@@ -1,5 +1,5 @@
 Name: gnulib
-Version: 0.1.6734.fbd3f
+Version: 0.1.6840.3f463
 Release: alt1
 
 Summary: GNU Portability Library
@@ -60,6 +60,9 @@ cd build-check
 %_datadir/%name/
 
 %changelog
+* Wed Dec 06 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1.6840.3f463-alt1
+- v0.1-6734-gfbd3fbba93 -> v0.1-6840-g3f463202bd.
+
 * Wed Sep 13 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1.6734.fbd3f-alt1
 - v0.1-5208-gc8b8f3bbcd -> v0.1-6734-gfbd3fbba93.
 - Fixed the License: tag (Freely distributable -> GPL-3.0-or-later and

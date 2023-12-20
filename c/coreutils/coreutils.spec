@@ -1,5 +1,5 @@
 Name: coreutils
-Version: 9.4.0.24.75e248
+Version: 9.4.0.75.7f2c97
 Release: alt1
 %define srcname %name-%version-%release
 
@@ -50,7 +50,7 @@ Conflicts: rpm-utils < 0:0.7.6-alt1
 # due to hostname
 Conflicts: net-tools < 0:1.60-alt9
 
-BuildRequires: gnulib >= 0.1.6708.04be9
+BuildRequires: gnulib >= 0.1.6840.3f463
 # due to CHECK_NORMAL_MENU_STRUCTURE option
 BuildRequires: makeinfo >= 6.8
 
@@ -225,6 +225,11 @@ export SHELL VERBOSE
 %doc AUTHORS NEWS.xz README THANKS.xz TODO
 
 %changelog
+* Mon Nov 06 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.4.0.75.7f2c97-alt1
+- coreutils: v9.4-24-g75e24853b7 -> v9.4-75-g7f2c97a241 (closes: #47724).
+- gnulib BR: v0.1-6708-g04be956135 -> v0.1-6840-g3f463202bd.
+- Updated translations from translationproject.org.
+
 * Wed Sep 13 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.4.0.24.75e248-alt1
 - coreutils: v9.1-8-ge08752509 -> v9.4-24-g75e24853b7.
 - gnulib BR: v0.1-5207-g7347caeb9d -> v0.1-6708-g04be956135.
