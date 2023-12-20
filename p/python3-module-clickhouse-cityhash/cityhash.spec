@@ -4,7 +4,7 @@
 
 Name:       python3-module-%oname
 Version:    1.0.2.4
-Release:    alt1
+Release:    alt2
 
 License:    %mit
 Group:      Development/Python3
@@ -15,6 +15,7 @@ Source:     %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-Cython
 
 BuildRequires: gcc-c++
 
@@ -60,6 +61,9 @@ cp -fR tests/ %buildroot%python3_sitelibdir/clickhouse_cityhash/
 
 
 %changelog
+* Wed Dec 20 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.2.4-alt2
+- Add build dependency on Cython.
+
 * Mon Dec 12 2022 Grigory Ustinov <grenka@altlinux.org> 1.0.2.4-alt1
 - Build new version.
 
