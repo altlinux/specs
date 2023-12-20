@@ -23,7 +23,7 @@
 %define _libexecdir /usr/libexec
 
 Name: vdsm
-Version: 4.50.4.1
+Version: 4.50.6
 Release: alt1
 Summary: Virtual Desktop Server Manager
 
@@ -853,6 +853,10 @@ fi
 %endif
 
 %changelog
+* Wed Dec 20 2023 Alexey Shabalin <shaba@altlinux.org> 4.50.6-alt1
+- New version 4.50.6.
+- fix for PEP-632 python-3.12
+
 * Wed Mar 01 2023 Alexey Shabalin <shaba@altlinux.org> 4.50.4.1-alt1
 - 4.50.4.1
 
