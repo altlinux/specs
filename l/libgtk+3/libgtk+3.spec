@@ -23,7 +23,7 @@
 %def_disable check
 
 Name: libgtk+3
-Version: %ver_major.38
+Version: %ver_major.39
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -65,6 +65,7 @@ Provides: gtk3 = %EVR
 Requires: %name-schemas = %EVR
 Requires: gtk-update-icon-cache >= %version
 Requires: icon-theme-adwaita
+Requires: at-spi2-core
 # ALT #32028
 Requires: gtk+3-themes-incompatible
 %{?_enable_colord:Requires: colord}
@@ -238,6 +239,7 @@ the functionality of the installed GTK+3 packages.
 %prep
 %setup -n %_name-%version
 %patch -p1
+
 # fix wrong GLIB define names
 sed -i.glib -e "s|GLIB_MIN_REQUIRED_VERSION|GLIB_VERSION_MIN_REQUIRED|" \
      -e "s|GLIB_MAX_ALLOWED_VERSION|GLIB_VERSION_MAX_ALLOWED|" \
@@ -438,6 +440,9 @@ xvfb-run %__meson_test -v --print-errorlogs
 %exclude %_man1dir/gtk-update-icon-cache*
 
 %changelog
+* Wed Dec 20 2023 Yuri N. Sedunov <aris@altlinux.org> 3.24.39-alt1
+- 3.24.39
+
 * Mon May 22 2023 Yuri N. Sedunov <aris@altlinux.org> 3.24.38-alt1
 - 3.24.38
 
