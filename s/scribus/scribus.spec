@@ -1,6 +1,6 @@
 Name: scribus
 Version: 1.5.8
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Desktop Publishing application written in Qt
@@ -23,6 +23,8 @@ Patch4: 24886.patch
 Patch5: 24981.patch
 Patch6: 25073.patch
 Patch7: 25139.patch
+
+Patch8: scribus-1.5.8-python-3.12.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake zlib-devel libssl-devel
@@ -126,6 +128,7 @@ BuildArch: noarch
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 # don't do that
 # brain damage with #if (PODOFO_VERSION < PODOFO_MAKE_VERSION(0, 9, 7))
@@ -193,6 +196,9 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Wed Dec 20 2023 Grigory Ustinov <grenka@altlinux.org> 1:1.5.8-alt3
+- fix building with python3.12.
+
 * Tue Apr 25 2023 Michael Shigorin <mike@altlinux.org> 1:1.5.8-alt2
 - fix build against poppler 22.09 with debian patches (ALT#44772)
 - spec cleanup
