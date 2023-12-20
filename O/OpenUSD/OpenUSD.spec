@@ -19,7 +19,7 @@
 
 Name: OpenUSD
 Version: 23.11
-Release: alt0.2
+Release: alt0.3
 Summary: Universal Scene Description library
 Group: Development/Other
 License: Apache-2.0
@@ -46,6 +46,7 @@ Patch2: embree4.patch
 Patch3: 0001-Downstream-only-add-an-SONAME-version.patch
 # https://github.com/PixarAnimationStudios/OpenUSD/pull/2651
 Patch4: OpenColorIO-2.3.patch
+Patch5: remove-distutils.patch
 
 BuildRequires(pre): cmake rpm-build-python3 ninja-build
 BuildRequires: gcc-c++
@@ -381,6 +382,9 @@ desktop-file-validate %buildroot%_desktopdir/org.openusd.usdview.desktop
 %python3_sitelibdir/pxr
 
 %changelog
+* Wed Dec 20 2023 Anton Vyatkin <toni@altlinux.org> 23.11-alt0.3
+- NMU: Drop dependency on distutils (Closes: #48865).
+
 * Wed Nov 22 2023 Nazarov Denis <nenderus@altlinux.org> 23.11-alt0.2
 - build with OpenColorIO 2.3
 
