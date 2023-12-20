@@ -1,6 +1,6 @@
 Name:    blink-qt
 Version: 5.6.0
-Release: alt3
+Release: alt4
 
 Summary: Blink SIP Client
 License: GPL-3.0+
@@ -28,6 +28,7 @@ Conflicts: python3-module-blink
 Source: %name-%version.tar
 Patch1: alt-desktop-l10n.patch
 Patch2: blink-qt-disable-__main__-import.patch
+Patch3: blink-qt-fix-build-with-cython3.patch
 
 %description
 Fully featured, easy to use SIP client with a Qt based UI Blink is a
@@ -40,6 +41,7 @@ Instant Messaging, File Transfers, Desktop Sharing and Presence.
 %setup -n %name-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 # Set correct python3 executable in shebang
 grep -Rl '#!.*python2$' * | xargs -n1 -i{} subst 's|#!.*python2$|#!%__python3|' "{}"
 
@@ -63,6 +65,9 @@ install -Dm 0644 debian/blink.1 %buildroot%_man1dir/blink.1
 %_man1dir/blink.1*
 
 %changelog
+* Wed Dec 20 2023 Grigory Ustinov <grenka@altlinux.org> 5.6.0-alt4
+- NMU: fix building with Cython>3.
+
 * Sat Nov 04 2023 Michael Shigorin <mike@altlinux.org> 5.6.0-alt3
 - NMU: build for %%e2k too
 
