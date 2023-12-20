@@ -1,8 +1,8 @@
-%define phpversion 8.0
+%define phpversion 8.2
 Name: phpipam
 Epoch: 1
-Version: 1.5.2
-Release: alt2
+Version: 1.6.0
+Release: alt1
 Summary: PHP-based virtual machine control tool
 Group: Networking/WWW
 License: GPLv3
@@ -22,13 +22,12 @@ Source11: %name-apache.conf
 Provides: %name-php = %EVR
 Provides: %name-php%phpversion = %EVR
 Obsoletes: %name-php7 < %EVR
-Conflicts: %name-php5
+Obsoletes: %name-php5 < %EVR
 BuildArch: noarch
 Requires: webserver-common
 Requires: php%phpversion-gmp php%phpversion-ldap php%phpversion-sockets php%phpversion-openssl php%phpversion-pdo php%phpversion-pdo_mysql php%phpversion-pcntl php%phpversion-mbstring php%phpversion-mcrypt php%phpversion-snmp php%phpversion-gd2 pear-core
 
 BuildRequires(pre): rpm-macros-webserver-common rpm-macros-apache2
-
 
 %description
 phpipam is an open-source web IP address management application.
@@ -124,11 +123,16 @@ rm -rf %buildroot%webserver_webappsdir/%name/.github
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Wed Dec 20 2023 Alexey Shabalin <shaba@altlinux.org> 1:1.6.0-alt1
+- 1.6.0 (Fixes: CVE-2023-24657).
+- Build with php8.2.
+
 * Thu Jul 13 2023 Anton Farygin <rider@altlinux.ru> 1:1.5.2-alt2
 - Built with php8.0.
 
 * Tue May 16 2023 Alexey Shabalin <shaba@altlinux.org> 1:1.5.2-alt1
-- 1.5.2 (Fixes: CVE-2023-0676, CVE-2023-0677, CVE-2023-0678, CVE-2023-1211, CVE-2023-1212).
+- 1.5.2 (Fixes: CVE-2023-0676, CVE-2023-0677, CVE-2023-0678, CVE-2023-1211,
+  CVE-2023-1212, CVE-2023-4965, CVE-2023-41580).
 
 * Fri May 06 2022 Alexey Shabalin <shaba@altlinux.org> 1.50.016-alt1
 - 1.5.0 (Fixes: CVE-2022-3845).
