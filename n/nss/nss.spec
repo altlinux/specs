@@ -1,6 +1,6 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.94.0
+Version:	3.96.1
 Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
@@ -264,6 +264,26 @@ popd
 %files -n lib%name-nssckbi-checkinstall
 
 %changelog
+* Wed Dec 20 2023 Alexey Gladkov <legion@altlinux.ru> 3.96.1-alt1
+- New version (3.96.1).
+- Certificate Authority Changes:
+  + Add CN=CommScope Public Trust ECC Root-01
+  + Add CN=CommScope Public Trust ECC Root-02
+  + Add CN=CommScope Public Trust RSA Root-01
+  + Add CN=CommScope Public Trust RSA Root-02
+  + Add CN=TrustAsia Global Root CA G3
+  + Add CN=TrustAsia Global Root CA G4
+  + Remove CN=Autoridad de Certificacion Firmaprofesional CIF A62634068,C=ES
+  + Remove CN=Chambers of Commerce Root - 2008
+  + Remove CN=Global Chambersign Root - 2008
+  + Remove CN=Symantec Class 1 Public Primary Certification Authority - G6,OU=Symantec Trust Network
+  + Remove CN=Symantec Class 2 Public Primary Certification Authority - G6,OU=Symantec Trust Network
+  + Remove CN=TrustCor ECA-1,OU=TrustCor Certificate Authority
+  + Remove CN=TrustCor RootCert CA-1,OU=TrustCor Certificate Authority
+  + Remove CN=TrustCor RootCert CA-2,OU=TrustCor Certificate Authority
+  + Remove CN=VeriSign Class 1 Public Primary Certification Authority - G3,OU="(c) 1999 VeriSign, Inc. - For authorized use only",OU=VeriSign Trust Network
+  + Remove CN=VeriSign Class 2 Public Primary Certification Authority - G3,OU="(c) 1999 VeriSign, Inc. - For authorized use only",OU=VeriSign Trust Network
+
 * Tue Oct 03 2023 Alexey Gladkov <legion@altlinux.ru> 3.94.0-alt1
 - New version (3.94).
 

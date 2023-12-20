@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 120.0.1
+Version: 121.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -32,10 +32,10 @@ Patch010: 0010-Add-dbus-cflags.patch
 
 %define gst_version   1.0
 %define nspr_version  4.35
-%define nss_version   3.86
+%define nss_version   3.96.1
 %define rust_version  1.65.0
 %define cargo_version 1.65.0
-%define llvm_version  16.0
+%define llvm_version  17.0
 
 ExcludeArch: %{ix86} ppc64le
 
@@ -427,6 +427,28 @@ fi
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Dec 20 2023 Alexey Gladkov <legion@altlinux.ru> 121.0-alt1
+- New release (121.0).
+- Security fixes:
+  + CVE-2023-6856: Heap-buffer-overflow affecting WebGL DrawElementsInstanced method with Mesa VM driver
+  + CVE-2023-6135: NSS susceptible to "Minerva" attack
+  + CVE-2023-6865: Potential exposure of uninitialized data in EncryptingOutputStream
+  + CVE-2023-6857: Symlinks may resolve to smaller than expected buffers
+  + CVE-2023-6858: Heap buffer overflow in nsTextFragment
+  + CVE-2023-6859: Use-after-free in PR_GetIdentitiesLayer
+  + CVE-2023-6866: TypedArrays lack sufficient exception handling
+  + CVE-2023-6860: Potential sandbox escape due to VideoBridge lack of texture validation
+  + CVE-2023-6867: Clickjacking permission prompts using the popup transition
+  + CVE-2023-6861: Heap buffer overflow affected nsWindow::PickerOpen(void) in headless mode
+  + CVE-2023-6868: WebPush requests on Firefox for Android did not require VAPID key
+  + CVE-2023-6869: Content can paint outside of sandboxed iframe
+  + CVE-2023-6870: Android Toast notifications may obscure fullscreen event notifications
+  + CVE-2023-6871: Lack of protocol handler warning in some instances
+  + CVE-2023-6872: Browsing history leaked to syslogs via GNOME
+  + CVE-2023-6863: Undefined behavior in ShutdownObserver()
+  + CVE-2023-6864: Memory safety bugs fixed in Firefox 121, Firefox ESR 115.6, and Thunderbird 115.6
+  + CVE-2023-6873: Memory safety bugs fixed in Firefox 121
+
 * Fri Dec 01 2023 Alexey Gladkov <legion@altlinux.ru> 120.0.1-alt1
 - New release (120.0.1).
 
