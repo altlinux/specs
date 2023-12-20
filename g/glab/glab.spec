@@ -5,7 +5,7 @@
 %def_with docs
 
 Name: glab
-Version: 1.35.0
+Version: 1.36.0
 Release: alt1
 
 Summary: A GitLab CLI tool bringing GitLab to your command line
@@ -14,7 +14,7 @@ Group: Development/Other
 Url: https://gitlab.com/gitlab-org/cli
 
 Source0: %name-%version.tar
-Source1: vendor.tar
+Source1: vendor-%version.tar
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang
@@ -84,6 +84,9 @@ mv .man-pages/* %buildroot%_man1dir
 %_man1dir/*.1.xz
 
 %changelog
+* Wed Dec 20 2023 Anton Zhukharev <ancieg@altlinux.org> 1.36.0-alt1
+- Updated to 1.36.0.
+
 * Tue Nov 07 2023 Anton Zhukharev <ancieg@altlinux.org> 1.35.0-alt1
 - Updated to 1.35.0.
 
