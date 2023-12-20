@@ -23,8 +23,8 @@ relational or object oriented databases.
 %def_without docs
 
 Name: py%oname
-Version: 3.8.0
-Release: alt3.2
+Version: 3.9.2
+Release: alt1
 Epoch: 1
 
 Summary: Managing hierarchical datasets
@@ -36,11 +36,8 @@ Url: http://www.pytables.org/
 VCS: https://github.com/PyTables/PyTables.git
 Source: %name-%version.tar
 
-# Patch from Debian
 Patch1: 0004-remove-gtags.patch
-Patch2: pytables-3.8.0-alt-fix-blosc2-get-directories.patch
-Patch3: pytables-3.8.0-find-blosc2.patch
-Patch4: pytables-3.8.0-Fix-compatibility-with-numpu-v1.25.patch
+Patch5: pytables-3.9.2-test-package-fix.patch
 
 Requires: python3-module-%oname = %EVR
 Requires: libblosc2
@@ -158,6 +155,9 @@ cd build/lib.* && env PYTHONPATH=. python3 tables/tests/test_all.py
 %python3_sitelibdir/%oname/nodes/tests/
 
 %changelog
+* Wed Dec 20 2023 Anton Vyatkin <toni@altlinux.org> 1:3.9.2-alt1
+- New version 3.9.2.
+
 * Wed Aug 23 2023 Ivan A. Melnikov <iv@altlinux.org> 1:3.8.0-alt3.2
 - NMU: Mark docs-only build requires as such.
 
