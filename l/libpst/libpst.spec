@@ -2,7 +2,7 @@
 
 Name: libpst
 Version: 0.6.76
-Release: alt3
+Release: alt4
 Summary: Tools for conversion of Outlook files to mailbox and other formats
 License: %gpl2plus
 Group: System/Libraries
@@ -11,7 +11,7 @@ Url: http://www.five-ten-sg.com/libpst
 Source0: %url/packages/%name-%version.tar
 Source100: libpst.watch
 Patch1: %name-%version-alt-known-fields.patch
-Patch2: %name-%version-python3.11.patch
+Patch2: %name-%version-python3.12.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-python3
@@ -128,6 +128,9 @@ rm -f %buildroot%_libdir/python*/site-packages/*.la
 %python3_sitelibdir/*.so
 
 %changelog
+* Wed Dec 20 2023 Grigory Ustinov <grenka@altlinux.org> 0.6.76-alt4
+- Fix building with python3.12.
+
 * Sat Jan 28 2023 Grigory Ustinov <grenka@altlinux.org> 0.6.76-alt3
 - Fix building with python3.11.
 
