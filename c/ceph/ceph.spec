@@ -60,7 +60,7 @@
 
 Name: ceph
 Version: 17.2.6
-Release: alt3.3
+Release: alt3.4
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -318,7 +318,7 @@ Summary: Dashboard module for Ceph Manager Daemon
 Group: Monitoring
 Requires: ceph-mgr = %EVR
 Requires: ceph-mgr-restful = %EVR
-Requires: ceph-grafana-dashboards = %EVR
+%{?_with_grafana:Requires: ceph-grafana-dashboards = %EVR}
 %if_with python3
 %py3_requires routes
 %endif
@@ -1843,6 +1843,9 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Wed Dec 20 2023 Michael Shigorin <mike@altlinux.org> 17.2.6-alt3.4
+- fix grafana knob
+
 * Mon Dec 18 2023 Michael Shigorin <mike@altlinux.org> 17.2.6-alt3.3
 - NMU: build on %%e2k (ilyakurdyukov@)
   + disable pmem either (move to whitelist, actually; mike@)
