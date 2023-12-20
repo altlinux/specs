@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 23.08.4
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Office
@@ -20,6 +20,7 @@ Obsoletes: %{name}-common < %EVR
 Requires: kde5-akonadi
 
 Source: %rname-%version.tar
+Patch1: alt-migrator-segfault.patch
 
 # Automatically added by buildreq on Tue Feb 15 2022 (-bi)
 # optimized out: boost-devel boost-devel-headers cmake cmake-modules debugedit elfutils fontconfig fontconfig-devel gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 gtk-update-icon-cache kde5-kontactinterface-common kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-plasma-framework-devel kf5-solid-devel kf5-sonnet-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXmu-devel libXrender-devel libXt-devel libctf-nobfd0 libdb4-devel libdbusmenu-qt52 libfreetype-devel libglvnd-devel libgpg-error libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-qmlmodels libqt5-quick libqt5-sql libqt5-svg libqt5-test libqt5-texttospeech libqt5-waylandclient libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstdc++-devel libwayland-client libwayland-cursor libxcb-devel libxcbutil-keysyms libxkbcommon-devel pkg-config python-modules python2-base python3 python3-base python3-dev python3-module-paste qt5-base-common qt5-base-devel rpm-build-file rpm-build-python3 rpm-macros-python sh4 tzdata xorg-proto-devel xorg-xf86miscproto-devel
@@ -36,6 +37,7 @@ A Getting Things Done application which aims at getting your mind like water.
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -53,8 +55,12 @@ A Getting Things Done application which aims at getting your mind like water.
 %_K5xdgapp/*zanshin*.desktop
 %_K5xmlgui/zanshin/
 %_K5icon/hicolor/*/apps/*zanshin*.*
+%_datadir/metainfo/*.xml
 
 %changelog
+* Wed Dec 20 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt2
+- add fix against migrator segfault (closes: 44720) (thanks sirius@alt)
+
 * Fri Dec 08 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
 - new version
 
