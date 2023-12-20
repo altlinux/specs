@@ -5,7 +5,7 @@
 %define _libexecdir /usr/libexec
 
 Name: yggdrasil
-Version: 0.5.2
+Version: 0.5.4
 Release: alt1
 
 Summary: End-to-end encrypted IPv6 networking
@@ -15,7 +15,7 @@ Url: https://yggdrasil-network.github.io
 Vcs: https://github.com/yggdrasil-network/yggdrasil-go.git
 
 Source0: %name-%version.tar
-Source1: vendor.tar
+Source1: vendor-%version.tar
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang
@@ -81,6 +81,9 @@ mv %buildroot{%_bindir,%_libexecdir/yggdrasil}/genkeys
 /usr/sbin/groupadd -r -f yggdrasil
 
 %changelog
+* Wed Dec 20 2023 Anton Zhukharev <ancieg@altlinux.org> 0.5.4-alt1
+- Updated to 0.5.4.
+
 * Tue Nov 07 2023 Anton Zhukharev <ancieg@altlinux.org> 0.5.2-alt1
 - Updated to 0.5.2.
 
