@@ -10,6 +10,7 @@
 
 %def_enable ipv6
 %def_enable agent2
+%def_enable webservice
 
 %ifndef _unitdir
 %define _unitdir %systemd_unitdir
@@ -17,7 +18,7 @@
 
 Name: zabbix
 Version: 6.0.25
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A network monitor
@@ -33,6 +34,7 @@ Patch0: %name-%version-alt.patch
 #%%{?_enable_java:BuildRequires(pre): java-devel-default}
 BuildRequires(pre): libelf-devel rpm-build-webserver-common rpm-macros-apache2
 %{?_enable_agent2:BuildRequires(pre): rpm-build-golang}
+%{?_enable_webservice:BuildRequires(pre): rpm-build-golang}
 
 # Automatically added by buildreq on Thu Nov 02 2017 (-bi)
 # optimized out: elfutils glibc-kernheaders-generic glibc-kernheaders-x86 libcom_err-devel libkrb5-devel libnet-snmp30 libp11-kit libpq-devel libsasl2-3 libssl-devel net-snmp-config perl pkg-config python-base python3 rpm-build-python3 xz
@@ -102,11 +104,20 @@ Group: Monitoring
 Requires: %name-common >= 1:2.0.4-alt1
 Requires: %name-agent-sudo
 
+%if_enabled agent2
 %package agent2
 Summary: %name agent2
 Group: Monitoring
 Requires: %name-common >= 1:2.0.4-alt1
 Requires: %name-agent-sudo
+%endif
+
+%if_enabled webservice
+%package web-service
+Summary: %name web service
+Group: Monitoring
+Requires: %name-common >= 1:2.0.4-alt1
+%endif
 
 %package agent-sudo
 Summary: sudo entry for %name agent
@@ -280,6 +291,7 @@ Zabbix java gateway
 %description agent
 zabbix network monitor agent.
 
+%if_enabled agent2
 %description agent2
 zabbix network monitor agent2.
 
@@ -287,6 +299,12 @@ ZABBIX is software for monitoring of your applications, network and servers.
 ZABBIX supports both polling and trapping techniques to collect data from
 monitored hosts. A flexible notification mechanism allows easy and quickly
 configure different types of notifications for pre-defined events.
+%endif
+
+%if_enabled webservice
+%description web-service
+Zabbix web servce for performing various tasks using headless web browser.
+%endif
 
 %description agent-sudo
 Sudo entry for zabbix agent.
@@ -397,6 +415,7 @@ export GOFLAGS="-mod=vendor"
 	%{subst_enable ipv6} \
 	--enable-agent \
 	%{subst_enable agent2} \
+	%{subst_enable webservice} \
 	%{subst_enable java} \
 	--with-libcurl \
 	--with-libxml2 \
@@ -483,6 +502,11 @@ install -pDm0644 sources/%{name}_proxy.service %buildroot%_unitdir/%{name}_proxy
 %if_enabled java
 install -pDm0755 sources/%{name}_java_gateway.init %buildroot%_initdir/%{name}_java_gateway
 install -pDm0644 sources/%{name}_java_gateway.service %buildroot%_unitdir/%{name}_java_gateway.service
+%endif
+%if_enabled webservice
+install -m0640 src/go/conf/zabbix_web_service.conf %buildroot%_sysconfdir/%name/
+install -pDm0755 sources/%{name}_web_service.init %buildroot%_initdir/%{name}_web_service
+install -pDm0644 sources/%{name}_web_service.service %buildroot%_unitdir/%{name}_web_service.service
 %endif
 
 # sudo entry
@@ -602,6 +626,8 @@ fi
 %preun agent
 %preun_service zabbix_agentd
 
+
+%if_with agent2
 %post agent2
 if [ $1 -eq 1 ]; then
 	sed -i -e "s,Hostname=Zabbix server,Hostname=$HOSTNAME,g" \
@@ -611,6 +637,7 @@ fi
 
 %preun agent2
 %preun_service zabbix_agent2
+%endif
 
 %post phpfrontend-engine
 if [ -f %webserver_webappsdir/%name/frontends/php/conf/zabbix.conf.php -a ! -f %webserver_webappsdir/%name/ui/conf/zabbix.conf.php ]
@@ -707,6 +734,15 @@ fi
 %_man8dir/%{name}_agent2.*
 %endif
 
+%if_enabled webservice
+%files web-service
+%config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/%name/%{name}_web_service.conf
+%_initdir/%{name}_web_service
+%_unitdir/*_web_service*
+%_sbindir/%{name}_web_service
+%_man8dir/%{name}_web_service.*
+%endif
+
 %files agent-sudo
 %config(noreplace) %attr(0400,root,root) %_sysconfdir/sudoers.d/%name
 
@@ -733,6 +769,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Wed Dec 20 2023 Alexei Takaseev <taf@altlinux.org> 1:6.0.25-alt2
+- Add zabbix-web-service subpackage
+
 * Thu Dec 14 2023 Alexei Takaseev <taf@altlinux.org> 1:6.0.25-alt1
 - 6.0.25
 
