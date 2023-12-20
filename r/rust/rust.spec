@@ -1,7 +1,7 @@
 Name: rust
 Epoch: 1
-Version: 1.74.0
-Release: alt1.1
+Version: 1.74.1
+Release: alt1
 Summary: The Rust Programming Language
 
 %define r_ver 1.73.0
@@ -461,6 +461,9 @@ rm -rf %rustdir
 %rustlibdir/src
 
 %changelog
+* Wed Dec 20 2023 Alexey Gladkov <legion@altlinux.ru> 1:1.74.1-alt1
+- New version (1.74.1).
+
 * Sun Nov 26 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.74.0-alt1.1
 - NMU: spec: riscv64 support
 
