@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2.8.3
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Fast numerical array expression evaluator for Python and NumPy
@@ -22,6 +22,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: libnumpy-py3-devel
 
 BuildRequires: gcc-c++ liblapack-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: /proc
@@ -57,10 +59,10 @@ sed -i 's|@PYVER@|%_python3_version%_python3_abiflags|' \
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 cat > tox.ini <<'EOF'
@@ -77,10 +79,13 @@ tox.py3 --sitepackages -vvr -s false
 
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Dec 18 2023 Grigory Ustinov <grenka@altlinux.org> 1:2.8.3-alt2
+- Moved on pyproject macros.
+
 * Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 1:2.8.3-alt1
 - new version 2.8.3
 
