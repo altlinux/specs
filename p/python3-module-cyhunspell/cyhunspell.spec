@@ -3,7 +3,7 @@
 
 Name: python3-module-%modulename
 Version: 2.0.3
-Release: alt1
+Release: alt2
 Summary: Cython wrapper on Hunspell Dictionary
 
 License: MIT
@@ -14,6 +14,7 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %modulename-%version.tar
 Source1: https://github.com/hunspell/hunspell/archive/v1.7.0.tar.gz
+Patch: cyhunspell-2.0.3-fix-build-with-new-cython.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libhunspell-devel
@@ -44,10 +45,14 @@ Otherwise it uses in-memory caching.
 
 %prep
 %setup -n %modulename-%version
+%patch -p2
 mkdir -p external
 tar -xf %SOURCE1 -C external/
 
 %build
+# Force re-cythonize for python3.12
+cython3 --cplus hunspell/hunspell.pyx
+
 %python3_build
 
 %install
@@ -62,6 +67,9 @@ py.test3 -v
 %python3_sitelibdir/*
 
 %changelog
+* Wed Dec 20 2023 Grigory Ustinov <grenka@altlinux.org> 2.0.3-alt2
+- Fix build with Cython>3.
+
 * Wed Dec 21 2022 Grigory Ustinov <grenka@altlinux.org> 2.0.3-alt1
 - Build new version for python3.11.
 
