@@ -7,7 +7,7 @@
 Name: qca-qt5
 %define major 2
 %define minor 3
-%define bugfix 5
+%define bugfix 7
 Version: %major.%minor.%bugfix
 Release: alt1
 %K5init no_altplace man
@@ -20,9 +20,6 @@ Url: https://userbase.kde.org/QCA
 Requires: lib%name = %version-%release
 
 Source: %name-%version.tar
-# upstream
-Patch1: 0001-Remove-test-that-openssl-has-decided-it-s-wrong.patch
-Patch2: 0001-hashunittest-run-sha384longtest-only-for-providers-t.patch
 # ALT
 Patch10: qca-2.0.3-alt-paths.patch
 
@@ -209,8 +206,6 @@ This plugin provides features based on Botan. It implements:
 
 %prep
 %setup -q -n %name-%version
-%patch1 -p1
-%patch2 -p1
 #
 %patch10 -p1
 
@@ -225,6 +220,7 @@ export QC_CERTSTORE_PATH="%_datadir/ca-certificates/ca-bundle.crt"
     -Dqca_CERTSTORE:STRING=%_datadir/ca-certificates/ca-bundle.crt \
     -DQCA_GPG_EXECUTABLE:STRING=gpg \
     -DQT4_BUILD:BOOL=OFF \
+    -DBUILD_WITH_QT6:BOOL=OFF \
     -DQCA_SUFFIX:STRING=qt5 \
     -DQCA_MAN_INSTALL_DIR:STRING=%_mandir \
     #
@@ -282,6 +278,9 @@ done
 %_qt5_headerdir/Qca-qt5/
 
 %changelog
+* Wed Dec 20 2023 Sergey V Turchin <zerg@altlinux.org> 2.3.7-alt1
+- new version
+
 * Thu Apr 20 2023 Sergey V Turchin <zerg@altlinux.org> 2.3.5-alt1
 - new version
 
