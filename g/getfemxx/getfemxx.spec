@@ -5,7 +5,7 @@
 %define rname getfem
 Name: getfemxx
 Version: 5.4.2
-Release: alt1
+Release: alt1.1
 
 Group: Development/C++
 Summary: Generic and efficient C++ library for finite element methods
@@ -20,6 +20,7 @@ Source0: getfem-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-devel gcc-c++ gcc-fortran glibc-devel python3-devel
 BuildRequires: libnumpy-py3-devel python3-module-scipy python3-module-mpi4py
+BuildRequires:python3-module-setuptools
 %ifnarch %{arm} aarch64 ppc64le
 #BuildRequires: scilab
 %endif
@@ -111,6 +112,9 @@ install -m 0644 \
 %python3_sitelibdir/*getfem*.so
 
 %changelog
+* Wed Dec 20 2023 Grigory Ustinov <grenka@altlinux.org> 5.4.2-alt1.1
+- NMU: Add build dependency on setuptools.
+
 * Mon Dec 18 2023 Sergey V Turchin <zerg@altlinux.org> 5.4.2-alt1
 - new version
 
