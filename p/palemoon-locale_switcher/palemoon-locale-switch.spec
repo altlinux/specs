@@ -5,7 +5,7 @@
 
 Name:    palemoon-locale_switcher
 Version: 3.1.0
-Release: alt2.3
+Release: alt3
 
 Summary: The Palemoon locale switcher
 
@@ -21,6 +21,7 @@ ExclusiveArch: x86_64 aarch64
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 Source: %pname-%version.xpi
+Patch1: %name-bootstrap-3.1.0.patch
 
 BuildRequires(pre):	rpm-build-palemoon
 
@@ -41,6 +42,7 @@ and is distributed under the GNU General Public License, V3.
 
 %prep
 %setup -c -n %pname-%version/%cid
+%patch1 -p1
 
 
 %install
@@ -63,6 +65,9 @@ fi
 %palemoon_datadir/defaults/pref/local_switcher_pref.js
 
 %changelog
+* Thu Dec 21 2023 Hihin Ruslan <ruslandh@altlinux.ru> 3.1.0-alt3
+- Add palemoon-locale_switcher-bootstrap-3.1.0.patch
+
 * Sat Dec 09 2023 Hihin Ruslan <ruslandh@altlinux.ru> 3.1.0-alt2.3
 - Add local_switcher_pref.js (ALT bug #48746)
 
@@ -94,3 +99,4 @@ fi
 * Thu Jul 16 2015 Hihin Ruslan <ruslandh@altlinux.ru> 2.1.3-alt1
 - initial build for ALT Linux Sisyphus
 
+palemoon-locale_swicher-bootstrap-3.1.0.patch
