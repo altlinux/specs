@@ -1,4 +1,4 @@
-%define git_version 98318ae89f1a893a6ded3a640405cdbb33e08757
+%define git_version b12291d110049b2f35e32e0de30d70e9a4c060d2
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
@@ -59,8 +59,8 @@
 %endif
 
 Name: ceph
-Version: 17.2.6
-Release: alt3.4
+Version: 17.2.7
+Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -1521,6 +1521,7 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %_datadir/ceph/mgr/pg_autoscaler
 %_datadir/ceph/mgr/progress
 %_datadir/ceph/mgr/rbd_support
+%_datadir/ceph/mgr/rgw
 %_datadir/ceph/mgr/selftest
 %_datadir/ceph/mgr/snap_schedule
 %_datadir/ceph/mgr/stats
@@ -1843,6 +1844,9 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Wed Dec 20 2023 Alexey Shabalin <shaba@altlinux.org> 17.2.7-alt1
+- 17.2.7
+
 * Wed Dec 20 2023 Michael Shigorin <mike@altlinux.org> 17.2.6-alt3.4
 - fix grafana knob
 
