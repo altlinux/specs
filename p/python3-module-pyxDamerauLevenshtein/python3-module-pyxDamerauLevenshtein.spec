@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.7.1
-Release: alt1
+Release: alt2
 
 Summary: Damerau-Levenshtein (DL) edit distance algorithm for Python in Cython for high performance
 License: BSD-3-Clause
@@ -34,6 +34,10 @@ BuildRequires(pre): rpm-build-pyproject
 %prep
 %setup
 %autopatch -p1
+
+# Force recythonize it please!
+cython3 pyxdameraulevenshtein/pyxdameraulevenshtein.pyx
+
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -53,6 +57,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Thu Dec 21 2023 Grigory Ustinov <grenka@altlinux.org> 1.7.1-alt2
+- Add force recythonizing of source.
+
 * Sat Oct 14 2023 Anton Zhukharev <ancieg@altlinux.org> 1.7.1-alt1
 - Built for ALT Sisyphus.
 
