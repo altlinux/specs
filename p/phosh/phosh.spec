@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: phosh
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: A pure Wayland shell for mobile devices
@@ -60,8 +60,8 @@ BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(gcr-3) >= 3.7.5
 BuildRequires: pkgconfig(gio-2.0) >= 2.76
 BuildRequires: pkgconfig(gio-unix-2.0) >= 2.58
-BuildRequires: pkgconfig(glib-2.0) >= 2.70.0
-BuildRequires: pkgconfig(gnome-desktop-3.0) >= 3.26
+BuildRequires: pkgconfig(glib-2.0) >= 2.74.0
+BuildRequires: pkgconfig(gnome-desktop-3.0) >= 43
 BuildRequires: pkgconfig(gsettings-desktop-schemas) >= 42
 BuildRequires: pkgconfig(gobject-2.0) >= 2.50.0
 BuildRequires: pkgconfig(gtk+-3.0) >= 3.22
@@ -194,6 +194,9 @@ xvfb-run %__meson_test
 %{?_enable_gtk_doc:%doc %_datadir/doc/%name-%api_ver}
 
 %changelog
+* Wed Dec 20 2023 Yuri N. Sedunov <aris@altlinux.org> 0.34.1-alt1
+- 0.34.1
+
 * Wed Dec 06 2023 Yuri N. Sedunov <aris@altlinux.org> 0.34.0-alt1
 - 0.34.0
 
