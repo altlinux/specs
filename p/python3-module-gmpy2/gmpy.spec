@@ -1,9 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname gmpy2
 
+%def_without check
+
 Name: python3-module-%oname
-Version: 2.1.5
-Release: alt2
+Version: 2.2.0
+Release: alt0.a2
 
 Summary: GMP/MPIR, MPFR, and MPC interface
 
@@ -11,15 +13,11 @@ License: LGPL-3.0+
 Group: Development/Python3
 Url: https://github.com/aleaxit/gmpy
 
-# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-devel
 BuildRequires: libmpc-devel
-BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
 
 %description
 A C-coded Python extension module that wraps the GMP library to provide
@@ -27,47 +25,15 @@ to Python code fast multiprecision arithmetic (integer, rational, and
 float), random number generation, advanced number-theoretical functions,
 and more.
 
-%package docs
-Summary: Documentation and tests for GMPY
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-A C-coded Python extension module that wraps the GMP library to provide
-to Python code fast multiprecision arithmetic (integer, rational, and
-float), random number generation, advanced number-theoretical functions,
-and more.
-
-This package contains documentation and tests for GMPY.
-
-%package pickles
-Summary: Pickles for GMPY
-Group: Development/Python
-
-%description pickles
-A C-coded Python extension module that wraps the GMP library to provide
-to Python code fast multiprecision arithmetic (integer, rational, and
-float), random number generation, advanced number-theoretical functions,
-and more.
-
-This package contains pickles for GMPY.
-
 %prep
 %setup
-
-%prepare_sphinx3 .
 
 %build
 %add_optflags -fno-strict-aliasing
 %python3_build_debug
 
-%make -C docs html
-
 %install
 %python3_install
-
-#install -d %buildroot%python_sitelibdir/%oname
-#cp -fR docs/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -75,13 +41,13 @@ python3 test/gmpy_test.py
 python3 test/runtests.py
 
 %files
-%doc README
+%doc README.rst
 %python3_sitelibdir/*
 
-%files docs
-%doc docs/_build/html test*
-
 %changelog
+* Wed Dec 20 2023 Grigory Ustinov <grenka@altlinux.org> 2.2.0-alt0.a2
+- Build new version for python3.12.
+
 * Sat Oct 14 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.1.5-alt2
 - NMU: fixed FTBFS with MPFR 4.2.1
 
