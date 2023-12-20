@@ -1,8 +1,8 @@
 %define subscribers_dir /lib/resolvconf
 
 Name: openresolv
-Version: 3.12.0
-Release: alt2
+Version: 3.13.2
+Release: alt1
 
 Summary: A framework for managing DNS information 
 License: BSD-2-Clause
@@ -10,7 +10,7 @@ Group: System/Configuration/Networking
 
 URL: https://roy.marples.name/projects/%name
 Source: %name-%version.tar
-Vcs: git://roy.marples.name/openresolv.git
+Vcs: https://github.com/NetworkConfiguration/openresolv.git
 Source1: test
 Patch0: %name-%version-%release.patch
 BuildArch: noarch
@@ -92,7 +92,7 @@ cp %SOURCE1 .
 ./test
 %configure --sbindir=/sbin --libexecdir=/lib/resolvconf \
            --localstatedir=%_var \
-           --rundir=%_var/run \
+           --rundir=/run \
            --os=linux
 %make
 
@@ -145,6 +145,11 @@ touch %buildroot%_localstatedir/bind/etc/resolvconf-options.conf
 %endif
 
 %changelog
+* Wed Dec 20 2023 Mikhail Efremov <sem@altlinux.org> 3.13.2-alt1
+- Use /run as rundir.
+- Updated Vcs tag.
+- Updated to 3.12.2.
+
 * Sun Sep 18 2022 Alexey Shabalin <shaba@altlinux.org> 3.12.0-alt2
 - Build without PowerDNS Recursor support.
   PowerDNS Recursor package does not exist in Sisyphus yet.
