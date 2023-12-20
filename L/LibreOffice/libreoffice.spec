@@ -1,4 +1,4 @@
-# 7.6.2.1
+# 7.6.4.1
 %def_without python
 %def_with parallelism
 %def_without fetch
@@ -28,7 +28,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 Summary: LibreOffice Productivity Suite
 License: MPL-2.0
 Group: Office
@@ -81,6 +81,9 @@ Patch600: LibreOffice-7.4.2.3-update-russian-translation.patch
 
 # Stolen from %name-still
 Patch700: alt-013-icu74.patch
+
+# See https://bugs.documentfoundation.org/show_bug.cgi?id=158302#c1
+Patch800: libxml2-2.12.patch
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
@@ -321,6 +324,8 @@ Provides additional %{langname} translations and resources for %name. \
 #patch600 -p1
 
 %patch700 -p1
+
+%patch800 -p1
 
 # TODO move officebean to SDK or separate package
 # Hack in -Wl,-rpath=/usr/lib/jvm/jre-11-openjdk/lib
@@ -633,6 +638,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Tue Dec 19 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 7.6.4.1-alt2
+- FTBFS: fixed build with libxml2 2.12 (ALT #48840).
+
 * Thu Dec 14 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 7.6.4.1-alt1
 - Update to 7.6.4.1 (fix CVE-2023-6186 and CVE-2023-6185)
 
