@@ -4,7 +4,7 @@
 
 Name:          gem-foreman
 Version:       0.87.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Process manager for applications with multiple components
 License:       MIT
 Group:         Development/Ruby
@@ -15,6 +15,7 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: ronn
 %if_with check
 BuildRequires: gem(thor) >= 1.2.1
 BuildRequires: gem(rake) >= 0
@@ -24,7 +25,7 @@ BuildRequires: gem(simplecov) >= 0
 BuildRequires: gem(timecop) >= 0
 BuildRequires: gem(codeclimate-test-reporter) >= 0
 BuildRequires: gem(aws-s3) >= 0
-BuildRequires: gem(ronn) >= 0
+BuildRequires: gem(ronn-ng) >= 0
 BuildRequires: gem(yard) >= 0.9.11
 BuildRequires: gem(automatiek) >= 0
 BuildConflicts: gem(thor) >= 2
@@ -41,6 +42,7 @@ BuildConflicts: gem(yard) >= 1
 Provides:      gem(foreman) = 0.87.2
 
 %ruby_bindir_to %ruby_bindir
+%ruby_use_gem_version foreman:0.87.2
 
 %description
 Process manager for applications with multiple components.
@@ -48,7 +50,7 @@ Process manager for applications with multiple components.
 
 %package       -n foreman-rb
 Version:       0.87.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Process manager for applications with multiple components executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета foreman
 Group:         Other
@@ -65,7 +67,7 @@ Process manager for applications with multiple components executable(s).
 
 %package       -n gem-foreman-doc
 Version:       0.87.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Process manager for applications with multiple components documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman
 Group:         Development/Documentation
@@ -82,7 +84,7 @@ Process manager for applications with multiple components documentation files.
 
 %package       -n gem-foreman-devel
 Version:       0.87.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Process manager for applications with multiple components development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman
 Group:         Development/Ruby
@@ -97,7 +99,7 @@ Requires:      gem(simplecov) >= 0
 Requires:      gem(timecop) >= 0
 Requires:      gem(codeclimate-test-reporter) >= 0
 Requires:      gem(aws-s3) >= 0
-Requires:      gem(ronn) >= 0
+Requires:      gem(ronn-ng) >= 0
 Requires:      gem(yard) >= 0.9.11
 Requires:      gem(automatiek) >= 0
 Conflicts:     gem(thor) >= 2
@@ -143,6 +145,9 @@ Process manager for applications with multiple components development package.
 
 
 %changelog
+* Tue Dec 19 2023 Pavel Skrylev <majioa@altlinux.org> 0.87.2-alt1.1
+- ! fixed dep to ronn-ng instead of ronn
+
 * Wed Nov 29 2023 Pavel Skrylev <majioa@altlinux.org> 0.87.2-alt1
 - ^ 0.87.0 -> 0.87.2
 

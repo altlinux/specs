@@ -6,7 +6,7 @@
 
 Name:          ruby
 Version:       %_version
-Release:       alt1
+Release:       alt1.1
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -43,7 +43,6 @@ Requires:      %lname = %_version-%release
 Requires:      ruby-stdlibs = %_version-%release
 Requires:      gem irb erb
 Requires:      /bin/install
-Requires:      rvm-devel
 %define obsolete() \
 Provides:      %1 = %_version-%release \
 Obsoletes:     %1
@@ -260,7 +259,7 @@ Ruby manuals and documentation.
 %package       -n gem
 Epoch:         2
 Version:       3.3.26
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby gem executable and framefork
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -278,7 +277,7 @@ Ruby gem executable and framework.
 %package       -n rpm-macros-ruby
 Epoch:         1
 Version:       %_version
-Release:       alt1
+Release:       alt1.1
 Summary:       rpm macros for Ruby packages
 Group:         Development/Ruby
 
@@ -340,11 +339,9 @@ INSTALL=/bin/install rvm reinstall . \
    --with-sitearchincludedir=%_usr/local/include/%name \
    --with-sitearchhdrdir=%_usr/local/include/%name \
    --with-rubysitearchprefix=%_usr/local/%_lib/%name \
-   --with-vendordir=%_cachedir \
-   --with-vendorlibdir=%_cachedir/%name \
-   --with-vendorarchdir=%_cachedir/%name \
-   --with-vendorhdrdir=%_cachedir/%name/include \
-   --with-vendorarchhdrdir=%_cachedir/%name/include \
+   --with-vendordir=%_libexecdir/%name \
+   --with-vendorlibdir=%_libexecdir/%name/vendor_ruby \
+   --with-vendorarchdir=%_libexecdir/%name/vendor_ruby \
    --with-rdoc=ri,html \
    -C --prefix=%_prefix
 
@@ -423,6 +420,10 @@ echo "NOTE: to make the environment variable changes come into effect, please re
 %_rpmmacrosdir/ruby.env
 
 %changelog
+* Mon Dec 18 2023 Pavel Skrylev <majioa@altlinux.org> 3.1.4-alt1.1
+- ! fixed %vendordir folder set
+- - removed rvm-devel dep from ruby (closes #48812)
+
 * Mon Nov 13 2023 Pavel Skrylev <majioa@altlinux.org> 3.1.4-alt1
 - ^ 3.1.2 -> 3.1.4 (closes #47868)
 - * moved build to rvm

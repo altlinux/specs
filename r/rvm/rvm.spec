@@ -2,7 +2,7 @@
 
 Name:          rvm
 Version:       1.29.12
-Release:       alt1
+Release:       alt2
 Summary:       Ruby enVironment Manager (RVM)
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -52,9 +52,8 @@ Autoreq:       yes,noshell
 
 Requires:      setup
 Requires:      gperf
-#NOTE specify gcc12 explicitly
-Requires:      gcc12
-Requires:      gcc12-c++
+Requires:      gcc
+Requires:      gcc-c++
 Requires:      doxygen
 Requires:      autoconf
 Requires:      groff-base
@@ -118,7 +117,7 @@ export PATH="%_cachedir/ruby/gemie/bin:%_libexecdir/%name/bin:\$PATH:/usr/bin:/b
 [[ -s "%_libexecdir/%name/scripts/rvm" ]] && source "%_libexecdir/%name/scripts/rvm" # Load RVM into a shell session *as a function*
 PROFILE
 
-%pre          devel
+%pre           devel
 ln -sf /proc/self/fd /dev/fd >/dev/null 2>&1
 getent group rvm >/dev/null || %_sbindir/groupadd -r rvm
 usermod -a -G rvm root
@@ -143,5 +142,8 @@ usermod -a -G rvm root
 %dir %attr(775,root,rvm) %_logdir/%name
 
 %changelog
+* Thu Dec 14 2023 Pavel Skrylev <majioa@altlinux.org> 1.29.12-alt2
+- ! fixed rvm build for custom user-space rubies
+
 * Wed Aug 02 2023 Pavel Skrylev <majioa@altlinux.org> 1.29.12-alt1
 - Initial build v1.29.12 for Sisyphus.

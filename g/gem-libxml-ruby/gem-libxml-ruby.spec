@@ -1,8 +1,9 @@
+%define        _unpackaged_files_terminate_build 1
 %define        gemname libxml-ruby
 
 Name:          gem-libxml-ruby
-Version:       3.2.3
-Release:       alt2
+Version:       4.1.1
+Release:       alt1
 Summary:       Ruby language bindings for the GNOME Libxml2 XML toolkit
 License:       MIT
 Group:         Development/Ruby
@@ -11,18 +12,20 @@ Vcs:           https://github.com/xml4r/libxml-ruby.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
-Patch:         %name-%version-%release.patch
+Patch:         libxml-ruby-original-source.patch
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libxml2-devel
 BuildRequires: zlib-devel
+%if_with check
 BuildRequires: gem(rake-compiler) >= 0
 BuildRequires: gem(minitest) >= 0
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 Obsoletes:     libxml-ruby < %EVR
 Provides:      libxml-ruby = %EVR
-Provides:      gem(libxml-ruby) = 3.2.3
+Provides:      gem(libxml-ruby) = 4.1.1
 
 
 %description
@@ -31,14 +34,14 @@ XML toolkit.
 
 
 %package       -n gem-libxml-ruby-doc
-Version:       3.2.3
+Version:       4.1.1
 Release:       alt1
 Summary:       Ruby language bindings for the GNOME Libxml2 XML toolkit documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета libxml-ruby
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(libxml-ruby) = 3.2.3
+Requires:      gem(libxml-ruby) = 4.1.1
 Obsoletes:     libxml-ruby-doc < %EVR
 Provides:      libxml-ruby-doc = %EVR
 
@@ -50,14 +53,14 @@ Ruby language bindings for the GNOME Libxml2 XML toolkit documentation files.
 
 
 %package       -n gem-libxml-ruby-devel
-Version:       3.2.3
+Version:       4.1.1
 Release:       alt1
 Summary:       Ruby language bindings for the GNOME Libxml2 XML toolkit development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета libxml-ruby
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(libxml-ruby) = 3.2.3
+Requires:      gem(libxml-ruby) = 4.1.1
 Requires:      gem(rake-compiler) >= 0
 Requires:      gem(minitest) >= 0
 
@@ -70,7 +73,8 @@ Ruby language bindings for the GNOME Libxml2 XML toolkit development package.
 
 %prep
 %setup
-%patch -p1
+%autopatch
+rm -rf log
 
 %build
 %ruby_build
@@ -97,6 +101,9 @@ Ruby language bindings for the GNOME Libxml2 XML toolkit development package.
 
 
 %changelog
+* Mon Dec 18 2023 Pavel Skrylev <majioa@altlinux.org> 4.1.1-alt1
+- ^ 3.2.3 -> 4.1.1
+
 * Mon Oct 17 2022 Alexey Shabalin <shaba@altlinux.org> 3.2.3-alt2
 - build master snapshot (fix for libxml2-2.10.3)
 
