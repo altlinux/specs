@@ -1,11 +1,11 @@
 Name: goldendict-ng
-Version: 0.1.0
+Version: 23.12.07
 Release: alt1
 Summary: The Next Generation GoldenDict. A feature-rich open-source dictionary lookup program, supporting multiple dictionary formats and online dictionaries.
 License: GPL-3.0
 ExclusiveArch: %qt6_qtwebengine_arches
 Group: Text tools
-URL: https://github.com/xiaoyifang/simple-eb/
+URL: https://github.com/xiaoyifang/goldendict-ng
 
 Source: %name-%version.tar
 Patch0: path_media_format_to_player.patch
@@ -65,6 +65,9 @@ The Next Generation GoldenDict. A feature-rich open-source dictionary lookup pro
 %_datadir/pixmaps/goldendict-ng.png
 
 %changelog
+* Thu Dec 21 2023 Oleg Proskurin <proskur@altlinux.org> 23.12.07-alt1
+- New version
+
 * Mon Dec 11 2023 Oleg Proskurin <proskur@altlinux.org> 0.1.0-alt1
 - New version
 
