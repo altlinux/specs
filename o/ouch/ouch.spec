@@ -1,12 +1,17 @@
+%def_with check
+
 Name: ouch
-Version: 0.4.1
+Version: 0.5.1
 Release: alt1
 Summary: Painless compression and decompression for your terminal
 License: MIT
 Group: Archiving/Compression
 Url: https://github.com/ouch-org/ouch
 Source: %name-%version.tar
+Source1: vendor.tar
 
+BuildRequires(pre): rpm-build-rust
+BuildRequires: gcc-c++
 BuildRequires: rust-cargo
 
 %description
@@ -14,7 +19,7 @@ ouch stands for Obvious Unified Compression Helper and is a CLI tool
 to help you compress and decompress files of several formats.
 
 %prep
-%setup
+%setup -a 1
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
 [source.crates-io]
@@ -25,19 +30,22 @@ directory = "vendor"
 EOF
 
 %build
-cargo build --offline --release
-
-%check
-cargo test
+%rust_build
 
 %install
-cargo install --path . --root %buildroot/%_usr
+%rust_install
+
+%check
+%rust_test
 
 %files
 %_bindir/%name
 %doc README.md
 
 %changelog
+* Wed Dec 20 2023 Alexander Makeenkov <amakeenk@altlinux.org> 0.5.1-alt1
+- Updated to version 0.5.1.
+
 * Mon Jan 30 2023 Alexander Makeenkov <amakeenk@altlinux.org> 0.4.1-alt1
 - Updated to version 0.4.1
 
