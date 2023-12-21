@@ -6,7 +6,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 Name: palemoon
 Version: 32.5.1
 
-Release: alt1
+Release: alt2.1
 
 License: MPL-2.0 GPL-3.0 and LGPL-2.1+
 Group: Networking/WWW
@@ -24,6 +24,7 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 %define palemoon_cid                    \{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4\}
 
+%define newmoon_prefix                  %_libdir/%bname
 #define newmoon_datadir                 %%_datadir/%%sname
 %define newmoon_datadir                 %_datadir/%bname
 %define newmoon_bindir                  %_libdir/%bname
@@ -38,13 +39,13 @@ Source2: defaults-%bname.tar
 Source4: %sname-mozconfig
 Source6: %bname.desktop
 Source7: firefox.c
-Source8: firefox-prefs.js
+#Source8: firefox-prefs.js
 Source9: HISTORY_GIT
 Source10: Changelog
 Source11: content.tar
 
-Source12: xulstore.json
-Source13: kde.js
+#Source12: xulstore.json
+#Source13: kde.js
 
 #Patch15: palemoon-32.0.1-ppc64le-alt1.patch
 
@@ -74,27 +75,27 @@ Patch113: palemoon-29.4.6-kde-background.patch
 
 Patch115: palemoon-32.4.0-mathops.patch
 Patch116: palemoon-32.4.0-hunspell.patch
-Patch117: palemoon-32.5.0-locale.patch
+#Patch117: palemoon-32.5.1-locale.patch
 
 #Patch114: mewmoon_branding-31.0.0.patch
 Patch200: %bname-32.5.1-branding.patch
 
 %set_autoconf_version 2.13
 
-# Automatically added by buildreq on Mon Nov 20 2023
-# optimized out: alt-os-release alternatives fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel
-# libX11-devel libXext-devel libXfixes-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libctf-nobfd0
-# libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel
-# libxcb-devel perl pkg-config python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email
-# python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python2-base python3 python3-base
-# python3-dev python3-module-setuptools sh5 xorg-proto-devel zlib-devel
+BuildPreReq: gstreamer1.0-devel gst-plugins1.0-devel libpixman-devel
+BuildPreReq: python3-base unzip xorg-cf-files libsndfile-devel
+
+# Automatically added by buildreq on Wed Dec 20 2023
+# optimized out: alt-os-release alternatives fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXfixes-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcrypt-devel libctf-nobfd0 libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel libxcb-devel perl pkg-config python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-distutils python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python2-base python3 python3-base python3-dev python3-module-setuptools sh5 xorg-proto-devel zlib-devel
 BuildRequires: doxygen gcc-c++ libGConf-devel libXcomposite-devel libXdamage-devel libXt-devel libalsa-devel libdbus-glib-devel libgtk+2-devel
-BuildRequires: libgtk+3-devel libhunspell-devel libpulseaudio-devel libsocket python-modules-distutils python-modules-json
+BuildRequires: libgtk+3-devel libhunspell-devel libpixman-devel libpulseaudio-devel libsocket python-devel python-modules-json
 BuildRequires: python-modules-wsgiref unzip yasm zip
+
 
 # BEGIN SourceDeps(oneline):
 BuildRequires: gobject-introspection-devel libssl-devel perl(Archive/Zip.pm) perl(CGI.pm) perl(LWP/Simple.pm)
 BuildRequires: perl(XML/LibXML.pm) perl(XML/LibXSLT.pm) perl(diagnostics.pm) perl(fastcwd.pl) swig texinfo
+BuildRequires: bzlib-devel gobject-introspection-devel libgtest-devel libpng-devel libssl-devel swig texinfo zlib-devel
 # END SourceDeps(oneline)
 
 BuildPreReq: %_bindir/python2.7 python2-base
@@ -104,16 +105,14 @@ BuildPreReq: libXcomposite-devel libXdamage-devel
 BuildRequires: libcpuid-devel
 %endif
 
-# BEGIN SourceDeps(oneline):
-BuildRequires: bzlib-devel gobject-introspection-devel libgtest-devel libpng-devel libssl-devel swig texinfo zlib-devel
-# END SourceDeps(oneline)
-
 BuildRequires(pre): mozilla-common-devel rpm-macros-alternatives mozilla-common
 BuildRequires(pre): browser-plugins-npapi-devel
 
 BuildPreReq: python-module-future python-modules-json python-modules-wsgiref
 
-#BuildRequires: gcc%%{_gcc_version}-c++
+BuildPreReq: gstreamer-devel
+# set_gcc_version 4.9
+# BuildRequires: gcc%%{_gcc_version}-c++
 
 BuildPreReq: chrpath
 BuildPreReq: autoconf_%_autoconf_version
@@ -139,11 +138,17 @@ Provides: webclient
 
 Conflicts: %bname < 31.0.0
 
-#Requires: libgstreamer1.0 gst-libav
-#Requires: gst-plugins-base1.0
+Requires: gst-plugins-bad1.0 
+Requires: gst-plugins-good1.0 
+Requires: gst-plugins-ugly1.0 
+Requires: gst-plugins1.0-tools
+Requires: gstreamer1.0-utils 
+
+Requires: libgstreamer1.0 gst-libav
+Requires: gst-plugins-base1.0
 
 # Protection against fraudulent DigiNotar certificates
-#Requires: libnss
+Requires: libnss
 
 %description -n %bname
 The New Moon browser, an unofficial branding of the Pale Moon project browser
@@ -211,7 +216,7 @@ tar -xf %SOURCE1
 
 %patch115 -p1
 %patch116 -p1
-%patch117 -p1
+#patch117 -p1
 
 #patch114 -p1
 
@@ -273,32 +278,32 @@ echo "ac_add_options --with-nss-prefix=%_libdir/nss" >> .mozconfig
  echo 'ac_add_options --enable-optimize=" -march=x86-64 -msse2 -mfpmath=sse"' >> .mozconfig
 %endif
 
-pwd
 
-cat << EOF >> palemoon/app/profile/prefs.js
-user_pref("browser.EULA.override", true);
-user_pref("browser.ctrlTab.previews", true);
-user_pref("browser.tabs.insertRelatedAfterCurrent", false);
-user_pref("browser.tabs.onTop", true);
-user_pref("browser.startup.homepage", "file://%_docdir/HTML/index.html");
-user_pref("browser.backspace_action", 2);
-user_pref("browser.display.use_system_colors", true);
-user_pref("browser.download.folderList", 1);
-user_pref("browser.link.open_external", 3);
-user_pref("app.update.auto", false);
-user_pref("app.update.enabled", false);
-user_pref("app.update.autoInstallEnabled", false);
-user_pref("dom.ipc.plugins.enabled.nswrapper*", false);
-user_pref("extensions.autoDisableScopes", 0);
-user_pref("extensions.shownSelectionUI", true);
-user_pref("network.manage-offline-status", true);
-user_pref("browser.urlbar.decodeURLsOnCopy", true);
+
+cat << EOF >> palemoon/app/profile/%sname.js
+// -----------  Build Add   ------------------------
+pref("browser.EULA.override", true);
+pref("app.update.auto", false);
+pref("app.update.enabled", false);
+pref("app.update.autoInstallEnabled", false);
+pref("browser.display.use_system_colors", true);
+pref("browser.helperApps.deleteTempFileOnExit", false);
+pref("browser.link.open_external", 3);
+pref("browser.urlbar.decodeURLsOnCopy", true);
+pref("extensions.autoDisableScopes", 3);
+pref("ui.allow_platform_file_picker", "false");
+pref("media.gstreamer.enabled", true);
+user_pref("general.useragent.locale",	"chrome://global/locale/intl.properties");
+user_pref("extensions.getAddons.cache.enabled", false);
+user_pref("intl.locale.matchOS",  true);
+user_pref("general.useragent.locale", "C");
 EOF
 
 %build
 %add_optflags %optflags_shared
+%add_optflags %optflags_shared
 
-%add_findprov_lib_path %newmoon_datadir
+%add_findprov_lib_path %newmoon_prefix
 
 export MOZ_BUILD_APP=%sname
 
@@ -361,9 +366,9 @@ gcc %optflags \
 	%SOURCE7 -o %bname
 
 %install
-## ? install -D -m644 %SOURCE12 obj-%_arch/dist/bin/browser/defaults/profile/xulstore.json
+## ? install -D -m644 %%SOURCE12 obj-%_arch/dist/bin/browser/defaults/profile/xulstore.json
 # нужен только с патчами KDE
-#install -D -m644 %SOURCE13 obj-%_arch/dist/bin/defaults/pref/kde.js
+#install -D -m644 %%SOURCE13 obj-%_arch/dist/bin/defaults/pref/kde.js
 
 #cd palemoon
 cd obj-%_arch
@@ -416,11 +421,6 @@ rm -rf -- \
 install -D -m 644 %SOURCE6 ./%_desktopdir/%bname.desktop
 install -d -m 755 %buildroot/%newmoon_bindir/browser/defaults/preferences/
 
-#cat > %buildroot/%newmoon_bindir/browser/defaults/preferences/%sname-l10n.js <<EOF
-#pref("intl.locale.matchOS",		true);
-#pref("general.useragent.locale",	"chrome://global/locale/intl.properties");
-#pref("extensions.getAddons.cache.enabled", false);
-#EOF
 
 
 
@@ -455,6 +455,9 @@ printf '%_bindir/xbrowser\t%_bindir/%bname\t99\n' >./%_altdir/%bname
  	done
      )
 
+
+
+
 #install -d   %buildroot/%_docdir/%bname-%version/
 # Add Doc
 install -D -m 644 %SOURCE9  %_builddir/%sname-%version
@@ -462,6 +465,15 @@ install -D -m 644 %SOURCE10 %_builddir/%sname-%version
 # install -D -m 644 %_builddir/palemoon-%version/AUTHORS %_builddir/%sname-%version
 # install -D -m 644 %_builddir/palemoon-%version/LICENSE %_builddir/%sname-%version
 # install -D -m 644 %_builddir/palemoon-%version/README.md %_builddir/%sname-%version
+
+# cat > %buildroot/%newmoon_bindir/browser/defaults/preferences/%sname-l10n.js <<EOF
+# pref("general.useragent.locale",	"chrome://global/locale/intl.properties");
+# pref("extensions.getAddons.cache.enabled", false);
+# pref("general.useragent.locale", "en-GB");
+# EOF
+
+
+
 
 %files -n %bname
 %dir %newmoon_bindir
@@ -484,6 +496,9 @@ install -D -m 644 %SOURCE10 %_builddir/%sname-%version
 %exclude %_includedir/*
 
 %changelog
+* Sat Dec 16 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2:32.5.1-alt2.1
+- Update
+
 * Sun Dec 03 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2:32.5.1-alt1
 - Release 32.5.1
 (CVE-2023-6204, CVE-2023-6210, CVE-2023-6209 and CVE-2023-6205)
@@ -938,5 +953,3 @@ install -D -m 644 %SOURCE10 %_builddir/%sname-%version
 
 * Sun Jun 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.5.01-alt0.1
 - initial build for ALT Linux Sisyphus
-
-
