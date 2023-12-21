@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.27.10
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init
 
@@ -383,7 +383,13 @@ mkdir -p %buildroot/%_bindir
 mkdir -p %buildroot/%_kf5_bin
 ln -s `relative %_K5bin/startplasma-x11 %_bindir/startkde5` %buildroot/%_bindir/startkde5
 ln -s `relative %_K5bin/startplasma-x11 %_kf5_bin/startkde5` %buildroot/%_kf5_bin/startkde5
-install -m0755 %SOURCE50 %buildroot/%_bindir/dbus-restart-kde5
+install -m0755 /dev/null %buildroot/%_bindir/dbus-restart-kde5
+%_K5if_ver_gteq %ubt_id M110
+# not need to restart dbus
+echo -e '#!/bin/sh\n# Not need to restart user dbus when all services in standard place' >%buildroot/%_bindir/dbus-restart-kde5
+%else
+cat %SOURCE50 >%buildroot/%_bindir/dbus-restart-kde5
+%endif
 
 # Add chksession support
 mkdir -p %buildroot/%x11confdir/wmsession.d/
@@ -551,6 +557,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_unitdir_user/plasma-core.target.d/xd
 
 
 %changelog
+* Thu Dec 21 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.10-alt2
+- restart session dbus only if need
+
 * Thu Dec 07 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.10-alt1
 - new version
 
