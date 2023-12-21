@@ -1,6 +1,6 @@
 %define nm_version 1.1.90
-%define git_date %nil
-#define git_date .git20110510
+#define git_hash %nil
+%define git_hash .g7e01b1d
 
 %def_with gtk4
 
@@ -13,21 +13,20 @@
 %endif
 
 Name: NetworkManager-vpnc
-Version: 1.2.8
-Release: alt1%git_date
+Version: 1.2.9
+Release: alt1%git_hash
 License: GPLv2+
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for vpnc
 Url: https://networkmanager.dev/docs/vpn/
 Vcs: https://gitlab.gnome.org/GNOME/NetworkManager-vpnc.git
 Source: %name-%version.tar
-Source1: NetworkManager-vpnc.master.ru.po
 Patch: %name-%version-%release.patch
 
 BuildRequires: libnm-devel >= %nm_version
 BuildRequires: libnma-devel
 BuildRequires: libgtk+3-devel
-%{?_with_gtk4:BuildRequires: libgtk4-devel libnma-gtk4-devel xvfb-run}
+%{?_with_gtk4:BuildRequires: libgtk4-devel >= 4.6.3 libnma-gtk4-devel}
 BuildRequires: libsecret-devel
 BuildRequires: intltool gettext
 
@@ -77,8 +76,6 @@ This package contains files for GTK4 applications to use %name.
 %setup
 %patch -p1
 
-cp -a %SOURCE1 po/ru.po
-
 %build
 %autoreconf
 %configure \
@@ -88,11 +85,7 @@ cp -a %SOURCE1 po/ru.po
 	--without-libnm-glib \
 	%{subst_with gtk4} \
 	--enable-more-warnings=%more_warnings
-%if_with gtk4
-xvfb-run %make_build
-%else
 %make_build
-%endif
 
 %install
 %makeinstall_std
@@ -124,6 +117,11 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Thu Dec 21 2023 Mikhail Efremov <sem@altlinux.org> 1.2.9-alt1.g7e01b1d
+- Upstream git snapshot (for updated translations mostly).
+- Used Russian translation from upstream.
+- Dropped workaround with xvfb-run.
+
 * Thu Mar 17 2022 Mikhail Efremov <sem@altlinux.org> 1.2.8-alt1
 - Used xvfb-run.
 - Added gtk4 subpackage.
