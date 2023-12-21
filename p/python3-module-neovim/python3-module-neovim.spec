@@ -2,8 +2,8 @@
 %define oname pynvim
 
 Name: python3-module-%oldname
-Version: 0.4.3
-Release: alt1.1
+Version: 0.5.0
+Release: alt1
 
 Summary: Python 3 client to Neovim
 
@@ -38,6 +38,9 @@ for connecting to and scripting Nvim processes through its msgpack-rpc API.
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Thu Dec 21 2023 Vladimir Didenko <cow@altlinux.org> 0.5.0-alt1
+- new release
+
 * Sun Oct 16 2022 Grigory Ustinov <grenka@altlinux.org> 0.4.3-alt1.1
 - NMU: updated build dependencies
 
