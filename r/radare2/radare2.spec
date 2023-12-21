@@ -1,32 +1,32 @@
-Summary: A reverse engineering framework
 Name: radare2
-Version: 5.5.4
-Release: alt2
+Version: 5.8.8
+Release: alt1
+
+Summary: A reverse engineering framework
 License: LGPL-3.0-or-later
 Group: Development/Tools
 Url: http://radare.org/
+
 Source: %name-%version.tar
-Packager: Nikita Ermakov <arei@altlinux.org>
 
-BuildRequires: libzip-devel zlib-devel libmagic-devel capstone-devel libxxhash-devel liblz4-devel meson openssl-devel libuv-devel libtree-sitter-devel
-
-# bundled sdb ./shlr/sdb/README.md
-# bundled js0n ./shlr/sdb/src/json/README
-# bundled openbsdregex libr/util/regex/README
-# bundled tcc ./shlr/tcc/README.md
-# bundled binutils 2.13  ./libr/asm/arch/tricore/README.md
-#                        ./libr/asm/arch/ppc/gnu/
-#                        ./libr/asm/arch/arm/gnu/
-# bundled vavrdisasm 1.6 ./libr/asm/arch/avr/README
-
-%description
-A reverse engineering framework and command line tools.
+BuildRequires: meson
+BuildRequires: capstone-devel
+BuildRequires: liblz4-devel
+BuildRequires: libmagic-devel
+BuildRequires: libuv-devel
+BuildRequires: libxxhash-devel
+BuildRequires: libzip-devel
+BuildRequires: openssl-devel
+BuildRequires: zlib-devel
 
 %package devel
 Summary: Development files for %name
 License: LGPL-3.0-or-later
 Group: Development/Tools
-Requires: %name = %version-%release
+
+%description
+A reverse engineering framework and command line tools.
+
 %description devel
 Development files for %name package.
 
@@ -34,41 +34,44 @@ Development files for %name package.
 %setup
 
 %build
-%meson                               \
-  -Dr2_gittip=%version-%release      \
-  -Duse_sys_magic=true               \
-  -Duse_sys_zip=true                 \
-  -Duse_sys_zlib=true                \
-  -Duse_sys_lz4=true                 \
-  -Duse_sys_xxhash=true              \
-  -Duse_sys_openssl=true             \
-  -Duse_libuv=true                   \
-  -Duse_sys_capstone=true
-%meson_build
+%meson \
+    -Dr2_gittip=%version-%release      \
+    -Duse_sys_magic=true               \
+    -Duse_sys_zip=true                 \
+    -Duse_sys_zlib=true                \
+    -Duse_sys_lz4=true                 \
+    -Duse_sys_xxhash=true              \
+    -Duse_sys_openssl=true             \
+    -Duse_libuv=true                   \
+    -Duse_sys_capstone=true
+%meson_build -j%([ %__nprocs -gt 32 ] && echo 32 || echo %__nprocs)
 
 %install
 %meson_install
 # Remove package manager
-rm %buildroot/%_bindir/r2pm
+rm %buildroot%_bindir/r2pm
 # Copy r_jemalloc to the include directory
-cp -r libr/include/heap/r_jemalloc %buildroot/%_includedir/
-
-%files devel
-%_libdir/pkgconfig/*.pc
-%_includedir/libr/
-%_includedir/r_jemalloc/
+cp -r libr/include/heap %buildroot%_includedir/libr
 
 %files
 %doc DEVELOPERS.md COPYING COPYING.LESSER CONTRIBUTING.md README.md
-%doc %_docdir/%{name}
+%doc %_docdir/%name
 %_bindir/*
-%_libdir/libr*.so*
-%_datadir/%name/
-%_mandir/man1/*
-%_mandir/man7/*
+%_libdir/libr*.so.*
+%_datadir/%name
 %_datadir/zsh
+%_man1dir/*
+%_man7dir/*
+
+%files devel
+%_libdir/libr*.so
+%_libdir/pkgconfig/*.pc
+%_includedir/libr
 
 %changelog
+* Wed Dec 20 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.8.8-alt1
+- 5.8.8 released
+
 * Tue Aug 08 2023 Vitaly Lipatov <lav@altlinux.ru> 5.5.4-alt2
 - NMU: remove unneeded BRs
 

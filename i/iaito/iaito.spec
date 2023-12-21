@@ -1,5 +1,5 @@
 Name: iaito
-Version: 5.7.8
+Version: 5.8.8
 Release: alt1
 
 Summary: GUI for radare2
@@ -43,6 +43,9 @@ install -pm0644 -D src/iaito.1 %buildroot%_man1dir/iaito.1
 %_man1dir/iaito.1*
 
 %changelog
+* Wed Dec 20 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.8.8-alt1
+- 5.8.8 released
+
 * Thu Oct 27 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.7.8-alt1
 - 5.7.8 released
 
