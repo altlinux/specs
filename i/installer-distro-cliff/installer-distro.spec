@@ -1,7 +1,7 @@
 %define distro cliff
 Name: installer-distro-%distro
 Version: 10.0
-Release: alt6
+Release: alt7
 
 License: GPLv2+
 Group: System/Configuration/Other
@@ -85,6 +85,10 @@ cp -a steps.d/* %buildroot%install2dir/steps
 %files stage3
 
 %changelog
+* Thu Dec 21 2023 Anton Midyukov <antohami@altlinux.org> 10.0-alt7
+- alterator-menu: add audit, logs to module-expert-list
+- postinstall.d/20-alterator-menu.sh: do not add 'users' to expert list
+
 * Fri Nov 03 2023 Paul Wolneykien <manowar@altlinux.org> 10.0-alt6
 - Require renamed installer-feature-integalert-*.
 
