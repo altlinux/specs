@@ -2,7 +2,7 @@
 
 Name: nmstate
 Version: 2.1.4
-Release: alt1
+Release: alt2
 Summary: Declarative network manager API
 Group: System/Configuration/Networking
 
@@ -10,10 +10,12 @@ License: LGPLv2+
 Url: https://github.com/%name/%name
 Source: %name-%version.tar
 Patch: %name-%version.patch
+Patch3500: nix-loongarch64.patch
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-rust
 BuildRequires: python3-devel python3-module-setuptools python3-module-yaml
 BuildRequires: rpm-build-rust
+BuildRequires: cargo-vendor-checksum diffstat
 BuildRequires: /proc
 
 %description
@@ -60,6 +62,12 @@ This package contains the Python 3 library for Nmstate.
 %prep
 %setup
 %patch -p1
+
+%patch3500 -p1
+diffstat -p1 -l < %PATCH3500 | \
+	sed -re 's@rust/vendor/@@' | \
+	xargs -r cargo-vendor-checksum --vendor rust/vendor -f
+
 pushd rust
 mkdir -p .cargo
 cat >.cargo/config.toml << EOF
@@ -112,6 +120,9 @@ rm -f %buildroot%_libdir/*.{a,la}
 %_pkgconfigdir/nmstate.pc
 
 %changelog
+* Thu Dec 21 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.1.4-alt2
+- NMU: fixed FTBFS on LoongArch.
+
 * Wed Mar 01 2023 Alexey Shabalin <shaba@altlinux.org> 2.1.4-alt1
 - Initial build.
 
