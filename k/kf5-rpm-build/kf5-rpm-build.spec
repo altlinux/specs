@@ -13,7 +13,7 @@
 %define __if_ver_not_eq() %if "%(rpmvercmp '%1' '%2')" != "0"
 
 Name: kf5-rpm-build
-Version: 5.100.2
+Version: 5.101.0
 Release: alt1
 
 Group: Development/KDE and QT
@@ -55,6 +55,9 @@ install -D -m 0755 %SOURCE2 %buildroot/%_bindir/rpm-build-kf5-find-qtlang
 %_bindir/rpm-build-kf5-*
 
 %changelog
+* Thu Dec 21 2023 Sergey V Turchin <zerg@altlinux.org> 5.101.0-alt1
+- allow to redefine _K5link
+
 * Thu Nov 16 2023 Sergey V Turchin <zerg@altlinux.org> 5.100.2-alt1
 - fix install files
 
