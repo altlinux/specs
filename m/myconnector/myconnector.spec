@@ -2,7 +2,7 @@
 %define xdgdir  %_xdgconfigdir/autostart
 
 Name:     myconnector
-Version:  2.5.1
+Version:  2.5.2
 Release:  alt1
 
 Summary:  MyConnector - remote desktop client
@@ -93,6 +93,7 @@ install -pm755 kiosk/*.desktop %buildroot%basedir/kiosk
 install -pDm600 kiosk/kiosk.conf %buildroot%_sysconfdir/%name/kiosk.conf
 install -pDm644 myconnector.conf %buildroot%_sysconfdir/%name/%name.conf
 install -pDm644 %name.bashcomp %buildroot%_datadir/bash-completion/completions/%name
+rm -f docs/conf.py docs/requirements.txt
 mkdir -p %buildroot%xdgdir
 cat > %buildroot%xdgdir/myconnector.desktop << EOF
 [Desktop Entry]
@@ -138,6 +139,9 @@ msgfmt ru.po -o %buildroot%_datadir/locale/ru/LC_MESSAGES/%name.mo
 %doc docs/*
 
 %changelog
+* Thu Dec 21 2023 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.5.2-alt1
+- [kiosk] Fixed bug (ALT #44818)
+
 * Mon Nov 20 2023 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.5.1-alt1
 - [FreeRDP] Fixed connecting with NLA if username is not set
 
