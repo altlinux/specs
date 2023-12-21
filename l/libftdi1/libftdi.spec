@@ -1,7 +1,7 @@
 Summary:   Library to program and control the FTDI USB serial controllers
 Name:      libftdi1
 Version:   1.5
-Release:   alt3
+Release:   alt3.1
 License:   LGPL for libftdi and GPLv2+linking exception for the C++ wrapper
 Group:     System/Libraries
 URL:       http://www.intra2net.com/en/developer/libftdi
@@ -13,6 +13,7 @@ BuildRequires: gcc-c++ boost-devel
 BuildRequires: rpm-macros-cmake
 BuildRequires: cmake swig
 BuildRequires: python3-devel rpm-build-python3
+BuildRequires: python3-module-setuptools
 BuildRequires: libconfuse-devel
 
 
@@ -165,6 +166,9 @@ fi
 %exclude %_man3dir/ftdi_eeprom*
 
 %changelog
+* Thu Dec 21 2023 Grigory Ustinov <grenka@altlinux.org> 1.5-alt3.1
+- NMU: added build dependency on setuptools
+
 * Thu Sep 16 2021 Ilya Mashkin <oddity@altlinux.ru> 1.5-alt3
 - NMU: rebuild with new libconfuse
 - Temporary disable LTO
