@@ -3,12 +3,10 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%define commit_num .4
-%define commit_id .g992c7938e
 
 Name: neomutt
-Version: 20231103
-Release: alt1%commit_num%commit_id
+Version: 20231221
+Release: alt1
 Summary: A version of Mutt with added features
 License: GPL-2.0-only and ALT-Public-Domain
 Group: Networking/Mail
@@ -135,6 +133,9 @@ make -s test
 %_datadir/neomutt
 
 %changelog
+* Fri Dec 22 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 20231221-alt1
+- Update to 20231221(2023-12-21).
+
 * Sun Nov 05 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 20231103-alt1.4.g992c7938e
 - Update to 20231103-4-g992c7938e.
 
