@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define module_name gitlab
 %define pypi_name python-gitlab
-%def_without check
+%def_with check
 
 Name: python3-module-%module_name
-Version: 3.13.0
-Release: alt2
+Version: 4.2.0
+Release: alt1
 Summary: A python wrapper for the GitLab API
 License: LGPL-3.0
 Group: Development/Python3
@@ -47,6 +47,9 @@ Python package providing access to the GitLab server API.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Dec 21 2023 Alexander Makeenkov <amakeenk@altlinux.org> 4.2.0-alt1
+- Updated to version 4.2.0.
+
 * Thu Mar 09 2023 Alexander Makeenkov <amakeenk@altlinux.org> 3.13.0-alt2
 - Disabled tests
 
