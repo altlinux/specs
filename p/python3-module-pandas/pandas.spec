@@ -7,8 +7,8 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 1.3.1
-Release: alt3
+Version: 2.1.4
+Release: alt1
 Summary: Python Data Analysis Library
 License: BSD-3-Clause
 Group: Development/Python3
@@ -17,14 +17,18 @@ Url: https://pandas.pydata.org
 
 # https://github.com/pandas-dev/pandas.git
 Source: %name-%version.tar
-Patch1: %oname-alt-docs.patch
-Patch2: %oname-alt-remove-tests-dependency.patch
+Patch1: pandas-fix-generate-version.patch
+Patch2: pandas-2.1.4-alt-remove-tests-dependency.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: python3-devel
 BuildRequires: libnumpy-py3-devel python3-module-Cython python3-module-numpy
 BuildRequires: python3(scipy) python3(xlrd)
+BuildRequires: python3-module-mesonpy
+BuildRequires: meson
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_enabled check
 BuildRequires: xvfb-run
 BuildRequires: python3(openpyxl)
@@ -88,10 +92,7 @@ This package contains documentation for pandas.
 %patch1 -p1
 %patch2 -p1
 
-# fix version info
-sed -i \
-	-e "s/git_refnames\s*=\s*\"[^\"]*\"/git_refnames = \" \(tag: v%version\)\"/" \
-	%oname/_version.py
+sed -i "s/@VERSION@/%version/" generate_version.py
 
 %if_with docs
 %prepare_sphinx3 doc
@@ -100,10 +101,10 @@ ln -s ../objects.inv doc/source/
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with docs
 pushd doc
@@ -117,10 +118,10 @@ xvfb-run python3 setup.py test
 %files
 %doc *.md
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/testing.py
-%exclude %python3_sitelibdir/*/_testing
+%exclude %python3_sitelibdir/*/_testing*
 %exclude %python3_sitelibdir/*/conftest.py
 %exclude %python3_sitelibdir/*/*/test*
 %exclude %python3_sitelibdir/*/*/_test*
@@ -131,7 +132,7 @@ xvfb-run python3 setup.py test
 %files tests
 %python3_sitelibdir/*/tests
 %python3_sitelibdir/*/testing.py
-%python3_sitelibdir/*/_testing
+%python3_sitelibdir/*/_testing*
 %python3_sitelibdir/*/conftest.py
 %python3_sitelibdir/*/*/test*
 %python3_sitelibdir/*/*/_test*
@@ -145,6 +146,9 @@ xvfb-run python3 setup.py test
 %endif
 
 %changelog
+* Thu Dec 21 2023 Anton Vyatkin <toni@altlinux.org> 2.1.4-alt1
+- New version 2.1.4.
+
 * Mon Dec 06 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.1-alt3
 - Bootstrap for python3.10.
 
