@@ -2,14 +2,14 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name smile
-%define ver_major 2.8
+%define ver_major 2.9
 %define rdn_name it.mijorus.smile
 
 # <screenshot> height too large
 %def_disable check
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: An emoji picker
@@ -65,6 +65,9 @@ ln -sf ../../fonts/ttf/google-noto-emoji/NotoColorEmoji.ttf \
 %doc README*
 
 %changelog
+* Thu Dec 21 2023 Yuri N. Sedunov <aris@altlinux.org> 2.9.0-alt1
+- 2.9.0
+
 * Wed Oct 11 2023 Yuri N. Sedunov <aris@altlinux.org> 2.8.2-alt1
 - first build for Sisyphus
 
