@@ -11,8 +11,8 @@
 %def_with graphicsmagick
 
 Name: inkscape
-Version: %major
-Release: alt1.1
+Version: %major.2
+Release: alt1
 
 Summary: A Vector Drawing Application
 
@@ -27,7 +27,7 @@ Source: %name-%version.tar
 
 Source1: inkview.desktop
 
-Patch: poppler-22.03.0.patch
+Patch1: 694d8ae43d06efff21adebf377ce614d660b24cd.patch
 
 # a program package can't have any provides
 AutoProv:no
@@ -156,7 +156,7 @@ Run checkinstall tests for %name.
 
 %prep
 %setup
-#patch -p1
+%patch1 -p1
 
 %ifarch %e2k
 # missing typeinfo fix
@@ -260,6 +260,10 @@ true
 %files checkinstall
 
 %changelog
+* Thu Dec 21 2023 Vitaly Lipatov <lav@altlinux.ru> 1.3.2-alt1
+- new version 1.3.2 (with rpmrb script)
+- fix build with libxml2-2.12.3 (ALT bug 48874)
+
 * Mon Jul 31 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.3-alt1.1
 - e2k: build fix
 
