@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 4.4
+%define ver_major 4.6
 %define beta %nil
 %define rdn_name org.darktable.darktable
 
@@ -17,8 +17,8 @@
 %def_enable lensfun
 
 Name: darktable
-Version: %ver_major.2
-Release: alt2.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
 License: GPL-3.0
@@ -33,7 +33,6 @@ Patch: darktable-3.0.0-is_supported_platform.patch
 # based on https://bugzilla.altlinux.org/attachment.cgi?id=8682&action=edit
 # by Pavel Nakonechnyi
 Patch1: darktable-4.4.0-alt-disable-use-of-gcc-graphite.patch
-Patch10: rawspeed-3.6-up-libxml2-2.12.patch
 
 ExcludeArch: %ix86 armh
 AutoReq: nolua
@@ -48,7 +47,7 @@ AutoReq: nolua
 %define lensfun_api_ver 1
 %define lensfun_ver 0.3.3
 %define libraw_ver 0.21.0
-%define libavif_ver 0.9.1
+%define libavif_ver 0.9.2
 %define libheif_ver 1.12.0
 %define openexr_ver 3.0
 %define lua_ver_major 5.4
@@ -67,7 +66,7 @@ BuildRequires: libexiv2-devel >= %exiv2_ver libflickcurl-devel libsecret-devel
 BuildRequires: libgphoto2-devel libjpeg-devel liblcms2-devel
 BuildRequires: liblensfun%lensfun_api_ver-devel >= %lensfun_ver
 BuildRequires: libpng-devel librsvg-devel libsqlite3-devel libtiff-devel
-BuildRequires: openexr-devel >= %openexr_ver python3-module-imath
+BuildRequires: openexr-devel >= %openexr_ver
 BuildRequires: libxkbcommon-x11-devel lsb-release
 BuildRequires: libjson-glib-devel libsoup-devel libpixman-devel libexpat-devel
 BuildRequires: libcolord-gtk-devel libudev-devel
@@ -97,9 +96,6 @@ light table. It also enables you to develop raw images and enhance them.
 %prep
 %setup -n %name-%version
 %patch1 -p1
-pushd src/external/rawspeed
-%patch10 -p1
-popd
 
 %build
 %ifarch ppc64le
@@ -151,6 +147,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %doc README* RELEASE_NOTES*
 
 %changelog
+* Thu Dec 21 2023 Yuri N. Sedunov <aris@altlinux.org> 4.6.0-alt1
+- 4.6.0
+
 * Sun Dec 17 2023 Yuri N. Sedunov <aris@altlinux.org> 4.4.2-alt2.1
 - fixed build with libxml2-2.12.x
 
