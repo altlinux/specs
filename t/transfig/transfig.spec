@@ -1,6 +1,6 @@
 Name: transfig
 Version: 3.2.9
-Release: alt1
+Release: alt2
 
 Summary: A utility for converting FIG files (made by xfig) to other formats
 Group: Graphics
@@ -39,6 +39,10 @@ PostScript).  Transfig is used to create TeX documents which are portable
 %_datadir/fig2dev
 
 %changelog
+* Thu Dec 21 2023 Vladislav Zavjalov <slazav@altlinux.org> 3.2.9-alt2
+- current snapshot (699062a129473f7f9f4dd21dad30e04405d3ef24)
+  important fix for utf-8 rendering
+
 * Tue Sep 26 2023 Vladislav Zavjalov <slazav@altlinux.org> 3.2.9-alt1
 - 3.2.9
 
