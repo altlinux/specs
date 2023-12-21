@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: installer-livecd-install
-Version: 0.10.0
+Version: 0.10.1
 Release: alt1
 
 Summary: Special step livecd-install for installers
@@ -38,6 +38,9 @@ BuildArch: noarch
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Dec 21 2023 Anton Midyukov <antohami@altlinux.org> 0.10.1-alt1
+- backend3: copy files instead unsquashfs when in kernel cmdline 'oldinst'
+
 * Thu Apr 06 2023 Anton Midyukov <antohami@altlinux.org> 0.10.0-alt1
 - mount virtual filesystem for chroot after extract squash
 - Requires: installer-scripts-remount-stage2 >= 0.6.0
