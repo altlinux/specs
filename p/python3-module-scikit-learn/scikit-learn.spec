@@ -12,7 +12,7 @@
 
 Name: python3-module-%oname
 Version: 1.3.0
-Release: alt1
+Release: alt2
 
 Summary: A set of python modules for machine learning and data mining
 License: BSD-3-Clause
@@ -31,6 +31,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-numpy
 BuildRequires: python3-module-scipy
+BuildRequires: python3-module-Cython
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-joblib
@@ -84,6 +85,9 @@ popd
 
 
 %changelog
+* Thu Dec 21 2023 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt2
+- Add Cython to build dependencies.
+
 * Fri Oct 27 2023 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
 - Automatically updated to 1.3.0 (Closes: #46326).
 
