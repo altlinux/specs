@@ -2,7 +2,7 @@
 
 Name:          python3-module-cups
 Version:       1.9.74
-Release:       alt3
+Release:       alt3.1
 
 Summary:       Python bindings for the CUPS API
 
@@ -22,6 +22,7 @@ BuildRequires(pre): libcups-devel >= 2.2.12-alt2
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
 
 %description
 Python bindings for the CUPS API. This module allows
@@ -66,6 +67,9 @@ subst 's|#!.*python$|#!%__python3|' $(grep -Rl 'python$' *)
 
 
 %changelog
+* Thu Dec 21 2023 Grigory Ustinov <grenka@altlinux.org> 1.9.74-alt3.1
+- NMU: add setuptools to build dependencies
+
 * Fri Aug 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.9.74-alt3
 - build python3 module separately
 
