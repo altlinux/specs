@@ -66,7 +66,7 @@
 
 Name: virtualbox
 Version: 7.0.12
-Release: alt2
+Release: alt5
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -214,51 +214,21 @@ It allows to share files and sync time with host system.
 %package guest-common
 Summary: Additions common files for VirtualBox OSE guest systems
 Group: Emulators
-Provides: %name-guest-common = 6.1.8
-Provides: %name-guest-common = 6.1.6
-Provides: %name-guest-common = 6.1.4
-Provides: %name-guest-common = 6.1.2
-Provides: %name-guest-common = 6.1.0
+
 # for automatic adding group vboxadd (and vboxsf) to system roles (users, powerusers, localadmins)
 Requires: libnss-role >= 0.5.1
+
+# https://bugzilla.altlinux.org/42576
+Provides: %name-guest-common-vboxvideo = %EVR
+Obsoletes: %name-guest-common-vboxvideo < %EVR
+Provides: %name-guest-common-vboxguest = %EVR
+Obsoletes: %name-guest-common-vboxguest < %EVR
+Provides: %name-guest-common-vboxsf = %EVR
+Obsoletes: %name-guest-common-vboxsf < %EVR
 
 %description guest-common
 This packages contains common files for VirtualBox OSE guest systems.
 It consists modprobe rules to load kernel modules guest on guest system.
-
-%package guest-common-vboxvideo
-Summary: Additions common files for VirtualBox OSE vboxvideo driver
-Group: Emulators
-Provides: %name-guest-common-vboxvideo = 6.1.8
-Provides: %name-guest-common-vboxvideo = 6.1.6
-Provides: %name-guest-common-vboxvideo = 6.1.4
-Provides: %name-guest-common-vboxvideo = 6.1.2
-Provides: %name-guest-common-vboxvideo = 6.1.0
-
-%description guest-common-vboxvideo
-This packages contains common files for VirtualBox OSE vboxvideo driver.
-It consists modprobe rules to load kernel module vboxvideo on guest system.
-
-%package guest-common-vboxguest
-Summary: Additions common files for VirtualBox OSE vboxguest driver
-Group: Emulators
-Provides: %name-guest-common-vboxguest = 6.1.8
-Provides: %name-guest-common-vboxguest = 6.1.6
-Provides: %name-guest-common-vboxguest = 6.1.4
-Provides: %name-guest-common-vboxguest = 6.1.2
-Provides: %name-guest-common-vboxguest = 6.1.0
-
-%description guest-common-vboxguest
-This packages contains common files for VirtualBox OSE vboxguest driver.
-It consists modprobe rules to load kernel module vboxguest on guest system.
-
-%package guest-common-vboxsf
-Summary: Additions common files for VirtualBox OSE vboxsf driver
-Group: Emulators
-
-%description guest-common-vboxsf
-This packages contains common files for VirtualBox OSE vboxsf driver.
-It consists modprobe rules to load kernel module vboxsf on guest system.
 
 %package webservice
 Summary: VirtualBox Web Service
@@ -678,12 +648,6 @@ cd additions >/dev/null
   install -d %buildroot/%_bindir
   install -m755 VBoxClient VBoxControl VBoxDRMClient VBoxService %buildroot/%_bindir/
 
-# install kernel modules configuration
-  install -pDm644 %SOURCE25 %buildroot%_sysconfdir/modprobe.d/virtualbox-vboxvideo.conf
-  install -pDm644 %SOURCE26 %buildroot%_sysconfdir/modprobe.d/virtualbox-vboxguest.conf
-  install -pDm644 %SOURCE28 %buildroot%_sysconfdir/modules-load.d/virtualbox-addition.conf
-  install -pDm644 %SOURCE29 %buildroot%_sysconfdir/modprobe.d/virtualbox-vboxsf.conf
-
 # install roles
   install -Dpm644 %SOURCE32 %buildroot%_sysconfdir/role.d/virtualbox-addition.role
 
@@ -883,17 +847,7 @@ mountpoint -q /dev || {
 
 %if_with additions
 %files guest-common
-%config %_sysconfdir/modules-load.d/virtualbox-addition.conf
 %config(noreplace) %_sysconfdir/role.d/virtualbox-addition.role
-
-%files guest-common-vboxvideo
-%config %_sysconfdir/modprobe.d/virtualbox-vboxvideo.conf
-
-%files guest-common-vboxguest
-%config %_sysconfdir/modprobe.d/virtualbox-vboxguest.conf
-
-%files guest-common-vboxsf
-%config %_sysconfdir/modprobe.d/virtualbox-vboxsf.conf
 
 %files guest-utils
 /sbin/mount.vboxsf
@@ -960,6 +914,21 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Fri Dec 22 2023 Valery Sinelnikov <greh@altlinux.org> 7.0.12-alt5
+- Fix build with libxml2(Closes: 48893)
+
+* Thu Dec 07 2023 Anton Midyukov <antohami@altlinux.org> 7.0.12-alt4
+- NMU: virtualbox-guest-common: do'nt pack
+       /etc/modules-load.d/virtualbox-addition.conf
+
+* Thu Dec 07 2023 Anton Midyukov <antohami@altlinux.org> 7.0.12-alt3
+- NMU:
+  + Remove and obsolete subpackages:
+    - virtualbox-guest-common-vboxvideo
+    - virtualbox-guest-common-vboxguest
+    - virtualbox-guest-common-vboxsf
+  + Remove old provides at virtualbox-guest-common
+
 * Fri Oct 20 2023 Valery Sinelnikov <greh@altlinux.org> 7.0.12-alt2
 - Merge branch 'p10'
 
