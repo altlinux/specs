@@ -5,7 +5,7 @@
 %set_verify_elf_method strict
 
 Name: ugrep
-Version: 4.3.4
+Version: 4.4.1
 Release: alt1
 
 Summary: Universal grep: a feature-rich grep implementation with focus on speed
@@ -60,8 +60,18 @@ bin/ugrep --version | bin/ugrep '^%name \Q%version\E\s'
 %_bindir/*
 %_man1dir/*.1*
 %_datadir/%name
+%_datadir/bash-completion/completions/ug*
+%_datadir/fish/vendor_completions.d/ug*
+%_datadir/zsh/site-functions/_ug*
 
 %changelog
+* Fri Dec 22 2023 Vitaly Chikunov <vt@altlinux.org> 4.4.1-alt1
+- Update to 4.4.1 (2023-12-22).
+- Added shell completion scripts (bash, fish, zsh).
+
+* Fri Dec 08 2023 Vitaly Chikunov <vt@altlinux.org> 4.3.5-alt1
+- Update to 4.3.5 (2023-12-08).
+
 * Mon Nov 27 2023 Vitaly Chikunov <vt@altlinux.org> 4.3.4-alt1
 - Update to 4.3.4 (2023-11-27).
 
