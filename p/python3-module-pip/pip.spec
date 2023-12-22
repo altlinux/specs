@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 23.3.1
-Release: alt2
+Version: 23.3.2
+Release: alt1
 
 Summary: The PyPA recommended tool for installing Python packages
 License: MIT
@@ -122,6 +122,9 @@ export NO_LATEST_WHEELS=YES
 %system_wheels_path/%{pep427_name %pypi_name}-%version-*.whl
 
 %changelog
+* Thu Dec 21 2023 Stanislav Levin <slev@altlinux.org> 23.3.2-alt1
+- 23.3.1 -> 23.3.2.
+
 * Wed Nov 01 2023 Stanislav Levin <slev@altlinux.org> 23.3.1-alt2
 - Dropped false positive dependency on distutils.
 
