@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admc
-Version: 0.15.0
+Version: 0.15.1
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -28,6 +28,7 @@ BuildRequires: libkrb5-devel
 
 Requires: libsasl2
 Requires: libsasl2-plugin-gssapi
+Requires: ad-integration-themes
 
 Source0: %name-%version.tar
 
@@ -109,6 +110,14 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Wed Dec 13 2023 Semyon Knyazev <samael@altlinux.org> 0.15.1-alt1
+- Add icon theme selection. System theme is taken from /usr/share/icons
+  dir, custom themes are taken from /usr/share/ad-integration dir
+  by default. Theme dirs must have index.theme file to be included.
+  Theme dirs can also be symlinks.
+- Object creation and disabling bugs in 0.15.0 version are
+  fixed. (closes: 48780)
+
 * Fri Nov 17 2023 Valery Sinelnikov <greh@altlinux.org> 0.15.0-alt1
 - Domain info root item is added to console tree. Its results widget
   contains tree with sites, domain controllers and FSMO role items. It
