@@ -1,5 +1,5 @@
 %define module_name     drbd9
-%define module_version  9.2.6
+%define module_version  9.2.7
 %define module_release  alt1
 %define flavour         un-def
 %define karch x86_64 aarch64 ppc64le
@@ -48,7 +48,8 @@ make -C drbd KDIR=/lib/modules/*/build
 
 %install
 install -d %buildroot/%module_dir
-install -m644 -D drbd/drbd.ko drbd/drbd_transport_tcp.ko %buildroot/%module_dir/
+# Before 5.4: drbd/drbd-kernel-compat/handshake/handshake.ko
+install -m644 -D drbd/drbd*.ko %buildroot/%module_dir/
 
 %files
 %module_dir/*.ko
