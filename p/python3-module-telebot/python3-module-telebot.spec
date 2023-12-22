@@ -3,7 +3,7 @@
 %define pypi_name pyTelegramBotAPI
 
 Name: python3-module-%modulename
-Version: 4.14.0
+Version: 4.14.1
 Release: alt1
 
 Summary: Python Telegram bot api
@@ -42,6 +42,9 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 
 %changelog
+* Thu Dec 21 2023 Alexander Makeenkov <amakeenk@altlinux.org> 4.14.1-alt1
+- Updated to version 4.14.1.
+
 * Wed Sep 27 2023 Alexander Makeenkov <amakeenk@altlinux.org> 4.14.0-alt1
 - Updated to version 4.14.0.
 - Changed to build from upstream tag.
