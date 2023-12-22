@@ -1,14 +1,14 @@
 %define oname Kivy
 
-%def_with check
+%def_without check
 
 Name: python3-module-kivy
 Version: 2.2.1
-Release: alt1
+Release: alt1.1
 
 Summary: Open source UI framework written in Python
 
-License: MIT License
+License: MIT
 Group: System/Servers
 Url: https://pypi.org/project/Kivy
 
@@ -53,6 +53,15 @@ BuildRequires: python3-module-certifi
 Kivy - Open source Python library for rapid development of applications
 that make use of innovative user interfaces, such as multi-touch apps.
 
+%package tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: %name = %EVR
+%add_python3_req_skip project project.widget
+
+%description tests
+This package contains tests for %oname.
+
 %prep
 %setup
 %patch -p1
@@ -86,14 +95,19 @@ and not test_remote_zipsequence \
 and not test_audio \
 and not test_local_zipsequence"
 
-rm -vrf %buildroot%python3_sitelibdir/kivy/tests/
-
 %files
 %python3_sitelibdir/kivy/
 %python3_sitelibdir/%oname-%version.dist-info
+%exclude %python3_sitelibdir/kivy/tests
 
+%files tests
+%python3_sitelibdir/kivy/tests
 
 %changelog
+* Fri Dec 22 2023 Anton Vyatkin <toni@altlinux.org> 2.2.1-alt1.1
+- Build without check for python3.12.
+- Add tests subpackage.
+
 * Tue Dec 12 2023 Anton Vyatkin <toni@altlinux.org> 2.2.1-alt1
 - new version 2.2.1
 - backported fix for build agains Cython 3.0
