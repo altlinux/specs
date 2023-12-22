@@ -6,7 +6,7 @@
 %endif
 
 Name:    python3-module-%pypi_name
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: OPC UA library for python >= 3.7
@@ -38,7 +38,15 @@ BuildArch: noarch
 Source: %pypi_name-%version.tar
 
 %description
-%summary
+%summary.
+
+%package -n %pypi_name
+Summary: Tools for OPC UA
+Group: Engineering
+Requires: %name = %EVR
+
+%description -n %pypi_name
+%summary.
 
 %prep
 %setup -n %pypi_name-%version
@@ -61,7 +69,14 @@ pytest3 -v -k "not (test_xml_import_companion_specifications[client]) \
 %python3_sitelibdir/%module_name/
 %python3_sitelibdir/%{pyproject_distinfo %module_name}
 
+%files -n %pypi_name
+%_bindir/*
+
 %changelog
+* Fri Dec 22 2023 Anton Midyukov <antohami@altlinux.org> 1.0.6-alt1
+- new version 1.0.6
+- pack tools
+
 * Sun Nov 12 2023 Anton Midyukov <antohami@altlinux.org> 1.0.5-alt1
 - new version 1.0.5
 
