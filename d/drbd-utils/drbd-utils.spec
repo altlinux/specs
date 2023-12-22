@@ -1,11 +1,11 @@
 %def_without xen
-%define githash fd0904f7bf256ecd380e1c19ec73c712f3855d40
+%define githash fdd9a4d603a9dc99d110d8bd0e288d7c0b6f586e
 %define gitdiff c6e62702d5e4fb2cf6b3fa27e67cb0d4b399a30b
 %define _localstatedir %_var
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: drbd-utils
-Version: 9.26.0
+Version: 9.27.0
 Release: alt1
 
 Summary: DRBD user-land tools and scripts
@@ -188,6 +188,9 @@ make test
 %_datadir/cluster/drbd.metadata
 
 %changelog
+* Fri Dec 22 2023 Andrew A. Vasilyev <andy@altlinux.org> 9.27.0-alt1
+- 9.27.0
+
 * Mon Oct 30 2023 Andrew A. Vasilyev <andy@altlinux.org> 9.26.0-alt1
 - 9.26.0
 
