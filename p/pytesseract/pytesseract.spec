@@ -2,7 +2,7 @@
 
 Name: pytesseract
 Version: 0.3.10
-Release: alt1
+Release: alt1.1
 
 Summary: An optical character recognition (OCR) tool for Python
 License: Apache-2.0
@@ -21,6 +21,7 @@ BuildRequires: python3(pytest)
 BuildRequires: python3(tox)
 BuildRequires: python3(numpy)
 BuildRequires: python3(pandas)
+BuildRequires: python3-module-pandas-tests
 BuildRequires: tesseract tesseract-langpack-fr tesseract-langpack-osd
 Requires: tesseract
 Requires: python3-module-%name = %version-%release
@@ -78,5 +79,8 @@ tox.py3 --sitepackages --skip-pkg-install -p auto -o -v
 %python3_sitelibdir/*
 
 %changelog
+* Fri Dec 22 2023 Anton Vyatkin <toni@altlinux.org> 0.3.10-alt1.1
+- NMU: fixed FTBFS (added BR pandas-tests).
+
 * Wed Jun 15 2022 Paul Wolneykien <manowar@altlinux.org> 0.3.10-alt1
 - Initial version 0.3.10.
