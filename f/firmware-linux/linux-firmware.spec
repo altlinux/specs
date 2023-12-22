@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20231212
+Version: 20231215
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -94,6 +94,12 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/mellanox
 
 %changelog
+* Fri Dec 22 2023 Cronbuild Service <cronbuild@altlinux.org> 20231215-alt1
+- upstream changes (GIT c156e6be):
+  + amdgpu: DMCUB updates for various AMDGPU ASICs (thx Wayne Lin)
+  + qcom: Add Audio firmware for SM8650 QRD (thx Neil Armstrong)
+  + qcom: Add Audio firmware for SM8550 QRD (thx Neil Armstrong)
+
 * Thu Dec 14 2023 Cronbuild Service <cronbuild@altlinux.org> 20231212-alt1
 - upstream changes (GIT c52dc252):
   + wfx: update to firmware 3.17 (thx J?r?me Pouiller)
