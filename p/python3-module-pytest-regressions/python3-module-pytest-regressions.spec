@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.5.0
-Release: alt2
+Release: alt3
 Summary: Pytest plugin for regression testing
 License: MIT
 Group: Development/Python3
@@ -26,6 +26,7 @@ BuildRequires(pre): rpm-build-pyproject
 %if_with check
 %add_pyproject_deps_check_filter tox restructuredtext-lint
 %pyproject_builddeps_metadata_extra dev
+BuildRequires: python3-module-pandas-tests
 %endif
 
 %description
@@ -53,6 +54,9 @@ Fixtures to write regression tests.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Dec 22 2023 Anton Zhukharev <ancieg@altlinux.org> 2.5.0-alt3
+- Fixed FTBFS (pandas 2.1.4).
+
 * Mon Dec 04 2023 Stanislav Levin <slev@altlinux.org> 2.5.0-alt2
 - Restored the numpy patch back for transparent backports.
 
