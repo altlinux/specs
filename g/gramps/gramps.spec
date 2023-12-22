@@ -1,6 +1,6 @@
 Name: gramps
 Version: 5.1.4
-Release: alt1
+Release: alt2
 
 Summary: Genealogical Research and Analysis Management Programming System
 Summary(ru_RU.UTF-8): Программная система анализирования и управления генеалогическими изысканиями
@@ -86,6 +86,9 @@ cp -p %buildroot%_datadir/%name/images/%name.png %buildroot%_iconsdir/hicolor/48
 
 echo -n "%_datadir" > %buildroot%python3_sitelibdir/gramps/gen/utils/resource-path
 
+# Bug? 'from .test import test_util as tu' resolved as python3(gramps.test.test)
+rm -rv %buildroot%python3_sitelibdir/gramps/test/
+
 #install -D -m644 %buildroot%_datadir/gramps/images/gramps.png %buildroot%_liconsdir/gramps.png
 %find_lang %name
 
@@ -108,6 +111,9 @@ echo -n "%_datadir" > %buildroot%python3_sitelibdir/gramps/gen/utils/resource-pa
 %_iconsdir/hicolor/*/mimetypes/*
 
 %changelog
+* Fri Dec 22 2023 Vitaly Lipatov <lav@altlinux.ru> 5.1.4-alt2
+- remove unused tests (getting rid of gramps.test.test and unittest reqs)
+
 * Wed Dec 22 2021 Andrey Cherepanov <cas@altlinux.org> 5.1.4-alt1
 - NMU: new version 5.1.4 (ALT bug #37029)
 
