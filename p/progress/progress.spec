@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: progress
-Version: 0.16
-Release: alt1.gitceb6e78
+Version: 0.17
+Release: alt1
 Summary: Linux tool to show progress for cp, mv, dd, ... (formerly known as cv)
 License: GPL-3.0
 Group: Other
@@ -35,6 +35,9 @@ install -m 0644 %name.1* %buildroot%_man1dir
 %doc LICENSE
 
 %changelog
+* Sat Dec 23 2023 Alexander Makeenkov <amakeenk@altlinux.org> 0.17-alt1
+- Updated to version 0.17.
+
 * Sat May 28 2022 Alexander Makeenkov <amakeenk@altlinux.org> 0.16-alt1.gitceb6e78
 - Updated to last upstream git
 
