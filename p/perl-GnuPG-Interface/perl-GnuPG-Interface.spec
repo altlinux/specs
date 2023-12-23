@@ -2,7 +2,7 @@
 %define module GnuPG-Interface
 
 Name: perl-%module
-Version: 1.03
+Version: 1.04
 Release: alt1
 
 Summary: Supply object methods for interacting with GnuPG
@@ -42,6 +42,9 @@ rm -f t/get_secret_keys.t
 %perl_vendor_privlib/GnuPG
 
 %changelog
+* Sat Dec 23 2023 Igor Vlasenko <viy@altlinux.org> 1.04-alt1
+- automated CPAN update
+
 * Mon Sep 25 2023 Igor Vlasenko <viy@altlinux.org> 1.03-alt1
 - automated CPAN update
 
