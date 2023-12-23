@@ -1,11 +1,10 @@
-%define llvm_ver 15
 %define opencv_world_ver 4
 
 %def_disable clang
 
 Name: deepin-opencv-mobile
-Version: 0
-Release: alt1.git7ca8299
+Version: 0.0.2.7ca8
+Release: alt1
 
 Summary: Deepin fork of opencv-mobile
 
@@ -18,16 +17,12 @@ Source: %url/archive/%version/%name-%version.tar.gz
 ExcludeArch: ppc64le
 
 BuildRequires(pre): rpm-build-ninja
-BuildRequires(pre): libopencv-devel
+BuildRequires: cmake libopencv-devel libva-devel libopenblas-devel libdc1394-devel
 %if_enabled clang
-#BuildRequires(pre): rpm-macros-llvm-common
-BuildRequires: clang%llvm_ver.0-devel
-BuildRequires: lld%llvm_ver.0-devel
-BuildRequires: llvm%llvm_ver.0-devel
+BuildRequires: clang-devel lld-devel
 %else
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ libgomp-devel
 %endif
-BuildRequires: cmake
 
 %description
 %summary.
@@ -44,13 +39,11 @@ Summary: Development package for %name
 Group: Development/C++
 Requires: libopencv-devel
 
-%%description -n deepin-libopencv_world-devel
+%description -n deepin-libopencv_world-devel
 The package provides development files for %name.
 
 %prep
 %setup
-#sed -i 's|"opencv2/core.hpp"|<%%_includedir/opencv4/opencv2/core.hpp>|' \
-#  opencv-4.5.4/modules/world/include/opencv2/world.hpp
 
 %build
 #%%ifarch ppc64le
@@ -58,9 +51,9 @@ The package provides development files for %name.
 #%%endif
 %if_enabled clang
 %define optflags_lto -flto=thin
-export CC=clang-%llvm_ver
-export CXX=clang++-%llvm_ver
-export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
+export CC=clang
+export CXX=clang++
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
 
 %cmake \
@@ -186,5 +179,9 @@ mv -f %buildroot%_datadir/licenses/opencv4/SoftFloat-COPYING.txt %buildroot%_doc
 %_includedir/deepin/opencv4/opencv2/world.hpp
 
 %changelog
+* Fri Dec 22 2023 Leontiy Volodin <lvol@altlinux.org> 0.0.2.7ca8-alt1
+- Fixed version.
+- Cleanup spec.
+
 * Tue Mar 07 2023 Leontiy Volodin <lvol@altlinux.org> 0-alt1.git7ca8299
 - Initial build for ALT Sisyphus (for deepin-ocr-plugin).
