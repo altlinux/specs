@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DBIx-SearchBuilder
 Name: perl-%dist
-Version: 1.79
+Version: 1.80
 Release: alt1
 
 Summary: Encapsulate SQL queries and rows in simple perl objects
@@ -37,6 +37,9 @@ updating data in a DBI-accesible database.
 %perl_vendor_privlib/DBIx
 
 %changelog
+* Sat Dec 23 2023 Igor Vlasenko <viy@altlinux.org> 1.80-alt1
+- automated CPAN update
+
 * Tue Dec 05 2023 Igor Vlasenko <viy@altlinux.org> 1.79-alt1
 - automated CPAN update
 
