@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-SQL-Translator
-Version: 1.63
+Version: 1.64
 Release: alt1
 
 Summary: Manipulate structured data definitions (SQL and more)
@@ -44,6 +44,9 @@ delimited text files.
 %perl_vendor_privlib/auto/share/dist/SQL-Translator
 
 %changelog
+* Sat Dec 23 2023 Igor Vlasenko <viy@altlinux.org> 1.64-alt1
+- automated CPAN update
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 1.63-alt1
 - automated CPAN update
 
