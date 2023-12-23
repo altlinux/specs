@@ -1,7 +1,7 @@
 Summary: An "archives first" approach to mailing lists
 
 Name: public-inbox
-Version: 1.9.0
+Version: 1.9.0.1113.g84874a85
 Release: alt1
 
 Group: Networking/Mail
@@ -56,6 +56,7 @@ BuildRequires: perl-base
 BuildRequires: perl-devel
 BuildRequires: perl-highlight
 BuildRequires: perl-podlators
+BuildRequires: perl-autodie
 BuildRequires: xapian-core
 BuildRequires: openssl
 BuildRequires: sqlite3
@@ -91,11 +92,15 @@ public-inbox spawned around three main ideas:
 %autopatch -p1
 
 %build
+mkdir .cache
+export PERL_INLINE_DIRECTORY=$PWD/.cache
+
 pushd certs
 perl ./create-certs.perl
 popd
 
 rm -f -- t/hl_mod.t
+rm -f -- t/cindex.t
 case "`arch`" in
 	ppc64le) # I really don't care about ppc64le.
 		rm -f -- t/lei-sigpipe.t
@@ -126,6 +131,9 @@ mkdir -p "$HOME/.cache/public-inbox/inline-c"
 %_man8dir/*
 
 %changelog
+* Sat Dec 23 2023 Alexey Gladkov <legion@altlinux.ru> 1.9.0.1113.g84874a85-alt1
+- New git snapshot (v1.9.0-1113-g84874a85).
+
 * Mon Oct 17 2022 Alexey Gladkov <legion@altlinux.ru> 1.9.0-alt1
 - New version (1.9.0).
 
