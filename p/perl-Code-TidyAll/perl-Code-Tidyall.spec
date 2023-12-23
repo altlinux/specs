@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-Code-TidyAll
-Version: 0.83
+Version: 0.84
 Release: alt1
 Summary: Test::Code::TidyAll - Check that all your files are tidy and valid according to tidyall
 License: GPL-1.0+  or Artistic-1.0-Perl
@@ -38,6 +38,9 @@ When invoking Code::TidyAll, we pass mode => 'test' by default; see modes.
 %_man1dir/*
 
 %changelog
+* Sat Dec 23 2023 Igor Vlasenko <viy@altlinux.org> 0.84-alt1
+- automated CPAN update
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.83-alt1
 - automated CPAN update
 
