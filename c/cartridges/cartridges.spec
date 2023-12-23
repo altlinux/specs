@@ -2,14 +2,14 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name cartridges
-%define ver_major 2.6
+%define ver_major 2.7
 %define rdn_name hu.kramo.Cartridges
 
-# bad screenshots
+# online screenshots
 %def_disable check
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: Cartridges
@@ -32,7 +32,7 @@ Requires: typelib(Adw) = 1 dconf
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson blueprint-compiler >= %bp_ver typelib(Adw)
-%{?_enable_check:BuildRequires: /usr/bin/appstream-util desktop-file-utils}
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 Cartridges is a simple game launcher for all of your games. It has
@@ -69,6 +69,9 @@ SteamGridDB.
 
 
 %changelog
+* Sat Dec 23 2023 Yuri N. Sedunov <aris@altlinux.org> 2.7.1-alt1
+- 2.7.1
+
 * Sat Nov 04 2023 Yuri N. Sedunov <aris@altlinux.org> 2.6.2-alt1
 - 2.6.2
 
