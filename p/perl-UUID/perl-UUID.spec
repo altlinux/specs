@@ -1,9 +1,9 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: perl(CPAN/Meta.pm)
-# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(CPAN/Meta.pm) perl(Text/Patch.pm)
+# END SourceDeps(oneline)
 Name: perl-UUID
-Version: 0.31
+Version: 0.32
 Release: alt1
 Summary: DCE compatible Universally Unique Identifier library for Perl
 
@@ -40,6 +40,9 @@ Environment (DCE) utility uuidgen.
 %perl_vendor_autolib/UUID
 
 %changelog
+* Sat Dec 23 2023 Igor Vlasenko <viy@altlinux.org> 0.32-alt1
+- automated CPAN update
+
 * Tue Nov 14 2023 Igor Vlasenko <viy@altlinux.org> 0.31-alt1
 - automated CPAN update
 
