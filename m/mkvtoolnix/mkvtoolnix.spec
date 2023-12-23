@@ -15,8 +15,8 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 80.0
-Release: alt2
+Version: 81.0
+Release: alt1
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
 Group: Video
@@ -28,11 +28,10 @@ Patch1: ax_boost_base_morearch.patch
 
 Provides: mkvmerge = %EVR
 
-BuildRequires(pre): rpm-build-xdg
+BuildRequires(pre): rpm-build-xdg rpm-build-ruby
 BuildRequires: gcc-c++ boost-devel boost-filesystem-devel zlib-devel libmagic-devel
 BuildRequires: libgmp-devel
 BuildRequires: libvorbis-devel libogg-devel
-BuildRequires: ruby ruby-stdlibs ruby-tools
 BuildRequires: libebml-devel >= 1.4.4 libmatroska-devel >= 1.7.1 libfmt-devel >= 6.1.0
 BuildRequires: docbook-style-xsl xsltproc
 BuildRequires: libpugixml-devel
@@ -109,10 +108,10 @@ export CXXFLAGS="$CXXFLAGS -I%_includedir/qt6 -I%_includedir/qt6/QtCore -I%_incl
     %{subst_with dvdread} \
     %nil
 
-rake V=1
+%ruby_bindir/rake V=1
 
 %install
-rake DESTDIR=%buildroot install
+%ruby_bindir/rake DESTDIR=%buildroot install
 
 %find_lang --with-man %name
 %find_lang --with-man %name-gui
@@ -124,8 +123,8 @@ rake DESTDIR=%buildroot install
 cat mkvextract.lang mkvmerge.lang mkvpropedit.lang >> %name.lang
 
 %check
-rake V=1 tests:unit
-rake V=1 tests:run_unit
+%ruby_bindir/rake V=1 tests:unit
+%ruby_bindir/rake V=1 tests:run_unit
 
 %files -f %name.lang
 %doc COPYING
@@ -162,6 +161,10 @@ rake V=1 tests:run_unit
 %endif
 
 %changelog
+* Sat Dec 23 2023 L.A. Kostis <lakostis@altlinux.ru> 81.0-alt1
+- 81.0.
+- BR: update ruby requires.
+
 * Thu Nov 09 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 80.0-alt2
 - NMU: fixed FTBFS on LoongArch.
 
