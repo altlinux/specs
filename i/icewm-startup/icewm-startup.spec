@@ -1,10 +1,10 @@
 %def_without xtdesktop
 %def_without desklaunch
 %def_without ivman
-%def_with blueberry
+%def_without blueberry
 Name: icewm-startup
 Version: 0.215
-Release: alt1
+Release: alt2
 
 Summary: simple pluggable IceWM autostart manager
 
@@ -703,6 +703,9 @@ fi
 %icewmconfdir/XXkb.conf
 
 %changelog
+* Sat Dec 23 2023 Anton Midyukov <antohami@altlinux.org> 0.215-alt2
+- NMU: disable build blueberry-tray
+
 * Sun Dec 03 2023 Anton Midyukov <antohami@altlinux.org> 0.215-alt1
 - added polkit-gnome
 
