@@ -1,7 +1,7 @@
 %def_with check
 Name: ethtool
 Version: 6.5
-Release: alt3
+Release: alt4
 Epoch: 1
 Summary: Ethernet settings tools for network cards
 License: GPLv2
@@ -53,6 +53,9 @@ make check
 %_datadir/bash-completion
 
 %changelog
+* Sat Dec 23 2023 Sergey Y. Afonin <asy@altlinux.org> 1:6.5-alt4
+- NMU: fixed output of ethlist for devices which unsupported by ethtool
+
 * Tue Nov 14 2023 Sergey Y. Afonin <asy@altlinux.org> 1:6.5-alt3
 - NMU: added the ethlist script (ALT #39620)
 
