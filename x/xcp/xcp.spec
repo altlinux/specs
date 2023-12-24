@@ -1,7 +1,7 @@
 %def_without check
 
 Name: xcp
-Version: 0.10.0
+Version: 0.16.0
 Release: alt1
 Summary: An extended cp
 License: GPL-3.0
@@ -47,5 +47,11 @@ EOF
 %_bindir/%name
 
 %changelog
+* Sun Dec 24 2023 Alexander Makeenkov <amakeenk@altlinux.org> 0.16.0-alt1
+- Updated to version 0.16.0.
+
+* Sun Sep 17 2023 Alexander Makeenkov <amakeenk@altlinux.org> 0.12.0-alt1
+- Updated to version 0.12.0.
+
 * Sun Jun 25 2023 Alexander Makeenkov <amakeenk@altlinux.org> 0.10.0-alt1
 - Initial build for ALT.
