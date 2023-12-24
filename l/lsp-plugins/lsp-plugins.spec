@@ -2,8 +2,8 @@
 %define xdg_name in.lsp_plug.lsp_plugins
 
 Name: lsp-plugins
-Version: 1.2.13
-Release: alt1.1
+Version: 1.2.14
+Release: alt1
 
 Summary: Linux Studio Plugins
 Group: Sound
@@ -124,6 +124,9 @@ rm -f %buildroot%_libdir/*.a
 %_defaultdocdir/%name/
 
 %changelog
+* Sun Dec 24 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.14-alt1
+- 1.2.14
+
 * Tue Oct 31 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.13-alt1.1
 - try to build for all default arches
 
