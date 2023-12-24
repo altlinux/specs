@@ -1,5 +1,5 @@
 Name: pgmodeler
-Version: 0.9.2
+Version: 1.0.6
 Release: alt1
 
 Summary: PostgreSQL Database Modeler
@@ -11,9 +11,12 @@ Url: http://pgmodeler.com.br/
 # Source-git: https://github.com/pgmodeler/pgmodeler.git
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ qt5-base-devel qt5-svg-devel libpq-devel libxml2-devel libXext-devel postgresql-devel
+Patch1: pgmodeler-fix-build-with-libxml2.patch
 
-BuildPreReq: rpm-macros-qt5
+BuildRequires(pre): rpm-macros-qt5
+BuildRequires: gcc-c++ libpq-devel libxml2-devel libXext-devel postgresql-devel
+BuildRequires: qt6-base-devel qt6-svg-devel
+
 
 %description
 pgModeler - PostgreSQL Database Modeler - is an open source data modeling tool designed for PostgreSQL.
@@ -22,13 +25,15 @@ of entity-relationship diagrams and the features that PostgreSQL implements as e
 
 %prep
 %setup
+%patch1 -p1
 
 %build
-%qmake_qt5 pgmodeler.pro \
+%qmake_qt6 pgmodeler.pro \
     PREFIX=%prefix \
-    PRIVATEBINDIR=%_libdir/%name/bin \
     PRIVATELIBDIR=%_libdir/%name \
     PLUGINSDIR=%_libdir/%name/plugins
+# bug with rpath there
+#    PRIVATEBINDIR=%_libdir/%name/bin \
 
 %make_build
 
@@ -39,10 +44,16 @@ of entity-relationship diagrams and the features that PostgreSQL implements as e
 %doc README.md CHANGELOG.md RELEASENOTES.md
 %_bindir/%name
 %_bindir/%name-cli
+%_bindir/%name-ch
+%_bindir/%name-se
 %_datadir/%name/
 %_libdir/%name/
 
 %changelog
+* Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 1.0.6-alt1
+- new version 1.0.6 (with rpmrb script)
+- switch to Qt6
+
 * Fri Feb 14 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.2-alt1
 - new version 0.9.2 (with rpmrb script)
 - use _libdir
