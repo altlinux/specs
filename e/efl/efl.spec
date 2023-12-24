@@ -2,7 +2,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 1.26
+%define ver_major 1.27
 %define beta %nil
 %define gst_api_ver 1.0
 %define wayland_ver 1.11.0
@@ -11,7 +11,8 @@
 %def_enable wayland
 %def_enable drm
 %def_enable multisense
-%def_enable fb
+# unmaintained
+%def_disable fb
 # fb requires tslib?
 %def_disable tslib
 %def_enable egl
@@ -25,6 +26,11 @@
 %def_disable json
 %def_enable heif
 %def_enable avif
+%ifarch armh
+%def_disable jxl
+%else
+%def_enable jxl
+%endif
 %def_disable physics
 
 # elua disabled by default
@@ -38,12 +44,12 @@
 %def_enable lua
 
 Name: efl
-Version: %ver_major.3
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: Enlightenment Foundation Libraries
 Group: System/Libraries
-License: BSD and GPL and LGPL and CC-BY-SA-3.0
+License: BSD-2-Clause and LGPL-2.0 and Zlib and CC-BY-SA-3.0
 Url: http://www.enlightenment.org/
 
 %if_disabled snapshot
@@ -66,6 +72,7 @@ BuildRequires: libgif-devel libwebp-devel
 %{?_enable_json:BuildRequires: librlottie-devel}
 %{?_enable_avif:BuildRequires: libavif-devel}
 %{?_enable_heif:BuildRequires: libheif-devel}
+%{?_enable_jxl:BuildRequires: libjxl-devel}
 BuildRequires: fontconfig-devel libfreetype-devel libfribidi-devel libharfbuzz-devel
 BuildRequires: libpulseaudio-devel libsndfile-devel zlib-devel liblz4-devel
 BuildRequires: libssl-devel libcurl-devel libdbus-devel
@@ -254,7 +261,7 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 	%{?_disable_gstreamer:-Dgstreamer=false} \
 	%{?_enable_avahi:-Davahi=true} \
 	%{?_enable_physics:-Dphysics=true} \
-	-Devas-loaders-disabler="[%{?_disable_json:'json',}%{?_disable_avif: 'avif'}%{?_disable_heif: 'heif'}]" \
+	-Devas-loaders-disabler="[%{?_disable_json:'json',}%{?_disable_avif: 'avif',}%{?_disable_heif: 'heif',}%{?_disable_jxl: 'jxl'}]" \
 	-Dmount-path=/bin/mount \
 	-Dunmount-path=/bin/umount \
 	-Deject-path=%_bindir/eject
@@ -328,7 +335,7 @@ export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_fi
 %_datadir/mime/packages/edje.xml
 %_datadir/mime/packages/evas.xml
 %_prefix/lib/systemd/user/ethumb.service
-%doc AUTHORS README NEWS COMPLIANCE COPYING*
+%doc AUTHORS README* COMPLIANCE COPYING*
 
 %files -n %name-libs-devel
 %_bindir/ecore_evas_convert
@@ -439,6 +446,9 @@ export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_fi
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Sun Dec 24 2023 Yuri N. Sedunov <aris@altlinux.org> 1.27.0-alt1
+- 1.27.0
+
 * Thu Aug 03 2023 Yuri N. Sedunov <aris@altlinux.org> 1.26.3-alt1.1
 - E2K: lcc 1.26 ftbfs workaround by ilyakurdyukov@
 

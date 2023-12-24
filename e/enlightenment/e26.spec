@@ -1,8 +1,8 @@
 %def_disable snapshot
 
-%define ver_major 0.25
+%define ver_major 0.26
 %define beta %nil
-%define efl_ver_major 1.25
+%define efl_ver_major 1.27
 %define efl_ver %efl_ver_major.0
 
 %def_enable bluetooth
@@ -21,8 +21,8 @@
 %def_disable wmsession
 
 Name: enlightenment
-Version: %ver_major.4
-Release: alt1.2
+Version: %ver_major.0
+Release: alt1
 Epoch: 1
 
 Summary: The Enlightenment window manager
@@ -226,12 +226,12 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %_bindir/start_%name
 %_datadir/%name/
 %_datadir/xsessions/%name-xorg.desktop
-%{?_enable_wayland:%_datadir/wayland-sessions/%name.desktop}
+%exclude %{?_enable_wayland:%_datadir/wayland-sessions/%name.desktop}
 %_pixmapsdir/%name-askpass.png
 %_desktopdir/*.desktop
 %{?_enable_systemd:%_prefix/lib/systemd/user/%name.service}
 %_xdgmenusdir/e-applications.menu
-%doc AUTHORS COPYING README
+%doc AUTHORS COPYING README*
 
 %files devel
 %_includedir/%name/
@@ -240,6 +240,10 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Sun Dec 24 2023 Yuri N. Sedunov <aris@altlinux.org> 1:0.26.0-alt1
+- 0.26.0
+- removed unusable wayland session
+
 * Fri Nov 17 2023 Yuri N. Sedunov <aris@altlinux.org> 1:0.25.4-alt1.2
 - src/bin/system/e_system_ddc.c: support latest libddcutil.so.5
 
