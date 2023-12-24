@@ -12,7 +12,7 @@
 
 Name:    pacemaker
 Summary: Scalable High-Availability cluster resource manager
-Version: 2.1.6
+Version: 2.1.7
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Url:     http://www.clusterlabs.org
@@ -348,6 +348,9 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_datadir/pacemaker/base
 
 %changelog
+* Sat Dec 23 2023 Andrey Cherepanov <cas@altlinux.org> 2.1.7-alt1
+- New version.
+
 * Thu May 25 2023 Andrey Cherepanov <cas@altlinux.org> 2.1.6-alt1
 - New version.
 
