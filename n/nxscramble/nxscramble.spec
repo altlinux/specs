@@ -1,6 +1,6 @@
 Name: nxscramble
 Version: 0.2
-Release: alt1
+Release: alt2
 
 Summary: Utility which scrambles password string same way as Nomachine NX client
 
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 
 Packager: Lenar Shakirov <snejok@altlinux.org>
 
-BuildRequires: rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
 BuildRequires: libxml2-devel
 BuildRequires: qt5-base-devel
@@ -35,6 +35,9 @@ NX Client does it.
 %_bindir/nxscramble
 
 %changelog
+* Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 0.2-alt2
+- fix build
+
 * Thu Jul 01 2021 Vitaly Lipatov <lav@altlinux.ru> 0.2-alt1
 - cleanup spec, build with Qt5
 
