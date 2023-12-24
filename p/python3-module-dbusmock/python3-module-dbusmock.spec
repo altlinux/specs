@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-dbusmock
-Version: 0.30.0
+Version: 0.30.1
 Release: alt1
 
 Summary: mock D-Bus objects for tests
@@ -29,7 +29,7 @@ BuildRequires: polkit iio-sensor-proxy notification-daemon
 BuildRequires: python3(pytest)
 BuildRequires: python3-module-dbus-gobject python3-module-pycodestyle
 BuildRequires: python3-module-pyflakes python3-module-importlib-metadata
-BuildRequires: python3-module-mypy 
+BuildRequires: python3-module-mypy
 %endif
 
 %description
@@ -59,6 +59,9 @@ python3 -m unittest
 %doc NEWS PKG-INFO README*
 
 %changelog
+* Sun Dec 24 2023 Yuri N. Sedunov <aris@altlinux.org> 0.30.1-alt1
+- 0.30.1
+
 * Wed Dec 06 2023 Yuri N. Sedunov <aris@altlinux.org> 0.30.0-alt1
 - 0.30.0
 

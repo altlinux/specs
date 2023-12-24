@@ -2,7 +2,7 @@
 %define pypi_name py%modname
 
 Name: python3-module-%pypi_name
-Version: 5.0.2
+Version: 5.0.3
 Release: alt1
 
 Summary: Python GTK Spellcheck library
@@ -38,6 +38,9 @@ based on Enchant and it supports both GTK 3 and 4 via PyGObject.
 %doc README*
 
 %changelog
+* Sun Dec 24 2023 Yuri N. Sedunov <aris@altlinux.org> 5.0.3-alt1
+- 5.0.3
+
 * Sun Nov 19 2023 Yuri N. Sedunov <aris@altlinux.org> 5.0.2-alt1
 - first build for Sisyphus
 
