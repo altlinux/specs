@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.2.2
+Version: 1.3.0
 Release: alt1
 
 Summary: A caching front-end based on the Dogpile lock
@@ -17,6 +17,8 @@ Url: https://pypi.python.org/pypi/dogpile.cache/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pbr
@@ -53,10 +55,10 @@ heap.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
@@ -71,9 +73,12 @@ tox.py3 --sitepackages
 %files
 %doc *.rst
 %python3_sitelibdir/%mname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Dec 25 2023 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
+- Automatically updated to 1.3.0.
+
 * Tue Jul 11 2023 Grigory Ustinov <grenka@altlinux.org> 1.2.2-alt1
 - Automatically updated to 1.2.2.
 
