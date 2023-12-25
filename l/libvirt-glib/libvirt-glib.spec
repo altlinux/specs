@@ -1,21 +1,22 @@
-%def_disable check
+%def_enable check
+%define _unpackaged_files_terminate_build 1
 
 Name: libvirt-glib
-Version: 4.0.0
+Version: 5.0.0
 Release: alt1
 Summary: libvirt glib integration for events
 Group: System/Libraries
-License: LGPLv2+
+License: LGPL-2.1-or-later
 URL: http://libvirt.org/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-%define libvirt_ver 1.2.8
+%define libvirt_ver 2.3.0
 %define glib_ver 2.48.0
 %define libxml2_ver 2.9.1
 
-BuildRequires(pre): meson >= 0.50.0
-BuildRequires: gettext
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: gettext meson >= 0.56.0
 BuildRequires: libvirt-devel >= %libvirt_ver
 BuildRequires: glib2-devel >= %glib_ver libgio-devel
 BuildRequires: libxml2-devel >= %libxml2_ver
@@ -203,6 +204,10 @@ GObject introspection devel data for the libvirt-gobject library
 %_vapidir/libvirt-gobject-*
 
 %changelog
+* Mon Dec 25 2023 Alexey Shabalin <shaba@altlinux.org> 5.0.0-alt1
+- new version 5.0.0
+- enable check
+
 * Fri Mar 19 2021 Alexey Shabalin <shaba@altlinux.org> 4.0.0-alt1
 - new version 4.0.0
 
