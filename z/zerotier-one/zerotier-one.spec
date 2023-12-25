@@ -1,5 +1,5 @@
 Name: zerotier-one
-Version: 1.10.6
+Version: 1.12.2
 Release: alt1
 
 Summary: ZeroTier network virtualization service
@@ -80,6 +80,9 @@ cp debian/zerotier-one.service %buildroot%_unitdir/%name.service
 %preun
 %preun_service %name
 %changelog
+* Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 1.12.2-alt1
+- new version 1.12.2 (with rpmrb script)
+
 * Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 1.10.6-alt1
 - initial build for ALT Sisyphus
 
