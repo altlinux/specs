@@ -1,15 +1,16 @@
-%ifarch armh
+
+# XXX: packaged binaries contain GPU-targeted IR code. Native
+# linker is not used for building them. %%optflags_lto apply only when
+# building native binaries, and LTO causes problems on LoongArch.
+# To keep things simple disable LTO everywhere:
 %global optflags_lto %nil
-%else
-%global optflags_lto -flto=thin
-%endif
 # libclc itself can be built by any LLVM but newer is preferred
 # cause it contains better optimisations and improvements
 %global llvm_version 17.0
 
 Name: libclc
 Version: 17.0.4
-Release: alt1
+Release: alt2
 Summary: An open source implementation of the OpenCL 1.1 library requirements
 License: BSD
 Group: System/Libraries
@@ -21,7 +22,7 @@ Patch: libclc-llvm-spirv-path.patch
 BuildRequires(pre): cmake /proc
 BuildRequires: python3 libstdc++-devel
 BuildRequires: llvm-spirv >= %{llvm_version}.0, clspv
-BuildRequires: clang%{llvm_version} llvm%{llvm_version}-devel lld%{llvm_version}
+BuildRequires: clang%{llvm_version} llvm%{llvm_version}-devel
 
 # clc code is IR code
 BuildArch: noarch
@@ -70,7 +71,7 @@ export ALTWRAP_LLVM_VERSION=%{llvm_version}
 %cmake \
 	-DCMAKE_C_COMPILER=clang \
 	-DCMAKE_CXX_COMPILER=clang++ \
-	-DCMAKE_EXE_LINKER_FLAGS='-fuse-ld=lld'
+	%nil
 
 %cmake_build
 
@@ -86,6 +87,13 @@ export ALTWRAP_LLVM_VERSION=%{llvm_version}
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Fri Nov 10 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 17.0.4-alt2
+- NMU: fixed FTBFS on LoongArch:
+  + disable LTO (not used when building bitcode, causes problems on LoongArch)
+  + do not force linking with lld (native linker is used only for compiling
+    build tools like utils/prepare-builtins and CMake test programs, causes
+    failure on LoongArch).
+
 * Wed Nov 08 2023 L.A. Kostis <lakostis@altlinux.ru> 17.0.4-alt1
 - 17.0.4.
 - BR: added clspv.
