@@ -1,6 +1,6 @@
 Name: anilibria-winmaclinux
-Version: 1.2.11
-Release: alt2
+Version: 1.2.13
+Release: alt1
 
 Summary: AniLibria online video player for desktop platforms
 Summary(ru_RU.UTF-8): Онлайн-видеоплеер AniLibria для настольных платформ
@@ -63,6 +63,9 @@ popd
 %_iconsdir/hicolor/*/apps/anilibria.png
 
 %changelog
+* Mon Dec 25 2023 Roman Alifanov <ximper@altlinux.org> 1.2.13-alt1
+- new version 1.2.13 (with rpmrb script)
+
 * Thu Nov 30 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.2.11-alt2
 - NMU: removed qt5-webengine from (build) requirements since this package
   does not use webengine/webview (see src/AniLibria.pro and dependencies
