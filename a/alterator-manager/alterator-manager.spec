@@ -2,7 +2,7 @@
 
 Name: alterator-manager
 Version: 0.1.13
-Release: alt1
+Release: alt2
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -36,6 +36,7 @@ Headers for developing alterator-manager modules.
 %cmakeinstall_std
 mkdir -p %buildroot%alterator_libexecdir
 mkdir -p %buildroot%_datadir/alterator/backends
+mkdir -p %buildroot%_sysconfdir/alterator/backends
 mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
       %buildroot%_prefix/lib/systemd/user/alterator-manager.service
 
@@ -46,12 +47,16 @@ mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
 %_prefix/lib/systemd/user/alterator-manager.service
 %dir %alterator_libexecdir
 %dir %_datadir/alterator/backends
+%dir %_sysconfdir/alterator/backends
 %doc docs/*
 
 %files devel
 %_includedir/alterator
 
 %changelog
+* Mon Dec 25 2023 Ivan Savin <svn17@altlinux.org> 0.1.13-alt2
+- Add creation of /etc/alterator/backends directory for backend files.
+
 * Mon Dec 18 2023 Ivan Savin <svn17@altlinux.org> 0.1.13-alt1
 - Fix the backends_data table creation, it is created only if the pointer is
   NULL.
