@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 23.08.4
-Release: alt2
+Release: alt3
 %K5init
 
 Group: Graphical desktop/KDE
@@ -14,6 +14,7 @@ Requires: kf5-kirigami-addons
 
 Source: %rname-%version.tar
 Patch0: fix-incorrect-recording-saving.patch
+Patch1: fix-text-overlay.patch
 
 # Automatically added by buildreq on Wed Aug 18 2021 (-bi)
 # optimized out: cmake cmake-modules debugedit elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libctf-nobfd0 libglvnd-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-qml libqt5-qmlmodels libqt5-quick libqt5-quickcontrols2 libqt5-quicktemplates2 libqt5-svg libqt5-widgets libqt5-xml libsasl2-3 libssl-devel libstdc++-devel python-modules python2-base python3 python3-base python3-module-paste qt5-base-devel qt5-declarative-devel rpm-build-file rpm-build-python3 sh4 tzdata
@@ -59,6 +60,7 @@ Requires: %name-common
 %prep
 %setup -n %rname-%version
 %patch0 -p2
+%patch1 -p2
 
 %build
 %K5build
@@ -85,6 +87,9 @@ Requires: %name-common
 #%_K5lib/libkrecorder.so.*
 
 %changelog
+* Mon Dec 25 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 23.08.4-alt3
+- fix text overlay
+
 * Tue Dec 12 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 23.08.4-alt2
 - fix incorrect recording saving
 
