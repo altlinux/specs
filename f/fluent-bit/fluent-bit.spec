@@ -2,7 +2,7 @@
 %def_disable check
 
 Name: fluent-bit
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 
 Summary: Fast data collector for Linux
@@ -112,6 +112,9 @@ ctest
 %_unitdir/%name.service
 
 %changelog
+* Mon Dec 25 2023 Leontiy Volodin <lvol@altlinux.org> 2.2.1-alt1
+- New version.
+
 * Tue Nov 14 2023 Leontiy Volodin <lvol@altlinux.org> 2.2.0-alt1
 - New version.
 
