@@ -11,7 +11,7 @@
 
 Name: openuds-server
 Version: 3.6.0
-Release: alt9
+Release: alt10
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -26,7 +26,7 @@ Source12: openuds.logrotate
 Source13: openuds-nginx-sites.conf
 Source15: openuds-taskmanager.service
 Source16: openuds-web.service
-Source17: openuds-web.socket
+Source17: openuds-tmpfile.conf
 
 BuildRequires(pre): rpm-macros-systemd
 Requires: python3-module-django >= 2.2
@@ -109,7 +109,7 @@ mkdir -p %buildroot%_sysconfdir/nginx/sites-enabled.d
 touch %buildroot%_sysconfdir/nginx/sites-enabled.d/openuds.conf
 install -p -D -m 644 %SOURCE15 %buildroot%_unitdir/openuds-taskmanager.service
 install -p -D -m 644 %SOURCE16 %buildroot%_unitdir/openuds-web.service
-install -p -D -m 644 %SOURCE17 %buildroot%_unitdir/openuds-web.socket
+install -p -D -m 644 %SOURCE17 %buildroot%_tmpfilesdir/openuds.conf
 
 %pre
 %_sbindir/groupadd -r -f openuds >/dev/null 2>&1 ||:
@@ -128,12 +128,12 @@ fi
 %preun_systemd openuds-taskmanager.service
 
 %post nginx
-%post_systemd_postponed openuds-web.socket openuds-web.service
+%post_systemd_postponed openuds-web.service
 # Create SSL certificate for HTTPS server
 cert-sh generate nginx-openuds ||:
 
 %preun nginx
-%preun_systemd openuds-web.service openuds-web.socket
+%preun_systemd openuds-web.service
 
 %files
 %_datadir/openuds
@@ -153,9 +153,12 @@ cert-sh generate nginx-openuds ||:
 %config(noreplace) %_sysconfdir/nginx/sites-available.d/openuds.conf
 %ghost %_sysconfdir/nginx/sites-enabled.d/openuds.conf
 %_unitdir/openuds-web.service
-%_unitdir/openuds-web.socket
+%_tmpfilesdir/openuds.conf
 
 %changelog
+* Mon Dec 25 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.0-alt10
+- Set the correct runtime dir.
+
 * Thu Sep 14 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.0-alt9
 - Revert changes related to Migrating to Django 4.
 
