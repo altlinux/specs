@@ -7,8 +7,8 @@
 Name: obs-studio
 Summary: Free and open source software for video recording and live streaming
 Summary(ru_RU.UTF-8): Свободная программа для записи и трансляции видеопотока
-Version: 29.1.3
-Release: alt6
+Version: 30.0.2
+Release: alt1
 License: GPLv2+
 Group: Video
 Url: https://github.com/jp9000/obs-studio.git
@@ -30,7 +30,7 @@ BuildRequires: libalsa-devel
 BuildRequires: libjack-devel
 BuildRequires: libpulseaudio-devel 
 BuildRequires: qt6-base-devel
-BuildRequires: qt6-svg-devel
+BuildRequires: qt6-svg-devel qt6-svg
 BuildRequires: pkgconfig(MagickCore)
 BuildRequires: texlive-latex-base
 BuildRequires: zlib-devel
@@ -58,6 +58,7 @@ BuildRequires: libdrm-devel
 BuildRequires: libmbedtls-devel
 BuildRequires: libuuid-devel
 BuildRequires: libfdk-aac-devel
+BuildRequires: libdatachannel-devel
 %ifarch %luajit_arches
 BuildRequires: pkgconfig(luajit)
 %endif
@@ -119,6 +120,10 @@ sed -i 's|OBS_MULTIARCH_SUFFIX|LIB_SUFFIX|g' cmake/Modules/ObsHelpers.cmake
 sed -e 's|-Werror-implicit-function-declaration||g' -i cmake/Modules/CompilerConfig.cmake
 sed -e '/-Werror/d' -i cmake/Modules/CompilerConfig.cmake
 
+# disable unusable qsv plugin
+mv plugins/obs-qsv11/CMakeLists.txt plugins/obs-qsv11/CMakeLists.txt.disabled
+touch plugins/obs-qsv11/CMakeLists.txt
+
 %build
 %cmake \
 	-DOBS_VERSION_OVERRIDE=%version \
@@ -169,6 +174,12 @@ sed -e '/-Werror/d' -i cmake/Modules/CompilerConfig.cmake
 %_libdir/pkgconfig/libobs.pc
 
 %changelog
+* Mon Dec 25 2023 Anton Midyukov <antohami@altlinux.org> 30.0.2-alt1
+- New version 30.0.2.
+
+* Sun Nov 26 2023 Anton Midyukov <antohami@altlinux.org> 30.0.0-alt1
+- New version 30.0.0.
+
 * Sun Oct 01 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 29.1.3-alt6
 - explicitly disabled lua scripting on architectures where
   luajit is not available. Fixes FTBFS on LoongArch.
