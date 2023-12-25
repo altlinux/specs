@@ -1,6 +1,6 @@
 Name: 	  nagwad
-Version:  0.9.13
-Release:  alt3
+Version:  0.9.14
+Release:  alt1
 
 Summary:  Nagios watch daemon
 License:  GPLv3
@@ -150,6 +150,10 @@ fi
 %_sbindir/mk-syscall-rules
 
 %changelog
+* Mon Dec 25 2023 Paul Wolneykien <manowar@altlinux.org> 0.9.14-alt1
+- Fix: Use "usergroup-change" key in audit rules (to match the nagwad
+  filter key).
+
 * Tue Sep 07 2021 Paul Wolneykien <manowar@altlinux.org> 0.9.13-alt3
 - mk-syscall-rules: Add --relax option to relax on undetected arch.
 - Run mk-syscall-rules in relaxed mode when installing the package
