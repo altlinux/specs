@@ -9,8 +9,8 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: buildah
-Version: 1.33.2
-Release: alt2
+Version: 1.34.0
+Release: alt1
 Summary: A command line tool used to creating OCI Images
 Group: Development/Other
 License: Apache-2.0
@@ -87,6 +87,9 @@ popd
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Mon Dec 25 2023 Alexey Shabalin <shaba@altlinux.org> 1.34.0-alt1
+- New version 1.34.0.
+
 * Mon Dec 11 2023 Alexey Shabalin <shaba@altlinux.org> 1.33.2-alt2
 - Fixed libsubid detection.
 - Build with libsystemd.
