@@ -1,5 +1,5 @@
 Name:    hxtools
-Version: 20231101
+Version: 20231224
 Release: alt1
 
 Summary: A collection of several tools
@@ -66,6 +66,9 @@ install -Dpm0644 doc/fd0ssh.1 %buildroot%_man1dir/fd0ssh.1
 %_man1dir/fd0ssh.1*
 
 %changelog
+* Mon Dec 25 2023 Andrey Cherepanov <cas@altlinux.org> 20231224-alt1
+- New version.
+
 * Fri Nov 03 2023 Andrey Cherepanov <cas@altlinux.org> 20231101-alt1
 - New version.
 
