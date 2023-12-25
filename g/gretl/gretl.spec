@@ -2,7 +2,7 @@
 %def_with openmpi
 
 Name: gretl
-Version: 2023b
+Version: 2023c
 Release: alt1
 
 Summary: A tool for econometric analysis
@@ -142,7 +142,7 @@ desktop-file-install						\
 %_iconsdir/hicolor/48x48/apps/gretl.png
 %_iconsdir/hicolor/64x64/apps/gretl.png
 %_desktopdir/gretl*
-%_datadir/appdata/gretl.appdata.xml
+%_datadir/metainfo/gretl.appdata.xml
 
 %doc ChangeLog CompatLog README
 
@@ -157,6 +157,9 @@ desktop-file-install						\
 %endif
 
 %changelog
+* Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 2023c-alt1
+- new version 2023c (with rpmrb script)
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 2023b-alt1
 - new version 2023b (with rpmrb script)
 
