@@ -2,7 +2,7 @@
 
 Name: gnome3
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: GNOME 3 Desktop installers
 License: %gpl3plus
@@ -108,6 +108,9 @@ Requires: gnome-calendar >= %ver_major
 Requires: gnome-characters >= %characters_ver
 
 # Applications
+## All gvfs-backends
+Requires: gvfs-backends
+Requires: fuse-gvfs
 ## Default file manager
 Requires: nautilus >= %nautilus_ver
 Requires: nautilus-share samba-usershares
@@ -171,9 +174,7 @@ Requires: gnome-keyring-ssh >= %keyring_ver
 # Encryption keys management
 Requires: seahorse >= %seahorse_ver
 Requires: pinentry-gnome3
-## All gvfs-backends
-Requires: gvfs-backends
-Requires: fuse-gvfs
+
 # see ALT #31129
 Requires: xdg-utils
 Requires: gnome-disk-utility >= %gdu_ver
@@ -472,6 +473,9 @@ useful GNOME and GTK applications for mobile devices.
 %files regular
 
 %changelog
+* Mon Dec 25 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1.1
+- gvfs-{backends,fuse} moved from default to minimal.
+
 * Tue Oct 10 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - minimal: gedit replaced by gnome-text-editor (ALT #47485),
            added gnome-session-xsession (part of ALT#47915)
