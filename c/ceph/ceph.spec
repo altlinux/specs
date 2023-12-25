@@ -1,4 +1,4 @@
-%define git_version b12291d110049b2f35e32e0de30d70e9a4c060d2
+%define git_version 7fe91d5d5842e04be3b4f514d6dd990c54b29c76
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
@@ -59,7 +59,7 @@
 %endif
 
 Name: ceph
-Version: 17.2.7
+Version: 18.2.1
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -71,7 +71,7 @@ ExcludeArch: %ix86 %arm %mips32 ppc
 
 Source0: %name-%version.tar
 %if_without system_boost
-Source10: https://downloads.sourceforge.net/project/boost/boost/1.72.0/boost_1_72_0.tar.bz2
+Source10: https://boostorg.jfrog.io/artifactory/main/release/1.79.0/source/boost_1_79_0.tar.bz2
 %endif
 # git submodules
 Source11: ceph-erasure-code-corpus.tar
@@ -83,7 +83,6 @@ Source18: gf-complete.tar
 Source19: jerasure.tar
 Source20: googletest.tar
 Source21: isa-l.tar
-Source23: rapidjson.tar
 Source24: rocksdb.tar
 Source25: spdk.tar
 Source26: xxHash.tar
@@ -98,6 +97,9 @@ Source34: s3select.tar
 Source35: libkmip.tar
 Source36: arrow.tar
 Source37: utf8proc.tar
+Source38: rapidjson.tar
+Source39: csvparser.tar
+Source40: opentelemetry-cpp.tar
 
 Patch: %name-%version.patch
 
@@ -111,13 +113,13 @@ BuildRequires(pre): rpm-macros-systemd >= 5
 BuildRequires: cmake >= 3.10.2-alt1 ninja-build
 BuildRequires(pre): rpm-macros-cmake
 %if_with system_boost
-BuildRequires: boost-asio-devel boost-devel-headers >= 1.72.0 boost-program_options-devel boost-intrusive-devel
+BuildRequires: boost-asio-devel boost-devel-headers >= 1.79.0 boost-program_options-devel boost-intrusive-devel
 BuildRequires: boost-filesystem-devel boost-coroutine-devel boost-context-devel boost-lockfree-devel boost-msm-devel
 %endif
 BuildRequires: gcc-c++
 BuildRequires: libaio-devel libblkid-devel libcryptsetup-devel
 %{?_with_liburing:BuildRequires: liburing-devel}
-BuildRequires: libcurl-devel libexpat-devel libcap-ng-devel
+BuildRequires: libcurl-devel >= 7.32 libexpat-devel libcap-ng-devel libcap-devel
 BuildRequires: libstdc++-devel-static
 BuildRequires: libfuse-devel libkeyutils-devel
 BuildRequires: libldap-devel libnss-devel
@@ -151,10 +153,10 @@ BuildRequires: liblua5-devel >= 5.3 liblua5-devel-static >= 5.3
 %{?_with_dpdk:BuildRequires: libcryptopp-devel}
 %{?_with_spdk:BuildRequires: CUnit-devel libiscsi-devel libnuma-devel}
 %{?_with_zbd:BuildRequires: libzbd-devel}
-%{?_with_pmem:BuildRequires: libpmem-devel libpmemobj-devel libndctl-devel}
+%{?_with_pmem:BuildRequires: libpmem-devel libpmemobj-devel libdaxctl-devel >= 63 libndctl-devel >= 63}
 %{?_with_grafana:BuildRequires: jsonnet}
 %{?_with_system_arrow:BuildRequires: arrow-devel >= 4.0.0 libparquet-devel libprotobuf-devel libgrpc++-devel}
-%{?_with_system_utf8proc:BuildRequires: libutf8proc-devel}
+%{?_with_system_utf8proc:BuildRequires: libutf8proc-devel >= 2.2.0}
 
 %ifnarch %arm
 BuildRequires: rdma-core-devel
@@ -189,6 +191,7 @@ BuildRequires: python3-module-prettytable python3-module-routes python3-module-b
 BuildRequires: python3-module-html5lib python3-module-pyasn1
 BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
 BuildRequires: libxmlsec1-devel
+BuildRequires: python3-module-natsort python3-module-asyncssh
 %{?_enable_check:BuildRequires: python3-module-cherrypy python3-module-jwt python3-module-werkzeug python3-module-pecan python3-module-tox}
 %endif
 
@@ -812,7 +815,6 @@ tar -xf %SOURCE18 -C src/erasure-code/jerasure/gf-complete
 tar -xf %SOURCE19 -C src/erasure-code/jerasure/jerasure
 tar -xf %SOURCE20 -C src/googletest
 tar -xf %SOURCE21 -C src/isa-l
-tar -xf %SOURCE23 -C src/rapidjson
 %if_without system_rocksdb
 tar -xf %SOURCE24 -C src/rocksdb
 %endif
@@ -833,12 +835,17 @@ tar -xf %SOURCE31 -C src/fmt
 tar -xf %SOURCE32 -C src/spawn
 tar -xf %SOURCE33 -C src/pybind/mgr/rook/rook-client-python
 tar -xf %SOURCE34 -C src/s3select
+tar -xf %SOURCE38 -C src/s3select/rapidjson
+tar -xf %SOURCE39 -C src/s3select/include/csvparser
 tar -xf %SOURCE35 -C src/libkmip
 %if_without system_arrow
 tar -xf %SOURCE36 -C src/arrow
 %endif
 %if_without system_utf8proc
 tar -xf %SOURCE37 -C src/utf8proc
+%endif
+%if_with jaeger
+tar -xf %SOURCE40 -C src/jaegertracing/opentelemetry-cpp
 %endif
 
 %patch -p1
@@ -1003,6 +1010,10 @@ export CPPFLAGS="$java_inc"
 %if_with system_utf8proc
     -DWITH_SYSTEM_UTF8PROC:BOOL=ON \
 %endif
+%if_with seastar
+    -DWITH_SEASTAR:BOOL=ON \
+    -DWITH_JAEGER:BOOL=OFF \
+%endif
     -DWITH_MANPAGE:BOOL=ON
 
 export VERBOSE=1
@@ -1045,7 +1056,6 @@ mv %buildroot%_sbindir/mount.ceph %buildroot/sbin/mount.ceph
 install -m 0644 -D udev/50-rbd.rules %buildroot%_udevrulesdir/50-rbd.rules
 
 # cephadm
-install -m 0755 src/cephadm/cephadm %buildroot%_sbindir/cephadm
 mkdir -p %buildroot%_localstatedir/cephadm/.ssh
 touch %buildroot%_localstatedir/cephadm/.ssh/authorized_keys
 
@@ -1385,6 +1395,8 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %dir %_libdir/ceph
 %dir %_libdir/ceph/erasure-code
 %_libdir/ceph/erasure-code/libec_*.so*
+%dir %_libdir/ceph/extblkdev
+%_libdir/ceph/extblkdev/libceph_*.so*
 %dir %_libdir/ceph/compressor
 %_libdir/ceph/compressor/libceph_*.so*
 %_unitdir/ceph-crash.service
@@ -1432,6 +1444,10 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %_bindir/rbd-replay
 %_bindir/rbd-replay-many
 %_bindir/rbdmap
+%_bindir/rgw-gap-list
+%_bindir/rgw-gap-list-comparator
+%_bindir/rgw-orphan-list
+%_bindir/rgw-restore-bucket-index
 /sbin/mount.ceph
 %if_with lttng
 %_bindir/rbd-replay-prep
@@ -1456,6 +1472,7 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %_mandir/man8/rbd-replay.8*
 %_mandir/man8/rbd-replay-many.8*
 %_mandir/man8/rbd-replay-prep.8*
+%_mandir/man8/rgw-orphan-list.8*
 %dir %_datadir/ceph
 %_datadir/ceph/known_hosts_drop.ceph.com
 %_datadir/ceph/id_rsa_drop.ceph.com
@@ -1598,12 +1615,10 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %_bindir/radosgw-es
 %_bindir/radosgw-token
 %_bindir/radosgw-object-expirer
-%_bindir/rgw-gap-list
-%_bindir/rgw-gap-list-comparator
-%_bindir/rgw-orphan-list
+%_bindir/rgw-policy-check
 %_mandir/man8/ceph-diff-sorted.8*
 %_mandir/man8/radosgw.8*
-%_mandir/man8/rgw-orphan-list.8*
+%_mandir/man8/rgw-policy-check.8*
 %_logdir/radosgw
 %dir %_localstatedir/ceph/radosgw
 %_unitdir/ceph-radosgw@.service
@@ -1704,7 +1719,6 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %files -n librgw2
-%_libdir/libradosgw.so.*
 %_libdir/librgw.so.*
 %if_with lttng
 %_libdir/librgw_op_tp.so.*
@@ -1714,7 +1728,6 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %files -n librgw-devel
 %_includedir/rados/librgw.h
 %_includedir/rados/rgw_file.h
-%_libdir/libradosgw.so
 %_libdir/librgw.so
 %if_with lttng
 %_libdir/librgw_op_tp.so
@@ -1844,6 +1857,9 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Thu Dec 21 2023 Alexey Shabalin <shaba@altlinux.org> 18.2.1-alt1
+- 18.2.1
+
 * Wed Dec 20 2023 Alexey Shabalin <shaba@altlinux.org> 17.2.7-alt1
 - 17.2.7
 
