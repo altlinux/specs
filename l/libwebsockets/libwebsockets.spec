@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libwebsockets
-Version: 4.3.2
-Release: alt2
+Version: 4.3.3
+Release: alt1
 
 Summary: A lightweight C library for Websockets
 
@@ -52,7 +52,7 @@ This package contains the tests for %name applications.
 
 %prep
 %setup
-%patch -p1
+#patch -p1
 
 %build
 %cmake \
@@ -99,6 +99,9 @@ find %buildroot -name '*_static.pc' -exec rm -f {} ';'
 %_datadir/%name-test-server/
 
 %changelog
+* Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 4.3.3-alt1
+- new version 4.3.3 (with rpmrb script)
+
 * Fri Jul 14 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.3.2-alt2
 - NMU: backported upstream commit to fix FTBFS with gcc13 (thx Andy Green).
 - Fixed License: tag.
