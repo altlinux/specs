@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: diffoscope
-Version: 220
+Version: 253
 Release: alt1
 
 Summary: In-depth comparison of files, archives, and directories
@@ -17,6 +17,7 @@ BuildRequires: python3-module-libmagic
 BuildRequires: python3-module-libarchive-c
 BuildRequires: python3-module-docutils
 BuildRequires: python3-modules-curses
+BuildRequires: python3-module-wheel
 BuildRequires: /usr/bin/help2man
 BuildRequires: /usr/bin/xxd
 Requires: python3(tlsh)
@@ -33,11 +34,11 @@ or PDF just as easily. The differences can be shown in a text or HTML report.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 %make -C doc
 
 %install
-%python3_install
+%pyproject_install
 install -Dm644 doc/diffoscope.1 %buildroot%_man1dir/diffoscope.1
 
 %files
@@ -47,6 +48,9 @@ install -Dm644 doc/diffoscope.1 %buildroot%_man1dir/diffoscope.1
 %_man1dir/diffoscope.1*
 
 %changelog
+* Mon Dec 25 2023 Slava Aseev <ptrnine@altlinux.org> 253-alt1
+- new version
+
 * Thu Sep 15 2022 Slava Aseev <ptrnine@altlinux.org> 220-alt1
 - new version
 
