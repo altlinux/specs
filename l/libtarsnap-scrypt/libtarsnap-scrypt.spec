@@ -2,7 +2,7 @@
 %define oname scrypt
 
 Name: libtarsnap-scrypt
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 
 Summary: The scrypt key derivation function
@@ -75,6 +75,9 @@ than alternative functions such as PBKDF2 or bcrypt.
 %_man1dir/scrypt.*
 
 %changelog
+* Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 1.3.2-alt1
+- new version 1.3.2 (with rpmrb script)
+
 * Sun Sep 20 2020 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt1
 - new version 1.3.1 (with rpmrb script)
 
