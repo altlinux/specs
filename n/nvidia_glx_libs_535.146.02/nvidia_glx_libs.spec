@@ -8,8 +8,6 @@
 
 %define nvidia_sover 1
 %define nvvm_sover 4
-%define nvidia_egl_wayland_libver 1.0.2
-%define libnvidia_egl_wayland libnvidia-egl-wayland%nvidia_egl_wayland_sover
 
 %ifarch %ix86
 %define subd ./32
@@ -17,9 +15,14 @@
 %define subd ./
 %endif
 
-Name: nvidia_glx_libs
-Version: 535.129.03
-Release: alt1.1
+%define nv_version 535
+%define nv_release 146
+%define nv_minor   02
+%define pkg_rel alt1
+%define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
+Name: nvidia_glx_libs_%nv_version_full
+Version: %nv_version_full
+Release: %pkg_rel
 
 ExclusiveArch: %ix86 x86_64 aarch64
 
@@ -162,7 +165,6 @@ rm -rf precompiled
 popd
 
 %build
-
 %install
 # install libraries
 mkdir -p %buildroot/%_libdir/
@@ -196,38 +198,38 @@ install -m 0644 nvidia-smi.1.gz %buildroot/%_man1dir/
 mkdir -p %buildroot/%_sysconfdir/OpenCL/vendors/
 install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 # fixing the work of CUDA rendering in DaVinci Resolve without nvidia-cuda-toolkit
-ln -s libcuda.so.%version %buildroot%_libdir/libcuda.so
-ln -s libnvcuvid.so.%version %buildroot%_libdir/libnvcuvid.so
-ln -s libnvidia-encode.so.%version %buildroot%_libdir/libnvidia-encode.so
+for l in libcuda libnvcuvid libnvidia-encode ; do
+    ln -s ${l}.so.%version %buildroot/%_libdir/${l}.so
+done
 
 %files -n ocl-nvidia
 %files -n libnvidia-ptxjitcompiler
 %_libdir/libnvidia-ptxjitcompiler.so.%version
-%_libdir/libnvidia-ptxjitcompiler.so.%{nvidia_sover}
+%_libdir/libnvidia-ptxjitcompiler.so.%nvidia_sover
 %files -n libnvidia-ml
 %_libdir/libnvidia-ml.so.%version
-%_libdir/libnvidia-ml.so.%{nvidia_sover}
+%_libdir/libnvidia-ml.so.%nvidia_sover
 %files -n libcuda
-%_libdir/libcuda.so.%{nvidia_sover}
+%_libdir/libcuda.so.%nvidia_sover
 %_libdir/libcuda.so.%version
 %_libdir/libcuda.so
 %files -n libnvidia-opencl
-%_libdir/libnvidia-opencl.so.%{nvidia_sover}
+%_libdir/libnvidia-opencl.so.%nvidia_sover
 %_libdir/libnvidia-opencl.so.%version
 %_sysconfdir/OpenCL/vendors/nvidia.icd
 %files -n libnvcuvid
-%_libdir/libnvcuvid.so.%{nvidia_sover}
+%_libdir/libnvcuvid.so.%nvidia_sover
 %_libdir/libnvcuvid.so.%version
 %_libdir/libnvcuvid.so
 %files -n libnvidia-encode
-%_libdir/libnvidia-encode.so.%{nvidia_sover}
+%_libdir/libnvidia-encode.so.%nvidia_sover
 %_libdir/libnvidia-encode.so.%version
 %_libdir/libnvidia-encode.so
 %files -n libnvidia-nvvm
-%_libdir/libnvidia-nvvm.so.%{nvvm_sover}
+%_libdir/libnvidia-nvvm.so.%nvvm_sover
 %_libdir/libnvidia-nvvm.so.%version
 %files -n libnvidia-fbc
-%_libdir/libnvidia-fbc.so.%{nvidia_sover}
+%_libdir/libnvidia-fbc.so.%nvidia_sover
 %_libdir/libnvidia-fbc.so.%version
 %if "%_lib" != "lib"
 %files -n nvidia-smi
@@ -238,21 +240,24 @@ ln -s libnvidia-encode.so.%version %buildroot%_libdir/libnvidia-encode.so
 #%_libdir/nvidia/wine/
 %endif
 %files -n libnvidia-ngx
-%_libdir/libnvidia-ngx.so.%{nvidia_sover}
+%_libdir/libnvidia-ngx.so.%nvidia_sover
 %_libdir/libnvidia-ngx.so.%version
 %files -n libnvoptix
-%_libdir/libnvoptix.so.%{nvidia_sover}
+%_libdir/libnvoptix.so.%nvidia_sover
 %_libdir/libnvoptix.so.%version
 %_datadir/nvidia/nvoptix.bin
 %files -n libcudadebugger
-%_libdir/libcudadebugger.so.%{nvidia_sover}
+%_libdir/libcudadebugger.so.%nvidia_sover
 %_libdir/libcudadebugger.so.%version
 %files -n libnvidia-api
-%_libdir/libnvidia-api.so.%{nvidia_sover}
+%_libdir/libnvidia-api.so.%nvidia_sover
 %_libdir/libnvidia-api.so.%version
 %endif
 
 %changelog
+* Mon Dec 25 2023 Sergey V Turchin <zerg@altlinux.org> 535.146.02-alt1
+- new version
+
 * Thu Nov 23 2023 Mikhail Tergoev <fidel@altlinux.org> 535.129.03-alt1.1
 - NMU: fixing the work of CUDA rendering in DaVinci Resolve without nvidia-cuda-toolkit
 
