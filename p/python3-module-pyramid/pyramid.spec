@@ -3,7 +3,7 @@
 %def_without bootstrap
 
 Name:           python3-module-%oname
-Version:        2.0.1
+Version:        2.0.2
 Release:        alt1
 Summary:        The Pyramid web application framework, a Pylons project
 Group:          Development/Python3
@@ -67,6 +67,9 @@ pytest3 tests
 %_bindir/pviews
 
 %changelog
+* Sat Dec 09 2023 Anton Midyukov <antohami@altlinux.org> 2.0.2-alt1
+- New version 2.0.2.
+
 * Mon Jun 12 2023 Anton Midyukov <antohami@altlinux.org> 2.0.1-alt1
 - new version 2.0.1
 - fix run tests
