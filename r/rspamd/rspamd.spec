@@ -2,8 +2,8 @@
 
 # TODO: add .pc-file to libhiredis-devel (to build with one)
 Name: rspamd
-Version: 3.7.3
-Release: alt2
+Version: 3.7.5
+Release: alt1
 
 Summary: Fast and modular antispam system written in C
 
@@ -119,6 +119,9 @@ install -pD -m 0644 %SOURCE5 %buildroot%_logrotatedir/%name
 %dir %attr(0770,root,rspamd) %_logdir/rspamd
 
 %changelog
+* Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 3.7.5-alt1
+- new version 3.7.5 (with rpmrb script)
+
 * Mon Nov 06 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.7.3-alt2
 - NMU: fixed FTBFS on LoongArch
 
