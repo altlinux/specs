@@ -12,10 +12,10 @@
 %define mono_version 8.1.0
 %define winetricks_version 20230505
 
-%define basemajor 8.x
-%define major 8.21
-%define rel %nil
-%define stagingrel %nil
+%define basemajor 9.0
+%define major 9.0
+%define rel -rc3
+%define stagingrel %rel
 # the packages will conflict with that
 %define conflictbase wine-vanilla
 
@@ -849,6 +849,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.1-alt1
+- build 9.0-rc3
+
 * Sat Nov 25 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.21.1-alt1
 - new version 8.21.1 (with rpmrb script)
 - set strict require wine-mono 8.1.0 (needed since 8.19)
