@@ -1,6 +1,6 @@
 Name: gramps
-Version: 5.1.4
-Release: alt2
+Version: 5.1.6
+Release: alt1
 
 Summary: Genealogical Research and Analysis Management Programming System
 Summary(ru_RU.UTF-8): Программная система анализирования и управления генеалогическими изысканиями
@@ -111,6 +111,9 @@ rm -rv %buildroot%python3_sitelibdir/gramps/test/
 %_iconsdir/hicolor/*/mimetypes/*
 
 %changelog
+* Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 5.1.6-alt1
+- new version 5.1.6 (with rpmrb script)
+
 * Fri Dec 22 2023 Vitaly Lipatov <lav@altlinux.ru> 5.1.4-alt2
 - remove unused tests (getting rid of gramps.test.test and unittest reqs)
 
