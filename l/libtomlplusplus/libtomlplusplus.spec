@@ -1,5 +1,5 @@
 Name: libtomlplusplus
-Version: 3.3.0
+Version: 3.4.0
 Release: alt1
 
 Summary: Header-only TOML config file parser and serializer for C++17
@@ -45,5 +45,8 @@ rm -v %buildroot%_includedir/meson.build
 %_datadir/tomlplusplus
 
 %changelog
+* Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 3.4.0-alt1
+- new version 3.4.0 (with rpmrb script)
+
 * Sat Mar 18 2023 Vitaly Lipatov <lav@altlinux.ru> 3.3.0-alt1
 - initial build for ALT Sisyphus
