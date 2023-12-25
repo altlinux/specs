@@ -3,7 +3,7 @@
 %define oname pytest-testinfra
 
 Name: python3-module-%oname
-Version: 6.8.0
+Version: 10.0.0
 Release: alt1
 Summary: pytest plugin for infrastructure testing
 License: Apache-2.0
@@ -55,6 +55,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
 
 %changelog
+* Mon Dec 18 2023 Slava Aseev <ptrnine@altlinux.org> 10.0.0-alt1
+- New version
+
 * Thu Sep 15 2022 Slava Aseev <ptrnine@altlinux.org> 6.8.0-alt1
 - new version
 
