@@ -8,7 +8,7 @@
 %endif
 
 Name: libcryptopp
-Version: 8.8.0
+Version: 8.9.0
 Release: alt1
 
 # convert 5.6.2 -> 562 format
@@ -145,6 +145,9 @@ EOF
 %_datadir/cryptopp/
 
 %changelog
+* Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 8.9.0-alt1
+- new version 8.9.0 (with rpmrb script)
+
 * Sun Aug 20 2023 Vitaly Lipatov <lav@altlinux.ru> 8.8.0-alt1
 - new version 8.8.0 (with rpmrb script)
 
