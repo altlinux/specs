@@ -1,12 +1,13 @@
 Name:     nudoku
-Version:  2.1.0
+Version:  3.0.0
 Release:  alt1
 
 Summary:  ncurses based sudoku game
+
 License:  GPLv3
 Group:    Games/Puzzles
-
-Url:      https://github.com/jubalh/nudoku
+URL:      http://jubalh.github.io/nudoku
+VCS:      https://github.com/jubalh/nudoku
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -31,11 +32,14 @@ BuildRequires: libcairo-devel
 %find_lang %name
 
 %files -f %name.lang
-%_bindir/*
-%_man6dir/*
 %doc AUTHORS LICENSE README.md
+%_bindir/%name
+%_man6dir/%name.6.*
 
 %changelog
+* Mon Dec 25 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
+- Automatically updated to 3.0.0.
+
 * Tue Dec 01 2020 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1
 - Automatically updated to 2.1.0.
 
