@@ -1,19 +1,19 @@
 
 Name: raptor2
-Version: 2.0.15
+Version: 2.0.16
 Release: alt1
 
 Group: Development/Other
 Summary: RDF Parser Toolkit for Redland
 Url: http://librdf.org/raptor/
-License: GPLv2+ or LGPLv2+ or ASL 2.0
+License: Apache-2.0 OR GPL-2.0-or-later OR LGPL-2.1-or-later
 
 # /usr/bin/rapper
 Conflicts: raptor
 
 Source: http://download.librdf.org/source/raptor2-%version.tar.gz
-# FC
-Patch50: raptor2-2.0.3-raptor2_doc.patch
+# SuSE
+Patch100: raptor-libxml2-2.11-support.patch
 
 # Automatically added by buildreq on Thu Sep 01 2011 (-bi)
 # optimized out: elfutils libxml2-devel pkg-config
@@ -39,8 +39,7 @@ Summary: Development files for %name
 
 %prep
 %setup
-
-#%patch50 -p1 -b .raptor2_doc
+%patch100 -p1
 
 # hack to nuke rpaths
 %if "%_libdir" != "/usr/lib"
@@ -78,6 +77,9 @@ sed -i -e 's|"/lib /usr/lib|"/%_lib %_libdir|' configure
 
 
 %changelog
+* Mon Dec 25 2023 Sergey V Turchin <zerg@altlinux.org> 2.0.16-alt1
+- new version (fixes: CVE-2017-18926 CVE-2020-25713) (closes: 48916)
+
 * Wed Nov 26 2014 Sergey V Turchin <zerg@altlinux.org> 2.0.15-alt1
 - new version
 
