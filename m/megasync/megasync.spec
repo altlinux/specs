@@ -1,5 +1,5 @@
 Name: megasync
-Version: 4.10.0.0
+Version: 4.11.0.0
 Release: alt1
 
 Summary: Easy automated syncing between your computers and your MEGA Cloud Drive
@@ -97,6 +97,9 @@ cp -a icons/hicolor/ %buildroot%_iconsdir/
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 4.11.0.0-alt1
+- new version 4.11.0.0 (with rpmrb script)
+
 * Tue Nov 07 2023 Vitaly Lipatov <lav@altlinux.ru> 4.10.0.0-alt1
 - new version 4.10.0.0 (with rpmrb script)
 
