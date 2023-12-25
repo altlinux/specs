@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ansible-freeipa
-Version: 1.8.4
+Version: 1.12.0
 Release: alt1
 
 Summary: Ansible roles and modules for FreeIPA
@@ -80,6 +80,9 @@ cp -r tests %buildroot%_datadir/%name/
 %_datadir/%name/tests
 
 %changelog
+* Mon Dec 18 2023 Slava Aseev <ptrnine@altlinux.org> 1.12.0-alt1
+- Update to new version
+
 * Thu Sep 15 2022 Slava Aseev <ptrnine@altlinux.org> 1.8.4-alt1
 - Update to new version
 
