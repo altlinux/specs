@@ -1,6 +1,6 @@
 Name: webgrind
-Version: 1.5.0
-Release: alt2
+Version: 1.9.3
+Release: alt1
 
 Summary: Xdebug Profiling Web Frontend in PHP
 License: BSD License
@@ -50,6 +50,7 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 %install
 mkdir -p %buildroot%webserver_webappsdir
 cp -a . %buildroot%webserver_webappsdir/%name
+rm -v %buildroot%webserver_webappsdir/%name/{.gitattributes,.github/workflows/docker-image.yml}
 
 %files
 %doc README.md
@@ -63,6 +64,9 @@ cp -a . %buildroot%webserver_webappsdir/%name
 
 
 %changelog
+* Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 1.9.3-alt1
+- new version 1.9.3 (with rpmrb script)
+
 * Tue Feb 04 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.5.0-alt2
 - Porting to python3.
 
