@@ -1,5 +1,5 @@
 Name: labwc
-Version: 0.6.5
+Version: 0.6.6
 Release: alt1
 
 Summary: A Wayland window-stacking compositor
@@ -51,6 +51,9 @@ BuildRequires: pkgconfig(libdrm)
 %_mandir/man5/*.5*
 
 %changelog
+* Sat Dec 16 2023 Roman Alifanov <ximper@altlinux.org> 0.6.6-alt1
+- new version 0.6.6 (with rpmrb script)
+
 * Mon Oct 02 2023 Roman Alifanov <ximper@altlinux.org> 0.6.5-alt1
 - new version 0.6.5 (with rpmrb script)
 
