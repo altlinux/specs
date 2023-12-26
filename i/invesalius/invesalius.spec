@@ -1,9 +1,11 @@
+# exclude cython-built internal plugins
+%set_verify_elf_method skip
 %define _unpackaged_files_terminate_build 1
 %filter_from_requires /python3(invesalius\(\..*\)\?)/d
 
 Name: invesalius
 Version: 3.1.99998
-Release: alt1
+Release: alt2.git.90a1be13
 
 Summary: InVesalius generates 3D reconstructions of CT and MRI images.
 License: GPLv2
@@ -13,8 +15,9 @@ URL: https://invesalius.github.io/
 VCS: https://github.com/invesalius/invesalius3.git
 
 Source0: %name-%version.tar
-Patch0: upstream-python3.11-pywx4.2.patch
-Patch1: set-python-lang-level.patch
+Patch0: set-python-lang-level.patch
+Patch1: remove-distutils-directives.patch
+Patch2: remove-runtime-setuptools-dependencies.patch
 
 BuildRequires: gcc gcc-c++
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/convert
@@ -38,6 +41,7 @@ Requires: python3-module-scipy
 Requires: python3-module-wx
 Requires: python3-module-pyacvd
 Requires: vtk-python3
+Requires: pkgconfig(fontconfig)
 
 %add_python3_req_skip torch
 # Packages are no longer supported and are getting moved to optinal requirements
@@ -52,6 +56,7 @@ Provides DICOM-support, 2D image segmentation tools, and more.
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' invesalius/expanduser.py
 
@@ -70,10 +75,9 @@ for dir in icons invesalius locale presets samples; do
 done
 
 # install plugins
-mkdir -p %buildroot%_libdir/%name
-cp -far invesalius_cy/*.so %buildroot%_libdir/%name
 mkdir -p %buildroot%instdir/%{name}_cy
-cp -far invesalius_cy/*.py %buildroot%_libdir/%name/%{name}_cy
+cp -far invesalius_cy/*.so %buildroot%instdir/%{name}_cy
+cp -far invesalius_cy/*.py %buildroot%instdir/%{name}_cy
 
 # add app
 cp -far app.py %buildroot%instdir
@@ -113,13 +117,17 @@ desktop-file-install --dir=%buildroot%_datadir/applications %name.desktop --vend
 %doc LICENSE.txt README.md docs/user_guide_en.pdf
 %_bindir/%name
 %_datadir/%name
-%_libdir/%name
 %_datadir/applications/%name.desktop
 %_miconsdir/%name.png
 %_niconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Mon Dec 25 2023 Elizaveta Morozova <morozovaes@altlinux.org> 3.1.99998-alt2.git.90a1be13
+- Built from 90a1be13ab0989facc15b269f212b65b3b3d1cb0.
+- Fixed cython plugins location (ALT #48811).
+- Added missing fontconfig dependency.
+
 * Fri Oct 20 2023 Elizaveta Morozova <morozovaes@altlinux.org> 3.1.99998-alt1
 - Initial build for ALT.
 
