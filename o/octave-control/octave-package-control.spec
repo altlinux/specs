@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/octave-config makeinfo
+BuildRequires: /usr/bin/octave-config gcc-fortran makeinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
 %define octpkg control
 Epoch: 1
 Name: octave-%octpkg
-Version: 3.4.0
+Version: 3.5.0
 Release: alt1
 Summary: Computer-Aided Control System Design
 
@@ -47,6 +47,9 @@ Computer-Aided Control System Design (CACSD) Tools for GNU Octave, based on the 
 %endif
 
 %changelog
+* Tue Dec 26 2023 Igor Vlasenko <viy@altlinux.org> 1:3.5.0-alt1
+- regenerated from template by package builder
+
 * Fri Apr 08 2022 Andrey Cherepanov <cas@altlinux.org> 1:3.4.0-alt1
 - new version
 
