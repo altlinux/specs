@@ -1,5 +1,5 @@
 Name: tin
-Version: 2.6.2
+Version: 2.6.3
 Release: alt1
 
 Summary: A basic Internet news reader
@@ -19,10 +19,21 @@ Patch2: tin-2.0.1-charset.patch
 # - specific MTA package (such as postfix): replace it by requirement of /usr/sbin/sendmail
 BuildRequires: gnupg libgsasl-devel libncursesw-devel libpcre-devel libuu-devel
 BuildRequires: /usr/sbin/sendmail
+# utils
+BuildRequires: perl(Net/NNTP.pm)
+BuildRequires: perl(Term/ReadLine.pm)
 
 %description
 Tin is a basic, easy to use Internet news reader. Tin can read news locally or
 remotely via an NNTP (Network News Transport Protocol) server.
+
+%package utils
+Summary: Perl utilities for tin
+Group: Networking/News
+BuildArch: noarch
+
+%description utils
+This package contains extra perl scripts for tin provided by upstream.
 
 %prep
 %setup
@@ -70,9 +81,14 @@ install -pD -m644 %_sourcedir/tin.attributes %buildroot%_sysconfdir/tin/attribut
 %exclude %_man5dir/mbox.*
 %exclude %_man5dir/mmdf.*
 
-# TODO: consider some more unpackaged scripts
+%files utils
+%_bindir/*.pl
 
 %changelog
+* Tue Dec 26 2023 Michael Shigorin <mike@altlinux.org> 2.6.3-alt1
+- new version (watch file uupdate)
+- added utils subpackage
+
 * Sun Dec 25 2022 Michael Shigorin <mike@altlinux.org> 2.6.2-alt1
 - new version (watch file uupdate)
 
