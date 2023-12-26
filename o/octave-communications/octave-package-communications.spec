@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/octave makeinfo texinfo
+BuildRequires: /usr/bin/octave makeinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
 %define octpkg communications
 Epoch: 1
 Name: octave-%octpkg
-Version: 1.2.4
+Version: 1.2.5
 Release: alt1
 Summary: Communications
 
@@ -31,7 +31,7 @@ Requires: octave >= 4.4 octave(signal) >= 1.1.3
 Digital Communications, Error Correcting Codes (Channel Code), Source Code functions, Modulation and Galois Fields
 
 %prep
-%setup -q -n %{octpkg}-%{version}
+%setup -q -n %{octpkg}
 
 %build
 %octave_build
@@ -40,13 +40,16 @@ Digital Communications, Error Correcting Codes (Channel Code), Source Code funct
 %octave_install
 
 %files
-%doc COPYING DESCRIPTION NEWS doc
+%doc DESCRIPTION COPYING NEWS doc
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Tue Dec 26 2023 Igor Vlasenko <viy@altlinux.org> 1:1.2.5-alt1
+- regenerated from template by package builder
+
 * Fri Apr 08 2022 Andrey Cherepanov <cas@altlinux.org> 1:1.2.4-alt1
 - new version
 
