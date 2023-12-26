@@ -1,32 +1,25 @@
-%define _unpackaged_files_terminate_build 1
 %define oname openpyxl
 
 Name:    python3-module-%oname
-Version: 3.0.10
+Version: 3.1.2
 Release: alt1
-Summary: A Python library to read/write Excel 2007 xlsx/xlsm files
-License: MIT/Expat
-Group:   Development/Python3
-Url:     http://openpyxl.readthedocs.io
-Packager: Andrey Cherepanov <cas@altlinux.org>
 
-# https://foss.heptapod.net/openpyxl/openpyxl
-Source0: %oname-%version.tar.gz
+Summary: A Python library to read/write Excel 2010 xlsx/xlsm files
+
+License: MIT
+Group:   Development/Python3
+URL:     https://pypi.org/project/openpyxl
+
+Source: %name-%version.tar
 
 BuildArch: noarch
 
-%py3_requires jdcal et_xmlfile
+%py3_requires et_xmlfile
 %py3_provides %oname
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-BuildRequires: python3-devel python3-test
-BuildRequires: python3-module-jdcal
-BuildRequires: python3-module-memory_profiler
-BuildRequires: python3-module-et_xmlfile
-BuildRequires: python3-module-numpy
-BuildRequires: python3-module-pandas-tests
-BuildRequires: python3-module-Pillow
 
 %description
 openpyxl is a Python library to read/write Excel 2010 xlsx/xlsm files.
@@ -35,7 +28,7 @@ It was born from lack of existing library to read/write natively from
 Python the Office Open XML format.
 
 %prep
-%setup -n %{oname}-%{version}
+%setup
 
 %build
 %pyproject_build
@@ -43,14 +36,15 @@ Python the Office Open XML format.
 %install
 %pyproject_install
 
-%check
-%tox_check_pyproject
-
 %files
 %doc LICENCE.rst README.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Dec 26 2023 Grigory Ustinov <grenka@altlinux.org> 3.1.2-alt1
+- Build new version.
+
 * Mon Jan 09 2023 Anton Vyatkin <toni@altlinux.org> 3.0.10-alt1
 - new version 3.0.10
 
