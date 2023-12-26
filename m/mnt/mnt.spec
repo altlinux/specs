@@ -1,6 +1,6 @@
 Name: mnt
 Summary: Mount hotplug devices as normal user
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 License: GPLv2
 Group: System/Base
@@ -25,6 +25,12 @@ install -D -m 755 umnt %buildroot%_bindir/umnt
 %_bindir/umnt
 
 %changelog
+* Tue Dec 26 2023 Hihin Ruslan <ruslandh@altlinux.ru> 1.0.4-alt1
+- Add mnt -a and alsblk
+
+* Mon Dec 05 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1.0.3-alt1.1
+- fix mnt with udiskctl
+
 * Sat Nov 12 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1.0.3-alt1
 - remove hmount ; correct scripts
 
