@@ -4,7 +4,7 @@ BuildRequires: makeinfo
 %def_with _octave_arch
 %define octpkg ocl
 Name: octave-%octpkg
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 Summary: OpenCL support for GNU Octave
 
@@ -27,10 +27,10 @@ Requires: octave >= 4.2.0
 
 
 %description
-Package using OpenCL for parallelization,
+Package using OpenCL for parallelization of (SIMD) computations,
 
 %prep
-%setup -n %octpkg-%version
+%setup -q -n %{octpkg}-%{version}
 
 %build
 %octave_build
@@ -46,6 +46,9 @@ Package using OpenCL for parallelization,
 %endif
 
 %changelog
+* Tue Dec 26 2023 Igor Vlasenko <viy@altlinux.org> 1.2.2-alt1
+- regenerated from template by package builder
+
 * Sat Mar 11 2023 Andrey Cherepanov <cas@altlinux.org> 1.2.1-alt1
 - new version
 
