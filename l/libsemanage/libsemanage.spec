@@ -10,8 +10,8 @@
 
 Name: libsemanage
 Epoch: 1
-Version: 3.2
-Release: alt2
+Version: 3.6
+Release: alt1
 Summary: Library, which provides an interface for SELinux management
 Group: System/Libraries
 License: LGPLv2.1+
@@ -93,13 +93,10 @@ binary policies.
 %install
 %makeinstall_std LIBDIR=%_libdir SHLIBDIR=/%_lib install-pywrap PYTHON=python3
 
-# TODO: currently only man5dir is translated. If other man pages are translated, %%find_lang use should be improved
-%find_lang --with-man --all-name %name
-
 %check
 %make_build test
 
-%files -f %name.lang
+%files
 %dir %_sysconfdir/selinux
 %config(noreplace) %_sysconfdir/selinux/*
 /%_lib/*.so.*
@@ -121,6 +118,10 @@ binary policies.
 %python3_sitelibdir/*
 
 %changelog
+* Mon Dec 25 2023 Anton Zhukharev <ancieg@altlinux.org> 1:3.6-alt1
+- (NMU) Updated to 3.6.
+  + Removed man-pages localizations that had been dropped by upstream.
+
 * Wed Sep 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.2-alt2
 - Fixed build with LTO.
 

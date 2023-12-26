@@ -6,8 +6,8 @@
 
 Name: libselinux
 Epoch: 1
-Version: 3.2
-Release: alt2
+Version: 3.6
+Release: alt1
 Summary: SELinux library
 License: Public Domain
 Group: System/Libraries
@@ -17,7 +17,10 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: libpcre-devel
+BuildRequires: python3-module-pyproject-installer
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: libpcre2-devel
 BuildRequires: python3-devel
 BuildRequires: swig >= 3.0.12-alt4
 BuildRequires: libsepol-devel >= %version
@@ -70,7 +73,7 @@ This package contains SELinux python 3.x bindings.
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
 
-%make_build CFLAGS="%optflags $(pkg-config libpcre --cflags)" LIBDIR=%_libdir all
+%make_build CFLAGS="%optflags $(pkg-config libpcre2 --cflags)" LIBDIR=%_libdir all
 %make_build CFLAGS="%optflags" LIBDIR=%_libdir PYTHON=%_bindir/python3 pywrap
 
 %install
@@ -80,11 +83,6 @@ install -d -m 0755 %buildroot%_runtimedir/setrans
 mv %buildroot%_sbindir/getdefaultcon %buildroot%_sbindir/selinuxdefcon
 mv %buildroot%_sbindir/getconlist %buildroot%_sbindir/selinuxconlist
 
-%find_lang --with-man --all-name %name
-
-egrep -v 'booleans\.8|selinux\.8' %name.lang > %name-utils.lang
-egrep    'booleans\.8|selinux\.8' %name.lang > %name-files.lang
-
 %check
 # Some vital PAM modules are linked with libselinux and therefore
 # we cannot allow libselinux to be linked with libpthread.
@@ -93,7 +91,7 @@ if ldd -r %buildroot%_libdir/libselinux.so 2>&1 |grep -Fq libpthread; then
 	exit 1
 fi
 
-%files -f %name-files.lang
+%files
 /%_lib/*.so.*
 %_man8dir/booleans.*
 %_man8dir/selinux.*
@@ -108,7 +106,7 @@ fi
 %files devel-static
 %_libdir/*.a
 
-%files utils -f %name-utils.lang
+%files utils
 %_sbindir/*
 %_man5dir/*
 %_man8dir/*
@@ -119,6 +117,10 @@ fi
 %python3_sitelibdir/*
 
 %changelog
+* Mon Dec 25 2023 Anton Zhukharev <ancieg@altlinux.org> 1:3.6-alt1
+- (NMU) Updated to 3.6.
+  + Removed man-pages localizations that had been dropped by upstream.
+
 * Wed Sep 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.2-alt2
 - Fixed build with LTO.
 

@@ -4,8 +4,8 @@
 
 Name: checkpolicy
 Epoch: 1
-Version: 3.2
-Release: alt2
+Version: 3.6
+Release: alt1
 Summary: SELinux policy compiler
 Group: System/Configuration/Other
 License: GPLv2
@@ -53,6 +53,9 @@ done
 %_man8dir/*
 
 %changelog
+* Tue Dec 26 2023 Anton Zhukharev <ancieg@altlinux.org> 1:3.6-alt1
+- (NMU) Updated to 3.6.
+
 * Wed Sep 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.2-alt2
 - Rebuilt with LTO.
 

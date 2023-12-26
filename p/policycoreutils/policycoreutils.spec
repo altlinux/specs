@@ -9,8 +9,8 @@
 Summary: SELinux policy core utilities
 Name: policycoreutils
 Epoch:   1
-Version: 3.2
-Release: alt6
+Version: 3.6
+Release: alt1
 License: GPLv2
 Group: System/Base
 Url: https://github.com/SELinuxProject/selinux
@@ -42,12 +42,14 @@ Requires: python3-module-semanage python3-module-audit
 
 BuildRequires(pre): rpm-build-xdg
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-pyproject-installer
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: libaudit-devel libcap-devel libpam-devel
 BuildRequires: libselinux-devel libsemanage-devel libsepol-devel libsepol-devel-static
 BuildRequires: desktop-file-utils
 BuildRequires: glib2-devel libgio-devel
-BuildRequires: libcap-ng-devel libpcre-devel libcgroup-devel
-BuildRequires: python3-devel
+BuildRequires: libcap-ng-devel libpcre2-devel libcgroup-devel
 BuildRequires: libsystemd-devel
 
 %add_python3_path %_datadir/system-config-selinux
@@ -176,7 +178,7 @@ popd
 %make_build -C selinux-dbus-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
 %make_build -C semodule-utils-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
 %make_build -C restorecond-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
-%make_build -C mcstrans-%version LIBDIR=%_libdir CFLAGS="%optflags $(pkg-config --cflags-only-I libpcre)" LIBSEPOLA="%_libdir/libsepol.a"
+%make_build -C mcstrans-%version LIBDIR=%_libdir CFLAGS="%optflags $(pkg-config --cflags-only-I libpcre2)" LIBSEPOLA="%_libdir/libsepol.a"
 
 %install
 %makeinstall_std -C policycoreutils-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
@@ -186,7 +188,7 @@ popd
 %makeinstall_std -C selinux-dbus-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
 %makeinstall_std -C semodule-utils-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
 %makeinstall_std -C restorecond-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
-%makeinstall_std -C mcstrans-%version LIBDIR=%_libdir CFLAGS="%optflags $(pkg-config --cflags-only-I libpcre)" LIBSEPOLA="%_libdir/libsepol.a" SYSTEMDDIR="/lib/systemd"
+%makeinstall_std -C mcstrans-%version LIBDIR=%_libdir CFLAGS="%optflags $(pkg-config --cflags-only-I libpcre2)" LIBSEPOLA="%_libdir/libsepol.a" SYSTEMDDIR="/lib/systemd"
 
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 mkdir -pv %buildroot%python3_sitelibdir
@@ -215,17 +217,6 @@ ln -sv $(relative %_sbindir/fixfiles /sbin/fixfiles) %buildroot/sbin/fixfiles
 
 %find_lang --with-man --all-name %name
 
-egrep 'newrole\.1' %name.lang > %name-newrole.lang
-egrep 'sandbox\.5|sandbox\.8|seunshare\.8' %name.lang > %name-sandbox.lang
-egrep 'restorecond\.8' %name.lang > %name-restorecond.lang
-egrep 'mcs\.8|mcstransd\.8|setrans\.conf\.5' %name.lang > %name-mcstransd.lang
-egrep 'sepolgen\.8|sepolicy-booleans\.8|sepolicy-generate\.8|sepolicy-interface\.8|sepolicy-network\.8|sepolicy\.8|sepolicy-communicate\.8|sepolicy-manpage\.8|sepolicy-transition\.8|semodule_expand\.8|semodule_link\.8|semodule_unpackage\.8' %name.lang > %name-devel.lang
-egrep 'system-config-selinux\.8|selinux-polgengui\.8|sepolicy-gui\.8' %name.lang > %name-gui.lang
-
-# Now remove all matched lines from original lang file
-grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang -f %name-mcstransd.lang -f %name-devel.lang -f %name-gui.lang %name.lang > %name-common.lang
-
-
 %triggerin -- selinux-policy
 [ -f %_datadir/selinux/devel/include/build.conf ] && sepolgen-ifgen ||:
 
@@ -246,7 +237,7 @@ grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang 
 # Fedora spec file has additional sub-packages: -python, -python3. 
 # Put it contents here, to main policycoreutils package
 #
-%files -f %name-common.lang
+%files -f %name.lang
 /sbin/restorecon
 /sbin/restorecon_xattr
 /sbin/fixfiles
@@ -310,7 +301,7 @@ grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang 
 %_man8dir/run_init.*
 
 
-%files newrole -f %name-newrole.lang
+%files newrole
 %config(noreplace) %_sysconfdir/pam.d/newrole
 %attr(4511,root,root) %_bindir/newrole
 %_man1dir/newrole.*
@@ -320,7 +311,7 @@ grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang 
 # sandbox - useless for selinux-policy-altlinux.
 # Leave it for ref-policy.
 #
-%files sandbox -f %name-sandbox.lang
+%files sandbox
 %_bindir/sandbox
 %_sbindir/seunshare
 %_initddir/sandbox
@@ -334,7 +325,7 @@ grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang 
 %_datadir/sandbox
 
 
-%files restorecond -f %name-restorecond.lang
+%files restorecond
 %_unitdir/restorecond.service
 %_prefix/lib/systemd/user/restorecond_user.service
 %_datadir/dbus-1/services/org.selinux.Restorecond.service
@@ -343,7 +334,7 @@ grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang 
 %config(noreplace) %_sysconfdir/selinux/restorecond*
 %_man8dir/restorecond.*
 
-%files mcstransd -f %name-mcstransd.lang
+%files mcstransd
 /sbin/mcstransd
 %_initrddir/mcstrans
 %_unitdir/mcstrans.service
@@ -353,7 +344,7 @@ grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang 
 %_man8dir/mcstransd.*
 %_datadir/mcstrans
 
-%files devel -f %name-devel.lang
+%files devel
 %_bindir/sepolgen
 %_bindir/sepolicy
 %_bindir/semodule_expand
@@ -378,7 +369,7 @@ grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang 
 %_man8dir/semodule_unpackage.*
 
 
-%files gui -f %name-gui.lang
+%files gui
 %_bindir/system-config-selinux
 %_bindir/selinux-polgengui
 %_bindir/sepolgen-ifgen
@@ -417,7 +408,7 @@ grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang 
 %files -n python3-module-policycoreutils
 %python3_sitelibdir/sepolicy/
 %python3_sitelibdir/sepolgen/
-%python3_sitelibdir/sepolicy-*.egg-info
+%python3_sitelibdir/sepolicy-*.dist-info
 %python3_sitelibdir/seobject.py
 %python3_sitelibdir/__pycache__/*
 %exclude %python3_sitelibdir/sepolicy/gui.py
@@ -430,6 +421,10 @@ grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang 
 %python3_sitelibdir/sepolicy/sepolicy.glade
 
 %changelog
+* Tue Dec 26 2023 Anton Zhukharev <ancieg@altlinux.org> 1:3.6-alt1
+- (NMU) Updated to 3.6.
+  + Removed man-pages localizations that had been dropped by upstream.
+
 * Thu Jun 23 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1:3.2-alt6
 - Added providing for policycoreutils-python-utils for more compatibility with RHEL.
 

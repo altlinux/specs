@@ -8,8 +8,8 @@
 
 Name: libsepol
 Epoch: 1
-Version: 3.2
-Release: alt2
+Version: 3.6
+Release: alt1
 Summary: SELinux binary policy manipulation library
 License: LGPLv2+
 Group: System/Libraries
@@ -77,9 +77,6 @@ on binary policies such as customizing policy boolean settings.
 %install
 %makeinstall_std LIBDIR=%_libdir SHLIBDIR=/%_lib
 
-# TODO: currently only man8dir is translated. If other man pages are translated, %%find_lang use should be improved
-%find_lang --with-man --all-name %name
-
 %check
 %make_build test
 
@@ -95,12 +92,16 @@ on binary policies such as customizing policy boolean settings.
 %files devel-static
 %_libdir/*.a
 
-%files utils -f %name.lang
+%files utils
 %_bindir/*
 %_man8dir/*
 %exclude %_man8dir/genpol*
 
 %changelog
+* Mon Dec 25 2023 Anton Zhukharev <ancieg@altlinux.org> 1:3.6-alt1
+- (NMU) Updated to 3.6.
+  + Removed man-pages localizations that had been dropped by upstream.
+
 * Wed Sep 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.2-alt2
 - Fixed build with LTO.
 
