@@ -4,7 +4,7 @@ BuildRequires: makeinfo
 %define octpkg splines
 Epoch: 1
 Name: octave-%octpkg
-Version: 1.3.4
+Version: 1.3.5
 Release: alt1
 Summary: Additional spline functions for Octave
 
@@ -30,7 +30,7 @@ Requires: octave >= 3.6.0
 Additional spline functions.
 
 %prep
-%setup -q -n %{octpkg}-%{version}
+%setup -q -n %{octpkg}
 
 %build
 %octave_build
@@ -46,6 +46,9 @@ Additional spline functions.
 %endif
 
 %changelog
+* Tue Dec 26 2023 Igor Vlasenko <viy@altlinux.org> 1:1.3.5-alt1
+- regenerated from template by package builder
+
 * Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 1:1.3.4-alt1
 - regenerated from template by package builder
 
