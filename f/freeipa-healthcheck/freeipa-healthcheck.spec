@@ -5,7 +5,7 @@
 %def_without pylint
 
 Name: freeipa-healthcheck
-Version: 0.12
+Version: 0.16
 Release: alt1
 
 Summary: Check the health of a FreeIPA installation
@@ -13,7 +13,8 @@ License: GPLv3
 Group: System/Base
 Url: https://github.com/freeipa/freeipa-healthcheck
 
-Source0: %name-%version.tar.gz
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 
 # Dogtag PKI 11.2.1 requires Java 17 that is not built for armh
@@ -22,11 +23,8 @@ ExcludeArch: %ix86 armh
 Requires: python3-module-%name = %EVR
 Requires: dogtag-pki-healthcheck
 
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %if_with check
 BuildRequires: python3-module-ipaserver
@@ -64,8 +62,8 @@ Core plugin system for %name.
 
 %prep
 %setup
-
 %patch -p1
+%pyproject_deps_resync_build
 
 %build
 %pyproject_build
@@ -137,6 +135,9 @@ export PYTHONPATH="$(pwd)"
 %python3_sitelibdir/ipahealthcheck/core/
 
 %changelog
+* Thu Dec 21 2023 Stanislav Levin <slev@altlinux.org> 0.16-alt1
+- 0.12 -> 0.16.
+
 * Mon Jan 23 2023 Stanislav Levin <slev@altlinux.org> 0.12-alt1
 - 0.11 -> 0.12.
 
