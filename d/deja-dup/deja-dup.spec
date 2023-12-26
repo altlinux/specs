@@ -1,5 +1,5 @@
 Name: deja-dup
-Version: 45.1
+Version: 45.2
 Release: alt1
 
 Summary: Simple backup tool and frontend for duplicity
@@ -93,6 +93,9 @@ desktop-file-validate %buildroot/%_sysconfdir/xdg/autostart/org.gnome.DejaDup.Mo
 #_datadir/help/*
 
 %changelog
+* Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 45.2-alt1
+- new version 45.2 (with rpmrb script)
+
 * Sun Oct 01 2023 Vitaly Lipatov <lav@altlinux.ru> 45.1-alt1
 - new version 45.1 (with rpmrb script)
 
