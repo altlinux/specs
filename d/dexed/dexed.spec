@@ -1,8 +1,8 @@
-ExclusiveArch: %ix86 x86_64
+ExcludeArch: ppc64le
 
 Name: dexed
 Version: 0.9.6
-Release: alt1
+Release: alt2
 
 License: GPLv3
 Summary: DX7 FM multi plaform/multi format plugin
@@ -25,6 +25,7 @@ Source10: %name-%version-juce.tar
 Source100: dexed.desktop
 
 Patch0: %name-%version-%release.patch
+Patch1: alt-concurrent-build.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libfreetype-devel
@@ -46,11 +47,13 @@ DX7 FM multi plaform/multi format plugin.
 %prep
 %setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10
 %patch0 -p1
+%patch1 -p1
 
 %build
 # Build Projucer
+export NPROCS=%__nprocs
 pushd ./assets/JUCE/extras/Projucer/Builds/LinuxMakefile
-make all
+make -j ${NPROCS:=1} all
 popd
 cp ./assets/JUCE/extras/Projucer/Builds/LinuxMakefile/build/Projucer ./assets/JUCE/
 
@@ -78,5 +81,8 @@ install -D -m 644 %SOURCE100 %buildroot%_datadir/applications/dexed.desktop
 %doc README* LICENSE*
 
 %changelog
+* Tue Dec 26 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.9.6-alt2
+- NMU: Build on more architectures. Use all available cores.
+
 * Thu Dec 14 2023 Aleksandr Yukhnenko <neff@altlinux.org> 0.9.6-alt1
 - Initial build for Sisyphus
