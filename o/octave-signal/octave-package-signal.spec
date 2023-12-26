@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: makeinfo
+BuildRequires: makeinfo texinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
 %define octpkg signal
 Epoch: 2
 Name: octave-%octpkg
-Version: 1.4.3
+Version: 1.4.5
 Release: alt1
 Summary: Signal Processing
 
@@ -40,13 +40,16 @@ Signal processing tools, including filtering, windowing and display functions.
 %octave_install
 
 %files
-%doc NEWS DESCRIPTION COPYING
+%doc DESCRIPTION COPYING NEWS doc
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Tue Dec 26 2023 Igor Vlasenko <viy@altlinux.org> 2:1.4.5-alt1
+- regenerated from template by package builder
+
 * Mon Nov 07 2022 Andrey Cherepanov <cas@altlinux.org> 2:1.4.3-alt1
 - new version
 
