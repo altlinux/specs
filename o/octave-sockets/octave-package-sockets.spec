@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: makeinfo
+BuildRequires: makeinfo texinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
 %define octpkg sockets
 Epoch: 1
 Name: octave-%octpkg
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 Summary: Sockets
 
@@ -40,13 +40,16 @@ Socket functions for networking from within octave.
 %octave_install
 
 %files
-%doc NEWS COPYING DESCRIPTION
+%doc COPYING DESCRIPTION NEWS doc
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Tue Dec 26 2023 Igor Vlasenko <viy@altlinux.org> 1:1.4.1-alt1
+- regenerated from template by package builder
+
 * Tue Nov 08 2022 Andrey Cherepanov <cas@altlinux.org> 1:1.4.0-alt1
 - new version
 
