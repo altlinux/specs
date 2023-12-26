@@ -2,7 +2,7 @@
 
 Name: os-autoinst
 Version: 4.6
-Release: alt13.1
+Release: alt14
 Summary: OS-level test automation
 License: GPLv2+
 Group: Development/Tools
@@ -146,6 +146,9 @@ export OPENQA_TEST_TIMEOUT_SCALE_CI=10
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Mon Dec 25 2023 Alexandr Antonov <aas@altlinux.org> 4.6-alt14
+- update to current version
+
 * Fri Oct 20 2023 Alexandr Antonov <aas@altlinux.org> 4.6-alt13.1
 - Disabling 13-osutils.t for aarhc64, ppc64le architectures
 
