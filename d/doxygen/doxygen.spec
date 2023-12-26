@@ -1,5 +1,5 @@
 Name: doxygen
-Version: 1.9.8
+Version: 1.10.0
 Release: alt1
 Epoch: 1
 
@@ -33,13 +33,15 @@ BuildRequires(pre): rpm-macros-qt5-webengine
 # Automatically added by buildreq on Wed Mar 22 2023
 # optimized out: cmake-modules fontconfig fonts-type1-urw gcc-c++ ghostscript-classic git-core glibc-kernheaders-generic glibc-kernheaders-x86 libglvnd-devel libgpg-error libqt5-core libqt5-gui libqt5-widgets libqt5-xml libsasl2-3 libssl-devel libstdc++-devel perl perl-parent python-modules python2-base python3 python3-base qt5-base-devel sh4 tex-common texlive texlive-collection-basic texlive-dist
 BuildRequires: cmake flex ghostscript-common graphviz qt5-svg-devel qt5-virtualkeyboard-devel qt5-wayland-devel texlive-collection-basic texlive-dist
-# graphviz uses pango as the default backend. pango needs some font and
-# a properly configured fontconfig to produce something sane.
-BuildRequires: fontconfig fonts-ttf-liberation
 
 %ifarch %qt5_qtwebengine_arches
 BuildRequires: qt5-webengine-devel qt5-webglplugin-devel
 %endif
+
+# graphviz uses pango as the default backend. pango needs some font and
+# a properly configured fontconfig to produce something sane.
+BuildRequires: fontconfig fonts-ttf-dejavu
+Requires: fontconfig fonts-ttf-dejavu
 
 %description
 Doxygen is a documentation system for C, C++ and IDL.  It can generate
@@ -131,6 +133,10 @@ cd BUILD && make tests
 %exclude %_man1dir/doxy[is]*
 
 %changelog
+* Tue Dec 26 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.10.0-alt1
+- 1.10.0;
+- require fonts-ttf-dejavu (fixes broken graphviz diagrams).
+
 * Fri Sep 01 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.9.8-alt1
 - 1.9.8
 
