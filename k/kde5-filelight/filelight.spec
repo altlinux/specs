@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 23.08.4
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -73,6 +73,9 @@ KF5 library
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Dec 26 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt2
+- fix russian translation
+
 * Mon Dec 11 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
 - new version
 
