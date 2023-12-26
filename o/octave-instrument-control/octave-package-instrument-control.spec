@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/octave-config /usr/bin/rpcgen libtirpc-devel linux-gpib-devel makeinfo texinfo
+BuildRequires: /usr/bin/octave-config /usr/bin/rpcgen libtirpc-devel linux-gpib-devel makeinfo pkgconfig(libmodbus) texinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
 %define octpkg instrument-control
 Name: octave-%octpkg
-Version: 0.8.0
+Version: 0.9.1
 Release: alt1
 Summary: Instrument Control
 
@@ -22,8 +22,8 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 BuildArch: noarch
 %endif
 Provides: octave(instrument-control) = %version
-# Depends: octave (>= 3.8.0)
-Requires: octave >= 3.8.0
+# Depends: octave (>= 4.0.0)
+Requires: octave >= 4.0.0
 
 
 %description
@@ -39,13 +39,16 @@ Low level I/O functions for serial, i2c, spi, parallel, tcp, gpib, vxi11, udp an
 %octave_install
 
 %files
-%doc COPYING README.md NEWS DESCRIPTION doc
+%doc COPYING README.md DESCRIPTION NEWS doc
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Tue Dec 26 2023 Igor Vlasenko <viy@altlinux.org> 0.9.1-alt1
+- regenerated from template by package builder
+
 * Sat Mar 11 2023 Andrey Cherepanov <cas@altlinux.org> 0.8.0-alt1
 - new version
 
