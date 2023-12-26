@@ -8,7 +8,7 @@
 
 Name: gimp
 Version: %ver_major.36
-Release: alt1
+Release: alt2
 
 Summary: The GNU Image Manipulation Program
 License: %gpl3only
@@ -29,7 +29,7 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: bzlib-devel gcc-c++ gtk-doc gvfs intltool libXcursor-devel libXmu-devel libXpm-devel libalsa-devel libexpat-devel
 BuildRequires: libgegl-devel libgexiv2-devel libgs-devel libgudev-devel liblcms2-devel liblzma-devel libmng-devel libopenjpeg2.0-devel
-BuildRequires: libpoppler-glib-devel librsvg-devel libtiff-devel libwebkitgtk2-devel libwebp-devel libwmf-devel
+BuildRequires: libpoppler-glib-devel librsvg-devel libtiff-devel libwebp-devel libwmf-devel
 BuildRequires: openexr-devel xdg-utils libpng-devel iso-codes-devel libheif-devel libXfixes-devel
 BuildRequires: python-module-pycairo-devel python-module-pygtk-devel
 BuildRequires: libmypaint-devel >= %mypaint_ver mypaint-brushes%brushes_ver-devel
@@ -125,6 +125,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_datadir/aclocal/*
 
 %changelog
+* Tue Dec 26 2023 Valery Inozemtsev <shrek@altlinux.ru> 2.10.36-alt2
+- sets the browser used by the help system
+
 * Thu Nov 09 2023 Valery Inozemtsev <shrek@altlinux.ru> 2.10.36-alt1
 - 2.10.36
 
