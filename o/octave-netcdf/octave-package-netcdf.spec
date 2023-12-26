@@ -1,16 +1,16 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: makeinfo
+BuildRequires: makeinfo texinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
 %define octpkg netcdf
 Name: octave-%octpkg
-Version: 1.0.14
+Version: 1.0.17
 Release: alt1
 Summary: A NetCDF interface for Octave
 
 Group: Sciences/Mathematics
-License: GPLv2+
-URL: http://octave.sf.net
+License: GPLv3+
+URL: https://octave.sf.net/netcdf/index.html
 
 Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octpkg}-%{version}.tar.gz
 
@@ -25,8 +25,8 @@ Provides: octave(netcdf) = %version
 
 # octave module BuildRequires: netcdf-devel [Fedora]
 BuildRequires: libnetcdf-devel
-# Depends: octave (>= 3.8.0)
-Requires: octave >= 3.8.0
+# Depends: octave (>= 4.0.0)
+Requires: octave >= 4.0.0
 
 
 %description
@@ -42,13 +42,16 @@ A NetCDF interface for Octave
 %octave_install
 
 %files
-%doc COPYING README.md NEWS DESCRIPTION
+%doc DESCRIPTION README.md COPYING NEWS doc
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Tue Dec 26 2023 Igor Vlasenko <viy@altlinux.org> 1.0.17-alt1
+- regenerated from template by package builder
+
 * Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 1.0.14-alt1
 - regenerated from template by package builder
 
