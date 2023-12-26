@@ -3,7 +3,7 @@
 
 Name: blackbox-terminal
 Version: 0.14.0
-Release: alt5.gitdc3417f
+Release: alt6.git55f34e7
 
 Summary: A beautiful GTK 4 terminal
 License: GPL-3.0
@@ -73,6 +73,9 @@ EOF
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Mon Dec 25 2023 Vladimir Didenko <cow@altlinux.org> 0.14.0-alt6.git55f34e7
+- New version
+
 * Mon Aug 21 2023 Vladimir Didenko <cow@altlinux.org> 0.14.0-alt5.gitdc3417f
 - Support -e option as alias for -c for xvt compatibility (closes: #47180)
 
