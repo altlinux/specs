@@ -7,7 +7,7 @@
 %endif
 
 Name: btrfs-progs
-Version: 6.6.2
+Version: 6.6.3
 Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
@@ -30,7 +30,7 @@ BuildRequires: xmlto
 BuildRequires: libzstd-devel
 BuildRequires: libudev-devel
 BuildRequires: libselinux-devel
-BuildRequires: python3-module-sphinx-sphinx-build-symlink
+BuildRequires: python3-module-sphinx-sphinx-build-symlink python3-module-sphinx_rtd_theme
 %if_with check
 BuildRequires: /proc /dev/kvm
 BuildRequires: /sbin/dmsetup
@@ -91,15 +91,10 @@ automake --add-missing ||:
 %make_build
 
 %install
-%makeinstall_std bindir=/sbin libdir=/%_lib incdir=/%_includedir/
-mkdir -p %buildroot%_libdir %buildroot%_bindir
-LIBNAME=`basename \`ls $RPM_BUILD_ROOT/%{_lib}/libbtrfs.so.*.*\``
-ln -s ../../%_lib/$LIBNAME %buildroot%_libdir/libbtrfs.so 
-LIBUTILNAME=`basename \`ls $RPM_BUILD_ROOT/%{_lib}/libbtrfsutil.so.*.*\``
-ln -s ../../%_lib/$LIBUTILNAME %buildroot%_libdir/libbtrfsutil.so
-ln -s ../../sbin/btrfs %buildroot%_bindir/btrfs
-rm -f %buildroot/%{_lib}/libbtrfs.so
-rm -f %buildroot/%{_lib}/libbtrfsutil.so
+%makeinstall_std bindir=%_bindir libdir=%_libdir incdir=%_includedir/
+mkdir -p %buildroot%_libdir %buildroot%_sbindir %buildroot/sbin
+ln %buildroot%_bindir/btrfs %buildroot%_sbindir/btrfs
+ln %buildroot%_bindir/btrfs %buildroot/sbin/btrfs
 
 install -pD -m644 btrfs-completion %buildroot%_datadir/bash-completion/completions/btrfs
 
@@ -127,15 +122,15 @@ vm-run --sbin --udevd --kvm=cond make V=1 TEST_LOG=dump test-mkfs
 
 %files
 /sbin/*
-%_bindir/btrfs
 %_bindir/*
+%_sbindir/*
 %_udevrulesdir/*.rules
 %_datadir/bash-completion/completions/btrfs
 %_man8dir/*
 %_man5dir/*
 
 %files -n libbtrfs
-/%_lib/*.so.*
+%_libdir/*.so.*
 
 %files -n libbtrfs-devel
 %_libdir/*.so
@@ -143,6 +138,10 @@ vm-run --sbin --udevd --kvm=cond make V=1 TEST_LOG=dump test-mkfs
 %_includedir/*
 
 %changelog
+* Tue Dec 26 2023 Anton Farygin <rider@altlinux.ru> 6.6.3-alt1
+- 6.6.3
+- libraries and binaries were moved to /usr
+
 * Sun Nov 26 2023 Anton Farygin <rider@altlinux.ru> 6.6.2-alt1
 - 6.6.2
 
