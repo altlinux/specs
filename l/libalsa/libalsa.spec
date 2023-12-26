@@ -2,8 +2,8 @@
 %def_without python
 
 Name: libalsa
-Version: 1.2.8
-Release: alt2
+Version: 1.2.10
+Release: alt1
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) library
@@ -201,6 +201,9 @@ done
 %_bindir/aserver
 
 %changelog
+* Tue Dec 26 2023 Michael Shigorin <mike@altlinux.org> 1:1.2.10-alt1
+- 1.2.10
+
 * Mon Oct 23 2023 Michael Shigorin <mike@altlinux.org> 1:1.2.8-alt2
 - add another snd-usb-audio example to modprobe.d file
 

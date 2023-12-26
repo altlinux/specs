@@ -1,8 +1,8 @@
 %def_with systemd
 
 Name: alsa-utils
-Version: 1.2.8
-Release: alt2
+Version: 1.2.10
+Release: alt1
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) utils
@@ -102,6 +102,9 @@ touch config.rpath
 %_man1dir/amixer.1*
 
 %changelog
+* Tue Dec 26 2023 Michael Shigorin <mike@altlinux.org> 1:1.2.10-alt1
+- 1.2.10
+
 * Tue Aug 29 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:1.2.8-alt2
 - Dropped R: libncursesw >= 5.7 due to migration to ncurses ABI 6; the original
   issue ALT#21991 is addressed through the RPM set-versions mechanism.

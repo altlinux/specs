@@ -1,6 +1,6 @@
 Name: alsa-ucm-conf
-Version: 1.2.8
-Release: alt8
+Version: 1.2.10
+Release: alt1
 
 Summary: Advanced Linux Sound Architecture (ALSA) Use Case Manager data
 License: BSD-3-Clause
@@ -8,18 +8,6 @@ Group: System/Libraries
 
 Url: http://www.alsa-project.org
 Source: %name-%version.tar
-
-Patch1: 0001-ucm.conf-turn-on-support-for-V2Module-and-V2Name-by-.patch
-Patch2: 0002-ucm2-add-pinephone-pro-support.patch
-Patch8: 0008-tegra-Add-UCM-for-RT5631-based-ASUS-Transformers.patch
-Patch9: 0009-tegra-Add-UCM-for-WM8903-based-ASUS-Transformers.patch
-Patch10: 0010-rt5631-add-headset-support.patch
-Patch11: 0011-wm8903-replace-amic-control-element.patch
-Patch12: 0012-ucm2-sof-essx8336-HiFi_fix_disdevall_and_EN_headset.patch
-Patch13: 0013-ucm2-sof-essx8336-add-inv-headset-detect-near-DMic.patch
-Patch14: 0014-sof-essx8336-update-strategy-and-add-support-for-es8.patch
-Patch20: 0020-amd-acp3x-essx8336-add-support-for-a-new-driver.patch
-
 BuildArch: noarch
 
 %define alsadata %_datadir/alsa
@@ -31,16 +19,6 @@ in a standalone repository.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch20 -p1
 
 %build
 
@@ -53,6 +31,11 @@ cp -at %buildroot%alsadata -- ucm*
 %doc LICENSE
 
 %changelog
+* Tue Dec 26 2023 Michael Shigorin <mike@altlinux.org> 1.2.10-alt1
+- 1.2.10
+- fix 15-years-old strl() related kludge in alsactl/init_sysdeps.c
+- drop upstream commits as patches
+
 * Mon Jun 19 2023 Vasiliy Kovalev <kovalev@altlinux.org> 1.2.8-alt8
 - sof-essx8336: update strategy and add support for es8326 codec
 
