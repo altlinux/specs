@@ -1,6 +1,6 @@
 Name: emonoda
-Version: 2.1.36
-Release: alt3
+Version: 2.1.37
+Release: alt1
 
 Summary: The set of tools to organize and management of your torrents
 
@@ -30,7 +30,7 @@ The set of tools to organize and management of your torrents.
 
 %prep
 %setup
-%autopatch -p1
+#autopatch -p1
 
 %build
 %python3_build
@@ -55,6 +55,9 @@ The set of tools to organize and management of your torrents.
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 2.1.37-alt1
+- new version 2.1.37 (with rpmrb script)
+
 * Wed Jul 26 2023 Vitaly Lipatov <lav@altlinux.ru> 2.1.36-alt3
 - cleanup spec
 - add patch against setuptools 68.0.0
