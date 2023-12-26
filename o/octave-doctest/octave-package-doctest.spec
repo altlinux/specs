@@ -3,7 +3,7 @@ BuildRequires: makeinfo
 # END SourceDeps(oneline)
 %define octpkg doctest
 Name: octave-%octpkg
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 Summary: Documentation tests
 
@@ -38,13 +38,16 @@ Find and run example code within documentation.
 %octave_install
 
 %files
-%doc README.md COPYING DESCRIPTION CONTRIBUTORS NEWS
+%doc COPYING NEWS DESCRIPTION README.md CONTRIBUTORS
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Tue Dec 26 2023 Igor Vlasenko <viy@altlinux.org> 0.8.0-alt1
+- regenerated from template by package builder
+
 * Fri Apr 19 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1
 - regenerated from template by package builder
 
