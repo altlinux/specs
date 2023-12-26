@@ -1,7 +1,7 @@
 %define appdir %_var/lib/tomcat/webapps
 
 Name: guacamole
-Version: 1.5.3
+Version: 1.5.4
 Release: alt1
 Summary: Clientless remote desktop gateway
 License: Apache-2.0
@@ -311,6 +311,9 @@ ln -r -s %buildroot%_datadir/java/postgresql-jdbc.jar %buildroot%_sysconfdir/%na
 %doc %_docdir/%name/auth-json
 
 %changelog
+* Mon Dec 25 2023 Alexander Burmatov <thatman@altlinux.org> 1.5.4-alt1
+- 1.5.4 (Fixes: CVE-2023-43826).
+
 * Fri Aug 18 2023 Alexey Shabalin <shaba@altlinux.org> 1.5.3-alt1
 - 1.5.3
 
@@ -323,4 +326,3 @@ ln -r -s %buildroot%_datadir/java/postgresql-jdbc.jar %buildroot%_sysconfdir/%na
 
 * Thu Nov 19 2020 Alexey Shabalin <shaba@altlinux.org> 1.2.0-alt1
 - Initial build
-
