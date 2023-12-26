@@ -22,7 +22,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 10.1.900
+Version: 10.1.990
 Release: alt1
 Url: https://basealt.ru
 
@@ -360,6 +360,9 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Dec 26 2023 Mikhail Efremov <sem@altlinux.org> 10.1.990-alt1
+- all: Bump distro version to 10.1.990.
+
 * Mon Dec 04 2023 Mikhail Efremov <sem@altlinux.org> 10.1.900-alt1
 - mate-settings: Don't use user background in the lightdm-gtk-greeter.
 - notes: Always update licenses.
