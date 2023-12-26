@@ -2,7 +2,7 @@
 %def_without check
 
 Name:	 freebasic
-Version: 1.10.0
+Version: 1.10.1
 Release: alt1
 
 Summary: FreeBASIC language compiler
@@ -79,6 +79,9 @@ make -C tests log-tests FB_LANG=fb || /bin/true
 %_man1dir/*
 
 %changelog
+* Tue Dec 26 2023 Andrey Cherepanov <cas@altlinux.org> 1.10.1-alt1
+- New version.
+
 * Thu May 18 2023 Andrey Cherepanov <cas@altlinux.org> 1.10.0-alt1
 - New version.
 
