@@ -8,7 +8,7 @@
 %define rname qmmp
 Name: qmmp%major
 Version: 2.1.5
-Release: alt2
+Release: alt3
 Epoch: 1
 %K5init no_altplace appdata
 
@@ -47,14 +47,14 @@ The user interface is similar to winamp or xmms.
 Supported formats:
 - MPEG1 layer 2/3
 - Ogg Vorbis
-- Opus
+- Ogg Opus
 - Native FLAC, Ogg FLAC
 - Musepack
 - WavePack
 - tracker modules (mod, s3m, it, xm, etc)
 - ADTS AAC
 - CD Audio
-- WMA, Monkey's Audio (and other formats provided by FFmpeg library)
+- WMA and other formats provided by FFmpeg library
 - PCM WAVE (and other formats provided by libsndfile library)
 - midi
 - chiptune formats (AY, GBS, GYM, HES, KSS, NSF, NSFE, SAP, SPC, VGM, VGZ, VTX)
@@ -64,37 +64,47 @@ DSP effects:
 - sample rate converter
 - LADSPA effects
 - extra stereo
-- crossfade (Experimental)
+- crossfade
 
 Visual effects:
 - projectM visualization
 - spectrum analyzer
 
 Output system support:
-- OSS
-- ALSA (Linux)
-- Pulse Audio
+- ALSA
+- PulseAudio
+- PipeWire
 - JACK
-- WaveOut (Win32)
+- QtMultimedia
+- Icecast
 
 Other features:
 - XMMS and Winamp 2.x skins support
+- alternative user interface based on standard widgets set
 - 10-band equalizer
 - MP3, Vorbis, AAC, AAC+ streams support
 - mms support
-- MPRIS (1.0 and 2.0)
-- removable device detection (via HAL or UDisks)
+- MPRIS
+- removable device detection (via UDisks)
 - video playback via Mplayer
-- lyrics (using lyrics.wikia.com)
+- lyrics
 - cover art support
 - CUE sheet support
-- embedded CUE support (for FLAC and WavPack)
+- embedded CUE support (for FLAC, WavPack)
 - multiple playlists
 - automatic charset detection for cue files and ShoutCast metadata
 - playlist formats: m3u, pls, xspf
 - ReplayGain support
-- Last.fm/Libre.fm scrobbler
+- sending listening history to Last.fm, Libre.fm and ListenBrainz
 - CDDB support
+- audio converter
+- stream browser
+- audio formats converter
+- external programs execution on track change
+- ReplayGain scanner
+- audio recording
+- listening history
+- media library
 
 %package -n qmmp
 Group: Sound
@@ -102,7 +112,70 @@ Summary: Qmmp - Qt-based multimedia player
 Conflicts: qmmp1
 Requires: unzip winamplike-skins
 %description -n qmmp
-%{description}
+Qmmp is an audio-player, written with help of Qt library.
+The user interface is similar to winamp or xmms.
+
+Supported formats:
+- MPEG1 layer 2/3
+- Ogg Vorbis
+- Ogg Opus
+- Native FLAC, Ogg FLAC
+- Musepack
+- WavePack
+- tracker modules (mod, s3m, it, xm, etc)
+- ADTS AAC
+- CD Audio
+- WMA and other formats provided by FFmpeg library
+- PCM WAVE (and other formats provided by libsndfile library)
+- midi
+- chiptune formats (AY, GBS, GYM, HES, KSS, NSF, NSFE, SAP, SPC, VGM, VGZ, VTX)
+
+DSP effects:
+- BS2B effect
+- sample rate converter
+- LADSPA effects
+- extra stereo
+- crossfade
+
+Visual effects:
+- projectM visualization
+- spectrum analyzer
+
+Output system support:
+- ALSA
+- PulseAudio
+- PipeWire
+- JACK
+- QtMultimedia
+- Icecast
+
+Other features:
+- XMMS and Winamp 2.x skins support
+- alternative user interface based on standard widgets set
+- 10-band equalizer
+- MP3, Vorbis, AAC, AAC+ streams support
+- mms support
+- MPRIS
+- removable device detection (via UDisks)
+- video playback via Mplayer
+- lyrics
+- cover art support
+- CUE sheet support
+- embedded CUE support (for FLAC, WavPack)
+- multiple playlists
+- automatic charset detection for cue files and ShoutCast metadata
+- playlist formats: m3u, pls, xspf
+- ReplayGain support
+- sending listening history to Last.fm, Libre.fm and ListenBrainz
+- CDDB support
+- audio converter
+- stream browser
+- audio formats converter
+- external programs execution on track change
+- ReplayGain scanner
+- audio recording
+- listening history
+- media library
 
 %package devel
 Summary: Qmmp header files
@@ -175,6 +248,9 @@ ln -s `relative %_wlskindir %_datadir/%rname/skins` %buildroot/%_datadir/%rname/
 %_K5link/lib*.so
 
 %changelog
+* Tue Dec 26 2023 Sergey V Turchin <zerg@altlinux.org> 1:2.1.5-alt3
+- update package description
+
 * Fri Dec 15 2023 Sergey V Turchin <zerg@altlinux.org> 1:2.1.5-alt2
 - add conflict with qmmp1
 
