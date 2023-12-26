@@ -2,11 +2,11 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%define libsepol_ver 3.2
+%define libsepol_ver 3.6
 
 Name: setools
-Version: 4.4.0
-Release: alt2
+Version: 4.4.4
+Release: alt1
 License: %gpl2plus
 URL: https://github.com/SELinuxProject/setools/wiki
 Summary: Policy analysis tools for SELinux
@@ -18,6 +18,9 @@ Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-cython
 BuildRequires: /proc
 #libsetools
 BuildRequires: libselinux-devel
@@ -25,9 +28,6 @@ BuildRequires: libselinux-devel
 # In libsepol defined version: POLICYDB_VERSION_MAX, so rebuild libsepol first if available.
 BuildRequires: libsepol-devel >= %libsepol_ver
 BuildRequires: libsepol-devel-static >= %libsepol_ver
-
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3(Cython)
 
 %description
 SETools is a collection of graphical tools, command-line tools, and
@@ -79,11 +79,10 @@ libraries designed to facilitate SELinux policy analysis.
 %patch -p1
 
 %build
-CFLAGS="%{optflags}" python3 setup.py build_ext
-CFLAGS="%{optflags}" %python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %find_lang --with-man --all-name %name
 
@@ -94,7 +93,7 @@ egrep 'apol\.1' %name.lang > %name-gui.lang
 %files -n python3-module-%name
 %doc ChangeLog COPYING COPYING.GPL COPYING.LGPL KNOWN-BUGS README.md
 %python3_sitelibdir/setools
-%python3_sitelibdir/setools-*-py*.egg-info
+%python3_sitelibdir/setools-*.dist-info
 
 %files console -f %name-console.lang
 %doc ChangeLog COPYING COPYING.GPL COPYING.LGPL KNOWN-BUGS README.md
@@ -121,6 +120,9 @@ egrep 'apol\.1' %name.lang > %name-gui.lang
 %python3_sitelibdir/setoolsgui
 
 %changelog
+* Tue Dec 26 2023 Anton Zhukharev <ancieg@altlinux.org> 4.4.4-alt1
+- (NMU) Updated to 4.4.4.
+
 * Wed Sep 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.4.0-alt2
 - Rebuilt with LTO.
 
