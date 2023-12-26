@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/octave-config makeinfo pkgconfig(nettle)
 %define octpkg general
 Epoch: 1
 Name: octave-%octpkg
-Version: 2.1.2
+Version: 2.1.3
 Release: alt1
 Summary: General
 
@@ -40,13 +40,16 @@ General tools for Octave.
 %octave_install
 
 %files
-%doc DESCRIPTION NEWS COPYING
+%doc DESCRIPTION COPYING NEWS
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Tue Dec 26 2023 Igor Vlasenko <viy@altlinux.org> 1:2.1.3-alt1
+- regenerated from template by package builder
+
 * Fri Apr 08 2022 Andrey Cherepanov <cas@altlinux.org> 1:2.1.2-alt1
 - new version
 
