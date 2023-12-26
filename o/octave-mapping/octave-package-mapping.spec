@@ -4,7 +4,7 @@ BuildRequires: libgdal-devel makeinfo
 %def_with _octave_arch
 %define octpkg mapping
 Name: octave-%octpkg
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 Summary: Mapping Functions
 
@@ -22,8 +22,8 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 BuildArch: noarch
 %endif
 Provides: octave(mapping) = %version
-# Depends: octave (>= 3.8.0), io (>= 2.2.7), geometry (>= 4.0.0)
-Requires: octave >= 3.8.0 octave(io) >= 2.2.7 octave(geometry) >= 4.0.0
+# Depends: octave (>= 5.2.0), io (>= 2.2.7), geometry (>= 4.0.0)
+Requires: octave >= 5.2.0 octave(io) >= 2.2.7 octave(geometry) >= 4.0.0
 
 
 %description
@@ -39,13 +39,16 @@ Simple mapping and GIS .shp .dxf and raster file functions.
 %octave_install
 
 %files
-%doc COPYING DESCRIPTION NEWS
+%doc DESCRIPTION NEWS COPYING
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Tue Dec 26 2023 Igor Vlasenko <viy@altlinux.org> 1.4.2-alt1
+- regenerated from template by package builder
+
 * Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt1
 - regenerated from template by package builder
 
