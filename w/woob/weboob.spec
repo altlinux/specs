@@ -13,7 +13,7 @@
 
 Name:    woob
 Version: 3.6
-Release: alt1
+Release: alt2
 
 Summary: woob is a collection of applications able to interact with websites, without requiring the user to open them in a browser
 License: AGPL-3.0+
@@ -69,6 +69,9 @@ subst 's|#!.*python[0-9.]*$|#!%__python3|' $(grep -Rl '#!.*python[0-9.]*$' *)
 rm -rf woob/tools/blinkpdf.py
 %endif
 
+# Remove unsupported smtpd
+rm -rf woob/applications/smtp
+
 %build
 %pyproject_build
 %if_with docs
@@ -105,6 +108,9 @@ cp -a modules %buildroot%_datadir/%name
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Tue Dec 26 2023 Andrey Cherepanov <cas@altlinux.org> 3.6-alt2
+- Removed unsupported in python3.12 module smtpd.
+
 * Wed Jun 14 2023 Andrey Cherepanov <cas@altlinux.org> 3.6-alt1
 - New version.
 
