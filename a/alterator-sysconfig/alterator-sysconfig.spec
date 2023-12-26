@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sysconfig
-Version: 1.3.13
+Version: 1.3.14
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/preinstall.d/*
@@ -50,6 +50,10 @@ alterator module for basic system settings
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Wed Dec 06 2023 Andrey Cherepanov <cas@altlinux.org> 1.3.14-alt1
+- Added uz language support
+- sysconfig-base: add description for win_space_toggle
+
 * Sat Oct 21 2023 Anton Midyukov <antohami@altlinux.org> 1.3.13-alt1
 - sysconfig-base: set /etc/vconsole.conf if exist
 

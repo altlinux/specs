@@ -1,6 +1,6 @@
 Name: alterator-l10n
-Version: 2.9.137
-Release: alt5
+Version: 2.9.138
+Release: alt1
 
 Summary: translations for all alterator modules
 License: GPL
@@ -119,7 +119,12 @@ make check
 %lang(da) %dir %_datadir/alterator/help/da_DK/
 %lang(da) %_datadir/alterator/help/da_DK/*.html
 
+%lang(uz) %_datadir/locale/uz/LC_MESSAGES/*.mo
+
 %changelog
+* Mon Dec 25 2023 Andrey Cherepanov <cas@altlinux.org> 2.9.138-alt1
+- Add base alterator localization on Uzbek
+
 * Thu Nov 16 2023 Elena Mishina <lepata@altlinux.org> 2.9.137-alt5
 - alterator-audit: fix help (closes #48458)
 

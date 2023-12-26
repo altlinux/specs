@@ -1,7 +1,7 @@
 # -*- mode: RPM-SPEC; tab-width: 8; fill-column: 70; -*- 
 
 Name: alterator-datetime
-Version: 4.8.2
+Version: 4.8.3
 Release: alt1
 
 Summary: alterator module for date/time setup
@@ -68,6 +68,9 @@ Helper functions for %name.
 %_bindir/alterator-datetime-functions
 
 %changelog
+* Mon Dec 25 2023 Andrey Cherepanov <cas@altlinux.org> 4.8.3-alt1
+- defaultzones: add Asia/Tashkent for Uzbek locale
+
 * Sun Dec 10 2023 Anton Midyukov <antohami@altlinux.org> 4.8.2-alt1
 - alterator-datetime-functions: add get_utc_cmdline function
 
