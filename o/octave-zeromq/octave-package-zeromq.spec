@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: makeinfo texinfo
+BuildRequires: makeinfo rpm-build-python3 texinfo
 # END SourceDeps(oneline)
 %def_with _octave_arch
 %define octpkg zeromq
 Name: octave-%octpkg
-Version: 1.5.3
+Version: 1.5.5
 Release: alt1
 Summary: ZeroMQ Toolbox
 
@@ -49,6 +49,9 @@ ZeroMQ bindings for GNU Octave
 %endif
 
 %changelog
+* Tue Dec 26 2023 Igor Vlasenko <viy@altlinux.org> 1.5.5-alt1
+- regenerated from template by package builder
+
 * Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 1.5.3-alt1
 - regenerated from template by package builder
 
