@@ -6,7 +6,7 @@
 %def_disable fortran
 
 Name: qd
-Version: 2.3.23
+Version: 2.3.24
 Release: alt1
 
 Summary: C++/Fortran-90 double-double and quad-double package
@@ -176,6 +176,9 @@ LD_LIBRARY_PATH=$PWD/src/.libs:$PWD/fortran/.libs make check
 %doc docs/qd.pdf
 
 %changelog
+* Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 2.3.24-alt1
+- new version 2.3.24 (with rpmrb script)
+
 * Sat Aug 28 2021 Vitaly Lipatov <lav@altlinux.ru> 2.3.23-alt1
 - new version 2.3.23 (with rpmrb script) (ALT bug 40821)
 - package qd.pc (ALT bug 40821)
