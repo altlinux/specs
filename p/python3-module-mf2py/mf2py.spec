@@ -1,7 +1,9 @@
 %define oname mf2py
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.1.3
+Version: 2.0.1
 Release: alt1
 
 Summary: Python Microformats2 parser
@@ -14,8 +16,13 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-poetry-core
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-requests
+BuildRequires: python3-module-beautifulsoup4
+BuildRequires: python3-module-mock
+%endif
 
 %py3_provides %oname
 
@@ -27,14 +34,14 @@ microformats1.
 %prep
 %setup
 
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
-
 %build
 %pyproject_build
 
 %install
 %pyproject_install
+
+%check
+%pyproject_run_pytest -v
 
 %files
 %doc README.*
@@ -43,6 +50,9 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 
 %changelog
+* Wed Dec 27 2023 Anton Vyatkin <toni@altlinux.org> 2.0.1-alt1
+- New version 2.0.1.
+
 * Thu Jun 29 2023 Anton Vyatkin <toni@altlinux.org> 1.1.3-alt1
 - New version 1.1.3
 
