@@ -3,7 +3,7 @@
 %def_with check
 
 Name: rapidfuzz-cpp
-Version: 2.2.3
+Version: 3.0.0
 Release: alt1
 
 Summary: Rapid fuzzy string matching in C++ using the Levenshtein Distance
@@ -57,6 +57,9 @@ Group: Development/C++
 %_libdir/cmake/rapidfuzz
 
 %changelog
+* Wed Dec 27 2023 Anton Zhukharev <ancieg@altlinux.org> 3.0.0-alt1
+- Updated to 3.0.0.
+
 * Mon Nov 20 2023 Anton Zhukharev <ancieg@altlinux.org> 2.2.3-alt1
 - Updated to 2.2.3.
 
