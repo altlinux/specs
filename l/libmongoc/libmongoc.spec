@@ -1,7 +1,7 @@
 %def_disable tests
 
 Name: libmongoc
-Version: 1.24.4
+Version: 1.25.3
 Release: alt1
 Summary: Client library written in C for MongoDB
 Group: System/Libraries
@@ -15,7 +15,7 @@ BuildRequires: cmake >= 3.15
 BuildRequires: python3-module-sphinx
 BuildRequires: libssl-devel libsasl2-devel libicu-devel
 BuildRequires: zlib-devel libsnappy-devel libzstd-devel
-BuildRequires: sphinx
+BuildRequires: libutf8proc-devel
 BuildRequires(pre): rpm-macros-cmake
 
 %{?_enable_tests:BuildRequires: mongo-server-mongod openssl}
@@ -79,8 +79,9 @@ sed -i 's|sphinx-build|sphinx-build-3|' build/cmake/FindSphinx.cmake
     -DENABLE_SNAPPY:STRING=ON \
     %{?_disable_tests:-DENABLE_TESTS:BOOL=OFF} \
     -DENABLE_UNINSTALL:BOOL=OFF \
-    -DENABLE_EXAMPLES:BOOL=OFF
-
+    -DENABLE_EXAMPLES:BOOL=OFF \
+    -DUSE_BUNDLED_UTF8PROC:BOOL=OFF \
+    -DENABLE_SRV:BOOL=ON
 
 %cmake_build
 
@@ -137,6 +138,9 @@ exit $ret
 
 
 %changelog
+* Wed Dec 27 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.25.3-alt1
+- 1.25.3
+
 * Wed Sep 06 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.24.4-alt1
 - 1.24.4
 
