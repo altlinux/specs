@@ -1,6 +1,6 @@
 %define mversion	7
 %define dversion	%mversion.1.1
-%define drelease	21
+%define drelease	24
 %define qlev		Q16HDRI
 %define mgkdir		ImageMagick
 %define soname		10
@@ -267,6 +267,9 @@ mv %buildroot%_docdir/%name-%mversion %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Wed Dec 27 2023 Anton Farygin <rider@altlinux.ru> 7.1.1.24-alt1
+- 7.1.1.21 -> 7.1.1.24
+
 * Wed Nov 22 2023 Anton Farygin <rider@altlinux.ru> 7.1.1.21-alt1
 - 7.1.1.15 -> 7.1.1.21
 
