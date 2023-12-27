@@ -166,7 +166,7 @@
 
 Name:		ffmpeg
 Epoch:		2
-Version:	6.0.1
+Version:	6.1
 Release:	alt1
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
@@ -867,6 +867,9 @@ tests/checkasm/checkasm
 %endif
 
 %changelog
+* Wed Dec 27 2023 Anton Farygin <rider@altlinux.ru> 2:6.1-alt1
+- 6.1
+
 * Sun Nov 26 2023 Anton Farygin <rider@altlinux.ru> 2:6.0.1-alt1
 - 6.0.1
 
