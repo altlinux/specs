@@ -6,7 +6,7 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.36.2
+Version: 1.37.0
 Release: alt1
 
 Summary: A personal full text search package
@@ -24,6 +24,7 @@ Source4: recoll_uk.qm
 # 1.24.1+ru
 Source5: recoll-searchgui.desktop
 Source100: recoll.watch
+Patch: recoll-xml-const-error.diff
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -63,15 +64,27 @@ Note that this package has been built without its usual GUI.
 %endif
 
 %description -l ru_RU.UTF-8
-Recoll - это персональный пакет полнотекстового поиска, основанный на очень мощном бэкенде (Xapian),
-для которого он предоставляет простой в использовании, многофункциональный, простой интерфейс
-администрирования.
+Recoll - это персональный пакет полнотекстового поиска, основанный на очень
+мощном бэкенде (Xapian), для которого он предоставляет простой в использовании,
+многофункциональный, простой интерфейс администрирования.
 
 Смотрите также пакет recoll-extras для более сложных вещей.
 %if_disabled qtgui
 
-Обратите внимание, что этот пакет был собран без его привычного графического интерфейса.
+Обратите внимание, что этот пакет был собран без его привычного графического
+интерфейса.
 %endif
+
+%package devel
+Summary: Development headers for Recoll
+Group: Development/C++
+Requires: %name = %version-%release
+
+%description devel
+This package contains library headers needed to link against librecoll.
+
+%description -l ru_RU.UTF-8 devel
+Этот пакет содержит библиотечные заголовки для связывания с librecoll.
 
 %package extras
 Summary: More helper scripts for Recoll
@@ -85,7 +98,8 @@ need bulky additional required packages, manual setup, or both.
 
 %description -l ru_RU.UTF-8 extras
 Этот пакет содержит дополнительные вспомогательные скрипты для recoll, которые
-могут потребовать громоздких дополнительных пакетов, ручной установки или и того и другого.
+могут потребовать громоздких дополнительных пакетов, ручной установки или
+и того и другого.
 
 %package full
 Summary: All the recommended stuff for Recoll
@@ -116,10 +130,11 @@ Obsoletes: python-module-%name
 This package contains Python bindings for Recoll.
 
 %description -l ru_RU.UTF-8 -n python3-module-%name
-Этот пакет содержит привязки языка Python для Recoll
+Этот пакет содержит привязки языка Python для Recoll.
 
 %prep
 %setup -n %name-%version%pre
+%patch -p2
 
 sed -i 's/openoffice/loffice/' sampleconf/mimeview
 sed -i '/^Categories=/s/=/=Qt;/' desktop/*.desktop
@@ -176,6 +191,10 @@ chrpath -d %buildroot%_bindir/recollindex
 %_man5dir/*
 %doc ChangeLog.* README
 
+%files devel
+# librecoll gets installed with no soname...
+%_includedir/%name/
+
 %files extras
 %_datadir/%name/filters/rcllyx
 %_datadir/%name/filters/*.py
@@ -187,8 +206,15 @@ chrpath -d %buildroot%_bindir/recollindex
 %python3_sitelibdir/*.egg-info
 %python3_sitelibdir/%name/
 %python3_sitelibdir/recollchm/
+%python3_sitelibdir/*.so
 
 %changelog
+* Wed Dec 27 2023 Michael Shigorin <mike@altlinux.org> 1.37.0-alt1
+- new version (watch file uupdate)
+- applied upstream-provided patch to fix build against libxml2 2.12.3
+- added devel subpackage
+- minor spec cleanup
+
 * Fri Nov 24 2023 Michael Shigorin <mike@altlinux.org> 1.36.2-alt1
 - new version (watch file uupdate)
 
