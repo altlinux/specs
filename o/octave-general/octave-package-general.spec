@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/octave-config makeinfo pkgconfig(nettle)
 Epoch: 1
 Name: octave-%octpkg
 Version: 2.1.3
-Release: alt1
+Release: alt2
 Summary: General
 
 Group: Sciences/Mathematics
@@ -19,6 +19,7 @@ BuildRequires(pre): rpm-build-octave
 BuildRequires: octave-devel
 %if_with _octave_arch
 BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel
+BuildRequires: gnu-config
 %else
 BuildArch: noarch
 %endif
@@ -34,6 +35,7 @@ General tools for Octave.
 %setup -q -n %{octpkg}-%{version}
 
 %build
+cp -at src /usr/share/gnu-config/config.{guess,sub}
 %octave_build
 
 %install
@@ -47,6 +49,9 @@ General tools for Octave.
 %endif
 
 %changelog
+* Wed Dec 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:2.1.3-alt2
+- NMU: fixed FTBFS on LoongArch (use fresh config.{config,guess})
+
 * Tue Dec 26 2023 Igor Vlasenko <viy@altlinux.org> 1:2.1.3-alt1
 - regenerated from template by package builder
 
