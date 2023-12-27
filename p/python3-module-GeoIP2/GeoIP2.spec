@@ -5,7 +5,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 4.7.0
+Version: 4.8.0
 Release: alt1
 
 Summary: %descr
@@ -18,6 +18,8 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-MaxMindDB
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with docs
 BuildRequires: python3-module-sphinx
@@ -51,7 +53,7 @@ Documentation for %oname.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %if_with docs
 sphinx-build-3 -b html docs html
@@ -59,16 +61,16 @@ rm -rf html/.{buildinfo,doctrees}
 %endif
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
 # database_test needs submodule with database
-py.test-3 --ignore tests/database_test.py
+# webservice_test needs internet connection
+%pyproject_run_pytest -k 'not database_test and not webservice_test'
 
 %files
 %python3_sitelibdir/geoip2
-%python3_sitelibdir/geoip2-%version-py%_python3_version.egg-info
+%python3_sitelibdir/geoip2-%version.dist-info
 
 %if_with docs
 %files doc
@@ -76,6 +78,9 @@ py.test-3 --ignore tests/database_test.py
 %endif
 
 %changelog
+* Wed Dec 27 2023 Grigory Ustinov <grenka@altlinux.org> 4.8.0-alt1
+- Automatically updated to 4.8.0.
+
 * Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 4.7.0-alt1
 - Automatically updated to 4.7.0.
 
