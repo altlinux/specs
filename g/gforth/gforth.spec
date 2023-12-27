@@ -1,7 +1,7 @@
 Name: gforth
 %define Name GNU Forth
 Version: 0.7.3
-Release: alt4
+Release: alt6
 License: %gpl3plus
 Group: Development/Other
 Summary: GNU implementation of the ANS Forth language
@@ -30,7 +30,7 @@ Requires: %name-doc-txt
 
 # Automatically added by buildreq on Tue Aug 14 2018
 # optimized out: emacs-base emacs-common fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libX11-locales libp11-kit perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-parent python-base python-modules python3 python3-base sh3 tex-common texlive texlive-collection-basic texlive-dist
-BuildRequires: emacs-nox emacs26-speedbar libffi-devel libltdl7-devel makeinfo openssh-clients texi2dvi
+BuildRequires: emacs-nox libffi-devel libltdl7-devel makeinfo openssh-clients texi2dvi
 
 BuildRequires: texlive-latex-recommended texlive-texmf
 
@@ -336,7 +336,7 @@ install -Dm 0644 %name.elc %buildroot%_datadir/emacs/site-lisp/%name.elc
 mkdir -p %buildroot%docdir
 cp [ABCINRT]* %buildroot%docdir/
 cd doc
-cp -a *.ps *.txt *.doc *.pdf gforth vmgen %buildroot%docdir
+cp -a *.ps *.txt *.doc *.pdf gforth_html vmgen_html %buildroot%docdir
 cd %buildroot%_datadir/%name/%version
 
 %check
@@ -372,8 +372,8 @@ make check
 %docdir/*.ps
 
 %files doc-html
-%docdir/gforth
-%docdir/vmgen
+%docdir/gforth_html
+%docdir/vmgen_html
 
 %files doc-txt
 %docdir/*.txt
@@ -389,6 +389,12 @@ make check
 %_emacslispdir/*.el
 
 %changelog
+* Wed Dec 27 2023 Fr. Br. George <george@altlinux.org> 0.7.3-alt6
+- Fix build
+
+* Tue Dec 26 2023 Fr. Br. George <george@altlinux.org> 0.7.3-alt5
+- Remove obsoleted dependency
+
 * Thu May 19 2022 Fr. Br. George <george@altlinux.org> 0.7.3-alt4
 - Eliminate .a files
 
