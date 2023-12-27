@@ -3,8 +3,8 @@
 %def_without check
 
 Name: python3-module-frozendict
-Version: 2.3.8
-Release: alt2
+Version: 2.3.10
+Release: alt1
 
 Summary: An immutable dictionary
 
@@ -49,6 +49,9 @@ py.test-3 -v
 %python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info
 
 %changelog
+* Wed Dec 27 2023 Grigory Ustinov <grenka@altlinux.org> 2.3.10-alt1
+- Automatically updated to 2.3.10.
+
 * Wed May 03 2023 Grigory Ustinov <grenka@altlinux.org> 2.3.8-alt2
 - Fixed build with python3.11.
 
