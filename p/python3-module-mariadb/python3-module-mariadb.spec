@@ -2,11 +2,11 @@
 %define pypi_name mariadb
 
 Name: python3-module-%pypi_name
-Version: 1.1.8
+Version: 1.1.9
 Release: alt1
 
 Summary: MariaDB Connector/Python
-License: LGPL-2.1
+License: LGPL-2.1-or-later
 Group: Development/Python3
 Url: https://pypi.org/project/mariadb/
 Vcs: https://github.com/mariadb-corporation/mariadb-connector-python
@@ -43,6 +43,10 @@ client library for client server communication.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Dec 27 2023 Anton Zhukharev <ancieg@altlinux.org> 1.1.9-alt1
+- Updated to 1.1.9.
+- Distributed under LGPL-2.1-or-later license.
+
 * Fri Oct 13 2023 Anton Zhukharev <ancieg@altlinux.org> 1.1.8-alt1
 - Updated to 1.1.8.
 
