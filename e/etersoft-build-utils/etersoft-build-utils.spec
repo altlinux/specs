@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.2.8
+Version: 3.2.9
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -69,6 +69,10 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Wed Dec 27 2023 Vitaly Lipatov <lav@altlinux.ru> 3.2.9-alt1
+- parse_cmd_pre_spec(): add spec detection inside hasher
+- rpmrb: fix -n support
+
 * Sat Nov 11 2023 Vitaly Lipatov <lav@altlinux.ru> 3.2.8-alt1
 - rpmrb: add -n to skip install built package in hasher
 - improve pkgrepls
