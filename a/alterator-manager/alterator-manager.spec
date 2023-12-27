@@ -1,8 +1,8 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.13
-Release: alt2
+Version: 0.1.14
+Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -15,6 +15,13 @@ Source: %name-%version.tar
 
 %description
 Modular tool for system configuration via D-Bus.
+
+%package tools
+Summary: Auxiliary tools for the alterator-manager.
+Group: Development/Other
+
+%description tools
+Auxiliary tools for the alterator-manager.
 
 %package devel
 Summary: Headers for developing alterator-manager modules
@@ -53,7 +60,16 @@ mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
 %files devel
 %_includedir/alterator
 
+%files tools
+%_bindir/am-dev-tool
+
+
 %changelog
+* Wed Dec 27 2023 Ivan Savin <svn17@altlinux.org> 0.1.14-alt1
+- Add the alterator-manager-tools package with the am-dev-tool utility.
+- Remove automatic generation of policy files (for polkit).
+- Update docs/README-ru.md.
+
 * Mon Dec 25 2023 Ivan Savin <svn17@altlinux.org> 0.1.13-alt2
 - Add creation of /etc/alterator/backends directory for backend files.
 
