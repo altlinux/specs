@@ -1,5 +1,5 @@
 Name: liblangtag
-Version: 0.6.3
+Version: 0.6.7
 Release: alt1
 
 Summary: An interface library to access tags for identifying languages
@@ -79,6 +79,9 @@ LD_LIBRARY_PATH=`pwd`/liblangtag/.libs make check
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Wed Dec 27 2023 Fr. Br. George <george@altlinux.org> 0.6.7-alt1
+- Autobuild version bump to 0.6.7
+
 * Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 0.6.3-alt1
 - Autobuild version bump to 0.6.3
 
