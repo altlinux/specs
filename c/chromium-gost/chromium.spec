@@ -12,7 +12,7 @@
 
 %define is_enabled() %{expand:%%{?_enable_%{1}:true}%%{!?_enable_%{1}:false}}
 
-%global llvm_version 16.0
+%global llvm_version 17.0
 %global gcc_version %nil
 #set_gcc_version %gcc_version
 
@@ -35,8 +35,8 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium-gost
-Version:        117.0.5938.62
-Release:        alt1
+Version:        120.0.6099.109
+Release:        alt2
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -82,20 +82,22 @@ Patch007: 0007-ALT-Hack-to-avoid-build-error-with-clang7.patch
 Patch008: 0008-FEDORA-bootstrap-with-python3.patch
 Patch009: 0009-ALT-use-system-zlib.patch
 Patch010: 0010-ALT-use-system-libdrm-library.patch
-Patch011: 0011-GENTOO-Fix-gtk4-build.patch
-Patch012: 0012-DEBIAN-allow-building-against-system-libraries-even-.patch
-Patch013: 0013-DEBIAN-use-system-zlib-library-instead-of-embedded-l.patch
-Patch014: 0014-DEBIAN-use-system-opus-library-instead-of-embedded.patch
-Patch015: 0015-DEBIAN-build-using-system-openjpeg.patch
-Patch016: 0016-DEBIAN-use-system-jpeg-library.patch
-Patch017: 0017-DEBIAN-use-system-libevent-library.patch
-Patch018: 0018-ALT-Use-system-libusb-libsecret-flatbuffers.patch
-##Patch019: 0019-Use-yandex-search-as-default.patch
-Patch020: 0020-GENTOO-EnumTable-crash.patch
-Patch021: 0021-ARCH-Add-missing-header.patch
-Patch022: 0022-ALT-Do-not-hardcode-flatbuffer-version.patch
-Patch023: 0023-Add-missing-headers.patch
-Patch024: 0024-FEDORA-System-brotli.patch
+Patch011: 0011-DEBIAN-allow-building-against-system-libraries-even-.patch
+Patch012: 0012-DEBIAN-use-system-zlib-library-instead-of-embedded-l.patch
+Patch013: 0013-DEBIAN-use-system-opus-library-instead-of-embedded.patch
+Patch014: 0014-DEBIAN-build-using-system-openjpeg.patch
+Patch015: 0015-DEBIAN-use-system-jpeg-library.patch
+Patch016: 0016-DEBIAN-use-system-libevent-library.patch
+Patch017: 0017-DEBIAN-work-around-a-clang-bug-with-libstdc.patch
+##Patch018: 0018-Use-yandex-search-as-default.patch
+Patch019: 0019-GENTOO-EnumTable-crash.patch
+Patch020: 0020-ALT-Do-not-hardcode-flatbuffer-version.patch
+Patch021: 0021-FEDORA-System-brotli.patch
+Patch022: 0022-atspi-mark-possibly-unused-gn-variables.patch
+Patch023: 0023-Revert-Use-aggregate-init-designed-initializers-more.patch
+Patch024: 0024-Use-std-nullptr_t-instead-of-nullptr_t.patch
+Patch025: 0025-Add-missing-headers.patch
+Patch026: 0026-Disable-unsupported-compiler-flags.patch
 ### End Patches
 
 # Specific C-G patch
@@ -162,6 +164,7 @@ BuildRequires:  pkgconfig(libdrm)
 BuildRequires:  pkgconfig(libevdev)
 BuildRequires:  pkgconfig(libevent)
 BuildRequires:  pkgconfig(libffi)
+BuildRequires:  pkgconfig(libhwy)
 BuildRequires:  pkgconfig(libjpeg)
 BuildRequires:  pkgconfig(libopenjp2)
 BuildRequires:  pkgconfig(libpci)
@@ -196,6 +199,7 @@ BuildRequires:  pkgconfig(xscrnsaver)
 BuildRequires:  pkgconfig(xshmfence)
 BuildRequires:  pkgconfig(xt)
 BuildRequires:  pkgconfig(xtst)
+BuildRequires:  pkgconfig(zlib)
 %if_enabled ffmpeg
 BuildRequires:  pkgconfig(libavcodec)
 BuildRequires:  pkgconfig(libavfilter)
@@ -242,11 +246,10 @@ sed -i '1i\
 sed -i 's/std::string data_dir_basename = "chromium"/std::string data_dir_basename = "chromium-gost"/' chrome/common/chrome_paths_linux.cc
 
 sed -i \
-	-e 's/"-ffile-compilation-dir=."//g' \
-	-e 's/"-no-canonical-prefixes"//g' \
-	-e 's/"-no-opaque-pointers",//g' \
-	-e 's/"-Wl,-mllvm,-disable-auto-upgrade-debug-info"//g' \
-	build/config/compiler/BUILD.gn
+        -e 's/"-ffile-compilation-dir=."//g' \
+        -e 's/"-no-canonical-prefixes"//g' \
+        -e 's/"-no-opaque-pointers",//g' \
+        build/config/compiler/BUILD.gn
 
 mkdir -p third_party/node/linux/node-linux-x64/bin
 ln -s %_bindir/node third_party/node/linux/node-linux-x64/bin/node
@@ -557,6 +560,83 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Dec 27 2023 Fr. Br. George <george@altlinux.org> 120.0.6099.109-alt2
+- GOST version
+
+* Mon Dec 18 2023 Alexey Gladkov <legion@altlinux.ru> 120.0.6099.109-alt2
+- Bring back optimization flags.
+
+* Sat Dec 16 2023 Alexey Gladkov <legion@altlinux.ru> 120.0.6099.109-alt1
+- New version (120.0.6099.109).
+- Security fixes:
+  - CVE-2023-6702: Type Confusion in V8.
+  - CVE-2023-6703: Use after free in Blink.
+  - CVE-2023-6704: Use after free in libavif.
+  - CVE-2023-6705: Use after free in WebRTC.
+  - CVE-2023-6706: Use after free in FedCM.
+  - CVE-2023-6707: Use after free in CSS.
+
+* Thu Dec 07 2023 Alexey Gladkov <legion@altlinux.ru> 120.0.6099.71-alt1
+- New version (120.0.6099.71).
+
+* Thu Nov 16 2023 Alexey Gladkov <legion@altlinux.ru> 119.0.6045.159-alt1
+- New version (119.0.6045.159).
+- Security fixes:
+  - CVE-2023-5997: Use after free in Garbage Collection.
+  - CVE-2023-6112: Use after free in Navigation.
+
+* Mon Nov 13 2023 Alexey Gladkov <legion@altlinux.ru> 119.0.6045.123-alt1
+- New version (119.0.6045.123).
+- Security fixes:
+  - CVE-2023-5996: Use after free in WebAudio.
+
+* Fri Nov 03 2023 Alexey Gladkov <legion@altlinux.ru> 119.0.6045.105-alt1
+- New version (119.0.6045.105).
+- Security fixes:
+  - CVE-2023-5480: Inappropriate implementation in Payments.
+  - CVE-2023-5482: Insufficient data validation in USB.
+  - CVE-2023-5849: Integer overflow in USB.
+  - CVE-2023-5850: Incorrect security UI in Downloads.
+  - CVE-2023-5851: Inappropriate implementation in Downloads.
+  - CVE-2023-5852: Use after free in Printing.
+  - CVE-2023-5853: Incorrect security UI in Downloads.
+  - CVE-2023-5854: Use after free in Profiles.
+  - CVE-2023-5855: Use after free in Reading Mode.
+  - CVE-2023-5856: Use after free in Side Panel.
+  - CVE-2023-5857: Inappropriate implementation in Downloads.
+  - CVE-2023-5858: Inappropriate implementation in WebApp Provider.
+  - CVE-2023-5859: Incorrect security UI in Picture In Picture.
+  - CVE-2023-5472: Use after free in Profiles.
+
+* Mon Oct 16 2023 Alexey Gladkov <legion@altlinux.ru> 118.0.5993.70-alt1
+- New version (118.0.5993.70).
+- Security fixes:
+  - CVE-2023-5218: Use after free in Site Isolation.
+  - CVE-2023-5346: Type Confusion in V8.
+  - CVE-2023-5473: Use after free in Cast.
+  - CVE-2023-5474: Heap buffer overflow in PDF.
+  - CVE-2023-5475: Inappropriate implementation in DevTools.
+  - CVE-2023-5476: Use after free in Blink History.
+  - CVE-2023-5477: Inappropriate implementation in Installer.
+  - CVE-2023-5478: Inappropriate implementation in Autofill.
+  - CVE-2023-5479: Inappropriate implementation in Extensions API.
+  - CVE-2023-5481: Inappropriate implementation in Downloads.
+  - CVE-2023-5483: Inappropriate implementation in Intents.
+  - CVE-2023-5484: Inappropriate implementation in Navigation.
+  - CVE-2023-5485: Inappropriate implementation in Autofill.
+  - CVE-2023-5486: Inappropriate implementation in Input.
+  - CVE-2023-5487: Inappropriate implementation in Fullscreen.
+
+* Thu Sep 28 2023 Alexey Gladkov <legion@altlinux.ru> 117.0.5938.132-alt1
+- New version (117.0.5938.132).
+- Security fixes:
+  - CVE-2023-5186: Use after free in Passwords.
+  - CVE-2023-5187: Use after free in Extensions.
+  - CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx.
+
+* Mon Sep 25 2023 Alexey Gladkov <legion@altlinux.ru> 117.0.5938.92-alt1
+- New version (117.0.5938.92).
+
 * Thu Sep 21 2023 Fr. Br. George <george@altlinux.org> 117.0.5938.62-alt1
 - GOST vesrion
 
