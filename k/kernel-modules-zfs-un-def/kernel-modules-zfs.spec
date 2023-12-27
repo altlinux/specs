@@ -2,9 +2,9 @@
 %define module_version 2.2.2
 %define module_release alt1
 
-%define flavour std-def
+%define flavour un-def
 %define karch %ix86 x86_64 aarch64 ppc64le armh
-BuildRequires(pre): kernel-headers-modules-std-def
+BuildRequires(pre): kernel-headers-modules-un-def
 
 %setup_kernel_module %flavour
 
@@ -15,6 +15,12 @@ BuildRequires(pre): kernel-headers-modules-std-def
 # ERROR: modpost: GPL-incompatible module zfs.ko uses GPL-only symbol 'mmu_feature_keys'
 %if "%(rpmvercmp '%kversion' '5.10')" >= "0"
 ExcludeArch: ppc64le %ix86
+%endif
+
+# The kernel is more than 6.2 not compatible in GPL symbols with ZFS
+# https://github.com/openzfs/zfs/issues/14555
+%if "%(rpmvercmp '%kversion' '6.2')" >= "0"
+ExcludeArch: aarch64
 %endif
 
 Summary: ZFS Linux modules

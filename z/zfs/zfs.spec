@@ -2,7 +2,7 @@
 %global _localstatedir %_var
 
 Name: zfs
-Version: 2.1.13
+Version: 2.2.2
 Release: alt1
 Summary: ZFS on Linux
 License: CDDL-1.0
@@ -13,7 +13,7 @@ Conflicts: fuse-zfs
 
 Source0: %name-%version.tar
 Source1: gitrevision.h
-Patch1: zfs-2.1.0-import-by-disk-id.patch
+Patch1: zfs-2.2.2-import-by-disk-id.patch
 
 BuildRequires: libblkid-devel libssl-devel libudev-devel libuuid-devel python3-devel zlib-devel rpm-build-kernel libtirpc-devel
 
@@ -71,7 +71,7 @@ install -m0644 %SOURCE1 include/zfs_gitrev.h
 %build
 %autoreconf
 %configure \
-	--sbindir=/sbin \
+	--sbindir=/usr/sbin \
 	--libexecdir=%_libexecdir \
 	--with-config=user \
 	--with-udevdir=/lib/udev \
@@ -92,13 +92,6 @@ install -pDm0644 %SOURCE0 %kernel_srcdir/%name-%version.tar
 tar --append --file=%kernel_srcdir/%name-%version.tar -- ../%name-%version/include/zfs_gitrev.h
 
 gzip %kernel_srcdir/%name-%version.tar
-mkdir -p %buildroot/%_lib
-for f in %buildroot%_libdir/lib*.so; do
-	t=$(readlink "$f")
-	ln -sf ../../%_lib/"$t" "$f"
-done
-mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
-
 install -m0644 COPYRIGHT LICENSE %buildroot%_datadir/doc/%name-utils-%version/
 
 #remove binary file from docdir:
@@ -164,15 +157,17 @@ fi
 %_sysconfdir/zfs/zfs-functions
 %_sysconfdir/zfs/*.example
 %_sysconfdir/modules-load.d/%name.conf
+%_sysconfdir/bash_completion.d/zfs
 %_unitdir/*.service
 %_unitdir/*.timer
 %_unitdir/*.target
 %_unitdir-preset/50-zfs.preset
+/sbin/mount.zfs
 /lib/systemd/system-generators/zfs-mount-generator
 /lib/udev/*_id
 %_udevrulesdir/*.rules
-%exclude /sbin/zed
-/sbin/*
+%exclude %_sbindir/zed
+%_sbindir/*
 %_bindir/*
 %_man1dir/*.1*
 %_man4dir/*.4*
@@ -187,12 +182,12 @@ fi
 %_sysconfdir/%name/zed.d/zed.rc
 %_sysconfdir/%name/zed.d/zed-functions.sh
 %_unitdir/zfs-zed.service
-/sbin/zed
+%_sbindir/zed
 %_libexecdir/zfs
 %_man8dir/zed.8*
 
 %files -n lib%name
-/%_lib/*.so.*
+%_libdir/*.so.*
 
 %files -n lib%name-devel
 %_includedir/*
@@ -203,6 +198,13 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Tue Dec 26 2023 Anton Farygin <rider@altlinux.ru> 2.2.2-alt1
+- 2.2.2
+- tools and libraries were moved to /usr
+
+* Sun Nov 26 2023 Anton Farygin <rider@altlinux.ru> 2.2.1-alt1
+- 2.2.1
+
 * Wed Nov 01 2023 Anton Farygin <rider@altlinux.ru> 2.1.13-alt1
 - 2.2.12 -> 2.2.13
 
