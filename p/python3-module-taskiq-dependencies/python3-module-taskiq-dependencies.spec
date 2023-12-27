@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.4.2
+Version: 1.5.0
 Release: alt1
 
 Summary: FastAPI-like dependency injection implementation
@@ -64,6 +64,9 @@ dependencies, and you can easily integrate it in any project.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Dec 27 2023 Anton Zhukharev <ancieg@altlinux.org> 1.5.0-alt1
+- Updated to 1.5.0.
+
 * Fri Sep 22 2023 Anton Zhukharev <ancieg@altlinux.org> 1.4.2-alt1
 - Updated to 1.4.2.
 
