@@ -1,10 +1,10 @@
 Name: arpsend
 Summary: arpsend - tool for network diagnostics and testing
-Version: 1.2.3
+Version: 1.2.5
 Release: alt1
 License: GPL/BSD/BSD-like
 Group: System/Configuration/Networking
-URL: http://www.net.princeton.edu/software/arpsend/
+URL: https://www.net.princeton.edu/software/arpsend/
 # vzctl have own copy of arpsend
 Conflicts: vzctl
 Source: %name-%version.tar
@@ -33,6 +33,9 @@ network administrators.
 %doc COPYING* README NEWS TODO ChangeLog AUTHORS
 
 %changelog
+* Wed Dec 27 2023 Anton Farygin <rider@altlinux.ru> 1.2.5-alt1
+- 1.2.5
+
 * Tue Oct 16 2018 Anton Farygin <rider@altlinux.ru> 1.2.3-alt1
 - 1.2.3
 
