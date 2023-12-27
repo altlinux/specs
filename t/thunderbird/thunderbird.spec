@@ -17,7 +17,7 @@
 %endif
 
 Name: 	 thunderbird
-Version: 115.4.1
+Version: 115.6.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -567,6 +567,31 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Thu Dec 21 2023 Pavel Vasenkov <pav@altlinux.org> 115.6.0-alt1
+- New version.
+- Security fixes:
+  + CVE-2023-50762 Truncated signed text was shown with a valid OpenPGP signature
+  + CVE-2023-50761 S/MIME signature accepted despite mismatching message date
+  + CVE-2023-6856 Heap-buffer-overflow affecting WebGL DrawElementsInstanced method with Mesa VM driver
+  + CVE-2023-6857 Symlinks may resolve to smaller than expected buffers
+  + CVE-2023-6858 Heap buffer overflow in nsTextFragment
+  + CVE-2023-6859 Use-after-free in PR_GetIdentitiesLayer
+  + CVE-2023-6860 Potential sandbox escape due to VideoBridge lack of texture validation
+  + CVE-2023-6861 Heap buffer overflow affected nsWindow::PickerOpen(void) in headless mode
+  + CVE-2023-6862 Use-after-free in nsDNSService
+  + CVE-2023-6863 Undefined behavior in ShutdownObserver()
+
+* Thu Nov 23 2023 Pavel Vasenkov <pav@altlinux.org> 115.5.0-alt1
+- New version.
+- Security fixes:
+  + CVE-2023-6204 Out-of-bound memory access in WebGL2 blitFramebuffer
+  + CVE-2023-6205 Use-after-free in MessagePort::Entangled
+  + CVE-2023-6206 Clickjacking permission prompts using the fullscreen transition
+  + CVE-2023-6207 Use-after-free in ReadableByteStreamQueueEntry::Buffer
+  + CVE-2023-6208 Using Selection API would copy contents into X11 primary selection.
+  + CVE-2023-6209 Incorrect parsing of relative URLs starting with "///"
+  + CVE-2023-6212 Memory safety bugs fixed in Firefox 120, Firefox ESR 115.5, and Thunderbird 115.5
+
 * Wed Nov 01 2023 Pavel Vasenkov <pav@altlinux.org> 115.4.1-alt1
 - New version.
 - Security fixes:
