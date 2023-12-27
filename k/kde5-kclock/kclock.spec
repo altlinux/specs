@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 23.08.4
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -86,6 +86,9 @@ Requires: %name-common
 
 
 %changelog
+* Wed Dec 27 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt2
+- clear country name when hard to use
+
 * Tue Dec 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
 - new version
 
