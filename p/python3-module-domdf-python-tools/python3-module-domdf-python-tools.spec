@@ -7,7 +7,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 3.7.0
+Version: 3.8.0.post2
 Release: alt1
 
 Summary: Helpful functions for Python
@@ -62,6 +62,9 @@ export PYTHONPATH="%buildroot%python3_sitelibdir"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Dec 27 2023 Anton Zhukharev <ancieg@altlinux.org> 3.8.0.post2-alt1
+- Updated to 3.8.0.post2.
+
 * Tue Nov 07 2023 Anton Zhukharev <ancieg@altlinux.org> 3.7.0-alt1
 - Updated to 3.7.0.
 

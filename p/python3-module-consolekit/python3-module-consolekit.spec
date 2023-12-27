@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.2
+Version: 1.6.0
 Release: alt1
 
 Summary: Additional utilities for click
@@ -56,6 +56,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Dec 27 2023 Anton Zhukharev <ancieg@altlinux.org> 1.6.0-alt1
+- Updated to 1.6.0.
+
 * Thu Nov 23 2023 Anton Zhukharev <ancieg@altlinux.org> 1.5.2-alt1
 - Updated to 1.5.2.
 
