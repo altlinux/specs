@@ -10,7 +10,7 @@
 
 Name: %{_name}3
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: libwnck is a Window Navigator Construction Kit
 License: LGPL-2.0
@@ -18,6 +18,16 @@ Group: System/Libraries
 Url: http://www.gnome.org
 
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
+# https://gitlab.archlinux.org/archlinux/packaging/packages/libwnck3/-/raw/main/0001-handle-avoid-segfault-in-invalidate_icons.patch
+Patch1: libwnck3-43.0-archlinux-handle-avoid-segfault-in-invalidate_icons.patch
+# https://gitlab.archlinux.org/archlinux/packaging/packages/libwnck3/-/raw/main/0002-handle-init-XRes-extension.patch
+Patch2: libwnck3-43.0-archlinux-handle-init-XRes-extension.patch
+# https://gitlab.archlinux.org/archlinux/packaging/packages/libwnck3/-/raw/main/0003-xutils-move-XRes-code-to-separate-function.patch
+Patch3: libwnck3-43.0-archlinux-xutils-move-XRes-code-to-separate-function.patch
+# https://gitlab.archlinux.org/archlinux/packaging/packages/libwnck3/-/raw/main/0004-xutils-use-WnckScreen-in-_wnck_get_pid.patch
+Patch4: libwnck3-43.0-archlinux-xutils-use-WnckScreen-in-_wnck_get_pid.patch
+# https://gitlab.archlinux.org/archlinux/packaging/packages/libwnck3/-/raw/main/0005-xutils-check-if-XRes-is-available-before-using-XResQ.patch
+Patch5: libwnck3-43.0-archlinux-xutils-check-if-XRes-is-available-before-using-XResQ.patch
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome %{?_enable_introspection:rpm-build-gir}
 BuildRequires: meson libX11-devel libXres-devel libXi-devel pkgconfig(cairo-xlib-xrender)
@@ -117,6 +127,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Thu Dec 28 2023 Leontiy Volodin <lvol@altlinux.org> 43.0-alt2
+- fix segfaults in DDE (thanks archlinux for the patches) (ALT #48951)
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
 - 43.0
 
