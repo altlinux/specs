@@ -1,8 +1,8 @@
 %def_disable bootstrap
 
 Name: libcap-ng
-Version: 0.8.3
-Release: alt2
+Version: 0.8.4
+Release: alt1
 
 Summary: An alternate posix capabilities library
 License: LGPLv2+
@@ -65,6 +65,9 @@ lets you set the file system based capabilities.
 %setup
 
 %build
+# from autogen.sh
+touch NEWS
+
 %autoreconf
 %if_disabled bootstrap
 
@@ -130,6 +133,9 @@ rm -f %buildroot%python3_sitelibdir/*.{a,la}
 %endif
 
 %changelog
+* Wed Dec 27 2023 Anton Zhukharev <ancieg@altlinux.org> 0.8.4-alt1
+- (NMU) Updated to 0.8.4.
+
 * Mon Apr 03 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.8.3-alt2
 - Simplified the bootstrap sequence (closes: #45741)
 
