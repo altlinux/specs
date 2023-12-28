@@ -7,7 +7,7 @@
 
 Name: recoll
 Version: 1.37.0
-Release: alt1
+Release: alt2
 
 Summary: A personal full text search package
 Summary(ru_RU.UTF-8): Программа для полнотекстового поиска по файлам с различными форматами.
@@ -176,7 +176,8 @@ chrpath -d %buildroot%_bindir/recollindex
 
 %files
 %_bindir/*
-%_libdir/lib%{name}*.so*
+# librecoll gets installed with no soname on intent: no ABI warranty
+%_libdir/lib%{name}-*.so
 %_datadir/%name
 %exclude %_datadir/%name/filters/rcllyx
 %exclude %_datadir/%name/filters/*.py
@@ -192,7 +193,7 @@ chrpath -d %buildroot%_bindir/recollindex
 %doc ChangeLog.* README
 
 %files devel
-# librecoll gets installed with no soname...
+%_libdir/lib%{name}.so
 %_includedir/%name/
 
 %files extras
@@ -209,6 +210,9 @@ chrpath -d %buildroot%_bindir/recollindex
 %python3_sitelibdir/*.so
 
 %changelog
+* Thu Dec 28 2023 Michael Shigorin <mike@altlinux.org> 1.37.0-alt2
+- move librecoll.so to devel subpackage
+
 * Wed Dec 27 2023 Michael Shigorin <mike@altlinux.org> 1.37.0-alt1
 - new version (watch file uupdate)
 - applied upstream-provided patch to fix build against libxml2 2.12.3
