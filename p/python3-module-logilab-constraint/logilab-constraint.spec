@@ -1,21 +1,28 @@
 %define oname logilab-constraint
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.6.0
+Version: 0.7.1
 Release: alt1
 
 Summary: A constraint satisfaction problem solver written in 100%% pure Python
-License: GPL
+License: LGPL
 Group: Development/Python3
-URL: http://www.logilab.org/852/
+URL: https://pypi.org/project/logilab-constraint
 
 BuildArch: noarch
 
-# hg clone http://hg.logilab.org/review/logilab/constraint
-Source: constraint-%version.tar.gz
+Source: constraint-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-logilab-common
+BuildRequires: python3-module-six
+%endif
 
 %description
 The constraint package is a constraint satisfaction problem solver
@@ -25,45 +32,27 @@ provided to work with finite domains and finite intervals. It should be
 fairly easy to add new kind of domains such as finite integer domains,
 together with specialized constraints.
 
-%package tests
-Summary: Tests for logilab constraint package
-Group: Development/Python3
-Requires: %name = %version-%release
-
-%description tests
-The constraint package is a constraint satisfaction problem solver
-written in 100%% pure Python. The implementation uses constraint
-propagation algorithms. Constraints and Domain implementations are
-provided to work with finite domains and finite intervals. It should be
-fairly easy to add new kind of domains such as finite integer domains,
-together with specialized constraints.
-
-This package contains tests for logilab constraint package.
-
 %prep
 %setup
 
-touch test/__init__.py
-
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
-rm -f %buildroot%python3_sitelibdir/logilab/__init__.py*
-
-mv test/ %buildroot%python3_sitelibdir/logilab/constraint/
+%check
+%pyproject_run_pytest -v -k 'not Abstract'
 
 %files
-%doc COPYING ChangeLog README doc/* examples
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/logilab/constraint/test/
-
-%files tests
-%python3_sitelibdir/logilab/constraint/test/
+%doc COPYING ChangeLog README.* examples
+%python3_sitelibdir/logilab
+%python3_sitelibdir/logilab_constraint-%version.dist-info
 
 %changelog
+* Thu Dec 28 2023 Anton Vyatkin <toni@altlinux.org> 0.7.1-alt1
+- new version 0.7.1
+
 * Wed Apr 01 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.6.0-alt1
 - Version updated to 0.6.0
 - build for python2 disabled.

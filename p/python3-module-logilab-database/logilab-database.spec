@@ -1,21 +1,31 @@
 %define oname logilab-database
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.17.1
+Version: 1.18.6
 Release: alt1
 
 Summary: Provides some classes to make unified access to different RDBMS possible
 License: LGPLv2.1+
 Group: Development/Python3
-URL: http://www.logilab.org/project/logilab-database
+URL: https://pypi.org/project/logilab-database
 
 BuildArch: noarch
 
-# hg clone http://hg.logilab.org/logilab/database
 Source: database-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-logilab-common
+BuildRequires: python3-modules-sqlite3
+BuildRequires: python3-module-dateutil
+BuildRequires: python3-module-psycopg2
+BuildRequires: python3-module-yapps2
+%endif
 
 %description
 logilab-database provides some classes to make unified access to
@@ -32,18 +42,24 @@ different RDBMS possible:
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
-rm -f %buildroot%python3_sitelibdir/logilab/__init__.py*
+%check
+%pyproject_run_pytest -v
 
 %files
-%doc ChangeLog README
-%python3_sitelibdir/*
+%doc ChangeLog README.*
+%python3_sitelibdir/logilab
+%python3_sitelibdir/logilab_database-%version.dist-info
+%python3_sitelibdir/logilab_database-%version-*-nspkg.pth
 
 %changelog
+* Thu Dec 28 2023 Anton Vyatkin <toni@altlinux.org> 1.18.6-alt1
+- new version 1.18.6
+
 * Wed Apr 01 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.17.1-alt1
 - Version updated to 1.17.1
 - build for python2 disabled.
