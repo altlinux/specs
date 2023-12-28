@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-ddt
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 Summary: A Python library to multiply test cases
@@ -26,6 +26,7 @@ BuildRequires: python3(tox)
 BuildRequires: python3(tox_console_scripts)
 BuildRequires: python3(tox_no_deps)
 BuildRequires: python3(yaml)
+BuildRequires: python3(aiounittest)
 %endif
 
 %description
@@ -55,6 +56,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr
 %python3_sitelibdir/__pycache__
 
 %changelog
+* Thu Dec 28 2023 Grigory Ustinov <grenka@altlinux.org> 1.7.0-alt1
+- Automatically updated to 1.7.0.
+
 * Fri Aug 12 2022 Grigory Ustinov <grenka@altlinux.org> 1.6.0-alt1
 - Automatically updated to 1.6.0.
 
