@@ -1,9 +1,9 @@
 %define repo qt5integration
 
-%def_disable clang
+%def_without clang
 
 Name: deepin-qt5integration
-Version: 5.6.11
+Version: 5.6.17
 Release: alt1
 
 Summary: Qt platform theme integration plugins for DDE
@@ -12,76 +12,59 @@ License: LGPL-3.0+
 Group: System/Libraries
 Url: https://github.com/linuxdeepin/qt5integration
 
-Packager: Leontiy Volodin <lvol@altlinux.org>
-
 Source: %url/archive/%version/%repo-%version.tar.gz
+Patch0: 0001-fix-App-cant-load-qml-module-chameleton-plugin.patch
+Patch1: 0001-fix-qapitrace-open-file-crash.patch
+Patch2: 0001-fix-remove-unused-dropped-header.patch
 
-%if_enabled clang
-BuildRequires(pre): clang-devel
-%else
-BuildRequires(pre): gcc-c++
-%endif
-BuildRequires: libatk-devel
-BuildRequires: dtk5-core-devel
-BuildRequires: dtk5-widget-devel
-BuildRequires: fontconfig-devel
-BuildRequires: libfreetype-devel
-BuildRequires: libgtk+2-devel
-BuildRequires: glib2-devel
-BuildRequires: libgdk-pixbuf-devel
-BuildRequires: libICE-devel
-BuildRequires: libinput-devel
-BuildRequires: libudev-devel
-BuildRequires: libpango-devel
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-svg-devel
-BuildRequires: libqtxdg-devel >= 3.0.0
-BuildRequires: qt5-x11extras-devel
-BuildRequires: libX11-devel
-BuildRequires: libXext-devel
-BuildRequires: libXrender-devel
-BuildRequires: libxcb-devel
-BuildRequires: libmtdev-devel
-BuildRequires: qt5-multimedia-devel
-BuildRequires: qt5-base-common
-BuildRequires: libgtest-devel
-# for libQt5ThemeSupport.a
-BuildRequires: qt5-base-devel-static
 # Requires: deepin-qt5platform-plugins
+
+BuildRequires(pre): rpm-build-ninja
+# qt5-base-devel-static for libQt5ThemeSupport.a
+# Automatically added by buildreq on Sat Oct 28 2023
+# optimized out: cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-devel qt5-svg-devel sh5 xorg-proto-devel
+BuildRequires: cmake dtk6-common-devel libdtkwidget-devel libgtest-devel libmtdev-devel libqtxdg-devel qt5-base-devel-static qt5-x11extras-devel
+
+%if_with clang
+BuildRequires: clang-devel lld-devel
+%else
+BuildRequires: gcc-c++
+%endif
 
 %description
 Multiple Qt plugins to provide better Qt5 integration for DDE is included.
 
 %prep
 %setup -n %repo-%version
+%autopatch -p1
 
 %build
-%qmake_qt5 \
-%if_enabled clang
-    QMAKE_STRIP= -spec linux-clang \
-%endif
-    CONFIG+=nostrip \
-    PREFIX=%prefix
-make -j1
+%cmake \
+  -GNinja \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_INSTALL_LIBDIR=%_lib \
+  -DCMAKE_INSTALL_PREFIX=%_prefix \
+#
+cmake --build %_cmake__builddir -j%__nprocs
 
 %install
-%makeinstall INSTALL_ROOT=%buildroot
+%cmake_install
 
 %files
 %doc README.md
 %doc LICENSE
+%_qt5_plugindir/iconengines/libdicon.so
+%_qt5_plugindir/iconengines/libdsvgicon.so
+%_qt5_plugindir/imageformats/libdci.so
+%_qt5_plugindir/imageformats/libdsvg.so
 %_qt5_plugindir/platformthemes/libqdeepin.so
 %_qt5_plugindir/styles/libchameleon.so
-%_qt5_plugindir/iconengines/libdsvgicon.so
-%_qt5_plugindir/iconengines/libdtkbuiltin.so
-%_qt5_plugindir/iconengines/libxdgicon.so
-%_qt5_plugindir/iconengines/libdtkdciicon.so
-%_qt5_plugindir/iconengines/libdtkiconproxy.so
-%_qt5_plugindir/imageformats/libdsvg.so
-%_qt5_plugindir/imageformats/libdci.so
-%_datadir/mime/packages/image-dci.xml
 
 %changelog
+* Sat Oct 28 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.17-alt1
+- New version 5.6.17.
+- Built via cmake instead qmake (by upstream).
+
 * Fri Jun 02 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.11-alt1
 - New version.
 

@@ -1,33 +1,28 @@
 %define repo dde-clipboard
 %def_disable clang
-%def_disable qmake
 
 Name: deepin-clipboard
-Version: 5.4.25
+Version: 6.0.7
 Release: alt1
+
 Summary: Clipboard for DDE
-License: GPL-3.0+
+
+License: GPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-clipboard
-Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 
+BuildRequires(pre): rpm-build-ninja
+# Automatically added by buildreq on Fri Dec 15 2023
+# optimized out: bash5 bashrc cmake cmake-modules dtkcore gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libgio-qt libglibmm-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libsigc++2-devel libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-client-devel pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-devel sh5 wayland-devel
+BuildRequires: dtk6-common-devel dwayland-devel extra-cmake-modules libdtkwidget-devel libgio-qt-devel libgtest-devel libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel qt5-tools
+BuildRequires: libsystemd-devel
 %if_enabled clang
-BuildRequires(pre): clang-devel
+BuildRequires: clang-devel
 %else
-BuildRequires(pre): gcc-c++
+BuildRequires: gcc-c++
 %endif
-%if_disabled qmake
-BuildRequires(pre): cmake rpm-build-ninja
-%endif
-BuildRequires: qt5-base-devel qt5-tools
-BuildRequires: kf5-kwayland-devel
-BuildRequires: dtk5-widget-devel dtk5-common
-BuildRequires: libgio-qt-devel
-BuildRequires: deepin-qt-dbus-factory-devel
-BuildRequires: libgtest-devel
-Requires: lcov
 
 %description
 %summary.
@@ -36,53 +31,44 @@ Requires: lcov
 %setup -n %repo-%version
 
 %build
-export PATH=%_qt5_bindir:$PATH
-
-%if_enabled qmake
-  %qmake_qt5 \
-    %if_enabled clang
-      QMAKE_STRIP= -spec linux-clang \
-    %endif
-      CONFIG+=nostrip \
-      PREFIX=%_prefix \
-#
-  %make_build
-%else
-  %if_enabled clang
-    export CC="clang"
-    export CXX="clang++"
-    export AR="llvm-ar"
-  %endif
-
-  %cmake \
-    -GNinja \
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-#
-  cmake --build "%_cmake__builddir" -j%__nprocs
+%if_enabled clang
+export CC="clang"
+export CXX="clang++"
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
+export PATH=%_qt5_bindir:$PATH
+%cmake \
+  -GNinja \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+#
+cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
-%if_enabled qmake
-  %makeinstall INSTALL_ROOT=%buildroot
-%else
-  %cmake_install
-%endif
+%cmake_install
+%find_lang --with-qt %repo
 
-mkdir -p %buildroot%_libexecdir/systemd/user/
-mv -f %buildroot/lib/systemd/user/%repo-daemon.service %buildroot%_libexecdir/systemd/user/
-
-%find_lang %name
-
-%files -f %name.lang
+%files -f %repo.lang
 %doc LICENSE
 %_bindir/%{repo}*
-%_datadir/%repo/
-%_desktopdir/%{repo}*.desktop
-%_sysconfdir/xdg/autostart/%{repo}*.desktop
-%_datadir/dbus-1/services/com.deepin.dde.Clipboard.service
-%_libexecdir/systemd/user/%repo-daemon.service
+%_datadir/dbus-1/services/org.deepin.dde.Clipboard1.service
+%_datadir/dbus-1/services/org.deepin.dde.ClipboardLoader1.service
+%_datadir/dbus-1/services/org.deepin.dde.daemon.Clipboard1.service
+%_userunitdir/%repo-daemon.service
+%_userunitdir/%repo.service
+%dir %_userunitdir/dde-session-initialized.target.wants/
+%_userunitdir/dde-session-initialized.target.wants/dde-clipboard.service
+# translations
+%dir %_datadir/%repo/
+%dir %_datadir/%repo/translations/
+%_datadir/%repo/translations/dde-clipboard.qm
+%_datadir/%repo/translations/dde-clipboard_es_419.qm
+%_datadir/%repo/translations/dde-clipboard_ky@Arab.qm
 
 %changelog
+* Fri Dec 15 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.7-alt1
+- New version 6.0.7.
+- Cleanup BRs.
+
 * Fri Jan 20 2023 Leontiy Volodin <lvol@altlinux.org> 5.4.25-alt1
 - New version (5.4.25).
 

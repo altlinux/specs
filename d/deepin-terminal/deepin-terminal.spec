@@ -1,38 +1,29 @@
+%define _libexecdir %_prefix/libexec
+
 Name: deepin-terminal
-Version: 6.0.1
+Version: 6.0.9
 Release: alt1
+
 Summary: Default terminal emulation application for Deepin
+
 License: GPL-3.0+ and (LGPL-2.0+ and GPL-2.0+ and BSD-3-Clause)
 Group: Terminals
 Url: https://github.com/linuxdeepin/deepin-terminal
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-ninja
-BuildRequires: gcc-c++
-BuildRequires: cmake
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-tools-devel
-BuildRequires: qt5-x11extras-devel
-BuildRequires: dtk5-widget-devel
-BuildRequires: dtk5-gui-devel
-BuildRequires: dtk5-core-devel
-BuildRequires: deepin-qt-dbus-factory-devel
-BuildRequires: glib2-devel
-BuildRequires: libat-spi2-core-devel
-BuildRequires: libsecret-devel
-BuildRequires: libgtest-devel
-BuildRequires: libgmock-devel
-BuildRequires: libxcbutil-icccm-devel
-# right-click menu style
-# Requires: deepin-menu
-# run command by create_from_commandline
 Requires: deepin-shortcut-viewer expect xdg-utils
 Requires: icon-theme-hicolor
 Requires: %name-data
 Requires: terminalwidget5-data
 #Recommends:     deepin-manual
 #Recommends:     zssh
+
+BuildRequires(pre): rpm-build-ninja
+# Automatically added by buildreq on Mon Oct 23 2023
+# optimized out: cmake-modules fontconfig-devel gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libfreetype-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel libxcbutil-icccm pkg-config python3 python3-base qt5-base-devel qt5-tools sh5
+BuildRequires: cmake libdtkwidget-devel libsecret-devel libxcbutil-icccm-devel lxqt-build-tools qt5-tools-devel qt5-x11extras-devel
 
 %description
 %summary.
@@ -49,7 +40,6 @@ The %name-data package provides shared data for Deepin Terminal.
 %package -n libterminalwidget5
 Summary: Qt5 terminal widget
 Group: System/Libraries
-BuildRequires: lxqt-build-tools libutf8proc-devel
 
 %description -n libterminalwidget5
 QTermWidget is an opensource project based on KDE4 Konsole application.
@@ -74,16 +64,13 @@ Development package for QTermWidget. Contains headers and dev-libs.
 
 %prep
 %setup
-# Much upstream weirdness
-# sed -i '/<QHash>/i#include <QObject>\n#include <QMap>' 3rdparty/terminalwidget/lib/SessionManager.h
-sed -i '/LXQtCompilerSettings/a remove_definitions(-DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII)' 3rdparty/terminalwidget/CMakeLists.txt
-# sed -i 's|default-config.json|src/assets/other/default-config.json|' CMakeLists.txt
+%patch -p1
 
 %build
 export PATH=%_qt5_bindir:$PATH
 %cmake \
     -GNinja \
-    -DDTKCORE_TOOL_DIR=%_libdir/libdtk-5*/DCore/bin \
+    -DDTKCORE_TOOL_DIR=%_libexecdir/dtk5/DCore/bin \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
@@ -124,6 +111,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_includedir/terminalwidget5/
 
 %changelog
+* Fri Dec 01 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.9-alt1
+- New version 6.0.9.
+- Cleanup spec and BRs.
+
 * Sun Jan 08 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.1-alt1
 - New version.
 - Cleanup spec.

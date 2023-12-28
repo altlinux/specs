@@ -1,50 +1,59 @@
+%define _libexecdir %_prefix/libexec
+
 %def_disable clang
 
 Name: dtkgui
-Version: 5.6.8
+Version: 5.6.20
 Release: alt1
+
 Summary: Deepin Toolkit, gui module for DDE look and feel
+
 License: LGPL-3.0
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dtkgui
+
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja
+# Automatically added by buildreq on Wed Oct 18 2023
+# optimized out: cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libcairo-devel libdouble-conversion3 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt liblcms2-devel libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-svg libqt5-widgets libqt5-xml libsasl2-3 libssl-devel libstdc++-devel pkg-config python3 python3-base qt5-base-devel qt5-svg-devel sh5 xorg-proto-devel
+BuildRequires: cmake dtk6-common-devel libdtkcore-devel libfreeimage-devel libgomp-devel libqtxdg-devel libraw-devel librsvg-devel
+# BuildRequires: libpcre2-devel libffi-devel libmount-devel libblkid-devel libselinux-devel libjpeg-devel libtiff-devel bzlib-devel libbrotli-devel libexpat-devel libpixman-devel
+# BuildRequires: libXdmcp-devel
 %if_enabled clang
 BuildRequires: clang-devel
 %else
 BuildRequires: gcc-c++ libgomp-devel
 %endif
-BuildRequires: cmake dtk5-core-devel dtk5-common librsvg-devel libgtest-devel libgmock-devel libqtxdg-devel libfreeimage-devel
 
 %description
 Deepin Toolkit, gui module for DDE look and feel.
 
-%package -n libdtk5-gui
+%package -n lib%{name}5
 Summary: Library for %name
-Group: Graphical desktop/Other
+Group: System/Libraries
+Provides: libdtk5-gui = %EVR
+Obsoletes: libdtk5-gui < %EVR
 
-%description -n libdtk5-gui
+%description -n lib%{name}5
 DtkGui is used for DDE look and feel.
 This package contains the shared libraries.
 
-%package -n dtk5-gui-devel
+%package -n lib%{name}-devel
 Summary: Development package for %name
 Group: Graphical desktop/Other
+Provides: dtk5-gui-devel = %EVR
+Obsoletes: dtk5-gui-devel < %EVR
 
-%description -n dtk5-gui-devel
+%description -n lib%{name}-devel
 Header files and libraries for %name.
 
 %prep
 %setup
-sed -i '/*build-*/d' .gitignore
-# Fix broken configs.
-sed -i '/libdir=/s/${prefix}//' \
-  misc/dtkgui.pc.in
-sed -i -e '/.tools/s/@CMAKE_INSTALL_PREFIX@//; /.libs/s/@CMAKE_INSTALL_PREFIX@//;' \
-  misc/qt_lib_dtkgui.pri.in
+%patch -p1
 
 %build
 %add_optflags -I/usr/lib/gcc/%{_target_alias}/%{get_version libgomp-devel}/include
@@ -60,10 +69,12 @@ export PATH=%_qt5_bindir:$PATH
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
   -DMKSPECS_INSTALL_DIR=%_qt5_archdatadir/mkspecs/modules/ \
-  -DCMAKE_INSTALL_LIBDIR=%_libdir \
+  -DPACKAGE_TOOL_INSTALL_DIR=libexec/dtk5/DGui/bin \
+  -DCMAKE_INSTALL_LIBDIR=%_lib \
+  -DLIB_INSTALL_DIR=%_libdir \
+  -DLIBRARY_INSTALL_DIR=%_lib \
   -DDTK_VERSION=%version \
   -DVERSION=%version \
-  -DLIB_INSTALL_DIR=%_libdir \
   -DBUILD_DOCS=OFF \
   %if_enabled clang
   -DLLVM_USE_LINKER=lld \
@@ -74,14 +85,16 @@ cmake --build %_cmake__builddir -j%__nprocs
 %install
 %cmake_install
 
-%files -n libdtk5-gui
-%doc README.md
-%doc LICENSE
-%_libdir/libdtkgui.so.5*
-%dir %_libdir/dtk5/
-%_libdir/dtk5/DGui/
+%files
+%doc README.md LICENSE
+%dir %_libexecdir/dtk5/
+%dir %_libexecdir/dtk5/DGui/
+%_libexecdir/dtk5/DGui/bin/
 
-%files -n dtk5-gui-devel
+%files -n lib%{name}5
+%_libdir/libdtkgui.so.5*
+
+%files -n lib%{name}-devel
 %dir %_includedir/dtk5/
 %_includedir/dtk5/DGui/
 %_qt5_archdatadir/mkspecs/modules/qt_lib_dtkgui.pri
@@ -93,6 +106,12 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/libdtkgui.so
 
 %changelog
+* Thu Nov 30 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.20-alt1
+- New version 5.6.20.
+- Renamed subpackages:
+  + libdtk5-gui -> dtkgui.
+  + dtk5-gui-devel -> libdtkgui-devel.
+
 * Fri Mar 10 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.8-alt1
 - New version.
 

@@ -3,37 +3,39 @@
 %define repoivr imagevisualresult
 %define sonameiv 0
 %define sonameivr 0
-%define llvm_ver 15
 
-%def_disable clang
-%def_enable cmake
+%def_without clang
+%def_with cmake
 
 Name: deepin-image-editor
-Version: 1.0.33
+Version: 1.0.39
 Release: alt1
+
 Summary: Image editor libraries for Deepin
+
 License: GPL-3.0+
 Group: System/Libraries
 Url: https://github.com/linuxdeepin/image-editor
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 
-%if_enabled clang
+%if_with clang
 ExcludeArch: armh
 %endif
 
-%if_enabled clang
-#BuildRequires(pre): rpm-macros-llvm-common
-BuildRequires: clang%llvm_ver.0-devel
-BuildRequires: lld%llvm_ver.0-devel
-BuildRequires: llvm%llvm_ver.0-devel
+# Automatically added by buildreq on Sat Oct 28 2023
+# optimized out: cmake cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libsasl2-3 libssl-devel libstdc++-devel libzen-devel pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-devel qt5-tools sh5 tbb-devel zlib-devel
+BuildRequires: glib2-devel libdtkwidget-devel libffmpegthumbnailer-devel libfreeimage-devel libmediainfo-devel libtiff-devel qt5-svg-devel qt5-tools-devel libdfm-io-devel
+
+%if_with clang
+BuildRequires: clang-devel
 %else
 BuildRequires: gcc-c++
 %endif
-%if_enabled cmake
-BuildRequires(pre): cmake rpm-build-ninja
+
+%if_with cmake
+BuildRequires: cmake rpm-build-ninja
 %endif
-BuildRequires: qt5-base-devel qt5-svg-devel qt5-tools-devel dtk5-widget-devel libopencv-devel libfreeimage-devel glib2-devel libmediainfo-devel libtiff-devel libffmpegthumbnailer-devel
 
 %description
 Image editor is a public library for deepin-image-viewer
@@ -99,12 +101,12 @@ sed -i 's|libimageviewer|libimagevisualresult|' \
 
 %build
 export PATH=%_qt5_bindir:$PATH
-%if_enabled cmake
-%if_enabled clang
+%if_with cmake
+%if_with clang
 %define optflags_lto -flto=thin
-export CC=clang-%llvm_ver
-export CXX=clang++-%llvm_ver
-export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
+export CC=clang
+export CXX=clang++
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %else
 %define optflags_lto %nil
 %endif
@@ -119,7 +121,7 @@ export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
 cmake --build "%_cmake__builddir"
 %else
 %qmake_qt5 \
-%if_enabled clang
+%if_with clang
     QMAKE_STRIP= -spec linux-clang \
 %endif
     CONFIG+=nostrip \
@@ -132,16 +134,18 @@ cmake --build "%_cmake__builddir"
 %endif
 
 %install
-%if_enabled cmake
+%if_with cmake
 %cmake_install
 %else
 %makeinstall INSTALL_ROOT=%buildroot
 %endif
+%find_lang --with-qt lib%repoiv
 
-%files -n lib%repoiv-data
+%files -n lib%repoiv-data -f lib%repoiv.lang
 %doc LICENSE.txt README.md
 %dir %_datadir/lib%repoiv/
-%_datadir/lib%repoiv/*
+%dir %_datadir/lib%repoiv/translations/
+%_datadir/lib%repoiv/translations/libimageviewer.qm
 
 %files -n lib%repoivr-data
 %dir %_datadir/lib%repoivr/
@@ -164,6 +168,9 @@ cmake --build "%_cmake__builddir"
 %_pkgconfigdir/lib%repoivr.pc
 
 %changelog
+* Fri Dec 22 2023 Leontiy Volodin <lvol@altlinux.org> 1.0.39-alt1
+- New version 1.0.39.
+
 * Thu Jun 29 2023 Leontiy Volodin <lvol@altlinux.org> 1.0.33-alt1
 - New version.
 

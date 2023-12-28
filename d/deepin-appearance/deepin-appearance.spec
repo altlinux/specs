@@ -1,0 +1,70 @@
+%define repo dde-appearance
+
+%def_disable clang
+
+Name: deepin-appearance
+Version: 1.1.7
+Release: alt1.git9f81088
+
+Summary: Set the theme and appearance of DDE
+
+License: GPL-3.0-or-later
+Group: Graphical desktop/Other
+Url: https://github.com/linuxdeepin/%repo
+
+Provides: %repo = %EVR
+
+Source: %url/archive/%version/%repo-%version.tar.gz
+
+BuildRequires: cmake qt5-tools-devel dtk6-common-devel dtkcore libdtkgui-devel kf5-kconfig-devel kf5-kwindowsystem-devel kf5-kglobalaccel-devel gsettings-qt-devel libgio-devel libXcursor-devel libXfixes-devel libgtk+3-devel libxcbutil-cursor-devel libsystemd-devel
+BuildRequires(pre): rpm-build-ninja
+%if_enabled clang
+BuildRequires(pre): clang-devel
+%else
+BuildRequires(pre): gcc-c++
+%endif
+
+%description
+%summary.
+
+%prep
+%setup -n %repo-%version
+
+%build
+%if_enabled clang
+export CC="clang"
+export CXX="clang++"
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
+%endif
+export PATH=%_qt5_bindir:$PATH
+%cmake \
+    -GNinja \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    %nil
+cmake --build "%_cmake__builddir" -j%__nprocs
+
+%install
+%cmake_install
+%find_lang --with-qt %repo
+
+%files -f %repo.lang
+%doc README.md
+%_bindir/%repo
+%_bindir/dde-fakewm
+%_userunitdir/%repo.service
+%dir %_datadir/%repo/
+%_datadir/%repo/custom.svg
+%dir %_datadir/%repo/translations/
+%_datadir/%repo/translations/dde-appearance_ky@Arab.qm
+%dir %_userunitdir/dde-session-initialized.target.wants/
+%_userunitdir/dde-session-initialized.target.wants/%repo.service
+%_datadir/dbus-1/services/com.deepin.wm.service
+%_datadir/dbus-1/services/org.deepin.dde.Appearance1.service
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/org.deepin.dde.appearance/
+%_datadir/dsg/configs/org.deepin.dde.appearance/org.deepin.dde.appearance.json
+
+%changelog
+* Fri Dec 08 2023 Leontiy Volodin <lvol@altlinux.org> 1.1.7-alt1.git9f81088
+- Initial build for ALT Sisyphus.

@@ -1,5 +1,5 @@
 Name: deepin
-Version: 5.0.3
+Version: 5.0.4
 Release: alt1
 Summary: Set of Deepin Desktop installers
 License: GPL-2.0+
@@ -26,37 +26,46 @@ Summary(ru_RU.UTF8): Установка Deepin с минимальным наб�
 Group: Graphical desktop/Other
 # BuildArch: noarch
 ExcludeArch: ppc64le armh
+Requires: kde5-profile
 Requires: libgsettings-qt
-Requires: libdtk5-core
-Requires: libdtk5-gui
-Requires: libdtk5-widget
 Requires: deepin-dock
 Requires: deepin-menu
 Requires: deepin-desktop-base
 Requires: deepin-session-ui
 Requires: deepin-session-shell
+Requires: deepin-session
 Requires: deepin-api
+%ifnarch ppc64le
 Requires: deepin-daemon
+%endif
 Requires: deepin-control-center
 Requires: deepin-qt5integration
 Requires: deepin-qt5platform-plugins
-Requires: deepin-launcher
+# Requires: deepin-launcher
 Requires: icon-theme-deepin
-# Requires: deepin-polkit-agent
-# Requires: deepin-polkit-agent-ext-gnomekeyring
-Requires: gnome-keyring
+Requires: deepin-polkit-agent
 Requires: startdde
-Requires: deepin-kwin
+Requires: deepin-kwin2
 Requires: deepin-desktop-schemas
 Requires: dtk5-common-schemas
 Requires: gtk-theme-deepin
-Requires: plasma5-kwin
-Requires: cgroup
 # Requires: fcitx-gtk3 fcitx-qt5
-# %%ifnarch armh ppc64le
 Requires: deepin-file-manager
 Requires: deepin-desktop
-# %%endif
+Requires: deepin-app-services
+Requires: deepin-network-core
+Requires: deepin-shortcut-viewer
+Requires: deepin-screensaver
+Requires: deepin-screensaver-modules
+Requires: deepin-clipboard
+Requires: deepin-sound-theme
+# Requires: deepin-fcitx5configtool-plugin
+Requires: deepin-service-manager
+Requires: deepin-application-manager
+Requires: xdg-desktop-portal-dde
+Requires: desktop-theme-deepin
+Requires: deepin-wloutput-daemon
+Requires: deepin-appearance
 
 %description minimal
 %name-minimal is a virtual package to provide minimal installation
@@ -69,40 +78,29 @@ Group: Graphical desktop/Other
 # BuildArch: noarch
 ExcludeArch: ppc64le armh
 Requires: %name-minimal = %version-%release
-Requires: deepin-default-settings
 Requires: deepin-terminal
 Requires: deepin-calendar
-Requires: deepin-anything
 Requires: deepin-wallpapers
-Requires: deepin-turbo
 Requires: deepin-system-monitor
 Requires: deepin-editor
-Requires: deepin-sound-theme
-%ifnarch armh
+%ifnarch armh ppc64le
 Requires: deepin-image-viewer
 %endif
 Requires: deepin-printer
-Requires: deepin-clipboard
 Requires: deepin-music
 Requires: deepin-calculator
 Requires: deepin-screen-recorder
 Requires: deepin-draw
 Requires: onboard
-# %%ifnarch armh
 Requires: deepin-movie
-# %%endif
 Requires: deepin-manual
-Requires: deepin-screensaver
-Requires: deepin-screensaver-modules
 Requires: deepin-compressor
 Requires: gvfs-backend-smb
-Requires: deepin-shortcut-viewer
 Requires: deepin-picker
-Requires: deepin-network-core
-Requires: kde5-profile
 Requires: deepin-log-viewer
-Requires: deepin-app-services
 Requires: deepin-grand-search
+Requires: deepin-account-faces
+Requires: deepin-widgets
 
 %description default
 %name-default is a virtual package to provide default installation
@@ -115,7 +113,6 @@ Group: Graphical desktop/Other
 # BuildArch: noarch
 ExcludeArch: ppc64le armh
 Requires: %name-default = %version-%release
-Requires: deepin-account-faces
 #Requires: deepin-topbar
 Requires: deepin-device-formatter
 Requires: deepin-tweak
@@ -131,6 +128,7 @@ Group: Graphical desktop/Other
 # BuildArch: noarch
 ExcludeArch: ppc64le armh
 Requires: %name-default = %version-%release
+Requires: deepin-launchpad
 
 %description regular
 %summary.
@@ -141,6 +139,9 @@ Requires: %name-default = %version-%release
 %files regular
 
 %changelog
+* Thu Dec 28 2023 Leontiy Volodin <lvol@altlinux.org> 5.0.4-alt1
+- Updated to DDE API v23.
+
 * Wed Jan 11 2023 Leontiy Volodin <lvol@altlinux.org> 5.0.3-alt1
 - Added dtk5-common-schemas in deepin-minimal.
 - Added deepin-grand-search in deepin-default.

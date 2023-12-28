@@ -1,79 +1,72 @@
-%def_disable clang
-%def_disable static
+%def_without clang
 
 %define repo dmusic
-%define optflags_lto %nil
+%define dmusic_ver 1
 
 Name: deepin-music
-Version: 6.2.17
+Version: 7.0.3
 Release: alt1
+
 Summary: Awesome music player with brilliant and tweakful UI Deepin-UI based
+
 License: GPL-3.0+
 Group: Sound
 Url: https://github.com/linuxdeepin/deepin-music
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: deepin-music-alt-fix-gcc-build.patch
+Patch1: deepin-music-alt-fix-underlinked-icui18n.patch
 
-%if_enabled clang
-BuildRequires(pre): clang-devel
-%else
-BuildRequires(pre): gcc-c++
-%endif
+Requires: vlc-mini ffmpeg dtkdeclarative
+
 BuildRequires(pre): rpm-build-kf5 cmake rpm-build-ninja
-BuildRequires: git-core
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-tools-devel
-BuildRequires: libicu-devel
-BuildRequires: libtag-devel
-BuildRequires: libavutil-devel
-BuildRequires: libavformat-devel
-BuildRequires: libcue-devel
-BuildRequires: dtk5-core-devel
-BuildRequires: dtk5-widget-devel
-BuildRequires: kf5-kcodecs-devel
-BuildRequires: libXext-devel
-BuildRequires: qt5-svg-devel
-BuildRequires: qt5-multimedia-devel
-BuildRequires: qt5-x11extras-devel
-BuildRequires: libvlc-devel
-BuildRequires: gsettings-qt-devel
-BuildRequires: mpris-qt5-devel
-BuildRequires: dbusextended-qt5-devel
-BuildRequires: udisks2-qt5-devel
-BuildRequires: deepin-qt-dbus-factory-devel
-Requires: vlc-mini ffmpeg
-# Requires: lib%%repo-static = %%version
+# Automatically added by buildreq on Sat Oct 28 2023
+# optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libavcodec-devel libavutil-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libicu-devel libmpris-qt5 libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-printsupport libqt5-qml libqt5-qmlmodels libqt5-quick libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libudisks2-qt5 pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-devel qt5-declarative-devel qt5-tools sh5 zlib-devel
+BuildRequires: cmake kf5-kcodecs-devel libSDL2-devel libavformat-devel libdtkdeclarative-devel libdtkwidget-devel libtag-devel libvlc-devel mpris-qt5-devel qt5-multimedia-devel qt5-svg-devel qt5-tools-devel udisks2-qt5-devel
+
+%if_with clang
+BuildRequires: clang-devel
+BuildRequires: lld-devel
+%else
+BuildRequires: gcc-c++
+%endif
 
 %description
 %summary.
 
-%if_enabled static
-%package -n lib%repo-devel-static
-Summary: Static libraries for %name
-Group: Development/Other
+%package -n lib%repo%dmusic_ver
+Summary: %repo library for %name
+Group: System/Libraries
 Provides: lib%name = %version
 Obsoletes: lib%name < %version
+
+%description -n lib%repo%dmusic_ver
+The package provides %repo library for %name.
+
+%package -n lib%repo-devel
+Summary: Static libraries for %name
+Group: Development/C++
 Provides: %name-devel = %version
 Obsoletes: %name-devel < %version
-# Provides: lib%%name-static = %%version
-# Obsoletes: lib%%name-static < %%version
 
-%description -n lib%repo-devel-static
-This package provides static libraries for %name.
-%endif
+%description -n lib%repo-devel
+The package provides development files for %repo library.
 
 %prep
 %setup
-sed -i 's|/usr/lib/deepin-aiassistant/|%_libdir/deepin-aiassistant/|' \
-    src/libmusic-plugin/CMakeLists.txt
+%if_without clang
+%patch -p1
+%endif
+%patch1 -p1
 
 %build
-%if_enabled clang
-export CC="clang"
-export CXX="clang++"
-export AR="llvm-ar"
-export NM="llvm-nm"
-export READELF="llvm-readelf"
+%if_with clang
+%define optflags_lto -flto=thin
+export CC=clang
+export CXX=clang++
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
+%else
+%define optflags_lto %nil
 %endif
 
 %cmake \
@@ -89,31 +82,36 @@ cmake --build %_cmake__builddir -j%__nprocs
 %cmake_install
 %find_lang %name
 
-%if_disabled static
-rm -f %buildroot%_libdir/lib%repo.a
-%endif
-
 %files -f %name.lang
-%doc CHANGELOG.md COPYING LICENSE README.md
+%doc CHANGELOG.md LICENSE README.md
 %_bindir/%name
 %_datadir/%name/
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
-%dir %_libdir/deepin-aiassistant/
-%dir %_libdir/deepin-aiassistant/serivce-plugins/
-%_libdir/deepin-aiassistant/serivce-plugins/libmusic-plugin.so
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/deepin-music/
+%_datadir/dsg/configs/deepin-music/org.deepin.music.json
 %dir %_datadir/deepin-manual/
 %dir %_datadir/deepin-manual/manual-assets/
 %dir %_datadir/deepin-manual/manual-assets/application/
 %dir %_datadir/deepin-manual/manual-assets/application/%name/
 %_datadir/deepin-manual/manual-assets/application/%name/music/
 
-%if_enabled static
-%files -n lib%repo-devel-static
-%_libdir/lib%repo.a
-%endif
+%files -n lib%repo%dmusic_ver
+%_libdir/lib%repo.so.%{dmusic_ver}*
+
+%files -n lib%repo-devel
+%_libdir/lib%repo.so
 
 %changelog
+* Sat Oct 28 2023 Leontiy Volodin <lvol@altlinux.org> 7.0.3-alt1
+- New version 7.0.3.
+- Fixed build using gcc.
+- Added dmusic subpackages.
+- Fixed underlinked icui18n.
+- Removed static subpackage.
+
 * Thu Jul 21 2022 Leontiy Volodin <lvol@altlinux.org> 6.2.17-alt1
 - New version (6.2.17).
 

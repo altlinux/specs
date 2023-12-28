@@ -1,12 +1,11 @@
 %def_disable clang
 
+%define _cmake__builddir BUILD
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 5.6.3
-Release: alt1.1
-%K5init no_altplace
-
+Version: 6.0.35
+Release: alt1
 Summary: New control center for Linux Deepin
 License: LGPL-3.0+
 Group: Graphical desktop/Other
@@ -20,52 +19,35 @@ Patch: deepin-control-center-no-user-experience.patch
 Patch1: deepin-control-center-lightdm-lockscreen.patch
 Patch2: deepin-control-center-hide-lockscreen-slide-widget.patch
 
-BuildRequires(pre): rpm-build-ninja desktop-file-utils rpm-build-kf5
-%if_enabled clang
-BuildRequires(pre): clang-devel
-%else
-BuildRequires(pre): gcc-c++
-%endif
-BuildRequires: cmake
-BuildRequires: deepin-network-utils-devel
-BuildRequires: dtk5-widget-devel
-BuildRequires: deepin-qt-dbus-factory-devel
-BuildRequires: gsettings-qt-devel
-BuildRequires: libGeoIP-devel
-BuildRequires: libnm-devel
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-multimedia-devel
-BuildRequires: qt5-svg-devel
-BuildRequires: qt5-x11extras-devel
-BuildRequires: libxcbutil-icccm-devel
-BuildRequires: libXext-devel
-BuildRequires: qt5-linguist
-BuildRequires: udisks2-qt5-devel
-BuildRequires: kf5-networkmanager-qt-devel
-BuildRequires: libpwquality-devel
-BuildRequires: libgmock-devel
-BuildRequires: libpolkitqt5-qt5-devel
-BuildRequires: libdeepin-pw-check-devel
-BuildRequires: deepin-desktop-base
-BuildRequires: dtk5-common-devel
-BuildRequires: dtk5-core-devel
-BuildRequires: qt5-wayland-devel kf5-kwayland-devel
-# libQt5XkbCommonSupport.a
-BuildRequires: qt5-base-devel-static
-# ---
-BuildRequires: libpcre-devel
-BuildRequires: libffi-devel
-BuildRequires: zlib-devel
-BuildRequires: libmount-devel
-BuildRequires: libblkid-devel
-BuildRequires: libselinux-devel
-BuildRequires: libgio-devel
-# ---
 # Requires: deepin-account-faces deepin-api deepin-daemon deepin-qt5integration deepin-network-utils GeoIP-GeoLite-data GeoIP-GeoLite-data-extra gtk-murrine-engine proxychains-ng redshift startdde
 # Requires: libdeepin-pw-check
 
+BuildRequires(pre): rpm-build-ninja
+%if_enabled clang
+BuildRequires: clang-devel
+%else
+BuildRequires: gcc-c++
+%endif
+# Automatically added by buildreq on Mon Oct 23 2023
+# optimized out: bash5 bashrc cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libcrypt-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libpolkit-qt5-agent libpolkit-qt5-core libpolkit-qt5-gui libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-help libqt5-multimedia libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel perl perl-Config-Tiny perl-Encode perl-XML-LibXML perl-parent pkg-config python3 python3-base qt5-base-common qt5-base-devel qt5-tools sh5
+BuildRequires: cmake deepin-gettext-tools doxygen libdeepin-pw-check-devel dtk6-common-devel libdtkwidget-devel libpolkitqt5-qt5-devel qt5-multimedia-devel qt5-svg-devel qt5-wayland-devel libgtest-devel gsettings-qt-devel
+
 %description
 New control center for Linux Deepin.
+
+%package -n libdcc-interface6
+Summary: Library for %name
+Group: System/Libraries
+
+%description -n libdcc-interface6
+This package provides library for %name.
+
+%package -n libdcc-widgets6
+Summary: Library for %name
+Group: System/Libraries
+
+%description -n libdcc-widgets6
+This package provides library for %name.
 
 %package devel
 Summary: %summary
@@ -76,28 +58,6 @@ Group: Development/Other
 
 %prep
 %setup -n %repo-%version
-%patch -p2
-%patch1 -p1
-%patch2 -p1
-
-# remove General Settings
-sed -i '/new CommonInfoModule/d' src/frame/window/mainwindow.cpp
-# remove Accounts module
-sed -i '/new AccountsModule/d' src/frame/window/mainwindow.cpp
-# remove Deepin ID Sync module
-sed -i '/new SyncModule/d' src/frame/window/mainwindow.cpp
-
-sed -i '/m_wake/d' src/frame/window/modules/power/generalwidget.{cpp,h}
-sed -i '/GSettingWatcher::instance()->getStatus(gsetting_systemSuspend) != "Hidden"/d' \
-  src/frame/window/modules/power/generalwidget.cpp
-
-sed -i 's|/lib/|/%_lib/|' \
-    com.deepin.controlcenter.develop.policy \
-    src/frame/window/mainwindow.cpp \
-    src/frame/window/insertplugin.cpp
-
-sed -i '/dde-grand-search-daemon/s|lib/${CMAKE_LIBRARY_ARCHITECTURE}|%_lib/|' \
-  CMakeLists.txt
 
 %build
 export PATH=%_qt5_bindir:$PATH
@@ -110,69 +70,66 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-
-# src/frame/CMakeLists.txt
-%K5build \
+%cmake \
+    -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DDCC_DISABLE_GRUB=YES \
+    -DDCC_DISABLE_GRUB=ON \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
-    -DDISABLE_RECOVERY=YES \
+    -DDISABLE_RECOVERY=ON \
     -DCVERSION=%version \
     -DAPP_VERSION=%version \
     -DVERSION=%version \
-    -DDISABLE_CLOUD_SYNC=YES \
-    -DDISABLE_AUTHENTICATION=YES \
-    -DDISABLE_ACCOUNT=YES \
-    -DDISABLE_SYS_UPDATE=YES \
-    -DDISABLE_SYS_UPDATE_SOURCE_CHECK=YES \
-    -DDISABLE_SYS_UPDATE_MIRRORS=YES \
-    -DDCC_DISABLE_FEEDBACK=YES \
-    -DDCC_DISABLE_POWERSAVE=YES \
+    -DDISABLE_CLOUD_SYNC=ON \
+    -DDISABLE_AUTHENTICATION=ON \
+    -DDISABLE_ACCOUNT=ON \
+    -DDISABLE_SYS_UPDATE=ON \
+    -DDISABLE_SYS_UPDATE_SOURCE_CHECK=ON \
+    -DDISABLE_SYS_UPDATE_MIRRORS=ON \
+    -DDCC_DISABLE_FEEDBACK=ON \
+    -DDCC_DISABLE_POWERSAVE=ON \
+    -DDISABLE_AUTHENTICATION=ON \
+    -DDISABLE_UPDATE=ON \
 %nil
+cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
-%K5install
-
-mkdir -p %buildroot%_libdir/%repo/plugins
-
-%ifnarch armh i586
-mv %buildroot/usr/lib/libdccwidgets.so %buildroot%_libdir/
-%endif
-
-mkdir -p %buildroot%_bindir/
-install -Dm644 com.deepin.controlcenter.addomain.policy %buildroot%_datadir/polkit-1/actions/
-
-%check
-desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
+%cmake_install
 
 %files
 %doc LICENSE README.md
 %_bindir/%repo
-%_bindir/%repo-wapper
 %_desktopdir/%repo.desktop
-%_datadir/dbus-1/services/*.service
-%_datadir/polkit-1/actions/*.policy
+%_datadir/dbus-1/services/org.deepin.dde.ControlCenter1.service
 %_datadir/%repo/
-%_datadir/dict/MainEnglishDictionary_ProbWL.txt
-%dir %_datadir/dman/
-%dir %_datadir/dman/dde-control-center/
-%_datadir/dman/dde-control-center/internaltest.md
-%_datadir/glib-2.0/schemas/com.deepin.dde.control-center.gschema.xml
-%dir %_libdir/dde-grand-search-daemon/
-%dir %_libdir/dde-grand-search-daemon/plugins/
-%dir %_libdir/dde-grand-search-daemon/plugins/searcher/
-%_libdir/dde-grand-search-daemon/plugins/searcher/com.deepin.dde-grand-search.dde-control-center-setting.conf
-%_libdir/libdccwidgets.so
+%dir %_libdir/%repo/
+%dir %_libdir/%repo/modules/
+%_libdir/%repo/modules/libdcc*.so
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.dde.control-center/
 %_datadir/dsg/configs/org.deepin.dde.control-center/org.deepin.dde.control-center*.json
+%_datadir/dsg/configs/org.deepin.region-format.json
+%_datadir/qt5/doc/dde-control-center.qch
+
+%files -n libdcc-interface6
+%_libdir/libdcc-interface.so.6*
+
+%files -n libdcc-widgets6
+%_libdir/libdcc-widgets.so.6*
 
 %files devel
-%_libdir/cmake/DdeControlCenter/
+%dir %_libdir/cmake/DdeControlCenter/
+%_libdir/cmake/DdeControlCenter/DdeControlCenter*.cmake
 %_includedir/%repo/
+%_libdir/libdcc-interface.so
+%_libdir/libdcc-widgets.so
 
 %changelog
+* Sat Dec 02 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.35-alt1
+- New version 6.0.35.
+- Cleanup spec and BRs.
+- Removed binding to KF5.
+
 * Thu Nov 02 2023 Ivan A. Melnikov <iv@altlinux.org> 5.6.3-alt1.1
 - NMU: Cleanup usage of %%K5* macros (fixes FTBFS).
 

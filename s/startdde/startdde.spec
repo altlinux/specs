@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: startdde
-Version: 5.10.2
+Version: 6.0.11
 Release: alt1
 Epoch: 1
 Summary: Starter of deepin desktop environment
@@ -11,32 +11,23 @@ Url: https://github.com/linuxdeepin/startdde
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: 0001-feat-dde-dconfig-daemon-configure-path.patch
-Patch1: 0001-feat-personalize-interface-mode-settings.patch
+Source1: vendor.tar
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
-BuildRequires(pre): rpm-build-golang
-BuildRequires: jq glib2-devel libgio-devel libgtk+3-devel libXcursor-devel libXfixes-devel libXi-devel libgudev-devel libgnome-keyring-devel libpulseaudio-devel libalsa-devel golang-deepin-api-devel libsecret-devel
+BuildRequires(pre): rpm-build-golang /proc
+BuildRequires: jq glib2-devel libgio-devel libgtk+3-devel libXcursor-devel libXfixes-devel libXi-devel libgudev-devel libgnome-keyring-devel libpulseaudio-devel libalsa-devel libsecret-devel
 
 %description
 Startdde is used for launching DDE components and invoking user's custom applications which compliant with xdg autostart specification.
 
 %prep
 %setup
-%patch -p1
-%patch1 -p1
-sed -i 's/sbin/bin/' Makefile
-sed -i 's|/etc/X11/Xsession.d/|/etc/X11/xinit/xinitrc.d/|' Makefile
-sed -i 's|/etc/X11/Xresources|/etc/X11|' \
-    etc_x11_session_d.go
-sed -i 's|/usr/sbin/|/usr/bin/|' \
-    misc/lightdm.conf
-sed -i 's|controlRedshift("disable")|controlRedshift("enable")|' \
-    display/display.go
+# Unpacked vendor/ into the source (used .gear/tags).
+tar -xf %SOURCE1
 
 %build
 %if_enabled clang
@@ -44,40 +35,33 @@ export CC="clang"
 export CXX="clang++"
 export AR="llvm-ar"
 %endif
-export GO111MODULE=off
-export GOPATH="%go_path/src/github.com/linuxdeepin/dde-api/vendor:%go_path"
+export GOPATH="$(pwd)/vendor:%go_path"
 # export GO_BUILD_FLAGS=-trimpath
 %make
 
 %install
 export GOPATH="%go_path"
 %makeinstall DESTDIR=%buildroot
-# Conflicts with lightdm.
-rm -rf %buildroot%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/%name
-%_bindir/deepin-fix-xauthority-perm
+%_sbindir/deepin-fix-xauthority-perm
 %dir %_libexecdir/deepin-daemon/
 %_libexecdir/deepin-daemon/greeter-display-daemon
-%_sysconfdir/X11/xinit/xinitrc.d/00deepin-dde-env
-%_sysconfdir/X11/xinit/xinitrc.d/01deepin-profile
-%_sysconfdir/X11/xinit/xinitrc.d/94qt_env
-%dir %_sysconfdir/profile.d/
-%_sysconfdir/profile.d/deepin-xdg-dir.sh
 %_datadir/%name/
-%dir %_datadir/xsessions/
-%_datadir/xsessions/deepin.desktop
+%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 %_datadir/glib-2.0/schemas/com.deepin.dde.display.gschema.xml
-%_datadir/glib-2.0/schemas/com.deepin.dde.startdde.gschema.xml
-%dir %_datadir/dsg/
-%dir %_datadir/dsg/configs/
-%dir %_datadir/dsg/configs/org.deepin.startdde/
-%_datadir/dsg/configs/org.deepin.startdde/org.deepin.startdde.StartManager.json
-%_datadir/dsg/configs/org.deepin.startdde/org.deepin.Display.json
+%_userunitdir/dde-display-task-refresh-brightness.service
+%dir %_userunitdir/dde-session-daemon.target.wants/
+%_userunitdir/dde-session-daemon.target.wants/dde-display-task-refresh-brightness.service
 
 %changelog
+* Fri Nov 24 2023 Leontiy Volodin <lvol@altlinux.org> 1:6.0.11-alt1
+- New version 6.0.11.
+- Used independent vendoring of submodules again.
+- Used own modification of lightdm.
+
 * Wed Jan 25 2023 Leontiy Volodin <lvol@altlinux.org> 1:5.10.2-alt1
 - New version (5.10.2).
 

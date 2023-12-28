@@ -1,32 +1,26 @@
-%global repo dde-calendar
+%define repo dde-calendar
 
 Name: deepin-calendar
-Version: 5.9.1
+Version: 5.11.0
 Release: alt1
+
 Summary: Calendar for Deepin Desktop Environment
-License: GPL-3.0+
+
+License: LGPL-2.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-calendar
-Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 %ifarch aarch64 armh
 Patch: deepin-calendar-5.8.27-alt-aarch64-armh.patch
 %endif
 
-BuildRequires(pre): rpm-build-ninja desktop-file-utils
-BuildRequires: gcc-c++
-BuildRequires: cmake
-BuildRequires: deepin-gettext-tools
-BuildRequires: qt5-linguist
-BuildRequires: dtk5-widget-devel
-BuildRequires: dtk5-common-devel
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-svg-devel
-BuildRequires: deepin-qt-dbus-factory-devel
-BuildRequires: libgmock-devel
-BuildRequires: qt5-tools-devel
 Requires: icon-theme-hicolor
+
+BuildRequires(pre): rpm-build-ninja
+# Automatically added by buildreq on Mon Oct 23 2023
+# optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdb4-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel pkg-config python3 python3-base qt5-base-devel qt5-tools sh5
+BuildRequires: cmake deepin-qt-dbus-factory-devel libdtkwidget-devel libical-devel qt5-svg-devel qt5-tools-devel
 
 %description
 Calendar for Deepin Desktop Environment.
@@ -37,28 +31,30 @@ Calendar for Deepin Desktop Environment.
 %patch -p1
 %endif
 
-sed -i 's|/usr/lib/deepin-aiassistant|%_libdir/deepin-aiassistant|' schedule-plugin/CMakeLists.txt
+sed -i 's|lib/deepin-aiassistant|%_lib/deepin-aiassistant|' \
+  schedule-plugin/CMakeLists.txt
+sed -i 's|${CMAKE_INSTALL_FULL_LIBEXECDIR}/deepin-daemon|%_libexecdir/deepin-daemon|' \
+  calendar-service/CMakeLists.txt
 
 %build
 export PATH=%_qt5_bindir:$PATH
 %cmake \
     -GNinja \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DLIB_INSTALL_DIR=%_libdir \
     -DAPP_VERSION=%version \
     -DVERSION=%version
 cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
-
-%check
-desktop-file-validate %buildroot%_desktopdir/%repo.desktop
+mkdir -p %buildroot%_sysconfdir/xdg/autostart/
+mv -f %buildroot%_prefix%_sysconfdir/xdg/autostart/dde-calendar-service.desktop %buildroot%_sysconfdir/xdg/autostart/
 
 %files
-%doc README.md
-%doc LICENSE
+%doc README.md LICENSE
 %_bindir/%repo
 %_datadir/%repo/
 %_datadir/dbus-1/services/com.deepin.Calendar.service
@@ -78,6 +74,11 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop
 %_userunitdir/com.dde.calendarserver.calendar.timer
 
 %changelog
+* Mon Oct 23 2023 Leontiy Volodin <lvol@altlinux.org> 5.11.0-alt1
+- New version 5.11.0.
+- Updated license tag.
+- Cleanup spec and BRs.
+
 * Fri Jan 20 2023 Leontiy Volodin <lvol@altlinux.org> 5.9.1-alt1
 - New version (5.9.1).
 

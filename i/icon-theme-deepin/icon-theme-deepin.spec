@@ -1,13 +1,12 @@
-# %%set_findreq_skiplist %%_iconsdir/bloom/actions/24/arrow-{down,left,right,up,empty}.svg
-
 Name: icon-theme-deepin
-Version: 2023.04.03
+Version: 2023.11.16
 Release: alt1
+
 Summary: Icons for the Deepin Desktop Environment
+
 License: GPL-3.0-only
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-icon-theme
-Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/deepin-icon-theme-%version.tar.gz
 
@@ -45,6 +44,9 @@ cp -a ./Sea ./bloom-fantacy ./usr/share/icons/hicolor %buildroot%_iconsdir/
 %_iconsdir/vintage/
 
 %changelog
+* Fri Nov 24 2023 Leontiy Volodin <lvol@altlinux.org> 2023.11.16-alt1
+- New version 2023.11.16.
+
 * Mon Apr 10 2023 Leontiy Volodin <lvol@altlinux.org> 2023.04.03-alt1
 - New version 2023.04.03.
 

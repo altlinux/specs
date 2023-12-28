@@ -1,9 +1,10 @@
-%def_disable clang
-%def_disable cmake
+%def_without clang
+# Not actual CMakeLists.txt
+%def_without cmake
 
 Name: deepin-screen-recorder
-Version: 5.10.22
-Release: alt2
+Version: 5.12.13.0.6.bc51
+Release: alt1
 
 Summary: Default screen recorder application for Deepin
 
@@ -12,71 +13,63 @@ License: GPL-3.0+
 Group: Video
 Url: https://github.com/linuxdeepin/deepin-screen-recorder
 
-Packager: Leontiy Volodin <lvol@altlinux.org>
-
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 Provides: %name-data = %version
 Obsoletes: %name-data < %version
 
-%if_enabled clang
-BuildRequires(pre): clang-devel
+# Automatically added by buildreq on Fri Dec 15 2023
+# optimized out: gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gstreamer1.0-devel libX11-devel libXcursor-devel libXext-devel libXfixes-devel libXi-devel libXtst-devel libavcodec-devel libavformat-devel libavutil-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libgst-plugins1.0 libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libstartup-notification libstdc++-devel libswscale-devel libudev-devel libxcb-devel pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-devel qt5-declarative-devel qt5-tools sh5 tbb-devel xorg-proto-devel
+BuildRequires: deepin-dock-devel deepin-qt-dbus-factory-devel dwayland-devel gst-plugins1.0-devel kf5-kconfig-devel kf5-ki18n-devel kf5-kwayland-devel kf5-kwindowsystem-devel libdtkwidget-devel libffmpegthumbnailer-devel libimagevisualresult-devel libopencv-devel libportaudio2-devel libswresample-devel libusb-devel libv4l-devel libxcbutil-devel qt5-multimedia-devel qt5-svg-devel qt5-tools-devel qt5-x11extras-devel
+
+# /etc/uos-version detection
+BuildRequires: deepin-desktop-base
+
+%if_with clang
+BuildRequires: clang-devel lld-devel
 %else
-BuildRequires(pre): gcc-c++
+BuildRequires: gcc-c++
 %endif
-%if_enabled cmake
-BuildRequires(pre): cmake rpm-build-ninja
+
+%if_with cmake
+BuildRequires: cmake rpm-build-ninja
 %endif
-BuildRequires(pre): rpm-build-kf5
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-tools-devel
-BuildRequires: libxcbutil-devel
-BuildRequires: deepin-qt-dbus-factory-devel
-BuildRequires: deepin-dock-devel
-BuildRequires: dtk5-gui-devel
-BuildRequires: dtk5-widget-devel
-BuildRequires: dtk5-common
-BuildRequires: gsettings-qt-devel
-BuildRequires: qt5-x11extras-devel
-BuildRequires: qt5-multimedia-devel
-BuildRequires: qt5-svg-devel
-BuildRequires: libavcodec-devel
-BuildRequires: libavformat-devel
-BuildRequires: libavfilter-devel
-BuildRequires: libswresample-devel
-BuildRequires: libswscale-devel
-BuildRequires: libavdevice-devel
-BuildRequires: libgbm-devel
-BuildRequires: libepoxy-devel
-BuildRequires: kf5-kwindowsystem-devel
-BuildRequires: kf5-kwayland-devel
-BuildRequires: kf5-ki18n-devel
-BuildRequires: kf5-kconfig-devel
 
 %description
 %summary.
 
 %prep
 %setup -n %name-%version
-sed -i 's|/usr/lib/|%_libdir/|' src/dde-dock-plugins/recordtime/recordtime.pro
-sed -i 's|/etc/due-shell|/etc/dde-shell|' src/src.pro
+%patch -p1
 
 %build
 export PATH=%_qt5_bindir:$PATH
+%if_enabled clang
+%define optflags_lto -flto=thin
+%endif
 %if_enabled cmake
     %if_enabled clang
-    export CC="clang"
-    export CXX="clang++"
-    export AR="llvm-ar"
+    export CC=clang
+    export CXX=clang++
+    export LDFLAGS="-fuse-ld=lld $LDFLAGS"
     %endif
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DVERSION=%version \
+    -DLIB_INSTALL_DIR=%_libdir \
+    -DDEFINES+="VERSION=%version" \
     %nil
 cmake --build "%_cmake__builddir" -j%__nprocs
 %else
 %qmake_qt5 \
     CONFIG+=nostrip \
+    VERSION=%version \
+    DEFINES+="VERSION=%version" \
+    LIB_INSTALL_DIR=%_libdir \
+    LIBDIR=%_lib \
+    unix:LIBS+=" -L/%_lib -ludev" \
     %if_enabled clang
         QMAKE_STRIP= -spec linux-clang \
     %endif
@@ -98,18 +91,16 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_bindir/deepin-pin-screenshots
 %_desktopdir/%name.desktop
 %_datadir/%name/
-%_datadir/deepin-pin-screenshots/
 %dir %_libdir/dde-dock/
 %dir %_libdir/dde-dock/plugins/
 %_libdir/dde-dock/plugins/libdeepin-screen-recorder-plugin.so
+%_libdir/dde-dock/plugins/libshot-start-plugin.so
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/scalable/apps/deepin-screenshot.svg
 %_datadir/dbus-1/services/com.deepin.ScreenRecorder.service
 %_datadir/dbus-1/services/com.deepin.Screenshot.service
 %_datadir/dbus-1/services/com.deepin.PinScreenShots.service
-# %dir %_sysconfdir/dde-shell/
-# %dir %_sysconfdir/dde-shell/json/
-# %_sysconfdir/dde-shell/json/screenRecorder.json
+%_datadir/glib-2.0/schemas/com.deepin.dde.dock.module.shot-start-plugin.gschema.xml
 %dir %_datadir/deepin-manual/
 %dir %_datadir/deepin-manual/manual-assets/
 %dir %_datadir/deepin-manual/manual-assets/application/
@@ -117,6 +108,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/deepin-manual/manual-assets/application/%name/screen-capture/
 
 %changelog
+* Wed Dec 21 2023 Leontiy Volodin <lvol@altlinux.org> 5.12.13.0.6.bc51-alt1
+- New version 5.12.13-6-gbc51a0c.
+
 * Tue Dec 05 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 5.10.22-alt2
 - NMU: fixed FTBFS (build without libprocps-devel, no longer available).
   Thanks to iv@.

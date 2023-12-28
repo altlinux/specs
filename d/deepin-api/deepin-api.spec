@@ -7,22 +7,24 @@
 %def_without check
 
 Name: deepin-api
-Version: 5.5.32
-Release: alt3.2
+Version: 6.0.8
+Release: alt1
+
 Summary: Golang bingding for dde-daemon
+
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-api
 
-Packager: Leontiy Volodin <lvol@altlinux.org>
-
 Source: %url/archive/%version/dde-api-%version.tar.gz
-Source1: vendor.tar
+Patch: %name-%version-%release.patch
+
+#Requires: deepin-desktop-base rfkill
+#Requires(pre): shadow-utils dbus-tools
 
 BuildRequires(pre): rpm-build-golang rpm-build-python3
+BuildRequires: /proc
 BuildRequires: libalsa-devel libcairo-devel libgio-devel libgtk+3-devel libgdk-pixbuf-devel libgudev-devel libcanberra-devel libpulseaudio-devel librsvg-devel libpoppler-glib-devel libpolkitqt5-qt5-devel libsystemd-devel libXfixes-devel libXcursor-devel libX11-devel libXi-devel deepin-gettext-tools libgdk-pixbuf-xlib-devel
-Requires: deepin-desktop-base rfkill
-Requires(pre): shadow-utils dbus-tools
 
 %description
 %summary.
@@ -30,7 +32,7 @@ Requires(pre): shadow-utils dbus-tools
 %package -n golang-%name-devel
 Summary: %summary
 Group: Graphical desktop/Other
-AutoReq: yes,noshell
+AutoReq: no
 # BuildArch: noarch
 
 %description -n golang-%name-devel
@@ -42,29 +44,12 @@ building other packages which use import path with
 
 %prep
 %setup -n dde-api-%version
-#patch -p1
-# Remove debian build files.
-rm -rf debian/
-# Fix unmets.
-sed -i 's|/usr/bin/true|/bin/true|' \
-    misc/systemd/system/deepin-shutdown-sound.service
-# Fixed build for i586.
-sed -i 's|gobuild|.build|' Makefile
-# Fixed paths.
-sed -i 's|/etc/default/locale|%_datadir/locale|' \
-    adjust-grub-theme/util.go \
-    locale-helper/ifc.go
-# Unpacked vendor/ into the source (used .gear/tags).
-tar -xf %SOURCE1
-# Fixed paths in vendor/.
-sed -i 's|/usr/share/locale/locale.alias|/usr/share/X11/locale/locale.alias|' \
-    vendor/src/github.com/linuxdeepin/go-lib/locale/locale.go
-sed -i 's|/usr/share/icons/deepin/|/usr/share/icons/bloom/|' \
-    vendor/src/github.com/linuxdeepin/go-x11-client/util/cursor/cursor_test.go
+%patch -p1
 
 %build
 export GOPATH="$(pwd)/vendor"
 export GOFLAGS="-mod=vendor"
+export GO111MODULE=off
 
 %make
 
@@ -77,9 +62,6 @@ export GOPATH="%go_path"
 mkdir -p %buildroot%_sharedstatedir/deepin-sound-player/.cache/dconf/
 touch %buildroot%_sharedstatedir/deepin-sound-player/.cache/dconf/user
 install -Dm644 archlinux/deepin-api.sysusers %buildroot/lib/sysusers.d/deepin-api.conf
-# Pack golang modules.
-mkdir -p %buildroot%go_path/src/%goipath/vendor/src/
-cp -a vendor/src/* %buildroot%go_path/src/%goipath/vendor/src/
 
 %files
 %doc README.md LICENSE
@@ -103,6 +85,12 @@ cp -a vendor/src/* %buildroot%go_path/src/%goipath/vendor/src/
 %go_path/src/%goipath
 
 %changelog
+* Mon Nov 27 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.8-alt1
+- New version 6.0.8.
+- Updated to API v23.
+- Cleanup spec.
+- Packed golang modules for deepin-api only.
+
 * Tue Oct 31 2023 Ivan A. Melnikov <iv@altlinux.org> 5.5.32-alt3.2
 - NMU: Update vendored golang.org/x/sys to build on loongarch64.
 

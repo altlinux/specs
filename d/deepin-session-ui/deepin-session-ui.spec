@@ -1,46 +1,31 @@
-%def_disable clang
+%def_without clang
 
 %define repo dde-session-ui
 
 Name: deepin-session-ui
-Version: 5.6.2
+Version: 6.0.10
 Release: alt1
+
 Summary: Deepin desktop-environment - Session UI module
+
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-session-ui
+
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 
-%if_enabled clang
-BuildRequires(pre): clang-devel
-%else
-BuildRequires(pre): gcc-c++
-%endif
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: cmake
-BuildRequires: deepin-gettext-tools
-BuildRequires: dtk5-common-devel
-BuildRequires: dtk5-widget-devel
-BuildRequires: deepin-qt-dbus-factory-devel
-BuildRequires: gsettings-qt-devel
-BuildRequires: libgtk+2-devel
-BuildRequires: lightdm-devel
-BuildRequires: libsystemd-devel
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-tools
-BuildRequires: qt5-svg-devel
-BuildRequires: qt5-x11extras-devel
-BuildRequires: qt5-multimedia-devel
-BuildRequires: libxcbutil-icccm-devel
-BuildRequires: libXcursor-devel
-BuildRequires: libXtst-devel
-BuildRequires: libpam0-devel
-BuildRequires: qt5-linguist
+# Automatically added by buildreq on Wed Oct 25 2023
+# optimized out: bash5 bashrc cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXext-devel libcrypt-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgmock-devel libgpg-error libgsettings-qt libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel libxcbutil-icccm pkg-config python3 python3-base qt5-base-devel sh5 xorg-proto-devel
+BuildRequires: cmake dtk6-common-devel dtkcore gsettings-qt-devel libdeepin-pw-check-devel libdtkwidget-devel libgio-devel libgtest-devel libsystemd-devel libxcbutil-icccm-devel qt5-svg-devel qt5-tools qt5-x11extras-devel
 BuildRequires: deepin-dock-devel
-BuildRequires: libgio-qt-devel
-BuildRequires: libgtest-devel
+%if_with clang
+BuildRequires: clang-devel
+%else
+BuildRequires: gcc-c++
+%endif
 
 %description
 This project include those sub-project:
@@ -60,7 +45,7 @@ sed -i 's|lib/dde-dock/|%_lib/dde-dock/|' CMakeLists.txt
 
 %build
 export PATH=%_qt5_bindir:$PATH
-%if_enabled clang
+%if_with clang
 export CC="clang"
 export CXX="clang++"
 export AR="llvm-ar"
@@ -94,7 +79,7 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_bindir/dde-wm-chooser
 %_bindir/dmemory-warning-dialog
 %_bindir/dde-hints-dialog
-%dir %_libexecdir/deepin-daemon
+%dir %_libexecdir/deepin-daemon/
 %_libexecdir/deepin-daemon/dde-bluetooth-dialog
 %_libexecdir/deepin-daemon/dde-lowpower
 %_libexecdir/deepin-daemon/dde-osd
@@ -103,17 +88,17 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libexecdir/deepin-daemon/dde-touchscreen-dialog
 %_libexecdir/deepin-daemon/dde-welcome
 %_libexecdir/deepin-daemon/dnetwork-secret-dialog
+%dir %_libexecdir/dde-control-center/
+%_libexecdir/dde-control-center/reset-password-dialog
 %_datadir/%repo/
-%_desktopdir/dde-osd.desktop
-#_iconsdir/hicolor/*/apps/deepin-*
 %_iconsdir/hicolor/scalable/devices/computer.svg
 %_datadir/dbus-1/services/*.service
-%_datadir/glib-2.0/schemas/com.deepin.dde.dock.module.notifications.gschema.xml
-%dir %_libdir/dde-dock
-%dir %_libdir/dde-dock/plugins
-%_libdir/dde-dock/plugins/libnotifications.so
 
 %changelog
+* Wed Oct 25 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.10-alt1
+- New version 6.0.10.
+- Cleanup BRs.
+
 * Wed Jan 11 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.2-alt1
 - New version.
 

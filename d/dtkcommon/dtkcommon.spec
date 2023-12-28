@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkcommon
-Version: 5.6.9
+Version: 5.6.20
 Release: alt1
 
 Summary: Deepin desktop schemas
@@ -21,35 +21,33 @@ BuildRequires(pre): gcc-c++
 %endif
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: cmake
-BuildRequires: glibc-core
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-tools
 
 %description
 %summary.
 
-%package -n dtk5-common-schemas
-Summary: Deepin desktop schemas
+%package -n dtk6-common-configs
+Summary: Deepin desktop configs
 Group: System/Configuration/Other
 BuildArch: noarch
+Provides: dtk5-common-schemas = %EVR
 
-%description -n dtk5-common-schemas
+%description -n dtk6-common-configs
 %summary.
 
-%package -n dtk5-common-devel
+%package -n dtk6-common-devel
 Summary: Development files for %name
 Group: Development/Other
-Provides: dtk5-common
+Provides: dtk5-common = %EVR
+Provides: dtk5-common-devel = %EVR
+Obsoletes: dtk5-common-devel < %EVR
 
-%description -n dtk5-common-devel
+%description -n dtk6-common-devel
 The package provides development files for %name.
 
 %prep
 %setup
 
 %build
-export QTDIR=%_qt5_prefix
-export PATH=%_qt5_bindir:$PATH
 %if_enabled clang
 export CC="clang"
 export CXX="clang++"
@@ -62,7 +60,6 @@ export AR="llvm-ar"
   -DDVERSION=%version \
   -DDTK_VERSION=%version \
   -DLIB_INSTALL_DIR=%_libdir \
-  -DMKSPECS_INSTALL_DIR=%_qt5_archdatadir/mkspecs \
   -DARCH=%_arch \
 #
 cmake --build "%_cmake__builddir" -j%__nprocs
@@ -70,16 +67,21 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %install
 %cmake_install
 
-%files -n dtk5-common-schemas
+%files -n dtk6-common-configs
 %doc LICENSE README.md
-%_datadir/glib-2.0/schemas/com.deepin.dtk.gschema.xml
+%_datadir/dsg/configs/org.deepin.dtk.preference.json
 
-%files -n dtk5-common-devel
+%files -n dtk6-common-devel
 %_libdir/cmake/Dtk/DtkConfig.cmake
-%_qt5_archdatadir/mkspecs/features/*.prf
-%_qt5_archdatadir/mkspecs/modules/qt_lib_dtkcommon.pri
+%_libdir/cmake/Dtk6/Dtk6Config.cmake
+%_libdir/cmake/DtkBuildHelper/DtkBuildHelperConfig.cmake
+%_libdir/cmake/DtkBuildHelper/DtkBuildHelperConfigVersion.cmake
 
 %changelog
+* Tue Nov 28 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.20-alt1
+- New version 5.6.20.
+- Switched to dtk6.
+
 * Mon Apr 24 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.9-alt1
 - New version 5.6.9.
 

@@ -1,32 +1,34 @@
 %define soname 1
-%define llvm_ver 15
 
 %def_disable clang
+%def_without cracklib
 
 Name: deepin-pw-check
-Version: 5.1.18
+Version: 6.0.2
 Release: alt1
+
 Summary: Verify the validity of the password for DDE
+
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-pw-check
-Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: deepin-pw-check-5.1.8-alt-exclude-cracklib.patch
+Patch: %name-%version-%release.patch
+Patch1: deepin-pw-check-6.0.2-alt-exclude-cracklib.patch
 
 %if_enabled clang
-#BuildRequires(pre): rpm-macros-llvm-common
-BuildRequires: clang%llvm_ver.0-devel
-BuildRequires: lld%llvm_ver.0-devel
-BuildRequires: llvm%llvm_ver.0-devel
+BuildRequires: clang-devel
+BuildRequires: lld-devel
 %else
 BuildRequires: gcc-c++
 %endif
-BuildRequires: rpm-build-golang
+BuildRequires: rpm-build-golang /proc
 BuildRequires: deepin-gettext-tools
 BuildRequires: libpam0-devel
-# BuildRequires: cracklib-devel
+%if_with cracklib
+BuildRequires: cracklib-devel
+%endif
 BuildRequires: libiniparser-devel
 BuildRequires: glib2-devel
 BuildRequires: libgtk+3-devel
@@ -66,17 +68,19 @@ This package provides static libraries for %name.
 %prep
 %setup
 %patch -p1
-patch -p1 < rpm/0001-fix-for-UonioTech.patch
-sed -i 's|/usr/lib|%_libdir|' \
+%if_without cracklib
+%patch1 -p1
+%endif
+sed -i 's|@LIBDIR@|%_lib|' \
   misc/pkgconfig/libdeepin_pw_check.pc
 
 %build
 %if_enabled clang
-export CC=clang-%llvm_ver
-export CXX=clang++-%llvm_ver
-export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
+export CC=clang
+export CXX=clang++
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-export GOPATH="%go_path/src/github.com/linuxdeepin/dde-api/vendor"
+export GOPATH="$PWD/vendor"
 export PAM_MODULE_DIR=/%_lib/security
 export PKG_FILE_DIR=%_libdir/pkgconfig
 export LIBDIR=%_lib
@@ -96,9 +100,9 @@ export GO111MODULE=off
 /%_lib/security/pam_deepin_pw_check.so
 %_bindir/pwd-conf-update
 %_datadir/locale/*/LC_MESSAGES/%name.mo
-%_datadir/dbus-1/system-services/com.deepin.daemon.PasswdConf.service
-%_datadir/dbus-1/system.d/com.deepin.daemon.PasswdConf.conf
-%_datadir/polkit-1/actions/com.deepin.daemon.passwdconf.policy
+%_datadir/dbus-1/system-services/org.deepin.dde.PasswdConf1.service
+%_datadir/dbus-1/system.d/org.deepin.dde.PasswdConf1.conf
+%_datadir/polkit-1/actions/org.deepin.dde.passwdconf.policy
 %dir %_libexecdir/%name/
 %_libexecdir/%name/%name
 
@@ -114,6 +118,10 @@ export GO111MODULE=off
 %_libdir/libdeepin_pw_check.a
 
 %changelog
+* Fri Dec 01 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.2-alt1
+- New version 6.0.2.
+- Used independent vendoring of submodules again.
+
 * Fri Jan 27 2023 Leontiy Volodin <lvol@altlinux.org> 5.1.18-alt1
 - New version (5.1.18).
 

@@ -1,64 +1,39 @@
-%define llvm_ver 15
-%define gcc_ver 13
-
 %ifarch loongarch64
-%def_disable clang
+%def_without clang
 %else
-%def_enable clang
+%def_with clang
 %endif
 
 Name: deepin-movie
 Version: 6.0.5
-Release: alt1.1
+Release: alt2
+
 Summary: Deepin movie is Deepin Desktop Environment Movie Player
+
 License: GPL-3.0+ and CC0-1.0 and CC-BY-4.0
 Group: Video
 Url: https://github.com/linuxdeepin/deepin-movie-reborn
-Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-reborn-%version.tar
 Patch0: %name-5.10.15-alt-cxx-flags.patch
 Patch1: %name-5.10.15-alt-libmpv.patch
 Patch2: %name-5.10.15-alt-underlinked-libraries.patch
+Patch3: %name-6.0.5-upstream-dtkgui.patch
 
-%if_enabled clang
-#BuildRequires(pre): rpm-macros-llvm-common
-BuildRequires: clang%llvm_ver.0-devel
-BuildRequires: lld%llvm_ver.0-devel
-BuildRequires: llvm%llvm_ver.0-devel
-BuildRequires: libstdc++%gcc_ver-devel
-%else
-BuildRequires: gcc%gcc_ver-c++
-%endif
-BuildRequires(pre): rpm-build-ninja
-BuildRequires: cmake
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-x11extras-devel
-BuildRequires: qt5-tools-devel
-BuildRequires: qt5-svg-devel
-BuildRequires: dtk5-widget-devel
-BuildRequires: libmpv-devel
-BuildRequires: libxcb-devel
-BuildRequires: libxcbutil-devel
-BuildRequires: libxcbutil-icccm-devel
-BuildRequires: xorg-xcbproto-devel
-BuildRequires: libavformat-devel
-BuildRequires: libavutil-devel
-BuildRequires: libavcodec-devel
-BuildRequires: libffmpegthumbnailer-devel
-BuildRequires: libpulseaudio-devel
-BuildRequires: libdvdnav-devel
-BuildRequires: gsettings-qt-devel
-BuildRequires: libswresample-devel
-BuildRequires: mpris-qt5-devel
-BuildRequires: dbusextended-qt5-devel
-BuildRequires: libva-devel
-BuildRequires: gstreamer1.0-devel
-BuildRequires: gst-plugins1.0-devel
-BuildRequires: qt5-multimedia-devel
 Requires: libdmr libdvdnav libgsettings-qt
 # direct dependency because dmr controls mpv via libmpv calls
 Requires: libmpv2
+
+BuildRequires(pre): rpm-build-ninja
+# Automatically added by buildreq on Sat Oct 28 2023
+# optimized out: alt-os-release clang17.0 clang17.0-support cmake cmake-modules glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gstreamer1.0-devel libX11-devel libXtst-devel libavcodec-devel libavformat-devel libavutil-devel libclang-cpp17 libdbusextended-qt5 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libdvdread-devel libglvnd-devel libgpg-error libgsettings-qt libmpris-qt5 libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libva-devel libxcb-devel lld17.0 llvm-common llvm17.0-libs pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-devel qt5-tools sh5 xorg-proto-devel
+BuildRequires: dbusextended-qt5-devel gsettings-qt-devel gst-plugins1.0-devel libdtkwidget-devel libdvdnav-devel libffmpegthumbnailer-devel libmpv-devel libxcbutil-devel mpris-qt5-devel qt5-multimedia-devel qt5-svg-devel qt5-tools-devel qt5-x11extras-devel
+
+%if_with clang
+BuildRequires: clang-devel lld-devel
+%else
+BuildRequires: gcc-c++
+%endif
 
 %description
 %summary.
@@ -79,23 +54,24 @@ This package provides development files for libdmr.
 
 %prep
 %setup -n %name-reborn-%version
-%if_enabled clang
+%if_with clang
 # build: use system opt flags.
 # The package isn't built with the patch using gcc.
 %patch0 -p1
 %endif
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
-%if_enabled clang
+%if_with clang
 %define optflags_lto -flto=thin
-export CC=clang-%llvm_ver
-export CXX=clang++-%llvm_ver
-export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
+export CC=clang
+export CXX=clang++
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %else
-export CC=gcc-%gcc_ver
-export CXX=g++-%gcc_ver
+export CC=gcc
+export CXX=g++
 %endif
 %cmake \
     -GNinja \
@@ -134,6 +110,11 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_pkgconfigdir/libdmr.pc
 
 %changelog
+* Wed Nov 01 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.5-alt2
+- Fixed build with dtkgui.
+- Cleanup spec and BRs.
+- Used default compiler versions for easy backporting.
+
 * Tue Oct 31 2023 Ivan A. Melnikov <iv@altlinux.org> 6.0.5-alt1.1
 - NMU: Build on loongarch64 with gcc13.
 

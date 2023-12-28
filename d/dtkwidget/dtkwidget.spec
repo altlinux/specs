@@ -2,7 +2,7 @@
 %def_enable docs
 
 Name: dtkwidget
-Version: 5.6.8
+Version: 5.6.20
 Release: alt1
 Summary: Deepin tool kit widget modules
 License: LGPL-3.0+ and GPL-3.0+
@@ -11,94 +11,67 @@ Url: https://github.com/linuxdeepin/dtkwidget
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch1: dtkwidget-5.6.2-alt-fix-missing-icon-on-titlebar-button.patch
+
+Provides: libdtk5-widget = %EVR
+Obsoletes: libdtk5-widget < %EVR
+
+# for webp (dci) icons
+Requires: qt5-imageformats
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
+%else
+BuildRequires(pre): gcc-c++
 %endif
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: cmake
-BuildRequires: qt5-linguist
-BuildRequires: qt5-base-devel-static
-BuildRequires: qt5-tools-devel
-BuildRequires: qt5-svg-devel
-BuildRequires: qt5-x11extras-devel
-BuildRequires: dtk5-core-devel
-BuildRequires: dtk5-gui-devel
-BuildRequires: dtk5-common-devel
-BuildRequires: gsettings-qt-devel
-BuildRequires: deepin-qt-dbus-factory-devel
-BuildRequires: libudev-devel
-BuildRequires: librsvg-devel
-BuildRequires: libstartup-notification-devel
-BuildRequires: libXi-devel
-BuildRequires: libX11-devel
-BuildRequires: libXext-devel
-BuildRequires: libxcbutil-devel
-BuildRequires: libxkbcommon-devel
-BuildRequires: libXrender-devel
-BuildRequires: libcups-devel
-BuildRequires: libgtest-devel
-BuildRequires: doxygen qt5-tools qt5-base-doc
-# libQt5Gui.so.5(Qt_5_PRIVATE_API) needed by dtkwidget
-BuildRequires: libqt5-gui
+# Automatically added by buildreq on Thu Oct 19 2023
+# optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXext-devel libXfixes-devel libXi-devel libdouble-conversion3 libdtkcore-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-help libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel pkg-config python3 python3-base qt5-base-common qt5-base-devel qt5-tools sh5 xorg-proto-devel
+BuildRequires: cmake doxygen dtk6-common-devel gsettings-qt-devel libcups-devel libdtkgui-devel libstartup-notification-devel libxcbutil-devel qt5-svg-devel qt5-tools-devel qt5-x11extras-devel
 
 %description
 DtkWidget is Deepin graphical user interface for deepin desktop development.
 
-%package -n libdtk5-widget
+%package -n lib%{name}5
 Summary: Libraries for %name
 Group: System/Libraries
 
-%description -n libdtk5-widget
+%description -n lib%{name}5
 DtkWidget is Deepin graphical user interface for deepin desktop development.
 Libraries for %name.
 
-%package -n dtk5-widget-configs
-Summary: Configs for %name
-Group: System/Configuration/Other
-BuildArch: noarch
-Requires: libdtk5-widget
-
-%description -n dtk5-widget-configs
-The package provides configs for %name.
-
-%package -n dtk5-widget-devel
+%package -n lib%name-devel
 Summary: Development package for %name
 Group: Development/KDE and QT
+Provides: dtk5-widget-devel = %EVR
+Obsoletes: dtk5-widget-devel < %EVR
 
-%description -n dtk5-widget-devel
+%description -n lib%name-devel
 Header files and libraries for %name.
 
-%package -n dtk5-widget-examples
+%package examples
 Summary: Examples for %name
 Group: Development/KDE and QT
+Provides: dtk5-widget-examples = %EVR
+Obsoletes: dtk5-widget-examples < %EVR
 
-%description -n dtk5-widget-examples
+%description examples
 DtkWidget is Deepin graphical user interface for deepin desktop development.
 Examples for %name.
 
 %if_enabled docs
-%package -n dtk5-widget-doc
+%package doc
 Summary: %name documantation
 Group: Documentation
 BuildArch: noarch
+Provides: dtk5-widget-doc = %EVR
+Obsoletes: dtk5-widget-doc < %EVR
 
-%description -n dtk5-widget-doc
+%description doc
 This package provides %name documantation.
 %endif
 
 %prep
 %setup
-%autopatch -p1
-sed -i "s|'/lib'|'/%_lib'|" conanfile.py
-sed -i 's|CMAKE_INSTALLL_PREFIX|CMAKE_INSTALL_PREFIX|' \
-  docs/CMakeLists.txt
-# Fix broken configs.
-sed -i '/libdir=/s/${prefix}//' \
-  misc/dtkwidget.pc.in
-sed -i -e '/.tools/s/@CMAKE_INSTALL_PREFIX@//; /.libs/s/@CMAKE_INSTALL_PREFIX@//;' \
-  misc/qt_lib_dtkwidget.pri.in
 
 %build
 %if_enabled clang
@@ -111,7 +84,7 @@ export READELF="llvm-readelf"
 export PATH=%_qt5_bindir:$PATH
 %cmake \
   -GNinja \
-  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_BUILD_TYPE=None \
   -DMKSPECS_INSTALL_DIR=%_qt5_archdatadir/mkspecs/modules/ \
 %if_enabled docs
   -DBUILD_DOCS=ON \
@@ -120,31 +93,28 @@ export PATH=%_qt5_bindir:$PATH
   -DBUILD_DOCS=OFF \
 %endif
   -DCMAKE_INSTALL_PREFIX=%_prefix \
-  -DCMAKE_INSTALL_LIBDIR=%_libdir \
+  -DCMAKE_INSTALL_LIBDIR=%_lib \
   -DDTK_VERSION=%version \
   -DVERSION=%version \
-  -DLIB_INSTALL_DIR=%_libdir \
+  -DBUILD_PLUGINS=OFF \
 #
 cmake --build %_cmake__builddir -j%__nprocs
 
 %install
 %cmake_install
 
-%files -n libdtk5-widget
+%files
 %doc README.md LICENSE
-%_libdir/lib%name.so.5*
 %dir %_libdir/dtk5/
 %dir %_libdir/dtk5/DWidget/
 %_libdir/dtk5/DWidget/bin/
 %dir %_datadir/dtk5/
 %_datadir/dtk5/DWidget/
 
-%files -n dtk5-widget-configs
-%dir %_datadir/dsg/
-%dir %_datadir/dsg/configs/
-%_datadir/dsg/configs/org.deepin.dtkwidget.feature-display.json
+%files -n lib%{name}5
+%_libdir/lib%name.so.5*
 
-%files -n dtk5-widget-devel
+%files -n lib%name-devel
 %dir %_includedir/dtk5/
 %_includedir/dtk5/DWidget/
 %_qt5_archdatadir/mkspecs/modules/*.pri
@@ -152,20 +122,26 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_pkgconfigdir/%name.pc
 %_libdir/lib%name.so
 
-%files -n dtk5-widget-examples
+%files examples
 %dir %_libdir/dtk5/DWidget/
 %_libdir/dtk5/DWidget/examples/
-%dir %_datadir/dsg/
-%dir %_datadir/dsg/configs/
-%dir %_datadir/dsg/configs/overrides/
-%dir %_datadir/dsg/configs/overrides/dtk-example/
-%dir %_datadir/dsg/configs/overrides/dtk-example/org.deepin.dtkwidget.feature-display/
-%_datadir/dsg/configs/overrides/dtk-example/org.deepin.dtkwidget*/*.json
 
-%files -n dtk5-widget-doc
+%files doc
 %_qt5_docdir/dtkwidget.qch
 
 %changelog
+* Thu Nov 30 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.20-alt1
+- New version 5.6.20.
+- Cleanup BRs.
+- Removed obsoleted patch.
+- Fixed missing icons.
+- Disabled plugins.
+- Renamed subpackages:
+  + libdtk5-widget -> dtkwidget.
+  + dtk5-widget-devel -> libdtkwidget-devel.
+  + dtk5-widget-examples -> dtkwidget-examples.
+  + dtk5-widget-doc -> dtkwidget-doc.
+
 * Fri Mar 10 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.8-alt1
 - New version.
 

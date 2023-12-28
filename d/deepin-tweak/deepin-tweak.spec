@@ -1,10 +1,12 @@
-%def_disable clang
+%def_without clang
 
 Name: deepin-tweak
 Version: 1.2.2
-Release: alt1
+Release: alt1.1
+
 Summary: Setting tool built on dtkdeclarative
 Summary(ru): Инструмент настройки, созданный на dtkdeclarative
+
 License: LGPL-3.0+
 Group: System/Configuration/Other
 Url: https://github.com/linuxdeepin/dtkdeclarative
@@ -15,16 +17,18 @@ Patch: 0001-fix-undefined-elfs.patch
 # dtkdeclarative doesn't built for armh
 ExcludeArch: armh
 
-%if_enabled clang
-BuildRequires(pre): clang-devel
-%else
-BuildRequires(pre): gcc-c++
-%endif
+Requires: dtkdeclarative
+
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: cmake
-BuildRequires: qt5-base-devel qt5-tools qt5-quickcontrols2-devel
-BuildRequires: dtk5-common dtk5-core-devel dtk5-gui-devel dtk5-declarative-devel gsettings-qt-devel
-Requires: dtk5-declarative
+# Automatically added by buildreq on Sat Oct 28 2023
+# optimized out: bash5 bashrc cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-qmlmodels libqt5-quick libqt5-svg libqt5-widgets libqt5-xml libsasl2-3 libssl-devel libstdc++-devel pkg-config python3 python3-base qt5-base-devel qt5-declarative-devel sh5
+BuildRequires: cmake gsettings-qt-devel libdtkdeclarative-devel qt5-tools
+
+%if_with clang
+BuildRequires: clang-devel lld-devel
+%else
+BuildRequires: gcc-c++
+%endif
 
 %description
 Deepin Tweak is an advanced setting tool built on dtkdeclarative. Deepin Tweak only provides limited built-in functions, most of which need to be provided by other developers in the community according to the requirements of plug-in development.
@@ -39,14 +43,11 @@ Deepin Tweak - это продвинутый инструмент настрой
 %build
 export PATH=%_qt5_bindir:$PATH
 
-%if_enabled clang
-
-export CC="clang"
-export CXX="clang++"
-export AR="llvm-ar"
-export NM="llvm-nm"
-export READELF="llvm-readelf"
-
+%if_with clang
+%define optflags_lto -flto=thin
+export CC=clang
+export CXX=clang++
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
 
 %cmake \
@@ -76,6 +77,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/%name/libdtkqml-%{name}*.so
 
 %changelog
+* Sat Oct 28 2023 Leontiy Volodin <lvol@altlinux.org> 1.2.2-alt1.1
+- Rebuilt with dtk.
+- Cleanup spec and BRs.
+
 * Tue Mar 21 2023 Leontiy Volodin <lvol@altlinux.org> 1.2.2-alt1
 - New version.
 

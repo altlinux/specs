@@ -1,15 +1,18 @@
 Name: deepin-desktop-base
-Version: 2023.03.31
-Release: alt1.1
+Version: 2023.09.05
+Release: alt1
+
 Summary: Base component for Deepin
+
 License: GPL-3.0
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-desktop-base
+
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Source1: distribution.info
-Patch: deepin-desktop-base-2022.07.26-alt-fix-multiarch-build.patch
+Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 #Recommends:     deepin-wallpapers
@@ -26,7 +29,7 @@ This package provides some components for Deepin desktop environment.
 
 %prep
 %setup
-%autopatch -p1
+%patch -p1
 
 %build
 %make_build
@@ -34,16 +37,20 @@ This package provides some components for Deepin desktop environment.
 %install
 %makeinstall_std
 
-install -Dm644 %SOURCE1 -t %buildroot/usr/share/deepin/
+install -Dm644 %SOURCE1 -t %buildroot%_datadir/deepin/
 # Remove Deepin distro's lsb-release
 rm %buildroot/etc/lsb-release
 # Don't override systemd timeouts
 rm -r %buildroot/etc/systemd
 # Make a symlink for deepin-version
 mkdir -p %buildroot%_sysconfdir/
-ln -sfv ../usr/lib/deepin/desktop-version %buildroot%_sysconfdir/deepin-version
+ln -s %_libexecdir/deepin/desktop-version %buildroot%_sysconfdir/deepin-version
+# Install os-version and rename to uos-version
+install -Dm644 files/os-version %buildroot%_sysconfdir/uos-version
 # Remove apt-specific templates
 rm -r %buildroot/usr/share/python-apt
+# Remove empty distro info directory
+rm -r %buildroot%_datadir/distro-info
 
 %files
 %doc LICENSE
@@ -54,9 +61,13 @@ rm -r %buildroot/usr/share/python-apt
 %_datadir/i18n/language_info.json
 %_libexecdir/deepin/desktop-version
 %_sysconfdir/deepin-version
+%_sysconfdir/uos-version
 %exclude %_datadir/plymouth/deepin-logo.png
 
 %changelog
+* Thu Nov 30 2023 Leontiy Volodin <lvol@altlinux.org> 2023.09.05-alt1
+- New version 2023.09.05.
+
 * Fri Oct 20 2023 Ivan A. Melnikov <iv@altlinux.org> 2023.03.31-alt1.1
 - NMU: loongarch64 support
 

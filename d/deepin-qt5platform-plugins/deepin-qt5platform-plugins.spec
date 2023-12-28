@@ -1,42 +1,32 @@
 %define repo qt5platform-plugins
 
-%def_disable clang
+%def_without clang
 
 Name: deepin-qt5platform-plugins
-Version: 5.6.12
+Version: 5.6.16
 Release: alt1
+
 Summary: Qt platform integration plugins for Deepin Desktop Environment
+
 License: GPL-2.0+ and LGPL-3.0 and MIT
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/qt5platform-plugins
-Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: %name-%version-%release.patch
 
-%if_enabled clang
-BuildRequires(pre): clang-devel
-%else
-BuildRequires(pre): gcc-c++
-%endif
-BuildRequires: git-core
-BuildRequires: libqt5-core
-BuildRequires: qt5-x11extras-devel
-BuildRequires: libcairo-devel
-BuildRequires: libglvnd-devel
-BuildRequires: libXi-devel
-BuildRequires: libxcb-render-util-devel
-BuildRequires: libxcbutil-image-devel
-BuildRequires: libxcbutil-icccm-devel
-BuildRequires: libxcbutil-keysyms-devel
-BuildRequires: libxkbcommon-x11-devel
-BuildRequires: libxkbcommon-devel
-BuildRequires: libSM-devel
-BuildRequires: libdbus-devel
-BuildRequires: libmtdev-devel
-BuildRequires: qt5-wayland-devel
+BuildRequires(pre): rpm-build-ninja
+# qt5-base-devel-static for libQt5EdidSupport.a
+# Automatically added by buildreq on Sat Oct 28 2023
+# optimized out: cmake cmake-modules fontconfig-devel gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXfixes-devel libXi-devel libcairo-devel libdouble-conversion3 libfreetype-devel libglvnd-devel libgmock-devel libgpg-error libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-test libqt5-waylandclient libqt5-widgets libqt5-x11extras libqt5-xcbqpa libsasl2-3 libssl-devel libstdc++-devel libwayland-client-devel libwayland-server-devel libxcb-devel libxcb-render-util libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxcbutil-keysyms-devel libxkbcommon-devel libxkbcommon-x11 pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-devel sh5 wayland-devel xorg-proto-devel zlib-devel
+BuildRequires: dwayland-devel extra-cmake-modules libdbus-devel libgtest-devel libmtdev-devel libwayland-cursor-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxkbcommon-x11-devel qt5-base-devel-static qt5-wayland-devel qt5-x11extras-devel
 BuildRequires: kf5-kwayland-devel
-# for libQt5EdidSupport.a
-BuildRequires: qt5-base-devel-static
+
+%if_with clang
+BuildRequires: clang-devel lld-devel
+%else
+BuildRequires: gcc-c++
+%endif
 
 %description
 %repo is the
@@ -44,31 +34,44 @@ BuildRequires: qt5-base-devel-static
 
 %prep
 %setup -n %repo-%version
-# Disable wayland for now: https://github.com/linuxdeepin/qt5platform-plugins/issues/47
-sed -i '/wayland/d' qt5platform-plugins.pro
-rm -r xcb/libqt5xcbqpa-dev wayland/qtwayland-dev
-sed -i 's|error(Not support Qt Version: .*)|INCLUDEPATH += %_qt5_headerdir/QtXcb|' xcb/linux.pri
+%patch -p1
+rm -r xcb/libqt5xcbqpa-dev xcb/libqt6xcbqpa-dev wayland/qtwayland-dev
 
 %build
 export PATH=%_qt5_bindir:$PATH
-%qmake_qt5 \
-%if_enabled clang
-    QMAKE_STRIP= -spec linux-clang \
+
+%if_with clang
+%define optflags_lto -flto=thin
+export CC=clang
+export CXX=clang++
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-    CONFIG+=nostrip \
-    PREFIX=%prefix \
-    unix:LIBS+="-L/%_lib -ldl"
-%make
+
+%cmake \
+  -GNinja \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_INSTALL_LIBDIR=%_lib \
+  -DCMAKE_INSTALL_PREFIX=%_prefix \
+  -DQT_XCB_PRIVATE_HEADERS=%_qt5_headerdir/QtXcb
+#
+cmake --build %_cmake__builddir -j%__nprocs
 
 %install
-%makeinstall INSTALL_ROOT=%buildroot
+%cmake_install
 
 %files
 %doc CHANGELOG.md README.md
 %doc LICENSE
 %_qt5_plugindir/platforms/libdxcb.so
+%_qt5_plugindir/platforms/libdwayland.so
+%_qt5_plugindir/wayland-shell-integration/libkwayland-shell.so
 
 %changelog
+* Tue Nov 28 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.16-alt1
+- New version 5.6.16.
+- Built via cmake instead qmake (by upstream).
+- Enabled wayland support.
+
 * Fri Jun 02 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.12-alt1
 - New version.
 

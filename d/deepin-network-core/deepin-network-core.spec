@@ -1,10 +1,11 @@
-%def_disable clang
+%def_without clang
 
 %define repo dde-network-core
+%define sover 2
 %define _cmake__builddir BUILD
 
 Name: deepin-network-core
-Version: 1.1.9
+Version: 2.0.16
 Release: alt1
 Summary: Deepin desktop-environment - network core files
 License: GPL-3.0+
@@ -14,29 +15,39 @@ Url: https://github.com/linuxdeepin/dde-network-core
 Source: %url/archive/%version/%repo-%version.tar.gz
 
 BuildPreReq: rpm-build-ninja rpm-build-kf5
-%if_enabled clang
+%if_with clang
 BuildPreReq: clang-devel
 %else
 BuildPreReq: gcc-c++
 %endif
-BuildRequires: cmake qt5-base-devel kf5-networkmanager-qt-devel deepin-qt-dbus-factory-devel gsettings-qt-devel deepin-network-utils-devel
-BuildRequires: qt5-tools-devel deepin-control-center deepin-control-center-devel dtk5-widget-devel dtk5-common libgtest-devel qt5-svg-devel deepin-dock-devel deepin-session-shell-devel libgio-devel
+# Automatically added by buildreq on Wed Oct 25 2023
+# optimized out: cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdcc-interface6 libdcc-widgets6 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt libnm-devel libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel pkg-config python3 python3-base qt5-base-devel qt5-tools sh5
+BuildRequires: cmake deepin-control-center-devel deepin-dock-devel deepin-session-shell-devel gsettings-qt-devel kf5-networkmanager-qt-devel libdtkwidget-devel libgtest-devel qt5-svg-devel qt5-tools-devel
 
 %description
 Deepin desktop-environment - network core files.
 
-%package devel
+%package -n lib%repo%sover
+Summary: Library for %name
+Group: System/Libraries
+
+%description -n lib%repo%sover
+This package provides library for %name.
+
+%package -n lib%repo-devel
 Summary: Development package for %name
 Group: Development/C++
+Provides: %name-devel = %version-%release
+Obsoletes: %name-devel < %version-%release
 
-%description devel
-Header files and libraries for %name.
+%description -n lib%repo-devel
+This package provides development files for %name.
 
 %prep
 %setup -n %repo-%version
 
 %build
-%if_enabled clang
+%if_with clang
 export CC="clang"
 export CXX="clang++"
 export AR="llvm-ar"
@@ -54,7 +65,7 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %install
 %cmake_install
 %ifnarch i586 armh
-mv -f %buildroot/usr/lib/{dde-control-center,dde-dock,dde-session-shell} %buildroot%_libdir
+mv -f %buildroot/usr/lib/{dde-dock,dde-session-shell} %buildroot%_libdir
 %endif
 mkdir -p %buildroot%_bindir
 
@@ -64,8 +75,8 @@ mkdir -p %buildroot%_bindir
 %_libdir/dde-control-center/modules/libdcc-network-plugin.so
 %dir %_libdir/dde-dock/
 %dir %_libdir/dde-dock/plugins/
-%dir %_libdir/dde-dock/plugins/system-trays/
-%_libdir/dde-dock/plugins/system-trays/libdock-network-plugin.so
+%dir %_libdir/dde-dock/plugins/quick-trays/
+%_libdir/dde-dock/plugins/quick-trays/libdock-network-plugin.so
 %dir %_libdir/dde-session-shell/
 %dir %_libdir/dde-session-shell/modules/
 %_libdir/dde-session-shell/modules/libdss-network-plugin.so
@@ -74,17 +85,23 @@ mkdir -p %buildroot%_bindir
 %dir %_datadir/dsg/configs/org.deepin.dde.network/
 %_datadir/dsg/configs/org.deepin.dde.network/org.deepin.dde.network.json
 /var/lib/polkit-1/localauthority/10-vendor.d/10-network-manager.pkla
-%_libdir/libdde-network-core.so
-%_datadir/dcc-network-plugin/
-%_datadir/dock-network-plugin/
-%_datadir/dss-network-plugin/
+%_datadir/dde-control-center/translations/dcc-network-plugin*.qm
+%_datadir/dock-network-plugin/translations/dock-network-plugin*.qm
+%_datadir/dss-network-plugin/translations/dss-network-plugin*.qm
 
-%files devel
+%files -n lib%repo%sover
+%_libdir/libdde-network-core.so.%{sover}*
+
+%files -n lib%repo-devel
 %dir %_includedir/libddenetworkcore/
 %_includedir/libddenetworkcore/*.h
 %_pkgconfigdir/dde-network-core.pc
+%_libdir/libdde-network-core.so
 
 %changelog
+* Wed Oct 25 2023 Leontiy Volodin <lvol@altlinux.org> 2.0.16-alt1
+- New version 2.0.16.
+
 * Thu Jan 19 2023 Leontiy Volodin <lvol@altlinux.org> 1.1.9-alt1
 - New version.
 

@@ -1,142 +1,134 @@
-%def_disable clang
-%def_disable docs
+%define _libexecdir %_prefix/libexec
 
-%define llvm_ver 15
+%def_disable clang
+%def_without docs
 
 Name: dtkcore
-Version: 5.6.8
+Version: 5.6.20
 Release: alt1
+
 Summary: Deepin tool kit core modules
+
 License: LGPL-2.1 and LGPL-3.0+ and GPL-3.0
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dtkcore
-Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: dtkcore-5.6.5-alt-fix-underlinked-libraries.patch
+Patch: %name-%version-%release.patch
 
-%if_enabled clang
-#BuildRequires(pre): rpm-macros-llvm-common
-BuildRequires: clang%llvm_ver.0-devel
-BuildRequires: lld%llvm_ver.0-devel
-BuildRequires: llvm%llvm_ver.0-devel
-%else
-BuildRequires(pre): gcc-c++
-%endif
+Provides: libdtk5-core = %EVR
+Obsoletes: libdtk5-core < %EVR
+Provides: dtk5-core = %EVR
+Obsoletes: dtk5-core < %EVR
+
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: cmake
-BuildRequires: rpm-build-python3
-BuildRequires: glibc-core
-BuildRequires: qt5-base-devel
-BuildRequires: gsettings-qt-devel
-BuildRequires: libgtest-devel
-BuildRequires: dtk5-common-devel
-BuildRequires: libsystemd-devel
-BuildRequires: doxygen qt5-tools
-%if_enabled docs
+BuildRequires: cmake rpm-build-python3 dtk6-common-devel gsettings-qt-devel libsystemd-devel qt5-base-devel libuchardet-devel libspdlog-devel
+%if_enabled clang
+BuildRequires: clang-devel lld-devel
+%else
+BuildRequires: gcc-c++
+%endif
+%if_with docs
 BuildRequires: qt5-base-doc
 %endif
-BuildRequires: libuchardet-devel
 
 %description
 Deepin tool kit core modules.
 
-%package -n dtk5-core
-Summary: %summary
-Group: Graphical desktop/Other
-
-%description -n dtk5-core
-Deepin tool kit core modules.
-Binaries for %name.
-
-%package -n libdtk5-core
+%package -n lib%{name}5
 Summary: Libraries for %name
 Group: System/Libraries
-Requires: dtk5-core
 
-%description -n libdtk5-core
+%description -n lib%{name}5
 Deepin tool kit core modules.
 Libraries for %name.
 
-%package -n dtk5-core-devel
+%package -n lib%name-devel
 Summary: Development package for %name
 Group: Development/KDE and QT
-Requires: qt5-base-devel
+Provides: dtk5-core-devel = %EVR
+Obsoletes: dtk5-core-devel < %EVR
+Requires: dtkcore = %EVR
 
-%description -n dtk5-core-devel
+%description -n lib%name-devel
 Header files and libraries for %name.
 
-%if_enabled docs
-%package -n dtk5-core-doc
+%if_with docs
+%package doc
 Summary: %name documantation
 Group: Documentation
 BuildArch: noarch
+Provides: dtk5-core-doc = %EVR
+Obsoletes: dtk5-core-doc < %EVR
 
-%description -n dtk5-core-doc
+%description doc
 This package provides %name documantation.
 %endif
 
 %prep
 %setup
 %patch -p1
-# Fix broken configs.
-sed -i '/libdir=/s/${prefix}//' \
-  misc/dtkcore.pc.in
-sed -i -e '/.tools/s/@CMAKE_INSTALL_PREFIX@//; /.libs/s/@CMAKE_INSTALL_PREFIX@//;' \
-  misc/qt_lib_dtkcore.pri.in
 
 %build
 %if_enabled clang
-export CC=clang-%llvm_ver CXX=clang++-%llvm_ver LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
+export CC=clang CXX=clang++ LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
 export PATH=%_qt5_bindir:$PATH
 %cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-  -DMKSPECS_INSTALL_DIR=%_qt5_archdatadir/mkspecs/modules/ \
   -DCMAKE_INSTALL_LIBDIR=%_libdir \
   -DDTK_VERSION=%version \
   -DVERSION=%version \
   -DLIB_INSTALL_DIR=%_libdir \
   -DD_DSG_APP_DATA_FALLBACK=/var/dsg/appdata \
   -DBUILD_WITH_SYSTEMD=ON \
-%if_disabled docs
+%if_without docs
   -DBUILD_DOCS=OFF \
 %endif
+  -DMKSPECS_INSTALL_DIR=%_qt5_archdatadir/mkspecs/modules/ \
   #
 cmake --build %_cmake__builddir -j%__nprocs
 
 %install
 %cmake_install
 
-%files -n dtk5-core
+%files
 %doc README.md LICENSE
-%_bindir/qdbusxml2cpp-fix
+%dir %_libexecdir/dtk5
+%dir %_libexecdir/dtk5/DCore/
+%_libexecdir/dtk5/DCore/bin/
 
-%files -n libdtk5-core
+%files -n lib%{name}5
 %_libdir/lib%name.so.5*
-%dir %_libdir/dtk5/
-%_libdir/dtk5/DCore/
 
-%files -n dtk5-core-devel
+%files -n lib%name-devel
 %doc docs/Specification.md
 %_libdir/lib%name.so
 %dir %_includedir/dtk5/
 %_includedir/dtk5/DCore/
-%_qt5_archdatadir/mkspecs/modules/*.pri
+%_qt5_archdatadir/mkspecs/modules/qt_lib_dtkcore.pri
 %_qt5_archdatadir/mkspecs/features/dtk_install_dconfig.prf
 %_libdir/cmake/DtkCore/
 %_libdir/cmake/DtkCMake/
 %_libdir/cmake/DtkTools/
-%_libdir/cmake/DtkDConfig/DtkDConfigConfig.cmake
+%_libdir/cmake/DtkDConfig/
 %_pkgconfigdir/dtkcore.pc
 
-%if_enabled docs
-%files -n dtk5-core-doc
+%if_with docs
+%files doc
 %_qt5_datadir/doc/dtkcore.qch
 %endif
 
 %changelog
+* Thu Nov 30 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.20-alt1
+- New version 5.6.20.
+- Renamed subpackages:
+  + libdtk5-core -> libdtkcore5.
+  + dtk5-core-devel -> libdtkcore-devel.
+  + dtk5-core -> dtkcore.
+  + dtk5-core-doc -> dtkcore-doc.
+
 * Fri Mar 10 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.8-alt1
 - New version.
 

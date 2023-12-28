@@ -1,20 +1,28 @@
 %define _sysusersdir /lib/sysusers.d
 
+%def_without cmake
+
 Name: deepin-anything
-Version: 6.0.4
+Version: 6.1.5
 Release: alt1
-Summary: Global search tool for Deepin
+
+Summary: The lightning-fast filename search for Deepin
+
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-anything
-Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: deepin-anything-6.1.5-upstream-update-CMakeLists.patch
 
-BuildRequires: gcc-c++ qt5-base-devel udisks2-qt5-devel libmount-devel dtk5-core-devel libpcre-devel glib2-devel libpcre-devel libnl-devel
+BuildRequires: glib2-devel libdtkcore-devel libmount-devel libnl-devel libpcre-devel udisks2-qt5-devel
+%if_with cmake
+BuildRequires: cmake rpm-build-ninja
+%endif
 
 %description
-File manager front end of Deepin OS.
+%summary.
+It is provides offline search functions.
 
 %package -n lib%name
 Summary: Libraries for %name
@@ -33,15 +41,43 @@ This package provides header files and libraries for %name.
 %prep
 %setup
 patch -p1 > archlinux/0001-linux-5.6.patch
-sed -i 's|/usr/lib/$(DEB_HOST_MULTIARCH)|%_libdir|; s|/usr/lib/modules-load.d|%_sysconfdir/modules-load.d|' src/Makefile
-sed -i 's|#include <pcre.h>|#include <pcre/pcre.h>|' src/library/src/fs_buf.c
+%patch -p1
+sed -i 's|/usr/lib/$(DEB_HOST_MULTIARCH)|%_libdir|; s|/usr/lib/modules-load.d|%_sysconfdir/modules-load.d|' \
+  src/Makefile
+sed -i 's|#include <pcre.h>|#include <pcre/pcre.h>|' \
+  src/library/src/fs_buf.c
+sed -i 's|/usr/bin/env python|%__python3|' \
+  src/tools/calc_index.py \
+  src/tools/primes.py
+# cmake
+sed -i 's|/usr/lib/modules-load.d|%_sysconfdir/modules-load.d|' \
+  src/kernelmod/CMakeLists.txt
+sed -i 's|/lib|/%_lib|' \
+  examples/deepin-anything-monitor/src/CMakeLists.txt
+sed -i 's|${CMAKE_CURRENT_SOURCE_DIR}/lib|%_libdir|' \
+  src/server/backend/CMakeLists.txt
+# fix pkgconfig files
+sed -i -e 's|${prefix}/lib/@HOST_MULTIARCH@|%_libdir|; s|libudisks2-qt5|udisks2-qt5|; s|libmount|mount|; s|libpcre3-1|libpcre|; s|libnl-genl-3|libnl-genl-3.0|;' \
+  src/server/backend/deepin-anything-server-lib.pc.in
 
 %build
 export PATH=%_qt5_bindir:$PATH
+%if_with cmake
+%cmake \
+  -GNinja \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+#
+cmake --build %_cmake__builddir -j%__nprocs
+%else
 %make VERSION=%version
+%endif
 
 %install
+%if_with cmake
+%cmake_install
+%else
 %makeinstall_std
+%endif
 mv -f %buildroot%_sysconfdir/dbus-1/system.d %buildroot%_datadir/dbus-1/system.d
 install -Dm644 archlinux/deepin-anything-server.sysusers %buildroot%_sysusersdir/deepin-anything-server.conf
 rm -rf %buildroot/usr/src/deepin-anything-0.0/
@@ -52,10 +88,6 @@ rm -rf %buildroot/usr/src/deepin-anything-0.0/
 %_datadir/dbus-1/interfaces/com.deepin.anything.xml
 %_sysusersdir/*.conf
 %_sysconfdir/modules-load.d/anything.conf
-%dir %_libdir/deepin-anything-server-lib/
-%dir %_libdir/deepin-anything-server-lib/plugins/
-%dir %_libdir/deepin-anything-server-lib/plugins/handlers/
-%_libdir/deepin-anything-server-lib/plugins/handlers/libupdate-lft.so
 
 %files -n lib%name
 %_libdir/libanything.so.*
@@ -71,6 +103,11 @@ rm -rf %buildroot/usr/src/deepin-anything-0.0/
 %_pkgconfigdir/deepin-anything-server-lib.pc
 
 %changelog
+* Fri Nov 17 2023 Leontiy Volodin <lvol@altlinux.org> 6.1.5-alt1
+- New version 6.1.5.
+- Fixed summary and description.
+- Cleanup BRs.
+
 * Tue Apr 04 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.4-alt1
 - New version 6.0.4.
 

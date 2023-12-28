@@ -1,44 +1,31 @@
-%def_disable clang
+%def_without clang
 
 %define repo dde-session-shell
 
 Name: deepin-session-shell
-Version: 5.5.68
-Release: alt3
+Version: 6.0.14
+Release: alt1
+
 Summary: Deepin desktop-environment - Session shell module
+
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-session-shell
-Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-Source1: pam-deepin-screenlocker
-Patch1: deepin-session-shell-5.5.68-alt-lightdm-for-lockscreen.patch
-Patch2: deepin-session-shell-5.4.13-hide-sleep-and-hibernate.patch
-Patch3: deepin-session-shell-5.5.68-alt-use-previous-encryption.patch
+Patch: %name-%version-%release.patch
 
-%if_enabled clang
-BuildRequires(pre): clang-devel
+Requires: pam0_tcb
+
+BuildRequires(pre): rpm-build-ninja rpm-build-kf5 rpm-build-xdg deepin-gettext-tools
+# Automatically added by buildreq on Wed Oct 25 2023
+# optimized out: alt-os-release bash5 bashrc cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXcursor-devel libXext-devel libXfixes-devel libXi-devel libXrandr-devel libXrender-devel libXtst-devel libcap-ng libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt liblightdm-gobject liblightdm-qt5 libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel libxcbutil-icccm pkg-config python3 python3-base qt5-base-common qt5-base-devel sh5 xorg-proto-devel
+BuildRequires: cmake dtkcore gsettings-qt-devel libdeepin-pw-check-devel libdtkwidget-devel libgtest-devel libpam-devel libxcbutil-icccm-devel lightdm-devel qt5-svg-devel qt5-tools qt5-x11extras-devel
+%if_with clang
+BuildRequires: clang-devel
 %else
-BuildRequires(pre): gcc-c++
+BuildRequires: gcc-c++
 %endif
-BuildRequires(pre): rpm-build-ninja rpm-build-kf5 rpm-build-xdg
-BuildRequires: cmake
-BuildRequires: qt5-tools
-BuildRequires: qt5-base-devel
-BuildRequires: deepin-qt-dbus-factory-devel
-BuildRequires: libpam0-devel
-BuildRequires: dtk5-widget-devel
-BuildRequires: dtk5-common
-BuildRequires: qt5-x11extras-devel
-BuildRequires: qt5-multimedia-devel
-BuildRequires: qt5-svg-devel
-BuildRequires: libxcbutil-icccm-devel
-BuildRequires: gsettings-qt-devel
-BuildRequires: lightdm-devel
-BuildRequires: libgmock-devel
-BuildRequires: kf5-kwayland-devel
-# deepin-gettext-tools dtk5-widget-devel deepin-qt-dbus-factory-devel gsettings-qt-devel libgtk+2-devel lightdm-devel libsystemd-devel qt5-base-devel qt5-svg-devel qt5-x11extras-devel qt5-multimedia-devel libxcbutil-icccm-devel libXcursor-devel libXtst-devel libpam0-devel qt5-linguist
 
 %description
 %summary.
@@ -52,43 +39,26 @@ Group: Development/Other
 
 %prep
 %setup -n %repo-%version
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-sed -i 's|/usr/bin|%_K5bin|' \
+%patch -p1
+sed -i '/kwin_wayland/s|/usr/bin/||' \
     files/wayland/kwin_wayland_helper-wayland \
     files/wayland/deepin-greeter-wayland
 sed -i 's|/usr/lib/x86_64-linux-gnu/|%_libdir/|' \
     files/wayland/lightdm-deepin-greeter-wayland \
     files/wayland/deepin-greeter-wayland
+sed -i '/QT_QPA_PLATFORM_PLUGIN_PATH/s|/usr/plugins/platforms|%_libdir/qt5/plugins/platforms|' \
+    files/wayland/lightdm-deepin-greeter-wayland
 sed -i 's|/usr/lib/|%_libdir/|' \
     src/global_util/modules_loader.cpp
 sed -i 's|lib/|%_lib/|' \
-    plugins/one-key-login/CMakeLists.txt
-# Fix undefined symbols.
-sed -i '/link_libraries(/a Dtk::Core' \
-    plugins/one-key-login/CMakeLists.txt
-sed -i '/link_libraries(/a Dtk::Widget' \
-    plugins/one-key-login/CMakeLists.txt
-#sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/design-current/backgrounds/default.png|' \
-#    src/widgets/fullscreenbackground.cpp \
-#    src/session-widgets/userinfo.h
-#sed -i 's|/usr/share/backgrounds/deepin/desktop.jpg|/usr/share/design-current/backgrounds/default.png|' \
-#    src/session-widgets/lockcontent.cpp \
-#    src/dde-shutdown/view/contentwidget.cpp
-#sed -i 's|/usr/share/wallpapers/deepin/desktop.jpg|/usr/share/design-current/backgrounds/default.png|' \
-#    src/widgets/fullscreenbackground.cpp
-#sed -i 's|theme/background/default_background.jpg|theme/background.png|' \
-#    src/dde-lock/logintheme.qrc \
-#    src/lightdm-deepin-greeter/logintheme.qrc
+    modules/*/CMakeLists.txt
 # We don't use common-auth in ALT
-# sed -i 's/password-auth/system-auth/; s/common-auth/system-auth/' src/libdde-auth/deepinauthframework.cpp
-#sed -i 's|m_model->setCurrentModeState(SessionBaseModel::ModeStatus::PasswordMode)|system("dde-swithtogreeter")|' \
-#  src/dde-lock/lockworker.cpp
+# sed -i 's|password-auth|pam_tcb|' src/libdde-auth/deepinauthframework.cpp
+# sed -i -e '/account/d; s|common-auth|system-auth|;' files/pam.d/dde-lock
 
 %build
 %add_optflags -I%_includedir/dtk5/DCore -I%_includedir/dtk5/DWidget
-%if_enabled clang
+%if_with clang
 export CC="clang"
 export CXX="clang++"
 export AR="llvm-ar"
@@ -99,7 +69,7 @@ export PATH=%_qt5_bindir:$PATH
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DKDE_KSCREENSAVER_PAM_SERVICE="deepin-screenlocker" \
+    -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
 #
 cmake --build "%_cmake__builddir" -j%__nprocs
 
@@ -107,17 +77,11 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %cmake_install
 chmod +x %buildroot%_bindir/deepin-greeter
 
-# Install deepin pam configuration files
-install -d -m 0755 %buildroot%_sysconfdir/pam.d/
-install -m 0644 %SOURCE1 %buildroot%_sysconfdir/pam.d/deepin-screenlocker
-
 %files
 %config(noreplace) %_sysconfdir/deepin/greeters.d/00-xrandr
 %config(noreplace) %_sysconfdir/deepin/greeters.d/lightdm-deepin-greeter
 %config(noreplace) %_sysconfdir/deepin/greeters.d/10-cursor-theme
-%config(noreplace) %_sysconfdir/pam.d/deepin-screenlocker
-%_xdgconfigdir/autostart/dde-lock.desktop
-%_sysconfdir/lightdm/deepin/qt-theme.ini
+%config(noreplace) %_sysconfdir/pam.d/dde-lock
 %_bindir/deepin-greeter
 %_bindir/lightdm-deepin-greeter
 %_bindir/dde-lock
@@ -131,13 +95,14 @@ install -m 0644 %SOURCE1 %buildroot%_sysconfdir/pam.d/deepin-screenlocker
 %_datadir/deepin-authentication/privileges/lightdm-deepin-greeter.conf
 %dir %_libdir/dde-session-shell/
 %dir %_libdir/dde-session-shell/modules/
-%_libdir/dde-session-shell/modules/libone-key-login.so
+%_libdir/dde-session-shell/modules/libvirtualkeyboard.so
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.dde.lightdm-deepin-greeter/
 %_datadir/dsg/configs/org.deepin.dde.lightdm-deepin-greeter/org.deepin.dde.lightdm-deepin-greeter.json
 %dir %_datadir/dsg/configs/org.deepin.dde.lock/
 %_datadir/dsg/configs/org.deepin.dde.lock/org.deepin.dde.lock.json
+%_sysconfdir/lightdm/deepin/qt-theme.ini
 
 %files devel
 %dir %_includedir/dde-session-shell/
@@ -146,6 +111,11 @@ install -m 0644 %SOURCE1 %buildroot%_sysconfdir/pam.d/deepin-screenlocker
 %_libdir/cmake/DdeSessionShell/DdeSessionShellConfig.cmake
 
 %changelog
+* Tue Dec 12 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.14-alt1
+- New version 6.0.14.
+- Cleanup spec, patches and BRs.
+- Fixed session unlock.
+
 * Mon Jan 23 2023 Leontiy Volodin <lvol@altlinux.org> 5.5.68-alt3
 - Fixed build with dtkwidget 5.6.4.
 - Updated deepin-screenlocker.

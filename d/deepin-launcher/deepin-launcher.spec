@@ -1,12 +1,10 @@
-%def_disable clang
+%def_without clang
 
 %define repo dde-launcher
-%define llvm_ver 15
-%define gcc_ver 13
 
 Name: deepin-launcher
-Version: 5.6.1
-Release: alt3.1
+Version: 6.0.19
+Release: alt1
 
 Summary: Deepin desktop-environment - Launcher module
 
@@ -17,53 +15,50 @@ Url: https://github.com/linuxdeepin/dde-launcher
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-Patch: 0001-fix-window-mode-show-slowly.patch
 
 Provides: %name-devel = %version
 Obsoletes: %name-devel < %version
+Conflicts: deepin-launchpad
+Obsoletes: deepin-launchpad
 
-%if_enabled clang
-#BuildRequires(pre): rpm-macros-llvm-common
-BuildRequires: clang%llvm_ver.0-devel
-BuildRequires: lld%llvm_ver.0-devel
-BuildRequires: llvm%llvm_ver.0-devel
-%else
-BuildRequires: gcc%gcc_ver-c++
-%endif
-BuildRequires(pre): rpm-build-ninja
-BuildRequires: cmake
-BuildRequires: qt5-tools-devel
-BuildRequires: dtk5-core-devel
-BuildRequires: dtk5-widget-devel
-BuildRequires: deepin-qt-dbus-factory-devel
-BuildRequires: gsettings-qt-devel
-BuildRequires: libxcbutil-icccm-devel
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-svg-devel
-BuildRequires: qt5-x11extras-devel
-BuildRequires: libgmock-devel
-BuildRequires: dtk5-common
 # Requires: deepin-menu deepin-daemon startdde icon-theme-hicolor
+
+BuildRequires(pre): rpm-build-ninja
+# Automatically added by buildreq on Tue Oct 24 2023
+# optimized out: bash5 bashrc cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel libxcbutil-icccm pkg-config python3 python3-base qt5-base-devel sh5
+BuildRequires: cmake dtk6-common-devel dtkcore gsettings-qt-devel libdtkwidget-devel libgio-devel libxcbutil-icccm-devel qt5-svg-devel qt5-tools qt5-x11extras-devel
+%if_with clang
+BuildRequires: clang-devel
+BuildRequires: lld-devel
+BuildRequires: llvm-devel
+%else
+BuildRequires: gcc-c++
+%endif
 
 %description
 %summary.
 
+%package devel
+Summary: Development package for %name
+Group: Development/C++
+
+%description devel
+%summary.
+The package provides development files for %name.
+
 %prep
 %setup -n %repo-%version
-%patch -p1
-sed -i 's|DRegionMonitor|Dtk::Gui::DRegionMonitor|' \
-    src/launchersys.cpp
 
 %build
 export PATH=%_qt5_bindir:$PATH
-%if_enabled clang
+%if_with clang
 %define optflags_lto -flto=thin
-export CC=clang-%llvm_ver
-export CXX=clang++-%llvm_ver
-export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
+export CC=clang
+export CXX=clang++
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %else
-export CC=gcc-%gcc_ver
-export CXX=g++-%gcc_ver
+export CC=gcc
+export CXX=g++
 %endif
 %cmake \
     -GNinja \
@@ -78,18 +73,28 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %files
 %doc LICENSE
 %_bindir/%repo
-%_bindir/%repo-wapper
 %_datadir/%repo/
 %_datadir/dbus-1/services/*.service
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/glib-2.0/schemas/com.deepin.dde.launcher.gschema.xml
-%_desktopdir/%repo.desktop
+%_userunitdir/org.deepin.dde.Launcher1.service
+%dir %_userunitdir/dde-session-initialized.target.wants/
+%_userunitdir/dde-session-initialized.target.wants/org.deepin.dde.Launcher1.service
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
-%dir %_datadir/dsg/configs/org.deepin.dde.launcher/
-%_datadir/dsg/configs/org.deepin.dde.launcher/org.deepin.dde.launcher.json
+%dir %_datadir/dsg/configs/dde-launcher/
+%_datadir/dsg/configs/dde-launcher/org.deepin.dde.launcher.json
+
+%files devel
+%dir %_includedir/dde-launcher/
+%_includedir/dde-launcher/*.h
 
 %changelog
+* Tue Dec 26 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt1
+- New version 6.0.19.
+- Cleanup BRs.
+- Used default compiler versions for easy backporting.
+
 * Tue Oct 31 2023 Ivan A. Melnikov <iv@altlinux.org> 5.6.1-alt3.1
 - NMU: build with gcc 13 (fixes build on loongarch64).
 
