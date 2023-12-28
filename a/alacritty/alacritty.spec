@@ -1,5 +1,5 @@
 Name: alacritty
-Version: 0.12.3
+Version: 0.13.0
 Release: alt1
 
 Summary: A fast, cross-platform, OpenGL terminal emulator
@@ -10,6 +10,7 @@ Url: https://github.com/alacritty/alacritty
 Source0: %name-%version.tar
 Source1: crates.tar
 
+BuildRequires: scdoc
 BuildRequires: rust-cargo /proc
 BuildRequires: pkgconfig(expat)
 BuildRequires: pkgconfig(freetype2)
@@ -41,26 +42,39 @@ export CARGO_HOME=${PWD}/cargo
 cargo build --release
 
 %install
+mkdir -p %buildroot%_man1dir %buildroot%_man5dir
+scdoc < extra/man/alacritty.1.scd > %buildroot%_man1dir/alacritty.1
+scdoc < extra/man/alacritty-msg.1.scd > %buildroot%_man1dir/alacritty-msg.1
+scdoc < extra/man/alacritty.5.scd > %buildroot%_man5dir/alacritty.5
+scdoc < extra/man/alacritty-bindings.5.scd > %buildroot%_man5dir/alacritty-bindings.5
 install -pm0755 -D target/release/alacritty %buildroot%_bindir/alacritty
-install -pm0644 -D extra/alacritty.man %buildroot%_man1dir/alacritty.1
 install -pm0644 -D extra/linux/Alacritty.desktop %buildroot%_desktopdir/Alacritty.desktop
 install -pm0644 -D extra/logo/alacritty-term.svg %buildroot%_iconsdir/hicolor/scalable/Alacritty.svg
-install -pm0644 -D alacritty.yml %buildroot%_sysconfdir/alacritty/alacritty.yml
+install -pm0644 -D extra/completions/_alacritty %buildroot%_datadir/zsh/site-functions/_alacritty
+install -pm0644 -D extra/completions/alacritty.bash %buildroot%_datadir/bash-completion/completions/alacritty
+install -pm0644 -D /dev/null %buildroot%_sysconfdir/alacritty/alacritty.toml
 
 %files
 %doc README* LICENSE* docs/*
 
 %dir %_sysconfdir/alacritty
-%config(noreplace) %_sysconfdir/alacritty/alacritty.yml
+%ghost %config(noreplace) %_sysconfdir/alacritty/alacritty.toml
 
 %_bindir/alacritty
+
+%_datadir/zsh/site-functions/_alacritty
+%_datadir/bash-completion/completions/alacritty
 
 %_desktopdir/Alacritty.desktop
 %_iconsdir/hicolor/scalable/Alacritty.svg
 
-%_man1dir/alacritty.1*
+%_man1dir/alacritty*.1*
+%_man5dir/alacritty*.5*
 
 %changelog
+* Thu Dec 28 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.13.0-alt1
+- 0.13.0 released
+
 * Tue Oct  3 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.3-alt1
 - 0.12.3 released
 
