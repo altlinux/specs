@@ -1,5 +1,5 @@
 Name: system-report
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 BuildArch: noarch
 
@@ -23,6 +23,9 @@ cp -f -- %SOURCE0 %buildroot/%_bindir/
 %_bindir/*
 
 %changelog
+* Thu Dec 28 2023 L.A. Kostis <lakostis@altlinux.ru> 0.1.3-alt1
+- Replace ddcprobe with ddcutil (fixes #48127).
+
 * Thu Dec 28 2023 Alexey Gladkov <legion@altlinux.ru> 0.1.2-alt1
 - Obtain:
   + OpenGL/Vulkan information.
