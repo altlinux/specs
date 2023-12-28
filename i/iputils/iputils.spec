@@ -1,5 +1,5 @@
 Name: iputils
-%define timestamp 20221126
+%define timestamp 20231222
 Version: %timestamp
 Release: alt1
 
@@ -115,6 +115,10 @@ fi
 %_mandir/man?/*
 
 %changelog
+* Thu Dec 28 2023 Mikhail Efremov <sem@altlinux.org> 20231222-alt1
+- 20221126 -> 20231222.
+- ping: Drop second call of drop_capabilities().
+
 * Tue Nov 29 2022 Mikhail Efremov <sem@altlinux.org> 20221126-alt1
 - Updated description.
 - Dropped ninfod subpackage (closes: #37138).
