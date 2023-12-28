@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 5.0.1
+Version: 5.1.0
 Release: alt1
 
 Summary: A Sphinx plugin to automatically document click-based applications
@@ -53,6 +53,9 @@ export PBR_VERSION="%version"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Dec 29 2023 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt1
+- Automatically updated to 5.1.0.
+
 * Thu Sep 21 2023 Grigory Ustinov <grenka@altlinux.org> 5.0.1-alt1
 - Automatically updated to 5.0.1.
 
