@@ -17,7 +17,7 @@ Group: System/Libraries
 
 Name:           libprelude
 Version:        5.2.0
-Release:        alt1_14
+Release:        alt1_15
 Summary:        Secure Connections between all Sensors and the Prelude Manager
 License:        LGPL-2.1+
 URL:            https://www.prelude-siem.org/
@@ -65,7 +65,6 @@ BuildRequires:  rpm-build-perl
 BuildRequires:  python3-devel
 BuildRequires:  pkgconfig(gnutls)
 BuildRequires:  pkgconfig(lua) >= 5.2
-BuildRequires:  pkgconfig(ruby)
 BuildRequires:  pkgconfig(zlib)
 
 %ifarch %valgrind_arches
@@ -318,6 +317,9 @@ patch -d %{buildroot}%{_includedir}/libprelude/ -p0 < %SOURCE1
 %doc AUTHORS ChangeLog README NEWS
 
 %changelog
+* Thu Dec 28 2023 Grigory Ustinov <grenka@altlinux.org> 5.2.0-alt1_15
+- Fixed FTBFS.
+
 * Wed Nov 29 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 5.2.0-alt1_14
 - NMU: fixed FTBFS on LoongArch (use rpm-macros-valgrind)
 
