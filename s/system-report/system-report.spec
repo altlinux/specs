@@ -1,10 +1,10 @@
 Name: system-report
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 BuildArch: noarch
 
 Summary: Collect hardware infomation for developers
-License: GPL
+License: GPL-2.0-or-later
 Group: System/Base
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
@@ -23,6 +23,13 @@ cp -f -- %SOURCE0 %buildroot/%_bindir/
 %_bindir/*
 
 %changelog
+* Thu Dec 28 2023 Alexey Gladkov <legion@altlinux.ru> 0.1.2-alt1
+- Obtain:
+  + OpenGL/Vulkan information.
+  + OpenCL information.
+  + Video acceleration capabilities.
+- Fix licence tag.
+
 * Mon Aug 15 2016 Alexey Gladkov <legion@altlinux.ru> 0.1.1-alt1
 - Not hardcode the path to utilities (ALT#32222)
 
