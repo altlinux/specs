@@ -5,7 +5,7 @@
 %endif
 
 Name: kde5-set
-Version: 23.08.2
+Version: 23.08.3
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -202,7 +202,7 @@ Requires: kde5-email-client
 %if_enabled qtwebengine
 Requires: kde5-pim-data-exporter kde5-pim-addons
 Requires: kde5-akregator kde5-kontact
-Requires: kde5-korganizer kde5-zanshin kde5-merkuro
+Requires: kde5-korganizer kde5-zanshin
 Requires: kde5-akonadi-calendar-tools
 %endif
 Requires: kde5-kalarm kde5-knotes
@@ -229,6 +229,9 @@ Requires: kde5-kaddressbook
 %files -n kde5-pim
 
 %changelog
+* Thu Dec 28 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
+- fix requires
+
 * Tue Nov 14 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - update requires
 
