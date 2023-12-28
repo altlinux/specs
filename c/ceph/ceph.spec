@@ -2,9 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
-%ifarch riscv64
 %define optflags_lto %nil
-%endif
 
 %def_with ocf
 %def_with tcmalloc
@@ -60,7 +58,7 @@
 
 Name: ceph
 Version: 18.2.1
-Release: alt1
+Release: alt2
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -1857,6 +1855,9 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Wed Dec 27 2023 Alexey Shabalin <shaba@altlinux.org> 18.2.1-alt2
+- Disabled LTO for all arches.
+
 * Thu Dec 21 2023 Alexey Shabalin <shaba@altlinux.org> 18.2.1-alt1
 - 18.2.1
 
