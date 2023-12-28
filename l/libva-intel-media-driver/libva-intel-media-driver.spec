@@ -1,6 +1,6 @@
 %define soname 7
 Name: libva-intel-media-driver
-Version: 23.3.4
+Version: 24.1.0
 Release: alt1
 
 Summary: Intel(R) Media Driver for VAAPI
@@ -64,6 +64,9 @@ This package provides the development environment for libigfxcmrt
 %_pkgconfigdir/igfxcmrt.pc
 
 %changelog
+* Wed Dec 27 2023 Anton Farygin <rider@altlinux.ru> 24.1.0-alt1
+- 23.3.4 -> 24.1.0
+
 * Tue Oct 24 2023 Anton Farygin <rider@altlinux.ru> 23.3.4-alt1
 - 23.2.4 -> 23.3.4
 
