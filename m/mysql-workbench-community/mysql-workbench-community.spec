@@ -1,6 +1,6 @@
 Name: mysql-workbench-community
 Version: 8.0.33
-Release: alt1
+Release: alt2
 
 Summary: A MySQL visual database modeling tool
 
@@ -20,6 +20,7 @@ Patch0: mysql-workbench-community-8.0.32-alt-suppress-unsupported.patch
 Patch1: %name-8.0.20-alt-boost-1.73.0-compat.patch
 Patch2: %name-8.0.33-alt-fix-finding-odbc.patch
 Patch3: %name-8.0.33-alt-fix-missing-include.patch
+Patch4: %name-8.0.33-alt-fix-usage-of-libxml2.patch
 
 Provides: mysql-workbench-oss = %version-%release
 Obsoletes: mysql-workbench-oss < %version-%release
@@ -65,6 +66,8 @@ BuildRequires(pre): rpm-build-python3
 %add_findreq_skiplist */mysql-workbench/libraries/grt_python_debugger.py
 
 %add_python3_path %_libdir/mysql-workbench/modules
+# https://bugzilla.altlinux.org/show_bug.cgi?id=48953#c3
+%filter_from_provides /python3(cairo)/d
 
 %set_verify_elf_method unresolved=relaxed
 
@@ -164,6 +167,7 @@ Look to %_defaultdocdir/%name-%version/License.txt
 %patch1 -p2
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 sed -i "s|ldconfig|/sbin/ldconfig|" frontend/linux/workbench/mysql-workbench.in
 
@@ -236,6 +240,10 @@ cp %_builddir/%name-%version/images/icons/MySQLWorkbenchDocIcon32x32.png %buildr
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Thu Dec 28 2023 Anton Zhukharev <ancieg@altlinux.org> 8.0.33-alt2
+- (NMU) Fixed FTBFS (libxml2 2.12.3).
+- (NMU) Removed 'python3(cairo)' providement.
+
 * Tue Jun 27 2023 Alexander Stepchenko <geochip@altlinux.org> 8.0.33-alt1
 - 8.0.32 -> 8.0.33
 - Add the required runtime dependencies (ALT #46877)
