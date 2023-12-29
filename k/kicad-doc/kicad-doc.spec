@@ -3,16 +3,19 @@
 
 Summary: Documentation and tutorials for kicad
 Name: kicad-doc
-Version: 7.0.9
+Version: 7.0.10
 Epoch: 1
 Release: alt1
 Group: Documentation
-License: GPLv3
+License: GPL-3.0-or-later
 Url: https://gitlab.com/kicad/services/kicad-doc
-Source: %name-%version.tar
 # Source-url: https://gitlab.com/kicad/services/kicad-doc/-/archive/%version/kicad-doc-%version.tar.bz2
+Source: %name-%version.tar
+
 BuildArch: noarch
-BuildRequires(pre): cmake rpm-macros-cmake
+
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
 BuildRequires: asciidoctor
 BuildRequires: po4a
 
@@ -165,7 +168,7 @@ Chinese translation.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %_datadir/doc/kicad/help/en
@@ -202,6 +205,9 @@ Chinese translation.
 %_datadir/doc/kicad/help/zh
 
 %changelog
+* Fri Dec 29 2023 Anton Midyukov <antohami@altlinux.org> 1:7.0.10-alt1
+- new version (7.0.10) with rpmgs script
+
 * Fri Nov 10 2023 Anton Midyukov <antohami@altlinux.org> 1:7.0.9-alt1
 - new version (7.0.9) with rpmgs script
 
