@@ -1,5 +1,5 @@
 Name: polybar
-Version: 3.6.3
+Version: 3.7.1
 Release: alt1
 
 Summary: A fast and easy-to-use status bar
@@ -55,9 +55,6 @@ A fast and easy-to-use status bar for tilling WM
 %cmake_install
 rm -rf %buildroot/%_docdir/%name/.buildinfo
 
-%check
-%cmake
-
 %files
 %doc README.md SUPPORT.md
 %_bindir/%name
@@ -73,6 +70,10 @@ rm -rf %buildroot/%_docdir/%name/.buildinfo
 %_datadir/zsh/site-functions/_%{name}_msg
 
 %changelog
+* Fri Dec 29 2023 Roman Alifanov <ximper@altlinux.org> 3.7.1-alt1
+- new version 3.7.1 (with rpmrb script)
+- fake %check removed
+
 * Mon May 22 2023 Roman Alifanov <ximper@altlinux.org> 3.6.3-alt1
 - Initial build for Sisyphus
 
