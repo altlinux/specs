@@ -1,16 +1,17 @@
 #%%def_with doc
 
 Name: gr-osmosdr
-Url: http://sdr.osmocom.org/trac/wiki/GrOsmoSDR
-Version: 0.2.4
-Release: alt2
+Url: https://osmocom.org/projects/gr-osmosdr/wiki/GrOsmoSDR
+Version: 0.2.5
+Release: alt1
 License: GPL-3.0-or-later
 Group: Engineering
 Summary: Common software API for various radio hardware
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-cmake rpm-build-python3
+BuildRequires(pre): rpm-macros-cmake rpm-macros-python3
+BuildRequires: rpm-build-python3
 BuildRequires: cmake gcc-c++
 BuildRequires: gnuradio-devel
 BuildRequires: boost-program_options-devel
@@ -122,6 +123,9 @@ EOF
 %endif
 
 %changelog
+* Fri Dec 29 2023 Anton Midyukov <antohami@altlinux.org> 0.2.5-alt1
+- New version 0.2.5.
+
 * Thu Jun 08 2023 Anton Midyukov <antohami@altlinux.org> 0.2.4-alt2
 - disable build documentation
 
