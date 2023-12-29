@@ -70,7 +70,7 @@
 
 Name: branding-simply-linux
 Version: 10.2
-Release: alt1.1
+Release: alt1.2
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
 %ifarch %ix86 x86_64
@@ -394,7 +394,14 @@ ln -s license.ru.html %buildroot%_datadir/alt-notes/license.uk.htm
 #slideshow
 mkdir -p %buildroot/usr/share/install2/slideshow
 mkdir -p %buildroot/etc/alterator
-cp -a slideshow/Slides*/  %buildroot/usr/share/install2/slideshow/
+pushd slideshow
+%ifarch %e2k
+for i in en ru; do mv Slides-$i/Slide10_SL10_${i}{_e2k,}.png; done
+%else
+rm -f Slides-*/Slide10_SL10_*_e2k.png
+%endif
+cp -a Slides*/  %buildroot/usr/share/install2/slideshow/
+popd
 # Set English slideshow as default
 ln -s Slides-en %buildroot/usr/share/install2/slideshow/Slides
 install -m0644 slideshow/slideshow.conf %buildroot/etc/alterator/
@@ -533,6 +540,9 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_datadir/install3/*
 
 %changelog
+* Thu Dec 28 2023 Michael Shigorin <mike@altlinux.org> 10.2-alt1.2
+- E2K: replace slide 10
+
 * Thu Nov 02 2023 Michael Shigorin <mike@altlinux.org> 10.2-alt1.1
 - E2K: link to platform-specific distribution manual (rm#115880)
 
