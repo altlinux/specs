@@ -4,17 +4,18 @@
 Name: kicad-templates
 Summary: Templates projects for kicad (creation of electronic schematic diagrams)
 Summary(ru_RU.UTF-8): Примеры проектов для kicad (разработка печатных плат)
-Version: 7.0.8
+Version: 7.0.10
 Release: alt1
-Source: %name-%version.tar
-License: GPLv2+
+License: GPL-3.0-or-later
 Group: Engineering
 Url: https://gitlab.com/kicad/libraries/%name
 # Source-url: https://gitlab.com/kicad/libraries/%name/-/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 
-Packager: Anton Midyukov <antohami@altlinux.org>
 BuildArch: noarch
-BuildRequires(pre): cmake rpm-macros-cmake gcc-c++
+
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++
 
 Requires: kicad-common >= %version
 
@@ -34,16 +35,19 @@ Kicad-%name содержит примеры проектов для kicad.
 %setup
 
 %build
-%cmake_insource
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 
 %files
 %_datadir/kicad/template/*
 
 %changelog
+* Fri Dec 29 2023 Anton Midyukov <antohami@altlinux.org> 7.0.10-alt1
+- new version (7.0.10) with rpmgs script
+
 * Mon Oct 02 2023 Anton Midyukov <antohami@altlinux.org> 7.0.8-alt1
 - new version (7.0.8) with rpmgs script
 
