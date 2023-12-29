@@ -4,7 +4,7 @@
 
 Name: deepin-session-shell
 Version: 6.0.14
-Release: alt1
+Release: alt2
 
 Summary: Deepin desktop-environment - Session shell module
 
@@ -15,14 +15,14 @@ Url: https://github.com/linuxdeepin/dde-session-shell
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: %name-%version-%release.patch
 
-Requires: pam0_tcb
+Requires: chkpwd-pam
 
 BuildRequires(pre): rpm-build-ninja rpm-build-kf5 rpm-build-xdg deepin-gettext-tools
 # Automatically added by buildreq on Wed Oct 25 2023
 # optimized out: alt-os-release bash5 bashrc cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXcursor-devel libXext-devel libXfixes-devel libXi-devel libXrandr-devel libXrender-devel libXtst-devel libcap-ng libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt liblightdm-gobject liblightdm-qt5 libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel libxcbutil-icccm pkg-config python3 python3-base qt5-base-common qt5-base-devel sh5 xorg-proto-devel
 BuildRequires: cmake dtkcore gsettings-qt-devel libdeepin-pw-check-devel libdtkwidget-devel libgtest-devel libpam-devel libxcbutil-icccm-devel lightdm-devel qt5-svg-devel qt5-tools qt5-x11extras-devel
 %if_with clang
-BuildRequires: clang-devel
+BuildRequires: clang-devel lld-devel
 %else
 BuildRequires: gcc-c++
 %endif
@@ -52,18 +52,12 @@ sed -i 's|/usr/lib/|%_libdir/|' \
     src/global_util/modules_loader.cpp
 sed -i 's|lib/|%_lib/|' \
     modules/*/CMakeLists.txt
-# We don't use common-auth in ALT
-# sed -i 's|password-auth|pam_tcb|' src/libdde-auth/deepinauthframework.cpp
-# sed -i -e '/account/d; s|common-auth|system-auth|;' files/pam.d/dde-lock
 
 %build
-%add_optflags -I%_includedir/dtk5/DCore -I%_includedir/dtk5/DWidget
 %if_with clang
 export CC="clang"
 export CXX="clang++"
-export AR="llvm-ar"
-export NM="llvm-nm"
-export READELF="llvm-readelf"
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
 export PATH=%_qt5_bindir:$PATH
 %cmake \
@@ -111,6 +105,9 @@ chmod +x %buildroot%_bindir/deepin-greeter
 %_libdir/cmake/DdeSessionShell/DdeSessionShellConfig.cmake
 
 %changelog
+* Fri Dec 29 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.14-alt2
+- Updated fixes for session unlock.
+
 * Tue Dec 12 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.14-alt1
 - New version 6.0.14.
 - Cleanup spec, patches and BRs.
