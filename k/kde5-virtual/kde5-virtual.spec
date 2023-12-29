@@ -5,7 +5,7 @@
 %endif
 
 Name: kde5-virtual
-Version: 5.28.1
+Version: 5.28.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -127,7 +127,7 @@ Provides: kde5-volume-control = %EVR
 Provides: kde5-volume-control-pipewire = %EVR
 Requires: kf5-filesystem
 Requires: plasma5-pa
-Requires: pipewire wireplumber
+Requires: pipewire pipewire-utils wireplumber
 %description -n kde5-volume-control-4-pipewire
 %summary
 
@@ -312,6 +312,9 @@ Requires: sddm sddm-theme-breeze plasma5-sddm-kcm dm-tool
 %files -n kde5-display-manager-7-lightdm
 
 %changelog
+* Fri Dec 29 2023 Sergey V Turchin <zerg@altlinux.org> 5.28.2-alt1
+- update pipewire requires
+
 * Mon Dec 25 2023 Sergey V Turchin <zerg@altlinux.org> 5.28.1-alt1
 - update pipewire requires
 
