@@ -10,7 +10,7 @@
 
 Name: %_name
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Webfont Kit Generator
 License: GPL-3.0-or-later
@@ -34,6 +34,7 @@ BuildArch: noarch
 Requires: typelib(Adw) = 1
 Requires: typelib(GtkSource) = 5
 Requires: typelib(Soup) = 3.0
+Requires: python3(fontTools) python3(brotli)
 Requires: dconf
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
@@ -78,6 +79,9 @@ Fonts for self-hosting.
 
 
 %changelog
+* Fri Dec 29 2023 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1.1
+- explicitly required python3(fontTools), python3(brotli)
+
 * Wed Dec 27 2023 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - first build for Sisyphus
 
