@@ -10,7 +10,7 @@
 
 Name: %{_name}3
 Version: %ver_major.0
-Release: alt2
+Release: alt2.1
 
 Summary: libwnck is a Window Navigator Construction Kit
 License: LGPL-2.0
@@ -82,6 +82,7 @@ GObject introspection devel data for the Window Navigator Construction Kit libra
 
 %prep
 %setup -n %_name-%version
+%autopatch -p1
 
 %build
 %meson \
@@ -127,6 +128,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Dec 29 2023 Leontiy Volodin <lvol@altlinux.org> 43.0-alt2.1
+- trully apply the patches
+
 * Thu Dec 28 2023 Leontiy Volodin <lvol@altlinux.org> 43.0-alt2
 - fix segfaults in DDE (thanks archlinux for the patches) (ALT #48951)
 
