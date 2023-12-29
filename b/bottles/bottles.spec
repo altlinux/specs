@@ -2,7 +2,7 @@
 
 Name:     bottles
 Version:  51.9
-Release:  alt2
+Release:  alt3
 Epoch:    1
 
 Summary:  Easily manage wine prefixes in a new way. Run Windows software and games on Linux
@@ -27,6 +27,12 @@ BuildRequires: desktop-file-utils
 
 Requires: typelib(WebKit2) = 4.0
 Requires: typelib(GtkSource) = 5
+Requires: python3(yaml)
+Requires: cabextract
+
+# See bottles/backend/utils/imagemagick.py
+Requires: /usr/bin/convert
+Requires: /usr/bin/identify
 
 %add_python3_path %_datadir/%name
 
@@ -58,6 +64,9 @@ echo %_datadir/locale/zh_Hant/LC_MESSAGES/bottles.mo >> %name.lang
 %_datadir/metainfo/*.metainfo.xml
 
 %changelog
+* Fri Dec 29 2023 Roman Alifanov <ximper@altlinux.org> 1:51.9-alt3
+- NMU: Added needed Requires (ALT #44234).
+
 * Thu Sep 14 2023 Andrey Cherepanov <cas@altlinux.org> 1:51.9-alt2
 - Added desktop-file-utils in build requirements.
 
