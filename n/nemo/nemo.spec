@@ -6,7 +6,7 @@
 %def_enable selinux
 
 Name: nemo
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: default file manager for Cinnamon
@@ -183,6 +183,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Fri Dec 29 2023 Anton Midyukov <antohami@altlinux.org> 6.0.2-alt1
+- 6.0.2
+
 * Thu Dec 21 2023 Anton Midyukov <antohami@altlinux.org> 6.0.1-alt1
 - 6.0.1
 
