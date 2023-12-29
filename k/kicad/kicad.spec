@@ -4,7 +4,7 @@
 %define majver 7.0
 
 Name: kicad
-Version: %majver.9
+Version: %majver.10
 Release: alt1
 Epoch: 1
 
@@ -17,13 +17,13 @@ Url: https://gitlab.com/kicad/code/kicad.git
 Source: %name-%version.tar
 Patch: require-libngspice.so.0.patch
 Patch2000: kicad-e2k.patch
-Packager: Anton Midyukov <antohami@altlinux.org>
 
 ExcludeArch: %arm
 
-BuildRequires(pre): cmake rpm-macros-cmake
-BuildRequires(pre): rpm-build-python3
-
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: cmake
+BuildRequires: rpm-build-python3
 BuildRequires: python3-dev
 BuildRequires: python3-module-wx
 BuildRequires: boost-devel boost-asio-devel boost-asio-devel boost-context-devel boost-filesystem-devel boost-geometry-devel boost-interprocess-devel boost-locale-devel boost-program_options-devel
@@ -170,6 +170,9 @@ done
 %dir %_datadir/kicad/template
 
 %changelog
+* Fri Dec 29 2023 Anton Midyukov <antohami@altlinux.org> 1:7.0.10-alt1
+- new version 7.0.10
+
 * Fri Nov 10 2023 Anton Midyukov <antohami@altlinux.org> 1:7.0.9-alt1
 - new version 7.0.9
 
