@@ -1,15 +1,15 @@
 %define api_ver 3.0
 
 Name: nemo-extensions
-Version: 5.6.0
+Version: 6.0.1
 Release: alt1
 Summary: Extensions for Nemo
 
 License: %gpl2plus and %lgpl2only
 URL: https://github.com/linuxmint/nemo-extensions
-Packager: Vladimir Didenko <cow at altlinux.org>
 Group: Graphical desktop/GNOME
 
+# Source-url: https://github.com/linuxmint/nemo-extensions/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -31,7 +31,7 @@ BuildRequires: libevince-devel
 BuildRequires: libmusicbrainz5-devel
 BuildRequires: gst-plugins1.0-gir-devel
 BuildRequires: gst-plugins1.0-devel
-BuildRequires: libwebkit2gtk-devel
+BuildRequires: libwebkit2gtk4.1-devel
 BuildRequires: libclutter-gtk3-devel
 BuildRequires: libclutter-gtk3-gir-devel
 BuildRequires: libclutter-gst3.0-devel
@@ -267,6 +267,9 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %_datadir/nemo-image-converter/
 
 %changelog
+* Fri Dec 29 2023 Anton Midyukov <antohami@altlinux.org> 6.0.1-alt1
+- 6.0.1
+
 * Fri Dec 2 2022 Vladimir Didenko <cow@altlinux.org> 5.6.0-alt1
 - 5.6.0
 
