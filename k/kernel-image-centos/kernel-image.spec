@@ -1,9 +1,9 @@
 Name: kernel-image-centos
 
-%define centos_release 394
+%define centos_release 399
 
 Version: 5.14.0.%{centos_release}
-Release: alt1.el9
+Release: alt2.el9
 
 %define kernel_base_version  %version
 %define kernel_extra_version %nil
@@ -297,6 +297,10 @@ fi
 
 # Extend config from fedora config.
 for o in \
+	CONFIG_BCACHE:'CONFIG_BCACHE=m' \
+	CONFIG_BCACHEFS_FS:'CONFIG_BCACHEFS_FS=m' \
+	CONFIG_BCACHEFS_POSIX_ACL:'CONFIG_BCACHEFS_POSIX_ACL=y' \
+	CONFIG_BCACHEFS_QUOTA:'CONFIG_BCACHEFS_QUOTA=y' \
 	CONFIG_9P_FS:'CONFIG_9P_FS=m' \
 	CONFIG_9P_FSCACHE:'CONFIG_9P_FSCACHE=y' \
 	CONFIG_9P_FS_POSIX_ACL:'CONFIG_9P_FS_POSIX_ACL=y' \
@@ -659,6 +663,12 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Dec 29 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.399-alt2.el9
+- Add bcache.
+
+* Fri Dec 15 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.399-alt1.el9
+- Updated to kernel-5.14.0-399.el9 (fixes: CVE-2022-3545, CVE-2022-41858, CVE-2023-28464, CVE-2023-38409, CVE-2023-4244, CVE-2023-42756, CVE-2023-5345, CVE-2023-6176)
+
 * Tue Dec 05 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.394-alt1.el9
 - Updated to kernel-5.14.0-394.el9:
   + Add Add Intel Meteor Lake PCH-S LPSS PCI IDs
