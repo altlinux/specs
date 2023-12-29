@@ -1,7 +1,7 @@
 
 Name: krb5-ticket-watcher
 Version: 1.0.3
-Release: alt22
+Release: alt23
 %K5init no_altplace
 
 Group: System/X11
@@ -25,6 +25,7 @@ Patch10: krb5-ticket-watcher-add-pw-exp-notif.patch
 Patch11: fix-deprecated-krb5-api-meth.patch
 Patch12: alt-crash-1.patch
 Patch13: alt-ignore-localhost-ip-as-def-realm.patch
+Patch14: alt-no-message-on-automatic-reniew.patch
 
 BuildRequires(pre): rpm-build-xdg rpm-build-kf5
 BuildRequires: desktop-file-utils
@@ -50,6 +51,7 @@ tickets.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 cat %SOURCE10 > po/ru.po
 
 %build
@@ -75,6 +77,9 @@ desktop-file-install --dir %buildroot/%_xdgconfigdir/autostart \
 %doc COPYING Changes News TODO
 
 %changelog
+* Fri Dec 29 2023 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt23
+- don't show message on automatoc ticket renewal (closes: 48892)
+
 * Thu Apr 13 2023 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt22
 - ignore 127.0.0.1 as realm
 
