@@ -3,18 +3,26 @@
 %def_disable clang
 
 Name: deepin-compressor
-Version: 6.0.0
+Version: 5.12.21
 Release: alt1
+Epoch: 1
+
 Summary: Archive Manager for Deepin Desktop Environment
-License: GPL-3.0+ and (GPL-2.0+ and LGPL-2.1+ and MPL-1.1) and BSD-2-Clause and Apache-2.0
+
+License: GPL-3.0-or-later and GPL-2.0-or-later and LGPL-2.1-or-later and MPL-1.1 and BSD-2-Clause
 Group: Archiving/Compression
 Url: https://github.com/linuxdeepin/deepin-compressor
-Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Provides: %name-devel = %version
 Obsoletes: %name-devel < %version
 
 Source: %url/archive/%version/%name-%version.tar.gz
+# Applied patch by archlinux:
+# https://patch-diff.githubusercontent.com/raw/linuxdeepin/deepin-compressor/pull/151.patch
+Patch: %name-%version-%release.patch
+
+Requires: p7zip
+# Requires: icon-theme-hicolor
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -22,46 +30,18 @@ BuildRequires(pre): clang-devel
 BuildRequires(pre): gcc-c++
 %endif
 BuildRequires(pre): desktop-file-utils rpm-build-kf5 rpm-build-ninja
-BuildRequires: cmake
-BuildRequires: qt5-base-devel
-BuildRequires: dtk5-widget-devel
-BuildRequires: kf5-kcodecs-devel
-BuildRequires: kf5-karchive-devel
-BuildRequires: qt5-multimedia-devel
-BuildRequires: qt5-x11extras-devel
-BuildRequires: libarchive-devel
-BuildRequires: libsecret-devel
-BuildRequires: libpoppler-cpp-devel
-BuildRequires: udisks2-qt5-devel
-BuildRequires: disomaster-devel
-BuildRequires: libzip-devel
-BuildRequires: libminizip-devel
-BuildRequires: qt5-tools-devel
-BuildRequires: deepin-gettext-tools
-BuildRequires: qt5-svg-devel
-BuildRequires: gsettings-qt-devel
-BuildRequires: libgmock-devel
-# Requires: icon-theme-hicolor
-# Requires: p7zip
+# Automatically added by buildreq on Sat Dec 30 2023
+# optimized out: bash5 bashrc cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-devel qt5-tools sh5 zlib-devel
+BuildRequires: cmake kf5-karchive-devel kf5-kcodecs-devel libarchive-devel libdtkwidget-devel libgio-devel libminizip-devel libmount-devel libzip-devel qt5-svg-devel qt5-tools-devel
 
 %description
 %summary.
 
 %prep
 %setup
-sed -i 's|/usr/bin/cp|/bin/cp|' \
-    tests/FuzzyTest/libfuzzer/CMakeLists.txt
+%patch -p1
 sed -i 's|/usr/lib|%_libdir|' \
     src/source/common/pluginmanager.cpp
-sed -i 's|#include <zip.h>|#include <libzip/zip.h>|' \
-    3rdparty/libzipplugin/libzipplugin.h
-%ifnarch armh i586
-sed -i 's|${CMAKE_BINARY_DIR}/lib|${CMAKE_BINARY_DIR}/%_lib|;' \
-    CMakeLists.txt
-sed -i 's|/lib/deepin-compressor/plugins|/%_lib/deepin-compressor/plugins|' \
-    CMakeLists.txt
-sed -i 's|-rpath=../lib:|-rpath=../%_lib:|' CMakeLists.txt
-%endif
 
 %build
 %if_enabled clang
@@ -85,10 +65,6 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
-%ifnarch armh i586
-mkdir -p %buildroot%_libdir/%name/plugins
-mv -f %buildroot/usr/lib/%name/plugins %buildroot%_libdir/%name
-%endif
 
 %check
 desktop-file-validate %buildroot%_desktopdir/%name.desktop
@@ -113,6 +89,12 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_datadir/deepin-manual/manual-assets/application/%name/archive-manager/
 
 %changelog
+* Sat Dec 30 2023 Leontiy Volodin <lvol@altlinux.org> 1:5.12.21-alt1
+- New version 5.12.21.
+- Fixed build with dtk 5.6.20 (thanks archlinux for the patch).
+- Cleanup BRs.
+- Updated license tag.
+
 * Fri Jan 20 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.0-alt1
 - New version (6.0.0).
 
