@@ -1,40 +1,36 @@
 Name: deepin-clone
-Version: 5.0.11
+Version: 5.0.15.0.4.bc86
 Release: alt1
+
 Summary: Disk and partition backup/restore tool
+
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-clone
-Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 ExcludeArch: armh
 
-BuildRequires(pre): desktop-file-utils cmake rpm-build-ninja
-BuildRequires: gcc-c++ deepin-gettext-tools dtk5-core-devel dtk5-widget-devel dtk5-common qt5-linguist libpolkitqt5-qt5-devel qt5-base-devel
-# Checking for dfm-plugin... no
 Requires: icon-theme-hicolor partclone
-# Check app/src/fixboot/bootdoctor.cpp
-# RHBZ#1687369
-# ExclusiveArch: x86_64 %%ix86 aarch64
+
+BuildRequires(pre): desktop-file-utils cmake rpm-build-ninja
+BuildRequires: gcc-c++ deepin-gettext-tools dtkcore libdtkwidget-devel dtk6-common-devel qt5-linguist libpolkitqt5-qt5-devel qt5-base-devel
 
 %description
 %summary.
 
 %prep
 %setup
+%patch -p1
 sed -i 's|Version=0.1|Version=%version|' app/%name.desktop
-# sed -i 's|/usr/sbin|/usr/bin|' \
-#     app/com.deepin.pkexec.deepin-clone.policy.tmp \
-#     app/deepin-clone-ionice \
-#     app/deepin-clone-pkexec \
-#     app/src/corelib/helper.cpp
 
 %build
 export PATH=%_qt5_bindir:$PATH
 %cmake \
     -GNinja \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DDISABLE_DFM_PLUGIN=YES \
@@ -49,22 +45,26 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %cmake_install
 chmod +x %buildroot%_bindir/deepin-clone-pkexec
 chmod +x %buildroot%_sbindir/deepin-clone-ionice
+%find_lang --with-qt %name
 
-%check
-desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
-
-%files
-%doc README.md
-%doc LICENSE
+%files -f %name.lang
+%doc README.md LICENSE
 %_bindir/%{name}*
 %_sbindir/%{name}*
-%_datadir/%name/
-%_desktopdir/%name.desktop
+%dir %_datadir/%name/
+%dir %_datadir/%name/translations/
+%_datadir/%name/translations/%name.qm
+%_datadir/%name/translations/%{name}_es_419.qm
+%_datadir/%name/translations/policy.qm
+%_datadir/%name/translations/policy_es_419.qm
 %_iconsdir/hicolor/scalable/mimetypes/*.svg
 %_datadir/mime/packages/%name.xml
 %_datadir/polkit-1/actions/com.deepin.pkexec.%name.policy
 
 %changelog
+* Sat Dec 30 2023 Leontiy Volodin <lvol@altlinux.org> 5.0.15.0.4.bc86-alt1
+- New version 5.0.15-4-gbc86458.
+
 * Tue Apr 19 2022 Leontiy Volodin <lvol@altlinux.org> 5.0.11-alt1
 - New version (5.0.11).
 
