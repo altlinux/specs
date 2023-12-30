@@ -8,14 +8,14 @@
 
 %def_with devel
 %def_without vanilla
-%define gecko_version 2.47.3
-%define mono_version 7.4.0
-%define winetricks_version 20220617
+%define gecko_version 2.47.4
+%define mono_version 8.1.0
+%define winetricks_version 20230505
 
-%define basemajor 8.0
-%define major 8.0
-%define rel .2
-%define stagingrel %nil
+%define basemajor 9.0
+%define major 9.0
+%define rel -rc3
+%define stagingrel %rel
 
 # the packages will conflict with that
 %define conflictlist wine-vanilla wine wine-tkg wine-proton-tkg
@@ -36,9 +36,6 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 # build ping subpackage
 %def_with set_cap_net_raw
 
-# build libwine.so.1 for compatibility
-%def_without libwine
-
 %if_feature llvm 11.0
 # build real PE libraries (.dll, not .dll.so), via clang
 %def_with mingw
@@ -58,15 +55,15 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 %def_with vulkan
 %endif
 
+%def_without wayland
+
 # use rpm-macros-features
 
 %if_feature opencl
 %def_with opencl
-%else
-%def_without opencl
 %endif
 
-%if_feature pcap 1.2.1
+%if_feature pcap 1.10.3
 %def_with pcap
 %else
 %def_without pcap
@@ -84,7 +81,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 %endif
 
 Name: wine-stable
-Version: %major.6
+Version: %major.0
 Release: alt1
 Epoch: 1
 
@@ -214,6 +211,10 @@ BuildRequires: gcc
 BuildRequires: %llvm_br
 %endif
 
+# hack against broken patch in wine-staging
+# Failed to apply patch eventfd_synchronization/0011-server-Add-an-object-operation-to-grab-the-esync-fil.patch
+BuildRequires: git-core
+
 # General dependencies
 BuildRequires(pre): rpm-build-intro >= 2.1.14
 BuildRequires(pre): rpm-macros-features
@@ -237,6 +238,9 @@ BuildRequires: libunwind-devel
 %endif
 BuildRequires: libnetapi-devel
 #BuildRequires: gstreamer-devel gst-plugins-devel
+
+# for winscard (libpcsclite.so here)
+BuildRequires: libpcsclite-devel
 
 # can be missed on old systems
 BuildRequires: libOSMesa-devel
@@ -417,23 +421,6 @@ Also you can control in manually:
 $ wine-cap_net_raw [on|off]
 
 
-%if_with libwine
-%package -n lib%name
-Summary: Compatibility library for Wine
-Group: System/Libraries
-#Conflicts: libwine-vanilla
-
-
-%description -n lib%name
-This package contains the library needed to run programs dynamically
-linked with Wine.
-
-%description -n lib%name -l ru_RU.UTF-8
-Этот пакет состоит из библиотек, которые реализуют Windows API.
-
-%endif
-
-
 %package devel-tools
 Summary: Development tools for %name-devel
 Group: Development/C
@@ -447,9 +434,18 @@ Provides: libwine-devel = %EVR
 # we don't need provide anything
 AutoProv:no
 
-# due winegcc requires
-Requires: gcc gcc-c++ glibc-devel libstdc++-devel
+# winegcc requires
+Requires: glibc-devel libstdc++-devel
 
+%if_with clang
+Requires: %llvm_br
+%else
+Requires: gcc gcc-c++
+%endif
+
+%if_with mingw
+Requires: %llvm_br
+%endif
 
 %description devel-tools
 %name-devel-tools contains tools needed to
@@ -485,8 +481,7 @@ develop programs using %name.
 %prep
 %setup -a 1 -a 10
 # Apply wine-staging patches
-%name-staging/patches/patchinstall.sh DESTDIR=$(pwd) --all --backend=patch \
-    -W programs-findstr -W winemenubuilder-integration -W winex11-wglShareLists
+%name-staging/staging/patchinstall.py DESTDIR=$(pwd) --all --backend=patch
 
 # disable rpath using for executable
 #__subst "s|^\(LDRPATH_INSTALL =\).*|\1|" Makefile.in
@@ -503,6 +498,15 @@ export CC=clang
 export CROSSCC=clang
 %endif
 
+# disable fortify as it can breaks wine
+# http://bugs.winehq.org/show_bug.cgi?id=24606
+%remove_optflags -fcf-protection
+%remove_optflags -fstack-protector-strong
+%remove_optflags -fstack-clash-protection
+# drop default FORTIFY_SOURCE here to mute warning when overrides with _FORTIFY_SOURCE=0 (wine disable it)
+%remove_optflags -D_FORTIFY_SOURCE=2
+%remove_optflags -Wp,-D_FORTIFY_SOURCE=2
+
 
 %configure --with-x \
 %if_with build64
@@ -515,9 +519,9 @@ export CROSSCC=clang
 	--without-capi \
 	%{subst_with opencl} \
 	%{subst_with pcap} \
-	%{subst_with unwind} \
 	%{subst_with mingw} \
 	%{subst_with vulkan} \
+	%{subst_with wayland} \
 	--bindir=%winebindir \
 	%nil
 
@@ -531,13 +535,6 @@ export CROSSCC=clang
 # clean permissions (via find to hide file list)
 find %buildroot%libwinedir/%winesodir -type f | xargs chmod 0644
 find %buildroot%libwinedir/%winepedir -type f | xargs chmod 0644
-
-%if_with libwine
-# keep in libdir for compatibility
-mv -v %buildroot%libwinedir/%winesodir/libwine.so.1* %buildroot%libdir
-%else
-rm -v %buildroot%libwinedir/%winesodir/libwine.so.1*
-%endif
 
 # hack for lib.req: ERROR: /tmp/.private/lav/wine-etersoft-buildroot/usr/lib64/wine/x86_64-unix/ws2_32.so: library ntdll.so not found
 %if "%_vendor" == "alt"
@@ -624,14 +621,6 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %if_with set_cap_net_raw
 %files ping
 %_sbindir/wine-cap_net_raw
-
-%post ping
-%_sbindir/wine-cap_net_raw on || :
-
-%preun ping
-if [ $1 = 0 ]; then
-    %_sbindir/wine-cap_net_raw off || :
-fi
 %endif
 
 %files
@@ -680,6 +669,9 @@ fi
 %libwinedir/%winesodir/msv1_0.so
 %libwinedir/%winesodir/win32u.so
 %libwinedir/%winesodir/winex11.so
+%if_with wayland
+%libwinedir/%winesodir/winewayland.so
+%endif
 %libwinedir/%winesodir/ws2_32.so
 %if_with opencl
 %libwinedir/%winesodir/opencl.so
@@ -696,7 +688,9 @@ fi
 %endif
 %libwinedir/%winesodir/winebus.so
 %libwinedir/%winesodir/wineusb.so
+%libwinedir/%winesodir/wineps.so
 %libwinedir/%winesodir/localspl.so
+%libwinedir/%winesodir/winscard.so
 
 %if_without mingw
 %{?_without_vanilla:%libwinedir/%winesodir/windows.networking.connectivity.so}
@@ -855,21 +849,23 @@ fi
 %_man1dir/winecpp.*
 %_man1dir/winemaker.*
 
-%if_with libwine
-%files -n lib%name
-%doc LICENSE AUTHORS
-# for compatibility only
-%libdir/libwine.so.1
-%libdir/libwine.so.1.0
-%endif
 
 %files devel
 %if_with mingw
 %libwinedir/%winepedir/lib*.a
 %endif
+# fix for makefiles: Don't build native import libraries for PE-only build.
+%ifarch %{ix86} x86_64
 %libwinedir/%winesodir/lib*.a
+%endif
 
 %changelog
+* Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.0-alt1
+- update to wine 9.0-rc3 release
+- set strict require wine-mono 8.1.0
+- set strict require wine-gecko 2.47.4
+- update winetricks up to 20230505
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.0.6-alt1
 - update to wine 8.0.2 release
 - add BuildRequires: libOSMesa-devel
