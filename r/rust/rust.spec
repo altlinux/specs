@@ -1,10 +1,10 @@
 Name: rust
 Epoch: 1
-Version: 1.74.1
+Version: 1.75.0
 Release: alt1
 Summary: The Rust Programming Language
 
-%define r_ver 1.73.0
+%define r_ver 1.74.0
 
 Group: Development/Other
 License: Apache-2.0 and MIT
@@ -216,11 +216,11 @@ patchelf --set-interpreter /lib64/ld-linux-aarch64.so.1 %rustdir/bin/rustc
 
 %else
 # Fix libdir path for bootstrap
-sed -i 's/Path::new("lib")/Path::new("%_lib")/' src/bootstrap/builder.rs
+sed -i 's/Path::new("lib")/Path::new("%_lib")/' src/bootstrap/src/core/builder.rs
 %endif
 
 # This only affects the transient rust-installer, but let it use our dynamic xz-libs
-sed -i -e '/LZMA_API_STATIC/d' src/bootstrap/tool.rs
+sed -i -e '/LZMA_API_STATIC/d' src/bootstrap/src/core/build_steps/tool.rs
 
 %if_without bundled_llvm
 rm -rf -- src/llvm-project
@@ -384,7 +384,6 @@ for i in \
 	codegen \
 	codegen-units \
 	incremental \
-	mir-opt \
 ; do
 	: "### rust_src_test: running $i"
 	status='done'
@@ -461,6 +460,9 @@ rm -rf %rustdir
 %rustlibdir/src
 
 %changelog
+* Sat Dec 30 2023 Alexey Gladkov <legion@altlinux.ru> 1:1.75.0-alt1
+- New version (1.75.0).
+
 * Wed Dec 20 2023 Alexey Gladkov <legion@altlinux.ru> 1:1.74.1-alt1
 - New version (1.74.1).
 
