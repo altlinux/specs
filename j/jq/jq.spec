@@ -3,7 +3,7 @@
 
 Name: jq
 %define lname lib%name
-Version: 1.7
+Version: 1.7.1
 Release: alt1
 Summary: Command-line JSON processor
 Group: Development/Other
@@ -89,6 +89,9 @@ cat ./test-suite.log
 %endif
 
 %changelog
+* Sat Dec 30 2023 Anton Farygin <rider@altlinux.ru> 1.7.1-alt1
+- 1.7 -> 1.7.1
+
 * Wed Sep 13 2023 Anton Farygin <rider@altlinux.ru> 1.7-alt1
 - 1.6 -> 1.7
 - fixed URL
