@@ -1,6 +1,6 @@
 %def_without asserts
 Name: libuv
-Version: 1.46.0
+Version: 1.47.0
 Release: alt1
 
 Summary: Evented I/O for NodeJS
@@ -14,6 +14,7 @@ Source: %name-%version.tar
 
 Patch1: libuv-fix-tests-ipv6.patch
 Patch2: libuv-fix-test-thread-affinity.patch
+Patch3: libuv-fix-test-tcp-connect6-error.patch
 
 BuildRequires: /proc
 BuildRequires: gcc-c++ openssl-devel zlib-devel
@@ -35,6 +36,7 @@ libuv header and build tools.
 %setup
 %patch1 -p2
 %patch2 -p2
+%patch3 -p2
 
 %build
 # due option hack in autogen.sh
@@ -66,6 +68,9 @@ rm -f %buildroot%_libdir/%name.a
 
 
 %changelog
+* Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 1.47.0-alt1
+- new version 1.47.0 (with rpmrb script)
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1.46.0-alt1
 - new version 1.46.0 (with rpmrb script)
 
