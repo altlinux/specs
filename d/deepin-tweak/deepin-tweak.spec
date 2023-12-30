@@ -1,8 +1,8 @@
 %def_without clang
 
 Name: deepin-tweak
-Version: 1.2.2
-Release: alt1.1
+Version: 1.2.2.0.17.6a00
+Release: alt1
 
 Summary: Setting tool built on dtkdeclarative
 Summary(ru): Инструмент настройки, созданный на dtkdeclarative
@@ -12,7 +12,7 @@ Group: System/Configuration/Other
 Url: https://github.com/linuxdeepin/dtkdeclarative
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: 0001-fix-undefined-elfs.patch
+Patch: deepin-tweak-1.1.0-alt-fix-undefined-elfs.patch
 
 # dtkdeclarative doesn't built for armh
 ExcludeArch: armh
@@ -55,10 +55,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
   -DMKSPECS_INSTALL_DIR=%_qt5_archdatadir/mkspecs/ \
   -DCMAKE_INSTALL_PREFIX=%_prefix \
-  -DCMAKE_INSTALL_LIBDIR=%_libdir \
+  -DCMAKE_INSTALL_LIBDIR=%_lib \
   -DDTK_VERSION=%version \
   -DVERSION=%version \
-  -DLIB_INSTALL_DIR=%_libdir \
 #
 cmake --build %_cmake__builddir -j%__nprocs
 
@@ -74,9 +73,12 @@ cmake --build %_cmake__builddir -j%__nprocs
 %dir %_datadir/%name/plugins/
 %_datadir/%name/plugins/*
 %dir %_libdir/%name/
-%_libdir/%name/libdtkqml-%{name}*.so
+%_libdir/%name/lib%{name}*.so
 
 %changelog
+* Sat Dec 30 2023 Leontiy Volodin <lvol@altlinux.org> 1.2.2.0.17.6a00-alt1
+- New version 1.2.2-17-g6a0061b.
+
 * Sat Oct 28 2023 Leontiy Volodin <lvol@altlinux.org> 1.2.2-alt1.1
 - Rebuilt with dtk.
 - Cleanup spec and BRs.
