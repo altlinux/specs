@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.39.0
+Version: 2.40.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -21,7 +21,7 @@ BuildRequires: autoconf
 BuildRequires: udev
 BuildRequires: flex
 BuildRequires: bison
-BuildRequires: help2man
+BuildRequires: scdoc
 BuildRequires: libkmod-devel
 BuildRequires: zlib-devel
 BuildRequires: bzlib-devel
@@ -70,6 +70,7 @@ Requires: util-linux >= 2.17.2-alt1
 AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
+Patch0: 0001-Update-configure.ac-for-new-autotools.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -407,6 +408,20 @@ fi
 %config(noreplace) %_sysconfdir/initrd.mk.d/guestfs.mk.example
 
 %changelog
+* Sat Dec 30 2023 Alexey Gladkov <legion@altlinux.ru> 2.40.0-alt1
+- New version (2.40.0).
+- Runtime:
+  + Do not overwrite logfiles.
+  + Add function to pick a console to common library.
+- Feature pipeline:
+  + getimage: check whether the loop module is loaded before mounting the image.
+  + overlayfs: fix delim in overlayfs options.
+  + overlayfs: allow to specify mounting parameters.
+  + overlayfs: add support the "data-only" lower layers.
+  + mountfs: optionally load loop module if needed.
+  + ping: Add helper to ping remote host.
+  + Add cmdline parameter to limit steps failure.
+
 * Tue Nov 07 2023 Alexey Gladkov <legion@altlinux.ru> 2.39.0-alt1
 - New version (2.39.0).
 - Feature plymouth:
