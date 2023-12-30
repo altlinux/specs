@@ -25,7 +25,7 @@
 %def_with scudo
 
 Name: telegram-desktop
-Version: 4.12.2
+Version: 4.13.1
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -150,7 +150,7 @@ BuildRequires: libopenal-devel >= 1.21.1
 BuildRequires: libva-devel libdrm-devel
 
 # Telegram fork of OWT
-BuildRequires: libowt-tg-devel >= 4.3.0.10
+BuildRequires: libowt-tg-devel >= 4.3.0.11
 BuildRequires: librnnoise-devel
 #BuildRequires: libvpx-devel
 BuildRequires: libjpeg-devel
@@ -387,7 +387,7 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %_bindir/telegramdesktop
 %_bindir/Telegram
 %_bindir/telegram
-%_desktopdir/*.desktop
+%_desktopdir/org.telegram.desktop.desktop
 %_datadir/dbus-1/services/*.service
 %_datadir/metainfo/*.metainfo.xml
 %_iconsdir/hicolor/16x16/apps/telegram.png
@@ -402,6 +402,12 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Sat Dec 30 2023 Vitaly Lipatov <lav@altlinux.ru> 4.13.1-alt1
+- new version 4.13.1 (with rpmrb script)
+
+* Sat Dec 30 2023 Vitaly Lipatov <lav@altlinux.ru> 4.13.0-alt1
+- new version 4.13.0 (with rpmrb script)
+
 * Mon Dec 04 2023 Vitaly Lipatov <lav@altlinux.ru> 4.12.2-alt1
 - new version 4.12.2 (with rpmrb script)
 - upstream switched from jemalloc to scudo

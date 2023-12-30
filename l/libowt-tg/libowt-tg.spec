@@ -6,8 +6,8 @@
 %def_disable pipewire
 
 Name: libowt-tg
-Version: 4.3.0.10
-Release: alt6
+Version: 4.3.0.11
+Release: alt1
 
 Summary: Open WebRTC Toolkit with Telegram desktop patches
 
@@ -183,6 +183,9 @@ rm -rv %buildroot%_includedir/tg_owt/third_party/{yasm,pffft,rnnoise}
 %_libdir/cmake/tg_owt/
 
 %changelog
+* Sat Dec 30 2023 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.11-alt1
+- build from git afd9d5d31798d3eacf9ed6c30601e91d0f1e4d60
+
 * Wed Aug 02 2023 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.10-alt6
 - remove Obsoletes: %name from devel subpackage (ALT bug 47099)
 
