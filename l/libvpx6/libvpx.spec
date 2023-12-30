@@ -21,8 +21,8 @@
 %endif
 
 Name: libvpx6
-Version: 1.11.0
-Release: alt2
+Version: 1.13.1
+Release: alt1
 Summary: VP8 video codec
 Group: Video
 License: BSD
@@ -104,6 +104,9 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %_bindir/*
 
 %changelog
+* Sun Nov 26 2023 Anton Farygin <rider@altlinux.ru> 1.13.1-alt1
+- 1.13.1
+
 * Thu Feb 10 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.11.0-alt2
 - Enabled SIMD-optimized decoding on aarch64 (Closes: #41915)
 
