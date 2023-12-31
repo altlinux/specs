@@ -1,5 +1,5 @@
 Name: scummvm
-Version: 2.6.0
+Version: 2.8.0
 Release: alt1
 
 Summary: Graphic adventure game interpreter
@@ -13,9 +13,9 @@ Patch1: scummvm-2.2.0-Fluidsynth2.2.patch
 
 Provides: %_gamesdatadir/%name
 
-# Automatically added by buildreq on Wed Oct 20 2021
-# optimized out: at-spi2-atk fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libGLU-devel libSDL-devel libX11-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgpg-error libharfbuzz-devel libogg-devel libpango-devel libpng-devel libsasl2-3 libstdc++-devel libwayland-client libwayland-cursor libwayland-egl pkg-config python3 python3-base sh4 xorg-proto-devel zlib-devel
-BuildRequires: curl gcc-c++ git-core libGLEW-devel libSDL_net-devel liba52-devel libalsa-devel libcurl-devel libfaad-devel libflac-devel libfluidsynth-devel libfribidi-devel libgif-devel libgtk+3-devel libjpeg-devel libmad-devel libmpeg2-devel libreadline-devel libtheora-devel libvorbis-devel
+# Automatically added by buildreq on Sun Dec 31 2023
+# optimized out: at-spi2-atk bash5 glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libSDL-devel libX11-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libflac-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libogg-devel libp11-kit libpango-devel libpng-devel libpulseaudio-devel libsasl2-3 libstdc++-devel libvorbis-devel libwayland-client libwayland-cursor libwayland-egl pipewire-jack-libs pipewire-libs pkg-config python3 python3-base python3-dev python3-module-setuptools sh5 xorg-proto-devel zlib-devel
+BuildRequires: curl gcc-c++ git-core libSDL_net-devel liba52-devel libalsa-devel libcurl-devel libfaad-devel libfluidsynth-devel libfribidi-devel libgif-devel libgtk+3-devel libjpeg-devel libmad-devel libmikmod-devel libmpeg2-devel libreadline-devel libspeechd-devel libtheora-devel
 
 %description
 ScummVM is a collection of interpreters, capable of emulating several
@@ -47,14 +47,13 @@ export CXXFLAGS=-DFS_API_VERSION=0x0202
 %makeinstall_std
 
 # Menu, themes and extra files
-install -pD -m644 dists/%name.desktop %buildroot%_datadir/applications/%name.desktop
-mkdir -p %buildroot%_datadir/%name
-install -p -m644 dists/engine-data/*.dat %buildroot%_datadir/%name/
-install -p -m644 dists/engine-data/*.cpt %buildroot%_datadir/%name/
-install -p -m644 dists/engine-data/*.tbl %buildroot%_datadir/%name/
+cp -a dists/engine-data %buildroot%_datadir/%name
 
 install -D dists/maemo/scummvm64.png %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
 install -D dists/maemo/scummvm48.png %buildroot%_iconsdir/hicolor/48x48/apps/%name.png
+install -D dists/emscripten/assets/scummvm-192.png buildroot%_iconsdir/hicolor/192x192/apps/%name.png
+install -D dists/emscripten/assets/scummvm-512.png buildroot%_iconsdir/hicolor/512x512/apps/%name.png
+
 install -D icons/scummvm.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 
 %files
@@ -62,8 +61,8 @@ install -D icons/scummvm.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.sv
 %exclude %_defaultdocdir/%name
 %_bindir/scummvm
 %_man6dir/scummvm.6*
-%_datadir/pixmaps/scummvm.xpm
-%_datadir/applications/%name.desktop
+%_pixmapsdir/*.xpm
+%_datadir/applications/*.desktop
 %_datadir/metainfo/*
 %_iconsdir/hicolor/*/apps/*
 %dir %_libdir/%name
@@ -72,6 +71,10 @@ install -D icons/scummvm.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.sv
 %_datadir/%name/*
 
 %changelog
+* Sun Dec 31 2023 Fr. Br. George <george@altlinux.org> 2.8.0-alt1
+- Autobuild version bump to 2.8.0
+- Update buildreqs
+
 * Thu Aug 04 2022 Fr. Br. George <george@altlinux.org> 2.6.0-alt1
 - Autobuild version bump to 2.6.0
 
