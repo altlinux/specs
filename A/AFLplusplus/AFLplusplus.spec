@@ -3,8 +3,8 @@
 %global llvm_version 15.0
 
 Name: AFLplusplus
-Version: 4.08c
-Release: alt3
+Version: 4.09c
+Release: alt1
 
 Summary: American Fuzzy Lop plus plus (AFL++)
 License: Apache-2.0
@@ -134,6 +134,9 @@ install -m755 utils/plot_ui/afl-plot-ui -t %buildroot%_bindir
 %_bindir/afl-plot-ui
 
 %changelog
+* Sun Dec 31 2023 Egor Ignatov <egori@altlinux.org> 4.09c-alt1
+- 4.09c
+
 * Tue Nov 07 2023 Egor Ignatov <egori@altlinux.org> 4.08c-alt3
 - Build with python3 and AFL_PERSISTENT_RECORD support
 
