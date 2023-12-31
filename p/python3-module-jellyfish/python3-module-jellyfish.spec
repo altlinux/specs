@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: python library for doing approximate and phonetic matching of strings
@@ -16,9 +16,8 @@ Vcs: https://github.com/jamesturk/jellyfish/
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Source2: vendor.tar
-%if_with check
 Source3: %name-%version-testdata.tar
-%endif
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -35,11 +34,7 @@ BuildRequires: python3-module-pytest
 ellyfish is a library for approximate & phonetic matching of strings.
 
 %prep
-%if_with check
 %setup -a2 -a3
-%else
-%setup -a2
-%endif
 %__mkdir_p .cargo
 %__cat >> .cargo/config.toml << EOF
 [source.crates-io]
@@ -48,6 +43,7 @@ replace-with = "vendored-sources"
 [source.vendored-sources]
 directory = "vendor"
 EOF
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -66,6 +62,9 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Dec 31 2023 Anton Zhukharev <ancieg@altlinux.org> 1.0.3-alt1
+- Updated to 1.0.3.
+
 * Sat Oct 14 2023 Anton Zhukharev <ancieg@altlinux.org> 1.0.2-alt1
 - Built for ALT Sisyphus based on upstream VCS.
 
