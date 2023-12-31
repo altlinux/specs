@@ -1,7 +1,7 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%define sover 1.1.0
+%define sover 1
 
 %def_with devel
 
@@ -12,14 +12,12 @@ Name: hiredis
 %else
 Name: hiredis%sover
 %endif
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 Summary: The official C client for Redis
 Group: System/Libraries
 License: BSD-3-Clause
 Url: https://github.com/redis/hiredis
-
-# https://github.com/redis/hiredis.git
 Source: hiredis-%version.tar
 
 Patch1: hiredis-alt-no-static-libraries.patch
@@ -98,6 +96,7 @@ cp hiredis-test %buildroot%_bindir/
 %files -n libhiredis%sover
 %doc COPYING CHANGELOG.md
 %_libdir/*.so.%{sover}
+%_libdir/*.so.%{sover}.*
 
 %if_with devel
 %files -n libhiredis-devel
@@ -110,6 +109,9 @@ cp hiredis-test %buildroot%_bindir/
 %endif
 
 %changelog
+* Sun Dec 31 2023 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1
+- 1.1.0 -> 1.2.0
+
 * Wed Nov 23 2022 Anton Farygin <rider@altlinux.ru> 1.1.0-alt1
 - 1.0.2 -> 1.1.0
 
