@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.106.0
+Version: 0.108.0
 Release: alt1
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
@@ -70,16 +70,8 @@ cat requirements-docs-tests.txt requirements-tests.txt > alt-requirements-tests.
 # test_async_sql_databases/test_tutorial001.py::test_create_read:
 # Due to too new sqlalchemy databases' sqlite backend is broken.
 # Temporary skip this test.
-#
-# tests/test_dependency_normal_exceptions.py::test_dependency_gets_exception:
-# fastapi requires starlette < 0.28, but we have one == 0.28 in sisyphus now.
-# Upstream has decided to change behavior in package for updating to new
-# starlette.
-# See https://github.com/tiangolo/fastapi/pull/9636#discussion_r1224626560.
-# Temporary skip this test.
 %pyproject_run_pytest -Wignore \
     --deselect='tests/test_tutorial/test_async_sql_databases/test_tutorial001.py::test_create_read' \
-    --deselect='tests/test_dependency_normal_exceptions.py::test_dependency_gets_exception' \
     tests
 
 %files
@@ -88,6 +80,9 @@ cat requirements-docs-tests.txt requirements-tests.txt > alt-requirements-tests.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Dec 31 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.108.0-alt1
+ - 0.106.0 -> 0.108.0
+
 * Tue Dec 26 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.106.0-alt1
 - 0.105.0 -> 0.106.0
 
