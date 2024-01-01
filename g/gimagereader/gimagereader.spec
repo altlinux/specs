@@ -2,7 +2,7 @@
 
 Name: gimagereader
 Version: 3.4.1
-Release: alt3
+Release: alt4
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -19,6 +19,8 @@ Source1: gimagereader-translations-ru.po
 Source2: manual-ru.html.in
 
 Patch1: gimagereader-fix-rescan-altbug-48017.patch
+Patch2: gimagereader-fix-gtk-rescan-altbug-48017.patch
+
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 
@@ -127,6 +129,7 @@ Common files for %name.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 # remove with new version
 # https://redmine.basealt.space/issues/2497
@@ -209,6 +212,9 @@ ln -s %name-gtk %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Mon Jan 01 2024 Vitaly Lipatov <lav@altlinux.ru> 3.4.1-alt4
+- fix rescan for gtk gui (ALT bug 48017)
+
 * Sun Oct 22 2023 Vitaly Lipatov <lav@altlinux.ru> 3.4.1-alt3
 - fix rescan (ALT bug 48017)
 
