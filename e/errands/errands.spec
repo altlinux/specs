@@ -1,12 +1,13 @@
-%def_enable snapshot
+%def_disable snapshot
 
+%define _name Errands
 %define ver_major 45
 %define rdn_name io.github.mrvladus.List
 
-%def_disable check
+%def_enable check
 
 Name: errands
-Version: %ver_major.0.6
+Version: %ver_major.1.2
 Release: alt1
 
 Summary: Todo application for GNOME
@@ -15,7 +16,7 @@ Group: Office
 Url: https://github.com/mrvladus/Errands
 
 %if_disabled snapshot
-Source: %url/-/archive/v%version/%name-%version.tar.gz
+Source: %url/archive/%version/%name-%version.tar.gz
 %else
 Vcs: https://github.com/mrvladus/Errands.git
 Source: %name-%version.tar
@@ -34,15 +35,15 @@ Requires: python3-module-icalendar >= 5.0.9
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson yelp-tools
-BuildRequires: /usr/bin/appstream-util desktop-file-utils
-BuildRequires: /usr/bin/appstreamcli
-%{?_enable_check:BuildRequires: python3(pytest)}
+BuildRequires: pkgconfig(libadwaita-1)
+BuildRequires: pkgconfig(pygobject-3.0)
+%{?_enable_check:BuildRequires: python3(pytest) desktop-file-utils /usr/bin/appstreamcli}
 
 %description
 Todo application for those who prefer simplicity.
 
 %prep
-%setup
+%setup %{?_disable_snapshot:-n %_name-%version}
 
 %build
 %meson
@@ -65,6 +66,9 @@ Todo application for those who prefer simplicity.
 %doc README*
 
 %changelog
+* Mon Jan 01 2024 Yuri N. Sedunov <aris@altlinux.org> 45.1.2-alt1
+- 45.1.2
+
 * Wed Dec 13 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0.6-alt1
 - updated to 45.0.6-15-gde8b47b
 
