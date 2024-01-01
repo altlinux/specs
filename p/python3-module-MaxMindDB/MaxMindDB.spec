@@ -2,7 +2,7 @@
 %define  fname maxminddb
 
 Name:    python3-module-%oname
-Version: 2.4.0
+Version: 2.5.1
 Release: alt1
 
 Summary: Python MaxMind DB reader extension
@@ -14,6 +14,8 @@ URL:     https://github.com/maxmind/MaxMind-DB-Reader-python
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 BuildRequires: libmaxminddb-devel
 BuildRequires: python3-module-sphinx
@@ -43,14 +45,15 @@ This package contains pickles for %oname.
 %setup -n %oname-%version
 
 %build
-%python3_build
+export MAXMINDDB_USE_SYSTEM_LIBMAXMINDDB=1
+%pyproject_build
 
 %make SPHINXBUILD="sphinx-build-3" -C docs man
 %make SPHINXBUILD="sphinx-build-3" -C docs html
 %make SPHINXBUILD="sphinx-build-3" -C docs pickle
 
 %install
-%python3_install
+%pyproject_install
 
 install -d %buildroot%_man1dir
 cp -fR docs/_build/man/* %buildroot%_man1dir
@@ -62,7 +65,7 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%fname/
 %files
 %doc README.rst
 %python3_sitelibdir/%fname
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*.dist-info
 %_man1dir/*
 %exclude %python3_sitelibdir/%fname/pickle
 
@@ -73,6 +76,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%fname/
 %python3_sitelibdir/%fname/pickle
 
 %changelog
+* Mon Jan 01 2024 Grigory Ustinov <grenka@altlinux.org> 2.5.1-alt1
+- Automatically updated to 2.5.1.
+
 * Mon Jul 17 2023 Grigory Ustinov <grenka@altlinux.org> 2.4.0-alt1
 - Automatically updated to 2.4.0.
 
