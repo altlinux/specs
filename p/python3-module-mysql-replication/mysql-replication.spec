@@ -3,7 +3,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.0.2
+Version: 1.0.5
 Release: alt1
 
 Summary: Pure Python Implementation of MySQL replication protocol build on top of PyMYSQL
@@ -14,8 +14,6 @@ URL: https://pypi.org/project/mysql-replication
 VCS: https://github.com/julien-duponchelle/python-mysql-replication
 
 Source: %name-%version.tar
-
-Patch: remove-distutils-for-python-3.12.patch
 
 BuildArch: noarch
 
@@ -30,7 +28,6 @@ and raw SQL queries.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %pyproject_build
@@ -48,6 +45,9 @@ and raw SQL queries.
 %exclude %python3_sitelibdir/pymysqlreplication/tests
 
 %changelog
+* Mon Jan 01 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.5-alt1
+- Automatically updated to 1.0.5.
+
 * Wed Oct 18 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt1
 - Automatically updated to 1.0.2.
 
