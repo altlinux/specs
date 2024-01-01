@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     mpc-qt
-Version:  23.02
+Version:  23.12
 Release:  alt1
 
 Summary:  A clone of Media Player Classic reimplemented in Qt.
@@ -11,10 +11,10 @@ Group:    Video
 Url:      https://github.com/mpc-qt/mpc-qt
 
 Source:   %name-%version.tar
+Patch:    %name-%version-%release.patch
 
-BuildRequires: qt5-tools-devel
-BuildRequires: qt5-base-devel
-BuildRequires: pkgconfig(Qt5X11Extras)
+BuildRequires: qt6-tools-devel
+BuildRequires: qt6-base-devel
 BuildRequires: libmpv-devel
 
 %description
@@ -24,27 +24,31 @@ Media Player Classic Qute Theater (mpc-qt) aims to reproduce most of the
 interface and functionality of mpc-h.
 
 %prep
-%setup
+%setuph
+%patch -p1
 rm -rf mpv-dev
 
 %build
-%qmake_qt5 PREFIX=%prefix MPCQT_VERSION=%version
+%qmake_qt6 PREFIX=%prefix MPCQT_VERSION=%version
 %make_build
 
 %install
 %makeinstall_std INSTALL_ROOT=%buildroot
+rm -r %buildroot%_defaultdocdir/%name
 
 %files
 %_bindir/%name
-%_desktopdir/io.github.mpc_qt.Mpc-Qt.desktop
-%_defaultdocdir/%name
+%_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
-%_datadir/%name
-%_datadir/metainfo/io.github.mpc_qt.Mpc-Qt.appdata.xml
+%doc DOCS/ipc.md
 
 %changelog
+* Mon Jan 01 2024 Anton Midyukov <antohami@altlinux.org> 23.12-alt1
+- New version 23.12
+- build with qt6
+
 * Thu Feb 16 2023 Anton Midyukov <antohami@altlinux.org> 23.02-alt1
-- - New version 23.02
+- New version 23.02
 
 * Sat Feb 26 2022 Anton Midyukov <antohami@altlinux.org> 22.02-alt1
 - New version 22.02
