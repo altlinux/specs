@@ -11,7 +11,7 @@
 %endif
 
 Name: python3-module-%oname
-Version: 2023.6
+Version: 2023.10
 Release: alt1
 
 Summary: Image IO for fable
@@ -74,6 +74,9 @@ python3 run_tests.py
 %python3_sitelibdir/%oname-%version.0.dist-info
 
 %changelog
+* Mon Jan 01 2024 Grigory Ustinov <grenka@altlinux.org> 2023.10-alt1
+- Automatically updated to 2023.10.
+
 * Tue Sep 26 2023 Grigory Ustinov <grenka@altlinux.org> 2023.6-alt1
 - Automatically updated to 2023.6.
 - Built with check.
