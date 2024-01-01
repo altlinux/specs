@@ -1,3 +1,4 @@
+%define soname 8
 %ifarch %ix86
 %define platform x86-linux-gcc
 %else
@@ -20,9 +21,9 @@
 %endif
 %endif
 
-Name: libvpx6
+Name: libvpx%soname
 Version: 1.13.1
-Release: alt1
+Release: alt2
 Summary: VP8 video codec
 Group: Video
 License: BSD
@@ -30,6 +31,8 @@ Url: http://www.webmproject.org/
 
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
+Obsoletes: libvpx6 >= 1.13
+Conflicts: libvpx6 >= 1.13
 
 BuildRequires: doxygen gcc-c++
 %ifarch %ix86 x86_64
@@ -93,7 +96,8 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 
 %files
 %doc AUTHORS LICENSE PATENTS CHANGELOG
-%_libdir/*.so.*
+%_libdir/*.so.%soname
+%_libdir/*.so.%soname.*
 
 %files -n libvpx-devel
 %_includedir/vpx
@@ -104,6 +108,9 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %_bindir/*
 
 %changelog
+* Mon Jan 01 2024 Anton Farygin <rider@altlinux.ru> 1.13.1-alt2
+- renamed to libvpx6 (closes: #45795)
+
 * Sun Nov 26 2023 Anton Farygin <rider@altlinux.ru> 1.13.1-alt1
 - 1.13.1
 
