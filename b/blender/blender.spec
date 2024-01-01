@@ -13,7 +13,10 @@
 
 %ifarch x86_64
 %def_with hip
-%def_with hiprt
+# hiprt depends on obsoleted rocm
+# version and segfaults
+# https://github.com/GPUOpen-LibrariesAndSDKs/HIPRTSDK/issues/18
+%def_without hiprt
 %def_with cuda
 %else
 %def_without hip
@@ -47,7 +50,7 @@
 
 Name: blender
 Version: 4.0.2
-Release: alt0.2
+Release: alt0.3
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -76,6 +79,7 @@ Patch27: blender-4.0.1-suse-reproducible.patch
 Patch28: blender-4.0.2-alt-hiprt-enable.patch
 Patch29: blender-4.0.2-alt-fix-manpage.patch
 Patch30: blender-alt-fix-clang-linking.patch
+Patch31: blender-4.0.2-rocm-6.x.patch
 
 # upstream fixes to merge
 
@@ -277,9 +281,14 @@ This package contains binaries for Nvidia GPUs to use with CUDA.
 %patch25 -p1
 %patch26 -p1
 %patch27 -p1
+%if_with hiprt
 %patch28 -p1
+%endif
 %patch29 -p1
 %patch30 -p1
+# rocm 6.x not ready yet for
+# production use
+#%%patch31 -p1
 
 # upstream patches
 
@@ -435,6 +444,10 @@ popd
 %endif
 
 %changelog
+* Fri Dec 29 2023 L.A. Kostis <lakostis@altlinux.ru> 4.0.2-alt0.3
+- Disable hiprt (as hiprt compiled against obsoleted rocm version
+  and doesn't work see upstream HIPRTSDK issue #18).
+
 * Wed Dec 06 2023 L.A. Kostis <lakostis@altlinux.ru> 4.0.2-alt0.2
 - Added CUDA support (tnx to fidel@ for packages).
 
