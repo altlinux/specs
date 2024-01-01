@@ -1,9 +1,9 @@
 Name: converseen
-Version: 0.9.11.1
+Version: 0.12.0.1
 Release: alt1
 Summary: Converseen is a free cross-platform batch image processor
 Summary(ru_RU.UTF-8): Converseen — свободная программа пакетного конвертирования изображений
-License: GPLv3
+License: GPL-3.0-or-later
 Group: Graphics
 Url: http://converseen.fasterland.net/
 BuildRequires(pre): rpm-macros-cmake
@@ -12,10 +12,9 @@ BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: ImageMagick-tools
 BuildRequires: libImageMagick-devel
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-phonon-devel
-BuildRequires: qt5-designer
-BuildRequires: qt5-tools-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-designer
+BuildRequires: qt6-tools-devel
 
 Source: %name-%version.tar
 
@@ -41,7 +40,7 @@ Converseen — свободная кроссплатформенная прог�
 %setup -n %name-%version
 
 %build
-%cmake
+%cmake -DUSE_QT6=on
 %cmake_build
 
 %install
@@ -49,7 +48,7 @@ Converseen — свободная кроссплатформенная прог�
 desktop-file-validate %buildroot/%_desktopdir/net.fasterland.converseen.desktop
 
 %files
-%doc COPYING
+%doc COPYING README.md CHANGELOG
 %_bindir/%name
 %_datadir/%name
 %_datadir/kservices5/ServiceMenus/converseen_import.desktop
@@ -58,6 +57,9 @@ desktop-file-validate %buildroot/%_desktopdir/net.fasterland.converseen.desktop
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Mon Jan 01 2024 Anton Midyukov <antohami@altlinux.org> 0.12.0.1-alt1
+- New version 0.12.0.1
+
 * Mon Aug 14 2023 Anton Midyukov <antohami@altlinux.org> 0.9.11.1-alt1
 - New version 0.9.11.1.
 
