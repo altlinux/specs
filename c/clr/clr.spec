@@ -11,7 +11,7 @@
 
 Name: clr
 Version: 5.7.1
-Release: alt0.2
+Release: alt0.3
 License: MIT
 Summary: Radeon Open Compute Common Language Runtime
 Url: https://github.com/ROCm-Developer-Tools/clr
@@ -30,6 +30,8 @@ Patch1: rocclr-gcc-13-fixes.patch
 Patch2: opencl-gcc-13-fixes.patch
 Patch3: hipcc-alt-hardcore-llvm-rocm.patch
 Patch4: hipcc-alt-hipInfo-path.patch
+# https://bugs.gentoo.org/915969
+Patch5: hip-5.7.0-set-correct-alignement.patch
 # patches from developer branch
 
 BuildRequires(pre): cmake /proc ninja-build
@@ -156,6 +158,10 @@ install -p -m 755 %SOURCE4 %buildroot%_sysconfdir/profile.d/
 %endif
 
 %changelog
+* Fri Dec 29 2023 L.A. Kostis <lakostis@altlinux.ru> 5.7.1-alt0.3
+- Apply patches:
+  + hip: set correct alignment for AVX512 (gentoo bug #915969).
+
 * Mon Nov 06 2023 L.A. Kostis <lakostis@altlinux.ru> 5.7.1-alt0.2
 - hipcc: fix hipInfo search path.
 
