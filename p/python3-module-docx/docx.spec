@@ -1,7 +1,7 @@
 %define modulename docx
 
 Name:    python3-module-%modulename
-Version: 1.0.1
+Version: 1.1.0
 Release: alt1
 
 Summary: Create and update Microsoft Word .docx files.
@@ -36,6 +36,9 @@ Source:  %name-%version.tar.gz
 %python3_sitelibdir/python_%modulename-%version.dist-info
 
 %changelog
+* Mon Jan 01 2024 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
+- Automatically updated to 1.1.0.
+
 * Sat Oct 21 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt1
 - Automatically updated to 1.0.1.
 
