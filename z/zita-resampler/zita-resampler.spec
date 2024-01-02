@@ -5,16 +5,14 @@
 
 Summary: Fast, high-quality sample rate conversion library
 Name: zita-resampler
-Version: 1.8.0
+Version: 1.11.2
 Release: alt1
-License: GPLv3+
+License: GPL-3.0-or-later
 Group: Sound
 Url: http://kokkinizita.linuxaudio.org/linuxaudio/zita-resampler/resampler.html
-Packager: Anton Midyukov <antohami@altlinux.org>
 
+# Source-url: http://kokkinizita.linuxaudio.org/linuxaudio/downloads/zita-resampler-%version.tar.xz
 Source: %name-%version.tar
-# Source-url: http://kokkinizita.linuxaudio.org/linuxaudio/downloads/zita-resampler-%version.tar.bz2
-Patch: zita-resampler-1.6.2-destdir.patch
 BuildRequires: gcc-c++ libsndfile-devel
 
 Requires: lib%name%sover = %EVR
@@ -96,6 +94,12 @@ export LDFLAGS+=" -L../source"
 %_libdir/lib%name.so
 
 %changelog
+* Tue Jan 02 2024 Anton Midyukov <antohami@altlinux.org> 1.11.2-alt1
+- new version (1.11.2) with rpmgs script
+
+* Tue Jan 02 2023 Anton Midyukov <antohami@altlinux.org> 1.10.1-alt1
+- new version (1.10.1) with rpmgs script
+
 * Sun Jun 27 2021 Anton Midyukov <antohami@altlinux.org> 1.8.0-alt1
 - new version (1.8.0) with rpmgs script
 

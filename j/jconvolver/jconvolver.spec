@@ -2,15 +2,17 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _localstatedir %_var
-Summary: Real-time Convolution Engine
+
 Name: jconvolver
-Version: 1.0.3
-Release: alt3
-License: GPLv2+
+Summary: Real-time Convolution Engine
+Version: 1.1.0
+Release: alt1
+License: GPL-2.0-or-later
 Group: Sound
 Url: https://kokkinizita.linuxaudio.org
 
-Source: https://kokkinizita.linuxaudio.org/downloads/%name-%version.tar.bz2
+# Source-url: https://kokkinizita.linuxaudio.org/linuxaudio/downloads/%name-%version.tar.bz2
+Source: %name-%version.tar
 Patch: jconvolver-1.0.3-get_ldflags_from_jack_pc.patch
 
 Obsoletes: jace <= 0.2.0
@@ -61,6 +63,9 @@ cp -a config-files/* %buildroot%_datadir/%name
 %_datadir/%name/
 
 %changelog
+* Tue Jan 02 2024 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
+- new version 1.1.0
+
 * Fri Sep 01 2023 Anton Midyukov <antohami@altlinux.org> 1.0.3-alt3
 - rebuild with pipewire-jack-libs-devel
 - clean Packager
