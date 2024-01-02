@@ -12,7 +12,7 @@
 
 Name: python3-module-%oname
 Version: 2023.10
-Release: alt1
+Release: alt2
 
 Summary: Image IO for fable
 
@@ -56,12 +56,9 @@ rm -rv src/fabio/third_party/_local
 %install
 %pyproject_install
 
-# Dont package tests
-rm -rv %buildroot%python3_sitelibdir/%oname/test
-rm -rv %buildroot%python3_sitelibdir/%oname/benchmark
-
 %check
-python3 run_tests.py
+env PYTHONPATH=%buildroot%python3_sitelibdir \
+python3 run_tests.py --installed
 
 %files
 %doc copyright *.rst
@@ -72,8 +69,13 @@ python3 run_tests.py
 %_bindir/fabio_viewer
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version.0.dist-info
+%exclude %python3_sitelibdir/%oname/test/*
+%exclude %python3_sitelibdir/%oname/benchmark/*
 
 %changelog
+* Mon Jan 01 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2023.10-alt2
+- NMU: fixed FTBFS during the initial build.
+
 * Mon Jan 01 2024 Grigory Ustinov <grenka@altlinux.org> 2023.10-alt1
 - Automatically updated to 2023.10.
 
