@@ -1,27 +1,26 @@
-%define module_version 0.082
+%define _unpackaged_files_terminate_build 1
 %define module_name MooX-Role-Parameterized
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Carp.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(List/MoreUtils.pm) perl(Module/Runtime.pm) perl(Moo.pm) perl(Moo/Role.pm) perl(Test/Exception.pm) perl(Test/More.pm) perl(autodie.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.082
-Release: alt2
+Version: 0.300
+Release: alt1
 Summary: MooX::Role::Parameterized - roles with composition parameters
 Group: Development/Perl
 License: mit
 URL: https://github.com/peczenyj/MooX-Role-Parameterized
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PA/PACMAN/%{module_name}-%{module_version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PA/PACMAN/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 From summary: %summary
 
 %prep
-%setup -q -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,10 +29,13 @@ From summary: %summary
 %perl_vendor_install
 
 %files
-%doc README Changelog README.md LICENSE
+%doc Changelog README.md examples
 %perl_vendor_privlib/M*
 
 %changelog
+* Tue Jan 02 2024 Igor Vlasenko <viy@altlinux.org> 0.300-alt1
+- automated CPAN update
+
 * Sun Mar 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.082-alt2
 - to Sisyphus as DBIx-Class-DeploymentHandler dep
 
