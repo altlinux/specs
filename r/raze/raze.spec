@@ -1,6 +1,6 @@
 Name: raze
 Version: 1.7.1
-Release: alt2
+Release: alt3
 
 Summary: Raze is a fork of Build engine games backed by GZDoom tech
 License: GPLv2+
@@ -10,7 +10,7 @@ Url: https://github.com/coelckers/Raze
 
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
-ExclusiveArch: x86_64 %e2k
+ExclusiveArch: x86_64 %e2k aarch64 loongarch64
 
 Source: %name-%version.tar
 Patch: 0001-Fix-file-paths.patch
@@ -77,6 +77,9 @@ done
 %_libdir/libdiscord-rpc.a
 
 %changelog
+* Tue Jan 02 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.7.1-alt3
+- NMU: build on more architectures
+
 * Sun Apr 23 2023 Artyom Bystrov <arbars@altlinux.org> 1.7.1-alt2
 - fix build on GCC13
 
