@@ -1,21 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 Epoch: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(DateTime.pm) perl(DateTime/Locale.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(strict.pm) perl(version.pm) perl(warnings.pm)
 # END SourceDeps(oneline)
-%define module_version 1.2.0
 %define module_name DateTime-Format-RFC3339
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.2.0
-Release: alt3
+Version: 1.4.0
+Release: alt1
 Summary: Parse and format RFC3339 datetime strings
 Group: Development/Perl
 License: unrestricted
 URL: http://search.cpan.org/dist/DateTime-Format-RFC3339/
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/I/IK/IKEGAMI/%{module_name}-v%{module_version}.tar.gz
+Source0: http://www.cpan.org/authors/id/I/IK/IKEGAMI/%{module_name}-v%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -25,7 +24,7 @@ defined at http://tools.ietf.org/html/rfc3339.
 It can be used to parse these formats in order to create the appropriate
 objects.
 %prep
-%setup -q -n %{module_name}-v%{module_version}
+%setup -q -n %{module_name}-v%{version}
 
 %build
 %perl_vendor_build
@@ -34,10 +33,13 @@ objects.
 %perl_vendor_install
 
 %files
-%doc Changes LICENSE.txt README.txt
+%doc Changes README.txt
 %perl_vendor_privlib/D*
 
 %changelog
+* Tue Jan 02 2024 Igor Vlasenko <viy@altlinux.org> 1:1.4.0-alt1
+- automated CPAN update
+
 * Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 1:1.2.0-alt3
 - fixed build
 
