@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist XML-Parser
 Name: perl-%dist
-Version: 2.46
+Version: 2.47
 Release: alt1
 
 Summary: Perl module for parsing XML files
@@ -36,11 +36,14 @@ find blib/lib/XML/Parser/Encodings -type f -not -name '*.enc' -print -delete
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README README.md
 %perl_vendor_archlib/XML
 %perl_vendor_autolib/XML
 
 %changelog
+* Tue Jan 02 2024 Igor Vlasenko <viy@altlinux.org> 2.47-alt1
+- new version
+
 * Mon Dec 14 2020 Igor Vlasenko <viy@altlinux.ru> 2.46-alt1
 - new version
 
