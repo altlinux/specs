@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Spreadsheet-ParseExcel
-Version: 0.65
+Version: 0.66
 Release: alt1
 Epoch: 1
 
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: http://search.cpan.org/dist/Spreadsheet-ParseExcel/
-Source: http://www.cpan.org/authors/id/D/DO/DOUGW/Spreadsheet-ParseExcel-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/J/JM/JMCNAMARA/Spreadsheet-ParseExcel-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ The Spreadsheet::ParseExcel module can be used to read information from Excel
 XLSX format.  See the Spreadsheet::XLSX module instead.
 
 %prep
-%setup -q -n Spreadsheet-ParseExcel-%version
+%setup -q -n Spreadsheet-ParseExcel-%{version}
 
 %build
 %perl_vendor_build
@@ -40,6 +40,9 @@ XLSX format.  See the Spreadsheet::XLSX module instead.
 %perl_vendor_privlib/Spreadsheet
 
 %changelog
+* Tue Jan 02 2024 Igor Vlasenko <viy@altlinux.org> 1:0.66-alt1
+- automated CPAN update
+
 * Mon Mar 24 2014 Igor Vlasenko <viy@altlinux.ru> 1:0.65-alt1
 - automated CPAN update
 
