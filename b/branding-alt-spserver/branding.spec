@@ -19,7 +19,7 @@
 
 Name: branding-%flavour
 Version: 10
-Release: alt6
+Release: alt7
 Epoch: 1
 Url: https://altsp.su
 
@@ -286,6 +286,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Dec 29 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt7
+- indexhtml: update links
+
 * Tue Nov 07 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt6
 - add system-logo.png for plymouth-theme-bgrt-alt
 - bootsplash: use plymouth-theme-bgrt-alt
