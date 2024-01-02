@@ -1,8 +1,8 @@
 %define sover 10
 
 Name: libfmt
-Version: 10.1.1
-Release: alt2
+Version: 10.2.0
+Release: alt1
 Epoch: 1
 
 Summary: An open-source formatting library for C++
@@ -12,9 +12,6 @@ Url: http://fmtlib.net/
 
 # https://github.com/fmtlib/fmt/archive/%version/fmt-%version.tar.gz
 Source: fmt-%version.tar
-
-# https://github.com/fmtlib/fmt/commit/28e2d3b640d0705a9622b0393cfc4779277c089c
-Patch: fmt-%version-version.patch
 
 BuildRequires: cmake ctest gcc-c++
 
@@ -41,7 +38,6 @@ This package contains development part of fmt.
 
 %prep
 %setup -n fmt-%version
-%patch0 -p1
 
 %build
 %cmake_insource \
@@ -71,6 +67,9 @@ make test
 %_libdir/libfmt.so
 
 %changelog
+* Tue Jan 02 2024 Nazarov Denis <nenderus@altlinux.org> 1:10.2.0-alt1
+- New version 10.2.0.
+
 * Mon Oct 16 2023 Nazarov Denis <nenderus@altlinux.org> 1:10.1.1-alt2
 - Fix version (ALT #48029)
 
