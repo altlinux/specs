@@ -1,7 +1,6 @@
-
 Name: mame
 Version: 0.261
-Release: alt1
+Release: alt2
 Group: Games/Arcade
 Summary: Multiple Arcade Machine Emulator
 Summary(ru_RU.UTF-8): Эмулятор множества аркадных (и не только) машин
@@ -20,7 +19,7 @@ Packager: Artyom Bystrov <arbars@altlinux.org>
 Source: %name-%version.tar
 Patch0: system_lua.patch
 BuildRequires: libexpat-devel rapidjson libsqlite3-devel libutf8proc-devel zlib-devel libjpeg-devel liblinenoise-devel
-BuildRequires: libflac-devel libglm-devel libportaudio2-devel libportmidi-devel fontconfig-devel
+BuildRequires: libflac-devel libglm-devel libportaudio2-devel libportmidi-devel fontconfig-devel eglexternalplatform-devel egl-wayland-devel libwayland-egl-devel wayland-devel
 BuildRequires: git-core libxcb libSDL2_ttf-devel libXi-devel libXinerama-devel libalsa-devel python-modules-compiler
 BuildRequires: python-modules-encodings python-modules-logging python-modules-xml qt5-base-devel libpulseaudio-devel
 BuildRequires: libuv-devel asio-devel gettext-tools
@@ -71,7 +70,7 @@ MAME и других людей, вносящих вклад.  возможно�
 %package tools
 Group: Games/Arcade
 Summary: Additional tools for MAME
-Requires: %name%{?_isa} = %version-%release
+Requires: %name = %version
 
 %description tools
 %summary.
@@ -79,18 +78,15 @@ Requires: %name%{?_isa} = %version-%release
 %package data
 Group: Games/Arcade
 Summary: Data files used by MAME
-
-BuildArch: noarch
+Requires: %name = %version
 
 %description data
-Group: Games/Arcade
 %summary.
 
 %package data-software-lists
 Group: Games/Arcade
 Summary: Software lists used by MAME
-Requires: %name-data >= %version-%release
-BuildArch: noarch
+Requires: %name-data = %version
 
 %description data-software-lists
 %summary. These are split from the main -data
@@ -99,7 +95,7 @@ subpackage due to relatively large size.
 %package doc
 Group: Games/Arcade
 Summary: Documentation for MAME
-BuildArch: noarch
+Requires: %name-data = %version
 
 %description doc
 HTML documentation for MAME.
@@ -178,7 +174,8 @@ make -j8 OPTIMISE="%optflags" \
     USE_SYSTEM_LIB_RAPIDJSON=1 \
     USE_SYSTEM_LIB_SQLITE3=1 \
     USE_SYSTEM_LIB_UTF8PROC=1 \
-    USE_SYSTEM_LIB_ZLIB=1
+    USE_SYSTEM_LIB_ZLIB=1 \
+    USE_WAYLAND=1
 
 #pushd docs
 #    %%make_build html
@@ -244,6 +241,23 @@ install -pm 644 mame.6 %buildroot%_man6dir
 popd
 find %buildroot%_datadir/%name -name LICENSE -exec rm {} \;
 
+# install menu entry
+mkdir -p %buildroot%_desktopdir
+cat > %buildroot%_desktopdir/%name.desktop << EOF
+[Desktop Entry]
+Name=MAME
+Comment=Multiple Ancient Machines Emulator
+Exec=%name
+Icon=%name
+Terminal=false
+Type=Application
+Categories=Game;ArcadeGame;
+X-Purism-FormFactor=Workstation;Mobile;
+EOF
+
+mkdir -p %buildroot%_iconsdir/scalable/apps
+install -D -m 0644 docs/source/images/MAMElogo.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
+
 %find_lang %name
 
 %files
@@ -256,6 +270,8 @@ find %buildroot%_datadir/%name -name LICENSE -exec rm {} \;
 %_bindir/%name
 %endif
 %_man6dir/mame.6*
+%_desktopdir/%name.desktop
+%_iconsdir/hicolor/scalable/apps/%name.svg
 
 %files tools
 %_bindir/castool
@@ -291,6 +307,10 @@ find %buildroot%_datadir/%name -name LICENSE -exec rm {} \;
 %_datadir/%name/hash/*
 
 %changelog
+* Sat Dec 30 2023  Artyom Bystrov <arbars@altlinux.org> 0.261-alt2
+- Add wayland support
+- Fix language support
+
 * Sat Dec  2 2023  Artyom Bystrov <arbars@altlinux.org> 0.261-alt1
 - Update to new version
 - Build for aarch64 is back
