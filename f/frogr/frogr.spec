@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.7
+%define ver_major 1.8
 %def_enable video
 %define xdg_name org.gnome.frogr
 
@@ -27,7 +27,7 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson yelp-tools libappstream-glib-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libjson-glib-devel >= %json_glib_ver
-BuildRequires: libsoup-devel libexif-devel libxml2-devel libgcrypt-devel
+BuildRequires: pkgconfig(libsoup-3.0) libexif-devel libxml2-devel libgcrypt-devel
 %{?_enable_video:BuildRequires: gstreamer1.0-devel}
 
 %description
@@ -58,6 +58,9 @@ a flickr account from the desktop.
 
 
 %changelog
+* Tue Jan 02 2024 Yuri N. Sedunov <aris@altlinux.org> 1.8-alt1
+- 1.8 (ported to libsoup-3.0)
+
 * Tue Mar 01 2022 Yuri N. Sedunov <aris@altlinux.org> 1.7-alt1
 - 1.7
 
