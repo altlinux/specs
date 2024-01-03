@@ -2,7 +2,7 @@
 
 Name: 	 tellico
 Version: 3.5.3
-Release: alt1
+Release: alt2
 
 Summary: A collection manager for KDE
 License: GPL-2.0+
@@ -10,12 +10,13 @@ Group:   Graphical desktop/KDE
 Url:     http://tellico-project.org/
 VCS:	 https://invent.kde.org/office/tellico.git
 
-Source: %name-%version.tar
+ExcludeArch: armh ppc64le
 
-ExclusiveArch: %ix86 x86_64
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires: gcc-c++
 BuildRequires: extra-cmake-modules
 BuildRequires: qt5-declarative-devel
@@ -52,9 +53,19 @@ BuildRequires: libxslt-devel
 BuildRequires: libyaz-devel
 BuildRequires: qimageblitz5-devel
 BuildRequires: qjson-qt5-devel
+%ifarch %qt5_qtwebengine_arches
 BuildRequires: qt5-webengine-devel
+%else
+BuildRequires: kf5-khtml-devel
+%endif
 BuildRequires: qt5-charts-devel
 BuildRequires: libcdio-devel
+
+%ifarch %qt5_qtwebengine_arches
+%define use_khtml FALSE
+%else
+%define use_khtml TRUE
+%endif
 
 %description
 Tellico is a KDE application for organizing your collections. It
@@ -65,8 +76,9 @@ video games, coins, stamps, trading cards, comic books, and wines.
 %setup
 
 %build
+
 %K5init no_altplace
-%K5build
+%K5build -DUSE_KHTML:BOOL=%use_khtml
 
 %install
 %K5install
@@ -94,6 +106,10 @@ find %buildroot -type f -print0 |
 %_datadir/knsrcfiles/tellico-*.knsrc
 
 %changelog
+* Wed Jan 03 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.5.3-alt2
+- NMU: use KHTML on architectures where qt5-webengine is not available.
+  Build for more architectures (including LoongArch).
+
 * Wed Jan 03 2024 Andrey Cherepanov <cas@altlinux.org> 3.5.3-alt1
 - New version.
 
