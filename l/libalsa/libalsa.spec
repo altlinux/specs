@@ -3,7 +3,7 @@
 
 Name: libalsa
 Version: 1.2.10
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) library
@@ -201,6 +201,9 @@ done
 %_bindir/aserver
 
 %changelog
+* Tue Jan  2 2024 Artyom Bystrov <arbars@altlinux.org> 1:1.2.10-alt2
+- Getting back Pinephone Pro patches in alsa-ucm-conf
+
 * Tue Dec 26 2023 Michael Shigorin <mike@altlinux.org> 1:1.2.10-alt1
 - 1.2.10
 

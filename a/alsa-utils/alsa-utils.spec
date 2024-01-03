@@ -2,7 +2,7 @@
 
 Name: alsa-utils
 Version: 1.2.10
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) utils
@@ -102,6 +102,9 @@ touch config.rpath
 %_man1dir/amixer.1*
 
 %changelog
+* Tue Jan  2 2024 Artyom Bystrov <arbars@altlinux.org> 1:1.2.10-alt2
+- Getting back support Pinephone Pro patches
+
 * Tue Dec 26 2023 Michael Shigorin <mike@altlinux.org> 1:1.2.10-alt1
 - 1.2.10
 
