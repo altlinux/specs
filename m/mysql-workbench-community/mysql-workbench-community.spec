@@ -1,6 +1,6 @@
 Name: mysql-workbench-community
 Version: 8.0.33
-Release: alt2
+Release: alt2.1
 
 Summary: A MySQL visual database modeling tool
 
@@ -177,6 +177,9 @@ sed -i "s/ -Werror//" CMakeLists.txt
 #8.0.19: https://lists.altlinux.org/pipermail/devel/2020-March/210126.html
 sed -i "s/ -Wno-deprecated-copy//g" CMakeLists.txt
 
+# Fix building with python3.12 https://docs.python.org/3/whatsnew/3.12.html#id10
+sed -i "/token.h/d" library/grt/src/python_context.cpp
+
 %build
 
 %ifarch %ix86
@@ -240,6 +243,9 @@ cp %_builddir/%name-%version/images/icons/MySQLWorkbenchDocIcon32x32.png %buildr
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Wed Jan 03 2024 Grigory Ustinov <grenka@altlinux.org> 8.0.33-alt2.1
+- NMU: Fixed building with python3.12.
+
 * Thu Dec 28 2023 Anton Zhukharev <ancieg@altlinux.org> 8.0.33-alt2
 - (NMU) Fixed FTBFS (libxml2 2.12.3).
 - (NMU) Removed 'python3(cairo)' providement.
