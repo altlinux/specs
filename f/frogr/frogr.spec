@@ -4,7 +4,7 @@
 %define xdg_name org.gnome.frogr
 
 Name: frogr
-Version: %ver_major
+Version: %ver_major.1
 Release: alt1
 
 Summary: A Flickr Remote Organizer for GNOME
@@ -58,6 +58,9 @@ a flickr account from the desktop.
 
 
 %changelog
+* Wed Jan 03 2024 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
+- 1.8.1
+
 * Tue Jan 02 2024 Yuri N. Sedunov <aris@altlinux.org> 1.8-alt1
 - 1.8 (ported to libsoup-3.0)
 
