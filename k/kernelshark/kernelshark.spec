@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name:     kernelshark
-Version: 2.2.1
+Version: 2.3.0
 Release: alt1
 # Epoch incremented, because previously kernelshark is packaged from trace-cmd
 # spec which have much bigger version number (2.9.1).
@@ -37,7 +37,8 @@ BuildRequires: libtracefs-devel
 BuildRequires: libXi-devel
 BuildRequires: libxml2-devel
 BuildRequires: polkit
-BuildRequires: qt5-base-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-scxml-devel
 BuildRequires: trace-cmd
 
 %define _metainfodir /usr/share/metainfo
@@ -82,6 +83,9 @@ appstream-util validate-relax --nonet %buildroot%_metainfodir/*.appdata.xml
 %_metainfodir/*.appdata.xml
 
 %changelog
+* Wed Dec 06 2023 Vitaly Chikunov <vt@altlinux.org> 1:2.3.0-alt1
+- Update to kernelshark-v2.3.0 (2023-11-19): switch to Qt 6.
+
 * Mon Jun 26 2023 Vitaly Chikunov <vt@altlinux.org> 1:2.2.1-alt1
 - Update to kernelshark-v2.2.1 (2023-06-07).
 
