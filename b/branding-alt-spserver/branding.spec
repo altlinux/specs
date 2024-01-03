@@ -19,7 +19,7 @@
 
 Name: branding-%flavour
 Version: 10
-Release: alt7
+Release: alt8
 Epoch: 1
 Url: https://altsp.su
 
@@ -286,6 +286,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed Jan 03 2024 Anton Midyukov <antohami@altlinux.org> 1:10-alt8
+- index-en.html: fix unclosed quote
+
 * Fri Dec 29 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt7
 - indexhtml: update links
 
