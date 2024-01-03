@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.2
-Release: alt5
+Release: alt6
 
 Summary: %Variant documentation
 License: %fdl
@@ -47,6 +47,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Wed Jan 03 2024 Elena Mishina <lepata@altlinux.org> 10.2-alt6
+- bug fixes (closes: #48990, #48988, #48993, #48995, #48997)
+
 * Thu Dec 28 2023 Elena Mishina <lepata@altlinux.org> 10.2-alt5
 - update to ALT Server 10.2rc
 - add FS, cryptsetup, audit
