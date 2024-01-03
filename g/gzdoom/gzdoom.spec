@@ -2,7 +2,7 @@
 
 Name: gzdoom
 Version: 4.11.1
-Release: alt1
+Release: alt2
 
 Summary: Enhanced Doom engine
 Summary(ru_RU.UTF-8): Продвинутый порт движка Doom
@@ -11,7 +11,7 @@ Group: Games/Arcade
 
 Url: http://zdoom.org
 
-ExclusiveArch: x86_64 %e2k aarch64
+ExclusiveArch: x86_64 %e2k aarch64 loongarch64
 
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
@@ -109,6 +109,9 @@ done
 %_gamesdatadir/doom/soundfonts/*
 
 %changelog
+* Wed Jan 03 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.11.1-alt2
+- NMU: build for LoongArch
+
 * Sun Oct 15 2023 Artyom Bystrov <arbars@altlinux.org> 4.11.1-alt1
 - Update to new version
 - Add patch for enabling sse2 (tnx to proklov_av@ from ROSA Team)
