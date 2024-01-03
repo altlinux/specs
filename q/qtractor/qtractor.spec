@@ -1,97 +1,80 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-mageia-compat
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ pkgconfig(aubio) pkgconfig(lv2) pkgconfig(ogg) pkgconfig(samplerate) pkgconfig(xcb) pkgconfig(zlib)
-# END SourceDeps(oneline)
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:		qtractor
-Version:	0.9.35
-Release:	alt1_1
-Summary:	An Audio/MIDI multi-track sequencer
-License:	GPLv2+
-Group:		Sound
-URL:		https://qtractor.sourceforge.io/
-Source0:	https://www.rncbc.org/archive/%{name}-%{version}.tar.gz
+Name: qtractor
+Version: 0.9.38
+Release: alt1
 
-BuildRequires:	qt6-base-devel
-BuildRequires:	qt6-base-devel
-BuildRequires:	qt6-svg-devel
-BuildRequires:	qt6-base-devel
-BuildRequires:	qt6-tools-devel
-BuildRequires:	pkgconfig(gtk+-2.0)
-BuildRequires:	pkgconfig(gtkmm-2.4)
-BuildRequires:	pkgconfig(jack)
-BuildRequires:	pkgconfig(sndfile)
-BuildRequires:	pkgconfig(mad)
-BuildRequires:	pkgconfig(rubberband)
-BuildRequires:	pkgconfig(liblo)
-BuildRequires:	pkgconfig(lilv-0)
-BuildRequires:	pkgconfig(dssi)
-BuildRequires:	pkgconfig(suil-0)
-BuildRequires:	pkgconfig(alsa)
-BuildRequires:	pkgconfig(vorbis)
-BuildRequires:	ladspa_sdk
-BuildRequires:	qt5-tools qt6-designer qt6-tools
-BuildRequires:	ccmake cmake ctest
+Summary: Audio/MIDI multi-track sequencer
+License: GPLv2
+Group: Sound
+Url: https://qtractor.org/
 
-Requires:	dssi dssi-examples
-Requires:	ladspa_sdk
-Source44: import.info
+Source: %name-%version-%release.tar
+
+BuildRequires: cmake gcc-c++
+BuildRequires: desktop-file-utils
+BuildRequires: ladspa_sdk
+BuildRequires: pkgconfig(Qt6)
+BuildRequires: pkgconfig(Qt6Svg)
+BuildRequires: pkgconfig(Qt6Linguist)
+BuildRequires: pkgconfig(alsa)
+BuildRequires: pkgconfig(aubio)
+BuildRequires: pkgconfig(dssi)
+BuildRequires: pkgconfig(jack)
+BuildRequires: pkgconfig(liblo)
+BuildRequires: pkgconfig(lilv-0)
+BuildRequires: pkgconfig(lv2)
+BuildRequires: pkgconfig(mad)
+BuildRequires: pkgconfig(rubberband)
+BuildRequires: pkgconfig(samplerate)
+BuildRequires: pkgconfig(sndfile)
+BuildRequires: pkgconfig(zlib)
 
 %description
-Qtractor is an Audio/MIDI multi-track sequencer application
-written in C++ around the Qt5 or Qt6 toolkit using Qt Designer.
-
-The initial target platform will be Linux, where the Jack Audio
-Connection Kit (JACK) for audio, and the Advanced Linux Sound
-Architecture (ALSA) for MIDI, are the main infrastructures to
-evolve as a fairly-featured Linux Desktop Audio Workstation GUI,
+Qtractor is an audio/MIDI multi-track sequencer application written
+in C++ with the Qt framework [1]. Target platform is Linux, where the
+Jack Audio Connection Kit (JACK) for audio and the Advanced Linux
+Sound Architecture (ALSA) for MIDI are the main infrastructures
+to evolve as a fairly-featured Linux desktop audio workstation GUI,
 specially dedicated to the personal home-studio.
 
 %prep
-%setup -q
-# E2K: fixed SSE detection code (ilyakurdyukov@)
+%setup
 %ifarch %e2k
-sed -i "/#if defined(__GNUC__)/s|#|#ifdef __e2k__\nreturn true;\n#el|" \
+sed -i.e2k "/#if defined(__GNUC__)/s|#|#ifdef __e2k__\nreturn true;\n#el|" \
   src/qtractor{AudioEngine,AudioMonitor,InsertPlugin,WsolaTimeStretcher}.cpp
 %endif
 
-
-
 %build
-%{mageia_cmake} -DJACK_LIBRARY="%(pkg-config --libs jack)"
-%mageia_cmake_build
+%cmake -DCONFIG_CLAP=NO -DCONFIG_VST2=NO -DCONFIG_VST3=NO
+%cmake_build
 
 %install
-%mageia_cmake_install
+%cmakeinstall_std
+desktop-file-edit \
+	--remove-key=X-SuSE-translate \
+        --remove-key=Version \
+        --set-key=Exec --set-value=%name \
+	%buildroot%_desktopdir/*.desktop
 
-desktop-file-install \
-	--remove-key="X-SuSE-translate" \
-	--remove-key="Version" \
-	--set-key=Exec --set-value="%{name}" \
-	--dir %{buildroot}%{_datadir}/applications \
-	%{buildroot}%{_datadir}/applications/org.rncbc.%{name}.desktop
+%files
+%doc LICENSE README
 
-%find_lang %{name} --with-man --with-qt
+%_bindir/qtractor
+%_libdir/qtractor
+%_datadir/qtractor
 
-%files -f %{name}.lang
-%doc README LICENSE TRANSLATORS ChangeLog
-%dir %{_libdir}/%{name}
-%dir %{_datadir}/%{name}
-%dir %{_datadir}/%{name}/translations
-%{_bindir}/%{name}
-%{_libdir}/%{name}/%{name}_plugin_scan
-%{_datadir}/mime/packages/org.rncbc.%{name}.xml
-%{_datadir}/applications/org.rncbc.%{name}.desktop
-%{_datadir}/icons/hicolor/32x32/apps/org.rncbc.%{name}.png
-%{_datadir}/icons/hicolor/scalable/apps/org.rncbc.%{name}.svg
-%{_datadir}/icons/hicolor/32x32/mimetypes/org.rncbc.%{name}.application-x-%{name}*.png
-%{_datadir}/icons/hicolor/scalable/mimetypes/org.rncbc.%{name}.application-x-%{name}*.svg
-%{_datadir}/metainfo/org.rncbc.%{name}.metainfo.xml
-%{_datadir}/man/man1/%{name}.1*
+%_datadir/metainfo/*.xml
+%_datadir/mime/packages/*.xml
+%_desktopdir/*.desktop
+%_iconsdir/*/*/*/*.png
+%_iconsdir/*/*/*/*.svg
 
+%_man1dir/qtractor.1*
 
 %changelog
+* Tue Jan  2 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.38-alt1
+- 0.9.38 released
+- fixed build with pw jack substitute (closes: 48991)
+
 * Mon Oct 02 2023 Igor Vlasenko <viy@altlinux.org> 0.9.35-alt1_1
 - update by mgaimport
 
