@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: tiv
-Version: 1.2
+Version: 1.2.1
 Release: alt1
 Summary: Terminal Image Viewer
 License: Apache-2.0 or GPL-3.0-or-later
@@ -44,5 +44,8 @@ src/tiv |& grep -Fw v%version
 %_bindir/tiv
 
 %changelog
+* Thu Dec 07 2023 Vitaly Chikunov <vt@altlinux.org> 1.2.1-alt1
+- Update to v1.2.1 (2023-12-06).
+
 * Thu Nov 02 2023 Vitaly Chikunov <vt@altlinux.org> 1.2-alt1
 - First import v.1.2-3-gc29bdc7 (2023-10-03).
