@@ -166,7 +166,7 @@
 
 Name:		ffmpeg-plugin-browser
 Version:	116
-Release:	alt1
+Release:	alt2
 
 Summary:	FFmpeg built specifically for codec support in special browser
 License:	GPLv3
@@ -602,6 +602,11 @@ echo 'include $(SRC_PATH)/ffbuild/libffmpeg.mak' >> Makefile
 %ifarch %ix86
 %add_optflags %{?_enable_mmx:-DRUNTIME_CPUDETECT}
 %endif
+%ifarch loongarch64
+%add_optflags -mlsx
+# XXX: when LTO is used the same flags must be passed to the linker
+%endif
+
 ./configure \
 	--prefix=%_prefix \
 	--libdir=%_libdir \
@@ -734,6 +739,12 @@ echo 'include $(SRC_PATH)/ffbuild/libffmpeg.mak' >> Makefile
 %ifarch aarch64
 	%{?optflags_lto:--enable-lto } \
 %endif
+%ifarch loongarch64
+	%{?optflags_lto:--enable-lto} \
+	--disable-lasx \
+	--extra-ldflags='-mlsx' \
+	--extra-libs='-latomic' \
+%endif
 	--extra-version='%release' \
 	#
 #	--enable-avresample \
@@ -775,6 +786,10 @@ tests/checkasm/checkasm
 %_libdir/ffmpeg-plugin-browser/libffmpeg.so
 
 %changelog
+* Mon Jan 01 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 116-alt2
+- NMU: fixed FTBFS on LoongArch (disable LASX accelerated code due
+  to failing tests, ensure SIMD is enabled during LTO).
+
 * Tue Oct 17 2023 Sergey V Turchin <zerg@altlinux.org> 116-alt1
 - new version
 
