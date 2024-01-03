@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: ugrep-indexer
-Version: 0.9.3
+Version: 0.9.5
 Release: alt1
 Summary: A monotonic indexer to speed up grepping
 License: BSD-3-Clause
@@ -57,6 +57,9 @@ bin/ugrep-indexer -d
 %_man1dir/ugrep-indexer.1*
 
 %changelog
+* Tue Jan 02 2024 Vitaly Chikunov <vt@altlinux.org> 0.9.5-alt1
+- Update to v0.9.5 (2023-12-31).
+
 * Thu Dec 07 2023 Vitaly Chikunov <vt@altlinux.org> 0.9.3-alt1
 - Update to v0.9.3 (2023-12-06).
 
