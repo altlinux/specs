@@ -2,23 +2,23 @@
 
 %define llvm_version 16.0
 
-%define git_ver 15419
-%define git_commit 6cd5a7eab960608cc38652c7d9f7900d52b122da
+%define git_ver 15909
+%define git_commit e707ff530d882475351ae1d4b555676e3e8ac8bd
 
-%define glslang_version sdk-1.3.224.1
-%define asmjit_commit c59847629d3a19da4d10f0be4ac33b43fc4a100f
+%define glslang_version 13.1.1
+%define asmjit_commit 416f7356967c1f66784dc1580fe157f9406d8bff
 %define hidapi_commit 8b43a97a9330f8b0035439ce9e255e4be202deca
-%define yaml_cpp_commit 0b67821f307e8c6bf0eba9b6d3250e3cf1441450
-%define spirv_headers_version sdk-1.3.231.1
-%define spirv_tools_version 2022.4
+%define yaml_cpp_commit 456c68f452da09d8ca84b375faa2b1397713eaba
+%define spirv_headers_version vulkan-sdk-1.3.268.0
+%define spirv_tools_version 2023.5.rc1
 %define cubeb_commit 70b4e3db7822de4d534959885cda109d6edbee36
-%define soundtouch_commit 83cfba67b6af80bb9bfafc0b324718c4841f2991
+%define soundtouch_commit ced3ce8d5ecc5aef8a5156fea206a37b33774bf3
 %define miniupnp_version miniupnpd_2_3_3
-%define rtmidi_version 5.0.0
+%define rtmidi_version 6.0.0
 
 Name: rpcs3
-Version: 0.0.29
-Release: alt1.2
+Version: 0.0.30
+Release: alt1
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -52,63 +52,48 @@ Source9: miniupnp-%miniupnp_version.tar
 # https://github.com/thestk/rtmidi/archive/refs/tags/%rtmidi_version/rtmidi-%rtmidi_version.tar.gz
 Source10: rtmidi-%rtmidi_version.tar
 
-Patch0: %name-alt-git.patch
-
 BuildRequires: /proc
 BuildRequires: clang%llvm_version
-BuildRequires: cmake >= 3.16.9
+BuildRequires: cmake
 BuildRequires: doxygen
-BuildRequires: git-core
+BuildRequires: glslang
+BuildRequires: glslc
 BuildRequires: graphviz
-BuildRequires: mlir%llvm_version-tools
-BuildRequires: ninja-build
-BuildRequires: pkgconfig(FAudio)
-BuildRequires: pkgconfig(Qt6) >= 6.4.0
-BuildRequires: pkgconfig(Qt6Multimedia) >= 6.4.0
-BuildRequires: pkgconfig(Qt6MultimediaWidgets) >= 6.4.0
-BuildRequires: pkgconfig(Qt6Svg) >= 6.4.0
-BuildRequires: pkgconfig(alsa)
-BuildRequires: pkgconfig(flatbuffers)
-BuildRequires: pkgconfig(glew)
-BuildRequires: pkgconfig(jack)
-BuildRequires: pkgconfig(libavformat)
-BuildRequires: pkgconfig(libcurl)
-BuildRequires: pkgconfig(libevdev)
-BuildRequires: pkgconfig(libffi)
-BuildRequires: pkgconfig(libpng)
-BuildRequires: pkgconfig(libswscale)
-BuildRequires: pkgconfig(libusb-1.0)
-BuildRequires: pkgconfig(libxml-2.0)
-BuildRequires: pkgconfig(libxxhash)
-BuildRequires: pkgconfig(openal)
-BuildRequires: pkgconfig(pugixml)
-BuildRequires: pkgconfig(python3)
-BuildRequires: pkgconfig(sdl2)
-BuildRequires: pkgconfig(udev)
-BuildRequires: pkgconfig(wayland-cursor)
-BuildRequires: pkgconfig(wayland-egl)
-BuildRequires: pkgconfig(wayland-server)
-BuildRequires: pkgconfig(wolfssl)
-BuildRequires: libmlir%llvm_version-devel
-BuildRequires: libpolly%llvm_version-devel
+BuildRequires: libGLEW-devel
+BuildRequires: libSDL2-devel
+BuildRequires: libalsa-devel
+BuildRequires: libavformat-devel
+BuildRequires: libcurl-devel
+BuildRequires: libevdev-devel
+BuildRequires: libfaudio-devel
+BuildRequires: libffi-devel
+BuildRequires: libflatbuffers-devel
+BuildRequires: libopenal-devel
+BuildRequires: libpng-devel
+BuildRequires: libpugixml-devel
+BuildRequires: libswresample-devel
+BuildRequires: libswscale-devel
+BuildRequires: libudev-devel
+BuildRequires: libusb-devel
+BuildRequires: libwayland-cursor-devel
+BuildRequires: libwayland-egl-devel
+BuildRequires: libwayland-server-devel
+BuildRequires: libwolfssl-devel
+BuildRequires: libxml2-devel
+BuildRequires: libxxhash-devel
 BuildRequires: lld%llvm_version
 BuildRequires: llvm%llvm_version-devel
-BuildRequires: ocaml-ctypes
-BuildRequires: ocaml-findlib
-BuildRequires: python3-module-yaml
-BuildRequires: qt6-multimedia >= 6.4.0
-BuildRequires: qt6-svg >= 6.4.0
-
-BuildPreReq: pkgconfig(libswresample)
-BuildPreReq: python3-module-Pygments
+BuildRequires: llvm%llvm_version-gold
+BuildRequires: ninja-build
+BuildRequires: pipewire-jack-libs-devel
+BuildRequires: qt6-multimedia-devel
+BuildRequires: qt6-svg-devel
 
 %description
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
 
 %prep
 %setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10
-
-%patch0 -p1
 
 %__mv -Tf ../glslang-%glslang_version 3rdparty/glslang/glslang
 %__mv -Tf ../asmjit-%asmjit_commit 3rdparty/asmjit/asmjit
@@ -178,6 +163,9 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Wed Jan 03 2024 Nazarov Denis <nenderus@altlinux.org> 0.0.30-alt1
+- Version 0.0.30
+
 * Wed Aug 30 2023 Nazarov Denis <nenderus@altlinux.org> 0.0.29-alt1.2
 - Fix FTBFS
 
