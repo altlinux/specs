@@ -1,7 +1,7 @@
 %def_with docs
 
 Name: txt2tags-python3
-Version: 3.8
+Version: 3.9
 Release: alt1
 Summary: Converts text files to HTML, XHTML, sgml, LaTeX, man...
 License: GPL-2.0
@@ -54,6 +54,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jan 03 2024 Andrey Cherepanov <cas@altlinux.org> 3.9-alt1
+- New version.
+
 * Sun Feb 19 2023 Andrey Cherepanov <cas@altlinux.org> 3.8-alt1
 - New version.
 
