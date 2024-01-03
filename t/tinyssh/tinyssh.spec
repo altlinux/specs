@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: tinyssh
-Version: 20230101
+Version: 20240101
 Release: alt1
 Summary: TinySSH is small server
 License: ALT-Public-Domain or CC0-1.0
@@ -59,5 +59,8 @@ EOF
 %_man8dir/tiny*.8*
 
 %changelog
+* Mon Jan 01 2024 Vitaly Chikunov <vt@altlinux.org> 20240101-alt1
+- Update to 20240101 (2024-01-01). (Fixes: CVE-2023-48795).
+
 * Sun Jan 01 2023 Vitaly Chikunov <vt@altlinux.org> 20230101-alt1
 - First import 20230101 (2022-12-31).
