@@ -7,7 +7,7 @@
 %define _libexec %prefix/libexec
 
 Name: gnuradio
-Version: 3.10.8.0
+Version: 3.10.9.1
 Release: alt1
 Summary: Software defined radio framework
 License: GPL-2.0-or-later
@@ -192,6 +192,9 @@ done
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jan 04 2024 Anton Midyukov <antohami@altlinux.org> 3.10.9.1-alt1
+- New version 3.10.9.1.
+
 * Fri Nov 10 2023 Anton Midyukov <antohami@altlinux.org> 3.10.8.0-alt1
 - New version 3.10.8.0.
 
