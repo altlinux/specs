@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.18.6
+Version: 1.19.0
 Release: alt1
 
 Summary: Provides some classes to make unified access to different RDBMS possible
@@ -57,6 +57,9 @@ different RDBMS possible:
 %python3_sitelibdir/logilab_database-%version-*-nspkg.pth
 
 %changelog
+* Thu Jan 04 2024 Anton Vyatkin <toni@altlinux.org> 1.19.0-alt1
+- new version 1.19.0
+
 * Thu Dec 28 2023 Anton Vyatkin <toni@altlinux.org> 1.18.6-alt1
 - new version 1.18.6
 

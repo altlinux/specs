@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.7.1
+Version: 0.8.0
 Release: alt1
 
 Summary: A constraint satisfaction problem solver written in 100%% pure Python
@@ -50,6 +50,9 @@ together with specialized constraints.
 %python3_sitelibdir/logilab_constraint-%version.dist-info
 
 %changelog
+* Thu Jan 04 2024 Anton Vyatkin <toni@altlinux.org> 0.8.0-alt1
+- new version 0.8.0
+
 * Thu Dec 28 2023 Anton Vyatkin <toni@altlinux.org> 0.7.1-alt1
 - new version 0.7.1
 
