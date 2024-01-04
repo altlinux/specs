@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: itop
-Version: 3.1.0.2
+Version: 3.1.1.1
 Release: alt1
 
 Summary: IT Operations Portal
@@ -134,6 +134,20 @@ fi
 %files php8.1
 
 %changelog
+* Thu Jan 04 2024 Pavel Zilke <zidex@altlinux.org> 3.1.1.1-alt1
+- New version 3.1.1.1
+- Security fixes:
+ + CVE-2023-48710 : Restrict pages/exec.php to PHP files
+ + CVE-2023-48709 : Fix CSV injection in Excel from an iTop CSV export file
+ + CVE-2023-46734 : Fix potential XSS vulnerabilities in TWIG CodeExtension filters
+ + CVE-2023-47123 : Fix XSS vulnerability in n:n relations "tagset" widget
+ + CVE-2023-47622 : Fix XSS vulnerabilities in ajax operations
+ + CVE-2023-47626 : Fix XSS vulnerabilities in authent token
+ + CVE-2023-44396 : Fix XSS vulnerabilities in dashlet ajax operations
+ + CVE-2023-43790 : Fix XSS vulnerabilities in friendlyname in object details
+ + CVE-2023-38511 : Fix dashboard allowing to load multiple files and urls
+ + CVE-2023-45808 : Fix object creation in non allowed org by forging http query in both Console and Portal
+
 * Fri Aug 11 2023 Pavel Zilke <zidex@altlinux.org> 3.1.0.2-alt1
 - New version 3.1.0.2
 - Security fixes:
