@@ -1,6 +1,6 @@
 Name:    coppwr
 Version: 1.5.0
-Release: alt1
+Release: alt2
 
 Summary: Low level control GUI for the PipeWire multimedia server
 License: GPL-3.0
@@ -10,10 +10,13 @@ Url:     https://github.com/dimtpap/coppwr
 Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 Source: %name-%version.tar
+Patch1: %name-1.5.0-nix-loongarch64.patch
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: /proc
 BuildRequires:  pkgconfig(libpipewire-0.3) clang-devel
+BuildRequires: cargo-vendor-checksum diffstat
+
 
 ExcludeArch: %ix86 armh
 
@@ -26,6 +29,9 @@ it.
 
 %prep
 %setup
+%patch1 -p1 
+diffstat -p1 -l %PATCH1 | sed -re 's@vendor/@@' | xargs cargo-vendor-checksum -f
+
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
 [source.crates-io]
@@ -71,5 +77,8 @@ install -Dm644 assets/icon/32.png %buildroot/%_datadir/icons/hicolor/32x32/apps/
 %_datadir/icons/hicolor/*/apps/io.github.dimtpap.coppwr.*
 
 %changelog
+* Thu Jan 04 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.5.0-alt2
+- NMU: fixed FTBFS on LoongArch (trivial patch for nix crate).
+
 * Thu Dec 28 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.5.0-alt1
 - Initial build for Sisyphus
