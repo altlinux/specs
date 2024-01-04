@@ -1,5 +1,5 @@
 Name: sway-input-config
-Version: 1.1.2
+Version: 1.3.2.2
 Release: alt1
 Summary: Sway Input Configurator
 Group: Graphical desktop/Other
@@ -24,13 +24,18 @@ BuildRequires(pre): rpm-build-python3
 %install
 %python3_install
 
+rm -rf -- %buildroot%_datadir/metainfo
+
 %files
 %_bindir/sway-input-config
 %_datadir/applications/sway-input-config.desktop
-%_pixmapsdir/sway-input-config.svg
+%_iconsdir/hicolor/*/apps/sway-input-config.png
 %python3_sitelibdir/sway_input_config
 %python3_sitelibdir/sway_input_config-*.egg-info
 
 %changelog
+* Thu Jan 04 2024 Alexey Gladkov <legion@altlinux.ru> 1.3.2.2-alt1
+- New version (1.3.2.2).
+
 * Mon Oct 31 2022 Alexey Gladkov <legion@altlinux.ru> 1.1.2-alt1
 - Initial build (1.1.2).
