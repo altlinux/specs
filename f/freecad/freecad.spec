@@ -6,18 +6,19 @@
 %def_with glvnd
 %def_with ninja
 %def_with pybind11
+%def_without pyside2
 
 %define oname freecad
 %define ldir %_libdir/%oname
 %ifndef build_parallel_jobs
 %define build_parallel_jobs 7
 %endif
-%define git_rev aaee1b5e39
-%define git_date 05.12.2022
+%define git_rev b9bfa5c550
+%define git_date 13.11.2023
 
 Name:    freecad
-Version: 0.21.1
-Release: alt4
+Version: 0.21.2
+Release: alt1
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -56,6 +57,14 @@ BuildRequires: qt5-tools-devel-static
 BuildRequires: qt5-webengine-devel
 BuildRequires: qt5-x11extras-devel
 BuildRequires: qt5-xmlpatterns-devel
+%if_with pyside2
+BuildRequires: python3-module-PySide2
+BuildRequires: pyside2-tools
+BuildRequires: python3-module-PySide2-devel
+BuildRequires: python3-module-shiboken2-devel
+%else
+%filter_from_requires /python3(PySide2/d
+%endif
 %define qmake %qmake_qt5
 %define qtbindir %_qt5_bindir
 BuildRequires: python3-devel swig gcc-fortran chrpath
@@ -104,7 +113,6 @@ BuildRequires: pybind11-devel
 #py3_provides ImageGui PartDesignGui _PartDesign
 %add_python3_req_skip pyopencl IfcImport Units
 %add_findreq_skiplist %ldir/Mod/*
-%filter_from_requires /python3(PySide2/d
 
 %ifnarch armh
 # TODO: cgal needed for openscad was not built for armh
@@ -251,6 +259,10 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_datadir/thumbnailers/FreeCAD.thumbnailer
 
 %changelog
+* Wed Jan 03 2024 Andrey Cherepanov <cas@altlinux.org> 1:0.21.2-alt1
+- New version.
+- Made build with PySide2 optional.
+
 * Wed Nov 01 2023 Andrey Cherepanov <cas@altlinux.org> 1:0.21.1-alt4
 - Removed python3-module-shiboken2-devel.
 
