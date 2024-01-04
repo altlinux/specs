@@ -7,6 +7,11 @@
 %def_with ninja
 %def_with pybind11
 %def_without pyside2
+%ifarch loongarch64
+%def_without web_mod
+%else
+%def_with web_mod
+%endif
 
 %define oname freecad
 %define ldir %_libdir/%oname
@@ -18,7 +23,7 @@
 
 Name:    freecad
 Version: 0.21.2
-Release: alt1
+Release: alt2
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -54,7 +59,9 @@ BuildRequires: qt5-phonon-devel
 BuildRequires: qt5-svg-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: qt5-tools-devel-static
+%if_with web_mod
 BuildRequires: qt5-webengine-devel
+%endif
 BuildRequires: qt5-x11extras-devel
 BuildRequires: qt5-xmlpatterns-devel
 %if_with pyside2
@@ -175,6 +182,9 @@ export PATH=$PATH:%_qt5_bindir
 %endif
 	-DFREECAD_LIBPACK_USEPYSIDE=OFF \
 	-DBUILD_QT5=ON \
+%if_without web_mod
+	-DBUILD_WEB=OFF \
+%endif
 %if_without bundled_libs
 	-DFREECAD_USE_EXTERNAL_SMESH=ON \
 	-DSMESH_DIR=%_libdir/cmake \
@@ -259,6 +269,10 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_datadir/thumbnailers/FreeCAD.thumbnailer
 
 %changelog
+* Thu Jan 04 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:0.21.2-alt2
+- NMU: build without web addon on LoongArch (requires qt5-webengine,
+  not available here).
+
 * Wed Jan 03 2024 Andrey Cherepanov <cas@altlinux.org> 1:0.21.2-alt1
 - New version.
 - Made build with PySide2 optional.
