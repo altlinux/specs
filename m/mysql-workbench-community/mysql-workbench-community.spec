@@ -1,6 +1,6 @@
 Name: mysql-workbench-community
 Version: 8.0.33
-Release: alt2.1
+Release: alt2.2
 
 Summary: A MySQL visual database modeling tool
 
@@ -14,13 +14,14 @@ Source0: %name-%version.tar
 Source1: antlr-4.11.1-complete.jar
 
 # https://www.mysql.com/support/supportedplatforms/workbench.html
-ExclusiveArch: %ix86 x86_64
+# ExclusiveArch: %ix86 x86_64
 
 Patch0: mysql-workbench-community-8.0.32-alt-suppress-unsupported.patch
 Patch1: %name-8.0.20-alt-boost-1.73.0-compat.patch
 Patch2: %name-8.0.33-alt-fix-finding-odbc.patch
 Patch3: %name-8.0.33-alt-fix-missing-include.patch
 Patch4: %name-8.0.33-alt-fix-usage-of-libxml2.patch
+Patch5: %name-8.0.33-alt-arm-fix.patch
 
 Provides: mysql-workbench-oss = %version-%release
 Obsoletes: mysql-workbench-oss < %version-%release
@@ -160,6 +161,11 @@ Architecture independent files for %name
 Some parts of code have separate licenses.
 Look to %_defaultdocdir/%name-%version/License.txt
 
+%ifarch loongarch64
+# LTO triggers assertion in ld on LoongArch
+%define optflags_lto %nil
+%endif
+
 %prep
 %setup
 
@@ -168,6 +174,7 @@ Look to %_defaultdocdir/%name-%version/License.txt
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 sed -i "s|ldconfig|/sbin/ldconfig|" frontend/linux/workbench/mysql-workbench.in
 
@@ -243,6 +250,11 @@ cp %_builddir/%name-%version/images/icons/MySQLWorkbenchDocIcon32x32.png %buildr
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Wed Jan 03 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 8.0.33-alt2.2
+- NMU: fixed FTBFS on aarch64 (char is unsigned on ARM).
+  Fixed FTBFS on LoongArch (disabled LTO to avoid assert in ld).
+  Build for all architectures.
+
 * Wed Jan 03 2024 Grigory Ustinov <grenka@altlinux.org> 8.0.33-alt2.1
 - NMU: Fixed building with python3.12.
 
