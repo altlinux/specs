@@ -21,7 +21,7 @@
 
 Name: %_name-good%api_ver
 Version: %ver_major.8
-Release: alt1
+Release: alt1.1
 
 Summary: A set of GStreamer plugins considered good
 Group: System/Libraries
@@ -94,7 +94,7 @@ This package contains development documentation for GStreamer Good Plugins
 %build
 %meson \
 	-Dexamples=disabled \
-	%{?_enable_check:-Dtests=enabled} \
+	%{?_disable_check:-Dtests=disabled} \
 	%{?_disable_doc:-Ddoc=disabled} \
 	%{?_enable_debug:-Dgst_debug=true}
 %nil
@@ -131,6 +131,9 @@ This package contains development documentation for GStreamer Good Plugins
 %endif
 
 %changelog
+* Thu Jan 04 2024 Michael Shigorin <mike@altlinux.org> 1.22.8-alt1.1
+- fix check knob (looks like current meson default is to enable it)
+
 * Mon Dec 18 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.8-alt1
 - 1.22.8
 
