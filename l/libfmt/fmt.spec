@@ -1,7 +1,7 @@
 %define sover 10
 
 Name: libfmt
-Version: 10.2.0
+Version: 10.2.1
 Release: alt1
 Epoch: 1
 
@@ -67,6 +67,9 @@ make test
 %_libdir/libfmt.so
 
 %changelog
+* Fri Jan 05 2024 Nazarov Denis <nenderus@altlinux.org> 1:10.2.1-alt1
+- New version 10.2.1.
+
 * Tue Jan 02 2024 Nazarov Denis <nenderus@altlinux.org> 1:10.2.0-alt1
 - New version 10.2.0.
 
