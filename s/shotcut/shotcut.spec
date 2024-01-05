@@ -4,8 +4,8 @@
 %define _vstring %(echo %{version} |tr -d ".")
 
 Name: shotcut
-Version: 23.07.08
-Release: alt1.1
+Version: 23.12.15
+Release: alt1
 Summary: A free, open source, cross-platform video editor
 Summary(ru_RU.UTF-8): Свободный кросс-платформенный видеоредактор
 License: GPL-3.0+
@@ -21,6 +21,7 @@ BuildRequires(pre): cmake
 BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib
+BuildRequires: pkgconfig(Qt6Charts)
 BuildRequires: pkgconfig(Qt6Concurrent)
 BuildRequires: pkgconfig(Qt6Core)
 BuildRequires: pkgconfig(Qt6Gui)
@@ -141,6 +142,9 @@ done
 %_man1dir/*
 
 %changelog
+* Fri Jan 05 2024 Andrey Cherepanov <cas@altlinux.org> 23.12.15-alt1
+- New version (ALT #48666).
+
 * Wed Sep 20 2023 Ivan A. Melnikov <iv@altlinux.org> 23.07.08-alt1.1
 - NMU: Avoid build dependency on mlt 6.
 
