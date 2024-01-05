@@ -2,7 +2,7 @@
 
 Name: clickhouse-cpp
 Version: 2.4.0
-Release: alt2
+Release: alt3
 Summary: ClickHouse C++ client library
 Group: System/Libraries
 License: Apache-2.0
@@ -18,6 +18,7 @@ Patch1: %name-alt-build.patch
 BuildRequires: gcc-c++ cmake
 BuildRequires: liblz4-devel
 BuildRequires: libcityhash-devel
+BuildRequires: libabseil-cpp-devel
 
 %description
 C++ client for Yandex ClickHouse.
@@ -55,7 +56,6 @@ Supported data types:
 Summary: Development files for ClickHouse C++ client library
 Group: Development/C++
 Requires: lib%name = %EVR
-Conflicts: libabseil-cpp-devel
 
 %description -n lib%name-devel
 C++ client for Yandex ClickHouse.
@@ -78,10 +78,10 @@ This package contains development files.
 %patch1 -p1
 
 # ensure 3rd-party bundled libraries are not used
-rm -rf contrib/{cityhash,gtest,lz4}
+rm -rf contrib/{cityhash,gtest,lz4,absl}
 
 %build
-%cmake -DWITH_SYSTEM_CITYHASH=ON -DWITH_SYSTEM_LZ4=ON -DWITH_SYSTEM_CITYHASH=ON -DBUILD_SHARED_LIBS=ON
+%cmake -DWITH_SYSTEM_CITYHASH=ON -DWITH_SYSTEM_LZ4=ON -DWITH_SYSTEM_CITYHASH=ON -DBUILD_SHARED_LIBS=ON -DWITH_SYSTEM_ABSEIL=ON
 %cmake_build
 
 %install
@@ -98,6 +98,9 @@ rm -rf %buildroot%_includedir/clickhouse
 %_libdir/*.so
 
 %changelog
+* Fri Jan 05 2024 Pavel Vainerman <pv@altlinux.ru> 2.4.0-alt3
+- build with system libabseil
+
 * Tue Jun 27 2023 Pavel Vainerman <pv@altlinux.ru> 2.4.0-alt2
 - headers of the libabseail are packed together with clickhouse (Closes: #42411)
 
