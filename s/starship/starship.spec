@@ -5,7 +5,7 @@
 %endif
 
 Name: starship
-Version: 1.16.0
+Version: 1.17.1
 Release: alt1
 Summary: The minimal, blazing-fast, and infinitely customizable prompt for any shell
 License: ISC
@@ -13,10 +13,9 @@ Group: Shells
 Url: https://github.com/starship/starship
 Source: %name-%version.tar
 Source1: vendor.tar
-# build failed
-Patch1: alt-drop-notify-rust-dep.patch
 
 BuildRequires(pre): rpm-build-rust
+BuildRequires: cargo-vendor-checksum
 BuildRequires: rust-cargo
 BuildRequires: cmake
 
@@ -29,7 +28,6 @@ BuildRequires: git
 
 %prep
 %setup -a 1
-%patch1 -p1
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
 [source.crates-io]
@@ -40,10 +38,11 @@ directory = "vendor"
 EOF
 
 %build
-%ifarch armh
-# LLVM ERROR: out of memory
+%ifarch armh i586
+# build failed with lto
 sed -i 's/lto = true/lto = false/' Cargo.toml
 %endif
+cargo-vendor-checksum --all
 %rust_build
 
 %install
@@ -60,6 +59,9 @@ cargo test -- --skip expiration_date_set
 %_bindir/%name
 
 %changelog
+* Fri Jan 05 2024 Alexander Makeenkov <amakeenk@altlinux.org> 1.17.1-alt1
+- Updated to version 1.17.1.
+
 * Wed Sep 13 2023 Alexander Makeenkov <amakeenk@altlinux.org> 1.16.0-alt1
 - Updated to version 1.16.0.
 
