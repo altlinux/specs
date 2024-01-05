@@ -12,8 +12,8 @@
 %endif
 
 Name:		bcc
-Version:	0.28.0
-Release:	alt2
+Version: 0.29.1
+Release: alt1
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -295,6 +295,9 @@ rm /tmp/vm.* /tmp/initramfs-*.img
 %files checkinstall
 
 %changelog
+* Thu Jan 04 2024 Vitaly Chikunov <vt@altlinux.org> 0.29.1-alt1
+- Update to v0.29.1 (2023-12-08).
+
 * Thu Sep 14 2023 Artyom Bystrov <arbars@altlinux.org> 0.28.0-alt2
 - Fix FTBFS
 
