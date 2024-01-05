@@ -1,8 +1,8 @@
 %define rdn_name net.sourceforge.liferea
 
 Name: liferea
-Version: 1.15.4
-Release: alt1.2
+Version: 1.15.5
+Release: alt1
 
 Summary: A RSS News Reader for GNOME
 License: GPLv2
@@ -123,6 +123,9 @@ xvfb-run %make_build
 %_libdir/%name/plugins/__pycache__/media-player.*
 
 %changelog
+* Fri Jan 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1.15.5-alt1
+- 1.15.5
+
 * Sat Dec 16 2023 Yuri N. Sedunov <aris@altlinux.org> 1.15.4-alt1.2
 - fixed build with libxml2-2.12.x
 
