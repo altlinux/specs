@@ -3,7 +3,7 @@
 
 Name: gnustep-gui
 Version: 0.30.0
-Release: alt1
+Release: alt2
 Summary: The GNUstep GUI library
 License: LGPL-2.1+ and GPL-3.0+
 Group: Development/Tools
@@ -14,6 +14,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 # https://github.com/gnustep/gnustep-gui.git
 Source: libs-gui-%version.tar
 Patch: gnustep-gui-alt-remove-missing-headers.patch
+Patch1: gnustep-gui-alt-ImageMagick-7.patch
 
 BuildRequires: gnustep-make-devel gnustep-base-devel
 %if_with objc2
@@ -95,6 +96,7 @@ This package contains the documentation for %name.
 %prep
 %setup -n libs-gui-%version
 %patch -p1
+%patch1 -p1
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -147,6 +149,9 @@ rm -fR %buildroot%_infodir
 %_docdir/GNUstep
 
 %changelog
+* Fri Jan 05 2024 Andrey Cherepanov <cas@altlinux.org> 0.30.0-alt2
+- FTBFS: rebuit with ImageMagick 7.x.
+
 * Thu Dec 29 2022 Andrey Cherepanov <cas@altlinux.org> 0.30.0-alt1
 - New version.
 
