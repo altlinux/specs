@@ -3,11 +3,18 @@
 %set_verify_elf_method strict
 %def_disable doc
 
+%ifarch x86_64
+%def_with cuda
+%filter_from_requires /libcudart\.so\.12/d
+%else
+%def_without cuda
+%endif
+
 %define soname 3.6.0
 
 Name: opensubdiv
 Version: %soname
-Release: alt2
+Release: alt3
 Summary: An Open-Source subdivision surface library
 Group: Development/Other
 License: Apache-2.0
@@ -32,6 +39,9 @@ BuildRequires: python3-module-docutils doxygen graphviz
 %endif
 # examples
 BuildRequires: libglfw3-devel libXrandr-devel libXxf86vm-devel libXcursor-devel libXinerama-devel libXi-devel libPtex-devel
+%if_with cuda
+BuildRequires: nvidia-cuda-devel
+%endif
 
 %description
 OpenSubdiv is a set of open source libraries that implement
@@ -52,6 +62,9 @@ Feel free to use it and let us know what you think.
 %package -n lib%name%soname
 Summary: An Open-Source subdivision surface library
 Group: System/Libraries
+%if_with cuda
+Requires: libcudart
+%endif
 
 %description -n lib%name%soname
 OpenSubdiv is a set of open source libraries that implement
@@ -147,6 +160,9 @@ rm -rf %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Sun Dec 10 2023 L.A. Kostis <lakostis@altlinux.ru> 3.6.0-alt3
+- x86_64: Enable CUDA support.
+
 * Thu Nov 16 2023 L.A. Kostis <lakostis@altlinux.ru> 3.6.0-alt2
 - Don't build documentation by default.
 - BR: remove clew deps (as we don't care about portability).
