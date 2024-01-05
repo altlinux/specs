@@ -3,7 +3,7 @@
 %define api_ver 3.0
 
 Name: xed
-Version: 3.4.4
+Version: 3.4.5
 Release: alt1
 
 Summary: xed is a small and lightweight text editor.
@@ -133,6 +133,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/*
 
 %changelog
+* Fri Jan 05 2024 Anton Midyukov <antohami@altlinux.org> 3.4.5-alt1
+- new version (3.4.5) with rpmgs script
+
 * Mon Dec 04 2023 Anton Midyukov <antohami@altlinux.org> 3.4.4-alt1
 - 3.4.4
 - Remove data subpackage
