@@ -3,8 +3,8 @@
 %def_with ruby
 
 Name: gwyddion
-Version: 2.63
-Release: alt1.1
+Version: 2.65
+Release: alt1
 
 Summary: An SPM data visualization and analysis tool
 Summary(ru_RU.UTF-8):  Программа для визуализации и анализа данных АСМ
@@ -284,6 +284,9 @@ install -D -m 755 plugins/invert_narray.rb %buildroot%ruby_vendorlibdir/gwyddion
 
 
 %changelog
+* Fri Jan 05 2024 Alexei Mezin <alexvm@altlinux.org> 2.65-alt1
+- new version
+
 * Thu Oct 26 2023 Ivan A. Melnikov <iv@altlinux.org> 2.63-alt1.1
 - NMU: dependencies cleanup: libgomp12-devel (unused)
   replaced with libgomp-devel (always current).
