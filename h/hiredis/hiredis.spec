@@ -13,7 +13,7 @@ Name: hiredis
 Name: hiredis%sover
 %endif
 Version: 1.2.0
-Release: alt1
+Release: alt2
 Summary: The official C client for Redis
 Group: System/Libraries
 License: BSD-3-Clause
@@ -31,6 +31,8 @@ Hiredis is a minimalistic C client library for the Redis database.
 Summary: The official C client for Redis
 License: BSD
 Group: System/Libraries
+Obsoletes: libhiredis1.1.0
+Conflicts: libhiredist1.1.0
 
 %description -n libhiredis%sover
 Hiredis is a minimalistic C client library for the Redis database.
@@ -109,6 +111,9 @@ cp hiredis-test %buildroot%_bindir/
 %endif
 
 %changelog
+* Fri Jan 05 2024 Anton Farygin <rider@altlinux.ru> 1.2.0-alt2
+- libhiredis1: added obsoletes and conflicts against libhiredis1.1.0 (Closes: #48978)
+
 * Sun Dec 31 2023 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1
 - 1.1.0 -> 1.2.0
 
