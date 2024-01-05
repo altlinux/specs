@@ -4,8 +4,8 @@
 %def_with markdown
 
 Name: %realname
-Version: 3.4.4
-Release: alt3
+Version: 3.4.5
+Release: alt1
 Epoch:3
 
 Summary: X11 Window Manager
@@ -43,7 +43,7 @@ BuildRequires: cmake gcc-c++ imlib2-devel libSM-devel libXcomposite-devel
 BuildRequires: libXdamage-devel libXft-devel libXinerama-devel libXpm-devel
 BuildRequires: libXrandr-devel libalsa-devel libao-devel libfribidi-devel
 BuildRequires: librsvg-devel libsndfile-devel
-BuildRequires: perl-Pod-Html perl-Pod-Usage /usr/bin/pod2html
+BuildRequires: perl-Pod-Usage /usr/bin/pod2html
 %if_with markdown
 BuildRequires: discount
 %else
@@ -148,6 +148,10 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Wed Jan 03 2024 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.4.5-alt1
+- 3.4.5
+- BR: removed duplicate
+
 * Fri Dec 01 2023 Igor Vlasenko <viy@altlinux.org> 3:3.4.4-alt3
 - NMU: fixed build with perl 5.38 - added BR: /usr/bin/pod2html
 
