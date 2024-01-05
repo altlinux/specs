@@ -6,7 +6,7 @@
 # As ubuntu
 %define gcc_ver 9
 
-%define _vk_api_version 1.3.269
+%define _vk_api_version 1.3.271
 
 %def_with clang
 %def_with wayland
@@ -22,7 +22,7 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2023.Q4.2
+Version: 2023.Q4.3
 Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
@@ -34,7 +34,7 @@ ExclusiveArch: x86_64
 Requires: vulkan-filesystem
 
 BuildRequires(pre): rpm-macros-cmake /proc
-BuildRequires: cmake ninja-build python3-devel curl libxcb-devel libssl-devel llvm-devel
+BuildRequires: cmake ninja-build python3-devel python3-module-jinja2 curl libxcb-devel libssl-devel llvm-devel
 BuildRequires: libX11-devel libxshmfence-devel libXrandr-devel glslang libdxcompiler-devel
 %if_with wayland
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
@@ -83,6 +83,7 @@ rm -rf %_builddir/llpc/imported/llvm-dialects && ln -s %_builddir/llvm-dialects 
 %else	
 export GCC_VERSION=%{gcc_ver} \
 %cmake \
+	-GNinja \
 %endif
 %if_with wayland
 	-DBUILD_WAYLAND_SUPPORT=ON \
@@ -97,13 +98,8 @@ export GCC_VERSION=%{gcc_ver} \
 %endif
         -DXGL_METROHASH_PATH=%_builddir/metrohash \
         -DXGL_CWPACK_PATH=%_builddir/cwpack \
-        -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
-        -G Ninja
-
-ninja \
-	-vvv \
-	-j %__nprocs \
-	-C "%_cmake__builddir"
+        -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+%cmake_build
 
 %install
 mkdir -p %buildroot{%_vkdir,%_vkldir,%_libdir,%_sysconfdir/amd}
@@ -122,6 +118,16 @@ sed -e 's|@API_VERSION@|%_vk_api_version|g' %SOURCE8 > %buildroot%_vkldir/$(base
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Fri Jan 05 2024 L.A. Kostis <lakostis@altlinux.ru> 2023.Q4.3-alt1
+- 2023-12-28 update:
+  + BR: added jinja2 module
+  + icd: bump vulkan version
+  + llvm-project: Updated to 021d89eb80d2
+  + gpurt: Updated to 6808afe3c8a3
+  + llpc: Updated to 0c23ae955060
+  + pal: Updated to 6353b182d28f
+  + xgl: Updated to 53656ff75237
+
 * Sun Dec 03 2023 L.A. Kostis <lakostis@altlinux.ru> 2023.Q4.2-alt1
 - 2023-11-24 update:
   + icd: bump vulkan version
