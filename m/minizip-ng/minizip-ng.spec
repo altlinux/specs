@@ -4,7 +4,7 @@
 %filter_from_provides /^pkgconfig(%compat_name)/d
 
 Name: %compat_name-ng
-Version: 4.0.3
+Version: 4.0.4
 Release: alt1
 
 Summary: Fork of the popular zip manipulation library found in the zlib distribution
@@ -196,6 +196,9 @@ developing applications that use %compat_name.
 %_libdir/lib%compat_name.so
 
 %changelog
+* Fri Jan 05 2024 Nazarov Denis <nenderus@altlinux.org> 4.0.4-alt1
+- New version 4.0.4.
+
 * Mon Nov 13 2023 Nazarov Denis <nenderus@altlinux.org> 4.0.3-alt1
 - New version 4.0.3.
 
