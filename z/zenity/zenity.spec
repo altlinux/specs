@@ -7,11 +7,11 @@
 %def_enable check
 
 Name: zenity
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: The GNOME port of dialog(1)
-License: LGPL-2.0-or-later
+License: LGPL-2.1-or-later
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Projects/Zenity
 
@@ -58,6 +58,9 @@ and shell scripts.
 %doc AUTHORS NEWS README*
 
 %changelog
+* Fri Jan 05 2024 Yuri N. Sedunov <aris@altlinux.org> 4.0.1-alt1
+- 4.0.1
+
 * Fri Dec 08 2023 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
 - 4.0.0 (ported to libadwaita/webkitgtk-6.0)
 
