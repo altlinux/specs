@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20231215
+Version: 20240105
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -94,6 +94,35 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/mellanox
 
 %changelog
+* Fri Jan 05 2024 Cronbuild Service <cronbuild@altlinux.org> 20240105-alt1
+- upstream changes (GIT c82c9486):
+  + amlogic/bluetooth: add firmware bin of W1 serial soc(w1u_uart) (thx yang.li)
+  + add firmware for mediatek bluetooth chip (MT7925) (thx Peter Tsao)
+  + add firmware for MT7925 (thx Deren Wu)
+  + ASoC: tas2563: Add dsp firmware for laptops or other mobile
+    devices (thx Shenghao Ding)
+  + rtl_bt: Add firmware and config files for RTL8852BT/RTL8852BE-VT (thx Max Chou)
+  + ASoC: tas2781: Add dsp firmware for different laptops (thx Shenghao Ding)
+  + ath11k: WCN6855 hw2.0: update to
+    WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.36 (thx Kalle Valo)
+  + ath11k: WCN6855 hw2.0: update board-2.bin (thx Kalle Valo)
+  + ath11k: WCN6750 hw1.0: update board-2.bin (thx Kalle Valo)
+  + ath11k: IPQ8074 hw2.0: update board-2.bin (thx Kalle Valo)
+  + ath10k: WCN3990 hw1.0: update board-2.bin (thx Kalle Valo)
+  + ath10k: QCA9888 hw2.0: update board-2.bin (thx Kalle Valo)
+  + ath10k: QCA4019 hw1.0: update board-2.bin (thx Kalle Valo)
+  + ath10k: QCA6174 hw3.0: update firmware-6.bin to
+    WLAN.RM.4.4.1-00309- (thx Kalle Valo)
+  + ath12k: add new driver and firmware for WCN7850 (thx Kalle Valo)
+  + iwlwifi: update gl FW for core80-165 release (thx Miri Korenblit)
+  + intel: vsc: Add firmware for Visual Sensing Controller (thx Sakari Ailus)
+  + cirrus: Add CS35L41 firmware and tunings for ASUS Zenbook
+    2023 Models (thx Stefan Binding)
+  + cirrus: Add CS35L41 firmware and tunings for ASUS Zenbook
+    2022 Models (thx Stefan Binding)
+  + QCA: Add bluetooth firmware nvm files for QCA2066 (thx Zijun Hu)
+  + QCA: Update Bluetooth QCA2066 firmware to 2.1.0-00629 (thx Zijun Hu)
+
 * Fri Dec 22 2023 Cronbuild Service <cronbuild@altlinux.org> 20231215-alt1
 - upstream changes (GIT c156e6be):
   + amdgpu: DMCUB updates for various AMDGPU ASICs (thx Wayne Lin)
