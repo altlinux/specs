@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    dart
-Version: 6.13.0
+Version: 6.13.1
 Release: alt1
 
 Summary: DART: Dynamic Animation and Robotics Toolkit
@@ -97,5 +97,8 @@ subst 's/eigen/eigen3/' %buildroot%_libdir/pkgconfig/%name.pc
 %_defaultdocdir/%name
 
 %changelog
+* Fri Jan 05 2024 Andrey Cherepanov <cas@altlinux.org> 6.13.1-alt1
+- New version.
+
 * Thu May 25 2023 Andrey Cherepanov <cas@altlinux.org> 6.13.0-alt1
 - Initial build for Sisyphus.
