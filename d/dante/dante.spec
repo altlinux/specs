@@ -1,3 +1,5 @@
+%def_disable static
+
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
@@ -9,7 +11,7 @@ ExcludeArch: ppc64le
 Summary: A free SOCKS v4/v5 client implementation
 Name: dante
 Version: 1.4.3
-Release: alt2
+Release: alt4
 License: BSD-type
 Group: Security/Networking
 Url: http://www.inet.no/dante/
@@ -56,7 +58,15 @@ Group: Development/C
 Requires: dante
 
 %description devel
-Additional libraries required to compile programs that use SOCKS.
+Static libraries required to compile programs including SOCKS.
+
+%package devel-static
+Summary: development libraries for SOCKS
+Group: Development/C
+Requires: lib%name-devel-static = %version-%release
+
+%description devel-static
+Static libraries required to compile programs including SOCKS.
 
 %prep
 %setup
@@ -70,7 +80,13 @@ Additional libraries required to compile programs that use SOCKS.
 %configure \
 	--disable-silent-rules \
 	--without-glibc-secure \
-	--without-upnp
+	--without-upnp \
+	--enable-clientdl \
+	--enable-serverdl \
+	--disable-preload \
+	--enable-shared \
+	%{subst_enable static} \
+	%nil
 %make_build
 %SOURCE2 -e -f passwd.db
 
@@ -86,6 +102,11 @@ install -D -m 0644 %SOURCE4 $RPM_BUILD_ROOT/%_sysconfdir/sysconfig/sockd
 install -D -m 0644 %SOURCE5 $RPM_BUILD_ROOT/%_sysconfdir/pam.d/sockd
 install -D passwd.db $RPM_BUILD_ROOT/%_sharedstatedir/sockd/passwd.db
 install -D -m 0644 SPECS/dante.service $RPM_BUILD_ROOT/%_unitdir/%name.service
+# make repocop happy - comply with The Policy!
+# https://www.altlinux.org/Services_Policy#systemd
+pushd $RPM_BUILD_ROOT/%_unitdir/
+ln -s  %name.service sockd.service
+popd
 
 
 %pre server
@@ -99,8 +120,7 @@ test -r %_sharedstatedir/sockd/passwd.db || sockd.passwd -r
 %config %_sysconfdir/socks.conf
 %_libdir/libsocks.so.0.1.1
 %_libdir/libsocks.so.0
-%_libdir/libsocks.so
-#%_libdir/libdsocks.so
+#_libdir/libdsocks.so
 %_bindir/socksify
 %_mandir/man1/socksify.1*
 %_mandir/man5/socks.conf.5*
@@ -117,15 +137,25 @@ test -r %_sharedstatedir/sockd/passwd.db || sockd.passwd -r
 %_man5dir/sockd*
 %_man8dir/sockd*
 %_man1dir/sockd*
-%_unitdir/%name.service
-
+%_unitdir/*.service
 
 %files devel
 %doc INSTALL doc/rfc* doc/SOCKS4.protocol
-%_libdir/libsocks.a
+%_libdir/libsocks.so
 %_includedir/socks.h
 
+%if_enabled static
+%files devel-static
+%_libdir/libsocks.a
+%endif
+
 %changelog
+* Fri Jan 05 2024 Alexei Mezin <alexvm@altlinux.org> 1.4.3-alt4
+- Add symlink to systemd service with correct name to comply with packaging policy.
+
+* Mon Dec 11 2023 Michael Shigorin <mike@altlinux.org> 1.4.3-alt3
+- introduce devel-static subpackage
+
 * Sat Feb 26 2022 Alexei Mezin <alexvm@altlinux.org> 1.4.3-alt2
 - With Krb5, SASL and GSSAPI support
 
