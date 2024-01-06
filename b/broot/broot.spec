@@ -1,19 +1,23 @@
+%def_with check
+
 Name: broot
-Version: 1.17.1
+Version: 1.32.0
 Release: alt1
 Summary: A new way to see and navigate directory trees
 License: MIT
 Group: File tools
 Url: https://dystroy.org/broot
 Source: %name-%version.tar
+Source1: vendor.tar
 
+BuildRequires(pre): rpm-build-rust
 BuildRequires: rust-cargo
 
 %description
 %summary.
 
 %prep
-%setup
+%setup -a 1
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
 [source.crates-io]
@@ -24,20 +28,27 @@ directory = "vendor"
 EOF
 
 %build
-cargo build --offline --release
+%ifarch armh
+# build failed with lto
+sed -i 's/lto = true/lto = false/' Cargo.toml
+%endif
+%rust_build
 
 %install
-cargo install --path . --root %buildroot/%_usr
+%rust_install
 install -Dm 0644 man/page %buildroot%_man1dir/%name.1
 
 %check
-cargo test
+%rust_test
 
 %files
 %_bindir/%name
 %_man1dir/%name.1.xz
 
 %changelog
+* Sat Jan 06 2024 Alexander Makeenkov <amakeenk@altlinux.org> 1.32.0-alt1
+- Updated to version 1.32.0.
+
 * Sat Dec 17 2022 Alexander Makeenkov <amakeenk@altlinux.org> 1.17.1-alt1
 - Updated to version 1.17.1
 
