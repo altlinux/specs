@@ -15,7 +15,7 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 81.0
+Version: 82.0
 Release: alt1
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
@@ -101,7 +101,6 @@ export CXXFLAGS="$CXXFLAGS -I%_includedir/qt6 -I%_includedir/qt6/QtCore -I%_incl
     %{subst_enable debug} \
     %{subst_enable profiling} \
 %if_enabled qt
-    --enable-qt6 \
     ac_cv_path_LCONVERT=%_bindir/lconvert-qt6 \
 %endif
     %{subst_with flac} \
@@ -161,6 +160,9 @@ cat mkvextract.lang mkvmerge.lang mkvpropedit.lang >> %name.lang
 %endif
 
 %changelog
+* Sat Jan 06 2024 L.A. Kostis <lakostis@altlinux.ru> 82.0-alt1
+- 82.0.
+
 * Sat Dec 23 2023 L.A. Kostis <lakostis@altlinux.ru> 81.0-alt1
 - 81.0.
 - BR: update ruby requires.
