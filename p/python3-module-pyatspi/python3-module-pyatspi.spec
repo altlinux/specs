@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: python3-module-%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Python bindings for at-spi library
@@ -24,7 +24,7 @@ BuildRequires: python3-devel python3-module-pygobject3-devel >= %pygobject_ver
 BuildRequires:  libX11-devel libICE-devel libSM-devel
 %{?_enable_tests:BuildRequires: python3-module-dbus-gobject python3-module-dbus-devel
 BuildRequires: libat-spi2-core-devel libgtk+3-devel libxml2-devel}
-%{?_enable_check:BuildRequires: /proc dbus typelib(Atspi) = 2.0 typelib(Gtk) = 3.0}
+%{?_enable_check:BuildRequires: /proc dbus at-spi2-core typelib(Atspi) = 2.0 typelib(Gtk) = 3.0}
 
 %description
 at-spi allows assistive technologies to access GTK-based
@@ -57,10 +57,13 @@ export PYTHON=%__python3
 
 %files
 %python3_sitelibdir/%_name/
-%doc AUTHORS README NEWS
+%doc AUTHORS README* NEWS
 
 
 %changelog
+* Sat Jan 06 2024 Yuri N. Sedunov <aris@altlinux.org> 2.46.1-alt1
+- 2.46.1
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 2.46.0-alt1
 - 2.46.0
 
