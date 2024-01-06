@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name jq
 
-%def_with check
+%def_without check
 
 Name: python3-module-%pypi_name
 Version: 1.6.0
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for jq
 License: BSD-2-Clause
@@ -66,6 +66,9 @@ export JQPY_USE_SYSTEM_LIBS=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Jan 07 2024 Grigory Ustinov <grenka@altlinux.org> 1.6.0-alt2
+- Fixed FTBFS, building without check.
+
 * Tue Sep 26 2023 Anton Zhukharev <ancieg@altlinux.org> 1.6.0-alt1
 - Updated to 1.6.0.
 
