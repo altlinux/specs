@@ -1,12 +1,12 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.34
+%define ver_major 0.35
 %define api_ver 0
-%define beta .beta1
+%define beta %nil
 %define rdn_name sm.puri.Phoc
 
 %define dev_uid 500
-%define wlroots_ver 767eedd
+%define wlroots_ver 0.17.1
 %define gmobile_ver v0.0.4
 
 # since 0.30 system 0.16 may be used but patched version required
@@ -19,7 +19,7 @@
 
 Name: phoc
 Version: %ver_major.0
-Release: alt0.5%beta
+Release: alt1%beta
 
 Summary: Display compositor designed for mobile devices
 License: GPL-3.0-or-later
@@ -58,12 +58,13 @@ BuildRequires: pkgconfig(wayland-protocols) >= %wayland_proto_ver
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(xcb-icccm)
 
-%{?_disable_embed_wlroots:BuildRequires: pkgconfig(wlroots) >= 0.16}
+%{?_disable_embed_wlroots:BuildRequires: pkgconfig(wlroots) >= 0.17.1}
 %{?_enable_embed_wlroots:BuildRequires: libgbm-devel libseat1-devel
 BuildRequires: pkgconfig(xcb-renderutil)
+BuildRequires: pkgconfig(xcb-errors)
 BuildRequires: pkgconfig(hwdata)
-#BuildRequires: pkgconfig(xcb-errors)
-BuildRequires: xorg-xwayland-devel libglvnd-devel libvulkan-devel}
+BuildRequires: xorg-xwayland-devel libglvnd-devel libvulkan-devel
+BuildRequires: pkgconfig(libliftoff)}
 %{?_enable_gtk_doc:BuildRequires: gi-docgen pkgconfig(gobject-introspection-1.0)}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_check:BuildRequires: libgtest-devel xvfb-run mutter-gnome /usr/bin/Xwayland}
@@ -124,6 +125,10 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Sat Jan 06 2024 Yuri N. Sedunov <aris@altlinux.org> 0.35.0-alt1
+- 0.35.0
+- built with patched wlroots-0.17.1, gmobile-0.0.4
+
 * Wed Dec 06 2023 Yuri N. Sedunov <aris@altlinux.org> 0.34.0-alt0.5.beta1
 - 0.34.0.beta1
 
