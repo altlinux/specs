@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: libbpf
-Version: 1.2.2
+Version: 1.3.0
 Release: alt1
 Summary: Stand-alone build of libbpf from the Linux kernel
 Group: System/Libraries
@@ -33,6 +33,9 @@ Library and header files to build with libbpf.
 %setup
 
 %build
+%ifarch x86_64
+%add_optflags -fanalyzer -Werror
+%endif
 cd src
 %make_build CFLAGS="%optflags -fPIC" V=1 STATIC_LIBS=
 
@@ -50,6 +53,9 @@ cd src
 %_pkgconfigdir/libbpf.pc
 
 %changelog
+* Fri Jan 05 2024 Vitaly Chikunov <vt@altlinux.org> 1.3.0-alt1
+- Update to v1.3.0 (2023-11-22).
+
 * Wed Jul 12 2023 Alexey Gladkov <legion@altlinux.ru> 1.2.2-alt1
 - Update to v1.2.2.
 
