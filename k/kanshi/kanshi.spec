@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kanshi
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 
 Summary: Dynamic display configuration
@@ -49,5 +49,8 @@ protocol.
 %_man5dir/kanshi.5.xz
 
 %changelog
+* Sun Dec 31 2023 Egor Ignatov <egori@altlinux.org> 1.5.0-alt1
+- 1.5.0
+
 * Mon Nov 27 2023 Egor Ignatov <egori@altlinux.org> 1.4.0-alt1
 - First build for ALT
