@@ -22,8 +22,8 @@
 %endif
 
 Name: rygel
-Version: %ver_major.4
-Release: alt1.1
+Version: %ver_major.5
+Release: alt1
 
 Summary: A UPnP v2 Media Server
 Group: System/Servers
@@ -239,6 +239,9 @@ sed -E -i 's|(/>)(<)|\1\n\2|g' %buildroot%_girdir/*.gir
 %_girdir/*.gir
 
 %changelog
+* Sun Jan 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.42.5-alt1
+- 0.42.5
+
 * Thu Sep 07 2023 Yuri N. Sedunov <aris@altlinux.org> 0.42.4-alt1.1
 - disabled lms plugin, unmantained lightmediascanner don't supports ffmpeg > 5
 
