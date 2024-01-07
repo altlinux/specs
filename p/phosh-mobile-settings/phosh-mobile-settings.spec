@@ -2,16 +2,16 @@
 %define rdn_name mobi.phosh.MobileSettings
 
 Name: phosh-mobile-settings
-Version: 0.34.0
+Version: 0.35.0
 Release: alt1
 
 Summary: Mobile Settings App for phosh and related components
 Group: Graphical desktop/GNOME
 License: GPL-3.0-or-later
-Url: https://gitlab.gnome.org/guidog/phosh-mobile-settings
+Url: https://gitlab.gnome.org/World/Phosh/phosh-mobile-settings
 
-Vcs: https://gitlab.gnome.org/guidog/phosh-mobile-settings.git
-Source: https://gitlab.gnome.org/guidog/phosh-mobile-settings/-/archive/v%version/phosh-mobile-settings-v%version.tar.gz
+Vcs: https://gitlab.gnome.org/World/Phosh/phosh-mobile-settings
+Source: https://gitlab.gnome.org/World/Phosh/phosh-mobile-settings/-/archive/v%version/phosh-mobile-settings-v%version.tar.gz
 Source1: gmobile-%gmobile_ver.tar
 
 Requires: dconf lm_sensors3
@@ -63,6 +63,9 @@ mv gmobile-%gmobile_ver subprojects/gmobile
 
 
 %changelog
+* Sun Jan 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.35.0-alt1
+- 0.35.0
+
 * Tue Dec 05 2023 Yuri N. Sedunov <aris@altlinux.org> 0.34.0-alt1
 - 0.34.0
 

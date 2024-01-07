@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.34
+%define ver_major 0.35
 %define beta %nil
 %define api_ver 0
 %define rdn_name sm.puri.Phosh
@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: phosh
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A pure Wayland shell for mobile devices
@@ -40,7 +40,7 @@ Requires: %name-data = %EVR
 # to avoid circular dependency
 %filter_from_requires /\/usr\/bin\/%name-session/d
 %filter_from_requires /\/usr\/libexec\/%name/d
-Requires: phoc >= 0.34
+Requires: phoc >= 0.35
 Requires: gnome-shell-data
 Requires: mutter-gnome
 Requires: gnome-session
@@ -194,6 +194,9 @@ xvfb-run %__meson_test
 %{?_enable_gtk_doc:%doc %_datadir/doc/%name-%api_ver}
 
 %changelog
+* Sun Jan 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.35.0-alt1
+- 0.35.0
+
 * Wed Dec 20 2023 Yuri N. Sedunov <aris@altlinux.org> 0.34.1-alt1
 - 0.34.1
 
