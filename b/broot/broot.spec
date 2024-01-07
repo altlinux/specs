@@ -2,22 +2,26 @@
 
 Name: broot
 Version: 1.32.0
-Release: alt1
+Release: alt2
 Summary: A new way to see and navigate directory trees
 License: MIT
 Group: File tools
 Url: https://dystroy.org/broot
 Source: %name-%version.tar
 Source1: vendor.tar
+Patch: broot-1.32.0-nix-loongarch64.patch
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: rust-cargo
+BuildRequires: cargo-vendor-checksum diffstat
 
 %description
 %summary.
 
 %prep
 %setup -a 1
+%patch -p1
+diffstat -p1 -l < %PATCH0 | sed -re 's@vendor/@@' | xargs -r cargo-vendor-checksum -f
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
 [source.crates-io]
@@ -46,6 +50,9 @@ install -Dm 0644 man/page %buildroot%_man1dir/%name.1
 %_man1dir/%name.1.xz
 
 %changelog
+* Sun Jan 07 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.32.0-alt2
+- NMU: fixed FTBFS on LoongArch.
+
 * Sat Jan 06 2024 Alexander Makeenkov <amakeenk@altlinux.org> 1.32.0-alt1
 - Updated to version 1.32.0.
 
