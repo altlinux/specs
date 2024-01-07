@@ -18,8 +18,8 @@ Obsoletes: gambas3-%{*} < %EVR \
 %nil
 
 Name:    gambas
-Version: 3.18.3
-Release: alt1.1
+Version: 3.18.4
+Release: alt1
 
 Summary: IDE based on a basic interpreter with object extensions
 License: GPL-2.0+
@@ -126,7 +126,6 @@ Patch6: %name-3.11.4-alt-postgre-bool-type-fix.patch
 Patch7: %name-alt-mysql8-bool-type-fix.patch
 Patch8: gambas3-3.13.0-poppler-0.73.0.patch
 Patch9: gambas3-3.14.1-gst1.patch
-Patch10: gambas-alt-poppler23.0.patch
 
 Provides:  gambas3 = %EVR
 Obsoletes: gambas3 < %EVR
@@ -1268,7 +1267,6 @@ Requires: %name-runtime = %version-%release
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%patch10 -p1
 %ifarch %e2k
 find . -name 'gambas.h' -exec sed -i "/ifndef NO_GAMBAS_CASE_REPLACEMENT/a #ifdef __cplusplus\n#include <bits/locale_facets.h>\n#endif" {} \;
 %endif
@@ -1919,6 +1917,9 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %appdir/info/gb.geom.list
 
 %changelog
+* Sun Jan 07 2024 Andrey Cherepanov <cas@altlinux.org> 3.18.4-alt1
+- New version.
+
 * Sun Nov 26 2023 Ivan A. Melnikov <iv@altlinux.org> 3.18.3-alt1.1
 - NMU: Use rpm-macros-qt5-webengine (fixes build on loongarch64).
 
