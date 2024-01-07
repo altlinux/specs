@@ -19,6 +19,15 @@
 %global polly_name polly%v_majmin
 %global clang_sover %v_major
 %global clang_cpp_sover %v_major
+%global omp_name omp%v_majmin
+%global omp_sover %v_major
+# libomp has own versioning
+%global omp_vmajor 5
+%ifarch ppc64le
+%global libomp_arch ppc64
+%else
+%global libomp_arch %_arch
+%endif
 
 %global llvm_default_name llvm%_llvm_version
 %global clang_default_name clang%_llvm_version
@@ -34,6 +43,13 @@
 %global llvm_docdir %llvm_datadir/doc
 %global llvm_python3_libdir %llvm_libdir/python3
 %global llvm_python3_sitelibdir %llvm_python3_libdir/site-packages
+
+# to make findreq happy with openmp
+# as we don't provide libomp.so in _libdir
+%add_findreq_skiplist %llvm_libdir/libompd.so
+%add_findreq_skiplist %_libdir/libomptarget.so.%omp_sover
+%add_findreq_skiplist %_bindir/llvm-omp-device-info-%v_major
+%add_findreq_skiplist %_bindir/llvm-omp-kernel-replay-%v_major
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
 AutoReq: nopython
@@ -89,7 +105,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt3
+Release: alt4
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -122,12 +138,15 @@ Patch23: clang-alt-riscv64-dynamic-linker-path.patch
 Patch101: clang-ALT-bug-40628-grecord-command-line.patch
 Patch102: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.patch
 Patch103: clang-alt-nvvm-libdevice.patch
+Patch104: openmp-alt-soname.patch
 
 Patch200: 0001-RuntimeDyld-RISCV-Minimal-riscv64-support.patch
 Patch201: 0002-RuntimeDyld-RISCV-Impleemnd-HI20-and-LO12_I-relocs.patch
 Patch202: 0003-RuntimeDyld-RISCV-Add-PCREL_HI20-and-PCREL_LO12_I-re.patch
 Patch203: 0004-RuntimeDyld-Minimal-LoongArch64-support.patch
 
+# debian patches for openmp
+Patch300: deb-openmp-riscv64.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -671,6 +690,53 @@ program.
 
 This package contains documentation for the Polly optimizer.
 
+%package -n lib%omp_name
+Summary: LLVM/OpenMP Host Runtime (libomp)
+Group: System/Libraries
+%requires_filesystem
+
+%description -n lib%omp_name
+OpenMP runtime for clang.
+
+%package -n lib%omp_name-devel
+Summary: OpenMP header files
+Group: Development/C
+Requires: %clang_name-support = %EVR
+%requires_filesystem
+
+%description -n lib%omp_name-devel
+OpenMP header files
+
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
+%package -n lib%omp_name-doc
+Summary: Documentation for OpenMP
+Group: Development/C
+BuildArch: noarch
+%requires_filesystem
+
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
+%description -n lib%omp_name-doc
+This package contains documentation for the OpenMP.
+
+%package cmake-common-modules
+Summary: LLVM common cmake modules
+Group: Development/C
+BuildArch: noarch
+Requires: cmake-modules
+%requires_filesystem
+
+%description cmake-common-modules
+These are CMake modules to be shared between LLVM projects strictly at build
+time.
+
+These modules are used by llvm runtimes built outside of llvm tree.
+
 %prep
 # %setup -n llvm-%tarversion.src -a1 -a2 -a3 -a4 -a5 -a6
 # for pkg in clang lld lldb; do
@@ -706,11 +772,15 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch101 -p1
 %patch102 -p2
 %patch103 -p1
+%patch104 -p2
 
 %patch200 -p2
 %patch201 -p2
 %patch202 -p2
 %patch203 -p2
+
+# debian patches
+%patch300 -p1
 
 # LLVM 12 and onward deprecate Python 2:
 # https://releases.llvm.org/12.0.0/docs/ReleaseNotes.html
@@ -718,7 +788,7 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 subst '/^#!.*python$/s|python$|python3|' $(grep -Rl '#!.*python$' *)
 
 %build
-PROJECTS="clang;clang-tools-extra;compiler-rt;mlir;polly"
+PROJECTS="clang;clang-tools-extra;compiler-rt;mlir;polly;openmp"
 %if_with lld
 PROJECTS="$PROJECTS;lld"
 %endif
@@ -792,6 +862,9 @@ fi
 	-DLLVM_BUILD_TOOLS:BOOL=ON \
 	\
 	-DMLIR_INSTALL_AGGREGATE_OBJECTS=OFF \
+	-DLIBOMP_INSTALL_ALIASES=OFF \
+	-DOPENMP_LIBDIR_SUFFIX="%_libsuff" \
+	-DOPENMP_INSTALL_LIBDIR=%_libdir \
 	\
 	%if_enabled tests
 	-DLLVM_INCLUDE_TESTS:BOOL=ON \
@@ -861,6 +934,12 @@ cd -
 rm -f %buildroot%llvm_bindir/argdumper
 rm -f %buildroot%llvm_datadir/clang/clang-format-bbedit.applescript
 
+# Remove OpenMP static libraries with equivalent shared libraries
+rm -rf %buildroot%llvm_libdir/libarcher_static.a
+# FIXME! will pack it later
+# those files are needed for libompd (OMP debugger)
+rm -rf %buildroot%llvm_datadir/gdb
+
 # Install the clang bash completion.
 mkdir -p %buildroot%_datadir/bash-completion/completions
 ln -sr %buildroot%llvm_datadir/clang/bash-autocomplete.sh %buildroot%_datadir/bash-completion/completions/clang-%v_major
@@ -899,6 +978,8 @@ find %buildroot%llvm_libdir/*.so* -type f,l \
 paste %_tmppath/shared-objects %_tmppath/shared-object-links | while read object link; do
 	ln -srv "$object" "$link"
 done
+# OpenMP needs special handling here
+ln -srv %buildroot%llvm_libdir/libomp.so.%omp_vmajor %buildroot%_libdir/libomp.so.%omp_vmajor
 
 # List all packaged binaries in this source package.
 find %buildroot%_bindir/*-%v_major > %_tmppath/PATH-executables
@@ -1078,13 +1159,21 @@ emit_filelist >%_tmppath/dyn-files-lib%polly_name-devel <<EOExecutableList
 man	polly
 EOExecutableList
 
+emit_filelist >%_tmppath/dyn-files-lib%omp_name-devel <<EOExecutableList
+%ifnarch %ix86 %arm
+bin	llvm-omp-device-info
+bin	llvm-omp-kernel-replay
+%endif
+man	llvmopenmp
+EOExecutableList
+
 # Comment out file validation for CMake targets placed
 # in a different package.
 sed -i '
 /APPEND _cmake_import_check_targets \(mlir-\|MLIR\)/ {s|^|#|}
 /APPEND _cmake_import_check_targets \(tblgen-lsp-server\)/ {s|^|#|}
 /APPEND _cmake_import_check_targets \(Polly\)/ {s|^|#|}
-/APPEND _cmake_import_check_targets \(llvm-omp-device-info\|omptarget\)/ {s|^|#|}
+/APPEND _cmake_import_check_targets \(llvm-omp-device-info\|llvm-omp-kernel-replay\|omptarget\)/ {s|^|#|}
 ' %buildroot%llvm_libdir/cmake/llvm/LLVMExports-*.cmake
 
 # Comment out file validation for CMake targets producing executables
@@ -1092,6 +1181,10 @@ sed -i '
 sed -i '
 /APPEND _cmake_import_check_files_for_.* .*[/]bin[/].*/ {s|^|#|}
 ' %buildroot%llvm_libdir/cmake/clang/ClangTargets-*.cmake
+
+# Shared cmake files for llvm projects
+mkdir -p %buildroot%_datadir/cmake
+cp -ar cmake/Modules %buildroot%_datadir/cmake/
 
 %check
 %if_enabled tests
@@ -1178,6 +1271,12 @@ ninja -C %builddir check-all || :
 # clang-tools
 %ifarch %hwasan_symbolize_arches
 %exclude %llvm_libdir/clang/%v_major/bin/hwasan_symbolize
+%endif
+%exclude %llvm_libdir/clang/%v_major/include/omp.h
+%ifnarch %arm
+%exclude %llvm_libdir/clang/%v_major/include/omp-tools.h
+%exclude %llvm_libdir/clang/%v_major/include/ompt.h
+%exclude %llvm_libdir/clang/%v_major/include/ompt-multiplex.h
 %endif
 
 %files -n %clang_name-support-shared-runtimes -f %_tmppath/libclang-support-shared-runtimes
@@ -1319,7 +1418,54 @@ ninja -C %builddir check-all || :
 %files -n lib%polly_name-doc
 %doc %llvm_docdir/LLVM/polly
 
+%files -n lib%omp_name
+%llvm_libdir/libomp.so.%omp_vmajor
+%_libdir/libomp.so.%omp_vmajor
+%ifnarch %ix86 %arm
+# libomptarget is not supported on 32-bit systems.
+%llvm_libdir/libomptarget.rtl.amdgpu.so.%omp_sover
+%llvm_libdir/libomptarget.rtl.cuda.so.%omp_sover
+%llvm_libdir/libomptarget.rtl.%libomp_arch.so.%omp_sover
+%llvm_libdir/libomptarget.so.%omp_sover
+%_libdir/libomptarget.rtl.amdgpu.so.%omp_sover
+%_libdir/libomptarget.rtl.cuda.so.%omp_sover
+%_libdir/libomptarget.rtl.%libomp_arch.so.%omp_sover
+%_libdir/libomptarget.so.%omp_sover
+%endif
+
+%files -n lib%omp_name-devel -f %_tmppath/dyn-files-lib%omp_name-devel
+%llvm_libdir/clang/%v_major/include/omp.h
+%llvm_libdir/libomp.so
+%ifnarch %arm
+%llvm_libdir/libompd.so
+%llvm_libdir/libarcher.so
+%llvm_libdir/clang/%v_major/include/omp-tools.h
+%llvm_libdir/clang/%v_major/include/ompt.h
+%llvm_libdir/clang/%v_major/include/ompt-multiplex.h
+%endif
+%llvm_libdir/cmake/openmp
+%ifnarch %ix86 %arm
+# libomptarget is not supported on 32-bit systems.
+%llvm_libdir/libomptarget.rtl.amdgpu.so
+%llvm_libdir/libomptarget.rtl.cuda.so
+%llvm_libdir/libomptarget.rtl.%libomp_arch.so
+%llvm_libdir/libomptarget.devicertl.a
+%llvm_libdir/libomptarget-amdgpu-*.bc
+%llvm_libdir/libomptarget-nvptx-*.bc
+%llvm_libdir/libomptarget.so
+%endif
+
+%files -n lib%omp_name-doc
+%doc %llvm_docdir/LLVM/openmp
+
+%files cmake-common-modules
+%_datadir/cmake/Modules/*
+
 %changelog
+* Mon Jan 01 2024 L.A. Kostis <lakostis@altlinux.ru> 17.0.3-alt4
+- Build OpenMP target.
+- Make separate package for cmake common modules.
+
 * Sun Dec 10 2023 L.A. Kostis <lakostis@altlinux.ru> 17.0.3-alt3
 - Applied fixes:
   + clang: fix CUDA libdevice search path.
