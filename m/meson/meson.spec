@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.2
+%define ver_major 1.3
 %define libname mesonbuild
 %define pkgdocdir %_docdir/%name-%version
 
@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: meson
-Version: %ver_major.3
+Version: %ver_major.1
 Release: alt1
 
 Summary: High productivity build system
@@ -28,6 +28,7 @@ Source: %name-%version.tar
 
 Source1: %name.macros
 Source2: %name.env
+Source3: %name-setup.macros
 
 BuildArch: noarch
 
@@ -108,6 +109,7 @@ popd}
 %pyproject_install
 install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 install -Dpm 0755 %SOURCE2 %buildroot%_rpmmacrosdir/%name.env
+install -Dpm 0644 %SOURCE3 %buildroot%_rpmmacrosdir/%name-setup
 
 %{?_enable_docs:
 mkdir -p %buildroot%pkgdocdir
@@ -130,6 +132,7 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 %files -n rpm-macros-%name
 %_rpmmacrosdir/%name
 %_rpmmacrosdir/%name.env
+%_rpmmacrosdir/%name-setup
 
 %if_enabled docs
 %files doc
@@ -137,6 +140,14 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 %endif
 
 %changelog
+* Thu Jan 4 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt1
+- 1.3.1
+- meson-setup.macros with new experimental
+  %%subst_enable_meson_{bool,feature} macros by darktemplar@
+
+* Wed Nov 22 2023 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Sat Oct 21 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1
 - 1.2.3
 
