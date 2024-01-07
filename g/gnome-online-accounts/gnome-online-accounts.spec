@@ -20,7 +20,7 @@
 
 Name: gnome-online-accounts
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: Provide online accounts information
 Group: Graphical desktop/GNOME
@@ -34,8 +34,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %endif
 
 Requires: lib%name = %EVR
-
-%{?_enable_kerberos:Requires: realmd}
+# realmd requires /sbin/telinit provided by sysvinit or systemd-sysvinit packages
+%{?_enable_kerberos:Requires: realmd systemd-sysvinit}
 
 %define glib_ver 2.68
 %define gtk_ver 3.20.0
@@ -181,6 +181,10 @@ sed -i '/#include <libxml\/xmlIO.h>/i #include <libxml/parser.h>' src/goabackend
 %endif
 
 %changelog
+* Sun Jan 07 2024 Yuri N. Sedunov <aris@altlinux.org> 3.48.0-alt1.2
+- explicitly required realmd+systemd-sysvinit to prevent
+  apt to resolve /sbin/telinit from sysvinit package
+
 * Sun Dec 17 2023 Yuri N. Sedunov <aris@altlinux.org> 3.48.0-alt1.1
 - fixed build with libxml2-2.12.x
 
