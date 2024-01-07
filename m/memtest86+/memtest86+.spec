@@ -1,5 +1,5 @@
 Name: memtest86+
-Version: 6.20
+Version: 7.00
 Release: alt1
 
 Summary: Memory test for x86 architecture
@@ -7,10 +7,8 @@ License: GPL-2.0-or-later
 Group: System/Kernel and hardware
 
 Url: http://www.memtest.org
-Source: %url/download/%version/%name-%version.tar.gz
 # Source-url: https://github.com/memtest86plus/memtest86plus/archive/refs/tags/v%version.tar.gz
-
-Packager: Michael Shigorin <mike@altlinux.org>
+Source: %name-%version.tar
 
 ExclusiveArch: %ix86 x86_64
 Requires(post,preun): bootloader-utils >= 0.3
@@ -93,6 +91,10 @@ ln -s `relative /sbin/installkernel %_sbindir/installmemtest86+` \
 %doc README.md
 
 %changelog
+* Mon Jan 08 2024 Anton Midyukov <antohami@altlinux.org> 7.00-alt1
+- new version (7.00) with rpmgs script
+- clean Packager
+
 * Mon May 08 2023 Anton Midyukov <antohami@altlinux.org> 6.20-alt1
 - new version (6.20) with rpmgs script
 
