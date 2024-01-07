@@ -1,5 +1,5 @@
 Name: startup-rescue
-Version: 0.47
+Version: 0.48
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
@@ -38,6 +38,7 @@ This package contains scripts used to boot your system from rescue disk.
 mkdir -p -- %buildroot{%_bindir,/sbin,%_initdir}
 
 install -pm755 rescue-shell %buildroot%_bindir/
+install -pm755 rescue-shell-show %buildroot%_bindir/
 %ifarch %ix86 x86_64
 install -pm755 fixmbr %buildroot/sbin/
 %endif
@@ -64,6 +65,10 @@ install -pm755 rescue-remote.init %buildroot%_initdir/rescue-remote
 %_initdir/rescue-remote
 
 %changelog
+* Fri Jan 05 2024 Anton Midyukov <antohami@altlinux.org> 0.48-alt1
+- separate script rescue-shell-show from rescue-shell
+- rescue-shell-show: show a link to Russian wiki if lang=ru_RU in cmdline
+
 * Tue Sep 26 2023 Anton Midyukov <antohami@altlinux.org> 0.47-alt1
 - rc.sysinit.rescue: do not remount '/' (already rw)
 
