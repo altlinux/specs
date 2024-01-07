@@ -1,5 +1,5 @@
 Name: livecd-user
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Create LiveCD user
@@ -37,6 +37,9 @@ fi
 %_unitdir/%name.service
 
 %changelog
+* Sat Jan 06 2024 Anton Midyukov <antohami@altlinux.org> 0.3-alt1
+- Add parameter LIVECD_NO_ISSUE (disable by default)
+
 * Wed Oct 26 2022 Anton Midyukov <antohami@altlinux.org> 0.2-alt1
 - livecd-user.service: increase timeout to 120 seconds
 
