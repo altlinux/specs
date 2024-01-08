@@ -1,7 +1,7 @@
 %define oname caffeine
 Name: %oname-ng
-Version: 4.0.2
-Release: alt2
+Version: 4.2.0
+Release: alt1
 Summary: Prevent screensaving and powersaving
 Group: Graphical desktop/Other
 License: GPLv3 and LGPLv3
@@ -12,8 +12,11 @@ Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: python3(setuptools) python3(setuptools_scm) python3(wheel)
+BuildRequires(pre): rpm-macros-python3 rpm-build-gir
+BuildRequires: rpm-build-python3
+BuildRequires: meson
+BuildRequires: python3-devel
+BuildRequires: scdoc
 BuildRequires: git-core
 
 Obsoletes: %oname =< %EVR
@@ -58,25 +61,27 @@ git add . -A
 git commit -a -m "%version"
 git tag -m "%version" %version
 
-%pyproject_build
+%meson
+%meson_build
 
 %install
-%pyproject_install
+%meson_install
 
-mv %buildroot%python3_sitelibdir%prefix/* %buildroot%prefix/
-mv %buildroot%python3_sitelibdir%_sysconfdir %buildroot/
+#mv %buildroot%python3_sitelibdir%prefix/* %buildroot%prefix/
+#mv %buildroot%python3_sitelibdir%_sysconfdir %buildroot/
 
-%find_lang %oname
+%find_lang %name
 
 # remove unused icons
 rm -r %buildroot%_iconsdir/ubuntu-mono-dark
 
-%files -f %oname.lang
+%files -f %name.lang
 %doc *.rst
 %_sysconfdir/xdg/autostart/%oname.desktop
 %_bindir/*
 %_man1dir/*.1.*
 %_desktopdir/*.desktop
+%_datadir/%oname
 %_iconsdir/hicolor/*/*/*
 %_pixmapsdir/*
 %python3_sitelibdir/*
@@ -84,6 +89,9 @@ rm -r %buildroot%_iconsdir/ubuntu-mono-dark
 %_datadir/glib-2.0/schemas/*
 
 %changelog
+* Mon Jan 08 2024 Anton Midyukov <antohami@altlinux.org> 4.2.0-alt1
+- new version 4.2.0
+
 * Thu Mar 09 2023 Anton Midyukov <antohami@altlinux.org> 4.0.2-alt2
 - switch to use AyatanaAppindicator
 
