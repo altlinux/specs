@@ -1,10 +1,10 @@
-%define git_commit 2fb55450610a4d10479a1eed1408f905d79318e3
-%define git_rev 7859
+%define git_commit 1c61b54208ca6266129d0f2394c04bd8c44f98c5
+%define git_rev 7926
 %define sover 0.10
 
 Name: mgba
-Version: %sover.2
-Release: alt2.1
+Version: %sover.3
+Release: alt1
 
 Summary: Game Boy Advance emulator
 License: MPL-2.0
@@ -107,6 +107,9 @@ sed -i -e 's/${GIT_REV}/%git_rev/' src/core/version.c.in
 %_libdir/lib%name.so
 
 %changelog
+* Mon Jan 08 2024 Nazarov Denis <nenderus@altlinux.org> 0.10.3-alt1
+- New version 0.10.3.
+
 * Sun Sep 10 2023 Nazarov Denis <nenderus@altlinux.org> 0.10.2-alt2.1
 - Fix FTBFS
 
