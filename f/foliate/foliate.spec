@@ -1,12 +1,12 @@
 %def_enable snapshot
 
-%define ver_major 3.0
+%define ver_major 3.1
 %define rdn_name com.github.johnfactotum.Foliate
 # https://github.com/johnfactotum/foliate-js.git
-%define fjs_ver 2ea6392
+%define fjs_ver 35f749d
 
 Name: foliate
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A simple and modern GTK eBook reader
@@ -89,6 +89,9 @@ mv %name-js-%fjs_ver/* src/%name-js
 
 
 %changelog
+* Mon Jan 08 2024 Yuri N. Sedunov <aris@altlinux.org> 3.1.0-alt1
+- 3.1.0
+
 * Mon Nov 20 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
 - 3.0.1
 
