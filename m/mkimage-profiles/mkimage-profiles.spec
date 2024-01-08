@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.5.15.2
+Version: 1.5.16
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -134,6 +134,15 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Jan 08 2024 Anton Midyukov <antohami@altlinux.org> 1.5.16-alt1
+- log.mk: fix abort on error when STDOUT=1 (ALT bug 48863)
+- datetime: set TIME ZONE, use alterator-datetime-functions,
+  set TIME_ZONE, TIME_UTC via kernel cmdline for distro images
+- grub: add new langs: kk_KZ, ky_KG, uz_UZ
+- live: fix mistake in 90-live-cleanup-drivers
+- live, grub, isolinux: new target use/live/rescue
+- sound: Enable pipewire socket instead service
+
 * Tue Dec 12 2023 Anton Midyukov <antohami@altlinux.org> 1.5.15.2-alt1
 - Fix vmguest feature after commit "vmguest: simplify the code"
 - various fixes for regular.mk
