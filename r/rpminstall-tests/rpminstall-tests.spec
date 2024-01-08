@@ -1,6 +1,6 @@
 Name: rpminstall-tests
 Version: 1.1.3
-Release: alt7
+Release: alt8
 
 Summary: Tests for rpm: how it interprets packages when installing
 
@@ -140,6 +140,8 @@ echo 'Now test also with "Epoch: 0" instead of no Epoch:'\
 
 %pre checkinstall -p %_sbindir/sh-safely
 set -x
+mkdir "$TMPDIR/home"
+HOME="$TMPDIR/home"; export HOME
 %simple_test
 %all_tests
 
@@ -147,6 +149,8 @@ set -x
 
 %pre archcompat-checkinstall -p %_sbindir/sh-safely
 set -x
+mkdir "$TMPDIR/home"
+HOME="$TMPDIR/home"; export HOME
 %archcompat_test
 %simple_test
 
@@ -154,10 +158,16 @@ set -x
 
 %pre archcompat-with-proc-checkinstall -p %_sbindir/sh-safely
 set -x
+mkdir "$TMPDIR/home"
+HOME="$TMPDIR/home"; export HOME
 %archcompat_test
 %simple_test
 
 %changelog
+* Sun Jan 07 2024 Arseny Maslennikov <arseny@altlinux.org> 1.1.3-alt8
+- Set more robust value for HOME environment variable in the *-checkinstall
+  package scriptlets.
+
 * Sat Aug 29 2020 Ivan Zakharyaschev <imz@altlinux.org> 1.1.3-alt7
 - Removed the buildtime nprocs value from the *-checkinstall package scriptlets:
   it would make no sense at runtime.
