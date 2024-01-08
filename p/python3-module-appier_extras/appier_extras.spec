@@ -1,14 +1,15 @@
 %define oname appier_extras
 
 Name: python3-module-%oname
-Version: 0.24.9
+Version: 0.25.0
 Release: alt1
 
 Summary: Appier Framework Extra Elements
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/appier_extras
+URL: https://pypi.python.org/pypi/appier_extras
+VCS: https://github.com/hivesolutions/appier-extras
 
 Source: %name-%version.tar
 
@@ -29,7 +30,7 @@ Set of extra elements for Appier Framework infra-structure.
 
 %install
 %pyproject_install
-rm -rf %_bindir/markdown
+rm -rf %buildroot%_bindir/markdown
 
 %files
 %doc *.md
@@ -37,6 +38,9 @@ rm -rf %_bindir/markdown
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Jan 08 2024 Grigory Ustinov <grenka@altlinux.org> 0.25.0-alt1
+- Automatically updated to 0.25.0.
+
 * Wed May 17 2023 Grigory Ustinov <grenka@altlinux.org> 0.24.9-alt1
 - Build new version.
 

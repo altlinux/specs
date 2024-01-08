@@ -2,14 +2,15 @@
 %define oname appier
 
 Name: python3-module-%oname
-Version: 1.31.4
+Version: 1.31.5
 Release: alt1
 
 Summary: Appier Framework
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/appier/
+URL: https://pypi.python.org/pypi/appier
+VCS: https://github.com/hivesolutions/appier
 
 Source: %name-%version.tar
 
@@ -55,6 +56,9 @@ This package contains tests for Appier Framework.
 %python3_sitelibdir/*/test
 
 %changelog
+* Mon Jan 08 2024 Grigory Ustinov <grenka@altlinux.org> 1.31.5-alt1
+- Automatically updated to 1.31.5.
+
 * Sat Oct 21 2023 Grigory Ustinov <grenka@altlinux.org> 1.31.4-alt1
 - Automatically updated to 1.31.4.
 
