@@ -3,14 +3,17 @@
 %def_disable clang
 
 Name: deepin-grand-search
-Version: 5.4.2
+Version: 5.4.5
 Release: alt1
+
 Summary: Basic search tool for DDE
-License: GPL-3.0+
+
+License: GPL-3.0-or-later
 Group: File tools
 Url: https://github.com/linuxdeepin/dde-grand-search
 
 Source: %url/archive/%version/%repo-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -18,9 +21,11 @@ BuildRequires(pre): clang-devel
 BuildRequires(pre): gcc-c++
 %endif
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: cmake libgio-devel glib2-devel libtag-devel libavformat-devel libffmpegthumbnailer-devel libpcre-devel
-BuildRequires: qt5-base-devel qt5-tools libpoppler-qt5-devel gsettings-qt-devel
-BuildRequires: dtk5-widget-devel dtk5-common deepin-qt-dbus-factory-devel deepin-dock-devel
+# Automatically added by buildreq on Tue Jan 09 2024
+# optimized out: alt-os-release bash5 bashrc cmake cmake-modules dtkcore gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libavcodec-devel libavformat-devel libavutil-devel libdeepin-pdfium1 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libicu-devel libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-common qt5-base-devel sh5 zlib-devel
+BuildRequires: deepin-dock-devel deepin-qt-dbus-factory-devel gsettings-qt-devel libdeepin-pdfium-devel libdtkwidget-devel libffmpegthumbnailer-devel libgio-devel libjpeg-devel libtag-devel qt5-tools
+# aarch64
+BuildRequires: libpcre-devel
 
 %description
 Deepin Grand Search is a basic search tool developed
@@ -29,10 +34,7 @@ a series of files,applications or documents, etc.
 
 %prep
 %setup -n %repo-%version
-sed -i 's|lib/dde-dock/plugins/|%_lib/dde-dock/plugins/|' \
-  src/grand-search-dock-plugin/CMakeLists.txt
-sed -i 's|lib/${CMAKE_LIBRARY_ARCHITECTURE}|%_lib|' \
-  CMakeLists.txt
+%patch -p1
 
 %build
 %define optflags_lto %nil
@@ -80,6 +82,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_datadir/glib-2.0/schemas/com.deepin.dde.dock.module.grand-search.gschema.xml
 
 %changelog
+* Tue Jan 09 2024 Leontiy Volodin <lvol@altlinux.org> 5.4.5-alt1
+- New version 5.4.5.
+- Cleanup BRs.
+
 * Thu Apr 06 2023 Leontiy Volodin <lvol@altlinux.org> 5.4.2-alt1
 - New version 5.4.2.
 
