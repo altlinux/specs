@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 8.0
-%define _dotnet_corerelease 8.0.0-preview.6.23329.7
-%define _dotnet_aspnetcorerelease 8.0.0-preview.6.23329.11
-%define _dotnet_aspnetcoreapprefrelease 8.0.0-preview.6.23329.11
-%define preview .preview.6.23330.14
+%define _dotnet_corerelease 8.0.0-rc.2.23479.6
+%define _dotnet_aspnetcorerelease 8.0.0-rc.2.23480.2
+%define _dotnet_aspnetcoreapprefrelease 8.0.0-rc.2.23480.2
+%define preview .rc.2.23502.2
 %define _dotnet_coreshortrelease 8.0.0%preview
 
 # FIXME: build from sources
@@ -59,7 +59,7 @@ applications and micro-services.
 Just copied managed binaries now.
 
 %package -n dotnet-aspnetcore-runtime-%_dotnet_major
-Summary: ASP.NET 6 runtime
+Summary: ASP.NET 8 runtime
 Group: Development/Other
 #AutoReq: yes,nomingw32,nomingw64,nomono,nomonolib
 AutoReq: no
@@ -80,7 +80,7 @@ applications and micro-services.
 
 
 %package -n dotnet-aspnetcore-targeting-pack-%_dotnet_major
-Summary: ASP.NET 6 targeting pack
+Summary: ASP.NET 8 targeting pack
 Group: Development/Other
 #AutoReq: yes,nomingw32,nomingw64,nomono,nomonolib
 AutoReq: no
@@ -130,6 +130,9 @@ cp -a %bootstrapdir/packs/Microsoft.AspNetCore.App.Ref/%_dotnet_aspnetcoreappref
 %_dotnet_aspnetcoreappref/
 
 %changelog
+* Mon Jan 08 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.0.rc.2.23502.2-alt1
+- ASP.NET 8.0.0 RC2
+
 * Fri Jul 28 2023 Vitaly Lipatov <lav@altlinux.ru> 8.0.0.preview.6.23330.14-alt1
 - ASP.NET 8.0.0 preview 6
 

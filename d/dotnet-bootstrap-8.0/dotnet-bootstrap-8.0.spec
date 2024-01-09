@@ -1,15 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 8.0
-%define _dotnet_corerelease 8.0.0-preview.6.23329.7
-%define _dotnet_sdkmanifestsrelease 8.0.100-preview.6
-%define _dotnet_sdkrelease 8.0.100-preview.6.23330.14
-%define _dotnet_aspnetcorerelease 8.0.0-preview.6.23329.11
-%define _dotnet_templatesrelease 8.0.0-preview.6.23329.11
-%define _dotnet_coreapprefrelease 8.0.0-preview.6.23329.7
-%define _dotnet_aspnetcoreapprefrelease 8.0.0-preview.6.23329.11
+%define _dotnet_corerelease 8.0.0-rc.2.23479.6
+%define _dotnet_sdkmanifestsrelease1 8.0.100-rc.1
+%define _dotnet_sdkmanifestsrelease 8.0.100-rc.2
+%define _dotnet_sdkrelease 8.0.100-rc.2.23502.2
+%define _dotnet_aspnetcorerelease 8.0.0-rc.2.23480.2
+%define _dotnet_templatesrelease 8.0.0-rc.2.23480.2
+%define _dotnet_coreapprefrelease 8.0.0-rc.2.23479.6
+%define _dotnet_aspnetcoreapprefrelease 8.0.0-rc.2.23480.2
 %define _dotnet_netstandartrelease 2.1.0
-%define preview .preview.6.23330.14
+%define preview .rc.2.23502.2
 %define _dotnet_coreshortrelease 8.0.0%preview
 %define _dotnet_sdkshortrelease 8.0.100%preview
 
@@ -19,7 +20,7 @@ Name: dotnet-bootstrap-%_dotnet_major
 Version: 8.0.0%preview
 Release: alt1
 
-Summary: .NET Core SDK binaries
+Summary: .NET 8 SDK binaries
 
 License: MIT
 Url: https://github.com/dotnet
@@ -29,11 +30,11 @@ Group: Development/Other
 # from https://github.com/dotnet/core/tree/master/release-notes/8.0
 
 # x86_64
-# Source-url: https://download.visualstudio.microsoft.com/download/pr/0ce806be-89f7-4264-ad1b-6ff1887e7b6b/08a75d03919470fba420b970a7565ef5/dotnet-sdk-8.0.100-preview.6.23330.14-linux-x64.tar.gz
+# Source-url: https://download.visualstudio.microsoft.com/download/pr/9144f37e-b370-41ee-a86f-2d2a69251652/bc1d544112ec134184a5aec7f7a1eaf9/dotnet-sdk-8.0.100-rc.2.23502.2-linux-x64.tar.gz
 Source: %name-%version.tar
 
 # aarch64
-# Source2-url: https://download.visualstudio.microsoft.com/download/pr/46626be9-8672-4c2c-b149-3233496e4372/fb49425c9eeb4f05291a9f57250c0e0d/dotnet-sdk-8.0.100-preview.6.23330.14-linux-arm64.tar.gz
+# Source2-url: https://download.visualstudio.microsoft.com/download/pr/0247681a-1a4a-4a32-a1a6-4149d56af27e/5bcbf1d8189c2649b16d27f5199e04a4/dotnet-sdk-8.0.100-rc.2.23502.2-linux-arm64.tar.gz
 Source2: %name-aarch64-%version.tar
 
 ExclusiveArch: x86_64 aarch64
@@ -114,7 +115,7 @@ strip \
 %dir %_dotnetdir/sdk/
 %_dotnet_sdk/
 %dir %_dotnetdir/sdk-manifests/
-%_dotnetdir/sdk-manifests/8.0.100-preview.3/
+%_dotnetdir/sdk-manifests/%_dotnet_sdkmanifestsrelease1/
 %_dotnet_sdkmanifests/
 %dir %_dotnetdir/shared/
 %dir %_dotnetdir/shared/Microsoft.NETCore.App/
@@ -125,6 +126,9 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Mon Jan 08 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.0.rc.2.23502.2-alt1
+- The .NET 8.0 and .NET SDK 8.0.0 RC2
+
 * Fri Jul 28 2023 Vitaly Lipatov <lav@altlinux.ru> 8.0.0.preview.6.23330.14-alt1
 - The .NET 8.0 and .NET SDK 8.0.0 preview 6
 

@@ -4,13 +4,14 @@
 %def_enable dotnet_host
 
 %define _dotnet_major 8.0
-%define _dotnet_corerelease 8.0.0-preview.6.23329.7
-%define _dotnet_sdkmanifestsrelease 8.0.100-preview.6
-%define _dotnet_sdkrelease 8.0.100-preview.6.23330.14
-%define _dotnet_templatesrelease 8.0.0-preview.6.23329.11
-%define _dotnet_coreapprefrelease 8.0.0-preview.6.23329.7
+%define _dotnet_corerelease 8.0.0-rc.2.23479.6
+%define _dotnet_sdkmanifestsrelease1 8.0.100-rc.1
+%define _dotnet_sdkmanifestsrelease 8.0.100-rc.2
+%define _dotnet_sdkrelease 8.0.100-rc.2.23502.2
+%define _dotnet_templatesrelease 8.0.0-rc.2.23480.2
+%define _dotnet_coreapprefrelease 8.0.0-rc.2.23479.6
 %define _dotnet_netstandartrelease 2.1.0
-%define preview .preview.6.23330.14
+%define preview .rc.2.23502.2
 %define _dotnet_coreshortrelease 8.0.0%preview
 %define _dotnet_sdkshortrelease 8.0.100%preview
 
@@ -20,7 +21,7 @@ Name: dotnet-sdk-%_dotnet_major
 Version: 8.0.100%preview
 Release: alt1
 
-Summary: SDK for the .NET
+Summary: SDK for the .NET 8
 
 License: MIT
 Group: Development/Other
@@ -117,11 +118,11 @@ cp -a %bootstrapdir/packs/NETStandard.Library.Ref/ %buildroot%_dotnetdir/packs/
 mkdir -p %buildroot%_dotnetdir/templates/%_dotnet_templatesrelease/
 cp -a %bootstrapdir/templates/%_dotnet_templatesrelease/* %buildroot%_dotnetdir/templates/%_dotnet_templatesrelease/
 
-mkdir -p %buildroot%_dotnetdir/sdk-manifests/8.0.100-preview.3/
-cp -a %bootstrapdir/sdk-manifests/8.0.100-preview.3/* %buildroot%_dotnetdir/sdk-manifests/8.0.100-preview.3/
-
 mkdir -p %buildroot%_dotnetdir/sdk-manifests/%_dotnet_sdkmanifestsrelease/
 cp -a %bootstrapdir/sdk-manifests/%_dotnet_sdkmanifestsrelease/* %buildroot%_dotnetdir/sdk-manifests/%_dotnet_sdkmanifestsrelease/
+
+mkdir -p %buildroot%_dotnetdir/sdk-manifests/%_dotnet_sdkmanifestsrelease1/
+cp -a %bootstrapdir/sdk-manifests/%_dotnet_sdkmanifestsrelease1/* %buildroot%_dotnetdir/sdk-manifests/%_dotnet_sdkmanifestsrelease1/
 
 # apphost used as executable, f.i. dotnet tool install --global paket will install it in $HOME/.dotnet/tools as paket
 # rewrite one with our binary
@@ -138,7 +139,7 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %_dotnetdir/templates/%_dotnet_templatesrelease/*.nupkg
 
 %dir %_dotnetdir/sdk-manifests/
-%_dotnetdir/sdk-manifests/8.0.100-preview.3/
+%_dotnetdir/sdk-manifests/%_dotnet_sdkmanifestsrelease1/
 %_dotnet_sdkmanifests/
 
 %files -n dotnet-targeting-pack-%_dotnet_major
@@ -153,6 +154,9 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %endif
 
 %changelog
+* Mon Jan 08 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.100.rc.2.23502.2-alt1
+- .NET SDK 8.0.0 RC2
+
 * Fri Jul 28 2023 Vitaly Lipatov <lav@altlinux.ru> 8.0.100.preview.6.23330.14-alt1
 - .NET SDK 8.0.0 preview 6
 

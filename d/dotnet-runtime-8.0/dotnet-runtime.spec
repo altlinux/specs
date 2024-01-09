@@ -2,10 +2,10 @@
 %def_disable dotnet_host
 
 %define _dotnet_major 8.0
-%define _dotnet_corerelease 8.0.0-preview.6.23329.7
+%define _dotnet_corerelease 8.0.0-rc.2.23479.6
 # used for build
-%define _dotnet_sdkrelease 8.0.100-preview.6.23330.14
-%define preview .preview.6.23330.14
+%define _dotnet_sdkrelease 8.0.100-rc.2.23502.2
+%define preview .rc.2.23502.2
 %define _dotnet_sdkshortrelease 8.0.100%preview
 
 %define commithash %version-%release
@@ -334,6 +334,7 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 #_dotnet_shared/libdbgshim.so
 %_dotnet_shared/libjitinterface*.so
 
+%_dotnet_shared/libclrgcexp.so
 %_dotnet_shared/libclrjit*.so
 %_dotnet_shared/libcoreclr.so
 %_dotnet_shared/libcoreclrtraceptprovider.so
@@ -383,6 +384,17 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Mon Jan 08 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.0.rc.2.23502.2-alt1
+- .NET 8.0.0 RC2
+- CVE-2023-44487: .NET Denial of Service Vulnerability
+- CVE-2023-38171: .NET Denial of Service Vulnerability
+- CVE-2023-36435: .NET Denial of Service Vulnerability
+- CVE-2023-36792: .NET Remote Code Execution Vulnerability
+- CVE-2023-36793: .NET Remote Code Execution Vulnerability
+- CVE-2023-36794: .NET Remote Code Execution Vulnerability
+- CVE-2023-36796: .NET Remote Code Execution Vulnerability
+- CVE-2023-36799: .NET Denial of Service Vulnerability
+
 * Fri Jul 28 2023 Vitaly Lipatov <lav@altlinux.ru> 8.0.0.preview.6.23330.14-alt1
 - .NET 8.0.0 preview 6
 
