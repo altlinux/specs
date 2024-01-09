@@ -8,7 +8,7 @@
 %def_with cmake
 
 Name: deepin-image-editor
-Version: 1.0.39
+Version: 1.0.40.0.1.7088
 Release: alt1
 
 Summary: Image editor libraries for Deepin
@@ -18,6 +18,9 @@ Group: System/Libraries
 Url: https://github.com/linuxdeepin/image-editor
 
 Source: %url/archive/%version/%repo-%version.tar.gz
+# Applied the patch by archlinux:
+# https://gitlab.archlinux.org/archlinux/packaging/packages/deepin-image-editor/-/raw/main/remove-broken-flags.patch
+Patch: %name-%version-%release.patch
 
 %if_with clang
 ExcludeArch: armh
@@ -90,14 +93,7 @@ Development libraries for deepin-album.
 
 %prep
 %setup -n %repo-%version
-sed -i 's|/usr/lib/|%_libdir/|' \
-    libimageviewer/CMakeLists.txt \
-    libimageviewer/libimageviewer.pro \
-    libimagevisualresult/CMakeLists.txt
-sed -i 's|3rdparty/tiff-tools/converttiff.h|../../3rdparty/tiff-tools/converttiff.h|' \
-    libimageviewer/unionimage/unionimage.cpp
-sed -i 's|libimageviewer|libimagevisualresult|' \
-    libimagevisualresult/libimagevisualresult.pc.in
+%patch -p1
 
 %build
 export PATH=%_qt5_bindir:$PATH
@@ -168,6 +164,10 @@ cmake --build "%_cmake__builddir"
 %_pkgconfigdir/lib%repoivr.pc
 
 %changelog
+* Tue Jan 09 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.40.0.1.7088-alt1
+- New version 1.0.40.0.1.7088.
+- Removed broken build flags (thanks archlinux for the patch).
+
 * Fri Dec 22 2023 Leontiy Volodin <lvol@altlinux.org> 1.0.39-alt1
 - New version 1.0.39.
 

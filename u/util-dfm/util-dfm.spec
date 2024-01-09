@@ -1,7 +1,7 @@
 %def_without clang
 
 Name: util-dfm
-Version: 1.2.17
+Version: 1.2.20.0.3.2827
 Release: alt1
 
 Summary: A Toolkits of libdfm-io, libdfm-mount and libdfm-burn
@@ -133,6 +133,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/cmake/dfm-burn/dfm-burnConfig.cmake
 
 %changelog
+* Tue Jan 09 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.20.0.3.2827-alt1
+- New version 1.2.20-3-g2827d7b.
+
 * Tue Oct 24 2023 Leontiy Volodin <lvol@altlinux.org> 1.2.17-alt1
 - Initial build for ALT Sisyphus.
 - Needed for deepin-file-manager 6.0.13.
