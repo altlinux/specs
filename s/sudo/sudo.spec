@@ -5,7 +5,7 @@
 
 
 Name: sudo
-Version: 1.9.15p3
+Version: 1.9.15p5
 Release: alt1
 Epoch: 1
 
@@ -263,6 +263,19 @@ fi
 %_man5dir/sudo_plugin.5*
 
 %changelog
+* Thu Jan 04 2024 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.15p5-alt1
+- Update to latest stable bugfix release:
+ + Fixed evaluation of the "lecture", "listpw", "verifypw", and "fdexec"
+   sudoers Defaults settings when used without an explicit value.
+ + Sudo will now transparently rename a user's lecture file from
+   the older name-based path to the newer user-ID-based path.
+ + Memory allocation failure if sysconf(_SC_LOGIN_NAME_MAX) fails.
+
+* Sat Dec 23 2023 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.15p4-alt1
+- Update to stable release with fixing regression to change in sudo 1.9.15.
+ + Bug that could prevent a user's privileges from being listed by "sudo -l"
+   if the sudoers entry in /etc/nsswitch.conf contains "[SUCCESS=return]".
+
 * Thu Dec 14 2023 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.15p3-alt1
 - Update to stable release with fixing regressions to changes in sudo 1.9.15.
 
