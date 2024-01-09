@@ -1,22 +1,22 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 6.0
-%define _dotnet_corerelease 6.0.20
+%define _dotnet_corerelease 6.0.25
 %define _dotnet_sdkmanifestsrelease 6.0.100
-%define _dotnet_sdkrelease 6.0.120
-%define _dotnet_aspnetcorerelease 6.0.20
-%define _dotnet_templatesrelease 6.0.20
-%define _dotnet_coreapprefrelease 6.0.20
-%define _dotnet_aspnetcoreapprefrelease 6.0.20
+%define _dotnet_sdkrelease 6.0.125
+%define _dotnet_aspnetcorerelease 6.0.25
+%define _dotnet_templatesrelease 6.0.25
+%define _dotnet_coreapprefrelease 6.0.25
+%define _dotnet_aspnetcoreapprefrelease 6.0.25
 %define _dotnet_netstandartrelease 2.1.0
 %define preview %nil
-%define _dotnet_coreshortrelease 6.0.20%preview
-%define _dotnet_sdkshortrelease 6.0.120%preview
+%define _dotnet_coreshortrelease 6.0.25%preview
+%define _dotnet_sdkshortrelease 6.0.125%preview
 
 %define _dotnetdir %_libdir/%name
 
 Name: dotnet-bootstrap-%_dotnet_major
-Version: 6.0.20%preview
+Version: 6.0.25%preview
 Release: alt1
 
 Summary: .NET Core SDK binaries
@@ -29,11 +29,11 @@ Group: Development/Other
 # from https://github.com/dotnet/core/tree/master/release-notes/6.0
 
 # x86_64
-# Source-url: https://download.visualstudio.microsoft.com/download/pr/bf2941f2-b4ef-4479-9e32-d07a85b26a12/142291d214f66fac48ab39263ec08cc6/dotnet-sdk-6.0.120-linux-x64.tar.gz
+# Source-url: https://download.visualstudio.microsoft.com/download/pr/84d8819b-f591-4e68-afcf-672248a10944/3cf79d3b59fedc18dad214e960b3139e/dotnet-sdk-6.0.125-linux-x64.tar.gz
 Source: %name-%version.tar
 
 # aarch64
-# Source2-url: https://download.visualstudio.microsoft.com/download/pr/cf1958b0-faa5-4378-b442-db4a1b3d5956/cfa9888a61a9f2b492eaf54814442e3b/dotnet-sdk-6.0.120-linux-arm64.tar.gz
+# Source2-url: https://download.visualstudio.microsoft.com/download/pr/1e3b6592-0a23-4e33-9a99-b566853dbfa2/5a2539eb598df7d1a78dccf7277d8dc1/dotnet-sdk-6.0.125-linux-arm64.tar.gz
 Source2: %name-aarch64-%version.tar
 
 ExclusiveArch: x86_64 aarch64
@@ -134,6 +134,26 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Tue Jan 09 2024 Vitaly Lipatov <lav@altlinux.ru> 6.0.25-alt1
+- The .NET 6.0.25 and .NET SDK 6.0.125 releases
+- CVE-2023-36049: .NET Elevation of Privilege Vulnerability
+- CVE-2023-36558: .NET Security Feature Bypass Vulnerability
+- CVE-2023-36792: .NET Remote Code Execution Vulnerability
+- CVE-2023-36793: .NET Remote Code Execution Vulnerability
+- CVE-2023-36794: .NET Remote Code Execution Vulnerability
+- CVE-2023-36796: .NET Remote Code Execution Vulnerability
+- CVE-2023-36799: .NET Denial of Service Vulnerability
+- CVE-2023-44487: .NET Denial of Service Vulnerability
+- CVE-2023-44487: .NET Denial of Service Vulnerability
+- CVE-2023-36792: .NET Remote Code Execution Vulnerability
+- CVE-2023-36793: .NET Remote Code Execution Vulnerability
+- CVE-2023-36794: .NET Remote Code Execution Vulnerability
+- CVE-2023-36796: .NET Remote Code Execution Vulnerability
+- CVE-2023-36799: .NET Denial of Service Vulnerability
+- CVE-2023-35390: .NET Remote Code Execution Vulnerability
+- CVE-2023-38180: .NET Denial of Service Vulnerability
+- CVE-2023-35391: .NET Information Disclosure Vulnerability
+
 * Fri Jul 28 2023 Vitaly Lipatov <lav@altlinux.ru> 6.0.20-alt1
 - The .NET 6.0.20 and .NET SDK 6.0.120 releases
 - CVE-2023-33127: .NET Remote Code Execution Vulnerability

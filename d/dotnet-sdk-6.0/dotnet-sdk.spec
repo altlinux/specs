@@ -1,26 +1,26 @@
 # TODO: build from sources
 %define _unpackaged_files_terminate_build 1
-%def_enable netstandart
+%def_enable netstandard
 %def_enable dotnet_host
 
 %define _dotnet_major 6.0
-%define _dotnet_corerelease 6.0.20
+%define _dotnet_corerelease 6.0.25
 %define _dotnet_sdkmanifestsrelease 6.0.100
-%define _dotnet_sdkrelease 6.0.120
-%define _dotnet_templatesrelease 6.0.20
-%define _dotnet_coreapprefrelease 6.0.20
+%define _dotnet_sdkrelease 6.0.125
+%define _dotnet_templatesrelease 6.0.25
+%define _dotnet_coreapprefrelease 6.0.25
 %define _dotnet_netstandartrelease 2.1.0
 %define preview %nil
-%define _dotnet_coreshortrelease 6.0.20%preview
-%define _dotnet_sdkshortrelease 6.0.120%preview
+%define _dotnet_coreshortrelease 6.0.25%preview
+%define _dotnet_sdkshortrelease 6.0.125%preview
 
 %define bootstrapdir %_libdir/dotnet-bootstrap-%_dotnet_major
 
 Name: dotnet-sdk-%_dotnet_major
-Version: 6.0.120%preview
-Release: alt2
+Version: 6.0.125%preview
+Release: alt1
 
-Summary: SDK for the .NET
+Summary: SDK for the .NET 6
 
 License: MIT
 Url: https://github.com/dotnet/sdk
@@ -115,7 +115,7 @@ cp -a %bootstrapdir/sdk/%_dotnet_sdkrelease/.toolsetversion %buildroot%_dotnet_s
 # dotnet-targeting-pack
 mkdir -p %buildroot%_dotnetdir/packs/
 cp -a %bootstrapdir/packs/Microsoft.NETCore.App.Ref/ %buildroot%_dotnetdir/packs/
-%if_enabled netstandart
+%if_enabled netstandard
 cp -a %bootstrapdir/packs/NETStandard.Library.Ref/ %buildroot%_dotnetdir/packs/
 %endif
 
@@ -145,13 +145,16 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %files -n dotnet-targeting-pack-%_dotnet_major
 %_dotnetdir/packs/Microsoft.NETCore.App.Ref/
 
-%if_enabled netstandart
+%if_enabled netstandard
 %files -n netstandard-targeting-pack-2.1
 %dir %_dotnetdir/packs/NETStandard.Library.Ref/
 %_dotnetdir/packs/NETStandard.Library.Ref/%_dotnet_netstandartrelease/
 %endif
 
 %changelog
+* Tue Jan 09 2024 Vitaly Lipatov <lav@altlinux.ru> 6.0.125-alt1
+- .NET SDK 6.0.125
+
 * Fri Jul 28 2023 Vitaly Lipatov <lav@altlinux.ru> 6.0.120-alt2
 - .NET SDK 6.0.120
 

@@ -2,11 +2,11 @@
 %def_disable dotnet_host
 
 %define _dotnet_major 6.0
-%define _dotnet_corerelease 6.0.20
+%define _dotnet_corerelease 6.0.25
 # used for build
-%define _dotnet_sdkrelease 6.0.120
+%define _dotnet_sdkrelease 6.0.125
 %define preview %nil
-%define _dotnet_sdkshortrelease 6.0.120%preview
+%define _dotnet_sdkshortrelease 6.0.125%preview
 
 %define commithash %version-%release
 
@@ -20,7 +20,7 @@
 %endif
 
 Name: dotnet-runtime-%_dotnet_major
-Version: 6.0.20
+Version: 6.0.25
 Release: alt1
 
 Summary: Microsoft .NET Runtime and Microsoft.NETCore.App
@@ -375,6 +375,26 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Tue Jan 09 2024 Vitaly Lipatov <lav@altlinux.ru> 6.0.25-alt1
+- .NET 6.0.25
+- CVE-2023-36049: .NET Elevation of Privilege Vulnerability
+- CVE-2023-36558: .NET Security Feature Bypass Vulnerability
+- CVE-2023-36792: .NET Remote Code Execution Vulnerability
+- CVE-2023-36793: .NET Remote Code Execution Vulnerability
+- CVE-2023-36794: .NET Remote Code Execution Vulnerability
+- CVE-2023-36796: .NET Remote Code Execution Vulnerability
+- CVE-2023-36799: .NET Denial of Service Vulnerability
+- CVE-2023-44487: .NET Denial of Service Vulnerability
+- CVE-2023-44487: .NET Denial of Service Vulnerability
+- CVE-2023-36792: .NET Remote Code Execution Vulnerability
+- CVE-2023-36793: .NET Remote Code Execution Vulnerability
+- CVE-2023-36794: .NET Remote Code Execution Vulnerability
+- CVE-2023-36796: .NET Remote Code Execution Vulnerability
+- CVE-2023-36799: .NET Denial of Service Vulnerability
+- CVE-2023-35390: .NET Remote Code Execution Vulnerability
+- CVE-2023-38180: .NET Denial of Service Vulnerability
+- CVE-2023-35391: .NET Information Disclosure Vulnerability
+
 * Fri Jul 28 2023 Vitaly Lipatov <lav@altlinux.ru> 6.0.20-alt1
 - .NET 6.0.20
 - CVE-2023-33127: .NET Remote Code Execution Vulnerability
