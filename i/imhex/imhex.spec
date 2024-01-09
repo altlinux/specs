@@ -1,5 +1,7 @@
+%add_findreq_skiplist %_libdir/imhex/plugins/*
+
 Name: imhex
-Version: 1.31.0
+Version: 1.32.2
 Release: alt1
 
 Summary: A hex editor for reverse engineers and programmers
@@ -10,9 +12,6 @@ Url: https://imhex.werwolv.net/
 
 # Source-url: https://github.com/WerWolv/ImHex/releases/download/v%version/Full.Sources.tar.gz
 Source: %name-%version.tar
-
-# https://github.com/WerWolv/ImHex/commit/25ddaa08dc872429cd97d990507a7db8f47d76eb
-Patch: %name-fix-build-with-capstone-4.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
@@ -39,8 +38,8 @@ same time ImHex is completely free and open source under the GPLv2 language.
 
 %prep
 %setup
-%patch0 -p1
-rm -rv lib/external/{capstone,fmt,nativefiledialog,yara,nlohmann_json}
+rm -rv lib/third_party/{capstone,fmt,nativefiledialog,yara,nlohmann_json}
+sed -i '/generateSDKDirectory()/d' CMakeLists.txt
 
 %build
 %cmake \
@@ -61,9 +60,15 @@ rm -rv lib/external/{capstone,fmt,nativefiledialog,yara,nlohmann_json}
 %cmake_install
 
 # install licenses
-cp -av lib/external/microtar/LICENSE microtar-LICENSE
-cp -av lib/external/xdgpp/LICENSE xdgpp-LICENSE
-rm -rv %buildroot%_datadir/licenses/imhex/
+cp -av lib/third_party/microtar/LICENSE microtar-LICENSE
+cp -av lib/third_party/xdgpp/LICENSE xdgpp-LICENSE
+rm -rv %buildroot%_datadir/licenses
+
+# this is a symlink for the old appdata name that we don't need
+rm -fv %buildroot%_datadir/metainfo/net.werwolv.%name.appdata.xml
+
+# drop updater binary
+rm -fv %buildroot%_bindir/imhex-updater
 
 %check
 # build binaries required for tests
@@ -80,10 +85,12 @@ rm -rv %buildroot%_datadir/licenses/imhex/
 %_desktopdir/%name.desktop
 %_libdir/libimhex.so*
 %_libdir/%name/
-%_datadir/metainfo/
-%_datadir/metainfo/net.werwolv.imhex.appdata.xml
+%_datadir/metainfo/*
 
 %changelog
+* Tue Jan 09 2024 Mikhail Tergoev <fidel@altlinux.org> 1.32.2-alt1
+- update to upstream 1.32.2
+
 * Wed Oct 18 2023 Mikhail Tergoev <fidel@altlinux.org> 1.31.0-alt1
 - update to upstream 1.31.0
 
