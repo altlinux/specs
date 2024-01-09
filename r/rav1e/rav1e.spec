@@ -1,5 +1,5 @@
 Name: rav1e
-Version: 0.6.6
+Version: 0.7.0
 Release: alt1
 
 Summary: The fastest and safest AV1 encoder
@@ -44,6 +44,11 @@ tar cf %SOURCE1 vendor
 %else
 tar xf %SOURCE1
 %endif
+# cargo-c 0.9.28+
+cat >> Cargo.toml << 'E_O_F'
+[package.metadata.capi.library]
+version_suffix_components = 1
+E_O_F
 
 %build
 export CARGO_HOME=${PWD}/cargo
@@ -67,6 +72,9 @@ cargo cinstall --destdir=%buildroot --includedir=%_includedir \
 %_pkgconfigdir/*pc
 
 %changelog
+* Tue Jan 09 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.0-alt1
+- 0.7.0 released
+
 * Wed May 17 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.6-alt1
 - 0.6.6 released
 
