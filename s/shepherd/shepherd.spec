@@ -6,8 +6,8 @@
 %define bash_completionsdir %_datadir/bash-completion/completions
 
 Name: shepherd
-Version: 0.10.2
-Release: alt3
+Version: 0.10.3
+Release: alt1
 
 Summary: The GNU Shepherd
 License: GPL-3.0+
@@ -16,7 +16,7 @@ Url: https://www.gnu.org/software/shepherd/
 Vcs: git://git.savannah.gnu.org/shepherd.git
 
 Source0: %name-%version.tar
-Patch0: %name-%version-alt-fix-runstatedir.patch
+Patch0: %name-0.10.3-alt-fix-runstatedir.patch
 
 Requires: guile-fibers
 Conflicts: sysvinit
@@ -75,6 +75,9 @@ programming model.
 %bash_completionsdir/herd
 
 %changelog
+* Tue Jan 09 2024 Anton Zhukharev <ancieg@altlinux.org> 0.10.3-alt1
+- Updated to 0.10.3.
+
 * Mon Jul 24 2023 Anton Zhukharev <ancieg@altlinux.org> 0.10.2-alt3
 - Added %%runstatedir as /var/run/shepherd (for socket).
 
