@@ -3,17 +3,20 @@
 
 Name: deepin-image-viewer
 Version: 5.9.9
-Release: alt2
+Release: alt3
+
 Summary: Image viewer for Deepin
-License: GPL-3.0+
+
+License: GPL-3.0-or-later
 Group: Graphics
 Url: https://github.com/linuxdeepin/deepin-image-viewer
-Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: deepin-image-viewer-5.9.9-libraw-0.21.patch
+Patch: %name-%version-%release.patch
 
 ExcludeArch: armh
+
+Requires: deepin-qt5integration
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -28,13 +31,12 @@ BuildRequires: qt5-tools-devel
 BuildRequires: libraw-devel
 BuildRequires: qt5-tools
 BuildRequires: libexif-devel
-BuildRequires: dtk5-widget-devel
+BuildRequires: libdtkwidget-devel
 BuildRequires: libimageviewer-devel
 BuildRequires: libgio-qt-devel
 BuildRequires: qt5-svg-devel
 BuildRequires: qt5-x11extras-devel
 BuildRequires: libfreeimage-devel
-Requires: deepin-qt5integration
 
 %description
 %summary.
@@ -108,6 +110,9 @@ cmake --build "%_cmake__builddir" -j1
 %_qt5_plugindir/imageformats/libxraw.so
 
 %changelog
+* Tue Jan 09 2024 Leontiy Volodin <lvol@altlinux.org> 5.9.9-alt3
+- Fixed build with APIv23.
+
 * Wed Sep 06 2023 Leontiy Volodin <lvol@altlinux.org> 5.9.9-alt2
 - Fixed build with libraw 0.21 (ALT #47425).
 
