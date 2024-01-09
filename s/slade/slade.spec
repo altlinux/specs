@@ -1,5 +1,5 @@
 Name: slade
-Version: 3.2.4
+Version: 3.2.5
 Release: alt1
 
 Summary: SLADE3 Doom editor
@@ -34,6 +34,7 @@ BuildRequires: libSFML-devel
 BuildRequires: libX11-devel
 BuildRequires: jackit-devel
 BuildRequires: liblua5.3-devel
+BuildRequires: libstdc++-devel-static
 
 %description
 SLADE3 is a modern editor for Doom-engine based games and source
@@ -44,7 +45,7 @@ from/to other generic formats such as PNG.
 %prep
 %setup -n %name-%version
 
-%patch0 -p1
+#patch0 -p1
 
 %__subst '/#include <FreeImage.h>/a #undef _WINDOWS_ ' src/common.h
 
@@ -59,8 +60,11 @@ from/to other generic formats such as PNG.
 %build
 %cmake_insource \
 	-DUSE_WX_EXCEPTION_HANDLER=0 \
-	-DWX_GTK3:BOOL=ON
-
+	-DWX_GTK3:BOOL=ON \
+	-DUSE_SYSTEM_FMT=ON \
+	-DNO_WEBVIEW=ON \
+	-DBUILD_PK3=ON
+	
 %make_build
 
 %install
@@ -95,6 +99,10 @@ done
 %_datadir/metainfo/net.mancubus.SLADE.metainfo.xml
 
 %changelog
+* Tue Jan  9 2024 Artyom Bystrov <arbars@altlinux.org> 3.2.5-alt1
+- Update to new version
+- Fix FTBFS
+
 * Sat Jun 24 2023 Artyom Bystrov <arbars@altlinux.org> 3.2.4-alt1
 - Update to new version
 
