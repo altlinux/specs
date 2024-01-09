@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 403
+%define centos_release 405
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -659,6 +659,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Jan 09 2024 Alexey Gladkov <legion@altlinux.ru> 5.14.0.405-alt1.el9
+- Updated to kernel-5.14.0-405.el9
+
 * Thu Jan 04 2024 Alexey Gladkov <legion@altlinux.ru> 5.14.0.403-alt1.el9
 - Updated to kernel-5.14.0-403.el9 (fixes: CVE-2023-46862, CVE-2023-6121, CVE-2023-6679)
 - Removed bcache.
