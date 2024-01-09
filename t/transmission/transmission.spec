@@ -7,8 +7,8 @@
 %define dname transmission-daemon
 
 Name: transmission
-Version: 4.0.4
-Release: alt4
+Version: 4.0.5
+Release: alt1
 
 Group: Networking/File transfer
 Summary: Llightweight BitTorrent client
@@ -239,6 +239,9 @@ fi
 %attr(1770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Tue Jan 09 2024 Mikhail Tergoev <fidel@altlinux.org> 4.0.5-alt1
+- updated to upstream version 4.0.5 (ALT bug: 48784)
+
 * Tue Nov 14 2023 Mikhail Tergoev <fidel@altlinux.org> 4.0.4-alt4
 - fixed permissions for transmission-daemon (ALT bug: 48426)
 
