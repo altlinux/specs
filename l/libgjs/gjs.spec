@@ -11,7 +11,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Javascript Bindings for GNOME
@@ -26,7 +26,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %endif
 
 %define glib_ver 2.66.0
-%define gi_ver 1.66
+%define gir_api_ver 1.0
+%define gir_ver 1.66
 
 Requires: gobject-introspection
 Requires: libmozjs%mozjs_ver_major >= %mozjs_ver
@@ -34,7 +35,7 @@ Requires: libmozjs%mozjs_ver_major >= %mozjs_ver
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson gcc-c++ libffi-devel libcairo-devel
 BuildRequires: libmozjs%mozjs_ver_major-devel >= %mozjs_ver
-BuildRequires: libgio-devel >= %glib_ver gobject-introspection-devel >= %gi_ver
+BuildRequires: libgio-devel >= %glib_ver pkgconfig(gobject-introspection-%gir_api_ver) >= %gir_ver
 BuildRequires: libreadline-devel libcairo-gobject-devel
 BuildRequires: libgtk4-devel libgtk4-gir-devel
 BuildRequires: valgrind pkgconfig(sysprof-capture-4)
@@ -108,6 +109,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Tue Jan 09 2024 Yuri N. Sedunov <aris@altlinux.org> 1.78.2-alt1
+- 1.78.2
+
 * Sun Dec 03 2023 Yuri N. Sedunov <aris@altlinux.org> 1.78.1-alt1
 - 1.78.1
 

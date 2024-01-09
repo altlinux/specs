@@ -13,7 +13,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: GObject contact aggregation library
@@ -171,6 +171,9 @@ the functionality of the Folks library.
 
 
 %changelog
+* Tue Jan 09 2024 Yuri N. Sedunov <aris@altlinux.org> 0.15.7-alt1
+- 0.15.7
+
 * Thu Mar 09 2023 Yuri N. Sedunov <aris@altlinux.org> 0.15.6-alt1
 - 0.15.6
 
