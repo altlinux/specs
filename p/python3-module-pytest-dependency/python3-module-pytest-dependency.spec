@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.5.1
+Version: 0.6.0
 Release: alt1
 
 Summary: Manage dependencies of tests
@@ -18,12 +18,11 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-Patch0: 0001-Adapt-matching-of-expected-output-in-the-tests-to-ad.patch
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-BuildRequires: python3-module-setuptools-scm
 
 %if_with check
 %pyproject_builddeps_metadata
@@ -38,7 +37,6 @@ skipped if any of the dependencies did fail or has been skipped.
 %prep
 %setup
 %autopatch -p1
-%pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -58,6 +56,9 @@ skipped if any of the dependencies did fail or has been skipped.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jan 09 2024 Anton Zhukharev <ancieg@altlinux.org> 0.6.0-alt1
+- Updated to 0.6.0.
+
 * Fri Oct 13 2023 Anton Zhukharev <ancieg@altlinux.org> 0.5.1-alt1
 - Built for ALT Sisyphus.
 
