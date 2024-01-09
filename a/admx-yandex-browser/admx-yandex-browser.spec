@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admx-yandex-browser
-Version: 116.0
+Version: 118.0
 Release: alt1
 
 Summary: YandexBrowser-specific ADMX policy templates
@@ -58,6 +58,9 @@ done
 %_destdir/*/*.adml
 
 %changelog
+* Mon Dec 25 2023 Valentin Sokolov <sova@altlinux.org> 118.0-alt1
+- Update policy templates to release 118.0.5993.159
+
 * Tue Dec 12 2023 Evgeny Sinelnikov <sin@altlinux.org> 116.0-alt1
 - Update policy templates to release 116.0.5845.228
 
