@@ -18,8 +18,8 @@
 #    vmxnet3: 0x15ad 0x07b0
 
 %define qemuroms 10222000 10ec8029 8086100e 10ec8139 1af41000 80861209 808610d3 15ad07b0
-%define date 20230816
-%define hash 9e99a55b
+%define date 20240110
+%define hash 0abb3e85
 
 Name: ipxe
 Version: %date
@@ -33,8 +33,8 @@ Url: http://ipxe.org/
 #Vcs-Git: git://git.ipxe.org/ipxe.git
 ExclusiveArch: x86_64
 
-Provides: gpxe
-Obsoletes: gpxe
+Provides: gpxe = %EVR
+Obsoletes: gpxe < %EVR
 
 Source: %name-%version.tar
 Patch: %name-%version.patch
@@ -63,8 +63,8 @@ or you can chainload into iPXE to obtain the features of iPXE without the hassle
 Summary: Network boot loader images in bootable USB, CD, floppy and GRUB formats
 Group: Development/Tools
 BuildArch: noarch
-Provides: gpxe-bootimgs
-Obsoletes: gpxe-bootimgs
+Provides: gpxe-bootimgs = %EVR
+Obsoletes: gpxe-bootimgs < %EVR
 
 %description bootimgs
 iPXE is an implementation of the PXE specification for network
@@ -79,8 +79,8 @@ Summary: Network boot loader roms in .rom format
 Group: Development/Tools
 BuildArch: noarch
 Requires: %name-roms-qemu = %EVR
-Provides: gpxe-roms
-Obsoletes: gpxe-roms
+Provides: gpxe-roms = %EVR
+Obsoletes: gpxe-roms < %EVR
 
 %description roms
 iPXE is an implementation of the PXE specification for network
@@ -93,8 +93,8 @@ This package contains the iPXE roms in .rom format.
 Summary: Network boot loader roms supported by QEMU, .rom format
 Group: Development/Tools
 BuildArch: noarch
-Provides: gpxe-roms-qemu
-Obsoletes: gpxe-roms-qemu
+Provides: gpxe-roms-qemu = %EVR
+Obsoletes: gpxe-roms-qemu < %EVR
 
 %description roms-qemu
 iPXE is an implementation of the PXE specification for network
@@ -118,24 +118,24 @@ rm -rf drivers/net/ath/ath9k
 
 make_ipxe() {
     %make_build \
-	NO_WERROR=1 V=1 \
-	GITVERSION=%hash \
+        NO_WERROR=1 V=1 \
+        GITVERSION=%hash \
         "$@"
 }
 
 make_ipxe bin-i386-efi/ipxe.efi \
-	bin-i386-efi/snponly.efi \
-	bin-x86_64-efi/ipxe.efi \
-	bin-x86_64-efi/snponly.efi
+        bin-i386-efi/snponly.efi \
+        bin-x86_64-efi/ipxe.efi \
+        bin-x86_64-efi/snponly.efi
 
 make_ipxe ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- \
-	bin-arm64-efi/ipxe.efi \
-	bin-arm64-efi/snponly.efi
+        bin-arm64-efi/ipxe.efi \
+        bin-arm64-efi/snponly.efi
 
 make_ipxe ISOLINUX_BIN=/usr/lib/syslinux/isolinux.bin \
-	bin/undionly.kpxe \
-	bin/ipxe.{dsk,iso,usb,lkrn} \
-	allroms
+        bin/undionly.kpxe \
+        bin/ipxe.{dsk,iso,usb,lkrn} \
+        allroms
 
 # build roms with efi support for qemu
 mkdir bin-combined
@@ -234,6 +234,9 @@ pxe_link 15ad07b0 vmxnet3
 %_datadir/%name.efi/efi-*.rom
 
 %changelog
+* Wed Jan 10 2024 Alexey Shabalin <shaba@altlinux.org> 1:20240110-alt1.git0abb3e85
+- Update to latest upstream snapshot.
+
 * Thu Aug 31 2023 Alexey Shabalin <shaba@altlinux.org> 1:20230816-alt1.git9e99a55b
 - Update to latest upstream snapshot.
 - Fixed build with binutils 2.41.
