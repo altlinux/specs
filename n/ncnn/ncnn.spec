@@ -2,10 +2,13 @@
 
 %def_disable clang
 %def_without python
+%ifarch loongarch64
+%{?optflags_lto:%global optflags_lto %optflags_lto -mlsx -mlasx}
+%endif
 
 Name: ncnn
 Version: 20240102
-Release: alt1
+Release: alt2
 
 Summary: Mobile neural network inference framework
 
@@ -128,6 +131,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %endif
 
 %changelog
+* Wed Jan 10 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 20240102-alt2
+- NMU: fixed FTBFS on LoongArch (ensure SIMD is enabled during LTO).
+
 * Wed Jan 10 2024 Leontiy Volodin <lvol@altlinux.org> 20240102-alt1
 - New version 20240102.
 
