@@ -2,7 +2,7 @@
 
 Name: colorized-logs
 Version: 2.6
-Release: alt2
+Release: alt3
 Summary: Tools for logs with ANSI color
 License: MIT
 Group: File tools
@@ -11,6 +11,8 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
+
+Conflicts: perl-HTML-FromANSI
 
 %description
 Here's a handful of tools for dealing with logs with ANSI color.
@@ -53,6 +55,9 @@ this package gives you:
 %doc LICENSE
 
 %changelog
+* Wed Jan 10 2024 Alexander Makeenkov <amakeenk@altlinux.org> 2.6-alt3
+- Added conflict to perl-HTML-FromANSI.
+
 * Fri Sep 01 2023 Alexander Makeenkov <amakeenk@altlinux.org> 2.6-alt2
 - Increased release to support update from autoimports.
 
