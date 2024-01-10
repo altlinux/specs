@@ -2,7 +2,7 @@
 
 Name: seabios
 Version: 1.16.3
-Release: alt1
+Release: alt2
 Summary: Open-source legacy BIOS implementation
 
 Group: Emulators
@@ -128,6 +128,9 @@ done
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Wed Jan 10 2024 Alexey Shabalin <shaba@altlinux.org> 1.16.3-alt2
+- really 1.16.3
+
 * Mon Dec 11 2023 Alexey Shabalin <shaba@altlinux.org> 1.16.3-alt1
 - 1.16.3
 
