@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.3.5
+Version: 0.3.6
 Release: alt1
 
 Summary: This repository contains a collection of TTP templates
@@ -48,8 +48,11 @@ popd
 %files
 %doc *.md
 %python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/%pypi_name-0.3.4.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jan 09 2024 Alexander Burmatov <thatman@altlinux.org> 0.3.6-alt1
+- New 0.3.6 version.
+
 * Tue Nov 14 2023 Alexander Burmatov <thatman@altlinux.org> 0.3.5-alt1
 - Initial build for Sisyphus.

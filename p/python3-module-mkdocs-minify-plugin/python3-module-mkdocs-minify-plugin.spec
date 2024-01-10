@@ -4,7 +4,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 Summary: A mkdocs plugin to minify the HTML of a page before it is written to disk
@@ -48,5 +48,8 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jan 09 2024 Alexander Burmatov <thatman@altlinux.org> 0.7.2-alt1
+- New 0.7.2 version.
+
 * Wed Oct 25 2023 Alexander Burmatov <thatman@altlinux.org> 0.7.1-alt1
 - Initial build for Sisyphus.

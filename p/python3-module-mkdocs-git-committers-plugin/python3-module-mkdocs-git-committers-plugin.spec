@@ -2,7 +2,7 @@
 %define mod_name mkdocs_git_committers_plugin
 
 Name:    python3-module-%pypi_name
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 
 Summary: A mkdocs plugin for displaying the last commit and a list of a file's contributors
@@ -35,5 +35,8 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jan 09 2024 Alexander Burmatov <thatman@altlinux.org> 0.2.3-alt1
+- New 0.2.3 version.
+
 * Wed Oct 25 2023 Alexander Burmatov <thatman@altlinux.org> 0.2.2-alt1
 - Initial build for Sisyphus.

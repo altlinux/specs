@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 6.6.0
+Version: 6.7.1
 Release: alt1
 
 Summary: Deep Difference and search of any Python object/data
@@ -57,5 +57,8 @@ Delta: Use deltas to reconstruct objects by adding deltas together.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jan 09 2024 Alexander Burmatov <thatman@altlinux.org> 6.7.1-alt1
+- Update version to 6.7.1.
+
 * Mon Nov 13 2023 Alexander Burmatov <thatman@altlinux.org> 6.6.0-alt1
 - Initial build for Sisyphus.

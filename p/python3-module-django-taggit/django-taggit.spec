@@ -1,11 +1,14 @@
 %define oname django-taggit
+%define mod_name taggit
+
+%def_with check
 
 Name: python3-module-%oname
-Version: 1.2.0
+Version: 5.0.1
 Release: alt1
 
 Summary: Simple tagging for django
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/django-taggit
 BuildArch: noarch
@@ -14,40 +17,39 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-isort
+BuildRequires: python3-module-setuptools python3-module-wheel
 
+%if_with check
+BuildRequires: python3-module-django
+BuildRequires: python3-module-django-dbbackend-sqlite3
+BuildRequires: python3-module-djangorestframework
+%endif
 
 %description
 django-taggit is a reusable Django application for simple tagging.
-
-%package tests
-Summary: Tests for %name
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-django-taggit is a reusable Django application for simple tagging.
-
-This package contains tests for %name.
 
 %prep
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+%find_lang %name
 
-%files
+%check
+python3 -m django test -v 2 --settings=tests.settings
+
+%files -f %name.lang
 %doc AUTHORS LICENSE *.rst docs/*
-%python3_sitelibdir/*
-
-%files tests
-
-
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Wed Jan 03 2024 Alexander Burmatov <thatman@altlinux.org> 5.0.1-alt1
+- Version updated to 5.0.1.
+
 * Mon Dec 16 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.2.0-alt1
 - Version updated to 1.2.0
 - build for python2 disabled
@@ -67,4 +69,3 @@ This package contains tests for %name.
 
 * Tue Sep 23 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.2-alt1.git20140921
 - Initial build for Sisyphus
-

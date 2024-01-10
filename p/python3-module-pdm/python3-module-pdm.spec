@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2.10.0
+Version: 2.11.2
 Release: alt1
 
 Summary: A modern Python package and dependency manager supporting the latest PEP standards
@@ -14,6 +14,7 @@ URL:     https://github.com/pdm-project/pdm
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools_scm python3-module-wheel
 BuildRequires: python3-module-pdm-backend
+BuildRequires: python3-module-dep-logic
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -74,5 +75,8 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jan 09 2024 Alexander Burmatov <thatman@altlinux.org> 2.11.2-alt1
+- New 2.11.2 version.
+
 * Thu Oct 26 2023 Alexander Burmatov <thatman@altlinux.org> 2.10.0-alt1
 - Initial build for Sisyphus.

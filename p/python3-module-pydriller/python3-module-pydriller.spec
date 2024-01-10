@@ -4,7 +4,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 2.5.1
+Version: 2.6
 Release: alt1
 
 Summary: Python Framework to analyse Git repositories
@@ -52,8 +52,11 @@ unzip test-repos.zip
 %files
 %doc *.md
 %python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/PyDriller-2.5.1.dist-info/
+%python3_sitelibdir/PyDriller-2.6.dist-info/
 
 %changelog
+* Tue Jan 09 2024 Alexander Burmatov <thatman@altlinux.org> 2.6-alt1
+- New 2.6 version.
+
 * Mon Nov 13 2023 Alexander Burmatov <thatman@altlinux.org> 2.5.1-alt1
 - Initial build for Sisyphus.

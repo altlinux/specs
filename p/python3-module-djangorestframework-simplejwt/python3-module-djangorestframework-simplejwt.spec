@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 5.3.0
+Version: 5.3.1
 Release: alt1
 
 Summary: A JSON Web Token authentication plugin for the Django REST Framework
@@ -22,6 +22,7 @@ BuildRequires: python3-module-pytest-django
 BuildRequires: python3-module-django-dbbackend-sqlite3
 BuildRequires: python3-module-jose
 BuildRequires: python3-module-jwt
+BuildRequires: python3-module-freezegun
 %endif
 
 BuildArch: noarch
@@ -50,5 +51,8 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/djangorestframework_simplejwt-0.0.0.dist-info/
 
 %changelog
+* Tue Jan 09 2024 Alexander Burmatov <thatman@altlinux.org> 5.3.1-alt1
+- New 5.3.1 version.
+
 * Mon Oct 23 2023 Alexander Burmatov <thatman@altlinux.org> 5.3.0-alt1
 - Initial build for Sisyphus.

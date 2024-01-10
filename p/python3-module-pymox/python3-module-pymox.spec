@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.1.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Pymox - Powerful and intuitive mock object framework for Python
@@ -44,5 +44,8 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%pypi_name-0.0.0.dist-info/
 
 %changelog
+* Tue Jan 09 2024 Alexander Burmatov <thatman@altlinux.org> 1.3.0-alt1
+- New 1.3.0 version.
+
 * Mon Oct 23 2023 Alexander Burmatov <thatman@altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus.

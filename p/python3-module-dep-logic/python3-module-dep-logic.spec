@@ -1,18 +1,20 @@
-%define pypi_name findpython
+%define pypi_name dep-logic
+%define mod_name dep_logic
 
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.4.1
+Version: 0.0.4
 Release: alt1
 
-Summary: A utility to find python versions on your system
-License: MIT
+Summary: Python dependency specifications supporting logical operations
+License: Apache-2.0
 Group:   Development/Python3
-URL:     https://github.com/frostming/findpython
+URL:     https://github.com/pdm-project/dep-logic
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools_scm python3-module-wheel
+BuildRequires: python3-module-pdm
 BuildRequires: python3-module-pdm-backend
 
 %if_with check
@@ -51,13 +53,9 @@ fi
 
 %files
 %doc *.md
-%_bindir/%pypi_name
-%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
-* Tue Jan 09 2024 Alexander Burmatov <thatman@altlinux.org> 0.4.1-alt1
-- New 0.4.1 version.
-
-* Thu Oct 26 2023 Alexander Burmatov <thatman@altlinux.org> 0.4.0-alt1
+* Tue Jan 09 2024 Alexander Burmatov <thatman@altlinux.org> 0.0.4-alt1
 - Initial build for Sisyphus.

@@ -1,7 +1,7 @@
 %def_with docs
 
 Name:    netbox
-Version: 3.6.6
+Version: 3.6.9
 Release: alt1
 
 Summary: The premier source of truth powering network automation
@@ -195,6 +195,9 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Wed Jan 10 2024 Alexander Burmatov <thatman@altlinux.org> 3.6.9-alt1
+- New 3.6.9 version.
+
 * Mon Dec 11 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.6-alt1
 - New 3.6.6 version.
 - Set the correct runtime dir.

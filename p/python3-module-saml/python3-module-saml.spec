@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 1.15.0
+Version: 1.16.0
 Release: alt1
 
 Summary: Add SAML support to your Python software using this library
@@ -49,5 +49,8 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo python3_%pypi_name}
 
 %changelog
+* Tue Jan 09 2024 Alexander Burmatov <thatman@altlinux.org> 1.16.0-alt1
+- New 1.16.0 version.
+
 * Tue Oct 03 2023 Alexander Burmatov <thatman@altlinux.org> 1.15.0-alt1
 - Initial build for Sisyphus.

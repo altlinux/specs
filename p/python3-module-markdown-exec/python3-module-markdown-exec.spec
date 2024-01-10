@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 
 Summary: Utilities to execute code blocks in Markdown files
@@ -59,5 +59,8 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jan 09 2024 Alexander Burmatov <thatman@altlinux.org> 1.8.0-alt1
+- New 1.8.0 version.
+
 * Wed Oct 25 2023 Alexander Burmatov <thatman@altlinux.org> 1.7.0-alt1
 - Initial build for Sisyphus.

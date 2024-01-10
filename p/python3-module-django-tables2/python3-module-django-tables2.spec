@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2.6.0
+Version: 2.7.0
 Release: alt1
 
 Summary: django-tables2 - An app for creating HTML tables
@@ -51,5 +51,8 @@ python3 manage.py test
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jan 03 2024 Alexander Burmatov <thatman@altlinux.org> 2.7.0-alt1
+- Update to 2.7.0 version.
+
 * Mon Oct 02 2023 Alexander Burmatov <thatman@altlinux.org> 2.6.0-alt1
 - Initial build for Sisyphus.

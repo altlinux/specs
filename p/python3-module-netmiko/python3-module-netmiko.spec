@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 4.2.0
+Version: 4.3.0
 Release: alt1
 
 Summary: Multi-vendor library to simplify Paramiko SSH connections to network devices
@@ -46,5 +46,8 @@ sed -i 's|from typing.re import Pattern|from typing import Pattern|' \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jan 09 2024 Alexander Burmatov <thatman@altlinux.org> 4.3.0-alt1
+- New 4.3.0 version.
+
 * Mon Nov 13 2023 Alexander Burmatov <thatman@altlinux.org> 4.2.0-alt1
 - Initial build for Sisyphus.
