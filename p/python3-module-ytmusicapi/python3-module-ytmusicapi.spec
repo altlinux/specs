@@ -1,8 +1,8 @@
 %define rname ytmusicapi
 
 Name: python3-module-%rname
-Version: 1.1.1
-Release: alt2
+Version: 1.4.2
+Release: alt1
 
 Group: Development/Python3
 Summary: YouTube Music Unofficial API
@@ -60,6 +60,9 @@ rm -rf %buildroot/%python3_sitelibdir_noarch/%rname/locales/
 #%_bindir/%rname
 
 %changelog
+* Tue Jan 09 2024 Sergey V Turchin <zerg@altlinux.org> 1.4.2-alt1
+- new version
+
 * Wed Nov 08 2023 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt2
 - don't use setuptools for packaging
 
