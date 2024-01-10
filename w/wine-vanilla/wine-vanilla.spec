@@ -15,7 +15,7 @@
 # https://dl.winehq.org/wine/source/
 %define basemajor 9.0
 %define major 9.0
-%define rel -rc3
+%define rel -rc4
 %define conflictbase wine
 
 # build ping subpackage
@@ -67,7 +67,7 @@
 
 Name: wine-vanilla
 Version: %major
-Release: alt1.rc3
+Release: alt1.rc4
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -712,17 +712,17 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 
 
 %files common
-%doc ANNOUNCE AUTHORS LICENSE README
-%lang(de) %doc documentation/README.de
-%lang(es) %doc documentation/README.es
-%lang(fr) %doc documentation/README.fr
-%lang(hu) %doc documentation/README.hu
-%lang(it) %doc documentation/README.it
-%lang(ko) %doc documentation/README.ko
-%lang(nb) %doc documentation/README.no
-%lang(pt) %doc documentation/README.pt
-%lang(pt_BR) %doc documentation/README.pt_br
-%lang(tr) %doc documentation/README.tr
+%doc ANNOUNCE.md AUTHORS LICENSE README.md
+%lang(de) %doc documentation/README-de.md
+%lang(es) %doc documentation/README-es.md
+%lang(fr) %doc documentation/README-fr.md
+%lang(hu) %doc documentation/README-hu.md
+%lang(it) %doc documentation/README-it.md
+%lang(ko) %doc documentation/README-ko.md
+%lang(nb) %doc documentation/README-no.md
+%lang(pt) %doc documentation/README-pt.md
+%lang(pt_BR) %doc documentation/README-pt_br.md
+%lang(tr) %doc documentation/README-tr.md
 
 %_bindir/wine
 %_bindir/wineserver
@@ -831,6 +831,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Mon Jan 08 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0-alt1.rc4
+- new version (9.0-rc4) with rpmgs script
+
 * Sat Dec 23 2023 Vitaly Lipatov <lav@altlinux.ru> 1:9.0-alt1.rc3
 - new version (9.0-rc3) with rpmgs script
 
