@@ -7,7 +7,7 @@
 %define u7s_admin_homedir %_localstatedir/%u7s_admin_usr
 
 Name: podsec
-Version: 1.0.8
+Version: 1.0.10
 Release: alt1
 
 Summary: Set of scripts for Podman Security
@@ -52,23 +52,19 @@ This package contains utilities for:
 Summary: Set of scripts for Kubernetes Security
 Group: Development/Other
 Requires: podsec >= 0.3.1
-Requires: kubernetes-kubeadm >= 1.26.3-alt2
-Requires: kubernetes-kubelet >= 1.26.3-alt2
-Requires: kubernetes-crio >= 1.26.3-alt2
-Requires: kubernetes-master >= 1.26.3-alt2
-Requires: kubernetes-node >= 1.26.3-alt2
-Requires: kubernetes-client >= 1.26.3-alt2
-Requires: cri-o >= 1.26.2
-Requires: cri-tools >= 1.22.0
-Requires: etcd >= 3.4.15
-Requires: flannel >= 0.19.2
-Requires: cni-plugin-flannel >= 1.1.2
 Requires: rootlesskit >= 1.1.0
 Requires: slirp4netns >= 1.1.12
 Requires: crun >= 1.8.1
 Requires: systemd-container
-%filter_from_requires /\/etc\/kubernetes\/kubelet/d
-
+Requires: kubernetes-common
+Requires: kubernetes-crio
+Requires: cri-o
+Requires: cri-tools
+%filter_from_requires /\/usr\/bin\/kubeadm/d
+# %filter_from_requires /\/etc\/kubernetes\/kubelet/d
+%filter_from_requires /kubernetes-client/d
+%filter_from_requires /kubernetes-kubeadm/d
+%filter_from_requires /kubernetes-kubelet/d
 
 %description k8s
 This package contains utilities for:
@@ -78,9 +74,9 @@ This package contains utilities for:
 %package k8s-rbac
 Summary: Set of scripts for Kubernetes RBAC
 Group: Development/Other
-Requires: kubernetes-client >= 1.26.3-alt2
 Requires: podsec >= %EVR
-
+Requires: openssh-common
+Requires: sh
 
 %description k8s-rbac
 This package contains utilities for
@@ -96,6 +92,7 @@ Requires: podsec >= %EVR
 Requires: openssh-server
 Requires: mailx
 Requires: trivy
+Requires: trivy-server
 
 %description inotify
 A set of scripts for  security monitoring by systemd timers or
@@ -123,7 +120,6 @@ A set of scripts for developers
 %pre
 groupadd -r -f podman >/dev/null 2>&1 ||:
 groupadd -r -f podman_dev >/dev/null 2>&1 ||:
-
 
 %pre k8s
 groupadd -r -f podman >/dev/null 2>&1 ||:
@@ -201,6 +197,12 @@ useradd -r -m -g %u7s_admin_grp -d %u7s_admin_homedir -G %kubernetes_grp,systemd
 %_mandir/man?/podsec-save-oci*
 
 %changelog
+* Tue Nov 07 2023 Alexey Kostarev <kaf@altlinux.org> 1.0.10-alt1
+- 1.0.10
+
+* Mon Oct 30 2023 Alexey Kostarev <kaf@altlinux.org> 1.0.9-alt1
+- 1.0.9
+
 * Tue Sep 26 2023 Alexey Kostarev <kaf@altlinux.org> 1.0.8-alt1
 - 1.0.8
 
