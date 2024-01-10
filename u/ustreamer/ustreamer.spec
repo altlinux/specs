@@ -1,5 +1,5 @@
 Name: ustreamer
-Version: 5.46
+Version: 5.48
 Release: alt1
 
 Summary: Lightweight MJPEG stream server
@@ -79,6 +79,9 @@ make install %defs DESTDIR=%buildroot PREFIX=%prefix
 %python3_sitelibdir/ustreamer.*.so
 
 %changelog
+* Wed Jan 10 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.48-alt1
+- 5.48 released
+
 * Thu Dec 14 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.46-alt1
 - 5.46 released
 
