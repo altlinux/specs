@@ -1,5 +1,5 @@
 Name:		mdevctl
-Version:	1.2.0
+Version:	1.3.0
 Release:	alt1
 Summary:	Mediated device management and persistence utility
 
@@ -14,6 +14,7 @@ BuildRequires: pkgconfig(udev)
 BuildRequires: rust-cargo
 BuildRequires: /proc
 BuildRequires: python3-module-docutils
+BuildRequires: systemd
 
 Requires: udev
 
@@ -60,6 +61,9 @@ cargo test --release --no-fail-fast
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Tue Jan 09 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.3.0-alt1
+- new version 1.3.0
+
 * Sat Aug 06 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.2.0-alt1
 - new version 1.2.0
 
