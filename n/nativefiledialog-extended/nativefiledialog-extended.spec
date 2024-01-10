@@ -1,14 +1,15 @@
 Name: nativefiledialog-extended
-Version: 1.1.0
-Release: alt2
+Version: 1.1.1
+Release: alt1
 Summary: Native file dialog library with C and C++ bindings
 
 License: Zlib
 Group: Development/C
 Url: https://github.com/btzy/nativefiledialog-extended
 
-# Source0-url: https://github.com/btzy/nativefiledialog-extended/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
+
+Patch0: nfd-alt-LoongArch-fix.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -81,6 +82,7 @@ mlabbe/nativefiledialog).
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %cmake \
@@ -104,6 +106,9 @@ mlabbe/nativefiledialog).
 %_libdir/cmake/nfd/*.cmake
 
 %changelog
+* Tue Jan 09 2024 Mikhail Tergoev <fidel@altlinux.org> 1.1.1-alt1
+- update to upstream 1.1.1
+
 * Wed Oct 18 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.1.0-alt2
 - NMU: fixed FTBFS on LoongArch
 
