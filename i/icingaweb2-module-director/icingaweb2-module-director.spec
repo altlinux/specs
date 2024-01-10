@@ -22,7 +22,7 @@
 
 Name:           icingaweb2-module-director
 Version:        1.11.0
-Release:        alt1
+Release:        alt2
 
 Summary:        Config module for Icinga 2
 License:        GPL-2.0-or-later
@@ -31,6 +31,7 @@ Group:          Monitoring
 URL:            https://icinga.com
 
 Source0:        https://github.com/Icinga/%name/archive/v%version/%name-%version.tar
+Patch0:         director-no-deprecated-modules.patch
 
 BuildRequires(pre): rpm-build-php-version
 BuildRequires:  php-devel
@@ -39,8 +40,6 @@ Requires:       icinga2 >= 2.8.0
 Requires:       icingaweb2 >= 2.8.0
 Requires:       icingaweb2-common >= 2.8.0
 Requires:       icingaweb2-module-incubator >= 0.20.0
-Requires:       icingaweb2-module-ipl >= 0.5.0
-Requires:       icingaweb2-module-reactbundle >= 0.9.0
 Requires:       php%_php_major.%_php_minor >= 7.3
 Requires:       php%_php_major.%_php_minor-curl
 Requires:       php%_php_major.%_php_minor-iconv
@@ -55,6 +54,7 @@ Director is a config module for Icinga 2.
 
 %prep
 %setup
+%patch0 -p2
 
 %build
 
@@ -99,5 +99,8 @@ getent passwd %icingadirector_user >/dev/null || useradd -c "Icinga2 director" -
 %_unitdir/icinga-director.service
 
 %changelog
+* Wed Jan 10 2024 Paul Wolneykien <manowar@altlinux.org> 1.11.0-alt2
+- Remove deprecated dependencies: 'ipl' and 'reactbundle' modules.
+
 * Tue Jan 09 2024 Paul Wolneykien <manowar@altlinux.org> 1.11.0-alt1
 - Initial build for Sisyphus.
