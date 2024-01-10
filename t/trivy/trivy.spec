@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: trivy
-Version: 0.48.1
+Version: 0.48.2
 Release: alt1
 Summary: A Fast Vulnerability Scanner for Containers
 
@@ -98,6 +98,14 @@ useradd -M -r -d %_sharedstatedir/%name -g _%name -s /dev/null -c "Trivy service
 %attr(0755,_trivy,_trivy) %dir %_sharedstatedir/trivy
 
 %changelog
+* Tue Jan 09 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.48.2-alt1
+- 0.48.1 -> 0.48.2 
+
+* Thu Dec 28 2023 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.48.1-alt2
+- Fixed environment variable at systemd service 
+- Added listen address option for trivy at systemd service
+- Added "WantedBy=multi-user.target" section
+
 * Tue Dec 19 2023 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.48.1-alt1
 - 0.48.0 -> 0.48.1 
 
