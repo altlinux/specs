@@ -4,7 +4,7 @@
 %def_without python
 
 Name: ncnn
-Version: 20231027
+Version: 20240102
 Release: alt1
 
 Summary: Mobile neural network inference framework
@@ -128,6 +128,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %endif
 
 %changelog
+* Wed Jan 10 2024 Leontiy Volodin <lvol@altlinux.org> 20240102-alt1
+- New version 20240102.
+
 * Tue Oct 31 2023 Leontiy Volodin <lvol@altlinux.org> 20231027-alt1
 - New version 20231027.
 
