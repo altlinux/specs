@@ -1,6 +1,6 @@
 Name:		mdevctl
 Version:	1.3.0
-Release:	alt1
+Release:	alt2
 Summary:	Mediated device management and persistence utility
 
 Group:		System/Configuration/Hardware
@@ -9,12 +9,14 @@ URL:		https://github.com/mdevctl/mdevctl
 
 Source0:	%name-%version.tar
 Patch0:		%name-%version.patch
+Patch3500:	%name-1.3.0-alt-nix-loongarch64.patch
 
 BuildRequires: pkgconfig(udev)
 BuildRequires: rust-cargo
 BuildRequires: /proc
 BuildRequires: python3-module-docutils
 BuildRequires: systemd
+BuildRequires: cargo-vendor-checksum diffstat
 
 Requires: udev
 
@@ -28,6 +30,11 @@ vfio-mdev for assignment to virtual machines.
 %prep
 %setup
 %patch0 -p1
+# patch vendored nix crate
+%patch3500 -p1
+# update checksums
+diffstat -p1 -l %PATCH3500 | sed -re 's@vendor/@@' | xargs cargo-vendor-checksum -f
+
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
 [source.crates-io]
@@ -61,6 +68,9 @@ cargo test --release --no-fail-fast
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Thu Jan 11 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.3.0-alt2
+- NMU: fixed FTBFS on LoongArch
+
 * Tue Jan 09 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.3.0-alt1
 - new version 1.3.0
 
