@@ -3,7 +3,7 @@
 %def_enable clang
 
 Name: dtkdeclarative
-Version: 5.6.18
+Version: 5.6.21
 Release: alt1
 Summary: Widget development toolkit for Deepin
 Summary(ru): Инструментарий по разработке виджетов для Deepin
@@ -12,6 +12,7 @@ Group: System/Configuration/Other
 Url: https://github.com/linuxdeepin/dtkdeclarative
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 ExcludeArch: armh
 
@@ -84,11 +85,7 @@ QtCreator Data files for %name.
 
 %prep
 %setup
-# Fix broken configs.
-sed -i '/libdir=/s/${prefix}//; /includedir=/s/${prefix}//' \
-  misc/dtkdeclarative.pc.in
-sed -i -e '/.tools/s/@CMAKE_INSTALL_PREFIX@//; /.libs/s/@CMAKE_INSTALL_PREFIX@//; /.includes/s/@CMAKE_INSTALL_PREFIX@//;' \
-  misc/qt_lib_dtkdeclarative.pri.in
+%patch -p1
 
 %build
 export PATH=%_qt5_bindir:$PATH
@@ -145,6 +142,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_datadir/qtcreator/templates/wizards/projects/qml-app-template/
 
 %changelog
+* Thu Jan 11 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.21-alt1
+- New version 5.6.21.
+
 * Fri Oct 20 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.18-alt1
 - New version 5.6.18.
 - Renamed subpackages:
