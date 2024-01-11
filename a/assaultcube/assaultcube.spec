@@ -10,7 +10,7 @@
 
 Name: assaultcube
 Version: 1.2.0.2
-Release: alt7.%rev
+Release: alt8.%rev
 Summary: Free first-person-shooter based on the game Cube
 Group: Games/Arcade
 License: Creative Commons
@@ -31,6 +31,7 @@ Patch1: %name-%version-alt-gcc.patch
 # Automatically added by buildreq on Sun Mar 23 2014
 # optimized out: libGL-devel libGLU-devel libSDL-devel libX11-devel libcloog-isl4 libogg-devel llvm xorg-xproto-devel
 BuildRequires: clang libSDL_image-devel libcurl-devel libopenal-devel libstdc++-devel libvorbis-devel zlib-devel
+BuildRequires: gnu-config
 %ifarch %e2k
 # because of the missing <new>
 BuildRequires: gcc-c++
@@ -49,10 +50,8 @@ game is all about team oriented multiplayer fun.
 %prep
 %setup
 %patch1 -p2
-%ifarch %e2k
-# the provided config is outdated and doesn't know about e2k
+# the provided config is outdated and doesn't know about e2k, LoongArch
 cp /usr/share/gnu-config/config.{guess,sub} source/enet/
-%endif
 
 %build
 %add_optflags -D__STRICT_ANSI__
@@ -86,6 +85,9 @@ mv README.html %buildroot/%_docdir/%name/
 %_liconsdir/*.png
 
 %changelog
+* Thu Jan 11 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.2.0.2-alt8.779627cb
+- Fixed FTBFS on LoongArch (use fresh config.{sub,guess}).
+
 * Wed Feb 02 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.2.0.2-alt7.779627cb
 - Fixed build for Elbrus.
 
