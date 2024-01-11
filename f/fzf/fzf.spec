@@ -5,10 +5,8 @@
 %add_debuginfo_skiplist %_bindir
 %brp_strip_none %_bindir/*
 
-%define fzf_revision d7d2ac3
-
 Name:		fzf
-Version:	0.44.1
+Version:	0.45.0
 Release:	alt1
 Summary:	A general-purpose command-line fuzzy finder.
 
@@ -102,6 +100,9 @@ install -Dpm0644 plugin/fzf.vim %buildroot%vim_runtime_dir/plugin/
 %vim_runtime_dir/plugin/*
 
 %changelog
+* Thu Jan 11 2024 Vladimir Didenko <cow@altlinux.org> 0.45.0-alt1
+- New version
+
 * Thu Nov 23 2023 Vladimir Didenko <cow@altlinux.org> 0.44.1-alt1
 - New version
 - Fix how version is passed during the build
