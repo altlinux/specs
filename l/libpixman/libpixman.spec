@@ -1,7 +1,7 @@
 %define srcname pixman
 
 Name: libpixman
-Version: 0.42.2
+Version: 0.43.0
 Release: alt1
 Epoch: 3
 Summary: Pixel manipulation library
@@ -15,6 +15,7 @@ Source: %srcname-%version.tar
 Patch: %srcname-%version-%release.patch
 Patch2000: %name-e2k.patch
 
+BuildRequires(pre): meson
 BuildRequires: libpng-devel
 
 %description
@@ -37,16 +38,16 @@ develop programs which make use of %name
 %endif
 
 %build
-%autoreconf
-%configure \
-	--disable-static
-%make_build
+%meson
+%meson_build -v
 
 %check
-%make check
+%ifnarch armh
+%__meson_test
+%endif
 
 %install
-%make DESTDIR=%buildroot install
+%meson_install
 
 %files
 %_libdir/*.so.*
@@ -57,6 +58,9 @@ develop programs which make use of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jan 11 2024 Valery Inozemtsev <shrek@altlinux.ru> 3:0.43.0-alt1
+- 0.43.0
+
 * Sat Nov 05 2022 Valery Inozemtsev <shrek@altlinux.ru> 3:0.42.2-alt1
 - 0.42.2 (fixed CVE-2022-44638)
 
