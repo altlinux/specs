@@ -28,7 +28,7 @@ python3(packaging) \\\
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 7.0.1
+Version: 7.2.6
 Release: alt1
 
 Summary: Tool for producing documentation for Python projects
@@ -262,6 +262,9 @@ EOF
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Thu Jan 11 2024 Fr. Br. George <george@altlinux.org> 1:7.2.6-alt1
+- Autobuild version bump to 7.2.6
+
 * Wed Jun 21 2023 Fr. Br. George <george@altlinux.org> 1:7.0.1-alt1
 - Autobuild version bump to 7.0.1
 
