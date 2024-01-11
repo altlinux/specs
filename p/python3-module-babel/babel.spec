@@ -1,13 +1,11 @@
 %define oname Babel
-# see babel/scripts/download_import_cldr.py
-%define cldr_version 37
-%define cldr_name cldr-%cldr_version
+%def_without import_cldr
 
 %def_with doc
 %def_with check
 
 Name: python3-module-babel
-Version: 2.13.1
+Version: 2.14.0
 Release: alt1
 Epoch: 1
 
@@ -17,9 +15,7 @@ Group: Development/Python3
 
 Url: http://babel.pocoo.org/
 
-# Source-url: %__pypi_url %oname
 Source: Babel-%version.tar.gz
-Source1: Babel-failed_tests
 # LC_ALL=ru_RU.UTF-8 python3 -m pytest tests |& sed -En '/^FAILED tests/s/.*::([^[ ]*).*/\1/p' | sort -u | tr '\n' ' ' > Babel-failed_tests
 
 BuildArch: noarch
@@ -30,7 +26,11 @@ BuildRequires(pre): rpm-macros-sphinx3
 
 # Automatically added by buildreq on Fri Mar 24 2023
 # optimized out: libgpg-error python-sphinx-objects.inv python3 python3-base python3-dev python3-module-Pygments python3-module-cffi python3-module-charset-normalizer python3-module-pkg_resources python3-module-pytz python3-module-setuptools python3-module-sphinx sh4
-BuildRequires: cldr-37-common python3-module-pyproject-installer python3-module-wheel python3-module-sphinx
+BuildRequires: python3-module-pyproject-installer python3-module-wheel python3-module-sphinx unzip
+
+%if_with import_cldr
+BuildRequires: cldr
+%endif
 
 %if_with check
 BuildRequires: python3-module-pytest python3-module-freezegun python3-module-pytz
@@ -48,15 +48,19 @@ localization (L10N) can be separated into two different aspects:
     and date formatting, etc.
 
 %prep
-%setup -n %oname-%version
+%if_with import_cldr
+%setup -T -n %oname-%version/cldr -c -a1
+%endif
+%setup -D -n %oname-%version
 
 %if_with doc
 %prepare_sphinx3 .
-ln -s ../objects.inv docs/
 %endif
 
 %build
-python3 scripts/import_cldr.py /usr/share/unicode/%cldr_name/common
+%if_with import_cldr
+python3 scripts/import_cldr.py /usr/share/unicode/cldr/common
+%endif
 %pyproject_build
 
 %install
@@ -69,7 +73,7 @@ python3 scripts/import_cldr.py /usr/share/unicode/%cldr_name/common
 
 %if_with check
 %check
-LC_ALL=ru_RU.UTF-8 python3 -m pytest tests -k "not `sed -E 's/ (.)/ and not \1/g' %SOURCE1`"
+LC_ALL=ru_RU.UTF-8 python3 -m pytest tests # -k "not `sed -E 's/ (.)/ and not \1/g' #SOURCE100`"
 %endif
 
 %files
@@ -81,6 +85,10 @@ LC_ALL=ru_RU.UTF-8 python3 -m pytest tests -k "not `sed -E 's/ (.)/ and not \1/g
 %python3_sitelibdir/*
 
 %changelog
+* Thu Jan 11 2024 Fr. Br. George <george@altlinux.org> 1:2.14.0-alt1
+- Autobuild version bump to 2.14.0
+- Drop CLDR dependency (turns out to be already incorporeted)
+
 * Thu Dec 07 2023 Fr. Br. George <george@altlinux.org> 1:2.13.1-alt1
 - Autobuild version bump to 2.13.1
 
