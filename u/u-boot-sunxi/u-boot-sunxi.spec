@@ -1,5 +1,5 @@
 Name: u-boot-sunxi
-Version: 2023.10
+Version: 2024.01
 Release: alt1
 
 Summary: Das U-Boot
@@ -67,6 +67,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Wed Jan 10 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 2024.01-alt1
+- 2024.01 released
+
 * Mon Oct 16 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.10-alt1
 - 2023.10 released
 
