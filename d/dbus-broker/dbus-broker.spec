@@ -1,5 +1,5 @@
 Name: dbus-broker
-Version: 33
+Version: 35
 Release: alt1
 Summary: Linux D-Bus Message Broker
 License: ASL 2.0
@@ -43,6 +43,9 @@ recent Linux kernel releases.
 %_man1dir/*.1*
 
 %changelog
+* Thu Jan 11 2024 Valery Inozemtsev <shrek@altlinux.ru> 35-alt1
+- update to v35
+
 * Mon Jul 03 2023 Valery Inozemtsev <shrek@altlinux.ru> 33-alt1
 - initial release
 
