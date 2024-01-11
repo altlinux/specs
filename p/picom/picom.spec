@@ -3,7 +3,7 @@
 
 Name: picom
 Version: 10.2
-Release: alt1
+Release: alt2
 Summary: A lightweight compositor for X11
 License: MPL-2.0 or MIT
 Group: System/X11
@@ -13,6 +13,7 @@ Source44: %name.watch
 Obsoletes: compton < %EVR
 Provides: compton = %version
 
+BuildRequires: asciidoc-a2x
 BuildRequires: rpm-build-python3
 BuildRequires: meson
 BuildRequires: libX11-devel
@@ -49,7 +50,7 @@ sed -i "/#warning Use of -ffast-math/s/#warning/#error/" src/utils.h
 %endif
 
 %build
-%meson
+%meson -D with_docs=True
 %meson_build
 
 %install
@@ -63,8 +64,12 @@ sed -i "/#warning Use of -ffast-math/s/#warning/#error/" src/utils.h
 %_sysconfdir/xdg/autostart/picom.desktop
 %exclude %_datadir/applications/*.desktop
 %_iconsdir/hicolor/*/*/*
+%_man1dir/*
 
 %changelog
+* Thu Jan 11 2024 Fr. Br. George <george@altlinux.ru> 10.2-alt2
+- Add manpages build
+
 * Sat Jan 21 2023 Anton Midyukov <antohami@altlinux.org> 10.2-alt1
 - new version 10.2
 - add %_sysconfdir/xdg/autostart/picom.desktop
