@@ -1,5 +1,5 @@
 Name: installer-distro-alt-workstation
-Version: 10.3.0
+Version: 10.4.0
 Release: alt1
 
 Summary: Installer configuration (ALT Workstation)
@@ -65,7 +65,12 @@ and executed off there during installation process.
 mkdir -p %buildroot%install2dir
 cp -a * %buildroot%install2dir/
 
+# Don't expand groups lists
+mkdir -p %buildroot%_sysconfdir/alterator
+echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
+
 %files stage2
+%_sysconfdir/alterator/pkg-groups.conf
 %install2dir/alterator-menu
 %install2dir/installer-steps
 %install2dir/*.d/*
@@ -73,6 +78,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Wed Dec 27 2023 Mikhail Efremov <sem@altlinux.org> 10.4.0-alt1
+- Added pkg-groups.conf.
+
 * Wed Nov 22 2023 Mikhail Efremov <sem@altlinux.org> 10.3.0-alt1
 - stage2: Don't try to remove alterator-wizardface.
 - stage2: Fix preinstall.d/80-setup-user-groups.
