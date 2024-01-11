@@ -1,12 +1,12 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _name planify
-%define ver_major 4.3
+%define ver_major 4.4
 %define rdn_name io.github.alainm23.%_name
 
 %def_enable check
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major
 Release: alt1
 
 Summary: Planify
@@ -37,6 +37,7 @@ BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(granite-7)
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(webkitgtk-6.0)
+BuildRequires: pkgconfig(gtksourceview-5)
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(libecal-2.0) >= %ecal_ver
 BuildRequires: pkgconfig(libedataserver-1.2)
@@ -95,6 +96,9 @@ This package contains files necessary to develop Planify plugins.
 %_vapidir/%_name.*
 
 %changelog
+* Thu Jan 11 2024 Yuri N. Sedunov <aris@altlinux.org> 4.4-alt1
+- updated to 4.4-2-gb0d21d71
+
 * Thu Dec 21 2023 Yuri N. Sedunov <aris@altlinux.org> 4.3.2-alt1
 - 4.3.2
 
