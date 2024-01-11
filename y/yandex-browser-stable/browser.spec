@@ -8,8 +8,8 @@
 Summary: Yandex Browser
 License: ALT-YANDEX-BROWSER
 Name: yandex-browser-stable
-Version: 23.9.1.1033
-Release: alt1
+Version: 23.11.1.802
+Release: alt2
 Group: Networking/WWW
 Vendor: YANDEX LLC
 Url: http://browser.yandex.ru/
@@ -182,6 +182,7 @@ store_partner_data() {
     store_partner_files "resources/wallpapers" "*"
   fi
 }
+
 store_partner_data
 exit 0
 # =============== END post ===============
@@ -204,6 +205,45 @@ exit 0
 # =============== END preun ===============
 
 %changelog
+
+* Tue Dec 18 2023 yabro <yabro@altlinux.org> 23.11.1.802-alt2
+- Removed excessive copy routine from spec-file
+
+* Tue Dec 18 2023 yabro <yabro@altlinux.org> 23.11.1.802-alt1
+- Browser updated to 23.11.1.802
+
+* Tue Dec 12 2023 yabro <yabro@altlinux.org> 23.11.1.783-alt1
+- Browser updated to 23.11.1.783
+ + Critical CVE-2023-4863: Heap buffer overflow in WebP.
+ + Critical CVE-2023-5218: Use after free in Site Isolation.
+ + High CVE-2023-5472: Use after free in Profiles.
+ + High CVE-2023-5346: Type Confusion in V8.
+ + High CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx.
+ + High CVE-2023-5186: Use after free in Passwords.
+ + High CVE-2023-5187: Use after free in Extensions.
+ + Medium CVE-2023-5487: Inappropriate implementation in Fullscreen.
+ + Medium CVE-2023-5484: Inappropriate implementation in Navigation.
+ + Medium CVE-2023-5475: Inappropriate implementation in DevTools.
+ + Medium CVE-2023-5483: Inappropriate implementation in Intents.
+ + Medium CVE-2023-5481: Inappropriate implementation in Downloads.
+ + Medium CVE-2023-5476: Use after free in Blink History.
+ + Medium CVE-2023-5474: Heap buffer overflow in PDF.
+ + Medium CVE-2023-5479: Inappropriate implementation in Extensions API.
+ + Medium CVE-2023-4900: Inappropriate implementation in Custom Tabs.
+ + Medium CVE-2023-4901: Inappropriate implementation in Prompts.
+ + Medium CVE-2023-4902: Inappropriate implementation in Input.
+ + Medium CVE-2023-4903: Inappropriate implementation in Custom Mobile Tabs.
+ + Medium CVE-2023-4904: Insufficient policy enforcement in Downloads.
+ + Medium CVE-2023-4905: Inappropriate implementation in Prompts.
+ + Low CVE-2023-4906: Insufficient policy enforcement in Autofill.
+ + Low CVE-2023-4907: Inappropriate implementation in Intents.
+ + Low CVE-2023-4908: Inappropriate implementation in Picture in Picture.
+ + Low CVE-2023-4909: Inappropriate implementation in Interstitials.
+ + Low CVE-2023-5485: Inappropriate implementation in Autofill.
+ + Low CVE-2023-5478: Inappropriate implementation in Autofill.
+ + Low CVE-2023-5477: Inappropriate implementation in Installer.
+ + Low CVE-2023-5486: Inappropriate implementation in Input.
+ + Low CVE-2023-5473: Use after free in Cast.
 
 * Tue Oct 11 2023 yabro <yabro@altlinux.org> 23.9.1.1033-alt1
 - Browser updated to 23.9.1.1033
