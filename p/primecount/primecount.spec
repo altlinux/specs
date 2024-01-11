@@ -1,7 +1,7 @@
 %define soname 7
 
 Name: primecount
-Version: 7.9
+Version: 7.10
 Release: alt1
 
 Summary: Count the number of primes
@@ -78,6 +78,9 @@ ctest
 %_pkgconfigdir/primecount.pc
 
 %changelog
+* Thu Jan 11 2024 Leontiy Volodin <lvol@altlinux.org> 7.10-alt1
+- New version 7.10.
+
 * Tue Jul 04 2023 Leontiy Volodin <lvol@altlinux.org> 7.9-alt1
 - New version 7.9.
 
