@@ -1,11 +1,13 @@
-%def_enable snapshot
-%define ver_major 1.15
+%def_disable snapshot
+
+%define _name Minder
+%define ver_major 1.16
 %define rdn_name com.github.phase1geo.minder
 
 %def_enable check
 
 Name: minder
-Version: %ver_major.6
+Version: %ver_major.1
 Release: alt1
 
 Summary: Mind-mapping application
@@ -14,7 +16,7 @@ Group: Office
 Url: https://github.com/phase1geo/Minder
 
 %if_disabled snapshot
-Source: %url/archive/v%version/%name-%version.tar.gz
+Source: %url/archive/%version/%name-%version.tar.gz
 %else
 Vcs: https://github.com/phase1geo/Minder.git
 Source: %name-%version.tar
@@ -44,7 +46,7 @@ BuildRequires: vapi(granite)
 Quickly create visual mind-maps using the keyboard and automatic layout.
 
 %prep
-%setup -n %name-%version
+%setup -n %{?_enable_snapshot:%name}%{?_disable_snapshot:%_name}-%version
 
 %build
 %meson
@@ -70,6 +72,9 @@ Quickly create visual mind-maps using the keyboard and automatic layout.
 
 
 %changelog
+* Thu Jan 11 2024 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt1
+- 1.16.1
+
 * Thu Aug 31 2023 Yuri N. Sedunov <aris@altlinux.org> 1.15.6-alt1
 - first build for Sisyphus (1.15.6-2-g3a35139)
 
