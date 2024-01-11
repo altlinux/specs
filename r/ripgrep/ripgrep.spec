@@ -2,8 +2,8 @@
 %def_with check
 
 Name: ripgrep
-Version: 14.0.3
-Release: alt2
+Version: 14.1.0
+Release: alt1
 Summary: Recursively searches directories for a regex pattern
 License: MIT and Unlicense
 Group: File tools
@@ -71,6 +71,9 @@ install -m 0644 _%bin_name %buildroot/%_datadir/zsh/site-functions
 %doc COPYING LICENSE-MIT UNLICENSE
 
 %changelog
+* Thu Jan 11 2024 Alexander Makeenkov <amakeenk@altlinux.org> 14.1.0-alt1
+- Updated to version 14.1.0.
+
 * Sun Dec 17 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 14.0.3-alt2
 - NMU: restored LoongArch support
 
