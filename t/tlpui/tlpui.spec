@@ -1,7 +1,7 @@
 %def_with check
 
 Name:    tlpui
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 
 Summary: A GTK user interface for TLP written in Python
@@ -57,6 +57,9 @@ of all the valid configuration values.
 
 
 %changelog
+* Wed Jan 10 2024 Leonid Znamenok <respublica@altlinux.org> 1.6.1-alt1
+- New release 1.6.1
+
 * Fri Oct 06 2023 Leonid Znamenok <respublica@altlinux.org> 1.6.0-alt1
 - New release 1.6.0
 
