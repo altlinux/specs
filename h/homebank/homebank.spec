@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: homebank
-Version: 5.7.2
+Version: 5.7.3
 Release: alt1
 
 # Note: _unstable suffix sometimes appears in some versions of the tarball.
@@ -10,9 +10,9 @@ Release: alt1
 Summary: Free easy personal accounting for all!
 License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
-Url: https://%name.free.fr/index.php
+Url: https://www.gethomebank.org
 
-Source: http://%name.free.fr/public/sources/%name-%_version.tar.gz
+Source: %url/public/sources/%name-%_version.tar.gz
 
 Requires: %name-help = %EVR
 
@@ -94,6 +94,9 @@ read and rather useful for a first time user.
 
 
 %changelog
+* Thu Jan 11 2024 Yuri N. Sedunov <aris@altlinux.org> 5.7.3-alt1
+- 5.7.3
+
 * Mon Nov 13 2023 Yuri N. Sedunov <aris@altlinux.org> 5.7.2-alt1
 - 5.7.2
 
