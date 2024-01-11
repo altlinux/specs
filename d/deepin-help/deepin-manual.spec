@@ -1,27 +1,33 @@
+%define repo deepin-manual
+
 %ifarch %not_qt5_qtwebengine_arches
 %def_disable qtwebengine
 %else
 %def_enable qtwebengine
 %endif
 
-Name: deepin-manual
-Version: 6.0.4
-Release: alt1.1
+Name: deepin-help
+Version: 6.0.6.0.4.35f8
+Release: alt1
+
 Summary: Help files for DDE
-License: GPL-3.0+ and CC0-1.0 and BSD-3-Clause
+
+License: GPL-3.0-or-later and CC0-1.0 and BSD-3-Clause
 # LICENSES/: CC0-1.0 and CC-BY-4.0 and MIT and BSD-3-Clause and LGPL-3.0 and GPL-3.0
 # tools/: CC0-1.0
-# tests/: CC0-1.0 and GPL-3.0+
+# tests/: CC0-1.0 and GPL-3.0-or-later
 # src/: GPL-3.0+ and CC0-1.0 and BSD-3-Clause
 # src/web*/*/qwebchannel.js: BSD-3-Clause or Qt.Commercial
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-manual
-Packager: Leontiy Volodin <lvol@altlinux.org>
 
-Source: %url/archive/%version/%name-%version.tar.gz
-%ifarch aarch64 armh
-Patch: deepin-manual-5.8.4-alt-aarch64-armh.patch
-%endif
+Source: %url/archive/%version/%repo-%version.tar.gz
+Patch: %name-%version-%release.patch
+
+Provides: %repo = %EVR
+Obsoletes: %repo < %EVR
+
+Requires: %name-data
 
 BuildRequires(pre): rpm-build-ninja
 BuildRequires(pre): rpm-macros-qt5-webengine
@@ -30,22 +36,21 @@ BuildRequires: gcc-c++ cmake qt5-base-devel qt5-tools-devel qt5-webchannel-devel
 BuildRequires: qt5-webengine-devel
 %endif
 
-Requires: %name-data
-
 %description
 %summary.
 
 %package data
 Summary: Data files for %name
 Group: Graphical desktop/Other
+Provides: %repo-data = %EVR
+Obsoletes: %repo-data < %EVR
+
 %description data
 Data files for %name.
 
 %prep
-%setup
-%ifarch aarch64 armh
+%setup -n %repo-%version
 %patch -p1
-%endif
 
 %build
 %if_enabled qtwebengine
@@ -68,18 +73,22 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %doc LICENSE README.md CHANGELOG.md
 %_bindir/dman
 %_bindir/dmanHelper
-%_desktopdir/%name.desktop
+%_desktopdir/%repo.desktop
 %_datadir/dbus-1/services/com.deepin.Manual.Open.service
 %_datadir/dbus-1/services/com.deepin.Manual.Search.service
-%_iconsdir/hicolor/scalable/apps/%name.svg
+%_iconsdir/hicolor/scalable/apps/%repo.svg
 %endif
 
 %files data
 %if_enabled qtwebengine
-%_datadir/%name/
+%_datadir/%repo/
 %endif
 
 %changelog
+* Thu Jan 11 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.6.0.4.35f8-alt1
+- New version 6.0.6-4-g35f8e3d3.
+- Renamed package from deepin-manual to deepin-help (not by upstream).
+
 * Thu Nov 02 2023 Ivan A. Melnikov <iv@altlinux.org> 6.0.4-alt1.1
 - NMU: employ rpm-macros-qt5-webengine (fixes build on loongarch64).
 
