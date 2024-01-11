@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.138
+Version: 2.9.139
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -122,6 +122,9 @@ make check
 %lang(uz) %_datadir/locale/uz/LC_MESSAGES/*.mo
 
 %changelog
+* Thu Jan 11 2024 Mikhail Efremov <sem@altlinux.org> 2.9.139-alt1
+- altrator-vm: Add Russian translation for WS BtrFS profile.
+
 * Mon Dec 25 2023 Andrey Cherepanov <cas@altlinux.org> 2.9.138-alt1
 - Add base alterator localization on Uzbek
 

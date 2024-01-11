@@ -1,5 +1,5 @@
 Name: volumes-profile-alt-workstation
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: Volumes description for ALT Workstation
@@ -10,6 +10,7 @@ Url: http://www.altlinux.org/Installer/beans
 Source: %name-%version.tar
 
 BuildArch: noarch
+Conflicts: alterator-vm < 0.4.32-alt2
 
 %define hookdir %_datadir/install2/initinstall.d
 
@@ -27,6 +28,10 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Thu Jan 11 2024 Mikhail Efremov <sem@altlinux.org> 0.4-alt1
+- Add btrfs profile.
+- Use Ext4 instead of Ext2/3.
+
 * Thu Aug 25 2022 Mikhail Efremov <sem@altlinux.org> 0.3-alt1
 - Add nvme, mmcblk support (by Anton Midyukov).
 
