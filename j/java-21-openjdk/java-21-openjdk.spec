@@ -10,7 +10,7 @@
 # Enable static library builds by default.
 %def_without staticlibs
 # Build a fresh libjvm.so for use in a copy of the bootstrap JDK
-%def_with fresh_libjvm
+%def_without fresh_libjvm
 # Build with system libraries
 %def_with system_libs
 
@@ -282,12 +282,12 @@
 # New Version-String scheme-style defines
 %global featurever 21
 %global interimver 0
-%global updatever 0
+%global updatever 1
 %global patchver 0
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
 # and this it is better to change it here, on single place
-%global buildjdkver 21
+%global buildjdkver %{featurever}
 %global lts_designator ""
 %global lts_designator_zip ""
 
@@ -312,7 +312,7 @@
 # Standard JPackage naming and versioning defines
 %global origin openjdk
 %global origin_nice OpenJDK
-%global buildver   35
+%global buildver   12
 # Priority must be 8 digits in total; up to openjdk 1.8, we were using 18..... so when we moved to 11, we had to add another digit
 # Using 10 digits may overflow the int used for priority, so we combine the patch and build versions
 # It is very unlikely we will ever have a patch version > 4 or a build version > 20, so we combine as (patch * 20) + build.
@@ -1981,5 +1981,10 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 %endif
 
 %changelog
+* Thu Jan 11 2024 Andrey Cherepanov <cas@altlinux.org> 0:21.0.1.0.12-alt1
+- New version.
+- Security fixes: CVE-2023-22081 and CVE-2023-22025.
+- End of bootstrapping.
+
 * Fri Oct 06 2023 Andrey Cherepanov <cas@altlinux.org> 0:21.0.0.0.35-alt1
 - Initial built in Sisyphus (based on Fedora spec file).
