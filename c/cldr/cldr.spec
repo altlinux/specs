@@ -1,8 +1,9 @@
 %define cldrdir %_datadir/unicode/cldr
+%def_without emoji
 
 Name: cldr
 Version: 43
-Release: alt1
+Release: alt2
 
 Summary: Unicode Common Locale Data Repository
 Group: Development/Other
@@ -22,7 +23,9 @@ Requires: %name-core = %version-%release
 Requires: %name-exemplars = %version-%release
 Requires: %name-keyboards = %version-%release
 Requires: %name-seed = %version-%release
+%if_without emoji
 Requires: cldr-emoji-annotation
+%endif
 
 %description
 The Unicode CLDR provides key building blocks for software to support the world's languages,
@@ -111,8 +114,13 @@ This package contains documentation for CLDR.
 %install
 mkdir -p %buildroot%cldrdir/common/
 cp -a common/* %buildroot%cldrdir/common/
+%if_without emoji
 # packed from other source to cldr-emoji-annotation
-rm -rf %buildroot%cldrdir/common/{annotations,annotationsDerived}/
+rm -rf %buildroot%cldrdir/common/{annotations,annotationsDerived,dtd}/
+%else
+%_datadir/unicode/cldr/common/dtd
+%endif
+
 cp -a {exemplars,keyboards,seed} %buildroot%cldrdir/
 mkdir -p %buildroot%_docdir/cldr/
 cp -a specs/* %buildroot%_docdir/cldr/
@@ -143,6 +151,9 @@ cp -a specs/* %buildroot%_docdir/cldr/
 %files
 
 %changelog
+* Thu Jan 11 2024 Fr. Br. George <george@altlinux.org> 43-alt2
+- fix cldr-emoji-annotation compatibility
+
 * Sat Aug 05 2023 Vitaly Lipatov <lav@altlinux.ru> 43-alt1
 - new version 43 (with rpmrb script)
 
