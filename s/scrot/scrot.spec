@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: scrot
-Version: 0.8
-Release: alt3
+Version: 1.10
+Release: alt1
 
 Summary: Screen-shot capture using Imlib 2
 License: MIT-feh
@@ -12,13 +12,8 @@ Url: https://github.com/resurrecting-open-source-projects/scrot
 Packager: Dmitriy Khanzhin <jinn@altlinux.org>
 
 Source: %name-%version.tar
-Patch0: scrot-alt-warnings-fix.patch
-Patch1: scrot-alt-makefile-fix.patch
-Patch2: scrot-alt-deb-man-typos_fix.patch
-Patch3: scrot-upstream-fix-gcc8-Wstringop-truncation.patch
 
-BuildRequires: libgiblib-devel libX11-devel imlib2-devel libfreetype-devel
-BuildRequires: libXext-devel
+BuildRequires: autoconf-archive imlib2-devel libXcomposite-devel libXext-devel libXinerama-devel
 
 %description
 A nice and straightforward screen capture utility implementing the
@@ -26,24 +21,15 @@ dynamic loaders of imlib2.
 
 %prep
 %setup
-%patch0 -p2
-
-# remove own getopt version
-rm -fv -- src/getopt*
-%patch1 -p2
-
-%patch2 -p2
-rm -f configure.in
-
-%patch3 -p1
 
 %build
 %autoreconf
-%configure
-%make_build CFLAGS="%optflags -Werror" --silent --no-print-directory
+%configure \
+	--docdir=%_defaultdocdir/%name-%version
+%make_build
 
 %install
-%makeinstall_std --silent --no-print-directory
+%makeinstall_std
 
 %files
 %_bindir/%name
@@ -51,6 +37,10 @@ rm -f configure.in
 %_defaultdocdir/%name-%version/
 
 %changelog
+* Fri Jan 12 2024 Dmitriy Khanzhin <jinn@altlinux.org> 1.10-alt1
+- 1.10-58-ge46d19f (by git describe --tags)
+- Updated BuildRequires
+
 * Fri Mar 27 2020 Dmitriy Khanzhin <jinn@altlinux.org> 0.8-alt3
 - built by new scheme
 - fixed FTBFS (backported from upstream)
