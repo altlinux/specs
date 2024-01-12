@@ -1,14 +1,14 @@
 Name: memtest86+
 Version: 7.00
-Release: alt1
+Release: alt2
 
 Summary: Memory test for x86 architecture
 License: GPL-2.0-or-later
 Group: System/Kernel and hardware
 
 Url: http://www.memtest.org
-# Source-url: https://github.com/memtest86plus/memtest86plus/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 ExclusiveArch: %ix86 x86_64
 Requires(post,preun): bootloader-utils >= 0.3
@@ -53,6 +53,7 @@ and avoids the following errors:
 
 %prep
 %setup
+%patch -p1
 
 %build
 %ifarch %ix86
@@ -91,6 +92,10 @@ ln -s `relative /sbin/installkernel %_sbindir/installmemtest86+` \
 %doc README.md
 
 %changelog
+* Sat Jan 13 2024 Anton Midyukov <antohami@altlinux.org> 7.00-alt2
+- switch to build from git (Closes:  49060)
+- app/display.c: do not show GIT_HASH in version (Closes: 49061)
+
 * Mon Jan 08 2024 Anton Midyukov <antohami@altlinux.org> 7.00-alt1
 - new version (7.00) with rpmgs script
 - clean Packager
