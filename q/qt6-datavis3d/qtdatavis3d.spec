@@ -2,7 +2,7 @@
 %global qt_module qtdatavis3d
 
 Name: qt6-datavis3d
-Version: 6.1.1
+Version: 6.6.1
 Release: alt1
 
 Group: System/Libraries
@@ -112,5 +112,8 @@ Requires: libqt6-core = %_qt6_version
 %_qt6_examplesdir/*
 
 %changelog
+* Fri Jan 12 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt1
+- fix version
+
 * Tue Dec 05 2023 Sergey V Turchin <zerg@altlinux.org> 6.1.1-alt1
 - initial build
