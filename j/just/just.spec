@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: just
-Version: 1.14.0
+Version: 1.22.1
 Release: alt1
 Summary: Just a command runner
 License: CC0-1.0
@@ -51,9 +51,8 @@ install -Dpm0644 completions/just.zsh  %buildroot%_datadir/zsh/site-functions/_j
 install -Dpm0644 completions/just.fish %buildroot%_datadir/fish/vendor_completions.d/just.fish
 install -Dpm0644 man/just.1 -t %buildroot%_man1dir
 
-%define _customdocdir %_docdir/%name
-
 %files
+%define _customdocdir %_docdir/%name
 %doc LICENSE *.md examples
 %_bindir/just
 %_man1dir/just.1*
@@ -62,5 +61,8 @@ install -Dpm0644 man/just.1 -t %buildroot%_man1dir
 %_datadir/fish/vendor_completions.d/just.fish
 
 %changelog
+* Tue Jan 09 2024 Vitaly Chikunov <vt@altlinux.org> 1.22.1-alt1
+- Update to 1.22.1 (2024-01-08).
+
 * Sat Jun 10 2023 Vitaly Chikunov <vt@altlinux.org> 1.14.0-alt1
 - First import 1.14.0-1-gf329046 (2023-06-10).
