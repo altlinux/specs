@@ -15,7 +15,7 @@
 
 Name: branding-%flavour
 Version: 10
-Release: alt4
+Release: alt5
 Epoch: 1
 
 Url: http://en.altlinux.org/starterkits
@@ -329,6 +329,10 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/autostart/*
 
 %changelog
+* Fri Jan 12 2024 Anton Midyukov <antohami@altlinux.org> 1:10-alt5
+- notes: clean word 'distribution' (Closes: 49057)
+- do not copy indexhtml to alt-notes
+
 * Sat Aug 19 2023 Anton Midyukov <antohami@altlinux.org> 1:10-alt4
 - os-release: add LOGO=altlinux (See ALT bug 43872)
 - copy licenses from distro-licenses
