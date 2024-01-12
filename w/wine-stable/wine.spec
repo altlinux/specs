@@ -14,11 +14,11 @@
 
 %define basemajor 9.0
 %define major 9.0
-%define rel -rc3
+%define rel -rc4
 %define stagingrel %rel
 
 # the packages will conflict with that
-%define conflictlist wine-vanilla wine wine-tkg wine-proton-tkg
+%define conflictlist wine-vanilla wine wine-tkg wine-proton-tkg wine-etersoft
 
 %define __add_conflict() \
 for mod in %{conflictlist}; do \
@@ -81,8 +81,8 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 %endif
 
 Name: wine-stable
-Version: %major.0
-Release: alt1
+Version: %major.0.1
+Release: alt1.rc4
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -426,7 +426,6 @@ Summary: Development tools for %name-devel
 Group: Development/C
 Requires: %name-devel = %EVR
 %add_conflict devel-tools
-#add_libconflict devel
 Conflicts: lib%name-devel < %version
 %if_with devel
 Provides: libwine-devel = %EVR
@@ -463,7 +462,7 @@ Group: Development/C
 Requires: %name = %EVR
 Obsoletes: lib%name-devel < %version
 #Provides: lib%name-devel = %EVR
-Conflicts: libwine--devel
+%add_conflict devel
 # we don't need provide anything
 AutoProv:no
 
@@ -741,17 +740,17 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 
 
 %files common
-%doc ANNOUNCE AUTHORS LICENSE README
-%lang(de) %doc documentation/README.de
-%lang(es) %doc documentation/README.es
-%lang(fr) %doc documentation/README.fr
-%lang(hu) %doc documentation/README.hu
-%lang(it) %doc documentation/README.it
-%lang(ko) %doc documentation/README.ko
-%lang(nb) %doc documentation/README.no
-%lang(pt) %doc documentation/README.pt
-%lang(pt_BR) %doc documentation/README.pt_br
-%lang(tr) %doc documentation/README.tr
+%doc ANNOUNCE.md AUTHORS LICENSE README.md
+%lang(de) %doc documentation/README-de.md
+%lang(es) %doc documentation/README-es.md
+%lang(fr) %doc documentation/README-fr.md
+%lang(hu) %doc documentation/README-hu.md
+%lang(it) %doc documentation/README-it.md
+%lang(ko) %doc documentation/README-ko.md
+%lang(nb) %doc documentation/README-no.md
+%lang(pt) %doc documentation/README-pt.md
+%lang(pt_BR) %doc documentation/README-pt_br.md
+%lang(tr) %doc documentation/README-tr.md
 
 %_bindir/wine
 %_bindir/wineserver
@@ -860,6 +859,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Thu Jan 11 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.0.1-alt1.rc4
+- update to wine 9.0-rc4 release
+
 * Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.0-alt1
 - update to wine 9.0-rc3 release
 - set strict require wine-mono 8.1.0
