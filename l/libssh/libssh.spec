@@ -7,18 +7,21 @@
 %define libssh libssh
 
 Name: libssh
-Version: 0.10.5
+Version: 0.10.6
 Release: alt1
 
 Group: System/Libraries
 Summary: C library to authenticate in a simple manner to one or more SSH servers
 Url: http://www.libssh.org/
-License: LGPLv2.1+
+License: LGPL-2.1-or-later
 
 # svn checkout svn://svn.berlios.de/libssh/trunk libssh
 Source: http://www.libssh.org/files/%name-%version.tar.gz
 Source3: libssh_client.config
 Source4: libssh_server.config
+# FC
+Patch1: libssh-0.10.6-rekey-timeout.patch
+Patch2: libssh-0.10.6-ipv6-hostname.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -73,6 +76,8 @@ This package contains the development files for %name.
 
 %prep
 %setup -q
+%patch1 -p1
+%patch2 -p1
 find ./ -type f \( -name *.c -or -name *.h \) | \
 while read f; do
     sed -i -E '/^#define[[:space:]]+KEYS_FOLDER[[:space:]]+"\/etc\/ssh\/"/s/\/etc\/ssh\//\/etc\/openssh/' "$f"
@@ -114,6 +119,9 @@ install -m644 %SOURCE4 %buildroot%_sysconfdir/libssh/libssh_server.config
 %_libdir/*.so
 
 %changelog
+* Fri Jan 12 2024 Sergey V Turchin <zerg@altlinux.org> 0.10.6-alt1
+- new version (fixes: CVE-2023-6004 CVE-2023-48795 CVE-2023-6918) (closes: 49050)
+
 * Wed Jul 05 2023 Sergey V Turchin <zerg@altlinux.org> 0.10.5-alt1
 - new version
 
