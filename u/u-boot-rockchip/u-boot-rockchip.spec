@@ -1,5 +1,5 @@
 Name: u-boot-rockchip
-Version: 2023.10
+Version: 2024.01
 Release: alt1
 
 Summary: Das U-Boot
@@ -10,7 +10,7 @@ ExclusiveArch: aarch64
 
 Source: %name-%version-%release.tar
 
-BuildRequires: atf-rockchip >= 2.6 rk35-firmware
+BuildRequires: atf-rockchip >= 2.6 rk35-firmware >= 20230616
 BuildRequires: bc ccache dtc >= 1.4 flex libssl-devel libuuid-devel libgnutls-devel
 BuildRequires: python3(libfdt)
 BuildRequires: python3(setuptools)
@@ -37,6 +37,7 @@ buildit()
   BL31=%_datadir/atf/$1/bl31.elf \
   %make_build HOSTCC='ccache gcc' CC='ccache gcc' O=${O} ${board}_defconfig all
   install -pm0644 -D ${O}/u-boot-rockchip.bin out/${board}/u-boot-rockchip.bin
+  rm -rf ${O}
 }
 
 for soc in PX30 RK3328 RK3399; do
@@ -45,8 +46,14 @@ for board in $boards; do buildit ${soc,,[A-Z]}; done
 done
 
 export RKBIN=%_datadir/rkbin/bin/rk35
-export ROCKCHIP_TPL=$RKBIN/rk3588_ddr_lp4_2112MHz_lp5_2736MHz_v1.08.bin
 
+export ROCKCHIP_TPL=$RKBIN/rk3568_ddr_1560MHz_v1.16.bin
+for soc in RK3568; do
+boards=$(fgrep -lr CONFIG_ROCKCHIP_${soc} configs |sed 's,^configs/\(.\+\)_defconfig,\1,')
+for board in $boards; do buildit ${soc,,[A-Z]}; done
+done
+
+export ROCKCHIP_TPL=$RKBIN/rk3588_ddr_lp4_2112MHz_lp5_2736MHz_v1.11.bin
 for soc in RK3588; do
 boards=$(fgrep -lr CONFIG_ROCKCHIP_${soc} configs |sed 's,^configs/\(.\+\)_defconfig,\1,')
 for board in $boards; do buildit ${soc,,[A-Z]}; done
@@ -62,6 +69,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Thu Jan 11 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 2024.01-alt1
+- 2024.01 released
+
 * Mon Oct 16 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.10-alt1
 - 2023.10 released
 
