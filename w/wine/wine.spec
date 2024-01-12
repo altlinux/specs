@@ -14,10 +14,20 @@
 
 %define basemajor 9.0
 %define major 9.0
-%define rel -rc3
+%define rel -rc4
 %define stagingrel %rel
 # the packages will conflict with that
-%define conflictbase wine-vanilla
+%define conflictlist wine-vanilla wine-stable wine-tkg wine-proton-tkg wine-etersoft
+
+%define __add_conflict() \
+for mod in %{conflictlist}; do \
+    echo -n "$mod-%{*} "; \
+done; unset mod;\
+%nil
+
+%define add_conflict() \
+Conflicts: %(%{expand: %%__add_conflict %{*}}) \
+%nil
 
 # used in wine staging only
 %def_with gtk3
@@ -70,7 +80,7 @@
 %endif
 
 Name: wine
-Version: %major.1
+Version: %major.2
 Release: alt1
 Epoch: 1
 
@@ -283,7 +293,7 @@ Requires: desktop-file-utils
 
 Requires: %name-common = %EVR
 
-Conflicts: %conflictbase
+Conflicts: %conflictlist
 
 # old gl part
 Provides: %winepkgname-gl = %EVR
@@ -327,7 +337,7 @@ Summary: WinAPI test for Wine
 Summary(ru_RU.UTF-8): Тест WinAPI для Wine
 Group: Emulators
 Requires: %name = %EVR
-Conflicts: %conflictbase-test
+%add_conflict test
 
 %description test
 WinAPI test for Wine (unneeded for usual work).
@@ -347,7 +357,7 @@ Requires: wine-mono = %mono_version
 Requires: wine-gecko = %gecko_version
 Requires: winetricks >= %winetricks_version
 
-Conflicts: %conflictbase-full
+%add_conflict full
 
 %description full
 Wine meta package. Use it for install all wine subpackages.
@@ -358,7 +368,7 @@ Summary: Common wine files and scripts
 Summary(ru_RU.UTF-8): Общие файлы и скрипты Wine
 Group: Emulators
 BuildArch: noarch
-Conflicts: %conflictbase-common
+%add_conflict common
 # we don't need provide anything
 AutoProv:no
 Conflicts: libwine <= 6.14.1
@@ -380,7 +390,7 @@ Requires: %name = %EVR
 # due ExclusiveArch
 #BuildArch: noarch
 
-Conflicts: %conflictbase-programs
+%add_conflict programs
 
 %description programs
 Wine GUI programs:
@@ -395,7 +405,7 @@ Group: Emulators
 Requires: %name = %EVR
 # due ExclusiveArch
 #BuildArch: noarch
-Conflicts: %conflictbase-ping
+%add_conflict ping
 
 %if_with set_cap_net_raw
 Requires(pre): libcap-utils
@@ -414,8 +424,7 @@ $ wine-cap_net_raw [on|off]
 Summary: Development tools for %name-devel
 Group: Development/C
 Requires: %name-devel = %EVR
-Conflicts: %conflictbase-devel-tools
-Conflicts: lib%conflictbase-devel
+%add_conflict devel-tools
 Conflicts: lib%name-devel < %version
 %if_with devel
 Provides: libwine-devel = %EVR
@@ -452,7 +461,7 @@ Group: Development/C
 Requires: %name = %EVR
 Obsoletes: lib%name-devel < %version
 #Provides: lib%name-devel = %EVR
-Conflicts: lib%conflictbase-devel
+%add_conflict devel
 # we don't need provide anything
 AutoProv:no
 
@@ -730,17 +739,17 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 
 
 %files common
-%doc ANNOUNCE AUTHORS LICENSE README
-%lang(de) %doc documentation/README.de
-%lang(es) %doc documentation/README.es
-%lang(fr) %doc documentation/README.fr
-%lang(hu) %doc documentation/README.hu
-%lang(it) %doc documentation/README.it
-%lang(ko) %doc documentation/README.ko
-%lang(nb) %doc documentation/README.no
-%lang(pt) %doc documentation/README.pt
-%lang(pt_BR) %doc documentation/README.pt_br
-%lang(tr) %doc documentation/README.tr
+%doc ANNOUNCE.md AUTHORS LICENSE README.md
+%lang(de) %doc documentation/README-de.md
+%lang(es) %doc documentation/README-es.md
+%lang(fr) %doc documentation/README-fr.md
+%lang(hu) %doc documentation/README-hu.md
+%lang(it) %doc documentation/README-it.md
+%lang(ko) %doc documentation/README-ko.md
+%lang(nb) %doc documentation/README-no.md
+%lang(pt) %doc documentation/README-pt.md
+%lang(pt_BR) %doc documentation/README-pt_br.md
+%lang(tr) %doc documentation/README-tr.md
 
 %_bindir/wine
 %_bindir/wineserver
@@ -849,6 +858,10 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Mon Jan 08 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.2-alt1
+- build 9.0-rc4
+- switch to use conflictlist
+
 * Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.1-alt1
 - build 9.0-rc3
 
