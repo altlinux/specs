@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name libxml++
 %define git_name libxmlplusplus
@@ -9,8 +9,8 @@
 %def_enable check
 
 Name: %{_name}3
-Version: %ver_major.4
-Release: alt1.1
+Version: %ver_major.5
+Release: alt1
 
 Summary: C++ wrapper for the libxml2 XML parser library
 Group: System/Libraries
@@ -87,6 +87,9 @@ This package contains the development documentation for libxml++ library.
 %endif
 
 %changelog
+* Fri Jan 12 2024 Yuri N. Sedunov <aris@altlinux.org> 3.2.5-alt1
+- 3.2.5
+
 * Sun Dec 17 2023 Yuri N. Sedunov <aris@altlinux.org> 3.2.4-alt1.1
 - updated to 3.2.4-17-g6997d49 (fixed build with libxml2-2.12.x)
 
