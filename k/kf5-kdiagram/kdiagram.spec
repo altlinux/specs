@@ -8,7 +8,7 @@
 
 Name: kf5-%rname
 Version: 2.8.0
-Release: alt1
+Release: alt2
 %K5init
 
 Group: System/Libraries
@@ -21,7 +21,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5
 # Automatically added by buildreq on Tue Mar 14 2017 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ libEGL-devel libGL-devel libqt5-core libqt5-gui libqt5-printsupport libqt5-sql libqt5-svg libqt5-widgets libstdc++-devel perl python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs
-BuildRequires: extra-cmake-modules qt5-svg-devel
+BuildRequires: extra-cmake-modules qt5-svg-devel qt5-tools-devel
 
 %description
 Powerful libraries (KChart, KGantt) for creating business diagrams.
@@ -70,7 +70,7 @@ KF5 library
 
 %install
 %K5install
-%find_lang %name --with-kde --all-name
+%K5find_qtlang %name --all-name
 
 %files common -f %name.lang
 
@@ -91,6 +91,9 @@ KF5 library
 %_K5lib/libKGantt.so.*
 
 %changelog
+* Tue Jan 09 2024 Sergey V Turchin <zerg@altlinux.org> 2.8.0-alt2
+- package translations
+
 * Mon Sep 06 2021 Sergey V Turchin <zerg@altlinux.org> 2.8.0-alt1
 - new version
 
