@@ -3,7 +3,7 @@
 
 Name: qt6-svg
 Version: 6.6.1
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt6 - Support for rendering and displaying SVG
@@ -75,13 +75,13 @@ Requires: libqt6-core = %_qt6_version
 %build
 %Q6build
 %if %qdoc_found
-%make -C BUILD docs
+%Q6make --target docs
 %endif
 
 %install
 %Q6install_qt
 %if %qdoc_found
-%make -C BUILD DESTDIR=%buildroot install_docs ||:
+%make -C BUILD DESTDIR=%buildroot VERBOSE=1 install_docs ||:
 %endif
 
 # relax depends on plugins files
@@ -124,6 +124,9 @@ done
 #%_qt6_examplesdir/*
 
 %changelog
+* Fri Jan 12 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt3
+- build docs verbose
+
 * Wed Dec 06 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt2
 - fix provides (closes: 47318)
 
