@@ -14,7 +14,7 @@
 %define altbranch %_priority_distbranch
 
 Name: branding-%flavour
-Version: 20230819
+Version: 20240112
 Release: alt1
 
 Url: http://en.altlinux.org
@@ -317,6 +317,10 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/autostart/*
 
 %changelog
+* Fri Jan 12 2024 Anton Midyukov <antohami@altlinux.org> 20240112-alt1
+- notes: clean word 'distribution'
+- do not copy indexhtml to alt-notes
+
 * Sat Aug 19 2023 Anton Midyukov <antohami@altlinux.org> 20230819-alt1
 - os-release: add LOGO=altlinux (Closes: 43872)
 - copy licenses from distro-licenses
