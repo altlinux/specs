@@ -1,6 +1,6 @@
 Name:    trivy-db
 Version: 20231228
-Release: alt3
+Release: alt4
 
 Summary: Database for Trivy
 License: Apache-2.0
@@ -27,7 +27,10 @@ groupadd -r -f _trivy > /dev/null 2>&1 ||:
 useradd -M -r -d %_sharedstatedir/%name -g _trivy -s /dev/null -c "Trivy services" _trivy > /dev/null 2>&1 ||:
 
 %post
-%post_systemd_postponed trivy
+SYSTEMCTL_BIN=systemctl
+if sd_booted && [ "$SYSTEMCTL_BIN" -q is-active trivy ]; then
+        %post_systemd_postponed trivy
+fi
 
 %files
 %doc LICENSE
@@ -36,6 +39,9 @@ useradd -M -r -d %_sharedstatedir/%name -g _trivy -s /dev/null -c "Trivy service
 %attr(0644,_trivy,_trivy) %_sharedstatedir/trivy/db/*
 
 %changelog
+* Fri Jan 12 2024 Alexey Shabalin <shaba@altlinux.org> 20231228-alt4
+- Restart trivy service if active only
+
 * Thu Jan 11 2024 Alexey Shabalin <shaba@altlinux.org> 20231228-alt3
 - Add useradd _trivy to %%pre
 - Fix perm on files
