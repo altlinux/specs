@@ -1,7 +1,7 @@
 %define ver_major 6.0
 
 Name: cinnamon-meta
-Version: %ver_major.0
+Version: %ver_major.4
 Release: alt1
 
 Summary: Cinnamon desktop meta package
@@ -78,6 +78,8 @@ Requires: gcalctool
 Requires: celluloid
 # Default image viewer
 Requires: xviewer
+# Default photo manager
+Requires: pix
 
 Requires: gnome-power-manager
 Requires: NetworkManager-gnome >= 0.8.995
@@ -94,6 +96,10 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Sat Jan 13 2024 Anton Midyukov <antohami@altlinux.org> 6.0.4-alt1
+- bump version
+- cinnamon-regular: add pix
+
 * Sat Dec 02 2023 Anton Midyukov <antohami@altlinux.org> 6.0.0-alt1
 - bump version
 - cleanup spec
