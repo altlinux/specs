@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name gnome-bluetooth
 %define ver_major 42
@@ -14,7 +14,7 @@
 
 Name: %_name%api_ver
 Version: %ver_major.7
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: The GNOME Bluetooth Subsystem
 License: GPL-2.0 and LGPL-2.1
@@ -27,12 +27,12 @@ Requires: lib%name = %EVR rfkill
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%beta.tar.xz
 %else
-Source: %name-%version.tar
+Source: %_name-%version.tar
 %endif
 
-%define gtk_ver 4.4.0
-%define adwaita_ver 1.1
-%define dbusmock_ver 0.23.0
+%define gtk_ver 4.10.0
+%define adwaita_ver 1.4
+%define dbusmock_ver 0.30.0
 %define upower_ver 0.99.14
 
 BuildRequires(pre): rpm-macros-meson rpm-macros-alternatives
@@ -178,6 +178,9 @@ dbus-run-session %__meson_test
 %endif
 
 %changelog
+* Sat Jan 13 2024 Yuri N. Sedunov <aris@altlinux.org> 42.7-alt2
+- updated to 42.7-15-gab399c80
+
 * Thu Nov 16 2023 Yuri N. Sedunov <aris@altlinux.org> 42.7-alt1
 - 42.7
 
