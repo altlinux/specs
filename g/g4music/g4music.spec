@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _name g4music
-%define ver_major 3.4
+%define ver_major 3.5
 %define rdn_name com.github.neithern.%_name
 
 %def_disable check
@@ -66,6 +66,9 @@ large music collection.
 
 
 %changelog
+* Sun Jan 14 2024 Yuri N. Sedunov <aris@altlinux.org> 3.5.1-alt1
+- 3.5.1
+
 * Sat Dec 23 2023 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
 - first build for Sisyphus (v3.4-1-3-g777a0d9)
 
