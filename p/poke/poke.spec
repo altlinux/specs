@@ -1,29 +1,32 @@
 # Spec file for poke - binary data editor
 
-%def_without gui
 %def_with    devel
 %def_without static
+%def_with    textstyle
 
 Name: poke
-Version: 1.3
-Release: alt4
+Version: 3.2
+Release: alt1
 
-Summary: extensible editor for structured binary data
+Summary: Extensible editor for structured binary data
 
-License: %gpl3plus
+License: GPLv3+
 Group: Text tools
 URL: http://www.jemarch.net/poke.html
 #URL: https://git.savannah.gnu.org/cgit/poke.git
 
-Packager: Nikolay A. Fetisov <naf@altlinux.org>
+Source0: %name-%version.tar.gz
+%if_with textstyle
+%define libtextstyle_ver 0.20.5
+Source1: libtextstyle-%libtextstyle_ver.tar.gz
+%endif
 
-Source0: %name-%version.tar
+BuildRequires(pre): rpm-macros-valgrind
 
-BuildRequires(pre): rpm-build-licenses rpm-macros-valgrind
+# Automatically added by buildreq on Sat Jan 13 2024
+# optimized out: bash5 glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libatomic_ops-devel libgpg-error libp11-kit perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-parent pkg-config python3-base sh5 shared-mime-info termutils tzdata
+BuildRequires: appstream flex glibc-devel-static help2man libgc-devel libnbd-devel libreadline-devel makeinfo texi2dvi dejagnu chrpath
 
-# Automatically added by buildreq on Tue Aug 29 2023
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libatomic_ops-devel libgpg-error libjson-c5 perl perl-parent pkg-config sh4 shared-mime-info termutils tzdata xz
-BuildRequires: appstream flex glibc-devel-static help2man libgc-devel libjson-c-devel libreadline-devel makeinfo texi2dvi
 %ifarch %valgrind_arches
 BuildRequires: valgrind
 %endif
@@ -39,20 +42,6 @@ it provides a full-fledged procedural, interactive programming
 language designed to describe data structures and to operate
 on them.
 
-%if_with gui
-%package gui
-Summary: Poke TCL/TK GUI interface
-Group: Text tools
-Requires: %name = %version-%release
-BuildArch: noarch
-
-%description gui
-GNU poke is an interactive, extensible editor for binary data.
-
-This package contains Poke TCL/TK GUI interface.
-
-%endif
-
 %if_with devel
 %package devel
 Summary: headers for Poke library
@@ -63,7 +52,6 @@ Requires: %name = %version-%release
 GNU poke is an interactive, extensible editor for binary data.
 
 This package contains headers for Poke library.
-
 %endif
 
 %if_with static
@@ -82,56 +70,75 @@ This package contains Poke static library.
 
 %prep
 %setup
+%if_with textstyle
+%setup -D -a1
+%endif
 
 mv -f -- COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-3.0+ %_docdir/%name/COPYING) COPYING
 
 %build
+# TODO parallel LTO is buggy for now
+#global optflags_lto %optflags_lto -flto=jobserver -ffat-lto-objects
+%global optflags_lto %nil
+%if_with textstyle
+cd libtextstyle-%libtextstyle_ver
+%configure --disable-shared
+%make_build
+make install DESTDIR=`realpath ..`/libtextstyle prefix=''
+cd ..
+LIBTEXTSTYLE=`realpath libtextstyle`
+%define libtextstyle_conf LDFLAGS=-L$LIBTEXTSTYLE/%_lib --with-libtextstyle-prefix=$LIBTEXTSTYLE --enable-hserver
+%else
+%define libtextstyle_conf
+%endif
 
-%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-
-%autoreconf
+#autoreconf
 %configure \
     --disable-rpath \
-     %{?_without_gui:--disable-gui} \
-    --with-libtextstype-prefix \
     --with-libreadline-prefix \
-    %nil
+    %libtextstyle_conf
 
 %make_build
 
 %install
 %make_install DESTDIR=%buildroot install
+# Die ugly RPATH die die die
+chrpath -d %buildroot/%_bindir/poke
+chrpath -d %buildroot/%_bindir/poked
 %find_lang %name
 
 %files -f %name.lang
+%if_with textstyle
+%doc libtextstyle-%libtextstyle_ver/doc
+%doc libtextstyle-%libtextstyle_ver/examples
+%endif
 %doc NEWS TODO README ChangeLog
 %doc --no-dereference COPYING
 
 %_bindir/%name
+%_bindir/%{name}d
 %_bindir/pk-*
 %_libdir/lib%name.so.*
 
 %_infodir/%name.*
-%_man1dir/%name.*
+%_man1dir/*
 
 %_datadir/%name
 %exclude %_datadir/emacs
-
-
-%if_with gui
-%files gui
-%_bindir/%name-gui
-%_datadir/%name/gui
-%endif
+%_datadir/vim/vimfiles/*/*
 
 %if_with devel
 %files devel
 %_includedir/lib%name.h
 %_libdir/lib%name.so
+%_libdir/pkgconfig/*
+%_datadir/aclocal/poke.m4
 %else
 %exclude %_includedir/lib%name.h
 %exclude %_libdir/lib%name.so
+%exclude %_libdir/pkgconfig/*
+%exclude %_datadir/aclocal/poke.m4
 %endif
 
 %if_with static
@@ -141,8 +148,16 @@ ln -s -- $(relative %_licensedir/GPL-3.0+ %_docdir/%name/COPYING) COPYING
 %exclude %_libdir/lib%name.a
 %endif
 
+%check
+make check
 
 %changelog
+* Sat Jan 13 2024 Fr. Br. George <george@altlinux.org> 3.2-alt1
+- Build new version
+- Vendor libtextstyle in (it's safe for no CSS is parsed)
+- Introduce checks
+- Remove gui build option dropped by upstream
+
 * Mon Nov 13 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.3-alt4
 - NMU: fixed FTBFS on LoongArch.
 
