@@ -1,5 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
+# Tests disabled for now: they cause hasher-priv to freeze
+%define _disable_check 1
+
 %if %{expand:%%{!?_without_check:%%{!?_disable_check:1}}0}
 %define tests enabled
 %else
@@ -8,7 +11,7 @@
 
 Name: zathura
 Version: 0.5.4
-Release: alt1
+Release: alt2
 
 Summary: A lightweight document viewer
 License: Zlib
@@ -91,6 +94,9 @@ mkdir -p %buildroot%_libdir/zathura
 %_datadir/dbus-1/interfaces/org.pwmt.*
 
 %changelog
+* Sun Jan 14 2024 Mikhail Efremov <sem@altlinux.org> 0.5.4-alt2
+- Disabled tests.
+
 * Wed Dec 13 2023 Mikhail Efremov <sem@altlinux.org> 0.5.4-alt1
 - tests: Don't run xvfb tests in parallel.
 - Enabled tests.

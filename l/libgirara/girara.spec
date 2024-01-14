@@ -2,6 +2,9 @@
 %define _soname 3
 %define _unpackaged_files_terminate_build 1
 
+# Tests disabled for now: they cause hasher-priv to freeze
+%define _disable_check 1
+
 %if %{expand:%%{!?_without_check:%%{!?_disable_check:1}}0}
 %define tests enabled
 %else
@@ -9,7 +12,7 @@
 %endif
 
 Name: lib%_name
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: GTK-based minimalistic user interface library
@@ -71,6 +74,10 @@ developing applications that use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Sun Jan 14 2024 Mikhail Efremov <sem@altlinux.org> 0.4.2-alt1
+- Disabled tests.
+- Updated to 0.4.2.
+
 * Wed Dec 13 2023 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt1
 - Enabled tests.
 - Updated to 0.4.1.
