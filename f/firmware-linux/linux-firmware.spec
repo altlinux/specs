@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20240105
+Version: 20240111
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -94,6 +94,23 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/mellanox
 
 %changelog
+* Sun Jan 14 2024 Cronbuild Service <cronbuild@altlinux.org> 20240111-alt1
+- upstream changes (GIT b3132c18):
+  + qcom: Update the firmware for Adreno a630 family of GPUs (thx Akhil P Oommen)
+  + cirrus: Add CS35L41 firmware for Legion Slim 7 Gen 8 laptops (thx Vitaly Rodionov)
+  + Add firmware for Cirrus CS35L41 for various Dell laptops (thx Stefan Binding)
+  + update firmware for qat_4xxx devices (thx Adam Guerin)
+  + update firmware for w1u_uart (thx Yang Li)
+  + amdgpu: DMCUB updates for DCN314 (thx Rodrigo Siqueira)
+  + Intel Bluetooth: Update firmware file for Magnetor Intel
+    Bluetooth AX211 (thx Lokendra Singh)
+  + Intel Bluetooth: Update firmware file for Solar Intel Bluetooth
+    AX101 (thx Lokendra Singh)
+  + Intel Bluetooth: Update firmware file for Solar Intel Bluetooth
+    AX203 (thx Lokendra Singh)
+  + Intel Bluetooth: Update firmware file for Solar Intel Bluetooth
+    AX210 (thx Lokendra Singh)
+
 * Fri Jan 05 2024 Cronbuild Service <cronbuild@altlinux.org> 20240105-alt1
 - upstream changes (GIT c82c9486):
   + amlogic/bluetooth: add firmware bin of W1 serial soc(w1u_uart) (thx yang.li)
