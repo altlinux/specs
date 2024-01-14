@@ -1,5 +1,5 @@
 Name: rpm-macros-features
-Version: 20231024
+Version: 20240114
 Release: alt1
 
 Summary: RPM macros to check if can build with a feature
@@ -58,6 +58,10 @@ install -D -m644 macros %buildroot/%_rpmmacrosdir/features
 %_rpmmacrosdir/features
 
 %changelog
+* Sun Jan 14 2024 Anton Farygin <rider@altlinux.ru> 20240114-alt1
+- removed php 8.0
+- added php 8.3
+
 * Tue Oct 24 2023 Ivan A. Melnikov <iv@altlinux.org> 20231024-alt1
 - no php8.0 on loongarch64
 
