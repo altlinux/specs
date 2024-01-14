@@ -1,0 +1,80 @@
+%def_enable snapshot
+%define _libexecdir %_prefix/libexec
+
+%define ver_major 1.3
+%define rdn_name net.nokyan.Resources
+
+%def_disable bootstrap
+
+Name: resources
+Version: %ver_major.0
+Release: alt1
+
+Summary: System monitor
+License: GPL-3.0-or-later
+Group: Monitoring
+Url: https://github.com/nokyan/resources
+
+%if_disabled snapshot
+Source: %url/archive/v%version/%name-%version.tar.gz
+%else
+Vcs: https://github.com/nokyan/resources.git
+Source: %name-%version.tar
+%endif
+Source1: %name-%version-cargo.tar
+
+ExcludeArch: ppc64le
+
+%define gtk_ver 4.8
+%define adwaita_ver 1.4
+
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson git rust-cargo
+BuildRequires: /usr/bin/appstream-util desktop-file-utils
+BuildRequires: pkgconfig(gtk4) >= %gtk_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
+
+%description
+Resources is a simple yet powerful monitor for your system resources and
+processes, written in Rust and using GTK 4 and libadwaita for its GUI.
+It's capable of displaying usage and details of your CPU, memory, GPUs,
+network interfaces and block devices. It's also capable of listing and
+terminating running graphical applications as well as processes.
+
+%prep
+%setup -n %name-%version %{?_disable_bootstrap:-a1}
+%{?_enable_bootstrap:
+mkdir .cargo
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
+
+%build
+%meson
+%meson_build
+
+%install
+%meson_install
+%find_lang %name
+
+%check
+%__meson_test
+
+%files -f %name.lang
+%_bindir/%name
+%dir %_libexecdir/%name
+%_libexecdir/%name/%name-kill
+%_libexecdir/%name/%name-processes
+%_desktopdir/%{rdn_name}*.desktop
+%_datadir/%name/
+%_datadir/glib-2.0/schemas/%{rdn_name}*.gschema.xml
+%_datadir/polkit-1/actions/%{rdn_name}*.policy
+%_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
+%_datadir/metainfo/%{rdn_name}*.metainfo.xml
+%doc README*
+
+
+%changelog
+* Sun Jan 14 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- first build for Sisyphus (v1.3.0-38-g98a8a6d)
+
+
