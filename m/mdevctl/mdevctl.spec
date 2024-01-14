@@ -1,6 +1,6 @@
 Name:		mdevctl
 Version:	1.3.0
-Release:	alt2
+Release:	alt3
 Summary:	Mediated device management and persistence utility
 
 Group:		System/Configuration/Hardware
@@ -63,11 +63,15 @@ cargo test --release --no-fail-fast
 %_sbindir/lsmdev
 %_udevrulesdir/60-mdevctl.rules
 %_sysconfdir/mdevctl.d
+/usr/lib/%name
 %_man8dir/mdevctl.8*
 %_man8dir/lsmdev.8*
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Sun Jan 14 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.3.0-alt3
+- add scripts.d subdirs (Closes: #49068)
+
 * Thu Jan 11 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.3.0-alt2
 - NMU: fixed FTBFS on LoongArch
 
