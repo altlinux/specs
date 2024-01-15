@@ -6,14 +6,14 @@ BuildRequires: libsowing-devel libyaml-devel perl(Encode.pm) perl(Encode/CN.pm) 
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.013
+Version: 0.14.0
 Release: alt1
 Summary: Wrapper around the C libyaml library
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://www.cpan.org/authors/id/T/TI/TINITA/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TI/TINITA/%{module_name}-v%{version}.tar.gz
 
 %description
 This module provides a thin wrapper around the C libyaml API.
@@ -29,7 +29,7 @@ changed.
 `libyaml-dev' has to be installed. It might be included in a future release.
 
 %prep
-%setup -q -n %{module_name}-%{version}
+%setup -q -n %{module_name}-v%{version}
 
 %build
 %perl_vendor_build
@@ -43,6 +43,9 @@ changed.
 %perl_vendor_autolib/*
 
 %changelog
+* Mon Jan 15 2024 Igor Vlasenko <viy@altlinux.org> 0.14.0-alt1
+- automated CPAN update
+
 * Tue Apr 12 2022 Igor Vlasenko <viy@altlinux.org> 0.013-alt1
 - automated CPAN update
 
