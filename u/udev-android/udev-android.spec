@@ -3,7 +3,7 @@
 %define adbusersgroup adbusers
 
 Name: udev-android
-Version: 20231207
+Version: 20240114
 Release: alt1
 
 Summary: Udev rules for adb and fastboot
@@ -37,6 +37,9 @@ install -p -m644 51-android.rules %buildroot%_udevrulesdir
 %_udevrulesdir/51-android.rules
 
 %changelog
+* Mon Jan 15 2024 Grigory Ustinov <grenka@altlinux.org> 20240114-alt1
+- Automatically updated to 20240114.
+
 * Thu Dec 28 2023 Grigory Ustinov <grenka@altlinux.org> 20231207-alt1
 - Automatically updated to 20231207.
 
