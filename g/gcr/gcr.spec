@@ -11,8 +11,8 @@
 %def_enable check
 
 Name: gcr
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: A GNOME crypto viewer and prompter
 Group: Graphical desktop/GNOME
@@ -196,6 +196,9 @@ xvfb-run %__meson_test -t 2
 
 
 %changelog
+* Mon Jan 15 2024 Yuri N. Sedunov <aris@altlinux.org> 3.41.2-alt1
+- 3.41.2
+
 * Mon Sep 05 2022 Yuri N. Sedunov <aris@altlinux.org> 3.41.1-alt2
 - disabled ssh-agent binary, conflicts gcr4 < 3.92.0
 
