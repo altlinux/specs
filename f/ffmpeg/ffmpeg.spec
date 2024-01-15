@@ -166,8 +166,8 @@
 
 Name:		ffmpeg
 Epoch:		2
-Version:	6.1
-Release:	alt2
+Version:	6.1.1
+Release:	alt1
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -867,6 +867,9 @@ tests/checkasm/checkasm
 %endif
 
 %changelog
+* Mon Jan 15 2024 Anton Farygin <rider@altlinux.ru> 2:6.1.1-alt1
+- 6.1.1
+
 * Thu Dec 28 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2:6.1-alt2
 - fixed build for Elbrus
 
