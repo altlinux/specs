@@ -91,7 +91,7 @@
 %def_enable vaapi
 %def_enable vdpau
 %if_ver_gteq %vulkan_ver 1.2.189
-%def_enable vulkan
+%def_disable vulkan
 %else
 %def_disable vulkan
 %endif
@@ -165,8 +165,8 @@
 %endif
 
 Name:		ffmpeg-plugin-browser
-Version:	116
-Release:	alt2
+Version:	118
+Release:	alt1
 
 Summary:	FFmpeg built specifically for codec support in special browser
 License:	GPLv3
@@ -179,10 +179,9 @@ Url:		http://ffmpeg.org
 Source:		%name-%version.tar
 Source1: find-provides.sh
 Patch1: chromium.patch
-Patch2: ffmpeg-chromium-100.patch
+Patch2: ffmpeg-chromium-118.patch
 Patch3: alt-vulkan-decode-defines.patch
-Patch4: ffmpeg-x86-optimization.patch
-Patch5: armv6-ffmpeg-no-thumb.patch
+Patch4: armv6-ffmpeg-no-thumb.patch
 Patch2000: ffmpeg-e2k-simd.patch
 
 %define __find_provides %SOURCE1
@@ -587,7 +586,6 @@ This package contains static development files for libswscale.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -786,6 +784,9 @@ tests/checkasm/checkasm
 %_libdir/ffmpeg-plugin-browser/libffmpeg.so
 
 %changelog
+* Mon Jan 15 2024 Sergey V Turchin <zerg@altlinux.org> 118-alt1
+- new version
+
 * Mon Jan 01 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 116-alt2
 - NMU: fixed FTBFS on LoongArch (disable LASX accelerated code due
   to failing tests, ensure SIMD is enabled during LTO).
