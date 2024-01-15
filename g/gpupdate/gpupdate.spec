@@ -32,7 +32,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.9.13.4
+Version: 0.9.13.5
 Release: alt1
 
 Summary: GPT applier
@@ -183,6 +183,13 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Fri Jan 12 2024 Valery Sinelnikov <greh@altlinux.org> 0.9.13.5-alt1
+- Fixed blocking check for machine policies with multiple sections (closes: 48971)
+- Extension of the valuename_typeint list for the admx-chromium 120.0
+- Extension of the valuename_typeint list for the admx-yandex 118.0
+- Changed PAM logic to prevent re-call (closes: 48973)
+- Changed timer option OnStartupSec to prevent re-call
+
 * Mon Dec 18 2023 Valery Sinelnikov <greh@altlinux.org> 0.9.13.4-alt1
 - Fixed regular expression to search for wallpaper management section (closes: 48828)
 
