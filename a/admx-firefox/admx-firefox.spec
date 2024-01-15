@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admx-firefox
-Version: 5.5
+Version: 5.6
 Release: alt1
 
 Summary: Firefox-specific ADMX policy templates
@@ -48,6 +48,9 @@ done
 %_destdir/*/*.adml
 
 %changelog
+* Thu Jan 11 2024 Valentin Sokolov <sova@altlinux.org> 5.6-alt1
+- Update Policy templates for Firefox 121 and Firefox ESR 115.6
+
 * Thu Nov 23 2023 Evgeny Sinelnikov <sin@altlinux.org> 5.5-alt1
 - Update Policy templates for Firefox 120 and Firefox ESR 115.5
 - Add "Enable or disable printing" policy support
