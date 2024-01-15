@@ -6,7 +6,7 @@
 %endif
 
 Name: fish
-Version: 3.6.4
+Version: 3.7.0
 Release: alt1
 
 Summary: A friendly interactive shell
@@ -87,6 +87,9 @@ fi
 %_pixmapsdir/fish.png
 
 %changelog
+* Mon Jan 15 2024 Alexey Shabalin <shaba@altlinux.org> 3.7.0-alt1
+- 3.7.0
+
 * Wed Dec 06 2023 Alexey Shabalin <shaba@altlinux.org> 3.6.4-alt1
 - 3.6.4 (Fixes: CVE-2023-49284)
 
