@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-Test-Mock-Time
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 Summary: Deterministic time & timers for event loop tests
 License: MIT
@@ -32,6 +32,9 @@ with timers.
 %perl_vendorlib/Test*
 
 %changelog
+* Mon Jan 15 2024 Igor Vlasenko <viy@altlinux.org> 0.2.1-alt1
+- automated CPAN update
+
 * Tue Aug 22 2023 Igor Vlasenko <viy@altlinux.org> 0.2.0-alt1
 - automated CPAN update
 
