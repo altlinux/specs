@@ -5,7 +5,7 @@
 
 Name:     podman
 Version:  4.8.3
-Release:  alt1
+Release:  alt2
 
 Summary:  Manage pods, containers, and container images
 License:  Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND ISC AND MIT AND MPL-2.0
@@ -28,7 +28,7 @@ Requires: conmon >= 2.1.7
 Requires: containers-common-extra
 Requires: gvisor-tap-vsock
 %ifnarch %e2k %arm %ix86
-Requires: netavark >= 1.6.0
+Requires: netavark >= 1.6.0 aardvark-dns
 %endif
 Requires: oci-runtime
 Requires: xz
@@ -155,6 +155,9 @@ rm -f %buildroot%_man5dir/dockerfile*
 %_datadir/user-tmpfiles.d/%name-docker.conf
 
 %changelog
+* Mon Jan 15 2024 Alexey Shabalin <shaba@altlinux.org> 4.8.3-alt2
+- Add requires aardvark-dns as dns plugin.
+
 * Wed Jan 10 2024 Alexey Shabalin <shaba@altlinux.org> 4.8.3-alt1
 - New version 4.8.3 (Fixes: CVE-2023-48795 by vendoring golang.org/x/crypto v0.17.0).
 
