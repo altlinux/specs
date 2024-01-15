@@ -1,6 +1,6 @@
 Name: altlinux-repos
-Version: 1.0
-Release: alt4
+Version: 1.1
+Release: alt1
 
 Summary: A set of ALT repos desktop files
 License: GPL
@@ -27,6 +27,9 @@ cp -a mirrors repositories %buildroot%_sysconfdir/apt/
 %_sysconfdir/apt/repositories
 
 %changelog
+* Fri Jan 12 2024 Anton Midyukov <antohami@altlinux.org> 1.1-alt1
+- repositories: add field X-Has-Arches
+
 * Tue Oct 03 2023 Ivan A. Melnikov <iv@altlinux.org> 1.0-alt4
 - Added sisyphus_loongarch64.
 

@@ -1,14 +1,13 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-mirror
-Version: 0.4.10
-Release: alt2
+Version: 0.5.0
+Release: alt1
 
 Source: %name-%version.tar
 
 Summary: local mirrors setup and maintainance
 License: GPL
-Packager: Stanislav Ievlev <inger@altlinux.org>
 
 Group: System/Configuration/Other
 
@@ -68,6 +67,10 @@ install -Dpm640 allowed %buildroot%_sysconfdir/alterator/mirror/allowed
 %config(noreplace) %_sysconfdir/alterator/mirror/allowed
 
 %changelog
+* Fri Jan 12 2024 Anton Midyukov <antohami@altlinux.org> 0.5.0-alt1
+- repositories: add field X-Has-Arches
+- spec: clean Packager
+
 * Sat Dec 09 2023 Michael Shigorin <mike@altlinux.org> 0.4.10-alt2
 - E2K: no special handling required.
 
