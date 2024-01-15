@@ -4,7 +4,7 @@
 
 Name: qt6-declarative
 Version: 6.6.1
-Release: alt1
+Release: alt2
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -304,11 +304,15 @@ mkdir bin_add
 ln -s %__python3 bin_add/python
 
 %build
+%if_enabled bootstrap
 %define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
+%else
+%define qdoc_found 0
+%endif
 export PATH=$PWD/bin_add:$PATH
 %Q6build
-%if_disabled bootstrap
-%make -C BUILD docs
+%if %qdoc_found
+%Q6make --target docs
 %endif
 
 #build rpm-build-qml
@@ -320,10 +324,8 @@ popd
 
 %install
 %Q6install_qt
-%if_disabled bootstrap
 %if %qdoc_found
-%make -C BUILD DESTDIR=%buildroot install_docs ||:
-%endif
+%make -C BUILD DESTDIR=%buildroot VERBOSE=1 install_docs ||:
 %endif
 
 # relax depends on plugins files
@@ -363,7 +365,7 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %dir %_qt6_qmldir/QtQuick/
 
 %files doc
-%if_disabled bootstrap
+%if %qdoc_found
 %_qt6_docdir/*
 %endif
 %_qt6_examplesdir/*
@@ -455,6 +457,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_bindir/rpmbqml6-qmlinfo
 
 %changelog
+* Mon Jan 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt2
+- using qdoc_found macro at build
+
 * Tue Dec 05 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt1
 - new version
 
