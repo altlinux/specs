@@ -2,7 +2,7 @@
 %def_without qt5
 
 Name: strawberry
-Version: 1.0.22
+Version: 1.0.23
 Release: alt1
 
 Summary: Audio player and music collection organizer
@@ -27,7 +27,7 @@ BuildRequires(pre): desktop-file-utils rpm-build-ninja /usr/bin/appstream-util
 # Automatically added by buildreq on Tue Oct 24 2023
 # optimized out: boost-devel-headers cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gstreamer1.0-devel icu-utils libX11-devel libdouble-conversion3 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgmock-devel libgpg-error libgst-plugins1.0 libicu-devel libimobiledevice-devel libp11-kit libplist-devel libqt6-concurrent libqt6-core libqt6-dbus libqt6-gui libqt6-network libqt6-sql libqt6-test libqt6-widgets libsasl2-3 libssl-devel libstdc++-devel libvulkan-devel libxcb-devel libxkbcommon-devel pkg-config python3 python3-base qt6-base-common qt6-base-devel qt6-tools sh5 shared-mime-info xorg-proto-devel zlib-devel
 BuildRequires: boost-devel cmake gst-plugins1.0-devel libalsa-devel libcdio-devel libchromaprint-devel libdbus-devel libebur128-devel libfftw3-devel libgpod-devel libgtest-devel libmtp-devel libprotobuf-devel libpulseaudio-devel libsqlite3-devel libtag-devel libvlc-devel protobuf-compiler
-BuildRequires: qt6-sql-interbase qt6-sql-mysql qt6-sql-odbc qt6-sql-postgresql
+BuildRequires: qt6-sql-interbase qt6-sql-mysql qt6-sql-odbc qt6-sql-postgresql libkdsingleapplication-qt6-devel
 
 %if_with clang
 BuildRequires: clang-devel
@@ -67,8 +67,6 @@ Features:
 
 %prep
 %setup
-mv 3rdparty/kdsingleapplication/KDSingleApplication/LICENSE.txt 3rdparty/kdsingleapplication/LICENSE-kdsingleapplication
-mv 3rdparty/SPMediaKeyTap/LICENSE 3rdparty/SPMediaKeyTap/LICENSE-SPMediaKeyTap
 
 %build
 %if_with clang
@@ -109,8 +107,7 @@ desktop-file-validate %buildroot%_desktopdir/org.strawberrymusicplayer.strawberr
 appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberrymusicplayer.strawberry.appdata.xml
 
 %files
-%doc COPYING 3rdparty/kdsingleapplication/LICENSE-kdsingleapplication 3rdparty/SPMediaKeyTap/LICENSE-SPMediaKeyTap
-%doc Changelog
+%doc COPYING Changelog README.md
 %_bindir/strawberry
 %_bindir/strawberry-tagreader
 %_datadir/metainfo/org.strawberrymusicplayer.strawberry.appdata.xml
@@ -120,6 +117,10 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Mon Jan 15 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.23-alt1
+- New version 1.0.23.
+- Built with system libkdsingleapplication.
+
 * Mon Dec 11 2023 Leontiy Volodin <lvol@altlinux.org> 1.0.22-alt1
 - New version 1.0.22.
 
