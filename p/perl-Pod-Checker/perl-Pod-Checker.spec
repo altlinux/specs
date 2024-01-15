@@ -6,7 +6,7 @@ BuildRequires: perl(Cwd.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(F
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.75
+Version: 1.76
 Release: alt1
 Summary: Pod::Checker verifies POD documentation contents for compliance with the POD format specifications
 Group: Development/Perl
@@ -35,6 +35,9 @@ BuildArch: noarch
 %_man1dir/*
 
 %changelog
+* Mon Jan 15 2024 Igor Vlasenko <viy@altlinux.org> 1.76-alt1
+- automated CPAN update
+
 * Mon May 23 2022 Igor Vlasenko <viy@altlinux.org> 1.75-alt1
 - automated CPAN update
 
