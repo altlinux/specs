@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Pod-Parser
 Name: perl-%dist
-Version: 1.66
+Version: 1.67
 Release: alt1
 
 Summary: Modules for parsing/translating POD format documents
@@ -41,6 +41,9 @@ so be sure to specify them in the B<use> statement if you need them:
 %perl_vendor_privlib/Pod
 
 %changelog
+* Mon Jan 15 2024 Igor Vlasenko <viy@altlinux.org> 1.67-alt1
+- automated CPAN update
+
 * Sat Apr 29 2023 Igor Vlasenko <viy@altlinux.org> 1.66-alt1
 - automated CPAN update
 
