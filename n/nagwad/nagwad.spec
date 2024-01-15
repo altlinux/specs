@@ -1,12 +1,11 @@
 Name: 	  nagwad
-Version:  0.9.14
+Version:  0.10.0
 Release:  alt1
 
 Summary:  Nagios watch daemon
 License:  GPLv3
 Group:    Monitoring
 Url: 	  http://git.altlinux.org/people/nbr/packages/nagwad.git
-
 
 Source:   %name-%version.tar
 
@@ -27,35 +26,55 @@ Provides: %name = %version-%release
 Obsoletes: %name <= 0.9.12-alt2
 
 Requires: systemd
-Requires: osec-cronjob
-Requires: nagios-nrpe >= 3.2.1-alt4
 Requires: %name-audit = %version-%release
+
+Conflicts: integ <= 0.4.2-alt2
 
 %description service
 Daemon that listens to journald and generates alerts based on journal messages
 Example configuration works with alterator-ports-access. It provides Nagios
 alerts when unauthorized USB devices are inserted.
 
-%package templates
+%package nagios
 Summary: Nagios templates for a nagwad node
 Group:   Monitoring
+
+Requires: %name-service = %version-%release
+Requires: nagios-nrpe >= 3.2.1-alt4
+
 Obsoletes: %name-server
 Conflicts: %name-server
 Conflicts: nagios < 3.0.6-alt9
 
+Obsoletes: %name-templates
+
 BuildArch: noarch
 
-%description templates
+%description nagios
 These are Nagios configuration templates for monitoring a nagwad-node.
 
-%package actions
+%package icinga
+Summary: Icinga-2 configuration for a nagwad node
+Group:   Monitoring
+BuildArch: noarch
+Requires: %name-service = %version-%release
+
+%description icinga
+These are Icinga-2 configuration templates for monitoring a nagwad-node.
+
+%package nagstamon
 Summary: Nagstamon actions for a nagwad node
 Group:   Monitoring
 Requires: xvt openssh-clients
+Requires: %name-service = %version-%release
+Requires: nsca-shell = %version-%release
+
+Obsoletes: %name-actions <= 0.9.14-alt1
+Provides: %name-actions = %version-%release
 
 BuildArch: noarch
 
-%description actions
+%description nagstamon
 These are Nagstamon action commands suitable for a nagwad-node.
 
 %package audit
@@ -77,6 +96,16 @@ Requires: which
 %description -n mk-syscall-rules
 Contains 'mk-syscall-rules' and 'aunormarch' utils.
 
+%package -n nsca-shell
+Summary: A shell which sends session typescript to a Nagios server
+Group:   Monitoring
+BuildArch: noarch
+
+%description -n nsca-shell
+A tool to record a typescript of a terminal session
+and then send it to a Nagios monitoring server in order to keep
+a log of operations with a particular host or service.
+
 %prep
 %setup
 
@@ -91,7 +120,9 @@ mkdir -p %buildroot/var/log/nagwad
 # Touch the file for %%ghost below.
 touch %buildroot%_sysconfdir/audit/rules.d/50-nagwad-arch.rules
 
-%pre
+%pre service
+getent group %name >/dev/null || %_sbindir/groupadd -r %name
+
 if [ -e %_sysconfdir/nagwad/audit/audit.regexp ]; then
     cp -nv %_sysconfdir/nagwad/audit/audit.regexp \
        %_sysconfdir/nagwad/audit.regexp ||:
@@ -124,13 +155,12 @@ fi
 
 %files service
 %doc README.md signal.html signal.md
-%_bindir/nsca-shell
 %_sbindir/nagwad
 %_unitdir/nagwad.*
 %_libexecdir/nagios/plugins/*
 %dir %_sysconfdir/nagwad
 %config(noreplace) %_sysconfdir/nagwad/*.regexp
-%config(noreplace) %_sysconfdir/nagios/nrpe-commands/nagwad.cfg
+%config(noreplace) %_sysconfdir/nagwad/*.sed
 /var/log/nagwad
 
 %files audit
@@ -138,18 +168,53 @@ fi
 %ghost %_sysconfdir/audit/rules.d/50-nagwad-arch.rules
 %config(noreplace) %_sysconfdir/nagwad/audit-rules.conf
 
-%files templates
+%files nagios
 %doc README.md signal.html signal.md
 %config(noreplace) %_sysconfdir/nagios/templates/*nagwad*.cfg
+%config(noreplace) %_sysconfdir/nagios/nrpe-commands/nagwad.cfg
 
-%files actions
+%files icinga
+%config(noreplace) %_sysconfdir/icinga2/conf.d/*.conf
+
+%files nagstamon
 %config(noreplace) %_sysconfdir/nagstamon/actions/*.conf
 
 %files -n mk-syscall-rules
 %_bindir/aunormarch
 %_sbindir/mk-syscall-rules
 
+%files -n nsca-shell
+%_bindir/nsca-shell
+
 %changelog
+* Mon Jan 15 2024 Paul Wolneykien <manowar@altlinux.org> 0.10.0-alt1
+- Reflect the event status in the name of the signal file and check
+  signal files in order of severity.
+- Make the signal files accessible by the members of 'nagwad' group.
+- Fixed %%pre: %%pre service.
+- /usr/sbin/nagwad: Source /etc/sysconfig/nagwad.
+- Make check_nagwad support status lines + the default status
+  command-line argument.
+- Make nagwad support sed filters.
+- Removed the obsolete check_osec NRPE plugin.
+- Update the login.regexp to also support the 'pam_faillock' module.
+- Update check plugins to report detailed OK and CRITICAL statuses.
+- Extracted nsca-shell into the separate package.
+- Make 'nagwad-icinga' and 'nagwad-nagstamon' depend on
+  'nagwad-service'.
+- Make 'nagwad-nagios' depend on 'nagios-nrpe'.
+- Fix: Make 'nagwad-service' not depend on 'osec-cronjob' and
+  'nagios-nrpe'.
+- Make nagwad.service to restart on failure.
+- Make nagwad.service want auditd.service.
+- Rename 'nagwad-templates' to 'nagwad-nagios' and move nrpe-commands
+  configuration to that package.
+- Added configuration file for Icinga-2 (package %name-icinga).
+- Rename package 'nagwad-actions' to 'nagwad-nagstamon'.
+- Make nagwad-service conflict with obsoleted package integ <=
+  0.4.2-alt2.
+- Added configuration files for integalert.
+
 * Mon Dec 25 2023 Paul Wolneykien <manowar@altlinux.org> 0.9.14-alt1
 - Fix: Use "usergroup-change" key in audit rules (to match the nagwad
   filter key).
