@@ -2,7 +2,7 @@
 %define _libexecdir /usr/libexec
 
 Name: virtiofsd
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 Summary: Virtio-fs vhost-user device daemon (Rust version)
 Group: Emulators
@@ -36,6 +36,16 @@ replace-with = "vendored-sources"
 
 [source.vendored-sources]
 directory = "vendor"
+
+[term]
+verbose = true
+quiet = false
+
+[build]
+rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
+
+[profile.release]
+strip = false
 EOF
 
 %build
@@ -43,14 +53,17 @@ EOF
 
 %install
 %rust_install -t %_libexecdir
-install -D -p -m 0644 50-qemu-virtiofsd.json %buildroot%_datadir/qemu/vhost-user/50-qemu-virtiofsd.json
+install -D -p -m 0644 50-virtiofsd.json %buildroot%_datadir/qemu/vhost-user/50-virtiofsd.json
 
 %files
 %doc README.md
 %_libexecdir/virtiofsd
-%_datadir/qemu/vhost-user/50-qemu-virtiofsd.json
+%_datadir/qemu/vhost-user/50-virtiofsd.json
 
 %changelog
+* Mon Jan 15 2024 Alexey Shabalin <shaba@altlinux.org> 1.9.0-alt1
+- New version 1.9.0.
+
 * Mon Oct 23 2023 Alexey Shabalin <shaba@altlinux.org> 1.8.0-alt1
 - New version 1.8.0.
 
