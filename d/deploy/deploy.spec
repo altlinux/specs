@@ -1,5 +1,5 @@
 Name: deploy
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: Script and set of ansible roles to deploy system services
@@ -31,6 +31,9 @@ system services like PostgreSQL or Moodle.
 %_datadir/%name
 
 %changelog
+* Tue Jan 16 2024 Andrey Cherepanov <cas@altlinux.org> 0.4.1-alt1
+- Added icinga2 role (thanks respublica@).
+
 * Mon Dec 11 2023 Andrey Cherepanov <cas@altlinux.org> 0.4.0-alt1
 - nexcloud: add remove rules.
 - Used version from rpm package.
