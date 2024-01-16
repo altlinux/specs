@@ -2,7 +2,7 @@
 
 Name: kde5-colord
 Version: 23.08.4
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -10,7 +10,7 @@ Summary: Colord support for KDE
 Url: https://invent.kde.org/graphics/colord-kde/
 License: GPL-2.0-or-later
 
-Requires: colord
+Requires: colord icc-profiles
 Requires: qml(org.kde.kirigamiaddons.treeview)
 
 Source: %rname-%version.tar
@@ -50,6 +50,9 @@ KDE support for colord including KDE Daemon module and System Settings module.
 %_K5data/kpackage/kcms/*colord*
 
 %changelog
+* Tue Jan 16 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt2
+- require icc-profiles
+
 * Tue Dec 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
 - new version
 
