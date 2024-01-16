@@ -1,6 +1,6 @@
 Name:    xsv
 Version: 0.13.0
-Release: alt1
+Release: alt2
 
 Summary: A fast CSV command line toolkit written in Rust
 License: MIT
@@ -46,5 +46,8 @@ EOF
 %doc *.md
 
 %changelog
+* Tue Jan 16 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.13.0-alt2
+- NMU: fixed FTBFS on LoongArch (updated libc crate).
+
 * Sun Sep 12 2021 Mikhail Gordeev <obirvalger@altlinux.org> 0.13.0-alt1
 - Initial build for Sisyphus
