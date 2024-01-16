@@ -1,6 +1,6 @@
 Name: parcellite
-Version: 1.2.2
-Release: alt2
+Version: 1.2.3
+Release: alt1
 Summary: Lightweight GTK+ Clipboard Manager
 License: GPLv3
 Group: Graphical desktop/GNOME
@@ -41,6 +41,9 @@ sed -i "s|\(.*VERSION \).*|\1\"%version\"|" config.h
 %_man1dir/%name.1*
 
 %changelog
+* Tue Jan 16 2024 Valery Inozemtsev <shrek@altlinux.ru> 1.2.3-alt1
+- 1.2.3
+
 * Fri Apr 14 2023 Valery Inozemtsev <shrek@altlinux.ru> 1.2.2-alt2
 - updated ru translation
 
