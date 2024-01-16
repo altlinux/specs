@@ -2,7 +2,7 @@
 %define rdn_name mobi.phosh.MobileSettings
 
 Name: phosh-mobile-settings
-Version: 0.35.0
+Version: 0.35.1
 Release: alt1
 
 Summary: Mobile Settings App for phosh and related components
@@ -63,6 +63,9 @@ mv gmobile-%gmobile_ver subprojects/gmobile
 
 
 %changelog
+* Tue Jan 16 2024 Yuri N. Sedunov <aris@altlinux.org> 0.35.1-alt1
+- 0.35.1
+
 * Sun Jan 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.35.0-alt1
 - 0.35.0
 
