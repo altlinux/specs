@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 45
 %define beta %nil
@@ -10,8 +10,8 @@
 %def_enable malcontent
 
 Name: gnome-initial-setup
-Version: %ver_major.0
-Release: alt2%beta
+Version: %ver_major.3
+Release: alt1%beta
 
 Summary: GNOME Initial Setup
 Group: Graphical desktop/GNOME
@@ -120,6 +120,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README* NEWS
 
 %changelog
+* Tue Jan 16 2024 Yuri N. Sedunov <aris@altlinux.org> 45.3-alt1
+- 45.3
+
 * Tue Nov 28 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt2
 - 45.0-11-gdcd515ca (updated translations)
 - fixed runtime dependencies
