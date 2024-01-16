@@ -36,7 +36,7 @@
 %def_disable dp_dpdk
 
 Name: frr
-Version: 9.0.1
+Version: 9.0.2
 Release: alt1
 Summary: FRRouting Routing daemon
 License: GPL-2.0-or-later AND LGPL-2.1-or-later
@@ -235,6 +235,9 @@ fi
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Tue Jan 16 2024 Alexey Shabalin <shaba@altlinux.org> 9.0.2-alt1
+- 9.0.2 (Fixes: CVE-2023-46752, CVE-2023-46753, CVE-2023-47234, CVE-2023-47235)
+
 * Thu Nov 09 2023 Alexey Shabalin <shaba@altlinux.org> 9.0.1-alt1
 - 9.0.1
 
