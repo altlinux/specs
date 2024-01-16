@@ -15,7 +15,7 @@
 # https://dl.winehq.org/wine/source/
 %define basemajor 9.0
 %define major 9.0
-%define rel -rc5
+%define rel %nil
 
 # the packages will conflict with that
 %define conflictlist wine wine-stable wine-tkg wine-proton-tkg wine-etersoft
@@ -79,7 +79,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 
 Name: wine-vanilla
 Version: %major
-Release: alt1.rc5
+Release: alt2
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -851,6 +851,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Wed Jan 17 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0-alt2
+- new version 9.0
+
 * Mon Jan 15 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0-alt1.rc5
 - new version (9.0-rc5) with rpmgs script
 - switch to use conflictlist
