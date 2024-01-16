@@ -1,6 +1,6 @@
 Name: engineering-meta
 Version: p10
-Release: alt9
+Release: alt10
 Summary: Metapackage for install Engineering Applications
 Summary(ru_RU.UTF-8): Метапакет для установки инженерных приложений
 Group: Engineering
@@ -127,6 +127,10 @@ Requires: pycam
 Requires: pcb2gcodeGUI
 %endif
 Requires: rastercarve
+# engraving and v-carving
+Requires: f-engrave ttf2cxf_stream
+Requires: dmap2gcode
+Requires: gimp-plugin-laser
 
 %description -n engineering-CAM
 Metapackage for install CAM (Computer-aided manufacturing)
@@ -202,6 +206,10 @@ Engineering applications not included in any category.
 %files -n engineering-misc
 
 %changelog
+* Tue Jan 16 2024 Anton Midyukov <antohami@altlinux.org> p10-alt10
+- CAM: add f-engrave, dmap2gcode, gimp-plugin-laser (gcode generators for
+  engraving). Thanks to Alexei Mezin
+
 * Wed Oct 18 2023 Anton Midyukov <antohami@altlinux.org> p10-alt9
 - CAM: do'nt require flatcam
 
