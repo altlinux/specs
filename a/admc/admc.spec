@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admc
-Version: 0.15.1
+Version: 0.15.2
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -110,6 +110,9 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Tue Jan 16 2024 Semyon Knyazev <samael@altlinux.org> 0.15.2-alt1
+- Removed missing theme error log on first launch. (closes: 49043)
+
 * Wed Dec 13 2023 Semyon Knyazev <samael@altlinux.org> 0.15.1-alt1
 - Add icon theme selection. System theme is taken from /usr/share/icons
   dir, custom themes are taken from /usr/share/ad-integration dir
