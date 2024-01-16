@@ -7,7 +7,7 @@
 %endif
 
 Name: systemd-ssh-agent
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Requires: ssh-provider-openssh-clients
@@ -41,6 +41,9 @@ install -m 0644 %SOURCE1 %buildroot/%_environmentdir/30-ssh_auth_socket.conf
 %_userunitdir/ssh-agent.service
 
 %changelog
+* Tue Jan 16 2024 Sergey V Turchin <zerg@altlinux.org> 1.3-alt1
+- add systemd support for wayland
+
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 1.2-alt1
 - update requires
 
