@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 23.08.4
-Release: alt3
+Release: alt4
 %K5init
 
 Group: Graphical desktop/KDE
@@ -87,6 +87,9 @@ Requires: %name-common
 #%_K5lib/libkrecorder.so.*
 
 %changelog
+* Tue Jan 16 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 23.08.4-alt4
+- update patches to fix incorrect file saving and text overlay
+
 * Mon Dec 25 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 23.08.4-alt3
 - fix text overlay
 
