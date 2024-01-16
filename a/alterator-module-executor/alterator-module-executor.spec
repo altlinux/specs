@@ -1,5 +1,5 @@
 Name: alterator-module-executor
-Version: 0.1.8
+Version: 0.1.9
 Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
@@ -33,6 +33,10 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Tue Jan 16 2024 Ivan Savin <svn17@altlinux.org> 0.1.9-alt1
+- Add a timeout field for methods. The timeout field contains the period of time
+  after which the SIGKILL will be sent to the process.
+
 * Mon Nov 27 2023 Ivan Savin <svn17@altlinux.org> 0.1.8-alt1
 - Add support for the action_id field from the InterfaceObjectInfo structure.
 
