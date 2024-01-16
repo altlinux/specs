@@ -72,7 +72,7 @@
 %brp_strip_none %sysroot/*  %prefix/lib/gcc/*.a %prefix/lib/gcc/*.o
 
 Name: cross-toolchain-%target
-Version: 20231108
+Version: 20240115
 Release: alt1
 Packager: Alexey Sheplyakov <asheplyakov@altlinux.org>
 Summary: GCC cross-toolchain for %target
@@ -81,19 +81,19 @@ Group: Development/C
 
 ExclusiveArch: x86_64
 
-%define gcc_version 13.2.0
+%define gcc_version 13.2.1
 %define gcc_branch %(v=%gcc_version; v=${v%%%%.*}; echo $v)
 %define binutils_version 2.41
 %define glibc_version 2.38.0.6.g7ac405a74c
 %define kernel_version 6.1
 
-Source0: gcc-13.2.0.tar
-Source1: binutils-2.41.tar
-Source2: glibc-2.38.0.6.g7ac405a74c-alt2.0.port.tar
-Source4: gmp-6.2.1.tar
-Source5: isl-0.24.tar
-Source6: mpc-1.2.1.tar
-Source7: mpfr-4.1.0.tar
+Source0: gcc-13.2.1.0.21.d99aee70bd7-20230729-alt0.0.port.1.tar.xz
+Source1: binutils-2.41.tar.xz
+Source2: glibc-2.38.0.6.g7ac405a74c-alt2.0.port.tar.xz
+Source4: gmp-6.2.1.tar.bz2
+Source5: isl-0.24.tar.bz2
+Source6: mpc-1.2.1.tar.gz
+Source7: mpfr-4.1.0.tar.bz2
 
 Patch0: 0002_glibc_floatn_multiple_types_error.patch
 
@@ -171,16 +171,16 @@ static glibc for %target_arch. Should be used for cross-compilation only
 %setup -cT
 mkdir -p -m755 linux binutils gcc glibc
 
-tar -x --strip-components=1 -f %SOURCE0 -C gcc
-tar -x --strip-components=1 -f %SOURCE1 -C binutils
-tar -x --strip-components=1 -f %SOURCE2 -C glibc
+tar -x --strip-components=1 -a -f %SOURCE0 -C gcc
+tar -x --strip-components=1 -a -f %SOURCE1 -C binutils
+tar -x --strip-components=1 -a -f %SOURCE2 -C glibc
 find /usr/src/kernel/sources -type f -name 'kernel-source-*.tar' | xargs -I {} -n1 tar -x --strip-components=1 -f {} -C linux
 
 mkdir -p -m755 gcc/gmp gcc/mpc gcc/mpfr gcc/isl
-tar -x --strip-components=1 -f %SOURCE4 -C gcc/gmp
-tar -x --strip-components=1 -f %SOURCE5 -C gcc/isl
-tar -x --strip-components=1 -f %SOURCE6 -C gcc/mpc
-tar -x --strip-components=1 -f %SOURCE7 -C gcc/mpfr
+tar -x --strip-components=1 -a -f %SOURCE4 -C gcc/gmp
+tar -x --strip-components=1 -a -f %SOURCE5 -C gcc/isl
+tar -x --strip-components=1 -a -f %SOURCE6 -C gcc/mpc
+tar -x --strip-components=1 -a -f %SOURCE7 -C gcc/mpfr
 
 # Tell glibc to NOT link C++ executables with a stage1 compiler
 patch -d glibc -p1 -i %PATCH0
@@ -803,6 +803,15 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 
 
 %changelog
+* Mon Jan 15 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 20240115-alt1
+- GCC:
+  + Use gcc-source 13.2.1.0.21.d99aee70bd7-20230729 from sisyphus_loongarch64.
+    This includes LoongArch SIMD patches from
+    https://github.com/loongson/gcc.git
+    branch loongarch-gcc-vector
+    commit 14ecbfa78ebdd9c8921517ed4354e64e96cda564
+- spec: ship compressed sources in src.rpm (take less space when building)
+
 * Wed Nov 08 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20231108-alt1
 - binutils: updated to version 2.41. Required for SIMD and virtualization support.
 
