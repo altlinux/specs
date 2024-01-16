@@ -2,7 +2,7 @@
 
 Name: alterator-manager
 Version: 0.1.15
-Release: alt1
+Release: alt2
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -67,6 +67,9 @@ mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
 
 
 %changelog
+* Tue Jan 16 2024 Ivan Savin <svn17@altlinux.org> 0.1.15-alt2
+- Update docs/README-ru.md.
+
 * Wed Jan 10 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.15-alt1
 - Add policy file for alterator-manager itself.
 
