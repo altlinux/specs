@@ -5,7 +5,7 @@
 
 Name: just
 Version: 1.22.1
-Release: alt1
+Release: alt2
 Summary: Just a command runner
 License: CC0-1.0
 Group: Development/Other
@@ -13,14 +13,19 @@ Url: https://just.systems/
 Vcs: https://github.com/casey/just
 
 Source: %name-%version.tar
+Patch1: just-target-loongarch64.patch
 BuildRequires: /proc
 BuildRequires: rust-cargo
+BuildRequires: cargo-vendor-checksum diffstat
 
 %description
 just is a handy way to save and run project-specific commands.
 
 %prep
 %setup
+%patch1 -p1
+diffstat -l -p1 < %PATCH1 | sed -re 's@vendor/@@' | xargs -r cargo-vendor-checksum -f
+
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
 [source.crates-io]
@@ -61,6 +66,9 @@ install -Dpm0644 man/just.1 -t %buildroot%_man1dir
 %_datadir/fish/vendor_completions.d/just.fish
 
 %changelog
+* Tue Jan 16 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.22.1-alt2
+- NMU: fixed FTBFS on LoongArch.
+
 * Tue Jan 09 2024 Vitaly Chikunov <vt@altlinux.org> 1.22.1-alt1
 - Update to 1.22.1 (2024-01-08).
 
