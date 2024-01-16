@@ -1,14 +1,14 @@
 %{?optflags_lto:%global optflags_lto %nil}
 Name: freeswitch
-Version: 1.10.10
-Release: alt3
+Version: 1.10.11
+Release: alt1
 Epoch: 1
 ExcludeArch: %arm %ix86
 
 Summary: FreeSWITCH open source telephony platform
 License: MPL-1.1
 Group: System/Servers
-# VCS: https://github.com/signalwire/freeswitch
+VCS: https://github.com/signalwire/freeswitch
 Url: http://www.freeswitch.org/
 
 Source: %name-%version.tar
@@ -29,7 +29,7 @@ BuildRequires: libilbc1-devel >= 0.0.2-alt3 libjs-devel flite-devel
 BuildRequires: libtiff-devel libldap-devel libsoundtouch-devel libldns-devel
 BuildRequires: libpcap-devel perl-devel
 BuildRequires: libcelt-devel libmpg123-devel liblame-devel libshout2-devel
-BuildRequires: libspandsp3-devel libsofia-sip-devel >= 1.13.12
+BuildRequires: libspandsp3-devel libsofia-sip-devel >= 1.13.17
 BuildRequires: libnet-snmp-devel libnl-devel libsensors3-devel zlib-devel
 BuildRequires: libuuid-devel postgresql-devel 
 BuildRequires: java-common java-1.8.0-openjdk-devel /proc libavformat-devel libavutil-devel libswresample-devel libswscale-devel
@@ -544,6 +544,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Tue Jan 16 2024 Anton Farygin <rider@altlinux.ru> 1:1.10.11-alt1
+- 1.10.10 -> 10.10.11
+
 * Thu Sep 07 2023 Anton Farygin <rider@altlinux.ru> 1:1.10.10-alt3
 - fixed build with ffmpeg 6
 
