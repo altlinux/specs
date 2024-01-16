@@ -1,5 +1,5 @@
 Name: installer-feature-serial
-Version: 0.6
+Version: 0.6.1
 Release: alt1
 
 Summary: serial console support
@@ -50,6 +50,10 @@ so that serial login is available.
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Tue Jan 16 2024 Anton Midyukov <antohami@altlinux.org> 0.6.1-alt1
+- 65-serial.sh: do not add console, already added
+- 65-serial.sh: cleanup quiet only in string with GRUB_CMDLINE_LINUX
+
 * Wed May 03 2023 Anton Midyukov <antohami@altlinux.org> 0.6-alt1
 - postinstall.d/65-serial.sh: clear 'quiet' bootargs
 - postinstall.d/65-serial.sh: do'nt clear 'splash' bootargs,
