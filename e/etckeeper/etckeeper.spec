@@ -1,15 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: etckeeper
-Version: 1.18.8
-Release: alt2
-
+Version: 1.18.21
+Release: alt1
 Summary: Etckeeper help to keep your /etc directory in VCS repository
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
 Url: https://etckeeper.branchable.com/
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Vcs: https://git.joeyh.name/index.cgi/etckeeper.git
 BuildArch: noarch
 AutoReq: yes,noshell
 Requires: coreutils diffutils findutils grep sh
@@ -17,7 +15,7 @@ Requires: git-core >= 1.6.0
 Requires: perl-base
 Obsoletes: %name-origin < %version-%release
 
-Packager: Evgenii Terechkov <evg@altlinux.org>
+Source: %name-%version.tar
 
 %description
 etckeeper is a collection of tools to let /etc be stored in a VCS
@@ -28,42 +26,46 @@ basics of working with VCS.
 
 %prep
 %setup
-%patch -p1
-
-%build
-%install
-make install DESTDIR=%buildroot
-install -D debian/cron.daily %buildroot%_sysconfdir/cron.daily/%name
-
+sed -i '/^LOWLEVEL_PACKAGE_MANAGER=/s/=.*/=rpm/' etckeeper.conf
+# No DPkg support, no empty lines.
+sed -i '/^RPM::/!d' apt.conf
+sed -i '/apt.apt.conf.d/s/05etckeeper/%name.conf/' Makefile
 # We dont want bzr now:
-rm -rf %buildroot%_libdir/python*
+sed -i '/etckeeper-bzr/d' Makefile
 # There is no cruft package for ALT:
-rm -rf %buildroot%_sysconfdir/cruft
+sed -i '/cruft/d' Makefile
 
-mv -v %buildroot%_sysconfdir/apt/apt.conf.d/05%name %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
+%install
+make install DESTDIR=%buildroot PYTHON=%__python3
+install -Dp .gear/cron.daily %buildroot%_sysconfdir/cron.daily/%name
 
 %check
+grep -x LOWLEVEL_PACKAGE_MANAGER=rpm %buildroot%_sysconfdir/%name/etckeeper.conf
+grep -x HIGHLEVEL_PACKAGE_MANAGER=apt %buildroot%_sysconfdir/%name/etckeeper.conf
 find %buildroot -type f | xargs file | grep 'shell script' | cut -d: -f1 | xargs -n1 -t bash -n
 
-%post
-if [ -e %_sysconfdir/.git/hooks/pre-commit ] && grep -E '^(/us[rb]/s?bin/)?%name' %_sysconfdir/.git/hooks/pre-commit >/dev/null 2>&1; then
- echo "Replacing path to etckeeper in %_sysconfdir/.git/hooks/pre-commit"
- sed -i 's!^/usr/sbin/etckeeper!etckeeper!;s!^/usr/bin/etckeeper!etckeeper!;s!^/usb/sbin/etckeeper!etckeeper!' %_sysconfdir/.git/hooks/pre-commit
-fi
+%triggerin -- %name < 1.18.16
+pl="/var/cache/etckeeper/packagelist.pre-install"
+[ ! -e $pl ] || LC_COLLATE=C LC_ALL= sort -o $pl{,}
 
 %files
+%define _customdocdir %_docdir/%name
+%doc README.md GPL CHANGELOG COPYRIGHT
 %_bindir/%name
 %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/%name.conf
 %_sysconfdir/apt/apt.conf.d/%name.conf
-%_man8dir/%{name}.*
+%_man8dir/%{name}.8*
 /usr/share/bash-completion/completions/%name
+/usr/share/zsh/vendor-completions/_etckeeper
 %_cachedir/%name
 %_sysconfdir/cron.daily/%name
 %_unitdir/%{name}.*
-%doc README.md GPL
 
 %changelog
+* Tue Jan 09 2024 Vitaly Chikunov <vt@altlinux.org> 1.18.21-alt1
+- Update to 1.18.21 (2023-11-28).
+
 * Tue Jun 28 2022 Vitaly Chikunov <vt@altlinux.org> 1.18.8-alt2
 - Fixed annoying 'egrep is obsolescent' warning.
 - Updated License, Group, and Url tags.
