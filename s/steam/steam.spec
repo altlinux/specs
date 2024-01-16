@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.78
-Release: alt8
+Release: alt9
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -19,6 +19,7 @@ Source3: %name.watch
 Patch0: %name-desktop-alt.patch
 Patch1: %name-xvt-alt.patch
 Patch2: %name-libgl-drivers-path.patch
+Patch3: %name-steamvr-alt.patch
 
 BuildRequires(Pre): rpm-build-python3
 
@@ -49,6 +50,7 @@ savegame and screenshot functionality, and many social features.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %install
 %makeinstall_std
@@ -74,6 +76,9 @@ savegame and screenshot functionality, and many social features.
 %config %_datadir/polkit-1/rules.d/%name-nm.rules
 
 %changelog 
+* Tue Jan 16 2024 Nazarov Denis <nenderus@altlinux.org> 1.0.0.78-alt9
+- Add patch to fix setup SteamVR (ALT #49080, #49081), thx fidel@
+
 * Fri Sep 29 2023 Nazarov Denis <nenderus@altlinux.org> 1.0.0.78-alt8
 - Add require on xorg-dri-vmwgfx (ALT #47710, #47711)
 
