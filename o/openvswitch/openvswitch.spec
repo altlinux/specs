@@ -12,7 +12,7 @@
 %endif
 
 Name: openvswitch
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 
 Summary: An open source, production quality, multilayer virtual switch
@@ -161,18 +161,18 @@ sed -i "s/__has_extension(c_atomic)/0/" lib/ovs-atomic.h
 export PYTHON3=%__python3
 %autoreconf
 %configure \
-	--disable-static \
-	--enable-shared \
-	--enable-ndebug \
-	--enable-ssl \
-	%{subst_enable afxdp} \
+    --disable-static \
+    --enable-shared \
+    --enable-ndebug \
+    --enable-ssl \
+    %{subst_enable afxdp} \
 %if_with dpdk
-	--with-dpdk=shared \
+    --with-dpdk=shared \
 %endif
-	--with-rundir=/run/%name \
-	--with-logdir=%_logdir/%name \
-	--with-dbdir=%_localstatedir/%name \
-	--with-pkidir=%_localstatedir/%name/pki
+    --with-rundir=/run/%name \
+    --with-logdir=%_logdir/%name \
+    --with-dbdir=%_localstatedir/%name \
+    --with-pkidir=%_localstatedir/%name/pki
 
 %make_build
 make rhel/usr_lib_systemd_system_ovs-vswitchd.service
@@ -196,7 +196,7 @@ install -pDm0644 rhel/etc_openvswitch_default.conf \
         %buildroot%_sysconfdir/openvswitch/default.conf
 
 for service in openvswitch ovsdb-server ovs-vswitchd ovs-delete-transient-ports \
-                openvswitch-ipsec; do
+               openvswitch-ipsec; do
     install -pDm0644 \
             rhel/usr_lib_systemd_system_${service}.service \
             %buildroot%_unitdir/${service}.service
@@ -380,8 +380,11 @@ fi
 %python3_sitelibdir/ovs-*.egg-info
 
 %changelog
+* Tue Jan 16 2024 Alexey Shabalin <shaba@altlinux.org> 3.2.1-alt1
+- 3.2.1
+
 * Tue Oct 10 2023 Alexey Shabalin <shaba@altlinux.org> 3.2.0-alt1
-- 3.2.0.
+- 3.2.0 (Fixes: CVE-2023-5366).
 
 * Fri Jul 07 2023 Alexey Shabalin <shaba@altlinux.org> 3.1.2-alt1
 - 3.1.2.
@@ -504,7 +507,7 @@ fi
 
 * Wed Dec 25 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.0.1-alt1
 - Fix runtimedir
-- Add %_datadir/%name/scripts/ovs-check-dead-ifs
+- Add %%_datadir/%%name/scripts/ovs-check-dead-ifs
 - Add etcnet support
 - Fix initscript for etcnet support
 
