@@ -1,11 +1,12 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name openweather
-%define ver_major 121
+%define git_name gnome-%_name
+%define ver_major 126
 %define beta %nil
-%define uuid %_name-extension@jenslody.de
-%define xdg_name org.gnome.shell.extensions.%_name
-%define gettext_domain gnome-shell-extension-%_name
+%define uuid %_name-extension@penguin-teal.github.io
+%define xdg_name org.gnome.shell.extensions.%{_name}refined
+%define gettext_domain gnome-shell-extension-%{_name}refined
 
 %def_enable check
 
@@ -15,20 +16,20 @@ Release: alt1
 
 Summary: Weather extension for the GNOME Shell
 Group: Graphical desktop/GNOME
-License: GPL-3.0
-Url: https://gitlab.com/skrewball/openweather
+License: GPL-3.0-or-later
+Url: https://github.com/penguin-teal/gnome-openweather
 
 BuildArch: noarch
 
 %if_disabled snapshot
-Source: %url/-/archive/v%version%beta/%_name-%version%beta.tar.gz
+Source: %url/archive/v%version%beta/%git_name-%version%beta.tar.gz
 %else
-Vcs: https://gitlab.com/skrewball/openweather.git
-Source: %name-%version%beta.tar
+Vcs: https://github.com/penguin-teal/gnome-openweather.git
+Source: %git_name-%version%beta.tar
 %endif
 
-Requires: gnome-shell >= 44
-Requires: typelib(Gtk) = 4.0
+Requires: gnome-shell >= 45
+Requires: typelib(Adw) = 1
 
 BuildRequires: /usr/bin/glib-compile-schemas
 
@@ -43,7 +44,7 @@ Weather data is fetched from OpenWeatherMap (https://openweathermap.org)
 including 3 hour forecasts for up to 5 days.
 
 %prep
-%setup -n %name-%version%beta
+%setup -n %git_name-%version%beta
 
 %build
 %make VERSION=%version
@@ -59,6 +60,9 @@ including 3 hour forecasts for up to 5 days.
 %doc AUTHORS README.md
 
 %changelog
+* Tue Jan 16 2024 Yuri N. Sedunov <aris@altlinux.org> 126-alt1
+- 126 (new upstream)
+
 * Tue Apr 25 2023 Yuri N. Sedunov <aris@altlinux.org> 121-alt1
 - 121
 
