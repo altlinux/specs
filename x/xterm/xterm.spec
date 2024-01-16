@@ -29,7 +29,7 @@
   --enable-toolbar
 
 Name: xterm
-Version: 388
+Version: 389
 Release: alt1
 
 Summary: A standard terminal emulator for the X Window System
@@ -170,6 +170,9 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Tue Jan 16 2024 Fr. Br. George <george@altlinux.org> 389-alt1
+- Autobuild version bump to 389
+
 * Tue Oct 24 2023 Fr. Br. George <george@altlinux.org> 388-alt1
 - Autobuild version bump to 388
 
