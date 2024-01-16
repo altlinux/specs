@@ -1,6 +1,6 @@
 %define module_name rtl8812au
 %define module_version 5.6.4.2
-%define module_release alt1
+%define module_release alt2
 
 %define flavour	un-def
 %define karch %ix86 x86_64
