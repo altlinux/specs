@@ -5,7 +5,7 @@
 
 Name: qt6-tools
 Version: 6.6.1
-Release: alt1
+Release: alt2
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -152,7 +152,11 @@ Requires: libqt6-core = %_qt6_version
 #%patch1 -p1
 
 %build
+%if_disabled bootstrap
 %define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
+%else
+%define qdoc_found 0
+%endif
 # needed for documentation generation
 # when some Qt header include paths
 # are specified using '-isystem $path' arguments
@@ -160,17 +164,15 @@ Requires: libqt6-core = %_qt6_version
 %Q6build \
     -DCMAKE_SKIP_RPATH:BOOL=ON \
     #
-%if_disabled bootstrap
-%make -C BUILD docs
+%if %qdoc_found
+%Q6make --target docs
 %endif
 
 %install
 >main.filelist
 %Q6install_qt
-%if_disabled bootstrap
 %if %qdoc_found
-%make -C BUILD DESTDIR=%buildroot install_docs ||:
-%endif
+%make -C BUILD DESTDIR=%buildroot VERBOSE=1 install_docs ||:
 %endif
 
 # Add desktop files
@@ -254,7 +256,7 @@ done
 %_qt6_bindir/assistant
 %_desktopdir/*assistant.desktop
 %_iconsdir/hicolor/*/apps/assistant*.*
-%if_disabled bootstrap
+%if %qdoc_found
 %_qt6_docdir/qtassistant/
 %_qt6_docdir/qtassistant.qch
 %endif
@@ -299,7 +301,7 @@ done
 #%files  devel-static
 
 %files doc
-%if_disabled bootstrap
+%if %qdoc_found
 %_qt6_docdir/*
 %exclude %_qt6_docdir/qtassistant/
 %exclude %_qt6_docdir/qtassistant.qch
@@ -316,6 +318,9 @@ done
 %_qt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Tue Jan 09 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt2
+- fix build docs
+
 * Tue Dec 05 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt1
 - new version
 
