@@ -3,7 +3,7 @@
 
 Name: alsa-oss
 Version: 1.1.8
-Release: alt2
+Release: alt3
 
 Summary: Advanced Linux Sound Architecture (ALSA) OSS compatibility library
 License: GPL
@@ -70,6 +70,9 @@ sed -i -e 's: oss-redir : :' Makefile.am
 %_man1dir/*
 
 %changelog
+* Tue Jan 16 2024 Michael Shigorin <mike@altlinux.org> 1.1.8-alt3
+- fix manpage (trivial patch sent upstream)
+
 * Wed Sep 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.8-alt2
 - Fixed build with LTO.
 
