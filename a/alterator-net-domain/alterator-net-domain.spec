@@ -1,6 +1,6 @@
 Name:    alterator-net-domain
 Version: 0.7.3
-Release: alt3
+Release: alt4
 
 Summary: Alterator module to provision system network domain
 License: GPL
@@ -44,6 +44,9 @@ and FreeIPA domain.
 %_bindir/*-sh-functions
 
 %changelog
+* Tue Jan 09 2024 Stanislav Levin <slev@altlinux.org> 0.7.3-alt4
+- Check for missing pwdhash
+
 * Wed Oct 11 2023 Michael Shigorin <mike@altlinux.org> 0.7.3-alt3
 - E2K: move to guile22 too
 - Minor spec cleanup

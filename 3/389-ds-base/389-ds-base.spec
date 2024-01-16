@@ -3,6 +3,7 @@
 %define pkgname	dirsrv
 %define groupname %pkgname.target
 %define _libexecdir %_usr/libexec
+%define bash_completions_dir %_datadir/bash-completion/completions
 
 %def_without selinux
 %def_with check
@@ -16,8 +17,8 @@
 %define get_dep_ge() %(rpm -q --qf '%%{NAME} >= %%{EVR}' %1 2>/dev/null || echo '%1 >= unknown')
 
 Name: 389-ds-base
-Version: 2.2.9
-Release: alt1.1
+Version: 2.4.4
+Release: alt1
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
@@ -33,7 +34,7 @@ Source2: vendor_rust.tar
 Patch: %name-%version-alt.patch
 Patch1: vendored-rustix-loongarch64-support.patch
 
-ExcludeArch: %ix86
+ExcludeArch: %ix86 armh
 
 # python deps
 BuildRequires(pre): rpm-build-python3
@@ -49,7 +50,6 @@ BuildRequires: libasan5
 %endif
 BuildRequires: libdb5.3-devel
 BuildRequires: liblmdb-devel
-BuildRequires: libevent-devel
 BuildRequires: libicu-devel
 BuildRequires: libkrb5-devel
 BuildRequires: libldap-devel
@@ -215,10 +215,6 @@ export LDFLAGS='-latomic'
 %add_optflags -U__SSE4_2__
 %endif
 
-# replace hardcoded version = "1.4.0.1",
-# https://github.com/389ds/389-ds-base/issues/5203
-sed -i 's/^version[[:space:]]*=.*$/version = "%version"/' src/lib389/setup.py
-
 %autoreconf
 
 %configure  \
@@ -248,6 +244,7 @@ SKIP_AUDIT_CI=yes NODE_ENV=production %make 389-console
 %endif
 
 # Python3 bindings
+%make src/lib389/setup.py
 pushd ./src/lib389
 %pyproject_build
 popd
@@ -277,6 +274,13 @@ for d in %_sbindir %_man8dir %_libexecdir; do
     cp -a %buildroot%python3_sitelibdir_noarch/$d/* -t %buildroot/$d/
 done
 rm -r %buildroot%python3_sitelibdir_noarch/%_usr
+
+# Register CLI tools for bash completion
+for clitool in dsconf dsctl dsidm dscreate ds-replcheck
+do
+    register-python-argcomplete "$clitool" > "$clitool"
+    install -p -m 0644 -D -t '%buildroot%bash_completions_dir' "$clitool"
+done
 
 mkdir -p %buildroot/{%_lockdir,%_localstatedir,%_logdir}/%pkgname
 
@@ -380,6 +384,7 @@ fi
 %_man5dir/dirsrv.5.*
 %_man5dir/dirsrv.systemd.5.*
 %_man8dir/openldap_to_ds.8.*
+%bash_completions_dir/ds-replcheck
 
 %files devel
 %_includedir/%pkgname/
@@ -411,6 +416,10 @@ fi
 %_man8dir/dscreate.8.*
 %_man8dir/dsctl.8.*
 %_man8dir/dsidm.8.*
+%bash_completions_dir/dsctl
+%bash_completions_dir/dsconf
+%bash_completions_dir/dscreate
+%bash_completions_dir/dsidm
 %python3_sitelibdir_noarch/lib389/
 %python3_sitelibdir_noarch/lib389-%version.dist-info/
 
@@ -420,13 +429,14 @@ fi
 %_datadir/metainfo/389-console/org.port389.cockpit_console.metainfo.xml
 %dir %_datadir/cockpit/389-console
 %_datadir/cockpit/389-console/manifest.json
-%_datadir/cockpit/389-console/*.html.gz
-%_datadir/cockpit/389-console/*.js.gz
-%_datadir/cockpit/389-console/*.css.gz
-%exclude %_datadir/cockpit/389-console/index.js.LICENSE.txt.gz
+%_datadir/cockpit/389-console/index.*
+%_datadir/cockpit/389-console/po.*
 %endif
 
 %changelog
+* Tue Dec 26 2023 Stanislav Levin <slev@altlinux.org> 2.4.4-alt1
+- 2.2.9 -> 2.4.4.
+
 * Fri Nov 17 2023 Ivan A. Melnikov <iv@altlinux.org> 2.2.9-alt1.1
 - NMU: loongarch64 support
 

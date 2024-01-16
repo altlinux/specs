@@ -2,7 +2,7 @@
 
 Name: slapi-nis
 Version: 0.60.0
-Release: alt1
+Release: alt2
 
 Summary: NIS Server and Schema Compatibility plugins for Directory Server
 License: GPL-3.0
@@ -22,7 +22,7 @@ BuildRequires: libsss_nss_idmap-devel
 BuildRequires: pam-devel
 BuildRequires: /usr/bin/rpcgen
 
-ExcludeArch: %ix86
+ExcludeArch: %ix86 armh
 
 Requires: 389-ds-base >= 1.3.5.6
 
@@ -71,6 +71,9 @@ sed -i -e 's,%_libdir/dirsrv/plugins/,,g' -e 's,.so$,,g' doc/examples/*.ldif
 %exclude %_libdir/dirsrv/plugins/*.la
 
 %changelog
+* Tue Jan 09 2024 Stanislav Levin <slev@altlinux.org> 0.60.0-alt2
+- Disabled build for armh.
+
 * Wed Sep 14 2022 Stanislav Levin <slev@altlinux.org> 0.60.0-alt1
 - 0.56.7 -> 0.60.0.
 
