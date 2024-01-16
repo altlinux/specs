@@ -14,7 +14,7 @@
 
 %define basemajor 9.0
 %define major 9.0
-%define rel -rc5
+%define rel %nil
 %define stagingrel %rel
 # the packages will conflict with that
 %define conflictlist wine-vanilla wine-stable wine-tkg wine-proton-tkg wine-etersoft
@@ -80,7 +80,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 %endif
 
 Name: wine
-Version: %major.3
+Version: %major.4
 Release: alt1
 Epoch: 1
 
@@ -858,6 +858,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Wed Jan 17 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.4-alt1
+- build 9.0 release
+
 * Mon Jan 15 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.3-alt1
 - build 9.0-rc5
 
