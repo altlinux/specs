@@ -1,9 +1,9 @@
 %def_without check
 
 Summary: Twm based window manager for the X Window System
-Summary(ru_RU): Основанный на twm оконный менеджер для X Window System
+Summary(ru): Основанный на twm оконный менеджер для X Window System
 Name: ctwm
-Version: 4.0.3.691
+Version: 4.1.0
 Epoch: 1
 Release: alt1
 
@@ -42,7 +42,7 @@ Arnaud Le Hors], any format understood by the imconv package [from the
 San Diego Supercomputer Center] and xwd files.  Ctwm can be compiled
 to use both, either or none of the above icon/pixmap formats.
 
-%description -l ru-RU
+%description -l ru
 Ctwm -- оконный менеждер для X Windows System, основанный на одном из
 старейших  оконных менеджеров для X11 -- twm (Tab Window Manager) из
 дистрибутива Mit X11. Под влиянием vuewm от Hewlett-Packard в ctwm
@@ -91,7 +91,7 @@ install -D %SOURCE3 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.xpm
 install -D %SOURCE1 %buildroot/%_sysconfdir/X11/wmsession.d/07%name
 install -D system.ctwmrc %buildroot/%_sysconfdir/X11/%name/system.ctwmrc
 install -D %SOURCE1 %buildroot/%_bindir/startctwm
-install -D %SOURCE6 %buildroot%_prefix/libexec/%name-session-target
+install -D %SOURCE6 %buildroot%prefix/libexec/%name-session-target
 install -d %buildroot%_user_unitdir
 install -D %SOURCE7 %buildroot%_user_unitdir/
 install -D %SOURCE8 %buildroot%_user_unitdir/
@@ -114,7 +114,7 @@ install -D %_cmake__builddir/ctwm.1 %buildroot%_man1dir/ctwm.1
 
 %files systemd
 %_user_unitdir/*
-%_prefix/libexec/*
+%prefix/libexec/*
 %_datadir/xsessions/%name-systemd.desktop
 
 %if_with check
@@ -123,6 +123,9 @@ install -D %_cmake__builddir/ctwm.1 %buildroot%_man1dir/ctwm.1
 %endif
 
 %changelog
+* Tue Jan 16 2024 Fr. Br. George <george@altlinux.org> 1:4.1.0-alt1
+- Autobuild version bump to 4.1.0
+
 * Wed Jun 29 2022 Fr. Br. George <george@altlinux.org> 1:4.0.3.691-alt1
 - Update to revision 691
 - Separate systemd-avare subpackage
