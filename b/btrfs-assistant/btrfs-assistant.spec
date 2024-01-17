@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: btrfs-assistant
-Version: 1.8
+Version: 1.9
 Summary: GUI management tool to make managing a Btrfs filesystem easier
 Release: alt1
 License: GPL-3.0
@@ -65,6 +65,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%name.metainf
 %_datadir/polkit-1/actions/org.%name.pkexec.policy
 
 %changelog
+* Wed Jan 17 2024 Alexander Makeenkov <amakeenk@altlinux.org> 1.9-alt1
+- Updated to version 1.9.
+
 * Mon Dec 25 2023 Alexander Makeenkov <amakeenk@altlinux.org> 1.8-alt1
 - Initial build for ALT.
 
