@@ -2,9 +2,11 @@
 Name: printer-driver-foo2capt
 
 Version: 0.1.4.2
-Release: alt1.git_1_8ecc3cd 
+Release: alt1.git_2_8ecc3cd 
 
 Source: %name-%version.tar
+Source1: ppdc.tar
+Patch1:  printer-driver-foo2capt-0.1.4.2-Makefile.patch
 
 Summary: Driver for Canon CAPT printers
 URL: https://github.com/mounaiban/captdriver
@@ -49,22 +51,30 @@ Captdriver - это альтернативный драйвер для лазе�
  LBP6000/6018
 
 %prep
-%setup
+%setup -a1
+%patch1 -p1 
+
 
 %build
 %autoreconf
 %configure
 %make_build
+%make ppd
 
 %install
 install -Dm0755 -t  %buildroot%_libexecdir/cups/filter/ src/rastertocapt
 install -Dm644  -t %buildroot%_datadir/cups/model/foo2capt/ *.ppd
+install -Dm644  -t %buildroot%_datadir/cups/model/foo2capt/ ppd/*.ppd
 
 %files
 %_datadir/cups/model/foo2capt/
 %_libexecdir/cups/filter/rastertocapt
 
 %changelog
+* Wed Jan 17 2024 Hihin Ruslan <ruslandh@altlinux.ru> 0.1.4.2-alt1.git_2_8ecc3cd
+- Add include files from libppd-tools
+- Generation new ppd files 
+
 * Sat Jul 22 2023 Hihin Ruslan <ruslandh@altlinux.ru> 0.1.4.2-alt1.git_1_8ecc3cd
 - Fix ppd driver location
 
@@ -76,3 +86,5 @@ install -Dm644  -t %buildroot%_datadir/cups/model/foo2capt/ *.ppd
 
 * Fri Nov 1 2019 Grigory Maksimov <zacat@altlinux.org> 0.1.0-alt1.git94b2bf2
 - Initial build for ALT
+
+
