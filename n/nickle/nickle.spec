@@ -1,5 +1,5 @@
 Name: nickle
-Version: 2.96
+Version: 2.97
 Release: alt1
 Summary: A programming language-based prototyping environment
 
@@ -77,6 +77,9 @@ chmod a-x examples/turtle/snowflake.5c
 %_includedir/nickle
 
 %changelog
+* Thu Jan 18 2024 Ilya Mashkin <oddity@altlinux.ru> 2.97-alt1
+- 2.97
+
 * Sat Dec 09 2023 Ilya Mashkin <oddity@altlinux.ru> 2.96-alt1
 - 2.96
 
