@@ -1,5 +1,5 @@
 Name: fricas
-Version: 1.3.9
+Version: 1.3.10
 Release: alt1
 
 Summary: FriCAS Computer Algebra System
@@ -78,6 +78,9 @@ install -D -m644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 
 
 %changelog
+* Thu Jan 18 2024 Ilya Mashkin <oddity@altlinux.ru> 1.3.10-alt1
+- 1.3.10
+
 * Sat Sep 02 2023 Ilya Mashkin <oddity@altlinux.ru> 1.3.9-alt1
 - 1.3.9
 
