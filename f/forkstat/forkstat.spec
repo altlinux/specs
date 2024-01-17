@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: forkstat
-Version: 0.03.01
+Version: 0.03.02
 Release: alt1
 Summary: Process fork/exec/exit monitoring tool
 License: GPL-2.0-or-later
@@ -27,6 +27,9 @@ connector also requires root privilege.
 %setup
 
 %build
+%ifarch x86_64
+%add_optflags -fanalyzer -Werror
+%endif
 %add_optflags %(getconf LFS_CFLAGS)
 export CFLAGS='%{optflags}'
 %make_build
@@ -41,6 +44,9 @@ export CFLAGS='%{optflags}'
 %_datadir/bash-completion/completions/forkstat
 
 %changelog
+* Sat Jan 13 2024 Vitaly Chikunov <vt@altlinux.org> 0.03.02-alt1
+- Update to V0.03.02 (2024-01-12).
+
 * Thu Feb 09 2023 Vitaly Chikunov <vt@altlinux.org> 0.03.01-alt1
 - Update to V0.03.01 (2023-02-08).
 
