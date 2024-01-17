@@ -1,7 +1,7 @@
 %def_without check
 
 Name: miniserve
-Version: 0.25.0
+Version: 0.26.0
 Release: alt1
 Summary: A CLI tool to serve files and dirs over HTTP
 License: MIT
@@ -49,6 +49,9 @@ install -m 0644 %name.1 %buildroot%_man1dir
 %doc LICENSE README.md
 
 %changelog
+* Wed Jan 17 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.26.0-alt1
+- Updated to version 0.26.0.
+
 * Sun Jan 07 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.25.0-alt1
 - Updated to version 0.25.0.
 
