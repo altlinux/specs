@@ -2,16 +2,20 @@
 %def_with docs
 
 %define repo dde-app-services
+%define qtver 5.15.11
 
 Name: deepin-app-services
-Version: 1.0.23
+Version: 1.0.24.0.2.3acd
 Release: alt1
+
 Summary: Service collection of DDE applications
-License: LGPL-3.0+
+
+License: LGPL-3.0-or-later
 Group: System/Configuration/Other
 Url: https://github.com/linuxdeepin/dde-app-services
 
 Source: %url/archive/%version/%repo-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja
 %if_with clang
@@ -22,6 +26,7 @@ BuildRequires: gcc-c++
 # Automatically added by buildreq on Fri Oct 20 2023
 # optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-help libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel python3 python3-base qt5-base-common qt5-base-devel qt5-tools sh5
 BuildRequires: cmake libdtkwidget-devel libgtest-devel
+BuildRequires: qt5-base-devel = %qtver
 %if_with docs
 BuildRequires: doxygen qt5-base-doc qt5-tools-devel
 %endif
@@ -41,10 +46,7 @@ This package provides %name documantation.
 
 %prep
 %setup -n %repo-%version
-sed -i 's|${CMAKE_INSTALL_PREFIX}/lib/systemd/system|%_unitdir|' \
-  dconfig-center/dde-dconfig-daemon/CMakeLists.txt
-sed -i -e '/dde-dconfig-daemon.conf/s|${CMAKE_INSTALL_PREFIX}||; /dde-dconfig-daemon-tmpfiles.conf/s|${CMAKE_INSTALL_PREFIX}||;' \
-  dconfig-center/dde-dconfig-daemon/CMakeLists.txt
+%patch -p1
 
 %build
 export PATH=%_qt5_bindir:$PATH
@@ -107,6 +109,9 @@ chmod +x %buildroot%_datadir/bash-completion/completions/dde-dconfig
 %endif
 
 %changelog
+* Tue Jan 16 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.24.0.2.3acd-alt1
+- New version 1.0.24-2-g3acd198.
+
 * Fri Oct 20 2023 Leontiy Volodin <lvol@altlinux.org> 1.0.23-alt1
 - New version 1.0.23.
 

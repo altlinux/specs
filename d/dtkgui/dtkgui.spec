@@ -3,12 +3,12 @@
 %def_disable clang
 
 Name: dtkgui
-Version: 5.6.20
+Version: 5.6.22
 Release: alt1
 
 Summary: Deepin Toolkit, gui module for DDE look and feel
 
-License: LGPL-3.0
+License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dtkgui
 
@@ -106,6 +106,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/libdtkgui.so
 
 %changelog
+* Tue Jan 16 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.22-alt1
+- New version 5.6.22.
+
 * Thu Nov 30 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.20-alt1
 - New version 5.6.20.
 - Renamed subpackages:

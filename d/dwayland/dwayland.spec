@@ -2,8 +2,8 @@
 %def_enable docs
 
 Name: dwayland
-Version: 5.24.3.1.4
-Release: alt2
+Version: 5.25.0
+Release: alt1
 
 Summary: Qt-style API to interact with the DDE wayland-client and wayland-server
 
@@ -90,7 +90,7 @@ export AR="llvm-ar"
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DCMAKE_PREFIX_PATH=%_qt5_prefix \
-    -DCMAKE_INSTALL_LIBDIR=%_K5lib \
+    -DCMAKE_INSTALL_LIBDIR=%_libdir \
     %if_enabled docs
     -DBUILD_QCH=ON \
     %endif
@@ -126,6 +126,9 @@ sed -i 's|includes =  .*|includes = %_includedir/DWayland/Client|' \
 %_libdir/libDWaylandServer.so
 
 %changelog
+* Tue Jan 16 2024 Leontiy Volodin <lvol@altlinux.org> 5.25.0-alt1
+- New version 5.25.0.
+
 * Wed Jan 25 2023 Leontiy Volodin <lvol@altlinux.org> 5.24.3.1.4-alt2
 - Fixed DWayland Client detection.
 

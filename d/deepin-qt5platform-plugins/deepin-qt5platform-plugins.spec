@@ -1,14 +1,15 @@
 %define repo qt5platform-plugins
+%define qtver 5.15.11
 
 %def_without clang
 
 Name: deepin-qt5platform-plugins
-Version: 5.6.16
+Version: 5.6.20
 Release: alt1
 
 Summary: Qt platform integration plugins for Deepin Desktop Environment
 
-License: GPL-2.0+ and LGPL-3.0 and MIT
+License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/qt5platform-plugins
 
@@ -19,7 +20,7 @@ BuildRequires(pre): rpm-build-ninja
 # qt5-base-devel-static for libQt5EdidSupport.a
 # Automatically added by buildreq on Sat Oct 28 2023
 # optimized out: cmake cmake-modules fontconfig-devel gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXfixes-devel libXi-devel libcairo-devel libdouble-conversion3 libfreetype-devel libglvnd-devel libgmock-devel libgpg-error libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-test libqt5-waylandclient libqt5-widgets libqt5-x11extras libqt5-xcbqpa libsasl2-3 libssl-devel libstdc++-devel libwayland-client-devel libwayland-server-devel libxcb-devel libxcb-render-util libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxcbutil-keysyms-devel libxkbcommon-devel libxkbcommon-x11 pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-devel sh5 wayland-devel xorg-proto-devel zlib-devel
-BuildRequires: dwayland-devel extra-cmake-modules libdbus-devel libgtest-devel libmtdev-devel libwayland-cursor-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxkbcommon-x11-devel qt5-base-devel-static qt5-wayland-devel qt5-x11extras-devel
+BuildRequires: dwayland-devel extra-cmake-modules libdbus-devel libgtest-devel libmtdev-devel libwayland-cursor-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxkbcommon-x11-devel qt5-base-devel-static = %qtver qt5-wayland-devel = %qtver qt5-x11extras-devel = %qtver
 BuildRequires: kf5-kwayland-devel
 
 %if_with clang
@@ -67,6 +68,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_qt5_plugindir/wayland-shell-integration/libkwayland-shell.so
 
 %changelog
+* Tue Jan 16 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.20-alt1
+- New version 5.6.20.
+
 * Tue Nov 28 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.16-alt1
 - New version 5.6.16.
 - Built via cmake instead qmake (by upstream).

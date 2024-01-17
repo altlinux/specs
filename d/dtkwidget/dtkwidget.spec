@@ -2,10 +2,10 @@
 %def_enable docs
 
 Name: dtkwidget
-Version: 5.6.20
+Version: 5.6.22
 Release: alt1
 Summary: Deepin tool kit widget modules
-License: LGPL-3.0+ and GPL-3.0+
+License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dtkwidget
 Packager: Leontiy Volodin <lvol@altlinux.org>
@@ -130,6 +130,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_qt5_docdir/dtkwidget.qch
 
 %changelog
+* Tue Jan 16 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.22-alt1
+- New version 5.6.22.
+
 * Thu Nov 30 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.20-alt1
 - New version 5.6.20.
 - Cleanup BRs.

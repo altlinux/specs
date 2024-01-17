@@ -3,12 +3,12 @@
 %define repo dde-session-ui
 
 Name: deepin-session-ui
-Version: 6.0.10
+Version: 6.0.14
 Release: alt1
 
 Summary: Deepin desktop-environment - Session UI module
 
-License: GPL-3.0+
+License: GPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-session-ui
 
@@ -77,7 +77,6 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_bindir/dde-pixmix
 %_bindir/dde-switchtogreeter
 %_bindir/dde-wm-chooser
-%_bindir/dmemory-warning-dialog
 %_bindir/dde-hints-dialog
 %dir %_libexecdir/deepin-daemon/
 %_libexecdir/deepin-daemon/dde-bluetooth-dialog
@@ -95,6 +94,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/dbus-1/services/*.service
 
 %changelog
+* Tue Jan 16 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.14-alt1
+- New version 6.0.14.
+
 * Wed Oct 25 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.10-alt1
 - New version 6.0.10.
 - Cleanup BRs.

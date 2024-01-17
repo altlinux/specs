@@ -4,7 +4,7 @@
 %def_without docs
 
 Name: dtkcore
-Version: 5.6.20
+Version: 5.6.22
 Release: alt1
 
 Summary: Deepin tool kit core modules
@@ -121,6 +121,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %endif
 
 %changelog
+* Tue Jan 16 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.22-alt1
+- New version 5.6.22.
+
 * Thu Nov 30 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.20-alt1
 - New version 5.6.20.
 - Renamed subpackages:

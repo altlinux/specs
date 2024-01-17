@@ -1,9 +1,10 @@
 %define repo dde-launchpad
+%define qtver 5.15.11
 
 %def_disable clang
 
 Name: deepin-launchpad
-Version: 0.3.0.0.18.caf2
+Version: 0.4.3
 Release: alt1
 
 Summary: Launcher for DDE - next generation
@@ -21,7 +22,7 @@ Source: %url/archive/%version/%repo-%version.tar.gz
 Patch1: deepin-lauchpad-upstream-AppStreamQt1_1.patch
 Patch2: deepin-lauchpad-upstream-AppStreamQt1.patch
 
-BuildRequires: cmake qt5-tools-devel qt5-declarative-devel qt5-svg-devel qt5-quickcontrols2-devel libgtest-devel dtk6-common-devel dtkcore libdtkgui-devel libappstream-qt-devel libsystemd-devel libgio-devel
+BuildRequires: cmake qt5-base-devel = %qtver qt5-tools-devel qt5-declarative-devel qt5-svg-devel qt5-quickcontrols2-devel libgtest-devel dtk6-common-devel dtkcore libdtkgui-devel libappstream-qt-devel libsystemd-devel libgio-devel
 BuildRequires(pre): rpm-build-ninja
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -65,7 +66,14 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %dir %_userunitdir/dde-session-initialized.target.wants/
 %_userunitdir/dde-session-initialized.target.wants/org.deepin.dde.Launcher1.service
 %_datadir/dbus-1/services/org.deepin.dde.Launcher1.service
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/dde-launchpad/
+%_datadir/dsg/configs/dde-launchpad/org.deepin.dde.launchpad.appsmodel.json
 
 %changelog
+* Wed Jan 17 2024 Leontiy Volodin <lvol@altlinux.org> 0.4.3-alt1
+- New version 0.4.3.
+
 * Tue Dec 26 2023 Leontiy Volodin <lvol@altlinux.org> 0.3.0.0.18.caf2-alt1
 - Initial build for ALT Sisyphus.

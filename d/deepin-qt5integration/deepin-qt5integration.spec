@@ -3,7 +3,7 @@
 %def_without clang
 
 Name: deepin-qt5integration
-Version: 5.6.17
+Version: 5.6.20.0.2.b020
 Release: alt1
 
 Summary: Qt platform theme integration plugins for DDE
@@ -13,9 +13,6 @@ Group: System/Libraries
 Url: https://github.com/linuxdeepin/qt5integration
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-Patch0: 0001-fix-App-cant-load-qml-module-chameleton-plugin.patch
-Patch1: 0001-fix-qapitrace-open-file-crash.patch
-Patch2: 0001-fix-remove-unused-dropped-header.patch
 
 # Requires: deepin-qt5platform-plugins
 
@@ -36,7 +33,6 @@ Multiple Qt plugins to provide better Qt5 integration for DDE is included.
 
 %prep
 %setup -n %repo-%version
-%autopatch -p1
 
 %build
 %cmake \
@@ -61,6 +57,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_qt5_plugindir/styles/libchameleon.so
 
 %changelog
+* Tue Jan 16 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.20.0.2.b020-alt1
+- New version 5.6.20-2-gb020f02.
+
 * Sat Oct 28 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.17-alt1
 - New version 5.6.17.
 - Built via cmake instead qmake (by upstream).

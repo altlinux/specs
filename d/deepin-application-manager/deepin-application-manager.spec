@@ -4,12 +4,12 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-application-manager
-Version: 1.1.4.0.1.b75b
+Version: 1.1.7
 Release: alt1
 
 Summary: App manager for Deepin
 
-License: GPL-3.0-or-later
+License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-application-manager
 
@@ -74,5 +74,9 @@ rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 %_datadir/dsg/configs/%repo/com.deepin*.json
 
 %changelog
+* Tue Jan 16 2024 Leontiy Volodin <lvol@altlinux.org> 1.1.7-alt1
+- New version 1.1.7.
+- Updated license tag.
+
 * Fri Dec 15 2023 Leontiy Volodin <lvol@altlinux.org> 1.1.4.0.1.b75b-alt1
 - Initial build for ALT Sisyphus.
