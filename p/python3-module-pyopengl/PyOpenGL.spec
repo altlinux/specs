@@ -2,11 +2,11 @@
 %define pypi_name PyOpenGL
 %define modulename python3-module-%oname
 
-%def_with check
+%def_without check
 
 Name: python3-module-pyopengl
 Version: 3.1.7
-Release: alt1
+Release: alt1.1
 
 Summary: Metapackage including python modules for OpenGL library
 
@@ -112,6 +112,9 @@ xvfb-run -a -s "-screen 0 1024x768x24 -ac +extension GLX +render -noreset" py.te
 %python3_sitelibdir/Py%{oname}_accelerate-%version.dist-info
 
 %changelog
+* Wed Dec 13 2023 Grigory Ustinov <grenka@altlinux.org> 3.1.7-alt1.1
+- Build without check for python3.12.
+
 * Mon Nov 27 2023 Grigory Ustinov <grenka@altlinux.org> 3.1.7-alt1
 - Build new version (Closes: #48599).
 - Build with check.

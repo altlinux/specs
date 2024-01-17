@@ -3,6 +3,7 @@
 %add_python3_req_skip FreeCADGui FreeCAD
 %add_findprov_skiplist %_libdir/freecad/Mod/* %_libdir/freecad/Ext/*
 %def_with bundled_libs
+%def_without bundled_pycxx
 %def_with glvnd
 %def_with ninja
 %def_with pybind11
@@ -23,7 +24,7 @@
 
 Name:    freecad
 Version: 0.21.2
-Release: alt2
+Release: alt3
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -40,6 +41,7 @@ Patch1: %name-remove-3rdParty.patch
 %endif
 Patch2: freecad-0.19.2-alt-boost-link.patch
 Patch3: freecad-alt-fix-icon-name-in-menu.patch
+Patch4: freecad-unbundled-pycxx.patch
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
@@ -113,6 +115,9 @@ BuildRequires: libnetgen-devel netgen
 %if_with pybind11
 BuildRequires: pybind11-devel
 %endif
+%if_without bundled_pycxx
+BuildRequires: python3-module-pycxx-devel
+%endif
 
 %py3_requires matplotlib.backends.backend_qt5
 #py3_provides Fem FreeCAD FreeCADGui Mesh Part MeshPart Drawing ImportGui
@@ -153,6 +158,11 @@ rm -rf src/3rdParty
 %endif
 %patch2 -p1
 %patch3 -p1
+%if_without bundled_pycxx
+%patch4 -p1
+rm -rf src/CXX
+%endif
+
 %ifarch %e2k
 sed -i "/-fext-numeric-literals/d" src/Mod/Path/App/CMakeLists.txt
 # because "error: cpio archive too big"
@@ -199,6 +209,10 @@ export PATH=$PATH:%_qt5_bindir
 	-DPACKAGE_WCDATE="%git_date" \
 	-DPACKAGE_WCURL="https://github.com/FreeCAD/FreeCAD" \
     -DUSE_OPENCV=ON \
+%if_without bundled_pycxx
+    -DPYCXX_INCLUDE_DIR=$(pkg-config --variable=includedir PyCXX) \
+    -DPYCXX_SOURCE_DIR=$(pkg-config --variable=srcdir PyCXX) \
+%endif
 	-Wno-dev
 export NPROCS=%build_parallel_jobs
 %if_with ninja
@@ -269,6 +283,9 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_datadir/thumbnailers/FreeCAD.thumbnailer
 
 %changelog
+* Fri Jan 05 2024 Grigory Ustinov <grenka@altlinux.org> 1:0.21.2-alt3
+- Build without bundled pycxx.
+
 * Thu Jan 04 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:0.21.2-alt2
 - NMU: build without web addon on LoongArch (requires qt5-webengine,
   not available here).

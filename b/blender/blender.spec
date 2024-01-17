@@ -50,7 +50,7 @@
 
 Name: blender
 Version: 4.0.2
-Release: alt0.3
+Release: alt0.4
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -80,6 +80,7 @@ Patch28: blender-4.0.2-alt-hiprt-enable.patch
 Patch29: blender-4.0.2-alt-fix-manpage.patch
 Patch30: blender-alt-fix-clang-linking.patch
 Patch31: blender-4.0.2-rocm-6.x.patch
+Patch32: blender-3.6.1-py312-pylongobject.patch
 
 # upstream fixes to merge
 
@@ -289,6 +290,7 @@ This package contains binaries for Nvidia GPUs to use with CUDA.
 # rocm 6.x not ready yet for
 # production use
 #%%patch31 -p1
+%patch32 -p1
 
 # upstream patches
 
@@ -444,6 +446,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 05 2024 Grigory Ustinov <grenka@altlinux.org> 4.0.2-alt0.4
+- NMU: fixed build with python3.12.
+
 * Fri Dec 29 2023 L.A. Kostis <lakostis@altlinux.ru> 4.0.2-alt0.3
 - Disable hiprt (as hiprt compiled against obsoleted rocm version
   and doesn't work see upstream HIPRTSDK issue #18).

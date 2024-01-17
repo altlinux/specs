@@ -14,7 +14,7 @@
 
 Name: %_name-core
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
 Group: System/Libraries
@@ -25,6 +25,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 Requires: lib%name = %version-%release
 Requires: dbus-tools-gui
+# /etc/xdg/Xwayland-session.d/00-at-spi uses busctl from systemd
+%filter_from_requires /^systemd/d
 
 %define meson_ver 0.63
 %define glib_ver 2.67.4
@@ -199,7 +201,7 @@ sed -i 's/\(sphinx-build\)/\1-3/' devel-docs/meson.build
 %_datadir/dbus-1/services/org.a11y.Bus.service
 %_datadir/defaults/at-spi2/accessibility.conf
 %_sysconfdir/xdg/autostart/at-spi-dbus-bus.desktop
-%_prefix/lib/systemd/user/at-spi-dbus-bus.service
+%_userunitdir/at-spi-dbus-bus.service
 %doc README* MAINTAINERS NEWS
 
 %files -n lib%name
@@ -251,6 +253,9 @@ sed -i 's/\(sphinx-build\)/\1-3/' devel-docs/meson.build
 %endif
 
 %changelog
+* Tue Jan 16 2024 Yuri N. Sedunov <aris@altlinux.org> 2.50.1-alt1.1
+- dropped dependency on systemd (see ALT ##49020,49024)
+
 * Sat Jan 06 2024 Yuri N. Sedunov <aris@altlinux.org> 2.50.1-alt1
 - 2.50.1
 

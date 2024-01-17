@@ -1,6 +1,6 @@
 Name: pam_python
 Version: 1.0.8
-Release: alt3
+Release: alt4
 
 Summary: A Pluggable Authentication Module that runs the Python interpreter
 
@@ -41,6 +41,7 @@ See also https://github.com/privacyidea/pam_python as example.
 %prep
 %setup
 %patch -p1
+sed -i 's/PyUnicode_GET_SIZE/PyUnicode_GET_LENGTH/' src/pam_python.c
 subst "s|-Werror||" src/Makefile
 subst "s|sphinx-build|sphinx-build-3|" doc/Makefile
 
@@ -63,6 +64,9 @@ cp $p/pam_python*.so $p/pam_python.so
 %doc %_docdir/%name/
 
 %changelog
+* Mon Jan 15 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.8-alt4
+- fixed build with python3.12.
+
 * Fri Mar 26 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.8-alt3
 - link with major python version
 

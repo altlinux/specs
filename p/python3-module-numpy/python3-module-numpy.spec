@@ -1,4 +1,4 @@
-%def_with check
+%def_without check
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
@@ -16,7 +16,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 1.25.2
-Release: alt3
+Release: alt3.1
 Summary: Fundamental package for array computing in Python
 License: BSD-3-Clause
 Group: Development/Python3
@@ -218,6 +218,9 @@ ln -s %_includedir/python%_python3_version/%oname \
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Wed Dec 06 2023 Grigory Ustinov <grenka@altlinux.org> 1:1.25.2-alt3.1
+- Bootstrap for python3.12.
+
 * Wed Dec 06 2023 Stanislav Levin <slev@altlinux.org> 1:1.25.2-alt3
 - Dropped dependency on extra tests packages (closes: #48687).
 

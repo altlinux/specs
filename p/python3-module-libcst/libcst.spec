@@ -2,11 +2,11 @@
 %define pypi_name libcst
 %define mod_name %pypi_name
 
-%def_with check
+%def_without check
 
 Name: python3-module-%pypi_name
 Version: 1.1.0
-Release: alt2
+Release: alt3
 
 Summary: A Concrete Syntax Tree (CST) parser and serializer library for Python
 License: MIT and Python-2.0 and Apache-2.0
@@ -83,6 +83,9 @@ export LIBCST_PARSER_TYPE=pure
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Nov 22 2023 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt3
+- Bootstrap for python3.12.
+
 * Tue Oct 31 2023 Anton Vyatkin <toni@altlinux.org> 1.1.0-alt2
 - NMU: Dropped dependency on distutils.
 

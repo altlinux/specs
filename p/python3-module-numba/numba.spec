@@ -4,8 +4,8 @@
 %def_without check
 
 Name:    python3-module-%oname
-Version: 0.57.1
-Release: alt2
+Version: 0.59.0
+Release: alt0.rc1
 
 Summary: A Just-In-Time Compiler for Numerical Functions in Python
 
@@ -17,12 +17,18 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ libgomp-devel libnumpy-py3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 Source:  %name-%version.tar
 
-Patch: numba-0.57.1-add-numpy-1.25-support.patch
-
 %add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/tests/pycc_distutils_usecase/
+
+%add_python3_req_skip numba_rvsdg.core.datastructures
+%add_python3_req_skip numba_rvsdg.core.datastructures.basic_block
+%add_python3_req_skip numba_rvsdg.core.datastructures.byte_flow
+%add_python3_req_skip numba_rvsdg.core.datastructures.scfg
+%add_python3_req_skip numba_rvsdg.rendering.rendering
 
 %description
 Numba is an open source, NumPy-aware optimizing compiler for Python sponsored by
@@ -36,7 +42,7 @@ C callbacks.
 
 %prep
 %setup
-%patch -p1
+sed -i 's/@VERSION@/%version/' setup.py
 sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
 
 %ifarch %e2k
@@ -45,10 +51,10 @@ sed -i "/omp parallel/s/),/)/" numba/np/ufunc/omppool.cpp
 %endif
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 mv %buildroot%_bindir/numba %buildroot%_bindir/numba3
 
@@ -63,9 +69,12 @@ popd
 %doc CHANGE_LOG *.rst
 %_bindir/numba3
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Dec 22 2023 Grigory Ustinov <grenka@altlinux.org> 0.59.0-alt0.rc1
+- Build new version.
+
 * Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 0.57.1-alt2
 - Fixed build with numpy 1.25.
 

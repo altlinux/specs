@@ -2,12 +2,12 @@
 %define oname urwid
 
 Name: python3-module-urwid
-Version: 2.1.2
+Version: 2.3.4
 Release: alt1
 
 Summary: Urwid is a console user interface library for Python.
 
-License: LGPL
+License: LGPLv2.1
 Group: Development/Python3
 Url: http://excess.org/urwid
 
@@ -38,63 +38,8 @@ useful for text console application developers:
  * Customizable layout for all widgets
  * Easy interface for creating HTML screen shots
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-Urwid is a console user interface library for Python. Urwid is released
-under the GNU Lesser General Public License and it includes many features
-useful for text console application developers:
-
- * Fluid interface resizing (xterm window resizing / fbset on Linux console)
- * Web application display mode using Apache and CGI [ Live Demo ]
- * Support for UTF-8, simple 8-bit and CJK encodings
- * Multiple text alignment and wrapping modes built-in
- * Ability create user-defined text layout classes
- * Simple markup for setting text attributes
- * Powerful list box that handles scrolling between different widget types
- * List box contents may be managed with a user-defined class
- * Flexible edit box for editing many different types of text
- * Buttons, check boxes and radio boxes
- * Customizable layout for all widgets
- * Easy interface for creating HTML screen shots
-
-This package contains tests for %oname.
-
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-Urwid is a console user interface library for Python. Urwid is released
-under the GNU Lesser General Public License and it includes many features
-useful for text console application developers:
-
- * Fluid interface resizing (xterm window resizing / fbset on Linux console)
- * Web application display mode using Apache and CGI [ Live Demo ]
- * Support for UTF-8, simple 8-bit and CJK encodings
- * Multiple text alignment and wrapping modes built-in
- * Ability create user-defined text layout classes
- * Simple markup for setting text attributes
- * Powerful list box that handles scrolling between different widget types
- * List box contents may be managed with a user-defined class
- * Flexible edit box for editing many different types of text
- * Buttons, check boxes and radio boxes
- * Customizable layout for all widgets
- * Easy interface for creating HTML screen shots
-
-This package contains documentation for %oname.
-
-
 %prep
 %setup
-
-#%prepare_sphinx .
-#ln -s ../objects.inv docs/
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -103,26 +48,15 @@ This package contains documentation for %oname.
 %install
 %python3_install
 
-#export PYTHONPATH=%buildroot%python_sitelibdir
-#pushd docs
-#sphinx-build -b pickle -d build/doctrees . build/pickle
-#sphinx-build -b html -d build/doctrees . build/html
-#popd
-
-#cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
-
-#%files docs
-#%doc docs/examples docs/tutorial docs/build/html
-
 %files
 %doc *.rst examples
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/%oname/tests
 
-%files tests
-%python3_sitelibdir/%oname/tests
 
 %changelog
+* Sun Jan 14 2024 Grigory Ustinov <grenka@altlinux.org> 2.3.4-alt1
+- Build new version for python3.12.
+
 * Thu Aug 05 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.2-alt1
 - new version 2.1.2 (with rpmrb script)
 

@@ -13,11 +13,11 @@
 %add_python3_req_skip Falkon
 
 %define rname falkon
-%def_enable python_plugins
+%def_disable python_plugins
 
 Name: kde5-%rname
 Version: 23.08.4
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Summary: Very fast web-browser
@@ -156,6 +156,9 @@ __EOF__
 %_K5lib/libFalkonPrivate.so.*
 
 %changelog
+* Tue Jan 02 2024 Grigory Ustinov <grenka@altlinux.org> 23.08.4-alt2
+- disable python plugins
+
 * Tue Dec 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
 - new version
 

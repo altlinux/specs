@@ -1,15 +1,16 @@
 Name: onboard
 Version: 1.4.1
-Release: alt4
+Release: alt5
 
 Summary: Simple on-screen Keyboard
 License: GPL-3.0+
-Group: Graphical desktop/GNOME 
+Group: Graphical desktop/GNOME
 URL: https://launchpad.net/onboard/
 
 Source0: http://launchpad.net/%name/0.96/%version/+download/%name-%version.tar.gz
-Source1: ru.po 
+Source1: ru.po
 Patch: build-against-Ayatana-AppIndicator.patch
+Patch1: 1004-fix-ftbfs-python3-12.patch
 
 BuildRequires(pre): etersoft-build-utils rpm-build-gnome python3-devel
 BuildRequires: gcc-c++
@@ -20,7 +21,7 @@ BuildRequires: libXtst-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libcanberra-devel
 BuildRequires: libdconf-devel
-BuildRequires: libgtk+3-devel 
+BuildRequires: libgtk+3-devel
 BuildRequires: libhunspell-devel
 BuildRequires: libxkbfile-devel
 BuildRequires: python3-module-distutils-extra >= 2.12
@@ -93,6 +94,9 @@ rm -rf %buildroot%_iconsdir/ubuntu-mono-*
 %_datadir/gnome-shell/extensions/Onboard_Indicator@onboard.org
 
 %changelog
+* Wed Jan 03 2024 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt5
+- Fixed build with python3.12.
+
 * Mon Mar 06 2023 Anton Midyukov <antohami@altlinux.org> 1.4.1-alt4
 - NMU: drop 'BuildRequires: libappindicator-gtk3-gir-devel'
 - NMU: add patch for Ayatana-AppIndicator support

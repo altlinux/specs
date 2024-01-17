@@ -7,13 +7,15 @@
 %set_verify_elf_method strict
 %endif
 
+%def_without check
+
 # TODO: build docs
 
 %define soname 2.3
 
 Name: opencolorio
 Version: 2.3.0
-Release: alt2.1
+Release: alt2.2
 
 Summary: Enables color transforms and image display across graphics apps
 License: BSD-3-Clause
@@ -204,6 +206,9 @@ popd
 %python3_sitelibdir/PyOpenColorIO
 
 %changelog
+* Sun Dec 31 2023 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt2.2
+- Build without check for python3.12.
+
 * Sat Nov 25 2023 Nazarov Denis <nenderus@altlinux.org> 2.3.0-alt2.1
 - Fix rebuild on i586
 

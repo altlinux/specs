@@ -19,7 +19,7 @@
 
 Name: OpenUSD
 Version: 23.11
-Release: alt0.3
+Release: alt0.4
 Summary: Universal Scene Description library
 Group: Development/Other
 License: Apache-2.0
@@ -81,6 +81,11 @@ BuildRequires: python3-module-PySide2
 ExclusiveArch: aarch64 x86_64
 
 %filter_from_requires /\/usr\/share\/fonts\/ttf\/roboto/d;\/usr\/share\/fonts\/ttf\/google\-roboto\-mono.*/d
+
+# should use pyside6 instead
+%add_python3_req_skip PySide2.QtCore
+%add_python3_req_skip PySide2.QtGui
+%add_python3_req_skip PySide2.QtWidgets
 
 %description
 Universal Scene Description (USD) is an efficient, scalable system for
@@ -382,6 +387,9 @@ desktop-file-validate %buildroot%_desktopdir/org.openusd.usdview.desktop
 %python3_sitelibdir/pxr
 
 %changelog
+* Tue Jan 02 2024 Grigory Ustinov <grenka@altlinux.org> 23.11-alt0.4
+- NMU: dropped dependency on PySide2.
+
 * Wed Dec 20 2023 Anton Vyatkin <toni@altlinux.org> 23.11-alt0.3
 - NMU: Drop dependency on distutils (Closes: #48865).
 

@@ -21,7 +21,7 @@
 
 Name: nvidia-cuda-toolkit
 Version: 12.3.1
-Release: alt1
+Release: alt2
 
 Summary: NVIDIA CUDA Toolkit libraries
 Summary(ru_RU.UTF-8): Библиотеки NVIDIA CUDA Toolkit
@@ -529,6 +529,10 @@ sed -i "/.*unsupported clang version.*/d" %buildroot%_includedir/crt/host_config
 # copy pkgconfig files
 cp -v pkgconfig/*.pc %buildroot%_pkgconfigdir/
 
+# Remove bundled python _sqlite3 library compiled with python3.10
+rm -rv %buildroot%_libdir/nsight-compute-%nsight_compute_ver/host/target-linux-x64/python/packages/nsys_recipe/third_party
+rm -rv %buildroot%_libdir/nsight-systems-%nsight_sys_ver/target-linux-x64/python/packages/nsys_recipe/third_party
+
 %files
 %_bindir/bin2c
 %_bindir/cudafe++
@@ -699,5 +703,8 @@ cp -v pkgconfig/*.pc %buildroot%_pkgconfigdir/
 %_bindir/nvprof
 
 %changelog
+* Mon Jan 15 2024 Grigory Ustinov <grenka@altlinux.org> 12.3.1-alt2
+- Fixed working with python3.12.
+
 * Fri Dec 01 2023 Mikhail Tergoev <fidel@altlinux.org> 12.3.1-alt1
 - Initial build for ALT Sisyphus

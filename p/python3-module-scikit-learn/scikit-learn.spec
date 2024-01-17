@@ -2,17 +2,13 @@
 
 %define oname scikit-learn
 
-# CPU time limit exceeded on armh and ppc64le
+# CPU time limit exceeded sometimes even on x86_64
 # test_graphviz_toy failed on i586
-%ifnarch armh ppc64le %ix86
-%def_with check
-%else
 %def_without check
-%endif
 
 Name: python3-module-%oname
 Version: 1.3.0
-Release: alt2
+Release: alt3
 
 Summary: A set of python modules for machine learning and data mining
 License: BSD-3-Clause
@@ -85,6 +81,9 @@ popd
 
 
 %changelog
+* Wed Jan 10 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt3
+- Build without check.
+
 * Thu Dec 21 2023 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt2
 - Add Cython to build dependencies.
 

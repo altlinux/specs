@@ -2,7 +2,7 @@
 
 Name: python3-module-%mname
 Version: 1.0.23
-Release: alt3
+Release: alt4
 
 Summary: Python interface for smbclient
 Group: Development/Python3
@@ -22,6 +22,9 @@ The smbc module provides an interface to the Samba client API.
 %setup -n py%mname-%version -a0
 %patch0 -p2
 
+# hotfix for python3.12
+sed -i 's/PyUnicode_GET_SIZE/PyUnicode_GET_LENGTH/g' smbc/context.c
+
 %build
 CFLAGS=-I/usr/include/samba-4.0/ %python3_build
 
@@ -33,6 +36,9 @@ CFLAGS=-I/usr/include/samba-4.0/ %python3_build
 %doc README.md NEWS PKG-INFO
 
 %changelog
+* Tue Jan 09 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.23-alt4
+- Fixed build with python3.12.
+
 * Fri Jul 30 2021 Igor Chudov <nir@altlinux.org> 1.0.23-alt3
 - Added support for Kerberos authentication via use_kerberos.patch
 

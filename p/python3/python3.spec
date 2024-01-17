@@ -15,9 +15,9 @@
 # but mostly through ALT Sisyphus rpm-build-python3's macros
 # (to make the picture more clear and less error-prone).
 
-%global pybasever 3.11
+%global pybasever 3.12
 # pybasever without the dot:
-%global pyshortver 311
+%global pyshortver 312
 
 %global pyabi %nil
 
@@ -95,7 +95,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %def_with desktop_file
 
 Name: python3
-Version: %{pybasever}.6
+Version: %{pybasever}.0
 Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
@@ -144,11 +144,6 @@ Source10: idle3.desktop
 
 #RH Patches
 
-# 00001 #
-# Fixup distutils/unixccompiler.py to remove standard library path from rpath:
-# Was Patch0 in ivazquez' python3000 specfile:
-Patch1: 00001-rpath.patch
-
 #ALT Linux patches
 
 # RLIMIT 1000000 unavailable in hasher
@@ -156,7 +151,7 @@ Patch1003: python-3.8.0-skip-test_setrusage_refcount-alt.patch
 
 # Disable "-i386-linux-gnu"-like suffixes for lib-dynload/*.so modules.
 # Disables test for those suffixes.
-Patch1004: python-3.5.1-alt-disable-build-PLATFORM_TRIPLET.patch
+Patch1004: python-3.12.0-alt-disable-build-PLATFORM_TRIPLET.patch
 
 # Use a common /usr/lib/python3/site-packages (without the minor version)
 Patch1005: python3-site-packages.patch
@@ -175,7 +170,7 @@ Patch1011: python3-ignore-env-trust-security.patch
 # Replaces absolute import with relative ones.
 Patch1012: python3-lib2to3-import.patch
 
-Patch1013: python3-LoongArch64-support.patch
+Patch1013: python3-revert-gh-98040-Remove-just-the-imp-module.patch
 
 # ======================================================
 # Additional metadata, and subpackages
@@ -340,11 +335,6 @@ python 3 code that uses more than just unittest and/or test_support.py.
 rm -r Modules/expat || exit 1
 rm -r Modules/_decimal/libmpdec || exit 1
 
-#   Remove embedded copy of libffi:
-for SUBDIR in darwin libffi_osx ; do
-  rm -r Modules/_ctypes/$SUBDIR || exit 1 ;
-done
-
 # Don't build upstream Python's implementation of these crypto algorithms;
 # instead rely on _hashlib and OpenSSL.
 #
@@ -356,14 +346,9 @@ done
 #    rm Modules/$f
 #done
 
-#
-# Apply patches:
-#
-%patch1 -p1
-
 # ALT Linux patches
 %patch1003 -p2
-%patch1004 -p1
+%patch1004 -p2
 
 %patch1005 -p2
 
@@ -372,7 +357,8 @@ done
 %patch1011 -p2
 
 %patch1012 -p2
-%patch1013 -p2
+
+%patch1013 -p1
 
 %ifarch %e2k
 # add e2k arch
@@ -493,8 +479,7 @@ cp -ar Tools/iobench %buildroot%tool_dir/
 cp -ar Tools/stringbench %buildroot%tool_dir/
 cp -ar Tools/importbench %buildroot%tool_dir/
 
-# Demo/simple scripts
-cp -ar Tools/demo %buildroot%tool_dir/
+# Simple scripts
 cp -ar Tools/scripts %buildroot%tool_dir/
 
 # Documentation tools
@@ -513,8 +498,7 @@ file_list='%tool_dir/clinic/cpp.py
     %tool_dir/freeze/makemakefile.py
     %tool_dir/freeze/parsesetup.py
     %_datadir/gdb/python/libpython.py
-    %tool_dir/scripts/2to3
-    %tool_dir/scripts/smelly.py'
+    %tool_dir/scripts/2to3'
 
 for file_name in $file_list
 do
@@ -568,15 +552,10 @@ EOF
 # Split this out so it goes directly to the pyconfig-32.h/pyconfig-64.h
 # variants:
 sed -i -e "s/'pyconfig.h'/'%_pyconfig_h'/" \
-  %buildroot%pylibdir/distutils/sysconfig.py \
   %buildroot%pylibdir/sysconfig.py
 %else
 %global _pyconfig_h pyconfig.h
 %endif
-
-# Install pathfix.py to bindir
-# See https://github.com/fedora-python/python-rpm-porting/issues/24
-cp -p Tools/scripts/pathfix.py %{buildroot}%{_bindir}/
 
 # Remove shebang lines from .py files that aren't executable, and
 # remove executability from .py files that don't have a shebang line:
@@ -594,12 +573,10 @@ find %buildroot/ -name "*~" -exec rm -v {} \;
 find . -name "*~" -exec rm -v {} \;
 
 # Get rid of crappy code:
-rm -v %buildroot%tool_dir/scripts/abitype.py
-rm -v %buildroot%tool_dir/scripts/fixcid.py
 rm -v %buildroot%pylibdir/encodings/{,__pycache__/}rot_13*.py*
 
 # Skip the 2to3 test data (which might contain Python2 code)
-%global lib2to3_tests %pylibdir/lib2to3/tests
+%global lib2to3_tests %pylibdir/test/test_lib2to3
 %add_python3_compile_exclude %lib2to3_tests/data
 %add_findreq_skiplist %lib2to3_tests/data/*
 %add_findprov_skiplist %lib2to3_tests/data/*
@@ -615,7 +592,6 @@ rm -v %buildroot%pylibdir/test/test_email/{,__pycache__/}torture_test*.py*
 rm -v %buildroot%pylibdir/test/{,__pycache__/}test_winreg*.py*
 rm -v %buildroot%pylibdir/test/{,__pycache__/}test_winsound*.py*
 rm -v %buildroot%pylibdir/test/{,__pycache__/}win_console_handler*.py*
-rm -v %buildroot%pylibdir/distutils/tests/{,__pycache__/}test_msvc{9,}compiler*.py*
 rm -v %buildroot%pylibdir/test/test_importlib/{,__pycache__/}test_windows*.py*
 rm -v %buildroot%pylibdir/test/libregrtest/{,__pycache__/}win_utils*.py*
 # The libs which are being tested below have been excluded in %%files (long ago):
@@ -624,14 +600,9 @@ rm -v %buildroot%pylibdir/test/test_asyncio/{,__pycache__/}test_windows_utils*.p
 rm -v %buildroot%pylibdir/test/{,__pycache__/}test_winconsoleio*.py*
 rm -v %buildroot%pylibdir/test/{,__pycache__/}test_msilib*.py*
 # Get rid of bad* tests
-rm -v %buildroot%pylibdir/test/test_future_stmt/bad*.py
-# Get rid of windows-related stuff
-rm -v %buildroot%pylibdir/distutils/*msvc*compiler*.py*
-rm -v %buildroot%tool_dir/scripts/win_add2path.py
+rm -v %buildroot%pylibdir/test/bad*.py
 # Get rid of crap
 rm -v -r %buildroot%pylibdir/ctypes/macholib/fetch_macholib
-rm -v %buildroot%tool_dir/scripts/md5sum.py
-rm -v %buildroot%tool_dir/scripts/parseentities.py
 
 %if_without tk
 # Most files from modules-tkinter subpackage
@@ -645,7 +616,6 @@ rm -rv %buildroot%pylibdir/turtledemo
 
 # Remove sphinxext (temporary)
 rm -v -r %buildroot%pylibdir/Doc/tools/{extensions,static,templates}
-rm -v %buildroot%pylibdir/Doc/tools/susp-ignored.csv
 
 # Fix end-of-line encodings:
 find %buildroot/ -name \*.py -exec sed -i 's/\r//' {} \;
@@ -743,14 +713,9 @@ export LANG=C
 LD_LIBRARY_PATH="$(pwd)" $(pwd)/python -m test.pythoninfo
 
 # -l (--findleaks) is not compatible with -j
-# distutils.tests.test_bdist_rpm tests fail when bootstraping the Python
-# package: rpmbuild requires /usr/bin/pythonX.Y to be installed
 WITHIN_PYTHON_RPM_BUILD= \
 LD_LIBRARY_PATH="$(pwd)" \
 $(pwd)/python -m test.regrtest \
-%if_with bootstrap
-    -x test_distutils \
-%endif
     -x test_socket -x test_signal \
     -i test_freeze_simple_script \
     -vwW --timeout=1800 %_smp_mflags
@@ -818,9 +783,8 @@ $(pwd)/python -m test.regrtest \
 %dynload_dir/_queue.cpython-%pyshortver%pyabi.so
 %dynload_dir/_random.cpython-%pyshortver%pyabi.so
 %dynload_dir/_sha1.cpython-%pyshortver%pyabi.so
-%dynload_dir/_sha256.cpython-%pyshortver%pyabi.so
+%dynload_dir/_sha2.cpython-%pyshortver%pyabi.so
 %dynload_dir/_sha3.cpython-%pyshortver%pyabi.so
-%dynload_dir/_sha512.cpython-%pyshortver%pyabi.so
 %dynload_dir/_socket.cpython-%pyshortver%pyabi.so
 %dynload_dir/_ssl.cpython-%pyshortver%pyabi.so
 %dynload_dir/_statistics.cpython-%pyshortver%pyabi.so
@@ -828,8 +792,9 @@ $(pwd)/python -m test.regrtest \
 %dynload_dir/_testclinic.cpython-%pyshortver%pyabi.so
 %dynload_dir/_testinternalcapi.cpython-%pyshortver%pyabi.so
 %dynload_dir/_testmultiphase.cpython-%pyshortver%pyabi.so
-%dynload_dir/_typing.cpython-%pyshortver%pyabi.so
+%dynload_dir/_testsinglephase.cpython-%pyshortver%pyabi.so
 %dynload_dir/_uuid.cpython-%pyshortver%pyabi.so
+%dynload_dir/_xxinterpchannels.cpython-%pyshortver%pyabi.so
 %dynload_dir/_xxsubinterpreters.cpython-%pyshortver%pyabi.so
 %dynload_dir/_xxtestfuzz.cpython-%pyshortver%pyabi.so
 %dynload_dir/_zoneinfo.cpython-%pyshortver%pyabi.so
@@ -852,6 +817,7 @@ $(pwd)/python -m test.regrtest \
 %dynload_dir/unicodedata.cpython-%pyshortver%pyabi.so
 %dynload_dir/xxlimited.cpython-%pyshortver%pyabi.so
 %dynload_dir/xxlimited_35.cpython-%pyshortver%pyabi.so
+%dynload_dir/xxsubtype.cpython-%pyshortver%pyabi.so
 %dynload_dir/zlib.cpython-%pyshortver%pyabi.so
 
 %pylibdir/*.py
@@ -898,13 +864,6 @@ $(pwd)/python -m test.regrtest \
 %pylibdir/dbm/*.py
 %pylibdir/dbm/__pycache__/*%bytecode_suffixes
 
-%dir %pylibdir/distutils/
-%dir %pylibdir/distutils/__pycache__/
-%pylibdir/distutils/*.py
-%pylibdir/distutils/__pycache__/*%bytecode_suffixes
-%pylibdir/distutils/README
-%pylibdir/distutils/command
-
 %dir %pylibdir/email/
 %dir %pylibdir/email/__pycache__/
 %pylibdir/email/*.py
@@ -944,7 +903,6 @@ $(pwd)/python -m test.regrtest \
 %pylibdir/json/__pycache__/*%bytecode_suffixes
 
 %pylibdir/lib2to3
-%exclude %lib2to3_tests
 %pylibdir/logging
 %pylibdir/multiprocessing
 %exclude %pylibdir/multiprocessing/popen_spawn_win32.py
@@ -988,6 +946,14 @@ $(pwd)/python -m test.regrtest \
 %pylibdir/zoneinfo/*.py
 %pylibdir/zoneinfo/__pycache__/*%bytecode_suffixes
 
+%dir %pylibdir/zipfile
+%dir %pylibdir/zipfile/__pycache__/
+%dir %pylibdir/zipfile/_path/
+%dir %pylibdir/zipfile/_path/__pycache__/
+%pylibdir/zipfile/*.py
+%pylibdir/zipfile/__pycache__/*%bytecode_suffixes
+%pylibdir/zipfile/_path
+
 # "Makefile" and the config-32/64.h file are needed by
 # distutils/sysconfig.py:_init_posix(), so we include them in the core
 # package, along with their parent directories (bug 531901):
@@ -1008,7 +974,7 @@ $(pwd)/python -m test.regrtest \
 %include_dir/internal/*.h
 %include_dir/cpython/*.h
 %exclude %include_dir/%_pyconfig_h
-%doc Misc/README.valgrind Misc/valgrind-python.supp Misc/gdbinit
+%doc Misc/README.valgrind Misc/valgrind-python.supp
 %_bindir/python3-config
 %_bindir/python%pybasever-config
 %_libdir/libpython3.so
@@ -1022,7 +988,6 @@ $(pwd)/python -m test.regrtest \
 %_bindir/python3-2to3
 %_bindir/2to3-%pybasever
 %_bindir/idle*
-%_bindir/pathfix.py
 %if_with desktop_file
 %_desktopdir/idle3.desktop
 %endif
@@ -1043,7 +1008,6 @@ $(pwd)/python -m test.regrtest \
 %pylibdir/idlelib
 %exclude %pylibdir/idlelib/idle_test
 %pylibdir/tkinter
-%exclude %pylibdir/tkinter/test
 %dynload_dir/_tkinter.cpython-%pyshortver%pyabi.so
 %pylibdir/turtle.py
 %pylibdir/__pycache__/turtle*%bytecode_suffixes
@@ -1067,9 +1031,6 @@ $(pwd)/python -m test.regrtest \
 %dynload_dir/_curses_panel.cpython-%pyshortver%pyabi.so
 
 %files test
-%pylibdir/ctypes/test
-%pylibdir/distutils/tests
-%lib2to3_tests
 %pylibdir/test
 %dynload_dir/_ctypes_test.cpython-%pyshortver%pyabi.so
 %dynload_dir/_testbuffer.cpython-%pyshortver%pyabi.so
@@ -1077,12 +1038,13 @@ $(pwd)/python -m test.regrtest \
 %dynload_dir/_testimportmultiple.cpython-%pyshortver%pyabi.so
 %if_with tk
 %pylibdir/idlelib/idle_test
-%pylibdir/tkinter/test
 %endif
-%pylibdir/unittest/test
 %tool_dir/scripts/run_tests.py
 
 %changelog
+* Fri Nov 03 2023 Grigory Ustinov <grenka@altlinux.org> 3.12.0-alt1
+- Updated to upstream version 3.12.0.
+
 * Tue Oct 03 2023 Grigory Ustinov <grenka@altlinux.org> 3.11.6-alt1
 - Updated to upstream version 3.11.6 (thx to kotopesutility@).
 

@@ -2,9 +2,12 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
+# https://github.com/pypa/setuptools/issues/3143
+%def_without python
+
 Name: tbb
 Version: 2021.10.0
-Release: alt1
+Release: alt1.1
 Summary: Threading Building Blocks
 License: Apache-2.0
 Group: Development/Tools
@@ -31,10 +34,12 @@ Patch5: 0001-Fix-build-on-GCC13.patch
 
 Requires: lib%name = %EVR
 
+%if_with python
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+%endif
 BuildRequires: gcc-c++
 BuildRequires: libgomp-devel
-BuildRequires: python3-devel
 BuildRequires: swig
 BuildRequires: cmake ctest
 # needed for some tests
@@ -93,6 +98,7 @@ having to be a threading expert.
 
 This package contains examples for Threading Building Blocks.
 
+%if_with python
 %package -n python3-module-%name
 Summary: Python 3 Threading Building Blocks module
 Group: Development/Python3
@@ -104,6 +110,7 @@ leverage multi-core processors for performance and scalability without
 having to be a threading expert.
 
 This package contains python3 module for Threading Building Blocks.
+%endif
 
 %prep
 %setup
@@ -131,11 +138,14 @@ export RPM_LD_FLAGS="${RPM_LD_FLAGS:-} -latomic"
 	-DCMAKE_CXX_STANDARD=14 \
 	-DTBB_EXAMPLES:BOOL=ON \
 	-DTBB_STRICT:BOOL=OFF \
+%if_with python
 	-DTBB4PY_BUILD:BOOL=ON \
+%else
+	-DTBB4PY_BUILD:BOOL=OFF \
+%endif
 	%nil
 
 %cmake_build
-%cmake_build -t python_build
 
 %install
 %cmakeinstall_std
@@ -162,12 +172,17 @@ rm -f %buildroot%_defaultdocdir/TBB/README.md
 %files examples
 %doc examples
 
+%if_with python
 %files -n python3-module-%name
 %python3_sitelibdir/TBB*
 %python3_sitelibdir/tbb
 %python3_sitelibdir/__pycache__/*
+%endif
 
 %changelog
+* Wed Jan 03 2024 Grigory Ustinov <grenka@altlinux.org> 2021.10.0-alt1.1
+- Build without python.
+
 * Wed Jul 26 2023 L.A. Kostis <lakostis@altlinux.ru> 2021.10.0-alt1
 - Updated to upstream version 2021.10.0.
 

@@ -1,4 +1,5 @@
 %define pypi_name Cython
+# requires python3(gdb) < 0
 %def_disable debugger
 %ifarch armh
 %def_disable check
@@ -7,8 +8,8 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 0.29.36
-Release: alt1.1
+Version: 3.0.7
+Release: alt1
 
 Summary: C-extensions for Python 3
 Group: Development/Python3
@@ -133,6 +134,15 @@ done
 %endif
 
 %changelog
+* Wed Dec 20 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0.7-alt1
+- 3.0.7
+
+* Sun Nov 26 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0.6-alt1
+- 3.0.6
+
+* Tue Oct 31 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0.5-alt1
+- 3.0.5
+
 * Sat Oct 14 2023 Yuri N. Sedunov <aris@altlinux.org> 0.29.36-alt1.1
 - prepared for python w/o distutils
 - disabled check pending for python-3.12

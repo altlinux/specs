@@ -1,14 +1,14 @@
 %define oname fuse
 
 Name: python3-module-%oname
-Version: 1.0.0
+Version: 1.0.7
 Release: alt1
 
 Summary: This is a Python interface to FUSE
 License: LGPL
 Group: Development/Python3
 Url: http://sourceforge.net/projects/fuse/
-# git://git.code.sf.net/p/fuse/fuse-python
+# https://github.com/libfuse/python-fuse
 
 Source0: python-%oname.tar
 
@@ -39,6 +39,9 @@ create and mount their own filesystem implementations.
 
 
 %changelog
+* Tue Jan 09 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.7-alt1
+- Updated to 1.0.7.
+
 * Fri Dec 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.0-alt1
 - Version updated to 1.0.0
 

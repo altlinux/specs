@@ -8,7 +8,7 @@
 
 Name: zbar
 Version: 0.23.92
-Release: alt4
+Release: alt5
 %define libname libzbar
 
 Summary: A library for scanning and decoding bar codes
@@ -195,6 +195,10 @@ scanning widget.
 %prep
 %setup
 %patch -p1
+
+# hotfix for python3.12
+sed -i 's/ob_digit/long_value.ob_digit/g' python/enum.c
+
 # TODO
 sed -i 's/gtk+-2.0/gtk+-3.0/' zbar-gtk.pc.in
 
@@ -271,6 +275,9 @@ export LIBS=-lm
 %endif
 
 %changelog
+* Wed Jan 03 2024 Grigory Ustinov <grenka@altlinux.org> 0.23.92-alt5
+- Add python3.12 support.
+
 * Sat Jan 28 2023 Grigory Ustinov <grenka@altlinux.org> 0.23.92-alt4
 - Add python3.11 support.
 

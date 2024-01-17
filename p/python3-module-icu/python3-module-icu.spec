@@ -7,7 +7,7 @@
 Name: python3-module-%modulename
 # python3 setup.py -V|tail -1
 Version: 2.7.4
-Release: alt1
+Release: alt1.1
 
 Summary: Python extension wrapping the ICU C++ API
 Group: Development/Python3
@@ -21,6 +21,8 @@ Vcs: https://github.com/ovalhub/pyicu.git
 Source: %srcname-%version.tar
 %endif
 
+Patch: fix-building-with-python3.12.patch
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ libicu-devel >= %icu_ver
 BuildRequires: python3-devel python3-module-setuptools
@@ -30,6 +32,7 @@ PyICU - Python 3 extension wrapping the ICU C++ API.
 
 %prep
 %setup -n %srcname-%version
+%patch -p2
 
 %build
 %python3_build
@@ -43,6 +46,9 @@ PyICU - Python 3 extension wrapping the ICU C++ API.
 
 
 %changelog
+* Sun Dec 31 2023 Grigory Ustinov <grenka@altlinux.org> 2.7.4-alt1.1
+- NMU: fix building with python3.12.
+
 * Fri Jun 25 2021 Yuri N. Sedunov <aris@altlinux.org> 2.7.4-alt1
 - 2.7.4
 

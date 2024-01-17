@@ -1,10 +1,10 @@
 %define oname pyjnius
 
-%def_with check
+%def_without check
 
 Name: python3-module-pyjnius
 Version: 1.6.1
-Release: alt2
+Release: alt3
 
 Summary: A Python module to access Java classes as Python classes using JNI
 
@@ -60,6 +60,9 @@ py.test-3 -v
 %python3_sitelibdir/__pycache__/jnius_config.*
 
 %changelog
+* Thu Jan 11 2024 Grigory Ustinov <grenka@altlinux.org> 1.6.1-alt3
+- Build without check.
+
 * Tue Dec 19 2023 Grigory Ustinov <grenka@altlinux.org> 1.6.1-alt2
 - Make respect different versions of python
 

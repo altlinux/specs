@@ -7,7 +7,7 @@ BuildRequires: gcc-c++
 %global modname pycxx
 
 Name:           python3-module-pycxx-devel
-Version:        7.1.7
+Version:        7.1.8
 Release:        alt1
 
 Summary:        Write Python extensions in C++
@@ -23,6 +23,7 @@ Source0:        %modname-%version.tar.gz
 Patch0:         python-pycxx-6.2.8-change-include-paths.patch
 
 BuildRequires:  python3-devel
+BuildRequires:  python3-module-setuptools
 
 %description
 PyCXX is a set of classes to help create extensions of Python in the
@@ -79,6 +80,9 @@ export PKG_CONFIG_PATH=%buildroot%_datadir/pkgconfig:%buildroot%_libdir/pkgconfi
 test "$(pkg-config --modversion PyCXX)" = "%version"
 
 %changelog
+* Fri Jan 05 2024 Grigory Ustinov <grenka@altlinux.org> 7.1.8-alt1
+- Build new version.
+
 * Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 7.1.7-alt1
 - Build new version.
 
