@@ -12,7 +12,7 @@
 Name: timeshift
 Version: 24.01.1
 Summary: System restore tool for Linux
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: Archiving/Backup
 URL: https://github.com/linuxmint/timeshift
@@ -63,8 +63,8 @@ install -m755 -pD %SOURCE1 %buildroot%_sysconfdir/firsttime.d/zz-firsttime-snaps
 %_bindir/%name
 %_bindir/%name-gtk
 %_bindir/%name-launcher
-%_datadir/%name/images/*
-%_sysconfdir/%name/default.json
+%_datadir/%name
+%_sysconfdir/%name
 %_desktopdir/%name-gtk.desktop
 %_iconsdir/hicolor/*/apps/%name.png
 %_datadir/metainfo/%name.appdata.xml
@@ -76,6 +76,9 @@ install -m755 -pD %SOURCE1 %buildroot%_sysconfdir/firsttime.d/zz-firsttime-snaps
 %doc README.md
 
 %changelog
+* Wed Jan 17 2024 Alexander Makeenkov <amakeenk@altlinux.org> 24.01.1-alt2
+- Fixed post-install unowned files.
+
 * Wed Jan 17 2024 Alexander Makeenkov <amakeenk@altlinux.org> 24.01.1-alt1
 - Updated to version 24.01.1.
 
