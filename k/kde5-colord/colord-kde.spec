@@ -2,7 +2,7 @@
 
 Name: kde5-colord
 Version: 23.08.4
-Release: alt2
+Release: alt3
 %K5init
 
 Group: Graphical desktop/KDE
@@ -14,6 +14,7 @@ Requires: colord icc-profiles
 Requires: qml(org.kde.kirigamiaddons.treeview)
 
 Source: %rname-%version.tar
+Source10: po-add-ru.po
 
 # Automatically added by buildreq on Mon Sep 12 2022 (-bi)
 # optimized out: cmake cmake-modules debugedit elfutils fontconfig fontconfig-devel gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 kf5-kauth-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kwidgetsaddons-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libctf-nobfd0 libfreetype-devel libglvnd-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-waylandclient libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstdc++-devel libwayland-client libwayland-cursor libxcb-devel libxkbcommon-devel libxkbfile-devel pkg-config python-modules python2-base python3 python3-base python3-dev python3-module-paste qt5-base-common qt5-base-devel rpm-build-file rpm-build-python3 rpm-macros-python sh4 tzdata xorg-proto-devel xorg-xf86miscproto-devel
@@ -33,6 +34,11 @@ KDE support for colord including KDE Daemon module and System Settings module.
 %prep
 %setup -n %rname-%version
 
+mv po/ru/colord-kde.po{,.old}
+msgcat --use-first %SOURCE10 po/ru/colord-kde.po.old > po/ru/colord-kde.po
+rm -f po/ru/colord-kde.po.old
+cp -ar po/ru/colord-kde.po po/ru/kcm_colord.po
+
 %build
 %K5build
 
@@ -50,6 +56,9 @@ KDE support for colord including KDE Daemon module and System Settings module.
 %_K5data/kpackage/kcms/*colord*
 
 %changelog
+* Wed Jan 17 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt3
+- fix russian translation
+
 * Tue Jan 16 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt2
 - require icc-profiles
 
