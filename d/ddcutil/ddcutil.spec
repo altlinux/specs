@@ -18,7 +18,7 @@
 %define soname 5
 
 Name: ddcutil
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 
 Summary: Utility to query and update monitor settings
@@ -80,7 +80,6 @@ NOCONFIGURE=1 ./autogen.sh
     --enable-lib \
     --enable-drm \
     --enable-usb \
-    --enable-x11 \
     --docdir="%_defaultdocdir/%name-%version"
 %make_build
 
@@ -120,6 +119,9 @@ installed_modulesdir=%_modulesloaddir
 # TODO: python subpackage?
 
 %changelog
+* Thu Jan 18 2024 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
+- 2.1.0
+
 * Fri Sep 29 2023 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
 - 2.0.0
 
