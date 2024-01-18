@@ -8,15 +8,15 @@
 
 Name: dhcpcd
 Epoch: 1
-Version: 9.4.0
-Release: alt2
+Version: 10.0.6
+Release: alt1
 
 Summary: DHCP Client
 License: BSD-2-Clause
 Group: System/Servers
 
 URL: https://roy.marples.name/projects/%name
-Vcs: git://roy.marples.name/dhcpcd.git
+Vcs: https://github.com/NetworkConfiguration/dhcpcd.git
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
@@ -104,6 +104,11 @@ fi
 %exclude %_datadir/%name/
 
 %changelog
+* Wed Jan 17 2024 Mikhail Efremov <sem@altlinux.org> 1:10.0.6-alt1
+- Don't return error if setup hostname not needed (closes: #47095).
+- Updated url tag.
+- Updated to 10.0.6.
+
 * Sun Jun 11 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:9.4.0-alt2
 - Fixed compilation on LoongArch (lp64d).
 
