@@ -1,12 +1,14 @@
+%define qtver 5.15.11
+
 %def_without clang
 
 Name: util-dfm
-Version: 1.2.20.0.3.2827
+Version: 1.2.21
 Release: alt1
 
 Summary: A Toolkits of libdfm-io, libdfm-mount and libdfm-burn
 
-License: GPL-3.0+
+License: GPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/util-dfm
 
@@ -15,7 +17,7 @@ Source: %url/archive/%version/%name-%version.tar.gz
 BuildRequires(pre): rpm-build-ninja
 # Automatically added by buildreq on Tue Oct 24 2023
 # optimized out: cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libgio-devel libglvnd-devel libgpg-error libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-widgets libsasl2-3 libssl-devel libstdc++-devel libzen-devel pkg-config python3 python3-base sh5 zlib-devel
-BuildRequires: cmake libisoburn-devel libmediainfo-devel libmount-devel libsecret-devel libudisks2-devel qt5-base-devel
+BuildRequires: cmake libisoburn-devel libmediainfo-devel libmount-devel libsecret-devel libudisks2-devel qt5-base-devel = %qtver
 %if_enabled clang
 BuildRequires: clang-devel
 BuildRequires: lld-devel
@@ -133,6 +135,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/cmake/dfm-burn/dfm-burnConfig.cmake
 
 %changelog
+* Thu Jan 18 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.21-alt1
+- New version 1.2.21.
+
 * Tue Jan 09 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.20.0.3.2827-alt1
 - New version 1.2.20-3-g2827d7b.
 
