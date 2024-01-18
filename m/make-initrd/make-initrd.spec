@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.40.0
+Version: 2.41.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -70,7 +70,6 @@ Requires: util-linux >= 2.17.2-alt1
 AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
-Patch0: 0001-Update-configure.ac-for-new-autotools.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -408,6 +407,15 @@ fi
 %config(noreplace) %_sysconfdir/initrd.mk.d/guestfs.mk.example
 
 %changelog
+* Thu Jan 18 2024 Alexey Gladkov <legion@altlinux.ru> 2.41.0-alt1
+- New version (2.41.0).
+- Feature pipeline:
+  + Restrict permissions to directories that can be accessed in the booted
+    system. Only root should have access to these directories.
+- Feature plymouth:
+  + Detect libdir on gentoo.
+  + Pack all plymouth modules by default.
+
 * Sat Dec 30 2023 Alexey Gladkov <legion@altlinux.ru> 2.40.0-alt1
 - New version (2.40.0).
 - Runtime:
