@@ -1,22 +1,24 @@
 Name: deepin-menu
 Version: 5.0.1
-Release: alt2
+Release: alt3
 Summary: Deepin menu service
-License: GPL-3.0-only
+License: GPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-menu
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: deepin-menu-5.0.1-alt-dtk-5_6_22.patch
 
 BuildRequires(pre): desktop-file-utils
-BuildRequires: dtk5-widget-devel deepin-qt-dbus-factory-devel qt5-base-devel qt5-multimedia-devel qt5-x11extras-devel
+BuildRequires: libdtkwidget-devel deepin-qt-dbus-factory-devel qt5-base-devel qt5-multimedia-devel qt5-x11extras-devel
 
 %description
 Deepin menu service for building beautiful menus.
 
 %prep
 %setup
+%patch -p2
 
 # Modify lib path to reflect the platform
 %__subst 's|/usr/bin|/usr/libexec|' data/com.deepin.menu.service \
@@ -38,6 +40,9 @@ Deepin menu service for building beautiful menus.
 %_datadir/dbus-1/services/com.deepin.menu.service
 
 %changelog
+* Thu Jan 18 2024 Leontiy Volodin <lvol@altlinux.org> 5.0.1-alt3
+- Fixed build on dtk 5.6.22.
+
 * Mon Oct 12 2020 Leontiy Volodin <lvol@altlinux.org> 5.0.1-alt2
 - Enabled debuginfo.
 - Fixed path location.
