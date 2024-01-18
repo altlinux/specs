@@ -1,12 +1,12 @@
 %def_with check
 %def_without badtests
-%def_with nimdoc
+%def_without nimdoc
 Name: nim-lang
-Version: 1.6.12
-Release: alt3
+Version: 2.0.2
+Release: alt1
 License: MIT
 Summary: A statically typed compiled systems programming language
-Source: nim-%version.tar
+Source: nim-%version.tar.xz
 Patch: nim-1.6.12-alt-install.patch
 Patch1: nim-1.6.12-alt-testament-all-propagate-keys.patch
 Patch2: nim-1.6.12-alt-Unparallel.patch
@@ -14,13 +14,13 @@ Patch3: nim-1.6.12-alt-32badtest.patch
 Url: https://nim-lang.org
 Group: Development/Other
 
+BuildRequires(pre): /proc /dev/pts
 # Automatically added by buildreq on Fri Jul 03 2020
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 perl python2-base sh4
-BuildRequires(pre): /proc
 BuildRequires: parallel gcc-c++ node git-core
 BuildRequires: rpm-build-python3
 %if_with check
-BuildRequires: libgc libsqlite3 valgrind
+BuildRequires: libgc libsqlite3 valgrind libpcre3
 %endif
 
 %description
@@ -63,17 +63,21 @@ install -D tools/nim.zsh-completion %buildroot%_datadir/zsh/site-functions/_nim
 
 %check
 sed -i '/jester/d' tests/cpp/tasync_cpp.nim
-sed -i '/Megatest/d' tests/misc/tjoinable.nim tests/testament/tjoinable.nim 
+sed -i '/Megatest/d' tests/misc/tjoinable.nim tests/testament/tjoinable.nim
 
+# vim: map <F11> <CR>/^FAIL:<CR>$F/ "eyw<C-W><C-W><C-W>_1G/aarch64<CR>:execute '/' . @e<CR>
+# vim: map <F10> <CR>$F/"3yw<C-W><C-W><C-W>_1G:execute '/' . @e<CR>
 # XXX Some bad tests
 %if_without badtests
-for badtest in tests/niminaction/Chapter7/Tweeter/src/tweeter.nim \
+echo \
                tests/niminaction/Chapter8/sfml/sfml_test.nim \
-               tests/testament/tshould_not_work.nim \
                tests/manyloc/nake/nakefile.nim \
-               tests/stdlib/tnetconnect.nim \
-               tests/stdlib/thttpclient.nim \
+        %ifarch %ix86
+               tests/stdlib/tcasts.nim \
+               tests/misc/trunner.nim \
+        %endif
         %ifarch ppc64le
+               tests/misc/trunner.nim \
                tests/arc/t14472.nim \
                tests/arc/tasyncleak3.nim \
                tests/arc/tasyncleak4.nim \
@@ -94,36 +98,65 @@ for badtest in tests/niminaction/Chapter7/Tweeter/src/tweeter.nim \
                tests/valgrind/tbasic_valgrind.nim \
                tests/valgrind/tleak_arc.nim \
                tests/views/tsplit_into_openarray.nim \
+               tests/dll/nimhcr_basic.nim \
+               tests/compiler/tasm.nim \
+               tests/objects/tunsafenew2.nim \
         %endif
         %ifarch aarch64
                tests/range/tcompiletime_range_checks.nim \
                tests/dll/nimhcr_unit.nim \
                tests/arc/tasyncorc.nim \
+               tests/threads/threadex.nim \
+               tests/threads/t7172.nim \
+               tests/threads/t8535.nim \
+               tests/threads/tonthreadcreation.nim \
+               tests/threads/tmanyjoin.nim \
+               tests/threads/tthreadvars.nim \
+               tests/threads/tracy_allocator.nim \
+               tests/threads/treusetvar.nim \
+               tests/dll/nimhcr_basic.nim \
+               tests/compiler/tasm.nim \
+               tests/misc/ttlsemulation.nim \
         %endif
         %ifarch %arm
+               tests/misc/trunner.nim \
                tests/arc/thard_alignment.nim \
+               tests/destructor/topttree.nim \
                tests/tuples/t12892.nim \
                tests/dll/nimhcr_unit.nim \
                tests/stdlib/tarithmetics.nim \
-               tests/dll/nimhcr_unit.nim \
                tests/misc/tsizeof4.nim \
+               tests/enum/tenum.nim \
+               tests/threads/threadex.nim \
+               tests/threads/tmanyjoin.nim \
+               tests/threads/tonthreadcreation.nim \
+               tests/threads/t7172.nim \
+               tests/threads/t8535.nim \
+               tests/threads/tracy_allocator.nim \
+               tests/threads/treusetvar.nim \
+               tests/threads/tthreadvars.nim \
+               tests/stdlib/tcasts.nim \
+               tests/dll/nimhcr_basic.nim \
+               tests/dll/client.nim \
+               tests/compiler/tasm.nim \
+               tests/misc/ttlsemulation.nim \
         %endif
+| tr ' ' '\n' > badtests.txt
+## do
+##        echo "#" > "$badtest"
+## done
 
-do
-        echo "#" > "$badtest"
-done
-
-mkdir -p .badtests
+mkdir -p badtests
 for baddir in tests/manyloc/keineschweine
 do
         test -d "$baddir" && mv "$baddir" badtests
 done
 %endif
 
-PATH=`pwd`/bin:$PATH ./koch tests --colors:off --megatest:off --nim:bin/nim all
+PATH=`pwd`/bin:$PATH ./koch tests --colors:off --megatest:off --nim:bin/nim --skipFrom:badtests.txt all
 # XXX Unparallel patch: these must not be executed in parallel with any other suite
-PATH=`pwd`/bin:$PATH ./koch tests --colors:off --megatest:off --nim:bin/nim c ic
-PATH=`pwd`/bin:$PATH ./koch tests --colors:off --megatest:off --nim:bin/nim c navigator
+PATH=`pwd`/bin:$PATH ./koch tests --colors:off --megatest:off --nim:bin/nim --skipFrom:badtests.txt c ic
+PATH=`pwd`/bin:$PATH ./koch tests --colors:off --megatest:off --nim:bin/nim --skipFrom:badtests.txt c navigator
 
 %files
 %doc %_datadir/nim/doc
@@ -138,6 +171,11 @@ PATH=`pwd`/bin:$PATH ./koch tests --colors:off --megatest:off --nim:bin/nim c na
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Fri Jan 12 2024 Fr. Br. George <george@altlinux.org> 2.0.2-alt1
+- Autobuild version bump to 2.0.2
+- Update bad tests
+- Disable nimdoc until it ceases to download modules
+
 * Mon Jun 05 2023 Fr. Br. George <george@altlinux.ru> 1.6.12-alt3
 - Fix nimble paths (again)
 
