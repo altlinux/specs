@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: fossology-nomos
-Version: 4.3.0
-Release: alt2
+Version: 4.4.0
+Release: alt1
 Summary: Nomos detects licenses and copyrights in a file
 License: GPL-2.0-or-later
 Group: Development/Other
@@ -29,6 +29,9 @@ FOSSology open source license compliance software system and toolkit.
 %setup
 
 %build
+%ifarch x86_64
+%add_optflags -fanalyzer -Werror
+%endif
 %add_optflags %(getconf LFS_CFLAGS)
 make -C src/nomos/agent -f Makefile.nomossa.altlinux \
        CFLAGS='%optflags -DVERSION_S=\"%version\" -DCOMMIT_HASH_S=\"%release\"'
@@ -38,7 +41,7 @@ install -Dm0755 -p src/nomos/agent/nomossa %buildroot%_bindir/nomossa
 
 %check
 PATH=%buildroot%_bindir:$PATH
-nomossa -V | grep '%version.*%release'
+nomossa -V | grep -Fx 'nomos build version: %version r(%release).'
 cp -a LICENSE /tmp
 pushd /tmp
   date > no_lice
@@ -54,6 +57,9 @@ nomossa -d LICENSES
 %_bindir/nomossa
 
 %changelog
+* Thu Jan 18 2024 Vitaly Chikunov <vt@altlinux.org> 4.4.0-alt1
+- Update to 4.4.0 (2024-01-15).
+
 * Wed Aug 02 2023 Vitaly Chikunov <vt@altlinux.org> 4.3.0-alt2
 - In directory mode (-d) do not print 'No_license_found' messages.
 
