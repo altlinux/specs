@@ -17,7 +17,7 @@
 %define get_dep_ge() %(rpm -q --qf '%%{NAME} >= %%{EVR}' %1 2>/dev/null || echo '%1 >= unknown')
 
 Name: 389-ds-base
-Version: 2.4.4
+Version: 2.4.5
 Release: alt1
 
 Summary: 389 Directory Server (base)
@@ -32,7 +32,6 @@ Source1: vendor_nodejs.tar
 %endif
 Source2: vendor_rust.tar
 Patch: %name-%version-alt.patch
-Patch1: vendored-rustix-loongarch64-support.patch
 
 ExcludeArch: %ix86 armh
 
@@ -181,7 +180,6 @@ A cockpit UI Plugin for configuring and administering the 389 Directory Server
 %prep
 %setup %{?_with_cockpit:-a1} -a2
 %patch -p1
-%patch1 -p1
 
 grep -qsF 'sysctldir = @prefixdir@/lib/sysctl.d' Makefile.am || exit 1
 sed -i 's|sysctldir = .*|sysctldir = %_sysctldir|' Makefile.am
@@ -201,10 +199,6 @@ grep -qs 'saslpath = "/usr/lib/aarch64-linux-gnu"' \
 ldap/servers/slapd/ldaputil.c || exit 1
 sed -i 's|\(saslpath = "/usr/\)lib\(/aarch64-linux-gnu"\)|\1lib64\2|g' \
 ldap/servers/slapd/ldaputil.c
-
-# allow patching vendored rust code
-sed -i -e 's/"files":{[^}]*}/"files":{}/' \
-        vendor/rustix/.cargo-checksum.json
 
 %build
 %ifarch mipsel
@@ -434,6 +428,9 @@ fi
 %endif
 
 %changelog
+* Tue Jan 16 2024 Stanislav Levin <slev@altlinux.org> 2.4.5-alt1
+- 2.4.4 -> 2.4.5.
+
 * Tue Dec 26 2023 Stanislav Levin <slev@altlinux.org> 2.4.4-alt1
 - 2.2.9 -> 2.4.4.
 
