@@ -36,7 +36,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -52,6 +52,7 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %endif
 Source5: gtk4-icon-cache.filetrigger
 Patch: gtk+-2.16.5-alt-stop-spam.patch
+#Patch10: gtk-4.10.3-paper-plane-reversed-list.patch
 
 %define meson_ver 0.63
 %define glib_ver 2.72
@@ -225,6 +226,7 @@ the functionality of the installed GTK+3 packages.
 %prep
 %setup -n %_name-%version
 %patch -p1
+#%%patch10 -p1
 
 %build
 %meson \
@@ -406,6 +408,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Thu Jan 18 2024 Yuri N. Sedunov <aris@altlinux.org> 4.12.5-alt1
+- 4.12.5
+
 * Sat Nov 18 2023 Yuri N. Sedunov <aris@altlinux.org> 4.12.4-alt1
 - 4.12.4
 
