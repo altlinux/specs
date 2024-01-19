@@ -7,8 +7,12 @@
 %def_enable deprecated
 %def_enable experimental
 
+# LTO causes test-vcp to fail
+# https://github.com/bluez/bluez/issues/683
+%global optflags_lto %nil
+
 Name: bluez
-Version: 5.70
+Version: 5.71
 Release: alt1
 
 Summary: Bluetooth utilities
@@ -184,6 +188,7 @@ fi
 %_includedir/bluetooth
 %_libdir/*.so
 %_pkgconfigdir/*.pc
+%_man5dir/*.5*
 
 %files cups
 %_prefix/lib/cups/backend/bluetooth
@@ -197,6 +202,11 @@ fi
 %_datadir/zsh/site-functions/_bluetoothctl
 
 %changelog
+* Tue Jan 09 2024 L.A. Kostis <lakostis@altlinux.ru> 5.71-alt1
+- 5.71.
+- Disable LTO due failed tests.
+- Added API man pages to -devel package.
+
 * Thu Oct 26 2023 L.A. Kostis <lakostis@altlinux.ru> 5.70-alt1
 - 5.70.
 
