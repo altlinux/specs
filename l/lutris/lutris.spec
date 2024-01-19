@@ -3,15 +3,19 @@
 %define appid net.lutris.Lutris
 
 Name: lutris
-Version: 0.5.14
+Version: 0.5.16
 Release: alt1
+
 Summary: Manager for game installation and execution
-License: GPL-2.0 and GPL-2.0+ and GPL-3.0+ and CC0-1.0 and LGPL-2.1+ and CC-BY-NC-SA-2.0 and CC-BY-SA-3.0
+
+License: GPL-3.0-or-later and LGPL-2.1-or-later and MIT
+# ./lutris/util/steam/vdf/__init__.py contains license MIT
+# ./lutris/gui/widgets/gi_composites.py contains license LGPL-2.1-or-later
 Group: Games/Other
 Url: https://lutris.net
 
 Source: https://lutris.net/releases/lutris_%version.tar.xz
-Patch: lutris-0.5.13-alt-python3-pixbuf-path.patch
+Patch: %name-%version-%release.patch
 
 Provides: python3(lutris.util.ubisoft)
 Conflicts: lutris-standalone
@@ -73,6 +77,10 @@ chmod +x %buildroot%_datadir/lutris/bin/lutris-wrapper
 %_man1dir/%name.1.xz
 
 %changelog
+* Tue Jan 16 2024 Leontiy Volodin <lvol@altlinux.org> 0.5.16-alt1
+- New version 0.5.16.
+- Updated license tag.
+
 * Fri Oct 20 2023 Leontiy Volodin <lvol@altlinux.org> 0.5.14-alt1
 - New version 0.5.14.
 
