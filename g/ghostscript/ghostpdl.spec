@@ -1,6 +1,6 @@
 Name: ghostscript
 Version: 10.01.1
-Release: alt1
+Release: alt2
 
 %define ijsver	0.35
 %global origver %version
@@ -40,7 +40,6 @@ Patch112: Ubuntu-020220925~387f094.patch
 
 ## ALT patches
 Patch500: ghostscript-alt-ijs-version.patch
-Patch501: alt-urw-fonts-naming.patch
 Patch502: ghostscript-9.23-100-run-dvipdf-securely.patch
 
 #compatibility requires
@@ -198,7 +197,6 @@ rm -rf expat freetype icclib jasper jpeg lcms lcms2 libpng openjpeg zlib cups/li
 
 ## ALT apply patches
 %patch500 -p1
-%patch501 -p1
 %patch502 -p1
 
 sed -i 's/FT_CALLBACK_DEF(\(.*\))/static \1/g' base/fapi_ft.c
@@ -266,7 +264,6 @@ cd ijs
 cd -
 
 rm -rf -- %buildroot%_mandir/de
-rm -rf -- %buildroot%_datadir/ghostscript/%version/Resource/Font
 rm -f  -- %buildroot%_bindir/ijs_{client,server}_example
 
 # X11.so always gets loaded, even with 'gs --help'
@@ -324,6 +321,9 @@ cp -a examples %buildroot%_docdir/%name-%version
 %_includedir/ijs
 
 %changelog
+* Wed Jan 10 2024 Vasiliy Kovalev <kovalev@altlinux.org> 10.01.1-alt2
+- Returned the upstream font naming (Closes: #46986)
+
 * Thu Apr 13 2023 Fr. Br. George <george@altlinux.org> 10.01.1-alt1
 - Autobuild version bump to 10.01.1
 - (Fixes: CVE-2023-28879)
