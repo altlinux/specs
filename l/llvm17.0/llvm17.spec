@@ -105,7 +105,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt4
+Release: alt5
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -1174,6 +1174,7 @@ sed -i '
 /APPEND _cmake_import_check_targets \(tblgen-lsp-server\)/ {s|^|#|}
 /APPEND _cmake_import_check_targets \(Polly\)/ {s|^|#|}
 /APPEND _cmake_import_check_targets \(llvm-omp-device-info\|llvm-omp-kernel-replay\|omptarget\)/ {s|^|#|}
+/APPEND _cmake_import_check_targets \(omp\)/ {s|^|#|}
 ' %buildroot%llvm_libdir/cmake/llvm/LLVMExports-*.cmake
 
 # Comment out file validation for CMake targets producing executables
@@ -1462,6 +1463,9 @@ ninja -C %builddir check-all || :
 %_datadir/cmake/Modules/*
 
 %changelog
+* Mon Jan 08 2024 L.A. Kostis <lakostis@altlinux.ru> 17.0.3-alt5
+- Exclude omp from LLVMExports.
+
 * Mon Jan 01 2024 L.A. Kostis <lakostis@altlinux.ru> 17.0.3-alt4
 - Build OpenMP target.
 - Make separate package for cmake common modules.
