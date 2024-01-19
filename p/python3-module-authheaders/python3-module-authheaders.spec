@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.15.3
+Version: 0.16.1
 Release: alt1
 
 Summary: library for the generation of email authentication headers
@@ -24,6 +24,7 @@ BuildRequires(pre): rpm-build-pyproject
 BuildRequires: publicsuffix-list
 %if_with check
 %pyproject_builddeps_metadata
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -47,8 +48,8 @@ cp %_datadir/publicsuffix/public_suffix_list.dat %pypi_name/public_suffix_list.t
 %pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-%pyproject_run -- %__python3 %pypi_name/test/test_authentication.py -v
+# Test requires /etc/resolv.conf via dnspython
+%pyproject_run_pytest -v -k 'not test_authenticate_dmarc_psdsub'
 
 %files
 %doc README.*
@@ -57,6 +58,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jan 19 2024 Anton Vyatkin <toni@altlinux.org> 0.16.1-alt1
+- New version 0.16.1.
+
 * Wed Sep 20 2023 Anton Vyatkin <toni@altlinux.org> 0.15.3-alt1
 - New version 0.15.3.
 
