@@ -1,13 +1,16 @@
+%define _libexecdir %_prefix/libexec
+
 %define oldname libgtop2
-%define ver_major 2.40
+%define ver_major 2.41
 %define api_ver 2.0
 
 %def_disable static
 %def_with examples
 %def_enable introspection
+%def_enable check
 
 Name: libgtop
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: LibGTop library
@@ -16,7 +19,7 @@ Group: System/Libraries
 Url: ftp://ftp.gnome.org
 
 Obsoletes: %oldname < 2.14.2
-Provides: %oldname = %version-%release
+Provides: %oldname = %EVR
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch2: %name-2.0.0-texinfo.patch
@@ -45,8 +48,8 @@ information from other /dev/kmem, among others.
 Group: Development/GNOME and GTK+
 Summary: The LibGTop samples
 Obsoletes: %oldname-examples < 2.14.2
-Provides: %oldname-examples = %version-%release
-Requires: %name = %version-%release
+Provides: %oldname-examples = %EVR
+Requires: %name = %EVR
 
 %description examples
 This package contains some example of using %name library
@@ -55,8 +58,8 @@ This package contains some example of using %name library
 Summary: Development files for %name
 Group: Development/GNOME and GTK+
 Obsoletes: %oldname-devel < 2.14.2
-Provides: %oldname-devel = %version-%release
-Requires: %name = %version-%release
+Provides: %oldname-devel = %EVR
+Requires: %name = %EVR
 
 %description devel
 LibGTop is a library that fetches information about the running
@@ -81,8 +84,8 @@ This package contains development documentation for the library.
 Summary: Static libraries for %name
 Group: Development/GNOME and GTK+
 Obsoletes: %oldname-devel-static < 2.14.2
-Provides: %oldname-devel-static = %version-%release
-Requires: %name-devel = %version-%release
+Provides: %oldname-devel-static = %EVR
+Requires: %name-devel = %EVR
 
 %description devel-static
 This package contains static libraries for development with %name.
@@ -90,16 +93,17 @@ This package contains static libraries for development with %name.
 %package gir
 Summary: GObject introspection data for the LibGTop library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the LibGTop library
 
 %package gir-devel
 Summary: GObject introspection devel data for the LibGTop library
-Group: System/Libraries
+Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-devel = %EVR
+Requires: %name-gir = %EVR
 
 %description gir-devel
 GObject introspection devel data for the LibGTop library
@@ -124,12 +128,14 @@ rm -rf doc/*.info
 
 %install
 %makeinstall_std
-
 %find_lang %name
 
+%check
+%make -k check VERBOSE=1
+
 %files -f %name.lang
-%_bindir/%{name}_daemon2
-%attr(4711,root,root) %_bindir/%{name}_server2
+%_libexecdir/%{name}_daemon2
+%attr(4711,root,root) %_libexecdir/%{name}_server2
 %_libdir/*.so.*
 %doc AUTHORS NEWS README
 
@@ -162,6 +168,9 @@ rm -rf doc/*.info
 %endif
 
 %changelog
+* Sun Oct 15 2023 Yuri N. Sedunov <aris@altlinux.org> 2.41.2-alt1
+- 2.41.2
+
 * Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 2.40.0-alt1
 - 2.40.0
 
