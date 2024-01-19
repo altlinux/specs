@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define git 0d6e9b3
+%define git %nil
 %define optflags_lto %nil
 
 %global _description \
@@ -11,8 +11,8 @@ intrinsic headers such as <xmmintrin.h>, only implemented with NEON-based \
 counterparts to produce the exact semantics of the intrinsics.
 
 Name:    sse2neon
-Version: 1.6.0
-Release: alt3.g%{git}
+Version: 1.7.0
+Release: alt1
 Summary: A translator from Intel SSE intrinsics to Arm/Aarch64 NEON implementation
 Group:   Development/C++
 License: MIT
@@ -65,6 +65,9 @@ make check ||:
 %_includedir/*
 
 %changelog
+* Sat Jan 13 2024 L.A. Kostis <lakostis@altlinux.ru> 1.7.0-alt1
+- 1.7.0.
+
 * Wed Nov 08 2023 L.A. Kostis <lakostis@altlinux.ru> 1.6.0-alt3.g0d6e9b3
 - v1.6.0-59-g0d6e9b3.
 
