@@ -1,7 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+# change libcares package name according to SharedLibsPolicy in future
+%define soname 2
 
 Name: c-ares
-Version: 1.19.1
+Version: 1.25.0
 Release: alt1
 
 Summary: A library that performs asynchronous DNS operations
@@ -16,6 +18,7 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 # need for test/configure
 BuildRequires: gcc-c++
+BuildRequires: libgtest-devel
 
 %description
 c-ares is a C library that performs DNS requests and name resolves
@@ -59,7 +62,8 @@ compile applications or shared objects that use c-ares.
 %_man1dir/*
 
 %files -n libcares
-%_libdir/*.so.*
+%_libdir/*.so.%soname
+%_libdir/*.so.%soname.*
 
 %files -n libcares-devel
 %_includedir/*
@@ -69,6 +73,9 @@ compile applications or shared objects that use c-ares.
 %_man3dir/*
 
 %changelog
+* Thu Jan 11 2024 Anton Farygin <rider@altlinux.ru> 1.25.0-alt1
+- 1.25.0
+
 * Wed Jul 05 2023 Alexey Shabalin <shaba@altlinux.org> 1.19.1-alt1
 - 1.19.1 (Fixes: CVE-2023-31124, CVE-2023-31130, CVE-2023-31147, CVE-2023-32067)
 
