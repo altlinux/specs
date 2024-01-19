@@ -4,13 +4,13 @@
 %define _libexecdir /usr/libexec
 
 Name: flannel
-Version: 0.23.0
+Version: 0.24.2
 Release: alt1
 
 Summary: flannel is a network fabric for containers
 License: Apache-2.0
 Group: Development/Other
-Url: https://%import_path
+Url: https://github.com/flannel-io/flannel
 ExclusiveArch: %go_arches
 
 Source: %name-%version.tar
@@ -36,7 +36,7 @@ export GOFLAGS="-mod=vendor"
 
 CGO_ENABLED=1 go build -ldflags " \
     -s -w \
-    -X %import_path/version.Version=%version \
+    -X %import_path/pkg/version.Version=%version \
     " -o dist ./...
 
 %install
@@ -58,6 +58,11 @@ install -D -p -m 0755 %SOURCE4 %buildroot%_tmpfilesdir/%name.conf
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Fri Jan 19 2024 Alexander Stepchenko <geochip@altlinux.org> 0.24.2-alt1
+- 0.23.0 -> 0.24.2
+- fix flannel displaying wrong version information
+- use full url in the Url directive
+
 * Wed Nov 29 2023 Alexander Stepchenko <geochip@altlinux.org> 0.23.0-alt1
 - 0.22.3 -> 0.23.0
 
