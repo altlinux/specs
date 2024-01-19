@@ -1,5 +1,5 @@
 Name: pulseaudio
-Version: 16.1
+Version: 17.0
 Release: alt1
 
 Summary: PulseAudio is a networked sound server
@@ -14,7 +14,7 @@ BuildRequires: intltool jackit-devel libalsa-devel libasyncns-devel
 BuildRequires: libavahi-devel libbluez-devel
 BuildRequires: libcap-devel libdbus-devel libgdbm-devel libudev-devel
 BuildRequires: libltdl7-devel libsoxr-devel
-BuildRequires: libsndfile-devel libspeex-devel libspeexdsp-devel libwebrtc-devel
+BuildRequires: libsndfile-devel libspeex-devel libspeexdsp-devel libwebrtc-audio-processing-devel
 BuildRequires: libICE-devel libSM-devel libX11-devel libXtst-devel libxcbutil-devel
 BuildRequires: libfftw3-devel libsbc-devel liborc-devel orc
 BuildRequires: libcheck-devel libssl-devel libsystemd-devel
@@ -68,7 +68,7 @@ This virtual package contains pulseaudio daemon and utilities.
 Summary: PulseAudio client side utilities
 Group: Sound
 Requires: lib%name = %version-%release
-Conflicts: %name-daemon < 0.9.16-alt0.2
+Conflicts: %name-daemon < 17.0-alt1
 
 %package qpaeq
 Summary: PulseAudio equalizer interface
@@ -79,9 +79,6 @@ Requires: lib%name = %version-%release
 Summary: PulseAudio daemon
 Group: Sound
 PreReq: shadow-utils
-Requires: lib%name = %version-%release
-Requires: udev-extras >= 0.20090516-alt2
-Conflicts: %name-utils < 0.9.16-alt0.2
 Provides: pulseaudio-bluez = %version-%release
 Obsoletes: pulseaudio-bluez
 
@@ -111,62 +108,35 @@ Summary: Development files for %name
 Group: Development/C
 Requires: lib%name = %version-%release
 
-%description daemon
-PulseAudio is a networked sound server, similar in theory to the Enlightened
-Sound Daemon (EsounD). PulseAudio is however much more advanced and has
-numerous features.
+%define desc \
+PulseAudio is a networked sound server, similar in theory to the Enlightened\
+Sound Daemon (EsounD). PulseAudio is however much more advanced and has\
+numerous features.\
 
+%description daemon %desc
 This package contains PulseAudio daemon.
 
-%description system
-PulseAudio is a networked sound server, similar in theory to the Enlightened
-Sound Daemon (EsounD). PulseAudio is however much more advanced and has
-numerous features.
-
+%description system %desc
 This package contains things needed to run PulseAudio system-wide.
 See http://www.pulseaudio.org/wiki/SystemWideInstance
 and especially http://www.pulseaudio.org/wiki/WhatIsWrongWithSystemMode
 
-%description utils
-PulseAudio is a networked sound server, similar in theory to the Enlightened
-Sound Daemon (EsounD). PulseAudio is however much more advanced and has
-numerous features.
-
+%description utils %desc
 This package contains PulseAudio client-side utilities.
 
-%description qpaeq
-PulseAudio is a networked sound server, similar in theory to the Enlightened
-Sound Daemon (EsounD). PulseAudio is however much more advanced and has
-numerous features.
-
+%description qpaeq %desc
 This package contains PulseAudio equalizer interface.
 
-%description gsettings
-PulseAudio is a networked sound server, similar in theory to the Enlightened
-Sound Daemon (EsounD). PulseAudio is however much more advanced and has
-numerous features.
-
+%description gsettings %desc
 This package contains gnome-related part of PulseAudio.
 
-%description jack
-PulseAudio is a networked sound server, similar in theory to the Enlightened
-Sound Daemon (EsounD). PulseAudio is however much more advanced and has
-numerous features.
-
+%description jack %desc
 This package contains JACK modules of PulseAudio.
 
-%description -n lib%name
-PulseAudio is a networked sound server, similar in theory to the Enlightened
-Sound Daemon (EsounD). PulseAudio is however much more advanced and has
-numerous features.
-
+%description -n lib%name %desc
 This package contains the pulseaudio shared libraries.
 
-%description -n lib%name-devel
-PulseAudio is a networked sound server, similar in theory to the Enlightened
-Sound Daemon (EsounD). PulseAudio is however much more advanced and has
-numerous features.
-
+%description -n lib%name-devel %desc
 This package contains development files for pulseaudio.
 
 %prep
@@ -179,6 +149,7 @@ echo %version > .tarball-version
     -Ddatabase=gdbm \
     -Daccess_group=audio \
     -Dadrian-aec=true \
+    -Dwebrtc-aec=enabled \
     -Dbluez5=enabled \
     -Dbluez5-gstreamer=enabled \
     -Dgstreamer=enabled \
@@ -232,13 +203,12 @@ mkdir -p \
 
 %_bindir/start-pulseaudio-x11
 %_bindir/pulseaudio
-%_bindir/pactl
 
 %_datadir/pulseaudio
 %_datadir/zsh/site-functions/_pulseaudio
 %_datadir/bash-completion/completions/*
 
-%_libdir/pulseaudio/libpulsecore-16.1.so
+%_libdir/pulseaudio/libpulsecore-17.0.so
 
 %_libexecdir/systemd/user/pulseaudio.service
 %_libexecdir/systemd/user/pulseaudio-x11.service
@@ -267,8 +237,8 @@ mkdir -p \
 %_unitdir/pulseaudio.socket
 
 %config(noreplace) %_sysconfdir/sysconfig/pulseaudio
-%config(noreplace) %_sysconfdir/dbus-1/system.d/pulseaudio-system.conf
 %config(noreplace) %_sysconfdir/pulse/system.pa
+%config(noreplace) %_datadir/dbus-1/system.d/pulseaudio-system.conf
 %dir %_sysconfdir/pulse/system.pa.d
 
 %attr(0770,root,pulse) %dir %_localstatedir/pulse
@@ -276,6 +246,7 @@ mkdir -p \
 %files utils
 %_bindir/pacat
 %_bindir/pacmd
+%_bindir/pactl
 %_bindir/padsp
 %_bindir/pamon
 %_bindir/paplay
@@ -324,7 +295,7 @@ mkdir -p \
 %_libdir/libpulse-mainloop-glib.so.*
 
 %dir %_libdir/pulseaudio
-%_libdir/pulseaudio/libpulsecommon-16.1.so
+%_libdir/pulseaudio/libpulsecommon-17.0.so
 %_man5dir/pulse-client.conf.5*
 
 %files -n lib%name-devel
@@ -335,6 +306,9 @@ mkdir -p \
 %_datadir/vala/vapi/*
 
 %changelog
+* Mon Jan 15 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 17.0-alt1
+- 17.0 released
+
 * Mon Jun 27 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 16.1-alt1
 - 16.1 released
 
