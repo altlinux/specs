@@ -1,44 +1,45 @@
+%define soversion 1
 Name: openslide
-Version: 3.4.1
+Version: 4.0.0
 Release: alt1
 
 Summary: C library for reading virtual slides
-License: LGPLv2
+License: LGPLv2.1
 Group: System/Libraries
 
 Url: http://openslide.org/
-Source: https://github.com/%name/%name/releases/download/v%version/%name-%version.tar.xz
+VCS: https://github.com/openslide/openslide
+Source: %name-%version.tar
 Source100: openslide.watch
-Packager: Michael Shigorin <mike@altlinux.org>
-
+BuildRequires(pre): meson
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(zlib)
 BuildRequires: libpng-devel
 BuildRequires: pkgconfig(libtiff-4)
-BuildRequires: libopenjpeg-devel
+BuildRequires: libopenjpeg2.0-devel
 BuildRequires: pkgconfig(gdk-pixbuf-2.0)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(sqlite3)
-
 BuildRequires: libturbojpeg-devel
 BuildRequires: libjpeg-devel
+BuildRequires: libdicom-devel
 
 %description
 The OpenSlide library allows programs to access virtual slide files
 regardless of the underlying image format.
 
-%package -n lib%name
+%package -n lib%name%soversion
 Summary: Shared library for %name
 Group: System/Libraries
 
-%description -n lib%name
+%description -n lib%name%soversion
 This package contains shared libraries for applications that use %name.
 
 %package -n lib%name-devel
 Summary: Development files for %name
 Group: Development/Other
-Requires: lib%name = %version-%release
+Requires: lib%name%soversion = %version-%release
 
 %description -n lib%name-devel
 This package contains libraries and header files for
@@ -56,15 +57,16 @@ with virtual slides.
 %setup
 
 %build
-%configure --disable-static
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
-%files -n lib%name
-%doc README.txt lgpl-2.1.txt LICENSE.txt CHANGELOG.txt
-%_libdir/*.so.*
+%files -n lib%name%soversion
+%doc README.md CHANGELOG.md
+%_libdir/*.so.%soversion
+%_libdir/*.so.%soversion.*
 
 %files -n lib%name-devel
 %_includedir/%name/
@@ -76,6 +78,12 @@ with virtual slides.
 %_man1dir/*
 
 %changelog
+* Thu Jan 18 2024 Anton Farygin <rider@altlinux.ru> 4.0.0-alt1
+- 3.4.1 -> 4.0.0
+
+* Thu Jan 18 2024 Anton Farygin <rider@altlinux.ru> 3.4.1-alt2
+- built with openjpeg2
+
 * Wed Apr 22 2015 Michael Shigorin <mike@altlinux.org> 3.4.1-alt1
 - new version (watch file uupdate)
 
