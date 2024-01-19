@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define kernel_base_version 6.6
+%define kernel_base_version 6.7
 %define kernel_source kernel-source-%kernel_base_version
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
 %add_findreq_skiplist %_datadir/perf-core/tests/*.py
@@ -13,7 +13,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt2
+Release: alt1
 
 Summary: Tools from Linux Kernel tree
 License: GPL-2.0-only
@@ -769,6 +769,9 @@ fi
 %endif
 
 %changelog
+* Fri Jan 19 2024 Vitaly Chikunov <vt@altlinux.org> 6.7-alt1
+- Update to v6.7 (2024-01-07).
+
 * Mon Nov 06 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 6.6-alt2
 - NMU: rtla: basic LoongArch support. Fixes FTBFS on LoongArch.
 
