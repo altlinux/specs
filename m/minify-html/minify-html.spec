@@ -2,7 +2,7 @@
 
 Name: minify-html
 Version: 0.10.8
-Release: alt1
+Release: alt2
 
 Summary: A Rust HTML minifier
 License: MIT
@@ -14,10 +14,12 @@ ExcludeArch: i586 armh
 
 Source0: %name-%version.tar
 Source1: crates.tar
+Patch1: target-lexicon-loongarch64.patch
 
 BuildRequires: rust-cargo /proc
 BuildRequires: rpm-build-python3 python3-module-setuptools
 BuildRequires: golang
+BuildRequires: cargo-vendor-checksum diffstat
 
 %package -n python3-module-minify-html
 Summary: A Rust HTML minifier
@@ -40,6 +42,10 @@ cargo vendor alt/crates --manifest-path cli/Cargo.toml --sync python/main/Cargo.
 tar cf %SOURCE1 alt/crates
 %else
 tar xf %SOURCE1
+pushd alt/crates/target-lexicon
+%patch1 -p1
+popd
+cargo-vendor-checksum --packages target-lexicon --vendor alt/crates
 %endif
 
 cat > python/main/__init__.py << 'E_O_F'
@@ -74,6 +80,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jan 19 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.10.8-alt2
+- NMU: fixed FTBFS on LoongArch (patched target-lexicon crate)
+
 * Wed Apr 19 2023 Dmitry Lyalyaev <fruktime@altlinux.org> 0.10.8-alt1
 - New version v0.10.8
 
