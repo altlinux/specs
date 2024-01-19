@@ -3,7 +3,7 @@
 
 Summary: AES encryption for SQLite databases
 Name:    sqlcipher
-Version: 4.5.5
+Version: 4.5.6
 Release: alt1
 License: BSD
 Group:   Databases
@@ -104,7 +104,7 @@ rm -f %buildroot%_libdir/*.{la,a}
 #./testfixture test/all.test
 
 %files
-%doc *.md LICENSE doc/*
+%doc *.md doc/*
 %_bindir/sqlcipher
 %_man1dir/*
 
@@ -120,6 +120,9 @@ rm -f %buildroot%_libdir/*.{la,a}
 %_tcllibdir/*
 
 %changelog
+* Thu Jan 18 2024 Andrey Cherepanov <cas@altlinux.org> 4.5.6-alt1
+- New version.
+
 * Thu Aug 31 2023 Andrey Cherepanov <cas@altlinux.org> 4.5.5-alt1
 - New version.
 
