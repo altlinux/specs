@@ -46,8 +46,8 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.0
-Release: alt2.2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -64,7 +64,8 @@ Source: %name-%version.tar
 # 0.4.1-15
 Source1: media-session-%ms_ver.tar
 Patch: %name-0.3.19-alt-rpath.patch
-Patch1: %name-1.0.0-alt-fix-build-examples.patch
+# https://gitlab.freedesktop.org/pipewire/pipewire/-/commit/fd33d2d3bb6333c7d6e74cbaa806bff2d908f589
+Patch10: pipewire-1.0.1-up-libcamera-0.2.0.patch
 
 Requires: %name-libs = %EVR
 %{?_enable_wireplumber:Requires: wireplumber}
@@ -193,7 +194,8 @@ This package provides development files for PipeWire JACK.
 
 %prep
 %setup -a1
-%patch1 -p1 -b .ex
+%patch10 -p1 -b .libcamera
+
 %ifarch %e2k
 # no attribute cleanup in C++ mode, but it's only used in C sources
 sed -i '1i #ifndef __cplusplus' spa/include/spa/utils/cleanup.h
@@ -412,6 +414,10 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 
 
 %changelog
+* Thu Jan 11 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- 1.0.1
+- built with libcamera-0.2.0
+
 * Thu Nov 30 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt2.2
 - enabled ModemManager in native backend in bluez5 spa plugin
 

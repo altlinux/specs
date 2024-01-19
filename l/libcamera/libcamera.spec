@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: libcamera
-Version: 0.1.0
-Release: alt2
+Version: 0.2.0
+Release: alt1
 Epoch: 1
 
 Summary: A complex camera support library for Linux
@@ -144,6 +144,9 @@ mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Jan 11 2024 Yuri N. Sedunov <aris@altlinux.org> 1:0.2.0-alt1
+- 0.2.0
+
 * Fri Jul 21 2023 Yuri N. Sedunov <aris@altlinux.org> 1:0.1.0-alt2
 - set 'pipelines' to 'auto' for %%ix86, x86_64, aarch64 and armh
 
