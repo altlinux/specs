@@ -1,5 +1,5 @@
 %define module_name	xtables-addons
-%define module_version	3.24
+%define module_version	3.25
 %define module_release	alt1
 
 %define flavour		std-def
@@ -73,6 +73,9 @@ rm -f %buildroot/%module_dir/xt_TEE.ko
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Jan 19 2024 Anton Farygin <rider@altlinux.ru> 3.25-alt1
+- 3.24 -> 3.25
 
 * Sun Jun 04 2023 Anton Farygin <rider@altlinux.ru> 3.24-alt1
 - 3.23 -> 3.24
