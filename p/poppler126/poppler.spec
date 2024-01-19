@@ -3,7 +3,7 @@
 %define popIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 %define popIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
-%def_disable compat
+%def_enable compat
 
 %if_disabled compat
 %def_enable cpp
@@ -28,7 +28,7 @@
 %endif
 
 %define rname poppler
-%define somajor 130
+%define somajor 126
 %define somajor_cpp 0
 %define somajor_qt 3
 %define somajor_qt4 4
@@ -36,7 +36,7 @@
 %define somajor_qt6 3
 %define somajor_glib 8
 %define major 23
-%define minor 08
+%define minor 02
 %define bugfix 0
 
 %if_disabled compat
@@ -46,7 +46,7 @@
 %endif
 Name: %pkgname
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %if_disabled compat
 %define poppler_devel lib%rname-devel
@@ -439,8 +439,8 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
-* Wed Jan 17 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.0-alt1
-- new version
+* Thu Jan 18 2024 Sergey V Turchin <zerg@altlinux.org> 23.02.0-alt2
+- build only compat library
 
 * Thu Jul 27 2023 Sergey V Turchin <zerg@altlinux.org> 23.02.0-alt1
 - new version
