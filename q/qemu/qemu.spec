@@ -3,6 +3,14 @@
 
 # {{{ macros define
 %define _unpackaged_files_terminate_build 1
+# Disable LTO
+# qos-test fails when built with LTO and gcc-12
+# https://gitlab.com/qemu-project/qemu/-/issues/1186
+%def_disable lto
+%if_disabled lto
+%global optflags_lto %nil
+%endif
+
 %def_disable edk2_cross
 
 %def_enable user_static
@@ -21,6 +29,7 @@
 %def_enable oss
 %def_disable jack
 %def_disable sndio
+%def_enable capstone
 %def_enable aio
 %def_enable io_uring
 %def_enable install_blobs
@@ -77,6 +86,7 @@
 %def_enable libdaxctl
 %def_enable fuse
 %def_disable brlapi
+%def_disable af_xdp
 
 %define power64 ppc64 ppc64p7 ppc64le
 %define mips32 mips mipsel mipsr6 mipsr6el
@@ -133,7 +143,7 @@
 # }}}
 
 Name: qemu
-Version: 8.1.3
+Version: 8.2.0
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -179,18 +189,20 @@ BuildRequires: zlib-devel libcurl-devel >= 7.29.0 libpci-devel glibc-kernheaders
 BuildRequires: ipxe-roms-qemu >= 1:20161208-alt1.git26050fd seavgabios seabios >= 1.7.4-alt2 libfdt-devel >= 1.5.0.0.20.2431 qboot
 BuildRequires: libpixman-devel >= 0.21.8
 BuildRequires: libkeyutils-devel
-BuildRequires: python3-devel
+%{?_enable_af_xdp:BuildRequires: libxdp-devel >= 1.4.0}
+BuildRequires: python3-devel >= 3.8
 BuildRequires: flex
 %ifarch riscv64
 BuildRequires: libatomic-devel-static
 %endif
-%{?_enable_sdl:BuildRequires: libSDL2-devel}
+%{?_enable_sdl:BuildRequires: libSDL2-devel libSDL2_image-devel}
 %{?_enable_curses:BuildRequires: libncursesw-devel}
 %{?_enable_alsa:BuildRequires: libalsa-devel}
 %{?_enable_pulseaudio:BuildRequires: libpulseaudio-devel}
 %{?_enable_pipewire:BuildRequires: pkgconfig(libpipewire-0.3) >= 0.3.60}
 %{?_enable_jack:BuildRequires: libjack-devel jack-audio-connection-kit}
 %{?_enable_sndio:BuildRequires: libsndio-devel}
+%{?_enable_capstone:BuildRequires: libcapstone-devel}
 %{?_enable_vnc_sasl:BuildRequires: libsasl2-devel}
 %{?_enable_vnc_jpeg:BuildRequires: libjpeg-devel}
 %{?_enable_png:BuildRequires: libpng-devel >= 1.6.34}
@@ -760,11 +772,7 @@ run_configure() {
 	--disable-debug-tcg \
 	--disable-sparse \
 	--disable-strip \
-%if "%__gcc_version_major" >= "11"
-	--enable-lto \
-%else
-	--disable-lto \
-%endif
+	%{?_enable_lto:--enable-lto} \
 	--firmwarepath="%firmwaredirs" \
 	 "$@"
 }
@@ -781,6 +789,7 @@ run_configure \
 	--enable-tcg \
 	--extra-ldflags="-Wl,-Ttext-segment=0x60000000" \
 	--audio-drv-list="" \
+	--disable-af-xdp \
 	--disable-alsa \
 	--disable-fdt \
 	--disable-auth-pam \
@@ -823,12 +832,13 @@ run_configure \
 	--disable-gtk-clipboard \
 	--disable-guest-agent \
 	--disable-guest-agent-msi \
-	--disable-hax \
+	--disable-hv-balloon \
 	--disable-hvf \
 	--disable-iconv \
 	--disable-jack \
 	--disable-sndio \
 	--disable-keyring \
+	--disable-libkeyutils \
 	--disable-kvm \
 	--disable-l2tpv3 \
 	--disable-libdaxctl \
@@ -857,6 +867,8 @@ run_configure \
 	--disable-parallels \
 	--disable-pie \
 	--disable-pipewire \
+	--disable-pixman \
+	--disable-plugins \
 	--disable-pvrdma \
 	--disable-qcow1 \
 	--disable-qed \
@@ -864,7 +876,9 @@ run_configure \
 	--disable-rbd \
 	--disable-vitastor \
 	--disable-rdma \
+	--disable-relocatable \
 	--disable-replication \
+	--disable-rutabaga-gfx \
 	--disable-rng-none \
 	--disable-sdl \
 	--disable-sdl-image \
@@ -917,19 +931,19 @@ N
 /return / s,any,cortex-a8,
 }" ../linux-user/arm/target_elf.h
 
-%make_build V=1 $buildldflags
+%make_build 
 
 %if_with arm
 mv qemu-arm qemu-armh
 
 sed -i '/return / s,cortex-a8,cortex-a53,' ../linux-user/arm/target_elf.h
-%make_build V=1 $buildldflags
+%make_build
 mv qemu-arm qemu-aarch64
 
 exit 0
 
 sed -i '/return / s,cortex-a53,any,' ../linux-user/arm/target_elf.h
-%make_build V=1 $buildldflags
+%make_build
 %endif
 
 popd
@@ -1010,7 +1024,7 @@ run_configure \
 	--enable-xkbcommon \
 	--disable-xen
 
-%make_build V=1 $buildldflags
+%make_build
 popd
 
 %install
@@ -1335,6 +1349,9 @@ popd
 %exclude %docdir/LICENSE
 
 %changelog
+* Fri Dec 29 2023 Alexey Shabalin <shaba@altlinux.org> 8.2.0-alt1
+- 8.2.0 (Fixes: CVE-2023-3255, CVE-2023-3019, CVE-2021-3527, CVE-2023-6693).
+
 * Mon Dec 04 2023 Alexey Shabalin <shaba@altlinux.org> 8.1.3-alt1
 - 8.1.3 (Fixes: CVE-2023-1544).
 - update vitastor block driver to vitastor-v1.3.1.
