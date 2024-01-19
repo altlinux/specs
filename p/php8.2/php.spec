@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  2
-%define _php_release_version 14
+%define _php_release_version 15
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -54,10 +54,6 @@ Patch19: php7-7.4-XFAIL-openssl-tests-with-internet-requires.patch
 Patch20: php7-7.4-fix-run-openssl-tests-server.patch
 Patch21: php-8.2-alt-test-dh7787.patch
 Patch22: php-8.2-altlinux-mbstring-test.patch
-
-
-Patch70: php8.0-debian-Add-support-for-use-of-the-system-timezone-database.patch
-Patch71: php8.0-debian-Use-system-timezone.patch
 
 Patch2000: php-8.1-e2k.patch
 
@@ -182,10 +178,6 @@ in use by other PHP-related packages.
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
-
-
-%patch70 -p1
-%patch71 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -388,14 +380,12 @@ export SKIP_IO_CAPTURE_TESTS=1
 rm -f sapi/cgi/tests/005.phpt
 # the test always fails when run in the building tree
 rm -f tests/basic/bug54514.phpt
-# the test fails due to an error in glibc-2.27 packaged for ALT: https://bugzilla.altlinux.org/show_bug.cgi?id=37368
-rm -f ext/standard/tests/strings/setlocale_variation2.phpt
 # the test always fails when run in the hasher environment
 rm -f ext/standard/tests/file/bug69442.phpt
 rm -f ext/posix/tests/posix_ttyname_error_wrongparams.phpt
 rm -f ext/standard/tests/general_functions/sys_getloadavg.phpt
 
-if ! make -j${NPROCS:-16} test; then
+if ! make -Onone -j${NPROCS:-16} test; then
   set +x
   for f in $(find .. -name \*.diff -type f -print); do
     if ! grep -q XFAIL "${f/.diff/.phpt}"
@@ -475,6 +465,15 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Fri Jan 19 2024 Anton Farygin <rider@altlinux.ru> 8.2.15-alt1
+- 8.2.14 -> 8.2.15
+- removed debian patches for use timezone and zone.tab from system :
+  - the zone.tab is removed in ALT in favor of the zone1970.tab
+  - obtaining timezone defaults from the system settings does not work now and
+    the patch needs to be rewrite
+  - the use of system timezone affects the performance of highly loaded
+    PHP installations
+
 * Mon Dec 25 2023 Anton Farygin <rider@altlinux.ru> 8.2.14-alt1
 - 8.2.13 -> 8.2.14
 

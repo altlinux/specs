@@ -1,12 +1,13 @@
 %define php_extension yaml
 
 Name: php%_php_suffix-%php_extension
-Version: 2.2.2
+Version: 2.2.3
 Release: alt%php_version.%php_release
 Summary: PHP5 YAML-1.1 parser and emitter
 License: %mit
 Group: System/Servers
-Url: http://pecl.php.net/package/yaml
+Url: https://pecl.php.net/package/yaml
+VCS: https://github.com/php/pecl-file_formats-yaml
 Source0: php-%php_extension-%version.tar
 BuildRequires(pre): rpm-build-php8.2-version rpm-build-licenses
 BuildRequires: php-devel = %php_version
@@ -57,6 +58,9 @@ EOF
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Fri Jan 19 2024 Anton Farygin <rider@altlinux.ru> 2.2.3-alt1
+- update to 2.2.3
 
 * Thu Dec 09 2021 Anton Farygin <rider@altlinux.ru> 2.2.2-alt%php_version.%php_release
 - built 2.2.2 for PHP 8.0 and PHP 7.4

@@ -1,13 +1,12 @@
 %define		php_extension	swoole
 %define 	real_name	swoole
-%define		real_version	4.8.13
+%define		real_version	5.1.1
 
 Name:	 	php%_php_suffix-%php_extension
 Version:	%real_version
-Release:	alt1.%_php_release_version
-
+Release:	alt2.%_php_release_version
+ExcludeArch: %ix86 armh
 Summary:	Coroutine-based concurrency library for PHP
-
 License:	Apache-2.0
 Group:		System/Servers
 URL:		https://pecl.php.net/package/swoole
@@ -17,7 +16,7 @@ Source0:	%real_name-%real_version.tar
 
 Source1:	php-%php_extension.ini
 Source2:	php-%php_extension-params.sh
-
+Patch0:	php-swoole-%version.patch
 
 BuildRequires(pre): rpm-build-php8.2-version
 BuildRequires(pre): rpm-build-licenses
@@ -25,9 +24,8 @@ BuildRequires: php-devel = %php_version
 
 BuildRequires: boost-devel-headers gcc-c++ libbrotli-devel libcurl-devel libpcre-devel libssl-devel zlib-devel
 
-# Using symbols from php-sockets:
-Requires: php%_php_suffix-sockets
-
+# Using symbols from php-sockets and php-curl:
+Requires: php%_php_suffix-sockets php%_php_suffix-curl
 
 %description
 php-swoole extension provides an event-driven asynchronous and
@@ -54,7 +52,7 @@ Swoole main features are includes:
 
 %prep
 %setup -c
-
+%patch0 -p1
 
 %build
 phpize
@@ -85,20 +83,21 @@ install -D -m 644 -- %SOURCE1 %buildroot/%php_extconf/%php_extension/config
 install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 
 %files
-%doc README.md README-CN.md SUPPORTED.md LICENSE
+%doc README.md LICENSE
 
 %php_extconf/%php_extension
 %php_extdir/*
 
-%post
-%php_extension_postin
-
-%preun
-%php_extension_preun
-
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %php_version-%version-%release
+
+* Fri Jan 19 2024 Anton Farygin <rider@altlinux.ru> 5.1.1-alt2
+- added upstream fix against php 8.3 (Closes: #49116)
+- removed postscripts (there is a filetrigger)
+
+* Tue Jan 09 2024 Anton Farygin <rider@altlinux.ru> 5.1.1-alt1
+- 5.1.1
 
 * Sun Jun 25 2023 Anton Farygin <rider@altlinux.ru> 4.8.13-alt1
 - 4.8.13
