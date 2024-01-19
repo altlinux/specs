@@ -2,8 +2,8 @@
 %define _localstatedir /var
 
 Name: sanlock
-Version: 3.8.5
-Release: alt2
+Version: 3.9.0
+Release: alt1
 Summary: A shared storage lock manager
 
 Group: System/Configuration/Other
@@ -195,6 +195,9 @@ useradd -r -d -M /run/%name -s /bin/false -c "sanlock user" -g %name -G disk %na
 %_man8dir/sanlk-reset*
 
 %changelog
+* Mon Jan 15 2024 Alexey Shabalin <shaba@altlinux.org> 3.9.0-alt1
+- 3.9.0
+
 * Fri Nov 03 2023 Alexey Shabalin <shaba@altlinux.org> 3.8.5-alt2
 - Fixed wdmd.service unit
 - Not package dir in /run because is a tmpfs
