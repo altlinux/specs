@@ -4,8 +4,12 @@
 %def_without docs
 %def_with openssl
 %def_with libjson
+%def_with libjemalloc
 %def_with check
 %def_without system_tests
+# skip enginepkcs11 tests
+# https://github.com/openssl/openssl/issues/22508
+%def_without enginepkcs11
 
 # common directory for documentation
 %define docdir %_docdir/bind-%version
@@ -23,8 +27,8 @@
 %endif
 
 Name: bind
-Version: 9.18.19
-%define src_version 9.18.19
+Version: 9.18.21
+%define src_version 9.18.21
 Release: alt1
 
 Summary: ISC BIND - DNS server
@@ -80,11 +84,13 @@ BuildRequires: gdb
 %if_with system_tests
 BuildRequires: python3(dns)
 BuildRequires: python3(hypothesis)
+%if_with enginepkcs11
 # requires only for pkcs11 tests
 BuildRequires: softhsm
 BuildRequires: libp11
 BuildRequires: opensc
 BuildRequires: openssl
+%endif
 %else
 BuildRequires: rpm-build-vm
 BuildRequires: /sbin/runuser
@@ -115,6 +121,7 @@ BuildPreReq: libcap-devel
 
 %{?_with_openssl:BuildPreReq: libssl-devel}
 %{?_with_libjson:BuildPreReq: libjson-c-devel}
+%{?_with_libjemalloc:BuildRequires: libjemalloc-devel}
 BuildPreReq: libkrb5-devel
 BuildRequires: libuv-devel
 BuildRequires: libidn2-devel
@@ -232,6 +239,7 @@ export SPHINX_BUILD=/usr/bin/sphinx-build-3
 	--enable-linux-caps \
 	--enable-fixed-rrset \
 	 %{subst_with openssl} \
+	 %{subst_with libjemalloc} \
 %if_with libjson
 	--with-json-c=yes \
 %endif
@@ -330,6 +338,7 @@ chmod 0755 %buildroot%_rpmlibdir/%name-restart.filetrigger
 # setup and teardown require root
 perl bin/tests/system/testsock.pl || sudo sh -x bin/tests/system/ifconfig.sh up
 
+%if_with enginepkcs11
 # setup softhsm
 # taken from https://gitlab.isc.org/isc-projects/images/-/blob/main/docker/bind9/debian-template/prep-softhsm-openssl-engine.sh.in
 export OPENSSL_CONF="/tmp/openssl.cnf"
@@ -360,6 +369,7 @@ dynamic_path = $(pkg-config libcrypto --variable=enginesdir)/pkcs11.so
 MODULE_PATH = %_libdir/softhsm/libsofthsm2.so
 init=0
 EOF
+%endif
 
 # tests are run as current user
 # see .gitlab-ci.yml
@@ -582,6 +592,9 @@ fi
 %endif
 
 %changelog
+* Thu Dec 28 2023 Stanislav Levin <slev@altlinux.org> 9.18.21-alt1
+- 9.18.19 -> 9.18.21.
+
 * Tue Sep 26 2023 Stanislav Levin <slev@altlinux.org> 9.18.19-alt1
 - 9.16.44 -> 9.18.19.
 
