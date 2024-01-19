@@ -10,22 +10,25 @@
 
 Name: libvncserver
 %define libname %name
-Version: 0.9.13
-Release: alt3
+Version: 0.9.14
+Release: alt1
 
 Group: System/Libraries
 Summary: An easy API to write one's own VNC server
 Url: https://libvnc.github.io/
-License: GPLv2
+License: GPL-2.0-or-later
 Packager: Sergey V Turchin <zerg@altlinux.org>
 
 Requires: %libvncserver %libvncclient
 
 Source: http://downloads.sourceforge.net/libvncserver/%tname-%version.tar.gz
-
-Patch2: CVE-2020-29260-libvncclient-free-vncRec-memory-in-rfbClientCleanup.patch
+# upstream
+Patch1: 0001-libvncserver-Add-API-to-add-custom-I-O-entry-points.patch
+Patch2: 0002-libvncserver-Add-channel-security-handlers.patch
 # SuSE
 Patch20: redef-keysym.patch
+# FC
+Patch30: ffmpeg.patch
 
 # Automatically added by buildreq on Thu Apr 21 2011 (-bi)
 # optimized out: elfutils libX11-devel libgfortran-devel libstdc++-devel xorg-xproto-devel
@@ -35,6 +38,7 @@ BuildRequires:  libICE-devel libSDL2-devel
 BuildRequires:  libsystemd-devel
 BuildRequires:  libjpeg-devel libpng-devel zlib-devel liblzo2-devel
 BuildRequires:  libssl-devel libgcrypt-devel libgnutls-devel
+BuildRequires:  pkgconfig(libavformat) pkgconfig(libavcodec) pkgconfig(libavutil) pkgconfig(libswscale)
 %if_enabled vaapi
 BuildRequires: libva-devel
 %endif
@@ -100,8 +104,10 @@ Conflicts: libvncserver < %EVR
 
 %prep
 %setup -n %tname-%version
+%patch1 -p1
 %patch2 -p1
 %patch20 -p1
+%patch30 -p1
 
 # set so version
 sed -i 's|^set.*VERSION_SO[[:space:]].*|set(VERSION_SO "%sover")|' CMakeLists.txt
@@ -118,17 +124,18 @@ make -C BUILD install DESTDIR=%buildroot
 %files
 
 %files -n %libvncserver
-%doc AUTHORS ChangeLog NEWS* README* TODO*
+%doc AUTHORS ChangeLog NEWS* README*
 %_libdir/libvncserver.so.%sover
 %_libdir/libvncserver.so.%sover.*
 
 %files -n %libvncclient
-%doc AUTHORS ChangeLog NEWS* README* TODO*
+%doc AUTHORS ChangeLog NEWS* README*
 %_libdir/libvncclient.so.%sover
 %_libdir/libvncclient.so.%sover.*
 
 %files devel
 %_pkgconfigdir/libvnc*.pc
+%_libdir/cmake/LibVNCServer/
 %_includedir/rfb
 %_libdir/lib*.so
 
@@ -139,6 +146,10 @@ make -C BUILD install DESTDIR=%buildroot
 
 
 %changelog
+* Wed Jan 17 2024 Sergey V Turchin <zerg@altlinux.org> 0.9.14-alt1
+- new version
+- enable ffmpeg
+
 * Wed Oct 26 2022 Alexander Danilov <admsasha@altlinux.org> 0.9.13-alt3
 - security (fixes: CVE-2020-29260)
 
