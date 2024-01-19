@@ -1,5 +1,5 @@
 Name: libneon
-Version: 0.32.2
+Version: 0.32.5
 Release: alt1
 Summary: neon is an HTTP and WebDAV client library
 License: LGPLv2+
@@ -11,7 +11,7 @@ Obsoletes: %{name}0.25 %{name}0.26
 Source: neon-%version.tar.gz
 Patch1: neon-0.27.0-multilib.patch
 
-BuildRequires: libexpat-devel libkrb5-devel libssl-devel openssl zlib-devel libgssapi-devel xmlto
+BuildRequires: libexpat-devel libkrb5-devel libssl-devel openssl zlib-devel xmlto
 
 %description
 neon is an HTTP and WebDAV client library, with a C language API.
@@ -68,6 +68,9 @@ install -pm644 AUTHORS BUGS NEWS README* THANKS TODO doc/*.txt \
 %docdir
 
 %changelog
+* Tue Jan 09 2024 Valery Inozemtsev <shrek@altlinux.ru> 0.32.5-alt1
+- 0.32.5
+
 * Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 0.32.2-alt1
 - Autobuild version bump to 0.32.2
 
