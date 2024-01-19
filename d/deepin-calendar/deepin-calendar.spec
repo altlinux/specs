@@ -1,62 +1,55 @@
 %define repo dde-calendar
 
 Name: deepin-calendar
-Version: 5.11.0
+Version: 5.12.1
 Release: alt1
 
 Summary: Calendar for Deepin Desktop Environment
 
-License: LGPL-2.0+
+License: LGPL-3.0-or-later
+# ./3rdparty/kcalendarcore/src/ contains license(s) LGPL-2.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-calendar
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-%ifarch aarch64 armh
-Patch: deepin-calendar-5.8.27-alt-aarch64-armh.patch
-%endif
+Patch: %name-%version-%release.patch
 
 Requires: icon-theme-hicolor
 
 BuildRequires(pre): rpm-build-ninja
 # Automatically added by buildreq on Mon Oct 23 2023
 # optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdb4-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel pkg-config python3 python3-base qt5-base-devel qt5-tools sh5
-BuildRequires: cmake deepin-qt-dbus-factory-devel libdtkwidget-devel libical-devel qt5-svg-devel qt5-tools-devel
+BuildRequires: cmake libdtkwidget-devel libical-devel qt5-svg-devel qt5-tools-devel
 
 %description
 Calendar for Deepin Desktop Environment.
 
 %prep
 %setup -n %repo-%version
-%ifarch aarch64 armh
 %patch -p1
-%endif
-
-sed -i 's|lib/deepin-aiassistant|%_lib/deepin-aiassistant|' \
-  schedule-plugin/CMakeLists.txt
-sed -i 's|${CMAKE_INSTALL_FULL_LIBEXECDIR}/deepin-daemon|%_libexecdir/deepin-daemon|' \
-  calendar-service/CMakeLists.txt
 
 %build
 export PATH=%_qt5_bindir:$PATH
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
-    -DLIB_INSTALL_DIR=%_libdir \
-    -DAPP_VERSION=%version \
+    -DSERVICE_INSTALL_DIR=%_libexecdir/deepin-daemon \
+    -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
     -DVERSION=%version
 cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
-mkdir -p %buildroot%_sysconfdir/xdg/autostart/
-mv -f %buildroot%_prefix%_sysconfdir/xdg/autostart/dde-calendar-service.desktop %buildroot%_sysconfdir/xdg/autostart/
+%find_lang --with-qt %repo
 
-%files
+%files -f %repo.lang
 %doc README.md LICENSE
 %_bindir/%repo
-%_datadir/%repo/
+%dir %_datadir/%repo/
+%dir %_datadir/%repo/translations/
+%dir %_datadir/%repo/data/
+%_datadir/%repo/data/huangli.db
 %_datadir/dbus-1/services/com.deepin.Calendar.service
 %_datadir/dbus-1/services/com.deepin.dataserver.Calendar.service
 %_desktopdir/%repo.desktop
@@ -70,10 +63,16 @@ mv -f %buildroot%_prefix%_sysconfdir/xdg/autostart/dde-calendar-service.desktop 
 %dir %_datadir/deepin-manual/manual-assets/application/
 %dir %_datadir/deepin-manual/manual-assets/application/%repo/
 %_datadir/deepin-manual/manual-assets/application/%repo/calendar/
+%dir %_datadir/deepin-log-viewer/
+%dir %_datadir/deepin-log-viewer/deepin-log.conf.d/
+%_datadir/deepin-log-viewer/deepin-log.conf.d/org.deepin.calendar.json
 %_userunitdir/com.dde.calendarserver.calendar.service
 %_userunitdir/com.dde.calendarserver.calendar.timer
 
 %changelog
+* Fri Jan 19 2024 Leontiy Volodin <lvol@altlinux.org> 5.12.1-alt1
+- New version 5.12.1.
+
 * Mon Oct 23 2023 Leontiy Volodin <lvol@altlinux.org> 5.11.0-alt1
 - New version 5.11.0.
 - Updated license tag.
