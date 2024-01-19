@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-pine
-Release: alt1
+Release: alt2
 epoch:1
 %define kernel_need_version	6.6
 # Used when kernel-source-x.y does not currently exist in repository.
@@ -424,6 +424,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Jan 19 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.6.12-alt2
+- added support for pinetab2
+
 * Mon Jan 15 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.6.12-alt1
 - 6.6.12
 
