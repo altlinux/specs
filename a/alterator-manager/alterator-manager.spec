@@ -1,8 +1,8 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.15
-Release: alt2
+Version: 0.1.16
+Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -45,6 +45,7 @@ mkdir -p %buildroot%alterator_libexecdir
 mkdir -p %buildroot%_datadir/alterator/backends
 mkdir -p %buildroot%_sysconfdir/alterator/backends
 mkdir -p %buildroot%_datadir/polkit-1/actions
+mkdir -p %buildroot%_rpmlibdir/
 mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
       %buildroot%_prefix/lib/systemd/user/alterator-manager.service
 
@@ -54,6 +55,7 @@ mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
 %_unitdir/alterator-manager.service
 %_prefix/lib/systemd/user/alterator-manager.service
 %_datadir/polkit-1/actions/ru.basealt.alterator.manager.policy
+%_rpmlibdir/%name.filetrigger
 %dir %alterator_libexecdir
 %dir %_datadir/alterator/backends
 %dir %_sysconfdir/alterator/backends
@@ -67,6 +69,9 @@ mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
 
 
 %changelog
+* Fri Jan 19 2024 Ivan Savin <svn17@altlinux.org> 0.1.16-alt1
+- Add filetrigger to restart the service (kozyrevid@).
+
 * Tue Jan 16 2024 Ivan Savin <svn17@altlinux.org> 0.1.15-alt2
 - Update docs/README-ru.md.
 
