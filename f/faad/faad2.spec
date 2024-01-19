@@ -1,7 +1,7 @@
 %define soversion 2
 
 Name: faad
-Version: 2.10.1
+Version: 2.11.1
 Release: alt1
 
 Summary: FAAD is a Freeware Advanced Audio Decoder
@@ -12,11 +12,11 @@ Url: http://www.audiocoding.com
 # https://github.com/knik0/faad2/releases
 Source: faad2-%version.tar
 
-%define libsndfile_ver 1.0.5
+%define libsndfile_ver 1.1.0
 
 BuildRequires(pre): libsndfile >= %libsndfile_ver
 
-BuildRequires: gcc-c++ id3lib-devel libstdc++-devel zlib-devel
+BuildRequires: gcc-c++ id3lib-devel libstdc++-devel zlib-devel cmake
 
 %description
 FAAD is a LC, MAIN and LTP profile MPEG2 and MPEG-4 AAC decoder.
@@ -43,24 +43,14 @@ documentation for lib%name.
 %prep
 %setup -n faad2-%version
 
-find ./ -type f -name "Makefile*" -print0 | \
-xargs -r0 subst 's,^\(CFLAGS\),AM_\1,g
-		    s,^\(LDFLAGS\),AM_\1,g
-		    s,^[[:blank:]*],\t,' --
-
 %build
 %add_optflags %optflags_shared
-#_buildshell ./bootstrap
-%autoreconf
-%configure \
-	--disable-static \
-	--without-drm \
-	#
+%cmake
 
-%make_build
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 
 # remove non-packaged files
 rm -f %buildroot%_libdir/*.la
@@ -70,8 +60,9 @@ rm -f %buildroot%_libdir/*.la
 %_man1dir/*
 
 %files -n lib%name%soversion
-%_libdir/*.so.%{soversion}*
-%doc AUTHORS ChangeLog NEWS README TODO
+%doc AUTHORS ChangeLog README
+%_libdir/*.so.%{soversion}
+%_libdir/*.so.%{soversion}.*
 
 %files -n lib%name-devel
 %_includedir/*
@@ -79,6 +70,9 @@ rm -f %buildroot%_libdir/*.la
 %_pkgconfigdir/faad2.pc
 
 %changelog
+* Tue Jan 16 2024 Anton Farygin <rider@altlinux.ru> 2.11.1-alt1
+- 2.10.1 -> 2.11.1
+
 * Wed Mar 29 2023 Anton Farygin <rider@altlinux.ru> 2.10.1-alt1
 - 2.10.0 -> 2.10.1
 
