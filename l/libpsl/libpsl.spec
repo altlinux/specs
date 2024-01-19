@@ -2,7 +2,7 @@
 %def_disable builtin
 
 Name: libpsl
-Version: 0.21.2
+Version: 0.21.5
 Release: alt1
 
 Summary: C library for the Public Suffix List
@@ -15,6 +15,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires: rpm-build-python3
 %if_disabled bootstrap
+BuildRequires(pre): meson
 BuildRequires: glib2-devel libgio-devel
 %{?_enable_builtin:BuildRequires: libicu-devel}
 BuildRequires: libidn2-devel
@@ -41,7 +42,6 @@ Browsers and other web clients can use it to
 
 Libpsl...
 
-- has built-in PSL data for fast access;
 - allows to load PSL data from files;
 - checks if a given domain is a "public suffix";
 - provides immediate cookie domain verification;
@@ -95,30 +95,23 @@ from a plain text Public Suffix List.
 
 %if_disabled bootstrap
 %build
-%autoreconf
-%configure \
-	--disable-silent-rules \
-	--disable-static \
-	--disable-cfi \
-	--disable-ubsan \
-	--disable-asan \
-	--enable-man \
-	--enable-gtk-doc \
+%meson \
+	-Druntime=libidn2 \
 %if_enabled builtin
-	--enable-builtin=libicu \
+	-Dbuiltin=true \
 %else
-	--disable-builtin \
+	-Dbuiltin=false \
 %endif
-	--enable-runtime=libidn2 \
-	--with-psl-distfile=%_datadir/publicsuffix/public_suffix_list.dafsa \
-	--with-psl-file=%_datadir/publicsuffix/effective_tld_names.dat \
-	--with-psl-testfile=%_datadir/publicsuffix/test_psl.txt
-%make_build
+	-Dpsl_distfile=%_datadir/publicsuffix/public_suffix_list.dafsa \
+	-Dpsl_file=%_datadir/publicsuffix/effective_tld_names.dat \
+	-Dpsl_testfile=%_datadir/publicsuffix/test_psl.txt \
+    -Ddocs=true \
+    -Dtests=true
+
+%meson_build -v
 
 %install
-%makeinstall_std
-# the script is noinst but the manpage is installed
-install -Dm0755 src/psl-make-dafsa %buildroot%_bindir/psl-make-dafsa
+%meson_install
 %else # bootstrap
 install -Dm0755 src/psl-make-dafsa %buildroot%_bindir/psl-make-dafsa
 install -Dm0644 src/psl-make-dafsa.1 %buildroot%_man1dir/psl-make-dafsa.1
@@ -126,7 +119,7 @@ install -Dm0644 src/psl-make-dafsa.1 %buildroot%_man1dir/psl-make-dafsa.1
 
 %if_disabled bootstrap
 %check
-make check
+%meson_test
 
 %files
 %doc COPYING
@@ -153,6 +146,11 @@ make check
 %_man1dir/psl-make-dafsa.1*
 
 %changelog
+* Fri Jan 19 2024 Mikhail Efremov <sem@altlinux.org> 0.21.5-alt1
+- Switched to meson build.
+- Fixed description.
+- Updated to 0.21.5.
+
 * Tue Dec 27 2022 Mikhail Efremov <sem@altlinux.org> 0.21.2-alt1
 - Dropped obsoleted patches.
 - Updated to 0.21.2.
