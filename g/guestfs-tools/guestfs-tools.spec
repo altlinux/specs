@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: guestfs-tools
-Version: 1.50.0
+Version: 1.52.0
 Release: alt1
 
 Summary: Tools to access and modify virtual machine disk images
@@ -13,7 +13,7 @@ Source0: %name-%version.tar
 Source2: %name-%version-common.tar
 
 BuildRequires: gcc-c++
-BuildRequires: libguestfs-devel >= 1.46.0
+BuildRequires: libguestfs-devel >= 1.49.8
 BuildRequires: perl-Pod-Simple
 BuildRequires: perl-Module-Build
 BuildRequires: perl-hivex
@@ -27,6 +27,7 @@ BuildRequires: libvirt-devel
 BuildRequires: libcrypt-devel
 BuildRequires: libncurses-devel
 BuildRequires: libosinfo-devel
+BuildRequires: hwdata-devel
 BuildRequires: ocaml-libguestfs-devel
 BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-gettext-devel
@@ -39,6 +40,9 @@ BuildRequires: unzip
 BuildRequires: perl-Expect
 BuildRequires: /usr/bin/qemu-img
 BuildRequires: xorriso
+BuildRequires: xml-utils
+BuildRequires: sqlite3
+BuildRequires: xz
 BuildRequires: perl-Sys-Guestfs
 BuildRequires: bash-completion
 BuildRequires: /proc
@@ -72,15 +76,6 @@ BuildArch: noarch
 %description -n virt-win-reg
 Virt-win-reg lets you look at and modify the Windows Registry of
 Windows virtual machines.
-
-%package -n virt-dib
-Summary: Safe and secure diskimage-builder replacement
-Group: File tools
-
-%description -n virt-dib
-Virt-dib is a safe and secure alternative to the OpenStack
-diskimage-builder command.  It is compatible with most
-diskimage-builder elements.
 
 %prep
 %setup -a2
@@ -166,12 +161,10 @@ rm -rf %buildroot%_mandir/{ja,uk}
 %_bindir/virt-win-reg
 %_mandir/man1/virt-win-reg.1*
 
-%files -n virt-dib
-%doc README COPYING
-%_bindir/virt-dib
-%_mandir/man1/virt-dib.1*
-
 %changelog
+* Fri Jan 12 2024 Alexey Shabalin <shaba@altlinux.org> 1.52.0-alt1
+- 1.50.0 -> 1.52.0
+
 * Mon Mar 20 2023 Egor Ignatov <egori@altlinux.org> 1.50.0-alt1
 - 1.48.2 -> 1.50.0
 

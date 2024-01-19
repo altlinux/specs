@@ -1,9 +1,8 @@
-# NOTE check viosock support in qemu and remove patch if it works
 # The source directory.
-%global source_directory 1.44-development
+%global source_directory 2.4-stable
 
 Name: virt-v2v
-Version: 1.44.2
+Version: 2.4.0
 Release: alt1
 Summary: Convert a virtual machine to run on KVM
 Group: Development/Other
@@ -11,19 +10,18 @@ License: GPLv2+
 Url: https://github.com/libguestfs/virt-v2v
 
 Source0: http://download.libguestfs.org/virt-v2v/%source_directory/%name-%version.tar.gz
-Patch1: 0001-fix-fatal-error-pcreh-No-such-file-or-directory.patch
-Patch4: fix-new-qemu-options.patch
-Patch5: remove-viosock-support.patch
+Patch1: fixes-common.patch
 
 BuildRequires(pre): rpm-build-ocaml
 BuildRequires: /usr/bin/pod2man
 BuildRequires: gcc
 BuildRequires: ocaml >= 4.01 ocaml-findlib ocaml-ocamlbuild
-BuildRequires: ocaml-libguestfs-devel
+BuildRequires: ocaml-libguestfs-devel ocaml-libvirt-devel ocaml-libnbd-devel
 BuildRequires: ocaml-gettext-devel
 BuildRequires: ocaml-fileutils-devel
 BuildRequires: ocaml-ounit-devel
 BuildRequires: libguestfs-devel
+BuildRequires: libnbd-devel
 BuildRequires: libaugeas-devel
 BuildRequires: bash-completion
 BuildRequires: gettext-tools
@@ -58,8 +56,6 @@ install virtio drivers so it will run quickly.
 
 %prep
 %setup
-%patch4 -p1
-%patch5 -p1
 pushd common
 %patch1 -p1
 popd
@@ -75,10 +71,6 @@ popd
 # Delete libtool crap.
 find %buildroot -name '*.la' -delete
 
-# Delete the v2v test harness (except for the man page).
-rm -r %buildroot%_libdir/ocaml/v2v_test_harness
-rm -r %buildroot%_libdir/ocaml/stublibs/dllv2v_test_harness*
-
 # Find locale files.
 %find_lang %name
 
@@ -90,6 +82,9 @@ rm -r %buildroot%_libdir/ocaml/stublibs/dllv2v_test_harness*
 %_datadir/bash-completion/completions/virt-v2v*
 
 %changelog
+* Fri Jan 12 2024 Alexey Shabalin <shaba@altlinux.org> 2.4.0-alt1
+- new version 2.4.0
+
 * Tue Mar 01 2022 Mikhail Gordeev <obirvalger@altlinux.org> 1.44.2-alt1
 - new version 1.44.2
 

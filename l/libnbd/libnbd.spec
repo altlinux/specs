@@ -1,13 +1,14 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%set_verify_elf_method strict
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 %define sover 0
+%def_enable ocaml
 
 Name: libnbd
 Version: 1.19.3
-Release: alt1
+Release: alt2
 Summary: NBD client library in userspace
 License: LGPL-2.1-or-later
 Group: Networking/File transfer
@@ -21,26 +22,49 @@ BuildRequires: libfuse3-devel
 BuildRequires: libgnutls-devel
 BuildRequires: liburing-devel
 BuildRequires: libxml2-devel
-BuildRequires: ocaml
 BuildRequires: perl-podlators
+%if_enabled ocaml
+BuildRequires(pre): rpm-build-ocaml
+BuildRequires: ocaml ocaml-findlib ocaml-ocamldoc
+%endif
 
 %description
 %summary.
 
-%package -n libnbd%sover
+%package -n %name%sover
 Summary: %name system library
 Group: System/Libraries
 
-%description -n libnbd%sover
+%description -n %name%sover
 %summary.
 
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: libnbd%sover = %EVR
+Requires: %name%sover = %EVR
 
 %description devel
 %summary.
+
+%package -n ocaml-%name
+Summary: OCaml language bindings for %name
+Group: Development/Other
+Provides: ocaml-nbd = %EVR
+Requires: %name%sover = %EVR
+
+%description -n ocaml-%name
+This package contains OCaml language bindings for %name.
+
+%package -n ocaml-%name-devel
+Summary: OCaml language development package for %name
+Group: Development/Other
+Provides: ocaml-nbd-devel = %EVR
+Requires: ocaml-%name = %EVR
+
+%description -n ocaml-%name-devel
+This package contains OCaml language development package for
+%name.  Install this if you want to compile OCaml software which
+uses %name.
 
 %prep
 %setup
@@ -50,7 +74,7 @@ Requires: libnbd%sover = %EVR
 %configure \
     --disable-static \
     --disable-golang \
-    --disable-ocaml \
+    %{subst_enable ocaml} \
     --disable-python \
     %nil
 %make_build
@@ -72,7 +96,7 @@ rm %buildroot%_datadir/bash-completion/completions/nbdsh
 %_man1dir/nbd*.1*
 %_datadir/bash-completion/completions/*
 
-%files -n libnbd%sover
+%files -n %name%sover
 %_libdir/libnbd.so.%sover
 %_libdir/libnbd.so.%sover.*
 
@@ -82,8 +106,37 @@ rm %buildroot%_datadir/bash-completion/completions/nbdsh
 %_pkgconfigdir/libnbd.pc
 %_man1dir/libnbd-*.1*
 %_man3dir/*.3*
+%exclude %_man3dir/libnbd-ocaml.3*
+%exclude %_man3dir/NBD*
+
+%if_enabled ocaml
+%files -n ocaml-%name
+%_libdir/ocaml/nbd
+%exclude %_libdir/ocaml/nbd/*.a
+%ifarch %ocaml_native_arch
+%exclude %_libdir/ocaml/nbd/*.cmxa
+%exclude %_libdir/ocaml/nbd/*.cmx
+%endif
+%exclude %_libdir/ocaml/nbd/*.mli
+%_libdir/ocaml/stublibs/*.so
+%_libdir/ocaml/stublibs/*.so.owner
+
+%files -n ocaml-%name-devel
+%doc ocaml/examples/*.ml
+%_libdir/ocaml/nbd/*.a
+%ifarch %ocaml_native_arch
+%_libdir/ocaml/nbd/*.cmxa
+%_libdir/ocaml/nbd/*.cmx
+%endif
+%_libdir/ocaml/nbd/*.mli
+%_man3dir/libnbd-ocaml.3*
+%_man3dir/NBD*
+%endif
 
 %changelog
+* Fri Jan 12 2024 Alexey Shabalin <shaba@altlinux.org> 1.19.3-alt2
+- Build with ocaml support.
+
 * Sun Dec 31 2023 Vitaly Chikunov <vt@altlinux.org> 1.19.3-alt1
 - Update to v1.19.3 (2023-12-19).
 

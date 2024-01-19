@@ -30,8 +30,8 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: libguestfs
-Version: 1.50.1
-Release: alt3.1
+Version: 1.52.0
+Release: alt1
 
 Summary: Library for accessing and modifying virtual machine disk images
 License: LGPLv2+
@@ -40,8 +40,9 @@ Url: http://libguestfs.org/
 
 Source: %name-%version.tar
 Source2: %name-%version-common.tar
-Patch1: %name-1.46.0-alt-fixes.patch
+Patch1: %name-1.52.0-alt-fixes.patch
 Patch2: %name-1.46.0-alt-fixes-common.patch
+Patch3: 0001-Add-GOST-checksum-command-support.patch
 
 BuildRequires: /proc
 BuildRequires: gcc gcc-c++ flex
@@ -62,7 +63,7 @@ BuildRequires: libsystemd-journal-devel >= 196
 BuildRequires: librpm-devel
 BuildRequires: libyara-devel
 BuildRequires: libtsk-devel
-BuildRequires: liblzma-devel
+BuildRequires: liblzma-devel libzstd-devel
 BuildRequires: libdbus-devel
 BuildRequires: libtirpc-devel
 BuildRequires: java-devel-default jpackage-utils
@@ -305,6 +306,7 @@ sed -i -e 's/"cap_chown=ep"/"= cap_chown+ep"/' generator/actions_core.ml
 pushd common
 %patch2 -p1
 popd
+%patch3 -p1
 
 %build
 %autoreconf
@@ -561,6 +563,10 @@ fi
 %endif #erlang
 
 %changelog
+* Fri Jan 12 2024 Alexey Shabalin <shaba@altlinux.org> 1.52.0-alt1
+- 1.52.0
+- add GOST checksum command support
+
 * Mon Dec 04 2023 Ivan A. Melnikov <iv@altlinux.org> 1.50.1-alt3.1
 - NMU: use %_arch instead of %_build_arch, which evaluates
   to 'unknown' (fixes FTBFS on loongarch64).
