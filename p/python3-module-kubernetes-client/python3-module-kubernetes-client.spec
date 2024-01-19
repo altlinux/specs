@@ -1,7 +1,7 @@
 %define  modulename kubernetes-client
 
 Name:     python3-module-%modulename
-Version:  25.3.0
+Version:  29.0.0
 Release:  alt1
 
 Summary:  Kubernetes Python Client
@@ -11,36 +11,35 @@ Url:      https://github.com/kubernetes-client/python
 Vcs:      https://github.com/kubernetes-client/python.git
 BuildArch:  noarch
 
-Packager: Andrew A. Vasilyev <andy@altlinux.org>
-
 Source:   %modulename-%version.tar
-Source1:  python-base-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %description
 Python client for the kubernetes API.
 
 %prep
 %setup -n %modulename-%version
-tar -xf %SOURCE1 -C 'kubernetes/base' --strip-components 1
 
 %build
-#%%python3_build
+%pyproject_build
 
 %install
-%__python3 setup.py install --root=%buildroot --prefix=%_prefix
-rm -rf %buildroot/usr/requirements.txt
-rm -rf %buildroot%python3_sitelibdir/kubernetes/leaderelection/example.py
-rm -rf %buildroot%python3_sitelibdir/kubernetes/dynamic/test_discovery.py
-rm -rf %buildroot%python3_sitelibdir/kubernetes/dynamic/test_client.py
+%pyproject_install
+cp -pr kubernetes/test %buildroot%python3_sitelibdir/kubernetes/
+cp -pr kubernetes/e2e_test %buildroot%python3_sitelibdir/kubernetes/
 
 %files
-%doc *.md LICENSE *.txt
+%doc README.md LICENSE *.txt
 %python3_sitelibdir/*
 
 %changelog
+* Sat Jan 20 2024 Andrew A. Vasilyev <andy@altlinux.org> 29.0.0-alt1
+- 29.0.0
+- change building scheme, python-base now in main tree
+
 * Thu Nov 24 2022 Andrew A. Vasilyev <andy@altlinux.org> 25.3.0-alt1
 - 25.3.0
 
