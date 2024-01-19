@@ -2,8 +2,8 @@
 # odbcinst -i -d -f template
 
 Name: mysql-connector-odbc
-Version: 8.0.35
-Release: alt2
+Version: 8.0.36
+Release: alt1
 
 Summary: MySQL Connector/ODBC - ODBC driver for MySQL
 
@@ -85,6 +85,9 @@ rm -f %buildroot/%_prefix/{ChangeLog,README.txt,LICENSE.txt,INFO_BIN,INFO_SRC}
 %exclude %_prefix/test
 
 %changelog
+* Thu Jan 18 2024 Nikolai Kostrigin <nickel@altlinux.org> 8.0.36-alt1
+- New version
+
 * Sat Nov 18 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 8.0.35-alt2
 - NMU: fixed FTBFS on LoongArch (and possibly riscv64)
 
