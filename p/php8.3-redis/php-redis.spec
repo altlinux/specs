@@ -4,8 +4,8 @@
 %define		php_extension	redis
 %define 	real_name	redis
 Name:	 	php%_php_suffix-%php_extension
-Version:	5.3.7
-Release:	alt2.%php_version
+Version:	6.0.2
+Release:	alt1.%php_version
 Summary:	Client extension for Redis key-value store
 License:	PHP-3.01
 Group:		System/Servers
@@ -56,7 +56,7 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 %php_extension_preun
 
 %files
-%doc CREDITS *.markdown
+%doc CREDITS *.md
 %php_extconf/%php_extension
 %php_extdir/*
 
@@ -64,7 +64,10 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %php_version-%php_release
 
-* Tue Dec 05 2023 Alexandr Antonov <aas@altlinux.org> 3.2.15-alt1.%php_version
+* Fri Jan 19 2024 Anton Farygin <rider@altlinux.ru> 6.0.2-alt1
+- 5.3.7 -> 6.0.2
+
+* Tue Dec 05 2023 Alexandr Antonov <aas@altlinux.org> 5.3.7-alt2
 - build with igbinary support
 
 * Sat Feb 19 2022 Anton Farygin <rider@altlinux.ru> 5.3.7-alt1
