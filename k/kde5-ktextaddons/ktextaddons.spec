@@ -12,8 +12,8 @@
 %define libkf5textcustomeditor libkf5textcustomeditor%sover
 
 Name: kde5-%rname
-Version: 1.5.2
-Release: alt2
+Version: 1.5.3
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -177,9 +177,12 @@ This package contains the development files for %name.
 %_K5inc/Text*/
 %_K5link/lib*.so
 %_libdir/cmake/KF5Text*/
-%_K5archdata/mkspecs/modules/qt_?ext*.pri
+#%_K5archdata/mkspecs/modules/qt_?ext*.pri
 
 %changelog
+* Wed Jan 17 2024 Sergey V Turchin <zerg@altlinux.org> 1.5.3-alt1
+- new version
+
 * Tue Dec 12 2023 Sergey V Turchin <zerg@altlinux.org> 1.5.2-alt2
 - update russian translation
 
