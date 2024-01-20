@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.14.7
+Version: 1.15.0
 Release: alt1
 
 Summary: Installer common parts
@@ -23,8 +23,6 @@ Obsoletes: %name-stage2 < %version-%release
 Requires: alterator >= 5.4.3
 # installer-preinstall.desktop
 Requires: alterator-preinstall >= 0.9-alt1
-# remount.desktop
-Requires: installer-alterator-remount-destination
 # scripts/install2
 Requires: alterator-wizardface alterator-backend-x11 >= 0.21-alt2 xinit xinitrc xorg-server xorg-drv-video
 Requires: glibc-locales
@@ -107,6 +105,10 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Thu Dec 14 2023 Anton Midyukov <antohami@altlinux.org> 1.15.0-alt1
+- Do'nt add remount destination step
+- initinstall.d/10-disk.sh: do not slow down mdraid resync
+
 * Thu Nov 30 2023 Michael Shigorin <mike@altlinux.org> 1.14.7-alt1
 - initinstall.d/10-network.sh:
   + avoid 'myhostname' to fix hostname suggestions (ALT#48641)
