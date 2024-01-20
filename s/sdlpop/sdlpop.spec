@@ -16,7 +16,7 @@
 #
 
 Name: sdlpop
-Version: 1.21
+Version: 1.23
 Release: alt1
 
 Summary: An open-source port of Prince of Persia
@@ -24,7 +24,7 @@ License: GPLv3
 Group: Games/Arcade
 
 Url: http://www.popot.org/get_the_games.php?game=SDLPoP
-Source: https://github.com/NagyD/SDLPoP/archive/v%version.tar.gz#/%name-%version.tar.gz
+Source: https://github.com/NagyD/SDLPoP/archive/v%version.tar.gz#/SDLPoP-%version.tar.gz
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -32,6 +32,7 @@ BuildRequires: pkgconfig
 BuildRequires: pkgconfig(SDL2_image)
 BuildRequires: pkgconfig(SDL2_mixer)
 BuildRequires: pkgconfig(sdl2)
+BuildRequires: desktop-file-utils
 
 %description
 SDLPoP is an open-source port of Prince of Persia 1,
@@ -49,34 +50,40 @@ sed -i 's/\r$//' doc/*.txt
 cd src
 %cmake
 %make_build
-sed -e 's,\$ROOT,%_libexecdir/%name,g' \
-    -e 's,SDLPoP,Prince of Persia,' \
-    < SDLPoP.desktop.template > SDLPoP.desktop
 
 %install
-install -d %buildroot%_bindir
+install -d %buildroot%_gamesbindir
 install -Dm0755 prince %buildroot%_libexecdir/%name/%name
-install -pDm644 src/SDLPoP.desktop %buildroot%_desktopdir/%name.desktop
 install -Dm0644 data/icon.png \
 	%buildroot%_datadir/icons/hicolor/32x32/apps/%name.png
 install -d %buildroot%_libexecdir/%name
-mv data/ %buildroot%_libexecdir/%name
+cp -a data/ %buildroot%_libexecdir/%name
 
 # Install Wrapper
-cat > %buildroot%_bindir/%name << EOF
+cat > %buildroot%_gamesbindir/%name << EOF
 #!/bin/sh
 exec "%_libexecdir/%name/\${0##*/}" \$@
 EOF
 
+cp -a src/SDLPoP.desktop{.template,}
+desktop-file-install \
+	--set-icon=%name \
+	--remove-key=Path \
+	--set-key=Exec --set-value='%_gamesbindir/%name' \
+	--dir=%buildroot%_desktopdir src/SDLPoP.desktop
+
 %files
-%doc doc/Readme.txt doc/ChangeLog.txt doc/bugs.txt
-%doc doc/gpl-3.0.txt
-%attr(0755,root,root) %_bindir/sdlpop
+%doc README* doc/ChangeLog.txt
+%attr(0755,root,root) %_gamesbindir/sdlpop
 %_libexecdir/%name
 %_datadir/icons/hicolor/32x32/apps/sdlpop.png
-%_datadir/applications/sdlpop.desktop
+%_datadir/applications/*.desktop
 
 %changelog
+* Sat Jan 20 2024 Ildar Mulyukov <ildar@altlinux.ru> 1.23-alt1
+- new version
+- fixed (ALT bug #39561)
+
 * Sat Jan 16 2021 Michael Shigorin <mike@altlinux.org> 1.21-alt1
 - built for ALT (thanks openSUSE)
 
