@@ -1,38 +1,48 @@
 %define _unpackaged_files_terminate_build 1
-%define oname testlink
+%define module_name testlink
+%define pypi_name TestLink_API_Python_client
+%def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%module_name
 Version: 0.8.1
-Release: alt5
+Release: alt6
 Summary: A Python client to use the TestLink API
 License: Apache-2.0
 Group: Development/Python3
 Url: https://github.com/lczub/TestLink-API-Python-client
 Source: %name-%version.tar
+Patch1: alt-disable-online-tests.patch
 
 BuildArch: noarch
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %description
 TestLink-API-Python-client is a Python XML-RPC client for TestLink.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-cp -r example test %buildroot%python3_sitelibdir/%oname
+%pyproject_install
+
+%check
+%tox_check_pyproject
 
 %files
-%python3_sitelibdir/%oname
-%python3_sitelibdir/TestLink_API_Python_client-%version-py%_python3_version.egg-info
-%doc LICENSE-2.0.txt doc/{install.rst,usage.rst}
+%python3_sitelibdir/%module_name
+%python3_sitelibdir/%pypi_name-%version.dist-info/METADATA
 
 %changelog
+* Sat Jan 20 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.1-alt6
+- Enabled offline tests.
+
 * Fri Jun 10 2022 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.1-alt5
 - Added closeBuild function
 - Removed patches
