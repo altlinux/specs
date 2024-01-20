@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: iotas
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: Simple note taking with Nextcloud Notes
@@ -75,6 +75,9 @@ on sync with Nextcloud Notes.
 %doc README*
 
 %changelog
+* Sat Jan 20 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.7-alt1
+- updated to 0.2.7-14-g3aa62e4
+
 * Sun Nov 19 2023 Yuri N. Sedunov <aris@altlinux.org> 0.2.6-alt1
 - first build for Sisyphus (0.2.6-13-gc7c221d)
 

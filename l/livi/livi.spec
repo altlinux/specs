@@ -3,11 +3,10 @@
 %define ver_major 0.0
 %define rdn_name org.sigxcpu.Livi
 
-# online screenshots
-%def_disable check
+%def_enable check
 
 Name: livi
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Livi is a Light Video player
@@ -28,7 +27,6 @@ Source: %name-%version.tar
 
 Requires: gst-plugins-base1.0 >= %gst_ver
 Requires: gst-libav
-Requires: gstreamer-vaapi
 Requires: dconf
 
 BuildRequires(pre): rpm-macros-meson
@@ -37,7 +35,7 @@ BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(gstreamer-1.0) >= %gst_ver
 BuildRequires: pkgconfig(gstreamer-play-1.0)
 BuildRequires: pkgconfig(gstreamer-gl-1.0)
-%{?_enable_check:BuildRequires: /usr/bin/appstream-util desktop-file-utils}
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 Minimalistic video player using GTK4 and GStreamer. The main purpose is
@@ -63,9 +61,12 @@ to make playing hw accelerated videos with hantro and OpenGL simple.
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
-%doc README*
+%doc README* NEWS
 
 %changelog
+* Sat Jan 20 2024 Yuri N. Sedunov <aris@altlinux.org> 0.0.6-alt1
+- updated to v0.0.6-10-gd2ec9b2
+
 * Tue Jan 02 2024 Yuri N. Sedunov <aris@altlinux.org> 0.0.5-alt1
 - first build for Sisyphus (v0.0.5-48-g2205cc6)
 
