@@ -19,7 +19,7 @@
 
 Name: libmozjs%ver_major
 Version: %ver_major.2.0
-Release: alt1
+Release: alt2
 
 Summary: JavaScript interpreter and libraries
 Group: System/Libraries
@@ -36,6 +36,11 @@ Source: %name-%version.tar
 %endif
 Patch16: mozjs-115.0.2-alt-fix-redefinition-double_t.patch
 Patch20: mozjs78-0ad-FixSharedArray.patch
+# upgrade vendored python modules
+# six -> 1.16
+# urllib3 -> 1.26.17
+# based on https://hg.mozilla.org/mozilla-central/rev/47b8e4dba076
+Patch30: mozjs-115.0.2-alt-python-vendor.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: /dev/shm /proc
@@ -57,7 +62,7 @@ with only mild differences from the published standard.
 %package devel
 Summary: Header files, libraries and development documentation for %name
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains the header files, static libraries and development
@@ -67,7 +72,7 @@ you will need to install %name-devel.
 %package devel-static
 Summary: SpiderMonkey static libraries
 Group: Development/C++
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 SpiderMonkey development kit (static libs)
@@ -87,10 +92,10 @@ interface to the JavaScript engine.
 %setup -n mozjs-%version
 %patch16 -p1
 #%%patch20 -p1 -b .0ad
+%patch30 -p1
 
 %build
-mkdir _build
-
+[ ! -d _build ] && mkdir _build && \
 # prepare (fix) virtualenv directory structure
 mkdir -p _build/_virtualenvs/init_py3/lib/python{%__python3_version,3/site-packages}
 ln -s ../python3/site-packages _build/_virtualenvs/init_py3/lib/python%__python3_version/site-packages
@@ -175,6 +180,9 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 %_libdir/*.a
 
 %changelog
+* Sun Jan 21 2024 Yuri N. Sedunov <aris@altlinux.org> 115.2.0-alt2
+- fixed build with python-3.12
+
 * Thu Aug 10 2023 Yuri N. Sedunov <aris@altlinux.org> 115.2.0-alt1
 - first build for Sisyphus
 
