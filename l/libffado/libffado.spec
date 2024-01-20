@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libffado
-Version: 2.4.7
-Release: alt2
+Version: 2.4.8
+Release: alt1
 
 Summary: Free firewire audio driver library
 License: GPLv2+
@@ -123,6 +123,9 @@ rm -f %buildroot%_datadir/metainfo/ffado-mixer.appdata.xml
 %python3_sitelibdir_noarch/ffado
 
 %changelog
+* Sat Jan 20 2024 L.A. Kostis <lakostis@altlinux.ru> 2.4.8-alt1
+- 2.4.8.
+
 * Mon Dec 18 2023 L.A. Kostis <lakostis@altlinux.ru> 2.4.7-alt2
 - BR: added jack.
 
