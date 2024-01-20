@@ -1,27 +1,29 @@
-%define _unpackaged_files_terminate_build 1
 %define oname rebulk
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.2.0
+Version: 3.3.0
 Release: alt1
+
 Summary: Rebulk - define simple search patterns in bulk to perform advanced matching on any string
+
 License: MIT
 Group: Development/Python3
-BuildArch: noarch
-Url: https://pypi.org/project/rebulk/
+URL: https://pypi.org/project/rebulk
+VCS: https://github.com/Toilal/rebulk
 
-# https://github.com/Toilal/rebulk.git
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
+BuildArch: noarch
+
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
-BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -36,30 +38,24 @@ to build a custom and complex string matcher using a readable and extendable API
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-usedevelop=True
-commands =
-    {envbindir}/pytest {posargs:-vra}
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -s false
+%pyproject_run_pytest rebulk/test
 
 %files
-%doc *.md
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%doc LICENSE *.md
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/*/test
 
 %changelog
+* Sat Jan 20 2024 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1
+- Automatically updated to 3.3.0.
+
 * Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
 - Automatically updated to 3.2.0.
 
