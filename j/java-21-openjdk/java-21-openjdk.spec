@@ -92,11 +92,11 @@
 # Set of architectures which support multiple ABIs
 %global multilib_arches sparc64 x86_64
 # Set of architectures for which we build slowdebug builds
-%global debug_arches    x86_64 aarch64
+%global debug_arches    x86_64 aarch64 loongarch64
 # Set of architectures for which we build fastdebug builds
 %global fastdebug_arches x86_64 ppc64le aarch64
 # Set of architectures with a Just-In-Time (JIT) compiler
-%global jit_arches      %{aarch64} x86_64
+%global jit_arches      %{aarch64} x86_64 loongarch64
 # Set of architectures which use the Zero assembler port (!jit_arches)
 %global zero_arches ppc s390
 # Set of architectures which run a full bootstrap cycle
@@ -106,7 +106,7 @@
 # Set of architectures with a Ahead-Of-Time (AOT) compiler
 %global aot_arches      x86_64 %{aarch64}
 # Set of architectures which support the serviceability agent
-%global sa_arches       x86_64 aarch64
+%global sa_arches       x86_64 aarch64 loongarch64
 # Set of architectures which support class data sharing
 # See https://bugzilla.redhat.com/show_bug.cgi?id=513605
 # MetaspaceShared::generate_vtable_methods is not implemented for the PPC JIT
@@ -266,6 +266,10 @@
 %global archinstall sparcv9
 %global stapinstall %{_target_cpu}
 %endif
+%ifarch loongarch64
+%global archinstall loongarch64
+%global stapinstall loongarch64
+%endif
 # Need to support noarch for srpm build
 %ifarch noarch
 %global archinstall %{nil}
@@ -349,7 +353,7 @@
 
 Name:    java-21-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt1
+Release: alt2
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -453,7 +457,7 @@ URL:      http://openjdk.java.net/
 %global tapsetdir %{tapsetdirttapset}/%{stapinstall}
 %endif
 
-%define java_arches x86_64 aarch64
+%define java_arches x86_64 aarch64 loongarch64
 ExclusiveArch: %{java_arches}
 
 # Prevent brp-java-repack-jars from being run
@@ -507,6 +511,9 @@ Source18: TestTranslations.java
 # JDK-8009550, RH910107: Depend on pcsc-lite-libs instead of pcsc-lite-devel as this is only in optional repo
 # PR: https://github.com/openjdk/jdk/pull/15409
 Patch6: jdk8009550-rh910107-fail_to_load_pcsc_library.patch
+
+# LoongArch support
+Patch3500: jdk21u+35-loongarch64.patch
 
 #############################################
 #
@@ -852,7 +859,9 @@ fi
 %if_with fresh_libjvm
 tar xf %{SOURCE1}
 mkdir -p %{bootjdk}
+%ifnarch loongarch64
 %__cp -af bootstrap/noarch/* %{bootjdk}
+%endif
 %__cp -af bootstrap/%archinstall/* %{bootjdk}
 %endif
 
@@ -862,6 +871,7 @@ mkdir -p %{bootjdk}
 pushd %{top_level_dir_name}
 # Patches in need of upstreaming
 %patch6 -p1
+%patch3500 -p1
 popd # openjdk
 
 # The OpenJDK version file includes the current
@@ -964,7 +974,7 @@ export NUM_PROC=${NUM_PROC:-1}
 [ ${NUM_PROC} -gt %{?_smp_ncpus_max} ] && export NUM_PROC=%{?_smp_ncpus_max}
 %endif
 
-%ifarch s390x sparc64 alpha aarch64
+%ifarch s390x sparc64 alpha aarch64 loongarch64
 export ARCH_DATA_MODEL=64
 %endif
 %ifarch alpha
@@ -1981,6 +1991,11 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 %endif
 
 %changelog
+* Thu Jan 18 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0:21.0.1.0.12-alt2
+- NMU: LoongArch support from https://github.com/loongson/jdk21u.git
+  branch loongarch-port
+  commit 73075208466960879bf48be6dc54a84bf1113716 (notice: it's not a HEAD)
+
 * Thu Jan 11 2024 Andrey Cherepanov <cas@altlinux.org> 0:21.0.1.0.12-alt1
 - New version.
 - Security fixes: CVE-2023-22081 and CVE-2023-22025.
