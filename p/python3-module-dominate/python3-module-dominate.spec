@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
-%define mname dominate
+%define module_name dominate
+%def_with check
 
-Name: python3-module-%mname
-Version: 2.7.0
+Name: python3-module-%module_name
+Version: 2.9.1
 Release: alt1
 Summary: Library for creating and manipulating HTML documents using an elegant DOM API
-License: LGPLv3
+License: LGPL-3.0
 Group: Development/Python3
 Url: https://github.com/Knio/dominate
 Source: %name-%version.tar
@@ -15,20 +16,15 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 
+%if_with check
+BuildRequires: python3(pytest)
+%endif
+
 %description
 Dominate is a Python library for creating and manipulating HTML documents using
 an elegant DOM API. It allows you to write HTML pages in pure Python very
 concisely, which eliminates the need to learn another template language, and
 lets you take advantage of the more powerful features of Python.
-
-%package -n %name-tests
-Summary: Tests for %name
-Group: Development/Python3
-BuildArch: noarch
-Requires: %name
-
-%description -n %name-tests
-This package contains tests for %name.
 
 %prep
 %setup
@@ -38,19 +34,19 @@ This package contains tests for %name.
 
 %install
 %pyproject_install
-mkdir -p %buildroot%python3_sitelibdir/%mname/tests
-install -m 0644 tests/* %buildroot%python3_sitelibdir/%mname/tests
+
+%check
+%pyproject_run_pytest
 
 %files
-%python3_sitelibdir/%mname
-%python3_sitelibdir/%mname-%version.dist-info
-%exclude %python3_sitelibdir/%mname/tests
+%python3_sitelibdir/%module_name
+%python3_sitelibdir/%module_name-%version.dist-info
 %doc LICENSE.txt README.md
 
-%files -n %name-tests
-%python3_sitelibdir/%mname/tests
-
 %changelog
+* Sat Jan 20 2024 Alexander Makeenkov <amakeenk@altlinux.org> 2.9.1-alt1
+- Updated to version 2.9.1.
+
 * Fri Oct 07 2022 Alexander Makeenkov <amakeenk@altlinux.org> 2.7.0-alt1
 - Updated to version 2.7.0
 
