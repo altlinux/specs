@@ -4,17 +4,19 @@
 
 Name: python3-module-%oname
 Version: 5.0.1
-Release: alt1
+Release: alt2
 
 Summary: Zope3 Template Attribute Languate
 License: ZPL-2.1
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.tal/
-
 VCS: https://github.com/zopefoundation/zope.tal.git
+
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-zope.i18nmessageid
 BuildRequires: python3-module-zope.interface
@@ -53,10 +55,10 @@ This package contains tests for Zope3 Template Attribute Languate.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if "%_lib" == "lib64"
 install -d %buildroot%python3_sitelibdir
@@ -65,12 +67,13 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-%tox_check
+rm -rf src/zope/tal/tests/test_files.py
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc *.rst
+%doc README.*
 %python3_sitelibdir/zope/tal
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
 %exclude %python3_sitelibdir/*/*/runtest.*
@@ -83,6 +86,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Sat Jan 20 2024 Anton Vyatkin <toni@altlinux.org> 5.0.1-alt2
+- Fix FTBFS.
+
 * Wed Feb 22 2023 Anton Vyatkin <toni@altlinux.org> 5.0.1-alt1
 - new version 5.0.1
 
