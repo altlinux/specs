@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mackup
-Version: 0.8.37
+Version: 0.8.40
 Release: alt1
 Summary: Keep your application settings in sync
 License: GPL-3.0
@@ -10,9 +10,9 @@ Url: https://github.com/lra/mackup
 Source: %name-%version.tar
 
 BuildArch: noarch
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildRequires: python3-module-poetry
 Requires: python3-module-%name
 
 %description
@@ -51,6 +51,9 @@ This package contains python module for %name
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Sat Jan 20 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.40-alt1
+- Updated to version 0.8.40.
+
 * Thu Apr 06 2023 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.37-alt1
 - Updated to version 0.8.37
 
