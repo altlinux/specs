@@ -5,7 +5,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt73
+Release: alt75
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -174,6 +174,13 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Thu Jan 18 2024 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt75
+- LVM, LUKS: use currect UUID's when creating dm-devices
+
+* Fri Dec 08 2023 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt74
+- don't map MBR and GPT partitions (Closes: #48723)
+- don't map RAID0
+
 * Thu Nov 23 2023 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt73
 - GPT: fix regression after alt70
 
