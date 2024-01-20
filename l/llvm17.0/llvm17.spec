@@ -23,6 +23,8 @@
 %global omp_sover %v_major
 # libomp has own versioning
 %global omp_vmajor 5
+# According to openmp/libomptarget/README.txt
+%global libomptarget_arches x86_64 aarch64 ppc64le
 %ifarch ppc64le
 %global libomp_arch ppc64
 %else
@@ -105,7 +107,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt5
+Release: alt6
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -1160,7 +1162,7 @@ man	polly
 EOExecutableList
 
 emit_filelist >%_tmppath/dyn-files-lib%omp_name-devel <<EOExecutableList
-%ifnarch %ix86 %arm
+%ifarch %libomptarget_arches
 bin	llvm-omp-device-info
 bin	llvm-omp-kernel-replay
 %endif
@@ -1186,6 +1188,22 @@ sed -i '
 # Shared cmake files for llvm projects
 mkdir -p %buildroot%_datadir/cmake
 cp -ar cmake/Modules %buildroot%_datadir/cmake/
+
+# XXX: libomptarget is NOT supported on LoongArch, but surpisingly some
+# bits are built anyway. Remove those to avoid an rpmbuild error due to
+# unpackaged files
+%ifarch loongarch64
+rm %buildroot%_libdir/libomptarget.so.%omp_sover
+rm %buildroot%llvm_libdir/libomptarget.so.%omp_sover
+rm %buildroot%llvm_libdir/libomptarget.devicertl.a
+rm %buildroot%llvm_libdir/libomptarget-amdgpu-*.bc
+rm %buildroot%llvm_libdir/libomptarget-nvptx-*.bc
+rm %buildroot%llvm_libdir/libomptarget.so
+rm %buildroot%_bindir/llvm-omp-device-info-%v_major
+rm %buildroot%_bindir/llvm-omp-kernel-replay-%v_major
+rm %buildroot%llvm_bindir/llvm-omp-device-info
+rm %buildroot%llvm_bindir/llvm-omp-kernel-replay
+%endif
 
 %check
 %if_enabled tests
@@ -1422,8 +1440,7 @@ ninja -C %builddir check-all || :
 %files -n lib%omp_name
 %llvm_libdir/libomp.so.%omp_vmajor
 %_libdir/libomp.so.%omp_vmajor
-%ifnarch %ix86 %arm
-# libomptarget is not supported on 32-bit systems.
+%ifarch %libomptarget_arches
 %llvm_libdir/libomptarget.rtl.amdgpu.so.%omp_sover
 %llvm_libdir/libomptarget.rtl.cuda.so.%omp_sover
 %llvm_libdir/libomptarget.rtl.%libomp_arch.so.%omp_sover
@@ -1445,8 +1462,7 @@ ninja -C %builddir check-all || :
 %llvm_libdir/clang/%v_major/include/ompt-multiplex.h
 %endif
 %llvm_libdir/cmake/openmp
-%ifnarch %ix86 %arm
-# libomptarget is not supported on 32-bit systems.
+%ifarch %libomptarget_arches
 %llvm_libdir/libomptarget.rtl.amdgpu.so
 %llvm_libdir/libomptarget.rtl.cuda.so
 %llvm_libdir/libomptarget.rtl.%libomp_arch.so
@@ -1463,6 +1479,10 @@ ninja -C %builddir check-all || :
 %_datadir/cmake/Modules/*
 
 %changelog
+* Tue Jan 09 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 17.0.3-alt6
+- NMU: fixed FTBFS on LoongArch: libomptarget is not supported here (but
+  surprisingly it's not completely disabled either).
+
 * Mon Jan 08 2024 L.A. Kostis <lakostis@altlinux.ru> 17.0.3-alt5
 - Exclude omp from LLVMExports.
 
