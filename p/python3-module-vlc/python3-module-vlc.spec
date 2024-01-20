@@ -3,7 +3,7 @@
 %define pypi_name python-vlc
 
 Name: python3-module-%modname
-Version: 3.0.16120
+Version: 3.0.20123
 Release: alt1
 Summary: Binding for the native libvlc API
 License: LGPL-2.1+
@@ -41,6 +41,9 @@ video player. Note that it relies on an already present install of VLC.
 %doc examples
 
 %changelog
+* Sat Jan 20 2024 Alexander Makeenkov <amakeenk@altlinux.org> 3.0.20123-alt1
+- Updated to version 3.0.20123.
+
 * Wed Jan 25 2023 Alexander Makeenkov <amakeenk@altlinux.org> 3.0.16120-alt1
 - Updated to version 3.0.16120
 - Use pyproject macroses for build
