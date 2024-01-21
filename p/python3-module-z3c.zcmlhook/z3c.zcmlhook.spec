@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.0
-Release: alt1
+Release: alt2
 
 Summary: Easily hook into the ZCML processing machinery
 License: ZPL-2.1
@@ -15,6 +15,8 @@ Vcs: https://github.com/zopefoundation/z3c.zcmlhook
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-zope.component
 BuildRequires: python3-module-zope.component-tests
@@ -40,10 +42,10 @@ This package contains tests for z3c.zcmlhook.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
@@ -52,11 +54,12 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-%tox_check
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.txt *.rst *.md
-%python3_sitelibdir/*
+%python3_sitelibdir/z3c/zcmlhook/
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
 
@@ -65,6 +68,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Sun Jan 21 2024 Anton Vyatkin <toni@altlinux.org> 2.0-alt2
+- Fixed FTBFS.
+
 * Sat Apr 01 2023 Anton Vyatkin <toni@altlinux.org> 2.0-alt1
 - New version 2.0
 
