@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 0.6.7
-Release: alt1
+Release: alt2
 
 Summary: Sphinx extensions for working with LaTeX math
 License: BSD-2-Clause
@@ -18,6 +18,8 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 Patch: drop-distutils.patch
+Patch1: texext-0.6.7-configparser-alt-fix.patch
+Patch2: texext-0.6.7-docstrings-fix.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -35,6 +37,8 @@ Texext - sphinx extensions for working with LaTeX math.
 %prep
 %setup
 %patch -p0
+%patch1 -p1
+%patch2 -p1
 
 # fix version info
 sed -i \
@@ -56,6 +60,9 @@ sed -i \
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Sun Jan 21 2024 Anton Vyatkin <toni@altlinux.org> 0.6.7-alt2
+- Fixed FTBFS (configparser deprecation).
+
 * Mon Oct 16 2023 Anton Vyatkin <toni@altlinux.org> 0.6.7-alt1
 - New version 0.6.7.
 
