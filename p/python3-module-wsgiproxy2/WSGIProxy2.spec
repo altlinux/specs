@@ -4,7 +4,7 @@
 
 Name:    python3-module-wsgiproxy2
 Version: 0.5.1
-Release: alt1
+Release: alt2
 
 Summary: WSGI Proxy that supports several HTTP backends
 
@@ -19,11 +19,14 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-intro >= 2.2.5
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-webob
 BuildRequires: python3-module-webtest
 BuildRequires: python3-module-urllib3
 BuildRequires: python3-module-requests
+BuildRequires: python3-module-pytest
 %endif
 
 Provides: python3-module-%oname
@@ -38,22 +41,26 @@ A WSGI Proxy with various http client backends.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %python3_prune
 
 %check
-%tox_check
+%pyproject_run_pytest -v
 
 %files
 %doc *.rst COPYING
-%python3_sitelibdir/*
+%python3_sitelibdir/wsgiproxy
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/*/test_*
 
 
 %changelog
+* Sun Jan 21 2024 Anton Vyatkin <toni@altlinux.org> 0.5.1-alt2
+- Fixed FTBFS.
+
 * Fri Apr 14 2023 Anton Vyatkin <toni@altlinux.org> 0.5.1-alt1
 - New version 0.5.1.
 
