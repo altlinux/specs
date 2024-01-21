@@ -12,7 +12,7 @@ Group: System/Libraries
 
 Name:           libpreludedb
 Version:        5.2.0
-Release:        alt1_7
+Release:        alt1_8
 Summary:        Framework for easy access to the IDMEF database
 # Prelude is GPL-2.0+
 # libmissing is LGPL-2.1+
@@ -28,6 +28,7 @@ Patch4:         libpreludedb-5.2.0-Add-pkg-config-file.patch
 Patch5:         libpreludedb-5.2.0-fix-test_rwlock1.patch
 Patch6:         libpreludedb-5.2.0-fix_thread_create.patch
 Patch7:         libpreludedb-5.2.0-Clean_libpreludedb-config.patch
+BuildRequires(pre):  rpm-macros-valgrind
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
 BuildRequires:  bison
@@ -48,7 +49,7 @@ BuildRequires:  rpm-build-perl
 BuildRequires:  python3-devel
 BuildRequires:  pkgconfig(zlib)
 
-%ifnarch s390
+%ifarch %valgrind_arches
 BuildRequires:  valgrind
 %endif
 
@@ -237,6 +238,9 @@ chmod +x %{buildroot}%{_datadir}/%{name}/classic/mysql2sqlite.sh
 %doc ChangeLog README NEWS
 
 %changelog
+* Sat Jan 20 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 5.2.0-alt1_8
+- NMU: fixed FTBFS on LoongArch (no valgrind here)
+
 * Fri Jan 21 2022 Igor Vlasenko <viy@altlinux.org> 5.2.0-alt1_7
 - update to new release by fcimport
 
