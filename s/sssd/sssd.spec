@@ -8,7 +8,7 @@
 %def_disable systemtap
 
 Name: sssd
-Version: 2.9.3
+Version: 2.9.4
 Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
@@ -123,6 +123,9 @@ BuildRequires: adcli
 BuildRequires: gnutls-utils
 %endif
 BuildRequires: po4a
+
+# Due logrotate configuration using pkill
+Requires: procps
 
 # Due sssd-drop-privileges control for unprivileged mode support
 Requires: local-policy >= 0.4.8
@@ -880,6 +883,19 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Wed Jan 17 2024 Evgeny Sinelnikov <sin@altlinux.org> 2.9.4-alt1
+- Update to latest 2.9 major release in long-term maintenance (LTM) phase.
+- Fixes from upstream:
+  + A crash when PAM passkey processing incorrectly handles non-passkey data.
+  + A workaround was implemented to handle gracefully misbehaving applications
+    that destroy internal state of SSSD client librarires.
+  + An error when rotating KCM's logs was fixed.
+  + Group membership handling when members are coming from different forest
+    domains and using ldap token groups is prohibited.
+  + Files provider was erroneously taking into consideration local_auth_policy
+    config option, thus breaking smartcard authentication of local user in
+    setups that didn't explicitly specify this option.
+
 * Mon Nov 20 2023 Evgeny Sinelnikov <sin@altlinux.org> 2.9.3-alt1
 - Update to latest 2.9 major release.
   + KCM: provide mechanism to purge expired credentials.
