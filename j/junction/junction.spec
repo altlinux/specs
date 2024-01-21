@@ -2,7 +2,7 @@
 %def_enable snapshot
 
 %define _name Junction
-%define ver_major 1.7
+%define ver_major 1.8
 %define beta %nil
 %define rdn_name re.sonny.Junction
 
@@ -68,6 +68,9 @@ Junction lets you choose the application to open files and links.
 
 
 %changelog
+* Sun Jan 21 2024 Yuri N. Sedunov <aris@altlinux.org> 1.8-alt1
+- 1.8
+
 * Thu Nov 16 2023 Yuri N. Sedunov <aris@altlinux.org> 1.7-alt1
 - first build for Sisyphus (v1.7-4-g5a322b6)
 
