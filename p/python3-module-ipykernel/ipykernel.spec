@@ -9,7 +9,7 @@
 %endif
 
 Name: python3-module-%oname
-Version: 6.28.0
+Version: 6.29.0
 Release: alt1
 
 Summary: IPython Kernel for Jupyter
@@ -90,6 +90,9 @@ rm -rf examples/
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Fri Jan 19 2024 Anton Vyatkin <toni@altlinux.org> 6.29.0-alt1
+- New version 6.29.0.
+
 * Fri Dec 29 2023 Anton Vyatkin <toni@altlinux.org> 6.28.0-alt1
 - New version 6.28.0.
 
