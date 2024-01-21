@@ -1,6 +1,6 @@
 Name:    eg25-manager
 Version: 0.4.6
-Release: alt1
+Release: alt2
 
 Summary: Manager daemon for the Quectel EG25 mobile broadband modem
 License: GPL-3.0+
@@ -46,6 +46,11 @@ It implements the following features:
 %install
 %meson_install
 
+# Enable service automatically if modem found
+cat>%buildroot%_udevrulesdir/90-eg25-service.rules<<EOF
+SUBSYSTEM=="usb", ACTION=="add", ATTRS{idVendor}=="2c7c", ATTRS{idProduct}=="0125", ENV{SYSTEMD_WANTS}="eg25-manager.service", TAG+="systemd"
+EOF
+
 %preun
 %preun_service %name
 
@@ -60,5 +65,8 @@ It implements the following features:
 %_datadir/%name
 
 %changelog
+* Sun Jan 21 2024 Anton Midyukov <antohami@altlinux.org> 0.4.6-alt2
+- Enable service automatically if modem found
+
 * Mon May 22 2023 Andrey Cherepanov <cas@altlinux.org> 0.4.6-alt1
 - Initial build for Sisyphus.
