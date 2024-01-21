@@ -4,21 +4,25 @@
 
 Name: python3-module-%oname
 Version: 1.1.5
-Release: alt1
+Release: alt2
 
 Summary: Portable Local Settings Storage
 License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/usersettings/
-
 VCS: https://github.com/glvnst/usersettings.git
+
 Source: %name-%version.tar
+Patch: usersettings-1.1.5-replace-readfp-alt-fix.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-appdirs
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -28,25 +32,28 @@ location (windows/os x/linux are supported).
 
 %prep
 %setup
+%patch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check
+%pyproject_run_pytest -v
 
 %files
 %doc *.md docs/* examples
 %python3_sitelibdir/%oname.py
 %python3_sitelibdir/__pycache__
-%python3_sitelibdir/%oname-*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 
 %changelog
+* Sun Jan 21 2024 Anton Vyatkin <toni@altlinux.org> 1.1.5-alt2
+- Fixed FTBFS.
+
 * Fri Feb 24 2023 Anton Vyatkin <toni@altlinux.org> 1.1.5-alt1
 - new version 1.1.5
 
