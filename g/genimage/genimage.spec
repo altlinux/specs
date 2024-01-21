@@ -1,15 +1,15 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%ifarch %ix86 x86_64 aarch64 ppc64le
+%ifarch %ix86 x86_64 aarch64 ppc64le riscv64 loongarch64
 %def_enable QEMU
 %endif
-%ifarch %ix86 x86_64 aarch64 %arm
+%ifarch %ix86 x86_64 aarch64 %arm riscv64 loongarch64
 %def_enable UBOOT
 %endif
 
 Name: genimage
-Version: 16
+Version: 17
 Release: alt1
 
 Summary: Tool to generate multiple filesystem and flash images
@@ -63,6 +63,10 @@ config file or from commandline switches.
 %_bindir/%name
 
 %changelog
+* Sat Jan 20 2024 Anton Midyukov <antohami@altlinux.org> 17-alt1
+- new version
+- enable qemu and uboot support on looongarch64, riscv64
+
 * Fri Sep 02 2022 Anton Midyukov <antohami@altlinux.org> 16-alt1
 - new version
 
