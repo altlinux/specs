@@ -1,8 +1,11 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict,lint=relaxed
+
 %global import_path github.com/restic/restic
 Name:     restic
-Version:  0.16.2
-Release:  alt1
-
+Version: 0.16.3
+Release: alt1
 Summary:  Fast, secure, efficient backup program
 License:  BSD-2-Clause
 Group:    Archiving/Backup
@@ -10,46 +13,53 @@ Vcs:      https://github.com/restic/restic
 Url:      https://restic.net/
 
 Source:   %name-%version.tar
-
-BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
 
 %description
 restic is a backup program that is fast, efficient and secure.
 
+Saving a backup on the same machine is nice but not a real backup
+strategy. Therefore, restic supports the following backends for storing
+backups natively:
+
+  Local directory
+  sftp server (via SSH)
+  HTTP REST server (protocol, rest-server)
+  Amazon S3 (or compatible such as Minio server)
+  OpenStack Swift
+  BackBlaze B2
+  Microsoft Azure Blob Storage
+  Google Cloud Storage
+  And many other services via the rclone Backend
+
 %prep
 %setup
+grep -Fx %version VERSION
 
 %build
-export BUILDDIR="$PWD/.build"
-export IMPORT_PATH="%import_path"
-export GOPATH="$BUILDDIR:%go_path"
-
-%golang_prepare
-
-cd .build/src/%import_path
-%golang_build cmd/restic
+# build.go cannot be used because of `-trimpath`.
+go build -v -buildmode=pie -ldflags '-X main.version=%version' ./cmd/restic
 
 %install
-export BUILDDIR="$PWD/.build"
-export IGNORE_SOURCES=1
-
-%golang_install
-
-for f in doc/man/*.?; do
-    install -Dp "$f" "%buildroot/%_man1dir/$(basename "$f")"
-done
-
-mkdir -p %buildroot%_datadir/zsh/site-functions
+install -Dp restic -t %buildroot%_bindir
+install -Dpm633 doc/man/*.1 -t %buildroot/%_man1dir
+mkdir -p %buildroot%_datadir/{zsh/site-functions,bash-completion/completions,fish/vendor_completions.d}
 %buildroot%_bindir/%name generate --zsh-completion %buildroot%_datadir/zsh/site-functions/_%name
-mkdir -p %buildroot%_datadir/bash-completion/completions
 %buildroot%_bindir/%name generate --bash-completion %buildroot%_datadir/bash-completion/completions/%name
-mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %buildroot%_bindir/%name generate --fish-completion %buildroot%_datadir/fish/vendor_completions.d/%name.fish
 
 %check
 PATH=%buildroot%_bindir:$PATH
 restic version
+## Upstream tests.
+# No user xattrs support on tmpfs on Linux before 6.6
+# https://github.com/restic/restic/issues/4646
+printf '6.6\n%s\n' $(uname -r) | sort -CV ||
+sed -i '/rtest.Assert/s/n2.ExtendedAttributes/test.ExtendedAttributes/' internal/restic/node_test.go
+# Cannot test with fusermount in Hasher.
+RESTIC_TEST_FUSE=0 \
+go test ./...
+## Smoke test.
 export RESTIC_PASSWORD=testic
 restic --repo ../test init
 restic --repo ../test backup .
@@ -63,14 +73,20 @@ cd ..
 diff -qr %name-%version x
 
 %files
+%define _customdocdir %_docdir/%name
+%doc LICENSE *.md doc/*.rst doc/images
 %_bindir/*
 %_man1dir/*.1*
-%doc *.md
 %_datadir/zsh/site-functions/_%name
 %_datadir/bash-completion/completions/%name
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Sat Jan 20 2024 Vitaly Chikunov <vt@altlinux.org> 0.16.3-alt1
+- Update to v0.16.3 (2024-01-14).
+- spec: Add more testing, update %%description, change build method, install
+  documentation.
+
 * Tue Oct 31 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.16.2-alt1
 - new version 0.16.2
 
