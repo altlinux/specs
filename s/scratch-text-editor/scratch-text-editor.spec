@@ -2,7 +2,7 @@
 
 %define _name code
 %define rdn_name io.elementary.%_name
-%define ver_major 7.1
+%define ver_major 7.2
 
 Name: scratch-text-editor
 Version: %ver_major.0
@@ -21,7 +21,7 @@ Vcs: https://github.com/elementary/code.git
 Source: %_name-%version.tar
 %endif
 
-Provides: %rdn_name = %version-%release
+Provides: %rdn_name = %EVR
 
 %define gtksourceview_api_ver 4
 %define granite_ver 6.0.0
@@ -77,7 +77,7 @@ Additional features include:
 %package devel
 Summary: Development files for scratch text editor
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Development files for scratch.
@@ -86,7 +86,7 @@ Development files for scratch.
 Summary: Vala language bindings for the scratch text editor
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description vala
 This package provides Vala language bindings for the scratch text editor.
@@ -126,6 +126,9 @@ This package provides Vala language bindings for the scratch text editor.
 %_vapidir/%{_name}core.vapi
 
 %changelog
+* Sun Jan 21 2024 Yuri N. Sedunov <aris@altlinux.org> 7.2.0-alt1
+- updated to 7.2.0-6-g1626d85b2
+
 * Thu Aug 03 2023 Yuri N. Sedunov <aris@altlinux.org> 7.1.0-alt1
 - updated to 7.1.0-7-gc2fb99006
 
