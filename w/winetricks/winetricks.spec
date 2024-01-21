@@ -1,5 +1,5 @@
 Name: winetricks
-Version: 20231003
+Version: 20240105
 Release: alt1
 
 Summary: Work around common problems in Wine
@@ -10,8 +10,8 @@ Url: https://github.com/Winetricks/winetricks
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/Winetricks/winetricks/archive/refs/heads/master.zip
-#Source-url: %url/archive/%version/%name-%version.tar.gz
+#Source-url: https://github.com/Winetricks/winetricks/archive/refs/heads/master.zip
+# Source-url: %url/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
 Patch2: 0001-winetricks-try-use-xvt-as-terminal.patch
@@ -26,6 +26,11 @@ BuildRequires: desktop-file-utils
 # runtime dependencies
 #Requires: /usr/bin/wine
 Requires: cabextract gzip unzip wget which
+
+# skip optional deps
+%filter_from_requires /^kde5-kdialog/d
+%filter_from_requires /^zenity/d
+
 
 #Requires: hicolor-icon-theme
 Conflicts: wine-vanilla < 3.18
@@ -45,6 +50,7 @@ or tweak various Wine settings individually.
 
 # fix req. Disable autoreq at all?
 %__subst 's|fusermount|a= fusermount|' src/winetricks
+%__subst 's|wineuserpath=\$(winepath|wineuserpath=$(a= winepath|' src/winetricks
 
 sed -i -e "s:steam::" -e "s:flash::" tests/*
 
@@ -75,6 +81,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 #exclude %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Wed Jan 17 2024 Vitaly Lipatov <lav@altlinux.ru> 20240105-alt1
+- new version 20240105 (with rpmrb script)
+
 * Fri Oct 06 2023 Vitaly Lipatov <lav@altlinux.ru> 20231003-alt1
 - new version 20231003 (with rpmrb script)
 
