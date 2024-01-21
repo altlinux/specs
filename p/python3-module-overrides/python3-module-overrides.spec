@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.4.0
+Version: 7.6.0
 Release: alt1
 
 Summary: A decorator to automatically detect mismatch when overriding a method
@@ -44,6 +44,9 @@ BuildRequires: python3-module-pytest
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Jan 21 2024 Anton Vyatkin <toni@altlinux.org> 7.6.0-alt1
+- New version 7.6.0.
+
 * Mon Aug 07 2023 Anton Vyatkin <toni@altlinux.org> 7.4.0-alt1
 - New version 7.4.0.
 
