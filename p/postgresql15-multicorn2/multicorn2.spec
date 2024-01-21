@@ -3,7 +3,7 @@
 
 Name: postgresql%pg_ver-multicorn2
 Version: 2.5
-Release: alt1
+Release: alt2
 
 Summary: Multicorn Python3 Wrapper for Postgresql %pg_ver Foreign Data Wrapper
 License: PostgreSQL
@@ -46,7 +46,7 @@ sed -i '/version=/i\ \ \ \ ext_modules = [multicorn_utils_module],' setup.py
 %doc README.md
 %doc %_defaultdocdir/postgresql/extension/multicorn.md
 %_libdir/pgsql/*.so
-%ifnarch %e2k
+%ifnarch %e2k loongarch64
 %_libdir/pgsql/bitcode/multicorn*
 %endif
 %python3_sitelibdir/multicorn
@@ -54,6 +54,9 @@ sed -i '/version=/i\ \ \ \ ext_modules = [multicorn_utils_module],' setup.py
 %_datadir/pgsql/extension
 
 %changelog
+* Sun Jan 21 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.5-alt2
+- NMU: fixed FTBFS on LoongArch.
+
 * Tue Sep 26 2023 Andrey Cherepanov <cas@altlinux.org> 2.5-alt1
 - New version.
 
