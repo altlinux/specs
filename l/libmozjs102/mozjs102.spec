@@ -19,7 +19,7 @@
 
 Name: libmozjs%ver_major
 Version: %ver_major.1.0
-Release: alt1.1
+Release: alt2
 
 Summary: JavaScript interpreter and libraries
 Group: System/Libraries
@@ -36,6 +36,12 @@ Source: %name-%version.tar
 %endif
 Patch16: 0016-ALT-Fix-redefinition-double_t.patch
 Patch20: mozjs78-0ad-FixSharedArray.patch
+# upgrade vendored python modules
+# six -> 1.16
+# urllib3 -> 1.26.17
+# based on https://hg.mozilla.org/mozilla-central/rev/47b8e4dba076
+Patch30: mozjs-115.0.2-alt-python-vendor.patch
+Patch31: mozjs-102-alt-distutils.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: /dev/shm /proc
@@ -87,6 +93,9 @@ interface to the JavaScript engine.
 %setup -n mozjs-%version
 %patch16 -p2
 %patch20 -p1 -b .0ad
+%patch30 -p1
+%patch31 -p1
+
 # in python-3.11 open(), io.open(), codecs.open() and fileinput.FileInput no longer
 # accept 'U' (“universal newline”) in the file mode.
 sed -i 's|"rU"|"r"|' python/mozbuild/mozbuild/{preprocessor,util,action/process_define_files,backend/base}.py
@@ -178,6 +187,9 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 %_libdir/*.a
 
 %changelog
+* Sun Jan 21 2024 Yuri N. Sedunov <aris@altlinux.org> 102.1.0-alt2
+- fixed build with python-3.12
+
 * Thu Jun 08 2023 Yuri N. Sedunov <aris@altlinux.org> 102.1.0-alt1.1
 - fixed build with python-3.11
 
