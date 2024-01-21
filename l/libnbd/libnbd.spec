@@ -7,8 +7,8 @@
 %def_enable ocaml
 
 Name: libnbd
-Version: 1.19.3
-Release: alt2
+Version: 1.19.4
+Release: alt1
 Summary: NBD client library in userspace
 License: LGPL-2.1-or-later
 Group: Networking/File transfer
@@ -25,7 +25,9 @@ BuildRequires: libxml2-devel
 BuildRequires: perl-podlators
 %if_enabled ocaml
 BuildRequires(pre): rpm-build-ocaml
-BuildRequires: ocaml ocaml-findlib ocaml-ocamldoc
+BuildRequires: ocaml
+BuildRequires: ocaml-findlib
+BuildRequires: ocaml-ocamldoc
 %endif
 
 %description
@@ -63,7 +65,7 @@ Requires: ocaml-%name = %EVR
 
 %description -n ocaml-%name-devel
 This package contains OCaml language development package for
-%name.  Install this if you want to compile OCaml software which
+%name. Install this if you want to compile OCaml software which
 uses %name.
 
 %prep
@@ -134,6 +136,9 @@ rm %buildroot%_datadir/bash-completion/completions/nbdsh
 %endif
 
 %changelog
+* Sun Jan 21 2024 Vitaly Chikunov <vt@altlinux.org> 1.19.4-alt1
+- Update to v1.19.4 (2024-01-16).
+
 * Fri Jan 12 2024 Alexey Shabalin <shaba@altlinux.org> 1.19.3-alt2
 - Build with ocaml support.
 
