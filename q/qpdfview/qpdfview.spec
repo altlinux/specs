@@ -1,6 +1,6 @@
 Name: qpdfview
 Version: 0.5
-Release: alt1
+Release: alt2
 Summary: Tabbed PDF viewer using the poppler library
 License: GPL-2.0-or-later
 Group: Office
@@ -9,6 +9,9 @@ Url: https://launchpad.net/qpdfview
 Source: %name-%version.tar
 Patch: qpdfview-0.4.18-fix-build-with-qt5-5.15.patch
 Patch1: qpdfview-desktop.patch
+# std::optional requires std=c++17 or later. Fixes:
+# /usr/include/poppler/qt5/poppler-form.h:888:6: error: ‘optional’ in namespace ‘std’ does not name a template type
+Patch2: qpdfview-stdc++17.patch
 
 BuildRequires: qt5-tools
 BuildRequires: pkgconfig(poppler-qt5)
@@ -64,6 +67,9 @@ ln -s %_iconsdir/hicolor/scalable/apps/%name.svg \
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Sun Jan 21 2024 Anton Midyukov <antohami@altlinux.org> 0.5-alt2
+- fix build with poppler 23.08.0
+
 * Tue Jul 25 2023 Anton Midyukov <antohami@altlinux.org> 0.5-alt1
 - new version (0.5) with rpmgs script
 
