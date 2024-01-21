@@ -1,8 +1,8 @@
 %def_without check
 
 Name: xcp
-Version: 0.16.0
-Release: alt2
+Version: 0.17.0
+Release: alt1
 Summary: An extended cp
 License: GPL-3.0
 Group: File tools
@@ -52,6 +52,9 @@ diffstat -p1 -l < %PATCH3500 | sed -re 's@vendor/@@' | xargs cargo-vendor-checks
 %_bindir/%name
 
 %changelog
+* Sun Jan 21 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.17.0-alt1
+- Updated to version 0.17.0.
+
 * Mon Dec 25 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.16.0-alt2
 - NMU: fixed FTBFS on LoongArch.
 
