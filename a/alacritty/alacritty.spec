@@ -1,6 +1,6 @@
 Name: alacritty
 Version: 0.13.1
-Release: alt1
+Release: alt2
 
 Summary: A fast, cross-platform, OpenGL terminal emulator
 License: Apache-2.0
@@ -49,7 +49,7 @@ scdoc < extra/man/alacritty.5.scd > %buildroot%_man5dir/alacritty.5
 scdoc < extra/man/alacritty-bindings.5.scd > %buildroot%_man5dir/alacritty-bindings.5
 install -pm0755 -D target/release/alacritty %buildroot%_bindir/alacritty
 install -pm0644 -D extra/linux/Alacritty.desktop %buildroot%_desktopdir/Alacritty.desktop
-install -pm0644 -D extra/logo/alacritty-term.svg %buildroot%_iconsdir/hicolor/scalable/Alacritty.svg
+install -pm0644 -D extra/logo/alacritty-term.svg %buildroot%_iconsdir/hicolor/scalable/apps/Alacritty.svg
 install -pm0644 -D extra/completions/_alacritty %buildroot%_datadir/zsh/site-functions/_alacritty
 install -pm0644 -D extra/completions/alacritty.bash %buildroot%_datadir/bash-completion/completions/alacritty
 install -pm0644 -D /dev/null %buildroot%_sysconfdir/alacritty/alacritty.toml
@@ -66,12 +66,15 @@ install -pm0644 -D /dev/null %buildroot%_sysconfdir/alacritty/alacritty.toml
 %_datadir/bash-completion/completions/alacritty
 
 %_desktopdir/Alacritty.desktop
-%_iconsdir/hicolor/scalable/Alacritty.svg
+%_iconsdir/hicolor/scalable/apps/Alacritty.svg
 
 %_man1dir/alacritty*.1*
 %_man5dir/alacritty*.5*
 
 %changelog
+* Mon Jan 22 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.13.1-alt2
+- placed properly app icon (closes: 49143)
+
 * Tue Jan 09 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.13.1-alt1
 - 0.13.1 released
 
