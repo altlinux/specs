@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.25.2
-Release: alt1
+Release: alt2
 Summary: A set of server components for JupyterLab and JupyterLab like applications
 License: BSD-3-Clause
 Group: Development/Python3
@@ -51,7 +51,7 @@ sed -i 's/--doctest-modules//' pyproject.toml
 %pyproject_install
 
 %check
-%pyproject_run_pytest -v --ignore=tests/test_translation_api.py
+%pyproject_run_pytest -v -W ignore::DeprecationWarning --ignore=tests/test_translation_api.py
 
 %files
 %doc README.*
@@ -59,6 +59,9 @@ sed -i 's/--doctest-modules//' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Mon Jan 22 2024 Anton Vyatkin <toni@altlinux.org> 2.25.2-alt2
+- Fixed FTBFS.
+
 * Tue Nov 28 2023 Anton Vyatkin <toni@altlinux.org> 2.25.2-alt1
 - New version 2.25.2.
 
