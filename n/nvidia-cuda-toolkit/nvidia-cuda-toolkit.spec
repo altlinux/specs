@@ -21,7 +21,7 @@
 
 Name: nvidia-cuda-toolkit
 Version: 12.3.1
-Release: alt2
+Release: alt3
 
 Summary: NVIDIA CUDA Toolkit libraries
 Summary(ru_RU.UTF-8): Библиотеки NVIDIA CUDA Toolkit
@@ -68,7 +68,6 @@ programs that make use of CUDA.
 %package -n nvidia-cuda-devel
 Group: Development/Other
 Summary: NVIDIA CUDA development files
-Requires: %name = %EVR
 Requires: libglvnd-devel ocl-icd-devel gcc-c++ libvdpau-devel tbb-devel
 %description -n nvidia-cuda-devel
 NVIDIA CUDA development files.
@@ -79,6 +78,12 @@ Summary: NVIDIA CUDA static library
 Requires: nvidia-cuda-devel = %EVR
 %description -n nvidia-cuda-devel-static
 NVIDIA CUDA static library.
+
+%package -n nvidia-cuda-gdb
+Group: System/Libraries
+Summary: NVIDIA CUDA Debugger (GDB)
+%description -n nvidia-cuda-gdb
+NVIDIA CUDA Debugger (GDB)
 
 %package -n nvidia-visual-profiler
 Group: System/Libraries
@@ -141,6 +146,12 @@ Summary: GPUDirect Storage cuFile runtime library
 %description -n libcufile
 GPUDirect Storage cuFile runtime library.
 
+%package -n libcufile-devel
+Group: Development/Other
+Summary: GPUDirect Storage - development files
+%description -n libcufile-devel
+GPUDirect Storage - development files
+
 %package -n libcuinj64
 Group: System/Libraries
 Summary: NVIDIA CUINJ Library (64-bit)
@@ -153,6 +164,12 @@ Summary: NVIDIA CUDA Profiler Tools Interface runtime library
 Provides: libcupti.so.12(libcupti.so.12)(64bit)
 %description -n libcupti
 NVIDIA CUDA Profiler Tools Interface runtime library.
+
+%package -n libcupti-devel
+Group: Development/Other
+Summary: NVIDIA CUDA Profiler Tools Interface development files
+%description -n libcupti-devel
+NVIDIA CUDA Profiler Tools Interface development files
 
 %package -n libcurand
 Group: System/Libraries
@@ -359,7 +376,7 @@ mkdir -p %buildroot%_docdir/%name/
 cp -vr cuda_documentation/* %buildroot%_docdir/%name/
 
 cp -vr cuda_gdb/bin/* %buildroot%_bindir/
-cp -vr cuda_gdb/extras/* %buildroot%_datadir/%name/extras/
+cp -vr cuda_gdb/extras/Debugger %buildroot%_datadir/%name/extras/
 
 cp -v cuda_nsight/bin/* %buildroot%_bindir/
 # skip %%_libdir/nsightee_plugins/com.nvidia.cuda.repo-1.0.0-SNAPSHOT.zip
@@ -553,8 +570,6 @@ rm -rv %buildroot%_libdir/nsight-systems-%nsight_sys_ver/target-linux-x64/python
 %_bindir/TreeLauncherSubreaper
 %_bindir/TreeLauncherTargetLdPreloadHelper
 %_bindir/compute-sanitizer
-%_bindir/cuda-gdb
-%_bindir/cuda-gdbserver
 %_bindir/nsight_ee_plugins_manage.sh
 %_includedir/*
 %_libdir/*.so
@@ -562,16 +577,26 @@ rm -rv %buildroot%_libdir/nsight-systems-%nsight_sys_ver/target-linux-x64/python
 %exclude %_libdir/libnvperf_host.so
 %exclude %_libdir/libnvperf_target.so
 %exclude %_libdir/libpcsamplingutil.so
+%exclude %_libdir/libcufile.so
+%exclude %_libdir/libcufile_rdma.so
+%exclude %_libdir/libcupti.so
 %_libdir/stubs/
 %_libdir/cmake/
 %_libdir/nvvm/
 %_datadir/%name
+%exclude %_datadir/%name/extras/Debugger
+%exclude %_datadir/%name/extras/CUPTI
 %_docdir/compute-sanitizer
 %_pkgconfigdir/*.pc
 # %%_libdir/nsightee_plugins/
 
 %files -n nvidia-cuda-devel-static
 %_libdir/*.a
+
+%files -n nvidia-cuda-gdb
+%_bindir/cuda-gdb
+%_bindir/cuda-gdbserver
+%_datadir/%name/extras/Debugger
 
 %files -n nvidia-nsight-compute
 %_bindir/ncu
@@ -623,6 +648,10 @@ rm -rv %buildroot%_libdir/nsight-systems-%nsight_sys_ver/target-linux-x64/python
 %files -n libcufile
 %_libdir/libcufile.so.*
 
+%files -n libcufile-devel
+%_libdir/libcufile.so
+%_libdir/libcufile_rdma.so
+
 %files -n libcuinj64
 %_libdir/libcuinj64.so.*
 
@@ -632,6 +661,10 @@ rm -rv %buildroot%_libdir/nsight-systems-%nsight_sys_ver/target-linux-x64/python
 %_libdir/libnvperf_host.so
 %_libdir/libnvperf_target.so
 %_libdir/libpcsamplingutil.so
+
+%files -n libcupti-devel
+%_datadir/%name/extras/CUPTI
+%_libdir/libcupti.so
 
 %files -n libcurand
 %_libdir/libcurand.so.*
@@ -703,6 +736,12 @@ rm -rv %buildroot%_libdir/nsight-systems-%nsight_sys_ver/target-linux-x64/python
 %_bindir/nvprof
 
 %changelog
+* Mon Jan 22 2024 Mikhail Tergoev <fidel@altlinux.org> 12.3.1-alt3
+- drop requires nvidia-cuda-toolkit from nvidia-cuda-devel (ALT bug: 48761)
+- separation of nvidia-cuda-gdb packages from nvidia-cuda-devel (ALT bug: 48762)
+- separation of libcufile-devel packages from nvidia-cuda-devel
+- separation of libcupti-devel packages from nvidia-cuda-devel
+
 * Mon Jan 15 2024 Grigory Ustinov <grenka@altlinux.org> 12.3.1-alt2
 - Fixed working with python3.12.
 
