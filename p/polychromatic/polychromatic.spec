@@ -1,5 +1,5 @@
 Name: polychromatic
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 
 Summary: RGB lighting interface utilites
@@ -46,6 +46,9 @@ graphical, command line or tray applet interface.
 %_man1dir/%name-*
 
 %changelog
+* Tue Nov 21 2023 Anton Kurachenko <srebrov@altlinux.org> 0.8.3-alt1
+- New version 0.8.3.
+
 * Mon Oct 09 2023 Anton Kurachenko <srebrov@altlinux.org> 0.8.2-alt1
 - New version 0.8.2.
 
