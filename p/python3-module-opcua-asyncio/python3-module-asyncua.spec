@@ -7,7 +7,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 1.0.6
-Release: alt1
+Release: alt2
 
 Summary: OPC UA library for python >= 3.7
 License: LGPL-3.0
@@ -61,8 +61,11 @@ Requires: %name = %EVR
 #%%tox_create_default_config
 #%%tox_check_pyproject
 # disable tests, where require external resources
+# also disable "test_publish[client]" because of python 3.12:
+# https://github.com/FreeOpcUa/opcua-asyncio/pull/1528
 pytest3 -v -k "not (test_xml_import_companion_specifications[client]) \
-	and not (test_xml_import_companion_specifications[server])"
+	and not (test_xml_import_companion_specifications[server]) \
+	and not (test_publish[client])"
 
 %files
 %doc *.md
@@ -73,6 +76,9 @@ pytest3 -v -k "not (test_xml_import_companion_specifications[client]) \
 %_bindir/*
 
 %changelog
+* Mon Jan 22 2024 Anton Midyukov <antohami@altlinux.org> 1.0.6-alt2
+- disable pytest "test_publish[client]" because of python 3.12
+
 * Fri Dec 22 2023 Anton Midyukov <antohami@altlinux.org> 1.0.6-alt1
 - new version 1.0.6
 - pack tools
