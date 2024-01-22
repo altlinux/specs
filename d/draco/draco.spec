@@ -1,5 +1,5 @@
 Name:    draco
-Version: 1.5.6
+Version: 1.5.7
 Release: alt1
 
 Summary: Draco is a library for compressing and decompressing 3D geometric meshes and point clouds. It is intended to improve the storage and transmission of 3D graphics
@@ -77,5 +77,8 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Sun Jan 21 2024 Andrey Cherepanov <cas@altlinux.org> 1.5.7-alt1
+- New version.
+
 * Mon Oct 30 2023 Andrey Cherepanov <cas@altlinux.org> 1.5.6-alt1
 - Initial build for Sisyphus.
