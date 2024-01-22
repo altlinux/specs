@@ -2,7 +2,7 @@
 %global __find_debuginfo_files %nil
 
 Name: kde5-plasma-addon-alt-weather
-Version: 1.0.16
+Version: 1.0.17
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -21,7 +21,7 @@ BuildRequires: kf5-kpackage-devel
 
 Requires: alt-identify-client
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 aarch64
 
 %description
 The weather forecast addon for KDE Workspace 5 Plasma
@@ -48,6 +48,11 @@ The weather forecast addon for KDE Workspace 5 Plasma
 %_datadir/metainfo/*
 
 %changelog
+* Mon Jan 22 2024 Slava Aseev <ptrnine@altlinux.org> 1.0.17-alt1
+- Enable build for aarch64
+- Fix compact view in vertical panel and system tray
+- Fix DetailsView when displayed via system tray
+
 * Tue Jan 16 2024 Slava Aseev <ptrnine@altlinux.org> 1.0.16-alt1
 - Refactor, add license headers, fix some potential bugs
   (thx @golubevan for the review)
