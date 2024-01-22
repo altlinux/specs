@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
 Version: 0.0.26
-Release: alt0_6_alpha
+Release: alt0_7_alpha
 
 Group: Games/Strategy
 Summary: Free, open-source realtime strategy game of ancient warfare
@@ -27,6 +27,7 @@ Patch2: 0ad-0.0.25-fonts.patch
 Patch5: 0ad-0.0.25-i586.patch
 Patch6: 0ad-fix-build-with-gcc13.patch
 Patch7: 0ad-fix-build-with-libfmt10.patch
+Patch8: 0ad-0.0.26-ps_xml.patch
 
 # disabled i586 build to unblock wxGTK3.0 rebuild; please remove later
 # ExcludeArch: %ix86
@@ -73,13 +74,14 @@ educational celebration of game development and ancient history.
 %prep
 %setup
 
-%patch0 -p1
+%patch -p1
 %patch1 -p1
 %patch2 -p1
 
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p2
 
 # update shebangs from python to python3
 find . -name '*.py' -o -name 'cxxtestgen' | xargs sed -i \
@@ -143,6 +145,9 @@ cp -a binaries/data/* %buildroot%_datadir/0ad/
 %_datadir/0ad/*
 
 %changelog
+* Mon Jan 22 2024 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.0.26-alt0_7_alpha
+- Add 
+
 * Mon Oct 16 2023 Anton Midyukov <antohami@altlinux.org> 1:0.0.26-alt0_6_alpha
 - NMU: rebuild with wxGTK3.2
 
@@ -270,4 +275,5 @@ cp -a binaries/data/* %buildroot%_datadir/0ad/
 
 * Wed Sep 12 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:0.0.11.alpha-alt1
 - build 0.0.11 from scratch
+
 
