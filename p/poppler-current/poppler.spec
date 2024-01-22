@@ -46,7 +46,7 @@
 %endif
 Name: %pkgname
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %if_disabled compat
 %define poppler_devel lib%rname-devel
@@ -105,6 +105,7 @@ BuildRequires: libgtk+3-gir-devel libgtk+3-devel
 BuildRequires: libopenjpeg2.0-devel openjpeg-tools2.0
 BuildRequires: libxml2-devel gtk-doc libcairo-gobject-devel
 BuildRequires: libXt-devel poppler-data
+BuildRequires: boost-devel libgpgme-devel
 
 %description
 Poppler is a fork of the xpdf PDF viewer developed by Derek Noonburg
@@ -316,7 +317,7 @@ export QT4DIR=%_qt4dir
 %cmake \
     -DSHARE_INSTALL_DIR=%_datadir \
     -DBUILD_SHARED_LIBS=ON \
-    -DENABLE_BOOST=OFF \
+    -DENABLE_GPGME=ON \
     -DENABLE_LIBCURL=ON \
     -DENABLE_ZLIB=OFF \
     -DENABLE_CMS=lcms2 \
@@ -439,6 +440,10 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
+* Mon Jan 22 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.0-alt2
+- build with gpgme
+- don't disable boost
+
 * Wed Jan 17 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.0-alt1
 - new version
 
