@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.2.3
-Release: alt4
+Release: alt5
 
 Summary: Utilities for testing Sphinx extensions
 
@@ -16,9 +16,12 @@ BuildArch: noarch
 
 # Source-url: %__pypi_url %oname
 Source: %oname-%version.tar
+Patch: sphinxtesters-0.2.3-configparser-alt-fix.patch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-docutils
@@ -30,12 +33,13 @@ Sphinxtesters - utilities for testing Sphinx extensions.
 
 %prep
 %setup -n %oname-%version
+%patch -p2
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %python3_prune
 
 %check
@@ -45,10 +49,13 @@ py.test3 -vv -k 'not test_bad_pagebuilder'
 %files
 %doc LICENSE README.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 
 %changelog
+* Mon Jan 22 2024 Anton Vyatkin <toni@altlinux.org> 0.2.3-alt5
+- Fixed FTBFS.
+
 * Fri Apr 07 2023 Anton Vyatkin <toni@altlinux.org> 0.2.3-alt4
 - Fix BuildRequires
 
