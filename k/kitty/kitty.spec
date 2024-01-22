@@ -2,7 +2,7 @@
 %def_with check
 
 Name: kitty
-Version: 0.31.0
+Version: 0.32.0
 Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
@@ -143,6 +143,14 @@ sed -i -e "s/-D_FORTIFY_SOURCE=2//" setup.py
 # Disable strip for kitten binary
 sed -i -e "/ld_flags.append('-s')/d" -e "s/ld_flags.append('-w')/pass/" setup.py
 
+# Fix arm detection
+sed -i -e "/is_arm/ s/'aarch64'/'aarch64', 'armv8l'/" setup.py
+
+# Disable fcf-protection on unsupported architectures
+%ifarch %ix86 ppc64le
+sed -i -e "s/-fcf-protection=full//" setup.py
+%endif
+
 %build
 %add_optflags -Wno-switch
 export CFLAGS="${CFLAGS:-%optflags}"
@@ -203,6 +211,9 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %_bindir/kitten
 
 %changelog
+* Mon Jan 22 2024 Egor Ignatov <egori@altlinux.org> 0.32.0-alt1
+- new version 0.32.0
+
 * Wed Nov 08 2023 Egor Ignatov <egori@altlinux.org> 0.31.0-alt1
 - new version 0.31.0
 
