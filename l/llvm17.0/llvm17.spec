@@ -8,7 +8,7 @@
 
 %global v_major 17
 %global v_majmin %v_major.0
-%global v_full %v_majmin.3
+%global v_full %v_majmin.6
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -107,7 +107,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt6
+Release: alt1
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -169,6 +169,7 @@ BuildRequires: python3-module-myst-parser zip zlib-devel binutils-devel ninja-bu
 %if_with lldb_contrib
 BuildRequires: pkgconfig(libedit)
 BuildRequires: pkgconfig(ncursesw)
+BuildRequires: pkgconfig(liblzma)
 BuildRequires: pkgconfig(libxml-2.0)
 #BuildRequires: pkgconfig(lua)
 BuildRequires: swig-devel
@@ -1479,6 +1480,10 @@ ninja -C %builddir check-all || :
 %_datadir/cmake/Modules/*
 
 %changelog
+* Sun Jan 21 2024 L.A. Kostis <lakostis@altlinux.ru> 17.0.6-alt1
+- 17.0.6.
+  BR: build lldb with lzma support.
+
 * Tue Jan 09 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 17.0.3-alt6
 - NMU: fixed FTBFS on LoongArch: libomptarget is not supported here (but
   surprisingly it's not completely disabled either).
