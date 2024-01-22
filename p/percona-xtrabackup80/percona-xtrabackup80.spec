@@ -8,7 +8,7 @@
 Summary: Online backup for InnoDB/XtraDB in MySQL, Percona Server and MariaDB
 Name: percona-xtrabackup%pxbu_major_minor
 Version: 8.0.35
-Release: alt1
+Release: alt2
 License: GPLv2 and LGPLv2
 Url: http://www.percona.com/software/percona-xtrabackup/
 Group: Databases
@@ -48,7 +48,6 @@ sed -i "/using __base/{N;N;s/^.*using __base.*EncodeBase.*friend __base.*$/Encod
 mkdir -p %_build/../libboost
 cp %SOURCE1 %_build/../libboost/
 tar xfv %SOURCE2 -C extra
-pathfix.py -pni "%__python3 -s" . ./storage/innobase/xtrabackup/test/subunit2junitxml
 
 %build
 %cmake -DWITH_BOOST=libboost -DBUILD_CONFIG=xtrabackup_release -DWITH_PROTOBUF=system \
@@ -95,6 +94,9 @@ rm -rf %buildroot%_libdir/debug/usr/lib64/xtrabackup/plugin
 %_libdir/xtrabackup
 
 %changelog
+* Mon Jan 22 2024 Alexei Takaseev <taf@altlinux.org> 8.0.35-alt2
+- Fix build with python 3.12
+
 * Thu Dec 14 2023 Alexei Takaseev <taf@altlinux.org> 8.0.35-alt1
 - 8.0.35-30
 - Drop percona-xtrabackup80-8.0.33-fix-gcc13.patch fixed in upstream
