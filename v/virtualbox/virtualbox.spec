@@ -65,8 +65,8 @@
 
 
 Name: virtualbox
-Version: 7.0.12
-Release: alt5
+Version: 7.0.14
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -914,6 +914,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Wed Jan 17 2024 Valery Sinelnikov <greh@altlinux.org> 7.0.14-alt1
+- Update to newest version 7.0.14
+
 * Fri Dec 22 2023 Valery Sinelnikov <greh@altlinux.org> 7.0.12-alt5
 - Fix build with libxml2(Closes: 48893)
 

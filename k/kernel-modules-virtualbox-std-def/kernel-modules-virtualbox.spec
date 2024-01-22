@@ -1,7 +1,7 @@
 %define module_name	virtualbox
-%define module_version	7.0.12
+%define module_version	7.0.14
 
-%define module_release	alt2
+%define module_release	alt1
 
 %define drv_module_name	vboxdrv
 %define pci_module_name	vboxpci
@@ -118,6 +118,9 @@ install -pD -m644 kernel-source-%net_module_adaptor_name-%module_version/vboxnet
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Jan 17 2024 Valery Sinelnikov <greh@altlinux.org> 7.0.14-alt1                                                                                                                           
+- Updated template for virtualbox 7.0.14
 
 * Fri Oct 20 2023 Valery Sinelnikov <greh@altlinux.org> 7.0.12-alt2
 - Merge branch 'p10'
