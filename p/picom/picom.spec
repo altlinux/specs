@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: picom
-Version: 10.2
-Release: alt2
+Version: 11
+Release: alt1
 Summary: A lightweight compositor for X11
 License: MPL-2.0 or MIT
 Group: System/X11
@@ -19,7 +19,6 @@ BuildRequires: meson
 BuildRequires: libX11-devel
 BuildRequires: libXext-devel
 BuildRequires: libconfig-devel
-BuildRequires: libpcre-devel
 BuildRequires: libGL-devel
 BuildRequires: libdbus-devel
 BuildRequires: libev-devel
@@ -28,6 +27,8 @@ BuildRequires: pkgconfig(xcb-renderutil)
 BuildRequires: pkgconfig(xcb-image)
 BuildRequires: pkgconfig(pixman-1)
 BuildRequires: pkgconfig(libxdg-basedir)
+BuildRequires: pkgconfig(xcb-util)
+BuildRequires: pkgconfig(libpcre2-8)
 
 %description
 This is forked from the original Compton because it seems to have become
@@ -67,6 +68,9 @@ sed -i "/#warning Use of -ffast-math/s/#warning/#error/" src/utils.h
 %_man1dir/*
 
 %changelog
+* Mon Jan 22 2024 Anton Midyukov <antohami@altlinux.org> 11-alt1
+- new version 11
+
 * Thu Jan 11 2024 Fr. Br. George <george@altlinux.ru> 10.2-alt2
 - Add manpages build
 
