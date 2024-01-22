@@ -120,8 +120,8 @@
 %endif
 
 Name:    samba
-Version: 4.19.3
-Release: alt2
+Version: 4.19.4
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2212,6 +2212,24 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Tue Jan 16 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.19.4-alt1
+- Update to stable release of Samba 4.19
+- Fixes from upstream:
+  + net changesecretpw cannot set the machine account password if secrets.tdb
+    is empty (Samba#13577).
+  + Following intermediate abolute share-local symlinks is broken (Samba#15505).
+    ctdb RELEASE_IP causes a crash in release_ip if a connection to a non-public
+    address disconnects first (Samba#15523).
+  + shadow_copy2 broken when current fileset's directories are removed (Samba#15544).
+  + 'force user = localunixuser' doesn't work if 'allow trusted domains = no'
+    is set (Samba#15469).
+  + smbget: debug logging doesn't work (Samba#15525), username in the smburl and
+    interactive password entry doesn't work (Samba#15532), auth function doesn't
+    set values for password prompt correctly (Samba#15538).
+  + Unable to copy and write files from clients to Ceph cluster via SMB Linux
+    gateway with Ceph VFS module (Samba#15440).
+  + Multichannel refresh network information (Samba#15547).
+
 * Tue Dec 12 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.19.3-alt2
 - Replace samba service pam config to samba-common due regression with password
   authentication in security = user mode with obey pam restrictions = yes.
