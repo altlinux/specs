@@ -1,5 +1,5 @@
 Name: hypnotix
-Version: 3.6
+Version: 4.3
 Release: alt1
 Summary: An M3U IPTV Player
 License: GPL-2.0-or-later
@@ -53,6 +53,9 @@ cp -r usr %buildroot
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Mon Jan 22 2024 Artyom Bystrov <arbars@altlinux.org> 4.3-alt1
+- New version
+
 * Fri Sep  1 2023 Artyom Bystrov <arbars@altlinux.org> 3.6-alt1
 - New version
 
