@@ -1,7 +1,8 @@
-%define  modulename sphinx-issues
+%define  modulename sphinx_issues
+%define  origname sphinx-issues
 
-Name:    python3-module-%modulename
-Version: 3.0.1
+Name:    python3-module-%origname
+Version: 4.0.0
 Release: alt1
 
 Summary: A Sphinx extension for linking to your project's issue tracker
@@ -12,11 +13,12 @@ URL:     https://github.com/sloria/sphinx-issues
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3-dev python3-module-wheel
+BuildRequires: python3-module-flit-core
 
 BuildArch: noarch
 
-Source:  %modulename-%version.tar
+Source: %origname-%version.tar
 
 %description
 A Sphinx extension for linking to your project's issue tracker. Includes
@@ -24,19 +26,23 @@ roles for linking to issues, pull requests, user profiles, with built-in
 support for GitHub (though this works with other services).
 
 %prep
-%setup -n %modulename-%version
+%setup -n %origname-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc README.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%modulename
+%python3_sitelibdir/%{pyproject_distinfo %modulename}
 
 %changelog
+* Mon Jan 22 2024 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt1
+- New version.
+
 * Fri Jan 14 2022 Andrey Cherepanov <cas@altlinux.org> 3.0.1-alt1
 - New version.
 
