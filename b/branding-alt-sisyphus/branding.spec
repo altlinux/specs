@@ -14,21 +14,16 @@
 %define altbranch %_priority_distbranch
 
 Name: branding-%flavour
-Version: 20240112
+Version: 20240122
 Release: alt1
 
 Url: http://en.altlinux.org
 
 BuildRequires(pre): rpm-macros-branding
 
-BuildRequires: cpio fonts-ttf-dejavu
-
+BuildRequires: fonts-ttf-dejavu
 BuildRequires: qt5-base-devel
-BuildRequires: libalternatives-devel
-
-BuildRequires: ImageMagick fontconfig bc libGConf-devel
-BuildRequires: fribidi
-
+BuildRequires: ImageMagick-tools
 BuildRequires: distro-licenses >= 1.3.1
 
 %define Theme Sisyphus
@@ -52,13 +47,10 @@ Distro-specific packages with design and texts
 
 %package bootloader
 Group: System/Configuration/Boot and Init
-Summary: Graphical boot logo for grub2, lilo and syslinux
+Summary: Graphical theme for grub2
 License: GPL
+ExcludeArch: %e2k %arm ppc64le mipsel
 
-%ifarch %ix86 x86_64
-BuildRequires: gfxboot >= 4
-%endif #ifarch
-BuildRequires: design-bootloader-source >= 5.0-alt2
 Requires: coreutils
 Provides: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-altlinux-%theme-bootloader
 
@@ -69,8 +61,7 @@ Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme desig
 %define grub_high black/white
 
 %description bootloader
-Here you find the graphical boot logo.
-Suitable for grub2, lilo and syslinux.
+%summary.
 
 %package bootsplash
 Summary: Theme for splash animations during bootup
@@ -184,16 +175,6 @@ Requires(post): indexhtml-common
 %description indexhtml
 ALT index.html welcome page.
 
-%package xfce-settings
-
-Summary: XFCE settings for %Brand %version %Theme
-License: Distributable
-Group: Graphical desktop/XFce
-%branding_add_conflicts %flavour xfce-settings
-
-%description xfce-settings
-XFCE settings for %Brand %version %Theme
-
 %prep
 %setup -n branding
 cp /usr/share/distro-licenses/ALT_Regular_License/license.{all,ru}.html.in notes/
@@ -240,20 +221,7 @@ popd
 mkdir -p %buildroot/usr/share/install2/slideshow
 install slideshow/* %buildroot/usr/share/install2/slideshow/
 
-# xfce-settings
-pushd xfce-settings
-mkdir -p %buildroot/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml
-mkdir -p %buildroot/etc/skel/.config/xfce4/panel
-mkdir -p %buildroot/etc/skel/.config/autostart
-cp -r etcskel/.config/xfce4/xfconf/xfce-perchannel-xml/* %buildroot/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml
-cp -r etcskel/.config/xfce4/panel/* %buildroot/etc/skel/.config/xfce4/panel
-cp -r etcskel/.config/autostart/* %buildroot/etc/skel/.config/autostart
-popd
-
 #bootloader
-%pre bootloader
-[ -s /usr/share/gfxboot/%theme ] && rm -fr /usr/share/gfxboot/%theme ||:
-
 %post bootloader
 . shell-config
 shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.txt
@@ -267,9 +235,6 @@ shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER ''
 %_sbindir/indexhtml-update
 
 %files bootloader
-%ifarch %ix86 x86_64
-%_datadir/gfxboot/%theme
-%endif #ifarch
 /boot/grub/themes/%theme
 
 #bootsplash
@@ -312,11 +277,13 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %indexhtmldir/images
 %_desktopdir/indexhtml.desktop
 
-%files xfce-settings
-%_sysconfdir/skel/.config/xfce4
-%_sysconfdir/skel/.config/autostart/*
-
 %changelog
+* Mon Jan 22 2024 Anton Midyukov <antohami@altlinux.org> 20240122-alt1
+- Drop gfxboot for syslinux
+- Remove xfce-settings subpackage
+- spec: update BR
+- spec: bootloader: exclude unsupported architectures; update description
+
 * Fri Jan 12 2024 Anton Midyukov <antohami@altlinux.org> 20240112-alt1
 - notes: clean word 'distribution'
 - do not copy indexhtml to alt-notes
