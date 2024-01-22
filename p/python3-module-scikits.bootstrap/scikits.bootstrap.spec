@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Summary: Bootstrap confidence interval estimation routines for Numpy/Scipy/Pandas
 License: BSD-3-Clause
@@ -16,10 +16,12 @@ VCS: https://github.com/cgevans/scikits-bootstrap.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-erf
-BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest
 %endif
 
 %py3_provides %oname
@@ -38,16 +40,16 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 %ifnarch %ix86
-%tox_check
+%pyproject_run_pytest -v
 %else
-%tox_check -- -k 'not test_abc_simple'
+%pyproject_run_pytest -v -k 'not test_abc_simple'
 %endif
 
 %if "%python3_sitelibdir" != "%python3_sitelibdir_noarch"
@@ -58,9 +60,12 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %files
 %doc LICENSE *.md
 %python3_sitelibdir/%mname
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Jan 22 2024 Anton Vyatkin <toni@altlinux.org> 1.1.0-alt2
+- Fixed FTBFS.
+
 * Tue Mar 14 2023 Anton Vyatkin <toni@altlinux.org> 1.1.0-alt1
 - New version 1.1.0.
 
