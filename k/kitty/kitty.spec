@@ -3,7 +3,7 @@
 
 Name: kitty
 Version: 0.32.0
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
 License: GPL-3.0
@@ -173,6 +173,10 @@ cp -r ./linux-package %buildroot%_prefix
 %buildroot%_bindir/kitten __complete__ setup fish | \
     install -Dm644 /dev/stdin %buildroot%_datadir/fish/vendor_completions.d/kitty.fish
 
+%buildroot%_bindir/kitty \
+    +runpy 'from kitty.config import *; print(commented_out_default_config())' \
+    | install -Dm644 /dev/stdin %buildroot%_datadir/kitty/kitty.conf.default
+
 
 %check
 %ifarch ppc64le
@@ -191,8 +195,8 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %files
 %_bindir/kitty
 %_libexecdir/kitty/
+%_datadir/kitty/
 %exclude %_libexecdir/kitty/shell-integration
-
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/*
 %_man1dir/*
@@ -211,6 +215,9 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %_bindir/kitten
 
 %changelog
+* Mon Jan 22 2024 Egor Ignatov <egori@altlinux.org> 0.32.0-alt2
+- package default config file
+
 * Mon Jan 22 2024 Egor Ignatov <egori@altlinux.org> 0.32.0-alt1
 - new version 0.32.0
 
