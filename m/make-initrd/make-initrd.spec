@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.41.0
+Version: 2.42.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -15,7 +15,6 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 %add_debuginfo_skiplist %_libdir/initrd/*
 
 %def_with iscsi
-%def_without bootloader
 
 BuildRequires: autoconf
 BuildRequires: udev
@@ -29,9 +28,6 @@ BuildRequires: liblzma-devel
 BuildRequires: libzstd-devel
 BuildRequires: libelf-devel
 BuildRequires: libtirpc-devel
-
-# bootloader feature
-%{?_with_bootloader:BuildRequires: libiniparser-devel libnewt-devel libslang2-devel}
 
 Provides: make-initrd(crc32c) = 1
 
@@ -239,19 +235,6 @@ AutoReq: noshell, noshebang
 Extra Boot Config (XBC) support for %name.
 
 
-%if_with bootloader
-%package boot
-Summary: Bootloader feature for %name
-Group: System/Base
-Requires: %name = %version-%release
-Requires: kexec-tools
-AutoReq: noshell, noshebang
-
-%description boot
-Make-initrd bootloader feature.
-%endif
-
-
 %package zfs
 Summary: Bootloader feature for %name
 Group: System/Base
@@ -261,6 +244,7 @@ AutoReq: noshell, noshebang
 
 %description zfs
 Make-initrd OpenZFS feature.
+
 
 %package guestfs
 Summary: guestfs feature for %name
@@ -290,7 +274,6 @@ Make-initrd guestfs feature.
 	--libexecdir=%_libexecdir \
 	--with-bootdir=/boot \
 	--with-runtimedir=%_libdir/initrd \
-	--with-kbddir=/lib/kbd \
 	--with-imagename='initrd-$(KERNEL)$(IMAGE_SUFFIX).img' \
 	--with-busybox \
 	--with-libelf \
@@ -298,7 +281,6 @@ Make-initrd guestfs feature.
 	--with-bzip2 \
 	--with-lzma \
 	--with-zstd \
-	%{?_with_bootloader:--with-feature-bootloader} \
 	#
 make
 
@@ -344,7 +326,6 @@ fi
 %exclude %_datadir/%name/features/zfs
 %exclude %_datadir/%name/features/guestfs
 %{?_with_iscsi:%exclude %_datadir/%name/features/iscsi}
-%{?_with_bootloader:%exclude %_datadir/%name/features/bootloader}
 %doc Documentation/*.md
 
 %files devmapper
@@ -393,12 +374,6 @@ fi
 %files bootconfig
 %_datadir/%name/features/bootconfig
 
-%if_with bootloader
-%files boot
-%_libexecdir/%name/features/bootloader
-%_datadir/%name/features/bootloader
-%endif
-
 %files zfs
 %_datadir/%name/features/zfs
 
@@ -407,6 +382,18 @@ fi
 %config(noreplace) %_sysconfdir/initrd.mk.d/guestfs.mk.example
 
 %changelog
+* Mon Jan 22 2024 Alexey Gladkov <legion@altlinux.ru> 2.42.0-alt1
+- New version (2.42.0) (ALT#49122).
+- Feature network:
+  + Do not add this feature by default (ALT#49123).
+- Feature system-glibc:
+  + Do not add this feature by default (ALT#49123).
+- Feature lkrg:
+  + Fix service permissions.
+- Remove features:
+  + raid, ide-to-scsi, scsi-to-ide, debug-procacct, kbd (ALT#49123).
+- Remove spawn-shell.
+
 * Thu Jan 18 2024 Alexey Gladkov <legion@altlinux.ru> 2.41.0-alt1
 - New version (2.41.0).
 - Feature pipeline:
