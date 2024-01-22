@@ -6,9 +6,6 @@
 # in release version
 %def_with check
 
-# Turn on while every major update
-%def_without bootstrap
-
 %define _unpackaged_files_terminate_build 1
 
 # Below the same shorthands as in Redhat's spec are definied,
@@ -95,7 +92,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %def_with desktop_file
 
 Name: python3
-Version: %{pybasever}.0
+Version: %{pybasever}.1
 Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
@@ -107,8 +104,6 @@ Url: http://www.python.org/
 # New common location for site-packages is supported since 0.1.9.
 # %%python3_ABI_dep is defined since 0.1.9.1.
 # The path macros brought in sync in 0.1.9.2.
-# %%__libpython3 macro is defined and used for the verify_elf trick
-# since 0.1.9.3.
 BuildRequires(pre): rpm-build-python3 >= 0.1.9.3
 # for %%valgrind_arches macro
 BuildRequires(pre): rpm-macros-valgrind
@@ -134,8 +129,6 @@ BuildRequires: zlib-devel libuuid-devel libnsl2-devel
 %add_python3_path %pylibdir
 #Do not recompile .py files with old python3
 %add_python3_compile_exclude %pylibdir
-# Help verify_elf:
-%global __libpython3 %buildroot%__libpython3
 
 Source: %name-%version.tar
 
@@ -170,7 +163,7 @@ Patch1011: python3-ignore-env-trust-security.patch
 # Replaces absolute import with relative ones.
 Patch1012: python3-lib2to3-import.patch
 
-Patch1013: python3-revert-gh-98040-Remove-just-the-imp-module.patch
+Patch1013: python3-bring-back-imp-module.patch
 
 # ======================================================
 # Additional metadata, and subpackages
@@ -318,6 +311,7 @@ Requires: %name-modules-sqlite3 = %EVR
 Requires: %name-tools = %EVR
 %add_python3_req_skip test.test_warnings.data msvcrt _winapi winreg
 %add_python3_self_prov_path %buildroot%pylibdir/test/test_import/
+%add_python3_self_prov_path %buildroot%pylibdir/test/regrtestdata/import_from_tests/test_regrtest_b/
 
 %description test
 The test modules from the main %name package.
@@ -358,7 +352,7 @@ rm -r Modules/_decimal/libmpdec || exit 1
 
 %patch1012 -p2
 
-%patch1013 -p1
+%patch1013 -p2
 
 %ifarch %e2k
 # add e2k arch
@@ -600,7 +594,7 @@ rm -v %buildroot%pylibdir/test/test_asyncio/{,__pycache__/}test_windows_utils*.p
 rm -v %buildroot%pylibdir/test/{,__pycache__/}test_winconsoleio*.py*
 rm -v %buildroot%pylibdir/test/{,__pycache__/}test_msilib*.py*
 # Get rid of bad* tests
-rm -v %buildroot%pylibdir/test/bad*.py
+rm -v %buildroot%pylibdir/test/test_future_stmt/bad*.py
 # Get rid of crap
 rm -v -r %buildroot%pylibdir/ctypes/macholib/fetch_macholib
 
@@ -1042,6 +1036,9 @@ $(pwd)/python -m test.regrtest \
 %tool_dir/scripts/run_tests.py
 
 %changelog
+* Fri Jan 19 2024 Grigory Ustinov <grenka@altlinux.org> 3.12.1-alt1
+- Updated to upstream version 3.12.1.
+
 * Fri Nov 03 2023 Grigory Ustinov <grenka@altlinux.org> 3.12.0-alt1
 - Updated to upstream version 3.12.0.
 
