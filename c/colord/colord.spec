@@ -11,8 +11,8 @@
 %def_enable systemd
 
 # ArgyllCMS required fot build
-%def_disable argyllcms_sensor
-%def_disable print_profiles
+%def_enable argyllcms_sensor
+%def_enable print_profiles
 
 %def_enable docs
 %def_disable check
@@ -26,7 +26,7 @@
 %define _localstatedir %_var
 
 Name: colord
-Version: 1.4.6
+Version: 1.4.7
 Release: alt1
 
 Summary: Color daemon
@@ -319,6 +319,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Mon Jan 22 2024 Yuri N. Sedunov <aris@altlinux.org> 1.4.7-alt1
+- 1.4.7
+- enabled ArgyllCMS support again
+
 * Mon Feb 28 2022 Yuri N. Sedunov <aris@altlinux.org> 1.4.6-alt1
 - 1.4.6
 
