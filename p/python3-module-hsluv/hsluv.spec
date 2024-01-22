@@ -1,7 +1,7 @@
 #%%def_disable check
 
 Name: python3-module-hsluv
-Version: 5.0.3
+Version: 5.0.4
 Release: alt1
 Summary: Human-friendly HSL
 License: MIT
@@ -45,5 +45,8 @@ pytest3 -v
 %python3_sitelibdir/hsluv-%version.dist-info
 
 %changelog
+* Mon Jan 22 2024 Anton Midyukov <antohami@altlinux.org> 5.0.4-alt1
+- new version (5.0.4) with rpmgs script
+
 * Mon Jun 12 2023 Anton Midyukov <antohami@altlinux.org> 5.0.3-alt1
 - initial build
