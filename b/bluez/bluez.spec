@@ -12,7 +12,7 @@
 %global optflags_lto %nil
 
 Name: bluez
-Version: 5.71
+Version: 5.72
 Release: alt1
 
 Summary: Bluetooth utilities
@@ -202,6 +202,9 @@ fi
 %_datadir/zsh/site-functions/_bluetoothctl
 
 %changelog
+* Mon Jan 22 2024 L.A. Kostis <lakostis@altlinux.ru> 5.72-alt1
+- 5.72.
+
 * Tue Jan 09 2024 L.A. Kostis <lakostis@altlinux.ru> 5.71-alt1
 - 5.71.
 - Disable LTO due failed tests.
