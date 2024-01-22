@@ -7,7 +7,7 @@
 %global import_path k8s.io/minikube
 
 Name: minikube
-Version: 1.31.2
+Version: 1.32.0
 Release: alt1
 
 Summary: Run Kubernetes locally
@@ -50,9 +50,9 @@ export BUILDDIR="$PWD/.build"
 export IGNORE_SOURCES=1
 %golang_install
 
-%__mkdir_p %buildroot%bash_completionsdir
-%__mkdir_p %buildroot%fish_completionsdir
-%__mkdir_p %buildroot%zsh_completionsdir
+mkdir -p %buildroot%bash_completionsdir
+mkdir -p %buildroot%fish_completionsdir
+mkdir -p %buildroot%zsh_completionsdir
 
 %buildroot%_bindir/%name completion bash > %buildroot%bash_completionsdir/%name
 %buildroot%_bindir/%name completion fish > %buildroot%fish_completionsdir/%name.fish
@@ -65,6 +65,10 @@ export IGNORE_SOURCES=1
 %zsh_completionsdir/_%name
 
 %changelog
+* Mon Jan 22 2024 Alexander Stepchenko <geochip@altlinux.org> 1.32.0-alt1
+- 1.31.2 -> 1.32.0 (ALT #49047)
+- Drop the %%__mkdir_p macro.
+
 * Wed Sep 13 2023 Anton Zhukharev <ancieg@altlinux.org> 1.31.2-alt1
 - Updated to 1.31.2.
 - Stopped packaging shell completions subpackages.
