@@ -9,7 +9,7 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 0.34.2
+Version: 0.34.3
 Release: alt1
 
 Summary: Highly concurrent networking library
@@ -22,6 +22,8 @@ Url: https://pypi.org/project/eventlet/
 Source: %name-%version.tar
 
 BuildArch: noarch
+
+Requires: python3-module-dns
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
@@ -140,6 +142,9 @@ and not test_full_duplex"
 %endif
 
 %changelog
+* Mon Jan 22 2024 Anton Vyatkin <toni@altlinux.org> 0.34.3-alt1
+- new version 0.34.3
+
 * Fri Dec 29 2023 Anton Vyatkin <toni@altlinux.org> 0.34.2-alt1
 - new version 0.34.2
 
