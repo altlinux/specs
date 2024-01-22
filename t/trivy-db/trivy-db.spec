@@ -1,6 +1,6 @@
 Name:    trivy-db
 Version: 20231228
-Release: alt4
+Release: alt5
 
 Summary: Database for Trivy
 License: Apache-2.0
@@ -28,7 +28,7 @@ useradd -M -r -d %_sharedstatedir/%name -g _trivy -s /dev/null -c "Trivy service
 
 %post
 SYSTEMCTL_BIN=systemctl
-if sd_booted && [ "$SYSTEMCTL_BIN" -q is-active trivy ]; then
+if sd_booted && "$SYSTEMCTL_BIN" -q is-active trivy ; then
         %post_systemd_postponed trivy
 fi
 
@@ -39,6 +39,9 @@ fi
 %attr(0644,_trivy,_trivy) %_sharedstatedir/trivy/db/*
 
 %changelog
+* Mon Jan 22 2024 Alexey Shabalin <shaba@altlinux.org> 20231228-alt5
+- Fix post script
+
 * Fri Jan 12 2024 Alexey Shabalin <shaba@altlinux.org> 20231228-alt4
 - Restart trivy service if active only
 
