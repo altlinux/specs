@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.18.0
-Release: alt1
+Release: alt2
 
 Summary: Fuzzy string matching in Python
 License: GPL-2.0
@@ -17,10 +17,13 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-hypothesis
 BuildRequires: python3-module-pycodestyle
 BuildRequires: python3-module-Levenshtein
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -31,22 +34,24 @@ the differences between sequences in a simple-to-use package.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check -- -k 'not test_process_warning'
+%pyproject_run_pytest -k 'not test_process_warning'
 
 %files
 %doc LICENSE.txt *.rst
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 
 %changelog
+* Tue Jan 23 2024 Anton Vyatkin <toni@altlinux.org> 0.18.0-alt2
+- Fix FTBFS.
+
 * Wed Mar 29 2023 Anton Vyatkin <toni@altlinux.org> 0.18.0-alt1
 - New version 0.18.0.
 
