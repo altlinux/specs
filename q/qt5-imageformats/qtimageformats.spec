@@ -6,7 +6,7 @@
 %def_disable fmt_jp2
 
 Name: qt5-imageformats
-Version: 5.15.11
+Version: 5.15.12
 Release: alt1
 
 Group: System/Libraries
@@ -15,13 +15,14 @@ Url: http://qt.io/
 License: LGPLv2 / GPLv3
 
 Requires: %name-common = %EVR
+Requires: qt5-svg
 
 Source: %qt_module-everywhere-src-%version.tar
 
 # Automatically added by buildreq on Tue Jun 03 2014 (-bi)
 # optimized out: elfutils libGL-devel libcloog-isl4 libjpeg-devel libqt5-clucene libqt5-core libqt5-gui libqt5-help libqt5-network libqt5-sql libqt5-widgets libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-declarative-devel qt5-tools ruby ruby-stdlibs zlib-devel
 #BuildRequires: gcc-c++ glibc-devel-static libjasper-devel libmng-devel libtiff-devel libwebp-devel python-module-protobuf qt5-script-devel qt5-tools-devel qt5-webkit-devel qt5-xmlpatterns-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-ubt rpm-macros-qt5 qt5-tools
+BuildRequires(pre): rpm-macros-qt5 qt5-tools
 BuildRequires: gcc-c++ glibc-devel libtiff-devel libwebp-devel qt5-base-devel
 %{?_enable_fmt_jp2:BuildRequires: libjasper-devel}
 %{?_enable_fmt_mng:BuildRequires: libmng-devel}
@@ -85,6 +86,9 @@ export QT_HASH_SEED=0
 %endif
 
 %changelog
+* Wed Jan 10 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.12-alt1
+- new version
+
 * Wed Nov 22 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.11-alt1
 - new version
 
@@ -151,31 +155,31 @@ export QT_HASH_SEED=0
 * Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
 - new version
 
-* Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
+* Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1
 - new version
 
-* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1%ubt
+* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1
 - new version
 
-* Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1%ubt
+* Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1
 - new version
 
-* Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
+* Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1
 - new version
 
-* Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
+* Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1
 - new version
 
-* Tue Dec 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
+* Tue Dec 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1
 - new version
 
-* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1
 - new version
 
-* Fri May 12 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt2%ubt
+* Fri May 12 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt2
 - rebuild with new libmng
 
-* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
+* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1
 - new version
 
 * Thu Oct 20 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt1.M80P.1

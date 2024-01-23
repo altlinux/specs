@@ -2,7 +2,7 @@
 %global qt_module qtwebview
 
 Name: qt5-webview
-Version: 5.15.11
+Version: 5.15.12
 Release: alt1
 
 Group: System/Libraries
@@ -93,6 +93,9 @@ syncqt.pl-qt5 -version %version
 %_qt5_examplesdir/*
 
 %changelog
+* Wed Jan 10 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.12-alt1
+- new version
+
 * Wed Nov 22 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.11-alt1
 - new version
 

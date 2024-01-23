@@ -36,8 +36,8 @@
 %define gname  qt5
 Name: qt5-base
 %define major  5
-Version: 5.15.11
-Release: alt2
+Version: 5.15.12
+Release: alt1
 %if "%version" == "%{get_version qt5-tools-common}"
 %def_disable bootstrap
 %else
@@ -867,6 +867,9 @@ make check -k ||:
 
 
 %changelog
+* Wed Jan 10 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.12-alt1
+- new version
+
 * Mon Dec 04 2023 Aleksei Kalinin <kaa@altlinux.org> 5.15.11-alt2
 - NMU: added workaround related to python3-module-PySide2 package
 

@@ -20,6 +20,7 @@
 %else
 %def_disable no_sse2
 %endif
+%def_disable python3
 
 %define ffmpeg_ver %{get_version libavformat-devel}
 #define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
@@ -30,7 +31,7 @@
 %endif
 
 Name: qt5-webengine
-Version: 5.15.15
+Version: 5.15.16
 Release: alt2
 
 Group: System/Libraries
@@ -97,7 +98,11 @@ BuildRequires: libdrm-devel gyp libudev-devel libxml2-devel jsoncpp-devel liblcm
 BuildRequires: libopus-devel libpci-devel libpng-devel libprotobuf-devel libpulseaudio-devel libre2-devel libsnappy-devel libsrtp2-devel
 BuildRequires: libwebp-devel libxslt-devel ninja-build protobuf-compiler libva-devel libvdpau-devel
 BuildRequires: node-yargs node-terser
+%if_enabled python3
+BuildRequires: python3-devel python3(six.moves)
+%else
 BuildRequires: python-devel python-modules-json
+%endif
 BuildRequires: qt5-connectivity-devel qt5-multimedia-devel qt5-script-devel qt5-sensors-devel qt5-serialport-devel qt5-svg-devel qt5-tools-devel
 BuildRequires: qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel qt5-declarative-devel qt5-location-devel qt5-webchannel-devel
 BuildRequires: qt5-phonon-devel
@@ -210,9 +215,11 @@ popd
 %patch41 -p1
 %patch42 -p1
 %patch43 -p1
+%if_enabled python3
 %patch44 -p1
 %patch45 -p1
 %patch46 -p1
+%endif
 %patch47 -p1
 %patch48 -p1
 %patch49 -p1
@@ -274,7 +281,12 @@ popd
 
 # generate qtwebengine-3rdparty.qdoc, it is missing from the tarball
 pushd src/3rdparty
-%__python chromium/tools/licenses.py \
+%if_enabled python3
+%__python3 \
+%else
+%__python \
+%endif
+  chromium/tools/licenses.py \
   --file-template ../../tools/about_credits.tmpl \
   --entry-template ../../tools/about_credits_entry.tmpl \
   credits >../webengine/doc/src/qtwebengine-3rdparty.qdoc
@@ -287,7 +299,11 @@ cp -p src/3rdparty/chromium/LICENSE LICENSE.Chromium
 mkdir -p bin
 ln -s %_bindir/ninja-build bin/ninja
 # fix find system python
+%if_enabled python3
+ln -s %__python3 bin/python
+%else
 ln -s %__python bin/python
+%endif
 
 syncqt.pl-qt5  -version %version
 
@@ -343,9 +359,9 @@ pushd %_target_platform
 %endif
 %if_enabled system_ffmpeg
     QMAKE_EXTRA_ARGS+="-system-webengine-ffmpeg" \
+    QMAKE_EXTRA_ARGS+="-webengine-webrtc-pipewire" \
 %endif
     ..
-#	 QMAKE_EXTRA_ARGS+="-webengine-webrtc-pipewire"
 #(while true; do date; sleep 7m; done) &
 %make_build -Onone
 %if %qdoc_found
@@ -440,6 +456,12 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Mon Jan 22 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt2
+- build with python2
+
+* Wed Jan 10 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt1
+- new version
+
 * Thu Nov 23 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.15-alt2
 - fix to build with icu-74
 
