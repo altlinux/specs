@@ -1,6 +1,6 @@
 Name: codeblocks
 Version: 20.03
-Release: alt9
+Release: alt10
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
 Summary(ru_RU.UTF-8): Code::Blocks это кросс-платформенная свободная среда разработки для C++ с открытым исходным кодом
@@ -39,6 +39,7 @@ Patch14: 29315df024251850832583f73e67e515dae10830.patch
 Patch15: 46720043319758cb0e798eb23520063583c40eaa.patch
 # Fix Assert failure when exit program first time
 Patch16: f700ec868532f4fd6784702ba086d900189864e8.patch
+Patch17: codeblocks-smartindent-notparallel.patch
 
 Requires: automake >= 1.7 libwxGTK3.2 gcc gcc-c++ gdb xterm gamin mythes-en
 
@@ -107,6 +108,7 @@ cp %SOURCE4 .
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
 
 # https://sourceforge.net/p/codeblocks/tickets/936/
 sed -ri '/^\s+#pragma implementation/ s,cbkeybinder,cbKeyConfigPanel,' src/plugins/contrib/keybinder/cbkeyConfigPanel.cpp
@@ -260,16 +262,7 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_datadir/%name/images/48x48/*
 %_datadir/%name/images/56x56/*
 %_datadir/%name/images/64x64/*
-%_datadir/%name/images/fortranproject/*
-%_datadir/%name/images/fortranproject/16x16/*
-%_datadir/%name/images/fortranproject/20x20/*
-%_datadir/%name/images/fortranproject/24x24/*
-%_datadir/%name/images/fortranproject/28x28/*
-%_datadir/%name/images/fortranproject/32x32/*
-%_datadir/%name/images/fortranproject/40x40/*
-%_datadir/%name/images/fortranproject/48x48/*
-%_datadir/%name/images/fortranproject/56x56/*
-%_datadir/%name/images/fortranproject/64x64/*
+%_datadir/%name/images/fortranproject
 # Fix of post-install unowned files
 %dir %_datadir/%name/images/16x16
 %dir %_datadir/%name/images/20x20
@@ -280,7 +273,6 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %dir %_datadir/%name/images/48x48
 %dir %_datadir/%name/images/56x56
 %dir %_datadir/%name/images/64x64
-%dir %_datadir/%name/images/fortranproject
 
 %_datadir/%name/images/codesnippets
 %_datadir/%name/images/wxsmith
@@ -340,6 +332,9 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_libdir/pkgconfig/wxsmith-contrib.pc
 
 %changelog
+* Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 20.03-alt10
+- Fixed FTBFS.
+
 * Wed Sep 21 2022 Grigory Ustinov <grenka@altlinux.org> 20.03-alt9
 - Fixed build with libwxGTK3.2.
 
