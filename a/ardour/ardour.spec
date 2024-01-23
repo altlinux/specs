@@ -1,6 +1,6 @@
 Name: ardour
 Version: 8.2
-Release: alt1
+Release: alt2
 
 Summary: Professional multi-track audio recording application
 License: GPLv2+
@@ -110,6 +110,9 @@ install -pm0644 -D ardour.1 %buildroot%_man1dir/ardour.1
 install -pm0644 -D gtk2_ardour/resources/Ardour-icon_16px.png %buildroot%_miconsdir/ardour8.png
 install -pm0644 -D gtk2_ardour/resources/Ardour-icon_32px.png %buildroot%_niconsdir/ardour8.png
 install -pm0644 -D gtk2_ardour/resources/Ardour-icon_48px.png %buildroot%_liconsdir/ardour8.png
+install -pm0644 -D tools/udev/surfaces.rules %buildroot%_udevrulesdir/60-ardour-surfaces.rules
+install -pm0644    tools/udev/99-cpu-dma-latency.rules %buildroot%_udevrulesdir/
+
 find %buildroot%_bindir -type l |while read l; do
 	ln -srvf %buildroot/$(readlink $l) $l
 done
@@ -118,6 +121,7 @@ done
 %files -f ardour.lang
 %dir %_sysconfdir/ardour8
 %config(noreplace) %_sysconfdir/ardour8/*
+%_udevrulesdir/*.rules
 %_bindir/ardour8*
 %_libdir/lib*.so.*
 %_libdir/ardour8
@@ -129,6 +133,10 @@ done
 %_man1dir/ardour.1*
 
 %changelog
+* Tue Jan 23 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.2-alt2
+- fixed ftbfs by adding workaround for dated itstool
+- udev rules packaged (closes: 48907)
+
 * Wed Dec 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.2-alt1
 - 8.2 released
 
