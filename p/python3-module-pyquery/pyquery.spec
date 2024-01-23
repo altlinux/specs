@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.0.0
-Release: alt2
+Release: alt3
 
 Summary: A jQuery-like library for python
 License: BSD-3-Clause
@@ -18,11 +18,13 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-cssselect
 BuildRequires: python3-module-lxml
 BuildRequires: python3-module-webtest
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -34,21 +36,27 @@ manipulation.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 # test_selector_html uses XML namespaces, which are broken with libxml2 2.10.4+
-%tox_check -- -k 'not test_get and not test_selector_html'
+# python3.12 https://github.com/gawel/pyquery/issues/249
+%pyproject_run_pytest -v \
+--deselect=pyquery/pyquery.py::pyquery.pyquery.PyQuery.serialize_dict \
+-k 'not test_get and not test_selector_html'
 
 %files
 %doc *.rst *.txt
 %python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/%pypi_name-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Tue Jan 23 2024 Anton Vyatkin <toni@altlinux.org> 2.0.0-alt3
+- Fix FTBFS.
+
 * Thu Apr 27 2023 Anton Vyatkin <toni@altlinux.org> 2.0.0-alt2
 - Fix FTBFS
 
