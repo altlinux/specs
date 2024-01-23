@@ -1,19 +1,28 @@
 %define oname scrypt
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.8.20
-Release: alt2
+Version: 0.8.21
+Release: alt1
 
 Summary: Bindings for the scrypt key derivation function library
 
-Url: https://pypi.org/project/scrypt
 License: BSD-2-Clause
 Group: Development/Python3
+URL: https://pypi.org/project/scrypt
+VCS: https://github.com/holgern/py-scrypt
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libssl-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 This is a set of Python bindings for the scrypt key derivation
@@ -32,17 +41,24 @@ hardware.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_pytest
 
 %files
 %doc README.rst LICENSE
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 0.8.21-alt1
+- Automatically updated to 0.8.21.
+- Build with check.
+
 * Mon Jul 18 2022 Grigory Ustinov <grenka@altlinux.org> 0.8.20-alt2
 - Fix license.
 - Add filter for tags.
