@@ -1,7 +1,7 @@
 %define  oname precis_i18n
 
 Name:    python3-module-%oname
-Version: 1.0.5
+Version: 1.1.0
 Release: alt1
 
 Summary: Python3 implementation of PRECIS framework (RFC 8264, RFC 8265, RFC 8266)
@@ -9,7 +9,8 @@ Summary: Python3 implementation of PRECIS framework (RFC 8264, RFC 8265, RFC 826
 License: MIT
 Group:   Development/Python3
 URL:     https://pypi.org/project/precis-i18n
-# https://github.com/byllyfish/precis_i18n
+VCS:     https://github.com/byllyfish/precis_i18n
+
 Source:  %name-%version.tar
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
@@ -47,11 +48,14 @@ Representing Nicknames (RFC 8266)
 %__python3 setup.py test
 
 %files
+%doc LICENSE.txt *.md
 %python3_sitelibdir/%oname
 %python3_sitelibdir/*.egg-info
-%doc *.rst
 
 %changelog
+* Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
+- Automatically updated to 1.1.0.
+
 * Sat Jan 07 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.5-alt1
 - Automatically updated to 1.0.5.
 
