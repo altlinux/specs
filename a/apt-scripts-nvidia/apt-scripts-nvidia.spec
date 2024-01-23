@@ -1,5 +1,5 @@
 Name: apt-scripts-nvidia
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 
 Summary: APT Lua scripts for NVIDIA driver
@@ -43,6 +43,9 @@ ls *.conf |sed 's:^:^/etc/apt/apt.conf.d/:;s:[.]:[.]:g' >%buildroot/etc/buildreq
 %config /etc/buildreqs/files/ignore.d/%name
 
 %changelog
+* Tue Jan 23 2024 Sergey V Turchin <zerg@altlinux.org> 0.6.1-alt1
+- don't check 32-bit libs is installed
+
 * Wed Sep 18 2019 Sergey V Turchin <zerg@altlinux.org> 0.6.0-alt1
 - add PackageKit support
 
