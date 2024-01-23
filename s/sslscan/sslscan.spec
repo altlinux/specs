@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: sslscan
-Version: 2.1.2
+Version: 2.1.3
 Release: alt1
 Summary: sslscan tests SSL/TLS enabled services to discover supported cipher suites
 License: GPL-3.0-or-later
@@ -45,6 +45,9 @@ grep -q qwerty   a.xml
 %_man1dir/sslscan.1.xz
 
 %changelog
+* Tue Jan 23 2024 Vitaly Chikunov <vt@altlinux.org> 2.1.3-alt1
+- Update to 2.1.3 (2024-01-21).
+
 * Thu Nov 16 2023 Vitaly Chikunov <vt@altlinux.org> 2.1.2-alt1
 - Update to 2.1.2 (2023-11-14).
 
