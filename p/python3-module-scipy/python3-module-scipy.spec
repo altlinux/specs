@@ -11,7 +11,7 @@
 
 Name: python3-module-%modname
 Version: %ver_major.%ver_minor
-Release: alt2
+Release: alt2.1
 
 Summary: SciPy is the library of scientific codes
 License: BSD-3-Clause
@@ -112,8 +112,13 @@ sed -i 's|^\(backend\).*|\1 : Agg|' ~/.matplotlib/matplotlibrc
 # fixup "EML instead of OpenBLAS/LAPACK" setup
 sed -i -e 's/lapack, /clapack, eml_algebra_mt, /g' -e 's/openblas, /blas, /g' site.cfg
 %endif
+%if_without pythran
+sed -i '/use-pythran/s/true/false/' meson_options.txt
+%endif
+%ifnarch %e2k
 # Solution for ALT#48852
 sed -i 's/lapack=openblas/lapack=lapack/' meson.build
+%endif
 
 export SCIPY_USE_PYTHRAN=0%{?with_pythran}
 %add_optflags -I%_includedir/suitesparse -fno-strict-aliasing %optflags_shared
@@ -174,6 +179,9 @@ popd
 %_includedir/%modname-py3
 
 %changelog
+* Tue Jan 23 2024 Michael Shigorin <mike@altlinux.org> 1.11.4-alt2.1
+- E2K: fix build (ilyakurdyukov@).
+
 * Tue Dec 19 2023 Grigory Ustinov <grenka@altlinux.org> 1.11.4-alt2
 - Fixed issue with lapack (Closes: #48852).
 
