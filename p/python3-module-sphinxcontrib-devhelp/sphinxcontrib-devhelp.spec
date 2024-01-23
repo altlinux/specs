@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: A sphinx extension which outputs Devhelp document
@@ -43,11 +43,14 @@ BuildArch: noarch
 %tox_check_pyproject
 
 %files
-%doc README.rst
+%doc LICENSE CHANGES README.rst
 %python3_sitelibdir/sphinxcontrib
 %python3_sitelibdir/sphinxcontrib_devhelp-%version.dist-info
 
 %changelog
+* Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.6-alt1
+- Automatically updated to 1.0.6.
+
 * Mon Sep 11 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.5-alt1
 - Automatically updated to 1.0.5.
 
