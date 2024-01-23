@@ -4,7 +4,7 @@
 
 Name: python3-module-exam
 Version: 0.10.6
-Release: alt4
+Release: alt5
 Summary: Helpers for better testing
 
 License: MIT
@@ -30,6 +30,9 @@ conventions and adhering to the unit testing interface.
 %patch0 -p1
 %patch1 -p1
 
+# hotfix for python3.12
+sed -i 's/assertRaisesRegexp/assertRaisesRegex/' tests/test_asserts.py
+
 %build
 %python3_build
 
@@ -46,6 +49,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 0.10.6-alt5
+- Fixed FTBFS.
+
 * Wed Apr 05 2023 Anton Vyatkin <toni@altlinux.org> 0.10.6-alt4
 - (NMU) Fix BuildRequires.
 
