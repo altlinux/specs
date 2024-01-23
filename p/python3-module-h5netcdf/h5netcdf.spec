@@ -4,14 +4,16 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Pythonic interface to netCDF4 via h5py
-License: BSD
+
+License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/h5netcdf
-# https://github.com/shoyer/h5netcdf.git
+URL: https://pypi.org/project/h5netcdf
+VCS: https://github.com/shoyer/h5netcdf
+
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -55,10 +57,13 @@ tested for compatibility with other netCDF4 interfaces.
 %tox_check_pyproject
 
 %files
-%doc *.rst
+%doc LICENSE *.rst
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
+- Automatically updated to 1.3.0.
+
 * Tue Jun 13 2023 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt1
 - Automatically updated to 1.2.0.
 
