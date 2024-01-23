@@ -1,5 +1,5 @@
 %define ltr libtorrent-rasterbar-devel
-%define rel alt1
+%define rel alt3
 
 Name: qbittorrent
 Version: 4.6.3
@@ -23,13 +23,14 @@ BuildRequires: GeoIP-Lite-Country
 BuildRequires: libnotify-devel
 BuildRequires: zlib-devel
 BuildRequires: gnu-config
+BuildRequires: rpm-build-python3 rpm-macros-python3
 
 %if "%rel" == "alt0.M80P"
 %define ltr libtorrent-rasterbar9-devel
 %endif
 BuildRequires: %ltr
 
-Requires: python-modules-ctypes
+Requires: python3-module-ctypesgen
 Requires: GeoIP-Lite-Country
 
 %description
@@ -105,6 +106,12 @@ make clean
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Jan 23 2024 Ilya Mashkin <oddity@altlinux.ru> 1:4.6.3-alt3
+- Fixed typo in the module name
+
+* Thu Jan 23 2024 Ilya Mashkin <oddity@altlinux.ru> 1:4.6.3-alt2
+- Build with Python3 only (Closes: #49006)
+
 * Thu Jan 18 2024 Ilya Mashkin <oddity@altlinux.ru> 1:4.6.3-alt1
 - 4.6.3
 
