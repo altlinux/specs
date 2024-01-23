@@ -1,10 +1,11 @@
 Name: alterator-module-executor
-Version: 0.1.9
+Version: 0.1.10
 Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
 License: GPL-2
 Group: System/Configuration/Other
+URL: https://gitlab.basealt.space/alt/alterator-module-executor
 
 BuildRequires: cmake gcc
 BuildRequires: libgio-devel libsystemd-devel libpolkit-devel
@@ -33,6 +34,10 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Tue Jan 23 2024 Ivan Savin <svn17@altlinux.org> 0.1.10-alt1
+- Clean line break symbol in end of line for stdout and stderr strings (sin@).
+- Add project URL to spec (sin@).
+
 * Tue Jan 16 2024 Ivan Savin <svn17@altlinux.org> 0.1.9-alt1
 - Add a timeout field for methods. The timeout field contains the period of time
   after which the SIGKILL will be sent to the process.
