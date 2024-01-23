@@ -5,7 +5,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 
 Summary: Python interface to MySQL
@@ -27,6 +27,7 @@ Buildrequires: libmysqlclient21-devel
 %if_with docs
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinx_rtd_theme
 %endif
 
 %description
@@ -97,6 +98,9 @@ py.test-3
 %endif
 
 %changelog
+* Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 2.2.1-alt1
+- Automatically updated to 2.2.1.
+
 * Mon Jul 17 2023 Grigory Ustinov <grenka@altlinux.org> 2.2.0-alt1
 - Automatically updated to 2.2.0.
 
