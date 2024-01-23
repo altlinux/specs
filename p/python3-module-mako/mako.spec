@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%modname
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: template library written in Python
@@ -94,6 +94,9 @@ py.test-3 -v
 %python3_sitelibdir/mako/testing
 
 %changelog
+* Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.1-alt1
+- Automatically updated to 1.3.1.
+
 * Fri Dec 29 2023 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
 - Automatically updated to 1.3.0.
 
