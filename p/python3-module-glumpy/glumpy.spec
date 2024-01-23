@@ -1,16 +1,16 @@
 %define oname glumpy
 
 Name: python3-module-%oname
-Version: 1.2.0
-Release: alt2.2
+Version: 1.2.1
+Release: alt1
 
 Summary: Fast, scalable & beautiful scientific visualisation
 
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/glumpy/
+URL: https://pypi.org/project/glumpy
+VCS: https://github.com/glumpy/glumpy
 
-# https://github.com/glumpy/glumpy.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -104,6 +104,9 @@ cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc doc/_build/html examples
 
 %changelog
+* Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt1
+- Automatically updated to 1.2.1.
+
 * Tue Oct 17 2023 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt2.2
 - Dropped dependency on distutils.
 
