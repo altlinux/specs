@@ -4,7 +4,7 @@
 
 Name: mongo6.0
 Version: 6.0.13
-Release: alt1
+Release: alt2
 Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
 Group: Development/Databases
@@ -30,6 +30,13 @@ BuildRequires: liblzma-devel
 %if_enabled valgrind
 BuildRequires: valgrind-devel
 %endif
+
+BuildRequires: python3-module-bson
+BuildRequires: python3-module-idna
+BuildRequires: python3-module-jsonschema
+BuildRequires: python3-module-memory_profiler
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-typing_extensions
 
 %description
 Mongo (from "huMONGOus") is a schema-free document-oriented database.
@@ -188,6 +195,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Tue Jan 23 2024 Alexei Takaseev <taf@altlinux.org> 6.0.13-alt2
+- Fix build with python 3.12. Use setuptools.
+
 * Tue Jan 16 2024 Alexei Takaseev <taf@altlinux.org> 6.0.13-alt1
 - 6.0.13
 
