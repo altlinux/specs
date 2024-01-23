@@ -1,5 +1,5 @@
 Name: lzlib
-Version: 1.13
+Version: 1.14
 Release: alt1
 
 Summary: The lzlib compression library provides in-memory LZMA compression and decompression functions
@@ -49,6 +49,9 @@ rm -fv %buildroot%_libdir/*.a
 %_infodir/*.info*
 
 %changelog
+* Tue Jan 23 2024 Michael Shigorin <mike@altlinux.org> 1.14-alt1
+- new version (watch file uupdate)
+
 * Mon May 15 2023 Michael Shigorin <mike@altlinux.org> 1.13-alt1
 - new version (watch file uupdate)
 
