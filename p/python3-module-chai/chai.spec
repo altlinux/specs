@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.2
-Release: alt2
+Release: alt3
 Summary: Easy to use mocking, stubbing and spying framework
 License: BSD
 Group: Development/Python3
@@ -15,7 +15,6 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 
 %py3_provides %oname
-%add_findreq_skiplist %python3_sitelibdir/%oname/python2.py
 
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-pytest python3-module-sphinx
@@ -48,6 +47,18 @@ This package contains documentation for %oname.
 %prep
 %setup
 
+# Remove python2 stuff
+rm chai/python2.py
+rm tests/comparator_py2.py
+
+# Replace unittest aliases removed in Python 3.12
+sed -i \
+    -e 's|assertEquals(|assertEqual(|' \
+    -e 's|assertNotEquals(|assertNotEqual(|' \
+    -e 's|assert_true(|assertTrue(|' \
+    -e 's|assert_equals(|assertEqual(|' \
+$(find tests -type f)
+
 %prepare_sphinx3 docs
 ln -s ../objects.inv docs/source/
 
@@ -77,6 +88,9 @@ python3 setup.py test
 %doc docs/build/html/*
 
 %changelog
+* Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 1.1.2-alt3
+- Fixed FTBFS.
+
 * Mon Jun 07 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.2-alt2
 - Drop python2 support.
 
