@@ -6,7 +6,7 @@
 
 Name: gtk-doc
 Version: %ver_major.2
-Release: alt1.1
+Release: alt2
 
 Summary: API documentation generation tool for GTK+ and GNOME
 Group: Development/Other
@@ -15,7 +15,7 @@ Url: http://www.gtk.org/gtk-doc/
 
 %define pkgdocdir %_docdir/%name-%version
 %define python_ver 3.2
-%define dblatex_ver 0.3.10
+%define dblatex_ver 0.3.12-alt2
 
 Requires: python3 >= %python_ver
 Requires: sgml-common >= 0.6.3-alt11
@@ -34,6 +34,7 @@ Source: %name-%version.tar
 %endif
 #https://gitlab.gnome.org/GNOME/gtk-doc/-/merge_requests/58
 Patch: gtk-doc-1.31-up-mr58.patch
+Patch1: gtk-doc-1.33.2-alt-fix-insufficiently-quoted-regular-expressions.patch
 
 BuildArch: noarch
 
@@ -82,6 +83,7 @@ used by GTK+, GLib and GNOME.
 %prep
 %setup
 %patch -p1
+%patch1
 # make cmake files arch-independent
 subst 's/libdir/datadir/' buildsystems/cmake/Makefile.am
 
@@ -111,7 +113,7 @@ EOF
 %find_lang --with-gnome gtk-doc-manual
 
 install -d -m755 %buildroot%pkgdocdir
-install -p -m644 AUTHORS ChangeLog MAINTAINERS NEWS README TODO doc/* \
+install -p -m644 AUTHORS ChangeLog NEWS README TODO doc/* \
     %buildroot%pkgdocdir/
 bzip2 -9 %buildroot%pkgdocdir/ChangeLog
 ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
@@ -119,7 +121,7 @@ ln -s %_licensedir/FDL-1.1 %buildroot%pkgdocdir/COPYING-DOCS
 cp -a examples %buildroot%pkgdocdir/
 
 %check
-%make check
+%make -k check VERBOSE=1
 
 %files
 %_bindir/*
@@ -134,7 +136,6 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/AUTHORS
 %pkgdocdir/COPYING
 %pkgdocdir/ChangeLog.bz2
-%pkgdocdir/MAINTAINERS
 %pkgdocdir/NEWS
 %pkgdocdir/README*
 %pkgdocdir/TODO
@@ -152,6 +153,11 @@ cp -a examples %buildroot%pkgdocdir/
 %pkgdocdir/COPYING-DOCS
 
 %changelog
+* Sun Jan 21 2024 Yuri N. Sedunov <aris@altlinux.org> 1.33.2-alt2
+- updated to 1.33.2-32-gea55cc1
+- gtkdoc/scan.py: fixed invalid escape sequences with python-3.12
+- required dblatex >= 0.3.12-alt2 (see ALT 49140)
+
 * Tue Aug 17 2021 Yuri N. Sedunov <aris@altlinux.org> 1.33.2-alt1.1
 - fixed python dependendencies (ALT #40763)
 

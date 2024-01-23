@@ -3,7 +3,7 @@
 
 Name: itstool
 Version: 2.0.7
-Release: alt1
+Release: alt2
 
 Summary: ITS-based XML translation tool
 Group: Development/GNOME and GTK+
@@ -15,6 +15,8 @@ Source: %name-%version.tar
 %else
 Source: http://files.itstool.org/itstool/%name-%version.tar.bz2
 %endif
+# https://src.fedoraproject.org/rpms/itstool/raw/rawhide/f/0001-Fix-insufficiently-quoted-regular-expressions.patch
+Patch1: itstool-2.0.7-fc-fix-insufficiently-quoted-regular-expressions.patch
 
 BuildArch: noarch
 
@@ -27,6 +29,7 @@ translate and how to separate it into PO file messages.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %autoreconf
@@ -46,6 +49,10 @@ translate and how to separate it into PO file messages.
 %doc NEWS
 
 %changelog
+* Tue Jan 23 2024 Yuri N. Sedunov <aris@altlinux.org> 2.0.7-alt2
+- applied "Fix insufficiently quoted regular expressions" fc patch
+  (thanx to grenka@ for the hint)
+
 * Sat Sep 25 2021 Yuri N. Sedunov <aris@altlinux.org> 2.0.7-alt1
 - 2.0.7
 
