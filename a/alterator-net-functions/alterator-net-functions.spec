@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-functions
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 
 Requires: libshell >= 0.1.3 etcnet
@@ -41,6 +41,10 @@ helpers for etcnet administration
 %_libexecdir/%name/
 
 %changelog
+* Tue Jan 23 2024 Mikhail Efremov <sem@altlinux.org> 2.1.2-alt1
+- Fix write_systemd_networkd_bootproto() (closes: #49159).
+- Fix sed regex for systemd-networkd config (closes: #49158).
+
 * Thu Feb 17 2022 Mikhail Efremov <sem@altlinux.org> 2.1.1-alt1
 - tests: Add test for valid x.x.x.255 ipv4 address.
 - valid_ipv4addr: Allow 255 in a last byte (closes: #30084).
