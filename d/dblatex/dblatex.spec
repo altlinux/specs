@@ -1,14 +1,21 @@
 Name: dblatex
 Version: 0.3.12
-Release: alt1
+Release: alt2
 
 Summary: DocBook to LaTeX/ConTeXt Publishing
+
 License: GPL-2.0-or-later and MIT and W3C
 Group: Text tools
-Url: http://dblatex.sourceforge.net/
-Packager: Kirill Maslinsky <kirill@altlinux.org>
+Url: http://dblatex.sourceforge.net
 
 Source: %name-%version.tar
+
+Patch: dblatex-0.3.11-disable-debian.patch
+Patch1: dblatex-0.3.11-which-shutil.patch
+Patch2: dblatex-0.3.11-replace-inkscape-by-rsvg.patch
+Patch3: dblatex-0.3.12-replace-imp-by-importlib.patch
+Patch4: dblatex-0.3.12-adjust-submodule-imports.patch
+Patch5: dblatex-0.3.12-fix-syntax-warnings.patch
 
 # ImageMagick-tools or GraphicsMagick-ImageMagick-compat
 Requires: /usr/bin/convert
@@ -49,33 +56,33 @@ SGML or XML sources, by converting first to a high level set of TeX macros.
 
 %prep
 %setup
+%patch -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 # \cyrchar is not defined, attempts to use it are unjustified
 sed -i 's/\\cyrchar//g' lib/dbtexmf/dblatex/unient.py
-# invalid inkscape parameters order
-sed -i '/inkscape.*format, *input, *output/s/input, *output/output, input/' lib/dbtexmf/core/imagedata.py
 
 #fix shebangs
 sed -i 's|\(/usr/bin/\)env \(python\)$|\1\23|' \
 scripts/dblatex tools/pdfscan.py \
-lib/dbtexmf/dblatex/xetex/*.py lib/contrib/which/which.py \
-lib/contrib/debian/dblatex
+lib/dbtexmf/dblatex/xetex/*.py
+
+rm -rv lib/contrib
 
 %build
 %python3_build
 
-%install 
+%install
 %python3_install
 
 mkdir -p %buildroot/%_dblatex_texdir
-mv %buildroot/%_dblatex_datadir/latex/{contrib,misc/multirow2.sty,style} %buildroot/%_dblatex_texdir
+mv %buildroot/%_dblatex_datadir/latex/{misc/multirow2.sty,style} %buildroot/%_dblatex_texdir
 rm -rvf %buildroot/%_dblatex_datadir/latex/misc
 
-#mkdir -p %buildroot/%_dblatex_datadir
-#cp -a buildroot/%_dblatex_datadir/xsl %buildroot/%_dblatex_datadir
-
 mkdir -p %buildroot/%_dblatex_datadir/latex
-#cp -a buildroot/%_dblatex_datadir/latex/{graphics,scripts,specs} %buildroot/%_dblatex_datadir/latex
-ln -s ../../texmf/tex/latex/dblatex/contrib %buildroot/%_dblatex_datadir/latex/contrib
 mv %buildroot/%_dblatex_datadir/latex/graphics %buildroot/%_dblatex_texdir
 
 mv %buildroot%_docdir/%name %buildroot%_docdir/%name-%version
@@ -84,10 +91,7 @@ cp COPYRIGHT %buildroot%_docdir/%name-%version
 # another fix shebang
 sed -i 's|\(/usr/bin/\)env \(python\)$|\1\23|' %buildroot%_bindir/%name
 
-%pre
-[ -h %_datadir/%name/latex/contrib ] || rm -rf %_datadir/%name/latex/contrib
-
-%files 
+%files
 %_bindir/%name
 %_dblatex_datadir
 %_dblatex_texdir
@@ -98,6 +102,9 @@ sed -i 's|\(/usr/bin/\)env \(python\)$|\1\23|' %buildroot%_bindir/%name
 
 
 %changelog
+* Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 0.3.12-alt2
+- Fixed working with python3.12 (Closes: #49140).
+
 * Tue Sep 14 2021 Grigory Ustinov <grenka@altlinux.org> 0.3.12-alt1
 - Build new version.
 
