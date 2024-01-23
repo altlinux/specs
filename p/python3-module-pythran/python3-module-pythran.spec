@@ -3,43 +3,54 @@
 %else
 %def_without check
 %endif
+
 %define pyname pythran
+
+%ifarch %e2k
+%def_without docs
+%else
+%def_without docs
+%endif
+
 Name: python3-module-%pyname
-Version: 0.14.0
-Release: alt2
+Version: 0.15.0
+Release: alt1
 Summary: Ahead of Time Python compiler for numeric kernels
 License: BSD and MIT
 Provides: %pyname
 Group: Development/Python3
+
 BuildArch: noarch
 
 Url: https://github.com/serge-sans-paille/pythran
 Source0: %name-%version.tar
-Patch0: %name-%version-%release.patch
-Patch1: drop-distutils.patch
 
-BuildRequires: make
-BuildRequires: boost-devel
-BuildRequires: gcc-c++
-BuildRequires: pandoc
-BuildRequires: rpm-build-python3
-BuildRequires: python3-dev
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-BuildRequires: python3-module-nbsphinx
-BuildRequires: /usr/bin/sphinx-build
-BuildRequires: python3-module-gast
-BuildRequires: python3-module-beniget
-BuildRequires: python3-module-ply
 
 %if_with check
-BuildRequires: xsimd-devel
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-xdist
 BuildRequires: python3-module-scipy
+BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-gast
+BuildRequires: python3-module-beniget
 BuildRequires: python3-module-ply
-BuildRequires: libflexiblas-devel unzip
-BuildRequires: python3-module-numpy-testing libnumpy-py3-devel
+BuildRequires: boost-devel
+BuildRequires: libflexiblas-devel
+BuildRequires: libnumpy-py3-devel
+BuildRequires: xsimd-devel
+BuildRequires: gcc-c++
+BuildRequires: unzip
+BuildRequires: ipython3
+BuildRequires: python3-module-pip
+%endif
+
+%if_with docs
+BuildRequires: python3-module-nbsphinx
+BuildRequires: /usr/bin/sphinx-build
+BuildRequires: pandoc
 %endif
 
 # This is a package that compiles code, it runtime requires devel packages
@@ -58,26 +69,17 @@ instruction units.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-find -name '*.hpp' -exec chmod -x {} +
-sed -i '1{/#!/d}' pythran/run.py
 
-# Remove bundled header libs and use the ones from system
-rm -r third_party/boost third_party/xsimd
-cat >> setup.cfg << EOF
-[build_py]
-no_boost=True
-no_xsimd=True
-EOF
+# drop distutils
+sed -i 's/distutils.errors/setuptools.errors/' pythran/run.py
+
+# remove bundled use the ones from system
+rm -r pythran/{boost,xsimd}
 
 # Both OpenBLAS and FlexiBLAS are registered as "openblas" in numpy
 sed -i 's|blas=blas|blas=openblas|' pythran/pythran-linux*.cfg
 sed -i 's|libs=|libs=flexiblas|' pythran/pythran-linux*.cfg
 sed -i 's|include_dirs=|include_dirs=/usr/include/flexiblas|' pythran/pythran-linux*.cfg
-
-# not yet available in Fedora
-sed -i '/guzzle_sphinx_theme/d' docs/conf.py docs/requirements.txt
 
 # The tests have some cflags in them
 # We need to adapt the flags to play nicely with other Fedora's flags
@@ -86,27 +88,35 @@ sed -i -e 's/-O0/-O1/g' -e 's/-Werror/-w/g' pythran/tests/__init__.py
 
 %build
 %pyproject_build
+
+%if_with docs
 PYTHONPATH=$PWD make -C docs html
 rm -rf docs/_build/html/.{doctrees,buildinfo}
+%endif
 
 %install
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject -- -k "not test_cli and not test_toolchain"
+# https://github.com/serge-sans-paille/pythran/issues/1981
+%pyproject_run_pytest -n auto -k 'not test_setup_build and not test_setup_build2'
 
 %files
 %doc LICENSE
 %doc README.rst
-%doc docs/_build/html
 %_bindir/%pyname
 %_bindir/%pyname-config
-%python3_sitelibdir_noarch/%pyname
-%python3_sitelibdir_noarch/%{pyname}*.dist-info
-%python3_sitelibdir_noarch/omp
+%python3_sitelibdir/%pyname
+%python3_sitelibdir/%pyname-%version.dist-info
+%python3_sitelibdir/omp
+%if_with docs
+%doc docs/_build/html
+%endif
 
 %changelog
+* Sun Jan 21 2024 Anton Vyatkin <toni@altlinux.org> 0.15.0-alt1
+- New version 0.15.0.
+
 * Fri Oct 27 2023 Anton Vyatkin <toni@altlinux.org> 0.14.0-alt2
 - (NMU) Dropped dependency on distutils.
 
