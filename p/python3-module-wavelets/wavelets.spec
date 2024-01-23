@@ -8,8 +8,8 @@
 %define oname wavelets
 
 Name: python3-module-%oname
-Version: 1.4.1
-Release: alt1.1
+Version: 1.5.0
+Release: alt1
 Summary: Wavelet Transforms in Python
 License: MIT and BSD-3-Clause
 Group: Development/Python3
@@ -19,7 +19,9 @@ Url: https://pypi.org/project/PyWavelets/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-devel
+BuildRequires: python3-module-mesonpy
+BuildRequires: meson
 BuildRequires: python3-module-Cython
 BuildRequires: python3-module-numpy-testing
 BuildRequires: libnumpy-py3-devel
@@ -62,10 +64,10 @@ This package contains tests for %oname.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 mkdir -p matplotlib
@@ -94,6 +96,9 @@ popd &>/dev/null
 %python3_sitelibdir/*/tests
 
 %changelog
+* Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 1.5.0-alt1
+- Automatically updated to 1.5.0.
+
 * Sat Apr 29 2023 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1.1
 - Disable check for ppc64le.
 
