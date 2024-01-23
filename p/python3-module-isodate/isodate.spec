@@ -5,9 +5,9 @@
 
 Name: python3-module-%oname
 Version: 0.6.1
-Release: alt1
+Release: alt2
 Summary: An ISO 8601 date/time/duration parser and formater
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/isodate/
 
@@ -15,9 +15,11 @@ Source0: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
-BuildRequires: python3(tox)
+BuildRequires: python3-module-coverage
 %endif
 
 %description
@@ -44,30 +46,24 @@ finds for instance nanoseconds it will round it to microseconds.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-# override upstream's tox config
-cat > tox.ini <<'EOF'
-[testenv]
-usedevelop=True
-commands =
-    python -m unittest discover -v src
-EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr -s false
+%tox_check_pyproject
 
 %files
 %doc *.txt *.rst
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname-%version.dist-info/
 %exclude %python3_sitelibdir/*/tests
 
 %changelog
+* Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 0.6.1-alt2
+- Fixed FTBFS.
+
 * Sat Mar 05 2022 Stanislav Levin <slev@altlinux.org> 0.6.1-alt1
 - 0.6.0 -> 0.6.1.
 
