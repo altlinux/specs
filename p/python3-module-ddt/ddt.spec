@@ -4,22 +4,24 @@
 %def_with check
 
 Name: python3-module-ddt
-Version: 1.7.0
+Version: 1.7.1
 Release: alt1
 
 Summary: A Python library to multiply test cases
 
 Group: Development/Python3
 License: MIT
-Url: https://pypi.org/project/ddt/
+URL: https://pypi.org/project/ddt
+VCS: https://github.com/datadriventests/ddt
 
-# https://github.com/datadriventests/ddt.git
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3(tox)
@@ -39,23 +41,24 @@ combination with other testing frameworks like unittest and nose.
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts --no-deps -vvr
+%tox_check_pyproject
 
 %files
 %doc README.md
 %python3_sitelibdir/%oname.py
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %python3_sitelibdir/__pycache__
 
 %changelog
+* Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 1.7.1-alt1
+- Automatically updated to 1.7.1.
+
 * Thu Dec 28 2023 Grigory Ustinov <grenka@altlinux.org> 1.7.0-alt1
 - Automatically updated to 1.7.0.
 
