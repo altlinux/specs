@@ -1,23 +1,25 @@
 %define modulename frozendict
 
-%def_without check
+%def_with check
 
 Name: python3-module-frozendict
-Version: 2.3.10
+Version: 2.4.0
 Release: alt1
 
 Summary: An immutable dictionary
 
-Url: https://pypi.org/project/frozendict
 License: MIT
 Group: Development/Python3
+URL: https://pypi.org/project/frozendict
+VCS: https://github.com/Marco-Sulla/python-frozendict
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# https://github.com/Marco-Sulla/python-frozendict
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -33,22 +35,27 @@ for dictionaries where immutability is desired.
 %prep
 %setup
 
+sed -i 's/2.3.10/%version/' src/frozendict/version.py
+
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3 -v
+%pyproject_run_pytest
 
 %files
 %doc README.md
 %python3_sitelibdir/%modulename
-%python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 2.4.0-alt1
+- Automatically updated to 2.4.0.
+- Build with check.
+
 * Wed Dec 27 2023 Grigory Ustinov <grenka@altlinux.org> 2.3.10-alt1
 - Automatically updated to 2.3.10.
 
