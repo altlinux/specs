@@ -4,7 +4,7 @@
 
 Name: mongo7.0
 Version: 7.0.5
-Release: alt1
+Release: alt2
 Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
 Group: Development/Databases
@@ -26,6 +26,13 @@ BuildRequires: libyaml-cpp-devel zlib-devel python-modules-json
 BuildRequires: python3-module-Cheetah python3-module-yaml python3-module-psutil
 BuildRequires: libcurl-devel python3-module-packaging
 BuildRequires: liblzma-devel
+
+BuildRequires: python3-module-bson
+BuildRequires: python3-module-idna
+BuildRequires: python3-module-jsonschema
+BuildRequires: python3-module-memory_profiler
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-typing_extensions
 
 %if_enabled valgrind
 BuildRequires: valgrind-devel
@@ -191,6 +198,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Mon Jan 22 2024 Alexei Takaseev <taf@altlinux.org> 7.0.5-alt2
+- Fix build with python 3.12. Use setuptools.
+
 * Fri Dec 29 2023 Alexei Takaseev <taf@altlinux.org> 7.0.5-alt1
 - 7.0.5
 
