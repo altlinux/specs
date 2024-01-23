@@ -1,5 +1,5 @@
 Name: python3-module-home-assistant-intents
-Version: 2023.10.16
+Version: 2024.1.2
 Release: alt1
 
 Summary: Intents for Home Assistant
@@ -39,6 +39,9 @@ cd package
 %python3_sitelibdir/home_assistant_intents-%version.dist-info
 
 %changelog
+* Fri Jan 19 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 2024.1.2-alt1
+- 2024.1.2 released
+
 * Fri Nov 03 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.10.16-alt1
 - 2023.10.16 released
 

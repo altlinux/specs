@@ -1,5 +1,5 @@
 Name: python3-module-jinja2
-Version: 3.1.2
+Version: 3.1.3
 Release: alt1
 
 Summary: The new and improved version of a small but fast template engine
@@ -11,7 +11,11 @@ Url: https://pypi.org/project/Jinja2/
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires: rpm-build-pyproject
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(pytest)
+BuildRequires: python3(markupsafe)
 
 %description
 Jinja2 is a template engine written in pure Python. It provides a Django
@@ -22,16 +26,22 @@ sandboxed environment.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_pytest tests
 
 %files
 %python3_sitelibdir/jinja2
-%python3_sitelibdir/Jinja2-%version-*-info
+%python3_sitelibdir/Jinja2-%version.dist-info
 
 %changelog
+* Fri Jan 19 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.1.3-alt1
+- 3.1.3 released
+
 * Thu Jul 14 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.1.2-alt1
 - 3.1.2 released
 

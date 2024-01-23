@@ -1,5 +1,5 @@
 Name: python3-module-lru-dict
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Fast LRU dict implementation
@@ -12,6 +12,7 @@ Source0: %name-%version-%release.tar
 BuildRequires: rpm-build-pyproject
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
+BuildRequires: python3(pytest)
 
 %description
 %summary
@@ -25,11 +26,17 @@ BuildRequires: python3(wheel)
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest test
+
 %files
-%python3_sitelibdir/lru.*.so
+%python3_sitelibdir/lru
 %python3_sitelibdir/lru_dict-%version.dist-info
 
 %changelog
+* Fri Jan 19 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.0-alt1
+- 1.3.0 released
+
 * Fri Jul 07 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.0-alt1
 - 1.2.0 released
 

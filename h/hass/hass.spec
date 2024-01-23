@@ -1,5 +1,5 @@
 Name: hass
-Version: 2023.11.1
+Version: 2024.1.3
 Release: alt1
 
 Summary: Home automation platform
@@ -15,6 +15,8 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 BuildRequires: python3(atomicwrites)
 BuildRequires: python3(awesomeversion)
+BuildRequires: python3(aiohttp_fast_url_dispatcher)
+BuildRequires: python3(aiohttp_zlib_ng)
 BuildRequires: python3(black)
 BuildRequires: python3(ciso8601)
 BuildRequires: python3(dateutil)
@@ -31,6 +33,7 @@ BuildRequires: python3(ulid_transform)
 BuildRequires: python3(voluptuous)
 BuildRequires: python3(voluptuous_serialize)
 BuildRequires: python3(yaml)
+BuildRequires: python3(zlib_ng)
 
 %package core
 Summary: Home automation platform
@@ -60,11 +63,6 @@ This package contains most of Home Assistant modules.
 
 %prep
 %setup
-> .coveragerc
-find homeassistant/components -type f -name manifest.json |\
-	fgrep -vf precious |sed -r 's,[^/]+$,,' |xargs rm -rv
-python3 -m script.hassfest
-tar x --wildcards --strip-components=1 --file %SOURCE0 '*/homeassistant/components'
 python3 -m script.translations develop --all
 
 %build
@@ -78,8 +76,10 @@ install -pm0644 -D hass.sysconfig %buildroot%_sysconfdir/sysconfig/hass
 mkdir -p %buildroot%_localstatedir/hass
 
 find %buildroot%python3_sitelibdir/homeassistant/components -type f -name manifest.json |\
-	fgrep -vf precious |sed -re 's,^%buildroot(/.+)/manifest.json,%exclude \1,' > core.files
-sed -re 's,%exclude ,,' < core.files > rest.files
+     sed -re 's,^%buildroot(/.+)/manifest.json,\1,' |sort > all.files
+sed -re 's,^,%python3_sitelibdir/homeassistant/,' < precious > core.files
+cat all.files core.files |sort |uniq -u > rest.files
+sed -re 's,^,%exclude ,' < rest.files > core.files
 
 %pre core
 %_sbindir/groupadd -r -f _hass &> /dev/null
@@ -104,6 +104,9 @@ sed -re 's,%exclude ,,' < core.files > rest.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Wed Jan 17 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 2024.1.3-alt1
+- 2024.1.3 released
+
 * Tue Nov 07 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.11.1-alt1
 - 2023.11.1 released
 

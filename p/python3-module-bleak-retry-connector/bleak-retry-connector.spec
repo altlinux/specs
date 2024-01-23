@@ -1,5 +1,5 @@
 Name: python3-module-bleak-retry-connector
-Version: 3.3.0
+Version: 3.4.0
 Release: alt1
 
 Summary: A connector for Bleak Client
@@ -41,6 +41,9 @@ cross-platform Python API to connect and communicate with e.g. sensors.
 %python3_sitelibdir/bleak_retry_connector-%version.dist-info
 
 %changelog
+* Wed Jan 17 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.4.0-alt1
+- 3.4.0 released
+
 * Fri Nov 03 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.3.0-alt1
 - 3.3.0 released
 

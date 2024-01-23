@@ -1,5 +1,5 @@
 Name: python3-module-usb-devices
-Version: 0.4.1
+Version: 0.4.5
 Release: alt1
 
 Summary: Bluetooth USB adapters
@@ -30,5 +30,8 @@ BuildRequires: python3(poetry-core)
 %python3_sitelibdir/usb_devices-%version.dist-info
 
 %changelog
+* Fri Jan 19 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.5-alt1
+- 0.4.5 released
+
 * Mon Jan 23 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.1-alt1
 - 0.4.1 released

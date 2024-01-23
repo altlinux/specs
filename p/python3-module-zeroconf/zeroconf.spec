@@ -1,5 +1,5 @@
 Name: python3-module-zeroconf
-Version: 0.119.0
+Version: 0.131.0
 Release: alt1
 
 Summary: Python Multicast DNS Service Discovery Library
@@ -12,7 +12,7 @@ Source0: %name-%version-%release.tar
 BuildRequires: rpm-build-python3 
 BuildRequires: python3(poetry-core)
 BuildRequires: python3(setuptools)
-#BuildRequires: python3(cython) too old
+BuildRequires: python3(cython)
 
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest-cov)
@@ -40,6 +40,9 @@ BuildRequires: python3(ifaddr)
 %python3_sitelibdir/zeroconf-%version.dist-info
 
 %changelog
+* Fri Jan 19 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.131.0-alt1
+- 0.131.0 released
+
 * Fri Nov 03 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.119.0-alt1
 - 0.119.0 released
 
