@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 0.8.0
-Release: alt1
+Release: alt2
 
 Summary: A Collection of core-level utility modules for Enthought projects
 License: BSD-3-Clause and Apache-2.0
@@ -15,6 +15,7 @@ Url: https://pypi.org/project/encore
 
 VCS: https://github.com/enthought/encore
 Source: %name-%version.tar
+Patch: encore-0.8.0-unittest-alt-fix.patch
 
 BuildArch: noarch
 
@@ -27,6 +28,7 @@ BuildRequires: python3-module-sphinx
 %if_with check
 BuildRequires: python3-modules-sqlite3
 BuildRequires: python3-module-requests
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -62,6 +64,7 @@ This package contains tests for encore.
 
 %prep
 %setup
+%patch -p1
 
 sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 
@@ -79,8 +82,7 @@ cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -v
 
 %files
 %doc LICENSE.txt README.rst
@@ -102,6 +104,9 @@ cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Tue Jan 23 2024 Anton Vyatkin <toni@altlinux.org> 0.8.0-alt2
+- Fixed FTBFS.
+
 * Wed Feb 22 2023 Anton Vyatkin <toni@altlinux.org> 0.8.0-alt1
 - new version 0.8.0
 
