@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%modname
-Version: 4.8.0
+Version: 4.9.0
 Release: alt1
 Summary: Python Typing Extensions
 Group: Development/Python3
@@ -50,16 +50,7 @@ must be compatible with multiple Python versions or requires experimental types.
 %pyproject_install
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-usedevelop=True
-changedir = src_py3
-commands = python -m unittest discover
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr -s false
+%tox_check_pyproject
 
 %files
 %doc README.md
@@ -68,6 +59,9 @@ tox.py3 --sitepackages -vvr -s false
 %python3_sitelibdir/%modname-%version.dist-info
 
 %changelog
+* Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 4.9.0-alt1
+- Automatically updated to 4.9.0.
+
 * Sat Oct 21 2023 Grigory Ustinov <grenka@altlinux.org> 4.8.0-alt1
 - Automatically updated to 4.8.0.
 
