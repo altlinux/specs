@@ -4,7 +4,7 @@
 
 Name: mongo4.4
 Version: 4.4.28
-Release: alt1
+Release: alt2
 Summary: mongo client shell and tools
 License: SSPL-1.0
 Group: Development/Databases
@@ -26,6 +26,13 @@ BuildRequires: liblzma-devel
 %if_enabled valgrind
 BuildRequires: valgrind-devel
 %endif
+
+BuildRequires: python3-module-bson
+BuildRequires: python3-module-idna
+BuildRequires: python3-module-jsonschema
+BuildRequires: python3-module-memory_profiler
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-typing_extensions
 
 Provides: mongo = %EVR
 Conflicts: mongo < %EVR
@@ -199,6 +206,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Tue Jan 23 2024 Alexei Takaseev <taf@altlinux.org> 4.4.28-alt2
+- Fix build with python 3.12. Use setuptools.
+
 * Fri Jan 12 2024 Alexei Takaseev <taf@altlinux.org> 4.4.28-alt1
 - 4.4.28
 
