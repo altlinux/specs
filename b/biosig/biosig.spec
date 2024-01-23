@@ -3,18 +3,17 @@
 %define soname 3
 
 Name: biosig
-Version: 2.3.1
-Release: alt2.1
+Version: 2.5.2
+Release: alt1
 
 Summary: Reading and writing routines for different biosignal data formats
 License: GPL-3.0+
 Group: Sciences/Medicine
 
-Url: http://biosig.sourceforge.net
+Url: https://biosig.sourceforge.net/
 Source: %name-%version.tar
 
-Patch1: %name-alt-return-type.patch
-Patch2: %name-alt-build.patch
+Patch1: %name-alt-build-2.5.2.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel
@@ -46,7 +45,8 @@ BioSig handles this by providing solutions for data acquisition,
 artifact processing, quality control, feature extraction, classification,
 modeling, data visualization, and so on.
 
-Everything in this project is freely available under the GNU General Public License.
+Everything in this project is freely available under the
+GNU General Public License.
 
 %package -n lib%name%soname
 Summary: Reading and writing routines for different biosignal data formats
@@ -67,7 +67,8 @@ BioSig handles this by providing solutions for data acquisition,
 artifact processing, quality control, feature extraction, classification,
 modeling, data visualization, and so on.
 
-Everything in this project is freely available under the GNU General Public License.
+Everything in this project is freely available under the
+GNU General Public License.
 
 %package devel
 Summary: Reading and writing routines for different biosignal data formats
@@ -90,7 +91,8 @@ BioSig handles this by providing solutions for data acquisition,
 artifact processing, quality control, feature extraction, classification,
 modeling, data visualization, and so on.
 
-Everything in this project is freely available under the GNU General Public License.
+Everything in this project is freely available under the
+GNU General Public License.
 
 %package -n python3-module-%name
 Summary: Reading and writing routines for different biosignal data formats
@@ -112,12 +114,12 @@ BioSig handles this by providing solutions for data acquisition,
 artifact processing, quality control, feature extraction, classification,
 modeling, data visualization, and so on.
 
-Everything in this project is freely available under the GNU General Public License.
+Everything in this project is freely available under the
+GNU General Public License.
 
 %prep
 %setup
-%patch1 -p2
-%patch2 -p2
+%patch1 -p1
 
 # sigviewer isn't built here. don't install it's manpage either
 rm -f biosig4c++/doc/sigviewer.1
@@ -153,6 +155,9 @@ rm -f biosig4c++/doc/mexSLOAD.1
 %python3_sitelibdir/Biosig-%version-py%{_python3_version}.egg-info
 
 %changelog
+* Fri Jan 19 2024 Alexey Shemyakin <alexeys@altlinux.org> 2.5.2-alt1
+- Update to version 2.5.2.
+
 * Tue Dec 19 2023 Grigory Ustinov <grenka@altlinux.org> 2.3.1-alt2.1
 - NMU: Add build dependency on setuptools.
 
@@ -161,3 +166,4 @@ rm -f biosig4c++/doc/mexSLOAD.1
 
 * Mon Jul 26 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.1-alt1
 - Initial build for ALT.
+
