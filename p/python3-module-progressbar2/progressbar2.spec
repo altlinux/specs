@@ -2,25 +2,28 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.2.0
+Version: 4.3.2
 Release: alt1
 
 Summary: Text progress bar library for Python
 
 License: LGPLv2.1+ or BSD
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/progressbar2
+URL: https://pypi.org/project/progressbar2
+VCS: https://github.com/WoLpH/python-progressbar
 
-# https://github.com/WoLpH/python-progressbar.git
 Source: %name-%version.tar
 Patch1: %oname-3.34.4-alt-doc.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-freezegun
 BuildRequires: python3-module-python_utils
+BuildRequires: python3-module-dill
 %endif
 
 BuildArch: noarch
@@ -40,21 +43,24 @@ display differently depending on the state of the progress bar.
 %patch1 -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 sed -i '/cov/d' pytest.ini
-export PYTHONPATH=$PWD
-py.test-3 -v
+%pyproject_run_pytest
 
 %files
-%doc examples.py *.rst
-%python3_sitelibdir/*
+%doc LICENSE examples.py *.rst
+%python3_sitelibdir/progressbar
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 4.3.2-alt1
+- Automatically updated to 4.3.2.
+
 * Thu Oct 27 2022 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
 - Automatically updated to 4.2.0.
 
