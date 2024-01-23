@@ -1,5 +1,5 @@
 Name: libupnpp
-Version: 0.25.0
+Version: 0.26.1
 Release: alt1
 
 Summary: C++ wrapper for libupnp
@@ -10,7 +10,7 @@ Url: http://www.lesbonscomptes.com/upmpdcli
 Source: %name-%version-%release.tar
 
 BuildRequires: gcc-c++
-BuildRequires: libcurl-devel libexpat-devel libnpupnp-devel >= 5.0
+BuildRequires: libcurl-devel libexpat-devel libnpupnp-devel >= 6.0
 
 %description
 libupnpp defines useful objects over libupnp and can be used
@@ -49,6 +49,9 @@ rm -vf %buildroot%_libdir/*.a
 %_pkgconfigdir/libupnpp.pc
 
 %changelog
+* Tue Jan 23 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.26.1-alt1
+- 0.26.1 released
+
 * Mon Dec 25 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.25.0-alt1
 - 0.25.0 released
 
