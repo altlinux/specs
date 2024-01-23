@@ -1,21 +1,29 @@
 %define _unpackaged_files_terminate_build 1
 %define oname process-tests
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 2.1.2
+Version: 3.0.0
 Release: alt1
+
 Summary: Tools for testing processes
+
 License: BSD-2-Clause
 Group: Development/Python3
-Url: https://pypi.org/project/process-tests
+URL: https://pypi.org/project/process-tests
+VCS: https://github.com/ionelmc/python-process-tests
 
-# https://github.com/ionelmc/python-process-tests.git
 Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-pytest-cov
+%endif
 
 %description
 Testcase classes and assertions for testing processes.
@@ -29,6 +37,9 @@ Testcase classes and assertions for testing processes.
 %install
 %pyproject_install
 
+%check
+%tox_check_pyproject
+
 %files
 %doc LICENSE *.rst
 %python3_sitelibdir/process_tests.py
@@ -36,6 +47,10 @@ Testcase classes and assertions for testing processes.
 %python3_sitelibdir/process_tests-%version.dist-info
 
 %changelog
+* Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
+- Automatically updated to 3.0.0.
+- Build with check.
+
 * Wed May 17 2023 Grigory Ustinov <grenka@altlinux.org> 2.1.2-alt1
 - Build new version.
 
