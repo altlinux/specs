@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.4.3
+Version: 3.8.0
 Release: alt1
 
 Summary: GuessIt - a library for guessing information from video files
@@ -20,6 +20,8 @@ Patch: %name-%version-alt.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 # install_requires=
@@ -51,31 +53,25 @@ both movies and tv shows episodes.
 sed -i -e '/mimetype:/d' guessit/test/*.yml
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-usedevelop=True
-commands =
-    {envbindir}/pytest {posargs:-vra}
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -s false
+%pyproject_run_pytest
 
 %files
 %doc *.md
 %_bindir/guessit
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname-%version.dist-info/
 %exclude %python3_sitelibdir/*/test/
 
 %changelog
+* Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 3.8.0-alt1
+- Automatically updated to 3.8.0.
+
 * Wed Feb 09 2022 Stanislav Levin <slev@altlinux.org> 3.4.3-alt1
 - 3.3.1 -> 3.4.3.
 
