@@ -2,14 +2,14 @@
 %def_with check
 
 Name: python3-module-%oname.core
-Version: 4.2.0
+Version: 4.5.0
 Release: alt1
 
 Summary: Chameleon Template Compiler
 License: BSD-4-Clause
 Group: Development/Python3
-Url: http://chameleon.repoze.org/
-# https://github.com/malthe/chameleon
+URL: https://pypi.org/project/Chameleon
+VCS: https://github.com/malthe/chameleon
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -18,6 +18,7 @@ BuildRequires: time
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-setuptools
+BuildPreReq: python3-module-wheel
 BuildPreReq: python3-module-sphinx
 BuildPreReq: python3-module-sphinx_rtd_theme
 
@@ -60,10 +61,10 @@ This package contains documentation for Chameleon Template Compiler.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make SPHINXBUILD="sphinx-build-3" pickle
@@ -71,7 +72,7 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 cp -fR _build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-%tox_check
+%tox_check_pyproject
 
 %files
 %doc *.txt *.rst
@@ -89,6 +90,9 @@ cp -fR _build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc _build/html/*
 
 %changelog
+* Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt1
+- Automatically updated to 4.5.0.
+
 * Tue Sep 26 2023 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
 - Automatically updated to 4.2.0.
 
