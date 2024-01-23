@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.0.0
-Release: alt2
+Release: alt3
 
 Summary: A pure-Python implementation of the HTTP/2 priority tree
 
@@ -21,6 +21,8 @@ Patch1: %name-%version-%release.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pytest-cov
@@ -50,18 +52,21 @@ requests of their clients.
 %setup
 %patch1 -p1
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%tox_check
+%tox_check_pyproject
 
 %files
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt3
+- Fixed FTBFS.
+
 * Mon Apr 03 2023 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 2.0.0-alt2
 - Increase tests timeout
 
