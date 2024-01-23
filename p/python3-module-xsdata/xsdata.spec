@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 23.8
+Version: 24.1
 Release: alt1
 
 Summary: Naive XML & JSON Bindings for python
@@ -30,6 +30,7 @@ BuildRequires: python3-module-docformatter
 BuildRequires: python3-module-jinja2
 BuildRequires: python3-module-requests
 BuildRequires: python3-module-click-default-group
+BuildRequires: ruff
 %endif
 
 BuildArch: noarch
@@ -58,5 +59,8 @@ Source: %name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 24.1-alt1
+- Automatically updated to 24.1.
+
 * Thu Dec 28 2023 Grigory Ustinov <grenka@altlinux.org> 23.8-alt1
 - Initial build for Sisyphus.
