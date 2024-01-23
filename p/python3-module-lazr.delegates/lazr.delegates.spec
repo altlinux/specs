@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 Summary: Easily write objects that delegate behavior
 License: LGPLv3
@@ -18,6 +18,8 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-zope.interface
 BuildRequires: python3-module-zope.testrunner
@@ -32,23 +34,26 @@ object, while still providing the underlying interface, and delegating behavior.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%tox_check
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.rst *.txt
 %python3_sitelibdir/lazr
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
 
 
 %changelog
+* Tue Jan 23 2024 Anton Vyatkin <toni@altlinux.org> 2.1.0-alt2
+- Fix FTBFS.
+
 * Wed Mar 22 2023 Anton Vyatkin <toni@altlinux.org> 2.1.0-alt1
 - New version 2.1.0.
 
