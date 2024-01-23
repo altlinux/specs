@@ -1,6 +1,6 @@
 Name: mednafen
-Version: 1.31.0
-Release: alt2
+Version: 1.32.0
+Release: alt1
 
 Summary: Multi-consoles Emulator
 Group: Emulators
@@ -86,6 +86,9 @@ export CXXFLAGS
 
 
 %changelog
+* Tue Jan 23 2024 Ilya Mashkin <oddity@altlinux.ru> 1.32.0-alt1
+- version 1.32.0
+
 * Sat Sep 10 2022 Ilya Mashkin <oddity@altlinux.ru> 1.31.0-alt2
 - Build with system libzstd
 
