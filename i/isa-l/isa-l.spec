@@ -1,16 +1,10 @@
 %define isl_ver 2
 
-# Tell versions [3.59,3.63) of GNU make to not export all variables.
-# Otherwise a system limit (for SysV at least) may be exceeded.
-#%%ifnarch ppc64le riscv64 s390x
-#%%def_with doc
-#%%else
 %def_without doc
-#%%endif
 %def_with check
 
 Name: isa-l
-Version: 2.30.0
+Version: 2.31.0
 Release: alt1
 
 Summary: Intelligent Storage Acceleration Library
@@ -20,10 +14,7 @@ Group: System/Libraries
 Url: https://github.com/intel/isa-l
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: %name-ec.patch
-Patch1: %name-sve-ec.patch
-Patch2: %name-s390x.patch
-Patch3: %name-i386.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires: help2man nasm
 %if_with doc
@@ -99,6 +90,9 @@ The package provides tools for %name.
 %_man1dir/igzip.1.xz
 
 %changelog
+* Tue Jan 23 2024 Leontiy Volodin <lvol@altlinux.org> 2.31.0-alt1
+- New version 2.31.0.
+
 * Wed Feb 08 2023 Leontiy Volodin <lvol@altlinux.org> 2.30.0-alt1
 - Initial build for ALT Sisyphus (thanks alpinelinux for the spec).
 - Needed for spdk.
