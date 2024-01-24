@@ -2,7 +2,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: hyprland
-Version: 0.33.1
+Version: 0.34.0
 Release: alt1
 
 Summary: Hyprland is a dynamic tiling Wayland compositor that doesn't sacrifice on its looks
@@ -31,7 +31,7 @@ BuildRequires: pkgconfig(egl)
 BuildRequires: pkgconfig(gbm) >= 17.1.0
 BuildRequires: pkgconfig(gl)
 BuildRequires: pkgconfig(glesv2)
-BuildRequires: pkgconfig(libdrm) >= 2.4.113
+BuildRequires: pkgconfig(libdrm) >= 2.4.118
 BuildRequires: pkgconfig(libinput) >= 1.14.0
 BuildRequires: pkgconfig(libseat) >= 0.2.0
 BuildRequires: pkgconfig(libudev)
@@ -43,7 +43,7 @@ BuildRequires: pkgconfig(pango)
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-protocols) >= 1.26
 BuildRequires: pkgconfig(wayland-scanner)
-BuildRequires: pkgconfig(wayland-server) >= 1.21
+BuildRequires: pkgconfig(wayland-server) >= 1.22
 BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(wayland-egl)
 
@@ -53,6 +53,7 @@ BuildRequires: pkgconfig(xcb-renderutil)
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(xwayland)
 BuildRequires: libdisplay-info-devel
+BuildRequires: libtomlplusplus-devel
 
 BuildRequires: pkgconfig(hwdata)
 
@@ -88,17 +89,24 @@ rm -rf %buildroot%_pkgconfigdir/wlroots.pc
 %doc README.md LICENSE
 %_bindir/Hyprland
 %_bindir/hyprctl
+%_bindir/hyprpm
+
 %_man1dir/Hyprland.1*
 %_man1dir/hyprctl.1*
+
 %_datadir/hyprland
 %_datadir/wayland-sessions/%name.desktop
 %_datadir/xdg-desktop-portal/%name-portals.conf
+
 %files devel
 %_datadir/pkgconfig/%name-protocols.pc
 %_datadir/pkgconfig/%name.pc
 %_datadir/hyprland-protocols/
 
 %changelog
+* Wed Jan 24 2024 Roman Alifanov <ximper@altlinux.org> 0.34.0-alt1
+- new version 0.34.0 (with rpmrb script)
+
 * Sat Dec 16 2023 Roman Alifanov <ximper@altlinux.org> 0.33.1-alt1
 - new version 0.33.1 (with rpmrb script)
 

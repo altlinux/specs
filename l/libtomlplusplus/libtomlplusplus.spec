@@ -1,6 +1,6 @@
 Name: libtomlplusplus
 Version: 3.4.0
-Release: alt1
+Release: alt2
 
 Summary: Header-only TOML config file parser and serializer for C++17
 
@@ -13,7 +13,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/marzer/tomlplusplus/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
 BuildRequires: cmake
 BuildRequires: gcc-c++
 
@@ -31,20 +32,27 @@ Header-only TOML config file parser and serializer for C++17.
 %setup
 
 %build
-%cmake_insource
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-rm -v %buildroot%_includedir/meson.build
+%meson_install
+
+%files
+%doc LICENSE README.md
+%_libdir/%name.so.3*
 
 %files devel
-%doc LICENSE README.md
 %_includedir/toml++/
 %_libdir/cmake/tomlplusplus
-%_datadir/tomlplusplus
+%_libdir/%name.so
+
+%_pkgconfigdir/tomlplusplus.pc
 
 %changelog
+* Wed Jan 24 2024 Roman Alifanov <ximper@altlinux.org> 3.4.0-alt2
+- NMU: switch to meson for the pkconfig file (and in general for more correct build)
+
 * Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 3.4.0-alt1
 - new version 3.4.0 (with rpmrb script)
 
