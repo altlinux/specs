@@ -3,8 +3,8 @@
 %def_disable static
 
 Name: vips
-Version: 8.14.2
-Release: alt2
+Version: 8.15.1
+Release: alt1
 
 Summary: Large image processing library
 
@@ -61,6 +61,9 @@ BuildRequires: pkgconfig(pango)
 BuildRequires: libimagequant-devel
 BuildRequires: pkgconfig(libjxl)
 %endif
+#BuildRequires: highway-devel needs highway >= 1.0.5
+BuildRequires: liborc-devel
+BuildRequires: libarchive-devel
 
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
@@ -197,6 +200,11 @@ rm -v %buildroot%_docdir/vips-doc/html/*.map
 # - package python bindings
 
 %changelog
+* Wed Jan 24 2024 L.A. Kostis <lakostis@altlinux.ru> 8.15.1-alt1
+- 8.15.1.
+- BR: enable optimisation via liborc.
+- BR: added libarchive (for image pyramid).
+
 * Thu Jun 29 2023 Michael Shigorin <mike@altlinux.org> 8.14.2-alt2
 - fix broken versioned BR:
 
