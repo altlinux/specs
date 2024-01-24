@@ -1,15 +1,22 @@
 Name:    codelite
-Version: 17.0.0
+Version: 17.7.0
 Release: alt1
 
 Summary: CodeLite is a powerful open-source, cross platform code editor for C/C++
 
 License: GPLv2+
 Group:   Development/Tools
-Url:     https://codelite.org/
-
+URL:     https://codelite.org/
 VCS:     https://github.com/eranif/codelite
+
 Source:  %name-%version.tar
+Source1: %name-%version-cc-wrapper.tar
+Source2: %name-%version-cc-wrapper-tinyjson.tar
+Source3: %name-%version-ctags.tar
+Source4: %name-%version-dtl.tar
+Source5: %name-%version-wx-config-msys2.tar
+Source6: %name-%version-wxdap.tar
+Source7: %name-%version-yaml-cpp.tar
 
 Requires: libedit-devel
 
@@ -29,10 +36,6 @@ BuildRequires: libpcre2-devel
 
 %add_python_req_skip gdb
 
-# [armh] objdump: ./usr/bin/codelite-ctags: file format not recognized
-# [armh] verify-elf: ERROR: ./usr/bin/codelite-ctags: objdump failed
-ExcludeArch: armh
-
 %description
 CodeLite is a free, open source, cross platform IDE specialized in C, C++,
 PHP and JavaScript (mainly for backend developers using Node.js)
@@ -40,7 +43,7 @@ programming languages, which runs best on all major platforms
 (Windows, macOS and Linux).
 
 %prep
-%setup
+%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7
 
 %build
 cmake . -G "Unix Makefiles" \
@@ -71,23 +74,10 @@ cp -p %buildroot%_datadir/%name/man/man1/%{name}* %buildroot%_datadir/man/man1/
 %_libexecdir/%name
 %_man1dir/%{name}*
 
-# Fix post-install unowned files
-%dir %_iconsdir/hicolor/128x128
-%dir %_iconsdir/hicolor/128x128/apps
-%dir %_iconsdir/hicolor/128x128@2x
-%dir %_iconsdir/hicolor/128x128@2x/apps
-%dir %_iconsdir/hicolor/256x256
-%dir %_iconsdir/hicolor/256x256/apps
-%dir %_iconsdir/hicolor/256x256@2x
-%dir %_iconsdir/hicolor/256x256@2x/apps
-%dir %_iconsdir/hicolor/32x32@2x
-%dir %_iconsdir/hicolor/32x32@2x/apps
-%dir %_iconsdir/hicolor/64x64
-%dir %_iconsdir/hicolor/64x64/apps
-%dir %_iconsdir/hicolor/64x64@2x
-%dir %_iconsdir/hicolor/64x64@2x/apps
-
 %changelog
+* Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 17.7.0-alt1
+- new version 17.7.0.
+
 * Sat Feb 04 2023 Anton Vyatkin <toni@altlinux.org> 17.0.0-alt1
 - new version 17.0.0.
 
