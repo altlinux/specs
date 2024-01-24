@@ -1,7 +1,7 @@
 %define oname caldav
 
 Name: python3-module-%oname
-Version: 1.3.6
+Version: 1.3.9
 Release: alt1
 
 Summary: A CalDAV (RFC4791) client library for Python
@@ -32,6 +32,9 @@ A CalDAV (RFC4791) client library for Python.
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Wed Jan 24 2024 Vladimir Didenko <cow@altlinux.org> 1.3.9-alt1
+- new version
+
 * Thu Sep 7 2023 Vladimir Didenko <cow@altlinux.org> 1.3.6-alt1
 - new version
 
