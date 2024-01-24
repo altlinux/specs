@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%modulename
-Version: 0.23.1
+Version: 0.24.0
 Release: alt1
 Summary: Trio - Pythonic async I/O for humans and snake people
 License: MIT or Apache-2.0
@@ -13,16 +13,25 @@ Group: Development/Python3
 Url: https://pypi.org/project/trio/
 Vcs: https://github.com/python-trio/trio
 BuildArch: noarch
-Source: %modulename-%version.tar
-Source1: %pyproject_deps_config_name
+Source: %name-%version.tar
 
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
 %if_with check
-%pyproject_builddeps_metadata
 BuildRequires: /proc
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-attrs
+BuildRequires: python3-module-sniffio
+BuildRequires: python3-module-outcome
+BuildRequires: python3-module-sortedcontainers
+BuildRequires: python3-module-idna
+# these are optional
+BuildRequires: python3-module-trustme
+BuildRequires: python3-module-astor
+BuildRequires: python3-module-openssl
+BuildRequires: python3-module-isort
 %endif
 
 # Self provides
@@ -50,13 +59,7 @@ same time with parallelized I/O.
 This package contains tests for %modulename.
 
 %prep
-%setup -n %modulename-%version
-
-# Upstream doesn't care about version
-sed -i 's/0.21.0+dev/%version/' trio/_version.py
-
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+%setup
 
 %build
 %pyproject_build
@@ -67,6 +70,7 @@ sed -i 's/0.21.0+dev/%version/' trio/_version.py
 %check
 # see ci.sh for details
 %pyproject_run_pytest -ra \
+    --pyargs trio --verbose \
     -p trio._tests.pytest_plugin \
     --skip-optional-imports \
     -m 'not redistributors_should_skip' \
@@ -78,17 +82,17 @@ sed -i 's/0.21.0+dev/%version/' trio/_version.py
 %exclude %python3_sitelibdir/%modulename/_tests
 %exclude %python3_sitelibdir/%modulename/testing
 %exclude %python3_sitelibdir/%modulename/_core/_tests
-%exclude %python3_sitelibdir/%modulename/tests.py
-%exclude %python3_sitelibdir/%modulename/__pycache__/tests.*
 
 %files tests
 %python3_sitelibdir/%modulename/_tests
 %python3_sitelibdir/%modulename/testing
 %python3_sitelibdir/%modulename/_core/_tests
-%python3_sitelibdir/%modulename/tests.py
-%python3_sitelibdir/%modulename/__pycache__/tests.*
 
 %changelog
+* Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 0.24.0-alt1
+- Automatically updated to 0.24.0.
+- Fixed cringe obninsk-style packaging.
+
 * Tue Nov 07 2023 Stanislav Levin <slev@altlinux.org> 0.23.1-alt1
 - 0.22.0 -> 0.23.1.
 
