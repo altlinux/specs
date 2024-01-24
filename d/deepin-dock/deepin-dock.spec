@@ -1,11 +1,10 @@
 %define repo dde-dock
-%define qtver 5.15.11
 
 %def_without clang
 
 Name: deepin-dock
 Version: 6.0.27
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Deepin desktop-environment - Dock module
@@ -17,9 +16,7 @@ Url: https://github.com/linuxdeepin/dde-dock
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: %name-%version-%release.patch
 
-# Requires: libdbusmenu-qt52 libddenetworkutils libdframeworkdbus2 libxcb libxcbutil-icccm libxcbutil-image
-
-BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -28,7 +25,10 @@ BuildRequires: gcc-c++
 # Qt5::XkbCommonSupport references the file /usr/lib64/libQt5XkbCommonSupport.a
 # Automatically added by buildreq on Mon Oct 23 2023
 # optimized out: alt-os-release bash5 bashrc cmake cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXcursor-devel libXext-devel libXi-devel libXtst-devel libdbusmenu-qt52 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-waylandclient libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl libwayland-server-devel libxcb-devel libxcbutil-icccm libxcbutil-image libxkbcommon-devel pkg-config python3 python3-base qt5-base-common qt5-base-devel sh5 wayland-devel xorg-proto-devel
-BuildRequires: dtk6-common-devel dwayland-devel extra-cmake-modules gsettings-qt-devel libXres-devel libdbusmenu-qt5-devel libdtkwidget-devel libgio-devel libwayland-cursor-devel libwayland-egl-devel libxcbutil-icccm-devel libxcbutil-image-devel qt5-base-devel-static = %qtver qt5-svg-devel = %qtver qt5-tools qt5-wayland-devel = %qtver qt5-x11extras-devel = %qtver
+BuildRequires: dtk6-common-devel dwayland-devel extra-cmake-modules gsettings-qt-devel libXres-devel libdbusmenu-qt5-devel libdtkwidget-devel libgio-devel libwayland-cursor-devel libwayland-egl-devel libxcbutil-icccm-devel libxcbutil-image-devel qt5-base-devel-static qt5-svg-devel qt5-tools qt5-wayland-devel qt5-x11extras-devel
+
+# Requires: libdbusmenu-qt52 libddenetworkutils libdframeworkdbus2 libxcb libxcbutil-icccm libxcbutil-image
+Requires: libqt5-core = %_qt5_version
 
 %description
 Deepin desktop-environment - Dock module.
@@ -99,6 +99,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/cmake/DdeDock/DdeDockConfig.cmake
 
 %changelog
+* Fri Jan 19 2024 Leontiy Volodin <lvol@altlinux.org> 1:6.0.27-alt2
+- Requires: libqt5-core = %%_qt5_version.
+
 * Tue Jan 16 2024 Leontiy Volodin <lvol@altlinux.org> 1:6.0.27-alt1
 - New version 6.0.27.
 - Updated license tag.

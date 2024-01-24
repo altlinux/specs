@@ -4,23 +4,24 @@
 
 Name: deepin-qt5integration
 Version: 5.6.20.0.2.b020
-Release: alt1
+Release: alt2
 
 Summary: Qt platform theme integration plugins for DDE
 
-License: LGPL-3.0+
+License: LGPL-3.0-or-later
 Group: System/Libraries
 Url: https://github.com/linuxdeepin/qt5integration
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 
-# Requires: deepin-qt5platform-plugins
-
-BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
 # qt5-base-devel-static for libQt5ThemeSupport.a
 # Automatically added by buildreq on Sat Oct 28 2023
 # optimized out: cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-devel qt5-svg-devel sh5 xorg-proto-devel
 BuildRequires: cmake dtk6-common-devel libdtkwidget-devel libgtest-devel libmtdev-devel libqtxdg-devel qt5-base-devel-static qt5-x11extras-devel
+
+# Requires: deepin-qt5platform-plugins
+Requires: libqt5-core = %_qt5_version
 
 %if_with clang
 BuildRequires: clang-devel lld-devel
@@ -57,6 +58,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_qt5_plugindir/styles/libchameleon.so
 
 %changelog
+* Fri Jan 19 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.20.0.2.b020-alt2
+- Requires: libqt5-core = %%_qt5_version.
+
 * Tue Jan 16 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.20.0.2.b020-alt1
 - New version 5.6.20-2-gb020f02.
 

@@ -1,11 +1,10 @@
 %define repo qt5platform-plugins
-%define qtver 5.15.11
 
 %def_without clang
 
 Name: deepin-qt5platform-plugins
 Version: 5.6.20
-Release: alt1
+Release: alt2
 
 Summary: Qt platform integration plugins for Deepin Desktop Environment
 
@@ -16,11 +15,11 @@ Url: https://github.com/linuxdeepin/qt5platform-plugins
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
 # qt5-base-devel-static for libQt5EdidSupport.a
 # Automatically added by buildreq on Sat Oct 28 2023
 # optimized out: cmake cmake-modules fontconfig-devel gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXfixes-devel libXi-devel libcairo-devel libdouble-conversion3 libfreetype-devel libglvnd-devel libgmock-devel libgpg-error libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-test libqt5-waylandclient libqt5-widgets libqt5-x11extras libqt5-xcbqpa libsasl2-3 libssl-devel libstdc++-devel libwayland-client-devel libwayland-server-devel libxcb-devel libxcb-render-util libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxcbutil-keysyms-devel libxkbcommon-devel libxkbcommon-x11 pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-devel sh5 wayland-devel xorg-proto-devel zlib-devel
-BuildRequires: dwayland-devel extra-cmake-modules libdbus-devel libgtest-devel libmtdev-devel libwayland-cursor-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxkbcommon-x11-devel qt5-base-devel-static = %qtver qt5-wayland-devel = %qtver qt5-x11extras-devel = %qtver
+BuildRequires: dwayland-devel extra-cmake-modules libdbus-devel libgtest-devel libmtdev-devel libwayland-cursor-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxkbcommon-x11-devel qt5-base-devel-static qt5-wayland-devel qt5-x11extras-devel
 BuildRequires: kf5-kwayland-devel
 
 %if_with clang
@@ -28,6 +27,8 @@ BuildRequires: clang-devel lld-devel
 %else
 BuildRequires: gcc-c++
 %endif
+
+Requires: libqt5-core = %_qt5_version
 
 %description
 %repo is the
@@ -68,6 +69,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_qt5_plugindir/wayland-shell-integration/libkwayland-shell.so
 
 %changelog
+* Fri Jan 19 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.20-alt2
+- Requires: libqt5-core = %%_qt5_version.
+
 * Tue Jan 16 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.20-alt1
 - New version 5.6.20.
 

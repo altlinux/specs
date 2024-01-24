@@ -1,12 +1,10 @@
-%define qtver 5.15.11
-
 %def_without clang
 # Not actual CMakeLists.txt
 %def_without cmake
 
 Name: deepin-screen-recorder
 Version: 5.12.15
-Release: alt1
+Release: alt2
 
 Summary: Default screen recorder application for Deepin
 
@@ -21,9 +19,10 @@ Patch: %name-%version-%release.patch
 Provides: %name-data = %version
 Obsoletes: %name-data < %version
 
+BuildRequires(pre): rpm-macros-qt5
 # Automatically added by buildreq on Fri Dec 15 2023
 # optimized out: gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gstreamer1.0-devel libX11-devel libXcursor-devel libXext-devel libXfixes-devel libXi-devel libXtst-devel libavcodec-devel libavformat-devel libavutil-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libgst-plugins1.0 libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libstartup-notification libstdc++-devel libswscale-devel libudev-devel libxcb-devel pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-devel qt5-declarative-devel qt5-tools sh5 tbb-devel xorg-proto-devel
-BuildRequires: deepin-dock-devel deepin-qt-dbus-factory-devel dwayland-devel gst-plugins1.0-devel kf5-kconfig-devel kf5-ki18n-devel kf5-kwayland-devel kf5-kwindowsystem-devel libdtkwidget-devel libffmpegthumbnailer-devel libimagevisualresult-devel libopencv-devel libportaudio2-devel libswresample-devel libusb-devel libv4l-devel libxcbutil-devel qt5-multimedia-devel = %qtver qt5-svg-devel = %qtver qt5-tools-devel = %qtver qt5-x11extras-devel = %qtver
+BuildRequires: deepin-dock-devel deepin-qt-dbus-factory-devel dwayland-devel gst-plugins1.0-devel kf5-kconfig-devel kf5-ki18n-devel kf5-kwayland-devel kf5-kwindowsystem-devel libdtkwidget-devel libffmpegthumbnailer-devel libimagevisualresult-devel libopencv-devel libportaudio2-devel libswresample-devel libusb-devel libv4l-devel libxcbutil-devel qt5-multimedia-devel qt5-svg-devel qt5-tools-devel qt5-x11extras-devel
 
 # /etc/uos-version detection
 BuildRequires: deepin-desktop-base
@@ -37,6 +36,8 @@ BuildRequires: gcc-c++
 %if_with cmake
 BuildRequires: cmake rpm-build-ninja
 %endif
+
+Requires: libqt5-core = %_qt5_version
 
 %description
 %summary.
@@ -114,6 +115,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/dsg/configs/org.deepin.screen-recorder/org.deepin.screen-recorder.record.json
 
 %changelog
+* Fri Jan 19 2024 Leontiy Volodin <lvol@altlinux.org> 5.12.15-alt2
+- Requires: libqt5-core = %%_qt5_version.
+
 * Tue Jan 16 2024 Leontiy Volodin <lvol@altlinux.org> 5.12.15-alt1
 - New version 5.12.15.
 

@@ -2,11 +2,10 @@
 %def_with docs
 
 %define repo dde-app-services
-%define qtver 5.15.11
 
 Name: deepin-app-services
 Version: 1.0.24.0.2.3acd
-Release: alt1
+Release: alt2
 
 Summary: Service collection of DDE applications
 
@@ -17,7 +16,7 @@ Url: https://github.com/linuxdeepin/dde-app-services
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -26,10 +25,11 @@ BuildRequires: gcc-c++
 # Automatically added by buildreq on Fri Oct 20 2023
 # optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-help libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel python3 python3-base qt5-base-common qt5-base-devel qt5-tools sh5
 BuildRequires: cmake libdtkwidget-devel libgtest-devel
-BuildRequires: qt5-base-devel = %qtver
 %if_with docs
 BuildRequires: doxygen qt5-base-doc qt5-tools-devel
 %endif
+
+Requires: libqt5-core = %_qt5_version
 
 %description
 %summary.
@@ -109,6 +109,9 @@ chmod +x %buildroot%_datadir/bash-completion/completions/dde-dconfig
 %endif
 
 %changelog
+* Fri Jan 19 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.24.0.2.3acd-alt2
+- Requires: libqt5-core = %%_qt5_version.
+
 * Tue Jan 16 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.24.0.2.3acd-alt1
 - New version 1.0.24-2-g3acd198.
 
