@@ -7,12 +7,12 @@
 %global servicename     docker
 
 %global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
-%global commit      311b9ff0aa93aa55880e1e5f8871c4fb69583426
+%global commit      615dfdf67264ed5b08dd5e86657bf0e580731cea
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:    docker-engine
-Version: 24.0.7
-Release: alt1.1
+Version: 25.0.0
+Release: alt1
 Summary: The open-source application container engine
 License: Apache-2.0
 Group: System/Configuration/Other
@@ -27,8 +27,6 @@ Source2: %servicename.init
 Source3: %servicename.sysconf
 Source4: %servicename-storage.sysconf
 Source5: daemon.json
-
-Patch1: altlinux/docker-engine-alt-loongarch64-support.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: /proc gcc golang >= 1.3 systemd-devel libdevmapper-devel libbtrfs-devel libseccomp-devel
@@ -151,6 +149,10 @@ exit 0
 %_udevrulesdir/80-docker.rules
 
 %changelog
+* Tue Jan 23 2024 Vladimir Didenko <cow@altlinux.org> 25.0.0-alt1
+- 25.0.0
+- drop loongarch64 support patch (already supported by upstream)
+
 * Thu Nov 02 2023 Ivan A. Melnikov <iv@altlinux.org> 24.0.7-alt1.1
 - NMU: add patch for loongarch64 support
 
