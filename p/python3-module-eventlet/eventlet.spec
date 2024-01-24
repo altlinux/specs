@@ -9,7 +9,7 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 0.34.3
+Version: 0.35.0
 Release: alt1
 
 Summary: Highly concurrent networking library
@@ -24,6 +24,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 Requires: python3-module-dns
+Requires: python3-module-greenlet
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
@@ -123,13 +124,11 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %check
-# test_full_duplex https://github.com/eventlet/eventlet/issues/821
 %pyproject_run_pytest -v -k "\
 not test_dns_methods_are_green \
 and not test_noraise_dns_tcp \
 and not test_clear \
-and not test_raise_dns_tcp \
-and not test_full_duplex"
+and not test_raise_dns_tcp"
 
 %files
 %doc AUTHORS NEWS README.rst
@@ -142,6 +141,9 @@ and not test_full_duplex"
 %endif
 
 %changelog
+* Wed Jan 24 2024 Anton Vyatkin <toni@altlinux.org> 0.35.0-alt1
+- new version 0.35.0
+
 * Mon Jan 22 2024 Anton Vyatkin <toni@altlinux.org> 0.34.3-alt1
 - new version 0.34.3
 
