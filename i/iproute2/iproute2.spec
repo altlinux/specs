@@ -2,8 +2,8 @@
 %def_with selinux
 
 Name: iproute2
-Version: 5.17.0
-Release: alt2
+Version: 6.6.0
+Release: alt1
 
 Summary: Advanced IP routing and network devices configuration tools
 License: GPLv2+
@@ -12,7 +12,6 @@ Url: http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2
 # git://git.altlinux.org/gears/i/%name.git
 Source: %name-%version-%release.tar
 
-Requires: libnetlink = %version-%release
 Provides: iproute = %version-%release
 Obsoletes: iproute < %version, %name-doc < %version
 
@@ -22,9 +21,22 @@ BuildRequires: flex libcap-devel libdb4-devel libelf-devel libiptables-devel lib
 %{?_with_selinux:BuildRequires: libselinux-devel}
 
 %description
-The iproute package contains networking utilities (ip and rtmon, for
-example) which are designed to use the advanced networking capabilities
-of the Linux kernel.
+iproute2 is a collection of utilities to control Linux networking and some
+other subsystems. It consists of several tools, of which the most important are
+ip(8) and tc(8).
+
+%package devel
+Summary: Headers and development files for iproute2
+Group: Development/C
+Requires: iproute2 = %version-%release
+
+%description devel
+iproute2 is a collection of utilities to control Linux networking and some
+other subsystems. It consists of several tools, of which the most important are
+ip(8) and tc(8).
+
+This package contains C headers to develop auxiliary code for programmable
+subsystems, like tc-bpf.
 
 %package -n arpd
 Summary: The arpd daemon
@@ -36,29 +48,14 @@ arpd is a daemon collecting gratuitous ARP information, saving it on
 local disk and feeding it to kernel on demand to avoid redundant
 broadcasting due to limited size of kernel ARP cache.
 
-%package -n libnetlink
-Summary: Netlink socket library
-Group: System/Libraries
-
-%description -n libnetlink
-This package contains libnetlink dynamic library.
-
-%package -n libnetlink-devel
-Summary: Netlink socket library headers
-Group: System/Libraries
-Requires: libnetlink = %version-%release
-
-%description -n libnetlink-devel
-This package contains libnetlink dynamic library headers.
-
 %prep
 %setup -n %name-%version-%release
 
 %build
-%make_build DBM_INCLUDE=%_includedir/db4 LIBDIR=%_libdir CCOPTS='%optflags' V=1
+%make_build DBM_INCLUDE=%_includedir/db4 CONF_USR_DIR=%_datadir/iproute2 LIBDIR=%_libdir CCOPTS='%optflags' V=1
 
 %install
-%makeinstall_std LIBDIR=%_libdir
+%makeinstall_std CONF_USR_DIR=%_datadir/iproute2 LIBDIR=%_libdir
 mkdir -p %buildroot{%_bindir,%_sbindir,%_localstatedir/arpd}
 pushd %buildroot/sbin
 rm routel
@@ -66,13 +63,7 @@ mv arpd bridge ctstat genl ifstat lnstat nstat rtacct rtstat ss tipc \
 	%buildroot%_sbindir/
 popd
 rm %buildroot%_man8dir/routel.8
-
-# libnetlink
-mkdir -p %buildroot{%_includedir,%_libdir,%_man3dir,/%_lib}
-install -p -m644 lib/libnetlink.so %buildroot/%_lib
-install -p -m644 include/{libnetlink.h,ll_map.h} %buildroot%_includedir
-install -p -m644 man/man3/libnetlink.3 %buildroot%_man3dir/
-ln -rs %buildroot/%_lib/libnetlink.so %buildroot%_libdir/
+mkdir -p %buildroot%_sysconfdir/iproute2
 
 # symlinks for unprivileged users
 for prg in ip rtmon tc; do
@@ -82,6 +73,7 @@ for prg in lnstat nstat ss; do
 	ln -rs %buildroot%_sbindir/$prg %buildroot%_bindir/
 done
 
+%define _stripped_files_terminate_build 1
 %define _unpackaged_files_terminate_build 1
 
 %files
@@ -90,25 +82,27 @@ done
 %_bindir/*
 %_libdir/tc/
 %exclude %_sbindir/arpd
+%_datadir/%name
 %config(noreplace) %_sysconfdir/%name
 %_man7dir/*
 %_man8dir/*
 %_datadir/bash-completion/completions/*
 %doc README* doc/actions
 
+%files devel
+%_includedir/iproute2
+%_man3dir/libnetlink.3*
+
 %files -n arpd
 %_sbindir/arpd
 %attr(700,root,root) %dir %_localstatedir/arpd
 
-%files -n libnetlink
-/%_lib/libnetlink.so
-
-%files -n libnetlink-devel
-%_includedir/*
-%_libdir/libnetlink.so
-%_man3dir/*
-
 %changelog
+* Wed Nov 08 2023 Arseny Maslennikov <arseny@altlinux.org> 6.6.0-alt1
+- 5.17.0 -> 6.6.0.
+- Dropped the homegrown libnetlink.so shared library: it is unused by other
+  packages, and there are a lot of alternatives today.
+
 * Tue Apr 26 2022 Vitaly Chikunov <vt@altlinux.org> 5.17.0-alt2
 - Change colorization defaults.
 
