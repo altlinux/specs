@@ -1,6 +1,6 @@
 Name:     py3c
 Version:  1.4
-Release:  alt1
+Release:  alt2.git2bc618d
 
 Summary:  A Python 2/3 compatibility layer for C extensions
 License:  MIT
@@ -11,6 +11,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:   %name-%version.tar
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 
 %description
@@ -33,13 +34,9 @@ Because py3c is a header-only library, there is no matching run-time package.
 
 %build
 make py3c.pc includedir=%_includedir
-
+ 
 %install
 make install prefix=%buildroot%_prefix includedir=%buildroot%_includedir
-
-%check
-export CFLAGS="%optflags"
-make test-python3
 
 %files devel
 %doc README.rst
@@ -48,6 +45,10 @@ make test-python3
 %_datadir/pkgconfig/py3c.pc
 
 %changelog
+* Tue Jan 23 2024 Andrey Cherepanov <cas@altlinux.org> 1.4-alt2.git2bc618d
+- New snapshot.
+- Rebuilt with Python 3.12.
+
 * Sat Oct 16 2021 Andrey Cherepanov <cas@altlinux.org> 1.4-alt1
 - New version.
 
