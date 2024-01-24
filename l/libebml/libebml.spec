@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: libebml
-Version: 1.4.4
+Version: 1.4.5
 Release: alt1
 Summary: Extensible Binary Meta Language access library
 License: LGPL-2.1-or-later and BSD
@@ -51,6 +51,9 @@ Files needed to build programs using libebml
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jan 24 2024 L.A. Kostis <lakostis@altlinux.ru> 1.4.5-alt1
+- 1.4.5.
+
 * Thu Dec 29 2022 L.A. Kostis <lakostis@altlinux.ru> 1.4.4-alt1
 - NMU:
   + 1.4.2 -> 1.4.4.
