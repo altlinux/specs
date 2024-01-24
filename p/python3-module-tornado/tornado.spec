@@ -1,8 +1,8 @@
 %define oname tornado
 
 Name: python3-module-%oname
-Version: 6.3.3
-Release: alt1.1
+Version: 6.4.0
+Release: alt1
 
 Summary: Scalable, non-blocking web server and tools
 
@@ -55,9 +55,12 @@ export ASYNC_TEST_TIMEOUT=120
 %files
 %doc LICENSE *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-6.4-py%_python3_version.egg-info
 
 %changelog
+* Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 6.4.0-alt1
+- Automatically updated to 6.4.0.
+
 * Wed Sep 13 2023 Ivan A. Melnikov <iv@altlinux.org> 6.3.3-alt1.1
 - Increase timeout for simple_httpclient_test
   (fixes build on riscv64 and mipsel).
