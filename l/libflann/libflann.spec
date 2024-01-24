@@ -14,12 +14,12 @@ Group: Development/C
 
 Name:           libflann
 Version:        1.9.2
-Release:        alt2
+Release:        alt2.1
 Summary:        Fast Library for Approximate Nearest Neighbors
 
 License:        BSD
 URL:            http://www.cs.ubc.ca/research/flann
-Source0:        https://www.github.com/mariusmuja/%{oldname}/archive/%{version}/%{oldname}-%{version}.tar.gz
+Source:         %{name}-%{version}.tar
 
 # Prevent the buildsysem from running setup.py, and use system-installed libflann.so
 # Not submitted upstream
@@ -39,6 +39,7 @@ BuildRequires:  texlive texlive-collection-basic
 BuildRequires:  texlive-dist
 
 BuildRequires:  python3-devel
+BuildRequires:  python3-module-distutils-extra
 Source44: import.info
 Provides: flann = %{version}-%{release}
 
@@ -78,7 +79,7 @@ Requires: %{name} = %{version}-%{release}
 Python 3 bindings for flann
 
 %prep
-%setup -n %{oldname}-%{version} 
+%setup
 %patch0 -p0 -b .fixpyflann
 %patch1 -p1
 %ifarch %e2k
@@ -133,6 +134,9 @@ rm -rf %{buildroot}%{_datadir}/doc/flann
 %{python3_sitelibdir}/flann-%{version}*.egg-info
 
 %changelog
+* Wed Jan 24 2024 Pavel Skrylev <majioa@altlinux.org> 1.9.2-alt2.1
+- ! fixed python3 deps
+
 * Wed Jun 28 2023 Michael Shigorin <mike@altlinux.org> 1.9.2-alt2
 - E2K: lcc 1.26 ftbfs workaround (ilyakurdyukov@)
 

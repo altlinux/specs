@@ -6,7 +6,7 @@
 
 Name:          ruby
 Version:       %_version
-Release:       alt1.1
+Release:       alt2
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -23,9 +23,10 @@ Patch2:        single_instantiating.patch
 Patch3:        alt_support_multiple_gem_trees.patch
 Patch4:        realpath.patch
 Patch5:        alt_block_install_gems.patch
+Patch6:        ac.patch
 BuildRequires(pre): rpm-macros-valgrind
-BuildRequires(pre): rpm-build-kernel
 BuildRequires: rvm-devel
+BuildRequires: autoconf >= 2.71
 %if_with check
 BuildRequires: gem(bundler) >= 0
 BuildRequires: gem(rake-compiler) >= 0
@@ -82,14 +83,6 @@ This package contains Ruby shared libraries.
 Summary:       Files for compiling extension modules for Ruby
 Group:         Development/C
 Requires:      %lname = %_version-%release
-Requires:      doxygen
-Requires:      rvm-devel
-Requires:      groff-base
-Requires:      gem(bundler) >= 0
-Requires:      gem(rake) >= 0
-Requires:      gem(rake-compiler) >= 0
-Requires:      gem(benchmark_driver) >= 0
-Requires:      gem(test-unit) >= 3.3.5
 
 %description   -n %lname-devel
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -99,17 +92,25 @@ management tasks (as in Perl). It is simple, straight-forward, and extensible.
 This package contains files, necessary to make extension library for Ruby.
 
 
-%package       -n %lname-devel-static
-Summary:       Files for compiling extension modules for Ruby
+%package       -n %name-devel
+Summary:       Files for development and testing with Ruby
 Group:         Development/C
-Requires:      %lname-devel = %_version-%release
+Requires:      %name = %_version-%release
+Requires:      rvm-devel
+Requires:      libruby-devel = %_version-%release
+Requires:      gem(bundler) >= 0
+Requires:      gem(rake) >= 0
+Requires:      gem(rake-compiler) >= 0
+Requires:      gem(benchmark_driver) >= 0
+Requires:      gem(test-unit) >= 3.3.5
 
-%description   -n %lname-devel-static
+%description   -n %name-devel
 Ruby is an interpreted scripting language for quick and easy object-oriented
 programming. It has many features for processing text files and performing system
 management tasks (as in Perl). It is simple, straight-forward, and extensible.
 
-This package contains static Ruby library needed for embedding Ruby.
+This package contains files, necessary to develop with ruby and for ruby testing
+purposes.
 
 
 %package       -n %name-stdlibs
@@ -120,7 +121,6 @@ Requires:      ruby = %_version-%release
 Provides:      rdoc = 6.4.0
 Provides:      bundle = 2.3.26
 Provides:      %name-libs = %_version-%release
-Provides:      %name-racc-runtime = %_version
 Provides:      gem(ipaddr) = 1.2.4
 Provides:      gem(fcntl) = 1.0.1
 Provides:      gem(stringio) = 3.0.1
@@ -205,7 +205,7 @@ This package contains standard Ruby runtime libraries.
 Summary:       ERB template library
 Group:         Development/Ruby
 BuildArch:     noarch
-Requires:      %name-stdlibs = %_version
+Requires:      %name-stdlibs = %_version-%release
 Provides:      %_bindir/erb
 Obsoletes:     %name-tools
 
@@ -217,7 +217,7 @@ ERB template library executable and manual.
 Summary:       Interactive Ruby Shell
 Group:         Development/Ruby
 BuildArch:     noarch
-Requires:      %name-stdlibs = %_version
+Requires:      %name-stdlibs = %_version-%release
 Provides:      %_bindir/irb
 Obsoletes:     %name-tools
 %obsolete      %name-tool-irb
@@ -225,11 +225,12 @@ Obsoletes:     %name-tools
 %description   -n irb
 irb is the REPL(read-eval&print loop) environment for Ruby programs.
 
+
 %package       -n ri-doc
 Summary:       Ruby ri executable document
 Group:         Development/Documentation
 BuildArch:     noarch
-Requires:      %name = %_version
+Requires:      %name = %_version-%release
 Provides:      %name-doc-ri
 Obsoletes:     %name-doc-ri
 
@@ -241,11 +242,12 @@ extensible.
 
 This package contains Ruby documentation in ri format.
 
+
 %package       doc
 Summary:       Ruby manuals and documentation
 Group:         Development/Documentation
 BuildArch:     noarch
-Requires:      ruby = %EVR
+Requires:      ruby = %_version-%release
 
 %description   doc
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -259,16 +261,15 @@ Ruby manuals and documentation.
 %package       -n gem
 Epoch:         2
 Version:       3.3.26
-Release:       alt1.1
+Release:       alt2
 Summary:       Ruby gem executable and framefork
 Group:         Development/Ruby
 BuildArch:     noarch
-Requires:      %name-stdlibs = %_version
+Requires:      %name-stdlibs = %_version-%release
 Provides:      %{name}gems = %version
 Provides:      %name-tools
 Obsoletes:     %{name}gems
 Obsoletes:     %name-tools
-AutoReq:       yes,noshell
 
 %description   -n gem
 Ruby gem executable and framework.
@@ -277,7 +278,7 @@ Ruby gem executable and framework.
 %package       -n rpm-macros-ruby
 Epoch:         1
 Version:       %_version
-Release:       alt1.1
+Release:       alt2
 Summary:       rpm macros for Ruby packages
 Group:         Development/Ruby
 
@@ -355,7 +356,7 @@ mkdir -p \
 
 cp COPYING LEGAL NEWS* README.md README.EXT *.ja %buildroot%_docdir/%name/
 while read -d " " i; do ln -s ../../%_libexecdir/%name/bin/$i %buildroot%_bindir/; done <<< "ruby ri erb irb gem "
-
+ln -s %name-3.1.pc %buildroot%_pkgconfigdir/%name.pc
 # install ruby macros
 install -D -p -m 0644 %SOURCE4 %buildroot%_rpmmacrosdir/ruby.env
 %__ruby -e 'File.open("%buildroot%_rpmmacrosdir/ruby", "w") { |f| f.puts ERB.new(IO.read("%SOURCE3")).result }'
@@ -384,6 +385,8 @@ echo "NOTE: to make the environment variable changes come into effect, please re
 %_includedir/%name
 %_includedir/%name.h
 %_libdir/*.so
+
+%files         -n %name-devel
 
 %files         stdlibs
 %exclude %_libexecdir/%name/bin
@@ -420,6 +423,11 @@ echo "NOTE: to make the environment variable changes come into effect, please re
 %_rpmmacrosdir/ruby.env
 
 %changelog
+* Fri Dec 22 2023 Pavel Skrylev <majioa@altlinux.org> 3.1.4-alt2
+- + dependency to autoconf >= 2.71
+- + ruby-devel package including rvm-devel and libruby-devel
+- ! fixed dep to pkgconfig ruby
+
 * Mon Dec 18 2023 Pavel Skrylev <majioa@altlinux.org> 3.1.4-alt1.1
 - ! fixed %vendordir folder set
 - - removed rvm-devel dep from ruby (closes #48812)
