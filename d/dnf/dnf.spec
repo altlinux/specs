@@ -3,7 +3,7 @@
 
 Name:    dnf
 Version: 4.13.0
-Release: alt1
+Release: alt2
 
 Summary: Package manager based on libdnf and libsolv. Replaces YUM.
 License: GPL-2.0
@@ -13,7 +13,8 @@ Url:     https://github.com/rpm-software-management/dnf
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
-Patch1: dnf-alt-pathes.patch
+Patch0: dnf-alt-pathes.patch
+Patch1: dnf-alt-not-use-dbCookie.patch
 
 BuildArch: noarch
 
@@ -48,6 +49,7 @@ Automatic upgrades for DNF.
 
 %prep
 %setup
+%patch0 -p1
 %patch1 -p1
 
 %build
@@ -110,5 +112,8 @@ ctest -VV
 %python3_sitelibdir/%name/automatic
 
 %changelog
+* Wed Jan 24 2024 Andrey Cherepanov <cas@altlinux.org> 4.13.0-alt2
+- Do not use dbCookie for transactions.
+
 * Wed Jun 15 2022 Andrey Cherepanov <cas@altlinux.org> 4.13.0-alt1
 - Initial build for Sisyphus.
