@@ -1,6 +1,6 @@
 Name:    coppwr
-Version: 1.5.0
-Release: alt2
+Version: 1.5.1
+Release: alt1
 
 Summary: Low level control GUI for the PipeWire multimedia server
 License: GPL-3.0
@@ -77,6 +77,9 @@ install -Dm644 assets/icon/32.png %buildroot/%_datadir/icons/hicolor/32x32/apps/
 %_datadir/icons/hicolor/*/apps/io.github.dimtpap.coppwr.*
 
 %changelog
+* Thu Jan 25 2024 Mikhail Gordeev <obirvalger@altlinux.org> 1.5.1-alt1
+- new version 1.5.1
+
 * Thu Jan 04 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.5.0-alt2
 - NMU: fixed FTBFS on LoongArch (trivial patch for nix crate).
 
