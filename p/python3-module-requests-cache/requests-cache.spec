@@ -5,17 +5,18 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.0.1
+Version: 1.1.1
 Release: alt1
 
 Summary: Persistent cache for requests library
 
 License: BSD-2-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/requests-cache/
+URL: https://pypi.org/project/requests-cache
+VCS: https://github.com/reclosedev/requests-cache
+
 BuildArch: noarch
 
-# https://github.com/reclosedev/requests-cache.git
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -52,6 +53,9 @@ Requests-cache is a transparent persistent cache for requests
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 1.1.1-alt1
+- Automatically updated to 1.1.1.
+
 * Sun Mar 26 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt1
 - Automatically updated to 1.0.1.
 
