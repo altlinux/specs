@@ -1,5 +1,5 @@
 Name:     slurp 
-Version:  1.4.0
+Version:  1.5.0
 Release:  alt1
 
 Summary:  Wayland region selector
@@ -39,5 +39,8 @@ Select a region in a Wayland compositor and print it to the standard output. Wor
 %_mandir/man1/*
 
 %changelog
+* Wed Jan 24 2024 Roman Alifanov <ximper@altlinux.org> 1.5.0-alt1
+- new version 1.5.0 (with rpmrb script)
+
 * Wed Dec 28 2022 Roman Alifanov <ximper@altlinux.org> 1.4.0-alt1
 - Initial build for Sisyphus
