@@ -1,20 +1,28 @@
 %define oname sqlalchemy-citext
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.3.0
-Release: alt2
+Version: 1.8.0
+Release: alt1
 
 Summary: A sqlalchemy plugin that allows postgres use of CITEXT
-License: BSD
+License: MIT and BSD-4-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/sqlalchemy-citext/
-# https://github.com/mahmoudimus/sqlalchemy-citext.git
+Url: https://pypi.org/project/sqlalchemy-citext/
+Vcs: https://github.com/mahmoudimus/sqlalchemy-citext.git
 BuildArch: noarch
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-SQLAlchemy python3-module-psycopg2
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-psycopg2
+BuildRequires: python3-module-sqlalchemy
+%endif
 
 %py3_provides citext
 %py3_requires sqlalchemy psycopg2
@@ -28,21 +36,23 @@ extension.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test
+%pyproject_run_pytest -v
 
 %files
-%doc *.md
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/tests
-
+%doc README.*
+%python3_sitelibdir/citext
+%python3_sitelibdir/sqlalchemy_citext-%version.dist-info
 
 %changelog
+* Wed Jan 24 2024 Anton Vyatkin <toni@altlinux.org> 1.8.0-alt1
+- New version 1.8.0.
+
 * Thu Nov 21 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.3.0-alt2
 - python2 disabled
 
