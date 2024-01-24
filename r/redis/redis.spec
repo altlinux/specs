@@ -9,7 +9,7 @@
 %endif
 
 Name: redis
-Version: 7.2.3
+Version: 7.2.4
 Release: alt1
 Summary: Redis is an advanced key-value store
 Group: Databases
@@ -20,8 +20,6 @@ Group: Databases
 License: BSD-3-Clause AND BSD-2-Clause AND MIT AND BSL-1.0
 URL: http://redis.io/
 #URL: https://github.com/antirez/redis
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source0: %name-%version.tar
 Patch0:  %name-%version-%release.patch
@@ -213,6 +211,9 @@ useradd  -r -g %redis_group -c 'Redis daemon' \
 %_includedir/%{name}module.h
 
 %changelog
+* Wed Jan 24 2024 Alexey Shabalin <shaba@altlinux.org> 7.2.4-alt1
+- 7.2.4 (Fixes: CVE-2023-41056)
+
 * Tue Nov 07 2023 Alexey Shabalin <shaba@altlinux.org> 7.2.3-alt1
 - 7.2.3 (Fixes: CVE-2023-45145)
 
