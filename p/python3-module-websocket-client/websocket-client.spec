@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.6.4
+Version: 1.7.0
 Release: alt1
 
 Summary: WebSocket client for Python with low level API options
@@ -68,6 +68,9 @@ py.test-3 -v websocket/tests
 %python3_sitelibdir/*/tests
 
 %changelog
+* Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 1.7.0-alt1
+- Automatically updated to 1.7.0.
+
 * Sat Oct 21 2023 Grigory Ustinov <grenka@altlinux.org> 1.6.4-alt1
 - Automatically updated to 1.6.4.
 
