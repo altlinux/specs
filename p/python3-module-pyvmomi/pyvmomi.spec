@@ -1,7 +1,9 @@
 %define  modulename pyvmomi
 
+%def_without check
+
 Name:    python3-module-%modulename
-Version: 8.0.2.0
+Version: 8.0.2.0.1
 Release: alt1
 
 Summary: VMware vSphere API Python Bindings
@@ -12,7 +14,15 @@ URL:     https://github.com/vmware/pyvmomi
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-BuildPreReq: rpm-build-python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-urllib3
+BuildRequires: python3-module-vcrpy
+%endif
 
 BuildArch: noarch
 
@@ -28,16 +38,22 @@ manage ESX, ESXi, and vCenter.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_pytest
 
 %files
 %python3_sitelibdir/pyV*
-%python3_sitelibdir/*.egg-*
+%python3_sitelibdir/*.dist-info
 
 %changelog
+* Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 8.0.2.0.1-alt1
+- Automatically updated to 8.0.2.0.1.
+
 * Mon Oct 02 2023 Grigory Ustinov <grenka@altlinux.org> 8.0.2.0-alt1
 - Automatically updated to 8.0.2.0.
 
