@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 23.1.0
+Version: 24.1.0
 Release: alt1
 Summary: Fancy PyPI READMEs with Hatch
 License: MIT
@@ -50,6 +50,9 @@ about the first impression of their project's PyPI landing page.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Wed Jan 24 2024 Vladimir Didenko <cow@altlinux.org> 24.1.0-alt1
+- 23.1.0 -> 24.1.0.
+
 * Mon May 22 2023 Stanislav Levin <slev@altlinux.org> 23.1.0-alt1
 - 22.8.0 -> 23.1.0.
 
