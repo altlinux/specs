@@ -3,16 +3,16 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.8.1
-Release: alt2
+Version: 0.8.2
+Release: alt1
 
 Summary: Simple VTXXX-compatible terminal emulator
 
 License: LGPLv3
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/pyte
+URL: https://pypi.org/project/pyte
+VCS: https://github.com/selectel/pyte
 
-# https://github.com/selectel/pyte.git
 Source: %name-%version.tar
 
 %py3_provides %oname
@@ -54,6 +54,9 @@ the suit.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 0.8.2-alt1
+- Automatically updated to 0.8.2.
+
 * Thu Oct 06 2022 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt2
 - Use modern macros.
 
