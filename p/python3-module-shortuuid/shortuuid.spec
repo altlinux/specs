@@ -4,24 +4,24 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.0.8
+Version: 1.0.11
 Release: alt1
 
 Summary: A generator library for concise, unambiguous and URL-safe UUIDs
 
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/shortuuid/
+
+BuildArch: noarch
 
 # Source-url: https://github.com/skorokithakis/shortuuid.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-
-BuildArch: noarch
-
+BuildRequires: python3-module-poetry-core
 %if_with check
-BuildRequires: python3(tox)
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -33,31 +33,28 @@ letters and numbers.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 # strip tests
-rm %buildroot%python3_sitelibdir/%oname/tests.py
+rm %buildroot%python3_sitelibdir/%oname/test_shortuuid.py
+# remove strange COPYING file
+rm %buildroot%python3_sitelibdir/COPYING
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    python %oname/tests.py
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr -s false --develop
+%pyproject_run_pytest -v
 
 %files
 %doc README.md
 %_bindir/%oname
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Jan 24 2024 Anton Vyatkin <toni@altlinux.org> 1.0.11-alt1
+- new version 1.0.11
+
 * Wed Mar 30 2022 Stanislav Levin <slev@altlinux.org> 1.0.8-alt1
 - 1.0.0 -> 1.0.8.
 
