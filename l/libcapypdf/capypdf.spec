@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Summary: CapyPDF is a library for generating PDF files
@@ -33,7 +33,9 @@ BuildRequires: pkgconfig(libjpeg)
 BuildRequires: pkgconfig(freetype2)
 BuildRequires: pkgconfig(libtiff-4)
 BuildRequires: pkgconfig(gtk4)
-%{?_enable_check:BuildRequires: python3(PIL) fonts-ttf-google-noto-serif ghostscript-common}
+%{?_enable_check:BuildRequires: python3(PIL) 
+BuildRequires:fonts-ttf-google-noto-serif fonts-ttf-google-noto-sans
+BuildRequires: ghostscript-common}
 
 %description
 CapyPDF is a library for generating PDF files. It aims to be very low
@@ -88,6 +90,9 @@ sed -i 's|/usr/share/color/icc/ghostscript/a98.icc|/usr/share/ghostscript/10.01.
 
 
 %changelog
+* Wed Jan 24 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Tue Dec 05 2023 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
 - 0.7.0
 
