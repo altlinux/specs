@@ -1,5 +1,5 @@
 Name: cpio
-Version: 2.14.0.4.e3cc
+Version: 2.15
 Release: alt1
 
 Summary: A GNU archiving program
@@ -109,6 +109,9 @@ mv %buildroot%_bindir/cpio{,.}static
 %define _unpackaged_files_terminate_build 1
 
 %changelog
+* Wed Jan 24 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.15-alt1
+- Updated to 2.15.
+
 * Mon Sep 18 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.14.0.4.e3cc-alt1
 - cpio: release_2_13 -> v2.14-4-ge3cc782
 - paxutils BR: v0.0.1-150-g6fba6e9.
