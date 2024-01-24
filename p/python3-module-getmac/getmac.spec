@@ -1,5 +1,5 @@
 Name: python3-module-getmac
-Version: 0.9.3
+Version: 0.9.4
 Release: alt1
 
 Summary: Python library to get the MAC address
@@ -32,6 +32,9 @@ on the local network.
 %python3_sitelibdir/getmac-%version.dist-info
 
 %changelog
+* Wed Jan 24 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.4-alt1
+- 0.9.4 released
+
 * Thu May 04 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.3-alt1
 - 0.9.3 released
 
