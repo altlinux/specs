@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.10.0
-Release: alt1
+Release: alt2
 
 Summary: WSGI adapter for aiohttp
 License: BSD-3-Clause
@@ -17,8 +17,11 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-aiohttp
+BuildRequires: python3-module-pytest
 %endif
 
 %py3_provides aiohttp_wsgi
@@ -31,23 +34,25 @@ aiohttp-wsgi is a WSGI adapter for aiohttp.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check
+%pyproject_run_pytest -v
 
 %files
 %doc *.rst LICENSE
 %_bindir/*
 %python3_sitelibdir/aiohttp_wsgi
-%python3_sitelibdir/aiohttp_wsgi-%version-*.egg-info
+%python3_sitelibdir/aiohttp_wsgi-%version.dist-info
 
 
 %changelog
+* Wed Jan 24 2024 Anton Vyatkin <toni@altlinux.org> 0.10.0-alt2
+- Fixed FTBFS.
+
 * Thu Apr 06 2023 Anton Vyatkin <toni@altlinux.org> 0.10.0-alt1
 - New version 0.10.0
 
