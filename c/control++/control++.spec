@@ -7,7 +7,7 @@
 
 Name: control++
 Version: 0.21.2
-Release: alt1
+Release: alt2
 
 Summary: System configuration tool
 License: GPLv3
@@ -117,6 +117,9 @@ cp -r tests/* %{buildroot}%{testsdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Wed Jan 24 2024 Alexey Appolonov <alexey@altlinux.org> 0.21.2-alt2
+- Updated manual.
+
 * Thu Aug 10 2023 Alexey Appolonov <alexey@altlinux.org> 0.21.2-alt1
 - Improved comparison of ulimits files;
 - Sync with the libcontrol++ ver 0.30.
