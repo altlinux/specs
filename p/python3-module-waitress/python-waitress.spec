@@ -4,24 +4,25 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.0.0
+Version: 2.1.2
 Release: alt1
 
 Summary: Waitress WSGI server
 License: ZPL-2.1
 Group: Development/Python3
-
 Url: https://pypi.org/project/waitress/
+Vcs: https://github.com/Pylons/waitress
+
 BuildArch: noarch
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
-BuildRequires(pre): rpm-build-python3
 
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
-BuildRequires: python3(tox_no_deps)
+BuildRequires: python3-module-pytest
 %endif
 
 Conflicts: python-module-%oname
@@ -41,24 +42,24 @@ visit https://docs.pylonsproject.org/projects/waitress/en/latest/
 %patch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts --no-deps -vvr
+%pyproject_run_pytest -v
 
 %files
 %doc README.rst CHANGES.txt COPYRIGHT.txt LICENSE.txt
 %_bindir/waitress-serve
 %python3_sitelibdir/waitress/
-%python3_sitelibdir/waitress-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/waitress-%version.dist-info
 
 %changelog
+* Wed Jan 24 2024 Anton Vyatkin <toni@altlinux.org> 2.1.2-alt1
+- New version 2.1.2.
+
 * Wed Apr 14 2021 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1
 - 1.2.1 -> 2.0.0.
 
