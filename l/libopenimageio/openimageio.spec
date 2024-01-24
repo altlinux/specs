@@ -10,8 +10,8 @@
 %define soname 2.5
 
 Name:           lib%oname
-Version:        2.5.5.0
-Release:        alt2
+Version:        2.5.7.0
+Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -27,6 +27,9 @@ Source0:        %name-%version.tar
 Source2: %oname.watch
 
 Patch1: %oname-alt-armh-disable-neon.patch
+# https://github.com/AcademySoftwareFoundation/OpenImageIO/issues/4111
+# revert simd change on aarch64
+Patch2: 0001-perf-simd-faster-vint4-load-store-with-unsigned-char.patch
 Patch2000: %oname-e2k.patch
 
 BuildRequires(pre): rpm-build-python3
@@ -139,6 +142,9 @@ Development files for package %name
 %ifarch armh
 %patch1 -p1
 %endif
+%ifarch aarch64
+%patch2 -p1 -R
+%endif
 %ifarch %e2k
 %patch2000 -p1
 # simplifies the patch
@@ -233,6 +239,10 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Wed Jan 24 2024 L.A. Kostis <lakostis@altlinux.ru> 2.5.7.0-alt1
+- 2.5.7.0.
+- aarch64: revert simd optimisations (see upstream issue #4111).
+
 * Thu Nov 16 2023 L.A. Kostis <lakostis@altlinux.ru> 2.5.5.0-alt2
 - Build: use C++17 for new openvdb.
 - BR: added Ptex.
