@@ -5,7 +5,7 @@
 
 Name: aircrack-ng
 Version: 1.7
-Release: alt2
+Release: alt3
 
 Summary: 802.11 WEP and WPA-PSK key recovery program
 License: GPLv2+
@@ -18,6 +18,7 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt-build.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 BuildRequires: gcc-c++
 BuildRequires: libssl-devel libsqlite3-devel
 BuildRequires: libnl-devel
@@ -86,6 +87,9 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %_includedir/*
 
 %changelog
+* Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 1.7-alt3
+- Removed build dependency on distutils.
+
 * Thu Jun 30 2022 Pavel Nakonechnyi <zorg@altlinux.org> 1.7-alt2
 - Removes dependency on systemd (closes: #43117).
 
