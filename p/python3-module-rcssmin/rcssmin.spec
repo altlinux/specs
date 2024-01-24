@@ -3,14 +3,16 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.1.0
+Version: 1.1.2
 Release: alt1
+
 Summary: CSS Minifier
+
 License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/%oname
+URL: https://pypi.org/project/rcssmin
+VCS: https://github.com/ndparker/rcssmin
 
-# https://github.com/ndparker/rcssmin.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -44,6 +46,9 @@ py.test-3 -v
 %python3_sitelibdir/_%oname.*.so
 
 %changelog
+* Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 1.1.2-alt1
+- Automatically updated to 1.1.2.
+
 * Thu Aug 04 2022 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
 - Build new version.
 
