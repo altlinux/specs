@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.9.6
-Release: alt1
+Release: alt2
 Summary: Query metadatdata from sdists / bdists / installed packages
 License: MIT
 Group: Development/Python
@@ -17,9 +17,11 @@ BuildArch: noarch
 BuildRequires: python-modules-wsgiref
 %if_with python3
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %endif
 %if_with check
-BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest
 %endif
 
 %add_python_req_skip configparser
@@ -115,14 +117,14 @@ cp -fR . ../python3
 
 %if_with python3
 pushd ../python3
-%python3_build_debug
+%pyproject_build
 popd
 %endif
 
 %install
 %if_with python3
 pushd ../python3
-%python3_install
+%pyproject_install
 popd
 pushd %buildroot%_bindir
 for i in $(ls); do
@@ -134,7 +136,11 @@ popd
 %python_install
 
 %check
-%tox_check
+%if_with python3
+pushd ../python3
+%pyproject_run_pytest -v
+popd
+%endif
 
 %files
 %doc *.txt
@@ -152,7 +158,8 @@ popd
 %files -n python3-module-%oname
 %doc *.txt
 %_bindir/*.py3
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/*/tests
 
 %files -n python3-module-%oname-tests
@@ -160,6 +167,9 @@ popd
 %endif
 
 %changelog
+* Wed Jan 24 2024 Anton Vyatkin <toni@altlinux.org> 1.9.6-alt2
+- (NMU) Fixed FTBFS.
+
 * Thu Mar 02 2023 Anton Vyatkin <toni@altlinux.org> 1.9.6-alt1
 - (NMU) New version 1.9.6
 - Fix BuildRequires
