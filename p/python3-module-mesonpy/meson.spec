@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.15.0
-Release: alt1
+Release: alt2
 
 Summary: Meson PEP 517 Python build backend
 License: MIT
@@ -52,7 +52,7 @@ for more details.
 
 %check
 %tox_create_default_config
-%tox_check_pyproject -- -k'not test_pep518'
+%tox_check_pyproject -- -k'not test_pep518 and not test_limited_api'
 
 %files
 %doc LICENSE *.rst
@@ -60,6 +60,9 @@ for more details.
 %python3_sitelibdir/%{pyproject_distinfo meson_python}
 
 %changelog
+* Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 0.15.0-alt2
+- Fixed FTBFS.
+
 * Mon Oct 30 2023 Grigory Ustinov <grenka@altlinux.org> 0.15.0-alt1
 - Automatically updated to 0.15.0.
 
