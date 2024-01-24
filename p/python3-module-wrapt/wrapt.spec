@@ -3,14 +3,16 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.15.0
+Version: 1.16.0
 Release: alt1
-Summary: A Python module for decorators, wrappers and monkey patching
-License: BSD
-Group: Development/Python3
-Url: https://pypi.python.org/pypi/wrapt
 
-# https://github.com/GrahamDumpleton/wrapt
+Summary: A Python module for decorators, wrappers and monkey patching
+
+License: BSD-2-Clause
+Group: Development/Python3
+URL: https://pypi.org/project/wrapt
+VCS: https://github.com/GrahamDumpleton/wrapt
+
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx3
@@ -71,7 +73,7 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 py.test3
 
 %files
-%doc README.rst
+%doc LICENSE README.rst
 %python3_sitelibdir/%oname
 %python3_sitelibdir/*.egg-info
 %exclude %python3_sitelibdir/*/pickle
@@ -83,6 +85,9 @@ py.test3
 %doc docs/_build/html blog
 
 %changelog
+* Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 1.16.0-alt1
+- Automatically updated to 1.16.0.
+
 * Mon Feb 27 2023 Grigory Ustinov <grenka@altlinux.org> 1.15.0-alt1
 - Automatically updated to 1.15.0.
 
