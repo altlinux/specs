@@ -1,6 +1,6 @@
 Name: emacs
-Version: 29.1
-Release: alt3
+Version: 29.2
+Release: alt1
 
 Summary: GNU Emacs text editor
 License: GPLv3+
@@ -266,9 +266,8 @@ cp -av %buildroot%_datadir/emacs/%version/site-lisp \
 # cleanups
 sed -i 's,%buildroot,,' %buildroot%_desktopdir/*desktop \
     %buildroot%_libexecdir/systemd/user/emacs.service
-mv %buildroot%_mandir/man1/{,g}ctags.1.gz
 mv %buildroot%_bindir/{,g}ctags
-rm -vf %buildroot%_infodir/info*
+mv %buildroot%_man1dir/{,g}ctags.1.gz
 rm -vf %buildroot%_infodir/dir
 
 # alternatives
@@ -276,7 +275,7 @@ install -pm644 -D .gear/athena.alternatives %buildroot%_altdir/%name-athena
 install -pm644 -D .gear/gtk3.alternatives %buildroot%_altdir/%name-gtk3
 install -pm644 -D .gear/pgtk.alternatives %buildroot%_altdir/%name-pgtk
 
-# X resources #
+# X resources
 install -pm0644 -D .gear/xresources %buildroot%_sysconfdir/X11/app-defaults/Emacs
 
 # file lists
@@ -371,6 +370,9 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %_infodir/elisp*
 
 %changelog
+* Wed Jan 24 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 29.2-alt1
+- 29.2 released
+
 * Mon Dec 11 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 29.1-alt3
 - utilize emacsclient from pgtk build (closes: 48754)
 
