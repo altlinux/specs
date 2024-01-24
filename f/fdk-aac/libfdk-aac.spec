@@ -1,9 +1,9 @@
-%define git 3f864cc
+%define git %nil
 %define soname 2
 
 Name: fdk-aac
-Version: 2.0.2
-Release: alt0.2.g%{git}
+Version: 2.0.3
+Release: alt0.1
 Summary: Fraunhofer FDK AAC Codec Library for Android
 License: Permissive
 Group: System/Libraries
@@ -61,6 +61,9 @@ develop programs which make use of %name
 %_libdir/cmake/*
 
 %changelog
+* Wed Jan 24 2024 L.A. Kostis <lakostis@altlinux.ru> 2.0.3-alt0.1
+- 2.0.3.
+
 * Fri Jan 27 2023 L.A. Kostis <lakostis@altlinux.ru> 2.0.2-alt0.2.g3f864cc
 - GIT 3f864cc.
 
