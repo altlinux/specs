@@ -2,16 +2,16 @@
 %define oname ujson
 
 Name: python3-module-%oname
-Version: 5.8.0
+Version: 5.9.0
 Release: alt1
 
 Summary: Ultra fast JSON encoder and decoder for Python
 
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/ujson
+URL: https://pypi.org/project/ujson
+VCS: https://github.com/esnme/ultrajson
 
-# https://github.com/esnme/ultrajson.git
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -47,11 +47,14 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %tox_check_pyproject
 
 %files
-%doc *.md
+%doc LICENSE.txt *.md
 %python3_sitelibdir/%oname.cpython-*.so
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 5.9.0-alt1
+- Automatically updated to 5.9.0.
+
 * Sun Jun 11 2023 Grigory Ustinov <grenka@altlinux.org> 5.8.0-alt1
 - Automatically updated to 5.8.0.
 
