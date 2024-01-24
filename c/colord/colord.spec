@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %def_enable daemon
 %def_enable session_helper
@@ -27,7 +27,7 @@
 
 Name: colord
 Version: 1.4.7
-Release: alt1
+Release: alt1.1
 
 Summary: Color daemon
 License: GPLv2+
@@ -39,6 +39,8 @@ Source: http://www.freedesktop.org/software/%name/releases/%name-%version.tar.xz
 %else
 Source: %name-%version.tar
 %endif
+# revert this
+Patch10: colord-1.4.7-up-1452a975ecae14299fb27d41522dfd32305481ce.patch
 
 %define colord_group %name
 %define colord_user %name
@@ -48,7 +50,8 @@ Source: %name-%version.tar
 %define gusb_ver 0.2.7
 %define bash_completion_ver 2.0
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
+%{?_enable_argyllcms:Requires: argyllcms}
 
 BuildRequires(pre): meson
 BuildRequires(pre): rpm-macros-valgrind
@@ -81,8 +84,8 @@ This package provides shared library for Colord to work.
 Summary: Development package for %name
 Group: Development/C
 Obsoletes: %name-devel
-Provides: %name-devel = %version-%release
-Requires: lib%name = %version-%release
+Provides: %name-devel = %EVR
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 colord is a low level system activated daemon that maps color devices to color
@@ -93,7 +96,7 @@ This package provides development files for Colord library.
 %package -n lib%name-gir
 Summary: GObject introspection data for the %name library
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-gir
 GObject introspection data for the %name library
@@ -102,8 +105,8 @@ GObject introspection data for the %name library
 Summary: GObject introspection devel data for the %name
 Group: Development/Other
 BuildArch: noarch
-Requires: lib%name-devel = %version-%release
-Requires: lib%name-gir = %version-%release
+Requires: lib%name-devel = %EVR
+Requires: lib%name-gir = %EVR
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the %name library
@@ -112,7 +115,7 @@ GObject introspection devel data for the %name library
 Summary: Vala Bindings for lib%name
 Group: Development/C
 BuildArch: noarch
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-vala
 This package provides Vala language bindings for %name library
@@ -120,7 +123,7 @@ This package provides Vala language bindings for %name library
 %package extra-profiles
 Summary: Color profiles for color management that are less commonly used
 Group: Graphics
-Requires: %name = %version-%release
+Requires: %name = %EVR
 BuildArch: noarch
 
 %description extra-profiles
@@ -130,7 +133,8 @@ This may be useful for CMYK soft-proofing or for extra device support.
 %package tests
 Summary: Tests for the Colord
 Group: Development/Other
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
+Requires: sqlite3
 
 %description tests
 This package provides tests programs that can be used to verify
@@ -147,6 +151,7 @@ This package provides Colord reference manual
 
 %prep
 %setup
+%patch10 -R -p1
 
 %build
 %meson \
@@ -174,8 +179,7 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %find_lang %name
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %pre
 %_sbindir/groupadd -r -f %colord_group 2>/dev/null ||:
@@ -191,7 +195,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/dbus-1/interfaces/org.freedesktop.ColorManager*.xml
 %_datadir/dbus-1/system-services/org.freedesktop.ColorManager.service
 %_datadir/polkit-1/actions/org.freedesktop.color.policy
-/lib/udev/rules.d/*.rules
+%_udevrulesdir/*.rules
 %_tmpfilesdir/%name.conf
 
 %if_enabled session_helper
@@ -216,10 +220,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man1dir/cd-fix-profile.*
 %_man1dir/cd-it8.1.*
 %attr(755,%colord_user,%colord_group) %dir %_localstatedir/lib/%name
+%ghost %attr(-,%colord_user,%colord_user) %_localstatedir/lib/%name/*.db
 %attr(755,%colord_user,%colord_group) %dir %_localstatedir/lib/%name/icc
 %dir %_localstatedir/lib/color
 %dir %_localstatedir/lib/color/icc
-%ghost %_localstatedir/lib/%name/*.db
 %systemd_unitdir/*.service
 %{?_enable_bash_completion:%_datadir/bash-completion/completions/colormgr}
 
@@ -319,6 +323,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Tue Jan 23 2024 Yuri N. Sedunov <aris@altlinux.org> 1.4.7-alt1.1
+- reverted 1452a975ecae14299 (ALT #49153)
+
 * Mon Jan 22 2024 Yuri N. Sedunov <aris@altlinux.org> 1.4.7-alt1
 - 1.4.7
 - enabled ArgyllCMS support again
