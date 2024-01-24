@@ -47,8 +47,8 @@
 %define vimspell_version	50.1
 
 Name: vim
-%define branch 9.0
-Version: %branch.2136
+%define branch 9.1
+Version: %branch.0050
 Release: alt1
 Epoch: 4
 
@@ -1053,6 +1053,10 @@ fi
 
 # {{{ changelog
 %changelog
+* Wed Jan 24 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:9.1.0050-alt1
+- Updated to v9.1.0050.
+- Applied some tweaks to specfile highlight (thx Vitaly Chikunov).
+
 * Wed Nov 29 2023 Alexander Danilov <admsasha@altlinux.org> 4:9.0.2136-alt1
 - Updated to v9.0.2136 (fixes CVE-2023-48237, CVE-2023-48236, CVE-2023-48235,
   CVE-2023-48234, CVE-2023-48233, CVE-2023-48232, CVE-2023-48231).
