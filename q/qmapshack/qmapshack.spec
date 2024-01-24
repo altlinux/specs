@@ -1,7 +1,5 @@
-%define _unpackaged_files_terminate_build 1
-
 Name: qmapshack
-Version: 1.17.0
+Version: 1.17.1
 Release: alt1
 Summary: GPS mapping and management tool
 Group: Sciences/Geosciences
@@ -57,6 +55,8 @@ QMapShack.
 %install
 %cmakeinstall_std
 
+%define _unpackaged_files_terminate_build 1
+
 %files
 %doc changelog.txt LICENSE
 %_bindir/%name
@@ -78,6 +78,9 @@ QMapShack.
 %_mandir/man1/qmt_*.*
 
 %changelog
+* Wed Jan 24 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.17.1-alt1
+- Updated to 1.17.1.
+
 * Sun Jul 30 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.17.0-alt1
 - Updated to 1.17.0.
 
