@@ -2,7 +2,7 @@
 
 Name: alterator-manager
 Version: 0.1.16
-Release: alt1
+Release: alt2
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -69,6 +69,9 @@ mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
 
 
 %changelog
+* Wed Jan 24 2024 Ivan Savin <svn17@altlinux.org> 0.1.16-alt2
+- Fix filetrigger (kozyrevid@).
+
 * Fri Jan 19 2024 Ivan Savin <svn17@altlinux.org> 0.1.16-alt1
 - Add filetrigger to restart the service (kozyrevid@).
 
