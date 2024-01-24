@@ -2,8 +2,8 @@
 %def_without check
 
 Name: python3-module-poppler-qt5
-Version: 21.1.0
-Release: alt2
+Version: 21.3.0
+Release: alt1
 
 Summary: A Python binding to Poppler-Qt5
 
@@ -16,13 +16,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
 
-# https://github.com/frescobaldi/python-poppler-qt5/issues/43
-Patch1: poppler-qt5-fix.patch
-
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python3-module-setuptools
 
 BuildRequires: gcc-c++ qt5-base-devel libpoppler-qt5-devel
 BuildRequires: python3-devel python3-module-setuptools
@@ -34,7 +29,6 @@ being actively maintained.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 export PATH=$PATH:%_qt5_bindir
@@ -60,6 +54,9 @@ chmod +x %buildroot/%python3_sitelibdir/*.so
 %python3_sitelibdir/PyQt5/bindings/popplerqt5/
 
 %changelog
+* Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 21.3.0-alt1
+- Build new version (Closes: #49160).
+
 * Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 21.1.0-alt2
 - rebuild with sip6
 
