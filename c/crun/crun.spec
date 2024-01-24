@@ -1,12 +1,12 @@
 %global _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-%define git_commit c761349704905da07cfe67f38dda6850334a160f
+%define git_commit 667e6ebd4e2442d39512e63215e79d693d0780aa
 %define __nprocs 8
 %def_disable embedded_yajl
 
 Summary: OCI runtime written in C
 Name: crun
-Version: 1.13
+Version: 1.14
 Release: alt1
 Group: Development/Other
 License: GPLv2+
@@ -22,10 +22,12 @@ Source14: yajl.tar
 BuildRequires: libcap-devel
 BuildRequires: libsystemd-devel
 BuildRequires: libseccomp-devel
+BuildRequires: libblake3-devel
 %{?_disable_embedded_yajl:BuildRequires: libyajl-devel}
 %ifarch aarch64 ppc64le x86_64
-BuildRequires: libcriu-devel >= 3.13
+BuildRequires: libcriu-devel >= 3.17
 %endif
+BuildRequires: libprotobuf-c-devel
 BuildRequires: gperf
 BuildRequires: go-md2man
 BuildRequires: python3 python3-devel
@@ -84,6 +86,9 @@ rm -f %buildroot%python3_sitelibdir/*.{a,la}
 %python3_sitelibdir/python_%name.so
 
 %changelog
+* Wed Jan 24 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.14-alt1
+- 1.14
+
 * Thu Jan 18 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.13-alt1
 - 1.13
 
