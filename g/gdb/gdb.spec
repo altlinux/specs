@@ -5,8 +5,8 @@
 %def_enable gdbserver
 
 Name: gdb
-Version: 13.2.0.43.854f46b6377
-Release: alt3
+Version: 14.1.0.56.d739d4fd457
+Release: alt1
 
 Summary: A GNU source-level debugger for C, C++ and other languages
 License: GPLv3+
@@ -17,7 +17,7 @@ Url: http://www.gnu.org/software/gdb/
 Source: gdb-%version-%release.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: flex libreadline-devel libexpat-devel liblzma-devel zlib-devel libgmp-devel
+BuildRequires: flex libreadline-devel libexpat-devel liblzma-devel zlib-devel libgmp-devel libmpfr-devel
 BuildRequires: gcc-c++
 BuildRequires: makeinfo
 BuildRequires: %{?_with_python:python3-devel} %{?_enable_tui:libncursesw-devel} %{?_with_debuginfod:libdebuginfod-devel}
@@ -243,6 +243,9 @@ fi
 %_libdir/lib*.a
 
 %changelog
+* Wed Jan 24 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 14.1.0.56.d739d4fd457-alt1
+- Updated to gdb-14.1-release-56-gd739d4fd457.
+
 * Wed Sep 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 13.2.0.43.854f46b6377-alt3
 - NMU: fixed FTBFS on LoongArch (in process tracing is not supported).
 
