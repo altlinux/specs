@@ -3,7 +3,7 @@
 %define oname constantly
 Name: python3-module-%oname
 Version: 15.1.0
-Release: alt6
+Release: alt7
 
 Summary: Symbolic constants in Python
 
@@ -26,6 +26,10 @@ Originally ``twisted.python.constants`` from the `Twisted <https://twistedmatrix
 %prep
 %setup
 
+# hotfix for python3.12
+sed -i 's/SafeConfigParser/ConfigParser/' versioneer.py
+sed -i 's/readfp/read_file/' versioneer.py
+
 # fix version info
 sed -i \
 	-e "s/git_refnames\s*=\s*\"[^\"]*\"/git_refnames = \" \(tag: %version\)\"/" \
@@ -45,6 +49,9 @@ py.test3
 %python3_sitelibdir/%oname-%version-py*.egg-info
 
 %changelog
+* Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 15.1.0-alt7
+- Fixed FTBFS.
+
 * Wed Sep 08 2021 Grigory Ustinov <grenka@altlinux.org> 15.1.0-alt6
 - Build without python2 support.
 
