@@ -4,7 +4,7 @@
 
 Name: rtorrent
 Version: 0.9.8
-Release: alt1
+Release: alt1.1
 
 Summary: rTorrent - rakshasa's ncurses BitTorrent client using librTorrent
 Group: Networking/File transfer
@@ -14,7 +14,7 @@ Url: https://github.com/rakshasa/rtorrent/wiki
 # https://github.com/rakshasa/rtorrent.git
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ libcurl-devel libidn-devel libncursesw-devel libsigc++2.0-devel libssl-devel libstdc++-devel libtinfo-devel zlib-devel libgssapi-devel
+BuildRequires: gcc-c++ libcurl-devel libidn-devel libncursesw-devel libsigc++2.0-devel libssl-devel libstdc++-devel libtinfo-devel zlib-devel
 BuildRequires: cppunit-devel
 BuildRequires: libxmlrpc-devel >= 0.12.2 libxml2-devel
 BuildRequires: libtorrent-devel >= 0.13.8
@@ -50,6 +50,9 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %_bindir/%name
 
 %changelog
+* Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 0.9.8-alt1.1
+- NMU: fixed FTBFS.
+
 * Fri Jun 05 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.8-alt1
 - Updated to upstream version 0.9.8.
 
