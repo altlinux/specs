@@ -1,17 +1,19 @@
 %define oname numpy-stl
 
 Name: python3-module-%oname
-Version: 3.0.1
-Release: alt2
+Version: 3.1.1
+Release: alt1
 
 Summary: Library to make reading, writing and modifying both binary and ascii STL files easy
-License: BSD
-Group: Development/Python3
-Url: https://pypi.python.org/pypi/numpy-stl/
-BuildArch: noarch
 
-# https://github.com/WoLpH/numpy-stl.git
+License: BSD-3-Clause
+Group: Development/Python3
+URL: https://pypi.org/project/numpy-stl
+VCS: https://github.com/WoLpH/numpy-stl
+
 Source: %name-%version.tar
+
+BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -26,7 +28,6 @@ BuildRequires: python3-module-sphinx
 BuildRequires: xvfb-run
 
 %py3_provides stl
-
 
 %description
 Simple library to make working with STL files (and 3D objects in
@@ -49,9 +50,8 @@ sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 %make -C docs html
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
 sed -i '/--flake8/d' pytest.ini
-py.test-3 -v
+%pyproject_run_pytest
 
 %files
 %doc *.rst docs/_build/html
@@ -60,6 +60,9 @@ py.test-3 -v
 %python3_sitelibdir/*.dist-info
 
 %changelog
+* Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt1
+- Automatically updated to 3.1.1.
+
 * Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt2
 - Fixed FTBFS.
 
