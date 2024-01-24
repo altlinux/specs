@@ -1,12 +1,11 @@
 %define repo dde-file-manager
 %define soname 1
-%define qtver 5.15.11
 
 %def_without clang
 
 Name: deepin-file-manager
 Version: 6.0.39
-Release: alt1
+Release: alt2
 
 Summary: Deepin File Manager
 
@@ -19,17 +18,19 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
 # Automatically added by buildreq on Thu Oct 26 2023
 # optimized out: alt-os-release bash5 bashrc boost-asio-devel boost-devel-headers boost-filesystem-devel cmake cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gsettings-qt-devel icu-utils libX11-devel libdeepin-pdfium1 libdfm-burn1 libdfm-io1 libdfm-mount1 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libdtkwidget-devel libffmpegthumbnailer-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt libicu-devel libisoburn-devel libp11-kit libpolkit-qt5-agent libpolkit-qt5-core libpolkit-qt5-gui libpoppler0-cpp libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libsecret-devel libssl-devel libstartup-notification libstdc++-devel libudisks2-devel libxcb-devel pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-common qt5-base-devel qt5-x11extras-devel sh5 xorg-proto-devel zlib-devel
 BuildRequires: deepin-dock-devel deepin-qt-dbus-factory-devel dtk6-common-devel dtkcore kf5-kcodecs-devel libcryptsetup-devel libdeepin-pdfium-devel libdfm-burn-devel libdfm-io-devel libdfm-mount-devel libdmr-devel libdocparser-devel liblucene++-devel libmount-devel libpcre-devel libpolkit-devel libpolkitqt5-qt5-devel libpoppler-cpp-devel libtag-devel qt5-multimedia-devel qt5-svg-devel qt5-tools
-BuildRequires: qt5-base-devel = %qtver deepin-gettext-tools
+BuildRequires: deepin-gettext-tools
 
 %if_with clang
 BuildRequires: clang-devel lld-devel libstdc++-devel
 %else
 BuildRequires: gcc-c++
 %endif
+
+Requires: libqt5-core = %_qt5_version
 
 %description
 File manager front end of Deepin OS.
@@ -217,6 +218,9 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Fri Jan 19 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.39-alt2
+- Requires: libqt5-core = %%_qt5_version.
+
 * Thu Jan 18 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.39-alt1
 - New version 6.0.39.
 
