@@ -1,12 +1,13 @@
 %def_enable  openssl
+%def_enable  hunspell
 %def_without devel
 
 Summary: CONE mail reader
 Name: cone
-Version: 1.8
+Version: 1.13
 Release: alt0.1
 Url: http://www.courier-mta.org/cone
-Source0: %name-%version.tar.bz2
+Source0: %name-%version.tar
 License: GPLv3
 Group: Networking/Mail
 
@@ -27,6 +28,10 @@ BuildRequires: openssl
 BuildRequires: openssl-devel
 %else
 BuildRequires: gnutls-devel libgcrypt-devel
+%endif
+%if_enabled hunspell
+BuildRequires: libhunspell-devel hunspell
+Requires: hunspell
 %endif
 
 Requires(post): perl
@@ -61,6 +66,9 @@ done
             --with-notice=unicode \
 	    --libexecdir=%_prefix/libexec \
 	    --with-certdb=%_datadir/ca-certificates/ca-bundle.crt \
+	    %if_enabled hunspell
+	    --with-spellcheck=hunspell \
+	    %endif
 	    %subst_with devel
 %build
 %make_build
@@ -99,6 +107,10 @@ echo 'and earlier'
 %endif
 
 %changelog
+* Wed Jan 24 2024 L.A. Kostis <lakostis@altlinux.ru> 1.13-alt0.1
+- 1.13.
+- enable spellchecking via hunspell.
+
 * Thu Feb 16 2023 L.A. Kostis <lakostis@altlinux.ru> 1.8-alt0.1
 - 1.8.
 - libidn -> libidn2.
