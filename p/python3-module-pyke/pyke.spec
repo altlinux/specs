@@ -2,7 +2,7 @@
 
 Name:       python3-module-pyke
 Version:    1.1.1
-Release:    alt4
+Release:    alt5
 
 Summary:    Knowledge-based inference engine
 License:    MIT
@@ -14,6 +14,7 @@ Source0:    http://download.sourceforge.net/%{oname}/%{oname}3-%{version}.zip
 Source44:   import.info
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 BuildRequires: unzip
 
 %py3_requires ply
@@ -61,6 +62,9 @@ rm -rf doc/source/
 
 
 %changelog
+* Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 1.1.1-alt5
+- Fixed FTBFS.
+
 * Mon Dec 09 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.1.1-alt4
 - python2 disabled
 
