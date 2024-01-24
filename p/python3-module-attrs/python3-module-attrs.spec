@@ -3,7 +3,7 @@
 %define pkgname attrs
 
 Name: python3-module-%pkgname
-Version: 23.1.0
+Version: 23.2.0
 Release: alt1
 
 Summary: Python attributes without boilerplate
@@ -51,6 +51,9 @@ fi
 %python3_sitelibdir/%newoname-%version.dist-info/
 
 %changelog
+* Wed Jan 24 2024 Vladimir Didenko <cow@altlinux.org> 23.2.0-alt1
+- New version
+
 * Thu May 25 2023 Vladimir Didenko <cow@altlinux.org> 23.1.0-alt1
 - New version
 
