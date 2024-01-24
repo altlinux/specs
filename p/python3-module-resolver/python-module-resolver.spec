@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.2.1
-Release: alt2
+Release: alt3
 
 Summary: Resolve specially formated statements to Python objects.
 
@@ -15,7 +15,7 @@ Packager: Sergey Alembekov <rt@altlinux.ru>
 Source0: %oname.tar
 
 BuildRequires(pre): rpm-build-python3
-
+BuildRequires: python3-module-setuptools
 
 %description
 %summary
@@ -35,6 +35,9 @@ BuildRequires(pre): rpm-build-python3
 
 
 %changelog
+* Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 0.2.1-alt3
+- Fixed FTBFS.
+
 * Thu Jan 16 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.2.1-alt2
 - porting on python3
 
