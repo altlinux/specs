@@ -1,5 +1,5 @@
 Name:    python3-module-httpx
-Version: 0.24.0
+Version: 0.26.0
 Release: alt1
 
 Summary: A next generation HTTP client for Python
@@ -40,6 +40,9 @@ A 1.0 release is expected to be issued sometime around mid-2020.
 %python3_sitelibdir/httpx-%version.dist-info
 
 %changelog
+* Wed Jan 24 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.26.0-alt1
+- 0.26.0 released
+
 * Thu May 04 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.24.0-alt1
 - 0.24.0 released
 
