@@ -1,6 +1,6 @@
 Name: mate-control-center
 Version: 1.26.1
-Release: alt2
+Release: alt3
 Epoch: 2
 Summary: MATE Desktop control-center
 License: LGPLv2+ and GPLv2+
@@ -73,6 +73,10 @@ find %buildroot%_libdir -name \*.la -delete
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jan 25 2024 Anton Midyukov <antohami@altlinux.org> 2:1.26.1-alt3
+- NMU: use upstream russian translation, because recommended by translator
+  Maria Shikunova (Closes: 49174)
+
 * Wed Jun 14 2023 Anton Midyukov <antohami@altlinux.org> 2:1.26.1-alt2
 - NMU: rebuild with libayatana-appindicator3
 
