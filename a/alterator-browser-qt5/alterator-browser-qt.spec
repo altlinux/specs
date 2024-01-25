@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.4.17
+Version: 3.4.18
 Release: alt1
 
 Source:%name-%version.tar
@@ -83,6 +83,9 @@ __EOF__
 
 
 %changelog
+* Thu Jan 25 2024 Sergey V Turchin <zerg at altlinux dot org> 3.4.18-alt1
+- fix margins on ultrawide screen
+
 * Wed Dec 27 2023 Sergey V Turchin <zerg at altlinux dot org> 3.4.17-alt1
 - fix ultrawide monitors support
 
