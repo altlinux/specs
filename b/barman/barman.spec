@@ -1,6 +1,6 @@
 Name: barman
-Version: 3.9.0
-Release: alt1.1
+Version: 3.10.0
+Release: alt1
 Summary: Backup and Recovery Manager for PostgreSQL
 
 License: GPL-3.0+
@@ -10,7 +10,7 @@ Url: http://www.pgbarman.org/
 Source: https://sourceforge.net/projects/pgbarman/files/%version/%name-%version.tar.gz
 Source1: barman.cron
 Source2: barman.logrotate
-Patch: barman-3.9.0-alt-python-312.patch
+Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
@@ -149,6 +149,9 @@ getent passwd barman >/dev/null || \
 exit 0
 
 %changelog
+* Thu Jan 25 2024 Leontiy Volodin <lvol@altlinux.org> 3.10.0-alt1
+- New version 3.10.0.
+
 * Wed Oct 18 2023 Leontiy Volodin <lvol@altlinux.org> 3.9.0-alt1.1
 - Cleanup BuildRequires.
 - Fixed build with python 3.12.
