@@ -1,18 +1,18 @@
 
 Name: virt-firmware
-Version: 1.8
+Version: 24.1.1
 Release: alt1
 Summary: Tools for virtual machine firmware volumes
 Group: Emulators
-License: GPLv2
+License: GPL-2.0-only
 Url: https://gitlab.com/kraxel/virt-firmware
 Vcs: https://gitlab.com/kraxel/virt-firmware.git
 Source: %name-%version.tar
 Patch: %name-%version.patch
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(setuptools) python3(wheel)
+BuildRequires(pre): rpm-build-python3 rpm-macros-systemd
+BuildRequires: python3(setuptools) python3(wheel) python3(cryptography)
 
 %description
 Tools for ovmf / armvirt firmware volumes This is a small collection of tools
@@ -24,20 +24,14 @@ to enroll secure boot certificates.
 Summary: Tools for virtual machine firmware volumes
 Group: Development/Python3
 Provides: %name = %EVR
+Provides: python3-module-virt-firmware-peutils = %EVR
+Obsoletes: python3-module-virt-firmware-peutils < %EVR
 
 %description -n python3-module-virt-firmware
 Tools for ovmf / armvirt firmware volumes This is a small collection of tools
 for edk2 firmware images. They support decoding and printing the content of
 firmware volumes. Variable stores (OVMF_VARS.fd) can be modified, for example
 to enroll secure boot certificates.
-
-%package -n python3-module-virt-firmware-peutils
-Summary: %summary - peutils
-Group: Development/Python3
-Conflicts: python3-module-virt-firmware < 1.6
-
-%description -n python3-module-virt-firmware-peutils
-Some utilities to inspect efi (pe) binaries.
 
 %package tests
 Summary: %summary - test cases
@@ -47,6 +41,17 @@ Requires: edk2-ovmf
 
 %description tests
 test cases
+
+%package -n uki-direct
+Group: System/Base
+Summary: %summary - manage UKI kernels.
+Provides: ukidirect = %EVR
+Requires: python3-module-virt-firmware
+Conflicts: systemd < 254
+
+%description -n uki-direct
+kernel-install plugin and systemd unit to manage automatic
+UKI (unified kernel image) updates.
 
 %prep
 %setup
@@ -65,27 +70,37 @@ install -m 644 man/*.1 %buildroot%_man1dir
 mkdir -p %buildroot%_datadir/%name
 cp -ar tests %buildroot%_datadir/%name
 
+# uki-direct
+install -m 755 -d %buildroot%_unitdir
+install -m 755 -d %buildroot%prefix/lib/kernel/install.d
+install -m 644 systemd/kernel-bootcfg-boot-successful.service %buildroot%_unitdir
+install -m 755 systemd/99-uki-uefi-setup.install %buildroot%prefix/lib/kernel/install.d
+
+%post -n uki-direct
+%post_systemd kernel-bootcfg-boot-successful.service
+
+%preun -n uki-direct
+%preun_systemd kernel-bootcfg-boot-successful.service
+
 %files -n python3-module-virt-firmware
 %doc README.md
-%_bindir/host-efi-vars
-%_bindir/virt-fw-dump
-%_bindir/virt-fw-vars
-%_bindir/virt-fw-sigdb
-%_bindir/migrate-vars
-%_man1dir/virt-*.1*
-%python3_sitelibdir/virt/firmware
-%python3_sitelibdir/virt_firmware-*
-
-%files -n python3-module-virt-firmware-peutils
-%python3_sitelibdir/virt/peutils
-%_bindir/pe-dumpinfo
-%_bindir/pe-listsigs
-%_bindir/pe-addsigs
+%_bindir/*
+%_man1dir/*.1*
+%python3_sitelibdir/*
 
 %files tests
 %_datadir/%name/tests
 
+%files -n uki-direct
+%_unitdir/kernel-bootcfg-boot-successful.service
+%prefix/lib/kernel/install.d/99-uki-uefi-setup.install
+
 %changelog
+* Thu Jan 25 2024 Alexey Shabalin <shaba@altlinux.org> 24.1.1-alt1
+- new version 24.1.1
+- merge python3-module-virt-firmware-peutils to python3-module-virt-firmware
+- add uki-direct package
+
 * Sun Jan 22 2023 Alexey Shabalin <shaba@altlinux.org> 1.8-alt1
 - new version 1.8
 
