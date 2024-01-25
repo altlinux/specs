@@ -1,7 +1,7 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.38.0.27.750a45a783
+Version: 2.38.0.41.cfe1219100
 Release: alt1
 Epoch: 6
 
@@ -144,6 +144,8 @@ Provides: locale locales %libc_locales
 Obsoletes: locale locales %libc_locales
 Obsoletes: %name-locales-junior
 Obsoletes: i586-glibc-locales
+Provides: glibc-locales-kv_RU-utf8 = %EVR
+Obsoletes: glibc-locales-kv_RU-utf8 < %EVR
 
 %package i18ndata
 Summary: Files for building customized GNU libc locales
@@ -775,6 +777,13 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Wed Jan 24 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.38.0.41.cfe1219100-alt1
+- Updated to glibc-2.38-41-gcfe1219100.
+- Backported upstream commits to add support for kv_RU locale:
+  + "localedata: add new locale kv_RU" (thx Kirill Izmestev, Mike FABIAN);
+  + "localedata: kv_RU: convert to UTF-8" (thx Mike FABIAN).
+- glibc-locales: provide and obsolete the glibc-locales-kv_RU-utf8 package.
+
 * Tue Oct 03 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.38.0.27.750a45a783-alt1
 - Updated to glibc-2.38-27-g750a45a783 (fixes: CVE-2023-4911, CVE-2023-5156).
 
