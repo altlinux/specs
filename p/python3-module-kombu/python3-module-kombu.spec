@@ -8,8 +8,8 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 5.2.4
-Release: alt5
+Version: 5.3.5
+Release: alt1
 
 Group: Development/Python3
 License: BSD-3-Clause
@@ -19,7 +19,6 @@ VCS: https://github.com/celery/kombu/
 
 Source: %name-%version.tar
 
-Patch0: kombu-5.2.4-tests-deps.patch
 # Patches from Debian
 Patch11: 0001-Remove-image-from-remote-donation-site-privacy-issue.patch
 
@@ -51,6 +50,7 @@ BuildRequires: python3(kazoo)
 BuildRequires: python3(pycurl)
 BuildRequires: python3(consul)
 BuildRequires: python3(Pyro5)
+BuildRequires: python3(hypothesis)
 
 # failed tests
 #BuildRequires: python3(librabbitmq)
@@ -112,7 +112,8 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
 %check
-%pyproject_run_pytest -ra
+# we havent got python3(azure) yet
+%pyproject_run_pytest -ra --ignore=t/unit/transport/test_azurestoragequeues.py
 
 %files
 %doc README.rst
@@ -125,6 +126,9 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %endif
 
 %changelog
+* Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 1:5.3.5-alt1
+- Build new version.
+
 * Mon Jun 12 2023 Anton Midyukov <antohami@altlinux.org> 1:5.2.4-alt5
 - migrate to Pyro5
 - enable more tests
