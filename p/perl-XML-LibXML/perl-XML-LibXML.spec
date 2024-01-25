@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 %define dist XML-LibXML
-%def_without bootstrap
+%def_with bootstrap
 Name: perl-%dist
-Version: 2.0209
-Release: alt3
+Version: 2.0210
+Release: alt1.1
 
 Summary: Perl binding for libxml2
 License: Artistic-1.0 OR GPL-2.0-or-later
@@ -16,11 +16,6 @@ Patch: XML-LibXML-2.0207-alt-at-autoreq.patch
 # To reduce dependencies replace Alien::Libxml2 with pkg-config
 Patch101: XML-LibXML-2.0208-Use-pkgconfig-instead-of-Alien-Libxml2.patch
 #BuildRequires: perl-Alien-Libxml2
-# Fix callback prototypes, in upstream after 2.0209, bug #2251181
-Patch102: XML-LibXML-2.0209-libxml-mm-Fix-function-prototypes-in-function-pointe.patch
-# Adjust external entity callback to libxml2-2.12.0, in upstream after 2.0209,
-# bug #2251181, <https://github.com/shlomif/perl-XML-LibXML/issues/82>
-Patch103: XML-LibXML-2.0209-Fix-copying-external-entity-from-an-ext_ent_handler-.patch
 
 Provides: perl-XML-LibXML-Common = 0.13-alt99
 Obsoletes: perl-XML-LibXML-Common < 0.13-alt99
@@ -48,8 +43,6 @@ providing access to the XPath API in libxml2.
 %setup -q -n %{dist}-%{version}
 %patch -p1
 %patch101 -p1
-%patch102 -p1
-%patch103 -p1
 
 %if_with bootstrap
 # bootstrap: disable build dependency on XML::SAX
@@ -77,6 +70,11 @@ mv t/48_SAX_Builder_rt_91433.t t/48_SAX_Builder_rt_91433.t.orig
 	%perl_vendor_autolib/XML
 
 %changelog
+* Thu Jan 25 2024 Alexey Shabalin <shaba@altlinux.org> 2.0210-alt1.1
+- new version 2.0210
+- build with new libxml2 2.12.4 (bootstrapped)
+- drop upstreamed patches
+
 * Tue Dec 19 2023 Alexey Shabalin <shaba@altlinux.org> 2.0209-alt3
 - unbootstrap
 
