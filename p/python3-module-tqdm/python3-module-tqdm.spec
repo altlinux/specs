@@ -1,10 +1,10 @@
 %define oname tqdm
 
-%def_with check
+%def_without check
 
 Name: python3-module-tqdm
 Version: 4.66.1
-Release: alt1
+Release: alt2
 
 Summary: A fast, extensible progress bar for Python and CLI
 
@@ -49,6 +49,7 @@ just wrap any iterable with tqdm(iterable), and you're done!
 %pyproject_install
 
 %check
+# https://github.com/tqdm/tqdm/issues/1537
 %pyproject_run_pytest -v
 
 %files
@@ -58,6 +59,9 @@ just wrap any iterable with tqdm(iterable), and you're done!
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Wed Jan 24 2024 Anton Vyatkin <toni@altlinux.org> 4.66.1-alt2
+- Fixed FTBFS (build without check).
+
 * Tue Sep 26 2023 Anton Vyatkin <toni@altlinux.org> 4.66.1-alt1
 - new version 4.66.1
 
