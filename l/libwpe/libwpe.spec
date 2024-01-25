@@ -1,10 +1,10 @@
 %define api_ver 1.0
 
 %def_enable check
-%def_enable docs
+%def_disable docs
 
 Name: libwpe
-Version: 1.14.1
+Version: 1.14.2
 Release: alt1
 
 Summary: General-purpose library for the WPE-flavored port of WebKit
@@ -70,6 +70,12 @@ This package contains development documentation for %name.
 %endif
 
 %changelog
+* Thu Jan 25 2024 Yuri N. Sedunov <aris@altlinux.org> 1.14.2-alt1
+- 1.14.2
+
+* Thu Aug 17 2023 Yuri N. Sedunov <aris@altlinux.org> 1.15.1-alt1
+- 1.15.1
+
 * Fri Feb 03 2023 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt1
 - 1.14.1
 
