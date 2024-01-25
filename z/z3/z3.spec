@@ -2,7 +2,7 @@
 
 Name: z3
 Version: 4.8.8
-Release: alt1
+Release: alt1.1
 Summary: High-performance theorem prover
 License: MIT
 Group: Sciences/Mathematics
@@ -18,6 +18,7 @@ BuildRequires: gcc-c++ doxygen graphviz
 BuildRequires: libgmp-devel libgmpxx-devel
 BuildRequires: python3-devel
 BuildRequires: python3(pkg_resources)
+BuildRequires: python3(setuptools)
 
 %description
 Z3 is a high-performance theorem prover being developed at Microsoft
@@ -47,7 +48,6 @@ This package contains development files of %name.
 %package -n lib%name-devel-docs
 Summary: Documentation for %name
 Group: Development/Documentation
-BuildArch: noarch
 
 %description -n lib%name-devel-docs
 Z3 is a high-performance theorem prover being developed at Microsoft
@@ -116,6 +116,9 @@ python3 examples/python/example.py
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 4.8.8-alt1.1
+- NMU: Fixed FTBFS.
+
 * Fri Jul 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 4.8.8-alt1
 - Updated to upstream version 4.8.8.
 
