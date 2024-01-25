@@ -2,7 +2,7 @@
 
 Name: python3-module-spake2
 Version: 0.8
-Release: alt1
+Release: alt2
 
 Summary: SPAKE2 password-authenticated key exchange (pure python)
 
@@ -47,6 +47,10 @@ message is 33 bytes long.
 %prep
 %setup -n %modulename-%version
 
+# hotfix for python3.12
+sed -i 's/SafeConfigParser/ConfigParser/' versioneer.py
+sed -i 's/readfp/read_file/' versioneer.py
+
 %build
 %python3_build
 
@@ -58,6 +62,9 @@ message is 33 bytes long.
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 0.8-alt2
+- Fixed FTBFS.
+
 * Sat Jun 09 2018 Vitaly Lipatov <lav@altlinux.ru> 0.8-alt1
 - new version 0.8 (with rpmrb script)
 
