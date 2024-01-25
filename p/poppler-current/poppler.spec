@@ -46,7 +46,7 @@
 %endif
 Name: %pkgname
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 %if_disabled compat
 %define poppler_devel lib%rname-devel
@@ -80,6 +80,9 @@ Url: http://poppler.freedesktop.org/
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 Source: %rname-%version.tar
+# upstream
+Patch1: nss-backend-crash.patch
+# ALT
 Patch10: alt-e2k.patch
 
 # Automatically added by buildreq on Fri Apr 01 2011 (-bi)
@@ -308,6 +311,7 @@ GObject introspection devel data for the Poppler library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 %patch10 -p1
 
 %build
@@ -440,6 +444,9 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
+* Thu Jan 25 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.0-alt3
+- add upstream fix against crash in nss backend
+
 * Mon Jan 22 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.0-alt2
 - build with gpgme
 - don't disable boost
