@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.2
-Release: alt1
+Release: alt2
 Summary: Sphinx extension to let you write LaTeX math using $$
 License: MIT
 Group: Development/Python3
@@ -35,6 +35,9 @@ This package contains tests for %oname.
 %prep
 %setup
 
+# hotfix for python3.12
+sed -i 's/SafeConfigParser/ConfigParser/' versioneer.py
+sed -i 's/readfp/read_file/' versioneer.py
 # fix egg-info
 sed -i -e 's/\(^\s\+git_refnames = \).*$/\1"%version"/' %realname/_version.py
 
@@ -55,6 +58,9 @@ sed -i -e 's/\(^\s\+git_refnames = \).*$/\1"%version"/' %realname/_version.py
 %python3_sitelibdir/%realname/tests
 
 %changelog
+* Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 1.2-alt2
+- Fixed FTBFS.
+
 * Tue Aug 24 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2-alt1
 - Updated to upstream version 1.2.
 
