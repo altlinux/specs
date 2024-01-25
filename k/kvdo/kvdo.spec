@@ -1,5 +1,5 @@
 Name: kvdo
-Version: 8.2.1.6
+Version: 8.2.3.3
 Release: alt1
 
 Summary: Kernel Modules for Virtual Data Optimizer
@@ -35,6 +35,9 @@ install -pDm0644 %_sourcedir/%name-%version.tar %kernel_srcdir/kernel-source-%na
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar
 
 %changelog
+* Thu Jan 25 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.3.3-alt1
+- 8.2.3.3
+
 * Tue May 02 2023 Alexey Shabalin <shaba@altlinux.org> 8.2.1.6-alt1
 - 8.2.1.6
 
