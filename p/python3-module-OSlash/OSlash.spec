@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 0.6.3
-Release: alt2
+Release: alt3
 
 Summary: Functors, Applicatives, And Monads in Python
 
@@ -42,6 +42,9 @@ in Python in production environments you should use FSlash instead.
 %prep
 %setup
 sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
+# hotfix for python3.12
+sed -i 's/SafeConfigParser/ConfigParser/' versioneer.py
+sed -i 's/readfp/read_file/' versioneer.py
 
 %build
 %pyproject_build
@@ -59,6 +62,9 @@ sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 0.6.3-alt3
+- Fixed FTBFS.
+
 * Thu Oct 06 2022 Grigory Ustinov <grenka@altlinux.org> 0.6.3-alt2
 - Use modern macros.
 - Build with check.
