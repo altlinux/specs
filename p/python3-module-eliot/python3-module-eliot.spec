@@ -2,7 +2,7 @@
 
 Name: python3-module-eliot
 Version: 1.14.0
-Release: alt1
+Release: alt2
 
 Summary: Logging library that tells you why it happened
 
@@ -49,6 +49,10 @@ to aggregate and store logs if you are using multiple processes across multiple 
 %prep
 %setup
 
+# hotfix for python3.12
+sed -i 's/SafeConfigParser/ConfigParser/' versioneer.py
+sed -i 's/readfp/read_file/' versioneer.py
+
 %build
 %python3_build
 
@@ -62,6 +66,9 @@ to aggregate and store logs if you are using multiple processes across multiple 
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 1.14.0-alt2
+- Fixed FTBFS.
+
 * Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 1.14.0-alt1
 - new version 1.14.0 (with rpmrb script)
 
