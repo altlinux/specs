@@ -3,7 +3,7 @@
 
 Name: python3-module-dask
 Version: 2021.7.2
-Release: alt1
+Release: alt2
 
 License: BSD
 Group: Development/Python
@@ -32,6 +32,10 @@ Dask is a flexible parallel computing library for analytics.
 %prep
 %setup
 
+# hotfix for python3.12
+sed -i 's/SafeConfigParser/ConfigParser/' versioneer.py
+sed -i 's/readfp/read_file/' versioneer.py
+
 %build
 %python3_build
 
@@ -48,6 +52,9 @@ Dask is a flexible parallel computing library for analytics.
 %python3_sitelibdir/*
 
 %changelog
+* Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 2021.7.2-alt2
+- Fixed FTBFS.
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 2021.7.2-alt1
 - new version 2021.7.2 (with rpmrb script)
 
