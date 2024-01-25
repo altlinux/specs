@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.6.13
-Release: alt1
+Release: alt2
 Summary: Python library for NETCONF clients
 License: Apache-2.0
 Group: Development/Python3
@@ -41,6 +41,9 @@ Poulopoulos (@leopoul)
 %setup
 %autopatch -p1
 
+# hotfix for python3.12
+sed -i 's/SafeConfigParser/ConfigParser/' versioneer.py
+sed -i 's/readfp/read_file/' versioneer.py
 # workaround for versioneer
 grep -qsF ' export-subst' .gitattributes || exit 1
 vers_f="$(sed -n 's/ export-subst//p' .gitattributes)"
@@ -62,6 +65,9 @@ sed -i 's/^\([ ]*\)git_refnames[ ]*=[ ]*".*"[ ]*$/\1git_refnames = " (tag: v%ver
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 0.6.13-alt2
+- Fixed FTBFS.
+
 * Tue Feb 07 2023 Stanislav Levin <slev@altlinux.org> 0.6.13-alt1
 - 0.6.12 -> 0.6.13.
 
