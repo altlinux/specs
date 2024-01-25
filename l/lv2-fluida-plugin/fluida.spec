@@ -1,6 +1,6 @@
 Name: lv2-fluida-plugin
 Version: 0.9.2
-Release: alt1
+Release: alt2
 
 Summary: Fluidsynth as LV2 plugin
 License: GPLv2
@@ -35,6 +35,9 @@ make install INSTALL_DIR=%buildroot%_libdir/lv2
 %_libdir/lv2/Fluida.lv2
 
 %changelog
+* Thu Jan 25 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.2-alt2
+- ftbfs fixed by adding workaround for broken xxd
+
 * Tue Jan 16 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.2-alt1
 - 0.9.2 released
 
