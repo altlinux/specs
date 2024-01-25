@@ -20,8 +20,8 @@
 %def_disable check
 
 Name: %_name-good%api_ver
-Version: %ver_major.8
-Release: alt1.1
+Version: %ver_major.9
+Release: alt1
 
 Summary: A set of GStreamer plugins considered good
 Group: System/Libraries
@@ -131,6 +131,9 @@ This package contains development documentation for GStreamer Good Plugins
 %endif
 
 %changelog
+* Thu Jan 25 2024 Yuri N. Sedunov <aris@altlinux.org> 1.22.9-alt1
+- 1.22.9
+
 * Thu Jan 04 2024 Michael Shigorin <mike@altlinux.org> 1.22.8-alt1.1
 - fix check knob (looks like current meson default is to enable it)
 

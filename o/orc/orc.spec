@@ -2,14 +2,18 @@
 %define ver_major 0.4
 %def_enable gtk_doc
 
+%ifarch %ix86 armh
+%def_disable check
+%else
 %def_enable check
+%endif
 
 %ifarch %valgrind_arches
 %def_enable valgrind
 %endif
 
 Name: orc
-Version: %ver_major.34
+Version: %ver_major.35
 Release: alt1
 
 Summary: The Oil Runtime Compiler
@@ -146,6 +150,9 @@ rm -f %buildroot/%_libdir/lib%name-test-%ver_major.a
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Wed Jan 24 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.35-alt1
+- 0.4.35
+
 * Tue May 30 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.34-alt1
 - 0.4.34
 - enabled %%check for all arches
