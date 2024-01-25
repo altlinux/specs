@@ -1,7 +1,7 @@
 %def_without static
 
 Name: ddrescue
-Version: 1.27
+Version: 1.28
 Release: alt1
 
 Summary: Data copying in presence of I/O errors
@@ -64,6 +64,9 @@ make check
 %endif
 
 %changelog
+* Wed Jan 24 2024 Michael Shigorin <mike@altlinux.org> 1.28-alt1
+- new version (watch file uupdate)
+
 * Wed Jan 25 2023 Michael Shigorin <mike@altlinux.org> 1.27-alt1
 - new version (watch file uupdate)
 
