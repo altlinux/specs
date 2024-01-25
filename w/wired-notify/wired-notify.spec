@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: wired-notify
-Version: 0.10.2
+Version: 0.10.4
 Release: alt1
 
 Summary: Lightweight notification daemon with highly customizable layout blocks, written in Rust.
@@ -27,10 +27,6 @@ Wired is light and fully customizable notification daemon that provides you with
 %setup
 %patch0 -p1
 
-%ifarch armh %ix86
-sed -i '/idle_threshold/ s/u64/u32/' src/config.rs
-%endif
-
 mkdir -p .cargo
 cat > .cargo/config.toml <<EOF
 [source.crates-io]
@@ -53,5 +49,8 @@ install -D -m644 wired.service -t %buildroot/usr/lib/systemd/user/
 /usr/lib/systemd/user/wired.service
 
 %changelog
+* Tue Jan 23 2024 Egor Ignatov <egori@altlinux.org> 0.10.4-alt1
+- new version 0.10.4
+
 * Thu Nov 03 2022 Egor Ignatov <egori@altlinux.org> 0.10.2-alt1
 - First build for ALT
