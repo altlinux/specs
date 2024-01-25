@@ -6,7 +6,7 @@
 
 Name: libbotan
 Version: 2.19.1
-Release: alt2.2
+Release: alt2.3
 
 Summary: A C++ Crypto Library
 License: BSD
@@ -19,6 +19,7 @@ Source: %name-%version.tar
 Patch2000: %name-e2k-simd.patch
 
 BuildRequires: rpm-build-python3
+BuildRequires: python3-module-setuptools
 BuildRequires: gcc-c++
 BuildRequires: liblzma-devel bzlib-devel libssl-devel zlib-devel
 BuildRequires: boost-asio-devel
@@ -110,6 +111,9 @@ LD_LIBRARY_PATH=. ./botan-test
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 2.19.1-alt2.3
+- Fixed FTBFS.
+
 * Fri Jul 14 2023 Artyom Bystrov <arbars@altlinux.org> 2.19.1-alt2.2
 - Fix build on GCC13
 
