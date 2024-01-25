@@ -4,7 +4,7 @@
 
 Name: python3-module-slip
 Version: 0.6.5
-Release: alt3
+Release: alt4
 Summary: Miscellaneous convenience, extension and workaround code for Python
 
 Group: Development/Python3
@@ -19,6 +19,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-licenses
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 
 %description
 The Simple Library for Python packages contain miscellaneous code for
@@ -66,6 +67,9 @@ find . -name '*.py' -o -name '*.py.in' | xargs sed -i '1s|^#!/usr/bin/python|#!/
 %python3_sitelibdir/slip.dbus-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 0.6.5-alt4
+- Fixed FTBFS.
+
 * Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 0.6.5-alt3
 - Rename package, cleanup spec.
 
