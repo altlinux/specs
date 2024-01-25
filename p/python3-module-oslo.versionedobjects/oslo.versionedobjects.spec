@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.2.0
-Release: alt2
+Release: alt3
 
 Summary: OpenStack Oslo Versioned Objects library
 
@@ -16,6 +16,7 @@ Source: %oname-%version.tar
 Source1: %oname.watch
 
 Patch: oslo.versionedobjects-fix-build-with-sphinx-6.1.1.patch
+Patch1: oslo.versionedobjects-fix-test_get_hashes-with-python3.12.patch
 
 BuildArch: noarch
 
@@ -85,6 +86,7 @@ This package contains documentation for %oname.
 %prep
 %setup -n %oname-%version
 %patch -p1
+%patch1 -p1
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -131,6 +133,9 @@ install -pDm 644 man/osloversionedobjects.1 %buildroot%_man1dir/osloversionedobj
 %endif
 
 %changelog
+* Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt3
+- Fixed FTBFS.
+
 * Tue Dec 19 2023 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt2
 - Build without distutils.
 
