@@ -18,7 +18,7 @@
 
 Name: gpgme
 Version: 1.23.1
-Release: alt2
+Release: alt3
 
 Summary: GnuPG Made Easy is a library designed to make access to GnuPG easier for applications
 License: LGPLv2.1+
@@ -190,6 +190,13 @@ export PATH=$PWD/tmp_bin:$PATH
 %install
 %makeinstall_std
 
+# Keep only PKG-INFO and *.txt files in egg-info dirs.
+find %buildroot%python3_sitelibdir/gpg-%version-py*egg-info \
+     %buildroot%python_sitelibdir/gpg-%version-py*egg-info \
+     -mindepth 1 -maxdepth 1 \
+     ! -name  'PKG-INFO' -a ! -name '*.txt' \
+     -delete
+
 #check
 #export PATH=$PWD/tmp_bin:$PATH
 #%make_build -k check
@@ -202,14 +209,12 @@ export PATH=$PWD/tmp_bin:$PATH
 %doc AUTHORS NEWS README THANKS
 
 %files -n python3-module-gpg
-%dir %python3_sitelibdir/gpg-%version-py*egg-info
-%python3_sitelibdir/gpg-%version-py*egg-info/PKG-INFO
-%python3_sitelibdir/gpg-%version-py*egg-info/*.txt
+%python3_sitelibdir/gpg-%version-py*egg-info
 %dir %python3_sitelibdir/gpg
 %python3_sitelibdir/gpg/*
 
 %files -n python-module-gpg
-%python_sitelibdir/gpg-%version-py*.egg-info
+%python_sitelibdir/gpg-%version-py*egg-info
 %dir %python_sitelibdir/gpg
 %python_sitelibdir/gpg/*
 
@@ -245,6 +250,9 @@ export PATH=$PWD/tmp_bin:$PATH
 %_libdir/libqgpgme.so.%qgpgme_sover.*
 
 %changelog
+* Thu Jan 25 2024 Paul Wolneykien <manowar@altlinux.org> 1.23.1-alt3
+- Adapted Python packages for different versions of egg-info.
+
 * Wed Nov 29 2023 Paul Wolneykien <manowar@altlinux.org> 1.23.1-alt2
 - Refine file globs for python packages.
 - Workaround setuptools bug \#3143 (patch).
