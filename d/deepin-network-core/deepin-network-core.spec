@@ -5,14 +5,15 @@
 %define _cmake__builddir BUILD
 
 Name: deepin-network-core
-Version: 2.0.16
+Version: 2.0.20
 Release: alt1
 Summary: Deepin desktop-environment - network core files
-License: GPL-3.0+
+License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-network-core
 
 Source: %url/archive/%version/%repo-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-ninja rpm-build-kf5
 %if_with clang
@@ -45,6 +46,7 @@ This package provides development files for %name.
 
 %prep
 %setup -n %repo-%version
+%patch -p1
 
 %build
 %if_with clang
@@ -56,20 +58,22 @@ export READELF="llvm-readelf"
 %endif
 export PATH=%_qt5_bindir:$PATH
 export CPLUS_INCLUDE_PATH=%_includedir/glib-2.0:%_libdir/glib-2.0/include:%_includedir/libnm:$CPLUS_INCLUDE_PATH
-%K5cmake \
+# %%K5cmake fails build on ppc64le
+%cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_EXE_LINKER_FLAGS:STRING='-L%_K5lib -L%_K5link' \
+  -DCMAKE_MODULE_LINKER_FLAGS:STRING='-L%_K5lib -L%_K5link' \
+  -DCMAKE_SHARED_LINKER_FLAGS:STRING='-L%_K5lib -L%_K5link' \
+  -DCMAKE_LIBRARY_PATH='%_K5link;%_K5lib;/%_lib' \
 #
 cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
-%ifnarch i586 armh
-mv -f %buildroot/usr/lib/{dde-dock,dde-session-shell} %buildroot%_libdir
-%endif
-mkdir -p %buildroot%_bindir
+%find_lang --with-qt --output=%name.lang dde-control-center dock-network-plugin dss-network-plugin
 
-%files
+%files -f %name.lang
 %dir %_libdir/dde-control-center/
 %dir %_libdir/dde-control-center/modules/
 %_libdir/dde-control-center/modules/libdcc-network-plugin.so
@@ -85,9 +89,16 @@ mkdir -p %buildroot%_bindir
 %dir %_datadir/dsg/configs/org.deepin.dde.network/
 %_datadir/dsg/configs/org.deepin.dde.network/org.deepin.dde.network.json
 /var/lib/polkit-1/localauthority/10-vendor.d/10-network-manager.pkla
-%_datadir/dde-control-center/translations/dcc-network-plugin*.qm
-%_datadir/dock-network-plugin/translations/dock-network-plugin*.qm
-%_datadir/dss-network-plugin/translations/dss-network-plugin*.qm
+# package translations outside %%find_lang
+%dir %_datadir/dde-control-center/
+%dir %_datadir/dde-control-center/translations/
+%_datadir/dde-control-center/translations/dcc-network-plugin.qm
+%dir %_datadir/dock-network-plugin/
+%dir %_datadir/dock-network-plugin/translations/
+%_datadir/dock-network-plugin/translations/dock-network-plugin.qm
+%dir %_datadir/dss-network-plugin/
+%dir %_datadir/dss-network-plugin/translations/
+%_datadir/dss-network-plugin/translations/dss-network-plugin.qm
 
 %files -n lib%repo%sover
 %_libdir/libdde-network-core.so.%{sover}*
@@ -99,6 +110,10 @@ mkdir -p %buildroot%_bindir
 %_libdir/libdde-network-core.so
 
 %changelog
+* Thu Jan 25 2024 Leontiy Volodin <lvol@altlinux.org> 2.0.20-alt1
+- New version 2.0.20.
+- Updated license tag.
+
 * Wed Oct 25 2023 Leontiy Volodin <lvol@altlinux.org> 2.0.16-alt1
 - New version 2.0.16.
 
