@@ -2,7 +2,7 @@
 
 Name: python3-module-txacme
 Version: 0.9.3
-Release: alt1
+Release: alt2
 
 Summary: ACME protocol implementation for Twisted
 
@@ -27,6 +27,10 @@ the event-driven networking engine for Python.
 %prep
 %setup
 
+# hotfix for python3.12
+sed -i 's/SafeConfigParser/ConfigParser/' versioneer.py
+sed -i 's/readfp/read_file/' versioneer.py
+
 %build
 %python3_build
 
@@ -41,6 +45,9 @@ rm -rfv %buildroot%python3_sitelibdir/txacme/test/
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 0.9.3-alt2
+- Fixed FTBFS.
+
 * Fri Sep 18 2020 Vitaly Lipatov <lav@altlinux.ru> 0.9.3-alt1
 - new version 0.9.3 (with rpmrb script)
 
