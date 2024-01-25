@@ -1,23 +1,21 @@
+%define sover 6
+
 %def_disable clang
 
 %define _cmake__builddir BUILD
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 6.0.35
+Version: 6.0.43
 Release: alt1
+
 Summary: New control center for Linux Deepin
-License: LGPL-3.0+
+
+License: GPL-3.0-or-later and MIT
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-control-center
-Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-# archlinux patches
-Patch: deepin-control-center-no-user-experience.patch
-# alt patches
-Patch1: deepin-control-center-lightdm-lockscreen.patch
-Patch2: deepin-control-center-hide-lockscreen-slide-widget.patch
 
 # Requires: deepin-account-faces deepin-api deepin-daemon deepin-qt5integration deepin-network-utils GeoIP-GeoLite-data GeoIP-GeoLite-data-extra gtk-murrine-engine proxychains-ng redshift startdde
 # Requires: libdeepin-pw-check
@@ -35,18 +33,18 @@ BuildRequires: cmake deepin-gettext-tools doxygen libdeepin-pw-check-devel dtk6-
 %description
 New control center for Linux Deepin.
 
-%package -n libdcc-interface6
+%package -n libdcc-interface%sover
 Summary: Library for %name
 Group: System/Libraries
 
-%description -n libdcc-interface6
+%description -n libdcc-interface%sover
 This package provides library for %name.
 
-%package -n libdcc-widgets6
+%package -n libdcc-widgets%sover
 Summary: Library for %name
 Group: System/Libraries
 
-%description -n libdcc-widgets6
+%description -n libdcc-widgets%sover
 This package provides library for %name.
 
 %package devel
@@ -73,20 +71,8 @@ export READELF="llvm-readelf"
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DDCC_DISABLE_GRUB=ON \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
-    -DDISABLE_RECOVERY=ON \
     -DCVERSION=%version \
-    -DAPP_VERSION=%version \
-    -DVERSION=%version \
-    -DDISABLE_CLOUD_SYNC=ON \
-    -DDISABLE_AUTHENTICATION=ON \
-    -DDISABLE_ACCOUNT=ON \
-    -DDISABLE_SYS_UPDATE=ON \
-    -DDISABLE_SYS_UPDATE_SOURCE_CHECK=ON \
-    -DDISABLE_SYS_UPDATE_MIRRORS=ON \
-    -DDCC_DISABLE_FEEDBACK=ON \
-    -DDCC_DISABLE_POWERSAVE=ON \
     -DDISABLE_AUTHENTICATION=ON \
     -DDISABLE_UPDATE=ON \
 %nil
@@ -94,13 +80,14 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
+%find_lang --with-qt %repo
 
-%files
+%files -f %repo.lang
 %doc LICENSE README.md
 %_bindir/%repo
 %_desktopdir/%repo.desktop
+%_datadir/metainfo/org.deepin.dde.controlcenter.metainfo.xml
 %_datadir/dbus-1/services/org.deepin.dde.ControlCenter1.service
-%_datadir/%repo/
 %dir %_libdir/%repo/
 %dir %_libdir/%repo/modules/
 %_libdir/%repo/modules/libdcc*.so
@@ -110,12 +97,18 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/dsg/configs/org.deepin.dde.control-center/org.deepin.dde.control-center*.json
 %_datadir/dsg/configs/org.deepin.region-format.json
 %_datadir/qt5/doc/dde-control-center.qch
+%dir %_datadir/%repo/
+%_datadir/%repo/developdocument.html
+# package translations outside %%find_lang
+%dir %_datadir/%repo/translations/
+%_datadir/%repo/translations/*_es_419.qm
+%_datadir/%repo/translations/*_ky@Arab.qm
 
-%files -n libdcc-interface6
-%_libdir/libdcc-interface.so.6*
+%files -n libdcc-interface%sover
+%_libdir/libdcc-interface.so.%{sover}*
 
-%files -n libdcc-widgets6
-%_libdir/libdcc-widgets.so.6*
+%files -n libdcc-widgets%sover
+%_libdir/libdcc-widgets.so.%{sover}*
 
 %files devel
 %dir %_libdir/cmake/DdeControlCenter/
@@ -125,6 +118,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/libdcc-widgets.so
 
 %changelog
+* Thu Jan 25 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.43-alt1
+- New version 6.0.43.
+- Fixed license tag.
+
 * Sat Dec 02 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.35-alt1
 - New version 6.0.35.
 - Cleanup spec and BRs.
