@@ -2,31 +2,33 @@
 
 %define oname zconfig
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 3.2.0
-Release: alt4
+Version: 4.0
+Release: alt1
 
 Summary: Python configuration module from Zope
-License: ZPL
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/ZConfig/
+Url: https://pypi.org/project/ZConfig
+Vcs: https://github.com/zopefoundation/ZConfig
 
 BuildArch: noarch
 
-# https://github.com/zopefoundation/ZConfig.git
 Source: %name-%version.tar
-# https://github.com/zopefoundation/ZConfig/issues/34
-Patch1: %oname-%version-upstream-schema2html.patch
-Patch2: 0001-test_logger-dropped-Python-3.2-ResourceWarning-worka.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
 BuildRequires: python3-module-zope.testrunner
 BuildRequires: python3-module-manuel
 BuildRequires: python3-module-manuel-tests
 BuildRequires: python3-module-docutils
+%endif
 
 Conflicts: python-module-%oname < 3.2.0-alt2
-
 
 %description
 ZConfig is a configuration library intended for general use. It supports a
@@ -65,23 +67,23 @@ This package contains tests for ZConfig.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
 
-sed -i 's|cgi|html|' ZConfig/schema2html.py
+sed -i 's/unittest.TestCase.assertRaisesRegexp/unittest.TestCase.assertRaisesRegex/' \
+	src/ZConfig/tests/support.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %_bindir/*
-%python3_sitelibdir/*
+%python3_sitelibdir/ZConfig
+%python3_sitelibdir/ZConfig-%version.dist-info
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/*/*/tests
 
@@ -91,6 +93,9 @@ sed -i 's|cgi|html|' ZConfig/schema2html.py
 
 
 %changelog
+* Thu Jan 25 2024 Anton Vyatkin <toni@altlinux.org> 4.0-alt1
+- New version 4.0.
+
 * Mon Aug 14 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.2.0-alt4
 - NMU: repaired test_with_syslog
 
