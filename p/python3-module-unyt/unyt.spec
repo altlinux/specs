@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 2.9.4
-Release: alt1
+Release: alt2
 Summary: Handle, manipulate, and convert data with units in Python
 License: BSD-3-Clause
 Group: Development/Python3
@@ -65,6 +65,9 @@ This package contains tests.
 sed -i \
 	-e "s/git_refnames\s*=\s*\"[^\"]*\"/git_refnames = \" \(tag: v%version\)\"/" \
 	./%oname/_version.py
+# hotfix for python3.12
+sed -i 's/SafeConfigParser/ConfigParser/' versioneer.py
+sed -i 's/readfp/read_file/' versioneer.py
 
 # if build from git source tree
 # setuptools_scm implements a file_finders entry point which returns all files
@@ -98,6 +101,9 @@ fi
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 2.9.4-alt2
+- Fixed FTBFS.
+
 * Thu Feb 09 2023 Stanislav Levin <slev@altlinux.org> 2.9.4-alt1
 - 2.8.0 -> 2.9.4.
 
