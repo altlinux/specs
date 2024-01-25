@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.6.7
-Release: alt1
+Release: alt2
 Summary: Junos 'EZ' automation for non-programmers
 License: Apache-2.0
 Group: Development/Python3
@@ -39,6 +39,9 @@ understanding of the Junos XML API.
 %setup
 %autopatch -p1
 
+# hotfix for python3.12
+sed -i 's/SafeConfigParser/ConfigParser/' versioneer.py
+sed -i 's/readfp/read_file/' versioneer.py
 # workaround for versioneer
 grep -qsF ' export-subst' .gitattributes || exit 1
 vers_f="$(sed -n 's/ export-subst//p' .gitattributes)"
@@ -60,6 +63,9 @@ sed -i 's/^\([ ]*\)git_refnames[ ]*=[ ]*".*"[ ]*$/\1git_refnames = " (tag: v%ver
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 2.6.7-alt2
+- Fixed FTBFS.
+
 * Wed Mar 01 2023 Stanislav Levin <slev@altlinux.org> 2.6.7-alt1
 - 2.6.6 -> 2.6.7.
 
