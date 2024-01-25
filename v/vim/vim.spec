@@ -49,7 +49,7 @@
 Name: vim
 %define branch 9.1
 Version: %branch.0050
-Release: alt1
+Release: alt2
 Epoch: 4
 
 Summary: VIsual editor iMproved
@@ -1053,6 +1053,10 @@ fi
 
 # {{{ changelog
 %changelog
+* Thu Jan 25 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:9.1.0050-alt2
+- Reverted upstream commit "patch 9.1.0041: xxd -i may generate incorrect C
+  statements" to fix regression in xxd -i output (ALT#49180).
+
 * Wed Jan 24 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:9.1.0050-alt1
 - Updated to v9.1.0050.
 - Applied some tweaks to specfile highlight (thx Vitaly Chikunov).
