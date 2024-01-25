@@ -2,7 +2,7 @@
 
 Name: confusable_homoglyphs
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
 Summary: A homoglyph is two or more very similar graphemes, characters, or glyphs.
 License: MIT
@@ -64,6 +64,9 @@ This package contains documentation for %name.
 %setup
 
 sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
+# hotfix for python3.12
+sed -i 's/SafeConfigParser/ConfigParser/' versioneer.py
+sed -i 's/readfp/read_file/' versioneer.py
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
@@ -103,6 +106,9 @@ mv tests/ %buildroot/%python3_sitelibdir/%name/
 
 
 %changelog
+* Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt2
+- Fixed FTBFS.
+
 * Mon Dec 16 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.0.0-alt1
 - Initial build for Sisyphus
 
