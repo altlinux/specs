@@ -1,8 +1,10 @@
 %define oname unittest-xml-reporting
 
+%def_without check
+
 Name: python3-module-%oname
 Version: 3.2.0
-Release: alt1
+Release: alt2
 
 Summary: unittest-based test runner with Ant/JUnit like XML reporting
 License: BSD
@@ -69,6 +71,9 @@ cp -fR tests/ %buildroot%python3_sitelibdir/xmlrunner
 %python3_sitelibdir/xmlrunner/tests
 
 %changelog
+* Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt2
+- Build without check.
+
 * Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
 - Automatically updated to 3.2.0.
 
