@@ -1,21 +1,28 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pygeoif
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.6
-Release: alt2
+Version: 1.2.0
+Release: alt1
 
 Summary: A basic implementation of the __geo_interface__
 License: LGPLv2.1+
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/pygeoif/
-# https://github.com/cleder/pygeoif.git
+Url: https://pypi.org/project/pygeoif
+Vcs: https://github.com/cleder/pygeoif.git
 BuildArch: noarch
 
-Source0: https://pypi.python.org/packages/be/33/ebda098a7f1f59593d1d5b842c2917a815e9ca09af684738cd8f4b3c151a/%{oname}-%{version}.tar.gz
+Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-typing_extensions
+%endif
 
 %py3_provides %oname
 
@@ -24,41 +31,27 @@ BuildRequires: python3-module-pytest
 PyGeoIf provides a GeoJSON-like protocol for geo-spatial (GIS) vector
 data.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-PyGeoIf provides a GeoJSON-like protocol for geo-spatial (GIS) vector
-data.
-
-This package contains tests for %oname.
-
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test
+%pyproject_run_pytest -v
 
 %files
-%doc *.rst docs/*
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test*
-%exclude %python3_sitelibdir/*/*/test*
-
-%files tests
-%python3_sitelibdir/*/test*
-%python3_sitelibdir/*/*/test*
-
+%doc README.*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Thu Jan 25 2024 Anton Vyatkin <toni@altlinux.org> 1.2.0-alt1
+- New version 1.2.0.
+
 * Thu Nov 21 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.6-alt2
 - python2 disabled
 
