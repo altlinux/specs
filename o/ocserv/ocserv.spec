@@ -1,19 +1,20 @@
 %global _unpackaged_files_terminate_build 1
 %define _localstatedir /var
+%define _libexecdir %_prefix/libexec
 %def_with maxmind
 %def_enable man
 %def_disable check
 %def_enable oidc_auth
 
 Name: ocserv
-Version: 1.2.1
-Release: alt2
+Version: 1.2.4
+Release: alt1
 
 Summary: OpenConnect SSL VPN server
 License: GPLv2+
 Group: System/Servers
 
-Url: http://www.infradead.org/ocserv/
+Url: https://ocserv.openconnect-vpn.net
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -129,15 +130,18 @@ export PATH=/sbin:/usr/sbin:$PATH
 %endif
 %_bindir/ocpasswd
 %_bindir/occtl
-%_bindir/%name-fw
 %_bindir/%name-script
 %_sbindir/%name
 %_sbindir/%name-worker
+%_libexecdir/%name-fw
 %_localstatedir/lib/ocserv/profile.xml
 %_unitdir/%name.service
 %_initdir/%name
 
 %changelog
+* Fri Jan 26 2024 Alexey Shabalin <shaba@altlinux.org> 1.2.4-alt1
+- New version 1.2.4.
+
 * Sun Nov 26 2023 Nikolay Burykin <bne@altlinux.org> 1.2.1-alt2
 - build with --enable-oidc-auth
 
