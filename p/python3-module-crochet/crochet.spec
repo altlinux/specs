@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.9.0
-Release: alt3
+Release: alt4
 
 Summary: Use Twisted anywhere!
 License: MIT
@@ -83,6 +83,9 @@ This package contains pickles for %oname.
 
 sed -i 's|sphinx-build|&-3|' docs/Makefile
 
+# hotfix for python3.12
+sed -i 's/SafeConfigParser/ConfigParser/' versioneer.py
+sed -i 's/readfp/read_file/' versioneer.py
 # fix version info
 sed -i \
 	-e "s/git_refnames\s*=\s*\"[^\"]*\"/git_refnames = \" \(tag: %version\)\"/" \
@@ -115,6 +118,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/*/pickle
 
 %changelog
+* Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 1.9.0-alt4
+- Fixed FTBFS.
+
 * Fri Apr 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.9.0-alt3
 - Build for python2 disabled.
 
