@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.0.0
-Release: alt2
+Release: alt3
 Summary: A toolbelt of useful classes and functions to be used with python-module-requests
 License: Apache-2.0
 Group: Development/Python3
@@ -28,6 +28,7 @@ BuildRequires: python3-module-requests
 %if_with check
 BuildRequires: python3-module-betamax
 BuildRequires: python3-module-trustme
+BuildRequires: python3-module-pytest
 %endif
 
 %py3_provides %oname
@@ -50,7 +51,7 @@ but some idiosyncracies prevent effective or sane testing on that version.
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -v -W ignore::DeprecationWarning
 
 %files
 %doc *.rst docs/*.rst
@@ -58,6 +59,9 @@ but some idiosyncracies prevent effective or sane testing on that version.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Jan 25 2024 Anton Vyatkin <toni@altlinux.org> 1.0.0-alt3
+- Fixed FTBFS.
+
 * Wed Aug 16 2023 Stanislav Levin <slev@altlinux.org> 1.0.0-alt2
 - Fixed FTBFS (urllib3 2).
 - Mapped PyPI name to distro's one.
