@@ -5,11 +5,10 @@
 %def_enable map
 %def_enable ffmpegthumbnailer
 %def_enable lua
-#%%%%define optflags_lto %nil
 %def_enable check
 
 Name: geeqie
-Version: 2.1
+Version: 2.2
 Release: alt1
 
 Summary: Graphics file browser utility
@@ -23,8 +22,6 @@ Source: https://github.com/BestImageViewer/geeqie/archive/v%version/%name-%versi
 Vcs: https://github.com/BestImageViewer/geeqie.git
 Source: %name-%version.tar
 %endif
-Patch10: %name-2.1-up-lua-build.patch
-Patch11: %name-2.1-up-do-not-truncate-socket-path.patch
 
 Provides: gqview = %version-%release
 Obsoletes: gqview < %version
@@ -66,8 +63,6 @@ ExifTool.
 
 %prep
 %setup
-%patch10 -p1 -b .lua
-%patch11 -p1 -b .socket
 
 %build
 %{?_enable_ffmpegthumbnailer:%add_optflags -Wno-error=unused-function}
@@ -99,13 +94,16 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %_libdir/%name/%name-export-jpeg
 %_libdir/%name/%name-image-crop
 %_libdir/%name/%name-random-image
+%_libdir/%name/%name-resize-image
 %_libdir/%name/%name-rotate
 %_libdir/%name/%name-symlink
 %_libdir/%name/%name-tethered-photography
 %_libdir/%name/%name-tethered-photography-hook-script
+%_libdir/%name/downsize
 %_libdir/%name/geocode-parameters.awk
 %_libdir/%name/lensID
-%_desktopdir/%name.desktop
+%_libdir/%name/resize-help.sh
+%_desktopdir/%rdn_name.desktop
 %_pixmapsdir/%name.png
 %_iconsdir/hicolor/*x*/apps/%name.png
 %_iconsdir/hicolor/scalable/apps/%name.svg
@@ -114,6 +112,9 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %doc NEWS README.*
 
 %changelog
+* Thu Jan 25 2024 Yuri N. Sedunov <aris@altlinux.org> 2.2-alt1
+- 2.2
+
 * Tue Nov 07 2023 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt1
 - 2.1
 - enabled %%check
