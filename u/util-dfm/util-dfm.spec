@@ -1,10 +1,8 @@
-%define qtver 5.15.11
-
 %def_without clang
 
 Name: util-dfm
 Version: 1.2.21
-Release: alt1
+Release: alt2
 
 Summary: A Toolkits of libdfm-io, libdfm-mount and libdfm-burn
 
@@ -14,10 +12,10 @@ Url: https://github.com/linuxdeepin/util-dfm
 
 Source: %url/archive/%version/%name-%version.tar.gz
 
-BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
 # Automatically added by buildreq on Tue Oct 24 2023
 # optimized out: cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libgio-devel libglvnd-devel libgpg-error libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-widgets libsasl2-3 libssl-devel libstdc++-devel libzen-devel pkg-config python3 python3-base sh5 zlib-devel
-BuildRequires: cmake libisoburn-devel libmediainfo-devel libmount-devel libsecret-devel libudisks2-devel qt5-base-devel = %qtver
+BuildRequires: cmake libisoburn-devel libmediainfo-devel libmount-devel libsecret-devel libudisks2-devel qt5-base-devel
 %if_enabled clang
 BuildRequires: clang-devel
 BuildRequires: lld-devel
@@ -25,6 +23,8 @@ BuildRequires: llvm-devel
 %else
 BuildRequires: gcc-c++
 %endif
+
+Requires: libqt5-core = %_qt5_version
 
 %description
 %summary.
@@ -135,6 +135,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/cmake/dfm-burn/dfm-burnConfig.cmake
 
 %changelog
+* Thu Jan 25 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.21-alt2
+- Requires: libqt5-core = %%_qt5_version.
+
 * Thu Jan 18 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.21-alt1
 - New version 1.2.21.
 
