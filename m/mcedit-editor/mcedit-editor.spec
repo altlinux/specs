@@ -3,7 +3,7 @@
 %endif
 
 Name: mcedit-editor
-Version: 0.3
+Version: 0.3.1
 Release: alt1
 
 Group: System/Configuration/Other
@@ -36,6 +36,9 @@ install -m 0644 %SOURCE2 %buildroot/%_environmentdir/30-mcedit-editor.conf
 %_environmentdir/30-mcedit-editor.conf
 
 %changelog
+* Thu Jan 25 2024 Sergey V Turchin <zerg@altlinux.org> 0.3.1-alt1
+- fix systemd support for wayland
+
 * Tue Jan 16 2024 Sergey V Turchin <zerg@altlinux.org> 0.3-alt1
 - add systemd support for wayland
 
