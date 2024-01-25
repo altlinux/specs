@@ -1,9 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 %define pname integalert
 
+# Using ifarch instead of ExclusiveArch tag in order to make
+# the other packages available on non-PVE arches.
+%ifarch x86_64 aarch64
+%def_with pve
+%else
+%def_without pve
+%endif
+
+
 Name:     %pname-source
 Version:  0.4.3
-Release:  alt2
+Release:  alt4
 
 Summary:  Osec-based integrity checking script and settings
 License:  GPLv2
@@ -11,10 +20,7 @@ Group:    Monitoring
 Url:      http://git.altlinux.org/people/manowar/packages/integalert.git
 
 Packager: Paul Wolneykien <manowar@altlinux.org>
-
 Source:   %name-%version.tar
-
-Obsoletes: integ < 0.4.2-alt2
 
 %description
 Osec-based integrity checking script and settings.
@@ -26,6 +32,8 @@ BuildArch: noarch
 
 Requires: systemd
 Requires: osec-cronjob >= 1.3.1-alt2
+
+Obsoletes: integ < 0.4.2-alt2
 
 %description -n %pname
 Osec-based integrity checking script and settings.
@@ -48,7 +56,7 @@ BuildArch: noarch
 Run integrity check after install (chroot files).
 
 %package -n %pname-vm-check
-Summary: Run VM integrity check before VM target and every 5 mins
+Summary: Run VM integrity check before vm.target and every 5 mins
 Group: Monitoring
 BuildArch: noarch
 
@@ -59,7 +67,6 @@ Includes service that 'integalert vm' is configured to run before
 %package -n %pname-trigger-pve
 Summary: Lock down PVE cluster VMs on integrity failure
 Group: Monitoring
-ExclusiveArch: x86_64 aarch64
 
 %description -n %pname-trigger-pve
 Lock down PVE cluster VMs on integalert_vm.service failure.
@@ -67,30 +74,56 @@ Lock down PVE cluster VMs on integalert_vm.service failure.
 %prep
 %setup
 
+%build
+%make_build
+
 %install
-install -D -m 0644 65-integrity.preset %buildroot/lib/systemd/system-preset/65-integrity.preset
-install -D -m 0755 90-integrity-init.sh  %buildroot%_datadir/install2/postinstall.d/90-integrity-init.sh
-install -D -m 0644 integalert.service %buildroot%_unitdir/integalert.service
-install -D -m 0644 integalert_vm.service %buildroot%_unitdir/integalert_vm.service
-install -D -m 0644 integalert_vm.timer %buildroot%_unitdir/integalert_vm.timer
-install -D -m 0700 integalert %buildroot/sbin/integalert
-
-install -D -m 0600 osec/integalert/dirs.conf %buildroot/%_sysconfdir/osec/integalert/dirs.conf
-install -D -m 0600 osec/integalert_vm/dirs.conf %buildroot/%_sysconfdir/osec/integalert_vm/dirs.conf
-install -D -m 0755 osec/integalert_vm/trigger.d/10-pve-lock-seabios %buildroot/%_sysconfdir/osec/integalert_vm/trigger.d/10-pve-lock-seabios
-install -D -m 0755 osec/integalert_vm/trigger.d/20-pve-lock-ovmf %buildroot/%_sysconfdir/osec/integalert_vm/trigger.d/20-pve-lock-ovmf
-install -D -m 0755 osec/integalert_vm/trigger.d/30-pve-lock-nodes %buildroot/%_sysconfdir/osec/integalert_vm/trigger.d/30-pve-lock-nodes
-install -D -m 0600 osec/integalert_container/dirs.conf %buildroot/%_sysconfdir/osec/integalert_container/dirs.conf
-
-mkdir -p %buildroot/%_sysconfdir/osec/integalert/trigger.d
-mkdir -p %buildroot/%_sysconfdir/osec/integalert_container/trigger.d
+%makeinstall_std sbindir=/sbin sysconfdir=%_sysconfdir datadir=%_datadir unitdir=%_unitdir  presetdir=/lib/systemd/system-preset WITH_PVE=%{with pve}
 
 %post -n %pname
-if [ $1 -ge 2 ]; then
-    if systemctl -q is-enabled integalert.service; then
-        systemctl daemon-reload
-        systemctl -q preset integalert.service
-    fi
+# On package update (don't check the $1 value due to package
+# rename):
+if systemctl -q is-enabled integalert.service; then
+    systemctl daemon-reload
+    systemctl -q preset integalert.service
+fi
+
+# On first installation, try to migrate from existing
+# configuration not maintained by RPM:
+if [ $1 -eq 1 ]; then
+    for d in integalert integalert_vm integalert_container; do
+	for f in pipe.conf; do
+	    if [ -e "%_sysconfdir/osec/$d/$f.rpmnew" ]; then
+		if [ -e "%_sysconfdir/osec/$d/$f.rpmold" ]; then
+		    mv -vf "%_sysconfdir/osec/$d/$f.rpmold" \
+		       "$(mktemp %_sysconfdir/osec/$d/$f.rpmold.XXX)"
+		fi
+
+		mv -vf "%_sysconfdir/osec/$d/$f" \
+		   "%_sysconfdir/osec/$d/$f.rpmold"
+		mv -vf "%_sysconfdir/osec/$d/$f.rpmnew" \
+		   "%_sysconfdir/osec/$d/$f"
+
+		echo "Warning! %_sysconfdir/osec/$d/$f.rpmnew was automatically re-installed as %_sysconfdir/osec/$d/$f. Existing file has been saved as %_sysconfdir/osec/$d/$f.rpmold." >&2
+	    fi
+	done
+
+	if [ -d %_sysconfdir/osec/${d}_fix ]; then
+	    ls %_sysconfdir/osec/${d}_fix | while read f; do
+		if [ -e "%_sysconfdir/osec/$d/$f.fix.rpmold" ]; then
+		    mv -vf "%_sysconfdir/osec/$d/$f.fix.rpmold" \
+		       "$(mktemp %_sysconfdir/osec/$d/$f.fix.rpmold.XXX)"
+		fi
+
+		mv -vf "%_sysconfdir/osec/${d}_fix/$f" \
+		   "%_sysconfdir/osec/${d}/$f.fix.rpmold"
+	    done
+
+	    rmdir -v %_sysconfdir/osec/${d}_fix
+
+	    echo "Warning! Files in %_sysconfdir/osec/${d}_fix were automatically saved as *.fix.rpmold files in %_sysconfdir/osec/$d." >&2
+	fi
+    done
 fi
 
 %files -n installer-feature-integalert-stage2
@@ -104,18 +137,32 @@ fi
 /sbin/integalert
 %dir %_sysconfdir/osec/integalert*
 %config(noreplace) %_sysconfdir/osec/integalert*/*.conf
+%_sysconfdir/osec/integalert*/sender
+%dir %_sysconfdir/osec/integalert*/trigger.d
 
 %files -n %pname-vm-check
 %_unitdir/integalert_vm.service
 %_unitdir/integalert_vm.timer
 
+%if_with pve
 %files -n %pname-trigger-pve
-%dir %_sysconfdir/osec/integalert/trigger.d
-%dir %_sysconfdir/osec/integalert_vm/trigger.d
-%dir %_sysconfdir/osec/integalert_container/trigger.d
 %config(noreplace) %_sysconfdir/osec/integalert_vm/trigger.d/*-pve-*
+%endif
 
 %changelog
+* Wed Jan 24 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.3-alt4
+- Added migration %%post script which makes backup copies of old
+  integalert profiles.
+- Generate and package the default configuration files for the
+  default ('main'), 'vm' and 'container' profiles.
+- Added 'configure' action which writes down the configuration
+  files for the specified integalert profile.
+- Run 'integalert container' from integalert_vm.service.
+
+* Wed Jan 17 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.3-alt3
+- Fix: Use %%ifarch instead of ExclusiveArch tag in order to make
+  the other packages available on non-PVE arches.
+
 * Tue Dec 26 2023 Paul Wolneykien <manowar@altlinux.org> 0.4.3-alt2
 - Make *-trigger-pve package exclusive arch: x86_64 aarch64.
 
