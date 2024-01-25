@@ -1,6 +1,6 @@
 Name:    magic-wormhole
 Version: 0.13.0
-Release: alt1
+Release: alt2
 
 Summary: get things from one computer to another, safely
 
@@ -58,6 +58,10 @@ Wormhole codes are single-use and do not need to be memorized.
 %prep
 %setup
 
+# hotfix for python3.12
+sed -i 's/SafeConfigParser/ConfigParser/' versioneer.py
+sed -i 's/readfp/read_file/' versioneer.py
+
 %build
 %python3_build
 
@@ -72,6 +76,9 @@ rm -rf %buildroot%python3_sitelibdir/wormhole/test/
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 0.13.0-alt2
+- Fixed FTBFS.
+
 * Sun Oct 01 2023 Vitaly Lipatov <lav@altlinux.ru> 0.13.0-alt1
 - new version 0.13.0 (with rpmrb script)
 
