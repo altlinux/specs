@@ -9,7 +9,7 @@
 %define _pluginsdir %_libdir/%name/plugins/4.2
 
 Name: wireshark
-Version: 4.2.0
+Version: 4.2.2
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -224,6 +224,9 @@ _EOF_
 %_libdir/cmake/%name
 
 %changelog
+* Thu Jan 25 2024 Anton Farygin <rider@altlinux.ru> 4.2.2-alt1
+- 4.2.2
+
 * Wed Nov 22 2023 Anton Farygin <rider@altlinux.ru> 4.2.0-alt1
 - 4.2.0
 
