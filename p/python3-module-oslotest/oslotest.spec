@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 4.5.0
-Release: alt4.1
+Release: alt5
 
 Summary: OpenStack Oslo test framework
 
@@ -14,6 +14,8 @@ Url: https://pypi.org/project/oslotest
 
 Source: %oname-%version.tar
 Source1: %oname.watch
+
+Patch: oslotest-replace-find_module-function.patch
 
 BuildArch: noarch
 
@@ -63,6 +65,8 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
+
+%patch -p1
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -118,6 +122,9 @@ popd
 %endif
 
 %changelog
+* Fri Jan 26 2024 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt5
+- Fixed FTBFS.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt4.1
 - Moved on modern pyproject macros.
 
