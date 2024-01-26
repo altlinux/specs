@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.1
+Version: 1.1.4
 Release: alt1
 Summary: Python 3 package for manipulating DXF drawings
 License: MIT
@@ -19,6 +19,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildRequires: python3(Cython)
+BuildRequires: python3(fontTools)
 
 %if_with check
 # dependencies
@@ -54,6 +55,9 @@ sed -i '1 {/env python/ d}' src/ezdxf/addons/drawing/qtviewer.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jan 26 2024 Grigory Ustinov <grenka@altlinux.org> 1.1.4-alt1
+- Automatically updated to 1.1.4.
+
 * Tue Feb 07 2023 Stanislav Levin <slev@altlinux.org> 1.0.1-alt1
 - 0.16.3 -> 1.0.1.
 
