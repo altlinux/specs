@@ -9,7 +9,7 @@
 %endif
 
 Name: python3-module-seaborn
-Version: 0.13.1
+Version: 0.13.2
 Release: alt1
 Summary: Seaborn: statistical data visualization
 License: BSD-3-Clause
@@ -52,10 +52,7 @@ statistical routines from scipy and statsmodels.
 rm -fv %buildroot%python3_sitelibdir/%oname/_testing.py
 
 %check
-# need pandas version >=2.0.2
-%pyproject_run_pytest -n auto -k "\
-not test_kde_singular_data \
-and not test_unfilled_marker_edgecolor_warning"
+%pyproject_run_pytest -n auto
 
 %files
 %doc LICENSE.md README.md
@@ -63,6 +60,9 @@ and not test_unfilled_marker_edgecolor_warning"
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Fri Jan 26 2024 Anton Vyatkin <toni@altlinux.org> 0.13.2-alt1
+- New version 0.13.2.
+
 * Tue Jan 02 2024 Anton Vyatkin <toni@altlinux.org> 0.13.1-alt1
 - New version 0.13.1.
 
