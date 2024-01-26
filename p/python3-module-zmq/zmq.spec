@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 24.0.1
-Release: alt1.1.1.1
+Version: 25.1.2
+Release: alt1
 
 Summary: Software library for fast, message-based applications
 
@@ -24,12 +24,14 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-Cython
 BuildRequires: python3-module-packaging
+BuildRequires: python3-module-tornado
 %if_without bootstrap
 BuildRequires: python3-module-cffi
 BuildRequires: python3-module-numpy
 %endif
 %if_with check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-asyncio
 %endif
 
 %description
@@ -74,6 +76,8 @@ This package contains the headers for the python bindings.
 
 # Nobody provides it
 %add_python3_req_skip zmq.backend.cffi._cffi
+%add_python3_req_skip zmq.eventloop.minitornado.ioloop
+%add_python3_req_skip zmq.eventloop.minitornado.log
 
 %prep
 %setup
@@ -99,10 +103,10 @@ subst "s|/usr/local/include|%_includedir|" setup.cfg
 # Maybe it somehow tied with paths
 export PYTHONPATH=%buildroot%python3_sitelibdir
 cd ..
-py.test3 --pyargs zmq -v -k "not test_cython"
+py.test3 --pyargs zmq -v --asyncio-mode auto -k "not test_cython"
 
 %files
-%doc README.md COPYING.LESSER COPYING.BSD CONTRIBUTING.md AUTHORS.md examples/
+%doc README.md LICENSE.LESSER LICENSE.BSD CONTRIBUTING.md AUTHORS.md examples/
 %python3_sitelibdir/*.dist-info
 %python3_sitelibdir/%oname
 %exclude %python3_sitelibdir/%oname/tests
@@ -115,6 +119,9 @@ py.test3 --pyargs zmq -v -k "not test_cython"
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Fri Jan 26 2024 Grigory Ustinov <grenka@altlinux.org> 25.1.2-alt1
+- Automatically updated to 25.1.2.
+
 * Fri Oct 13 2023 Anton Zhukharev <ancieg@altlinux.org> 24.0.1-alt1.1.1.1
 - (NMU) Provided PEP503-normalized project name.
 
