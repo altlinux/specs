@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.12.0
-Release: alt8
+Release: alt9
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 License: GPLv2
@@ -102,6 +102,9 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Fri Jan 26 2024 Alexei Takaseev <taf@altlinux.org> 1.12.0-alt9
+- update upstream to git:19c36e593d9b74a0f95582b6343b0921cd31e32a
+
 * Sun Sep 17 2023 Alexei Takaseev <taf@altlinux.org> 1.12.0-alt8
 - Disable net-snmp agent
 

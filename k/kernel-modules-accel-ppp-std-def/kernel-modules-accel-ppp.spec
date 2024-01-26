@@ -1,6 +1,6 @@
 %define module_name             accel-ppp
 %define module_version          1.12.0
-%define module_release          alt7
+%define module_release          alt9
 
 %define flavour		std-def
 %define karch	%ix86 x86_64 aarch64 ppc64le armh
@@ -65,6 +65,9 @@ install -m644 -D BUILD/drivers/vlan_mon/driver/vlan_mon.ko %buildroot/%module_di
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Jan 26 2024 Alexei Takaseev <taf@altlinux.org> 1.12.0-alt9
+- update upstream to git:19c36e593d9b74a0f95582b6343b0921cd31e32a
 
 * Thu Jul 20 2023 Alexei Takaseev <taf@altlinux.org> 1.12.0-alt7
 - ipoe: add support for kernels 6.3+
