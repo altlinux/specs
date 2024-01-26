@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.1.0
-Release: alt1.2
+Version: 4.3.0
+Release: alt1
 
 Summary: OpenStack Client library for Magnum API
 
@@ -14,6 +14,8 @@ Url: https://pypi.org/project/python-magnumclient
 
 Source: %oname-%version.tar
 Source1: %oname.watch
+
+Patch: magnumclient-fix-build-with-python3.12.patch
 
 BuildArch: noarch
 
@@ -75,6 +77,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
+%patch -p1
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -126,6 +129,9 @@ install -pDm 644 tools/magnum.bash_completion \
 %endif
 
 %changelog
+* Fri Jan 26 2024 Grigory Ustinov <grenka@altlinux.org> 4.3.0-alt1
+- Automatically updated to 4.3.0.
+
 * Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1.2
 - Dropped build dependency on python3-module-reno.
 
