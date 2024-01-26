@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: lightdm-kde-greeter
-Version: 0.4.17
+Version: 0.4.18
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE5 Greeter
@@ -71,7 +71,7 @@ This is a fork of KDE4-based LightDM greeter engine for KDE5.
 
 %find_lang --with-kde %name
 %find_lang --with-kde --append --output=%name.lang kcm_lightdm
-%find_lang --with-kde --append --output=%name.lang greeter
+%find_lang --with-kde --append --output=%name.lang lightdm_kde_greeter
 %find_lang --with-kde --append --output=%name.lang lightdm_theme_userbar
 
 # Add alternatives for xgreeters
@@ -96,6 +96,13 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Thu Jan 25 2024 Anton Golubev <golubevan@altlinux.org> 0.4.18-alt1
+- re-layout PSK input dialog (Closes: 48123)
+- make avatars more like locker in the breeze theme (Closes: 47950)
+- add battery indicator to userbar theme
+- move the "Log in as another user" to the center
+- support "hide-users" hint
+
 * Thu Sep 28 2023 Anton Golubev <golubevan@altlinux.org> 0.4.17-alt1
 - Show tooltips for keyboard and session buttons (Closes: 46496)
 - Cancel auth when click 'Log in as another user' (Closes: 47760)
