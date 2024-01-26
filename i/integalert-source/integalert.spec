@@ -12,7 +12,7 @@
 
 Name:     %pname-source
 Version:  0.4.3
-Release:  alt4
+Release:  alt5
 
 Summary:  Osec-based integrity checking script and settings
 License:  GPLv2
@@ -150,6 +150,11 @@ fi
 %endif
 
 %changelog
+* Fri Jan 26 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.3-alt5
+- Cosmetic improvement in the sender script.
+- Fixed possible errors in the packaged default configuration
+  files (there was a race condition).
+
 * Wed Jan 24 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.3-alt4
 - Added migration %%post script which makes backup copies of old
   integalert profiles.
