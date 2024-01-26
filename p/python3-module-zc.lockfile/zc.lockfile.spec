@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.0
+Version: 3.0
 Release: alt1
 Summary: Basic inter-process locks
 License: ZPL-2.1
@@ -16,10 +16,10 @@ Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
-
+BuildRequires: python3-module-wheel
 %if_with check
-BuildRequires: python3-module-tox
 BuildRequires: python3-module-zope.testing
+BuildRequires: python3-module-zope.testrunner
 %endif
 
 %description
@@ -52,10 +52,10 @@ This package contains tests for zc.lockfile.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -63,7 +63,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.txt *.rst
@@ -75,6 +75,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %python3_sitelibdir/*/*/tests.*
 
 %changelog
+* Fri Jan 26 2024 Anton Vyatkin <toni@altlinux.org> 3.0-alt1
+- New version 3.0.
+
 * Fri Jan 17 2020 Nikolai Kostrigin <nickel@altlinux.org> 2.0-alt1
 - NMU: 1.2.1 -> 2.0
 - Remove python2 module build
