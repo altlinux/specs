@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 3.11
-Release: alt2
+Release: alt3
 
 Summary: lex and yacc python implementation
 License: BSD
@@ -27,6 +27,9 @@ and yacc.
 %prep
 %setup
 
+# hotfix for python3.12
+sed -i 's/assert_/assertTrue/g' test/testlex.py test/testyacc.py
+
 %build
 %python3_build
 
@@ -45,6 +48,9 @@ popd
 
 
 %changelog
+* Fri Jan 26 2024 Grigory Ustinov <grenka@altlinux.org> 3.11-alt3
+- Fixed FTBFS.
+
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.11-alt2
 - Build for python2 disabled.
 
