@@ -1,35 +1,29 @@
 %define _unpackaged_files_terminate_build 1
 
+%define pypi_name pytest-sourceorder
 %define mname pytest_sourceorder
 %def_with check
 
 Name: python3-module-%mname
 Version: 0.6.0
-Release: alt1
-
+Release: alt2
 Summary: A pytest plugin for ensuring tests within a class are run in source order
-License: %gpl3plus
+License: GPL-3.0-only
 Group: Development/Python3
-# Source-git: https://github.com/encukou/pytest-sourceorder
 Url: https://pypi.org/project/pytest-sourceorder
-
-Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): rpm-build-python3
-
+Vcs: https://pagure.io/python-pytest-sourceorder
 BuildArch: noarch
-
-BuildRequires: python3-module-setuptools
-
-%if_with check
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-tox
-%endif
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
 # PyPI name
-%py3_provides pytest-sourceorder
-Provides: python3-module-pytest-sourceorder = %EVR
+%py3_provides %pypi_name
+Provides: python3-module-%pypi_name = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%endif
 
 %description
 Allows tests within a specially marked class to be run in source order,
@@ -37,26 +31,28 @@ instead of the "almost alphabetical" order Pytest normally uses.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr
+%pyproject_run_pytest -vra
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%doc README.rst COPYING
-%python3_sitelibdir/%mname-%version-py%_python3_version.egg-info/
+%doc README.rst
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %python3_sitelibdir/%mname.py
 %python3_sitelibdir/__pycache__/%mname.*.py*
 
 %changelog
+* Fri Jan 26 2024 Stanislav Levin <slev@altlinux.org> 0.6.0-alt2
+- Fixed FTBFS (Python 3.12).
+
 * Fri Dec 03 2021 Stanislav Levin <slev@altlinux.org> 0.6.0-alt1
 - 0.5.1 -> 0.6.0.
 
