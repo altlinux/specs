@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.6.0
-Release: alt2
+Release: alt2.1
 
 Summary: A module to work with countries and languages
 License: BSD
@@ -22,6 +22,10 @@ BuildRequires(pre): rpm-build-python3
 
 # build backend and its deps
 BuildRequires: python3(poetry-core)
+
+%if_with check
+BuildRequires: python3(pkg_resources)
+%endif
 
 %description
 BabelFish is a Python library to work with countries and languages.
@@ -46,6 +50,9 @@ BabelFish is a Python library to work with countries and languages.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jan 26 2024 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt2.1
+- NMU: fixed FTBFS.
+
 * Wed Sep 14 2022 Stanislav Levin <slev@altlinux.org> 0.6.0-alt2
 - Modernized packaging (fixes FTBFS due to poetry-core 1.1.0).
 
