@@ -10,7 +10,7 @@
 Name: python3-module-%pypi_name
 Epoch: 1
 Version: 69.0.3
-Release: alt1
+Release: alt2
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
 Group: Development/Python3
@@ -175,6 +175,9 @@ cp -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
 %system_wheels_path/setuptools-%version-*.whl
 
 %changelog
+* Fri Jan 26 2024 Stanislav Levin <slev@altlinux.org> 1:69.0.3-alt2
+- Fixed FTBFS (Python 3.12).
+
 * Tue Dec 26 2023 Stanislav Levin <slev@altlinux.org> 1:69.0.3-alt1
 - 68.2.2 -> 69.0.3.
 
