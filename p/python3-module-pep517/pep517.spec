@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.13.0
-Release: alt2
+Release: alt3
 
 Summary: API to call PEP 517 hooks for building Python packages
 
@@ -32,6 +32,7 @@ BuildRequires: python3(tomli)
 %endif
 
 # tests
+BuildRequires: python3(setuptools)
 BuildRequires: python3(testpath)
 BuildRequires: python3(pytest)
 %endif
@@ -63,6 +64,9 @@ PEP 517 specifies a standard API for systems which build Python packages.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jan 26 2024 Grigory Ustinov <grenka@altlinux.org> 0.13.0-alt3
+- Fixed FTBFS.
+
 * Thu Nov 10 2022 Stanislav Levin <slev@altlinux.org> 0.13.0-alt2
 - Fixed FTBFS (flit_core 3.7.1).
 
