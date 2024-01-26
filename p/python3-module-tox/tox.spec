@@ -1,58 +1,30 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name tox
 
-%define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
-
 %def_with check
 
 Name: python3-module-%pypi_name
 Version: 3.27.1
-Release: alt1
+Release: alt2
 
 Summary: virtualenv-based automation of test activities
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/tox/
 VCS: https://github.com/tox-dev/tox
-
+BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools_scm)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
 BuildRequires: /proc
-# install_requires
-BuildRequires: python3(filelock)
-BuildRequires: python3(packaging)
-BuildRequires: python3(pluggy)
-BuildRequires: python3(py)
-BuildRequires: python3(six)
-BuildRequires: python3(virtualenv)
-%if %tomli
-BuildRequires: python3(tomli)
-%endif
-
-# testing
-BuildRequires: python3(flaky)
-BuildRequires: python3(freezegun)
-BuildRequires: python3(psutil)
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest_mock)
-BuildRequires: python3(pytest_randomly)
-%endif
-
-BuildArch: noarch
-
-%py3_requires virtualenv
-%if %tomli
-# rebuild against Python 3.11 is required to get rid of old dependency
-%py3_requires tomli
+%pyproject_builddeps_metadata_extra testing
+# used in test_parallel_error_report,
+# upstream relies on being run within venv
+BuildRequires: python3-module-pip
 %endif
 
 %description
@@ -69,17 +41,9 @@ can use for:
 %prep
 %setup
 %patch -p1
-
-# setuptools_scm implements a file_finders entry point which returns all files
-# tracked by SCM.
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m 'release'
-    git tag '%version'
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -94,19 +58,10 @@ done
 popd
 
 %check
-# NOTE: don't use regular %%tox_check_* RPM macros here due to circular
-# dependency on tox. These macros automatically pull tox and its plugins into
-# build env. Anyway, we want to test tox being packaged with the same tox, not
-# a repo's one.
-%global tox_buildrequires %{?tox_buildrequires:%nil}
-%global _tox_bin %{?_tox_bin:%buildroot%_bindir/tox.py3}
-%global tox_check %{?tox_check:%{tox:} --sitepackages -vvr -s false}
-
-export TOX_TESTENV_PASSENV='PIP_NO_INDEX \
-PIP_NO_BUILD_ISOLATION TOX_LIMITED_SHEBANG'
+export VIRTUALENV_SYSTEM_SITE_PACKAGES=YES
 export TOX_LIMITED_SHEBANG=1
-export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
-%tox_check_pyproject -- -m "not internet"
+export PIP_NO_BUILD_ISOLATION=NO
+%pyproject_run_pytest -vra -m "not internet"
 
 %files
 %_bindir/tox.py3
@@ -115,6 +70,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jan 26 2024 Stanislav Levin <slev@altlinux.org> 3.27.1-alt2
+- Fixed FTBFS (Python 3.12).
+
 * Mon Nov 14 2022 Stanislav Levin <slev@altlinux.org> 3.27.1-alt1
 - 3.27.0 -> 3.27.1.
 
