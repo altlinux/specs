@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.2.9
-Release: alt1
+Release: alt2
 
 Summary: A wrapper module for pysnmp
 
@@ -24,6 +24,7 @@ BuildRequires: python3-module-pysnmp4
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-yaml
+BuildRequires: python3-module-pyasyncore
 %endif
 
 %py3_provides %oname
@@ -54,6 +55,9 @@ py.test-3 -v
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Fri Jan 26 2024 Grigory Ustinov <grenka@altlinux.org> 0.2.9-alt2
+- Fixed FTBFS.
+
 * Sun Sep 18 2022 Grigory Ustinov <grenka@altlinux.org> 0.2.9-alt1
 - Build new version.
 - Build with check.
