@@ -2,8 +2,8 @@
 %def_with check
 
 Name: kitty
-Version: 0.32.0
-Release: alt2
+Version: 0.32.1
+Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
 License: GPL-3.0
@@ -215,6 +215,9 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %_bindir/kitten
 
 %changelog
+* Fri Jan 26 2024 Egor Ignatov <egori@altlinux.org> 0.32.1-alt1
+- new version 0.32.1
+
 * Mon Jan 22 2024 Egor Ignatov <egori@altlinux.org> 0.32.0-alt2
 - package default config file
 
