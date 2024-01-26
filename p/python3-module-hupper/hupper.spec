@@ -4,7 +4,7 @@
 %def_with check
 
 Name:           python3-module-%oname
-Version:        1.12
+Version:        1.12.1
 Release:        alt1
 
 Summary:        Integrated process monitor for developing servers
@@ -46,13 +46,16 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 %pyproject_run_pytest -v
 
 %files
-%doc CHANGES.rst CONTRIBUTING.rst LICENSE.txt README.rst rtd.txt
+%doc CHANGES.rst CONTRIBUTING.rst LICENSE.txt README.rst
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 %_bindir/*
 
 
 %changelog
+* Fri Jan 26 2024 Anton Vyatkin <toni@altlinux.org> 1.12.1-alt1
+- New version 1.12.1.
+
 * Mon Sep 18 2023 Anton Vyatkin <toni@altlinux.org> 1.12-alt1
 - New version 1.12.
 
