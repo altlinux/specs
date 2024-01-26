@@ -1,13 +1,19 @@
 %def_with check
 Name: python3-module-sphinxcontrib-jquery
 Version: 4.1
-Release: alt2
+Release: alt3
 
 Summary: jQuery for use in Sphinx themes or extensions
 License: 0BSD
+URL: https://pypi.org/project/sphinxcontrib-jquery
+VCS: https://github.com/sphinx-contrib/jquery
 Group: Development/Python3
 
 Source: jquery-%version.tar.gz
+# support for Sphinx 7.1
+Patch: ed84c0dd67d83ebd542ea855656f4e30a54ba47f.patch
+# support for Sphinx 7.2
+Patch1: 80d1d3925c17c1860283323972680690f81d7b18.patch
 BuildArch: noarch
 
 # Automatically added by buildreq on Sat Mar 25 2023
@@ -26,6 +32,8 @@ themes or extensions.
 
 %prep
 %setup -n jquery-%version
+%patch -p1
+%patch1 -p1
 
 %build
 %pyproject_build
@@ -43,6 +51,9 @@ python3 -m pytest tests
 %python3_sitelibdir_noarch/sphinxcontrib_*
 
 %changelog
+* Fri Jan 26 2024 Grigory Ustinov <grenka@altlinux.org> 4.1-alt3
+- NMU: fixed FTBFS.
+
 * Tue Mar 28 2023 Michael Shigorin <mike@altlinux.org> 4.1-alt2
 - NMU:
   + fix build --without check
