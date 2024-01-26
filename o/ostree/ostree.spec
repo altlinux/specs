@@ -5,8 +5,8 @@
 %def_with ed25519
 
 Name: ostree
-Version: 2023.2
-Release: alt1.1
+Version: 2024.1
+Release: alt1
 
 Summary: Linux-based operating system develop/build/deploy tool
 License: LGPLv2+
@@ -15,11 +15,9 @@ Url: https://github.com/ostreedev/ostree
 
 Vcs: https://github.com/ostreedev/ostree.git
 Source: %name-%version.tar
-# Note! Always use HEAD!!
-# Source1-url: https://github.com/GNOME/libglnx/archive/master.zip
 Source1: libglnx.tar
-# Source2-url: https://github.com/mendsley/bsdiff/archive/master.zip
 Source2: bsdiff.tar
+Source3: composefs.tar
 
 Patch1: %name-%version.patch
 
@@ -34,7 +32,7 @@ BuildRequires: pkgconfig(zlib)
 BuildRequires: pkgconfig(libcurl) >= 7.29.0
 BuildRequires: pkgconfig(libcrypto) >= 1.0.1
 # The tests still require soup
-BuildRequires: pkgconfig(libsoup-2.4) >= 2.39.1
+BuildRequires: pkgconfig(libsoup-3.0) >= 3.0.0
 BuildRequires: libattr-devel
 # The tests require attr
 BuildRequires: attr
@@ -77,15 +75,6 @@ Requires: %name
 %description grub2
 GRUB2 integration for OSTree
 
-%package tests
-Summary: Tests for the %name package
-Group: Development/Other
-Requires: %name = %EVR
-
-%description tests
-This package contains tests that can be used to verify
-the functionality of the installed %name package.
-
 %package -n lib%name
 Summary: Library files of %name
 Group: System/Libraries
@@ -112,7 +101,7 @@ BuildArch: noarch
 This package contains development documentation for lib%name.
 
 %prep
-%setup -a1 -a2
+%setup -a1 -a2 -a3
 %patch1 -p1
 %ifarch %e2k
 # patch against paranoid -Werror
@@ -126,10 +115,9 @@ NOCONFIGURE=1 sh -x ./autogen.sh
 %configure --disable-silent-rules \
            --with-selinux \
            --with-curl \
-           --with-openssl \
+           --with-soup3 \
            %{?_with_ed25519:--with-ed25519-libsodium} \
            --enable-gtk-doc \
-           --enable-trivial-httpd-cmdline \
            --with-builtin-grub2-mkconfig \
            --without-grub2-mkconfig-path \
            %{?with_tests:--enable-installed-tests=exclusive} \
@@ -167,24 +155,16 @@ NOCONFIGURE=1 sh -x ./autogen.sh
 %_systemdgeneratordir/ostree-system-generator
 %_unitdir/ostree-*
 %_tmpfilesdir/*.conf
-%_libexecdir/lib%name
 %_prefix/lib/%name
 %_man1dir/*
 %_man5dir/ostree*
+%_man8dir/ostree*
 #%exclude %_sysconfdir/grub.d/*ostree
 #%exclude %_libexecdir/lib%name/grub2*
-%exclude %_libexecdir/lib%name/ostree-trivial-httpd
 
 #%files grub2
 #%_sysconfdir/grub.d/*ostree
 #%_libexecdir/lib%name/grub2*
-
-%if_with tests
-%files tests
-#%_libexecdir/installed-tests
-#%_datadir/installed-tests
-%_libexecdir/libostree/ostree-trivial-httpd
-%endif
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -200,6 +180,9 @@ NOCONFIGURE=1 sh -x ./autogen.sh
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Fri Jan 26 2024 Alexey Shabalin <shaba@altlinux.org> 2024.1-alt1
+- 2024.1
+
 * Tue Mar 28 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2023.2-alt1.1
 - Fixed build for Elbrus
 
