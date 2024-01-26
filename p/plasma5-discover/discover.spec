@@ -21,7 +21,7 @@
 
 Name: plasma5-%rname
 Version: 5.27.10
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Group: System/Configuration/Packaging
@@ -295,6 +295,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K5start \
 
 
 %changelog
+* Fri Jan 26 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.10-alt2
+- 5.27.10.1 bugfix release
+
 * Thu Dec 07 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.10-alt1
 - new version
 
