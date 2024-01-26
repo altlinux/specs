@@ -2,8 +2,8 @@
 
 Summary: High-performance and highly configurable free RADIUS server
 Name: freeradius
-Version: 3.2.2
-Release: alt2
+Version: 3.2.3
+Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Servers
 Url: http://www.freeradius.org/
@@ -102,6 +102,7 @@ The FreeRADIUS shared library
 Group: System/Servers
 Summary: FreeRADIUS utilities
 Requires: %name-libs = %version-%release
+Requires: %name-common = %version-%release
 # Radius client(s) need dicts to work:
 Requires: %name-dictionary = %version-%release
 
@@ -585,6 +586,7 @@ fi
 %_libdir/freeradius/rlm_cache_memcached.so
 %_libdir/freeradius/rlm_redis.so
 %_libdir/freeradius/rlm_rediswho.so
+%_libdir/freeradius/rlm_cache_redis.so
 %_libdir/freeradius/rlm_rest.so
 %_libdir/freeradius/rlm_json.so
 %_libdir/freeradius/rlm_sql_freetds.so
@@ -654,7 +656,7 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/mysql/*.conf
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/mysql/extras/wimax/*
 %_sysconfdir/raddb/mods-config/sql/main/ndb/README
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/ndb/*
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/main/ndb/*.sql
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/sql/moonshot-targeted-ids/mysql/*
 
 %files postgresql
@@ -706,6 +708,9 @@ fi
 #%_libdir/freeradius/rlm_sql_unixodbc-%version.so
 
 %changelog
+* Fri Jan 26 2024 Alexey Shabalin <shaba@altlinux.org> 3.2.3-alt1
+- 3.2.3
+
 * Mon May 08 2023 Grigory Ustinov <grenka@altlinux.org> 3.2.2-alt2
 - ExcludeArch: armh.
 
