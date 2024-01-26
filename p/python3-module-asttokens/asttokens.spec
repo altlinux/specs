@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.2.1
+Version: 2.4.1
 Release: alt1
 Summary: Annotate AST trees with source code positions
 Group: Development/Python3
@@ -54,6 +54,9 @@ refactoring or highlighting.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Jan 20 2024 Anton Zhukharev <ancieg@altlinux.org> 2.4.1-alt1
+- Updated to 2.4.1.
+
 * Wed Apr 26 2023 Stanislav Levin <slev@altlinux.org> 2.2.1-alt1
 - 2.0.5 -> 2.2.1.
 
