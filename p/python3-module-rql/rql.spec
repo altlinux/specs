@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.43.0
+Version: 1.0.1
 Release: alt1
 
 Summary: Relationship query language (RQL) utilities
@@ -50,6 +50,9 @@ parser, a type inferencer.
 
 
 %changelog
+* Fri Jan 26 2024 Anton Vyatkin <toni@altlinux.org> 1.0.1-alt1
+- new version 1.0.1
+
 * Thu Jan 04 2024 Anton Vyatkin <toni@altlinux.org> 0.43.0-alt1
 - new version 0.43.0
 
