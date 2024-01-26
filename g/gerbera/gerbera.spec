@@ -1,7 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
+%if %{expand:%%{!?_without_check:%%{!?_disable_check:1}}0}
+%define tests YES
+%else
+%define tests NO
+%endif
+
 Name: gerbera
-Version: 1.12.1
+Version: 2.0.0
 Release: alt1
 
 Summary: UPnP Media Server
@@ -13,8 +19,8 @@ Patch: %name-%version-%release.patch
 
 Requires: %name-data = %EVR
 
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake >= 3.18
+BuildRequires(pre): rpm-macros-cmake rpm-macros-ninja-build
+BuildRequires: cmake >= 3.18 ninja-build
 BuildRequires: gcc-c++
 BuildRequires: libupnp-devel >= 1.14.12
 BuildRequires: libfmt-devel >= 7.1.3
@@ -26,6 +32,7 @@ BuildRequires: libduktape-devel >= 2.5.0
 BuildRequires: libcurl-devel
 BuildRequires: libtag-devel >= 1.12
 BuildRequires: libmagic-devel
+BuildRequires: libwavpack-devel >= 5.1.0
 BuildRequires: libpugixml-devel >= 1.10
 BuildRequires: libexif-devel
 BuildRequires: libexiv2-devel >= 0.26
@@ -37,6 +44,9 @@ BuildRequires: zlib-devel
 BuildRequires: libebml-devel >= 1.4.2 libmatroska-devel >= 1.6.3
 BuildRequires: libsystemd-devel
 BuildRequires: libmysqlclient-devel
+
+# for check
+%{?!_without_check:%{?!_disable_check:BuildRequires: ctest libgtest-devel}}
 
 %description
 Gerbera is a UPnP media server which allows you to stream your digital
@@ -58,12 +68,15 @@ Data files for the Gerbera media server.
 %build
 %cmake \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -GNinja \
+    -DWITH_TESTS=%tests \
     -DWITH_JS=YES \
     -DWITH_MYSQL=YES \
     -DWITH_CURL=YES \
     -DWITH_TAGLIB=YES \
     -DWITH_MAGIC=YES \
     -DWITH_AVCODEC=YES \
+    -DWITH_WAVPACK=YES \
     -DWITH_EXIF=YES \
     -DWITH_EXIV2=YES \
     -DWITH_FFMPEGTHUMBNAILER=YES \
@@ -72,11 +85,11 @@ Data files for the Gerbera media server.
     -DWITH_MYSQL=YES \
     -DUPNP_HAS_REUSEADDR=YES
 
-%cmake_build
+%ninja_build -C "%_cmake__builddir"
 
 %install
 mkdir -p %buildroot{%_sysconfdir,%_localstatedir,%_logdir}/%name
-%cmakeinstall_std
+%ninja_install -C "%_cmake__builddir"
 
 %buildroot%_bindir/%name --create-config --home %_localstatedir/%name > %buildroot%_sysconfdir/%name/config.xml
 
@@ -92,6 +105,9 @@ cat > %buildroot%_logrotatedir/%name << 'EOF'
 EOF
 
 touch %buildroot%_localstatedir/%name/{%name.db,%name.html}
+
+%check
+%ctest
 
 %pre
 groupadd -r -f %name >/dev/null 2>&1 ||:
@@ -123,6 +139,9 @@ useradd -r -n -g %name -d %_localstatedir/%name -s /dev/null \
 %_datadir/%name
 
 %changelog
+* Fri Jan 26 2024 Alexey Shabalin <shaba@altlinux.org> 2.0.0-alt1
+- New version 2.0.0.
+
 * Sat Oct 14 2023 Nazarov Denis <nenderus@altlinux.org> 1.12.1-alt1
 - New version 1.12.1.
 
