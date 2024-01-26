@@ -1,6 +1,6 @@
 %define optflags_lto %nil
 Name:     denise
-Version:  2.1
+Version:  2.2.1
 Release:  alt1
 
 Summary:  Highly accurate C64/Amiga emulator
@@ -11,7 +11,6 @@ Url:      https://sourceforge.net/projects/deniseemu/
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source:   %name-%version.tar
-Source2:  LICENSE
 BuildRequires: gcc-c++ libSDL2-devel libgtk+3-devel libpulseaudio-devel libopenal-devel libXrandr-devel libXfixes-devel bzlib-devel libpcre2-devel libbrotli-devel libudev-devel libfreetype-devel libpcre-devel
 
 
@@ -37,8 +36,7 @@ Denise consists of 4 main modules.
 
 %install
 %makeinstall
-install -D -m 0644 data/txt/licence.md %buildroot%_datadir
-install -D -m 0644 %SOURCE2 %buildroot%_datadir
+install -D -m 0644 data/txt/licence.md %buildroot%_datadir/%name/
 
 %files
 %_bindir/%name
@@ -46,8 +44,11 @@ install -D -m 0644 %SOURCE2 %buildroot%_datadir
 %_desktopdir/%name.desktop
 %_iconsdir/%name.png
 
-
 %changelog
+* Fri Jan 26 2024 Artyom Bystrov <arbars@altlinux.org> 2.2.1-alt1
+- Update to new version
+- getting back russian translation
+
 * Sat Sep 30 2023 Artyom Bystrov <arbars@altlinux.org> 2.1-alt1
 - Update to new version
 
