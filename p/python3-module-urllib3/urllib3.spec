@@ -12,7 +12,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.1.0
-Release: alt1
+Release: alt2
 Epoch: 2
 Summary: HTTP library with thread-safe connection pooling, file post, and more
 License: MIT
@@ -66,6 +66,9 @@ export CI=yes
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 2:2.1.0-alt2
+- Fixed FTBFS.
+
 * Tue Nov 14 2023 Stanislav Levin <slev@altlinux.org> 2:2.1.0-alt1
 - 2.0.7 -> 2.1.0.
 
