@@ -7,11 +7,11 @@
 %global servicename     docker
 
 %global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
-%global commit      615dfdf67264ed5b08dd5e86657bf0e580731cea
+%global commit      71fa3ab079ec13d17257f86fa92db8d7f24802f1
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:    docker-engine
-Version: 25.0.0
+Version: 25.0.1
 Release: alt1
 Summary: The open-source application container engine
 License: Apache-2.0
@@ -149,6 +149,9 @@ exit 0
 %_udevrulesdir/80-docker.rules
 
 %changelog
+* Fri Jan 26 2024 Vladimir Didenko <cow@altlinux.org> 25.0.1-alt1
+- 25.0.1
+
 * Tue Jan 23 2024 Vladimir Didenko <cow@altlinux.org> 25.0.0-alt1
 - 25.0.0
 - drop loongarch64 support patch (already supported by upstream)
