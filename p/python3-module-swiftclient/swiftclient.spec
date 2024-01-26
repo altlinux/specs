@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.3.0
-Release: alt1.1
+Version: 4.4.0
+Release: alt1
 
 Summary: OpenStack Object Storage API Client Library
 
@@ -14,6 +14,8 @@ Url: https://pypi.org/project/python-swiftclient
 
 Source: %oname-%version.tar
 Source1: %oname.watch
+
+Patch: swiftclient-fix-call-assertion.patch
 
 BuildArch: noarch
 
@@ -60,6 +62,8 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
+
+%patch -p1
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -108,6 +112,9 @@ install -pDm 644 tools/swift.bash_completion \
 %endif
 
 %changelog
+* Fri Jan 26 2024 Grigory Ustinov <grenka@altlinux.org> 4.4.0-alt1
+- Automatically updated to 4.4.0.
+
 * Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 4.3.0-alt1.1
 - Dropped build dependency on python3-module-reno.
 
