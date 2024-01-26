@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.5.5
-Release: alt2
+Release: alt3
 
 Summary: Interface Python with pkg-config
 License: MIT
@@ -27,6 +27,7 @@ BuildRequires: /usr/bin/pkg-config
 BuildRequires: libssl-devel
 
 BuildRequires: python3(pytest)
+BuildRequires: python3(setuptools)
 %endif
 
 %description
@@ -51,6 +52,9 @@ for Python.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jan 26 2024 Grigory Ustinov <grenka@altlinux.org> 1.5.5-alt3
+- Fixed FTBFS.
+
 * Wed Sep 14 2022 Stanislav Levin <slev@altlinux.org> 1.5.5-alt2
 - Modernized packaging (fixes FTBFS due to poetry-core 1.1.0).
 
