@@ -1,7 +1,7 @@
 %define  modulename httpcore
 
 Name:    python3-module-%modulename
-Version: 0.17.0
+Version: 1.0.2
 Release: alt1
 
 Summary: A minimal HTTP client
@@ -13,8 +13,9 @@ URL:     https://www.encode.io/httpcore/
 # Source-url: https://github.com/encode/httpcore/archive/%version.tar.gz
 Source:  %modulename-%version.tar
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires(pre): rpm-build-pyproject
+BuildRequires: python3(hatchling)
+BuildRequires: python3(hatch-fancy-pypi-readme)
 
 BuildArch: noarch
 
@@ -39,25 +40,25 @@ Some things HTTP Core does do:
 
 %prep
 %setup -n %modulename-%version
-sed -ri 's/,\s+"anyio==[^"]+"//' setup.py
-sed -ri '/h11/ s/,<[^,"]+//p' setup.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # asyncio alternatives, optional
-%add_python3_req_skip anyio.abc
-%add_python3_req_skip anyio.streams.tls
-%add_python3_req_skip curio.io
+%add_python3_req_skip anyio sockio trio
+%add_python3_req_skip h2.config h2.connection h2.events h2.exceptions h2.settings
 
 %files
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info/
+%python3_sitelibdir/%modulename
+%python3_sitelibdir/*.dist-info
 
 %changelog
+* Fri Jan 26 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.2-alt1
+- 1.0.2
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 0.17.0-alt1
 - new version 0.17.0 (with rpmrb script)
 
