@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 1.17.10
-Release: alt1
+Release: alt2
 
 Summary: A simple code complexity analyser without caring about the C/C++ header files or Java imports, supports most of the popular languages
 License: MIT
@@ -34,6 +34,9 @@ duplicate detection) and many other forms of static code analysis.
 %prep
 %setup -n %pypi_name-%version
 
+# hotfix for python3.12
+find . -name "*.py" | xargs sed -i 's/assertRegexpMatches/assertRegex/g'
+
 %build
 %pyproject_build
 
@@ -50,8 +53,11 @@ duplicate detection) and many other forms of static code analysis.
 %python3_sitelibdir/lizard_ext/
 %python3_sitelibdir/lizard_languages/
 %python3_sitelibdir/lizard-1.17.9.dist-info/
-%python3_sitelibdir/__pycache__/%pypi_name.cpython-311.*
+%python3_sitelibdir/__pycache__/%pypi_name.cpython-31?.*
 
 %changelog
+* Fri Jan 26 2024 Grigory Ustinov <grenka@altlinux.org> 1.17.10-alt2
+- NMU: fixed FTBFS.
+
 * Mon Nov 13 2023 Alexander Burmatov <thatman@altlinux.org> 1.17.10-alt1
 - Initial build for Sisyphus.
