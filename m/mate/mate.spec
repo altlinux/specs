@@ -1,6 +1,6 @@
 Name: mate
 Version: 1.26.0
-Release: alt1
+Release: alt2
 
 Summary: MATE Desktop installers
 License: %gpl2plus
@@ -30,7 +30,7 @@ Summary: MATE Desktop installer for optimal user's requirements
 Group: Graphical desktop/MATE
 
 Requires: mate-minimal
-Requires: mate-calc mate-dictionary mate-disk-usage-analyzer
+Requires: mate-calc mate-disk-usage-analyzer
 Requires: mate-document-viewer mate-document-viewer-caja mate-document-viewer-thumbnailer
 Requires: mate-file-manager-extensions mate-file-manager-archiver
 Requires: mate-image-viewer mate-menu-editor mate-screenshot mate-search-tool mate-sensors-applet
@@ -58,6 +58,9 @@ This virtual package installs full MATE Desktop.
 %files maxi
 
 %changelog
+* Fri Jan 26 2024 Valery Inozemtsev <shrek@altlinux.ru> 1.26.0-alt2
+- removed mate-dictionary
+
 * Tue Feb 22 2022 Valery Inozemtsev <shrek@altlinux.ru> 1.26.0-alt1
 - updated to mate 1.26
 

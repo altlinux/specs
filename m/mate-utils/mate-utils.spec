@@ -2,7 +2,7 @@
 
 Name: mate-utils
 Version: 1.26.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: MATE utility programs
 License: GPLv3+
@@ -10,7 +10,7 @@ Group: Graphical desktop/MATE
 Url: http://mate-desktop.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Requires: mate-dictionary = %epoch:%version-%release
+#Requires: mate-dictionary = %epoch:%version-%release
 Requires: mate-screenshot = %epoch:%version-%release
 Requires: mate-search-tool = %epoch:%version-%release
 Requires: mate-system-log = %epoch:%version-%release
@@ -18,7 +18,7 @@ Requires: mate-disk-usage-analyzer = %epoch:%version-%release
 Obsoletes: mate-utils-libs
 
 Source: %name-%version.tar
-SOurce1: libegg.tar
+Source1: libegg.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: mate-common gcc-c++ gtk-doc inkscape libSM-devel libcanberra-gtk3-devel libgtop-devel
@@ -106,7 +106,7 @@ rm -fr gsearchtool/help/pt
 %configure \
 	--disable-static \
 	--disable-schemas-compile \
-	--enable-gdict-applet \
+	--disable-gdict-applet \
 	--enable-gtk-doc \
 	--enable-gtk-doc-html \
 	--enable-ipv6
@@ -118,7 +118,7 @@ rm -fr gsearchtool/help/pt
 
 %find_lang %name --with-gnome
 %find_lang mate-disk-usage-analyzer --with-gnome
-%find_lang mate-dictionary --with-gnome
+#%find_lang mate-dictionary --with-gnome
 %find_lang mate-search-tool --with-gnome
 %find_lang mate-system-log --with-gnome
 
@@ -127,11 +127,11 @@ rm -fr gsearchtool/help/pt
 %files common -f %name.lang
 %doc COPYING COPYING.libs NEWS README.md
 
-%files devel
-%_includedir/mate-dict
-%_libdir/libmatedict.so
-%_pkgconfigdir/mate-dict.pc
-%_datadir/gtk-doc/html/mate-dict
+#%files devel
+#%_includedir/mate-dict
+#%_libdir/libmatedict.so
+#%_pkgconfigdir/mate-dict.pc
+#%_datadir/gtk-doc/html/mate-dict
 
 %files -n mate-system-log -f mate-system-log.lang
 %_bindir/mate-system-log
@@ -149,19 +149,19 @@ rm -fr gsearchtool/help/pt
 %_man1dir/mate-screenshot.1*
 %_man1dir/mate-panel-screenshot.1*
 
-%files -n mate-dictionary -f mate-dictionary.lang
-%doc mate-dictionary/AUTHORS mate-dictionary/README.md
-%_bindir/mate-dictionary
-%_datadir/metainfo/mate-dictionary.appdata.xml
-%_desktopdir/mate-dictionary.desktop
-%_datadir/mate-dict
-%_datadir/mate-dictionary
-%_libexecdir/mate-dictionary-applet
-%_libdir/libmatedict.so.*
-%_datadir/glib-2.0/schemas/org.mate.dictionary.gschema.xml
-%_datadir/mate-panel/applets/org.mate.DictionaryApplet.mate-panel-applet
-%_datadir/dbus-1/services/org.mate.panel.applet.DictionaryAppletFactory.service
-%_man1dir/mate-dictionary.1*
+#%files -n mate-dictionary -f mate-dictionary.lang
+#%doc mate-dictionary/AUTHORS mate-dictionary/README.md
+#%_bindir/mate-dictionary
+#%_datadir/metainfo/mate-dictionary.appdata.xml
+#%_desktopdir/mate-dictionary.desktop
+#%_datadir/mate-dict
+#%_datadir/mate-dictionary
+#%_libexecdir/mate-dictionary-applet
+#%_libdir/libmatedict.so.*
+#%_datadir/glib-2.0/schemas/org.mate.dictionary.gschema.xml
+#%_datadir/mate-panel/applets/org.mate.DictionaryApplet.mate-panel-applet
+#%_datadir/dbus-1/services/org.mate.panel.applet.DictionaryAppletFactory.service
+#%_man1dir/mate-dictionary.1*
 
 %files -n mate-search-tool -f mate-search-tool.lang
 %_bindir/mate-search-tool
@@ -185,6 +185,9 @@ rm -fr gsearchtool/help/pt
 %_desktopdir/mate-disk-image-mounter.desktop
 
 %changelog
+* Fri Jan 26 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt2
+- disabled mate-dictionary
+
 * Thu May 11 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt1
 - 1.26.1
 
