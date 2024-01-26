@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 Name: timg
-Version: 1.5.3
+Version: 1.6.0
 Release: alt1
 
 Summary: terminal image viewer
@@ -29,6 +29,8 @@ BuildRequires: pkgconfig(libavcodec)
 BuildRequires: pkgconfig(libavdevice)
 BuildRequires: pkgconfig(libavfilter)
 BuildRequires: pkgconfig(GraphicsMagick++)
+BuildRequires: pkgconfig(poppler-glib)
+BuildRequires: pkgconfig(librsvg-2.0)
 
 %description
 A user-friendly terminal image viewer that uses graphic capabilities of
@@ -56,6 +58,9 @@ character blocks if these are not available.
 %doc README*
 
 %changelog
+* Fri Jan 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Wed Nov 29 2023 Yuri N. Sedunov <aris@altlinux.org> 1.5.3-alt1
 - 1.5.3
 
