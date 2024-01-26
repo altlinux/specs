@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 8.0.0
-Release: alt1.1
+Release: alt2
 
 Summary: OpenStack Library for managing machines with Dell iDRAC cards
 
@@ -59,6 +59,9 @@ This package contains documentation for %oname.
 %prep
 %setup -n %oname-%version
 
+# hotfix for python3.12
+find . -name '*.py' | xargs sed -i 's/assertRaisesRegexp/assertRaisesRegex/g'
+
 # Remove bundled egg-info
 rm -rfv *.egg-info
 
@@ -108,6 +111,9 @@ EOF
 %endif
 
 %changelog
+* Fri Jan 26 2024 Grigory Ustinov <grenka@altlinux.org> 8.0.0-alt2
+- Fixed FTBFS.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 8.0.0-alt1.1
 - Moved on modern pyproject macros.
 
