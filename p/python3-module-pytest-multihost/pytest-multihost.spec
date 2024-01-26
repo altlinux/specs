@@ -1,57 +1,58 @@
 %define _unpackaged_files_terminate_build 1
-%define oname pytest-multihost
+%define pypi_name pytest-multihost
+%define mod_name pytest_multihost
 
 %def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 3.4
-Release: alt1
-
+Release: alt2
 Summary: Utility for writing multi-host tests for pytest
 License: GPLv3
 Group: Development/Python3
-# Source-git: https://github.com/encukou/pytest-multihost.git
 Url: https://pypi.python.org/pypi/pytest-multihost
-
-Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-
-%if_with check
-BuildRequires: python3(paramiko)
-BuildRequires: python3(tox)
-%endif
-
-%set_python3_req_method strict
-%py3_provides pytest-multihost
-
+Vcs: https://pagure.io/python-pytest-multihost
 BuildArch: noarch
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+%py3_provides %pypi_name
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 A pytest plugin for multi-host testing.
 
 %prep
 %setup
-# skip tests which require SSH connection
-sed -i '/commands = python -m pytest/s/$/ -m "not needs_ssh"/g' tox.ini
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -v
+%pyproject_run_pytest -vra test_pytestmultihost/ -m 'not needs_ssh'
 
 %files
-%doc README.rst COPYING
-%python3_sitelibdir/pytest_multihost/
-%python3_sitelibdir/pytest_multihost-*.egg-info/
+%doc README.rst
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jan 26 2024 Stanislav Levin <slev@altlinux.org> 3.4-alt2
+- Fixed FTBFS (Python 3.12).
+
 * Mon Mar 29 2021 Stanislav Levin <slev@altlinux.org> 3.4-alt1
 - 3.0 -> 3.4.
 
