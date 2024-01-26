@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.0.0
-Release: alt1
+Release: alt2
 Summary: An extended commonmark compliant parser, with bridges to docutils/sphinx
 License: MIT
 Group: Development/Python3
@@ -18,6 +18,9 @@ BuildArch: noarch
 
 Source: %pypi_name-%version.tar
 Source1: %pyproject_deps_config_name
+
+# Fix tests broken by recent sphinx releases, up to sphinx v7.2.6
+Patch: 4f670fc04c438b57a9d4014be74e9a62cc0deba4.patch
 
 BuildRequires(pre): rpm-build-pyproject
 
@@ -62,6 +65,7 @@ See the MyST Parser documentation for more information.
 
 %prep
 %setup -n %pypi_name-%version
+%patch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -77,7 +81,7 @@ See the MyST Parser documentation for more information.
 %pyproject_run_pytest -ra tests --ignore tests/test_sphinx
 
 %files
-%doc README.md                                                                                                                                                              
+%doc README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
@@ -85,6 +89,9 @@ See the MyST Parser documentation for more information.
 %_bindir/myst-*
 
 %changelog
+* Fri Jan 26 2024 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt2
+- NMU: fixed FTBFS.
+
 * Sun Jul 09 2023 Andrey Limachko <liannnix@altlinux.org> 2.0.0-alt1
 - 2.0.0
 
