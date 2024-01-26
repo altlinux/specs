@@ -1,20 +1,33 @@
 %define modname cairosvg
 %define eggname CairoSVG
 
+%def_with check
+
 Name:               python3-module-cairosvg
-Version:            1.0.20
-Release:            alt2
+Version:            2.7.1
+Release:            alt1
 Summary:            A Simple SVG Converter for Cairo
 
 Group:              Development/Python3
 License:            LGPLv3+
-URL:                http://cairosvg.org/
-# VCS:		    git://github.com/Kozea/CairoSVG.git
-Source0:            http://pypi.python.org/packages/source/C/%{eggname}/%{eggname}-%{version}.tar.gz
+URL:                https://pypi.org/project/CairoSVG/
+VCS:		    https://github.com/Kozea/CairoSVG.git
+Source0:            %name-%version.tar
 
 BuildArch:          noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires:      python3-module-setuptools
+BuildRequires: 	    python3-module-wheel
+%if_with check
+BuildRequires: 	    python3-module-pytest
+BuildRequires:      python3-module-cairocffi
+BuildRequires:      libcairo
+BuildRequires:      python3-module-cssselect2
+BuildRequires:      python3-module-Pillow
+BuildRequires:      python3-module-tinycss2
+BuildRequires:      python3-module-defusedxml
+%endif
 Requires:           python3-module-pycairo
 
 Conflicts: python-module-cairosvg
@@ -28,21 +41,31 @@ For further information, please visit the CairoSVG Website
 http://www.cairosvg.org
 
 %prep
-%setup -n %{eggname}-%{version}
+%setup
 
 %build
-python3 setup.py build
+%pyproject_build
 
 %install
-python3 setup.py install --skip-build --root=%buildroot
+%pyproject_install
+
+# remove tests
+rm -rf %buildroot%python3_sitelibdir/%modname/test_api.py
+rm -rf %buildroot%python3_sitelibdir/%modname/__pycache__/test_api.*
+
+%check
+%pyproject_run_pytest -v --ignore test_non_regression
 
 %files
-%doc README.rst COPYING NEWS.rst TODO.rst
+%doc README.rst NEWS.rst
 %_bindir/cairosvg
 %python3_sitelibdir/%modname/
-%python3_sitelibdir/%{eggname}-%{version}-*
+%python3_sitelibdir/%eggname-%version.dist-info
 
 %changelog
+* Fri Jan 26 2024 Anton Vyatkin <toni@altlinux.org> 2.7.1-alt1
+- New version 2.7.1.
+
 * Mon Aug 02 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.20-alt2
 - Drop python2 support.
 
