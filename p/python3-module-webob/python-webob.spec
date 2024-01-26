@@ -5,7 +5,7 @@
 
 Name: python3-module-webob
 Version: 1.8.7
-Release: alt1
+Release: alt2
 
 Summary: WSGI request and response object
 License: MIT
@@ -18,11 +18,10 @@ Patch: webob-1.8.7-s-isAlive-is_alive.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 %description
@@ -36,28 +35,23 @@ environment.
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    {envbindir}/pytest -vra {posargs:tests}
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr --develop
+%pyproject_run_pytest -v
 
 %files
 %doc README.rst
 %python3_sitelibdir_noarch/webob/
-%python3_sitelibdir_noarch/WebOb-%version-py%_python3_version.egg-info/
+%python3_sitelibdir_noarch/WebOb-%version.dist-info
 
 %changelog
+* Fri Jan 26 2024 Anton Vyatkin <toni@altlinux.org> 1.8.7-alt2
+- Fixed FTBFS.
+
 * Tue Mar 29 2022 Stanislav Levin <slev@altlinux.org> 1.8.7-alt1
 - 1.8.6 -> 1.8.7.
 

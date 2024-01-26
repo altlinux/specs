@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.0.35
+Version: 3.0.0
 Release: alt1
 Summary: Helper to test WSGI applications
 License: MIT
@@ -17,15 +17,13 @@ Patch0: %name-%version-alt.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3(bs4)
 BuildRequires: python3(mock)
 BuildRequires: python3(PasteDeploy)
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
 BuildRequires: python3(waitress)
 BuildRequires: python3(webob)
 BuildRequires: python3(wsgiproxy)
@@ -44,22 +42,27 @@ This is based on ``paste.fixture.TestApp``.
 %setup
 %autopatch -p1
 
+sed -e 's/assertEquals/assertEqual/' \
+    -e 's/assertRaisesRegexp/assertRaisesRegex/' \
+    -i tests/*.py
+
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts --no-deps -vvr
+%pyproject_run_pytest -v
 
 %files
 %python3_sitelibdir/webtest/
-%python3_sitelibdir/WebTest-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/WebTest-%version.dist-info
 
 %changelog
+* Fri Jan 26 2024 Anton Vyatkin <toni@altlinux.org> 3.0.0-alt1
+- New version 3.0.0.
+
 * Wed Apr 14 2021 Stanislav Levin <slev@altlinux.org> 2.0.35-alt1
 - 2.0.19 -> 2.0.35.
 
