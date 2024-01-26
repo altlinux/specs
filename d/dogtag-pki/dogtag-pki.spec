@@ -21,7 +21,7 @@
 
 Name: dogtag-pki
 Version: 11.4.3
-Release: alt1
+Release: alt2
 
 Summary: Dogtag PKI Certificate System
 License: %gpl2only
@@ -62,6 +62,7 @@ BuildRequires: slf4j-jdk14
 BuildRequires: junit
 
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 # build dependency to build man pages
 BuildRequires: go-md2man
@@ -78,9 +79,6 @@ BuildRequires: python3-module-ldap
 BuildRequires: python3-module-lxml
 BuildRequires: python3-module-pyflakes
 BuildRequires: python3-module-selinux
-BuildRequires: python3-module-tox
-BuildRequires: python3(tox_console_scripts)
-BuildRequires: python3(tox_no_deps)
 %if_with pylint
 BuildRequires: python3-module-pylint
 %endif
@@ -465,13 +463,12 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %endif
 
 %check
-export PIP_NO_INDEX=YES
 export TOXENV=pep8py3,py%{python_version_nodots python3}
 %if_with pylint
 export TOXENV=$TOXENV,lint3
 %endif
 ln -sr ./tests/tox.ini ./
-tox.py3 --sitepackages -p auto -o -vvr --no-deps --console-scripts -s false
+%tox_check
 %cmake_build -t test
 
 %pre -n dogtag-pki-server
@@ -753,6 +750,9 @@ fi
 %_datadir/pki/server/webapps/pki/WEB-INF/
 
 %changelog
+* Wed Jan 24 2024 Stanislav Levin <slev@altlinux.org> 11.4.3-alt2
+- Fixed FTBFS (Python 3.12).
+
 * Tue Aug 01 2023 Stanislav Levin <slev@altlinux.org> 11.4.3-alt1
 - 11.2.1 -> 11.4.3.
 
