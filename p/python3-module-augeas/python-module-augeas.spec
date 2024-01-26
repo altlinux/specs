@@ -3,20 +3,18 @@
 %define oname augeas
 
 Name:       python3-module-%oname
-Version:    1.0.3
-Release:    alt3
+Version:    1.2.0
+Release:    alt1
 
 Summary:    Python bindings to augeas
 License:    LGPLv2+
 Group:      Development/Python3
 Url:        http://augeas.net/
 
-BuildArch:  noarch
-
 Source0:    %oname-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: libaugeas python3-module-cffi
+BuildRequires: libaugeas-devel python3-module-cffi
 
 Requires: libaugeas
 
@@ -27,8 +25,6 @@ python-augeas is a set of Python bindings around augeas.
 %prep
 %setup -n augeas-%version
 
-sed -i 's|python|python3|' ./test/Makefile
-
 %build
 %python3_build
 
@@ -36,14 +32,17 @@ sed -i 's|python|python3|' ./test/Makefile
 %python3_install
 
 %check
-%make check
+export PYTHONPATH=%buildroot%python3_sitelibdir
+python3 test/test_augeas.py
 
 %files
-%doc COPYING AUTHORS README.txt
+%doc COPYING AUTHORS README.md
 %python3_sitelibdir/*
 
-
 %changelog
+* Fri Jan 26 2024 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt1
+- Build new version.
+
 * Thu Feb 06 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.3-alt3
 - Build for python2 disabled.
 
