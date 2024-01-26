@@ -2,7 +2,7 @@
 
 Name: alterator-manager
 Version: 0.1.16
-Release: alt4
+Release: alt5
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -69,6 +69,9 @@ mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
 
 
 %changelog
+* Fri Jan 26 2024 Ivan Savin <svn17@altlinux.org> 0.1.16-alt5
+- Add check in filetrigger that the system is loaded using systemd (chernigin@).
+
 * Thu Jan 25 2024 Ivan Savin <svn17@altlinux.org> 0.1.16-alt4
 - Remove unnecessary debug output.
 
