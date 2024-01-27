@@ -13,8 +13,8 @@
 %define winetricks_version 20230505
 
 # https://dl.winehq.org/wine/source/
-%define basemajor 9.0
-%define major 9.0
+%define basemajor 9.x
+%define major 9.1
 %define rel %nil
 
 # the packages will conflict with that
@@ -79,7 +79,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 
 Name: wine-vanilla
 Version: %major
-Release: alt2
+Release: alt1
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -851,6 +851,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Sat Jan 27 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.1-alt1
+- new version 9.1 (with rpmrb script)
+
 * Wed Jan 17 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0-alt2
 - new version 9.0
 
