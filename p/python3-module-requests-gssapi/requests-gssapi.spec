@@ -5,7 +5,7 @@
 
 Name: python3-module-%mname
 Version: 1.2.3
-Release: alt1
+Release: alt1.1
 
 Summary: A GSSAPI/SPNEGO authentication handler for python-requests
 License: ISC
@@ -17,6 +17,8 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(gssapi)
@@ -45,26 +47,24 @@ guaranteed to be compatible.
 %patch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-commands = {envpython} -m pytest {posargs:.}
-EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc AUTHORS LICENSE *.rst
 %python3_sitelibdir/requests_gssapi/
-%python3_sitelibdir/requests_gssapi-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/requests_gssapi-%version.dist-info/
 
 %changelog
+* Sat Jan 27 2024 Grigory Ustinov <grenka@altlinux.org> 1.2.3-alt1.1
+- NMU: moved on modern pyproject macros.
+
 * Mon Nov 01 2021 Stanislav Levin <slev@altlinux.org> 1.2.3-alt1
 - 1.2.1 -> 1.2.3.
 
