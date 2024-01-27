@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libnl3
-Version: 3.7.0
+Version: 3.9.0
 Release: alt1
 
 Summary: library for applications dealing with netlink sockets
@@ -80,6 +80,9 @@ vm-run make check
 %exclude %_libdir/libnl/cli/qdisc/*.la
 
 %changelog
+* Sat Jan 27 2024 Anton Farygin <rider@altlinux.ru> 3.9.0-alt1
+- 3.9.0
+
 * Thu Oct 06 2022 Anton Farygin <rider@altlinux.ru> 3.7.0-alt1
 - 3.7.0
 
