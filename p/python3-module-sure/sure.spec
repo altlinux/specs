@@ -6,7 +6,7 @@
 Name: python3-module-%modname
 
 Version: 2.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: An idiomatic testing library for python with powerful and flexible assertions.
 
@@ -20,6 +20,8 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 # install_requires=
@@ -44,30 +46,25 @@ should.js.
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-usedevelop=True
-commands =
-    pytest {posargs:-vra}
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %_bindir/%modname
 %doc README.rst COPYING
 %python3_sitelibdir/%modname
-%python3_sitelibdir/%modname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%modname-%version.dist-info/
 
 %changelog
+* Sat Jan 27 2024 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1.1
+- NMU: moved on modern pyproject macros.
+
 * Sat Mar 05 2022 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1
 - 1.4.11 -> 2.0.0.
 
