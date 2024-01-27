@@ -2,7 +2,7 @@
 %define soname 9
 
 Name: nghttp3
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 Summary: nghttp3 is an implementation of RFC 9114 HTTP/3 mapping over QUIC and RFC 9204 QPACK in C
 
@@ -63,6 +63,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_libdir/*.so
 
 %changelog
+* Sat Jan 27 2024 Anton Farygin <rider@altlinux.ru> 1.1.0-alt1
+- 1.0.0 -> 1.1.0
+
 * Tue Oct 24 2023 Anton Farygin <rider@altlinux.ru> 1.0.0-alt1
 - 0.12.0 -> 1.0.0
 
