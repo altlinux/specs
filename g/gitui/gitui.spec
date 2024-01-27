@@ -1,0 +1,70 @@
+# SPDX-License-Identifier: GPL-2.0-only
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict,lint=relaxed,lfs=relaxed
+
+Name: gitui
+Version: 0.24.3
+Release: alt1
+Summary: Blazing fast terminal-ui for git written in rust
+License: MIT
+Group: Development/Other
+Url: https://github.com/extrawurst/gitui
+
+Source: %name-%version.tar
+BuildRequires: /proc
+BuildRequires: rust-cargo
+BuildRequires: openssl-devel
+
+%description
+%summary.
+
+%prep
+%setup
+mkdir -p .cargo
+# Overwriting due to 'linker' settings.
+cat > .cargo/config <<EOF
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"
+
+[term]
+verbose = true
+quiet = false
+
+[build]
+rustflags = ["-Copt-level=3", "-Cdebuginfo=1", "--cfg=rustix_use_libc"]
+
+[profile.release]
+strip = false
+
+# Incorrect linker specs causing failure on aarch64/armh:
+#   error: linker 'aarch64-linux-gnu-gcc' not found
+[target.'cfg(all())']
+linker = "gcc"
+EOF
+# Use openssl-devel.
+sed -i '/^default =/s/"vendor-openssl"//' Cargo.toml
+
+%build
+cargo build %_smp_mflags --offline --release
+cargo tree --no-dedupe --target all --prefix none --format '{l}' | sort -u > LICENSE.dependencies
+
+%install
+install -Dp target/release/%name -t %buildroot%_bindir
+
+%check
+%buildroot%_bindir/gitui --version | grep -Fx '%name %version'
+# This recompiles.
+cargo test  %_smp_mflags --release
+
+%files
+%define _customdocdir %_docdir/%name
+%doc CHANGELOG.md FAQ.md KEY_CONFIG.md LICENSE* README.md THEMES.md
+%_bindir/gitui
+
+%changelog
+* Sat Jan 27 2024 Vitaly Chikunov <vt@altlinux.org> 0.24.3-alt1
+- First import v0.24.3-63-gc30eb7c (2024-01-26).
