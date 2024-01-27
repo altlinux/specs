@@ -10,7 +10,7 @@
 %def_enable gtk3
 
 Name: lib%_name-gtk
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary: GTK+3 support library for colord daemon
@@ -108,8 +108,7 @@ This package contains development documentation for  %_name-gtk library.
 %find_lang %_name-gtk
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files  -f %_name-gtk.lang
 %_bindir/cd-convert
@@ -145,6 +144,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Sat Jan 27 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
+- 0.3.1
+
 * Mon Mar 07 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
 - 0.3.0
 
