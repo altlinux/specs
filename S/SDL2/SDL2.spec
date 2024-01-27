@@ -7,7 +7,7 @@
 
 Name: SDL2
 Version: 2.28.5
-Release: alt1
+Release: alt1.1
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -22,7 +22,7 @@ Source: %name-%version.tar
 BuildRequires: libXext-devel
 BuildRequires: libdbus-devel
 
-%{?_with_fcitx:BuildRequires: fcitx-devel}
+%{?_with_fcitx:BuildRequires: fcitx5-devel}
 BuildRequires: gcc-c++
 BuildRequires: libGLES-devel
 BuildRequires: libXScrnSaver-devel
@@ -116,6 +116,9 @@ This is the static libraries you can use to develop SDL applications.
 %_libdir/lib%{name}*.a
 
 %changelog
+* Sat Jan 27 2024 Nazarov Denis <nenderus@altlinux.org> 2.28.5-alt1.1
+- Fix FTBFS
+
 * Tue Nov 07 2023 Nazarov Denis <nenderus@altlinux.org> 2.28.5-alt1
 - New version 2.28.5.
 
