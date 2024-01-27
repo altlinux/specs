@@ -1,6 +1,6 @@
 Name: ansible-lint
 Version: 4.3.7
-Release: alt1.1
+Release: alt1.2
 
 Summary: Best practices checker for Ansible
 
@@ -13,7 +13,7 @@ Packager: Evgenii Terechkov <evg@altlinux.org>
 
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools python3-tools
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-tox python3-module-pip python3-module-wheel
 BuildRequires: python3-module-setuptools_scm >= 3.5.0
 BuildRequires: python3-module-yaml
@@ -39,7 +39,6 @@ python3 -m pip wheel --wheel-dir pyproject_wheeldir --no-deps --use-pep517 --no-
 %install
 python3 -m pip install --root %buildroot --no-deps --disable-pip-version-check --progress-bar off --verbose --ignore-installed --no-warn-script-location pyproject_wheeldir/*.whl
 if [ -d %buildroot%_bindir ]; then
-  pathfix.py -pni "%__python3" %buildroot%_bindir/*
   rm -rfv %buildroot%_bindir/__pycache__
 fi
 if [ -d %buildroot%python3_sitelibdir ]; then
@@ -52,10 +51,13 @@ fi
 
 %files
 %doc README.rst examples
-%_bindir/*
+%_bindir/%name
 %python3_sitelibdir/*
 
 %changelog
+* Sat Jan 27 2024 Grigory Ustinov <grenka@altlinux.org> 4.3.7-alt1.2
+- Fixed FTBFS.
+
 * Sat Aug 06 2022 Grigory Ustinov <grenka@altlinux.org> 4.3.7-alt1.1
 - Fixed build requires.
 
