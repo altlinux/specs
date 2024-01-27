@@ -3,7 +3,7 @@
 
 Name: kitty
 Version: 0.32.1
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
 License: GPL-3.0
@@ -17,6 +17,7 @@ Requires: %name-shell-integration = %EVR
 
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
+Patch1: 0001-setup.py-fixed-check-for-control-flow-protection.patch
 
 # 0.27.0: unmet /usr/pkg/bin/tic
 %add_findreq_skiplist %_libexecdir/kitty/shell-integration/ssh/bootstrap-utils.sh
@@ -130,6 +131,7 @@ images (kitten icat), manipulating the clipboard (kitten clipboard), etc.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 # Changing shebangs to python3
 find -type f -name "*.py" -exec sed -e 's|/usr/bin/env python3|%__python3|g'  \
@@ -215,6 +217,9 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %_bindir/kitten
 
 %changelog
+* Sat Jan 27 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.32.1-alt2
+- NMU: fixed FTBFS on LoongArch
+
 * Fri Jan 26 2024 Egor Ignatov <egori@altlinux.org> 0.32.1-alt1
 - new version 0.32.1
 
