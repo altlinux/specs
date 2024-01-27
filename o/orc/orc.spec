@@ -13,7 +13,7 @@
 %endif
 
 Name: orc
-Version: %ver_major.35
+Version: %ver_major.36
 Release: alt1
 
 Summary: The Oil Runtime Compiler
@@ -150,6 +150,9 @@ rm -f %buildroot/%_libdir/lib%name-test-%ver_major.a
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Sat Jan 27 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.36-alt1
+- 0.4.36
+
 * Wed Jan 24 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.35-alt1
 - 0.4.35
 
