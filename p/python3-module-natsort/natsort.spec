@@ -7,7 +7,7 @@
 
 Name: python3-module-%oname
 Version: 8.4.0
-Release: alt1
+Release: alt2
 
 Summary: Sort lists naturally
 License: MIT
@@ -19,6 +19,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(hypothesis)
@@ -65,10 +67,10 @@ This package contains documentation for %oname.
 echo '' > dev/requirements.txt
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with docs
 export PYTHONPATH=$PWD
@@ -81,23 +83,14 @@ cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %check
-sed -i '/\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-setenv =\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' tox.ini
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -rv
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc *.rst
 %_bindir/natsort
 %python3_sitelibdir/natsort/
-%python3_sitelibdir/*.egg-info/
+%python3_sitelibdir/*.dist-info/
 
 %if_with docs
 %exclude %python3_sitelibdir/*/pickle
@@ -111,6 +104,9 @@ tox.py3 --sitepackages -p auto -o -rv
 
 
 %changelog
+* Sun Jan 28 2024 Grigory Ustinov <grenka@altlinux.org> 8.4.0-alt2
+- Moved on modern pyproject macros.
+
 * Mon Jul 17 2023 Grigory Ustinov <grenka@altlinux.org> 8.4.0-alt1
 - Automatically updated to 8.4.0.
 
