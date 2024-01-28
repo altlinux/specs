@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: lib%rname%api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: This library provides a C++ interface to pango
@@ -73,12 +73,11 @@ BuildArch: noarch
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
-%doc AUTHORS NEWS
 %_libdir/*.so.*
+%doc README.* NEWS
 
 %files devel
 %_includedir/%rname-%api_ver
@@ -93,6 +92,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sun Jan 28 2024 Yuri N. Sedunov <aris@altlinux.org> 2.50.2-alt1
+- 2.50.2
+
 * Mon Sep 26 2022 Yuri N. Sedunov <aris@altlinux.org> 2.50.1-alt1
 - 2.50.1
 
