@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.26.2
-Release: alt2
+Release: alt3
 Summary: An unobtrusive argparse wrapper with natural syntax
 License: LGPLv3
 Group: Development/Python3
@@ -18,6 +18,8 @@ Patch0: %name-%version-alt.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(mock)
@@ -35,26 +37,23 @@ http://argh.rtfd.org
 %autopatch -p1
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-commands =
-    {envpython} -m pytest {posargs:-vra}
-EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc AUTHORS CHANGES *.rst
 %python3_sitelibdir/*
 
 %changelog
+* Sun Jan 28 2024 Grigory Ustinov <grenka@altlinux.org> 0.26.2-alt3
+- Moved on modern pyproject macros.
+
 * Mon Nov 29 2021 Stanislav Levin <slev@altlinux.org> 0.26.2-alt2
 - Fixed FTBFS.
 
