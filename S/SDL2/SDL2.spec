@@ -7,7 +7,7 @@
 
 Name: SDL2
 Version: 2.28.5
-Release: alt1.1
+Release: alt1.2
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -88,6 +88,9 @@ This is the static libraries you can use to develop SDL applications.
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
+%ifarch loongarch64
+export LDFLAGS='-mlsx -mlasx'
+%endif
 %configure \
     --enable-video-vulkan \
     --enable-video-wayland \
@@ -116,6 +119,9 @@ This is the static libraries you can use to develop SDL applications.
 %_libdir/lib%{name}*.a
 
 %changelog
+* Sun Jan 28 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.28.5-alt1.2
+- NMU: fixed FTBFS on LoongArch (ensure SIMD are available during LTO).
+
 * Sat Jan 27 2024 Nazarov Denis <nenderus@altlinux.org> 2.28.5-alt1.1
 - Fix FTBFS
 
