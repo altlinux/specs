@@ -1,5 +1,6 @@
 %define git %nil
 %define _libexecdir %_prefix/libexec
+%def_enable midi
 %def_enable obex
 %def_enable btpclient
 # since 5.44 the following tools marked as deprecated:
@@ -13,7 +14,7 @@
 
 Name: bluez
 Version: 5.72
-Release: alt1
+Release: alt2
 
 Summary: Bluetooth utilities
 License: GPL-2.0-or-later
@@ -31,6 +32,7 @@ Conflicts: udev-extras < 169
 
 BuildRequires: glib2-devel libudev-devel libdbus-devel libreadline-devel
 BuildRequires: systemd-devel gtk-doc python3-module-docutils
+%{?_enable_midi:BuildRequires: libalsa-devel}
 %{?_enable_obex:BuildRequires: libical-devel libicu-devel}
 %{?_enable_btpclient:BuildRequires: libell-devel >= 0.39}
 # for check
@@ -97,6 +99,7 @@ export MISC_CFLAGS="%optflags %(getconf LFS_CFLAGS)"
 	--enable-library \
 	--enable-threads \
 	--enable-external-ell \
+	%{subst_enable midi} \
 	%{subst_enable obex} \
 	%{subst_enable btpclient} \
 	--enable-cups \
@@ -202,6 +205,9 @@ fi
 %_datadir/zsh/site-functions/_bluetoothctl
 
 %changelog
+* Sun Jan 28 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.72-alt2
+- enabled MIDI support
+
 * Mon Jan 22 2024 L.A. Kostis <lakostis@altlinux.ru> 5.72-alt1
 - 5.72.
 
