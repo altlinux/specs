@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.4.0
-Release: alt1
+Release: alt2
 
 Summary: A python implementation of mongodb queries
 License: Public domain
@@ -17,6 +17,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 # install_requires=
@@ -37,28 +39,24 @@ by JSON or YAML parsers.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    {envbindir}/pytest -vra {posargs:tests}
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr --develop
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc *.rst
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Sun Jan 28 2024 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt2
+- Moved on modern pyproject macros.
+
 * Tue Mar 29 2022 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
 - 1.3.5 -> 1.4.0.
 
