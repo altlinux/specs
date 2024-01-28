@@ -1,6 +1,6 @@
 Name: elfutils
 Version: 0.189.0.46.27a8
-Release: alt1
+Release: alt2
 
 Summary: A collection of utilities and DSOs to handle ELF files and DWARF data
 License: GPLv3+ and (GPLv2+ or LGPLv3+)
@@ -248,10 +248,12 @@ cd %buildtarget
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
+%if_enabled libdebuginfod
 %if_disabled debuginfod_urls
 # Explicitly remove debuginfod profile.d's as we don't have
 # default value for DEBUGINFOD_URLS anyway.
-rm %buildroot%_sysconfdir/{debuginfod/altlinux.urls,profile.d/debuginfod.*sh}
+rm %buildroot%_sysconfdir/profile.d/debuginfod.*sh
+%endif
 %endif
 
 %check
@@ -363,14 +365,19 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %_man8dir/debuginfod.*
 %endif
 
+%if_enabled libdebuginfod
 %if_enabled debuginfod_urls
 %files -n debuginfod-urls
 %dir %_sysconfdir/debuginfod/
 %config(noreplace) %_sysconfdir/debuginfod/altlinux.urls
 %config(noreplace) %_sysconfdir/profile.d/debuginfod.*sh
 %endif
+%endif
 
 %changelog
+* Sat Jan 27 2024 Vitaly Chikunov <vt@altlinux.org> 0.189.0.46.27a8-alt2
+- spec: Fix build with disabled debuginfod_urls/libdebuginfod.
+
 * Wed Aug 02 2023 Dmitry V. Levin <ldv@altlinux.org> 0.189.0.46.27a8-alt1
 - elfutils-0.189 -> elfutils-0.189-46-g27a84961 (closes: #47125).
 
