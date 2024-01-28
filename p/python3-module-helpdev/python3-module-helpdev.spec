@@ -2,7 +2,7 @@
 
 Name: python3-module-helpdev
 Version: 0.7.1
-Release: alt1
+Release: alt1.1
 
 License: MIT
 Group: Development/Python
@@ -19,6 +19,8 @@ Patch0: %name-%version-%release.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 # for test
 
 %if_with check
@@ -38,34 +40,23 @@ Python distribution and packages, including Qt-things.
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-sed -i -e '/^whitelist_externals[ ]*=/a\
-    \/bin\/cp\
-    \/bin\/sed' \
-    -e '/^\[testenv\]$/a\
-setenv =\
-    py3: _PYTEST_BIN=%_bindir\/py.test3\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/pytest\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/pytest' \
-    -e '/test: -rreq-test\.txt/d' \
-    -e 's/test: pytest --cov /test: pytest /' \
-    tox.ini
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3-test
-tox.py3 --sitepackages -vv -r
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %_bindir/helpdev
 %python3_sitelibdir/*
 
 %changelog
+* Sun Jan 28 2024 Grigory Ustinov <grenka@altlinux.org> 0.7.1-alt1.1
+- NMU: moved on modern pyproject macros.
+
 * Mon Nov 09 2020 Stanislav Levin <slev@altlinux.org> 0.7.1-alt1
 - 0.6.10 -> 0.7.1.
 
