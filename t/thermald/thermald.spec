@@ -6,7 +6,7 @@
 %def_with monitor
 
 Name: thermald
-Version: 2.5.4
+Version: 2.5.6
 Release: alt1
 
 Summary: Thermal daemon for IA
@@ -181,6 +181,9 @@ exit 0
 %endif
 
 %changelog
+* Mon Jan 29 2024 Anton Midyukov <antohami@altlinux.org> 2.5.6-alt1
+- new version 2.5.6
+
 * Sat Oct 07 2023 Anton Midyukov <antohami@altlinux.org> 2.5.4-alt1
 - new version 2.5.4
 - cleaup spec
