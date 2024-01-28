@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.3.0
-Release: alt2
+Release: alt3
 
 License: MIT
 Group: Development/Python
@@ -22,6 +22,8 @@ Patch0: qtsass-0.3.0-Add-check-for-deprecated-api-between-2-and-3-version.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 # install_requires=
@@ -46,27 +48,24 @@ The purpose of this tool is to fill the gap between SASS and Qt-CSS by handling 
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    {envbindir}/pytest -vra {posargs:tests}
-EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr --develop
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %_bindir/%pypi_name
 %python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/%pypi_name-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Sun Jan 28 2024 Grigory Ustinov <grenka@altlinux.org> 0.3.0-alt3
+- Moved on modern pyproject macros.
+
 * Fri Apr 01 2022 Stanislav Levin <slev@altlinux.org> 0.3.0-alt2
 - Fixed FTBFS (Python 3.10).
 
