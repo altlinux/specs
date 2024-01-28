@@ -10,7 +10,7 @@
 %endif
 
 Name:     davmail
-Version:  6.2.0
+Version:  6.2.1
 Release:  alt1
 Summary:  POP/IMAP/SMTP/Caldav/Carddav/LDAP gateway for Microsoft Exchange
 URL:      http://davmail.sourceforge.net/
@@ -78,6 +78,9 @@ sed -i 's/\r//' releaseguide.txt
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sun Jan 28 2024 Andrey Cherepanov <cas@altlinux.org> 6.2.1-alt1
+- New version.
+
 * Sat Nov 11 2023 Andrey Cherepanov <cas@altlinux.org> 6.2.0-alt1
 - New version.
 
