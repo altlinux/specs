@@ -4,8 +4,8 @@
 %define _name cinnamon
 
 Name: %{_name}-session
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 License: GPLv2+
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
@@ -136,6 +136,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %_datadir/wayland-sessions/%{_name}-wayland.desktop
 
 %changelog
+* Mon Jan 29 2024 Anton Midyukov <antohami@altlinux.org> 6.0.2-alt1
+- 6.0.2
+
 * Sun Dec 03 2023 Anton Midyukov <antohami@altlinux.org> 6.0.1-alt2
 - pack cinnamon-session-quit.py
 
