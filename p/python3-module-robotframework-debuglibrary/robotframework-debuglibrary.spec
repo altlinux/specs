@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2.2.2
-Release: alt1
+Release: alt2
 
 Summary: RobotFramework debug library and an interactive shell
 License: BSD-3-Clause
@@ -24,6 +24,8 @@ Patch4: %oname-2.2.2-tests-Mark-step_functional_testing-as-xfail.patch
 Patch5: %oname-2.2.2-deps-Unpin-upper-version-of-prompt-toolkit.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: /dev/pts
@@ -48,29 +50,26 @@ sed -i 's|^#!/usr/bin/env python$|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    python -m unittest -v tests/test_debuglibrary.py
-EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr --develop
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc LICENSE
 %doc ChangeLog *.rst
 %_bindir/*
 %python3_sitelibdir/DebugLibrary
-%python3_sitelibdir/robotframework_debuglibrary-%version-py*.egg-info
+%python3_sitelibdir/robotframework_debuglibrary-%version.dist-info
 
 %changelog
+* Sun Jan 28 2024 Grigory Ustinov <grenka@altlinux.org> 2.2.2-alt2
+- Moved on modern pyproject macros.
+
 * Thu Mar 31 2022 Stanislav Levin <slev@altlinux.org> 2.2.2-alt1
 - 2.2.1 -> 2.2.2.
 
