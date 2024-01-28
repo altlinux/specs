@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.1.16
-Release: alt1
+Release: alt2
 Summary: Simple module to parse ISO 8601 dates
 
 Group: Development/Python3
@@ -14,6 +14,8 @@ Url: https://pypi.org/project/iso8601/
 Source0: %name-%version.tar
 
 BuildRequires: rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(pytest)
@@ -32,27 +34,25 @@ This module parses the most common forms of ISO 8601 date strings (e.g.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-
-# don't ship tests
-rm %buildroot%python3_sitelibdir/%pypi_name/test_iso8601.py
-rm %buildroot%python3_sitelibdir/%pypi_name/__pycache__/test_iso8601.cpython*
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false
+%tox_check_pyproject
 
 %files
 %doc LICENSE README.rst
 %python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/%pypi_name-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
+%exclude %python3_sitelibdir/%pypi_name/test_iso8601.py
+%exclude %python3_sitelibdir/%pypi_name/__pycache__/test_iso8601.cpython*
 
 %changelog
+* Sun Jan 28 2024 Grigory Ustinov <grenka@altlinux.org> 0.1.16-alt2
+- Moved on modern pyproject macros.
+
 * Thu Jul 22 2021 Stanislav Levin <slev@altlinux.org> 0.1.16-alt1
 - 0.1.11 -> 0.1.16.
 - Enabled testing.
