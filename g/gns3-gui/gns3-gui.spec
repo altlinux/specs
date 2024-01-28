@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gns3-gui
-Version: 2.2.44.1
+Version: 2.2.45
 Release: alt1
 
 Summary: GNS3 Graphical User Interface
@@ -90,6 +90,9 @@ find %buildroot/%python3_sitelibdir/ -type f -exec chmod -x {} \;
 %files -n gns3
 
 %changelog
+* Mon Jan 29 2024 Anton Midyukov <antohami@altlinux.org> 2.2.45-alt1
+- New version 2.2.45.
+
 * Sat Nov 18 2023 Anton Midyukov <antohami@altlinux.org> 2.2.44.1-alt1
 - New version 2.2.44.1
 - fix License
