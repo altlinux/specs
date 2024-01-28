@@ -14,7 +14,7 @@
 # vim:set ft=spec:
 Name: swig
 Version: 4.1.1
-Release: alt7
+Release: alt8
 Epoch: 1
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
@@ -34,6 +34,9 @@ Patch1: revert-Eliminate-some-temporary-buffers.patch
 
 # ALT commit 310d524062b544c538977c5e33548889fbb85926
 Patch2: 0001-guile-first-arg-to-scm_error-should-be-symbol-not-st.patch 
+
+# from Fedora
+Patch3: swig-python-3.12.patch
 
 %ifnarch %ix86
 %def_enable testsuite
@@ -246,6 +249,9 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Sun Jan 28 2024 Anton Midyukov <antohami@altlinux.org> 1:4.1.1-alt8
+- fix build with python 3.12
+
 * Mon Jul 24 2023 Anton Midyukov <antohami@altlinux.org> 1:4.1.1-alt7
 - rebuild without R
 
