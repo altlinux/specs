@@ -7,7 +7,7 @@
 Name: cura
 Epoch: 1
 Version: 5.4.0
-Release: alt1
+Release: alt2
 Summary: 3D printer control software
 License: LGPLv3+
 
@@ -32,9 +32,13 @@ Patch4: 0001-Avoid-crash-caused-by-KDE-qqc2-desktop-style.patch
 # Fedora patch
 # Skip forced loading SentryLogger to avoid an error on startup
 Patch10: 028e7f7.patch
+# Fix asserts for called once in Python 3.12
+# https://github.com/Ultimaker/Cura/pull/16103.patch
+Patch11: 16103.patch
 # Avoid "KeyError: material_name" crash
 # https://github.com/Ultimaker/Cura/pull/17642.patch
-Patch11: 17642.patch
+Patch12: 17642.patch
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-python3 rpm-macros-cmake
@@ -154,6 +158,9 @@ desktop-file-validate %buildroot%_datadir/applications/com.ultimaker.cura.deskto
 %_libexecdir/%name
 
 %changelog
+* Mon Jan 29 2024 Anton Midyukov <antohami@altlinux.org> 1:5.4.0-alt2
+- fix build with python 3.12
+
 * Mon Dec 18 2023 Anton Midyukov <antohami@altlinux.org> 1:5.4.0-alt1
 - new version (5.4.0) with rpmgs script
 

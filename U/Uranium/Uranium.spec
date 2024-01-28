@@ -7,7 +7,7 @@
 
 Name:    Uranium
 Version: 5.4.0
-Release: alt1
+Release: alt2
 
 Summary:  A Python framework for building Desktop applications.
 License: LGPL-3.0
@@ -53,6 +53,9 @@ Patch: Uranium-4.7.1-set-default-languages.patch
 
 # from Fedora
 Patch2: Uranium-5.3.0-qt-try-ints-then-bytes-for-gl-mask-functions.patch
+# Fix asserts for called once in Python 3.12
+# https://github.com/Ultimaker/Uranium/pull/885.patch#/Uranium-5.3.0-python3.12.patch
+Patch3: Uranium-5.3.0-python3.12.patch
 
 %description
 %summary
@@ -118,6 +121,9 @@ python3 -m pytest -v -k "not (TestSettingFunction and test_init_bad) and not Tes
 %doc html LICENSE
 
 %changelog
+* Sun Jan 28 2024 Anton Midyukov <antohami@altlinux.org> 5.4.0-alt2
+- Fix build with python 3.12
+
 * Mon Dec 18 2023 Anton Midyukov <antohami@altlinux.org> 5.4.0-alt1
 - new version (5.4.0) with rpmgs script
 
