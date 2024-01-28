@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.8.1
-Release: alt1
+Release: alt2
 
 Summary: Fixtures and markers to simplify testing of asynchronous tornado applications
 License: Apache-2.0
@@ -17,6 +17,8 @@ Url: https://pypi.org/project/pytest-tornado/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(pytest)
@@ -35,29 +37,25 @@ asynchronous tornado applications.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-commands =
-    python test/create_cert.py --cert test/testcert.pem
-    {envpython} -m pytest {posargs:-vra}
-EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc README.rst
 %python3_sitelibdir/pytest_tornado/
-%python3_sitelibdir/*.egg-info/
+%python3_sitelibdir/*.dist-info/
 
 
 %changelog
+* Sun Jan 28 2024 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt2
+- Moved on modern pyproject macros.
+
 * Fri Oct 16 2020 Stanislav Levin <slev@altlinux.org> 0.8.1-alt1
 - 0.8.0 -> 0.8.1.
 
