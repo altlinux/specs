@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2.1.3
-Release: alt1
+Release: alt2
 
 Summary: A quick unittest-compatible framework for repeating a test function over many fixtures
 
@@ -19,7 +19,9 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
 BuildRequires: python3(setuptools_scm)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(tox)
@@ -37,33 +39,29 @@ A quick unittest-compatible framework for repeating a test function over many fi
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 # strip tests
 rm -r %buildroot%python3_sitelibdir/%oname/tests/
 
 %check
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    python -m unittest -v
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr --develop
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc *.rst
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Sun Jan 28 2024 Grigory Ustinov <grenka@altlinux.org> 2.1.3-alt2
+- Moved on modern pyproject macros.
+
 * Tue Mar 29 2022 Stanislav Levin <slev@altlinux.org> 2.1.3-alt1
 - 1.0.1 -> 2.1.3.
 
