@@ -4,7 +4,7 @@
 # do not forget to update Git revision in setup section
 
 Name: yosys
-Version: 0.36
+Version: 0.37
 Release: alt1
 
 Summary: Yosys Open SYnthesis Suite
@@ -77,6 +77,9 @@ mv %buildroot%_datadir/%name/include/ %buildroot%_includedir/%name
 %_man1dir/%name-config.1*
 
 %changelog
+* Mon Jan 29 2024 Anton Midyukov <antohami@altlinux.org> 0.37-alt1
+- new version 0.37
+
 * Fri Dec 29 2023 Anton Midyukov <antohami@altlinux.org> 0.36-alt1
 - new version 0.36
 
