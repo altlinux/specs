@@ -4,29 +4,30 @@
 
 Name: python3-module-%oname
 Version: 1.7.1
-Release: alt2.1
+Release: alt3
 
 Summary: Python RESTful API Testing & Microbenchmarking Tool
 License: ASLv2.0
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/pyresttest/
-
 VCS: https://github.com/svanoort/pyresttest.git
+
 Source: %name-%version.tar
-Source1: repocop-test-hint:binary:python-module-pyresttest:altlinux-python-test-is-packaged
+Patch: use-system-six-alt-fix.patch
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pyaml
 BuildRequires: python3-module-pycurl
 BuildRequires: python3-module-future
+BuildRequires: python3-module-six
 %endif
 
 Requires: python3-module-future
-
-# There is a frightening meta-magic with paths
-%add_python3_req_skip pyresttest.six.moves
 
 %py3_provides %oname
 
@@ -39,27 +40,32 @@ Requires: python3-module-future
 
 %prep
 %setup
+%patch -p1
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=$PWD
-python3 -m unittest discover
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%__python3 -m unittest discover -v
 
 %files
 %doc *.md
 %_bindir/*
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 
 %changelog
+* Thu Jan 25 2024 Anton Vyatkin <toni@altlinux.org> 1.7.1-alt3
+- Fixed FTBFS.
+
 * Thu Aug 17 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 1.7.1-alt2.1
 - NMU: ignored unmet dependency.
 
