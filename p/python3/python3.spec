@@ -93,7 +93,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 
 Name: python3
 Version: %{pybasever}.1
-Release: alt1
+Release: alt2
 
 Summary: Version 3 of the Python programming language aka Python 3000
 
@@ -162,8 +162,6 @@ Patch1011: python3-ignore-env-trust-security.patch
 
 # Replaces absolute import with relative ones.
 Patch1012: python3-lib2to3-import.patch
-
-Patch1013: python3-bring-back-imp-module.patch
 
 # ======================================================
 # Additional metadata, and subpackages
@@ -351,8 +349,6 @@ rm -r Modules/_decimal/libmpdec || exit 1
 %patch1011 -p2
 
 %patch1012 -p2
-
-%patch1013 -p2
 
 %ifarch %e2k
 # add e2k arch
@@ -1036,6 +1032,9 @@ $(pwd)/python -m test.regrtest \
 %tool_dir/scripts/run_tests.py
 
 %changelog
+* Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 3.12.1-alt2
+- Moved imp module to zombie-imp (thx to antohami@).
+
 * Fri Jan 19 2024 Grigory Ustinov <grenka@altlinux.org> 3.12.1-alt1
 - Updated to upstream version 3.12.1.
 
