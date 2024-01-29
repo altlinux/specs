@@ -5,7 +5,7 @@
 
 Name: python3-module-%mname
 Version: 1.3.3
-Release: alt2
+Release: alt2.1
 Summary: Python package for talking to YubiKeys
 
 Group: Development/Python3
@@ -15,6 +15,8 @@ Url: https://github.com/Yubico/python-yubico
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(pytest)
@@ -44,27 +46,26 @@ This library makes it easy to use these two features.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-commands =
-    {envpython} -m pytest {posargs:-vra}
-EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -v -- test/soft
+# needs the hardware
+rm -rv test/usb
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc README COPYING
 %python3_sitelibdir/yubico/
-%python3_sitelibdir/python_yubico-*.egg-info
+%python3_sitelibdir/python_yubico-*.dist-info
 
 %changelog
+* Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.3-alt2.1
+- NMU: moved on modern pyproject macros.
+
 * Sun Nov 24 2019 Stanislav Levin <slev@altlinux.org> 1.3.3-alt2
 - Fixed build.
 - Dropped Python2 subpackage.
