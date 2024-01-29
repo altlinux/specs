@@ -1,5 +1,5 @@
 Name: tree-sitter
-Version: 0.20.8
+Version: 0.20.9
 Release: alt1
 
 Summary: Parser generator tool and an incremental parsing library
@@ -49,6 +49,11 @@ cat >> .cargo/config <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
+[source."git+https://github.com/bytecodealliance/wasmtime?rev=fa6fcd946b8f6d60c2d191a1b14b9399e261a76d"]
+git = "https://github.com/bytecodealliance/wasmtime"
+rev = "fa6fcd946b8f6d60c2d191a1b14b9399e261a76d"
+replace-with = "vendored-sources"
+
 [source.vendored-sources]
 directory = "cli/vendor"
 EOF
@@ -82,6 +87,9 @@ install -m 0755 target/release/%name %buildroot%_bindir
 %_bindir/%name
 
 %changelog
+* Sat Jan 27 2024 Vladimir Didenko <cow@altlinux.ru> 0.20.9-alt1
+- new version
+
 * Thu Apr 6 2023 Vladimir Didenko <cow@altlinux.ru> 0.20.8-alt1
 - new version
 
