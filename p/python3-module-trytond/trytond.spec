@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 6.4.5
-Release: alt2
+Release: alt2.1
 
 Summary: Tryton server
 License: GPL-3
@@ -55,6 +55,10 @@ This package contains tests for %oname.
 %prep
 %setup -q -n %{oname}-%{version}
 
+# hotfix for python3.12
+# https://foss.heptapod.net/tryton/tryton/-/commit/b097604b69b899117a9d3c00c3fdae8487356e48
+sed -i 's/\.not_called()/\.assert_not_called()/' trytond/tests/test_transaction.py
+
 %build
 %python3_build
 
@@ -76,6 +80,9 @@ python3 -m unittest discover -s trytond.tests -v
 
 
 %changelog
+* Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 6.4.5-alt2.1
+- NMU: fixed FTBFS.
+
 * Mon Dec 18 2023 Anton Zhukharev <ancieg@altlinux.org> 6.4.5-alt2
 - Applied patches from upstream for compatibility with werkzeug 3.0.
 
