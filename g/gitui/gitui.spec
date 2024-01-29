@@ -5,7 +5,7 @@
 
 Name: gitui
 Version: 0.24.3
-Release: alt1
+Release: alt2
 Summary: Blazing fast terminal-ui for git written in rust
 License: MIT
 Group: Development/Other
@@ -66,5 +66,9 @@ cargo test  %_smp_mflags --release
 %_bindir/gitui
 
 %changelog
+* Mon Jan 29 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.24.3-alt2
+- NMU: fixed FTBFS on LoongArch (updated vendored tempfiles to 3.5.0,
+  is-terminal -> 0.4.10).
+
 * Sat Jan 27 2024 Vitaly Chikunov <vt@altlinux.org> 0.24.3-alt1
 - First import v0.24.3-63-gc30eb7c (2024-01-26).
