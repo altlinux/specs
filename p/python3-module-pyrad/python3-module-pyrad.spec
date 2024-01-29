@@ -4,7 +4,7 @@
 
 Name:    python3-module-%modulename
 Version: 2.4
-Release: alt3
+Release: alt4
 
 Summary: Python RADIUS Implementation
 License: BSD-3-Clause
@@ -23,6 +23,7 @@ BuildRequires: python3-module-six
 BuildArch: noarch
 
 Source:  %modulename-%version.tar
+Patch: refactor-test-aliases-for-python3.11-compat.patch
 
 %description
 pyrad is an implementation of a RADIUS client as described in RFC2865. It takes
@@ -31,6 +32,7 @@ decoding responses.
 
 %prep
 %setup -n %modulename-%version
+%patch -p1
 
 %build
 %pyproject_build
@@ -48,6 +50,9 @@ decoding responses.
 %doc *.rst
 
 %changelog
+* Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 2.4-alt4
+- Fixed FTBFS.
+
 * Wed Oct 18 2023 Grigory Ustinov <grenka@altlinux.org> 2.4-alt3
 - Fixed BuildRequires.
 
