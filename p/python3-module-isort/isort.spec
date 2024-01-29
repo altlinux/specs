@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 5.12.0
-Release: alt1
+Release: alt1.1
 Summary: Python utility / library to sort Python imports
 Group: Development/Python3
 License: MIT
@@ -72,6 +72,9 @@ mv %buildroot%_bindir/isort{,.py3}
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 5.12.0-alt1.1
+- NMU: Fixed FTBFS.
+
 * Fri Feb 10 2023 Stanislav Levin <slev@altlinux.org> 5.12.0-alt1
 - 5.10.1 -> 5.12.0.
 
