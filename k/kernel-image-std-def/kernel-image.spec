@@ -1,8 +1,8 @@
 Name: kernel-image-std-def
-Release: alt1
+Release: alt2
 epoch:2
 %define kernel_base_version	6.1
-%define kernel_sublevel	.73
+%define kernel_sublevel	.75
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -288,6 +288,10 @@ subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := $(shell echo $${GCC_USE_CCACHE:+c
 
 # get rid of unwanted files resulting from patch fuzz
 find . -name "*.orig" -delete -or -name "*~" -delete
+
+%if 0%{?_is_ilp32}
+sed -Ei 's/-j[[:digit:]]*/-j8/' scripts/pahole-flags.sh
+%endif
 
 %build
 banner build
@@ -600,6 +604,15 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Jan 29 2024 Vitaly Chikunov <vt@altlinux.org> 2:6.1.75-alt2
+- spec: Limit -j for pahole for 32-bit architectures.
+
+* Fri Jan 26 2024 Kernel Bot <kernelbot@altlinux.org> 2:6.1.75-alt1
+- v6.1.75 (2024-01-25).
+
+* Sat Jan 20 2024 Kernel Bot <kernelbot@altlinux.org> 2:6.1.74-alt1
+- v6.1.74 (2024-01-20).
+
 * Tue Jan 16 2024 Kernel Bot <kernelbot@altlinux.org> 2:6.1.73-alt1
 - v6.1.73 (2024-01-15).
 
