@@ -1,5 +1,5 @@
 Name: qtractor
-Version: 0.9.38
+Version: 0.9.39
 Release: alt1
 
 Summary: Audio/MIDI multi-track sequencer
@@ -8,6 +8,8 @@ Group: Sound
 Url: https://qtractor.org/
 
 Source: %name-%version-%release.tar
+
+ExcludeArch: ppc64le
 
 BuildRequires: cmake gcc-c++
 BuildRequires: desktop-file-utils
@@ -71,6 +73,9 @@ desktop-file-edit \
 %_man1dir/qtractor.1*
 
 %changelog
+* Mon Jan 29 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.39-alt1
+- 0.9.39 released
+
 * Tue Jan  2 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.38-alt1
 - 0.9.38 released
 - fixed build with pw jack substitute (closes: 48991)
