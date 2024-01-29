@@ -20,8 +20,8 @@
 %add_findprov_skiplist %_libdir/nsight-compute-%nsight_compute_ver/*
 
 Name: nvidia-cuda-toolkit
-Version: 12.3.1
-Release: alt3
+Version: 12.3.2
+Release: alt1
 
 Summary: NVIDIA CUDA Toolkit libraries
 Summary(ru_RU.UTF-8): Библиотеки NVIDIA CUDA Toolkit
@@ -68,6 +68,7 @@ programs that make use of CUDA.
 %package -n nvidia-cuda-devel
 Group: Development/Other
 Summary: NVIDIA CUDA development files
+Requires: %name = %EVR
 Requires: libglvnd-devel ocl-icd-devel gcc-c++ libvdpau-devel tbb-devel
 %description -n nvidia-cuda-devel
 NVIDIA CUDA development files.
@@ -492,10 +493,6 @@ cp -vr libnvjpeg/lib64/* %buildroot%_libdir/
 cp -vr libnvjpeg/include/* %buildroot%_includedir/
 
 mkdir -p %buildroot%_libdir/nsight-compute-%nsight_compute_ver
-# no need to copy non-x86_64 binaries
-rm -vr nsight_compute/target/linux-desktop-glibc_2_11_3-x86
-rm -vr nsight_compute/target/linux-desktop-glibc_2_19_0-ppc64le
-rm -vr nsight_compute/target/linux-desktop-t210-a64
 cp -vr nsight_compute/* %buildroot%_libdir/nsight-compute-%nsight_compute_ver/
 cp -v integration/nsight-compute/* %buildroot%_bindir/
 # fix path nsight-compute
@@ -736,6 +733,10 @@ rm -rv %buildroot%_libdir/nsight-systems-%nsight_sys_ver/target-linux-x64/python
 %_bindir/nvprof
 
 %changelog
+* Mon Jan 29 2024 Mikhail Tergoev <fidel@altlinux.org> 12.3.2-alt1
+- updated to 12.3.2 (ALT bug: 49154)
+- returned requires nvidia-cuda-toolkit to nvidia-cuda-devel
+
 * Mon Jan 22 2024 Mikhail Tergoev <fidel@altlinux.org> 12.3.1-alt3
 - drop requires nvidia-cuda-toolkit from nvidia-cuda-devel (ALT bug: 48761)
 - separation of nvidia-cuda-gdb packages from nvidia-cuda-devel (ALT bug: 48762)
