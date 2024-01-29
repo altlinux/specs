@@ -1,7 +1,7 @@
 %def_enable snapshot
 %define _name Paper-Clip
 %define binary_name pdf-metadata-editor
-%define ver_major 4.0
+%define ver_major 5.0
 %define rdn_name io.github.diegoivan.pdf_metadata_editor
 
 %def_enable check
@@ -60,6 +60,9 @@ BuildRequires: pkgconfig(exempi-2.0)
 
 
 %changelog
+* Mon Jan 29 2024 Yuri N. Sedunov <aris@altlinux.org> 5.0-alt1
+- updated to v5.0-4-ge65d4de
+
 * Sat Dec 16 2023 Yuri N. Sedunov <aris@altlinux.org> 4.0-alt1
 - updated to v4.0-5-g6e784e0
 
