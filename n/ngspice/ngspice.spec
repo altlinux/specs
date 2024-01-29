@@ -2,10 +2,10 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _pkgdocdir %_docdir/%name-%version
-%define majver 39
+%define majver 40
 
 Name: ngspice
-Version: %majver.3
+Version: %majver
 Release: alt1
 Summary: A mixed level/signal circuit simulator
 
@@ -181,6 +181,9 @@ cp -a \
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Jan 29 2024 Anton Midyukov <antohami@altlinux.org> 40-alt1
+- new version 40
+
 * Sun Feb 05 2023 Anton Midyukov <antohami@altlinux.org> 39.3-alt1
 - new version  39.3
 
