@@ -1,7 +1,7 @@
 %define proj cglm
 
 Name: lib%proj
-Version: 0.8.9
+Version: 0.9.2
 Release: alt1
 
 Summary: CGLM is highly optimized graphics math (glm) for C
@@ -52,6 +52,9 @@ which will use the %name library.
 %_libdir/%name.so
 
 %changelog
+* Mon Jan 29 2024 Artyom Bystrov <arbars@altlinux.org> 0.9.2-alt1
+- update to new version
+
 * Wed Feb 22 2023 Artyom Bystrov <arbars@altlinux.org> 0.8.9-alt1
 - update to new version
 
