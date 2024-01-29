@@ -1,6 +1,6 @@
 Name: nextcloud-client
-Version: 3.9.0
-Release: alt1.1
+Version: 3.11.0
+Release: alt1
 %K5init no_altplace
 
 Group: Networking/File transfer
@@ -118,6 +118,9 @@ desktop-file-install \
 %_datadir/nemo-python/extensions/*
 
 %changelog
+* Fri Jan 26 2024 Evgeniy Korneechev <ekorneechev@altlinux.org> 3.11.0-alt1
+- new version (ALT#49166)
+
 * Fri Sep 15 2023 Sergey V Turchin <zerg@altlinux.org> 3.9.0-alt1.1
 - NMU: drop requires to mate, gnome and cinnamon libraries from main package (closes: 47503)
 - NMU: fix build requires
