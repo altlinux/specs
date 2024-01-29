@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.2.0
-Release: alt1
+Release: alt1.1
 
 Summary: Some handy archive helpers for Python
 License: MIT
@@ -53,7 +53,7 @@ sed -i '/pytest.skip/ s/msg/reason/' tests/test_zipfile.py
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra
+%pyproject_run_pytest -vra -W ignore::DeprecationWarning
 
 %files
 %doc LICENSE README.rst
@@ -61,6 +61,9 @@ sed -i '/pytest.skip/ s/msg/reason/' tests/test_zipfile.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 0.2.0-alt1.1
+- NMU: Ignore deprecation warnings in tests.
+
 * Wed Aug 02 2023 Anton Zhukharev <ancieg@altlinux.org> 0.2.0-alt1
 - Updated to 0.2.0.
 
