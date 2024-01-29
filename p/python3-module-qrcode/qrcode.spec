@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 7.4.2
-Release: alt2
+Release: alt3
 
 Summary: Python module to generate QR Codes
 
@@ -13,6 +13,7 @@ Group: Development/Python3
 Url: https://github.com/lincolnloop/python-qrcode
 
 Source: %name-%version.tar
+Patch: 1009adc1d19529c49e2f20b8ebc759e30060a5b2.patch
 
 BuildArch: noarch
 
@@ -34,6 +35,7 @@ to generate QR Codes.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %python3_build
@@ -52,6 +54,9 @@ py.test3 -s qrcode
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 7.4.2-alt3
+- Fixed FTBFS.
+
 * Tue Feb 14 2023 Grigory Ustinov <grenka@altlinux.org> 7.4.2-alt2
 - Fixed qrcode.image.pure, pymaging problem was solved.
 
