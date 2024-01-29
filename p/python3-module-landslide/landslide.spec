@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.6
-Release: alt2
+Release: alt3
 
 Summary: Lightweight markup language-based html5 slideshow generator
 License: ASLv2.0
@@ -18,6 +18,8 @@ Source: %name-%version.tar
 Patch: landslide-1.1.6-Support-markdown-v3.0.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(docutils)
@@ -46,31 +48,24 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
-%if_with check
 %check
-cat > tox.ini <<EOF
-[testenv]
-commands =
-    {envpython} tests.py -v
-EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -v
-%endif
+%pyproject_run_pytest tests.py
 
 %files
 %doc *.md examples
 %_bindir/landslide
 %python3_sitelibdir/landslide/
-%python3_sitelibdir/*.egg-info/
-
+%python3_sitelibdir/*.dist-info/
 
 %changelog
+* Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 1.1.6-alt3
+- Moved on modern pyproject macros.
+
 * Fri Dec 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.1.6-alt2
 - build for python2 disabled
 
