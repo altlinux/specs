@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-beautifulsoup4
-Version: 4.11.2
+Version: 4.12.3
 Release: alt1
 
 Summary: HTML/XML parser for quick-turnaround applications like screen-scraping
@@ -20,6 +20,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-hatchling
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -42,21 +43,25 @@ Beautiful Soup works better if lxml and/or html5lib is installed.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-%python3_prune
+%pyproject_install
+rm -rv %buildroot%python3_sitelibdir/bs4/tests
 
 %check
-python3 -m unittest discover -s bs4
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3
 
 %files
 %doc README.md *.txt
 %python3_sitelibdir/bs4/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 4.12.3-alt1
+- Build new version.
+
 * Sun Mar 12 2023 Vitaly Lipatov <lav@altlinux.ru> 4.11.2-alt1
 - new version 4.11.2 (with rpmrb script)
 
