@@ -8,7 +8,7 @@
 
 Name: resources
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: System monitor
 License: GPL-3.0-or-later
@@ -27,6 +27,8 @@ ExcludeArch: ppc64le
 
 %define gtk_ver 4.8
 %define adwaita_ver 1.4
+
+Requires: dconf /usr/sbin/dmidecode polkit
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson git rust-cargo
@@ -47,6 +49,9 @@ terminating running graphical applications as well as processes.
 mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
+
+# hardcode dmidecode path
+sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/utils/memory.rs
 
 %build
 %meson
@@ -74,6 +79,11 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Mon Jan 29 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt2
+- updated to v1.3.0-47-g7eeafb0
+- added dmidecode to runtime dependencies
+- src/utils/memory.rs: hardcode dmidecode path
+
 * Sun Jan 14 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - first build for Sisyphus (v1.3.0-38-g98a8a6d)
 
