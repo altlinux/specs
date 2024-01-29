@@ -2,7 +2,7 @@
 %define xdg_name io.github.Rirusha.Cassette
 
 Name: cassette
-Version: 0.1.1
+Version: 0.1.4
 Release: alt1
 
 Summary: GTK/Adwaita application that allows you to use Yandex Music service on Linux operating systems
@@ -15,7 +15,8 @@ Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson cmake vala
-BuildRequires: libgtk4-devel libadwaita-devel
+BuildRequires: blueprint-compiler
+BuildRequires: libgtk4-devel libadwaita-gir-devel libadwaita-devel
 BuildRequires: libjson-glib-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libgee-devel libxml2-devel
@@ -45,5 +46,8 @@ BuildRequires: libwebkitgtk6.0-devel
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Sun Jan 28 2024 Alexey Volkov <qualimock@altlinux.org> 0.1.4-alt1
+- New version 0.1.4
+
 * Wed Jan 3 2024 Alexey Volkov <qualimock@altlinux.org> 0.1.1-alt1
 - Initial build for ALT
