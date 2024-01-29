@@ -1,6 +1,6 @@
 Name: pulseaudio
 Version: 17.0
-Release: alt1
+Release: alt2
 
 Summary: PulseAudio is a networked sound server
 Group: System/Servers
@@ -306,6 +306,9 @@ mkdir -p \
 %_datadir/vala/vapi/*
 
 %changelog
+* Mon Jan 29 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 17.0-alt2
+- updated to v17.0-2-ged3d4f083, hopefully (closes: 49210)
+
 * Mon Jan 15 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 17.0-alt1
 - 17.0 released
 
