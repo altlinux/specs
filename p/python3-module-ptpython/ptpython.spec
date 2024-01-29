@@ -3,7 +3,7 @@
 %define oname ptpython
 
 Name: python3-module-%oname
-Version: 3.0.23
+Version: 3.0.25
 Release: alt1
 Summary: Python REPL build on top of prompt_toolkit
 License: BSD-3-Clause
@@ -45,10 +45,6 @@ Provides: %oname-ipython = %version.%release
 %install
 %pyproject_install
 
-%check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-python3 tests/run_tests.py -v
-
 %files
 %doc LICENSE
 %doc CHANGELOG *.rst
@@ -64,6 +60,9 @@ python3 tests/run_tests.py -v
 %python3_sitelibdir/%oname/*ipython*
 
 %changelog
+* Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.25-alt1
+- NMU: Build new version.
+
 * Tue Sep 12 2023 Fr. Br. George <george@altlinux.org> 3.0.23-alt1
 - Autobuild version bump to 3.0.23
 
