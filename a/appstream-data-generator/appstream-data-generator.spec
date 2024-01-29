@@ -3,7 +3,7 @@
 # Use current date as version
 
 Name:    appstream-data-generator
-Version: 20221002
+Version: 20240127
 Release: alt1
 Summary: Collection of tools for generation of appstream-data
 Group:   System/Configuration/Packaging
@@ -38,6 +38,10 @@ Collection of tools for generation of appstream-data
 %_bindir/*
 
 %changelog
+* Sat Jan 27 2024 Kirill Izmestev <felixz@altlinux.org> 20240127-alt1
+- After updating Python 3.12.0 need to add the letter r before \
+the redexp https://github.com/python/cpython/issues/98401.
+
 * Sun Oct 02 2022 Andrey Cherepanov <cas@altlinux.org> 20221002-alt1
 - Show missing icon name from desktop file.
 
