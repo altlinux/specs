@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2.3.6
-Release: alt1
+Release: alt1.1
 
 Summary: Object-oriented filesystem paths
 License: MIT
@@ -17,6 +17,8 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 # install_requires=
@@ -42,28 +44,24 @@ pathlib can be used also on older Python versions.
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-usedevelop=True
-commands =
-    python -m pytest tests {posargs:-vra}
-EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr -s false
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc CHANGELOG.rst LICENSE.rst README.rst
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 2.3.6-alt1.1
+- NMU: moved on modern pyproject macros.
+
 * Wed Feb 02 2022 Stanislav Levin <slev@altlinux.org> 2.3.6-alt1
 - 2.3.3 -> 2.3.6.
 
