@@ -1,10 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%define oname OGRE-Next
 %set_verify_elf_method strict,rpath=relaxed,unresolved=relaxed
+%set_fixup_method skip
 
 Name: ogre-next
 Version: 2.3.3
-Release: alt1
+Release: alt2
 Summary: Object-Oriented Graphics Rendering Engine 
 # CC-BY-SA is for devel docs
 License: MIT
@@ -58,6 +60,8 @@ Group: Development/C
 Requires: lib%name = %EVR
 Conflicts: libogre-devel
 
+%set_fixup_method skip
+
 %description -n lib%name-devel
 Ogre is a complete object-oriented 3D rendering engine. It supports
 different rendering subsystems but only the OpenGL system is useful
@@ -105,9 +109,11 @@ find -type f -print0 -name '*.cpp' -o -name '*.hpp' -name '*.h' |
 %cmake \
 	-DOGRE_LIB_DIRECTORY=%_lib \
 	-DOGRE_INSTALL_SAMPLES=ON \
+	-DOGRE_USE_NEW_PROJECT_NAME=ON \
 	-DOGRE_BUILD_TESTS=ON \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
 	-DOpenGL_GL_PREFERENCE=GLVND \
+	-DOGRE_SIMD_NEON:BOOL=FALSE \
 	%nil
 
 %cmake_build
@@ -115,38 +121,40 @@ find -type f -print0 -name '*.cpp' -o -name '*.hpp' -name '*.h' |
 %install
 %cmakeinstall_std
 
-rm -fr %buildroot%_pkgconfigdir
-
 %files
 %doc AUTHORS
 %_bindir/Ogre*
 %_bindir/Test_*
-%dir %_datadir/OGRE
-%config(noreplace) %_datadir/OGRE/plugins.cfg
-%config(noreplace) %_datadir/OGRE/resources.cfg
-%config(noreplace) %_datadir/OGRE/tests.cfg
-%config(noreplace) %_datadir/OGRE/HiddenAreaMeshVr.cfg
-%config(noreplace) %_datadir/OGRE/plugins_tools.cfg
-%config(noreplace) %_datadir/OGRE/resources2.cfg
+%dir %_datadir/%oname
+%config(noreplace) %_datadir/%oname/plugins.cfg
+%config(noreplace) %_datadir/%oname/resources.cfg
+%config(noreplace) %_datadir/%oname/tests.cfg
+%config(noreplace) %_datadir/%oname/HiddenAreaMeshVr.cfg
+%config(noreplace) %_datadir/%oname/plugins_tools.cfg
+%config(noreplace) %_datadir/%oname/resources2.cfg
 
-%_datadir/OGRE/Media
+%_datadir/%oname/Media
 
 %files -n lib%name
-%dir %_libdir/OGRE
+%dir %_libdir/%oname
 %_libdir/libOgre*.so.*
-%_libdir/OGRE/*.so*
+%_libdir/%oname/*.so*
 
 %files  -n lib%name-devel
 %_libdir/libOgre*.so
-%_libdir/OGRE/cmake
-%_includedir/OGRE
+%_libdir/pkgconfig/*
+%_libdir/%oname/cmake
+%_includedir/%oname
 
 #files %name-devel-doc
-%_datadir/OGRE/docs
+%_datadir/%oname/docs
 
 %files samples
 %_bindir/Sample_*
 
 %changelog
+* Mon Jan 29 2024 Artyom Bystrov <arbars@altlinux.org> 2.3.3-alt2
+- Getting back pkgconfig files
+
 * Mon Jan 15 2024 Artyom Bystrov <arbars@altlinux.org> 2.3.3-alt1
 - Initial build
