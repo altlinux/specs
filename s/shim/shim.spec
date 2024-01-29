@@ -4,7 +4,7 @@
 
 Name: shim
 Version: 15.7
-Release: alt3
+Release: alt4
 
 Summary: First-stage UEFI bootloader
 License: BSD
@@ -16,7 +16,7 @@ Source1: altlinux-ca.cer
 Source2: %name-%version-gnu-efi.tar
 
 Patch0: shim-15.7-upstream-Enable-the-NX-compatibility-flag-by-default.patch
-Patch1: shim-15.7-alt-Add-grub.altlinux-2-to-SBAT-revocations.patch
+Patch1: shim-15.7-alt-Bump-grub-SBAT-revocation-to-4.patch
 
 BuildRequires(pre): rpm-macros-uefi
 BuildRequires: pesign >= 0.106
@@ -103,6 +103,12 @@ popd
 %_datadir/shim/%version/ia32/*
 
 %changelog
+* Fri Nov 17 2023 Egor Ignatov <egori@altlinux.org> 15.7-alt4
+- Bump grub SBAT revocation to 4
+  + grub 2.06-alt17 fixes CVE-2023-4692 and CVE-2023-4693
+  + add shim-15.7-alt-Bump-grub-SBAT-revocation-to-4 patch
+  + remove shim-15.7-alt-Add-grub.altlinux-2-to-SBAT-revocations patch
+
 * Tue Mar 14 2023 Egor Ignatov <egori@altlinux.org> 15.7-alt3
 - grub 2.06-alt9 is missing fix for CVE-2022-28733, block SBAT grub.altlinux < 2
   + add shim-15.7-alt-Add-grub.altlinux-2-to-SBAT-revocations patch

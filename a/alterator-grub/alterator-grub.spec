@@ -2,7 +2,7 @@
 
 Name: alterator-grub
 Version: 0.25
-Release: alt1
+Release: alt2
 
 Summary: alterator module to setup grub bootloader
 License: GPL
@@ -10,6 +10,8 @@ Group: System/Configuration/Other
 
 Url: http://www.altlinux.org/Alterator
 Source: %name-%version.tar
+
+ExcludeArch: armh
 
 Requires: alterator >= 4.7-alt5
 Requires: alterator-l10n >= 2.9-alt10
@@ -53,6 +55,9 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Sun Jan 07 2024 Egor Ignatov <egori@altlinux.org> 0.25-alt2
+- grub-md-list: use lsblk to find drive by partition (closes: #48726)
+
 * Tue Oct 03 2023 Anton Midyukov <antohami@altlinux.org> 0.25-alt1
 - grub: check that the password does not contain non-ASCII characters
   (Closes: 47720)

@@ -2,7 +2,7 @@
 
 # SBAT generation number for ALT
 # Refer to https://github.com/rhboot/shim/blob/main/SBAT.md
-%global alt_gen_number 2
+%global alt_gen_number 1
 
 # grub modules' architecture is heavily dependent on custom ELF sections.
 # LTO crashes that fragile house of cards, so should be disabled.
@@ -12,7 +12,7 @@
 
 Name: grub
 Version: 2.06
-Release: alt16
+Release: alt17
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -451,6 +451,13 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Fri Oct 06 2023 Egor Ignatov <egori@altlinux.org> 2.06-alt17
+- backport upstream NTFS patch set (fixes: CVE-2023-4692, CVE-2023-4693)
+  + bump grub SBAT level to 4 and reset grub.altlinux
+- backport upstream ext2 fs patches (closes: #48343)
+- backport: Fix md array device enumeration (closes #47850)
+- return backward compatibility for grub config (closes: #48056)
+
 * Wed Sep 06 2023 Egor Ignatov <egori@altlinux.org> 2.06-alt16
 - 39_memtest: fix grub.cfg generation on i586 (closes: #47471)
 
