@@ -1,33 +1,28 @@
 %define _unpackaged_files_terminate_build 1
 
-%define mname kdcproxy
+%define pypi_name kdcproxy
 %def_with check
 
-Name: python3-module-%mname
+Name: python3-module-%pypi_name
 Version: 1.0.0
-Release: alt1
-
+Release: alt2
 Summary: A kerberos KDC HTTP proxy WSGI module
-License: %mit
+License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/kdcproxy
-# Source-git: https://github.com/latchset/kdcproxy
-
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): rpm-build-python3
-
-%if_with check
-BuildRequires: libkrb5
-BuildRequires: python3(dns)
-BuildRequires: python3(pyasn1)
-BuildRequires: python3(tox)
-BuildRequires: python3(webtest)
-%endif
-
+Vcs: https://github.com/latchset/kdcproxy
 BuildArch: noarch
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_metadata_extra tests
+BuildRequires: libkrb5
+%endif
 
 %description
 This package contains a Python 3.x WSGI module for proxying KDC requests
@@ -37,24 +32,27 @@ to deploy, with minimal configuration.
 %prep
 %setup
 %patch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-%_bindir/tox.py3 --sitepackages -vvr
+%pyproject_run_pytest -vra
 
 %files
-%doc COPYING README
-%python3_sitelibdir/%mname/
-%python3_sitelibdir/%mname-%version-py%_python3_version.egg-info/
+%doc README
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jan 29 2024 Stanislav Levin <slev@altlinux.org> 1.0.0-alt2
+- Fixed FTBFS (Python 3.12).
+
 * Fri Jan 22 2021 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1
 - 0.4.2 -> 1.0.0.
 
