@@ -1,9 +1,7 @@
 %global grub_arches x86_64 aarch64 loongarch64 %ix86
 
-%ifarch %grub_arches
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
-%endif
 
 #def_with slideshow
 
@@ -19,7 +17,7 @@
 
 Name: branding-%flavour
 Version: 20240122
-Release: alt2
+Release: alt3
 
 Url: http://en.altlinux.org
 
@@ -169,6 +167,7 @@ Conflicts: indexhtml-small_business
 Conflicts: indexhtml-school-server
 Conflicts: branding-sisyphus-server-light-indexhtml
 
+BuildArch: noarch
 %branding_add_conflicts %flavour indexhtml
 
 Requires: xdg-utils
@@ -238,11 +237,6 @@ shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER ''
 %post indexhtml
 %_sbindir/indexhtml-update
 
-%ifarch %grub_arches
-%files bootloader
-/boot/grub/themes/%theme
-%endif
-
 #bootsplash
 %post bootsplash
 subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
@@ -251,6 +245,13 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %config %_altdir/*.rcc
 /usr/share/alterator-browser-qt/design/*.rcc
 /usr/share/alterator/design/*
+
+%ifarch %grub_arches
+%files bootloader
+/boot/grub/themes/%theme
+%else
+%exclude /boot/grub/themes/%theme
+%endif
 
 %files graphics
 %config /etc/alternatives/packages.d/%name-graphics
@@ -284,6 +285,11 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Mon Jan 29 2024 Anton Midyukov <antohami@altlinux.org> 20240122-alt3
+- spec:
+  + indexhtml: BuildArch: noarch
+  + Unpackaged files terminate build for all architectures
+
 * Mon Jan 29 2024 Michael Shigorin <mike@altlinux.org> 20240122-alt2
 - spec: fix archdep (there's no per-package EA:!)
 
