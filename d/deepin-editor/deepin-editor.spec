@@ -1,9 +1,7 @@
-%define llvm_ver 15
-
 %def_disable clang
 
 Name: deepin-editor
-Version: 6.0.11
+Version: 6.0.15.0.6.660b
 Release: alt1
 
 Summary: Simple editor for Linux Deepin
@@ -13,40 +11,20 @@ Group: Editors
 Url: https://github.com/linuxdeepin/deepin-editor
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: deepin-editor-5.10.21-alt-aarch64-armh.patch
+Patch: %name-%version-%release.patch
 
+BuildRequires(pre): rpm-build-ninja
+# Automatically added by buildreq on Mon Jan 29 2024
+# optimized out: bash5 bashrc cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 icu-utils libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libicu-devel libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel pkg-config python3 python3-base python3-dev qt5-base-devel sh5
+BuildRequires: cmake deepin-qt-dbus-factory-devel kf5-kcodecs-devel kf5-syntax-highlighting-devel libchardet-devel libdtkwidget-devel libuchardet-devel qt5-svg-devel qt5-tools
 %if_enabled clang
-#BuildRequires(pre): rpm-macros-llvm-common
-BuildRequires: clang%llvm_ver.0-devel
-BuildRequires: lld%llvm_ver.0-devel
-BuildRequires: llvm%llvm_ver.0-devel
-BuildRequires: libstdc++%gcc_ver-devel
+BuildRequires: clang-devel
+BuildRequires: lld-devel
+BuildRequires: libstdc++-devel
 %else
 BuildRequires: gcc-c++
 %endif
-BuildRequires(pre): rpm-build-ninja
-BuildRequires: cmake
-BuildRequires: libfreeimage-devel
-BuildRequires: kf5-kcodecs-devel
-BuildRequires: kf5-syntax-highlighting-devel
-BuildRequires: dtk5-widget-devel
-BuildRequires: libexif-devel
-BuildRequires: libexif-devel
-BuildRequires: libxcbutil-devel
-BuildRequires: libXtst-devel
-BuildRequires: libpolkitqt5-qt5-devel
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-tools
-BuildRequires: qt5-svg-devel
-BuildRequires: qt5-x11extras-devel
-BuildRequires: qt5-linguist
-BuildRequires: deepin-qt-dbus-factory-devel
-BuildRequires: libgtest-devel
-BuildRequires: libgmock-devel
-BuildRequires: dtk5-common
-BuildRequires: libuchardet-devel
-BuildRequires: libenca-devel
-BuildRequires: libchardet-devel
+
 # Requires: deepin-session-shell deepin-qt5integration
 
 %description
@@ -60,28 +38,34 @@ BuildRequires: libchardet-devel
 export PATH=%_qt5_bindir:$PATH
 %if_enabled clang
 %define optflags_lto -flto=thin
-export CC=clang-%llvm_ver
-export CXX=clang++-%llvm_ver
-export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
+export CC=clang
+export CXX=clang++
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
 %cmake \
     -GNinja \
-    -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DAPP_VERSION=%version \
-    -DVERSION=%version \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
 #
 cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
-%find_lang %name
+%find_lang --with-qt %name
 
 %files -f %name.lang
 %doc README.md LICENSE.txt
 %_bindir/%name
-%_datadir/%name/
+%dir %_datadir/%name/
+%dir %_datadir/%name/themes/
+%_datadir/%name/themes/*.theme
+# package translations outside %%find_lang
+%dir %_datadir/%name/translations/
+%_datadir/%name/translations/%name.qm
+# ---
+%dir %_datadir/%name/org.kde.syntax-highlighing/
+%dir %_datadir/%name/org.kde.syntax-highlighing/syntax/
+%_datadir/%name/org.kde.syntax-highlighing/syntax/vbscript.xml
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %dir %_datadir/dsg/
@@ -95,6 +79,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/deepin-manual/manual-assets/application/%name/editor/
 
 %changelog
+* Mon Jan 29 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.15.0.6.660b-alt1
+- New version 6.0.15-6-g660b5ad1.
+
 * Tue Jul 25 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.11-alt1
 - New version 6.0.11.
 
