@@ -3,7 +3,7 @@
 
 Name: openbabel
 Version: %ver_major.1
-Release: alt4
+Release: alt4.1
 
 %define tag_ver %(echo %version|tr . -)
 
@@ -89,12 +89,12 @@ Python bindings for Open Babel.
 %patch -p1
 # fix python install path
 sed -i 's/dist\(-packages\)/site\1/' scripts/CMakeLists.txt
-
-%build
 %ifarch %e2k
 # see also mcst#3675; there *is* -fPIC there
-%add_optflags -Wl,--no-warn-shared-textrel
+sed -i 's/-Wl,--fatal-warnings //' CMakeLists.txt
 %endif
+
+%build
 %cmake \
     -DWITH_MAEPARSER:BOOL=OFF \
     -DWITH_COORDGEN:BOOL=OFF \
@@ -136,6 +136,9 @@ sed -i 's/dist\(-packages\)/site\1/' scripts/CMakeLists.txt
 %endif
 
 %changelog
+* Mon Jan 29 2024 Michael Shigorin <mike@altlinux.org> 3.1.1-alt4.1
+- E2K: update mcst#3675 workaround for lcc 1.27
+
 * Mon Oct 16 2023 Anton Midyukov <antohami@altlinux.org> 3.1.1-alt4
 - NMU: rebuild with wxGTK3.2
 
