@@ -2,7 +2,7 @@
 
 Name:               python3-module-%{modname}
 Version:            0.3.5
-Release:            alt2
+Release:            alt3
 Summary:            Logging utilities
 
 Group:              Development/Python3
@@ -10,6 +10,7 @@ License:            BSD
 URL:                http://pypi.python.org/pypi/logutils
 Source0:            %{modname}-%{version}.tar
 Patch:              set-default-log-level.patch
+Patch1:             0001-remove-test_hashandlers.patch
 
 BuildArch:          noarch
 
@@ -27,6 +28,7 @@ are packaged here.
 %prep
 %setup -n %{modname}-%{version}
 %patch -p1
+%patch1 -p1
 
 # Remove bundled egg-info in case it exists
 rm -rf %{modname}.egg-info
@@ -46,6 +48,9 @@ rm -rf %{modname}.egg-info
 %{python3_sitelibdir}/%{modname}-%{version}-*
 
 %changelog
+* Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 0.3.5-alt3
+- Fixed FTBFS.
+
 * Mon Feb 27 2023 Grigory Ustinov <grenka@altlinux.org> 0.3.5-alt2
 - Fixed FTBFS.
 
