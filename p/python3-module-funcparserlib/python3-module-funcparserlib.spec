@@ -4,17 +4,18 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 0.3.6
-Release: alt2
+Version: 1.0.0
+Release: alt1
 
 Summary: Recurisve descent parsing library for Python based on functional combinators
+
 License: MIT
 Group:   Development/Python3
-
-URL:     https://github.com/vlasovskikh/funcparserlib
+URL:     https://pypi.org/project/funcparserlib
+VCS:     https://github.com/vlasovskikh/funcparserlib
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3-module-poetry
 
 %if_with check
 BuildRequires: python3(tox)
@@ -22,9 +23,7 @@ BuildRequires: python3(tox)
 
 BuildArch: noarch
 
-Source:  %modulename-%version.tar
-Patch0: 0001-Tweak-to-oneplus-to-make-it-act-the-same-as-many-wit.patch
-Patch1: 0002-Drop-support-for-EOL-Pythons-Add-support-for-modern-.patch
+Source:  %name-%version.tar
 
 %description
 Parser combinators are just higher-order functions that take parsers as their
@@ -48,28 +47,26 @@ of comments included. It features the longest parsed prefix error reporting, as
 well as a tiny lexer generator for token position tracking.
 
 %prep
-%setup -n %modulename-%version
-%autopatch -p1
+%setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-# setuptools' `test` command is deprecated
-sed -i 's/python setup.py test/python -m unittest discover/' tox.ini
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr -s false
+%tox_check_pyproject
 
 %files
+%doc LICENSE README.md
 %python3_sitelibdir/%modulename/
-%python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info/
-%doc README CHANGES
+%python3_sitelibdir/%modulename-%version.dist-info/
 
 %changelog
+* Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1
+- Automatically updated to 1.0.0.
+
 * Thu Sep 16 2021 Stanislav Levin <slev@altlinux.org> 0.3.6-alt2
 - Backported 2to3 changes (fixed FTBFS due to new setuptools 58).
 
