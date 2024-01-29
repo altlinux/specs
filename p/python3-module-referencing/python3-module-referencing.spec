@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.32.1
+Version: 0.33.0
 Release: alt1
 
 Summary: Cross-specification JSON referencing (JSON Schema, OpenAPI, and the one you just made up!)
@@ -12,7 +12,8 @@ Group: Development/Python3
 URL: https://pypi.org/project/referencing
 VCS: https://github.com/python-jsonschema/referencing
 BuildArch: noarch
-Source: %pypi_name-%version.tar
+Source: %name-%version.tar
+Source1: %name-%version-suite.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
@@ -42,7 +43,7 @@ across all drafts without needing to implement support themselves.
 This package contains tests for %pypi_name.
 
 %prep
-%setup -n %pypi_name-%version
+%setup -a1
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -65,6 +66,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/*/tests
 
 %changelog
+* Mon Jan 29 2024 Anton Vyatkin <toni@altlinux.org> 0.33.0-alt1
+- New version 0.33.0
+
 * Sun Jan 21 2024 Anton Vyatkin <toni@altlinux.org> 0.32.1-alt1
 - new version 0.32.1
 
