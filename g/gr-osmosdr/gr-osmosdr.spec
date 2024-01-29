@@ -3,7 +3,7 @@
 Name: gr-osmosdr
 Url: https://osmocom.org/projects/gr-osmosdr/wiki/GrOsmoSDR
 Version: 0.2.5
-Release: alt1
+Release: alt2
 License: GPL-3.0-or-later
 Group: Engineering
 Summary: Common software API for various radio hardware
@@ -36,7 +36,8 @@ BuildRequires: graphviz
 %endif
 
 # uhd not available for %ix86 %arm
-ExcludeArch: %ix86 %arm
+# gnuradio not available for ppc64le
+ExcludeArch: %ix86 %arm ppc64le
 
 %description
 Primarily gr-osmosdr supports the OsmoSDR hardware, but it also
@@ -123,6 +124,9 @@ EOF
 %endif
 
 %changelog
+* Mon Jan 29 2024 Anton Midyukov <antohami@altlinux.org> 0.2.5-alt2
+- add ppc64le to ExcludeArch
+
 * Fri Dec 29 2023 Anton Midyukov <antohami@altlinux.org> 0.2.5-alt1
 - New version 0.2.5.
 

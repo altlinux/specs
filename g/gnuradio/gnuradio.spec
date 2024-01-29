@@ -7,7 +7,7 @@
 %define _libexec %prefix/libexec
 
 Name: gnuradio
-Version: 3.10.9.1
+Version: 3.10.9.2
 Release: alt1
 Summary: Software defined radio framework
 License: GPL-2.0-or-later
@@ -18,7 +18,8 @@ Source: %name-%version.tar
 Patch0: fix-gnuradio-qtgui.pc.patch
 
 # uhd not available for i586, armh
-ExcludeArch: %ix86 %arm
+# also segfault when build on ppc64le
+ExcludeArch: %ix86 %arm ppc64le
 
 %add_python3_path %_datadir/%name
 %add_findreq_skiplist %_datadir/%name/examples/*.grc
@@ -45,7 +46,7 @@ BuildRequires: pkgconfig(fftw3f)
 BuildRequires: pkgconfig(gsl)
 BuildRequires: pkgconfig(jack)
 BuildRequires: pkgconfig(portaudio-2.0)
-#BuildRequires: pkgconfig(thrift)
+BuildRequires: pkgconfig(thrift)
 BuildRequires: pkgconfig(uhd)
 BuildRequires: libSDL-devel
 BuildRequires: libvolk-devel
@@ -192,6 +193,10 @@ done
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Jan 29 2024 Anton Midyukov <antohami@altlinux.org> 3.10.9.2-alt1
+- New version 3.10.9.2.
+- add ppc64le to ExcludeArch
+
 * Thu Jan 04 2024 Anton Midyukov <antohami@altlinux.org> 3.10.9.1-alt1
 - New version 3.10.9.1.
 

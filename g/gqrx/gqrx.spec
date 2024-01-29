@@ -1,6 +1,6 @@
 Name: gqrx
 Version: 2.17.3
-Release: alt1
+Release: alt2
 
 Summary: Software defined radio receiver powered by GNU Radio and Qt.
 License: GPL-3.0
@@ -42,7 +42,8 @@ BuildRequires: libunwind-devel
 Requires: qt6-svg
 
 # uhd not available for %ix86 %arm
-ExcludeArch: %ix86 %arm
+# gnuradio not available for ppc64le
+ExcludeArch: %ix86 %arm ppc64le
 
 %description
 %summary
@@ -71,6 +72,9 @@ appstream-util validate-relax --nonet \
 %doc COPYING LICENSE-CTK README.md
 
 %changelog
+* Mon Jan 29 2024 Anton Midyukov <antohami@altlinux.org> 2.17.3-alt2
+- add ppc64le to ExcludeArch
+
 * Mon Oct 23 2023 Anton Midyukov <antohami@altlinux.org> 2.17.3-alt1
 - New version 2.17.3.
 - build with qt6
