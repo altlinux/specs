@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.10.0
-Release: alt1
+Release: alt2
 
 Summary: A templating library able to output odt and pdf files
 License: GPL-3
@@ -16,6 +16,8 @@ Source0: https://files.pythonhosted.org/packages/98/50/a72676bad791bec1f5399667d
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 # install_requires:
@@ -41,28 +43,28 @@ objects.
 %setup -n %oname-%version
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # don't package tests
 rm -r %buildroot%python3_sitelibdir/%oname/tests/
 
 %check
-# `test` command of setuptools is deprecated
-sed -i 's/{envpython} setup.py test/python -m unittest discover/' tox.ini
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --no-deps -vvr -s false
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc CHANGELOG README
 %_bindir/relatorio-render
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 0.10.0-alt2
+- Moved on modern pyproject macros.
+
 * Thu Sep 16 2021 Stanislav Levin <slev@altlinux.org> 0.10.0-alt1
 - 0.9.0 -> 0.10.0.
 
