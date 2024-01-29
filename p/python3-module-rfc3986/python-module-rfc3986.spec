@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.4.0
-Release: alt1
+Release: alt1.1
 Summary: Validating URI References per RFC 3986
 Group: Development/Python3
 License: Apache-2.0
@@ -16,6 +16,8 @@ Patch: %name-%version-alt.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(idna)
@@ -33,31 +35,24 @@ A Python implementation of RFC 3986 including validation and authority parsing.
 %patch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-sed -i '/^\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-setenv =\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
-
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -vvr
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc README.rst LICENSE
 %python3_sitelibdir/rfc3986/
-%python3_sitelibdir/rfc3986-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/rfc3986-%version.dist-info/
 
 %changelog
+* Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt1.1
+- NMU: moved on modern pyproject macros.
+
 * Tue Sep 29 2020 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
 - 1.3.1 -> 1.4.0.
 - Stopped Python2 package build.
