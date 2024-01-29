@@ -3,7 +3,7 @@
 
 Name: linstor-client
 Summary: Linstor Client
-Version: 1.20.1
+Version: 1.21.0
 Release: alt1
 Group: Development/Python3
 License: GPLv3
@@ -13,7 +13,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
-BuildRequires: python3-module-linstor >= 1.4.1
+BuildRequires: python3-module-linstor >= 1.21.0
 %{?_enable_manpages:BuildRequires: help2man xsltproc docbook-style-xsl}
 
 %description
@@ -46,6 +46,9 @@ install -D -m 0644 scripts/bash_completion/linstor %buildroot%_sysconfdir/bash_c
 %endif
 
 %changelog
+* Mon Jan 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.21.0-alt1
+- 1.21.0
+
 * Wed Oct 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.20.1-alt1
 - 1.20.1
 

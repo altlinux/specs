@@ -8,7 +8,7 @@
 %define __jar_repack %nil
 
 Name: linstor
-Version: 1.25.1
+Version: 1.26.0
 Release: alt1
 Summary: DRBD replicated volume manager
 Group: System/Servers
@@ -38,7 +38,7 @@ It's used to provide persistent Linux block storage for cloudnative and hypervis
 # export PATH=$PWD/gradle-6.7/bin:$PATH
 export PATH=$PWD/gradle-8.2.1/bin:$PATH
 gradle %GRADLE_TASKS %GRADLE_FLAGS
-#for p in server satellite controller; do echo "%LS_PREFIX/.$p" >> "%_builddir/%NAME_VERS/$p/jar.deps"; done
+#for p in server satellite controller; do echo "%%LS_PREFIX/.$p" >> "%%_builddir/%%NAME_VERS/$p/jar.deps"; done
 
 %install
 mkdir -p %buildroot%LS_PREFIX
@@ -63,7 +63,7 @@ cp %_builddir/%NAME_VERS/scripts/firewalld/linstor-controller.xml %buildroot%FIR
 cp %_builddir/%NAME_VERS/scripts/firewalld/linstor-satellite.xml %buildroot%FIREWALLD_SERVICES
 mkdir -p %buildroot%_sysconfdir/drbd.d/
 cp %_builddir/%NAME_VERS/scripts/linstor-resources.res %buildroot%_sysconfdir/drbd.d/
-#touch %buildroot%LS_PREFIX/{.server,.satellite,.controller}
+#touch %%buildroot%%LS_PREFIX/{.server,.satellite,.controller}
 mkdir -p %buildroot%_sysconfdir/linstor
 cp %_builddir/%NAME_VERS/docs/linstor.toml-example %buildroot%_sysconfdir/linstor/
 touch %buildroot%_sysconfdir/linstor/linstor.toml
@@ -115,7 +115,7 @@ Linstor controller manages linstor satellites and persistant data storage.
 %post controller
 %LS_PREFIX/bin/controller.postinst.sh
 %post_service linstor-controller
-#test -f %_bindir/firewall-cmd && firewall-cmd --reload --quiet || :
+#test -f %%_bindir/firewall-cmd && firewall-cmd --reload --quiet || :
 
 %preun controller
 %preun_service linstor-controller
@@ -145,12 +145,15 @@ and creates drbd resource files.
 
 %post satellite
 %post_service linstor-satellite
-#test -f %_bindir/firewall-cmd && firewall-cmd --reload --quiet || :
+#test -f %%_bindir/firewall-cmd && firewall-cmd --reload --quiet || :
 
 %preun satellite
 %preun_service linstor-satellite
 
 %changelog
+* Mon Jan 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.26.0-alt1
+- 1.26.0
+
 * Fri Dec 01 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.25.1-alt1
 - 1.25.1
 
