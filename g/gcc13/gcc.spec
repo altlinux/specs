@@ -4,7 +4,7 @@
 
 Name: gcc%gcc_branch
 Version: 13.2.1
-Release: alt2
+Release: alt3
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -19,7 +19,7 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20230817
+%define snapshot 20240128
 
 %define srcver %version-%snapshot-%release
 %define srcfilename gcc-%srcver
@@ -50,14 +50,14 @@ Url: https://gcc.gnu.org/
 %define d_arches		%ix86 x86_64 %arm aarch64 %mips s390x riscv64
 %define gnat_arches		%ix86 x86_64
 %define go_arches		%ix86 x86_64
-%define libasan_arches		%ix86 x86_64 %arm aarch64 ppc64le mipsel riscv64
+%define libasan_arches		%ix86 x86_64 %arm aarch64 ppc64le mipsel riscv64 loongarch64
 %define libhwasan_arches	x86_64 aarch64
-%define libatomic_arches	%ix86 x86_64 %arm aarch64 mips mipsel s390x riscv64 ppc64le
-%define libitm_arches		%ix86 x86_64 %arm aarch64 s390x ppc64le riscv64
+%define libatomic_arches	%ix86 x86_64 %arm aarch64 mips mipsel s390x riscv64 ppc64le loongarch64
+%define libitm_arches		%ix86 x86_64 %arm aarch64 s390x ppc64le riscv64 loongarch64
 %define liblsan_arches		x86_64 aarch64 ppc64le
 %define libquadmath_arches	%ix86 x86_64 ppc64le
 %define libtsan_arches		x86_64 aarch64 ppc64le
-%define libubsan_arches		%ix86 x86_64 %arm aarch64 ppc64le riscv64
+%define libubsan_arches		%ix86 x86_64 %arm aarch64 ppc64le riscv64 loongarch64
 %define libvtv_arches		%ix86 x86_64
 
 %ifarch %d_arches
@@ -114,7 +114,7 @@ Url: https://gcc.gnu.org/
 %def_disable compat
 
 # For some architectures we do not want multilib support.
-%ifarch riscv64
+%ifarch riscv64 loongarch64
 %def_disable multilib
 %else
 %def_enable multilib
@@ -1652,6 +1652,10 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %ifarch riscv64
 %gcc_target_libdir/include/riscv_vector.h
 %endif
+%ifarch loongarch64
+%gcc_target_libdir/include/larchintrin.h
+%gcc_target_libdir/include/pthread.h
+%endif
 %ifarch ppc64le
 %gcc_target_libdir/ecrt*.o
 %gcc_target_libdir/ncrt*.o
@@ -2142,8 +2146,19 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Mon Jan 29 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 13.2.1-alt3
+- Updated to merged branches from https://gcc.gnu.org/git/gcc.git:
+  + vendors/redhat/heads/gcc-13-branch
+  commit f783814ad6a04ae5ef44595216596a2b75eda15b;
+  + releases/gcc-13 (snapshot 20240128)
+  commit r13-8258-g56cbb1e0389b3a62d53ec6a1bc0c6cb3b419e08b.
+- Added support for loongarch64 architecture (thx Alexey Sheplyakov).
+- Changed the method for enabling the --as-needed linker feature by default,
+  to avoid its usage along with sanitizer (-fsanitize=*) instrumentation
+  (thx Matthias Klose).
+
 * Sat Aug 19 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 13.2.1-alt2
-- Updated to merge branch from https://gcc.gnu.org/git/gcc.git:
+- Updated to merged branch from https://gcc.gnu.org/git/gcc.git:
   + releases/gcc-13 (snapshot 20230817)
   commit r13-7730-g76b0a5783b524e4b7963f32069f1c9882d09cf38.
 - riscv64: Packaged riscv_vector.h (thx Ivan A. Melnikov).
