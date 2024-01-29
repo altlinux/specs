@@ -1,6 +1,6 @@
 Name: python3-module-platformio
 Version: 6.1.13
-Release: alt1
+Release: alt2
 
 Summary: PlatformIO Core
 License: Apache-2.0
@@ -13,21 +13,6 @@ BuildArch: noarch
 BuildRequires: rpm-build-pyproject
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
-
-BuildRequires: python3(pytest)
-BuildRequires: python3(aiofiles)
-BuildRequires: python3(ajsonrpc)
-BuildRequires: python3(bottle)
-BuildRequires: python3(click)
-BuildRequires: python3(elftools)
-BuildRequires: python3(marshmallow)
-BuildRequires: python3(requests)
-BuildRequires: python3(semantic_version)
-BuildRequires: python3(starlette)
-BuildRequires: python3(tabulate)
-BuildRequires: python3(uvicorn)
-BuildRequires: python3(wsproto)
-BuildRequires: python3(zeroconf)
 
 %description
 %summary
@@ -49,9 +34,6 @@ BuildRequires: python3(zeroconf)
 
 %set_python3_req_method strict
 
-%check
-%tox_check_pyproject
-
 %files
 %_bindir/pio
 %_bindir/platformio
@@ -60,6 +42,9 @@ BuildRequires: python3(zeroconf)
 %python3_sitelibdir/platformio-%version.dist-info
 
 %changelog
+* Mon Jan 29 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.1.13-alt2
+- dropped check section, most of actual tests are online anyway
+
 * Tue Jan 23 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.1.13-alt1
 - 6.1.13 released
 
