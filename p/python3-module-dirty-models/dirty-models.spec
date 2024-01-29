@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.12.4
-Release: alt1
+Release: alt1.1
 Summary: Dirty models for python 3
 License: BSD
 Group: Development/Python3
@@ -16,6 +16,8 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 # install_requires=
@@ -60,29 +62,23 @@ Features:
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-usedevelop=True
-commands =
-    nose2
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -s false
+%tox_check_pyproject
 
 %files
 %doc *.rst
 %python3_sitelibdir/dirty_models/
-%python3_sitelibdir/dirty_models-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/dirty_models-%version.dist-info/
 
 %changelog
+* Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 0.12.4-alt1.1
+- NMU: moved on modern pyproject macros.
+
 * Tue Feb 08 2022 Stanislav Levin <slev@altlinux.org> 0.12.4-alt1
 - 0.9.2 -> 0.12.4.
 
