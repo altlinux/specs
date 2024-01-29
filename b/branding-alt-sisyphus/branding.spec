@@ -1,5 +1,9 @@
+%global grub_arches x86_64 aarch64 loongarch64 %ix86
+
+%ifarch %grub_arches
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
+%endif
 
 #def_with slideshow
 
@@ -15,7 +19,7 @@
 
 Name: branding-%flavour
 Version: 20240122
-Release: alt1
+Release: alt2
 
 Url: http://en.altlinux.org
 
@@ -49,7 +53,6 @@ Distro-specific packages with design and texts
 Group: System/Configuration/Boot and Init
 Summary: Graphical theme for grub2
 License: GPL
-ExcludeArch: %e2k %arm ppc64le mipsel
 
 Requires: coreutils
 Provides: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-altlinux-%theme-bootloader
@@ -154,7 +157,6 @@ Slideshow for %Brand %version %Theme installer
 Summary: ALT welcome page
 License: distributable
 Group: System/Base
-BuildArch: noarch
 Provides: indexhtml indexhtml-%theme = %version indexhtml-Desktop = 1:5.0
 Obsoletes: indexhtml-desktop indexhtml-Desktop
 
@@ -221,6 +223,7 @@ popd
 mkdir -p %buildroot/usr/share/install2/slideshow
 install slideshow/* %buildroot/usr/share/install2/slideshow/
 
+%ifarch %grub_arches
 #bootloader
 %post bootloader
 . shell-config
@@ -230,12 +233,15 @@ shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 shell_config_set /etc/sysconfig/grub2 GRUB_BACKGROUND ''
 # deprecated
 shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER ''
+%endif
 
 %post indexhtml
 %_sbindir/indexhtml-update
 
+%ifarch %grub_arches
 %files bootloader
 /boot/grub/themes/%theme
+%endif
 
 #bootsplash
 %post bootsplash
@@ -278,6 +284,9 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Mon Jan 29 2024 Michael Shigorin <mike@altlinux.org> 20240122-alt2
+- spec: fix archdep (there's no per-package EA:!)
+
 * Mon Jan 22 2024 Anton Midyukov <antohami@altlinux.org> 20240122-alt1
 - Drop gfxboot for syslinux
 - Remove xfce-settings subpackage
