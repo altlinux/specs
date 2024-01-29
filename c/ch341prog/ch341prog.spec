@@ -3,16 +3,14 @@
 Name: ch341prog
 # look at the last non-specfile change, take date and first 8 digits
 Version: 20170517ba1a8306
-Release: alt1
+Release: alt2
 Summary: 24xx/25xx I2C/SPI IC flashing tool for CH341-based programmers
-License: GPL3
+License: GPLv3+
 Group: Development/Other
 URL: https://github.com/setarcos/ch341prog
 Source0: %name-%version.tar.xz
 %if %build_static
-BuildRequires: glibc-devel-static libnetlink-devel-static
-%else
-BuildRequires: libnetlink-devel
+BuildRequires: glibc-devel-static
 %endif
 
 %description
@@ -34,9 +32,9 @@ BuildArch: noarch
 %build
 %__cc	-std=gnu99 -Wall -Ilibusb \
 	*.c libusb/*.c -o %name \
-	-lpthread -lnetlink \
+	-lpthread -s \
 %if %build_static
-	-s -static
+	-static
 %else
 	;
 %endif
@@ -58,6 +56,10 @@ install -m 644 %name.1 %buildroot/%_man1dir/
 %doc CH341_chip.txt COPYING README.md
 
 %changelog
+* Mon Jan 29 2023 Gremlin from Kremlin <gremlin@altlinux.org> 20170517ba1a8306-alt2
+- build without libnetlink
+- set license to explicit GPLv3+
+
 * Wed Oct 04 2017 Gremlin from Kremlin <gremlin@altlinux.org> 20170517ba1a8306-alt1
 - first build
 
