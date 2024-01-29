@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.5.4
-Release: alt1
+Release: alt1.1
 Summary: Validate library for python 3
 License: MIT
 Group: Development/Python3
@@ -16,6 +16,8 @@ Source0: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(dirty_models)
@@ -44,31 +46,25 @@ Features:
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-usedevelop=True
-commands =
-    nose2 -v
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
 # requires aiounittest, nose2 doesn't support skip on module level
 rm tests/dirty_validators/tests_async_complex.py
-tox.py3 --sitepackages --console-scripts -vvr -s false
+%tox_check_pyproject
 
 %files
 %doc *.rst
 %python3_sitelibdir/dirty_validators/
-%python3_sitelibdir/dirty_validators-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/dirty_validators-%version.dist-info/
 
 %changelog
+* Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 0.5.4-alt1.1
+- NMU: moved on modern pyproject macros.
+
 * Mon Feb 14 2022 Stanislav Levin <slev@altlinux.org> 0.5.4-alt1
 - 0.3.2 -> 0.5.4
 
