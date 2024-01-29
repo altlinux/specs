@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 410
+%define centos_release 413
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -659,6 +659,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Jan 29 2024 Alexey Gladkov <legion@altlinux.ru> 5.14.0.413-alt1.el9
+- Updated to kernel-5.14.0-413.el9 (fixes: CVE-2022-0480, CVE-2023-6356, CVE-2023-6531, CVE-2023-6535, CVE-2023-6536)
+
 * Mon Jan 22 2024 Alexey Gladkov <legion@altlinux.ru> 5.14.0.410-alt1.el9
 - Updated to kernel-5.14.0-410.el9 (fixes: CVE-2020-26555, CVE-2023-6606)
 
