@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _pkgdocdir %_docdir/%name-%version
-%define majver 40
+%define majver 41
 
 Name: ngspice
 Version: %majver
@@ -181,6 +181,9 @@ cp -a \
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Jan 29 2024 Anton Midyukov <antohami@altlinux.org> 41-alt1
+- new version 41
+
 * Mon Jan 29 2024 Anton Midyukov <antohami@altlinux.org> 40-alt1
 - new version 40
 
