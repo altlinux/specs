@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 3.0.0
-Release: alt1
+Release: alt1.1
 Summary: A python svg graph plotting library
 License: LGPLv3
 Group: Development/Python3
@@ -18,6 +18,8 @@ Patch0: %name-%version-alt.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(cairosvg)
@@ -37,27 +39,28 @@ documentation is on http://pygal.org
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 mv %buildroot%_bindir/pygal_gen.py{,3}
 
 # don't package tests
 rm -r %buildroot%python3_sitelibdir/%oname/test/
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts --no-deps -vvr
+%tox_check_pyproject
 
 %files
 %doc CHANGELOG README*
 %_bindir/pygal_gen.py3
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1.1
+- NMU: moved on modern pyproject macros.
+
 * Wed Feb 02 2022 Stanislav Levin <slev@altlinux.org> 3.0.0-alt1
 - 2.4.0 -> 3.0.0.
 
