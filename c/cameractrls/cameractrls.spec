@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cameractrls
-Version: 0.5.11
+Version: 0.5.13
 Release: alt1
 
 Summary: Camera controls
@@ -72,5 +72,8 @@ popd
 %python3_sitelibdir/CameraCtrls
 
 %changelog
+* Mon Jan 29 2024 Mikhail Tergoev <fidel@altlinux.org> 0.5.13-alt1
+- 0.5.13
+
 * Wed Nov 08 2023 Mikhail Tergoev <fidel@altlinux.org> 0.5.11-alt1
 - initial build for ALT Sisyphus
