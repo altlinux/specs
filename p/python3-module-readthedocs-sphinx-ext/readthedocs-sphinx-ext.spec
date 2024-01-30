@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.2.1
+Version: 2.2.5
 Release: alt1
 
 Summary: This holds code specific for Read the Docs and Sphinx
@@ -46,6 +46,9 @@ Tooling for a better Read the Docs Sphinx build experience.
 %python3_sitelibdir/readthedocs_sphinx_ext-%version-py%_python3_version.egg-info
 
 %changelog
+* Wed Jan 31 2024 Grigory Ustinov <grenka@altlinux.org> 2.2.5-alt1
+- Automatically updated to 2.2.5.
+
 * Mon Jun 12 2023 Grigory Ustinov <grenka@altlinux.org> 2.2.1-alt1
 - Automatically updated to 2.2.1.
 
