@@ -1,9 +1,6 @@
-%define _unpackaged_files_terminate_build 1
-%def_with check
-
 Name: python3-module-atomicwrites
 Version: 1.4.1
-Release: alt1
+Release: alt2
 
 Summary: Python Atomic file writes on POSIX
 License: MIT
@@ -13,51 +10,41 @@ Url: https://pypi.org/project/atomicwrites
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
-
-%if_with check
-BuildRequires: python3-module-tox
-%endif
+BuildRequires(pre): rpm-build-pyproject
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(pytest)
 
 BuildArch: noarch
 
-%define long_desc This module provides atomic file writes on POSIX operating  \
-systems. It supports:                                                         \
-* Race-free assertion that the target file doesn't yet exist                  \
-* Simple high-level API that wraps a very flexible class-based API            \
-* Consistent error handling across platforms
-
 %description
-%long_desc
+This module provides atomic file writes on POSIX operating systems.
+It supports:
+* Race-free assertion that the target file doesn't yet exist
+* Simple high-level API that wraps a very flexible class-based AP
+* Consistent error handling across platforms
 
 %prep
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-sed -i '/\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-setenv =\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}-test
-tox.py3 --sitepackages -vvr
+%pyproject_run_pytest tests
 
 %files
 %doc LICENSE README.rst
-%python3_sitelibdir/atomicwrites/
-%python3_sitelibdir/atomicwrites-*.egg-info/
+%python3_sitelibdir/atomicwrites
+%python3_sitelibdir/atomicwrites-%version.dist-info
 
 %changelog
+* Tue Jan 30 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.1-alt2
+- cleaned up check section
+
 * Thu May 11 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.1-alt1
 - 1.4.1
 
