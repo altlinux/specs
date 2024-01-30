@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.27.10
-Release: alt2
+Release: alt3
 Epoch: 1
 %K5init
 
@@ -119,6 +119,7 @@ Patch139: alt-locales-list.patch
 Patch140: alt-watch-wallpaper.patch
 Patch141: alt-weather-fix-ua.patch
 Patch142: alt-fix-lockout-applet.patch
+Patch143: alt-run-etc-profile.patch
 
 # Automatically added by buildreq on Sat Mar 21 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig glib2-devel glibc-devel-static kf5-attica-devel kf5-kdoctools-devel kf5-kjs-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcln-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libgst-plugins1.0 libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-script libqt5-sql libqt5-svg libqt5-test libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libwayland-server libxcb-devel libxcbutil-keysyms libxcbutil-keysyms-devel libxkbfile-devel libxml2-devel pkg-config python-base qt5-base-devel qt5-declarative-devel qt5-webkit-devel rpm-build-gir ruby ruby-stdlibs wayland-devel xml-common xml-utils xorg-fixesproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -326,6 +327,7 @@ popd
 %patch140 -p1
 %patch141 -p1
 %patch142 -p1
+%patch143 -p1
 
 install -m 0644 %SOURCE1 po/ru/freememorynotifier.po
 tar xf %SOURCE11 freememorynotifier/
@@ -557,6 +559,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_unitdir_user/plasma-core.target.d/xd
 
 
 %changelog
+* Tue Jan 30 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.10-alt3
+- force run /etc/profile at wayland session start (closes: 49197)
+
 * Thu Dec 21 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.10-alt2
 - restart session dbus only if need
 
