@@ -7,7 +7,7 @@
 
 Name: audiosharing
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Audio Sharing application for GNOME
 License: GPL-3.0
@@ -17,7 +17,7 @@ Url: https://gitlab.gnome.org/World/audiosharing
 %if_disabled snapshot
 Source: %url/-/archive/%version/%name-%version.tar.gz
 %else
-Vcs: https://gitlab.gnome.org/World/amberol.git
+Vcs: https://gitlab.gnome.org/World/audiosharing.git
 Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
@@ -32,7 +32,7 @@ Requires: libgst-rtsp-server >= %gst_ver
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo git yelp-tools
-BuildRequires: /usr/bin/appstream-util desktop-file-utils
+BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(gstreamer-1.0) >= %gst_ver
@@ -74,6 +74,10 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Tue Jan 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt2
+- updated to 0.2.2-13-gda62bbc
+- fixed Vcs tag
+
 * Thu Jul 06 2023 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt1
 - first build for Sisyphus
 
