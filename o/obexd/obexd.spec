@@ -3,7 +3,7 @@
 %def_disable server
 
 Name: obexd
-Version: 0.47
+Version: 0.48
 Release: alt1
 Summary: D-Bus service for Obex Client access
 Group: System/Servers
@@ -46,6 +46,9 @@ Bluetooth-equipped devices
 %_datadir/dbus-1/services/obex*.service
 
 %changelog
+* Tue Jan 30 2024 Valery Inozemtsev <shrek@altlinux.ru> 0.48-alt1
+- 0.48
+
 * Thu Aug 09 2012 Valery Inozemtsev <shrek@altlinux.ru> 0.47-alt1
 - 0.47
 
