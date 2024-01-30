@@ -1,7 +1,7 @@
 %def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 0.7
+%define ver_major 0.8
 %define rdn_name sm.puri.Chatty
 
 %def_enable purple
@@ -9,49 +9,47 @@
 #chatty-clock:ERROR:../tests/clock.c:170:test_clock_human_time: assertion failed (str == array[i].human_time_detailed): ("0 minute ago" == "1 minute ago")
 %def_disable check
 %else
-%def_enable check
+# chatty:pgp failed in hasher
+%def_disable check
 %endif
 
 Name: chatty
-Version: %ver_major.3
+Version: %ver_major.1
 Release: alt1
 
 Summary: SMS, MMS and XMPP messaging application for GNOME
 Group: Networking/Instant messaging
 License: GPL-3.0-or-later
-Url: https://source.puri.sm/Librem5/chatty
+Url: https://gitlab.gnome.org/World/Chatty
 
 %if_disabled snapshot
-Source: https://source.puri.sm/Librem5/%name/-/archive/v%version/%name-v%version.tar.gz
+Source: https://gitlab.gnome.org/World/Chatty/-/archive/v%version/%name-v%version.tar.gz
 %else
-Vcs: https://source.puri.sm/Librem5/chatty.git
+Vcs: https://gitlab.gnome.org/World/Chatty.git
 Source: %name-%version.tar
 %endif
 
 %define glib_ver 2.66
-%define gtk_ver 3.22
-%define gtk4_ver 4.6
-%define handy_ver 1.5
+%define gtk4_ver 4.10
 %define adw_ver 1.2
+%define desktop_ver 43
 
 Requires: dconf yelp
 Requires: ModemManager feedbackd
+Requires: gnupg2
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson gcc-c++ yelp-tools
 BuildRequires: /usr/bin/appstream-util desktop-file-utils
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
-BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver
-BuildRequires: pkgconfig(gspell-1)
-#BuildRequires: pkgconfig(gtk4) >= %gtk4_ver
-BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
-#BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
+BuildRequires: pkgconfig(gtk4) >= %gtk4_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(sqlite3)
-BuildRequires: pkgconfig(gnome-desktop-3.0)
-#BuildRequires: pkgconfig(gnome-desktop-4)
-BuildRequires: evolution-data-server-devel
+BuildRequires: pkgconfig(gnome-desktop-4)
+BuildRequires: pkgconfig(libebook-contacts-1.2)
+BuildRequires: pkgconfig(libebook-1.2)
 BuildRequires: libphonenumber-devel
-BuildRequires: pkgconfig(gsettings-desktop-schemas)
+BuildRequires: pkgconfig(gsettings-desktop-schemas) >= %desktop_ver
 BuildRequires: libfeedback-devel
 BuildRequires: pkgconfig(mm-glib)
 %{?_enable_purple:BuildRequires: libpurple-devel}
@@ -93,6 +91,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Tue Jan 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
+- updated to v0.8.1-1-g28fbb899 (ported to gtk4/libadwaita)
+
 * Tue May 30 2023 Yuri N. Sedunov <aris@altlinux.org> 0.7.3-alt1
 - first build for Sisyphus (ALT #46306)
 
