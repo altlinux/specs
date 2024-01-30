@@ -10,7 +10,7 @@
 
 Name: python3-module-%oname
 Version: 4.3.0
-Release: alt1
+Release: alt2
 
 Summary: Zope datetime
 
@@ -27,10 +27,11 @@ BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
-BuildRequires: python3-module-tox
 BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-six
 %endif
 
 %py3_requires zope
@@ -53,11 +54,10 @@ This package contains tests for zope.datetime.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-%python3_prune
+%pyproject_install
 
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
@@ -66,24 +66,18 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-sed -i 's|zope-testrunner |zope-testrunner3 |g' tox.ini
-sed -i '/\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-setenv =\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/zope-testrunner3\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/zope-testrunner3' tox.ini
-
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.txt *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/zope/datetime/tests
 
 %changelog
+* Wed Jan 31 2024 Grigory Ustinov <grenka@altlinux.org> 4.3.0-alt2
+- Moved on modern pyproject macros.
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 4.3.0-alt1
 - new version (4.3.0) with rpmgs script
 - cleanup build
