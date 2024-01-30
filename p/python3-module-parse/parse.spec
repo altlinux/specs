@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.19.0
-Release: alt1
+Release: alt2
 Summary: parse() is the opposite of format()
 License: BSD
 Group: Development/Python3
@@ -16,6 +16,8 @@ Url: https://pypi.org/project/parse/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(tox)
@@ -28,21 +30,22 @@ Parse strings using a specification based on the Python format() syntax.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr -s false
+%tox_check_pyproject
 
 %files
 %doc *.rst
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jan 31 2024 Grigory Ustinov <grenka@altlinux.org> 1.19.0-alt2
+- Moved on modern pyproject macros.
+
 * Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 1.19.0-alt1
 - 1.8.2 -> 1.19.0.
 
