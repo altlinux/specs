@@ -1,35 +1,17 @@
 %define _unpackaged_files_terminate_build 1
-
-%def_disable static
-
+%define sover 0
 Name: libid3tag
-Version: 0.15.1b
-Release: alt10
+Version: 0.16.3
+Release: alt1
 Summary: ID3 Tag manipulation library
 Summary(ru_RU.UTF-8): Библиотека для работы с тегами ID3
 License: GPL-2.0-or-later
 Group: Sound
-Url: https://www.underbit.com/products/mad/
-
-# https://download.sourceforge.net/%name/%name-%version.tar.gz
+Url: https://codeberg.org/tenacityteam/libid3tag
+VCS: https://codeberg.org/tenacityteam/libid3tag.git
 Source: %name-%version.tar
-Patch1: %name-0.15.0b-alt-pkgconfig.patch
-Patch2: libid3tag-0.15.1b-fix-CVE-2008-2109.patch
 
-# Patches from Debian
-Patch10: 10_a_capella.dpatch
-# CVE-2004-2779
-Patch11: 10_utf16.dpatch
-Patch12: 11_unknown_encoding.dpatch
-Patch13: gperf_size_t.patch
-
-# Patches from Gentoo
-Patch20: libid3tag-0.15.1b-file-write.patch
-Patch21: libid3tag-0.15.1b-tag.patch
-
-%{?_enable_static:BuildPreReq: glibc-devel-static}
-
-BuildRequires: gcc-c++ gperf libstdc++-devel zlib-devel
+BuildRequires: gcc-c++ gperf libstdc++-devel zlib-devel cmake
 
 %description
 %name is a library for reading and (eventually) writing ID3 tags,
@@ -51,59 +33,31 @@ using %name library.
 В этом пакете находятся файлы, необходимые для использования %name
 в разработке приложений.
 
-%package devel-static
-Summary: Static libraries for %name
-Group: Development/C
-Requires: %name-devel = %EVR
-
-%description devel-static
-This package contains development libraries required for packaging
-statically linked %name-based software.
-
-%description devel-static -l ru_RU.UTF-8
-В этом пакете находятся статические библиотеки, необходимые для
-использования %name в разработке статических приложений.
-
 %prep
 %setup
-%patch1 -p1
-%patch2 -p0
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch20 -p1
-%patch21 -p1
-
-touch NEWS AUTHORS ChangeLog
 
 %build
-%autoreconf
-
-%configure %{subst_enable static}
-
-# SMP-incompatible build
-%make
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 
 %files
-%doc COPYING
 %doc CHANGES README CREDITS COPYRIGHT
-%_libdir/*.so.*
+%_libdir/*.so.%sover
+%_libdir/*.so.%sover.*
 
 %files devel
 %_libdir/*.so
+%_libdir/cmake/id3tag
 %_pkgconfigdir/*
 %_includedir/*
 
-%if_enabled static
-%files devel-static
-%_libdir/*.a
-%endif
-
 %changelog
+* Mon Jan 29 2024 Anton Farygin <rider@altlinux.ru> 0.16.3-alt1
+- 0.16.3
+
 * Thu Dec 24 2020 Dmitry V. Levin <ldv@altlinux.org> 0.15.1b-alt10
 - NMU.
 - Fixed License tag.
