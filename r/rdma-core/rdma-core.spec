@@ -8,10 +8,10 @@
 %else
 %def_disable dma_coherent
 %endif
-
+%def_enable pyverbs
 
 Name: rdma-core
-Version: 48.0
+Version: 50.0
 Release: alt1
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
@@ -26,6 +26,7 @@ Source: %name-%version.tar
 Patch: %name-%version.patch
 Patch2000: %name-e2k.patch
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: binutils
 BuildRequires: cmake >= 3.18.1 rpm-macros-cmake
 BuildRequires: ninja-build rpm-macros-ninja-build
@@ -34,6 +35,9 @@ BuildRequires: pkgconfig(libnl-3.0)
 BuildRequires: pkgconfig(libnl-route-3.0)
 BuildRequires: libsystemd-devel
 BuildRequires: /usr/bin/rst2man
+%if_enabled pyverbs
+BuildRequires: python3-module-Cython python3-devel
+%endif
 %ifnarch %e2k
 BuildRequires: pandoc
 %endif
@@ -225,6 +229,14 @@ Requires: %name = %EVR
 In conjunction with the kernel ib_srp driver, srp_daemon allows you to
 discover and use SCSI devices via the SCSI RDMA Protocol over InfiniBand.
 
+%package -n python3-module-pyverbs
+Summary: Python3 API over IB verbs
+Group: Development/Python3
+
+%description -n python3-module-pyverbs
+Pyverbs is a Cython-based Python API over libibverbs, providing an
+easy, object-oriented access to IB verbs.
+
 %prep
 %setup
 %patch -p1
@@ -259,6 +271,14 @@ sed -i '/rdma_man_get_prebuilt(/a execute_process(COMMAND "echo" " " OUTPUT_FILE
     -DCMAKE_INSTALL_UDEV_RULESDIR:PATH=%_udevrulesdir \
     -DCMAKE_INSTALL_PERLDIR:PATH=%perl_vendor_privlib \
     -DENABLE_IBDIAGS_COMPAT:BOOL=True \
+%if_enabled pyverbs
+    -DNO_PYVERBS=0 \
+%else
+    -DNO_PYVERBS=1 \
+%endif
+    -DPYTHON_EXECUTABLE:PATH=%__python3 \
+    -DCMAKE_INSTALL_PYTHON_ARCH_LIB:PATH=%python3_sitelibdir
+
 
 %ninja_build
 
@@ -585,7 +605,17 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %_man8dir/srp_daemon.*
 %docdir/ibsrpdm.md
 
+%if_enabled pyverbs
+%files -n python3-module-pyverbs
+%python3_sitelibdir/*
+%_docdir/%name-%version/tests
+%endif
+
 %changelog
+* Fri Jan 26 2024 Alexey Shabalin <shaba@altlinux.org> 50.0-alt1
+- New version 50.0.
+- Add python3-module-pyverbs package
+
 * Tue Oct 10 2023 Alexey Shabalin <shaba@altlinux.org> 48.0-alt1
 - new version 48.0
 
