@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.5.6
-Release: alt2
+Release: alt3
 Summary: parse_type extends the parse module (opposite of string.format())
 License: BSD
 Group: Development/Python
@@ -17,6 +17,8 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(parse)
@@ -35,22 +37,23 @@ Simplifies to build parse types based on the parse module.
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false
+%tox_check_pyproject
 
 %files
 %doc *.rst
 %python3_sitelibdir/parse_type/
-%python3_sitelibdir/parse_type-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/parse_type-%version.dist-info/
 
 %changelog
+* Wed Jan 31 2024 Grigory Ustinov <grenka@altlinux.org> 0.5.6-alt3
+- Moved on modern pyproject macros.
+
 * Thu Sep 16 2021 Stanislav Levin <slev@altlinux.org> 0.5.6-alt2
 - Fixed FTBFS (setuptools 58).
 
