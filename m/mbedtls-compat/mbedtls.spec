@@ -5,7 +5,7 @@
 %def_disable static
 
 Name: %pkgname-compat
-Version: 2.28.6
+Version: 2.28.7
 Release: alt1
 
 Summary: Transport Layer Security protocol suite
@@ -139,6 +139,9 @@ sed -i 's/-Werror/-Wno-error/' CMakeLists.txt
 %endif
 
 %changelog
+* Tue Jan 30 2024 Nazarov Denis <nenderus@altlinux.org> 2.28.7-alt1
+- Version 2.28.7
+
 * Wed Nov 08 2023 Nazarov Denis <nenderus@altlinux.org> 2.28.6-alt1
 - Version 2.28.6
 
