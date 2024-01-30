@@ -5,8 +5,8 @@
 %def_enable check
 
 Name: xdg-desktop-portal-wlr
-Version: %ver_major.0
-Release: alt1.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: xdg-desktop-portal backend for wlroots
 Group: Graphical desktop/Other
@@ -62,6 +62,9 @@ mkdir -p %buildroot/%_xdgconfigdir/%name
 
 
 %changelog
+* Tue Jan 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
+- updated to v0.7.1-3-g1eae4bf
+
 * Mon Aug 14 2023 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1.1
 - /etc/xdg/xdg-desktop-portal-wlr directory owned by package
 
