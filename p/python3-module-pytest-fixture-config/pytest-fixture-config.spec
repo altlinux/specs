@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.7.0
-Release: alt2
+Release: alt3
 Summary: Fixture configuration utils for py.test
 License: MIT
 Group: Development/Python3
@@ -15,6 +15,8 @@ BuildArch: noarch
 Source: %oname-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(pytest)
@@ -35,28 +37,25 @@ sed -i -e 's:setuptools-git:setuptools:g' \
 	common_setup.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-commands =
-    {envpython} -m pytest {posargs:-vra}
-EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -vvr
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc CHANGES.md README.md
 %python3_sitelibdir/__pycache__/pytest_fixture_config.*.py*
-%python3_sitelibdir/pytest_fixture_config-*.egg-info/
+%python3_sitelibdir/pytest_fixture_config-*.dist-info/
 %python3_sitelibdir/pytest_fixture_config.py
 
 %changelog
+* Wed Jan 31 2024 Grigory Ustinov <grenka@altlinux.org> 1.7.0-alt3
+- Moved on modern pyproject macros.
+
 * Mon Oct 19 2020 Stanislav Levin <slev@altlinux.org> 1.7.0-alt2
 - Stopped Python2 package build.
 
