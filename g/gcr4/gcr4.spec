@@ -1,8 +1,8 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name gcr
 %define _libexecdir %_prefix/libexec
-%define ver_major 4.1
+%define ver_major 4.2
 %define gcr_api_ver 4
 %define gck_api_ver 2
 
@@ -132,7 +132,7 @@ This package contains development documentation for GCR libraries.
 %find_lang %_name-%gcr_api_ver
 
 %check
-xvfb-run %__meson_test -t 3
+xvfb-run %__meson_test -t 6
 
 %files -f %_name-%gcr_api_ver.lang
 %{?_enable_gtk4:%_bindir/%_name-viewer-gtk4}
@@ -177,6 +177,9 @@ xvfb-run %__meson_test -t 3
 %_vapidir/%_name-%gcr_api_ver.vapi
 
 %changelog
+* Tue Jan 30 2024 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
+- 4.2.0
+
 * Wed Mar 08 2023 Yuri N. Sedunov <aris@altlinux.org> 4.1.0-alt1
 - 4.1.0
 
