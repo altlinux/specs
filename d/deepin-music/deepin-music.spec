@@ -4,7 +4,7 @@
 %define dmusic_ver 1
 
 Name: deepin-music
-Version: 7.0.3
+Version: 7.0.3.0.1.6a82
 Release: alt1
 
 Summary: Awesome music player with brilliant and tweakful UI Deepin-UI based
@@ -14,12 +14,9 @@ Group: Sound
 Url: https://github.com/linuxdeepin/deepin-music
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: deepin-music-alt-fix-gcc-build.patch
-Patch1: deepin-music-alt-fix-underlinked-icui18n.patch
+Patch: %name-%version-%release.patch
 
-Requires: vlc-mini ffmpeg dtkdeclarative
-
-BuildRequires(pre): rpm-build-kf5 cmake rpm-build-ninja
+BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
 # Automatically added by buildreq on Sat Oct 28 2023
 # optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libavcodec-devel libavutil-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libicu-devel libmpris-qt5 libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-printsupport libqt5-qml libqt5-qmlmodels libqt5-quick libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libudisks2-qt5 pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-devel qt5-declarative-devel qt5-tools sh5 zlib-devel
 BuildRequires: cmake kf5-kcodecs-devel libSDL2-devel libavformat-devel libdtkdeclarative-devel libdtkwidget-devel libtag-devel libvlc-devel mpris-qt5-devel qt5-multimedia-devel qt5-svg-devel qt5-tools-devel udisks2-qt5-devel
@@ -30,6 +27,9 @@ BuildRequires: lld-devel
 %else
 BuildRequires: gcc-c++
 %endif
+
+Requires: vlc-mini ffmpeg dtkdeclarative
+Requires: libqt5-core = %_qt5_version
 
 %description
 %summary.
@@ -54,10 +54,7 @@ The package provides development files for %repo library.
 
 %prep
 %setup
-%if_without clang
 %patch -p1
-%endif
-%patch1 -p1
 
 %build
 %if_with clang
@@ -80,12 +77,16 @@ cmake --build %_cmake__builddir -j%__nprocs
 
 %install
 %cmake_install
-%find_lang %name
+%find_lang --with-qt %name
 
 %files -f %name.lang
 %doc CHANGELOG.md LICENSE README.md
 %_bindir/%name
-%_datadir/%name/
+# package translations outside %%find_lang
+%dir %_datadir/%name/
+%dir %_datadir/%name/translations/
+%_datadir/%name/translations/deepin-music_ky@Arab.qm
+# ---
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %dir %_datadir/dsg/
@@ -105,6 +106,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/lib%repo.so
 
 %changelog
+* Tue Jan 30 2024 Leontiy Volodin <lvol@altlinux.org> 7.0.3.0.1.6a82-alt1
+- New version 7.0.3-1-g6a8242f9.
+- Requires: libqt5-core = %%_qt5_version.
+
 * Sat Oct 28 2023 Leontiy Volodin <lvol@altlinux.org> 7.0.3-alt1
 - New version 7.0.3.
 - Fixed build using gcc.
