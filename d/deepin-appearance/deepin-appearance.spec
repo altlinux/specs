@@ -3,12 +3,12 @@
 %def_disable clang
 
 Name: deepin-appearance
-Version: 1.1.7
-Release: alt1.git9f81088
+Version: 1.1.25
+Release: alt1
 
 Summary: Set the theme and appearance of DDE
 
-License: GPL-3.0-or-later
+License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/%repo
 
@@ -66,5 +66,8 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/dsg/configs/org.deepin.dde.appearance/org.deepin.dde.appearance.json
 
 %changelog
+* Tue Jan 30 2024 Leontiy Volodin <lvol@altlinux.org> 1.1.25-alt1
+- New version 1.1.25.
+
 * Fri Dec 08 2023 Leontiy Volodin <lvol@altlinux.org> 1.1.7-alt1.git9f81088
 - Initial build for ALT Sisyphus.

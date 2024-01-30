@@ -4,8 +4,8 @@
 %define repo dde-app-services
 
 Name: deepin-app-services
-Version: 1.0.24.0.2.3acd
-Release: alt2
+Version: 1.0.25
+Release: alt1
 
 Summary: Service collection of DDE applications
 
@@ -71,20 +71,23 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %install
 %cmake_install
 chmod +x %buildroot%_datadir/bash-completion/completions/dde-dconfig
+%find_lang --output=%name.lang dde-dconfig dde-dconfig-editor
 
-%files
+%files -f %name.lang
 %doc LICENSE README.md
 %_bindir/dde-dconfig*
 %_datadir/dbus-1/interfaces/org.desktopspec.ConfigManager*.xml
 %_datadir/dbus-1/system.d/org.desktopspec.ConfigManager.conf
 %_datadir/dbus-1/system-services/org.desktopspec.ConfigManager.service
 %_datadir/bash-completion/completions/dde-dconfig
+# package translations outside %%find_lang
 %dir %_datadir/dde-dconfig/
 %dir %_datadir/dde-dconfig/translations/
-%_datadir/dde-dconfig/translations/*.qm
+%_datadir/dde-dconfig/translations/dde-dconfig_zh_CN.qm
 %dir %_datadir/dde-dconfig-editor/
 %dir %_datadir/dde-dconfig-editor/translations/
-%_datadir/dde-dconfig-editor/translations/*.qm
+%_datadir/dde-dconfig-editor/translations/dde-dconfig-editor_zh_CN.qm
+# ---
 %_unitdir/dde-dconfig-daemon.service
 /lib/sysusers.d/dde-dconfig-daemon.conf
 /lib/tmpfiles.d/dde-dconfig-daemon-tmpfiles.conf
@@ -109,6 +112,9 @@ chmod +x %buildroot%_datadir/bash-completion/completions/dde-dconfig
 %endif
 
 %changelog
+* Tue Jan 30 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.25-alt1
+- New version 1.0.25.
+
 * Fri Jan 19 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.24.0.2.3acd-alt2
 - Requires: libqt5-core = %%_qt5_version.
 
