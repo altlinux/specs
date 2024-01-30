@@ -1,5 +1,5 @@
 Version: 3.2.4
-Release: alt1
+Release: alt2
 
 %def_enable doc
 
@@ -57,6 +57,9 @@ Toy Parser Generator -- это лексический и синтаксичес�
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jan 30 2024 Fr. Br. George <george@altlinux.ru> 3.2.4-alt2
+- Python 3.12 SyntaxWarning for non-raw escapes
+
 * Wed Feb 02 2022 Fr. Br. George <george@altlinux.ru> 3.2.4-alt1
 - Autobuild version bump to 3.2.4
 - Drop python2 support
