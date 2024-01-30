@@ -8,7 +8,7 @@
 %def_with cmake
 
 Name: deepin-image-editor
-Version: 1.0.40.0.1.7088
+Version: 1.0.41
 Release: alt1
 
 Summary: Image editor libraries for Deepin
@@ -164,6 +164,9 @@ cmake --build "%_cmake__builddir"
 %_pkgconfigdir/lib%repoivr.pc
 
 %changelog
+* Tue Jan 30 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.41-alt1
+- New version 1.0.41.
+
 * Tue Jan 09 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.40.0.1.7088-alt1
 - New version 1.0.40.0.1.7088.
 - Removed broken build flags (thanks archlinux for the patch).
