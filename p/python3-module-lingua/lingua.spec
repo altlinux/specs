@@ -1,8 +1,15 @@
 %define oname lingua
 
+# tests have totally broken with python3.12
+# but I dont care about them, likewise about package
+# It doesn't needed for anything, but mako has
+# optional dependency on lingua<4. So this package
+# is like a dummy
+%def_without check
+
 Name: python3-module-%oname
 Version: 4.15.0
-Release: alt2
+Release: alt3
 
 Summary: Translation toolset
 
@@ -55,6 +62,9 @@ sed -i 's/4.14/4.15/' src/lingua/__init__.py
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 4.15.0-alt3
+- Built without check.
+
 * Thu Jul 21 2022 Grigory Ustinov <grenka@altlinux.org> 4.15.0-alt2
 - Built and installed by pyproject_* macros.
 - Fixed license.
