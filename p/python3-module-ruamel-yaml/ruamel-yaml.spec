@@ -1,25 +1,22 @@
 Name: python3-module-ruamel-yaml
-Version: 0.17.40
+Version: 0.18.5
 Release: alt1
 
 Summary: is a YAML 1.2 loader/dumper package for Python
 
-License: GPLv3
+License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/ruamel.yaml
-Provides: python3(ruamel)
 
-Packager: Pavel Vainerman <pv@altlinux.ru>
-
-# Source-url: %__pypi_url ruamel.yaml
+# Source-url: %%__pypi_url ruamel.yaml
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3 rpm-build-intro
-
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel >= 3.7
 BuildRequires: python3-module-setuptools python3-module-wheel
 
 BuildArch: noarch
-
+%py3_provides ruamel
 %add_python3_req_skip _ruamel_yaml
 
 %description
@@ -39,10 +36,13 @@ export RUAMEL_NO_PIP_INSTALL_CHECK="1"
 
 %files
 %doc LICENSE CHANGES README.md
-%python3_sitelibdir/ruamel/
+%python3_sitelibdir/ruamel
 %python3_sitelibdir/ruamel.yaml-%version.dist-info
 
 %changelog
+* Tue Jan 30 2024 Alexey Shabalin <shaba@altlinux.org> 0.18.5-alt1
+- new version 0.18.5
+
 * Sat Oct 21 2023 Vitaly Lipatov <lav@altlinux.ru> 0.17.40-alt1
 - new version 0.17.40 (with rpmrb script)
 - switch to pyproject_build

@@ -1,5 +1,5 @@
 Name: borgmatic
-Version: 1.8.6
+Version: 1.8.7
 Release: alt1
 
 Summary: borgmatic (formerly atticmatic) is a simple Python wrapper script for the Borg
@@ -30,7 +30,6 @@ Requires: python3-module-ruamel-yaml.clib
 %py3_use jsonschema
 %py3_use packaging
 %py3_use requests
-%py3_use ruamel-yaml < 0.18.0
 %py3_use ruamel-yaml > 0.15.0
 
 %description
@@ -57,6 +56,10 @@ rather than having to put them all on the command-line, and handles common error
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Tue Jan 30 2024 Alexey Shabalin <shaba@altlinux.org> 1.8.7-alt1
+- new version 1.8.7
+- fixed conflict with python3-module-ruamel-yaml > 0.18.0
+
 * Thu Jan 04 2024 Pavel Vainerman <pv@altlinux.ru> 1.8.6-alt1
 - new version (1.8.6) with rpmgs script
 - (spec) update build macros
