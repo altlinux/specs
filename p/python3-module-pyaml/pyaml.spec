@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 21.10.1
-Release: alt1
+Release: alt2
 
 Summary: PyYAML-based module to produce pretty and readable YAML-serialized data
 License: WTFPL
@@ -17,6 +17,8 @@ BuildArch: noarch
 Source0: %oname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 # install_requires=
@@ -34,28 +36,25 @@ PyYAML-based module to produce pretty and readable YAML-serialized data.
 %setup -n %oname-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    python -m unittest -v
-EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr --develop
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc COPYING PKG-INFO README README.rst
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname-%version.dist-info/
 %exclude %python3_sitelibdir/*/tests
 
 %changelog
+* Wed Jan 31 2024 Grigory Ustinov <grenka@altlinux.org> 21.10.1-alt2
+- Moved on modern pyproject macros.
+
 * Thu Mar 31 2022 Stanislav Levin <slev@altlinux.org> 21.10.1-alt1
 - 16.12.2 -> 21.10.1.
 
