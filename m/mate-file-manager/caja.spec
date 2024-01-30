@@ -3,7 +3,7 @@
 
 Name: mate-file-manager
 Version: 1.26.1
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: File manager for MATE
 License: GPLv2+ and LGPLv2+
@@ -104,6 +104,9 @@ mkdir -p %buildroot%_libdir/caja/extensions-2.0
 %_datadir/gtk-doc/html/libcaja-extension
 
 %changelog
+* Tue Jan 30 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt3
+- cherry pick upstream fix gfile sort and symlink warnings w glib2.76 or later
+
 * Wed Apr 12 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt2
 - added x-scheme-handler/smb mimetype to caja-folder-handler.desktop
 
