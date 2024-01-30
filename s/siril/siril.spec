@@ -1,6 +1,6 @@
 Name:           siril
-Version:        1.2.0
-Release:        alt3
+Version:        1.2.1
+Release:        alt1
 Summary:        Astronomical image processing software
 Group: 		Graphics
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -13,6 +13,7 @@ Source0:        https://free-astro.org/download/%{name}-%{version}.tar.bz2
 
 Patch1:         siril-1.0.0-opencv_flann.patch
 Patch2: 	0001-Fix-compilation-with-exiv2-0.28.patch
+Patch3:		siril-skip-update-check.patch 
 
 # Notes on dependencies:
 # No ffms and heif support 
@@ -59,7 +60,9 @@ SER files)
 #setup -c -n siril-%version
 %setup
 #patch1 -p1
-%patch2 -p1
+#patch2 -p1
+%patch3 -p1
+
 %ifarch %e2k
 sed -i -E ":a;/\\\\$/{N;ba};\
 /^[[:space:]]*#pragma omp .*[[:space:]](num_threads|if|schedule)\(/{s/#/for(long &/;\
@@ -107,6 +110,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/org.free_
 
 
 %changelog
+* Tue Jan 30 2024 Ilya Mashkin <oddity@altlinux.ru> 1.2.1-alt1
+- 1.2.1
+
 * Sat Nov 11 2023 Ilya Mashkin <oddity@altlinux.ru> 1.2.0-alt3
 - Build with new exiv2
 
