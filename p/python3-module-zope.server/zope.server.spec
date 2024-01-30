@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 4.0.2
-Release: alt1
+Release: alt2
 Summary: Zope Server (Web and FTP)
 License: ZPLv2.1
 Group: Development/Python3
@@ -15,6 +15,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-tox
@@ -23,6 +24,7 @@ BuildRequires: python3-module-zope.testrunner
 BuildRequires: python3-module-zope.publisher
 BuildRequires: python3-module-paste
 BuildRequires: python3-module-zope.component-tests
+BuildRequires: python3-module-pyasyncore
 %endif
 
 %py3_requires zope zope.interface zope.publisher zope.security
@@ -46,11 +48,13 @@ This package contains tests for zope.server.
 %prep
 %setup
 
+sed -i 's/assertRaisesRegexp/assertRaisesRegex/' src/zope/server/ftp/tests/test_ftpserver.py
+
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -58,18 +62,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-sed -i '/\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-setenv =\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/zope-testrunner3\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/zope-testrunner3' tox.ini
-
-sed -i 's|zope-testrunner |zope-testrunner3 |g' tox.ini
-
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.txt
@@ -83,6 +76,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %python3_sitelibdir/*/*/*/tests
 
 %changelog
+* Wed Jan 31 2024 Grigory Ustinov <grenka@altlinux.org> 4.0.2-alt2
+- Moved on modern pyproject macros.
+
 * Tue Dec 24 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.0.2-alt1
 - NMU: 3.9.0 -> 4.0.2
 - Remove python2 module build
