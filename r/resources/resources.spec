@@ -8,7 +8,7 @@
 
 Name: resources
 Version: %ver_major.0
-Release: alt2
+Release: alt2.1
 
 Summary: System monitor
 License: GPL-3.0-or-later
@@ -29,6 +29,11 @@ ExcludeArch: ppc64le
 %define adwaita_ver 1.4
 
 Requires: dconf /usr/sbin/dmidecode polkit
+
+# nvml-wrapper requires libnvidia-ml.so (ALT #49236)
+%ifarch %ix86 x86_64 aarch64
+Requires: %_libdir/libnvidia-ml.so
+%endif
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson git rust-cargo
@@ -79,6 +84,9 @@ sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/utils/memory.rs
 
 
 %changelog
+* Wed Jan 31 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt2.1
+- added %%_libdir/libnvidia-ml.so to runtime dependencies (ALT #49236)
+
 * Mon Jan 29 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt2
 - updated to v1.3.0-47-g7eeafb0
 - added dmidecode to runtime dependencies
