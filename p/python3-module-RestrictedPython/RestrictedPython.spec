@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.1
+Version: 7.0
 Release: alt1
 Summary: Provides a restricted execution environment for Python, e.g. for running untrusted code
 License: ZPL-2.1
@@ -16,6 +16,8 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(pytest)
@@ -32,10 +34,10 @@ e.g. for running untrusted code.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -43,21 +45,18 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    {envbindir}/pytest -vra {posargs:tests}
-EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr --develop
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc *.txt
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Wed Jan 31 2024 Grigory Ustinov <grenka@altlinux.org> 7.0-alt1
+- NMU: Automatically updated to 7.0.
+
 * Sun Aug 27 2023 Nikolai Kostrigin <nickel@altlinux.org> 6.1-alt1
 - 5.2 -> 6.1
 
