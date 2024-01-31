@@ -1,60 +1,61 @@
 Name: ansible-lint
-Version: 4.3.7
-Release: alt1.2
+Version: 6.22.2
+Release: alt1
 
 Summary: Best practices checker for Ansible
 
 Group: System/Libraries
-License: MIT
-Url: https://github.com/willthames/ansible-lint
-
+License: GPLv3+
+Url: https://github.com/ansible/ansible-lint
 Source: %name-%version.tar
-Packager: Evgenii Terechkov <evg@altlinux.org>
 
 BuildArch: noarch
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3 %pyproject_buildrequires
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-tox python3-module-pip python3-module-wheel
-BuildRequires: python3-module-setuptools_scm >= 3.5.0
-BuildRequires: python3-module-yaml
-BuildRequires: python3-module-rich
-BuildRequires: python3-module-ruamel-yaml >= 0.15.37
-BuildRequires: python3-module-typing_extensions
-BuildRequires: ansible >= 2.8
+BuildRequires: python3-module-setuptools >= 65.3.0
+BuildRequires: python3-module-setuptools_scm >= 7.0.5
+BuildRequires: python3-module-rich >= 12.0.0
+BuildRequires: python3-module-ruamel-yaml >= 0.18.5
+BuildRequires: python3-module-yamllint >= 1.30.0
+BuildRequires: ansible-core >= 2.12.0 python3-module-ansible-compat >= 4.1.11
 
-# for python3 < 3.8
-Requires: python3-module-typing_extensions
+# for tests
+#BuildRequires: python3-module-yaml >= 5.4.1
+#BuildRequires: python3-module-pytest >= 7.2.2 python3-module-pytest-xdist >= 2.1.0
+#BuildRequires: python3-module-pylint python3-module-mypy python3-module-black
+#BuildRequires: python3-module-wcmatch
+
+Requires: ansible-core >= 2.12.0
+Requires: python3-module-yamllint
 
 %description
-ansible-lint checks playbooks for practices and behaviour that could potentially be improved
+ansible-lint checks playbooks for practices and behavior that could
+potentially be improved.
 
 %prep
 %setup
 echo "ref-names: tag: v%version" > .git_archival.txt
 
 %build
-python3 -m pip wheel --wheel-dir pyproject_wheeldir --no-deps --use-pep517 --no-build-isolation --disable-pip-version-check --progress-bar off --verbose .
-#%%python3_build
+%pyproject_build
 
 %install
-python3 -m pip install --root %buildroot --no-deps --disable-pip-version-check --progress-bar off --verbose --ignore-installed --no-warn-script-location pyproject_wheeldir/*.whl
-if [ -d %buildroot%_bindir ]; then
-  rm -rfv %buildroot%_bindir/__pycache__
-fi
-if [ -d %buildroot%python3_sitelibdir ]; then
-  sed -i 's/pip/rpm/' %buildroot%python3_sitelibdir/*.dist-info/INSTALLER
-fi
-if [ -d %buildroot%python3_sitelibdir_noarch ]; then
-  sed -i 's/pip/rpm/' %buildroot%python3_sitelibdir_noarch/*.dist-info/INSTALLER
-fi
-#%%python3_install
+%pyproject_install
+
+#%%check
+#%%pyproject_run_pytest
 
 %files
-%doc README.rst examples
+%doc README.md examples
 %_bindir/%name
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jan 30 2024 Alexey Shabalin <shaba@altlinux.org> 6.22.2-alt1
+- new version 6.22.2
+
 * Sat Jan 27 2024 Grigory Ustinov <grenka@altlinux.org> 4.3.7-alt1.2
 - Fixed FTBFS.
 
