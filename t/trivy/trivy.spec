@@ -4,7 +4,7 @@
 
 Name: trivy
 Version: 0.48.3
-Release: alt2
+Release: alt3
 Summary: A Fast Vulnerability Scanner for Containers
 
 Group: Monitoring
@@ -55,6 +55,9 @@ Requires: trivy-db
 %setup
 
 %build
+find . -type f -exec \
+	sed -i "s/ghcr.io\/aquasecurity\/node-collector:0.0.9/registry.altlinux.org\/alt\/k8s-trivy-node-collector:%_priority_distbranch/g" {} +
+
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
@@ -93,6 +96,9 @@ rm -rf -- %buildroot%go_root
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Tue Jan 30 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.48.3-alt3
+- Replace default value for node-collector-imageref (k8s)
+
 * Thu Jan 11 2024 Alexey Shabalin <shaba@altlinux.org> 0.48.3-alt2
 - Restart service at transaction end
 - Move useradd to trivy-db package
