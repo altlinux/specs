@@ -18,7 +18,7 @@
 %define nv_version 535
 %define nv_release 154
 %define nv_minor   05
-%define pkg_rel alt1
+%define pkg_rel alt2
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 Name: nvidia_glx_libs_%nv_version_full
 Version: %nv_version_full
@@ -197,8 +197,8 @@ install -m 0644 nvidia-smi.1.gz %buildroot/%_man1dir/
 %endif
 mkdir -p %buildroot/%_sysconfdir/OpenCL/vendors/
 install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
-# fixing the work of CUDA rendering in DaVinci Resolve without nvidia-cuda-toolkit
-for l in libcuda libnvcuvid libnvidia-encode ; do
+# fixing the work of CUDA rendering in DaVinci Resolve without nvidia-cuda-toolkit and more
+for l in libcuda libnvcuvid libnvidia-encode libnvidia-ml ; do
     ln -s ${l}.so.%version %buildroot/%_libdir/${l}.so
 done
 
@@ -209,6 +209,7 @@ done
 %files -n libnvidia-ml
 %_libdir/libnvidia-ml.so.%version
 %_libdir/libnvidia-ml.so.%nvidia_sover
+%_libdir/libnvidia-ml.so
 %files -n libcuda
 %_libdir/libcuda.so.%nvidia_sover
 %_libdir/libcuda.so.%version
@@ -255,6 +256,9 @@ done
 %endif
 
 %changelog
+* Wed Jan 31 2024 Sergey V Turchin <zerg@altlinux.org> 535.154.05-alt2
+- package libnvidia-ml.so against bug#49236
+
 * Tue Jan 23 2024 Sergey V Turchin <zerg@altlinux.org> 535.154.05-alt1
 - new version
 
