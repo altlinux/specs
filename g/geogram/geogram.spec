@@ -1,12 +1,18 @@
 Name:          geogram
 Version:       1.7.9
-Release:       alt1
+Release:       alt2
 Summary:       Geogram library by INRIA
 License:       WTFPL
 Group:         Sciences/Mathematics
 Url:           http://alice.loria.fr/index.php/software/4-library/75-geogram.html
 Vcs:           https://github.com/alicevision/geogram.git
 Packager:      Pavel Skrylev <majioa@altlinux.org>
+
+%ifarch loongarch64
+%def_disable legacy_numeric
+%else
+%def_enable legacy_numeric
+%endif
 
 Source:        %name-%version.tar
 Patch:         patch.patch
@@ -161,9 +167,14 @@ Transport in 3d that scales up to 1 million Dirac masses.
        -DVORPALINE_BUILD_DYNAMIC:BOOL=ON \
        -DGEOGRAM_USE_SYSTEM_GLFW3:BOOL=ON \
        -DGEOGRAM_WITH_HLBFGS:BOOL=OFF \
+%if_enabled legacy_numeric
+       -DGEOGRAM_WITH_LEGACY_NUMERICS:BOOL=ON \
+%else
+       -DGEOGRAM_WITH_LEGACY_NUMERICS:BOOL=OFF \
+%endif
        -DGEOGRAM_WITH_EXPLORAGRAM:BOOL=OFF
 
-%cmake_build -j1
+%cmake_build %{?_enable_legacy_numeric:-j1}
 
 %install
 %cmakeinstall_std
@@ -180,7 +191,9 @@ Transport in 3d that scales up to 1 million Dirac masses.
 %files         -n lib%{name}
 %doc README*
 %_libdir/lib%{name}.*so.*
+%if_enabled legacy_numeric
 %_libdir/lib%{name}_num*.so.*
+%endif
 
 %files         -n lib%{name}-gfx
 %_libdir/lib%{name}_gfx*.so.*
@@ -190,7 +203,9 @@ Transport in 3d that scales up to 1 million Dirac masses.
 %_libdir/cmake/*
 %_pkgconfigdir/%{name}1.pc
 %_libdir/lib%{name}.*so
+%if_enabled legacy_numeric
 %_libdir/lib%{name}_num*.so
+%endif
    
 %files         -n lib%{name}-gfx-devel
 %_includedir/%{name}1/%{name}_gfx/
@@ -198,5 +213,10 @@ Transport in 3d that scales up to 1 million Dirac masses.
 %_libdir/lib%{name}_gfx*.so
 
 %changelog
+* Mon Jan 29 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.7.9-alt2
+- NMU: fixed FTBFS on LoongArch:
+  + disabled legacy numeric libraries
+  + explained that loongarch64 is 64-bit
+
 * Thu Jan 25 2024 Pavel Skrylev <majioa@altlinux.org> 1.7.9-alt1
 - initial build for Sisyphus
