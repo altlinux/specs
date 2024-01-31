@@ -1,7 +1,7 @@
 %define optflags_lto %nil
 
 Name: radeon-memory-visualizer
-Version: 1.7
+Version: 1.8
 Release: alt0.1
 License: MIT
 Summary: Software tool to analyze video memory usage on AMD Radeon GPUs
@@ -13,7 +13,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++ qt5-svg-devel python3-module-sphinx-sphinx-build-symlink
-BuildRequires: python3-module-sphinx_rtd_theme linuxdeployqt
+BuildRequires: python3-module-sphinx_rtd_theme linuxdeployqt chrpath
 
 Requires: %name-data = %EVR
 
@@ -66,6 +66,9 @@ install -m644 LICENSE.txt %buildroot%_datadir/rmv/
 %_datadir/rmv/*
 
 %changelog
+* Wed Jan 31 2024 L.A. Kostis <lakostis@altlinux.ru> 1.8-alt0.1
+- 1.8.
+
 * Mon Nov 06 2023 L.A. Kostis <lakostis@altlinux.ru> 1.7-alt0.1
 - 1.7.
 - BR: added linuxdeployqt.
