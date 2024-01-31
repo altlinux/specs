@@ -2,7 +2,7 @@
 
 Summary:          Library to support IDNA2008 internationalized domain names
 Name:             libidn2
-Version:          2.3.4
+Version:          2.3.7
 Release:          alt1
 License:          (GPLv2+ or LGPLv3+) and GPLv3+
 Group:            System/Libraries
@@ -102,6 +102,9 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %{?_enable_doc:%_man1dir/idn2.1*}
 
 %changelog
+* Wed Jan 31 2024 Mikhail Efremov <sem@altlinux.org> 2.3.7-alt1
+- 2.3.4 -> 2.3.7.
+
 * Wed Oct 26 2022 Mikhail Efremov <sem@altlinux.org> 2.3.4-alt1
 - Require libunistring2 again.
 - 2.3.3 -> 2.3.4.
