@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.2.2
-Release: alt1
+Release: alt2
 
 Summary: Spying framework
 License: MIT
@@ -16,6 +16,8 @@ BuildArch: noarch
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(numpy)
@@ -31,28 +33,24 @@ Mockito is a spying framework based on Java library with the same name.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-usedevelop=True
-commands =
-    {envbindir}/pytest {posargs:-vra}
-EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc AUTHORS *.rst
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Wed Jan 31 2024 Grigory Ustinov <grenka@altlinux.org> 1.2.2-alt2
+- Moved on modern pyproject macros.
+
 * Fri Sep 10 2021 Stanislav Levin <slev@altlinux.org> 1.2.2-alt1
 - 0.7.1 -> 1.2.2.
 
