@@ -1,12 +1,15 @@
-%define sover_maj 1
-%define sover 1.0.0
-%define libquazip libquazip1-qt5_%sover
 %define _cmake__builddir BUILD
 
 %define rname quazip
 Name: quazip-qt5
-Version: 1.2
-Release: alt2
+Version: 1.4
+Release: alt1
+%define major %{expand:%(X='%version'; echo ${X%%%%.*})}
+%define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
+%define bugfix %{expand:%(X='%version'; echo ${X##*.})}
+#define sover %major
+%define sover 1.0.0
+%define libquazip libquazip1-qt5_%sover
 
 Group: System/Libraries
 Summary: Qt/C++ wrapper for the minizip library
@@ -53,6 +56,7 @@ for developing applications that use %rname.
 
 %prep
 %setup
+sed -i '/^set.*QUAZIP_LIB_SOVERSION/s/QUAZIP_LIB_SOVERSION.*/QUAZIP_LIB_SOVERSION %sover)/' CMakeLists.txt
 
 %build
 %cmake \
@@ -84,6 +88,9 @@ install -Dm 0644 .gear/FindQuaZip.cmake %buildroot/%_datadir/cmake/Modules/FindQ
 %_pkgconfigdir/quazip*-qt*.pc
 
 %changelog
+* Wed Jan 31 2024 Sergey V Turchin <zerg@altlinux.org> 1.4-alt1
+- new version
+
 * Sat Jan 01 2022 Anton Midyukov <antohami@altlinux.org> 1.2-alt2
 - use pkgconfig in FindQuaZip5.cmake
 
