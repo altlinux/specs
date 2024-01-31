@@ -1,6 +1,6 @@
 Name: firewalld
-Version: 2.1.0
-Release: alt2
+Version: 2.1.1
+Release: alt1
 
 Summary: A firewall daemon with D-BUS interface providing a dynamic firewall
 License: GPLv2+
@@ -160,6 +160,9 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %endif
 
 %changelog
+* Wed Jan 31 2024 Mikhail Efremov <sem@altlinux.org> 2.1.1-alt1
+- Updated to 2.1.1.
+
 * Mon Jan 22 2024 Mikhail Efremov <sem@altlinux.org> 2.1.0-alt2
 - firewall-config: Require libgtk+3-gir (closes: #49135).
 
