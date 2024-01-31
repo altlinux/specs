@@ -1,7 +1,7 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.38.0.41.cfe1219100
+Version: 2.38.0.44.d37c2b20a4
 Release: alt1
 Epoch: 6
 
@@ -777,6 +777,10 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Wed Jan 31 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.38.0.44.d37c2b20a4-alt1
+- Updated to glibc-2.38-44-gd37c2b20a4 (fixes: CVE-2023-6246, CVE-2023-6779,
+  CVE-2023-6780).
+
 * Wed Jan 24 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.38.0.41.cfe1219100-alt1
 - Updated to glibc-2.38-41-gcfe1219100.
 - Backported upstream commits to add support for kv_RU locale:
