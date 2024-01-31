@@ -5,7 +5,7 @@
 
 Name: git-absorb
 Version: 0.6.11
-Release: alt1
+Release: alt2
 Summary: git commit --fixup, but automatic
 License: BSD-3-Clause
 Group: Development/Tools
@@ -65,5 +65,8 @@ install -Dpm644 completion.fish -T %buildroot%_datadir/fish/vendor_completions.d
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Wed Jan 31 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.6.11-alt2
+- NMU: fixed FTBFS on LoongArch (use libc v0.2.144).
+
 * Sat Jan 27 2024 Vitaly Chikunov <vt@altlinux.org> 0.6.11-alt1
 - First import 0.6.11 (2023-11-28).
