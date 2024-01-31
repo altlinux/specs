@@ -16,7 +16,7 @@
 
 Name: kde5-%rname
 Version: 23.08.4
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Education
@@ -32,6 +32,7 @@ Requires: epstool
 Source: %rname-%version.tar
 Patch1: alt-lib-so-ver.patch
 Patch2: alt-find-luajit.patch
+Patch3: fix-incorrect-removal-tabs.patch
 
 # Automatically added by buildreq on Wed Mar 30 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ gtk-update-icon-cache kf5-attica-devel kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libqt5-xmlpatterns libstdc++-devel libxcbutil-keysyms pkg-config python-base python-devel python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils
@@ -92,6 +93,7 @@ KF5 library
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 
 #LUA_BASE_VER=`echo "%{get_version libluajit-devel}" | sed -E 's|^([[:digit:]]+\.[[:digit:]]).*|\1|'`
 #pushd src/backends/lua
@@ -151,6 +153,9 @@ mkdir -p %buildroot
 %endif
 
 %changelog
+* Tue Jan 30 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 23.08.4-alt2
+- fix incorrect deletion of menu items (ALT #48950)
+
 * Tue Dec 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
 - new version
 
