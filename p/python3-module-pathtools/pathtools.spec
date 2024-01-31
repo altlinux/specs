@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.1.2
-Release: alt2
+Release: alt2.1
 Summary: Path utilities for Python
 License: MIT
 Group: Development/Python3
@@ -15,6 +15,9 @@ Source: %oname-%version.tar
 Patch1: %oname-%version-alt-docs.patch
 
 BuildRequires(pre): rpm-build-python3
+# A copy of the imp module that was removed in Python 3.12.
+# It shouldn't be used, should use `importlib.metadata` instead.
+BuildRequires: python3-module-zombie-imp
 
 %description
 Pattern matching and various utilities for file systems paths.
@@ -34,8 +37,11 @@ Pattern matching and various utilities for file systems paths.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 0.1.2-alt2.1
+- NMU: Added zombie-imp to BuildRequires.
+
 * Tue Jun 01 2021 Grigory Ustinov <grenka@altlinux.org> 0.1.2-alt2
-- Drop ptyhon2 support.
+- Drop python2 support.
 - Build without docs.
 
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.2-alt1.qa1

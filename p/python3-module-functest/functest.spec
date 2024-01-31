@@ -2,7 +2,7 @@
 
 Name:       python3-module-%oname
 Version:    0.8.8
-Release:    alt3
+Release:    alt3.1
 
 Summary:    Functional test framework
 License:    ASLv2.0
@@ -15,6 +15,9 @@ Source:     %name-%version.tar
 Patch0:     port-on-python3.patch
 
 BuildRequires(pre): rpm-build-python3
+# A copy of the imp module that was removed in Python 3.12.
+# It shouldn't be used, should use `importlib.metadata` instead.
+BuildRequires: python3-module-zombie-imp
 
 %py3_provides %oname
 Conflicts: python-module-%oname
@@ -55,6 +58,9 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 
 
 %changelog
+* Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 0.8.8-alt3.1
+- NMU: Added zombie-imp to BuildRequires.
+
 * Wed Jan 29 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.8.8-alt3
 - Porting on Python3.
 

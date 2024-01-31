@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.7.0
-Release: alt5
+Release: alt5.1
 Summary: A goodie-bag of unix shell and environment tools for py.test
 License: MIT
 Group: Development/Python
@@ -21,6 +21,9 @@ Patch2: use-stdlib-unittest.mock-on-python-3.patch
 Patch3: Fix-forcing-color-through-termcolor.patch
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
+# A copy of the imp module that was removed in Python 3.12.
+# It shouldn't be used, should use `importlib.metadata` instead.
+BuildRequires: python3-module-zombie-imp
 %pyproject_builddeps_build
 %if_with check
 %pyproject_builddeps_metadata
@@ -57,6 +60,9 @@ sed -i -e 's:setuptools-git:setuptools:g' \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 1.7.0-alt5.1
+- NMU: Added zombie-imp to BuildRequires.
+
 * Tue May 16 2023 Stanislav Levin <slev@altlinux.org> 1.7.0-alt5
 - Fixed FTBFS (termcolor 2.3.0).
 

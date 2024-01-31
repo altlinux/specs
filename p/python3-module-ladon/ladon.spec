@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.9.40
-Release: alt2
+Release: alt2.1
 
 Summary: Several web service interfaces at once, including JSON-WSP, SOAP and JSON-RPC
 License: LGPLv3
@@ -15,6 +15,9 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-jinja2
 BuildRequires: python3(sphinx_bootstrap_theme)
+# A copy of the imp module that was removed in Python 3.12.
+# It shouldn't be used, should use `importlib.metadata` instead.
+BuildRequires: python3-module-zombie-imp
 
 %py3_provides %oname
 %py3_requires jinja2 json
@@ -55,6 +58,9 @@ python3 setup.py test
 
 
 %changelog
+* Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 0.9.40-alt2.1
+- NMU: Added zombie-imp to BuildRequires.
+
 * Thu Nov 07 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.40-alt2
 - disable python2
 

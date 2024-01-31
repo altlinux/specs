@@ -2,7 +2,7 @@
 
 Name: falcon
 Version: 1.4.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: Framework for building high-performance microservices and app backends.
 License: Apache-2.0
@@ -19,6 +19,9 @@ BuildRequires: python3-module-six
 BuildRequires: python3-module-mimeparse
 BuildRequires: python3-module-msgpack
 BuildRequires: python3-module-jsonschema
+# A copy of the imp module that was removed in Python 3.12.
+# It shouldn't be used, should use `importlib.metadata` instead.
+BuildRequires: python3-module-zombie-imp
 
 Requires: python3-module-%name = %EVR
 Requires: python3-module-django-dbbackend-sqlite3
@@ -68,6 +71,9 @@ This package contain python modules for %name.
 
 
 %changelog
+* Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1.2
+- NMU: Added zombie-imp to BuildRequires.
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.4.1-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 

@@ -4,7 +4,7 @@
 
 Name: mongo4.4
 Version: 4.4.28
-Release: alt2
+Release: alt2.1
 Summary: mongo client shell and tools
 License: SSPL-1.0
 Group: Development/Databases
@@ -22,6 +22,9 @@ BuildRequires: systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel
 BuildRequires: libyaml-cpp-devel zlib-devel python-modules-json
 BuildRequires: python3-module-Cheetah python3-module-yaml python3-module-psutil
 BuildRequires: libcurl-devel python3-module-packaging
+# A copy of the imp module that was removed in Python 3.12.
+# It shouldn't be used, should use `importlib.metadata` instead.
+BuildRequires: python3-module-zombie-imp
 BuildRequires: liblzma-devel
 %if_enabled valgrind
 BuildRequires: valgrind-devel
@@ -206,6 +209,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 4.4.28-alt2.1
+- NMU: Added zombie-imp to BuildRequires.
+
 * Tue Jan 23 2024 Alexei Takaseev <taf@altlinux.org> 4.4.28-alt2
 - Fix build with python 3.12. Use setuptools.
 

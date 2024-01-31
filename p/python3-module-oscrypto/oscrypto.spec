@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 1.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: Compiler-free Python crypto library backed by the OS, supporting CPython and PyPy
 
@@ -15,6 +15,9 @@ URL:     https://github.com/wbond/oscrypto
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
+# A copy of the imp module that was removed in Python 3.12.
+# It shouldn't be used, should use `importlib.metadata` instead.
+BuildRequires: python3-module-zombie-imp
 
 %if_with check
 BuildRequires: python3-module-asn1crypto
@@ -48,5 +51,8 @@ on the OS for patching. Works on Windows, OS X and Linux/BSD.
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1.1
+- NMU: Added zombie-imp to BuildRequires.
+
 * Tue Jun 28 2022 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
 - Initial build for Sisyphus.

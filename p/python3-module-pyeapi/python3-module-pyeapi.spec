@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 1.0.2
-Release: alt1
+Release: alt1.1
 
 Summary: Python client for Arista eAPI
 License: BSD-3-Clause
@@ -14,6 +14,9 @@ URL:     https://github.com/arista-eosplus/pyeapi
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+# A copy of the imp module that was removed in Python 3.12.
+# It shouldn't be used, should use `importlib.metadata` instead.
+BuildRequires: python3-module-zombie-imp
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -49,5 +52,8 @@ more nodes and connection properties.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt1.1
+- NMU: Added zombie-imp to BuildRequires.
+
 * Tue Nov 14 2023 Alexander Burmatov <thatman@altlinux.org> 1.0.2-alt1
 - Initial build for Sisyphus.

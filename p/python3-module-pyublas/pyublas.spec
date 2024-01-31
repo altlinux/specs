@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 2017.1
-Release: alt2
+Release: alt2.1
 
 Summary: Seamless Numpy-UBlas interoperability
 License: BSD
@@ -20,6 +20,9 @@ Patch1: %oname-%version-alt-armh-build.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ boost-python3-devel libnumpy-py3-devel
+# A copy of the imp module that was removed in Python 3.12.
+# It shouldn't be used, should use `importlib.metadata` instead.
+BuildRequires: python3-module-zombie-imp
 %if_with docs
 BuildRequires: python3-module-sphinx
 %endif
@@ -110,6 +113,9 @@ rm -fR %_includedir/pyublas
 %python3_sitelibdir/pyublas/include
 
 %changelog
+* Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 2017.1-alt2.1
+- NMU: Added zombie-imp to BuildRequires.
+
 * Wed Sep 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2017.1-alt2
 - Fixed build for armh.
 

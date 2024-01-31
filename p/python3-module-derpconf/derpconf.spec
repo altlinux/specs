@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.8.1
-Release: alt2
+Release: alt2.1
 
 Summary: derpconf abstracts loading configuration files for your app
 License: MIT
@@ -18,6 +18,9 @@ Source0: https://pypi.python.org/packages/98/2d/4703d2f342faf2d66970f67d7664f24f
 
 
 BuildRequires(pre): rpm-build-python3
+# A copy of the imp module that was removed in Python 3.12.
+# It shouldn't be used, should use `importlib.metadata` instead.
+BuildRequires: python3-module-zombie-imp
 
 %if_with check
 BuildRequires: python3-module-gevent python3-module-coverage
@@ -55,6 +58,9 @@ python3 setup.py test
 
 
 %changelog
+* Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt2.1
+- NMU: Added zombie-imp to BuildRequires.
+
 * Wed Nov 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.8.1-alt2
 - version updated to 0.8.1
 - python2 -> python3

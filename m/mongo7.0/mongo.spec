@@ -4,7 +4,7 @@
 
 Name: mongo7.0
 Version: 7.0.5
-Release: alt2
+Release: alt2.1
 Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
 Group: Development/Databases
@@ -33,6 +33,9 @@ BuildRequires: python3-module-jsonschema
 BuildRequires: python3-module-memory_profiler
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-typing_extensions
+# A copy of the imp module that was removed in Python 3.12.
+# It shouldn't be used, should use `importlib.metadata` instead.
+BuildRequires: python3-module-zombie-imp
 
 %if_enabled valgrind
 BuildRequires: valgrind-devel
@@ -198,6 +201,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 7.0.5-alt2.1
+- NMU: Added zombie-imp to BuildRequires.
+
 * Mon Jan 22 2024 Alexei Takaseev <taf@altlinux.org> 7.0.5-alt2
 - Fix build with python 3.12. Use setuptools.
 

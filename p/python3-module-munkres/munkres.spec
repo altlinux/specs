@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.0.6
-Release: alt4.git20131103.2
+Release: alt4.git20131103.3
 Summary: Munkres algorithm for the Assignment Problem
 License: BSD
 Group: Development/Python3
@@ -13,6 +13,9 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+# A copy of the imp module that was removed in Python 3.12.
+# It shouldn't be used, should use `importlib.metadata` instead.
+BuildRequires: python3-module-zombie-imp
 
 %py3_provides %oname
 
@@ -38,6 +41,9 @@ useful for solving the Assignment Problem.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.6-alt4.git20131103.3
+- NMU: Added zombie-imp to BuildRequires.
+
 * Sun Jul 25 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.6-alt4.git20131103.2
 - Drop python2 support.
 

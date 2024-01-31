@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.17.52
-Release: alt2
+Release: alt2.1
 
 Summary: Fast and readable async non-blocking network apps
 
@@ -18,6 +18,9 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pytest
+# A copy of the imp module that was removed in Python 3.12.
+# It shouldn't be used, should use `importlib.metadata` instead.
+BuildRequires: python3-module-zombie-imp
 %py3_provides %oname
 
 %description
@@ -62,6 +65,9 @@ python3 setup.py test
 %python3_sitelibdir/*/examples
 
 %changelog
+* Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 1.17.52-alt2.1
+- NMU: Added zombie-imp to BuildRequires.
+
 * Thu Jul 22 2021 Grigory Ustinov <grenka@altlinux.org> 1.17.52-alt2
 - Rename package, cleanup spec.
 

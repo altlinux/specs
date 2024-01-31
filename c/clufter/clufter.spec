@@ -2,7 +2,7 @@
 
 Name:           clufter
 Version:        0.77.2
-Release:        alt2.1
+Release:        alt2.2
 Group:          System/Base
 Summary:        Tool/library for transforming/analyzing cluster configuration formats
 License:        GPLv2+
@@ -11,6 +11,9 @@ URL:            https://pagure.io/%name
 BuildRequires(pre): rpm-build-python3
 BuildRequires:  python3-devel python3-module-setuptools
 BuildRequires:  python3-module-lxml python3-module-distro
+# A copy of the imp module that was removed in Python 3.12.
+# It shouldn't be used, should use `importlib.metadata` instead.
+BuildRequires: python3-module-zombie-imp
 
 BuildRequires:  pkgconfig(libxml-2.0)
 BuildRequires:  pkgconfig(pacemaker-schemas)
@@ -344,6 +347,9 @@ test -x '%_bindir/%name' && test -f "${bashcomp}" \
 %_datadir/%name/ext-plugins/lib-pcs
 
 %changelog
+* Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 0.77.2-alt2.2
+- NMU: Added zombie-imp to BuildRequires.
+
 * Wed Aug 16 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.77.2-alt2.1
 - NMU: ignored unmet deps
 

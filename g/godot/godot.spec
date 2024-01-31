@@ -20,7 +20,7 @@
 
 Name: godot
 Version: 3.1
-Release: alt4
+Release: alt4.1
 
 Summary: Godot Engine - Multi-platform 2D and 3D game engine
 License: %mit
@@ -45,6 +45,9 @@ BuildRequires: libX11-devel libXcursor-devel libXi-devel libXinerama-devel libXr
 BuildRequires: libGL-devel libGLU-devel
 BuildRequires: libalsa-devel libpulseaudio-devel
 BuildRequires: libudev-devel
+# A copy of the imp module that was removed in Python 3.12.
+# It shouldn't be used, should use `importlib.metadata` instead.
+BuildRequires: python3-module-zombie-imp
 
 %{!?_with_builtin_bullet:BuildRequires: libbullet-devel}
 %{!?_with_builtin_enet:BuildRequires: libenet-devel}
@@ -194,6 +197,9 @@ install -m 644 -D %name.desktop %buildroot%_desktopdir/
 %endif
 
 %changelog
+* Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 3.1-alt4.1
+- NMU: Added zombie-imp to BuildRequires.
+
 * Thu Aug 12 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1-alt4
 - NMU: drop all python2 BR, drop openssl BR, cleanup all BR
 - NMU: enable build with system opus
