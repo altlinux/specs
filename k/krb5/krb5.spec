@@ -9,7 +9,7 @@
 
 Name: krb5
 Version: 1.21.2
-Release: alt1
+Release: alt2
 
 %if_without bootstrap
 %if_with doc
@@ -34,7 +34,7 @@ Source100: noport.c
 Patch23: krb5-1.3.1-fedora-dns.patch
 Patch39: krb5-1.12-fedora-api.patch
 Patch60: krb5-1.18-fedora-pam.patch
-Patch63: krb5-1.18-fedora-selinux-label.patch
+Patch63: krb5-1.20.1-fedora-SELinux-integration.patch
 Patch86: krb5-1.9-fedora-debuginfo.patch
 Patch129: krb5-1.11-fedora-run_user_0.patch
 
@@ -517,6 +517,10 @@ fi
 # {{{ changelog
 
 %changelog
+* Wed Jan 24 2024 Ivan A. Melnikov <iv@altlinux.org> 1.21.2-alt2
+- Update SELinux patch from fedora (fixes FTBFS
+  with recent libselinux)
+
 * Wed Aug 16 2023 Ivan A. Melnikov <iv@altlinux.org> 1.21.2-alt1
 - 1.21.2 (Fixes: CVE-2023-39975)
 
