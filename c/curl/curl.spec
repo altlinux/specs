@@ -31,7 +31,7 @@
 %endif
 
 Name: curl
-Version: 8.5.0
+Version: 8.6.0
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -175,6 +175,7 @@ export PATH=/sbin:/usr/sbin:$PATH
 %install
 %makeinstall_std
 %makeinstall_std -C docs/libcurl
+rm -f %buildroot%_man1dir/mk-ca-bundle.*
 
 %check
 %make -k test-full %relax
@@ -207,6 +208,11 @@ popd
 %endif
 
 %changelog
+* Wed Jan 31 2024 Anton Farygin <rider@altlinux.ru> 8.6.0-alt1
+- 8.5.0 -> 8.6.0
+- Fixes:
+   * CVE-2024-0853 : OCSP verification bypass with TLS session reuse
+
 * Wed Dec 06 2023 Anton Farygin <rider@altlinux.ru> 8.5.0-alt1
 - 8.4.0 -> 8.5.0
 - Fixes:
