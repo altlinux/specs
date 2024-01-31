@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: Generic support library for signed-token-based auth schemes
 License: MPL-2.0
@@ -17,6 +17,8 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(tox)
@@ -33,25 +35,29 @@ oauth, or MAC Access authentication.
 %setup
 %autopatch -p1
 
+# hotfix for python3.12
+sed -i 's/assertEquals/assertEqual/' tokenlib/tests/test_utils.py tokenlib/tests/test_tokens.py
+sed -i 's/assertNotEquals/assertNotEqual/' tokenlib/tests/test_tokens.py
+
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
-# don't ship tests
-rm -r %buildroot%python3_sitelibdir/%oname/tests/
+%pyproject_install
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false
+%tox_check_pyproject
 
 %files
 %doc *.txt *.rst
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname-%version.dist-info/
+%exclude %python3_sitelibdir/%oname/tests/
 
 %changelog
+* Wed Jan 31 2024 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt2
+- Moved on modern pyproject macros.
+
 * Fri Sep 10 2021 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1
 - 0.3.1 -> 2.0.0.
 
