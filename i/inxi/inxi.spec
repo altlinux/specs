@@ -1,6 +1,6 @@
 Name: inxi
-Version: 3.3.31.2
-Release: alt1.1
+Version: 3.3.32
+Release: alt1
 
 Summary: A full featured system information script
 Summary(ru): Скрипт вывода полной информации об оборудовании и системе
@@ -57,7 +57,7 @@ install -p -D -m 644 %name.conf %buildroot%_sysconfdir/%name.conf
 
 %check
 perl -c inxi
-./inxi -V
+./inxi --vf
 
 %files
 %doc %name.changelog README.txt LICENSE.txt
@@ -66,6 +66,9 @@ perl -c inxi
 %_man1dir/%name.1*
 
 %changelog
+* Wed Jan 31 2024 Leontiy Volodin <lvol@altlinux.org> 3.3.32-alt1
+- New version 3.3.32.
+
 * Tue Dec 05 2023 Hihin Ruslan <ruslandh@altlinux.ru> 3.3.31.2-alt1.1
 - Add inxi-3.3.31.2-platform.patch (ALT bug #48682)
 
