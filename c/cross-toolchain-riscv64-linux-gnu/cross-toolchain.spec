@@ -82,7 +82,7 @@
 %brp_strip_none %sysroot/*  %prefix/lib/gcc/*.a %prefix/lib/gcc/*.o
 
 Name: cross-toolchain-%target
-Version: 20230815
+Version: 20240126
 Release: alt1
 Summary: GCC cross-toolchain for %target
 License: LGPL-2.1-or-later and LGPL-3.0-or-later and GPL-2.0-or-later and GPL-3.0-or-later and GPL-3.0-or-later with GCC-exception-3.1
@@ -92,8 +92,8 @@ ExclusiveArch: x86_64
 
 %define gcc_version 13.2.1
 %define gcc_branch %(v=%gcc_version; v=${v%%%%.*}; echo $v)
-%define binutils_version 2.40
-%define glibc_version 2.37.0.22.3593050c27
+%define binutils_version 2.41
+%define glibc_version 2.38.0.11.g1aed90c9c8
 %define kernel_version 6.4
 
 BuildPreReq: gcc-c++
@@ -105,9 +105,9 @@ BuildPreReq: kernel-source-%kernel_version
 BuildRequires: /usr/bin/qemu-%target_qemu_arch-static
 BuildRequires: python3
 
-Source0: gcc-13.2.1-alt0.1.rv64.tar
-Source1: binutils-2.40-alt0.2.rv64.tar
-Source2: glibc-2.37.0.22.3593050c27-alt1.tar
+Source0: gcc-13.2.1-alt2.tar
+Source1: binutils-2.41-alt1.tar
+Source2: glibc-2.38.0.11.g1aed90c9c8-alt1.tar
 
 %description
 GCC cross-toolchain for %target
@@ -807,6 +807,9 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 
 
 %changelog
+* Fri Jan 26 2024 Ivan A. Melnikov <iv@altlinux.org> 20240126-alt1
+- Sync sources with sisyphus_riscv64.
+
 * Tue Aug 15 2023 Ivan A. Melnikov <iv@altlinux.org> 20230815-alt1
 - Sync gcc sources with sisyphus_riscv64 (gcc 13.2.1-alt0.1.rv64)
 
