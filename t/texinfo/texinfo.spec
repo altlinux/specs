@@ -1,5 +1,5 @@
 Name: texinfo
-Version: 7.0.3
+Version: 7.1
 Release: alt1
 
 Summary: Tools needed to create Texinfo format documentation files
@@ -25,7 +25,6 @@ Patch4: texinfo-alt-texi2dvi-baroque-shells.patch
 Patch5: texinfo-alt-texi2any-version.patch
 Patch6: texinfo-alt-makeinfo-split-size.patch
 Patch7: texinfo-alt-tests.patch
-Patch8: texinfo-fedora-undef-val-array-ref.patch
 
 Requires: makeinfo = %version-%release
 Requires: texi2dvi = %version-%release
@@ -33,6 +32,7 @@ Requires: texi2dvi = %version-%release
 BuildRequires(pre): rpm-build-tex
 BuildRequires: cvs bzlib-devel help2man libtinfo-devel libzio-devel zlib-devel
 BuildRequires: perl-devel
+BuildRequires: perl(charnames.pm)
 BuildRequires: perl(Locale/Messages.pm)
 BuildRequires: perl(Pod/Simple/PullParser.pm)
 BuildRequires: perl(Text/Unidecode.pm)
@@ -108,7 +108,6 @@ This packages contains new RPM macros for packaging texinfo files.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
 
 install -pm755 %_sourcedir/texi2pdf util/
 
@@ -165,6 +164,7 @@ mkdir -p %buildroot%_man8dir
 install -pm644 %_sourcedir/update-info-dir.8 %buildroot%_man8dir/
 
 rm -r %buildroot%_datadir/locale/*.us-ascii
+rm -r %buildroot%_datadir/locale/pl.iso-8859-2
 %find_lang --output=texinfo.lang texinfo texinfo_document
 
 %check
@@ -220,6 +220,9 @@ unset ALL_TESTS LANG
 %_rpmmacrosdir/*
 
 %changelog
+* Wed Jan 24 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.1-alt1
+- 7.0.3 -> 7.1.
+
 * Sat Sep 09 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.0.3-alt1
 - 6.7 -> 7.0.3.
 
