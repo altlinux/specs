@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.7.5
-Release: alt2
+Release: alt3
 Summary: File system based database that uses python pickles
 License: MIT
 Group: Development/Python3
@@ -16,6 +16,8 @@ Source0: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(pytest)
@@ -39,29 +41,25 @@ PickleShare.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-usedevelop=True
-commands =
-    {envbindir}/pytest {posargs:-vra}
-EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -s false
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc README.md
 %python3_sitelibdir/pickleshare.py
 %python3_sitelibdir/__pycache__/pickleshare.cpython-*
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Wed Jan 31 2024 Grigory Ustinov <grenka@altlinux.org> 0.7.5-alt3
+- Moved on modern pyproject macros.
+
 * Mon Mar 21 2022 Stanislav Levin <slev@altlinux.org> 0.7.5-alt2
 - Fixed FTBFS (Python 3.10).
 
