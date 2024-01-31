@@ -1,5 +1,5 @@
 Name: sdcc
-Version: 4.3.0
+Version: 4.4.0
 Release: alt1
 Epoch: 1
 
@@ -9,8 +9,6 @@ Group: Development/C
 Url: http://sdcc.sourceforge.net
 
 Source: %name-%version.tar
-
-Patch1: %name-%version-alt.patch
 
 BuildRequires: rpm-build-python3
 BuildRequires: flex gcc-c++ boost-devel gputils >= 1.5.2
@@ -62,7 +60,6 @@ microprocessors.
 
 %prep
 %setup
-%patch1 -p1
 find support -type f |xargs grep -l 'env python' |\
 	xargs sed -ri '/^#!\/usr\/bin\/env python$/ s,env python,python3,'
 sed -ri '/^extern char \*(copying|warranty)/ s,char ,const char ,' \
@@ -95,6 +92,9 @@ rm -vf %buildroot%_man1dir/serialview*
 %_docdir/%name-%version
 
 %changelog
+* Wed Jan 31 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:4.4.0-alt1
+- 4.4.0
+
 * Tue Jul 11 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:4.3.0-alt1
 - 4.3.0
 
