@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		1706b11e866
+%define svnrev		623853f8d6f
 
 %def_with pgsql
 %def_enable java
@@ -17,7 +17,7 @@
 %endif
 
 Name: zabbix
-Version: 6.0.25
+Version: 6.0.26
 Release: alt2
 Epoch: 1
 
@@ -47,7 +47,7 @@ BuildRequires: libssh2-devel
 BuildRequires: libunixODBC-devel
 %endif
 
-%{?_enable_java:BuildRequires: java-devel rpm-build-java}
+%{?_enable_java:BuildRequires: java-11-devel rpm-build-java}
 
 %if_with pgsql
 BuildRequires: libpq-devel
@@ -769,6 +769,12 @@ fi
 %_includedir/%name
 
 %changelog
+* Wed Jan 31 2024 Alexei Takaseev <taf@altlinux.org> 1:6.0.26-alt2
+- Change BR java-devel to java-11-devel
+
+* Tue Jan 30 2024 Alexei Takaseev <taf@altlinux.org> 1:6.0.26-alt1
+- 6.0.26
+
 * Wed Dec 20 2023 Alexei Takaseev <taf@altlinux.org> 1:6.0.25-alt2
 - Add zabbix-web-service subpackage
 
