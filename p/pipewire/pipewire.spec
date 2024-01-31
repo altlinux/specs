@@ -11,7 +11,7 @@
 %define api_ver 0.3
 %define spa_api_ver 0.2
 %define gst_api_ver 1.0
-%define libcamera_ver 1:0.0.1
+%define libcamera_ver 0.2.0
 
 %def_enable gstreamer
 %def_enable systemd
@@ -46,7 +46,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Media Sharing Server
@@ -64,8 +64,6 @@ Source: %name-%version.tar
 # 0.4.1-15
 Source1: media-session-%ms_ver.tar
 Patch: %name-0.3.19-alt-rpath.patch
-# https://gitlab.freedesktop.org/pipewire/pipewire/-/commit/fd33d2d3bb6333c7d6e74cbaa806bff2d908f589
-Patch10: pipewire-1.0.1-up-libcamera-0.2.0.patch
 
 Requires: %name-libs = %EVR
 %{?_enable_wireplumber:Requires: wireplumber}
@@ -194,7 +192,6 @@ This package provides development files for PipeWire JACK.
 
 %prep
 %setup -a1
-%patch10 -p1 -b .libcamera
 
 %ifarch %e2k
 # no attribute cleanup in C++ mode, but it's only used in C sources
@@ -414,6 +411,9 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 
 
 %changelog
+* Wed Jan 31 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Thu Jan 11 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
 - 1.0.1
 - built with libcamera-0.2.0
