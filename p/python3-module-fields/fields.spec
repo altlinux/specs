@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 5.0.0
-Release: alt4
+Release: alt5
 
 Summary: Container class boilerplate killer
 License: BSD
@@ -18,6 +18,8 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(attr)
@@ -40,22 +42,23 @@ Container class boilerplate killer.
 rm src/fields/py2ordereddict.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3-nocov
-tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false
+%tox_check_pyproject
 
 %files
 %doc LICENSE *.rst
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Wed Jan 31 2024 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt5
+- Moved on modern pyproject macros.
+
 * Wed Feb 02 2022 Stanislav Levin <slev@altlinux.org> 5.0.0-alt4
 - Fixed FTBFS (Python3.10).
 
