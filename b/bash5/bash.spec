@@ -1,6 +1,6 @@
 Name: bash5
 %define bash_version 5.2
-%define bash_patchlevel .15
+%define bash_patchlevel .26
 Version: %bash_version%bash_patchlevel
 Release: alt1
 
@@ -300,6 +300,9 @@ make -k check -C build-bash
 %_libexecdir/%name/*.h
 
 %changelog
+* Wed Jan 24 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.2.26-alt1
+- 5.2.15 -> 5.2.26.
+
 * Wed Sep 06 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.2.15-alt1
 - 4.4.23 -> 5.2.15.
 

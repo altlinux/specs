@@ -2,7 +2,7 @@
 
 Name: readline
 %define rl_version 8.2
-%define rl_patch .1
+%define rl_patch .10
 %define srcname readline-%rl_version
 Version: %rl_version%rl_patch
 Release: alt1
@@ -145,6 +145,9 @@ popd
 %_libdir/*.a
 
 %changelog
+* Wed Jan 24 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.2.10-alt1
+- Updated to 8.2.10.
+
 * Wed Sep 06 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.2.1-alt1
 - Updated to 8.2.1.
 - Packaged pkgconfig files (ALT#44993).
