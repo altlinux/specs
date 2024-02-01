@@ -5,7 +5,7 @@
 
 
 Name: neomutt
-Version: 20231221
+Version: 20240201
 Release: alt1
 Summary: A version of Mutt with added features
 License: GPL-2.0-only and ALT-Public-Domain
@@ -133,6 +133,9 @@ make -s test
 %_datadir/neomutt
 
 %changelog
+* Thu Feb 01 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 20240201-alt1
+- Update to 20240201 (2024-02-01).
+
 * Fri Dec 22 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 20231221-alt1
 - Update to 20231221(2023-12-21).
 
