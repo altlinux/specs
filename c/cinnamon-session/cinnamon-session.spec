@@ -5,7 +5,7 @@
 
 Name: %{_name}-session
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 License: GPLv2+
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
@@ -136,6 +136,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %_datadir/wayland-sessions/%{_name}-wayland.desktop
 
 %changelog
+* Thu Feb 01 2024 Anton Midyukov <antohami@altlinux.org> 6.0.3-alt2
+- startcinnamon-wayland: add -l option to shebang for run /etc/profile.d/*
+
 * Thu Feb 01 2024 Anton Midyukov <antohami@altlinux.org> 6.0.3-alt1
 - 6.0.3
 
