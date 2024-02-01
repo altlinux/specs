@@ -32,7 +32,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.9.13.5
+Version: 0.9.13.6
 Release: alt1
 
 Summary: GPT applier
@@ -140,7 +140,7 @@ fi
 # Remove storage in case we've lost compatibility between versions.
 # The storage will be regenerated on GPOA start.
 %define active_policy %_sysconfdir/local-policy/active
-%triggerpostun -- %name < 0.9.12.4
+%triggerpostun -- %name < 0.9.13.6
 rm -f %_cachedir/%name/registry.sqlite
 if test -L %active_policy; then
 	sed -i "s|^\s*local-policy\s*=.*|local-policy = $(readlink -f %active_policy)|" \
@@ -183,6 +183,10 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Wed Jan 31 2024 Valery Sinelnikov <greh@altlinux.org> 0.9.13.6-alt1
+- Added support for hidden attribute for folders (closes: 48964)
+- Added support for Cyrillic and spaces for mounting disks (closes: 49229)
+
 * Fri Jan 12 2024 Valery Sinelnikov <greh@altlinux.org> 0.9.13.5-alt1
 - Fixed blocking check for machine policies with multiple sections (closes: 48971)
 - Extension of the valuename_typeint list for the admx-chromium 120.0
