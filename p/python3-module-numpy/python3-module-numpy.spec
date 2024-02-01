@@ -16,7 +16,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 1.25.2
-Release: alt3.1
+Release: alt3.2
 Summary: Fundamental package for array computing in Python
 License: BSD-3-Clause
 Group: Development/Python3
@@ -32,11 +32,9 @@ Patch4: numpy-1.21.4-alt-use-sleep-in-auxv-test.patch
 Patch5: numpy-1.25.2-alt-loongarch64-selected_real_kind.patch
 
 # E2K patchset with MCST numbering scheme
-%ifarch %e2k
-Patch1001: 0001-arch_e2k_define.patch
-Patch1002: 0002-bug92804.patch
-Patch1003: 0003-lcc-1.24-compat.patch
-%endif
+Source2000: 0001-arch_e2k_define.patch
+Source2001: 0002-bug92804.patch
+
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: gcc-c++ gcc-fortran liblapack-devel swig
@@ -116,6 +114,10 @@ This package contains development files of NumPy.
 %prep
 %setup -a 3 -a4
 %autopatch -p1
+%ifarch %e2k
+patch -p1 -i %SOURCE2000
+patch -p1 -i %SOURCE2001
+%endif
 
 # headers
 sed -i 's|^prefix.*|prefix=%python3_sitelibdir/%oname/core|' \
@@ -218,6 +220,9 @@ ln -s %_includedir/python%_python3_version/%oname \
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Thu Feb 01 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:1.25.2-alt3.2
+- Updated e2k patches.
+
 * Wed Dec 06 2023 Grigory Ustinov <grenka@altlinux.org> 1:1.25.2-alt3.1
 - Bootstrap for python3.12.
 
