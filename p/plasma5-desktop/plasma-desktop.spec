@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.27.10
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -27,6 +27,7 @@ Patch5: alt-multimedia-player-chooser.patch
 Patch6: alt-def-panel.patch
 Patch7: alt-def-desktop-containment.patch
 Patch8: alt-def-desktop-widgets.patch
+Patch9: alt-dont-indicate-audio-on-taskbar.patch
 Patch10: alt-def-session.patch
 Patch11: alt-def-key-numlock.patch
 Patch12: alt-def-layout-indicator.patch
@@ -129,6 +130,7 @@ Common polkit files for %name
 %patch6 -p1
 %patch7 -p1
 #%patch8 -p1
+%patch9 -p1
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
@@ -252,6 +254,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Thu Feb 01 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.10-alt2
+- don't indicate audiostreams on taskbar by default
+
 * Thu Dec 07 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.10-alt1
 - new version
 
