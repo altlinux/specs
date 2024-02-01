@@ -1,6 +1,6 @@
 Name:     mupen64plus-qt
 Version:  1.15
-Release:  alt1
+Release:  alt2
 
 Summary:  A customizable launcher for Mupen64Plus
 License:  BSD-3-Clause
@@ -48,5 +48,8 @@ install -Dm644 "resources/mupen64plus-qt.6"         "%{buildroot}%{_mandir}/man6
 %{_mandir}/man6/mupen64plus-qt.6*
 
 %changelog
+* Thu Feb  1 2024 Artyom Bystrov <arbars@altlinux.org> 1.15-alt2
+- Fix version of quazip in patch
+
 * Mon Jan 02 2023 Artyom Bystrov <arbars@altlinux.org> 1.15-alt1
 - Initial build for Sisyphus
