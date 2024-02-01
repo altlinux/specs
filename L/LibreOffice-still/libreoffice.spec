@@ -6,10 +6,11 @@
 %def_without fetch
 %def_enable lto
 %def_with dconf
-%def_without mdds
-%def_without orcus
-# Uncompatible with zxing-cpp > 1.2
-%def_without zxing
+%def_with mdds
+%def_with orcus
+# Uncompatible with zxing-cpp >= 2.2.1
+%def_with zxing
+%def_without openssl
 
 # enable kde5 UI
 %def_enable kde5
@@ -27,14 +28,14 @@
 %def_disable mergelibs
 
 Name: LibreOffice-still
-%define hversion 7.5
-%define urelease 9.2
+%define hversion 7.6
+%define urelease 4.1
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt1
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -98,10 +99,6 @@ Patch500: alt-010-mips-fix-linking-with-libatomic.patch
 # make -j32 fails without this patch
 Patch700: alt-700-external-project-concurrency.patch
 
-# LoongArch
-Patch3500: alt-011-ax_boost_base-loongarch64.patch
-Patch3501: alt-012-configure_loongarch64.patch
-
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
 %add_findreq_skiplist %lodir/sdk/examples/python/toolpanel/toolpanel.py 
@@ -116,8 +113,12 @@ Patch3501: alt-012-configure_loongarch64.patch
 
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-glib-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libgtk+2-devel libgtk+3-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxslt-devel mdds-devel perl-Archive-Zip postgresql-devel python3-dev unzip xorg-cf-files zip
-BuildRequires: python2.7(distutils) libunixODBC-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel libssl-devel
+BuildRequires: cppunit-devel flex fonts-ttf-liberation gcc-c++ git-core gperf gst-plugins1.0-devel hunspell-en imake libGConf-devel libGLEW-devel libabw-devel libbluez-devel libcdr-devel libclucene-core-devel libcmis-devel libcups-devel libdbus-glib-devel libetonyek-devel libexpat-devel libexttextcat-devel libfreehand-devel libglm-devel libharfbuzz-devel libhunspell-devel libhyphen-devel libjpeg-devel liblangtag-devel liblcms2-devel libldap-devel liblpsolve-devel libmspub-devel libmwaw-devel libmythes-devel libneon-devel libnss-devel libodfgen-devel libredland-devel libsane-devel libvigra-devel libvisio-devel libwpd10-devel libwpg-devel libwps-devel libxslt-devel mdds-devel perl-Archive-Zip postgresql-devel python3-dev unzip xorg-cf-files zip
+BuildRequires: python2.7(distutils) libunixODBC-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel libXt-devel
+%if_with openssl
+BuildRequires: libssl-devel
+%endif
+BuildRequires: libgtk4-devel
 BuildRequires: xsltproc
 
 # 4.4
@@ -155,6 +156,7 @@ BuildRequires: qt5-base-devel qt5-x11extras-devel
 BuildRequires: kf5-kconfig-devel kf5-kcoreaddons-devel
 BuildRequires: kf5-ki18n-devel kf5-kio-devel kf5-kwindowsystem-devel
 BuildRequires: kf5-kdelibs4support-devel
+BuildRequires: libgtk+3-devel
 %endif
 # 6.1.5.2
 #BuildRequires: libpoppler-devel
@@ -189,6 +191,8 @@ BuildRequires: libopenjpeg2.0-devel
 BuildRequires: libabseil-cpp-devel
 # 7.4
 BuildRequires: libwebp-devel libtiff-devel
+# 7.6
+BuildRequires: frozen-devel
 
 %if_without python
 BuildRequires: python3-dev
@@ -241,6 +245,14 @@ Provides: %name-gnome = %EVR
 Obsoletes: %name-gnome < %EVR
 Conflicts: LibreOffice-gtk3
 %description gtk3
+GTK3 extensions for %name
+
+%package gtk4
+Summary: GTK4 Extensions for %name
+Group:  Office
+Requires: %uname = %EVR
+Requires: %name-common = %EVR
+%description gtk4
 GTK3 extensions for %name
 
 %if_enabled qt5
@@ -377,8 +389,6 @@ echo Direct build
 %patch500 -p0
 
 %patch700 -p1
-%patch3500 -p1
-%patch3501 -p1
 
 # TODO move officebeans to SDK or separate package
 # Hack in -Wl,-rpath=/usr/lib/jvm/jre-11-openjdk/lib
@@ -472,12 +482,23 @@ export ac_cv_prog_LO_CLANG_CC=""
         %{?_without_orcus:--without-system-orcus } \
         %{?_without_zxing:--without-system-zxing } \
         %{subst_enable mergelibs} \
-        --enable-odk \
+        --without-system-libcmis \
         --disable-firebird-sdbc \
         --disable-coinmp \
-        --enable-dbus \
+        --disable-dbus \
+%if_with openssl
+        --enable-openssl \
+        --enable-cipher-openssl-backend \
+%else
+        --disable-openssl \
+%endif
+        --disable-pdfium \
+        --disable-skia \
         --enable-evolution2 \
+        --enable-introspection \
+        --enable-odk \
         --enable-gio \
+        --enable-symbols \
         --enable-build-opensymbol \
         --enable-avahi \
         %{subst_with java} \
@@ -486,6 +507,10 @@ export ac_cv_prog_LO_CLANG_CC=""
         --without-doxygen \
         --without-system-poppler \
         --without-system-dragonbox \
+        --without-system-libfixmath \
+        --with-system-libs \
+        --without-export-validation \
+        --without-lxml \
         --without-system-libfixmath \
         \
         --with-external-dict-dir=%_datadir/myspell \
@@ -502,8 +527,7 @@ export ac_cv_prog_LO_CLANG_CC=""
         --with-help \
   \
         %{subst_enable qt5} \
-        --enable-gtk3 \
-        --enable-cipher-openssl-backend \
+        --enable-gtk4 \
 %if_enabled kde5
         --enable-gtk3-kde5 \
 %endif
@@ -514,12 +538,13 @@ export ac_cv_prog_LO_CLANG_CC=""
 %endif
 %if_with python
         --enable-python=internal \
+%else
+        --enable-python=system \
 %endif
 %if_with dconf
         --enable-dconf \
 %endif
         --enable-introspection \
-        --enable-cipher-openssl-backend \
         --enable-eot \
         --enable-formula-logger \
 %if_with fetch
@@ -567,6 +592,9 @@ done
 # Create gtk3 plugin list
 find %buildroot%lodir -name "*_gtk3lo.so" | sed 's@^%buildroot@@' > files.gtk3
 
+# Create gtk4 plugin list
+find %buildroot%lodir -name "*_gtk4lo.so" | sed 's@^%buildroot@@' > files.gtk4
+
 # Create qt5 plugin list
 find %buildroot%lodir -name "*qt5*"   | sed 's@^%buildroot@@' > files.qt5
 
@@ -574,7 +602,7 @@ find %buildroot%lodir -name "*qt5*"   | sed 's@^%buildroot@@' > files.qt5
 find %buildroot%lodir -name "*_kde5*" | sed 's@^%buildroot@@' > files.kde5
 
 # Generate base filelist by removing files from  separated packages
-{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gtk3 files.kde5 files.qt5; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | egrep -v '/share/extensions/.|%lodir/sdk/.' > files.nolang
+{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gtk3 files.gtk4 files.kde5 files.qt5; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | egrep -v '/share/extensions/.|%lodir/sdk/.' > files.nolang
 
 # Return Oxygen icon theme from LibreOffice 5.3 (see https://bugs.documentfoundation.org/show_bug.cgi?id=110353 for details)
 install -D %SOURCE400 %buildroot%lodir/share/config/images_oxygen.zip
@@ -687,6 +715,8 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 
 %files gtk3 -f files.gtk3
 
+%files gtk4 -f files.gtk4
+
 %if_enabled qt5
 %files qt5 -f files.qt5
 %endif
@@ -726,6 +756,10 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Thu Feb 01 2024 Andrey Cherepanov <cas@altlinux.org> 7.6.4.1-alt1
+- New version.
+- Built with GTK4 VCL and unify build flags with Fedora.
+
 * Mon Dec 18 2023 Andrey Cherepanov <cas@altlinux.org> 7.5.9.2-alt2
 - FTBFS: fixed build with libxml2 2.12 (ALT #48841).
 
