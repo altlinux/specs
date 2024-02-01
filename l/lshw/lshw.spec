@@ -1,6 +1,6 @@
 Name: lshw
-Version: B.02.19.2
-Release: alt2.1
+Version: B.02.20
+Release: alt1
 
 Summary: Hardware Lister
 License: GPL-2.0
@@ -13,17 +13,17 @@ Source102: lshw-gtk.1
 
 Patch1: lshw-fix-desktop.patch
 Patch2: lshw-2.13-gcc43.patch
-# fc (rhbz #1332486)
-Patch10: lshw-non-root.patch
-Patch11: lshw-B.02.19.2-cmake.patch
-Patch12: lshw-B.02.18-scandir.patch
-Patch13: lshw-fix-mmc.patch
-Patch14: lshw-fix-segfault-in-apfs-volume-code.patch
+Patch3: lshw-non-root.patch
+Patch4: lshw-B.02.18-scandir.patch
+Patch5: lshw-B.02.20-cmake.patch
 
 Requires: pciids usbids
 
 BuildRequires(pre): cmake rpm-build-ninja
-BuildRequires: gcc-c++ libgtk+2-devel libsqlite3-devel
+BuildRequires: gcc-c++
+BuildRequires: libgtk+3-devel
+BuildRequires: libglib2-devel
+BuildRequires: libsqlite3-devel
 
 %description
 lshw (Hardware Lister) is a small tool to provide detailed informaton on the
@@ -52,11 +52,9 @@ This package provides graphical (GTK+) front-end to lshw.
 %prep
 %setup -a 100
 %patch2 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -101,6 +99,9 @@ install -Dpm0644 %SOURCE102 %buildroot%_man1dir/lshw-gtk.1
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Tue Jan 09 2024 Andrey Cherepanov <cas@altlinux.org> B.02.20-alt1
+- New version.
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> B.02.19.2-alt2.1
 - NMU: spec: adapted to new cmake macros.
 
