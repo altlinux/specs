@@ -2,7 +2,7 @@
 
 Name: radeon-memory-visualizer
 Version: 1.8
-Release: alt0.1
+Release: alt0.2
 License: MIT
 Summary: Software tool to analyze video memory usage on AMD Radeon GPUs
 Url: https://github.com/GPUOpen-Tools/radeon_memory_visualizer
@@ -18,7 +18,7 @@ BuildRequires: python3-module-sphinx_rtd_theme linuxdeployqt chrpath
 Requires: %name-data = %EVR
 
 # doesn't compile on 32-bit
-ExclusiveArch: aarch64 x86_64 ppc64le
+ExclusiveArch: aarch64 x86_64 ppc64le loongarch64
 
 %description
 The Radeon Memory Visualizer (RMV) is a software tool that will allow users to
@@ -66,6 +66,9 @@ install -m644 LICENSE.txt %buildroot%_datadir/rmv/
 %_datadir/rmv/*
 
 %changelog
+* Thu Feb 01 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.8-alt0.2
+- NMU: build for LoongArch.
+
 * Wed Jan 31 2024 L.A. Kostis <lakostis@altlinux.ru> 1.8-alt0.1
 - 1.8.
 
