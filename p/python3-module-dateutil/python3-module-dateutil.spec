@@ -6,8 +6,8 @@
 %define pypi_name python-dateutil
 
 Name: python3-module-%oname
-Version: 2.8.2
-Release: alt2
+Version: 2.8.3
+Release: alt0.git0586f4a
 
 Summary: Extensions to the standard datetime module
 
@@ -56,7 +56,7 @@ datetime module, available in Python 2.3+. Allows:
 %setup
 %patch1 -p1
 # FIXME: Make sure a unicode string can be passed to TZ (GH #802)
-%__subst "s|test_gettz_badzone_unicode|disabled_test_gettz_badzone_unicode|" dateutil/test/test_tz.py
+%__subst "s|test_gettz_badzone_unicode|disabled_test_gettz_badzone_unicode|" tests/test_tz.py
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -78,6 +78,9 @@ py.test3
 %python3_sitelibdir/dateutil
 
 %changelog
+* Wed Jan 31 2024 Pavel Skrylev <majioa@altlinux.org> 2.8.3-alt0.git0586f4a
+- ^ get git version to fix zero date bug.
+
 * Thu May 04 2023 Stanislav Levin <slev@altlinux.org> 2.8.2-alt2
 - Mapped PyPI name to distro's one.
 
