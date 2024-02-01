@@ -4,13 +4,14 @@
 
 Name:          lib%{origname}
 Version:       0.1
-Release:       alt0.git2143fd6
+Release:       alt0.git2143fd6.1
 Summary:       A library for k-nearest neighbor search
 License:       BSD-2-Clause
 Group:         Sciences/Mathematics
 Url:           https://github.com/aaalgo/kgraph
 Vcs:           https://github.com/aaalgo/kgraph.git
-ExcludeArch:   armh aarch64 ppc64le
+# XXX: xsimd supports on x86 SSE and ARM neon
+ExclusiveArch: aarch64 %ix86 x86_64
 
 Source:        %name-%version.tar
 Patch:         config.patch
@@ -28,6 +29,9 @@ BuildRequires: libnumpy-py3-devel
 BuildRequires: libopenblas-devel
 
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%ifarch x86_64 %ix86
+%add_optflags -msse2
+%endif
 
 %description
 KGraph: A Library for Approximate Nearest Neighbor Search.
@@ -154,5 +158,11 @@ rows of NumPy matrices.
 
 
 %changelog
+* Thu Feb 01 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.1-alt0.git2143fd6.1
+- NMU:
+  + Fixed FTBFS on aarch64 (don't force SSE2 here)
+  + Build only on aarch64 and x86 as the thing requires either x86 SSE2+
+    or ARM NEON
+
 * Wed Jan 31 2024 Pavel Skrylev <majioa@altlinux.org> 0.1-alt0.git2143fd6
 - initial build the git ref 2143fd6 for Sisyphus
