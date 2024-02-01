@@ -1,8 +1,6 @@
-%def_with check
-
 Name:		coccigrep
 Version:	1.20
-Release:	alt1
+Release:	alt2
 Summary:	Semantic grep for the C language based on coccinelle
 
 Group:		Development/Tools
@@ -17,7 +15,9 @@ Source:		%name-%version.tar
 BuildRequires(pre):	rpm-build-python3
 BuildRequires:		python3-devel
 BuildRequires:		python3-module-setuptools
-%{?!_without_check:%{?!_disable_check:BuildRequires: spatch}}
+%{?!_disable_check:
+BuildRequires: spatch
+}
 
 %description
 Coccigrep is a semantic grep for the C and C++ languages based on Coccinelle
@@ -39,7 +39,6 @@ gzip -c coccigrep.1 > coccigrep.1.gz
 %python3_install
 install -D coccigrep.1.gz %buildroot/%_man1dir/coccigrep.1.gz
 
-%if_with check
 %check
 cat > test.c <<'EOF'
   struct test { int y; };
@@ -53,7 +52,6 @@ export PYTHONPATH=./src
 ./coccigrep -v -t 'struct test' -a 'y' test.c	|| exit 1
 ./coccigrep -v -t 'struct test' -a 'x' test.c	&& exit 1
 ./coccigrep -v -t 'test' test.c			&& exit 1
-%endif
 
 %files
 %doc LICENSE README.rst ChangeLog
@@ -62,6 +60,9 @@ export PYTHONPATH=./src
 %python3_sitelibdir/*
 
 %changelog
+* Thu Feb 01 2024 Vitaly Chikunov <vt@altlinux.org> 1.20-alt2
+- Fix: ALT beekeeper Sisyphus/x86_64 test rebuild failed.
+
 * Tue May 05 2020 Vitaly Chikunov <vt@altlinux.org> 1.20-alt1
 - Update to v1.20.
 
