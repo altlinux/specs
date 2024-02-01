@@ -29,7 +29,7 @@
 Name: bind
 Version: 9.18.21
 %define src_version 9.18.21
-Release: alt1
+Release: alt2
 
 Summary: ISC BIND - DNS server
 License: MPL-2.0
@@ -93,7 +93,6 @@ BuildRequires: openssl
 %endif
 %else
 BuildRequires: rpm-build-vm
-BuildRequires: /sbin/runuser
 BuildRequires: /dev/kvm
 %endif
 
@@ -391,6 +390,8 @@ sudo sh bin/tests/system/ifconfig.sh down
 
 cat > run_smoke.sh <<'_EOF'
 # setup
+set -x
+ulimit -n $(ulimit -Hn)
 runas="$1"
 perl bin/tests/system/testsock.pl || sh -x bin/tests/system/ifconfig.sh up
 ip a
@@ -412,7 +413,7 @@ if [ -z "$testdirs" ] ; then
     echo 'Tests using ns==1 not found'
     exit 1
 fi
-runuser -u "$runas" -- python3 -m pytest $testdirs
+setpriv --reuid "$runas" -- python3 -m pytest $testdirs
 
 # teardown
 popd
@@ -592,6 +593,9 @@ fi
 %endif
 
 %changelog
+* Wed Jan 31 2024 Alexander Danilov <admsasha@altlinux.org> 9.18.21-alt2
+- Fixed tests on some configurations.
+
 * Thu Dec 28 2023 Stanislav Levin <slev@altlinux.org> 9.18.21-alt1
 - 9.18.19 -> 9.18.21.
 
