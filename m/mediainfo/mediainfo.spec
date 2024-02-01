@@ -1,7 +1,9 @@
+%define ver_major 24.01
+
 %def_disable kde4
 
 Name: mediainfo
-Version: 23.11
+Version: %ver_major.1
 Release: alt1
 
 Group: File tools
@@ -11,7 +13,7 @@ Url: http://mediainfo.sourceforge.net
 
 Source: https://mediaarea.net/download/source/%name/%version/%{name}_%{version}.tar.xz
 
-Requires: lib%name >= %version
+Requires: lib%name >= %ver_major
 
 %{?_enable_kde4:BuildRequires(pre): rpm-macros-kde-common-devel}
 BuildRequires(pre): rpm-build-kf5
@@ -21,7 +23,7 @@ BuildRequires: dos2unix
 BuildRequires: zlib-devel
 BuildRequires: libpango-devel
 BuildRequires: libzen-devel >= 0.4.41
-BuildRequires: libmediainfo-devel >= %version
+BuildRequires: libmediainfo-devel >= %ver_major
 BuildRequires: libwxGTK3.2-devel
 BuildRequires: sgml-common
 
@@ -47,7 +49,7 @@ This package includes the command line interface
 %package gui
 Group: File tools
 Summary: MediaInfo supplies information about a video or audio file
-Requires: lib%name >= %version
+Requires: lib%name >= %ver_major
 
 %description gui
 MediaInfo supplies technical and tag information about a video or audio file
@@ -152,6 +154,9 @@ rm -f %buildroot%_datadir/kde4/services/ServiceMenus/mediainfo-gui.desktop
 %_K5srv/ServiceMenus/%name-gui.desktop
 
 %changelog
+* Thu Feb 01 2024 Yuri N. Sedunov <aris@altlinux.org> 24.01.1-alt1
+- 24.01.1
+
 * Thu Nov 30 2023 Yuri N. Sedunov <aris@altlinux.org> 23.11-alt1
 - 23.11
 
