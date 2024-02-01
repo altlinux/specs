@@ -1,7 +1,9 @@
+%define lua_version 5.3
+
 ExclusiveArch: x86_64
 
 Name: plugdata
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 
 Summary: Pure Data as a plugin, with a new GUI
@@ -18,11 +20,13 @@ Source3: %name-%version-libraries-clap-juce-extensions-clap-libs-clap.tar
 Source4: %name-%version-libraries-clap-juce-extensions-clap-libs-clap-helpers.tar
 Source5: %name-%version-libraries-concurrentqueue.tar
 Source6: %name-%version-libraries-heavylib.tar
-Source7: %name-%version-libraries-pd-else.tar
-Source8: %name-%version-libraries-pd-lua.tar
-Source9: %name-%version-libraries-plugdata-ofelia.tar
-Source10: %name-%version-libraries-plugdata-ofelia-libraries-cppsockets.tar
-Source11: %name-%version-libraries-pure-data.tar
+Source7: %name-%version-libraries-melatonin_blur.tar
+Source8: %name-%version-libraries-pd-else.tar
+Source9: %name-%version-libraries-pd-lua.tar
+Source10: %name-%version-libraries-plugdata-ofelia.tar
+Source11: %name-%version-libraries-plugdata-ofelia-libraries-cppsockets.tar
+Source12: %name-%version-libraries-pure-data.tar
+Source13: %name-%version-libraries-readerwriterqueue.tar
 Source100: plugdata.desktop
 
 Patch0: %name-%version-%release.patch
@@ -40,7 +44,7 @@ BuildRequires: libfreetype-devel bzlib-devel libpcre2-devel libbrotli-devel
 BuildRequires: libcurl-devel
 BuildRequires: libalsa-devel
 BuildRequires: pipewire-jack-libs-devel
-BuildRequires: liblua5.4-devel
+BuildRequires: liblua%lua_version-devel
 
 %description
 Plugin wrapper around Pure Data to allow patching in a wide selection of DAWs.
@@ -60,7 +64,7 @@ Summary: Pure Data as a plugin, with new GUI (LV2)
 Plugin wrapper around PureData to allow patching in a wide selection of DAWs.
 
 %prep
-%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11
+%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13
 %patch0 -p1
 
 pushd Libraries/JUCE
@@ -97,6 +101,9 @@ install -D -m 644 %SOURCE100 %buildroot%_datadir/applications/plugdata.desktop
 %doc README* LICENSE*
 
 %changelog
+* Mon Jan 29 2024 Aleksandr Yukhnenko <neff@altlinux.org> 0.8.3-alt1
+- 0.8.3
+
 * Wed Dec 13 2023 Aleksandr Yukhnenko <neff@altlinux.org> 0.8.2-alt1
 - 0.8.2
 
