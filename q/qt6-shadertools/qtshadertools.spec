@@ -2,7 +2,7 @@
 
 Name: qt6-shadertools
 Version: 6.6.1
-Release: alt1
+Release: alt2
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -74,13 +74,13 @@ Requires: libqt6-core = %_qt6_version
 
 %Q6build
 %if %qdoc_found
-%make -C BUILD docs
+%Q6make --target docs
 %endif
 
 %install
 %Q6install_qt
 %if %qdoc_found
-%make -C BUILD DESTDIR=%buildroot install_docs ||:
+%make -C BUILD DESTDIR=%buildroot VERBOSE=1 install_docs ||:
 %endif
 
 %files common
@@ -110,6 +110,9 @@ Requires: libqt6-core = %_qt6_version
 #%_qt6_examplesdir/*
 
 %changelog
+* Thu Feb 01 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt2
+- increase docs build verbosity
+
 * Tue Dec 05 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt1
 - new version
 
