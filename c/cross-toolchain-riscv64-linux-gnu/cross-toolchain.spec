@@ -83,12 +83,31 @@
 
 Name: cross-toolchain-%target
 Version: 20240126
-Release: alt1
+Release: alt2
 Summary: GCC cross-toolchain for %target
 License: LGPL-2.1-or-later and LGPL-3.0-or-later and GPL-2.0-or-later and GPL-3.0-or-later and GPL-3.0-or-later with GCC-exception-3.1
 Group: Development/C
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 loongarch64
+
+%ifarch loongarch64
+# XXX: By default GCC build system builds GCC as non-PIE binaries (for
+# performance reasons). However on LoongArch many non-trivial non-PIE
+# binaries have text relocations (the default code model on LoongArch
+# is a bit tough, i.e. the code offsets must fit into 128MB).
+# rpm-build verifies every binary with text relocations with
+# eu-findtextrel, however eu-findtextrel refuses to process non-PIE
+# binaries and bails out with an error. As a result build fails with
+# the following error:
+#
+# eu-findtextrel: './usr/bin/riscv64-linux-gnu-lto-dump' is not a DSO or PIE
+#
+# To avoid the problem build GCC as a PIE binary on LoongArch.
+%def_enable host_shared
+%else
+%def_disable host_shared
+%endif
+
 
 %define gcc_version 13.2.1
 %define gcc_branch %(v=%gcc_version; v=${v%%%%.*}; echo $v)
@@ -405,6 +424,10 @@ env \
 	--enable-default-pie \
 	--enable-gnu-unique-object \
 	--enable-linker-build-id \
+%if_enabled host_shared
+	--enable-host-pie \
+	--enable-host-shared \
+%endif
 	%nil
 
 env \
@@ -807,6 +830,9 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 
 
 %changelog
+* Thu Feb 01 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 20240126-alt2
+- NMU: adjusted spec for LoongArch (avoid FTBFS due to eu-findtextrel).
+
 * Fri Jan 26 2024 Ivan A. Melnikov <iv@altlinux.org> 20240126-alt1
 - Sync sources with sisyphus_riscv64.
 
