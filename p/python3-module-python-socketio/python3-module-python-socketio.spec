@@ -6,13 +6,13 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 5.10.0
+Version: 5.11.0
 Release: alt1
 
 Summary: Python Socket.IO server and client
 License: MIT
 Group:   Development/Python3
-URL:     https://pypi.org/project/Flask-SocketIO
+URL:     https://pypi.org/project/python-socketio
 VCS:     https://github.com/miguelgrinberg/python-socketio
 
 BuildRequires(pre): rpm-build-pyproject
@@ -76,5 +76,8 @@ This package contains documentation for %pypi_name.
 %doc examples
 
 %changelog
+* Thu Feb 01 2024 Andrey Limachko <liannnix@altlinux.org> 5.11.0-alt1
+- 5.11.0
+
 * Tue Oct 24 2023 Andrey Limachko <liannnix@altlinux.org> 5.10.0-alt1
 - Initial build for Sisyphus
