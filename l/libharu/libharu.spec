@@ -1,76 +1,76 @@
-Group: System/Libraries
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%global gittag0 RELEASE_2_3_0RC3
+%define _localstatedir %_var
+%define soname 2.4
+Name: libharu
+Version: 2.4.4
+Release: alt1
+Summary: C library for generating PDF files
+Group: System/Libraries
+License: zlib-acknowledgement
+Url: http://libharu.org
+VCS: https://github.com/libharu/libharu
+Source0: %name-%version.tar
 
-Name:           libharu
-Version:        2.3.0
-Release:        alt2_13
-Summary:        C library for generating PDF files
-License:        zlib with acknowledgement
-URL:            http://libharu.org
-# not available. rebuilt from ZIP in this package
-Source0:        https://github.com/libharu/${name}/archive/%{gittag0}/%{name}-%{version}-rc3.tar.gz
-Patch0:         libharu-RELEASE_2_3_0_cmake.patch
-Patch1:         libharu-2.3.0-triangleshading.patch
-Patch2:         libharu-2.3.0-smallnumber.patch
-
-BuildRequires:  gcc
-BuildRequires:  ctest cmake
-BuildRequires:  libpng-devel
-BuildRequires:  zlib-devel
-Source44: import.info
-Patch33: libharu-2.3.0-1-Included-necessary-char-widths-in-generated-PDF.patch
-Patch34: libharu-2.3.0-2-Avoid-issue-with-libtiff-duplicate-symbols.patch
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-c++
+BuildRequires: ctest cmake
+BuildRequires: libpng-devel
+BuildRequires: zlib-devel
 
 %description
-libHaru is a library for generating PDF files. 
+libHaru is a library for generating PDF files.
 It is free, open source, written in ANSI C and cross platform.
 
-%package        devel
-Group: Development/Other
-Summary:        Development files for %{name}
-Requires:       %{name} = %{version}-%{release}
+%package -n libharu%soname
+Summary: %summary
+Group: System/Libraries
 
-%description    devel
-The %{name}-devel package contains libraries and header files for
-developing applications that use %{name}.
+%description -n libharu%soname
+libHaru is a library for generating PDF files.
+It is free, open source, written in ANSI C and cross platform.
+
+
+%package devel
+Group: Development/Other
+Summary: Development files for %name
+Requires: %name%soname = %EVR
+
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
 
 %prep
-%setup -qn %{name}-%{gittag0}
-# fix cmake build
-%patch0 -p1 -b .cmake
-# github #157 pull request
-%patch1 -p1 -b .triangleshading
-# github #187 pull request
-%patch2 -p1 -b .smallnumber
-%patch33 -p1
-%patch34 -p1
+%setup
 
 %build
-%{fedora_v2_cmake} -DLIBHPDF_STATIC=NO
+%cmake -DLIBHPDF_STATIC=NO
 
-%fedora_v2_cmake_build
+%cmake_build
 
 %install
-%fedora_v2_cmake_install
+%cmake_install
 
-
-
-%files
-%doc README
-%{_libdir}/libhpdf.so.*
-%exclude %{_datadir}/%{name}
+%files -n libharu%soname
+%doc README.md  LICENSE
+%_libdir/libhpdf.so.%soname
+%_libdir/libhpdf.so.%soname.*
+%exclude %_datadir/%name
 
 %files devel
-%{_includedir}/*
-%{_libdir}/libhpdf.so
+%_includedir/*
+%_libdir/libhpdf.so
 
 %changelog
+* Fri Jan 19 2024 Anton Farygin <rider@altlinux.ru> 2.4.4-alt1
+- 2.4.4
+
+* Tue Apr 04 2023 Anton Farygin <rider@altlinux.ru> 2.4.3-alt1
+- new version
+- built from upstream git
+- use SPDX for license tag
+- cleanup spec from autoimport artefacts
+- added soname patch from fedora
+
 * Tue Apr 27 2021 Igor Vlasenko <viy@altlinux.org> 2.3.0-alt2_13
 - dropped python2 examples (closes: #39982)
 

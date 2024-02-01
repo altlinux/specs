@@ -1,36 +1,55 @@
-%define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%define ver 9.3
+%define ver 9.1
 
-Name: vtk
+Name: vtk9.1
 Version: %ver.0
-Release: alt1
+Release: alt2
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
-License: BSD-3-Clause
+License: BSD-like
 Group: Development/Tools
 Url: https://www.vtk.org/
 
-VCS: https://gitlab.kitware.com/vtk/vtk.git
+# https://gitlab.kitware.com/vtk/vtk.git
 Source: %name-%version.tar
 
 # git submodules
-Source1: %name-%version-ThirdParty-vtkm-vtkvtkm-vtk-m.tar
+Source1: vtk-%version-ThirdParty-vtkm-vtkvtkm-vtk-m.tar
 
 # Remote modules
-Source100: %name-%version-MomentInvariants.tar
-Source101: %name-%version-vtkDICOM.tar
+Source100: vtk-%version-MomentInvariants.tar
+Source101: vtk-%version-PoissonReconstruction.tar
+Source102: vtk-%version-Powercrust.tar
+Source103: vtk-%version-SignedTensor.tar
+Source104: vtk-%version-SplineDrivenImageSlicer.tar
+Source105: vtk-%version-vtkDICOM.tar
 
-Patch1: %name-9.3.0-alt-python-install-path.patch
+Patch1: vtk-%version-alt-python-install-path.patch
+
 # Fix/hack for https://gitlab.kitware.com/vtk/vtk/-/issues/18220
 # Needed for itk-snap
-Patch2: %name-9.1.0-alt-modules-autoinit.patch
-Patch3: %name-9.1.0-alt-dont-fetch-remote-modules.patch
-Patch4: %name-9.1.0-alt-compile-flags.patch
-Patch5: %name-9.3.0-alt-armh-compat.patch
+Patch2: vtk-%version-alt-modules-autoinit.patch
 
-Requires: lib%name%ver = %EVR
+# Patch required libharu version (Fedora 33+ contains the needed VTK patches)
+Patch3: vtk-%version-fedora-libharu.patch
+
+Patch4: vtk-%version-alt-dont-fetch-remote-modules.patch
+
+Patch5: vtk-%version-alt-fix-linking.patch
+
+Patch6: vtk-%version-alt-compile-flags.patch
+
+Patch7: vtk-%version-alt-armh-compat.patch
+
+Patch8: vtk-%version-alt-PoissonReconstruction-build.patch
+
+Patch9: vtk-%version-alt-SplineDrivenImageSlicer-install-headers.patch
+
+Patch10: 0001-Fix-build-on-GCC13.patch
+Patch3500: 0002-Fixed-FTBFS-on-LoongArch.patch
+
+Requires: libvtk%ver = %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-qt5
@@ -40,7 +59,7 @@ BuildRequires: boost-devel boost-filesystem-devel
 BuildRequires: boost-graph-parallel-devel
 BuildRequires: libfreetype-devel libjpeg-devel
 BuildRequires: libxml2-devel libexpat-devel libftgl220-devel libpng-devel
-BuildRequires: libtiff-devel zlib-devel libhdf5-devel libsqlite3-devel /usr/bin/sqlite3
+BuildRequires: libtiff-devel zlib-devel libhdf5-devel libsqlite3-devel
 BuildRequires: doxygen graphviz libgsl-devel
 BuildRequires: libbfd-devel libopenmotif-devel
 BuildRequires: libgl2ps-devel
@@ -74,10 +93,6 @@ BuildRequires: libnumpy-py3-devel
 BuildRequires: libopenslide-devel
 BuildRequires: libarchive-devel
 BuildRequires: libfmt-devel
-BuildRequires: nlohmann-json-devel
-BuildRequires: bzlib-devel
-BuildRequires: libpcre2-devel
-BuildRequires: libbrotli-devel
 
 %description
 VTK is an open-source software system for image processing, 3D graphics, volume
@@ -85,11 +100,11 @@ rendering and visualization. VTK includes many advanced algorithms (e.g.,
 surface reconstruction, implicit modelling, decimation) and rendering techniques
 (e.g., hardware-accelerated volume rendering, LOD control).
 
-%package -n lib%name%ver
+%package -n libvtk%ver
 Summary: Shared libraries of The Visualization Toolkit (VTK)
 Group: System/Libraries
 
-%description -n lib%name%ver
+%description -n libvtk%ver
 VTK is an open-source software system for image processing, 3D graphics, volume
 rendering and visualization. VTK includes many advanced algorithms (e.g.,
 surface reconstruction, implicit modelling, decimation) and rendering techniques
@@ -97,161 +112,27 @@ surface reconstruction, implicit modelling, decimation) and rendering techniques
 
 This package contains shared libraries of VTK.
 
-%package -n lib%name-devel
-Summary: Development files of The Visualization Toolkit (VTK)
-Group: Development/C++
-Requires: %name = %EVR
-Requires: %name-python3 = %EVR
-Requires: lib%name%ver = %EVR
-Requires: lib%name%ver-python3 = %EVR
-Requires: python3-module-%name = %EVR
-Requires: python3-module-%name-tests = %EVR
-Requires: nlohmann-json-devel
-Requires: %name-doc = %EVR
-Requires: %name-examples = %EVR
-%ifnarch %arm
-Requires: %name-qt5 = %EVR
-%endif
-# Following dependencies are duplicates from build dependencies
-Requires: qt5-base-devel
-Requires: qt5-declarative-devel
-Requires: libfreetype-devel
-Requires: eigen3-devel
-Requires: libdouble-conversion-devel
-Requires: python3-devel
-Requires: libxml2-devel
-Requires: libgdal-devel
-Requires: libGLEW-devel
-Requires: libarchive-devel
-Requires: libcgns-devel
-Requires: libfmt-devel
-Conflicts: libvtk6.1-devel libvtk6.2-devel libvtk8.1-devel
-Conflicts: libvtk8.2-devel
-
-%description -n lib%name-devel
-VTK is an open-source software system for image processing, 3D graphics, volume
-rendering and visualization. VTK includes many advanced algorithms (e.g.,
-surface reconstruction, implicit modelling, decimation) and rendering techniques
-(e.g., hardware-accelerated volume rendering, LOD control).
-
-This package contains development files of VTK.
-
-%package doc
-Summary: Documentation for The Visualization Toolkit (VTK)
-Group: Development/Documentation
-
-%description doc
-VTK is an open-source software system for image processing, 3D graphics, volume
-rendering and visualization. VTK includes many advanced algorithms (e.g.,
-surface reconstruction, implicit modelling, decimation) and rendering techniques
-(e.g., hardware-accelerated volume rendering, LOD control).
-
-This package contains documentation for VTK.
-
-%package python3
-Summary: The Visualization Toolkit (VTK) Python bindings
-Group: Development/Python3
-Requires: %name = %EVR
-Requires: lib%name%ver = %EVR
-Requires: lib%name%ver-python3 = %EVR
-Requires: python3-module-%name = %EVR
-Conflicts: vtk6.1-python vtk6.2-python vtk8.1-python
-Conflicts: vtk8.2-python vtk8.2-python3
-
-%description python3
-VTK is an open-source software system for image processing, 3D graphics, volume
-rendering and visualization. VTK includes many advanced algorithms (e.g.,
-surface reconstruction, implicit modelling, decimation) and rendering techniques
-(e.g., hardware-accelerated volume rendering, LOD control).
-
-This package provides Python bindings to VTK.
-
-%package -n lib%name%ver-python3
-Summary: The Visualization Toolkit (VTK) Python shared libraries
-Group: System/Libraries
-Requires: lib%name%ver = %EVR
-
-%description -n lib%name%ver-python3
-VTK is an open-source software system for image processing, 3D graphics, volume
-rendering and visualization. VTK includes many advanced algorithms (e.g.,
-surface reconstruction, implicit modelling, decimation) and rendering techniques
-(e.g., hardware-accelerated volume rendering, LOD control).
-
-This package contains Python shared libraries of VTK.
-
-%package -n python3-module-%name
-Summary: The Visualization Toolkit (VTK) Python bindings
-Group: Development/Python3
-Requires: lib%name%ver-python3 = %EVR
-%add_python3_req_skip GDK gtk gtkgl gtk.gtkgl pygtk vtkParallelPython
-%add_python3_req_skip vtk.vtkCommonCore vtk.vtkFiltersGeometry vtk.vtkRenderingCore vtk.vtkWebCore vtk.web vtk.web.camera vtk.web.query_data_model
-%add_python3_req_skip wslink.websocket
-%py3_requires PyQt5
-Provides: python3-module-vtk8.2 = %EVR
-Obsoletes: python3-module-vtk8.2 < %EVR
-Conflicts: python3-module-vtk8.2 < %EVR
-
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/vtkmodules/web/wslink.py
-
-%description -n python3-module-%name
-VTK is an open-source software system for image processing, 3D graphics, volume
-rendering and visualization. VTK includes many advanced algorithms (e.g.,
-surface reconstruction, implicit modelling, decimation) and rendering techniques
-(e.g., hardware-accelerated volume rendering, LOD control).
-
-This package provides Python bindings to VTK.
-
-%package -n python3-module-%name-tests
-Summary: Tests for The Visualization Toolkit (VTK) Python bindings
-Group: Development/Python3
-Requires: python3-module-%name = %EVR
-Provides: python3-module-vtk8.2-tests = %EVR
-Obsoletes: python3-module-vtk8.2-tests < %EVR
-Conflicts: python3-module-vtk8.2-tests < %EVR
-
-%description -n python3-module-%name-tests
-VTK is an open-source software system for image processing, 3D graphics, volume
-rendering and visualization. VTK includes many advanced algorithms (e.g.,
-surface reconstruction, implicit modelling, decimation) and rendering techniques
-(e.g., hardware-accelerated volume rendering, LOD control).
-
-This package contains tests for Python bindings to VTK.
-
-%package examples
-Summary: The Visualization Toolkit (VTK) examples
-Group: Development/Tools
-Requires: %name = %EVR
-%add_python3_req_skip numeric
-
-%description examples
-VTK is an open-source software system for image processing, 3D graphics, volume
-rendering and visualization. VTK includes many advanced algorithms (e.g.,
-surface reconstruction, implicit modelling, decimation) and rendering techniques
-(e.g., hardware-accelerated volume rendering, LOD control).
-
-This package contains VTK examples.
-
-%package qt5
-Summary: The Visualization Toolkit (VTK) QML plugin
-Group: System/Libraries
-
-%description qt5
-VTK is an open-source software system for image processing, 3D graphics, volume
-rendering and visualization. VTK includes many advanced algorithms (e.g.,
-surface reconstruction, implicit modelling, decimation) and rendering techniques
-(e.g., hardware-accelerated volume rendering, LOD control).
-
-This package contains VTK QML plugin.
 
 %prep
-%setup -a1 -a100 -a101
+%setup -a1 -a100 -a101 -a102 -a103 -a104 -a105
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch3500 -p1
 
+pushd Remote/PoissonReconstruction
+%patch8 -p1
+popd
 
+pushd Remote/SplineDrivenImageSlicer
+%patch9 -p1
+popd
+
+%patch10 -p1
 # remove bundled libraries
 for x in constantly expat freetype gl2ps hdf5 hyperlink incremental jpeg jsoncpp libharu libxml2 lz4 netcdf oggtheora png tiff Twisted txaio zlib ZopeInterface ; do
 	rm -rf ThirdParty/${x}/vtk${x}
@@ -283,21 +164,24 @@ export PYTHON=%__python3
 	-DVTK_GROUP_ENABLE_StandAlone:STRING=YES \
 	-DVTK_GROUP_ENABLE_Views:STRING=YES \
 	-DVTK_GROUP_ENABLE_Web:STRING=YES \
-	-DCMAKE_INSTALL_LICENSEDIR:PATH=share/doc/%name-%ver/licenses \
+	-DCMAKE_INSTALL_LICENSEDIR:PATH=share/doc/vtk-%ver/licenses \
 	-DVTK_MODULE_ENABLE_VTK_CommonArchive:STRING=YES \
 	-DVTK_MODULE_ENABLE_VTK_DomainsMicroscopy:STRING=YES \
 	-DVTK_MODULE_ENABLE_VTK_GeovisGDAL:STRING=YES \
 	-DVTK_MODULE_ENABLE_VTK_ImagingOpenGL2:STRING=YES \
 	-DVTK_MODULE_ENABLE_VTK_InfovisBoost:STRING=YES \
 	-DVTK_MODULE_ENABLE_VTK_InfovisBoostGraphAlgorithms:STRING=YES \
-%ifarch %arm
-	-DVTK_GROUP_ENABLE_Qt:STRING=NO \
-%else
+%ifnarch %arm
 	-DVTK_GROUP_ENABLE_Qt:STRING=YES \
+	-DVTK_MODULE_ENABLE_VTK_RenderingContextOpenGL2:STRING=YES \
+%else
+	-DVTK_GROUP_ENABLE_Qt:STRING=NO \
+	-DVTK_MODULE_ENABLE_VTK_RenderingContextOpenGL2:STRING=NO \
+	-DVTK_MODULE_ENABLE_VTK_GUISupportQt:STRING=NO \
+	-DVTK_MODULE_ENABLE_VTK_GUISupportQtQuick:STRING=NO \
+	-DVTK_MODULE_ENABLE_VTK_GUISupportQtSQL:STRING=NO \
 %endif
 	-DVTK_USE_EXTERNAL=ON \
-	-DVTK_MODULE_USE_EXTERNAL_VTK_fast_float=OFF \
-	-DVTK_MODULE_USE_EXTERNAL_VTK_verdict=OFF \
 	-DVTK_MODULE_USE_EXTERNAL_VTK_expat=ON \
 	-DVTK_MODULE_USE_EXTERNAL_VTK_exprtk=OFF \
 	-DVTK_MODULE_USE_EXTERNAL_VTK_freetype=ON \
@@ -316,6 +200,10 @@ export PYTHON=%__python3
 	-DVTK_MODULE_USE_EXTERNAL_VTK_zlib=ON \
 	-DVTK_MODULE_USE_EXTERNAL_VTK_utf8=OFF \
 	-DVTK_MODULE_USE_EXTERNAL_VTK_pegtl=OFF \
+%ifarch %arm
+	-DVTK_OPENGL_USE_GLES=ON \
+	-DVTK_OPENGL_HAS_EGL=ON \
+%endif
 	-DVTK_PYTHON_VERSION=3 \
 	-DVTK_PYTHON_OPTIONAL_LINK=OFF \
 	-DVTK_SMP_IMPLEMENTATION_TYPE="Sequential" \
@@ -323,6 +211,11 @@ export PYTHON=%__python3
 	-DVTK_WRAP_PYTHON=ON \
 	-DVTK_MODULE_ENABLE_VTK_ParallelMomentInvariants:STRING=NO \
 	-DVTK_MODULE_ENABLE_VTK_MomentInvariants:STRING=YES \
+	-DVTK_MODULE_ENABLE_VTK_PoissonReconstruction:STRING=YES \
+	-DVTK_MODULE_ENABLE_VTK_Powercrust:STRING=YES \
+	-DVTK_MODULE_ENABLE_VTK_SignedTensor:STRING=YES \
+	-DVTK_MODULE_ENABLE_VTK_SplineDrivenImageSlicer:STRING=YES \
+	-DVTK_MODULE_ENABLE_VTK_vtkDICOM:STRING=YES \
 	%nil
 
 export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/%_lib
@@ -333,51 +226,13 @@ export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/%_lib
 %cmakeinstall_std
 
 %files
-%doc Copyright.txt README.md
-%_bindir/vtkParseJava-%ver
-%_bindir/vtkWrapHierarchy-%ver
-%_bindir/vtkWrapJava-%ver
-%_bindir/vtkProbeOpenGLVersion-%ver
 
-%files -n lib%name%ver
-%_libdir/*-%ver.so.*
-%exclude %_libdir/libvtk*Python*-%ver.so.*
-
-%files -n lib%name-devel
-%_libdir/*.so
-%_includedir/%name-%ver
-%_libdir/cmake/%name-%ver
-%_libdir/%name-%ver
-
-%files doc
-%_docdir/%name-%ver
-
-%files examples
-%doc Examples
-
-%files python3
-%_bindir/*python*
-%_bindir/*Python*
-
-%files -n lib%name%ver-python3
-%_libdir/libvtk*Python*-%ver.so.*
-
-%files -n python3-module-%name
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/__pycache__
-%exclude %python3_sitelibdir/vtkmodules/test
-
-%files -n python3-module-%name-tests
-%python3_sitelibdir/vtkmodules/test
-
-%ifnarch %arm
-%files qt5
-%_qt5_qmldir/VTK.%ver
-%endif
+%files -n libvtk%ver
+%_libdir/*.so.*
 
 %changelog
-* Wed Jan 24 2024 Anton Farygin <rider@altlinux.ru> 9.3.0-alt1
-- 9.3.0
+* Tue Jan 30 2024 Anton Farygin <rider@altlinux.ru> 9.1.0-alt2
+- build as compat library
 
 * Mon Sep 25 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 9.1.0-alt1.3
 - NMU: fixed FTBFS on LoongArch

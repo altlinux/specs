@@ -1,6 +1,6 @@
 Name: opencascade
 Version: 7.7.2
-Release: alt1
+Release: alt2
 Summary: SDK intended for development of applications dealing with 3D CAD data
 License: LGPL-2.1-only-with-OCCT-exception-1.0
 Group: Development/Tools
@@ -93,7 +93,7 @@ export DESTDIR="%buildroot"
        -DCMAKE_BUILD_TYPE=RelWithDebInfo \
        -DUSE_TBB=False \
        -DUSE_VTK=True \
-       -D3RDPARTY_VTK_INCLUDE_DIR=%_includedir/vtk-9.1 \
+       -D3RDPARTY_VTK_INCLUDE_DIR=%_includedir/vtk-9.3 \
        -DINSTALL_DIR_LIB=%_lib \
        -DINSTALL_DIR_CMAKE=%_lib/cmake/%name
 %ninja_build
@@ -131,6 +131,9 @@ rm -f /usr/share/doc/opencascade/*
 %_datadir/doc/%name
 
 %changelog
+* Mon Jan 29 2024 Anton Farygin <rider@altlinux.ru> 7.7.2-alt2
+- built with  vtk 9.3
+
 * Sat Jul 22 2023 Andrey Cherepanov <cas@altlinux.org> 7.7.2-alt1
 - New version.
 
