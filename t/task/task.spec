@@ -1,20 +1,21 @@
-Name:           task
-Version:        2.5.1
-Release:        alt3
-Summary:        A command-line todo list manager
+Name: task
+Version: 2.5.1
+Release: alt4
 
-Group:          Office
-License:        GPLv2+
-URL:            http://taskwarrior.org
-Source0:        %name-%version.tar
-Packager:	Kirill Maslinsky <kirill@altlinux.org>
-Patch0:		%name-%version-%release.patch
+Summary: A command-line todo list manager
+License: GPLv2+
+Group: Office
+
+Url: http://taskwarrior.org
+Source: %name-%version.tar
+Packager: Kirill Maslinsky <kirill@altlinux.org>
+Patch: %name-%version-%release.patch
 
 Requires: zsh-completion-%name = %version-%release %name-core = %version-%release
 # TODO Requires: vim-plugin-syntax
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires:  gcc-c++ libncurses-devel cmake libuuid-devel perl-devel libgnutls-devel python-devel
+BuildRequires: gcc-c++ libncurses-devel cmake libuuid-devel perl-devel libgnutls-devel python-devel
 
 %description
 Task is a command-line todo list manager. It has
@@ -28,8 +29,8 @@ This package includes zsh completion bindings.
 # TODO and new vim stuff
 
 %package core
-Group:		Office
-Summary:	Core distribution of taskwarrior
+Group: Office
+Summary: Core distribution of taskwarrior
 %description core
 Task is a command-line todo list manager. It has
 support for GTD functionality and includes the
@@ -39,18 +40,19 @@ low-level API, abbreviations for all commands and
 options, multiuser file locking, recurring tasks.
 
 %package -n zsh-completion-task
-Group:		Shells
-BuildArch:	noarch
+Group: Shells
+BuildArch: noarch
 Summary: Zsh completion for taskwarrior
 %description -n zsh-completion-task
 Zsh completion for taskwarrior
 
 %prep
-%setup -q
-%patch0 -p1
+%setup
+%patch -p1
 
 %build
 %cmake_insource
+%make_build
 
 %install
 %makeinstall_std
@@ -74,6 +76,11 @@ make test
 %_datadir/zsh/Completion/Unix/_task
 
 %changelog
+* Thu Feb 01 2024 Michael Shigorin <mike@altlinux.org> 2.5.1-alt4
+- NMU:
+  + enable parallel build
+  + minor spec cleanup
+
 * Sat Apr 25 2020 Kirill Maslinsky <kirill@altlinux.org> 2.5.1-alt3
 - fix python shebang
 
