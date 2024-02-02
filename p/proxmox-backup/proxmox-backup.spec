@@ -3,7 +3,7 @@
 %define proxy_user backup
 
 Name: proxmox-backup
-Version: 3.1.2.1
+Version: 3.1.4.1
 Release: alt1
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
@@ -203,6 +203,10 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/doc/%name
 
 %changelog
+* Fri Feb 02 2024 Andrew A. Vasilyev <andy@altlinux.org> 1:3.1.4.1-alt1
+- 3.1.4-1
+- fix kernel build date detection (ALT #49262)
+
 * Mon Dec 04 2023 Andrew A. Vasilyev <andy@altlinux.org> 1:3.1.2.1-alt1
 - 3.1.2-1
 
