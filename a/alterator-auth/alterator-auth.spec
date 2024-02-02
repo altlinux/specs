@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.44.7
+Version: 0.44.8
 Release: alt1
 
 Summary: Alterator module for system wide auth settings
@@ -169,6 +169,9 @@ rm -f %buildroot%_libexecdir/alterator/hooks/auth
 %files -n task-auth-freeipa
 
 %changelog
+* Fri Feb 02 2024 Andrey Cherepanov <cas@altlinux.org> 0.44.8-alt1
+- system-auth: ad: disabled conflicted auth service.
+
 * Thu Nov 23 2023 Andrey Cherepanov <cas@altlinux.org> 0.44.7-alt1
 - system-auth: remove extra quote in usage output (ALT #48139)
 
