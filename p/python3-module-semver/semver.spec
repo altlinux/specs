@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.13.0
-Release: alt2
+Version: 3.0.2
+Release: alt1
 
 Summary: Python package to work with Semantic Versioning
 
@@ -12,17 +12,17 @@ Group: Development/Python3
 License: BSD-3-Clause
 Url: https://pypi.org/project/semver/
 
-# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
-Patch0: semver-2.13.0-doctest-Sync-assumption-about-error-message-for-Pyth.patch
-Patch1: semver-2.13.0-tests-Drop-dependency-on-coverage.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(pytest)
+BuildRequires: python3(pytest-cov)
 BuildRequires: python3(tox)
 BuildRequires: python3(tox_console_scripts)
 BuildRequires: python3(tox_no_deps)
@@ -36,25 +36,24 @@ A Python module for semantic versioning. Simplifies comparing versions.
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false --develop
+%tox_check_pyproject
 
 %files
 %doc *.rst LICENSE.txt
 %_bindir/pysemver
-%python3_sitelibdir/%oname.py
-%python3_sitelibdir/__pycache__/%oname.*
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Fri Feb 02 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.2-alt1
+- Build new version.
+
 * Thu Mar 31 2022 Stanislav Levin <slev@altlinux.org> 2.13.0-alt2
 - Fixed FTBFS (Python 3.10).
 
