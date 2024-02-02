@@ -2,7 +2,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: openssl3
-Version: 3.1.4
+Version: 3.1.5
 Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
@@ -384,6 +384,9 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Fri Feb 02 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.5-alt1
+- Updated to 3.1.5.
+
 * Tue Oct 24 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.4-alt1
 - Updated to 3.1.4 (fixes CVE-2023-5363).
 
