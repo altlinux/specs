@@ -4,7 +4,7 @@
 %define xdg_name com.github.wwmm.easyeffects
 
 Name: easyeffects
-Version: 7.1.3
+Version: 7.1.4
 Release: alt1
 
 Summary: Audio effects for Pipewire applications
@@ -33,6 +33,7 @@ Requires: pipewire >= %pw_ver dconf
 Requires: ladspa-zam-plugins
 Requires: calf-plugins >= %calf_ver
 Requires: lv2-lsp-plugins >= %lsp_ver
+Requires: lv2-mda-plugins
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson gcc-c++ pkgconfig(sigc++-3.0) >= %sigc_ver libfmt-devel
@@ -89,6 +90,10 @@ sed -i 's/tbb/tbb32/' src/meson.build
 %doc README* CHANGELOG.*
 
 %changelog
+* Fri Feb 02 2024 Yuri N. Sedunov <aris@altlinux.org> 7.1.4-alt1
+- 7.1.4
+- added lv2-mda-plugins to runtime dependencies (ALT #4913)
+
 * Thu Nov 09 2023 Yuri N. Sedunov <aris@altlinux.org> 7.1.3-alt1
 - 7.1.3
 
