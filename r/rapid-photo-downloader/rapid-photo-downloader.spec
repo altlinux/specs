@@ -1,23 +1,20 @@
 Name: rapid-photo-downloader
-Version: 0.9.34
-Release: alt2
+Version: 0.9.35
+Release: alt1
 
 %define xdg_name net.damonlynch.rapid_photo_downloader
 
 Summary: Download photos and videos from cameras, memory cards and Portable Storage Devices
 License: GPLv3+
 Group: Graphics
-
 Url: http://www.damonlynch.net/rapid/
-Source: http://launchpad.net/rapid/pyqt/%version/+download/%name-%version.tar.gz
+
+Vcs: https://github.com/damonlynch/rapid-photo-downloader.git
+Source: https://launchpad.net/rapid/pyqt/%version/+download/%name-%version.tar.gz
 
 BuildArch: noarch
 
 %add_typelib_req_skiplist typelib(Unity)
-
-%if "%(rpmvercmp '%{get_version python3}' '3.6.0')" <= "0"
-Requires: python3-module-typing >= 3.6.4
-%endif
 
 Requires: python3-module-PyQt5 >= 5.15.6 libqt5-svg
 Requires: python3-module-zmq >= 16.0.2
@@ -69,6 +66,9 @@ cp -r build/mo/* %buildroot%_datadir/locale
 %doc README* RELEASE_NOTES* CHANGES*
 
 %changelog
+* Fri Feb 02 2024 Yuri N. Sedunov <aris@altlinux.org> 0.9.35-alt1
+- 0.9.35
+
 * Tue Aug 08 2023 Yuri N. Sedunov <aris@altlinux.org> 0.9.34-alt2
 - ported to %%pyproject macros
 - python3-module-pyxdg required (ALT #47151)
