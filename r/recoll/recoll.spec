@@ -6,8 +6,8 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.37.0
-Release: alt2
+Version: 1.37.2
+Release: alt1
 
 Summary: A personal full text search package
 Summary(ru_RU.UTF-8): Программа для полнотекстового поиска по файлам с различными форматами.
@@ -24,7 +24,6 @@ Source4: recoll_uk.qm
 # 1.24.1+ru
 Source5: recoll-searchgui.desktop
 Source100: recoll.watch
-Patch: recoll-xml-const-error.diff
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -134,7 +133,6 @@ This package contains Python bindings for Recoll.
 
 %prep
 %setup -n %name-%version%pre
-%patch -p2
 
 sed -i 's/openoffice/loffice/' sampleconf/mimeview
 sed -i '/^Categories=/s/=/=Qt;/' desktop/*.desktop
@@ -210,6 +208,9 @@ chrpath -d %buildroot%_bindir/recollindex
 %python3_sitelibdir/*.so
 
 %changelog
+* Fri Feb 02 2024 Michael Shigorin <mike@altlinux.org> 1.37.2-alt1
+- new version (watch file uupdate)
+
 * Thu Dec 28 2023 Michael Shigorin <mike@altlinux.org> 1.37.0-alt2
 - move librecoll.so to devel subpackage
 
