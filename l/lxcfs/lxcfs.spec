@@ -1,5 +1,5 @@
 Name:		lxcfs
-Version:	5.0.3
+Version:	5.0.4
 Release:	alt1
 Summary:	FUSE filesystem for LXC
 
@@ -10,8 +10,7 @@ URL:		https://github.com/lxc/lxcfs
 VCS:		https://github.com/lxc/lxcfs.git
 Source0:	%name-%version.tar
 Source1:	lxcfs.sysvinit
-# revert https://github.com/lxc/lxcfs/pull/555
-Patch:		lxcfs-5.0.3-fix-service.patch
+Patch:		lxcfs-5.0.4-loongarch64.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson >= 0.61 python3-module-jinja2
@@ -67,6 +66,10 @@ find %buildroot -name '*.la' -delete
 %dir %_localstatedir/%name
 
 %changelog
+* Wed Jan 31 2024 Alexey Shabalin <shaba@altlinux.org> 5.0.4-alt1
+- New version 5.0.4.
+- Backport from upstream "Add macro pivot&bpf for loongarch64"
+
 * Thu Mar 23 2023 Alexey Shabalin <shaba@altlinux.org> 5.0.3-alt1
 - Updated to 5.0.3.
 - Built against libfuse-2.

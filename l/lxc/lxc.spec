@@ -2,7 +2,7 @@
 # lxc: linux Container library
 #
 # (C) Copyright IBM Corp. 2007, 2008
-# (C) ALT Linux Team 2009-2021
+# (C) ALT Linux Team 2009-2024
 #
 # Authors:
 # Daniel Lezcano <dlezcano at fr.ibm.com>
@@ -29,7 +29,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 %define sover 1
-%def_with systemd
+%def_disable static_init
 
 # Skip automatic dependency to optional lsb scripts
 %add_findreq_skiplist %_initdir/*
@@ -42,8 +42,8 @@
 %add_findreq_skiplist %_libexecdir/lxc/lxc-net
 
 Name: lxc
-Version: 5.0.2
-Release: alt2
+Version: 5.0.3
+Release: alt1
 
 Summary: Linux Containers
 
@@ -56,20 +56,21 @@ Source0: lxc-%version.tar
 Source1: lxc-net.sysconfig
 Source2: lxc-user-nic.control
 Source3: lxc.watch
+Source4: 30-lxc-inotify.conf
 
 # git://git.altlinux.org:/gears/l/lxc.git
 Patch: %name-%version-%release.patch
 
 Requires: lxc-core lxc-net lxc-templates
 
-BuildRequires(pre): meson >= 0.61 rpm-macros-pam
+BuildRequires(pre): rpm-macros-pam rpm-macros-meson
+BuildRequires: meson >= 0.61
 BuildRequires: docbook2X
-BuildRequires: libcap-devel libcap-devel-static
+BuildRequires: libcap-devel
 BuildRequires: libpam-devel
 BuildRequires: libseccomp-devel libselinux-devel libssl-devel
-BuildRequires: python3-dev
 BuildRequires: pkgconfig(systemd)
-BuildRequires: libpam-devel
+%{?_enable_static_init:BuildRequires: libcap-devel-static}
 
 %description
 Containers are insulated areas inside a system, which have their own namespace
@@ -190,7 +191,7 @@ echo -e "#undef ARRAY_SIZE\n#define ARRAY_SIZE(x) (sizeof(x)/sizeof(*(x)))" >> s
 %build
 %meson \
     -Ddistrosysconfdir='/etc/sysconfig' \
-    -Dinit-script=%{?_with_systemd:systemd,}sysvinit \
+    -Dinit-script=systemd,sysvinit \
     -Dcapabilities=true \
     -Dapparmor=false \
     -Dselinux=true \
@@ -210,6 +211,7 @@ mv %buildroot%_libdir/security %buildroot/%_lib/
 mkdir -p %buildroot%_localstatedir/lxc
 install -pm644 %SOURCE1 %buildroot%_sysconfdir/sysconfig/lxc-net
 install -pDm755 %SOURCE2 %buildroot%_controldir/lxc-user-nic
+install -pDm644 %SOURCE4 %buildroot%_sysctldir/30-lxc-inotify.conf
 
 rm %buildroot%_datadir/lxc/lxc-patch.py
 find %buildroot -name '*.a' -delete
@@ -251,7 +253,7 @@ groupadd -r -f vmusers ||:
 %dir %_sysconfdir/sysconfig/lxc
 %config(noreplace) %_sysconfdir/lxc/*
 %config(noreplace) %_sysconfdir/sysconfig/lxc*
-
+%_sysctldir/30-lxc-inotify.conf
 %_datadir/bash-completion/completions/*
 
 %_bindir/lxc-*
@@ -271,21 +273,14 @@ groupadd -r -f vmusers ||:
 %_mandir/ko/*
 
 %_initdir/lxc
-
-%if_with systemd
 %_unitdir/lxc.service
 %_unitdir/lxc@.service
 %_unitdir/lxc-monitord.service
-%endif
 
 %files net
 %_libexecdir/lxc/lxc-net
-
 %_initdir/lxc-net
-
-%if_with systemd
 %_unitdir/lxc-net.service
-%endif
 
 %files templates
 %dir %_datadir/lxc
@@ -308,8 +303,7 @@ groupadd -r -f vmusers ||:
 %_datadir/lxc/hooks
 %_datadir/lxc/lxc.functions
 
-%_sbindir/init.lxc
-%_sbindir/init.lxc.static
+%_sbindir/init.lxc*
 %_localstatedir/lxc
 
 %dir %_datadir/lxc
@@ -328,6 +322,13 @@ groupadd -r -f vmusers ||:
 %_man8dir/pam_cgfs.8*
 
 %changelog
+* Wed Jan 31 2024 Alexey Shabalin <shaba@altlinux.org> 5.0.3-alt1
+- 5.0.3.
+- Backport from upstream "Add loongarch64 support".
+- Disable build init.lxc.static.
+- Drop systemd knob.
+- Add sysctl config with "fs.inotify.max_user_instances = 1024" (ALT#46072).
+
 * Thu Mar 23 2023 Alexey Shabalin <shaba@altlinux.org> 5.0.2-alt2
 - convert AppArmor and SELinux confile parsing from errors to warnings
 
