@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2.0.2
-Release: alt1
+Release: alt2
 
 Summary: Shorthand syntax for building OrderedDicts
 
@@ -19,6 +19,8 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(repeated_test)
@@ -33,10 +35,10 @@ Shorthand syntax for building OrderedDicts.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 rm -f %buildroot%python3_sitelibdir/test_od.py
 
 %check
@@ -48,15 +50,18 @@ EOF
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py3
-tox.py3 --sitepackages -vvr --develop
+%tox_check_pyproject
 
 %files
 %doc *.rst
 %python3_sitelibdir/%oname.py
 %python3_sitelibdir/__pycache__/%oname.*
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Fri Feb 02 2024 Grigory Ustinov <grenka@altlinux.org> 2.0.2-alt2
+- Moved on modern pyproject macros.
+
 * Tue Mar 29 2022 Stanislav Levin <slev@altlinux.org> 2.0.2-alt1
 - 1.0 -> 2.0.2.
 
