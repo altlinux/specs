@@ -6,7 +6,7 @@
 
 Name: python3-module-%mod_name
 Epoch: 1
-Version: 1.5.1
+Version: 1.6
 Release: alt1
 Summary: jinja2 template renderer for aiohttp.web
 License: Apache-2.0
@@ -14,7 +14,6 @@ Group: Development/Python3
 Url: https://pypi.org/project/aiohttp-jinja2/
 VCS: https://github.com/aio-libs/aiohttp_jinja2.git
 Source0: aiohttp-%version.tar
-Patch0: aiohttp_jinja2-1.5-tests-Drop-dependency-on-coverage.patch
 
 BuildArch: noarch
 
@@ -43,7 +42,9 @@ jinja2 template renderer for aiohttp.web.
 
 %prep
 %setup -n aiohttp-%version
-%autopatch -p1
+
+# drop dependency on coverage
+sed -i '/--cov=/d' pytest.ini
 
 %build
 %pyproject_build
@@ -60,6 +61,9 @@ jinja2 template renderer for aiohttp.web.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 02 2024 Anton Vyatkin <toni@altlinux.org> 1:1.6-alt1
+- new version 1.6
+
 * Fri Feb 17 2023 Stanislav Levin <slev@altlinux.org> 1:1.5.1-alt1
 - 1.5 -> 1.5.1.
 
