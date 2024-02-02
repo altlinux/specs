@@ -3,8 +3,8 @@
 %define pypi_name XStatic-Angular
 
 Name: python3-module-%oname
-Version: 1.5.8.0
-Release: alt2
+Version: 1.8.2.2
+Release: alt1
 
 Summary: Angular (XStatic packaging standard)
 License: MIT
@@ -47,6 +47,9 @@ files.
 
 
 %changelog
+* Fri Feb 02 2024 Ilfat Aminov <aminov@altlinux.org> 1.8.2.2-alt1
+- 1.8.2.2
+
 * Thu Nov 28 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.5.8.0-alt2
 - python2 disabled
 
