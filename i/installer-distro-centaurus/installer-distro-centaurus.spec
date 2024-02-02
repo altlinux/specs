@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
 Version: 10.2
-Release: alt1
+Release: alt2
 
 Summary: Installer files for Centaurus distro
 License: GPL-2.0-only
@@ -63,6 +63,9 @@ cp -a * %buildroot%install2dir/
 %install2dir/*.d/*
 %files stage3
 %changelog
+* Fri Feb 02 2024 Dmitry Terekhin <jqt4@altlinux.org> 10.2-alt2
+- 35-enable-systemd-networkd.sh: by default in alt-server
+
 * Tue Nov 14 2023 Dmitry Terekhin <jqt4@altlinux.org> 10.2-alt1
 - move default services control to mkimage-profiles
 
