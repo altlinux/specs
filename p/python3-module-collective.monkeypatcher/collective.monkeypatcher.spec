@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 1.2
-Release: alt1
+Release: alt2
 Summary: Support for applying monkey patches late in the startup cycle
 License: BSD
 Group: Development/Python3
@@ -17,6 +17,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-tox
@@ -73,10 +74,10 @@ Core files of %mname.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
@@ -86,22 +87,12 @@ install -p -m644 build/lib/%mname/__init__.py \
 	%buildroot%python3_sitelibdir/%mname/
 
 %check
-sed -i 's|zope-testrunner |zope-testrunner3 |g' tox.ini
-sed -i '/\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-setenv =\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/zope-testrunner3\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/zope-testrunner3\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/zope-testrunner3' tox.ini
-
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.rst
 %python3_sitelibdir/%mname/*
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*.dist-info
 %python3_sitelibdir/*-nspkg.pth
 %exclude %python3_sitelibdir/%mname/*/tests
 %exclude %python3_sitelibdir/%mname/__init__.py*
@@ -114,6 +105,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %python3_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Fri Feb 02 2024 Grigory Ustinov <grenka@altlinux.org> 1.2-alt2
+- Moved on modern pyproject macros.
+
 * Fri Jan 10 2020 Nikolai Kostrigin <nickel@altlinux.org> 1.2-alt1
 - NMU: 1.1.3 -> 1.2
 - Remove python2 module build
