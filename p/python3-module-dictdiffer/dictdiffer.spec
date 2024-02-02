@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.8.1
-Release: alt1
+Release: alt2
 
 Summary: Dictdiffer is a module that helps you to diff and patch dictionaries
 License: MIT
@@ -20,6 +20,8 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools_scm)
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(pytest)
@@ -38,24 +40,24 @@ Dictdiffer is a library that helps you to diff and patch dictionaries.
 # its used as the primary source for the version number in which
 # case it will be a unparsed string
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build_install
+%pyproject_install
 
 %check
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr
+%tox_check_pyproject
 
 %files
 %doc *.rst LICENSE
 %python3_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2024 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt2
+- Moved on modern pyptoject macros.
+
 * Wed Oct 14 2020 Stanislav Levin <slev@altlinux.org> 0.8.1-alt1
 - 0.7.0 -> 0.8.1.
 
