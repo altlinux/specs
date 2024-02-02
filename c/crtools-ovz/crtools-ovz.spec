@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 
 Name: crtools-ovz
-Version: 3.18.0.24
+Version: 3.18.1.1
 Release: alt1
 
 Summary: Utility to checkpoint/restore tasks for OpenVZ containers
@@ -10,8 +10,6 @@ License: GPL-2.0-only
 Group: System/Configuration/Other
 Url: http://criu.org
 Vcs: https://src.openvz.org/scm/ovz/criu.git
-
-Packager: Andrew A. Vasilyev <andy@altlinux.org>
 
 Source: criu-%version.tar
 
@@ -31,6 +29,8 @@ BuildRequires: glibc-devel
 BuildRequires: libnl-devel
 BuildRequires: libcap-devel
 BuildRequires: python3-base
+BuildRequires: python3-module-importlib-metadata
+BuildRequires: python3-module-setuptools
 # BuildRequires: python3-devel
 # BuildRequires: libselinux-devel
 BuildRequires(pre): rpm-build-python3
@@ -112,10 +112,12 @@ vm-run --kvm=cond --sbin --udevd make test || :
 %_man1dir/*.1*
 %_man8dir/criu.8*
 %_man8dir/crtools.8*
-%python3_sitelibdir/pycriu
-%python3_sitelibdir/crit-*.egg-info
+%python3_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2024 Andrew A. Vasilyev <andy@altlinux.org> 3.18.1.1-alt1
+- 3.18.1.1
+
 * Thu Aug 24 2023 Andrew A. Vasilyev <andy@altlinux.org> 3.18.0.24-alt1
 - 3.18.0.24
 
