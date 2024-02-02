@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 3.0.1
-Release: alt1
+Release: alt2
 Summary: Transaction management for Python
 License: ZPL-2.1
 Group: Development/Python3
@@ -16,6 +16,8 @@ Url: https://pypi.org/project/transaction/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 # install_requires=
@@ -42,29 +44,24 @@ manager in transaction.tests.test_SampleDataManager.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    zope-testrunner --test-path=src -vv
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr --develop
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.txt *.rst
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname-%version.dist-info/
 %exclude %python3_sitelibdir/%oname/tests
 
 %changelog
+* Fri Feb 02 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt2
+- Moved on modern pyproject macros.
+
 * Wed Mar 30 2022 Stanislav Levin <slev@altlinux.org> 3.0.1-alt1
 - 2.1.2 -> 3.0.1.
 
