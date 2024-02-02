@@ -27,10 +27,10 @@
 %define label digiKam
 Name: kde5-%rname
 %define ver_major 8
-%define ver_minor 1
+%define ver_minor 2
 %define ver_bugfix 0
 Version: %ver_major.%ver_minor.%ver_bugfix
-Release: alt4
+Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 %define sover %version
@@ -39,7 +39,7 @@ Release: alt4
 %define libdigikamgui libdigikamgui%sover
 
 Summary: digiKam is an advanced digital photo management application for linux
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Graphics
 Url: http://www.digikam.org/
 
@@ -57,6 +57,7 @@ Requires: qt5-sql-mysql
 %endif
 # libs/dimg/filters/icc
 Requires: icc-profiles
+Requires: /usr/bin/exiftool
 
 BuildRequires(pre): rpm-build-kf5 rpm-macros-qt5-webengine rpm-build-ubt libopencv-devel
 # Automatically added by buildreq on Wed Jul 20 2016 (-bi)
@@ -102,11 +103,10 @@ Source3: doc-translated.tar
 Source6: CMakeLists.txt
 #
 Source10: mysql_install_db
-#
-Patch1: exiv2-0.28.patch
 # ALT
 Patch100: alt-libraw-aarch64.patch
 Patch101: alt-own-mysql-install-db.patch
+Patch102: fix-segfault-on-action-search.patch
 
 %description
 DigiKam is an advanced digital photo management application for KDE.
@@ -189,10 +189,10 @@ Development files for %label.
 %prep
 %setup -n %rname-%version -c -a1 -a2 -a3
 mv %rname-%version core
-%patch1 -p1
 pushd core
 %patch100 -p1
 %patch101 -p1
+%patch102 -p2
 popd
 install -m 0644 %SOURCE6 ./
 sed -i '/DIGIKAM_MAJOR_VERSION/s|@VERMAJOR@|%ver_major|' CMakeLists.txt
@@ -340,6 +340,10 @@ install -m 0755 %SOURCE10 %buildroot/%_K5bin/digikam_mysql_install_db
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Fri Feb 02 2024 Sergey V Turchin <zerg@altlinux.org> 8.2.0-alt1
+- new version
+- fix segfault on search action (closes: 44003)
+
 * Mon Nov 27 2023 Sergey V Turchin <zerg@altlinux.org> 8.1.0-alt4
 - using rpm-macros-qt5-webengine
 
