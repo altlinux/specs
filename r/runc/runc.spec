@@ -7,7 +7,7 @@
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
-%global commit      4bccb38cc9cf198d52bebf2b3a90cd14e7af8c06
+%global commit      51d5e94601ceffbbd85688df1c928ecccbfa4685
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %set_verify_elf_method unresolved=no
@@ -15,7 +15,7 @@
 %brp_strip_none %_bindir/*
 
 Name:           runc
-Version:        1.1.11
+Version:        1.1.12
 Release:        alt1
 Summary:        CLI for running Open Containers
 Group:          Development/Other
@@ -42,7 +42,7 @@ and to manage containers running under runc.
 %prep
 %setup -q
 sed -i 's/ -trimpath//g' Makefile
-
+sed -i '/\#\!\/bin\/bash/d' contrib/completions/bash/%name
 %patch1 -p1
 
 %build
@@ -66,19 +66,17 @@ install -p -m 0644 man/man8/*.8 %buildroot%_man8dir/
 install -d -p %buildroot%_datadir/bash-completion/completions
 install -p -m 0644 contrib/completions/bash/%name %buildroot%_datadir/bash-completion/completions/
 
-mkdir -p -- %buildroot%_tmpfilesdir
-cat > %buildroot%_tmpfilesdir/runc.conf <<EOF
-d /run/runc 0700 root root -
-EOF
-
 %files
 %doc MAINTAINERS_GUIDE.md PRINCIPLES.md README.md CONTRIBUTING.md
 %_bindir/*
-%_tmpfilesdir/runc.conf
 %_man8dir/*
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Fri Feb 02 2024 Alexey Shabalin <shaba@altlinux.org> 1.1.12-alt1
+- New version 1.1.12 (Fixes: CVE-2024-21626).
+- Drop tmpfiles.d/runc.conf
+
 * Wed Jan 10 2024 Vladimir Didenko <cow@altlinux.ru> 1.1.11-alt1
 - New version
 
