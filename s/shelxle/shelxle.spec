@@ -1,5 +1,5 @@
 Name: shelxle
-Version: 1.0.1598
+Version: 1.0.1603
 Release: alt1
 
 Summary: A Qt GUI for SHELX
@@ -43,6 +43,9 @@ cp kissfft/COPYING COPYING_kissfft
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Thu Jan 25 2024 Denis G. Samsonenko <ogion@altlinux.org> 1.0.1603-alt1
+- new version
+
 * Wed Jan 17 2024 Denis G. Samsonenko <ogion@altlinux.org> 1.0.1598-alt1
 - new version
 
