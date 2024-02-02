@@ -22,7 +22,7 @@
 
 Name:           icingaweb2-module-director
 Version:        1.11.0
-Release:        alt2
+Release:        alt3
 
 Summary:        Config module for Icinga 2
 License:        GPL-2.0-or-later
@@ -86,6 +86,7 @@ getent passwd %icingadirector_user >/dev/null || useradd -c "Icinga2 director" -
 %preun_service icinga-director
 
 %filter_from_requires /^\/etc\/default\/icinga2/d
+%filter_from_requires /^\/etc\/sysconfig\/icinga2/d
 %filter_from_requires /^\/etc\/icinga2\/icinga2\.sysconfig/d
 
 %files -f %name.lang
@@ -99,6 +100,9 @@ getent passwd %icingadirector_user >/dev/null || useradd -c "Icinga2 director" -
 %_unitdir/icinga-director.service
 
 %changelog
+* Fri Feb 02 2024 Paul Wolneykien <manowar@altlinux.org> 1.11.0-alt3
+- Removed extra file dependency on /etc/sysconfig/icinga2.
+
 * Wed Jan 10 2024 Paul Wolneykien <manowar@altlinux.org> 1.11.0-alt2
 - Remove deprecated dependencies: 'ipl' and 'reactbundle' modules.
 
