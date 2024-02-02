@@ -2,7 +2,7 @@
 
 Name:		glmark2
 Version:	2021.12
-Release:	alt4
+Release:	alt5
 
 Summary:	an OpenGL 2.0 and ES 2.0 benchmark
 Url:		https://github.com/glmark2/glmark2
@@ -12,8 +12,9 @@ License:	GPL-3.0-or-later
 Vcs:		git://git.altlinux.org:/gears/g/glmark2.git
 Source:		%name-%version-%release.tar
 
-BuildRequires(pre): gcc-c++
-BuildRequires:	/usr/bin/python3
+BuildRequires(pre): rpm-macros-meson
+BuildRequires:  gcc-c++
+BuildRequires:  meson >= 0.64
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libudev-devel
@@ -110,15 +111,14 @@ benchmark.
 %build
 export CFLAGS="%optflags"
 export CXXFLAGS="${CFLAGS}"
-./waf configure \
-	--with-flavors="%flavors" \
-	--data-path=%_datadir/%name \
-	--prefix=%prefix \
-	#
-./waf
+%meson \
+	-Dflavors="%flavors" \
+	-Ddata-path=%_datadir/name \
+%nil
+%meson_build
 
 %install
-./waf install --destdir=%buildroot
+%meson_install
 
 %files
 %_bindir/%name
@@ -148,6 +148,9 @@ export CXXFLAGS="${CFLAGS}"
 %_datadir/%name
 
 %changelog
+* Fri Feb 02 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2021.12-alt5
+- Build with meson. Fixes FTBFS due to python 3.12.
+
 * Sat Jun 10 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2021.12-alt4
 - Fixed python3.11 fallout
 
