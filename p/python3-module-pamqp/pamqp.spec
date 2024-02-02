@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 3.2.1
-Release: alt1
+Release: alt2
 
 Summary: RabbitMQ Focused AMQP low-level library
 License: BSD-3-Clause
@@ -19,6 +19,9 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
 %if_with docs
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx
@@ -61,7 +64,7 @@ This package contains documentation for %oname.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %if_with docs
 export PYTHONPATH="$PWD"
@@ -70,7 +73,7 @@ sphinx-build-3 docs html
 %endif
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with docs
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
@@ -78,12 +81,12 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
 %tox_create_default_config
-%tox_check
+%tox_check_pyproject
 
 %files
 %doc *.rst LICENSE
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %if_with docs
 %exclude %python3_sitelibdir/*/pickle
 
@@ -96,6 +99,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Feb 02 2024 Grigory Ustinov <grenka@altlinux.org> 3.2.1-alt2
+- Moved on modern pyproject macros.
+
 * Thu Apr 13 2023 Anton Vyatkin <toni@altlinux.org> 3.2.1-alt1
 - (NMU) New version 3.2.1.
 
