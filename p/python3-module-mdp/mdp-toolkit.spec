@@ -13,7 +13,7 @@
 
 Name: python3-module-%oname
 Version: %release_tag.0%commit_num%commit_id
-Release: alt1
+Release: alt2
 
 Summary: Modular toolkit for Data Processing
 
@@ -28,6 +28,9 @@ Source1: MDP-tutorial.pdf
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-future
@@ -86,20 +89,20 @@ sed -i 's|#! /usr/bin/env python|#! /usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 %tox_create_default_config
-%tox_check -- mdp
-%tox_check -- bimdp
+%tox_check_pyproject -- mdp
+%tox_check_pyproject -- bimdp
 
 %files
 %python3_sitelibdir/bimdp
 %python3_sitelibdir/%oname
-%python3_sitelibdir/MDP-%release_tag-*.egg-info
+%python3_sitelibdir/MDP-%release_tag.dist-info
 %exclude %python3_sitelibdir/%oname/test
 %exclude %python3_sitelibdir/bimdp/test
 
@@ -113,6 +116,9 @@ sed -i 's|#! /usr/bin/env python|#! /usr/bin/env python3|' \
 
 
 %changelog
+* Fri Feb 02 2024 Grigory Ustinov <grenka@altlinux.org> 3.6.0.15.g64f14eee-alt2
+- Moved on modern pyproject macros.
+
 * Sun Jul 30 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 3.6.0.15.g64f14eee-alt1
 - NMU: updated to MDP 3.6-15-g64f14eee
 
