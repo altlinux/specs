@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.13.6
-Release: alt1
+Release: alt1.1
 
 Summary: scp module for paramiko
 License: LGPL-2.1-or-later
@@ -17,6 +17,8 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 # install_requires:
@@ -44,10 +46,10 @@ and has only been tested with this implementation.
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 cat > tox.ini <<EOF
@@ -64,16 +66,17 @@ commands =
 commands_post =
     - pkill -F /tmp/ssh_server/sshd.pid
 EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -s false
+%tox_check_pyproject
 
 %files
 %doc README.rst
 %python3_sitelibdir/scp.py
 %python3_sitelibdir/__pycache__/scp.cpython*
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Fri Feb 02 2024 Grigory Ustinov <grenka@altlinux.org> 0.13.6-alt1.1
+- NMU: moved on modern pyproject macros.
+
 * Fri Jul 23 2021 Stanislav Levin <slev@altlinux.org> 0.13.6-alt1
 - Initial build for Sisyphus.
