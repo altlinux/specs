@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.1
-Release: alt1
+Release: alt2
 Summary: Simplified ZCML directives, reduced dependencies
 License: BSD
 Group: Development/Python3
@@ -17,6 +17,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-tox
@@ -56,10 +57,10 @@ This package contains tests for repoze.zcml.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -68,8 +69,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %check
 sed -i 's|python setup|python3 setup|g' tox.ini
-
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
+%tox_check_pyproject
 
 %files
 %doc *.txt docs/*.rst *.rst
@@ -83,6 +83,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %python3_sitelibdir/*/*/*/tests.*
 
 %changelog
+* Fri Feb 02 2024 Grigory Ustinov <grenka@altlinux.org> 1.1-alt2
+- Moved on modern pyproject macros.
+
 * Fri Sep 24 2021 Nikolai Kostrigin <nickel@altlinux.org> 1.1-alt1
 - 1.0b1 -> 1.1
 
