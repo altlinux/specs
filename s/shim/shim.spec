@@ -3,8 +3,8 @@
 %def_with check
 
 Name: shim
-Version: 15.7
-Release: alt4
+Version: 15.8
+Release: alt1
 
 Summary: First-stage UEFI bootloader
 License: BSD
@@ -15,8 +15,7 @@ Source: %name-%version.tar
 Source1: altlinux-ca.cer
 Source2: %name-%version-gnu-efi.tar
 
-Patch0: shim-15.7-upstream-Enable-the-NX-compatibility-flag-by-default.patch
-Patch1: shim-15.7-alt-Bump-grub-SBAT-revocation-to-4.patch
+Patch0: shim-15.8-alt-Bump-grub-SBAT-revocation-to-4.patch
 
 BuildRequires(pre): rpm-macros-uefi
 BuildRequires: pesign >= 0.106
@@ -54,7 +53,6 @@ Includes both ia32 and x64 EFI binaries.
 %prep
 %setup -a 2
 %patch0 -p1
-%patch1 -p1
 
 echo "shim.altlinux,%alt_gen_number,ALT Linux,shim,%version-%release,http://git.altlinux.org/gears/s/shim.git" > data/sbat.altlinux.csv
 
@@ -103,6 +101,17 @@ popd
 %_datadir/shim/%version/ia32/*
 
 %changelog
+* Thu Feb 01 2024 Egor Ignatov <egori@altlinux.org> 15.8-alt1
+- new version
+- update shim-15.8-alt-Bump-grub-SBAT-revocation-to-4 patch
+- Fixes:
+  + CVE-2023-40546 mok: fix LogError() invocation
+  + CVE-2023-40547 - avoid incorrectly trusting HTTP headers
+  + CVE-2023-40548 Fix integer overflow on SBAT section size on 32-bit system
+  + CVE-2023-40549 Authenticode: verify that the signature header is in bounds.
+  + CVE-2023-40550 pe: Fix an out-of-bound read in verify_buffer_sbat()
+  + CVE-2023-40551: pe-relocate: Fix bounds check for MZ binaries
+
 * Fri Nov 17 2023 Egor Ignatov <egori@altlinux.org> 15.7-alt4
 - Bump grub SBAT revocation to 4
   + grub 2.06-alt17 fixes CVE-2023-4692 and CVE-2023-4693
