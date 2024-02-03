@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: lib%rname%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: C++ wrapper for GLib
@@ -109,6 +109,9 @@ sed -i  '/giomm_tls_client/d' tests/meson.build
 %endif
 
 %changelog
+* Sat Feb 03 2024 Yuri N. Sedunov <aris@altlinux.org> 2.78.1-alt1
+- 2.78.1
+
 * Tue Sep 12 2023 Yuri N. Sedunov <aris@altlinux.org> 2.78.0-alt1
 - 2.78.0
 
