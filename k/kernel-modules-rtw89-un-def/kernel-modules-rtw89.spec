@@ -1,6 +1,6 @@
 %define module_name     rtw89
 %define module_version  0.0
-%define module_release  alt4.git.4f3464d
+%define module_release  alt5.git.ebe87ac
 
 %define flavour         un-def
 %define karch %ix86 x86_64 aarch64 ppc64le armh
@@ -53,6 +53,9 @@ install rtw*.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sat Feb 03 2024 Anton Farygin <rider@altlinux.ru> 0.0-alt5.git.ebe87a
+- update to ebe87ac
 
 * Tue Mar 14 2023 Anton Farygin <rider@altlinux.ru> 0.0-alt4.git.4f3464d
 - update to 4f3464d
