@@ -3,13 +3,13 @@
 
 %define _name dosage
 %define __name Dosage
-%define ver_major 1.4
+%define ver_major 1.5
 %define rdn_name io.github.diegopvlk.Dosage
 
 %def_disable check
 
 Name: gnome-%_name
-Version: %ver_major.8
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME Dosage
@@ -73,6 +73,9 @@ Features:
 %doc README*
 
 %changelog
+* Sat Feb 03 2024 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt1
+- 1.5.1
+
 * Sun Dec 24 2023 Yuri N. Sedunov <aris@altlinux.org> 1.4.8-alt1
 - 1.4.8
 
