@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.6.1
-Release: alt1
+Release: alt2
 
 Summary: Dom's tools for Tom's Obvious, Minimal Language
 License: MIT
@@ -18,6 +18,7 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: dom-toml-0.6.1-py312-fix.patch
 
 %py3_provides %pypi_name
 
@@ -35,6 +36,7 @@ BuildRequires(pre): rpm-build-pyproject
 
 %prep
 %setup
+%patch0 -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -57,6 +59,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 02 2024 Anton Vyatkin <toni@altlinux.org> 0.6.1-alt2
+- (NMU) Fixed FTBFS (with python 3.12)
+
 * Wed May 10 2023 Anton Zhukharev <ancieg@altlinux.org> 0.6.1-alt1
 - New version.
 
