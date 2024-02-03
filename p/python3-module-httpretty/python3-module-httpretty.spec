@@ -4,7 +4,7 @@
 
 Name:    python3-module-%modulename
 Version: 1.1.4
-Release: alt1
+Release: alt2
 
 Summary: HTTP client mocking tool for Python - inspired by Fakeweb for Ruby
 License: MIT
@@ -47,6 +47,8 @@ Source: %modulename-%version.tar
 %pyproject_install
 
 %check
+# https://github.com/gabrielfalcao/HTTPretty/issues/405
+export EVENTLET_NO_GREENDNS=yes
 %pyproject_run_pytest -k "not test_http_passthrough \
     and not test_https_passthrough \
     and not test_httpretty_should_allow_forcing_headers_urllib2 \
@@ -65,6 +67,9 @@ Source: %modulename-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %modulename}
 
 %changelog
+* Sat Feb 03 2024 Anton Vyatkin <toni@altlinux.org> 1.1.4-alt2
+- Fixed FTBFS.
+
 * Tue Dec 12 2023 Alexander Burmatov <thatman@altlinux.org> 1.1.4-alt1
 - Update version to 1.1.4.
 
