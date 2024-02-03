@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.2.2
-Release: alt1
+Release: alt1.1
 
 Summary: A library to create a command-line program from a function
 License: LGPLv3
@@ -52,6 +52,9 @@ function signatures.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Feb 03 2024 Grigory Ustinov <grenka@altlinux.org> 2.2.2-alt1.1
+- NMU: fixed FTBFS with python3.12.
+
 * Mon Nov 21 2022 Stanislav Levin <slev@altlinux.org> 2.2.2-alt1
 - 2.2.1 -> 2.2.2.
 
