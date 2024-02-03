@@ -20,7 +20,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (верс�
 
 Name: firefox-esr
 Version: 115.6.0
-Release: alt1
+Release: alt2
 License: MPL-2.0
 Group: Networking/WWW
 URL: http://www.mozilla.org/projects/firefox/
@@ -42,6 +42,12 @@ Source10: firefox-l10n.txt
 Source11: l10n.tar
 Source12: firefox-privacy-prefs.js
 Source13: policies.json
+# Solution for ftbfs with python3.12 based on idea from
+# https://bugzilla.mozilla.org/show_bug.cgi?id=1857492
+# but with exception, that we dont want to update urllib3
+# just update bundled inside it six.py to 1.16
+# https://raw.githubusercontent.com/benjaminp/six/1.16.0/six.py
+Source14: six.py
 
 ### Start Patches
 Patch001: 0001-FEDORA-build-arm-libopus.patch
@@ -60,6 +66,11 @@ Patch018: 0018-rust-loongarch64.patch
 Patch019: 0019-libwebrtc-loongarch64.patch
 Patch021: 0021-rust-authenticator.patch
 Patch022: 0022-rust-update-checksums.patch
+# 23 and 24 are upstream patches for compatibility with python3.12
+# https://hg.mozilla.org/integration/autoland/rev/0315c2d875ca2a95bbb65ef4a1f7b75f72ed7263
+Patch023: 0315c2d875ca2a95bbb65ef4a1f7b75f72ed7263.patch
+# https://hg.mozilla.org/integration/autoland/rev/ee3b3779af7fc81a53859fa92856ef9deae17a75
+Patch024: ee3b3779af7fc81a53859fa92856ef9deae17a75.patch
 ### End Patches
 
 %ifndef build_parallel_jobs
@@ -181,6 +192,9 @@ BuildRequires: python3(hamcrest)
 BuildRequires: python3(pip)
 BuildRequires: python3(setuptools)
 BuildRequires: python3(sqlite3)
+# A copy of the imp module that was removed in python3.12
+# It shouldn't be used, should use `importlib.metadata` instead
+BuildRequires: python3(imp)
 
 # Rust requires
 BuildRequires: /proc
@@ -253,6 +267,10 @@ Most likely you don't need to use this package.
 %autopatch -p1
 ### Finish apply patches
 
+# Update bundled six.py for 1.16
+cp -fv %SOURCE14 mozilla/third_party/python/six/six.py
+cp -fv %SOURCE14 mozilla/third_party/python/urllib3/urllib3/packages/six.py
+
 cd mozilla
 
 tar -xf %SOURCE1
@@ -303,6 +321,8 @@ find toolkit/components/uniffi-js -type f |
 
 rm -rf -- obj-x86_64-pc-linux-gnu
 rm -rf -- third_party/python/setuptools/setuptools*
+rm -rf -- third_party/python/setuptools/pkg_resources
+rm -rf -- third_party/python/pip/pip*
 rm -rf -- third_party/python/click/click*
 
 %build
@@ -530,6 +550,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Fri Feb 02 2024 Grigory Ustinov <grenka@altlinux.org> 115.6.0-alt2
+- Fixed building with python3.12.
+
 * Wed Dec 20 2023 Pavel Vasenkov <pav@altlinux.org> 115.6.0-alt1
 - New ESR version.
 - Security fixes
