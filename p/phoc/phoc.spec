@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.35
+%define ver_major 0.36
 %define api_ver 0
 %define beta %nil
 %define rdn_name sm.puri.Phoc
@@ -125,6 +125,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Sat Feb 03 2024 Yuri N. Sedunov <aris@altlinux.org> 0.36.0-alt1
+- 0.36.0
+
 * Sat Jan 06 2024 Yuri N. Sedunov <aris@altlinux.org> 0.35.0-alt1
 - 0.35.0
 - built with patched wlroots-0.17.1, gmobile-0.0.4

@@ -1,8 +1,10 @@
+%def_enable snapshot
+
 %define gmobile_ver v0.0.4
 %define rdn_name mobi.phosh.MobileSettings
 
 Name: phosh-mobile-settings
-Version: 0.35.1
+Version: 0.36.0
 Release: alt1
 
 Summary: Mobile Settings App for phosh and related components
@@ -11,7 +13,13 @@ License: GPL-3.0-or-later
 Url: https://gitlab.gnome.org/World/Phosh/phosh-mobile-settings
 
 Vcs: https://gitlab.gnome.org/World/Phosh/phosh-mobile-settings
-Source: https://gitlab.gnome.org/World/Phosh/phosh-mobile-settings/-/archive/v%version/phosh-mobile-settings-v%version.tar.gz
+
+%if_disabled snapshot
+Source: https://gitlab.gnome.org/World/Phosh/phosh-mobile-settings/-/archive/v%version/%name-v%version.tar.gz
+%else
+Source: %name-%version.tar
+%endif
+
 Source1: gmobile-%gmobile_ver.tar
 
 Requires: dconf lm_sensors3
@@ -19,8 +27,8 @@ Requires: dconf lm_sensors3
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: gcc-c++ meson
 BuildRequires: /usr/bin/appstreamcli desktop-file-utils
-BuildRequires: pkgconfig(gio-2.0) >= 2.68
-BuildRequires: pkgconfig(gtk4) >= 4.4
+BuildRequires: pkgconfig(gio-2.0) >= 2.74
+BuildRequires: pkgconfig(gtk4) >= 4.12.5
 BuildRequires: pkgconfig(gtk4-wayland) >= 4.4
 BuildRequires: pkgconfig(libadwaita-1) >= 1.1
 BuildRequires: pkgconfig(wayland-client) >= 1.14
@@ -36,7 +44,7 @@ BuildRequires: pkgconfig(json-glib-1.0)
 Mobile Settings App for phosh and related components.
 
 %prep
-%setup -n %name-v%version -a1
+%setup -n %name-%{?_disable_snapshot:v}%version -a1
 mv gmobile-%gmobile_ver subprojects/gmobile
 
 %build
@@ -63,6 +71,9 @@ mv gmobile-%gmobile_ver subprojects/gmobile
 
 
 %changelog
+* Sat Feb 03 2024 Yuri N. Sedunov <aris@altlinux.org> 0.36.0-alt1
+- updated to v0.36.0-5-g794fa6e
+
 * Tue Jan 16 2024 Yuri N. Sedunov <aris@altlinux.org> 0.35.1-alt1
 - 0.35.1
 

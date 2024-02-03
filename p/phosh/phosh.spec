@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.35
+%define ver_major 0.36
 %define beta %nil
 %define api_ver 0
 %define rdn_name sm.puri.Phosh
@@ -40,12 +40,14 @@ Requires: %name-data = %EVR
 # to avoid circular dependency
 %filter_from_requires /\/usr\/bin\/%name-session/d
 %filter_from_requires /\/usr\/libexec\/%name/d
-Requires: phoc >= 0.35
+Requires: phoc >= 0.36
 Requires: gnome-shell-data
 Requires: mutter-gnome
 Requires: gnome-session
 Requires: iio-sensor-proxy
 Requires: fonts-ttf-google-lato
+# since 0.36
+Requires: /sbin/capsh
 
 # squeekboard provides osk-wayland
 Requires: /usr/bin/osk-wayland
@@ -120,6 +122,8 @@ This package provides files needed to develop Phosh plugins.
 %patch2 -p1 -b .alt
 %patch3 -p1 -b .alt-dm
 sed -i 's|\(User=\)1000|\1%dev_uid|' data/%name.service
+# full path to capsh
+sed -i 's|\(capsh\)|/sbin/\1|' data/%name.service
 
 %build
 %meson \
@@ -194,6 +198,9 @@ xvfb-run %__meson_test
 %{?_enable_gtk_doc:%doc %_datadir/doc/%name-%api_ver}
 
 %changelog
+* Sat Feb 03 2024 Yuri N. Sedunov <aris@altlinux.org> 0.36.0-alt1
+- 0.36.0
+
 * Sun Jan 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.35.0-alt1
 - 0.35.0
 
