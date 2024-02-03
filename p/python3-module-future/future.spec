@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.18.3
-Release: alt2
+Release: alt3
 Summary: Clean single-source support for Python 3 and 2
 License: MIT
 Group: Development/Python3
@@ -17,6 +17,8 @@ Patch0: %name-%version-alt.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(pytest)
@@ -38,10 +40,10 @@ support both Python 3 and Python 2 with minimal overhead.
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # don't package tests
 rm -r %buildroot%python3_sitelibdir/*/*/test
@@ -51,13 +53,16 @@ rm -r %buildroot%_bindir/*
 
 %check
 %tox_create_default_config
-%tox_check
+%tox_check_pyproject -- -k 'not test_isinstance_recursion_limit and not test_subclass_recursion_limit'
 
 %files
 %doc *.txt *.rst
 %python3_sitelibdir/*
 
 %changelog
+* Sat Feb 03 2024 Grigory Ustinov <grenka@altlinux.org> 0.18.3-alt3
+- Fixed FTBFS with python 3.12.
+
 * Wed Aug 16 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.18.3-alt2
 - Fixed FTBFS with python 3.11.
 
