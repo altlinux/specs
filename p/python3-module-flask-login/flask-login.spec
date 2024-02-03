@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.6.3
-Release: alt1
+Release: alt2
 
 Summary: User session management for Flask
 License: MIT
@@ -16,6 +16,7 @@ Vcs: https://github.com/maxcountryman/flask-login
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch: flask-login-0.6.3-utcnow-fix.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -40,6 +41,7 @@ extension capable of loading users from their ID.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %pyproject_build
@@ -56,6 +58,9 @@ extension capable of loading users from their ID.
 %python3_sitelibdir/Flask_Login-%version.dist-info/
 
 %changelog
+* Sat Feb 03 2024 Anton Vyatkin <toni@altlinux.org> 0.6.3-alt2
+- Fixed FTBFS with python 3.12.
+
 * Mon Dec 18 2023 Anton Zhukharev <ancieg@altlinux.org> 0.6.3-alt1
 - Updated to 0.6.3.
 
