@@ -6,7 +6,7 @@
 
 Name:          ruby
 Version:       %_version
-Release:       alt2
+Release:       alt2.1
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -261,7 +261,7 @@ Ruby manuals and documentation.
 %package       -n gem
 Epoch:         2
 Version:       3.3.26
-Release:       alt2
+Release:       alt2.1
 Summary:       Ruby gem executable and framefork
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -278,7 +278,7 @@ Ruby gem executable and framework.
 %package       -n rpm-macros-ruby
 Epoch:         1
 Version:       %_version
-Release:       alt2
+Release:       alt2.1
 Summary:       rpm macros for Ruby packages
 Group:         Development/Ruby
 
@@ -355,7 +355,7 @@ mkdir -p \
    %buildroot%_docdir/%name
 
 cp COPYING LEGAL NEWS* README.md README.EXT *.ja %buildroot%_docdir/%name/
-while read -d " " i; do ln -s ../../%_libexecdir/%name/bin/$i %buildroot%_bindir/; done <<< "ruby ri erb irb gem "
+while read -d " " i; do ln -s ../../%_libexecdir/%name/bin/$i %buildroot%_bindir/; done <<< "ruby erb irb gem "
 ln -s %name-3.1.pc %buildroot%_pkgconfigdir/%name.pc
 # install ruby macros
 install -D -p -m 0644 %SOURCE4 %buildroot%_rpmmacrosdir/ruby.env
@@ -371,7 +371,6 @@ echo "NOTE: to make the environment variable changes come into effect, please re
 %files
 %_libexecdir/%name/bin
 %_bindir/%name
-%_bindir/ri
 %_man1dir/%name.*
 %dir %_datadir/ri
 %attr(0755,root,root) %_sysconfdir/bashrc.d/%name.sh
@@ -423,6 +422,9 @@ echo "NOTE: to make the environment variable changes come into effect, please re
 %_rpmmacrosdir/ruby.env
 
 %changelog
+* Sat Feb 03 2024 Pavel Skrylev <majioa@altlinux.org> 3.1.4-alt2.1
+- - removed ri from %%_bindir leaving it in %%ruby_bindir
+
 * Fri Dec 22 2023 Pavel Skrylev <majioa@altlinux.org> 3.1.4-alt2
 - + dependency to autoconf >= 2.71
 - + ruby-devel package including rvm-devel and libruby-devel

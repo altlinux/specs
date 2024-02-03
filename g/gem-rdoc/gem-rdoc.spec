@@ -1,7 +1,8 @@
+%define        _unpackaged_files_terminate_build 1
 %define        gemname rdoc
 
 Name:          gem-rdoc
-Version:       6.4.0.1
+Version:       6.6.2
 Release:       alt1
 Summary:       RDoc produces HTML and online documentation for Ruby projects
 License:       Ruby
@@ -14,18 +15,24 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 Patch:         use_system_dirs.patch
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: racc
-BuildRequires: gem(kpeg) >= 0
+%if_with check
+BuildRequires: gem(rake) >= 0
+BuildRequires: gem(racc) > 1.4.10
+BuildRequires: gem(kpeg) >= 1.3.3
+BuildRequires: gem(test-unit) >= 0
+BuildRequires: gem(test-unit-ruby-core) >= 0
+BuildRequires: gem(rubocop) >= 1.15.0
+BuildRequires: gem(gettext) >= 0
 BuildRequires: gem(psych) >= 4.0.0
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
 Requires:      gem(psych) >= 4.0.0
 Obsoletes:     ruby-rdoc < %EVR
 Provides:      ruby-rdoc = %EVR
-Provides:      gem(rdoc) = 6.4.0.1
-
-%ruby_use_gem_version rdoc:6.4.0.1
+Provides:      gem(rdoc) = 6.6.2
 
 %ruby_on_build_rake_tasks generate
 
@@ -35,14 +42,14 @@ rdoc and ri tools for generating and displaying online documentation.
 
 
 %package       -n rdoc
-Version:       6.4.0.1
+Version:       6.6.2
 Release:       alt1
 Summary:       RDoc produces HTML and online documentation for Ruby projects executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета rdoc
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(rdoc) = 6.4.0.1
+Requires:      gem(rdoc) = 6.6.2
 Obsoletes:     ruby-tool-rdoc
 Obsoletes:     ruby-tools
 Conflicts:     rdoc <= 1.9.3-alt10
@@ -59,14 +66,14 @@ rdoc and ri tools for generating and displaying online documentation.
 
 
 %package       -n ri
-Version:       6.4.0.1
+Version:       6.6.2
 Release:       alt1
 Summary:       RDoc produces HTML and online documentation for Ruby projects executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета rdoc
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(rdoc) = 6.4.0.1
+Requires:      gem(rdoc) = 6.6.2
 
 %description   -n ri
 RDoc produces HTML and online documentation for Ruby projects
@@ -80,14 +87,14 @@ rdoc and ri tools for generating and displaying online documentation.
 
 
 %package       -n gem-rdoc-doc
-Version:       6.4.0.1
+Version:       6.6.2
 Release:       alt1
 Summary:       RDoc produces HTML and online documentation for Ruby projects documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rdoc
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rdoc) = 6.4.0.1
+Requires:      gem(rdoc) = 6.6.2
 
 %description   -n gem-rdoc-doc
 RDoc produces HTML and online documentation for Ruby projects documentation
@@ -98,6 +105,34 @@ rdoc and ri tools for generating and displaying online documentation.
 
 %description   -n gem-rdoc-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета rdoc.
+
+
+%package       -n gem-rdoc-devel
+Version:       6.6.2
+Release:       alt1
+Summary:       RDoc produces HTML and online documentation for Ruby projects development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rdoc
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(rdoc) = 6.6.2
+Requires:      gem(rake) >= 0
+Requires:      gem(racc) > 1.4.10
+Requires:      gem(kpeg) >= 1.3.3
+Requires:      gem(test-unit) >= 0
+Requires:      gem(test-unit-ruby-core) >= 0
+Requires:      gem(rubocop) >= 1.15.0
+Requires:      gem(gettext) >= 0
+
+%description   -n gem-rdoc-devel
+RDoc produces HTML and online documentation for Ruby projects development
+package.
+
+RDoc produces HTML and online documentation for Ruby projects. RDoc includes the
+rdoc and ri tools for generating and displaying online documentation.
+
+%description   -n gem-rdoc-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета rdoc.
 
 
 %prep
@@ -131,8 +166,14 @@ rdoc and ri tools for generating and displaying online documentation.
 %doc README.rdoc
 %ruby_gemdocdir
 
+%files         -n gem-rdoc-devel
+%doc README.rdoc
+
 
 %changelog
+* Sat Feb 03 2024 Pavel Skrylev <majioa@altlinux.org> 6.6.2-alt1
+- ^ 6.4.0[1] -> 6.6.2
+
 * Mon Jul 11 2022 Pavel Skrylev <majioa@altlinux.org> 6.4.0.1-alt1
 - ^ 6.4.0 -> 6.4.0[1]
 - ! paths to ri system folder

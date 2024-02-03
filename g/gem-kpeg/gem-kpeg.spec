@@ -1,10 +1,11 @@
+%define        _unpackaged_files_terminate_build 1
 %define        gemname kpeg
 
 Name:          gem-kpeg
-Version:       1.3.1
+Version:       1.3.3
 Release:       alt1
 Summary:       KPeg is a simple PEG library for Ruby
-License:       MIT
+License:       BSD-3-Clause
 Group:         Development/Ruby
 Url:           https://github.com/evanphx/kpeg
 Vcs:           https://github.com/evanphx/kpeg.git
@@ -14,14 +15,18 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 Patch:         patch.patch
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(minitest) >= 5.2 gem(minitest) < 6
-BuildRequires: gem(rdoc) >= 4.0 gem(rdoc) < 7
-BuildRequires: gem(hoe) >= 3.7 gem(hoe) < 4
+%if_with check
+BuildRequires: gem(minitest) >= 5.16
+BuildRequires: gem(rdoc) >= 4.0
+BuildRequires: gem(rake) >= 0.8
+BuildConflicts: gem(minitest) >= 6
+BuildConflicts: gem(rdoc) >= 7
+BuildConflicts: gem(rake) >= 15.0
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Requires:      gem(minitest) >= 5.0 gem(minitest) < 6
-Provides:      gem(kpeg) = 1.3.1
+Provides:      gem(kpeg) = 1.3.3
 
 
 %description
@@ -35,14 +40,14 @@ memoization}[http://www.vpri.org/pdf/tr2008003_experimenting.pdf] trick.
 
 
 %package       -n kpeg
-Version:       1.3.1
+Version:       1.3.3
 Release:       alt1
 Summary:       KPeg is a simple PEG library for Ruby executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета kpeg
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(kpeg) = 1.3.1
+Requires:      gem(kpeg) = 1.3.3
 
 %description   -n kpeg
 KPeg is a simple PEG library for Ruby executable(s).
@@ -60,14 +65,14 @@ memoization}[http://www.vpri.org/pdf/tr2008003_experimenting.pdf] trick.
 
 
 %package       -n gem-kpeg-doc
-Version:       1.3.1
+Version:       1.3.3
 Release:       alt1
 Summary:       KPeg is a simple PEG library for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета kpeg
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(kpeg) = 1.3.1
+Requires:      gem(kpeg) = 1.3.3
 
 %description   -n gem-kpeg-doc
 KPeg is a simple PEG library for Ruby documentation files.
@@ -85,16 +90,20 @@ memoization}[http://www.vpri.org/pdf/tr2008003_experimenting.pdf] trick.
 
 
 %package       -n gem-kpeg-devel
-Version:       1.3.1
+Version:       1.3.3
 Release:       alt1
 Summary:       KPeg is a simple PEG library for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета kpeg
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(kpeg) = 1.3.1
+Requires:      gem(kpeg) = 1.3.3
+Requires:      gem(minitest) >= 5.16
 Requires:      gem(rdoc) >= 4.0
-Requires:      gem(hoe) >= 0
+Requires:      gem(rake) >= 0.8
+Conflicts:     gem(minitest) >= 6
+Conflicts:     gem(rdoc) >= 7
+Conflicts:     gem(rake) >= 15.0
 
 %description   -n gem-kpeg-devel
 KPeg is a simple PEG library for Ruby development package.
@@ -142,5 +151,9 @@ memoization}[http://www.vpri.org/pdf/tr2008003_experimenting.pdf] trick.
 
 
 %changelog
+* Sat Feb 03 2024 Pavel Skrylev <majioa@altlinux.org> 1.3.3-alt1
+- ^ 1.3.1 -> 1.3.3
+- * relicensing
+
 * Tue Aug 23 2022 Pavel Skrylev <majioa@altlinux.org> 1.3.1-alt1
 - + packaged gem with Ruby Policy 2.0
