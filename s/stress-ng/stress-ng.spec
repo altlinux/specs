@@ -8,7 +8,7 @@
 %def_with gpu
 
 Name: stress-ng
-Version: 0.17.04
+Version: 0.17.05
 Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
@@ -20,6 +20,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-make
 BuildRequires: banner
+BuildRequires: libacl-devel
 BuildRequires: libaio-devel
 BuildRequires: libattr-devel
 BuildRequires: libbsd-devel
@@ -115,6 +116,10 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Sat Feb 03 2024 Vitaly Chikunov <vt@altlinux.org> 0.17.05-alt1
+- Update to V0.17.05 (2024-02-01).
+- Enable libacl support.
+
 * Sat Jan 06 2024 Vitaly Chikunov <vt@altlinux.org> 0.17.04-alt1
 - Update to V0.17.04 (2024-01-05).
 
