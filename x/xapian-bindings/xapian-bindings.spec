@@ -15,7 +15,7 @@
 
 Name: xapian-bindings
 Version: 1.4.24
-Release: alt4
+Release: alt5
 
 Summary: Xapian search engine bindings
 License: GPL-2.0-or-later
@@ -35,7 +35,6 @@ BuildRequires: libxapian-devel = %version
 BuildRequires(pre): rpm-macros-ruby
 BuildRequires: gem(test-unit)
 BuildRequires: rpm-build-ruby
-BuildRequires: /usr/bin/rdoc
 %endif
 %if_with python
 %setup_python_module %name
@@ -115,6 +114,7 @@ sed -i '/_xapian_la_LDFLAGS/s/$/ -lruby/' ruby/Makefile.am
 %autoreconf
 export RUBY_LIB=%ruby_vendorlibdir
 export RUBY_LIB_ARCH=%ruby_vendorarchdir
+export RDOC=$(PATH=/usr/lib/ruby/bin:$PATH type -p rdoc)
 %configure %{subst_with python} %{subst_with python3} %{subst_with ruby}
 %make_build
 
@@ -154,6 +154,9 @@ rm -rf %buildroot%_defaultdocdir/%name/
 %endif
 
 %changelog
+* Sun Feb 04 2024 Vitaly Chikunov <vt@altlinux.org> 1.4.24-alt5
+- spec: Fix FTBFS after gem-rdoc-6.6.2-alt1 update.
+
 * Thu Feb 01 2024 Vitaly Chikunov <vt@altlinux.org> 1.4.24-alt4
 - spec: check: Fix ALT beekeeper build (ruby test failure).
 
