@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 4.0.0
-Release: alt1
+Release: alt2
 
 Summary: i18n and l10n support for Flask based on Babel and pytz
 License: BSD-3-Clause
@@ -17,7 +17,6 @@ Vcs: https://github.com/python-babel/flask-babel
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Patch0: %name-4.0.0-alt-fix-tests.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-poetry-core
@@ -35,7 +34,6 @@ This is based on the Python babel and pytz modules.
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 %pyproject_build
@@ -52,6 +50,9 @@ This is based on the Python babel and pytz modules.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Feb 03 2024 Anton Vyatkin <toni@altlinux.org> 4.0.0-alt2
+- Fixed FTBFS with python 3.12.
+
 * Mon Dec 18 2023 Anton Zhukharev <ancieg@altlinux.org> 4.0.0-alt1
 - Updated to 4.0.0.
 - Built from upstream VCS.
