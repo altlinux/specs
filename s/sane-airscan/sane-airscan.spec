@@ -3,7 +3,7 @@
 
 Name: sane-airscan
 Version: 0.99.27
-Release: alt1
+Release: alt2.git3a6fd942
 
 Summary: This package contains SANE backend for AirScan (eSCL) and WSD document scanners
 
@@ -16,13 +16,13 @@ Source: %name-%version.tar
 
 Patch0: %name-%version-%release.patch
 
-BuildRequires: meson
 BuildRequires: libavahi-glib-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libpng-devel
 BuildRequires: libsane-devel
 BuildRequires: libxml2-devel
 BuildRequires: libgnutls-devel
+BuildRequires: libtiff-devel
 
 %description
 Similar to how most modern network printers support "driverless" printing, using
@@ -51,8 +51,6 @@ so on.
 %patch0 -p1
 
 %build
-mkdir -p ./BUILD
-meson ./BUILD
 %make_build
 
 %install
@@ -70,6 +68,15 @@ meson ./BUILD
 %_man5dir/*.5.xz
 
 %changelog
+* Wed Jan 31 2024 Nikolai Kostrigin <nickel@altlinux.org> 0.99.27-alt2.git3a6fd942
+- 0.99.27 plus latest upstream fixes and features
+  + fix FTBFS when building against libxml2
+  + new models support tested and fixed
+- spec: do not use meson for build
+  + refer to https://github.com/alexpevzner/sane-airscan/issues/49#issuecomment-657639351
+  + remove meson from BR:
+- spec: add libtiff-devel to BR: according to upstream codebase changes
+
 * Fri Oct 29 2021 Nikolai Kostrigin <nickel@altlinux.org> 0.99.27-alt1
 - new version
 
