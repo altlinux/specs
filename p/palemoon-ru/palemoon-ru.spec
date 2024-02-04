@@ -4,8 +4,8 @@
 %define cid_dict       ru@dictionaries.addons.mozilla.org
 %define cid_dict_dir   %palemoon_noarch_extensionsdir/%cid_dict
 
-%define min_version	32.5.0
-%define max_version	32.6.*
+%define min_version	33.0.0
+%define max_version	33.6.*
 
 %define bname		newmoon
 %define sdir		searchplugins
@@ -14,7 +14,7 @@
 
 Name: palemoon-ru
 
-Version: 32.5.0
+Version: 33.0.0
 Release: alt1
 
 ExclusiveArch: x86_64 aarch64
@@ -34,7 +34,7 @@ Source2: searchplugins.tar
 Patch:   %name-31.1.0-search.patch
 #Patch2:	 %name-27.3.0-advanced.patch
 
-Requires: palemoon >= 32.0.0
+Requires: palemoon >= 33.0.0
 Requires: hunspell-ru
 Requires: palemoon-searchplugins
 
@@ -52,7 +52,6 @@ The Palemoon Russian translation and dictionary.
 Summary: The Palemoon Russian translation and dictionary.
 Group:   Networking/WWW
 #BuildArch: noarch
-ExcludeArch: %ix86 %arm ppc64le 
 
 Conflicts:  palemoon-ru < 27.7.0
 
@@ -129,6 +128,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %search_dir
 
 %changelog
+* Sun Feb 04 2024 Hihin Ruslan <ruslandh@altlinux.ru> 33.0.0-alt1
+- Version 33.3.0
+
 * Sun Nov 19 2023 Hihin Ruslan <ruslandh@altlinux.ru> 32.5.0-alt1
 - Version 32.5.0
 
