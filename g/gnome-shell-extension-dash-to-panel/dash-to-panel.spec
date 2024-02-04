@@ -1,5 +1,5 @@
 Name: gnome-shell-extension-dash-to-panel
-Version: 59
+Version: 60
 Release: alt1
 
 %define sname dash-to-panel
@@ -44,8 +44,11 @@ similar to that found in KDE Plasma and Windows 7+. A separate dock is no longer
 %doc README.md
 
 %changelog
+* Mon Feb 05 2024 Hihin Ruslan <ruslandh@altlinux.ru> 60-alt1
+- Version v59
+
 * Mon Sep 25 2023 Hihin Ruslan <ruslandh@altlinux.ru> 59-alt1
-- version v59
+- Version v59
 
 * Sat Sep 23 2023 Hihin Ruslan <ruslandh@altlinux.ru> 56-alt2_git_2_d5790be
 - Update from github commit d5790be
