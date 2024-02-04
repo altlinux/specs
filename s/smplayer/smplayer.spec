@@ -1,7 +1,7 @@
-%define		git afa9c7dfe
-%define		svn 10169
+%define		git d32f21eee
+%define		svn 10227
 
-%define		rel alt2
+%define		rel alt1
 
 Name:		smplayer
 Summary:	A great MPlayer/MPV front-end (QT5)
@@ -10,16 +10,17 @@ Summary(uk_UA.UTF8): Потужний інтерфейс для MPlayer/MPV (QT5
 License:	GPLv2
 Group:		Video
 Url:		http://smplayer.sourceforge.net
-Version:	23.6.0
+Version:	23.12.0
 Release:	%rel.%svn
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Source0:	%name-%version.tar
 Patch0:		smplayer-paths-fix-alt.patch
 Patch1:		smplayer-18.3-disable_update.patch
+Patch2:		smplayer-nogit-23.12.0.patch
 
-# Automatically added by buildreq on Tue Sep 07 2021 (-bi)
-# optimized out: debugedit elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libctf-nobfd0 libglvnd-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-widgets libqt5-xml libstdc++-devel libxcb-devel python3 python3-base qt5-base-devel qt5-tools sh4 xorg-proto-devel xz
-BuildRequires: libXext-devel qt5-script-devel qt5-tools-devel zlib-devel
+# Automatically added by buildreq on Sun Feb 04 2024 (-bi)
+# optimized out: debugedit elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libctf-nobfd0 libdouble-conversion3 libglvnd-devel libgpg-error libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-widgets libqt5-xml libsasl2-3 libstdc++-devel libxcb-devel python3 python3-base qt5-base-devel qt5-tools rpm-build-file sh5 xorg-proto-devel xz
+BuildRequires: libXext-devel qt5-declarative-devel qt5-script-devel qt5-tools-devel zlib-devel
 
 %description
 smplayer intends to be a complete front-end for MPlayer/MPV, from basic features
@@ -80,6 +81,8 @@ This is a simple web server to serve local files for Chromecast
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+
 sed -i 's|DOC_PATH=$(PREFIX)/share/doc/packages/smplayer|DOC_PATH=%_docdir/%name-%version|g' Makefile
 sed -i 's|0UNKNOWN|%svn|g' get_svn_revision.sh
 
@@ -107,6 +110,9 @@ export OPTFLAGS="%optflags"
 %files -n %name-mplayer
 
 %changelog
+* Sun Feb 04 2024 Hihin Ruslan <ruslandh@altlinux.ru> 23.12.0-alt1.10227
+- 23.6.0 (10227)
+
 * Tue Oct 24 2023 Hihin Ruslan <ruslandh@altlinux.ru> 23.6.0-alt2.10169
 - 23.6.0 (rev10169)
 
@@ -733,3 +739,4 @@ after a restart of the mplayer process.
 
 * Mon Feb 12 2007 Ricardo Villalba <rvm@escomposlinux.org>
   - first spec file
+
