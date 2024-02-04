@@ -3,7 +3,7 @@
 
 Name:          gem-rdoc
 Version:       6.6.2
-Release:       alt1
+Release:       alt1.1
 Summary:       RDoc produces HTML and online documentation for Ruby projects
 License:       Ruby
 Group:         Development/Ruby
@@ -15,10 +15,10 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 Patch:         use_system_dirs.patch
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(kpeg) >= 1.3.3
 %if_with check
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(racc) > 1.4.10
-BuildRequires: gem(kpeg) >= 1.3.3
 BuildRequires: gem(test-unit) >= 0
 BuildRequires: gem(test-unit-ruby-core) >= 0
 BuildRequires: gem(rubocop) >= 1.15.0
@@ -43,7 +43,7 @@ rdoc and ri tools for generating and displaying online documentation.
 
 %package       -n rdoc
 Version:       6.6.2
-Release:       alt1
+Release:       alt1.1
 Summary:       RDoc produces HTML and online documentation for Ruby projects executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета rdoc
 Group:         Other
@@ -67,7 +67,7 @@ rdoc and ri tools for generating and displaying online documentation.
 
 %package       -n ri
 Version:       6.6.2
-Release:       alt1
+Release:       alt1.1
 Summary:       RDoc produces HTML and online documentation for Ruby projects executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета rdoc
 Group:         Other
@@ -88,7 +88,7 @@ rdoc and ri tools for generating and displaying online documentation.
 
 %package       -n gem-rdoc-doc
 Version:       6.6.2
-Release:       alt1
+Release:       alt1.1
 Summary:       RDoc produces HTML and online documentation for Ruby projects documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rdoc
 Group:         Development/Documentation
@@ -109,7 +109,7 @@ rdoc and ri tools for generating and displaying online documentation.
 
 %package       -n gem-rdoc-devel
 Version:       6.6.2
-Release:       alt1
+Release:       alt1.1
 Summary:       RDoc produces HTML and online documentation for Ruby projects development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rdoc
 Group:         Development/Ruby
@@ -171,6 +171,9 @@ rdoc and ri tools for generating and displaying online documentation.
 
 
 %changelog
+* Sun Feb 04 2024 Pavel Skrylev <majioa@altlinux.org> 6.6.2-alt1.1
+- ! fixed build with compilation markdown rb (closes #49288)
+
 * Sat Feb 03 2024 Pavel Skrylev <majioa@altlinux.org> 6.6.2-alt1
 - ^ 6.4.0[1] -> 6.6.2
 
