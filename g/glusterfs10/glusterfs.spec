@@ -1,6 +1,6 @@
 # TODO: --enable-bd-xlator
 
-%define major 10.4
+%define major 10.5
 %define somajor 10
 #define _localstatedir /var
 %def_enable epoll
@@ -25,7 +25,7 @@
 
 Name: glusterfs10
 Version: %major
-Release: alt2
+Release: alt1
 
 Summary: Cluster File System
 
@@ -77,7 +77,7 @@ AutoProv: no
 ExcludeArch: armh
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev
+BuildRequires: python3-dev python3-module-setuptools
 
 # liblvm2-devel: disable bd translator (uses obsoleted liblvm2app.so from liblvm2)
 
@@ -805,6 +805,9 @@ rm -rf %buildroot%_includedir/glusterfs/
 #files checkinstall
 
 %changelog
+* Sun Feb 04 2024 Vitaly Lipatov <lav@altlinux.ru> 10.5-alt1
+- new version 10.5 (with rpmrb script)
+
 * Thu Jul 27 2023 Vitaly Lipatov <lav@altlinux.ru> 10.4-alt2
 - disable devel subpackage
 
