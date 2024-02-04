@@ -1,6 +1,6 @@
 Name: polymc
-Version: 5.1
-Release: alt4
+Version: 6.1
+Release: alt1
 
 Summary: Minecraft launcher with ability to manage multiple instances
 
@@ -14,9 +14,6 @@ Source: %name-%version.tar
 # Source1-url: https://github.com/PolyMC/libnbtplusplus/archive/refs/heads/master.zip
 Source1: %name-libnbtplusplus-%version.tar
 
-# Gix build with Qt 6.6.0: https://github.com/PolyMC/PolyMC/commit/c0ca8d21cae003a476d000834b71b12fc5af5245
-Patch1: c0ca8d21cae003a476d000834b71b12fc5af5245.patch
-
 ExcludeArch: %arm
 
 BuildRequires(pre): rpm-macros-cmake
@@ -29,7 +26,7 @@ BuildRequires: qt6-charts-devel qt6-5compat-devel
 BuildRequires: cmake gcc-c++ extra-cmake-modules
 
 BuildRequires: java-devel
-BuildRequires: java-openjdk-headless
+BuildRequires: jre-openjdk-headless
 BuildRequires: scdoc libgamemode-devel
 BuildRequires: libtomlplusplus-devel libghc_filesystem-devel quazip-qt6-devel
 
@@ -39,6 +36,8 @@ Requires: qt6-svg qt6-imageformats
 # for older minecraft versions
 Requires: xrandr
 
+%add_optflags -Wno-error=return-type
+
 %description
 PolyMC is a free, open source launcher for Minecraft. It allows you to have
 multiple, separate instances of Minecraft (each with their own mods, texture
@@ -47,7 +46,6 @@ a simple interface.
 
 %prep
 %setup -a1
-%patch1 -p1
 %__subst 's|share/jars|share/polymc/jars|' CMakeLists.txt launcher/Application.cpp
 
 %build
@@ -77,6 +75,9 @@ a simple interface.
 #_datadir/qlogging-categories6/*.categories
 
 %changelog
+* Sun Feb 04 2024 Vitaly Lipatov <lav@altlinux.ru> 6.1-alt1
+- new version 6.1 (with rpmrb script)
+
 * Sun Nov 26 2023 Vitaly Lipatov <lav@altlinux.ru> 5.1-alt4
 - fix META URL (ALT bug 48495)
 - fix build with Qt 6.6.0
