@@ -1,8 +1,10 @@
 Summary: The Basilisk web browser
 Summary(ru_RU.UTF-8): Интернет-браузер Baselisk - неофициальная сборка браузера palemoon
 
+%define vendor_version v2024.02.03
+
 Name: basilisk
-Version:  52.9.0
+Version:  52.9.0_1_%vendor_version
 
 Release: alt1
 
@@ -25,7 +27,6 @@ Source7: firefox.c
 Patch1:  mozilla-%name-52.9.0-bug-1153109-enable-stdcxx-compat.patch
 Patch22: basilisk_rpath-52.9.0.patch
 
-#Obsoletes: palemoon  < 29.4.6
 Provides: palemoon
 Provides: webclient
 
@@ -38,9 +39,13 @@ Provides: webclient
 %set_autoconf_version 2.13
 
 
-BuildRequires: doxygen gcc-c++ libGConf-devel libXcomposite-devel libXdamage-devel libXt-devel libalsa-devel libdbus-glib-devel libgtk+2-devel
-BuildRequires: libgtk+3-devel libhunspell-devel libpulseaudio-devel libsocket python-modules-distutils python-modules-json
-BuildRequires: python-modules-wsgiref unzip yasm zip
+# Automatically added by buildreq on Sun Feb 04 2024
+# optimized out: alt-os-release alternatives fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXfixes-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libctf-nobfd0 libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel libxcb-devel perl pkg-config python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python2-base python3 python3-base python3-dev python3-module-setuptools sh5 xorg-proto-devel zlib-devel
+BuildRequires: doxygen gcc-c++ libXcomposite-devel libXdamage-devel libXt-devel libalsa-devel libdbus-glib-devel libgtk+2-devel libgtk+3-devel
+BuildRequires: libhunspell-devel libpulseaudio-devel libsocket python-modules-distutils python-modules-json python-modules-wsgiref unzip yasm zip
+
+BuildRequires: libGConf-devel 
+BuildRequires: atasm nasm
 
 
 # BEGIN SourceDeps(oneline):
@@ -48,8 +53,8 @@ BuildRequires: gobject-introspection-devel libssl-devel perl(Archive/Zip.pm) per
 BuildRequires: perl(XML/LibXML.pm) perl(XML/LibXSLT.pm) perl(diagnostics.pm) perl(fastcwd.pl) swig texinfo
 # END SourceDeps(oneline)
 
-BuildPreReq: %_bindir/python2.7 python2-base
-BuildPreReq: libXcomposite-devel libXdamage-devel
+BuildPreReq: %_bindir/python2.7 python2-base 
+BuildPreReq: libXcomposite-devel libXdamage-devel libavcodec-devel
 
 %ifarch x86_64
 BuildRequires: libcpuid-devel
@@ -81,8 +86,6 @@ cross-platform.
 созданная с использованием языка XUL для описания интерфейса пользователя.
 
 
-
-
 # Protection against fraudulent DigiNotar certificates
 #Requires: libnss
 
@@ -102,11 +105,32 @@ These helper macros provide possibility to rebuild
 %setup -n %name-%version -c
 cp -f %SOURCE4 .mozconfig
 
-%ifarch x86_64
-echo 'ac_add_options --enable-optimize="-O3 -march=x86-64 -w -msse2 -mfpmath=sse"' >> .mozconfig
-%endif
 
 echo "mk_add_options MOZ_OBJDIR=obj-%_arch" >> .mozconfig
+echo "mk_add_options MOZ_MAKE_FLAGS=%_smp_mflags" >> .mozconfig
+
+echo "ac_add_options --disable-elf-hack" >> .mozconfig
+echo "ac_add_options --enable-alsa --enable-pulseaudio" >> .mozconfig
+echo "ac_add_options --enable-raw --enable-ffmpeg" >> .mozconfig
+
+# echo "ac_add_options --enable-system-hunspell" >> .mozconfig
+
+echo "ac_add_options --with-pthreads" >> .mozconfig
+
+echo "ac_add_options --x-libraries=%_libdir/X11" >> .mozconfig
+echo "ac_add_options --with-nss-prefix=%_libdir/nss" >> .mozconfig
+
+%ifarch x86_64
+ echo "_BUILD_64=1" >> .mozconfig
+ echo "ac_add_options --with-arch=x86-64" >> .mozconfig
+ echo 'ac_add_options --enable-optimize="-O3 -march=x86-64 -w -msse2 -mfpmath=sse"' >> .mozconfig
+%endif
+
+%ifarch aarch64
+echo "_BUILD_64=1" >> .mozconfig
+echo 'ac_add_options --enable-optimize="-O3 -w -flto=auto"' >> .mozconfig
+#echo "ac_add_options --with-arch=aarch64" >> .mozconfig
+%endif
 
 %patch1 -p1
 %patch22 -p1
@@ -154,7 +178,7 @@ MOZ_SMP_FLAGS=%_smp_mflags
 
 TOPSRCDIR=$pwd
 
-make -f client.mk \
+%make_build -f client.mk \
  	MAKENSISU= \
  	STRIP="/bin/true" \
  	MOZ_APP_VERSION=%version \
@@ -320,5 +344,11 @@ install -D -m 644 %_builddir/basilisk-%version/README.md %buildroot/%_docdir/%na
 %exclude %_includedir/*
 
 %changelog
+* Sun Feb 04 2024 Hihin Ruslan <ruslandh@altlinux.ru> 52.9.0_1_v2024.02.03-alt1
+- Update to vendor_version v2024.02.03
+
+* Fri Dec 08 2023 Hihin Ruslan <ruslandh@altlinux.ru> 52.9.0-alt2_1_v2023.12.09
+- Update to vendor_version v2023.12.09
+
 * Thu Nov 23 2023 Hihin Ruslan <ruslandh@altlinux.ru> 52.9.0-alt1
 - Init Build
