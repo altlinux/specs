@@ -1,8 +1,9 @@
+%global _unpackaged_files_terminate_build 1
 %define flavors	x11-gl,drm-gl,x11-glesv2,drm-glesv2,wayland-gl,wayland-glesv2
 
 Name:		glmark2
 Version:	2021.12
-Release:	alt5
+Release:	alt6
 
 Summary:	an OpenGL 2.0 and ES 2.0 benchmark
 Url:		https://github.com/glmark2/glmark2
@@ -113,7 +114,7 @@ export CFLAGS="%optflags"
 export CXXFLAGS="${CFLAGS}"
 %meson \
 	-Dflavors="%flavors" \
-	-Ddata-path=%_datadir/name \
+	-Ddata-path=%_datadir/%name \
 %nil
 %meson_build
 
@@ -148,6 +149,10 @@ export CXXFLAGS="${CFLAGS}"
 %_datadir/%name
 
 %changelog
+* Sun Feb 04 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2021.12-alt6
+- Recover from fallout caused by switching to meson.
+  Actually include data files into common subpackage.
+
 * Fri Feb 02 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2021.12-alt5
 - Build with meson. Fixes FTBFS due to python 3.12.
 
