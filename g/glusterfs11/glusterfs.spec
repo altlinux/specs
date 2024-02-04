@@ -1,6 +1,6 @@
 # TODO: --enable-bd-xlator
 
-%define major 11.0
+%define major 11.1
 %define somajor 11
 #define _localstatedir /var
 %def_enable epoll
@@ -25,7 +25,7 @@
 
 Name: glusterfs11
 Version: %major
-Release: alt2
+Release: alt1
 
 Summary: Cluster File System
 
@@ -77,7 +77,8 @@ AutoProv: no
 ExcludeArch: armh
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev
+
+BuildRequires: python3-dev python3-module-setuptools
 
 # liblvm2-devel: disable bd translator (uses obsoleted liblvm2app.so from liblvm2)
 
@@ -717,6 +718,7 @@ rm -rf %buildroot%_includedir/glusterfs/
 %_sbindir/gluster
 %_man8dir/gluster.8*
 %_sysconfdir/bash_completion.d/gluster.bash
+#_datadir/bash-completion/completions/gluster.bash
 
 %if_with ganesha
 %files ganesha
@@ -780,7 +782,7 @@ rm -rf %buildroot%_includedir/glusterfs/
 %_libdir/libglusterfs.so.%somajor.*
 
 %files -n python3-module-%name
-%python3_sitelibdir_noarch/*
+%python3_sitelibdir_noarch/gluster/
 
 %if_with ocf
 %files resource-agents
@@ -792,6 +794,9 @@ rm -rf %buildroot%_includedir/glusterfs/
 #files checkinstall
 
 %changelog
+* Sun Feb 04 2024 Vitaly Lipatov <lav@altlinux.ru> 11.1-alt1
+- new version 11.1 (with rpmrb script)
+
 * Mon Jul 31 2023 Vitaly Lipatov <lav@altlinux.ru> 11.0-alt2
 - restore missed BR: libgperftools-devel
 - use tcmalloc on aarch64 too
