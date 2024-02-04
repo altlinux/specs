@@ -17,8 +17,8 @@
 %endif
 
 Name: 	 thunderbird
-Version: 115.6.0
-Release: alt2
+Version: 115.7.0
+Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -589,6 +589,19 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Sun Feb 04 2024 Pavel Vasenkov <pav@altlinux.org> 115.7.0-alt1
+- New version.
+- Security fixes:
+  + CVE-2024-0741 Out of bounds write in ANGLE
+  + CVE-2024-0742 Failure to update user input timestamp
+  + CVE-2024-0746 Crash when listing printers on Linux
+  + CVE-2024-0747 Bypass of Content Security Policy when directive unsafe-inline was set
+  + CVE-2024-0749 Phishing site popup could show local origin in address bar
+  + CVE-2024-0750 Potential permissions request bypass via clickjacking
+  + CVE-2024-0751 Privilege escalation through devtools
+  + CVE-2024-0753 HSTS policy on subdomain could bypass policy of upper domain
+  + CVE-2024-0755 Memory safety bugs fixed in Firefox 122, Firefox ESR 115.7, and Thunderbird 115.7
+
 * Sun Feb 04 2024 Grigory Ustinov <grenka@altlinux.org> 115.6.0-alt2
 - Fixed building with python3.12.
 
