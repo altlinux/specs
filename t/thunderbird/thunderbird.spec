@@ -18,7 +18,7 @@
 
 Name: 	 thunderbird
 Version: 115.6.0
-Release: alt1
+Release: alt2
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -36,6 +36,12 @@ Source6: l10n.tar
 # Get $HOME/.cargo after run cargo install cbindgen (without bin/cbindgen)
 Source7: cbindgen-vendor.tar
 Source8: thunderbird-wayland.desktop
+# Solution for ftbfs with python3.12 based on idea from
+# https://bugzilla.mozilla.org/show_bug.cgi?id=1857492
+# but with exception, that we dont want to update urllib3
+# just update bundled inside it six.py to 1.16
+# https://raw.githubusercontent.com/benjaminp/six/1.16.0/six.py
+Source9: six.py
 
 Patch01: thunderbird-alt-fix-redefinition-double_t.patch
 Patch02: thunderbird-115-disable-browser-option.patch
@@ -45,6 +51,11 @@ Patch3501: 0002_xpcom_add_loongarch64_support.patch
 Patch3502: 0003_botan_loongarch64_buildfix.patch
 Patch3503: 0004_rust_loongarch64.patch
 Patch3504: 0005_rust_checksums_upd.patch
+# 3505 and 3506 are upstream patches for compatibility with python3.12
+# https://hg.mozilla.org/integration/autoland/rev/0315c2d875ca2a95bbb65ef4a1f7b75f72ed7263
+Patch3505: 0315c2d875ca2a95bbb65ef4a1f7b75f72ed7263.patch
+# https://hg.mozilla.org/integration/autoland/rev/ee3b3779af7fc81a53859fa92856ef9deae17a75
+Patch3506: ee3b3779af7fc81a53859fa92856ef9deae17a75.patch
 
 ExcludeArch: armh
 
@@ -160,6 +171,9 @@ BuildRequires: python3(hamcrest)
 BuildRequires: python3(pip)
 BuildRequires: python3(setuptools)
 BuildRequires: python3(sqlite3)
+# A copy of the imp module that was removed in python3.12
+# It shouldn't be used, should use `importlib.metadata` instead
+BuildRequires: python3(imp)
 
 # Rust requires
 BuildRequires: /proc
@@ -250,6 +264,12 @@ tar -xf %SOURCE6
 %patch3502 -p1
 %patch3503 -p1
 %patch3504 -p1
+%patch3505 -p1
+%patch3506 -p1
+
+# Update bundled six.py for 1.16
+cp -fv %SOURCE9 third_party/python/six/six.py
+cp -fv %SOURCE9 third_party/python/urllib3/urllib3/packages/six.py
 
 #echo %version > mail/config/version.txt
 
@@ -283,7 +303,9 @@ echo 'export NODEJS="/tmp/node-stdout-nonblocking-wrapper"' >> .mozconfig
 sed -i -e '\,hyphenation/,d' comm/mail/installer/removed-files.in
 
 rm -rf -- third_party/python/setuptools/setuptools*
+rm -rf -- third_party/python/setuptools/pkg_resources
 rm -rf -- third_party/python/click/click*
+rm -rf -- third_party/python/pip/pip*
 
 %build
 %define optflags_lto %nil
@@ -567,6 +589,9 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Sun Feb 04 2024 Grigory Ustinov <grenka@altlinux.org> 115.6.0-alt2
+- Fixed building with python3.12.
+
 * Thu Dec 21 2023 Pavel Vasenkov <pav@altlinux.org> 115.6.0-alt1
 - New version.
 - Security fixes:
