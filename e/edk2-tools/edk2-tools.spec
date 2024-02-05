@@ -1,10 +1,10 @@
 %define TOOL_CHAIN_TAG GCC5
-%define openssl_ver 1.1.1s
+%define openssl_ver 3.0.9
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-tools
-Version: 20221117
-Release: alt2
+Version: 20231115
+Release: alt1
 Summary: EFI Development Kit II Tools
 
 #Vcs-Git: https://github.com/tianocore/edk2.git
@@ -195,6 +195,9 @@ popd
 %doc BaseTools/UserManuals/*.rtf
 
 %changelog
+* Thu Jan 25 2024 Alexey Shabalin <shaba@altlinux.org> 20231115-alt1
+- edk2-stable202311
+
 * Mon Oct 02 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20221117-alt2
 - NMU: build on LoongArch
 

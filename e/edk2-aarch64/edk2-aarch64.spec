@@ -1,10 +1,10 @@
 %global optflags_lto %nil
 %define tool_chain_tag GCC5
-%define openssl_ver 1.1.1s
+%define openssl_ver 3.0.9
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-aarch64
-Version: 20221117
+Version: 20231115
 Release: alt1
 Summary: AARCH64 Virtual Machine Firmware
 
@@ -20,9 +20,11 @@ Source2: openssl.tar
 Source3: berkeley-softfloat-3.tar
 Source4: Logo.bmp
 
-# ALT-specific JSON "descriptor files"
-Source20: 70-edk2-aarch64-verbose.json
-Source21: 60-edk2-aarch64.json
+# json description files
+Source10: 50-edk2-aarch64-qcow2.json
+Source11: 51-edk2-aarch64-raw.json
+Source12: 52-edk2-aarch64-verbose-qcow2.json
+Source13: 53-edk2-aarch64-verbose-raw.json
 
 Patch1: %name-%version.patch
 
@@ -35,7 +37,10 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: iasl nasm gcc-c++
 BuildRequires: python3-devel python3-modules-sqlite3
 BuildRequires: libuuid-devel
+BuildRequires: qemu-img
 BuildRequires: bc
+# openssl configure
+BuildRequires: /usr/bin/pod2man bc zlib-devel perl-PathTools perl-IPC-Cmd perl-JSON
 
 Requires: ipxe-roms-qemu
 
@@ -78,7 +83,19 @@ tar -xf %SOURCE2 --strip-components 1 --directory CryptoPkg/Library/OpensslLib/o
 mkdir -p ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3
 tar -xf %SOURCE3 --strip-components 1 --directory ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3
 
+# include paths pointing to unused submodules
+mkdir -p MdePkg/Library/MipiSysTLib/mipisyst/library/include
+mkdir -p CryptoPkg/Library/MbedTlsLib/mbedtls/include
+mkdir -p CryptoPkg/Library/MbedTlsLib/mbedtls/include/mbedtls
+mkdir -p CryptoPkg/Library/MbedTlsLib/mbedtls/library
+
 %build
+export PYTHON_COMMAND=%__python3
+export EXTRA_OPTFLAGS="%optflags"
+python3 CryptoPkg/Library/OpensslLib/configure.py
+
+# for mkdosfs
+export PATH=/sbin:$PATH
 
 source ./edksetup.sh
 
@@ -93,17 +110,22 @@ CC_FLAGS="${CC_FLAGS} --cmd-len=65536"
 CC_FLAGS="${CC_FLAGS} -D NETWORK_IP6_ENABLE=TRUE"
 CC_FLAGS="${CC_FLAGS} -D NETWORK_TLS_ENABLE=TRUE"
 CC_FLAGS="${CC_FLAGS} -D NETWORK_HTTP_BOOT_ENABLE=TRUE"
+CC_FLAGS="${CC_FLAGS} -D NETWORK_ISCSI_ENABLE=TRUE"
+CC_FLAGS="${CC_FLAGS} -D NETWORK_ALLOW_HTTP_CONNECTIONS=TRUE"
 CC_FLAGS="${CC_FLAGS} -D TPM2_ENABLE=TRUE"
 CC_FLAGS="${CC_FLAGS} -D TPM1_ENABLE=TRUE"
+CC_FLAGS="${CC_FLAGS} -D CAVIUM_ERRATUM_27456=TRUE"
 
-# ovmf features
-OVMF_2M_FLAGS="${CC_FLAGS} -D FD_SIZE_2MB=TRUE"
+VERBOSE_FLAGS="-D DEBUG_PRINT_ERROR_LEVEL=0x8040004F"
+SILENT_FLAGS="-D DEBUG_PRINT_ERROR_LEVEL=0x80000000"
+TPM_FLAGS="-D TPM1_ENABLE=TRUE -D TPM2_ENABLE=TRUE"
+NO_TPM_FLAGS="-D TPM1_ENABLE=FALSE -D TPM2_ENABLE=FALSE"
 
-# ovmf + secure boot features
-OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D SECURE_BOOT_ENABLE=TRUE"
-OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D SMM_REQUIRE=TRUE"
-OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D EXCLUDE_SHELL_FROM_FD=TRUE -D BUILD_SHELL=FALSE"
-#OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D EXCLUDE_SHELL_FROM_FD=TRUE"
+# grub.efi uses EfiLoaderData for code
+NX_BROKEN_SHIM_GRUB_DATA="--pcd PcdDxeNxMemoryProtectionPolicy=0xC000000000007FD1"
+# shim.efi has broken MemAttr code
+NX_BROKEN_SHIM_GRUB_MEM="--pcd PcdUninstallMemAttrProtocol=TRUE"
+PCD_FLAGS="${NX_BROKEN_SHIM_GRUB_DATA} ${NX_BROKEN_SHIM_GRUB_MEM}"
 
 # arm firmware features
 #ARM_FLAGS="-t %%tool_chain_tag -b DEBUG --cmd-len=65536"
@@ -120,23 +142,33 @@ unset MAKEFLAGS
 
 #(cd UefiCpuPkg/ResetVector/Vtf0; python Build.py)
 
-#mkdir -p FatBinPkg/EnhancedFatDxe/{X64,Ia32}
-#source ./edksetup.sh
-
-
 # build aarch64 firmware
 mkdir -p AAVMF
 gcc -c -fpic ArmPkg/Library/GccLto/liblto-aarch64.s -o ArmPkg/Library/GccLto/liblto-aarch64.a
 
 # Build with a verbose debug mask first, and stash the binary.
-build ${ARM_FLAGS} -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc -D DEBUG_PRINT_ERROR_LEVEL=0x8040004F
+build ${ARM_FLAGS} ${VERBOSE_FLAGS} ${TPM_FLAGS} ${PCD_FLAGS} -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc
 cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_EFI.fd AAVMF/QEMU_EFI.verbose.fd
+cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_EFI.fd AAVMF/QEMU_EFI-pflash.raw
 cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_VARS.fd AAVMF/QEMU_VARS.fd
+cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_VARS.fd AAVMF/vars-template-pflash.raw
+truncate --size 64m AAVMF/QEMU_EFI-pflash.raw
+truncate --size 64m AAVMF/vars-template-pflash.raw
 
-# Rebuild with a silent (errors only) debug mask.
-build ${ARM_FLAGS} -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc -D DEBUG_PRINT_ERROR_LEVEL=0x80000000
-cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_EFI.fd AAVMF/QEMU_EFI.fd
+# Build with a silent (errors only) debug mask.
+build ${ARM_FLAGS} ${SILENT_FLAGS} ${TPM_FLAGS} ${PCD_FLAGS} -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc
+cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_EFI.fd AAVMF/QEMU_EFI.silent.fd
+cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_EFI.fd AAVMF/QEMU_EFI-silent-pflash.raw
+truncate --size 64m AAVMF/QEMU_EFI-silent-pflash.raw
 
+# Build with a silent (errors only) debug mask and without TPM
+build ${ARM_FLAGS} ${SILENT_FLAGS} ${NO_TPM_FLAGS} ${PCD_FLAGS} -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc
+cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_EFI.fd AAVMF/QEMU_EFI.kernel.fd
+
+for raw in AAVMF/*.raw; do
+    qcow2="${raw%%.raw}.qcow2"
+    qemu-img convert -f raw -O qcow2 -o cluster_size=4096 -S 4096 "$raw" "$qcow2"
+done
 
 %install
 # For distro-provided firmware packages, the specification
@@ -147,26 +179,12 @@ cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_EFI.fd AAVMF/QEMU_EFI.fd
 mkdir -p %buildroot%_datadir/qemu/firmware
 mkdir -p %buildroot%_datadir/{edk2,AAVMF}
 
-cat AAVMF/QEMU_EFI.verbose.fd /dev/zero | head -c 64m \
-  > %buildroot%_datadir/AAVMF/AAVMF_CODE.verbose.fd
-
-cat AAVMF/QEMU_EFI.fd /dev/zero | head -c 64m \
-  > %buildroot%_datadir/AAVMF/AAVMF_CODE.fd
-
-cat AAVMF/QEMU_VARS.fd /dev/zero | head -c 64m \
-  > %buildroot%_datadir/AAVMF/AAVMF_VARS.fd
-
-
+cp -a AAVMF %buildroot%_datadir/
 ln -r -s %buildroot%_datadir/AAVMF %buildroot%_datadir/edk2/aarch64
 
 for f in %_sourcedir/*edk2-aarch64*.json; do
     install -pm 644 $f %buildroot%_datadir/qemu/firmware
 done
-
-# add symlinks for compat
-ln -r -s %buildroot%_datadir/AAVMF/AAVMF_CODE.verbose.fd %buildroot%_datadir/edk2/aarch64/QEMU_EFI-pflash.raw
-ln -r -s %buildroot%_datadir/AAVMF/AAVMF_CODE.fd %buildroot%_datadir/edk2/aarch64/QEMU_EFI-silent-pflash.raw
-ln -r -s %buildroot%_datadir/AAVMF/AAVMF_VARS.fd %buildroot%_datadir/edk2/aarch64/vars-template-pflash.raw
 
 %files
 %_datadir/AAVMF
@@ -174,6 +192,9 @@ ln -r -s %buildroot%_datadir/AAVMF/AAVMF_VARS.fd %buildroot%_datadir/edk2/aarch6
 %_datadir/qemu/firmware/*edk2-aarch64*.json
 
 %changelog
+* Fri Feb 02 2024 Alexey Shabalin <shaba@altlinux.org> 20231115-alt1
+- edk2-stable202311
+
 * Wed Nov 30 2022 Alexey Shabalin <shaba@altlinux.org> 20221117-alt1
 - edk2-stable202211 (Fixes: CVE-2021-38578)
 
