@@ -1,6 +1,6 @@
 Name: xfce4-terminal
-Version: 1.1.1
-Release: alt2
+Version: 1.1.2
+Release: alt1
 
 Summary: Terminal emulator application for Xfce
 Summary (ru_RU.UTF-8): Эмулятор терминала для Xfce
@@ -66,6 +66,9 @@ __EOF__
 %_desktopdir/*
 
 %changelog
+* Mon Feb 05 2024 Mikhail Efremov <sem@altlinux.org> 1.1.2-alt1
+- Updated to 1.1.2.
+
 * Wed Oct 18 2023 Mikhail Efremov <sem@altlinux.org> 1.1.1-alt2
 - Don't require rpm-build-xfce4 >= 0.2.0-alt1.
 - Require xfce4-dev-tools >= 4.18.1.
