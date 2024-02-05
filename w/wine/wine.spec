@@ -35,7 +35,14 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 # build ping subpackage
 %def_with set_cap_net_raw
 
-%if_feature llvm 11.0
+%ifarch aarch64
+# old clang have some troubles with .seh on aarch64
+%define minllvm 15.0
+%else
+%define minllvm 11.0
+%endif
+
+%if_feature llvm %minllvm
 # build real PE libraries (.dll, not .dll.so), via clang
 %def_with mingw
 %else
@@ -80,7 +87,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 %endif
 
 Name: wine
-Version: %major.4
+Version: %major.6
 Release: alt1
 Epoch: 1
 
@@ -112,11 +119,11 @@ AutoReq: yes, noperl, nomingw32
 ExclusiveArch: %ix86 x86_64 aarch64
 
 # set compilers
-%ifarch aarch64
-%def_with clang
+#ifarch aarch64
+#def_with clang
 # clang-12: error: unsupported argument 'auto' to option 'flto='
-%define optflags_lto -flto=thin
-%endif
+#define optflags_lto -flto=thin
+#endif
 
 # minimalize memory using
 %ifarch %ix86 armh
@@ -858,6 +865,22 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Mon Feb 05 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.6-alt1
+- update patches to staging wine-9.0:
+  + prntvpt: Add version resource. (eterbug #16463)
+- spec: need lvvm 15.0 on aarch64
+
+* Tue Jan 30 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.5-alt1
+- disable clang using for aarch64
+- update patches to staging wine-9.0
+  + prntvpt: Also initialize dmDefaultSource field. (eterbug #14957)
+  + prntvpt: Forward BindPTProviderThunk to PTOpenProviderEx. (eterbug #14957)
+  + prntvpt: Forward UnbindPTProviderThunk to PTCloseProvider. (eterbug #14957)
+  + prntvpt: Implement ConvertDevModeToPrintTicketThunk2. (eterbug #14957)
+  + prntvpt: Implement ConvertPrintTicketToDevModeThunk2. (eterbug #14957)
+  + prntvpt: Implement GetPrintCapabilitiesThunk2. (eterbug #14957)
+  + prntvpt: Prefer builtin. (eterbug #14957)
+
 * Wed Jan 17 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.4-alt1
 - build 9.0 release
 
