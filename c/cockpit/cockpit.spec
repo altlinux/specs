@@ -36,7 +36,7 @@
 
 Name: cockpit
 Version: 280.1
-Release: alt1
+Release: alt2
 
 Summary: Web Console for Linux servers
 License: LGPLv2+
@@ -574,6 +574,9 @@ systemd-tmpfiles --create cockpit-tempfiles.conf >/dev/null 2>&1 ||:
 %endif # build optional extension packages
 
 %changelog
+* Mon Feb 05 2024 Stanislav Levin <slev@altlinux.org> 280.1-alt2
+- Fixed FTBFS (libssh 0.10.6).
+
 * Tue Nov 29 2022 Stanislav Levin <slev@altlinux.org> 280.1-alt1
 - 280 -> 280.1.
 
