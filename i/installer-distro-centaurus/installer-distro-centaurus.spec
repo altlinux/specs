@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
 Version: 10.2
-Release: alt2
+Release: alt3
 
 Summary: Installer files for Centaurus distro
 License: GPL-2.0-only
@@ -57,12 +57,20 @@ Centaurus Installer stage3.
 mkdir -p %buildroot%install2dir
 cp -a * %buildroot%install2dir/
 
+# Don't expand groups lists
+mkdir -p %buildroot%_sysconfdir/alterator
+echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
+
 %files stage2
+%_sysconfdir/alterator/pkg-groups.conf
 %install2dir/alterator-menu
 %install2dir/installer-steps
 %install2dir/*.d/*
 %files stage3
 %changelog
+* Mon Feb 05 2024 Dmitry Terekhin <jqt4@altlinux.org> 10.2-alt3
+- added pkg-groups.conf
+
 * Fri Feb 02 2024 Dmitry Terekhin <jqt4@altlinux.org> 10.2-alt2
 - 35-enable-systemd-networkd.sh: by default in alt-server
 
