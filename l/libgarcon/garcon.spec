@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: 4.18.1
+Version: 4.18.2
 Release: alt1
 
 Summary: Implementation of the freedesktop.org menu specification
@@ -196,7 +196,7 @@ rm -rf %buildroot%_datadir/locale/uz@Latn/
 
 %files gtk3
 %_libdir/%name-gtk3-1.so.*
-%_niconsdir/*.*
+%_iconsdir/hicolor/*/*/*.*
 
 %files gtk3-devel
 %_includedir/%_name-gtk3-1/
@@ -213,6 +213,9 @@ rm -rf %buildroot%_datadir/locale/uz@Latn/
 
 
 %changelog
+* Mon Feb 05 2024 Mikhail Efremov <sem@altlinux.org> 4.18.2-alt1
+- Updated to 4.18.2.
+
 * Wed Mar 29 2023 Mikhail Efremov <sem@altlinux.org> 4.18.1-alt1
 - Updated to 4.18.1.
 
