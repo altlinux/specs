@@ -1,6 +1,6 @@
 %define mversion	7
 %define dversion	%mversion.1.1
-%define drelease	24
+%define drelease	27
 %define qlev		Q16HDRI
 %define mgkdir		ImageMagick
 %define soname		10
@@ -37,11 +37,13 @@ Requires: ghostscript-classic fonts-type1-urw lib%name%mversion.%soname = %EVR
 BuildPreReq: libpng-devel
 
 
-# Automatically added by buildreq on Wed Nov 03 2010
 BuildRequires: bzlib-devel curl gcc-c++ glibc-devel-static graphviz groff-base imake libXext-devel libXt-devel libjasper-devel libjbig-devel liblcms-devel liblqr-devel libtiff-devel libwmf-devel libxml2-devel perl-devel xdg-utils xorg-cf-files
 
 BuildRequires: libjpeg-devel liblcms2-devel liblzma-devel libwebp-devel libgraphviz-devel libjasper-devel libjbig-devel liblcms-devel libtiff-devel libwmf-devel libxml2-devel perl-devel chrpath liblqr-devel libltdl-devel perl-parent
 BuildRequires: libheif-devel libraw-devel libraqm-devel libflif-devel libzstd-devel libfftw3-devel
+%ifnarch armh
+BuildRequires: libjxl-devel
+%endif
 
 %{?!_with_bootstrap:BuildRequires: libdjvu-devel openexr-devel transfig libopenjpeg2.0-devel}
 %{?_enable_openmp:BuildRequires: libgomp-devel}
@@ -267,6 +269,10 @@ mv %buildroot%_docdir/%name-%mversion %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Thu Feb 01 2024 Anton Farygin <rider@altlinux.ru> 7.1.1.27-alt1
+- 7.1.1.24 -> 7.1.1.27
+- built with enabled JPEG XL support
+
 * Wed Dec 27 2023 Anton Farygin <rider@altlinux.ru> 7.1.1.24-alt1
 - 7.1.1.21 -> 7.1.1.24
 
