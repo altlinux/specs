@@ -1,7 +1,7 @@
 Name:           qmc2
 Version:        0.243
 Group: Games/Arcade
-Release:        alt1
+Release:        alt1.1
 Summary:        M.A.M.E. Catalog / Launcher II
 
 #PDF.js is ASL 2.0
@@ -20,7 +20,7 @@ BuildRequires:  libXmu-devel
 BuildRequires:  make
 BuildRequires:  libminizip-ng-compat-devel
 BuildRequires:  zlib-devel
-BuildRequires:  qt5-multimedia-devel
+BuildRequires:  qt5-multimedia-devel qt5-declarative-devel
 BuildRequires:  qt5-svg-devel qt5-script-devel
 BuildRequires:  qt5-webengine-devel
 BuildRequires:  qt5-xmlpatterns-devel
@@ -124,5 +124,8 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/qchdman.desktop
 
 
 %changelog
+* Mon Feb  5 2024 Artyom Bystrov <arbars@altlinux.org> 0.243-alt1.1
+- Add qt5-declarative-devel in BR
+
 * Fri Dec 29 2023 Artyom Bystrov <arbars@altlinux.org> 0.243-alt1
 - Initial commit for Sisyphus
