@@ -1,5 +1,5 @@
 Name:    pipe-viewer
-Version: 0.4.8
+Version: 0.4.9
 Release: alt1
 
 Summary: A lightweight YouTube client for Linux, without requiring an API key.
@@ -10,6 +10,8 @@ Url:     https://github.com/trizen/pipe-viewer
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source: %name-%version.tar
+# https://github.com/trizen/pipe-viewer/issues/194
+Patch0: Fix-run-after-update-to-0.4.9.patch
 
 BuildArch: noarch
 
@@ -29,6 +31,8 @@ Package provides two versions of client:
 
 %prep
 %setup
+
+%patch0 -p1
 
 %build
 %perl_vendor_build --gtk3
@@ -65,5 +69,9 @@ done
 %_man1dir/%name.1.xz
 
 %changelog
+* Mon Feb  5 2024 Artyom Bystrov <arbars@altlinux.org> 0.4.9-alt1
+- Update to new version
+- Fix run after update to 0.4.9 (ALTBUG #49127)
+
 * Thu Nov 23 2023 Artyom Bystrov <arbars@altlinux.org> 0.4.8-alt1
 - Initial build for Sisyphus
