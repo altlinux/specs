@@ -1,6 +1,6 @@
 Name: cc65
 Version: 2.19
-Release: alt1
+Release: alt2
 Summary: A free C compiler for 6502 based systems
 Group: Development/Tools
 # For license clarification see:
@@ -92,7 +92,7 @@ they have been split into this package.
 %build
 
 # Main binaries
-%make_build 
+%make_build PREFIX=%_prefix
 
 # Additional binaries
 mkdir -p util_bin
@@ -150,5 +150,8 @@ install -p -m 0755 util_bin/* %buildroot%_bindir
 # %doc %_docdir/%name
 
 %changelog
+* Mon Feb  5 2024 Artyom Bystrov <arbars@altlinux.org> 2.19-alt2
+- add prefix in build
+
 * Sat Jan 09 2021 Artyom Bystrov <arbars@altlinux.org> 2.19-alt1
 - initial build for ALT Sisyphus

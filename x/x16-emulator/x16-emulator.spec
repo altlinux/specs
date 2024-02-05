@@ -1,7 +1,6 @@
-%set_gcc_version 10
 Name: x16-emulator
-Version: r38
-Release: alt4
+Version: r46
+Release: alt1
 
 Summary: Emulator for the Commander X16 computer system
 License: BSD-2-Clause License
@@ -15,7 +14,8 @@ Patch0: fix-rom-path.patch
 Patch1: gcc11_workaround.patch
 
 BuildRequires(pre): ImageMagick-tools
-BuildRequires: libSDL2-devel
+BuildRequires: gcc-c++ libSDL2-devel
+BuildRequires: zlib-devel
 %ifnarch %e2k
 BuildRequires: pandoc
 %endif
@@ -29,7 +29,7 @@ operating systems.
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
+#patch1 -p1
 
 %build
 %ifnarch %e2k
@@ -84,6 +84,9 @@ done
 %endif
 
 %changelog
+* Mon Feb  5 2024 Artyom Bystrov <arbars@altlinux.org> r46-alt1
+- Update to new version
+
 * Thu Jun 02 2022 Artyom Bystrov <arbars@altlinux.org> r38-alt4
 - Add GCC handle
 
