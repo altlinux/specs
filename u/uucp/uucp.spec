@@ -1,6 +1,6 @@
 Name: uucp
 Version: 1.07
-Release: alt5
+Release: alt6
 
 Summary: The %name utility for copying files between systems
 License: GPLv2
@@ -130,6 +130,9 @@ chmod go-rwx %_logdir/%name/Debug
 %_man1dir/cu.1*
 
 %changelog
+* Mon Feb 05 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.07-alt6
+- fixed build with texinfo-7.1
+
 * Wed Jan 13 2021 Fr. Br. George <george@altlinux.ru> 1.07-alt5
 - Rebuild with new autoconf
 
