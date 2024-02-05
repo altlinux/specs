@@ -1,6 +1,6 @@
 Name: python3-module-chacha20poly1305-reuseable
-Version: 0.2.5
-Release: alt2
+Version: 0.12.0
+Release: alt1
 
 Summary: ChaCha20Poly1305 that is reuseable for asyncio
 License: Apache-2.0
@@ -37,6 +37,9 @@ BuildRequires: python3(cryptography)
 %python3_sitelibdir/chacha20poly1305_reuseable-%version.dist-info
 
 %changelog
+* Fri Jan 26 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.0-alt1
+- 0.12.0 released
+
 * Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 0.2.5-alt2
 - fixed ftbfs
 
