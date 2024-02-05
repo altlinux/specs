@@ -274,9 +274,9 @@
 # New Version-String scheme-style defines
 %global featurever 17
 %global interimver 0
-%global updatever 9
+%global updatever 10
 %global patchver 0
-%global buildver 9
+%global buildver 7
 
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
@@ -297,13 +297,13 @@
 %global origin_nice     OpenJDK
 %global top_level_dir_name   %{origin}
 %global top_level_dir_name_backup %{top_level_dir_name}-backup
-# Priority must be 8 digits in total; up to openjdk 1.8, we were using 18..... so when we moved to 11, we had to add another digit
-# Using 10 digits may overflow the int used for priority, so we combine the patch and build versions
-# It is very unlikely we will ever have a patch version > 4 or a build version > 20, so we combine as (patch * 20) + build.
-# This means 11.0.9.0+11 would have had a priority of 11000911 as before
-# A 11.0.9.1+1 would have had a priority of 11000921 (20 * 1 + 1), thus ensuring it is bigger than 11.0.9.0+11
-# TODO hardcoded
-%global priority 17000909
+# priority must be 8 digits in total; untill openjdk 1.8 we were using 18..... so when moving to 11 we had to add another digit
+%if %is_system_jdk
+%define priority %( printf '%02d%02d%02d%02d' %{featurever} %{interimver} %{updatever} %{buildver} )
+%else
+# for techpreview, using 1, so slowdebugs can have 0
+%define priority %( printf '%08d' 3 )
+%endif
 %global newjavaver %{featurever}.%{interimver}.%{updatever}.%{patchver}
 %global javaver %{featurever}
 
@@ -360,7 +360,7 @@
 
 Name:    java-17-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt2
+Release: alt1
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -2013,6 +2013,16 @@ fi
 %endif
 
 %changelog
+* Mon Feb 05 2024 Andrey Cherepanov <cas@altlinux.org> 0:17.0.10.0.7-alt1
+- New version.
+- Security fixes:
+  - CVE-2024-20918
+  - CVE-2024-20919
+  - CVE-2024-20921
+  - CVE-2024-20932
+  - CVE-2024-20945
+  - CVE-2024-20952
+
 * Tue Dec 12 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0:17.0.9.0.9-alt2
 - Support LoongArch architecture (patch from https://github.com/loongson/jdk17u
   branch master-ls, commit 84bd3bf8f104c294b595be579fa4268c5c83ed82).
