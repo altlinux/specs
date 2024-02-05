@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.2
+Version: 1.5.3
 Release: alt1
 
 Summary: Project documentation with Markdown
@@ -20,6 +20,7 @@ Patch0: %name-%version-alt.patch
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
+BuildRequires: python3-module-setuptools
 %if_with check
 %pyproject_builddeps_metadata
 %endif
@@ -74,6 +75,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 05 2024 Anton Vyatkin <toni@altlinux.org> 1.5.3-alt1
+- New version 1.5.3.
+
 * Thu Aug 03 2023 Stanislav Levin <slev@altlinux.org> 1.5.2-alt1
 - 1.5.1 -> 1.5.2.
 
