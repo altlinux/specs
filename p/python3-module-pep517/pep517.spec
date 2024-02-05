@@ -1,12 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pep517
-%define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.13.0
-Release: alt3
+Version: 0.13.1
+Release: alt1
 
 Summary: API to call PEP 517 hooks for building Python packages
 
@@ -25,21 +24,10 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(flit_core)
 
 %if_with check
-# install_requires:
-# tomllib since Python 3.11+
-%if %tomli
-BuildRequires: python3(tomli)
-%endif
-
-# tests
 BuildRequires: python3(setuptools)
 BuildRequires: python3(testpath)
 BuildRequires: python3(pytest)
-%endif
-
-%if %tomli
-# rebuild against Python 3.11 is required to get rid of old dependency
-%py3_requires tomli
+BuildRequires: python3(tomli)
 %endif
 
 %description
@@ -64,6 +52,9 @@ PEP 517 specifies a standard API for systems which build Python packages.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 05 2024 Anton Vyatkin <toni@altlinux.org> 0.13.1-alt1
+- New version 0.13.1.
+
 * Fri Jan 26 2024 Grigory Ustinov <grenka@altlinux.org> 0.13.0-alt3
 - Fixed FTBFS.
 
