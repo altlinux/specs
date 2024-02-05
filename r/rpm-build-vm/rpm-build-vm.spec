@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.63
+Version: 1.64
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -114,11 +114,11 @@ Summary: Checkinstall for vm-run
 Group: Development/Other
 BuildArch: noarch
 %ifarch %supported_arches
-Requires(pre): busybox
+Requires(post): busybox
 %endif
-Requires(pre): %name-createimage = %EVR
-Requires(pre): procps
-Requires(pre): time
+Requires(post): %name-createimage = %EVR
+Requires(post): procps
+Requires(post): time
 
 %description checkinstall
 Run checkinstall tests for vm-run.
@@ -155,6 +155,7 @@ install -Dp bash_completion %buildroot%_sysconfdir/bashrc.d/vm_completion.sh
 install -D -p -m 0755 vm-resize   %buildroot%_bindir/vm-resize
 %endif
 install -D -p -m 0755 kvm-ok      %buildroot%_bindir/kvm-ok
+install -Dp checkinstall.sh %buildroot%_libexecdir/vm-run.ci/checkinstall
 
 %pre run
 # Only allow to install inside of hasher.
@@ -166,6 +167,7 @@ install -D -p -m 0755 kvm-ok      %buildroot%_bindir/kvm-ok
 %files
 
 %files checkinstall
+%_libexecdir/vm-run.ci
 
 %files createimage
 %ifarch %supported_arches
@@ -200,50 +202,7 @@ chmod a+r /etc/login.defs
 # Call filetrigger for the past kernels.
 find /boot | %_rpmlibdir/vm-run.filetrigger
 
-%pre checkinstall
-PS4=$'\n+ '
-set -ex
-# qemu in tcg mode can hang un-def-5.10 kernel on ppc64 if smp>1 on "smp:
-# Bringing up secondary CPUs" message.
-ls -l /dev/kvm
-set | grep ^LD_
-
-# Simulate filetrigger run
-find /boot > /tmp/filelist
-%_rpmlibdir/posttrans-filetriggers /tmp/filelist
-rm /tmp/filelist
-# Remove trigger so it does not re-create '/tmp/vm-ext4.img'.
-> %_rpmlibdir/z-vm-createimage.filetrigger
-
-kvm-ok
-timeout 300 vm-run --heredoc <<-'EOF'
-	uname -a
-	echo $USER '(date)' "(date)"
-EOF
-timeout 300 vm-run --kvm=cond "date; date"
-# Should show neither syntax error nor username.
-timeout 300 vm-run --kvm=cond echo '(date)' '$USER'
-if type -p busybox; then
-	timeout 300 vm-run --initrd --append=rddebug 'uname -a; exit 7' || test $? -eq 7
-fi
-! timeout --preserve-status 300 vm-run "true; false; true" || exit 1
-timeout 300 vm-run --mem=max free -g
-timeout 300 vm-run --mem=256 --cpu=max lscpu
-df -h /tmp
-timeout 300 vm-run --tmp=max df -h /tmp
-rm /tmp/vm-tmpfs.qcow2
-timeout 300 vm-run --verbose --overlay=ext4 uname -a
-rmdir /mnt/0
-rm /usr/src/ext4.0.img
-timeout 300 vm-run --rootfs --verbose df
-rm /tmp/vm-ext4.img
-timeout 300 vm-run --hvc --no-quiet 'dmesg -r | grep Unknown'
-timeout 300 vm-run --tcg --mem='' --cpu=1 cat /proc/cpuinfo
-# Clean up without '-f' ensures these files existed.
-rm /tmp/initramfs-*un-def-alt*.img
-# SCRIPT and exit code files form each vm-run invocation. Each SCRIPT file
-# should correspond to '.ret' file.
-find /tmp/vm.?????????? -maxdepth 0 | xargs -t -i -n1 rm {} {}.ret
+%post checkinstall -p %_libexecdir/vm-run.ci/checkinstall
 
 %check
 # Verify availability of KVM in girar & beehiver.
@@ -251,7 +210,7 @@ ls -l /dev/kvm && test -w /dev/kvm
 
 %else
 # Test stub.
-%pre checkinstall
+%post checkinstall
 set -ex
 vm-run --unknown-option date
 vm-run -- exit 1
@@ -259,6 +218,10 @@ vm-run --stub-exit=7 && exit 1 || test $? -eq 7
 %endif
 
 %changelog
+* Fri Feb 02 2024 Vitaly Chikunov <vt@altlinux.org> 1.64-alt1
+- vm-run: Limit memory below RLIMIT_AS. Add --maxmem and --maxcpu to
+  workaround potential problems with it.
+
 * Thu Nov 23 2023 Vitaly Chikunov <vt@altlinux.org> 1.63-alt1
 - microvm: Detect CONFIG_SERCON=n.
 
