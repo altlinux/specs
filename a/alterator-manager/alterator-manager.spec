@@ -1,8 +1,8 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.16
-Release: alt5
+Version: 0.1.17
+Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -69,6 +69,10 @@ mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
 
 
 %changelog
+* Mon Feb 05 2024 Ivan Savin <svn17@altlinux.org> 0.1.17-alt1
+- Add the ability to use the full interface name in backend files.
+- Update docs/README-ru.md.
+
 * Fri Jan 26 2024 Ivan Savin <svn17@altlinux.org> 0.1.16-alt5
 - Add check in filetrigger that the system is loaded using systemd (chernigin@).
 
