@@ -1,8 +1,9 @@
+%define        _unpackaged_files_terminate_build 1
 %define        gemname md2man
 
 Name:          gem-md2man
 Version:       5.1.2
-Release:       alt1.1
+Release:       alt2
 Summary:       Converts markdown into UNIX manual pages
 License:       ISC
 Group:         Development/Ruby
@@ -12,19 +13,30 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Patch:         deps.patch
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(binman) >= 5.0 gem(binman) < 6
-BuildRequires: gem(redcarpet) >= 3.0 gem(redcarpet) < 4
-BuildRequires: gem(rouge) >= 3.0 gem(rouge) < 4
-BuildRequires: gem(minitest) >= 5.0 gem(minitest) < 6
-BuildRequires: gem(rake) >= 12.0 gem(rake) < 14
+%if_with check
+BuildRequires: gem(minitest) >= 5.0
+BuildRequires: gem(binman) >= 5.0
+BuildRequires: gem(redcarpet) >= 3.0
+BuildRequires: gem(rouge) >= 3.0
+BuildConflicts: gem(minitest) >= 6
+BuildConflicts: gem(binman) >= 6
+BuildConflicts: gem(redcarpet) >= 4
+BuildConflicts: gem(rouge) >= 4
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rake >= 13.0.1,rake < 14
-Requires:      gem(binman) >= 5.0 gem(binman) < 6
-Requires:      gem(redcarpet) >= 3.0 gem(redcarpet) < 4
-Requires:      gem(rouge) >= 3.0 gem(rouge) < 4
+%ruby_use_gem_dependency rake >= 13.1.0,rake < 14
+Requires:      gem(binman) >= 5.0
+Requires:      gem(rake) >= 12.0
+Requires:      gem(redcarpet) >= 3.0
+Requires:      gem(rouge) >= 3.0
+Conflicts:     gem(binman) >= 6
+Conflicts:     gem(rake) >= 14
+Conflicts:     gem(redcarpet) >= 4
+Conflicts:     gem(rouge) >= 4
 Provides:      gem(md2man) = 5.1.2
 
 
@@ -37,12 +49,13 @@ Markdown into UNIX manpages as well as HTML webpages using Redcarpet.
 
 %package       -n md2man-utils
 Version:       5.1.2
-Release:       alt1.1
+Release:       alt2
 Summary:       Converts markdown into UNIX manual pages executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета md2man
 Group:         Other
 BuildArch:     noarch
 
+Provides:      md2man = %EVR
 Requires:      gem(md2man) = 5.1.2
 
 %description   -n md2man-utils
@@ -59,7 +72,7 @@ Markdown into UNIX manpages as well as HTML webpages using Redcarpet.
 
 %package       -n gem-md2man-doc
 Version:       5.1.2
-Release:       alt1.1
+Release:       alt2
 Summary:       Converts markdown into UNIX manual pages documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета md2man
 Group:         Development/Documentation
@@ -81,15 +94,15 @@ Markdown into UNIX manpages as well as HTML webpages using Redcarpet.
 
 %package       -n gem-md2man-devel
 Version:       5.1.2
-Release:       alt1.1
+Release:       alt2
 Summary:       Converts markdown into UNIX manual pages development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета md2man
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(md2man) = 5.1.2
-Requires:      gem(minitest) >= 5.0 gem(minitest) < 6
-Requires:      gem(rake) >= 12.0 gem(rake) < 14
+Requires:      gem(minitest) >= 5.0
+Conflicts:     gem(minitest) >= 6
 
 %description   -n gem-md2man-devel
 Converts markdown into UNIX manual pages development package.
@@ -105,6 +118,7 @@ Markdown into UNIX manpages as well as HTML webpages using Redcarpet.
 
 %prep
 %setup
+%autopatch
 
 %build
 %ruby_build
@@ -135,6 +149,9 @@ Markdown into UNIX manpages as well as HTML webpages using Redcarpet.
 
 
 %changelog
+* Mon Feb 05 2024 Pavel Skrylev <majioa@altlinux.org> 5.1.2-alt2
+- ! spec with fixed build deps from md2man to md2man-utils
+
 * Thu Sep 02 2021 Pavel Skrylev <majioa@altlinux.org> 5.1.2-alt1.1
 - ! spec
 

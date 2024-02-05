@@ -4,10 +4,10 @@ License: MIT
 Group: System/Base
 Url: https://github.com/mikhailnov/snr
 Version: 1.7
-Release: alt2
+Release: alt3
 Source0: %name-%version.tar
 BuildArch: noarch
-BuildRequires: md2man
+BuildRequires: md2man-utils
 Requires: systemd-container
 Requires: coreutils iproute2 binutils grep gawk sed
 
@@ -22,9 +22,6 @@ Simple wrapper to quickly run systemd-nspawn containers with support to:
 %prep
 %setup -q
 
-%build
-:
-
 %install
 %makeinstall_std
 
@@ -36,6 +33,8 @@ Simple wrapper to quickly run systemd-nspawn containers with support to:
 
 
 %changelog
+* Mon Feb 05 2024 Pavel Skrylev <majioa@altlinux.org> 1.7-alt3
+- ! FTBFS: use md2man-utils from gem-md2man instead of md2man
 
 * Thu Feb 25 2021 Mikhail Novosyolov <mikhailnov@altlinux.org> 1.7-alt2
 - Regenerate man page with md2man 1.0-alt2 which produces better result
