@@ -3,8 +3,8 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: trivy
-Version: 0.48.3
-Release: alt3
+Version: 0.49.0
+Release: alt1
 Summary: A Fast Vulnerability Scanner for Containers
 
 Group: Monitoring
@@ -96,6 +96,9 @@ rm -rf -- %buildroot%go_root
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Mon Feb 05 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.49.0-alt1
+- 0.48.3 -> 0.49.0
+
 * Tue Jan 30 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.48.3-alt3
 - Replace default value for node-collector-imageref (k8s)
 
