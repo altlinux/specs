@@ -1,15 +1,13 @@
 %def_enable static
 
 Name: speex
-Version: 1.2
-Release: alt2
+Version: 1.2.1
+Release: alt1
 Summary: An open-source, patent-free speech codec
 License: BSD-style
 Group: Sound
-Url: http://www.speex.org
+Url: https://www.speex.org
 %define pkgdocdir %_docdir/%name-%version
-Packager: Denis Smirnov <mithraen@altlinux.ru>
-
 # %url/download/%name-%version%prerel.tar.bz2
 Source: %name-%version.tar
 Requires: lib%name = %version-%release
@@ -108,6 +106,9 @@ install -m 0644 COPYING AUTHORS NEWS README %buildroot%pkgdocdir/
 %endif
 
 %changelog
+* Mon Feb 05 2024 Anton Farygin <rider@altlinux.ru> 1.2.1-alt1
+- 1.2 -> 1.2.1
+
 * Sat Oct 16 2021 Arseny Maslennikov <arseny@altlinux.org> 1.2-alt2
 - Built static libraries with -ffat-lto-objects.
 
