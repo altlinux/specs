@@ -1,5 +1,5 @@
 Name: xroar
-Version: 1.4.2
+Version: 1.5.2
 Release: alt1
 Summary: Dragon and Tandy CoCo Emulator
 License: GPL-3.0+
@@ -81,7 +81,10 @@ done
 %doc doc/%name.pdf
 
 %changelog
-* Fri Sep  1 2023 Artyom Bystrov <arbars@altlinux.org> 1.4.2-alt1
+* Mon Feb 5 2024 Artyom Bystrov <arbars@altlinux.org> 1.5.2-alt1
+- update to new version
+
+* Fri Sep 1 2023 Artyom Bystrov <arbars@altlinux.org> 1.4.2-alt1
 - update to new version
 
 * Fri May 26 2023 Artyom Bystrov <arbars@altlinux.org> 1.3.1-alt1
