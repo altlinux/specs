@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.3.3
-Release: alt1
+Release: alt2
 
 Summary: Python interface for GNU Scientific Library (GSL)
 License: GPL-2.0
@@ -14,6 +14,7 @@ Vcs: https://github.com/pygsl/pygsl
 
 Source: %name-%version.tar
 Patch: pygsl-python312.patch
+Patch1: pygsl-2.3.3-Drop-dependency-on-numpy.distutils.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -122,6 +123,9 @@ py.test-3 tests/ --ignore tests/odeiv2_test.py -k 'not test_levin_utrunk'
 
 
 %changelog
+* Fri Feb 02 2024 Stanislav Levin <slev@altlinux.org> 2.3.3-alt2
+- Fixed FTBFS (numpy 1.26).
+
 * Tue Dec 19 2023 Anton Vyatkin <toni@altlinux.org> 2.3.3-alt1
 - New version 2.3.3.
 - Build without distutils.

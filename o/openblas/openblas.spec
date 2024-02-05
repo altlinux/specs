@@ -28,8 +28,8 @@
 
 
 Name: openblas
-Version: 0.3.23
-Release: alt2
+Version: 0.3.26
+Release: alt1
 
 Summary: Optimized BLAS library based on GotoBLAS2 1.13 
 License: BSD
@@ -159,6 +159,9 @@ F_COMPILER="GFORTRAN" C_COMPILER="GCC" \
 %exclude %_libdir/*.a
 
 %changelog
+* Fri Feb 02 2024 Stanislav Levin <slev@altlinux.org> 0.3.26-alt1
+- 0.3.23 -> 0.3.26.
+
 * Mon Dec 04 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.3.23-alt2
 - NMU: fixed FTBFS on LoongArch
 

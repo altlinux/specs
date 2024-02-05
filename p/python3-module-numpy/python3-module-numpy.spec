@@ -1,4 +1,4 @@
-%def_without check
+%def_with check
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
@@ -15,8 +15,8 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 1.25.2
-Release: alt3.2
+Version: 1.26.3
+Release: alt1
 Summary: Fundamental package for array computing in Python
 License: BSD-3-Clause
 Group: Development/Python3
@@ -25,56 +25,41 @@ VCS: https://github.com/numpy/numpy.git
 Source: %name-%version.tar
 Source3: svml.tar
 Source4: x86-simd-sort.tar
+Source5: numpy-meson.tar
+Source6: numpy-meson-python.tar
 Source1: %pyproject_deps_config_name
 Patch: numpy-1.20.2-Remove-strict-dependency-on-testing-package.patch
-Patch1: numpy-1.21.1-alt-use-system-fallocate-declaration.patch
+Patch1: numpy-1.26.3-Use-large-file-fallocate-on-32-bit-linux-platfor.patch
 Patch4: numpy-1.21.4-alt-use-sleep-in-auxv-test.patch
-Patch5: numpy-1.25.2-alt-loongarch64-selected_real_kind.patch
+Patch5: numpy-1.26.3-ALT-provide-metadata-hook.patch
+Patch6: numpy-1.26.3-ALT-Xfail-test_limited_api.patch
 
 # E2K patchset with MCST numbering scheme
 Source2000: 0001-arch_e2k_define.patch
 Source2001: 0002-bug92804.patch
 
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: gcc-c++ gcc-fortran liblapack-devel swig
+# ninja and patchelf are required by vendored meson-python
+BuildRequires: /usr/bin/ninja-build
+BuildRequires: /usr/bin/patchelf
 %pyproject_builddeps_build
 %if_with check
+# meson is not packaged
+%add_pyproject_deps_check_filter meson
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 # some tests want /proc/meminfo
 BuildRequires: /proc
+# tests require meson:
+# numpy/f2py/tests/test_f2py2e.py::test_untitled_cli
+# numpy/f2py/tests/test_f2py2e.py::test_no_py312_distutils_fcompiler
+BuildRequires: /usr/bin/meson
 %endif
 
-# _pytesttester is optional and mocked if missing on import of numpy
-%add_python3_req_skip numpy._pytesttester
-
-# numpy provides the hook for PyInstaller via entry_points mechanism
-# PyInstaller will call this hook
-# see https://github.com/numpy/numpy/issues/17184
-%filter_from_requires /python3(PyInstaller\(\..*\)\?)/d
-
-# numpy.distutils is deprecated and will be removed with Python 3.12
-# https://numpy.org/doc/stable/reference/distutils.html
-# https://numpy.org/doc/stable/reference/distutils_status_migration.html#distutils-status-migration
-# https://bugzilla.altlinux.org/35103
-%filter_from_requires /python3(distutils\(\..*\)\?)/d
-%filter_from_requires /python3(setuptools\(\..*\)\?)/d
-
-# code_generators is only available in source tree and is not
-# shipped, but we ship code that may use it, for example, numpy.core.cversions
-%filter_from_requires /python3(code_generators\(\..*\)\?)/d
-# sys.path is prepended with code_generators path
-%add_python3_req_skip genapi
-%add_python3_req_skip numpy_api
-
 %add_findprov_skiplist %python3_sitelibdir/%oname/random/_examples/*
-%add_findreq_skiplist  %python3_sitelibdir/%oname/random/_examples/*
-
-# core.setup_common is imported from core.setup
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/core/
-# f2py.setup: from __version__ import version
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/f2py/
 
 Conflicts: python-module-numpy < 1:1.15.4-alt6
 
@@ -89,6 +74,7 @@ basic statistical operations, random simulation and much more.
 %package testing
 Summary: Testing part of NumPy (Python 3)
 Group: Development/Python3
+AutoReq: yes, nopython3
 Requires: %name = %EVR
 
 %description testing
@@ -97,6 +83,7 @@ This package contains testing part of NumPy.
 %package tests
 Summary: Tests for NumPy (Python 3)
 Group: Development/Python3
+AutoReq: yes, nopython3
 Requires: %name = %EVR
 
 %description tests
@@ -112,7 +99,7 @@ Requires: python3-devel
 This package contains development files of NumPy.
 
 %prep
-%setup -a 3 -a4
+%setup -a 3 -a4 -a5 -a6
 %autopatch -p1
 %ifarch %e2k
 patch -p1 -i %SOURCE2000
@@ -125,13 +112,11 @@ sed -i 's|^prefix.*|prefix=%python3_sitelibdir/%oname/core|' \
 sed -i 's|^includedir.*|includedir=%_includedir/python%_python3_version/%oname|' \
 	%oname/core/npymath.ini.in
 
-# fix version info
-sed -i \
-	-e "s/git_refnames\s*=\s*\"[^\"]*\"/git_refnames = \" \(tag: v%version\)\"/" \
-	%oname/_version.py
+# remove distutils based installation configs to drop extra build deps in
+# runtime
+find \( -name 'setup.py' -o -name 'setup.cfg' \) -delete
 
 %pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 %if_with check
 %pyproject_deps_resync_check_pipreqfile test_requirements.txt
 %endif
@@ -141,11 +126,19 @@ sed -i \
 %pyproject_build
 
 %check
-# no-build to avoid double build
-%pyproject_run -- python3 runtests.py --no-build -v -- -ra -o=addopts=-Wignore %{?relax_tests:||:}
+# synced to upstream CI (.github/workflows/linux.yml)
+%pyproject_run -- bash -s <<-'ENDTESTS'
+set -eu
+cd tools
+pytest --pyargs %pypi_name -ra -o=addopts=-Wignore %{?relax_tests:||:}
+ENDTESTS
 
 %install
 %pyproject_install
+# build of numpy is quite long process, but the METADATA is only required,
+# intree build backend is patched to expect custom METADATA directory
+export RPM_CUSTOM_METADATA_DIR=%buildroot%python3_sitelibdir/%{pyproject_distinfo %oname}
+%pyproject_deps_resync_metadata
 
 install -d %buildroot%_includedir/python%_python3_version
 mv %buildroot%python3_sitelibdir/%oname/core/include/%oname \
@@ -177,7 +170,6 @@ ln -s %_includedir/python%_python3_version/%oname \
 %exclude %python3_sitelibdir/%oname/core/lib/npy-pkg-config
 %exclude %python3_sitelibdir/%oname/doc
 %exclude %python3_sitelibdir/%oname/core/include
-%exclude %python3_sitelibdir/%oname/distutils/mingw
 %exclude %python3_sitelibdir/%oname/f2py/src
 %exclude %python3_sitelibdir/%oname/core/lib/libnpymath.a
 %exclude %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
@@ -201,7 +193,6 @@ ln -s %_includedir/python%_python3_version/%oname \
 %python3_sitelibdir/%oname/lib/tests/
 %python3_sitelibdir/%oname/fft/tests/
 %python3_sitelibdir/%oname/f2py/tests/
-%python3_sitelibdir/%oname/distutils/tests/
 %python3_sitelibdir/%oname/core/tests/
 %python3_sitelibdir/%oname/compat/tests/
 %python3_sitelibdir/%oname/array_api/tests/
@@ -213,13 +204,15 @@ ln -s %_includedir/python%_python3_version/%oname \
 %files -n lib%oname-py3-devel
 %_includedir/python%_python3_version/%oname
 %python3_sitelibdir/%oname/core/include
-%python3_sitelibdir/%oname/distutils/mingw
 %python3_sitelibdir/%oname/f2py/src
 %python3_sitelibdir/%oname/core/lib/npy-pkg-config
 %python3_sitelibdir/%oname/core/lib/libnpymath.a
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Fri Feb 02 2024 Stanislav Levin <slev@altlinux.org> 1:1.26.3-alt1
+- 1.25.2 -> 1.26.3.
+
 * Thu Feb 01 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:1.25.2-alt3.2
 - Updated e2k patches.
 
