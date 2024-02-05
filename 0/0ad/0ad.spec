@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
 Version: 0.0.26
-Release: alt0_7_alpha
+Release: alt0_8_alpha
 
 Group: Games/Strategy
 Summary: Free, open-source realtime strategy game of ancient warfare
@@ -145,8 +145,11 @@ cp -a binaries/data/* %buildroot%_datadir/0ad/
 %_datadir/0ad/*
 
 %changelog
+* Mon Feb 05 2024 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.0.26-alt0_8_alpha
+- Fix spec
+
 * Mon Jan 22 2024 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.0.26-alt0_7_alpha
-- Add 
+- Add 0ad-0.0.26-ps_xml.patch
 
 * Mon Oct 16 2023 Anton Midyukov <antohami@altlinux.org> 1:0.0.26-alt0_6_alpha
 - NMU: rebuild with wxGTK3.2
