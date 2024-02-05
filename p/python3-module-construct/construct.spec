@@ -1,5 +1,5 @@
 Name: python3-module-construct
-Version: 2.10.68
+Version: 2.10.70
 Release: alt1
 
 Summary: A powerful declarative parser/builder for binary data
@@ -13,9 +13,11 @@ BuildArch: noarch
 BuildRequires: rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
+
 BuildRequires: python3(pytest)
 BuildRequires: python3(arrow)
 BuildRequires: python3(cloudpickle)
+BuildRequires: python3(cryptography)
 BuildRequires: python3(lz4)
 BuildRequires: python3(numpy)
 BuildRequires: python3(ruamel)
@@ -40,7 +42,7 @@ parse data into Pythonic objects, and in the other direction, convert
 %pyproject_install
 
 %check
-py.test3 tests/ -k 'not benchmark' --showlocals --verbose
+%pyproject_run_pytest tests -k 'not benchmark'
 
 %files
 %doc README.rst LICENSE
@@ -48,6 +50,9 @@ py.test3 tests/ -k 'not benchmark' --showlocals --verbose
 %python3_sitelibdir/construct-%version.dist-info
 
 %changelog
+* Mon Feb 05 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.10.70-alt1
+- 2.10.70 released
+
 * Thu Jul 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.10.68-alt1
 - 2.10.68 released
 
