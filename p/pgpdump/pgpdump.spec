@@ -1,11 +1,15 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: pgpdump
-Version: 0.35
+Version: 0.36
 Release: alt1
 
 Summary: A PGP packet visualizer
 License: BSD-3-Clause
-Group: File tools 
-Url: http://www.mew.org/~kazu/proj/pgpdump/
+Group: File tools
+Url: https://www.mew.org/~kazu/proj/pgpdump/
 Vcs: https://github.com/kazu-yamamoto/pgpdump
 
 Source: %name-%version.tar
@@ -25,6 +29,10 @@ to understand.
 %setup
 
 %build
+%ifarch x86_64
+%add_optflags -fanalyzer -Werror
+%endif
+%autoreconf
 %configure
 %make
 
@@ -32,11 +40,8 @@ to understand.
 install -D pgpdump %buildroot%_bindir/pgpdump
 install -D pgpdump.1 %buildroot%_man1dir/pgpdump.1
 
-%define _unpackaged_files_terminate_build 1
-%define _stripped_files_terminate_build 1
-%set_verify_elf_method strict
-
 %check
+./pgpdump -v |& grep -P '^pgpdump version \Q%version,'
 data/test.sh -v
 
 %files
@@ -45,6 +50,9 @@ data/test.sh -v
 %_man1dir/pgpdump.*
 
 %changelog
+* Mon Jan 29 2024 Vitaly Chikunov <vt@altlinux.org> 0.36-alt1
+- Update to v0.36 (2024-01-29).
+
 * Sun May 22 2022 Vitaly Chikunov <vt@altlinux.org> 0.35-alt1
 - Updated to v0.35 (2022-02-28).
 
