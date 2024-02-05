@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.9.7
+Version: 1.0.0
 Release: alt1
 Summary: Plugin for py.test that shows failures and errors instantly and shows a progress bar
 License: BSD
@@ -49,6 +49,9 @@ feel of py.test (e.g. progressbar, show tests that fail instantly).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 02 2024 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1
+- 0.9.7 -> 1.0.0.
+
 * Fri Apr 28 2023 Stanislav Levin <slev@altlinux.org> 0.9.7-alt1
 - 0.9.5 -> 0.9.7.
 
