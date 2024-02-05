@@ -4,7 +4,7 @@
 %define pypi_name pydantic
 
 Name: python3-module-%pypi_name
-Version: 2.5.3
+Version: 2.6.1
 Release: alt1
 
 Summary: Data parsing and validation using Python type hints
@@ -24,6 +24,8 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
+%add_pyproject_deps_check_filter eval-type-backport
+%add_pyproject_deps_check_filter pytest-codspeed
 %pyproject_builddeps_metadata
 %pyproject_builddeps_metadata_extra email
 %pyproject_builddeps_check
@@ -59,7 +61,16 @@ with pydantic.
 # Also generating north_star_data.json at each test exec and comparing it with
 # expected md5sum leads to failed build, because of Faker or something else has
 # been updated.
-%pyproject_run_pytest --ignore='tests/test_docs.py' --benchmark-skip
+# tests/test_validators.py:
+# Skip test_use_bare, test_use_no_fields, test_assert_raises_validation_error
+# test_validator_bad_fields_throws_configerror tests because of too new pytest
+# >= 8.0 that has passed to Sisyphus in 339306 task and has broken these ones.
+# See: https://github.com/pydantic/pydantic/issues/8674.
+%pyproject_run_pytest -Wignore --ignore='tests/test_docs.py' --benchmark-skip \
+    --deselect='tests/test_validators.py::test_use_bare' \
+    --deselect='tests/test_validators.py::test_use_no_fields' \
+    --deselect='tests/test_validators.py::test_validator_bad_fields_throws_configerror' \
+    --deselect='tests/test_validators.py::test_assert_raises_validation_error'
 
 %files
 %doc LICENSE *.md
@@ -67,6 +78,9 @@ with pydantic.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Feb 05 2024 Alexandr Shashkin <dutyrok@altlinux.org> 2.6.1-alt1
+- 2.5.3 -> 2.6.1
+
 * Sat Jan 20 2024 Alexandr Shashkin <dutyrok@altlinux.org> 2.5.3-alt1
 - 2.5.2 -> 2.5.3
 
