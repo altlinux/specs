@@ -1,6 +1,6 @@
 Name: dblatex
 Version: 0.3.12
-Release: alt2
+Release: alt3
 
 Summary: DocBook to LaTeX/ConTeXt Publishing
 
@@ -79,10 +79,11 @@ rm -rv lib/contrib
 %python3_install
 
 mkdir -p %buildroot/%_dblatex_texdir
-mv %buildroot/%_dblatex_datadir/latex/{misc/multirow2.sty,style} %buildroot/%_dblatex_texdir
+mv %buildroot/%_dblatex_datadir/latex/{contrib,misc/multirow2.sty,style} %buildroot/%_dblatex_texdir
 rm -rvf %buildroot/%_dblatex_datadir/latex/misc
 
 mkdir -p %buildroot/%_dblatex_datadir/latex
+ln -s ../../texmf/tex/latex/dblatex/contrib %buildroot/%_dblatex_datadir/latex/contrib
 mv %buildroot/%_dblatex_datadir/latex/graphics %buildroot/%_dblatex_texdir
 
 mv %buildroot%_docdir/%name %buildroot%_docdir/%name-%version
@@ -100,8 +101,10 @@ sed -i 's|\(/usr/bin/\)env \(python\)$|\1\23|' %buildroot%_bindir/%name
 %_docdir/%name-%version
 %_man1dir/%name.1*
 
-
 %changelog
+* Mon Feb 05 2024 Grigory Ustinov <grenka@altlinux.org> 0.3.12-alt3
+- Fixed packaging error (Closes: #49203).
+
 * Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 0.3.12-alt2
 - Fixed working with python3.12 (Closes: #49140).
 
