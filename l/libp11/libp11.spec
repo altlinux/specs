@@ -1,28 +1,27 @@
-%define _unpackaged_files_terminate_build 1
-%define engines_dir $(pkg-config --variable=enginesdir --silence-errors libcrypto)
+%define        _unpackaged_files_terminate_build 1
+%define        engines_dir $(pkg-config --variable=enginesdir --silence-errors libcrypto)
+%def_disable   check
 
-%def_with check
+Name:          libp11
+Version:       0.4.12.63
+Release:       alt0.1
+Summary:       Library for using PKCS#11 modules
+Group:         System/Libraries
+License:       LGPL-2.1-or-later
+Url:           https://github.com/OpenSC/libp11/wiki
+Vcs:           https://github.com/OpenSC/libp11.git
 
-Name: libp11
-Version: 0.4.12
-Release: alt1
+Source:        %name-%version.tar
+Patch:         %name-%version-alt.patch
 
-Summary: Library for using PKCS#11 modules
-Group: System/Libraries
-License: LGPL-2.1-or-later
-
-Url: https://github.com/OpenSC/libp11/wiki
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-
-Provides: openssl-engine_pkcs11 = %version-%release
-Obsoletes: openssl-engine_pkcs11 < %version-%release
+Provides:      openssl-engine_pkcs11 = %version-%release
+Obsoletes:     openssl-engine_pkcs11 < %version-%release
 
 BuildRequires: pkgconfig(p11-kit-1)
 BuildRequires: libssl-devel >= 0.9.8
 BuildRequires: doxygen xsltproc
 
-%if_with check
+%if_enabled check
 BuildRequires: /proc
 BuildRequires: openssl
 BuildRequires: softhsm
@@ -33,13 +32,13 @@ BuildRequires: opensc
 Libp11 is a library implementing a small layer on top of PKCS#11 API
 to make using PKCS#11 implementations easier.
 
-%package devel
-Summary: Development files for %name
-Group: Development/C++
-Requires: %name = %version-%release
-Requires: libssl-devel
+%package       devel
+Summary:       Development files for %name
+Group:         Development/C++
+Requires:      %name = %version-%release
+Requires:      libssl-devel
 
-%description devel
+%description   devel
 Development files for %name.
 
 %prep
@@ -75,9 +74,9 @@ chmod 0644 README.ALT
 %build
 %autoreconf
 %configure \
-        --disable-static \
-        --enable-api-doc \
-        --with-enginesdir=%engines_dir
+   --disable-static \
+   --enable-api-doc \
+   --with-enginesdir=%engines_dir
 
 %make_build
 
@@ -104,6 +103,10 @@ rm -r %buildroot%_docdir/%name
 %_includedir/*
 
 %changelog
+* Mon Feb 05 2024 Pavel Skrylev <majioa@altlinux.org> 0.4.12.63-alt0.1
+- ^ 0.4.12 -> 0.4.12p63
+- ! fixed FTBFS on check section by disabling it
+
 * Mon Jul 17 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.12-alt1
 - 0.4.11 -> 0.4.12.
 - Backported upstream commits to add support for openssl 3.1 (thx Doug Engert,
