@@ -2,8 +2,8 @@
 %define        gemname ffi
 
 Name:          gem-ffi
-Version:       1.16.3
-Release:       alt1
+Version:       1.16.3.25
+Release:       alt0.1
 Summary:       Ruby foreign function interface
 License:       BSD-3-Clause
 Group:         Development/Ruby
@@ -13,28 +13,30 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: libffi-devel
 %if_with check
+BuildRequires: gem(bigdecimal) >= 0
+BuildRequires: gem(bundler) >= 1.16
 BuildRequires: gem(rake) >= 13.0
 BuildRequires: gem(rake-compiler) >= 1.1
 BuildRequires: gem(rake-compiler-dock) >= 1.0
 BuildRequires: gem(rspec) >= 2.15
-BuildRequires: gem(bundler) >= 1.16
 BuildRequires: gem(kramdown) >= 0
 BuildRequires: gem(yard) >= 0.9
+BuildConflicts: gem(bundler) >= 3
 BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(rake-compiler) >= 2
 BuildConflicts: gem(rake-compiler-dock) >= 2
-BuildConflicts: gem(bundler) >= 3
 BuildConflicts: gem(yard) >= 1
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rspec >= 3.10.0,rspec < 4
 Obsoletes:     ruby-ffi < %EVR
 Provides:      ruby-ffi = %EVR
-Provides:      gem(ffi) = 1.16.3
+Provides:      gem(ffi) = 1.16.3.25
 
+%ruby_use_gem_version ffi:1.16.3.25
 
 %description
 Ruby-FFI is a gem for programmatically loading dynamically-linked native
@@ -45,14 +47,14 @@ extension using Ruby-FFI.
 
 
 %package       -n gem-ffi-doc
-Version:       1.16.3
-Release:       alt1
+Version:       1.16.3.25
+Release:       alt0.1
 Summary:       Ruby foreign function interface documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ffi
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(ffi) = 1.16.3
+Requires:      gem(ffi) = 1.16.3.25
 
 %description   -n gem-ffi-doc
 Ruby foreign function interface documentation files.
@@ -68,25 +70,26 @@ extension using Ruby-FFI.
 
 
 %package       -n gem-ffi-devel
-Version:       1.16.3
-Release:       alt1
+Version:       1.16.3.25
+Release:       alt0.1
 Summary:       Ruby foreign function interface development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ffi
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(ffi) = 1.16.3
+Requires:      gem(ffi) = 1.16.3.25
+Requires:      gem(bigdecimal) >= 0
+Requires:      gem(bundler) >= 1.16
 Requires:      gem(rake) >= 13.0
 Requires:      gem(rake-compiler) >= 1.1
 Requires:      gem(rake-compiler-dock) >= 1.0
 Requires:      gem(rspec) >= 2.15
-Requires:      gem(bundler) >= 1.16
 Requires:      gem(kramdown) >= 0
 Requires:      gem(yard) >= 0.9
+Conflicts:     gem(bundler) >= 3
 Conflicts:     gem(rake) >= 14
 Conflicts:     gem(rake-compiler) >= 2
 Conflicts:     gem(rake-compiler-dock) >= 2
-Conflicts:     gem(bundler) >= 3
 Conflicts:     gem(yard) >= 1
 
 %description   -n gem-ffi-devel
@@ -130,6 +133,10 @@ extension using Ruby-FFI.
 
 
 %changelog
+* Sun Feb 04 2024 Pavel Skrylev <majioa@altlinux.org> 1.16.3.25-alt0.1
+- ^ 1.16.3 -> 1.16.3p25
+- ! FTBFS for lost ffi.h
+
 * Mon Dec 04 2023 Pavel Skrylev <majioa@altlinux.org> 1.16.3-alt1
 - ^ 1.15.5 -> 1.16.3
 
