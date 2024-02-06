@@ -30,7 +30,7 @@ Name: kde5-%rname
 %define ver_minor 2
 %define ver_bugfix 0
 Version: %ver_major.%ver_minor.%ver_bugfix
-Release: alt1
+Release: alt2
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 %define sover %version
@@ -340,6 +340,9 @@ install -m 0755 %SOURCE10 %buildroot/%_K5bin/digikam_mysql_install_db
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Mon Feb 05 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 8.2.0-alt2
+- fix path to images in doc files (closes: 48375)
+
 * Fri Feb 02 2024 Sergey V Turchin <zerg@altlinux.org> 8.2.0-alt1
 - new version
 - fix segfault on search action (closes: 44003)
