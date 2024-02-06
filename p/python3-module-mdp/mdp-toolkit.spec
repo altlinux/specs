@@ -13,7 +13,7 @@
 
 Name: python3-module-%oname
 Version: %release_tag.0%commit_num%commit_id
-Release: alt2
+Release: alt3
 
 Summary: Modular toolkit for Data Processing
 
@@ -35,6 +35,7 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-future
 BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-zombie-imp
 %endif
 
 %add_python3_req_skip shogun UserDict pp libsvm.svmutil
@@ -116,6 +117,9 @@ sed -i 's|#! /usr/bin/env python|#! /usr/bin/env python3|' \
 
 
 %changelog
+* Tue Feb 06 2024 Grigory Ustinov <grenka@altlinux.org> 3.6.0.15.g64f14eee-alt3
+- Fixed FTBFS.
+
 * Fri Feb 02 2024 Grigory Ustinov <grenka@altlinux.org> 3.6.0.15.g64f14eee-alt2
 - Moved on modern pyproject macros.
 
