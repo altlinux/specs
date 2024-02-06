@@ -1,5 +1,5 @@
 Name: 	  nagwad
-Version:  0.10.0
+Version:  0.10.1
 Release:  alt1
 
 Summary:  Nagios watch daemon
@@ -125,7 +125,15 @@ getent group %name >/dev/null || %_sbindir/groupadd -r %name
 
 if [ -e %_sysconfdir/nagwad/audit/audit.regexp ]; then
     cp -nv %_sysconfdir/nagwad/audit/audit.regexp \
-       %_sysconfdir/nagwad/audit.regexp ||:
+       %_sysconfdir/nagwad/eperm.regexp ||:
+fi
+if [ -e %_sysconfdir/nagwad/audit.regexp ]; then
+    cp -nv %_sysconfdir/nagwad/audit.regexp \
+       %_sysconfdir/nagwad/eperm.regexp ||:
+fi
+if [ -e %_sysconfdir/nagwad/audit-rules.conf ]; then
+    cp -nv %_sysconfdir/nagwad/audit-rules.conf \
+       %_sysconfdir/nagwad/eperm-audit-rules.conf ||:
 fi
 if [ -e %_sysconfdir/nagwad/authdata/authdata.regexp ]; then
     cp -nv %_sysconfdir/nagwad/authdata/authdata.regexp \
@@ -139,10 +147,6 @@ if [ -e %_sysconfdir/nagwad/login/login.regexp ]; then
     cp -nv %_sysconfdir/nagwad/login/login.regexp \
        %_sysconfdir/nagwad/login.regexp ||:
 fi
-if [ -e %_sysconfdir/nagwad/osec/osec.regexp ]; then
-    cp -nv %_sysconfdir/nagwad/osec/osec.regexp \
-       %_sysconfdir/nagwad/osec.regexp ||:
-fi
 
 %post audit
 _mk_syscall_rules_relax=
@@ -150,8 +154,8 @@ if [ $1 = 1 -a -d /.host -a -d /.in -a -d /.out ]; then
     _mk_syscall_rules_relax=1
 fi
 %_sbindir/mk-syscall-rules -v \
-                           ${_mk_syscall_rules_relax:+--relax} \
-                           -c %_sysconfdir/nagwad/audit-rules.conf
+    ${_mk_syscall_rules_relax:+--relax} \
+    -c %_sysconfdir/nagwad/eperm-audit-rules.conf
 
 %files service
 %doc README.md signal.html signal.md
@@ -161,19 +165,23 @@ fi
 %dir %_sysconfdir/nagwad
 %config(noreplace) %_sysconfdir/nagwad/*.regexp
 %config(noreplace) %_sysconfdir/nagwad/*.sed
+%dir %_sysconfdir/nagwad/process-event.d
+%config(noreplace) %_sysconfdir/nagwad/process-event.d/[0-9]*
+%dir %_sysconfdir/nagwad/process-event.d/eperm-skip.d
+%config(noreplace) %_sysconfdir/nagwad/process-event.d/eperm-skip.d/*.regexp
 /var/log/nagwad
 
 %files audit
 %config(noreplace) %_sysconfdir/audit/rules.d/*-nagwad*-noarch.rules
 %ghost %_sysconfdir/audit/rules.d/50-nagwad-arch.rules
-%config(noreplace) %_sysconfdir/nagwad/audit-rules.conf
+%config(noreplace) %_sysconfdir/nagwad/eperm-audit-rules.conf
 
 %files nagios
-%doc README.md signal.html signal.md
 %config(noreplace) %_sysconfdir/nagios/templates/*nagwad*.cfg
 %config(noreplace) %_sysconfdir/nagios/nrpe-commands/nagwad.cfg
 
 %files icinga
+%doc conf/icinga/nagwad.json
 %config(noreplace) %_sysconfdir/icinga2/conf.d/*.conf
 
 %files nagstamon
@@ -187,6 +195,33 @@ fi
 %_bindir/nsca-shell
 
 %changelog
+* Tue Feb 06 2024 Paul Wolneykien <manowar@altlinux.org> 0.10.1-alt1
+- Save copies of events to /run/nagwad/events.
+- New version of signal.md documentation (Russian).
+- Minor fix of login.sed.
+- Package Icinga Director basket as a doc.
+- Added nagwad Icinga Director basket in JSON format.
+- Improved description of host group "nagwad-nodes".
+- Improved display name: "Printing policy violation attempt".
+- Rename 'audit' filter (and all related files) to 'eperm'.
+- Remove deprecated 'osec' check.
+- Added "nagwad-host" host template for Icinga.
+- Fix: Don't copy README and signal.* manual to the `-nagios` package.
+- Updated README.
+- Monitor integrity of file access audit rules.
+- Fixed audit.regexp: Only SYSCALL messages.
+- Updated audit.regexp: Added nagwad- prefix.
+- Skip access errors to /proc/1/environ by default.
+- Added 10-audit post-process filter which skips events for
+  particular files listed in audit-skip.d.
+- Allow post-filters to add text to messages.
+- Match each event with previously registered events and ignore
+  duplicates.
+- Support event post-processing filters in /etc/nagwad/process-event.d.
+- Process the journal starting from the current boot.
+- Process the message with no leading whitespace by default.
+- check_nagwad: Don't print minor accidental errors.
+
 * Mon Jan 15 2024 Paul Wolneykien <manowar@altlinux.org> 0.10.0-alt1
 - Reflect the event status in the name of the signal file and check
   signal files in order of severity.
