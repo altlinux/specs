@@ -6,25 +6,24 @@
 %def_enable syslog
 %def_enable lfs
 %def_disable sdp
-%def_enable gznbd
+# https://github.com/NetworkBlockDevice/nbd/issues/149
+%def_disable gznbd
 %def_with setproctitle
 %def_without  static_client
 
 Name: nbd
-Version: 3.23
+Version: 3.25
 Release: alt1
 Summary: Network Block Device user space tools
-License: GPL
+License: GPLv2
 Group: Networking/Other
-URL: http://%name.sourceforge.net/
-
-# https://github.com/NetworkBlockDevice/nbd.git
+URL: https://nbd.sourceforge.io/
+VCS: https://github.com/NetworkBlockDevice/nbd.git
 Source: %name-%version.tar
 
-Source1: nbd.init
-Source2: nbd-server.conf
-Source3: nbd.service
-Source4: nbd.sysconfig
+Source1: nbd-server.conf
+Source2: nbd.service
+Source3: nbd.sysconfig
 
 Patch1: %name-alt.patch
 
@@ -112,14 +111,23 @@ mv %name-client{,.static}
 %install
 %makeinstall_std
 %{?_with_static_client:install -pm755 %name-client.static %buildroot%_sbindir/}
-install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
-install -pD -m755 %SOURCE3 %buildroot%_unitdir/nbd.service
-install -pD -m644 %SOURCE4 %buildroot%_sysconfdir/sysconfig/nbd-server
-install -pD %SOURCE2 %buildroot%_sysconfdir/%name-server/config
+install -pDm644 systemd/nbd@.service %buildroot%_unitdir/nbd@.service
+mkdir -p %buildroot%_unitdir/nbd@.service.d
+cat > %buildroot%_unitdir/nbd@.service.d/modprobe.conf <<EOF
+[Service]
+ExecStartPre=/sbin/modprobe nbd
+EOF
+
+install -pD %SOURCE1 %buildroot%_sysconfdir/%name-server/config
+install -pD -m755 %SOURCE2 %buildroot%_unitdir/nbd-server.service
+install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/nbd-server
 
 %define docdir %_docdir/%name-%version
 mkdir -p %buildroot%docdir
 install -pm644 README.md tests/run/simple_test %buildroot%docdir/
+
+%check
+DELAY=10 make check
 
 %pre server
 %_sbindir/groupadd -r -f _nbd
@@ -139,8 +147,9 @@ install -pm644 README.md tests/run/simple_test %buildroot%docdir/
 %config(noreplace) %_sysconfdir/sysconfig/nbd-server
 %_man1dir/*
 %_man5dir/*
-%_initdir/*
-%_unitdir/*.service
+%_unitdir/nbd-server.service
+%_unitdir/nbd@.service
+%_unitdir/nbd@.service.d
 %defattr(600,root,_nbd,710)
 %config(noreplace) %_sysconfdir/%name-server/
 
@@ -154,6 +163,13 @@ install -pm644 README.md tests/run/simple_test %buildroot%docdir/
 %endif
 
 %changelog
+* Tue Feb 06 2024 Anton Farygin <rider@altlinux.ru> 3.25-alt1
+- 3.23 -> 3.25
+- disabled gznbd due to unmantained in mainstream
+- renamed nbd.service to nbd-server.service
+- removed unsupported sysvinit initscript
+- added nbd@.service client unit
+
 * Tue Mar 01 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 3.23-alt1
 - Updated to upstream version 3.23.
 
