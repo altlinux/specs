@@ -20,7 +20,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (верс�
 
 Name: firefox-esr
 Version: 115.7.0
-Release: alt1
+Release: alt2
 License: MPL-2.0
 Group: Networking/WWW
 URL: http://www.mozilla.org/projects/firefox/
@@ -71,6 +71,7 @@ Patch022: 0022-rust-update-checksums.patch
 Patch023: 0315c2d875ca2a95bbb65ef4a1f7b75f72ed7263.patch
 # https://hg.mozilla.org/integration/autoland/rev/ee3b3779af7fc81a53859fa92856ef9deae17a75
 Patch024: ee3b3779af7fc81a53859fa92856ef9deae17a75.patch
+Patch025: 0025-dont-remove-yandex-mailru.patch
 ### End Patches
 
 %ifndef build_parallel_jobs
@@ -550,6 +551,21 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Feb 06 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 115.7.0-alt2
+- Reverted malicious upstream commit
+  https://hg.mozilla.org/integration/autoland/rev/a03a9c72d1db3716adffc6968cfb6eb43c6fcd74
+  which forces firefox to autoremove yandex, mail.ru, vk search extensions.
+  Note: reverting that (and some similar) commit is a necessary condition to
+  make firefox obey the search engine settings specified in policies.json.
+  Alas it might be not enough. The problem is that firefox is tightly
+  integrated with services provided by Mozilla corporation, such as bookmark
+  sync, telemetry, captive portal detection, you name it. Reportedly a similar
+  malware has been deployed there, thus yandex search extension (or in fact any
+  extension) can be removed remotely (that is, without user consent) if the user
+  is signed in into mozilla account, sends telemetry data to mozilla, etc.
+  Perhaps it's time to make unmozilla firefox (similarly to ungoogled chromium).
+- policies.json: use yandex search by default (Closes: #43516).
+
 * Sun Feb 04 2024 Pavel Vasenkov <pav@altlinux.org> 115.7.0-alt1
 - New ESR version.
 - Security fixes
