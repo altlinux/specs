@@ -32,7 +32,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.9.13.6
+Version: 0.9.13.7
 Release: alt1
 
 Summary: GPT applier
@@ -183,6 +183,10 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Mon Feb 05 2024 Valery Sinelnikov <greh@altlinux.org> 0.9.13.7-alt1
+- Editing the cache size in the Yandex browser has returned (closes: 44621)
+- Removed unnecessary calls to subprocess
+
 * Wed Jan 31 2024 Valery Sinelnikov <greh@altlinux.org> 0.9.13.6-alt1
 - Added support for hidden attribute for folders (closes: 48964)
 - Added support for Cyrillic and spaces for mounting disks (closes: 49229)
