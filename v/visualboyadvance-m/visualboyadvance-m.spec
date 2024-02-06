@@ -1,7 +1,7 @@
 %global shortname vbam
 
 Name: visualboyadvance-m
-Version: 2.1.8
+Version: 2.1.9
 Release: alt1
 
 Summary: Game Boy Advance Emulator
@@ -108,6 +108,7 @@ export NPROCS=1
 %_datadir/locale/de/LC_MESSAGES/wxvbam.mo
 %_datadir/locale/en_US/LC_MESSAGES/wxvbam.mo
 %_datadir/locale/es/LC_MESSAGES/wxvbam.mo
+%_datadir/locale/es_419/LC_MESSAGES/wxvbam.mo
 %_datadir/locale/fr/LC_MESSAGES/wxvbam.mo
 %_datadir/locale/gl/LC_MESSAGES/wxvbam.mo
 %_datadir/locale/ko/LC_MESSAGES/wxvbam.mo
@@ -116,7 +117,7 @@ export NPROCS=1
 %_datadir/locale/pt_BR/LC_MESSAGES/wxvbam.mo
 %_datadir/locale/ru_RU/LC_MESSAGES/wxvbam.mo
 %_datadir/locale/tr/LC_MESSAGES/wxvbam.mo
-%_datadir/locale/zh_TW/LC_MESSAGES/wxvbam.mo
+%_datadir/locale/zh-Hans/LC_MESSAGES/wxvbam.mo
 %_mandir/man6/visualboyadvance-m.6.xz
 %_datadir/vbam/vba-over.ini
 %config(noreplace) %{_sysconfdir}/%{shortname}.cfg
@@ -125,6 +126,9 @@ export NPROCS=1
 
 
 %changelog
+* Tue Feb 06 2024 Ilya Mashkin <oddity@altlinux.ru> 2.1.9-alt1
+- 2.1.9
+
 * Tue Dec 19 2023 Ilya Mashkin <oddity@altlinux.ru> 2.1.8-alt1
 - 2.1.8
 
