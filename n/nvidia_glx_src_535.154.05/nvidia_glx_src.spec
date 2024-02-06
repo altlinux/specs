@@ -25,7 +25,7 @@
 %define nv_version 535
 %define nv_release 154
 %define nv_minor   05
-%define pkg_rel alt258
+%define pkg_rel alt259
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -106,6 +106,7 @@ Patch2: alt-ignore-dma-remap.patch
 #
 Patch4: kernel-5.11-aarch64.patch
 Patch5: kernel-5.13-aarch64.patch
+Patch6: kernel-6.7.3.patch
 
 BuildRequires(pre): rpm-build-ubt libgbm-devel
 BuildRequires: rpm-build-kernel rpm-macros-alternatives
@@ -184,6 +185,7 @@ pushd kernel
 %patch4 -p1
 %patch5 -p1
 %endif
+%patch6 -p2
 rm -rf precompiled
 %ifarch aarch64
 #fgrep -rl MT_DEVICE_GRE |xargs sed -i s,MT_DEVICE_GRE,MT_NORMAL_NC,
@@ -424,6 +426,9 @@ fi
 %endif
 
 %changelog
+* Tue Feb 06 2024 Sergey V Turchin <zerg@altlinux.org> 535.154.05-alt259
+- add fix against kernel 6.7.3
+
 * Tue Jan 23 2024 Sergey V Turchin <zerg@altlinux.org> 535.154.05-alt258
 - new version
 
