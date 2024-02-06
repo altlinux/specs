@@ -1,18 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Encode/JP.pm) perl(HTTP/Cookies.pm) perl(Test/Memory/Cycle.pm) perl(Test/Taint.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 %define dist WWW-Mechanize
 Name: perl-%dist
-Version: 2.17
-Release: alt2
+Version: 2.18
+Release: alt1
 
 Summary: Handy web browsing in a Perl object
 License: Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/S/SI/SIMBABQUE/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/O/OA/OALDERS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -48,6 +48,9 @@ which can be queried and revisited.
 %doc	%perl_vendor_privlib/WWW/Mechanize/*.pod
 
 %changelog
+* Tue Feb 06 2024 Igor Vlasenko <viy@altlinux.org> 2.18-alt1
+- automated CPAN update
+
 * Fri Aug 25 2023 Igor Vlasenko <viy@altlinux.org> 2.17-alt2
 - NMU: fixed build
 
