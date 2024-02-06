@@ -2,12 +2,12 @@
 
 Name: seabios
 Version: 1.16.3
-Release: alt2
+Release: alt3
 Summary: Open-source legacy BIOS implementation
 
 Group: Emulators
 BuildArch: noarch
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 loongarch64 aarch64
 License: LGPLv3
 Url: http://www.seabios.org
 
@@ -38,6 +38,9 @@ Source23: config.seabios-microvm
 
 BuildRequires: python3
 BuildRequires: acpica
+%if %_build_cpu != x86_64
+BuildRequires: gcc-i586-linux-gnu
+%endif
 Conflicts: qemu-common < 1.6.0-alt1
 
 %description
@@ -78,6 +81,9 @@ build_bios() {
 		EXTRAVERSION="-%{release}" \
 		PYTHON=python3 \
 		HOSTCC=gcc \
+%if %_build_cpu != x86_64
+		CROSS_PREFIX=i586-linux-gnu- \
+%endif
 		$4
 
 	cp out/$2 binaries/$3
@@ -128,6 +134,10 @@ done
 %_datadir/seavgabios/vgabios*.bin
 
 %changelog
+* Mon Feb 05 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.16.3-alt3
+- spec: support cross-compilation. Useful for non-x86 ports (in particular
+  sisyphus_loongarch64).
+
 * Wed Jan 10 2024 Alexey Shabalin <shaba@altlinux.org> 1.16.3-alt2
 - really 1.16.3
 
