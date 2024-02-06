@@ -286,8 +286,9 @@
 # New Version-String scheme-style defines
 %global featurever 21
 %global interimver 0
-%global updatever 1
+%global updatever 2
 %global patchver 0
+%global buildver 13
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
 # and this it is better to change it here, on single place
@@ -316,13 +317,7 @@
 # Standard JPackage naming and versioning defines
 %global origin openjdk
 %global origin_nice OpenJDK
-%global buildver   12
-# Priority must be 8 digits in total; up to openjdk 1.8, we were using 18..... so when we moved to 11, we had to add another digit
-# Using 10 digits may overflow the int used for priority, so we combine the patch and build versions
-# It is very unlikely we will ever have a patch version > 4 or a build version > 20, so we combine as (patch * 20) + build.
-# This means 11.0.9.0+11 would have had a priority of 11000911 as before
-# A 11.0.9.1+1 would have had a priority of 11000921 (20 * 1 + 1), thus ensuring it is bigger than 11.0.9.0+11
-%global priority 21000035
+%global priority %( printf '%%02d%%02d%%02d%%02d' %{featurever} %{interimver} %{updatever} %{buildver} )
 %global newjavaver %{featurever}.%{interimver}.%{updatever}.%{patchver}
 %global javaver %{featurever}
 
@@ -353,7 +348,7 @@
 
 Name:    java-21-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt2
+Release: alt1
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -1991,6 +1986,15 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 %endif
 
 %changelog
+* Mon Feb 05 2024 Andrey Cherepanov <cas@altlinux.org> 0:21.0.2.0.13-alt1
+- New version.
+- Security fixes:
+  - CVE-2024-20918
+  - CVE-2024-20919
+  - CVE-2024-20921
+  - CVE-2024-20945
+  - CVE-2024-20952
+
 * Thu Jan 18 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0:21.0.1.0.12-alt2
 - NMU: LoongArch support from https://github.com/loongson/jdk21u.git
   branch loongarch-port
