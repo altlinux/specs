@@ -2,9 +2,12 @@
 
 %define _name emoji-copy
 %define old_name emoji-selector
-%define git_ver 1.1.0
+%define git_ver 1.1.1
 # from metadata.json
-%define ego_ver 14
+#%%define ego_ver 14
+# from e.g.o
+%define EGO 6242/%_name
+%define ego_ver 17
 %define beta %nil
 %define uuid emoji-copy@felipeftn
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -69,6 +72,9 @@ popd
 %doc README.md
 
 %changelog
+* Tue Feb 06 2024 Yuri N. Sedunov <aris@altlinux.org> 17-alt1
+- 17
+
 * Wed Dec 06 2023 Yuri N. Sedunov <aris@altlinux.org> 14-alt1
 - 14
 - switched build to EGO release numbering

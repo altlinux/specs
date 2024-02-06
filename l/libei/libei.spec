@@ -16,7 +16,7 @@
 %endif
 
 Name: libei
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A library for Emulated Input
@@ -129,6 +129,9 @@ rm -f %buildroot%_libdir/libmunit.so
 %_bindir/ei-debug-events
 
 %changelog
+* Mon Feb 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
+- 1.2.1
+
 * Wed Dec 06 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 

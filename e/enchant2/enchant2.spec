@@ -8,8 +8,9 @@
 %def_disable check
 
 Name: %_name%api_ver
-Version: 2.6.6
+Version: 2.6.4
 Release: alt1
+Epoch: 1
 
 Summary: An Enchanting Spell Checking Program
 Group: Text tools
@@ -60,8 +61,10 @@ sed -i 's|\(AC_PREREQ(\[2.\)71|\169|' configure.ac
 %add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure --disable-static \
-	--disable-gcc-warnings \
-	%{subst_enable relocatable}
+    --disable-gcc-warnings \
+    %{subst_enable relocatable} \
+    --with-hunspell-dir=%_datadir/myspell \
+    %{?_enable_aspell:--with-aspell-dir=%_libdir/aspell} \
 %nil
 %make_build
 
@@ -93,6 +96,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Tue Feb 06 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.6.4-alt1
+- rollback to 2.6.4
+
 * Mon Feb 05 2024 Yuri N. Sedunov <aris@altlinux.org> 2.6.6-alt1
 - 2.6.6
 
