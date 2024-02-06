@@ -11,7 +11,7 @@
 %endif
 
 Name: libxfce4ui
-Version: 4.18.4
+Version: 4.18.5
 Release: alt1
 
 Summary: Various GTK widgets for Xfce
@@ -194,6 +194,9 @@ make check
 %_desktopdir/xfce4-about.desktop
 
 %changelog
+* Mon Feb 05 2024 Mikhail Efremov <sem@altlinux.org> 4.18.5-alt1
+- Updated to 4.18.5.
+
 * Tue May 23 2023 Mikhail Efremov <sem@altlinux.org> 4.18.4-alt1
 - Keep xflock4 as last fallback.
 - Updated to 4.18.4.
