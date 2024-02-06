@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.0.12
+Version: 4.1.0
 Release: alt1
 Summary: JupyterLab computational environment
 License: BSD-3-Clause
@@ -29,6 +29,7 @@ BuildRequires: python3-module-pytest-console-scripts
 BuildRequires: python3-module-pytest-timeout
 BuildRequires: python3-module-requests-cache
 BuildRequires: node
+BuildRequires: python3-module-httpx
 %endif
 
 %description
@@ -101,6 +102,9 @@ mv %buildroot/usr/etc/jupyter/jupyter_server_config.d/jupyterlab.json \
 %python3_sitelibdir/%pypi_name/browser_check.py
 
 %changelog
+* Tue Feb 06 2024 Anton Vyatkin <toni@altlinux.org> 4.1.0-alt1
+- new version 4.1.0
+
 * Wed Jan 31 2024 Anton Vyatkin <toni@altlinux.org> 4.0.12-alt1
 - new version 4.0.12
 
