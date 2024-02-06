@@ -5,9 +5,11 @@
 # Enable cmake RPATH for unit tests
 %global _cmake_skip_rpath %nil
 
+%def_enable test
+
 Name: libnss-role
 Version: 0.5.6
-Release: alt1
+Release: alt2
 
 Summary: NSS API library and admin tools for roles and privilegies
 
@@ -22,12 +24,13 @@ Source: %name-%version.tar
 
 BuildRequires: glibc-devel
 BuildRequires: cmake
-BuildRequires: ctest
-BuildRequires: libcmocka
-BuildRequires: libcmocka-devel
-BuildRequires: libpam0
 BuildRequires: libpam0-devel
 BuildRequires: nss_wrapper
+
+%if_enabled test
+BuildRequires: ctest
+BuildRequires: libcmocka-devel
+%endif
 
 Requires: libpam0 chrooted >= 0.3.5-alt1 chrooted-resolv control
 
@@ -48,16 +51,25 @@ NSS API library for roles and privilegies.
 
 %build
 %cmake \
+%if_enabled test
+	-DENABLE_TESTS=ON \
+%else
+	-DENABLE_TESTS=OFF \
+%endif
 	-DNSS_LIBDIR=/%_lib \
 	-DROLE_LIBDIR=%_libdir \
 	-DMANDIR=%_man8dir \
 	-DCMAKE_INSTALL_PREFIX:PATH=%_prefix
 %cmake_build
+%if_enabled test
 %cmake_build -t all_tests
+%endif
 
+%if_enabled test
 %check
 %cmake_build -- all_tests
 %_cmake__builddir/checkver %version
+%endif
 
 %install
 %cmakeinstall_std
@@ -91,6 +103,9 @@ update_chrooted all
 %_includedir/role/
 
 %changelog
+* Tue Feb 06 2024 Vitaly Lipatov <lav@altlinux.ru> 0.5.6-alt2
+- Add support for --disable=test
+
 * Wed Feb 02 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.5.6-alt1
 - Add libnss-role control facility
 
