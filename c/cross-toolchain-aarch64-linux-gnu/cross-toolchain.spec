@@ -3,7 +3,11 @@
 # %%define target_arch arm
 # %%define target_arch mipsel
 # %%define target_arch riscv64
+# %%define target_arch mips64el
 # %%define target_arch loongarch64
+# %%define target_arch mipsisa64r6el
+# %%define target_arch i586
+# %%define target_arch x86_64
 %define target_arch aarch64
 
 
@@ -28,6 +32,7 @@
 %define arm_arch armv7-a
 %define arm_fp_isa vfpv3-d16
 %define arm_fp_abi hard
+%define target_userspace gnueabihf
 %define target_no_default_pie 1
 %endif
 
@@ -48,11 +53,20 @@
 %define target_has_gold 1
 %endif
 
+%if "%target_arch" == "mipsisa64r6el"
+%define target_kernel mips
+%define target_qemu_arch mips64el
+%define target_ld_linux /lib64/ld-linux-mipsn8.so.1
+%define target_libdir lib64
+%define target_userspace gnuabi64
+%endif
+
 %if "%target_arch" == "riscv64"
 %define target_kernel riscv
 %define target_qemu_arch riscv64
 %define target_ld_linux /lib64/ld-linux-riscv64-lp64d.so.1
 %define target_libdir lib64
+%define target_has_itm 1
 %endif
 
 %if "%target_arch" == "loongarch64"
@@ -63,24 +77,75 @@
 %define target_has_itm 1
 %endif
 
-%if "%target_arch" != "arm"
-%define target %target_arch-linux-gnu
-%else
-%define target %target_arch-linux-gnueabihf
+%if "%target_arch" == "x86_64"
+%define target_kernel x86
+%define target_qemu_arch x86_64
+%define target_ld_linux /lib64/ld-linux-x86-64.so.2
+%define target_libdir lib64
+%define target_has_itm 1
+%define target_has_mvec 1
+%define target_has_quadmath 1
 %endif
+
+%if "%target_arch" == "i586"
+%define target_kernel x86
+%define target_qemu_arch i386
+%define target_ld_linux /lib/ld-linux.so.2
+%define target_libdir lib
+%define target_no_default_pie 1
+%define target_has_itm 1
+%define target_has_quadmath 1
+%endif
+
+%if "%{?target_userspace}" == ""
+%define target_userspace gnu
+%endif
+
+%define target %target_arch-linux-%target_userspace
 %define sysroot %prefix/lib/%target/sys-root
 
 # don't strip debuginfo from binaries for other platform, it does not work
 %brp_strip_none %sysroot/*  %prefix/lib/gcc/*.a %prefix/lib/gcc/*.o
 
 Name: cross-toolchain-%target
-Version: 20230822
+Version: 20240206
 Release: alt1
 Summary: GCC cross-toolchain for %target
 License: LGPL-2.1-or-later and LGPL-3.0-or-later and GPL-2.0-or-later and GPL-3.0-or-later and GPL-3.0-or-later with GCC-exception-3.1
 Group: Development/C
 
-ExclusiveArch: x86_64 loongarch64
+%if "%target_arch" == "x86_64" || "%target_arch" == "i586"
+ExclusiveArch: aarch64 loongarch64
+%else
+%if "%target_arch" == "aarch64" || "%target_arch" == "arm"
+ExclusiveArch: loongarch64 x86_64
+%else
+%if "%target_arch" == "loongarch64"
+ExclusiveArch: x86_64
+%else
+ExclusiveArch: loongarch64 x86_64
+%endif
+%endif
+%endif
+
+%ifarch loongarch64
+# XXX: By default GCC build system builds GCC as non-PIE binaries (for
+# performance reasons). However on LoongArch many non-trivial non-PIE
+# binaries have text relocations (the default code model on LoongArch
+# is a bit tough, i.e. the code offsets must fit into 128MB).
+# rpm-build verifies every binary with text relocations with
+# eu-findtextrel, however eu-findtextrel refuses to process non-PIE
+# binaries and bails out with an error. As a result build fails with
+# the following error:
+#
+# eu-findtextrel: './usr/bin/riscv64-linux-gnu-lto-dump' is not a DSO or PIE
+#
+# To avoid the problem build GCC as a PIE binary on LoongArch.
+%def_enable host_shared
+%else
+%def_disable host_shared
+%endif
+
 
 %define gcc_version %{get_version gcc-source}
 %define gcc_branch %(v=%gcc_version; v=${v%%%%.*}; echo $v)
@@ -281,6 +346,12 @@ cd ../obj_gcc_bootstrap
 	--with-madd4=no \
 	--with-fix-loongson3-llsc=yes \
 %endif
+%if "%target_arch" == "mipsisa64r6el"
+	--with-arch-64=mips64r6 \
+	--with-abi=64 \
+	--with-float=hard \
+	--with-nan=2008 \
+%endif
 %if "%target_arch" == "riscv64"
 	--with-arch=rv64gc \
 	--with-abi=lp64d \
@@ -371,6 +442,12 @@ env \
         --with-madd4=no \
         --with-fix-loongson3-llsc=yes \
 %endif
+%if "%target_arch" == "mipsisa64r6el"
+	--with-arch-64=mips64r6 \
+	--with-abi=64 \
+	--with-float=hard \
+	--with-nan=2008 \
+%endif
 %if "%target_arch" == "riscv64"
 	--with-arch=rv64gc \
 	--with-abi=lp64d \
@@ -379,6 +456,10 @@ env \
 	--enable-linker-build-id \
 %if 0%{?target_no_default_pie} == 0
 	--enable-default-pie \
+%endif
+%if_enabled host_shared
+	--enable-host-pie \
+	--enable-host-shared \
 %endif
 	%nil
 
@@ -586,7 +667,7 @@ address_of_message: .word message
 EOF
 %endif
 
-%if "%target_arch" == "mipsel" || "%target_arch" == "mips64el"
+%if "%target_arch" == "mipsel" || "%target_arch" == "mips64el" || "%target_arch" == "mipsisa64r6el"
 cat > bye.S <<EOF
 #include <sys/syscall.h>
 .text
@@ -635,8 +716,68 @@ _start:
 EOF
 %endif
 
+%if "%target_arch" == "i586"
+cat > bye.S <<EOF
+#include <sys/syscall.h>
+
+.section .rodata
+message: .asciz "bye-bye ...\n"
+msg_len = (. - message)
+
+.text
+.global _start
+_start:
+	movl \$__NR_write, %%eax
+	# stdout
+	movl \$1, %%ebx
+	leal message(%%ebp), %%ecx
+	movl \$msg_len, %%edx
+	int \$0x80
+
+	movl \$__NR_exit, %%eax
+	movl \$0, %%ebx
+	int \$0x80
+
+.section .note.GNU-stack,"",@progbits
+EOF
+%endif
+
+%if "%target_arch" == "x86_64"
+cat > bye.S <<EOF
+#include <sys/syscall.h>
+
+.data
+message: .asciz "bye-bye ...\n"
+msg_len = (. - message)
+
+.text
+.global _start
+_start:
+	movl \$__NR_write, %%eax
+	# stdout
+	movl \$1, %%edi
+	leaq message(%%rip), %%rsi
+	movl \$msg_len, %%edx
+	syscall
+
+	movl \$__NR_exit, %%eax
+	movl \$0, %%edi
+	syscall
+
+.section .note.GNU-stack,"",@progbits
+EOF
+%endif
+
+# XXX: x86 targeted binutils align sections at 4 KB (target page size).
+# On host architectures with page size > 4KB qemu refuse to load such a binary.
+%if "%target_arch" == "i586"
+%global asm_extra_flags -Wl,-Ttext-segment=0x90000000
+%else
+%global asm_extra_flags %nil
+%endif
+
 env PATH=%buildroot%prefix/bin:$PATH \
-%buildroot%prefix/bin/%target-gcc -static -nostdlib -o bye_asm bye.S || exit 11
+%buildroot%prefix/bin/%target-gcc -nostdlib -static -no-pie %asm_extra_flags -o bye_asm bye.S || exit 11
 qemu-%target_qemu_arch-static ./bye_asm || exit 13
 
 %files -n gcc-%target
@@ -668,6 +809,10 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %if 0%{?target_has_itm}
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libitm.so*
 %endif
+%if 0%{?target_has_quadmath}
+%exclude %prefix/lib/gcc/%target/%gcc_branch/libquadmath.a
+%exclude %prefix/lib/gcc/%target/%gcc_branch/libquadmath.so*
+%endif
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libstdc++.so*
 # binunitls
 %exclude %prefix/libexec/gcc/%target/bin/*
@@ -687,6 +832,9 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %if 0%{?target_has_itm}
 %prefix/lib/gcc/%target/%gcc_branch/libitm.a
 %endif
+%if 0%{?target_has_quadmath}
+%prefix/lib/gcc/%target/%gcc_branch/libquadmath.a
+%endif
 %prefix/lib/gcc/%target/%gcc_branch/libstdc++.a
 %prefix/lib/gcc/%target/%gcc_branch/libstdc++fs.a
 %prefix/lib/gcc/%target/%gcc_branch/libsupc++.a
@@ -698,6 +846,9 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %prefix/lib/gcc/%target/%gcc_branch/libgomp.so*
 %if 0%{?target_has_itm}
 %prefix/lib/gcc/%target/%gcc_branch/libitm.so*
+%endif
+%if 0%{?target_has_quadmath}
+%prefix/lib/gcc/%target/%gcc_branch/libquadmath.so*
 %endif
 %prefix/lib/gcc/%target/%gcc_branch/libstdc++.so*
 
@@ -788,6 +939,15 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 
 
 %changelog
+* Tue Feb 06 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 20240206-alt1
+- Added x86-targeted cross-compilers (for now only on aarch64 and LoongArch).
+
+* Thu Dec 07 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20231207-alt1
+- spec: applied mips64 bits from iv@.
+
+* Fri Oct 06 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20231006-alt1
+- spec: build compiler binaries as PIE. Fixes FTBFS on LoongArch.
+
 * Tue Aug 22 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20230822-alt1
 - glibc: libmvec has been added on aarch64, move libmvec.a into
   cross-glibc-static-$TARGET subpackage
