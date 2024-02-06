@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: graphs
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Plot and manipulate data with Graphs
@@ -79,6 +79,9 @@ sed -i "s/'pytest'/'py.test3'/" tests/meson.build
 %_typelibdir/%_name-%api_ver.typelib
 
 %changelog
+* Tue Feb 06 2024 Yuri N. Sedunov <aris@altlinux.org> 1.7.2-alt1
+- updated to v1.7.2-2-g975ae74
+
 * Mon Jan 15 2024 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
 - first build for Sisyphus (v1.7.1-8-g11b2692)
 
