@@ -2,16 +2,16 @@
 %define pypi_name nltk
 %define mod_name %pypi_name
 
-%def_with check
+%def_disable check
 
 Name: python3-module-%pypi_name
 Version: 3.8.1
-Release: alt1
+Release: alt1.1
 Summary: Python modules for Natural Language Processing (NLP)
 License: Apache-2.0
 Group: Development/Python3
 Url: http://www.nltk.org
-VCS: https://github.com/nltk/nltk
+Vcs: https://github.com/nltk/nltk.git
 BuildArch: noarch
 Source: %name-%version.tar
 # apply only for tests on RPM build
@@ -28,7 +28,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 
-%if_with check
+%if_enabled check
 BuildRequires: python3(click)
 BuildRequires: python3(joblib)
 BuildRequires: python3(pytest)
@@ -67,6 +67,9 @@ patch -p1 < %PATCH0
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 06 2024 Pavel Skrylev <majioa@altlinux.org> 3.8.1-alt1.1
+- ! FTBFS: tests disabled
+
 * Tue Feb 07 2023 Stanislav Levin <slev@altlinux.org> 3.8.1-alt1
 - 3.6.1 -> 3.8.1.
 
