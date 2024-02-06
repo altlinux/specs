@@ -1,22 +1,18 @@
 %define _unpackaged_files_terminate_build 1
-
 Name: atftp
-Version: 0.7.2
-Release: alt2
-
+Version: 0.8.0
+Release: alt1
 URL: https://sourceforge.net/projects/atftp
 Summary: Advanced Trivial File Transfer Protocol
 License: GPLv2+
 Group: System/Servers
 Conflicts: tftpd
-
+VCS: https://git.code.sf.net/p/atftp/code
 Source: %name-%version.tar
-
 Source1: atftpd.init
 Source2: atftpd.sysconfig
 Source3: atftpd.tmpfiles.conf
-
-Patch1: %name-%version-alt.patch
+Source4: atftpd.service
 
 %description
 atftp stands for Advanced Trivial File Transfer Protocol. It is called
@@ -31,17 +27,18 @@ faster boot of hundreds of machine simultaneously.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
+%autoreconf
 %configure --disable-libpcre
-make
+%make_build
 
 %install
 %makeinstall
 install -pm0755 -D %SOURCE1 %buildroot%_initdir/atftpd
 install -pm0644 -D %SOURCE2 %buildroot%_sysconfdir/sysconfig/atftpd
 install -pm0644 -D %SOURCE3 %buildroot%_tmpfilesdir/atftpd.tmpfiles.conf
+install -pm0644 -D %SOURCE4 %buildroot%_unitdir/atftpd.service
 mkdir -p %buildroot%_localstatedir/tftpboot
 mkdir -pm0770 %buildroot%_logdir/atftpd
 touch %buildroot%_sysconfdir/mtftp.conf
@@ -64,8 +61,8 @@ touch %buildroot%_sysconfdir/mtftp.conf
 %ghost %config(noreplace) %_sysconfdir/mtftp.conf
 
 %_tmpfilesdir/atftpd.tmpfiles.conf
-
 %_initdir/atftpd
+%_unitdir/atftpd.service
 
 %_bindir/atftp
 %_sbindir/atftpd
@@ -79,6 +76,10 @@ touch %buildroot%_sysconfdir/mtftp.conf
 %dir %attr(0770,root,_atftpd) %_logdir/atftpd
 
 %changelog
+* Tue Feb 06 2024 Anton Farygin <rider@altlinux.ru> 0.8.0-alt1
+- 0.8.0
+- added unit file for systemd (Closes: #28104)
+
 * Wed Oct 28 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.7.2-alt2
 - Create runtime directory via tmpfiles (Closes: #39157).
 
