@@ -98,7 +98,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.7
+Version: %ver_major.9
 Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
@@ -162,6 +162,8 @@ Source89: systemd-sysusers-shared.alternatives
 Source90: systemd-sysusers-standalone.alternatives
 Source91: systemd-tmpfiles-shared.alternatives
 Source92: systemd-tmpfiles-standalone.alternatives
+Source93: systemd-busctl-shared.alternatives
+Source94: systemd-busctl-standalone.alternatives
 
 Patch1: %name-%version.patch
 
@@ -649,6 +651,7 @@ Provides: %name-shutdown-standalone = %EVR
 Provides: %name-sysctl-standalone = %EVR
 Provides: %name-sysusers-standalone = %EVR
 Provides: %name-tmpfiles-standalone = %EVR
+Provides: %name-busctl-standalone = %EVR
 Obsoletes: %name-modules-load-standalone < %EVR
 Obsoletes: %name-sysctl-standalone < %EVR
 Obsoletes: %name-sysusers-standalone < %EVR
@@ -669,6 +672,7 @@ This package contains standalone utils from systemd:
  - systemd-sysctl.standalone
  - systemd-sysusers.standalone
  - systemd-tmpfiles.standalone
+ - busctl.standalone
 
 %package utils-filetriggers
 Group: System/Configuration/Boot and Init
@@ -1052,6 +1056,7 @@ install -pD -m755 %SOURCE80 %buildroot%_rpmlibdir/systemd-user.filetrigger
 for f in systemd-modules-load systemd-repart systemd-shutdown systemd-sysctl systemd-sysusers systemd-tmpfiles; do
         mv %buildroot/sbin/$f %buildroot/sbin/$f.shared
 done
+mv %buildroot%_bindir/busctl %buildroot%_bindir/busctl.shared
 install -pD -m644 %SOURCE81 %buildroot/%_altdir/systemd-modules-load-shared
 install -pD -m644 %SOURCE82 %buildroot/%_altdir/systemd-modules-load-standalone
 install -pD -m644 %SOURCE83 %buildroot/%_altdir/systemd-repart-shared
@@ -1064,6 +1069,8 @@ install -pD -m644 %SOURCE89 %buildroot/%_altdir/systemd-sysusers-shared
 install -pD -m644 %SOURCE90 %buildroot/%_altdir/systemd-sysusers-standalone
 install -pD -m644 %SOURCE91 %buildroot/%_altdir/systemd-tmpfiles-shared
 install -pD -m644 %SOURCE92 %buildroot/%_altdir/systemd-tmpfiles-standalone
+install -pD -m644 %SOURCE93 %buildroot/%_altdir/systemd-busctl-shared
+install -pD -m644 %SOURCE94 %buildroot/%_altdir/systemd-busctl-standalone
 
 cat >>%buildroot%_sysctldir/50-mmap-min-addr.conf <<EOF
 # Indicates the amount of address space which a user process will be
@@ -1656,7 +1663,9 @@ fi
 %_tmpfilesdir/systemd-pstore.conf
 %endif
 
-%_bindir/busctl
+%_bindir/busctl.shared
+%_altdir/systemd-busctl-shared
+
 %_bindir/systemd-socket-activate
 %_bindir/systemd-cat
 %_bindir/systemd-cgls
@@ -2339,6 +2348,9 @@ fi
 
 %if_enabled standalone_binaries
 %files utils-standalone
+%_bindir/busctl.standalone
+%_altdir/systemd-busctl-standalone
+
 /sbin/systemd-modules-load.standalone
 %_altdir/systemd-modules-load-standalone
 
@@ -2425,6 +2437,10 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Mon Feb 05 2024 Alexey Shabalin <shaba@altlinux.org> 1:254.9-alt1
+- 254.9
+- Add busctl to standalone utils package.
+
 * Thu Dec 07 2023 Alexey Shabalin <shaba@altlinux.org> 1:254.7-alt1
 - 254.7 (Fixes: CVE-2023-31439)
 
