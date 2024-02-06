@@ -1,11 +1,16 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict,lint=relaxed,lfs=relaxed
+
 Name:    rustic
-Version: 0.5.4
+Version: 0.6.1
 Release: alt1
 
 Summary: rustic - fast, encrypted, deduplicated backups powered by pure Rust
 License: Apache-2.0
-Group:   Other
-Url:     https://github.com/rustic-rs/rustic
+Group:   Archiving/Backup
+Url:     https://rustic.cli.rs/
+Vcs:     https://github.com/rustic-rs/rustic
 
 Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
@@ -14,22 +19,33 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-rust
 BuildRequires: /proc
 
-ExcludeArch: ppc64le
-
 %description
 Rustic is a backup tool that provides fast, encrypted, deduplicated backups. It
-reads and writes the restic repo format desribed in the design document and can
+reads and writes the restic repo format described in the design document and can
 therefore be used as a complete replacement for restic.
+
+rustic currently is in beta state and misses regression tests. It is not
+recommended to use it for production backups, yet.
 
 %prep
 %setup
 mkdir -p .cargo
-cat >> .cargo/config <<EOF
+tee -a .cargo/config <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
 directory = "vendor"
+
+[build]
+rustflags = ["-Copt-level=3", "-Cdebuginfo=1", "--cfg=rustix_use_libc"]
+
+[profile.release]
+strip = false
+%if 0%{!?_is_lp64:1}
+lto = "thin"
+codegen-units = 16
+%endif
 EOF
 
 %build
@@ -55,6 +71,9 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Sat Jan 27 2024 Vitaly Chikunov <vt@altlinux.org> 0.6.1-alt1
+- Update to v0.6.1 (2023-11-19).
+
 * Mon Jun 05 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.5.4-alt1
 - new version 0.5.4
 
