@@ -2,28 +2,26 @@
 %define docdir %_docdir/%name-%version
 
 Name: asciidoc
-Version: 9.1.0
-Release: alt2
+Version: 10.2.0
+Release: alt1
 
 Summary: asciidoc converts an AsciiDoc text file to DocBook, HTML or LinuxDoc
 
 Group: Text tools
-License: GPLv2+
-Url: http://www.methods.co.nz/asciidoc/
-
-Packager: Artem Zolochevskiy <azol@altlinux.ru>
+License: GPL-2.0-or-later
+Url: http://asciidoc.org
 
 BuildArch: noarch
 
-# Source-url: https://github.com/asciidoc-py/asciidoc-py/archive/refs/tags/%version.tar.gz
+# Source-url: https://github.com/asciidoc-py/asciidoc-py/releases/download/%version/asciidoc-%version.tar.gz
 Source: %name-%version.tar
+Patch1: asciidoc-table-separator.patch
 
-BuildRequires(pre): rpm-build-vim rpm-build-tex
-BuildRequires: python3-devel
+BuildRequires(pre): rpm-build-tex
+BuildRequires: python3-devel python3-module-pip python3-module-setuptools python3-module-wheel
 BuildRequires: xsltproc docbook-style-xsl
 #BuildRequires: source-highlight
 #BuildRequires: graphviz
-
 
 %description
 The asciidoc(1) command translates the AsciiDoc text file to the backend
@@ -31,7 +29,6 @@ formatted file.
 
 AsciiDoc is a text document format for writing short documents, articles,
 books and UNIX man pages.
-
 
 %package a2x
 Summary: a2x converts AsciiDoc text file to PDF, XHTML, HTML Help, manpage or plain text
@@ -62,7 +59,6 @@ Requires: dblatex
 %description latex
 Support for asciidoc LaTeX output.
 
-
 %package doc
 Summary: AsciiDoc documentation and examples
 Group: Development/Documentation
@@ -76,94 +72,59 @@ books and UNIX man pages.
 
 This package contains AsciiDoc documentation and examples.
 
-
-%package -n vim-plugin-asciidoc-syntax
-Summary: Vim syntax highlighting for AsciiDoc files
-Group: Editors
-Requires: vim-common
-
-%description -n vim-plugin-asciidoc-syntax
-The asciidoc(1) command translates the AsciiDoc text file to the backend
-formatted file.
-
-AsciiDoc is a text document format for writing short documents, articles,
-books and UNIX man pages.
-
-This package contains AsciiDoc syntax highlighting support for Vim.
-
-
 %prep
 %setup
+%patch1 -p1
 
 %build
 %autoreconf
 %configure docdir=%docdir
 
 %install
-%make_install DESTDIR=%buildroot install docs
-mv -f %buildroot%_bindir/%name.py %buildroot%_bindir/%name
-mv -f %buildroot%_bindir/a2x.py %buildroot%_bindir/a2x
-install -pD %buildroot%_sysconfdir/%name/dblatex/asciidoc-dblatex.sty \
+%make_install DESTDIR=%buildroot install docs manpages
+mkdir -p %buildroot%_man1dir
+mv %buildroot%docdir/doc/{asciidoc.1,a2x.1,testasciidoc.1} %buildroot%_man1dir/
+install -pD %buildroot%python3_sitelibdir/%name/resources/dblatex/asciidoc-dblatex.sty \
   %buildroot%_texmfmain/tex/latex/%name/asciidoc-dblatex.sty
-
-# install vim plugin
-#install -d %buildroot{%vim_ftdetect_dir,%vim_syntax_dir}
-#install -p -m644 vim/ftdetect/asciidoc_filetype.vim %buildroot%vim_ftdetect_dir/
-#install -p -m644 vim/syntax/asciidoc.vim %buildroot%vim_syntax_dir/
 
 # install extra docs for asciidoc package
 install -d %buildroot%docdir/
 install -pD -m644 COPYRIGHT  %buildroot%docdir/
 
-rm -rfv %buildroot%{_sysconfdir}/asciidoc/filters/music
-
 %files
 %_bindir/%name
-
-%dir %_sysconfdir/%name
-%config(noreplace) %_sysconfdir/%name/*.conf
-%dir %_sysconfdir/%name/filters/
-%config(noreplace) %_sysconfdir/%name/filters/code/
-%config(noreplace) %_sysconfdir/%name/filters/graphviz/
-%config(noreplace) %_sysconfdir/%name/filters/source/
-%_sysconfdir/%name/images
-%_sysconfdir/%name/themes
-%config(noreplace) %_sysconfdir/%name/javascripts/
-%config(noreplace) %_sysconfdir/%name/stylesheets/
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/asciidoc/resources/filters/latex
+%exclude %python3_sitelibdir/asciidoc/resources/filters/music
 
 %_man1dir/%name.*
 %_man1dir/test%name.*
 %dir %docdir
-%doc %docdir/BUGS.txt
-%doc %docdir/CHANGELOG.txt
+%doc %docdir/BUGS.adoc
+%doc %docdir/CHANGELOG.adoc
 %doc %docdir/COPYRIGHT
-%doc %docdir/README.asciidoc
+%doc %docdir/README.md
 
 %files a2x
 %_bindir/a2x
-%config(noreplace) %_sysconfdir/%name/docbook-xsl/
 %_man1dir/a2x.*
 
 %files latex
-%config(noreplace) %_sysconfdir/%name/filters/latex/
-%config(noreplace) %_sysconfdir/%name/filters/unwraplatex.py
-%config(noreplace) %_sysconfdir/%name/dblatex/
+%python3_sitelibdir/%name/resources/filters/latex
 %_texmfmain/tex/latex/%name/
 
 %files doc
 %doc %docdir
-%exclude %docdir/BUGS.txt
-%exclude %docdir/CHANGELOG.txt
+%exclude %docdir/BUGS.adoc
+%exclude %docdir/CHANGELOG.adoc
 %exclude %docdir/COPYRIGHT
-%exclude %docdir/README.asciidoc
-
-%if 0
-%files -n vim-plugin-asciidoc-syntax
-#vim_ftdetect_dir/*.vim
-%vim_syntax_dir/*.vim
-%endif
+%exclude %docdir/README.md
 
 %changelog
+* Tue Feb 06 2024 Alexey Shabalin <shaba@altlinux.org> 10.2.0-alt1
+- 10.2.0
+- fix invalid escape sequence (ALT#49310)
+
 * Mon Aug 16 2021 Vitaly Lipatov <lav@altlinux.ru> 9.1.0-alt2
 - use w3m (as default text generator) instead of lynx
 - drop source-highlight require (it is recommended only)
