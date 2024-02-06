@@ -1,12 +1,13 @@
 Name: clusterssh
 Version: 4.16
-Release: alt1
+Release: alt2.git.b302a77
 
 Summary: Run commands on multiple servers over ssh
 Group: Networking/Remote access
 License: %gpl2plus
 Url: https://github.com/duncs/clusterssh
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 BuildRequires: rpm-build-licenses
 
 BuildPreReq: perl-base perl(Config/Simple.pm) perl(Fcntl.pm) perl-devel
@@ -31,6 +32,7 @@ an ssh connection.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 perl Build.PL installdirs=vendor
@@ -54,6 +56,9 @@ mv  %buildroot/%_bindir/clusterssh_bash_completion.dist \
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Tue Feb 06 2024 Anton Farygin <rider@altlinux.ru> 4.16-alt2.git.b302a77
+- FTBFS: applied commits from upstream git
+
 * Tue May 16 2023 Anton Farygin <rider@altlinux.ru> 4.16-alt1
 - 3.28 -> 4.16
 
