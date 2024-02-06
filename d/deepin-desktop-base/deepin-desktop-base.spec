@@ -1,5 +1,5 @@
 Name: deepin-desktop-base
-Version: 2023.09.05
+Version: 2024.01.03
 Release: alt1
 
 Summary: Base component for Deepin
@@ -59,12 +59,16 @@ rm -r %buildroot%_datadir/distro-info
 %_datadir/deepin/distribution.info
 %_datadir/i18n/i18n_dependent.json
 %_datadir/i18n/language_info.json
+%dir %_libexecdir/deepin/
 %_libexecdir/deepin/desktop-version
 %_sysconfdir/deepin-version
 %_sysconfdir/uos-version
 %exclude %_datadir/plymouth/deepin-logo.png
 
 %changelog
+* Tue Feb 06 2024 Leontiy Volodin <lvol@altlinux.org> 2024.01.03-alt1
+- New version 2024.01.03.
+
 * Thu Nov 30 2023 Leontiy Volodin <lvol@altlinux.org> 2023.09.05-alt1
 - New version 2023.09.05.
 
