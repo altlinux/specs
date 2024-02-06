@@ -3,8 +3,8 @@
 %define pypi_name XStatic-jQuery
 
 Name: python3-module-%oname
-Version: 1.10.2.1
-Release: alt3
+Version: 1.12.4.1
+Release: alt1
 
 Summary: jQuery (XStatic packaging standard)
 License: MIT
@@ -46,6 +46,9 @@ files.
 
 
 %changelog
+* Tue Feb 06 2024 Ilfat Aminov <aminov@altlinux.org> 1.12.4.1-alt1
+- 1.12.4.1
+
 * Wed Feb 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.10.2.1-alt3
 - Build for python2 disabled.
 

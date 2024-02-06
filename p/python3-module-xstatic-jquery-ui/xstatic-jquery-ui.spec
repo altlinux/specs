@@ -3,8 +3,8 @@
 %define pypi_name XStatic-jquery-ui
 
 Name:       python3-module-%oname
-Version:    1.12.0.1
-Release:    alt2
+Version:    1.13.0.1
+Release:    alt1
 
 Summary:    jquery-ui (XStatic packaging standard)
 License:    MIT
@@ -48,6 +48,9 @@ files.
 
 
 %changelog
+* Tue Feb 06 2024 Ilfat Aminov <aminov@altlinux.org> 1.13.0.1-alt1
+- 1.13.0.1
+
 * Thu Feb 20 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.12.0.1-alt2
 - Build for python2 disabled.
 

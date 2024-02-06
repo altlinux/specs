@@ -3,8 +3,8 @@
 %define pypi_name XStatic-mdi
 
 Name: python3-module-%oname
-Version: 1.4.57.0
-Release: alt3
+Version: 1.6.50.2
+Release: alt1
 
 Summary: mdi (XStatic packaging standard)
 License: MIT
@@ -45,6 +45,9 @@ This package is intended to be used by any project that needs these files.
 
 
 %changelog
+* Tue Feb 06 2024 Ilfat Aminov <aminov@altlinux.org> 1.6.50.2-alt1
+- 1.6.50.2
+
 * Thu Nov 21 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.4.57.0-alt3
 - python2 disabled
 
