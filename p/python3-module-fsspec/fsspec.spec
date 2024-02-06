@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2022.01.0
-Release: alt1
+Release: alt2
 Summary: A specification that python filesystems should adhere to
 License: BSD-3-Clause
 Group: Development/Python3
@@ -18,6 +18,8 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: pytest3 python3-module-numpy-testing
+BuildRequires: python3-module-aiohttp
+BuildRequires: python3-module-requests
 
 # not all optional dependencies are available
 %add_python3_req_skip distributed.client distributed.worker dvc.repo panel pyarrow.hdfs pygit2 smbclient
@@ -54,6 +56,9 @@ pytest-3 -v \
 %python3_sitelibdir/%oname-*-py3*.egg-info
 
 %changelog
+* Tue Feb 06 2024 Grigory Ustinov <grenka@altlinux.org> 2022.01.0-alt2
+- Fixed FTBFS.
+
 * Tue Feb 15 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 2022.01.0-alt1
 - Updated to upstream version 2022.01.0.
 
