@@ -1,5 +1,5 @@
 Name: gnucobol
-Version: 3.1.2
+Version: 3.2
 Release: alt1
 
 Summary: GnuCOBOL (formely Open COBOL) - COBOL compiler
@@ -89,6 +89,9 @@ make test CFLAGS="%optflags -O"
 %_libdir/libcob.so.*
 
 %changelog
+* Tue Feb 06 2024 Ilya Mashkin <oddity@altlinux.ru> 3.2-alt1
+- 3.2
+
 * Wed Apr 28 2021 Ilya Mashkin <oddity@altlinux.ru> 3.1.2-alt1
 - 3.1.2
 - Change License to GPLv3+ and LGPLv3+ and GFDL
