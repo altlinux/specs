@@ -1,5 +1,5 @@
 Name: deepin-desktop-schemas
-Version: 6.0.3
+Version: 6.0.5
 Release: alt1
 
 Summary: GSettings deepin desktop-wide schemas
@@ -67,6 +67,9 @@ dconf update
 %_datadir/%name/
 
 %changelog
+* Tue Feb 06 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.5-alt1
+- New version 6.0.5.
+
 * Tue Jul 25 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.3-alt1
 - New version 6.0.3.
 - NMU:
