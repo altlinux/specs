@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: A basic implementation of the __geo_interface__
@@ -49,6 +49,9 @@ data.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Tue Feb 06 2024 Anton Vyatkin <toni@altlinux.org> 1.3.0-alt1
+- New version 1.3.0.
+
 * Thu Jan 25 2024 Anton Vyatkin <toni@altlinux.org> 1.2.0-alt1
 - New version 1.2.0.
 
