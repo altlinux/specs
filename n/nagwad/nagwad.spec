@@ -1,5 +1,5 @@
 Name: 	  nagwad
-Version:  0.10.1
+Version:  0.10.2
 Release:  alt1
 
 Summary:  Nagios watch daemon
@@ -195,6 +195,11 @@ fi
 %_bindir/nsca-shell
 
 %changelog
+* Tue Feb 06 2024 Paul Wolneykien <manowar@altlinux.org> 0.10.2-alt1
+- Fixed template name in signal.md.
+- Fixed Icinga nagwad templates: run checks with agent (on local
+  or remote hosts).
+
 * Tue Feb 06 2024 Paul Wolneykien <manowar@altlinux.org> 0.10.1-alt1
 - Save copies of events to /run/nagwad/events.
 - New version of signal.md documentation (Russian).
