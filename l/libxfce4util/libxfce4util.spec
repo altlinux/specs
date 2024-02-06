@@ -2,8 +2,8 @@
 %def_enable vala
 
 Name: libxfce4util
-Version: 4.18.1
-Release: alt2
+Version: 4.18.2
+Release: alt1
 
 Summary: Utility library for the Xfce desktop environment
 Summary(ru_RU.UTF-8): Библиотека утилит для рабочего стола Xfce
@@ -116,6 +116,9 @@ Vala bindings for %name.
 %endif
 
 %changelog
+* Tue Feb 06 2024 Mikhail Efremov <sem@altlinux.org> 4.18.2-alt1
+- Updated to 4.18.2.
+
 * Fri Dec 01 2023 Kirill Izmestev <felixz@altlinux.org> 4.18.1-alt2
 - Apply patch(3a279d2b) from the master branch (ALT #48589).
 
