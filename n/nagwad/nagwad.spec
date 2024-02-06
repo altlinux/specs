@@ -1,11 +1,11 @@
 Name: 	  nagwad
 Version:  0.10.2
-Release:  alt1
+Release:  alt2
 
 Summary:  Nagios watch daemon
 License:  GPLv3
 Group:    Monitoring
-Url: 	  http://git.altlinux.org/people/nbr/packages/nagwad.git
+Url: 	  http://git.altlinux.org/people/manowar/packages/nagwad.git
 
 Source:   %name-%version.tar
 
@@ -195,6 +195,9 @@ fi
 %_bindir/nsca-shell
 
 %changelog
+* Tue Feb 06 2024 Paul Wolneykien <manowar@altlinux.org> 0.10.2-alt2
+- Fixed project URL.
+
 * Tue Feb 06 2024 Paul Wolneykien <manowar@altlinux.org> 0.10.2-alt1
 - Fixed template name in signal.md.
 - Fixed Icinga nagwad templates: run checks with agent (on local
