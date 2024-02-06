@@ -9,7 +9,7 @@
 
 Name: bpftrace
 Version: 0.19.1
-Release: alt1
+Release: alt2
 Summary: High-level tracing language for Linux eBPF
 Group: Development/Debuggers
 License: Apache-2.0
@@ -51,6 +51,7 @@ BuildRequires: libstdc++-devel-static
 BuildRequires: lld >= %llvm_min
 BuildRequires: llvm-devel >= %llvm_min
 BuildRequires: llvm-devel-static >= %llvm_min
+BuildRequires: python3-module-setuptools
 BuildRequires: /proc
 # Assuming 'kernel' dependency will bring un-def kernel
 %{?!_without_check:%{?!_disable_check:
@@ -150,6 +151,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Tue Feb 06 2024 Grigory Ustinov <grenka@altlinux.org> 0.19.1-alt2
+- Fixed FTBFS.
+
 * Sun Nov 12 2023 Vitaly Chikunov <vt@altlinux.org> 0.19.1-alt1
 - Update to v0.19.1 (2023-10-04).
 
