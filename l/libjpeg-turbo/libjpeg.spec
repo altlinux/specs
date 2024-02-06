@@ -1,17 +1,14 @@
-
-%def_enable profiling
-
 Name: libjpeg-turbo
-Version: 2.1.5.1
-Release: alt2
+Version: 3.0.2
+Release: alt1
 Epoch: 2
 
 Summary: A SIMD-accelerated library for manipulating JPEG image format files
 License: BSD-3-Clause
 Group: System/Libraries
-Url: http://sourceforge.net/projects/%name/
+Url: https://github.com/libjpeg-turbo/libjpeg-turbo
 
-# http://download.sourceforge.net/%name/%name-%version.tar.gz
+# https://github.com/libjpeg-turbo/libjpeg-turbo/archive/refs/tags/%version.tar.gz
 Source: %name-%version-%release.tar
 Source2: http://jpegclub.org/jpegexiforient.c
 Source3: exifautotran
@@ -20,9 +17,6 @@ Patch0: libjpeg-turbo-alt-rdjpgcom-i18n.patch
 Patch1: libjpeg-turbo-alt-versioning.patch
 Patch2: libjpeg-turbo-fedora-noinst.patch
 Patch2000: %name-e2k-simd.patch
-
-# why it should be enabled?
-%def_disable static
 
 BuildRequires: cmake ctest
 
@@ -99,6 +93,14 @@ This package contains a turbojpeg shared library.
 %description -n libturbojpeg-devel
 This package contains development files for the turbojpeg library.
 
+%ifnarch armh i586
+%def_enable profiling
+%else
+%def_disable profiling
+%endif
+
+%def_disable static
+
 %prep
 %setup -n %name-%version-%release
 %patch0 -p2
@@ -131,11 +133,7 @@ EOF
 # up to 50%% on e2k for progressive JPEG decoding
 %if_enabled profiling
 %add_optflags -fprofile-generate
-%cmake -G'Unix Makefiles' \
-%if_disabled static
--DENABLE_STATIC=FALSE
-%endif
-%nil
+%cmake -G'Unix Makefiles' %{?!_enable_static:-DENABLE_STATIC=FALSE}
 %cmake_build
 # it's better not to do it in parallel
 ( cd %_cmake__builddir ; make -k test ; make clean )
@@ -148,7 +146,7 @@ eprof -d %_cmake__builddir -s %_cmake__builddir/eprof.sum
 %endif
 %endif
 
-%cmake -G'Unix Makefiles'
+%cmake -G'Unix Makefiles' %{?!_enable_static:-DENABLE_STATIC=FALSE}
 %cmake_build
 make jpegexiforient
 bzip2 -9fk libjpeg.txt structure.txt usage.txt
@@ -200,6 +198,9 @@ install -pm644 README* change.log \
 %_pkgconfigdir/libturbojpeg.pc
 
 %changelog
+* Tue Feb 06 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 2:3.0.2-alt1
+- 3.0.2 released (fixes: CVE-2023-2804)
+
 * Mon Nov 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2:2.1.5.1-alt2
 - dropped jpeginfo in favour of external one (closes: 41171, 48408)
 
