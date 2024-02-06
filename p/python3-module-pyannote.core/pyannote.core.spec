@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 3.5
-Release: alt1
+Release: alt2
 
 Summary: PyAnnote core
 License: MIT
@@ -31,6 +31,10 @@ documents.
 %prep
 %setup
 %patch0 -p1
+
+# hotfix for python3.12
+sed -i 's/SafeConfigParser/ConfigParser/' versioneer.py
+sed -i 's/readfp/read_file/' versioneer.py
 
 touch version.py
 echo '%version' >> version.py
@@ -60,6 +64,9 @@ install -p -m644 %mname/__init__.py \
 
 
 %changelog
+* Tue Feb 06 2024 Grigory Ustinov <grenka@altlinux.org> 3.5-alt2
+- Fixed FTBFS.
+
 * Mon Jan 27 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.5-alt1
 - Version updated to 3.5
 - porting on python3.

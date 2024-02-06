@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 2.4.3
-Release: alt1
+Release: alt2
 
 Summary: Common interface to multimedia databases.
 License: MIT
@@ -28,6 +28,10 @@ BuildRequires: python3-module-sphinx
 %prep
 %setup
 %patch0 -p1
+
+# hotfix for python3.12
+sed -i 's/SafeConfigParser/ConfigParser/' versioneer.py
+sed -i 's/readfp/read_file/' versioneer.py
 
 touch 'version.py'
 echo '%version' >> version.py
@@ -54,6 +58,9 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 
 
 %changelog
+* Tue Feb 06 2024 Grigory Ustinov <grenka@altlinux.org> 2.4.3-alt2
+- Fixed FTBFS.
+
 * Mon Jan 27 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.4.3-alt1
 - Initial build.
 
