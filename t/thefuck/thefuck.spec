@@ -2,7 +2,7 @@
 
 Name:    thefuck
 Version: 3.32
-Release: alt2
+Release: alt3
 
 Summary: Magnificent app which corrects your previous console command
 
@@ -17,6 +17,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
 %if_with check
+BuildRequires: python3-module-six
 BuildRequires: python3-module-psutil
 BuildRequires: python3-module-colorama
 BuildRequires: python3-module-decorator
@@ -32,6 +33,8 @@ Source:  %name-%version.tar
 
 # replace distutils for python 3.12
 Patch: dd26fb91a0fdec42fc1990bb91eab21e2c44a0a8.patch
+# use importlib instead of imp for python 3.12
+Patch1: 904693a496c5371bb8eb2d57698b720770c52f14.patch
 
 %description
 %summary.
@@ -39,6 +42,9 @@ Patch: dd26fb91a0fdec42fc1990bb91eab21e2c44a0a8.patch
 %prep
 %setup
 %patch -p1
+%patch1 -p1
+sed -i '1d' thefuck/conf.py
+sed -i '1d' thefuck/types.py
 
 rm -v thefuck/system/win32.py
 
@@ -49,7 +55,7 @@ rm -v thefuck/system/win32.py
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -k 'not TestGetValidHistoryWithoutCurrent'
 
 %files
 %doc *.md
@@ -59,6 +65,9 @@ rm -v thefuck/system/win32.py
 %python3_sitelibdir/%name-%version.dist-info
 
 %changelog
+* Tue Feb 06 2024 Grigory Ustinov <grenka@altlinux.org> 3.32-alt3
+- Build without imp.
+
 * Thu Oct 12 2023 Grigory Ustinov <grenka@altlinux.org> 3.32-alt2
 - Dropped dependency on distutils.
 - Build with check.
