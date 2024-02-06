@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20240111
+Version: 20240203
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -94,6 +94,87 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/mellanox
 
 %changelog
+* Tue Feb 06 2024 Cronbuild Service <cronbuild@altlinux.org> 20240203-alt1
+- upstream changes (GIT b4b04a5c):
+  + amdgpu: update DMCUB to v0.0.203.0 for DCN314 and DCN32 (thx Hamza Mahfooz)
+  + wilc1000: update WILC1000 firmware to v16.1.2 (thx Ajay Singh)
+  + rtl_nic: add firmware for RTL8126A (thx Heiner Kallweit)
+  + intel: Add IPU6 firmware binaries (thx Bingbu Cao)
+  + ath11k: WCN6855 hw2.0: update to
+    WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.37 (thx Kalle Valo)
+  + qcom: Add Audio firmware for SM8550 HDK (thx Neil Armstrong)
+  + Revert "amdgpu: DMCUB updates for various AMDGPU ASICs" (thx Mario Limonciello)
+  + amdgpu: update SMU 13.0.0 firmware (thx Alex Deucher)
+  + amdgpu: update PSP 13.0.0 firmware (thx Alex Deucher)
+  + amdgpu: update GC 11.0.0 firmware (thx Alex Deucher)
+  + brcm: Add brcmfmac43430-sdio.xxx.txt nvram for the Chuwi Hi8
+    (CWI509) tablet (thx Hans de Goede)
+  + amdgpu: DMCUB updates for various AMDGPU ASICs (thx Tom Chung)
+  + qcom: Add Audio firmware for SM8650 MTP (thx Neil Armstrong)
+  + Add firmware for Cirrus CS35L41 on HP Consumer Laptops (thx Stefan Binding)
+  + Intel Bluetooth: Make spacing consistent with rest of WHENCE (thx Diederik de Haas)
+  + amdgpu: update raven2 firmware (thx Alex Deucher)
+  + amdgpu: update raven firmware (thx Alex Deucher)
+  + amdgpu: update SDMA 5.2.7 firmware (thx Alex Deucher)
+  + amdgpu: update PSP 13.0.8 firmware (thx Alex Deucher)
+  + amdgpu: update VCN 3.1.2 firmware (thx Alex Deucher)
+  + amdgpu: update SDMA 5.2.6 firmware (thx Alex Deucher)
+  + amdgpu: update PSP 13.0.5 firmware (thx Alex Deucher)
+  + amdgpu: update GC 10.3.6 firmware (thx Alex Deucher)
+  + amdgpu: add GC 11.0.1 rlc_1 firmware (thx Alex Deucher)
+  + amdgpu: update vega20 firmware (thx Alex Deucher)
+  + amdgpu: update VCN 4.0.0 firmware (thx Alex Deucher)
+  + amdgpu: update SMU 13.0.0 firmware (thx Alex Deucher)
+  + amdgpu: update PSP 13.0.0 firmware (thx Alex Deucher)
+  + amdgpu: update GC 11.0.0 firmware (thx Alex Deucher)
+  + amdgpu: update vega12 firmware (thx Alex Deucher)
+  + amdgpu: update vega10 firmware (thx Alex Deucher)
+  + amdgpu: update beige goby firmware (thx Alex Deucher)
+  + amdgpu: update picasso firmware (thx Alex Deucher)
+  + amdgpu: update dimgrey cavefish firmware (thx Alex Deucher)
+  + amdgpu: update vangogh firmware (thx Alex Deucher)
+  + amdgpu: update navy flounder firmware (thx Alex Deucher)
+  + amdgpu: update green sardine firmware (thx Alex Deucher)
+  + amdgpu: update sienna cichlid firmware (thx Alex Deucher)
+  + amdgpu: update PSP 13.0.11 firmware (thx Alex Deucher)
+  + amdgpu: update GC 11.0.4 firmware (thx Alex Deucher)
+  + amdgpu: update VCN 4.0.2 firmware (thx Alex Deucher)
+  + amdgpu: update PSP 13.0.4 firmware (thx Alex Deucher)
+  + amdgpu: update GC 11.0.1 firmware (thx Alex Deucher)
+  + amdgpu: update arcturus firmware (thx Alex Deucher)
+  + amdgpu: update navi14 firmware (thx Alex Deucher)
+  + amdgpu: add VCN 4.0.3 firmware (thx Alex Deucher)
+  + amdgpu: add SDMA 4.4.2 firmware (thx Alex Deucher)
+  + amdgpu: add SMU 13.0.6 firmware (thx Alex Deucher)
+  + amdgpu: add PSP 13.0.6 firmware (thx Alex Deucher)
+  + amdgpu: Add GC 9.4.3 firmware (thx Alex Deucher)
+  + amdgpu: update renoir firmware (thx Alex Deucher)
+  + amdgpu: update VCN 4.0.4 firmware (thx Alex Deucher)
+  + amdgpu: update SMU 13.0.7 firmware (thx Alex Deucher)
+  + amdgpu: update PSP 13.0.7 firmware (thx Alex Deucher)
+  + amdgpu: update GC 11.0.2 firmware (thx Alex Deucher)
+  + amdgpu: update navi12 firmware (thx Alex Deucher)
+  + amdgpu: update yellow carp firmware (thx Alex Deucher)
+  + amdgpu: update SMU 13.0.10 firmware (thx Alex Deucher)
+  + amdgpu: update SDMA 6.0.3 firmware (thx Alex Deucher)
+  + amdgpu: update PSP 13.0.10 firmware (thx Alex Deucher)
+  + amdgpu: update GC 11.0.3 firmware (thx Alex Deucher)
+  + amdgpu: update navi10 firmware (thx Alex Deucher)
+  + amdgpu: update aldebaran firmware (thx Alex Deucher)
+  + Update AMD cpu microcode (thx John Allen)
+  + RTL8192E: Remove old realtek WiFi firmware (thx Peter Robinson)
+  + Intel Bluetooth: Update firmware file for Magnetor Intel
+    Bluetooth AX101 (thx Lokendra Singh)
+  + Intel Bluetooth: Update firmware file for Magnetor Intel
+    Bluetooth AX203 (thx Lokendra Singh)
+  + Intel Bluetooth: Update firmware file for SolarF Intel Bluetooth
+    AX203 (thx Lokendra Singh)
+  + Intel Bluetooth: Update firmware file for SolarF Intel Bluetooth
+    AX211 (thx Lokendra Singh)
+  + Intel Bluetooth: Update firmware file for Solar Intel Bluetooth
+    AX211 (thx Lokendra Singh)
+  + amdgpu: DMCUB updates for DCN314 (thx Alex Hung)
+
 * Sun Jan 14 2024 Cronbuild Service <cronbuild@altlinux.org> 20240111-alt1
 - upstream changes (GIT b3132c18):
   + qcom: Update the firmware for Adreno a630 family of GPUs (thx Akhil P Oommen)
