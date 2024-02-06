@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: pioneerspacesim
-Version: 20230203
-Release: alt3
+Version: 20240203
+Release: alt1
 
 Summary: A game of lonely space adventure
 License: GPLv3 and BSD and MIT and Apache-2.0 and ALT-Public-Domain and CC-BY-SA-3.0 and Bitstream-Vera and OFL-1.1
@@ -19,8 +19,8 @@ ExcludeArch: armh i586
 Source: %name-%version.tar
 
 Patch1: suse-use-system-fmt.patch
-Patch2: alt-add-return-value.patch
 Patch3: alt-fix-fmt-wont-format-enum.patch
+Patch4: alt-fix-fmt-vsprintf-usage.patch
 Patch3500: alt-profiler-loongarch-ftbfs-fix.patch
 
 BuildRequires(pre): rpm-macros-cmake
@@ -62,19 +62,19 @@ This package contains models, scripts and other data for the game.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 %patch3 -p1
+%patch4 -p1
 %patch3500 -p1
-
-#fix the version, otherwise it will be set to the build date
-#also, instead of the commit hash, write the alt release version
-sed -i "/^string(TIMESTAMP PROJECT_VERSION/c\set(PROJECT_VERSION %version)\nset(PROJECT_VERSION_GIT %release)" CMakeLists.txt
 
 %build
 %cmake \
     -DUSE_SYSTEM_LIBGLEW=ON \
     -DCMAKE_INSTALL_PREFIX=%prefix \
-    -DPIONEER_DATA_DIR=%_datadir/%name \
+    -DPIONEER_DATA_DIR=%_datadir/%name/data \
+    -DPIONEER_INSTALL_DATADIR=%_datadir/%name \
+    -DUSE_SSE42=OFF \
+    -DUSE_AVX2=OFF \
+    -DPROJECT_VERSION_INFO="%release" \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo
 %cmake_build
 
@@ -84,13 +84,17 @@ sed -i "/^string(TIMESTAMP PROJECT_VERSION/c\set(PROJECT_VERSION %version)\nset(
 %install
 %cmake_install
 
+# add a prefix to the additional executable files, they are named too general:
+# editor, modelcompiler, etc.
+find %buildroot%_bindir -type f ! -name 'pioneer*' -exec rename '' pioneer- {} \;
+
 %check
 %_cmake__builddir/unittest
 
 %files
 %_bindir/*
 %_desktopdir/*.desktop
-%_datadir/appdata/*.xml
+%_datadir/metainfo/*.xml
 
 %files data
 %doc AUTHORS.txt Changelog.txt Modelviewer.txt Quickstart.txt README.md
@@ -104,6 +108,14 @@ sed -i "/^string(TIMESTAMP PROJECT_VERSION/c\set(PROJECT_VERSION %version)\nset(
 %_datadir/%name/
 
 %changelog
+* Mon Feb 05 2024 Anton Golubev <golubevan@altlinux.org> 20240203-alt1
+- new version
+- build without SSE4 and AVX, which support has been added
+- since the version is now hardcoded, no need to sed CMakeLists.txt
+- move metainfo from legacy location
+- add a prefix to the auxiliary executable files
+- fix fmt::vsprintf usage
+
 * Mon Oct 16 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20230203-alt3
 - NMU: fixed FTBFS on LoongArch
 
