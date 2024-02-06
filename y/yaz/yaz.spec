@@ -8,7 +8,7 @@
 
 Name: yaz
 Version: 5.25.0
-Release: alt3
+Release: alt4
 
 Summary: Z39.50/SRW/SRU toolkit
 
@@ -18,6 +18,9 @@ URL: http://www.indexdata.dk/%name/
 
 # Source-url: http://ftp.indexdata.dk/pub/%name/%name-%version.tar.gz
 Source: %name-%version.tar
+# missing header for glibc 2.39
+# https://github.com/indexdata/yaz/pull/105
+Patch: yaz-5.34.0-glibc-atoi-glibc.patch
 
 %define lname lib%name
 Requires: %lname = %version-%release
@@ -85,6 +88,7 @@ server and client.
 
 %prep
 %setup
+%patch -p1
 # Fix tests linking.
 sed -i 's| ../src/libyaz_icu\.la | ../src/libyaz.la&|' test/Makefile*
 
@@ -142,6 +146,9 @@ bzip2 --best --force --keep NEWS
 %_docdir/%name/
 
 %changelog
+* Tue Feb 06 2024 Grigory Ustinov <grenka@altlinux.org> 5.25.0-alt4
+- Fixed FTBFS.
+
 * Tue Feb 05 2019 Vitaly Lipatov <lav@altlinux.ru> 5.25.0-alt3
 - rebuild with libicu 6.3.1
 
