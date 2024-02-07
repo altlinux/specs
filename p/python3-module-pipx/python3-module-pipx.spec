@@ -5,7 +5,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.4.1
+Version: 1.4.3
 Release: alt1
 
 Summary: Install and Run Python Applications in Isolated Environments
@@ -55,6 +55,9 @@ BuildRequires: python3-module-pytest
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 07 2024 Anton Zhukharev <ancieg@altlinux.org> 1.4.3-alt1
+- Updated to 1.4.3.
+
 * Tue Jan 09 2024 Anton Zhukharev <ancieg@altlinux.org> 1.4.1-alt1
 - Updated to 1.4.1.
 
