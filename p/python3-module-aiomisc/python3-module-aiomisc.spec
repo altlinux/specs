@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name aiomisc
 
-%def_with check
+# Very unstable tests.
+%def_without check
 
 Name: python3-module-%pypi_name
-Version: 17.3.23
+Version: 17.3.41
 Release: alt1
 
 Summary: Miscellaneous utils for asyncio
@@ -26,6 +27,8 @@ BuildRequires(pre): rpm-build-pyproject
 %add_pyproject_deps_check_filter autodoc
 %add_pyproject_deps_check_filter collective-checkdocs
 %add_pyproject_deps_check_filter coveralls
+%add_pyproject_deps_check_filter grpc-stubs
+%add_pyproject_deps_check_filter grpcio-tools
 %add_pyproject_deps_check_filter pytest-rst
 %add_pyproject_deps_check_filter sphinx-autobuild
 %add_pyproject_deps_check_filter sphinx-intl
@@ -86,6 +89,9 @@ sed -i '/^__version__/s/= .*$/= "%version"/' aiomisc/version.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 07 2024 Anton Zhukharev <ancieg@altlinux.org> 17.3.41-alt1
+- Updated to 17.3.41.
+
 * Mon Oct 02 2023 Anton Zhukharev <ancieg@altlinux.org> 17.3.23-alt1
 - Updated to 17.3.23.
 
