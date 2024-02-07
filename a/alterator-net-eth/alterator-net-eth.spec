@@ -1,5 +1,5 @@
 Name: alterator-net-eth
-Version: 5.2.6
+Version: 5.2.7
 Release: alt1
 
 Source:%name-%version.tar
@@ -77,6 +77,9 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %_sysconfdir/hooks/hostname.d/*
 
 %changelog
+* Wed Feb 07 2024 Mikhail Efremov <sem@altlinux.org> 5.2.7-alt1
+- ui: Fix iface info in the web UI (closes: #49256).
+
 * Fri Jan 12 2024 Mikhail Efremov <sem@altlinux.org> 5.2.6-alt1
 - ui: Fix reading IP addresses on init.
 - ui: Cleanup IP configuration in 'static' mode (closes: #48920).
