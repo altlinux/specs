@@ -1,4 +1,4 @@
-%define kernel_base_version 6.5
+%define kernel_base_version 6.6
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
@@ -30,7 +30,7 @@ Summary: Linux kernel C header files for use by glibc and other userspace softwa
 #  16 /* SPDX-License-Identifier: LGPL-2.1+ WITH Linux-syscall-note */
 #  24 # SPDX-License-Identifier: GPL-2.0
 #  24 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause) */
-#  25 /* SPDX-License-Identifier: GPL-2.0-only WITH Linux-syscall-note */
+#  26 /* SPDX-License-Identifier: GPL-2.0-only WITH Linux-syscall-note */
 # 165 /* SPDX-License-Identifier: GPL-2.0+ WITH Linux-syscall-note */
 # 993 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
 License: GPL-2.0-only with Linux-syscall-note
@@ -300,6 +300,9 @@ cd - > /dev/null
 %hdr_dir/include/asm
 
 %changelog
+* Wed Feb 07 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.6-alt1
+- v6.5 -> v6.6.
+
 * Sat Sep 23 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.5-alt1
 - v6.4 -> v6.5.
 
