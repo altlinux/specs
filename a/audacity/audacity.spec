@@ -14,7 +14,7 @@
 
 Name: audacity
 Version: 3.4.2
-Release: alt1.1
+Release: alt1.2
 
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
@@ -66,6 +66,7 @@ BuildRequires: pkgconfig(jack)
 BuildRequires: pkgconfig(libavformat)
 BuildRequires: pkgconfig(lilv-0)
 BuildRequires: pkgconfig(libjpeg)
+BuildRequires: pkgconfig(libturbojpeg)
 BuildRequires: pkgconfig(lv2)
 BuildRequires: pkgconfig(mad)
 BuildRequires: pkgconfig(ogg)
@@ -249,6 +250,9 @@ patchelf --print-needed %buildroot/%_libdir/audacity/modules/mod-mp3.so | grep -
 %_datadir/%name/help
 
 %changelog
+* Wed Feb 07 2024 Ivan A. Melnikov <iv@altlinux.org> 3.4.2-alt1.2
+- Add libturbojpeg build dependency (fixes FTBFS)
+
 * Thu Nov 23 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.4.2-alt1.1
 - Fixed build for Elbrus
 
