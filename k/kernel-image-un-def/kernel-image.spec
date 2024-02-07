@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
-Release: alt1
+Release: alt2
 epoch:1
 %define kernel_base_version	6.6
-%define kernel_sublevel	.15
+%define kernel_sublevel	.16
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -589,6 +589,13 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Feb 07 2024 Vitaly Chikunov <vt@altlinux.org> 1:6.6.16-alt2
+- config: Disable CONFIG_VIDEO_SOLO6X10 on 32-bit arches.
+- config: CONFIG_CAN_CALC_BITTIMING=y (ALT#49276).
+
+* Tue Feb 06 2024 Kernel Bot <kernelbot@altlinux.org> 1:6.6.16-alt1
+- v6.6.16 (2024-02-05).
+
 * Thu Feb 01 2024 Kernel Bot <kernelbot@altlinux.org> 1:6.6.15-alt1
 - v6.6.15 (2024-01-31).
 
