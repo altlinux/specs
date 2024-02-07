@@ -3,7 +3,7 @@
 %def_enable gtk_doc
 
 %ifarch %ix86 armh
-%def_disable check
+%def_enable check
 %else
 %def_enable check
 %endif
@@ -13,7 +13,7 @@
 %endif
 
 Name: orc
-Version: %ver_major.36
+Version: %ver_major.37
 Release: alt1
 
 Summary: The Oil Runtime Compiler
@@ -150,6 +150,10 @@ rm -f %buildroot/%_libdir/lib%name-test-%ver_major.a
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Wed Feb 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.37-alt1
+- 0.4.37
+- enabled %%check for %%ix86 and armh
+
 * Sat Jan 27 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.36-alt1
 - 0.4.36
 
