@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.11.0
+Version: 1.12.0
 Release: alt1
 
 Summary: A python refactoring library
@@ -15,13 +15,13 @@ Vcs: https://github.com/python-rope/rope
 
 BuildArch: noarch
 
-Source0: %pypi_name-%version.tar
+Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %add_pyproject_deps_check_filter pip-tools
 %pyproject_builddeps_metadata_extra dev
@@ -30,10 +30,11 @@ BuildRequires: python3-modules-sqlite3
 %endif
 
 %description
-%summary
+%summary.
 
 %prep
-%setup -n %pypi_name-%version
+%setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -49,11 +50,16 @@ BuildRequires: python3-modules-sqlite3
 %pyproject_run_pytest -vra -k 'not test_search_submodule'
 
 %files
-%doc COPYING README.rst CHANGELOG.md docs
-%python3_sitelibdir/%pypi_name
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%doc COPYING README.rst CHANGELOG.md
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 07 2024 Anton Zhukharev <ancieg@altlinux.org> 1.12.0-alt1
+- Updated to 1.12.0.
+- Built from upstream VCS.
+- Stopped shipping unrendered docs.
+
 * Tue Nov 07 2023 Anton Zhukharev <ancieg@altlinux.org> 1.11.0-alt1
 - Updated to 1.11.0.
 
