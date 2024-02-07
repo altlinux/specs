@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 2.9
+%define ver_major 2.10
 %define sover 9
 %def_disable docs
 
@@ -125,6 +125,9 @@ mkdir -p %buildroot%_sysconfdir/%name
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Feb 07 2024 Yuri N. Sedunov <aris@altlinux.org> 2.10.0-alt1
+- 2.10.0
+
 * Mon Nov 27 2023 Yuri N. Sedunov <aris@altlinux.org> 2.9.0-alt1
 - 2.9.0
 
