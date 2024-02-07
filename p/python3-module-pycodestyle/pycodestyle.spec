@@ -4,11 +4,11 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.11.0
+Version: 2.11.1
 Release: alt1
 
 Summary: Python style guide checker
-License: Expat
+License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/pycodestyle/
 Vcs: https://github.com/pycqa/pycodestyle
@@ -56,6 +56,10 @@ mv %buildroot%_bindir/pycodestyle{,.py3}
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 07 2024 Anton Zhukharev <ancieg@altlinux.org> 2.11.1-alt1
+- Updated to 2.11.1.
+- Distributed under MIT license.
+
 * Mon Aug 14 2023 Stanislav Levin <slev@altlinux.org> 2.11.0-alt1
 - 2.10.0 -> 2.11.0.
 
