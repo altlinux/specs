@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.2.1
-Release: alt1
+Release: alt2
 
 Summary: Removes unused imports and unused variables as reported by pyflakes
 License: MIT
@@ -17,11 +17,11 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -40,6 +40,7 @@ autoflake also removes useless pass statements by default.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -48,10 +49,8 @@ autoflake also removes useless pass statements by default.
 
 %install
 %pyproject_install
-
 rm %buildroot%python3_sitelibdir/{LICENSE,README.md}
-
-find %buildroot%python3_sitelibdir -name 'test_*' -exec rm -rfv {} \;
+find %buildroot%python3_sitelibdir -name 'test_*' -type f -delete
 
 %check
 %pyproject_run_unittest test_autoflake.py
@@ -59,9 +58,14 @@ find %buildroot%python3_sitelibdir -name 'test_*' -exec rm -rfv {} \;
 %files
 %doc LICENSE README.md
 %_bindir/%pypi_name
-%python3_sitelibdir/*
+%python3_sitelibdir/%pypi_name.py
+%python3_sitelibdir/__pycache__/%pypi_name.*.pyc
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 07 2024 Anton Zhukharev <ancieg@altlinux.org> 2.2.1-alt2
+- Fixed FTBFS.
+
 * Fri Sep 01 2023 Anton Zhukharev <ancieg@altlinux.org> 2.2.1-alt1
 - Updated to 2.2.1.
 
