@@ -14,7 +14,7 @@
 
 Name: python3-module-%pyname
 Version: 0.15.0
-Release: alt1
+Release: alt2
 Summary: Ahead of Time Python compiler for numeric kernels
 License: BSD and MIT
 Provides: %pyname
@@ -45,6 +45,7 @@ BuildRequires: gcc-c++
 BuildRequires: unzip
 BuildRequires: ipython3
 BuildRequires: python3-module-pip
+BuildRequires: libopenblas-devel
 %endif
 
 %if_with docs
@@ -114,6 +115,9 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 %endif
 
 %changelog
+* Tue Feb 06 2024 Anton Vyatkin <toni@altlinux.org> 0.15.0-alt2
+- Fixed FTBFS.
+
 * Sun Jan 21 2024 Anton Vyatkin <toni@altlinux.org> 0.15.0-alt1
 - New version 0.15.0.
 
