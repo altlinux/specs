@@ -2,7 +2,7 @@
 
 Name: luajit
 Version: 2.1
-Release: alt14.gitff6c496
+Release: alt15.git0d313b2
 
 Summary: a Just-In-Time Compiler for Lua
 License: MIT
@@ -72,7 +72,7 @@ It may be embedded or used as a general-purpose, stand-alone language.
 		 INSTALL_LIB=%buildroot%_libdir \
 		 Q=
 
-mv %buildroot%_bindir/luajit-2.1.0-beta3 %buildroot%_bindir/luajit
+mv %buildroot%_bindir/luajit-2.1.* %buildroot%_bindir/luajit
 
 
 %files
@@ -93,6 +93,9 @@ mv %buildroot%_bindir/luajit-2.1.0-beta3 %buildroot%_bindir/luajit
 %_libdir/*.a
 
 %changelog
+* Tue Feb 6 2024 Vladimir Didenko <cow@altlinux.org> 2.1-alt15.git0d313b2
+- sync with the latest version of 2.1 branch
+
 * Tue Aug 22 2023 Ildar Mulyukov <ildar@altlinux.ru> 2.1-alt14.gitff6c496
 - NMU: add req: rpm-build-lua to lib%name-devel for Lua auto req/prov
 
