@@ -6,7 +6,7 @@
 %define hooks_dir %_prefix/libexec/ca-trust/update.d
 
 Name: ca-trust
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
 Summary: CA certificates and associated trust infrastructure
@@ -22,7 +22,7 @@ Source4: extract-pem.hook
 Source5: extract-java.hook
 Source6: extract-directory-hash.hook
 
-BuildRequires: asciidoc asciidoc-a2x
+BuildRequires: asciidoc xmlto
 
 Requires: p11-kit-trust
 Requires: %_datadir/pki/ca-trust-source/ca-bundle.trust.p11-kit
@@ -79,9 +79,7 @@ file named ca-certificates.crt, as Debian does.
 pushd docs
 # update-ca-trust manpage
 asciidoc -v -d manpage -b docbook update-ca-trust.8.txt
-xsltproc --nonet -o update-ca-trust.8 \
-         /etc/asciidoc/docbook-xsl/manpage.xsl \
-         update-ca-trust.8.xml
+xmlto -v man update-ca-trust.8.xml
 popd
 
 %install
@@ -180,6 +178,9 @@ fi
 %hooks_dir/40-extract-directory-hash.hook
 
 %changelog
+* Wed Feb 07 2024 Mikhail Efremov <sem@altlinux.org> 0.1.5-alt1
+- Use xmlto for the xml-to-man conversion.
+
 * Wed Oct 19 2022 Mikhail Efremov <sem@altlinux.org> 0.1.4-alt1
 - Added directory-hash subpackage (closes: #44052).
 
