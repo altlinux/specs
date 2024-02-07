@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.27.10
-Release: alt2
+Release: alt3
 %K5init
 
 Group: Graphical desktop/KDE
@@ -20,6 +20,7 @@ Source: %rname-%version.tar
 Source10: kcm_multicomponentchooser-ru-add.po
 Source11: kcm_touchpad-ru-add.po
 Source1: multicomponentchooser.tar
+Patch1: alt-def-color-scheme.patch
 Patch2: alt-menu-icon.patch
 Patch3: alt-def-apps-menu.patch
 Patch4: alt-def-kicker.patch
@@ -123,6 +124,7 @@ Common polkit files for %name
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -254,6 +256,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Wed Feb 07 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.10-alt3
+- set quick settings default color scheme
+
 * Thu Feb 01 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.10-alt2
 - don't indicate audiostreams on taskbar by default
 
