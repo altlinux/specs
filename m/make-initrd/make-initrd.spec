@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.42.0
+Version: 2.43.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -382,6 +382,23 @@ fi
 %config(noreplace) %_sysconfdir/initrd.mk.d/guestfs.mk.example
 
 %changelog
+* Wed Feb 07 2024 Alexey Gladkov <legion@altlinux.ru> 2.43.0-alt1
+- New version (2.43.0).
+- Feature overlayfs:
+  + New feature to take lowerdirs into account.
+- Feature guestfs:
+  + Add gost checksum utilities.
+- Feature pipeline:
+  + Add dependency on additional utilities.
+  + Register ping= cmdline parameter.
+- Feature lkrg:
+  + Fix LSM header for service (ALT#49219).
+- Feature multipath:
+  + Add plugins directory.
+  + Logically separate the multipath and sg3_utils files.
+- Feature plymouth:
+  + Use the library list to find the plymouth directory.
+
 * Mon Jan 22 2024 Alexey Gladkov <legion@altlinux.ru> 2.42.0-alt1
 - New version (2.42.0) (ALT#49122).
 - Feature network:
