@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    pdal
-Version: 2.6.2
+Version: 2.6.3
 Release: alt1
 
 Summary: PDAL is Point Data Abstraction Library. GDAL for point cloud data.
@@ -76,6 +76,9 @@ sed -i '/{CMAKE_DL_LIBS}/a unwind' CMakeLists.txt
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Wed Feb 07 2024 Andrey Cherepanov <cas@altlinux.org> 2.6.3-alt1
+- New version.
+
 * Tue Dec 12 2023 Andrey Cherepanov <cas@altlinux.org> 2.6.2-alt1
 - New version.
 
