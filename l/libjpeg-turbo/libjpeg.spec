@@ -1,6 +1,6 @@
 Name: libjpeg-turbo
 Version: 3.0.2
-Release: alt1
+Release: alt2
 Epoch: 2
 
 Summary: A SIMD-accelerated library for manipulating JPEG image format files
@@ -32,6 +32,9 @@ Group: System/Libraries
 Summary: Development tools for programs which will use the libjpeg library
 Group: Development/C
 Requires: libjpeg = %epoch:%version-%release
+Requires: libturbojpeg = %epoch:%version-%release
+Provides: libturbojpeg-devel = %epoch:%version-%release
+Obsoletes: libturbojpeg-devel
 %ifnarch %ix86
 Provides: libjpeg-mmx-devel
 %endif
@@ -53,11 +56,6 @@ Requires: libjpeg = %epoch:%version-%release
 Summary: A turbojpeg library
 Group: System/Libraries
 Requires: libjpeg = %epoch:%version-%release
-
-%package -n libturbojpeg-devel
-Summary: Development files for the turbojpeg library
-Group: Development/C
-Requires: libturbojpeg = %epoch:%version-%release
 
 %description
 libjpeg-turbo is a derivative of libjpeg which uses SIMD instructions
@@ -89,9 +87,6 @@ a JPEG file.  Wrjpgcom inserts text comments into a JPEG file.
 
 %description -n libturbojpeg
 This package contains a turbojpeg shared library.
-
-%description -n libturbojpeg-devel
-This package contains development files for the turbojpeg library.
 
 %ifnarch armh i586
 %def_enable profiling
@@ -178,11 +173,14 @@ install -pm644 README* change.log \
 
 %files -n libjpeg-devel
 %_libdir/libjpeg.so
+%_libdir/libturbojpeg.so
 %_includedir/j*
+%_includedir/turbojpeg.h
 %dir %docdir
 %docdir/[^CLR]*
-%_pkgconfigdir/libjpeg.pc
 %_libdir/cmake/libjpeg-turbo
+%_pkgconfigdir/libjpeg.pc
+%_pkgconfigdir/libturbojpeg.pc
 
 %if_enabled static
 %files -n libjpeg-devel-static
@@ -192,12 +190,10 @@ install -pm644 README* change.log \
 %files -n libturbojpeg
 %_libdir/libturbojpeg.so.*
 
-%files -n libturbojpeg-devel
-%_libdir/libturbojpeg.so
-%_includedir/turbojpeg.h
-%_pkgconfigdir/libturbojpeg.pc
-
 %changelog
+* Wed Feb 07 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 2:3.0.2-alt2
+- merged back devel part of libturbojpeg (closes: 49320)
+
 * Tue Feb 06 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 2:3.0.2-alt1
 - 3.0.2 released (fixes: CVE-2023-2804)
 
