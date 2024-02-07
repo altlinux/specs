@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.2.0
+Version: 4.3.1
 Release: alt1
 Summary: pytest plugin for Qt (PyQt4, PyQt5 and PySide) application testing
 License: MIT
@@ -62,6 +62,9 @@ export TOX_TESTENV_PASSENV="XDG_CONFIG_DIRS"
 %python3_sitelibdir/pytest_qt-%version.dist-info
 
 %changelog
+* Wed Feb 07 2024 Anton Vyatkin <toni@altlinux.org> 4.3.1-alt1
+- New version 4.3.1.
+
 * Wed Dec 07 2022 Anton Farygin <rider@altlinux.ru> 4.2.0-alt1
 - 4.0.2 -> 4.2.0
 - enabled tests
