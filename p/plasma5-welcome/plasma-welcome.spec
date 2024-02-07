@@ -2,7 +2,7 @@
 
 Name: plasma5-welcome
 Version: 5.27.10
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -76,6 +76,9 @@ Requires: %name-common = %version-%release
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Feb 07 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.10-alt2
+- fix russian translation (see bug#47320)
+
 * Thu Dec 07 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.10-alt1
 - new version
 
