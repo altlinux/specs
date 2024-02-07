@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: flatseal
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Manage Flatpak permissions
@@ -35,7 +35,7 @@ Requires: yelp
 
 Requires: typelib(Adw) = 1
 Requires: typelib(WebKit) = 6.0
-Requires: typelib(AppStream)
+Requires: typelib(AppStream) = 1.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson yelp-tools
@@ -73,6 +73,9 @@ Flatpak applications.
 %doc README* DOCUMENTATION*
 
 %changelog
+* Wed Feb 07 2024 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
+- 2.1.1
+
 * Wed Oct 18 2023 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
 - first build for Sisyphus
 
