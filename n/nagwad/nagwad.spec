@@ -1,6 +1,8 @@
+%define icinga_user icinga
+
 Name: 	  nagwad
-Version:  0.10.2
-Release:  alt2
+Version:  0.10.3
+Release:  alt1
 
 Summary:  Nagios watch daemon
 License:  GPLv3
@@ -58,6 +60,7 @@ Summary: Icinga-2 configuration for a nagwad node
 Group:   Monitoring
 BuildArch: noarch
 Requires: %name-service = %version-%release
+Requires: icinga2
 
 %description icinga
 These are Icinga-2 configuration templates for monitoring a nagwad-node.
@@ -157,6 +160,9 @@ fi
     ${_mk_syscall_rules_relax:+--relax} \
     -c %_sysconfdir/nagwad/eperm-audit-rules.conf
 
+%post icinga
+usermod -a -G %name %icinga_user
+
 %files service
 %doc README.md signal.html signal.md
 %_sbindir/nagwad
@@ -195,6 +201,15 @@ fi
 %_bindir/nsca-shell
 
 %changelog
+* Wed Feb 07 2024 Paul Wolneykien <manowar@altlinux.org> 0.10.3-alt1
+- Updated signal.md: host template names and new packages for
+  installation.
+- signal.md: Added a note about agent configuration in Icinga
+  Director.
+- Fix: Automatically added 'icinga' user to the 'nagwad' group
+  ('nagwad-icinga' now depends on 'icinga2' package).
+- Fix Icinga Director basket: added Icinga Agent settings.
+
 * Tue Feb 06 2024 Paul Wolneykien <manowar@altlinux.org> 0.10.2-alt2
 - Fixed project URL.
 
