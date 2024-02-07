@@ -24,7 +24,7 @@
 
 Name:    freecad
 Version: 0.21.2
-Release: alt3
+Release: alt4
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -42,6 +42,7 @@ Patch1: %name-remove-3rdParty.patch
 Patch2: freecad-0.19.2-alt-boost-link.patch
 Patch3: freecad-alt-fix-icon-name-in-menu.patch
 Patch4: freecad-unbundled-pycxx.patch
+Patch5: freecad-vtk9.3.patch
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
@@ -162,6 +163,7 @@ rm -rf src/3rdParty
 %patch4 -p1
 rm -rf src/CXX
 %endif
+%patch5 -p1
 
 %ifarch %e2k
 sed -i "/-fext-numeric-literals/d" src/Mod/Path/App/CMakeLists.txt
@@ -283,6 +285,9 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_datadir/thumbnailers/FreeCAD.thumbnailer
 
 %changelog
+* Wed Feb 07 2024 Grigory Ustinov <grenka@altlinux.org> 1:0.21.2-alt4
+- Fixed build with vtk9.3.
+
 * Fri Jan 05 2024 Grigory Ustinov <grenka@altlinux.org> 1:0.21.2-alt3
 - Build without bundled pycxx.
 
