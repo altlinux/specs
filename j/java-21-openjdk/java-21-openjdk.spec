@@ -34,6 +34,10 @@
 # With LTO flags enabled, debuginfo checks fail for some reason. Disable
 # LTO for a passing build. This really needs to be looked at.
 %define _lto_cflags %{nil}
+%ifarch loongarch64
+# See https://github.com/loongson/jdk21u/issues/15
+%define optflags_lto %nil
+%endif
 
 # note: parametrized macros are order-sensitive (unlike not-parametrized) even with normal macros
 # also necessary when passing it as parameter to other macros. If not macro, then it is considered a switch
@@ -348,7 +352,7 @@
 
 Name:    java-21-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt1
+Release: alt2
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -1986,6 +1990,10 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 %endif
 
 %changelog
+* Wed Feb 07 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0:21.0.2.0.13-alt2
+- NMU: worked around FTBFS on LoongArch: disabled LTO until the problem
+  is solved properly, see https://github.com/loongson/jdk21u/issues/15
+
 * Mon Feb 05 2024 Andrey Cherepanov <cas@altlinux.org> 0:21.0.2.0.13-alt1
 - New version.
 - Security fixes:
