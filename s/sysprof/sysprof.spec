@@ -17,7 +17,7 @@
 %endif
 
 Name: sysprof
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Sysprof kernel based performance profiler for Linux
@@ -111,6 +111,9 @@ developing applications that use GtkGHex library.
 %_pkgconfigdir/%name-capture-%capture_ver.pc
 
 %changelog
+* Wed Feb 07 2024 Yuri N. Sedunov <aris@altlinux.org> 45.2-alt1
+- 45.2
+
 * Tue Oct 24 2023 Yuri N. Sedunov <aris@altlinux.org> 45.1-alt1
 - 45.1
 
