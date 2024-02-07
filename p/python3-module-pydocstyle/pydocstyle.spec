@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 6.3.0
-Release: alt1
+Release: alt2
 Summary: Python docstring style checker
 License: MIT
 Group: Development/Python3
@@ -16,6 +16,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+Patch1: fix-tests-py312.patch
 %pyproject_runtimedeps_metadata
 # Conflicts due to binaries in /usr/bin
 Conflicts: python-module-%pypi_name
@@ -63,6 +64,9 @@ sed -i 's/^version = "@VERSION@"$/version = "%version"/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 07 2024 Anton Vyatkin <toni@altlinux.org> 6.3.0-alt2
+- Fixed tests pass with python3.12.
+
 * Wed May 17 2023 Stanislav Levin <slev@altlinux.org> 6.3.0-alt1
 - 6.2.3 -> 6.3.0.
 
