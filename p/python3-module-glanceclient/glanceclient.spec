@@ -1,26 +1,25 @@
-%define        _unpackaged_files_terminate_build 1
-%define        pypiname python-glanceclient
-%define        modname glanceclient
-%define        distname python_glanceclient
-%define        sname glance
-%def_disable   check
-%def_enable    doc
+%define oname glanceclient
+%def_without check
+%def_with docs
 
-Name:          python3-module-%pypiname
-Version:       4.4.0
-Release:       alt1
-Summary:       OpenStack Image API Client Library
-License:       Apache-2.0
-Group:         Development/Python3
-Url:           https://opendev.org/openstack/python-glanceclient
-Vcs:           https://opendev.org/openstack/python-glanceclient.git
+Name: python3-module-%oname
+Version: 4.4.0
+Release: alt2
 
-Source:        %name-%version.tar
-Source1:       %name.watch
-BuildArch:     noarch
+Summary: OpenStack Image API Client Library
+
+License: Apache-2.0
+Group: Development/Python3
+Url: https://pypi.org/project/python-glanceclient
+
+Source: %oname-%version.tar
+Source1: %oname.watch
+
+BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(wheel)
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-prettytable >= 0.7.1
 BuildRequires: python3-module-keystoneauth1 >= 3.6.2
@@ -31,7 +30,7 @@ BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-wrapt >= 1.7.0
 BuildRequires: python3-module-OpenSSL >= 17.1.0
 
-%if_enabled    check
+%if_with check
 BuildRequires: python3-module-hacking >= 3.0.1
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-os-client-config >= 1.28.0
@@ -44,85 +43,88 @@ BuildRequires: python3-module-tempest >= 17.1.0
 BuildRequires: python3-module-requests-mock >= 1.2.0
 %endif
 
-%if_enabled    doc
-BuildRequires: python3(sphinx)
-BuildRequires: python3(sphinxcontrib.apidoc)
+%if_with docs
+BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
-BuildRequires: python3-module-reno >= 2.5.0
+BuildRequires: python3-module-sphinxcontrib-apidoc
 %endif
 
 %description
 There's a Python API (the glanceclient module), and a command-line script
 (glance). Each implements 100 percent of the OpenStack Glance API.
 
+%package tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: %name = %EVR
 
-%package       tests
-Summary:       Tests for %pypiname
-Group:         Development/Python3
-Requires:      %name = %EVR
+%description tests
+This package contains tests for %oname.
 
-%description   tests
-This package contains tests for %pypiname.
+%if_with docs
+%package doc
+Summary: Documentation for %oname
+Group: Development/Documentation
 
-
-%if_enabled    doc
-%package       doc
-Summary:       Documentation for %pypiname
-Group:         Development/Documentation
-
-%description   doc
-This package contains documentation for %pypiname.
+%description doc
+This package contains documentation for %oname.
 %endif
 
-
 %prep
-%setup
+%setup -n %oname-%version
+
+# Remove bundled egg-info
+rm -rfv *.egg-info
 
 %build
-export PBR_VERSION=%version
 %pyproject_build
 
-%if_enabled doc
+%if_with docs
 export PYTHONPATH="$PWD"
+# generate html docs
 sphinx-build-3 doc/source html
+# generate man page
 sphinx-build-3 -b man doc/source man
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
 %pyproject_install
-%{?!_disable_doc:install -pDm 644 man/%sname.1 %buildroot%_man1dir/%pypiname.1}
+
+%if_with docs
+# install man page
+install -pDm 644 man/glance.1 %buildroot%_man1dir/%oname.1
+%endif
 
 # install bash completion
-install -pDm 644 tools/%sname.bash_completion %buildroot%_sysconfdir/bash_completion.d/%sname.bash_completion
+install -pDm 644 tools/glance.bash_completion \
+  %buildroot%_sysconfdir/bash_completion.d/glance.bash_completion
 
 %check
-%pyproject_run_pytest
-%pyproject_run_unittest
+%__python3 -m stestr run
 
 %files
-%doc LICENSE *.rst
-%_bindir/%sname
-%python3_sitelibdir/%modname
-%exclude %python3_sitelibdir/%modname/tests/
-%python3_sitelibdir/%distname-%version.dist-info/
-%dir %_sysconfdir/bash_completion.d/
+%doc LICENSE AUTHORS ChangeLog *.rst
+%_bindir/glance
+%python3_sitelibdir/%oname
+%python3_sitelibdir/python_glanceclient-%version.dist-info
+%dir %_sysconfdir/bash_completion.d
 %_sysconfdir/bash_completion.d/glance.bash_completion
+%exclude %python3_sitelibdir/%oname/tests
 
-%files         tests
-%doc LICENSE *.rst
-%python3_sitelibdir/%modname/tests
+%files tests
+%python3_sitelibdir/%oname/tests
 
-%if_enabled    doc
-%files         doc
-%doc LICENSE *.rst
-%{?!_disable_doc:%doc html}
-%_man1dir/%pypiname.1.xz
+%if_with docs
+%files doc
+%doc LICENSE *.rst html
+%_man1dir/%oname.1.xz
 %endif
 
 %changelog
-* Wed Feb 07 2024 Pavel Skrylev <majioa@altlinux.org> 4.4.0-alt1
-- ^ 4.3.0 -> 4.4.0
-- ! fixed spec format
+* Wed Feb 07 2024 Grigory Ustinov <grenka@altlinux.org> 4.4.0-alt2
+- Bring back normal package.
 
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 4.3.0-alt1.1
 - Moved on modern pyproject macros.
