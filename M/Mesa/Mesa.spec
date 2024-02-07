@@ -10,7 +10,7 @@
 %define radeon_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k loongarch64 riscv64
 %define vulkan_radeon_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k loongarch64 riscv64
 %define nouveau_arches %ix86 x86_64 armh aarch64 ppc64le mipsel %e2k riscv64
-%define vulkan_nouveau_arches %ix86 x86_64 armh aarch64 ppc64le mipsel %e2k
+#define vulkan_nouveau_arches %ix86 x86_64 armh aarch64 ppc64le mipsel %e2k
 %define intel_arches %ix86 x86_64
 %define vulkan_intel_arches %ix86 x86_64
 %define vulkan_virtio_arches %ix86 x86_64 aarch64 ppc64le mipsel loongarch64 riscv64
@@ -74,9 +74,9 @@
 %ifarch %vulkan_radeon_arches
 %vulkan_drivers_add amd
 %endif
-%ifarch %vulkan_nouveau_arches
-%vulkan_drivers_add nouveau-experimental
-%endif
+#ifarch #vulkan_nouveau_arches
+#vulkan_drivers_add nouveau-experimental
+#endif
 %ifarch %vulkan_virtio_arches
 %vulkan_drivers_add virtio
 %endif
@@ -92,8 +92,8 @@
 %endif
 %vulkan_drivers_add swrast
 
-%define ver_major 23.3
-%define ver_minor 5
+%define ver_major 24.0
+%define ver_minor 0
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -337,7 +337,7 @@ Mesa-based DRI drivers
 	-Dgallium-drivers='%{?gallium_drivers}' \
 	-Dvulkan-drivers='%{?vulkan_drivers}' \
 	-Dvulkan-layers='device-select, overlay' \
-	-Dvideo-codecs='vc1dec, h264dec, h264enc, h265dec, h265enc' \
+	-Dvideo-codecs='vc1dec, h264dec, h264enc, h265dec, h265enc, av1dec, av1enc, vp9dec' \
 %ifarch %vdpau_arches
 	-Dgallium-vdpau=enabled \
 %endif
@@ -559,10 +559,10 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_libdir/X11/modules/dri/nouveau_*dri.so
 %_libdir/dri/nouveau_drv_video.so
 %_libdir/vdpau/libvdpau_nouveau.so*
-%ifarch %vulkan_nouveau_arches
-%_libdir/libvulkan_nouveau.so
-%_datadir/vulkan/icd.d/nouveau_icd*.json
-%endif
+#ifarch #vulkan_nouveau_arches
+#_libdir/libvulkan_nouveau.so
+#_datadir/vulkan/icd.d/nouveau_icd*.json
+#endif
 %ifarch %gallium_opencl_arches
 %_libdir/gallium-pipe/pipe_nouveau.so
 %endif
@@ -608,6 +608,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Feb 01 2024 Valery Inozemtsev <shrek@altlinux.ru> 4:24.0.0-alt1
+- 24.0.0
+
 * Thu Feb 01 2024 Valery Inozemtsev <shrek@altlinux.ru> 4:23.3.5-alt1
 - 23.3.5
 
