@@ -1,0 +1,36 @@
+Name: tree-sitter-c
+Version: 0.20.7
+Release: alt1
+
+Summary: C grammar for tree-sitter
+License: MIT
+Group: Development/Other
+Url: https://github.com/tree-sitter/tree-sitter-c
+
+Source: %name-%version.tar
+
+%description
+%summary
+
+%prep
+%setup
+
+%build
+gcc -shared %optflags %optflags_shared -Isrc src/parser.c -o c.so
+
+%install
+install -pm0644 -D c.so %buildroot%_libdir/libtree-sitter-c.so
+install -pm0644 -D src/grammar.json %buildroot%_libdir/tree-sitter-c/src/grammar.json
+install -pm0644 package.json %buildroot%_libdir/tree-sitter-c
+
+%files
+%doc LICENSE README*
+%_libdir/*.so
+%_libdir/tree-sitter-c
+
+%changelog
+* Wed Feb 07 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.20.7-alt1
+- 0.20.7 released
+
+* Mon Oct 23 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.20.6-alt1
+- initial
