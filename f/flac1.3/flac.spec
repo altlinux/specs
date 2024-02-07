@@ -1,14 +1,9 @@
-%set_verify_elf_method strict
-%define _unpackaged_files_terminate_build 1
-%define _stripped_files_terminate_build 1
-%define flacdocs %_docdir/%name
+%define soversion 8
+%define cppsoversion 6
 
-%define soversion 12
-%define cppsoversion 10
-
-Name: flac
-Version: 1.4.3
-Release: alt1
+Name: flac1.3
+Version: 1.3.3.0.79.37d1
+Release: alt3
 
 Summary: An encoder/decoder for the Free Lossless Audio Codec
 License: GPL-2.0-or-later and BSD-3-Clause and GFDL-1.1-or-later
@@ -18,13 +13,12 @@ Vcs: https://github.com/xiph/flac.git
 # git://git.altlinux.org/gears/f/flac.git
 Source: %name-%version-%release.tar
 
-Requires: lib%name%soversion = %EVR
+Requires: libflac%soversion = %EVR
 
 %def_disable static
 %{?_enable_static:BuildRequires: glibc-devel-static}
 
 BuildPreReq: gcc-c++ libogg-devel
-BuildRequires: pandoc
 
 %description
 FLAC stands for Free Lossless Audio Codec.  Grossly oversimplified, FLAC is
@@ -35,14 +29,12 @@ editor for FLAC files and input plugins for various music players.
 
 This package contains the command-line tools and documentation.
 
-%package -n lib%name%soversion
+%package -n libflac%soversion
 Summary: FLAC shared library
 Group: System/Libraries
 License: BSD-3-Clause
-Provides: lib%name = %version
-Obsoletes: lib%name < %version
 
-%description -n lib%name%soversion
+%description -n libflac%soversion
 FLAC stands for Free Lossless Audio Codec.  Grossly oversimplified, FLAC is
 similar to Ogg Vorbis, but lossless.  The FLAC project consists of the stream
 format, reference encoders and decoders in library form, flac, a command-line
@@ -85,14 +77,13 @@ editor for FLAC files and input plugins for various music players.
 This package contains development libraries required for packaging
 statically linked FLAC-based software.
 
-%package -n lib%name++%cppsoversion
+%package -n libflac++%cppsoversion
 Summary: Object shared library FLAC++
 Group: System/Libraries
 License: BSD-3-Clause
-Requires: lib%name%soversion = %EVR
-Provides: lib%name++ = %version
+Requires: libflac%soversion = %EVR
 
-%description -n lib%name++%cppsoversion
+%description -n libflac++%cppsoversion
 FLAC stands for Free Lossless Audio Codec.  Grossly oversimplified, FLAC is
 similar to Ogg Vorbis, but lossless.  The FLAC project consists of the stream
 format, reference encoders and decoders in library form, flac, a command-line
@@ -157,49 +148,30 @@ done
 
 %install
 %makeinstall_std
+%define flacdocs %_docdir/%name
+mv %buildroot%_docdir/flac %buildroot%_docdir/%name
+install -pm644 COPYING.Xiph AUTHORS README %buildroot%flacdocs/
+rm %buildroot%flacdocs/FLAC.tag
 
 %check
-%make_build -Onone -k check
+%make_build -k check
 
-%files
-%_bindir/*
-%_mandir/man?/*
-%flacdocs/
+%set_verify_elf_method strict
+%define _stripped_files_terminate_build 1
 
-%files -n lib%name%soversion
-%doc AUTHORS README.md COPYING.Xiph
-%_libdir/libFLAC.so.%soversion
-%_libdir/libFLAC.so.%soversion.*
+%files -n libflac%soversion
+%_libdir/libFLAC.so.*
+%dir %flacdocs/
+%flacdocs/AUTHORS
+%flacdocs/README
+%flacdocs/COPYING.Xiph
 
-%files -n lib%name-devel
-%_aclocaldir/libFLAC.m4
-%_libdir/libFLAC.so
-%_includedir/FLAC/
-%_pkgconfigdir/flac.pc
-
-%if_enabled static
-%files -n lib%name-devel-static
-%_libdir/libFLAC.a
-%endif
-
-%files -n lib%name++%cppsoversion
-%_libdir/libFLAC++.so.%cppsoversion
-%_libdir/libFLAC++.so.%cppsoversion.*
-
-%files -n lib%name++-devel
-%_datadir/aclocal/libFLAC++.m4
-%_libdir/libFLAC++.so
-%_includedir/FLAC++/
-%_pkgconfigdir/flac++.pc
-
-%if_enabled static
-%files -n lib%name++-devel-static
-%_libdir/libFLAC++.a
-%endif
+%files -n libflac++%cppsoversion
+%_libdir/libFLAC++.so.*
 
 %changelog
-* Mon Feb 05 2024 Anton Farygin <rider@altlinux.ru> 1.4.3-alt1
-- 1.3.3 -> 1.4.3
+* Tue Feb 06 2024 Anton Farygin <rider@altlinux.ru> 1.3.3.0.79.37d1-alt3
+- Built as a compatibility package without a development part.
 
 * Fri Jul 02 2021 Dmitry V. Levin <ldv@altlinux.org> 1.3.3.0.79.37d1-alt2
 - Revert upstream commit 1.3.3-64-g159cd6c4 to make audiofile FLAC test pass
