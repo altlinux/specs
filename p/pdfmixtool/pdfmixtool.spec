@@ -1,6 +1,6 @@
 Name: pdfmixtool
 Version: 1.1.1
-Release: alt2
+Release: alt2.1
 
 License: LGPL-3.0-only
 Group: Office
@@ -8,9 +8,9 @@ Url: https://www.scarpetta.eu/pdfmixtool
 
 # Source-url: https://gitlab.com/scarpetta/pdfmixtool/-/archive/v%version/pdfmixtool-v%version.tar.gz
 Source: %name-%version.tar
-
 Patch: %name-1.1-alt-desktop.patch
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: libqpdf-devel
 BuildRequires: qt6-base-devel
@@ -24,8 +24,7 @@ BuildRequires: libp11-kit-devel
 
 BuildRequires: qt6-tools-devel
 BuildRequires: qt6-svg-devel
-BuildRequires: libImageMagick-devel
-BuildRequires(pre): rpm-macros-cmake
+BuildRequires: libGraphicsMagick-c++-devel
 
 Summary: PDF Mix Tool is a simple PDF editing application
 Summary(ru_RU.UTF-8): PDF Mix Tool - это простое приложение для редактирования PDF-файлов
@@ -53,7 +52,9 @@ PDF, извлекать страницы из файла PDF, редактиро
 %autopatch -p2
 
 %build
-%cmake -DQT_VERSION=6
+%cmake \
+   -DQT_VERSION=6 \
+   -DUSE_GRAPHICSMAGICK=ON
 %cmake_build
 
 %install
@@ -67,6 +68,9 @@ PDF, извлекать страницы из файла PDF, редактиро
 %_datadir/metainfo/eu.scarpetta.PDFMixTool.appdata.xml
 
 %changelog
+* Wed Feb 07 2024 Pavel Skrylev <majioa@altlinux.org> 1.1.1-alt2.1
+- ! FTBFS: rebuild with libGraphicsMagick-c++ instead of libImageMagick
+
 * Tue Feb 28 2023 Evgeny Chuck <koi@altlinux.org> 1.1.1-alt2
 - rebuilted on qt6
 
