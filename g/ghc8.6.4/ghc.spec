@@ -9,7 +9,7 @@
 
 Name: ghc8.6.4
 Version: 8.6.4
-Release: alt10
+Release: alt11
 
 Summary: Glasgow Haskell Compilation system
 License: BSD-3-Clause and HaskellReport
@@ -278,6 +278,9 @@ sed -i 's/@GHC_LLVM_VERSION@/%_llvm_version/' %buildroot%_rpmmacrosdir/ghc
 %exclude %docdir/[AR]*
 
 %changelog
+* Wed Feb 07 2024 Anton Zhukharev <ancieg@altlinux.org> 8.6.4-alt11
+- Fixed FTBFS (python 3.12).
+
 * Tue Sep 26 2023 Ivan A. Melnikov <iv@altlinux.org> 8.6.4-alt10
 - NMU: unregistered builds for riscv64 and loongarch64:
   + enable unregistered builds for selected architectures;
