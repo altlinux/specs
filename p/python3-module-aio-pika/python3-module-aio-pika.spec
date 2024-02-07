@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 9.3.1
+Version: 9.4.0
 Release: alt1
 
 Summary: AMQP 0.9 client designed for asyncio and humans
@@ -19,13 +19,11 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-
-%py3_provides %pypi_name
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %add_pyproject_deps_check_filter collective-checkdocs
 %add_pyproject_deps_check_filter coveralls
@@ -40,7 +38,6 @@ BuildRequires(pre): rpm-build-pyproject
 A wrapper around aiormq for asyncio and humans.
 
 Features:
-
 * Completely asynchronous API.
 * Object oriented API.
 * Transparent auto-reconnects with complete state recovery with connect_robust
@@ -53,9 +50,9 @@ Features:
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-
 %if_with check
 %pyproject_deps_resync_check_poetry dev
 %endif
@@ -75,6 +72,9 @@ Features:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 07 2024 Anton Zhukharev <ancieg@altlinux.org> 9.4.0-alt1
+- Updated to 9.4.0.
+
 * Wed Dec 27 2023 Anton Zhukharev <ancieg@altlinux.org> 9.3.1-alt1
 - Updated to 9.3.1.
 

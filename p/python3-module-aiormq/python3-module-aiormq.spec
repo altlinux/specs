@@ -5,7 +5,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 6.7.7
+Version: 6.8.0
 Release: alt1
 
 Summary: Pure python AMQP 0.9.1 asynchronous client library
@@ -18,11 +18,11 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %add_pyproject_deps_check_filter collective-checkdocs
 %add_pyproject_deps_check_filter coveralls
@@ -37,9 +37,9 @@ BuildRequires(pre): rpm-build-pyproject
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-
 %if_with check
 %pyproject_deps_resync_check_poetry dev
 %endif
@@ -59,6 +59,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 07 2024 Anton Zhukharev <ancieg@altlinux.org> 6.8.0-alt1
+- Updated to 6.8.0.
+
 * Wed Sep 06 2023 Anton Zhukharev <ancieg@altlinux.org> 6.7.7-alt1
 - Updated to 6.7.7.
 
