@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: errands
-Version: %ver_major.1.8
+Version: %ver_major.1.9
 Release: alt1
 
 Summary: Todo application for GNOME
@@ -70,6 +70,9 @@ Todo application for those who prefer simplicity.
 %doc README*
 
 %changelog
+* Thu Feb 08 2024 Yuri N. Sedunov <aris@altlinux.org> 45.1.9-alt1
+- 45.1.9
+
 * Wed Feb 07 2024 Yuri N. Sedunov <aris@altlinux.org> 45.1.8-alt1
 - 45.1.8
 
