@@ -3,14 +3,12 @@
 
 %def_with check
 Name: python3-module-%pypi_name
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 License: MIT
 Source: %pypi_name-%version.tar
 # those tests require internet access
 Patch0: %pypi_name-alt-disable-broken-tests.patch
-# https://github.com/astropy/pytest-remotedata/pull/69
-Patch1: %pypi_name-replace-deprecated-code.patch
 Group: Development/Python3
 BuildArch: noarch
 Summary: Pytest plugin to control whether tests are run that have remote data
@@ -38,7 +36,6 @@ package in order to be of more general use.
 %prep
 %setup -n %pypi_name-%version
 %patch0 -p2
-%patch1 -p1
 
 %build
 %pyproject_build
@@ -55,6 +52,9 @@ package in order to be of more general use.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 07 2024 L.A. Kostis <lakostis@altlinux.ru> 0.4.1-alt1
+- 0.4.1.
+
 * Sat Aug 05 2023 L.A. Kostis <lakostis@altlinux.ru> 0.4.0-alt1
 - Disable tests which require internet access (see upstream issue #41).
 - Initial build for ALTLinux.
