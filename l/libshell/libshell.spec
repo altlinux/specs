@@ -1,7 +1,7 @@
 %def_enable man
 
 Name: libshell
-Version: 0.4.11
+Version: 0.4.12
 Release: alt1
 
 Summary: A library of shell functions
@@ -14,7 +14,6 @@ Url: https://github.com/legionus/libshell.git
 
 Source: %name-%version.tar
 
-BuildRequires: help2man
 %if_enabled man
 BuildRequires: scdoc
 %endif
@@ -46,15 +45,15 @@ sed -i -e 's,^#!/bin/ash,#!/bin/sh,' \
 
 %build
 %make \
-	%{?_disable_man:MD2MAN=}
+	%{?_disable_man:SCDOC=}
 
 %install
 %make_install \
-	%{?_disable_man:MD2MAN=} \
+	%{?_disable_man:SCDOC=} \
 	DESTDIR=%buildroot \
 	install
 %make_install \
-	%{?_disable_man:MD2MAN=} \
+	%{?_disable_man:SCDOC=} \
 	DESTDIR=%buildroot \
 	install-single
 
@@ -80,6 +79,10 @@ sed -i -e 's,^#!/bin/ash,#!/bin/sh,' \
 %endif
 
 %changelog
+* Wed Feb 07 2023 Alexey Gladkov <legion@altlinux.ru> 0.4.12-alt1
+- Migrate cgrep manpage from help2man to scdoc (ALT#49315).
+- Add functions for operating with file locks (shell-locks).
+
 * Mon Jun 06 2022 Alexey Gladkov <legion@altlinux.ru> 0.4.11-alt1
 - shell-version:
   + Fix version.
