@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nlohmann-json
-Version: 3.11.2
-Release: alt1.1
+Version: 3.11.3
+Release: alt1
 
 Summary: JSON for Modern C++ (c++11) ("single header file")
 
@@ -16,10 +16,6 @@ Packager: Pavel Vainerman <pv@altlinux.ru>
 Source0: %name-%version.tar
 # Source1-url: https://github.com/nlohmann/json_test_data/archive/refs/tags/v3.1.0.tar.gz
 Source1: json_test_data.tar
-
-# fix build with gcc 13
-Patch1: a49829bd984c0282be18fcec070df0c31bf77dd5.patch
-Patch2: a5b09d50b786638ed9deb09ef13860a3cb64eb6b.patch
 
 BuildRequires: cmake ctest gcc-c++
 
@@ -83,6 +79,9 @@ ln -sf ../json_test_data %_cmake__builddir/json_test_data
 #_pkgconfigdir/nlohmann_json.pc
 
 %changelog
+* Wed Feb 07 2024 Paul Wolneykien <manowar@altlinux.org> 3.11.3-alt1
+- New version 3.11.3.
+
 * Tue Aug 01 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.11.2-alt1.1
 - Fixed build for Elbrus.
 

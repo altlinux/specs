@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libcoeurl
-Version: 0.1.1
-Release: alt2.1
+Version: 0.3.0
+Release: alt1
 
 Summary: A simple async wrapper around CURL for C++
 
@@ -11,10 +11,13 @@ License: MIT
 Url: https://nheko.im/nheko-reborn/coeurl.git
 
 Source: %name-%version.tar
-Patch0: %name-%version-add-pkgconfig.patch
-Patch1: coeurl-fmt10-fix.patch
 
-BuildRequires: cmake gcc-c++ libspdlog-devel
+Patch0: coeurl-fmt10-fix.patch
+Patch1: coeurl-libcurl-wrap-privide-fix.patch
+
+BuildRequires(pre): rpm-macros-meson
+
+BuildRequires: meson gcc-c++ libspdlog-devel
 BuildRequires: libevent-devel libcurl-devel
 
 %description
@@ -33,40 +36,33 @@ library.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
+%autopatch -p1
 
 %build
-# Undefined references from_json/to_json:
-%define optflags_lto %nil
-
-%cmake -DUSE_BUNDLED_SPDLOG=OFF   \
-       -DUSE_BUNDLED_LIBEVENT=OFF \
-       -DUSE_BUNDLED_LIBCURL=OFF  \
-       -DBUILD_SHARED_LIBS=ON     \
-       -DCMAKE_BUILD_TYPE=Release
-
-%cmake_build
+%meson
+%meson_build
 
 %install
-%cmakeinstall_std
+%meson_install
 
-# Testing needs a local Synapse server instance
-#%check
-#%make_build test
+%check
+%meson_test
 
 %files
 %doc README.md
 %doc LICENSE
-%_libdir/*.so
+%_libdir/*.so.*
 
 %files devel
 %doc examples
 %_includedir/coeurl
-%_libdir/cmake/coeurl/*.cmake
+%_libdir/*.so
 %_libdir/pkgconfig/coeurl.pc
 
 %changelog
+* Wed Feb 07 2024 Paul Wolneykien <manowar@altlinux.org> 0.3.0-alt1
+- New version 0.3.0.
+
 * Sat Oct 14 2023 Nazarov Denis <nenderus@altlinux.org> 0.1.1-alt2.1
 - NMU: Fix build with fmt 10
 

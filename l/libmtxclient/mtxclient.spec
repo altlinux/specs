@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libmtxclient
-Version: 0.7.0
-Release: alt2
+Version: 0.9.2
+Release: alt3
 
 Summary: Client API library for the Matrix protocol, built on top of Boost.Asio
 
@@ -18,6 +18,7 @@ BuildRequires: boost-asio-devel nlohmann-json-devel boost-signals-devel
 BuildRequires: libgtest-devel libssl-devel zlib-devel
 BuildRequires: libolm-devel libsodium-devel libspdlog-devel
 BuildRequires: libevent-devel libcurl-devel libcoeurl-devel
+BuildRequires: libre2-devel
 
 %description
 Client API library for the Matrix protocol, built on top of Boost.Asio.
@@ -49,6 +50,7 @@ library.
        -DUSE_BUNDLED_JSON=OFF    \
        -DUSE_BUNDLED_OPENSSL=OFF \
        -DUSE_BUNDLED_COEURL=OFF  \
+       -DUSE_BUNDLED_RE2=OFF  \
        -DCMAKE_BUILD_TYPE=Release
 
 %cmake_build
@@ -74,6 +76,15 @@ library.
 %_libdir/*.so
 
 %changelog
+* Wed Feb 07 2024 Paul Wolneykien <manowar@altlinux.org> 0.9.2-alt3
+- Minor build fixes and updates.
+
+* Wed Sep 27 2023 Paul Wolneykien <manowar@altlinux.org> 0.9.2-alt2
+- Fix: Require libre2-devel for building.
+
+* Tue Sep 26 2023 Paul Wolneykien <manowar@altlinux.org> 0.9.2-alt1
+- New version 0.9.2.
+
 * Mon Jul 17 2023 Artyom Bystrov <arbars@altlinux.org> 0.7.0-alt2
 - Fix build on GCC13
 
