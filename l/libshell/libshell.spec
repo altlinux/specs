@@ -1,7 +1,7 @@
 %def_enable man
 
 Name: libshell
-Version: 0.4.12
+Version: 0.4.13
 Release: alt1
 
 Summary: A library of shell functions
@@ -79,6 +79,9 @@ sed -i -e 's,^#!/bin/ash,#!/bin/sh,' \
 %endif
 
 %changelog
+* Wed Feb 08 2023 Alexey Gladkov <legion@altlinux.ru> 0.4.13-alt1
+- More manpages fixes.
+
 * Wed Feb 07 2023 Alexey Gladkov <legion@altlinux.ru> 0.4.12-alt1
 - Migrate cgrep manpage from help2man to scdoc (ALT#49315).
 - Add functions for operating with file locks (shell-locks).
