@@ -2,7 +2,7 @@
 %define boost_include %_includedir/%name
 %define boost_doc %_docdir/%name
 
-%def_with devel
+%def_without devel
 %if_with devel
 %def_with boost_build
 %def_with devel_static
@@ -44,7 +44,7 @@
 %add_findreq_skiplist  %_datadir/b2/src/tools/doxproc.py
 
 %define ver_maj 1
-%define ver_min 84
+%define ver_min 83
 %define ver_rel 0
 
 %define namesuff %{ver_maj}.%{ver_min}.%{ver_rel}
@@ -57,10 +57,10 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 
-Name: boost
+Name: boost%namesuff
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt7
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -81,8 +81,21 @@ Patch83: boost-1.83.0-fedora-b2-build-flags.patch
 # https://lists.boost.org/Archives/boost/2020/04/248812.php
 Patch88: boost-1.73.0-fedora-cmakedir.patch
 
-# https://github.com/boostorg/spirit/pull/783
-Patch89: boost-1.84.0-alt-fix-karma-includes.patch
+# https://github.com/boostorg/phoenix/issues/111
+Patch89: boost-1.81.0-upstream-phoenix-fix-uargN.patch
+
+# https://github.com/boostorg/mpi/issues/149
+Patch90: boost-1.83.0-alt-mpi-nonreturn-abort.patch
+
+# https://github.com/boostorg/context/pull/234
+Patch91: boost-1.83.0-alt-context-fix-platform-detection.patch
+
+# https://github.com/boostorg/context/issues/235
+# https://github.com/boostorg/context/pull/236
+Patch92: boost-1.83.0-alt-context-fix-macos-detection.patch
+
+# https://github.com/boostorg/unordered/issues/205
+Patch93: boost-1.83.0-upstream-unordered-fix-copy-assign.patch
 
 Patch2000: boost-1.83-e2k-makecontext.patch
 
@@ -101,49 +114,6 @@ BuildRequires: %mpiimpl-devel
 
 BuildRequires: gcc-c++ libstdc++-devel zlib-devel bzlib-devel libicu-devel
 
-Provides: %name-complete = %EVR
-Obsoletes: %name-complete < %EVR
-
-Requires: %name-devel-headers = %EVR
-Requires: %name-devel = %EVR
-Requires: %name-asio-devel = %EVR
-Requires: %name-beast-devel = %EVR
-Requires: %name-chrono-devel = %EVR
-Requires: %name-cobalt-devel = %EVR
-%if_with context
-Requires: %name-context-devel = %EVR
-%if_with coroutine
-Requires: %name-coroutine-devel = %EVR
-%endif
-%endif
-Requires: %name-filesystem-devel = %EVR
-Requires: %name-flyweight-devel = %EVR
-Requires: %name-geometry-devel = %EVR
-%if_with mpi
-Requires: %name-graph-parallel-devel = %EVR
-%endif
-Requires: %name-interprocess-devel = %EVR
-Requires: %name-intrusive-devel = %EVR
-Requires: %name-locale-devel = %EVR
-Requires: %name-lockfree-devel = %EVR
-Requires: %name-log-devel = %EVR
-Requires: %name-math-devel = %EVR
-%if_with mpi
-Requires: %name-mpi-devel = %EVR
-%endif
-Requires: %name-msm-devel = %EVR
-Requires: %name-mysql-devel = %EVR
-Requires: %name-polygon-devel = %EVR
-Requires: %name-program_options-devel = %EVR
-%if_with python
-Requires: %name-python3-devel = %EVR
-%endif
-Requires: %name-redis-devel = %EVR
-Requires: %name-signals-devel = %EVR
-Requires: %name-timer-devel = %EVR
-Requires: %name-units-devel = %EVR
-Requires: %name-wave-devel = %EVR
-
 %if_with devel
 %description
 The Boost web site provides free peer-reviewed portable C++ source
@@ -158,9 +128,6 @@ standards.
 Although Boost was begun by members of the C++ Standards Committee
 Library Working Group, membership has expanded to include nearly two
 thousand members of the C++ community at large.
-
-This package brings all the Boost development files (headers and
-libraries) to your system.
 %else
 %description
 This is legacy package build to ease transition to new version of
@@ -268,6 +235,63 @@ already been included in the C++ 2011 standard and others have been
 proposed to the C++ Standards Committee for inclusion in future
 standards.
 
+
+%package complete
+Summary: Boost libraries -- complete release
+Group: Development/C++
+BuildArch: noarch
+
+Requires: %name-devel-headers = %EVR
+Requires: %name-devel = %EVR
+Requires: %name-asio-devel = %EVR
+Requires: %name-chrono-devel = %EVR
+%if_with context
+Requires: %name-context-devel = %EVR
+%if_with coroutine
+Requires: %name-coroutine-devel = %EVR
+%endif
+%endif
+Requires: %name-filesystem-devel = %EVR
+Requires: %name-flyweight-devel = %EVR
+Requires: %name-geometry-devel = %EVR
+%if_with mpi
+Requires: %name-graph-parallel-devel = %EVR
+%endif
+Requires: %name-interprocess-devel = %EVR
+Requires: %name-intrusive-devel = %EVR
+Requires: %name-locale-devel = %EVR
+Requires: %name-lockfree-devel = %EVR
+Requires: %name-log-devel = %EVR
+Requires: %name-math-devel = %EVR
+%if_with mpi
+Requires: %name-mpi-devel = %EVR
+%endif
+Requires: %name-msm-devel = %EVR
+Requires: %name-polygon-devel = %EVR
+Requires: %name-program_options-devel = %EVR
+%if_with python
+Requires: %name-python3-devel = %EVR
+%endif
+Requires: %name-signals-devel = %EVR
+Requires: %name-timer-devel = %EVR
+Requires: %name-units-devel = %EVR
+Requires: %name-wave-devel = %EVR
+
+%description complete
+The Boost web site provides free peer-reviewed portable C++ source
+libraries.  The emphasis is on libraries which work well with the C++
+Standard Library. One goal is to establish "existing practice" and
+provide reference implementations so that the Boost libraries are
+suitable for eventual standardization. Some of the libraries have
+already been included in the C++ 2011 standard and others have been
+proposed to the C++ Standards Committee for inclusion in future
+standards.
+
+This is a virtual package which depends on all Boost packages except
+static libraries. Install it if you need complete Boost distribution in
+your system.
+
+
 %package asio-devel
 Summary: The Boost Asio Library development files
 Group: Development/C++
@@ -287,36 +311,6 @@ asio is a cross-platform C++ library for network programming that
 provides developers with a consistent asynchronous I/O model using a
 modern C++ approach.
 
-%package beast-devel
-Summary: The Boost Beast Library development files
-Group: Development/C++
-BuildArch: noarch
-AutoReq: yes, nocpp
-
-Requires(pre,postun): %name-devel = %EVR
-Requires: %name-asio-devel = %EVR
-
-%description beast-devel
-Beast is a C++ header-only library serving as a foundation for writing
-interoperable networking libraries by providing low-level HTTP/1,
-WebSocket, and networking protocol vocabulary types and algorithms
-using the consistent asynchronous model of Boost.Asio.
-
-%package cobalt-devel
-Summary: The Boost Cobalt Library development files
-Group: Development/C++
-BuildArch: noarch
-AutoReq: yes, nocpp
-
-Requires(pre,postun): %name-devel = %EVR
-Requires: %name-asio-devel = %EVR
-
-%description cobalt-devel
-Boost.Cobalt provides basic algorithms and types for C++20 coroutines.
-This library is meant to provide to C++ simple single threaded
-asynchronicity akin to node.js and asyncio in python that works
-with existing libraries like Boost.Beast, Boost.Mysql or Boost.Redis.
-It based on Boost.Asio.
 
 %package context-devel
 Summary: The Boost Context Library development files
@@ -549,26 +543,6 @@ and quickly define state machines of very high performance.
 
 It is header-only library. This package contains the headers.
 
-%package mysql-devel
-Summary: The Boost MySQL Library development files
-Group: Development/C++
-BuildArch: noarch
-AutoReq: yes, nocpp
-
-Requires(pre,postun): %name-devel = %EVR
-Requires: %name-asio-devel = %EVR
-
-%description mysql-devel
-Boost.MySQL is a C++11 client for the MySQL and MariaDB database
-servers, based on Boost.Asio.
-
-This library is a full implementation of the MySQL client/server
-protocol. It aims to expose the protocol primitives in an efficient
-but easy-to-use way. It is similar in scope to the official
-libmysqlclient, but interoperable with Asio, safer and more
-expressive. Note that Boost.MySQL does not use libmysqlclient: it's a
-full implementation of the MySQL protocol, which makes it natively
-compatible with Asio.
 
 %package polygon-devel
 Summary: The Boost Polygon Library development files
@@ -635,19 +609,6 @@ in order to use them with Boost.Python. The system should simply
 
 This package contains development files for Boost.Python build with
 Python 3.
-
-%package redis-devel
-Summary: The Boost Redis Library development files
-Group: Development/C++
-BuildArch: noarch
-AutoReq: yes, nocpp
-
-Requires(pre,postun): %name-devel = %EVR
-Requires: %name-asio-devel = %EVR
-
-%description redis-devel
-Boost.Redis is a high-level Redis client library built on top of
-Boost.Asio that implements the Redis protocol RESP3.
 
 %package signals-devel
 Summary: The Boost Signals Library development files
@@ -1476,7 +1437,7 @@ if [ -d %buildroot%boost_doc/boost ] ; then
 fi
 
 # some documentation have hyperlinks to real headers; this makes them work
-ln -rs %buildroot%_includedir/%name %buildroot%boost_doc/boost
+ln -s %_includedir/%name %buildroot%boost_doc/boost
 
 # Programs that link with Boost.Thread and Boost.Filesystem need to link
 # with Boost.System explicitly. For thread, this is new requirement since
@@ -1528,15 +1489,13 @@ rm -rf %buildroot%_libdir/*math_c99l*.so*
 rm -rf %buildroot%_libdir/*math_tr1l*.so*
 %endif
 
-%if_with devel
-%files
-# the base package is virtual
 
+#files
+
+%if_with devel
 %files devel-headers
 %_includedir/%name
 %exclude %_includedir/%name/asio*
-%exclude %_includedir/%name/beast*
-%exclude %_includedir/%name/cobalt*
 %if_with context
 %exclude %_includedir/%name/context
 %if_with coroutine
@@ -1556,13 +1515,11 @@ rm -rf %buildroot%_libdir/*math_tr1l*.so*
 %exclude %_includedir/%name/graph/distributed/
 %endif
 %exclude %_includedir/%name/msm
-%exclude %_includedir/%name/mysql*
 %exclude %_includedir/%name/polygon
 %exclude %_includedir/%name/program_options*
 %if_with python
 %exclude %_includedir/%name/python*
 %endif
-%exclude %_includedir/%name/redis*
 %exclude %_includedir/%name/signal*
 %exclude %_includedir/%name/wave*
 
@@ -1612,14 +1569,10 @@ rm -rf %buildroot%_libdir/*math_tr1l*.so*
 %dir %boost_doc/
 %doc %boost_doc/LICENSE_1_0.txt
 
+%files complete
+
 %files asio-devel
 %_includedir/%name/asio*
-
-%files beast-devel
-%_includedir/%name/beast*
-
-%files cobalt-devel
-%_includedir/%name/cobalt*
 
 %if_with context
 %files context-devel
@@ -1684,9 +1637,6 @@ rm -rf %buildroot%_libdir/*math_tr1l*.so*
 %files msm-devel
 %_includedir/%name/msm
 
-%files mysql-devel
-%_includedir/%name/mysql*
-
 %files polygon-devel
 %_includedir/%name/polygon
 
@@ -1704,9 +1654,6 @@ rm -rf %buildroot%_libdir/*math_tr1l*.so*
 %_libdir/*boost_python3*.so
 %_libdir/*boost_numpy3*.so
 %endif
-
-%files redis-devel
-%_includedir/%name/redis*
 
 %files signals-devel
 %_includedir/%name/signal*
@@ -1907,11 +1854,8 @@ done
 
 
 %changelog
-* Thu Feb 08 2024 Ivan A. Melnikov <iv@altlinux.org> 1:1.84.0-alt1
-- 1.84.0
-- Add patch to fix missing include in karma/binary
-- Use the base package ('boost') in place of boost-complete
-- Separate packages for Beast, Cobalt, MySQL and Redis libraries
+* Tue Dec 26 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.83.0-alt7
+- rebuild as compat package without development files
 
 * Sat Dec 16 2023 Grigory Ustinov <grenka@altlinux.org> 1:1.83.0-alt6
 - Build without distutils

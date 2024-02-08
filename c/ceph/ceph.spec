@@ -58,7 +58,7 @@
 
 Name: ceph
 Version: 18.2.1
-Release: alt2
+Release: alt2.1
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -111,7 +111,7 @@ BuildRequires(pre): rpm-macros-systemd >= 5
 BuildRequires: cmake >= 3.10.2-alt1 ninja-build
 BuildRequires(pre): rpm-macros-cmake
 %if_with system_boost
-BuildRequires: boost-asio-devel boost-devel-headers >= 1.79.0 boost-program_options-devel boost-intrusive-devel
+BuildRequires: boost-asio-devel boost-beast-devel boost-devel >= 1.79.0 boost-program_options-devel boost-intrusive-devel
 BuildRequires: boost-filesystem-devel boost-coroutine-devel boost-context-devel boost-lockfree-devel boost-msm-devel
 %endif
 BuildRequires: gcc-c++
@@ -1855,6 +1855,9 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Thu Feb 08 2024 Ivan A. Melnikov <iv@altlinux.org> 18.2.1-alt2.1
+- NMU: fix building with boost 1.84.0-alt1
+
 * Wed Dec 27 2023 Alexey Shabalin <shaba@altlinux.org> 18.2.1-alt2
 - Disabled LTO for all arches.
 

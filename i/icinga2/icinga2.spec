@@ -38,7 +38,7 @@ Group:          Monitoring
 
 Name:           icinga2
 Version:        2.14.0
-Release:        alt5
+Release:        alt5.1
 URL:            https://www.icinga.com/
 Source:         https://github.com/Icinga/%name/archive/v%version/%name-%version.tar
 
@@ -74,6 +74,7 @@ BuildRequires:  boost-system-devel >= 1.66
 BuildRequires:  boost-test-devel >= 1.66
 BuildRequires:  boost-thread-devel >= 1.66
 BuildRequires:  boost-asio-devel >= 1.66
+BuildRequires:  boost-beast-devel >= 1.66
 BuildRequires:  boost-signals-devel >= 1.66
 BuildRequires:  boost-interprocess-devel >= 1.66
 
@@ -362,6 +363,9 @@ fi
 %_datadir/nano/%name.nanorc
 
 %changelog
+* Thu Feb 08 2024 Ivan A. Melnikov <iv@altlinux.org> 2.14.0-alt5.1
+- NMU: fix building with boost 1.84.0-alt1
+
 * Thu Nov 23 2023 Paul Wolneykien <manowar@altlinux.org> 2.14.0-alt5
 - Remove disabled 'selinux' subpackage from the spec.
 - Fix: Make -common, -doc, vim- and nano- subpackages noarch.
