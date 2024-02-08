@@ -2,7 +2,7 @@
 %set_verify_elf_method rpath=relaxed
 Name: 86box
 Version: 4.0.1
-Release: alt1
+Release: alt2
 Summary: 86Box is a low level x86 emulator that runs older operating systems and software designed for IBM PC systems
 Group: Emulators
 License: GPLv3
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 BuildPreReq: rpm-macros-cmake rpm-macros-qt5 qt5-declarative-devel libslirp-devel extra-cmake-modules
 BuildRequires: gcc-c++ libevdev-devel ecm wayland-devel libwayland-client-devel libffi-devel libappstream-glib libjack-devel libxkbcommon-devel liblash-devel pkgconfig(systemd) libdbus-devel libinstpatch-devel
 BuildRequires: cmake libpng-devel zlib-devel libopenal-devel librtmidi-devel libpcre-devel qt5-tools-devel libfluidsynth-devel libpcre2-devel bzlib-devel libbrotli-devel libpulseaudio-devel libsndfile-devel libXdmcp-devel
-BuildRequires: fontconfig-devel git-core libxcb libSDL2_ttf-devel libXi-devel libalsa-devel python-modules-compiler python-modules-encodings python-modules-logging python-modules-xml qt5-base-devel libxkbcommon-x11-devel
+BuildRequires: fontconfig-devel libxcb libSDL2_ttf-devel libXi-devel libalsa-devel qt5-base-devel libxkbcommon-x11-devel
 
 ExcludeArch: ppc64le
 
@@ -34,15 +34,16 @@ Download release with the release number of emulator, and unzip in
 
 %build
 
-%ifarch %e2k armh
-%cmake -DRELEASE=on -DDYNAREC=off -DCMAKE_SKIP_RPATH:BOOL=yes
-%else
-    %ifarch aarch64
-	%cmake -DRELEASE=on -DNEW_DYNAREC=on -DCMAKE_SKIP_RPATH:BOOL=yes
-    %else
-	%cmake -DRELEASE=on -DCMAKE_SKIP_RPATH:BOOL=yes
-    %endif
+%cmake \
+	-DRELEASE=on \
+	-DCMAKE_SKIP_RPATH:BOOL=yes \
+%ifarch aarch64
+	-DNEW_DYNAREC=on \
 %endif
+%ifarch %e2k armh loongarch64
+	-DDYNAREC=off \
+%endif
+	%nil
 
 %cmake_build
 
@@ -74,6 +75,10 @@ appstream-util validate-relax --nonet %buildroot%_metainfodir/net.86box.86Box.me
 %_iconsdir/hicolor/*/apps/net.86box.86Box.png
 
 %changelog
+* Thu Feb 08 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.0.1-alt2
+- NMU: build for LoongArch (no DYNAREC here). While at it trimmed build
+  dependencies (python2 stuff is not required, etc).
+
 * Thu Feb  1 2024 Artyom Bystrov <arbars@altlinux.org> 4.0.1-alt1
 - update to new version
 
