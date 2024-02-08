@@ -3,8 +3,8 @@
 %define repo dde-session-shell
 
 Name: deepin-session-shell
-Version: 6.0.14
-Release: alt2
+Version: 6.0.17
+Release: alt1
 
 Summary: Deepin desktop-environment - Session shell module
 
@@ -40,18 +40,17 @@ Group: Development/Other
 %prep
 %setup -n %repo-%version
 %patch -p1
-sed -i '/kwin_wayland/s|/usr/bin/||' \
-    files/wayland/kwin_wayland_helper-wayland \
-    files/wayland/deepin-greeter-wayland
+# sed -i '/kwin_wayland/s|/usr/bin/||' \
+#     files/wayland/kwin_wayland_helper-wayland \
+#     files/wayland/deepin-greeter-wayland
 sed -i 's|/usr/lib/x86_64-linux-gnu/|%_libdir/|' \
     files/wayland/lightdm-deepin-greeter-wayland \
     files/wayland/deepin-greeter-wayland
 sed -i '/QT_QPA_PLATFORM_PLUGIN_PATH/s|/usr/plugins/platforms|%_libdir/qt5/plugins/platforms|' \
     files/wayland/lightdm-deepin-greeter-wayland
 sed -i 's|/usr/lib/|%_libdir/|' \
-    src/global_util/modules_loader.cpp
-sed -i 's|lib/|%_lib/|' \
-    modules/*/CMakeLists.txt
+    src/global_util/modules_loader.cpp \
+    src/session-widgets/auth_module.h
 
 %build
 %if_with clang
@@ -105,6 +104,9 @@ chmod +x %buildroot%_bindir/deepin-greeter
 %_libdir/cmake/DdeSessionShell/DdeSessionShellConfig.cmake
 
 %changelog
+* Thu Feb 08 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.17-alt1
+- New version 6.0.17.
+
 * Fri Dec 29 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.14-alt2
 - Updated fixes for session unlock.
 

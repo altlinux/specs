@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-session
-Version: 1.2.1
+Version: 1.2.5
 Release: alt1
 
 Summary: Launching DDE components systemd service
@@ -68,7 +68,7 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libexecdir/dde-session-ctl
 %_datadir/dbus-1/services/org.deepin.dde.Session1.service
 %_datadir/xsessions/dde-x11.desktop
-%_datadir/wayland-sessions/dde-wayland.desktop
+# %%_datadir/wayland-sessions/dde-wayland.desktop
 %_userunitdir/dde-session*
 %_userunitdir/dde-desktop.service
 %_userunitdir/dde-display.service
@@ -84,5 +84,8 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_userunitdir/dde-xsettings-checker.service
 
 %changelog
+* Thu Feb 08 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.5-alt1
+- New version 1.2.5.
+
 * Thu Dec 21 2023 Leontiy Volodin <lvol@altlinux.org> 1.2.1-alt1
 - Initial build for ALT Sisyphus.
