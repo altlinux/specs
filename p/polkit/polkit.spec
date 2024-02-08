@@ -1,7 +1,7 @@
 %define _libexecdir /usr/libexec
 
 Name: polkit
-Version: 123
+Version: 124
 Release: alt1
 
 Summary: PolicyKit Authorization Framework
@@ -64,6 +64,14 @@ Obsoletes: lib%{name}1-gir-devel < %version
 %description -n lib%name-gir-devel
 GObject introspection devel data for the Polkit-1.0 library
 
+%package default-rules
+Summary: Default rules for polkit
+Group: System/Libraries
+BuildArch: noarch
+
+%description default-rules
+contains a configuration file that describes that a user in the wheel group is an administrator
+
 %prep
 %setup
 %patch -p1
@@ -80,7 +88,8 @@ touch ChangeLog
 	-D gtk_doc=true \
 	-D introspection=true \
 	-D man=true \
-	-D session_tracking=libsystemd-login
+	-D session_tracking=libsystemd-login \
+	-D pam_prefix=%_sysconfdir/pam.d
 %meson_build
 
 %install
@@ -108,11 +117,13 @@ touch ChangeLog
 %attr(0700,polkitd,root) %dir %_datadir/%name-1/rules.d
 %_datadir/%name-1/policyconfig-1.dtd
 %_datadir/%name-1/actions/org.freedesktop.policykit.policy
-%exclude %_datadir/%name-1/rules.d/50-default.rules
 %_datadir/dbus-1/system-services/org.freedesktop.PolicyKit1.service
 %systemd_unitdir/polkit.service
 %_man1dir/*.1*
 %_man8dir/*.8*
+
+%files default-rules
+%_datadir/%name-1/rules.d/50-default.rules
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -132,6 +143,10 @@ touch ChangeLog
 %_girdir/*.gir
 
 %changelog
+* Thu Feb 08 2024 Valery Inozemtsev <shrek@altlinux.ru> 124-alt1
+- 124
+- new subpackage polkit-default-rules containing 50-default.rules
+
 * Mon Dec 04 2023 Valery Inozemtsev <shrek@altlinux.ru> 123-alt1
 - 123
 - is not packed 50-default.rules (closes: #35763)
