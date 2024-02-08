@@ -1,5 +1,5 @@
 Name: bcachefs-tools
-Version: 1.3.3
+Version: 1.4.1
 Release: alt1
 
 Summary: Userspace tools and docs for bcachefs
@@ -18,6 +18,7 @@ BuildRequires: pkgconfig(liblz4)
 BuildRequires: pkgconfig(libzstd)
 BuildRequires: pkgconfig(libudev)
 BuildRequires: pkgconfig(libkeyutils)
+BuildRequires: pkgconfig(systemd)
 BuildRequires: libaio-devel
 
 %description
@@ -34,14 +35,27 @@ sed -ri '/^VERSION/ s,v0.1-nogit,v%version,'  Makefile
 %make_build NO_RUST=please EXTRA_CFLAGS='%optflags'
 
 %install
-%make_install NO_RUST=please PREFIX=%_prefix DESTDIR=%buildroot install
-rm -v %buildroot/sbin/*.fuse.*
+%make_install NO_RUST=please PREFIX=%_prefix ROOT_SBINDIR=%_sbindir DESTDIR=%buildroot install
+install -pm0755 mount.bcachefs.sh %buildroot%_sbindir/mount.bcachefs
 
 %files
 %doc COPYING README*
-/sbin/*
-%_man8dir/*
+
+%_udevrulesdir/*
+
+%_unitdir/bcachefsck@.service
+%_unitdir/system-bcachefsck.slice
+
+%_sbindir/bcachefs
+%_sbindir/fsck.bcachefs
+%_sbindir/mkfs.bcachefs
+%_sbindir/mount.bcachefs
+
+%_man8dir/bcachefs.8*
 
 %changelog
+* Thu Feb 08 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.1-alt1
+- 1.4.1 released
+
 * Thu Nov 16 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.3-alt1
 - initial
