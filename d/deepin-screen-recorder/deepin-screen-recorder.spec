@@ -3,8 +3,8 @@
 %def_without cmake
 
 Name: deepin-screen-recorder
-Version: 5.12.15
-Release: alt2
+Version: 5.12.17
+Release: alt1
 
 Summary: Default screen recorder application for Deepin
 
@@ -115,6 +115,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/dsg/configs/org.deepin.screen-recorder/org.deepin.screen-recorder.record.json
 
 %changelog
+* Thu Feb 08 2024 Leontiy Volodin <lvol@altlinux.org> 5.12.17-alt1
+- New version 5.12.17.
+
 * Fri Jan 19 2024 Leontiy Volodin <lvol@altlinux.org> 5.12.15-alt2
 - Requires: libqt5-core = %%_qt5_version.
 
