@@ -8,7 +8,7 @@
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt6.g%{git}
+Release: alt7.g%{git}
 Provides: kernel-source-%module_name-%module_version
 Summary: Linux %module_name Broadcom WiFi chipset series module sources
 License: Propreitary
@@ -18,7 +18,7 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 Source0: %name-%real_version.tar
 
-ExclusiveArch: x86_64
+ExclusiveArch: %ix86 x86_64
 BuildPreReq: kernel-build-tools
 
 %description
@@ -55,6 +55,10 @@ blacklist bcma-pci-bridge
 __EOF__
 
 mkdir -p %kernel_srcdir
+%ifarch %ix86
+rm -f %name-%version/bcmwl/lib/wlc_hybrid.o_shipped
+mv %name-%version/bcmwl/lib/wlc_hybrid.o_shipped.i386 %name-%version/bcmwl/lib/wlc_hybrid.o_shipped
+%endif
 tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version/bcmwl
 
 %files
@@ -65,6 +69,10 @@ tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version/bcmwl
 %config(noreplace) %_sysconfdir/modprobe.d/blacklist-bcm2.conf
 
 %changelog
+* Thu Feb 08 2024 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt7.g6adc981
+- Restore 32-bit support (closes #49323).
+- Remove forbidden conflicts to kernel-modules-bcmwl.
+
 * Wed Apr 05 2023 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt6.g6adc981
 - Add kernel-module configuration subpkg (closes #45082).
 

@@ -1,9 +1,9 @@
 %define module_name	bcmwl
 %define module_version	6.30.223.271
-%define module_release alt15
+%define module_release alt16
 
 %define flavour		std-def
-%define karch x86_64
+%define karch %ix86 x86_64
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-std-def
 
@@ -75,6 +75,9 @@ make -C %_usrsrc/linux-%kversion-%flavour INSTALL_MOD_PATH=%buildroot INSTALL_MO
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Feb 08 2024 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt16
+- Restore %%ix86 build (closes: #49323)
 
 * Thu Jun 15 2023 Anton Farygin <rider@altlinux.ru> 6.30.223.271-alt15
 - remove %name-kernel-conf requires to avoid conflicting configuration with
