@@ -1,10 +1,21 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name paramiko
 
+%define add_python_extra() \
+%{expand:%%package -n %%name+%{1} \
+Summary: %%summary \
+Group: Development/Python3 \
+Requires: %%name \
+%{expand:%%pyproject_runtimedeps_metadata -- --extra %{1}} \
+%%description -n %%name+%{1}' \
+Extra "%{1}" for %%pypi_name. \
+%%files -n %%name+%{1} \
+}
+
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.3.1
+Version: 3.4.0
 Release: alt1
 Summary: SSH2 protocol for python
 License: LGPL-2.1
@@ -15,7 +26,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -33,6 +44,8 @@ BuildRequires: python3-module-k5test
 paramiko is a module for python that implements the SSH2 protocol for secure
 (encrypted and authenticated) connections to remote machines. It is written
 entirely in python (no C or platform-dependent code).
+
+%add_python_extra gssapi
 
 %prep
 %setup
@@ -58,6 +71,9 @@ entirely in python (no C or platform-dependent code).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 05 2024 Stanislav Levin <slev@altlinux.org> 3.4.0-alt1
+- 3.3.1 -> 3.4.0.
+
 * Mon Aug 07 2023 Stanislav Levin <slev@altlinux.org> 3.3.1-alt1
 - 3.1.0 -> 3.3.1.
 
