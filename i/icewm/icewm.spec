@@ -5,7 +5,7 @@
 
 Name: %realname
 Version: 3.4.5
-Release: alt1
+Release: alt2
 Epoch:3
 
 Summary: X11 Window Manager
@@ -148,6 +148,9 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Wed Feb 07 2024 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.4.5-alt2
+- added gpicview into toolbar
+
 * Wed Jan 03 2024 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.4.5-alt1
 - 3.4.5
 - BR: removed duplicate
