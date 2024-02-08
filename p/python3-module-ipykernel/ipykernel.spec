@@ -2,14 +2,10 @@
 
 %define oname ipykernel
 
-%ifnarch ppc64le
 %def_with check
-%else
-%def_without check
-%endif
 
 Name: python3-module-%oname
-Version: 6.29.1
+Version: 6.29.2
 Release: alt1
 
 Summary: IPython Kernel for Jupyter
@@ -90,6 +86,9 @@ rm -rf examples/
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Thu Feb 08 2024 Anton Vyatkin <toni@altlinux.org> 6.29.2-alt1
+- New version 6.29.2.
+
 * Tue Feb 06 2024 Anton Vyatkin <toni@altlinux.org> 6.29.1-alt1
 - New version 6.29.1.
 
