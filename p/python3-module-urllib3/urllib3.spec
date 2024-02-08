@@ -2,6 +2,17 @@
 %define pypi_name urllib3
 %define mod_name %pypi_name
 
+%define add_python_extra() \
+%{expand:%%package -n %%name+%{1} \
+Summary: %%summary \
+Group: Development/Python3 \
+Requires: %%name \
+%{expand:%%pyproject_runtimedeps_metadata -- --extra %{1}} \
+%%description -n %%name+%{1}' \
+Extra "%{1}" for %%pypi_name. \
+%%files -n %%name+%{1} \
+}
+
 # tests suite is very unstable (freezes or crashes) on arches different from
 # x86_64
 %if %_arch == x86_64
@@ -11,8 +22,8 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 2.1.0
-Release: alt2
+Version: 2.2.0
+Release: alt1
 Epoch: 2
 Summary: HTTP library with thread-safe connection pooling, file post, and more
 License: MIT
@@ -23,6 +34,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version.patch
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -30,15 +42,20 @@ BuildRequires(pre): rpm-build-pyproject
 %add_pyproject_deps_check_filter memray
 %add_pyproject_deps_check_filter pytest-memray
 %add_pyproject_deps_check_filter towncrier
-%add_pyproject_deps_check_filter brotli
 %pyproject_builddeps_metadata_extra socks
 %pyproject_builddeps_metadata_extra brotli
 %pyproject_builddeps_metadata_extra zstd
+%pyproject_builddeps_metadata_extra h2
 %pyproject_builddeps_check
 %endif
 
 %description
 urllib3 is a powerful, user-friendly HTTP client for Python.
+
+%add_python_extra brotli
+%add_python_extra socks
+%add_python_extra zstd
+%add_python_extra h2
 
 %prep
 %setup
@@ -58,6 +75,7 @@ urllib3 is a powerful, user-friendly HTTP client for Python.
 %check
 # to adjust timeouts: test.LONG_TIMEOUT
 export CI=yes
+export NO_VENDORED_HYPERCORN=yes
 %pyproject_run_pytest -ra
 
 %files
@@ -66,6 +84,9 @@ export CI=yes
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 05 2024 Stanislav Levin <slev@altlinux.org> 2:2.2.0-alt1
+- 2.1.0 -> 2.2.0.
+
 * Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 2:2.1.0-alt2
 - Fixed FTBFS.
 
