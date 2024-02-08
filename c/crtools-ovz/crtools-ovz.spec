@@ -3,7 +3,7 @@
 
 Name: crtools-ovz
 Version: 3.18.1.1
-Release: alt1
+Release: alt2
 
 Summary: Utility to checkpoint/restore tasks for OpenVZ containers
 License: GPL-2.0-only
@@ -29,9 +29,7 @@ BuildRequires: glibc-devel
 BuildRequires: libnl-devel
 BuildRequires: libcap-devel
 BuildRequires: python3-base
-BuildRequires: python3-module-importlib-metadata
 BuildRequires: python3-module-setuptools
-# BuildRequires: python3-devel
 # BuildRequires: libselinux-devel
 BuildRequires(pre): rpm-build-python3
 
@@ -40,6 +38,7 @@ BuildRequires: rpm-build-vm-run
 BuildRequires: vzkernel
 BuildRequires: libaio-devel
 BuildRequires: python3-module-future python3-module-yaml python3-module-protobuf
+BuildRequires: python3-module-importlib-metadata
 BuildRequires: libbsd-devel
 BuildRequires: iproute2 iptables iputils openvswitch
 %endif
@@ -115,6 +114,9 @@ vm-run --kvm=cond --sbin --udevd make test || :
 %python3_sitelibdir/*
 
 %changelog
+* Thu Feb 08 2024 Andrew A. Vasilyev <andy@altlinux.org> 3.18.1.1-alt2
+- fix build with Python 3.12
+
 * Fri Feb 02 2024 Andrew A. Vasilyev <andy@altlinux.org> 3.18.1.1-alt1
 - 3.18.1.1
 
