@@ -1,6 +1,6 @@
 Name:    trivy-db
-Version: 20231228
-Release: alt5
+Version: 20240208
+Release: alt1
 
 Summary: Database for Trivy
 License: Apache-2.0
@@ -39,6 +39,9 @@ fi
 %attr(0644,_trivy,_trivy) %_sharedstatedir/trivy/db/*
 
 %changelog
+* Thu Feb 08 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 20240208-alt1
+- repocop cronbuild 20240208. At your service.
+
 * Mon Jan 22 2024 Alexey Shabalin <shaba@altlinux.org> 20231228-alt5
 - Fix post script
 
