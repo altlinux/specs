@@ -1,31 +1,31 @@
 %define soname dframeworkdbus
 %define repo   dde-qt-dbus-factory
-%define llvm_ver 15
 
 %def_disable clang
 
 Name: deepin-qt-dbus-factory
 Version: 6.0.0
-Release: alt1
+Release: alt2
+
 Summary: A repository stores auto-generated Qt5 dbus code
+
 # The entire source code is GPL-3.0+ except
 # libdframeworkdbus/qtdbusextended/ which is LGPL-2.1+
 License: GPL-3.0+ and LGPL-2.1+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-qt-dbus-factory
-Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 
+BuildRequires(pre): rpm-macros-qt5
 %if_enabled clang
-BuildRequires: clang%llvm_ver.0-devel
-BuildRequires: lld%llvm_ver.0-devel
-BuildRequires: llvm%llvm_ver.0-devel
-#BuildRequires: libstdc++%%gcc_ver-devel
+BuildRequires: clang-devel lld-devel
 %else
 BuildRequires: gcc-c++
 %endif
 BuildRequires: python3 libglvnd-devel qt5-base-devel
+
+Requires: libqt5-core = %_qt5_version
 
 %description
 A repository stores auto-generated Qt5 dbus code.
@@ -51,9 +51,9 @@ Header files and libraries for %name.
 %build
 %if_enabled clang
 %define optflags_lto %nil
-export CC=clang-%llvm_ver
-export CXX=clang++-%llvm_ver
-export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
+export CC=clang
+export CXX=clang++
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
 %qmake_qt5 \
 %if_enabled clang
@@ -78,6 +78,10 @@ export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
 %_libdir/lib%soname.so
 
 %changelog
+* Thu Feb 08 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.0-alt2
+- Requires: libqt5-core = %%_qt5_version.
+- Cleanup spec.
+
 * Mon Feb 20 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.0-alt1
 - New version (6.0.0).
 
