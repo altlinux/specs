@@ -1,5 +1,11 @@
+#April 01 2022:
+#Version gxkb 0.9.4 released.
+#* Removed ru and by flags. #StandWithUkraine
+
+%def_enable appindicator
+
 Name: gxkb
-Version: 0.9.3
+Version: 0.9.5
 Release: alt1
 
 Summary: X11 keyboard indicator and switcher
@@ -7,11 +13,15 @@ License: GPL-2.0
 Group: System/X11
 Url: http://sourceforge.net/projects/%name/
 
+Vcs: https://github.com/zen-tools/gxkb.git
 Source: http://download.sourceforge.net/%name/%name-%version.tar.gz
+Source10: by.png
+Source11: ru.png
 
-Requires: setxkbmap
+Requires: setxkbmap xkeyboard-config
 
 BuildRequires: libgtk+3-devel libxklavier-devel libwnck3-devel
+%{?_enable_appindicator:BuildRequires: libayatana-appindicator3-devel}
 
 %description
 GXKB shows a flag of current keyboard in a systray area and allows you to
@@ -19,9 +29,12 @@ switch to another one. It's written in C and uses the GTK library.
 
 %prep
 %setup
+cp %SOURCE10 %SOURCE11 data/flags
+sed -i 's@bw\.png[[:space:]]*\\@&\n    by.png           \\@
+        s@rs\.png[[:space:]]*\\@&\n    ru.png           \\@' data/flags/Makefile.am
 
 %build
-%configure
+%configure %{subst_enable appindicator}
 %make_build
 
 %install
@@ -36,6 +49,11 @@ switch to another one. It's written in C and uses the GTK library.
 %doc README* doc/AUTHORS doc/NEWS
 
 %changelog
+* Wed Feb 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.9.5-alt1
+- 0.9.5
+- enabled appindicator support
+- restored ru and by flags
+
 * Mon Oct 25 2021 Yuri N. Sedunov <aris@altlinux.org> 0.9.3-alt1
 - 0.9.3
 
