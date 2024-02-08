@@ -1,8 +1,8 @@
 %def_enable check
 
 Name: python3-module-jedi
-Version: 0.18.2
-Release: alt2
+Version: 0.19.1
+Release: alt1
 Summary: An autocompletion tool for Python that can be used for text editors
 License: MIT
 Group: Development/Python
@@ -107,6 +107,9 @@ python3 -m pytest -k "not `echo %failed_tests | sed 's/ / and not /g'`"
 %doc docs/_build3/html/*
 
 %changelog
+* Thu Feb 08 2024 Anton Zhukharev <ancieg@altlinux.org> 0.19.1-alt1
+- Updated to 0.19.1.
+
 * Wed Jun 21 2023 Fr. Br. George <george@altlinux.org> 0.18.2-alt2
 - Enable tests
 
