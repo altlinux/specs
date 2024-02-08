@@ -1,23 +1,24 @@
 %define _unpackaged_files_terminate_build 1
-
-%global import_path github.com/yggdrasil-network/yggdrasil-go
+%define import_path github.com/yggdrasil-network/yggdrasil-go
 
 %define _libexecdir /usr/libexec
 
 Name: yggdrasil
-Version: 0.5.4
+Version: 0.5.5
 Release: alt1
 
 Summary: End-to-end encrypted IPv6 networking
 License: LGPLv3
 Group: Security/Networking
 Url: https://yggdrasil-network.github.io
-Vcs: https://github.com/yggdrasil-network/yggdrasil-go.git
-
-Source0: %name-%version.tar
-Source1: vendor-%version.tar
+Vcs: https://github.com/yggdrasil-network/yggdrasil-go
 
 ExclusiveArch: %go_arches
+
+Source0: %name-%version.tar
+Source1: %name-%version-vendor.tar
+Patch0: %name-%version-alt.patch
+
 BuildRequires(pre): rpm-build-golang
 
 %description
@@ -36,16 +37,16 @@ over either IPv4 or IPv6.
 
 %prep
 %setup -a1
+%autopatch -p1
 
 # fix 'chmod' path
-sed -i contrib/systemd/yggdrasil-default-config.service -e '/chmod/ s|/usr||'
+sed -i '/chmod/s|/usr||' contrib/systemd/yggdrasil-default-config.service
 
 %build
 export GO111MODULE=off
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-
 %golang_prepare
 
 cd .build/src/%import_path
@@ -55,32 +56,33 @@ export PKGVER="%version-%release"
 export LDFLAGS="-X $PKGSRC.buildName=$PKGNAME -X $PKGSRC.buildVersion=$PKGVER"
 %golang_build cmd/*
 
-
 %install
 export BUILDDIR="$PWD/.build"
 export IGNORE_SOURCES=1
-
 %golang_install
-
-install -pD -m0644 contrib/systemd/yggdrasil.service \
-                   %buildroot%_unitdir/yggdrasil.service
-install -pD -m0644 contrib/systemd/yggdrasil-default-config.service \
-                   %buildroot%_unitdir/yggdrasil-default-config.service
 
 # move 'genkeys' to %%_libexecdir
 mkdir -p %buildroot%_libexecdir/yggdrasil
 mv %buildroot{%_bindir,%_libexecdir/yggdrasil}/genkeys
 
+# install systemd services
+cd contrib/systemd
+install -pD -m0644 {,%buildroot%_unitdir/}yggdrasil.service
+install -pD -m0644 {,%buildroot%_unitdir/}yggdrasil-default-config.service
+
 %files
 %doc LICENSE README.md CHANGELOG.md
-%_bindir/*
-%_libexecdir/*
-%_unitdir/*
+%_bindir/%{name}*
+%_libexecdir/%name/
+%_unitdir/*.service
 
 %pre
 /usr/sbin/groupadd -r -f yggdrasil
 
 %changelog
+* Thu Feb 08 2024 Anton Zhukharev <ancieg@altlinux.org> 0.5.5-alt1
+- Updated to 0.5.5.
+
 * Wed Dec 20 2023 Anton Zhukharev <ancieg@altlinux.org> 0.5.4-alt1
 - Updated to 0.5.4.
 
