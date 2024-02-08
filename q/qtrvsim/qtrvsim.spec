@@ -26,7 +26,7 @@
 
 Name: qtrvsim
 Version: 0.9.6
-Release: alt1
+Release: alt2
 Summary: RISC-V CPU simulator for education purposes
 License: GPLv3+
 Group: Emulators
@@ -36,15 +36,8 @@ Patch: qtrvsim-return-type.patch
 Patch101: 0001-GUI-fix-crash-when-no-tab-is-selected.patch
 
 
-# Automatically added by buildreq on Tue Feb 06 2024
-# optimized out: bash5 cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libglvnd-devel libgpg-error libp11-kit libqt5-core libqt5-gui libqt5-printsupport libqt5-test libqt5-widgets libsasl2-3 libssl-devel libstdc++-devel pkg-config python3 python3-base python3-dev qt5-base-devel sh5 xz
-BuildRequires: cmake ctest python3-module-setuptools qt5-svg-devel qt5-virtualkeyboard-devel qt5-wayland-devel 
-
-%ifnarch ppc64le
-BuildRequires: qt5-webengine-devel qt5-webglplugin-devel
-%endif
-
-BuildRequires: cmake
+BuildRequires: qt5-base-devel qt5-tools
+BuildRequires: cmake ctest
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig
 BuildRequires: pkgconfig(Qt5Core)
@@ -91,5 +84,10 @@ make -C %_cmake__builddir test
 %doc README.md docs/user/*.md
 
 %changelog
+* Thu Feb 08 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.9.6-alt2
+- NMU: trimmed build dependencies (qt5-webengine and co are not required,
+  see CMakeLists.txt and dependencies of binary packages).
+  Fixes FTBFS on LoongArch.
+
 * Tue Feb 06 2024 Fr. Br. George <george@altlinux.ru> 0.9.6-alt1
 - Initial build for ALT
