@@ -1,8 +1,8 @@
 Name: xinput
-Version: 1.6.3
+Version: 1.6.4
 Release: alt1
 Summary: utility to configure and test XInput devices
-License: MIT/X11
+License: MIT
 Group: System/X11
 Url: https://cgit.freedesktop.org/xorg/app/xinput
 
@@ -34,6 +34,9 @@ xinput - utility to configure and test XInput devices
 %_man1dir/*
 
 %changelog
+* Thu Feb 08 2024 Fr. Br. George <george@altlinux.org> 1.6.4-alt1
+- Autobuild version bump to 1.6.4
+
 * Thu Sep 05 2019 Fr. Br. George <george@altlinux.ru> 1.6.3-alt1
 - Autobuild version bump to 1.6.3
 
