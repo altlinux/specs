@@ -11,8 +11,8 @@
 
 
 Name:     %pname-source
-Version:  0.4.3
-Release:  alt5
+Version:  0.4.4
+Release:  alt1
 
 Summary:  Osec-based integrity checking script and settings
 License:  GPLv2
@@ -150,6 +150,9 @@ fi
 %endif
 
 %changelog
+* Thu Feb 08 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.4-alt1
+- Update: On service failure isolate 'integ-check-failed.target'.
+
 * Fri Jan 26 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.3-alt5
 - Cosmetic improvement in the sender script.
 - Fixed possible errors in the packaged default configuration
