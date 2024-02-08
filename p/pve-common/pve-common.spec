@@ -2,12 +2,11 @@
 
 Name: pve-common
 Summary: PVE base library
-Version: 7.4.1
-Release: alt2
+Version: 7.4.2
+Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %name-%version.tar
 
@@ -72,6 +71,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Mon Feb 05 2024 Andrew A. Vasilyev <andy@altlinux.org> 7.4.2-alt1
+- 7.4-2
+
 * Fri May 26 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.1-alt2
 - etcnet: skip unrecognized route line (ALT #45932)
 

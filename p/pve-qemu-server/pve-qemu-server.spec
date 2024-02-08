@@ -3,8 +3,8 @@
 
 Name: pve-qemu-server
 Summary: PVE Qemu Server Tools
-Version: 7.4.3
-Release: alt3
+Version: 7.4.4
+Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -67,6 +67,9 @@ ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-virtio.jpg
 %perl_vendor_privlib/PVE/*.pm
 
 %changelog
+* Mon Feb 05 2024 Andrew A. Vasilyev <andy@altlinux.org> 7.4.4-alt1
+- 7.4-4
+
 * Tue Oct 31 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.3-alt3
 - add new (block) VM state
 

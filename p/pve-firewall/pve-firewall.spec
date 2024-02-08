@@ -2,7 +2,7 @@
 
 Name: pve-firewall
 Summary: Proxmox VE Firewall
-Version: 4.3.2
+Version: 4.3.5
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
@@ -73,6 +73,9 @@ __EOF__
 %_man8dir/*
 
 %changelog
+* Mon Feb 05 2024 Andrew A. Vasilyev <andy@altlinux.org> 4.3.5-alt1
+- 4.3-5
+
 * Thu May 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.3.2-alt1
 - 4.3-2
 - add copyright file

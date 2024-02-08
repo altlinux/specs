@@ -4,20 +4,20 @@
 %add_findreq_skiplist %perl_vendor_privlib/PVE/Jobs.pm
 
 %define ver_major 7.4
-%define ver_minor 3
+%define ver_minor 17
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
-Release: alt6
+Release: alt1
 License: AGPL-3.0+ and GPLv3 and MIT and OFL-1.1
 Group: System/Servers
 Url: https://git.proxmox.com/
 Vcs: git://git.proxmox.com/git/pve-manager.git
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64 aarch64
 
 BuildRequires(pre): rpm-macros-systemd
+BuildRequires(pre): rpm-macros-javascript
 
 Requires: cstream lzop zstd wget schedutils gdisk hdparm rsync pciutils
 Requires: perl-LWP-Protocol-https
@@ -37,6 +37,8 @@ Source6: basealt_logo.png
 Source8: basealt_favicon.ico
 Source9: basealt_logo-128.png
 
+Source10: sencha-touch.tgz
+
 BuildRequires: pve-doc-generator >= 7.2.3 xmlto perl-Pod-Parser
 BuildRequires: pve-storage >= 7.2.12 pve-cluster >= 7.2.3
 BuildRequires: pve-common >= 7.2.6 pve-guest-common >= 4.2.1
@@ -51,6 +53,8 @@ This package contains the PVE management tools
 
 %prep
 %setup
+# sencha-touch
+tar xf %SOURCE10
 
 grep '/var/run' * -rl | while read f; do
     sed -i 's|/var/run|/run|' $f
@@ -65,6 +69,10 @@ done
 install -m0644 %SOURCE6 %buildroot%_datadir/%name/images/basealt_logo.png
 install -m0644 %SOURCE8 %buildroot%_datadir/%name/images/favicon.ico
 install -m0644 %SOURCE9 %buildroot%_datadir/%name/images/logo-128.png
+
+# sencha-touch
+mkdir -p %buildroot%_jsdir/
+cp -p -r sencha-touch %buildroot%_jsdir/
 
 # fix config backup job retention
 mkdir -p %buildroot%_localstatedir/%name/jobs
@@ -91,6 +99,10 @@ rm -f  %buildroot%_bindir/pveupgrade
 rm -f  %buildroot%_datadir/doc/pve-manager/aplinfo.dat
 rm -f  %buildroot%_man1dir/pvesubscription.1*
 rm -f  %buildroot%_man1dir/pveupgrade.1*
+rm -f  %buildroot%_man1dir/pve6to7.1*
+rm -f  %buildroot%_bindir/pve6to7
+rm -f  %buildroot%_bindir/pve7to8
+rm -f  %buildroot%_man1dir/pve7to8.1*
 
 %post
 %post_systemd_postponed pvedaemon pvestatd pveproxy spiceproxy pvescheduler
@@ -124,8 +136,17 @@ rm -f  %buildroot%_man1dir/pveupgrade.1*
 %attr(0770,root,www-data) %_logdir/pveproxy
 %_man1dir/*
 %_man8dir/*
+%_jsdir/sencha-touch
 
 %changelog
+* Mon Feb 05 2024 Andrew A. Vasilyev <andy@altlinux.org> 7.4.17-alt1
+- 7.4-17
+- revert changing gpg to sq
+- add sencha-touch to system location
+
+* Tue Dec 26 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.3-alt7
+- add support for ifupdown2
+
 * Thu Jun 01 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.3-alt6
 - add more Requires, update required versions
 
