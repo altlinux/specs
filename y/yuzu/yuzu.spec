@@ -10,7 +10,7 @@
 
 Name: yuzu
 Version: 1563
-Release: alt1
+Release: alt1.1
 
 Summary: Nintendo Switch emulator/debugger
 License: GPLv3+
@@ -33,6 +33,7 @@ Source2: mbedtls-%mbedtls_commit.tar
 Source3: https://github.com/lat9nq/tzdb_to_nx/releases/download/%tzdb_to_nx_date/%tzdb_to_nx_date.zip
 
 Patch0: %name-cpp-jwt-version-alt.patch
+Patch1: %name-xbyak-version-alt.patch
 
 BuildRequires: /proc
 BuildRequires: boost-asio-devel
@@ -81,6 +82,7 @@ BuildRequires: zlib-devel
 %setup -n %name-mainline-mainline-0-%version -b 1 -b 2
 
 %patch0 -p1
+%patch1 -p1
 
 %__mv -Tf ../sirit-%sirit_commit externals/sirit
 %__mv -Tf ../mbedtls-%mbedtls_commit externals/mbedtls
@@ -136,6 +138,9 @@ sed -i -e 's/-Werror=shadow-uncaptured-local/-Wno-error=shadow-uncaptured-local/
 %_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
 
 %changelog
+* Thu Feb 08 2024 Nazarov Denis <nenderus@altlinux.org> 1563-alt1.1
+- Fix FTBFS
+
 * Tue Sep 19 2023 Nazarov Denis <nenderus@altlinux.org> 1563-alt1
 - Version 1563
 
