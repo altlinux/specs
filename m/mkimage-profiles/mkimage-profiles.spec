@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.5.16
+Version: 1.6.0
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -134,6 +134,19 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Fri Feb 09 2024 Anton Midyukov <antohami@altlinux.org> 1.6.0-alt1
+- rename phone.mk -> mobile.mk, drop feature phone
+- live: refactoring 60-live-rescue-root, add autologin root to serial tty
+  in rescue mode
+- efi: add mockutil, pesign to rescue only
+- Add VERSION file for build doc
+- doc: do not use images from asciidoc, add missing images (fix FTBFS)
+- mediacheck: show "Error: implantisomd5 is not available" on screen
+- grub, syslinux: add lowmem to 25install-vnc-* also
+- Add support patches from image-paches.d/
+- Set MKI_VER_MINIMAL=0.3.0, MKI_VER_OPTIMAL=0.3.2
+- fix some package lists
+
 * Mon Jan 08 2024 Anton Midyukov <antohami@altlinux.org> 1.5.16-alt1
 - log.mk: fix abort on error when STDOUT=1 (ALT bug 48863)
 - datetime: set TIME ZONE, use alterator-datetime-functions,
