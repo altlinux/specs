@@ -3,7 +3,7 @@
 %define mod_name material
 
 Name: python3-module-%pypi_name
-Version: 9.5.3
+Version: 9.5.8
 Release: alt1
 
 Summary: Documentation that simply works
@@ -16,6 +16,7 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -28,6 +29,7 @@ more than 50 languages, for all devices.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -43,6 +45,9 @@ more than 50 languages, for all devices.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 09 2024 Anton Zhukharev <ancieg@altlinux.org> 9.5.8-alt1
+- Updated to 9.5.8.
+
 * Wed Dec 27 2023 Anton Zhukharev <ancieg@altlinux.org> 9.5.3-alt1
 - Updated to 9.5.3.
 
