@@ -4,11 +4,11 @@
 %def_enable gstreamer
 %def_disable manual
 # Tests build fail with lto. What to disable, tests or lto?
-%def_disable tests
+%def_enable tests
 
 Name: SPICE
 Version: 0.15.2
-Release: alt1
+Release: alt2
 Summary: Implements the SPICE protocol
 Group: Graphical desktop/Other
 License: LGPLv2+
@@ -96,6 +96,9 @@ rm -f %buildroot%_libdir/libspice-server.la
 %_pkgconfigdir/spice-server.pc
 
 %changelog
+* Fri Feb 09 2024 Alexey Shabalin <shaba@altlinux.org> 0.15.2-alt2
+- Enable tests.
+
 * Tue Jul 04 2023 Alexey Shabalin <shaba@altlinux.org> 0.15.2-alt1
 - 0.15.2
 
