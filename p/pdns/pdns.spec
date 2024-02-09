@@ -4,7 +4,7 @@
 %define _pkgdocdir %_docdir/%name
 
 Name: pdns
-Version: 4.8.3
+Version: 4.8.4
 Release: alt1
 Summary: A modern, advanced and high performance authoritative-only nameserver
 Group: System/Servers
@@ -336,6 +336,9 @@ fi
 %_unitdir/ixfrdist@.service
 
 %changelog
+* Sat Feb 10 2024 Alexey Shabalin <shaba@altlinux.org> 4.8.4-alt1
+- 4.8.4
+
 * Mon Oct 23 2023 Alexey Shabalin <shaba@altlinux.org> 4.8.3-alt1
 - 4.8.3
 
@@ -357,7 +360,7 @@ fi
 - Fixed build for Elbrus.
 
 * Thu Sep 15 2022 Alexey Shabalin <shaba@altlinux.org> 4.6.3-alt1
-- 4.6.3 (Fixes: CVE-2020-17482, CVE-2020-17482, CVE-2020-24696, CVE-2020-24697, CVE-2020-24698,
+- 4.6.3 (Fixes: CVE-2020-17482, CVE-2020-24696, CVE-2020-24697, CVE-2020-24698,
   CVE-2021-36754, CVE-2022-27227)
 - Removed random, lua, mydns, opendbx backends.
 
@@ -380,7 +383,8 @@ fi
 - NMU: Fixed BuildRequires (dropped needless sqlite-devel).
 
 * Sat Feb 22 2020 Alexey Shabalin <shaba@altlinux.org> 4.2.1-alt1
-- 4.2.1 (Fixes: CVE-2017-15091, CVE-2018-10851, CVE-2018-14626, CVE-2019-3871, CVE-2019-10162, CVE-2019-10163)
+- 4.2.1 (Fixes: CVE-2017-15091, CVE-2018-10851, CVE-2018-14626, CVE-2019-3871,
+  CVE-2019-10162, CVE-2019-10163, CVE-2019-10203)
 
 * Mon Jan 14 2019 Nikolai Kostrigin <nickel@altlinux.org> 4.0.3-alt3
 - fix FTBFS due to transition to libmysqlclient21
@@ -441,7 +445,7 @@ fi
    + add patch to support g++ 4.3
 
 * Sun Oct 19 2008 Pavel Shilovsky <piastry@altlinux.org> 2.9.21.1-alt1
-- updated to new version 2.9.21.1
+- updated to new version 2.9.21.1 (Fixes: CVE-2008-3337)
    + add patch to support boost 1.36
    + add backend sqlite3
 
