@@ -14,7 +14,7 @@
 
 Name: abiword
 Version: %ver_major.5
-Release: alt2
+Release: alt2.1
 
 Summary: Lean and fast full-featured word processor
 Group: Office
@@ -42,6 +42,7 @@ Patch12: abiword-2.6.0-boolean.patch
 Patch13: abiword-3.0.0-librevenge.patch
 
 Patch20: abiword-3.0.0-python-override.patch
+Patch30: abiword-3.0.5-alt-boost-1.84.patch
 
 Obsoletes: abisuite, abisuite-koi8, abisuite-cp1251, abisuite-iso8859-8
 Obsoletes: %name-%abi_ver
@@ -150,6 +151,7 @@ Python 3 bindings for developing with AbiWord library
 
 %patch20 -p1 -b python
 sed -i "s|python|\$(PYTHON)|" src/gi-overrides/Makefile.am
+%patch30 -p1 -b .boost
 
 %build
 %add_optflags -std=c++11 %(getconf LFS_CFLAGS)
@@ -211,6 +213,9 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %python3_sitelibdir/gi/overrides/*
 
 %changelog
+* Fri Feb 09 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.5-alt2.1
+- rebuilt against boost-1.84 with fix by iv@
+
 * Sat Dec 16 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0.5-alt2
 - updated to 3.0.5-12-g545d30fe1 (fixed build with libxml2-2.12.x)
 
