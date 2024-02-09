@@ -3,7 +3,7 @@
 
 Name: aardvark-dns
 Version: 1.9.0
-Release: alt1
+Release: alt2
 License: Apache-2.0
 Summary: Authoritative DNS server for A/AAAA container records
 Group: Development/Other
@@ -11,6 +11,7 @@ Url: https://github.com/containers/%name
 Vcs: https://github.com/containers/%name
 Source: %name-%version.tar
 Patch: %name-%version.patch
+ExcludeArch: %arm %ix86
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
@@ -45,6 +46,9 @@ EOF
 %_libexecdir/podman/%name
 
 %changelog
+* Fri Feb 09 2024 Alexey Shabalin <shaba@altlinux.org> 1.9.0-alt2
+- exclude 32-bit arch.
+
 * Tue Dec 05 2023 Alexey Shabalin <shaba@altlinux.org> 1.9.0-alt1
 - New version 1.9.0.
 
