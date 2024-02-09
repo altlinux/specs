@@ -18,7 +18,7 @@ Obsoletes: gambas3-%{*} < %EVR \
 %nil
 
 Name:    gambas
-Version: 3.18.4
+Version: 3.19.0
 Release: alt1
 
 Summary: IDE based on a basic interpreter with object extensions
@@ -61,6 +61,7 @@ BuildRequires: libgsl-devel
 BuildRequires: libgtk+2-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libgtkglext-devel
+BuildRequires: libfribidi-devel
 BuildRequires: libICE-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libltdl-devel
@@ -162,6 +163,7 @@ Requires: %name-gb-form-dialog = %version-%release
 Requires: %name-gb-form-mdi = %version-%release
 Requires: %name-gb-form-stock = %version-%release
 Requires: %name-gb-form = %version-%release
+Requires: %name-gb-highlight = %version-%release
 Requires: %name-gb-gmp = %version-%release
 Requires: %name-gb-gsl = %version-%release
 Requires: %name-gb-gtk = %version-%release
@@ -297,13 +299,13 @@ Requires: %name-gb-db = %version-%release
 Requires: %name-gb-db-form = %version-%release
 Requires: %name-gb-desktop = %version-%release
 Requires: %name-gb-inotify = %version-%release
-Requires: %name-gb-eval-highlight = %version-%release
 Requires: %name-gb-form = %version-%release
 Requires: %name-gb-form-dialog = %version-%release
 Requires: %name-gb-form-editor = %version-%release
 Requires: %name-gb-form-mdi = %version-%release
 Requires: %name-gb-form-stock = %version-%release
 Requires: %name-gb-form-terminal = %version-%release
+Requires: %name-gb-highlight = %version-%release
 #Requires: %name-gb-gtk3 = %version-%release
 #Requires: %name-gb-gtk3-x11 = %version-%release
 #Requires: %name-gb-gtk3-webview = %version-%release
@@ -1257,6 +1259,14 @@ Requires: %name-runtime = %version-%release
 %description gb-geom
 %summary.
 
+%package gb-highlight
+Summary: Gambas3 component package for gb.highlight
+Group: Development/Tools
+Requires: %name-runtime = %version-%release
+
+%description gb-highlight
+%summary.
+
 %prep
 %setup -q
 %patch1 -p1
@@ -1646,20 +1656,22 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %_libdir/gambas3/gb.net.la
 %appdir/info/gb.net.info
 %appdir/info/gb.net.list
-%appdir/control/gb.net.pop3/
-%appdir/control/gb.net.smtp/
+%appdir/control/gb.net/*.png
 
 %files gb-net-curl
 %_libdir/gambas3/gb.net.curl.*
 %appdir/info/gb.net.curl.*
+%appdir/control/gb.net.curl/*.png
 
 %files gb-net-pop3
 %_libdir/gambas3/gb.net.pop3.*
 %appdir/info/gb.net.pop3.*
+%appdir/control/gb.net.pop3/
 
 %files gb-net-smtp
 %_libdir/gambas3/gb.net.smtp.*
 %appdir/info/gb.net.smtp.*
+%appdir/control/gb.net.smtp/
 
 %files gb-openal
 %_libdir/gambas3/gb.openal.*
@@ -1916,7 +1928,16 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %appdir/info/gb.geom.info
 %appdir/info/gb.geom.list
 
+%files gb-highlight
+%_libdir/gambas3/gb.highlight.*
+%appdir/info/gb.highlight.info
+%appdir/info/gb.highlight.list
+
 %changelog
+* Wed Feb 07 2024 Andrey Cherepanov <cas@altlinux.org> 3.19.0-alt1
+- New version.
+- New component: gb.highlight.
+
 * Sun Jan 07 2024 Andrey Cherepanov <cas@altlinux.org> 3.18.4-alt1
 - New version.
 
