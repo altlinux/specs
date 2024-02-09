@@ -1,6 +1,6 @@
 Name: xboxdrv
 Version: 0.8.8
-Release: alt2.1
+Release: alt2.2
 
 Summary: Xbox/Xbox360 USB Gamepad Driver for Userspace
 License: GPLv3
@@ -42,7 +42,13 @@ works for you there is no need to try this driver.
 %patch0 -p1
 
 %build
-%make_build PREFIX=%_prefix
+scons \
+	-j%_smp_build_ncpus \
+	BUILD=custom \
+	CFLAGS='%optflags' \
+	CXXFLAGS='%optflags' \
+	PREFIX=%_prefix
+
 
 %install
 %makeinstall_std PREFIX=%_prefix
@@ -54,6 +60,10 @@ works for you there is no need to try this driver.
 %_man1dir/%name.1*
 
 %changelog
+* Thu Feb 08 2024 Ivan A. Melnikov <iv@altlinux.org> 0.8.8-alt2.2
+- NMU: respect %%optflags when building
+  (fixes build with boost 1.84.0+).
+
 * Tue May 04 2021 Nazarov Denis <nenderus@altlinux.org> 0.8.8-alt2.1
 - Update build requires to fix FTBFS
 
