@@ -4,8 +4,8 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name:     podman
-Version:  4.8.3
-Release:  alt2
+Version:  4.9.2
+Release:  alt1
 
 Summary:  Manage pods, containers, and container images
 License:  Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND ISC AND MIT AND MPL-2.0
@@ -155,6 +155,9 @@ rm -f %buildroot%_man5dir/dockerfile*
 %_datadir/user-tmpfiles.d/%name-docker.conf
 
 %changelog
+* Fri Feb 09 2024 Alexey Shabalin <shaba@altlinux.org> 4.9.2-alt1
+- New version 4.9.2.
+
 * Mon Jan 15 2024 Alexey Shabalin <shaba@altlinux.org> 4.8.3-alt2
 - Add requires aardvark-dns as dns plugin.
 
@@ -192,7 +195,7 @@ rm -f %buildroot%_man5dir/dockerfile*
 - new version 4.4.2 (Fixes: CVE-2023-0778)
 
 * Fri Jan 27 2023 Alexey Shabalin <shaba@altlinux.org> 4.3.1-alt1
-- new version 4.3.1
+- new version 4.3.1 (Fixes: CVE-2022-2989)
 
 * Sat Oct 08 2022 Alexey Shabalin <shaba@altlinux.org> 4.2.1-alt1
 - new version 4.2.1
