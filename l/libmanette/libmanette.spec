@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: A simple GObject game controller library
@@ -107,6 +107,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_bindir/%_name-test
 
 %changelog
+* Fri Feb 09 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.7-alt1
+- 0.2.7
+
 * Sat Nov 28 2020 Yuri N. Sedunov <aris@altlinux.org> 0.2.6-alt1
 - 0.2.6
 
