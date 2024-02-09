@@ -7,7 +7,7 @@
 
 Name: kde5-%rname
 Version: 23.08.4
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Archiving/Compression
@@ -18,7 +18,6 @@ License: GPLv2+ / LGPLv2+
 Requires: unrar p7zip unzip zip
 
 Source: %rname-%version.tar
-Patch1: alt-clizip-priority.patch
 
 # Automatically added by buildreq on Wed Aug 05 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python3 python3-base ruby ruby-stdlibs xml-common xml-utils zlib-devel
@@ -63,7 +62,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %if_disabled libzip
 sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
@@ -109,6 +107,9 @@ sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
 %_K5lib/libkerfuffle.so.*
 
 %changelog
+* Fri Feb 09 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt2
+- don't prefer clizip plugin over cli7z (closes: 49339)
+
 * Mon Dec 11 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
 - new version
 
