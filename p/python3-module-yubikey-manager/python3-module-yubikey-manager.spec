@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name yubikey-manager
+%define mod_name ykman
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.2.1
+Version: 5.3.0
 Release: alt1
 
 Summary: Tool for managing your YubiKey configuration
@@ -12,22 +13,20 @@ License: BSD-2-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/yubikey-manager/
 Vcs: https://github.com/Yubico/yubikey-manager
+
 BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 
 Requires: ykpers
 Requires: libykpers-1
 Requires: pcsc-lite-ccid
-
-Provides: ykman
-
-%py3_provides %pypi_name
-
+Provides: %mod_name = %EVR
+%pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %add_pyproject_deps_check_filter pyinstaller
 %add_pyproject_deps_check_filter sphinx-rtd-theme
@@ -40,9 +39,9 @@ Python 3.6 (or later) library for configuring a YubiKey.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-
 %if_with check
 %pyproject_deps_resync_check_poetry dev
 %endif
@@ -56,15 +55,20 @@ Python 3.6 (or later) library for configuring a YubiKey.
 install -pD -m0644 man/ykman.1 %buildroot%_man1dir/ykman.1
 
 %check
-%pyproject_run_pytest
+%pyproject_run_pytest -vra
 
 %files
 %doc COPYING NEWS
-%_bindir/*
-%_man1dir/*
-%python3_sitelibdir/*
+%_bindir/%mod_name
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/yubikit/
+%python3_sitelibdir/%{pep427_name %pypi_name}-%version.dist-info/
+%_man1dir/%mod_name.1.*
 
 %changelog
+* Fri Feb 09 2024 Anton Zhukharev <ancieg@altlinux.org> 5.3.0-alt1
+- Updated to 5.3.0.
+
 * Wed Oct 11 2023 Anton Zhukharev <ancieg@altlinux.org> 5.2.1-alt1
 - Updated to 5.2.1.
 
