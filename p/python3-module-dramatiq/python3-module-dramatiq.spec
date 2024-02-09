@@ -5,7 +5,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.15.0
+Version: 1.16.0
 Release: alt1
 
 Summary: A fast and reliable distributed task processing library for Python 3
@@ -18,11 +18,11 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %pyproject_builddeps_metadata_extra dev
 %pyproject_builddeps_check
@@ -33,6 +33,7 @@ BuildRequires(pre): rpm-build-pyproject
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -47,11 +48,14 @@ BuildRequires(pre): rpm-build-pyproject
 
 %files
 %doc COPYING COPYING.LESSER README.md
-%_bindir/*
+%_bindir/%{pypi_name}*
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 09 2024 Anton Zhukharev <ancieg@altlinux.org> 1.16.0-alt1
+- Updated to 1.16.0.
+
 * Thu Nov 02 2023 Anton Zhukharev <ancieg@altlinux.org> 1.15.0-alt1
 - Updated to 1.15.0.
 
