@@ -2,7 +2,10 @@
 
 Name: libduktape
 Version: 2.7.0
-Release: alt2
+Release: alt2.1
+%define sover 207
+%define libduktape libduktape%sover
+%define libduktaped libduktaped%sover
 
 Summary: Embeddable Javascript engine library
 License: MIT
@@ -23,13 +26,31 @@ and compact footprint.
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %EVR
 
 %description devel
 Libraries and header files for developing programs based on %name.
 
 
 #----------------------------------------------------------------------------
+
+%package -n %libduktape
+Summary: Embeddable Javascript engine commandline duk interpreter
+Group: System/Libraries
+Provides: libduktape = %EVR
+Obsoletes: libduktape < %EVR
+
+%description -n %libduktape
+Duktape is an embeddable Javascript engine, with a focus on portability
+and compact footprint.
+
+%package -n %libduktaped
+Summary: Embeddable Javascript engine commandline duk interpreter
+Group: System/Libraries
+Conflicts: libduktape <= 2.7.0-alt2
+
+%description -n %libduktaped
+Duktape is an embeddable Javascript engine, with a focus on portability
+and compact footprint.
 
 %package -n %oname
 Summary: Embeddable Javascript engine commandline duk interpreter
@@ -48,9 +69,10 @@ This package contains a commandline duk interpreter.
 %patch -p2
 
 %build
-%make -f Makefile.sharedlibrary
-%make -f Makefile.sharedlibrary duk
-#make -f Makefile.cmdline
+%add_optflags %optflags_shared
+%make CFLAGS="%optflags" -f Makefile.sharedlibrary
+%make CFLAGS="%optflags" -f Makefile.sharedlibrary duk
+#make CFLAGS="%optflags" -f Makefile.cmdline
 
 %install
 %makeinstall_std \
@@ -61,15 +83,18 @@ This package contains a commandline duk interpreter.
 mkdir -p %buildroot%_bindir
 install -m 755 duk %buildroot%_bindir/duk
 
-%files
+%files -n %libduktape
 %_libdir/libduktape.so.*
+%_libdir/libduktape.so.%sover
+
+%files -n %libduktaped
 %_libdir/libduktaped.so.*
+%_libdir/libduktaped.so.%sover
 
 %files devel
 %_includedir/duk_config.h
 %_includedir/duktape.h
-%_libdir/libduktape.so
-%_libdir/libduktaped.so
+%_libdir/lib*.so
 %_libdir/pkgconfig/duktape.pc
 
 %files -n %oname
@@ -77,6 +102,10 @@ install -m 755 duk %buildroot%_bindir/duk
 %_bindir/duk
 
 %changelog
+* Fri Feb 09 2024 Sergey V Turchin <zerg@altlinux.org> 2.7.0-alt2.1
+- apply shared libs policy
+- fix compile flags
+
 * Wed Dec 06 2023 Michael Shigorin <mike@altlinux.org> 2.7.0-alt2
 - package duktaped library too
 
