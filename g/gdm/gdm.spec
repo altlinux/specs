@@ -26,7 +26,7 @@
 
 Name: gdm
 Version: %ver_major.0.1
-Release: alt3%beta
+Release: alt3.1%beta
 
 Summary: The GNOME Display Manager
 License: GPL-2.0
@@ -178,8 +178,10 @@ This package contains user documentation for Gdm.
 
 %prep
 %setup -n %name-%version%beta
-sed -i 's|/usr\(/bin/touch\)|\1|' data/61-gdm.rules.in
-sed -i 's|/usr\(/bin/rm\)|\1|' data/61-gdm.rules.in
+sed -i 's|/usr\(/bin/touch\)|\1|
+        s|/usr\(/bin/rm\)|\1|
+        s|/usr\(/lib/systemd/system-sleep/nvidia\)|\1|' data/61-gdm.rules.in
+
 %patch2 -p1 -b .XSession
 %patch7 -p1 -b .Init
 %patch8 -p1 -b .XSession-Xterm
@@ -305,6 +307,10 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Fri Feb 09 2024 Yuri N. Sedunov <aris@altlinux.org> 45.0.1-alt3.1
+- data/61-gdm.rules.in: /usr/lib/systemd/system-sleep/nvidia ->
+  /lib/systemd/system-sleep/nvidia (ALT #49345)
+
 * Fri Oct 20 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0.1-alt3
 - enabled plymouth integration again (ALT #48083)
 
