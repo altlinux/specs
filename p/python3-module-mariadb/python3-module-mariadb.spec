@@ -2,7 +2,7 @@
 %define pypi_name mariadb
 
 Name: python3-module-%pypi_name
-Version: 1.1.9
+Version: 1.1.10
 Release: alt1
 
 Summary: MariaDB Connector/Python
@@ -13,11 +13,11 @@ Vcs: https://github.com/mariadb-corporation/mariadb-connector-python
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 BuildRequires: libmariadb-devel
 
 %description
@@ -28,6 +28,7 @@ client library for client server communication.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -43,6 +44,9 @@ client library for client server communication.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 09 2024 Anton Zhukharev <ancieg@altlinux.org> 1.1.10-alt1
+- Updated to 1.1.10.
+
 * Wed Dec 27 2023 Anton Zhukharev <ancieg@altlinux.org> 1.1.9-alt1
 - Updated to 1.1.9.
 - Distributed under LGPL-2.1-or-later license.
