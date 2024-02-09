@@ -1,6 +1,6 @@
 Name: portproton
-Version: 1.3
-Release: alt2
+Version: 1.4
+Release: alt1
 
 Summary: Installer for PortProton
 
@@ -10,28 +10,17 @@ Url: https://github.com/Castro-Fidel/PortProton_ALT
 
 Source: %name-%version.tar
 
-Requires: bubblewrap cabextract wget zstd gawk tar xz pciutils bc coreutils file
-Requires: curl icoutils wmctrl zenity xdg-utils desktop-file-utils
-Requires: libvulkan1 vulkan-tools libd3d libGL gamemode fontconfig xrdb
+Requires: bubblewrap cabextract zstd gawk tar xz pciutils coreutils file
+Requires: curl icoutils wmctrl xdg-utils desktop-file-utils yad
+Requires: libvulkan1 vulkan-tools libd3d libGL libMesaOpenCL gamemode fontconfig xrdb
 Requires: libcurl libgio libnm libnsl1 libnss glibc-nss glibc-pthread
 Requires: /usr/bin/convert
 
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: x86_64
 
 %description
 Installer PortProton for Windows games.
 
-%ifarch %ix86
-%package -n %name-dependencies
-Group: Games/Other
-Summary: Meta package for installation 32-bit dependencies for %name
-Requires: libvulkan1 vulkan-tools libd3d libGL gamemode fontconfig xrdb
-Requires: libcurl libgio libnm libnsl1 libnss glibc-nss glibc-pthread
-%description -n %name-dependencies
-%summary
-%endif
-
-%ifarch x86_64
 %prep
 %setup
 
@@ -46,13 +35,13 @@ install -Dm644 %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
-%endif
-
-%ifarch %ix86
-%files -n %name-dependencies
-%endif
 
 %changelog
+* Fri Feb 09 2024 Mikhail Tergoev <fidel@altlinux.org> 1.4-alt1
+- updated to v1.4
+- update requires
+- drop meta package 32-bit dependencies (it does not work as intended)
+
 * Sun Dec 24 2023 Mikhail Tergoev <fidel@altlinux.org> 1.3-alt2
 - added meta package for installation 32-bit dependencies
 - update requires
