@@ -25,7 +25,7 @@
 %def_with scudo
 
 Name: telegram-desktop
-Version: 4.14.12
+Version: 4.14.14
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -86,6 +86,8 @@ BuildRequires: qt6-svg-devel qt6-svg
 BuildRequires: qt6-charts-devel qt6-charts
 BuildRequires: qt6-5compat-devel
 BuildRequires: qt6-imageformats
+# WebView support: Quick QuickWidgets WaylandCompositor
+BuildRequires: qt6-declarative-devel
 %{?_with_wayland:BuildRequires: qt6-wayland-devel qt6-wayland}
 # needs for smiles and emojicons
 Requires: qt6-imageformats
@@ -404,6 +406,13 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Fri Feb 09 2024 Vitaly Lipatov <lav@altlinux.ru> 4.14.14-alt1
+- new version 4.14.14 (with rpmrb script)
+
+* Fri Feb 09 2024 Vitaly Lipatov <lav@altlinux.ru> 4.14.13-alt1
+- new version 4.14.13 (with rpmrb script)
+- add BR: qt6-declarative-devel (so that it is clearly present)
+
 * Mon Feb 05 2024 Vitaly Lipatov <lav@altlinux.ru> 4.14.12-alt1
 - new version 4.14.12 (with rpmrb script)
 
