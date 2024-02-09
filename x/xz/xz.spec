@@ -1,6 +1,6 @@
 Name: xz
-Version: 5.2.5
-Release: alt3.1
+Version: 5.4.5
+Release: alt1
 
 Summary: LZMA/XZ compression programs
 # We don't package scripts to grep, diff, and view compressed files here
@@ -130,6 +130,9 @@ rm %buildroot%docdir/COPYING.GPL*
 %check
 make -k check
 
+%define _stripped_files_terminate_build 1
+%define _unpackaged_files_terminate_build 1
+
 %files -f xz.lang
 %_bindir/*lz*
 %_bindir/*xz*
@@ -155,6 +158,9 @@ make -k check
 %_libdir/liblzma.a
 
 %changelog
+* Mon Jan 15 2024 Arseny Maslennikov <arseny@altlinux.org> 5.4.5-alt1
+- 5.2.5-2-gcf1ec551 -> 5.4.5.
+
 * Sat Dec 04 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 5.2.5-alt3.1
 - 15%% faster lzma decompression on e2k-v5 and e2k-v6.
 - Extra comments on profiling, style editing, .tar size print.
