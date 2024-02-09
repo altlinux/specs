@@ -6,8 +6,8 @@
 %def_with pulse
 
 Name: SDL2
-Version: 2.28.5
-Release: alt1.2
+Version: 2.30.0
+Release: alt1
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -119,6 +119,9 @@ export LDFLAGS='-mlsx -mlasx'
 %_libdir/lib%{name}*.a
 
 %changelog
+* Fri Feb 09 2024 Nazarov Denis <nenderus@altlinux.org> 2.30.0-alt1
+- New version 2.30.0. (ALT #49337)
+
 * Sun Jan 28 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.28.5-alt1.2
 - NMU: fixed FTBFS on LoongArch (ensure SIMD are available during LTO).
 
