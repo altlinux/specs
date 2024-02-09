@@ -7,7 +7,7 @@
 
 Name: ghc8.10.7
 Version: 8.10.7
-Release: alt4
+Release: alt5
 
 Summary: Glasgow Haskell Compilation system
 License: BSD-3-Clause and HaskellReport
@@ -283,6 +283,9 @@ sed -i 's/@GHC_VERSION@/%version/' %buildroot%_rpmmacrosdir/ghc
 %exclude %docdir/[AR]*
 
 %changelog
+* Fri Feb 09 2024 Anton Zhukharev <ancieg@altlinux.org> 8.10.7-alt5
+- Fixed FTBFS (python 3.12).
+
 * Sat Aug 26 2023 Evgeny Sinelnikov <sin@altlinux.org> 8.10.7-alt4
 - Rebuild with ghc 8.10.7 (final second bootstrap)
 
