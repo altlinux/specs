@@ -108,14 +108,14 @@
 %brp_strip_none %sysroot/*  %prefix/lib/gcc/*.a %prefix/lib/gcc/*.o
 
 Name: cross-toolchain-%target
-Version: 20240206
+Version: 20240208
 Release: alt1
 Summary: GCC cross-toolchain for %target
 License: LGPL-2.1-or-later and LGPL-3.0-or-later and GPL-2.0-or-later and GPL-3.0-or-later and GPL-3.0-or-later with GCC-exception-3.1
 Group: Development/C
 
 %if "%target_arch" == "x86_64" || "%target_arch" == "i586"
-ExclusiveArch: aarch64 loongarch64
+ExcludeArch: %ix86 x86_64
 %else
 %if "%target_arch" == "aarch64" || "%target_arch" == "arm"
 ExclusiveArch: loongarch64 x86_64
@@ -164,6 +164,7 @@ BuildRequires: libmpc-devel libmpfr-devel libgmp-devel zlib-devel
 BuildRequires: rsync
 BuildRequires: /usr/bin/qemu-%target_qemu_arch-static
 BuildRequires: python3
+BuildRequires: gnu-config
 
 %description
 GCC cross-toolchain for %target
@@ -235,6 +236,9 @@ find /usr/src/gcc-source -type f -name 'gcc-*.tar' | xargs -I {} -n1 tar -x --st
 find /usr/src/binutils-source -type f -name 'binutils-*.tar' | xargs -I {} -n1 tar -x --strip-components=1 -f {} -C binutils
 find /usr/src/kernel/sources -type f -name 'kernel-source-*.tar' | xargs -I {} -n1 tar -x --strip-components=1 -f {} -C linux
 find /usr/src/glibc-source -type f -name 'glibc-*.tar' | xargs -I {} -n1 tar -x --strip-components=1 -f {} -C glibc
+
+cp -at gcc /usr/share/gnu-config/config.{guess,sub}
+cp -at glibc/scripts /usr/share/gnu-config/config.{guess,sub}
 
 rm -rf stage
 
@@ -607,6 +611,9 @@ env PATH=%buildroot%prefix/bin:$PATH \
 env PATH=%buildroot%prefix/bin:$PATH \
 %buildroot%prefix/bin/%target-g++ -o hello_cpp hello.cpp || exit 3
 
+%ifnarch armh
+# XXX: qemu-user is badly broken on armh
+
 # Note: LD_LIBRARY_PATH is for **target** ld.so.
 # Use qemu-user-static so qemu-user is not affected by LD_LIBRARY_PATH
 env LD_LIBRARY_PATH=%buildroot%sysroot/lib64:${gcc_runtime_libdir} \
@@ -614,6 +621,8 @@ env LD_LIBRARY_PATH=%buildroot%sysroot/lib64:${gcc_runtime_libdir} \
 
 env LD_LIBRARY_PATH=%buildroot%sysroot/lib64:${gcc_runtime_libdir} \
 	qemu-%target_qemu_arch-static -L %buildroot%sysroot ./hello_cpp || exit 7
+
+%endif
 
 %if "%target_arch" == "aarch64"
 cat > bye.S <<EOF
@@ -778,7 +787,11 @@ EOF
 
 env PATH=%buildroot%prefix/bin:$PATH \
 %buildroot%prefix/bin/%target-gcc -nostdlib -static -no-pie %asm_extra_flags -o bye_asm bye.S || exit 11
+
+%ifnarch armh
+# XXX: qemu-user is badly broken on armh
 qemu-%target_qemu_arch-static ./bye_asm || exit 13
+%endif
 
 %files -n gcc-%target
 %_bindir/%target-gcc*
@@ -939,6 +952,10 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 
 
 %changelog
+* Thu Feb 08 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 20240208-alt1
+- Build x86-targeted cross-compilers on all non-x86 architectures.
+- Don't run test binaries on armh (qemu-user is badly broken there).
+
 * Tue Feb 06 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 20240206-alt1
 - Added x86-targeted cross-compilers (for now only on aarch64 and LoongArch).
 
