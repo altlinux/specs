@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 2.2.0
-Release: alt1
+Release: alt2
 
 Summary: Typed interactions with the GitHub API v3
 License: LGPL-3.0
@@ -28,6 +28,7 @@ Buildrequires: python3-module-httpretty
 Buildrequires: python3-module-pytest-cov
 Buildrequires: python3-module-dateutil
 Buildrequires: python3-module-typing-extensions
+Buildrequires: python3-module-cryptography
 %endif
 
 BuildArch: noarch
@@ -62,6 +63,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Feb 09 2024 Grigory Ustinov <grenka@altlinux.org> 2.2.0-alt2
+- Fixed FTBFS.
+
 * Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 2.2.0-alt1
 - Automatically updated to 2.2.0.
 
