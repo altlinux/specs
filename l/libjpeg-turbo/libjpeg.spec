@@ -1,6 +1,6 @@
 Name: libjpeg-turbo
 Version: 3.0.2
-Release: alt2
+Release: alt2.1
 Epoch: 2
 
 Summary: A SIMD-accelerated library for manipulating JPEG image format files
@@ -191,6 +191,9 @@ install -pm644 README* change.log \
 %_libdir/libturbojpeg.so.*
 
 %changelog
+* Fri Feb 09 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2:3.0.2-alt2.1
+- e2k patch update
+
 * Wed Feb 07 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 2:3.0.2-alt2
 - merged back devel part of libturbojpeg (closes: 49320)
 
