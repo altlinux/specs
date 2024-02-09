@@ -1,9 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
-%global llvm_version 15.0
+# use at least llvm 15
+%if %(printf %%.0f %_llvm_version) < 15
+%global _llvm_version 15.0
+%endif
 
 Name: AFLplusplus
-Version: 4.09c
+Version: 4.10c
 Release: alt1
 
 Summary: American Fuzzy Lop plus plus (AFL++)
@@ -20,17 +23,18 @@ Provides: afl++ = %EVR
 # Note: Consider removing and obsoleting afl
 Conflicts: afl
 
-Requires: clang%llvm_version lld%llvm_version
+Requires: clang%_llvm_version lld%_llvm_version
 
 # Don't require afl-plot-ui to not depend on UI libs
 %add_findreq_skiplist %_bindir/afl-plot
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-llvm-common
 
 BuildRequires: python3-dev
 BuildRequires: gcc-c++ gcc-plugin-devel
-BuildRequires: llvm%llvm_version llvm%llvm_version-devel
-BuildRequires: clang%llvm_version lld%llvm_version
+BuildRequires: llvm%_llvm_version llvm%_llvm_version-devel
+BuildRequires: clang%_llvm_version lld%_llvm_version
 
 %add_verify_elf_skiplist %_libexecdir/afl/*
 %add_verify_elf_skiplist %_libexecdir/afl/custom_mutators/*
@@ -67,7 +71,7 @@ cp -r utils utils.orig
 find ./utils.orig -type f -exec chmod -x {} \;
 
 %build
-export ALTWRAP_LLVM_VERSION=%llvm_version
+export ALTWRAP_LLVM_VERSION=%_llvm_version
 export CC=clang
 export CXX=clang++
 export LD=ld.lld
@@ -96,7 +100,7 @@ for util in afl_network_proxy defork socket_fuzzing plot_ui; do
 done
 
 %install
-export ALTWRAP_LLVM_VERSION=%llvm_version
+export ALTWRAP_LLVM_VERSION=%_llvm_version
 export CC=clang
 export CXX=clang++
 export LD=ld.lld
@@ -134,6 +138,9 @@ install -m755 utils/plot_ui/afl-plot-ui -t %buildroot%_bindir
 %_bindir/afl-plot-ui
 
 %changelog
+* Wed Feb 07 2024 Egor Ignatov <egori@altlinux.org> 4.10c-alt1
+- 4.10c
+
 * Sun Dec 31 2023 Egor Ignatov <egori@altlinux.org> 4.09c-alt1
 - 4.09c
 
