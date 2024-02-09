@@ -5,7 +5,7 @@
 %define _cmake__builddir BUILD
 
 Name: libzip
-Version: 1.9.2
+Version: 1.10.1
 Release: alt1
 
 Group: System/Libraries
@@ -53,12 +53,24 @@ developing applications that use %name.
 
 %prep
 %setup -q
-sed -i '/^ADD_SUBDIRECTORY(regress)$/d' CMakeLists.txt
+#sed -i '/^ADD_SUBDIRECTORY(regress)$/d' CMakeLists.txt
 
 %build
 %cmake \
-    -DBUILD_SHARED_LIBS=ON \
     -DCMAKE_INSTALL_INCLUDEDIR=include/libzip \
+    -DBUILD_SHARED_LIBS=ON \
+    -DENABLE_COMMONCRYPTO:BOOL=OFF \
+    -DENABLE_GNUTLS:BOOL=OFF \
+    -DENABLE_MBEDTLS:BOOL=OFF \
+    -DENABLE_OPENSSL:BOOL=ON \
+    -DENABLE_WINDOWS_CRYPTO:BOOL=OFF \
+    -DENABLE_BZIP2:BOOL=ON \
+    -DENABLE_LZMA:BOOL=ON \
+    -DENABLE_ZSTD:BOOL=ON \
+    -DBUILD_TOOLS:BOOL=ON \
+    -DBUILD_REGRESS:BOOL=ON \
+    -DBUILD_EXAMPLES:BOOL=OFF \
+    -DBUILD_DOC:BOOL=ON
     #
 %cmake_build
 
@@ -85,6 +97,9 @@ make -C BUILD install DESTDIR=%buildroot
 %_man3dir/*ZIP*
 
 %changelog
+* Fri Feb 09 2024 Sergey V Turchin <zerg@altlinux.org> 1.10.1-alt1
+- new version
+
 * Tue Dec 06 2022 Sergey V Turchin <zerg@altlinux.org> 1.9.2-alt1
 - new version (closes: 42839)
 
