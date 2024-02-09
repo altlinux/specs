@@ -107,7 +107,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt1
+Release: alt2
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -880,6 +880,9 @@ fi
 		-DLLDB_TEST_COMPILER:PATH=%_bindir/gcc \
 		%endif
 	%endif
+	%ifarch %ix86
+	-DLLVM_DEFAULT_TARGET_TRIPLE:STRING="i586-pc-linux-gnu" \
+	%endif
 	\
 	-DLLVM_INCLUDE_EXAMPLES:BOOL=ON \
 	-DLLVM_BUILD_EXAMPLES:BOOL=OFF \
@@ -1480,6 +1483,9 @@ ninja -C %builddir check-all || :
 %_datadir/cmake/Modules/*
 
 %changelog
+* Thu Feb 08 2024 L.A. Kostis <lakostis@altlinux.ru> 17.0.6-alt2
+- clang: fix wrong -print-runtime-dir on %%ix86.
+
 * Sun Jan 21 2024 L.A. Kostis <lakostis@altlinux.ru> 17.0.6-alt1
 - 17.0.6.
   BR: build lldb with lzma support.
