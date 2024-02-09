@@ -10,7 +10,7 @@
 
 Name:     vzmigrate
 Version:  7.0.150
-Release:  alt1
+Release:  alt1.1
 
 Summary:  Virtuozzo migration tool
 License:  GPLv2+
@@ -78,6 +78,10 @@ make install \
 %doc *.md
 
 %changelog
+* Thu Feb 08 2024 Ivan A. Melnikov <iv@altlinux.org> 7.0.150-alt1.1
+- NMU: switch to using C++11 standard (fixes build
+  with boost 1.84.0+).
+
 * Wed Apr 05 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.0.150-alt1
 - 7.0.150
 
