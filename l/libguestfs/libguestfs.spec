@@ -31,7 +31,7 @@
 
 Name: libguestfs
 Version: 1.52.0
-Release: alt1
+Release: alt2
 
 Summary: Library for accessing and modifying virtual machine disk images
 License: LGPLv2+
@@ -563,6 +563,9 @@ fi
 %endif #erlang
 
 %changelog
+* Sat Feb 10 2024 Alexey Shabalin <shaba@altlinux.org> 1.52.0-alt2
+- add info about CVE to changelog
+
 * Fri Jan 12 2024 Alexey Shabalin <shaba@altlinux.org> 1.52.0-alt1
 - 1.52.0
 - add GOST checksum command support
@@ -592,7 +595,7 @@ fi
 - enable basic tests
 
 * Mon Sep 05 2022 Egor Ignatov <egori@altlinux.org> 1.48.4-alt1
-- 1.48.4
+- 1.48.4 (Fixes: CVE-2022-2211)
 - update libguestfs-1.46.0-alt-fixes patch
 
 * Sat Feb 05 2022 Anton Farygin <rider@altlinux.ru> 1.46.2-alt2
