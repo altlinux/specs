@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: iotop-c
-Version: 1.25
+Version: 1.26
 Release: alt1
 Summary: A top utility for IO
 License: GPL-2.0-or-later
@@ -57,6 +57,9 @@ mv %buildroot%_man8dir/iotop.8 %buildroot%_mandir/man8/iotop-c.8
 %_man8dir/iotop-c.*
 
 %changelog
+* Fri Feb 09 2024 Vitaly Chikunov <vt@altlinux.org> 1.26-alt1
+- Update to v1.26 (2024-02-04).
+
 * Sun Oct 15 2023 Vitaly Chikunov <vt@altlinux.org> 1.25-alt1
 - Update to v1.25 (2023-10-14).
 
