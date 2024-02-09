@@ -2,7 +2,7 @@
 
 Name: plasma5-welcome
 Version: 5.27.10
-Release: alt3
+Release: alt4
 %K5init
 
 Group: Graphical desktop/KDE
@@ -70,6 +70,8 @@ mkdir -p %buildroot/%_datadir/plasma-welcome-extra-pages{,-pre}
 
 %files -f %name.lang
 %doc LICENSES/*
+%dir %_datadir/plasma-welcome-extra-pages/
+%dir %_datadir/plasma-welcome-extra-pages-pre/
 %_K5bin/plasma-welcome
 %_K5qml/org/kde/plasma/welcome/
 %_K5xdgapp/*plasma-welcome*.desktop
@@ -77,6 +79,9 @@ mkdir -p %buildroot/%_datadir/plasma-welcome-extra-pages{,-pre}
 %_datadir/metainfo/*.xml
 
 %changelog
+* Fri Feb 09 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.10-alt4
+- package extra pages dirs
+
 * Wed Feb 07 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.10-alt3
 - add ability to add distro-specific pages first
 
