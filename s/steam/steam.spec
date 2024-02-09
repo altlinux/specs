@@ -1,6 +1,6 @@
 Name: steam
-Version: 1.0.0.78
-Release: alt9
+Version: 1.0.0.79
+Release: alt1
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -76,6 +76,9 @@ savegame and screenshot functionality, and many social features.
 %config %_datadir/polkit-1/rules.d/%name-nm.rules
 
 %changelog 
+* Fri Feb 09 2024 Nazarov Denis <nenderus@altlinux.org> 1.0.0.79-alt1
+- Version 1.0.0.79
+
 * Tue Jan 16 2024 Nazarov Denis <nenderus@altlinux.org> 1.0.0.78-alt9
 - Add patch to fix setup SteamVR (ALT #49080, #49081), thx fidel@
 
