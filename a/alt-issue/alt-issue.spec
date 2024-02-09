@@ -1,5 +1,5 @@
 Name: alt-issue
-Version: 1.1
+Version: 1.2
 Release: alt1
 
 Summary: Create issue.d banners for ALT distros
@@ -61,15 +61,18 @@ EOF
 touch %_sysconfdir/issue
 
 %files
-%_sysconfdir/issue.d/00alt.issue
+%config(noreplace) %_sysconfdir/issue.d/00alt.issue
 
 %files server
-%_sysconfdir/issue.d/00server.issue
+%config(noreplace) %_sysconfdir/issue.d/00server.issue
 
 %files server-pve
-%_sysconfdir/issue.d/pve.issue
+%config(noreplace) %_sysconfdir/issue.d/pve.issue
 
 %changelog
+* Fri Feb 09 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.2-alt1
+- mark all files as config (ALT #49291)
+
 * Thu May 27 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.1-alt1
 - change package structure, use \R macros
 
