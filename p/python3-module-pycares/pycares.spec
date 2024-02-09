@@ -3,7 +3,7 @@
 
 Name: python3-module-%module_name
 Version: 4.1.2
-Release: alt1
+Release: alt2
 
 Summary: Python interface for c-ares
 
@@ -15,6 +15,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libcares-devel
+BuildRequires: python3-module-cffi
 
 %if_with docs
 BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme
@@ -48,6 +49,9 @@ export LANG=en_US.UTF-8
 %endif
 
 %changelog
+* Fri Feb 09 2024 Grigory Ustinov <grenka@altlinux.org> 4.1.2-alt2
+- Fixed FTBFS.
+
 * Thu Jun 02 2022 Grigory Ustinov <grenka@altlinux.org> 4.1.2-alt1
 - Build new version.
 
