@@ -1,6 +1,6 @@
 Name: nmap
 Version: 7.94
-Release: alt1
+Release: alt2
 Epoch: 20020501
 
 Summary: Network exploration tool and security scanner
@@ -25,7 +25,7 @@ BuildRequires: gcc-c++, libcap-devel
 BuildRequires: libpcap-devel >= 2:0.8, libpcre-devel, libssl-devel, libssh2-devel, zlib-devel
 # nmap/configure.ac:836:    # We need Lua 5.4 exactly
 %{?_with_liblua:BuildRequires: liblua5.4-devel}
-%{?_with_ndiff:BuildRequires: python3-devel}
+%{?_with_ndiff:BuildRequires: python3-devel python3-module-setuptools}
 %{?_with_zenmap:BuildRequires: libpam-devel python3-devel}
 
 # Nmap Lua scripts are self-contained;
@@ -145,6 +145,9 @@ rm %buildroot%_datadir/zenmap/su-to-zenmap.sh
 %endif
 
 %changelog
+* Fri Feb 09 2024 Anton Zhukharev <ancieg@altlinux.org> 20020501:7.94-alt2
+- Fixed FTBFS (python 3.12).
+
 * Mon Jul 31 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 20020501:7.94-alt1
 - Updated to 7.94.
 - Reenabled zenmap as it now supports Python 3.
