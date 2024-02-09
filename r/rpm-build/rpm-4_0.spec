@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.194
+Version: 4.0.4.195
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -384,6 +384,13 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Thu Jan 11 2024 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.195-alt1
+- debuginfo: Changed compression format (--lzma2=dict=2MiB ->
+  --check=crc32 --lzma2=dict=1MiB) of xz-compressed modules for compatibility
+  with kmod >= 31 (thx asheplyakov@).
+- Introduced brp-verify-unit to check sanity of systemd units included
+  in built packages.
+
 * Fri Dec 08 2023 Vitaly Chikunov <vt@altlinux.org> 4.0.4.194-alt1
 - debuginfo: Do not strip debugging vmlinux binary.
 
