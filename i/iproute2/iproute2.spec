@@ -2,7 +2,7 @@
 %def_with selinux
 
 Name: iproute2
-Version: 6.6.0
+Version: 6.7.0
 Release: alt1
 
 Summary: Advanced IP routing and network devices configuration tools
@@ -98,6 +98,9 @@ done
 %attr(700,root,root) %dir %_localstatedir/arpd
 
 %changelog
+* Sat Jan 13 2024 Arseny Maslennikov <arseny@altlinux.org> 6.7.0-alt1
+- 6.6.0 -> 6.7.0.
+
 * Wed Nov 08 2023 Arseny Maslennikov <arseny@altlinux.org> 6.6.0-alt1
 - 5.17.0 -> 6.6.0.
 - Dropped the homegrown libnetlink.so shared library: it is unused by other
