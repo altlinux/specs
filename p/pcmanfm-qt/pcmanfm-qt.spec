@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    pcmanfm-qt
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 Epoch: 1
 
@@ -53,6 +53,9 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Sat Feb 10 2024 Anton Midyukov <antohami@altlinux.org> 1:1.4.1-alt1
+- New version 1.4.1.
+
 * Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1:1.4.0-alt1
 - New version 1.4.0.
 
