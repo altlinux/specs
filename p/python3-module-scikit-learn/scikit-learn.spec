@@ -1,21 +1,20 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname scikit-learn
 
-# CPU time limit exceeded sometimes even on x86_64
-# test_graphviz_toy failed on i586
+# CPU time limit exceeded
+# 1.4.0 passes check on local machine
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.3.0
-Release: alt3
+Version: 1.4.0
+Release: alt1
 
 Summary: A set of python modules for machine learning and data mining
+
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/scikit-learn
+URL: https://pypi.org/project/scikit-learn
+VCS: https://github.com/scikit-learn/scikit-learn
 
-# https://github.com/scikit-learn/scikit-learn
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -28,6 +27,7 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-numpy
 BuildRequires: python3-module-scipy
 BuildRequires: python3-module-Cython
+
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-joblib
@@ -79,8 +79,10 @@ popd
 %python3_sitelibdir/sklearn/utils/_testing.py
 %python3_sitelibdir/sklearn/utils/__pycache__/_testing.*
 
-
 %changelog
+* Sat Feb 10 2024 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt1
+- Automatically updated to 1.4.0.
+
 * Wed Jan 10 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt3
 - Build without check.
 
