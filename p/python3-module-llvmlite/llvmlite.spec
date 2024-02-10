@@ -10,14 +10,15 @@
 %endif
 
 Name:    python3-module-%oname
-Version: 0.40.1
-Release: alt3
+Version: 0.41.0
+Release: alt1
 
 Summary: A lightweight LLVM python binding for writing JIT compilers
 
 License: BSD-2-Clause
 Group:   Development/Python3
 URL:     https://pypi.org/project/llvmlite
+VCS:     https://github.com/numba/llvmlite
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -62,11 +63,14 @@ export LDFLAGS='-fuse-ld=lld'
 %__python3 ./runtests.py
 
 %files
-%doc *.rst
+%doc LICENSE CHANGE_LOG *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%{pyproject_distinfo %oname}/
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Sat Feb 10 2024 Grigory Ustinov <grenka@altlinux.org> 0.41.0-alt1
+- Automatically updated to 0.41.0.
+
 * Wed Sep 13 2023 L.A. Kostis <lakostis@altlinux.ru> 0.40.1-alt3
 - llvm12.0->llvm14.0.
 
