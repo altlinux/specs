@@ -1,6 +1,6 @@
 Name: crcutil
 Version: 1.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: Fast CRC library
 License: Apache-2.0
@@ -10,8 +10,7 @@ Vcs: https://github.com/cloudera/crcutil.git
 
 Source: %name-%version.tar
 Source1: lib%name.pc.in
-
-ExcludeArch: armh
+Patch3500: crcutil-1.0-alt-nonx86.patch
 
 BuildRequires: gcc-c++
 
@@ -36,13 +35,14 @@ Development files for %name.
 
 %prep
 %setup
+%patch3500 -p1
 %ifarch %e2k
 sed -i "s/-DCRCUTIL_USE_MM_CRC32=1/-DHAVE_AARCH64/;s/-mcrc32/-mno-sse4.2/" autogen.sh
 %endif
-./autogen.sh
-./configure --prefix=%_prefix --libdir=%_libdir
 
 %build
+./autogen.sh
+./configure --prefix=%_prefix --libdir=%_libdir
 %make_build
 
 %install
@@ -67,6 +67,9 @@ install -m644 lib%name.pc %buildroot%_pkgconfigdir
 %_pkgconfigdir/*
 
 %changelog
+* Sat Feb 10 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.0-alt1.2
+- NMU: fixed FTBFS on armv7 and LoongArch (and possibly riscv).
+
 * Fri Jul 29 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.0-alt1.1
 - Fixed build for Elbrus.
 
