@@ -9,12 +9,12 @@
 %def_without devel
 %def_with vanilla
 %define gecko_version 2.47.4
-%define mono_version 8.1.0
-%define winetricks_version 20230505
+%define mono_version 9.0.0
+%define winetricks_version 20240105
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 9.x
-%define major 9.1
+%define major 9.2
 %define rel %nil
 
 # the packages will conflict with that
@@ -279,7 +279,7 @@ BuildRequires: desktop-file-utils
 # FIXME: Actually for x86_32
 Requires: glibc-pthread glibc-nss
 
-Requires: wine-gecko = %gecko_version
+#Requires: wine-gecko = %gecko_version
 
 # For menu/MIME subsystem
 Requires: desktop-file-utils
@@ -851,6 +851,12 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Sat Feb 10 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.2-alt1
+- new version 9.2 (with rpmrb script)
+- set strict require wine-mono 9.0.0
+- update winetricks require to 20240105
+- don't require wine-gecko from wine-vanilla package
+
 * Sat Jan 27 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.1-alt1
 - new version 9.1 (with rpmrb script)
 
