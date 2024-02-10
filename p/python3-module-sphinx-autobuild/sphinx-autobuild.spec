@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2021.03.14
+Version: 2024.02.04
 Release: alt1
 
 Summary: Watch a Sphinx directory and rebuild the documentation when a change is detected
@@ -46,11 +46,14 @@ Also includes a livereload enabled web server.
 %tox_check_pyproject
 
 %files
-%doc LICENSE *.rst
+%doc *.rst
 %_bindir/sphinx-autobuild
 %python3_sitelibdir/sphinx_autobuild
-%python3_sitelibdir/sphinx_autobuild-2021.3.14.dist-info
+%python3_sitelibdir/sphinx_autobuild-2024.2.4.dist-info
 
 %changelog
+* Sat Feb 10 2024 Grigory Ustinov <grenka@altlinux.org> 2024.02.04-alt1
+- Automatically updated to 2024.02.04.
+
 * Tue Sep 19 2023 Grigory Ustinov <grenka@altlinux.org> 2021.03.14-alt1
 - Initial build for Sisyphus.
