@@ -2,7 +2,7 @@
 %define _name sdl-%__name
 
 Name: sdl_%__name
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 
 Summary: Classic scrolling shoot'em
@@ -38,13 +38,17 @@ install -pD -m644 %SOURCE2 %buildroot%_desktopdir/%__name.desktop
 %_bindir/%__name
 %_man5dir/%__name.cfg.*
 %_man6dir/%__name.*
-%_pixmapsdir/%__name.png
 %_desktopdir/%__name.desktop
+%_pixmapsdir/%__name.png
+%_iconsdir/hicolor/*x*/apps/%__name.png
 %doc NEWS* README* doc/origdoc.txt
 
 %exclude %_docdir/%_name
 
 %changelog
+* Sun Feb 11 2024 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
 * Sun May 21 2023 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
 - 2.3.0
 
