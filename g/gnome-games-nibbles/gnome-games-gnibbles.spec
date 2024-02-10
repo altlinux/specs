@@ -1,5 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %def_disable snapshot
+%def_enable check
 
 %define _name nibbles
 %define __name gnome-%_name
@@ -9,7 +10,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Guide a worm around a maze
@@ -29,9 +30,10 @@ Provides:  gnome-games-gnibbles = %EVR
 
 %define glib_ver 2.78.0
 %define gtk_ver 4.6.0
+%define vala_ver 0.56
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson
+BuildRequires: meson vala-tools >= %vala_ver
 BuildRequires: yelp-tools gsettings-desktop-schemas-devel
 BuildRequires: desktop-file-utils /usr/bin/appstreamcli
 BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk_ver
@@ -57,6 +59,9 @@ much room to move.
 %meson_install
 %find_lang --with-gnome %__name
 
+%check
+%__meson_test
+
 %files -f gnome-%_name.lang
 %_bindir/%__name
 %_desktopdir/%xdg_name.desktop
@@ -70,6 +75,9 @@ much room to move.
 %doc NEWS
 
 %changelog
+* Sat Feb 10 2024 Yuri N. Sedunov <aris@altlinux.org> 4.0.2-alt1
+- 4.0.2
+
 * Mon Dec 18 2023 Yuri N. Sedunov <aris@altlinux.org> 4.0.1-alt1
 - 4.0.1
 
