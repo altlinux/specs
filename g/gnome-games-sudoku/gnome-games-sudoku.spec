@@ -7,7 +7,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: GNOME Sudoku game
@@ -59,6 +59,9 @@ in popularity.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Sat Feb 10 2024 Yuri N. Sedunov <aris@altlinux.org> 45.5-alt1
+- 45.5
+
 * Fri Jan 05 2024 Yuri N. Sedunov <aris@altlinux.org> 45.4-alt1
 - 45.4
 
