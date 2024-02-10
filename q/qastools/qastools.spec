@@ -1,12 +1,12 @@
 Name: qastools
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Collection of desktop applications for ALSA
-License: GPL-3.0
+License: MIT
 Group: Sound
 
-Url: http://xwmw.org/qastools
+Url: https://gitlab.com/sebholt/qastools
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -109,6 +109,11 @@ done
 %_datadir/metainfo/qasmixer.appdata.xml
 
 %changelog
+* Sat Feb 10 2024 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
+- nev version 1.3.0
+- fix License
+- update URL
+
 * Mon Dec 18 2023 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt1
 - new version 1.2.0
 
