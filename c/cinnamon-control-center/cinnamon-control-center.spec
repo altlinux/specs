@@ -8,14 +8,14 @@
 %def_enable onlineaccounts
 
 Name: cinnamon-control-center
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Cinnamon Control Center
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: https://github.com/linuxmint/cinnamon-control-center
-
+#Source-url: https://github.com/linuxmint/cinnamon-control-center/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
 # From configure.ac
@@ -147,6 +147,9 @@ you'll want to install this package.
 
 
 %changelog
+* Sat Feb 10 2024 Anton Midyukov <antohami@altlinux.org> 6.0.1-alt1
+- 6.0.1
+
 * Sun Dec 17 2023 Anton Midyukov <antohami@altlinux.org> 6.0.0-alt2
 - rebuild without gnome-bluetooth (not used)
 
