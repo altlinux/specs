@@ -6,7 +6,7 @@
 
 Name: libmaa
 Version: 1.4.7
-Release: alt5
+Release: alt6
 
 Summary: Library providing many low-level data structures
 License: MIT
@@ -34,14 +34,6 @@ Requires: %name = %EVR
 %description devel
 This package contains development files of libmaa.
 
-%package devel-static
-Summary: Static library for libmaa
-Group: Development/C
-Requires: %name-devel = %EVR
-
-%description devel-static
-This package contains the static version of libmaa.
-
 %package devel-doc
 Summary: Documentation for libmaa
 Group: Development/Documentation
@@ -56,6 +48,7 @@ This package contains development documentation for libmaa.
 %define libmaa_docdir %_docdir/%name-%version
 %define _mkc_env \
 	export DOCDIR=%libmaa_docdir \
+	export MKSTATICLIB=no \
 	%mkc_env
 
 %build
@@ -87,10 +80,10 @@ This package contains development documentation for libmaa.
 %files devel-doc
 %libmaa_docdir/libmaa.600dpi.ps
 
-%files devel-static
-%_libdir/*.a
-
 %changelog
+* Sat Feb 10 2024 Grigory Ustinov <grenka@altlinux.org> 1.4.7-alt6
+- Dropped devel-static subpackage (Closes: #39377).
+
 * Mon Oct 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.7-alt5
 - Fixed build with LTO
 
