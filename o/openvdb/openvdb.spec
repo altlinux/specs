@@ -21,7 +21,7 @@
 
 Name: openvdb
 Version: 10.1.0
-Release: alt3
+Release: alt3.1
 Summary: C++ library for sparse volumetric data discretized on three-dimensional grids
 Group: Graphics
 License: MPL-2.0-no-copyleft-exception
@@ -31,6 +31,8 @@ URL: https://www.openvdb.org
 Source: %name-%version.tar
 
 Patch1: openvdb-8.0.0-alt-link-with-libatomic-on-mips.patch
+Patch2: openvdb-10.1.0-add-missing-header.patch
+
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-devel boost-interprocess-devel
@@ -176,6 +178,9 @@ sed -i 's,MINIMUM_GCC_VERSION 9.3.1,MINIMUM_GCC_VERSION 9.3.0,' \
 %_defaultdocdir/OpenVDB
 
 %changelog
+* Thu Feb 08 2024 Ivan A. Melnikov <iv@altlinux.org> 10.1.0-alt3.1
+- NMU: fix building with boost 1.84.0-alt1
+
 * Mon Dec 18 2023 Michael Shigorin <mike@altlinux.org> 10.1.0-alt3
 - E2K: fix build (lcc 1.26.x pretends to be like gcc 9.3.0)
 
