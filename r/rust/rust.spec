@@ -1,7 +1,7 @@
 Name: rust
 Epoch: 1
 Version: 1.75.0
-Release: alt1
+Release: alt2
 Summary: The Rust Programming Language
 
 %define r_ver 1.74.0
@@ -270,6 +270,18 @@ export DESTDIR="%buildroot"
 export ALTWRAP_LLVM_VERSION="%llvm_version"
 EOF
 
+. ./env.sh
+
+CLANG_RUNTIME_DIR=`clang -print-runtime-dir`
+
+# Until fixed: https://bugzilla.altlinux.org/49275
+%ifarch %{ix86}
+MAJVER=`echo %llvm_version | cut -d. -f1`
+CLANG_RUNTIME_DIR="%_libdir/llvm-%llvm_version/lib/clang/$MAJVER/lib/i586-pc-linux-gnu"
+%endif
+
+test -r "$CLANG_RUNTIME_DIR/libclang_rt.profile.a"
+
 cat > config.toml <<EOF
 changelog-seen = 2
 [build]
@@ -318,10 +330,9 @@ cxx = "clang++"
 ar = "llvm-ar"
 ranlib = "llvm-ranlib"
 llvm-config = "/usr/bin/llvm-config"
+profiler = "$CLANG_RUNTIME_DIR/libclang_rt.profile.a"
 %endif
 EOF
-
-. ./env.sh
 
 python3 x.py build
 python3 x.py doc
@@ -460,6 +471,9 @@ rm -rf %rustdir
 %rustlibdir/src
 
 %changelog
+* Fri Feb 02 2024 Alexey Gladkov <legion@altlinux.ru> 1:1.75.0-alt2
+- Enable the profiler runtime for native hosts.
+
 * Sat Dec 30 2023 Alexey Gladkov <legion@altlinux.ru> 1:1.75.0-alt1
 - New version (1.75.0).
 
