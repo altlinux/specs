@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: IMSProg
-Version: 1.1.12
+Version: 1.2.1
 Release: alt1
 
 Summary: I2C, SPI and MicroWire EEPROM/Flash chip programmer for CH341a devices
@@ -95,8 +95,6 @@ cp IMSProg_programmer/README.md IMSProg_programmer.md
 %_desktopdir/IMSProg.desktop
 %_desktopdir/IMSProg_editor.desktop
 #%%_desktopdir/IMSProg_database_update.desktop
-%dir %_sysconfdir/imsprog
-%_sysconfdir/imsprog/IMSProg.Dat
 %_udevrulesdir/99-CH341.rules
 %_pixmapsdir/chipEdit64.png
 %_pixmapsdir/IMSProg64.png
@@ -104,6 +102,9 @@ cp IMSProg_programmer/README.md IMSProg_programmer.md
 %_man1dir/*.1.*
 
 %changelog
+* Sat Feb 10 2024 Anton Midyukov <antohami@altlinux.org> 1.2.1-alt1
+- new version
+
 * Wed Feb 07 2024 Anton Midyukov <antohami@altlinux.org> 1.1.12-alt1
 - new version
 - 99-CH341.rules: change group uucp instead plugdev
