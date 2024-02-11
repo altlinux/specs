@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 4.0.2
-Release: alt1
+Release: alt2
 
 Summary: Collection of utilities for interacting with PyPI
 License: Apache-2.0
@@ -63,7 +63,8 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PYTHONPATH=%buildroot%python3_sitelibdir
 python3 -m pytest --ignore-glob '*integration*.py' -k "\
 not test_exception_handling \
-and not test_http_exception_handling"
+and not test_http_exception_handling" \
+-W ignore::pytest.PytestRemovedIn8Warning
 
 %files
 %doc AUTHORS *.rst docs/*.rst LICENSE
@@ -73,6 +74,9 @@ and not test_http_exception_handling"
 
 
 %changelog
+* Sun Feb 11 2024 Grigory Ustinov <grenka@altlinux.org> 4.0.2-alt2
+- Fixed FTBFS.
+
 * Tue Mar 28 2023 Anton Vyatkin <toni@altlinux.org> 4.0.2-alt1
 - New version 4.0.2.
 
