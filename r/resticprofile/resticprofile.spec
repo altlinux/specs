@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: resticprofile
-Version: 0.24.0
+Version: 0.25.0
 Release: alt1
 Summary: Configuration profiles manager and scheduler for restic backup
 License: GPL-3.0-only
@@ -61,5 +61,8 @@ go test ./... || true
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Sat Feb 10 2024 Vitaly Chikunov <vt@altlinux.org> 0.25.0-alt1
+- Update to v0.25.0 (2024-02-07). (Fixes CVE-2023-48795).
+
 * Mon Jan 22 2024 Vitaly Chikunov <vt@altlinux.org> 0.24.0-alt1
 - First import v0.24.0 (2023-10-24).
