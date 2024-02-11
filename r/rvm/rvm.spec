@@ -1,8 +1,8 @@
 %define        _unpackaged_files_terminate_build 1
 
 Name:          rvm
-Version:       1.29.12
-Release:       alt2
+Version:       1.29.12.125
+Release:       alt0.1
 Summary:       Ruby enVironment Manager (RVM)
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -11,7 +11,7 @@ Vcs:           https://github.com/rvm/rvm.git
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Patch:         alt.patch
+Patch:         %name-%EVR.patch
 BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: /proc /dev
 BuildRequires: curl
@@ -51,6 +51,8 @@ Group:         Development/Ruby
 Autoreq:       yes,noshell
 
 Requires:      setup
+Requires:      curl
+Requires:      gnupg2
 Requires:      gperf
 Requires:      gcc
 Requires:      gcc-c++
@@ -96,7 +98,7 @@ Development code package.
 
 %prep
 %setup
-%autopatch
+%autopatch -p1
 
 %install
 ./install --auto-dotfiles --path %buildroot%_libexecdir/%name
@@ -118,9 +120,9 @@ export PATH="%_cachedir/ruby/gemie/bin:%_libexecdir/%name/bin:\$PATH:/usr/bin:/b
 PROFILE
 
 %pre           devel
-ln -sf /proc/self/fd /dev/fd >/dev/null 2>&1
-getent group rvm >/dev/null || %_sbindir/groupadd -r rvm
-usermod -a -G rvm root
+ln -sf /proc/self/fd /dev/fd >/dev/null 2>&1 || true
+
+exit 0
 
 %files
 %doc README* CHANGELOG* CONTRIBUTING* FORMATTING* HACKING* VERSION
@@ -142,6 +144,11 @@ usermod -a -G rvm root
 %dir %attr(775,root,rvm) %_logdir/%name
 
 %changelog
+* Wed Feb 07 2024 Pavel Skrylev <majioa@altlinux.org> 1.29.12.125-alt0.1
+- ^ 1.29.12 -> 1.29.12p125
+- ! clean up pre script
+- ! minor fixed
+
 * Thu Dec 14 2023 Pavel Skrylev <majioa@altlinux.org> 1.29.12-alt2
 - ! fixed rvm build for custom user-space rubies
 

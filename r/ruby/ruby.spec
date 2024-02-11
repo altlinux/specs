@@ -6,7 +6,7 @@
 
 Name:          ruby
 Version:       %_version
-Release:       alt2.1
+Release:       alt3
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -24,6 +24,7 @@ Patch3:        alt_support_multiple_gem_trees.patch
 Patch4:        realpath.patch
 Patch5:        alt_block_install_gems.patch
 Patch6:        ac.patch
+Patch7:        rearrange_loadpath.patch
 BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: rvm-devel
 BuildRequires: autoconf >= 2.71
@@ -52,8 +53,6 @@ Obsoletes:     %1
 echo "Provides: %name-module-$m = %_version-%release"; \
 echo "Obsoletes: %name-module-$m"; \
 done)
-Provides:      ri = 6.4.0
-Obsoletes:     ri < 6.4.1
 
 
 %description
@@ -246,7 +245,6 @@ This package contains Ruby documentation in ri format.
 %package       doc
 Summary:       Ruby manuals and documentation
 Group:         Development/Documentation
-BuildArch:     noarch
 Requires:      ruby = %_version-%release
 
 %description   doc
@@ -261,7 +259,7 @@ Ruby manuals and documentation.
 %package       -n gem
 Epoch:         2
 Version:       3.3.26
-Release:       alt2.1
+Release:       alt3
 Summary:       Ruby gem executable and framefork
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -278,7 +276,7 @@ Ruby gem executable and framework.
 %package       -n rpm-macros-ruby
 Epoch:         1
 Version:       %_version
-Release:       alt2.1
+Release:       alt3
 Summary:       rpm macros for Ruby packages
 Group:         Development/Ruby
 
@@ -340,7 +338,7 @@ INSTALL=/bin/install rvm reinstall . \
    --with-sitearchincludedir=%_usr/local/include/%name \
    --with-sitearchhdrdir=%_usr/local/include/%name \
    --with-rubysitearchprefix=%_usr/local/%_lib/%name \
-   --with-vendordir=%_libexecdir/%name \
+   --with-vendordir=%_libexecdir/%name/vendor_ruby \
    --with-vendorlibdir=%_libexecdir/%name/vendor_ruby \
    --with-vendorarchdir=%_libexecdir/%name/vendor_ruby \
    --with-rdoc=ri,html \
@@ -363,7 +361,11 @@ install -D -p -m 0644 %SOURCE4 %buildroot%_rpmmacrosdir/ruby.env
 %__ruby -e 'File.open("%buildroot%_sysconfdir/bashrc.d/%name.sh", "w") { |f| f.puts ERB.new(IO.read("%SOURCE1")).result }'
 
 %check
-make test
+%make test
+
+%pre
+getent group ruby >/dev/null || %_sbindir/groupadd -r ruby
+usermod -a -G ruby root
 
 %post
 echo "NOTE: to make the environment variable changes come into effect, please relogin the terminal session" 1>&2
@@ -374,7 +376,8 @@ echo "NOTE: to make the environment variable changes come into effect, please re
 %_man1dir/%name.*
 %dir %_datadir/ri
 %attr(0755,root,root) %_sysconfdir/bashrc.d/%name.sh
-%dir %attr(775,root,rvm) %_cachedir/%name/gemie
+%dir %attr(775,root,ruby) %_cachedir/%name/
+%dir %attr(775,root,ruby) %_cachedir/%name/gemie
 
 %files         -n %lname
 %_libdir/*.so.*
@@ -422,6 +425,10 @@ echo "NOTE: to make the environment variable changes come into effect, please re
 %_rpmmacrosdir/ruby.env
 
 %changelog
+* Wed Feb 07 2024 Pavel Skrylev <majioa@altlinux.org> 3.1.4-alt3
+- + allow access to gem cache for ruby group instead of rvm (closes #48325)
+- * rearranged load path (closes #48249)
+
 * Sat Feb 03 2024 Pavel Skrylev <majioa@altlinux.org> 3.1.4-alt2.1
 - - removed ri from %%_bindir leaving it in %%ruby_bindir
 

@@ -1,8 +1,11 @@
 %define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname nokogiri
 
 Name:          gem-nokogiri
-Version:       1.15.5
+Version:       1.16.2
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
 License:       MIT
@@ -18,24 +21,24 @@ BuildRequires: libxslt-devel
 BuildRequires: zlib-devel
 BuildRequires: gem(mini_portile2) >= 2.8.2
 BuildConflicts: gem(mini_portile2) >= 2.9
-%if_with check
+%if_enabled check
+BuildRequires: gem(mutex_m) >= 0
 BuildRequires: gem(bundler) >= 2.1.4
-BuildRequires: gem(rake) >= 13.0.1
+BuildRequires: gem(rake) >= 13.1.0
 BuildRequires: gem(rake-compiler) >= 1.1.2
-BuildRequires: gem(rake-compiler-dock) >= 0.7.2
-BuildRequires: gem(hoe-markdown) = 1.4.0
+BuildRequires: gem(rake-compiler-dock) >= 1.2.1
 BuildRequires: gem(rexical) = 1.0.7
 BuildRequires: gem(minitest) >= 5.17.0
-BuildRequires: gem(minitest-reporters) >= 1.6.0
-BuildRequires: gem(ruby_memcheck) >= 1.3.2
+BuildRequires: gem(minitest-parallel_fork) = 2.0.0
+BuildRequires: gem(ruby_memcheck) >= 2.2.1
 BuildRequires: gem(rubyzip) >= 2.3.2
 BuildRequires: gem(simplecov) >= 0.17
 BuildRequires: gem(rubocop) >= 1.15.0
 BuildRequires: gem(rubocop-minitest) >= 0.13.0
-BuildRequires: gem(rubocop-packaging) = 0.5.2
+BuildRequires: gem(rubocop-packaging) >= 0.5.2
 BuildRequires: gem(rubocop-performance) >= 1.11.3
 BuildRequires: gem(rubocop-rake) >= 0.6.0
-BuildRequires: gem(rubocop-shopify) >= 2.13.0
+BuildRequires: gem(rubocop-shopify) >= 2.14.0
 BuildRequires: gem(rdoc) >= 6.1.1
 BuildRequires: gem(racc) >= 1.4
 BuildConflicts: gem(bundler) >= 3
@@ -43,12 +46,12 @@ BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(rake-compiler) >= 2
 BuildConflicts: gem(rake-compiler-dock) >= 2
 BuildConflicts: gem(minitest) >= 6
-BuildConflicts: gem(minitest-reporters) >= 2
 BuildConflicts: gem(ruby_memcheck) >= 3
-BuildConflicts: gem(rubyzip) >= 2.4
+BuildConflicts: gem(rubyzip) >= 3
 BuildConflicts: gem(simplecov) >= 1
 BuildConflicts: gem(rubocop) >= 2
 BuildConflicts: gem(rubocop-minitest) >= 1
+BuildConflicts: gem(rubocop-packaging) >= 1
 BuildConflicts: gem(rubocop-performance) >= 2
 BuildConflicts: gem(rubocop-rake) >= 1
 BuildConflicts: gem(rubocop-shopify) >= 3
@@ -59,28 +62,28 @@ BuildConflicts: gem(racc) >= 2
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency bundler >= 2.1.4,bundler < 3
-%ruby_use_gem_dependency rake >= 13.0.1,rake < 14
+%ruby_use_gem_dependency rake >= 13.1.0,rake < 14
 %ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
 %ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
-%ruby_use_gem_dependency minitest-reporters >= 1.6.1,minitest-reporters < 2
-%ruby_use_gem_dependency ruby_memcheck >= 2.2.1,ruby_memcheck < 3
 %ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
 %ruby_use_gem_dependency rubocop-minitest >= 0.13.0,rubocop-minitest < 1
 %ruby_use_gem_dependency rubocop-performance >= 1.11.3,rubocop-performance < 2
-%ruby_use_gem_dependency rubocop-shopify >= 2.14.0,rubocop-shopify < 3
 %ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
-%ruby_use_gem_dependency rake-compiler-dock >= 0.7.2,rake-compiler-dock < 2
+%ruby_use_gem_dependency rake-compiler-dock >= 1.2.1,rake-compiler-dock < 2
 %ruby_use_gem_dependency rubocop-rake >= 0.6.0,rubocop-rake < 1
+%ruby_use_gem_dependency rubocop-packaging >= 0.5.2,rubocop-packaging < 1
+%ruby_use_gem_dependency rubocop-shopify >= 2.14.0,rubocop-shopify < 3
+%ruby_use_gem_dependency ruby_memcheck >= 2.2.1,ruby_memcheck < 3
+%ruby_use_gem_dependency rubyzip >= 2.3.2,rubyzip < 3
 Requires:      gem(mini_portile2) >= 2.8.2
 Requires:      gem(racc) >= 1.4
 Conflicts:     gem(mini_portile2) >= 2.9
 Conflicts:     gem(racc) >= 2
 Obsoletes:     ruby-nokogiri < %EVR
 Provides:      ruby-nokogiri = %EVR
-Provides:      gem(nokogiri) = 1.15.5
+Provides:      gem(nokogiri) = 1.16.2
 
-%ruby_bindir_to %ruby_bindir
 
 %description
 Nokogiri parses and searches XML/HTML very quickly, and also has correctly
@@ -89,14 +92,14 @@ contanis Ruby libraries for Nokogiri.
 
 
 %package       -n nokogiri
-Version:       1.15.5
+Version:       1.16.2
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета nokogiri
 Group:         Development/Other
 BuildArch:     noarch
 
-Requires:      gem(nokogiri) = 1.15.5
+Requires:      gem(nokogiri) = 1.16.2
 
 %description   -n nokogiri
 Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
@@ -110,15 +113,16 @@ contanis Ruby libraries for Nokogiri.
 Исполнямка для самоцвета nokogiri.
 
 
+%if_enabled    doc
 %package       -n gem-nokogiri-doc
-Version:       1.15.5
+Version:       1.16.2
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета nokogiri
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(nokogiri) = 1.15.5
+Requires:      gem(nokogiri) = 1.16.2
 
 %description   -n gem-nokogiri-doc
 Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) documentation
@@ -130,31 +134,32 @@ contanis Ruby libraries for Nokogiri.
 
 %description   -n gem-nokogiri-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета nokogiri.
+%endif
 
-
+%if_enabled    devel
 %package       -n gem-nokogiri-devel
-Version:       1.15.5
+Version:       1.16.2
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета nokogiri
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(nokogiri) = 1.15.5
+Requires:      gem(nokogiri) = 1.16.2
+Requires:      gem(mutex_m) >= 0
 Requires:      gem(bundler) >= 2.1.4
-Requires:      gem(rake) >= 13.0.1
+Requires:      gem(rake) >= 13.1.0
 Requires:      gem(rake-compiler) >= 1.1.2
-Requires:      gem(rake-compiler-dock) >= 0.7.2
-Requires:      gem(hoe-markdown) = 1.4.0
+Requires:      gem(rake-compiler-dock) >= 1.2.1
 Requires:      gem(rexical) = 1.0.7
 Requires:      gem(minitest) >= 5.17.0
-Requires:      gem(minitest-reporters) >= 1.6.1
-Requires:      gem(ruby_memcheck) >= 1.3.2
+Requires:      gem(minitest-parallel_fork) = 2.0.0
+Requires:      gem(ruby_memcheck) >= 2.2.1
 Requires:      gem(rubyzip) >= 2.3.2
 Requires:      gem(simplecov) >= 0.17
 Requires:      gem(rubocop) >= 1.15.0
 Requires:      gem(rubocop-minitest) >= 0.13.0
-Requires:      gem(rubocop-packaging) = 0.5.2
+Requires:      gem(rubocop-packaging) >= 0.5.2
 Requires:      gem(rubocop-performance) >= 1.11.3
 Requires:      gem(rubocop-rake) >= 0.6.0
 Requires:      gem(rubocop-shopify) >= 2.14.0
@@ -168,12 +173,12 @@ Conflicts:     gem(rake) >= 14
 Conflicts:     gem(rake-compiler) >= 2
 Conflicts:     gem(rake-compiler-dock) >= 2
 Conflicts:     gem(minitest) >= 6
-Conflicts:     gem(minitest-reporters) >= 2
 Conflicts:     gem(ruby_memcheck) >= 3
-Conflicts:     gem(rubyzip) >= 2.4
+Conflicts:     gem(rubyzip) >= 3
 Conflicts:     gem(simplecov) >= 1
 Conflicts:     gem(rubocop) >= 2
 Conflicts:     gem(rubocop-minitest) >= 1
+Conflicts:     gem(rubocop-packaging) >= 1
 Conflicts:     gem(rubocop-performance) >= 2
 Conflicts:     gem(rubocop-rake) >= 1
 Conflicts:     gem(rubocop-shopify) >= 3
@@ -189,6 +194,7 @@ contanis Ruby libraries for Nokogiri.
 
 %description   -n gem-nokogiri-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета nokogiri.
+%endif
 
 
 %prep
@@ -211,18 +217,25 @@ contanis Ruby libraries for Nokogiri.
 
 %files         -n nokogiri
 %doc README.md
-%ruby_bindir/nokogiri
+%_bindir/nokogiri
 
+%if_enabled    doc
 %files         -n gem-nokogiri-doc
 %doc README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-nokogiri-devel
 %doc README.md
 %ruby_includedir/*
-
+%endif
 
 %changelog
+* Fri Feb 09 2024 Pavel Skrylev <majioa@altlinux.org> 1.16.2-alt1
+- ^ 1.15.5 -> 1.16.2
+- ! fixed CVE-2024-25062
+
 * Wed Nov 29 2023 Pavel Skrylev <majioa@altlinux.org> 1.15.5-alt1
 - ^ 1.13.8 -> 1.15.5
 
