@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.0
-Release: alt2
+Release: alt3
 
 Summary: Bootstrap confidence interval estimation routines for Numpy/Scipy/Pandas
 License: BSD-3-Clause
@@ -47,9 +47,9 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 %check
 %ifnarch %ix86
-%pyproject_run_pytest -v
+%pyproject_run_pytest -v -W ignore::pytest.PytestRemovedIn8Warning
 %else
-%pyproject_run_pytest -v -k 'not test_abc_simple'
+%pyproject_run_pytest -v -k 'not test_abc_simple' -W ignore::pytest.PytestRemovedIn8Warning
 %endif
 
 %if "%python3_sitelibdir" != "%python3_sitelibdir_noarch"
@@ -63,6 +63,9 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sun Feb 11 2024 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt3
+- Fixed FTBFS.
+
 * Mon Jan 22 2024 Anton Vyatkin <toni@altlinux.org> 1.1.0-alt2
 - Fixed FTBFS.
 
