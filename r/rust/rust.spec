@@ -1,10 +1,10 @@
 Name: rust
 Epoch: 1
-Version: 1.75.0
-Release: alt2
+Version: 1.76.0
+Release: alt1
 Summary: The Rust Programming Language
 
-%define r_ver 1.74.0
+%define r_ver 1.75.0
 
 Group: Development/Other
 License: Apache-2.0 and MIT
@@ -51,7 +51,9 @@ BuildRequires: pkgconfig(libssh2)
 BuildRequires: pkgconfig(tinfo)
 %if_without bundled_llvm
 BuildRequires: pkgconfig(libffi)
-BuildRequires: clang%{llvm_version}
+
+# clang=17.0.6-alt2: fix wrong -print-runtime-dir on %%ix86.
+BuildRequires: clang%{llvm_version} >= 17.0.6-alt2
 BuildRequires: clang%{llvm_version}-devel
 BuildRequires: llvm%{llvm_version}-devel
 BuildRequires:  lld%{llvm_version}-devel
@@ -274,12 +276,6 @@ EOF
 
 CLANG_RUNTIME_DIR=`clang -print-runtime-dir`
 
-# Until fixed: https://bugzilla.altlinux.org/49275
-%ifarch %{ix86}
-MAJVER=`echo %llvm_version | cut -d. -f1`
-CLANG_RUNTIME_DIR="%_libdir/llvm-%llvm_version/lib/clang/$MAJVER/lib/i586-pc-linux-gnu"
-%endif
-
 test -r "$CLANG_RUNTIME_DIR/libclang_rt.profile.a"
 
 cat > config.toml <<EOF
@@ -471,6 +467,9 @@ rm -rf %rustdir
 %rustlibdir/src
 
 %changelog
+* Sat Feb 10 2024 Alexey Gladkov <legion@altlinux.ru> 1:1.76.0-alt1
+- New version (1.76.0).
+
 * Fri Feb 02 2024 Alexey Gladkov <legion@altlinux.ru> 1:1.75.0-alt2
 - Enable the profiler runtime for native hosts.
 
