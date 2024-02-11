@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.7
+Version: 0.0.9
 Release: alt1
 
 Summary: A streaming multipart parser for Python
@@ -23,11 +23,9 @@ Patch0: %name-%version-alt.patch
 # see https://bugzilla.altlinux.org/43483 for more information
 %filter_from_provides /python.*/d
 Conflicts: python3-module-multipart
-
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -41,7 +39,6 @@ python-multipart is an Apache2 licensed streaming multipart parser for Python.
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-
 %if_with check
 %pyproject_deps_resync_check_pipreqfile requirements.txt
 %endif
@@ -61,6 +58,9 @@ python-multipart is an Apache2 licensed streaming multipart parser for Python.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Feb 11 2024 Anton Zhukharev <ancieg@altlinux.org> 0.0.9-alt1
+- Updated to 0.0.9.
+
 * Mon Feb 05 2024 Anton Zhukharev <ancieg@altlinux.org> 0.0.7-alt1
 - Updated to 0.0.7.
 
