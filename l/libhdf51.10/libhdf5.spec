@@ -1,21 +1,19 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname hdf5
-%define sover 310
-%define soverhl 310
+%define sover 103
+%define soverhl 100
 
-Name: lib%oname
-Version: 1.14.3
-Release: alt1
+Name: libhdf51.10
+Version: 1.10.6
+Release: alt3
 
 Summary: Hierarchical Data Format 5 library
-License: BSD
+License: Nearly BSD, but changed sources must be marked
 Group: System/Libraries
 
 Url: http://www.hdfgroup.org/HDF5/
-VCS: https://github.com/HDFGroup/hdf5.git
+# https://github.com/HDFGroup/hdf5.git
 Source: %name-%version.tar
-Patch: %name-alt-disable-rpath.patch
+Patch: libhdf5-alt-disable-rpath.patch
 
 # Automatically added by buildreq on Sat Sep 15 2007
 BuildRequires: gcc-c++ libssl-devel zlib-devel
@@ -27,23 +25,23 @@ implementation. HDF5 is designed to address some of the limitations of
 the older HDF product and to address current and anticipated
 requirements of modern systems and applications.
 
-%package -n lib%oname-%sover
+%package -n libhdf5-%sover
 Summary: Hierarchical Data Format 5 library
 Group: System/Libraries
 
-%description -n lib%oname-%sover
+%description -n libhdf5-%sover
 HDF5 is a completely new Hierarchical Data Format product consisting
 of a data format specification and a supporting library
 implementation. HDF5 is designed to address some of the limitations of
 the older HDF product and to address current and anticipated
 requirements of modern systems and applications.
 
-%package -n lib%oname-hl-%soverhl
+%package -n libhdf5-hl-%soverhl
 Summary: Hierarchical Data Format 5 library
 Group: System/Libraries
-Requires: lib%oname-%sover = %EVR
+Requires: libhdf5-%sover = %EVR
 
-%description -n lib%oname-hl-%soverhl
+%description -n libhdf5-hl-%soverhl
 HDF5 is a completely new Hierarchical Data Format product consisting
 of a data format specification and a supporting library
 implementation. HDF5 is designed to address some of the limitations of
@@ -146,33 +144,19 @@ Version: %version
 Libs: -lhdf5_hl_cpp -lhdf5_hl -lhdf5_cpp -lhdf5 -lstdc++ -lz
 EOF
 
-%files -n lib%oname-%sover
+%files -n libhdf5-%sover
+%doc COPYING COPYING_LBNL_HDF5
+%doc README.txt release_docs/{HISTORY*,RELEASE.txt}
 %_libdir/lib*.so.%{sover}
 %_libdir/lib*.so.%{sover}.*
-%exclude %_libdir/libhdf5_hl*.so*
 
-%files -n lib%oname-hl-%soverhl
-%_libdir/libhdf5_hl*.so.%{soverhl}
-%_libdir/libhdf5_hl*.so.%{soverhl}.*
-
-%files -n lib%oname-devel
-%doc COPYING COPYING_LBNL_HDF5
-%doc README.md release_docs/{HISTORY*,RELEASE.txt}
-%_libdir/lib*.so
-%_includedir/*
-%_pkgconfigdir/*
-
-%files -n %oname-tools
-%_bindir/*
-# used to show configuration at runtime
-%_libdir/libhdf5.settings
-
-%files -n %oname-examples
-%_datadir/hdf5_examples
+%files -n libhdf5-hl-%soverhl
+%_libdir/lib*.so.%{soverhl}
+%_libdir/lib*.so.%{soverhl}.*
 
 %changelog
-* Sun Nov 26 2023 Anton Farygin <rider@altlinux.ru> 1.14.3-alt1
-- 1.14.3
+* Sat Feb 10 2024 Anton Farygin <rider@altlinux.ru> 1.10.6-alt3
+- built as compat package without development files
 
 * Sat May 15 2021 Michael Shigorin <mike@altlinux.org> 1.10.6-alt2
 - E2K: avoid lcc-unsupported options
