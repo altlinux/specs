@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.0
-Release: alt2
+Version: 2.2.0
+Release: alt1
 
 Summary: Describe-style plugin for the pytest framework
 License: MIT
@@ -52,11 +52,14 @@ Jasmine (JavaScript).
 %pyproject_run_pytest -vra
 
 %files
-%doc README.rst
+%doc README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Feb 11 2024 Anton Zhukharev <ancieg@altlinux.org> 2.2.0-alt1
+- Updated to 2.2.0.
+
 * Tue Feb 06 2024 Anton Zhukharev <ancieg@altlinux.org> 2.1.0-alt2
 - Fixed FTBFS.
 
