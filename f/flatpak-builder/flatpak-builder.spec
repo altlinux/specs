@@ -9,7 +9,7 @@
 %{?_enable_docs:%def_enable docbook_docs}
 
 Name: flatpak-builder
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 Epoch:1
 
@@ -95,6 +95,9 @@ See http://flatpak.org/ for more information.
 %{?_enable_docbook_docs:%doc %_docdir/%name}}
 
 %changelog
+* Sun Feb 11 2024 Yuri N. Sedunov <aris@altlinux.org> 1:1.4.1-alt1
+- 1.4.1
+
 * Wed Dec 13 2023 Yuri N. Sedunov <aris@altlinux.org> 1:1.4.0-alt1
 - 1.4.0
 
