@@ -6,7 +6,7 @@
 Name: dropbear
 Summary: A smallish SSH server and client
 Version: 2022.83
-Release: alt1
+Release: alt2
 License: MIT
 Group: System/Servers
 Url: https://matt.ucc.asn.au/dropbear/dropbear.html
@@ -16,9 +16,7 @@ Source: %name-%version.tar
 Source2: dropbear.service
 Source3: dropbear.sysconfig
 
-BuildRequires: glibc-devel-static
-BuildRequires: libcrypt-devel-static
-BuildRequires: zlib-devel-static
+BuildRequires: zlib-devel
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: iproute2
 BuildRequires: python3-module-psutil
@@ -48,16 +46,6 @@ cat > localoptions.h <<EOF
 EOF
 
 %build
-%ifarch x86_64 aarch64 %ix86
-	export LDFLAGS=-static-pie
-	%define how_linked static-pie
-	%define test_no_aslr %nil
-%else
-	# ld: cannot find rcrt1.o: No such file or directory
-	export LDFLAGS=-static
-	%define how_linked statically
-	%define test_no_aslr -k 'not aslr'
-%endif
 # --disable-harden: We have hardening enabled in GCC by default.
 %ifarch x86_64 %ix86
 # Additional upstream hardening for x86.
@@ -83,14 +71,6 @@ install -Dpm644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
 ./dropbearkey -t ed25519 -f dropbear_ed25519_host_key
 # Upstream tend to enable DSS (ignoring config).
 ! ./dropbearkey | grep -iw DSS || exit 1
-# Sizes, sizes.
-ls -l %buildroot/usr/*bin
-for i in dbclient dropbear dropbearconvert dropbearkey scp; do
-	file $i | grep '%how_linked linked' || {
-		file $i
-		exit 1
-	}
-done
 # Upstream testsuite.
 vm-run --ext4 --heredoc <<-EOF
   cd test
@@ -99,7 +79,7 @@ vm-run --ext4 --heredoc <<-EOF
   mkdir -p ~/.ssh
   ../dropbearkey -t ecdsa -f ~/.ssh/id_dropbear | grep ^ecdsa > ~/.ssh/authorized_keys
   chmod 700 ~/.ssh ~/.ssh/authorized_keys
-  pytest3 --reruns=3 --hostkey=fakekey --dbclient=../dbclient --dropbear=../dropbear %test_no_aslr
+  pytest3 --reruns=3 --hostkey=fakekey --dbclient=../dbclient --dropbear=../dropbear
 EOF
 
 %post
@@ -124,6 +104,10 @@ EOF
 %_bindir/scp
 
 %changelog
+* Sun Feb 11 2024 Vitaly Chikunov <vt@altlinux.org> 2022.83-alt2
+- Backport the fix for the Terrapin attack (fixes CVE-2023-48795).
+- Undo static linking (ALT#49349).
+
 * Mon Oct 16 2023 Vitaly Chikunov <vt@altlinux.org> 2022.83-alt1
 - Update to DROPBEAR_2022.83 (2022-11-14).
 - Experimentally build static executables (glibc based).
