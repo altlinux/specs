@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: usrmerge
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: transition to merged usr
@@ -47,6 +47,10 @@ AutoReq: no
 Requires: bash
 Requires: coreutils
 Requires: findutils
+# Require cmp(1).
+Requires: diffutils
+# Require file(1) which supports file -p.
+Requires: file
 Requires: usrmerge = %EVR
 
 %description hier-convert
@@ -61,6 +65,13 @@ can be invoked directly by an administrator who knows what they are doing.
 %_prefix/libexec/usrmerge/hier-convert
 
 %changelog
+* Thu Feb 08 2024 Arseny Maslennikov <arseny@altlinux.org> 0.3-alt1
+- 0.2 -> 0.3; see commit history for details.
+  Notably:
+  + Introduced new CLI flag: -f. Non-equivalent files are only
+    replaced if this flag is present.
+  + Added a resolution rule for byte-for-byte equivalent regular files.
+
 * Fri Jul 28 2023 Arseny Maslennikov <arseny@altlinux.org> 0.2-alt1
 - 0.1 -> 0.2; see commit history for details.
   Notably:
