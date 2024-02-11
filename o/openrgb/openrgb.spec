@@ -1,6 +1,6 @@
 Name: openrgb
 Version: 0.9
-Release: alt1
+Release: alt2
 
 Summary: Open source RGB lighting control that doesn't depend on manufacturer software
 
@@ -27,6 +27,7 @@ Supports a wide variety of RGB components, peripherals, accessories, and lights 
 
 %prep
 %setup
+subst "s|/usr/lib/udev/rules.d|%_udevrulesdir|g" ResourceManager.cpp
 
 %build
 %qmake_qt5 OpenRGB.pro
@@ -43,10 +44,6 @@ cp qt/OpenRGB.desktop %buildroot/%_desktopdir/OpenRGB.desktop
 cp qt/OpenRGB.png %buildroot/%_iconsdir/hicolor/128x128/apps/OpenRGB.png
 cp qt/org.openrgb.OpenRGB.metainfo.xml %buildroot/%_datadir/metainfo/org.openrgb.OpenRGB.metainfo.xml
 
-#cp SOURCE1  %buildroot/%_udevrulesdir/60-openrgb.rules
-
-#%makeinstall_std
-#%make_install install
 %make_install INSTALL_ROOT=%buildroot install
 
 mv %buildroot%_libexecdir/udev/rules.d/60-openrgb.rules %buildroot/%_udevrulesdir/60-openrgb.rules
@@ -59,6 +56,9 @@ mv %buildroot%_libexecdir/udev/rules.d/60-openrgb.rules %buildroot/%_udevrulesdi
 %_iconsdir/hicolor/128x128/apps/OpenRGB.png
 
 %changelog
+* Mon Feb 12 2024 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt2
+- fix path to udev rules (thanks, nenderus@!)
+
 * Fri Jul 14 2023 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt1
 - new version 0.9 (with rpmrb script)
 
