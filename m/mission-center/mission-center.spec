@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: mission-center
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Mission Center
@@ -71,9 +71,6 @@ mv nvtop-%nvtop_ver %{__builddir}/src/sys_info_v2/gatherer/src/debug/build/nativ
 # hardcode dmidecode path
 sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/sys_info_v2/mem_info.rs
 
-#TODO: build with system hw.db
-sed -i 's|\(#!/usr/bin/\)env \(python\)|\1\23|' data/hwdb/*.py
-
 %build
 %meson
 %meson_build
@@ -97,6 +94,9 @@ sed -i 's|\(#!/usr/bin/\)env \(python\)|\1\23|' data/hwdb/*.py
 
 
 %changelog
+* Sun Feb 11 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.4-alt1
+- updated to v0.4.4-2
+
 * Fri Dec 15 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt1
 - 0.4.3
 

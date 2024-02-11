@@ -1,9 +1,11 @@
 %def_disable snapshot
 %def_enable utils
 %define sover 14
+# running nfsd and root priviledges required
+%def_disable check
 
 Name: libnfs
-Version: 5.0.2
+Version: 5.0.3
 Release: alt1
 
 Summary: NFS client library
@@ -19,13 +21,20 @@ Vcs: https://github.com/sahlberg/libnfs.git
 Source: %name-%version.tar
 %endif
 
+%{?_enable_check:BuildRequires(pre):rpm-macros-valgrind
+BuildRequires: nfs-server sudo
+%ifarch %valgrind_arches
+BuildRequires: valgrind
+%endif
+}
+
 %description
 LIBNFS is a client library for accessing NFS shares over a network.
 
 %package devel
 Group: Development/C
 Summary: NFS client library - development files
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 LIBNFS is a client library for accessing NFS shares over a network.
@@ -36,7 +45,7 @@ applications that use %name.
 %package utils
 Summary: Utility programs for LibNFS
 Group: Networking/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description utils
 This package provides utilities from LibNFS package.
@@ -53,9 +62,13 @@ This package provides utilities from LibNFS package.
 %install
 %makeinstall_std
 
+%check
+%make -k VERSION=3 test VERBOSE=1
+%make -k VERSION=4 test VERBOSE=1
+
 %files
 %_libdir/%name.so.*
-%doc README COPYING
+%doc README COPYING CHANGELOG
 
 %files devel
 %_includedir/nfsc/
@@ -74,6 +87,9 @@ This package provides utilities from LibNFS package.
 %endif
 
 %changelog
+* Sun Feb 11 2024 Yuri N. Sedunov <aris@altlinux.org> 5.0.3-alt1
+- 5.0.3
+
 * Wed Aug 10 2022 Yuri N. Sedunov <aris@altlinux.org> 5.0.2-alt1
 - 5.0.2
 
