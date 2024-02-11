@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.18.1
-Release: alt1
+Release: alt1.1
 Summary: Fast JSON schema validator for Python
 License: BSD-3-Clause
 Group: Development/Python3
@@ -51,7 +51,7 @@ Fast JSON schema validator for Python
 %pyproject_install
 
 %check
-%pyproject_run_pytest -m "not benchmark" -vra
+%pyproject_run_pytest -m "not benchmark" -vra -W ignore::pytest.PytestRemovedIn8Warning
 
 %files
 %doc README.rst AUTHORS CHANGELOG.txt
@@ -59,6 +59,9 @@ Fast JSON schema validator for Python
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Feb 11 2024 Grigory Ustinov <grenka@altlinux.org> 2.18.1-alt1.1
+- NMU: fixed FTBFS.
+
 * Mon Oct 02 2023 Stanislav Levin <slev@altlinux.org> 2.18.1-alt1
 - 2.18.0 -> 2.18.1.
 
