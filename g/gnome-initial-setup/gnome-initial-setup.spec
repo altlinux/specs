@@ -10,7 +10,7 @@
 %def_enable malcontent
 
 Name: gnome-initial-setup
-Version: %ver_major.3
+Version: %ver_major.4.1
 Release: alt1%beta
 
 Summary: GNOME Initial Setup
@@ -120,6 +120,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README* NEWS
 
 %changelog
+* Mon Feb 12 2024 Yuri N. Sedunov <aris@altlinux.org> 45.4.1-alt1
+- 45.4.1
+
 * Tue Jan 16 2024 Yuri N. Sedunov <aris@altlinux.org> 45.3-alt1
 - 45.3
 
