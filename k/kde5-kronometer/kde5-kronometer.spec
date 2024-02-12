@@ -2,12 +2,13 @@
 
 Name: kde5-%rname
 Version: 2.3.0
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
 Summary: Stopwatch application by KDE
-Url: http://www.kde.org
+Url: https://invent.kde.org/utilities/kronometer
+Vcs: https://invent.kde.org/utilities/kronometer.git
 License: GPLv2+
 
 Source: %rname-%version.tar
@@ -38,5 +39,8 @@ Kronometer is a simple stopwatch application.
 %_datadir/kf5/config.kcfg/%rname.*
 
 %changelog
+* Wed Feb 07 2024 Anton Kurachenko <srebrov@altlinux.org> 2.3.0-alt2
+- Changed project homepage link.
+
 * Fri Jul 21 2023 Anton Kurachenko <srebrov@altlinux.org> 2.3.0-alt1
 - Initial build for Sisyphus.
