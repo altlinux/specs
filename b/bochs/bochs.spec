@@ -1,7 +1,7 @@
 %define _hardened_build 1
 Name:           bochs
 Version:        2.6.11
-Release:        alt1
+Release:        alt2
 Summary:        Portable x86 PC emulator
 License:        LGPLv2+
 Group: Emulators
@@ -13,11 +13,11 @@ Patch3: %{name}-0008_qemu-bios-provide-gpe-_l0x-methods.patch
 Patch4: %{name}-0009_qemu-bios-pci-hotplug-support.patch
 Patch7: %{name}-nonet-build.patch
 # Update configure for aarch64 (bz #925112)
-Patch8: bochs-aarch64.patch
 Patch10: bochs-usb.patch
 Patch11: bochs-2.6.10-slirp-include.patch
 Patch12: smp-debug.patch
 Patch13: iasl-filename.patch
+Patch14: bochs-bios-cross-compile.patch
 
 ExcludeArch:    s390x
 
@@ -26,11 +26,12 @@ BuildRequires:  libXt-devel libXpm-devel libSDL2-devel readline-devel byacc libn
 BuildRequires:  docbook-utils
 BuildRequires:  gtk2-devel
 BuildRequires: make
-%ifarch %{ix86} x86_64
 BuildRequires:  dev86 iasl
+%ifnarch %ix86 x86_64
+BuildRequires: gcc-x86_64-linux-gnu
+%endif
 
 Requires:       %{name}-bios = %{version}-%{release}
-%endif
 Requires:       seavgabios
 
 %description
@@ -56,27 +57,17 @@ Group: Emulators
 Special version of bochs compiled with a gdb stub so that the software running
 inside the emulator can be debugged with gdb.
 
-%ifarch %{ix86} x86_64
-# building firmwares are quite tricky, because they often have to be built on
-# their native architecture (or in a cross-capable compiler, that we lack in
-# koji), and deployed everywhere. Recent koji builders support a feature
-# that allow us to build packages in a single architecture, and create noarch
-# subpackages that will be deployed everywhere. Because the package can only
-# be built in certain architectures, the main package has to use
-# BuildArch: <nativearch>, or something like that.
-# Note that using ExclusiveArch is _wrong_, because it will prevent the noarch
-# packages from getting into the excluded repositories.
 %package	bios
 Summary:        Bochs bios
 #BuildArch:      noarch
 Provides:       bochs-bios-data = 2.3.8.1
 Obsoletes:      bochs-bios-data < 2.3.8.1
 Group: Emulators
+BuildArch: noarch
 
 %description bios
 Bochs BIOS is a free implementation of a x86 BIOS provided by the Bochs project.
 It can also be used in other emulators, such as QEMU
-%endif
 
 %package        devel
 Summary:        Bochs header and source files
@@ -96,6 +87,7 @@ Header and source files from bochs source.
 %patch11 -p0
 %patch12 -p3
 %patch13 -p1
+%patch14 -p1
 
 # Fix up some man page paths.
 sed -i -e 's|/usr/local/share/|%{_datadir}/|' doc/man/*.*
@@ -146,11 +138,13 @@ mv bochs bochs-gdb
 %configure $CONFIGURE_FLAGS
 make %{?_smp_mflags}
 
-%ifarch %{ix86} x86_64
 cd bios
-make bios
-cp BIOS-bochs-latest BIOS-bochs-kvm
+make bios \
+%ifnarch %ix86 x86_64
+	CROSS_COMPILE=x86_64-linux-gnu- \
 %endif
+	%nil
+cp BIOS-bochs-latest BIOS-bochs-kvm
 
 %install
 rm -rf $RPM_BUILD_ROOT _installed-docs
@@ -160,9 +154,6 @@ ln -s %{_prefix}/share/seavgabios/vgabios-isavga.bin $RPM_BUILD_ROOT%{_prefix}/s
 ln -s %{_prefix}/share/seavgabios/vgabios-qxl.bin $RPM_BUILD_ROOT%{_prefix}/share/bochs/vgabios-qxl
 ln -s %{_prefix}/share/seavgabios/vgabios-stdvga.bin $RPM_BUILD_ROOT%{_prefix}/share/bochs/vgabios-stdvga
 ln -s %{_prefix}/share/seavgabios/vgabios-vmware.bin $RPM_BUILD_ROOT%{_prefix}/share/bochs/vgabios-vmware
-%ifnarch %{ix86} x86_64
-rm -rf $RPM_BUILD_ROOT%{_prefix}/share/bochs/*{BIOS,bios}*
-%endif
 install -m 755 bochs-debugger bochs-gdb $RPM_BUILD_ROOT%{_bindir}
 mv $RPM_BUILD_ROOT%{_docdir}/bochs _installed-docs
 rm $RPM_BUILD_ROOT%{_mandir}/man1/bochs-dlx.1*
@@ -194,14 +185,12 @@ cp -pr osdep.h $RPM_BUILD_ROOT%{_prefix}/include/bochs/disasm/
 %dir %{_datadir}/bochs/
 %{_datadir}/bochs/keymaps/
 
-%ifarch %{ix86} x86_64
 %files bios
 %{_datadir}/bochs/BIOS*
 %{_datadir}/bochs/vgabios*
 %{_datadir}/bochs/VGABIOS*
 %{_datadir}/bochs/bios.bin-1.13.0
 %{_datadir}/bochs/SeaBIOS-README
-%endif
 
 
 %files debugger
@@ -214,6 +203,9 @@ cp -pr osdep.h $RPM_BUILD_ROOT%{_prefix}/include/bochs/disasm/
 %{_prefix}/include/bochs/
 
 %changelog
+* Wed Feb 07 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.6.11-alt2
+- bochs-bios is available on all architectures now
+
 * Wed Mar 10 2021 Ilya Mashkin <oddity@altlinux.ru> 2.6.11-alt1
 - 2.6.11
 
