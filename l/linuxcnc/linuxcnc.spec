@@ -4,10 +4,10 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.9.2
-Release: alt1
+Release: alt2.20240203
 
 Summary: LinuxCNC controls CNC machines
-Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
+Summary(ru_RU.UTF-8): Программное обеспечение для управления станками c ЧПУ
 License: GPLv2+ and LGPLv2
 Group: Engineering
 Url: https://github.com/LinuxCNC/linuxcnc
@@ -16,9 +16,10 @@ ExclusiveArch: aarch64 alpha %arm ia64 %ix86 x86_64 %e2k loongarch64
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-Buildrequires(pre): rpm-build-tcl rpm-build-python3
-Buildrequires: rpm-build-gir
-Buildrequires: python3-devel
+
+BuildRequires(pre): rpm-build-tcl rpm-build-python3
+BuildRequires: rpm-build-gir
+BuildRequires: python3-devel
 BuildRequires: gcc-c++ pkgconfig(glib-2.0)
 BuildRequires: libgtk+3-gir-devel
 BuildRequires: libgtk+2-devel
@@ -103,7 +104,7 @@ Library for %name
 
 %package doc
 Summary: Documementation for %name
-Buildarch: noarch
+BuildArch: noarch
 Group: Documentation
 
 %description doc
@@ -111,7 +112,7 @@ Documementation for %name
 
 %package doc-fr
 Summary: French documementation for %name
-Buildarch: noarch
+BuildArch: noarch
 Group: Documentation
 Requires: %name-doc = %version
 
@@ -120,7 +121,7 @@ French documementation for %name
 
 %package doc-es
 Summary: Spanish documementation for %name
-Buildarch: noarch
+BuildArch: noarch
 Group: Documentation
 Requires: %name-doc = %version
 
@@ -168,9 +169,6 @@ popd
 # install rules
 mkdir -p %buildroot%_udevrulesdir
 cp debian/extras/lib/udev/rules.d/* %buildroot%_udevrulesdir
-
-# fix desktop Name
-sed 's/Name=/Name=LinuxCNC /g' -i %buildroot%_desktopdir/linuxcnc-*.desktop
 
 # fix desktop categories
 desktop-file-install --dir %buildroot%_desktopdir \
@@ -239,6 +237,11 @@ rm %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Mon Feb 12 2024 Anton Midyukov <antohami@altlinux.org> 2.9.2-alt2.20240203
+- new snapshot
+- fix Name of desktop files (Closes: 49380)
+- correct russian summary
+
 * Wed Dec 20 2023 Anton Midyukov <antohami@altlinux.org> 2.9.2-alt1
 - new version 2.9.2
 
