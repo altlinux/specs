@@ -2,14 +2,16 @@
 
 Name: gpicview
 Version: 0.2.5
-Release: alt1
+Release: alt3.20231013
 
 Summary: A simple and fast image viewer with low memory usage
 License: GPLv2+
 Group: Graphics
 
 Url: http://lxde.sourceforge.net/gpicview/
-Source: http://downloads.sourceforge.net/lxde/gpicview-%version.tar.xz
+Source: http://downloads.sourceforge.net/lxde/gpicview-%version.tar
+
+Patch: %name-%version-%release.patch
 
 # gpicview may use invocation of xdg-mime from xdg-utils to become default
 # viewer for supported image formats
@@ -29,8 +31,10 @@ XP image viewer and gimmage.
 
 %prep
 %setup
+%patch -p1
 
 %build
+%autoreconf
 %configure %{subst_enable gtk3}
 %make_build
 
@@ -47,6 +51,12 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %_desktopdir/*
 
 %changelog
+* Mon Feb 12 2024 Anton Midyukov <antohami@altlinux.org> 0.2.5-alt3.20231013
+- update russian translation
+
+* Mon Feb 12 2024 Anton Midyukov <antohami@altlinux.org> 0.2.5-alt2.20231013
+- new snapshot
+
 * Sun Mar 27 2016 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt1
 - 0.2.5
 
