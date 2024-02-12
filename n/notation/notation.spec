@@ -1,6 +1,6 @@
 %global import_path github.com/notaryproject/notation
 Name:    notation
-Version: 1.0.1
+Version: 1.1.0
 Release: alt1
 
 Summary: A CLI tool to sign and verify artifacts
@@ -60,5 +60,8 @@ go test -v -coverprofile=coverage.txt -covermode=atomic ./...
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Thu Feb 08 2024 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.0-alt1
+- new version 1.1.0
+
 * Wed Nov 22 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.0.1-alt1
 - Initial build for Sisyphus
