@@ -1,5 +1,5 @@
 Name: corectrl
-Version: 1.3.9
+Version: 1.3.10
 Release: alt1
 Summary: Core control application
 Group: System/Configuration/Hardware
@@ -71,6 +71,10 @@ fi
 %_datadir/polkit-1/actions/org.%name.*.policy
 
 %changelog
+* Mon Feb 12 2024 L.A. Kostis <lakostis@altlinux.ru> 1.3.10-alt1
+- 1.3.10.
+- Fix unresolved symbols from easyloggingpp.
+
 * Mon Jan 22 2024 L.A. Kostis <lakostis@altlinux.ru> 1.3.9-alt1
 - 1.3.9.
 
