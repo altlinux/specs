@@ -1,6 +1,6 @@
 Name: libao
 Version: 1.2.2
-Release: alt5
+Release: alt6
 Epoch: 1
 
 Summary: Cross Platform Audio Output Library
@@ -41,8 +41,8 @@ sed -i 's,-O20,%optflags_optimization,g' configure*
 	--enable-pulse \
 	--enable-alsa \
 	--disable-alsa-mmap \
+	--enable-oss \
 	--disable-broken-oss \
-	--disable-oss \
 	--disable-esd \
 	--disable-arts \
 	--disable-nas
@@ -62,6 +62,7 @@ __EOF__
 %_libdir/*.so.*
 %dir %_libdir/ao
 %dir %_libdir/ao/plugins-4
+%_libdir/ao/plugins-4/liboss.so
 %_libdir/ao/plugins-4/libalsa.so
 %_libdir/ao/plugins-4/libpulse.so
 %_man5dir/*
@@ -74,6 +75,9 @@ __EOF__
 %_datadir/aclocal/*
 
 %changelog
+* Tue Jan 16 2024 Michael Shigorin <mike@altlinux.org> 1:1.2.2-alt6
+- re-enable oss for tricky routing with aoss and ~/.asoundrc
+
 * Mon Nov 23 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.2.2-alt5
 - NMU: fallback to alsa driver if pulse fails (closes: #39337)
 - backported from e2k (thx mike@):
