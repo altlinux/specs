@@ -66,7 +66,7 @@
 
 Name: virtualbox
 Version: 7.0.14
-Release: alt1
+Release: alt2
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -666,7 +666,7 @@ cd additions >/dev/null
   install -m644 %SOURCE5 %buildroot%_sysconfdir/security/console.perms.d/
 
   install -d %buildroot%_unitdir/
-  install -m755 %SOURCE27 %buildroot%_unitdir/
+  install -m644 %SOURCE27 %buildroot%_unitdir/
 
   mkdir -p %buildroot%_pam_modules_dir/
   install -m644 pam_vbox.so %buildroot%_pam_modules_dir/
@@ -914,6 +914,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Mon Feb 12 2024 Valery Sinelnikov <greh@altlinux.org> 7.0.14-alt2
+- Removed unneeded execution permission in systemd unit file
+
 * Wed Jan 17 2024 Valery Sinelnikov <greh@altlinux.org> 7.0.14-alt1
 - Update to newest version 7.0.14
 
