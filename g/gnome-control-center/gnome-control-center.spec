@@ -16,7 +16,7 @@
 %def_enable check
 
 Name: gnome-control-center
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -200,6 +200,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Mon Feb 12 2024 Yuri N. Sedunov <aris@altlinux.org> 45.3-alt1
+- 45.3
+
 * Thu Dec 07 2023 Yuri N. Sedunov <aris@altlinux.org> 45.2-alt1
 - 45.2
 
