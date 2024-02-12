@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name pango
@@ -18,7 +18,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -87,7 +87,7 @@ Summary: Development libraries and header files for pango
 Group: Development/C
 Provides: %_name-devel = %version
 Obsoletes: %_name-devel < %version
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The pango-devel package includes the libraries and header files
@@ -117,7 +117,7 @@ The pango-devel package includes the static libraries for the pango package.
 %package gir
 Summary: GObject introspection data for the Pango library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the Pango library
@@ -134,7 +134,7 @@ GObject introspection devel data for the Pango library
 %package tests
 Summary: Tests for the Pango library
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 This package provides tests programs that can be used to verify
@@ -218,6 +218,9 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 
 %changelog
+* Sun Feb 11 2024 Yuri N. Sedunov <aris@altlinux.org> 1.51.2-alt1
+- 1.51.2
+
 * Sat Sep 16 2023 Yuri N. Sedunov <aris@altlinux.org> 1.51.1-alt1
 - 1.51.1
 

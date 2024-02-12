@@ -7,7 +7,7 @@
 %define pypi_name gtweak
 
 Name: gnome-tweaks
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: A tool to customize advanced GNOME 3 options
@@ -83,6 +83,9 @@ Features:
 %doc AUTHORS NEWS README*
 
 %changelog
+* Mon Feb 12 2024 Yuri N. Sedunov <aris@altlinux.org> 45.1-alt1
+- 45.1
+
 * Sat Sep 23 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 
