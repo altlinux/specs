@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libmpdclient
-Version: 2.20
+Version: 2.22
 Release: alt1
 
 Summary: MPD client library
@@ -14,8 +14,8 @@ VCS: https://github.com/MusicPlayerDaemon/libmpdclient.git
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-meson rpm-build-vala
-BuildRequires: meson libvala-devel
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
 BuildRequires: doxygen fontconfig
 
 %description
@@ -37,15 +37,6 @@ BuildArch: noarch
 %description devel-docs
 Development documentation for %name.
 
-%package vala
-Summary: Vala language bindings for %name
-Group: Development/Other
-BuildArch: noarch
-Requires: %name = %EVR
-
-%description vala
-This package provides Vala language bindings for %name.
-
 %prep
 %setup
 
@@ -60,7 +51,7 @@ This package provides Vala language bindings for %name.
 %meson_install
 
 %files
-%doc README.rst COPYING AUTHORS NEWS
+%doc README.rst AUTHORS NEWS LICENSES/{BSD-2-Clause.txt,BSD-3-Clause.txt}
 %_libdir/*.so.*
 
 %files devel
@@ -71,10 +62,11 @@ This package provides Vala language bindings for %name.
 %files devel-docs
 %_docdir/%name
 
-%files vala
-%_vapidir/*
-
 %changelog
+* Mon Feb 12 2024 Mikhail Tergoev <fidel@altlinux.org> 2.22-alt1
+- Updated to upstream version 2.22.
+- Upstream dropped the unmaintained Vala bindings (see NEWS).
+
 * Wed Nov 01 2023 Mikhail Tergoev <fidel@altlinux.org> 2.20-alt1
 - Updated to upstream version 2.20.
 
