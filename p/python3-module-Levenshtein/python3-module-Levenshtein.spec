@@ -4,28 +4,26 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.23.0
-Release: alt2
+Version: 0.25.0
+Release: alt1
 
 Summary: Python extension for computing string edit distances and similarities
 License: GPL-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/Levenshtein/
-Vcs: https://github.com/maxbachmann/Levenshtein
+Vcs: https://github.com/rapidfuzz/Levenshtein
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-Patch0: python3-module-Levenshtein-0.23.0-alt-use-base-cython.patch
-
-%py3_provides %pypi_name
+Patch0: python3-module-Levenshtein-0.25.0-alt-use-bare-cython.patch
 
 %pyproject_runtimedeps_metadata
-Provides: python3-module-%{pep503_name %pypi_name}
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+%py3_provides %pypi_name
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 BuildRequires: gcc-c++
 BuildRequires: rapidfuzz-cpp-devel
-
 %if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -65,9 +63,12 @@ It supports both normal and Unicode strings.
 %files
 %doc HISTORY.md README.md SECURITY.md
 %python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Mon Feb 12 2024 Anton Zhukharev <ancieg@altlinux.org> 0.25.0-alt1
+- Updated to 0.25.0.
+
 * Mon Nov 20 2023 Anton Zhukharev <ancieg@altlinux.org> 0.23.0-alt2
 - Fixed FTBFS (rapidfuzz-devel -> rapidfuzz-cpp-devel).
 
