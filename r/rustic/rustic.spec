@@ -3,7 +3,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name:    rustic
-Version: 0.6.1
+Version: 0.7.0
 Release: alt1
 
 Summary: rustic - fast, encrypted, deduplicated backups powered by pure Rust
@@ -43,7 +43,7 @@ rustflags = ["-Copt-level=3", "-Cdebuginfo=1", "--cfg=rustix_use_libc"]
 [profile.release]
 strip = false
 %if 0%{!?_is_lp64:1}
-lto = "thin"
+lto = false
 codegen-units = 16
 %endif
 EOF
@@ -62,6 +62,16 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 
 %check
 %rust_test
+## Smoke test.
+PATH=%buildroot%_bindir:$PATH
+export RUSTIC_PASSWORD=rustic
+export RUSTIC_REPOSITORY=/tmp/repo
+rustic init
+rustic backup --glob='!target' --as-path=/ .
+rustic check
+rustic restore latest ../x
+rustic restore latest --verify-existing ../x
+diff -qr --exclude=target . ../x
 
 %files
 %doc *.md
@@ -71,6 +81,11 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Tue Feb 06 2024 Vitaly Chikunov <vt@altlinux.org> 0.7.0-alt1
+- Update to v0.7.0 (2024-02-03).
+- Added OpenDAL backends and WebDAV server.
+- spec: Add smoke test in %%check.
+
 * Sat Jan 27 2024 Vitaly Chikunov <vt@altlinux.org> 0.6.1-alt1
 - Update to v0.6.1 (2023-11-19).
 
