@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 0.7
-Release: alt2
+Release: alt3
 
 Summary: Extended version of Python's builtin glob module
 License: BSD-2-Clause
@@ -19,6 +19,8 @@ Source0: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pytest
 %endif
@@ -34,21 +36,24 @@ recursive wildcards.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3 test.py
+%pyproject_run_pytest -v -W ignore::pytest.PytestRemovedIn8Warning test.py
 
 %files
 %doc CHANGES *.rst PKG-INFO
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 
 %changelog
+* Mon Feb 12 2024 Anton Vyatkin <toni@altlinux.org> 0.7-alt3
+- Fixed FTBFS.
+
 * Wed Mar 29 2023 Anton Vyatkin <toni@altlinux.org> 0.7-alt2
 - Fix BuildRequires.
 
