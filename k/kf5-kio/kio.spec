@@ -3,7 +3,7 @@
 %def_enable streebog
 
 Name: kf5-%rname
-Version: 5.113.0
+Version: 5.115.0
 Release: alt1
 %K5init no_altplace
 
@@ -181,6 +181,12 @@ mkdir -p %buildroot/%_K5data/kio/servicemenus/
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Mon Feb 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.115.0-alt1
+- new version
+
+* Mon Jan 15 2024 Sergey V Turchin <zerg@altlinux.org> 5.114.0-alt1
+- new version
+
 * Fri Dec 15 2023 Sergey V Turchin <zerg@altlinux.org> 5.113.0-alt1
 - new version
 

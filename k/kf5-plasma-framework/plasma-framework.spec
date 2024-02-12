@@ -3,7 +3,7 @@
 %add_findreq_skiplist %_K5data/plasma/plasma_scriptengine_ruby/*.rb
 
 Name: kf5-%rname
-Version: 5.113.0
+Version: 5.115.0
 Release: alt1
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
@@ -139,6 +139,12 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Mon Feb 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.115.0-alt1
+- new version
+
+* Mon Jan 15 2024 Sergey V Turchin <zerg@altlinux.org> 5.114.0-alt1
+- new version
+
 * Fri Dec 15 2023 Sergey V Turchin <zerg@altlinux.org> 5.113.0-alt1
 - new version
 

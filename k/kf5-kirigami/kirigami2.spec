@@ -1,7 +1,7 @@
 %define rname kirigami2
 
 Name: kf5-kirigami
-Version: 5.113.0
+Version: 5.115.0
 Release: alt1
 %K5init altplace
 
@@ -90,6 +90,12 @@ sed -i "s/_MSC_VER/__e2k__/" src/imagecolors.cpp
 %_K5lib/libKF5Kirigami2.so.*
 
 %changelog
+* Mon Feb 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.115.0-alt1
+- new version
+
+* Mon Jan 15 2024 Sergey V Turchin <zerg@altlinux.org> 5.114.0-alt1
+- new version
+
 * Fri Dec 15 2023 Sergey V Turchin <zerg@altlinux.org> 5.113.0-alt1
 - new version
 

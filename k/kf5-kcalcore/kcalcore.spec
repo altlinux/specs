@@ -1,7 +1,7 @@
 %define rname kcalendarcore
 
 Name: kf5-kcalcore
-Version: 5.113.0
+Version: 5.115.0
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -12,7 +12,6 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
-Patch: fix-infinite-looping.patch
 
 # Automatically added by buildreq on Tue Aug 11 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python3 python3-base ruby ruby-stdlibs
@@ -63,7 +62,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch -p1
 
 %build
 %K5build
@@ -91,6 +89,12 @@ KF5 library
 %_K5lib/libKF5CalendarCore.so.*
 
 %changelog
+* Mon Feb 12 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.115.0-alt1
+- new version
+
+* Mon Jan 15 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.114.0-alt1
+- new version
+
 * Fri Dec 15 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.113.0-alt1
 - new version
 
