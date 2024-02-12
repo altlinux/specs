@@ -13,7 +13,7 @@
 
 Name: nbd
 Version: 3.25
-Release: alt1
+Release: alt2
 Summary: Network Block Device user space tools
 License: GPLv2
 Group: Networking/Other
@@ -119,7 +119,7 @@ ExecStartPre=/sbin/modprobe nbd
 EOF
 
 install -pD %SOURCE1 %buildroot%_sysconfdir/%name-server/config
-install -pD -m755 %SOURCE2 %buildroot%_unitdir/nbd-server.service
+install -pD -m644 %SOURCE2 %buildroot%_unitdir/nbd-server.service
 install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/nbd-server
 
 %define docdir %_docdir/%name-%version
@@ -163,6 +163,9 @@ DELAY=10 make check
 %endif
 
 %changelog
+* Mon Feb 12 2024 Anton Farygin <rider@altlinux.ru> 3.25-alt2
+- fixed systemd unit (closes: #49344)
+
 * Tue Feb 06 2024 Anton Farygin <rider@altlinux.ru> 3.25-alt1
 - 3.23 -> 3.25
 - disabled gznbd due to unmantained in mainstream
