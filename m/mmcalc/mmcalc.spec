@@ -1,6 +1,6 @@
 Name: mmcalc
 Summary: Molar Mass Calculator
-Version: 20220619
+Version: 20240208
 Release: alt1
 Group: Sciences/Chemistry
 License: LGPL
@@ -117,6 +117,10 @@ is acceptable.
 %_desktopdir/g%name-gtk3.desktop
 
 %changelog
+* Thu Feb 08 2024 Denis G. Samsonenko <ogion@altlinux.org> 20240208-alt1
+- new version
+- atoms.dat: mass numbers correction for several elements
+
 * Sun Jun 19 2022 Denis G. Samsonenko <ogion@altlinux.org> 20220619-alt1
 - new version
 
