@@ -4,7 +4,7 @@
 
 Name: offlineimap
 Version: 8.0.0
-Release: alt2
+Release: alt3
 
 Summary: Powerful IMAP/Maildir synchronization and reader support
 
@@ -53,10 +53,10 @@ make -C docs man SPHINXBUILD='sphinx-build-3'
 %pyproject_install
 
 mkdir -p %buildroot/%_man1dir
-install -p docs/%name.1 %buildroot/%_man1dir/
+install -m 644 -p docs/%name.1 %buildroot/%_man1dir/
 
 mkdir -p %buildroot/%_userunitdir
-install -p contrib/systemd/*.service contrib/systemd/*.timer -t %buildroot/%_userunitdir
+install -m 644 -p contrib/systemd/*.service contrib/systemd/*.timer -t %buildroot/%_userunitdir
 
 %check
 ./offlineimap.py -V
@@ -70,6 +70,10 @@ install -p contrib/systemd/*.service contrib/systemd/*.timer -t %buildroot/%_use
 %_man1dir/%name.1.*
 
 %changelog
+* Mon Feb 12 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 8.0.0-alt3
+- Fixed FTBFS with python 3.12.
+- Install manual pages and systemd units with correct permissions (0644).
+
 * Thu Sep 07 2023 Egor Ignatov <egori@altlinux.org> 8.0.0-alt2
 - Migrate to pyproject macros
 - Backport python3.11 compatibility patch
