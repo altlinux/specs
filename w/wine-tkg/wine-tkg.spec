@@ -11,11 +11,10 @@
 
 # get versions gecko amd mono from wine/dlls/appwiz.cpl/addons.c
 %define gecko_version 2.47.4
-%define mono_version 8.1.0
-%define winetricks_version 20230505
+%define mono_version 9.0.0
+%define winetricks_version 20240105
 
-%define basemajor 9.0
-%define major 9.0
+%define major 9.2
 %define rel %nil
 %define conflictlist wine-vanilla wine-stable wine wine-proton-tkg wine-etersoft
 
@@ -848,6 +847,10 @@ fi
 %endif
 
 %changelog
+* Mon Feb 12 2024 Mikhail Tergoev <fidel@altlinux.org> 1:9.2-alt1
+- updated to 9.2
+- mono 9.0.0
+
 * Wed Jan 17 2024 Mikhail Tergoev <fidel@altlinux.org> 1:9.0-alt1
 - updated to 9.0
 - switch to use conflictlist (based on wine 9.x spec, thanx lav@)
