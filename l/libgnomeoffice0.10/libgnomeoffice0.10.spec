@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 0.10
 %define api_ver 0.10
@@ -14,7 +14,7 @@
 
 Name: libgnomeoffice%api_ver
 Version: %ver_major.57
-Release: alt0.1
+Release: alt1
 
 Summary: Library for writing gnome office programs
 Group: Graphical desktop/GNOME
@@ -150,6 +150,9 @@ GObject introspection devel data for the Goffice library.
 
 
 %changelog
+* Mon Feb 12 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.57-alt1
+- 0.10.57
+
 * Mon Nov 06 2023 Yuri N. Sedunov <aris@altlinux.org> 0.10.57-alt0.1
 - updated to GOFFICE_0_10_56-4-g9ce985d0
 

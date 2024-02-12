@@ -13,7 +13,7 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.56
+Version: %ver_major.57
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -34,7 +34,7 @@ Provides: %name-light = %EVR
 %define gsf_ver 1.14.51
 %define gda_ver 5.2
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.56
+%define goffice_ver 0.10.57
 
 %{?_with_python:
 %add_python3_path %_libdir/%name/%version/plugins
@@ -193,6 +193,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_pkgconfigdir/*
 
 %changelog
+* Mon Feb 12 2024 Yuri N. Sedunov <aris@altlinux.org> 1.12.57-alt1
+- 1.12.57
+
 * Fri Nov 03 2023 Yuri N. Sedunov <aris@altlinux.org> 1.12.56-alt1
 - 1.12.56
 
