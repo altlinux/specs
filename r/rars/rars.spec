@@ -1,6 +1,6 @@
 Name: rars
-Version: 1.5.20220215
-Release: alt2
+Version: 1.6
+Release: alt1
 
 Summary: RISC-V Assembler and Runtime Simulator
 
@@ -62,6 +62,10 @@ done
 %_iconsdir/*/*/apps/*
 
 %changelog
+* Sat Feb 10 2024 Fr. Br. George <george@altlinux.org> 1.6-alt1
+- Update to release
+- Update JSoftFloat to bugfix
+
 * Fri Jun 16 2023 Anton Midyukov <antohami@altlinux.org> 1.5.20220215-alt2
 - add 'Requires: java'
 
