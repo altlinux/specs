@@ -2,7 +2,7 @@
 
 Name: nlohmann-json
 Version: 3.11.3
-Release: alt1
+Release: alt2
 
 Summary: JSON for Modern C++ (c++11) ("single header file")
 
@@ -79,6 +79,9 @@ ln -sf ../json_test_data %_cmake__builddir/json_test_data
 #_pkgconfigdir/nlohmann_json.pc
 
 %changelog
+* Mon Feb 12 2024 Paul Wolneykien <manowar@altlinux.org> 3.11.3-alt2
+- Saved upstream URL to the package repo.
+
 * Wed Feb 07 2024 Paul Wolneykien <manowar@altlinux.org> 3.11.3-alt1
 - New version 3.11.3.
 
