@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.2.0
-Release: alt2
+Release: alt3
 Summary: Tox plugin for skipping the installation of all deps and extras
 License: MIT
 Group: Development/Python3
@@ -43,6 +43,7 @@ environments. The dependencies of tested package if any are not touched.
 
 %check
 export PIP_NO_INDEX=YES
+export VIRTUALENV_SYSTEM_SITE_PACKAGES=YES
 %pyproject_run_pytest -ra -Wignore tests
 
 %files
@@ -50,6 +51,9 @@ export PIP_NO_INDEX=YES
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 12 2024 Stanislav Levin <slev@altlinux.org> 0.2.0-alt3
+- Fixed FTBFS (Python 3.12).
+
 * Wed Aug 09 2023 Stanislav Levin <slev@altlinux.org> 0.2.0-alt2
 - Fixed FTBFS (Python 3.11).
 - Modernized packaging.
