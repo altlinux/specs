@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 
 %define _name news_flash_gtk
-%define ver_major 3.0
+%define ver_major 3.1
 %define rdn_name io.gitlab.news_flash.NewsFlash
 
 %def_disable bootstrap
@@ -26,7 +26,7 @@ Source: %_name-%version.tar
 Source1: %name-%version-cargo.tar
 
 # [ppc64le] error: failed to run custom build command for `ring v0.16.20`
-ExcludeArch: ppc64le
+#ExcludeArch: ppc64le
 
 %define gtk_ver 4.12
 %define adwaita_ver 1.4
@@ -76,6 +76,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Tue Feb 13 2024 Yuri N. Sedunov <aris@altlinux.org> 3.1.1-alt1
+- 3.1.1
+
 * Mon Sep 25 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
 - first build for Sisyphus
 
