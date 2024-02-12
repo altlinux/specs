@@ -79,7 +79,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt7
+Release: alt8
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -705,6 +705,9 @@ export ALTWRAP_LLVM_VERSION=15.0
 	-DLLVM_BUILD_TOOLS:BOOL=ON \
 	\
 	-DMLIR_INSTALL_AGGREGATE_OBJECTS=OFF \
+	%ifarch %ix86
+	-DLLVM_DEFAULT_TARGET_TRIPLE:STRING="i586-pc-linux-gnu" \
+	%endif
 	\
 	%if_enabled tests
 	-DLLVM_INCLUDE_TESTS:BOOL=ON \
@@ -1200,6 +1203,10 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Mon Feb 12 2024 L.A. Kostis <lakostis@altlinux.ru> 15.0.7-alt8
+- backport fix from llvm17.0:
+  clang: fix wrong -print-runtime-dir on %%ix86.
+
 * Fri Dec 08 2023 L.A. Kostis <lakostis@altlinux.ru> 15.0.7-alt7
 - Applied fixes:
   clang: fix CUDA libdevice search path.
