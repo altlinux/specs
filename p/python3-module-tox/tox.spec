@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.27.1
-Release: alt2
+Release: alt3
 
 Summary: virtualenv-based automation of test activities
 License: MIT
@@ -70,6 +70,9 @@ export PIP_NO_BUILD_ISOLATION=NO
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 12 2024 Stanislav Levin <slev@altlinux.org> 3.27.1-alt3
+- Fixed FTBFS (Pytest 8).
+
 * Fri Jan 26 2024 Stanislav Levin <slev@altlinux.org> 3.27.1-alt2
 - Fixed FTBFS (Python 3.12).
 
