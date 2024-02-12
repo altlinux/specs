@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.15.0
+Version: 1.15.1
 Release: alt1
 
 Summary: Installer common parts
@@ -105,6 +105,10 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Thu Feb 08 2024 Anton Midyukov <antohami@altlinux.org> 1.15.1-alt1
+- Revert "initinstall.d/10-disk.sh: do not slow down mdraid resync"
+- postinstall.d: add 10-increase-raid-limit.sh
+
 * Thu Dec 14 2023 Anton Midyukov <antohami@altlinux.org> 1.15.0-alt1
 - Do'nt add remount destination step
 - initinstall.d/10-disk.sh: do not slow down mdraid resync
