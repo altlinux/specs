@@ -22,14 +22,14 @@
 %define fakebrand xalt
 
 %define major 10
-%define minor 2
+%define minor 3
 %define bugfix 0
 %define altversion %major.%minor
 %define altmajor %major
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt8
+Release: alt1
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -487,6 +487,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Mon Feb 12 2024 Sergey V Turchin <zerg at altlinux dot org> 10.3.0-alt1
+- new version
+
 * Mon Oct 02 2023 Sergey V Turchin <zerg at altlinux dot org> 10.2.0-alt8
 - cleanup installer slideshow
 
