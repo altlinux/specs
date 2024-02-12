@@ -1,11 +1,10 @@
 # debuginfo extraction currently fails with
 # "Failed to write file: invalid section alignment"
 %global __find_debuginfo_files %nil
-
 %global _unpackaged_files_terminate_build 1
 
-%global gopath    %_libdir/golang
-%global goroot    %_libdir/golang
+%global gopath %_libdir/golang
+%global goroot %_libdir/golang
 
 %set_verify_elf_method unresolved=no
 %add_debuginfo_skiplist %goroot %_bindir
@@ -20,17 +19,16 @@
 %global import_path     %{provider_prefix}
 
 Name: mongo-tools
-Version: 4.2.12
+Version: 100.9.4
 Release: alt1
 
-Summary: mongo client shell and tools
+Summary: Mongo client tools
 License: Apache-2.0
 Url: https://github.com/mongodb/mongo-tools
 Group: Development/Databases
 
-Packager: Vladimir Didenko <cow@altlinux.org>
-
 Source: %name-%version.tar
+Source1: man.tar
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang >= 1.3
@@ -43,6 +41,7 @@ The MongoDB tools provides import, export, and diagnostic capabilities.
 
 %prep
 %setup
+tar xf %SOURCE1
 
 %build
 # Temporary workaround to build with golang 1.16. Waiting for upstream to
@@ -56,7 +55,7 @@ rm -fr "$BUILDDIR/src/$IMPORT_PATH/vendor"
 cp -alv -- vendor/* "$BUILDDIR/src"
 
 mkdir bin
-binaries=(bsondump mongostat mongofiles mongoexport mongoimport mongorestore mongodump mongotop mongoreplay)
+binaries=(bsondump mongostat mongofiles mongoexport mongoimport mongorestore mongodump mongotop)
 for bin in "${binaries[@]}"; do
     go build -o bin/${bin} \-tags ssl $BUILDDIR/src/%{import_path}/${bin}/main/${bin}.go
 done
@@ -68,14 +67,18 @@ install -p -m 0755 bin/* %{buildroot}%{_bindir}
 # Mongo-tools does not contain man files yet
 # - see https://groups.google.com/forum/#!topic/mongodb-dev/t6Sd2Bki12I
 install -d %{buildroot}%{_mandir}/man1
-install -p -m 644 man/* %{buildroot}%{_mandir}/man1/
+install -p -m 644 man/* %{buildroot}%{_man1dir}/
 
 %files
 %doc README.md CONTRIBUTING.md THIRD-PARTY-NOTICES LICENSE.md
 %_bindir/*
-%{_mandir}/man1/*
+%_man1dir/*.1*
 
 %changelog
+* Mon Feb 12 2024 Andrey Cherepanov <cas@altlinux.org> 100.9.4-alt1
+- New version (ALT #49305).
+- Fixed summary.
+
 * Sat Feb 20 2021 Vladimir Didenko <cow@altlinux.org> 4.2.12-alt1
 - 4.2.12
 - fix build with golang 1.16
