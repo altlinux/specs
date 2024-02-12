@@ -2,11 +2,11 @@
 %define pypi_name logging-journald
 %define mod_name logging_journald
 
-# build aiomisc first
+# broken tests
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.6.6
+Version: 0.6.7
 Release: alt1
 
 Summary: Pure python logging handler for writing logs to the journald using native protocol
@@ -19,13 +19,11 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-
-%py3_provides %pypi_name
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -36,9 +34,9 @@ BuildRequires(pre): rpm-build-pyproject
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-
 %if_with check
 %pyproject_deps_resync_check_poetry dev
 %endif
@@ -49,6 +47,9 @@ BuildRequires(pre): rpm-build-pyproject
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest -vra
+
 %files
 %doc README.md COPYING
 %python3_sitelibdir/%mod_name.py
@@ -56,6 +57,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/__pycache__/%mod_name.*.pyc
 
 %changelog
+* Mon Feb 12 2024 Anton Zhukharev <ancieg@altlinux.org> 0.6.7-alt1
+- Updated to 0.6.7.
+
 * Wed Sep 06 2023 Anton Zhukharev <ancieg@altlinux.org> 0.6.6-alt1
 - Updated to 0.6.6.
 - Distributed under MIT license.
