@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.9.25
-Release: alt1
+Release: alt2
 
 Summary: QUIC and HTTP/3 implementation in Python
 License: BSD-3-Clause
@@ -15,6 +15,7 @@ Vcs: https://github.com/aiortc/aioquic
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch: aioquic-0.9.25-upstream-adapt-test-for-service-identitity-ge24.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -33,6 +34,7 @@ regularly tested for interoperability against other QUIC implementations.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -51,6 +53,9 @@ regularly tested for interoperability against other QUIC implementations.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Feb 12 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.9.25-alt2
+- Fixed FTBFS: adapt test for service-identitity >= 24.
+
 * Tue Jan 09 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.9.25-alt1
 - 0.9.21 -> 0.9.25
 
