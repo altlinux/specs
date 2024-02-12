@@ -1,5 +1,5 @@
 Name: openxray
-Version: 1.6.02_2088
+Version: 1.6.02_2188
 Release: alt1
 
 Summary: X-Ray Engine Linux port by OpenXRay team
@@ -11,6 +11,7 @@ ExcludeArch: armh ppc64le
 
 Source: %name-%version.tar.xz
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libfreeimage-devel
@@ -43,16 +44,11 @@ original game files.
 %setup
 
 %build
-mkdir build && cd build
-cmake .. \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=%_prefix \
-    -DCMAKE_SKIP_RPATH=ON
-%make_build
+%cmake
+%cmake_build
 
 %install
-cd build
-%makeinstall_std
+%cmakeinstall_std
 rm -v %buildroot%_datadir/openxray/gamedata/*/.gitattributes
 
 %files
@@ -81,6 +77,10 @@ rm -v %buildroot%_datadir/openxray/gamedata/*/.gitattributes
 %_datadir/bash-completion/completions/xr_3da
 
 %changelog
+* Tue Feb 06 2024 Anton Kurachenko <srebrov@altlinux.org> 1.6.02_2188-alt1
+- Updating to new version 1.6.02_2188.
+- Switching to use cmake-macros for build.
+
 * Mon Sep 11 2023 Anton Kurachenko <srebrov@altlinux.org> 1.6.02_2088-alt1
 - Updating to new version 1.6.02_2088.
 - Compressing of the %files section in the spec. Cosmetic changes.
