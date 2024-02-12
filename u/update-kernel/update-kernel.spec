@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: update-kernel
-Version: 1.14
+Version: 1.15
 Release: alt1
 Summary: Update kernel and modules
 License: GPL-2.0-or-later
@@ -59,6 +59,10 @@ make check
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Mon Feb 12 2024 Vitaly Chikunov <vt@altlinux.org> 1.15-alt1
+- Make --dry-run and --download-only non-exclusive (ALT#49340).
+- Improve informativeness of confirmation dialog.
+
 * Sat Feb 10 2024 Vitaly Chikunov <vt@altlinux.org> 1.14-alt1
 - Distinguish --dry-run and --download-only options (ALT#49340).
 
