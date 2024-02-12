@@ -11,7 +11,7 @@
 %define _cmake__builddir build
 
 Name: cmake
-Version: 3.28.2
+Version: 3.28.3
 Release: alt1
 
 Summary: Cross-platform, open-source make system
@@ -353,6 +353,10 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Mon Feb 12 2024 Vitaly Lipatov <lav@altlinux.ru> 3.28.3-alt1
+- new version (3.28.3) with rpmgs script
+- add _cmakedir macro (ALT bug 49373)
+
 * Thu Feb 01 2024 Vitaly Lipatov <lav@altlinux.ru> 3.28.2-alt1
 - new version (3.28.2) with rpmgs script
 
