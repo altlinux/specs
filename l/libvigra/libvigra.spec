@@ -9,8 +9,8 @@
 %endif
 
 Name: lib%_name
-Version: 1.11.1
-Release: alt3
+Version: 1.11.2
+Release: alt1
 
 Summary: Generic Programming for Computer Vision
 License: MIT
@@ -20,11 +20,9 @@ Url: http://ukoethe.github.io/%_name
 %if_disabled snapshot
 Source: https://github.com/ukoethe/%_name/releases/download/Version-1-11-1/%_name-%version-src.tar.gz
 %else
-# VCS https://github.com/ukoethe/%name/
+Vcs: https://github.com/ukoethe/%name/
 Source: %_name-%version.tar
 %endif
-# partially deimproved FindOpenEXR
-Patch: vigra-1.11.1-fedora-openexr3.patch
 
 # for vigra-config
 BuildRequires(pre): rpm-build-python3
@@ -79,7 +77,6 @@ This package provides Python3 bindings for VIGRA library.
 
 %prep
 %setup -n %_name-%version
-%patch -p1
 # fix shebang
 sed -i 's|\(#!\/usr\/bin\/\)env \(python\)|\1\23|' config/vigra-config.in
 
@@ -89,7 +86,7 @@ sed -i 's,-ftemplate-depth=900,,' CMakeLists.txt
 %endif
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %cmake \
 %{?_disable_python:-DWITH_VIGRANUMPY:BOOL=OFF} \
 %{?_enable_python:-DWITH_VIGRANUMPY:BOOL=ON -DPYTHON_VERSION=3} \
@@ -126,6 +123,11 @@ sed -i 's,-ftemplate-depth=900,,' CMakeLists.txt
 
 
 %changelog
+* Mon Feb 12 2024 Yuri N. Sedunov <aris@altlinux.org> 1.11.2-alt1
+- updated to 1-11-2-22-g502d5bc7
+- removed upstreamed patch from previous release
+- built against HDF5-1.14.3
+
 * Sat Dec 02 2023 Ivan A. Melnikov <iv@altlinux.org> 1.11.1-alt3
 - fix build with OpenEXR 3+ with patch from fedora
 
