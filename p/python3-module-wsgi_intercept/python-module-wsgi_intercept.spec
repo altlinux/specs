@@ -1,8 +1,9 @@
 %define oname wsgi_intercept
+%def_without docs
 
 Name: python3-module-%oname
-Version: 1.5.0
-Release: alt2
+Version: 1.13.0
+Release: alt1
 Summary: wsgi_intercept installs a WSGI application in place of a real URI for testing
 License: MIT
 Group: Development/Python3
@@ -42,22 +43,7 @@ to test your Web app.
 
 This package contains tests for %oname.
 
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-Installs a WSGI application in place of a real URI for testing.
-
-Testing a WSGI application normally involves starting a server at a
-local host and port, then pointing your test code to that address.
-Instead, this library lets you intercept calls to any specific host/port
-combination and redirect them into a WSGI application importable by your
-test program. Thus, you can avoid spawning multiple processes or threads
-to test your Web app.
-
-This package contains pickles for %oname.
-
+%if_with docs
 %package docs
 Summary: Documentation for %oname
 Group: Development/Documentation
@@ -73,13 +59,16 @@ test program. Thus, you can avoid spawning multiple processes or threads
 to test your Web app.
 
 This package contains documentation for %oname.
+%endif
 
 %prep
 %setup -n %oname-%version
 %patch -p1
 
+%if_with docs
 %prepare_sphinx3 .
 ln -s ../objects.inv docs/
+%endif
 
 %build
 %python3_build
@@ -87,28 +76,30 @@ ln -s ../objects.inv docs/
 %install
 %python3_install
 
+%if_with docs
 export PYTHONPATH=%buildroot%python3_sitelibdir
-%make SPHINXBUILD="sphinx-build-3" -C docs pickle
 %make SPHINXBUILD="sphinx-build-3" -C docs html
 
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
+%endif
 
 %files
 %doc README
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
-%exclude %python3_sitelibdir/*/pickle
 
 %files tests
 %python3_sitelibdir/*/tests
 
-%files pickles
-%python3_sitelibdir/*/pickle
-
+%if_with docs
 %files docs
 %doc docs/_build/html/*
+%endif
 
 %changelog
+* Mon Feb 12 2024 Ilfat Aminov <aminov@altlinux.org> 1.13.0-alt1
+- 1.13.0
+
 * Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 1.5.0-alt2
 - Drop python2 support.
 
