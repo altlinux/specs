@@ -60,7 +60,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt2
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -1907,6 +1907,9 @@ done
 
 
 %changelog
+* Mon Feb 12 2024 Michael Shigorin <mike@altlinux.org> 1:1.84.0-alt2
+- E2K: prime_fmod ftbfs workaround (ilyakurdyukov@; mcst#8285)
+
 * Thu Feb 08 2024 Ivan A. Melnikov <iv@altlinux.org> 1:1.84.0-alt1
 - 1.84.0
 - Add patch to fix missing include in karma/binary
