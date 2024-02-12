@@ -11,7 +11,7 @@
 
 
 Name:     %pname-source
-Version:  0.4.4
+Version:  0.4.5
 Release:  alt1
 
 Summary:  Osec-based integrity checking script and settings
@@ -150,6 +150,10 @@ fi
 %endif
 
 %changelog
+* Mon Feb 12 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.5-alt1
+- Fix: Make sysinit.target weakly depend on integalert service
+  by default.
+
 * Thu Feb 08 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.4-alt1
 - Update: On service failure isolate 'integ-check-failed.target'.
 
