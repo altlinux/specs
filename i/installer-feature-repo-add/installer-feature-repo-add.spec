@@ -1,6 +1,6 @@
 Name: installer-feature-repo-add
 Version: 0.3
-Release: alt3
+Release: alt4
 
 Summary: Add the installation media to APT configuration
 License: GPL
@@ -29,6 +29,10 @@ Conflicts: alterator-pkg < 2.6.18-alt1
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Mon Feb 12 2024 Anton Midyukov <antohami@altlinux.org> 0.3-alt4
+- detect file system on local drive (e.g. usb flash drive)
+- failed if install from local drive and .disk/info not found
+
 * Thu Dec 08 2022 Dmitry Terekhin <jqt4@altlinux.org> 0.3-alt3
 - use PARTUUID to identify ISO9660 partition
 
