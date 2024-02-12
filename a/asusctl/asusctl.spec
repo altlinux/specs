@@ -1,6 +1,6 @@
 Name:     asusctl
-Version:  4.7.2
-Release:  alt1.1
+Version:  5.0.7
+Release:  alt1
 
 %define user_service /etc/systemd/user/
 
@@ -17,7 +17,7 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 Source:  %name-%version.tar
 Source1: README.ru
-#Source2: vendors-%version.tar
+Source2: vendor.tar
 #Patch1: asusctl-4.3.1-systemd.patch
 
 
@@ -62,8 +62,30 @@ Buildrequires: git
 %global rustflags -Clink-arg=-Wl,-z,relro,-z,now
 
 %prep
-%setup
+%setup -a2
 #%%patch1 -p1
+
+mkdir .cargo
+cat >.cargo/config <<EOF
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source."git+https://github.com/emilk/egui?rev=b8e798777de519de3a1878798097ab2ab0bd4def"]
+git = "https://github.com/emilk/egui"
+rev = "b8e798777de519de3a1878798097ab2ab0bd4def"
+replace-with = "vendored-sources"
+
+[source."git+https://github.com/flukejones/notify-rust.git"]
+git = "https://github.com/flukejones/notify-rust.git"
+replace-with = "vendored-sources"
+
+[source."git+https://gitlab.com/asus-linux/supergfxctl.git"]
+git = "https://gitlab.com/asus-linux/supergfxctl.git"
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"
+EOF
 
 %build
 export RUSTFLAGS="%rustflags"
@@ -112,6 +134,9 @@ mv %buildroot/usr/lib/udev/rules.d/99-asusd.rules %buildroot/%_udevrulesdir/99-a
 %_datadir/rog-gui/*
 
 %changelog
+* Mon Feb 12 2024 Hihin Ruslan <ruslandh@altlinux.ru> 5.0.7-alt1
+- Version 5.0.7
+
 * Mon Sep 11 2023 Hihin Ruslan <ruslandh@altlinux.ru> 4.7.2-alt1.1
 - Update sisyphus
 
