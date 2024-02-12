@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.3
+Version: 0.4.5
 Release: alt1
 
 Summary: A comprehensive and scalable set of string tokenizers and similarity measures in Python
@@ -16,13 +16,12 @@ Vcs: https://github.com/anhaidgroup/py_stringmatching
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-Patch0: python3-module-py-stringmatching-0.4.3-alt-use-base-cython.patch
+Source2: setup.py
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 BuildRequires: libnumpy-py3-devel
-
 %if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -37,7 +36,7 @@ The package is free, open-source, and BSD-licensed.
 
 %prep
 %setup
-%autopatch -p1
+%__install %SOURCE2 .
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -58,6 +57,9 @@ The package is free, open-source, and BSD-licensed.
 %exclude %python3_sitelibdir/%mod_name/tests
 
 %changelog
+* Mon Feb 12 2024 Anton Zhukharev <ancieg@altlinux.org> 0.4.5-alt1
+- Updated to 0.4.5.
+
 * Sat Oct 14 2023 Anton Zhukharev <ancieg@altlinux.org> 0.4.3-alt1
 - Built for ALT Sisyphus.
 
