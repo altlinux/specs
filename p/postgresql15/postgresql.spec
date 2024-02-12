@@ -17,8 +17,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     15
-%define postgresql_minor     5
-%define postgresql_altrel    2
+%define postgresql_minor     6
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -963,6 +963,9 @@ fi
 %endif
 
 %changelog
+* Mon Feb 12 2024 Alexei Takaseev <taf@altlinux.org> 15.6-alt1
+- 15.6 (Fixes CVE-2024-0985)
+
 * Mon Nov 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 15.5-alt2
 - NMU: fixed FTBFS on LoongArch (build without jit, llvm <= 15 is not available)
 

@@ -19,8 +19,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     12
-%define postgresql_minor     17
-%define postgresql_altrel    2
+%define postgresql_minor     18
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -938,6 +938,9 @@ fi
 %endif
 
 %changelog
+* Mon Feb 12 2024 Alexei Takaseev <taf@altlinux.org> 12.18-alt1
+- 12.18 (Fixes CVE-2024-0985)
+
 * Sun Nov 12 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 12.17-alt2
 - NMU: fixed FTBFS on LoongArch
 
