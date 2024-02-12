@@ -8,7 +8,7 @@
 
 Name: %hsc_namever-%f_pkg_name
 Version: 1.6.6
-Release: alt2
+Release: alt3
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -42,6 +42,9 @@ System X.509 handling
 %files -f %name-files.all
 
 %changelog
+* Mon Feb 12 2024 Anton Zhukharev <ancieg@altlinux.org> 1.6.6-alt3
+- Fixed certificates discovery.
+
 * Thu Aug 17 2023 Anton Zhukharev <ancieg@altlinux.org> 1.6.6-alt2
 - Fixed FTBFS.
 
