@@ -20,7 +20,7 @@
 
 Name:           icingaweb2
 Version:        2.12.1
-Release:        alt1
+Release:        alt2
 
 Summary:        Icinga Web
 License:        GPL-2.0-or-later
@@ -89,6 +89,7 @@ Requires:       php%_php_major.%_php_minor-mbstring
 Requires:       php%_php_major.%_php_minor-gd
 Requires:       php%_php_major.%_php_minor-imagick
 Requires:       php%_php_major.%_php_minor-curl
+Requires:       php%_php_major.%_php_minor-fileinfo
 
 %description php
 Icinga Web PHP and vendor libraries.
@@ -269,6 +270,9 @@ fi
 %ghost %_sysconfdir/nginx/sites-enabled.d/%name.conf
 
 %changelog
+* Mon Feb 12 2024 Paul Wolneykien <manowar@altlinux.org> 2.12.1-alt2
+- Fix: Require php-fileinfo (thx Elena Mishina).
+
 * Wed Dec 06 2023 Andrey Limachko <liannnix@altlinux.org> 2.12.1-alt1
 - New version 2.12.1.
 
