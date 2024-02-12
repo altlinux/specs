@@ -9,7 +9,7 @@
 
 Name: geeqie
 Version: 2.2
-Release: alt1
+Release: alt1.1
 
 Summary: Graphics file browser utility
 License: GPL-2.0-or-later
@@ -23,8 +23,9 @@ Vcs: https://github.com/BestImageViewer/geeqie.git
 Source: %name-%version.tar
 %endif
 
-Provides: gqview = %version-%release
-Obsoletes: gqview < %version
+# https://bugzilla.altlinux.org/49370
+#Provides: gqview = %EVR
+#Obsoletes: gqview < %version
 
 %define lua_ver 5.3
 
@@ -112,6 +113,9 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %doc NEWS README.*
 
 %changelog
+* Mon Feb 12 2024 Yuri N. Sedunov <aris@altlinux.org> 2.2-alt1.1
+- doesn't obsolete/provides gqview (ALT #49370)
+
 * Thu Jan 25 2024 Yuri N. Sedunov <aris@altlinux.org> 2.2-alt1
 - 2.2
 
