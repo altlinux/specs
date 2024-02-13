@@ -1,5 +1,5 @@
 Name: hasher-priv
-Version: 2.0.13
+Version: 2.0.14
 Release: alt1
 
 Summary: A privileged helper for the hasher project
@@ -77,6 +77,9 @@ fi
 %doc DESIGN
 
 %changelog
+* Tue Feb 13 2024 Vitaly Chikunov <vt@altlinux.org> 2.0.14-alt1
+- Add the experimental nproc system setting.
+
 * Sat Nov 18 2023 Dmitry V. Levin <ldv@altlinux.org> 2.0.13-alt1
 - hasher-useradd: added -f/--force option to skip uid check (by Alexey Gladkov).
 - daemon.conf: added min_uid and min_gid options to change
