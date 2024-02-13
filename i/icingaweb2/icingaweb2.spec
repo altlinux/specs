@@ -20,7 +20,7 @@
 
 Name:           icingaweb2
 Version:        2.12.1
-Release:        alt2
+Release:        alt3
 
 Summary:        Icinga Web
 License:        GPL-2.0-or-later
@@ -107,6 +107,7 @@ Selects MySQL PDO module to be used with Icinga Web PHP library.
 Summary:        PostgreSQL PDO bindings for Icinga Web PHP library
 Group:          Development/Other
 Requires:       php%_php_major.%_php_minor-pdo_pgsql
+Requires:       php%_php_major.%_php_minor-pgsql
 Provides:       %name-php-sql = %version-%release
 
 %description php-pgsql
@@ -270,6 +271,9 @@ fi
 %ghost %_sysconfdir/nginx/sites-enabled.d/%name.conf
 
 %changelog
+* Tue Feb 13 2024 Paul Wolneykien <manowar@altlinux.org> 2.12.1-alt3
+- Make icingaweb2-php-pgsql depend on php-pgsql (thx Elena Mishina).
+
 * Mon Feb 12 2024 Paul Wolneykien <manowar@altlinux.org> 2.12.1-alt2
 - Fix: Require php-fileinfo (thx Elena Mishina).
 
