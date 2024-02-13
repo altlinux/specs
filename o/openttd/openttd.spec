@@ -1,7 +1,7 @@
 %define daterev 20230205
 %define gitsnapshot 2ebc601d97aa431e5d8aebfe4a7bbfdabf29dc75
 %define version_major 13
-%define version_minor 0
+%define version_minor 4
 
 Name: openttd
 Version: %version_major.%version_minor
@@ -49,6 +49,9 @@ echo "%version	%daterev	0	%gitsnapshot	1	1	`echo %daterev|cut -c 1-4`" >.ottdrev
 %_man6dir/*
 
 %changelog
+* Tue Feb 13 2024 Anton Farygin <rider@altlinux.ru> 13.4-alt1
+- 13.0 -> 13.4
+
 * Mon Feb 06 2023 Anton Farygin <rider@altlinux.ru> 13.0-alt1
 - 12.2 -> 13.0
 
