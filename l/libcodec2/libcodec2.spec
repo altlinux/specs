@@ -1,5 +1,6 @@
+%define soversion 1.2
 Name: libcodec2
-Version: 1.0.5
+Version: 1.2.0
 Release: alt1
 
 Summary: libcodec2 is a library for the codec2 low bit rate speech codec
@@ -18,10 +19,17 @@ libcodec2 is a library for the codec2 low bit rate speech codec.
 %package devel
 Summary: codec2 development files
 Group: Development/C
-Requires: libcodec2 = %version-%release
+Requires: libcodec2_%soversion = %EVR
 
 %description devel
 codec2 development files.
+
+%package -n libcodec2_%soversion
+Summary: libcodec2 is a library for the codec2 low bit rate speech codec
+Group: System/Libraries
+
+%description -n libcodec2_%soversion
+libcodec2 is a library for the codec2 low bit rate speech codec.
 
 %prep
 %setup
@@ -54,8 +62,8 @@ Libs: -L\${libdir} -lcodec2
 EOF
 
 
-%files
-%_libdir/libcodec2.so.*
+%files -n libcodec2_%soversion
+%_libdir/libcodec2.so.%soversion
 
 %files devel
 %_includedir/codec2
@@ -64,6 +72,9 @@ EOF
 %_libdir/pkgconfig/codec2.pc
 
 %changelog
+* Tue Feb 13 2024 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1
+- 1.0.5 -> 1.2.0
+
 * Thu Oct 06 2022 Anton Farygin <rider@altlinux.ru> 1.0.5-alt1
 - 1.0.3 -> 1.0.5
 
