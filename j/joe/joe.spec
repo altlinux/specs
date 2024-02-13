@@ -1,25 +1,18 @@
 Name: joe
-Version: 3.7
-Release: alt2.qa1
-
-Packager: Victor Forsyuk <force@altlinux.org>
-
+Version: 4.6
+Release: alt1
 Summary: An easy to use modeless text editor
-License: GPL
+License: GPLv2
 Group: Editors
-
-URL: http://joe-editor.sourceforge.net/
-Source: http://downloads.sf.net/joe-editor/joe-%version.tar.gz
-Source1: joe_icons.tar.bz2
-Source2: joe.desktop
-Source3: joe.png
-
-Patch1: joe-3.0-yuk-c-color.patch
-Patch2: joe-3.5-cp1251.patch
-Patch10: joe-3.7-joerc.patch
-Patch11: joe-3.5-time.patch
-
-# Automatically added by buildreq on Tue Nov 11 2008
+URL: https://joe-editor.sourceforge.io/
+Source: %name-%version.tar
+Patch1: joe-3.7-joerc.patch
+Patch2: joe-3.8-selinux.patch
+Patch3: joe-3.8-time.patch
+Patch4: joe-3.8-indent-ow.patch
+Patch5: joe-3.8-aarch64.patch
+Patch6: joe-3.8-format-security.patch
+Patch7: joe-4.6-c99.patch
 BuildRequires: aspell libncurses-devel
 
 %description
@@ -33,15 +26,21 @@ WordStar. If you're just starting out, you should probably install joe because
 it is very easy to use.
 
 %prep
-%setup -a1
+%setup
 
 %patch1 -p1
 %patch2 -p1
-%patch10 -p1
-%patch11 -p1
-
-%__subst 's/ -asis/-asis/' rc/j*rc.in
-%__subst 's/ -guess_utf8/-guess_utf8/' rc/j*rc.in
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+iconv -f koi8-r -t utf-8 ./man/ru/joe.1.in >./man/ru/joe.1.in.aux
+touch -r ./man/ru/joe.1.in ./man/ru/joe.1.in.aux
+mv ./man/ru/joe.1.in.aux ./man/ru/joe.1.in
+iconv -f ISO_8859-1 -t UTF-8 ChangeLog > ChangeLog.tmp
+touch -r ChangeLog ChangeLog.tmp
+mv ChangeLog.tmp ChangeLog
 
 %build
 %configure
@@ -58,31 +57,21 @@ pushd %buildroot%_man1dir
 	ln -s joe.1 rjoe.1
 popd
 
-install -pD -m644 joe_16.xpm %buildroot%_miconsdir/joe.xpm
-install -pD -m644 joe_32.xpm %buildroot%_niconsdir/joe.xpm
-install -pD -m644 joe_48.xpm %buildroot%_liconsdir/joe.xpm
-
-install -pD -m644 %{SOURCE2} %buildroot%_desktopdir/joe.desktop
-install -pD -m644 %{SOURCE3} %buildroot%_pixmapsdir/joe.png
-
-# Thanks, but we will choose docs in files section
-rm -rf %buildroot%_defaultdocdir
 
 %files
+%doc NEWS.md README.md ChangeLog
 %_bindir/*
 %dir %_sysconfdir/joe
 %config(noreplace) %_sysconfdir/joe/*
 %_datadir/joe
 %_man1dir/*
 %lang(ru) %_mandir/ru/man?/*
-%_desktopdir/*
-%_pixmapsdir/*
-%_niconsdir/joe.xpm
-%_miconsdir/joe.xpm
-%_liconsdir/joe.xpm
-%doc HINTS LIST NEWS README
 
 %changelog
+* Tue Feb 13 2024 Anton Farygin <rider@altlinux.ru> 4.6-alt1
+- 3.7 -> 4.6
+- sync patches with fedora
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.7-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
