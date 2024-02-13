@@ -9,7 +9,7 @@
 
 Name: libinput
 Version: 1.25.0
-Release: alt1
+Release: alt1.1
 
 Summary: Input devices library
 Group: System/Libraries
@@ -141,7 +141,6 @@ the functionality of the installed libinput library.
 %_libexecdir/%name/%name-analyze-recording
 %_libexecdir/%name/%name-analyze-touch-down-state
 %_libexecdir/%name/%name-debug-events
-%_libexecdir/%name/%name-debug-gui
 %_libexecdir/%name/%name-debug-tablet
 %_libexecdir/%name/%name-list-devices
 %_libexecdir/%name/%name-list-kernel-devices
@@ -155,7 +154,6 @@ the functionality of the installed libinput library.
 %_libexecdir/%name/%name-record
 %_libexecdir/%name/%name-replay
 %_libexecdir/%name/%name-test
-%{?_enable_debug_gui:%exclude %_libexecdir/%name/%name-debug-gui}
 %_man1dir/%name.1.*
 %_man1dir/%name-analyze.1*
 %_man1dir/%name-analyze-per-slot-delta.1*
@@ -193,6 +191,9 @@ the functionality of the installed libinput library.
 %endif
 
 %changelog
+* Tue Feb 13 2024 Yuri N. Sedunov <aris@altlinux.org> 1.25.0-alt1.1
+- fixed build with disable=debug_gui
+
 * Mon Jan 15 2024 Yuri N. Sedunov <aris@altlinux.org> 1.25.0-alt1
 - 1.25.0
 
