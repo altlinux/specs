@@ -3,7 +3,7 @@
 %define mod_name memphis
 
 Name: python3-module-%pypi_name
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: Python client for Memphis. Memphis is an event processing platform
@@ -16,11 +16,11 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %set_pyproject_deps_check_filter types-
 %add_pyproject_deps_check_filter wemake-python-styleguide
@@ -42,6 +42,7 @@ and data engineers.
 
 %prep
 %setup
+%autopatch -p1
 
 # that's funny
 sed -i 's/"asyncio", //' setup.py
@@ -61,6 +62,9 @@ sed -i 's/"asyncio", //' setup.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 13 2024 Anton Zhukharev <ancieg@altlinux.org> 1.3.1-alt1
+- Updated to 1.3.1.
+
 * Tue Jan 09 2024 Anton Zhukharev <ancieg@altlinux.org> 1.3.0-alt1
 - Updated to 1.3.0.
 
