@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 1.4.0
-Release: alt1
+Release: alt2
 
 Summary: A set of python modules for machine learning and data mining
 
@@ -20,7 +20,9 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: liblapack-devel
+%ifnarch %e2k
 BuildRequires: libgomp-devel
+%endif
 BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
@@ -80,6 +82,9 @@ popd
 %python3_sitelibdir/sklearn/utils/__pycache__/_testing.*
 
 %changelog
+* Mon Feb 12 2024 Michael Shigorin <mike@altlinux.org> 1.4.0-alt2
+- E2K: disable openmp on e2k
+
 * Sat Feb 10 2024 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt1
 - Automatically updated to 1.4.0.
 
