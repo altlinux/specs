@@ -1,9 +1,9 @@
 %define uname   MangoHud
-%define srcname %uname-v%version-Source
+%define srcname %uname-v%version-1-Source
 %define srcpath %uname-v%version
 
 Name: mangohud
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Summary: A Vulkan overlay layer for monitoring FPS, temperatures, CPU/GPU load and more
@@ -25,6 +25,7 @@ BuildRequires: libdbus-devel
 BuildRequires: libglfw3-devel
 BuildRequires: libspdlog-devel
 BuildRequires: libstdc++-devel-static
+BuildRequires: libvulkan-devel
 BuildRequires: libwayland-client-devel
 BuildRequires: meson
 BuildRequires: nlohmann-json-devel
@@ -51,6 +52,18 @@ Requires: %name
 %description -n mangoapp
 A transparent background OpenGL application with a built-in %uname designed to be run inside a gamescope instance.
 
+%package -n mangoplot
+Summary: Local visualization
+Group: Games/Arcade
+Requires: %name
+BuildArch: noarch
+
+%description -n mangoplot
+mangoplot is a plotting script that is shipped with MangoHud: on a given folder,
+it takes each log file, makes a 1D heatmap of its framerates,
+then stacks the heats maps vertically to form a 2D graph for
+easy visual comparison between benchmarks.
+
 %prep
 %setup -n %srcpath
 %patch0 -p1
@@ -73,19 +86,24 @@ A transparent background OpenGL application with a built-in %uname designed to b
 %doc LICENSE
 %_bindir/%name
 %_bindir/%{name}ctl
-%_bindir/mangoplot
 %_libdir/%name/
 %_man1dir/%name.1*
 %_datadir/icons/hicolor/scalable/*/*.svg
 %_datadir/vulkan/implicit_layer.d/*Mango*.json
-%_docdir/%name/%uname.conf.example
+%_docdir/%name/*.conf.example
 %_datadir/metainfo/*.metainfo.xml
 
 %files -n mangoapp
 %_bindir/mangoapp
 %_man1dir/mangoapp.1*
 
+%files -n mangoplot
+%_bindir/mangoplot
+
 %changelog
+* Tue Feb 13 2024 Nazarov Denis <nenderus@altlinux.org> 0.7.1-alt1
+- 0.7.1
+
 * Wed Sep 27 2023 Nazarov Denis <nenderus@altlinux.org> 0.7.0-alt1
 - 0.7.0
 
