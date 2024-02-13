@@ -1,19 +1,14 @@
+%define soname 6.2.0
 Name: libesmtp
-Version: 1.0.6
-Release: alt2
-
+Version: 1.1.0
+Release: alt1
 Summary: LibESMTP is a library to manage posting email using SMTP
-License: GPL
+License: GPLv2
 Group: System/Libraries
-Url: http://www.stafford.uklinux.net/libesmtp/
-Packager: Vladimir Lettiev <crux@altlinux.ru>
-
-Source: %name-%version.tar.bz2
-Patch1: libesmtp-build.patch
-Patch2: libesmtp-1.0.6-openssl1.1.patch
-
-# Automatically added by buildreq on Sat Apr 24 2004
+Url: https://github.com/libesmtp/libESMTP
+Source: %name-%version.tar
 BuildRequires: libssl-devel
+BuildRequires(pre): meson
 
 %description
 LibESMTP is a library to manage posting (or submission of) electronic
@@ -22,11 +17,22 @@ Exim or Postfix.  It may be used as part of a Mail User Agent (MUA) or
 another program that must be able to post electronic mail but where mail
 functionality is not the program's primary purpose.
 
+%package -n libesmtp%soname
+Summary: LibESMTP is a library to manage posting email using SMTP
+Group: System/Libraries
+
+%description -n libesmtp%soname
+LibESMTP is a library to manage posting (or submission of) electronic
+mail using SMTP to a preconfigured Mail Transport Agent (MTA) such as
+Exim or Postfix.  It may be used as part of a Mail User Agent (MUA) or
+another program that must be able to post electronic mail but where mail
+functionality is not the program's primary purpose.
+
+
 %package devel
 Summary: Development files for libESMTP
 Group: Development/C
-PreReq: %name = %version-%release
-License: GPL
+Requires: libesmtp%soname = %version-%release
 
 %description devel
 This package contains development files required for packaging
@@ -34,33 +40,28 @@ libESMTP-based software.
 
 %prep
 %setup -q
-%patch1 -p1
-%patch2 -p1
 
 %build
-%configure \
-    --enable-pthreads \
-    --enable-require-all-recipients \
-    --enable-etrn \
-    --disable-static
-
-%make_build
+%meson  --buildtype=release
+%meson_build
 
 %install
-%makeinstall_std
-rm %buildroot%_libdir/esmtp-plugins/*.la
+%meson_install
 
-%files
-%_libdir/libesmtp.so.*
-%_libdir/esmtp-plugins
-%doc AUTHORS README ChangeLog INSTALL COPYING TODO NEWS Notes doc/api.xml
+%files -n libesmtp%soname
+%doc README.md
+%_libdir/libesmtp.so.%soname
+%_libdir/esmtp-plugins-%soname
 
 %files devel
-%_bindir/*
 %_includedir/*
 %_libdir/*.so
+%_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Feb 13 2024 Anton Farygin <rider@altlinux.ru> 1.1.0-alt1
+- 1.1.0
+
 * Thu Jan 24 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.6-alt2
 - Rebuilt with openssl1.1.
 
