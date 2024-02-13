@@ -1,6 +1,6 @@
 Name:    trivy-db
 Version: 20240208
-Release: alt1
+Release: alt2
 
 Summary: Database for Trivy
 License: Apache-2.0
@@ -39,6 +39,9 @@ fi
 %attr(0644,_trivy,_trivy) %_sharedstatedir/trivy/db/*
 
 %changelog
+* Tue Feb 13 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 20240208-alt2
+- Fix package name trivy-db-tool typo
+
 * Thu Feb 08 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 20240208-alt1
 - repocop cronbuild 20240208. At your service.
 
