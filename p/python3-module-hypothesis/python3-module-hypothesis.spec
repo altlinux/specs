@@ -5,7 +5,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 6.82.3
+Version: 6.98.4
 Release: alt1
 
 Summary: A library for property based testing
@@ -74,8 +74,13 @@ cp %SOURCE1 ./
 %python3_sitelibdir/_hypothesis_pytestplugin.py
 %python3_sitelibdir/__pycache__/_hypothesis_ftz_detector.*
 %python3_sitelibdir/_hypothesis_ftz_detector.py
+%python3_sitelibdir/__pycache__/_hypothesis_globals.*
+%python3_sitelibdir/_hypothesis_globals.py
 
 %changelog
+* Tue Feb 13 2024 Alexandr Shashkin <dutyrok@altlinux.org> 6.98.4-alt1
+- 6.82.3 -> 6.98.4
+
 * Thu Aug 10 2023 Alexandr Shashkin <dutyrok@altlinux.org> 6.82.3-alt1
 - 6.75.3 -> 6.82.3 (Closes: #46798)
 
