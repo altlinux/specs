@@ -1,13 +1,13 @@
 %define soname 1
 
 Name: libnvme
-Version: 1.6
-Release: alt2
+Version: 1.7.1
+Release: alt1
 Summary: Linux-native nvme device management library
 Group: System/Libraries
 
 License: LGPL-2.1+
-# https://github.com/linux-nvme/libnvme/archive/refs/tags/v1.3.tar.gz
+# https://github.com/linux-nvme/libnvme/archive/refs/tags/v%{version}.tar.gz
 Source: %{name}-%{version}.tar
 
 Url: http://github.com/linux-nvme/libnvme
@@ -76,6 +76,9 @@ rm -f %buildroot%_libdir/*.a
 %python3_sitelibdir/libnvme/
 
 %changelog
+* Tue Feb 13 2024 L.A. Kostis <lakostis@altlinux.ru> 1.7.1-alt1
+- 1.7.1.
+
 * Tue Dec 05 2023 Artem Kurashov <saahriktu@altlinux.org> 1.6-alt2
 - Add python3-module-libnvme package.
 
