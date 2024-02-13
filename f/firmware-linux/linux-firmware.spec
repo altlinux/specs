@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20240203
+Version: 20240208
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -94,6 +94,13 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/mellanox
 
 %changelog
+* Tue Feb 13 2024 Cronbuild Service <cronbuild@altlinux.org> 20240208-alt1
+- upstream changes (GIT fbef4d38):
+  + panthor: Add initial firmware for Gen10 Arm Mali GPUs (thx Liviu Dudau)
+  + amdgpu: DMCUB Updates for DCN321: 7.0.38.0 (thx Aurabindo Pillai)
+  + amdgpu: DMCUB updates for Yellow Carp: 4.0.68.0 (thx Aurabindo Pillai)
+  + Montage: add firmware for Mont-TSSE (thx Carrie.Cai)
+
 * Tue Feb 06 2024 Cronbuild Service <cronbuild@altlinux.org> 20240203-alt1
 - upstream changes (GIT b4b04a5c):
   + amdgpu: update DMCUB to v0.0.203.0 for DCN314 and DCN32 (thx Hamza Mahfooz)
