@@ -1,8 +1,11 @@
 %define        _unpackaged_files_terminate_build 1
+%def_disable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname puppet
 
 Name:          gem-puppet
-Version:       8.3.1
+Version:       8.4.0
 Release:       alt1
 Summary:       A network tool for managing many disparate systems
 License:       Apache-2.0
@@ -24,12 +27,10 @@ Patch3:        puppet-alt-aptrpm-osfamily.patch
 Patch4:        fix_yaml.patch
 Patch5:        ronn.patch
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(ronn-ng) >= 0.7
-BuildConflicts: gem(ronn-ng) >= 1
-%if_with check
+%if_enabled check
 BuildRequires: gem(facter) >= 4.3.0
-BuildRequires: gem(semantic_puppet) >= 1.0
-BuildRequires: gem(puppet-resource_api) >= 1.5
+BuildRequires: gem(semantic_puppet) >= 1.1
+BuildRequires: gem(puppet-resource_api) >= 1.1
 BuildRequires: gem(diff-lcs) >= 1.3
 BuildRequires: gem(hiera-eyaml) >= 0
 BuildRequires: gem(hocon) >= 1.0
@@ -53,6 +54,7 @@ BuildRequires: gem(racc) >= 1.5.2
 BuildRequires: gem(ruby-prof) >= 0.16.0
 BuildRequires: gem(packaging) >= 0.99
 BuildRequires: gem(gettext-setup) >= 1.0
+BuildRequires: gem(ronn-ng) >= 0.7
 BuildRequires: gem(fast_gettext) >= 2.1
 BuildRequires: gem(locale) >= 2.1
 BuildRequires: gem(multi_json) >= 1.13
@@ -61,8 +63,8 @@ BuildRequires: gem(deep_merge) >= 1.0
 BuildRequires: gem(scanf) >= 1.0
 BuildRequires: gem(CFPropertyList) >= 2.2
 BuildConflicts: gem(facter) >= 5
-BuildConflicts: gem(semantic_puppet) >= 2
-BuildConflicts: gem(puppet-resource_api) >= 2
+BuildConflicts: gem(semantic_puppet) >= 2.0
+BuildConflicts: gem(puppet-resource_api) >= 2.0
 BuildConflicts: gem(diff-lcs) >= 2
 BuildConflicts: gem(hocon) >= 2
 BuildConflicts: gem(minitar) >= 1
@@ -81,6 +83,7 @@ BuildConflicts: gem(rubocop) >= 2
 BuildConflicts: gem(rubocop-i18n) >= 4
 BuildConflicts: gem(packaging) >= 1
 BuildConflicts: gem(gettext-setup) >= 2
+BuildConflicts: gem(ronn-ng) >= 1
 BuildConflicts: gem(fast_gettext) >= 3
 BuildConflicts: gem(locale) >= 3
 BuildConflicts: gem(multi_json) >= 2
@@ -96,11 +99,11 @@ BuildConflicts: gem(CFPropertyList) >= 4
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
 %ruby_use_gem_dependency rspec-expectations >= 3.10.1,rspec-expectations < 4
 %ruby_use_gem_dependency ffi >= 1.15.5,ffi < 2
-%ruby_use_gem_dependency racc >= 1.7.3
+%ruby_use_gem_dependency racc >= 1.7.3,racc < 2
 %ruby_use_gem_dependency CFPropertyList >= 3.0.6,CFPropertyList < 4
 Requires:      gem(facter) >= 4.3.0
-Requires:      gem(semantic_puppet) >= 1.0
-Requires:      gem(puppet-resource_api) >= 1.5
+Requires:      gem(semantic_puppet) >= 1.1
+Requires:      gem(puppet-resource_api) >= 1.1
 Requires:      gem(fast_gettext) >= 2.1
 Requires:      gem(locale) >= 2.1
 Requires:      gem(multi_json) >= 1.13
@@ -110,8 +113,8 @@ Requires:      gem(scanf) >= 1.0
 Requires:      gem(CFPropertyList) >= 2.2
 Requires:      puppet = %EVR
 Conflicts:     gem(facter) >= 5
-Conflicts:     gem(semantic_puppet) >= 2
-Conflicts:     gem(puppet-resource_api) >= 2
+Conflicts:     gem(semantic_puppet) >= 2.0
+Conflicts:     gem(puppet-resource_api) >= 2.0
 Conflicts:     gem(fast_gettext) >= 3
 Conflicts:     gem(locale) >= 3
 Conflicts:     gem(multi_json) >= 2
@@ -119,7 +122,8 @@ Conflicts:     gem(concurrent-ruby) >= 2
 Conflicts:     gem(deep_merge) >= 2
 Conflicts:     gem(scanf) >= 2
 Conflicts:     gem(CFPropertyList) >= 4
-Provides:      gem(puppet) = 8.3.1
+Provides:      gem(puppet) = 8.4.0
+
 
 %description
 Puppet lets you centrally manage every important aspect of your system using a
@@ -129,14 +133,14 @@ with obviously discrete elements like packages, services, and files.
 
 
 %package       -n puppet
-Version:       8.3.1
+Version:       8.4.0
 Release:       alt1
 Summary:       A network tool for managing many disparate systems executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета puppet
 Group:         System/Servers
 BuildArch:     noarch
 
-Requires:      gem(puppet) = 8.3.1
+Requires:      gem(puppet) = 8.4.0
 Requires:      shadow-change
 Provides:      puppet-agent = %EVR
 Requires(preun,post): %name = %EVR
@@ -148,20 +152,20 @@ Puppet lets you centrally manage every important aspect of your system using a
 cross-platform specification language that manages all the separate elements
 normally aggregated in different files, like users, cron jobs, and hosts, along
 with obviously discrete elements like packages, services, and files.
-
 %description   -n puppet -l ru_RU.UTF-8
 Исполнямка для самоцвета puppet.
 
 
+%if_enabled    doc
 %package       -n gem-puppet-doc
-Version:       8.3.1
+Version:       8.4.0
 Release:       alt1
 Summary:       A network tool for managing many disparate systems documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puppet
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(puppet) = 8.3.1
+Requires:      gem(puppet) = 8.4.0
 
 %description   -n gem-puppet-doc
 A network tool for managing many disparate systems documentation files.
@@ -170,20 +174,21 @@ Puppet lets you centrally manage every important aspect of your system using a
 cross-platform specification language that manages all the separate elements
 normally aggregated in different files, like users, cron jobs, and hosts, along
 with obviously discrete elements like packages, services, and files.
-
 %description   -n gem-puppet-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета puppet.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-puppet-devel
-Version:       8.3.1
+Version:       8.4.0
 Release:       alt1
 Summary:       A network tool for managing many disparate systems development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puppet
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(puppet) = 8.3.1
+Requires:      gem(puppet) = 8.4.0
 Requires:      gem(diff-lcs) >= 1.3
 Requires:      gem(hiera-eyaml) >= 0
 Requires:      gem(hocon) >= 1.0
@@ -235,9 +240,9 @@ Puppet lets you centrally manage every important aspect of your system using a
 cross-platform specification language that manages all the separate elements
 normally aggregated in different files, like users, cron jobs, and hosts, along
 with obviously discrete elements like packages, services, and files.
-
 %description   -n gem-puppet-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета puppet.
+%endif
 
 
 %prep
@@ -368,15 +373,22 @@ sed -e "s,sample.server.name,$(hostname)," \
 %doc %_man8dir/*
 %doc %_man5dir/puppet.conf.5*
 
+%if_enabled    doc
 %files         -n gem-puppet-doc
 %doc README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-puppet-devel
 %doc README.md
+%endif
 
 
 %changelog
+* Sat Feb 10 2024 Pavel Skrylev <majioa@altlinux.org> 8.4.0-alt1
+- ^ 8.3.1 -> 8.4.0
+
 * Tue Dec 19 2023 Pavel Skrylev <majioa@altlinux.org> 8.3.1-alt1
 - ^ 7.24.0.161 -> 8.3.1
 
