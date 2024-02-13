@@ -1,5 +1,5 @@
 Name: portproton
-Version: 1.4
+Version: 1.5
 Release: alt1
 
 Summary: Installer for PortProton
@@ -12,9 +12,14 @@ Source: %name-%version.tar
 
 Requires: bubblewrap cabextract zstd gawk tar xz pciutils coreutils file
 Requires: curl icoutils wmctrl xdg-utils desktop-file-utils yad
-Requires: libvulkan1 vulkan-tools libd3d libGL libMesaOpenCL gamemode fontconfig xrdb
+Requires: libvulkan1 vulkan-tools libd3d libGL gamemode fontconfig xrdb
 Requires: libcurl libgio libnm libnsl1 libnss glibc-nss glibc-pthread
 Requires: /usr/bin/convert
+
+# TODO: 32-bit dependencies
+# Requires: i586-libvulkan1 i586-libd3d i586-libGL i586-libgio i586-libnm
+# Requires: i586-libnsl1 i586-libnss i586-glibc-nss i586-glibc-pthread
+# Requires: i586-libunwind i586-xorg-dri-swrast
 
 ExclusiveArch: x86_64
 
@@ -37,6 +42,10 @@ install -Dm644 %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Tue Feb 13 2024 Mikhail Tergoev <fidel@altlinux.org> 1.5-alt1
+- updated to v1.5
+- drop requires: libMesaOpenCL
+
 * Fri Feb 09 2024 Mikhail Tergoev <fidel@altlinux.org> 1.4-alt1
 - updated to v1.4
 - update requires
