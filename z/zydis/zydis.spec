@@ -1,8 +1,8 @@
-%define sover 4.0
+%define sover 4.1
 
 Name: zydis
-Version: 4.0.0
-Release: alt2
+Version: 4.1.0
+Release: alt1
 
 Summary: Fast and lightweight x86/x86-64 disassembler and code generation library.
 License: MIT
@@ -13,13 +13,12 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/zyantific/%name/archive/refs/tags/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
-Patch3500: zydis-loongarch64.patch
 
 BuildRequires: cmake
 BuildRequires: doxygen
-BuildRequires: gcc-c++
 BuildRequires: graphviz
 BuildRequires: libzycore-devel
+BuildRequires: python3-dev
 
 %description
 Fast and lightweight x86/x86-64 disassembler and code generation library.
@@ -47,7 +46,6 @@ Development tools for %name
 
 %prep
 %setup
-%patch3500 -p1
 
 %build
 %cmake \
@@ -72,6 +70,9 @@ Development tools for %name
 %_bindir/Zydis*
 
 %changelog
+* Tue Feb 13 2024 Nazarov Denis <nenderus@altlinux.org> 4.1.0-alt1
+- New version 4.1.0.
+
 * Mon Oct 30 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.0.0-alt2
 - NMU: fixed FTBFS on LoongArch
 

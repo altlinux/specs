@@ -1,7 +1,7 @@
-%define sover 6.5
+%define sover 6.6
 
 Name: dynarmic
-Version: 6.5.0
+Version: 6.6.3
 Release: alt1
 
 Summary: A dynamic recompiler for ARM.
@@ -64,6 +64,9 @@ Header files for lib%name
 %_includedir/%name
 
 %changelog
+* Tue Feb 13 2024 Nazarov Denis <nenderus@altlinux.org> 6.6.3-alt1
+- New version 6.6.3.
+
 * Thu Jul 27 2023 Nazarov Denis <nenderus@altlinux.org> 6.5.0-alt1
 - New version 6.5.0.
 
