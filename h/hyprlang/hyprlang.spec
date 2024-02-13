@@ -1,10 +1,10 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name hyprlang
 
 %def_enable check
 
 Name: %_name
-Version: 0.2.1
+Version: 0.3.1
 Release: alt1
 
 Summary: Hyprland configuration library
@@ -19,8 +19,6 @@ Source: %url/archive/v%version/%_name-%version.tar.gz
 %else
 Source: %_name-%version.tar
 %endif
-
-ExcludeArch: %ix86 armh
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
@@ -49,7 +47,6 @@ Development files for the Hyprlang library.
 
 %prep
 %setup -n %_name-%version
-sed -i 's|share/pkgconfig|${CMAKE_INSTALL_LIBDIR}/pkgconfig|' CMakeLists.txt
 
 %build
 %cmake
@@ -71,6 +68,9 @@ sed -i 's|share/pkgconfig|${CMAKE_INSTALL_LIBDIR}/pkgconfig|' CMakeLists.txt
 %_pkgconfigdir/%_name.pc
 
 %changelog
+* Tue Feb 13 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
+- 0.3.1
+
 * Sun Jan 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
 - first build for Sisyphus (v0.2.1-5-gf1aaf52)
 
