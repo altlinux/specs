@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: opencl-headers
-Version: 2023.04.17
+Version: 2023.12.14
 Release: alt1
 Epoch: 1
 
@@ -48,6 +48,9 @@ rm -vf CL/{cl_dx9_media_sharing*.h,cl_d3d10.h,cl_d3d11.h}
 %_datadir/pkgconfig/OpenCL-Headers.pc
 
 %changelog
+* Tue Feb 13 2024 L.A. Kostis <lakostis@altlinux.ru> 1:2023.12.14-alt1
+- v2023.12.14.
+
 * Thu Nov 16 2023 L.A. Kostis <lakostis@altlinux.ru> 1:2023.04.17-alt1
 - Rebased to v2023.04.17.
 - .spec: restructure.
