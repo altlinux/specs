@@ -1,19 +1,20 @@
 %define _unpackaged_files_terminate_build 1
-%define  pypi_name testfixtures
+%define pypi_name testfixtures
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.1.0
+Version: 7.2.2
 Release: alt1
 
 Summary: A collection of helpers and mock objects for unit tests and doc tests
 License: MIT
-Group:   Development/Python3
-URL: https://pypi.org/project/testfixtures
+Group: Development/Python3
+Url: https://pypi.org/project/testfixtures
 VCS: https://github.com/Simplistix/testfixtures
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -29,6 +30,7 @@ when writing unit tests or doc tests.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -50,6 +52,9 @@ rm -r %buildroot%python3_sitelibdir/testfixtures/tests/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 13 2024 Stanislav Levin <slev@altlinux.org> 7.2.2-alt1
+- 7.1.0 -> 7.2.2.
+
 * Thu Jul 27 2023 Stanislav Levin <slev@altlinux.org> 7.1.0-alt1
 - 7.0.4 -> 7.1.0.
 
