@@ -9,7 +9,7 @@
 
 Name: authenticator
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Generate Two-Factor Codes
 License: GPL-3.0-or-later
@@ -44,7 +44,7 @@ BuildRequires: pkgconfig(zbar)
 BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(dbus-1)
-%{?_enable_check:BuildRequires: /usr/bin/appstream-util desktop-file-utils clippy}
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils clippy}
 
 %description
 Simple application for generating Two-Factor Authentication Codes.
@@ -68,7 +68,7 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 # remove broken build.rs from zbar-rust (the same in decoder)
 rm -f vendor/zbar-rust/build.rs
-sed -i 's|"build.rs":"d0aaf233f1e388a56f9f0df71ff4d678fadb8eca2ce7e28a1e2da144e2c28632",||' \
+sed -i 's|"build.rs":"894b33392971ba9dad1dd4e45869478198f86e911e0b29f7e0d9fbf1342672c2",||' \
 vendor/zbar-rust/.cargo-checksum.json
 
 %build
@@ -80,7 +80,7 @@ vendor/zbar-rust/.cargo-checksum.json
 %find_lang %name
 
 %check
-%__meson_test
+%__meson_test -t 2
 
 %files -f %name.lang
 %_bindir/%name
@@ -95,6 +95,9 @@ vendor/zbar-rust/.cargo-checksum.json
 
 
 %changelog
+* Tue Feb 13 2024 Yuri N. Sedunov <aris@altlinux.org> 4.4.0-alt2
+- updated to 4.4.0-46-gb8dbe84
+
 * Wed Dec 27 2023 Yuri N. Sedunov <aris@altlinux.org> 4.4.0-alt1
 - first build for Sisyphus (4.4.0-12-g1e99792)
 
