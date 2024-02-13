@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: atftp
 Version: 0.8.0
-Release: alt1
+Release: alt2
 URL: https://sourceforge.net/projects/atftp
 Summary: Advanced Trivial File Transfer Protocol
 License: GPLv2+
@@ -76,6 +76,9 @@ touch %buildroot%_sysconfdir/mtftp.conf
 %dir %attr(0770,root,_atftpd) %_logdir/atftpd
 
 %changelog
+* Tue Feb 13 2024 Anton Farygin <rider@altlinux.ru> 0.8.0-alt2
+- fixed systemd unit (Closes: #49359)
+
 * Tue Feb 06 2024 Anton Farygin <rider@altlinux.ru> 0.8.0-alt1
 - 0.8.0
 - added unit file for systemd (Closes: #28104)
