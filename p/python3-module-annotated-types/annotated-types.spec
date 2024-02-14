@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 
 Summary: Reusable constraint types to use with typing.Annotated
@@ -46,7 +46,7 @@ this package.
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile requirements/testing.txt
+%pyproject_deps_resync_check_pipreqfile requirements/testing.in
 %endif
 
 %build
@@ -64,6 +64,9 @@ this package.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Feb 14 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.6.0-alt1
+- 0.5.0 -> 0.6.0
+
 * Thu Aug 10 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.5.0-alt1
 - Initial build for Sisyphus
 
