@@ -51,7 +51,7 @@
 
 Name:    golang
 Version: 1.21.7
-Release: alt1
+Release: alt2
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
@@ -148,6 +148,7 @@ Summary:   Golang compiler tests for stdlib
 Group:     Development/Other
 BuildArch: noarch
 Requires:  %name = %version-%release
+AutoReqProv: no
 
 %description tests
 %summary.
@@ -159,7 +160,7 @@ BuildArch: noarch
 AutoReq: noshell, noshebang
 
 %description src
-%{summary}.
+%summary.
 
 %prep
 %setup -q
@@ -240,36 +241,12 @@ cp -apfv api bin doc lib pkg src misc test go.env VERSION \
 
 find %buildroot%go_root -exec touch -r $PWD/VERSION "{}" \;
 
+
 # remove bootstrap files
 rm -rfv -- %buildroot%go_root/pkg/bootstrap
 
-# remove testdata, tests, and non-go files
-find \
-	%buildroot%go_root/src \
-	\( \
-		\( -type d -name 'testdata'   \) -o \
-		\( -type f -name 'Makefile'   \) -o \
-		\( -type f -name '*_test.go'  \) -o \
-		\( -type f -name 'test_*'     \) -o \
-		\( -type f -name '*test.bash' \) -o \
-		\( -type f -name 'test.'      \) \
-	\) \
-		-print0 |
-	xargs -0 rm -rfv --
-
-# remove scripts for other platform.
-find \
-	%buildroot%go_root/src \
-		-maxdepth 1 \
-	\( \
-		\( -type f -name '*.rc'  \) -o \
-		\( -type f -name '*.bat' \)    \
-	\) \
-		-print0 |
-	xargs -0 rm -fv --
-
-# remove test for other platforms scripts
-rm %buildroot%go_root/test/winbatch.go
+# remove the doc Makefile
+rm -rfv -- %buildroot%go_root/doc/Makefile
 
 # remove the unnecessary zoneinfo file (Go will always use the system one first)
 rm -rfv -- \
@@ -337,6 +314,30 @@ mkdir -p -- \
 	%buildroot%go_path/src/golang.org/x \
 #
 
+# cleanup
+find \
+	%buildroot%go_root/src \
+	\( \
+		\( -type f -name '.gitignore' \) -o \
+		\( -type f -name '*.orig'     \) \
+	\) \
+		-print0 |
+	xargs -0 rm -rfv --
+
+
+# find test files
+cwd=$(pwd)
+src_list=$cwd/go-src.list
+tests_list=$cwd/go-tests.list
+rm -f $src_list $tests_list
+touch $src_list $tests_list
+pushd %buildroot%go_root
+find src/ -type d -a \( ! -name testdata -a ! -ipath '*/testdata/*' \) -printf '%%%%dir %go_root/%%p\n' >> $src_list
+find src/ ! -type d -a \( ! -ipath '*/testdata/*' -a ! -name '*_test.go' \) -printf '%go_root/%%p\n' >> $src_list
+find src/ -type d -a \( -name testdata -o -ipath '*/testdata/*' \) -printf '%%%%dir %go_root/%%p\n' >> $tests_list
+find src/ ! -type d -a \( -ipath '*/testdata/*' -o -name '*_test.go' \) -printf '%go_root/%%p\n' >> $tests_list
+popd
+
 %files
 %_bindir/*
 %go_root
@@ -368,16 +369,17 @@ mkdir -p -- \
 %files misc
 %go_root/misc
 
-%files tests
+%files tests -f go-tests.list
 %go_root/test
 
-%files src
-%go_root/src
-%exclude %go_root/src/runtime/runtime-gdb.py
+%files src -f go-src.list
 
 %changelog
+* Thu Feb 08 2024 Alexey Shabalin <shaba@altlinux.org> 1.21.7-alt2
+- Update files in tests package (ALT#48016).
+
 * Wed Feb 07 2024 Alexey Shabalin <shaba@altlinux.org> 1.21.7-alt1
--  New version (1.21.7).
+- New version (1.21.7).
 
 * Tue Jan 09 2024 Alexey Shabalin <shaba@altlinux.org> 1.21.6-alt1
 - New version (1.21.6).
