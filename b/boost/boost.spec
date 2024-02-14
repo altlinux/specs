@@ -60,7 +60,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt2
+Release: alt3
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -1304,6 +1304,7 @@ sed -i 's/BOOST_GCC >= 70000/0/' boost/assert/source_location.hpp
 sed -i 's/static constexpr/static const/' libs/url/src/detail/replacement_field_rule.cpp
 sed -i '/large_power_of_5\[\] =/s/\[\]/[5]/' \
 	boost/json/detail/charconv/detail/fast_float/bigint.hpp
+sed -i '/inv_sizes32\[\] =/s/\[\]/[29]/' boost/unordered/detail/prime_fmod.hpp
 %endif
 
 cat >> ./tools/build/src/user-config.jam << EOF
@@ -1907,6 +1908,9 @@ done
 
 
 %changelog
+* Tue Feb 13 2024 Michael Shigorin <mike@altlinux.org> 1:1.84.0-alt3
+- E2K: use the patch in the intended way (thx Krylov)
+
 * Mon Feb 12 2024 Michael Shigorin <mike@altlinux.org> 1:1.84.0-alt2
 - E2K: prime_fmod ftbfs workaround (ilyakurdyukov@; mcst#8285)
 
