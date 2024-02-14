@@ -17,8 +17,8 @@
 %add_python_req_skip _gpgme
 
 Name: gpgme
-Version: 1.23.1
-Release: alt3
+Version: 1.23.2
+Release: alt1
 
 Summary: GnuPG Made Easy is a library designed to make access to GnuPG easier for applications
 License: LGPLv2.1+
@@ -250,6 +250,9 @@ find %buildroot%python3_sitelibdir/gpg-%version-py*egg-info \
 %_libdir/libqgpgme.so.%qgpgme_sover.*
 
 %changelog
+* Tue Feb 13 2024 Cronbuild Service <cronbuild@altlinux.org> 1.23.2-alt1
+- New version 1.23.2.
+
 * Thu Jan 25 2024 Paul Wolneykien <manowar@altlinux.org> 1.23.1-alt3
 - Adapted Python packages for different versions of egg-info.
 
