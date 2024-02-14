@@ -1,17 +1,27 @@
-Summary: Tool for Authenticode signing of EXE/CAB files
+%define _unpackaged_files_terminate_build 1
+
 Name: osslsigncode
-Version: 2.2
+Version: 2.7
 Release: alt1
+
+Summary: Tool for Authenticode signing of EXE/CAB files
 License: GPLv2+
 Group: File tools
 Url: https://github.com/mtrojnar/osslsigncode
-#GIT: https://github.com/mtrojnar/osslsigncode.git
+
 Source: %name-%version.tar
+
+Patch0: osslsigncode-2.7-alt-fix-test-server-on-python3.12.patch
+Patch1: osslsigncode-2.7-upstream-fixed-windows-segmentation-fault.patch
+
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: libssl-devel
 BuildRequires: libcurl-devel
-BuildRequires: libgsf libgsf-devel libgsf-gir-devel
-BuildRequires: autoconf-common
-BuildRequires: automake-common
+BuildRequires: libgsf-devel libgsf-gir-devel
+BuildRequires: zlib-devel
+BuildRequires: libfaketime
+BuildRequires: cmake ctest
+BuildRequires: openssl
 
 %description
 Tool for Authenticode signing of EXE/CAB files.
@@ -19,19 +29,28 @@ Tool for Authenticode signing of EXE/CAB files.
 %prep
 %setup -q
 
+%patch0 -p1
+%patch1 -p1
+
 %build
-./bootstrap
-%configure --with-curl --with-gsf
-make %{?_smp_mflags}
+%cmake
+%cmake_build
 
 %install
-make install DESTDIR=%buildroot
+%cmake_install
+
+%check
+%ctest -j1
 
 %files
-%doc COPYING.txt LICENSE.txt NEWS.md README.unauthblob.md README.md TODO.md
+%doc COPYING.txt LICENSE.txt NEWS.md README.md
 %_bindir/osslsigncode
+%_datadir/bash-completion/completions/osslsigncode.bash
 
 %changelog
+* Mon Feb 12 2024 Egor Ignatov <egori@altlinux.org> 2.7-alt1
+- new version
+
 * Fri Sep 17 2021 Nikolai Kostrigin <nickel@altlinux.org> 2.2-alt1
 - new version
 
