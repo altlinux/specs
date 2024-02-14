@@ -1,5 +1,5 @@
 Name: ddcui
-Version: 0.5.3
+Version: 0.5.4
 Release: alt1
 
 Summary: Graphical utility to query and update monitor settings
@@ -13,7 +13,7 @@ Source: %url/archive/v%version/%name-%version.tar.gz
 %define glib_ver 2.40
 %define qt_ver 5.5
 
-BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake rpm-build-systemd
 BuildRequires: cmake pkgconfig(glib-2.0) >= %glib_ver
 BuildRequires: libddcutil-devel >= %ddcutil_ver
 BuildRequires: pkgconfig(Qt5Widgets) >= %qt_ver
@@ -36,9 +36,12 @@ BuildRequires: pkgconfig(Qt5Help)
 
 %install
 %cmake_install
+mkdir -p  %buildroot%_modulesloaddir
+mv %buildroot%_prefix/lib/modules-load.d/%name.conf %buildroot%_modulesloaddir/
 
 %files
 %_bindir/%name
+%_modulesloaddir/%name.conf
 %_desktopdir/%name.desktop
 %_man1dir/%name.1*
 %_iconsdir/hicolor/*x*/apps/*.png
@@ -46,6 +49,9 @@ BuildRequires: pkgconfig(Qt5Help)
 %doc AUTHORS NEWS.md README.md CHANGELOG.md
 
 %changelog
+* Wed Feb 14 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.4-alt1
+- 0.5.4
+
 * Thu Feb 08 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.3-alt1
 - 0.5.3
 
