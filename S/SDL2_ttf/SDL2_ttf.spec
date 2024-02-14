@@ -1,8 +1,8 @@
-%define freetype_commit 6fc77cee03e078e97afcee0c0e06a2d3274b9a29
-%define harfbuzz_commit 43931e3e596c04044861770b831c8f9452e2d3b0
+%define freetype_commit 12c5e620858bd503731091e9371d06c0a3e7c967
+%define harfbuzz_commit 516b7ed0b022ab0ffeb0cee87d31d9c40d3a54df
 
 Name: SDL2_ttf
-Version: 2.20.2
+Version: 2.22.0
 Release: alt1
 
 Summary: Simple DirectMedia Layer - Sample TrueType Font Library
@@ -94,6 +94,9 @@ EOF
 %_libdir/cmake/%name
 
 %changelog
+* Wed Feb 14 2024 Nazarov Denis <nenderus@altlinux.org> 2.22.0-alt1
+- Version 2.22.0
+
 * Tue Feb 07 2023 Nazarov Denis <nenderus@altlinux.org> 2.20.2-alt1
 - Version 2.20.2
 
