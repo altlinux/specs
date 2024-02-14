@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 
 Summary: Simple image creator
@@ -88,6 +88,9 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Wed Feb 14 2024 Alexey Gladkov <legion@altlinux.ru> 0.3.3-alt1
+- Add HSH_INSTALL_PROC support in mki-install.
+
 * Mon Aug 14 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.2-alt1
 - tools.mk.in: Correct the path to the mki-image-patches helper script.
 - spec: Exclude the package release specification from the hasher requirement.
