@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
-%define sover 5
+%define sover 6
 
 Name: superlu
-Version: 5.2.2
-Release: alt1.1
+Version: 6.0.1
+Release: alt1
 Summary: A set of subroutines to solve a sparse linear system A*X=B
-License: BSD-like
+License: BSD and GPLv2+
 Group: Sciences/Mathematics
 Url: https://github.com/xiaoyeli/superlu
 
@@ -17,14 +17,14 @@ Source: %name-%version.tar
 Patch1: superlu-5.2.2-no-internal-blas.patch
 
 # ALT Patch
-Patch10: superlu-5.2.2-respect-flags.patch
+Patch10: superlu-6.0.1-respect-flags.patch
 
 Provides: %name = %EVR
 Requires: lib%name%sover = %EVR
 
 BuildRequires: cmake
 BuildRequires: ctest
-BuildRequires: gcc-fortran gcc-c++ liblapack-devel
+BuildRequires: gcc-fortran gcc-c++ libflexiblas-devel
 BuildRequires: csh doxygen graphviz ghostscript-utils
 
 %description
@@ -86,9 +86,11 @@ This package contains documentation for SuperLU.
 
 %build
 %cmake \
+	-DCMAKE_BUILD_TYPE:STRING=Release \
 	-DCMAKE_INSTALL_INCLUDEDIR="include/superlu" \
 	-DBUILD_SHARED_LIBS=ON \
 	-Denable_internal_blaslib=OFF \
+	-DTPL_BLAS_LIBRARIES="`pkg-config --libs flexiblas`" \
 	-Denable_tests=ON \
 	%nil
 
@@ -119,6 +121,10 @@ ctest
 %doc FORTRAN
 
 %changelog
+* Wed Feb 14 2024 Anton Farygin <rider@altlinux.ru> 6.0.1-alt1
+- 5.2.2 -> 6.0.1
+- built with libflexiblas
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 5.2.2-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
