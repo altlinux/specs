@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.3.9
-Release: alt1
+Release: alt2
 
 License: BSD-3-Clause
 Group: Development/Python3
@@ -37,6 +37,7 @@ BuildRequires: python3-module-pyparsing
 BuildRequires: python3-module-attrs
 BuildRequires: gdal
 BuildRequires: /proc
+BuildRequires: python3-module-hypothesis
 %endif
 
 %py3_provides %oname
@@ -68,7 +69,8 @@ rm -rf %oname # Don't try unbuilt copy.
 # Ignore some tests using network access
 %pyproject_run_pytest -ra \
     -m 'not network and not wheel' \
-    -k 'not test_rio_env_no_credentials and not test_datasetreader_ctor_url and not test_read_boundless and not test_resampling_rms and not test_merge_precision[precision0] and not test_merge_precision[precision1]'
+    -k 'not test_rio_env_no_credentials and not test_datasetreader_ctor_url and not test_read_boundless and not test_resampling_rms and not test_merge_precision[precision0] and not test_merge_precision[precision1]' \
+    -W ignore::pytest.PytestRemovedIn8Warning
 
 %files
 %doc *.txt *.rst docs/ examples/
@@ -77,6 +79,9 @@ rm -rf %oname # Don't try unbuilt copy.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Thu Feb 08 2024 Anton Vyatkin <toni@altlinux.org> 1.3.9-alt2
+- Fixed FTBFS.
+
 * Mon Oct 23 2023 Andrey Cherepanov <cas@altlinux.org> 1.3.9-alt1
 - new version 1.3.9
 - use /proc build requirement to prevent segafault on tests
