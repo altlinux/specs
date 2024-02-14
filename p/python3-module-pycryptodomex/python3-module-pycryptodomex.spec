@@ -1,7 +1,7 @@
 %define  modulename pycryptodomex
 
 Name:    python3-module-%modulename
-Version: 3.18.0
+Version: 3.20.0
 Release: alt1
 
 Summary: A self-contained cryptographic library for Python
@@ -70,6 +70,11 @@ respect to the last official version of PyCrypto (2.6.1):
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed Feb 14 2024 Andrey Cherepanov <cas@altlinux.org> 3.20.0-alt1
+- New version (ALT #49419).
+- Fixed a side-channel leakage with OAEP decryption that could be
+  exploited to carry out a Manger attack.
+
 * Mon Dec 18 2023 Andrey Cherepanov <cas@altlinux.org> 3.18.0-alt1
 - New version.
 
