@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lact
-Version: 0.5.0
-Release: alt1.1
+Version: 0.5.2
+Release: alt1
 
 Summary: Linux AMDGPU Control Application
 License: MIT
@@ -11,7 +11,7 @@ Group: Monitoring
 URL: https://github.com/ilya-zlobintsev/LACT
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-ExclusiveArch: x86_64 aarch64 ppc64le loongarch64
+ExclusiveArch: x86_64 loongarch64
 
 # Source-url: https://github.com/ilya-zlobintsev/LACT/archive/v%version/LACT-%version.tar.gz
 Source0: LACT-%version.tar
@@ -47,7 +47,7 @@ export CARGO_HOME=${PWD}/cargo
 cargo build --release --offline
 
 %install
-DESTDIR=%buildroot%prefix make install
+DESTDIR=%buildroot PREFIX=%prefix make install
 %__chmod 644 %buildroot%_desktopdir/io.github.%name-linux.desktop
 %__chmod 644 %buildroot%_pixmapsdir/io.github.%name-linux.png
 %__mkdir_p %buildroot%_unitdir
@@ -59,9 +59,13 @@ DESTDIR=%buildroot%prefix make install
 %_bindir/%name
 %_desktopdir/io.github.%name-linux.desktop
 %_pixmapsdir/io.github.%name-linux.png
+%_iconsdir/hicolor/scalable/apps/io.github.%name-linux.svg
 %_unitdir/%{name}d.service
 
 %changelog
+* Wed Feb 14 2024 Nazarov Denis <nenderus@altlinux.org> 0.5.2-alt1
+- New version 0.5.2.
+
 * Mon Nov 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.5.0-alt1.1
 - NMU: build for LoongArch too
 
