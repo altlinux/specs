@@ -1,5 +1,5 @@
 Name: installer-alterator-pkg
-Version: 3.1.3
+Version: 3.1.4
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -57,6 +57,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Sun Jan 28 2024 Anton Midyukov <antohami@altlinux.org> 3.1.4-alt1
+- initinstall.d/90-pkg.sh: fix mkdir /var/lib/install3 when run from not '/'
+
 * Tue Dec 12 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 3.1.3-alt1
 - add reading checkbox state from conf file
 
