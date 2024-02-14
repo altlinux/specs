@@ -5,7 +5,7 @@
 %def_enable spreadsheet-model
 %def_with python
 Name: liborcus
-Version: 0.18.1
+Version: 0.19.2
 Release: alt1
 Summary: Standalone file import filter library for spreadsheet documents
 
@@ -103,6 +103,9 @@ ln -s %name-%libver.pc %buildroot%_pkgconfigdir/%name.pc
 %endif
 
 %changelog
+* Fri Feb 02 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 0.19.2-alt1
+- Updated to 0.19.2
+
 * Wed Sep 27 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.18.1-alt1
 - Updated to 0.18.1
 

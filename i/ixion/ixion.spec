@@ -1,5 +1,5 @@
 Name: ixion
-Version: 0.18.1
+Version: 0.19.0
 Release: alt1
 Url: https://gitlab.com/ixion/ixion
 License: MPL-2.0
@@ -72,6 +72,9 @@ sed -i 's/sphinx-build/sphinx-build-3/g' Makefile.am
 %python3_sitelibdir/*
 
 %changelog
+* Fri Feb 02 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 0.19.0-alt1
+- Updated to 0.19.0
+
 * Fri Aug 25 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.18.1-alt1
 - Updated to 0.18.1
 

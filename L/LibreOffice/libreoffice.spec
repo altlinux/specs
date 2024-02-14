@@ -1,4 +1,4 @@
-# 7.6.4.1
+# 24.2.0.3
 %def_without python
 %def_with parallelism
 %def_without fetch
@@ -21,14 +21,14 @@
 %def_disable mergelibs
 
 Name: LibreOffice
-%define hversion 7.6
-%define urelease 4.1
+%define hversion 24.2
+%define urelease 0.3
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt1
 Summary: LibreOffice Productivity Suite
 License: MPL-2.0
 Group: Office
@@ -61,7 +61,6 @@ Source300:      libreoffice.unused
 ## FC patches
 Patch1: FC-0001-disable-libe-book-support.patch
 Patch2: kahansum_test_fix_for_aarc64_s390x.patch
-Patch3: pdfdoc.patch
 
 ## Long-term FC patches
 
@@ -82,8 +81,9 @@ Patch600: LibreOffice-7.4.2.3-update-russian-translation.patch
 # Stolen from %name-still
 Patch700: alt-013-icu74.patch
 
-# See https://bugs.documentfoundation.org/show_bug.cgi?id=158302#c1
-Patch800: libxml2-2.12.patch
+# c++ missing headers
+Patch900: alt-014-missing_headers.patch
+
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
@@ -122,6 +122,9 @@ BuildRequires: libzxing-cpp-devel
 
 # 7.6
 BuildRequires: frozen-devel
+
+# 24.2
+BuildRequires: libargon2-devel
 
 %if_with java
 BuildRequires: java-devel >= 9.0.0 junit ant bsh pentaho-reporting-flow-engine 
@@ -251,6 +254,7 @@ or to download and install (possibly newer) extensions manually.
 
 %add_python3_self_prov_path %buildroot%_libdir/LibreOffice/program/uno.py
 %add_python3_self_prov_path %buildroot%_libdir/LibreOffice/program/unohelper.py
+%add_python3_self_prov_path %buildroot%_libdir/LibreOffice/program/officehelper.py
 
 %package sdk
 Group: Development/Other
@@ -307,7 +311,6 @@ Provides additional %{langname} translations and resources for %name. \
 ## FC apply patches
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 ## Long-term FC patches applying
 
@@ -325,7 +328,7 @@ Provides additional %{langname} translations and resources for %name. \
 
 %patch700 -p1
 
-%patch800 -p1
+%patch900 -p1
 
 # TODO move officebean to SDK or separate package
 # Hack in -Wl,-rpath=/usr/lib/jvm/jre-11-openjdk/lib
@@ -443,6 +446,7 @@ export ac_cv_prog_LO_CLANG_CC=""
         %{subst_enable qt5} \
         %{subst_enable dconf} \
         --enable-gtk3 \
+        --without-system-zxcvbn \
 %if_enabled kf5 \
         --enable-gtk3-kde5 \
 %endif
@@ -638,6 +642,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Sun Feb 11 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 24.2.0.3-alt1
+- Update to 24.2.0.3
+
 * Tue Dec 19 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 7.6.4.1-alt2
 - FTBFS: fixed build with libxml2 2.12 (ALT #48840).
 
