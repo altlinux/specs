@@ -1,19 +1,20 @@
 Name: SDL2_net
-Version: 2.0.1
+Version: 2.2.0
 Release: alt1
 
 Summary: Simple DirectMedia Layer - Portable network library
-License: zlib
+License: Zlib
 Group: System/Libraries
 
 Url: http://www.libsdl.org/projects/SDL_net/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source0: http://www.libsdl.org/projects/SDL_net/release/%name-%version.tar.gz
+# http://www.libsdl.org/projects/SDL_net/release/%name-%version.tar.gz
+Source: %name-%version.tar
 
 BuildRequires: chrpath
-BuildRequires: gcc-c++
-BuildRequires: libSDL2-devel >= 2.0.1
+BuildRequires: libSDL2-devel-static
+BuildRequires: perl-parent
 
 %description
 This is a portable network library for use with SDL.
@@ -51,7 +52,7 @@ This is the libraries and include files you can use to develop SDL networked app
 chrpath -d %buildroot%_libdir/lib%name-2.0.so.*
 
 %files -n lib%name
-%doc CHANGES.txt COPYING.txt README.txt
+%doc CHANGES.txt README.txt
 %_libdir/lib%name-2.0.so.*
 
 %files -n lib%name-devel
@@ -59,8 +60,12 @@ chrpath -d %buildroot%_libdir/lib%name-2.0.so.*
 %_includedir/SDL2/SDL_net.h
 %_pkgconfigdir/%name.pc
 %_libdir/lib%name.so
+%_libdir/cmake/%name
 
 %changelog
+* Wed Feb 14 2024 Nazarov Denis <nenderus@altlinux.org> 2.2.0-alt1
+- Version 2.2.0
+
 * Fri Jan 22 2016 Nazarov Denis <nenderus@altlinux.org> 2.0.1-alt1
 - Version 2.0.1
 
