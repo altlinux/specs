@@ -2,7 +2,7 @@
 %global default_backend64 %{default_backend}64
 
 %global major_version 3
-%global minor_version 3
+%global minor_version 4
 %global patch_version 1
 
 Name: flexiblas
@@ -10,11 +10,10 @@ Version: %major_version.%minor_version.%patch_version
 Release: alt1
 Summary: A BLAS/LAPACK wrapper library with runtime exchangeable backends
 Group: Sciences/Mathematics
-# GPLv3 with an exception for the BLAS/LAPACK interface
-# https://www.gnu.org/licenses/gpl-faq.en.html#LinkingOverControlledInterface
-# libcscutils/ is LGPLv2+
-# contributed/ and test/ are BSD
-License: GPLv3 with exceptions and LGPLv2+ and BSD
+# LGPL-3.0-or-later
+# libcscutils/ is LGPL-2.0-or-later
+# contributed/ and test/ are BSD-3-Clause-Open-MPI
+License:        LGPL-3.0-or-later AND LGPL-2.0-or-later AND BSD-3-Clause-Open-MPI
 Url: https://www.mpi-magdeburg.mpg.de/projects/%name
 Source0: %name-%version.tar
 VCS: https://github.com/mpimd-csc/flexiblas
@@ -226,6 +225,9 @@ make -C build64 test
 %endif
 
 %changelog
+* Wed Feb 14 2024 Anton Farygin <rider@altlinux.ru> 3.4.1-alt1
+- 3.4.1
+
 * Fri Aug 11 2023 Anton Farygin <rider@altlinux.ru> 3.3.1-alt1
 - 3.3.1
 
