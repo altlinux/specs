@@ -1,5 +1,5 @@
 Name: mbuffer
-Version: 20230301
+Version: 20240107
 Release: alt1
 Summary: Measuring Buffer is an enhanced version of buffer
 
@@ -34,6 +34,9 @@ make install DESTDIR=%buildroot INSTALL="install -p"
 %_bindir/%name
 
 %changelog
+* Wed Feb 14 2024 L.A. Kostis <lakostis@altlinux.ru> 20240107-alt1
+- Updated to 20240107.
+
 * Mon Mar 06 2023 L.A. Kostis <lakostis@altlinux.ru> 20230301-alt1
 - Updated to 20230301.
 - Fix md5 detection when using openssl.
