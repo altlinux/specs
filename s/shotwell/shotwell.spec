@@ -11,7 +11,7 @@
 %define gst_api_ver 1.0
 
 Name: shotwell
-Version: %ver_major.4
+Version: %ver_major.6
 Release: alt1
 
 Summary: A digital photo organizer designed for the GNOME desktop environment
@@ -85,6 +85,7 @@ mode, and export them to share with others.
 %files -f %name.lang
 %_bindir/%name
 %dir %_libexecdir/%name
+%_libexecdir/%name/%name-authenticator
 %_libexecdir/%name/%name-video-thumbnailer
 %_libexecdir/%name/%name-settings-migrator
 %_libexecdir/%name/%name-video-metadata-handler
@@ -103,6 +104,7 @@ mode, and export them to share with others.
 %_libdir/%name/
 %_desktopdir/%{xdg_name}*.desktop
 %_iconsdir/hicolor/*x*/apps/%xdg_name.png
+%_iconsdir/hicolor/scalable/apps/%xdg_name.svg
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %_datadir/glib-2.0/schemas/*
 %_datadir/metainfo/%xdg_name.appdata.xml
@@ -111,6 +113,9 @@ mode, and export them to share with others.
 
 
 %changelog
+* Wed Feb 14 2024 Yuri N. Sedunov <aris@altlinux.org> 0.32.6-alt1
+- 0.32.6
+
 * Wed Dec 06 2023 Yuri N. Sedunov <aris@altlinux.org> 0.32.4-alt1
 - 0.32.4
 
