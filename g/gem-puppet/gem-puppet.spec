@@ -6,7 +6,7 @@
 
 Name:          gem-puppet
 Version:       8.4.0
-Release:       alt1
+Release:       alt1.1
 Summary:       A network tool for managing many disparate systems
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -61,7 +61,7 @@ BuildRequires: gem(multi_json) >= 1.13
 BuildRequires: gem(concurrent-ruby) >= 1.0
 BuildRequires: gem(deep_merge) >= 1.0
 BuildRequires: gem(scanf) >= 1.0
-BuildRequires: gem(CFPropertyList) >= 2.2
+BuildRequires: gem(CFPropertyList) >= 3.0.6
 BuildConflicts: gem(facter) >= 5
 BuildConflicts: gem(semantic_puppet) >= 2.0
 BuildConflicts: gem(puppet-resource_api) >= 2.0
@@ -110,7 +110,7 @@ Requires:      gem(multi_json) >= 1.13
 Requires:      gem(concurrent-ruby) >= 1.0
 Requires:      gem(deep_merge) >= 1.0
 Requires:      gem(scanf) >= 1.0
-Requires:      gem(CFPropertyList) >= 2.2
+Requires:      gem(CFPropertyList) >= 3.0.6
 Requires:      puppet = %EVR
 Conflicts:     gem(facter) >= 5
 Conflicts:     gem(semantic_puppet) >= 2.0
@@ -134,7 +134,7 @@ with obviously discrete elements like packages, services, and files.
 
 %package       -n puppet
 Version:       8.4.0
-Release:       alt1
+Release:       alt1.1
 Summary:       A network tool for managing many disparate systems executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета puppet
 Group:         System/Servers
@@ -159,7 +159,7 @@ with obviously discrete elements like packages, services, and files.
 %if_enabled    doc
 %package       -n gem-puppet-doc
 Version:       8.4.0
-Release:       alt1
+Release:       alt1.1
 Summary:       A network tool for managing many disparate systems documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puppet
 Group:         Development/Documentation
@@ -182,7 +182,7 @@ with obviously discrete elements like packages, services, and files.
 %if_enabled    devel
 %package       -n gem-puppet-devel
 Version:       8.4.0
-Release:       alt1
+Release:       alt1.1
 Summary:       A network tool for managing many disparate systems development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puppet
 Group:         Development/Ruby
@@ -386,6 +386,9 @@ sed -e "s,sample.server.name,$(hostname)," \
 
 
 %changelog
+* Wed Feb 14 2024 Pavel Skrylev <majioa@altlinux.org> 8.4.0-alt1.1
+- ! maked dep to CFPropertyList gem more strict
+
 * Sat Feb 10 2024 Pavel Skrylev <majioa@altlinux.org> 8.4.0-alt1
 - ^ 8.3.1 -> 8.4.0
 
