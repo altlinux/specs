@@ -1,6 +1,6 @@
 Name: libtommath
-Version: 1.1.0
-Release: alt2
+Version: 1.2.1
+Release: alt1
 
 Summary: A portable number theoretic multiple-precision integer library
 License: WTFPL
@@ -49,7 +49,8 @@ sed -i \
 
 %build
 %make_build V=1 LIBPATH=%_libdir CFLAGS="%optflags -I./" -f makefile.shared
-%make_build V=1 -f makefile poster manual docs
+echo "@@@@"
+make V=1 -f makefile manual docs
 
 %install
 # There is no configure script that ships with libtommath but it does
@@ -61,6 +62,10 @@ make install INCPATH=%_includedir/tommath DESTDIR=%buildroot LIBPATH=%_libdir -f
 find %buildroot -name '*.la' -exec rm -f {} ';'
 find %buildroot -name '*.a' -exec rm -f {} ';'
 find %buildroot -name '*.h' -exec chmod 644 {} ';'
+
+%check
+make -f makefile.shared test
+./test
 
 %files
 %doc LICENSE
@@ -74,9 +79,13 @@ find %buildroot -name '*.h' -exec chmod 644 {} ';'
 
 %files doc
 %doc LICENSE
-%doc doc/bn.pdf doc/poster.pdf doc/tommath.pdf
+%doc doc/bn.pdf
+#  doc/poster.pdf doc/tommath.pdf
 
 %changelog
+* Wed Feb 14 2024 Fr. Br. George <george@altlinux.org> 1.2.1-alt1
+- Autobuild version bump to 1.2.1
+
 * Tue Sep 21 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt2
 - Drop devel-static subpackage.
 
