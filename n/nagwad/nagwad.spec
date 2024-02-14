@@ -1,7 +1,7 @@
 %define icinga_user icinga
 
 Name: 	  nagwad
-Version:  0.10.3
+Version:  0.10.4
 Release:  alt1
 
 Summary:  Nagios watch daemon
@@ -201,6 +201,11 @@ usermod -a -G %name %icinga_user
 %_bindir/nsca-shell
 
 %changelog
+* Wed Feb 14 2024 Paul Wolneykien <manowar@altlinux.org> 0.10.4-alt1
+- Fixed integalert.regexp: React to messages of different integalert
+  profiles.
+- signal.md: Fixed reference to `icinga2-doc`.
+
 * Wed Feb 07 2024 Paul Wolneykien <manowar@altlinux.org> 0.10.3-alt1
 - Updated signal.md: host template names and new packages for
   installation.

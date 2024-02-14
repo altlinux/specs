@@ -11,7 +11,7 @@
 
 
 Name:     %pname-source
-Version:  0.4.5
+Version:  0.4.6
 Release:  alt1
 
 Summary:  Osec-based integrity checking script and settings
@@ -150,6 +150,10 @@ fi
 %endif
 
 %changelog
+* Wed Feb 14 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.6-alt1
+- Make integalert_vm.service and timer depend on pvedaemon.service
+  and libvirtd.service.
+
 * Mon Feb 12 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.5-alt1
 - Fix: Make sysinit.target weakly depend on integalert service
   by default.
