@@ -2,8 +2,8 @@
 %def_with check
 
 Name: kitty
-Version: 0.32.1
-Release: alt2
+Version: 0.32.2
+Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
 License: GPL-3.0
@@ -217,6 +217,9 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %_bindir/kitten
 
 %changelog
+* Wed Feb 14 2024 Egor Ignatov <egori@altlinux.org> 0.32.2-alt1
+- new version 0.32.2
+
 * Sat Jan 27 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.32.1-alt2
 - NMU: fixed FTBFS on LoongArch
 
