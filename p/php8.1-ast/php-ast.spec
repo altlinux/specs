@@ -2,7 +2,7 @@
 
 Name: php%_php_suffix-%php_extension
 Version: 1.1.1
-Release: alt1.%php_version
+Release: alt2.%php_version
 
 Summary: Extension exposing PHP 7 abstract syntax tree
 License: BSD-3-Clause 
@@ -37,13 +37,16 @@ install -D -m 644 %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 NO_INTERACTION=1 make test
 
 %files
-%php_extdir/*
-
 %doc README.md
+%php_extdir/*
+%php_extconf/%php_extension
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %version-%release
+
+* Wed Feb 14 2024 Anton Farygin <rider@altlinux.ru> 1.1.1-alt2
+- packaged ini file (closed: #48422)
 
 * Thu Nov 16 2023 Alexey Shemyakin <alexeys@altlinux.org> 1.1.1-alt1
 - Update to version 1.1.1.
