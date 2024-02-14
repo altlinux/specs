@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define beta %nil
 
 %def_enable video
@@ -13,7 +13,7 @@
 %endif
 
 Name: exiv2
-Version: 0.28.1
+Version: 0.28.2
 Release: alt1%beta
 
 Summary: Command line tool to access EXIF data in image files
@@ -101,6 +101,9 @@ exiv2 library.
 
 
 %changelog
+* Wed Feb 14 2024 Yuri N. Sedunov <aris@altlinux.org> 0.28.2-alt1
+- 0.28.2 (fixed CVE-2024-24826, CVE-2024-25112)
+
 * Wed Nov 08 2023 Yuri N. Sedunov <aris@altlinux.org> 0.28.1-alt1
 - v0.28.1-1-gc351c7cce
 
