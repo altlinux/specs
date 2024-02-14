@@ -11,7 +11,7 @@
 %endif
 
 Name: portfolio
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: File manager for Linux mobile devices
@@ -73,6 +73,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Wed Feb 14 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
 * Sat Sep 02 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - first build for Sisyphus
 
