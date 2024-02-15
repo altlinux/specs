@@ -22,7 +22,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 10.1.990
+Version: 10.2
 Release: alt1
 Url: https://basealt.ru
 
@@ -360,6 +360,11 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed Feb 14 2024 Mikhail Efremov <sem@altlinux.org> 10.2-alt1
+- slideshow: Fix Telegram link.
+- indexhtml: Fix Telegram link.
+- indexhtml: Add mail lists link.
+
 * Tue Dec 26 2023 Mikhail Efremov <sem@altlinux.org> 10.1.990-alt1
 - all: Bump distro version to 10.1.990.
 
