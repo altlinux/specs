@@ -4,7 +4,7 @@
 %def_disable static
 
 Name: recode
-Version: 3.7.12
+Version: 3.7.14
 Release: alt1
 
 Summary: The `recode' library converts files between character sets and usages
@@ -67,6 +67,11 @@ Patch1: recode-3.6-debian-boolsize.patch
 Patch2: recode-3.6-alt-unicode-in-docs.patch
 Patch3: recode-3.6-alt-e2k.patch
 Patch5: recode-3.7.1-Rename-coliding-hash-functions.patch
+
+Patch6:      recode-3.7.13-Rename-coliding-hash-functions.patch
+# https://github.com/rrthomas/recode/issues/48
+Patch7:      0001-src-task.c-only-close-input-stream-when-we-opened-it.patch
+
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -132,12 +137,14 @@ files to allow you to develop applications using the `recode' libraries.
 %ifarch %e2k
 #patch3 -p1
 %endif
-#patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 %build
 #rm acinclude.m4 m4/libtool.m4 m4/flex.m4
 #sed -i 's/ad_AC_PROG_FLEX/AC_PROG_LEX/' configure.in
 %autoreconf -fi
+
 sed -i 's/--no-verify//' configure
 #configure %{subst_enable static}
 %configure \
@@ -178,6 +185,9 @@ chrpath -d %buildroot%_bindir/%name
 # - configure.in:18: error: automatic de-ANSI-fication support has been removed
 
 %changelog
+* Thu Feb 15 2024 Ilya Mashkin <oddity@altlinux.ru> 3.7.14-alt1
+- 3.7.14
+
 * Fri Mar 25 2022 Ilya Mashkin <oddity@altlinux.ru> 3.7.12-alt1
 - 3.7.12
 
