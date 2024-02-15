@@ -1,5 +1,8 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: qastools
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: Collection of desktop applications for ALSA
@@ -109,6 +112,9 @@ done
 %_datadir/metainfo/qasmixer.appdata.xml
 
 %changelog
+* Thu Feb 15 2024 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
+- nev version 1.4.0
+
 * Sat Feb 10 2024 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
 - nev version 1.3.0
 - fix License
