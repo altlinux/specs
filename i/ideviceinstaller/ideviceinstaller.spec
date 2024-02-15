@@ -1,6 +1,6 @@
 Name: ideviceinstaller
 Version: 1.1.1
-Release: alt1
+Release: alt2
 
 Summary: A tool to manage installed apps on iOS device
 Group: System/Kernel and hardware
@@ -10,6 +10,7 @@ Url: http://www.libimobiledevice.org/
 Source: %name.tar
 
 Patch0: alt-fix-build.patch
+Patch1: fix-build-zip_get_num.patch
 
 BuildRequires: libplist-devel >= 2.2.0
 BuildRequires: libimobiledevice-devel >= 1.3.0
@@ -23,6 +24,7 @@ and enumerate installed or archived apps.
 %prep
 %setup -n %name
 #%patch0 -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -38,6 +40,10 @@ and enumerate installed or archived apps.
 %doc AUTHORS README.md NEWS
 
 %changelog
+* Thu Feb 15 2024 Pavel Nakonechnyi <zorg@altlinux.org> 1.1.1-alt2
+- fixes build with libzip-1.10.1
+- fixes #49427
+
 * Thu Jun 18 2020 Pavel Nakonechnyi <zorg@altlinux.org> 1.1.1-alt1
 - updated to upstream release 1.1.1
 
