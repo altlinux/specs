@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: image-analyzer
-Version: 3.2.5
+Version: 3.2.6
 Release: alt1
 
 Summary: Simple Gtk+ application that displays tree structure of disc image
@@ -61,6 +61,9 @@ sed 's|/usr/bin/env python3|/usr/bin/python3|' -i src/%name
 %_pixmapsdir/*.svg
 
 %changelog
+* Thu Feb 15 2024 Nazarov Denis <nenderus@altlinux.org> 3.2.6-alt1
+- New version 3.2.6.
+
 * Thu Nov 11 2021 Nazarov Denis <nenderus@altlinux.org> 3.2.5-alt1
 - Version 3.2.5
 
