@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.25.2
-Release: alt2
+Version: 2.25.3
+Release: alt1
 Summary: A set of server components for JupyterLab and JupyterLab like applications
 License: BSD-3-Clause
 Group: Development/Python3
@@ -31,6 +31,7 @@ BuildRequires: /dev/pts
 BuildRequires: python3-module-ruamel-yaml
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pip
 %endif
 
 %description
@@ -51,7 +52,13 @@ sed -i 's/--doctest-modules//' pyproject.toml
 %pyproject_install
 
 %check
-%pyproject_run_pytest -v -W ignore::DeprecationWarning --ignore=tests/test_translation_api.py
+for p in \
+  tests/translations/jupyterlab-some-package \
+  tests/translations/jupyterlab-language-pack-es_CO
+do
+  %__python3 -m pip install --use-pep517 --no-build-isolation --disable-pip-version-check $p
+done
+%pyproject_run_pytest -v -W ignore::DeprecationWarning
 
 %files
 %doc README.*
@@ -59,6 +66,9 @@ sed -i 's/--doctest-modules//' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Thu Feb 15 2024 Anton Vyatkin <toni@altlinux.org> 2.25.3-alt1
+- New version 2.25.3.
+
 * Mon Jan 22 2024 Anton Vyatkin <toni@altlinux.org> 2.25.2-alt2
 - Fixed FTBFS.
 
