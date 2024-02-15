@@ -8,7 +8,7 @@
 
 Name: SPICE
 Version: 0.15.2
-Release: alt2
+Release: alt3
 Summary: Implements the SPICE protocol
 Group: Graphical desktop/Other
 License: LGPLv2+
@@ -73,6 +73,12 @@ tar -xf %SOURCE3 -C subprojects/spice-common/common/recorder
 # version in .tarball-version file
 echo "%version" > .tarball-version
 #%%patch1 -p1
+%ifarch %e2k
+# workaround for regression in LCC 1.26 when default gnu++14 is used
+sed -i "/global_cxxflags +=/a '-std=gnu++17'," meson.build
+# workaround for bug that causes spice_server_kbd_leds() to be hidden
+sed -i 's/int spice_server_kbd_leds/__attribute__((visibility("default"))) &/' server/inputs-channel.h
+%endif
 
 %build
 %meson \
@@ -96,6 +102,9 @@ rm -f %buildroot%_libdir/libspice-server.la
 %_pkgconfigdir/spice-server.pc
 
 %changelog
+* Thu Feb 15 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.15.2-alt3
+- Fixed build for Elbrus.
+
 * Fri Feb 09 2024 Alexey Shabalin <shaba@altlinux.org> 0.15.2-alt2
 - Enable tests.
 
