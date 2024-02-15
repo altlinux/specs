@@ -8,7 +8,7 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt20
+Release: alt21
 
 Summary: %child modules set for %name
 License: GPL-3.0
@@ -208,6 +208,13 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Thu Feb 15 2024 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt21
+- use $BC_ROOT instead of $rootmnt, it fixes race conditions
+- core+interactive: daemon stop has been reworked (ALT #49126)
+- core+interactive: deallocate TTY's at finish (ALT #49125)
+- core: add cmdline parameter to limit steps failure
+- pipeline steps has been synced whith upstream v2.42.0
+
 * Fri Nov 17 2023 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt20
 - introduced a common default for setting timeouts
 - altboot: fixed localdev module (ALT #48448)
