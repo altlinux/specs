@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: picom
-Version: 11.1
+Version: 11.2
 Release: alt1
 Summary: A lightweight compositor for X11
 License: MPL-2.0 or MIT
@@ -20,6 +20,8 @@ BuildRequires: libX11-devel
 BuildRequires: libXext-devel
 BuildRequires: libconfig-devel
 BuildRequires: libGL-devel
+BuildRequires: libEGL-devel
+BuildRequires: libepoxy-devel
 BuildRequires: libdbus-devel
 BuildRequires: libev-devel
 BuildRequires: libuthash-devel
@@ -68,6 +70,9 @@ sed -i "/#warning Use of -ffast-math/s/#warning/#error/" src/utils.h
 %_man1dir/*
 
 %changelog
+* Thu Feb 15 2024 Anton Midyukov <antohami@altlinux.org> 11.2-alt1
+- New version 11.2.
+
 * Mon Jan 29 2024 Anton Midyukov <antohami@altlinux.org> 11.1-alt1
 - New version 11.1.
 
