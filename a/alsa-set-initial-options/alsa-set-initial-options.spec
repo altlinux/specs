@@ -1,21 +1,17 @@
 Name: alsa-set-initial-options
-Version: 1.3
+Version: 1.4
 Release: alt1
 
-Summary: Initial setup of alsa options
+Summary: Initial setup of ALSA options
 License: GPL
 Group: Sound
-Url: http://altlinux.ru/
 
-Provides: alsa-set-initial-mixer = %version-%release
-Obsoletes: alsa-set-initial-mixer < %version-%release
-
+Url: http://altlinux.org
+Source: alsa-set-initial-options
 BuildArch: noarch
 
-Source0: alsa-set-initial-options
-
 %description
-Initial setup of alsa options and volumes at first system start
+Initial setup of ALSA options and mixer volumes at first system startup.
 
 
 %install
@@ -27,6 +23,10 @@ install -m 0755 -D %SOURCE0 %buildroot/%_sysconfdir/firsttime.d/%name
 
 
 %changelog
+* Thu Feb 15 2024 Michael Shigorin <mike@altlinux.org> 1.4-alt1
+- refactor script for reliability and performance
+- minor spec cleanup (see also ALT#46206)
+
 * Thu Dec 29 2011 Sergey V Turchin <zerg@altlinux.org> 1.3-alt1
 - execute `alsactl init` first
 
