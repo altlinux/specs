@@ -1,5 +1,5 @@
 Name: fastfetch
-Version: 2.0.2
+Version: 2.8.3
 Release: alt1
 Summary: Like neofetch, but much faster because written in c
 
@@ -11,7 +11,7 @@ Packager: Artyom Bystrov <arbars@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 
 BuildRequires: cmake
-BuildRequires: gcc ctest
+BuildRequires: gcc-c++ ctest
 BuildRequires: libpci-devel
 BuildRequires: wayland-devel
 BuildRequires: libxcb-devel
@@ -72,11 +72,17 @@ popd
 %_bindir/%name
 %_bindir/flashfetch
 %_datadir/%name/
+%_datadir/licenses/fastfetch/LICENSE
+%_man1dir/%name.1.xz
 
 %files bash-completion
 %_datadir/bash-completion/completions/%name
-
+%_datadir/fish/vendor_completions.d/%name.fish
 %changelog
+
+* Thu Feb 15 2024 Artyom Bystrov <arbars@altlinux.org> 2.8.3-alt1
+- Update to new version
+
 * Tue Aug 22 2023 Artyom Bystrov <arbars@altlinux.org> 2.0.2-alt1
 - Update to new version
 
