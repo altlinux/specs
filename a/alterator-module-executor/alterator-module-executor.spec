@@ -1,5 +1,5 @@
 Name: alterator-module-executor
-Version: 0.1.10
+Version: 0.1.11
 Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
@@ -34,6 +34,10 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Thu Feb 15 2024 Ivan Savin <svn17@altlinux.org> 0.1.11-alt1
+- Disable UTF-8 channel encoding if return from stdout is enabled as a byte
+  array.
+
 * Tue Jan 23 2024 Ivan Savin <svn17@altlinux.org> 0.1.10-alt1
 - Clean line break symbol in end of line for stdout and stderr strings (sin@).
 - Add project URL to spec (sin@).
