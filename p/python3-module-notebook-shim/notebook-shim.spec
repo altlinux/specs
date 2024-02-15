@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 Summary: A shim layer for notebook traits and config
 License: BSD-3-Clause
@@ -68,6 +68,9 @@ mv %buildroot/usr/etc/jupyter/jupyter_server_config.d/notebook_shim.json \
 %python3_sitelibdir/%mod_name/tests
 
 %changelog
+* Thu Feb 15 2024 Anton Vyatkin <toni@altlinux.org> 0.2.4-alt1
+- New version 0.2.4.
+
 * Mon Jun 19 2023 Anton Vyatkin <toni@altlinux.org> 0.2.3-alt1
 - Initial build for Sisyphus
 
