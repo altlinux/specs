@@ -1,5 +1,8 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: converseen
-Version: 0.12.0.2
+Version: 0.12.1.0
 Release: alt1
 Summary: Converseen is a free cross-platform batch image processor
 Summary(ru_RU.UTF-8): Converseen — свободная программа пакетного конвертирования изображений
@@ -48,7 +51,7 @@ Converseen — свободная кроссплатформенная прог�
 desktop-file-validate %buildroot/%_desktopdir/net.fasterland.converseen.desktop
 
 %files
-%doc COPYING README.md CHANGELOG
+%doc COPYING.txt README.md CHANGELOG
 %_bindir/%name
 %_datadir/%name
 %_datadir/kservices5/ServiceMenus/converseen_import.desktop
@@ -57,6 +60,9 @@ desktop-file-validate %buildroot/%_desktopdir/net.fasterland.converseen.desktop
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Thu Feb 15 2024 Anton Midyukov <antohami@altlinux.org> 0.12.1.0-alt1
+- New version 0.12.1.0
+
 * Mon Jan 29 2024 Anton Midyukov <antohami@altlinux.org> 0.12.0.2-alt1
 - New version 0.12.0.2
 
