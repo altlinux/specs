@@ -1,6 +1,6 @@
 Name: dosbox-staging
-Version: 0.80.1
-Release: alt1.1
+Version: 0.81.0
+Release: alt1
 License: GPLv2
 Summary: An attempt to revitalize DOSBox, an emulator that recreates a MS-DOS compatible environment
 Group: Emulators
@@ -70,6 +70,9 @@ mv %buildroot/%_man1dir/dosbox.1 %buildroot/%_man1dir/dosbox-staging.1
 %exclude %_datadir/licenses
 
 %changelog
+* Thu Feb 15 2024 Artyom Bystrov <arbars@altlinux.org> 0.81.0-alt1
+- Update to new version
+
 * Mon May 08 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.80.1-alt1.1
 - Fixed build for Elbrus
 
