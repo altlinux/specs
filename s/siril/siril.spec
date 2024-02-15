@@ -1,6 +1,6 @@
 Name:           siril
 Version:        1.2.1
-Release:        alt1
+Release:        alt2
 Summary:        Astronomical image processing software
 Group: 		Graphics
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -72,6 +72,18 @@ s/(#.*schedule\([^()]*, *)([^()]*)\)/_xxxs=\\2,\\1_xxxs)/;\
 s/#/_xxxc=1;_xxxc;_xxxc=0)\n&/}" \
 	src/{registration,filters,stacking,rt,algos,gui,compositing,pixelMath,core,io}/*.c \
 	src/filters/{deconvolution/*.{c,hpp},nlbayes/*.cpp}
+sed -i '/omp critical (fftw)/d;/<fftw3.h>/a \
+__attribute__((noinline)) static void*fftwf_malloc_(std::size_t n){\
+#pragma omp critical(fftw)\
+void*p=fftwf_malloc(n);return p;}\
+__attribute__((noinline)) static void fftwf_free_(void*p){\
+#pragma omp critical(fftw)\
+fftwf_free(p);}\
+#define fftwf_malloc fftwf_malloc_\
+#define fftwf_free fftwf_free_' \
+	src/filters/deconvolution/fftw_allocator.hpp
+%add_optflags -Wno-unused-but-set-variable -Wno-maybe-uninitialized -Wno-unused-variable
+
 %endif
 
 %build
@@ -110,6 +122,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/org.free_
 
 
 %changelog
+* Thu Feb 15 2024 Ilya Mashkin <oddity@altlinux.ru> 1.2.1-alt2
+- fix build on Elbrus (thanks to Ilya Kurdyukov)
+
 * Tue Jan 30 2024 Ilya Mashkin <oddity@altlinux.ru> 1.2.1-alt1
 - 1.2.1
 
