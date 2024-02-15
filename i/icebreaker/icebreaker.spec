@@ -1,5 +1,5 @@
 Name: icebreaker
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 Epoch: 1
 
@@ -58,6 +58,9 @@ install -pDm644 %SOURCE4 %buildroot/%_liconsdir/%name.xpm
 %_liconsdir/icebreaker.xpm
 
 %changelog
+* Thu Feb 15 2024 Ilya Mashkin <oddity@altlinux.ru> 1:2.2.2-alt1
+- 2.2.2
+
 * Mon Oct 11 2021 Ilya Mashkin <oddity@altlinux.ru> 1:2.2.1-alt1
 - 2.2.1
 
