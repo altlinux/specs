@@ -1,20 +1,22 @@
 %define _unpackaged_files_terminate_build 1
-
-%global import_path github.com/exercism/cli
+%define import_path github.com/exercism/cli
 
 Name: exercism-cli
-Version: 3.2.0
+Version: 3.3.0
 Release: alt1
 
 Summary: A Go based command line tool for exercism.org
 License: MIT
 Group: Education
-Url: https://github.com/exercism/cli
-
-Source0: %name-%version.tar
-Source1: vendor.tar
+Url: https://exercism.org/
+Vcs: https://github.com/exercism/cli
 
 ExclusiveArch: %go_arches
+
+Source0: %name-%version.tar
+Source1: %name-%version-vendor.tar
+Patch0: %name-%version-alt.patch
+
 BuildRequires(pre): rpm-build-golang
 
 %description
@@ -24,12 +26,12 @@ to the site.
 
 %prep
 %setup -a1
+%autopatch -p1
 
 %build
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-
 %golang_prepare
 
 cd .build/src/%import_path
@@ -42,9 +44,12 @@ export IGNORE_SOURCES=1
 
 %files
 %doc LICENSE CHANGELOG.md README.md
-%_bindir/*
+%_bindir/exercism
 
 %changelog
+* Thu Feb 15 2024 Anton Zhukharev <ancieg@altlinux.org> 3.3.0-alt1
+- Updated to 3.3.0.
+
 * Wed Aug 02 2023 Anton Zhukharev <ancieg@altlinux.org> 3.2.0-alt1
 - Updated to 3.2.0.
 
