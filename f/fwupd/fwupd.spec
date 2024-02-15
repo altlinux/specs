@@ -25,7 +25,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.9.12
+Version: 1.9.13
 
 Release: alt1
 License: LGPL-2.1+
@@ -76,6 +76,7 @@ BuildRequires: meson
 BuildRequires: python3-module-Pillow
 BuildRequires: python3-module-pycairo
 BuildRequires: python3-module-pygobject3
+BuildRequires: python3-module-jinja2
 BuildRequires: vala-tools
 BuildRequires: /proc
 
@@ -227,9 +228,6 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4,30M:/usr/src \
 %dir %_sysconfdir/fwupd/remotes.d
 %_sysconfdir/fwupd/bios-settings.d
 %config(noreplace)%_sysconfdir/fwupd/remotes.d/*.conf
-%if_enabled tests
-%exclude %_sysconfdir/fwupd/remotes.d/fwupd-tests.conf
-%endif
 %_sysconfdir/pki/fwupd
 %_sysconfdir/pki/fwupd-metadata
 %dir %_datadir/fwupd
@@ -310,10 +308,13 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4,30M:/usr/src \
 %_datadir/fwupd/device-tests/*.json
 %_libexecdir/installed-tests/fwupd
 %dir %_sysconfdir/fwupd/remotes.d
-%config(noreplace)%_sysconfdir/fwupd/remotes.d/fwupd-tests.conf
+%_datadir/fwupd/remotes.d/fwupd-tests.conf
 %endif
 
 %changelog
+* Fri Feb 09 2024 Egor Ignatov <egori@altlinux.org> 1.9.13-alt1
+- 1.9.13
+
 * Wed Jan 24 2024 Egor Ignatov <egori@altlinux.org> 1.9.12-alt1
 - 1.9.12
 
