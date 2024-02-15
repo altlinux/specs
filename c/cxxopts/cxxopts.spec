@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: %_name
-Version: 3.1.1
+Version: 3.2.0
 Release: alt1
 
 Summary: Lightweight C++ option parser library
@@ -47,6 +47,9 @@ Development files for %name.
 %_pkgconfigdir/%_name.pc
 
 %changelog
+* Thu Feb 15 2024 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
 * Sun Nov 26 2023 Yuri N. Sedunov <aris@altlinux.org> 3.1.1-alt1
 - first build for Sisyphus
 
