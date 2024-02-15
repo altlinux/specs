@@ -1,5 +1,5 @@
 Name: kernel-source-vhba
-Version: 20211218
+Version: 20240202
 Release: alt1
 
 Summary: Source for VHBA module
@@ -47,6 +47,9 @@ install -Dp -m0644 %SOURCE1 %buildroot%_udevrulesdir/60-vhba.rules
 %config %_udevrulesdir/60-vhba.rules
 
 %changelog
+* Thu Feb 15 2024 Nazarov Denis <nenderus@altlinux.org> 20240202-alt1
+- New version 20240202.
+
 * Thu Jan 13 2022 Nazarov Denis <nenderus@altlinux.org> 20211218-alt1
 - Version 20211218
 
