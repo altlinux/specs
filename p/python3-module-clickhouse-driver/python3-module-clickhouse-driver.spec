@@ -1,25 +1,22 @@
 %define _unpackaged_files_terminate_build 1
-%define oname clickhouse-driver
+%define pypi_name clickhouse-driver
+%define mod_name clickhouse_driver
 
-Name:       python3-module-%oname
-Version:    0.2.5
-Release:    alt2
+Name:       python3-module-%pypi_name
+Version:    0.2.6
+Release:    alt1
 License:    MIT
 Group:      Development/Python3
 Summary:    ClickHouse Python Driver with native interface support.
 Url:        https://github.com/mymarilyn/clickhouse-driver
 Source:     %name-%version.tar
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-tzlocal
-BuildRequires: python3-module-pytz
-BuildRequires: python3-module-Cython
-
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+# for backward compatibility, actually it's optional dependency
 Requires: python3-module-clickhouse-cityhash
-Requires: python3-module-numpy
-Requires: python3-module-tzlocal
+BuildRequires(pre): rpm-build-pyproject
+BuildRequires: python3-module-cython
+%pyproject_builddeps_build
 
 %add_python3_req_skip pandas pandas.api.types
 
@@ -28,47 +25,28 @@ Requires: python3-module-tzlocal
 %description
 ClickHouse Python Driver with native (TCP) interface support.
 
-%package    tests
-Group:      Development/Python3
-Summary:    ClickHouse Python Driver with native interface support.
-Requires:   python3-module-%oname = %EVR
-
-%description tests
-ClickHouse Python Driver with native (TCP) interface support.
-
-Package contains tests for %name.
-
 %prep
 %setup
-
 # Force recythonize it please!
 find . -name "*.c" | xargs rm -fv
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
 
-# install module for sphinx to temporary directory 
-%__python3 setup.py install --skip-build --root=_build --force
-export PYTHONPATH=$PWD/_build/%python3_sitelibdir
-%make -C docs/ man SPHINXBUILD=sphinx-build-3
-
 %install
 %pyproject_install
 
-cp -fR tests/ %buildroot%python3_sitelibdir/clickhouse_driver/
-mkdir -p %buildroot/%_man1dir
-install -pm0644 docs/*/man/*.1 %buildroot/%_man1dir/
-
 %files
 %doc LICENSE README.* CONTRIBUTING.rst
-%python3_sitelibdir/*
-%_man1dir/*.1.*
-%exclude %python3_sitelibdir/clickhouse_driver/tests/
-
-%files tests
-%python3_sitelibdir/clickhouse_driver/tests/
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 16 2024 Stanislav Levin <slev@altlinux.org> 0.2.6-alt1
+- 0.2.5 -> 0.2.6.
+
 * Mon Dec 18 2023 Grigory Ustinov <grenka@altlinux.org> 0.2.5-alt2
 - Added recythonizing of sources
 
