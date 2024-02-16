@@ -4,8 +4,8 @@
 
 Summary: Terminal multiplexer
 Name: tmux
-Version: 3.3a
-Release: alt2
+Version: 3.4
+Release: alt1
 License: ISC and BSD-3-Clause and BSD-2-Clause
 Group: Terminals
 Url: https://tmux.github.io/
@@ -13,7 +13,6 @@ Vcs: https://github.com/tmux/tmux
 
 Source0: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
 Source1: bash_completion_tmux.sh
-Patch0: CVE-2022-47016.patch
 BuildRequires: libevent-devel >= 2.0
 BuildRequires: libncurses-devel
 BuildRequires: libutempter-devel
@@ -45,6 +44,9 @@ install -Dpm 644 %SOURCE1 %buildroot%_datadir/bash-completion/completions/tmux
 %_datadir/bash-completion/completions/tmux
 
 %changelog
+* Wed Feb 14 2024 Vitaly Chikunov <vt@altlinux.org> 3.4-alt1
+- Update to 3.4 (2024-02-14).
+
 * Tue Feb 07 2023 Vitaly Chikunov <vt@altlinux.org> 3.3a-alt2
 - (Fixes: CVE-2022-47016).
 
