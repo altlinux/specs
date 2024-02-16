@@ -2,9 +2,10 @@
 %define pypi_name yamllint
 
 %def_with check
+%def_with docs
 
 Name: python3-module-%pypi_name
-Version: 1.33.0
+Version: 1.35.1
 Release: alt1
 Summary: A linter for YAML files
 License: GPLv3
@@ -25,6 +26,10 @@ BuildRequires: /dev/pts
 %pyproject_builddeps_metadata
 %endif
 
+%if_with docs
+BuildRequires: python3-module-sphinx_rtd_theme
+%endif
+
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
 %description
@@ -42,29 +47,38 @@ indentation, etc.
 %build
 %pyproject_build
 
+%if_with docs
 # man page
 pushd docs
 make man
 popd
+%endif
 
 %install
 %pyproject_install
 
+%if_with docs
 # man page
 install -D -m0644 docs/_build/man/yamllint.1 %buildroot/%_man1dir/yamllint.1
+%endif
 
 %check
 %pyproject_run_unittest discover
 
 %files
 %doc README.rst CHANGELOG.rst
+%if_with docs
 %_man1dir/yamllint.1.*
+%endif
 
 %_bindir/yamllint
 %python3_sitelibdir/yamllint/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 16 2024 Stanislav Levin <slev@altlinux.org> 1.35.1-alt1
+- 1.33.0 -> 1.35.1.
+
 * Tue Nov 14 2023 Stanislav Levin <slev@altlinux.org> 1.33.0-alt1
 - 1.32.0 -> 1.33.0.
 
