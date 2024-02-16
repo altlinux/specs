@@ -3,7 +3,7 @@
 
 Name: python3-module-poppler-qt5
 Version: 21.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: A Python binding to Poppler-Qt5
 
@@ -31,6 +31,10 @@ being actively maintained.
 %setup
 
 %build
+%ifarch %e2k
+# new poppler uses std::optional, so at least C++17 is required
+%add_optflags -std=c++17
+%endif
 export PATH=$PATH:%_qt5_bindir
 sip-build --verbose --no-make \
   --qmake-setting 'QMAKE_CFLAGS_RELEASE="%optflags"' \
@@ -54,6 +58,9 @@ chmod +x %buildroot/%python3_sitelibdir/*.so
 %python3_sitelibdir/PyQt5/bindings/popplerqt5/
 
 %changelog
+* Fri Feb 16 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 21.3.0-alt1.1
+- Fixed build for Elbrus.
+
 * Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 21.3.0-alt1
 - Build new version (Closes: #49160).
 
