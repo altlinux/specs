@@ -1,36 +1,31 @@
 %define _unpackaged_files_terminate_build 1
-%define mname requests-gssapi
+
+%define pypi_name requests-gssapi
+%define mod_name requests_gssapi
 
 %def_with check
 
-Name: python3-module-%mname
-Version: 1.2.3
-Release: alt1.1
-
+Name: python3-module-%pypi_name
+Version: 1.3.0
+Release: alt1
 Summary: A GSSAPI/SPNEGO authentication handler for python-requests
 License: ISC
 Group: Development/Python3
-# Source-git: https://github.com/pythongssapi/requests-gssapi.git
 Url: https://pypi.org/project/requests-gssapi
-
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%if_with check
-BuildRequires: python3(gssapi)
-BuildRequires: python3(requests)
-BuildRequires: python3(tox)
-%endif
-
+Vcs: https://github.com/pythongssapi/requests-gssapi
 BuildArch: noarch
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
 # PyPI name
 %py3_provides requests-gssapi
 Provides: python3-module-requests_gssapi = %EVR
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata_extra dev
+%endif
 
 %description
 Requests is an HTTP library, written in Python, for human beings.
@@ -45,6 +40,8 @@ guaranteed to be compatible.
 %prep
 %setup
 %patch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -53,15 +50,17 @@ guaranteed to be compatible.
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -ra
 
 %files
 %doc AUTHORS LICENSE *.rst
-%python3_sitelibdir/requests_gssapi/
-%python3_sitelibdir/requests_gssapi-%version.dist-info/
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 16 2024 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
+- 1.2.3 -> 1.3.0.
+
 * Sat Jan 27 2024 Grigory Ustinov <grenka@altlinux.org> 1.2.3-alt1.1
 - NMU: moved on modern pyproject macros.
 
