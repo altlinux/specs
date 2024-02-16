@@ -9,11 +9,10 @@
 # https://github.com/NetworkBlockDevice/nbd/issues/149
 %def_disable gznbd
 %def_with setproctitle
-%def_without  static_client
 
 Name: nbd
 Version: 3.25
-Release: alt2
+Release: alt3
 Summary: Network Block Device user space tools
 License: GPLv2
 Group: Networking/Other
@@ -38,19 +37,10 @@ BuildRequires: autoconf-archive bison flex
 Tools for the Linux Kernel's network block device, allowing you to use
 remote block devices over a TCP/IP network.
 
-%package doc
-Summary: Network Block Device user space tools documentation
-Group: Documentation
-BuildArch: noarch
-
-%description doc
-This package contains basic documentation for Network Block Device
-user space tools.
-
 %package server
 Summary: Network Block Device server
 Group: Networking/Other
-Requires: %name-doc = %EVR
+Requires: %name-client = %EVR
 
 %description server
 This package contains nbd-server - a user space daemon to serve files
@@ -59,21 +49,10 @@ for Network Block Devices on remote hosts.
 %package client
 Summary: Network Block Device client
 Group: Networking/Other
-Requires: %name-doc = %EVR
 
 %description client
 This package contains nbd-client - a user space tool needed to manage
 a Network Block Device.
-
-%if_with static_client
-%package client-static
-Summary: Network Block Device static client
-Group: Networking/Other
-Requires: %name-doc = %EVR
-
-%description client-static
-This package contains a statically linked edition of nbd-client.
-%endif
 
 %prep
 %setup
@@ -83,19 +62,6 @@ This package contains a statically linked edition of nbd-client.
 %add_optflags -D_FILE_OFFSET_BITS=64
 
 ./autogen.sh
-
-%if_with static_client
-%configure \
-    %{subst_enable debug} \
-    %{subst_enable lfs} \
-    --disable-syslog \
-    --disable-sdp \
-    %nil
-
-make CC="diet -Os %__cc" CFLAGS="%optflags -Os" LDADD="-lcompat" %name-client
-mv %name-client{,.static}
-%make_build clean
-%endif
 
 %configure \
     %{subst_enable debug} \
@@ -134,13 +100,10 @@ DELAY=10 make check
 %_sbindir/useradd -r -g _nbd -d /dev/null -s /dev/null -n _nbd > /dev/null 2>&1 ||:
 
 %post server
-%post_service %name
+%post_service nbd-server
 
 %preun server
-%preun_service %name
-
-%files doc
-%docdir
+%preun_service nbd-server
 
 %files server
 %_bindir/*
@@ -154,15 +117,15 @@ DELAY=10 make check
 %config(noreplace) %_sysconfdir/%name-server/
 
 %files client
+%docdir
 %_sbindir/%name-client
 %_man8dir/*
 
-%if_with static_client
-%files client-static
-%_sbindir/%name-client.static
-%endif
-
 %changelog
+* Fri Feb 16 2024 Anton Farygin <rider@altlinux.ru> 3.25-alt3
+- added pidfile to the systemd unit (closes: #49344)
+- content of the %name-doc package is included in the package with client
+
 * Mon Feb 12 2024 Anton Farygin <rider@altlinux.ru> 3.25-alt2
 - fixed systemd unit (closes: #49344)
 
