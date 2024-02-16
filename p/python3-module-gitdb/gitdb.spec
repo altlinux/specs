@@ -4,33 +4,23 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.0.10
+Version: 4.0.11
 Release: alt1
-
 Summary: IO of git-style object databases
-
 License: BSD
 Group: Development/Python3
 Url: https://pypi.org/project/gitdb/
 VCS: https://github.com/gitpython-developers/gitdb.git
-
 BuildArch: noarch
-
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# install_requires=
-BuildRequires: python3(smmap)
-
-BuildRequires: python3(pytest)
-BuildRequires: /usr/bin/git
+%pyproject_builddeps_metadata
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -49,6 +39,9 @@ This package contains tests for %pypi_name.
 %prep
 %setup
 %autopatch -p1
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -60,15 +53,7 @@ This package contains tests for %pypi_name.
 rm -vr gitdb/ext/*
 
 %check
-# need git repo and objects, see gitdb/test/lib.py
-git init
-git config user.email "someone@somewhere.com"
-git config user.name "someone"
-git add -A
-git commit -m "%version"
-
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -ra
 
 %files
 %doc AUTHORS *.rst
@@ -80,6 +65,9 @@ git commit -m "%version"
 %python3_sitelibdir/gitdb/test/
 
 %changelog
+* Thu Feb 15 2024 Stanislav Levin <slev@altlinux.org> 4.0.11-alt1
+- 4.0.10 -> 4.0.11.
+
 * Fri Nov 25 2022 Stanislav Levin <slev@altlinux.org> 4.0.10-alt1
 - 4.0.9 -> 4.0.10.
 
