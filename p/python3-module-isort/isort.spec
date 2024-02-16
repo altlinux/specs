@@ -4,37 +4,37 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.12.0
-Release: alt1.1
+Version: 5.13.2
+Release: alt1
 Summary: Python utility / library to sort Python imports
 Group: Development/Python3
 License: MIT
 Url: https://pypi.org/project/isort
 VCS: https://github.com/PyCQA/isort
 BuildArch: noarch
-
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(poetry-core)
-
+%add_python3_req_skip pylama.lint
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
 BuildRequires: /usr/bin/git
-BuildRequires: python3(black)
-BuildRequires: python3(hypothesis)
-BuildRequires: python3(pylama)
-BuildRequires: python3(colorama)
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest_mock)
+%add_pyproject_deps_check_filter cruft
+%add_pyproject_deps_check_filter example-isort-sorting-plugin
+%add_pyproject_deps_check_filter example-shared-isort-profile
+%add_pyproject_deps_check_filter hypothesmith
+%add_pyproject_deps_check_filter pep8-naming
+%add_pyproject_deps_check_filter pip-api
+%add_pyproject_deps_check_filter pipreqs
+%add_pyproject_deps_check_filter portray
+%add_pyproject_deps_check_filter requirementslib
+%add_pyproject_deps_check_filter safety
+%add_pyproject_deps_check_filter smmap2
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
-
-%add_python3_req_skip pylama.lint
-
-# conditional import
-%py3_requires tomli
 
 %description
 Python utility / library to sort Python imports
@@ -42,6 +42,11 @@ Python utility / library to sort Python imports
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_poetry dev
+%endif
 
 # remove bunled(for tests only) plugins/profiles,
 # they cannot be loaded within venv and break tests assumptions
@@ -72,6 +77,9 @@ mv %buildroot%_bindir/isort{,.py3}
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Feb 15 2024 Stanislav Levin <slev@altlinux.org> 5.13.2-alt1
+- 5.12.0 -> 5.13.2.
+
 * Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 5.12.0-alt1.1
 - NMU: Fixed FTBFS.
 
