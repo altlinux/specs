@@ -13,7 +13,7 @@
 %define libkpimitinerary libkpimitinerary%sover
 
 Name: kde5-%rname
-Version: 23.08.4
+Version: 23.08.5
 Release: alt1
 %K5init
 
@@ -102,6 +102,9 @@ Obsoletes: libkpimitinerary < %EVR
 %_K5lib/libKPim5Itinerary.so.*
 
 %changelog
+* Fri Feb 16 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
+- new version
+
 * Fri Dec 08 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
 - new version
 

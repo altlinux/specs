@@ -1,7 +1,7 @@
 %define rname akonadi-calendar-tools
 
 Name: kde5-%rname
-Version: 23.08.4
+Version: 23.08.5
 Release: alt1
 %K5init
 
@@ -49,6 +49,9 @@ Akonadi Calendar Tools.
 %_K5icon/*/*/apps/*alendar*.*
 
 %changelog
+* Fri Feb 16 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
+- new version
+
 * Fri Dec 08 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
 - new version
 
