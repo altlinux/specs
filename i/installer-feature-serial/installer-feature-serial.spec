@@ -1,5 +1,5 @@
 Name: installer-feature-serial
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: serial console support
@@ -50,6 +50,9 @@ so that serial login is available.
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Fri Feb 16 2024 Michael Shigorin <mike@altlinux.org> 0.6.2-alt1
+- E2K: support ttyS1 if present
+
 * Tue Jan 16 2024 Anton Midyukov <antohami@altlinux.org> 0.6.1-alt1
 - 65-serial.sh: do not add console, already added
 - 65-serial.sh: cleanup quiet only in string with GRUB_CMDLINE_LINUX
