@@ -3,7 +3,7 @@
 %global fontname fontawesome-web
 
 Name: fonts-font-awesome-web
-Version: 6.4.2
+Version: 6.5.1
 Release: alt1
 Summary: Iconic font set, web files
 Group: System/Fonts/True type
@@ -111,6 +111,9 @@ done
 %_datadir/%name/js
 
 %changelog
+* Fri Feb 16 2024 L.A. Kostis <lakostis@altlinux.ru> 6.5.1-alt1
+- 6.5.1.
+
 * Fri Sep 15 2023 L.A. Kostis <lakostis@altlinux.ru> 6.4.2-alt1
 - 6.4.2.
 
