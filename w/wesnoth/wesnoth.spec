@@ -23,7 +23,7 @@
 
 Name: wesnoth%wessuffix
 Version: 1.16.9
-Release: alt1
+Release: alt2
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
 Summary(ru_RU.UTF-8): двухмерная пошаговая стратегия в стиле фэнтези
@@ -180,6 +180,17 @@ This package contains python3 interface to Battle for Wesnoth.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%ifarch %e2k
+# jump tables are slow with LCC
+# there's also a bug where LCC demands a "void*" pointer, not a "const void*"
+sed -i '1i #define LUA_USE_JUMPTABLE 0' src/lua/lvm.cpp
+# workaround for bug with "static inline" template classes
+sed -i 's/static inline std::/static std::/' src/tstring.hpp
+echo "std::vector<std::string> t_string_base::id_to_textdomain;" >> src/tstring.cpp
+echo "std::map<std::string, unsigned int> t_string_base::textdomain_to_id;" >> src/tstring.cpp
+sed -i '/static inline std::/{s/inline//;s/{}//}' src/quit_confirmation.hpp
+echo "std::vector<quit_confirmation*> quit_confirmation::blockers_ {};" >> src/quit_confirmation.cpp
+%endif
 
 %build
 %define _optlevel 3
@@ -415,6 +426,9 @@ mv %buildroot%_datadir/%name/data/tools/wesnoth %buildroot%_datadir/%name/data/t
 %endif
 
 %changelog
+* Fri Feb 16 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.16.9-alt2
+- Fixed build for Elbrus
+
 * Mon Oct 09 2023 Igor Vlasenko <viy@altlinux.org> 1.16.9-alt1
 - new version
 
