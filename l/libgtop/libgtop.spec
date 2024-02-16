@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: libgtop
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: LibGTop library
@@ -168,6 +168,9 @@ rm -rf doc/*.info
 %endif
 
 %changelog
+* Fri Feb 16 2024 Yuri N. Sedunov <aris@altlinux.org> 2.41.3-alt1
+- 2.41.3
+
 * Sun Oct 15 2023 Yuri N. Sedunov <aris@altlinux.org> 2.41.2-alt1
 - 2.41.2
 
