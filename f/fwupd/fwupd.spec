@@ -27,7 +27,7 @@ Summary: Firmware update daemon
 Name: fwupd
 Version: 1.9.13
 
-Release: alt1
+Release: alt2
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
 Url: https://github.com/fwupd/fwupd
@@ -66,6 +66,7 @@ BUildRequires: libflashrom-devel
 BuildRequires: libdrm-devel
 BuildRequires: libsoup-devel
 BuildRequires: libsqlite3-devel
+BuildRequires: libpassim-devel
 BuildRequires: libsystemd-devel
 BuildRequires: libtpm2-tss-devel
 BuildRequires: libudev-devel
@@ -312,6 +313,9 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4,30M:/usr/src \
 %endif
 
 %changelog
+* Fri Feb 16 2024 Ajrat Makhmutov <rauty@altlinux.org> 1.9.13-alt2
+- build with libpassim
+
 * Fri Feb 09 2024 Egor Ignatov <egori@altlinux.org> 1.9.13-alt1
 - 1.9.13
 
