@@ -2,7 +2,7 @@ Name: kernel-image-std-debug
 Release: alt1
 epoch:2
 %define kernel_base_version	6.1
-%define kernel_sublevel	.77
+%define kernel_sublevel	.78
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -604,6 +604,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Feb 17 2024 Kernel Bot <kernelbot@altlinux.org> 2:6.1.78-alt1
+- v6.1.78 (2024-02-16).
+- arm64: add dts for SoM NMS-SM-RK3568 and computer VSNF.466459.001 on its basis.
+
 * Tue Feb 06 2024 Kernel Bot <kernelbot@altlinux.org> 2:6.1.77-alt1
 - v6.1.77 (2024-02-05).
 
