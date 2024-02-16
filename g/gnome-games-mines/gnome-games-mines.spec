@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
@@ -8,18 +9,22 @@
 
 Name: gnome-games-%_name
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Classic find the mines in the minefield game
 Group: Games/Boards
-License: GPLv3+
-Url: http://live.gnome.org/GnomeGames/
+License: GPL-3.0-or-later
+Url: https://wiki.gnome.org/Apps/Mines
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
+%else
+Source: %__name-%version.tar
+%endif
 
-Provides:  %__name = %version-%release
+Provides:  %__name = %EVR
 Obsoletes: gnome-games-gnomine
-Provides:  gnome-games-gnomine = %version-%release
+Provides:  gnome-games-gnomine = %EVR
 
 %define glib_ver 2.40.0
 %define gtk_ver 3.22.23
@@ -46,7 +51,7 @@ NOME Mines is a variation of the popular logic puzzle minesweeper.
 %find_lang --with-gnome %__name
 
 %files -f gnome-%_name.lang
-%attr(2711,root,games) %_bindir/%__name
+%_bindir/%__name
 %_desktopdir/%xdg_name.desktop
 %_datadir/%__name/
 %_iconsdir/hicolor/*/apps/*.svg
@@ -55,6 +60,9 @@ NOME Mines is a variation of the popular logic puzzle minesweeper.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Fri Feb 16 2024 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt2
+- 40.1-14-g389c92e (updated translations)
+
 * Mon Feb 28 2022 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
 - 40.1
 
