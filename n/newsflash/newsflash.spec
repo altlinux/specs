@@ -6,10 +6,10 @@
 %define rdn_name io.gitlab.news_flash.NewsFlash
 
 %def_disable bootstrap
-%def_disable check
+%def_enable check
 
 Name: newsflash
-Version: %ver_major.1
+Version: %ver_major.3
 Release: alt1
 
 Summary: NewsFlash is a RSS reader
@@ -18,7 +18,7 @@ Group: Networking/News
 Url: https://apps.gnome.org/NewsFlash
 
 %if_disabled snapshot
-Source: %url/-/archive/v%version/%_name-%version.tar.gz
+Source: https://gitlab.com/news-flash/-/archive/v%version/%_name-%version.tar.gz
 %else
 Vcs: https://gitlab.com/news-flash/news_flash_gtk.git
 Source: %_name-%version.tar
@@ -37,15 +37,17 @@ Requires: xdg-utils
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo
 BuildRequires: blueprint-compiler
-BuildRequires: /usr/bin/appstream-util desktop-file-utils
+BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver gir(Adw)
 BuildRequires: pkgconfig(webkitgtk-6.0) >= %webkit_ver
 BuildRequires: pkgconfig(dbus-1)
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(sqlite3)
+
 %description
 %summary
 
@@ -76,6 +78,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sat Feb 17 2024 Yuri N. Sedunov <aris@altlinux.org> 3.1.3-alt1
+- 3.1.3
+
 * Tue Feb 13 2024 Yuri N. Sedunov <aris@altlinux.org> 3.1.1-alt1
 - 3.1.1
 
