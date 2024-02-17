@@ -15,8 +15,8 @@
 %define _disable_test 1
 
 Name: perl-MIME-EncWords
-Version: 1.014.3
-Release: alt2
+Version: 1.015.0
+Release: alt1
 
 Summary: deal with RFC 2047 encoded words (improved)
 
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Slava Dubrovskiy <dubrsl@altlinux.org>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/N/NE/NEZUMI/MIME-EncWords-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/N/NE/NEZUMI/%{module}-%{version}.tar.gz
 BuildRequires: perl-devel perl-MIME-Charset
 
 %description
@@ -66,7 +66,7 @@ non-Latin multibyte characters with any 7 bit sequences):
       Subject: ???(laziness), ????(impatience), ??(hubris)
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -77,10 +77,14 @@ non-Latin multibyte characters with any 7 bit sequences):
 rm -rf %buildroot%perl_vendor_privlib/POD2/JA
 
 %files
+%doc Changes ARTISTIC README GPL
 %perl_vendor_privlib/MIME/*
 %perl_vendor_privlib/Encode/MIME/EncWords.pm
 
 %changelog
+* Sat Feb 17 2024 Igor Vlasenko <viy@altlinux.org> 1.015.0-alt1
+- automated CPAN update
+
 * Fri Jun 29 2018 Igor Vlasenko <viy@altlinux.ru> 1.014.3-alt2
 - fixed unpackaged files
 
