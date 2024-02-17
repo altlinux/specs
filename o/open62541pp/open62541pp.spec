@@ -4,7 +4,7 @@
 %define lname libopen62541pp
 
 Name: open62541pp
-Version: 0.6.0
+Version: 0.12.0
 Release: alt1
 
 Summary: open62541++ is a C++ wrapper built on top of the amazing open62541 OPC UA (OPC Unified Architecture) library.
@@ -66,6 +66,9 @@ cp -p %{SOURCE1} .
 
 
 %changelog
+* Sun Feb 18 2024 Pavel Vainerman <pv@altlinux.ru> 0.12.0-alt1
+- new version (0.12.0) with rpmgs script
+
 * Sat Jul 29 2023 Pavel Vainerman <pv@altlinux.ru> 0.6.0-alt1
 - new version (0.6.0) with rpmgs script
 
