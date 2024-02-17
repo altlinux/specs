@@ -1,4 +1,5 @@
 %define _stripped_files_terminate_build 1
+%set_autoconf_version 2.60
 %set_verify_elf_method relaxed
 
 %def_enable bat
@@ -13,8 +14,8 @@
 %define bacula_major 13
 
 Name: bacula%{bacula_major}
-Version: %{bacula_major}.0.3
-Release: alt4
+Version: %{bacula_major}.0.4
+Release: alt1
 
 License: AGPL-3.0
 Summary: Network based backup program
@@ -45,7 +46,7 @@ Patch3: bacula-9.4.0-fedora-seg-fault.patch
 Patch4: bacula11-alt-fix-logrotate.patch
 Patch2000: bacula11-e2k.patch
 
-BuildRequires: gcc-c++ autoconf_2.60
+BuildRequires: gcc-c++
 BuildRequires: libMySQL-devel postgresql-devel
 BuildRequires: libssl-devel libncurses-devel libsqlite3-devel libacl-devel libcap-devel zlib-devel
 BuildRequires: liblz4-devel liblzo2-devel
@@ -467,7 +468,6 @@ rm -f src/lib/lz4.{c,h}
 
 %build
 export MTX=%_sbindir/mtx
-%set_autoconf_version 2.60
 
 # Regenerate configure
 pushd autoconf
@@ -927,6 +927,9 @@ rm -rf %_cachedir/baculum/runtime/*
 %endif
 
 %changelog
+* Sat Feb 17 2024 Alexei Takaseev <taf@altlinux.org> 13.0.4-alt1
+- 13.0.4
+
 * Mon Jul 24 2023 Alexei Takaseev <taf@altlinux.org> 13.0.3-alt4
 - Use %%set_autoconf_version macro
 
