@@ -3,7 +3,7 @@
 
 Name: plog-devel
 Version: 1.1.10
-Release: alt1
+Release: alt2
 Summary: Portable, simple and extensible C++ logging library
 Group: Development/Other
 License: MIT
@@ -23,6 +23,9 @@ as CSV log format and wide string support.
 
 %prep
 %setup -n plog-%version
+%ifarch %e2k
+sed -i 's/-Werror/-Wno-error/' samples/CMakeLists.txt
+%endif
 
 %build
 %cmake -DPLOG_BUILD_TESTS=ON
@@ -40,5 +43,8 @@ rm -rv %buildroot%_docdir/plog
 %_libdir/cmake/plog/
 
 %changelog
+* Sat Feb 17 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.1.10-alt2
+- Fixed build for Elbrus
+
 * Mon Nov 13 2023 Anton Midyukov <antohami@altlinux.org> 1.1.10-alt1
 - initial build
