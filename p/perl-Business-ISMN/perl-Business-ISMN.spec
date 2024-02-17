@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Business-ISMN
-Version: 1.203
+Version: 1.204
 Release: alt1
 
 Summary: Work with International Standard Music Numbers
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Kirill Maslinsky <kirill@altlinux.org>
 
 BuildArch: noarch
-Source0: http://www.cpan.org/authors/id/B/BD/BDFOY/%{module}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BR/BRIANDFOY/%{module}-%{version}.tar.gz
 
 BuildRequires: perl-Module-Build perl-Tie-Cycle
 
@@ -47,6 +47,9 @@ None.
 %perl_vendor_privlib/Business/*
 
 %changelog
+* Sat Feb 17 2024 Igor Vlasenko <viy@altlinux.org> 1.204-alt1
+- automated CPAN update
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 1.203-alt1
 - automated CPAN update
 
