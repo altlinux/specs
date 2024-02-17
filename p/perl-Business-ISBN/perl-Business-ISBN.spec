@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Business-ISBN
 Name: perl-%dist
-Version: 3.008
+Version: 3.009
 Release: alt1
 
 Summary: work with International Standard Book Numbers
@@ -13,7 +13,7 @@ Url: %CPAN %dist
 Packager: Vladimir A. Svyatoshenko <svyt@altlinux.ru>
 
 BuildArch: noarch
-Source0: http://www.cpan.org/authors/id/B/BD/BDFOY/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BR/BRIANDFOY/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Jun 11 2007
 BuildRequires: perl-Business-ISBN-Data perl-devel perl-libwww
@@ -35,6 +35,9 @@ None.
 %perl_vendor_privlib/Business*
 
 %changelog
+* Sat Feb 17 2024 Igor Vlasenko <viy@altlinux.org> 3.009-alt1
+- automated CPAN update
+
 * Mon Apr 03 2023 Igor Vlasenko <viy@altlinux.org> 3.008-alt1
 - automated CPAN update
 
