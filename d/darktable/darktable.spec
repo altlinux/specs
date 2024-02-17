@@ -17,7 +17,7 @@
 %def_enable lensfun
 
 Name: darktable
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
@@ -34,7 +34,7 @@ Patch: darktable-3.0.0-is_supported_platform.patch
 # by Pavel Nakonechnyi
 Patch1: darktable-4.4.0-alt-disable-use-of-gcc-graphite.patch
 
-ExcludeArch: %ix86 armh
+ExcludeArch: %ix86 armh aarch64
 AutoReq: nolua
 
 %define cmake_ver 3.10
@@ -47,7 +47,7 @@ AutoReq: nolua
 %define lensfun_api_ver 1
 %define lensfun_ver 0.3.3
 %define libraw_ver 0.21.0
-%define libavif_ver 0.9.2
+%define libavif_ver 0.9.3
 %define libheif_ver 1.12.0
 %define openexr_ver 3.0
 %define lua_ver_major 5.4
@@ -147,6 +147,10 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %doc README* RELEASE_NOTES*
 
 %changelog
+* Sat Feb 17 2024 Yuri N. Sedunov <aris@altlinux.org> 4.6.1-alt1
+- 4.6.1
+- disabled build for aarch64 due internal compiler error
+
 * Thu Dec 21 2023 Yuri N. Sedunov <aris@altlinux.org> 4.6.0-alt1
 - 4.6.0
 
