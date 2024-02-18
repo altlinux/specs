@@ -2,11 +2,11 @@
 %define _stripped_files_terminate_build 1
 Name: dictd
 Version: 1.13.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Url: http://www.dict.org/
-License: GPL
+License: GPLv2
 
 Source: %name-%version.tar.gz
 Source2: dictd.init
@@ -174,7 +174,7 @@ EXTRAOPTIONS="--locale ru_RU.UTF-8 \$LISTENTO"
 EOF
 
 install -D -m 755 %SOURCE6 %buildroot%_controldir/dictd
-install -D %SOURCE8 %buildroot%_unitdir/dictd.service
+install -D -m 644 %SOURCE8 %buildroot%_unitdir/dictd.service
 install -D -m 755 %SOURCE9 %buildroot%_rpmlibdir/dictd.filetrigger
 
 %pre
@@ -238,6 +238,9 @@ fi
 %_man1dir/colorit.1*
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 1:1.13.1-alt2
+- fix service file permissions
+
 * Sun Nov 28 2021 Aleksey Cheusov <cheusov@altlinux.org> 1:1.13.1-alt1
 - 1.13.1
 - Remove local patches. They are useless.
