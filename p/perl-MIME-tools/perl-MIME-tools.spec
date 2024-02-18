@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist MIME-tools
 Name: perl-%dist
-Version: 5.510
+Version: 5.514
 Release: alt1
 Epoch: 1
 
@@ -38,6 +38,9 @@ messages.
 %perl_vendor_privlib/MIME*
 
 %changelog
+* Sun Feb 18 2024 Igor Vlasenko <viy@altlinux.org> 1:5.514-alt1
+- new version
+
 * Thu Jul 07 2022 Igor Vlasenko <viy@altlinux.org> 1:5.510-alt1
 - new version
 
