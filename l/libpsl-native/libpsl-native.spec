@@ -2,7 +2,7 @@
 %define targetdir %_libdir/powershell/runtimes/%_dotnet_rid/native
 
 Name: libpsl-native
-Version: 7.3.2
+Version: 7.4.0
 Release: alt1
 
 Summary: PowerShell Native library
@@ -37,6 +37,7 @@ which is C#'s Foreign Function Interface to C code (and C++ by way of extern C).
 %patch -p2
 # use only optflags from rpm
 subst 's|.*CMAKE_CXX_FLAGS.*||' src/libpsl-native/CMakeLists.txt
+subst 's| -fpie | |' src/libpsl-native/CMakeLists.txt
 
 %build
 pushd src/libpsl-native/
@@ -66,6 +67,9 @@ LANG=en_US.utf8 LD_LIBRARY_PATH=$(pwd)/../powershell-unix/ ctest --verbose || tr
 %targetdir/libpsl-native.so
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 7.4.0-alt1
+- new version 7.4.0 (with rpmrb script)
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 7.3.2-alt1
 - new version 7.3.2 (with rpmrb script)
 
