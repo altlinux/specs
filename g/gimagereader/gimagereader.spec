@@ -1,8 +1,8 @@
 %def_without qt4
 
 Name: gimagereader
-Version: 3.4.1
-Release: alt4
+Version: 3.4.2
+Release: alt1
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -128,8 +128,8 @@ Common files for %name.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
+#patch1 -p1
+#patch2 -p1
 
 # remove with new version
 # https://redmine.basealt.space/issues/2497
@@ -212,6 +212,9 @@ ln -s %name-gtk %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 3.4.2-alt1
+- new version 3.4.2 (with rpmrb script)
+
 * Mon Jan 01 2024 Vitaly Lipatov <lav@altlinux.ru> 3.4.1-alt4
 - fix rescan for gtk gui (ALT bug 48017)
 
