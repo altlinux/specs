@@ -1,9 +1,9 @@
 Name: startup-rescue
-Version: 0.48
+Version: 0.49
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
-License: GPL
+License: GPL-2.0-or-later
 Group: System/Base
 
 Url: http://en.altlinux.org/rescue
@@ -12,9 +12,7 @@ Source: rescue-%version.tar
 Requires(post): %post_service
 Requires(preun): %preun_service
 Requires: sfdisk console-vt-tools libshell system-report
-
-# Weird kludge
-Provides: /sbin/find-fstab
+Requires: livecd-rescue-utility = %EVR
 
 # Optional requires
 %ifarch %ix86 x86_64
@@ -23,27 +21,31 @@ Requires: dmidecode ddcprobe
 Requires: altquire
 Requires: agetty
 
-# /sbin/rescue-launcher is optional too
-%filter_from_requires /rescue\-launcher/d
-
 Conflicts: startup-school-rescue startup-nanolive
 
 %description
 This package contains scripts used to boot your system from rescue disk.
 
+%package -n livecd-rescue-utility
+Summary: Rescue utility for livecd
+Group: System/Base
+
+%description -n livecd-rescue-utility
+%summary.
+
 %prep
 %setup -n rescue-%version
 
 %install
-mkdir -p -- %buildroot{%_bindir,/sbin,%_initdir}
+mkdir -p -- %buildroot{%_bindir,%_sbindir,%_initdir}
 
 install -pm755 rescue-shell %buildroot%_bindir/
 install -pm755 rescue-shell-show %buildroot%_bindir/
 %ifarch %ix86 x86_64
-install -pm755 fixmbr %buildroot/sbin/
+install -pm755 fixmbr %buildroot%_sbindir/
 %endif
-install -pm755 find-fstab %buildroot/sbin/
-install -pm755 mount-fstab mount-system unmount-system %buildroot/sbin/
+install -pm755 find-fstab %buildroot%_sbindir/
+install -pm755 mount-fstab mount-system unmount-system %buildroot%_sbindir/
 install -pm644 inittab.rescue mdadm-ro.conf %buildroot/etc/
 install -pm755 rc.sysinit.rescue %buildroot/etc/rc.d/
 install -pm755 sysreport.init %buildroot%_initdir/sysreport
@@ -56,15 +58,23 @@ install -pm755 rescue-remote.init %buildroot%_initdir/rescue-remote
 %preun_service rescue-remote
 
 %files
-/sbin/*
-%_bindir/*
 /etc/mdadm-ro.conf
 /etc/inittab.rescue
 /etc/rc.d/rc.sysinit.rescue
 %_initdir/sysreport
 %_initdir/rescue-remote
 
+%files -n livecd-rescue-utility
+%_sbindir/*
+%_bindir/*
+
 %changelog
+* Thu Jan 25 2024 Anton Midyukov <antohami@altlinux.org> 0.49-alt1
+- separate package livecd-rescue-utility
+- rescue-shell: hide 'rescue-launcher' behind a variable
+- replace /sbin/* to %%_sbindir/*
+- update License (GPL -> GPL-2.0-or-later)
+
 * Fri Jan 05 2024 Anton Midyukov <antohami@altlinux.org> 0.48-alt1
 - separate script rescue-shell-show from rescue-shell
 - rescue-shell-show: show a link to Russian wiki if lang=ru_RU in cmdline
