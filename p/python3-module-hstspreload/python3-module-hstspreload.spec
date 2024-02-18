@@ -1,7 +1,7 @@
 %define  modulename hstspreload
 
 Name:    python3-module-%modulename
-Version: 2023.1.1
+Version: 2024.2.1
 Release: alt1
 
 Summary: Chromium HSTS Preload list as a Python package and updated daily
@@ -39,6 +39,9 @@ See https://hstspreload.org for more information regarding the list itself.
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 2024.2.1-alt1
+- new version 2024.2.1 (with rpmrb script)
+
 * Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 2023.1.1-alt1
 - new version 2023.1.1 (with rpmrb script)
 
