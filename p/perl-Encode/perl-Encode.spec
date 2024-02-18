@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Encode
 Name: perl-%dist
-Version: 3.19
+Version: 3.20
 Release: alt1
 
 Summary: Character encodings
@@ -134,6 +134,9 @@ bzip2 -k Changes
 	%perl_vendor_archlib/Encode/MIME/Header/ISO_2022_JP.pm
 
 %changelog
+* Sun Feb 18 2024 Igor Vlasenko <viy@altlinux.org> 3.20-alt1
+- new version
+
 * Thu Aug 04 2022 Igor Vlasenko <viy@altlinux.org> 3.19-alt1
 - new version
 
