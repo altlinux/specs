@@ -2,27 +2,23 @@ Group: Development/Other
 # BEGIN SourceDeps(oneline):
 #BuildRequires: perl(Clone/Fast.pm)
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Clone.pm) perl(JSON.pm) perl(Module/Build.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Clone.pm) perl(JSON.pm) perl(Module/Build.pm) perl(Parse/CPAN/Meta.pm) perl(YAML/Tiny.pm) perl-podlators perl(Module/Build/XSUtil.pm)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Data-Clone
-Version:        0.004
-Release:        alt1_30
+Version:        0.006
+Release:        alt1
 Summary:        Polymorphic data cloning
 License:        GPL-1.0-or-later OR Artistic-1.0-Perl
 URL:            https://metacpan.org/release/Data-Clone
-Source0:        https://cpan.metacpan.org/authors/id/G/GF/GFUJI/Data-Clone-%{version}.tar.gz
-# Remove using of ' as a package name separator (CPAN RT#148415)
-Patch0:         Data-Clone-0.004-Fix-for-perl-5.38.patch
+Source0:        http://www.cpan.org/authors/id/I/IS/ISHIGAKI/Data-Clone-%{version}.tar.gz
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(constant.pm)
 BuildRequires:  perl(Data/Dumper.pm)
 BuildRequires:  perl(Devel/PPPort.pm)
 BuildRequires:  perl(ExtUtils/ParseXS.pm)
-BuildRequires:  perl(inc/Module/Install.pm)
-BuildRequires:  perl(Module/Install/AuthorTests.pm)
 BuildRequires:  perl(parent.pm)
 BuildRequires:  perl(Scalar/Util.pm)
 BuildRequires:  perl(Test/LeakTrace.pm)
@@ -48,14 +44,12 @@ polymorphic data cloning.
 
 %prep
 %setup -q -n Data-Clone-%{version}
-%patch0  -p1
 
 %build
-/usr/bin/perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
-%make_build
+%perl_vendor_build
 
 %install
-make pure_install DESTDIR=%{buildroot}
+%perl_vendor_install
 
 find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
@@ -63,15 +57,15 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 
 # %{_fixperms} %{buildroot}/*
 
-%check
-make test
-
 %files
-%doc Changes README
+%doc Changes README.md example
 %{perl_vendor_archlib}/auto/*
 %{perl_vendor_archlib}/Data*
 
 %changelog
+* Sat Feb 17 2024 Igor Vlasenko <viy@altlinux.org> 0.006-alt1
+- automated CPAN update
+
 * Tue Oct 31 2023 Igor Vlasenko <viy@altlinux.org> 0.004-alt1_30
 - reimport
 
