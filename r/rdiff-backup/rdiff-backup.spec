@@ -1,5 +1,5 @@
 Name: rdiff-backup
-Version: 2.2.5
+Version: 2.2.6
 Release: alt1
 
 Summary: Backup software
@@ -62,6 +62,9 @@ rm -rfv %_docdir/%name/Windows-*.md
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 2.2.6-alt1
+- new version 2.2.6 (with rpmrb script)
+
 * Mon Jun 12 2023 Vitaly Lipatov <lav@altlinux.ru> 2.2.5-alt1
 - new version 2.2.5 (with rpmrb script)
 
