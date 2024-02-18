@@ -1,7 +1,7 @@
 %define oname curtsies
 
 Name: python3-module-curtsies
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: Library for interacting with the terminal
@@ -35,6 +35,9 @@ Curtsies is a library for interacting with the terminal.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 0.4.2-alt1
+- new version 0.4.2 (with rpmrb script)
+
 * Sun Jan 22 2023 Vitaly Lipatov <lav@altlinux.ru> 0.4.1-alt1
 - new version 0.4.1 (with rpmrb script)
 
