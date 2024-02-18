@@ -1,7 +1,7 @@
 %define oname mechanize
 
 Name: python3-module-%oname
-Version: 0.4.8
+Version: 0.4.9
 Release: alt1
 
 Summary: Stateful programmatic web browsing
@@ -38,6 +38,9 @@ after Andy Lester's Perl module WWW::Mechanize.
 %python3_sitelibdir/*
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 0.4.9-alt1
+- new version 0.4.9 (with rpmrb script)
+
 * Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 0.4.8-alt1
 - new version 0.4.8 (with rpmrb script)
 
