@@ -1,7 +1,7 @@
 %define modulename boltons
 
 Name: python3-module-boltons
-Version: 21.0.0
+Version: 23.1.1
 Release: alt1
 
 Summary: When they're not builtins, they're boltons.
@@ -43,6 +43,9 @@ Contains over 230 BSD-licensed utility types and functions that can be used as a
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 23.1.1-alt1
+- new version 23.1.1 (with rpmrb script)
+
 * Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 21.0.0-alt1
 - new version 21.0.0 (with rpmrb script)
 
