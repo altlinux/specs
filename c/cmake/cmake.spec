@@ -12,7 +12,7 @@
 
 Name: cmake
 Version: 3.28.3
-Release: alt1
+Release: alt1.1
 
 Summary: Cross-platform, open-source make system
 
@@ -159,6 +159,8 @@ Set of RPM macros for packaging applications that use cmake.
 # "Could NOT find OpenMP_C (missing: OpenMP_omp_LIBRARY OpenMP_pthread_LIBRARY)"
 # cmake tries to scan the OpenMP example for libraries, which breaks the build
 sed -i 's/if(CMAKE_${LANG}_VERBOSE_FLAG)/if(false) # &/' Modules/FindOpenMP.cmake
+# workaround for SUNPro compiler also helps EDG
+sed -i 's/__SUNPRO_CC/__EDG__/' Source/cmArgumentParserTypes.h
 %endif
 
 # use %_optlevel for any compiler
@@ -353,6 +355,9 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Sun Feb 18 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.28.3-alt1.1
+- workaround for ICE on e2k
+
 * Mon Feb 12 2024 Vitaly Lipatov <lav@altlinux.ru> 3.28.3-alt1
 - new version (3.28.3) with rpmgs script
 - add _cmakedir macro (ALT bug 49373)
