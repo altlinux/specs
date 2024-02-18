@@ -1,7 +1,7 @@
 %def_without pgsql
 Name: gnunet
 Version: 0.11.5
-Release: alt2
+Release: alt3
 
 Summary: Peer-to-peer framework
 
@@ -11,15 +11,14 @@ Url: http://gnunet.org/
 Packager: ALT QA Team <qa@packages.altlinux.org>
 
 Source: http://ftpmirror.gnu.org/gnunet/%name-%version.tar
-# (TODO: add pseudouser)
-Source1: gnunetd.init.altlinux
-Source2: gnunetd.service
+
+Source3: gnunetd.sysusers
 
 Patch2: gnunet-0.11.0-alt-mysql8-transition.patch
 
 BuildRequires: gcc-c++ libmysqlclient21-devel libgnurl-devel libextractor-devel libgcrypt-devel libglade-devel libncursesw-devel libsqlite3-devel zlib-devel
 #BuildRequires: %_bindir/git %_bindir/svnversion libICE-devel libSM-devel 
-BuildRequires: glib2-devel libglpk-devel libgnutls-devel libltdl7-devel libmicrohttpd-devel libunistring-devel pkgconfig(libgtop-2.0) python-devel
+BuildRequires: glib2-devel libglpk-devel libgnutls-devel libltdl7-devel libmicrohttpd-devel libunistring-devel pkgconfig(libgtop-2.0)
 BuildRequires: libpulseaudio-devel libopus-devel libogg-devel
 BuildRequires: libidn2-devel libjansson-devel libzbar-devel
 %if_with pgsql
@@ -80,9 +79,9 @@ export CFLAGS CXXFLAGS
 export LD_LIBRARY_PATH=$(pwd)/src/block/.libs:$(pwd)/src/ats/.libs:$(pwd)/src/statistics/.libs:$(pwd)/src/json/.libs:$(pwd)/src/gnsrecord/.libs
 %makeinstall_std
 %find_lang %name
-mkdir -p %buildroot{%_initdir,%_unitdir}
-install -m0755 %SOURCE1 %buildroot%_initdir/gnunetd
-install -m0644 %SOURCE2 %buildroot%_unitdir/gnunetd.service
+
+install -D -m0644 contrib/services/systemd/gnunet.service %buildroot%_unitdir/gnunetd.service
+install -D -m0644 %SOURCE3 %buildroot%_sysusersdir/gnunetd.conf
 
 # unpackaged files found
 rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
@@ -149,11 +148,9 @@ rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 #_libexecdir/gnunet/libexec/gnunet-helper-audio-record
 #_libexecdir/gnunet/libexec/gnunet-service-conversation
 
-
-
 %_datadir/gnunet/
-%_initdir/gnunetd
 %_unitdir/gnunetd.service
+%config %_sysusersdir/gnunetd.conf
 
 %files -n lib%name
 %_libdir/gnunet/
@@ -277,6 +274,11 @@ rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 %_libdir/pkgconfig/gnunetspeaker.pc
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 0.11.5-alt3
+- create service user _sysusersdir/gnunetd.conf and use it
+- remove sysvinit script
+- drop BR: python-devel
+
 * Sat Oct 16 2021 Igor Vlasenko <viy@altlinux.org> 0.11.5-alt2
 - NMU: rebuild with glpk
 
