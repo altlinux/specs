@@ -1,7 +1,7 @@
 %define oname msgpack
 
 Name: python3-module-%oname
-Version: 1.0.5
+Version: 1.0.7
 Release: alt1
 
 Summary: A Python 3 MessagePack (de)serializer
@@ -39,6 +39,9 @@ This is a Python (de)serializer for MessagePack.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 1.0.7-alt1
+- new version 1.0.7 (with rpmrb script)
+
 * Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 1.0.5-alt1
 - new version 1.0.5 (with rpmrb script)
 
