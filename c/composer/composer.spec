@@ -1,3 +1,8 @@
+%if_feature php83 8.3.0
+%def_with php83
+%define defphp php8.3
+%endif
+
 %if_feature php80 8.0.0
 %def_with php80
 %define defphp php8.0
@@ -8,15 +13,21 @@
 %define defphp php8.1
 %endif
 
+%if_feature php82 8.2.0
+%def_with php82
+%define defphp php8.2
+%endif
+
 %if_feature php7 7.4.3
 %def_with php7
 %define defphp php7
 %endif
 
+
 # Note: /usr/bin/compose still use php command
 
 Name: composer
-Version: 2.5.8
+Version: 2.7.1
 Release: alt1
 
 Summary: Composer helps you declare, manage and install dependencies of PHP projects, ensuring you have the right stack everywhere
@@ -79,6 +90,10 @@ install -m 0644 -D %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 2.7.1-alt1
+- new version 2.7.1 (with rpmrb script)
+- build with php8.2 by default
+
 * Sat Aug 12 2023 Vitaly Lipatov <lav@altlinux.ru> 2.5.8-alt1
 - new version (2.5.8) with rpmgs script
 - build with php8.1 if php7 is missed (ALT bug 44695)
