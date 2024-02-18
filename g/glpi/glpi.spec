@@ -1,8 +1,8 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 10.0.11
-Release: alt2
+Version: 10.0.12
+Release: alt1
 
 Summary: IT and asset management software
 License: GPLv3
@@ -167,6 +167,13 @@ fi
 %files php8.2
 
 %changelog
+* Fri Feb 02 2024 Pavel Zilke <zidex@altlinux.org> 10.0.12-alt1
+- New version 10.0.12
+- This release fixes a security issue that has been recently discovered. Update is recommended!
+- Security fixes:
+ + CVE-2024-23645 : Reflected XSS in reports pages
+ + CVE-2023-51446 : LDAP Injection during authentication ()
+
 * Tue Dec 19 2023 Pavel Zilke <zidex@altlinux.org> 10.0.11-alt2
 - Fix spec (ALT #48856)
 
