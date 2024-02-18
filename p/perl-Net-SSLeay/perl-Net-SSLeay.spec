@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Net-SSLeay
 Name: perl-%dist
-Version: 1.92
+Version: 1.94
 Release: alt1
 
 Summary: Perl extension for using OpenSSL
@@ -9,6 +9,8 @@ License: BSD-style
 Group: Development/Perl
 
 URL: %CPAN %dist
+VCS: git+https://github.com/radiator-software/p5-net-ssleay.git
+
 Source0: http://www.cpan.org/authors/id/M/MI/MIKEM/%{dist}-%{version}.tar
 
 # Automatically added by buildreq on Wed Sep 26 2012
@@ -36,6 +38,9 @@ so you can write servers or clients for more complicated applications.
 %perl_vendor_autolib/Net
 
 %changelog
+* Sun Feb 18 2024 Igor Vlasenko <viy@altlinux.org> 1.94-alt1
+- new version
+
 * Wed Jan 19 2022 Igor Vlasenko <viy@altlinux.org> 1.92-alt1
 - new version
 
