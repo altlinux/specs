@@ -12,7 +12,7 @@
 %def_without doc
 
 Name: python3-module-%oname
-Version: 5.3.4
+Version: 5.3.6
 Release: alt1
 
 Summary: Celery is an open source asynchronous task queue/job queue based on distributed message passing
@@ -157,6 +157,9 @@ rm -f t/unit/contrib/test_sphinx.py
 %endif
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 5.3.6-alt1
+- new version 5.3.6 (with rpmrb script)
+
 * Sun Oct 01 2023 Vitaly Lipatov <lav@altlinux.ru> 5.3.4-alt1
 - new version 5.3.4 (with rpmrb script)
 
