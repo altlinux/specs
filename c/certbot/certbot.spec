@@ -6,7 +6,7 @@
 
 Name: certbot
 Version: 2.8.0
-Release: alt1
+Release: alt2
 
 Summary: A free, automated certificate authority client
 
@@ -21,7 +21,7 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 BuildRequires: python3-devel python3-module-setuptools
-BuildRequires(pre): rpm-build-python3 rpm-build-intro
+BuildRequires(pre): rpm-build-python3 rpm-build-intro rpm-macros-features
 # man pages
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinx_rtd_theme
@@ -47,6 +47,13 @@ Requires: python3-module-future
 %py3_use pyrfc3339
 %py3_use pytz >= 2019.3
 
+%if_notfeature python3 3.9
+%py3_use importlib-resources >= 1.3.1
+%endif
+
+%if_notfeature python3 3.10
+%py3_use importlib-metadata >= 4.6
+%endif
 
 Provides: letsencrypt = %version
 Obsoletes: letsencrypt
@@ -262,6 +269,9 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 2.8.0-alt2
+- add BR: rpm-macros-features, add missed importlib.metadata if needed
+
 * Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 2.8.0-alt1
 - new version 2.8.0 (with rpmrb script)
 
