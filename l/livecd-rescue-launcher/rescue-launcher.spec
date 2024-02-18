@@ -1,6 +1,6 @@
 Name: livecd-rescue-launcher
 Version: 0.1.3
-Release: alt1
+Release: alt2
 
 Summary: Optional autorun feature for ALT Rescue
 License: GPL-2.0-or-later
@@ -12,6 +12,7 @@ Source: rescue-launcher-%version.tar
 Packager: Leonid Krivoshein <klark@altlinux.org>
 
 Provides: rescue-launcher = %EVR
+Obsoletes: rescue-launcher < %EVR
 
 %description
 This package contains additional scripts, used for auto-run
@@ -42,6 +43,9 @@ chmod 644 %buildroot/var/log/rescue-launcher.log
 %ghost /var/log/rescue-launcher.log
 
 %changelog
+* Sun Feb 18 2024 Anton Midyukov <antohami@altlinux.org> 0.1.3-alt2
+- Obsoletes: rescue-launcher < %%EVR
+
 * Mon Feb 05 2024 Anton Midyukov <antohami@altlinux.org> 0.1.3-alt1
 - rename package to livecd-rescue-launcher
 - replace /sbin to %%_sbindir
