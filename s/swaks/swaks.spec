@@ -1,7 +1,7 @@
 %define to_utf8(f:) iconv -f %{-f:%{-f*}}%{!-f:iso-8859-1} -t utf-8 < %1 > %1. && touch -r %1 %1. && mv -f %1. %1
 
 Name: swaks
-Version: 20201014.0
+Version: 20240103.0
 Release: alt1
 
 Summary: Command-line SMTP transaction tester
@@ -51,6 +51,9 @@ mkdir -p %buildroot/%_man1dir
 %doc README.txt doc/Changes.txt doc/recipes.txt doc/ref.txt
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 20240103.0-alt1
+- new version 20240103.0 (with rpmrb script)
+
 * Thu Nov 19 2020 Vitaly Lipatov <lav@altlinux.ru> 20201014.0-alt1
 - new version 20201014.0 (with rpmrb script)
 
