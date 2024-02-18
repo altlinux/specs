@@ -1,7 +1,7 @@
 %define oname repoze.who
 
 Name:           python3-module-%oname
-Version:        2.4.1
+Version:        3.0.0
 Release:        alt1
 
 Summary:        Identification and authentication framework for WSGI
@@ -105,6 +105,9 @@ done
 
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 3.0.0-alt1
+- new version 3.0.0 (with rpmrb script)
+
 * Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 2.4.1-alt1
 - new version 2.4.1 (with rpmrb script)
 
