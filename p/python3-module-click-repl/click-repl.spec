@@ -1,7 +1,7 @@
 %define oname click-repl
 
 Name: python3-module-click-repl
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
 Summary: REPL plugin for Click
@@ -46,5 +46,8 @@ REPL plugin for Click.
 %python3_sitelibdir/*
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 0.3.0-alt1
+- new version 0.3.0 (with rpmrb script)
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 0.2.0-alt1
 - initial build for ALT Sisyphus
