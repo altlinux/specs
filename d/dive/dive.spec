@@ -3,7 +3,7 @@
 # TODO: build with external sources
 
 Name: dive
-Version: 0.10.0
+Version: 0.12.0
 Release: alt1
 
 Summary: A tool for exploring each layer in a docker image
@@ -20,7 +20,8 @@ Source: %name-%version.tar
 Source1: %name-development-%version.tar
 
 BuildRequires(pre): rpm-macros-golang
-ExclusiveArch: %go_arches
+
+ExclusiveArch: x86_64 aarch64
 
 BuildRequires: golang >= 1.7
 
@@ -48,5 +49,9 @@ install -D -p -m 755 ./dist/dive %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 0.12.0-alt1
+- new version 0.12.0 (with rpmrb script)
+- build only for x86_64 and aarch64
+
 * Mon Jan 02 2023 Vitaly Lipatov <lav@altlinux.ru> 0.10.0-alt1
 - initial build for ALT Sisyphus
