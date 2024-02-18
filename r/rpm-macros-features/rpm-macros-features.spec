@@ -1,5 +1,5 @@
 Name: rpm-macros-features
-Version: 20240206
+Version: 20240217
 Release: alt1
 
 Summary: RPM macros to check if can build with a feature
@@ -20,6 +20,10 @@ BuildRequires: libvulkan-devel
 endif
 
 if_feature icu 6.5
+...
+endif
+
+if_notfeature python3 3.10
 ...
 endif
 
@@ -58,6 +62,10 @@ install -D -m644 macros %buildroot/%_rpmmacrosdir/features
 %_rpmmacrosdir/features
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 20240217-alt1
+- add if_notfeature
+- add python3, wine features
+
 * Tue Feb 06 2024 Vitaly Lipatov <lav@altlinux.ru> 20240206-alt1
 - update features' versions
 
