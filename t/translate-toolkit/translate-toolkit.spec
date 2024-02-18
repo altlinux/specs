@@ -1,8 +1,8 @@
 %define modname translate
 
 Name: translate-toolkit
-Version: 3.10.0
-Release: alt2
+Version: 3.12.2
+Release: alt1
 
 Summary: Tools and API for translation and localization engineering.
 
@@ -93,7 +93,7 @@ rm -fr %buildroot%python3_sitelibdir/%modname/docs/
 %filter_from_requires /mercurial/d
 
 # remove optional fluent
-rm %buildroot%python3_sitelibdir/%modname/storage/{fluent.py,test_fluent.py}
+rm %buildroot%python3_sitelibdir/%modname/storage/fluent.py
 
 %files
 %doc docs/{features,history,license}.rst
@@ -108,6 +108,9 @@ rm %buildroot%python3_sitelibdir/%modname/storage/{fluent.py,test_fluent.py}
 %doc docs/_build/html
 
 %changelog
+* Thu Feb 08 2024 Anton Midyukov <antohami@altlinux.org> 3.12.2-alt1
+- new version (3.12.2) with rpmgs script
+
 * Mon Aug 28 2023 Anton Midyukov <antohami@altlinux.org> 3.10.0-alt2
 - fix BuildRequires for build on p10
 
