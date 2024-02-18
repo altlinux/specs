@@ -1,7 +1,7 @@
 %define soname 2
 
 Name: libpaper
-Version: 2.1.2
+Version: 2.1.3
 Release: alt1
 Epoch: 2
 
@@ -106,6 +106,9 @@ to develop applications which use libpaper.
 %_libdir/libpaper.so
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 2:2.1.3-alt1
+- new version 2.1.3 (with rpmrb script)
+
 * Tue Nov 07 2023 Vitaly Lipatov <lav@altlinux.ru> 2:2.1.2-alt1
 - new version 2.1.2 (with rpmrb script)
 
