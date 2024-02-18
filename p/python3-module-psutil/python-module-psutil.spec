@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 5.9.5
-Release: alt1.1
+Version: 5.9.8
+Release: alt1
 
 Summary: A process utilities module for Python
 
@@ -55,6 +55,9 @@ py.test-3 -vv
 %python3_sitelibdir/*
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 5.9.8-alt1
+- new version 5.9.8 (with rpmrb script)
+
 * Thu Aug 17 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 5.9.5-alt1.1
 - NMU: ignored unmet dependency
 
