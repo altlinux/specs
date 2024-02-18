@@ -1,7 +1,7 @@
 %define oname diskcache
 
 Name: python3-module-diskcache
-Version: 5.6.1
+Version: 5.6.3
 Release: alt1
 
 Summary: Disk Cache -- Disk and file backed persistent cache
@@ -41,6 +41,9 @@ written in pure-Python, and compatible with Django.
 %python3_sitelibdir/*
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 5.6.3-alt1
+- new version 5.6.3 (with rpmrb script)
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 5.6.1-alt1
 - new version 5.6.1 (with rpmrb script)
 
