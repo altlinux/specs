@@ -1,5 +1,5 @@
 Name: patool
-Version: 1.15.0
+Version: 2.1.1
 Release: alt1
 
 Summary: Portable command line archive file manager
@@ -54,6 +54,9 @@ and do not require helper applications to be installed.
 %python3_sitelibdir/*
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
+- new version 2.1.1 (with rpmrb script)
+
 * Sat Oct 28 2023 Vitaly Lipatov <lav@altlinux.ru> 1.15.0-alt1
 - new version 1.15.0
 - switch to pyproject_build
