@@ -1,6 +1,6 @@
 %define oname PyDrive2
 Name: python3-module-pydrive2
-Version: 1.16.1
+Version: 1.19.0
 Release: alt1
 
 Summary: Google Drive API Python wrapper library, maintained fork of PyDrive
@@ -47,6 +47,9 @@ Google Drive API Python wrapper library. Maintained fork of PyDrive.
 %python3_sitelibdir/*
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 1.19.0-alt1
+- new version 1.19.0 (with rpmrb script)
+
 * Thu Jul 20 2023 Vitaly Lipatov <lav@altlinux.ru> 1.16.1-alt1
 - new version 1.16.1 (with rpmrb script)
 
