@@ -1,6 +1,6 @@
 
 Name: libwpg
-Version: 0.3.3
+Version: 0.3.4
 Release: alt1
 
 Summary: Library for importing and converting Corel WordPerfect(tm) Graphics images
@@ -21,6 +21,8 @@ BuildRequires: doxygen
 BuildRequires: help2man
 BuildRequires: pkgconfig(librevenge-0.0)
 BuildRequires: pkgconfig(libwpd-0.10)
+
+BuildRequires: boost-devel-headers
 
 %description
 libwpg is a library for reading and converting WPG images
@@ -97,6 +99,9 @@ install -m 0644 wpg2*.1 %buildroot%_man1dir/
 %doc docs/doxygen/html
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 0.3.4-alt1
+- new version 0.3.4 (with rpmrb script)
+
 * Sun Feb 10 2019 Vitaly Lipatov <lav@altlinux.ru> 0.3.3-alt1
 - new version 0.3.3 (with rpmrb script)
 
