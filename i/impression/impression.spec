@@ -7,7 +7,7 @@
 
 Name: impression
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Impression is a tool to create bootable drives
 License: GPL-3.0
@@ -68,6 +68,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Mon Feb 19 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt2
+- updated to v3.0.1-15-ge78b301
+
 * Tue Nov 07 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
 - 3.0.1
 
