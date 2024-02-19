@@ -1,20 +1,20 @@
-%define modname evdev
+%define pypi_name evdev
 
-Name: python3-module-%modname
-Version: 1.6.1
+Name: python3-module-%pypi_name
+Version: 1.7.0
 Release: alt1
 
 Summary: Python3 bindings to the generic input event interface
 Group: Development/Python3
 License: BSD-3-Clause
-Url: https://pypi.python.org/pypi/%modname
+Url: https://pypi.python.org/pypi/%pypi_name
 Vcs: https://github.com/gvalkov/python-evdev.git
 
-Source: https://pypi.io/packages/source/e/%modname/%modname-%version.tar.gz
+Source: https://pypi.io/packages/source/e/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: glibc-kernheaders
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3(wheel) python3(setuptools)
 
 %description
 This package provides bindings to the generic input event interface in
@@ -23,20 +23,23 @@ in the kernel directly to userspace through character devices that are
 typically located in /dev/input/
 
 %prep
-%setup -n %modname-%version
+%setup -n %pypi_name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%python3_sitelibdir/%modname/
-%exclude %python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 %doc README*
 
 %changelog
+* Mon Feb 19 2024 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
+- 1.7.0
+
 * Sat Jan 21 2023 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt1
 - 1.6.1
 
