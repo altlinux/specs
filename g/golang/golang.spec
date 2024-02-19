@@ -50,8 +50,8 @@
 %def_enable fail_on_tests
 
 Name:    golang
-Version: 1.21.7
-Release: alt2
+Version: 1.22.0
+Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
@@ -375,6 +375,9 @@ popd
 %files src -f go-src.list
 
 %changelog
+* Fri Feb 16 2024 Alexey Shabalin <shaba@altlinux.org> 1.22.0-alt1
+- New version (1.22.0).
+
 * Thu Feb 08 2024 Alexey Shabalin <shaba@altlinux.org> 1.21.7-alt2
 - Update files in tests package (ALT#48016).
 
