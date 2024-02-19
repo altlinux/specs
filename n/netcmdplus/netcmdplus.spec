@@ -3,20 +3,21 @@
 %define _samba_dc_pythonarchdir  %_samba_dc_mod_libdir/python%_python3_version
 
 Name: netcmdplus
-Version: 0.1.2
-Release: alt2
+Version: 0.1.3
+Release: alt1
 
 Summary: Extended samba-tool (netcmd) version
 License: GPLv3+
 Group: System/Configuration/Other
 
-Url: http://git.altlinux.org/people/manowar/packages/netcmdplus.git
-Packager: Paul Wolneykien <manowar@altlinux.org>
+Url: https://gitlab.basealt.space/alt/netcmdplus.git
 
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 
-BuildPreReq: rpm-build-python3
-BuildRequires: /usr/bin/2to3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 # Add conflicts due compatiblity with old samba package not provided alternative to heimdal libs
 Conflicts: samba-dc < 4.14.10-alt2
@@ -24,6 +25,9 @@ Conflicts: samba-dc < 4.14.10-alt2
 Conflicts: python3-module-samba < 4.14
 
 Conflicts: %name < %EVR
+
+# samba-tool-plus: binary uses samba_tool_plus function
+Requires: python3-module-samba > 4.18
 
 %description
 netcmdplus extends samba-tool "user" and "group" commands with additional operations.
@@ -40,18 +44,14 @@ This package contains Python3 module code that extends samba.netcmd package.
 
 %prep
 %setup
-find . -type f -name '*.py' -exec \
-    sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' '{}' +
-find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
-
-sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' bin/samba-tool-plus
-2to3 -w -n bin/samba-tool-plus
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 mkdir -p %buildroot%_altdir
 mkdir -p %buildroot%_samba_mod_libdir/bin
@@ -71,9 +71,13 @@ printf "%_bindir/samba-tool-plus\t%_samba_mod_libdir/bin/samba-tool-plus\t20\n" 
 
 %files -n python3-module-%name
 %python3_sitelibdir_noarch/%name/
-%python3_sitelibdir_noarch/*.egg-info
+%python3_sitelibdir_noarch/%{pyproject_distinfo %name}/
 
 %changelog
+* Mon Feb 19 2024 Evgeny Sinelnikov <sin@altlinux.org> 0.1.3-alt1
+- Add compatibility with stable releases of samba-4.18 and later (closes: 49404).
+- Replace python3 build to new pyproject_build process.
+
 * Sat Nov 13 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.1.2-alt2
 - Add support samba-tool-plus alternatives for various samba-dc and
   samba-dc-mitkrb5 builds with Heimdal and MIT Kerberos respectively.
