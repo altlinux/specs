@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 3.22
 %define xdg_name org.gnome.Meld
@@ -6,8 +6,8 @@
 %def_enable check
 
 Name: meld
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Meld Diff Viewer
 License: GPL-2.0-or-later
@@ -69,6 +69,9 @@ including Git, Bazaar, Mercurial, Subversion and CVS.
 %doc NEWS README*
 
 %changelog
+* Sun Feb 18 2024 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
+- 3.22.1
+
 * Tue Oct 17 2023 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt2
 - updated to 3.22.0-53-geebd1a0e
 - excluded useless build_helpers.py
