@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.28
-Release: alt1.1
+Release: alt1.2
 
 Summary: Implementations of freedesktop.org standards in Python 3
 License: LGPL-2.0
@@ -23,11 +23,11 @@ Source: %pypi_name-%version.tar
 BuildArch: noarch
 
 Requires: shared-mime-info
-Provides: %pypi_name = %version-%release
+Provides: %pypi_name = %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
-%{?_enable_check:BuildRequires: python3-module-pytest shared-mime-info}
+%{?_enable_check:BuildRequires: python3(pytest) python3(imp) shared-mime-info}
 
 %description
 PyXDG contains implementations of freedesktop.org standards in Python 3.
@@ -51,6 +51,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir py.test-3
 
 
 %changelog
+* Mon Feb 19 2024 Yuri N. Sedunov <aris@altlinux.org> 0.28-alt1.2
+- updated BR
+
 * Thu May 04 2023 Yuri N. Sedunov <aris@altlinux.org> 0.28-alt1.1
 - removed python3-module-nose from BR (ALT #46064)
 
