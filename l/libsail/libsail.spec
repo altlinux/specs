@@ -3,10 +3,10 @@
 # https://bugzilla.altlinux.org/36576
 # SVG: libresvg (not now)
 
-%define pre -rc3
+%define pre %nil
 Name: libsail
-Version: 0.9.0
-Release: alt2.rc3
+Version: 0.9.1
+Release: alt1
 
 Summary: Squirrel Abstract Image Library
 
@@ -63,10 +63,13 @@ mv %buildroot/usr/lib/cmake %buildroot%_libdir/
 %files devel
 %_libdir/cmake/*
 %_libdir/libsail*.so
-%_pkgconfigdir/libsail*.pc
+%_pkgconfigdir/*.pc
 %_includedir/sail/
 
 %changelog
+* Mon Feb 19 2024 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt1
+- new version (0.9.1) with rpmgs script
+
 * Sat Aug 05 2023 Vitaly Lipatov <lav@altlinux.ru> 0.9.0-alt2.rc3
 - update to 0.9.0-rc3
 - add BR: libavif-devel
