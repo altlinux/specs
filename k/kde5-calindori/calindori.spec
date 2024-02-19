@@ -4,8 +4,8 @@
 %define libcalindori libcalindori%sover
 
 Name: kde5-%rname
-Version: 23.08.4
-Release: alt2
+Version: 23.08.5
+Release: alt1
 %K5init
 
 Summary: Calendar application for Plasma Mobile
@@ -56,6 +56,9 @@ Calindori is a touch friendly calendar application. It has been designed for mob
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
+- new version
+
 * Mon Dec 18 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt2
 - fix segfault when deleting event or todo from associated lists (closes: 42708) (thanks krf10@alt)
 

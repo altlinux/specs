@@ -1,8 +1,8 @@
 %define rname krecorder
 
 Name: kde5-%rname
-Version: 23.08.4
-Release: alt4
+Version: 23.08.5
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -87,6 +87,9 @@ Requires: %name-common
 #%_K5lib/libkrecorder.so.*
 
 %changelog
+* Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
+- new version
+
 * Tue Jan 16 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 23.08.4-alt4
 - update patches to fix incorrect file saving and text overlay
 

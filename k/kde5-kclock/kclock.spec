@@ -1,8 +1,8 @@
 %define rname kclock
 
 Name: kde5-%rname
-Version: 23.08.4
-Release: alt2
+Version: 23.08.5
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -86,6 +86,9 @@ Requires: %name-common
 
 
 %changelog
+* Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
+- new version
+
 * Wed Dec 27 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt2
 - clear country name when hard to use
 
