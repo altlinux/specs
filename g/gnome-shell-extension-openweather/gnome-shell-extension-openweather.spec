@@ -2,7 +2,7 @@
 
 %define _name openweather
 %define git_name gnome-%_name
-%define ver_major 128
+%define ver_major 129
 %define beta %nil
 %define uuid %_name-extension@penguin-teal.github.io
 %define xdg_name org.gnome.shell.extensions.%{_name}refined
@@ -30,6 +30,7 @@ Source: %git_name-%version%beta.tar
 
 Requires: gnome-shell >= 45
 Requires: typelib(Adw) = 1
+Requires: geoclue2 typelib(Geoclue)
 
 BuildRequires: /usr/bin/glib-compile-schemas
 
@@ -60,6 +61,9 @@ including 3 hour forecasts for up to 5 days.
 %doc AUTHORS README.md CHANGELOG*
 
 %changelog
+* Mon Feb 19 2024 Yuri N. Sedunov <aris@altlinux.org> 129-alt1
+- 129
+
 * Fri Feb 02 2024 Yuri N. Sedunov <aris@altlinux.org> 128-alt1
 - 128
 
