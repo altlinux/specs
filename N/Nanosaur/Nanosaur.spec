@@ -1,6 +1,6 @@
 Name:    Nanosaur
 Version: 1.4.4
-Release: alt1
+Release: alt2
 
 Summary: Nanosaur source port
 License: Creative Commons Attribution-NonCommercialShare Alike 4.0
@@ -38,7 +38,7 @@ install -D -m0644 ./packaging/io.jor.nanosaur.appdata.xml  %buildroot%_datadir/a
 for N in 16 32 48 64 128;
 do
 convert ./packaging/Nanosaur.png -scale ${N}x${N} $N.png;
-install -D -m 0644 $N.png %buildroot%_iconsdir/hicolor/${N}x${N}/apps/%name.png
+install -D -m 0644 $N.png %buildroot%_iconsdir/hicolor/${N}x${N}/apps/io.jor.nanosaur.png
 done
 
 %files 
@@ -48,9 +48,12 @@ done
 %_libexecdir/%name/%name
 %_libexecdir/%name/Data/
 %_datadir/applications/io.jor.nanosaur.desktop
-%_iconsdir/hicolor/*/apps/%name.png
+%_iconsdir/hicolor/*/apps/io.jor.nanosaur.png
 %_datadir/appdata/io.jor.nanosaur.appdata.xml
 
 %changelog
+* Mon Feb 19 2024 Artyom Bystrov <arbars@altlinux.org> 1.4.4-alt2
+- Fix icon on desktop file
+
 * Mon Nov 27 2023 Artyom Bystrov <arbars@altlinux.org> 1.4.4-alt1
 - Initial build for Sisyphus
