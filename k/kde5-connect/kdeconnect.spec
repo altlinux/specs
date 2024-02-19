@@ -9,7 +9,7 @@
 %add_findreq_skiplist %_datadir/nautilus-python/extensions/*.py
 
 Name: kde5-connect
-Version: 23.08.4
+Version: 23.08.5
 Release: alt1
 %K5init
 
@@ -167,6 +167,9 @@ done
 #%_K5lib/libkdeconnectsmshelper.so.*
 
 %changelog
+* Fri Feb 16 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
+- new version
+
 * Mon Dec 11 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
 - new version
 

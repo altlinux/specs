@@ -5,7 +5,7 @@
 %define service_name app-org.kde.spectacle
 
 Name: kde5-%rname
-Version: 23.08.4
+Version: 23.08.5
 Release: alt1
 %K5init
 
@@ -93,6 +93,9 @@ developing applications that use %name.
 #%_K5dbus_iface/org.kde.Spectacle.xml
 
 %changelog
+* Fri Feb 16 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
+- new version
+
 * Mon Dec 11 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
 - new version
 

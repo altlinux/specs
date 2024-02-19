@@ -1,8 +1,8 @@
 %define rname filelight
 
 Name: kde5-%rname
-Version: 23.08.4
-Release: alt2
+Version: 23.08.5
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -73,6 +73,9 @@ KF5 library
 %_datadir/metainfo/*.xml
 
 %changelog
+* Fri Feb 16 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
+- new version
+
 * Tue Dec 26 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt2
 - fix russian translation
 

@@ -11,8 +11,8 @@
 %define libokularcore libokular5core%sover
 
 Name: kde5-%rname
-Version: 23.08.4
-Release: alt2
+Version: 23.08.5
+Release: alt1
 %K5init no_altplace
 
 Group: Office
@@ -117,9 +117,6 @@ cat "$tmp_file" >po/ru/okular.po
 rm -f "$tmp_file"
 
 %build
-%_K5if_ver_lt %ubt_id M110
-%add_optflags -std=c++17
-%endif
 %K5build \
 %if_enabled mobile
     -DOKULAR_UI=both \
@@ -193,6 +190,9 @@ fi
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Fri Feb 16 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
+- new version
+
 * Tue Feb 06 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt2
 - fix compile with gcc-10 and new poppler
 

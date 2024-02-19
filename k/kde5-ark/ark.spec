@@ -6,8 +6,8 @@
 %def_disable libzip
 
 Name: kde5-%rname
-Version: 23.08.4
-Release: alt2
+Version: 23.08.5
+Release: alt1
 %K5init
 
 Group: Archiving/Compression
@@ -107,6 +107,9 @@ sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
 %_K5lib/libkerfuffle.so.*
 
 %changelog
+* Fri Feb 16 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
+- new version
+
 * Fri Feb 09 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt2
 - don't prefer clizip plugin over cli7z (closes: 49339)
 

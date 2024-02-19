@@ -1,7 +1,7 @@
 %define rname kruler
 
 Name: kde5-%rname
-Version: 23.08.4
+Version: 23.08.5
 Release: alt1
 %K5init
 
@@ -45,6 +45,9 @@ BuildRequires: kf5-ki18n-devel kf5-knotifications-devel kf5-kwidgetsaddons-devel
 %_datadir/metainfo/*.xml
 
 %changelog
+* Fri Feb 16 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
+- new version
+
 * Mon Dec 11 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
 - new version
 
