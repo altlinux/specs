@@ -1,11 +1,11 @@
 Name:    CroMagRally
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
 Summary: The wildest racing game since man invented the wheel!
 License: Creative Commons Attribution-NonCommercialShare Alike 4.0
 Group:   Games/Arcade
-Url:     https://github.com/jorio/Nanosaur
+Url:     https://github.com/jorio/CroMagRally
 
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
@@ -37,7 +37,7 @@ install -D -m0644 ./packaging/cromagrally.desktop %{buildroot}%_desktopdir/croma
 for N in 16 32 48 64 128;
 do
 convert ./packaging/cromagrally-desktopicon.png -scale ${N}x${N} $N.png;
-install -D -m 0644 $N.png %buildroot%_iconsdir/hicolor/${N}x${N}/apps/%name.png
+install -D -m 0644 $N.png %buildroot%_iconsdir/hicolor/${N}x${N}/apps/cromagrally-desktopicon.png
 done
 
 %files 
@@ -47,8 +47,12 @@ done
 %_libexecdir/%name/%name
 %_libexecdir/%name/Data/
 %_datadir/applications/cromagrally.desktop
-%_iconsdir/hicolor/*/apps/%name.png
+%_iconsdir/hicolor/*/apps/cromagrally-desktopicon.png
 
 %changelog
+* Mon Feb 19 2024 Artyom Bystrov <arbars@altlinux.org> 3.0.0-alt2
+- Fix icon on desktop file
+- Fix link to source {ALTBUG #48633}
+
 * Tue Nov 28 2023 Artyom Bystrov <arbars@altlinux.org> 3.0.0-alt1
 - Initial build for Sisyphus
