@@ -1,7 +1,7 @@
 %define name podman-compose
 Name: %name
 Version: 1.0.6
-Release: alt1
+Release: alt2
 Summary: An implementation of Docker Compose Spec with Podman backend
 BuildArch: noarch
 
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 
 BuildRequires: rpm-build-python3
 
-Requires: podman >= 4.8.3-alt2
+Requires: podman >= 4.4.2
 
 %description
 An implementation of Docker Compose Spec
@@ -41,6 +41,9 @@ Using podman-compose you can migrate the docker-compose solution to kubernetes.
 %python3_sitelibdir/*
 
 %changelog
+* Sun Feb 18 2024 Alexey Kostarev <kaf@altlinux.org> 1.0.6-alt2
+- 1.0.6
+
 * Mon Jan 15 2024 Alexey Kostarev <kaf@altlinux.org> 1.0.6-alt1
 - 1.0.6
 
