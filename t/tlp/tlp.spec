@@ -1,6 +1,6 @@
 Name: tlp
-Version: 1.5.0
-Release: alt2
+Version: 1.6.1
+Release: alt1
 
 Summary: Optimize laptop battery life
 
@@ -123,6 +123,9 @@ fi
 %preun
 %preun_service tlp
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 1.6.1-alt1
+- new version 1.6.1 (with rpmrb script)
+
 * Fri Apr 28 2023 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt2
 - manual build for Sisyphus
 
