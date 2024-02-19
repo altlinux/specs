@@ -1,23 +1,23 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 8.0
-%define _dotnet_corerelease 8.0.0-rc.2.23479.6
-%define _dotnet_sdkmanifestsrelease1 8.0.100-rc.1
-%define _dotnet_sdkmanifestsrelease 8.0.100-rc.2
-%define _dotnet_sdkrelease 8.0.100-rc.2.23502.2
-%define _dotnet_aspnetcorerelease 8.0.0-rc.2.23480.2
-%define _dotnet_templatesrelease 8.0.0-rc.2.23480.2
-%define _dotnet_coreapprefrelease 8.0.0-rc.2.23479.6
-%define _dotnet_aspnetcoreapprefrelease 8.0.0-rc.2.23480.2
+%define _dotnet_corerelease 8.0.2
+#define _dotnet_sdkmanifestsrelease1 %nil
+%define _dotnet_sdkmanifestsrelease 8.0.100
+%define _dotnet_sdkrelease 8.0.102
+%define _dotnet_aspnetcorerelease %_dotnet_corerelease
+%define _dotnet_templatesrelease %_dotnet_corerelease
+%define _dotnet_coreapprefrelease %_dotnet_corerelease
+%define _dotnet_aspnetcoreapprefrelease %_dotnet_corerelease
 %define _dotnet_netstandartrelease 2.1.0
-%define preview .rc.2.23502.2
-%define _dotnet_coreshortrelease 8.0.0%preview
-%define _dotnet_sdkshortrelease 8.0.100%preview
+%define preview %nil
+%define _dotnet_coreshortrelease %_dotnet_corerelease%preview
+%define _dotnet_sdkshortrelease %_dotnet_sdkrelease%preview
 
 %define _dotnetdir %_libdir/%name
 
 Name: dotnet-bootstrap-%_dotnet_major
-Version: 8.0.0%preview
+Version: 8.0.2%preview
 Release: alt1
 
 Summary: .NET 8 SDK binaries
@@ -30,11 +30,11 @@ Group: Development/Other
 # from https://github.com/dotnet/core/tree/master/release-notes/8.0
 
 # x86_64
-# Source-url: https://download.visualstudio.microsoft.com/download/pr/9144f37e-b370-41ee-a86f-2d2a69251652/bc1d544112ec134184a5aec7f7a1eaf9/dotnet-sdk-8.0.100-rc.2.23502.2-linux-x64.tar.gz
+# Source-url: https://download.visualstudio.microsoft.com/download/pr/672cfd95-c7fe-42e3-8b68-30c74f7af88e/ecdaa65fe42b6572ed37d407c26de8a2/dotnet-sdk-8.0.102-linux-x64.tar.gz
 Source: %name-%version.tar
 
 # aarch64
-# Source2-url: https://download.visualstudio.microsoft.com/download/pr/0247681a-1a4a-4a32-a1a6-4149d56af27e/5bcbf1d8189c2649b16d27f5199e04a4/dotnet-sdk-8.0.100-rc.2.23502.2-linux-arm64.tar.gz
+# Source2-url: https://download.visualstudio.microsoft.com/download/pr/23568042-614a-41d3-a6b9-51e178e42977/cb1e1f4f5fb5d46080a60cd14d631660/dotnet-sdk-8.0.102-linux-arm64.tar.gz
 Source2: %name-aarch64-%version.tar
 
 ExclusiveArch: x86_64 aarch64
@@ -115,7 +115,9 @@ strip \
 %dir %_dotnetdir/sdk/
 %_dotnet_sdk/
 %dir %_dotnetdir/sdk-manifests/
+%ifdef _dotnet_sdkmanifestsrelease1
 %_dotnetdir/sdk-manifests/%_dotnet_sdkmanifestsrelease1/
+%endif
 %_dotnet_sdkmanifests/
 %dir %_dotnetdir/shared/
 %dir %_dotnetdir/shared/Microsoft.NETCore.App/
@@ -126,6 +128,17 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.2-alt1
+- The .NET 8.0.2 and .NET SDK 8.0.2 release
+- CVE-2023-36038: .NET Denial of Service Vulnerability
+- CVE-2023-36049: .NET Elevation of Privilege Vulnerability
+- CVE-2023-36558: .NET Security Feature Bypass Vulnerability
+- CVE-2024-0056: Microsoft.Data.SqlClient and System.Data.SqlClient SQL Data provider Information Disclosure Vulnerability
+- CVE-2024-0057: .NET Security Feature bypass Vulnerability
+- CVE-2024-21319: .NET Denial of Service Vulnerability
+- CVE-2024-21386: .NET Denial of Service Vulnerability
+- CVE-2024-21404: .NET Denial of Service Vulnerability
+
 * Mon Jan 08 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.0.rc.2.23502.2-alt1
 - The .NET 8.0 and .NET SDK 8.0.0 RC2
 

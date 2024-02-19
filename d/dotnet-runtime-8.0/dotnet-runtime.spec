@@ -2,12 +2,13 @@
 %def_disable dotnet_host
 
 %define _dotnet_major 8.0
-%define _dotnet_corerelease 8.0.0-rc.2.23479.6
+%define _dotnet_corerelease 8.0.2
 # used for build
-%define _dotnet_sdkrelease 8.0.100-rc.2.23502.2
-%define preview .rc.2.23502.2
-%define _dotnet_sdkshortrelease 8.0.100%preview
+%define _dotnet_sdkrelease 8.0.102
+%define preview %nil
+%define _dotnet_sdkshortrelease %_dotnet_sdkrelease%preview
 
+%define upstream_tag v%_dotnet_corerelease
 %define commithash %version-%release
 
 # Debug Release
@@ -25,7 +26,7 @@
 %endif
 
 Name: dotnet-runtime-%_dotnet_major
-Version: 8.0.0%preview
+Version: 8.0.2%preview
 Release: alt1
 
 Summary: Microsoft .NET Runtime and Microsoft.NETCore.App
@@ -36,6 +37,9 @@ Group: Development/Other
 
 # Source-url: https://github.com/dotnet/runtime/archive/v%{_dotnet_corerelease}.tar.gz
 Source: %name-%version.tar
+
+# Full upstream information about release
+#Source1: https://github.com/dotnet/dotnet/releases/download/%{upstream_tag}/release.json
 
 Patch1: genmoduleindex.sh.patch
 
@@ -177,6 +181,12 @@ contributing to the project on GitHub (https://github.com/dotnet/core).
 %setup
 %patch1 -p2
 
+#release_json_tag="$(grep tag %SOURCE1 | cut -d: -f2 | sed -E 's/[," ]*//g')"
+#if [ ${release_json_tag} != %{upstream_tag} ]; then
+#   echo "error: tag in release.json doesn't match tag in spec file"
+#   exit 1
+#fi
+
 # set global runtime location
 %__subst "s|/usr/share/dotnet|%_dotnetdir|" src/native/corehost/hostmisc/pal.unix.cpp
 
@@ -188,7 +198,7 @@ rm -rfv src/coreclr/pal/src/libunwind*
 %endif
 
 # be equal to our bootstrap version
-%__subst "s|%_dotnet_major.100|%_dotnet_sdkrelease|" global.json
+%__subst "s|%_dotnet_major.1[0-9][0-9]|%_dotnet_sdkrelease|" global.json
 
 %build
 #export DotNetRunningInDocker=1
@@ -217,19 +227,18 @@ cd -
 
 # build Native libraries
 cd src/native/libs/
-bash -x ./build-native.sh %debrelopt -skipgenerateversion
+bash -x ./build-native.sh %debrelopt
 cd -
+
+# FIXME: allow get the release info from release.json file
+subst 's|Version N/A|Version %_dotnet_corerelease|' artifacts/obj/_version.c
+subst 's|RuntimeProductVersion 0.0.0-dev|RuntimeProductVersion %_dotnet_corerelease|' artifacts/obj/runtime_version.h
 
 # build host commands
 export artifacts=$(pwd)/artifacts
 cd src/native/corehost/
 sh -x ./build.sh \
     %debrelopt \
-    -hostver %_dotnet_corerelease \
-    -apphostver %_dotnet_corerelease \
-    -fxrver %_dotnet_corerelease \
-    -policyver %_dotnet_corerelease \
-    -skipgenerateversion \
     -portablebuild 0 \
     -coreclrartifacts $artifacts/bin/coreclr/Linux.%_dotnet_arch.%debrel \
     -nativelibsartifacts  $artifacts/bin/native/Linux-%_dotnet_arch-%debrel \
@@ -294,6 +303,9 @@ cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/Microsoft.
 rm -fv %buildroot%_dotnet_shared/libsuperpmi-shim-*.so
 rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 
+%check
+#%buildroot%_dotnetdir/dotnet --info
+#%buildroot%_dotnetdir/dotnet --version
 
 %files
 %doc LICENSE.TXT PATENTS.TXT THIRD-PARTY-NOTICES.TXT README.md CONTRIBUTING.md
@@ -384,6 +396,17 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.2-alt1
+- .NET 8.0.2 release
+- CVE-2023-36038: .NET Denial of Service Vulnerability
+- CVE-2023-36049: .NET Elevation of Privilege Vulnerability
+- CVE-2023-36558: .NET Security Feature Bypass Vulnerability
+- CVE-2024-0056: Microsoft.Data.SqlClient and System.Data.SqlClient SQL Data provider Information Disclosure Vulnerability
+- CVE-2024-0057: .NET Security Feature bypass Vulnerability
+- CVE-2024-21319: .NET Denial of Service Vulnerability
+- CVE-2024-21386: .NET Denial of Service Vulnerability
+- CVE-2024-21404: .NET Denial of Service Vulnerability
+
 * Mon Jan 08 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.0.rc.2.23502.2-alt1
 - .NET 8.0.0 RC2
 - CVE-2023-44487: .NET Denial of Service Vulnerability
