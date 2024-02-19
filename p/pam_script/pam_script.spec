@@ -1,6 +1,6 @@
 %define oname pam-script
 Name: pam_script
-Version: 1.1.8
+Version: 1.1.9
 Release: alt1
 
 Summary: This PAM module can invoke scripts within the PAM stack
@@ -32,7 +32,7 @@ other scripts.
 
 %build
 # it is strange we need it
-mkdir config
+#mkdir config
 %autoreconf
 %configure	--prefix=%prefix \
 		--libdir=%_pam_modules_dir \
@@ -53,6 +53,9 @@ rm -f %buildroot/%_sysconfdir/pam-script/logscript
 %_man7dir/*
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 1.1.9-alt1
+- new version 1.1.9 (with rpmrb script)
+
 * Sat Sep 24 2016 Vitaly Lipatov <lav@altlinux.ru> 1.1.8-alt1
 - new version 1.1.8 (with rpmrb script)
 
