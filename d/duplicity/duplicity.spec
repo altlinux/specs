@@ -1,5 +1,5 @@
 Name: duplicity
-Version: 1.2.3
+Version: 2.2.1
 Release: alt1
 
 Summary: Untrusted/encrypted backup using rsync algorithm
@@ -8,9 +8,7 @@ Group: Archiving/Backup
 Url: https://gitlab.com/duplicity/duplicity
 License: GPLv2
 
-#Source-url: https://gitlab.com/duplicity/duplicity/-/archive/rel.%version/duplicity-rel.%version.tar.bz2
-# tarball filled with version and date (see VersionedCopy in setup.py)
-# Source-url: https://launchpad.net/duplicity/1.0/%{version}/+download/duplicity-%{version}.tar.gz
+# Source-url: https://gitlab.com/duplicity/duplicity/-/archive/rel.%version/duplicity-rel.%version.tar.bz2
 Source: %name-%version.tar
 
 AutoProv:no
@@ -65,13 +63,17 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 
 %files -f %name.lang
 %doc CHANGELOG.md README*
-%_bindir/rdiffdir
+#%_bindir/rdiffdir
 %_bindir/duplicity
 %_man1dir/*
 %python3_sitelibdir/%name/
 %python3_sitelibdir/%name-*.egg-info
 
 %changelog
+* Mon Feb 19 2024 Vitaly Lipatov <lav@altlinux.ru> 2.2.1-alt1
+- new version 2.2.1 (with rpmrb script)
+- no more rdiffdir binary
+
 * Fri Jun 30 2023 Vitaly Lipatov <lav@altlinux.ru> 1.2.3-alt1
 - new version 1.2.3 (with rpmrb script)
 
