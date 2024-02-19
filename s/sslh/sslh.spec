@@ -1,5 +1,5 @@
 Name: sslh
-Version: 1.22c
+Version: 2.0.1
 Release: alt1
 
 Summary: A ssl/ssh multiplexer
@@ -16,7 +16,7 @@ Source3: sslh.service
 Source4: sslh.cfg
 
 # Automatically added by buildreq on Sun Aug 29 2021
-BuildRequires: libcap-devel libconfig-devel libpcre2-devel libsystemd-devel perl-Pod-Parser
+BuildRequires: libcap-devel libconfig-devel libpcre2-devel libsystemd-devel libev-devel perl-Pod-Parser
 
 %description
 sslh lets one accept both HTTPS and SSH connections on the
@@ -55,6 +55,9 @@ install -m 644 %SOURCE4 %buildroot%_sysconfdir/%name/sslh.cfg
 %config(noreplace) %_sysconfdir/%name/sslh.cfg
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt1
+- new version 2.0.1 (with rpmrb script)
+
 * Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1.22c-alt1
 - new version 1.22c (with rpmrb script)
 
