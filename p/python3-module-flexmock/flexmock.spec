@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.11.3
-Release: alt1
+Release: alt2
 
 Summary: Mock/Stub/Spy library for Python
 License: BSD-2-Clause
@@ -14,6 +14,7 @@ Url: https://pypi.org/project/flexmock/
 Vcs: https://github.com/flexmock/flexmock
 
 Source: %name-%version.tar
+Patch: flexmock-0.11.3-subunit-fix.patch
 
 BuildArch: noarch
 
@@ -32,6 +33,7 @@ mocks, stubs and fakes.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %pyproject_build
@@ -49,6 +51,9 @@ sed -i '/python tests\/test_teamcity.py/d' tox.ini
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Mon Feb 19 2024 Anton Vyatkin <toni@altlinux.org> 0.11.3-alt2
+- Fixed FTBFS.
+
 * Thu Mar 30 2023 Anton Vyatkin <toni@altlinux.org> 0.11.3-alt1
 - New version 0.11.3.
 
