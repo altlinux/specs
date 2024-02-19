@@ -1,5 +1,5 @@
 Name: ima-integrity-check
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: IMA integrity check
@@ -55,13 +55,13 @@ sed -r -e "s;@LIBDIRS@;$LIBDIRS;" -e "s;@EXECLIBDIRS@;$LIBEXECDIRS;" integrity-s
 chmod +x integrity-sign
 
 %install
-install -pD -m 750 integrity-sign %buildroot%_sbindir/integrity-sign
-install -pD -m 750 integrity-applier %buildroot%_bindir/integrity-applier
-install -pD -m 750 integrity-remover %buildroot%_bindir/integrity-remover
-install -pD -m 750 utils/signing  %buildroot%_sbindir/signing
-install -pD -m 750 utils/signing-utils  %buildroot%_sbindir/signing-utils
-install -pD -m 750 utils/signing.utils.parse  %buildroot%_sbindir/signing.utils.parse
-install -pD -m 750 units/signing.service %buildroot/%_unitdir/signing.service
+install -pD -m 700 integrity-sign %buildroot%_sbindir/integrity-sign
+install -pD -m 700 integrity-applier %buildroot%_bindir/integrity-applier
+install -pD -m 700 integrity-remover %buildroot%_bindir/integrity-remover
+install -pD -m 700 utils/signing  %buildroot%_sbindir/signing
+install -pD -m 700 utils/signing-utils  %buildroot%_sbindir/signing-utils
+install -pD -m 700 utils/signing.utils.parse  %buildroot%_sbindir/signing.utils.parse
+install -pD -m 600 units/signing.service %buildroot%_unitdir/signing.service
 
 
 
@@ -88,7 +88,6 @@ fi
 %_sbindir/signing
 %_sbindir/signing-utils
 %_sbindir/signing.utils.parse
-
 %_unitdir/signing.service
 
 
@@ -100,6 +99,9 @@ fi
 %_datadir/make-initrd/features/integrity
 
 %changelog
+* Tue Feb 13 2024 Denis Medvedev <nbr@altlinux.org> 0.5.2-alt1
+- changed operations to manual signing.
+
 * Mon Dec 25 2023 Denis Medvedev <nbr@altlinux.org> 0.5.1-alt1
 - Initial release, based on ima-evm-integrity-check and parts of
 cert-distro-updater
