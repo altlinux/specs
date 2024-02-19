@@ -10,7 +10,7 @@
 
 Name: chromatic
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 
 Summary: Fine-tune your instruments with Chromatic
 License: GPL-3.0-or-later
@@ -46,8 +46,9 @@ intuitive. Requires PulseAudio or PipeWire.
 %setup -n %name-%version %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 mkdir .cargo
+cargo update -p rustc-serialize
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
-tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
+tar -cf %_sourcedir/%name-%version-cargo.tar Cargo.lock .cargo/ vendor/}
 
 %build
 %meson
@@ -71,6 +72,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Mon Feb 19 2024 Yuri N. Sedunov <aris@altlinux.org> 0.1.2-alt1.1
+- fixed build by updating rustc-serialize to 3.0.25
+
 * Wed Jan 03 2024 Yuri N. Sedunov <aris@altlinux.org> 0.1.2-alt1
 - first build for Sisyphus (ffaeb50)
 
