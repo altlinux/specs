@@ -5,7 +5,7 @@
 %endif
 
 Name: kde5-virtual
-Version: 5.28.2
+Version: 5.28.3
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -120,7 +120,7 @@ Obsoletes: kde5-volume-control-2-kmix < %EVR
 %description -n kde5-volume-control-2-alsa
 %summary
 
-%package -n kde5-volume-control-4-pipewire
+%package -n kde5-volume-control-7-pipewire
 Group: Graphical desktop/KDE
 Summary: Plasma PulseAudio volume control
 Provides: kde5-volume-control = %EVR
@@ -128,14 +128,17 @@ Provides: kde5-volume-control-pipewire = %EVR
 Requires: kf5-filesystem
 Requires: plasma5-pa
 Requires: pipewire pipewire-utils wireplumber
-%description -n kde5-volume-control-4-pipewire
+#
+Provides: kde5-volume-control-4-pipewire = %EVR
+Obsoletes: kde5-volume-control-4-pipewire < %EVR
+%description -n kde5-volume-control-7-pipewire
 %summary
 
 %package -n kde5-volume-control-6-pulseaudio
 Group: Graphical desktop/KDE
 Summary: Plasma PulseAudio volume control
 Provides: kde5-volume-control = %EVR
-Provides: kde5-volume-control-plasmapulse = %EVR
+Provides: kde5-volume-control-pulseaudio = %EVR
 Requires: kf5-filesystem
 Requires: plasma5-pa
 Requires: pulseaudio-daemon
@@ -288,8 +291,8 @@ Requires: sddm sddm-theme-breeze plasma5-sddm-kcm dm-tool
 
 %files -n kde5-volume-control-0-dummy
 %files -n kde5-volume-control-2-alsa
-%files -n kde5-volume-control-4-pipewire
 %files -n kde5-volume-control-6-pulseaudio
+%files -n kde5-volume-control-7-pipewire
 
 %files -n kde5-email-client-0-dummy
 %if_enabled qtwebengine
@@ -312,6 +315,9 @@ Requires: sddm sddm-theme-breeze plasma5-sddm-kcm dm-tool
 %files -n kde5-display-manager-7-lightdm
 
 %changelog
+* Tue Feb 20 2024 Sergey V Turchin <zerg@altlinux.org> 5.28.3-alt1
+- increase kde5-volume-control-pipewire priority over pulseaudio
+
 * Fri Dec 29 2023 Sergey V Turchin <zerg@altlinux.org> 5.28.2-alt1
 - update pipewire requires
 
