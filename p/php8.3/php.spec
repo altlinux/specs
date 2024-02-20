@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  3
-%define _php_release_version 2
+%define _php_release_version 3
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -33,10 +33,10 @@ Source2: php-packaging.readme
 Source3: php.ini
 Source4: phpinfo.tar
 
-Patch0: php8-enable-compile-with-PIC.patch
-Patch1: php-version.patch
-Patch2: php-shared-1.patch
-Patch3: php-cli-build.patch
+Patch1: php-8.2.16-alt-always-link-extension-with-libphp.patch
+Patch2: php-8.2.16-shared-1.patch
+Patch3: php-8.2.16-cli-build.patch
+Patch4: php-8.2.16-alt-build-with-PIC.patch
 Patch5: php-8.3.1-sapi-scandir.patch
 Patch6: php-devel-scripts-alternatives.patch
 Patch8: php7-source-7.4-cxx.patch
@@ -155,10 +155,10 @@ in use by other PHP-related packages.
 %prep
 %setup -q -n php-source
 %setup -q -n php-source -T -D -a4
-%patch0 -p1
-%patch1 -p2
+%patch1 -p1
 %patch2 -p1
-%patch3 -p2
+%patch3 -p1
+%patch4 -p1
 %patch5 -p1
 %patch6 -p2 -b .alternatives
 %patch8 -p1
@@ -462,6 +462,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Mon Feb 19 2024 Anton Farygin <rider@altlinux.ru> 8.3.3-alt1
+- 8.3.2 -> 8.3.3
+
 * Fri Jan 19 2024 Anton Farygin <rider@altlinux.ru> 8.3.2-alt1
 - 8.3.2
 
