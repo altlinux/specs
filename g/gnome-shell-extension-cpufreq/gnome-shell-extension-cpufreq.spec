@@ -1,12 +1,11 @@
-%define git 7d4a7356
 %define domain konkor
 %define _libexecdir %_prefix/libexec
 %define _name cpufreq
 %define xdg_name org.gnome.shell.extensions.%_name
 
 Name: gnome-shell-extension-cpufreq
-Version: 53.0
-Release: alt1.g%{git}
+Version: 54.0
+Release: alt1
 
 Summary: System Monitor and Power Manager for Gnome Shell
 Group: Graphical desktop/GNOME
@@ -56,6 +55,9 @@ rm -rf %buildroot%_defaultdocdir
 %doc LICENSE README.md
 
 %changelog
+* Tue Feb 20 2024 Alexey Shabalin <shaba@altlinux.org> 54.0-alt1
+- version 54 with gnome 45 compatibility fixes.
+
 * Tue Apr 18 2023 Alexey Shabalin <shaba@altlinux.org> 53.0-alt1.g7d4a7356
 - version 53 with gnome 44 compatibility fixes.
 
