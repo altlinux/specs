@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: stgit
-Version: 2.4.2
+Version: 2.4.5
 Release: alt1
 Summary: Stacked Git
 License: GPL-2.0-only
@@ -84,6 +84,12 @@ rm t/t1205-push-subdir.sh # https://github.com/stacked-git/stgit/issues/367
 %_datadir/doc/stgit
 
 %changelog
+* Tue Feb 20 2024 Vitaly Chikunov <vt@altlinux.org> 2.4.5-alt1
+- Update to v2.4.5 (2024-02-18).
+
+* Tue Feb 13 2024 Vitaly Chikunov <vt@altlinux.org> 2.4.4-alt1
+- Update to v2.4.4 (2024-02-11).
+
 * Thu Jan 04 2024 Vitaly Chikunov <vt@altlinux.org> 2.4.2-alt1
 - Update to v2.4.2 (2023-12-26).
 
