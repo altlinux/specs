@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name cartridges
@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Cartridges
@@ -69,6 +69,9 @@ SteamGridDB.
 
 
 %changelog
+* Tue Feb 20 2024 Yuri N. Sedunov <aris@altlinux.org> 2.7.3-alt1
+- 2.7.3
+
 * Mon Jan 01 2024 Yuri N. Sedunov <aris@altlinux.org> 2.7.2-alt1
 - updated to v2.7.2-2-g06e4dad
 
