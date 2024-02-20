@@ -10,8 +10,9 @@
 %def_without vanilla
 %define gecko_version 2.47.4
 %define mono_version 8.1.0
-%define winetricks_version 20230505
+%define winetricks_version 20240105
 
+# https://dl.winehq.org/wine/source/
 %define basemajor 9.0
 %define major 9.0
 %define rel %nil
@@ -57,6 +58,9 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 %undefine _without_mingw
 %def_with mingw
 %endif
+
+# TODO: clang: error: unsupported option '-mabi=' for target 'x86_64-unknown-linux-gnu'
+#def_with clang
 
 # https://bugs.etersoft.ru/show_bug.cgi?id=15244
 %def_with unwind
@@ -109,8 +113,8 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 %endif
 
 Name: wine
-Version: %major.6
-Release: alt2
+Version: %major.7
+Release: alt1
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -166,13 +170,6 @@ ExclusiveArch: %ix86 x86_64
 #<artificial>:(.text+0x12): undefined reference to `thread_data'
 #ld: <artificial>:(.text+0x2a): undefined reference to `wld_start'
 %define optflags_lto %nil
-
-# TODO: also check build64
-# workaround for https://bugzilla.altlinux.org/38130
-# notbuild64mingw = without mingw && without build64
-%if %{expand:%%{?_without_mingw:1}%%{!?_without_mingw:0}} && %{expand:%%{?_without_build64:1}%%{!?_without_build64:0}}
-    %define notbuild64mingw 1
-%endif
 
 %define libdir %_libdir
 %define libwinedir %libdir/wine
@@ -862,7 +859,7 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %_bindir/msidb
 
 %_includedir/wine/
-#%_aclocaldir/wine.m4
+#_aclocaldir/wine.m4
 
 %_man1dir/wmc.*
 %_man1dir/wrc.*
@@ -889,6 +886,12 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Tue Feb 20 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.7-alt1
+- update patches to staging wine-9.0
+  + windowscodecs: Implement IWICBitmapFlipRotator(WICBitmapTransformRotate90) for bitmaps with bpp >= 8. (eterbug #17003)
+  + windowscodecs/tests: Add a test for IWICBitmapFlipRotator(WICBitmapTransformRotate90). (eterbug #17003)
+- require winetricks 20240105
+
 * Thu Feb 08 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.6-alt2
 - spec: cleanup PE packing
 - spec: force PE compilation for aarch64
