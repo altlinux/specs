@@ -2,7 +2,7 @@
 %define pypi_name hatchling
 
 Name: python3-module-%pypi_name
-Version: 1.18.0
+Version: 1.21.0
 Release: alt1
 Summary: Modern, extensible Python build backend
 License: MIT
@@ -45,6 +45,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Dec 20 2023 Stanislav Levin <slev@altlinux.org> 1.21.0-alt1
+- 1.18.0 -> 1.21.0.
+
 * Tue Jun 13 2023 Stanislav Levin <slev@altlinux.org> 1.18.0-alt1
 - 1.17.0 -> 1.18.0.
 
