@@ -6,7 +6,7 @@
 
 Name: libdb%_sover
 Version: %_sover.30
-Release: alt6
+Release: alt7
 Summary: Berkeley database library
 License: BSD-style
 Group: System/Libraries
@@ -250,7 +250,6 @@ pushd %buildroot
 	for f in .%_libdir/libdb{,-*}.so; do
 		ln -snf ../../%_lib/%_libdb_so "$f"
 	done
-	ln -s ../../%_lib/%_libdb_so .%_libdir/
 
 %if_enabled tcl
 	mv .%_libdir/libdb_tcl* .%_tcllibdir/
@@ -334,13 +333,19 @@ done
 %files devel
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name-devel
 %_libdir/libdb.so
-%_libdir/libdb-*.so
+# Since we install the real shared object in /%_lib/libdb-*.so, there is no
+# need to install a link here.
+#_libdir/libdb-*.so
+%_libdir/libdb-[0-9].so
 %_includedir/*
 %if_enabled cxx
 %exclude %_includedir/*/*cxx*
 %endif
 
 %changelog
+* Sun Feb 18 2024 Arseny Maslennikov <arseny@altlinux.org> 4.8.30-alt7
+- NMU: adapted for https://altlinux.org/Usrmerge.
+
 * Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 4.8.30-alt6
 - NMU: build with java 8 explicitly
 
