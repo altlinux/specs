@@ -5,7 +5,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.1
+Version: 5.2
 Release: alt1
 
 Summary: Translucent persistent objects
@@ -119,6 +119,9 @@ rm -f docs/_build/html/.buildinfo
 %python3_sitelibdir/%oname/*.h
 
 %changelog
+* Tue Feb 20 2024 Anton Vyatkin <toni@altlinux.org> 5.2-alt1
+- New version 5.2.
+
 * Fri Oct 06 2023 Anton Vyatkin <toni@altlinux.org> 5.1-alt1
 - New version 5.1.
 
