@@ -8,7 +8,7 @@
 
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
-Version: 3.8.3
+Version: 3.8.4
 Release: alt1
 Group: Sciences/Geosciences
 
@@ -226,6 +226,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Tue Feb 20 2024 Andrey Cherepanov <cas@altlinux.org> 3.8.4-alt1
+- New version.
+
 * Thu Jan 11 2024 Andrey Cherepanov <cas@altlinux.org> 3.8.3-alt1
 - New version.
 
