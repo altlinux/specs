@@ -1,7 +1,7 @@
 %define rname kmouth
 
 Name: kde5-%rname
-Version: 23.08.4
+Version: 23.08.5
 Release: alt1
 %K5init no_appdata
 
@@ -70,6 +70,9 @@ Requires: %name-common = %version-%release
 %_K5xmlgui/kmouth/
 
 %changelog
+* Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
+- new version
+
 * Tue Dec 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
 - new version
 

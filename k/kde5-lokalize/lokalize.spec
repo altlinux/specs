@@ -20,7 +20,7 @@
 
 %define rname lokalize
 Name: kde5-%rname
-Version: 23.08.4
+Version: 23.08.5
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{!?_enable_obsolete_kde4:no_appdata}
 
@@ -92,6 +92,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
+- new version
+
 * Tue Dec 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
 - new version
 

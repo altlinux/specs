@@ -2,8 +2,8 @@
 %define rname skanpage
 
 Name: kde5-%rname
-Version: 23.08.4
-Release: alt2
+Version: 23.08.5
+Release: alt1
 %K5init
 
 Group: Graphics
@@ -53,6 +53,9 @@ It supports saving to image and PDF files.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
+- new version
+
 * Mon Jan 22 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt2
 - fix segfault with scanner connected by usb (thanks krf10@alt)
 

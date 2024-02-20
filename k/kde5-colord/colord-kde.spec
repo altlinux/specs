@@ -1,8 +1,8 @@
 %define rname colord-kde
 
 Name: kde5-colord
-Version: 23.08.4
-Release: alt4
+Version: 23.08.5
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -58,6 +58,9 @@ cp -ar po/ru/colord-kde.po po/ru/kcm_colord.po
 %_K5data/kpackage/kcms/*colord*
 
 %changelog
+* Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
+- new version
+
 * Fri Feb 16 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt4
 - fix icc profile delete (thanks krf10@alt)
 

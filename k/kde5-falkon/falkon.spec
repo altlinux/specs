@@ -16,8 +16,8 @@
 %def_disable python_plugins
 
 Name: kde5-%rname
-Version: 23.08.4
-Release: alt2
+Version: 23.08.5
+Release: alt1
 %K5init no_altplace
 
 Summary: Very fast web-browser
@@ -156,6 +156,9 @@ __EOF__
 %_K5lib/libFalkonPrivate.so.*
 
 %changelog
+* Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
+- new version
+
 * Tue Jan 02 2024 Grigory Ustinov <grenka@altlinux.org> 23.08.4-alt2
 - disable python plugins
 
