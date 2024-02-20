@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.5.0
+Version: 5.5.1
 Release: alt1
 Summary: Objects and routines pertaining to date and time (tempora)
 License: MIT
@@ -48,6 +48,9 @@ Objects and routines pertaining to date and time (tempora).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 20 2024 Stanislav Levin <slev@altlinux.org> 5.5.1-alt1
+- 5.5.0 -> 5.5.1.
+
 * Thu Jul 27 2023 Stanislav Levin <slev@altlinux.org> 5.5.0-alt1
 - 5.3.0 -> 5.5.0.
 
