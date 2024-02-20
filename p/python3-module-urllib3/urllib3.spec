@@ -3,14 +3,14 @@
 %define mod_name %pypi_name
 
 %define add_python_extra() \
-%{expand:%%package -n %%name+%{1} \
+%{expand:%%package -n %%name+%1 \
 Summary: %%summary \
 Group: Development/Python3 \
 Requires: %%name \
-%{expand:%%pyproject_runtimedeps_metadata -- --extra %{1}} \
-%%description -n %%name+%{1}' \
-Extra "%{1}" for %%pypi_name. \
-%%files -n %%name+%{1} \
+%{expand:%%pyproject_runtimedeps_metadata -- --extra %1} \
+%%description -n %%name+%1' \
+Extra "%1" for %%pypi_name. \
+%%files -n %%name+%1 \
 }
 
 # tests suite is very unstable (freezes or crashes) on arches different from
@@ -22,7 +22,7 @@ Extra "%{1}" for %%pypi_name. \
 %endif
 
 Name: python3-module-%pypi_name
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 Epoch: 2
 Summary: HTTP library with thread-safe connection pooling, file post, and more
@@ -84,6 +84,9 @@ export NO_VENDORED_HYPERCORN=yes
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 19 2024 Stanislav Levin <slev@altlinux.org> 2:2.2.1-alt1
+- 2.2.0 -> 2.2.1.
+
 * Mon Feb 05 2024 Stanislav Levin <slev@altlinux.org> 2:2.2.0-alt1
 - 2.1.0 -> 2.2.0.
 
