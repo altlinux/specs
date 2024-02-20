@@ -1,8 +1,9 @@
-
 %global _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: vitastor
-Version: 1.4.4
+Version: 1.4.5
 Release: alt1
 Summary: Vitastor, a fast software-defined clustered block storage
 Group: System/Base
@@ -17,7 +18,7 @@ Patch: %name-%version.patch
 Patch2000: %name-e2k.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++
+BuildRequires: cmake gcc-c++ ninja-build
 
 BuildRequires: pkgconfig(liburing)
 BuildRequires: libgperftools-devel
@@ -154,14 +155,15 @@ tar -xf %SOURCE2 -C cpp-btree
 tar -xf %SOURCE3 -C json11
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %cmake \
-        -DCMAKE_VERBOSE_MAKEFILE=ON \
         -DWITH_QEMU=OFF \
-        -DWITH_FIO=OFF
+        -DWITH_FIO=OFF \
+	-GNinja
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 mkdir -p %buildroot{%_sysconfdir,%_libexecdir,%_localstatedir}/%name
 cp -r mon %buildroot%_libexecdir/%name
@@ -262,6 +264,9 @@ fi
 %endif
 
 %changelog
+* Tue Feb 20 2024 Alexey Shabalin <shaba@altlinux.org> 1.4.5-alt1
+- 1.4.5
+
 * Wed Feb 14 2024 Alexey Shabalin <shaba@altlinux.org> 1.4.4-alt1
 - 1.4.4
 
