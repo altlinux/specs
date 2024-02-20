@@ -11,7 +11,7 @@
 
 Name:           lib%oname
 Version:        2.5.7.0
-Release:        alt1
+Release:        alt1.1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -239,6 +239,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Tue Feb 20 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.5.7.0-alt1.1
+- Updated patch for Elbrus.
+
 * Wed Jan 24 2024 L.A. Kostis <lakostis@altlinux.ru> 2.5.7.0-alt1
 - 2.5.7.0.
 - aarch64: revert simd optimisations (see upstream issue #4111).
