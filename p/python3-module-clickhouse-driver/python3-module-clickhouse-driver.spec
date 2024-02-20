@@ -3,7 +3,7 @@
 %define mod_name clickhouse_driver
 
 Name:       python3-module-%pypi_name
-Version:    0.2.6
+Version:    0.2.7
 Release:    alt1
 License:    MIT
 Group:      Development/Python3
@@ -44,6 +44,9 @@ find . -name "*.c" | xargs rm -fv
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 20 2024 Anton Farygin <rider@altlinux.ru> 0.2.7-alt1
+- 0.2.6 -> 0.2.7
+
 * Fri Feb 16 2024 Stanislav Levin <slev@altlinux.org> 0.2.6-alt1
 - 0.2.5 -> 0.2.6.
 
