@@ -2,7 +2,7 @@
 
 Name: distro-licenses
 Version: 1.3.3
-Release: alt1
+Release: alt2
 License: CC0-1.0
 Summary: Texts of various distribution licenses
 Group: System/Base
@@ -27,6 +27,9 @@ Texts of various distribution licenses
 %_bindir/*
 
 %changelog
+* Tue Feb 20 2024 Anton Midyukov <antohami@altlinux.org> 1.3.3-alt2
+- replace http with https in the link www.basealt.ru
+
 * Mon Oct 02 2023 Anton Midyukov <antohami@altlinux.org> 1.3.3-alt1
 - ALT_Community_License: add english version
 
