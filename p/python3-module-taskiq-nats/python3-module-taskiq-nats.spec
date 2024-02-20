@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.3.1
+Version: 0.4.0
 Release: alt1
 
 Summary: NATS broker for taskiq
@@ -19,13 +19,11 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-
-%py3_provides %pypi_name
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %add_pyproject_deps_check_filter autoflake
 %add_pyproject_deps_check_filter wemake-python-styleguide
@@ -39,9 +37,9 @@ Taskiq-nats is a plugin for taskiq that adds NATS broker.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-
 %if_with check
 %pyproject_deps_resync_check_poetry dev
 %endif
@@ -61,6 +59,9 @@ Taskiq-nats is a plugin for taskiq that adds NATS broker.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 20 2024 Anton Zhukharev <ancieg@altlinux.org> 0.4.0-alt1
+- Updated to 0.4.0.
+
 * Mon Oct 02 2023 Anton Zhukharev <ancieg@altlinux.org> 0.3.1-alt1
 - Updated to 0.3.1.
 
