@@ -3,7 +3,7 @@
 
 
 Name: dosbox-x
-Version: 2023.09.01
+Version: 2023.10.06
 Release: alt1
 Summary: DOS emulator for running DOS games and applications including Windows 3.x/9x
 License: GPLv2+
@@ -60,12 +60,16 @@ DOSBox-X emulates a legacy IBM PC and DOS environment, and has many emulation
 options and features.
 
 %prep
-%setup -n dosbox-x-dosbox-x-v%version
+%setup -n dosbox-x-v%version
 
 %build
 ./autogen.sh
 %add_optflags -fPIC
+%ifarch %e2k
+%configure --enable-core-inline --enable-debug=heavy --enable-sdl2 --disable-libslirp
+%else
 %configure --enable-core-inline --enable-debug=heavy --enable-sdl2
+%endif
 %make_build
 
 %install
@@ -86,6 +90,10 @@ cp contrib/linux/*.metainfo.xml %buildroot%_metainfodir/
 %doc dosbox-x.reference.full.conf
 
 %changelog
+* Tue Feb 20 2024 Artyom Bystrov <arbars@altlinux.org> 2023.10.06-alt1
+- Update to new version
+- Minor reworking of build env (tnx mike@)
+
 * Tue Sep 12 2023 Artyom Bystrov <arbars@altlinux.org> 2023.09.01-alt1
 - Update to new version
 
