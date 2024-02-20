@@ -1,6 +1,6 @@
 Name: ardour
-Version: 8.2
-Release: alt2
+Version: 8.3
+Release: alt1
 
 Summary: Professional multi-track audio recording application
 License: GPLv2+
@@ -85,20 +85,21 @@ LC_ALL=C.utf8 ./waf configure \
 	--optimize \
 	--arch="%optflags" \
 %ifarch armh
-    --dist-target=armhf \
+	--dist-target=armhf \
 %endif
 %ifarch aarch64
-    --dist-target=aarch64 \
+	--dist-target=aarch64 \
 %endif
 %ifarch i586
-    --dist-target=i686 \
+	--dist-target=i686 \
 %endif
 	--no-phone-home \
 	--freedesktop \
 	--use-external-libs \
+	--no-ytk \
 %ifarch %e2k
-    --cxx11 \
-    --keepflags \
+	--cxx11 \
+	--keepflags \
 %endif
 	#
 
@@ -133,6 +134,9 @@ done
 %_man1dir/ardour.1*
 
 %changelog
+* Tue Feb 20 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.3-alt1
+- 8.3 released
+
 * Tue Jan 23 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 8.2-alt2
 - fixed ftbfs by adding workaround for dated itstool
 - udev rules packaged (closes: 48907)
