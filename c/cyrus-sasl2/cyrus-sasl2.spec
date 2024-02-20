@@ -11,7 +11,7 @@
 
 Name: cyrus-sasl2
 Version: 2.1.27
-Release: alt2.2
+Release: alt3
 
 Summary: SASL2 is the Simple Authentication and Security Layer
 License: ALT-Cyrus
@@ -215,6 +215,7 @@ make install DESTDIR=%buildroot
 pushd %buildroot/%_libdir
     ln -s -nf ../../%_lib/libsasl2.so.3 libsasl2.so
 popd
+rm -f %buildroot/%_lib/libsasl2.so
 
 mkdir -p %buildroot%_sysconfdir
 mkdir -p %buildroot%_mandir/man8
@@ -299,7 +300,6 @@ ls -l %buildroot%_man3dir/*
 %_mandir/man3/*
 %endif
 %_libdir/*.so
-/%_lib/*.so
 %_pkgconfigdir/*
 
 %files docs
@@ -319,6 +319,9 @@ ls -l %buildroot%_man3dir/*
 %endif
 
 %changelog
+* Wed Feb 14 2024 Arseny Maslennikov <arseny@altlinux.org> 2.1.27-alt3
+- NMU: prepare for https://altlinux.org/Usrmerge.
+
 * Thu Aug 05 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.27-alt2.2
 - disable sphinx (can't build with new sphinx)
 
