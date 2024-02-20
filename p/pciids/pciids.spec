@@ -1,14 +1,13 @@
 Name: pciids
-Version: 20231116
+Version: 20240220
 Release: alt1
-
-Packager: Victor Forsyuk <force@altlinux.org>
 
 Summary: Repository of PCI IDs (pci.ids database)
 License: GPLv2+ or BSD
 Group: System/Libraries
 
-Url: http://pciids.sourceforge.net
+#Url: http://pciids.sourceforge.net
+Url: https://pci-ids.ucw.cz
 Source: %url/pci.ids
 Patch: hwdatabase.ti24.patch
 
@@ -34,6 +33,9 @@ install -pD -m644 pci.ids %buildroot%_datadir/misc/pci.ids
 %_datadir/misc/pci.ids
 
 %changelog
+* Tue Feb 20 2024 Cronbuild Service <cronbuild@altlinux.org> 20240220-alt1
+- repocop cronbuild 20240220. At your service.
+
 * Thu Nov 16 2023 Cronbuild Service <cronbuild@altlinux.org> 20231116-alt1
 - repocop cronbuild 20231116. At your service.
 
