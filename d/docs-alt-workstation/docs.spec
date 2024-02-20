@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.2
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,12 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Tue Feb 20 2024 Elena Mishina <lepata@altlinux.org> 10.2-alt2
+- fix some typos (ALT #49343, #49390, #49388, #49273)
+- update Timeshift (ALT #49364, #49360)
+- update install-distro (ALT #49272, #49338, #49408, #49411)
+- update group policy (ALT #49330, #49332, #49341)
+
 * Tue Jan 23 2024 Elena Mishina <lepata@altlinux.org> 10.2-alt1
 - update to ALT Workstation 10.2rc
 
