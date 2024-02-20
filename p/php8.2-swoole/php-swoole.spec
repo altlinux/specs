@@ -1,10 +1,10 @@
 %define		php_extension	swoole
 %define 	real_name	swoole
-%define		real_version	5.1.1
+%define		real_version	5.1.2
 
 Name:	 	php%_php_suffix-%php_extension
 Version:	%real_version
-Release:	alt2.%_php_release_version
+Release:	alt1.%_php_release_version
 ExcludeArch: %ix86 armh
 Summary:	Coroutine-based concurrency library for PHP
 License:	Apache-2.0
@@ -91,6 +91,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %php_version-%version-%release
+
+* Wed Feb 14 2024 Anton Farygin <rider@altlinux.ru> 5.1.2-alt1
+- 5.1.2 (Closes: #49121)
 
 * Fri Jan 19 2024 Anton Farygin <rider@altlinux.ru> 5.1.1-alt2
 - added upstream fix against php 8.3 (Closes: #49116)
