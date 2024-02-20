@@ -10,7 +10,7 @@
 %endif
 
 Name: python3-module-%oname
-Version: 7.16.0
+Version: 7.16.1
 Release: alt1
 
 Summary: Converting Jupyter Notebooks
@@ -162,6 +162,9 @@ export JUPYTER_PATH=%buildroot%_datadir/jupyter
 %endif
 
 %changelog
+* Tue Feb 20 2024 Anton Vyatkin <toni@altlinux.org> 7.16.1-alt1
+- New version 7.16.1.
+
 * Thu Feb 08 2024 Anton Vyatkin <toni@altlinux.org> 7.16.0-alt1
 - New version 7.16.0.
 
