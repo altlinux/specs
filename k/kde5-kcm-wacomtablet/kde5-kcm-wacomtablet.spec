@@ -2,15 +2,17 @@
 
 Name: kde5-kcm-wacomtablet
 Version: 3.2.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Summary: KDE Config Module for Wacom Tablets
 License: GPL-2.0-or-later
 Group: System/Libraries
-URL: https://invent.kde.org/system/wacomtablet
+URL: https://invent.kde.org/plasma/wacomtablet
+Vcs: https://invent.kde.org/plasma/wacomtablet.git
 
 Source: %rname-%version.tar
+Patch: %name-%version-alt-qt5.15-build-fix.patch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules
@@ -30,6 +32,15 @@ BuildRequires: kf5-kservice-devel
 BuildRequires: libXi-devel
 BuildRequires: libxcb-devel
 BuildRequires: libwacom-devel
+BuildRequires: libgudev-devel
+BuildRequires: libpcre2-devel
+BuildRequires: libffi-devel
+BuildRequires: libevdev-devel
+BuildRequires: zlib-devel
+BuildRequires: bzlib-devel
+BuildRequires: libpng-devel
+BuildRequires: libbrotli-devel
+BuildRequires: libexpat-devel
 BuildRequires: xorg-drv-wacom-devel
 
 %description
@@ -43,8 +54,7 @@ module.
 
 %prep
 %setup -n %rname-%version
-#Fix build with Qt 5.15
-sed -i '24a #include <QPainterPath>' src/kcmodule/pressurecurvewidget.cpp
+%patch -p1
 
 %build
 %K5build
@@ -69,5 +79,9 @@ sed -i '24a #include <QPainterPath>' src/kcmodule/pressurecurvewidget.cpp
 %_datadir/wacomtablet/*
 
 %changelog
+* Sat Feb 03 2024 Anton Kurachenko <srebrov@altlinux.org> 3.2.0-alt2
+- Fixed missing BuildReq.
+- Changed homepage link.
+
 * Sun Jul 16 2023 Anton Kurachenko <srebrov@altlinux.org> 3.2.0-alt1
 - Initial build for Sisyphus.
