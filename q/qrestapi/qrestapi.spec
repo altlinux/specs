@@ -2,7 +2,9 @@
 
 Name: qrestapi
 Version: 0
-Release: alt2.git.ea5e85a
+Release: alt3.git.88c02c5
+%define soversion 0
+%define libname libqrestapi%soversion
 Summary: Simple Qt library allowing to synchronously or asynchronously query a REST server
 License: Apache-2.0
 Group: Development/C++
@@ -12,10 +14,9 @@ Url: https://github.com/commontk/qRestAPI
 Source: %name-%version.tar
 
 Patch1: qrestapi-alt-install.patch
-Patch2: qrestapi-alt-include-dirs.patch
 
 BuildRequires: gcc-c++ cmake
-BuildRequires: qt5-base-devel qt5-script-devel
+BuildRequires: qt5-base-devel qt5-declarative-devel
 
 %description
 qRestAPI is a cross-platform Qt-based library allowing
@@ -43,7 +44,6 @@ This package contains development files for qRestAPI.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 
 %build
 %cmake \
@@ -59,7 +59,7 @@ This package contains development files for qRestAPI.
 %files -n lib%name
 %doc LICENSE
 %doc README.md
-%_libdir/*.so.*
+%_libdir/*.so.%soversion
 
 %files -n lib%name-devel
 %_includedir/*
@@ -67,6 +67,9 @@ This package contains development files for qRestAPI.
 %_libdir/cmake/qRestAPI
 
 %changelog
+* Thu Nov 23 2023 Elizaveta Morozova <morozovaes@altlinux.org> 0-alt3.git.88c02c5
+- Built from 88c02c5d90169dfe065fa068969e59ada314d3cb.
+
 * Wed Jun 07 2023 Elizaveta Morozova <morozovaes@altlinux.org> 0-alt2.git.ea5e85a
 - Built from ea5e85a1ecfb05174ab604d66fa3186ae9a45eda.
 - Built on armh.

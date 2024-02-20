@@ -2,7 +2,7 @@
 
 Name: vtkaddon
 Version: 0
-Release: alt1.git.402e7c6
+Release: alt2.git.960c2e3
 Summary: General-purpose features that may be integrated into VTK library in the future
 License: BSD-style
 Group: Development/Tools
@@ -90,5 +90,8 @@ This package provides Python bindings to vtkAddon.
 %python3_sitelibdir/*
 
 %changelog
+* Wed Feb 07 2024 Elizaveta Morozova <morozovaes@altlinux.org> 0-alt2.git.960c2e3
+- Update to snapshot 960c2e3c8aa5155951930b53f1590f3db8f94d80.
+
 * Fri May 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0-alt1.git.402e7c6
 - Initial build for ALT.

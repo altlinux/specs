@@ -1,17 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%def_without system_vtk
 
-%define slicerver 5.2
+%define slicerver 5.6
 Name: slicer
-Version: %slicerver.2
+Version: %slicerver.1
 Release: alt1
 Summary: Multi-platform, free open source software for visualization and image computing
 License: BSD-like
 Group: Sciences/Medicine
 Url: https://www.slicer.org/
 
-# Exlusion source: pythonqt, CTK
+# Exclusion source: pythonqt, CTK
 ExcludeArch: %arm
+ExcludeArch: i586
 
 # https://github.com/Slicer/Slicer.git
 Source: %name-%version.tar
@@ -136,6 +138,7 @@ find . -name '*.py' | xargs sed -i \
 jqplotdir="$(pwd)/jqPlot"
 
 %cmake \
+	-DCMAKE_INSTALL_LIBDIR:PATH=%_libdir \
 	-DSlicer_DEFAULT_RELEASE_TYPE:STRING=Stable \
 	-DSlicer_VERSION:STRING=%slicerver \
 	-DSlicer_VERSION_FULL:STRING=%version \
@@ -199,12 +202,9 @@ find %buildroot%_libdir -name '*.a' -delete
 rm -rf %buildroot%_libdir/cmake
 rm -rf %buildroot%_libdir/Slicer-%slicerver/lib/Slicer-%slicerver/cmake
 
-# fix qt designer launch
-ln -sr %buildroot%_bindir/designer-qt5 %buildroot%_libdir/Slicer-%slicerver/bin/designer-real
-
 %files
 %doc COPYRIGHT.txt License.txt
-%doc README.txt CONTRIBUTING.md AUTHORS.md
+%doc README.md CONTRIBUTING.md AUTHORS.md
 %_bindir/Slicer
 %_libdir/*.so
 %_libdir/*.so.*
@@ -229,6 +229,9 @@ ln -sr %buildroot%_bindir/designer-qt5 %buildroot%_libdir/Slicer-%slicerver/bin/
 %_qt5_plugindir/designer/*.so
 
 %changelog
+* Thu Feb 01 2024 Elizaveta Morozova <morozovaes@altlinux.org> 5.6.1-alt1
+- Updated version to 5.6.1.
+
 * Mon May 15 2023 Elizaveta Morozova <morozovaes@altlinux.org> 5.2.2-alt1
 - Updated version to 5.2.2.
 - Added patch: slicer-alt-itk-compat - removed custom ITK Namespaces (feature requires bundled ITK).

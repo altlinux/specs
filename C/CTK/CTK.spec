@@ -2,7 +2,7 @@
 
 Name: CTK
 Version: 0.1.0
-Release: alt5.git.a203172b
+Release: alt6.git.51c9f4a
 Summary: A set of common support code for medical imaging, surgical navigation, and related purposes
 License: Apache-2.0
 Group: Development/Tools
@@ -15,13 +15,13 @@ ExcludeArch: %arm
 Source: %name-%version.tar
 
 Patch1: %name-alt-build.patch
-Patch2: %name-upstream-qt-imports.patch
+Patch2: %name-alt-qt5_compat.patch
 
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires: gcc-c++ cmake
-BuildRequires: qt5-base-devel qt5-script-devel qt5-tools-devel-static qt5-xmlpatterns-devel qt5-multimedia-devel
+BuildRequires: qt5-base-devel qt5-script-devel qt5-tools-devel-static qt5-xmlpatterns-devel qt5-multimedia-devel qt5-svg-devel
 %ifarch %qt5_qtwebengine_arches
 BuildRequires: qt5-webengine-devel
 %else
@@ -34,6 +34,7 @@ BuildRequires: libitk-devel
 BuildRequires: libqrestapi-devel
 BuildRequires: qtsoap5-devel
 BuildRequires: pythonqt-devel
+BuildRequires: liblog4qt-devel
 
 Requires: lib%name = %EVR
 
@@ -149,7 +150,7 @@ done
 
 %files -n lib%name
 %doc LICENSE
-%doc README.rst
+%doc README.md
 %_libdir/lib*.so.*
 %_libdir/ctk
 %_libdir/liborg_commontk_*.so
@@ -171,6 +172,9 @@ done
 %python3_sitelibdir/*.so
 
 %changelog
+* Fri Feb 02 2024 Elizaveta Morozova <morozovaes@altlinux.org> 0.1.0-alt6.git.51c9f4a
+- Update to snapshot 51c9f4a5a55f38ddce9d8b75a72c02fca64bf17a.
+
 * Tue Nov 28 2023 Elizaveta Morozova <morozovaes@altlinux.org> 0.1.0-alt5.git.a203172b
 - Fixed Qt module imports via standalone python (ALT #46364).
 
