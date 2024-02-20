@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.0.2
-Release: alt1.2
+Version: 3.0.3
+Release: alt1
 Summary: Python library for serializing any arbitrary object graph into JSON
 License: BSD-3-Clause
 Group: Development/Python3
@@ -46,10 +46,8 @@ jsonpickle converts complex Python objects to and from JSON.
 
 %check
 # test_multindex_dataframe_roundtrip fail on armh and i586
-# test_timedelta_index_roundtrip https://github.com/jsonpickle/jsonpickle/issues/460
 %pyproject_run_pytest -ra -k "\
-not test_multindex_dataframe_roundtrip \
-and not test_timedelta_index_roundtrip"
+not test_multindex_dataframe_roundtrip"
 
 %files
 %doc CHANGES.rst README.rst
@@ -57,6 +55,9 @@ and not test_timedelta_index_roundtrip"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 20 2024 Anton Vyatkin <toni@altlinux.org> 3.0.3-alt1
+- New version 3.0.3.
+
 * Tue Jan 23 2024 Anton Vyatkin <toni@altlinux.org> 3.0.2-alt1.2
 - NMU: fix FTBFS.
 
