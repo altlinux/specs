@@ -25,7 +25,7 @@
 
 Name: glusterfs11
 Version: %major
-Release: alt1
+Release: alt2
 
 Summary: Cluster File System
 
@@ -42,7 +42,7 @@ Source3: umount.glusterfs
 Source4: glusterfs.logrotate
 Source7: glusterd.init
 Source8: glustereventsd.init
-Patch2000: glusterfs9-e2k.patch
+Patch2000: glusterfs11-e2k.patch
 
 Patch: 0001-afr_selfheal_do-return-EIO-if-inode-type-is-not-IA_I.patch
 
@@ -794,6 +794,9 @@ rm -rf %buildroot%_includedir/glusterfs/
 #files checkinstall
 
 %changelog
+* Tue Feb 20 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 11.1-alt2
+- fixed patch for Elbrus
+
 * Sun Feb 04 2024 Vitaly Lipatov <lav@altlinux.ru> 11.1-alt1
 - new version 11.1 (with rpmrb script)
 
