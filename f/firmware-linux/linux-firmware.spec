@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20240208
+Version: 20240220
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -94,6 +94,21 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/mellanox
 
 %changelog
+* Tue Feb 20 2024 Cronbuild Service <cronbuild@altlinux.org> 20240220-alt1
+- upstream changes (GIT 97b693d2):
+  + update firmware for en8811h 2.5G ethernet phy (thx Lucien Jheng)
+  + add firmware for MT7996 (thx Shayne Chen)
+  + xe: First GuC release for LNL and Xe (thx John Harrison)
+  + i915: Add GuC v70.20.0 for ADL-P, DG1, DG2, MTL and TGL (thx John Harrison)
+  + Add CS35L41 firmware for Lenovo Legion 7i gen7 laptop (16IAX7) (thx Stefan Binding)
+  + brcm: Add nvram for the Asus Memo Pad 7 ME176C tablet (thx Hans de Goede)
+  + ice: update ice DDP package to 1.3.36.0 (thx Przemek Kitszel)
+  + Intel IPU3 ImgU: Move firmware file under intel/ipu (thx Sakari Ailus)
+  + Intel IPU6: Move firmware binaries under ipu/ (thx Sakari Ailus)
+  + check_whence: Add a check for duplicate link entries (thx Juerg Haefliger)
+  + WHENCE: Clean up section separators (thx Juerg Haefliger)
+  + Add CS35L41 firmware for additional ASUS Zenbook 2023 models (thx Stefan Binding)
+
 * Tue Feb 13 2024 Cronbuild Service <cronbuild@altlinux.org> 20240208-alt1
 - upstream changes (GIT fbef4d38):
   + panthor: Add initial firmware for Gen10 Arm Mali GPUs (thx Liviu Dudau)
