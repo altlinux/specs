@@ -15,8 +15,8 @@
 %define libcantor_config libcantor_config%cantor_config_sover
 
 Name: kde5-%rname
-Version: 23.08.4
-Release: alt2
+Version: 23.08.5
+Release: alt1
 %K5init
 
 Group: Education
@@ -153,6 +153,9 @@ mkdir -p %buildroot
 %endif
 
 %changelog
+* Tue Feb 20 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
+- new version
+
 * Tue Jan 30 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 23.08.4-alt2
 - fix incorrect deletion of menu items (ALT #48950)
 
