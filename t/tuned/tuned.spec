@@ -5,7 +5,7 @@
 %define tuneddir %_prefix/lib/tuned
 
 Name: tuned
-Version: 2.21.0
+Version: 2.22.0
 Release: alt1
 
 Summary: A dynamic adaptive system tuning daemon
@@ -479,6 +479,9 @@ fi
 %_man7dir//tuned-profiles-openshift.7*
 
 %changelog
+* Tue Feb 20 2024 Vitaly Chikunov <vt@altlinux.org> 2.22.0-alt1
+- Update to v2.22.0 (2024-02-16).
+
 * Sun Sep 03 2023 Vitaly Chikunov <vt@altlinux.org> 2.21.0-alt1
 - Update to v2.21.0 (2023-08-29).
 
