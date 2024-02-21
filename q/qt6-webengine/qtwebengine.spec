@@ -25,7 +25,7 @@
 %endif
 
 Name: qt6-webengine
-Version: 6.6.1
+Version: 6.6.2
 Release: alt1
 
 Group: System/Libraries
@@ -38,7 +38,6 @@ Source: %qt_module-everywhere-src-%version.tar
 Source100: jquery.min.js
 Source101: jquery.tablesorter.min.js
 Patch1: alt-ftbfs.patch
-Patch2: chromium-icu-74.patch
 # Debian
 Patch200: remove_catapult_3rdparty.patch
 Patch201: remove_catapult_core.patch
@@ -186,9 +185,6 @@ Requires: libqt6-core = %_qt6_version
 %setup -n %qt_module-everywhere-src-%version
 #
 %patch1 -p1
-pushd src/3rdparty/chromium
-%patch2 -p1
-popd
 #
 %patch200 -p1
 %patch201 -p1
@@ -406,6 +402,9 @@ done
 %_pkgconfigdir/Qt?*.pc
 
 %changelog
+* Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
+- new version
+
 * Tue Dec 05 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt1
 - new version
 

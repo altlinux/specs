@@ -3,8 +3,8 @@
 %define optflags_lto %nil
 
 Name: qt6-declarative
-Version: 6.6.1
-Release: alt2
+Version: 6.6.2
+Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -457,6 +457,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_bindir/rpmbqml6-qmlinfo
 
 %changelog
+* Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
+- new version
+
 * Mon Jan 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt2
 - using qdoc_found macro at build
 

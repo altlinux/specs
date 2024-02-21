@@ -2,7 +2,7 @@
 %global qt_module qtdoc
 
 Name: qt6-doc
-Version: 6.6.1
+Version: 6.6.2
 Release: alt1
 
 Group: Development/KDE and QT
@@ -65,6 +65,9 @@ Requires: %name-common
 %setup -n %qt_module-everywhere-src-%version
 #syncqt.pl-qt6 -version %version
 
+sed -i '/qt_internal_add_example(documentviewer)/d' examples/demos/CMakeLists.txt
+
+
 %build
 %Q6build
 %if %qdoc_found
@@ -85,5 +88,8 @@ Requires: %name-common
 %_qt6_archdatadir/mkspecs/*doc*
 
 %changelog
+* Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
+- new version
+
 * Tue Dec 05 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt1
 - initial build

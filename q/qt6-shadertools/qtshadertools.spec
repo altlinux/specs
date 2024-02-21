@@ -1,8 +1,8 @@
 %global qt_module qtshadertools
 
 Name: qt6-shadertools
-Version: 6.6.1
-Release: alt2
+Version: 6.6.2
+Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -70,7 +70,11 @@ Requires: libqt6-core = %_qt6_version
 %setup -n %qt_module-everywhere-src-%version
 
 %build
+%if_enabled bootstrap
 %define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
+%else
+%define qdoc_found 0
+%endif
 
 %Q6build
 %if %qdoc_found
@@ -110,6 +114,9 @@ Requires: libqt6-core = %_qt6_version
 #%_qt6_examplesdir/*
 
 %changelog
+* Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
+- new version
+
 * Thu Feb 01 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt2
 - increase docs build verbosity
 

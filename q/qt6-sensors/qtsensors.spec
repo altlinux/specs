@@ -3,7 +3,7 @@
 %global qt_module qtsensors
 
 Name: qt6-sensors
-Version: 6.6.1
+Version: 6.6.2
 Release: alt1
 
 Group: System/Libraries
@@ -116,6 +116,9 @@ Requires: libqt6-core = %_qt6_version
 #%_qt6_examplesdir/*
 
 %changelog
+* Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
+- new version
+
 * Tue Dec 05 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt1
 - new version
 

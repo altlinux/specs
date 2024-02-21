@@ -31,7 +31,7 @@
 %define gname  qt6
 Name: qt6-base
 %define major  6
-Version: 6.6.1
+Version: 6.6.2
 Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
@@ -826,6 +826,9 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
+- new version
+
 * Tue Dec 05 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt1
 - new version
 

@@ -2,8 +2,8 @@
 %global qt_module qtsvg
 
 Name: qt6-svg
-Version: 6.6.1
-Release: alt3
+Version: 6.6.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - Support for rendering and displaying SVG
@@ -124,6 +124,9 @@ done
 #%_qt6_examplesdir/*
 
 %changelog
+* Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
+- new version
+
 * Fri Jan 12 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt3
 - build docs verbose
 

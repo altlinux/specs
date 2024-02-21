@@ -6,7 +6,7 @@
 %def_enable pulse
 
 Name: qt6-multimedia
-Version: 6.6.1
+Version: 6.6.2
 Release: alt1
 
 Group: System/Libraries
@@ -24,7 +24,7 @@ BuildRequires(pre): rpm-macros-qt6
 BuildRequires: cmake glibc-devel
 BuildRequires: rpm-build-qml6
 BuildRequires: qt6-base-devel qt6-declarative qt6-declarative-devel qt6-shadertools-devel qt6-svg-devel
-BuildRequires: libxkbcommon-x11-devel
+BuildRequires: libxkbcommon-x11-devel libXrandr-devel
 BuildRequires: libavformat-devel libavcodec-devel libswresample-devel libswscale-devel libavutil-devel
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(gstreamer-1.0)
@@ -60,7 +60,7 @@ Common package for %name
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: qt6-base-devel
 %description devel
 %summary.
@@ -68,7 +68,7 @@ Requires: qt6-base-devel
 %package devel-static
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: %name-devel
 %description devel-static
 %summary.
@@ -76,14 +76,14 @@ Requires: %name-devel
 %package doc
 Summary: Document for developing apps which will use Qt6 %qt_module
 Group: Development/KDE and QT
-Requires: %name-common = %EVR
+Requires: %name-common
 %description doc
 This package contains documentation for Qt6 %qt_module
 
 %package -n libqt6-multimedia
 Summary: Qt6 library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-multimedia
 %summary
@@ -91,7 +91,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-multimediaquick
 Summary: Qt6 library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-multimediaquick
 %summary
@@ -99,7 +99,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-multimediawidgets
 Summary: Qt6 library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-multimediawidgets
 %summary
@@ -107,7 +107,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-spatialaudio
 Summary: Qt6 library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-spatialaudio
 %summary
@@ -177,6 +177,9 @@ done
 %_qt6_examplesdir/*
 
 %changelog
+* Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
+- new version
+
 * Tue Dec 05 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt1
 - new version
 

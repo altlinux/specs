@@ -3,7 +3,7 @@
 %global qt_module qtpositioning
 
 Name: qt6-positioning
-Version: 6.6.1
+Version: 6.6.2
 Release: alt1
 
 Group: System/Libraries
@@ -125,6 +125,9 @@ sed -i 's|-ftree-vectorize||' src/3rdparty/*/*.pro
 %_qt6_examplesdir/*
 
 %changelog
+* Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
+- new version
+
 * Tue Dec 05 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt1
 - new version
 

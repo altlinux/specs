@@ -2,7 +2,7 @@
 %global qt_module qtcharts
 
 Name: qt6-charts
-Version: 6.6.1
+Version: 6.6.2
 Release: alt1
 
 Group: System/Libraries
@@ -118,6 +118,9 @@ done
 %_qt6_examplesdir/*
 
 %changelog
+* Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
+- new version
+
 * Tue Dec 05 2023 Sergey V Turchin <zerg@altlinux.org> 6.6.1-alt1
 - new version
 
