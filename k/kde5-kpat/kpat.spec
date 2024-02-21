@@ -4,7 +4,7 @@
 %define libkcardgame libkcardgame%cardgame_sover
 
 Name: kde5-%rname
-Version: 23.08.4
+Version: 23.08.5
 Release: alt1
 %K5init
 
@@ -93,6 +93,9 @@ mv %buildroot/%_K5data/mime/packages/kpatience.xml \
 %_K5lib/libkcardgame.so.*
 
 %changelog
+* Tue Feb 20 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
+- new version
+
 * Tue Dec 12 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.4-alt1
 - new version
 
