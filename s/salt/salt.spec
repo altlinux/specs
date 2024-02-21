@@ -2,7 +2,7 @@
 
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 3006.4
+Version: 3006.6
 Release: alt1
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
@@ -23,6 +23,7 @@ Source6: salt-syndic.init
 
 Patch1: salt-alt-supported-names.patch
 Patch2: salt-alt-uname-path.patch
+Patch3: salt-match_hostname.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools perl-podlators
@@ -32,10 +33,13 @@ BuildRequires: python3-module-distro
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-importlib-metadata
 
-# Control module version for 3006.4
-BuildRequires: python3-module-cryptography >= 41.0.4
+# Control module version for 3006.6
+BuildRequires: python3-module-cryptography >= 41.0.7
 BuildRequires: python3-module-urllib3 >= 2.0.6
-BuildRequires: python3-module-GitPython >= 3.1.37
+BuildRequires: python3-module-pycryptodome >= 3.19.1
+BuildRequires: python3-module-pycryptodomex >= 3.19.1
+BuildRequires: python3-module-GitPython >= 3.1.41
+BuildRequires: python3-module-jinja2 >= 3.1.3
 
 %add_python3_req_skip win32api win32event win32service win32serviceutil winerror pythoncom distutils ntsecuritycon win32con win32process win32security vsanmgmtObjects
 
@@ -106,6 +110,7 @@ with XMLRPC or even a Websocket API.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 # Current Salt version from sources
 echo -n '%version' > salt/_version.txt
 # Remove local copy documentation mention
@@ -262,6 +267,14 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Wed Feb 14 2024 Andrey Cherepanov <cas@altlinux.org> 3006.6-alt1
+- New version.
+- Security fixes:
+  + CVE-2024-22231 Prevent directory traversal when creating syndic cache
+    directory on the master.
+  + CVE-2024-22232 Prevent directory traversal attacks in the master's
+    serve_file method.
+
 * Thu Nov 02 2023 Andrey Cherepanov <cas@altlinux.org> 3006.4-alt1
 - New version.
 - Security fix for CVE-2023-34049.
