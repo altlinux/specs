@@ -11,8 +11,8 @@
 %define qIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 
 Name: mono
-Version: 6.12.0.147
-Release: alt2
+Version: 6.12.0.199
+Release: alt1
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -1405,6 +1405,10 @@ done
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Mon Feb 19 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 6.12.0.199-alt1
+- Updated to upstream version 6.12.0.199 (Closes: #46650).
+- Submodules scheme update(git->https) to avoid internal restriction.
+
 * Mon Aug 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.12.0.147-alt2
 - Disabled LTO.
 
