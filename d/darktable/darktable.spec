@@ -5,7 +5,7 @@
 %define rdn_name org.darktable.darktable
 
 %def_enable noise_tools
-# o.21 required
+# 0.21 required
 %def_enable system_libraw
 %def_enable system_lua
 %def_enable libavif
@@ -18,7 +18,7 @@
 
 Name: darktable
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
 License: GPL-3.0
@@ -33,8 +33,9 @@ Patch: darktable-3.0.0-is_supported_platform.patch
 # based on https://bugzilla.altlinux.org/attachment.cgi?id=8682&action=edit
 # by Pavel Nakonechnyi
 Patch1: darktable-4.4.0-alt-disable-use-of-gcc-graphite.patch
+Patch3500: darktable-4.6.1-loongarch64.patch
 
-ExcludeArch: %ix86 armh aarch64
+ExcludeArch: %ix86 armh
 AutoReq: nolua
 
 %define cmake_ver 3.10
@@ -96,9 +97,18 @@ light table. It also enables you to develop raw images and enhance them.
 %prep
 %setup -n %name-%version
 %patch1 -p1
+%patch3500 -p1
 
 %build
-%ifarch ppc64le
+%ifarch aarch64
+# See https://github.com/darktable-org/darktable/issues/15941
+# and https://gcc.gnu.org/bugzilla/show_bug.cgi?id=111677
+# XXX: this disables the implicit `-fstack-protector-strong` (which
+#      is set by ALT Linux' GCC by default).
+%add_optflags -fstack-protector
+%endif
+# XXX: LTO breaks build on aarch64, loongarch64, ppc64le
+%ifnarch x86_64
 %define optflags_lto %nil
 %endif
 %define _optlevel 3
@@ -147,6 +157,10 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %doc README* RELEASE_NOTES*
 
 %changelog
+* Sun Feb 18 2024 Yuri N. Sedunov <aris@altlinux.org> 4.6.1-alt2
+- fixed FTBFS on LoongArch (asheplyakov@)
+  asheplyakov@: build for aarch64 again (disable stack-protector-strong to avoid ICE)
+
 * Sat Feb 17 2024 Yuri N. Sedunov <aris@altlinux.org> 4.6.1-alt1
 - 4.6.1
 - disabled build for aarch64 due internal compiler error

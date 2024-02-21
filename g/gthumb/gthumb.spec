@@ -22,7 +22,7 @@
 %endif
 
 Name: gthumb
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -57,15 +57,16 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Requires: %name-data = %version-%release
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson glib2-devel >= %glib_ver
+BuildRequires: meson intltool yelp-tools
+BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 %{?_enable_clutter:BuildRequires: libclutter-devel libclutter-gtk3-devel >= %clutter_gtk_ver}
 %{?_enable_gstreamer:BuildRequires: gstreamer%gst_api_ver-devel >= %gst_ver gst-plugins%gst_api_ver-devel >= %gst_ver}
-BuildRequires: libjpeg-devel libpng-devel libtiff-devel zlib-devel
-BuildRequires: libsoup-devel >= %soup_ver libsecret-devel
-BuildRequires: librsvg-devel intltool perl-XML-Parser gnome-common yelp-tools
-BuildRequires: gsettings-desktop-schemas-devel libwebp-devel >= %webp_ver libjson-glib-devel
-BuildRequires: libwebkitgtk4-devel >= %webkit_ver
+BuildRequires: libjpeg-devel libpng-devel libtiff-devel zlib-devel librsvg-devel
+BuildRequires: libwebp-devel >= %webp_ver libjson-glib-devel
+BuildRequires: libsecret-devel
+BuildRequires: gsettings-desktop-schemas-devel
+BuildRequires: libsoup-devel >= %soup_ver  pkgconfig(webkit2gtk-4.0) >= %webkit_ver
 %{?_enable_libraw:BuildRequires: libraw-devel >= %libraw_ver libgomp-devel}
 %{?_enable_libheif:BuildRequires: libheif-devel >= %heif_ver}
 %{?_enable_libbrasero:BuildRequires: libbrasero-devel >= %brasero_ver}
@@ -184,6 +185,9 @@ This package contains headers needed to build extensions for gThumb.
 %_pkgconfigdir/*
 
 %changelog
+* Mon Feb 19 2024 Yuri N. Sedunov <aris@altlinux.org> 3.12.5-alt1
+- 3.12.5
+
 * Tue Oct 10 2023 Yuri N. Sedunov <aris@altlinux.org> 3.12.4-alt1
 - 3.12.4
 
