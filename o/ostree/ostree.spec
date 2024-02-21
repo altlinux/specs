@@ -5,7 +5,7 @@
 %def_with ed25519
 
 Name: ostree
-Version: 2024.1
+Version: 2024.3
 Release: alt1
 
 Summary: Linux-based operating system develop/build/deploy tool
@@ -180,6 +180,9 @@ NOCONFIGURE=1 sh -x ./autogen.sh
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Wed Feb 21 2024 Alexey Shabalin <shaba@altlinux.org> 2024.3-alt1
+- 2024.3
+
 * Fri Jan 26 2024 Alexey Shabalin <shaba@altlinux.org> 2024.1-alt1
 - 2024.1
 
