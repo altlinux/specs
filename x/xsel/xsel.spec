@@ -1,5 +1,5 @@
 Name:	 xsel
-Version: 1.2.0.0.58.gef01f3c
+Version: 1.2.1
 Release: alt1
 Summary: Command line clipboard and X selection tool
 
@@ -36,6 +36,9 @@ clipboard or buffer that you would paste with the middle mouse button.
 %_man1dir/%{name}.1x*
 
 %changelog
+* Mon Feb 19 2024 Ilya Demyanov <turbid@altlinux.org> 1.2.1-alt1
+- New upstream version
+
 * Thu Dec 19 2019 Fr. Br. George <george@altlinux.ru> 1.2.0.0.58.gef01f3c-alt1
 - Update from upstream git
 
