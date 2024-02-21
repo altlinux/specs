@@ -2,7 +2,7 @@
 
 Name:       puppetserver
 Version:    6.20.0
-Release:    alt1
+Release:    alt2
 Summary:    Server automation framework and application
 License:    Apache-2.0
 Group:      Other
@@ -11,6 +11,7 @@ Url:        https://github.com/puppetlabs/puppetserver
 BuildArch: noarch
 
 Source: %name-%version.tar
+Source5: %name.service
 
 Source1: puppetserver.init
 Source2: jruby-1_7.jar
@@ -111,8 +112,12 @@ install -d -m 0700 %buildroot%_localstatedir/%name/jars
 install -d -m 0755 %buildroot%_sysconfdir/default
 install -m 0644 ext/default %buildroot%_sysconfdir/default/%name
 
+install -Dpm 0644 ext/default %buildroot%_sysconfdir/sysconfig/%name                                                  
+
 install -d -m 0755 %buildroot%_sysconfdir/init.d
 install -m 0755 %SOURCE1 %buildroot%_sysconfdir/init.d/%name
+
+install -Dpm 0644 %SOURCE5 %buildroot%_unitdir/%name.service
 
 mkdir -p %buildroot%_tmpfilesdir
 install -m 0644 ext/puppetserver.tmpfiles.conf %buildroot%_tmpfilesdir/
@@ -130,6 +135,9 @@ getent group puppet > /dev/null || \
 		useradd -r --gid puppet --home "/var/lib/puppetserver" --shell $(which nologin) \
 		--comment "puppetserver daemon"  puppet || :
 	fi
+
+%preun
+%preun_service %name
 
 %post
 install --directory %_sysconfdir/puppet/ssl
@@ -157,10 +165,13 @@ if [ -d /var/log/puppetlabs/puppetserver ]; then
    mv -f /var/log/puppetlabs/puppetserver/* /var/log/puppetserver
    rm -rf /var/log/puppetlabs/puppetserver
 fi
+%post_service %name
 
 %files
 %_datadir/%name
 %config(noreplace) %_sysconfdir/%name
+%config %_sysconfdir/sysconfig/%name
+%_unitdir/%name.service
 %_var/log/%name
 %_var/lib/%name
 %_var/run/%name
@@ -171,6 +182,9 @@ fi
 %_sysconfdir/default/%name
 
 %changelog
+* Wed Feb 21 2024 Andrey Cherepanov <cas@altlinux.org> 6.20.0-alt2
+- Add service file.
+
 * Wed Sep 21 2022 Pavel Skrylev <majioa@altlinux.org> 6.20.0-alt1
 - ^ 6.13.0 -> 6.20.0
 - - remove conflict to gem-oj
