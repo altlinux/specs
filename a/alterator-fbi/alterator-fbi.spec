@@ -1,9 +1,11 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_without guile20
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-fbi
-Version: 5.49.3
-Release: alt3
+Version: 5.49.4
+Release: alt1
 
 Source: %name-%version.tar
 Patch0: alterator-fbi-5.49.1-call-cc-via-reset.patch
@@ -77,6 +79,7 @@ mkdir -p %buildroot/%_localstatedir/alterator/csrf-tokens
 %__install -Dpm640 ahttpd.logrotate %buildroot/%_sysconfdir/logrotate.d/ahttpd
 %__install -Dpm644 ahttpd.conf %buildroot%_sysconfdir/ahttpd/ahttpd.conf
 %__install -Dpm644 acl.conf %buildroot%_sysconfdir/ahttpd/acl.conf
+%__install -Dpm644 openssl.cnf %buildroot%_sysconfdir/ahttpd/openssl.cnf
 %__install -Dpm755 ahttpd.init %buildroot/%_initrddir/ahttpd
 %__install -d %buildroot/%_cachedir/ahttpd
 %__install -d %buildroot/
@@ -148,9 +151,9 @@ fi ||:
 %_var/run/ahttpd
 %attr(750,root,adm) %_logdir/ahttpd
 %attr(700,_ahttpd,root) %dir %_sysconfdir/ahttpd
-%attr(700,_ahttpd,root) %dir %_sysconfdir/ahttpd
 %config(noreplace) %_sysconfdir/ahttpd/ahttpd.conf
 %config(noreplace) %_sysconfdir/ahttpd/acl.conf
+%config(noreplace) %_sysconfdir/ahttpd/openssl.cnf
 %attr(750,_ahttpd,root) %_cachedir/ahttpd
 %_unitdir/ahttpd.service
 %_unitdir/ahttpd.socket
@@ -161,6 +164,10 @@ fi ||:
 
 
 %changelog
+* Tue Feb 20 2024 Paul Wolneykien <manowar@altlinux.org> 5.49.4-alt1
+- Fixed a typo in the ahttpd.acl.conf(5) manual page.
+- Configure ahttpd to use TLSv1.3 or higher (closes: 44991).
+
 * Wed Sep 20 2023 Michael Shigorin <mike@altlinux.org> 5.49.3-alt3
 - Change guile20 condition from e2k to guile20.
 
