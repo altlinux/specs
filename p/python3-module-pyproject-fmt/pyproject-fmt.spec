@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.1
+Version: 1.7.0
 Release: alt1
 Summary: Format pyproject.toml file
 License: MIT
@@ -49,6 +49,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 20 2024 Stanislav Levin <slev@altlinux.org> 1.7.0-alt1
+- 1.5.1 -> 1.7.0.
+
 * Tue Nov 14 2023 Stanislav Levin <slev@altlinux.org> 1.5.1-alt1
 - 1.4.1 -> 1.5.1.
 
