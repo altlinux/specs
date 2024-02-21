@@ -15,7 +15,7 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 1.26.3
+Version: 1.26.4
 Release: alt1
 Summary: Fundamental package for array computing in Python
 License: BSD-3-Clause
@@ -26,12 +26,10 @@ Source: %name-%version.tar
 Source3: svml.tar
 Source4: x86-simd-sort.tar
 Source5: numpy-meson.tar
-Source6: numpy-meson-python.tar
+Source6: mesonpy.py
 Source1: %pyproject_deps_config_name
 Patch: numpy-1.20.2-Remove-strict-dependency-on-testing-package.patch
-Patch1: numpy-1.26.3-Use-large-file-fallocate-on-32-bit-linux-platfor.patch
 Patch4: numpy-1.21.4-alt-use-sleep-in-auxv-test.patch
-Patch5: numpy-1.26.3-ALT-provide-metadata-hook.patch
 Patch6: numpy-1.26.3-ALT-Xfail-test_limited_api.patch
 
 # E2K patchset with MCST numbering scheme
@@ -99,7 +97,7 @@ Requires: python3-devel
 This package contains development files of NumPy.
 
 %prep
-%setup -a 3 -a4 -a5 -a6
+%setup -a 3 -a4 -a5
 %autopatch -p1
 %ifarch %e2k
 patch -p1 -i %SOURCE2000
@@ -135,9 +133,12 @@ ENDTESTS
 
 %install
 %pyproject_install
+
 # build of numpy is quite long process, but the METADATA is only required,
 # intree build backend is patched to expect custom METADATA directory
 export RPM_CUSTOM_METADATA_DIR=%buildroot%python3_sitelibdir/%{pyproject_distinfo %oname}
+# path to our custom mesonpy
+export PYTHONPATH=%_sourcedir
 %pyproject_deps_resync_metadata
 
 install -d %buildroot%_includedir/python%_python3_version
@@ -210,6 +211,9 @@ ln -s %_includedir/python%_python3_version/%oname \
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Mon Feb 19 2024 Stanislav Levin <slev@altlinux.org> 1:1.26.4-alt1
+- 1.26.3 -> 1.26.4.
+
 * Fri Feb 02 2024 Stanislav Levin <slev@altlinux.org> 1:1.26.3-alt1
 - 1.25.2 -> 1.26.3.
 

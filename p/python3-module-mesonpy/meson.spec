@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.15.0
-Release: alt2
+Release: alt2.1
 
 Summary: Meson PEP 517 Python build backend
 License: MIT
@@ -31,6 +31,9 @@ BuildRequires: python3-module-pytest-mock
 BuildArch: noarch
 
 Source: %name-%version.tar
+# mapping from PyPI name (actual PyPI name is meson-python)
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-meson-python = %EVR
 
 %description
 meson-python is a Python build backend built on top of the Meson build system.
@@ -60,6 +63,9 @@ for more details.
 %python3_sitelibdir/%{pyproject_distinfo meson_python}
 
 %changelog
+* Tue Feb 20 2024 Stanislav Levin <slev@altlinux.org> 0.15.0-alt2.1
+- NMU: mapped PyPI name to distro's one.
+
 * Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 0.15.0-alt2
 - Fixed FTBFS.
 
