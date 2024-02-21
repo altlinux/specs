@@ -3,13 +3,14 @@
 %set_verify_elf_method strict
 
 Name: libcbor
-Version: 0.10.2
+Version: 0.11.0
 Release: alt1
 
 Summary: libcbor is a C library for parsing and generating CBOR
 License: MIT
 Group: System/Libraries
 Url: https://github.com/pjk/libcbor
+Vcs: https://github.com/pjk/libcbor
 
 Source: %name-%version.tar
 
@@ -30,7 +31,6 @@ the general-purpose schema-less binary data format.
 %package devel
 Summary: Development header files for libcbor C library
 Group: Development/C
-Requires: %name = %EVR
 
 %description devel
 Development header file for libcbor - a C library for parsing and generating
@@ -58,10 +58,14 @@ install -pD -m0644 doc/man/libcbor.3 %buildroot/%_man3dir/libcbor.3
 %doc CHANGELOG.md CONTRIBUTING.md LICENSE.md README.md
 %_includedir/cbor*
 %_libdir/%name.so
-%_libdir/pkgconfig/*
-%_man3dir/*
+%_pkgconfigdir/%name.pc
+%_cmakedir/%name/
+%_man3dir/*.3.*
 
 %changelog
+* Wed Feb 21 2024 Anton Zhukharev <ancieg@altlinux.org> 0.11.0-alt1
+- Updated 0.11.0.
+
 * Sat Mar 11 2023 Anton Zhukharev <ancieg@altlinux.org> 0.10.2-alt1
 - 0.10.1 -> 0.10.2.
 
