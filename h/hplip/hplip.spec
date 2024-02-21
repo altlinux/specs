@@ -29,7 +29,7 @@
 
 Name:    hplip
 Version: 3.23.12
-Release: alt1
+Release: alt2
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -252,6 +252,7 @@ Patch156: hplip-revert-plugins.patch
 #Patch159: hplip-check-userperms.patch
 Patch161: hplip-hpsetup-noscanjets.patch
 Patch162: hplip-systray-qt5.patch
+Patch163: hplip-no-readfp.patch
 # end fedora patches
 
 # ubuntu patches
@@ -540,6 +541,7 @@ rm prnt/hpcups/ErnieFilter.{cpp,h} prnt/hpijs/ernieplatform.h
 #patch159 -p1 -b .check-userperms
 %patch161 -p1 -b .hpsetup-noscanjets
 %patch162 -p1 -b .systray-qt5
+%patch163 -p1 -b .no-readfp
 
 # from fedora 3.9.12-3/3.10.9-9
 sed -i.duplex-constraints \
@@ -1126,6 +1128,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Wed Feb 21 2024 Andrey Cherepanov <cas@altlinux.org> 1:3.23.12-alt2
+- Fixed crash on readfp (ALT #49464).
+
 * Sat Dec 02 2023 Andrey Cherepanov <cas@altlinux.org> 1:3.23.12-alt1
 - New version.
 - Added support for the following new printers:
