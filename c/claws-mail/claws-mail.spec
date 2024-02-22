@@ -32,7 +32,7 @@
 
 Name:   	claws-mail
 Version:	4.2.0
-Release: 	alt1
+Release: 	alt2
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	GPLv3+
@@ -43,6 +43,19 @@ Vcs:		git://git.claws-mail.org/claws.git
 
 Source: %name-%version.tar
 Patch:	%name-%version-%release.patch
+
+# Patches from upstream git.
+# Must be reverted when new version will be released.
+Patch1: Fix-bug-4720-resource-leak-patch-by-olaf-aepfle.de.patch
+Patch2: Fix-bug-4724-set-proper-availability-status-to-sign-.patch
+Patch3: Fix-Bug-4728.-Patch-provided-by-Olaf-Hering.patch
+Patch4: fix-bug-4733-Line-breaks-lost-in-headers.patch
+Patch5: Fix-CIDs-1220325-1491306-and-1491315.patch
+Patch6: Fix-CIDs-1491064-and-1491074.patch
+Patch7: Fix-CID-1491137-Out-of-bounds-access-OVERRUN.patch
+Patch8: Fix-CID-1491211-Use-after-free.patch
+Patch9: Remove-wrong-initialization-from-max_message_size.patch
+Patch10: fix-several-USE_AFTER_FREE-coverity-bugs.patch
 
 Obsoletes:	%_oldname < %version
 Provides:	%_oldname
@@ -70,7 +83,7 @@ BuildRequires: libcurl-devel
 
 # For plugin-fancy
 %if_enabled fancy
-BuildRequires: libwebkit2gtk-devel
+BuildRequires: libwebkit2gtk4.1-devel
 %endif
 
 # For plugin-litehtmlviewer
@@ -615,6 +628,18 @@ echo 'echo "%version"' >./version
 
 %patch -p1
 
+# From upstream
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+
 %autoreconf
 
 %build
@@ -831,6 +856,20 @@ install -p -m644 src/plugins/litehtml_viewer/litehtml/LICENSE %buildroot%_defaul
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Thu Feb 22 2024 Mikhail Efremov <sem@altlinux.org> 4.2.0-alt2
+- Patches from upstream:
+  + Fix bug 4720 (resource leak);
+  + Fix bug 4724: set proper availability status to sign/encrypt;
+  + Fix Bug 4728;
+  + fix bug 4733, 'Line breaks lost in headers';
+  + Fix CIDs 1220325, 1491306 and 1491315;
+  + Fix CIDs 1491064 and 1491074;
+  + Fix CID 1491137 'Out-of-bounds access (OVERRUN)';
+  + Fix CID 1491211 'Use after free';
+  + Remove wrong initialization from max_message_size;
+  + fix several USE_AFTER_FREE coverity bugs.
+- fancy: Build with libwebkit2gtk4.1.
+
 * Fri Nov 24 2023 Mikhail Efremov <sem@altlinux.org> 4.2.0-alt1
 - Patch from upstream:
     + if cmd is invalid, NULL it.
