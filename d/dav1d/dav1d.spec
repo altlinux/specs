@@ -1,16 +1,15 @@
 Name: dav1d
-Version: 1.2.1
+Version: 1.4.0
 Release: alt1
+%define soversion 7
 
 Summary: AV1 cross-platform Decoder
 License: BSD
 Group: Video
 
 Url: https://code.videolan.org/videolan/dav1d
-# Source-url: https://github.com/videolan/dav1d/archive/%version.tar.gz
+VCS: https://code.videolan.org/videolan/dav1d.git/
 Source: %name-%version.tar
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
 BuildRequires: gcc
 BuildRequires: nasm
 BuildRequires: doxygen
@@ -20,17 +19,17 @@ BuildRequires: meson >= 0.47.0
 dav1d is a new AV1 cross-platform Decoder, open-source, and focused on speed
 and correctness.
 
-%package -n libdav1d
+%package -n libdav1d_%soversion
 Group: Video
 Summary: Library files for dav1d
 
-%description -n libdav1d
+%description -n libdav1d_%soversion
 Library files for dav1d, the AV1 cross-platform Decoder.
 
 %package -n libdav1d-devel
 Group: Video
 Summary: Development files for dav1d
-Requires: libdav1d = %EVR
+Requires: libdav1d_%soversion = %EVR
 
 %description -n libdav1d-devel
 Development files for dav1d, the AV1 cross-platform Decoder.
@@ -42,7 +41,6 @@ Development files for dav1d, the AV1 cross-platform Decoder.
 %meson
 
 %meson_build
-#meson_build doc/html
 
 %install
 %meson_install
@@ -55,9 +53,10 @@ Development files for dav1d, the AV1 cross-platform Decoder.
 %doc CONTRIBUTING.md NEWS README.md
 %_bindir/dav1d
 
-%files -n libdav1d
+%files -n libdav1d_%soversion
 %doc COPYING doc/PATENTS
-%_libdir/libdav1d.so.*
+%_libdir/libdav1d.so.%soversion
+%_libdir/libdav1d.so.%soversion.*
 
 %files -n libdav1d-devel
 #doc %_target_platform/doc/html
@@ -66,6 +65,10 @@ Development files for dav1d, the AV1 cross-platform Decoder.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Feb 22 2024 Anton Farygin <rider@altlinux.ru> 1.4.0-alt1
+- 1.4.0
+- a package with the library was renamed in accordance with SharedLibsPolicy
+
 * Fri Jun 30 2023 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
 - new version 1.2.1 (with rpmrb script)
 
