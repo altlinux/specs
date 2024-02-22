@@ -7,13 +7,13 @@
 
 %def_enable tools
 %def_enable man
-%def_disable plugins
+%def_enable plugins
 %def_disable tests
 %def_disable check
 
 Name: lib%_name
 Version: %sover.0
-Release: alt1
+Release: alt1.1
 
 Summary: JPEG XL image format reference implementation
 License: BSD-3-Clause
@@ -117,6 +117,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Thu Feb 22 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1.1
+- enabled plugins again
+
 * Thu Feb 22 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
 - 0.10.0
 
