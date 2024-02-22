@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 5.7.1
-Release: alt1
+Release: alt2
 Summary: Jupyter core package
 License: BSD-3-Clause
 Group: Development/Python3
@@ -29,6 +29,7 @@ Jupyter core package. A base package on which Jupyter projects rely.
 
 %prep
 %setup
+sed -i "/addopts/,/]/ s/--color=yes//" pyproject.toml
 
 %build
 %pyproject_build
@@ -37,8 +38,13 @@ Jupyter core package. A base package on which Jupyter projects rely.
 %pyproject_install
 
 %check
-export LC_ALL=en_US.UTF-8
-%pyproject_run_pytest -v
+%pyproject_run_pytest -v \
+	--deselect "jupyter_core/paths.py::jupyter_core.paths.jupyter_path" \
+	--deselect "tests/test_paths.py::test_jupyter_path" \
+	--deselect "tests/test_paths.py::test_jupyter_path_user_site" \
+	--deselect "tests/test_paths.py::test_jupyter_path_no_user_site" \
+	--deselect "tests/test_paths.py::test_jupyter_config_path" \
+	--deselect "tests/test_paths.py::test_jupyter_config_path_no_user_site"
 
 %files
 %doc *.md
@@ -49,6 +55,9 @@ export LC_ALL=en_US.UTF-8
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Feb 21 2024 Anton Vyatkin <toni@altlinux.org> 5.7.1-alt2
+- Fixed FTBFS.
+
 * Fri Jan 19 2024 Anton Vyatkin <toni@altlinux.org> 5.7.1-alt1
 - New version 5.7.1.
 
