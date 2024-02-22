@@ -50,7 +50,7 @@
 
 Name: blender
 Version: 4.0.2
-Release: alt0.4
+Release: alt0.4.1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -446,6 +446,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 22 2024 Michael Shigorin <mike@altlinux.org> 4.0.2-alt0.4.1
+- E2K: update patch (ilyakurdyukov@).
+
 * Fri Jan 05 2024 Grigory Ustinov <grenka@altlinux.org> 4.0.2-alt0.4
 - NMU: fixed build with python3.12.
 
