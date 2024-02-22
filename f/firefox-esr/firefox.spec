@@ -19,8 +19,8 @@ Summary: The Mozilla Firefox project is a redesign of Mozilla's browser (ESR ver
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (версия ESR)
 
 Name: firefox-esr
-Version: 115.7.0
-Release: alt2
+Version: 115.8.0
+Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
 URL: http://www.mozilla.org/projects/firefox/
@@ -66,12 +66,7 @@ Patch018: 0018-rust-loongarch64.patch
 Patch019: 0019-libwebrtc-loongarch64.patch
 Patch021: 0021-rust-authenticator.patch
 Patch022: 0022-rust-update-checksums.patch
-# 23 and 24 are upstream patches for compatibility with python3.12
-# https://hg.mozilla.org/integration/autoland/rev/0315c2d875ca2a95bbb65ef4a1f7b75f72ed7263
-Patch023: 0315c2d875ca2a95bbb65ef4a1f7b75f72ed7263.patch
-# https://hg.mozilla.org/integration/autoland/rev/ee3b3779af7fc81a53859fa92856ef9deae17a75
-Patch024: ee3b3779af7fc81a53859fa92856ef9deae17a75.patch
-Patch025: 0025-dont-remove-yandex-mailru.patch
+Patch023: 0023-dont-remove-yandex-mailru.patch
 ### End Patches
 
 %ifndef build_parallel_jobs
@@ -551,6 +546,18 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Feb 21 2024 Pavel Vasenkov <pav@altlinux.org> 115.8.0-alt1
+- New ESR version.
+- Security fixes
+  + CVE-2024-1546 Out-of-bounds memory read in networking channels
+  + CVE-2024-1547 Alert dialog could have been spoofed on another site
+  + CVE-2024-1548 Fullscreen Notification could have been hidden by select element
+  + CVE-2024-1549 Custom cursor could obscure the permission dialog
+  + CVE-2024-1550 Mouse cursor re-positioned unexpectedly could have led to unintended permission grants
+  + CVE-2024-1551 Multipart HTTP Responses would accept the Set-Cookie header in response parts
+  + CVE-2024-1552 Incorrect code generation on 32-bit ARM devices
+  + CVE-2024-1553 Memory safety bugs fixed in Firefox 123, Firefox ESR 115.8, and Thunderbird 115.8
+
 * Tue Feb 06 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 115.7.0-alt2
 - Reverted malicious upstream commit
   https://hg.mozilla.org/integration/autoland/rev/a03a9c72d1db3716adffc6968cfb6eb43c6fcd74
