@@ -9,8 +9,8 @@
 %def_without selinux
 
 Name: NetworkManager-applet-gtk
-Version: 1.34.0
-Release: alt2%git_hash
+Version: 1.36.0
+Release: alt1%git_hash
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Summary: Panel applet for use with NetworkManager
@@ -94,6 +94,10 @@ mkdir -p %buildroot/%_datadir/gnome-vpn-properties
 %dir %_datadir/gnome-vpn-properties
 
 %changelog
+* Thu Feb 22 2024 Mikhail Efremov <sem@altlinux.org> 1.36.0-alt1
+- Updated Russian translation.
+- Updated to 1.36.0.
+
 * Thu Nov 30 2023 Mikhail Efremov <sem@altlinux.org> 1.34.0-alt2
 - Enabled indicator support (closes: #48555).
 
