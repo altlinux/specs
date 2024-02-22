@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name planify
-%define ver_major 4.4
+%define ver_major 4.5
 %define rdn_name io.github.alainm23.%_name
 
 %def_enable check
@@ -44,6 +44,8 @@ BuildRequires: pkgconfig(libedataserver-1.2)
 BuildRequires: evolution-data-server-vala
 BuildRequires: pkgconfig(libical-glib)
 BuildRequires: pkgconfig(libportal-gtk4)
+BuildRequires: pkgconfig(gxml-0.20)
+BuildRequires: pkgconfig(libsecret-1)
 
 %description
 Planner with Todoist support.
@@ -96,6 +98,9 @@ This package contains files necessary to develop Planify plugins.
 %_vapidir/%_name.*
 
 %changelog
+* Thu Feb 22 2024 Yuri N. Sedunov <aris@altlinux.org> 4.5-alt1
+- 4.5
+
 * Thu Jan 11 2024 Yuri N. Sedunov <aris@altlinux.org> 4.4-alt1
 - updated to 4.4-2-gb0d21d71
 
