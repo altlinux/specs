@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.10.1
+Version: 0.10.2
 Release: alt1
 
 Summary: HTTP Request and Response Service
@@ -55,6 +55,9 @@ All endpoint responses are JSON-encoded.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 21 2024 Anton Zhukharev <ancieg@altlinux.org> 0.10.2-alt1
+- Updated to 0.10.2.
+
 * Mon Dec 18 2023 Anton Zhukharev <ancieg@altlinux.org> 0.10.1-alt1
 - Updated to 0.10.1.
 - Changed upstream to PSF (Python Software Foundation).
