@@ -1,34 +1,35 @@
 %def_enable snapshot
-%define _unpackaged_files_terminate_build 1
 
 %define _name jxl
-%define sover 0.10
+%define sover 0.8
 %define libname lib%_name%sover
 
-%def_enable tools
-%def_enable man
+%def_disable tools
+%def_disable man
 %def_disable plugins
 %def_disable tests
 %def_disable check
 
-Name: lib%_name
-Version: %sover.0
-Release: alt1
+Name: %libname
+Version: %sover.2
+Release: alt2
 
 Summary: JPEG XL image format reference implementation
 License: BSD-3-Clause
 Group: System/Libraries
 Url: https://github.com/libjxl/libjxl
 
+ExcludeArch: armh
+
 %if_disabled snapshot
-Source: https://github.com/libjxl/libjxl/archive/v%version/%name-%version.tar.gz
+Source: https://github.com/libjxl/libjxl/archive/v%version/lib%_name-%version.tar.gz
 %else
 Vcs: https://github.com/libjxl/libjxl.git
-Source: %name-%version.tar
+Source: lib%_name-%version.tar
 %endif
 
 %define gif_ver 5.1
-%define hwy_ver 1.1.0
+%define hwy_ver 1.0.3
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ ninja-build
@@ -44,32 +45,8 @@ BuildRequires: libavif-devel libbrotli-devel liblcms2-devel zlib-devel
 %description
 JPEG XL image format reference implementation Library.
 
-%package -n %libname
-Summary: JPEG XL image format reference implementation Library.
-Group: System/Libraries
-
-%description -n %libname
-This package provides shared JPEG XL libraries.
-
-%package devel
-Summary: Development files for JPEG XL library
-Group: Development/C++
-Requires: %libname = %EVR
-
-%description devel
-This package provides JPEG XL development files.
-
-%package tools
-Summary: The JPEG XL library command line tools
-Group: Graphics
-Requires: %libname = %EVR
-
-%description tools
-This package provides JPEG XL tools.
-
-
 %prep
-%setup
+%setup -n lib%_name-%version
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -92,33 +69,12 @@ rm -f %buildroot%_libdir/*.a
 %check
 %cmake_build -t test
 
-%files -n %libname
-%_libdir/%{name}*.so.%{sover}*
-%{?_enable_plugins:
-%_libdir/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-jxl.so
-%_datadir/thumbnailers/jxl.thumbnailer}
-%doc AUTHORS README* PATENTS
-
-%files devel
-%_libdir/%{name}*.so
-%_includedir/%_name/
-%_pkgconfigdir/%{name}*.pc
-
-%if_enabled tools
-%files tools
-%_bindir/c%_name
-%_bindir/d%_name
-%_bindir/benchmark_xl
-%_bindir/cjpegli
-%_bindir/djpegli
-%_bindir/%{_name}info
-%{?_enable_man:%_man1dir/c%_name.1*
-%_man1dir/d%_name.1*}
-%endif
+%files
+%_libdir/lib%{_name}*.so.%{sover}*
 
 %changelog
-* Thu Feb 22 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
-- 0.10.0
+* Thu Feb 22 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt2
+- compat library
 
 * Wed Jun 14 2023 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1
 - 0.8.2

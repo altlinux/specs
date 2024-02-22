@@ -1,7 +1,12 @@
+%def_disable snapshot
+%ifarch armh
+%def_disable check
+%else
 %def_enable check
+%endif
 
 Name: highway
-Version: 1.0.3
+Version: 1.1.0
 Release: alt1
 
 Summary: Efficient and performance-portable SIMD wrapper libraries
@@ -9,11 +14,15 @@ License: Apache-2.0
 Group: System/Libraries
 Url: https://github.com/google/highway
 
-Vcs: https://github.com/google/highway.git
+%if_disabled snapshot
 Source: %url/archive/%version/%name-%version.tar.gz
+%else
+Vcs: https://github.com/google/highway.git
+Source: %name-%version.tar
+%endif
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++
+BuildRequires: /proc cmake gcc-c++
 BuildRequires: ctest libgtest-devel
 
 %description
@@ -50,8 +59,12 @@ Documentation for Highway libraries.
 
 %build
 %cmake \
+    -DCMAKE_BUILD_TYPE=Release \
     -DBUILD_SHARED_LIBS=ON \
     -DHWY_SYSTEM_GTEST=ON \
+%ifarch %ix86
+    -DHWY_CMAKE_SSE2=ON \
+%endif
 %ifarch armh
     -DHWY_CMAKE_ARM7=ON
 %endif
@@ -80,11 +93,18 @@ Documentation for Highway libraries.
 %_pkgconfigdir/libhwy.pc
 %_pkgconfigdir/libhwy-contrib.pc
 %_pkgconfigdir/libhwy-test.pc
+%_libdir/cmake/hwy/
 
 %files doc
 %doc g3doc hwy/examples
 
 %changelog
+* Mon Feb 19 2024 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
+* Thu Aug 31 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.7-alt1
+- updated to 1.0.7-2-gfed142a
+
 * Sun Jan 29 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
 - 1.0.3
 - enabled %%check for all arches
