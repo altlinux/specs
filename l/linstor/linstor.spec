@@ -8,7 +8,7 @@
 %define __jar_repack %nil
 
 Name: linstor
-Version: 1.26.0
+Version: 1.26.1
 Release: alt1
 Summary: DRBD replicated volume manager
 Group: System/Servers
@@ -151,6 +151,9 @@ and creates drbd resource files.
 %preun_service linstor-satellite
 
 %changelog
+* Thu Feb 22 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.26.1-alt1
+- 1.26.1
+
 * Mon Jan 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.26.0-alt1
 - 1.26.0
 
