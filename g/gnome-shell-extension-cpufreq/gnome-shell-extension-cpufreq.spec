@@ -5,7 +5,7 @@
 
 Name: gnome-shell-extension-cpufreq
 Version: 54.0
-Release: alt1
+Release: alt2
 
 Summary: System Monitor and Power Manager for Gnome Shell
 Group: Graphical desktop/GNOME
@@ -55,6 +55,9 @@ rm -rf %buildroot%_defaultdocdir
 %doc LICENSE README.md
 
 %changelog
+* Tue Feb 20 2024 Alexey Shabalin <shaba@altlinux.org> 54.0-alt2
+- fix install new files.
+
 * Tue Feb 20 2024 Alexey Shabalin <shaba@altlinux.org> 54.0-alt1
 - version 54 with gnome 45 compatibility fixes.
 
