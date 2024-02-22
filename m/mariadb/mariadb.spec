@@ -50,8 +50,8 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.11.6
-Release: alt1
+Version: 10.11.7
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -124,6 +124,7 @@ Patch101: rocksdb-6.8.0-alt-add-libatomic-if-needed.patch
 Patch102: mariadb-10.5.11-alt-link-with-latomic-if-needed.patch
 Patch103: rocksdb-alt-upstream-gcc13.patch
 Patch104: mariadb-10.11.5-disable-download-fmt.patch
+Patch105: 1063738-revert-c432c9ef.patch
 
 Patch2000: mariadb-e2k.patch
 
@@ -440,6 +441,7 @@ tar -xf %SOURCE107 -C extra/libfmt/src/libfmt
 #%%patch102 -p1
 %patch103 -p1 -d ./storage/rocksdb/rocksdb
 %patch104 -p1
+%patch105 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -1056,6 +1058,12 @@ fi
 %endif
 
 %changelog
+* Thu Feb 22 2024 Alexei Takaseev <taf@altlinux.org> 10.11.7-alt2
+- Fix build on armh
+
+* Sat Feb 17 2024 Alexei Takaseev <taf@altlinux.org> 10.11.7-alt1
+- 10.11.7
+
 * Tue Nov 14 2023 Alexei Takaseev <taf@altlinux.org> 10.11.6-alt1
 - 10.11.6
 
