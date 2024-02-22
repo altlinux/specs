@@ -1,6 +1,6 @@
 Name: installer-feature-repo-add
-Version: 0.3
-Release: alt4
+Version: 0.4
+Release: alt1
 
 Summary: Add the installation media to APT configuration
 License: GPL
@@ -29,6 +29,9 @@ Conflicts: alterator-pkg < 2.6.18-alt1
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Wed Feb 21 2024 Mikhail Efremov <sem@altlinux.org> 0.4-alt1
+- Ensure that CDROMDEV is not empty.
+
 * Mon Feb 12 2024 Anton Midyukov <antohami@altlinux.org> 0.3-alt4
 - detect file system on local drive (e.g. usb flash drive)
 - failed if install from local drive and .disk/info not found
