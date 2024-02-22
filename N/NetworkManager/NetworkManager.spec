@@ -59,7 +59,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.44.2
+Version: 1.46.0
 Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -265,6 +265,7 @@ Summary: Mobile broadband device plugin for NetworkManager
 Group: System/Configuration/Networking
 Requires: ModemManager >= 0.7
 Requires: %_name = %version-%release
+Requires: mobile-broadband-provider-info
 
 %description wwan
 This package contains NetworkManager support for mobile broadband (WWAN) devices.
@@ -688,6 +689,13 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Thu Feb 22 2024 Mikhail Efremov <sem@altlinux.org> 1.46.0-alt1
+- Updated to 1.46.0.
+
+* Thu Feb 22 2024 Mikhail Efremov <sem@altlinux.org> 1.45.90-alt1
+- wwan: Require mobile-broadband-provider-info (closes: #49351).
+- Updated to 1.45.90 (1.46-rc1).
+
 * Wed Oct 04 2023 Mikhail Efremov <sem@altlinux.org> 1.44.2-alt1
 - 50-ntp: Replaced egrep with grep -E.
 - Updated to 1.44.2.
