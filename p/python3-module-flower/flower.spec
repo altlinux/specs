@@ -2,9 +2,9 @@
 
 Name: python3-module-flower
 Version: 2.0.1
-Release: alt1
+Release: alt2
 Summary: Real-time monitor and web admin for Celery
-License: BSD
+License: BSD-3-Clause
 Group: Other
 Url: https://github.com/mher/flower
 Source: %name-%version.tar
@@ -33,7 +33,9 @@ information about the status of Celery workers and tasks.
 %python3_sitelibdir/flower
 %python3_sitelibdir/%{pyproject_distinfo flower}
 
-
 %changelog
+* Thu Feb 22 2024 Alexander Makeenkov <amakeenk@altlinux.org> 2.0.1-alt2
+- Fixed license.
+
 * Thu Feb 22 2024 Alexander Makeenkov <amakeenk@altlinux.org> 2.0.1-alt1
 - Initial build for ALT.
