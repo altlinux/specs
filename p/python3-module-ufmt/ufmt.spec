@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.3.0
+Version: 2.5.0
 Release: alt1
 Summary: Safe, atomic formatting with black and usort
 License: MIT
@@ -20,7 +20,9 @@ Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+# not packaged
 %add_pyproject_deps_check_filter attribution
+%add_pyproject_deps_check_filter ruff-api
 %pyproject_builddeps_metadata_extra dev
 # black is runtime dependency but it's filtered out by default
 BuildRequires: python3-module-black
@@ -68,6 +70,9 @@ rm -r %buildroot%python3_sitelibdir/%pypi_name/tests/
 %_bindir/%pypi_name
 
 %changelog
+* Thu Feb 22 2024 Stanislav Levin <slev@altlinux.org> 2.5.0-alt1
+- 2.3.0 -> 2.5.0.
+
 * Thu Nov 09 2023 Stanislav Levin <slev@altlinux.org> 2.3.0-alt1
 - 2.2.0 -> 2.3.0.
 

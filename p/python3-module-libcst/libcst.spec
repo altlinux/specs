@@ -2,11 +2,11 @@
 %define pypi_name libcst
 %define mod_name %pypi_name
 
-%def_without check
+%def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.0
-Release: alt3
+Version: 1.2.0
+Release: alt1
 
 Summary: A Concrete Syntax Tree (CST) parser and serializer library for Python
 License: MIT and Python-2.0 and Apache-2.0
@@ -17,7 +17,6 @@ Source0: %name-%version.tar
 Source1: vendor_rust.tar
 Source2: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-Patch1: drop-distutils.patch
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -68,14 +67,16 @@ find %buildroot%python3_sitelibdir -type d -name tests | \
 # contains CodemodTest class which provides testing facility for Codemods
 
 %check
-# ufmt ignores files ignored by VCS and codegen tests fail
-sed -i 's/^\.tox\/$/# &/' .gitignore
-
 export NO_PYRE=yes
+%pyproject_run -- bash -s <<-'ENDTESTS'
+set -eux
+cd %mod_name
 export LIBCST_PARSER_TYPE=native
-%pyproject_run -- bash -c 'cd %mod_name && python3 -m unittest'
+python -m %mod_name.tests
+
 export LIBCST_PARSER_TYPE=pure
-%pyproject_run -- bash -c 'cd %mod_name && python3 -m unittest'
+python -m %mod_name.tests
+ENDTESTS
 
 %files
 %doc README.rst
@@ -83,6 +84,9 @@ export LIBCST_PARSER_TYPE=pure
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 21 2024 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
+- 1.1.0 -> 1.2.0.
+
 * Wed Nov 22 2023 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt3
 - Bootstrap for python3.12.
 
