@@ -3,7 +3,7 @@
 
 Name: strawberry
 Version: 1.0.23
-Release: alt1
+Release: alt2
 
 Summary: Audio player and music collection organizer
 
@@ -28,6 +28,7 @@ BuildRequires(pre): desktop-file-utils rpm-build-ninja /usr/bin/appstream-util
 # optimized out: boost-devel-headers cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gstreamer1.0-devel icu-utils libX11-devel libdouble-conversion3 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgmock-devel libgpg-error libgst-plugins1.0 libicu-devel libimobiledevice-devel libp11-kit libplist-devel libqt6-concurrent libqt6-core libqt6-dbus libqt6-gui libqt6-network libqt6-sql libqt6-test libqt6-widgets libsasl2-3 libssl-devel libstdc++-devel libvulkan-devel libxcb-devel libxkbcommon-devel pkg-config python3 python3-base qt6-base-common qt6-base-devel qt6-tools sh5 shared-mime-info xorg-proto-devel zlib-devel
 BuildRequires: boost-devel cmake gst-plugins1.0-devel libalsa-devel libcdio-devel libchromaprint-devel libdbus-devel libebur128-devel libfftw3-devel libgpod-devel libgtest-devel libmtp-devel libprotobuf-devel libpulseaudio-devel libsqlite3-devel libtag-devel libvlc-devel protobuf-compiler
 BuildRequires: qt6-sql-interbase qt6-sql-mysql qt6-sql-odbc qt6-sql-postgresql libkdsingleapplication-qt6-devel
+BuildRequires: libicu-devel
 
 %if_with clang
 BuildRequires: clang-devel
@@ -117,6 +118,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Thu Feb 22 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.0.23-alt2
+- Fixed build for Elbrus (missing BR).
+
 * Mon Jan 15 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.23-alt1
 - New version 1.0.23.
 - Built with system libkdsingleapplication.
