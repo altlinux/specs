@@ -32,7 +32,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.9.13.7
+Version: 0.9.13.8
 Release: alt1
 
 Summary: GPT applier
@@ -183,6 +183,10 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Thu Feb 22 2024 Valery Sinelnikov <greh@altlinux.org> 0.9.13.8-alt1
+- Added search for dc on the site
+- Added compatibility support for the oldest versions of SQLAlchemy
+
 * Mon Feb 05 2024 Valery Sinelnikov <greh@altlinux.org> 0.9.13.7-alt1
 - Editing the cache size in the Yandex browser has returned (closes: 44621)
 - Removed unnecessary calls to subprocess
