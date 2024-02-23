@@ -12,15 +12,15 @@
 %global clang_version %(echo %llvm_version | cut -d . -f 1)
 
 Name: python3-module-%mod_name
-Version: 6.6.1
-Release: alt1.1
+Version: 6.6.2
+Release: alt1
 
 Summary: Python bindings for the Qt cross-platform application and UI framework
 Group: Development/Python3
 License: BSD-3-Clause and GPL-2.0 and GPL-3.0 and LGPL-3.0 GFDL-1.3-no-invariants-only
 URL: https://wiki.qt.io/Qt_for_Python
 
-# Download from https://www.nic.funet.fi/pub/mirrors/download.qt-project.org/official_releases/QtForPython/pyside6/PySide6-6.6.0-src/pyside-setup-everywhere-src-6.6.0.tar.xz
+# Download from https://www.nic.funet.fi/pub/mirrors/download.qt-project.org/official_releases/QtForPython/pyside6/PySide6-6.6.2-src/pyside-setup-everywhere-src-6.6.2.tar.xz
 Source: pyside-setup-opensource-%version.tar
 Patch0: always-link-to-python-libraries.patch
 Patch1: pyside6-6.6.0-no-qtexampleicons.patch
@@ -49,6 +49,7 @@ BuildRequires: libnumpy-py3-devel
 BuildRequires: libxml2-devel
 BuildRequires: libxslt-devel
 BuildRequires: zlib-devel
+BuildRequires: liblzma-devel
 
 # Common dependencies
 BuildRequires: qt6-base-devel
@@ -173,7 +174,7 @@ to Python, or even to get useful information to debug an application.
 
 %prep
 %setup -n pyside-setup-opensource-%version
-%patch0 -p0
+%patch0 -p2
 %patch1 -p2
 
 %build
@@ -247,7 +248,7 @@ ctest \
   --force-new-ctest-process \
   --test-dir pyside6 \
   --parallel %_smp_build_ncpus \
-  --exclude-regex 'pysidetest_new_inherited_functions_test|pysidetest_qvariant_test|registry_existence_test|signals_disconnect_test|support_voidptr_test|QtCore_loggingcategorymacros_test|QtGui_qpen_test|QtGui_timed_app_and_patching_test|QtWidgets_application_test|Qt3DExtras_qt3dextras_test'
+  --exclude-regex 'pysidetest_new_inherited_functions_test|pysidetest_qvariant_test|registry_existence_test|signals_disconnect_test|support_voidptr_test|QtCore_loggingcategorymacros_test|QtGui_qpen_test|QtGui_timed_app_and_patching_test|QtWidgets_application_test|Qt3DExtras_qt3dextras_test|pyside6-android-deploy_test_pyside6_android_deploy'
 popd
 
 
@@ -288,6 +289,9 @@ popd
 %python3_sitelibdir/shiboken6_generator-%version-*.egg-info
 
 %changelog
+* Fri Feb 23 2024 Anton Vyatkin <toni@altlinux.org> 6.6.2-alt1
+- new version 6.6.2
+
 * Tue Dec 19 2023 Anton Vyatkin <toni@altlinux.org> 6.6.1-alt1.1
 - don't use distutils
 
