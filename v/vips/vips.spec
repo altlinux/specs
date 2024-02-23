@@ -1,10 +1,11 @@
 %def_enable introspection
 %def_enable gtk_doc
 %def_disable static
+%def_disable orc
 
 Name: vips
 Version: 8.15.1
-Release: alt1
+Release: alt3
 
 Summary: Large image processing library
 
@@ -47,7 +48,11 @@ BuildRequires: pkgconfig(libtiff-4) >= 4.0.10
 BuildRequires: pkgconfig(libwebp) >= 0.6.0
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(matio)
+%if_enabled orc
 BuildRequires: pkgconfig(orc-0.4) >= 0.4.11
+%else
+BuildRequires: highway-devel >= 1.0.5
+%endif
 BuildRequires: pkgconfig(pangoft2)
 BuildRequires: pkgconfig(python3)
 BuildRequires: pkgconfig(pygobject-3.0) >= 3.13.0
@@ -61,9 +66,8 @@ BuildRequires: pkgconfig(pango)
 BuildRequires: libimagequant-devel
 BuildRequires: pkgconfig(libjxl)
 %endif
-#BuildRequires: highway-devel needs highway >= 1.0.5
-BuildRequires: liborc-devel
 BuildRequires: libarchive-devel
+BuildRequires: libexif-devel
 
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
@@ -200,10 +204,17 @@ rm -v %buildroot%_docdir/vips-doc/html/*.map
 # - package python bindings
 
 %changelog
+* Fri Feb 23 2024 L.A. Kostis <lakostis@altlinux.ru> 8.15.1-alt3
+- BR: optimize orc/highway deps.
+
+* Thu Jan 25 2024 L.A. Kostis <lakostis@altlinux.ru> 8.15.1-alt2
+- Enable SIMD opts via highway.
+
 * Wed Jan 24 2024 L.A. Kostis <lakostis@altlinux.ru> 8.15.1-alt1
 - 8.15.1.
 - BR: enable optimisation via liborc.
 - BR: added libarchive (for image pyramid).
+- BR: added libexif support.
 
 * Thu Jun 29 2023 Michael Shigorin <mike@altlinux.org> 8.14.2-alt2
 - fix broken versioned BR:
