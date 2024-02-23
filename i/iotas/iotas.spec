@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define ver_major 0.2
@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: iotas
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: Simple note taking with Nextcloud Notes
@@ -16,7 +16,7 @@ Group: Office
 Url: https://gitlab.gnome.org/World/iotas
 
 %if_disabled snapshot
-Source: %url/-/archive/v%version/%name-%version.tar.gz
+Source: %url/-/archive/%version/%name-%version.tar.gz
 %else
 Vcs: https://gitlab.gnome.org/World/iotas.git
 Source: %name-%version.tar
@@ -75,6 +75,9 @@ on sync with Nextcloud Notes.
 %doc README*
 
 %changelog
+* Sat Feb 24 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.8-alt1
+- 0.2.8
+
 * Sat Jan 20 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.7-alt1
 - updated to 0.2.7-14-g3aa62e4
 
