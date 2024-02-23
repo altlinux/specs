@@ -1,12 +1,12 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 3.3
+%define ver_major 3.4
 %define rdn_name org.kop316.antispam
 
 %def_enable check
 
 Name: phosh-antispam
-Version: %ver_major.1
+Version: %ver_major
 Release: alt1
 
 Summary: Phosh Anti-Spam
@@ -22,7 +22,7 @@ Source: %name-%version.tar
 %endif
 
 %define gtk_ver 4.6
-%define adwaita_ver 1.2
+%define adwaita_ver 1.4
 
 Requires: gnome-calls
 
@@ -61,6 +61,9 @@ hangs up depending on the user's preferences.
 
 
 %changelog
+* Sat Feb 24 2024 Yuri N. Sedunov <aris@altlinux.org> 3.4-alt1
+- updated to 3.4-2-ga739995
+
 * Wed Nov 08 2023 Yuri N. Sedunov <aris@altlinux.org> 3.3.1-alt1
 - 3.3.1
 
