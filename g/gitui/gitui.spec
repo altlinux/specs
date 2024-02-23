@@ -4,8 +4,8 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: gitui
-Version: 0.24.3
-Release: alt2
+Version: 0.25.0
+Release: alt1
 Summary: Blazing fast terminal-ui for git written in rust
 License: MIT
 Group: Development/Other
@@ -47,6 +47,8 @@ linker = "gcc"
 EOF
 # Use openssl-devel.
 sed -i '/^default =/s/"vendor-openssl"//' Cargo.toml
+# There should not be non-source precompiled files.
+find vendor \( -name '*.a' -o -name '*.lib' -o -name '*.dll' -o -name '*.obj' \) | grep . && exit 1
 
 %build
 cargo build %_smp_mflags --offline --release
@@ -66,6 +68,9 @@ cargo test  %_smp_mflags --release
 %_bindir/gitui
 
 %changelog
+* Fri Feb 23 2024 Vitaly Chikunov <vt@altlinux.org> 0.25.0-alt1
+- Update to v0.25.0 (2024-02-21).
+
 * Mon Jan 29 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.24.3-alt2
 - NMU: fixed FTBFS on LoongArch (updated vendored tempfiles to 3.5.0,
   is-terminal -> 0.4.10).
