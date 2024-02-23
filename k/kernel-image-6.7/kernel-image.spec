@@ -1,7 +1,7 @@
 Name: kernel-image-6.7
 Release: alt1
 %define kernel_base_version	6.7
-%define kernel_sublevel	.5
+%define kernel_sublevel	.6
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -588,6 +588,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Feb 24 2024 Kernel Bot <kernelbot@altlinux.org> 6.7.6-alt1
+- v6.7.6 (2024-02-23).
+- config-aarch64: Do not disable CONFIG_DEBUG_INFO_BTF.
+
 * Sun Feb 18 2024 Vitaly Chikunov <vt@altlinux.org> 6.7.5-alt1
 - v6.7.5 (2024-02-16) (based on un-def/sisyphus).
 
