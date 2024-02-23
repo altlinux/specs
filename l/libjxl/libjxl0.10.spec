@@ -8,12 +8,13 @@
 %def_enable tools
 %def_enable man
 %def_enable plugins
+%def_enable gimp_plugin
 %def_disable tests
 %def_disable check
 
 Name: lib%_name
 Version: %sover.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: JPEG XL image format reference implementation
 License: BSD-3-Clause
@@ -37,6 +38,7 @@ BuildRequires: highway-devel >= %hwy_ver
 BuildRequires: libjpeg-devel openexr-devel libpng-devel libwebp-devel
 BuildRequires: libavif-devel libbrotli-devel liblcms2-devel zlib-devel
 %{?_enable_plugins:BuildRequires: libgdk-pixbuf-devel}
+%{?_enable_gimp_plugin:BuildRequires: libgimp-devel}
 %{?_enable_man:BuildRequires: asciidoc-a2x}
 %{?_enable_tests:BuildRequires: libgtest-devel}
 %{?_enable_check:BuildRequires: ctest}
@@ -47,9 +49,19 @@ JPEG XL image format reference implementation Library.
 %package -n %libname
 Summary: JPEG XL image format reference implementation Library.
 Group: System/Libraries
+Requires: %name-pixbuf-loader = %EVR
+Obsoletes: %name < 0.9
 
 %description -n %libname
 This package provides shared JPEG XL libraries.
+
+%package pixbuf-loader
+Summary: JPEG XL image loader for GTK+ applications
+Group: System/Libraries
+Conflicts: %name < 0.9
+
+%description pixbuf-loader
+This package provides JPEG XL image loader for gdk-pixbuf.
 
 %package devel
 Summary: Development files for JPEG XL library
@@ -67,6 +79,14 @@ Requires: %libname = %EVR
 %description tools
 This package provides JPEG XL tools.
 
+%package -n gimp-plugin-%name
+Summary: JPEG XL plugin for GIMP
+Group: Graphics
+Requires: %libname = %EVR
+Requires: gimp
+
+%description -n gimp-plugin-%name
+This package provides JPEG XL support for GIMP.
 
 %prep
 %setup
@@ -94,10 +114,16 @@ rm -f %buildroot%_libdir/*.a
 
 %files -n %libname
 %_libdir/%{name}*.so.%{sover}*
-%{?_enable_plugins:
-%_libdir/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-jxl.so
-%_datadir/thumbnailers/jxl.thumbnailer}
 %doc AUTHORS README* PATENTS
+
+%{?_enable_plugins:
+%files pixbuf-loader
+%_libdir/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-jxl.so
+%_datadir/thumbnailers/jxl.thumbnailer
+%{?_enable_gimp_plugin:
+%files -n gimp-plugin-%name
+%_libdir/gimp/2.0/plug-ins/file-jxl/file-jxl}
+}
 
 %files devel
 %_libdir/%{name}*.so
@@ -117,6 +143,10 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Sat Feb 24 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1.2
+- moved gdk-pixbuf loader to separate package
+- new gimp-plugin-libjxl package
+
 * Thu Feb 22 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1.1
 - enabled plugins again
 
