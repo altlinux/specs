@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1
 %define kernel_base_version	6.6
-%define kernel_sublevel	.17
+%define kernel_sublevel	.18
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -589,6 +589,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Feb 23 2024 Kernel Bot <kernelbot@altlinux.org> 1:6.6.18-alt1
+- v6.6.18 (2024-02-23).
+
 * Sat Feb 17 2024 Kernel Bot <kernelbot@altlinux.org> 1:6.6.17-alt1
 - v6.6.17 (2024-02-16).
 - config: Make all cpufreq governors built-in.
