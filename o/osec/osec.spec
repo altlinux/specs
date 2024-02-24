@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: osec
-Version: 1.3.1
-Release: alt3
+Version: 1.3.2
+Release: alt1
 
 Summary: Lightweight file permission checker
 License: GPL3
@@ -118,6 +118,10 @@ rm -f %osec_statedir/osec.db.*
 %_bindir/osec_rpm_reporter
 
 %changelog
+* Sat Feb 24 2024 Alexey Gladkov <legion@altlinux.ru> 1.3.2-alt1
+- New version (1.3.2).
+- Fix infinite loop (ALT#49446).
+
 * Mon Jan 09 2023 Alexey Gladkov <legion@altlinux.ru> 1.3.1-alt3
 - osec.timer: Randomize startup time (ALT#44842).
 
