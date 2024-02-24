@@ -17,7 +17,7 @@
 %endif
 
 Name: 	 thunderbird
-Version: 115.7.0
+Version: 115.8.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -51,11 +51,6 @@ Patch3501: 0002_xpcom_add_loongarch64_support.patch
 Patch3502: 0003_botan_loongarch64_buildfix.patch
 Patch3503: 0004_rust_loongarch64.patch
 Patch3504: 0005_rust_checksums_upd.patch
-# 3505 and 3506 are upstream patches for compatibility with python3.12
-# https://hg.mozilla.org/integration/autoland/rev/0315c2d875ca2a95bbb65ef4a1f7b75f72ed7263
-Patch3505: 0315c2d875ca2a95bbb65ef4a1f7b75f72ed7263.patch
-# https://hg.mozilla.org/integration/autoland/rev/ee3b3779af7fc81a53859fa92856ef9deae17a75
-Patch3506: ee3b3779af7fc81a53859fa92856ef9deae17a75.patch
 
 ExcludeArch: armh
 
@@ -264,8 +259,6 @@ tar -xf %SOURCE6
 %patch3502 -p1
 %patch3503 -p1
 %patch3504 -p1
-%patch3505 -p1
-%patch3506 -p1
 
 # Update bundled six.py for 1.16
 cp -fv %SOURCE9 third_party/python/six/six.py
@@ -589,6 +582,18 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Sat Feb 24 2024 Pavel Vasenkov <pav@altlinux.org> 115.8.0-alt1
+- New version.
+- Security fixes:
+  + CVE-2024-1546 Out-of-bounds memory read in networking channels
+  + CVE-2024-1547 Alert dialog could have been spoofed on another site
+  + CVE-2024-1548 Fullscreen Notification could have been hidden by select element
+  + CVE-2024-1549 Custom cursor could obscure the permission dialog
+  + CVE-2024-1550 Mouse cursor re-positioned unexpectedly could have led to unintended permission grants
+  + CVE-2024-1551 Multipart HTTP Responses would accept the Set-Cookie header in response parts
+  + CVE-2024-1552 Incorrect code generation on 32-bit ARM devices
+  + CVE-2024-1553 Memory safety bugs fixed in Firefox 123, Firefox ESR 115.8, and Thunderbird 115.8
+
 * Sun Feb 04 2024 Pavel Vasenkov <pav@altlinux.org> 115.7.0-alt1
 - New version.
 - Security fixes:
