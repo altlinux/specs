@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: bin-marcosnils
-Version: 0.17.2
+Version: 0.17.3
 Release: alt1
 Summary: Effortless binary manager
 License: MIT
@@ -22,7 +22,9 @@ different sources (mostly from GitHub or Docker registry).
 %setup
 
 %build
+%ifnarch %ix86 armh riscv64
 export CGO_ENABLED=0
+%endif
 go build -v -buildmode=pie -ldflags \
 	"-X main.version=%version-%release
 	 -X main.date=$(date -I)
@@ -41,5 +43,8 @@ go test -v ./...
 %_bindir/bin
 
 %changelog
+* Sat Feb 24 2024 Vitaly Chikunov <vt@altlinux.org> 0.17.3-alt1
+- Update to v0.17.3 (2024-01-31).
+
 * Sat Jan 20 2024 Vitaly Chikunov <vt@altlinux.org> 0.17.2-alt1
 - First import v0.17.2 (2023-10-03).
