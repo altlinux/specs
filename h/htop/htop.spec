@@ -4,8 +4,8 @@
 %def_enable sensors
 
 Name: htop
-Version: 3.2.2
-Release: alt2.2
+Version: 3.3.0
+Release: alt1
 
 Summary: Interactive ncurses-based process viewer for Linux
 License: GPLv2+
@@ -102,6 +102,9 @@ rm -r %buildroot%_pixmapsdir/
 
 
 %changelog
+* Sat Feb 24 2024 Ilya Mashkin <oddity@altlinux.ru> 3.3.0-alt1
+- 3.3.0
+
 * Thu Oct 12 2023 Hihin Ruslan <ruslandh@altlinux.ru> 3.2.2-alt2.2
 - Fix spec and .gear/rules
 
