@@ -1,6 +1,6 @@
 Name:		uget
 Version:	2.2.3
-Release:	alt1
+Release:	alt2
 Summary:	Download manager using GTK+ and libcurl
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group:		Networking/File transfer
@@ -36,7 +36,7 @@ autoreconf -fisv
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
 
 desktop-file-install \
 	--dir $RPM_BUILD_ROOT%_desktopdir \
@@ -56,6 +56,9 @@ desktop-file-install \
 
 
 %changelog
+* Sat Feb 24 2024 Ilya Mashkin <oddity@altlinux.ru> 2.2.3-alt2
+- translations fixed (Closes: #49294, #37701)
+
 * Mon Aug 31 2020 Ilya Mashkin <oddity@altlinux.ru> 2.2.3-alt1
 - 2.2.3
 
