@@ -1,5 +1,5 @@
 Name: myMPD
-Version: 10.1.6
+Version: 14.0.3
 Release: alt1
 
 Summary: myMPD is a standalone and mobile friendly web mpd client with a tiny footprint and advanced features
@@ -10,6 +10,7 @@ Url: https://github.com/jcorporation/myMPD
 # repacked https://github.com/jcorporation/%name/archive/refs/tags/v%version.tar.gz
 Source0: %name-%version.tar
 Source1: mympd.init
+Patch0: %name-14.0.3-alt-fix-systemd-service-path.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc
@@ -29,6 +30,7 @@ Therefore myMPD is ideal for raspberry pis and similar devices.
 
 %prep
 %setup
+%patch0 -p1
 %ifarch %e2k
 sed -i "s/-Werror /-Wno-error /" {,test/}CMakeLists.txt
 %endif
@@ -63,8 +65,11 @@ fi
 %_man1dir/mympd-script.1.xz
 
 %changelog
+* Sat Feb 24 2024 Nikolay Burykin <bne@altlinux.org> 14.0.3-alt1
+- 14.0.3 
+
 * Sun Dec 11 2022 Nikolay Burykin <bne@altlinux.org> 10.1.6-alt1
-- 10.1.6 
+- 10.1.6
 
 * Tue Oct 18 2022 Nikolay Burykin <bne@altlinux.org> 9.5.0-alt1
 - 9.5.0
