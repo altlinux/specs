@@ -4,7 +4,7 @@
 
 Name: qt6-positioning
 Version: 6.6.2
-Release: alt1
+Release: alt1.1
 
 Group: System/Libraries
 Summary: Qt6 - QtPositioning component
@@ -78,10 +78,6 @@ Requires: libqt6-core = %_qt6_version
 %prep
 %setup -n %qt_module-everywhere-src-%version
 
-%ifarch e2k
-sed -i 's|-ftree-vectorize||' src/3rdparty/*/*.pro
-%endif
-
 %build
 %Q6build
 %if %qdoc_found
@@ -125,6 +121,9 @@ sed -i 's|-ftree-vectorize||' src/3rdparty/*/*.pro
 %_qt6_examplesdir/*
 
 %changelog
+* Fri Feb 23 2024 Michael Shigorin <mike@altlinux.org> 6.6.2-alt1.1
+- spec: drop obsolete e2kv3-only hack for old lcc
+
 * Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
 - new version
 

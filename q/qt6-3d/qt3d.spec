@@ -3,7 +3,7 @@
 
 Name: qt6-3d
 Version: 6.6.2
-Release: alt1
+Release: alt1.1
 
 Group: System/Libraries
 Summary: Qt6 - Qt3D QML bindings and C++ APIs
@@ -160,6 +160,9 @@ find_package(Qt6 COMPONENTS ShaderTools)
 __EOF__
 
 %build
+%ifarch %e2k
+%add_optflags -mno-sse
+%endif
 %Q6build \
     -DFEATURE_qt3d_rhi_renderer:BOOL=ON \
     #
@@ -234,6 +237,9 @@ __EOF__
 %_qt6_examplesdir/*
 
 %changelog
+* Fri Feb 23 2024 Michael Shigorin <mike@altlinux.org> 6.6.2-alt1.1
+- E2K: disable SSE due to core header missing
+
 * Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
 - new version
 

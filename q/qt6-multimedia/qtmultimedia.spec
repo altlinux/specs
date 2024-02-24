@@ -7,7 +7,7 @@
 
 Name: qt6-multimedia
 Version: 6.6.2
-Release: alt1
+Release: alt1.1
 
 Group: System/Libraries
 Summary: Qt6 - Multimedia support
@@ -117,6 +117,9 @@ Requires: libqt6-core = %_qt6_version
 %setup -n %qt_module-everywhere-src-%version
 
 %build
+%ifarch %e2k
+%add_optflags -mno-sse
+%endif
 %Q6build
 %if %qdoc_found
 %make -C BUILD docs
@@ -177,6 +180,9 @@ done
 %_qt6_examplesdir/*
 
 %changelog
+* Fri Feb 23 2024 Michael Shigorin <mike@altlinux.org> 6.6.2-alt1.1
+- E2K: disable SSE due to x86 asm (ilyakurdyukov@)
+
 * Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
 - new version
 
