@@ -8,13 +8,13 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 
 Name:           freedoom
 
-Version:        0.12.1
+Version:        0.13.0
 Release:        alt1
 Summary:        Doom styled first person shooter game
 
 License:        BSD
 URL:            https://freedoom.github.io/
-Source0:        https://github.com/freedoom/freedoom/releases/download/v0.12.1/freedoom-0.12.1.zip
+Source0:        https://github.com/freedoom/freedoom/releases/download/v0.12.1/freedoom-0.13.0.zip
 Source1:        freedoom1.desktop
 Source2:        freedoom2.desktop
 Source3:        freedoom.png
@@ -105,6 +105,9 @@ chmod 755 %{buildroot}/%{_bindir}/%{name}2
 %{_bindir}/%{name}2
 
 %changelog
+* Sat Feb 24 2024 Artyom Bystrov <arbars@altlinux.org> 0.13.0-alt1
+- Update to new version
+
 * Mon May 10 2021 Ilya Mashkin <oddity@altlinux.ru> 0.12.1-alt1
 - 0.12.1
 - added cmdline launchers from FC
