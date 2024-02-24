@@ -1,5 +1,5 @@
 Name: hackrf
-Version: 2023.01.1
+Version: 2024.02.1
 Release: alt1
 Summary: HackRF Utilities
 
@@ -77,6 +77,9 @@ popd
 #_docdir/%name
 
 %changelog
+* Sat Feb 24 2024 Anton Midyukov <antohami@altlinux.org> 2024.02.1-alt1
+- New version 2024.02.1.
+
 * Sun Apr 23 2023 Anton Midyukov <antohami@altlinux.org> 2023.01.1-alt1
 - New version 2023.01.1.
 
