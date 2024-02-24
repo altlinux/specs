@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 122.0.1
+Version: 123.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -32,7 +32,7 @@ Patch010: 0010-Add-dbus-cflags.patch
 
 %define gst_version   1.0
 %define nspr_version  4.35
-%define nss_version   3.96.1
+%define nss_version   3.98
 %define rust_version  1.65.0
 %define cargo_version 1.65.0
 %define llvm_version  17.0
@@ -427,6 +427,22 @@ fi
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Sat Feb 24 2024 Alexey Gladkov <legion@altlinux.ru> 123.0-alt1
+- New release (123.0).
+- Security fixes:
+  + CVE-2024-1546: Out-of-bounds memory read in networking channels
+  + CVE-2024-1547: Alert dialog could have been spoofed on another site
+  + CVE-2024-1554: fetch could be used to effect cache poisoning
+  + CVE-2024-1548: Fullscreen Notification could have been hidden by select element
+  + CVE-2024-1549: Custom cursor could obscure the permission dialog
+  + CVE-2024-1550: Mouse cursor re-positioned unexpectedly could have led to unintended permission grants
+  + CVE-2024-1551: Multipart HTTP Responses would accept the Set-Cookie header in response parts
+  + CVE-2024-1555: SameSite cookies were not properly respected when opening a website from an external browser
+  + CVE-2024-1556: Invalid memory access in the built-in profiler
+  + CVE-2024-1552: Incorrect code generation on 32-bit ARM devices
+  + CVE-2024-1553: Memory safety bugs fixed in Firefox 123, Firefox ESR 115.8, and Thunderbird 115.8
+  + CVE-2024-1557: Memory safety bugs fixed in Firefox 123
+
 * Thu Feb 08 2024 Alexey Gladkov <legion@altlinux.ru> 122.0.1-alt1
 - New release (122.0.1).
 

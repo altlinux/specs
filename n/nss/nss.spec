@@ -1,6 +1,6 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.96.1
+Version:	3.98
 Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
@@ -264,6 +264,16 @@ popd
 %files -n lib%name-nssckbi-checkinstall
 
 %changelog
+* Sat Feb 24 2024 Alexey Gladkov <legion@altlinux.ru> 3.98-alt1
+- New version (3.98).
+- Certificate Authority Changes:
+  + Add CN=D-Trust SBR Root CA 1 2022
+  + Add CN=D-Trust SBR Root CA 2 2022
+  + Add CN=Telekom Security SMIME ECC Root 2021
+  + Add CN=Telekom Security SMIME RSA Root 2023
+  + Add CN=Telekom Security TLS ECC Root 2020
+  + Add CN=Telekom Security TLS RSA Root 2023
+
 * Wed Dec 20 2023 Alexey Gladkov <legion@altlinux.ru> 3.96.1-alt1
 - New version (3.96.1).
 - Certificate Authority Changes:
