@@ -29,7 +29,7 @@
 
 Name: LibreOffice-still
 %define hversion 7.6
-%define urelease 4.1
+%define urelease 5.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -92,7 +92,6 @@ Patch410: alt-005-svg-icons-1.patch
 Patch411: alt-006-svg-icons-2.patch
 Patch412: alt-007-svg-icons-3.patch
 Patch413: alt-013-icu74.patch
-Patch414: libxml2-2.12-fixed-build.patch
 
 Patch500: alt-010-mips-fix-linking-with-libatomic.patch
 
@@ -383,8 +382,6 @@ echo Direct build
 #patch411 -p1
 #patch412 -p1
 %patch413 -p1
-# https://bugs.documentfoundation.org/show_bug.cgi?id=158302
-%patch414 -p1
 
 %patch500 -p0
 
@@ -756,6 +753,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Sat Feb 24 2024 Andrey Cherepanov <cas@altlinux.org> 7.6.5.2-alt1
+- New version.
+
 * Thu Feb 01 2024 Andrey Cherepanov <cas@altlinux.org> 7.6.4.1-alt1
 - New version.
 - Built with GTK4 VCL and unify build flags with Fedora.
