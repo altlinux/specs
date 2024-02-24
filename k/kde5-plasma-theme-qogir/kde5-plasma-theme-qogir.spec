@@ -2,8 +2,8 @@
 %filter_from_requires /sed/d
 
 Name: kde5-plasma-theme-qogir
-Version: 2023.01.30
-Release: alt1.git5f80b0a
+Version: 2024.02.03
+Release: alt1.git6e61df9
 Summary: Qogir KDE theme
 
 Group: Graphical desktop/KDE
@@ -11,7 +11,7 @@ License: GPL-3.0
 Url: https://github.com/vinceliuice/Qogir-kde
 
 Source: %name-%version.tar.gz
-Patch: 0001-Disable-root-check.patch
+Patch: %name-alt-disable-root-check.patch
 
 BuildArch: noarch
 
@@ -58,6 +58,9 @@ mv -f %buildroot%_datadir/kf5/Kvantum/* %buildroot%_datadir/Kvantum/
 %_datadir/kf5/wallpapers/Qogir*
 
 %changelog
+* Sat Feb 24 2024 Leontiy Volodin <lvol@altlinux.org> 2024.02.03-alt1.git6e61df9
+- Updated from git (commit: 6e61df9).
+
 * Mon Mar 27 2023 Leontiy Volodin <lvol@altlinux.org> 2023.01.30-alt1.git5f80b0a
 - Updated from git (commit: 5f80b0a).
 
