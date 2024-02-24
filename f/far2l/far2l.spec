@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: far2l
-Version: 2.5.3
+Version: 2.6.0
 Release: alt1
 
 Summary: Linux port of FAR v2
@@ -90,6 +90,9 @@ Used code from projects:
 %_man1dir/far2l.*
 
 %changelog
+* Sat Feb 24 2024 Anton Midyukov <antohami@altlinux.org> 2.6.0-alt1
+- new version (2.6.0) with rpmgs script
+
 * Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 2.5.3-alt1
 - new version (2.5.3) with rpmgs script
 
