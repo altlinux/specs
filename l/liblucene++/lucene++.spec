@@ -2,8 +2,8 @@
 %def_enable check
 
 Name: lib%_name
-Version: 3.0.8
-Release: alt2
+Version: 3.0.9
+Release: alt1
 
 Summary: A high-performance, full-featured text search engine written in C++
 Group: System/Libraries
@@ -24,7 +24,7 @@ a high-performance, full-featured text search engine.
 %package devel
 Summary: Development files for lucene++
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Development files for lucene++, a high-performance, full-featured text
@@ -64,6 +64,9 @@ search engine written in C++
 %_libdir/cmake/%{name}*
 
 %changelog
+* Sun Feb 25 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.9-alt1
+- 3.0.9
+
 * Tue Mar 22 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0.8-alt2
 - updated to rel_3.0.8-28-g4fb8e5f (ALT #42206)
 
