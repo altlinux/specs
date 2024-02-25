@@ -2,19 +2,16 @@
 
 %define sover 1
 Name: libmfx
-Version: 22.5.4
-Release: alt2
-
+Version: 23.2.2
+Release: alt1
 Summary: The Intel Media SDK
 
 License: MIT
 Group: System/Libraries
 Url: https://github.com/Intel-Media-SDK/MediaSDK
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-# Source-url: https://github.com/Intel-Media-SDK/MediaSDK/archive/intel-mediasdk-%version.tar.gz
+VCS: https://github.com/Intel-Media-SDK/MediaSDK
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
@@ -41,6 +38,7 @@ the Intel Media SDK.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %cmake_insource \
@@ -90,6 +88,9 @@ the Intel Media SDK.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Feb 25 2024 Anton Farygin <rider@altlinux.ru> 23.2.2-alt1
+- 22.5.4 -> 23.2.2
+
 * Fri Jul 14 2023 Artyom Bystrov <arbars@altlinux.org> 22.5.4-alt2
 - Fix build on GCC13
 

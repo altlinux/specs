@@ -58,10 +58,9 @@
 # https://trac.ffmpeg.org/ticket/9112
 %def_disable liblensfun
 %def_enable libmp3lame
-%ifarch x86_64
-%def_enable libmfx
-%else
+%ifarch x86_64 aarch64
 %def_disable libmfx
+%def_enable libvpl
 %endif
 %{?_enable_version3:%def_enable libopencore_amrnb}
 %{?_enable_version3:%def_enable libopencore_amrwb}
@@ -167,7 +166,7 @@
 Name:		ffmpeg
 Epoch:		2
 Version:	6.1.1
-Release:	alt1
+Release:	alt2
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -213,6 +212,7 @@ BuildRequires:	yasm
 %{?_enable_liblensfun:BuildRequires: liblensfun-devel}
 %{?_enable_libmp3lame:BuildRequires: liblame-devel}
 %{?_enable_libmfx:BuildRequires: libmfx-devel}
+%{?_enable_libvpl:BuildRequires: libvpl-devel}
 %{?_enable_librabbitmq:BuildRequires: librabbitmq-c-devel}
 %{?_enable_libopencore_amrnb:BuildRequires: libopencore-amrnb-devel}
 %{?_enable_libopencore_amrwb:BuildRequires: libopencore-amrwb-devel}
@@ -637,6 +637,7 @@ xz Changelog
 	%{subst_enable libkvazaar} \
 	%{subst_enable liblensfun} \
 	%{subst_enable libmfx} \
+	%{subst_enable libvpl} \
 	%{subst_enable libmodplug} \
 	%{subst_enable libmp3lame} \
 	%{subst_enable librabbitmq} \
@@ -867,6 +868,9 @@ tests/checkasm/checkasm
 %endif
 
 %changelog
+* Thu Feb 22 2024 Anton Farygin <rider@altlinux.ru> 2:6.1.1-alt2
+- built with libvpl instead of libmfx
+
 * Mon Jan 15 2024 Anton Farygin <rider@altlinux.ru> 2:6.1.1-alt1
 - 6.1.1
 
