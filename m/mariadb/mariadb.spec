@@ -51,7 +51,7 @@
 
 Name: mariadb
 Version: 10.11.7
-Release: alt2
+Release: alt2.1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -450,6 +450,8 @@ sed -i 's|-fno-sanitize=shift|""|' \
   libmariadb/plugins/auth/CMakeLists.txt
 sed -i 's|WSREP_NORETURN|__attribute__((noreturn))|' \
   wsrep-lib/include/wsrep/thread_service.hpp
+sed -i 's|xmlGetLastError|(xmlErrorPtr)&|' \
+	storage/connect/libdoc.cpp
 %endif
 
 # Replace that horror.
@@ -1058,6 +1060,9 @@ fi
 %endif
 
 %changelog
+* Sun Feb 25 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 10.11.7-alt2.1
+- Fix build on e2k
+
 * Thu Feb 22 2024 Alexei Takaseev <taf@altlinux.org> 10.11.7-alt2
 - Fix build on armh
 
