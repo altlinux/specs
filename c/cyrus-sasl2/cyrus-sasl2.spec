@@ -10,8 +10,8 @@
 %define abiversion 3
 
 Name: cyrus-sasl2
-Version: 2.1.27
-Release: alt3
+Version: 2.1.28
+Release: alt1
 
 Summary: SASL2 is the Simple Authentication and Security Layer
 License: ALT-Cyrus
@@ -29,9 +29,6 @@ Source5: saslauthd.sysconfig
 # It's a converted server-plugin-flow.fig to JPEG
 Source7: %name-alt-server-plugin-flow.jpg
 Source8: README.ALT
-
-Patch1: bug_3920_rimap.patch
-Patch2: sphinx3.patch
 
 Requires: libsasl2-%abiversion = %version-%release
 
@@ -129,9 +126,6 @@ This package contains documentations for SASL2
 
 %prep
 %setup
-
-#patch1 -p0
-%patch2 -p1
 
 %build
 
@@ -319,6 +313,9 @@ ls -l %buildroot%_man3dir/*
 %endif
 
 %changelog
+* Sun Feb 25 2024 Andrey Limachko <liannnix@altlinux.org> 2.1.28-alt1
+- NMU: 2.1.28 (Closes: #49511)
+
 * Wed Feb 14 2024 Arseny Maslennikov <arseny@altlinux.org> 2.1.27-alt3
 - NMU: prepare for https://altlinux.org/Usrmerge.
 
