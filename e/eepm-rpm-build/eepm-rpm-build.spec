@@ -7,8 +7,8 @@
 %define default_payload w2T.xzdio
 
 Name: eepm-rpm-build
-Version: %major.1
-Release: alt2
+Version: %major.2
+Release: alt1
 
 Summary: Simplified RPM rpmbuild used in epm repack
 
@@ -141,6 +141,9 @@ rm -rf %buildroot%_mandir/
 %rpmhome/rpmuncompress
 
 %changelog
+* Mon Feb 26 2024 Vitaly Lipatov <lav@altlinux.ru> 4.18.2-alt1
+- new version 4.18.2 (with rpmrb script)
+
 * Sun Oct 29 2023 Vitaly Lipatov <lav@altlinux.ru> 4.18.1-alt2
 - use major macro in the spec
 - set correct localstatedir /var
