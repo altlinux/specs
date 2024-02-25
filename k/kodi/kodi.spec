@@ -1,6 +1,6 @@
 Name: kodi
 Version: 20.4
-Release: alt1
+Release: alt2
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
@@ -16,7 +16,12 @@ Source0: %name-%version-%release.tar
 BuildRequires: cmake gcc-c++
 BuildRequires: libcrossguid-devel libflatbuffers-devel libgif-devel liblzo2-devel
 BuildRequires: libunistring-devel libidn2-devel libEGL-devel
-BuildRequires: java-11-devel /proc swig
+BuildRequires: /proc swig
+%ifarch %e2k
+BuildRequires: java-devel
+%else
+BuildRequires: java-11-devel
+%endif
 BuildRequires: pkgconfig(RapidJSON)
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(bluez)
@@ -200,6 +205,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/xsessions/kodi.desktop
 
 %changelog
+* Sun Feb 25 2024 Michael Shigorin <mike@altlinux.org> 20.4-alt2
+- E2K: use default java
+
 * Mon Feb 12 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 20.4-alt1
 - 20.4-Nexus released
 
