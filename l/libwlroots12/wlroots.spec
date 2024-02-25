@@ -1,8 +1,8 @@
-%define soversion 11
+%define soversion 12
 
 Name: libwlroots%soversion
-Version: 0.16.2
-Release: alt3
+Version: 0.17.1
+Release: alt1
 
 Summary: Modular Wayland compositor library
 License: MIT
@@ -12,16 +12,14 @@ Url: https://gitlab.freedesktop.org/wlroots/wlroots
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-Source: wlroots.tar
-
-Patch0001: 0001-Avoid-duplicate-case-values.patch
-Patch0002: 0002-examples-dmabuf-capture-fix-frame_number-deprecated-.patch
+# Source-url: https://gitlab.freedesktop.org/wlroots/wlroots/-/archive/%version/wlroots-%version.tar.gz
+Source: %name-%version.tar
 
 BuildRequires(pre): meson
 BuildRequires: cmake
 BuildRequires: ctags
 BuildRequires: glslang
-BuildRequires: hwdatabase
+BuildRequires: pkgconfig(hwdata)
 
 BuildRequires: pkgconfig(egl)
 BuildRequires: pkgconfig(freerdp2)
@@ -31,6 +29,7 @@ BuildRequires: pkgconfig(libavcodec)
 BuildRequires: pkgconfig(libavformat)
 BuildRequires: pkgconfig(libavutil)
 BuildRequires: pkgconfig(libdrm)
+BuildRequires: pkgconfig(libdisplay-info)
 BuildRequires: pkgconfig(libinput)
 BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(libseat)
@@ -51,23 +50,24 @@ BuildRequires: pkgconfig(xcb-render)
 BuildRequires: pkgconfig(xcb-renderutil)
 BuildRequires: pkgconfig(xcb-xfixes)
 BuildRequires: pkgconfig(xcb-xinput)
+BuildRequires: pkgconfig(xcb-errors)
+
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(xwayland)
 
 %description
 %summary
 
-#%package -n libwlroots-devel
-#Summary: Development files for libwlroots
-#Group: Development/C
-#Requires: %name = %version-%release
+%package -n libwlroots-devel
+Summary: Development files for libwlroots
+Group: Development/C
+Requires: %name = %version-%release
 
-#%description -n libwlroots-devel
-#This package provides development files for libwlroots library.
+%description -n libwlroots-devel
+This package provides development files for libwlroots library.
 
 %prep
-%setup -n wlroots
-%autopatch -p1
+%setup
 
 if ! grep -qs '^soversion[[:space:]]*=[[:space:]]*%soversion[[:space:]]*$' meson.build; then
 	echo >&2 "Outdated %%soversion value in spec"
@@ -75,14 +75,19 @@ if ! grep -qs '^soversion[[:space:]]*=[[:space:]]*%soversion[[:space:]]*$' meson
 fi
 
 %build
-%meson
+%meson \
+  "-Dbackends=[
+    'drm',
+	'libinput',
+    'x11',
+  ]" \
+  -Dxwayland=enabled \
+  -Dxcb-errors=enabled
+
 %meson_build
 
 %install
 %meson_install
-rm -rf %buildroot%_includedir/wlr
-rm %buildroot%_libdir/libwlroots.so
-rm %buildroot%_pkgconfigdir/wlroots.pc
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
@@ -92,14 +97,15 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/libwlroots.so.*
 %doc README.md LICENSE
 
-#%files -n libwlroots-devel
-#%_includedir/wlr
-#%_libdir/libwlroots.so
-#%_pkgconfigdir/wlroots.pc
+%files -n libwlroots-devel
+%_includedir/wlr
+%_libdir/libwlroots.so
+%_pkgconfigdir/wlroots.pc
 
 %changelog
-* Sat Feb 24 2024 Roman Alifanov <ximper@altlinux.org> 0.16.2-alt3
-- devel is not packed
+* Sat Feb 24 2024 Roman Alifanov <ximper@altlinux.org> 0.17.1-alt1
+- new version 0.17.1 (with rpmrb script)
+- move to tarball
 
 * Sun Oct 01 2023 Alexey Gladkov <legion@altlinux.ru> 0.16.2-alt2
 - Fix frame_number deprecated in FFmpeg 6.0
