@@ -7,8 +7,8 @@
 %endif
 
 Name: mixxx
-Version: 2.3.6
-Release: alt3.2
+Version: 2.4.0
+Release: alt1
 
 Summary: Free digital DJ software
 Summary(ru_RU.UTF-8): Свободная программа для цифрового диджеинга
@@ -25,30 +25,15 @@ Obsoletes: %name-data < %EVR
 Requires: qt5-sql-sqlite
 
 BuildPreReq: rpm-macros-qt5 rpm-build-ninja
+# Automatically added by buildreq on Mon Feb 26 2024
+# optimized out: cmake-modules fontconfig-devel gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libalsa-devel libavcodec-devel libavformat-devel libavutil-devel libcairo-gobject libdouble-conversion3 libfftw3-devel libflac-devel libfreetype-devel libgdk-pixbuf libgio-devel libglvnd-devel libgmock-devel libgpg-error liblame-devel libmp4v2-3 libogg-devel libopencore-amrnb0 libopencore-amrwb0 libopus-devel libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml librabbitmq-c4 libsamplerate-devel libsasl2-3 libserd-devel libsord-devel libsqlite3-devel libsratom-devel libssl-devel libstdc++-devel libvorbis-devel libx265-199 libxcb-devel libxcbutil-keysyms-devel libxkbcommon-devel libxkbfile-devel lv2-devel pipewire-jack-libs pipewire-libs pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-devel sh5 xorg-proto-devel xorg-xf86miscproto-devel zlib-devel
+BuildRequires: cmake git-core libGLU-devel libavdevice-devel libavfilter-devel libbenchmark-devel libchromaprint-devel libdjinterop-devel = 0.20.2 libebur128-devel libgtest-devel libhidapi-devel libid3tag-devel libkeyfinder-devel libmad-devel libmicrosoft-gsl-devel libmodplug-devel libmp4v2-devel libopusfile-devel libportaudio2-devel libportmidi-devel libprotobuf-devel libqtkeychain-qt5-devel librubberband-devel libshout-idjc-devel libsndfile-devel libsoundtouch-devel libswresample-devel libswscale-devel libtag-devel libupower-devel libusb-devel libwavpack-devel lilv-devel protobuf-compiler qt5-declarative-devel qt5-svg-devel qt5-x11extras-devel
 %if_enabled clang
 BuildRequires: clang-devel llvm-devel-static
 %else
 BuildRequires: gcc-c++
 %endif
-BuildRequires: /proc
-# BEGIN SourceDeps(oneline):
-BuildRequires: libGLU-devel libX11-devel libglvnd-devel
-BuildRequires: libogg-devel libprotobuf-devel protobuf-compiler
-BuildRequires: libsqlite3-devel libvorbis-devel qt5-base-devel
-BuildRequires: qt5-script-devel qt5-svg-devel qt5-x11extras-devel
-# END SourceDeps(oneline)
-BuildRequires: cmake git-core libchromaprint-devel
-BuildRequires: libkeyfinder-devel libfftw3-devel libebur128-devel
-BuildRequires: libflac-devel liblame-devel libportaudio2-devel
-BuildRequires: libportmidi-devel librubberband-devel
-BuildRequires: libsndfile-devel libsoundtouch-devel libtag-devel
-BuildRequires: libupower-devel libmp4v2-devel libavcodec-devel
-BuildRequires: libavformat-devel libavutil-devel libswscale-devel
-BuildRequires: libswresample-devel libavdevice-devel
-BuildRequires: libavfilter-devel liblilv-devel libshout-idjc-devel
-BuildRequires: libmodplug-devel libopus-devel libopusfile-devel
-BuildRequires: libmad-devel libid3tag-devel libqtkeychain-qt5-devel
-BuildRequires: libusb-devel libhidapi-devel libwavpack-devel
+# BuildRequires: /proc
 
 %if_enabled clang
 ExcludeArch: armh
@@ -64,6 +49,9 @@ Mixxx - это бесплатная, с открытым исходным код
 
 %prep
 %setup
+# 0.20.2 includes syntax fixes only
+sed -i '/LIBDJINTEROP_VERSION/s|0.20.1|0.20.2|' \
+  CMakeLists.txt
 
 %build
 %if_enabled clang
@@ -78,22 +66,38 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
-chmod +x %buildroot%_datadir/mixxx/controllers/novation-launchpad/scripts/compile-mapping.js
-chmod +x %buildroot%_datadir/mixxx/controllers/novation-launchpad/scripts/compile-scripts.js
+%find_lang --with-qt %name
 
-%files
+%files -f %name.lang
 %_bindir/%name
 %exclude %_datadir/doc
 %doc README.md COPYING LICENSE res/Mixxx-Keyboard-Shortcuts.pdf
-%_datadir/%name
+%dir %_datadir/%name/
+%dir %_datadir/%name/skins/
+%dir %_datadir/%name/controllers/
+%dir %_datadir/%name/effects/
+%dir %_datadir/%name/keyboard/
+%_datadir/%name/skins/*
+%_datadir/%name/controllers/*
+%_datadir/%name/controllers/.eslintrc.json
+%_datadir/%name/effects/*
+%_datadir/%name/keyboard/*.cfg
+# package translations outside %%find_lang
+%dir %_datadir/%name/translations/
+%_datadir/%name/translations/mixxx_es_419.qm
+# ---
 %_datadir/metainfo/org.mixxx.Mixxx.metainfo.xml
 %_desktopdir/org.mixxx.Mixxx.desktop
-%_iconsdir/hicolor/scalable/apps/%name.svg
+%_iconsdir/hicolor/scalable/apps/%{name}*.svg
 %_iconsdir/hicolor/??x??/apps/%name.png
 %_iconsdir/hicolor/???x???/apps/%name.png
 %_udevrulesdir/69-%name-usb-uaccess.rules
 
 %changelog
+* Mon Feb 26 2024 Leontiy Volodin <lvol@altlinux.org> 2.4.0-alt1
+- New version 2.4.0.
+- Cleanup BRs.
+
 * Tue Oct 17 2023 Leontiy Volodin <lvol@altlinux.org> 2.3.6-alt3.2
 - Fixed file conflicts (ALT #48039).
 
