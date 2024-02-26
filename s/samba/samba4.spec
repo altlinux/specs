@@ -121,7 +121,7 @@
 
 Name:    samba
 Version: 4.19.4
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1180,8 +1180,6 @@ popd
 # winbind
 %if_with winbind
 mkdir -p %buildroot/%_lib
-ln -sf ..%_samba_libdir/libnss_winbind.so.2 %buildroot/%_lib/libnss_winbind.so.2
-ln -sf ..%_samba_libdir/libnss_wins.so.2    %buildroot/%_lib/libnss_wins.so.2
 
 mkdir -p  %buildroot%_libdir/krb5/plugins/libkrb5
 mv %buildroot%_samba_mod_libdir/krb5/winbind_krb5_locator.so %buildroot%_libdir/krb5/plugins/libkrb5/
@@ -2084,9 +2082,7 @@ control role-sambashare enabled
 
 %files winbind-clients
 %_samba_libdir/libnss_winbind.so*
-/%_lib/libnss_winbind.so.*
 %_samba_libdir/libnss_wins.so*
-/%_lib/libnss_wins.so.*
 /%_lib/security/pam_winbind.so
 %config(noreplace) %_sysconfdir/security/pam_winbind.conf
 %if_with doc
@@ -2212,6 +2208,10 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Thu Feb 15 2024 Arseny Maslennikov <arseny@altlinux.org> 4.19.4-alt2
+- NMU: remove useless symlinks to nss_winbind and nss_wins.
+  See also: https://altlinux.org/Usrmerge.
+
 * Tue Jan 16 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.19.4-alt1
 - Update to stable release of Samba 4.19
 - Fixes from upstream:
