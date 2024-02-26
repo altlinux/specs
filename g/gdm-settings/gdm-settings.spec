@@ -1,9 +1,9 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name gdm-settings
 %define pypi_name gdms
-%define ver_major 4.1
+%define ver_major 4.2
 %define rdn_name io.github.realmazharhussain.GdmSettings
 
 %def_enable check
@@ -67,6 +67,9 @@ Python and uses LibAdwaita for graphical interface.
 
 
 %changelog
+* Mon Feb 26 2024 Yuri N. Sedunov <aris@altlinux.org> 4.2-alt1
+- 4.2
+
 * Sat Feb 3 2024 Yuri N. Sedunov <aris@altlinux.org> 4.1-alt1
 - first build for Sisyphus (v4.1-18-g38c63db)
 
