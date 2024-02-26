@@ -1,21 +1,19 @@
-%define major 3
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: libntirpc
-Version: %major.5
+Version: 5.0
 Release: alt1
-
 Summary: New Transport Independent RPC Library
-
 Group: System/Libraries
-License: BSD
+License: BSD-3-Clause
 Url: https://github.com/nfs-ganesha/ntirpc
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-# Source-url: https://github.com/nfs-ganesha/ntirpc/archive/v%version/ntirpc-%version.tar.gz
+Vcs: https://github.com/nfs-ganesha/ntirpc.git
 Source: %name-%version.tar
-
-BuildRequires: cmake
-BuildRequires: libjemalloc-devel
+Patch: %name-%version.patch
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake ninja-build
 BuildRequires: libkrb5-devel
 BuildRequires: libnsl2-devel
 BuildRequires: libuserspace-rcu-devel
@@ -39,29 +37,30 @@ the following features not found in libtirpc:
 
 %package devel
 Summary: Development headers for %name
-Requires: %name = %version
-Group: Development/Other
+Requires: %name = %EVR
+Group: Development/C
 
 %description devel
 Development headers and auxiliary files for developing with %name.
 
 %prep
 %setup
+%patch -p1
 
 %build
-%cmake -DOVERRIDE_INSTALL_PREFIX=%prefix -DTIRPC_EPOLL=1 -DUSE_GSS=ON "-GUnix Makefiles"
+%add_optflags %(getconf LFS_CFLAGS)
+%cmake \
+    -DTIRPC_EPOLL=1 \
+    -DUSE_GSS=ON \
+    -GNinja
 
-%make_build -C "%_cmake__builddir"
+%cmake_build
 
 %install
-%makeinstall_std -C "%_cmake__builddir"
-
-rm -f %buildroot%_includedir/ntirpc/misc/winpthreads.h
-ln -s %name.so.%version %buildroot%_libdir/%name.so.%major
+%cmake_install
 
 %files
-%_libdir/libntirpc.so.%major
-%_libdir/libntirpc.so.%version
+%_libdir/libntirpc.so.*
 %doc COPYING
 %doc NEWS README
 
@@ -71,6 +70,9 @@ ln -s %name.so.%version %buildroot%_libdir/%name.so.%major
 %_pkgconfigdir/libntirpc.pc
 
 %changelog
+* Sat Feb 17 2024 Alexey Shabalin <shaba@altlinux.org> 5.0-alt1
+- 5.0
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 3.5-alt1
 - new version 3.5 (with rpmrb script)
 
@@ -117,40 +119,3 @@ ln -s %name.so.%version %buildroot%_libdir/%name.so.%major
 * Thu Jul 21 2016 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
 - initial build for ALT Linux Sisyphus
 
-* Mon Feb 29 2016 Kaleb S. KEITHLEY <kkeithle at redhat.com> 1.4.0-0.2pre2
-- libntirpc 1.4.0-pre2
-
-* Fri Feb 5 2016 Kaleb S. KEITHLEY <kkeithle at redhat.com> 1.4.0-0.1pre1
-- libntirpc 1.4.0-pre1, correct release
-
-* Fri Feb 5 2016 Kaleb S. KEITHLEY <kkeithle at redhat.com> 1.4.0-1pre1
-- libntirpc 1.4.0-pre1
-
-* Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.1-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
-
-* Wed Dec 9 2015 Kaleb S. KEITHLEY <kkeithle at redhat.com>
-- Requires: libtirpc for /etc/netconfig (most already have it)
-
-* Mon Oct 26 2015 Kaleb S. KEITHLEY <kkeithle at redhat.com> 1.3.1-1
-- libntirpc 1.3.1 GA
-
-* Fri Oct 9 2015 Kaleb S. KEITHLEY <kkeithle at redhat.com> 1.3.0-3
-- libntirpc 1.3.0 GA, w/ -DTIRPC_EPOLL=ON
-
-* Wed Sep 9 2015 Kaleb S. KEITHLEY <kkeithle at redhat.com> 1.3.0-2
-- libntirpc 1.3.0 GA, w/ correct top-level CMakeList.txt
-
-* Wed Sep 9 2015 Kaleb S. KEITHLEY <kkeithle at redhat.com> 1.3.0-1
-- libntirpc 1.3.0 GA
-
-* Thu Jul 16 2015 Kaleb S. KEITHLEY <kkeithle at redhat.com> 1.2.1-3
-- RHEL 6 finally has new enough cmake
-- use -isystem ... to ensure correct <rpc/rpc*.h> are used
-- ensure -DTIRPC_EPOLL is defined for correct evchan functionality
-
-* Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.2.1-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
-
-* Mon Mar 23 2015 Kaleb S. KEITHLEY <kkeithle at redhat.com> 1.2.1-1
-- Initial commit
