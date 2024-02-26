@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.64
+Version: 1.65
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -218,6 +218,9 @@ vm-run --stub-exit=7 && exit 1 || test $? -eq 7
 %endif
 
 %changelog
+* Mon Feb 26 2024 Vitaly Chikunov <vt@altlinux.org> 1.65-alt1
+- i586: Avoid 'mce: Unable to init MCE device' warning.
+
 * Fri Feb 02 2024 Vitaly Chikunov <vt@altlinux.org> 1.64-alt1
 - vm-run: Limit memory below RLIMIT_AS. Add --maxmem and --maxcpu to
   workaround potential problems with it.
