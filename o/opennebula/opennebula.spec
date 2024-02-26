@@ -13,7 +13,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 6.6.1.1
-Release: alt1
+Release: alt2
 License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.io
@@ -36,7 +36,7 @@ BuildRequires: libsystemd-devel
 BuildRequires: libnsl2-devel
 BuildRequires: openssh
 BuildRequires: scons
-BuildRequires: python3-module-setuptools /usr/bin/pathfix.py
+BuildRequires: python3-module-setuptools
 BuildRequires: java-openjdk-devel ws-commons-util xmlrpc-common xmlrpc-client
 BuildRequires: zlib-devel
 BuildRequires: node node-bower node-gyp npm node-devel node-sass libsass libzeromq-devel
@@ -363,7 +363,7 @@ to be installed separately).
 %package java
 Summary: Java bindings for OpenNebula Cloud API, OCA
 Group: Development/Java
-BuildArch: noarch
+#BuildArch: noarch
 Requires: ws-commons-util
 Requires: xmlrpc-common
 Requires: xmlrpc-client
@@ -554,7 +554,7 @@ rm -f  %buildroot%_libexecdir/one/ruby/vcenter_driver.rb
 rm -f  %buildroot%_libexecdir/one/ruby/cloud/CloudClient.rb
 
 ## opennebula-cli
-#rm -rf  %buildroot%_libexecdir/one/ruby/cli
+#rm -rf  %%buildroot%%_libexecdir/one/ruby/cli
 
 # delete docs
 rm -rf %buildroot%_libexecdir/ruby/gems/*/doc
@@ -616,7 +616,7 @@ install -p -D -m 644 share/etc/modules-load.d/opennebula-node-lxc.conf %buildroo
 
 # node-firecracker
 %if_with firecracker
-#install -p -D -m 755 src/svncterm_server/svncterm_server %buildroot%_bindir/svncterm_server
+#install -p -D -m 755 src/svncterm_server/svncterm_server %%buildroot%%_bindir/svncterm_server
 install -p -D -m 755 src/vmm_mad/remotes/lib/firecracker/one-clean-firecracker-domain %buildroot%_sbindir/one-clean-firecracker-domain
 install -p -D -m 755 src/vmm_mad/remotes/lib/firecracker/one-prepare-firecracker-domain %buildroot%_sbindir/one-prepare-firecracker-domain
 %endif
@@ -630,9 +630,9 @@ rm -f %buildroot%_sbindir/install-firecracker
 
 rm -rf %buildroot%_libexecdir/one/sunstone/public/{node_modules,patches}
 rm -f %buildroot%_libexecdir/one/sunstone/public/{SConstruct,build.sh}
-#rm -rf %buildroot%_libexecdir/one/fireedge/node_modules
-#rm -rf %buildroot%_libexecdir/one/fireedge/src
-#rm -f %buildroot%_libexecdir/one/fireedge/package.json
+#rm -rf %%buildroot%%_libexecdir/one/fireedge/node_modules
+#rm -rf %%buildroot%%_libexecdir/one/fireedge/src
+#rm -f %%buildroot%%_libexecdir/one/fireedge/package.json
 
 # fix placement
 mv %buildroot%_libexecdir/flow %buildroot%_datadir/flow
@@ -648,11 +648,10 @@ PYTHON=%__python3 make install ROOT=%buildroot
 popd
 
 # fix ambiguous Python shebangs
-pathfix.py -pni %__python3 %buildroot/usr/lib/one/sunstone/public/bower_components/guacamole-common-js/guacamole/util/*.py
-pathfix.py -pni %__python3 %buildroot/usr/lib/one/sunstone/public/bower_components/no-vnc/utils/*.py
-#pathfix.py -pni %__python3 %buildroot/usr/share/one/websockify/websockify/websocketproxy.py
-#pathfix.py -pni %__python3 %buildroot/usr/share/one/websockify/run
-
+sed -i 's|/usr/bin/python|%__python3|' \
+    %buildroot/usr/lib/one/sunstone/public/bower_components/guacamole-common-js/guacamole/util/*.py
+sed -i 's|/usr/bin/env python|%__python3|' \
+    %buildroot/usr/lib/one/sunstone/public/bower_components/no-vnc/utils/*.py
 
 %pre common
 groupadd -r -f -g %oneadmin_gid oneadmin 2>/dev/null ||:
@@ -1130,6 +1129,12 @@ fi
 %exclude %_man1dir/oneprovider.1*
 
 %changelog
+* Sat Feb 24 2024 Andrew A. Vasilyev <andy@altlinux.org> 6.6.1.1-alt2
+- disable noarch for opennebula-java subpackage (thnx lav@)
+- fix building without pathfix (thnx grenka@) (ALT #49501)
+- fix VNC_PORTS in oned.conf
+- add aliases:true for newer psych
+
 * Tue Oct 24 2023 Alexey Shabalin <shaba@altlinux.org> 6.6.1.1-alt1
 - 6.6.1.1
 
