@@ -19,7 +19,7 @@
 
 Name: %_name%api_ver
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: A library for weather information
 Group: System/Libraries
@@ -44,6 +44,8 @@ Patch11: %_name-4.3.2-alt-Novorossia-po-locations.patch}
 %define gir_ver 0.9.5
 %define vala_ver 0.21.1
 %define geocode_ver 3.26.3
+
+Requires: %name-data = %EVR
 
 BuildRequires(pre): rpm-build-gnome rpm-macros-meson
 BuildRequires: meson
@@ -77,7 +79,6 @@ This package contains locations development data for %name.
 Summary: Development files for %name
 Group: Development/C
 Requires: %name = %EVR
-Requires: %name-data = %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -185,6 +186,9 @@ sed -i "s|'\(pylint\)'|'\1.py3'|" meson.build
 
 
 %changelog
+* Tue Feb 27 2024 Yuri N. Sedunov <aris@altlinux.org> 4.4.0-alt1.1
+- data is required for library to work
+
 * Sat Sep 16 2023 Yuri N. Sedunov <aris@altlinux.org> 4.4.0-alt1
 - 4.4.0
 
