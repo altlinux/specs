@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 2023.4
+Version: 2024.1
 Release: alt1
 
 Summary: Python package wrapping the IANA time zone database
@@ -51,6 +51,9 @@ standard location), as a part of PEP 615
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Feb 26 2024 Grigory Ustinov <grenka@altlinux.org> 2024.1-alt1
+- Automatically updated to 2024.1.
+
 * Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 2023.4-alt1
 - Automatically updated to 2023.4.
 
