@@ -1,6 +1,6 @@
 Name: make-initrd
-Version: 2.43.0
-Release: alt2
+Version: 2.44.0
+Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -66,7 +66,6 @@ Requires: util-linux >= 2.17.2-alt1
 AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
-Patch0: 0001-feature-plymouth-Fix-unbound-variable-PLYMOUTH_LIBDI.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -383,6 +382,17 @@ fi
 %config(noreplace) %_sysconfdir/initrd.mk.d/guestfs.mk.example
 
 %changelog
+* Mon Feb 26 2024 Alexey Gladkov <legion@altlinux.ru> 2.44.0-alt1
+- New version (2.44.0).
+- Feature plymouth:
+  + Stop plymouth before running rdshell (ALT#49492).
+  + Do not start plymouth if using rdshell.
+- Runtime:
+  + Try to load efivarfs before mount (ALT#49491).
+- Misc:
+  + Improve bug-report generation.
+  + Rewrite mi-bug-report.
+
 * Tue Feb 13 2024 Alexey Gladkov <legion@altlinux.ru> 2.43.0-alt2
 - Feature plymouth:
   + Fix unbound variable PLYMOUTH_LIBDIR.
