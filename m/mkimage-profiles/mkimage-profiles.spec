@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -134,6 +134,21 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Feb 26 2024 Anton Midyukov <antohami@altlinux.org> 1.6.1-alt1
+- services: add targets for enable/disable bluetooth
+- services: create lists of services to disable/enable in Live with installer
+- live-install: add base packages for install and live
+- xdg-user-dirs: add missing use/services for enable systemd service
+- live-install: fix list of base packages for installed system
+- control: create list of control to set in Live with installer
+- install2: create postinstall.d/86-all-groups if not exist only
+- replace image-scripts.d/30-all-groups from build-distro to common rootfs
+- repo: run 90-repo-mirror for Live also
+- live-install: fix use/live/repo to be compatible with 90-repo-mirror
+- pkg.in/lists: mark interactivesystem as metapackage
+- stage2: enable bootchain for e2k arch and p11, c11* branches
+- add latests commits for ALT Server
+
 * Fri Feb 09 2024 Anton Midyukov <antohami@altlinux.org> 1.6.0-alt1
 - rename phone.mk -> mobile.mk, drop feature phone
 - live: refactoring 60-live-rescue-root, add autologin root to serial tty
@@ -143,7 +158,7 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 - doc: do not use images from asciidoc, add missing images (fix FTBFS)
 - mediacheck: show "Error: implantisomd5 is not available" on screen
 - grub, syslinux: add lowmem to 25install-vnc-* also
-- Add support patches from image-paches.d/
+- Add support patches from image-patches.d/
 - Set MKI_VER_MINIMAL=0.3.0, MKI_VER_OPTIMAL=0.3.2
 - fix some package lists
 
