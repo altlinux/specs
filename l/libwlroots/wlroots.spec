@@ -1,8 +1,8 @@
 %define soversion 12
 
-Name: libwlroots%soversion
+Name: libwlroots
 Version: 0.17.1
-Release: alt1
+Release: alt2
 
 Summary: Modular Wayland compositor library
 License: MIT
@@ -56,12 +56,19 @@ BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(xwayland)
 
 %description
-%summary
+%summary.
+
+%package -n libwlroots%soversion
+Summary: Modular Wayland compositor library
+Group: System/Libraries
+
+%description -n libwlroots%soversion
+%summary.
 
 %package -n libwlroots-devel
 Summary: Development files for libwlroots
 Group: Development/C
-Requires: %name = %version-%release
+Requires: libwlroots%soversion = %EVR
 
 %description -n libwlroots-devel
 This package provides development files for libwlroots library.
@@ -93,7 +100,7 @@ fi
 export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
 
-%files
+%files -n libwlroots%soversion
 %_libdir/libwlroots.so.*
 %doc README.md LICENSE
 
@@ -103,6 +110,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/wlroots.pc
 
 %changelog
+* Tue Feb 27 2024 Roman Alifanov <ximper@altlinux.org> 0.17.1-alt2
+- reworking package to save history of tasks in the future
+
 * Sat Feb 24 2024 Roman Alifanov <ximper@altlinux.org> 0.17.1-alt1
 - new version 0.17.1 (with rpmrb script)
 - move to tarball
