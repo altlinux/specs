@@ -4,13 +4,13 @@
 
 Name: accountsservice
 Version: 23.13.9
-Release: alt1
+Release: alt2
 Summary: D-Bus interfaces for querying and manipulating user account information
 
 Group: System/Base
 License: GPLv3+
-Url: http://www.fedoraproject.org/wiki/Features/UserAccountDialog
-#VCS: git://anongit.freedesktop.org/accountsservice
+Url: https://www.freedesktop.org/wiki/Software/AccountsService/
+Vcs: https://gitlab.freedesktop.org/accountsservice/accountsservice.git
 
 Source: %name-%version.tar
 Patch1: %name-%version.patch
@@ -89,7 +89,8 @@ GObject introspection devel data for the accountsservice library
 
 %install
 %meson_install
-
+# Install empty directory for interfaces
+mkdir -p %buildroot%_datadir/%name/interfaces
 %find_lang accounts-service
 
 %check
@@ -125,6 +126,11 @@ GObject introspection devel data for the accountsservice library
 %_girdir/*.gir
 
 %changelog
+* Wed Feb 21 2024 Alexey Shabalin <shaba@altlinux.org> 23.13.9-alt2
+- Sync with upstream main branch
+- Fixed show users list (ALT#48825).
+- Fix Url tag (ALT#49452)
+
 * Wed Jul 05 2023 Alexey Shabalin <shaba@altlinux.org> 23.13.9-alt1
 - 23.13.9
 - set minimum_uid=1000
