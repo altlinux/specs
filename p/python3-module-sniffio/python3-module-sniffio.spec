@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: Sniff out which async library your code is running under
@@ -14,7 +14,7 @@ Group: Development/Python3
 Url: https://pypi.org/project/sniffio/
 Vcs: https://github.com/python-trio/sniffio
 BuildArch: noarch
-Source: %pypi_name-%version.tar
+Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -29,7 +29,8 @@ This is a tiny package whose only purpose is to let you detect which async
 library (like Trio, and asyncio, and ...) your code is running under.
 
 %prep
-%setup -n %pypi_name-%version
+%setup
+%pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
@@ -57,6 +58,9 @@ ENDUNITTEST
 %exclude %python3_sitelibdir/%pypi_name/_tests
 
 %changelog
+* Mon Feb 26 2024 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1
+- 1.3.0 -> 1.3.1.
+
 * Tue Nov 07 2023 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
 - 1.2.0 -> 1.3.0.
 
