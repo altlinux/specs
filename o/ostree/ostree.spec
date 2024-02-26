@@ -6,7 +6,7 @@
 
 Name: ostree
 Version: 2024.3
-Release: alt1
+Release: alt2
 
 Summary: Linux-based operating system develop/build/deploy tool
 License: LGPLv2+
@@ -180,6 +180,9 @@ NOCONFIGURE=1 sh -x ./autogen.sh
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Mon Feb 26 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 2024.3-alt2
+- add ALT Linux mounts support
+
 * Wed Feb 21 2024 Alexey Shabalin <shaba@altlinux.org> 2024.3-alt1
 - 2024.3
 
