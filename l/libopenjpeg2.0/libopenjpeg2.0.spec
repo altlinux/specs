@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: JPEG 2000 codec library (API version 2.0)
@@ -26,8 +26,8 @@ Source: https://github.com/uclouvain/%_name/archive/v%version/%_name-%version.ta
 #Source: %url%_name-%version.tar.gz
 %endif
 # https://github.com/uclouvain/openjpeg-data.git
-# 679840K
-%{?_enable_check:Source1: %_name-data-cd724fb.tar}
+# 1.1G
+%{?_enable_check:Source1: %_name-data-f9991d5.tar}
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ libtiff-devel libjpeg-devel libwebp-devel
@@ -97,7 +97,7 @@ mv %buildroot%_man1dir/opj_decompress.1 %buildroot%_man1dir/opj2_decompress.1
 mv %buildroot%_man1dir/opj_dump.1 %buildroot%_man1dir/opj2_dump.1
 %endif
 # and fix cmake-files
-subst 's|opj_\([compess,decompess,dump]\)|opj2_\1|g' %buildroot%_libdir/%_name-%ver_major/*.cmake
+subst 's|opj_\([compess,decompess,dump]\)|opj2_\1|g' %buildroot%_libdir/cmake/%_name-%ver_major/*.cmake
 
 %check
 %cmake_build -t test
@@ -108,9 +108,9 @@ subst 's|opj_\([compess,decompess,dump]\)|opj2_\1|g' %buildroot%_libdir/%_name-%
 
 %files devel
 %_includedir/%_name-%ver_major/
-%_libdir/%_name-%ver_major/
 %_libdir/%libname.so
 %_pkgconfigdir/%libname.pc
+%_libdir/cmake/%_name-%ver_major/*.cmake
 %{?_enable_docs:%_man3dir/%libname.3.*}
 
 %files -n openjpeg-tools%api_ver
@@ -121,10 +121,13 @@ subst 's|opj_\([compess,decompess,dump]\)|opj2_\1|g' %buildroot%_libdir/%_name-%
 
 %if_enabled docs
 %files devel-doc
-%_datadir/doc/%_name-%ver_major/
+%_datadir/doc/%_name/
 %endif
 
 %changelog
+* Tue Feb 27 2024 Yuri N. Sedunov <aris@altlinux.org> 2.5.1-alt1
+- 2.5.1 (fixed CVE-2021-3575)
+
 * Fri May 13 2022 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
 - 2.5.0 (fixed CVE-2013-4289, CVE-2013-4290, CVE-2019-6988, 
   CVE-2018-20846, CVE-2018-16376, CVE-2021-29338)
