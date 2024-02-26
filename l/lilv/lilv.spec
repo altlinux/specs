@@ -1,140 +1,88 @@
+Name: lilv
+Version: 0.24.24
+Release: alt1
+
+Summary: An LV2 Resource Description Framework Library
+License: 0BSD
+Group: Sound
+Url: https://github.com/lv2/lilv
+
+Source: %name-%version-%release.tar
+
+BuildRequires: gcc-c++ meson rpm-build-python3
+BuildRequires: pkgconfig(lv2)
+BuildRequires: pkgconfig(serd-0)
+BuildRequires: pkgconfig(sndfile)
+BuildRequires: pkgconfig(sord-0)
+BuildRequires: pkgconfig(sratom-0)
+BuildRequires: pkgconfig(zix-0)
+
+%package -n liblilv
+Summary: lilv shared libraries
 Group: System/Libraries
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python3 rpm-macros-fedora-compat
-BuildRequires: waf
-# END SourceDeps(oneline)
-BuildRequires: gcc-c++
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-# %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name lilv
-%define version 0.24.12
-%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
-%global maj 0
 
-Name:       lilv
-Version:    0.24.12
-Release:    alt1_3
-Summary:    An LV2 Resource Description Framework Library
+%package devel
+Summary: Development libraries and headers for lilv
+Group: Development/C
 
-License:    MIT
-URL:        http://drobilla.net/software/lilv/
-Source0:    http://download.drobilla.net/%{name}-%{version}.tar.bz2
-
-# New test suite looks for unversioned python
-Patch0:     %{name}-test-python.patch
-# Patch sent upstream https://github.com/lv2/lilv/pull/45
-Patch1:     %{name}-doc-install-directory.patch
-
-BuildRequires:  doxygen
-BuildRequires:  graphviz libgraphviz
-BuildRequires:  libsord-devel >= 0.14.0
-BuildRequires:  libsratom-devel >= 0.4.4
-BuildRequires:  lv2-devel >= 1.18.0
-BuildRequires:  python3
-BuildRequires:  python3-devel
-BuildRequires:  swig
-BuildRequires:  libserd-devel >= 0.30.0
-BuildRequires:  gcc
-BuildRequires:  gcc-c++
-BuildRequires:  libsndfile-devel >= 1.0.0
-#BuildRequires:  python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
-#BuildRequires:  python3-module-sphinx_lv2_theme
-
-Requires:       lv2 >= 1.18.0
-Source44: import.info
-Conflicts: liblilv < 0.24.11
+%package -n python3-module-lilv
+Summary: Python bindings for lilv
+Group: Development/Python3
+Requires: liblilv == %version-%release
+BuildArch: noarch
 
 %description
-%{name} is a library to make the use of LV2 plugins as simple as possible
+lilv is a library to make the use of LV2 plugins as simple as possible
 for applications. Lilv is the successor to SLV2, rewritten to be significantly
 faster and have minimal dependencies.
 
-%package -n liblilv
-Group: System/Libraries
-Summary:    Libraries for %{name}
-
 %description -n liblilv
-%{name} is a lightweight C library for Resource Description Syntax which
+lilv is a lightweight C library for Resource Description Syntax which
 supports reading and writing Turtle and NTriples.
-
-This package contains the libraries for %{name}.
-
-%package devel
-Group: Development/Other
-Summary:    Development libraries and headers for %{name}
-Requires:   liblilv = %{version}-%{release}
-Provides: liblilv-devel = %EVR
+This package contains the libraries for lilv.
 
 %description devel
-%{name} is a lightweight C library for Resource Description Syntax which
+lilv is a lightweight C library for Resource Description Syntax which
 supports reading and writing Turtle and NTriples.
-
-This package contains the headers and development libraries for %{name}.
-
-%package -n python3-module-lilv
-Group: System/Libraries
-%{?python_provide:%python_provide python3-%{name}}
-Summary:    Python bindings for %{name}
-Requires:   liblilv = %{version}-%{release}
+This package contains the headers and development libraries for lilv.
 
 %description -n python3-module-lilv
-%{name} is a lightweight C library for Resource Description Syntax which
+lilv is a lightweight C library for Resource Description Syntax which
 supports reading and writing Turtle and NTriples.
-
-This package contains the python libraries for %{name}.
+This package contains the python bindings for lilv.
 
 %prep
-%setup -q
-%patch0 -p1
-%patch1 -p1
-
-# Do not run ld config
-sed -i -e 's|bld.add_post_fun(autowaf.run_ldconfig)||' wscript
-# for packagers sake, build the tests with debug symbols
-sed -i -e "s|'-ftest-coverage'\]|\
- '-ftest-coverage' \] + '%{optflags}'.split(' ')|" wscript
+%setup
 
 %build
-
-export LINKFLAGS="%{__global_ldflags}"
-/usr/bin/python3 waf configure -v --prefix=%{_prefix} \
- --libdir=%{_libdir} --configdir=%{_sysconfdir} --mandir=%{_mandir} \
- --test --dyn-manifest
-/usr/bin/python3 waf -v build %{?_smp_mflags}
+%meson
+%meson_build
 
 %install
-/usr/bin/python3 waf -v install --destdir=%{buildroot}
-chmod +x %{buildroot}%{_libdir}/lib%{name}-0.so.*
-
-%check
-/usr/bin/python3 waf test
+%meson_install
 
 %files
-%{_bindir}/lilv-bench
-%{_bindir}/lv2info
-%{_bindir}/lv2ls
-%{_bindir}/lv2bench
-%{_bindir}/lv2apply
-%{_sysconfdir}/bash_completion.d/lilv
-%{_mandir}/man1/*
+%_bindir/lv2*
+%_datadir/bash-completion/completions/lilv
+%_man1dir/lv2*.1*
 
 %files -n liblilv
 %doc AUTHORS NEWS README.md
-%doc --no-dereference COPYING
-%{_libdir}/lib%{name}-%{maj}.so.*
+%_libdir/liblilv-0.so.*
 
 %files devel
-%{_libdir}/lib%{name}-%{maj}.so
-%{_libdir}/pkgconfig/%{name}-%{maj}.pc
-%{_includedir}/%{name}-%{maj}/
-#%{_docdir}/%{name}/%{name}-%{maj}/
+%_libdir/liblilv-0.so
+%_pkgconfigdir/lilv-0.pc
+%_includedir/lilv-0
 
 %files -n python3-module-lilv
-%{python3_sitelibdir_noarch}/%{name}.*
-%{python3_sitelibdir_noarch}/__pycache__/*
+%python3_sitelibdir_noarch/lilv.*
+%python3_sitelibdir_noarch/*/lilv.*
 
 %changelog
+* Mon Feb 26 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.24.24-alt1
+- 0.24.24 released
+
 * Thu Feb 24 2022 Igor Vlasenko <viy@altlinux.org> 0.24.12-alt1_3
 - new version
 
