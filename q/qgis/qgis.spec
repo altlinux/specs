@@ -6,10 +6,9 @@
 %def_enable python
 %def_enable devel
 %def_enable server
-%define rname qgis
 
-Name:    qgis3
-Version: 3.34.3
+Name:    qgis
+Version: 3.36.0
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
@@ -19,7 +18,7 @@ Url:     http://qgis.org/
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source: %rname-%version.tar
+Source: %name-%version.tar
 Source3: qgis-server-httpd.conf
 Source4: qgis-server-README
 Source5: qgis.xml
@@ -109,6 +108,9 @@ Requires: qca-qt5-ossl
 Requires: gpsbabel
 Requires: libqwt6-qt5
 
+Provides: qgis3 = %EVR
+Obsoletes: qgis3 < %EVR
+
 # We don't want to provide private Python extension libs
 %add_findprov_skiplist %%python_sitelibdir/qgis/*.so 
 %add_python3_path %_datadir/qgis/python
@@ -128,6 +130,8 @@ including GeoTIFF, Arc/Info ASCII Grid, and USGS ASCII DEM.
 Summary: Development Libraries for the Quantum GIS
 Group: Development/C
 Requires: %name = %version-%release
+Provides: qgis3-devel = %EVR
+Obsoletes: qgis3-devel < %EVR
 
 %description devel
 Development packages for Quantum GIS including the C header files.
@@ -137,6 +141,8 @@ Summary: GRASS Support Libraries for Quantum GIS
 Group: Sciences/Geosciences
 Requires: %name = %version-%release
 Requires: grass
+Provides: qgis3-grass = %EVR
+Obsoletes: qgis3-grass < %EVR
   
 %description grass
 GRASS plugin for Quantum GIS required to interface with the GRASS
@@ -148,6 +154,8 @@ Group: Sciences/Geosciences
 Requires: %name = %version-%release
 Requires: python3-module-gdal
 Requires: python3-module-qscintilla2-qt5
+Provides: qgis3-python = %EVR
+Obsoletes: qgis3-python < %EVR
 
 %description python
 Python integration and plug-ins for Quantum GIS.
@@ -159,6 +167,8 @@ Provides:  %name-mapserver = %version-%release
 Obsoletes: %name-mapserver < %version-%release
 Requires: %name = %version-%release
 Requires: libfcgi
+Provides: qgis3-server = %EVR
+Obsoletes: qgis3-server < %EVR
 
 %description server
 This FastCGI OGC web map server implements OGC WMS 1.3.0 and 1.1.1.
@@ -170,7 +180,7 @@ are included.
 Please refer to %name-server-README for details!
 
 %prep
-%setup -n %rname-%version
+%setup
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -193,8 +203,8 @@ export LD_LIBRARY_PATH=`pwd`/output/%_lib
     -DCMAKE_SKIP_RPATH:BOOL=ON \
     -DQGIS_LIB_SUBDIR:PATH=%_lib \
     -DQGIS_MANUAL_SUBDIR:PATH=/share/man \
-    -DQGIS_PLUGIN_SUBDIR:PATH=%_lib/%rname \
-    -DQGIS_CGIBIN_SUBDIR:PATH=%_libexecdir/%rname \
+    -DQGIS_PLUGIN_SUBDIR:PATH=%_lib/%name \
+    -DQGIS_CGIBIN_SUBDIR:PATH=%_libexecdir/%name \
     -DWITH_BINDINGS:BOOL=%{?_enable_python:ON}%{?!_enable_python:OFF} \
     -DWITH_SERVER:BOOL=%{?_enable_server:ON}%{?!_enable_server:OFF} \
 %if_enabled grass
@@ -225,7 +235,7 @@ export NPROCS=8
 
 # Install MIME type definitions
 install -pd %buildroot%_datadir/mime/packages
-install -pm0644 %SOURCE5 %buildroot%_datadir/mime/packages/%rname.xml
+install -pm0644 %SOURCE5 %buildroot%_datadir/mime/packages/%name.xml
 
 # Install application and MIME icons
 install -pd %buildroot%_datadir/pixmaps
@@ -234,30 +244,26 @@ install -pd %buildroot%_datadir/icons/hicolor/scalable/apps
 install -pd %buildroot%_datadir/icons/hicolor/128x128/mimetypes
 install -pm0644 \
         images/icons/qgis-icon-60x60.png \
-	%buildroot%_datadir/pixmaps/%rname.png
+	%buildroot%_datadir/pixmaps/%name.png
 install -pm0644 \
-	images/icons/%rname-icon-16x16.png \
-	%buildroot%_datadir/icons/hicolor/16x16/apps/%rname.png
+	images/icons/%name-icon-16x16.png \
+	%buildroot%_datadir/icons/hicolor/16x16/apps/%name.png
 install -pm0644 \
-	images/icons/%{rname}_icon.svg \
-	%buildroot%_datadir/icons/hicolor/scalable/apps/%rname.svg
+	images/icons/%{name}_icon.svg \
+	%buildroot%_datadir/icons/hicolor/scalable/apps/%name.svg
 install -pm0644 \
-	%buildroot%_datadir/%rname/images/icons/%rname-mime-icon.png \
+	%buildroot%_datadir/%name/images/icons/%name-mime-icon.png \
 	%buildroot%_datadir/icons/hicolor/128x128/mimetypes/application-x-qgis-layer-settings.png
 install -pm0644 \
-	%buildroot%_datadir/%rname/images/icons/%rname-mime-icon.png \
+	%buildroot%_datadir/%name/images/icons/%name-mime-icon.png \
 	%buildroot%_datadir/icons/hicolor/128x128/mimetypes/application-x-qgis-project.png
 
 # Install basic QGIS Mapserver configuration for Apache
 install -pd %buildroot%_sysconfdir/httpd/conf.d
 install -pm0644 %SOURCE3 %buildroot%_sysconfdir/httpd/conf.d/qgis-server.conf
 
-# Packed by %%doc in server, see qgis-server-README
-rm -f %buildroot%_libexecdir/%rname/wms_metadata.xml
-rm -f %buildroot%_libexecdir/%rname/admin.sld
-
 # Remove files packaged by doc
-pushd %buildroot%_datadir/%rname/doc
+pushd %buildroot%_datadir/%name/doc
 rm -f BUGS \
 	CHANGELOG \
 	CODING \
@@ -268,102 +274,106 @@ rm -f BUGS \
 popd
 
 # Install server docs
-mkdir -p %buildroot%_datadir/doc/%rname-server-%version
-cp src/server/admin.sld src/server/wms_metadata.xml %SOURCE4 %SOURCE3 \
-   %buildroot%_datadir/doc/%rname-server-%version
+mkdir -p %buildroot%_datadir/doc/%name-server-%version
+cp %SOURCE4 %SOURCE3 \
+   %buildroot%_datadir/doc/%name-server-%version
 
 %if_enabled python
 # Copy test utilities form tests to plugins/processing/tests
 cp tests/src/python/utilities.py %buildroot%_datadir/qgis/python/plugins/processing/tests/
 %endif
 
-%find_lang %rname --with-qt
+%find_lang %name --with-qt
 # Add missing localization
-echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hans.qm" >> %rname.lang
-echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hant.qm" >> %rname.lang
+echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hans.qm" >> %name.lang
+echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hant.qm" >> %name.lang
 
 %if_disabled devel
-rm -rf %buildroot%_datadir/%rname/FindQGIS.cmake \
-       %buildroot%_includedir/%rname \
-       %buildroot%_libdir/lib%{rname}*.so \
+rm -rf %buildroot%_datadir/%name/FindQGIS.cmake \
+       %buildroot%_includedir/%name \
+       %buildroot%_libdir/lib%{name}*.so \
        %buildroot%_libdir/qt5/plugins/designer/libqgis_customwidgets.so* \
-       %buildroot%_datadir/doc/%rname-server-%version \
-       %buildroot%_sysconfdir/httpd/conf.d/%{rname}-server.conf \
-       %buildroot%_libexecdir/%rname
+       %buildroot%_datadir/doc/%name-server-%version \
+       %buildroot%_sysconfdir/httpd/conf.d/%{name}-server.conf \
+       %buildroot%_libexecdir/%name
 %endif
 
-%files -f %rname.lang
+%files -f %name.lang
 %doc BUGS COPYING Exception_to_GPL_for_Qt.txt PROVENANCE *.md ChangeLog.gz
 # QGIS shows these files in the GUI
-%_datadir/%rname/doc
-%dir %_datadir/%rname/i18n/
-%_libdir/lib%{rname}_analysis.so.*
-%_libdir/lib%{rname}_app.so.*
-%_libdir/lib%{rname}_core.so.*
-%_libdir/lib%{rname}_gui.so.*
-%_libdir/lib%{rname}_native.so.*
-%_libdir/lib%{rname}_3d.so.*
-%_libdir/%rname
-%_bindir/%rname
-%_bindir/%{rname}_process
+%_datadir/%name/doc
+%dir %_datadir/%name/i18n/
+%_libdir/lib%{name}_analysis.so.*
+%_libdir/lib%{name}_app.so.*
+%_libdir/lib%{name}_core.so.*
+%_libdir/lib%{name}_gui.so.*
+%_libdir/lib%{name}_native.so.*
+%_libdir/lib%{name}_3d.so.*
+%_libdir/%name
+%_bindir/%name
+%_bindir/%{name}_process
 %doc %_man1dir/*
-%dir %_datadir/%rname/
-%_datadir/mime/packages/%rname.xml
-%_datadir/pixmaps/%rname.png
-%_datadir/icons/hicolor/*/apps/%rname.png
-%_datadir/icons/hicolor/128x128/mimetypes/application-x-%rname-project.png
-%_datadir/icons/hicolor/128x128/mimetypes/application-x-%rname-layer-settings.png
-%_datadir/icons/hicolor/scalable/apps/%rname.svg
-%_iconsdir/hicolor/*x*/mimetypes/%{rname}-*.png
-%_iconsdir/hicolor/scalable/mimetypes/%{rname}*.svg
+%dir %_datadir/%name/
+%_datadir/mime/packages/%name.xml
+%_datadir/pixmaps/%name.png
+%_datadir/icons/hicolor/*/apps/%name.png
+%_datadir/icons/hicolor/128x128/mimetypes/application-x-%name-project.png
+%_datadir/icons/hicolor/128x128/mimetypes/application-x-%name-layer-settings.png
+%_datadir/icons/hicolor/scalable/apps/%name.svg
+%_iconsdir/hicolor/*x*/mimetypes/%{name}-*.png
+%_iconsdir/hicolor/scalable/mimetypes/%{name}*.svg
 %_datadir/applications/*.desktop
-%_datadir/%rname/images
-%_datadir/%rname/resources
-%_datadir/%rname/svg
+%_datadir/%name/images
+%_datadir/%name/resources
+%_datadir/%name/svg
 %if_enabled server
-%_libdir/lib%{rname}_server.so.*
+%_libdir/lib%{name}_server.so.*
 %endif
 %if_enabled grass
 %exclude %_libdir/libqgisgrass*.so.*
-%exclude %_libdir/%rname/libprovider_grass*.so
-%exclude %_libdir/%rname/libprovider_grassraster*.so
-%exclude %_libdir/%rname/grass
+%exclude %_libdir/%name/libprovider_grass*.so
+%exclude %_libdir/%name/libprovider_grassraster*.so
+%exclude %_libdir/%name/grass
 %endif
 %_datadir/metainfo/org.qgis.qgis.appdata.xml
 
 %if_enabled devel
 %files devel
-%_datadir/%rname/FindQGIS.cmake
-%_includedir/%rname
-%_libdir/lib%{rname}*.so
+%_datadir/%name/FindQGIS.cmake
+%_includedir/%name
+%_libdir/lib%{name}*.so
 %_libdir/qt5/plugins/designer/libqgis_customwidgets.so*
 %endif
 
 %if_enabled grass
 %files grass
 %_libdir/libqgisgrass*.so.*
-%_libdir/%rname/libprovider_grass*.so
-%_libdir/%rname/grass
-%_datadir/%rname/grass
+%_libdir/%name/libprovider_grass*.so
+%_libdir/%name/grass
+%_datadir/%name/grass
 %endif
 
 %if_enabled python
 %files python
 %_libdir/libqgispython.so.*
-%_datadir/%rname/python
-%python3_sitelibdir/%rname
+%_datadir/%name/python
+%python3_sitelibdir/%name
 %python3_sitelibdir/PyQt5/uic/widget-plugins/
 %endif
 
 %if_enabled server
 %files server
-%doc %_datadir/doc/%rname-server-%version
-%config(noreplace) %_sysconfdir/httpd/conf.d/%{rname}-server.conf
+%doc %_datadir/doc/%name-server-%version
+%config(noreplace) %_sysconfdir/httpd/conf.d/%{name}-server.conf
 %_bindir/qgis_mapserver
-%_libexecdir/%rname
+%_libexecdir/%name
 %endif
 
 %changelog
+* Sat Feb 24 2024 Andrey Cherepanov <cas@altlinux.org> 3.36.0-alt1
+- New version.
+- Renamed ro qgis.
+
 * Sun Jan 21 2024 Andrey Cherepanov <cas@altlinux.org> 3.34.3-alt1
 - New version.
 
