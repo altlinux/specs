@@ -13,7 +13,7 @@
 
 Name:    castxml
 Version: 0.6.2
-Release: alt2
+Release: alt3
 
 Summary: C-family abstract syntax tree XML output tool
 
@@ -31,6 +31,8 @@ BuildRequires: llvm-devel
 BuildRequires: lld
 %endif
 BuildRequires: clang-devel
+# requires clang-format, which is in clang-tools
+BuildRequires: clang-tools
 BuildRequires: libedit-devel
 BuildRequires: zlib-devel
 BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
@@ -98,6 +100,9 @@ popd
 %_datadir/%name/empty.cpp
 
 %changelog
+* Mon Feb 26 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.6.2-alt3
+- Fixed build for Elbrus (missing BR).
+
 * Wed Nov 01 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.6.2-alt2
 - NMU: Fixed FTBFS on LoongArch
 
