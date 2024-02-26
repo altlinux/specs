@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name pango
-%define ver_major 1.51
+%define ver_major 1.52
 %define api_ver 1.0
 %define module_ver 1.8.0
 %def_disable static
@@ -18,7 +18,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -218,6 +218,9 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 
 %changelog
+* Mon Feb 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1.52.0-alt1
+- 1.52.0
+
 * Sun Feb 11 2024 Yuri N. Sedunov <aris@altlinux.org> 1.51.2-alt1
 - 1.51.2
 
