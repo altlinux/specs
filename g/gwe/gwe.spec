@@ -2,7 +2,7 @@
 
 Name:    gwe
 Version: 0.15.7
-Release: alt1
+Release: alt2
 
 Summary: System utility designed to provide information, control the fans and overclock your NVIDIA card
 License: GPL-3.0
@@ -22,6 +22,9 @@ BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-gir
 BuildRequires: gobject-introspection-devel
+
+Requires: typelib(Notify)
+Requires: python3(sqlite3)
 
 %add_python3_req_skip gi.repository.GObject
 
@@ -56,6 +59,9 @@ and overclock your NVIDIA video card and graphics processor.
 %_iconsdir/hicolor/symbolic/apps/*.svg
 
 %changelog
+* Mon Feb 26 2024 Andrey Cherepanov <cas@altlinux.org> 0.15.7-alt2
+- Added requirements of typelib(Notify) and python3(sqlite3) (ALT #49502).
+
 * Fri Jan 26 2024 Andrey Cherepanov <cas@altlinux.org> 0.15.7-alt1
 - New version.
 
