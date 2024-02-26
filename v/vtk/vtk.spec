@@ -6,7 +6,7 @@
 
 Name: vtk
 Version: %ver.0
-Release: alt1
+Release: alt1.1
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-3-Clause
 Group: Development/Tools
@@ -250,6 +250,9 @@ This package contains VTK QML plugin.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%ifarch %e2k
+sed -i 's/decltype(resRange)::/typename &/' Common/Math/vtkFFT.txx
+%endif
 
 
 # remove bundled libraries
@@ -376,6 +379,9 @@ export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/%_lib
 %endif
 
 %changelog
+* Mon Feb 26 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 9.3.0-alt1.1
+- Fixed build for Elbrus.
+
 * Wed Jan 24 2024 Anton Farygin <rider@altlinux.ru> 9.3.0-alt1
 - 9.3.0
 
