@@ -32,7 +32,7 @@
 Name: qt6-base
 %define major  6
 Version: 6.6.2
-Release: alt2
+Release: alt3
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -826,6 +826,9 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Mon Feb 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt3
+- fix iconloader fallback (closes: 49503)
+
 * Thu Feb 22 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt2
 - set C.UTF-8 locale for qmake
 
