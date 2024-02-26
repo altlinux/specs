@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admc
-Version: 0.15.2
+Version: 0.16.0
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -110,6 +110,24 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Tue Feb 20 2024 Semyon Knyazev <samael@altlinux.org> 0.16.0-alt1
+- Add drag&drop policy link order changing to links tab in the policy OU
+  widget.
+- Domain info widget: "Servers" items are removed from the tree and
+  domain controller version is added.
+- Add link state icons (enforced/disabled) to the links tab from the
+  policy OU widget.
+- Domain policy link broken deletion is fixed (the same links in other
+  OUs were deleted instead of domain's link). (closes: 49385)
+- Fix broken domain policy link icon changing: enforcing/disabling
+  from policy widget changed another OU's the same policy link icon.
+- Fix links duplication in policy OU widget's inheritance tab.
+- Fixed user properties window resize.
+- Add optional attributes loading. It can be performed via "Load
+  optional attribute values" option checking (in the preferences menu)
+  or with corresponding button in the attributes tab. (closes: 48817)
+- Fixed not selected of any theme after ADMC start.
+
 * Tue Jan 16 2024 Semyon Knyazev <samael@altlinux.org> 0.15.2-alt1
 - Removed missing theme error log on first launch. (closes: 49043)
 
