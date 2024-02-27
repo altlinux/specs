@@ -1,14 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 
-Name:      appstream-data
+Name:      appstream-data-desktop
 Summary:   ALT Linux AppStream metadata
-Version:   20240208
+Version:   20240226
 Release:   alt1
 Group:     System/Configuration/Packaging
 BuildArch: noarch
 License:   CC0 and CC-BY and CC-BY-SA and GFDL
 URL:       http://www.altlinux.org/SoftwareCenter/Applications
 Source:    %name-%version.tar
+
+Provides:  appstream-data = %EVR
+Obsoletes: appstream-data < 20240211
 
 BuildRequires: appstream-data-generator
 
@@ -32,6 +35,10 @@ cp -r xmls/* %buildroot%_datadir/app-info/xmls/
 %_datadir/app-info/icons/altlinux
 
 %changelog
+* Mon Feb 26 2024 Kirill Izmestev <felixz@altlinux.org> 20240226-alt1
+- Changed package name to appstream-data-desktop.
+- Added provides, obsoletes for appstream-data (thanks antohami@).
+
 * Thu Feb 08 2024 Kirill Izmestev <felixz@altlinux.org> 20240208-alt1
 - Updated database.
 

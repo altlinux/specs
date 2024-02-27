@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
-Name:      appstream-data-mobile
+Name:      appstream-data-1-mobile
 Summary:   ALT Linux AppStream metadata
-Version:   20240208
+Version:   20240226
 Release:   alt1
 Group:     System/Configuration/Packaging
 BuildArch: noarch
@@ -10,7 +10,9 @@ License:   CC0 and CC-BY-SA
 URL:       http://www.altlinux.org/SoftwareCenter/Applications
 Source:    %name-%version.tar
 
-Conflicts: appstream-data
+Conflicts: appstream-data-desktop
+Provides:  appstream-data
+Provides:  appstream-data-mobile
 
 BuildRequires: appstream-data-generator
 
@@ -27,13 +29,18 @@ mkdir -p %buildroot%_datadir/app-info/icons
 
 cp -r icons/* %buildroot%_datadir/app-info/icons/
 cp -r xmls/* %buildroot%_datadir/app-info/xmls/
-#cp -r manual-%version/* %buildroot%_datadir/app-info/xmls/
 
 %files
 %_datadir/app-info/xmls/*
 %_datadir/app-info/icons/altlinux
 
 %changelog
+* Mon Feb 26 2024 Kirill Izmestev <felixz@altlinux.org> 20240226-alt1
+- Added application to exclusive list and updated database.
+- Changed conflicts to appstream-data-desktop.
+- Added provides for package appstream-data.
+- Renamed package to appstream-data-1-mobile (thanks antohami@).
+
 * Thu Feb 08 2024 Kirill Izmestev <felixz@altlinux.org> 20240208-alt1
 - Improved package description.
 - Added conflicts for package appstream-data.
