@@ -1,12 +1,9 @@
 # TODO: build external, json11 separately
 # Check https://github.com/EasyCoding/tgbuild for patches
 
-%define ffmpeg_version 3.4
-# require
-%define tg_qt5_version 5.15.10
-# upstream uses 6.5.2
-#define tg_qt6_version 6.5.2
-%define tg_qt6_version 6.4.2
+%define ffmpeg_version 4.0
+# minimum required
+%define tg_qt6_version 6.6.2
 
 # AppID for Basealt build
 # got from https://core.telegram.org/api/obtaining_api_id
@@ -14,7 +11,6 @@
 %define apihash bb6c3f8fffd8fe6804fc5131a08e1c44
 
 # TODO: def_with clang
-%def_with qt6
 %def_with wayland
 %def_with x11
 %def_with rlottie
@@ -26,7 +22,7 @@
 
 Name: telegram-desktop
 Version: 4.15.0
-Release: alt1
+Release: alt2
 
 Summary: Telegram Desktop messaging app
 
@@ -43,7 +39,6 @@ Source: %name-%version.tar
 Patch1: telegram-desktop-remove-tgvoip.patch
 Patch2: telegram-desktop-set-native-window-frame.patch
 Patch5: telegram-desktop-fix-missed-cstdint.patch
-Patch6: telegram-desktop-disabled-icon-checkbox.patch
 Patch7: telegram-desktop-fix-build-with-make.patch
 Patch8: telegram-desktop-use-external-gsl.patch
 Patch9: telegram-desktop-try-fix-circular-deps.patch
@@ -79,7 +74,6 @@ BuildRequires: python3
 BuildRequires: cmake >= 3.16
 BuildRequires: extra-cmake-modules
 
-%if_with qt6
 BuildRequires(pre): rpm-macros-qt6
 BuildRequires: qt6-base-devel >= %tg_qt6_version
 BuildRequires: qt6-svg-devel qt6-svg
@@ -91,25 +85,6 @@ BuildRequires: qt6-declarative-devel
 %{?_with_wayland:BuildRequires: qt6-wayland-devel qt6-wayland}
 # needs for smiles and emojicons
 Requires: qt6-imageformats
-%else
-BuildRequires(pre): rpm-macros-qt5
-BuildRequires: qt5-base-devel >= %tg_qt5_version
-BuildRequires: qt5-svg-devel
-BuildRequires: libqt5-core libqt5-network libqt5-gui qt5-imageformats
-
-BuildRequires: kf5-kcoreaddons-devel
-
-# needs for smiles and emojicons
-Requires: qt5-imageformats
-
-# run around https://bugzilla.altlinux.org/show_bug.cgi?id=34665
-Requires: libqt5-core >= %_qt5_version
-
-# for -lQt5PlatformSupport
-BuildRequires: qt5-base-devel-static
-
-%{?_with_wayland:BuildRequires: kf5-kwayland-devel qt5-wayland-devel}
-%endif
 
 BuildRequires: libenchant2-devel
 BuildRequires: libhunspell-devel
@@ -222,6 +197,11 @@ BuildRequires: libswscale-devel >= %ffmpeg_version
 BuildRequires: libswresample-devel >= %ffmpeg_version
 %endif
 
+# Use the same Qt version as built with
+# See https://bugzilla.altlinux.org/49495
+# https://git.altlinux.org/gears/t/telegram-desktop.git?a=blob;f=tdesktop/Telegram/lib_ui/ui/rp_widget.cpp;h=41b24bc5cd896aadd6fc6c35fadfa00f5f4f4b8b#l25
+Requires: libqt6-core = %_qt6_version
+
 Requires: dbus
 
 # instead of internal fonts OpenSans
@@ -257,9 +237,6 @@ or business messaging needs.
 %patch1 -p2
 %patch2 -p2
 %patch5 -p2
-%if_without qt6
-%patch6 -p2
-%endif
 
 %if_without gsl
 test -d /usr/share/cmake/Microsoft.GSL/ && echo "External Microsoft GSL is incompatible with buggy libstd++ (see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106547), remove libmicrosoft-gsl-devel to correct build" && exit 1
@@ -340,11 +317,7 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
 %endif
     -DDESKTOP_APP_DISABLE_CRASH_REPORTS:BOOL=ON \
     -DDESKTOP_APP_DISABLE_SPELLCHECK:BOOL=OFF \
-%if_with qt6
     -DQT_VERSION_MAJOR=6 \
-%else
-    -DQT_VERSION_MAJOR=5 \
-%endif
 %if_without scudo
     -DDESKTOP_APP_DISABLE_SCUDO=ON \
 %endif
@@ -406,6 +379,10 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Tue Feb 27 2024 Vitaly Lipatov <lav@altlinux.ru> 4.15.0-alt2
+- spec: drop all Qt5 related code
+- add strict require to libqt6-core built with (ALT bug 49495)
+
 * Mon Feb 19 2024 Vitaly Lipatov <lav@altlinux.ru> 4.15.0-alt1
 - new version 4.15.0 (with rpmrb script)
 
