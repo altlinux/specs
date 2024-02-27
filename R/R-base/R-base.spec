@@ -1,6 +1,6 @@
 Name: R-base
 Version: 4.2.2
-Release: alt1
+Release: alt2
 
 Summary: A language for data analysis and graphics
 License: GPLv2
@@ -42,6 +42,12 @@ S is the statistician's Matlab and R is to S what Octave is to Matlab.
 %patch -p1
 %patch1 -p1
 rm src/extra/blas/*.f src/modules/lapack/*.f
+%ifarch %e2k
+tar -xzf src/library/Recommended/mgcv.tgz
+sed -i -E "/#pragma omp .*num_threads\(\*/{s/.*num_threads\((\*[^(]*)\).*/int nthr_fix=\\1;\n&/;s/num_threads\((\*[^(]*)\).*/num_threads(nthr_fix)/}" mgcv/src/{discrete,gdi}.c
+sed -i -E "s/num_threads\((\*[^(]*)\).*/num_threads(nthr_fix)/;s/int \*nt.*\) \{/&int nthr_fix=*nt;/" mgcv/src/mat.c
+tar -czf src/library/Recommended/mgcv.tgz mgcv ; rm -rf mgcv
+%endif
 
 %build
 %define verid %(v=%version; IFS=.; set $v; echo "$1.$2")
@@ -344,6 +350,9 @@ classification, clustering, ...).
 %_infodir/R-*.info*
 
 %changelog
+* Tue Dec 19 2023 Michael Shigorin <mike@altlinux.org> 4.2.2-alt2
+- E2K: openmp-related ftbfs workaround (ilyakurdyukov@)
+
 * Thu Jul 27 2023 Leontiy Volodin <lvol@altlinux.org> 4.2.2-alt1
 - Version 4.2.2 (by @kirill) (closes #45320)
 - i586 support dropped upstream (by @kirill)
