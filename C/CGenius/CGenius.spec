@@ -1,7 +1,7 @@
 %define _metainfodir %_datadir/metainfo
 
 Name: CGenius
-Version: 3.4.9
+Version: 3.5.0
 Release: alt1
 
 Summary: the clone of Commander Keen
@@ -104,6 +104,9 @@ cp -a hqp/{games,global} %buildroot%_gamesdatadir/commandergenius/
 %_gamesdatadir/commandergenius/global/snd
 
 %changelog
+*Thu Feb 15 2024 Artyom Bystrov <arbars@altlinux.org> 3.5.0-alt1
+- Update to new version
+
 * Tue Aug 22 2023 Artyom Bystrov <arbars@altlinux.org> 3.4.9-alt1
 - Update to new version
 
