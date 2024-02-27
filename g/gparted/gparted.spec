@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: gparted
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 
 Summary: %Name Partition Editor
@@ -121,7 +121,7 @@ xvfb-run %make check
 %_iconsdir/hicolor/*/apps/*
 %_desktopdir/%name.desktop
 %_datadir/polkit-1/actions/org.gnome.gparted.policy
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 
 %if_enabled usermode
 %_bindir/%name
@@ -130,6 +130,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Tue Feb 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Wed Feb 22 2023 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
 - 1.5.0
 
