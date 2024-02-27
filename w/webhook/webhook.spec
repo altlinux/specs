@@ -5,7 +5,7 @@
 
 Name: webhook
 Version: 2.8.1
-Release: alt1
+Release: alt2
 Summary: A lightweight incoming webhook server to run shell commands
 License: MIT
 Group: System/Servers
@@ -29,7 +29,9 @@ satisfied in order for the hook to be triggered.
 %setup
 
 %build
+%ifnarch %ix86 armh riscv64
 export CGO_ENABLED=0
+%endif
 export GOFLAGS='-buildmode=pie'
 go build -v
 
@@ -55,5 +57,8 @@ kill %%1
 %_unitdir/%name.service
 
 %changelog
+* Sat Feb 24 2024 Vitaly Chikunov <vt@altlinux.org> 2.8.1-alt2
+- spec: Fix FTBFS after golang update to 1.22.
+
 * Tue Jan 23 2024 Vitaly Chikunov <vt@altlinux.org> 2.8.1-alt1
 - First import 2.8.1-6-gbd1aaab (2023-12-26).
