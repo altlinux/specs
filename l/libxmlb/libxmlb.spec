@@ -2,9 +2,9 @@
 %define soversion 2
 Summary: Library for querying compressed XML metadata
 Name: libxmlb
-Version: 0.3.14
+Version: 0.3.15
 Release: alt1
-License: LGPLv2+
+License: LGPLv2.1
 Group: System/Libraries
 Url: https://github.com/hughsie/libxmlb
 Source0: %name-%version.tar
@@ -51,6 +51,22 @@ Group: System/Libraries
 %description common
 Common files for %name.
 
+%package tools
+Summary: XMLb utility 
+Group: System/Libraries
+
+%description tools
+XMLb tool allows creating, dumping and querying binary XML blobs.
+
+%package tests
+Group: System/Libraries
+Summary: Tests for the %name package
+Requires: libxmlb%soversion = %EVR
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the installed %name package
+
 %package -n libxmlb-devel
 Summary: Development package for %name
 Group: Development/C
@@ -76,14 +92,19 @@ Files for development with %name.
 %meson_install
 
 %files common
+%_libdir/girepository-1.0/*.typelib
+
+%files tools
 %doc README.md LICENSE
 %_bindir/xb-tool
 %_man1dir/*.1*
-%dir %_libdir/girepository-1.0
-%_libdir/girepository-1.0/*.typelib
 
 %files -n libxmlb%soversion
 %_libdir/libxmlb.so.%{soversion}*
+
+%files tests
+%_libexecdir/installed-tests/%name
+%_datadir/installed-tests/%name
 
 %files devel
 %dir %_datadir/gir-1.0
@@ -96,6 +117,11 @@ Files for development with %name.
 %_libdir/pkgconfig/xmlb.pc
 
 %changelog
+* Tue Feb 27 2024 Anton Farygin <rider@altlinux.ru> 0.3.15-alt1
+- 0.3.14 -> 0.3.15
+- XMLb tool was moved from the common package to the tools package
+- added package with tests
+
 * Sun Sep 17 2023 Anton Farygin <rider@altlinux.ru> 0.3.14-alt1
 - 0.3.11 -> 0.3.14
 
