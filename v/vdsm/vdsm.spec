@@ -24,7 +24,7 @@
 
 Name: vdsm
 Version: 4.50.6
-Release: alt1
+Release: alt1.1
 Summary: Virtual Desktop Server Manager
 
 Group: System/Configuration/Other
@@ -103,9 +103,7 @@ Requires: lvm2 >= 2.02.177
 Requires: qemu-kvm >= 6.0.0
 
 # GlusterFS client-side RPMs needed for Gluster SD
-%ifnarch ppc64le
-Requires: glusterfs-client >= %gluster_version
-%endif
+#Requires: glusterfs-client >= %gluster_version
 
 Requires: psmisc >= 22.6
 Requires: sos >= 3.7
@@ -505,8 +503,8 @@ Summary: Gluster Plugin for VDSM
 Group: Development/Python
 Provides: %name-gluster = %version-%release
 Requires: %name = %version-%release
-Requires: glusterfs-server >= %gluster_version
-Requires: glusterfs-georeplication >= %gluster_version
+#Requires: glusterfs-server >= %gluster_version
+#Requires: glusterfs-georeplication >= %gluster_version
 #Requires: glusterfs-events >= %gluster_version
 Requires: libblockdev-plugins
 Requires: xfsprogs
@@ -853,6 +851,9 @@ fi
 %endif
 
 %changelog
+* Tue Feb 27 2024 Vitaly Lipatov <lav@altlinux.ru> 4.50.6-alt1.1
+- NMU: disable glusterfs requires in noarch packages
+
 * Wed Dec 20 2023 Alexey Shabalin <shaba@altlinux.org> 4.50.6-alt1
 - New version 4.50.6.
 - fix for PEP-632 python-3.12
