@@ -5,8 +5,8 @@
 %define oname wt
 
 Name: libwt
-Version: 4.5.0
-Release: alt4
+Version: 4.10.3
+Release: alt1
 Summary: Wt (pronounced as witty) is a C++ library for developing web applications.
 License: GPL
 Group: Development/C++
@@ -146,8 +146,8 @@ you can focus on actual functionality with a rich set of feature-complete widget
 
 %prep
 %setup
-%patch1 -p2
-%patch2 -p2
+#patch1 -p2
+#patch2 -p2
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -199,6 +199,9 @@ you can focus on actual functionality with a rich set of feature-complete widget
 #files docs
 
 %changelog
+* Wed Feb 28 2024 Vitaly Lipatov <lav@altlinux.ru> 4.10.3-alt1
+- new version 4.10.3 (with rpmrb script)
+
 * Fri Oct 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.5.0-alt4
 - Fixed build with gcc-11.
 
