@@ -3,14 +3,13 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict,lint=relaxed
 
-%global import_path github.com/ncw/rclone
 Name:     rclone
-Version:  1.61.1
-Release:  alt1
+Version: 1.65.2
+Release: alt1
 Summary:  rsync for cloud storage
 License:  MIT
 Group:    Networking/File transfer
-Vcs:      https://github.com/ncw/rclone
+Vcs:      https://github.com/rclone/rclone
 Url:      https://rclone.org/
 
 Source:   %name-%version.tar
@@ -20,19 +19,20 @@ BuildRequires: golang
 
 %description
 Rclone ("rsync for cloud storage") is a command-line program to sync
-files and directories to and from different cloud storage providers.
+files and directories to and from different cloud storage providers:
 
-Google Drive, S3, Dropbox, Backblaze B2, One Drive, Swift, Hubic, Wasabi,
-Google Cloud Storage, Yandex Files
+  Google Drive, S3, Dropbox, Backblaze B2, One Drive, OpenStack Swift,
+  Ceph, WebDAV, Google Cloud Storage, Mail.ru Cloud, Mega, Yandex Disk,
+  and many others.
 
 %prep
 %setup
 
 %build
 go build -v -buildmode=pie -ldflags=-X=github.com/rclone/rclone/fs.Version=%version
-./%name completion bash > %name.bash
-./%name completion fish > %name.fish
-./%name completion zsh  > %name.zsh
+./%name completion bash %name.bash
+./%name completion fish %name.fish
+./%name completion zsh  %name.zsh
 
 %install
 install -Dp %name -t %buildroot%_bindir
@@ -41,13 +41,12 @@ install -Dpm644 %name.fish %buildroot%_datadir/fish/vendor_completions.d/%name.f
 install -Dpm644 %name.zsh  %buildroot%_datadir/zsh/site-functions/_%name
 install -Dpm644 %name.1 -t %buildroot%_man1dir
 
-%define _customdocdir %_docdir/%name
-
 %check
 banner tests
 PATH=%buildroot%_bindir:$PATH
 # Simplest
 rclone version
+rclone version | grep -Fx 'rclone %version'
 # Some complicated algorithms
 > /tmp/empty
 rclone md5sum /tmp/empty	| grep -w d41d8cd98f00b204e9800998ecf8427e
@@ -57,21 +56,23 @@ rclone hashsum MailruHash /tmp/empty | grep -w 000000000000000000000000000000000
 rclone hashsum CRC-32 /tmp/empty| grep -w 00000000
 # Basic commands
 rclone about .
-rclone lsd .
-rclone check . .		# positive
-! rclone check . .. 2>/dev/null	# netagive
+rclone lsd . | grep -w vendor
+rclone check . .			  # positive
+! rclone check . .. 2>/dev/null	|| exit 2 # netagive
 # Remote protocol and remote control
 rclone --rc serve webdav --read-only . &
 trap "kill $!" EXIT
 sleep 1
 rclone --webdav-url=http://127.0.0.1:8080/ check :webdav: .
 rclone --webdav-url=http://127.0.0.1:8080/ copy :webdav:COPYING /tmp/
-rclone rc core/stats
+rclone rc core/stats | grep '"errors": 0,'
 rclone rc core/quit
 trap - EXIT
+diff COPYING /tmp/COPYING
 
 %files
-%doc *.md
+%define _customdocdir %_docdir/%name
+%doc COPYING *.md
 %_bindir/%name
 %_man1dir/%name.1*
 %_datadir/bash-completion/completions/%name
@@ -79,6 +80,9 @@ trap - EXIT
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Mon Feb 26 2024 Vitaly Chikunov <vt@altlinux.org> 1.65.2-alt1
+- Update to v1.65.2 (2024-01-24). (ALT#49497).
+
 * Sun Feb 05 2023 Vitaly Chikunov <vt@altlinux.org> 1.61.1-alt1
 - Update to v1.61.1 (2022-12-23) (ALT#45130).
 
