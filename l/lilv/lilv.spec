@@ -1,6 +1,6 @@
 Name: lilv
 Version: 0.24.24
-Release: alt1
+Release: alt2
 
 Summary: An LV2 Resource Description Framework Library
 License: 0BSD
@@ -21,14 +21,16 @@ BuildRequires: pkgconfig(zix-0)
 Summary: lilv shared libraries
 Group: System/Libraries
 
-%package devel
+%package -n liblilv-devel
 Summary: Development libraries and headers for lilv
 Group: Development/C
+Provides: lilv-devel = %EVR
+Obsoletes: lilv-devel
 
 %package -n python3-module-lilv
 Summary: Python bindings for lilv
 Group: Development/Python3
-Requires: liblilv == %version-%release
+Requires: liblilv == %EVR
 BuildArch: noarch
 
 %description
@@ -41,7 +43,7 @@ lilv is a lightweight C library for Resource Description Syntax which
 supports reading and writing Turtle and NTriples.
 This package contains the libraries for lilv.
 
-%description devel
+%description -n liblilv-devel
 lilv is a lightweight C library for Resource Description Syntax which
 supports reading and writing Turtle and NTriples.
 This package contains the headers and development libraries for lilv.
@@ -70,7 +72,7 @@ This package contains the python bindings for lilv.
 %doc AUTHORS NEWS README.md
 %_libdir/liblilv-0.so.*
 
-%files devel
+%files -n liblilv-devel
 %_libdir/liblilv-0.so
 %_pkgconfigdir/lilv-0.pc
 %_includedir/lilv-0
@@ -80,6 +82,9 @@ This package contains the python bindings for lilv.
 %python3_sitelibdir_noarch/*/lilv.*
 
 %changelog
+* Tue Feb 27 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.24.24-alt2
+- fix devel subpackage naming (closes: 49521)
+
 * Mon Feb 26 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.24.24-alt1
 - 0.24.24 released
 
