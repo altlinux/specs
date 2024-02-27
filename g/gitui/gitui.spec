@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: gitui
-Version: 0.25.0
+Version: 0.25.1
 Release: alt1
 Summary: Blazing fast terminal-ui for git written in rust
 License: MIT
@@ -68,6 +68,9 @@ cargo test  %_smp_mflags --release
 %_bindir/gitui
 
 %changelog
+* Sat Feb 24 2024 Vitaly Chikunov <vt@altlinux.org> 0.25.1-alt1
+- Update to v0.25.1 (2024-02-23).
+
 * Fri Feb 23 2024 Vitaly Chikunov <vt@altlinux.org> 0.25.0-alt1
 - Update to v0.25.0 (2024-02-21).
 
