@@ -2,8 +2,8 @@
 %global __find_debuginfo_files %nil
 
 Name: kde5-plasma-addon-alt-weather
-Version: 1.0.17
-Release: alt1.1
+Version: 1.0.18
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 Plasma weather addon
@@ -37,7 +37,6 @@ The weather forecast addon for KDE Workspace 5 Plasma
 %find_lang %name --all-name
 
 %files -f %name.lang
-%_K5plug/plasma/applets/*.so
 %_K5plug/plasma/dataengine/*.so
 %_K5qml/org/kde/plasma/alt/private/weather/
 %_datadir/icons/hicolor/scalable/status/*
@@ -48,6 +47,14 @@ The weather forecast addon for KDE Workspace 5 Plasma
 %_datadir/metainfo/*
 
 %changelog
+* Mon Feb 26 2024 Slava Aseev <ptrnine@altlinux.org> 1.0.18-alt1
+- Use IP geolocation by default
+- Show wind direction
+- Make errors more informative
+- Show old data if some error occurred
+- Disable widget resize workaround
+- Fix widget description
+
 * Mon Feb 19 2024 Michael Shigorin <mike@altlinux.org> 1.0.17-alt1.1
 - EA: += %%e2k
 
