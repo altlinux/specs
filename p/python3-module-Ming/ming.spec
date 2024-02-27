@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.13.0
-Release: alt1
+Release: alt1.1
 
 Summary: Bringing order to Mongo since 2009
 License: MIT
@@ -15,6 +15,9 @@ Vcs: https://github.com/TurboGears/Ming
 Source: %name-%version.tar
 
 BuildArch: noarch
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %oname} = %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -62,6 +65,9 @@ This package contains tests for Ming.
 
 
 %changelog
+* Tue Feb 27 2024 Stanislav Levin <slev@altlinux.org> 0.13.0-alt1.1
+- NMU: mapped PyPI name to distro's one.
+
 * Mon Apr 24 2023 Anton Vyatkin <toni@altlinux.org> 0.13.0-alt1
 - New version 0.13.0.
 

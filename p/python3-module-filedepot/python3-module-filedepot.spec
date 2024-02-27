@@ -1,24 +1,33 @@
 %define _unpackaged_files_terminate_build 1
-%define oname filedepot
-# depends on unmaintained nose
-%def_disable check
 
-Name: python3-module-%oname
-Version: 0.8.0
+%define pypi_name filedepot
+%define mod_name depot
+
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 0.11.0
 Release: alt1
 Summary: Toolkit for storing files and attachments in web applications
 License: MIT
 Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.org/project/filedepot/
-
-# https://github.com/amol-/depot.git
+Vcs: https://github.com/amol-/depot
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-
-%py3_requires anyascii
-%py3_provides %oname
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+# boto is deprecated
+%add_pyproject_deps_check_filter boto
+# not packaged
+%add_pyproject_deps_check_filter google-cloud-storage
+%pyproject_builddeps_metadata_extra testing
+%endif
 
 %description
 DEPOT is a framework for easily storing and serving files in web
@@ -26,24 +35,33 @@ applications on Python2.6+ and Python3.2+.
 
 %prep
 %setup
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 # drop boto-based connector (boto was replaced with boto3)
 rm depot/io/awss3.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
+# skip tests requiring running Mongo
+export NO_MONGO=1
+%pyproject_run_unittest discover -v
 
 %files
 %doc *.rst
-%python3_sitelibdir/depot/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 26 2024 Stanislav Levin <slev@altlinux.org> 0.11.0-alt1
+- 0.8.0 -> 0.11.0.
+
 * Wed Mar 09 2022 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1
 - 0.7.1 -> 0.8.0.
 
