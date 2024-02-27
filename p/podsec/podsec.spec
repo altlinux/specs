@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define u7s_admin_usr u7s-admin
 %define u7s_admin_grp u7s-admin
 %define kubernetes_grp kube
@@ -8,7 +9,7 @@
 
 Name: podsec
 Version: 1.0.10
-Release: alt2
+Release: alt4
 
 Summary: Set of scripts for Podman Security
 License: GPLv2+
@@ -64,6 +65,7 @@ Requires: cri-tools
 %filter_from_requires /kubernetes-client/d
 %filter_from_requires /kubernetes-kubeadm/d
 %filter_from_requires /kubernetes-kubelet/d
+%filter_from_requires /\/etc\/kubernetes\/kubelet/d
 
 %description k8s
 This package contains utilities for:
@@ -92,6 +94,9 @@ Requires: openssh-server
 Requires: mailx
 Requires: trivy
 Requires: trivy-server
+Requires: nagios-plugins-network
+%filter_from_requires /\/usr\/lib\/nagios\/plugins\/podsec-inotify-check-images/d
+%filter_from_requires /\/usr\/lib\/nagios\/plugins\/podsec-inotify-check-policy/d
 
 %description inotify
 A set of scripts for  security monitoring by systemd timers or
@@ -115,28 +120,21 @@ A set of scripts for developers
 
 %install
 %makeinstall_std
+ln -r -s %buildroot%_bindir/podsec-inotify-check-policy %buildroot%nagios_plugdir/
+ln -r -s %buildroot%_bindir/podsec-inotify-check-images %buildroot%nagios_plugdir/
 
 %pre
 groupadd -r -f podman >/dev/null 2>&1 ||:
 groupadd -r -f podman_dev >/dev/null 2>&1 ||:
 
 %pre k8s
-groupadd -r -f podman >/dev/null 2>&1 ||:
 groupadd -r -f %u7s_admin_grp  2>&1 ||:
-useradd -r -m -g %u7s_admin_grp -d %u7s_admin_homedir -G %kubernetes_grp,systemd-journal,podman \
+useradd -r -M -g %u7s_admin_grp -d %u7s_admin_homedir -G %kubernetes_grp,systemd-journal,podman \
     -c 'usernet user account' %u7s_admin_usr  2>&1 ||:
-chown -R %u7s_admin_usr:%u7s_admin_grp %u7s_admin_homedir
-rm -rf %u7s_admin_homedir/.lpoptions \
-  %u7s_admin_homedir/.mutt \
-  %u7s_admin_homedir/.rpmmacros \
-  %u7s_admin_homedir/.xprofile \
-  %u7s_admin_homedir/.lpoptions \
-  %u7s_admin_homedir/.xsession.d
 
 %post inotify
 %post_systemd podsec-inotify-check-containers.service
 %post_systemd podsec-inotify-check-kubeapi.service
-
 %preun inotify
 %preun_systemd podsec-inotify-check-containers.service
 %preun_systemd podsec-inotify-check-kubeapi.service
@@ -179,7 +177,6 @@ rm -rf %u7s_admin_homedir/.lpoptions \
 %exclude %_mandir/man?/podsec-k8s-rbac-*
 %_unitdir/u7s.service
 %_userunitdir/*
-%u7s_admin_homedir/.??*
 %dir %attr(0750,%u7s_admin_usr,%u7s_admin_grp) %u7s_admin_homedir
 %dir %attr(0750,%u7s_admin_usr,%u7s_admin_grp) %u7s_admin_homedir/.local
 %dir %attr(0750,%u7s_admin_usr,%u7s_admin_grp) %u7s_admin_homedir/.cache
@@ -196,13 +193,11 @@ rm -rf %u7s_admin_homedir/.lpoptions \
 %_mandir/man?/podsec-k8s-rbac-*
 
 %files inotify
-%nagios_plugdir/podsec-inotify-*
 %_bindir/podsec-inotify-*
+%nagios_plugdir/podsec-inotify-*
 %_mandir/man?/podsec-inotify-*
 %_unitdir/podsec-inotify-*
 %exclude %_unitdir/u7s.service
-%dir %attr(0750,%u7s_admin_usr,%u7s_admin_grp) %nagiosdir
-%dir %attr(0750,%u7s_admin_usr,%u7s_admin_grp) %nagios_plugdir
 
 %files dev
 %_bindir/podsec-save-oci
@@ -211,7 +206,11 @@ rm -rf %u7s_admin_homedir/.lpoptions \
 %_mandir/man?/podsec-save-oci*
 
 %changelog
-* Wed Jan 31 2024 Alexey Kostarev <kaf@altlinux.org> 1.0.10-alt2
+* Mon Feb 26 2024 Alexey Shabalin <shaba@altlinux.org> 1.0.10-alt4
+- Fix useradd u7s-admin
+- Fix package podsec-inotify-*
+
+* Fri Feb 23 2024 Alexey Kostarev <kaf@altlinux.org> 1.0.10-alt3
 - 1.0.10
 
 * Wed Jan 31 2024 Alexey Kostarev <kaf@altlinux.org> 10.0.10-alt2
