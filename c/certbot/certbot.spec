@@ -5,8 +5,8 @@
 %define acme_version %version
 
 Name: certbot
-Version: 2.8.0
-Release: alt2
+Version: 2.9.0
+Release: alt1
 
 Summary: A free, automated certificate authority client
 
@@ -269,6 +269,9 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Wed Feb 28 2024 Vitaly Lipatov <lav@altlinux.ru> 2.9.0-alt1
+- new version 2.9.0 (with rpmrb script)
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 2.8.0-alt2
 - add BR: rpm-macros-features, add missed importlib.metadata if needed
 
