@@ -1,7 +1,7 @@
 
 Name: voiceman-media-ru
 Version: 20111127
-Release: alt1.qa1
+Release: alt1.qa2
 BuildArch: noarch
 License: GPL
 Group: Sound
@@ -28,6 +28,9 @@ speech notifications in Russian of any newly inserted removable media.
 %_datadir/sounds/voiceman/*
 
 %changelog
+* Wed Feb 28 2024 Ivan A. Melnikov <iv@altlinux.org> 20111127-alt1.qa2
+- NMU: replace egrep with grep -E (fixes unmets on /bin/egrep)
+
 * Fri Mar 24 2023 Igor Vlasenko <viy@altlinux.org> 20111127-alt1.qa1
 - fixed udevrulesdir
 
