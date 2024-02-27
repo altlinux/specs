@@ -1,5 +1,5 @@
 Name: imlib2
-Version: 1.12.1
+Version: 1.12.2
 Release: alt1
 
 Summary: Image loading, saving, rendering, and manipulation library
@@ -8,7 +8,6 @@ Group: System/Libraries
 Url: https://git.enlightenment.org/old/legacy-imlib2
 # Source-url: https://sourceforge.net/projects/enlightenment/files/imlib2-src/%version/%name-%version.tar.xz
 Source: %name-%version.tar
-Patch: imlib2-1.12.0-alt-i586-fix-icewm-segfault.patch
 
 %def_disable static
 %def_enable mmx
@@ -63,15 +62,12 @@ distribution.
 
 %prep
 %setup
-%ifarch i586
-%patch -p1
-%endif
 #sed -i 's/echo \$libdirs -lImlib2 @my_libs@/echo -lImlib2/' imlib2-config.in
 sed -i '1a#include <stdbool.h>' \
   src/modules/loaders/loader_gif.c
 
 %build
-export LIBS+="-L/%_lib -lm"
+export LIBS+=" -lwebp -L/%_lib -lm"
 %autoreconf
 %configure \
 	%{subst_enable static} \
@@ -119,6 +115,9 @@ make check
 %endif
 
 %changelog
+* Tue Feb 06 2024 Leontiy Volodin <lvol@altlinux.org> 1.12.2-alt1
+- New version 1.12.2.
+
 * Thu Sep 28 2023 Leontiy Volodin <lvol@altlinux.org> 1.12.1-alt1
 - New version 1.12.1.
 - Enabled check.
