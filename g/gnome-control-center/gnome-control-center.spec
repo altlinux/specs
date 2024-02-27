@@ -17,7 +17,7 @@
 
 Name: gnome-control-center
 Version: %ver_major.3
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: GNOME Control Center
 License: GPL-2.0-or-later
@@ -29,6 +29,7 @@ Source: %name-%version%beta.tar
 %else
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %endif
+Source1: https://github.com/eggert/tz/blob/main/zone.tab
 
 %define glib_ver 2.75.0
 %define gtk4_ver 4.9.3
@@ -145,7 +146,8 @@ you'll want to install this package.
 %prep
 %setup -n %name-%version%beta
 # define TZ_DATA_FILE "/usr/share/zoneinfo/zone.tab"
-sed -i 's|zone\.tab|zone1970.tab|' panels/datetime/tz.h
+#sed -i 's|zone\.tab|zone1970.tab|' panels/datetime/tz.h
+sed -i 's|\(\/usr\/share\/\)zoneinfo\/\(zone.tab\)|\1%name/\2|' panels/datetime/tz.h
 
 %build
 %meson \
@@ -157,6 +159,7 @@ sed -i 's|zone\.tab|zone1970.tab|' panels/datetime/tz.h
 
 %install
 %meson_install
+cp %SOURCE1 %buildroot%_datadir/%name/
 %find_lang --with-gnome --output=%name.lang %name-%api_ver %name-%api_ver-timezones %_name
 
 %check
@@ -173,6 +176,7 @@ xvfb-run %__meson_test
 %dir %_datadir/%name
 %_datadir/%name/keybindings
 %_datadir/%name/pixmaps
+%_datadir/%name/zone.tab
 %_desktopdir/*.desktop
 %_datadir/pixmaps/faces/
 %_iconsdir/hicolor/*/*/*
@@ -200,6 +204,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Tue Feb 27 2024 Yuri N. Sedunov <aris@altlinux.org> 45.3-alt1.1
+- used local copy of zone.tab for datetime panel
+
 * Mon Feb 12 2024 Yuri N. Sedunov <aris@altlinux.org> 45.3-alt1
 - 45.3
 
