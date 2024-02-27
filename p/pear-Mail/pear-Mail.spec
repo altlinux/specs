@@ -1,6 +1,6 @@
 %define pear_name Mail
 Name: pear-%pear_name
-Version: 1.5.1
+Version: 2.0.0
 Release: alt1
 
 Summary: Class that provides multiple interfaces for sending emails
@@ -51,6 +51,9 @@ provides a RFC822 email address list validation utility class.
 %pear_dir/docs/Mail/
 
 %changelog
+* Wed Feb 28 2024 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
+- new version 2.0.0 (with rpmrb script)
+
 * Sun Oct 01 2023 Vitaly Lipatov <lav@altlinux.ru> 1.5.1-alt1
 - new version 1.5.1 (with rpmrb script)
 
