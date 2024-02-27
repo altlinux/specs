@@ -1,7 +1,7 @@
 %define optflags_lto %nil
 
 Name: openjazz
-Version: 20190106
+Version: 20231028
 Release: alt1
 
 Summary: Open source realization of Jazz JackRabbit old-school platformer
@@ -59,6 +59,8 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Tue Feb 27 2024 Artyom Bystrov <arbars@altlinux.org> 20231028-alt1
+- Update to new version
 
 * Sat Jul 09 2022 Artyom Bystrov <arbars@altlinux.org> 20190106-alt1
 - initial build for ALT Sisyphus
