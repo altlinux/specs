@@ -2,16 +2,16 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-Summary: A collection of unix tools
+Summary: A collection of UNIX tools
 Name: moreutils
-Version: 0.68
+Version: 0.69
 Release: alt1
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: File tools
-Source0: %name-%version.tar
 Url: http://joeyh.name/code/moreutils/
 Vcs: https://git.joeyh.name/index.cgi/moreutils.git
 
+Source0: %name-%version.tar
 BuildRequires: docbook2X
 BuildRequires: docbook-dtds
 BuildRequires: perl-IPC-Run
@@ -21,8 +21,8 @@ BuildRequires: /proc
 }}
 
 %description
-A collection of unix tools that nobody thought to write long ago, when
-unix was young. Currently it consists of these tools:
+A collection of UNIX tools that nobody thought to write long ago, when
+UNIX was young. Currently it consists of these tools:
 
  - chronic: runs a command quietly unless it fails
  - combine: combine the lines in two files using boolean operations
@@ -62,8 +62,9 @@ sed -i -e 's,"file:///.*docbookx\.dtd","/usr/share/sgml/docbook/dtd/4.4/docbookx
 
 %install
 %makeinstall_std
-# ts's man conflicts with openssl :
-mv %buildroot%_man1dir/ts.1 %buildroot%_man1dir/%{name}_ts.1
+# ts's man conflicts with openssl. Tool name first so that user can type `man
+# ts<tab>` and see there is another page.
+mv %buildroot%_man1dir/ts.1 %buildroot%_man1dir/ts-%name.1
 
 %check
 make check
@@ -81,6 +82,10 @@ make check
 %_man1dir/parallel.1*
 
 %changelog
+* Tue Feb 27 2024 Vitaly Chikunov <vt@altlinux.org> 0.69-alt1
+- Update to 0.69 (2024-02-25). No-op change.
+- 'ts' man page is renamed so it's easier to find with tab completion.
+
 * Wed Nov 29 2023 Vitaly Chikunov <vt@altlinux.org> 0.68-alt1
 - Update to 0.68 (2023-11-28).
 
