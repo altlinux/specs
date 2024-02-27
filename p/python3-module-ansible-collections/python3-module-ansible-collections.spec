@@ -1,5 +1,5 @@
 Name:    python3-module-ansible-collections
-Version: 8.3.0
+Version: 8.4.0
 Release: alt1
 
 Summary: This repository contains the community.general and some other Ansible Collection
@@ -69,6 +69,9 @@ find %buildroot%python3_sitelibdir/ansible_collections -name tests | xargs rm -r
 %files -n ansible
 
 %changelog
+* Tue Feb 27 2024 Andrey Cherepanov <cas@altlinux.org> 8.4.0-alt1
+- New version.
+
 * Tue Jan 30 2024 Andrey Cherepanov <cas@altlinux.org> 8.3.0-alt1
 - New version.
 
