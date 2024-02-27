@@ -17,7 +17,7 @@ BuildRequires: /usr/bin/diff /usr/bin/makeinfo /usr/bin/neqn /usr/bin/tbl
 
 Name: hdf
 Version: 4.2.15
-Release: alt2
+Release: alt3
 Summary: A general purpose library and file format for storing scientific data
 License: BSD
 URL: https://portal.hdfgroup.org/
@@ -81,6 +81,12 @@ HDF development headers and libraries.
 %patch8 -p1 -b .aarch64
 %patch9 -p1 -b .ppc64le
 %patch11 -p1 -b .build
+%ifarch %e2k
+sed -i 's/__x86_64__/__e2k__/' \
+	hdf/src/{hconv,hdfi}.h mfhdf/fortran/jackets.c.in \
+	mfhdf/libsrc/{{array,cdf,putget,xdrposix}.c,netcdf.h.in} \
+	mfhdf/ncgen/ncgen{.l,yy.c}
+%endif
 
 ## Fix syntax error bacause 'CLASSPATH_ENV=$H4_CLASSPATH' line on epel6 builds
 # Use only if java is disabled
@@ -159,6 +165,9 @@ make -j1 check
 %{_docdir}/%{name}/examples/
 
 %changelog
+* Tue Feb 27 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.2.15-alt3
+- Fixed build for Elbrus.
+
 * Tue Sep 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.15-alt2
 - Fixed build with LTO.
 
