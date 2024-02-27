@@ -10,7 +10,8 @@
 
 Name: redis
 Version: 7.2.4
-Release: alt1
+Release: alt1.1
+
 Summary: Redis is an advanced key-value store
 Group: Databases
 # redis, hiredis: BSD-3-Clause
@@ -109,7 +110,7 @@ USE_MALLOC="USE_JEMALLOC=yes"
 ./utils/gen-test-certs.sh
 ./runtest --clients 1 --verbose --tags -largemem:skip --skipunit unit/oom-score-adj --skipunit unit/memefficiency  --skiptest "CONFIG SET rollback on apply error" --tls
 ./runtest-moduleapi
-timeout 30m ./runtest-cluster --tls
+timeout 120m ./runtest-cluster --tls
 ./runtest-sentinel
 
 %install
@@ -211,6 +212,9 @@ useradd  -r -g %redis_group -c 'Redis daemon' \
 %_includedir/%{name}module.h
 
 %changelog
+* Tue Feb 27 2024 Ivan A. Melnikov <iv@altlinux.org> 7.2.4-alt1.1
+- NMU: Increase tests timeout (fixes FTBFS on riscv64).
+
 * Wed Jan 24 2024 Alexey Shabalin <shaba@altlinux.org> 7.2.4-alt1
 - 7.2.4 (Fixes: CVE-2023-41056)
 
