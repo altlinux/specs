@@ -113,7 +113,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 %endif
 
 Name: wine
-Version: %major.7
+Version: %major.8
 Release: alt1
 Epoch: 1
 
@@ -886,6 +886,10 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Mon Feb 26 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.8-alt1
+- update patches to staging wine-9.0
+  - wineps.drv: Return default resolution if PPD doesn't provide the list of supported resolutions. (eterbug #17039)
+
 * Tue Feb 20 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.7-alt1
 - update patches to staging wine-9.0
   + windowscodecs: Implement IWICBitmapFlipRotator(WICBitmapTransformRotate90) for bitmaps with bpp >= 8. (eterbug #17003)
