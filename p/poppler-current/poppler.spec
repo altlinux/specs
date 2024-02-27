@@ -4,6 +4,7 @@
 %define popIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %def_disable compat
+%def_enable jpeg2000
 
 %if_disabled compat
 %def_enable cpp
@@ -46,7 +47,7 @@
 %endif
 Name: %pkgname
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 
 %if_disabled compat
 %define poppler_devel lib%rname-devel
@@ -84,6 +85,7 @@ Source: %rname-%version.tar
 Patch1: nss-backend-crash.patch
 # ALT
 Patch10: alt-e2k.patch
+Patch11: alt-openjpeg-version.patch
 
 # Automatically added by buildreq on Fri Apr 01 2011 (-bi)
 #BuildRequires: gcc-c++ glib-networking glibc-devel-static gtk-doc gvfs imake libXt-devel libcurl-devel libgtk+2-devel libgtk+2-gir-devel libjpeg-devel liblcms-devel libopenjpeg-devel libqt3-devel libqt4-devel libqt4-gui libqt4-xml libxml2-devel python-modules-compiler python-modules-encodings time xorg-cf-files
@@ -105,7 +107,9 @@ BuildRequires: glib2-devel
 BuildRequires: gcc-c++ glibc-devel libcurl-devel zlib-devel libnss-devel libpcre-devel
 BuildRequires: libjpeg-devel liblcms2-devel libtiff-devel libpng-devel
 BuildRequires: libgtk+3-gir-devel libgtk+3-devel
+%if_enabled jpeg2000
 BuildRequires: libopenjpeg2.0-devel openjpeg-tools2.0
+%endif
 BuildRequires: libxml2-devel gtk-doc libcairo-gobject-devel
 BuildRequires: libXt-devel poppler-data
 BuildRequires: boost-devel libgpgme-devel
@@ -313,6 +317,7 @@ GObject introspection devel data for the Poppler library
 %setup -n %rname-%version
 %patch1 -p1
 %patch10 -p1
+%patch11 -p1
 
 %build
 %if_enabled qt4
@@ -326,7 +331,11 @@ export QT4DIR=%_qt4dir
     -DENABLE_ZLIB=OFF \
     -DENABLE_CMS=lcms2 \
     -DENABLE_DCTDECODER=libjpeg \
+%if_enabled jpeg2000
     -DENABLE_LIBOPENJPEG=openjpeg2 \
+%else
+    -DENABLE_LIBOPENJPEG=unmaintained \
+%endif
     -DENABLE_XPDF_HEADERS=%{?_enable_xpdfheaders:ON}%{!?_enable_xpdfheaders:OFF} \
     -DENABLE_UNSTABLE_API_ABI_HEADERS=%{?_enable_xpdfheaders:ON}%{!?_enable_xpdfheaders:OFF} \
     -DENABLE_UTILS=%{?_enable_utils:ON}%{!?_enable_utils:OFF} \
@@ -444,6 +453,9 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
+* Tue Feb 27 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.0-alt4
+- fix to build with new openjpeg
+
 * Thu Jan 25 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.0-alt3
 - add upstream fix against crash in nss backend
 
