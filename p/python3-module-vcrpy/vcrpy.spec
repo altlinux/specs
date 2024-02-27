@@ -1,33 +1,26 @@
 %define _unpackaged_files_terminate_build 1
-%define oname vcrpy
+%define pypi_name vcrpy
+%define mod_name vcr
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 4.1.1
-Release: alt2
+Name: python3-module-%pypi_name
+Version: 6.0.1
+Release: alt1
 Summary: Automatically mock your HTTP interactions to simplify and speed up testing
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/vcrpy/
-
-# https://github.com/kevin1024/vcrpy.git
-Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
+Vcs: https://github.com/kevin1024/vcrpy
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# install_requires=
-BuildRequires: python3(wrapt)
-BuildRequires: python3(yaml)
-BuildRequires: python3(yarl)
-BuildRequires: python3(six)
-
-BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
+%pyproject_builddeps_metadata_extra tests
 %endif
 
 %description
@@ -37,34 +30,29 @@ testing.
 %prep
 %setup
 %autopatch -p1
-
-# don't package boto stubs, this code should be unreachable with boto3
-rm vcr/stubs/boto_stubs.py
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    {envbindir}/pytest -vra {posargs:tests}
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-export REQUIRES_INTERNET=yes
-export TOX_TESTENV_PASSENV='REQUIRES_INTERNET'
-tox.py3 --sitepackages --console-scripts -vvr --develop -- tests/unit
+export REQUESTS_CA_BUNDLE=`python3 -m pytest_httpbin.certs`
+# TODO: integrations tests are failing atm, need some investigation
+%pyproject_run_pytest -ra -m 'not online' tests/unit/
 
 %files
-%doc LICENSE.txt README.rst
-%python3_sitelibdir/*
+%doc README.rst
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 26 2024 Stanislav Levin <slev@altlinux.org> 6.0.1-alt1
+- 4.1.1 -> 6.0.1.
+
 * Wed Mar 09 2022 Stanislav Levin <slev@altlinux.org> 4.1.1-alt2
 - Dropped dependency on unmaintained and unused boto.
 
