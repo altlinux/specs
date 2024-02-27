@@ -1,5 +1,5 @@
 Name: flycast
-Version: 2.1
+Version: 2.2
 Release: alt1
 Summary: multi-platform Sega Dreamcast, Naomi, Naomi 2, and Atomiswave emulator
 License: GPL-2.0
@@ -98,6 +98,9 @@ install -D -m 0644 shell/linux/man/%name.1 %buildroot%_man1dir/
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Thu Feb  8 2024  Artyom Bystrov <arbars@altlinux.org> 2.2-alt1
+- Update to new version
+
 * Mon Jun 26 2023 Artyom Bystrov <arbars@altlinux.org> 2.1-alt1
 - Update to new version
 
