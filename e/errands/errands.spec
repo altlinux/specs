@@ -8,7 +8,7 @@
 
 Name: errands
 Version: %ver_major.1.9
-Release: alt1
+Release: alt1.1
 
 Summary: Todo application for GNOME
 License: MIT
@@ -24,7 +24,7 @@ Source: %name-%version.tar
 
 %define adwaita_ver 1.2
 
-Requires: typelib(Adw) = 1
+Requires: typelib(Adw) = 1 typelib(GtkSource) = 5
 Requires: yelp
 
 BuildArch: noarch
@@ -70,6 +70,9 @@ Todo application for those who prefer simplicity.
 %doc README*
 
 %changelog
+* Tue Feb 27 2024 Yuri N. Sedunov <aris@altlinux.org> 45.1.9-alt1.1
+- explicitly required typelib(GtkSource) = 5 (ALT #49507)
+
 * Thu Feb 08 2024 Yuri N. Sedunov <aris@altlinux.org> 45.1.9-alt1
 - 45.1.9
 
