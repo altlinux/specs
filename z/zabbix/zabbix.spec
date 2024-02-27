@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		623853f8d6f
+%define svnrev		c5fe8f4d2d2
 
 %def_with pgsql
 %def_enable java
@@ -17,8 +17,8 @@
 %endif
 
 Name: zabbix
-Version: 6.0.26
-Release: alt2
+Version: 6.0.27
+Release: alt1
 Epoch: 1
 
 Summary: A network monitor
@@ -769,6 +769,10 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue Feb 27 2024 Alexei Takaseev <taf@altlinux.org> 1:6.0.27-alt1
+- 6.0.27 (Fixes: CVE-2023-32725, CVE-2023-32726, CVE-2023-32727
+                 CVE-2023-32728, CVE-2024-22119)
+
 * Wed Jan 31 2024 Alexei Takaseev <taf@altlinux.org> 1:6.0.26-alt2
 - Change BR java-devel to java-11-devel
 
