@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: resticprofile
-Version: 0.25.0
+Version: 0.26.0
 Release: alt1
 Summary: Configuration profiles manager and scheduler for restic backup
 License: GPL-3.0-only
@@ -25,7 +25,10 @@ BuildRequires: golang
 %autopatch -p1
 
 %build
+%ifnarch armh %ix86
+# -buildmode=pie requires external (cgo) linking, but cgo is not enabled
 export CGO_ENABLED=0
+%endif
 export GOFLAGS="-buildmode=pie"
 commit=$(awk '$2="v%version" {print$1}' .gear/tags/list)
 ldflags="-X main.version=%version-%release
@@ -61,6 +64,9 @@ go test ./... || true
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Wed Feb 21 2024 Vitaly Chikunov <vt@altlinux.org> 0.26.0-alt1
+- Update to v0.26.0 (2024-02-20).
+
 * Sat Feb 10 2024 Vitaly Chikunov <vt@altlinux.org> 0.25.0-alt1
 - Update to v0.25.0 (2024-02-07). (Fixes CVE-2023-48795).
 
