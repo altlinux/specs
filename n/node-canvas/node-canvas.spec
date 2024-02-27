@@ -1,7 +1,7 @@
 %define pname canvas
 
 Name: node-canvas
-Version: 2.8.0
+Version: 2.11.2
 Release: alt1
 
 Summary: node-canvas is a Cairo-backed Canvas implementation for Node.js
@@ -16,6 +16,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 Source1: %name-development-%version.tar
+Source2: %name-production-%version.tar
 
 
 BuildRequires(pre): rpm-build-intro >= 1.9.18
@@ -39,7 +40,9 @@ and the space required for serialized data is far less than JSON.
 %npm_build
 
 npm test || :
-npm prune --production
+#npm prune --omit=dev
+rm -rf node_modules
+tar xf %SOURCE2
 
 #%check
 #npm test
@@ -53,6 +56,9 @@ rm -rf %buildroot/%nodejs_sitelib/%pname/{prebuild,examples,src,test,binding.gyp
 %nodejs_sitelib/%pname/
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 2.11.2-alt1
+- new version 2.11.2 (with rpmrb script)
+
 * Mon Dec 20 2021 Vitaly Lipatov <lav@altlinux.ru> 2.8.0-alt1
 - new version 2.8.0 (with rpmrb script)
 

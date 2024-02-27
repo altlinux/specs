@@ -1,7 +1,7 @@
 %define pname nan
 
 Name: node-nan
-Version: 2.16.0
+Version: 2.18.0
 Release: alt1
 
 Summary: Native Abstractions for Node.js
@@ -61,6 +61,9 @@ rm -rf %buildroot/%nodejs_sitelib/%pname/tools/
 %nodejs_sitelib/%pname/
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 2.18.0-alt1
+- new version 2.18.0 (with rpmrb script)
+
 * Thu Aug 04 2022 Vitaly Lipatov <lav@altlinux.ru> 2.16.0-alt1
 - new version 2.16.0 (with rpmrb script)
 

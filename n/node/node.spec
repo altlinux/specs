@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
-%define major 18.18
+%define major 20.11
 
-%define nodejs_soversion 108
+%define nodejs_soversion 115
 %define nodejs_abi %nodejs_soversion
 
 # there are both 6 and 7 provided (https://github.com/nodejs/node/pull/35199), see napi using
@@ -16,20 +16,20 @@
 
 
 # check deps/npm/package.json for it
-%define npm_version 9.6.7
+%define npm_version 10.2.4
 # separate build npm
-%def_without npm
+%def_with npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
 # check deps/corepack/package.json
-%define corepackver 0.18.0
+%define corepackver 0.19.0
 %def_without corepack
 
 # check deps/zlib/zlib.h
 %define zlib_version 1.2.13
 
 # check deps/cares/include/ares_version.h
-%define c_ares_version 1.19.1
+%define c_ares_version 1.20.1
 
 # check deps/llhttp/include/llhttp.h
 %define llhttp_version 6.0.11
@@ -42,16 +42,16 @@
 %def_with systemssl
 
 # check deps/uv/include/uv/version.h
-%define libuv_version 1.44.2
+%define libuv_version 1.48.0
 %def_with systemuv
 
 # check deps/nghttp2/lib/includes/nghttp2/nghttp2ver.h
-%define libnghttp2_version 1.51.0
+%define libnghttp2_version 1.57.0
 %def_with systemnghttp2
 
 # see deps/v8/src/objects/intl-objects.h for V8_MINIMUM_ICU_VERSION
 # check tools/icu/current_ver.dep
-%define libicu_abi 7.2
+%define libicu_abi 7.3
 # see rpm-macros-features
 %if_feature icu %libicu_abi
 %def_with systemicu
@@ -80,7 +80,7 @@
 %def_with nodejs_abi
 
 Name: node
-Version: %major.2
+Version: %major.1
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -97,6 +97,7 @@ Source: %name-%version.tar
 Source7: nodejs_native.req.files
 
 Patch1: node18-system-openssl.patch
+Patch2: npm-disable-internal-node-gyp.patch
 
 BuildRequires(pre): rpm-macros-nodejs
 BuildRequires(pre): rpm-build-intro >= 2.1.14
@@ -234,11 +235,17 @@ Summary:	A package manager for node
 License:	MIT License
 Requires:	node
 BuildArch:	noarch
-AutoReq:	yes,nopython
 # https://bugzilla.altlinux.org/show_bug.cgi?id=38130
 #%if_with nodejs_abi
-Requires:	nodejs(abi) = %nodejs_abi
+#Requires:	nodejs(abi) = %nodejs_abi
 #%endif
+
+Requires: bash
+Requires: /usr/bin/node
+
+# we do not need any module provides here
+AutoProv: no
+AutoReq: no
 
 %description -n npm
 npm is a package manager for node. You can use it to install and publish your
@@ -272,6 +279,7 @@ As a result, Corepack doesn't have any effect at all on the way you use npm.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %if_with systemv8
 # hack against https://bugzilla.altlinux.org/show_bug.cgi?id=32573#c3
@@ -313,11 +321,29 @@ rm -rv deps/zlib deps/cares deps/brotli
 #rm -rv tools/inspector_protocol/jinja2
 
 
-%if_without npm
-#true
+%if_with npm
+# remove all node-gyp deps
+rm -rv deps/npm/node_modules/node-gyp/
+%else
 # don't use: keep internal npm (used for doc build)
 rm -rv deps/npm/
 ln -s %_libexecdir/node_modules/npm deps/npm
+
+
+# Workaround for https://github.com/npm/cli/issues/780
+cd man
+local f name sec title
+rm -v man5/install.5 
+for f in man5/folders.5 man7/*.7; do
+  sec=${f##*.}
+  name=$(basename "$f" ."$sec")
+  title=$(echo "$name" | tr '[:lower:]' '[:upper:]')
+
+  sed -Ei "s/^\.TH \"$title\"/.TH \"NPM-$title\"/" "$f"
+  mv "$f" "${f%/*}/npm-$name.$sec"
+done
+cd - >/dev/null
+
 %endif
 
 # use rpm's cflags
@@ -398,10 +424,15 @@ cp -p deps/uv/include/*.h %{buildroot}%{_includedir}/node
 %endif
 
 %if_with npm
-#node-gyp needs common.gypi too
-mkdir -p %{buildroot}%{_datadir}/node
-cp -p common.gypi %{buildroot}%{_datadir}/node
-#tar -xf %{SOURCE0} --directory=%{buildroot}%{_datadir}/node/sources
+rm -rv %buildroot%nodejs_sitelib/npm/bin/node-gyp-bin/
+
+# remove all node-gyp deps
+rm -rv %buildroot%nodejs_sitelib/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin
+
+cat <<EOF >> %buildroot%nodejs_sitelib/npm/.npmrc
+globalconfig=/etc/npmrc
+update-notifier=false
+EOF
 %endif
 
 %if_with nodejs_abi
@@ -416,22 +447,9 @@ EOF
 chmod 0755 %buildroot%_rpmlibdir/nodejs_native.req
 %endif
 
-rm -rf %buildroot/usr/lib/dtrace/
-rm -rf %buildroot/usr/share/doc/node/gdbinit
-rm -rf %buildroot/usr/share/doc/node/lldb_commands.py
-rm -rf %buildroot/usr/share/doc/node/lldbinit
+rm -rv %buildroot/usr/share/doc/node/gdbinit
+rm -rv %buildroot/usr/share/doc/node/lldb_commands.py
 
-
-# drop tapset file
-rm -rf %buildroot%_datadir/systemtap/tapset
-
-# pack node include tarball required to gyp building
-#mkdir -p %name-v%version/include/
-#cp -rp %buildroot%_includedir/%name %name-v%version/include/
-#mkdir -p %buildroot%_datadir/node/
-#tar -zcf %buildroot%_datadir/%name/%name-v%version-headers.tar.gz %name-v%version
-
-#ln -s node_modules %buildroot%_prefix/lib/node
 
 %files
 %doc CHANGELOG.md LICENSE README.md
@@ -477,8 +495,8 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %if_with npm
 %files -n npm
 %_bindir/npm
+%_bindir/npx
 %nodejs_sitelib/npm/
-%exclude %_libexecdir/node_modules/npm/node_modules/node-gyp/gyp/tools/emacs
 %endif
 
 %if_with corepack
@@ -488,6 +506,27 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 20.11.1-alt1
+- new version 20.11.1 (with rpmrb script)
+- enable build npm subpackage
+- CVE-2024-21892: Code injection and privilege escalation through Linux capabilities- (High)
+- CVE-2024-22019: http: Reading unprocessed HTTP request with unbounded chunk extension allows DoS attacks- (High)
+- CVE-2024-21896: Path traversal by monkey-patching Buffer internals- (High)
+- CVE-2024-22017: setuid() does not drop all privileges due to io_uring - (High)
+- CVE-2023-46809: Node.js is vulnerable to the Marvin Attack (timing variant of the Bleichenbacher attack against PKCS#1 v1.5 padding) - (Medium)
+- CVE-2024-21891: Multiple permission model bypasses due to improper path traversal sequence sanitization - (Medium)
+- CVE-2024-21890: Improper handling of wildcards in --allow-fs-read and --allow-fs-write (Medium)
+- CVE-2024-22025: Denial of Service by resource exhaustion in fetch() brotli decoding - (Medium)
+- libuv >= 1.48.0
+
+* Mon Feb 05 2024 Vitaly Lipatov <lav@altlinux.ru> 20.11.0-alt1
+- new version 20.11.0 (with rpmrb script)
+- set npm >= 10.2.4, c-ares >= 1.20.1
+
+* Thu Nov 02 2023 Vitaly Lipatov <lav@altlinux.ru> 20.9.0-alt1
+- 2023-10-24, Version 20.9.0 'Iron' (LTS)
+- set npm >= 10.1.0, libuv >= 1.46.0, libicu >= 7.3, libnghttp2 >= 1.57.0
+
 * Thu Nov 02 2023 Vitaly Lipatov <lav@altlinux.ru> 18.18.2-alt1
 - new version 18.18.2 (with rpmrb script)
 - note: libuv reverted to 1.44.2 in upstream due some regressions
