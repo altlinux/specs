@@ -2,7 +2,7 @@
 
 Name: neofetch
 Version: 7.1.0
-Release: alt3
+Release: alt3.1
 Summary: A command-line system information tool
 License: MIT
 Group: Monitoring
@@ -11,9 +11,14 @@ Source: %name-%version.tar
 Patch1: alt-logo.patch
 
 BuildArch: noarch
+
+Requires: coreutils
 %filter_from_requires /mate-terminal/d
 %filter_from_requires /terminology/d
 %filter_from_requires /kitty/d
+%filter_from_requires /uname/d
+%filter_from_requires /pve-manager/d
+%filter_from_requires /powerpc-utils/d
 
 %description
 Neofetch is a command-line system information tool written in bash 3.2+.
@@ -34,6 +39,9 @@ hardware in an aesthetic and visually pleasing way.
 %_man1dir/%name.1.xz
 
 %changelog
+* Wed Feb 28 2024 Ivan A. Melnikov <iv@altlinux.org> 7.1.0-alt3.1
+- Filter out more dependencies (fixes rebuilding).
+
 * Fri Sep 30 2022 Alexander Makeenkov <amakeenk@altlinux.org> 7.1.0-alt3
 - Added ALT logo (closes: #43529)
 
