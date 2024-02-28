@@ -13,8 +13,8 @@
 %def_disable check
 
 Name: lib%_name
-Version: %sover.0
-Release: alt1.2
+Version: %sover.1
+Release: alt1
 
 Summary: JPEG XL image format reference implementation
 License: BSD-3-Clause
@@ -143,6 +143,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Wed Feb 28 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.1-alt1
+- 0.10.1
+
 * Sat Feb 24 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1.2
 - moved gdk-pixbuf loader to separate package
 - new gimp-plugin-libjxl package
