@@ -1,7 +1,7 @@
 %define distro cliff
 Name: installer-distro-%distro
 Version: 10.0
-Release: alt7
+Release: alt8
 
 License: GPLv2+
 Group: System/Configuration/Other
@@ -79,12 +79,15 @@ cp -a steps.d/* %buildroot%install2dir/steps
 %files stage2
 %install2dir/alterator-menu
 %install2dir/installer-steps
-%install2dir/services-*
-%install2dir/systemd-*
+%ghost %install2dir/services-*
+%ghost %install2dir/systemd-*
 
 %files stage3
 
 %changelog
+* Wed Feb 28 2024 Anton Midyukov <antohami@altlinux.org> 10.0-alt8
+- ghost lists of services
+
 * Thu Dec 21 2023 Anton Midyukov <antohami@altlinux.org> 10.0-alt7
 - alterator-menu: add audit, logs to module-expert-list
 - postinstall.d/20-alterator-menu.sh: do not add 'users' to expert list
