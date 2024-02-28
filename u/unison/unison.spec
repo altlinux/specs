@@ -1,6 +1,15 @@
+
+%ifarch %ocaml_native_arch
+%global unison_native NATIVE=true
+%else
+# Use -output-complete-exe instead of -custom
+# see https://bugzilla.altlinux.org/48475
+%global unison_native NATIVE=false CAMLLDFLAGS=-output-complete-exe
+%endif
+
 Name: unison
 Version: 2.51.4
-Release: alt1
+Release: alt1.1
 
 Summary: File-synchronization tool
 
@@ -11,6 +20,8 @@ Url: http://www.cis.upenn.edu/~bcpierce/unison
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
+
+BuildRequires(pre): rpm-build-ocaml >= 1.6.1
 BuildRequires: ocaml >= 4.10
 BuildRequires: texlive-collection-latexrecommended texlive-collection-basic ghostscript-utils
 
@@ -36,13 +47,13 @@ other.
 %patch0 -p1
 
 %build
-%make_build
+%make_build %unison_native
 
 %install
 install -Dp -m 0755 src/%name %buildroot/%_bindir/%name
 
 %check
-make test
+make test %unison_native
 
 
 %files
@@ -50,6 +61,9 @@ make test
 %_bindir/unison
 
 %changelog
+* Wed Feb 28 2024 Ivan A. Melnikov <iv@altlinux.org> 2.51.4-alt1.1
+- NMU: support building on architectures that don't have ocamlopt
+
 * Thu Jul 29 2021 Anton Farygin <rider@altlinux.ru> 2.51.4-alt1
 - 2.51.4
 
