@@ -3,8 +3,8 @@
 %endif
 
 Name: mongo4.4
-Version: 4.4.28
-Release: alt2.1
+Version: 4.4.29
+Release: alt1
 Summary: mongo client shell and tools
 License: SSPL-1.0
 Group: Development/Databases
@@ -209,6 +209,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Tue Feb 27 2024 Alexei Takaseev <taf@altlinux.org> 4.4.29-alt1
+- 4.4.29
+
 * Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 4.4.28-alt2.1
 - NMU: Added zombie-imp to BuildRequires.
 
