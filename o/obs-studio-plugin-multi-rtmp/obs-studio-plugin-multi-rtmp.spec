@@ -1,6 +1,6 @@
 Name: obs-studio-plugin-multi-rtmp
 Version: 0.5.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: This is a plugin to streaming to multiple RTMP servers concurrently
 
@@ -24,7 +24,7 @@ BuildRequires: pkgconfig(vulkan)
 
 Requires: obs-studio
 
-ExclusiveArch: x86_64
+ExcludeArch: %ix86 %arm %mips
 
 %description
 This is a plugin to streaming to multiple RTMP servers concurrently.
@@ -36,7 +36,7 @@ It can also use standalone encoders with basic configuration (bitrate).
 
 %build
 %cmake_insource
-%make
+%make_build
 
 %install
 mkdir -p %buildroot%_datadir/obs
@@ -50,6 +50,9 @@ mv rundir/RelWithDebInfo/obs-plugins/64bit/obs-multi-rtmp.so %buildroot%_libdir/
 %_datadir/obs/obs-plugins/obs-multi-rtmp
 
 %changelog
+* Wed Feb 28 2024 Ivan A. Melnikov <iv@altlinux.org> 0.5.0.1-alt1.1
+- NMU: Build on all 64-bit architectures
+
 * Tue Oct 24 2023 Mikhail Tergoev <fidel@altlinux.org> 0.5.0.1-alt1
 - initial build for ALT Sisyphus
 
