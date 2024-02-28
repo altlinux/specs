@@ -1,6 +1,6 @@
 Name: installer-distro-regular
 Version: 0.1
-Release: alt1
+Release: alt2
 
 Summary: Installer configuration for ALT Regular
 License: GPL-2.0-or-later
@@ -63,11 +63,15 @@ cp -a * %buildroot%install2dir/
 %files stage2
 %install2dir/alterator-menu
 %install2dir/installer-steps
-#%%install2dir/*.d/*
+%ghost %install2dir/services-*
+%ghost %install2dir/systemd-*
 
 %files stage3
 
 %changelog
+* Wed Feb 28 2024 Anton Midyukov <antohami@altlinux.org> 0.1-alt2
+- add ghost lists of service
+
 * Wed Sep 20 2023 Anton Midyukov <antohami@altlinux.org> 0.1-alt1
 - Initial fork from installer-distro-alt-workstation
 - remove preinstall, postinstall scripts
