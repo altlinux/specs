@@ -1,6 +1,6 @@
 Name: SpamOracle
 Version: 1.6
-Release: alt1
+Release: alt1.1
 
 Group: Networking/Mail
 Summary: Spam filter
@@ -8,7 +8,9 @@ License: GPL2
 Url: https://github.com/xavierleroy/spamoracle
 Packager: Evgenii Terechkov <evg@altlinux.ru>
 Source: spamoracle-%version.tar
+Patch1: spamoracle-alt-bytecode-build.patch
 
+BuildRequires(pre): rpm-build-ocaml >= 1.6.1
 BuildRequires: ocaml
 
 %description
@@ -25,9 +27,14 @@ Recommends: procmail
 
 %prep
 %setup -nspamoracle-%version
+%autopatch -p1
 
 %build
-make
+make \
+%ifnarch %ocaml_native_arch
+    NATIVE=false
+%endif
+    %nil
 
 %install
 mkdir -p %buildroot%_bindir %buildroot%_man1dir %buildroot%_man5dir
@@ -41,6 +48,9 @@ make install BINDIR=%buildroot%_bindir MANDIR=%buildroot%_mandir LANGUAGES="-DFR
 %doc README* Changes
 
 %changelog
+* Wed Feb 28 2024 Ivan A. Melnikov <iv@altlinux.org> 1.6-alt1.1
+- NMU: fix build w/o ocamlopt
+
 * Wed Feb 26 2020 Anton Farygin <rider@altlinux.ru> 1.6-alt1
 - 1.6
 - cleanup spec
