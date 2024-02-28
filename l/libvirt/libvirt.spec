@@ -145,7 +145,7 @@
 %if_with  qemu
 %def_with qemu_tcg
 %def_with libnbd
-%ifarch %ix86 x86_64 armh aarch64 ppc64le
+%ifarch %ix86 x86_64 armh aarch64 ppc64le loongarch64
 %def_with qemu_kvm
 %endif
 %endif
@@ -187,7 +187,7 @@
 
 Name: libvirt
 Version: 9.8.0
-Release: alt2
+Release: alt3
 Summary: Library providing a simple API virtualization
 License: GPL-2.0-or-later AND LGPL-2.1-only AND LGPL-2.1-or-later AND OFL-1.1
 Group: System/Libraries
@@ -1403,6 +1403,11 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Tue Feb 27 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 9.8.0-alt3
+- Added LoongArch support patches based on
+  https://gitlab.com/lixianglai/libvirt/-/tree/loongarch
+- spec: build libvirt-kvm for LoongArch.
+
 * Sat Dec 02 2023 Ivan A. Melnikov <iv@altlinux.org> 9.8.0-alt2
 - Enable server dirvers on loongarch64.
 
