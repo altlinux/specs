@@ -1,5 +1,5 @@
 Name: wlogout
-Version: 1.1.1
+Version: 1.2
 Release: alt1
 
 Summary: A logout menu for wayland environments
@@ -44,6 +44,9 @@ subst "s|/fish/completions|/fish/vendor_completions.d|" meson.build
 %_datadir/zsh/site-functions/_wlogout*
 
 %changelog
+* Wed Feb 28 2024 Roman Alifanov <ximper@altlinux.org> 1.2-alt1
+- new version 1.2 (with rpmrb script)
+
 * Sun Jun 04 2023 Roman Alifanov <ximper@altlinux.org> 1.1.1-alt1
 - Initial build for Sisyphus
 
