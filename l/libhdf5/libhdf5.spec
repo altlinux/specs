@@ -6,7 +6,7 @@
 
 Name: lib%oname
 Version: 1.14.3
-Release: alt1
+Release: alt2
 
 Summary: Hierarchical Data Format 5 library
 License: BSD
@@ -94,20 +94,9 @@ This package contains examples for HDF5.
 %patch -p1
 
 %ifarch %e2k
-# unsupported by lcc as of 1.21.21
-sed -i	-e 's,-Wlogical-op,,' \
-	-e 's,-Wvla,,' \
-	-e 's,-Wsync-nand,,' \
-	-e 's,-Wdouble-promotion,,' \
-	-e 's,-Wnull-dereference,,' \
-	-e 's,-Whsa,,' \
-	-e 's,-Wnormalized,,' \
-	-e 's,-Walloc-zero,,' \
-	-e 's,-Walloca,,' \
-	-e 's,-Wformat-overflow=2,,' \
-	-e 's,-Wrestrict,,' \
-	CMakeLists.txt config/gnu-flags \
-	config/cmake/HDFCompilerFlags.cmake
+# too many unsupported warning options
+find config/gnu-warnings/ -type f ! -name '*general' \
+	-exec rm -f {} \; -exec touch {} \;
 %endif
 
 %build
@@ -171,6 +160,9 @@ EOF
 %_datadir/hdf5_examples
 
 %changelog
+* Wed Feb 28 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.14.3-alt2
+- Fixed build for Elbrus
+
 * Sun Nov 26 2023 Anton Farygin <rider@altlinux.ru> 1.14.3-alt1
 - 1.14.3
 
