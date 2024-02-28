@@ -6,7 +6,7 @@
 # As ubuntu
 %define gcc_ver 9
 
-%define _vk_api_version 1.3.271
+%define _vk_api_version 1.3.277
 
 %def_with clang
 %def_with wayland
@@ -22,7 +22,7 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2023.Q4.3
+Version: 2024.Q1.2
 Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
@@ -41,9 +41,9 @@ BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel lib
 BuildRequires: libffi-devel
 %endif
 %if_with clang
-BuildRequires: clang mold llvm-devel gcc-c++ libstdc++-devel
+BuildRequires: clang mold llvm-devel gcc-c++ libstdc++-devel-static
 %else
-BuildRequires: gcc%{gcc_ver}-c++ libstdc++%{gcc_ver}-devel
+BuildRequires: gcc%{gcc_ver}-c++ libstdc++%{gcc_ver}-devel-static
 %endif
 
 Source0: xgl.tar
@@ -118,6 +118,17 @@ sed -e 's|@API_VERSION@|%_vk_api_version|g' %SOURCE8 > %buildroot%_vkldir/$(base
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Sat Feb 24 2024 L.A. Kostis <lakostis@altlinux.ru> 2024.Q1.2-alt1
+- xgl: built with static libstdc++.
+- 2024-02-23 update:
+  + icd: bump vulkan version
+  + llvm-dialects: Updated to 69e114f9d886
+  + llvm-project: Updated to 3d1ed0c398ba
+  + gpurt: Updated to 8d50dc6e9c45
+  + llpc: Updated to d4c8845341ff
+  + pal: Updated to abb22ae22308
+  + xgl: Updated to ccc121a22ad0
+
 * Fri Jan 05 2024 L.A. Kostis <lakostis@altlinux.ru> 2023.Q4.3-alt1
 - 2023-12-28 update:
   + BR: added jinja2 module
