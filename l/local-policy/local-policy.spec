@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: local-policy
-Version: 0.6.1
+Version: 0.6.3
 Release: alt1
 
 Summary: ALT Local Policies Default templates
@@ -47,7 +47,8 @@ for i in sshd-gssapi-auth \
          autofs-browse-mode \
          smb-conf-idmap-backend \
          smb-conf-idmap-range \
-         smb-conf-machine-password-timeout
+         smb-conf-machine-password-timeout \
+         oddjob-gpupdate-dbus-timeout
 do
         install -pD -m755 "controls/$i" \
                 "%buildroot%_sysconfdir/control.d/facilities/$i"
@@ -81,6 +82,13 @@ fi
 %_datadir/%name/*
 
 %changelog
+* Thu Feb 29 2024 Evgeny Sinelnikov <sin@altlinux.org> 0.6.3-alt1
+- Improve oddjob-gpupdate-dbus-timeout control.
+- Initial support build for debian.
+
+* Wed Jan 24 2024 Andrey Limachko <liannnix@altlinux.org> 0.6.2-alt1
+- Add oddjob-gpupdate-dbus-timeout control
+
 * Wed Dec 13 2023 Evgeny Sinelnikov <sin@altlinux.org> 0.6.1-alt1
 - Fix krb5-conf-ccache control:
  * Incorrect file presence check when option not found has been fixed.
