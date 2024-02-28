@@ -1,8 +1,8 @@
 # change to %nil for release
 %define beta %nil
 Name: testdisk
-Version: 7.1
-Release: alt3
+Version: 7.2
+Release: alt1
 
 Summary: Tool to check and undelete partition
 
@@ -107,6 +107,9 @@ rm -rf %buildroot%_mandir/zh_CN/
 %_man8dir/qphotorec*
 
 %changelog
+* Wed Feb 28 2024 Vitaly Lipatov <lav@altlinux.ru> 7.2-alt1
+- new version 7.2 (with rpmrb script)
+
 * Thu Jul 11 2019 Vitaly Lipatov <lav@altlinux.ru> 7.1-alt3
 - build without libewf
 
