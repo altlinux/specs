@@ -5,7 +5,7 @@
 
 Name: resticprofile
 Version: 0.26.0
-Release: alt1
+Release: alt1.1
 Summary: Configuration profiles manager and scheduler for restic backup
 License: GPL-3.0-only
 Group: Archiving/Backup
@@ -25,7 +25,7 @@ BuildRequires: golang
 %autopatch -p1
 
 %build
-%ifnarch armh %ix86
+%ifnarch armh %ix86 loongarch64
 # -buildmode=pie requires external (cgo) linking, but cgo is not enabled
 export CGO_ENABLED=0
 %endif
@@ -64,6 +64,9 @@ go test ./... || true
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Wed Feb 28 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.26.0-alt1.1
+- NMU: fixed FTBFS on LoongArch (-buildmode=pie requires CGO here).
+
 * Wed Feb 21 2024 Vitaly Chikunov <vt@altlinux.org> 0.26.0-alt1
 - Update to v0.26.0 (2024-02-20).
 
