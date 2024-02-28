@@ -1,7 +1,7 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: xca
-Version: 2.5.0
+Version: 2.6.0
 Release: alt1
 
 Summary: A GUI for handling X509 certificates, RSA keys, PKCS#10 Requests
@@ -44,6 +44,7 @@ presented.
 %doc AUTHORS README.md
 %_datadir/xca
 %_datadir/doc/xca
+%_datadir/metainfo/*.xml
 %_desktopdir/xca*
 %_datadir/bash-completion/completions/xca
 %_datadir/mime/packages/xca.xml
@@ -53,6 +54,9 @@ presented.
 %_bindir/*
 
 %changelog
+* Wed Feb 28 2024 Pavel Nakonechnyi <zorg@altlinux.ru> 2.6.0-alt1
+- update to 2.6.0 release
+
 * Sat Sep 30 2023 Pavel Nakonechnyi <zorg@altlinux.ru> 2.5.0-alt1
 - update to 2.5.0 release, Qt6-based build
 
