@@ -1,5 +1,5 @@
 Name:    cava
-Version: 0.9.1
+Version: 0.10.1
 Release: alt1
 
 Summary: Cross-platform Audio Visualizer
@@ -8,7 +8,6 @@ Group:   Sound
 Url:     https://github.com/karlstav/cava
 
 Source: %name-%version.tar
-Patch0: cava-0.8.3-dirs-fix-alt.patch
 
 Requires: kbd-data
 
@@ -19,13 +18,13 @@ BuildRequires:  libpulseaudio-devel
 BuildRequires:  libtool
 BuildRequires:  libncursesw-devel
 BuildRequires:  libportaudio2-devel
+BuildRequires:  pipewire-jack-libs-devel pipewire-libs-devel
 
 %description
 C.A.V.A. is a bar spectrum audio visualizer for the Linux terminal using ALSA, pulseaudio or fifo buffer for input.
 
 %prep
 %setup
-%patch0 -p1
 echo %version > version
 
 %build
@@ -42,6 +41,9 @@ echo %version > version
 /lib/kbd/consolefonts/%name.psf
 
 %changelog
+* Wed Feb 28 2024 Roman Alifanov <ximper@altlinux.org> 0.10.1-alt1
+- new version 0.10.1 (with rpmrb script)
+
 * Mon Sep 11 2023 Roman Alifanov <ximper@altlinux.org> 0.9.1-alt1
 - new version 0.9.1 (with rpmrb script)
 
