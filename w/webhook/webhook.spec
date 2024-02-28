@@ -5,7 +5,7 @@
 
 Name: webhook
 Version: 2.8.1
-Release: alt2
+Release: alt2.1
 Summary: A lightweight incoming webhook server to run shell commands
 License: MIT
 Group: System/Servers
@@ -29,7 +29,7 @@ satisfied in order for the hook to be triggered.
 %setup
 
 %build
-%ifnarch %ix86 armh riscv64
+%ifnarch %ix86 armh riscv64 loongarch64
 export CGO_ENABLED=0
 %endif
 export GOFLAGS='-buildmode=pie'
@@ -57,6 +57,11 @@ kill %%1
 %_unitdir/%name.service
 
 %changelog
+* Wed Feb 28 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.8.1-alt2.1
+- NMU: fixed FTBFS on LoongArch:
+  + use golang.org/x/sys@v0.0.0-20220712014510-0a85c31ab51e
+  + -buildmode=pie requires CGO on LoongArch
+
 * Sat Feb 24 2024 Vitaly Chikunov <vt@altlinux.org> 2.8.1-alt2
 - spec: Fix FTBFS after golang update to 1.22.
 
