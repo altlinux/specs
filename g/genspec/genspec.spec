@@ -1,6 +1,6 @@
 Name:     genspec
 Version:  1.4.2
-Release:  alt1
+Release:  alt2
 
 Summary:  Script for generation RPM spec file from template
 License:  GPLv3+
@@ -34,6 +34,9 @@ cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 %_man1dir/*
 
 %changelog
+* Wed Feb 28 2024 Mikhail Gordeev <obirvalger@altlinux.org> 1.4.2-alt2
+- Fix working with python 3.12
+
 * Thu May 18 2023 Andrey Cherepanov <cas@altlinux.org> 1.4.2-alt1
 - Add new template using ninja-build
 
