@@ -1,7 +1,7 @@
 %define rname python-caja
 
 Name: python3-module-caja
-Version: 1.26.0
+Version: 1.28.0
 Release: alt1
 Summary: Python bindings for Caja
 Group: Development/Other
@@ -55,6 +55,9 @@ Python bindings for Caja
 %_datadir/gtk-doc/html/caja-python
 
 %changelog
+* Wed Feb 28 2024 Valery Inozemtsev <shrek@altlinux.ru> 1.28.0-alt1
+- 1.28.0
+
 * Tue Aug 10 2021 Valery Inozemtsev <shrek@altlinux.ru> 1.26.0-alt1
 - 1.26.0
 

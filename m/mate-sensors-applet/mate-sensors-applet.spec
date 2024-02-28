@@ -1,8 +1,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-sensors-applet
-Version: 1.26.0
-Release: alt2
+Version: 1.28.0
+Release: alt1
 Epoch: 1
 Summary: MATE panel applet for hardware sensors
 License: GPLv2+
@@ -75,6 +75,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/libmate-sensors-applet-plugin.so
 
 %changelog
+* Tue Feb 27 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.0-alt1
+- 1.28.0
+
 * Mon Nov 21 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt2
 - updated ru translation
 

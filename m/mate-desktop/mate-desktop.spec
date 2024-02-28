@@ -1,5 +1,5 @@
 Name: mate-desktop
-Version: 1.26.1
+Version: 1.28.1
 Release: alt1
 Epoch: 1
 Summary: Shared code for mate-panel, mate-session, mate-file-manager, etc
@@ -84,6 +84,7 @@ __EOF__
 %doc AUTHORS COPYING COPYING.LIB NEWS README
 %_bindir/mate-*
 %_datadir/mate-about
+%_datadir/xdg-desktop-portal/mate-portals.conf
 %_desktopdir/mate-*.desktop
 %_iconsdir/hicolor/*/apps/*
 %_man1dir/mate-*.1*
@@ -102,6 +103,9 @@ __EOF__
 %_datadir/gir-1.0/MateDesktop-2.0.gir
 
 %changelog
+* Mon Feb 26 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.1-alt1
+- 1.28.1
+
 * Thu Mar 30 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt1
 - 1.26.1
 

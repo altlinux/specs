@@ -1,8 +1,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-polkit
-Version: 1.26.1
-Release: alt2
+Version: 1.28.1
+Release: alt1
 Epoch: 1
 Summary: Integrates polkit authentication for MATE desktop
 License: GPLv2+
@@ -41,6 +41,9 @@ Integrates polkit with the MATE Desktop environment
 %_libexecdir/polkit-mate-authentication-agent-1
 
 %changelog
+* Tue Feb 27 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.1-alt1
+- 1.28.1
+
 * Wed Jun 14 2023 Anton Midyukov <antohami@altlinux.org> 1:1.26.1-alt2
 - NMU: rebuild with libayatana-appindicator3
 

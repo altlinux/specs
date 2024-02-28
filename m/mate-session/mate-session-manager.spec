@@ -2,8 +2,8 @@
 %define rname mate-session-manager
 
 Name: mate-session
-Version: 1.26.1
-Release: alt2
+Version: 1.28.0
+Release: alt1
 Epoch: 1
 Summary: MATE Desktop session manager
 License: GPLv2+
@@ -14,9 +14,8 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Requires: mate-control-center mate-polkit mate-desktop polkit
 
 Source: %rname-%version.tar
-Source1: mate-submodules-%rname.tar
+Source1: libegg.tar
 Patch: %rname-%version-%release.patch
-Patch1: mate-submodules-libegg.patch
 
 BuildRequires: mate-common libSM-devel libXtst-devel libdbus-glib-devel libgtk+3-devel libsystemd-devel
 BuildRequires: glib2-devel libXcomposite-devel libepoxy-devel xmlto xorg-xtrans-devel
@@ -29,11 +28,6 @@ full-featured user session.
 %prep
 %setup -q -n %rname-%version -a1
 %patch -p1
-%patch1 -p0
-
-cat << __EOF__ > mate-submodules/Makefile.am
-SUBDIRS = libegg
-__EOF__
 
 %build
 %autoreconf
@@ -77,6 +71,9 @@ __EOF__
 %_man1dir/*.1*
 
 %changelog
+* Mon Feb 26 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.0-alt1
+- 1.28.0
+
 * Sun May 14 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt2
 - added patch to kick users after timeout
 

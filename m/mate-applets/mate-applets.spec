@@ -1,8 +1,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-applets
-Version: 1.26.1
-Release: alt2
+Version: 1.28.0
+Release: alt1
 Epoch: 1
 Summary: MATE Desktop panel applets
 License: GPLv2+ and LGPLv2+
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: mate-common libSM-devel libdbus-glib-devel libgtksourceview3-devel libnl-devel libwireless-devel
-BuildRequires: libgtop-devel libgucharmap-devel libnotify-devel libpolkit-devel libupower-devel
+BuildRequires: mate-desktop-devel libgtop-devel libgucharmap-devel libnotify-devel libpolkit-devel libupower-devel
 BuildRequires: libwireless-devel libwnck3-devel libxml2-devel mate-panel-devel yelp-tools
 
 %description
@@ -62,6 +62,9 @@ rm -fr %buildroot%_datadir/help/*/mate-stickynotes-applet
 %_man1dir/*.1*
 
 %changelog
+* Tue Feb 27 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.0-alt1
+- 1.28.0
+
 * Tue Dec 13 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt2
 - updated ru translate
 

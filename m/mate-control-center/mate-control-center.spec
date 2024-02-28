@@ -1,6 +1,6 @@
 Name: mate-control-center
-Version: 1.26.1
-Release: alt3
+Version: 1.28.0
+Release: alt1
 Epoch: 2
 Summary: MATE Desktop control-center
 License: LGPLv2+ and GPLv2+
@@ -17,7 +17,7 @@ Requires: gsettings-desktop-schemas mate-settings-daemon gnome-keyring
 BuildRequires: mate-common libSM-devel libXScrnSaver-devel libXcursor-devel libXi-devel libXxf86misc-devel libcanberra-gtk3-devel
 BuildRequires: libdconf-devel mate-desktop-devel libmatekbd-devel librsvg-devel libxml2-devel mate-menus-devel mate-settings-daemon-devel
 BuildRequires: mate-window-manager-devel yelp-tools desktop-file-utils libpolkit-devel libaccountsservice-devel
-BuildRequires: libayatana-appindicator3-devel
+BuildRequires: libayatana-appindicator3-devel libgtop-devel libudisks2-devel libsystemd-devel
 
 %description
 MATE Control Center configures system settings such as themes,
@@ -55,8 +55,7 @@ find %buildroot%_libdir -name \*.la -delete
 %config %_sysconfdir/xdg/menus/matecc.menu
 %_bindir/mate-*
 %_sbindir/mate-display-properties-install-systemwide
-%_libdir/libmate-*.so.*
-%_libdir/window-manager-settings
+%exclude %_desktopdir/mate-system-info.desktop
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/*/*
 %_datadir/mate-control-center
@@ -68,11 +67,12 @@ find %buildroot%_libdir -name \*.la -delete
 %_man1dir/mate-*.1.*
 
 %files devel
-%_includedir/*
-%_libdir/*.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Feb 27 2024 Valery Inozemtsev <shrek@altlinux.ru> 2:1.28.0-alt1
+- 1.28.0
+
 * Thu Jan 25 2024 Anton Midyukov <antohami@altlinux.org> 2:1.26.1-alt3
 - NMU: use upstream russian translation, because recommended by translator
   Maria Shikunova (Closes: 49174)

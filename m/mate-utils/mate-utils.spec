@@ -1,8 +1,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-utils
-Version: 1.26.1
-Release: alt2
+Version: 1.28.0
+Release: alt1
 Epoch: 1
 Summary: MATE utility programs
 License: GPLv3+
@@ -18,11 +18,11 @@ Requires: mate-disk-usage-analyzer = %epoch:%version-%release
 Obsoletes: mate-utils-libs
 
 Source: %name-%version.tar
-Source1: libegg.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: mate-common gcc-c++ gtk-doc inkscape libSM-devel libcanberra-gtk3-devel libgtop-devel
-BuildRequires: mate-panel-devel librsvg-utils libudisks2-devel yelp-tools
+BuildRequires: mate-panel-devel librsvg-utils libudisks2-devel yelp-tools mate-desktop-devel
+#BuildRequires: libwayland-client-devel libgtk-layer-shell-devel libgtk+3-devel
 
 %description
 The mate-utils package contains a set of small "desk accessory" utility
@@ -96,9 +96,10 @@ Requires: %name-common = %epoch:%version-%release
 Attach and mount one or more disk image files
 
 %prep
-%setup -q -a1
+%setup -q
 %patch -p1
 
+tar -xf libegg.tar
 rm -fr gsearchtool/help/pt
 
 %build
@@ -185,6 +186,9 @@ rm -fr gsearchtool/help/pt
 %_desktopdir/mate-disk-image-mounter.desktop
 
 %changelog
+* Tue Feb 27 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.0-alt1
+- 1.28.0
+
 * Fri Jan 26 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt2
 - disabled mate-dictionary
 

@@ -1,6 +1,6 @@
 Name: mate-calc
-Version: 1.26.0
-Release: alt3
+Version: 1.28.0
+Release: alt1
 Epoch: 1
 Summary: MATE Desktop calculator
 License: GPLv2+
@@ -42,6 +42,9 @@ It uses a multiple precision package to do its arithmetic to give a high degree 
 %_man1dir/*.1*
 
 %changelog
+* Wed Feb 28 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.0-alt1
+- 1.28.0
+
 * Tue Apr 11 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt3
 - fixed round keys (closes: #44349)
 

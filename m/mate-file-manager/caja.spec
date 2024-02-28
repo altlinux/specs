@@ -2,8 +2,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-file-manager
-Version: 1.26.1
-Release: alt3
+Version: 1.28.0
+Release: alt1
 Epoch: 1
 Summary: File manager for MATE
 License: GPLv2+ and LGPLv2+
@@ -11,13 +11,15 @@ Group: Graphical desktop/MATE
 Url: http://mate-desktop.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
+Provides: %rname = %epoch:%version-%release
 Requires: mate-file-manager-extensions mate-file-manager-schemas
 
 Source: %rname-%version.tar
-Source1: mate-submodules-%rname.tar
+Source1: libegg.tar
 Patch: %rname-%version-%release.patch
 
-BuildRequires: mate-common gtk-doc libSM-devel libexempi-devel libexif-devel libgail3-devel libnotify-devel libselinux-devel libxml2-devel mate-desktop-devel
+BuildRequires: mate-common gtk-doc libSM-devel libexempi-devel libexif-devel libgail3-devel libnotify-devel
+BuildRequires: libwayland-client-devel libgtk-layer-shell-devel libselinux-devel libxml2-devel mate-desktop-devel
 
 %description
 Caja (mate-file-manager) is the file manager and graphical shell
@@ -30,6 +32,7 @@ icons on the MATE desktop.
 %package extensions
 Group: Graphical desktop/MATE
 Summary:  Mate-file-manager extensions library
+Provides: %rname-extensions = %epoch:%version-%release
 
 %description extensions
 This package provides the libraries used by caja extensions.
@@ -39,6 +42,7 @@ Group: Graphical desktop/MATE
 Summary:  Mate-file-manager schemas
 License:  LGPLv2+
 BuildArch: noarch
+Provides: %rname-schemas = %epoch:%version-%release
 
 %description schemas
 This package provides the gsettings schemas for caja.
@@ -46,6 +50,7 @@ This package provides the gsettings schemas for caja.
 %package devel
 Group: Development/C
 Summary:  Support for developing mate-file-manager extensions
+Provides: %rname-devel = %epoch:%version-%release
 
 %description devel
 This package provides libraries and header files needed
@@ -55,13 +60,10 @@ for developing caja extensions.
 %setup -q -n %rname-%version -a1
 %patch -p1
 
-cat << __EOF__ > mate-submodules/Makefile.am
-SUBDIRS = libegg
-__EOF__
-
 %build
 %autoreconf
 %configure \
+	--enable-wayland \
 	--enable-gtk-doc \
 	--disable-static \
 	--disable-schemas-compile \
@@ -104,6 +106,9 @@ mkdir -p %buildroot%_libdir/caja/extensions-2.0
 %_datadir/gtk-doc/html/libcaja-extension
 
 %changelog
+* Tue Feb 27 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.0-alt1
+- 1.28.0
+
 * Tue Jan 30 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt3
 - cherry pick upstream fix gfile sort and symlink warnings w glib2.76 or later
 

@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-screensaver
-Version: 1.26.2
+Version: 1.28.0
 Release: alt1
 Epoch: 2
 Summary: MATE Screensaver
@@ -85,6 +85,9 @@ install -m644 -pD doc/mate-screensaver.html %buildroot%_datadir/doc/mate-screens
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Feb 27 2024 Valery Inozemtsev <shrek@altlinux.ru> 2:1.28.0-alt1
+- 1.28.0
+
 * Mon May 15 2023 Valery Inozemtsev <shrek@altlinux.ru> 2:1.26.2-alt1
 - 1.26.2
 

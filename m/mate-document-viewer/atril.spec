@@ -5,8 +5,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-document-viewer
-Version: 1.26.1
-Release: alt2
+Version: 1.28.0
+Release: alt1
 Epoch: 1
 Summary: Document viewer
 License: GPLv2+ and LGPLv2+ and MIT
@@ -17,13 +17,12 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Requires: mathjax
 
 Source: %rname-%version.tar
-Source1: libegg.tar
 Patch: %rname-%version-%release.patch
 
-BuildRequires: mate-common
+BuildRequires: mate-common mate-desktop-devel mate-file-manager-devel
 BuildRequires: gcc-c++ gtk-doc libdjvu-devel libgail3-devel libkpathsea-devel libsynctex-devel
 BuildRequires: libpoppler-glib-devel libsecret-devel libspectre-devel libtiff-devel libSM-devel
-BuildRequires: libxml2-devel mate-file-manager-devel yelp-tools
+BuildRequires: libxml2-devel yelp-tools
 
 %if_enabled xps
 BuildRequires: libgxps-devel libgxps-gir-devel
@@ -105,8 +104,10 @@ This package contains the atril extension for the
 caja file manager.
 
 %prep
-%setup -q -n %rname-%version -a1
+%setup -q -n %rname-%version
 %patch -p1
+
+tar -xf libegg.tar
 
 %build
 %autoreconf
@@ -195,6 +196,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Feb 28 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.0-alt1
+- 1.28.0
+
 * Mon Nov 27 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt2
 - fixed requires for mate-document-viewer-thumbnailer (closes: #48498)
 

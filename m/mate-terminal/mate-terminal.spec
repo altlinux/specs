@@ -1,5 +1,5 @@
 Name: mate-terminal
-Version: 1.26.1
+Version: 1.28.1
 Release: alt1
 Epoch: 1
 Summary: Terminal emulator for MATE
@@ -11,7 +11,6 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Provides: xvt x-terminal-emulator
 
 Source: %name-%version.tar
-Source1: mate-submodules-%name.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: mate-common libSM-devel libdconf-devel libpcre2-devel libvte3-devel yelp-tools
@@ -22,8 +21,10 @@ backgrounds, opening multiple terminals in a single window (tabs) and
 clickable URLs.
 
 %prep
-%setup -q -a1
+%setup -q
 %patch -p1
+
+tar -xf libegg.tar
 
 %build
 %autoreconf
@@ -55,6 +56,9 @@ __EOF__
 %_man1dir/*.1*
 
 %changelog
+* Wed Feb 28 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.1-alt1
+- 1.28.1
+
 * Thu May 11 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt1
 - 1.26.1
 

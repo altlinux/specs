@@ -1,8 +1,8 @@
 %define rname caja-extensions
 
 Name: mate-file-manager-extensions
-Version: 1.26.1
-Release: alt4
+Version: 1.28.0
+Release: alt1
 Epoch: 1
 Summary: Set of extensions for caja file manager
 License: GPLv2+
@@ -10,10 +10,12 @@ Group: Graphical desktop/MATE
 Url: http://mate-desktop.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
+Provides: %rname = %epoch:%version-%release
+
 Source: %rname-%version.tar
 Patch: %rname-%version-%release.patch
 
-BuildRequires: mate-common gtk-doc libdbus-glib-devel mate-desktop-devel mate-file-manager-devel
+BuildRequires: mate-common gtk-doc libdbus-glib-devel mate-desktop-devel mate-file-manager-devel gst-plugins1.0-devel
 
 %description
 Extensions for the caja file-browser, open-terminal, image-converter, sendto and share
@@ -22,13 +24,25 @@ Extensions for the caja file-browser, open-terminal, image-converter, sendto and
 Group: Graphical desktop/MATE
 Summary: Common files for %rname
 BuildArch: noarch
+Provides: %rname-common = %epoch:%version-%release
 
 %description common
 %summary
 
+%package -n mate-file-manager-audio-video-properties
+Group: Graphical desktop/MATE
+Summary: MATE file manager audio-video-properties extension
+Provides: caja-audio-video-properties = %epoch:%version-%release
+Requires: %name-common = %epoch:%version-%release
+
+%description -n mate-file-manager-audio-video-properties
+The caja-audio-video-properties extension allows you to
+view audio and video properties in Caja.
+
 %package -n mate-file-manager-image-converter
 Group: Graphical desktop/MATE
 Summary: MATE file manager image converter extension
+Provides: caja-image-converter = %epoch:%version-%release
 Requires: %name-common = %epoch:%version-%release ImageMagick-tools
 
 %description -n mate-file-manager-image-converter
@@ -38,6 +52,7 @@ re-size/rotate images from Caja.
 %package -n mate-file-manager-open-terminal
 Group: Graphical desktop/MATE
 Summary: Mate-file-manager extension for an open terminal shortcut
+Provides: caja-open-terminal = %epoch:%version-%release
 Requires: %name-common = %epoch:%version-%release
 
 %description -n mate-file-manager-open-terminal
@@ -47,6 +62,7 @@ Terminal" option for mate-file-manager users who prefer that option.
 %package -n mate-file-manager-sendto
 Group: Graphical desktop/MATE
 Summary: MATE file manager sendto
+Provides: caja-sendto = %epoch:%version-%release
 Requires: %name-common = %epoch:%version-%release
 
 %description -n mate-file-manager-sendto
@@ -63,6 +79,7 @@ Development libraries and headers for caja-sendto
 %package -n mate-file-manager-share
 Group: Graphical desktop/MATE
 Summary: Easy sharing folder via Samba (CIFS protocol)
+Provides: caja-share = %epoch:%version-%release
 Requires: %name-common = %epoch:%version-%release samba
 
 %description -n mate-file-manager-share
@@ -72,6 +89,7 @@ sharing via Samba (CIFS protocol) in *NIX systems.
 %package -n mate-file-manager-beesu
 Group: Graphical desktop/MATE
 Summary: MATE file manager beesu
+Provides: caja-beesu = %epoch:%version-%release
 Requires: %name-common = %epoch:%version-%release beesu
 
 %description -n mate-file-manager-beesu
@@ -80,17 +98,19 @@ Caja beesu extension for open files as superuser
 %package -n mate-file-manager-wallpaper
 Group: Graphical desktop/MATE
 Summary: MATE file manager wallpaper
+Provides: caja-wallpaper = %epoch:%version-%release
 Requires: %name-common = %epoch:%version-%release
 
 %description -n mate-file-manager-wallpaper
 Caja wallpaper extension, allows to quickly set wallpaper.
 
-%package -n caja-xattr-tags
+%package -n mate-file-manager-xattr-tags
 Group: Graphical desktop/MATE
 Summary: MATE file manager xattr-tags
+Provides: caja-xattr-tags = %epoch:%version-%release
 Requires: %name-common = %epoch:%version-%release
 
-%description -n caja-xattr-tags
+%description -n mate-file-manager-xattr-tags
 Caja xattr-tags extension, allows to quickly set xattr-tags
 
 %prep
@@ -124,6 +144,10 @@ find %buildroot%_libdir -name \*.la -delete
 %files common -f %rname.lang
 %doc AUTHORS COPYING README
 %dir %_datadir/caja-extensions
+
+%files -n mate-file-manager-audio-video-properties
+%_libdir/caja/extensions-2.0/libcaja-av.so
+%_datadir/caja/extensions/libcaja-av.caja-extension
 
 %files -n mate-file-manager-image-converter
 %_libdir/caja/extensions-2.0/libcaja-image-converter.so
@@ -160,11 +184,14 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/caja/extensions-2.0/libcaja-wallpaper.so
 %_datadir/caja/extensions/libcaja-wallpaper.caja-extension
 
-#files -n caja-xattr-tags
+#files -n mate-file-manager-xattr-tags
 #_libdir/caja/extensions-2.0/libcaja-xattr-tags.so
 #_datadir/caja/extensions/libcaja-xattr-tags.caja-extension
 
 %changelog
+* Tue Feb 27 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.0-alt1
+- 1.28.0
+
 * Wed Oct 11 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt4
 - updated build dependensions
 

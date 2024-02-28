@@ -1,7 +1,7 @@
 %define rname marco
 
 Name: mate-window-manager
-Version: 1.26.2
+Version: 1.28.1
 Release: alt1
 Epoch: 1
 Summary: MATE Desktop window manager
@@ -13,7 +13,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %rname-%version.tar
 Patch: %rname-%version-%release.patch
 
-BuildRequires: mate-common libSM-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXinerama-devel libXpresent-devel
+BuildRequires: mate-common mate-desktop-devel libSM-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXinerama-devel libXpresent-devel
 BuildRequires: libXrandr-devel libXres-devel libcanberra-gtk3-devel libgtop-devel libstartup-notification-devel zenity yelp-tools
 
 %description
@@ -78,6 +78,9 @@ Development files for marco
 %_man1dir/marco-window-demo.1*
 
 %changelog
+* Mon Feb 26 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.1-alt1
+- 1.28.1
+
 * Thu May 11 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.2-alt1
 - 1.26.2
 

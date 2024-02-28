@@ -1,7 +1,9 @@
 %define _libexecdir %_prefix/libexec
 
+%def_enable wayland
+
 Name: mate-media
-Version: 1.26.1
+Version: 1.28.1
 Release: alt1
 Epoch: 1
 Summary: MATE media programs
@@ -14,6 +16,9 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: mate-common libcanberra-gtk3-devel libmatemixer-devel libxml2-devel mate-desktop-devel mate-panel-devel
+%if_enabled wayland
+BuildRequires: libwayland-client-devel libgtk-layer-shell-devel
+%endif
 
 %description
 This package contains a few media utilities for the MATE desktop,
@@ -26,6 +31,7 @@ including a volume control.
 %build
 %autoreconf
 %configure \
+	%{subst_enable wayland} \
 	--libexecdir=%_libexecdir \
 	--disable-static \
 	--disable-schemas-compile
@@ -41,15 +47,22 @@ including a volume control.
 %doc AUTHORS COPYING NEWS README
 %_sysconfdir/xdg/autostart/mate-volume-control-*.desktop
 %_bindir/mate-volume-control*
+%if_disabled wayland
 %_libexecdir/mate-volume-control*
+%_datadir/dbus-1/services/*.service
+%else
+%_libdir/libmate-volume-control-applet.so
+%endif
 %_datadir/%name
 %_datadir/mate-panel/applets/*.mate-panel-applet
 %_datadir/sounds/mate
-%_datadir/dbus-1/services/*.service
 %_desktopdir/mate-volume-control.desktop
 %_man1dir/*.1*
 
 %changelog
+* Tue Feb 27 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.1-alt1
+- 1.28.1
+
 * Mon May 15 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt1
 - 1.26.1
 
