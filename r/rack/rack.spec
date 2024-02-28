@@ -1,6 +1,6 @@
 Name: rack
 Version: 2.4.1
-Release: alt1
+Release: alt2
 
 Summary: VCV virtual Eurorack host
 License: GPLv3
@@ -13,6 +13,7 @@ Source0: %name-%version-%release.tar
 Source1: deps-%version-%release.tar
 
 BuildRequires: cmake gcc-c++
+BuildRequires: /usr/bin/convert
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(glew)
 BuildRequires: pkgconfig(glfw3)
@@ -77,12 +78,31 @@ cp -prv include %buildroot%_datadir/rack/sdk
 cp -prv dep/include %buildroot%_datadir/rack/sdk/dep
 cp -pv *.mk %buildroot%_datadir/rack/sdk
 
+convert icon.ico icon.png
+install -pm0644 -D icon-0.png %buildroot%_iconsdir/hicolor/32x32/apps/rack.png
+install -pm0644 -D icon-1.png %buildroot%_iconsdir/hicolor/64x64/apps/rack.png
+
+cat > rack.desktop << 'EOF'
+[Desktop Entry]
+Name=VCV Rack
+Comment=Virtual Eurorack host
+Exec=rack
+Icon=rack
+Terminal=false
+Type=Application
+Categories=AudioVideo;Audio;Midi;X-Jack;
+EOF
+
+install -pm0644 -D rack.desktop %buildroot%_desktopdir/rack.desktop
+
 %files
 %doc LICENSE* README*
 %_bindir/rack
 %_libdir/*.so.*
 %_libdir/rack
 %_datadir/rack
+%_iconsdir/*/*/*/*.png
+%_desktopdir/rack.desktop
 %exclude %_datadir/rack/sdk
 
 %files devel
@@ -90,5 +110,8 @@ cp -pv *.mk %buildroot%_datadir/rack/sdk
 %_datadir/rack/sdk
 
 %changelog
+* Wed Feb 28 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.4.1-alt2
+- desktop entry packaged
+
 * Wed Feb 21 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.4.1-alt1
 - initial
