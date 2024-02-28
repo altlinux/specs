@@ -10,8 +10,8 @@
 %def_disable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.2
+Release: alt1
 
 Summary: JPEG 2000 codec library (API version 2.0)
 License: BSD-2-Clause
@@ -28,8 +28,6 @@ Source: https://github.com/uclouvain/%_name/archive/v%version/%_name-%version.ta
 # https://github.com/uclouvain/openjpeg-data.git
 # 1.1G
 %{?_enable_check:Source1: %_name-data-f9991d5.tar}
-
-Patch10: %_name-2.5.1-alt-include.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ libtiff-devel libjpeg-devel libwebp-devel
@@ -71,8 +69,6 @@ developing with %name library.
 %prep
 %setup -n %_name-%version
 %{?_enable_check:mkdir data && tar -xf %SOURCE1 --strip-components=1 -C data/}
-
-%patch10
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -129,6 +125,9 @@ subst 's|opj_\([compess,decompess,dump]\)|opj2_\1|g' %buildroot%_libdir/cmake/%_
 %endif
 
 %changelog
+* Wed Feb 28 2024 Yuri N. Sedunov <aris@altlinux.org> 2.5.2-alt1
+- 2.5.2
+
 * Tue Feb 27 2024 Yuri N. Sedunov <aris@altlinux.org> 2.5.1-alt1.1
 - src/lib/openjp2/openjpeg.h: include lost opj_config.h (ALT #49527)
 
