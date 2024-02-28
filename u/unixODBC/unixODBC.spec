@@ -2,7 +2,7 @@
 %define somask %{abiversion}*
 
 Name:    unixODBC
-Version: 2.3.11
+Version: 2.3.12
 Release: alt1
 
 Summary: Unix ODBC driver manager and database drivers
@@ -175,7 +175,7 @@ find doc -name Makefile\* -delete
 %files -n lib%name-devel
 %doc ChangeLog doc/ProgrammerManual doc/lst
 %dir %_includedir/unixODBC/
-%_includedir/unixODBC/config.h
+#_includedir/unixODBC/config.h
 %_includedir/unixODBC/unixodbc_conf.h
 %_includedir/unixodbc.h
 %_includedir/autotest.h
@@ -197,6 +197,10 @@ find doc -name Makefile\* -delete
 %_pkgconfigdir/odbcinst.pc
 
 %changelog
+* Wed Feb 28 2024 Vitaly Lipatov <lav@altlinux.ru> 2.3.12-alt1
+- new version 2.3.12 (with rpmrb script)
+- there is no more unixODBC/config.h in include dir
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 2.3.11-alt1
 - new version 2.3.11 (with rpmrb script)
 
