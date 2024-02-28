@@ -5,7 +5,7 @@
 
 Name:     rclone
 Version: 1.65.2
-Release: alt1
+Release: alt1.1
 Summary:  rsync for cloud storage
 License:  MIT
 Group:    Networking/File transfer
@@ -29,7 +29,11 @@ files and directories to and from different cloud storage providers:
 %setup
 
 %build
-go build -v -buildmode=pie -ldflags=-X=github.com/rclone/rclone/fs.Version=%version
+go build -v \
+%ifarch loongarch64
+	-tags math_big_pure_go \
+%endif
+	-buildmode=pie -ldflags=-X=github.com/rclone/rclone/fs.Version=%version
 ./%name completion bash %name.bash
 ./%name completion fish %name.fish
 ./%name completion zsh  %name.zsh
@@ -80,6 +84,9 @@ diff COPYING /tmp/COPYING
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Wed Feb 28 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.65.2-alt1.1
+- NMU: fixed FTBFS on LoongArch (use go implementation of math_big).
+
 * Mon Feb 26 2024 Vitaly Chikunov <vt@altlinux.org> 1.65.2-alt1
 - Update to v1.65.2 (2024-01-24). (ALT#49497).
 
