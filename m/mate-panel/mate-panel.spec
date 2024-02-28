@@ -1,12 +1,14 @@
 Name: mate-panel
 Version: 1.28.0
-Release: alt1
+Release: alt2
 Epoch: 2
 Summary: MATE Desktop panel and applets
 License: GPLv2+
 Group: Graphical desktop/MATE
 Url: http://mate-desktop.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
+
+Requires: dconf-editor
 
 Source0: %name-%version.tar
 Source1: libegg.tar
@@ -86,6 +88,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gir-1.0/MatePanelApplet-4.0.gir
 
 %changelog
+* Wed Feb 28 2024 Valery Inozemtsev <shrek@altlinux.ru> 2:1.28.0-alt2
+- requires dconf-editor (closes: #49555)
+
 * Mon Feb 26 2024 Valery Inozemtsev <shrek@altlinux.ru> 2:1.28.0-alt1
 - 1.28.0
 
