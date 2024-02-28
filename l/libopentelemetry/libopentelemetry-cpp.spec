@@ -3,7 +3,7 @@
 
 Name:          lib%oname
 Version:       1.13.0
-Release:       alt1
+Release:       alt1.1
 Group:         Development/C++
 Summary:       The OpenTelemetry C++ Client
 License:       Apache-2.0
@@ -11,6 +11,8 @@ Url:           https://opentelemetry-cpp.readthedocs.io/
 Vcs:           https://github.com/open-telemetry/opentelemetry-cpp.git
 
 Source:        %name-%version.tar
+Patch1:        libopentelemetry-alt-detect-loongarch64.patch
+
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: /proc
 BuildRequires: cmake
@@ -42,7 +44,7 @@ The OpenTelemetry C++ Client.
 
 %prep
 %setup
-#%autopatch
+%autopatch -p1
 
 %build
 %cmake_insource \
@@ -69,5 +71,8 @@ The OpenTelemetry C++ Client.
 
 
 %changelog
+* Wed Feb 28 2024 Ivan A. Melnikov <iv@altlinux.org> 1.13.0-alt1.1
+- NMU: loongarch64 support.
+
 * Wed Jan 10 2024 Pavel Skrylev <majioa@altlinux.org> 1.13.0-alt1
 - Initial build for Sisyphus
