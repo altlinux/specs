@@ -3,18 +3,18 @@
 %define cargo_install %rust_install
 %define cargo_test %rust_test
 
-Name:           lsd
-Version:        0.23.1
-Release:        alt1
+Name: lsd
+Version: 1.0.0
+Release: alt1
 
-Summary:        Ls command with a lot of pretty colors and some other stuff
+Summary: Ls command with a lot of pretty colors and some other stuff
 
-License:        Apache-2.0
+License: Apache-2.0
 Group: File tools
-URL:            https://crates.io/crates/lsd
+Url: https://crates.io/crates/lsd
 
-# Source-url: https://github.com/lsd-rs/lsd/archive/refs/tags/%version.tar.gz
-Source:         %name-%version.tar
+# Source-url: https://github.com/lsd-rs/lsd/archive/refs/tags/v%version.tar.gz
+Source: %name-%version.tar
 
 # Cargo modules for build rust code
 Source1: %name-development-%version.tar
@@ -37,7 +37,6 @@ replace-with = "vendored-sources"
 directory = "vendor"
 EOF
 
-
 %build
 %cargo_build
 
@@ -50,8 +49,11 @@ EOF
 %doc README.md
 %_bindir/lsd
 
-
 %changelog
+* Wed Feb 28 2024 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
+- new version 1.0.0
+- cleanup spec, fix source url
+
 * Sun Aug 20 2023 Vitaly Lipatov <lav@altlinux.ru> 0.23.1-alt1
 - initial build for ALT Sisyphus
 
