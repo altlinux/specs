@@ -3,7 +3,7 @@
 
 Name:		coccinelle
 Version:	1.1.1
-Release:	alt2
+Release:	alt2.1
 Summary:	Semantic patching for Linux (spatch)
 
 Group:		Development/C
@@ -14,7 +14,7 @@ Vcs:		https://github.com/coccinelle/coccinelle.git
 Source:		%name-%version.tar
 Provides:	spatch
 
-BuildRequires(pre): rpm-build-ocaml
+BuildRequires(pre): rpm-build-ocaml >= 1.6.1
 BuildRequires(pre): rpm-build-python3
 BuildRequires:	ocaml >= 3.12.1
 BuildRequires:	ocaml-findlib
@@ -102,6 +102,11 @@ sed -i '1s:^#!/usr/bin/env python$:#!/usr/bin/python3:' tools/pycocci
 sed -i 's/--infer/& -O 1/' Makefile
 %endif
 
+%ifnarch %ocaml_native_arch
+# see https://bugzilla.altlinux.org/48475
+find . -name Makefile | xargs sed -r  -i 's/-custom\s/-output-complete-exe /g'
+%endif
+
 %build
 ./autogen
 %configure \
@@ -138,7 +143,12 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 
 # tests/SCORE_expected.sexp should be generated with previous version
 # of coccinelle by `spatch --testall`.
-if yes | ./spatch.opt -macro_file standard.h --iso-file standard.iso --testall > log 2>&1; then
+%ifarch %ocaml_native_arch
+%global spatch ./spatch.opt
+%else
+%global spatch ./spatch
+%endif
+if yes | %spatch -macro_file standard.h --iso-file standard.iso --testall > log 2>&1; then
 	echo :: SCORE TEST SUCCESS
 	tail log
 else
@@ -170,6 +180,9 @@ cd %_docdir/%name-demos-%version
 %files checkinstall
 
 %changelog
+* Wed Feb 28 2024 Ivan A. Melnikov <iv@altlinux.org> 1.1.1-alt2.1
+- NMU: fix build w/o ocamlnative
+
 * Fri Feb 04 2022 Vitaly Chikunov <vt@altlinux.org> 1.1.1-alt2
 - Fixed rebuild with python 3.10.
 - Resolved memory exhaustion when building on armh.
