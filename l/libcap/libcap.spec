@@ -1,6 +1,6 @@
 Name: libcap
-Version: 2.27.0.2.ac1e
-Release: alt4
+Version: 2.69
+Release: alt1
 Epoch: 1
 
 Summary: Library for getting and setting POSIX.1e capabilities
@@ -9,6 +9,7 @@ Group: System/Libraries
 Url: https://sites.google.com/site/fullycapable/
 # git://git.altlinux.org/gears/l/libcap.git
 Source: %name-%version-%release.tar
+Vcs: https://git.kernel.org/pub/scm/libs/libcap/libcap.git
 
 # For backwards compatibility.
 %{expand:%%global lib_suffix %(test %_lib != lib64 && echo %%nil || echo '()(64bit)')}
@@ -67,30 +68,32 @@ for users specified in configuration file.
 
 %build
 %global optflags_lto %optflags_lto -ffat-lto-objects
-%make_build CC=%__cc CFLAGS="%optflags" \
-	lib=%_lib DEBUG= INDENT=
+%make_build CC=%__cc CFLAGS="%optflags" FORCELINKPAM=yes \
+	GOLANG=no lib=%_lib DEBUG= INDENT=
 
 %install
-%makeinstall_std lib=%_lib RAISE_SETFCAP=no
+%makeinstall_std lib=%_lib RAISE_SETFCAP=no FORCELINKPAM=yes
 install -pDm600 pam_cap/capability.conf %buildroot/etc/security/capability.conf
 
 # Relocate development library from /%_lib/ to %_libdir/.
-symlink="%buildroot/%_lib/libcap.so"
-soname=$(readlink "$symlink")
-rm "$symlink"
-ln -rsnf %buildroot/%_lib/"$soname" "%buildroot%_libdir/libcap.so"
-mv %buildroot/%_lib/libcap.a %buildroot%_libdir/
-
-# For backwards compatibility.
-ln -rsnf %buildroot/%_lib/"$soname" "%buildroot%_libdir/libcap.so.1"
+mkdir -p "%buildroot%_libdir"
+for l in libcap libpsx; do
+	symlink="%buildroot/%_lib/"$l".so"
+	soname=$(readlink "$symlink")
+	rm "$symlink"
+	ln -rsnf %buildroot/%_lib/"$soname" "%buildroot%_libdir/"$l".so"
+	mv %buildroot/%_lib/"$l".a %buildroot%_libdir/
+done
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
+%check
+%make_build CC=%__cc CFLAGS="%optflags" lib=%_lib DEBUG= INDENT= test
+
 %files
 /%_lib/*.so.*
-%_libdir/*.so.*
 
 %files utils
 /sbin/*
@@ -102,7 +105,7 @@ ln -rsnf %buildroot/%_lib/"$soname" "%buildroot%_libdir/libcap.so.1"
 %_includedir/sys/*.h
 %_pkgconfigdir/*.pc
 %_man3dir/*
-%doc CHANGELOG License README *.txt pgp.keys.asc doc/capability.notes progs/*.c
+%doc CHANGELOG License README *.txt pgp.keys.asc doc/capability.md progs/*.c
 
 %files devel-static
 %_libdir/*.a
@@ -112,8 +115,15 @@ ln -rsnf %buildroot/%_lib/"$soname" "%buildroot%_libdir/libcap.so.1"
 %_pam_modules_dir/*
 
 %changelog
+* Tue Jan 30 2024 Mikhail Efremov <sem@altlinux.org> 1:2.69-alt1
+- Dropped libcap.so.1 symlink.
+- Fixed some compiler warnings.
+- Enabled tests.
+- Updated patches.
+- libcap-2.27-2-gac1ef31 -> 2.69.
+
 * Tue Aug 24 2021 Dmitry V. Levin <ldv@altlinux.org> 1:2.27.0.2.ac1e-alt4
-- Added -ffat-lto-objects to %optflags_lto.
+- Added -ffat-lto-objects to %%optflags_lto.
 
 * Wed Aug 12 2020 Dmitry V. Levin <ldv@altlinux.org> 1:2.27.0.2.ac1e-alt3
 - Build and package static library (closes: #37718).
