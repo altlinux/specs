@@ -13,7 +13,7 @@
 
 Name: libvxl
 Version: 3.5.0
-Release: alt1
+Release: alt1.1
 
 Group: System/Libraries
 Summary: C++ Libraries for Computer Vision Research and Implementation
@@ -71,6 +71,9 @@ This package contains documentation for VXL.
 %prep
 %setup
 %patch1 -p1
+%ifarch %e2k
+sed -i 's/-fno-gcse/-Wall/' v3p/netlib/CMakeLists.txt
+%endif
 
 %build
 %cmake -GNinja \
@@ -123,6 +126,9 @@ This package contains documentation for VXL.
 %endif
 
 %changelog
+* Tue Feb 27 2024 Michael Shigorin <mike@altlinux.org> 3.5.0-alt1.1
+- E2K: avoid lcc-unsupported option (ilyakurdyukov@)
+
 * Mon Apr 17 2023 Elizaveta Morozova <morozovaes@altlinux.org> 3.5.0-alt1
 - New version
 - Build using ninja-build
