@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rpm-build-extra-targets
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: Build packages for other platforms
@@ -65,5 +65,8 @@ find build -name macros |
 %doc README.md
 
 %changelog
+* Wed Feb 28 2024 Ivan A. Melnikov <iv@altlinux.org> 0.2-alt1
+- Fix %%optflags definition for loongarch64.
+
 * Tue Jul 25 2023 Ivan A. Melnikov <iv@altlinux.org> 0.1-alt1
 - Initial build as a separate package (ALT #44453).
