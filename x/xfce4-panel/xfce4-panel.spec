@@ -4,7 +4,7 @@
 %define git_hash %nil
 
 Name: xfce4-panel
-Version: 4.18.5
+Version: 4.18.6
 Release: alt1%git_hash
 
 Summary: Panel for Xfce
@@ -160,6 +160,9 @@ Vala bindings for libxfce4panel-gtk3.
 %endif
 
 %changelog
+* Thu Feb 29 2024 Mikhail Efremov <sem@altlinux.org> 4.18.6-alt1
+- Updated to 4.18.6.
+
 * Wed Sep 27 2023 Mikhail Efremov <sem@altlinux.org> 4.18.5-alt1
 - Dropped %%xfce4_drop_gitvtag macro.
 - Updated to 4.18.5.
