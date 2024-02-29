@@ -1,26 +1,15 @@
-%def_enable  clang
-%def_disable shared_libraries
-%def_enable  widevine
 %def_enable  ffmpeg
 %def_enable  google_api_keys
-%def_disable debug
 
 %define max_parallel_jobs 64
 %ifndef build_parallel_jobs
 %global build_parallel_jobs %__nprocs
 %endif
 
-%define is_enabled() %{expand:%%{?_enable_%{1}:true}%%{!?_enable_%{1}:false}}
-
 %global llvm_version 17.0
-%global gcc_version %nil
-#set_gcc_version %gcc_version
 
 %set_verify_elf_method rpath=relaxed textrel=relaxed lfs=relaxed lint=relaxed
-
-%if_disabled debug
 %add_debuginfo_skiplist %_libdir/* %_bindir/*
-%endif
 
 %define _unpackaged_files_terminate_build 1
 
@@ -35,8 +24,8 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium-gost
-Version:        120.0.6099.109
-Release:        alt2
+Version:        121.0.6167.160
+Release:        alt1
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -44,7 +33,6 @@ Group:          Networking/WWW
 Url:            https://www.chromium.org
 
 Source0:        chromium.tar.zst
-Source1:        chromium.watch
 
 Source30:       master_preferences
 Source31:       default_bookmarks.html
@@ -93,11 +81,15 @@ Patch017: 0017-DEBIAN-work-around-a-clang-bug-with-libstdc.patch
 Patch019: 0019-GENTOO-EnumTable-crash.patch
 Patch020: 0020-ALT-Do-not-hardcode-flatbuffer-version.patch
 Patch021: 0021-FEDORA-System-brotli.patch
-Patch022: 0022-atspi-mark-possibly-unused-gn-variables.patch
-Patch023: 0023-Revert-Use-aggregate-init-designed-initializers-more.patch
-Patch024: 0024-Use-std-nullptr_t-instead-of-nullptr_t.patch
-Patch025: 0025-Add-missing-headers.patch
-Patch026: 0026-Disable-unsupported-compiler-flags.patch
+Patch022: 0022-Revert-Use-aggregate-init-designed-initializers-more.patch
+Patch023: 0023-Add-missing-headers.patch
+Patch024: 0024-Disable-unsupported-compiler-flags.patch
+Patch025: 0025-Fix-rust-clang-path.patch
+Patch026: 0026-FEDORA-Fix-invalid-escape-sequence.patch
+Patch027: 0027-DEBIAN-remove-dependencies-on-third_party-catapult.patch
+Patch028: 0028-Use-system-sysroot-for-rust.patch
+Patch029: 0029-DEBIAN-work-around-incorrect-template-selection.patch
+Patch030: 0030-nullptr_t-without-namespace-std.patch
 ### End Patches
 
 # Specific C-G patch
@@ -126,14 +118,10 @@ BuildRequires:  perl-Switch
 BuildRequires:  pkg-config
 BuildRequires:  usbids
 BuildRequires:  xdg-utils
-%if_enabled clang
 BuildRequires:  clang%{llvm_version}
 BuildRequires:  clang%{llvm_version}-devel
 BuildRequires:  llvm%{llvm_version}-devel
 BuildRequires:  lld%{llvm_version}-devel
-%else
-BuildRequires:  gcc%gcc_version-c++
-%endif
 BuildRequires:  pkgconfig(absl_utility)
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(atk)
@@ -215,6 +203,9 @@ BuildRequires:  python3(markupsafe)
 BuildRequires:  python3(ply)
 BuildRequires:  python3(simplejson)
 
+BuildRequires:  rust       >= 1.75.0-alt2
+BuildRequires:  rust-cargo >= 1.75.0-alt2
+
 # We do not build an internal version of libvulkan but we want to have it on the
 # system.
 #Requires: libvulkan1
@@ -273,28 +264,29 @@ sed -i '1i#define PROCESSOR_TYPE -1\
 
 
 %build
-%if_enabled clang
 export ALTWRAP_LLVM_VERSION="%llvm_version"
 export CC="clang"
 export CXX="clang++"
 export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
-%else
-export CC="gcc"
-export CXX="g++"
-export AR="ar"
-export NM="nm"
-export READELF="readelf"
-%endif
+export RANLIB="llvm-ranlib"
+export LLVM_PREFIX=`llvm-config --prefix`
+export LLVM_LIBDIR=`llvm-config --libdir`
+export CLANG_MAJVER=`echo %llvm_version | cut -d. -f1`
+export CLANG_LIBDIR="$LLVM_LIBDIR/clang/$CLANG_MAJVER/lib"
 
 bits=$(getconf LONG_BIT)
 
-export RANLIB="ranlib"
 export PATH="$PWD/third_party/depot_tools:$PATH"
 export CHROMIUM_RPATH="%_libdir/%name"
 
-FLAGS='-Wno-unknown-warning-option -Wno-deprecated-declarations'
+FLAGS=
+FLAGS+=' -Wno-unknown-warning-option -Wno-deprecated-declarations'
+FLAGS+=' -Wno-unused-command-line-argument -Wno-unused-but-set-variable'
+FLAGS+=' -Wno-unused-result -Wno-unused-function -Wno-unused-variable'
+FLAGS+=' -Wno-unused-const-variable -Wno-unneeded-internal-declaration'
+FLAGS+=' -Wno-unknown-attributes'
 FLAGS+=' -DUSE_SYSTEM_MINIZIP'
 
 export CFLAGS="$FLAGS"
@@ -328,7 +320,6 @@ gn_arg+=( use_bundled_weston=false )
 gn_arg+=( use_xkbcommon=true )
 gn_arg+=( use_icf=false )
 gn_arg+=( enable_linux_installer=false )
-gn_arg+=( enable_rust=false )
 gn_arg+=( optimize_webui=false )
 gn_arg+=( link_pulseaudio=true )
 gn_arg+=( enable_hangout_services_extension=true )
@@ -356,26 +347,21 @@ gn_arg+=( proprietary_codecs=true )
 
 # Remove debug
 gn_arg+=( is_debug=false )
-%if_enabled debug
-gn_arg+=( symbol_level=2 )
-gn_arg+=( blink_symbol_level=2 )
-gn_arg+=( v8_symbol_level=2 )
-%else
+gn_arg+=( dcheck_always_on=false )
+gn_arg+=( dcheck_is_configurable=false )
 gn_arg+=( symbol_level=0 )
 gn_arg+=( blink_symbol_level=0 )
 gn_arg+=( v8_symbol_level=0 )
-%endif
 
 gn_arg+=( enable_nacl=false )
-gn_arg+=( is_component_ffmpeg=%{is_enabled shared_libraries} )
-gn_arg+=( is_component_build=%{is_enabled shared_libraries} )
-gn_arg+=( enable_widevine=%{is_enabled widevine} )
+gn_arg+=( is_component_ffmpeg=false )
+gn_arg+=( is_component_build=false )
+gn_arg+=( enable_widevine=true )
 
 gn_arg+=( rtc_use_pipewire=true )
 gn_arg+=( rtc_link_pipewire=true )
 
-%if_enabled clang
-gn_arg+=( clang_base_path=\"%_prefix/lib/llvm-%{llvm_version}\" )
+gn_arg+=( clang_base_path=\"$LLVM_PREFIX\" )
 gn_arg+=( is_clang=true )
 gn_arg+=( clang_use_chrome_plugins=false )
 gn_arg+=( use_lld=true )
@@ -389,9 +375,11 @@ fi
 gn_arg+=( is_cfi=false )
 gn_arg+=( use_cfi_icall=false )
 gn_arg+=( chrome_pgo_phase=0 )
-%else
-gn_arg+=( is_clang=false )
-%endif
+
+# use system rust
+export RUSTC_BOOTSTRAP=1
+gn_arg+=( rust_sysroot_absolute=\"$(rustc --print sysroot)\" )
+gn_arg+=( rustc_version=\"$(rustc --version)\" )
 
 %ifnarch x86_64
 gn_arg+=( icu_use_data_file=false )
@@ -436,14 +424,11 @@ test $n -gt %max_parallel_jobs && n=%max_parallel_jobs
 %define GOSTCFLAGS -O2 -g
 %endif
 
-ninja \
-	-vvv \
-	-j $n \
-	-C %target \
-	chrome \
-	chrome_sandbox \
-	chromedriver \
-	policy_templates
+for name in chrome chrome_sandbox chromedriver policy_templates; do
+	export NINJA_STATUS="[$name %%f/%%t] "
+	ninja -vvv -j "$n" -C %target $name
+done
+
 
 %install
 mkdir -p -- \
@@ -541,6 +526,7 @@ EOF
 	done
 )
 
+
 %files
 %doc AUTHORS LICENSE
 %dir %_datadir/gnome-control-center
@@ -560,6 +546,37 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Feb 29 2024 Fr. Br. George <george@altlinux.org> 121.0.6167.160-alt1
+- GOST version
+
+* Thu Feb 08 2024 Alexey Gladkov <legion@altlinux.ru> 121.0.6167.160-alt1
+- New version (121.0.6167.160).
+- Security fixes:
+  - CVE-2024-1283: Heap buffer overflow in Skia.
+  - CVE-2024-1284: Use after free in Mojo.
+
+* Thu Feb 08 2024 Alexey Gladkov <legion@altlinux.ru> 121.0.6167.139-alt1
+- New version (121.0.6167.139).
+- Security fixes:
+  - CVE-2024-1059: Use after free in WebRTC.
+  - CVE-2024-1060: Use after free in Canvas.
+  - CVE-2024-1077: Use after free in Network.
+
+* Wed Jan 24 2024 Alexey Gladkov <legion@altlinux.ru> 121.0.6167.85-alt1
+- New version (121.0.6167.85).
+- Security fixes:
+  - CVE-2024-0804: Insufficient policy enforcement in iOS Security UI.
+  - CVE-2024-0805: Inappropriate implementation in Downloads.
+  - CVE-2024-0806: Use after free in Passwords.
+  - CVE-2024-0807: Use after free in WebAudio.
+  - CVE-2024-0808: Integer underflow in WebUI.
+  - CVE-2024-0809: Inappropriate implementation in Autofill.
+  - CVE-2024-0810: Insufficient policy enforcement in DevTools.
+  - CVE-2024-0811: Inappropriate implementation in Extensions API.
+  - CVE-2024-0812: Inappropriate implementation in Accessibility.
+  - CVE-2024-0813: Use after free in Reading Mode.
+  - CVE-2024-0814: Incorrect security UI in Payments.
+
 * Wed Dec 27 2023 Fr. Br. George <george@altlinux.org> 120.0.6099.109-alt2
 - GOST version
 
