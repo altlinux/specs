@@ -3,7 +3,7 @@
 
 %define _name gdm-settings
 %define pypi_name gdms
-%define ver_major 4.2
+%define ver_major 4.3
 %define rdn_name io.github.realmazharhussain.GdmSettings
 
 %def_enable check
@@ -67,6 +67,9 @@ Python and uses LibAdwaita for graphical interface.
 
 
 %changelog
+* Thu Feb 29 2024 Yuri N. Sedunov <aris@altlinux.org> 4.3-alt1
+- 4.3
+
 * Mon Feb 26 2024 Yuri N. Sedunov <aris@altlinux.org> 4.2-alt1
 - 4.2
 
