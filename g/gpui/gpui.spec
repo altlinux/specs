@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpui
-Version: 0.2.40
+Version: 0.2.41
 Release: alt1
 
 Summary: Group policy editor
@@ -112,6 +112,14 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Tue Feb 29 2024 Vladimir Rubanov <august@altlinux.org> 0.2.41-alt1
+- 0.2.41-alt1
+- Features:
+  + Add edit entry to preferences context menu (Closes: 49098).
+- Fixes:
+  + Fix admx-firefox elements order (Closes: 44507).
+  + Fix text elements order (Closes: 49053).
+
 * Tue Dec 26 2023 Vladimir Rubanov <august@altlinux.org> 0.2.40-alt1
 - 0.2.40-alt1
 - Fixes:
