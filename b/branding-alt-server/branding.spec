@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 10.2
-Release: alt2.1
+Release: alt3
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -344,6 +344,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Feb 29 2024 Dmitry Terekhin <jqt4@altlinux.org> 10.2-alt3
+- Fix different sizes of GUI elements (rm#125458 rm#125847)
+
 * Thu Nov 02 2023 Michael Shigorin <mike@altlinux.org> 10.2-alt2.1
 - E2K: link to platform-specific distribution manual (rm#115880)
 
