@@ -4,7 +4,7 @@
 
 Name: zot
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: zot - A production-ready vendor-neutral OCI-native container image registry (purely based on OCI Distribution Specification)
 License: Apache-2.0
@@ -17,9 +17,9 @@ Source1: zui.tar
 Source2: zot.service
 Source3: config.json
 
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang rpm-build-nodejs
 BuildRequires: golang
-BuildRequires: node >= 18
 
 %description
 zot: a production-ready vendor-neutral OCI image registry -
@@ -112,5 +112,8 @@ useradd -r -g _%name -M -d %_localstatedir/%name -s /dev/null -c "Zot registry u
 %_datadir/fish/vendor_completions.d/zli.fish
 
 %changelog
+* Thu Feb 29 2024 Alexander Stepchenko <geochip@altlinux.org> 2.0.1-alt2
+- Use rpm-build-nodejs in BuildRequires instead of npm >= 18
+
 * Mon Feb 19 2024 Alexander Stepchenko <geochip@altlinux.org> 2.0.1-alt1
 - Initial build for ALT.
