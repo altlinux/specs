@@ -1,7 +1,8 @@
 %def_disable clang
+%def_without dlightdm
 
 Name: startdde
-Version: 6.0.11
+Version: 6.0.13
 Release: alt1
 Epoch: 1
 Summary: Starter of deepin desktop environment
@@ -20,6 +21,10 @@ BuildRequires(pre): gcc-c++
 %endif
 BuildRequires(pre): rpm-build-golang /proc
 BuildRequires: jq glib2-devel libgio-devel libgtk+3-devel libXcursor-devel libXfixes-devel libXi-devel libgudev-devel libgnome-keyring-devel libpulseaudio-devel libalsa-devel libsecret-devel
+
+%if_with dlightdm
+Requires: deepin-session-shell
+%endif
 
 %description
 Startdde is used for launching DDE components and invoking user's custom applications which compliant with xdg autostart specification.
@@ -42,6 +47,10 @@ export GOPATH="$(pwd)/vendor:%go_path"
 %install
 export GOPATH="%go_path"
 %makeinstall DESTDIR=%buildroot
+%if_without dlightdm
+# conflict with system lightdm
+rm -rf %buildroot%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
+%endif
 %find_lang %name
 
 %files -f %name.lang
@@ -49,14 +58,21 @@ export GOPATH="%go_path"
 %_sbindir/deepin-fix-xauthority-perm
 %dir %_libexecdir/deepin-daemon/
 %_libexecdir/deepin-daemon/greeter-display-daemon
-%_datadir/%name/
-%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
+%dir %_datadir/%name/
+%_datadir/%name/filter.conf
 %_datadir/glib-2.0/schemas/com.deepin.dde.display.gschema.xml
 %_userunitdir/dde-display-task-refresh-brightness.service
-%dir %_userunitdir/dde-session-daemon.target.wants/
-%_userunitdir/dde-session-daemon.target.wants/dde-display-task-refresh-brightness.service
+%dir %_userunitdir/dde-session-initialized.target.wants/
+%_userunitdir/dde-session-initialized.target.wants/dde-display-task-refresh-brightness.service
+%if_with dlightdm
+%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
+%endif
 
 %changelog
+* Thu Feb 29 2024 Leontiy Volodin <lvol@altlinux.org> 1:6.0.13-alt1
+- New version 6.0.13.
+- Used system lightdm instead lightdm-deepin-greeter again (ALT #49028).
+
 * Fri Nov 24 2023 Leontiy Volodin <lvol@altlinux.org> 1:6.0.11-alt1
 - New version 6.0.11.
 - Used independent vendoring of submodules again.
