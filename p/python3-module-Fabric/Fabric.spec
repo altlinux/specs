@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.2.1
+Version: 3.2.2
 Release: alt1
 Summary: High level SSH command execution
 License: BSD-2-Clause
@@ -81,6 +81,9 @@ This package contains tests for %oname.
 %python3_sitelibdir/%mod_name/testing/
 
 %changelog
+* Wed Feb 14 2024 Stanislav Levin <slev@altlinux.org> 3.2.2-alt1
+- 3.2.1 -> 3.2.2.
+
 * Mon Aug 07 2023 Stanislav Levin <slev@altlinux.org> 3.2.1-alt1
 - 3.0.1 -> 3.2.1.
 
