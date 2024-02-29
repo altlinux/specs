@@ -3,8 +3,8 @@
 %endif
 
 Name: mongo5.0
-Version: 5.0.24
-Release: alt2.1
+Version: 5.0.25
+Release: alt1
 Summary: mongo client shell and tools
 License: SSPL-1.0
 Group: Development/Databases
@@ -211,6 +211,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Thu Feb 29 2024 Alexei Takaseev <taf@altlinux.org> 5.0.25-alt1
+- 5.0.24
+
 * Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 5.0.24-alt2.1
 - NMU: Added zombie-imp to BuildRequires.
 
