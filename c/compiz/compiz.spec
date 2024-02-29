@@ -2,7 +2,7 @@
 
 Name: compiz
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: OpenGL window and compositing manager
 License: GPLv2 and LGPLv2 and MIT
@@ -19,12 +19,11 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: boost-devel-headers cmake gcc-c++ intltool libGLU-devel libSM-devel libXcomposite-devel
+BuildRequires: boost-devel-headers cmake gcc-c++ intltool libGLU-devel libSM-devel libXcomposite-devel libpng-devel
 BuildRequires: libXcursor-devel libXdamage-devel libXi-devel libXinerama-devel libXrandr-devel libdbus-devel
 BuildRequires: libglibmm-devel libjpeg-devel libmetacity3.0-devel libnotify-devel libprotobuf-devel librsvg-devel
-BuildRequires: libstartup-notification-devel libwnck3-devel libxslt-devel protobuf-compiler xsltproc
-BuildRequires: pkgconfig(mate-window-settings-2.0) python3-devel python3-module-Cython
-BuildRequires: libpcre-devel libXdmcp-devel libdrm-devel libfribidi-devel libpixman-devel libpng-devel
+BuildRequires: libstartup-notification-devel libwnck3-devel libxslt-devel protobuf-compiler xsltproc libpixman-devel
+BuildRequires: python3-devel python3-module-Cython libpcre-devel libXdmcp-devel libdrm-devel libfribidi-devel
 
 %description
 Compiz is an OpenGL compositing manager that use GLX_EXT_texture_from_pixmap
@@ -126,6 +125,9 @@ rm -f %buildroot%_bindir/compiz-decorator
 %_datadir/cmake/Modules/%name
 
 %changelog
+* Thu Feb 29 2024 Valery Inozemtsev <shrek@altlinux.ru> 0.9.14.2-alt3
+- updated build dependencies
+
 * Mon Oct 16 2023 Valery Inozemtsev <shrek@altlinux.ru> 0.9.14.2-alt2
 - updated build dependencies
 
