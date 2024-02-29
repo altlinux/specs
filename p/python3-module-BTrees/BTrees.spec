@@ -2,13 +2,13 @@
 %define pypi_name BTrees
 %define oname %pypi_name
 
-%define dynamic_mods %(echo `cat %{SOURCE2} 2>/dev/null || echo unknown`)
+%define dynamic_mods %(echo `cat %SOURCE2 2>/dev/null || echo unknown`)
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.0
-Release: alt2
+Version: 5.2
+Release: alt1
 
 Summary: Scalable persistent object containers
 License: ZPL-2.1
@@ -92,6 +92,9 @@ rm %buildroot%python3_sitelibdir/%pypi_name/*.{h,c}
 %python3_sitelibdir/*/tests
 
 %changelog
+* Thu Feb 29 2024 Stanislav Levin <slev@altlinux.org> 5.2-alt1
+- 5.0 -> 5.2.
+
 * Mon Jul 31 2023 Stanislav Levin <slev@altlinux.org> 5.0-alt2
 - Mapped PyPI name to distro's one.
 
