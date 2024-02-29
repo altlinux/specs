@@ -8,7 +8,7 @@
 %def_with ninja
 %def_with pybind11
 %def_without pyside2
-%ifarch loongarch64
+%ifarch loongarch64 %e2k
 %def_without web_mod
 %else
 %def_with web_mod
@@ -24,7 +24,7 @@
 
 Name:    freecad
 Version: 0.21.2
-Release: alt4
+Release: alt5
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -172,6 +172,8 @@ sed -i "/-fext-numeric-literals/d" src/Mod/Path/App/CMakeLists.txt
 # too much warnings of this type
 %add_optflags -Wno-overloaded-virtual
 sed -i "s/FC_OS_WIN32/__EDG__/" src/Mod/Sketcher/App/GeoEnum.{h,cpp}
+sed -i "/extern template/{N;s/.*/#ifndef OBSERVER_CPP\n&\n#endif/}" src/Base/Observer.h
+sed -i "1i #define OBSERVER_CPP" src/Base/Observer.cpp
 %endif
 
 %build
@@ -285,6 +287,9 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_datadir/thumbnailers/FreeCAD.thumbnailer
 
 %changelog
+* Thu Feb 29 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:0.21.2-alt5
+- Fixed build for Elbrus.
+
 * Wed Feb 07 2024 Grigory Ustinov <grenka@altlinux.org> 1:0.21.2-alt4
 - Fixed build with vtk9.3.
 
