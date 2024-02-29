@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       3.5.1
-Release:       alt8
+Release:       alt8.1
 Summary:       An application that automates the lifecycle of servers
 License:       MIT
 Group:         System/Servers
@@ -343,7 +343,7 @@ foundation.
 
 %package       -n foreman-doc
 Version:       3.5.1
-Release:       alt8
+Release:       alt8.1
 Summary:       An application that automates the lifecycle of servers documentation files
 Group:         Development/Documentation
 BuildArch:     noarch
@@ -410,9 +410,9 @@ install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 install -Dm0644 %SOURCE3 %buildroot%_logrotatedir/%name
 install -Dm0644 %SOURCE4 %buildroot%_sysconfdir/cron.d/%name
 install -Dm0644 %SOURCE5 %buildroot%_tmpfilesdir/%name.conf
-install -Dm0755 %SOURCE6 %buildroot%_unitdir/%name.service
+install -Dm0644 %SOURCE6 %buildroot%_unitdir/%name.service
 install -Dm0644 %SOURCE7 %buildroot%_sysconfdir/%name/settings.yml
-install -Dm0755 %SOURCE8 %buildroot%_sysconfdir/nginx/sites-available.d/%name.conf
+install -Dm0644 %SOURCE8 %buildroot%_sysconfdir/nginx/sites-available.d/%name.conf
 install -Dm0640 /dev/null %buildroot%_sysconfdir/%name/encryption_key.rb
 install -Dm0640 /dev/null %buildroot%_sysconfdir/%name/local_secret_token.rb
 install -Dm0644 %SOURCE11 %buildroot%_unitdir/%{name}-jobs.service
@@ -509,6 +509,9 @@ railsctl cleanup %name
 
 
 %changelog
+* Thu Feb 29 2024 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt8.1
+- ! fixed right to service and conf files
+
 * Thu Dec 14 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt8
 - ! fixed fast-gettext patch
 - ! fixed russian translation
