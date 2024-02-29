@@ -4,25 +4,22 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.3
+Version: 2.4
 Release: alt1
 Summary: Exposes the Intel SSE4.2 CRC32C instruction
 License: LGPLv2.1
 Group: Development/Python3
 Url: https://pypi.org/project/crc32c/
 VCS: https://github.com/ICRAR/crc32c.git
-
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(pytest)
+%pyproject_builddeps_metadata
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -32,6 +29,8 @@ instruction set of Intel CPUs.
 %prep
 %setup
 %patch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -40,12 +39,7 @@ instruction set of Intel CPUs.
 %pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    python -u run-tests.py
-EOF
-%tox_check_pyproject
+%pyproject_run -- python -u run-tests.py
 
 %files
 %doc *.rst
@@ -53,6 +47,9 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 28 2024 Stanislav Levin <slev@altlinux.org> 2.4-alt1
+- 2.3 -> 2.4.
+
 * Wed Oct 19 2022 Stanislav Levin <slev@altlinux.org> 2.3-alt1
 - 2.2 -> 2.3.
 
