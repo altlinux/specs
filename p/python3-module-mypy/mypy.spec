@@ -12,7 +12,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.8.0
-Release: alt2
+Release: alt3
 Summary: Optional static typing for Python 3 and 2 (PEP 484)
 License: MIT
 Group: Development/Python3
@@ -133,6 +133,9 @@ rm -r %buildroot%python3_sitelibdir/mypyc/
 %endif
 
 %changelog
+* Thu Feb 29 2024 Stanislav Levin <slev@altlinux.org> 1.8.0-alt3
+- Fixed FTBFS (typing_extensions 4.10.0).
+
 * Tue Feb 20 2024 Stanislav Levin <slev@altlinux.org> 1.8.0-alt2
 - Fixed FTBFS (hatchling 1.21.0).
 
