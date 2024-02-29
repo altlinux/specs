@@ -5,7 +5,7 @@
 %filter_from_requires /^lua%current_lua_version(util.*/d
 
 Name: prosody
-Version: 0.12.3
+Version: 0.12.4
 Release: alt1
 
 Summary: Modern XMPP communication server
@@ -78,6 +78,9 @@ install -Dpm644 %SOURCE4 %buildroot/%_tmpfilesdir/prosody.conf
 %_man1dir/*
 
 %changelog
+* Thu Oct 26 2023 Andrey Cherepanov <cas@altlinux.org> 0.12.4-alt1
+- Updated to 0.12.4.
+
 * Sat Feb 25 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.12.3-alt1
 - Updated to 0.12.3.
 

@@ -3,50 +3,50 @@
 %define jicofo_user _jicofo
 
 Name:           jicofo
-Version:        1.1
-Release:        alt0.4
+Version:        1.1.9258
+Release:        alt1
 
 Summary:        JItsi Meet COnference FOcus
-#Group:          Networking/Instant messaging
 Group:          System/Servers
 License:        Apache-2.0
 URL:            http://www.jitsi.org
-# VCS:          https://github.com/jitsi/jicofo.git
+VCS:            https://github.com/jitsi/jicofo.git
 
-#ExclusiveArch:  %ix86 x86_64
 ExclusiveArch:  x86_64
-#BuildArch: noarch
 
-Source0:        %name-%version.tar
-Source1:        m2-%name-%version.tar
-#Source2:        %name.sh
+Source0: %name-%version.tar
 
 AutoReqProv: yes,noosgi
 
 BuildRequires(pre): rpm-build-java
-BuildRequires:  java-1.8.0-devel
-BuildRequires:  maven
-BuildRequires:  unzip
+BuildRequires: java-17-openjdk-devel
+BuildRequires: maven-local
+BuildRequires: mvn(org.eclipse.jetty:jetty-server)
+BuildRequires: mvn(org.jetbrains:annotations)
+BuildRequires: mvn(org.slf4j:slf4j-jdk14)
+BuildRequires: mvn(org.xmlunit:xmlunit-core)
+BuildRequires: mvn(org.mockito:mockito-core)
+BuildRequires: mvn(org.jxmpp:jxmpp-core)
+BuildRequires: mvn(org.jxmpp:jxmpp-jid)
 
-Requires:	java
+Requires: java
 
 %description
 Jicofo is a conference focus agent for Jitsi Meet.
 
 %prep
-tar -x -C ~ -f %SOURCE1
 %setup
 
 %build
-mvn install -Dassembly.skipAssembly=false
-mvn -DskipTests -Dassembly.skipAssembly=true package
-mvn dependency:copy-dependencies -DincludeScope=runtime
+mvn -Dmaven.repo.local=${PWD}/m2/repository -DskipTests -Dassembly.skipAssembly=false install
+mvn -Dmaven.repo.local=${PWD}/m2/repository -DskipTests -Dassembly.skipAssembly=true package
+mvn -Dmaven.repo.local=${PWD}/m2/repository dependency:copy-dependencies -DincludeScope=runtime
 
 %install
 mkdir -p %buildroot%_datadir/jicofo/lib/ %buildroot%_sysconfdir/jitsi/jicofo/ %buildroot%_sysconfdir/logrotate.d/
-install -m644 target/dependency/*             %buildroot%_datadir/jicofo/lib/
+install -m644 jicofo/target/dependency/*           %buildroot%_datadir/jicofo/lib/
 install -m644 lib/logging.properties          %buildroot%_sysconfdir/jitsi/jicofo/
-install -m644 target/jicofo-%version-SNAPSHOT.jar  %buildroot%_datadir/jicofo/jicofo.jar
+install -m644 jicofo/target/jicofo-*-SNAPSHOT.jar  %buildroot%_datadir/jicofo/jicofo.jar
 install -m755 resources/jicofo.sh             %buildroot%_datadir/jicofo/
 install -m644 resources/collect-dump-logs.sh  %buildroot%_datadir/jicofo/
 install -m644 resources/config/jicofo-logrotate.d %buildroot%_sysconfdir/logrotate.d/jicofo
@@ -61,7 +61,7 @@ install -m644 resources/alt-jicofo.service %buildroot%_unitdir/%name.service
 %_datadir/jicofo/jicofo.sh
 %_bindir/jicofo
 %_datadir/jicofo/collect-dump-logs.sh
-%dir %attr(700, %jicofo_user, -) %_sysconfdir/jitsi/jicofo
+%dir %attr(700,%jicofo_user,root) %_sysconfdir/jitsi/jicofo
 %config %_sysconfdir/jitsi/jicofo/logging.properties
 %config %_sysconfdir/logrotate.d/jicofo
 %_unitdir/%name.service
@@ -70,7 +70,20 @@ install -m644 resources/alt-jicofo.service %buildroot%_unitdir/%name.service
 %_sbindir/useradd -r -d /dev/null -s /dev/null -n %jicofo_user \
         2> /dev/null > /dev/null ||:
 
+%post
+%post_service %name
+
+%preun
+%preun_service %name
+
 %changelog
+* Thu Feb 22 2024 Andrey Cherepanov <cas@altlinux.org> 1.1.9258-alt1
+- New version.
+- Built with openjdk17.
+
+* Thu Dec 07 2023 Andrey Cherepanov <cas@altlinux.org> 1.1.9111-alt1
+- New version.
+
 * Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 1.1-alt0.4
 - build with java 8
 
