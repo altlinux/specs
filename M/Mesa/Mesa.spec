@@ -93,11 +93,11 @@
 %vulkan_drivers_add swrast
 
 %define ver_major 24.0
-%define ver_minor 1
+%define ver_minor 2
 
 Name: Mesa
 Version: %ver_major.%ver_minor
-Release: alt2
+Release: alt1
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -608,6 +608,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Feb 29 2024 Valery Inozemtsev <shrek@altlinux.ru> 4:24.0.2-alt1
+- 24.0.2
+
 * Tue Feb 20 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 4:24.0.1-alt2
 - NMU: make Radeon great again. See
   https://gitlab.freedesktop.org/mesa/mesa/-/issues/10613
