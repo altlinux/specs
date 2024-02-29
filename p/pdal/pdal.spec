@@ -2,7 +2,7 @@
 
 Name:    pdal
 Version: 2.6.3
-Release: alt1
+Release: alt2
 
 Summary: PDAL is Point Data Abstraction Library. GDAL for point cloud data.
 License: BSD-3-Clause
@@ -25,7 +25,9 @@ BuildRequires: libgeotiff-devel
 BuildRequires: liblz4-devel
 BuildRequires: libpnetcdf-devel
 BuildRequires: libssl-devel
+%ifnarch %e2k
 BuildRequires: libunwind-devel
+%endif
 BuildRequires: libxml2-devel
 BuildRequires: libzstd-devel
 BuildRequires: python3-devel
@@ -49,7 +51,14 @@ Group: Development/C++
 
 %prep
 %setup -n PDAL-%version
+%ifnarch %e2k
 sed -i '/{CMAKE_DL_LIBS}/a unwind' CMakeLists.txt
+%endif
+%ifarch %e2k
+# need to disable workarounds for GCC
+sed -i "s/EIGEN_GNUC_AT_LEAST(6,0)/0/" \
+	vendor/eigen/Eigen/src/Core/products/GeneralBlockPanelKernel.h
+%endif
 
 %build
 %cmake -GNinja -Wno-dev \
@@ -76,6 +85,9 @@ sed -i '/{CMAKE_DL_LIBS}/a unwind' CMakeLists.txt
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Thu Feb 29 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.6.3-alt2
+- Fixed build for Elbrus.
+
 * Wed Feb 07 2024 Andrey Cherepanov <cas@altlinux.org> 2.6.3-alt1
 - New version.
 
