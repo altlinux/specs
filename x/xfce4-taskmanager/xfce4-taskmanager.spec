@@ -1,5 +1,5 @@
 Name: xfce4-taskmanager
-Version: 1.5.6
+Version: 1.5.7
 Release: alt1
 
 Summary: Taskmanager for Xfce Desktop
@@ -48,6 +48,9 @@ BuildRequires: libgtk+3-devel libcairo-devel libwnck3-devel
 %_iconsdir/hicolor/*/*/*.*
 
 %changelog
+* Thu Feb 29 2024 Mikhail Efremov <sem@altlinux.org> 1.5.7-alt1
+- Updated to 1.5.7.
+
 * Tue Oct 03 2023 Mikhail Efremov <sem@altlinux.org> 1.5.6-alt1
 - Minor spec cleanup.
 - Updated to 1.5.6.
