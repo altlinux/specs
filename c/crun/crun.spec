@@ -1,12 +1,12 @@
 %global _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-%define git_commit 1961d211ba98f532ea52d2e80f4c20359f241a98
+%define git_commit a220ca661ce078f2c37b38c92e66cf66c012d9c1
 %define __nprocs 8
 %def_disable embedded_yajl
 
 Summary: OCI runtime written in C
 Name: crun
-Version: 1.14.3
+Version: 1.14.4
 Release: alt1
 Group: Development/Other
 License: GPLv2+
@@ -86,6 +86,9 @@ rm -f %buildroot%python3_sitelibdir/*.{a,la}
 %python3_sitelibdir/python_%name.so
 
 %changelog
+* Fri Mar 01 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.14.4-alt1
+- 1.14.4
+
 * Sat Feb 17 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.14.3-alt1
 - 1.14.3
 
