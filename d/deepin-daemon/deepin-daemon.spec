@@ -3,7 +3,7 @@
 %define repo dde-daemon
 
 Name: deepin-daemon
-Version: 6.0.28
+Version: 6.0.35
 Release: alt1
 Epoch: 2
 
@@ -22,12 +22,8 @@ Patch: deepin-daemon-6.0.23-archlinux-ddcutil-2.patch
 
 ExcludeArch: ppc64le
 
-BuildRequires(pre): rpm-build-golang /proc
-BuildRequires: gcc-c++ glib2-devel libgio-devel libgtk+3-devel libsystemd-devel libudev-devel fontconfig-devel libpam0-devel libnl-devel librsvg-devel libfprint2-devel libalsa-devel libpulseaudio-devel libXcursor-devel libXfixes-devel libpulseaudio-devel libXi-devel libgudev-devel libinput-devel libddcutil-devel librsvg-utils deepin-gettext-tools deepin-clipboard libgdk-pixbuf-xlib-devel
-# nm module
-#BuildRequires: libnm-gir-devel
-#BuildRequires: python3-module-pygobject3
-#BuildRequires: golang-gopkg-yaml-2-devel
+# Requires: libX11 libXi libalsa glibc-core libcrypt libddcutil5 libgtk+3 libgdk-pixbuf libgdk-pixbuf-xlib libgio glib2 libgudev libinput libnl3 libpam0 libudev1
+
 Requires: bamfdaemon at-spi2-core
 %ifnarch s390 s390x %arm ppc64le
 Requires: rfkill
@@ -37,6 +33,13 @@ Requires: rfkill
 %ifnarch armh i586
 Requires: lshw
 %endif
+
+BuildRequires(pre): rpm-build-golang /proc
+BuildRequires: gcc-c++ glib2-devel libgio-devel libgtk+3-devel libsystemd-devel libudev-devel fontconfig-devel libpam0-devel libnl-devel librsvg-devel libfprint2-devel libalsa-devel libpulseaudio-devel libXcursor-devel libXfixes-devel libpulseaudio-devel libXi-devel libgudev-devel libinput-devel libddcutil-devel librsvg-utils deepin-gettext-tools deepin-clipboard libgdk-pixbuf-xlib-devel
+# nm module
+#BuildRequires: libnm-gir-devel
+#BuildRequires: python3-module-pygobject3
+#BuildRequires: golang-gopkg-yaml-2-devel
 
 %description
 Daemon handling the DDE session settings
@@ -56,7 +59,7 @@ sed -i 's|/usr/libexec/lxdm-greeter-gtk|%_libexecdir/lxdm-greeter-gtk|' \
    accounts1/users/testdata/autologin/{lxdm,lxdm_autologin}.conf
 sed -i 's|/usr/bin/lightdm|/usr/sbin/lightdm|' \
    accounts1/users/testdata/autologin/lightdm.service \
-   accounts1/user_chpwd_union_id.go
+   accounts1/users/testdata/autologin/display-manager.service
 
 # Replace reference of google-chrome to chromium-browser
 sed -i 's/google-chrome/chromium-browser/g' \
@@ -119,7 +122,10 @@ export LIBS+="-L/%_lib -lpam -lsystemd"
 #make -C network/nm_generator gen-nm-code
 
 %makeinstall_std PAM_MODULE_DIR=/%_lib/security
-chmod +x %buildroot%_datadir/%repo/audio/echoCancelEnable.sh
+
+# no more needed with pipewire
+rm -rf %buildroot%_datadir/%repo/audio/echoCancelEnable.sh
+rm -rf %buildroot%_sysconfdir/pulse/daemon.conf.d/10-deepin.conf
 
 mv -f %buildroot/lib/systemd/user/org.dde.session.Daemon1.service \
     %buildroot%_userunitdir/
@@ -149,7 +155,6 @@ mv -f %buildroot/lib/systemd/user/org.dde.session.Daemon1.service \
 /var/lib/polkit-1/localauthority/10-vendor.d/org.deepin.dde.grub2.pkla
 %_sysconfdir/acpi/actions/deepin_lid.sh
 %_sysconfdir/acpi/events/deepin_lid
-%_sysconfdir/pulse/daemon.conf.d/10-deepin.conf
 %_sysconfdir/NetworkManager/conf.d/deepin.dde.daemon.conf
 /lib/udev/rules.d/80-deepin-fprintd.rules
 %_unitdir/deepin-accounts1-daemon.service
@@ -162,6 +167,10 @@ mv -f %buildroot/lib/systemd/user/org.dde.session.Daemon1.service \
 %_datadir/dsg/configs/org.deepin.dde.daemon/*.json
 
 %changelog
+* Thu Feb 29 2024 Leontiy Volodin <lvol@altlinux.org> 2:6.0.35-alt1
+- New version 6.0.35.
+- Excluded pulseaudio daemon and utils from requires (ALT #48332).
+
 * Fri Nov 17 2023 Leontiy Volodin <lvol@altlinux.org> 2:6.0.28-alt1
 - New version 6.0.28.
 - Updated to API v23.

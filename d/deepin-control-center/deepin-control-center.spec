@@ -6,7 +6,7 @@
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 6.0.43
+Version: 6.0.44
 Release: alt1
 
 Summary: New control center for Linux Deepin
@@ -75,6 +75,7 @@ export READELF="llvm-readelf"
     -DCVERSION=%version \
     -DDISABLE_AUTHENTICATION=ON \
     -DDISABLE_UPDATE=ON \
+    -DDISABLE_SOUND_ADVANCED=ON \
 %nil
 cmake --build "%_cmake__builddir" -j%__nprocs
 
@@ -118,6 +119,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/libdcc-widgets.so
 
 %changelog
+* Thu Feb 01 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.44-alt1
+- New version 6.0.44.
+
 * Thu Jan 25 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.43-alt1
 - New version 6.0.43.
 - Fixed license tag.
