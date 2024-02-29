@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.3.7
+Version: 0.3.8
 Release: alt1
 Summary: Serialize all of Python
 License: BSD
@@ -36,10 +36,18 @@ Summary: %summary
 Group: Development/Python3
 Requires: %name
 %pyproject_runtimedeps_metadata -- --extra graph
-# https://github.com/uqfoundation/dill/issues/606
-Requires: python3-module-gprof2dot
 %description -n %name+graph
 Extra 'graph' for %pypi_name.
+
+%package -n %name+profile
+Summary: %summary
+Group: Development/Python3
+Requires: %name
+%pyproject_runtimedeps_metadata -- --extra profile
+# file conflict on /usr/bin/get_gprof
+Conflicts: %name+graph < 0.3.8-alt1
+%description -n %name+profile
+Extra 'profile' for %pypi_name.
 
 %prep
 %setup
@@ -65,9 +73,14 @@ rm -r %buildroot%python3_sitelibdir/%mod_name/tests/
 
 %files -n %name+graph
 %_bindir/get_objgraph
+
+%files -n %name+profile
 %_bindir/get_gprof
 
 %changelog
+* Thu Feb 29 2024 Stanislav Levin <slev@altlinux.org> 0.3.8-alt1
+- 0.3.7 -> 0.3.8.
+
 * Mon Jul 24 2023 Stanislav Levin <slev@altlinux.org> 0.3.7-alt1
 - 0.3.6 -> 0.3.7.
 
