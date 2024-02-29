@@ -1,9 +1,9 @@
 Name: filesystem
-Version: 2.3.18
+Version: 2.3.19
 Release: alt1
 
 Summary: The basic directory layout for a GNU/Linux system
-License: Public Domain
+License: ALT-Public-Domain
 Group: System/Base
 
 Source0: %name-dir.list
@@ -71,6 +71,9 @@ done < %_sourcedir/%name-link.list
 %files -f list
 
 %changelog
+* Thu Nov 16 2023 Arseny Maslennikov <arseny@altlinux.org> 2.3.19-alt1
+- Removed /var/nobody altogether.
+
 * Fri Sep 04 2020 Alexey Shabalin <shaba@altlinux.org> 2.3.18-alt1
 - Added /etc/keys directory (by Mikhail Efremov).
 

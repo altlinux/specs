@@ -1,91 +1,70 @@
-Name: basesystem
+Name: interactivesystem
 Version: sisyphus
 Release: alt25
 Epoch: 1
 
-Summary: The skeleton package which defines a basic %distribution chroot
+Summary: The skeleton package which defines an interactive %distribution system
 License: GPLv2+
 Group: System/Base
 BuildArch: noarch
 
-Requires: altlinux-release
-Requires: bash
-Requires: common-licenses
-Requires: etcskel
-Requires: filesystem
-Requires: gawk
-Requires: getopt
-Requires: gzip
-Requires: perl-base
-Requires: rootfiles
-Requires: rpm
-Requires: setup
-Requires: shadow-utils
-Requires: tar
-Requires: util-linux
-Requires: vitmp
-Requires: xz
-Requires: zstd
+Requires: basesystem
+
+Requires: console-common-scripts
+Requires: crontabs
+Requires: info
+Requires: losetup
+Requires: man
+Requires: network-config-subsystem
+Requires: passwd
+Requires: sash
+Requires: time
+Requires: which
+
+%package systemd
+Summary: The skeleton package which defines an interactive %distribution system
+Group: System/Base
+Requires: %name = %epoch:%version-%release
+Requires: systemd
+
+%package sysv
+Summary: The skeleton package which defines an interactive %distribution system
+Group: System/Base
+Requires: %name = %epoch:%version-%release
+Requires: chkconfig
+Requires: mingetty
+Requires: stmpclean
+Requires: sysvinit
 
 %description
-This package defines the components of a basic %distribution system
+This package defines the components of an interactive %distribution system
 (for example, the package installation order to use during bootstrapping).
 
+This is a base package for interactivesystem.
+
+%description systemd
+This package defines the components of an interactive %distribution system
+(for example, the package installation order to use during bootstrapping).
+
+To implement some system functions, it pulls in tools from the systemd project.
+
+%description sysv
+This package defines the components of an interactive %distribution system
+(for example, the package installation order to use during bootstrapping).
+
+To implement some system functions, it pulls in tools to accompany the sysv rc,
+making sure to avoid tools from the systemd project.
+
 %files
-
-%post
-# Upgrade passwd manually, until we gain an independent implementation
-# of sysusers.
-# Enforce UID and GID change for `nobody'; https://altlinux.org/NobodySubjectPolicy
-line="$(grep ^nobody /etc/passwd)"
-[ "${line#*:*:65534:65534:}" != "$line" ] || {
-	script='
-BEGIN {
-	FS = ":"; OFS = ":";
-}
-{
-	if ($1 == "nobody") {
-		$1 = "nobody";
-		if ($2 != "*") {
-			$2 = "x";
-		}
-		$3 = "65534";
-		$4 = "65534";
-		$5 = "Linux Kernel overflowuid";
-		$6 = "/dev/null";
-		$7 = "/dev/null";
-		NF = 7;
-	}
-	print;
-}
-'
-	awk "$script" /etc/passwd > /etc/passwd.new
-	mv /etc/passwd.new /etc/passwd
-
-	script='
-BEGIN {
-	FS = ":"; OFS = ":";
-}
-{
-	if ($1 == "nobody") {
-		$1 = "nobody";
-		$2 = "x";
-		$3 = "65534";
-		NF = 4;
-	}
-	print;
-}
-'
-	awk "$script" /etc/group > /etc/group.new
-	mv /etc/group.new /etc/group
-}
+%files systemd
+%files sysv
 
 %changelog
 * Sun Dec 10 2023 Arseny Maslennikov <arseny@altlinux.org> 1:sisyphus-alt25
-- Split interactivesystem away from basesystem.
-
-* Sat Dec 09 2023 Arseny Maslennikov <arseny@altlinux.org> 1:sisyphus-alt24
-- Added a facility to upgrade default passwd entries, hopefully temporary.
+- Split interactivesystem away from basesystem to its own source package.
+- Added two new interactivesystem-* packages (Closes: 28681):
+  + interactivesystem-systemd;
+  + interactivesystem-sysv.
 
 * Fri Mar 26 2021 Arseny Maslennikov <arseny@altlinux.org> 1:sisyphus-alt23
 - Cleaned up dependencies of interactivesystem:

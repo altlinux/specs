@@ -1,6 +1,6 @@
 Name: sisyphus_check
-Version: 0.8.68
-Release: alt2
+Version: 0.8.69
+Release: alt1
 
 Summary: package checker for Sisyphus
 License: GPLv2+
@@ -35,6 +35,9 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Tue Nov 14 2023 Arseny Maslennikov <arseny@altlinux.org> 0.8.69-alt1
+- Disallowed file objects whose owner or group is nobody.
+
 * Wed Nov 01 2023 Dmitry V. Levin <ldv@altlinux.org> 0.8.68-alt2
 - Suppressed dependency on alt-rpmkeys-checksig.
 

@@ -1,5 +1,5 @@
 Name: setup
-Version: 2.2.19
+Version: 2.2.20
 Release: alt1
 
 Summary: Initial set of configuration files
@@ -72,6 +72,10 @@ find %buildroot%_sysconfdir/profile.d -type l |
 %_datadir/base-passwd
 
 %changelog
+* Tue Nov 07 2023 Arseny Maslennikov <arseny@altlinux.org> 2.2.20-alt1
+- Install the default overflowuid defined by Linux (incl. our kernels) as the
+  nobody user and group. The user and group 99 are installed as _nobody99.
+
 * Wed Nov 01 2023 Arseny Maslennikov <arseny@altlinux.org> 2.2.19-alt1
 - /etc/services: dropped incorrect last-updated timestamp (ALT#47357)
 - /etc/protocols: dropped incorrect last-updated timestamp (ALT#47357)
