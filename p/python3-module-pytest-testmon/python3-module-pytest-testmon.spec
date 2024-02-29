@@ -2,7 +2,7 @@
 %global pypi_name pytest-testmon
 
 Name: python3-module-%pypi_name
-Version: 2.0.9
+Version: 2.1.1
 Release: alt1
 Summary: A py.test plug-in which executes only tests affected by recent changes
 License: AGPL-3.0
@@ -42,6 +42,9 @@ executes only tests affected by recent changes.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 28 2024 Stanislav Levin <slev@altlinux.org> 2.1.1-alt1
+- 2.0.9 -> 2.1.1.
+
 * Thu Jun 15 2023 Stanislav Levin <slev@altlinux.org> 2.0.9-alt1
 - 2.0.8 -> 2.0.9.
 
