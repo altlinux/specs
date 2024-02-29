@@ -7,7 +7,7 @@
 %define modesetmodule_name	nvidia-modeset
 %define uvmmodule_name		nvidia-uvm
 %define drmmodule_name		nvidia-drm
-%define package_version	535.154.05
+%define package_version	550.54.14
 %define module_version	%package_version
 %ifarch %ix86 armh
 %define module_version	390.157
@@ -25,7 +25,7 @@
 
 %define legacy7 %nil
 %nvIF_ver_lt %xorg_ver 99
-%define legacy7 470.223.02
+%define legacy7 470.239.06
 %endif
 %define legacy7_src %(echo %legacy7 | tr -d .)
 
@@ -294,6 +294,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Jan 23 2024 Sergey V Turchin <zerg at altlinux dot org> 550.54.14-alt1
+- new releases (550.54.14, 470.239.06)
 
 * Tue Jan 23 2024 Sergey V Turchin <zerg at altlinux dot org> 535.154.05-alt1
 - new release (535.154.05)
