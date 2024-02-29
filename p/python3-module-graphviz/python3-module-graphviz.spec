@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.20.1
-Release: alt3
+Release: alt4
 Summary: Simple Python interface for Graphviz
 License: MIT
 Group: Development/Python3
@@ -16,7 +16,6 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-%release.patch
-Patch1: graphviz-0.20.1-fix-test-py312.patch
 Requires: graphviz
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -35,8 +34,7 @@ BuildRequires: fontconfig
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -54,6 +52,9 @@ BuildRequires: fontconfig
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 28 2024 Stanislav Levin <slev@altlinux.org> 0.20.1-alt4
+- Fixed FTBFS.
+
 * Thu Jan 25 2024 Anton Vyatkin <toni@altlinux.org> 0.20.1-alt3
 - Fixed FTBFS.
 
