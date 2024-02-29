@@ -90,10 +90,11 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %endif
 
 %def_with desktop_file
+%def_with docs
 
 Name: python3
-Version: %{pybasever}.1
-Release: alt2
+Version: %{pybasever}.2
+Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
 
@@ -123,6 +124,7 @@ BuildRequires: zlib-devel libuuid-devel libnsl2-devel
 %{?_with_valgrind:BuildRequires: valgrind-devel}
 %{?_with_desktop_file:BuildRequires: desktop-file-utils}
 %{?!_without_check:%{?!_disable_check:BuildRequires: /dev/pts /proc}}
+%{?_with_docs:BuildRequires: python3-module-sphinx python3-module-python-docs-theme}
 
 # Fix find-requires
 %global __python3 %buildroot%_bindir/python3
@@ -319,6 +321,20 @@ in production.
 You might want to install the python3-test package if you're developing
 python 3 code that uses more than just unittest and/or test_support.py.
 
+%if_with docs
+%package doc
+Summary: Documentation for the Python 3 programming language
+Group: Documentation
+
+%description doc
+Documentation for the Python 3 programming language, interpreter,
+and bundled module library in the HTML format.
+
+%description doc -l ru_RU.UTF-8
+Документация по языку программирования Python 3, его интерпретатору
+и распространяемой с ним библиотеке модулей, в формате HTML.
+%endif
+
 %prep
 %setup
 
@@ -429,6 +445,12 @@ popd
 
 build
 
+%if_with docs
+sphinx-build-3 Doc html
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+%endif
+
 # ======================================================
 # Installing the built code:
 # ======================================================
@@ -446,7 +468,7 @@ make install DESTDIR=%buildroot INSTALL="install -p"
 
 # Here we copy some config files to make python suggest to compile with shared
 # library, not static. This can be verified by:
-# python3 -c 'import sys ; import distutils.sysconfig ; sys.stdout.write(distutils.sysconfig.get_config_var("BLDLIBRARY"))'
+# python3 -c 'import sys ; import sysconfig ; sys.stdout.write(sysconfig.get_config_var("BLDLIBRARY"))'
 # See more in ALT#40939
 cp -av ../build-shared/Makefile %buildroot%pylibdir/config-%pybasever%pyabi-%pyarch/Makefile
 cp -av ../build-shared/python-config %buildroot%_bindir/python3-config
@@ -534,10 +556,9 @@ cat > %buildroot%include_dir/pyconfig.h << EOF
 #endif
 EOF
 
-# Fix for bug 201434: make sure distutils looks at the right pyconfig.h file
-# Similar for sysconfig: sysconfig.get_config_h_filename tries to locate
-# pyconfig.h so it can be parsed, and needs to do this at runtime in site.py
-# when python starts up (bug 653058)
+# Fix for bug 201434: make sure sysconfig looks at the right pyconfig.h file
+# sysconfig.get_config_h_filename tries to locate pyconfig.h so it can be parsed,
+# and needs to do this at runtime in site.py when python starts up (bug 653058)
 #
 # Split this out so it goes directly to the pyconfig-32.h/pyconfig-64.h
 # variants:
@@ -562,8 +583,8 @@ find %buildroot -name \*.bat -exec rm -v {} \;
 find %buildroot/ -name "*~" -exec rm -v {} \;
 find . -name "*~" -exec rm -v {} \;
 
-# Get rid of crappy code:
-rm -v %buildroot%pylibdir/encodings/{,__pycache__/}rot_13*.py*
+# Heal, not kill. ALT#49401
+sed -i 's|\(/usr/bin/\)env \(python\)$|\1\23|' %buildroot%pylibdir/encodings/rot_13*.py
 
 # Skip the 2to3 test data (which might contain Python2 code)
 %global lib2to3_tests %pylibdir/test/test_lib2to3
@@ -945,7 +966,7 @@ $(pwd)/python -m test.regrtest \
 %pylibdir/zipfile/_path
 
 # "Makefile" and the config-32/64.h file are needed by
-# distutils/sysconfig.py:_init_posix(), so we include them in the core
+# sysconfig.py:_init_posix(), so we include them in the core
 # package, along with their parent directories (bug 531901):
 %dir %pylibdir/config-%pybasever%pyabi-%pyarch/
 %pylibdir/config-%pybasever%pyabi-%pyarch/Makefile
@@ -1031,7 +1052,17 @@ $(pwd)/python -m test.regrtest \
 %endif
 %tool_dir/scripts/run_tests.py
 
+%if_with docs
+%files doc
+%doc html/*
+%endif
+
 %changelog
+* Mon Feb 12 2024 Grigory Ustinov <grenka@altlinux.org> 3.12.2-alt1
+- Updated to upstream version 3.12.2.
+- Fixed rot13 codec (Closes: #49401).
+- Built with modern docs.
+
 * Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 3.12.1-alt2
 - Moved imp module to zombie-imp (thx to antohami@).
 
