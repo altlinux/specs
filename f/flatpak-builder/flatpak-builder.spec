@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _localstatedir %_var
 %define _libexecdir %_prefix/libexec
@@ -7,9 +7,11 @@
 %def_with system_debugedit
 %def_enable docs
 %{?_enable_docs:%def_enable docbook_docs}
+%def_disable check
+%def_enable installed_tests
 
 Name: flatpak-builder
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 Epoch:1
 
@@ -49,6 +51,13 @@ Requires: /usr/bin/unzip
 Requires: /usr/bin/7z
 %{?_with_system_debugedit:Requires: debugedit >= %debugedit_ver}
 
+%{?_enable_installed_tests:%add_python3_path %_libexecdir/installed-tests/%name
+%filter_from_requires /python2/d
+%add_python_compile_exclude %_libexecdir/installed-tests/%name/testpython.py
+}
+
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
 BuildRequires: flatpak >= %flatpak_ver
 BuildRequires: /usr/bin/appstreamcli appstream-compose >= %appstream_ver
 BuildRequires: libcap-devel
@@ -66,26 +75,37 @@ BuildRequires: xsltproc
 %{?_with_system_debugedit:BuildRequires: /usr/bin/debugedit libdw-devel >= %libdw_ver}
 %{?_enable_docs:BuildRequires: xsltproc docbook-dtds docbook-style-xsl}
 %{?_enable_docbook_docs:BuildRequires: xmlto}
+%{?_enable_installed_tests:BuildRequires: rpm-build-python3 rpm-build-python}
 
 %description
 Flatpak-builder is a tool for building flatpaks from sources.
 
 See http://flatpak.org/ for more information.
 
+%package tests
+Summary: Tests for %name
+Group: Development/Other
+Requires: %name = %EVR
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the installed Flatpak-builder.
+
 %prep
 %setup
 
 %build
-%autoreconf
-%configure \
-    %{?_disable_docs:--disable-documentation --disable-docbook-docs} \
-    %{?_enable_docbook_docs:--enable-docbook-docs} \
-    %{?_with_system_debugedit:--with-system-debugedit}
+%meson \
+    %{subst_enable_meson_feature docs docs} \
+    %{subst_enable_meson_bool installed_tests installed_tests}
 %nil
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
+
+%check
+%__meson_test
 
 %files
 %_bindir/%name
@@ -94,7 +114,16 @@ See http://flatpak.org/ for more information.
 %_man5dir/flatpak-manifest.5*
 %{?_enable_docbook_docs:%doc %_docdir/%name}}
 
+%files tests
+%_libexecdir/installed-tests/%name
+%_datadir/installed-tests/%name
+
 %changelog
+* Fri Mar 01 2024 Yuri N. Sedunov <aris@altlinux.org> 1:1.4.2-alt1
+- updated to 1.4.2-2-g8c036e00
+- build with Meson
+- new -tests subpackage
+
 * Sun Feb 11 2024 Yuri N. Sedunov <aris@altlinux.org> 1:1.4.1-alt1
 - 1.4.1
 
