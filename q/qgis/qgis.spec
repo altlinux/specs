@@ -9,7 +9,7 @@
 
 Name:    qgis
 Version: 3.36.0
-Release: alt1
+Release: alt2
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPL-3.0+ with exceptions
@@ -26,6 +26,7 @@ Source5: qgis.xml
 Patch1: qgis-serverprefix.patch
 Patch2: qgis-no-politics.patch
 Patch3: qgis-alt-python3-libpath.patch
+Patch2000: qgis-e2k.patch
 
 # Fix unresolved symbols in grass based libs
 %set_verify_elf_method unresolved=relaxed
@@ -184,6 +185,9 @@ Please refer to %name-server-README for details!
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%ifarch %e2k
+%patch2000 -p1
+%endif
 
 # Delete bundled libs
 rm -rf src/core/gps/qextserialport
@@ -194,6 +198,10 @@ sed -i '/dxf2shp_converter/d' src/plugins/CMakeLists.txt
 gzip ChangeLog
 
 %build
+%ifarch %e2k
+# "error: cpio archive too big"
+%define optflags_debug -g0
+%endif
 %add_optflags -Wno-error=return-type
 CFLAGS="${CFLAGS:-%optflags}"; export CFLAGS;
 CXXFLAGS="${CXXFLAGS:-%optflags}"; export CXXFLAGS;
@@ -370,6 +378,9 @@ rm -rf %buildroot%_datadir/%name/FindQGIS.cmake \
 %endif
 
 %changelog
+* Fri Mar 01 2024 Michael Shigorin <mike@altlinux.org> 3.36.0-alt2
+- E2K: fix build (ilyakurdyukov@).
+
 * Sat Feb 24 2024 Andrey Cherepanov <cas@altlinux.org> 3.36.0-alt1
 - New version.
 - Renamed ro qgis.
