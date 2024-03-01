@@ -5,7 +5,7 @@
 
 Name: bin-marcosnils
 Version: 0.17.3
-Release: alt1
+Release: alt1.1
 Summary: Effortless binary manager
 License: MIT
 Group: System/Configuration/Packaging
@@ -22,7 +22,7 @@ different sources (mostly from GitHub or Docker registry).
 %setup
 
 %build
-%ifnarch %ix86 armh riscv64
+%ifnarch %ix86 armh riscv64 loongarch64
 export CGO_ENABLED=0
 %endif
 go build -v -buildmode=pie -ldflags \
@@ -43,6 +43,11 @@ go test -v ./...
 %_bindir/bin
 
 %changelog
+* Wed Feb 28 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.17.3-alt1.1
+- NMU: fixed FTBFS on LoongArch:
+  + -buildmode=pie requires cgo here
+  + use golang.org/x/sys@v0.0.0-20220712014510-0a85c31ab51e
+
 * Sat Feb 24 2024 Vitaly Chikunov <vt@altlinux.org> 0.17.3-alt1
 - Update to v0.17.3 (2024-01-31).
 
