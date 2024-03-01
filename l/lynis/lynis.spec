@@ -5,8 +5,8 @@ Group: File tools
 %global bashcompdir %(pkg-config --variable=completionsdir bash-completion)
 
 Name:           lynis
-Version:        3.0.0
-Release:        alt3
+Version:        3.0.9
+Release:        alt1
 Summary:        Security and system auditing tool
 License:        GPLv3
 URL:            https://cisofy.com/lynis/
@@ -96,6 +96,9 @@ done
 %ghost %_localstatedir/log/lynis-report.dat
 
 %changelog
+* Fri Mar 01 2024 Pavel Vasenkov <pav@altlinux.org> 3.0.9-alt1
+- update new release 3.0.9 (Closed: #49562)
+
 * Mon Dec 04 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt3
 - Fixed FTBFS (Closes: #48583).
 
