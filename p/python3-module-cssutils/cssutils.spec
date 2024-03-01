@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.7.1
+Version: 2.9.0
 Release: alt1
 Summary: CSS Cascading Style Sheets library for Python
 License: LGPL-3.0
@@ -55,6 +55,9 @@ any rendering facilities!
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 01 2024 Stanislav Levin <slev@altlinux.org> 2.9.0-alt1
+- 2.7.1 -> 2.9.0.
+
 * Tue Jun 13 2023 Stanislav Levin <slev@altlinux.org> 2.7.1-alt1
 - 2.3.0 -> 2.7.1.
 
