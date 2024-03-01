@@ -4,7 +4,7 @@
 
 Name: libhdf51.10
 Version: 1.10.6
-Release: alt3
+Release: alt4
 
 Summary: Hierarchical Data Format 5 library
 License: Nearly BSD, but changed sources must be marked
@@ -104,6 +104,9 @@ sed -i	-e 's,-Wlogical-op,,' \
 	-e 's,-Walloca,,' \
 	-e 's,-Wformat-overflow=2,,' \
 	-e 's,-Wrestrict,,' \
+	-e 's,-Wattribute-alias=2,,' \
+	-e 's,-Wattribute-alias,,' \
+	-e 's,-Wmissing-profile,,' \
 	CMakeLists.txt config/gnu-flags \
 	config/cmake/HDFCompilerFlags.cmake
 %endif
@@ -155,6 +158,9 @@ EOF
 %_libdir/lib*.so.%{soverhl}.*
 
 %changelog
+* Fri Mar 01 2024 Michael Shigorin <mike@altlinux.org> 1.10.6-alt4
+- E2K: avoid more lcc-unsupported options
+
 * Sat Feb 10 2024 Anton Farygin <rider@altlinux.ru> 1.10.6-alt3
 - built as compat package without development files
 
