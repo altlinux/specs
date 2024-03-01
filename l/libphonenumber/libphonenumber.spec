@@ -5,7 +5,7 @@
 
 Name: libphonenumber
 Version: 8.13.31
-Release: alt1
+Release: alt1.1
 
 Summary: Library to handle international phone numbers
 License: Apache-2.0 and BSD-3-Clause and MIT
@@ -46,6 +46,11 @@ developing applications that use %name.
 %setup -n %name-%version/cpp
 %patch1 -b .link
 
+%ifarch %e2k
+# the problematic warning actually sits in protobuf (-Winvalid-offsetof)
+sed -i 's/-Werror/-Wno-error/g' {,../tools/cpp/}CMakeLists.txt
+%endif
+
 # gtest > 1.13 requires >= C++14
 sed -i 's|\(CMAKE_CXX_STANDARD \)11|\1%stdxx|' ../tools/cpp/CMakeLists.txt
 
@@ -77,6 +82,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/cmake/%name/
 
 %changelog
+* Fri Mar 01 2024 Yuri N. Sedunov <aris@altlinux.org> 8.13.31-alt1.1
+- E2K: ftbfs workaround (ilyakurdyukov@)
+
 * Sat Feb 24 2024 Yuri N. Sedunov <aris@altlinux.org> 8.13.31-alt1
 - 8.13.31
 
