@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.3.8
+Version: 2.0.2
 Release: alt1
 
 Summary: Iteration for datetime object with cron like format
@@ -16,20 +16,14 @@ VCS: http://github.com/kiorky/croniter
 BuildArch: noarch
 
 Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-BuildRequires: rpm-build-python3
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# install_requires=
-BuildRequires: python3(dateutil)
-
-BuildRequires: python3(pytz)
-BuildRequires: python3(pytest)
-BuildRequires: python3(packaging)
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -38,6 +32,11 @@ Croniter provides iteration for datetime object with cron like format.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements/test.txt
+%endif
 
 # Remove reundant script header to avoid rpmlint warnings
 find -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
@@ -49,10 +48,8 @@ find -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 %pyproject_install
 
 %check
-# override upstream's config (too much to patch)
-%tox_create_default_config
 # TimezoneDateutil test fails, see https://bugzilla.altlinux.org/show_bug.cgi?id=39164
-%tox_check_pyproject -- -vra -k 'not testTimezoneDateutil'
+%pyproject_run_pytest -ra -k 'not testTimezoneDateutil'
 
 %files
 %doc README.rst
@@ -60,6 +57,9 @@ find -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 01 2024 Stanislav Levin <slev@altlinux.org> 2.0.2-alt1
+- 1.3.8 -> 2.0.2.
+
 * Tue Nov 22 2022 Stanislav Levin <slev@altlinux.org> 1.3.8-alt1
 - 1.2.0 -> 1.3.8.
 
