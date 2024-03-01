@@ -3,8 +3,8 @@
 %def_disable clang
 
 Name: deepin-launchpad
-Version: 0.4.3
-Release: alt2
+Version: 0.4.6
+Release: alt1
 
 Summary: Launcher for DDE - next generation
 
@@ -29,7 +29,7 @@ BuildRequires(pre): gcc-c++
 %endif
 BuildRequires: cmake qt5-tools-devel qt5-declarative-devel qt5-svg-devel qt5-quickcontrols2-devel libgtest-devel dtk6-common-devel dtkcore libdtkgui-devel libappstream-qt-devel libsystemd-devel libgio-devel
 
-Requires: libqt5-core = %_qt5_version
+Requires: libqt5-gui = %_qt5_version
 
 %description
 %summary.
@@ -64,8 +64,6 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/%repo/translations/dde-launchpad.qm
 %_datadir/metainfo/org.deepin.dde.launchpad.appdata.xml
 %_userunitdir/org.deepin.dde.Launcher1.service
-%dir %_userunitdir/dde-session-initialized.target.wants/
-%_userunitdir/dde-session-initialized.target.wants/org.deepin.dde.Launcher1.service
 %_datadir/dbus-1/services/org.deepin.dde.Launcher1.service
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
@@ -73,6 +71,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/dsg/configs/dde-launchpad/org.deepin.dde.launchpad.appsmodel.json
 
 %changelog
+* Fri Mar 01 2024 Leontiy Volodin <lvol@altlinux.org> 0.4.6-alt1
+- New version 0.4.6.
+
 * Fri Jan 19 2024 Leontiy Volodin <lvol@altlinux.org> 0.4.3-alt2
 - Requires: libqt5-core = %%_qt5_version.
 
