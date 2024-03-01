@@ -3,7 +3,7 @@
 %def_enable clang
 
 Name: dtkdeclarative
-Version: 5.6.21
+Version: 5.6.24
 Release: alt1
 Summary: Widget development toolkit for Deepin
 Summary(ru): Инструментарий по разработке виджетов для Deepin
@@ -14,12 +14,14 @@ Url: https://github.com/linuxdeepin/dtkdeclarative
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch: %name-%version-%release.patch
 
+%if_enabled clang
 ExcludeArch: armh
+%endif
 
 Provides: dtk5-declarative = %EVR
 Obsoletes: dtk5-declarative < %EVR
 
-BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
 %if_enabled clang
 BuildRequires: clang-devel
 %else
@@ -29,6 +31,8 @@ BuildRequires: gcc-c++
 # Automatically added by buildreq on Fri Oct 20 2023
 # optimized out: alt-os-release clang17.0 clang17.0-support cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libclang-cpp17 libdouble-conversion3 libdtkcore-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-qmlmodels libqt5-quick libqt5-quickcontrols2 libqt5-quicktemplates2 libqt5-svg libqt5-widgets libqt5-xml libsasl2-3 libssl-devel libstdc++-devel llvm-common llvm17.0-libs pkg-config python3 python3-base qt5-base-devel qt5-declarative-devel qt5-tools sh5
 BuildRequires: cmake libdtkgui-devel qt5-quickcontrols2-devel qt5-tools-devel
+
+Requires: libqt5-core = %_qt5_version
 
 %description
 dtkdeclarative is a widget development toolkit based on QtQuick/QtQml, which is a brand new substitute for dtkwidget. dtkdeclarative is developed based on qtdeclarative. It covers all existing QML widgets and adds plenty of DTK friendly visual effects and color schemes. Compared to dtkwidget. It has:
@@ -106,10 +110,11 @@ export READELF="llvm-readelf"
   -DBUILD_DOCS=OFF \
   -DMKSPECS_INSTALL_DIR=%_qt5_archdatadir/mkspecs/modules/ \
   -DCMAKE_INSTALL_PREFIX=%_prefix \
-  -DCMAKE_INSTALL_LIBDIR=%_libdir \
+  -DINCLUDE_INSTALL_DIR=include \
+  -DCMAKE_INSTALL_LIBDIR=%_lib \
+  -DLIB_INSTALL_DIR=%_lib \
   -DDTK_VERSION=%version \
   -DVERSION=%version \
-  -DLIB_INSTALL_DIR=%_libdir \
 #
 cmake --build %_cmake__builddir -j%__nprocs
 
@@ -124,7 +129,7 @@ cmake --build %_cmake__builddir -j%__nprocs
 %dir %_qt5_qmldir/org/deepin/dtk/
 %_qt5_qmldir/org/deepin/dtk/libdtkdeclarativeplugin.so
 %_qt5_qmldir/org/deepin/dtk/qmldir
-%_desktopdir/dtk-exhibition.desktop
+%dir %_datadir/dtk5/
 %_datadir/dtk5/DDeclarative/
 
 %files -n lib%name%soname
@@ -142,6 +147,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_datadir/qtcreator/templates/wizards/projects/qml-app-template/
 
 %changelog
+* Fri Mar 01 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.24-alt1
+- New version 5.6.24.
+- Requires: libqt5-core = %%_qt5_version.
+
 * Thu Jan 11 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.21-alt1
 - New version 5.6.21.
 
