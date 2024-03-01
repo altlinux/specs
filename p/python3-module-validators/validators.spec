@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.21.2
+Version: 0.22.0
 Release: alt1
 
 Summary: Python data validation for Humans
@@ -50,6 +50,9 @@ schema.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 01 2024 Stanislav Levin <slev@altlinux.org> 0.22.0-alt1
+- 0.21.2 -> 0.22.0.
+
 * Mon Aug 14 2023 Stanislav Levin <slev@altlinux.org> 0.21.2-alt1
 - 0.18.1 -> 0.21.2.
 
