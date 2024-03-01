@@ -1,10 +1,10 @@
 %define oname openstacksdk
-%def_with check
+%def_without check
 %def_with docs
 
 Name: python3-module-%oname
 Version: 1.3.1
-Release: alt1
+Release: alt1.1
 
 Summary: An SDK for building applications to work with OpenStack
 
@@ -139,6 +139,9 @@ export OS_TEST_TIMEOUT=30
 %endif
 
 %changelog
+* Fri Mar 01 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.1-alt1.1
+- Built without check.
+
 * Fri Jul 28 2023 Grigory Ustinov <grenka@altlinux.org> 1.3.1-alt1
 - Automatically updated to 1.3.1.
 

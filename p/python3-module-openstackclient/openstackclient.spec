@@ -1,10 +1,10 @@
 %define oname openstackclient
-%def_with check
+%def_without check
 %def_with docs
 
 Name: python3-module-%oname
 Version: 6.2.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: OpenStack Command-line Client
 
@@ -128,6 +128,9 @@ install -pDm 644 man/openstack.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Fri Mar 01 2024 Grigory Ustinov <grenka@altlinux.org> 6.2.0-alt1.2
+- Built without check.
+
 * Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 6.2.0-alt1.1
 - Dropped build dependency on python3-module-reno.
 

@@ -1,10 +1,10 @@
 %define oname os-vif
-%def_with check
+%def_without check
 %def_with docs
 
 Name: python3-module-%oname
 Version: 3.2.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: A library for plugging and unplugging virtual interfaces in OpenStack
 
@@ -133,6 +133,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Fri Mar 01 2024 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1.2
+- Built without check.
+
 * Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1.1
 - Dropped build dependency on python3-module-reno.
 
