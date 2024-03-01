@@ -1,8 +1,8 @@
 %def_without clang
 
 Name: util-dfm
-Version: 1.2.21
-Release: alt2
+Version: 1.2.22
+Release: alt1
 
 Summary: A Toolkits of libdfm-io, libdfm-mount and libdfm-burn
 
@@ -24,14 +24,13 @@ BuildRequires: llvm-devel
 BuildRequires: gcc-c++
 %endif
 
-Requires: libqt5-core = %_qt5_version
-
 %description
 %summary.
 
 %package doc
 Summary: Documentation for %name.
 Group: Documentation
+BuildArch: noarch
 
 %description doc
 This package provides documentation for %name.
@@ -135,6 +134,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/cmake/dfm-burn/dfm-burnConfig.cmake
 
 %changelog
+* Fri Mar 01 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.22-alt1
+- New version 1.2.22.
+- No more needed libqt5-core = %%_qt5_version.
+
 * Thu Jan 25 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.21-alt2
 - Requires: libqt5-core = %%_qt5_version.
 
