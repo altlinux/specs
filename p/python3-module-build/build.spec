@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.3
-Release: alt2
+Version: 1.1.1
+Release: alt1
 Summary: Simple, correct PEP 517 build frontend
 License: MIT
 Group: Development/Python3
@@ -61,6 +61,9 @@ Requires: python3-module-%pypi_name
 %_bindir/pyproject-build
 
 %changelog
+* Fri Mar 01 2024 Stanislav Levin <slev@altlinux.org> 1.1.1-alt1
+- 1.0.3 -> 1.1.1.
+
 * Thu Feb 15 2024 Stanislav Levin <slev@altlinux.org> 1.0.3-alt2
 - Fixed FTBFS (setuptools 69.0.3).
 
