@@ -113,7 +113,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 %endif
 
 Name: wine
-Version: %major.8
+Version: %major.9
 Release: alt1
 Epoch: 1
 
@@ -886,6 +886,11 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Fri Mar 01 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.9-alt1
+- update patches to staging wine-9.0
+  + compstui: Add more string resources. (eterbug #17016)
+  + revert "prntvpt: Prefer builtin. (eterbug #14957)"
+
 * Mon Feb 26 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.8-alt1
 - update patches to staging wine-9.0
   - wineps.drv: Return default resolution if PPD doesn't provide the list of supported resolutions. (eterbug #17039)
