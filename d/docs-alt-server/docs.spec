@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.2
-Release: alt8
+Release: alt9
 
 Summary: %Variant documentation
 License: %fdl
@@ -47,6 +47,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Fri Mar 1 2024 Elena Mishina <lepata@altlinux.org> 10.2-alt9
+- update to latest public distr of ALT Server 10.2
+- small improvements
+
 * Tue Feb 20 2024 Elena Mishina <lepata@altlinux.org> 10.2-alt8
 - bug fixes (closes: #49441)
 
