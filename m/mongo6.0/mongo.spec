@@ -3,8 +3,8 @@
 %endif
 
 Name: mongo6.0
-Version: 6.0.13
-Release: alt2.1
+Version: 6.0.14
+Release: alt1
 Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
 Group: Development/Databases
@@ -198,6 +198,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Fri Mar 01 2024 Alexei Takaseev <taf@altlinux.org> 6.0.14-alt1
+- 6.0.14
+
 * Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 6.0.13-alt2.1
 - NMU: Added zombie-imp to BuildRequires.
 
