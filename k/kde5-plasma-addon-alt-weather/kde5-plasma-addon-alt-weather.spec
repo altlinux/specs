@@ -2,7 +2,7 @@
 %global __find_debuginfo_files %nil
 
 Name: kde5-plasma-addon-alt-weather
-Version: 1.0.20
+Version: 1.0.21
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -47,6 +47,9 @@ The weather forecast addon for KDE Workspace 5 Plasma
 %_datadir/metainfo/*
 
 %changelog
+* Fri Mar 01 2024 Slava Aseev <ptrnine@altlinux.org> 1.0.21-alt1
+- Fix getting weather with en_* locales
+
 * Thu Feb 29 2024 Slava Aseev <ptrnine@altlinux.org> 1.0.20-alt1
 - Handle "calm" wind direction properly (closes: #49570)
 - Fix weather url when auto location enabled (closes: #49569)
