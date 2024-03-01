@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 4.1.0
-Release: alt1
+Release: alt2
 
 Summary: stestr is parallel Python test runner
 
@@ -38,6 +38,7 @@ BuildRequires: python3-module-ddt
 BuildRequires: python3-module-yaml
 BuildRequires: python3-module-tomlkit
 BuildRequires: python3-module-iso8601
+BuildRequires: python3-module-extras
 %endif
 
 %description
@@ -114,6 +115,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %doc LICENSE html
 
 %changelog
+* Fri Mar 01 2024 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt2
+- Fixed FTBFS.
+
 * Mon Sep 18 2023 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1
 - Automatically updated to 4.1.0.
 
