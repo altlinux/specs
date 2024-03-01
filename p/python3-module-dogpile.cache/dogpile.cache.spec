@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 
 Summary: A caching front-end based on the Dogpile lock
@@ -65,10 +65,7 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages
+%tox_check_pyproject
 
 %files
 %doc *.rst
@@ -76,6 +73,9 @@ tox.py3 --sitepackages
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Mar 01 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.2-alt1
+- Automatically updated to 1.3.2.
+
 * Sat Feb 10 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.1-alt1
 - Automatically updated to 1.3.1.
 
