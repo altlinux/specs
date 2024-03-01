@@ -8,7 +8,7 @@
 %define xdg_name org.gnome.Epiphany
 
 Name: epiphany
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: Epiphany is a GNOME web browser.
@@ -120,6 +120,9 @@ _EOF_
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Fri Mar 01 2024 Yuri N. Sedunov <aris@altlinux.org> 45.3-alt1
+- 45.3
+
 * Fri Jan 05 2024 Yuri N. Sedunov <aris@altlinux.org> 45.2-alt1
 - 45.2
 
