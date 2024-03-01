@@ -2,7 +2,7 @@
 
 Name:          fakegit
 Version:       1.1.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Emulating some "git" commands
 License:       MIT
 Group:         Development/Other
@@ -12,7 +12,6 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 Patch:         %name-%version-%release.patch
-Conflicts:     git-core
 
 %description
 The `fakegit` command provides some psuedo "git" commands. The clone is
@@ -28,14 +27,17 @@ The `ls-files` just ls all files within current, and the underneath folders.
 %autopatch -p1
 
 %install
-%makeinstall_std
+%makeinstall_std BINDIR=%_gamesbindir
 
 %files
 %doc *.md
-%_bindir/git
-%_bindir/%name
+%_gamesbindir/git
+%_gamesbindir/%name
 
 
 %changelog
+* Fri Mar 01 2024 Pavel Skrylev <majioa@altlinux.org> 1.1.0-alt1.1
+- ! fixed install path to games, which is also default one in PATH
+
 * Wed Feb 21 2024 Pavel Skrylev <majioa@altlinux.org> 1.1.0-alt1
 - Initial build v1.1.0 for Sisyphus.
