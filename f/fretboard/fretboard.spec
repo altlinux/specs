@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name Fretboard
-%define ver_major 5.3
+%define ver_major 5.4
 %define xdg_name dev.bragefuglseth.%_name
 
 %def_disable bootstrap
@@ -65,6 +65,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Fri Mar 01 2024 Yuri N. Sedunov <aris@altlinux.org> 5.4-alt1
+- 5.4
+
 * Thu Feb 01 2024 Yuri N. Sedunov <aris@altlinux.org> 5.3-alt1
 - first build for Sisyphus
 
