@@ -81,7 +81,7 @@
 
 Name: node
 Version: %major.1
-Release: alt1
+Release: alt2
 
 Summary: Evented I/O for V8 Javascript
 
@@ -322,6 +322,9 @@ rm -rv deps/zlib deps/cares deps/brotli
 
 
 %if_with npm
+# fix https://bugzilla.altlinux.org/43430
+subst 's|// obj\[key\] = flatOptions.userAgent|obj[key] = flatOptions.userAgent|' deps/npm/node_modules/@npmcli/config/lib/definitions/definitions.js
+
 # remove all node-gyp deps
 rm -rv deps/npm/node_modules/node-gyp/
 %else
@@ -433,6 +436,7 @@ cat <<EOF >> %buildroot%nodejs_sitelib/npm/.npmrc
 globalconfig=/etc/npmrc
 update-notifier=false
 EOF
+
 %endif
 
 %if_with nodejs_abi
@@ -506,6 +510,9 @@ rm -rv %buildroot/usr/share/doc/node/lldb_commands.py
 %endif
 
 %changelog
+* Fri Mar 01 2024 Vitaly Lipatov <lav@altlinux.ru> 20.11.1-alt2
+- fix npm config get user-agent output again (ALT bug 43430)
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 20.11.1-alt1
 - new version 20.11.1 (with rpmrb script)
 - enable build npm subpackage
