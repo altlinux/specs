@@ -19,11 +19,12 @@
 
 Name: dotnet-sdk-%_dotnet_major
 Version: 8.0.102%preview
-Release: alt1
+Release: alt2
 
 Summary: SDK for the .NET 8
 
 License: MIT
+URL: https://github.com/dotnet/sdk
 Group: Development/Other
 
 Source: %name-%version.tar
@@ -53,6 +54,9 @@ Requires: dotnet-targeting-pack-%_dotnet_major = %version-%release
 Requires: netstandard-targeting-pack-2.1 = %_dotnet_netstandartrelease
 
 Requires: dotnet-common
+
+# https://bugzilla.altlinux.org/49566
+Requires: ca-certificates-nuget.org
 
 AutoReq: yes,nomingw32,nomingw64,nomono,nomonolib
 AutoProv: no
@@ -158,6 +162,9 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %endif
 
 %changelog
+* Fri Mar 01 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.102-alt2
+- add Requires: ca-certificates-nuget.org (ALT bug 49566)
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.102-alt1
 - .NET SDK 8.0.102 release
 - CVE-2023-36038: .NET Denial of Service Vulnerability
