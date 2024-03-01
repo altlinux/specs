@@ -1,6 +1,6 @@
 Name: crrcsim
 Version: 0.9.12
-Release: alt2
+Release: alt3
 
 Summary: A Model-Airplane Flight Simulation Program
 License: GPLv2
@@ -11,6 +11,7 @@ Url: http://crrcsim.berlios.de/wiki
 Source0: %name-%version.tar.gz
 Source1: CRRCsim.desktop
 Patch1: %name-%version-alt-build.patch
+Patch2: %name-%version-alt-nonx86.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libjpeg-devel
@@ -37,10 +38,11 @@ such as joystick, mouse, keyboard ...
 %prep
 %setup
 %patch1 -p2
+%patch2 -p1
 
 %build
 %configure
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -60,6 +62,10 @@ desktop-file-install --vendor="" \
 %_man1dir/%name.1*
 
 %changelog
+* Fri Mar 01 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.9.12-alt3
+- NMU: fixed FTBFS on non-x86 architectures (made inputdev_parallel a stub
+  on non-x86 architectures).
+
 * Mon Jul 03 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.12-alt2
 - Fixed build with new toolchain
 
