@@ -7,7 +7,7 @@
 %def_with wx
 
 Name: python3-module-%oname
-Version: 3.7.2
+Version: 3.7.5
 Release: alt1
 
 Summary: Matlab(TM) style python plotting package
@@ -353,6 +353,9 @@ done
 %_datadir/matplotlib/mpl-data
 
 %changelog
+* Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 3.7.5-alt1
+- New version 3.7.5.
+
 * Wed Aug 16 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 3.7.2-alt1
 - Updated to 3.7.2.
 - Moved _backend_gtk to python3-module-matplotlib-backend_gtk
