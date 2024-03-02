@@ -12,7 +12,7 @@
 
 Name: python3-module-%oname
 Version: 6.6.1
-Release: alt1
+Release: alt2
 
 Summary: Python 3 bindings for Qt 6
 License: GPLv3
@@ -41,7 +41,7 @@ BuildRequires: python3-module-dbus-devel
 BuildRequires: qt6-connectivity-devel qt6-multimedia-devel qt6-sensors-devel
 BuildRequires: qt6-serialport-devel
 BuildRequires: qt6-svg-devel qt6-tools-devel qt6-websockets-devel
-BuildRequires: qt6-declarative-devel
+BuildRequires: qt6-declarative-devel qt6-webchannel-devel
 
 #if_with dbus
 # https://bugzilla.altlinux.org/show_bug.cgi?id=33873
@@ -117,13 +117,13 @@ sip-build \
 
 %files
 %doc NEWS README
-%python3_sitelibdir/PyQt6
+%python3_sitelibdir/PyQt6/
 %python3_sitelibdir/PyQt6-%version.dist-info/
 %exclude %python3_sitelibdir/PyQt6/bindings/
 %exclude %python3_sitelibdir/PyQt6/lupdate/
 %_libdir/qt6/plugins/PyQt6/
 %if_with dbus
-%python3_sitelibdir/dbus/mainloop/pyqt6.so
+%python3_sitelibdir/dbus/mainloop/pyqt6.abi3.so
 %endif
 
 %files devel
@@ -140,6 +140,9 @@ sip-build \
 #python3_sitelibdir/PyQt6/__pycache__/pyrcc*
 
 %changelog
+* Sat Mar 02 2024 Vitaly Lipatov <lav@altlinux.ru> 6.6.1-alt2
+- add BR: qt6-webchannel-devel
+
 * Sat Dec 09 2023 Anton Midyukov <antohami@altlinux.org> 6.6.1-alt1
 - new version (6.6.1) with rpmgs script
 
