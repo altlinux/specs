@@ -6,7 +6,7 @@
 
 Name: libbotan
 Version: 2.19.1
-Release: alt2.4
+Release: alt2.5
 
 Summary: A C++ Crypto Library
 License: BSD
@@ -60,6 +60,8 @@ Python extensions for botan
 %setup
 %ifarch %e2k
 %patch2000 -p1
+# The patch is correct, but there's a new ICE in the compiler.
+sed -i "/^e2k/d" src/lib/block/aes/aes_vperm/info.txt
 %endif
 
 %build
@@ -111,6 +113,9 @@ LD_LIBRARY_PATH=. ./botan-test
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Sat Mar 02 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.19.1-alt2.5
+- Fixed build for Elbrus
+
 * Thu Feb 08 2024 Ivan A. Melnikov <iv@altlinux.org> 2.19.1-alt2.4
 - NMU: fix building with boost 1.84.0
 
