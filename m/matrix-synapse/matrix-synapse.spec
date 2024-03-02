@@ -1,5 +1,5 @@
 Name: matrix-synapse
-Version: 1.89.0
+Version: 1.101.0
 Release: alt1
 
 Summary: Synapse: Matrix reference homeserver
@@ -8,7 +8,7 @@ Group: Communications
 
 Url: http://matrix.org
 
-# Source-url: https://github.com/matrix-org/synapse/archive/v%version.tar.gz
+# Source-url: https://github.com/element-hq/synapse/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
 # Cargo modules for build rust code in the rust dir
@@ -42,7 +42,7 @@ BuildRequires: python3 >= 3.8
 %py3_use pyasn1 >= 0.1.9
 %py3_use pyasn1-modules >= 0.0.7
 %py3_use bcrypt >= 3.1.7
-%py3_use Pillow >= 5.4.0
+%py3_use Pillow >= 10.0.1
 %py3_use sortedcontainers >= 1.5.2
 %py3_use pymacaroons-pynacl >= 0.13.0
 %py3_use msgpack >= 0.5.2
@@ -57,7 +57,8 @@ BuildRequires: python3 >= 3.8
 %py3_use cryptography >= 3.4.7
 %py3_use ijson >= 3.1.4
 %py3_use matrix-common >= 1.3.0
-%py3_use packaging >= 16.1
+%py3_use packaging >= 20.0
+%py3_use pydantic < 3
 %py3_use pydantic >= 1.7.4
 #py3_use setuptools-rust >= 1.3
 #py3_use matrix-synapse-ldap3 >= 0.1
@@ -80,16 +81,10 @@ BuildRequires: python3 >= 3.8
 %py3_use parameterized >= 0.7.4
 %py3_use idna >= 2.5
 
-# optional
-# wait for https://bugzilla.altlinux.org/47129
-#py3_use pyicu >= 2.10.2
-#py3_use icu
-
-# "url_preview"
-%py3_use lxml >= 3.5.0
+%py3_use icu >= 2.10.2
 
 # "test"
-%py3_use mock >= 2.0
+#py3_use mock >= 2.0
 
 BuildRequires: rust-cargo
 
@@ -108,7 +103,7 @@ Requires: python3-module-twisted-mail >= 17.5.0
 # optional
 %add_python3_req_skip opentracing
 # internal
-%add_python3_req_skip synapse.synapse_rust.push
+%add_python3_req_skip synapse.synapse_rust.push synapse.synapse_rust.acl synapse.synapse_rust.events
 
 %description
 Matrix is an ambitious new ecosystem for open federated Instant Messaging and VoIP.
@@ -183,6 +178,9 @@ fi
 %attr(0750,_synapse,_synapse) /var/log/synapse/
 
 %changelog
+* Sat Mar 02 2024 Vitaly Lipatov <lav@altlinux.ru> 1.101.0-alt1
+- new version 1.101.0 (with rpmrb script)
+
 * Sat Aug 05 2023 Vitaly Lipatov <lav@altlinux.ru> 1.89.0-alt1
 - new version 1.89.0 (with rpmrb script)
 - switch to pyproject.toml
