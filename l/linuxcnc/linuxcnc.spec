@@ -4,7 +4,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.9.2
-Release: alt2.20240203
+Release: alt3.20240203
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программное обеспечение для управления станками c ЧПУ
@@ -63,7 +63,7 @@ Requires: tclx tcl-blt
 %py3_requires PyQt5.Qsci
 
 # Fix me!!!
-%add_python3_req_skip __main__ gi.repository.GdkPixbuf gst gtk gtk.glade Cairo
+%add_python3_req_skip __main__ gi.repository.GdkPixbuf gst gtk glib gtk.glade Cairo
 %add_python3_req_skip emccanon interpreter
 %add_python3_req_skip plasmac qtvcp.lib.qt_pdf
 
@@ -237,6 +237,9 @@ rm %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Sat Mar 02 2024 Vitaly Lipatov <lav@altlinux.ru> 2.9.2-alt3.20240203
+- filter out python3(glib) require (fix incorrect autoreq) (see ALT bug #41092)
+
 * Mon Feb 12 2024 Anton Midyukov <antohami@altlinux.org> 2.9.2-alt2.20240203
 - new snapshot
 - fix Name of desktop files (Closes: 49380)
