@@ -1,51 +1,63 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
-%define modulename icu
-%define srcname PyICU
-%define icu_ver 6.9.1
+%define modname icu
+%define pypi_name PyICU
+%define icu_ver 7.4
 
-Name: python3-module-%modulename
+%def_disable check
+
+Name: python3-module-%modname
 # python3 setup.py -V|tail -1
-Version: 2.7.4
-Release: alt1.1
+Version: 2.12
+Release: alt2
 
 Summary: Python extension wrapping the ICU C++ API
 Group: Development/Python3
 License: MIT
-Url: https://pyicu.osafoundation.org/
+Url: https://gitlab.pyicu.org/main/pyicu
 
 %if_disabled snapshot
-Source: https://pypi.python.org/packages/source/P/PyICU/%srcname-%version.tar.gz
+Source: https://pypi.python.org/packages/source/P/PyICU/%pypi_name-%version.tar.gz
 %else
-Vcs: https://github.com/ovalhub/pyicu.git
-Source: %srcname-%version.tar
+Vcs: https://gitlab.pyicu.org/main/pyicu.git
+Source: %pypi_name-%version.tar
 %endif
-
-Patch: fix-building-with-python3.12.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ libicu-devel >= %icu_ver
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-devel python3-module-wheel python3-module-setuptools
+%{?_enable_check:BuildRequires: python3-module-pytest}
 
 %description
 PyICU - Python 3 extension wrapping the ICU C++ API.
 
 %prep
-%setup -n %srcname-%version
-%patch -p2
+%setup -n %pypi_name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%__python3 -m pytest
 
 %files
-%python3_sitelibdir/*
+%python3_sitelibdir/%modname/
+#%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%python3_sitelibdir/PyICU-%version.dist-info/
 %doc CREDITS README* CHANGES samples/
 
 
 %changelog
+* Sat Mar 02 2024 Yuri N. Sedunov <aris@altlinux.org> 2.12-alt2
+- updated to v2.12-9-g0cc78e3
+
+* Sat Mar 02 2024 Yuri N. Sedunov <aris@altlinux.org> 2.12-alt1
+- 2.12 (new %%Url, %%Vcs)
+- ported to %%pyproject* macros
+
 * Sun Dec 31 2023 Grigory Ustinov <grenka@altlinux.org> 2.7.4-alt1.1
 - NMU: fix building with python3.12.
 
