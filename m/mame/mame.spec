@@ -1,5 +1,5 @@
 Name: mame
-Version: 0.262
+Version: 0.263
 Release: alt1
 Group: Games/Arcade
 Summary: Multiple Arcade Machine Emulator
@@ -20,7 +20,7 @@ Source: %name-%version.tar
 Patch0: system_lua.patch
 Patch1: 0001-Add-update-for-russian-translation.patch
 
-BuildRequires: libexpat-devel rapidjson libsqlite3-devel libutf8proc-devel zlib-devel libjpeg-devel liblinenoise-devel
+BuildRequires: libexpat-devel rapidjson libsqlite3-devel libutf8proc-devel zlib-devel libjpeg-devel liblinenoise-devel glibc-devel
 BuildRequires: libflac-devel libglm-devel libportaudio2-devel libportmidi-devel fontconfig-devel eglexternalplatform-devel egl-wayland-devel libwayland-egl-devel wayland-devel
 BuildRequires: git-core libxcb libSDL2_ttf-devel libXi-devel libXinerama-devel libalsa-devel python-modules-compiler
 BuildRequires: python-modules-encodings python-modules-logging python-modules-xml qt5-base-devel libpulseaudio-devel
@@ -106,7 +106,7 @@ HTML documentation for MAME.
 %setup -n %name-%version
 
 %patch0 -p1
-%patch1 -p1
+#%%patch1 -p1
 
 rm -rf 3rdparty/compat \
     3rdparty/asio \
@@ -310,6 +310,10 @@ install -D -m 0644 docs/source/images/MAMElogo.svg %buildroot%_iconsdir/hicolor/
 %_datadir/%name/hash/*
 
 %changelog
+* Thu Feb 29 2024 Artyom Bystrov <arbars@altlinux.org> 0.263-alt1
+- Update to new version
+- Disable temporary patch for russian translation update (added to upstream)
+
 * Wed Jan 31 2024 Artyom Bystrov <arbars@altlinux.org> 0.262-alt1
 - Update to new version
 - Add temporary patch for russian translation update
