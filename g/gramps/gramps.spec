@@ -1,5 +1,5 @@
 Name: gramps
-Version: 5.1.6
+Version: 5.2.0
 Release: alt1
 
 Summary: Genealogical Research and Analysis Management Programming System
@@ -24,6 +24,9 @@ BuildRequires: intltool
 AutoReq:yes,nopython
 AutoProv:no
 
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
 %add_typelib_req_skiplist typelib(GtkosxApplication) typelib(Gtkspell)
 
 %add_python3_req_skip winreg
@@ -33,7 +36,7 @@ AutoProv:no
 # TODO: need build python-module-osmgpsmap
 %add_python3_req_skip osmgpsmap
 
-%py3_requires PyICU
+%py3_requires icu
 
 %description
 gramps (Genealogical Research and Analysis Management Programming
@@ -49,68 +52,45 @@ GRAMPS (Программная система управления генеал�
 %setup
 
 %build
-%python3_build
-# TODO: python3_build --server
+%pyproject_build
 
 %install
-%python3_install --resourcepath=%_datadir
+%pyproject_install
 
-mkdir -p %buildroot%_datadir/locale
-cp -pr build/mo/* %buildroot%_datadir/locale/
+#mkdir -p %buildroot%_datadir/locale
+#cp -pr build/mo/* %buildroot%_datadir/locale/
 #Remove duplicate doc
 rm -f %buildroot%_datadir/%name/COPYING
 
-mkdir -p %buildroot%_desktopdir/
-cp -p build/data/gramps.desktop %buildroot%_desktopdir/
-
-mkdir -p %buildroot%_datadir/mime/packages/
-cp -p build/data/gramps.xml %buildroot%_datadir/mime/packages/
-
-mkdir -p %buildroot%_datadir/application-registry/
-cp -p data/gramps.applications %buildroot%_datadir/application-registry/
-
-mkdir -p %buildroot%_datadir/appdata/
-cp -p build/data/gramps.appdata.xml %buildroot%_datadir/appdata/
-
-mkdir -p %buildroot%_man1dir/
-cp -p build/data/man/gramps.1.gz %buildroot%_man1dir/gramps.1.gz
-
-mkdir -p %buildroot%_pixmapsdir/
-cp -p images/gramps.png %buildroot%_pixmapsdir/
-
 rm -rf %buildroot%_docdir/gramps/
-#rm -rf %buildroot%_iconsdir/
 
-mkdir -p %buildroot%_iconsdir/hicolor/48x48/apps/
-cp -p %buildroot%_datadir/%name/images/%name.png %buildroot%_iconsdir/hicolor/48x48/apps/
-
-echo -n "%_datadir" > %buildroot%python3_sitelibdir/gramps/gen/utils/resource-path
+#echo -n "%_datadir" > %buildroot%python3_sitelibdir/gramps/gen/utils/resource-path
 
 # Bug? 'from .test import test_util as tu' resolved as python3(gramps.test.test)
 rm -rv %buildroot%python3_sitelibdir/gramps/test/
 
 #install -D -m644 %buildroot%_datadir/gramps/images/gramps.png %buildroot%_liconsdir/gramps.png
-%find_lang %name
+%find_lang %name --with-man
 
 %files -f %name.lang
 %doc AUTHORS FAQ NEWS README.md TODO
 %_bindir/%name
 %python3_sitelibdir/gramps/
-%python3_sitelibdir/gramps-*.egg-info
+%python3_sitelibdir/gramps-*.dist-info
 %_man1dir/*
 %_datadir/%name/
 %_desktopdir/*
-%_datadir/mime-info/*
-%_iconsdir/hicolor/48x48/apps/*
-%_datadir/application-registry/*
-%_datadir/appdata/*
-#%config %_sysconfdir/gconf/schemas/*
-%_datadir/mime/packages/*
-%_pixmapsdir/%name.png
-%_iconsdir/hicolor/*/apps/gramps.*
+%_datadir/metainfo/*
+%_iconsdir/hicolor/*/apps/*
 %_iconsdir/hicolor/*/mimetypes/*
+%_datadir/mime/packages/*
 
 %changelog
+* Sat Mar 02 2024 Vitaly Lipatov <lav@altlinux.ru> 5.2.0-alt1
+- new version 5.2.0 (with rpmrb script)
+- switch to pyproject_build
+- replace BR: PyICU with icu (see ALT bug #47129)
+
 * Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 5.1.6-alt1
 - new version 5.1.6 (with rpmrb script)
 
