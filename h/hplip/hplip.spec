@@ -29,7 +29,7 @@
 
 Name:    hplip
 Version: 3.23.12
-Release: alt2
+Release: alt3
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -333,10 +333,7 @@ Requires: dbus-tools-gui
 # Requires: notification-daemon
 # for hp-scan -n
 Requires: python%{pysuffix}-module-Pillow
-# from fedora 3.10.9-9 patch 33 (= 133)
-# Enable D-Bus threading (and require pygobject2) (bug #600932).
-# patch33 -p1 -b .dbus-threads
-Requires: python%{pysuffix}-module-pygobject
+Requires: python%{pysuffix}-module-pygobject3
 # hplip-gui uses lsusb
 Requires: %_bindir/lsusb
 
@@ -1128,6 +1125,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Sat Mar 02 2024 Andrey Cherepanov <cas@altlinux.org> 1:3.23.12-alt3
+- Requires python3-module-pygobject3 (ALT #49591).
+
 * Wed Feb 21 2024 Andrey Cherepanov <cas@altlinux.org> 1:3.23.12-alt2
 - Fixed crash on readfp (ALT #49464).
 
