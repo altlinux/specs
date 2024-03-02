@@ -11,7 +11,7 @@
 
 Name: pix
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: An image viewer and browser utility.
 License: GPLv2+
@@ -52,11 +52,11 @@ BuildRequires: libjpeg-devel libpng-devel libtiff-devel zlib-devel
 BuildRequires: libsoup-gnome-devel >= %soup_ver libsecret-devel
 BuildRequires: librsvg-devel intltool perl-XML-Parser gnome-common yelp-tools
 BuildRequires: gsettings-desktop-schemas-devel libwebp-devel >= %webp_ver libjson-glib-devel
-BuildRequires: libwebkit2gtk-devel >= %webkit_ver libchamplain-devel >= %champlain_ver
+BuildRequires: libwebkit2gtk-devel >= %webkit_ver
 %{?_enable_libopenraw:BuildPreReq: libopenraw-gnome-devel >= %openraw_ver}
 %{?_enable_libbrasero:BuildRequires: libbrasero-devel >= %brasero_ver}
 %{?_enable_web_albums:BuildRequires: bison flex}
-%{?_enabled_libchamplain:BuildRequires: libchamplain-devel >= %champlain_ver}
+%{?_enable_libchamplain:BuildRequires: libchamplain-devel >= %champlain_ver}
 BuildPreReq: meson
 BuildRequires: pkgconfig(xapp)
 
@@ -123,6 +123,9 @@ This package contains headers needed to build extensions for pix.
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 3.2.2-alt2
+- NMU: s/_enabled_libchamplain/_enable_libchamplain/
+
 * Fri Jan 05 2024 Anton Midyukov <antohami@altlinux.org> 3.2.2-alt1
 - new version (3.2.2) with rpmgs script
 
