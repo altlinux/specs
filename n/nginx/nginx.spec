@@ -1,7 +1,7 @@
 Name: nginx
 Summary: Fast HTTP server
 Version: 1.24.0
-Release: alt5
+Release: alt6
 License: BSD
 Group: System/Servers
 BuildRequires: libpcre2-devel libssl-devel perl-devel zlib-devel libkrb5-devel
@@ -17,6 +17,7 @@ BuildRequires: libxml2-devel libxslt-devel
 %def_with xslt
 %def_without debug
 %def_with geoip
+%def_with push_stream
 %def_with spnego
 %def_enable cache_purge
 %def_enable rtmp
@@ -36,6 +37,7 @@ Source12: nginx.filetrigger
 Source13: ngx_http_auth_pam_module.tar
 Source14: spnego-http-auth-nginx-module.tar
 Source15: nginx-accept_language-module.tar
+Source16: nginx-push-stream-module.tar
 Source100: %name.watch
 
 Patch0: cache-purge-fix-compatibility.patch
@@ -101,6 +103,16 @@ Requires: %name = %EVR
 Perl for nginx
 %endif
 
+%if_with push_stream
+%package push_stream
+Summary: Nginx Push Stream Module
+Group: System/Servers
+Requires: %name = %EVR
+
+%description push_stream
+A pure stream http push technology for your Nginx setup.
+%endif
+
 %package spnego
 Summary: Simple and Protected GSSAPI Negotiation Mechanism for nginx
 Group: System/Servers
@@ -124,7 +136,7 @@ Fast HTTP server, extremely useful as an Apache frontend
 
 
 %prep
-%setup -a 7 -a 10 -a 13 -a 14 -a 15
+%setup -a 7 -a 10 -a 13 -a 14 -a 15 -a 16
 sed -i 's/INSTALLSITEMAN3DIR=.*/INSTALLDIRS=vendor/' auto/lib/perl/make
 cp -f %SOURCE11 conf/mime.types
 
@@ -177,6 +189,9 @@ popd
 %endif
 %if_with auth_pam
 	--add-dynamic-module=ngx_http_auth_pam_module \
+%endif
+%if_with push_stream
+	--add-dynamic-module=nginx-push-stream-module \
 %endif
 	--with-http_sub_module \
 	--with-http_dav_module \
@@ -344,6 +359,12 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_perl_module.so
 %endif
 
+%if_with push_stream
+%files push_stream
+%config(noreplace) %nginx_etc/modules-available.d/http_push_stream.conf
+%modpath/ngx_http_push_stream_module.so
+%endif
+
 %files spnego
 %config(noreplace) %nginx_etc/modules-available.d/http_auth_spnego.conf
 %modpath/ngx_http_auth_spnego_module.so
@@ -353,6 +374,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Fri Mar 01 2024 Andrey Cherepanov <cas@altlinux.org> 1.24.0-alt6
+- added push_stream module
+
 * Thu Nov 09 2023 Anton Farygin <rider@altlinux.ru> 1.24.0-alt5
 - added upstream change 9165:cdda286c0f1b to improve the per-iteration stream
   handling limit for HTTP2 protocol (in is related to CVE-2023-44487)
