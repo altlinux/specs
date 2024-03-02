@@ -2,7 +2,7 @@
 
 Name: pyLinuxWheel
 Version: 0.6.1
-Release: alt4
+Release: alt5
 
 Summary: A simple utility to configure logitech steering wheels for Linux
 
@@ -20,7 +20,8 @@ BuildRequires(pre): rpm-build-python3
 # For desktop file & AppData
 BuildRequires: libappstream-glib desktop-file-utils
 
-Requires: python3-module-pycairo python3-module-evdev python3-module-pygobject python3-module-pyudev
+Requires: python3-module-pycairo python3-module-evdev python3-module-pyudev
+Requires: python3-module-pygobject3 libgtk+3-gir
 
 BuildArch: noarch
 
@@ -70,6 +71,9 @@ cp -rv data/rules/99-logitech-wheel-perms.rules %buildroot/lib/udev/rules.d/
 %_bindir/appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/io.itch.pyLinuxWheel.appdata.xml
 
 %changelog
+* Sat Mar 02 2024 Vitaly Lipatov <lav@altlinux.ru> 0.6.1-alt5
+- fix requires
+
 * Wed Dec 06 2023 Mikhail Tergoev <fidel@altlinux.org> 0.6.1-alt4
 - updated Russian translation (ALT bug: 48063)
 
