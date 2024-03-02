@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 # Based on https://github.com/iovisor/bcc/blob/master/SPECS/bcc.spec
 
@@ -13,12 +14,11 @@
 
 Name:		bcc
 Version: 0.29.1
-Release: alt1
+Release: alt2
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
-URL:		https://www.iovisor.org/technology/bcc
-Vcs:		https://github.com/iovisor/bcc.git
+Url:		https://github.com/iovisor/bcc
 
 Source:		%name-%version.tar
 Source1: libbpf-0.tar
@@ -41,15 +41,17 @@ BuildRequires: flex
 BuildRequires: libdebuginfod-devel
 BuildRequires: libelf-devel-static
 BuildRequires: liblzma-devel
+BuildRequires: libmlir-devel
 BuildRequires: libncurses-devel
+BuildRequires: libpolly-devel
 BuildRequires: libstdc++-devel
+BuildRequires: libxml2-devel
 BuildRequires: lld
 BuildRequires: llvm-devel
 BuildRequires: llvm-devel-static
 BuildRequires: python3-devel
 BuildRequires: python3-tools
 BuildRequires: zlib-devel
-BuildRequires: libxml2-devel libmlir-devel libpolly-devel
 %if_with luajit
 BuildRequires: libluajit-devel
 BuildRequires: luajit
@@ -165,6 +167,10 @@ tar xf %SOURCE2 -C libbpf-tools
 tar xf %SOURCE3 -C src/cc
 tar xf %SOURCE4 -C libbpf-tools
 
+# Poor man's pathfix.py
+grep -lrZx -e '#!/usr/bin/env python3\?' -e '#!/usr/bin/python' tools \
+	| xargs -0 sed -i '1s,#!.*,#!%__python3,'
+
 %build
 %define optflags_lto %nil
 
@@ -197,9 +203,6 @@ export CXX=clang++
 %make_build -C libbpf-tools BPFTOOL=/usr/sbin/bpftool V=1
 
 %install
-%set_verify_elf_method relaxed
-pathfix.py -pni %__python3 tools
-
 %cmake_install
 
 # Cannot make noarch package because bcc exists not on all arches
@@ -295,6 +298,9 @@ rm /tmp/vm.* /tmp/initramfs-*.img
 %files checkinstall
 
 %changelog
+* Sat Mar 02 2024 Vitaly Chikunov <vt@altlinux.org> 0.29.1-alt2
+- Fix FTBFS after removal of pathfix.py on python3 update.
+
 * Thu Jan 04 2024 Vitaly Chikunov <vt@altlinux.org> 0.29.1-alt1
 - Update to v0.29.1 (2023-12-08).
 
