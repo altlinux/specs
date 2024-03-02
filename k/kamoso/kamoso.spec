@@ -1,7 +1,7 @@
 %def_without ru_doc
 
 Name:    kamoso
-Version: 24.01.95
+Version: 24.02.0
 Release: alt1
 
 Group:   Video
@@ -99,6 +99,9 @@ itstool -m $TMPDIR/kamoso.mo -o ru/ doc/index.docbook
 %_K5notif/%name.notifyrc
 
 %changelog
+* Sat Mar 02 2024 Andrey Cherepanov <cas@altlinux.org> 24.02.0-alt1
+- New version.
+
 * Wed Jan 31 2024 Andrey Cherepanov <cas@altlinux.org> 24.01.95-alt1
 - New version.
 
