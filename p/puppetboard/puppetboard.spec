@@ -1,5 +1,5 @@
 Name:    puppetboard
-Version: 5.3.0
+Version: 5.4.0
 Release: alt1
 
 Summary: Web frontend for PuppetDB
@@ -98,6 +98,9 @@ getent passwd puppetboard > /dev/null || \
 %dir %wsgi_dir
 
 %changelog
+* Sat Mar 02 2024 Andrey Cherepanov <cas@altlinux.org> 5.4.0-alt1
+- New version.
+
 * Thu Feb 08 2024 Andrey Cherepanov <cas@altlinux.org> 5.3.0-alt1
 - New version.
 
