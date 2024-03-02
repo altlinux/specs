@@ -7,7 +7,7 @@
 
 Name: python3-module-twisted-core
 Version: %major.0
-Release: alt2
+Release: alt3
 
 Summary: An asynchronous networking framework written in Python
 
@@ -297,11 +297,12 @@ cp %SOURCE1 README.ALT-ru_RU.UTF-8
 %install
 %python3_install
 
-# cfsupport is support for MacOSX Core Foundations, so we can delete it
-rm -rf %buildroot%python3_sitelibdir/twisted/internet/cfsupport
-
 # iocpreactor is a win32 reactor, so we can delete it
-rm -rf %buildroot%python3_sitelibdir/twisted/internet/iocpreactor
+rm -rv %buildroot%python3_sitelibdir/twisted/internet/iocpreactor
+
+# remove obsoleted gobject using (see ALT bug #41092)
+rm -rv %buildroot%python3_sitelibdir/twisted/internet/glib2reactor.py
+rm -rv %buildroot%python3_sitelibdir/twisted/internet/gtk2reactor.py
 
 # Man pages
 mkdir -p %buildroot%_man1dir/
@@ -515,6 +516,9 @@ ln -s trial %buildroot%_bindir/trial-3
 %python3_sitelibdir/twisted/logger/test
 
 %changelog
+* Sat Mar 02 2024 Vitaly Lipatov <lav@altlinux.ru> 22.10.0-alt3
+- remove obsoleted gobject using (see ALT bug #41092)
+
 * Fri Jul 28 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 22.10.0-alt2
 - exclude excessive gnome deps from core
 
