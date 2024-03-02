@@ -4,13 +4,13 @@
 %def_with check
 
 Name: python3-module-dns
-Version: 2.2.0
-Release: alt2
+Version: 2.6.1
+Release: alt1
 Epoch: 1
 
 Summary: DNS toolkit
 
-License: BSD-like
+License: ISC
 Group: Development/Python
 Url: http://www.dnspython.org
 
@@ -22,13 +22,12 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-setuptools_scm
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-hatchling
 BuildRequires: pytest3
 
 # optional
 %add_python3_req_skip curio curio.socket
+%add_python3_req_skip aioquic aioquic.quic.configuration aioquic.quic.connection aioquic.quic.events
 
 %py3_provides %oname
 Provides: python3-module-%oname
@@ -48,10 +47,10 @@ direct manipulation of DNS zones, messages, names, and records.
 rm -f examples/._*
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %python3_prune
 
 %check
@@ -62,6 +61,11 @@ py.test3 -v
 %python3_sitelibdir/*
 
 %changelog
+* Sat Mar 02 2024 Vitaly Lipatov <lav@altlinux.ru> 1:2.6.1-alt1
+- new version 2.6.1, change license to ISC
+- switch to pyproject_build
+- CVE-2023-29483
+
 * Sat May 06 2023 Anton Zhukharev <ancieg@altlinux.org> 1:2.2.0-alt2
 - (NMU) Added missing provides.
 
