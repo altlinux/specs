@@ -1,33 +1,25 @@
-%define major 0.10
-%define abiversion 2
-
-Name: podofo
-Version: %major.3
-Release: alt1
+%define major 0.9
+Name: podofo%major
+Version: %major.8
+Release: alt2
 
 Summary: PDF manipulation library and tools
 Summary(ru_RU.UTF8): Библиотека и инструменты для работы с PDF
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-License: LGPLv2-plus AND GPLv2-plus
+License: distributable (see COPYING)
 Group: Office
-URL: https://github.com/podofo/podofo
+URL: http://sourceforge.net/projects/podofo/
 
-# Source-url: https://github.com/podofo/podofo/archive/refs/tags/%version.tar.gz
-Source: %name-%version.tar
+Source: http://prdownloads.sf.net/podofo/%name/%major/%name-%version.tar
 
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++
-BuildRequires: fontconfig-devel libfreetype-devel
-BuildRequires: libjpeg-devel libpng-devel libtiff-devel
-BuildRequires: zlib-devel libxml2-devel libssl-devel
+BuildPrereq: rpm-macros-cmake zlib-devel libpng-devel
 
-# Just to hide 'Package bzip2 was not found in the pkg-config search path.'
-# See https://bugzilla.altlinux.org/30001
-BuildRequires: bzlib-devel
+# Automatically added by buildreq on Thu Jan 21 2010
+BuildRequires: cmake fontconfig-devel gcc-c++ libfreetype-devel libjpeg-devel libssl-devel libtiff-devel
 
-%define libname lib%name%abiversion
+%define libname libpodofo
 
 Requires: %libname = %EVR
 
@@ -53,6 +45,7 @@ Summary: PoDoFo headers
 Summary(ru_RU.UTF8): Заголовочные файлы PoDoFo
 Group: Development/C
 Requires: %libname = %EVR
+Conflicts: libpodofo-devel
 
 %description -n lib%name-devel
 Development files for the PoDoFo library.
@@ -64,42 +57,36 @@ Development files for the PoDoFo library.
 %setup
 subst "s|@PODOFO_VERSION@|%version|" src/podofo/libpodofo.pc.in
 # fix broken copying rule
-#mkdir test/TokenizerTest/objects
+mkdir test/TokenizerTest/objects
 
 %build
-%cmake -DPODOFO_BUILD_TOOLS=ON
-%cmake_build
+%cmake_insource -G "Unix Makefiles" \
+	-DPODOFO_BUILD_SHARED:BOOL=TRUE \
+	-DFREETYPE_INCLUDE_DIR:FILEPATH=%_includedir/freetype2 \
+	-D_FILE_OFFSET_BITS=64
+%make_build VERBOSE=1
 
 %install
-%cmakeinstall_std
-mkdir -p %buildroot%_cmakedir/
-mv %buildroot%_datadir/%name %buildroot%_cmakedir/
-
-%files
-%doc README.md
-%_bindir/podofo*
+%makeinstall_std
 
 %files -n %libname
-%doc README.md AUTHORS.md CHANGELOG.md
-%_libdir/libpodofo.so.%abiversion
 %_libdir/libpodofo.so.%version
 
+%if 0
+%files
+%doc README.html FAQ.html
+%_bindir/*
+%_man1dir/*
+%endif
+
 %files -n lib%name-devel
-%_includedir/%name/
-%_pkgconfigdir/libpodofo.pc
-%_cmakedir/%name/
-%_libdir/libpodofo.so
+%_includedir/podofo/
+#_pkgconfigdir/*
+%_libdir/*.so
 
 %changelog
-* Wed Feb 28 2024 Vitaly Lipatov <lav@altlinux.ru> 0.10.3-alt1
-- new version 0.10.3 (with rpmrb script)
-- more strict paths in files section
-- build lib package as libpodofo2
-
-* Wed Feb 28 2024 Vitaly Lipatov <lav@altlinux.ru> 0.10.0-alt1
-- the release is complete re-imagination of PoDoFo 0.9.x API in C++17,
-  and it's API/ABI incompatible with the previous releases.
-- cleanup spec, change URL and Source URL to github place
+* Sat Mar 02 2024 Vitaly Lipatov <lav@altlinux.ru> 0.9.8-alt2
+- build with versioned -devel subpackage
 
 * Fri Dec 09 2022 Vitaly Lipatov <lav@altlinux.ru> 0.9.8-alt1
 - new version 0.9.8 (with rpmrb script)

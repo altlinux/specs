@@ -1,6 +1,6 @@
 Name: scribus
-Version: 1.5.8
-Release: alt3
+Version: 1.6.1
+Release: alt1
 Epoch: 1
 
 Summary: Desktop Publishing application written in Qt
@@ -12,19 +12,8 @@ Packager: Paul Wolneykien <manowar@altlinux.ru>
 
 ##Source-url: https://github.com/scribusproject/scribus/archive/master.zip
 # Source-url: http://prdownloads.sf.net/%name/%version/%name-%version.tar.xz
-Vcs: https://github.com/scribusproject/scribus.git
 Source: %name-%version.tar
-Patch0: scribus-1.5.7-up-harfbuzz-3.0.0.patch
 Patch1: scribus-1.5.7-no-execbit-plugins.patch
-Patch2: scribus-1.5.7-fix-undefined-mnone-color.patch
-# upstream revisions as debian patches
-Patch3: 24883.patch
-Patch4: 24886.patch
-Patch5: 24981.patch
-Patch6: 25073.patch
-Patch7: 25139.patch
-
-Patch8: scribus-1.5.8-python-3.12.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake zlib-devel libssl-devel
@@ -120,19 +109,11 @@ BuildArch: noarch
 
 %prep
 %setup
-#patch0 -p1 -b .harfbuzz
 %patch1 -p2
-#patch2 -p2
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
 
 # don't do that
 # brain damage with #if (PODOFO_VERSION < PODOFO_MAKE_VERSION(0, 9, 7))
-sed -i 's|\(pBase->SetOwner\)|//\1|' scribus/pdf_analyzer.cpp
+#sed -i 's|\(pBase->SetOwner\)|//\1|' scribus/pdf_analyzer.cpp
 
 %build
 %cmake \
@@ -171,6 +152,7 @@ popd
 %_datadir/metainfo/scribus.appdata.xml
 %_datadir/mime/packages/scribus.xml
 %_iconsdir/hicolor/*/apps/scribus.png
+%_iconsdir/hicolor/*/mimetypes/application-vnd.scribus.png
 %_libdir/%name/
 %_man1dir/*
 %exclude %_mandir/de
@@ -196,6 +178,11 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Wed Feb 28 2024 Vitaly Lipatov <lav@altlinux.ru> 1:1.6.1-alt1
+- new version 1.6.1 (with rpmrb script)
+- build with libpodofo 0.10
+- cleanup spec
+
 * Wed Dec 20 2023 Grigory Ustinov <grenka@altlinux.org> 1:1.5.8-alt3
 - fix building with python3.12.
 
