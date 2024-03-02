@@ -4,13 +4,15 @@
 %set_verify_elf_method strict
 
 Name: ugrep-indexer
-Version: 0.9.5
+Version: 0.9.6
 Release: alt1
 Summary: A monotonic indexer to speed up grepping
 License: BSD-3-Clause
 Group: File tools
 Url: https://github.com/Genivia/ugrep-indexer
 Requires: ugrep >= 3.12.5
+
+%define valgrind_arches %ix86 x86_64
 
 Source: %name-%version.tar
 BuildRequires: bzlib-devel
@@ -23,16 +25,19 @@ BuildRequires: libzstd-devel
 BuildRequires: zlib-devel
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: ugrep
+%ifarch %valgrind_arches
+BuildRequires: valgrind
+%endif
 }}
 
 %description
 The ugrep-indexer utility recursively indexes files to speed up recursive
 grepping.
 
-Note: this is a 0.9 beta version of a new generation of "monotonic indexers".
-This release is subject to change and improvements based on experiments and
-user feedback. Regardless, this implementation has been extensively tested for
-correctness. Additional features and performance improvements are planned.
+Note: this is a 0.9 beta version of a new generation of "monotonic
+indexers". This release is subject to change and improvements based on
+experiments and user feedback. Regardless, this implementation has been
+extensively tested for correctness.
 
 %prep
 %setup
@@ -46,10 +51,23 @@ correctness. Additional features and performance improvements are planned.
 %makeinstall_std
 
 %check
-bin/ugrep-indexer -I -v
-ugrep -r -I -l 'std::chrono' --stats
-ugrep -r -I -l 'std::chrono' --stats --index
-bin/ugrep-indexer -d
+# Smoke testing. Upstream does not provide test suite.
+%ifarch %valgrind_arches
+# Valgrind does not treat --track-fds reports as errors (and they are
+# suppressed with -q). Grep logs for 'Open file descriptor'.
+%define valgrind valgrind --error-exitcode=2 --track-fds=yes --trace-children=yes --track-origins=yes
+%else
+%define valgrind %nil
+%endif
+%valgrind bin/ugrep-indexer -I -v
+bzip2 -k README.md
+gzip -k README.md
+xz -k README.md
+zstd -k README.md
+%valgrind bin/ugrep-indexer -I -v -z | grep -w '4 new files indexed'
+ugrep -r -z -I -l 'std::chrono' --stats
+ugrep -r -z -I -l 'std::chrono' --stats --index | grep -w '5 matching'
+%valgrind bin/ugrep-indexer -d
 
 %files
 %doc LICENSE.txt README.md
@@ -57,6 +75,10 @@ bin/ugrep-indexer -d
 %_man1dir/ugrep-indexer.1*
 
 %changelog
+* Sat Mar 02 2024 Vitaly Chikunov <vt@altlinux.org> 0.9.6-alt1
+- Update to v0.9.6 (2024-02-29).
+- spec: Improve smoke testing in %%check.
+
 * Tue Jan 02 2024 Vitaly Chikunov <vt@altlinux.org> 0.9.5-alt1
 - Update to v0.9.5 (2023-12-31).
 
