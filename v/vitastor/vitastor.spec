@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: vitastor
-Version: 1.4.7
+Version: 1.4.8
 Release: alt1
 Summary: Vitastor, a fast software-defined clustered block storage
 Group: System/Base
@@ -153,6 +153,7 @@ Vitastor Proxmox VE Plugin.
 %endif
 tar -xf %SOURCE2 -C cpp-btree
 tar -xf %SOURCE3 -C json11
+sed -i 's|fdiagnostics-color=always|fdiagnostics-color=auto|' src/CMakeLists.txt
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -264,6 +265,9 @@ fi
 %endif
 
 %changelog
+* Sun Mar 03 2024 Alexey Shabalin <shaba@altlinux.org> 1.4.8-alt1
+- 1.4.8
+
 * Thu Feb 22 2024 Alexey Shabalin <shaba@altlinux.org> 1.4.7-alt1
 - 1.4.7
 
