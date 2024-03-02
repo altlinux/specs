@@ -1,6 +1,6 @@
 Name: screen-message
 Version: 0.6
-Release: alt2
+Release: alt3
 
 Summary: Screen message show given text in fullscreen
 License: GPLv2+
@@ -26,14 +26,17 @@ make
 
 %install
 make install DESTDIR=%buildroot
-install -m 755 sm.py %buildroot%_bindir
+#install -m 755 sm.py %buildroot%_bindir
 
 %files
-%_bindir/*
+%_bindir/sm
 %_man1dir/*
 
 
 %changelog
+* Sat Mar 02 2024 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt3
+- don't pack unworked sm.py
+
 * Tue Mar 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.6-alt2
 - Porting to python3.
 
