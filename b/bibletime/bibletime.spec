@@ -1,5 +1,5 @@
 Name: bibletime
-Version: 2.11.2
+Version: 3.0.3
 Release: alt1
 
 Summary: BibleTime is a Bible study application based on Qt
@@ -17,13 +17,17 @@ Source: %name/%name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses rpm-macros-cmake
 
-BuildRequires: cmake libclucene-core-devel libssl-devel qt5-imageformats qt5-svg-devel qt5-tools-devel qt5-webkit-devel
-
+BuildRequires: cmake libclucene-core-devel libssl-devel
 BuildRequires: libsword-devel >= 1.7
-
 BuildRequires: librsvg-utils
 
+BuildRequires: qt5-imageformats qt5-svg-devel qt5-tools-devel qt5-webkit-devel
 Requires: qt5-imageformats
+
+# for docs
+BuildRequires: po4a xsltproc fop docbook-style-xsl
+
+Requires: %name-doc = %EVR
 
 %description
 BibleTime is a free and easy to use bible study tool for UNIX systems.
@@ -32,6 +36,15 @@ BibleTime provides easy handling of digitalized texts (Bibles, commentaries
 and lexicons) and powerful features to work with these texts (search in
 texts, write own notes, save, print etc.).
 BibleTime is a frontend for the SWORD Bible Framework.
+
+%package doc
+Summary: Documentation for %name
+Group: Text tools
+BuildArch: noarch
+
+%description doc
+Documentation for %name.
+
 
 %prep
 %setup
@@ -57,9 +70,16 @@ rm -f %buildroot%_iconsdir/%name.svg
 %_datadir/%name/
 %_desktopdir/*
 %_liconsdir/*
-%_iconsdir/hicolor/scalable/apps/%name.svg
+%_iconsdir/hicolor/scalable/apps/*.svg
+%_datadir/metainfo/info.bibletime.BibleTime.metainfo.xml
+
+%files doc
+%_docdir/%name/
 
 %changelog
+* Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 3.0.3-alt1
+- new version 3.0.3
+
 * Fri Jun 29 2018 Vitaly Lipatov <lav@altlinux.ru> 2.11.2-alt1
 - new version 2.11.2 (with rpmrb script)
 
