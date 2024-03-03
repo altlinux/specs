@@ -1,7 +1,7 @@
 %define oname python-ly
 
 Name: python3-module-ly
-Version: 0.9.7
+Version: 0.9.8
 Release: alt1
 
 Summary: Tool and library for manipulating LilyPond files
@@ -10,11 +10,15 @@ Url: https://github.com/wbsoft/python-ly
 License: GPL
 Group: Development/Python3
 
-# Source-url: %__pypi_url %oname
+#Source-url: %__pypi_url %oname
+# Source-url: https://github.com/frescobaldi/python-ly/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
+
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 BuildArch: noarch
 
@@ -41,10 +45,10 @@ You can also read the docs online at http://python-ly.readthedocs.org/.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %_bindir/ly
@@ -53,6 +57,10 @@ You can also read the docs online at http://python-ly.readthedocs.org/.
 
 
 %changelog
+* Mon Mar 04 2024 Vitaly Lipatov <lav@altlinux.ru> 0.9.8-alt1
+- new version
+- switch to pyproject_build
+
 * Sat Jul 10 2021 Vitaly Lipatov <lav@altlinux.ru> 0.9.7-alt1
 - new version 0.9.7 (with rpmrb script)
 
