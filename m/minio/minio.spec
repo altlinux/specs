@@ -1,8 +1,8 @@
 %global import_path github.com/minio/minio
-%global commit 4d9f05a195a4fac3bd5f7db85a6f540f368ad54b
+%global commit 92788e4cf4aa5fc7c42227642f206482fccecaf1
 %global shortcommit %(c=%{commit}; echo ${c:0:12})
-%global tag RELEASE.2023-10-16T04-13-43Z
-%define version 2023.10.16
+%global tag RELEASE.2024-02-26T09-33-48Z
+%define version 2024.02.26
 
 %global _unpackaged_files_terminate_build 1
 
@@ -22,7 +22,8 @@ Source4: %name.service
 Patch: %name-%version.patch
 
 ExclusiveArch: %go_arches
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang golang >= 1.21
 
 %description
 MinIO is an object storage server released under Apache License v2.0.
@@ -45,7 +46,7 @@ export TAG=%tag
 export VERSION=${TAG#RELEASE.}
 export COMMIT=%commit
 export SCOMMIT=%shortcommit
-export YEAR=2023
+export YEAR=2024
 export prefix=%import_path/cmd
 
 # setup flags like 'go run buildscripts/gen-ldflags.go' would do
@@ -56,7 +57,7 @@ sed -e "s|DEVELOPMENT.GOGET|$VERSION|g" -i cmd/build-constants.go
 
 %golang_prepare
 pushd $BUILDDIR/src/%import_path
-CGO_ENABLED=0 %gobuild -tags kqueue -trimpath -o %name .
+%gobuild -tags kqueue -trimpath -o %name .
 #CGO_ENABLED=0 %golang_build .
 popd
 
@@ -96,6 +97,9 @@ useradd -r -g _%name -c "Minio" -d %_sharedstatedir/%name -s /dev/null -n _%name
 %_unitdir/%name.service
 
 %changelog
+* Sun Mar 03 2024 Alexey Shabalin <shaba@altlinux.org> 2024.02.26-alt1
+- Update to RELEASE.2024-02-26T09-33-48Z
+
 * Mon Oct 23 2023 Alexey Shabalin <shaba@altlinux.org> 2023.10.16-alt1
 - Update to RELEASE.2023-10-16T04-13-43Z
 
