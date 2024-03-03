@@ -143,7 +143,7 @@
 # }}}
 
 Name: qemu
-Version: 8.2.0
+Version: 8.2.1
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -1349,6 +1349,10 @@ popd
 %exclude %docdir/LICENSE
 
 %changelog
+* Sun Mar 03 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.1-alt1
+- 8.2.1.
+- backkport patches (Fixes: CVE-2023-0330, CVE-2023-6683).
+
 * Fri Dec 29 2023 Alexey Shabalin <shaba@altlinux.org> 8.2.0-alt1
 - 8.2.0 (Fixes: CVE-2023-3255, CVE-2023-3019, CVE-2021-3527, CVE-2023-6693).
 
