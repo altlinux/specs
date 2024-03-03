@@ -2,8 +2,8 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: loki
-Version: 2.9.2
-Release: alt1.1
+Version: 2.9.5
+Release: alt1
 Summary: Loki: like Prometheus, but for logs
 License: Apache-2.0
 Group: Monitoring
@@ -19,7 +19,8 @@ Source6: promtail.yaml
 Patch1:  go.etcd.io-bbolt-loong64.patch
 
 ExclusiveArch: %go_arches
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang golang >= 1.20
 BuildRequires: systemd-devel
 
 %description
@@ -152,6 +153,9 @@ useradd -r -N -g _promtail -G systemd-journal -c 'Promtail log collector' \
 %doc clients/cmd/docker-driver/pipeline-example.yaml
 
 %changelog
+* Sun Mar 03 2024 Alexey Shabalin <shaba@altlinux.org> 2.9.5-alt1
+- New version 2.9.5.
+
 * Thu Nov 02 2023 Ivan A. Melnikov <iv@altlinux.org> 2.9.2-alt1.1
 - NMU: loongarch64 support
 
