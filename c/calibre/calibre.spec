@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 5.44.0
+Version: 7.5.1
 Release: alt1
 
 Summary: A e-book library management application
@@ -12,160 +12,212 @@ Url: http://calibre-ebook.com/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# https://calibre-ebook.com/dist/src redirect to
-# Source-url: http://download.calibre-ebook.com/%version/calibre-%version.tar.xz
+#Source-url: https://github.com/kovidgoyal/calibre/archive/refs/tags/v%version.tar.gz
+# Source-url: https://download.calibre-ebook.com/%version/calibre-%version.tar.xz
 Source: %name-%version.tar
-Source1: calibre-mount-helper
 
-Patch: calibre-no-update.patch
-Patch1: calibre-0.8.55-alt-no-macmenu.patch
+Patch1: calibre-no-update.patch
+Patch2: calibre-nodisplay.patch
 
-AutoProv:yes,nopython3
-ExcludeArch: %not_qt5_qtwebengine_arches
+AutoProv:no
+
+ExclusiveArch: %qt6_qtwebengine_arches
 
 Requires: fonts-ttf-core
-Requires: xkeyboard-config
+#Requires: xkeyboard-config
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-intro >= 1.9.19
-BuildRequires(pre): rpm-macros-qt5-webengine
+BuildRequires(pre): rpm-macros-qt6-webengine
 
-# FIXME: hack
-%add_python3_req_skip calibre.ebooks.markdown.__main__
+%define calibredir %_datadir/calibre
 
 # Windows's modules
-%add_python3_req_skip win32serviceutil win32service win32event win32con win32com win32api win32gui winerror _winreg pywintypes pythoncom usbobserver calibre_extensions.winsapi
+%add_python3_req_skip calibre_extensions.winsapi
 
 # internal extensions?
 %add_python3_req_skip calibre_extensions calibre_extensions.fast_css_transform calibre_extensions.freetype calibre_extensions.progress_indicator calibre_extensions.speedup
 
 %add_python3_path %_libdir/%name
 
-BuildRequires: chrpath
-BuildRequires: /proc
+#BuildRequires: chrpath
+#BuildRequires: /proc
 
-BuildRequires: gcc-c++ libX11-devel libXext-devel libXrender-devel libjpeg-devel libsqlite3-devel
-BuildRequires: cmake >= 3.14
-BuildRequires: libusb-devel >= 1.0.22
-
-####### Building headless QPA plugin #######
-#Project MESSAGE: This project is using private headers and will therefore be tied to this specific Qt module build version.
-#Project MESSAGE: Running this project against other versions of the Qt modules may crash at any arbitrary point.
-#Project MESSAGE: This is not a bug, but a result of using Qt internals. You have been warned!
-#make: *** No rule to make target '/usr/lib64/libQt5ThemeSupport.a', needed by '/usr/src/RPM/BUILD/calibre/src/calibre/plugins/libheadless.so'.  Stop.
-BuildRequires: qt5-base-devel-static glibc-devel-static
-
-
-BuildRequires: qt5-base-devel
-# >= 5.13
-BuildRequires: qt5-svg-devel qt5-declarative-devel qt5-imageformats qt5-webchannel-devel qt5-location-devel qt5-x11extras-devel qt5-wayland-devel qt5-sensors-devel qt5-webengine-devel
+#BuildRequires: gcc-c++ libX11-devel libXext-devel libXrender-devel libjpeg-devel libsqlite3-devel
+BuildRequires: gcc-c++
+BuildRequires: cmake
 
 BuildRequires: xdg-utils >= 1.0.2
 
-BuildRequires: libpoppler-qt5-devel >= 0.20.2
-# TODO: new version 20.08.0
-BuildRequires: libpoppler-devel >= 0.76.1
-BuildRequires: libpodofo-devel >= 0.9.6
-BuildRequires: libwmf-devel >= 0.2.8
-BuildRequires: libchm-devel >= 0.40
-# upstream uses 6.7
-BuildRequires: libicu-devel >= 5.6
-BuildRequires: libmtp-devel >= 1.1.17
+BuildRequires(pre): rpm-macros-qt6
+BuildRequires: qt6-base-devel
+# Project MESSAGE: This project is using private headers and will therefore be tied to this specific Qt module build version.
+# Project MESSAGE: Running this project against other versions of the Qt modules may crash at any arbitrary point.
+# Project MESSAGE: This is not a bug, but a result of using Qt internals. You have been warned!
+#BuildRequires: qt6-qtbase-private-devel
 
-%py3_use dbus >= 1.2.16
-BuildRequires: libdbus-devel >= 1.10.8
-# https://bugzilla.altlinux.org/show_bug.cgi?id=39224
-BuildRequires: libdbus-glib-devel >= 0.110
-BuildRequires: optipng >= 0.7.7
-Requires: optipng >= 0.7.7
+BuildRequires: qt6-svg-devel qt6-svg
+BuildRequires: qt6-charts-devel qt6-charts
+BuildRequires: qt6-webengine-devel
+BuildRequires: qt6-imageformats
+# WebView support: Quick QuickWidgets WaylandCompositor
+BuildRequires: qt6-declarative-devel
+BuildRequires: qt6-wayland-devel qt6-wayland
+# needs for smiles and emojicons
+Requires: qt6-imageformats
 
+
+#BuildRequires: libpoppler-qt5-devel >= 0.20.2
+#BuildRequires: libwmf-devel >= 0.2.8
+
+#py3_use dbus >= 1.2.16
 
 # missed in the official list
-BuildRequires: glib2-devel fontconfig-devel libfreetype-devel libssl-devel libudev-devel
+#BuildRequires: libudev-devel
+#BuildRequires: python3-modules-curses
+#BuildRequires: libmtdev-devel libts-devel libinput-devel
+BuildRequires: libxkbcommon-devel
 
 BuildRequires: python3
 Requires: python3
 
-BuildRequires: python3-modules-curses
 
-BuildRequires: libmtdev-devel libts-devel libinput-devel libxkbcommon-devel
+# Checked 02.03.2024 with
+# https://github.com/kovidgoyal/calibre/blob/master/bypy/sources.json
+# calibre/bypy/sources.json
+BuildRequires: zlib-devel
+# >= 1.3
+BuildRequires: bzlib-devel >= 1.0.8
+# xz
+BuildRequires: liblzma-devel
+#>= 5.4.4
+#BuildRequires: libunrar-devel >= 6.2.11
+BuildRequires: libunrar-devel >= 6.1.7
+BuildRequires: libbrotli-devel >= 1.1.0
+BuildRequires: libzstd-devel >= 1.5.5
 
-BuildRequires: zlib-devel bzlib-devel
-BuildRequires: libexpat >= 2.2.4
-BuildRequires: libffi-devel >= 3.3
-BuildRequires: libwebp-devel >= 1.1.0
-BuildRequires: libpng-devel >= 1.6.37
-BuildRequires: libjxr-devel >= 0.2.1
-# iconv?
-BuildRequires: libxml2-devel >= 2.9.10
-BuildRequires: libxslt-devel >= 1.1.34
-BuildRequires: libgpg-error-devel >= 1.36
-# TODO:
-BuildRequires: libgcrypt-devel >= 1.8.6
-
-BuildRequires: libhunspell-devel >= 1.7.0
+BuildRequires: libexpat >= 2.5.0
+BuildRequires: libsqlite3-devel
+BuildRequires: libffi-devel
+#>= 3.4.4
 BuildRequires: libhyphen-devel >= 2.8.8
-# TODO: 2.1.0
+BuildRequires: libssl-devel >= 3.1.3
+#BuildRequires: libncursesw-devel >= 6.4
+BuildRequires: libncursesw-devel >= 6.3
+BuildRequires: libreadline-devel >= 8.2
+BuildRequires: libicu-devel >= 7.3
+# TODO:
 BuildRequires: libstemmer-devel
+#>= 2.2.0
+BuildRequires: libjpeg-devel >= 3.0.0
+BuildRequires: libpng-devel >= 1.6.40
+BuildRequires: libjbig-devel >= 2.1
+BuildRequires: libtiff-devel
+#>= 4.6.0
+BuildRequires: libwebp-devel >= 1.3.2
+BuildRequires: libfreetype-devel >= 2.13.2
+BuildRequires: libgraphite2-devel >= 1.3.4
+BuildRequires: fontconfig-devel >= 2.14.2
+# iconv (in glibc)
+BuildRequires: libxml2-devel >= 2.12.1
+BuildRequires: libxslt-devel
+#>= 1.1.39
+BuildRequires: libchm-devel >= 0.40
+BuildRequires: optipng >= 0.7.7
+Requires: optipng >= 0.7.7
+# TODO: mozjpeg 4.1.4
+BuildRequires: libusb-devel >= 1.0.26
+BuildRequires: libmtp-devel >= 1.1.21
+BuildRequires: libopenjpeg2.0-devel >= 2.5.0
+BuildRequires: libpoppler-devel >= 23.08.0
+BuildRequires: libpodofo-devel >= 0.10.3
+BuildRequires: libgpg-error-devel >= 1.47
+BuildRequires: libgcrypt-devel >= 1.10.2
+BuildRequires: glib2-devel >= 2.78.0
 
-# Checked 23.05.2022 with
-# https://github.com/kovidgoyal/build-calibre/blob/master/scripts/sources.json
+BuildRequires: libdbus-devel
+#>= 1.15.8
+# https://bugzilla.altlinux.org/show_bug.cgi?id=39224
+BuildRequires: libdbus-glib-devel
+#>= 0.112
+
+BuildRequires: libhunspell-devel >= 1.7.2
+
+
+# Checked 02.03.2024 with
+# https://github.com/kovidgoyal/calibre/blob/master/bypy/sources.json
 # calibre/bypy/sources.json
 
-%py3_use six >= 1.15.0
-%py3_use unrardll >= 0.1.5
-%py3_use lxml >= 4.5.2
+%py3_use six >= 1.16.0
+%py3_use unrardll >= 0.1.7
+%py3_use lxml >= 4.9.3
 %py3_use pychm >= 0.8.6
-%py3_use html5-parser >= 0.4.10
-%py3_use css-parser >= 1.0.6
-%py3_use dateutil >= 2.8.1
-%py3_use jeepney >= 0.6.0
-%py3_use dns >= 2.0.0
-%py3_use mechanize >= 0.4.7
-%py3_use feedparser >= 5.2.1
+%py3_use html5-parser >= 0.4.12
+%py3_use css-parser >= 1.0.10
+%py3_use dateutil >= 2.8.2
+%py3_use jeepney >= 0.8.0
+%py3_use dns >= 2.4.2
+%py3_use mechanize >= 0.4.8
+%py3_use feedparser >= 6.0.10
 # sgmllib is needed for feedparser parsing malformed feeds
 #py3_use sgmllib3k >= 1.0.0
-%py3_use markdown >= 3.2.2
+%py3_use markdown >= 3.4.4
 %py3_use html2text >= 2020.1.16
 # no need really
-%py3_use soupsieve >= 2.0.1
-# TODO: bs4 >= 4.7.1
-%py3_use beautifulsoup4 >= 4.9.1
-%py3_use regex >= 2020.07.14
-%py3_use chardet >= 3.0.4
-%py3_use cchardet >= 2.1.7
-%py3_use msgpack >= 1.0.0
-%py3_use Pygments >= 2.6.1
-%py3_use pycryptodome >= 3.9.8
-# https://bugzilla.altlinux.org/40472
-%py3_use apsw > 3.35.4-alt1.r1
+#py3_use soupsieve
+#>= 2.5
+%py3_use beautifulsoup4 >= 4.12.2
+%py3_use regex >= 2023.8.8
+%py3_use chardet >= 5.2.0
+BuildRequires: libuchardet-devel
+# >= 0.0.8
+%py3_use msgpack >= 1.0.7
+%py3_use Pygments >= 2.16.1
+%py3_use pycryptodome >= 3.19.0
+%py3_use apsw > 3.43.0.0
 %py3_use webencodings >= 0.5.1
 %py3_use html5lib >= 1.1
-%py3_use Pillow >= 8.3.0
-%py3_use netifaces >= 0.10.9
-%py3_use psutil >= 5.7.2
-%py3_use ifaddr >= 0.1.7
-# used only in py7zr?
-#py3_use texttable >= 1.6.3
+%py3_use Pillow >= 10.0.1
+%py3_use netifaces >= 0.11.0
+%py3_use psutil >= 5.9.5
+%py3_use ifaddr >= 0.2.0
+
+# needed for py7zr
+#py3_use texttable >= 1.6.7
+#py3_use multivolumefile 0.2.3
+#py3_use brotli 1.1.0
+#py3_use pyzstd 0.15.9
+#py3_use pypmd 1.0.0
+#py3_use inflate64 0.3.1
 # TODO: build py7zr
-#py3_use py7zr >= 0.11.1
-%py3_use zeroconf >= 0.31.0
-%py3_use toml >= 0.10.1
-%py3_use pyparsing >= 2.4.7
-%py3_use packaging >= 20.4
+#py3_use py7zr >= 0.20.6
 
-%py3_buildrequires sip6 >= 5.5.0
-%py3_buildrequires PyQt-builder >= 1.6.0
-%py3_buildrequires PyQt5-sip >= 12.8.1
-BuildRequires: python3-module-PyQt5-devel
-%py3_use PyQt5 >= 5.15.2
-%py3_use PyQtWebEngine >= 5.15.2
+%py3_use fonttools >= 4.47.0
+%py3_use zeroconf >= 0.115.0
 
-#py3_use dukpy
-# TODO: p3_use mozjpeg 3.3.1
+#py3_use toml >= 0.10.1
+#py3_use pyparsing >= 2.4.7
+%py3_use packaging >= 23.1
 
-# TODO: https://github.com/brailcom/speechd >= 0.10.1
 
+%py3_buildrequires sip6 >= 6.7.11
+%py3_buildrequires PyQt-builder
+# >= 1.15.2
+%py3_buildrequires PyQt6-sip >= 13.5.2
+BuildRequires: python3-module-PyQt6-devel
+%py3_use PyQt6 >= 6.5.2
+%py3_use PyQt6-WebEngine >= 6.5.0
+
+BuildRequires: libspeechd-devel
+#>= 0.11.5
+BuildRequires: libxxhash-devel
+#>= 3.3.0
+
+%py3_use jeepney
+%py3_use xxhash
+
+Requires:       udisks2
+Requires:       /usr/bin/jpegtran
 
 %description
 calibre is an e-book library manager. It can view, convert and catalog e-books
@@ -188,47 +240,97 @@ TXT, PDF, LRS и FB2.
 %setup
 %__subst "s|libdir = s.get_python_lib.*|libdir = '%buildroot%python3_sitelibdir'|" setup/install.py
 %__subst "s|hunspell-1.7|hunspell|" setup/extensions.json
-# don't check for new upstream version
-#patch -p1
-#patch1 -p1
+
+%patch1 -p1
+%patch2 -p1
 
 # TODO: remove or replace with python
 find -type f -name "*.py" | xargs %__subst "s|^#!/usr/bin/env python$|#!/usr/bin/python3|"
-#find -type f -name "*.py" | xargs %__subst "s|^#!/usr/bin/python2$|#!/usr/bin/python3|"
+find -type f -name "*.py" | xargs %__subst "s|^#!/usr/bin/python2$|#!/usr/bin/python3|"
 
 # fix default libdir
 %__subst "s|/usr/lib|%_libdir|" setup/build_environment.py
 
 # setup QMAKE compile flags
-sed -i 's|^\(.*QMAKE_LIBS_PRIVATE.*\+=.*glib.*fontconfig.*\)$|\1\n            QMAKE_CXXFLAGS += %optflags|' setup/build.py
+#sed -i 's|^\(.*QMAKE_LIBS_PRIVATE.*\+=.*glib.*fontconfig.*\)$|\1\n            QMAKE_CXXFLAGS += %optflags|' setup/build.py
+
+sed -e "s/^Name=calibre/Name=Calibre/g" \
+    -i src/calibre/linux.py
 
 %build
-%python3_build
+export LANG='en_US.UTF-8'
+#python3 setup.py build
+#python3 setup.py iso639
+#python3 setup.py iso3166
+#python3 setup.py translations
+#python3 setup.py liberation_fonts --system-liberation_fonts --path-to-liberation_fonts %_ttffontsdir/liberation
+
+# TODO:
+# https://bugs.launchpad.net/calibre/+bug/2005955
+#python3 setup.py hyphenation --hyphenation-url="%SOURCE2"
+
+# TODO: /usr/share/javascript/mathjax/core.js
+#python3 setup.py mathjax --system-mathjax --path-to-mathjax /usr/share/javascript/mathjax
+# FIXME: Downloading MathJax: https://github.com/mathjax/MathJax/archive/3.1.4.tar.gz
+#python3 setup.py mathjax
+
+#$ grep sub_commands setup/resources.py
+#    sub_commands = ['kakasi', 'liberation_fonts', 'mathjax', 'rapydscript', 'hyphenation']
+#python3 setup.py resources
+
+#python3 setup.py gui
 
 %install
-#python_install (not use due skip-build unsupported)
-mkdir -p %buildroot%python3_sitelibdir/
-python3 setup.py install --staging-libdir=%buildroot%_libdir --libdir=%_libdir --prefix=%_prefix --root=%buildroot --staging-root=%buildroot/%_prefix
-%find_lang --with-kde %name
+export LANG='en_US.UTF-8'
 
-# fix bash completion file placement
-#install -m644 -D %buildroot%_datadir/bash-completion/completions/calibre %buildroot/etc/bash_completion.d/%name
-rm -rfv %buildroot%_datadir/bash-completion
-rm -rfv %buildroot%_libdir/calibre/tinycss/tests
+python3 setup.py install \
+    --staging-root=%buildroot%_prefix --prefix=%_prefix \
+    --staging-libdir=%buildroot%_libdir --libdir=%_libdir \
+    --system-plugins-location=%calibredir/system-plugins \
+    %nil
+
+cp -a man-pages/ %buildroot%_mandir
+
+%find_lang --with-man --all-name %name
+
+#rm -rv %buildroot%calibredir/rapydscript/
+
+rm -rv %buildroot%_datadir/bash-completion
+rm -rv %buildroot%_libdir/calibre/tinycss/tests
 
 #chrpath -d %buildroot%_libdir/%name/%name/plugins/*.so
 
-rm -fv %buildroot%_bindir/calibre-uninstall
-rm -rf %buildroot%_datadir/%name/fonts/liberation/
-rm -fv %buildroot%_datadir/%name/calibre-portable.*
-install -m 755 %SOURCE1 %buildroot%_bindir/calibre-mount-helper
+#rm -v %buildroot%_bindir/calibre-uninstall
+rm -rv %buildroot%_datadir/%name/fonts/liberation/
+rm -v %buildroot%_datadir/%name/calibre-portable.*
 
-rm -vf %buildroot%_libdir/calibre/calibre/translations/msgfmt.py
+rm -v %buildroot%_libdir/calibre/calibre/translations/msgfmt.py
+
+
+#	rm debian/tmp/usr/share/calibre/calibre-portable.*
+#	rm debian/tmp/usr/lib/python*/site-packages/init_calibre.py
+#	rmdir debian/tmp/usr/share/desktop-directories
+#
+#	# do not install developer's script
+#	rm debian/tmp/usr/lib/calibre/calibre/devices/mtp/unix/upstream/update.py
+#
+# 	# Replace "python" to "python3" in shebang
+#	find debian/tmp/usr/lib/calibre debian/tmp/usr/share/calibre -name '*.py' -print | xargs --no-run-if-empty sed --separate --file=debian/fix-python-shebang.sed --in-place
+#
+#	# Remove source path name from pyuic6 outputs
+#	find debian/tmp/usr/lib/calibre/calibre/gui2 -name '*_ui.py' -print | xargs --no-run-if-empty sed --separate --file=debian/remove-ui-basepath.sed --in-place
+
+
+%check
+#export LANG='en_US.UTF-8'
+#python3 -m unittest discover
+
 
 %files -f %name.lang
 %doc README.md Changelog.txt
 #/etc/bash_completion.d/%name
 %_bindir/*
+%_man1dir/*
 %_libdir/%name/
 %python3_sitelibdir/*
 %_datadir/%name/
@@ -241,6 +343,10 @@ rm -vf %buildroot%_libdir/calibre/calibre/translations/msgfmt.py
 %_datadir/mime/packages/calibre-mimetypes.xml
 
 %changelog
+* Sat Mar 02 2024 Vitaly Lipatov <lav@altlinux.ru> 7.5.1-alt1
+- new version 7.5.1
+- build with PyQt6
+
 * Wed Jul 13 2022 Vitaly Lipatov <lav@altlinux.ru> 5.44.0-alt1
 - new version 5.44.0 (with rpmrb script)
 
