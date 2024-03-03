@@ -1,11 +1,12 @@
-%def_disable snapshot
-%def_enable ffmpeg
+%def_enable snapshot
+# removed in 1.12
+%def_disable ffmpeg
 # test_rpm failed
 %def_disable check
 
 Name: libextractor
-Version: 1.11
-Release: alt3
+Version: 1.13
+Release: alt1
 
 Summary: libextractor is a simple library for keyword extraction
 
@@ -18,8 +19,6 @@ Source: ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
-Patch: %name-1.11-up-exiv2-0.28.patch
-Patch1: %name-1.11-alt-exiv2-0.28.1-32-bit.patch
 
 %define flac_ver 1.3
 
@@ -63,13 +62,12 @@ This package contains the files needed to build packages that depend on %name.
 
 %prep
 %setup
-%patch -p1 -b .exiv2
-%patch1 -p1 -b .exiv2-32.bit
 
 %build
 %autoreconf
 %configure --disable-static \
 	%{subst_enable ffmpeg}
+%nil
 %make_build
 
 %install
@@ -84,7 +82,7 @@ rm -f %buildroot%_libdir/%name/*.la
 export LD_LIBRARY_PATH=%buildroot%_libdir
 export LIBEXTRACTOR_PREFIX=%buildroot%_libdir
 # some tests failed in hasher -- need to investigate
-%make check
+%make -k check VERBOSE=1
 
 %files -f %name.lang
 %_libdir/*.so.*
@@ -104,6 +102,9 @@ export LIBEXTRACTOR_PREFIX=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Sun Mar 03 2024 Yuri N. Sedunov <aris@altlinux.org> 1.13-alt1
+- updated to v1.13-2-ga75f40b6
+
 * Wed Nov 08 2023 Yuri N. Sedunov <aris@altlinux.org> 1.11-alt3
 - prepared for exiv2-0.28
 
