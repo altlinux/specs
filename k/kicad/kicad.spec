@@ -1,10 +1,10 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%define majver 7.0
+%define majver 8.0
 
 Name: kicad
-Version: %majver.11
+Version: %majver.0
 Release: alt1
 Epoch: 1
 
@@ -15,8 +15,8 @@ Group: Engineering
 
 Url: https://gitlab.com/kicad/code/kicad.git
 Source: %name-%version.tar
-Patch: require-libngspice.so.0.patch
-Patch2000: kicad-e2k.patch
+Patch: %name-%version-%release.patch
+Patch1000: kicad-e2k.patch
 
 ExcludeArch: %arm
 
@@ -26,15 +26,41 @@ BuildRequires: cmake
 BuildRequires: rpm-build-python3
 BuildRequires: python3-dev
 BuildRequires: python3-module-wx
-BuildRequires: boost-devel boost-asio-devel boost-asio-devel boost-context-devel boost-filesystem-devel boost-geometry-devel boost-interprocess-devel boost-locale-devel boost-program_options-devel
+BuildRequires: boost-devel
+BuildRequires: boost-asio-devel
+BuildRequires: boost-asio-devel
+BuildRequires: boost-context-devel
+BuildRequires: boost-filesystem-devel
+BuildRequires: boost-geometry-devel
+BuildRequires: boost-interprocess-devel
+BuildRequires: boost-locale-devel
+BuildRequires: boost-program_options-devel
 BuildRequires: ccmake gcc-c++
 BuildRequires: libwxGTK3.2-devel
 BuildRequires: libgtk+3-devel
-BuildRequires: libGLEW-devel libcairo-devel libssl-devel swig pkgconfig(gobject-2.0) libpcre-devel libpixman-devel pkgconfig(harfbuzz) pkgconfig(expat) pkgconfig(libdrm) pkgconfig(xdmcp) pkgconfig(xdamage) pkgconfig(xxf86vm) libcurl-devel
+BuildRequires: libGLEW-devel
+BuildRequires: libcairo-devel
+BuildRequires: libssl-devel
+BuildRequires: swig
+BuildRequires: pkgconfig(gobject-2.0)
+BuildRequires: libpcre-devel
+BuildRequires: libpixman-devel
+BuildRequires: pkgconfig(harfbuzz)
+BuildRequires: pkgconfig(expat)
+BuildRequires: pkgconfig(libdrm)
+BuildRequires: pkgconfig(xdmcp)
+BuildRequires: pkgconfig(xdamage)
+BuildRequires: pkgconfig(xxf86vm)
+BuildRequires: pkgconfig(libsecret-1)
+BuildRequires: libwayland-client-devel
+BuildRequires: libwayland-server-devel
+BuildRequires: libwayland-cursor-devel
+BuildRequires: libwayland-egl-devel
+BuildRequires: libcurl-devel
+BuildRequires: libgit2-devel
 BuildRequires: libunixODBC-devel
 BuildRequires: doxygen graphviz
 BuildRequires: dos2unix
-BuildRequires: python-devel
 BuildRequires: libglm-devel
 BuildRequires: libuuid-devel
 BuildRequires: ngspice-devel
@@ -100,13 +126,14 @@ Common package for kicad.
 
 %prep
 %setup
+%patch -p1
+
 %ifarch %e2k
 %patch2000 -p1
 sed -i "s/-Wreturn-type/-Wbuggy-edg/" cmake/Warnings.cmake
 sed -i "s/';'/']'/" thirdparty/pegtl/pegtl/demangle.hpp
 sed -i "s/m_currentSymbol.GetSubLibraryName()/((wxString)&)/" eeschema/symbol_viewer_frame.cpp
 %endif
-%patch -p1
 
 %build
 %ifarch %e2k
@@ -116,16 +143,10 @@ sed -i "s/m_currentSymbol.GetSubLibraryName()/((wxString)&)/" eeschema/symbol_vi
 %endif
 %cmake \
     %_cmake_skip_rpath \
-    -DKICAD_USE_OCC:=ON \
-    -DKICAD_SCRIPTING=ON \
-    -DKICAD_SCRIPTING_MODULES=ON \
-    -DKICAD_SCRIPTING_PYTHON3=ON \
     -DPYTHON_SITE_PACKAGE_PATH=%python3_sitelibdir \
     -DKICAD_SCRIPTING_WXPYTHON=ON \
-    -DKICAD_SCRIPTING_WXPYTHON_PHOENIX=ON \
-    -DKICAD_SCRIPTING_ACTION_MENU=ON \
-    -DKICAD_SPICE=ON \
     -DKICAD_USE_EGL=ON \
+    -DKICAD_WAYLAND=ON \
     -DKICAD_BUILD_I18N=ON \
     -DKICAD_I18N_UNIX_STRICT_PATH=ON \
     -DKICAD_VERSION_EXTRA=%release \
@@ -170,6 +191,10 @@ done
 %dir %_datadir/kicad/template
 
 %changelog
+* Fri Feb 23 2024 Anton Midyukov <antohami@altlinux.org> 1:8.0.0-alt1
+- new version 8.0.0
+- patch from diff
+
 * Fri Feb 23 2024 Anton Midyukov <antohami@altlinux.org> 1:7.0.11-alt1
 - new version 7.0.11
 

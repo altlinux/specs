@@ -4,7 +4,7 @@
 Name: kicad-symbols
 Summary: schematic symbol libraries for kicad (creation of electronic schematic diagrams)
 Summary(ru_RU.UTF-8): Библиотеки электрических обозначений для kicad (разработка печатных плат)
-Version: 7.0.11
+Version: 8.0.0
 Release: alt1
 License: GPL-2.0-or-later
 Group: Engineering
@@ -47,6 +47,9 @@ Kicad - это программное обеспечение с открытым
 %_datadir/kicad/template/sym-lib-table
 
 %changelog
+* Sun Mar 03 2024 Anton Midyukov <antohami@altlinux.org> 8.0.0-alt1
+- new version (8.0.0) with rpmgs script
+
 * Fri Feb 23 2024 Anton Midyukov <antohami@altlinux.org> 7.0.11-alt1
 - new version (7.0.11) with rpmgs script
 
