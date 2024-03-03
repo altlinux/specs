@@ -1,9 +1,10 @@
+%def_with check
 %define dkms_name openrazer-driver
 %define dkms_version 3.7.0
 
 Name: openrazer
 Version: 3.7.0
-Release: alt1
+Release: alt2
 
 Summary: Open source driver and user-space daemon for managing Razer devices
 License: GPL-2.0
@@ -11,12 +12,23 @@ Group: System/Kernel and hardware
 URL: https://github.com/openrazer/openrazer
 BuildArch: noarch
 
-Source0: %name-%version.tar
+Source: %name-%version.tar
+Patch: %name-%version-alt-skip-check-plugdev.patch
+Patch1: %name-%version-alt-fake_driver-include.patch
 
 Requires: openrazer-kernel-modules-dkms
 Requires: openrazer-daemon
 Requires: python3-module-openrazer
 BuildRequires: python3-module-setuptools
+%if_with check
+BuildRequires: dbus-tools-gui
+BuildRequires: python3-module-setproctitle
+BuildRequires: python3-module-dbus
+BuildRequires: python3-module-numpy
+BuildRequires: python3-module-pygobject3
+BuildRequires: python3-module-pyudev
+BuildRequires: python3-module-daemonize
+%endif
 
 %description
 Meta package for installing all required openrazer packages.
@@ -46,6 +58,8 @@ Python library for accessing the daemon from Python.
 
 %prep
 %setup
+%patch -p1
+%patch1 -p1
 
 %build
 # noop
@@ -53,18 +67,30 @@ Python library for accessing the daemon from Python.
 %install
 make DESTDIR=%buildroot setup_dkms udev_install daemon_install python_library_install
 
+cp -v ./pylib/%name/_fake_driver/*.cfg %buildroot%python3_sitelibdir/%name/_fake_driver/
+install -D -m 0755 ./scripts/create_fake_device.py %buildroot%python3_sitelibdir/%name/scripts/create_fake_device.py
+
 mkdir -p %buildroot/lib/udev/
 for f in %buildroot%_libexecdir/udev/*
 do
 mv -v "$f" %buildroot/lib/udev/
 done
 
+%check
+#functional test
+export OR_SKIP_CHECK_PLUGDEV_FOR_TESTS=1
+eval $(dbus-launch --sh-syntax)
+./scripts/ci/setup-fakedriver.sh
+./scripts/ci/launch-daemon.sh
+sleep 5
+./scripts/ci/test-daemon.sh
+
 %pre -n %name-kernel-modules-dkms
 #!/bin/sh
 set -e
 getent group plugdev >/dev/null || groupadd -r plugdev
 
-%post -n openrazer-kernel-modules-dkms
+%post -n %name-kernel-modules-dkms
 #!/bin/sh
 set -e
 dkms install %dkms_name/%dkms_version || {
@@ -72,7 +98,7 @@ echo "Failed to install openrazer-driver! Update your kernel and install"
 echo "kernel-headers-modules matching your kernel type std-def/un-def."
 }
 
-%preun -n openrazer-kernel-modules-dkms
+%preun -n %name-kernel-modules-dkms
 #!/bin/sh
 if [ "$(dkms status -m %dkms_name -v %dkms_version)" ]; then
   dkms remove -m %dkms_name -v %dkms_version --all
@@ -101,6 +127,9 @@ fi
 %python3_sitelibdir/%name-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Feb 14 2024 Anton Kurachenko <srebrov@altlinux.org> 3.7.0-alt2
+- Functional tests added in the spec.
+
 * Tue Nov 14 2023 Anton Kurachenko <srebrov@altlinux.org> 3.7.0-alt1
 - New version 3.7.0.
 

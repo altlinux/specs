@@ -1,6 +1,8 @@
+%def_with check
+
 Name: polychromatic
 Version: 0.8.3
-Release: alt1
+Release: alt2
 
 Summary: RGB lighting interface utilites
 License: GPL-3.0
@@ -10,6 +12,7 @@ URL: https://github.com/polychromatic/polychromatic
 ExclusiveArch: %qt5_qtwebengine_arches
 
 Source: %name-%version.tar
+Patch: %name-%version-alt-run_daemon-commands-fix.patch
 
 BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires(pre): rpm-macros-meson
@@ -17,6 +20,13 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: sassc
 BuildRequires: intltool
 BuildRequires: meson
+%if_with check
+BuildRequires: openrazer-daemon
+BuildRequires: python3-module-openrazer
+BuildRequires: python3-module-colorama
+BuildRequires: python3-module-colour
+BuildRequires: python3-module-requests
+%endif
 
 %description
 RGB lighting management front-end application for OpenRazer via a
@@ -24,10 +34,17 @@ graphical, command line or tray applet interface.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %meson
 %meson_build
+
+%check
+#integration tests with openrazer
+export OR_SKIP_CHECK_PLUGDEV_FOR_TESTS=1
+eval $(dbus-launch --sh-syntax)
+./tests/openrazer/run_daemon.sh "%python3_sitelibdir_noarch/openrazer/"
 
 %install
 %meson_install
@@ -46,6 +63,9 @@ graphical, command line or tray applet interface.
 %_man1dir/%name-*
 
 %changelog
+* Sun Feb 11 2024 Anton Kurachenko <srebrov@altlinux.org> 0.8.3-alt2
+- Integration test added in the spec.
+
 * Tue Nov 21 2023 Anton Kurachenko <srebrov@altlinux.org> 0.8.3-alt1
 - New version 0.8.3.
 
