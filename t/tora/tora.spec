@@ -1,6 +1,6 @@
 Name: tora
 Version: 3.2
-Release: alt8.gitf31e755f
+Release: alt9.gitf31e755f
 Summary: TOra is an open-source multi-platform database management GUI
 License: GPL
 Group: Databases
@@ -11,6 +11,8 @@ ExclusiveArch: %ix86 x86_64
 # https://github.com/tora-tool/tora.git
 Source: %name-%version.tar
 Source2: %name.png
+
+Patch1: e4f7553a06b409f37ad199643dc5869b04aa0ac7.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ postgresql-devel boost-devel libferrisloki-devel
@@ -24,6 +26,7 @@ set of DBA tools. TOra also includes support for MySQL and Postgres.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %cmake_insource \
@@ -50,6 +53,9 @@ install -pm 644 src/tora.desktop %buildroot%_desktopdir/%name.desktop
 %_desktopdir/*
 
 %changelog
+* Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 3.2-alt9.gitf31e755f
+- fix build with QScintilla 2.14.1
+
 * Wed Apr 07 2021 Andrey Sokolov <keremet@altlinux.ru> 3.2-alt8.gitf31e755f
 - Updated to v3.2-296-gf31e755f (closes: 39894)
 

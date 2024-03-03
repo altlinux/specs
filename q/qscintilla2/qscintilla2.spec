@@ -3,8 +3,8 @@
 %define oname qscintilla2
 
 Name: qscintilla2
-Version: 2.13.1
-Release: alt1.1
+Version: 2.14.1
+Release: alt1
 
 Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 
@@ -14,6 +14,7 @@ Url: https://riverbankcomputing.com/software/qscintilla
 
 # Source-url: https://www.riverbankcomputing.com/static/Downloads/QScintilla/%version/QScintilla_src-%version.zip
 Source: QScintilla-%version.tar
+
 #Patch1: %name-%version-alt-build.patch
 
 %define libname lib%{oname}
@@ -22,10 +23,12 @@ BuildRequires: gcc-c++
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python3-devel
+
 BuildRequires(pre): rpm-macros-qt5
+BuildRequires: python3-module-sip6 python3-module-PyQt-builder
+
 BuildRequires: qt5-base-devel qt5-tools-devel
 BuildRequires: python3-module-PyQt5-devel
-BuildRequires: python3-module-sip6 python3-module-PyQt-builder
 
 %description
 Qscintilla is a free source code editing component. It comes with complete
@@ -217,7 +220,7 @@ rm -rf %buildroot/%python3_sitelibdir/QScintilla-%version.dist-info
 
 %files -n lib%oname-qt5-devel
 %_includedir/qt5/*.h
-%_includedir/qt5/Qsci
+%_includedir/qt5/Qsci/
 %_qt5_libdatadir/*.so
 %_libdir/*_qt5.so
 
@@ -225,7 +228,7 @@ rm -rf %buildroot/%python3_sitelibdir/QScintilla-%version.dist-info
 %_qt5_plugindir/designer/*.so
 
 %files -n python3-module-%oname-qt5
-%python3_sitelibdir/PyQt5/Qsci.so
+%python3_sitelibdir/PyQt5/Qsci.*so
 #python3_sitelibdir/PyQt5/Qsci.pyi
 %_datadir/qt5/qsci3/api/python/*.api
 
@@ -239,6 +242,9 @@ rm -rf %buildroot/%python3_sitelibdir/QScintilla-%version.dist-info
 %_docdir/%libname-%version
 
 %changelog
+* Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 2.14.1-alt1
+- new version 2.14.1
+
 * Fri Jan 21 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.13.1-alt1.1
 - fixed build for Elbrus
 
