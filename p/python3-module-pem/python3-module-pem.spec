@@ -1,7 +1,7 @@
 %define modulename pem
 
 Name: python3-module-pem
-Version: 21.2.0
+Version: 23.1.0
 Release: alt1
 
 Summary: Easy PEM file parsing in Python
@@ -17,7 +17,13 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
+
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-vcs
+BuildRequires: python3-module-hatch-fancy-pypi-readme
 
 BuildArch: noarch
 
@@ -29,17 +35,21 @@ i.e. Base64 encoded DER keys and certificates.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %python3_prune
 
 %files
 %python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info/
+%python3_sitelibdir/*.dist-info/
 
 %changelog
+* Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 23.1.0-alt1
+- new version 23.1.0
+- switch to pyproject_build
+
 * Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 21.2.0-alt1
 - new version 21.2.0 (with rpmrb script)
 
