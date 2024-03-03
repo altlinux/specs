@@ -9,7 +9,7 @@
 
 
 Name: python3-module-%pypi_name
-Version: 6.0.0
+Version: 6.1.0
 Release: alt1
 
 Summary: An easy whitelist-based HTML-sanitizing tool
@@ -20,8 +20,7 @@ License: Apache-2.0
 Group: Development/Python3
 
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
+# Source-url: https://github.com/mozilla/bleach/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -35,6 +34,8 @@ BuildRequires: python3(wheel)
 %description
 Bleach is an HTML sanitizing library that escapes or strips markup and
 attributes based on a white list.
+
+This is deprecated package, use python3-module-nh3 instead.
 
 
 %prep
@@ -52,6 +53,10 @@ attributes based on a white list.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 6.1.0-alt1
+- new version 6.1.0 (with rpmrb script)
+- return Source-url
+
 * Fri Feb 10 2023 Stanislav Levin <slev@altlinux.org> 6.0.0-alt1
 - 5.0.0 -> 6.0.0.
 
