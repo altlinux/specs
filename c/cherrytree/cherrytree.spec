@@ -1,5 +1,5 @@
 Name: cherrytree
-Version: 1.0.2
+Version: 1.0.4
 Release: alt1
 
 Summary: Hierarchical note taking application
@@ -15,6 +15,7 @@ Packager: Konstantin Artyushkin <akv@altlinux.org>
 Source: %name-%version.tar
 Patch: categories.patch
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
@@ -31,8 +32,6 @@ BuildRequires: libuchardet-devel
 BuildRequires: libcurl-devel
 BuildRequires: libfribidi-devel
 BuildRequires: libvte3-devel
-
-Requires: %_bindir/7z
 
 %description
 CherryTree is a hierarchical note taking application, featuring rich text and
@@ -54,6 +53,12 @@ sed -i "s|pConverted+|(gchar*)&|" src/ct/ct_misc_utils.cc
 sed -i "s|save_to_buffer(|&(gchar*\&)|" src/ct/ct_{imports,image,parser_html}.cc
 sed -i "s|filename(pOutStr|filename((gchar*)pOutStr|" src/ct/ct_filesystem.cc
 %endif
+
+# remove unused code
+rm -r .old.pygtk2 .vscode .devcontainer
+rm -r src/spdlog
+# linked statically
+#rm -r src/7za
 
 %build
 %cmake  -DBUILD_TESTING=OFF -DCT_VERSION=%version
@@ -78,6 +83,11 @@ sed -i "s|filename(pOutStr|filename((gchar*)pOutStr|" src/ct/ct_filesystem.cc
 
 
 %changelog
+* Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 1.0.4-alt1
+- new version 1.0.4 (with rpmrb script)
+- remove unused sources before build
+- drop Requires: %_bindir/7z (there are no calls)
+
 * Sat Oct 14 2023 Nazarov Denis <nenderus@altlinux.org> 1.0.2-alt1
 - new version 1.0.2 (with rpmrb script)
 
