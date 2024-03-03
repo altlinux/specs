@@ -1,8 +1,8 @@
 %global import_path github.com/minio/mc
-%global commit d158b9a478a6a5a74795f01097d069be82edfff6
+%global commit 98af07b69ce564bec48c5a9edc6d080679ee1c13
 %global shortcommit %(c=%{commit}; echo ${c:0:12})
-%global tag RELEASE.2023-10-14T01-57-03Z
-%define version 2023.10.14
+%global tag RELEASE.2024-03-03T00-13-08Z
+%define version 2024.03.03
 
 %global _unpackaged_files_terminate_build 1
 
@@ -19,7 +19,9 @@ Source: %name-%version.tar
 Patch: %name-%version.patch
 
 ExclusiveArch:  %go_arches
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang golang >= 1.19
+
 
 %description
 MinIO Client (mc) provides a modern alternative to UNIX commands
@@ -41,7 +43,7 @@ export VERSION=${TAG#RELEASE.}
 export COMMIT=%commit
 export SCOMMIT=%shortcommit
 export prefix=%import_path/cmd
-export YEAR=2022
+export YEAR=2024
 
 # setup flags like 'go run buildscripts/gen-ldflags.go' would do
 export LDFLAGS="-X $prefix.Version=$VERSION -X $prefix.ReleaseTag=$TAG -X $prefix.CommitID=$COMMIT -X $prefix.ShortCommitID=$SCOMMIT -X github.com/minio/mc/cmd.CopyrightYear=$YEAR"
@@ -51,7 +53,7 @@ sed -e "s|DEVELOPMENT.GOGET|$VERSION|g" -i cmd/build-constants.go
 
 %golang_prepare
 pushd $BUILDDIR/src/%import_path
-CGO_ENABLED=0 %gobuild -tags kqueue -trimpath -o %name .
+%gobuild -tags kqueue -trimpath -o %name .
 #CGO_ENABLED=0 %golang_build .
 popd
 
@@ -68,6 +70,9 @@ install -p -m 755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sun Mar 03 2024 Alexey Shabalin <shaba@altlinux.org> 2024.03.03-alt1
+- Update to RELEASE.2024-03-03T00-13-08Z
+
 * Mon Oct 23 2023 Alexey Shabalin <shaba@altlinux.org> 2023.10.14-alt1
 - Update to RELEASE.2023-10-14T01-57-03Z
 
