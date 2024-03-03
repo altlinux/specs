@@ -2,7 +2,7 @@
 
 Name: tortoisehg
 Version: 6.5.1
-Release: alt1
+Release: alt2
 
 Summary: Mercurial GUI command line tool thg
 
@@ -17,7 +17,7 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 
 Requires: python3-module-iniparse mercurial
 Requires: python3-module-PyQt5 python3-module-qscintilla2-qt5 python3-module-Pygments
-Requires: python3-module-pygobject
+Requires: python3-module-pygobject3
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: mercurial
@@ -96,6 +96,9 @@ rm -rf %buildroot%_datadir/nautilus-python/extensions/nautilus-thg.py*
 %endif
 
 %changelog
+* Sat Mar 02 2024 Vitaly Lipatov <lav@altlinux.ru> 6.5.1-alt2
+- fix requires for work with gi
+
 * Sun Nov 05 2023 Grigory Ustinov <grenka@altlinux.org> 6.5.1-alt1
 - Build new version.
 
