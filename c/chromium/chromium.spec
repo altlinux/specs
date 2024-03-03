@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        121.0.6167.160
+Version:        122.0.6261.94
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -80,11 +80,12 @@ Patch022: 0022-Revert-Use-aggregate-init-designed-initializers-more.patch
 Patch023: 0023-Add-missing-headers.patch
 Patch024: 0024-Disable-unsupported-compiler-flags.patch
 Patch025: 0025-Fix-rust-clang-path.patch
-Patch026: 0026-FEDORA-Fix-invalid-escape-sequence.patch
-Patch027: 0027-DEBIAN-remove-dependencies-on-third_party-catapult.patch
-Patch028: 0028-Use-system-sysroot-for-rust.patch
-Patch029: 0029-DEBIAN-work-around-incorrect-template-selection.patch
-Patch030: 0030-nullptr_t-without-namespace-std.patch
+Patch026: 0026-DEBIAN-remove-dependencies-on-third_party-catapult.patch
+Patch027: 0027-Use-system-sysroot-for-rust.patch
+Patch028: 0028-DEBIAN-work-around-incorrect-template-selection.patch
+Patch029: 0029-nullptr_t-without-namespace-std.patch
+Patch030: 0030-Revert-PA-Use-Internal-Partition-in-Scan.patch
+Patch031: 0031-libstdc-fix-static-assertion-in-NodeUuidEquality.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -485,7 +486,6 @@ EOF
 
 %files
 %doc AUTHORS LICENSE
-%dir %_datadir/gnome-control-center
 %dir %_datadir/gnome-control-center/default-apps
 %dir %_sysconfdir/%name
 %dir %_sysconfdir/%name/policies
@@ -502,6 +502,20 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Feb 28 2024 Alexey Gladkov <legion@altlinux.ru> 122.0.6261.94-alt1
+- New version (122.0.6261.94).
+- Security fixes:
+  - CVE-2024-1669: Out of bounds memory access in Blink.
+  - CVE-2024-1670: Use after free in Mojo.
+  - CVE-2024-1671: Inappropriate implementation in Site Isolation.
+  - CVE-2024-1672: Inappropriate implementation in Content Security Policy.
+  - CVE-2024-1673: Use after free in Accessibility.
+  - CVE-2024-1674: Inappropriate implementation in Navigation.
+  - CVE-2024-1675: Insufficient policy enforcement in Download.
+  - CVE-2024-1676: Inappropriate implementation in Navigation.
+  - CVE-2024-1938: Type Confusion in V8.
+  - CVE-2024-1939: Type Confusion in V8.
+
 * Thu Feb 08 2024 Alexey Gladkov <legion@altlinux.ru> 121.0.6167.160-alt1
 - New version (121.0.6167.160).
 - Security fixes:
