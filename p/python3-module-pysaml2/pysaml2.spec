@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 7.4.2
-Release: alt1
+Release: alt2
 
 Summary: Python implementation of SAML2
 License: Apache-2.0
@@ -27,6 +27,8 @@ BuildRequires: python3-module-xmlschema
 %endif
 
 %add_python3_req_skip ConfigParser cookielib repoze.who.plugins.form urlparse
+
+%filter_from_requires /curl/d
 
 BuildArch: noarch
 
@@ -63,6 +65,9 @@ that allow you to use it with other frameworks.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 7.4.2-alt2
+- drop curl from requires
+
 * Tue Jun 13 2023 Grigory Ustinov <grenka@altlinux.org> 7.4.2-alt1
 - Automatically updated to 7.4.2.
 
