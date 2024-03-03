@@ -1,7 +1,7 @@
 # since 3.29.x depends on modules in %_libdir/%%name
 %set_verify_elf_method unresolved=relaxed
 
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 %define ver_major 45
 %define beta %nil
@@ -10,7 +10,7 @@
 
 Name: gnome-boxes
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: A GNOME 3 application to access virtual systems
 Group: Emulators
@@ -25,7 +25,7 @@ Source: %name-%version%beta.tar
 
 %define glib_ver 2.50.0
 %define gtk_ver 3.22.20
-%define libvirt_glib_ver 4.0.0
+%define libvirt_glib_ver 5.0.0
 %define libxml2_ver 2.7.8
 %define libusb_ver 1.0.9
 %define spice_gtk_ver 0.41
@@ -41,7 +41,7 @@ Source: %name-%version%beta.tar
 Requires: gnome-keyring dconf
 
 # Need libvirtd and an hypervisor to do anything useful
-Requires: libvirt-daemon
+Requires: libvirt libvirt-daemon libvirt-kvm
 Requires: qemu-kvm
 
 # Needed for unattended installations
@@ -125,6 +125,10 @@ the functionality of the Boxes.
 %exclude %_includedir/%name/
 
 %changelog
+* Sun Mar 03 2024 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt2
+- updated to 45.0-24-g9c5bb93e
+- added libvirt, libvirt-kvm to runtime dependencies (ALT #35457)
+
 * Mon Sep 18 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 
