@@ -9,7 +9,7 @@
 
 Name: python3-module-%oname
 Version: 5.15.10
-Release: alt1
+Release: alt2
 
 Summary: Python 3 bindings for Qt 5
 
@@ -159,13 +159,13 @@ rm -rv %buildroot/%python3_sitelibdir/PyQt5/uic/port_v2/
 %if_with dbus
 %python3_sitelibdir/dbus/mainloop/pyqt5*.so
 %endif
-%exclude %python3_sitelibdir/PyQt5/QtWebKit.so
-%exclude %python3_sitelibdir/PyQt5/QtWebKitWidgets.so
+%exclude %python3_sitelibdir/PyQt5/QtWebKit.*so
+%exclude %python3_sitelibdir/PyQt5/QtWebKitWidgets.*so
 
 %if_with webkit
 %files webkit
-%python3_sitelibdir/PyQt5/QtWebKit.so
-%python3_sitelibdir/PyQt5/QtWebKitWidgets.so
+%python3_sitelibdir/PyQt5/QtWebKit.*so
+%python3_sitelibdir/PyQt5/QtWebKitWidgets.*so
 %endif
 
 %files devel
@@ -182,6 +182,9 @@ rm -rv %buildroot/%python3_sitelibdir/PyQt5/uic/port_v2/
 %python3_sitelibdir/PyQt5/__pycache__/pyrcc*
 
 %changelog
+* Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 5.15.10-alt2
+- fix QtWebKit packing (new name QtWebKit.abi3.so since new sip6)
+
 * Thu Nov 09 2023 Anton Midyukov <antohami@altlinux.org> 5.15.10-alt1
 - new version (5.15.10) with rpmgs script
 
