@@ -1,11 +1,11 @@
 Name: planner
-Version: 0.14.6
-Release: alt3
+Version: 0.14.92
+Release: alt1
 
 Summary: Planner - project management application
 Summary(ru_RU.UTF-8): Программа управления проектами Planner
 
-License: GPL
+License: GPLv2
 Group: Office
 Url: http://live.gnome.org/Planner
 
@@ -13,21 +13,32 @@ Packager: Pavel Vainerman <pv@altlinux.ru>
 
 #Source: http://ftp.gnome.org/pub/GNOME/sources/planner/%version/%name-%version.tar.bz2
 Source: http://ftp.gnome.org/pub/GNOME/sources/planner/0.14/%name-%version.tar
-Source1: %name-%version.ru.po
+#Source1: %name-%version.ru.po
 #Patch: %name-%version.patch
 
 Patch1: %name-window.c.patch
 Patch2: %name-main.c.patch
 
-# Automatically added by buildreq on Sat Jun 26 2010
-BuildRequires: desktop-file-utils gtk-doc intltool libglade-devel libgnomeui-devel librarian libxslt-devel libgsf-devel
+BuildRequires(pre): rpm-macros-meson
 
-# python-base python-dev python-module-pygtk-devel python-modules-compiler python-modules-encodings esound
+BuildRequires: meson desktop-file-utils intltool libglade-devel libgnomeui-devel librarian libxslt-devel libgsf-devel
+
+# check meson.build
+BuildRequires: pkgconfig(glib-2.0) >= 2.56
+BuildRequires: pkgconfig(gobject-2.0)
+BuildRequires: pkgconfig(gtk+-3.0) >= 3.22
+BuildRequires: pkgconfig(gail-3.0)
+BuildRequires: pkgconfig(libxml-2.0) >= 2.6.27
+BuildRequires: pkgconfig(libxslt) >= 1.1.23
+BuildRequires: pkgconfig(libexslt)
+#BuildRequires: pkgconfig(libgda-5.0) >= 1.0
+#BuildRequires: pkgconfig(libebook-1.2)
+# eds >= 3.6
 
 Obsoletes: mrproject
 Provides: mrproject
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 #add_findprov_lib_path %_libdir/%name
 %add_verify_elf_skiplist %_libdir/%name/plugins/*.so
@@ -64,42 +75,26 @@ Libraries needed to develop for planner.
 %prep
 %setup
 %patch1 -p0
-%patch2 -p0
-cp -f %SOURCE1 po/ru.po
-# https://bugzilla.altlinux.org/show_bug.cgi?id=35056
-#__subst "s|sr@Latn|sr@latin|" po/LINGUAS
-#mv po/sr@Latn.po po/sr@latin.po
+#patch2 -p0
+#cp -f %SOURCE1 po/ru.po
 
 %build
-#autoreconf -fisv
-%__subst "s| install-data-hook||" data/mime/Makefile.in
-%configure --disable-python --enable-simple-priority-scheduling --disable-schemas-install
-%make_build || %make
+%meson
+%meson_build
 
 %install
-%makeinstall
+%meson_install
+mv %buildroot%_libdir/planner/libplanner-1.so* %buildroot%_libdir/
 
 %find_lang %name --with-gnome
 
-mkdir -p $RPM_BUILD_ROOT%_datadir/doc/%name-%version
 
-#DOCS="README.sql sample-1.planner kitchen.planner"
-
-DOCS=$( ls $RPM_BUILD_ROOT%_datadir/doc/%name )
-for i in $DOCS
-do
-	cd $RPM_BUILD_ROOT%_datadir/doc/%name-%version/
-	%__mv ../%name/$i $i
-done
-
-rm -rf %buildroot%_libdir/%name/*/*.la
-# drop incorrect locale
-rm -rf %buildroot%_datadir/locale/sr@Latn/
-
+%if 0
 %files -n lib%name-devel
 %_includedir/%name-1.0/
 %_libdir/pkgconfig/*
 %_libdir/libplanner-1.so
+%endif
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -113,24 +108,21 @@ rm -rf %buildroot%_datadir/locale/sr@Latn/
 
 %files -f %name.lang
 # %doc ChangeLog README
-%_bindir/*
-%_sysconfdir/gconf/schemas/%name.schemas
-#%_datadir/application-registry/*
+%_bindir/planner
+%_datadir/GConf/gsettings/planner.convert
+%_datadir/glib-2.0/schemas/app.drey.Planner.gschema.xml
+%_iconsdir/hicolor/*/apps/gnome-planner.*
 %_datadir/applications/*
-#%_datadir/mime-info/*
 %_datadir/mime/packages/*
-# both already in find_lang -with-gnome
-#_datadir/gnome/help/%name/
-#_datadir/omf/%name/
-# %_datadir/gtk-doc/html/lib%name
-%_docdir/%name-%version/
-%_datadir/pixmaps/*
 %_datadir/%name/
 %_datadir/icons/hicolor/48x48/mimetypes/*
 %_man1dir/*
 
-
 %changelog
+* Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 0.14.92-alt1
+- new version 0.14.92
+- switch to meson
+
 * Tue Feb 04 2020 Pavel Vainerman <pv@altlinux.ru> 0.14.6-alt3
 - update ru.po
 - added patches
