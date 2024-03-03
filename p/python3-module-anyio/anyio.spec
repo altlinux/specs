@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-anyio
-Version: 4.2.0
+Version: 4.3.0
 Release: alt1
 
 Summary: High level compatibility layer for multiple asynchronous event loop implementations
@@ -17,6 +17,7 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -46,6 +47,7 @@ It will blend in with native libraries of your chosen backend.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
@@ -57,38 +59,7 @@ It will blend in with native libraries of your chosen backend.
 %pyproject_install
 
 %check
-# Next "bad tests" don't work within hasher, where network and name resolution
-# aren't configured.
-## Wrong localhost address
-badtests+=" or (TestTCPStream and (test_happy_eyeballs and (ipv6 or dualstack)"
-badtests+=" or (test_connection_refused and multi)))"
-badtests+=" or (TestTCPListener and test_bind_link_local)"
-
-## Bind and resolution failure
-badtests+=" or (TestTCPStream and ipv6 and (test_send_after_close"
-badtests+="     or test_unretrieved_future_exception_server_crash"
-badtests+="     or test_send_after_peer_closed or test_iterate"
-badtests+="     or test_connect_tcp_with_tls_cert_check_fail"
-badtests+="     or test_connect_tcp_with_tls or test_send_eof"
-badtests+="     or test_receive_after_close or test_send_large_buffer"
-badtests+="     or test_close_during_receive or test_send_receive"
-badtests+="     or test_concurrent_receive or test_extra_attributes"
-badtests+="     or test_socket_options or test_receive_timeout"
-badtests+="     or test_concurrent_send))"
-badtests+=" or (test_reuse_port and (TestConnectedUDPSocket or TestUDPSocket"
-badtests+="     or TestTCPListener))"
-badtests+=" or ((TestConnectedUDPSocket or TestUDPSocket)"
-badtests+="     and (test_receive_after_close or test_send_after_close"
-badtests+="         or test_close_during_receive or test_send_receive"
-badtests+="         or test_iterate or test_close_during_receive"
-badtests+="         or test_concurrent_receive))"
-badtests+=" or (TestConnectedUDPSocket and test_extra_attributes and ipv6)"
-badtests+=" or (TestUDPSocket and test_extra_attributes)"
-badtests+=" or (TestTCPListener and (test_send_after_eof"
-badtests+="     or test_close_from_other_task or test_socket_options"
-badtests+="     or test_accept_after_close or (test_accept and (ipv4 or ipv6))"
-badtests+="     or test_extra_attributes))"
-%pyproject_run_pytest -Wignore -m "not network" -k "not (${badtests:4})"
+%pyproject_run_pytest -Wignore -m "not network"
 
 %files
 %doc README.rst
@@ -96,6 +67,9 @@ badtests+="     or test_extra_attributes))"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Mar 03 2024 Alexandr Shashkin <dutyrok@altlinux.org> 4.3.0-alt1
+- 4.2.0 -> 4.3.0
+
 * Thu Feb 08 2024 Alexandr Shashkin <dutyrok@altlinux.org> 4.2.0-alt1
 - 3.6.2 -> 4.2.0
 
