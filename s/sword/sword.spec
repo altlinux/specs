@@ -1,9 +1,9 @@
 %def_with cmake
-%define major 1.8
+%define major 1.9
 
 Name: sword
-Version: %major.1
-Release: alt5
+Version: %major.0
+Release: alt1
 
 Summary: The SWORD Project framework for manipulating Bible texts
 Summary(ru_RU.UTF-8): Проект SWORD - оболочка для работы с текстами Библии
@@ -17,13 +17,13 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 #Source0: http://www.crosswire.org/download/ftpmirror.tmp/pub/sword/source/v1.5/%name-%version.tar.bz2
 Source: http://www.crosswire.org/ftpmirror/pub/sword/source/v%major/%name-%version.tar
 Source2: sword_icons.tar
-Patch: https://src.fedoraproject.org/rpms/sword/raw/fddb031c123743bc8dc622d48e65a73727cc398f/f/sword-1.8.1-integer-types.diff
 
-Requires: lib%name = %version
+Requires: lib%name = %EVR
 
-BuildRequires: bc cppunit-devel gcc-c++ glibc-devel libclucene-core-devel libcurl-devel libicu-devel zlib-devel
+BuildRequires: bc cppunit-devel gcc-c++ libclucene-core-devel libcurl-devel libicu-devel zlib-devel
 
 %if_with cmake
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 %endif
 
@@ -58,7 +58,6 @@ will need to develop applications which will use the SWORD Bible Framework.
 
 %prep
 %setup
-%patch -p1
 
 %ifarch %e2k
 # mcst#4060
@@ -117,6 +116,9 @@ make tests
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 1.9.0-alt1
+- new version 1.9.0 (with rpmrb script)
+
 * Mon Dec 30 2019 Ildar Mulyukov <ildar@altlinux.ru> 1.8.1-alt5
 - fix ppc64le build (closes #37665)
 
