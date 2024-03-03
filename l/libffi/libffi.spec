@@ -2,8 +2,8 @@
 %define soname 8
 
 Name: libffi
-Version: 3.4.2
-Release: alt2
+Version: 3.4.6
+Release: alt1
 Epoch: 1
 
 Summary: Foreign Function Interface library
@@ -102,6 +102,12 @@ make -k check
 %_libdir/*.a
 
 %changelog
+* Sun Feb 25 2024 Anton Farygin <rider@altlinux.ru> 1:3.4.6-alt1
+- 3.4.6
+
+* Wed Oct 05 2022 Anton Farygin <rider@altlinux.ru> 1:3.4.3-alt1
+- 3.4.3
+
 * Tue Oct 19 2021 Anton Farygin <rider@altlinux.ru> 1:3.4.2-alt2
 - Built with disable-exec-static-tramp for a workaround for
   upstream incompatability with gjs, gobject-introspection and other projects
