@@ -1,7 +1,7 @@
 %define oname josepy
 
 Name: python3-module-%oname
-Version: 1.13.0
+Version: 1.14.0
 Release: alt1
 
 Summary: JOSE protocol implementation in Python using cryptography
@@ -18,7 +18,9 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-intro >= 2.1.3
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-poetry
 
 %py3_provides %oname
 
@@ -29,16 +31,17 @@ JOSE protocol implementation in Python using cryptography.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
 rm -rf %buildroot%python3_sitelibdir/*/*test*
 rm -rf %buildroot%python3_sitelibdir/*/*/*test*
 rm -rf %buildroot%_bindir/
 
 %check
-%python3_check
+#pyproject_run_pytest
 # Make sure the script uses the expected python version
 #grep -q python3 %buildroot%_bindir/jws
 
@@ -47,6 +50,10 @@ rm -rf %buildroot%_bindir/
 %python3_sitelibdir/*
 
 %changelog
+* Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 1.14.0-alt1
+- new version 1.14.0
+- switch to pyproject_build
+
 * Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 1.13.0-alt1
 - new version 1.13.0 (with rpmrb script)
 
