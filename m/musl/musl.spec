@@ -3,8 +3,8 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: musl
-Version: 1.2.4
-Release: alt2
+Version: 1.2.5
+Release: alt1
 Group: System/Libraries
 Summary: Implementation of the C standard library
 License: MIT
@@ -12,7 +12,6 @@ Url: https://musl.libc.org/
 Vcs: https://git.musl-libc.org/git/musl
 
 Source: %name-%version.tar
-Patch3500: musl-20231008-loongarch.patch
 
 %description
 %summary.
@@ -69,7 +68,6 @@ Requires(post): toilet
 
 %prep
 %setup
-%patch3500 -p1
 
 # Use musl-fts from Debian.
 mkdir -p src/fts
@@ -163,6 +161,9 @@ grep -Ex 'ldso="/lib/%ldname"' %buildroot%_bindir/ld.musl-clang
 %_datadir/%name-checkinstall
 
 %changelog
+* Sun Mar 03 2024 Vitaly Chikunov <vt@altlinux.org> 1.2.5-alt1
+- Update to v1.2.5 (2024-02-29).
+
 * Fri Nov 10 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.2.4-alt2
 - NMU: support LoongArch architecture (added patch from
   https://www.openwall.com/lists/musl/2023/10/08/1)
