@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.2.12
+Version: 0.2.13
 Release: alt1
 Summary: Measures number of Terminal column cells of wide-character codes
 License: MIT
@@ -59,6 +59,9 @@ rm tox.ini
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 01 2024 Stanislav Levin <slev@altlinux.org> 0.2.13-alt1
+- 0.2.12 -> 0.2.13.
+
 * Thu Dec 07 2023 Stanislav Levin <slev@altlinux.org> 0.2.12-alt1
 - 0.2.10 -> 0.2.12.
 
