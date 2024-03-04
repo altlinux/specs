@@ -1,7 +1,7 @@
 %define oname humanize
 
 Name: python3-module-%oname
-Version: 4.4.0
+Version: 4.9.0
 Release: alt1
 
 Summary: Python humanize utilities
@@ -17,7 +17,9 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools_scm python3-module-setuptools
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-hatchling python3-module-hatch-vcs
 BuildRequires: python3-module-pytest python3-module-freezegun
 
 #py3_provides %oname
@@ -31,20 +33,24 @@ or into a human readable size or throughput.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %python3_prune
 
 %check
-%python3_test
+#pyproject_run_pytest
 
 %files
 %doc README.md
 %python3_sitelibdir/*
 
 %changelog
+* Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 4.9.0-alt1
+- new version 4.9.0
+- switch to pyproject_build
+
 * Sun Jan 22 2023 Vitaly Lipatov <lav@altlinux.ru> 4.4.0-alt1
 - new version 4.4.0 (with rpmrb script)
 
