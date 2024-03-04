@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %def_enable introspection
 %def_enable gtk_doc
@@ -12,7 +12,7 @@
 %define api_ver 0.1
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GObject wrapper for the Microsoft Graph API
@@ -131,6 +131,9 @@ the functionality of the installed %_name library.
 
 
 %changelog
+* Tue Mar 05 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
+- 0.2.1
+
 * Sat Mar 02 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - first build for sisyphus (0.2.0-1-g11e0670)
 
