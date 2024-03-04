@@ -15,7 +15,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:		java3d
 Version:	1.5.2
-Release:	alt5_15jpp8
+Release:	alt6_15jpp8
 Summary:	The Java 3D API
 Group:		Development/Java
 License:	BSD, GPL
@@ -45,7 +45,7 @@ Patch7:		typedef.patch
 BuildRequires:	ant
 BuildRequires:	ant-junit
 BuildRequires:	glibc-devel
-%ifnarch %{arm} aarch64 ppc64le
+%ifarch %{ix86} x86_64
 BuildRequires:	jogl
 %endif
 BuildRequires:	javapackages-local
@@ -210,7 +210,7 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %{_javadir}/%{name}/j3dcore.jar
 %{_javadir}/%{name}/j3dutils-%{version}.jar
 %{_javadir}/%{name}/j3dutils.jar
-%ifnarch %{arm} aarch64 ppc64le
+%ifarch %{ix86} x86_64
 %{_libdir}/libj3dcore-ogl.so
 %endif
 
@@ -228,6 +228,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Thu Dec 07 2023 Ivan A. Melnikov <iv@altlinux.org> 1.5.2-alt6_15jpp8
+- stricter arch list for jogl dependency
+
 * Wed Apr 06 2022 Igor Vlasenko <viy@altlinux.org> 1.5.2-alt5_15jpp8
 - workaround for libs.req stunt
 
