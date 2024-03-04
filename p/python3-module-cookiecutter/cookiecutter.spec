@@ -6,8 +6,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.5.0
-Release: alt2
+Version: 2.6.0
+Release: alt1
 
 Summary: A cross-platform command-line utility that creates projects from cookiecutters
 License: BSD-3-Clause
@@ -82,6 +82,9 @@ touch pytest.ini
 %_datadir/fish/vendor_completions.d/%binfile_name.fish
 
 %changelog
+* Mon Mar 04 2024 Alexandr Shashkin <dutyrok@altlinux.org> 2.6.0-alt1
+- 2.5.0 -> 2.6.0
+
 * Fri Dec 08 2023 Alexandr Shashkin <dutyrok@altlinux.org> 2.5.0-alt2
 - Fixed "No module named 'click'" error when build without check
 
