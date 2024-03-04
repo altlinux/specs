@@ -2,7 +2,7 @@
 
 Name: osgearth
 Version: 3.5
-Release: alt1
+Release: alt2
 
 Summary: Dynamic map generation toolkit for OpenSceneGraph
 License: LGPL-3.0 with exceptions
@@ -117,6 +117,11 @@ This package contains sample data files for osgEarth.
 %setup
 tar xf %SOURCE1
 %patch1 -p1
+%ifarch %e2k
+# error: undefined reference to symbol '_ZTIN9osgViewer14GraphicsWindowE'
+sed -i 's/OSGUTIL_LIBRARY/& OSGVIEWER_LIBRARY/' \
+	src/applications/osgearth_bakefeaturetiles/CMakeLists.txt
+%endif
 # Remove non-free content
 rm -rf data/loopix
  
@@ -127,8 +132,7 @@ sed -i 's|add_subdirectory(fastdxt)|# add_subdirectory(fastdxt)|' src/osgEarthDr
 
 %build
 %ifarch %e2k
-# -std=c++03 by default as of lcc 1.23.12
-%add_optflags -std=c++11
+%add_optflags -std=c++14
 # OpenSceneGraph debuginfo too large now => unmets
 %global __find_debuginfo_files %nil
 %endif
@@ -160,6 +164,9 @@ cp -a data tests %buildroot%_datadir/osgEarth
 %_datadir/osgEarth
 
 %changelog
+* Mon Mar 04 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.5-alt2
+- Fixed build for Elbrus.
+
 * Tue Oct 24 2023 Andrey Cherepanov <cas@altlinux.org> 3.5-alt1
 - New version.
 
