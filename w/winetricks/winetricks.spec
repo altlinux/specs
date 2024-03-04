@@ -1,5 +1,5 @@
 Name: winetricks
-Version: 20240105
+Version: 20240223
 Release: alt1
 
 Summary: Work around common problems in Wine
@@ -10,11 +10,15 @@ Url: https://github.com/Winetricks/winetricks
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-#Source-url: https://github.com/Winetricks/winetricks/archive/refs/heads/master.zip
-# Source-url: %url/archive/%version/%name-%version.tar.gz
+#Source-url: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/Winetricks/winetricks/commit/f87bf9e6a7c67a06487a1ef710c0d9c548ae6f01
 Source: %name-%version.tar
 
 Patch2: 0001-winetricks-try-use-xvt-as-terminal.patch
+
+Patch10: 0001-Remove-unuseful-binary-arch-detection.patch
+Patch11: 0002-add-w_expand_env32-and-w_expand_env64-and-using-them.patch
+Patch12: 0003-Rename-w_try_regsvr-to-w_try_regsvr32.patch
 
 BuildArch: noarch
 
@@ -47,6 +51,9 @@ or tweak various Wine settings individually.
 %prep
 %setup
 %patch2 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
 
 # fix req. Disable autoreq at all?
 %__subst 's|fusermount|a= fusermount|' src/winetricks
@@ -81,6 +88,10 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 #exclude %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Mon Mar 04 2024 Vitaly Lipatov <lav@altlinux.ru> 20240223-alt1
+- new version (20240223) from commit f87bf9e6a7c67a06487a
+- add patches with rewrite new style wow64 support (github #2191)
+
 * Wed Jan 17 2024 Vitaly Lipatov <lav@altlinux.ru> 20240105-alt1
 - new version 20240105 (with rpmrb script)
 
