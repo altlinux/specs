@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name gcr
 %define _libexecdir %_prefix/libexec
@@ -13,7 +13,7 @@
 %def_enable check
 
 Name: gcr%gcr_api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A GNOME crypto viewer and prompter
@@ -131,6 +131,15 @@ This package contains development documentation for GCR libraries.
 %meson_install
 %find_lang %_name-%gcr_api_ver
 
+# gcr-ssh-agent.socket and gcr-ssh-agent.service
+# should be enabled
+
+#$ cat /etc/profile.d/gcr-ssh-agent.sh
+
+#if [ -z "$SSH_AUTH_SOCK" ]; then
+#    export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh
+#fi
+
 %check
 xvfb-run %__meson_test -t 6
 
@@ -177,6 +186,9 @@ xvfb-run %__meson_test -t 6
 %_vapidir/%_name-%gcr_api_ver.vapi
 
 %changelog
+* Mon Mar 04 2024 Yuri N. Sedunov <aris@altlinux.org> 4.2.1-alt1
+- 4.2.1
+
 * Tue Jan 30 2024 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
 - 4.2.0
 
