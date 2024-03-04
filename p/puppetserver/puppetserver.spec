@@ -2,7 +2,7 @@
 
 Name:       puppetserver
 Version:    6.20.0
-Release:    alt3
+Release:    alt4
 Summary:    Server automation framework and application
 License:    Apache-2.0
 Group:      Other
@@ -47,9 +47,6 @@ control over the Ruby runtime.
 %prep
 %setup
 %patch1 -p2
-sed "s|gem-path: \\[.*\\]|gem-path: [$(echo $(ls /usr/lib/ruby/gems | \
-   sed -e "s,^,/usr/lib/ruby/gems/,") | sed "s/ \\+/, /")]|" \
-   -i ext/config/conf.d/puppetserver.conf
 subst 's|/var/log/puppetlabs|/var/log|' $(find -name '*.xml')
 sed '/name.*environments/a \
         }, \
@@ -182,6 +179,9 @@ fi
 %_sysconfdir/default/%name
 
 %changelog
+* Mon Mar 04 2024 Pavel Skrylev <majioa@altlinux.org> 6.20.0-alt4
+- ! fixed: added proper gem_path to config (closes #49603)
+
 * Mon Mar 04 2024 Andrey Cherepanov <cas@altlinux.org> 6.20.0-alt3
 - puppetserver.service: disable autorestart and standard output type syslog (ALT #49602).
 - Use adapted /etc/sysconfig/puppetserver.
