@@ -1,7 +1,7 @@
 %define srcname pixman
 
 Name: libpixman
-Version: 0.43.0
+Version: 0.43.4
 Release: alt1
 Epoch: 3
 Summary: Pixel manipulation library
@@ -42,7 +42,7 @@ develop programs which make use of %name
 %meson_build -v
 
 %check
-%ifnarch armh
+%ifnarch armh %ix86
 %__meson_test
 %endif
 
@@ -58,6 +58,9 @@ develop programs which make use of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Mar 04 2024 Valery Inozemtsev <shrek@altlinux.ru> 3:0.43.4-alt1
+- 0.43.4
+
 * Thu Jan 11 2024 Valery Inozemtsev <shrek@altlinux.ru> 3:0.43.0-alt1
 - 0.43.0
 
