@@ -3,8 +3,8 @@
 %endif
 
 Name: mongo7.0
-Version: 7.0.5
-Release: alt2.1
+Version: 7.0.6
+Release: alt1
 Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
 Group: Development/Databases
@@ -201,6 +201,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Mon Mar 04 2024 Alexei Takaseev <taf@altlinux.org> 7.0.6-alt1
+- 7.0.6
+
 * Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 7.0.5-alt2.1
 - NMU: Added zombie-imp to BuildRequires.
 
