@@ -3,10 +3,16 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
+%ifarch loongarch64
+%def_without check
+%else
+%def_with check
+%endif
+
 # Based on https://github.com/iovisor/bcc/blob/master/SPECS/bcc.spec
 
 # Lua jit is not available for some architectures
-%ifarch i586 x86_64 aarch64
+%ifarch i586 x86_64 aarch64 loongarch64
 %def_with luajit
 %else
 %def_without luajit
@@ -14,7 +20,7 @@
 
 Name:		bcc
 Version: 0.29.1
-Release: alt2
+Release: alt3
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -28,7 +34,7 @@ Source4: blazesym-0.tar
 
 # bcc does not support 32-bit arches
 # See https://github.com/iovisor/bcc/issues/3241
-ExclusiveArch: x86_64 aarch64 ppc64le
+ExclusiveArch: x86_64 aarch64 ppc64le loongarch64
 
 BuildRequires(pre): python3-module-setuptools
 BuildRequires(pre): rpm-macros-cmake
@@ -46,7 +52,9 @@ BuildRequires: libncurses-devel
 BuildRequires: libpolly-devel
 BuildRequires: libstdc++-devel
 BuildRequires: libxml2-devel
+%ifnarch loongarch64
 BuildRequires: lld
+%endif
 BuildRequires: llvm-devel
 BuildRequires: llvm-devel-static
 BuildRequires: python3-devel
@@ -258,7 +266,7 @@ vm-run bcc cpudist 1 1
 if grep CONFIG_DEBUG_INFO_BTF=y /boot/config-*; then
 	vm-run bpf-cpudist 1 1
 fi
-rm /tmp/vm.* /tmp/initramfs-*.img
+rm -f /tmp/vm.* /tmp/initramfs-*.img
 
 %files -n libbcc
 %doc LICENSE.txt
@@ -298,6 +306,11 @@ rm /tmp/vm.* /tmp/initramfs-*.img
 %files checkinstall
 
 %changelog
+* Mon Mar 04 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.29.1-alt3
+- NMU: spec: adjusted for LoongArch:
+  + do NOT use lld (as of llvm 17 lld is incompatible with the GNU ld one).
+  + disable tests for now (KVM is not reliable enough yet here).
+
 * Sat Mar 02 2024 Vitaly Chikunov <vt@altlinux.org> 0.29.1-alt2
 - Fix FTBFS after removal of pathfix.py on python3 update.
 
