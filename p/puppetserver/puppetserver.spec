@@ -2,7 +2,7 @@
 
 Name:       puppetserver
 Version:    6.20.0
-Release:    alt2
+Release:    alt3
 Summary:    Server automation framework and application
 License:    Apache-2.0
 Group:      Other
@@ -16,6 +16,7 @@ Source5: %name.service
 Source1: puppetserver.init
 Source2: jruby-1_7.jar
 Source3: jruby-9k.jar
+Source4: default
 
 Patch1: puppetserver-6.13.0-alt.patch
 
@@ -112,11 +113,10 @@ install -d -m 0700 %buildroot%_localstatedir/%name/jars
 install -d -m 0755 %buildroot%_sysconfdir/default
 install -m 0644 ext/default %buildroot%_sysconfdir/default/%name
 
-install -Dpm 0644 ext/default %buildroot%_sysconfdir/sysconfig/%name                                                  
-
 install -d -m 0755 %buildroot%_sysconfdir/init.d
 install -m 0755 %SOURCE1 %buildroot%_sysconfdir/init.d/%name
 
+install -Dpm 0644 %SOURCE4 %buildroot%_sysconfdir/sysconfig/%name
 install -Dpm 0644 %SOURCE5 %buildroot%_unitdir/%name.service
 
 mkdir -p %buildroot%_tmpfilesdir
@@ -182,6 +182,10 @@ fi
 %_sysconfdir/default/%name
 
 %changelog
+* Mon Mar 04 2024 Andrey Cherepanov <cas@altlinux.org> 6.20.0-alt3
+- puppetserver.service: disable autorestart and standard output type syslog (ALT #49602).
+- Use adapted /etc/sysconfig/puppetserver.
+
 * Wed Feb 21 2024 Andrey Cherepanov <cas@altlinux.org> 6.20.0-alt2
 - Add service file.
 
