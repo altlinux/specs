@@ -2,7 +2,7 @@
 %define oname pytest-regtest
 
 Name: python3-module-%oname
-Version: 1.5.1
+Version: 2.1.1
 Release: alt1
 
 Summary: pytest plugin for regression tests
@@ -15,8 +15,7 @@ Source0: %oname-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-hatchling
 BuildRequires: python3-module-pytest
 
 %py3_provides pytest_regtest
@@ -37,15 +36,17 @@ way as it did before introduced changes.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -v tests/test_plugin.py
+%pyproject_run_pytest -v
 
 %files
 %doc PKG-INFO
-%python3_sitelibdir/__pycache__/pytest_regtest.*
+%python3_sitelibdir/pytest_regtest
 %python3_sitelibdir/pytest_regtest-%version.dist-info
-%python3_sitelibdir/pytest_regtest.py
 
 %changelog
+* Mon Mar 04 2024 Anton Vyatkin <toni@altlinux.org> 2.1.1-alt1
+- new version 2.1.1
+
 * Fri Aug 18 2023 Anton Vyatkin <toni@altlinux.org> 1.5.1-alt1
 - new version 1.5.1
 
