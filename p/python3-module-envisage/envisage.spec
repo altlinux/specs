@@ -3,8 +3,8 @@
 %define oname envisage
 
 Name: python3-module-envisage
-Version: 6.1.0
-Release: alt2
+Version: 6.1.1
+Release: alt1
 
 Summary: Extensible Application Framework
 
@@ -24,7 +24,9 @@ Patch2: envisage-6.1.0-alt-fix-mistake-in-menu-group-specification.patch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
+
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %add_findprov_skiplist %python3_sitelibdir/%oname/plugins/*
 %add_findreq_skiplist  %python3_sitelibdir/%oname/plugins/*
@@ -77,13 +79,13 @@ This package contains development documentation for Envisage.
 %prep
 %setup
 #patch1 -p1
-%patch2 -p1
+#patch2 -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %python3_prune
 
 %files
@@ -92,6 +94,10 @@ This package contains development documentation for Envisage.
 %python3_sitelibdir/*
 
 %changelog
+* Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 6.1.1-alt1
+- new version 6.1.1
+- switch to pyproject_build
+
 * Mon Jan 23 2023 Anton Vyatkin <toni@altlinux.org> 6.1.0-alt2
 - added patch for fix mistake in menu group specification
 
