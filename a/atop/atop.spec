@@ -2,8 +2,8 @@
 %filter_from_requires /^.usr.bin.systemctl/d
 
 Name: atop
-Version: 2.9.0
-Release: alt2
+Version: 2.10.0
+Release: alt1
 Summary: AT Computing's System & Process Monitor
 License: GPLv2+
 Group: Monitoring
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: rpm-build-python3
-BuildRequires: libncurses-devel zlib-devel
+BuildRequires: libncursesw-devel zlib-devel glib2-devel libjson-c-devel
 
 %description
 %name is an interactive monitor to view the load on a Linux-system. It shows the
@@ -28,13 +28,15 @@ format for long-term analysis.
 %patch -p1
 
 %build
+# fix build with glib2-devel
+export C_INCLUDE_PATH=%_libdir/glib-2.0/include:%_includedir/glib-2.0/glib:%_includedir/glib-2.0:%_includedir/json-c:$C_INCLUDE_PATH
 %make_build CFLAGS="%optflags"
 gzip -c9 ChangeLog > ChangeLog.gz
 
 %install
 mkdir -p %buildroot/usr/lib/pm-utils/sleep.d %buildroot%_sysconfdir/default
-for i in systemdinstall sysvinstall;do
-make $i DESTDIR=%buildroot INIPATH=%_initddir SYSDPATH=%_unitdir
+for i in install sysvinstall;do
+make $i DESTDIR=%buildroot INIPATH=%_initddir SYSDPATH=%_unitdir PMPATHD=/lib/systemd/system-sleep
 done
 :> %buildroot%_sysconfdir/%{name}rc
 
@@ -45,7 +47,7 @@ done
 %preun_service %name ||:
 
 %files
-%doc AUTHOR ChangeLog.* README
+%doc AUTHORS ChangeLog.* README
 %ghost %config(noreplace) %_sysconfdir/%{name}rc
 %config(noreplace) %_sysconfdir/default/%name
 %_bindir/*
@@ -54,16 +56,19 @@ done
 %_man5dir/*
 %_man8dir/*
 %_sysconfdir/cron.d/*
-%_sysconfdir/logrotate.d/*
+# %_sysconfdir/logrotate.d/*
 %_initdir/*
 %_unitdir/%{name}*.service
 %_unitdir/%{name}*.timer
 %_logdir/%name
 %_datadir/%name
-/usr/lib/systemd/system-sleep/atop-pm.sh
+/lib/systemd/system-sleep/atop-pm.sh
 /usr/lib/pm-utils/sleep.d/45atoppm
 
 %changelog
+* Mon Mar 04 2024 Leontiy Volodin <lvol@altlinux.org> 2.10.0-alt1
+- atop 2.10.0
+
 * Wed Nov 22 2023 Leontiy Volodin <lvol@altlinux.org> 2.9.0-alt2
 - Fix version (ALT #48545)
 
