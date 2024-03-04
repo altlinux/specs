@@ -5,8 +5,8 @@
 %def_without doc
 
 Name: python3-module-%oname
-Version: 4.8.0
-Release: alt3
+Version: 4.9.0
+Release: alt1
 
 Summary: Pexpect is a pure Python Expect. It allows easy control of other applications
 
@@ -17,12 +17,15 @@ Url: https://pypi.python.org/pypi/pexpect
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
-Patch: 0003-tests-spawn-python3-not-python.patch
-
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
+
 BuildRequires: python3-module-ptyprocess
+
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
 
 %if_with doc
 BuildRequires: python3-module-sphinx
@@ -53,23 +56,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup
-%patch -p1
-# fix some incompatibility
 %__subst 's|"time"|"time -p true"|' tests/test_async.py
-%__subst 's|"python"|"python3"|' pexpect/replwrap.py
-
-fix_env_python () {
-    # change shebang /usr/bin/env python -> /usr/bin/$PYTHON
-    PYTHON="$1"
-    find -type f -name '*.py' | \
-        xargs sed -i \
-            "1s|#!/usr/bin/env python[[:space:]]*$|#!/usr/bin/$PYTHON|"
-
-    sed -i "1s|#!/usr/bin/env python[[:space:]]*$|#!/usr/bin/$PYTHON|" \
-        tests/fakessh/ssh
-}
-
-fix_env_python python3
 
 %if_with doc
 %prepare_sphinx3 .
@@ -77,10 +64,10 @@ ln -s ../objects.inv doc/
 %endif
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %if_with doc
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C doc html SPHINXBUILD=sphinx-build-3
@@ -96,7 +83,7 @@ py.test3 -v || echo "FIXME: There are IGNORED test failures."
 %files
 %doc LICENSE *.rst
 %python3_sitelibdir/pexpect/
-%python3_sitelibdir/pexpect-*.egg-info/
+%python3_sitelibdir/pexpect-*.dist-info/
 
 %if_with doc
 %files docs
@@ -105,6 +92,9 @@ py.test3 -v || echo "FIXME: There are IGNORED test failures."
 %endif
 
 %changelog
+* Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 4.9.0-alt1
+- new version 4.9.0 (with rpmrb script)
+
 * Sat Jul 03 2021 Vitaly Lipatov <lav@altlinux.ru> 4.8.0-alt3
 - apply more clean python3 patch
 - temp. ignore test result (failed only on rebuild)
