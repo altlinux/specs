@@ -1,5 +1,5 @@
 Name: startup-rescue
-Version: 0.49
+Version: 0.49.1
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
@@ -69,6 +69,9 @@ install -pm755 rescue-remote.init %buildroot%_initdir/rescue-remote
 %_bindir/*
 
 %changelog
+* Mon Mar 04 2024 Anton Midyukov <antohami@altlinux.org> 0.49.1-alt1
+- rescue-shell: fix condition for run rescue-launcher
+
 * Thu Jan 25 2024 Anton Midyukov <antohami@altlinux.org> 0.49-alt1
 - separate package livecd-rescue-utility
 - rescue-shell: hide 'rescue-launcher' behind a variable
