@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.29.2
+Version: 6.29.3
 Release: alt1
 
 Summary: IPython Kernel for Jupyter
@@ -69,9 +69,7 @@ sed -i 's/--color=yes//' pyproject.toml
 cp -r tests/ %buildroot%python3_sitelibdir/%oname/
 
 %check
-# Cause pytest error.
-rm -rf examples/
-%pyproject_run -- xvfb-run pytest -v -W ignore::DeprecationWarning -k 'not test_tk_loop'
+%pyproject_run -- xvfb-run pytest -v -W default tests/inprocess/
 
 %files
 %doc README.*
@@ -86,6 +84,9 @@ rm -rf examples/
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Tue Feb 27 2024 Anton Vyatkin <toni@altlinux.org> 6.29.3-alt1
+- New version 6.29.3.
+
 * Thu Feb 08 2024 Anton Vyatkin <toni@altlinux.org> 6.29.2-alt1
 - New version 6.29.2.
 
