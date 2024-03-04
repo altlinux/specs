@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 3.16.2
+Version: 3.17.1
 Release: alt1
 
 Summary: A small, expressive orm -- supports postgresql, mysql and sqlite
@@ -17,18 +17,23 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
-BuildArch: noarch
-
 Obsoletes: python-module-peewee
 Provides: python-module-peewee
 
 BuildRequires(pre): rpm-macros-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-sphinx python3-module-pytest python3-modules-sqlite3
+
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme
+BuildRequires: python3-module-pytest python3-modules-sqlite3
+
+BuildRequires: python3-module-Cython
 
 # Keep noarch: Could not find libsqlite3, SQLite extensions will not be built.
-#BuildRequires: libsqlite3-devel
+BuildRequires: libsqlite3-devel
 
 %add_python3_req_skip pysqlcipher
 
@@ -65,12 +70,12 @@ find -type f -name '*.py' -exec \
 ln -s ../objects.inv docs/
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %python3_prune
-
+#[ -d %buildroot%python3_sitelibdir/ ] || mv %buildroot%python3_sitelibdir/
 %make -C docs html SPHINXBUILD=sphinx-build-3
 
 %check
@@ -86,6 +91,10 @@ python3 runtests.py
 %doc docs/_build/html/*
 
 %changelog
+* Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 3.17.1-alt1
+- new version 3.17.1
+- switch to pyproject_build, build as noarch
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 3.16.2-alt1
 - new version 3.16.2 (with rpmrb script)
 
