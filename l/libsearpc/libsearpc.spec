@@ -1,5 +1,5 @@
 Name: libsearpc
-Version: 3.2.0
+Version: 3.2.0.1
 Release: alt1
 
 Summary: RPC library for Seafile
@@ -10,9 +10,9 @@ Url: https://github.com/haiwen/libsearpc
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/haiwen/libsearpc/archive/v%version.tar.gz
+#Source-url: https://github.com/haiwen/libsearpc/archive/v%version.tar.gz
+# Source-url: https://github.com/haiwen/libsearpc/commit/cb1ffb2676ee0e96e4d416fe062f81b2e212271f
 Source: %name-%version.tar
-Patch: 9b2e2dc65213fb22ed400dc54e4c2279564df62b.patch
 
 BuildRequires: glib2-devel libjansson-devel
 
@@ -43,7 +43,7 @@ Seafile RPC python3 module.
 
 %prep
 %setup
-%patch -p1
+# https://github.com/haiwen/libsearpc/pull/20
 sed -i 's/(DESTDIR)//' libsearpc.pc.in
 sed -i -e 's@#!/usr/bin/env python@#!%__python3@' lib/searpc-codegen.py
 
@@ -69,6 +69,9 @@ sed -i -e 's@#!/usr/bin/env python@#!%__python3@' lib/searpc-codegen.py
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 3.2.0.1-alt1
+- build cb1ffb2676ee0e96e4d416fe062f81b2e212271f commit
+
 * Sun Jan 19 2020 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt1
 - new version (3.2.0) with rpmgs script
 - switch to python3 (build the module as standalone package)

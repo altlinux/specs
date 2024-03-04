@@ -1,5 +1,5 @@
 Name: seafile-client
-Version: 8.0.6
+Version: 9.0.5
 Release: alt1
 
 Summary: Seafile gui client on QT bassed
@@ -18,21 +18,39 @@ Source1: seafile.desktop
 Patch: seafile-client-no-return-error.patch
 Patch2: 86ebea086c6b78738b3140c922c909331d2b9a94.patch
 
-Requires: seafile >= %version
-
-# manually removed: git-core i586-libxcb libfreetype-infinality python-module-mwlib ruby ruby-stdlibs python-module-google python3-dev python3-module-yieldfrom python3-module-zope 
-# Automatically added by buildreq on Tue May 17 2016
-# optimized out: cmake cmake-modules gcc-c++ glib2-devel libEGL-devel libGL-devel libevent-devel libgio-devel libgpg-error libjansson-devel libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-test libqt5-widgets libqt5-xml libsearpc-devel libstdc++-devel libuuid-devel pkg-config python-base python-modules python3 python3-base  qt5-tools
-BuildRequires: cmake doxygen graphviz libsqlite3-devel libssl-devel zlib-devel
-BuildRequires: qt5-imageformats qt5-tools-devel
-
-BuildRequires: qt5-base-devel
+ExclusiveArch: %qt6_qtwebengine_arches
 
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-qt6
+BuildRequires(pre): rpm-macros-qt6-webengine
 
-BuildRequires: libevent-devel >= 2.0
+BuildRequires: cmake
+BuildRequires: doxygen graphviz
+
+BuildRequires: pkgconfig(Qt6Core)
+BuildRequires: pkgconfig(Qt6Gui)
+BuildRequires: pkgconfig(Qt6Widgets)
+BuildRequires: pkgconfig(Qt6Linguist)
+BuildRequires: pkgconfig(Qt6Network)
+BuildRequires: pkgconfig(Qt6Core5Compat)
+BuildRequires: pkgconfig(Qt6WebEngineCore)
+BuildRequires: pkgconfig(Qt6WebEngineWidgets)
+
+BuildRequires: qt6-imageformats
+
 BuildRequires: libseafile-devel >= %version
 
+# see CMakeLists.txt
+BuildRequires: pkgconfig(sqlite3) >= 3.0.0
+BuildRequires: pkgconfig(jansson) >= 2.2.1
+BuildRequires: pkgconfig(libsearpc) >= 1.0
+BuildRequires: pkgconfig(openssl) >= 0.98
+#BuildRequires: pkgconfig(libseafile) >= 1.7
+BuildRequires: pkgconfig(libevent) >= 2.0
+BuildRequires: pkgconfig(zlib) >= 1.2.0
+
+
+Requires: seafile >= %EVR
 Conflicts: libseafile <= 2.0.4
 
 %description
@@ -48,11 +66,12 @@ subst '1iADD_DEFINITIONS(-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_26)' CMakeLi
 cp %SOURCE1 data/
 
 %build
-PATH=%_qt5_bindir:$PATH %cmake_insource
-%make_build
+export PATH=%_qt6_bindir:$PATH
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 ln -s seafile-applet %buildroot%_bindir/%name
 
 %find_lang %name
@@ -65,6 +84,10 @@ ln -s seafile-applet %buildroot%_bindir/%name
 %_pixmapsdir/*
 
 %changelog
+* Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 9.0.5-alt1
+- new version 9.0.5
+- switch to Qt6 build
+
 * Tue Apr 05 2022 Vitaly Lipatov <lav@altlinux.ru> 8.0.6-alt1
 - new version 8.0.6 (with rpmrb script)
 

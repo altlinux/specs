@@ -1,5 +1,5 @@
 Name: seafile
-Version: 8.0.6
+Version: 9.0.5
 Release: alt1
 
 Summary: Full-fledged cloud storage platform
@@ -18,19 +18,27 @@ Source2: nginx.conf.example
 
 Patch: seafile-curl-7.62.patch
 
-Requires: lib%name = %version-%release
+BuildRequires(pre): rpm-build-python3
 
-BuildRequires: intltool libssl-devel libuuid-devel
-BuildRequires: zlib-devel libjson-glib-devel
+BuildRequires: intltool libuuid-devel
 BuildRequires: vala
-BuildRequires: rpm-build-python3 python3-devel
-
-BuildRequires: libsearpc-devel >= 3.2.0
 
 BuildRequires: libsqlite3-devel >= 3.7
-BuildRequires: libevent-devel >= 2.0
-BuildRequires: libarchive-devel >= 2.8.5
-BuildRequires: libcurl-devel >= 7.17
+
+BuildRequires: libssl-devel
+
+# see configure.ac
+BuildRequires: pkgconfig(glib-2.0) >= 2.16.0
+BuildRequires: pkgconfig(gobject-2.0) >= 2.16.0
+BuildRequires: pkgconfig(libsearpc) >= 1.0
+BuildRequires: pkgconfig(jansson) >= 2.2.1
+BuildRequires: pkgconfig(libevent) >= 2.0
+BuildRequires: pkgconfig(zlib) >= 1.2.0
+BuildRequires: pkgconfig(libcurl) >= 7.17
+BuildRequires: pkgconfig(libwebsockets) >= 4.0.20
+
+Requires: lib%name = %EVR
+
 
 %description
 Seafile is a next-generation open source cloud storage system
@@ -47,7 +55,7 @@ wiki, and discussion to enable easy collaboration around documents within a team
 %package -n fuse-seafile
 Summary: Seafile FUSE access
 Group: Networking/File transfer
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n fuse-seafile
 Seafile FUSE access.
@@ -57,7 +65,7 @@ with advanced support for file syncing, privacy protection and teamwork.
 %package cli
 Summary: Seafile CLI client
 Group: Networking/File transfer
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description cli
 Seafile CLI client.
@@ -68,6 +76,7 @@ with advanced support for file syncing, privacy protection and teamwork.
 %package -n python3-module-seafile
 Summary: Seafile client python3 module
 Group: Networking/File transfer
+Requires: lib%name = %EVR
 
 %description -n python3-module-seafile
 The python3 module with Seafile client.
@@ -98,7 +107,7 @@ cp %SOURCE1 .
 
 %build
 %autoreconf
-%configure --disable-static PYTHON=%__python3
+%configure --disable-static --enable-ws PYTHON=%__python3
 # FIXME: breakes build
 %make_build || %make
 
@@ -114,17 +123,21 @@ cp %SOURCE1 .
 %_man1dir/seaf-cli.1.*
 
 %files -n lib%name
-%_libdir/*.so.*
+%_libdir/libseafile.so.*
 
 %files -n python3-module-seafile
 %python3_sitelibdir/%name/
 
 %files -n lib%name-devel
-%_includedir/*
-%_libdir/*.so
-%_pkgconfigdir/lib%name.pc
+%_includedir/seafile/
+%_libdir/libseafile.so
+%_pkgconfigdir/libseafile.pc
 
 %changelog
+* Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 9.0.5-alt1
+- new version 9.0.5, cleanup spec
+- update BR, build with websocket support
+
 * Tue Apr 05 2022 Vitaly Lipatov <lav@altlinux.ru> 8.0.6-alt1
 - new version 8.0.6 (with rpmrb script)
 
