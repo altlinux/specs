@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.109.2
+Version: 0.110.0
 Release: alt1
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
@@ -80,6 +80,9 @@ cat requirements-docs-tests.txt requirements-tests.txt > alt-requirements-tests.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Mar 04 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.110.0-alt1
+- 0.109.2 -> 0.110.0
+
 * Fri Feb 09 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.109.2-alt1
 - 0.109.0 -> 0.109.2 (Fixed: CVE-2024-24762)
 

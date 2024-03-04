@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.16.2
+Version: 2.16.3
 Release: alt1
 
 Summary: Core validation logic for pydantic written in rust
@@ -52,10 +52,18 @@ replace-with = "vendored-sources"
 [source.vendored-sources]
 directory = "vendor"
 
+[term]
+verbose = true
+quiet = false
+
+[install]
+root = "%buildroot%_prefix"
+
 [build]
-rustflags = [
-    "-C", "link-args=-lmimalloc",
-]
+rustflags = ["-Copt-level=3", "-Cdebuginfo=1", "--cfg=rustix_use_libc"]
+
+[profile.release]
+strip = false
 EOF
 
 %pyproject_deps_resync_build
@@ -86,6 +94,9 @@ export CFLAGS="$CFLAGS -mno-outline-atomics"
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Mon Mar 04 2024 Alexandr Shashkin <dutyrok@altlinux.org> 2.16.3-alt1
+- 2.16.2 -> 2.16.3
+
 * Mon Feb 05 2024 Alexandr Shashkin <dutyrok@altlinux.org> 2.16.2-alt1
 - 2.14.6 -> 2.16.2
 
