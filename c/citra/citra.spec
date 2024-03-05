@@ -1,8 +1,8 @@
-%define git_date 20230916
-%define git_commit d2d3741
+%define git_date 20240303
+%define git_commit 0ff3440
 
 Name: citra
-Version: 1991
+Version: 2104
 Release: alt1
 
 Summary: Nintendo 3DS emulator
@@ -50,13 +50,14 @@ sed -i \
 src/common/scm_rev.cpp.in
 
 %build
-%add_optflags -Wno-error=deprecated-declarations
+%add_optflags
 
 %cmake \
 	-DENABLE_QT_TRANSLATION:BOOL=ON \
 	-DUSE_SYSTEM_SDL2:BOOL=ON \
 	-DUSE_SYSTEM_OPENSSL:BOOL=ON \
 	-DUSE_SYSTEM_LIBUSB:BOOL=ON \
+	-DCITRA_WARNINGS_AS_ERRORS:BOOL=OFF \
 	-Wno-dev
 
 %cmake_build
@@ -79,6 +80,9 @@ ctest
 %_man6dir/%name-qt.6*
 
 %changelog
+* Tue Mar 05 2024 Nazarov Denis <nenderus@altlinux.org> 2104-alt1
+- Version Nightly 2104
+
 * Sat Sep 16 2023 Nazarov Denis <nenderus@altlinux.org> 1991-alt1
 - Version Nightly 1991
 
