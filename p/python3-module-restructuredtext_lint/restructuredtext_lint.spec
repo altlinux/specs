@@ -2,12 +2,16 @@
 
 Name:    python3-module-%modulename
 Version: 1.4.0
-Release: alt1
+Release: alt2
 
 Summary: reStructuredText linter
 License: Unlicense
 Group:   Development/Python3
 URL:     https://github.com/twolfson/restructuredtext-lint
+
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %modulename} = %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-docutils >= 0.11
@@ -33,6 +37,9 @@ Source: %name-%version.tar
 %python3_sitelibdir/*
 
 %changelog
+* Mon Dec 25 2023 Ajrat Makhmutov <rauty@altlinux.org> 1.4.0-alt2
+- Mapped PyPI name to distro's one.
+
 * Sat May 28 2022 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt1
 - Build new version.
 

@@ -8,7 +8,7 @@
 
 Name: python3-module-%oname
 Version: 3.0.43
-Release: alt1
+Release: alt2
 Summary: Library for building powerful interactive command lines in Python
 License: BSD-3-Clause
 Group: Development/Python3
@@ -22,6 +22,10 @@ Patch1: %oname-alt-docs.patch
 
 %add_findreq_skiplist %python3_sitelibdir/%oname/eventloop/win32.py
 %add_findreq_skiplist %python3_sitelibdir/%oname/input/win32.py
+
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %oname} = %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -106,6 +110,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Dec 20 2023 Ajrat Makhmutov <rauty@altlinux.org> 3.0.43-alt2
+- Mapped PyPI name to distro's one.
+
 * Wed Dec 13 2023 Anton Vyatkin <toni@altlinux.org> 3.0.43-alt1
 - New version 3.0.43.
 
