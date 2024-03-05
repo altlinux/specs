@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.27.10
-Release: alt4
+Release: alt5
 Epoch: 1
 %K5init
 
@@ -75,6 +75,7 @@ Source42: obex.conf
 Source43: xdg-user-dirs.conf
 #
 Source50: dbus-restart-kde5.sh
+Source51: nvidia_optimus_available.cpp
 
 Patch100: alt-startkde.patch
 Patch101: alt-menu-add-tooltip.patch
@@ -121,6 +122,7 @@ Patch141: alt-weather-fix-ua.patch
 Patch142: alt-fix-lockout-applet.patch
 Patch143: alt-run-etc-profile.patch
 Patch144: alt-def-lookandfeel.patch
+Patch145: alt-add-nvidia-prime-to-menu.patch
 
 # Automatically added by buildreq on Sat Mar 21 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig glib2-devel glibc-devel-static kf5-attica-devel kf5-kdoctools-devel kf5-kjs-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcln-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libgst-plugins1.0 libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-script libqt5-sql libqt5-svg libqt5-test libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libwayland-server libxcb-devel libxcbutil-keysyms libxcbutil-keysyms-devel libxkbfile-devel libxml2-devel pkg-config python-base qt5-base-devel qt5-declarative-devel qt5-webkit-devel rpm-build-gir ruby ruby-stdlibs wayland-devel xml-common xml-utils xorg-fixesproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -137,7 +139,7 @@ BuildRequires: appstream-qt-devel
 %endif
 BuildRequires: libwayland-client-devel libwayland-server-devel libdrm-devel
 BuildRequires: pipewire-libs-devel
-BuildRequires: libxapian-devel libnm-devel
+BuildRequires: libxapian-devel libnm-devel libsysfs-devel
 BuildRequires: libxcbutil-image-devel libxcbutil-devel
 BuildRequires: iceauth xmessage xprop xrdb xset xsetroot
 BuildRequires: kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel
@@ -330,6 +332,10 @@ popd
 %patch142 -p1
 %patch143 -p1
 %patch144 -p1
+%patch145 -p1 -b .prime
+
+pwd
+install -m0644 %SOURCE51 applets/kicker/plugin/
 
 install -m 0644 %SOURCE1 po/ru/freememorynotifier.po
 tar xf %SOURCE11 freememorynotifier/
@@ -561,6 +567,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_unitdir_user/plasma-core.target.d/xd
 
 
 %changelog
+* Tue Mar 05 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.10-alt5
+- allow to run apps via NVIDIA PRIME from main menu
+
 * Wed Feb 07 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.10-alt4
 - set default color scheme
 
