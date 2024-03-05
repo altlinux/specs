@@ -7,7 +7,7 @@
 %define prog_name            kubernetes
 %define kubernetes_major     1
 %define kubernetes_minor     26
-%define kubernetes_patch     11
+%define kubernetes_patch     14
 
 Name: %prog_name%kubernetes_major.%kubernetes_minor
 Version: %kubernetes_major.%kubernetes_minor.%kubernetes_patch
@@ -183,6 +183,7 @@ Packege contains files specific for using crio.
 %setup -q
 
 %build
+export GOTOOLCHAIN=local
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
@@ -386,6 +387,9 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Tue Mar 05 2024 Alexey Shabalin <shaba@altlinux.org> 1.26.14-alt1
+- 1.26.14
+
 * Fri Dec 01 2023 Alexander Stepchenko <geochip@altlinux.org> 1.26.11-alt1
 - 1.26.10 -> 1.26.11 (Fixes: CVE-2023-5528)
 

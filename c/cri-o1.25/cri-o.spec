@@ -13,11 +13,11 @@
 %define prog_name            cri-o
 %define cri_o_major          1
 %define cri_o_minor          25
-%define cri_o_patch          4
+%define cri_o_patch          5
 
 Name: %prog_name%cri_o_major.%cri_o_minor
 Version: %cri_o_major.%cri_o_minor.%cri_o_patch
-Release: alt1.1
+Release: alt1
 Summary: Kubernetes Container Runtime Interface for OCI-based containers
 Group: Development/Other
 License: Apache-2.0
@@ -136,6 +136,9 @@ install -p -m 644 contrib/cni/99-loopback.conf %buildroot%_sysconfdir/cni/net.d/
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Tue Mar 05 2024 Alexey Shabalin <shaba@altlinux.org> 1.25.5-alt1
+- 1.25.5
+
 * Tue Mar 05 2024 Ivan A. Melnikov <iv@altlinux.org> 1.25.4-alt1.1
 - NMU: loongarch64 support
 

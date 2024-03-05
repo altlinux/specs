@@ -12,7 +12,7 @@
 
 %define prog_name            cri-o
 %define cri_o_major          1
-%define cri_o_minor          27
+%define cri_o_minor          28
 %define cri_o_patch          4
 
 Name: %prog_name%cri_o_major.%cri_o_minor
@@ -137,6 +137,9 @@ install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/ne
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Tue Mar 05 2024 Alexey Shabalin <shaba@altlinux.org> 1.28.4-alt1
+- 1.28.4.
+
 * Tue Mar 05 2024 Alexey Shabalin <shaba@altlinux.org> 1.27.4-alt1
 - 1.27.4.
 
