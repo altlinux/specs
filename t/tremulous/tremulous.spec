@@ -2,8 +2,6 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-ExclusiveArch: %ix86 x86_64 aarch64 ppc64le %e2k
-
 %ifarch %ix86
 %global optflags_lto %nil
 %add_optflags -no-pie
@@ -13,28 +11,12 @@ ExclusiveArch: %ix86 x86_64 aarch64 ppc64le %e2k
 %define _group _tremulous
 %define _home %_localstatedir/%name
 
-%ifarch x86_64
-%define __arch x86_64
-%endif
-%ifarch %ix86
-%define __arch x86
-%endif
-%ifarch ppc
-%define __arch ppc
-%endif
-%ifarch ppc64le
-%define __arch ppc64le
-%endif
-%ifarch aarch64
-%define __arch aarch64
-%endif
-%ifarch %e2k
-%define __arch e2k
-%endif
+# tremulous/Makefile:
+%define __arch %(uname -m | sed -e s/i.86/x86/)
 
 Name: tremulous
 Version: 1.2.0
-Release: alt4
+Release: alt4.1
 Summary: Tremulous - 3D FPS Strategic Shooter
 License: GPL
 Group: Games/Arcade
@@ -55,6 +37,8 @@ Patch10: tremulous-1.2.0-dll-overwrite.patch
 Patch11: tremulous-getstatus-dos.patch
 Patch12: tremulous-aarch64.patch
 Patch13: tremulous-i686.patch
+Patch14: tremulous-alt-riscv64-loongarch64.patch
+Patch15: tremulous-alt-fix-segfault.patch
 
 Requires: %name-server = %EVR
 Requires: %name-client = %EVR
@@ -154,10 +138,10 @@ sed -i 's,-Werror,,g' src/tools/asm/Makefile
 
 %patch10 -p1 -b .dll-overwrite
 %patch11 -p1 -b .getstatus-dos
-%ifarch aarch64
 %patch12 -p1 -b .aarch64
-%endif
 %patch13 -p1 -b .i686
+%patch14 -p1
+%patch15 -p1
 
 # Rip out the bundled libraries and use the
 # system versions instead
@@ -244,6 +228,12 @@ install -d %buildroot%_home
 %attr(775,root,%_group) %dir %_home
 
 %changelog
+* Tue Mar 05 2024 Ivan A. Melnikov <iv@altlinux.org> 1.2.0-alt4.1
+- NMU:
+  + fix and enable build on armh;
+  + add loongarch64 and riscv64 support;
+  + fix segfault in FS_AddGameDirectory.
+
 * Wed Oct 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.0-alt4
 - Fixed build on i586.
 
