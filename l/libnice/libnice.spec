@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name nice
 %define ver_major 0.1
 %define api_ver %ver_major
@@ -10,8 +10,8 @@
 %def_disable check
 
 Name: libnice
-Version: %ver_major.21
-Release: alt2
+Version: %ver_major.22
+Release: alt1
 
 Summary: Connectivity Establishment standard (ICE) library
 Group: System/Libraries
@@ -168,6 +168,9 @@ for Gstreamer (1.0 API version)
 
 
 %changelog
+* Tue Mar 05 2024 Yuri N. Sedunov <aris@altlinux.org> 0.1.22-alt1
+- 0.1.22
+
 * Mon Jul 10 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.21-alt2
 - updated to 0.1.21-9-g4b63250
 - rebuilt against libgupnp-igd-1.6
