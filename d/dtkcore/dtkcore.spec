@@ -5,7 +5,7 @@
 
 Name: dtkcore
 Version: 5.6.22
-Release: alt1
+Release: alt2
 
 Summary: Deepin tool kit core modules
 
@@ -21,7 +21,7 @@ Obsoletes: libdtk5-core < %EVR
 Provides: dtk5-core = %EVR
 Obsoletes: dtk5-core < %EVR
 
-BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
 BuildRequires: cmake rpm-build-python3 dtk6-common-devel gsettings-qt-devel libsystemd-devel qt5-base-devel libuchardet-devel libspdlog-devel
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
@@ -32,12 +32,15 @@ BuildRequires: gcc-c++
 BuildRequires: qt5-base-doc
 %endif
 
+Requires: libqt5-dbus = %_qt5_version
+
 %description
 Deepin tool kit core modules.
 
 %package -n lib%{name}5
 Summary: Libraries for %name
 Group: System/Libraries
+Requires: libqt5-core = %_qt5_version
 
 %description -n lib%{name}5
 Deepin tool kit core modules.
@@ -121,6 +124,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %endif
 
 %changelog
+* Tue Mar 05 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.22-alt2
+- Requires: libqt5-core = %%_qt5_version.
+
 * Tue Jan 16 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.22-alt1
 - New version 5.6.22.
 

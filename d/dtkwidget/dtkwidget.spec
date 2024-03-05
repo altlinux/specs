@@ -3,7 +3,7 @@
 
 Name: dtkwidget
 Version: 5.6.23
-Release: alt1
+Release: alt2
 Summary: Deepin tool kit widget modules
 License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
@@ -23,7 +23,7 @@ BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
-BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
 # Automatically added by buildreq on Thu Oct 19 2023
 # optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXext-devel libXfixes-devel libXi-devel libdouble-conversion3 libdtkcore-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-help libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel pkg-config python3 python3-base qt5-base-common qt5-base-devel qt5-tools sh5 xorg-proto-devel
 BuildRequires: cmake doxygen dtk6-common-devel gsettings-qt-devel libcups-devel libdtkgui-devel libstartup-notification-devel libxcbutil-devel qt5-svg-devel qt5-tools-devel qt5-x11extras-devel
@@ -34,6 +34,10 @@ DtkWidget is Deepin graphical user interface for deepin desktop development.
 %package -n lib%{name}5
 Summary: Libraries for %name
 Group: System/Libraries
+Requires: libqt5-core = %_qt5_version
+Requires: libqt5-gui = %_qt5_version
+Requires: libqt5-printsupport = %_qt5_version
+Requires: libqt5-widgets = %_qt5_version
 
 %description -n lib%{name}5
 DtkWidget is Deepin graphical user interface for deepin desktop development.
@@ -130,6 +134,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_qt5_docdir/dtkwidget.qch
 
 %changelog
+* Tue Mar 05 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.23-alt2
+- Required on current qt5 version.
+
 * Fri Mar 01 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.23-alt1
 - New version 5.6.23.
 

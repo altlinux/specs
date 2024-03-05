@@ -4,7 +4,7 @@
 
 Name: dtkgui
 Version: 5.6.22
-Release: alt1
+Release: alt2
 
 Summary: Deepin Toolkit, gui module for DDE look and feel
 
@@ -17,7 +17,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
 # Automatically added by buildreq on Wed Oct 18 2023
 # optimized out: cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libcairo-devel libdouble-conversion3 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt liblcms2-devel libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-svg libqt5-widgets libqt5-xml libsasl2-3 libssl-devel libstdc++-devel pkg-config python3 python3-base qt5-base-devel qt5-svg-devel sh5 xorg-proto-devel
 BuildRequires: cmake dtk6-common-devel libdtkcore-devel libfreeimage-devel libgomp-devel libqtxdg-devel libraw-devel librsvg-devel
@@ -37,6 +37,8 @@ Summary: Library for %name
 Group: System/Libraries
 Provides: libdtk5-gui = %EVR
 Obsoletes: libdtk5-gui < %EVR
+Requires: libqt5-core = %_qt5_version
+Requires: libqt5-gui = %_qt5_version
 
 %description -n lib%{name}5
 DtkGui is used for DDE look and feel.
@@ -106,6 +108,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/libdtkgui.so
 
 %changelog
+* Tue Mar 05 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.22-alt2
+- Requires: libqt5-core and libqt5-gui = %%_qt5_version.
+
 * Tue Jan 16 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.22-alt1
 - New version 5.6.22.
 
