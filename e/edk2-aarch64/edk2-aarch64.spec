@@ -5,7 +5,7 @@
 # More subpackages to come once licensing issues are fixed
 Name: edk2-aarch64
 Version: 20231115
-Release: alt1
+Release: alt2
 Summary: AARCH64 Virtual Machine Firmware
 
 License: BSD-2-Clause-Patent
@@ -28,7 +28,7 @@ Source13: 53-edk2-aarch64-verbose-raw.json
 
 Patch1: %name-%version.patch
 
-ExclusiveArch: aarch64
+ExclusiveArch: aarch64 loongarch64 x86_64
 BuildArch: noarch
 
 Provides: edk2-ovmf-aarch64 = %EVR
@@ -41,6 +41,12 @@ BuildRequires: qemu-img
 BuildRequires: bc
 # openssl configure
 BuildRequires: /usr/bin/pod2man bc zlib-devel perl-PathTools perl-IPC-Cmd perl-JSON
+%if %_build_cpu != aarch64
+BuildRequires: gcc-aarch64-linux-gnu
+%define gcc_triplet aarch64-linux-gnu-
+%else
+%define gcc_triplet %nil
+%endif
 
 Requires: ipxe-roms-qemu
 
@@ -92,6 +98,9 @@ mkdir -p CryptoPkg/Library/MbedTlsLib/mbedtls/library
 %build
 export PYTHON_COMMAND=%__python3
 export EXTRA_OPTFLAGS="%optflags"
+%if %_build_cpu != aarch64
+export GCC5_AARCH64_PREFIX=aarch64-linux-gnu-
+%endif
 python3 CryptoPkg/Library/OpensslLib/configure.py
 
 # for mkdosfs
@@ -144,7 +153,7 @@ unset MAKEFLAGS
 
 # build aarch64 firmware
 mkdir -p AAVMF
-gcc -c -fpic ArmPkg/Library/GccLto/liblto-aarch64.s -o ArmPkg/Library/GccLto/liblto-aarch64.a
+%{gcc_triplet}gcc -c -fpic ArmPkg/Library/GccLto/liblto-aarch64.s -o ArmPkg/Library/GccLto/liblto-aarch64.a
 
 # Build with a verbose debug mask first, and stash the binary.
 build ${ARM_FLAGS} ${VERBOSE_FLAGS} ${TPM_FLAGS} ${PCD_FLAGS} -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc
@@ -192,6 +201,11 @@ done
 %_datadir/qemu/firmware/*edk2-aarch64*.json
 
 %changelog
+* Tue Mar 05 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 20231115-alt2
+- Make it possible to cross-compile the thing. Useful for ports
+  (in particular loongarch64). Also the package can be built
+  on an x86_64 machine (without resorting to qemu-user).
+
 * Fri Feb 02 2024 Alexey Shabalin <shaba@altlinux.org> 20231115-alt1
 - edk2-stable202311
 
