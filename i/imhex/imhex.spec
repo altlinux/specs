@@ -1,7 +1,7 @@
 %add_findreq_skiplist %_libdir/imhex/plugins/*
 
 Name: imhex
-Version: 1.32.2
+Version: 1.33.1
 Release: alt1
 
 Summary: A hex editor for reverse engineers and programmers
@@ -88,6 +88,9 @@ rm -fv %buildroot%_bindir/imhex-updater
 %_datadir/metainfo/*
 
 %changelog
+* Tue Mar 05 2024 Mikhail Tergoev <fidel@altlinux.org> 1.33.1-alt1
+- updated to upstream 1.33.1
+
 * Tue Jan 09 2024 Mikhail Tergoev <fidel@altlinux.org> 1.32.2-alt1
 - update to upstream 1.32.2
 
