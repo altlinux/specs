@@ -1,5 +1,5 @@
 Name: dmenu
-Version: 4.6
+Version: 5.2
 Release: alt1
 
 Summary: Dynamic menu
@@ -9,7 +9,7 @@ Group: Graphical desktop/Other
 Url: http://tools.suckless.org/
 Source: %name-%version.tar.gz
 
-Patch1: dmenu-4.6-alt-make.patch
+Patch1: dmenu-alt-make.patch
 
 # Automatically added by buildreq on Thu Apr 14 2011
 # optimized out: libX11-devel xorg-xproto-devel
@@ -20,7 +20,7 @@ dynamic menu for dwm
 
 %prep
 %setup
-%patch1 -p1
+%patch1 -p2
 
 %build
 %make_build OPTFLAGS="%optflags"
@@ -34,6 +34,9 @@ dynamic menu for dwm
 %_man1dir/*
 
 %changelog
+* Tue Mar 05 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.2-alt1
+- Updated to 5.2
+
 * Wed Oct 19 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.6-alt1
 - Updated to 4.6.
 
