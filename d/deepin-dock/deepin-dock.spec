@@ -3,8 +3,8 @@
 %def_without clang
 
 Name: deepin-dock
-Version: 6.0.27
-Release: alt2
+Version: 6.0.35.0.3.3eb9
+Release: alt1
 Epoch: 1
 
 Summary: Deepin desktop-environment - Dock module
@@ -16,7 +16,7 @@ Url: https://github.com/linuxdeepin/dde-dock
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
+BuildRequires(pre): rpm-build-ninja
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -28,7 +28,6 @@ BuildRequires: gcc-c++
 BuildRequires: dtk6-common-devel dwayland-devel extra-cmake-modules gsettings-qt-devel libXres-devel libdbusmenu-qt5-devel libdtkwidget-devel libgio-devel libwayland-cursor-devel libwayland-egl-devel libxcbutil-icccm-devel libxcbutil-image-devel qt5-base-devel-static qt5-svg-devel qt5-tools qt5-wayland-devel qt5-x11extras-devel
 
 # Requires: libdbusmenu-qt52 libddenetworkutils libdframeworkdbus2 libxcb libxcbutil-icccm libxcbutil-image
-Requires: libqt5-core = %_qt5_version
 
 %description
 Deepin desktop-environment - Dock module.
@@ -99,6 +98,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/cmake/DdeDock/DdeDockConfig.cmake
 
 %changelog
+* Tue Mar 05 2024 Leontiy Volodin <lvol@altlinux.org> 1:6.0.35.0.3.3eb9-alt1
+- New version 6.0.35-3-g3eb95284.
+- No more needed libqt5-core = %%_qt5_version.
+
 * Fri Jan 19 2024 Leontiy Volodin <lvol@altlinux.org> 1:6.0.27-alt2
 - Requires: libqt5-core = %%_qt5_version.
 
