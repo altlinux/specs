@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-ddt
-Version: 1.7.1
+Version: 1.7.2
 Release: alt1
 
 Summary: A Python library to multiply test cases
@@ -56,6 +56,9 @@ combination with other testing frameworks like unittest and nose.
 %python3_sitelibdir/__pycache__
 
 %changelog
+* Tue Mar 05 2024 Grigory Ustinov <grenka@altlinux.org> 1.7.2-alt1
+- Automatically updated to 1.7.2.
+
 * Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 1.7.1-alt1
 - Automatically updated to 1.7.1.
 
