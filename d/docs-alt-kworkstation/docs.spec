@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.3
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -49,6 +49,12 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Tue Mar 05 2024 Elena Mishina <lepata@altlinux.org> 10.3-alt2
+- update discover (closes #49520, #49524, #49522)
+- update samba (closes #49561)
+- add krfb (closes #49554)
+- small improvement (closes #49461, #49462, #49480, #49466, #49469)
+
 * Mon Feb 19 2024 Elena Mishina <lepata@altlinux.org> 10.3-alt1
 - update to ALT Kworkstation 10.3
 
