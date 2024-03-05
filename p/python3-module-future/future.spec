@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.18.3
-Release: alt3
+Version: 1.0.0
+Release: alt1
 Summary: Clean single-source support for Python 3 and 2
 License: MIT
 Group: Development/Python3
@@ -14,6 +14,7 @@ Url: https://python-future.org/
 # https://github.com/PythonCharmers/python-future.git
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
+Patch1: %oname-%version-skip_tests_with_connection_errors.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -46,10 +47,10 @@ support both Python 3 and Python 2 with minimal overhead.
 %pyproject_install
 
 # don't package tests
-rm -r %buildroot%python3_sitelibdir/*/*/test
-rm -r %buildroot%python3_sitelibdir/*/tests
+rm -rv %buildroot%python3_sitelibdir/*/*/test
+rm -rv %buildroot%python3_sitelibdir/*/tests
 
-rm -r %buildroot%_bindir/*
+rm -rv %buildroot%_bindir/*
 
 %check
 %tox_create_default_config
@@ -57,9 +58,16 @@ rm -r %buildroot%_bindir/*
 
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/libfuturize
+%python3_sitelibdir/libpasteurize
+%python3_sitelibdir/past
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Mar 05 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1
+- Automatically updated to 1.0.0.
+
 * Sat Feb 03 2024 Grigory Ustinov <grenka@altlinux.org> 0.18.3-alt3
 - Fixed FTBFS with python 3.12.
 
