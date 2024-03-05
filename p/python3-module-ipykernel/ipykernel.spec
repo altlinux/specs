@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 6.29.3
-Release: alt1
+Release: alt2
 
 Summary: IPython Kernel for Jupyter
 License: BSD-3-Clause
@@ -40,7 +40,7 @@ BuildRequires: xvfb-run
 BuildRequires: python3-module-trio
 %endif
 
-%add_python3_req_skip gtk
+%add_python3_req_skip gtk gobject
 
 %description
 This package provides the IPython kernel for Jupyter.
@@ -84,6 +84,9 @@ cp -r tests/ %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Sat Mar 02 2024 Vitaly Lipatov <lav@altlinux.ru> 6.29.3-alt2
+- NMU: drop gobject require used for obsoleted gtk2 (see ALT bug #41092)
+
 * Tue Feb 27 2024 Anton Vyatkin <toni@altlinux.org> 6.29.3-alt1
 - New version 6.29.3.
 
