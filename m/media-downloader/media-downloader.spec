@@ -1,5 +1,5 @@
 Name: media-downloader
-Version: 4.3.1
+Version: 4.4.0
 Release: alt1
 
 Summary: GUI frontend to multiple CLI based downloading programs
@@ -13,9 +13,9 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: qt5-base-devel
+BuildRequires: qt6-base-devel
 BuildRequires: desktop-file-utils
-Requires: yt-dlp
+Requires: yt-dlp aria2 ffmpeg
 
 %description
 This project is a Qt/C++ based GUI frontend to CLI multiple CLI based tools that
@@ -44,8 +44,11 @@ Features offered:-
 %prep
 %setup
 
+subst 's|"DownloadUrl": "https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest"||' extensions/yt-dlp*.json
+subst 's|mainObj.insert( "DownloadUrl","https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest" ) ;||' src/engines/yt-dlp.cpp
+
 %build
-%cmake
+%cmake -DBUILD_WITH_QT6=ON
 %cmake_build
 
 %install
@@ -62,6 +65,12 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_pixmapsdir/%name.png
 
 %changelog
+* Tue Mar 05 2024 Ivan Mazhukin <vanomj@altlinux.org> 4.4.0-alt1
+- new version (4.4.0) with rpmgs script
+- build with qt6
+- added necessary dependencies
+- removed automatic downloading of binaries
+
 * Tue Feb 13 2024 Ivan Mazhukin <vanomj@altlinux.org> 4.3.1-alt1
 - Initial build for Alt Sisyphus
 
