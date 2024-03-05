@@ -6,7 +6,7 @@
 
 Name:    blosc2
 Version: 2.13.2
-Release: alt1
+Release: alt2
 
 Summary: A fast, compressed, persistent binary data store library for C
 License: BSD-3-Clause
@@ -15,6 +15,7 @@ Url:     https://www.blosc.org/
 VCS:     https://github.com/Blosc/c-blosc2
 
 Source:  %name-%version.tar
+Patch1:  0001-init_shuffle_implementation-use-a-proper-synchroniza.patch
 
 BuildRequires(pre): cmake gcc-c++
 BuildRequires: zlib-devel liblz4-devel libzstd-devel ctest
@@ -56,6 +57,7 @@ This package contains development files of Blosc2 library.
 
 %prep
 %setup
+%patch1 -p1
 %ifarch %e2k
 # why is libdl used but not linked?
 sed -i '1i set(LIBS ${LIBS} "dl")' blosc/CMakeLists.txt
@@ -96,6 +98,11 @@ rm -rf internal-complibs
 %_libdir/cmake/Blosc2
 
 %changelog
+* Mon Mar 04 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.13.2-alt2
+- NMU: added a proper synchronization to `init_shuffle_implementation`.
+  Now tests pass properly on LoongArch (and possibly other weakly ordered
+  CPUs).
+
 * Mon Feb 12 2024 Anton Vyatkin <toni@altlinux.org> 2.13.2-alt1
 - New version 2.13.2.
 
