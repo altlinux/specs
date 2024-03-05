@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 Name: calibre
 Version: 7.5.1
-Release: alt1
+Release: alt1.1
 
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
@@ -18,6 +18,7 @@ Source: %name-%version.tar
 
 Patch1: calibre-no-update.patch
 Patch2: calibre-nodisplay.patch
+Patch3: calibre-alt-loongarch64-and-riscv64-support.patch
 
 AutoProv:no
 
@@ -243,6 +244,7 @@ TXT, PDF, LRS и FB2.
 
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 # TODO: remove or replace with python
 find -type f -name "*.py" | xargs %__subst "s|^#!/usr/bin/env python$|#!/usr/bin/python3|"
@@ -343,6 +345,9 @@ rm -v %buildroot%_libdir/calibre/calibre/translations/msgfmt.py
 %_datadir/mime/packages/calibre-mimetypes.xml
 
 %changelog
+* Mon Mar 04 2024 Ivan A. Melnikov <iv@altlinux.org> 7.5.1-alt1.1
+- NMU: fix build on loongarch64
+
 * Sat Mar 02 2024 Vitaly Lipatov <lav@altlinux.ru> 7.5.1-alt1
 - new version 7.5.1
 - build with PyQt6
