@@ -1,11 +1,10 @@
 %def_disable clang
 %def_disable tests
 %define repo dde-printer
-%define llvm_ver 15
 
 Name: deepin-printer
-Version: 0.9.16
-Release: alt2
+Version: 0.9.20
+Release: alt1
 Summary: Printing utility for DDE
 License: GPL-3.0+
 # src/cppcups/snmp.{c,h}: Apache-2.0
@@ -14,13 +13,10 @@ Url: https://github.com/linuxdeepin/dde-printer
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-Patch: deepin-print-alt-fix-gtest-1.13.patch
+Patch: deepin-printer-0.9.20-upstream-fix-attribute-modification.patch
 
 %if_enabled clang
-#BuildRequires(pre): rpm-macros-llvm-common
-BuildRequires: clang%llvm_ver.0-devel
-BuildRequires: lld%llvm_ver.0-devel
-BuildRequires: llvm%llvm_ver.0-devel
+BuildRequires: clang-devel lld-devel
 %else
 BuildRequires: gcc-c++
 %endif
@@ -38,16 +34,14 @@ Graphical interface to configure the printing system for DDE.
 
 %prep
 %setup -n %repo-%version
-%if_disabled tests
 %patch -p1
-%endif
 
 %build
 export PATH=%_qt5_bindir:$PATH
 %if_enabled clang
-export CC=clang-%llvm_ver
-export CXX=clang++-%llvm_ver
-export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
+export CC=clang
+export CXX=clang++
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
 %qmake_qt5 \
 %if_enabled clang
@@ -80,6 +74,11 @@ chmod +x %buildroot%_sysconfdir/xdg/autostart/%repo-watch.desktop
 %_datadir/deepin-manual/manual-assets/application/%repo/print-manager/
 
 %changelog
+* Tue Mar 05 2024 Leontiy Volodin <lvol@altlinux.org> 0.9.20-alt1
+- New version 0.9.20.
+- Used default compiler versions for easy backporting.
+- Applied fixes from master branch.
+
 * Thu Jan 26 2023 Leontiy Volodin <lvol@altlinux.org> 0.9.16-alt2
 - Fixed build with googletest 1.13.0.
 
