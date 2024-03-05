@@ -1,16 +1,21 @@
 %define includedir %_includedir/%name
 
 Name: p7zip
-Version: 17.04
+Version: 17.05
 Release: alt2
 
 Summary: 7zip unofficial port - a file-archiver with highest compression ratio
+
 License: LGPLv2+ with UnRAR exception
 Group: Archiving/Compression
+Url: https://github.com/p7zip-project/p7zip
 
-Url: https://github.com/szcnick/p7zip
+# Source-url: https://github.com/p7zip-project/p7zip/archive/refs/tags/v%version.tar.gz
 Source: v%version.tar.gz
-Patch: p7zip-17.02-P7ZIP_HOME_DIR.patch
+
+Patch0: p7zip-17.02-P7ZIP_HOME_DIR.patch
+Patch1: p7zip-17.05-ZIP_STRING_LENGTH.patch
+Patch2: p7zip-17.05-MAX_LEVEL_ZSTD.patch
 
 # Automatically added by buildreq on Sat Oct 08 2011
 # optimized out: libstdc++-devel
@@ -52,7 +57,9 @@ The devel package contains the p7zip include files.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 chmod +x *.sh */*.sh
 
 %build
@@ -66,12 +73,11 @@ chmod +x *.sh */*.sh
 %ifarch %ix86
 cp -f makefile.linux_x86_asm_gcc_4.X makefile.machine
 %endif
-%ifarch %ix86 %mips32
-sed -i 's/mx=22/mx=10/' check/check.sh
-sed -i 's/mx=22/mx=10/' check/check_7za.sh
-%endif
 %ifarch x86_64
 cp -f makefile.linux_amd64_asm makefile.machine
+%endif
+%ifarch %ix86 %mips32
+sed -i 's/mx=2[12]/mx=9/' check/check.sh check/check_7za.sh
 %endif
 
 # NB: 'all' is not default target in this makefile
@@ -110,9 +116,21 @@ xargs -0 install -pm644 -t %buildroot%includedir/
 %includedir
 
 %check
+%ifnarch %ix86
 P7ZIP_HOME_DIR=`pwd`/bin/ make test_7z
+%endif
 
 %changelog
+* Mon Mar 04 2024 Vitaly Lipatov <lav@altlinux.ru> 17.05-alt2
+- build to Sisyphus
+
+* Thu May 18 2023 Dmitriy V Genger <oskiller@altlinux.org> 17.05-alt1
+- New version 17.05 with rpmgs script
+- Fix ZIP replace the existing file (ALT bug 45641)
+- Fix tests max level for zstd
+- Reduce tests memory requirements for i586
+- Skip tests for i586
+
 * Fri Aug 13 2021 Ivan A. Melnikov <iv@altlinux.org> 17.04-alt2
 - Reduce tests memory requirements for %%mips32
 
