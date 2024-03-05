@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-terminal
-Version: 6.0.9
+Version: 6.0.11
 Release: alt1
 
 Summary: Default terminal emulation application for Deepin
@@ -17,10 +17,11 @@ Requires: deepin-shortcut-viewer expect xdg-utils
 Requires: icon-theme-hicolor
 Requires: %name-data
 Requires: terminalwidget5-data
+Requires: libqt5-widgets = %_qt5_version
 #Recommends:     deepin-manual
 #Recommends:     zssh
 
-BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
 # Automatically added by buildreq on Mon Oct 23 2023
 # optimized out: cmake-modules fontconfig-devel gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libfreetype-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel libxcbutil-icccm pkg-config python3 python3-base qt5-base-devel qt5-tools sh5
 BuildRequires: cmake libdtkwidget-devel libsecret-devel libxcbutil-icccm-devel lxqt-build-tools qt5-tools-devel qt5-x11extras-devel
@@ -111,6 +112,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_includedir/terminalwidget5/
 
 %changelog
+* Tue Mar 05 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.11-alt1
+- New version 6.0.11.
+- Requires: libqt5-widgets = %%_qt5_version.
+
 * Fri Dec 01 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.9-alt1
 - New version 6.0.9.
 - Cleanup spec and BRs.
