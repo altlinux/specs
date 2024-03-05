@@ -68,9 +68,12 @@
 %def_enable replication
 %ifnarch %arm %ix86 %mips32
 %def_enable numa
-%def_enable libpmem
 %else
 %def_disable numa
+%endif
+%ifnarch %arm %ix86 %mips32 loongarch64
+%def_enable libpmem
+%else
 %def_disable libpmem
 %endif
 %def_enable replication
@@ -120,6 +123,10 @@
 %global kvm_package   system-riscv
 %def_enable qemu_kvm
 %endif
+%ifarch loongarch64
+%global kvm_package   system-loongarch
+%def_enable qemu_kvm
+%endif
 %ifarch %mips_arch
 %global kvm_package   system-mips
 %endif
@@ -132,7 +139,7 @@
 %define ui_spice_list %{?_enable_spice:app core}
 %define device_usb_list redirect %{?_enable_smartcard:smartcard} host
 %define device_display_list virtio-gpu-pci %{?_enable_virglrenderer:virtio-gpu virtio-gpu-gl virtio-gpu-pci-gl virtio-vga-gl} virtio-vga %{?_enable_spice:qxl}
-%define qemu_arches aarch64 alpha arm avr cris hppa m68k microblaze mips nios2 or1k ppc riscv rx s390x sh4 sparc tricore x86 xtensa loongarch
+%define qemu_arches aarch64 alpha arm avr cris hppa loongarch m68k microblaze mips nios2 or1k ppc riscv rx s390x sh4 sparc tricore x86 xtensa
 
 %global _group vmusers
 %global rulenum 90
@@ -144,7 +151,7 @@
 
 Name: qemu
 Version: 8.2.1
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -949,6 +956,13 @@ sed -i '/return / s,cortex-a53,any,' ../linux-user/arm/target_elf.h
 popd
 %endif
 
+%ifarch loongarch64
+# XXX: until glibc-kernheaders is updated from 6.7, we need a workaround:
+pushd linux-headers
+ln -s asm-loongarch asm
+popd
+%endif
+
 # Build for non-static qemu-*
 mkdir build-dynamic
 pushd build-dynamic
@@ -1349,6 +1363,15 @@ popd
 %exclude %docdir/LICENSE
 
 %changelog
+* Mon Mar 04 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 8.2.1-alt2
+- LoongArch KVM support from https://github.com/loongson/qemu.git,
+  branch kvm-loongarch, commit 432f4cf89493f2a1ac144018224e7d1b4fbc31a4.
+- qemu-user: fixed running 32-bit x86 binaries on hosts with a page
+  size > 4KB (such as LoongArch, ppc64*)
+- spec:
+  + LoongArch: work around old glibc-kernheaders (thanks iv@)
+  + LoongArch: pmem is not supported [yet]
+
 * Sun Mar 03 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.1-alt1
 - 8.2.1.
 - backkport patches (Fixes: CVE-2023-0330, CVE-2023-6683).
