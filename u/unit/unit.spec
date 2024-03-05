@@ -11,7 +11,7 @@
 %def_disable devel
 
 Name: unit
-Version: 1.31.1
+Version: 1.32.0
 Release: alt1
 
 Summary: NGINX Unit - Web Application Server
@@ -27,8 +27,9 @@ BuildRequires: libssl-devel
 BuildRequires: libpcre2-devel
 %{?_enable_ruby:BuildRequires: ruby libruby-devel}
 %{?_enable_perl:BuildRequires: perl-devel perl-base}
-%{?_enable_php:BuildRequires: php8.1 php8.1-devel php-base}
 %{?_enable_python:BuildRequires: python3-devel}
+# This will bring highest version of libphp:
+%{?_enable_php:BuildRequires: php-devel}
 
 Provides: nginx-unit = %EVR
 Requires(post): service >= 0.5.33
@@ -90,6 +91,10 @@ sed -i -e 's/NXT_HAVE_MEMFD_CREATE/NO_&/' auto/shmem
 
 sed -i 's!/var/run/!/run/!' pkg/rpm/rpmbuild/SOURCES/unit.logrotate
 
+# Link with (any) current libphp.
+LIBPHP_LDFLAGS=-l$(ldd /usr/bin/php | grep -Po '(?<=/lib)php-\S+(?=.so)')
+sed -i "/NXT_PHP_LIB=/s/\"-lphp.*\"/$LIBPHP_LDFLAGS/" auto/modules/php
+
 %build
 %add_optflags $(getconf LFS_CFLAGS)
 # Test compilation passes with the following options:
@@ -125,7 +130,7 @@ CFLAGS="%optflags" \
   ./configure python --config=python3-config
 %endif
 %if_enabled php
-  ./configure php --config=/usr/bin/php-config8.1
+  ./configure php --config=/usr/bin/php-config
 %endif
 %if_enabled ruby
   ./configure ruby
@@ -179,7 +184,7 @@ set -ex
 # systemd-analyze better works in non-'/'.
 cd
 systemd-analyze verify unit.service
-logrotate %_sysconfdir/logrotate.d/unit
+logrotate --state /dev/null %_sysconfdir/logrotate.d/unit
 
 %pre
 /usr/sbin/groupadd -r -f _unit
@@ -240,6 +245,9 @@ logrotate %_sysconfdir/logrotate.d/unit
 %files checkinstall
 
 %changelog
+* Tue Mar 05 2024 Vitaly Chikunov <vt@altlinux.org> 1.32.0-alt1
+- Update to 1.32.0 (2024-02-27).
+
 * Sun Oct 22 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.31.1-alt1
 - Update to 1.31.1 (2023-10-17).
 
