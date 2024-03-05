@@ -98,7 +98,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
@@ -133,6 +133,7 @@ Source38: 85-timesyncd.preset
 
 Source44: 10-oomd-defaults.conf
 Source45: 10-oomd-per-slice-defaults.conf
+Source47: 10-map-count.conf
 
 # simpleresolv
 Source68: altlinux-simpleresolv.path
@@ -580,7 +581,7 @@ Summary: udev - an userspace implementation of devfs
 License: GPLv2+
 Requires: shadow-utils dmsetup kmod >= 15 util-linux >= 2.27.1 losetup >= 2.19.1
 Provides: hotplug = 2004_09_23-alt18
-Obsoletes: hotplug
+Obsoletes: hotplug < 2004_09_23-alt18
 Provides: udev-extras = %EVR
 Obsoletes: udev-extras < %EVR
 Provides: udev-rules = %EVR
@@ -1014,11 +1015,13 @@ install -m 0644 %SOURCE38 %buildroot%_presetdir/
 
 # systemd-oomd default configuration
 install -D -m 0644 -t %buildroot%_systemd_dir/oomd.conf.d/ %SOURCE44
-install -D -m 0644 -t %buildroot%_unitdir/user-.slice.d/ %SOURCE45
 install -D -m 0644 -t %buildroot%_unitdir/system.slice.d/ %SOURCE45
 install -D -m 0644 -t %buildroot%_user_unitdir/slice.d/ %SOURCE45
 
-install -Dm0664 -t %buildroot%_systemd_dir/network/ %SOURCE25
+# increase vm.max_map_count
+install -D -m 0644 -t %buildroot%_sysctldir/ %SOURCE47
+
+install -D -m 0664 -t %buildroot%_systemd_dir/network/ %SOURCE25
 
 sed -i 's|#!/usr/bin/env python3|#!%__python3|' %buildroot%_prefix%_systemd_dir/tests/run-unit-tests.py
 
@@ -1761,7 +1764,6 @@ fi
 %dir %_unitdir
 %_unitdir/*
 
-%exclude %_unitdir/user-.slice.d/10-oomd-per-slice-defaults.conf
 %exclude %_unitdir/system.slice.d/10-oomd-per-slice-defaults.conf
 %exclude %_user_unitdir/slice.d/10-oomd-per-slice-defaults.conf
 
@@ -2100,6 +2102,7 @@ fi
 %files sysctl-common
 %config(noreplace) %_sysconfdir/sysctl.d/99-sysctl.conf
 %_sysconfdir/sysctl.conf
+%_sysctldir/10-map-count.conf
 %_sysctldir/49-coredump-disable.conf
 %_sysctldir/50-default.conf
 %_sysctldir/50-net.conf
@@ -2172,7 +2175,6 @@ fi
 
 %files oomd-defaults
 %_systemd_dir/oomd.conf.d/10-oomd-defaults.conf
-%_unitdir/user-.slice.d/10-oomd-per-slice-defaults.conf
 %_unitdir/system.slice.d/10-oomd-per-slice-defaults.conf
 %_user_unitdir/slice.d/10-oomd-per-slice-defaults.conf
 
@@ -2437,6 +2439,10 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Tue Mar 05 2024 Alexey Shabalin <shaba@altlinux.org> 1:254.10-alt1
+- 254.10
+- Increase vm.max_map_count (ALT#48094)
+
 * Mon Feb 05 2024 Alexey Shabalin <shaba@altlinux.org> 1:254.9-alt1
 - 254.9
 - Add busctl to standalone utils package.
