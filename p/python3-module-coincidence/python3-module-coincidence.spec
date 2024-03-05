@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.6.5
+Version: 0.6.6
 Release: alt1
 Summary: Helper functions for pytest
 License: MIT
@@ -49,6 +49,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 05 2024 Stanislav Levin <slev@altlinux.org> 0.6.6-alt1
+- 0.6.5 -> 0.6.6.
+
 * Mon Apr 24 2023 Stanislav Levin <slev@altlinux.org> 0.6.5-alt1
 - 0.6.3 -> 0.6.5.
 
