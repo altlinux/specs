@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: varia
-Version: %ver_major.6
+Version: %ver_major.29.2
 Release: alt1
 
 Summary: Download manager based on aria2
@@ -66,6 +66,9 @@ It uses the amazing aria2 to handle the downloads.
 %doc README*
 
 %changelog
+* Tue Mar 05 2024 Yuri N. Sedunov <aris@altlinux.org> 2024.2.29.2-alt1
+- 2024.2.29-2
+
 * Wed Feb 14 2024 Yuri N. Sedunov <aris@altlinux.org> 2024.2.6-alt1
 - first build for Sisyphus (v2024.2.6-5-g6fb6073)
 
