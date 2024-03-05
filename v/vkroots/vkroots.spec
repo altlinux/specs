@@ -1,6 +1,6 @@
 Name: vkroots
-Version: 0.0.0.1
-Release: alt1.e554d4c
+Version: 0.0.0.2
+Release: alt1.c07bb6f
 
 Summary: vkroots is a framework for writing Vulkan layers that takes all the complexity/hastle away from you!
 License: MIT AND LGPL-2.1-or-later AND Apache-2.0
@@ -51,5 +51,8 @@ and they are automagically hooked using C++20 concepts magic!
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Mar 05 2024 Mikhail Tergoev <fidel@altlinux.org> 0.0.0.2-alt1.c07bb6f
+- updated to upstream commit c07bb6f
+
 * Mon May 22 2023 Mikhail Tergoev <fidel@altlinux.org> 0.0.0.1-alt1.e554d4c
 - Initial build for Sisyphus
