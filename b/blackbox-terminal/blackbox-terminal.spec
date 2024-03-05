@@ -3,7 +3,7 @@
 
 Name: blackbox-terminal
 Version: 0.14.0
-Release: alt7.gitd693b92
+Release: alt8.gitd693b92
 
 Summary: A beautiful GTK 4 terminal
 License: GPL-3.0
@@ -12,6 +12,7 @@ Group: Terminals
 Url: https://gitlab.gnome.org/raggesilver/blackbox
 Source: %name-%version.tar
 Patch1: blackbox-0.14.0-alt-xvt-compatibility.patch
+Patch2: blackbox-0.14.0-alt-gio-print.patch
 Packager: Vladimir Didenko <cow@altlinux.org>
 
 Provides: xvt
@@ -73,6 +74,9 @@ EOF
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Tue Mar 5 2024 Vladimir Didenko <cow@altlinux.org> 0.14.0-alt8.gitd693b92
+- Fix undefined reference build issue
+
 * Mon Feb 26 2024 Vladimir Didenko <cow@altlinux.org> 0.14.0-alt7.gitd693b92
 - New version
 
