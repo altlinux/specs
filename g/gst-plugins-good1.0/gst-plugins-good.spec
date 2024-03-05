@@ -1,5 +1,5 @@
 %define _name gst-plugins
-%define ver_major 1.22
+%define ver_major 1.24
 %define api_ver 1.0
 
 %define _gst_datadir %_datadir/gstreamer-%api_ver
@@ -8,8 +8,11 @@
 
 %def_enable jack
 %def_enable pulse
+%def_enable caca
 %def_enable qt5
+%ifnarch armh
 %def_enable qt6
+%endif
 
 %def_disable doc
 %def_disable debug
@@ -20,7 +23,7 @@
 %def_disable check
 
 Name: %_name-good%api_ver
-Version: %ver_major.10
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of GStreamer plugins considered good
@@ -51,8 +54,9 @@ BuildRequires: pkgconfig(libxml-2.0)
 %{?_enable_valgrind:BuildRequires: valgrind-tool-devel}
 %{?_enable_jack:BuildRequires: libjack-devel}
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
+%{?_enable_caca:BuildRequires: libcaca-devel}
 %{?_enable_qt5:BuildRequires: qt5-base-devel qt5-tools qt5-declarative-devel qt5-x11extras-devel qt5-wayland-devel}
-%{?_enable_qt6:BuildRequires: qt6-base-devel qt6-tools-devel qt6-declarative-devel qt6-wayland-devel}
+%{?_enable_qt6:BuildRequires: qt6-base-devel qt6-tools-devel qt6-declarative-devel qt6-wayland-devel /usr/bin/qsb-qt6}
 %{?_enable_doc:BuildRequires: hotdoc gstreamer%api_ver-utils}
 %{?_enable_check:BuildRequires: /proc gstreamer%api_ver %_bindir/gst-tester-%api_ver}
 
@@ -131,6 +135,9 @@ This package contains development documentation for GStreamer Good Plugins
 %endif
 
 %changelog
+* Tue Mar 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.0-alt1
+- 1.24.0
+
 * Wed Feb 14 2024 Yuri N. Sedunov <aris@altlinux.org> 1.22.10-alt1
 - 1.22.10
 

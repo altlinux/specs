@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name gst-plugins
-%define ver_major 1.22
+%define ver_major 1.24
 %define api_ver 1.0
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
@@ -20,7 +20,7 @@
 %def_disable check
 
 Name: %_name-base%api_ver
-Version: %ver_major.10
+Version: %ver_major.0
 Release: alt1
 
 Summary: An essential set of GStreamer plugins
@@ -52,7 +52,10 @@ BuildRequires: libgudev-devel libglvnd-devel libdrm-devel libgbm-devel
 BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel wayland-protocols
 BuildRequires: libgraphene-devel libjpeg-devel libpng-devel
 BuildRequires: libXext-devel libXi-devel libXv-devel libSM-devel libalsa-devel libgtk+3-devel libvisual0.4-devel iso-codes-devel
-BuildRequires: libcdparanoia-devel libtheora-devel libvorbis-devel libopus-devel >= %opus_ver
+BuildRequires: libcdparanoia-devel libtheora-devel
+BuildRequires: pkgconfig(vorbis)
+#BuildRequires: pkgconfig(vorbisidec)
+BuildRequires: libopus-devel >= %opus_ver
 BuildRequires: gobject-introspection-devel
 %{?_enable_libunwind:BuildRequires: libunwind-devel}
 %{?_enable_libdw:BuildRequires: libdw-devel}
@@ -203,6 +206,9 @@ GObject introspection devel data for the GStreamer library
 
 
 %changelog
+* Tue Mar 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.0-alt1
+- 1.24.0
+
 * Wed Feb 14 2024 Yuri N. Sedunov <aris@altlinux.org> 1.22.10-alt1
 - 1.22.10
 

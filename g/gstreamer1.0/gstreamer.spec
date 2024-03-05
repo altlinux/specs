@@ -1,5 +1,5 @@
 %define _name gstreamer
-%define ver_major 1.22
+%define ver_major 1.24
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define api_ver 1.0
@@ -8,10 +8,11 @@
 %def_disable debug
 %def_disable libunwind
 %def_disable libdw
+%def_enable ptp_helper
 %def_disable check
 
 Name: %_name%api_ver
-Version: %ver_major.10
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer streaming media framework runtime
@@ -26,8 +27,8 @@ Provides: %_name = %EVR
 Requires(pre): libcap-utils
 Requires: lib%name = %EVR
 
-%define glib_ver 2.44.0
-%define meson_ver 0.54
+%define glib_ver 2.64.0
+%define meson_ver 1.1
 
 BuildRequires(pre): rpm-macros-meson >= %meson_ver rpm-build-gir rpm-build-python3
 BuildRequires: meson flex gcc-c++
@@ -39,6 +40,7 @@ BuildRequires: libcap-devel libcap-utils
 BuildRequires: bash-completion
 %{?_enable_libunwind:BuildRequires: libunwind-devel}
 %{?_enable_libdw:BuildRequires: libdw-devel}
+%{?_enable_ptp_helper:BuildRequires: rust-cargo}
 %{?_enable_doc:BuildRequires: hotdoc}
 
 %description
@@ -120,7 +122,8 @@ export LIBS=-lcxa
 	%{?_enable_check:-Dtests=enabled} \
 	%{?_disable_doc:-Ddoc=disabled} \
 	%{?_enable_debug:-Dgst_debug=true} \
-	-Dptp-helper-permissions="capabilities"
+	%{?_enable_ptp_helper:-Dptp-helper=enabled \
+	-Dptp-helper-permissions="capabilities"}
 %nil
 %meson_build
 
@@ -132,12 +135,13 @@ export LIBS=-lcxa
 %__meson_test
 
 %post
-setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-ptp-helper 2>/dev/null ||:
+setcap cap_sys_nice,cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-ptp-helper{,-test} 2>/dev/null ||:
 
 %files -f %_name-%api_ver.lang
 %dir %_libexecdir/%_name-%api_ver
 %_libexecdir/%_name-%api_ver/gst-plugin-scanner
-%_libexecdir/%_name-%api_ver/gst-ptp-helper
+%{?_enable_ptp_helper:%_libexecdir/%_name-%api_ver/gst-ptp-helper
+%_libexecdir/%_name-%api_ver/gst-ptp-helper-test}
 %dir %_libdir/%_name-%api_ver
 %_libdir/%_name-%api_ver/*.so
 %doc AUTHORS NEWS README* RELEASE
@@ -191,6 +195,9 @@ setcap cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%api_ver/gst-pt
 %_libexecdir/%_name-%api_ver/gst-plugins-doc-cache-generator
 
 %changelog
+* Tue Mar 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.0-alt1
+- 1.24.0
+
 * Wed Feb 14 2024 Yuri N. Sedunov <aris@altlinux.org> 1.22.10-alt1
 - 1.22.10
 

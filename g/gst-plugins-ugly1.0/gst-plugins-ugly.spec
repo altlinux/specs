@@ -1,5 +1,5 @@
 %define _name gst-plugins
-%define ver_major 1.22
+%define ver_major 1.24
 %define api_ver 1.0
 
 %define _gst_datadir %_datadir/gstreamer-%api_ver
@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: %_name-ugly%api_ver
-Version: %ver_major.10
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of encumbered GStreamer plugins
@@ -78,8 +78,8 @@ collection.
 
 %files -f %_name-ugly-%api_ver.lang
 %_gst_libdir/libgsta52dec.so
-%_gst_libdir/libgstamrnb.so
-%_gst_libdir/libgstamrwbdec.so
+#%_gst_libdir/libgstamrnb.so
+#%_gst_libdir/libgstamrwbdec.so
 %_gst_libdir/libgstasf.so
 %{?_enable_gpl:%_gst_libdir/libgstcdio.so
 %_gst_libdir/libgstdvdread.so
@@ -97,6 +97,9 @@ collection.
 %endif
 
 %changelog
+* Tue Mar 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.0-alt1
+- 1.24.0
+
 * Wed Feb 14 2024 Yuri N. Sedunov <aris@altlinux.org> 1.22.10-alt1
 - 1.22.10
 

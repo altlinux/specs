@@ -30,14 +30,14 @@
 
 %define _name gst-plugins
 %define api_ver 1.0
-%define ver_major 1.22
+%define ver_major 1.24
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 
 %def_disable doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.10
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -173,6 +173,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_typelibdir/GstVa-%api_ver.typelib
 %_typelibdir/GstVulkan-%api_ver.typelib
 %_typelibdir/GstVulkanWayland-%api_ver.typelib
+%_typelibdir/GstAnalytics-1.0.typelib
+%_typelibdir/GstDxva-1.0.typelib
+%_typelibdir/GstMse-1.0.typelib
 %_datadir/gstreamer-%api_ver/presets/GstVoAmrwbEnc.prs
 %_datadir/gstreamer-%api_ver/presets/GstFreeverb.prs
 %_datadir/gstreamer-%api_ver/encoding-profiles/device/dvd.gep
@@ -205,7 +208,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_girdir/GstVa-%api_ver.gir
 %_girdir/GstVulkan-%api_ver.gir
 %_girdir/GstVulkanWayland-%api_ver.gir
-
+%_girdir/GstAnalytics-1.0.gir
+%_girdir/GstDxva-1.0.gir
+%_girdir/GstMse-1.0.gir
 
 %if_enabled doc
 %files doc
@@ -214,6 +219,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Tue Mar 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.0-alt1
+- 1.24.0
+
 * Wed Feb 14 2024 Yuri N. Sedunov <aris@altlinux.org> 1.22.10-alt1
 - 1.22.10
 

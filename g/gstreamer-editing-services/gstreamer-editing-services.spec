@@ -1,13 +1,13 @@
 %define _name ges
 %define new_name gst-editing-services
-%define ver_major 1.22
+%define ver_major 1.24
 %define gst_api_ver 1.0
 %define api_ver 1.0
 
 %def_disable doc
 
 Name: gstreamer-editing-services
-Version: %ver_major.10
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer Editing Services (GES)
@@ -108,7 +108,8 @@ library.
 #%_datadir/bash-completion/completions/%_name-launch-%api_ver
 %_man1dir/%_name-launch-*
 # gi overrides
-%python3_sitelibdir_noarch/gi/overrides/*
+%python3_sitelibdir/gi/overrides/GES.py
+%python3_sitelibdir/gi/overrides/__pycache__/*
 %doc ChangeLog README* RELEASE NEWS AUTHORS
 
 # for tests only?
@@ -134,6 +135,9 @@ library.
 %endif
 
 %changelog
+* Tue Mar 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.0-alt1
+- 1.24.0
+
 * Wed Feb 14 2024 Yuri N. Sedunov <aris@altlinux.org> 1.22.10-alt1
 - 1.22.10
 
