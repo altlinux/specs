@@ -1,19 +1,18 @@
 # SPEC file for heimdall package
 
 Name:    heimdall
-Version: 1.4.2
-Release: alt1.1
+Version: 2.0.2
+Release: alt1
 
 Summary: tool suite to flash firmware onto Samsung smartphones
 
 License: %bsdstyle
 Group:   Other
-URL:     https://github.com/Benjamin-Dobell/Heimdall
-#URL:    http://www.glassechidna.com.au/heimdall
+URL:     http://www.glassechidna.com.au/heimdall
 
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 
-Source0: %name-%version.tar
+Source:  https://git.sr.ht/~grimler/Heimdall/archive/v%{version}.tar.gz#/%name-%version.tar
 Patch0:  %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
@@ -74,6 +73,9 @@ install -m 0664 %name/60-%name.rules %buildroot%_udevrulesdir/
 %_bindir/%name-frontend
 
 %changelog
+* Fri Mar 01 2024 Ildar Mulyukov <ildar@altlinux.ru> 2.0.2-alt1
+- build from the fork: https://git.sr.ht/~grimler/Heimdall
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1.4.2-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
