@@ -187,7 +187,7 @@
 
 Name: libvirt
 Version: 9.8.0
-Release: alt3
+Release: alt4
 Summary: Library providing a simple API virtualization
 License: GPL-2.0-or-later AND LGPL-2.1-only AND LGPL-2.1-or-later AND OFL-1.1
 Group: System/Libraries
@@ -1403,6 +1403,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Tue Mar 04 2024 Alexander Kuznetsov <kuznetsovam@altlinux.org> 9.8.0-alt4
+- Fix off-by-one error in udevListInterfacesByStatus (Fixes: CVE-2024-1441)
+
 * Tue Feb 27 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 9.8.0-alt3
 - Added LoongArch support patches based on
   https://gitlab.com/lixianglai/libvirt/-/tree/loongarch
