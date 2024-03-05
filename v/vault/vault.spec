@@ -5,7 +5,7 @@
 %def_with prebuild_webui
 
 Name:    vault
-Version: 1.13.5
+Version: 1.13.12
 Release: alt1
 
 Summary: A tool for secrets management, encryption as a service, and privileged access management
@@ -36,7 +36,7 @@ BuildRequires: /proc
 %setup
 
 %if_without prebuild_webui
-ln -sf %nodejs_sitelib/node-sass ui/node_modules/node-sass
+ln -sf %nodejs_sitelib/node-sass ui/node_modules
 %endif
 
 %build
@@ -56,6 +56,7 @@ cd .build/src/%import_path
 mkdir -p ./http/web_ui
 pushd ui
 #npm rebuild node-sass
+npx browserslist@latest --update-db
 yarn run --offline build
 popd
 %endif
@@ -100,6 +101,10 @@ setcap -q cap_ipc_lock+ep %_bindir/%name 2>/dev/null ||:
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Tue Mar 05 2024 Nikolay Burykin <bne@altlinux.org> 1.13.12-alt1
+- New version 1.13.12
+- CVE-2023-6337: Vault vulnerable to denial of service through memory exhaustion when handling large HTTP requests (High)
+
 * Wed Aug 09 2023 Nikolay Burykin <bne@altlinux.org> 1.13.5-alt1
 - 1.13.5
 - build with webui (ALT #46783)
