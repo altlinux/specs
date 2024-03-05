@@ -1,9 +1,9 @@
 %define optflags_lto %nil
 
-%define llvm_version 16.0
+%define llvm_version 17.0
 
-%define git_ver 15909
-%define git_commit e707ff530d882475351ae1d4b555676e3e8ac8bd
+%define git_ver 16163
+%define git_commit ef8afa78737dd426941b204187b6838ad74420f1
 
 %define glslang_version 13.1.1
 %define asmjit_commit 416f7356967c1f66784dc1580fe157f9406d8bff
@@ -13,11 +13,11 @@
 %define spirv_tools_version 2023.5.rc1
 %define cubeb_commit 70b4e3db7822de4d534959885cda109d6edbee36
 %define soundtouch_commit ced3ce8d5ecc5aef8a5156fea206a37b33774bf3
-%define miniupnp_version miniupnpd_2_3_3
+%define miniupnp_version miniupnpd_2_3_4
 %define rtmidi_version 6.0.0
 
 Name: rpcs3
-Version: 0.0.30
+Version: 0.0.31
 Release: alt1
 
 Summary: PS3 emulator/debugger
@@ -51,6 +51,8 @@ Source8: soundtouch-%soundtouch_commit.tar
 Source9: miniupnp-%miniupnp_version.tar
 # https://github.com/thestk/rtmidi/archive/refs/tags/%rtmidi_version/rtmidi-%rtmidi_version.tar.gz
 Source10: rtmidi-%rtmidi_version.tar
+
+Patch0: %name-llvm-version.patch
 
 BuildRequires: /proc
 BuildRequires: clang%llvm_version
@@ -94,6 +96,8 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 
 %prep
 %setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10
+
+%patch0 -p1
 
 %__mv -Tf ../glslang-%glslang_version 3rdparty/glslang/glslang
 %__mv -Tf ../asmjit-%asmjit_commit 3rdparty/asmjit/asmjit
@@ -163,6 +167,9 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Tue Mar 05 2024 Nazarov Denis <nenderus@altlinux.org> 0.0.31-alt1
+- Version 0.0.31
+
 * Wed Jan 03 2024 Nazarov Denis <nenderus@altlinux.org> 0.0.30-alt1
 - Version 0.0.30
 
