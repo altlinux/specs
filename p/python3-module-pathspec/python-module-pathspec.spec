@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.11.2
+Version: 0.12.1
 Release: alt1
 Summary: Utility library for gitignore style pattern matching of file paths
 License: MPL-2.0-no-copyleft-exception
@@ -53,6 +53,9 @@ gitignore files.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Mar 04 2024 Stanislav Levin <slev@altlinux.org> 0.12.1-alt1
+- 0.11.2 -> 0.12.1.
+
 * Mon Jul 31 2023 Stanislav Levin <slev@altlinux.org> 0.11.2-alt1
 - 0.11.1 -> 0.11.2.
 
