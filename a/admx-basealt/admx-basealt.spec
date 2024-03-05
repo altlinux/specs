@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.1.13.5
+Version: 0.1.13.6
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -36,6 +36,16 @@ done
 %_destdir
 
 %changelog
+* Mon Mar 04 2024 Valentin Sokolov <sova@altlinux.org> 0.1.13.6-alt1
+- Added new group policies for Machine1 polkit actions
+- Added new group policies for Login1 polkit actions
+- Added new group policies for Realmd polkit actions
+- Added new group policies for Udisks2 polkit actions
+- Drop policy for /dev/kvm. Drop udev rules and control for /dev/kvm in qemo-8.0.0-alt1
+- Drop policy "Vino Vnc password". This functionality is being removed because the password was stored insecurely
+- The "package update" policy has been temporarily removed for full analysis and possible implementation
+- Fix typos (closes: 46380, 47756, 49263, 49274, 47756, 49302, 49106, 49107, 49139, 49202, 49220, 47138, 49325)
+
 * Tue Jan 16 2024 Valentin Sokolov <sova@altlinux.org> 0.1.13.5-alt1
 - Fixed typos in Russian-language policy descriptions (closes: 47671, 46379, 47756, 45808, 42367, 45596)
 
