@@ -6,7 +6,7 @@
 %define soname 0
 
 Name: openpgl
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 Summary: Intel(R) Open Path Guiding Library
 Group: Development/Other
@@ -15,9 +15,6 @@ URL: https://github.com/OpenPathGuidingLibrary/openpgl
 
 # https://github.com/OpenPathGuidingLibrary/%name/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
-
-# https://github.com/OpenPathGuidingLibrary/openpgl/issues/6
-Patch: linux-arm-and-visibility.patch
 
 BuildRequires: cmake gcc-c++
 BuildRequires: tbb-devel
@@ -63,8 +60,6 @@ This package contains development files for Intel(R) Open Path Guiding Library.
 %prep
 %setup
 
-%patch -p1
-
 %build
 %cmake \
 	-DCMAKE_BUILD_TYPE=%build_type \
@@ -88,5 +83,8 @@ rm -rf %buildroot%_datadir/doc/%name
 %_libdir/cmake/%{name}-%{version}
 
 %changelog
+* Wed Mar 06 2024 L.A. Kostis <lakostis@altlinux.ru> 0.6.0-alt1
+- 0.6.0.
+
 * Thu Jul 06 2023 L.A. Kostis <lakostis@altlinux.ru> 0.5.0-alt1
 - Initial build for ALTLinux.
