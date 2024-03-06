@@ -2,10 +2,10 @@
 %define dir		var/lib/clamav-db
 %define sys_clamav 	/var/lib/clamav
 %define sys_db		/var/lib/clamav-db
-%define checksum	09c62fbb8d2de9cfeca516b3927347ba
+%define checksum	7b25366a07c2b1701e7a2498469a5209
 
 Name:    clamav-db-%dbname
-Version: 20231208
+Version: 20240306
 Release: alt1
 
 Summary: Antivirus database for ClamAV (%dbname)
@@ -51,6 +51,9 @@ done
 %attr(664,mail,root) %config(noreplace) /%dir/%dbname.cvd
 
 %changelog
+* Wed Mar 06 2024 Kirill Izmestev <felixz@altlinux.org> 20240306-alt1
+- Update database.
+
 * Fri Dec 08 2023 Kirill Izmestev <felixz@altlinux.org> 20231208-alt1
 - Update database.
 
