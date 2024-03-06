@@ -1,17 +1,14 @@
 Name: alterator-logs
-Version: 0.9.2
+Version: 0.9.3
 Release: alt1
 
-Packager: Stanislav Ievlev <inger@altlinux.ru>
-
-Summary: alterator module for system logs
+Summary: Alterator module for system logs
 License: GPL
 Group: System/Configuration/Other
-Url: http://wiki.sisyphus.ru/Alterator
+Url: https://www.altlinux.org/Alterator
+BuildArch: noarch
 
 Source: %name-%version.tar
-
-BuildArch: noarch
 
 Requires: alterator >= 4.10-alt6
 Requires: alterator-sh-functions >= 0.3-alt1
@@ -30,7 +27,7 @@ BuildRequires: guile22-devel
 BuildRequires: alterator-fbi
 
 %description
-System logs alterator module
+System logs alterator module.
 
 %prep
 %setup -q
@@ -51,6 +48,10 @@ System logs alterator module
 touch /var/log/journald
 
 %changelog
+* Wed Mar 06 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.9.3-alt1
+- fix: when changing the log, the number of lines is lost (ALT bug 44392)
+- fix: don't go to first page after resizing
+
 * Sun Nov 28 2021 Anton Midyukov <antohami@altlinux.org> 0.9.2-alt1
 - do not require systemd (journalctl)
 
