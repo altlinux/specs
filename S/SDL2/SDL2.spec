@@ -6,7 +6,7 @@
 %def_with pulse
 
 Name: SDL2
-Version: 2.30.0
+Version: 2.30.1
 Release: alt1
 
 Summary: Simple DirectMedia Layer
@@ -119,6 +119,9 @@ export LDFLAGS='-mlsx -mlasx'
 %_libdir/lib%{name}*.a
 
 %changelog
+* Wed Mar 06 2024 Nazarov Denis <nenderus@altlinux.org> 2.30.1-alt1
+- New version 2.30.1.
+
 * Fri Feb 09 2024 Nazarov Denis <nenderus@altlinux.org> 2.30.0-alt1
 - New version 2.30.0. (ALT #49337)
 
