@@ -1,8 +1,8 @@
 %define git %nil
 
 Name: libopus
-Version: 1.4
-Release: alt1.2
+Version: 1.5.1
+Release: alt1
 
 Summary: Opus Audio Codec library
 License: BSD
@@ -10,7 +10,6 @@ Group: System/Libraries
 Url: http://opus-codec.org/
 # http://downloads.xiph.org/releases/opus/%name-%version.tar.gz
 Source: opus-%version.tar
-Patch: libopus-silk-fix-missing-have_arm_intrinsics_or_asm.patch
 
 BuildRequires(pre): meson, cmake
 
@@ -45,7 +44,6 @@ statically linked libopus-based software.
 
 %prep
 %setup -n opus-%version
-%patch -p2
 
 %build
 printf 'PACKAGE_VERSION="%s"\n' '%version' > package_version
@@ -53,7 +51,12 @@ printf 'PACKAGE_VERSION="%s"\n' '%version' > package_version
        -Dcheck-asm=true \
        -Dcustom-modes=true \
 %ifarch x86_64
-       -Drtcd=disabled
+       -Drtcd=disabled \
+%endif
+%ifarch x86_64 aarch64
+       -Denable-deep-plc=true \
+       -Denable-dred=true \
+       -Denable-osce=true
 %endif
 %meson_build
 
@@ -82,6 +85,14 @@ printf 'PACKAGE_VERSION="%s"\n' '%version' > package_version
 %endif
 
 %changelog
+* Tue Mar 05 2024 L.A. Kostis <lakostis@altlinux.ru> 1.5.1-alt1
+- 1.5.1.
+- libopus: enable ML functionality on supported arches (which increases the
+  size of library but gives some benefints like PLC or DRED to improve sound
+  quality in low-quality/noisy networks).
+- dnn: updated to opus_data-735117b.
+- spec: remove obsoleted patches.
+
 * Mon Dec 04 2023 Ivan A. Melnikov <iv@altlinux.org> 1.4-alt1.2
 - NMU: add with_doc knob to simplify bootstrap (asheplyakov@)
 
