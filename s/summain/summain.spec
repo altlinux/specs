@@ -2,7 +2,7 @@
 
 Name: summain
 Version: 0.26.0
-Release: alt1
+Release: alt2
 
 Summary: File manifest generator
 License: GPLv3+
@@ -51,6 +51,9 @@ cargo install --offline --force --root %buildroot/%_usr --path ./ --no-track
 %_bindir/summain
 
 %changelog
+* Tue Mar 05 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.26.0-alt2
+- NMU: fixed FTBFS on LoongArch (updated vendored crates).
+
 * Fri Feb 04 2022 Stanislav Levin <slev@altlinux.org> 0.26.0-alt1
 - 0.20 -> 0.26.0 (Python => Rust).
 
