@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.11.0
-Release: alt2
+Version: 0.12.1
+Release: alt1
 Summary: Buffer compression and transformation codecs for use
 License: MIT
 Group: Development/Python3
@@ -68,6 +68,9 @@ This package contains tests for %pypi_name.
 %python3_sitelibdir/%mod_name/tests/
 
 %changelog
+* Wed Mar 06 2024 Stanislav Levin <slev@altlinux.org> 0.12.1-alt1
+- 0.11.0 -> 0.12.1.
+
 * Fri Jun 23 2023 Stanislav Levin <slev@altlinux.org> 0.11.0-alt2
 - Added compatibility with numpy 1.25.0.
 - Modernized packaging.
