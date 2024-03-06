@@ -1,40 +1,43 @@
 %define _unpackaged_files_terminate_build 1
-%define oname parse_type
+%define pypi_name parse-type
+%define mod_name parse_type
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 0.5.6
-Release: alt3
-Summary: parse_type extends the parse module (opposite of string.format())
-License: BSD
+Name: python3-module-%mod_name
+Version: 0.6.2
+Release: alt1
+Summary: Simplifies to build parse types based on the parse module
+License: MIT
 Group: Development/Python
-BuildArch: noarch
 Url: https://pypi.org/project/parse-type/
-
-# https://github.com/jenisys/parse_type.git
+Vcs: https://github.com/jenisys/parse_type
+BuildArch: noarch
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(parse)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
-%py3_requires parse
-
 %description
-Simplifies to build parse types based on the parse module.
+%summary.
 
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile py.requirements/ci.github.testing.txt
+%endif
 
 %build
 %pyproject_build
@@ -43,14 +46,17 @@ Simplifies to build parse types based on the parse module.
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -ra
 
 %files
-%doc *.rst
-%python3_sitelibdir/parse_type/
-%python3_sitelibdir/parse_type-%version.dist-info/
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 05 2024 Stanislav Levin <slev@altlinux.org> 0.6.2-alt1
+- 0.5.6 -> 0.6.2.
+
 * Wed Jan 31 2024 Grigory Ustinov <grenka@altlinux.org> 0.5.6-alt3
 - Moved on modern pyproject macros.
 

@@ -4,34 +4,25 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.0.1
+Version: 7.1.1
 Release: alt1
 
 Summary: BDD library for the py.test runner
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/pytest-bdd/
-# https://github.com/pytest-dev/pytest-bdd.git
+Vcs: https://github.com/pytest-dev/pytest-bdd.git
 BuildArch: noarch
 
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(execnet)
-BuildRequires: python3(glob2)
-BuildRequires: python3(mako)
-BuildRequires: python3(parse)
-BuildRequires: python3(parse_type)
+%pyproject_builddeps_metadata
 %endif
-
-%py3_provides %pypi_name
 
 %description
 pytest-bdd implements a subset of Gherkin language for the automation of
@@ -52,6 +43,8 @@ the Gherkin imperative declarations.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -60,7 +53,7 @@ the Gherkin imperative declarations.
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -ra
 
 %files
 %doc CHANGES.rst README.rst
@@ -69,6 +62,9 @@ the Gherkin imperative declarations.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 05 2024 Stanislav Levin <slev@altlinux.org> 7.1.1-alt1
+- 6.0.1 -> 7.1.1.
+
 * Wed Jul 20 2022 Stanislav Levin <slev@altlinux.org> 6.0.1-alt1
 - 4.1.0 -> 6.0.1.
 
