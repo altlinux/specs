@@ -1,6 +1,8 @@
+%def_enable profiling
+
 Name: 7-zip
 Version: 23.01
-Release: alt1.1
+Release: alt2
 Group: Archiving/Compression
 License: LGPLv2+ with UnRAR-exception
 Url: https://www.7-zip.org
@@ -61,15 +63,48 @@ s@7zCon.sfx@%buildroot%_libdir/7z/7zCon.sfx@g
 %ifarch %arm
 %define optflags_lto %nil
 %add_optflags -mno-unaligned-access
+# error: 'compressedSize' may be used uninitialized
+sed -i 's/UInt64 compressedSize;/UInt64 compressedSize = 0;/' \
+	CPP/7zip/Archive/Chm/ChmHandler.cpp
+%endif
+
+%ifarch %e2k
+pgo_flags="-fprofile-generate-parallel"
+%else
+pgo_flags="-fprofile-generate -fprofile-update=atomic"
 %endif
 
 %make_build -C CPP/7zip/Bundles/Alone2 -f ../../cmpl_gcc.mak \
+%if_enabled profiling
+	LOCAL_FLAGS="%optflags $pgo_flags" LD_arch="$pgo_flags" \
+%else
 	LOCAL_FLAGS="%optflags" \
+%endif
 	MY_LIBS="" \
 %ifarch %e2k
 	CFLAGS_WARN="-Wno-error -O%_optlevel" \
 %endif
 	%nil
+
+%if_enabled profiling
+pushd CPP/7zip/Bundles/Alone2
+# run benchmark (1 iteration, small dictionary, 1 thread, all methods)
+stdbuf -o L b/g/7zz b 1 -md21 -mmt1 -mm="*"
+%ifarch %e2k
+eprof -d . -s eprof.sum
+%endif
+# clean object files
+rm -f b/g/*.o
+popd
+# build with profile
+%make_build -C CPP/7zip/Bundles/Alone2 -f ../../cmpl_gcc.mak \
+	LOCAL_FLAGS="%optflags -fprofile-use" \
+	MY_LIBS="" \
+%ifarch %e2k
+	CFLAGS_WARN="-Wno-error -O%_optlevel" \
+%endif
+	%nil
+%endif
 
 %make_build -C CPP/7zip/Bundles/SFXCon -f makefile.gcc \
 %ifarch %e2k
@@ -91,6 +126,11 @@ cd p7zip/check
 sh check.sh %buildroot%_bindir/7zz
 
 %changelog
+* Tue Mar 05 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 23.01-alt2
+- update patch for Elbrus
+- compile with profiling
+- fix armh build
+
 * Sat Mar 02 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 23.01-alt1.1
 - simd patch for Elbrus
 
