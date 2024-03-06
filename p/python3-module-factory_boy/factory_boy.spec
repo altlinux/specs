@@ -6,8 +6,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.2.1
-Release: alt2
+Version: 3.3.0
+Release: alt1
 
 Summary: A test fixtures replacement for Python
 License: MIT
@@ -18,14 +18,13 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%add_pyproject_deps_check_filter mongoengine
-%add_pyproject_deps_check_filter zest-releaser
-%pyproject_builddeps_metadata_extra dev
+%pyproject_builddeps_metadata
 BuildRequires: python3-module-django-dbbackend-sqlite3
 %endif
 
@@ -53,8 +52,6 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/python3|' \
 %pyproject_install
 
 %check
-# mongoengine is not packaged in Sisyphus
-export SKIP_MONGOENGINE=1
 %pyproject_run_unittest
 
 %files
@@ -63,6 +60,9 @@ export SKIP_MONGOENGINE=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 01 2024 Stanislav Levin <slev@altlinux.org> 3.3.0-alt1
+- 3.2.1 -> 3.3.0.
+
 * Wed May 10 2023 Stanislav Levin <slev@altlinux.org> 3.2.1-alt2
 - Fixed FTBFS.
 - Modernized packaging.
