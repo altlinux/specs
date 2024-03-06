@@ -1,6 +1,6 @@
 Name: tuxkart
 Version: 0.4.0
-Release: alt3
+Release: alt4
 
 Summary: Tuxedo T Penguin stars in Tuxkart
 License: GPL
@@ -8,9 +8,9 @@ Group: Games/Arcade
 
 Url: http://tuxkart.sourceforge.net/
 Source: http://tuxkart.sourceforge.net/dist/%name-%version.tar.gz
+Patch1: tuxkart-portability.patch
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-ExclusiveArch: %ix86 x86_64
 
 # Automatically added by buildreq on Mon Oct 06 2003 (-bi)
 BuildRequires: xorg-cf-files libX11-devel libXi-devel libXext-devel libXmu-devel gcc-c++ libGLU-devel libaudio-devel libglut-devel libstdc++-devel plib-devel
@@ -20,6 +20,7 @@ This is another game that stars your Favorite Hero: Tux, the Linux Penguin.
 
 %prep
 %setup
+%patch1 -p1
 find . -type f \! -name configure -print0 | xargs -r0 chmod -x --
 sed -i 's/-O6/-O%_optlevel/g' configure*
 
@@ -54,6 +55,9 @@ EOF
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Mar 06 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.4.0-alt4
+- NMU: build for all architectures
+
 * Fri Jun 21 2019 Michael Shigorin <mike@altlinux.org> 0.4.0-alt3
 - fix superfluous optimization level
 - minor spec fixup/cleanup
