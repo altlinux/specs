@@ -5,8 +5,8 @@
 %endif
 
 Name: deepin-movie
-Version: 6.0.5
-Release: alt2
+Version: 6.0.6
+Release: alt1
 
 Summary: Deepin movie is Deepin Desktop Environment Movie Player
 
@@ -16,9 +16,7 @@ Url: https://github.com/linuxdeepin/deepin-movie-reborn
 
 Source: %url/archive/%version/%name-reborn-%version.tar
 Patch0: %name-5.10.15-alt-cxx-flags.patch
-Patch1: %name-5.10.15-alt-libmpv.patch
-Patch2: %name-5.10.15-alt-underlinked-libraries.patch
-Patch3: %name-6.0.5-upstream-dtkgui.patch
+Patch1: %name-5.10.15-alt-underlinked-libraries.patch
 
 Requires: libdmr libdvdnav libgsettings-qt
 # direct dependency because dmr controls mpv via libmpv calls
@@ -60,8 +58,6 @@ This package provides development files for libdmr.
 %patch0 -p1
 %endif
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
 %if_with clang
@@ -110,6 +106,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_pkgconfigdir/libdmr.pc
 
 %changelog
+* Wed Mar 06 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.6-alt1
+- New version 6.0.6.
+
 * Wed Nov 01 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.5-alt2
 - Fixed build with dtkgui.
 - Cleanup spec and BRs.
