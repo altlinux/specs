@@ -1,7 +1,7 @@
 %define _sover 4.7
 Name: libdb%_sover
 Version: %_sover.25
-Release: alt12
+Release: alt13
 %define srcname db-%version
 
 Summary: Berkeley database library
@@ -383,7 +383,6 @@ pushd %buildroot
 	for f in .%_libdir/libdb{,-*}.so; do
 		ln -snf ../../%_lib/%_libdb_so "$f"
 	done
-	ln -s ../../%_lib/%_libdb_so .%_libdir/
 
 %if_enabled static
 	# Correct static libraries.
@@ -522,6 +521,9 @@ done
 %endif #static
 
 %changelog
+* Mon Feb 19 2024 Arseny Maslennikov <arseny@altlinux.org> 4.7.25-alt13
+- NMU: adapted for https://altlinux.org/Usrmerge.
+
 * Wed Aug 25 2021 Dmitry V. Levin <ldv@altlinux.org> 4.7.25-alt12
 - Disabled build and packaging of static libraries.
 
