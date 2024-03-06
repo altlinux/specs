@@ -3,7 +3,7 @@
 
 Name: hd-idle
 Version: 1.21
-Release: alt1
+Release: alt2
 
 Summary: Hard Disk Idle Spin-Down Utility
 License: GPL-3.0
@@ -66,6 +66,9 @@ install -pm644 debian/%name.default %buildroot%_sysconfdir/sysconfig/%name
 %_man8dir/%{name}*
 
 %changelog
+* Wed Mar 06 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.21-alt2
+- NMU: fixed FTBFS on LoongArch.
+
 * Tue Mar 05 2024 L.A. Kostis <lakostis@altlinux.ru> 1.21-alt1
 - Initial build for ALTLinux.
 
