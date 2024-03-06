@@ -8,8 +8,8 @@
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name: bpftrace
-Version: 0.19.1
-Release: alt2
+Version: 0.20.1
+Release: alt1
 Summary: High-level tracing language for Linux eBPF
 Group: Development/Debuggers
 License: Apache-2.0
@@ -35,9 +35,9 @@ ExclusiveArch:	x86_64 aarch64
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: binutils-devel
 BuildRequires: cereal-devel
-BuildRequires: clangd >= %llvm_min
 BuildRequires: clang-devel >= %llvm_min
 BuildRequires: clang-devel-static >= %llvm_min
+BuildRequires: clangd >= %llvm_min
 BuildRequires: clang-tools >= %llvm_min
 BuildRequires: cmake
 BuildRequires: flex
@@ -51,8 +51,8 @@ BuildRequires: libstdc++-devel-static
 BuildRequires: lld >= %llvm_min
 BuildRequires: llvm-devel >= %llvm_min
 BuildRequires: llvm-devel-static >= %llvm_min
-BuildRequires: python3-module-setuptools
 BuildRequires: /proc
+BuildRequires: python3-module-setuptools
 # Assuming 'kernel' dependency will bring un-def kernel
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: kernel-headers-modules-un-def
@@ -133,11 +133,12 @@ if [ -w /dev/kvm ]; then
 	.gear/delete-blocks uint64_t	tests/runtime/signed_ints
 	.gear/delete-blocks tracepoint:random:random_read tests/runtime/variable
 	.gear/delete-blocks tracepoint:sched:sched_wakeup tests/runtime/regression
+	.gear/delete-blocks histogram-finegrain tests/runtime/json-output
 %ifarch aarch64
 	# TIMEOUT on aarch64
 	.gear/delete-blocks python	tests/runtime/json-output
 %endif
-	export BPFTRACE_RUNTIME_TEST_EXECUTABLE=$PWD/%_cmake__builddir/src/
+	export BPFTRACE_RUNTIME_TEST_EXECUTABLE=$PWD/%_cmake__builddir/src/bpftrace
 	sed -i 's/xattr.h/user.h/' tests/runtime/basic
 	vm-run --kvm=cond --sbin tests/runtime-tests.sh
 fi
@@ -151,6 +152,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Sun Mar 03 2024 Vitaly Chikunov <vt@altlinux.org> 0.20.1-alt1
+- Update to v0.20.1 (2024-01-29).
+
 * Tue Feb 06 2024 Grigory Ustinov <grenka@altlinux.org> 0.19.1-alt2
 - Fixed FTBFS.
 
