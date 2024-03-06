@@ -8,13 +8,12 @@
 %def_with gpu
 
 Name: stress-ng
-Version: 0.17.05
+Version: 0.17.06
 Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
 License: GPL-2.0-only
-Url: http://colinianking.github.io/stress-ng/
-Vcs: https://github.com/ColinIanKing/stress-ng/
+Url: https://github.com/ColinIanKing/stress-ng
 
 Source: %name-%version.tar
 
@@ -48,7 +47,7 @@ ways. It was designed to exercise various physical subsystems
 of a computer as well as the various operating system kernel
 interfaces. Stress-ng features:
 
-  * 310+ stress tests
+  * 320+ stress tests
   * 80+ CPU specific stress tests that exercise floating point, integer,
     bit manipulation and control flow
   * 20+ virtual memory stress tests
@@ -82,6 +81,10 @@ sed -ri 's,"-O([0123])",\1,' stress-ng.h
 %endif
 
 %build
+%ifarch x86_64
+# -Werror cannot be added yet https://github.com/ColinIanKing/stress-ng/issues/365
+%add_optflags -fanalyzer
+%endif
 %ifarch ppc64le
 # Disable LTO as is does not build on ppc64:
 #   https://github.com/ColinIanKing/stress-ng/issues/273
@@ -116,6 +119,9 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Wed Mar 06 2024 Vitaly Chikunov <vt@altlinux.org> 0.17.06-alt1
+- Update to V0.17.06 (2024-03-05).
+
 * Sat Feb 03 2024 Vitaly Chikunov <vt@altlinux.org> 0.17.05-alt1
 - Update to V0.17.05 (2024-02-01).
 - Enable libacl support.
