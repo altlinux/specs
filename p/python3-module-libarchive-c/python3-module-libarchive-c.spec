@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.0
-Release: alt2
+Version: 5.1
+Release: alt1
 Summary: Python interface to libarchive
 License: CC0
 Group: Development/Python3
@@ -64,6 +64,9 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 06 2024 Stanislav Levin <slev@altlinux.org> 5.1-alt1
+- 4.0 -> 5.1.
+
 * Fri May 12 2023 Stanislav Levin <slev@altlinux.org> 4.0-alt2
 - Modernized packaging.
 - Fixed FTBFS (pytest-xdist 3).
