@@ -2,8 +2,8 @@
 %define cfg %_builddir/%name-%version/
 
 Name:    lazarus
-Version: 3.0
-Release: alt2
+Version: 3.2
+Release: alt1
 Epoch:   1
 
 Summary: Lazarus Component Library and IDE
@@ -367,6 +367,9 @@ subst 's|#!.*python$|#!%__python3|' %buildroot%_libdir/lazarus/components/GLScen
 %_libdir/libQt5Pas.so
 
 %changelog
+* Wed Mar 06 2024 Andrey Cherepanov <cas@altlinux.org> 1:3.2-alt1
+- New version.
+
 * Mon Dec 18 2023 Andrey Cherepanov <cas@altlinux.org> 1:3.0-alt2
 - End of bootstrap qtpas.
 
