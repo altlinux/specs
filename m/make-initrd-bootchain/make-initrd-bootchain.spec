@@ -8,7 +8,7 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt21
+Release: alt22
 
 Summary: %child modules set for %name
 License: GPL-3.0
@@ -208,6 +208,9 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Wed Mar 06 2024 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt22
+- resolv.conf is now copied during the liveboot-post.d stage
+
 * Thu Feb 15 2024 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt21
 - use $BC_ROOT instead of $rootmnt, it fixes race conditions
 - core+interactive: daemon stop has been reworked (ALT #49126)
