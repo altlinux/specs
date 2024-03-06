@@ -4,7 +4,7 @@
 
 Name:		fscrypt
 Version:	0.3.4
-Release:	alt1
+Release:	alt2
 Summary:	A high-level tool for the management of Linux kernel filesystem encryption
 
 Group:		System/Kernel and hardware
@@ -60,6 +60,9 @@ vm-run --kvm=cond --sbin --user --udevd \
 %doc *.md
 
 %changelog
+* Wed Mar 06 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.3.4-alt2
+- NMU: fixed FTBFS on LoongArch (updated vendored golang.org/x/sys module).
+
 * Mon Jun 05 2023 Vitaly Chikunov <vt@altlinux.org> 0.3.4-alt1
 - Update to v0.3.4 (2023-01-30). (Fixes: CVE-2022-25326, CVE-2022-25327,
   CVE-2022-25328).
