@@ -1,5 +1,5 @@
 Name: argyllcms
-Version: 2.3.1
+Version: 3.1.0
 Release: alt1
 
 Summary: ICC compatible color management system
@@ -16,6 +16,7 @@ Patch1: argyllcms-datadir.patch
 BuildRequires: jam
 BuildRequires: pkgconfig(libtiff-4)
 BuildRequires: pkgconfig(libjpeg)
+BuildRequires: pkgconfig(zlib)
 BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(libusb-1.0)
 BuildRequires: pkgconfig(x11)
@@ -47,6 +48,8 @@ viewer.
 %prep
 %setup
 %patch1 -p1
+# assure it will uses system libs
+rm -r tiff jpeg zlib png
 
 %build
 export CCOPTFLAG="%optflags"
@@ -69,5 +72,9 @@ rm -rv %buildroot%_bindir/License.txt
 %_datadir/color/argyll/
 
 %changelog
+* Wed Mar 06 2024 Vitaly Lipatov <lav@altlinux.ru> 3.1.0-alt1
+- new version 3.1.0
+- drop tiff, jpeg, zlib,png embedded sources
+
 * Thu Apr 20 2023 Vitaly Lipatov <lav@altlinux.ru> 2.3.1-alt1
 - initial build for ALT Sisyphus (thanks, Cauldron!)
