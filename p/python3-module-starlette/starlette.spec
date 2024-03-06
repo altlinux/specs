@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.37.1
+Version: 0.37.2
 Release: alt1
 
 Summary: The little ASGI framework that shines
@@ -70,6 +70,9 @@ sed -n '/^# Testing$/,/^[[:space:]]*$/p' requirements.txt | \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Mar 06 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.37.2-alt1
+- 0.37.1 -> 0.37.2
+
 * Tue Feb 13 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.37.1-alt1
 - 0.37.0 -> 0.37.1
 
