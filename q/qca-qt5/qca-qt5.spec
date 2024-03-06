@@ -7,7 +7,7 @@
 Name: qca-qt5
 %define major 2
 %define minor 3
-%define bugfix 7
+%define bugfix 8
 Version: %major.%minor.%bugfix
 Release: alt1
 %K5init no_altplace man
@@ -278,6 +278,9 @@ done
 %_qt5_headerdir/Qca-qt5/
 
 %changelog
+* Wed Mar 06 2024 Sergey V Turchin <zerg@altlinux.org> 2.3.8-alt1
+- new version
+
 * Wed Dec 20 2023 Sergey V Turchin <zerg@altlinux.org> 2.3.7-alt1
 - new version
 
