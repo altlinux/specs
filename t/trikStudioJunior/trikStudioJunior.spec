@@ -6,7 +6,7 @@
 
 Name: trikStudioJunior
 Version: 2021.3
-Release: alt1
+Release: alt1.1
 Summary: Intuitive graphical programming environment
 Summary(ru_RU.UTF-8): Интуитивно-понятная графическая среда программирования
 License: Apache-2.0
@@ -63,6 +63,12 @@ Data files for %name
 %patch -p1
 sed -e '2 a export LD_LIBRARY_PATH=%_libdir\/%name\/' -i installer/platform/trikStudio.sh
 sed -e 's|^trik-studio|%_libdir/%name/trik-studio|' -i installer/platform/trikStudio.sh
+
+%ifarch loongarch64 riscv64
+# gold does not work on these architectures
+sed -e '/use_gold_linker/d' -i global.pri
+%endif
+
 
 tar -xf ./.gear/qslog.tar.bz2
 tar -xf ./.gear/checkapp.tar.bz2
@@ -128,6 +134,10 @@ done
 %doc LICENSE NOTICE README.md
 
 %changelog
+* Wed Mar 06 2024 Ivan A. Melnikov <iv@altlinux.org> 2021.3-alt1.1
+- NMU: don't use gold on loongarch64 and riscv64 (fixes build
+  on these architectures).
+
 * Wed Feb 09 2022 Valery Sinelnikov <greh@altlinux.org> 2021.3-alt1
 - Update to jr2021.3
 
