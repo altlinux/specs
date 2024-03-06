@@ -2,7 +2,7 @@
 
 Name:      appstream-data-desktop
 Summary:   ALT Linux AppStream metadata
-Version:   20240226
+Version:   20240306
 Release:   alt1
 Group:     System/Configuration/Packaging
 BuildArch: noarch
@@ -35,6 +35,9 @@ cp -r xmls/* %buildroot%_datadir/app-info/xmls/
 %_datadir/app-info/icons/altlinux
 
 %changelog
+* Wed Mar 06 2024 Kirill Izmestev <felixz@altlinux.org> 20240306-alt1
+- Updated database.
+
 * Mon Feb 26 2024 Kirill Izmestev <felixz@altlinux.org> 20240226-alt1
 - Changed package name to appstream-data-desktop.
 - Added provides, obsoletes for appstream-data (thanks antohami@).
