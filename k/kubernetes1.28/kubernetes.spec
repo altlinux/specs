@@ -11,7 +11,7 @@
 
 Name: %prog_name%kubernetes_major.%kubernetes_minor
 Version: %kubernetes_major.%kubernetes_minor.%kubernetes_patch
-Release: alt1
+Release: alt1.1
 Summary: Container cluster management
 
 Group: System/Configuration/Other
@@ -40,6 +40,10 @@ Source25: scheduler
 Source26: kubernetes.tmpfiles
 Source27: crio.conf
 Source28: 99-kubernetes-cri.conf
+
+Patch1: runc-alt-loongarch64-support.patch
+Patch2: kubernets-alt-loongarch64-support.patch
+Patch3: ebpf-alt-loongarch64-support.patch
 
 Provides: %prog_name = %EVR
 Conflicts: %prog_name < %EVR
@@ -181,6 +185,7 @@ Packege contains files specific for using crio.
 
 %prep
 %setup -q
+%autopatch -p1
 
 %build
 export GOTOOLCHAIN=local
@@ -220,7 +225,7 @@ export BUILDDIR="$PWD/.gopath"
 export GOPATH="%go_path"
 
 cd .gopath/src/%import_path
-%ifarch ppc64le aarch64
+%ifarch ppc64le aarch64 loongarch64
 output_path="_output/local/go/bin"
 %else
 output_path="_output/local/bin/linux/%go_hostarch"
@@ -387,6 +392,9 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Wed Mar 06 2024 Ivan A. Melnikov <iv@altlinux.org> 1.28.7-alt1.1
+- NMU: loongarch64 support
+
 * Tue Mar 05 2024 Alexey Shabalin <shaba@altlinux.org> 1.28.7-alt1
 - 1.28.7
 
