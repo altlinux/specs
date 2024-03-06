@@ -2,7 +2,7 @@
 %define		_rc	rc8
 Name:		aMule
 Version:	2.3.3
-Release:	alt5
+Release:	alt6
 
 Summary:	aMule - eMule client.
 License:	GPL-2.0-or-later
@@ -16,9 +16,11 @@ Source:		%_name-%version.tar.gz
 Conflicts:	xmule
 
 Patch: amule-2.3.3-upstream-allow-autoconf_2.70.patch
+# https://sources.debian.org/data/main/a/amule/1%3A2.3.3-3/debian/patches/wx3.2.patch
+Patch1: debian-wx3.2.patch
 
 # Automatically added by buildreq on Mon Jun 16 2008
-BuildRequires: flex gcc gcc-c++ imake libpng-devel libreadline-devel libwxGTK3.0-devel xorg-cf-files
+BuildRequires: flex gcc gcc-c++ imake libpng-devel libreadline-devel libwxGTK3.2-devel xorg-cf-files
 BuildRequires: libcryptopp-devel >= 6
 BuildRequires: libupnp-devel binutils-devel libcurl-devel libtool bison libexpat-devel
 
@@ -34,7 +36,7 @@ for multiplatform support.
 
 %prep
 %setup -q -n %_name-%version
-%patch -p1
+%autopatch -p1
 
 %__subst "s,aMuleConv(wxT(\"iso8859-1\")),aMuleConv(wxLocale::GetSystemEncodingName())," src/utils/aLinkCreator/src/alcc.h
 %__subst "s,aMuleConv(wxT(\"iso8859-1\")),aMuleConv(wxLocale::GetSystemEncodingName())," src/utils/aLinkCreator/src/ed2khash.cpp
@@ -79,6 +81,11 @@ export CXXFLAGS="%{optflags} -std=c++14"
 %dir %_docdir/amule
 
 %changelog
+* Tue Mar 05 2024 Anton Midyukov <antohami@altlinux.org> 2.3.3-alt6
+- NMU:
+  + rebuild with stable wxGTK3.2
+  + add patch from Debian for fix works with wxGTK3.2
+
 * Fri Jul 28 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.3.3-alt5
 - Backported an upstream patch to allow reconfiguration with autoconf 2.70+
   (thx Pablo Barciela).
