@@ -1,6 +1,6 @@
 Name:     fastonosql
 Version:  1.15.0
-Release:  alt4
+Release:  alt5
 
 Summary:  FastoNoSQL is a crossplatform Redis, Memcached, SSDB, LevelDB, RocksDB, UnQLite, LMDB, UpscaleDB, ForestDB GUI management tool.
 
@@ -23,6 +23,9 @@ Source1: %name-cmake-%version.tar
 # update with separate script update_common.sh
 Source2: %name-common-%version.tar
 
+Patch1: 0001-build-stop-discriminating-architectures.patch
+Patch2: 0002-common-macros.h-added-defines-for-loongarch64-riscv-.patch
+
 #BuildRequires:
 
 # Automatically added by buildreq on Sun Jan 28 2018
@@ -36,6 +39,7 @@ Requires: qt5-imageformats
 
 %prep
 %setup -a1 -a2
+%autopatch1 -p1
 
 # hack to search compiled common (and CMAKE_CXX_FLAGS later)
 %__subst "s|/usr /usr/local /opt|$(pwd)/DEST/usr/lib $(pwd)/DEST/usr|" cmake/FindCommon.cmake
@@ -87,6 +91,9 @@ mv %buildroot%_bindir/FastoNoSQL %buildroot%_bindir/%name
 %doc CHANGELOG COPYRIGHT README.md
 
 %changelog
+* Wed Mar 06 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.15.0-alt5
+- NMU: fixed FTBFS on LoongArch
+
 * Mon Jul 10 2023 Artyom Bystrov <arbars@altlinux.org> 1.15.0-alt4
 - Fix build on GCC13
 
