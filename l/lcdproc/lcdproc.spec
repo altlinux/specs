@@ -1,6 +1,6 @@
 Name: lcdproc
 Version: 0.5.7
-Release: alt4
+Release: alt5
 
 Summary: Show info on LCD displays
 License: GPLv2
@@ -43,6 +43,10 @@ subst "s#\(DriverPath\)=.*#\1=%_libdir/lcdproc/#" LCDd.conf
 %build
 %autoreconf
 %add_optflags -fcommon
+%ifnarch %ix86 x86_64
+# XXX: LTO breaks AC_COMPILE_IFELSE
+export ac_cv_port_have_lpt=no
+%endif
 %configure \
 	--enable-libusb \
 	--enable-stat-nfs \
@@ -74,6 +78,10 @@ install -pDm644 %SOURCE2 %buildroot%_unitdir/%name.service
 %_unitdir/*
 
 %changelog
+* Wed Mar 06 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.5.7-alt5
+- NMU: configure: fixed LPT port false positive detection (due to LTO).
+  Fixes FTBFS on LoongArch.
+
 * Fri Mar 26 2021 Grigory Ustinov <grenka@altlinux.org> 0.5.7-alt4
 - Fixed FTBFS with -fcommon.
 - Fixed license tag.
