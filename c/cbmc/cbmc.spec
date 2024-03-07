@@ -8,7 +8,7 @@
 
 Name: cbmc
 Version: 5.95.1
-Release: alt1
+Release: alt2
 Summary: C Bounded Model Checker
 License: BSD-4-Clause
 Group: Development/C
@@ -21,7 +21,7 @@ BuildRequires: cmake
 BuildRequires: flex
 BuildRequires: gcc-c++
 BuildRequires: libglpk-devel
-BuildRequires: libminisat-devel-static
+BuildRequires: libcadical-devel-static
 BuildRequires: ninja-build
 BuildRequires: rpm-build-python3
 BuildRequires: zlib-devel
@@ -74,7 +74,7 @@ sed -i '/GIT_INFO/s/n\/a/%release%{?disttag::%disttag}/' src/util/CMakeLists.txt
 %cmake \
 	-DWITH_JBMC:BOOL=OFF \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
-	-Dsat_impl="system-minisat2" \
+	-Dsat_impl="system-cadical" \
 	%nil
 %cmake_build
 
@@ -115,6 +115,9 @@ rm -rf %buildroot%_includedir/cprover
 %endif
 
 %changelog
+* Sun Mar 03 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 5.95.1-alt2
+- Rebuilt with system cadical
+
 * Sat Nov 25 2023 Vitaly Chikunov <vt@altlinux.org> 5.95.1-alt1
 - Experimental build cbmc-5.95.1 (2023-10-30).
   Warning: This is so experimental that not all tests are passed.
