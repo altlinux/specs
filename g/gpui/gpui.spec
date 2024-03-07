@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpui
-Version: 0.2.41
+Version: 0.2.42
 Release: alt1
 
 Summary: Group policy editor
@@ -112,6 +112,11 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Wed Mar 6 2024 Vladimir Rubanov <august@altlinux.org> 0.2.42-alt1
+- 0.2.42-alt1
+- Features:
+  + Add environment variables dialog to preferences.
+
 * Tue Feb 29 2024 Vladimir Rubanov <august@altlinux.org> 0.2.41-alt1
 - 0.2.41-alt1
 - Features:
