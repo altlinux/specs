@@ -18,7 +18,7 @@
 
 Name: 	 thunderbird
 Version: 115.8.0
-Release: alt1
+Release: alt2
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -46,6 +46,7 @@ Source9: six.py
 Patch01: thunderbird-alt-fix-redefinition-double_t.patch
 Patch02: thunderbird-115-disable-browser-option.patch
 Patch03: thunderbird-115-fix-types-defination.patch
+Patch04: 0050-ALT-Show-restore-CSD-button-as-maximized.patch
 Patch3500: 0001-thunderbird-115-add-loongarch-support.patch
 Patch3501: 0002_xpcom_add_loongarch64_support.patch 
 Patch3502: 0003_botan_loongarch64_buildfix.patch
@@ -254,6 +255,7 @@ tar -xf %SOURCE6
 %patch01 -p2
 %patch02 -p2
 %patch03 -p2
+%patch04 -p2
 %patch3500 -p1
 %patch3501 -p1
 %patch3502 -p1
@@ -582,6 +584,9 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Thu Mar 07 2024 Andrey Cherepanov <cas@altlinux.org> 115.8.0-alt2
+- Use maximize icon for CSD restore button missing in some themes (ALT #49606).
+
 * Sat Feb 24 2024 Pavel Vasenkov <pav@altlinux.org> 115.8.0-alt1
 - New version.
 - Security fixes:
