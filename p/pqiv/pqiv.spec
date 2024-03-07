@@ -1,5 +1,5 @@
 Name: pqiv
-Version: 2.12
+Version: 2.13
 Release: alt1
 
 Summary: Minimalist Image Viewer
@@ -71,8 +71,7 @@ Requires: %name = %version
 Backend for %name
 
 %prep
-#setup -q -n %name-%version
-%setup -q
+%setup -q -n %name-%version
 #patch -p1
 %if "%_lib" == "lib64"
 sed -i 's|^LIBDIR=\$(PREFIX)/lib$|LIBDIR=%_libdir|' GNUmakefile
@@ -137,6 +136,9 @@ _EOF_
 %_libdir/%name/%name-backend-wand.so
 
 %changelog
+* Thu Mar 07 2024 Ilya Mashkin <oddity@altlinux.ru> 2.13-alt1
+- 2.13
+
 * Wed Apr 13 2022 Ilya Mashkin <oddity@altlinux.ru> 2.12-alt1
 - 2.12
 - Add desktop file
