@@ -1,6 +1,6 @@
 Name: refkeen
 Version: 0.18.3
-Release: alt3
+Release: alt3.1
 
 Summary: Ports of Keen Dreams, Catacomb 3-D and the Catacomb Adventure Series
 License: GPLv2+
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 
 BuildRequires: cmake gcc-c++ rpm-macros-cmake libSDL2-devel libspeexdsp-devel ImageMagick-tools
 
-ExclusiveArch: %ix86 x86_64 %e2k
+ExclusiveArch: %ix86 x86_64 %e2k loongarch64
 %description
 Reflection Keen is a project consisting of source ports of the following titles, all being inspired by the Chocolate Doom port:
 
@@ -134,6 +134,9 @@ done
 %_iconsdir/hicolor/*/apps/reflection-wolf3d.png
 
 %changelog
+* Thu Mar 07 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.18.3-alt3.1
+- NMU: build for LoongArch
+
 * Tue Apr 13 2021 Artyom Bystrov <arbars@altlinux.org> 0.18.3-alt3
 - Add e2k arch in ExclusiveArch (thanks to mike@)
 - Fixing path to binaries and icons
