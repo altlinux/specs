@@ -1,5 +1,5 @@
 Name: ustreamer
-Version: 5.51
+Version: 6.0
 Release: alt1
 
 Summary: Lightweight MJPEG stream server
@@ -20,6 +20,7 @@ Group: Development/Python
 BuildRequires: kvmd-janus-devel
 BuildRequires: libalsa-devel
 BuildRequires: libbsd-devel
+BuildRequires: libdrm-devel
 BuildRequires: libevent-devel
 BuildRequires: libgpiod-devel
 BuildRequires: libjansson-devel
@@ -47,7 +48,7 @@ This package contains plugin for Janus WebRTC Server
 %desc
 This package contains Python bindings.
 
-%define defs WITH_GPIO=1 WITH_SYSTEMD=1 WITH_JANUS=1
+%define defs WITH_GPIO=1 WITH_SYSTEMD=1 WITH_JANUS=1 WITH_V4P=1
 
 %prep
 %setup
@@ -68,6 +69,7 @@ make install %defs DESTDIR=%buildroot PREFIX=%prefix
 %doc README*
 %_bindir/ustreamer
 %_bindir/ustreamer-dump
+%_bindir/ustreamer-v4p
 %_man1dir/ustreamer.1*
 %_man1dir/ustreamer-dump.1*
 
@@ -79,6 +81,9 @@ make install %defs DESTDIR=%buildroot PREFIX=%prefix
 %python3_sitelibdir/ustreamer.*.so
 
 %changelog
+* Thu Mar 07 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.0-alt1
+- 6.0 released
+
 * Wed Feb 21 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.51-alt1
 - 5.51 released
 
