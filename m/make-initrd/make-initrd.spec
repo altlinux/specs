@@ -1,6 +1,6 @@
 Name: make-initrd
 Version: 2.44.0
-Release: alt1
+Release: alt2
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -371,17 +371,26 @@ fi
 %_datadir/%name/guess/smart-card
 %_datadir/%name/features/smart-card
 
+%ifnarch %e2k
 %files bootconfig
 %_datadir/%name/features/bootconfig
+%endif
 
+%ifnarch %e2k
 %files zfs
 %_datadir/%name/features/zfs
+%endif
 
+%ifnarch %e2k
 %files guestfs
 %_datadir/%name/features/guestfs
 %config(noreplace) %_sysconfdir/initrd.mk.d/guestfs.mk.example
+%endif
 
 %changelog
+* Thu Mar 07 2024 Alexey Gladkov <legion@altlinux.ru> 2.44.0-alt2
+- Avoid unmets on e2k.
+
 * Mon Feb 26 2024 Alexey Gladkov <legion@altlinux.ru> 2.44.0-alt1
 - New version (2.44.0).
 - Feature plymouth:
