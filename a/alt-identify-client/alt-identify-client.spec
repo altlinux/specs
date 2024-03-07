@@ -2,7 +2,7 @@
 
 Name: alt-identify-client
 Version: 1.0.1
-Release: alt1
+Release: alt2
 
 Summary: Client-side executable for ALT OS validation
 Group: Other
@@ -29,9 +29,13 @@ mkdir -p %buildroot
 cp -rp %_builddir/%name-%version/%_arch/prefix/* %buildroot/
 
 %files
+%doc LICENSE
 %_bindir/perform_request_with_identification
 
 %changelog
+* Thu Mar 07 2024 Slava Aseev <ptrnine@altlinux.org> 1.0.1-alt2
+- Add license (closes: #49525)
+
 * Thu Jan 18 2024 Slava Aseev <ptrnine@altlinux.org> 1.0.1-alt1
 - Update to new version
 - Build for aarch64
