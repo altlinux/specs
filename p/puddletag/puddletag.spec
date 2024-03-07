@@ -1,6 +1,6 @@
 Name: puddletag
-Version: 2.2.0
-Release: alt1.1
+Version: 2.3.0
+Release: alt1
 
 Summary: Feature rich, easy to use tag editor
 License: GPLv2 and GPLv3+
@@ -8,13 +8,15 @@ Group: File tools
 Url: https://github.com/puddletag/puddletag
 BuildArch: noarch
 
-Source0: %name-%version.tar.gz
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
-BuildRequires: ImageMagick
+%set_pyproject_deps_runtime_filter pyqt5-qt5 pyqt5-sip
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
-%add_python3_req_skip quodlibet.parse tags puddlestuff.libraries.mysqllib
+%add_python3_req_skip tags
 
 %description
 puddletag is an audio tag editor for GNU/Linux similar to Windows program
@@ -37,6 +39,8 @@ Supported formats: ID3v1, ID3v2 (mp3), MP4 (mp4, m4a, etc.), VorbisComments
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -44,24 +48,19 @@ Supported formats: ID3v1, ID3v2 (mp3), MP4 (mp4, m4a, etc.), VorbisComments
 %install
 %pyproject_install
 
-mkdir -p %buildroot%_iconsdir/hicolor/{16x16,32x32,64x64,96x96,128x128,256x256}/apps
-install -m 0644 %name.png %buildroot%_iconsdir/hicolor/256x256/apps/
-
-for i in 16x16 32x32 64x64 96x96 128x128; do
-  convert -resize "$i" %name.png %buildroot%_iconsdir/hicolor/"$i"/apps/%name.png
-done
-
 %files
 %doc NEWS TODO THANKS
 %_bindir/%name
 %_desktopdir/%name.desktop
-%_iconsdir/hicolor/*/apps/%name.*
-%exclude %_datadir/pixmaps/%name.*
+%_datadir/pixmaps/%name.*
 %python3_sitelibdir/puddlestuff/
 %python3_sitelibdir/%name-%version.dist-info/
 %_man1dir/%name.*
 
 %changelog
+* Tue Mar 05 2024 Anton Kurachenko <srebrov@altlinux.org> 2.3.0-alt1
+- New version 2.3.0.
+
 * Thu Aug 17 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 2.2.0-alt1.1
 - NMU: ignored unmet dependency.
 
