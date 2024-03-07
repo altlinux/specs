@@ -29,7 +29,7 @@
 Name: bind
 Version: 9.18.24
 %define src_version 9.18.24
-Release: alt1
+Release: alt2
 
 Summary: ISC BIND - DNS server
 License: MPL-2.0
@@ -124,6 +124,8 @@ BuildPreReq: libcap-devel
 BuildPreReq: libkrb5-devel
 BuildRequires: libuv-devel
 BuildRequires: libidn2-devel
+# doh support
+BuildRequires: libnghttp2-devel
 
 %package utils
 Summary: Utilities provided by ISC BIND
@@ -238,14 +240,16 @@ export SPHINX_BUILD=/usr/bin/sphinx-build-3
 	--enable-linux-caps \
 	--enable-fixed-rrset \
 	 %{subst_with openssl} \
-	 %{subst_with libjemalloc} \
+%if_with libjemalloc
+	 --with-jemalloc=yes \
+%endif
 %if_with libjson
 	--with-json-c=yes \
 %endif
 	--disable-static \
 	--includedir=%{_includedir}/bind9 \
 	--with-gssapi=yes \
-	--disable-doh \
+	--enable-doh \
 	#
 
 %make_build
@@ -275,7 +279,7 @@ mkdir -p %buildroot%run_dir
 mkdir -p %buildroot%log_dir
 
 # Create a chrooted environment...
-mkdir -p %buildroot%_chrootdir/{dev,%_sysconfdir,var/run,session,zone/slave}
+mkdir -p %buildroot%_chrootdir/{dev,%_sysconfdir,var/run/named,var/log/named,session,zone/slave}
 for n in named options rndc local rfc1912 rfc1918; do
 	install -pm640 "addon/bind.$n.conf" \
 		"%buildroot%_chrootdir%_sysconfdir/$n.conf"
@@ -558,7 +562,10 @@ fi
 %dir %attr(1770,root,%named_group) %_chrootdir/zone
 %dir %attr(700,root,%named_group) %verify(not mode) %_chrootdir/zone/slave
 %dir %attr(700,root,%named_group) %verify(not mode) %_chrootdir/var
-%dir %attr(1770,root,%named_group) %_chrootdir/var/run
+%dir %attr(710,root,%named_group) %_chrootdir%_runtimedir
+%dir %attr(1770,root,%named_group) %_chrootdir%_var%run_dir
+%dir %attr(710,root,%named_group) %_chrootdir%_logdir
+%dir %attr(1770,root,%named_group) %_chrootdir%log_dir
 %dir %attr(700,root,%named_group) %_chrootdir/session
 %config(noreplace) %_chrootdir%_sysconfdir/*.conf
 %config(noreplace) %verify(not md5 mtime size) %_chrootdir%_sysconfdir/rndc.key
@@ -593,6 +600,9 @@ fi
 %endif
 
 %changelog
+* Thu Mar 07 2024 Stanislav Levin <slev@altlinux.org> 9.18.24-alt2
+- Enabled DoH (closes: #49573).
+
 * Tue Feb 13 2024 Stanislav Levin <slev@altlinux.org> 9.18.24-alt1
 - 9.18.21 -> 9.18.24.
 
