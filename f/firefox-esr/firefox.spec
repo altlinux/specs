@@ -20,7 +20,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (верс�
 
 Name: firefox-esr
 Version: 115.8.0
-Release: alt1
+Release: alt2
 License: MPL-2.0
 Group: Networking/WWW
 URL: http://www.mozilla.org/projects/firefox/
@@ -67,6 +67,7 @@ Patch019: 0019-libwebrtc-loongarch64.patch
 Patch021: 0021-rust-authenticator.patch
 Patch022: 0022-rust-update-checksums.patch
 Patch023: 0023-dont-remove-yandex-mailru.patch
+Patch050: 0050-ALT-Show-restore-CSD-button-as-maximized.patch
 ### End Patches
 
 %ifndef build_parallel_jobs
@@ -546,6 +547,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Thu Mar 07 2024 Andrey Cherepanov <cas@altlinux.org> 115.8.0-alt2
+- Use maximize icon for CSD restore button missing in some themes (ALT #49606).
+
 * Wed Feb 21 2024 Pavel Vasenkov <pav@altlinux.org> 115.8.0-alt1
 - New ESR version.
 - Security fixes
