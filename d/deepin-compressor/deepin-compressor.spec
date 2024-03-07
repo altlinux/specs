@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-compressor
-Version: 5.12.21
+Version: 5.12.25
 Release: alt1
 Epoch: 1
 
@@ -55,7 +55,6 @@ export PATH=%_qt5_bindir:$PATH
 %K5cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DAPP_VERSION=%version \
     -DVERSION=%version \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DLIB_INSTALL_DIR=%_libdir \
@@ -65,16 +64,19 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
+%find_lang --with-qt %name
 
 %check
 desktop-file-validate %buildroot%_desktopdir/%name.desktop
 
-%files
+%files -f %name.lang
 %doc README.md
 %doc LICENSE
 %_bindir/%name
 %_desktopdir/%name.desktop
-%_datadir/%name/
+%dir %_datadir/%name/
+%dir %_datadir/%name/translations/
+%_datadir/%name/translations/%name.qm
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/mime/packages/%name.xml
 %dir %_datadir/applications/context-menus/
@@ -82,6 +84,10 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %dir %_libdir/%name/
 %dir %_libdir/%name/plugins/
 %_libdir/%name/plugins/*.so
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/org.deepin.compressor/
+%_datadir/dsg/configs/org.deepin.compressor/org.deepin.compressor.method.json
 %dir %_datadir/deepin-manual/
 %dir %_datadir/deepin-manual/manual-assets/
 %dir %_datadir/deepin-manual/manual-assets/application/
@@ -89,6 +95,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_datadir/deepin-manual/manual-assets/application/%name/archive-manager/
 
 %changelog
+* Thu Mar 07 2024 Leontiy Volodin <lvol@altlinux.org> 1:5.12.25-alt1
+- New version 5.12.25.
+
 * Sat Dec 30 2023 Leontiy Volodin <lvol@altlinux.org> 1:5.12.21-alt1
 - New version 5.12.21.
 - Fixed build with dtk 5.6.20 (thanks archlinux for the patch).
