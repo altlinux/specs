@@ -10,7 +10,7 @@
 
 Name:     zincati
 Version:  0.0.22
-Release:  alt6
+Release:  alt7
 
 Summary:  An auto-update agent for ALT Container OS hosts.
 License:  Apache-2.0
@@ -19,10 +19,12 @@ Url:      https://github.com/coreos/zincati
 
 Source:   %name-%version.tar
 Patch1:   %name-%version-%release.patch
+Patch3500: nix-loongarch64.patch
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: openssl-devel
 BuildRequires: /proc
+BuildRequires: cargo-vendor-checksum diffstat
 
 %description
 %summary
@@ -30,6 +32,8 @@ BuildRequires: /proc
 %prep
 %setup
 %patch1 -p1
+%patch3500 -p1
+diffstat -l -p1 < %PATCH3500 | sed -re 's@vendor/@@' | xargs -r cargo-vendor-checksum -f
 
 %build
 %rust_build
@@ -63,6 +67,9 @@ useradd -g %zincati_group -G root,wheel -c 'Zincati user for auto-updates' -M -d
 %doc *.md
 
 %changelog
+* Thu Feb 22 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.0.22-alt7
+- NMU: fixed FTBFS on LoongArch
+
 * Thu Oct 07 2021 Andrey Sokolov <keremet@altlinux.org> 0.0.22-alt6
 - Ignore invalid arguments
 - Fixes after renaming ACOS to ALTCOS
