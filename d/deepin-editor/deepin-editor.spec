@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-editor
-Version: 6.0.15.0.6.660b
+Version: 6.0.16
 Release: alt1
 
 Summary: Simple editor for Linux Deepin
@@ -13,7 +13,7 @@ Url: https://github.com/linuxdeepin/deepin-editor
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
 # Automatically added by buildreq on Mon Jan 29 2024
 # optimized out: bash5 bashrc cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 icu-utils libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libicu-devel libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel pkg-config python3 python3-base python3-dev qt5-base-devel sh5
 BuildRequires: cmake deepin-qt-dbus-factory-devel kf5-kcodecs-devel kf5-syntax-highlighting-devel libchardet-devel libdtkwidget-devel libuchardet-devel qt5-svg-devel qt5-tools
@@ -26,6 +26,7 @@ BuildRequires: gcc-c++
 %endif
 
 # Requires: deepin-session-shell deepin-qt5integration
+Requires: libqt5-gui = %_qt5_version
 
 %description
 %summary.
@@ -79,6 +80,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/deepin-manual/manual-assets/application/%name/editor/
 
 %changelog
+* Thu Mar 07 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.16-alt1
+- New version 6.0.16.
+- Requires: libqt5-gui = %%_qt5_version.
+
 * Mon Jan 29 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.15.0.6.660b-alt1
 - New version 6.0.15-6-g660b5ad1.
 
