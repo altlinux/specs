@@ -5,7 +5,7 @@
 
 Summary: Dynamic Kernel Module Support Framework
 Name: dkms
-Version: 3.0.12
+Version: 3.0.13
 Release: alt1
 License: GPL-2.0-or-later
 Group: System/Kernel and hardware
@@ -44,15 +44,11 @@ Run checkinstall tests for dkms.
 %build
 echo "enable dkms.service" > dkms.preset
 
-# Turn prerm into postrm, disabling call to depmod.
-sed 's/dkms remove/& --no-depmod/' kernel_prerm.d_dkms > kernel_postrm.d_dkms
-
 %install
 %makeinstall_std SYSTEMD=%_unitdir install-redhat
 
 # Install triggers.
 rm -rf %buildroot%_sysconfdir/kernel
-install -p -m755 kernel_postrm.d_dkms   %buildroot%_libexecdir/dkms/postrm
 install -p -m755 kernel_postinst.d_dkms %buildroot%_libexecdir/dkms/postinst
 # '9' to make it run before boot_kernel.filetrigger for prerm
 install -p -m755 -D .gear/dkms.filetrigger %buildroot%_rpmlibdir/9dkms.filetrigger
@@ -119,10 +115,14 @@ rm -rf /usr/src/dkms_test-1.0
 %_localstatedir/dkms
 %_man8dir/dkms.8*
 %_datadir/bash-completion/completions/dkms
+%_datadir/zsh/site-functions/_dkms
 
 %files checkinstall
 
 %changelog
+* Thu Mar 07 2024 Andrey Cherepanov <cas@altlinux.org> 3.0.13-alt1
+- New version.
+
 * Tue Sep 26 2023 Andrey Cherepanov <cas@altlinux.org> 3.0.12-alt1
 - New version.
 
