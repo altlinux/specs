@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.27.10
-Release: alt5
+Release: alt6
 Epoch: 1
 %K5init
 
@@ -75,7 +75,7 @@ Source42: obex.conf
 Source43: xdg-user-dirs.conf
 #
 Source50: dbus-restart-kde5.sh
-Source51: nvidia_optimus_available.cpp
+Source51: nvidia_prime_available.cpp
 
 Patch100: alt-startkde.patch
 Patch101: alt-menu-add-tooltip.patch
@@ -567,6 +567,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_unitdir_user/plasma-core.target.d/xd
 
 
 %changelog
+* Thu Mar 07 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.10-alt6
+- don't use nvidia-prime-run to start NVIDIA PRIME apps
+
 * Tue Mar 05 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.10-alt5
 - allow to run apps via NVIDIA PRIME from main menu
 
