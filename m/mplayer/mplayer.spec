@@ -315,7 +315,7 @@
 
 Name: %lname
 Version: 1.5
-Release: alt1.%svnrev.3
+Release: alt1.%svnrev.4
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -369,6 +369,8 @@ Patch20: 0020-fix-tools-build-with-shared-ffmpeg.patch
 Patch21: 0021-fix-usage-mp_msg.patch
 Patch22: 0022-Secure-IPC-perms.patch
 Patch23: 0023-loongarch64-riscv64-support.patch
+Patch24: 0024-mp_image.c-add-the-header-missing-now.patch
+# avoid autopatch
 Source2000: mplayer-e2k.patch
 
 %if_enabled gui
@@ -413,7 +415,7 @@ BuildRequires: rpm-build-python
 %{?_enable_mng:BuildRequires: libmng-devel}
 %{?_enable_png:BuildRequires: libpng-devel}
 %{?_enable_jpeg:BuildRequires: libjpeg-devel}
-%{?_enable_openjpeg:BuildRequires: libopenjpeg-devel}
+%{?_enable_openjpeg:BuildRequires: libopenjpeg2.0-devel}
 %{?_enable_libcdio:BuildRequires: libcdio-devel libcdio-paranoia-devel}
 %{?_enable_libgtop:BuildRequires: pkgkonfig(libgtop-2.0)}
 %{?_enable_lzo:BuildRequires: liblzo2-devel}
@@ -666,7 +668,7 @@ Ukrainian language support for %Name.
 
 
 %prep
-%setup -q -n %Name-%pkgver
+%setup -n %Name-%pkgver
 %autopatch -p2
 %ifarch %e2k
 patch -p2 < %SOURCE2000
@@ -1159,6 +1161,10 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Thu Mar 07 2024 Michael Shigorin <mike@altlinux.org> 1.5-alt1.38416.4
+- Fix build regarding BR: and headers (ilyakurdyukov@).
+- Minor spec cleanup.
+
 * Fri Nov 24 2023 Ivan A. Melnikov <iv@altlinux.org> 1.5-alt1.38416.3
 - Add loongarch64 and riscv64 support.
 
