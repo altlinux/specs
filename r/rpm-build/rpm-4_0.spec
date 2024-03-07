@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.195
+Version: 4.0.4.196
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -333,9 +333,11 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %rpmattr %_rpmlibdir/ldd
 %rpmattr %_rpmlibdir/rpm2cpio.sh
 %rpmattr %_rpmlibdir/find-lang
+%rpmattr %_rpmlibdir/rpmb-find-package
 %rpmattr %_rpmlibdir/find-provides
 %rpmattr %_rpmlibdir/find-requires
 %rpmattr %_rpmlibdir/find-debuginfo-files
+%rpmattr %_rpmlibdir/rpmb-functions
 %rpmattr %_rpmlibdir/process-debuginfo
 %rpmattr %_rpmlibdir/process-lto
 %rpmattr %_rpmlibdir/find-scriptlet-requires
@@ -384,6 +386,10 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Mon Mar 04 2024 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.196-alt1
+- Moved scripts/find-package and scripts/functions over from our rpm project to
+  be installed as part of rpm-build.
+
 * Thu Jan 11 2024 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.195-alt1
 - debuginfo: Changed compression format (--lzma2=dict=2MiB ->
   --check=crc32 --lzma2=dict=1MiB) of xz-compressed modules for compatibility
