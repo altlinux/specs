@@ -2,7 +2,7 @@
 
 Name: free-sa
 Version: 1.6.2
-Release: alt3.3
+Release: alt4
 
 Packager: Avramenko Andrew <liks@altlinux.ru>
 Summary: Squid report generator per user/ip/name
@@ -11,7 +11,8 @@ Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: %name-1.6.2-alt-no-strip.patch
 Patch2: %name-%version-alt-gcc-10-fno-common.patch
-ExclusiveArch: i586 x86_64
+Patch3: %name-%version-alt-anyarch.patch
+Patch4: %name-%version-alt-2big2inline.patch
 
 License: GPL
 Group: Monitoring
@@ -27,14 +28,14 @@ HTML/CSS reports code.
 %patch0 -p1
 %patch1 -p2
 %patch2 -p2
-sed -i 's|\(\-\-relax\)|-Wl,\1|' configs/*.mk
-sed -i 's|\-mrelax||' configs/*.mk
+%patch3 -p2
+%patch4 -p2
 
 %build
-%make OSTYPE=altlinux-%_target_cpu-gcc4
+%make OSTYPE=altlinux-generic-gcc
 
 %install
-make install DESTDIR=%buildroot OSTYPE=altlinux-%_target_cpu-gcc4
+make install DESTDIR=%buildroot OSTYPE=altlinux-generic-gcc
 mkdir -p %buildroot/%_mandir
 mkdir -p %buildroot/%_sysconfdir/%name
 mv %buildroot/usr/man/* %buildroot/%_mandir/
@@ -56,6 +57,9 @@ subst "s,%buildroot,," %buildroot/%_sysconfdir/%name/%name.conf
 %dir /var/cache/%name
 
 %changelog
+* Thu Mar 07 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.6.2-alt4
+- NMU: build for all architectures
+
 * Fri Mar 26 2021 Slava Aseev <ptrnine@altlinux.org> 1.6.2-alt3.3
 - Fixed build with gcc-10 (-fno-common FTBFS)
 
