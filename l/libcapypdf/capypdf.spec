@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: 0.8.0
+Version: 0.9.0
 Release: alt1
 
 Summary: CapyPDF is a library for generating PDF files
@@ -90,6 +90,9 @@ sed -i 's|/usr/share/color/icc/ghostscript/a98.icc|/usr/share/ghostscript/10.01.
 
 
 %changelog
+* Thu Mar 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
+- 0.9.0
+
 * Wed Jan 24 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
 - 0.8.0
 
