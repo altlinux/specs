@@ -1,6 +1,6 @@
 Name:    cargo-vendor-filterer
 Version: 0.5.9
-Release: alt2
+Release: alt3
 
 Summary: Tool to `cargo vendor` with filtering
 License: Apache-2.0
@@ -46,6 +46,10 @@ install -pDm 0755 cargo-vendor-alt %buildroot%_bindir
 %_bindir/*
 
 %changelog
+* Thu Mar 07 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.5.9-alt3
+- cargo-vendor-alt: added LoongArch platform
+- updated rustix, libc, linux-raw-sys so the package builds on LoongArch
+
 * Fri Apr 21 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.5.9-alt2
 - Vendor all features in cargo-vendor-alt
 
