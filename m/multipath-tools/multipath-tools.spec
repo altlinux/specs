@@ -5,7 +5,7 @@
 %define libmpathdir %syslibdir/multipath
 
 Name: multipath-tools
-Version: 0.9.7
+Version: 0.9.8
 Release: alt1
 
 Summary: Tools to manage multipath devices with device-mapper
@@ -15,7 +15,6 @@ Group: System/Configuration/Hardware
 Url: http://christophe.varoqui.free.fr
 Vcs: https://github.com/opensvc/multipath-tools.git
 Source: %name-%version.tar
-Source2: multipath.rules
 Source3: multipathd.init
 Source4: multipath.modules
 Source5: multipath.conf
@@ -102,9 +101,12 @@ unset RPM_OPT_FLAGS
     prefix=%_prefix \
     systemd_prefix="" \
     etc_prefix="" \
+    bindir=/sbin \
+    libudevdir=/lib/udev \
     syslibdir=%syslibdir \
     libdir=%libmpathdir \
     plugindir=%libmpathdir \
+    usr_prefix=%_prefix \
     configdir=%_sysconfdir/multipath/conf.d \
     configfile=%_sysconfdir/multipath.conf \
     statedir=%_sysconfdir/multipath \
@@ -200,6 +202,9 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %_pkgconfigdir/libdmmp.pc
 
 %changelog
+* Thu Mar 07 2024 Alexey Shabalin <shaba@altlinux.org> 0.9.8-alt1
+- 0.9.8
+
 * Thu Nov 30 2023 Alexey Shabalin <shaba@altlinux.org> 0.9.7-alt1
 - 0.9.7
 
