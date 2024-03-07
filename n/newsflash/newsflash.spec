@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: newsflash
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: NewsFlash is a RSS reader
@@ -78,6 +78,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Fri Mar 08 2024 Yuri N. Sedunov <aris@altlinux.org> 3.1.6-alt1
+- 3.1.6
+
 * Sat Mar 02 2024 Yuri N. Sedunov <aris@altlinux.org> 3.1.5-alt1
 - 3.1.5
 
