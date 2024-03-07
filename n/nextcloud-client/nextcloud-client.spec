@@ -1,14 +1,12 @@
 Name: nextcloud-client
 Version: 3.11.0
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Group: Networking/File transfer
 Summary: Nextcloud Desktop Client
 License: GPLv2
 Url: https://github.com/nextcloud/desktop
-
-ExcludeArch: %not_qt5_qtwebengine_arches
 
 Provides: mirall = %version-%release
 Obsoletes: mirall <= %version-%release
@@ -27,7 +25,10 @@ Patch6: alt-fix-fortify-source.patch
 BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: doxygen extra-cmake-modules graphviz kf5-kio-devel libqtkeychain-qt5-devel libsqlite3-devel libssl-devel python3-dev qt5-tools-devel qt5-webkit-devel zlib-devel
-BuildRequires: libqt5-webenginewidgets qt5-webengine-devel libgio-devel glib2-devel qt5-svg-devel
+%ifarch %qt5_qtwebengine_arches
+BuildRequires: libqt5-webenginewidgets qt5-webengine-devel
+%endif
+BuildRequires: libgio-devel glib2-devel qt5-svg-devel
 BuildRequires: kf5-kwindowsystem-devel
 BuildRequires: qt5-quickcontrols2-devel
 BuildRequires: qt5-websockets-devel kf5-karchive-devel /usr/bin/rsvg-convert
@@ -73,6 +74,9 @@ Cinnamon %name integration
 %add_optflags %optflags_shared
 %K5build \
     -DBUILD_WITH_QT4=OFF \
+%ifarch %not_qt5_qtwebengine_arches
+    -DBUILD_WITH_WEBENGINE=OFF \
+%endif
     -DDATA_INSTALL_DIR=%_datadir \
     -DCMAKE_INSTALL_SYSCONFDIR=/etc/%name \
     -DKDE_INSTALL_PLUGINDIR=%_K5plug \
@@ -118,6 +122,10 @@ desktop-file-install \
 %_datadir/nemo-python/extensions/*
 
 %changelog
+* Thu Mar 07 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.11.0-alt2
+- NMU: build for more architectures (use qt5-webengine where available,
+  build without qt5-webengine elsewhere)
+
 * Fri Jan 26 2024 Evgeniy Korneechev <ekorneechev@altlinux.org> 3.11.0-alt1
 - new version (ALT#49166)
 
