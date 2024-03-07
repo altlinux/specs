@@ -2,7 +2,7 @@
 
 Name: lazygit
 Version: 0.40.2
-Release: alt1
+Release: alt2
 
 Summary: Simple terminal UI for git commands
 License: MIT
@@ -13,6 +13,7 @@ ExclusiveArch: %go_arches
 
 #Source-url: %url/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
+Patch3500: pty-loongarch64.patch
 
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
@@ -41,6 +42,7 @@ ass, lazygit might be for you.
 
 %prep
 %setup
+%patch3500 -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -64,6 +66,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Thu Mar 07 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.40.2-alt2
+- NMU: fixed FTBFS on LoongArch (trivial patch for creack/pty module)
+
 * Thu Aug 17 2023 Ilya Demyanov <turbid@altlinux.org> 0.40.2-alt1
 - new version
 - moving sources to a subdirectory
