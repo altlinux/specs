@@ -1,13 +1,13 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.36
+%define ver_major 0.37
 %define api_ver 0
 %define beta %nil
 %define rdn_name sm.puri.Phoc
 
 %define dev_uid 500
 %define wlroots_ver 0.17.1
-%define gmobile_ver v0.0.4
+%define gmobile_ver v0.0.6
 
 # since 0.30 system 0.16 may be used but patched version required
 # but 0.34.0 required patched 0.17 version
@@ -109,6 +109,9 @@ rm -r %buildroot%_includedir/wlr
 rm %buildroot%_libdir/libwlroots.a
 rm %buildroot%_pkgconfigdir/wlroots.pc}
 
+rm %buildroot%_libdir/libgmobile.*
+rm %buildroot%_pkgconfigdir/gmobile.pc
+
 %check
 WLR_RENDERER=pixman xvfb-run %__meson_test
 
@@ -125,6 +128,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Fri Mar 08 2024 Yuri N. Sedunov <aris@altlinux.org> 0.37.0-alt1
+- 0.37.0
+
 * Sat Feb 03 2024 Yuri N. Sedunov <aris@altlinux.org> 0.36.0-alt1
 - 0.36.0
 

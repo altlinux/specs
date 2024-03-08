@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.36
+%define ver_major 0.37
 %define beta %nil
 %define api_ver 0
 %define rdn_name sm.puri.Phosh
@@ -137,6 +137,9 @@ sed -i 's|\(capsh\)|/sbin/\1|' data/%name.service
 
 %install
 %meson_install
+rm %buildroot%_libdir/libgmobile.*
+rm %buildroot%_pkgconfigdir/gmobile.pc
+
 install -pD -m644 %SOURCE1 %buildroot%_sysconfdir/pam.d/%name
 install -Dpm 0644 data/phosh.service %buildroot%_unitdir/phosh.service
 
@@ -168,6 +171,11 @@ xvfb-run %__meson_test
 %_libdir/%name/plugins/lib%name-plugin-emergency-info.so
 %_libdir/%name/plugins/prefs/lib%name-plugin-prefs-ticket-box.so
 %_libdir/%name/plugins/prefs/lib%name-plugin-prefs-emergency-info.so
+%_libdir/%name/plugins/caffeine-quick-setting.plugin
+%_libdir/%name/plugins/lib%name-plugin-caffeine-quick-setting.so
+%_libdir/%name/plugins/lib%name-plugin-simple-custom-quick-setting.so
+%_libdir/%name/plugins/simple-custom-quick-setting.plugin
+
 %doc NEWS README.md
 
 %files data
@@ -198,6 +206,9 @@ xvfb-run %__meson_test
 %{?_enable_gtk_doc:%doc %_datadir/doc/%name-%api_ver}
 
 %changelog
+* Fri Mar 08 2024 Yuri N. Sedunov <aris@altlinux.org> 0.37.0-alt1
+- 0.37.0
+
 * Sat Feb 03 2024 Yuri N. Sedunov <aris@altlinux.org> 0.36.0-alt1
 - 0.36.0
 

@@ -1,10 +1,10 @@
 %def_enable snapshot
 
-%define gmobile_ver v0.0.4
+%define gmobile_ver v0.0.6
 %define rdn_name mobi.phosh.MobileSettings
 
 Name: phosh-mobile-settings
-Version: 0.36.0
+Version: 0.37.0
 Release: alt1
 
 Summary: Mobile Settings App for phosh and related components
@@ -53,6 +53,9 @@ mv gmobile-%gmobile_ver subprojects/gmobile
 
 %install
 %meson_install
+rm %buildroot%_libdir/libgmobile.*
+rm %buildroot%_pkgconfigdir/gmobile.pc
+
 %find_lang %name
 
 %check
@@ -71,6 +74,9 @@ mv gmobile-%gmobile_ver subprojects/gmobile
 
 
 %changelog
+* Fri Mar 08 2024 Yuri N. Sedunov <aris@altlinux.org> 0.37.0-alt1
+- 0.37.0
+
 * Sat Feb 03 2024 Yuri N. Sedunov <aris@altlinux.org> 0.36.0-alt1
 - updated to v0.36.0-5-g794fa6e
 
