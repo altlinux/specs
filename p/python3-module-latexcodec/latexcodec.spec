@@ -1,26 +1,33 @@
 %define oname latexcodec
 
+%def_with check
+%def_with docs
+
 Name: python3-module-%oname
-Version: 2.0.1
-Release: alt2
+Version: 3.0.0
+Release: alt1
 
 Summary: A lexer and codec to work with LaTeX code in Python
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/latexcodec
+Url: https://pypi.org/project/latexcodec
+Vcs: https://github.com/mcmtroffaes/latexcodec.git
 BuildArch: noarch
 
-# https://github.com/mcmtroffaes/latexcodec.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-sphinx python3-module-six
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with docs
+BuildRequires: python3-module-sphinx
+%endif
+
+%if_with check
 BuildRequires: python3-module-pytest
+%endif
 
 %py3_provides %oname
-%py3_requires six
-
 
 %description
 A lexer and codec to work with LaTeX code in Python.
@@ -40,30 +47,39 @@ This package contains pickles for %oname.
 sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
+%if_with docs
 export PYTHONPATH=$PWD
 %make -C doc pickle
 %make -C doc html
 cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
+%endif
 
 %check
-export PYTHONPATH=$PWD
-py.test-3
+%pyproject_run_pytest -v
 
 %files
-%doc *.rst doc/_build/html
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/pickle
+%doc README.*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
+%if_with docs
+%doc doc/_build/html
+%exclude %python3_sitelibdir/%oname/pickle
 
 %files pickles
-%python3_sitelibdir/*/pickle
+%dir %python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname/pickle
+%endif
 
 
 %changelog
+* Fri Mar 08 2024 Anton Vyatkin <toni@altlinux.org> 3.0.0-alt1
+- New version 3.0.0.
+
 * Fri Mar 31 2023 Anton Vyatkin <toni@altlinux.org> 2.0.1-alt2
 - Fix BuildRequires.
 
