@@ -2,15 +2,16 @@
 %define llvm_version 17.0
 
 # git describe mainline-0-%version
-%define git_descr mainline-636-12706-g974380fe10c
+%define git_descr mainline-636-14434-g537296095ab
 
 %define sirit_commit ab75463999f4f3291976b079d42d52ee91eebf3f
 %define mbedtls_commit 8c88150ca139e06aa2aae8349df8292a88148ea1
-%define tzdb_to_nx_date 220816
+%define simpleini_version 4.20
+%define tzdb_to_nx_date 221202
 
 Name: yuzu
-Version: 1563
-Release: alt1.1
+Version: 1734
+Release: alt1
 
 Summary: Nintendo Switch emulator/debugger
 License: GPLv3+
@@ -19,7 +20,7 @@ Group: Emulators
 Url: https://%name-emu.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64
 
 BuildRequires(pre): libavfilter-devel
 
@@ -29,20 +30,24 @@ Source0: %name-mainline-mainline-0-%version.tar
 Source1: sirit-%sirit_commit.tar
 # https://github.com/yuzu-emu/mbedtls/archive/%mbedtls_commit/mbedtls-%mbedtls_commit.tar.gz
 Source2: mbedtls-%mbedtls_commit.tar
+# https://github.com/brofield/simpleini/archive/v%simpleini_version/simpleini-%simpleini_version.tar.gz
+Source3: simpleini-%simpleini_version.tar
 
-Source3: https://github.com/lat9nq/tzdb_to_nx/releases/download/%tzdb_to_nx_date/%tzdb_to_nx_date.zip
+Source4: https://github.com/lat9nq/tzdb_to_nx/releases/download/%tzdb_to_nx_date/%tzdb_to_nx_date.zip
 
 Patch0: %name-cpp-jwt-version-alt.patch
 Patch1: %name-xbyak-version-alt.patch
+Patch2: %name-vulkan-version-alt.patch
 
 BuildRequires: /proc
 BuildRequires: boost-asio-devel
 BuildRequires: boost-filesystem-devel
 BuildRequires: catch-devel
-BuildRequires: clang-tools
 BuildRequires: clang%llvm_version
+BuildRequires: clang%llvm_version-tools
 BuildRequires: glslang
 BuildRequires: libSDL2-devel
+BuildRequires: libVulkanUtilityLibraries-devel
 BuildRequires: libavcodec-devel
 BuildRequires: libavfilter-devel
 BuildRequires: libbrotli-devel
@@ -53,19 +58,18 @@ BuildRequires: libdynarmic-devel
 BuildRequires: libedit-devel
 BuildRequires: libenet-devel
 BuildRequires: libffi-devel
-BuildRequires: libinih-devel
+BuildRequires: libgamemode-devel
 BuildRequires: liblz4-devel
 BuildRequires: libopus-devel
-BuildRequires: libpolly%llvm_version-devel
+BuildRequires: libstb-devel
 BuildRequires: libswscale-devel
 BuildRequires: libusb-devel
 BuildRequires: libvulkan-memory-allocator-devel
 BuildRequires: libxml2-devel
 BuildRequires: libzstd-devel
 BuildRequires: lld%llvm_version
-BuildRequires: llvm%llvm_version-devel
+BuildRequires: llvm%llvm_version
 BuildRequires: llvm%llvm_version-gold
-BuildRequires: mlir%llvm_version-tools
 BuildRequires: ninja-build
 BuildRequires: nlohmann-json-devel
 BuildRequires: python-modules-encodings
@@ -73,19 +77,22 @@ BuildRequires: python3-dev
 BuildRequires: python3-module-mpl_toolkits
 BuildRequires: qt6-tools-devel
 BuildRequires: spirv-headers
+BuildRequires: unzip
 BuildRequires: zlib-devel
 
 %description
 %name is an open source Nintendo Switch emulator/debugger.
 
 %prep
-%setup -n %name-mainline-mainline-0-%version -b 1 -b 2
+%setup -n %name-mainline-mainline-0-%version -b 1 -b 2 -b 3
 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %__mv -Tf ../sirit-%sirit_commit externals/sirit
 %__mv -Tf ../mbedtls-%mbedtls_commit externals/mbedtls
+%__mv -Tf ../simpleini-%simpleini_version externals/simpleini
 
 # Enforce package versioning in GUI
 sed -i \
@@ -102,8 +109,8 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 
 sed -i -e 's/-Werror=shadow-uncaptured-local/-Wno-error=shadow-uncaptured-local/' src/CMakeLists.txt
 
-%__mkdir_p %_target_platform/externals/nx_tzdb
-%__cp %SOURCE3 %_target_platform/externals/nx_tzdb
+%__mkdir_p %_target_platform/externals/nx_tzdb/nx_tzdb
+unzip %SOURCE4 -d %_target_platform/externals/nx_tzdb/nx_tzdb
 
 %cmake \
 	-DCMAKE_C_COMPILER:STRING=clang \
@@ -116,6 +123,7 @@ sed -i -e 's/-Werror=shadow-uncaptured-local/-Wno-error=shadow-uncaptured-local/
 	-DENABLE_QT_TRANSLATION:BOOL=TRUE \
 	-DYUZU_USE_EXTERNAL_SDL2:BOOL=FALSE \
 	-DYUZU_USE_EXTERNAL_VULKAN_HEADERS:BOOL=FALSE \
+	-DYUZU_USE_EXTERNAL_VULKAN_UTILITY_LIBRARIES:BOOL=FALSE \
 	-DYUZU_ENABLE_LTO:BOOL=TRUE \
 	-DYUZU_DOWNLOAD_TIME_ZONE_DATA:BOOL=TRUE \
 	-DSIRIT_USE_SYSTEM_SPIRV_HEADERS:BOOL=TRUE \
@@ -138,6 +146,9 @@ sed -i -e 's/-Werror=shadow-uncaptured-local/-Wno-error=shadow-uncaptured-local/
 %_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
 
 %changelog
+* Fri Mar 08 2024 Nazarov Denis <nenderus@altlinux.org> 1734-alt1
+- Version 1734
+
 * Thu Feb 08 2024 Nazarov Denis <nenderus@altlinux.org> 1563-alt1.1
 - Fix FTBFS
 
