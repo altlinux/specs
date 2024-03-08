@@ -1,7 +1,7 @@
 %global import_path github.com/gobuffalo/packr
 Name:     packr
 Version:  2.0.6
-Release:  alt1
+Release:  alt2
 
 Summary:  The simple and easy way to embed static files into Go binaries.
 License:  MIT
@@ -45,5 +45,8 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Fri Mar 08 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.0.6-alt2
+- NMU: fixed FTBFS on LoongArch
+
 * Sat Mar 16 2019 Mikhail Gordeev <obirvalger@altlinux.org> 2.0.6-alt1
 - Initial build for Sisyphus
