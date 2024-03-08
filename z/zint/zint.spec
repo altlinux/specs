@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name:      zint
-Version:   2.12.0
+Version:   2.13.0
 Release:   alt1
 Summary:   A barcode generator and library
 Summary(ru_RU.UTF-8): Генератор штрихкодов и библиотека
@@ -144,6 +144,9 @@ desktop-file-install --dir %buildroot%_datadir/applications %name-qt.desktop
 
 
 %changelog
+* Thu Mar 07 2024 Konstantin Rybakov <kastet@altlinux.org> 2.13.0-alt1
+- Updated to upstream version 2.13.0
+
 * Fri Feb 24 2023 Konstantin Rybakov <kastet@altlinux.org> 2.12.0-alt1
 - Updated to upstream version 2.12.0
 
