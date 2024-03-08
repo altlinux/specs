@@ -1,6 +1,6 @@
 Name:     cargo-flamegraph
 Version:  0.6.2
-Release:  alt1
+Release:  alt2
 
 Summary:  Easy flamegraphs for Rust projects and everything else
 License:  Apache-2.0 and MIT
@@ -34,5 +34,8 @@ No perl or pipes required.
 %doc LICENSE-APACHE LICENSE-MIT README.md example.svg example_cropped.png
 
 %changelog
+* Fri Mar 08 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.6.2-alt2
+- NMU: fixed FTBFS on LoongArch (updated vendored crates)
+
 * Thu Mar 09 2023 Alexander Burmatov <thatman@altlinux.org> 0.6.2-alt1
 - Initial build for Sisyphus
