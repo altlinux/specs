@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%ifarch %e2k ppc64le
+%ifarch %not_qt5_qtwebengine_arches
 %def_enable webkit
 %else
 %def_disable webkit
@@ -8,7 +8,7 @@
 
 Name: psi
 Version: 1.5
-Release: alt2
+Release: alt2.1
 Group: Networking/Instant messaging
 Summary: Psi Jabber client
 Summary(ru_RU.UTF-8): Jabber клиент Psi
@@ -30,7 +30,7 @@ Patch4: psi-1.5-build-qt515.patch
 #BuildRequires: unzip
 Requires: sound_handler ca-certificates
 # Automatically added by buildreq on Tue Nov 25 2008
-BuildRequires(pre): rpm-macros-qt5
+BuildRequires(pre): rpm-macros-qt5 rpm-macros-qt5-webengine
 BuildRequires: cmake gcc-c++ libXScrnSaver-devel libaspell-devel libcom_err-devel libqca-qt5-devel
 BuildRequires: libotr-devel libhunspell-devel
 BuildRequires: libtidy-devel >= 1.2.0
@@ -292,6 +292,9 @@ rm -f %buildroot%_libdir/%name/plugins/libripperccplugin.so
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Fri Mar 08 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.5-alt2.1
+- NMU: fixed FTBFS on LoongArch (build with webkit)
+
 * Mon Jan 31 2022 Oleg Solovyov <mcpain@altlinux.org> 1.5-alt2
 - e2k & ppc64le: build with qtwebkit
 
