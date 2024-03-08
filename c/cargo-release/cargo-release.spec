@@ -2,7 +2,7 @@
 
 Name:     cargo-release
 Version:  0.24.5
-Release:  alt1
+Release:  alt2
 
 Summary:  Helper for publishing new crate versions
 License:  Apache-2.0 and MIT
@@ -42,5 +42,9 @@ Cargo subcommand 'release': everything about releasing a rust crate
 %doc LICENSE-APACHE LICENSE-MIT README.md docs/*
 
 %changelog
+* Fri Mar 08 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.24.5-alt2
+- NMU: fixed FTBFS on LoongArch (updated is-terminal, tempfile,
+  terminal_size crates and their dependencies)
+
 * Tue Mar 07 2023 Alexander Burmatov <thatman@altlinux.org> 0.24.5-alt1
 - Initial build for Sisyphus
