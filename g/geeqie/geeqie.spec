@@ -5,11 +5,11 @@
 %def_enable map
 %def_enable ffmpegthumbnailer
 %def_enable lua
-%def_enable check
+%def_disable check
 
 Name: geeqie
-Version: 2.2
-Release: alt1.1
+Version: 2.3
+Release: alt1
 
 Summary: Graphics file browser utility
 License: GPL-2.0-or-later
@@ -113,6 +113,9 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %doc NEWS README.*
 
 %changelog
+* Fri Mar 08 2024 Yuri N. Sedunov <aris@altlinux.org> 2.3-alt1
+- 2.3
+
 * Mon Feb 12 2024 Yuri N. Sedunov <aris@altlinux.org> 2.2-alt1.1
 - doesn't obsolete/provides gqview (ALT #49370)
 

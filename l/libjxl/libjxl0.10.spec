@@ -13,7 +13,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %sover.1
+Version: %sover.2
 Release: alt1
 
 Summary: JPEG XL image format reference implementation
@@ -120,6 +120,7 @@ rm -f %buildroot%_libdir/*.a
 %files pixbuf-loader
 %_libdir/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-jxl.so
 %_datadir/thumbnailers/jxl.thumbnailer
+%_datadir/mime/packages/image-jxl.xml
 %{?_enable_gimp_plugin:
 %files -n gimp-plugin-%name
 %_libdir/gimp/2.0/plug-ins/file-jxl/file-jxl}
@@ -143,6 +144,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Fri Mar 08 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.2-alt1
+- 0.10.2
+
 * Wed Feb 28 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.1-alt1
 - 0.10.1
 
