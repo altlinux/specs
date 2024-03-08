@@ -5,7 +5,7 @@
 
 Name: lsd
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: Ls command with a lot of pretty colors and some other stuff
 
@@ -50,6 +50,9 @@ EOF
 %_bindir/lsd
 
 %changelog
+* Fri Mar 08 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.0.0-alt2
+- NMU: fixed FTBFS on LoongArch
+
 * Wed Feb 28 2024 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
 - new version 1.0.0
 - cleanup spec, fix source url
