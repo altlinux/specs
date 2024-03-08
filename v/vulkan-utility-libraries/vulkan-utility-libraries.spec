@@ -1,7 +1,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: vulkan-utility-libraries
-Version: 1.3.268
+Version: 1.3.277
 Release: alt1
 Summary: Utility libraries for Vulkan developers
 
@@ -13,7 +13,7 @@ Url: http://www.khronos.org/
 Source0: %name.tar
 
 BuildRequires(pre): cmake gcc-c++
-BuildRequires: libvulkan-devel
+BuildRequires: vulkan-headers = %version
 
 Requires: vulkan-devel
 
@@ -49,6 +49,10 @@ Development headers for Vulkan applications.
 %_libdir/cmake/VulkanUtilityLibraries/*.cmake
 
 %changelog
+* Tue Mar 05 2024 L.A. Kostis <lakostis@altlinux.ru> 1.3.277-alt1
+- 1.3.277.
+- BR: require headers only.
+
 * Mon Nov 13 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3.268-alt1
 - Initial build for ALTLinux.
 

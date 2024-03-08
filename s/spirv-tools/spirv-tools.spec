@@ -5,7 +5,7 @@
 %define optflags_lto %nil
 
 Name: spirv-tools
-Version: 2023.5
+Version: 2023.6
 Release: alt0.1.rc1
 Epoch: 1
 
@@ -24,7 +24,7 @@ BuildRequires(pre): cmake ninja-build
 BuildRequires: gcc-c++
 BuildRequires: python3-devel
 # due sdk requires
-BuildRequires: spirv-headers >= 2:1.5.5-alt10
+BuildRequires: spirv-headers >= 2:1.5.5-alt11
 
 %description
 The package includes an assembler, binary module parser,
@@ -96,6 +96,9 @@ ninja \
 %_datadir/cmake/SPIRV-Tools*
 
 %changelog
+* Thu Mar 07 2024 L.A. Kostis <lakostis@altlinux.ru> 1:2023.6-alt0.1.rc1
+- Updated to 2023.6.rc1 (for >= sdk-1.3.275.0).
+
 * Fri Nov 10 2023 L.A. Kostis <lakostis@altlinux.ru> 1:2023.5-alt0.1.rc1
 - Updated to 2023.5.rc1.
 

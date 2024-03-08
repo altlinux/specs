@@ -1,6 +1,6 @@
 %define sover 1
-%define glslang_ver 13.1.1
-%define spirv_tools_ver 2023.5
+%define glslang_ver 14.0.0
+%define spirv_tools_ver 2023.6
 %define build_type RelWithDebInfo
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type
 %def_disable static
@@ -11,7 +11,7 @@
 %endif
 
 Name: shaderc
-Version: 2023.7
+Version: 2023.8
 Release: alt0.1
 
 Summary: A collection of tools, libraries and tests for shader compilation 
@@ -77,6 +77,8 @@ Command line compiler for GLSL/HLSL to SPIR-V
 %setup -n %name-%version
 %patch0 -p1
 %patch1 -p1
+# Explicitly use python3 in hashbangs.
+subst '/^#!.*python$/s|python$|python3|' $(grep -Rl '#!.*python$' *)
 
 %build
 %_cmake \
@@ -121,6 +123,10 @@ rm -f %buildroot%_libdir/*.a
 %_bindir/*
 
 %changelog
+* Fri Mar 08 2024 L.A. Kostis <lakostis@altlinux.ru> 2023.8-alt0.1
+- v2023.8.
+- Bump glslang and SPIRV-Tools deps.
+
 * Tue Nov 14 2023 L.A. Kostis <lakostis@altlinux.ru> 2023.7-alt0.1
 - v2023.7.
 - Bump glslang and SPIRV-Tools deps.

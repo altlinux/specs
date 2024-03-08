@@ -1,8 +1,8 @@
-%define git 4183b26
+%define git 1c6bb27
 
 Name: spirv-headers
 Version: 1.5.5
-Release: alt10.g%{git}
+Release: alt11.g%{git}
 Epoch: 2
 
 Summary: machine-readable files for the SPIR-V Registry
@@ -20,10 +20,12 @@ BuildRequires(pre): cmake
 BuildRequires: gcc-c++
 
 %description
-This repository contains machine-readable files for the SPIR-V Registry. This includes:
+This repository contains machine-readable files for the SPIR-V Registry. This
+includes:
 
 * Header files for various languages.
-* JSON files describing the grammar for the SPIR-V core instruction set and the extended instruction sets.
+* JSON files describing the grammar for the SPIR-V core instruction set and the
+  extended instruction sets.
 * The XML registry file.
 * A tool to build the headers from the JSON grammar.
 
@@ -44,8 +46,11 @@ This repository contains machine-readable files for the SPIR-V Registry. This in
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Thu Mar 07 2024 L.A. Kostis <lakostis@altlinux.ru> 2:1.5.5-alt11.g1c6bb27
+- Updated to GIT 1c6bb27 (for sdk-1.2.275.0).
+
 * Wed Nov 08 2023 L.A. Kostis <lakostis@altlinux.ru> 2:1.5.5-alt10.g4183b26
-- Updated to GIT 4183b260f4cccae52a89efdfcdd43c4897989f42 (as required by clspv).
+- Updated to GIT 4183b26 (as required by clspv).
 
 * Thu Sep 14 2023 L.A. Kostis <lakostis@altlinux.ru> 2:1.5.5-alt9.g124a966
 - Updated to GIT 124a966 (for sdk-1.3.261.1).
