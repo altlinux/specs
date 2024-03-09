@@ -1,12 +1,15 @@
+%def_enable check
+
 Name: squeekboard
-Version: 1.22.0
-Release: alt2
+Version: 1.23.0
+Release: alt1
 
 Summary: A Wayland on-screen keyboard
 License: GPLv3
 Group: Graphical desktop/Other
 Url: https://gitlab.gnome.org/World/Phosh/squeekboard
 
+Vcs: https://gitlab.gnome.org/World/Phosh/squeekboard.git
 Source0: %name-%version.tar
 Source1: crates.tar
 
@@ -22,6 +25,7 @@ BuildRequires: pkgconfig(wayland-scanner)
 BuildRequires: pkgconfig(gnome-desktop-3.0)
 BuildRequires: pkgconfig(libfeedback-0.0)
 BuildRequires: pkgconfig(xkbcommon)
+%{?_enable_check:BuildRequires: clippy xkeyboard-config}
 
 %description
 %summary
@@ -29,8 +33,13 @@ BuildRequires: pkgconfig(xkbcommon)
 %prep
 %setup
 %ifdef bootstrap
-cargo vendor
-tar cf %SOURCE1 vendor
+export CARGO_HOME=${PWD}/cargo
+%meson -Donline=true -Dnewer=true
+%meson_build Cargo.toml
+cp %__builddir/Cargo.toml ./
+mkdir cargo
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > cargo/config
+tar cf %SOURCE1 vendor cargo/config
 %else
 tar xf %SOURCE1
 %endif
@@ -51,12 +60,20 @@ EOF
 
 %find_lang %name
 
+%check
+export CARGO_HOME=${PWD}/cargo
+%__meson_test
+
 %files -f %name.lang
 %_bindir/*
 %_altdir/%name
 %_desktopdir/*.desktop
 
 %changelog
+* Sat Mar 09 2024 Yuri N. Sedunov <aris@altlinux.org> 1.23.0-alt1
+- updated to v1.23.0-3-ge3d08ff
+- enabled %%check
+
 * Mon Jul 31 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt2
 - provides osk-wayland (ALT #47074)
 

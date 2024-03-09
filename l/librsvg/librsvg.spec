@@ -18,7 +18,7 @@
 %def_disable check
 
 Name: %bname
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 Epoch: 1
 
@@ -210,6 +210,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Sat Mar 09 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.57.2-alt1
+- 2.57.2
+
 * Sat Dec 16 2023 Yuri N. Sedunov <aris@altlinux.org> 1:2.57.1-alt1
 - 2.57.1
 
