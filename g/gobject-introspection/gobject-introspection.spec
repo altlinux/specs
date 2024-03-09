@@ -1,17 +1,19 @@
 %def_disable snapshot
 
-%define ver_major 1.78
+%define ver_major 1.80
+%define api_ver 1.0
+%define gir_api_ver 1.0
 %def_enable doctool
 %ifarch ppc64le armh
 %def_disable check
 %else
-%def_enable check
+%def_disable check
 %endif
 %def_enable gtk_doc
 
 Name: gobject-introspection
-Version: %ver_major.1
-Release: alt1.3
+Version: %ver_major.0
+Release: alt1
 
 Summary: Introspection system for GObject-based libraries
 Group: System/Libraries
@@ -27,26 +29,15 @@ Source: %name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %endif
 
-# setuptools internally ends up imports `inspect`, which needs `ast`.
-# When giscanner/ is in PYTHONPATH (as it is in tests), it provides its
-# own top-level `ast.py`, overriding the standard library with an
-# incompatible module. Tests will fail.
-# https://bugzilla.redhat.com/show_bug.cgi?id=2208966
-# https://gitlab.gnome.org/GNOME/gobject-introspection/-/issues/429
-Patch10: %name-1.78.1-fc-ast.patch
-
 %add_python3_path %_libdir/%name/giscanner
-# especially for Patch10
-# python3(giscanner.ast) < 0
-%add_python3_req_skip giscanner.ast
 #https://bugzilla.altlinux.org/38965
 # python3(pkgconfig) provided by giscanner/pkgconfig.py
 %filter_from_provides /python3(pkgconfig)/d
 %add_python3_req_skip distutils.msvccompiler
 %filter_from_requires /python3(distutils.*)/d
 
-%define glib_ver 2.78.0
-%define python_ver 3.7
+%define glib_ver 2.79.1
+%define python_ver 3.8
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: /proc meson libgio-devel >= %glib_ver
@@ -72,6 +63,8 @@ Summary: Libraries and headers for gobject-introspection
 Group: Development/C
 Requires: %name = %EVR libgio-devel rpm-build-gir
 Requires: %name-x11 = %EVR
+#Requires: libgirepository%api_ver = %EVR
+Requires: libgirepository%api_ver-devel = %EVR
 Requires: python3(setuptools._distutils)
 Provides: gir-repository-devel = %EVR
 Obsoletes: gir-repository-devel
@@ -82,6 +75,21 @@ common metadata format for representing GObject-based C APIs, designed
 for bindings, documentation tools and API verification.
 
 This package provides libraries and headers for gobject-introspection.
+
+%package -n libgirepository%api_ver
+Summary: GObject Introspection Library (API 1.0)
+Group: System/Libraries
+
+%description -n libgirepository%api_ver
+This package provides shared GObject Introspection library.
+
+%package -n libgirepository%api_ver-devel
+Summary: development package for GObject Introspection library (API 1.0)
+Group: Development/C
+Requires: libgirepository%api_ver = %EVR
+
+%description -n libgirepository%api_ver-devel
+This package provides development files for GObject Introspection library.
 
 %package devel-doc
 Summary: Documentation for gobject-introspection
@@ -99,8 +107,6 @@ gobject-introspection.
 
 %prep
 %setup
-%patch10 -p1
-mv giscanner/ast.py giscanner/gio_ast.py
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -117,16 +123,11 @@ mv giscanner/ast.py giscanner/gio_ast.py
 %__meson_test -v
 
 %files
-%_libdir/lib*.so.*
 %dir %_typelibdir/
 %_typelibdir/DBus-1.0.typelib
 %_typelibdir/DBusGLib-1.0.typelib
 %_typelibdir/GIRepository-2.0.typelib
 %_typelibdir/GL-1.0.typelib
-%_typelibdir/GLib-2.0.typelib
-%_typelibdir/GModule-2.0.typelib
-%_typelibdir/GObject-2.0.typelib
-%_typelibdir/Gio-2.0.typelib
 %_typelibdir/cairo-1.0.typelib
 %_typelibdir/fontconfig-2.0.typelib
 %_typelibdir/freetype2-2.0.typelib
@@ -141,16 +142,27 @@ mv giscanner/ast.py giscanner/gio_ast.py
 %_typelibdir/xrandr-1.3.typelib
 
 %files devel
-%_includedir/%name-1.0
-%_bindir/g-ir-*
-%_libdir/lib*.so
+%_bindir/g-ir-annotation-tool
+%_bindir/g-ir-compiler
+%_bindir/g-ir-doc-tool
+%_bindir/g-ir-generate
+%_bindir/g-ir-inspect
+%_bindir/g-ir-scanner
 %dir %_libdir/%name
 %_libdir/%name/giscanner/
-%_pkgconfigdir/*.pc
 %_girdir/
-%_datadir/%name-1.0
-%_datadir/aclocal/*.m4
+%_datadir/%name-%api_ver
+%_datadir/aclocal/introspection.m4
 %_man1dir/*.1*
+
+%files -n libgirepository%api_ver
+%_libdir/libgirepository-%api_ver.so.*
+
+%files -n libgirepository%api_ver-devel
+%_includedir/%name-%api_ver
+%_libdir/libgirepository-%api_ver.so
+%_pkgconfigdir/%name-%api_ver.pc
+%_pkgconfigdir/%name-no-export-%api_ver.pc
 
 %if_enabled gtk_doc
 %files devel-doc
@@ -158,6 +170,13 @@ mv giscanner/ast.py giscanner/gio_ast.py
 %endif
 
 %changelog
+* Sat Mar 09 2024 Yuri N. Sedunov <aris@altlinux.org> 1.80.0-alt1
+- 1.80.0
+- build against debootstraped glib-2.80.0-alt2
+
+* Tue Jan 02 2024 Yuri N. Sedunov <aris@altlinux.org> 1.78.1-alt2
+- new libgirepository1.0{,-devel} subpackages
+
 * Fri Oct 13 2023 Yuri N. Sedunov <aris@altlinux.org> 1.78.1-alt1.3
 - fixed %%check w/o distutils
 

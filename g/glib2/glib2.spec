@@ -34,7 +34,7 @@
 %def_disable check
 
 # required for < 2.78 -> 2.80 transition
-%def_enable bootstrap
+%def_disable bootstrap
 
 %if_enabled bootstrap
 %def_disable introspection
@@ -44,7 +44,7 @@
 
 Name: glib2
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -87,6 +87,8 @@ Obsoletes: lib%name < %version
 
 Provides: %name-core = %version
 Obsoletes: %name-core < %version
+
+Conflicts: gobject-introspection < 1.79
 
 %add_python3_path %_datadir/glib-2.0/codegen
 %allow_python3_import_path %_datadir/glib-2.0/codegen
@@ -142,6 +144,7 @@ Requires: %name = %EVR
 Requires: rpm-build-gir >= 0.5
 Provides: lib%name-devel = %version
 Obsoletes: lib%name-devel < %version
+Conflicts: gobject-introspection < 1.79
 
 %description devel
 GLib is the low-level core library that forms the basis for projects
@@ -421,9 +424,10 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 %endif
 
+%if_enabled doc
 %files doc
-#%_datadir/gtk-doc/html/glib
-#%_datadir/gtk-doc/html/gobject
+%_datadir/doc/glib-%api_ver/
+%endif
 
 %files -n libgio
 %_bindir/gapplication
@@ -474,10 +478,6 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %_pkgconfigdir/gio-unix-%api_ver.pc
 %{?_enable_man:%_man1dir/gdbus-codegen.*}
 
-%files -n libgio-doc
-#%_datadir/gtk-doc/html/gio
-#%_datadir/gtk-doc/html/gdbus-object-manager-example
-
 %exclude %_datadir/gdb/auto-load/%_libdir/libglib-%api_ver.so.0.*-gdb.py
 %exclude %_datadir/gdb/auto-load/%_libdir/libgobject-%api_ver.so.0.*-gdb.py
 %exclude %_datadir/glib-%api_ver/gdb/
@@ -492,12 +492,12 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Fri Mar 08 2024 Yuri N. Sedunov <aris@altlinux.org> 2.80.0-alt2
+- debootstrap: built with old gobject-introspection-1.78
+
 * Fri Mar 08 2024 Yuri N. Sedunov <aris@altlinux.org> 2.80.0-alt1
 - 2.80.0
 - bootstrap without gobject-introspection
-
-* Tue Feb 13 2024 Yuri N. Sedunov <aris@altlinux.org> 2.79.2-alt2
-- debootstrap: built with old gobject-introspection-1.78
 
 * Mon Jan 22 2024 Yuri N. Sedunov <aris@altlinux.org> 2.78.4-alt1
 - 2.78.4
