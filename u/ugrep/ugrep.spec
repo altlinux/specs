@@ -5,7 +5,7 @@
 %set_verify_elf_method strict
 
 Name: ugrep
-Version: 5.0.0
+Version: 5.1.0
 Release: alt1
 
 Summary: Universal grep: a feature-rich grep implementation with focus on speed
@@ -22,6 +22,7 @@ BuildRequires: bzlib-devel
 BuildRequires: gcc-c++
 BuildRequires: hardlink
 BuildRequires: libbrotli-devel
+BuildRequires: libbzip3-devel
 BuildRequires: liblz4-devel
 BuildRequires: liblzma-devel
 BuildRequires: libpcre2-devel
@@ -44,7 +45,7 @@ fuzzy search.
 # can be fixed with this, but performance may be worse
 #sed -i "/<cpuid.h>/{N;s/.*/#define cpuidex __cpuidex/}" include/reflex/simd.h
 %endif
-%configure
+%configure --with-bzip3
 %make_build
 
 %install
@@ -65,6 +66,10 @@ bin/ugrep --version | bin/ugrep '^%name \Q%version\E\s'
 %_datadir/zsh/site-functions/_ug*
 
 %changelog
+* Fri Mar 08 2024 Vitaly Chikunov <vt@altlinux.org> 5.1.0-alt1
+- Update to 5.1.0 (2024-03-08).
+- Enable bzip3 decompression support.
+
 * Tue Feb 20 2024 Vitaly Chikunov <vt@altlinux.org> 5.0.0-alt1
 - Update to 5.0.0 (2024-02-20).
 
