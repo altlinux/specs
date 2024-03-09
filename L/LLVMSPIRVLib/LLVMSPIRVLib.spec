@@ -1,24 +1,25 @@
 %define _unpackaged_files_terminate_build 1
 %define llvm_ver_major 17.0
-%define git %nil
+%define git 6c1910a9
 
 # FIXME!
 %define optflags_lto %nil
 
 Name:    LLVMSPIRVLib
 Version: 17.0.0
-Release: alt1
+Release: alt3.g%{git}
 Summary: A tool and a library for bi-directional translation between SPIR-V and LLVM IR
 Group:   Development/C++
 License: MIT
 URL:     https://github.com/KhronosGroup/SPIRV-LLVM-Translator
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch0: %name-%version-%release.patch
+Patch1: llvm-spirv-opensycl.patch
 
 BuildRequires(pre): cmake
 BuildRequires: llvm%{llvm_ver_major}-devel gcc-c++ libstdc++-devel zlib-devel
-BuildRequires: libspirv-tools-devel spirv-headers
+BuildRequires: libspirv-tools-devel spirv-headers >= 1.5.5-alt12
 
 %description
 LLVM/SPIR-V Bi-Directional Translator, a library and tool for translation
@@ -56,7 +57,7 @@ command line utility for translating between LLVM bitcode and SPIR-V binary.
 
 %prep
 %setup
-%autopatch -p1
+%patch0 -p1
 
 %build
 %cmake \
@@ -86,6 +87,13 @@ command line utility for translating between LLVM bitcode and SPIR-V binary.
 %_bindir/llvm-spirv
 
 %changelog
+* Sat Mar 09 2024 L.A. Kostis <lakostis@altlinux.ru> 17.0.0-alt3.g6c1910a9
+- GIT 6c1910a9 (fixes FTBFS with new spirv-tools).
+- disable OpenSYCL patch (needs refactoring).
+
+* Mon Jan 08 2024 L.A. Kostis <lakostis@altlinux.ru> 17.0.0-alt2
+- llvm-spirv: apply patch from OpenSYCL.
+
 * Tue Oct 03 2023 L.A. Kostis <lakostis@altlinux.ru> 17.0.0-alt1
 - Rebased to v17.0.0.
 
