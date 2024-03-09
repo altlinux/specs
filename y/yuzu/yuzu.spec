@@ -11,7 +11,7 @@
 
 Name: yuzu
 Version: 1734
-Release: alt1
+Release: alt2
 
 Summary: Nintendo Switch emulator/debugger
 License: GPLv3+
@@ -37,7 +37,6 @@ Source4: https://github.com/lat9nq/tzdb_to_nx/releases/download/%tzdb_to_nx_date
 
 Patch0: %name-cpp-jwt-version-alt.patch
 Patch1: %name-xbyak-version-alt.patch
-Patch2: %name-vulkan-version-alt.patch
 
 BuildRequires: /proc
 BuildRequires: boost-asio-devel
@@ -68,7 +67,7 @@ BuildRequires: libvulkan-memory-allocator-devel
 BuildRequires: libxml2-devel
 BuildRequires: libzstd-devel
 BuildRequires: lld%llvm_version
-BuildRequires: llvm%llvm_version
+BuildRequires: llvm%llvm_version-devel
 BuildRequires: llvm%llvm_version-gold
 BuildRequires: ninja-build
 BuildRequires: nlohmann-json-devel
@@ -88,7 +87,6 @@ BuildRequires: zlib-devel
 
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %__mv -Tf ../sirit-%sirit_commit externals/sirit
 %__mv -Tf ../mbedtls-%mbedtls_commit externals/mbedtls
@@ -146,6 +144,9 @@ unzip %SOURCE4 -d %_target_platform/externals/nx_tzdb/nx_tzdb
 %_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
 
 %changelog
+* Sat Mar 09 2024 Nazarov Denis <nenderus@altlinux.org> 1734-alt2
+- Remove vulkan version patch
+
 * Fri Mar 08 2024 Nazarov Denis <nenderus@altlinux.org> 1734-alt1
 - Version 1734
 
