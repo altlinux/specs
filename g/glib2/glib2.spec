@@ -3,11 +3,15 @@
 %{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 2.78
+%define ver_major 2.80
 %define api_ver 2.0
+%define gir_api_ver 3.0
+%define meson_ver 1.2.0
+%define gi_api_ver 3.0
+%define gi_ver 1.78.0
+%define gir_ver 1.0
 %define ffi_ver 3.0.0
 %define pcre2_ver 10.32
-%define meson_ver 0.60
 %define gtk_doc_ver 1.32.1
 %define gio_module_dir %_libdir/gio/modules
 
@@ -21,7 +25,7 @@
 %else
 %def_enable installed_tests
 %endif
-%def_enable gtk_doc
+%def_disable doc
 %def_enable man
 %def_enable libmount
 %def_disable systemtap
@@ -29,8 +33,17 @@
 %def_disable debug
 %def_disable check
 
+# required for < 2.78 -> 2.80 transition
+%def_enable bootstrap
+
+%if_enabled bootstrap
+%def_disable introspection
+%else
+%def_enable introspection
+%endif
+
 Name: glib2
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -85,16 +98,19 @@ Obsoletes: %name-core < %version
 BuildRequires: libpcre2-devel >= %pcre2_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-licenses rpm-build-python3
-BuildRequires: meson >= %meson_ver gcc-c++ gtk-doc >= %gtk_doc_ver indent
+BuildRequires: meson >= %meson_ver gcc-c++ indent
 BuildRequires: glibc-kernheaders libdbus-devel
 BuildRequires: libffi-devel >= %ffi_ver zlib-devel libelf-devel
 BuildRequires: pkgconfig(bash-completion)
-BuildRequires: python3(setuptools._distutils)
+BuildRequires: python3(packaging)
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
 %{?_enable_libmount:BuildRequires: libmount-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 %{?_enable_fam:BuildRequires: libgamin-devel}
 %{?_enable_systemtap:BuildRequires: libsystemtap-sdt-devel}
 %{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
+%{?_enable_doc:BuildRequires: gi-docgen}
+%{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_check:
 BuildRequires: /proc dbus-tools-gui /bin/dbus-daemon desktop-file-utils chrpath
 BuildRequires: xdg-desktop-portal python3-module-dbusmock}
@@ -124,8 +140,6 @@ Summary: Development files and tools for GLib
 Group: Development/C
 Requires: %name = %EVR
 Requires: rpm-build-gir >= 0.5
-%add_python3_req_skip distutils.version
-Requires: python3(setuptools._distutils)
 Provides: lib%name-devel = %version
 Obsoletes: lib%name-devel < %version
 
@@ -251,11 +265,13 @@ install -p -m644 %_sourcedir/gio-compat-2.57.lds gio/compat.lds
 %meson \
     %{?_enable_static:--default-library=both} \
     -Dgio_module_dir='%gio_module_dir' \
+    %{?_disable_introspection:-Dintrospection=disabled} \
     %{?_disable_selinux:-Dselinux=false} \
     %{?_disable_xattr:-Dxattr=false} \
     %{?_disable_libmount:-Dlibmount=false} \
-    %{?_enable_gtk_doc:-Dgtk_doc=true} \
-    %{?_enable_man:-Dman=true} \
+    %{?_enable_doc:-Ddocumentation=true} \
+    %{?_enable_man:-Dman-pages=enabled} \
+    %{?_disable_man:-Dman-pages=disabled} \
     %{?_enable_fam:-Dfam=true} \
     %{?_enable_systemtap:-Dsystemtap=true} \
     %{?_enable_sysprof:-Dsysprof=enabled} \
@@ -310,6 +326,16 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %_libdir/libgobject-%api_ver.so.0*
 %_libdir/libgmodule-%api_ver.so.0*
 %_libdir/libgthread-%api_ver.so.0*
+%_libdir/libgirepository-%api_ver.so.0*
+%if_disabled bootstrap
+%_typelibdir/GIRepository-%gi_api_ver.typelib
+%_typelibdir/GLib-2.0.typelib
+%_typelibdir/GLibUnix-2.0.typelib
+%_typelibdir/GModule-2.0.typelib
+%_typelibdir/GObject-2.0.typelib
+%_typelibdir/Gio-2.0.typelib
+%_typelibdir/GioUnix-2.0.typelib
+%endif
 %config(noreplace) %_sysconfdir/profile.d/*
 %doc NEWS README.md
 
@@ -319,12 +345,23 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %_bindir/glib-genmarshal
 %_bindir/glib-gettextize
 %_bindir/glib-mkenums
-%_bindir/gobject*
-%_bindir/gtester*
+%_bindir/gobject-query
+%_bindir/gtester
+%_bindir/gtester-report
+
+%_bindir/gi-compile-repository
+%_bindir/gi-decompile-typelib
+%_bindir/gi-inspect-typelib
+
 %dir %_includedir/glib-%api_ver
-%_includedir/glib-%api_ver/glib*
-%_includedir/glib-%api_ver/gobject*
-%_includedir/glib-%api_ver/gmodule*
+%_includedir/glib-%api_ver/glib.h
+%_includedir/glib-%api_ver/glib-object.h
+%_includedir/glib-%api_ver/glib-unix.h
+%_includedir/glib-%api_ver/gmodule.h
+%_includedir/glib-%api_ver/glib/
+%_includedir/glib-%api_ver/gobject/
+%_includedir/glib-%api_ver/gmodule/
+%_includedir/glib-%api_ver/girepository/
 %dir %_libdir/glib-%api_ver
 %dir %_libdir/glib-%api_ver/include
 %_libdir/glib-%api_ver/include/*.h
@@ -332,10 +369,23 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %_libdir/libgmodule-%api_ver.so
 %_libdir/libgobject-%api_ver.so
 %_libdir/libgthread-%api_ver.so
+%_libdir/libgirepository-%api_ver.so
+
+%if_disabled bootstrap
+%_girdir/GIRepository-%gi_api_ver.gir
+%_girdir/GLib-%api_ver.gir
+%_girdir/GLibUnix-%api_ver.gir
+%_girdir/GModule-%api_ver.gir
+%_girdir/GObject-%api_ver.gir
+%_girdir/Gio-%api_ver.gir
+%_girdir/GioUnix-%api_ver.gir
+%endif
+
 %_pkgconfigdir/glib-%api_ver.pc
 %_pkgconfigdir/gmodule*-%api_ver.pc
 %_pkgconfigdir/gobject-%api_ver.pc
 %_pkgconfigdir/gthread-%api_ver.pc
+%_pkgconfigdir/girepository-%api_ver.pc
 %_datadir/aclocal/glib*.m4
 %_datadir/aclocal/gsettings.m4
 %dir %_datadir/glib-%api_ver
@@ -351,6 +401,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %_man1dir/glib-mkenums.*
 %_man1dir/gobject*
 %_man1dir/gtester*
+%_man1dir/gi-compile-repository*
+%_man1dir/gi-decompile-typelib*
+%_man1dir/gi-inspect-typelib*
 %endif
 
 %if_enabled static
@@ -358,6 +411,7 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %_libdir/libglib-%api_ver.a
 %_libdir/libgobject-%api_ver.a
 %_libdir/libgthread-%api_ver.a
+%_libdir/libgirepository-%api_ver.a
 # gmodule and gio use dynamic loading
 %exclude %_libdir/libgmodule-%api_ver.a
 %exclude %_libdir/libgio-%api_ver.a
@@ -368,8 +422,8 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %files doc
-%_datadir/gtk-doc/html/glib
-%_datadir/gtk-doc/html/gobject
+#%_datadir/gtk-doc/html/glib
+#%_datadir/gtk-doc/html/gobject
 
 %files -n libgio
 %_bindir/gapplication
@@ -421,7 +475,7 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %{?_enable_man:%_man1dir/gdbus-codegen.*}
 
 %files -n libgio-doc
-%_datadir/gtk-doc/html/gio
+#%_datadir/gtk-doc/html/gio
 #%_datadir/gtk-doc/html/gdbus-object-manager-example
 
 %exclude %_datadir/gdb/auto-load/%_libdir/libglib-%api_ver.so.0.*-gdb.py
@@ -438,6 +492,13 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Fri Mar 08 2024 Yuri N. Sedunov <aris@altlinux.org> 2.80.0-alt1
+- 2.80.0
+- bootstrap without gobject-introspection
+
+* Tue Feb 13 2024 Yuri N. Sedunov <aris@altlinux.org> 2.79.2-alt2
+- debootstrap: built with old gobject-introspection-1.78
+
 * Mon Jan 22 2024 Yuri N. Sedunov <aris@altlinux.org> 2.78.4-alt1
 - 2.78.4
 
