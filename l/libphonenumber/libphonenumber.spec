@@ -4,8 +4,8 @@
 %define stdxx 17
 
 Name: libphonenumber
-Version: 8.13.31
-Release: alt1.1
+Version: 8.13.32
+Release: alt1
 
 Summary: Library to handle international phone numbers
 License: Apache-2.0 and BSD-3-Clause and MIT
@@ -82,6 +82,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/cmake/%name/
 
 %changelog
+* Sat Mar 09 2024 Yuri N. Sedunov <aris@altlinux.org> 8.13.32-alt1
+- 8.13.32
+
 * Fri Mar 01 2024 Yuri N. Sedunov <aris@altlinux.org> 8.13.31-alt1.1
 - E2K: ftbfs workaround (ilyakurdyukov@)
 
