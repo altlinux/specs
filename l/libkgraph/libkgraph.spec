@@ -1,37 +1,32 @@
 %define        _unpackaged_files_terminate_build 1
-%define        origname kgraph
-%define        pypiname %origname
+%define        origname KGraph
+%define        pkgname kgraph
+%define        pypiname %pkgname
 
-Name:          lib%{origname}
+Name:          lib%{pkgname}
 Version:       0.1
-Release:       alt0.git2143fd6.1
+Release:       alt0.git2143fd6.2
 Summary:       A library for k-nearest neighbor search
 License:       BSD-2-Clause
 Group:         Sciences/Mathematics
 Url:           https://github.com/aaalgo/kgraph
 Vcs:           https://github.com/aaalgo/kgraph.git
-# XXX: xsimd supports on x86 SSE and ARM neon
 ExclusiveArch: aarch64 %ix86 x86_64
 
 Source:        %name-%version.tar
-Patch:         config.patch
+Patch:         %name-%version-%release.patch
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libgomp-devel
 BuildRequires: boost-devel
 BuildRequires: boost-program_options-devel
-BuildRequires: xsimd-devel
+#BuildRequires: xsimd-devel
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3(wheel)
 BuildRequires: python3(numpy)
 BuildRequires: libnumpy-py3-devel
 BuildRequires: libopenblas-devel
-
-%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-%ifarch x86_64 %ix86
-%add_optflags -msse2
-%endif
 
 %description
 KGraph: A Library for Approximate Nearest Neighbor Search.
@@ -125,7 +120,7 @@ rows of NumPy matrices.
 
 %prep
 %setup
-%autopatch
+%autopatch -p1
 
 %build
 %cmake_insource
@@ -144,8 +139,8 @@ rows of NumPy matrices.
 %files         devel
 %doc README*
 %_libdir/%{name}*.so
-%_includedir/%{origname}*
-%_datadir/cmake/%{origname}
+%_includedir/%{pkgname}*
+%_datadir/cmake/Modules/Find%{origname}.cmake
 
 %files         devel-static
 %doc README*
@@ -158,6 +153,9 @@ rows of NumPy matrices.
 
 
 %changelog
+* Mon Mar 04 2024 Pavel Skrylev <majioa@altlinux.org> 0.1-alt0.git2143fd6.2
+- ! fixed placement and containment of find module for the package
+
 * Thu Feb 01 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.1-alt0.git2143fd6.1
 - NMU:
   + Fixed FTBFS on aarch64 (don't force SSE2 here)
