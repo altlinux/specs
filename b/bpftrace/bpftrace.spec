@@ -3,13 +3,23 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict,lint=relaxed
 
+%ifarch loongarch64
+# XXX: only lld supports thin LTO. However
+# - as of LLVM 16 lld does not support LoongArch targets at all
+# - as of LLVM 17 lld does not support LoongArch relocations properly
+#   and is unable to link with libraries produced by GNU ld (i.e. glibc)
+%def_without lld
+%define optflags_lto %nil
+%else
+%def_with lld
 %define optflags_lto -flto=thin
+%endif
 
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name: bpftrace
 Version: 0.20.1
-Release: alt1
+Release: alt2
 Summary: High-level tracing language for Linux eBPF
 Group: Development/Debuggers
 License: Apache-2.0
@@ -29,7 +39,7 @@ Source3: bpftool-0.tar
 Source4: libbpf-0.tar
 Source5: libbpf-1.tar
 Source6: libbpf-2.tar
-ExclusiveArch:	x86_64 aarch64
+ExclusiveArch:	x86_64 aarch64 loongarch64
 
 %define llvm_min 11
 BuildRequires(pre): rpm-macros-cmake
@@ -48,7 +58,9 @@ BuildRequires: libelf-devel
 BuildRequires: libpcap-devel
 BuildRequires: libstdc++-devel
 BuildRequires: libstdc++-devel-static
+%if_with lld
 BuildRequires: lld >= %llvm_min
+%endif
 BuildRequires: llvm-devel >= %llvm_min
 BuildRequires: llvm-devel-static >= %llvm_min
 BuildRequires: /proc
@@ -84,7 +96,9 @@ sed -i 's/@.*@/True/' tests/runtime/engine/cmake_vars.py
 %remove_optflags -frecord-gcc-switches
 export CC=clang
 export CXX=clang++
+%if_with lld
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
+%endif
 export Clang_DIR=/usr/share/cmake/Modules/clang
 # -DBUILD_TESTING:BOOL=ON will require googletest and try to clone it from github
 %cmake \
@@ -152,6 +166,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Sat Mar 09 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.20.1-alt2
+- NMU: fixed FTBFS on LoongArch
+
 * Sun Mar 03 2024 Vitaly Chikunov <vt@altlinux.org> 0.20.1-alt1
 - Update to v0.20.1 (2024-01-29).
 
