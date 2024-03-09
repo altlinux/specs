@@ -3,9 +3,9 @@
 # Choose markdown or asciidoc to generate manual html
 %def_with markdown
 
-Name: %realname
-Version: 3.4.5
-Release: alt2
+Name: icewm
+Version: 3.4.6
+Release: alt1
 Epoch:3
 
 Summary: X11 Window Manager
@@ -148,6 +148,9 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Sat Mar 09 2024 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.4.6-alt1
+- 3.4.6
+
 * Wed Feb 07 2024 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.4.5-alt2
 - added gpicview into toolbar
 
