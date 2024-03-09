@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 # WARNING: Rebuild QGIS whenever a new version of GRASS is shipped! Even though the soname might stay the same, it won't work anymore.
 # http://hub.qgis.org/issues/5274
-%define grass_version 8.3.1
+%define grass_version 8.3.2
 %def_enable grass
 %def_enable python
 %def_enable devel
@@ -9,7 +9,7 @@
 
 Name:    qgis
 Version: 3.36.0
-Release: alt2
+Release: alt3
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPL-3.0+ with exceptions
@@ -378,6 +378,9 @@ rm -rf %buildroot%_datadir/%name/FindQGIS.cmake \
 %endif
 
 %changelog
+* Sat Mar 09 2024 Andrey Cherepanov <cas@altlinux.org> 3.36.0-alt3
+- Rebuilt with grass 8.3.2.
+
 * Fri Mar 01 2024 Michael Shigorin <mike@altlinux.org> 3.36.0-alt2
 - E2K: fix build (ilyakurdyukov@).
 
