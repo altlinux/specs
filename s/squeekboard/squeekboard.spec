@@ -2,7 +2,7 @@
 
 Name: squeekboard
 Version: 1.23.0
-Release: alt1
+Release: alt2
 
 Summary: A Wayland on-screen keyboard
 License: GPLv3
@@ -12,6 +12,7 @@ Url: https://gitlab.gnome.org/World/Phosh/squeekboard
 Vcs: https://gitlab.gnome.org/World/Phosh/squeekboard.git
 Source0: %name-%version.tar
 Source1: crates.tar
+Patch3500: nix-loongarch64.patch
 
 Provides: osk-wayland
 
@@ -25,6 +26,7 @@ BuildRequires: pkgconfig(wayland-scanner)
 BuildRequires: pkgconfig(gnome-desktop-3.0)
 BuildRequires: pkgconfig(libfeedback-0.0)
 BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: cargo-vendor-checksum diffstat
 %{?_enable_check:BuildRequires: clippy xkeyboard-config}
 
 %description
@@ -42,6 +44,8 @@ cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > cargo/config
 tar cf %SOURCE1 vendor cargo/config
 %else
 tar xf %SOURCE1
+%patch3500 -p1
+diffstat -l -p1 %PATCH3500 | sed -re 's@vendor/@@' | xargs -r cargo-vendor-checksum -f
 %endif
 
 %build
@@ -70,6 +74,9 @@ export CARGO_HOME=${PWD}/cargo
 %_desktopdir/*.desktop
 
 %changelog
+* Sat Mar 09 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.23.0-alt2
+- NMU: fixed FTBFS on LoongArch (trivial patch for nix crate)
+
 * Sat Mar 09 2024 Yuri N. Sedunov <aris@altlinux.org> 1.23.0-alt1
 - updated to v1.23.0-3-ge3d08ff
 - enabled %%check
