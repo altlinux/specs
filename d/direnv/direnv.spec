@@ -5,7 +5,7 @@
 
 Name: direnv
 Version: 2.34.0
-Release: alt1
+Release: alt1.1
 Summary: unclutter your .profile
 License: MIT
 Group: Shells
@@ -24,7 +24,9 @@ on the current directory.
 %setup
 
 %build
-%{?_is_lp64:export CGO_ENABLED=0}
+%ifnarch %ix86 armh loongarch64 riscv64
+export CGO_ENABLED=0
+%endif
 go build -v -buildmode=pie -ldflags "-X main.version=%version" main.go
 
 %install
@@ -43,5 +45,8 @@ go test ./...
 # zsh-completions: /usr/share/zsh/site-functions/_direnv
 
 %changelog
+* Sat Mar 09 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.34.0-alt1.1
+- NMU: fixed FTBFS on LoongArch (building PIE binary requires cgo here).
+
 * Fri Mar 08 2024 Vitaly Chikunov <vt@altlinux.org> 2.34.0-alt1
 - First import v2.34.0-2-g07254a6 (2024-03-03).
