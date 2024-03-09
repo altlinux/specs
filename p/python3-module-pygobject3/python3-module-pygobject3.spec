@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name pygobject
-%define ver_major 3.46
+%define ver_major 3.48
 %define api_ver 3.0
 %define gtk_api_ver 3.0
 %def_enable pycairo
@@ -24,9 +24,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source: %_name-%version.tar
 %endif
 Patch: pygobject-3.38.0-alt-meson-0.55_build.patch
-# "Use pycairo from target python before pkg-config"
-# Revert this. We don't package headers under %%python_sitelibdir
-Patch10: pygobject-3.46.0-up-pycairo-detect.patch
 
 %add_findprov_lib_path %python3_sitelibdir/gi
 
@@ -94,7 +91,6 @@ Development documentation for %_name.
 %prep
 %setup -n %_name-%version
 %patch -p1
-%patch10 -p1 -R
 
 %build
 %meson \
@@ -129,6 +125,9 @@ xvfb-run %__meson_test -t 2
 %endif
 
 %changelog
+* Sat Mar 09 2024 Yuri N. Sedunov <aris@altlinux.org> 3.48.0-alt1
+- 3.48.0
+
 * Sun Sep 10 2023 Yuri N. Sedunov <aris@altlinux.org> 3.46.0-alt1
 - 3.46.0
 
