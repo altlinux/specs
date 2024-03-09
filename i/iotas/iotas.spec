@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: iotas
-Version: %ver_major.8
+Version: %ver_major.9
 Release: alt1
 
 Summary: Simple note taking with Nextcloud Notes
@@ -22,7 +22,7 @@ Vcs: https://gitlab.gnome.org/World/iotas.git
 Source: %name-%version.tar
 %endif
 
-%define adwaita_ver 1.4
+%define adw_ver 1.4
 
 Requires: typelib(Adw) = 1
 Requires: typelib(GtkSource) = 5
@@ -35,9 +35,10 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson
-BuildRequires: /usr/bin/appstreamcli desktop-file-utils
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(gobject-introspection-1.0)
 BuildRequires: pkgconfig(libadwaita-1)
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 Iotas is a simple note taking app with mobile-first design and a focus
@@ -75,6 +76,9 @@ on sync with Nextcloud Notes.
 %doc README*
 
 %changelog
+* Sat Mar 09 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.9-alt1
+- 0.2.9
+
 * Sat Feb 24 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.8-alt1
 - 0.2.8
 
