@@ -1,6 +1,6 @@
 Name: sayonara
 Version: 1.9.0.1
-Release: alt1
+Release: alt2
 
 Summary: A lightweight Qt Audio player
 License: GPLv3+
@@ -12,6 +12,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): desktop-file-utils
+BuildRequires(pre): rpm-build-python3
 BuildRequires: cmake gcc-c++
 BuildRequires: gstreamer1.0-devel
 BuildRequires: gst-plugins1.0-devel
@@ -72,6 +73,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.appdata.xml
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sun Mar 10 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.9.0.1-alt2
+- FTBFS: add BR: rpm-build-python3
+
 * Wed Jan 31 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.9.0.1-alt1
 - 1.9.0-stable1
 
