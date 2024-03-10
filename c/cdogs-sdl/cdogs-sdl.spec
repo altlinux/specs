@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/desktop-file-validate gcc-c++ libGLU-devel libSDL2-devel
 #global extra_version -2
 
 Name:           cdogs-sdl
-Version:        1.5.0
+Version:        2.0.0
 Release:        alt1
 Summary:        C-Dogs is an arcade shoot-em-up
 # The game-engine is GPLv2+
@@ -68,13 +68,13 @@ sed -i 's,-freg-struct-return,,' CMakeLists.txt
 %install
 %fedora_v2_cmake_install
 
-install -D -m 0644 build/linux/io.github.cxong.cdogs-sdl.appdata.xml %buildroot%{_datadir}/appdata/io.github.cxong.%{name}.appdata.xml
+install -D -m 0644 build/linux/io.github.cxong.cdogs-sdl.appdata.xml %buildroot%{_datadir}/metadata/io.github.cxong.%{name}.appdata.xml
 mkdir -p %buildroot%_datadir/%name/
 %check
 desktop-file-validate \
   $RPM_BUILD_ROOT%{_datadir}/applications/io.github.cxong.%{name}.desktop
 appstream-util validate-relax --nonet \
-  $RPM_BUILD_ROOT%{_datadir}/appdata/io.github.cxong.%{name}.appdata.xml
+  $RPM_BUILD_ROOT%{_datadir}/metadata/io.github.cxong.%{name}.appdata.xml
 
 
 %files
@@ -82,12 +82,16 @@ appstream-util validate-relax --nonet \
 %doc --no-dereference doc/COPYING.BSD doc/COPYING.GPL doc/COPYING.MJSON.txt doc/COPYING.xgetopt.txt doc/COPYING.yajl.txt doc/LICENSE.nanopb.txt doc/license.rlutil.txt
 %{_bindir}/%{name}*
 %{_datadir}/%{name}
-%{_datadir}/appdata/io.github.cxong.%{name}.appdata.xml
+%{_datadir}/metadata/io.github.cxong.%{name}.appdata.xml
 %{_datadir}/applications/io.github.cxong.%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/io.github.cxong.%{name}.png
 
 
 %changelog
+* Sat Mar  9 2024 Artyom Bystrov <arbars@altlinux.org> 2.0.0-alt1
+- update to new version
+- fix path of appdata file
+
 * Tue Aug  8 2023 Artyom Bystrov <arbars@altlinux.org> 1.5.0-alt1
 - update to new version
 
