@@ -4,7 +4,7 @@
 
 Name: android-tools
 Version: 34.0.4
-Release: alt1
+Release: alt2
 
 Summary: Android Debug CLI tools
 License: APL
@@ -44,10 +44,23 @@ Patch18: typos.patch
 # Debian, from boringssl package
 Patch100: Revert-Remove-support-for-ppc64le.patch
 
+# LoongArch
+Patch3500: boringssl-loongarch64.patch
+
+%ifarch loongarch64
+# XXX: as of LLVM 17 lld supports only a subset of LoongArch relocations.
+# Thus lld is unable to use libraries built with GNU ld (including libc).
+%def_without lld
+%else
+%def_with lld
+%endif
+
 Requires: udev-android
 
 BuildRequires: clang%{llvm_version} clang%{llvm_version}-support
+%if_with lld
 BuildRequires: lld%{llvm_version}
+%endif
 BuildRequires: llvm%{llvm_version}-devel
 BuildRequires: libstdc++-devel
 
@@ -119,6 +132,7 @@ choice.
 pushd external/boringssl
 %patch100 -p1
 popd
+%patch3500 -p1
 
 rm -rf development/[a-s]* development/v* development/testrunner
 
@@ -128,10 +142,14 @@ done
 
 %build
 
-%add_optflags %optflags_shared
-
-# we are building with Clang
+%if_with lld
+# XXX: only LLD supports thin LTO
 %define optflags_lto -flto=thin
+%else
+%define optflags_lto %nil
+%endif
+
+%add_optflags %optflags_shared
 
 %define makefilesdir %_builddir/%name-%version/debian/makefiles
 %define outbindir %_builddir/%name-%version/out_bin
@@ -159,6 +177,9 @@ case %_arch in
     "mipsel")
         DEB_HOST_ARCH="mipsel"
         ;;
+    "loongarch64")
+        DEB_HOST_ARCH="loong64"
+        ;;
     *)
         false
         ;;
@@ -175,8 +196,11 @@ CPPFLAGS+=" -Wno-c99-designator -Wno-gnu-designator -Wno-gnu-folding-constant"
 CPPFLAGS+=" $(getconf LFS_CFLAGS)"
 
 CXXFLAGS+=" -std=gnu++2a -gdwarf-4"
+%if_with lld
+LDFLAGS+=" -fuse-ld=lld"
+%endif
 
-LDFLAGS+=" -fuse-ld=lld -Wl,--build-id=sha1 -Wl,-rpath,%aprefix/lib -L%outlibdir"
+LDFLAGS+=" -Wl,--build-id=sha1 -Wl,-rpath,%aprefix/lib -L%outlibdir"
 
 export LLVM_LIBDIR=`llvm-config --libdir`
 export CLANG_MAJVER=`echo %llvm_version | cut -d. -f1`
@@ -309,6 +333,11 @@ done
 %aprefix
 
 %changelog
+* Sun Mar 10 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 34.0.4-alt2
+- NMU: fixed FTBFS on LoongArch:
+  + boringssl: explain that LoongArch (lp64d) is 64-bit
+  + spec: use GNU linker on LoongArch
+
 * Sat Mar 09 2024 Pavel Nakonechnyi <zorg@altlinux.org> 34.0.4-alt1
 - Platform 34.0.4
 - Built with Clang
