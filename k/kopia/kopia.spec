@@ -5,7 +5,7 @@
 
 Name: kopia
 Version: 0.15.0
-Release: alt1
+Release: alt2
 Summary: Backup tool with fast, incremental backups, client-side end-to-end encryption, compression and data deduplication (CLI)
 License: Apache-2.0
 Group: Archiving/Backup
@@ -13,6 +13,7 @@ Url: https://kopia.io
 Vcs: https://github.com/kopia/kopia
 
 Source: %name-%version.tar
+Patch3500: %name-0.15.0-loongarch64.patch
 BuildRequires: golang
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: openssh-common
@@ -28,6 +29,7 @@ files/directories that you deem are important or critical.
 
 %prep
 %setup
+%patch3500 -p1
 # Remove out-of-band auto-update functionality.
 # https://github.com/kopia/kopia/issues/3617
 for i in $(grep ^func cli/update_check.go | grep -Po '\b\S+(?=\()'); do
@@ -42,7 +44,7 @@ rm tests/end_to_end_test/auto_update_test.go
 %build
 %define import_path github.com/kopia/kopia
 %define build_info %release%{?disttag::%disttag}
-%ifnarch armh %ix86
+%ifnarch armh %ix86 loongarch64 riscv64
 # -buildmode=pie requires external (cgo) linking, but cgo is not enabled
 export CGO_ENABLED=0
 %endif
@@ -86,5 +88,8 @@ diff -qr $OLDPWD x
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Sun Mar 10 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.15.0-alt2
+- NMU: fixed FTBFS on LoongArch.
+
 * Tue Jan 30 2024 Vitaly Chikunov <vt@altlinux.org> 0.15.0-alt1
 - First import v0.15.0 (2023-10-18).
