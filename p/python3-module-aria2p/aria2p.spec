@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.12.0
-Release: alt1
+Release: alt2
 
 Summary: Command-line tool and library to interact with an aria2c
 License: ISC
@@ -22,6 +22,8 @@ Source1: %pyproject_deps_config_name
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
+
+Requires: aria2
 
 %if_with check
 %pyproject_builddeps_metadata
@@ -60,5 +62,8 @@ with an aria2c daemon process through JSON-RPC.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Mar 10 2024 Alexey Volkov <qualimock@altlinux.org> 0.12.0-alt2
+- Add aria2 to dependencies
+
 * Mon Feb 14 2024 Alexey Volkov <qualimock@altlinux.org> 0.12.0-alt1
 - Initial build for ALT
