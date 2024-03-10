@@ -1,13 +1,12 @@
 Name: faust
 Version: 0.9.90
-Release: alt4
+Release: alt5
 
 Summary: FAUST is a compiled language for real-time audio signal processing
 License: GPL-2.0-or-later
 Group: Sound
 Url: http://faust.grame.fr/
 
-Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 #Patch: %name-1.0-alt-makefile-fixes.patch
 Patch1: faust2md-pyhon3.patch
@@ -135,6 +134,12 @@ rm %buildroot/usr/lib/*.a
 # remove files for other OS
 rm -r %buildroot%_libexecdir/%name/android
 rm -r %buildroot%_libexecdir/%name/iOS*
+rm %buildroot%_bindir/faust2android
+rm %buildroot%_bindir/faust2ios*
+rm %buildroot%_bindir/faust2w32*
+rm %buildroot%_bindir/faust2bela
+rm %buildroot%_bindir/faust2rpi*
+rm %buildroot%_bindir/faust2ros*
 
 %files -f %name.lang
 %dir %doc %_docdir/%name-%version/
@@ -160,6 +165,10 @@ rm -r %buildroot%_libexecdir/%name/iOS*
 %_libexecdir/%name
 
 %changelog
+* Sun Mar 10 2024 Anton Midyukov <antohami@altlinux.org> 0.9.90-alt5
+- faust2appls: remove faust2android, faust2ios*, faust2w32*, faust2bela,
+  faust2rpi*, faust2ros* (Closes: 49641)
+
 * Tue May 04 2021 Anton Midyukov <antohami@altlinux.org> 0.9.90-alt4
 - Add python3 path /usr/lib/faust (Fix FTBFS without
   rpm-build-python)
