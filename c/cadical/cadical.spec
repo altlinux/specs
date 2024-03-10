@@ -3,7 +3,7 @@
 %define sover 0
 
 Name: cadical
-Version: 1.9.4
+Version: 1.9.5
 Release: alt1
 
 Summary: CaDiCaL SAT Solver
@@ -89,5 +89,8 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/lib%{name}.a
 
 %changelog
+* Sun Mar 10 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 1.9.5-alt1
+- Update to upstream 1.9.5
+
 * Tue Jan 16 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 1.9.4-alt1
 - Initial build for Sisyphus.
