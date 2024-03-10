@@ -1,70 +1,71 @@
 # requires pandoc
 %def_enable docs
+%global llvm_version 17.0
 
 Name: android-tools
-Version: 10.0.0
-Release: alt5.r36
+Version: 34.0.4
+Release: alt1
 
 Summary: Android Debug CLI tools
 License: APL
 Group: Development/Tools
 
-Url: http://developer.android.com/guide/developing/tools/
-# For sources use the following repositories:
-#  https://android.googlesource.com/platform/system/core
-#  https://android.googlesource.com/platform/system/extras
-# fetching sources example:
-# ANDROID_TAG="android-5.1.1_r38" debian/create-snapshot
+Url: https://developer.android.com/studio/releases/platform-tools
+# Debian's package: https://salsa.debian.org/android-tools-team/android-platform-tools.git
+#
+# fetching upstream sources (~/.gitconfig will be temporary backed-up as ~/.gitconfig.get-orig-source):
+# PLATFORM_TOOLS_VERSION="34.0.4" DEB_SOURCE="deb" debian/get-orig-source
+#
+# repo tool is needed, see https://gerrit.googlesource.com/git-repo/+/refs/heads/main/README.md
 
 Source: %name-%version-%release.tar
 
 # Debian core patches
-Patch0: move-log-file-to-proper-dir.patch
-Patch1: Added-missing-headers.patch
-Patch3: libusb-header-path.patch
-Patch4: stdatomic.patch
-Patch5: Nonnull.patch
-Patch7: Vector-cast.patch
-Patch8: use-Python-3-for-mkbootimg.patch
-Patch11: throw-exception-on-unknown-os.patch
-Patch12: simg_dump-python3.patch
-Patch13: fix-attribute-issue-with-gcc.patch
-Patch14: workaround-error-expected-primary-expression-before-.-token.patch
-Patch15: fix-gettid-exception-declaration.patch
-Patch16: fix-build-on-non-x86.patch
-#Patch17: add-missing-headers.patch
-Patch18: hard-code-build-number.patch
+Patch0: Revert-Remove-mips-build.patch
+Patch1: Revert-Remove-mips-support-fr.patch
+Patch2: Revert-Remove-a-file-we-haven-t-built-since-2013.patch
+Patch3: support-mips.patch
+Patch4: Revert-Order-events-returned-by-fdevent_epoll.patch
+Patch5: Revert-3-Add-rust-demangling.patch
+Patch6: stdatomic.patch
+Patch7: workaround__builtin_available.patch
+Patch8: Nullable.patch
+Patch9: unwindstack-porting.patch
+Patch10: move-log-file-to-proper-dir.patch
+Patch11: Added-missing-headers.patch
+Patch12: libusb-header-path.patch
+Patch13: throw-exception-on-unknown-os.patch
+Patch14: hard-code-build-number.patch
+Patch15: stub-out-fastdeploy.patch
+Patch16: Implement-const_iterator-operator.patch
+Patch17: Update_casting_type.patch
+Patch18: typos.patch
 
-# Debian libunwind patches
-Patch30: user_pt_regs.patch
-Patch31: legacy_built-in_sync_functions.patch
-Patch32: 20150704-CVE-2015-3239_dwarf_i.h.patch
-
-# patch from OpenMandriva
-Patch100: libcrypto_utils-openssl-1.1.patch
-Patch101: adb-system-openssl.patch
-
-# misc patches
-Patch150: adb-usb_linux-fix-usb_handle.patch
-
-# ALT patches
-Patch200: alt-libbacktrace-fix-GetErrorString-return.patch
-Patch201: alt-make-ext4fs-fix-fs_config-include.patch
-Patch202: alt-libunwind-fix-ppc64le-build.patch
-Patch203: alt-libadb-fix-attribute-usage.patch
-Patch204: alt-liblp-fix-cstring-header.patch
-Patch205: alt-libunwindstack-dirty-ppc64-compile-fix.patch
-Patch206: alt-libunwindstack-dwarfmemory-include-cstddef.patch
+# Debian, from boringssl package
+Patch100: Revert-Remove-support-for-ppc64le.patch
 
 Requires: udev-android
 
-BuildRequires: gcc-c++
+BuildRequires: clang%{llvm_version} clang%{llvm_version}-support
+BuildRequires: lld%{llvm_version}
+BuildRequires: llvm%{llvm_version}-devel
+BuildRequires: libstdc++-devel
+
 BuildRequires: liblzma-devel
-BuildRequires: libssl-devel zlib-devel libselinux-devel
+BuildRequires: zlib-devel libselinux-devel
 BuildRequires: libusb-devel libgtest-devel libsafe-iop-devel
+BuildRequires: libunwind-devel
+BuildRequires: protobuf-compiler libprotobuf-devel
+BuildRequires: squashfuse-devel
+BuildRequires: libbrotli-devel
+BuildRequires: liblz4-devel
+BuildRequires: libzstd-devel
+BuildRequires: libpng-devel
+
 %if_enabled docs
 BuildRequires: pandoc
 %endif
+
 BuildRequires: rpm-build-python3
 
 %description
@@ -73,67 +74,64 @@ This package contains following utilities:
 Android Debug Bridge (adb) -- it is a versatile command line tool, which lets
 you communicate with an emulator instance or connected Android-powered device.
 
-Fastboot -- is a command line tool for flashing an Android device, boot an
-Android device to fastboot mode, etc.
+fastboot -- a command line tool for flashing an Android device, boot an Android
+device to fastboot mode, etc.
 
-Mkbootimg -- creates Android boot images that includes kernel image and ramdisk,
+mkbootimg -- creates Android boot images that includes kernel image and ramdisk,
 in a special format which can be used with fastboot.
 
 Command line tools to create sparse images for usage with Android devices.
 Includes sim2img, img2simg, simg2simg and append2simg tools.
 
+etc1tool -- a command line utility that lets you encode PNG images to the ETC1
+compression standard and decode ETC1 compressed images back to PNG. It is part
+of the Android SDK for working with media files for game apps. The standard for
+the ETC1 texture format is here:
+http://www.khronos.org/registry/gles/extensions/OES/OES_compressed_ETC1_RGB8_texture.txt
+
+hprof-conv -- converts the HPROF file that is generated by the Android SDK tools
+to a standard format so you can view the file in a profiling tool of your
+choice.
+
 %prep
 %setup
-pushd system/core
+# applying Debian patches
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
+%patch10 -p1
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
-#%patch17 -p1
+%patch17 -p1
 %patch18 -p1
+
+pushd external/boringssl
+%patch100 -p1
 popd
 
-pushd system/external/libunwind
-%patch30 -p1
-%patch31 -p1
-%patch32 -p1
-popd
+rm -rf development/[a-s]* development/v* development/testrunner
 
-pushd system/core
-%patch100 -p3
-%patch101 -p3
-
-%patch200 -p1
-%patch203 -p1
-%patch204 -p1
-%patch205 -p1
-%patch206 -p1
-popd
-
-pushd system/core/adb
-%patch150 -p1
-popd
-
-pushd system/extras
-#%patch201 -p3
-popd
-
-pushd system/external/libunwind
-%patch202 -p4
-popd
+for proto in packages/modules/adb/fastdeploy/proto packages/modules/adb/proto; do
+		(cd $proto && find . -name '*.proto' -printf 'Regenerate %%p\n' -exec protoc --cpp_out=. {} \;)
+done
 
 %build
 
 %add_optflags %optflags_shared
+
+# we are building with Clang
+%define optflags_lto -flto=thin
 
 %define makefilesdir %_builddir/%name-%version/debian/makefiles
 %define outbindir %_builddir/%name-%version/out_bin
@@ -144,60 +142,79 @@ popd
 
 case %_arch in
     "aarch64")
-        CPU="arm64"
+        DEB_HOST_ARCH="arm64"
         ;;
     "armh")
-        CPU="arm"
+        DEB_HOST_ARCH="armhf"
         ;;
     "i586")
-        CPU="x86"
+        DEB_HOST_ARCH="i386"
         ;;
     "x86_64")
-        CPU="x86_64"
+        DEB_HOST_ARCH="amd64"
         ;;
     "ppc64le")
-        CPU="ppc64"
+        DEB_HOST_ARCH="ppc64el"
         ;;
     "mipsel")
-        CPU="mips"
+        DEB_HOST_ARCH="mipsel"
         ;;
     *)
         false
         ;;
 esac
 
-CFLAGS+=" %optflags -DNDEBUG -UDEBUG -Wno-unknown-pragmas -Wno-attributes"
-CFLAGS+=" -I%_builddir/%name-%version/debian/include"
-CPPFLAGS+=" %optflags -DNDEBUG -UDEBUG -Wno-unknown-pragmas -Wno-attributes"
-CPPFLAGS+=" -I%_builddir/%name-%version/debian/include"
+CC="clang"
+CXX="clang++"
+
+CFLAGS+=" %optflags -std=gnu17 -gdwarf-4"
+
+CPPFLAGS+=" %optflags -DNDEBUG -UDEBUG -fmessage-length=0 -fno-exceptions"
+CPPFLAGS+=" -fno-strict-aliasing -no-canonical-prefixes"
+CPPFLAGS+=" -Wno-c99-designator -Wno-gnu-designator -Wno-gnu-folding-constant"
 CPPFLAGS+=" $(getconf LFS_CFLAGS)"
-LDFLAGS+=" -Wl,-R%aprefix/lib -L%outlibdir"
+
+CXXFLAGS+=" -std=gnu++2a -gdwarf-4"
+
+LDFLAGS+=" -fuse-ld=lld -Wl,--build-id=sha1 -Wl,-rpath,%aprefix/lib -L%outlibdir"
+
+export LLVM_LIBDIR=`llvm-config --libdir`
+export CLANG_MAJVER=`echo %llvm_version | cut -d. -f1`
+export CLANG_INCDIR="${LLVM_LIBDIR}/clang/${CLANG_MAJVER}/include/"
+
+CXXFLAGS+=" -I${CLANG_INCDIR}" # for stdbool.h and alike
+CPPFLAGS+=" -I${CLANG_INCDIR}" # for stddef.h and alike
+
 DEB_VERSION=%version
-export CFLAGS CPPFLAGS LDFLAGS DEB_VERSION CPU
+export CC CXX CFLAGS CPPFLAGS CXXFLAGS LDFLAGS DEB_VERSION DEB_HOST_ARCH
 
 mkdir -p %outbindir
 mkdir -p %outlibdir
 mkdir -p %outmandir
 
-# dirty workaround to link against 7z library (needed for libunwind)
-ln -s %_libdir/p7zip/7z.so %outlibdir/lib7z.so
-
-# building libunwind
-pushd system/external/libunwind
-OUT_DIR=%outlibdir make -f %makefilesdir/libunwind.mk
+# building boringssl
+pushd external/boringssl
+OUT_DIR=%outlibdir MAKEFILES_DIR=%makefilesdir make -j$(nproc) -f %makefilesdir/libcrypto.mk
+OUT_DIR=%outlibdir MAKEFILES_DIR=%makefilesdir make -j$(nproc) -f %makefilesdir/libssl.mk
 popd
 
-# order is important
+extras_components_libs=" \
+        libcpu_features \
+        liblzma \
+		    libext4_utils \
+        libETC1"
+
 core_components_libs=" \
 		    liblog \
 		    libbase \
 		    libcutils \
-		    libcrypto_utils \
-		    libadb \
  		    libbacktrace \
+		    libsparse \
 		    libutils \
 		    libziparchive \
-		    libsparse"
+		    libcrypto_utils \
+        libnativehelper"
+
 core_simg_tools=" \
 		    simg2img \
 		    simg2simg \
@@ -206,75 +223,84 @@ core_simg_tools=" \
 
 core_tools="adb fastboot"
 
-extras_components_libs=" \
-		    libext4_utils"
+misc_tools="etc1tool hprof-conv"
 
-# building core libraries at first
-pushd system/core
-for i in $core_components_libs; do
-    make -f %makefilesdir/$i.mk
-    cp -a $i.so* %outlibdir
-done
-popd
-
-# now building extra libraries
-pushd system/extras
+# building extra libraries
 for i in $extras_components_libs; do
-    OUT_DIR=%outlibdir make -f %makefilesdir/$i.mk
+    OUT_DIR=%outlibdir make -j$(nproc) -f %makefilesdir/$i.mk
 done
-popd
+
+# building core libraries
+for i in $core_components_libs; do
+    OUT_DIR=%outlibdir make -j$(nproc) -f %makefilesdir/$i.mk
+done
+
+# libadb requires a bit more variables
+OUT_DIR=%outlibdir \
+    PLATFORM_TOOLS_VERSION=%version \
+    DEB_VERSION=%version-%release \
+    make -j$(nproc) -f %makefilesdir/libadb.mk
 
 # building core tools
-pushd system/core
 for i in $core_tools; do
-    make -f %makefilesdir/$i.mk
-    cp -a $i/$i %outbindir
+    OUT_DIR=%outbindir \
+        OUT_LIBS_DIR=%outlibdir \
+        DEB_VERSION=%version-%release \
+        PLATFORM_TOOLS_VERSION=%version \
+        make -j$(nproc) -f %makefilesdir/$i.mk
 done
 
-# simg stuff requires special handling as it is libsparse-based
+# simg tools
 for i in $core_simg_tools; do
-    make -f %makefilesdir/$i.mk
-    cp -a libsparse/$i %outbindir
+    OUT_DIR=%outbindir \
+        make -j$(nproc) -f %makefilesdir/$i.mk
 done
-popd
 
-# we do not need symlink to 7z library anymore
-rm -f %outlibdir/lib7z.so
+# misc tools
+for i in $misc_tools; do
+    OUT_DIR=%outbindir \
+        OUT_LIBS_DIR=%outlibdir \
+        make -j$(nproc) -f %makefilesdir/$i.mk
+done
 
-# do not forget about mkbootimg
-cp system/core/mkbootimg/mkbootimg.py %outbindir/mkbootimg
-cp system/core/mkbootimg/unpack_bootimg.py %outbindir/unpack_bootimg
-
-%if_enabled docs
 # building man pages
-for i in $core_tools; do
+%if_enabled docs
+for i in adb fastboot etc1tool; do
     pandoc -s -o %outmandir/$i.1 debian/$i.1.md
 done
 %endif
 
-%install
+# do not forget about mkbootimg
+cp system/tools/mkbootimg/mkbootimg.py %outbindir/mkbootimg
+cp system/tools/mkbootimg/unpack_bootimg.py %outbindir/unpack_bootimg
+cp system/tools/mkbootimg/repack_bootimg.py %outbindir/repack_bootimg
 
-core_tools="adb fastboot"
+%install
 
 mkdir -p %buildroot%_bindir %buildroot%aprefix/bin %buildroot%aprefix/lib %buildroot%_man1dir
 
-for i in $core_tools mkbootimg unpack_bootimg; do
+for i in adb fastboot mkbootimg unpack_bootimg repack_bootimg; do
     install -pm0755 %outbindir/$i %buildroot%_bindir/$i
 done
-for i in append2simg img2simg simg2img simg2simg; do
+for i in append2simg img2simg simg2img simg2simg etc1tool hprof-conv; do
     install -pm0755 %outbindir/$i %buildroot%aprefix/bin
 done
 
-cp -a %outlibdir/* %buildroot%aprefix/lib
+cp -a %outlibdir/*.so %buildroot%aprefix/lib
+cp -a %outlibdir/*.so.* %buildroot%aprefix/lib
 
-for i in $core_tools; do
+for i in adb fastboot etc1tool; do
     install -pm0644 %outmandir/$i.1 %buildroot%_man1dir
 done
 
 mkdir -p %buildroot%_sysconfdir/bash_completion.d
-for i in $core_tools; do
+for i in adb fastboot; do
     install -pm0644 debian/bash_completion.d/$i %buildroot%_sysconfdir/bash_completion.d
 done
+
+%add_findreq_skiplist	%_bindir/mkbootimg
+%add_findreq_skiplist	%_bindir/unpack_bootimg
+%add_findreq_skiplist	%_bindir/repack_bootimg
 
 %files
 %_bindir/*
@@ -283,6 +309,11 @@ done
 %aprefix
 
 %changelog
+* Sat Mar 09 2024 Pavel Nakonechnyi <zorg@altlinux.org> 34.0.4-alt1
+- Platform 34.0.4
+- Built with Clang
+- More tools added
+
 * Sun Nov 27 2022 Pavel Nakonechnyi <zorg@altlinux.org> 10.0.0-alt5.r36
 - Fix build failure with new Linux kernel headers
   See https://github.com/torvalds/linux/commit/94dfc73e7cf4a31da66b8843f0b9283ddd6b8381
