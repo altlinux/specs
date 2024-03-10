@@ -7,7 +7,7 @@
 
 Name: telepathy-logger
 Version: 0.8.2
-Release: alt2
+Release: alt2.1
 
 Summary: Telepathy client that logs information received by the Telepathy framework
 License: LGPLv2.1+
@@ -28,7 +28,7 @@ BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: gtk-doc intltool libgio-devel >= 2.28.0
 BuildRequires: libdbus-devel libdbus-glib-devel libtelepathy-glib-devel >= 0.24.2
 BuildRequires: libxml2-devel libsqlite3-devel
-%{?_enable_introspection:BuildRequires: libtelepathy-glib-gir-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libtelepathy-glib-gir-devel}
 %{?_enable_check:BuildRequires: xvfb-run /proc dbus python3-module-twisted-words python3-module-xmpp}
 
 %description
@@ -137,6 +137,9 @@ xvfb-run %make -k check VERBOSE=1
 
 
 %changelog
+* Sun Mar 10 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt2.1
+- fixed BR
+
 * Thu Aug 05 2021 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt2
 - applied debian (0.8.2-4) patchset
 - updated BR
