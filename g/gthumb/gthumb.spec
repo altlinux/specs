@@ -22,7 +22,7 @@
 %endif
 
 Name: gthumb
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -71,7 +71,7 @@ BuildRequires: libsoup-devel >= %soup_ver  pkgconfig(webkit2gtk-4.0) >= %webkit_
 %{?_enable_libheif:BuildRequires: libheif-devel >= %heif_ver}
 %{?_enable_libbrasero:BuildRequires: libbrasero-devel >= %brasero_ver}
 %{?_enable_webservices:BuildRequires: bison flex}
-%{?_enabled_libchamplain:BuildRequires: libchamplain-gtk3-devel >= %champlain_ver}
+%{?_enable_libchamplain:BuildRequires: libchamplain-gtk3-devel >= %champlain_ver}
 %{?_enable_colord:BuildRequires: libcolord-devel}
 %{?_enable_libjxl:BuildRequires: libjxl-devel}
 
@@ -185,6 +185,9 @@ This package contains headers needed to build extensions for gThumb.
 %_pkgconfigdir/*
 
 %changelog
+* Sun Mar 10 2024 Yuri N. Sedunov <aris@altlinux.org> 3.12.6-alt1
+- 3.12.6
+
 * Mon Feb 19 2024 Yuri N. Sedunov <aris@altlinux.org> 3.12.5-alt1
 - 3.12.5
 
