@@ -2,7 +2,7 @@
 
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 3006.7
+Version: 3007.0
 Release: alt1
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
@@ -23,7 +23,6 @@ Source6: salt-syndic.init
 
 Patch1: salt-alt-supported-names.patch
 Patch2: salt-alt-uname-path.patch
-Patch3: salt-match_hostname.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools perl-podlators
@@ -41,7 +40,7 @@ BuildRequires: python3-module-pycryptodomex >= 3.19.1
 BuildRequires: python3-module-GitPython >= 3.1.41
 BuildRequires: python3-module-jinja2 >= 3.1.3
 
-%add_python3_req_skip win32api win32event win32service win32serviceutil winerror pythoncom distutils ntsecuritycon win32con win32process win32security vsanmgmtObjects
+%add_python3_req_skip win32api win32event win32service win32serviceutil winerror pythoncom distutils ntsecuritycon win32con win32process win32security vsanmgmtObjects requests.packages.urllib3.util.ssl_
 
 # pyrax.exceptions is a not a real dependency: pyrax
 # presence is gated at salt/utils/openstack/pyrax/__init__.py
@@ -110,7 +109,6 @@ with XMLRPC or even a Websocket API.
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 # Current Salt version from sources
 echo -n '%version' > salt/_version.txt
 # Remove local copy documentation mention
@@ -267,6 +265,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Sat Mar 09 2024 Andrey Cherepanov <cas@altlinux.org> 3007.0-alt1
+- New version.
+
 * Wed Feb 28 2024 Andrey Cherepanov <cas@altlinux.org> 3006.7-alt1
 - New version.
 
