@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: %_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Cartridges
@@ -69,6 +69,9 @@ SteamGridDB.
 
 
 %changelog
+* Sun Mar 10 2024 Yuri N. Sedunov <aris@altlinux.org> 2.7.4-alt1
+- 2.7.4
+
 * Tue Feb 20 2024 Yuri N. Sedunov <aris@altlinux.org> 2.7.3-alt1
 - 2.7.3
 
