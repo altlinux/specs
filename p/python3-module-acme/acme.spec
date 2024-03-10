@@ -2,7 +2,7 @@
 
 Name: python3-module-acme
 Version: 2.9.0
-Release: alt1
+Release: alt2
 
 Summary: Python library for the ACME protocol
 
@@ -50,6 +50,7 @@ Documentation for the ACME python libraries
 #  it is better do not to require argparse on python >= 2.7.
 %__subst "s|^argparse$||" \
     %buildroot%python3_sitelibdir/%modulename-%{version}*.egg-info/requires.txt
+%python3_prune
 
 %check
 #__python setup.py test
@@ -68,6 +69,9 @@ Documentation for the ACME python libraries
 #%doc docs/_build/html
 
 %changelog
+* Sun Mar 10 2024 Vitaly Lipatov <lav@altlinux.ru> 2.9.0-alt2
+- remove internal tests
+
 * Wed Feb 28 2024 Vitaly Lipatov <lav@altlinux.ru> 2.9.0-alt1
 - new version 2.9.0 (with rpmrb script)
 
