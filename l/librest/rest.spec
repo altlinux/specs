@@ -7,7 +7,7 @@
 
 Name: lib%_name
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: A library for access to RESTful web services
 Group: System/Libraries
@@ -19,7 +19,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Requires: ca-certificates
 
 BuildRequires: glib2-devel libsoup-gnome-devel libxml2-devel gtk-doc
-%{?_enable_introspection:BuildRequires: libsoup-gnome-gir-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libsoup-gnome-gir-devel}
 
 %description
 This library was designed to make it easier to access web services that
@@ -108,6 +108,9 @@ This package contains development documentation for the %_name library.
 %_datadir/gtk-doc/html/%{_name}*%api_ver/
 
 %changelog
+* Sun Mar 10 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1.1
+- fixed BR
+
 * Tue Oct 17 2017 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
 - 0.8.1
 
