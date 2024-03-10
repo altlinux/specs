@@ -11,7 +11,7 @@
 
 Name: lib%{_name}
 Version: %ver_major.4
-Release: alt1
+Release: alt1.1
 
 Summary: Helper library for geocoding services
 License: LGPL-2.0-or-later
@@ -30,7 +30,7 @@ BuildRequires: libjson-glib-devel >= %json_glib_ver pkgconfig(libsoup-2.4) >= %s
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_introspection:
 BuildRequires(pre): rpm-build-gir
-BuildRequires: gir(Soup) = 2.4 libjson-glib-gir-devel}
+BuildRequires: gobject-introspection-devel gir(Soup) = 2.4 libjson-glib-gir-devel}
 
 %description
 %_name is a helper library for geocoding and reverse-geocoding
@@ -132,6 +132,9 @@ the functionality of the installed %_name library.
 %endif
 
 %changelog
+* Sun Mar 10 2024 Yuri N. Sedunov <aris@altlinux.org> 3.26.4-alt1.1
+- fixed BR after glib update to 2.80
+
 * Mon Aug 08 2022 Yuri N. Sedunov <aris@altlinux.org> 3.26.4-alt1
 - 3.26.4
 
