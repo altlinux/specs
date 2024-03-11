@@ -2,8 +2,8 @@
 %def_disable scim
 
 Name: plasma5-desktop
-Version: 5.27.10
-Release: alt4
+Version: 5.27.11
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -256,6 +256,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Thu Mar 07 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt1
+- new version
+
 * Mon Feb 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.10-alt4
 - slightly smaller default panel height
 

@@ -20,8 +20,8 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma5-%rname
-Version: 5.27.10
-Release: alt2
+Version: 5.27.11
+Release: alt1
 %K5init no_altplace
 
 Group: System/Configuration/Packaging
@@ -295,6 +295,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K5start \
 
 
 %changelog
+* Thu Mar 07 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt1
+- new version
+
 * Fri Jan 26 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.10-alt2
 - 5.27.10.1 bugfix release
 

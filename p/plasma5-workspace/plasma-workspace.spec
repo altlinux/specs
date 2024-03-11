@@ -36,8 +36,8 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.27.10
-Release: alt6
+Version: 5.27.11
+Release: alt1
 Epoch: 1
 %K5init
 
@@ -567,6 +567,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_unitdir_user/plasma-core.target.d/xd
 
 
 %changelog
+* Thu Mar 07 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.11-alt1
+- new version
+
 * Thu Mar 07 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.10-alt6
 - don't use nvidia-prime-run to start NVIDIA PRIME apps
 

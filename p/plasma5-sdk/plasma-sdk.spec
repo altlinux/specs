@@ -2,7 +2,7 @@
 %filter_from_requires /inkscape/d
 
 Name: plasma5-sdk
-Version: 5.27.10
+Version: 5.27.11
 Release: alt1
 %K5init
 
@@ -84,6 +84,9 @@ KF5 library
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Mar 07 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt1
+- new version
+
 * Thu Dec 07 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.10-alt1
 - new version
 

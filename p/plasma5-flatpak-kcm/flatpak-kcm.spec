@@ -1,7 +1,7 @@
 %define rname flatpak-kcm
 
 Name: plasma5-%rname
-Version: 5.27.10
+Version: 5.27.11
 Release: alt1
 %K5init
 
@@ -68,6 +68,9 @@ Requires: %name-common = %version-%release
 %_K5data/kpackage/kcms/kcm_flatpak/
 
 %changelog
+* Thu Mar 07 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt1
+- new version
+
 * Thu Dec 07 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.10-alt1
 - new version
 

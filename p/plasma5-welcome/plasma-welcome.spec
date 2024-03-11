@@ -1,8 +1,8 @@
 %define rname plasma-welcome
 
 Name: plasma5-welcome
-Version: 5.27.10
-Release: alt5
+Version: 5.27.11
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -81,6 +81,9 @@ mkdir -p %buildroot/%_datadir/plasma-welcome-extra-pages{,-pre}
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Mar 07 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt1
+- new version
+
 * Wed Feb 14 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.10-alt5
 - fix Discover page proposed apps list (closes: 49412)
 
