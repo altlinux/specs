@@ -4,7 +4,7 @@
 
 Name: deepin-launchpad
 Version: 0.4.6
-Release: alt1
+Release: alt2
 
 Summary: Launcher for DDE - next generation
 
@@ -36,8 +36,10 @@ Requires: libqt5-gui = %_qt5_version
 
 %prep
 %setup -n %repo-%version
+%if "%(get_version libappstream-qt-devel)" < "1"
 %patch1 -p1 -R
 %patch2 -p1 -R
+%endif
 
 %build
 %if_enabled clang
@@ -71,6 +73,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/dsg/configs/dde-launchpad/org.deepin.dde.launchpad.appsmodel.json
 
 %changelog
+* Mon Mar 11 2024 Leontiy Volodin <lvol@altlinux.org> 0.4.6-alt2
+- Applied improvements for easy rebuilding with appstream v1.
+
 * Fri Mar 01 2024 Leontiy Volodin <lvol@altlinux.org> 0.4.6-alt1
 - New version 0.4.6.
 
