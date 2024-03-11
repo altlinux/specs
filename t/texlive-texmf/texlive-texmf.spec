@@ -1,7 +1,7 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python3 rpm-macros-java
 BuildRequires: gcc-c++ perl(Archive/Tar.pm) perl(Config/IniFiles.pm) perl(Data/Dumper/Concise.pm) perl(Date/Format.pm) perl(Date/Parse.pm) perl(Digest/SHA.pm) perl(Digest/SHA1.pm) perl(Encode.pm) perl(Encode/Alias.pm) perl(Encode/Locale.pm) perl(ExtUtils/MakeMaker.pm) perl(Fatal.pm) perl(File/Copy/Recursive.pm) perl(File/HomeDir.pm) perl(File/Slurp.pm) perl(File/Which.pm) perl(HTML/FormatText.pm) perl(HTML/TreeBuilder.pm) perl(HTTP/Request/Common.pm) perl(HTTP/Status.pm) perl(IO/Compress/Zip.pm) perl(IO/String.pm) perl(IPC/System/Simple.pm) perl(JSON.pm) perl(LWP.pm) perl(LWP/Protocol/https.pm) perl(LWP/Simple.pm) perl(LWP/UserAgent.pm) perl(Locale/Maketext/Simple.pm) perl(Math/Trig.pm) perl(Pod/Man.pm) perl(Pod/Text.pm) perl(Pod/Usage.pm) perl(Spreadsheet/ParseExcel.pm) perl(Term/ANSIColor.pm) perl(Term/ReadKey.pm)
-BuildRequires: perl(Test/More.pm) perl(Text/Unidecode.pm) perl(Tk.pm) perl(Tk/Adjuster.pm) perl(Tk/BrowseEntry.pm) perl(Tk/Dialog.pm) perl(Tk/DirTree.pm) perl(Tk/HList.pm) perl(Tk/ItemStyle.pm) perl(Tk/NoteBook.pm) perl(Tk/ROText.pm) perl(Tk/widgets.pm) perl(URI/Escape.pm) perl(Unicode/GCString.pm) perl(WWW/Mechanize.pm) perl(XML/Parser.pm) perl(XML/XPath.pm) perl(XML/XPath/XMLParser.pm) perl(YAML/Tiny.pm) perl(autodie.pm) perl-devel python3-devel texinfo
+BuildRequires: perl(Test/More.pm) perl(Text/Unidecode.pm) perl(Tk.pm) perl(Tk/Adjuster.pm) perl(Tk/BrowseEntry.pm) perl(Tk/Dialog.pm) perl(Tk/DirTree.pm) perl(Tk/HList.pm) perl(Tk/ItemStyle.pm) perl(Tk/NoteBook.pm) perl(Tk/ROText.pm) perl(Tk/widgets.pm) perl(URI/Escape.pm) perl(Unicode/GCString.pm) perl(Unicode/Normalize.pm) perl(WWW/Mechanize.pm) perl(XML/Parser.pm) perl(XML/XPath.pm) perl(XML/XPath/XMLParser.pm) perl(YAML/Tiny.pm) perl(autodie.pm) perl-devel python3-devel texinfo
 # END SourceDeps(oneline)
 #
 #     `This package is an abomination.  It should not exist.'
@@ -71,9 +71,7 @@ BuildRequires: perl(Test/More.pm) perl(Text/Unidecode.pm) perl(Tk.pm) perl(Tk/Ad
 %global __requires_exclude %{?__requires_exclude:%__requires_exclude|}^/usr/bin/wish
 
 %define enable_asymptote	0
-%define enable_xindy		1
 
-%define with_system_tex4ht	0
 
 %define texmfbindir		%{_bindir}
 %define texmfdir		%{_datadir}/texmf
@@ -91,21 +89,21 @@ BuildRequires: perl(Test/More.pm) perl(Text/Unidecode.pm) perl(Tk.pm) perl(Tk/Ad
 %define	__debug_package %{nil}
 %define __debug_install_post %{nil}
 
-%define relYear 2021
+%define relYear 2022
 %global tl_version %relYear
-%global mga_tl_timestamp 20210325
+%global mga_tl_timestamp 20220321
 
 Name:		texlive-texmf
 Version:	%relYear
-Release:	alt1_4
+Release:	alt0_12
 Summary:	The TeX formatting system
 Group:		Publishing
-License:	http://www.tug.org/texlive/LICENSE.TL
-URL:		http://tug.org/texlive/
+License:	https://www.tug.org/texlive/LICENSE.TL
+URL:		https://tug.org/texlive/
 Source0:	ftp://tug.org/historic/systems/texlive/%{relYear}/texlive-%{mga_tl_timestamp}-texmf.tar.xz
 Source1:	ftp://tug.org/historic/systems/texlive/%{relYear}/texlive-%{mga_tl_timestamp}-texmf.tar.xz.sha512
 Source2:	XDvi-color
-Source3:	http://www.tug.org/texlive/LICENSE.TL
+Source3:	https://www.tug.org/texlive/LICENSE.TL
 Source4:	ftp://tug.org/historic/systems/texlive/%{relYear}/install-tl-unx.tar.gz#/install-tl-unx-%{relYear}.tgz
 # Source5:	http://mirror.hmc.edu/ctan/systems/texlive/tlnet/tlpkg/texlive.tlpdb
 Source6:	updmap-collection-basic.cfg
@@ -130,8 +128,6 @@ Requires:	texlive >= %{tl_version}
 Requires:	texlive-collection-basic = %{version}
 Requires:	texlive-dist = %{version}-%{release}
 
-%if !%{with_system_tex4ht}
-%endif
 # latex-beamer functionality is already included in texlive-texmf
 
 Patch4: texlive-20160523-texmf-mageia-kpfix.patch
@@ -140,6 +136,7 @@ Patch4: texlive-20160523-texmf-mageia-kpfix.patch
 %global __provides_exclude %{?__provides_exclude:%__provides_exclude|}^pear\\(animals.php\\)$
 Requires(post): tex-common
 Source44: import.info
+Source45: pathfix.py
 Patch33: texlive-texmf-2017-alt-texmf-first.patch
 BuildRequires: rpm-build-tex >= 0.4
 AutoReq: yes,notex,nopython,nopython3
@@ -260,7 +257,6 @@ Conflicts: texlive-latex-recommended < 2009
 Obsoletes: texlive-latex-recommended < 2009
 Obsoletes: texlive-common < 0.1.0.1
 Provides: %{texmfdistdir}
-Conflicts: texlive < 2021
 
 
 %description	-n texlive-collection-basic
@@ -286,10 +282,6 @@ should be sufficient for most users of TeX or TeX-related programs.
 %{texmfdistdir}/tlpkg
 %{texmfdistdir}/ttf2pk
 %{texmfdistdir}/xdvi
-%if %{enable_xindy}
-%{texmfdistdir}/xindy
-%doc %{texmfdistdir}/doc/xindy
-%endif
 %{texmfdistdir}/bibtex
 %{texmfdistdir}/dvips
 %{texmfdistdir}/makeindex
@@ -300,16 +292,17 @@ should be sufficient for most users of TeX or TeX-related programs.
 %{texmfdistdir}/pbibtex
 %{texmfdistdir}/scripts
 %{texmfdistdir}/web2c
-%if !%{with_system_tex4ht}
 %{texmfdistdir}/tex4ht
+%{texmfdistdir}/xindy
 %{_javadir}/tex4ht.jar
-%endif
 %{texmfdistdir}/texdoc
 %dir %{texmflocaldir}
 %ghost %{texmfdistdir}/ls-R
 %ghost %{texmflocaldir}/ls-R
 
 #context
+%exclude %{texmfbindir}/context
+%exclude %{texmfbindir}/contextjit
 %exclude %{texmfbindir}/mptopdf
 %exclude %{texmfbindir}/mtxrun
 %exclude %{texmfdistdir}/bibtex/bst/context
@@ -317,6 +310,11 @@ should be sufficient for most users of TeX or TeX-related programs.
 %exclude %{texmfdistdir}/tex/generic/context
 %exclude %{texmfdistdir}/fonts/map/pdftex/context
 %exclude %{texmfdistdir}/metapost/context
+%exclude %{texmfbindir}/luatools
+%exclude %{texmfbindir}/mtxrunjit
+%exclude %{texmfbindir}/texexec
+%exclude %{texmfbindir}/texmfstart.rb
+%exclude %{texmfbindir}/texmfstart
 # moved to corresponding packages
 %exclude %{texmfdistdir}/web2c/updmap-dist.cfg
 %exclude %{texmfdistdir}/web2c/updmap-fontsextra.cfg
@@ -625,7 +623,7 @@ TeX-related libraries) that are missing from the texlive-basic package.
 Summary:	Tex Live ConTeXt Package
 Group:		Publishing
 Requires:	texlive-texmf >= %{version}-%{release}
-Requires:	ruby
+Requires:	erb ruby ruby-stdlibs
 Conflicts: tetex-context < 2.01
 AutoReq: yes,notex,nopython,nopython3
 AutoProv: yes,nopython,nopython3
@@ -645,8 +643,15 @@ if you rely on context for building tex documents.
 %{texmfdistdir}/fonts/misc/xetex/fontmapping/context
 %{texmfdistdir}/fonts/tfm/hoekwater/context
 %{texmfdistdir}/fonts/type1/hoekwater/context
+%{texmfbindir}/context
+%{texmfbindir}/contextjit
+%{texmfbindir}/luatools
 %{texmfbindir}/mptopdf
 %{texmfbindir}/mtxrun
+%{texmfbindir}/mtxrunjit
+%{texmfbindir}/texexec
+%{texmfbindir}/texmfstart
+%{texmfbindir}/texmfstart.rb
 %{texmfdistdir}/context
 %{texmfdistdir}/scripts/context
 %{texmfdistdir}/tex/context
@@ -654,11 +659,6 @@ if you rely on context for building tex documents.
 %{texmfdistdir}/bibtex/bst/context
 %{texmfdistdir}/tex/generic/context
 %{texmfdistdir}/metapost/context
-%exclude %{texmfdistdir}/scripts/context/stubs/source
-%exclude %{texmfdistdir}/scripts/context/stubs/setup
-%exclude %{texmfdistdir}/scripts/context/stubs/install
-%exclude %{texmfdistdir}/scripts/context/stubs/mswin
-%exclude %{texmfdistdir}/scripts/context/stubs/win64
 
 %package	-n texlive-doc
 Summary:	Tex Live documentation
@@ -742,15 +742,14 @@ production system. It provides a comprehensive TeX system. It includes
 all the major TeX-related programs, macro packages, and fonts that are
 free software, including support for many languages around the world.
 
+%if 0
 %files		-n texlive-doc
 #texmfdistdir/doc/*
 %if %{enable_asymptote}
 %exclude %{texmfdistdir}/doc/asymptote
 %endif
-%if %{enable_xindy}
-%exclude %{texmfdistdir}/doc/xindy
-%endif
 %{texmfdistdir}/doc
+%endif
 
 #-----------------------------------------------------------------------
 %package	-n texlive-fontsextra
@@ -775,7 +774,7 @@ free software, including support for many languages around the world.
 %{texmfdistdir}/web2c/updmap-fontsextra.cfg
 
 %package	-n texlive-fonts-asian
-Summary:	TeX Live extra fonts for asian languages
+Summary:	TeX Live extra fonts for Asian languages
 Group:		Publishing
 Requires:	texlive-texmf = %{version}
 Requires(post):	texlive-dist = %{version}-%{release}
@@ -800,7 +799,7 @@ AutoReq: yes,notex,nopython,nopython3
 AutoProv: yes,nopython,nopython3
 
 %description	-n texlive-fonts-sources
-This package contains the source (mf) files for all fonts. This is usally only
+This package contains the source (mf) files for all fonts. This is usually only
 needed if you build applications.
 
 %files		-n texlive-fonts-sources -f %{SOURCE12}
@@ -846,7 +845,7 @@ perl -pi -e 's%%^# (viewer_pdf = )xpdf.*%%$1xdg-open%%;'	\
 	texmf-dist/texdoc/texdoc.cnf
 
 # fix python shebangs
-%{_bindir}/pathfix.py -pni "%{__python3} " \
+python3 %{SOURCE45} -pni "%{__python3} " \
 	. \
 	texmf-dist/scripts/pdfbook2/pdfbook2 \
 	texmf-dist/scripts/de-macro/de-macro \
@@ -861,157 +860,134 @@ perl -pi -e 's%\%\{texmfdistdir\}%\%exclude \%\{texmfdistdir\}%g;' excludes
 
 #-----------------------------------------------------------------------
 %install
+#remove scripts for windows
+rm -f texmf-dist/scripts/texlive/uninstall-win32.pl
+
+rm -rf texmf-dist/scripts/tlgs \
+	texmf-dist/scripts/context/stubs/source \
+	texmf-dist/scripts/context/stubs/setup \
+	texmf-dist/scripts/context/stubs/install \
+	texmf-dist/scripts/context/stubs/mswin \
+	texmf-dist/scripts/context/stubs/win64
+find texmf-dist/ -name *.exe -exec rm -f {} \;
+find texmf-dist/ -name *.dll -exec rm -f {} \;
+
+#remove scripts we have in psutils, gs or texlive
+rm -rf texmf-dist/scripts/psutils
+
+#change executeable for some files
+find texmf-dist/scripts/ -name *.jar -name *.pm -name README* -name CHANGES* -name LICENCE* -executable -exec chmod -x {} \;
+
 mkdir -p %{buildroot}%{texmfdistdir}
 cp -la texmf-dist/* %{buildroot}%{texmfdistdir}
 
 mkdir -p %{buildroot}%{texmfbindir}
 
 pushd %{buildroot}%{texmfbindir}
-	ln -sf %{texmfdistdir}/scripts/a2ping/a2ping.pl a2ping
-	ln -sf %{texmfdistdir}/scripts/fontools/afm2afm afm2afm
-	ln -sf %{texmfdistdir}/scripts/bundledoc/arlatex arlatex
-	ln -sf %{texmfdistdir}/scripts/authorindex/authorindex authorindex
-	ln -sf %{texmfdistdir}/scripts/fontools/autoinst autoinst
-	ln -sf %{texmfdistdir}/scripts/bibexport/bibexport.sh bibexport
-	ln -sf %{texmfdistdir}/scripts/bundledoc/bundledoc bundledoc
-	ln -sf %{texmfdistdir}/scripts/cachepic/cachepic.tlu cachepic
-	ln -sf %{texmfdistdir}/scripts/de-macro/de-macro de-macro
-	ln -sf %{texmfdistdir}/scripts/dviasm/dviasm.py dviasm
-	ln -sf %{texmfdistdir}/scripts/texlive-extra/e2pall.pl e2pall
-	ln -sf %{texmfdistdir}/scripts/epstopdf/epstopdf.pl epstopdf
-	ln -sf %{texmfdistdir}/scripts/fig4latex/fig4latex fig4latex
-	ln -sf %{texmfdistdir}/scripts/findhyph/findhyph findhyph
-	ln -sf %{texmfdistdir}/scripts/fragmaster/fragmaster.pl fragmaster
-%if !%{with_system_tex4ht}
-	ln -sf %{texmfdistdir}/scripts/tex4ht/ht.sh ht
-	ln -sf %{texmfdistdir}/scripts/tex4ht/htcontext.sh htcontext
-	ln -sf %{texmfdistdir}/scripts/tex4ht/htlatex.sh htlatex
-	ln -sf %{texmfdistdir}/scripts/tex4ht/htmex.sh htmex
-	ln -sf %{texmfdistdir}/scripts/tex4ht/httex.sh httex
-	ln -sf %{texmfdistdir}/scripts/tex4ht/httexi.sh httexi
-	ln -sf %{texmfdistdir}/scripts/tex4ht/htxelatex.sh htxelatex
-	ln -sf %{texmfdistdir}/scripts/tex4ht/htxetex.sh htxetex
-%endif
-	ln -sf %{texmfdistdir}/scripts/latex2man/latex2man latex2man
-	ln -sf %{texmfdistdir}/scripts/latexdiff/latexdiff.pl latexdiff
-	ln -sf %{texmfdistdir}/scripts/latexdiff/latexdiff-vc.pl latexdiff-vc
-	ln -sf %{texmfdistdir}/scripts/latexmk/latexmk.pl latexmk
-	ln -sf %{texmfdistdir}/scripts/latexdiff/latexrevise.pl latexrevise
-	ln -sf %{texmfdistdir}/scripts/listings-ext/listings-ext.sh listings-ext.sh
-	ln -sf %{texmfdistdir}/scripts/glossaries/makeglossaries makeglossaries
-	ln -sf %{texmfdistdir}/scripts/mathspic/mathspic.pl mathspic
-%if !%{with_system_tex4ht}
-	ln -sf %{texmfdistdir}/scripts/tex4ht/mk4ht.pl mk4ht
-%endif
-	ln -sf %{texmfdistdir}/scripts/mkgrkindex/mkgrkindex mkgrkindex
-	ln -sf %{texmfdistdir}/scripts/mkjobtexmf/mkjobtexmf.pl mkjobtexmf
-	ln -sf %{texmfdistdir}/scripts/accfonts/mkt1font mkt1font
-	ln -sf %{texmfdistdir}/scripts/context/perl/mptopdf.pl mptopdf
-	ln -sf %{texmfdistdir}/scripts/fontools/ot2kpx ot2kpx
-	#ln -sf %{texmfdistdir}/scripts/pdfjam/pdf180 pdf180
-	#ln -sf %{texmfdistdir}/scripts/pdfjam/pdf270 pdf270
-	#ln -sf %{texmfdistdir}/scripts/pdfjam/pdf90 pdf90
-	ln -sf %{texmfdistdir}/scripts/pax/pdfannotextractor.pl pdfannotextractor
-	#ln -sf %{texmfdistdir}/scripts/oberdiek/pdfatfi.pl pdfatfi
-	ln -sf %{texmfdistdir}/scripts/pdfbook2/pdfbook2 pdfbook2
-	ln -sf %{texmfdistdir}/scripts/pdfcrop/pdfcrop.pl pdfcrop
-	#ln -sf %{texmfdistdir}/scripts/pdfjam/pdfflip pdfflip
-	ln -sf %{texmfdistdir}/scripts/pdfjam/pdfjam pdfjam
-	#ln -sf %{texmfdistdir}/scripts/pdfjam/pdfjam-pocketmod pdfjam-pocketmod
-	#ln -sf %{texmfdistdir}/scripts/pdfjam/pdfjam-slides3up pdfjam-slides3up
-	#ln -sf %{texmfdistdir}/scripts/pdfjam/pdfjam-slides6up pdfjam-slides6up
-	#ln -sf %{texmfdistdir}/scripts/pdfjam/pdfjoin pdfjoin
-	#ln -sf %{texmfdistdir}/scripts/pdfjam/pdfnup pdfnup
-	#ln -sf %{texmfdistdir}/scripts/pdfjam/pdfpun pdfpun
-#    ln -sf %{texmfdistdir}/scripts/ppower4/pdfthumb.tlu pdfthumb
-	ln -sf %{texmfdistdir}/scripts/perltex/perltex.pl perltex
-#    ln -sf %{texmfdistdir}/scripts/fontools/pfm2kpx pfm2kpx
-	ln -sf %{texmfdistdir}/scripts/pkfix/pkfix.pl pkfix
-	ln -sf %{texmfdistdir}/scripts/pkfix-helper/pkfix-helper pkfix-helper
-#    ln -sf %{texmfdistdir}/scripts/ppower4/ppower4.tlu ppower4
-	ln -sf %{texmfdistdir}/scripts/pst-pdf/ps4pdf ps4pdf
-	ln -sf %{texmfdistdir}/scripts/pst2pdf/pst2pdf.pl pst2pdf
-	ln -sf %{texmfdistdir}/scripts/purifyeps/purifyeps purifyeps
-	ln -sf %{texmfdistdir}/scripts/epstopdf repstopdf
-	ln -sf %{texmfdistdir}/scripts/pdfcrop rpdfcrop
-	ln -sf %{texmfdistdir}/scripts/texdef latexdef
-	ln -sf %{texmfdistdir}/scripts/texlive-extra/allcm.sh allec
-	ln -sf %{texmfdistdir}/scripts/texlive-extra/kpsetool.sh kpsepath
-	ln -sf %{texmfdistdir}/scripts/texlive-extra/kpsetool.sh kpsexpand
-	ln -sf %{texmfdistdir}/scripts/texlive/fmtutil.pl mktexfmt
-	ln -sf %{texmfdistdir}/scripts/texlive/mktextfm mktextfm
-	ln -sf %{texmfdistdir}/scripts/texlive/mktexmf mktexmf
-	ln -sf %{texmfdistdir}/scripts/texlive/mktexlsr texhash
-	ln -sf %{texmfdistdir}/scripts/texlive/mktexlsr mktexlsr
-	ln -sf %{texmfdistdir}/scripts/texlive/rungs.tlu rungs
-#    ln -sf %{texmfdistdir}/scripts/fontools/showglyphs showglyphs
-	ln -sf %{texmfdistdir}/scripts/splitindex/splitindex.pl splitindex
-	ln -sf %{texmfdistdir}/scripts/simpdftex/simpdftex simpdftex
-	ln -sf %{texmfdistdir}/scripts/svn-multi/svn-multi.pl svn-multi
-	ln -sf %{texmfdistdir}/scripts/texcount/texcount.pl texcount
-	ln -sf %{texmfdistdir}/scripts/texdiff/texdiff texdiff
-	ln -sf %{texmfdistdir}/scripts/texdirflatten/texdirflatten texdirflatten
-	ln -sf %{texmfdistdir}/scripts/texdoc/texdoc.tlu texdoc
-	ln -sf %{texmfdistdir}/scripts/texloganalyser/texloganalyser texloganalyser
-	ln -sf %{texmfdistdir}/scripts/thumbpdf/thumbpdf.pl thumbpdf
-	ln -sf %{texmfdistdir}/scripts/ulqda/ulqda.pl ulqda
-	ln -sf %{texmfdistdir}/scripts/vpe/vpe.pl vpe
-	ln -sf %{texmfdistdir}/scripts/accfonts/vpl2ovp vpl2ovp
-	ln -sf %{texmfdistdir}/scripts/accfonts/vpl2vpl vpl2vpl
-	ln -sf %{texmfdistdir}/scripts/texlive/updmap.pl updmap
-	ln -sf %{texmfdistdir}/scripts/texlive/updmap-sys.sh updmap-sys
-	ln -sf %{texmfdistdir}/scripts/context/stubs/unix/mtxrun mtxrun
-	ln -sf %{texmfdistdir}/scripts/texlive/fmtutil.pl fmtutil
-	ln -sf %{texmfdistdir}/scripts/texlive/fmtutil-sys.sh fmtutil-sys
+	#link executeables
+	find %{buildroot}%{texmfdistdir}/scripts/ -name '*.pl' -type f -executable -exec echo {} \; -exec basename {} .pl \;|sed 's,^%{buildroot},,'|xargs -n 2 ln -sf
+	find %{buildroot}%{texmfdistdir}/scripts/ -name '*.lua' -type f -executable -exec echo {} \; -exec basename {} .lua \;|sed 's,^%{buildroot},,'|xargs -n 2 ln -sf
+	find %{buildroot}%{texmfdistdir}/scripts/ -name '*.sh' -type f -executable -exec echo {} \; -exec basename {} .sh \;|sed 's,^%{buildroot},,'|xargs -n 2 ln -sf
+	find %{buildroot}%{texmfdistdir}/scripts/ -name '*.py' -type f -executable -exec echo {} \; -exec basename {} .py \;|sed 's,^%{buildroot},,'|xargs -n 2 ln -sf
+	find %{buildroot}%{texmfdistdir}/scripts/ -name '*.tlu' -type f -executable -exec echo {} \; -exec basename {} .tlu \;|sed 's,^%{buildroot},,'|xargs -n 2 ln -sf
+	find %{buildroot}%{texmfdistdir}/scripts/ -name '*.tcl' -type f -executable -exec echo {} \; -exec basename {} .tcl \;|sed 's,^%{buildroot},,'|xargs -n 2 ln -sf
+	find %{buildroot}%{texmfdistdir}/scripts/ -name '*.rb' -type f -executable -exec echo {} \; -exec basename {} .tcl \;|sed 's,^%{buildroot},,'|xargs -n 2 ln -sf
+
+	find %{buildroot}%{texmfdistdir}/scripts/ -type f -executable \
+	-not -name '*.pl' \
+	-not -name '*.cs' \
+	-not -name '*.lua' \
+	-not -name '*.sh' \
+	-not -name '*.py' \
+	-not -name '*.tlu' \
+	-not -name '*.tcl' \
+	-not -name '*.jar' \
+	-not -name '*.yaml' \
+	-not -name '*.pm' \
+	-not -name '*.txt' \
+	-not -name 'CHANGES*' \
+	-not -name 'LICENCE*' \
+	-not -name 'README*' \
+	-not -name '*.smc' \
+	-not -name '*.r' \
+	-not -name '*.rb' \
+	-exec echo {} \; -exec basename {} \;|sed 's,^%{buildroot},,'|xargs -n 2 ln -sf
+
+# cleanup of files not belonging to real commands, but that are installed from the commands above
+	rm -f \
+	alt_getopt cloze herelist lapp-mk4 luaindex luamesh luamesh-polygon luamesh-tex \
+	lua-uca-collator lua-uca-ducet lua-uca-languages lua-uca-reordering-table \
+	lua-uca-tailoring luasseq lyluatex lyluatex-lib lyluatex-options \
+	make4ht-aeneas-config make4ht-config make4ht-dvireader make4ht-errorlogparser \
+	make4ht-filterlib make4ht-htlatex make4ht-indexing make4ht-lib make4ht-logging \
+	make4ht-xtpipes	mkparams mkutils pgfmolbio physical \
+	placeat puyotikz pythontex_engines pythontex_install pythontex_utils \
+	spelling-main spelling-recurse spelling-stage-1 spelling-stage-2 spelling-stage-3 \
+	spelling-stage-4 tex4ebook-exec_azw tex4ebook-exec_azw3 tex4ebook-exec_epub \
+	tex4ebook-exec_epub3 tex4ebook-exec_mobi texdoclib-alias texdoclib-cli \
+	texdoclib-config texdoclib-const texdoclib-score texdoclib-search texdoclib-util \
+	texdoclib-view webquiz_layout webquiz_templates webquiz_xml
+# xindy (and xindy.mem) is already provided in the texlive package as a link to
+# scripts/xindy/xindy.pl, so skip the duplicate xindy link here.
+	rm -f xindy
+
+#add some special links last
+	ln -sf euptex uplatex
+	ln -sf epstopdf repstopdf
+	ln -sf texdef latexdef
+ 	ln -sf allcm allec
+	ln -sf fmtutil mktexfmt
+ 	ln -sf mktexlsr texhash
+	ln -sf tex lollipop
+	ln -sf luatex luacsplain
+	ln -sf luatex optex
+ 	ln -sf kpsetool kpsepath
+ 	ln -sf kpsetool kpsexpand
+	ln -sf pdfcrop rpdfcrop
+	ln -sf convbkmk.rb convbkmk
+	ln -sf cluttex cllualatex
+	ln -sf cluttex clxelatex
+	ln -sf hitex hilatex
 popd
 
-    (cd  %{buildroot}%{texmfdistdir}/tex/generic/config ; ln -sf ../tex-ini-files/pdftexconfig.tex .)
+	(cd %{buildroot}%{texmfdistdir}/tex/generic/config ; ln -sf ../tex-ini-files/pdftexconfig.tex .)
 
 	mkdir -p %{buildroot}%{_datadir}/X11/app-defaults
 	pushd %{buildroot}%{_datadir}/X11/app-defaults
 	ln -sf %{texmfdistdir}/xdvi/XDvi XDvi
 	cp %{SOURCE2} %{buildroot}%{_datadir}/X11/app-defaults
-    popd
+popd
 
 pushd %{buildroot}%{texmfdistdir}
 %if !%{enable_asymptote}
-    rm -fr asymptote doc/asymptote doc/info/asy* tex/latex/asymptote
+	rm -fr asymptote doc/asymptote doc/info/asy* tex/latex/asymptote
 %endif
-%if !%{enable_xindy}
-    rm -fr xindy doc/xindy scripts/xindy
-%endif
-    rm -fr dvipdfm
-    perl -pi -e 's%%/usr/local%%/usr%%;' dvipdfmx/dvipdfmx.cfg
-    rm -f ls-R README
-    rm -fr doc/gzip
-    cp -f %{SOURCE3} .
+	rm -fr dvipdfm
+	perl -pi -e 's%%/usr/local%%/usr%%;' dvipdfmx/dvipdfmx.cfg
+	rm -f ls-R README
+	rm -fr doc/gzip
+	cp -f %{SOURCE3} .
 
-    find doc/man \( -name Makefile -o -name \*.pdf \) -exec rm -f {} \;
+	find doc/man \( -name Makefile -o -name \*.pdf \) -exec rm -f {} \;
 	# with_system_psutils
-    rm -f doc/man/man1/{epsffit,extractres,fixdlsrps,fixfmps,fixmacps,fixpsditps,fixpspps,fixscribeps,fixtpps,fixwfwps,fixwpps,fixwwps,getafm,includeres,psbook,psmerge,psnup,psresize,psselect,pstops,psjoin,psutils}.1
+	rm -f doc/man/man1/{epsffit,extractres,fixdlsrps,fixfmps,fixmacps,fixpsditps,fixpspps,fixscribeps,fixtpps,fixwfwps,fixwpps,fixwwps,getafm,includeres,psbook,psmerge,psnup,psresize,psselect,pstops,psjoin,psutils,dvilualatex-dev,lualatex-dev,pdflatex-dev,platex-dev,uplatex-dev,xelatex-dev}.1
 
-
-    mkdir -p %{buildroot}%{_mandir}
-    mv -f doc/man/* %{buildroot}%{_mandir}
-    mkdir -p %{buildroot}%{_infodir}
-    mv -f doc/info/*.info %{buildroot}%{_infodir}
+	mkdir -p %{buildroot}%{_mandir}
+	mv -f doc/man/* %{buildroot}%{_mandir}
+	mkdir -p %{buildroot}%{_infodir}
+	mv -f doc/info/*.info %{buildroot}%{_infodir}
 popd
 
 pushd %{buildroot}%{texmfdistdir}
-%if %{with_system_tex4ht}
-    rm -fr tex4ht
-%endif
-    rm -f ls-R README
-    # .in files in documentation confuse find-provides
-    rm -f doc/bibtex/urlbst/*.in
+	rm -f ls-R README
+	# .in files in documentation confuse find-provides
+	rm -f doc/bibtex/urlbst/*.in
 popd
 
-%if !%{with_system_tex4ht}
 	mkdir %{buildroot}%{_javadir}
 	pushd %{buildroot}%{_javadir}
-	    ln -sf %{texmfdistdir}/tex4ht/bin/tex4ht.jar tex4ht.jar
+	ln -sf %{texmfdistdir}/tex4ht/bin/tex4ht.jar tex4ht.jar
 	popd
-%endif
 pushd %{buildroot}%{texmfdistdir}/doc/fonts
  find . -name \*.pdf -exec rm -rf {} \;
  rm -rf gnu-freefont/tools
@@ -1027,7 +1003,7 @@ rm -rf %{buildroot}%{texmfdistdir}/tlpkg/installer/xz
 
 
 perl -pi -e 's|-var-value=TEXMFROOT|-var-value=TEXMFMAIN|g;'			\
-    %{buildroot}%{texmfdistdir}/scripts/texlive/updmap.pl
+	%{buildroot}%{texmfdistdir}/scripts/texlive/updmap.pl
 
 mkdir -p %{buildroot}%{texmflocaldir}
 
@@ -1089,6 +1065,9 @@ EOF
 
 
 %changelog
+* Fri Mar 08 2024 Igor Vlasenko <viy@altlinux.org> 2022-alt0_12
+- new version (prerelease)
+
 * Fri Sep 17 2021 Igor Vlasenko <viy@altlinux.org> 2021-alt1_4
 - added requires on texlive-fonts-sources for #40813
 

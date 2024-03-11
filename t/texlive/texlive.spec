@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ gobject-introspection-devel imake libXt-devel perl(Archive/Tar.pm) perl(BibTeX/Parser.pm) perl(BibTeX/Parser/Author.pm) perl(Date/Format.pm) perl(Date/Parse.pm) perl(Digest/SHA1.pm) perl(Encode.pm) perl(Encode/Alias.pm) perl(Encode/Locale.pm) perl(ExtUtils/MakeMaker.pm) perl(Fatal.pm) perl(File/Copy/Recursive.pm) perl(File/Which.pm) perl(HTML/FormatText.pm) perl(HTML/TreeBuilder.pm) perl(HTTP/Request/Common.pm) perl(IO/Compress/Zip.pm) perl(IPC/System/Simple.pm) perl(JSON.pm) perl(LWP/Protocol/https.pm) perl(LWP/Simple.pm) perl(LWP/UserAgent.pm) perl(LaTeX/ToUnicode.pm) perl(Locale/Maketext/Simple.pm) perl(Math/Trig.pm) perl(Pod/Man.pm) perl(Pod/Text.pm) perl(Pod/Usage.pm) perl(Spreadsheet/ParseExcel.pm) perl(Statistics/Descriptive.pm) perl(Statistics/Distributions.pm) perl(Term/ANSIColor.pm)
-BuildRequires: perl(Term/ReadKey.pm) perl(Test.pm) perl(Tk.pm) perl(Tk/Dialog.pm) perl(Tk/NoteBook.pm) perl(URI/Escape.pm) perl(WWW/Mechanize.pm) perl(autodie.pm) perl-devel texinfo xorg-cf-files zlib-devel bzlib-devel
+BuildRequires: /usr/bin/ccache /usr/bin/doxygen /usr/bin/xmlto /usr/bin/zip boost-devel boost-filesystem-devel boost-program_options-devel bzlib-devel gcc-c++ glib2-devel gobject-introspection-devel imake libICE-devel libSM-devel libX11-devel libXt-devel libjpeg-devel libopenmotif-devel libtiff-devel perl(Archive/Tar.pm) perl(BibTeX/Parser.pm) perl(BibTeX/Parser/Author.pm) perl(Date/Format.pm) perl(Date/Parse.pm) perl(Digest/SHA1.pm) perl(Encode.pm) perl(Encode/Alias.pm) perl(Encode/Locale.pm) perl(Fatal.pm) perl(File/Copy/Recursive.pm) perl(File/Which.pm) perl(HTML/FormatText.pm) perl(HTML/TreeBuilder.pm) perl(HTTP/Request/Common.pm) perl(IO/Compress/Zip.pm) perl(IPC/System/Simple.pm) perl(JSON.pm) perl(LWP/Protocol/https.pm) perl(LWP/Simple.pm) perl(LWP/UserAgent.pm) perl(LaTeX/ToUnicode.pm) perl(Locale/Maketext/Simple.pm)
+BuildRequires: perl(Math/Trig.pm) perl(Pod/Man.pm) perl(Pod/Text.pm) perl(Pod/Usage.pm) perl(Spreadsheet/ParseExcel.pm) perl(Statistics/Descriptive.pm) perl(Statistics/Distributions.pm) perl(Term/ANSIColor.pm) perl(Term/ReadKey.pm) perl(Tk.pm) perl(Tk/Dialog.pm) perl(Tk/NoteBook.pm) perl(URI/Escape.pm) perl(Unicode/Normalize.pm) perl(WWW/Mechanize.pm) perl(autodie.pm) pkgconfig(sdl2) python3-devel rpm-build-perl rpm-build-python3 texinfo xorg-cf-files zlib-devel
 # END SourceDeps(oneline)
 # findreq artefacts
 # let's drop the dep for now
@@ -14,7 +14,7 @@ BuildRequires: perl(Term/ReadKey.pm) perl(Test.pm) perl(Tk.pm) perl(Tk/Dialog.pm
 %filter_from_requires /^perl(installer.mirrors.pl)/d
 %filter_from_requires /^perl(TeXLive.trans.pl)/d
 
-BuildRequires: libpixman-devel
+BuildRequires: pkgconfig(bzip2) libpixman-devel
 BuildRequires: chrpath
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -25,16 +25,9 @@ BuildRequires: /usr/bin/hg
 %global __requires_exclude ^perl\\((PDF::Reuse.*|Pedigree.*|TeXLive.*|Tk::path_tre|only|pdfTeX|script::MakeSPList)\\)|pear\\(animals.php\\)
 %global __provides_exclude_from %{?__provides_exclude_from:%__provides_exclude_from|}^%{_docdir}
 
-# need to bootstrap first
-# - xindy need clisp in main
 # - let asymptote be packaged separately, as the generated one is known
 #   to not be fully functional
 %define enable_asymptote	0
-%define enable_xindy		0
-
-# in its own package
-%define enable_xdvik            1
-%define enable_dvi2tty          1
 
 # luajit supports only these architectures
 %ifarch %ix86 x86_64 %arm aarch64 %mips
@@ -45,18 +38,11 @@ BuildRequires: /usr/bin/hg
 %define enable_mfluajit		0
 %endif
 
-%define with_system_poppler	1
-%define with_system_dialog	1
-%define with_system_icu		1
+# in its own package
 %define with_system_lcdf	0
-%define with_system_psutils	1
-%define with_system_t1lib	1
 %define with_system_tex4ht	0
 %define with_system_teckit	1
-%define with_system_graphite2	1
-%define with_system_harfbuzz	1
 
-%define enable_shared		1
 
 %define texmfbindir		%{_bindir}
 %define texmfdir		%{_datadir}/texmf
@@ -67,31 +53,27 @@ BuildRequires: /usr/bin/hg
 %define texmfprojectdir		%{_datadir}/texmf-project
 %define texmfvardir		%{_localstatedir}/lib/texmf
 %define texmfconfdir		%{_sysconfdir}/texmf
-%define relYear	2021
+%define relYear	2022
 %global tl_version %relYear
-%global mga_tl_timestamp 20210325
+%global mga_tl_timestamp 20220321
 
 
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	%relYear
-Release:	alt5_3
+Release:	alt0_9
 Summary:	The TeX formatting system
 Group:		Publishing
-License:	http://www.tug.org/texlive/LICENSE.TL
-URL:		http://tug.org/texlive/
+License:	https://www.tug.org/texlive/LICENSE.TL
+URL:		https://tug.org/texlive/
 Source0:	ftp://tug.org/historic/systems/texlive/%{relYear}/%{name}-%{mga_tl_timestamp}-source.tar.xz
 Source1:	ftp://tug.org/historic/systems/texlive/%{relYear}/%{name}-%{mga_tl_timestamp}-source.tar.xz.sha512
 
-%if %{enable_xdvik}
 Requires:	ghostscript-module-X
-%endif
 
 
 #-----------------------------------------------------------------------
-%if %{with_system_dialog}
 Requires:	dialog
-%endif
 Requires:	ghostscript
 %if %{enable_asymptote}
 Requires:	gv
@@ -101,9 +83,7 @@ Requires:	tkinter
 Requires:	lcdf-typetoools
 %else
 %endif
-%if %{with_system_psutils}
 Requires:	psutils
-%endif
 %if %{with_system_teckit}
 Requires:	libteckit-utils
 %endif
@@ -118,66 +98,45 @@ Requires:	texlive-collection-basic
 #-----------------------------------------------------------------------
 BuildRequires:	autoconf-archive
 BuildRequires:	bison
-%if %{enable_xindy}
 BuildRequires:	clisp
-BuildRequires:	libffcall-devel
-%endif
-%if %{enable_asymptote}
-BuildRequires:	libfftw3-devel
-BuildRequires:	flex
-%endif
-BuildRequires:	pkgconfig(freetype2)
-BuildRequires:	pkgconfig(fontconfig)
-BuildRequires:  libgmp-devel
-%if %{enable_asymptote}
-BuildRequires:	libgc-devel
-BuildRequires:	libsigsegv-devel
-BuildRequires:	ghostscript-dvipdf
-BuildRequires:	libgsl-devel
-BuildRequires:	libGL-devel
-%endif
+BuildRequires:	libffcall libffcall-devel
 BuildRequires:	libgs-devel
-BuildRequires:	pkgconfig(libbrotlienc)
-BuildRequires:	pkgconfig(libwoff2enc)
-BuildRequires:	libxxhash-devel
-BuildRequires:	libpotrace-devel
+BuildRequires:	pkgconfig(gmp)
+BuildRequires:	pkgconfig(graphite2)
+BuildRequires:	libicu-devel
+BuildRequires:	libpaper-devel
+BuildRequires:	mercurial mercurial-hgext
+BuildRequires:	pkgconfig(cairo)
+BuildRequires:	pkgconfig(fontconfig)
+BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(gdlib)
-BuildRequires:  graphite2-devel
-BuildRequires:  pkgconfig(harfbuzz)
-BuildRequires:  pkgconfig(mpfr)
-%if %{with_system_poppler}
-BuildRequires: pkgconfig(poppler)
-%endif
-BuildRequires:	pkgconfig(xaw7)
-%if !%{with_system_dialog}
-BuildRequires:	ncurses-devel
-%endif
+BuildRequires:	pkgconfig(harfbuzz)
+BuildRequires:	pkgconfig(libbrotlienc)
 BuildRequires:	pkgconfig(libpng)
-%if %{with_system_t1lib}
+BuildRequires:	pkgconfig(libwoff2enc)
+BuildRequires:	pkgconfig(mpfr)
+BuildRequires:	pkgconfig(poppler)
+BuildRequires:	pkgconfig(xaw7)
+BuildRequires:	pkgconfig(zziplib)
+BuildRequires:	libpotrace-devel
 BuildRequires:	t1lib-devel
-%endif
+BuildRequires:	texlive
+BuildRequires:	texlive-dist
+BuildRequires:	texlive-fonts-sources
+BuildRequires:	pkgconfig(libxxhash)
 %if %{with_system_teckit}
 BuildRequires:	libteckit-devel
 %endif
-%if %{with_system_icu}
-BuildRequires:	libicu-devel
-%endif
-%if %{with_system_graphite2}
-BuildRequires:	libgraphite2-devel
-%endif
-%if %{with_system_harfbuzz}
-BuildRequires:	libharfbuzz-devel
-%endif
-%if %{enable_xindy}
-BuildRequires:	texlive
-%endif
 %if %{enable_asymptote}
+BuildRequires:	pkgconfig(fftw3)
+BuildRequires:	flex
+BuildRequires:	pkgconfig(bdw-gc)
+BuildRequires:	libsigsegv-devel
+BuildRequires:	ghostscript-utils
+BuildRequires:	pkgconfig(gsl)
+BuildRequires:	libglvnd-devel
 BuildRequires:	makeinfo
 %endif
-BuildRequires:	pkgconfig(zziplib)
-BuildRequires:	pkgconfig(cairo)
-BuildRequires:	libpaper-devel
-BuildRequires:	mercurial mercurial-hgext
 
 #-----------------------------------------------------------------------
 Patch1: texlive-20160523-mageia-format.patch
@@ -187,6 +146,9 @@ Patch2: texlive-20160523-mageia-asymptote.patch
 Patch4: texlive-20160523-texmf-mageia-kpfix.patch
 Patch5: includePatch.patch
 Patch7: texlive-dvisvgm-system-libs.patch
+Patch8: mga-fix-build-with-gs10.patch
+Patch9: texlive-use-grep-E-and-grep-F-instead-of-deprecated-egrep-fgrep.patch
+Patch10: CVE-2023-32700.patch
 Source44: import.info
 Provides: dvipng = %{tl_version}
 Provides: lcdf-typetools = %{tl_version}
@@ -217,13 +179,9 @@ Conflicts: texlive-omega < 2009
 Conflicts: texlive-xetex < 2009
 Patch33: texlive-2017-alt-texmf-first.patch
 Patch34: texlive-2018-alt-gcc8.patch
+Patch35: texlive-2022-dvisvgm-alt-cxx.patch
 Provides: texlive-collection-binextra = %{tl_version}
-Patch35: texlive-2018-e2k-luatex.patch
-# Poppler patches
-#Patch101: 0001-try-to-adapt-to-poppler-0.58.patch
-
-# fixed build with gcc-13
-Patch36: texlive-20210325-alt-gcc13.patch
+Patch36: texlive-2018-e2k-luatex.patch
 
 #-----------------------------------------------------------------------
 %description
@@ -241,11 +199,8 @@ free software, including support for many languages around the world.
 %ghost %config(noreplace) %{texmfconfdir}/web2c/updmap.cfg
 
 
-#-----------------------------------------------------------------------
-%if %{enable_shared}
-########################################################################
-%define        kpathsea_major          6
-%define        kpathsea                libkpathsea%{kpathsea_major}
+%define	kpathsea_major	6
+%define	kpathsea	libkpathsea%{kpathsea_major}
 %exclude %{texmfbindir}/teckit_compile
 
 %package	-n %{kpathsea}
@@ -279,9 +234,9 @@ This package includes the kpathsea development files.
 %{_libdir}/pkgconfig/kpathsea.pc
 
 #-----------------------------------------------------------------------
-%define        texlua_major           5
-%define        texluajit_major        2
-%define        texlua                 libtexlua%{texlua_major}
+%define	texlua_major	5
+%define	texluajit_major	2
+%define	texlua	libtexlua%{texlua_major}
 
 %package	-n %{texlua}
 Summary:	Library for TeXlua
@@ -322,8 +277,8 @@ This package includes the TeXlua development files.
 %endif
 
 #-----------------------------------------------------------------------
-%define        synctex_major           2
-%define        synctex                 libsynctex%{synctex_major}
+%define	synctex_major	2
+%define	synctex	libsynctex%{synctex_major}
 
 %package	-n %{synctex}
 Summary:	Library for SyncTeX
@@ -354,8 +309,8 @@ This package includes the synctex development files.
 %{_libdir}/pkgconfig/synctex.pc
 
 #-----------------------------------------------------------------------
-%define        ptexenc_major           1
-%define        ptexenc                 libptexenc%{ptexenc_major}
+%define	ptexenc_major	1
+%define	ptexenc	libptexenc%{ptexenc_major}
 
 %package	-n %{ptexenc}
 Summary:	Library for Japanese pTeX
@@ -390,8 +345,6 @@ This package includes the ptexenc development files.
 %{_libdir}/pkgconfig/ptexenc.pc
 
 ########################################################################
-# enable_shared
-%endif
 
 #-----------------------------------------------------------------------
 %prep
@@ -406,6 +359,9 @@ cat %_sourcedir/texlive-20160523-mageia-asymptote.patch | hg import -  -q -m tex
 cat %_sourcedir/texlive-20160523-texmf-mageia-kpfix.patch | hg import -  -q -m texlive-20160523-texmf-mageia-kpfix.patch --user "rpmbuild <rpmbuild>"
 cat %_sourcedir/includePatch.patch | hg import -  -q -m includePatch.patch --user "rpmbuild <rpmbuild>"
 cat %_sourcedir/texlive-dvisvgm-system-libs.patch | hg import -  -q -m texlive-dvisvgm-system-libs.patch --user "rpmbuild <rpmbuild>"
+cat %_sourcedir/mga-fix-build-with-gs10.patch | hg import -  -q -m mga-fix-build-with-gs10.patch --user "rpmbuild <rpmbuild>"
+cat %_sourcedir/texlive-use-grep-E-and-grep-F-instead-of-deprecated-egrep-fgrep.patch | hg import -  -q -m texlive-use-grep-E-and-grep-F-instead-of-deprecated-egrep-fgrep.patch --user "rpmbuild <rpmbuild>"
+cat %_sourcedir/CVE-2023-32700.patch | hg import -  -q -m CVE-2023-32700.patch --user "rpmbuild <rpmbuild>"
 
 
 # setup default builtin values, added to paths.h from texmf.cnf
@@ -421,8 +377,10 @@ perl -pi -e 's%%^(TEXMFMAIN\s+= ).*%%$1%{texmfdistdir}%%;'			  \
 	texk/kpathsea/texmf.cnf
 %patch33 -p0
 %patch34 -p1
-%patch35 -p2
-%patch36 -p1
+%patch35 -p1
+# viy@: no need: configure fails, but we use system library
+rm -rf libs/cairo
+%patch36 -p2
 
 %if ! %{enable_luajittex}
 # even if building luajit is disabled, build scripts still call
@@ -432,35 +390,55 @@ rm -rf libs/luajit
 
 #-----------------------------------------------------------------------
 %build
-%add_optflags -fpermissive
 export CXXFLAGS="%{optflags} -std=c++14"
 
 #for dvisvgm system libs patches
-autoreconf -vfi texk/dvisvgm
-# viy: LTO
-# and something like autoreconf -fisv libs/cairo does not work
-rm -rf libs/cairo
-
-# viy: for new
-#libtool: Version mismatch error.  This is libtool 2.4.7, but the
-#libtool: definition of this LT_INIT comes from libtool 2.4.6.
 ./reautoconf
+
 mkdir -p Work
 pushd Work
 
 %define _configure_script ../configure
 CONFIGURE_TOP=.. \
 %configure							\
-	--with-banner-add="/Mageia"				\
-	--disable-native-texlive-build				\
-	--enable-missing					\
-	--disable-linked-scripts				\
-	--with-system-gmp					\
-	--with-system-graphite2					\
-	--with-system-harfbuzz					\
-	--with-system-libpaper					\
-	--with-system-mpfr					\
-	--with-system-zlib					\
+%if %{with_system_lcdf}
+	--disable-lcdf-typetools				\
+%endif
+%if %{with_system_teckit}
+	--disable-teckit					\
+	--with-teckit-includes=%{_includedir}/teckit		\
+%endif
+%if %{with_system_tex4ht}
+	--disable-tex4htk					\
+%endif
+	--with-banner-add="/Mageia"	\
+	--disable-dialog \
+	--disable-linked-scripts \
+	--disable-native-texlive-build \
+	--disable-psutils \
+	--disable-static \
+	--disable-t1utils \
+	--enable-dvi2tty \
+	--enable-missing \
+	--enable-shared \
+	--enable-xdvik \
+	--enable-xindy \
+	--enable-xindy-rules \
+	--with-freetype2-includes=%{_includedir}/freetype2	\
+	--without-system-xpdf \
+	--with-system-cairo \
+	--with-system-freetype2 \
+	--with-system-gd \
+	--with-system-gmp \
+	--with-system-graphite2 \
+	--with-system-harfbuzz \
+	--with-system-icu \
+	--with-system-libpaper \
+	--with-system-libpng \
+	--with-system-mpfr \
+	--with-system-pixman \
+	--with-system-poppler \
+	--with-system-t1lib \
 %if %{enable_luajittex}
 	--enable-luajittex					\
 %else
@@ -472,79 +450,8 @@ CONFIGURE_TOP=.. \
 %else
 	--disable-mfluajit					\
 %endif
-%if %{enable_shared}
-	--enable-shared						\
-	--disable-static					\
-%else
-	--disable-shared					\
-%endif
-%if %{enable_xindy}
-	--enable-xindy-rules            			\
-%else
-	--disable-xindy						\
-%endif
-%if %{enable_xdvik}
-        --enable-xdvik                                          \
-%else
-        --disable-xdvik                                         \
-%endif
-%if %{enable_dvi2tty}
-        --enable-dvi2tty                                        \
-%else
-        --disable-dvi2tty                                       \
-%endif
-	--with-system-freetype2					\
-	--with-freetype2-includes=%{_includedir}/freetype2	\
-%if %{with_system_dialog}
-	--disable-dialog					\
-%else
-	--enable-dialog						\
-%endif
-%if %{with_system_psutils}
-	--disable-psutils					\
-%else
-	--enable-psutils					\
-%endif
-	--with-system-gd					\
-%if %{with_system_lcdf}
-	--disable-lcdf-typetools				\
-%endif
-	--with-system-libpng					\
-%if %{with_system_t1lib}
-	--with-system-t1lib					\
-	--disable-t1utils					\
-%endif
-%if %{with_system_teckit}
-	--disable-teckit					\
-	--with-teckit-includes=%{_includedir}/teckit		\
-%endif
-%if %{with_system_tex4ht}
-	--disable-tex4htk					\
-%endif
-%if %{with_system_icu}
-	--with-system-icu					\
-%else
-	--without-system-icu					\
-%endif
-%if %{with_system_poppler}
-	--without-system-xpdf					\
-	--with-system-poppler					\
-%else
-	--without-system-xpdf					\
-%endif
-%if %{with_system_graphite2}
-	--with-system-graphite2					\
-%else
-	--without-system-graphite2					\
-%endif
-%if %{with_system_harfbuzz}
-	--with-system-harfbuzz					\
-%else
-	--without-system-harfbuzz					\
-%endif
-	--with-system-zziplib					\
-	--with-system-cairo					\
-	--with-system-pixman
+	--with-system-zlib \
+	--with-system-zziplib
 %define _configure_script ./configure
 %make_build
 
@@ -586,11 +493,6 @@ mkdir -p %{buildroot}%{texmfconfdir}
 %if %{with_system_lcdf}
 # stray directory left
 rm -fr %{buildroot}%{_datadir}/lcdf-typetools-for-tex-live
-%else
-# openmpi has a program with the same name
-if [ -f %{buildroot}%{texmfbindir}/otfinfo ]; then
-    mv -f %{buildroot}%{texmfbindir}/otfinfo{,-texlive}
-fi
 %endif
 
 pushd %{buildroot}%{texmfbindir}
@@ -632,9 +534,7 @@ pushd %{buildroot}%{texmfbindir}
 		$file
 	fi
     done
-%if %{with_system_dialog}
 	ln -sf %{_bindir}/dialog tcdialog
-%endif
 %if %{enable_asymptote}
 	ln -sf %{texmfdir}/asymptote/GUI/xasy.py xasy
 %endif
@@ -662,12 +562,6 @@ rm -fr %{buildroot}%{texmfdir} %{buildroot}%{texmfdistdir}
 # install manual pages and info files from texlive-texmf tarball
 rm -fr %{buildroot}%{_mandir} %{buildroot}%{_infodir}
 
-%if !%{enable_shared}
-# do not generate dynamic libraries and do not install static ones
-rm -fr %{buildroot}%{_libdir}
-rm -fr %{buildroot}%{_includedir}
-%endif
-
 rm -f %{buildroot}%{_datadir}/applications/xdvi.desktop
 
 # drop .la files
@@ -689,6 +583,9 @@ rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R %{texmfconfdir}/ls-R
 
 #-----------------------------------------------------------------------
 %changelog
+* Fri Mar 08 2024 Igor Vlasenko <viy@altlinux.org> 2022-alt0_9
+- new version (test release)
+
 * Thu Jul 27 2023 Mikhail Tergoev <fidel@altlinux.org> 2021-alt5_3
 - NMU: fixed build with gcc-13 (ALT bug 46864)
 
