@@ -1,6 +1,6 @@
 Name: openocd
 Version: 0.12.0
-Release: alt1
+Release: alt2
 
 Summary: Debugging, in-system programming and boundary-scan testing for embedded devices
 License: GPLv2
@@ -9,7 +9,7 @@ Url: http://sourceforge.net/projects/openocd
 
 Source: %name-%version-%release.tar
 
-BuildRequires: capstone-devel jimtcl-devel libftdi1-devel libgpiod-devel libhidapi-devel libjaylink-devel libusb-devel texinfo
+BuildRequires: capstone-devel jimtcl-devel libftdi1-devel libhidapi-devel libjaylink-devel libusb-devel texinfo
 
 %description
 The Open On-Chip Debugger (OpenOCD) provides debugging, in-system
@@ -30,6 +30,7 @@ hardware debugging.
   --disable-doxygen-html \
   --disable-internal-jimtcl \
   --disable-internal-libjaylink \
+  --enable-internal-libgpiod \
   --enable-amtjtagaccel \
   --enable-at91rm9200 \
   --enable-bcm2835gpio \
@@ -79,6 +80,9 @@ install -pm644 -D contrib/60-openocd.rules %buildroot%_udevrulesdir/60-openocd.r
 %_mandir/man1/*
 
 %changelog
+* Mon Mar 11 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.0-alt2
+- rebuilt with jimtcl-0.82 and internal libgpiod
+
 * Wed Jan 18 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.0-alt1
 - 0.12.0 released
 

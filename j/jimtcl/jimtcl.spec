@@ -1,6 +1,6 @@
 Name: jimtcl
-Version: 0.81
-Release: alt2
+Version: 0.82
+Release: alt1
 
 Summary: A small embeddable Tcl interpreter
 License: BSD
@@ -10,7 +10,7 @@ Url: http://jim.tcl.tk
 # https://github.com/msteveb/jimtcl.git
 Source0: %name-%version.tar
 
-BuildRequires: asciidoc
+BuildRequires: asciidoc zlib-devel
 
 %description
 Jim is an opensource small-footprint implementation of the Tcl
@@ -22,7 +22,6 @@ first-class arrays and UTF-8 support.
 %package devel
 Summary: Development files for %name
 Group: Development/Tcl
-Requires: %name%{?_isa} = %version-%release
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -40,8 +39,9 @@ export RANLIB=ranlib
 export STRIP=strip
 
 %configure \
-	--full \
 	--shared \
+	--docdir=%_defaultdocdir/%name-%version \
+	--disable-ssl \
 	--disable-option-checking \
 	#
 %make_build
@@ -51,16 +51,14 @@ make test
 
 %install
 %makeinstall_std
-rm -rf %buildroot/%_datadir/doc/jim
-pushd %buildroot/%_libdir/
-ln -s libjim.so.* libjim.so
-popd
+rm %buildroot%_libdir/jim/tcltest.tcl
 
 %files
 %doc LICENSE AUTHORS README Tcl.html
 %_bindir/jimdb
 %_bindir/jimsh
 %_libdir/libjim.so.*
+%_libdir/jim
 
 %files devel
 %doc DEVELOPING README.extensions README.metakit README.namespaces README.oo README.utf-8 STYLE
@@ -70,6 +68,9 @@ popd
 %_pkgconfigdir/jimtcl.pc
 
 %changelog
+* Mon Feb 27 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.82-alt1
+- 0.82 released
+
 * Wed Nov 30 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.81-alt2
 - filter out outdated test
 
