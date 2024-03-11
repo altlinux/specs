@@ -2,13 +2,14 @@
 
 Name: fprintd
 Version: 1.94.2
-Release: alt1
+Release: alt2
+
 Summary: D-Bus service for Fingerprint reader access
+License: GPLv2+
 Group: System/Servers
 Url: https://www.freedesktop.org/wiki/Software/fprint/fprintd
-License: GPLv2+
+VCS: https://gitlab.freedesktop.org/libfprint/fprintd.git
 
-# https://gitlab.freedesktop.org/libfprint/fprintd
 Source: %name-%version.tar
 Source1: system-auth-fprintd
 Source2: system-auth-use_first_pass-fprintd
@@ -16,21 +17,32 @@ Source2: system-auth-use_first_pass-fprintd
 Patch: %name-%version.patch
 
 BuildRequires(pre): meson
-BuildRequires: libdbus-glib-devel
-BuildRequires: pkgconfig(libfprint-2) > 1.94.0
-BuildRequires: libfprint2-gir-devel
-BuildRequires: pkgconfig(glib-2.0) pkgconfig(dbus-glib-1)
-BuildRequires: pkgconfig(gmodule-2.0) pkgconfig(polkit-gobject-1) >= 0.91 pkgconfig(gio-2.0) >= 2.26
+BuildRequires(pre): rpm-build-python3
+
+BuildRequires: libgio-devel
 BuildRequires: libpam0-devel
-BuildRequires: gtk-doc intltool
-BuildRequires: /usr/bin/pod2man /usr/bin/xmllint /usr/bin/xsltproc docbook-dtds
-BuildRequires: pkgconfig(systemd)
-BuildRequires: pkgconfig(libpamtest)
+BuildRequires: libpolkit-devel
+BuildRequires: libsystemd-devel
+BuildRequires: libdbus-glib-devel
+BuildRequires: libfprint2-gir-devel
+BuildRequires: libgirepository1.0-devel
+BuildRequires: gobject-introspection-devel
+
+BuildRequires: gtk-doc
+BuildRequires: intltool
+BuildRequires: perl-podlators
+BuildRequires: xml-utils
+BuildRequires: xsltproc
+BuildRequires: docbook-dtds
+
+BuildRequires: pam_wrapper
+BuildRequires: libpamtest-devel
+BuildRequires: python3-module-libpamtest
+
 BuildRequires: python3-module-pycairo
 BuildRequires: python3-module-dbus
 BuildRequires: python3-module-dbusmock
-BuildRequires: python3-module-libpamtest
-BuildRequires: python3(gi)
+BuildRequires: python3-module-pygobject3
 
 Requires: %name-clients = %EVR
 
@@ -100,7 +112,6 @@ install -m0644 -p %SOURCE2 %buildroot%_sysconfdir/pam.d/
 %_sysconfdir/pam.d/system-auth-*
 
 %files devel
-#_datadir/gtk-doc/html/fprintd
 %_datadir/dbus-1/interfaces/net.reactivated.Fprint.Device.xml
 %_datadir/dbus-1/interfaces/net.reactivated.Fprint.Manager.xml
 
@@ -108,6 +119,10 @@ install -m0644 -p %SOURCE2 %buildroot%_sysconfdir/pam.d/
 %_bindir/%name-*
 
 %changelog
+* Sun Mar 10 2024 Egor Ignatov <egori@altlinux.org> 1.94.2-alt2
+- update Russian translation
+- fix tests
+
 * Tue Jun 21 2022 Egor Ignatov <egori@altlinux.org> 1.94.2-alt1
 - 1.94.2
 - backport upstream fix for tests (issue #135)

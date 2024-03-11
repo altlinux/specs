@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libfprint2
-Version: 1.94.5
-Release: alt3.1
+Version: 1.94.7
+Release: alt1
 
 Summary: Tool kit for fingerprint scanner
 License: LGPLv2+
@@ -42,7 +42,7 @@ Group: System/Libraries
 Requires: %name = %EVR
 
 %description gir
-GObject introspection data for %name
+GObject introspection data for %name.
 
 %package devel
 Summary: Development files for %name
@@ -61,7 +61,15 @@ Requires: %name-gir = %EVR
 Requires: %name-devel = %EVR
 
 %description gir-devel
-GObject introspection devel data for %name
+GObject introspection devel data for %name.
+
+%package tests
+Summary: Installed tests for %name
+Group: System/Libraries
+Requires: %name = %EVR
+
+%description tests
+Installed tests for %name.
 
 %prep
 %setup
@@ -72,7 +80,8 @@ GObject introspection devel data for %name
        -Dintrospection=true \
        -Dudev_rules=enabled \
        -Dgtk-examples=false \
-       -Ddoc=true
+       -Ddoc=false \
+       -Dinstalled-tests=true
 %meson_build
 
 %install
@@ -86,20 +95,26 @@ GObject introspection devel data for %name
 %_libdir/*.so.*
 %_udevrulesdir/70-libfprint-2.rules
 
-%files gir
-%_libdir/girepository-1.0/*.typelib
-
 %files devel
 %doc HACKING.md
-%doc %_datadir/gtk-doc/html/libfprint-2
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/libfprint-2.pc
+
+%files tests
+%_datadir/installed-tests/libfprint-2
+%_libexecdir/installed-tests/libfprint-2
+
+%files gir
+%_libdir/girepository-1.0/*.typelib
 
 %files gir-devel
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Sun Mar 10 2024 Egor Ignatov <egori@altlinux.org> 1.94.7-alt1
+- new version 1.94.7
+
 * Mon Jun 05 2023 Ivan A. Melnikov <iv@altlinux.org> 1.94.5-alt3.1
 - NMU: increase tests timeout to fix build on riscv64
 
