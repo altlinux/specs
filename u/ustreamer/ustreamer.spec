@@ -1,5 +1,5 @@
 Name: ustreamer
-Version: 6.0
+Version: 6.2
 Release: alt1
 
 Summary: Lightweight MJPEG stream server
@@ -81,6 +81,9 @@ make install %defs DESTDIR=%buildroot PREFIX=%prefix
 %python3_sitelibdir/ustreamer.*.so
 
 %changelog
+* Mon Mar 11 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.2-alt1
+- 6.2 released
+
 * Thu Mar 07 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.0-alt1
 - 6.0 released
 
