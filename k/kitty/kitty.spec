@@ -3,7 +3,7 @@
 
 Name: kitty
 Version: 0.32.2
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
 License: GPL-3.0
@@ -46,7 +46,6 @@ BuildRequires: libGL-devel
 BuildRequires: libpng-devel
 BuildRequires: libssl-devel
 BuildRequires: libdbus-devel
-BuildRequires: librsync-devel
 BuildRequires: liblcms2-devel
 BuildRequires: libxxhash-devel
 BuildRequires: fontconfig-devel
@@ -65,6 +64,9 @@ BuildRequires: ncurses
 BuildRequires: /proc
 
 %if_with check
+BuildRequires: zsh
+BuildRequires: bash
+BuildRequires: fish
 BuildRequires: /dev/pts
 BuildRequires: fonts-ttf-gnu-freefont-mono
 %endif
@@ -153,6 +155,11 @@ sed -i -e "/is_arm/ s/'aarch64'/'aarch64', 'armv8l'/" setup.py
 sed -i -e "s/-fcf-protection=full//" setup.py
 %endif
 
+# 0.32.2: Disable optimizations for kittens/transfer/algorithm.c:init_rsync()
+# because it segfaults due to a bug in gcc10
+sed -i -e '/^init_rsync(/ i__attribute__((optimize("O0")))' \
+    kittens/transfer/algorithm.c
+
 %build
 %add_optflags -Wno-switch
 export CFLAGS="${CFLAGS:-%optflags}"
@@ -217,6 +224,10 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %_bindir/kitten
 
 %changelog
+* Mon Mar 11 2024 Egor Ignatov <egori@altlinux.org> 0.32.2-alt2
+- enable shell-integration tests
+- fix build with gcc 10
+
 * Wed Feb 14 2024 Egor Ignatov <egori@altlinux.org> 0.32.2-alt1
 - new version 0.32.2
 
