@@ -1,16 +1,21 @@
 Name: libgpiod
-Version: 1.6.4
+Version: 2.1
 Release: alt1
 
 Summary: Linux GPIO interacting library
 License: LGPL-2.1
 Group: System/Libraries
-Url: https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git/
+Url: https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git
 
 Source0: %name-%version-%release.tar
 
 BuildRequires: autoconf-archive gcc-c++ help2man
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: rpm-build-pyproject
+BuildRequires: python3(wheel)
+
+%package -n libgpiod2
+Summary: Linux GPIO interacting library
+Group: System/Libraries
 
 %package c++
 Summary: C++ bindings for libgpiod
@@ -41,6 +46,10 @@ data structures behind a straightforward API.
 %description
 %desc
 
+%description -n libgpiod2
+%desc
+This package contains libgpiod shared library.
+
 %description c++
 %desc
 This package contains C++ bindings for libgpiod.
@@ -62,17 +71,22 @@ This package contains Python bindings for libgpiod.
 
 %build
 %autoreconf
-%configure --enable-tools \
-	--disable-static \
-	--enable-bindings-cxx \
-	--enable-bindings-python
-
+%configure --disable-static --enable-tools --enable-bindings-cxx
 %make_build
+# isn't that lovely
+%pyproject_build --backend-config-settings \
+	'{"--build-option": [
+			"build_ext",
+			"--inplace",
+			"--include-dirs=../../include",
+			"--library-dirs=../../lib/.libs"]}' \
+	bindings/python
 
 %install
 %makeinstall_std
+%pyproject_install bindings/python/dist/*.whl
 
-%files
+%files -n libgpiod2
 %doc COPYING README
 %_libdir/libgpiod.so.*
 
@@ -82,6 +96,7 @@ This package contains Python bindings for libgpiod.
 %files devel
 %_includedir/gpiod.h
 %_includedir/gpiod.hpp
+%_includedir/gpiodcxx
 %_libdir/libgpiod.so
 %_libdir/libgpiodcxx.so
 %_pkgconfigdir/libgpiod.pc
@@ -93,9 +108,16 @@ This package contains Python bindings for libgpiod.
 %_man1dir/gpio*.1*
 
 %files -n python3-module-gpiod
-%python3_sitelibdir/gpiod.so
+%python3_sitelibdir/gpiod
+%python3_sitelibdir/gpiod-*.dist-info
 
 %changelog
+* Mon Mar 11 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1-alt1
+- 2.1 released
+
+* Thu Sep 21 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.2-alt1
+- 2.0.2 released
+
 * Fri Feb 10 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.4-alt1
 - 1.6.4 released
 
