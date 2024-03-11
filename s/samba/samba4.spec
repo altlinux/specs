@@ -120,8 +120,8 @@
 %endif
 
 Name:    samba
-Version: 4.19.4
-Release: alt2
+Version: 4.19.5
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2208,6 +2208,15 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Mon Mar 11 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.19.5-alt1
+- Update to stable release of Samba 4.19
+- Fixes from upstream:
+  + Windows 2016 fails to restore previous version of a file from a shadow_copy2
+    snapshot (Samba#13688).
+  + smbd fixes (Samba#12421, Samba#15550).
+  + samba-gpupdate fixes (Samba#15548, Samba#15557, Samba#15552, Samba#15558).
+  + smbpasswd reset permissions only if not 0600 (Samba#15555).
+
 * Thu Feb 15 2024 Arseny Maslennikov <arseny@altlinux.org> 4.19.4-alt2
 - NMU: remove useless symlinks to nss_winbind and nss_wins.
   See also: https://altlinux.org/Usrmerge.
