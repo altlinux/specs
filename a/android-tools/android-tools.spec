@@ -4,7 +4,7 @@
 
 Name: android-tools
 Version: 34.0.4
-Release: alt2
+Release: alt3
 
 Summary: Android Debug CLI tools
 License: APL
@@ -46,6 +46,7 @@ Patch100: Revert-Remove-support-for-ppc64le.patch
 
 # LoongArch
 Patch3500: boringssl-loongarch64.patch
+Patch3501: libunwindstack-loongarch64.patch
 
 %ifarch loongarch64
 # XXX: as of LLVM 17 lld supports only a subset of LoongArch relocations.
@@ -133,6 +134,7 @@ pushd external/boringssl
 %patch100 -p1
 popd
 %patch3500 -p1
+%patch3501 -p1
 
 rm -rf development/[a-s]* development/v* development/testrunner
 
@@ -333,6 +335,11 @@ done
 %aprefix
 
 %changelog
+* Mon Mar 11 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 34.0.4-alt3
+- NMU: fixed FTBFS on LoongArch for real:
+  + libunwindstack: implemented AsmGetRegs for LoongArch. Makes ELF symbol
+    check happy (and is pointless otherwise).
+
 * Sun Mar 10 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 34.0.4-alt2
 - NMU: fixed FTBFS on LoongArch:
   + boringssl: explain that LoongArch (lp64d) is 64-bit
