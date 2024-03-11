@@ -1,6 +1,6 @@
 Name: ghostwriter
 Version: 2.1.6
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform, aesthetic, distraction-free Markdown editor
 
@@ -15,14 +15,32 @@ Source: %name-%version.tar
 
 Patch: ghostwriter-qt5.15-fix.patch
 
-BuildRequires(pre): rpm-macros-qt5
+BuildRequires(pre): rpm-macros-qt5 rpm-macros-qt6
 
-BuildRequires(pre): rpm-macros-qt5-webengine
-# Required qt5-qtwebengine is not available on some arches.
-ExcludeArch: %not_qt5_qtwebengine_arches
+BuildRequires(pre): rpm-macros-qt5-webengine rpm-macros-qt6-webengine
 
+# Requires QtWebEngine. Can be built either with Qt5 or Qt6.
+ExclusiveArch: %qt5_qtwebengine_arches %qt6_qtwebengine_arches
+%ifarch %qt5_qtwebengine_arches
+# Use Qt5 on architectures where qt5-webengine is available.
+%def_with qt5
+%def_without qt6
+%else
+%ifarch %qt6_qtwebengine_arches
+# Otherwise use Qt6 if qt6-webengine is available.
+%def_with qt6
+%def_without qt5
+%endif
+%endif
+
+%if_with qt5
 BuildRequires: qt5-base-devel libqt5-core libqt5-network libqt5-gui libqt5-dbus
 BuildRequires: qt5-webengine-devel qt5-svg-devel qt5-tools
+%endif
+%if_with qt6
+BuildRequires: qt6-base-devel qt6-5compat-devel qt6-tools-devel
+BuildRequires: qt6-webengine-devel qt6-webchannel-devel qt6-svg-devel
+%endif
 
 #BuildRequires: cmake(Qt5LinguistTools)
 #BuildRequires: cmake(Qt5XmlPatterns)
@@ -59,7 +77,13 @@ or your novel.
 sed -i 's@appdata/@metainfo/@g' %name.pro
 
 %build
+%if_with qt5
 %qmake_qt5 PREFIX=%prefix .
+%else
+%if_with qt6
+%qmake_qt6 PREFIX=%prefix .
+%endif
+%endif
 %make_build
 
 %install
@@ -77,6 +101,9 @@ sed -i 's@appdata/@metainfo/@g' %name.pro
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Mon Mar 11 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.1.6-alt2
+- NMU: build for LoongArch (use Qt6 here)
+
 * Mon Dec 19 2022 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt1
 - new version
 - update URL and Source URL
