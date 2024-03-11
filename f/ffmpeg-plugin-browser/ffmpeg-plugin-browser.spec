@@ -90,7 +90,8 @@
 %def_enable sdl2
 %def_enable vaapi
 %def_enable vdpau
-%if_ver_gteq %vulkan_ver 1.2.189
+# VK_HEADER_VERSION
+%if_ver_gteq %vulkan_ver 1.3.238
 %def_disable vulkan
 %else
 %def_disable vulkan
@@ -166,14 +167,13 @@
 
 Name:		ffmpeg-plugin-browser
 Version:	118
-Release:	alt1
+Release:	alt2
 
 Summary:	FFmpeg built specifically for codec support in special browser
 License:	GPLv3
 Group:		Video
 
-Url:		http://ffmpeg.org
-
+Url:		https://chromium.googlesource.com/chromium/third_party/ffmpeg
 
 # https://chromium.googlesource.com/chromium/third_party/ffmpeg.git
 Source:		%name-%version.tar
@@ -784,6 +784,9 @@ tests/checkasm/checkasm
 %_libdir/ffmpeg-plugin-browser/libffmpeg.so
 
 %changelog
+* Mon Mar 11 2024 Sergey V Turchin <zerg@altlinux.org> 118-alt2
+- update package url
+
 * Mon Jan 15 2024 Sergey V Turchin <zerg@altlinux.org> 118-alt1
 - new version
 
