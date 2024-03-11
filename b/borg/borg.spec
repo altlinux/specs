@@ -1,8 +1,6 @@
-%def_without check
-
 Name: borg
-Version: 1.2.4
-Release: alt1.1
+Version: 1.2.7
+Release: alt1
 
 Summary: Deduplicating backup program with compression and authenticated encryption
 
@@ -75,6 +73,9 @@ py.test-3 -x -vk "$TEST_SELECTOR" $PYTHONPATH/borg/testsuite/*.py
 
 
 %changelog
+* Sun Jan 07 2024 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.2.7-alt1
+- 1.2.7 release
+
 * Wed Jan 03 2024 Grigory Ustinov <grenka@altlinux.org> 1.2.4-alt1.1
 - Build without check for python3.12.
 
