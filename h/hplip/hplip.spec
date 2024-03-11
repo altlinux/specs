@@ -29,7 +29,7 @@
 
 Name:    hplip
 Version: 3.23.12
-Release: alt3
+Release: alt4
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -191,6 +191,7 @@ Patch15: hplip-alt-use-python3-in-service.patch
 # Fix undefined _GDB() function
 Patch17: hplip-alt-fix-undefined-_GDB-call.patch
 Patch18: hplip-alt-add-M125ra-model.patch
+Patch19: hplip-alt-ftbfs-fix-buit.patch
 
 # fedora patches
 Patch101: hplip-pstotiff-is-rubbish.patch
@@ -585,6 +586,7 @@ tar -xf %SOURCE6
 %patch15 -p2
 %patch17 -p2
 %patch18 -p2
+%patch19 -p2
 
 egrep -lZr '#!/usr/bin/python$' . | xargs -r0 sed -i 's,#!/usr/bin/python$,#!/usr/bin/python%{pysuffix},'
 fgrep -lZr '#!/usr/bin/env python' . | xargs -r0 sed -i 's,#!/usr/bin/env python,#!/usr/bin/python%{pysuffix},'
@@ -1125,6 +1127,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Mon Mar 11 2024 Andrey Cherepanov <cas@altlinux.org> 1:3.23.12-alt4
+- FTBFS: fixed build.
+
 * Sat Mar 02 2024 Andrey Cherepanov <cas@altlinux.org> 1:3.23.12-alt3
 - Requires python3-module-pygobject3 (ALT #49591).
 
