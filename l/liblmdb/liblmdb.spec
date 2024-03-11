@@ -2,7 +2,7 @@
 %def_with check
 
 Name: liblmdb
-Version: 0.9.31
+Version: 0.9.32
 Release: alt1
 
 Summary: Symas Lightning Memory-Mapped Database
@@ -12,8 +12,9 @@ License: OLDAP-2.8
 # branch mdb.RE/0.9
 Vcs: https://git.openldap.org/openldap/openldap.git
 Source: %name-%version.tar
+Source1: lmdb.pc.in
 
-Patch12: liblmdb-0.9.18-alt-deb-add-soname-fix-install.patch
+Patch12: liblmdb-0.9.32-alt-deb-add-soname-fix-install.patch
 
 %description
 Lighting Memory-Mapped Database (LMDB) is an ultra-fast, ultra-compact
@@ -54,23 +55,38 @@ This package provides tools for manipulating LMDB databases:
 %install
 %makeinstall -C %name
 
+# Install pkgconfig file
+sed -e 's:@PREFIX@:%_prefix:g' \
+    -e 's:@EXEC_PREFIX@:%_exec_prefix:g' \
+    -e 's:@LIBDIR@:%_libdir:g' \
+    -e 's:@INCLUDEDIR@:%_includedir:g' \
+    -e 's:@PACKAGE_VERSION@:%version:g' \
+    %SOURCE1 >lmdb.pc
+install -Dpm 0644 -t %buildroot%_pkgconfigdir lmdb.pc
+
 rm %buildroot%_libdir/liblmdb.a
 
 %check
 make -C %name test
 
 %files
+%doc %name/COPYRIGHT %name/CHANGES
 %_libdir/%name.so.*
 
 %files devel
 %_includedir/lmdb.h
 %_libdir/%name.so
+%_pkgconfigdir/lmdb.pc
 
 %files -n lmdb-utils
 %_bindir/mdb_*
 %_man1dir/mdb_*
 
 %changelog
+* Mon Mar 11 2024 Evgeny Sinelnikov <sin@altlinux.org> 0.9.32-alt1
+- Updated to 0.9.32.
+- Add lmdb.pc pkg-config file from Fedora to development subpackages.
+
 * Wed Oct 04 2023 Alexey Shabalin <shaba@altlinux.org> 0.9.31-alt1
 - Updated to 0.9.31.
 
