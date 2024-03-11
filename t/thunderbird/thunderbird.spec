@@ -18,7 +18,7 @@
 
 Name: 	 thunderbird
 Version: 115.8.0
-Release: alt2
+Release: alt3
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -584,6 +584,9 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Mon Mar 11 2024 Andrey Cherepanov <cas@altlinux.org> 115.8.0-alt3
+- Use maximize icon for mail window too (ALT #49606).
+
 * Thu Mar 07 2024 Andrey Cherepanov <cas@altlinux.org> 115.8.0-alt2
 - Use maximize icon for CSD restore button missing in some themes (ALT #49606).
 
