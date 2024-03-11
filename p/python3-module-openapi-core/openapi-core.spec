@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.18.2
-Release: alt1
+Release: alt2
 Summary: Client-side and server-side support for the OpenAPI Specification v3
 License: BSD-3-Clause
 Group: Development/Python3
@@ -13,6 +13,7 @@ Url: https://pypi.org/project/openapi-core/
 Vcs: https://github.com/python-openapi/openapi-core
 BuildArch: noarch
 Source: %name-%version.tar
+Patch: openapi-0.18.2-pytest8-fix.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-poetry-core
@@ -43,6 +44,7 @@ for the OpenAPI v3.0 and OpenAPI v3.1 specification.
 
 %prep
 %setup
+%patch -p1
 sed -i '/--cov/d' pyproject.toml
 
 %build
@@ -60,6 +62,9 @@ sed -i '/--cov/d' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Mon Mar 11 2024 Anton Vyatkin <toni@altlinux.org> 0.18.2-alt2
+- Fixed FTBFS.
+
 * Tue Nov 07 2023 Anton Vyatkin <toni@altlinux.org> 0.18.2-alt1
 - New version 0.18.2.
 
