@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.3.0
-Release: alt2
+Version: 5.14.1
+Release: alt1
 
 Summary: Traitlets Python config system
 
@@ -17,17 +17,15 @@ Url: https://pypi.python.org/pypi/traitlets
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx3
+BuildRequires(pre): rpm-build-python3
 
 # build backend and its deps
 BuildRequires: python3(hatchling)
 
-# docs build
-BuildRequires: python3(sphinx)
-BuildRequires: python3(sphinx_rtd_theme)
-
 %if_with check
 BuildRequires: python3(pytest)
+BuildRequires: python3(argcomplete)
+BuildRequires: python3(pytest-mock)
 %endif
 
 %py3_provides %oname
@@ -45,53 +43,32 @@ A configuration system for Python applications.
 
 This package contains tests for %oname.
 
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-A configuration system for Python applications.
-
-This package contains pickles for %oname.
-
 %prep
 %setup
-
-%prepare_sphinx3 docs
-ln -s ../objects.inv docs/source/
+sed -i 's/"--color=yes",//' pyproject.toml
 
 %build
 %pyproject_build
 
-export PYTHONPATH=$(pwd)
-%make SPHINXBUILD="sphinx-build-3" -C docs pickle
-%make SPHINXBUILD="sphinx-build-3" -C docs html
-
 %install
 %pyproject_install
 
-cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname
-
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -v --ignore tests/test_typing.py
 
 %files
-%doc examples docs/build/html
+%doc README.*
 %python3_sitelibdir/traitlets/
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
-%exclude %python3_sitelibdir/*/pickle
-%exclude %python3_sitelibdir/*/tests
-%exclude %python3_sitelibdir/*/*/tests
+%exclude %python3_sitelibdir/%oname/tests
 
 %files tests
 %python3_sitelibdir/*/tests
-%python3_sitelibdir/*/*/tests
-
-%files pickles
-%python3_sitelibdir/*/pickle
 
 %changelog
+* Mon Feb 26 2024 Anton Vyatkin <toni@altlinux.org> 5.14.1-alt1
+- new version 5.14.1
+
 * Thu Nov 10 2022 Stanislav Levin <slev@altlinux.org> 5.3.0-alt2
 - Fixed FTBFS (flit_core 3.7.1).
 
