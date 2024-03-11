@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: gamescope
-Version: 3.12.5
+Version: 3.14.2
 Release: alt1
 
 Summary: SteamOS session compositing window manager
@@ -13,20 +13,17 @@ License: BSD-2-Clause
 Url: https://github.com/Plagman/gamescope
 
 Source: %name-%version.tar
-
-# Create stb.pc to satisfy dependency('stb')
-# Taken from Fedora
-Source1: stb.pc
+Source1: submodules-%name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
 BuildRequires: cmake
 BuildRequires: gcc-c++
+BuildRequires: libstb-devel
 BuildRequires: libliftoff-devel
 BuildRequires: libbenchmark-devel
 BuildRequires: libglm-devel
 BuildRequires: hwdata-devel
-BuildRequires: libwlroots11
 BuildRequires: libwlroots-devel
 BuildRequires: pipewire-libs-devel
 BuildRequires: libX11-devel
@@ -51,7 +48,8 @@ BuildRequires: glslang-devel
 BuildRequires: libinput-devel
 BuildRequires: libXmu-devel
 BuildRequires: libdisplay-info-devel
-BuildRequires: vkroots-devel
+BuildRequires: libXcursor-devel
+BuildRequires: libavif-devel
 
 ExclusiveArch: x86_64
 
@@ -87,14 +85,12 @@ currently have to set R600_DEBUG=nodcc,
 or corruption will be observed until the stack picks up DRM modifiers support.
 
 %prep
-%setup
+%setup -a1
 
-# Install stub pkgconfig file
-mkdir -p pkgconfig
-cp %SOURCE1 pkgconfig/stb.pc
+# use system stb
+sed -i "s|dependency('stb')|declare_dependency(include_directories: include_directories('/usr/include/stb'))|g" src/meson.build
 
 %build
-export PKG_CONFIG_PATH=pkgconfig
 %meson \
 	-Dpipewire=enabled \
 	-Denable_openvr_support=false \
@@ -106,13 +102,20 @@ export PKG_CONFIG_PATH=pkgconfig
 %install
 %meson_install
 
+# remove vkroots devel files
+rm -vr %buildroot%_includedir/vkroots.h
+rm -vr %buildroot/%_pkgconfigdir/vkroots.pc
+
 %files
 %doc LICENSE README.md
 %_bindir/gamescope
-%_libdir/libVkLayer_FROG_gamescope_wsi.so
+%_libdir/libVkLayer_FROG_gamescope_wsi_*.so
 %_datadir/vulkan/implicit_layer.d/VkLayer_FROG_gamescope_wsi.*.json
 
 %changelog
+* Mon Mar 11 2024 Mikhail Tergoev <fidel@altlinux.org> 3.14.2-alt1
+- 3.14.2
+
 * Thu Sep 14 2023 Mikhail Tergoev <fidel@altlinux.org> 3.12.5-alt1
 - 3.12.5
 - Revert to git.
