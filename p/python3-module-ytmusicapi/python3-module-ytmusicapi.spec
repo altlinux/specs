@@ -1,7 +1,7 @@
 %define rname ytmusicapi
 
 Name: python3-module-%rname
-Version: 1.4.2
+Version: 1.5.4
 Release: alt1
 
 Group: Development/Python3
@@ -60,6 +60,9 @@ rm -rf %buildroot/%python3_sitelibdir_noarch/%rname/locales/
 #%_bindir/%rname
 
 %changelog
+* Mon Mar 11 2024 Sergey V Turchin <zerg@altlinux.org> 1.5.4-alt1
+- new version
+
 * Tue Jan 09 2024 Sergey V Turchin <zerg@altlinux.org> 1.4.2-alt1
 - new version
 
