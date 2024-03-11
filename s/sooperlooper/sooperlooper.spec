@@ -1,6 +1,6 @@
 Name: sooperlooper
 Version: 1.7.9
-Release: alt1
+Release: alt2
 
 Summary: Live Looping Sampler
 License: GPLv2
@@ -42,6 +42,7 @@ This package contais SooperLooper Engine.
 %setup
 
 %build
+%add_optflags -fpermissive
 sh autogen.sh
 %configure
 %make_build
@@ -61,5 +62,8 @@ sh autogen.sh
 %_datadir/sooperlooper
 
 %changelog
+* Mon Mar 11 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.9-alt2
+- fixed build with recent liblo
+
 * Tue Dec 26 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.9-alt1
 - initial
