@@ -3,9 +3,14 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
+%ifndef _priority_distbranch
+# We have it defined in macros but not in buildmacros.
+%define _priority_distbranch %(rpm --eval %%_priority_distbranch)
+%endif
+
 Name: rpm-build-vm
 Version: 1.65
-Release: alt1
+Release: alt2
 
 Summary: RPM helper to run tests in virtualised environment
 License: GPL-2.0-only
@@ -113,8 +118,10 @@ at "/tmp/vm-ext4.img" out of your hasher root to run vm-run with it as rootfs.
 Summary: Checkinstall for vm-run
 Group: Development/Other
 BuildArch: noarch
+%if "%_priority_distbranch" == "sisyphus"
 %ifarch %supported_arches
 Requires(post): busybox
+%endif
 %endif
 Requires(post): %name-createimage = %EVR
 Requires(post): procps
@@ -218,6 +225,10 @@ vm-run --stub-exit=7 && exit 1 || test $? -eq 7
 %endif
 
 %changelog
+* Mon Mar 11 2024 Vitaly Chikunov <vt@altlinux.org> 1.65-alt2
+- Fix rebuild with gcc-10.
+- Remove BR:busybox for non-sisyphus branches.
+
 * Mon Feb 26 2024 Vitaly Chikunov <vt@altlinux.org> 1.65-alt1
 - i586: Avoid 'mce: Unable to init MCE device' warning.
 
