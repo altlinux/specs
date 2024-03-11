@@ -1,12 +1,13 @@
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define xdg_name org.gnome.DiskUtility
 %define _libexecdir %_prefix/libexec
 %def_enable gsd_plugin
 %def_enable libsystemd
+%def_enable check
 
 Name: gnome-disk-utility
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Disk management application
@@ -33,7 +34,6 @@ Requires: udisks2 >= %udisks_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg
 BuildRequires: meson
-BuildRequires: /usr/bin/appstream-util desktop-file-utils
 BuildRequires: libudisks2-devel >= %udisks_ver
 BuildRequires: libgio-devel  >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
@@ -44,6 +44,7 @@ BuildRequires: libdvdread-devel >= %dvdread_ver
 BuildRequires: liblzma-devel >= %lzma_ver
 BuildRequires: libnotify-devel libcanberra-gtk3-devel
 %{?_enable_libsystemd:BuildRequires: pkgconfig(systemd)}
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 BuildRequires: xsltproc docbook-style-xsl
 
 %description
@@ -63,6 +64,9 @@ RAID, SMART monitoring, etc
 %install
 %meson_install
 %find_lang --with-gnome --output=global.lang %name
+
+%check
+%__meson_test
 
 %files -f global.lang
 %_bindir/gnome-disk-image-mounter
@@ -84,6 +88,9 @@ RAID, SMART monitoring, etc
 
 
 %changelog
+* Mon Mar 11 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Fri Dec 01 2023 Yuri N. Sedunov <aris@altlinux.org> 45.1-alt1
 - 45.1
 
