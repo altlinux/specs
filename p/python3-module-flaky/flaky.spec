@@ -1,22 +1,26 @@
 %define oname flaky
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 3.7.0
-Release: alt2
+Version: 3.8.0
+Release: alt1
 
 Summary: Plugin for nose or py.test that automatically reruns flaky tests
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/flaky
+URL: https://pypi.org/project/flaky
+VCS: https://github.com/box/flaky
 
-# https://github.com/box/flaky.git
 Source: %name-%version.tar
 
-Patch: remove-nose-dependency.patch
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-mock python3-module-genty
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 BuildArch: noarch
 
@@ -29,20 +33,33 @@ those tests or marking them to @skip, they can be automatically retried.
 
 %prep
 %setup
-%patch -p1
+
+# fix version
+sed -i 's/3.7.0/%version/' setup.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+# adapted from upstream's tox.ini
+%pyproject_run_pytest -v -k 'example and not options' --doctest-modules test/test_pytest/
+%pyproject_run_pytest -v -k 'example and not options' test/test_pytest/
+%pyproject_run_pytest -v -p no:flaky test/test_pytest/test_flaky_pytest_plugin.py
+%pyproject_run_pytest -v --force-flaky --max-runs 2 test/test_pytest/test_pytest_options_example.py
 
 %files
 %doc *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Mar 11 2024 Grigory Ustinov <grenka@altlinux.org> 3.8.0-alt1
+- Automatically updated to 3.8.0.
+- Built with check.
+
 * Mon May 30 2022 Grigory Ustinov <grenka@altlinux.org> 3.7.0-alt2
 - Removed nose dependency.
 
