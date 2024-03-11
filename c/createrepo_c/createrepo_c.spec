@@ -1,6 +1,6 @@
 Name:     createrepo_c
 Version:  1.0.4
-Release:  alt1
+Release:  alt2
 Summary:  Creates a common metadata repository
 License:  GPL-2.0+
 Group:    System/Configuration/Packaging
@@ -14,22 +14,22 @@ ExcludeArch: ppc64le
 
 BuildRequires(pre): rpm-macros-cmake
 
-BuildRequires: cmake
-BuildRequires: gcc
+BuildRequires(pre): cmake
+BuildRequires: bzip2-devel
 BuildRequires: doxygen
 BuildRequires: expat-devel
-BuildRequires: libmagic-devel
 BuildRequires: glib2-devel
 BuildRequires: libcurl-devel
-BuildRequires: libxml2-devel
-BuildRequires: libssl-devel
+BuildRequires: libgio-devel
+BuildRequires: liblzma-devel
+BuildRequires: libmagic-devel
+BuildRequires: libmodulemd-devel
 BuildRequires: librpm-devel
 BuildRequires: libsqlite3-devel
-BuildRequires: bzip2-devel
-BuildRequires: liblzma-devel
-BuildRequires: zlib-devel
+BuildRequires: libssl-devel
+BuildRequires: libxml2-devel
 BuildRequires: libzstd-devel
-BuildRequires: libmodulemd-devel
+BuildRequires: zlib-devel
 
 BuildRequires: python3-devel
 
@@ -98,6 +98,9 @@ ln -s modifyrepo_c %buildroot%_bindir/modifyrepo
 %python3_sitelibdir/*
 
 %changelog
+* Mon Mar 11 2024 Andrey Cherepanov <cas@altlinux.org> 1.0.4-alt2
+- FTBFS: required libgio-devel for build.
+
 * Wed Feb 07 2024 Andrey Cherepanov <cas@altlinux.org> 1.0.4-alt1
 - New version.
 
