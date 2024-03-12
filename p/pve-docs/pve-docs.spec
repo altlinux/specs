@@ -1,11 +1,10 @@
 Name: pve-docs
 Summary: PVE Documentation
-Version: 7.4.2
-Release: alt2
+Version: 8.1.3
+Release: alt1
 License: AGPL-3.0+ and GFDL-1.3+
 Group: Documentation
 Url: https://git.proxmox.com/
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %name-%version.tar
 
@@ -25,7 +24,7 @@ grep 'proxmox.com' * -rl | while read f; do
 	sed -i 's|proxmox.com|basealt.ru|' $f
 done
 sed -i 's|{python}|python3|' asciidoc/*.conf
-rm -f getting-help.adoc howto-improve-pve-docs.adoc pve-package-repos.adoc pve-faq.adoc pve-installation.adoc pve-system-requirements.adoc translation.adoc pve-installation-media.adoc cpu-models.conf.adoc
+rm -f getting-help.adoc howto-improve-pve-docs.adoc pve-package-repos.adoc pve-faq.adoc pve-installation.adoc pve-system-requirements.adoc translation.adoc pve-installation-media.adoc cpu-models.conf.adoc firmware-updates.adoc
 
 %build
 %make DOCRELEASE=%version
@@ -44,6 +43,9 @@ install -m644 images/screenshot/*.png %buildroot%_datadir/%name/images/screensho
 %_datadir/%name
 
 %changelog
+* Fri Mar 01 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.1.3-alt1
+- 8.1.3
+
 * Thu May 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.2-alt2
 - add copyright file
 

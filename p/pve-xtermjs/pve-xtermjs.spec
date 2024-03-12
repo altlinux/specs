@@ -1,9 +1,10 @@
 %global _unpackaged_files_terminate_build 1
+%define _libexecdir %_prefix/libexec
 
 Name: pve-xtermjs
 Summary: HTML/JS Shell client
-Version: 4.16.0.1
-Release: alt2
+Version: 5.3.0.3
+Release: alt1
 License: AGPL-3.0+
 Group: Networking/WWW
 Url: https://git.proxmox.com/
@@ -25,24 +26,36 @@ This is an xterm.js client for PVE Host, Container and Qemu Serial Terminal
 %build
 #export BUILD_MODE=release
 #%%make_build
+pushd termproxy
 %rust_build
+popd
 
-#sed -i 's|Proxmox|PVE|' src/www/index.html.tpl.in
-sed -e "s/@VERSION@/%version/" src/www/index.html.tpl.in > src/www/index.html.tpl
-sed -e "s/@VERSION@/%version/" src/www/index.html.hbs.in > src/www/index.html.hbs
-rm src/www/index.html.tpl.in src/www/index.html.hbs.in
+#sed -i 's|Proxmox|PVE|' xterm.js/src/index.html.tpl.in
+sed -e "s/@VERSION@/%version/" xterm.js/src/index.html.tpl.in > xterm.js/src/index.html.tpl
+sed -e "s/@VERSION@/%version/" xterm.js/src/index.html.hbs.in > xterm.js/src/index.html.hbs
+rm xterm.js/src/index.html.tpl.in xterm.js/src/index.html.hbs.in
 
 %install
-%rust_install termproxy
+pushd termproxy
+#%%rust_install proxmox-termproxy
+install -dm755 %buildroot%_libexecdir/proxmox/
+install -m755 target/release/proxmox-termproxy %buildroot%_libexecdir/proxmox/
+install -dm755 %buildroot%_bindir
+ln -s %_libexecdir/proxmox/proxmox-termproxy %buildroot%_bindir/termproxy
+popd
 mkdir -p %buildroot%_datadir/%name
-cp src/www/* %buildroot%_datadir/%name/
+cp xterm.js/src/* %buildroot%_datadir/%name/
 
 %files
-%doc debian/copyright
+%doc xterm.js/debian/copyright
+%_libexecdir/proxmox/proxmox-termproxy
 %_bindir/termproxy
 %_datadir/%name
 
 %changelog
+* Thu Feb 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 5.3.0.3-alt1
+- 5.3.0-3
+
 * Tue Oct 31 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.16.0.1-alt2
 - Support LoongArch architecture
 

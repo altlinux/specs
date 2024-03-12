@@ -3,8 +3,8 @@
 
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
-Version: 7.3.3
-Release: alt5
+Version: 8.0.5
+Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -53,22 +53,34 @@ Requires: openssl rsync
 %summary.
 This package contains the API2 endpoints and CLI binary 'pvecm'.
 
+%package -n libpve-notify-perl
+Summary: Proxmox Virtual Environment cluster PVE::Notify module
+Group: Development/Perl
+
+%description -n libpve-notify-perl
+%summary.
+This package contains the PVE::Notify. It is a very thin wrapper
+around the Proxmox::RS::Notify module, feeding the configuration
+from the new 'notifications.cfg' and 'priv/notifications.cfg' files
+into it.
+
+
 %prep
 %setup
 %patch -p1
 %if_with bootstrap
-sed -i -e '/^install:/ s/pvecm.1//' -e '/^install:/ s/datacenter.cfg.5//' -e '/^install:/ s/pvecm.bash-completion//' -e '/^install:/ s/pvecm.zsh-completion//' data/PVE/Makefile
-sed -i -e '/install -D .*pvecm.1/d' -e '/install -D .*datacenter.cfg.5/d' -e '/install -m .*pvecm.bash-completion/d' -e '/install -m .*pvecm.zsh-completion/d' data/PVE/Makefile
-sed -i -e '/^install:/ s/pmxcfs.8//' data/src/Makefile
-sed -i -e '/install -D .*pmxcfs.8/d' data/src/Makefile
+sed -i -e '/^install:/ s/pvecm.1//' -e '/^install:/ s/datacenter.cfg.5//' -e '/^install:/ s/pvecm.bash-completion//' -e '/^install:/ s/pvecm.zsh-completion//' src/PVE/Makefile
+sed -i -e '/install -D .*pvecm.1/d' -e '/install -D .*datacenter.cfg.5/d' -e '/install -m .*pvecm.bash-completion/d' -e '/install -m .*pvecm.zsh-completion/d' src/PVE/Makefile
+sed -i -e '/^install:/ s/pmxcfs.8//' src/pmxcfs/Makefile
+sed -i -e '/install -D .*pmxcfs.8/d' src/pmxcfs/Makefile
 %endif
 
 %build
-%make -C data
+%make -C src
 
 %install
-%makeinstall_std -C data/PVE/Cluster
-%makeinstall_std -C data
+%makeinstall_std -C src/PVE/Cluster
+%makeinstall_std -C src
 install -pD -m644 debian/%name.service %buildroot%systemd_unitdir/%name.service
 install -pD -m644 debian/sysctl.d/10-pve.conf %buildroot%_sysctldir/10-pve.conf
 install -pD -m0755 %SOURCE3 %buildroot%_prefix/lib/rpm/%name.filetrigger
@@ -145,7 +157,13 @@ fi
 %perl_vendor_privlib/PVE/CLI/*
 %perl_vendor_privlib/PVE/Cluster/Setup.pm
 
+%files -n libpve-notify-perl
+%perl_vendor_privlib/PVE/Notify.pm
+
 %changelog
+* Wed Feb 28 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.0.5-alt1
+- 8.0.5
+
 * Fri Dec 01 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.3.3-alt5
 - build without bootstrap
 

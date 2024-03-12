@@ -2,8 +2,8 @@
 
 Name: pve-apiclient
 Summary: PVE API client library
-Version: 3.2.1
-Release: alt2
+Version: 3.3.1
+Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://www.proxmox.com
@@ -29,14 +29,17 @@ This implements an API client for Proxmox VE in perl.
 %setup
 
 %install
-install -D -m 0644 PVE/APIClient/LWP.pm %buildroot%perl_vendor_privlib/PVE/APIClient/LWP.pm
-install -D -m 0644 PVE/APIClient/Exception.pm %buildroot%perl_vendor_privlib/PVE/APIClient/Exception.pm
+install -D -m 0644 src/PVE/APIClient/LWP.pm %buildroot%perl_vendor_privlib/PVE/APIClient/LWP.pm
+install -D -m 0644 src/PVE/APIClient/Exception.pm %buildroot%perl_vendor_privlib/PVE/APIClient/Exception.pm
 
 %files
-%doc examples debian/copyright
+%doc src/examples debian/copyright
 %perl_vendor_privlib/PVE/*
 
 %changelog
+* Wed Feb 28 2024 Andrew A. Vasilyev <andy@altlinux.org> 3.3.1-alt1
+- 3.3.1
+
 * Thu May 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 3.2.1-alt2
 - add copyright file
 

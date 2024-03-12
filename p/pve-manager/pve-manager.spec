@@ -3,8 +3,8 @@
 %add_findreq_skiplist %perl_vendor_privlib/PVE/Status/InfluxDB.pm
 %add_findreq_skiplist %perl_vendor_privlib/PVE/Jobs.pm
 
-%define ver_major 7.4
-%define ver_minor 17
+%define ver_major 8.1
+%define ver_minor 4
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
@@ -59,6 +59,7 @@ tar xf %SOURCE10
 grep '/var/run' * -rl | while read f; do
     sed -i 's|/var/run|/run|' $f
 done
+sed -i 's|/usr/lib/systemd|/lib/systemd|' configs/Makefile
 
 %build
 %make PACKAGE="pve-manager" VERSION="%ver_major-%ver_minor" PVERELEASE="%ver_major" REPOID="%release"
@@ -118,6 +119,7 @@ rm -f  %buildroot%_man1dir/pve7to8.1*
 %_sysconfdir/logrotate.d/pve
 %config(noreplace) %_sysconfdir/vzdump.conf
 %_unitdir/*
+%_systemd_dir/network/99-default.link.d/proxmox-mac-address-policy.conf
 %_tmpfilesdir/%name.conf
 %_bindir/*
 %perl_vendor_privlib/PVE/*.pm
@@ -139,6 +141,11 @@ rm -f  %buildroot%_man1dir/pve7to8.1*
 %_jsdir/sencha-touch
 
 %changelog
+* Thu Feb 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.1.4-alt1
+- 8.1.4
+- improve ifupdown2 support
+- fix regexp for kernel build date
+
 * Mon Feb 05 2024 Andrew A. Vasilyev <andy@altlinux.org> 7.4.17-alt1
 - 7.4-17
 - revert changing gpg to sq

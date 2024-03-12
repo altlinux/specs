@@ -3,8 +3,8 @@
 
 Name: pve-doc-generator
 Summary: Proxmox VE Documentation helpers
-Version: 7.4.2
-Release: alt3
+Version: 8.1.3
+Release: alt1
 License: AGPL-3.0+ and GFDL-1.3+
 Group: Documentation
 Url: https://git.proxmox.com/
@@ -22,7 +22,7 @@ BuildRequires: asciidoc-a2x source-highlight
 %description
 Tool to auto-generate various Proxmox VE Documentation files
 
-#%%add_findreq_skiplist %_datadir/pve-doc-generator/*.pl
+#%%add_findreq_skiplist %%_datadir/pve-doc-generator/*.pl
 
 %prep
 %setup -q -n %name-%version
@@ -49,6 +49,9 @@ install -pD -m755 asciidoc-pve %buildroot%_bindir/asciidoc-pve
 %_datadir/pve-doc-generator
 
 %changelog
+* Wed Feb 28 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.1.3-alt1
+- 8.1.3
+
 * Wed Oct 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.4.2-alt3
 - remove BR: libpve-cluster-perl (Closes: #48151)
 

@@ -7,8 +7,8 @@
 %global firmwaredirs "%_datadir/qemu:%_datadir/seabios:%_datadir/seavgabios:%_datadir/ipxe:%_datadir/ipxe.efi"
 
 Name: pve-%rname
-Version: 7.2.0
-Release: alt4
+Version: 8.1.5
+Release: alt1
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -24,8 +24,9 @@ Source102: berkeley-softfloat-3.tar
 Source5: qemu-kvm.sh
 # /etc/qemu/bridge.conf
 Source12: bridge.conf
+Source13: vitastor.c
 
-Patch: pve-qemu-7.2-vitastor.patch
+Patch: pve-qemu-8.1-vitastor.patch
 %set_verify_elf_method fhs=relaxed
 %add_verify_elf_skiplist %_datadir/%rname/*
 %add_findreq_skiplist %_datadir/%rname/*
@@ -47,6 +48,7 @@ BuildRequires: libsystemd-devel libtasn1-devel libpmem-devel libzstd-devel zlib-
 BuildRequires: ipxe-roms-qemu seavgabios seabios edk2-ovmf edk2-aarch64 qboot
 #BuildRequires: librdmacm-devel libibverbs-devel libibumad-devel
 BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme ninja-build meson
+BuildRequires: python3-module-setuptools
 BuildRequires: libproxmox-backup-qemu-devel >= 1.3.0
 BuildRequires: libvitastor-devel
 
@@ -107,21 +109,24 @@ This package provides a command line tool for manipulating disk images
 %setup
 mkdir debian
 tar -xf %SOURCE99 -C debian --strip-components 1
-tar -xf %SOURCE100 -C ui/keycodemapdb --strip-components 1
-tar -xf %SOURCE101 -C tests/fp/berkeley-testfloat-3 --strip-components 1
-tar -xf %SOURCE102 -C tests/fp/berkeley-softfloat-3 --strip-components 1
+mkdir -p subprojects/{keycodemapdb,berkeley-testfloat-3,berkeley-softfloat-3}
+tar -xf %SOURCE100 -C subprojects/keycodemapdb --strip-components 1
+tar -xf %SOURCE101 -C subprojects/berkeley-testfloat-3 --strip-components 1
+tar -xf %SOURCE102 -C subprojects/berkeley-softfloat-3 --strip-components 1
+cp -a subprojects/packagefiles/berkeley-testfloat-3/* subprojects/berkeley-testfloat-3/
+cp -a subprojects/packagefiles/berkeley-softfloat-3/* subprojects/berkeley-softfloat-3/
 
 for p in `cat debian/patches/series`; do
     patch -p1 < debian/patches/$p
 done
 
+cp %SOURCE13 block/vitastor.c
 %patch -p1
 
 %build
 export CFLAGS="%optflags"
 # non-GNU configure
 ./configure \
-        --with-git-submodules=ignore \
         --target-list=x86_64-softmmu,aarch64-softmmu \
         --prefix=%_prefix \
         --sysconfdir=%_sysconfdir \
@@ -288,8 +293,6 @@ ln -sf ../AAVMF/AAVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/AAVMF_VARS.f
 %_libexecdir/vhost-user-gpu
 %_libexecdir/virtfs-proxy-helper
 %_man1dir/virtfs-proxy-helper.*
-%_libexecdir/virtiofsd
-%_man1dir/virtiofsd.*
 %_man1dir/qemu-storage-daemon.1*
 %_man7dir/qemu-storage-daemon-qmp-ref.*
 %_man8dir/qemu-pr-helper.8*
@@ -302,6 +305,9 @@ ln -sf ../AAVMF/AAVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/AAVMF_VARS.f
 %_man8dir/qemu-nbd.8*
 
 %changelog
+* Sun Mar 03 2024 Andrew A. Vasilyev <andy@altlinux.org> 1:8.1.5-alt1
+- 8.1.5-3
+
 * Fri Nov 03 2023 Alexey Shabalin <shaba@altlinux.org> 1:7.2.0-alt4
 - Update vitastor block driver to vitastor/hotfix-1.1.0.
 

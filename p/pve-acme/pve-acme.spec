@@ -1,7 +1,7 @@
 Name: pve-acme
 Summary: PVE ACME integration perl library
-Version: 1.4.4
-Release: alt2
+Version: 1.5.0
+Release: alt1
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -20,8 +20,8 @@ Conflicts: pve-manager < 7.0.11-alt1
 %description
 Used in perl-based PVE project as common interface for DNS and HTTP ACME challenges
 
-#%%add_findreq_skiplist %perl_vendor_privlib/PVE/ACME.pm
-#%%add_findreq_skiplist %perl_vendor_privlib/PVE/ACME/DNSChallenge.pm
+#%%add_findreq_skiplist %%perl_vendor_privlib/PVE/ACME.pm
+#%%add_findreq_skiplist %%perl_vendor_privlib/PVE/ACME/DNSChallenge.pm
 %add_findreq_skiplist %_datadir/proxmox-acme/**/*
 
 %prep
@@ -39,6 +39,9 @@ chmod a+x %buildroot%_datadir/proxmox-acme/dnsapi/*.sh
 %_datadir/proxmox-acme
 
 %changelog
+* Fri Mar 01 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.5.0-alt1
+- 1.5.0
+
 * Sun Oct 22 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.4.4-alt2
 - ALT: change nogroup to nobody
 

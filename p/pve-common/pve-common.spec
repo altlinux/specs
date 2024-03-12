@@ -2,7 +2,7 @@
 
 Name: pve-common
 Summary: PVE base library
-Version: 7.4.2
+Version: 8.1.0
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
@@ -12,6 +12,7 @@ Source: %name-%version.tar
 
 ExclusiveArch: x86_64 aarch64
 
+BuildRequires: perl-Encode
 BuildRequires: perl-ph
 BuildRequires: perl(IO/Socket/IP.pm)
 BuildRequires: perl(Filesys/Df.pm)
@@ -50,6 +51,11 @@ This package contains the base library used by other PVE components.
 %prep
 %setup -q -n %name-%version
 sed -i 's|Proxmox VE|PVE|' src/PVE/Tools.pm
+# No mknod syscall in perl for aarch64:
+%ifarch aarch64
+sed -i 's/SYS_mknod,/SYS_mknodat,/' src/PVE/Syscall.pm
+sed -i 's/SYS_mknod,/SYS_mknodat, -100,/' src/PVE/Tools.pm
+%endif
 
 %install
 cd src
@@ -71,6 +77,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Wed Feb 28 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.1.0-alt1
+- 8.1.0
+
 * Mon Feb 05 2024 Andrew A. Vasilyev <andy@altlinux.org> 7.4.2-alt1
 - 7.4-2
 

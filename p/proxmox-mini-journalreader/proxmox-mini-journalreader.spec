@@ -2,7 +2,7 @@
 
 Name: proxmox-mini-journalreader
 Summary: Minimal systemd Journal Reader
-Version: 1.3.1
+Version: 1.4.0
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
@@ -14,7 +14,7 @@ Patch: %name-%version.patch
 Provides: pve-mini-journalreader = %EVR
 Obsoletes: pve-mini-journalreader < %EVR
 
-BuildRequires: libsystemd-devel
+BuildRequires: libsystemd-devel /usr/bin/scdoc
 
 %description
 A minimal application to read the last X lines of the systemd journal or the
@@ -35,8 +35,12 @@ sed -i 's/-D_FORTIFY_SOURCE=2//' src/Makefile
 %files
 %doc debian/copyright
 %_bindir/*
+%_man1dir/*
 
 %changelog
+* Thu Feb 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Thu May 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.3.1-alt1
 - add copyright file
 

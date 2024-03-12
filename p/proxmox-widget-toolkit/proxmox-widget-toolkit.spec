@@ -2,7 +2,7 @@
 
 Name: proxmox-widget-toolkit
 Summary: ExtJS Helper Classes for Proxmox
-Version: 3.7.3
+Version: 4.1.4
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Other
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 Patch: %name-%version.patch
 BuildArch: noarch
 
-BuildRequires: sassc
+BuildRequires: sassc /usr/bin/uglifyjs
 
 Provides: pve-widget-toolkit = %EVR
 Obsoletes: pve-widget-toolkit < %EVR
@@ -51,6 +51,9 @@ install -pD -m644 src/api-viewer/APIViewer.js %buildroot%_datadir/javascript/%na
 %_datadir/javascript/%name-dev
 
 %changelog
+* Wed Feb 28 2024 Andrew A. Vasilyev <andy@altlinux.org> 4.1.4-alt1
+- 4.1.4
+
 * Mon Feb 05 2024 Andrew A. Vasilyev <andy@altlinux.org> 3.7.3-alt1
 - 3.7.3
 
