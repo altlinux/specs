@@ -1,12 +1,23 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_disable check
 %{!?_systemdgeneratordir: %global _systemdgeneratordir /lib/systemd/system-generators}
 %define _libexecdir %_usr/libexec
 %def_with tests
 %def_with ed25519
 
+%define libsoup3_ver %{get_version libsoup3.0}
+%if "%(rpmvercmp %libsoup3_ver 3.0.0)" < "0"
+%def_without soup3
+%def_with soup
+%else
+%def_with soup3
+%def_without soup
+%endif
+
 Name: ostree
 Version: 2024.3
-Release: alt2
+Release: alt3
 
 Summary: Linux-based operating system develop/build/deploy tool
 License: LGPLv2+
@@ -24,7 +35,7 @@ Patch1: %name-%version.patch
 Requires: libostree = %EVR
 Requires: %_bindir/gpg2
 
-BuildRequires(pre): rpm-macros-systemd
+BuildRequires(pre): rpm-macros-systemd rpm-build-gir
 
 # Core requirements
 BuildRequires: pkgconfig(gio-unix-2.0) >= 2.66.0
@@ -32,7 +43,8 @@ BuildRequires: pkgconfig(zlib)
 BuildRequires: pkgconfig(libcurl) >= 7.29.0
 BuildRequires: pkgconfig(libcrypto) >= 1.0.1
 # The tests still require soup
-BuildRequires: pkgconfig(libsoup-3.0) >= 3.0.0
+BuildRequires: pkgconfig(libsoup-3.0)
+BuildRequires: pkgconfig(libsoup-2.4)
 BuildRequires: libattr-devel
 # The tests require attr
 BuildRequires: attr
@@ -115,7 +127,8 @@ NOCONFIGURE=1 sh -x ./autogen.sh
 %configure --disable-silent-rules \
            --with-selinux \
            --with-curl \
-           --with-soup3 \
+           %{subst_with soup3} \
+           %{subst_with soup} \
            %{?_with_ed25519:--with-ed25519-libsodium} \
            --enable-gtk-doc \
            --with-builtin-grub2-mkconfig \
@@ -180,6 +193,9 @@ NOCONFIGURE=1 sh -x ./autogen.sh
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Tue Mar 12 2024 Alexey Shabalin <shaba@altlinux.org> 2024.3-alt3
+- Build with soup3 for sisyphus, with soup2 for p10
+
 * Mon Feb 26 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 2024.3-alt2
 - add ALT Linux mounts support
 
