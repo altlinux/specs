@@ -1,58 +1,43 @@
-%define oname aiohttp
-
-%def_with python3
-# def_with docs needed package python3-modile-sphinxcontrib-blockdiag (missing in Sisyphus)
-%def_without docs
-%def_without check
-
-Name: python3-module-%oname
-Version: 3.9.1
+Name: python3-module-aiohttp
+Version: 3.9.3
 Release: alt1
+
 Summary: http client/server for asyncio
 License: Apache-2.0
-Group: Development/Python3
-Url: https://github.com/KeepSafe/aiohttp.git
-Source: %name-%version.tar
-# submodule part from pypi archive with pregenerated c sources
+Group: Development/Python
+Url: https://github.com/aio-libs/aiohttp
+
+Source0: %name-%version-%release.tar
 Source1: llhttp.tar
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-pyproject
+BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
-BuildRequires: python3-devel python3-module-setuptools python3-module-Cython
-BuildRequires: python3-module-multidict
-%if_with check
-BuildRequires: python3-module-yarl python3-module-async-timeout python3-module-pytest-mock
-%endif
-%if_with docs
-BuildRequires(pre): python3-module-sphinx-devel
-BuildRequires: python3-module-sphinxcontrib-asyncio python3-module-sphinxcontrib-newsfeed
-%endif
+BuildRequires: python3(cython)
+BuildRequires: python3(multidict)
 
-# conditional imports
-%py3_requires charset_normalizer idna_ssl
+BuildRequires: python3(pytest)
+BuildRequires: python3(pytest-cov)
+BuildRequires: python3(attr)
+BuildRequires: python3(yarl)
+BuildRequires: python3(aiosignal)
+BuildRequires: python3(gunicorn)
+BuildRequires: python3(re_assert)
+BuildRequires: python3(freezegun)
+BuildRequires: python3(brotli)
+BuildRequires: python3(brotlicffi)
+
+%package tests
+Summary: Tests for aiohttp
+Group: Development/Python
+Requires: python3-module-aiohttp = %EVR
 
 %description
 http client/server for asyncio (PEP-3156).
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
 %description tests
 http client/server for asyncio (PEP-3156).
-
-This package contains tests for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-http client/server for asyncio (PEP-3156).
-
-This package contains documentation for %oname.
+This package contains tests for aiohttp
 
 %prep
 %setup -a1
@@ -61,44 +46,33 @@ sed -i 's,".git",".gitmodules",' tools/gen.py
 # use system cython
 sed -i '/^cythonize:/ s,.install-cython,,' Makefile
 find tools -type f -name \*.py | xargs sed -ri '/env python$/ s,$,3,'
-%if_with docs
-%prepare_sphinx3 .
-ln -s ../objects.inv docs/
-%endif
 
 %build
 make cythonize
 %pyproject_build
 
-%if_with docs
-%make_build -C docs html SPHINXBUILD=py3_sphinx-build
-%endif
-
 %install
 %pyproject_install
 
-%if_with check
 %check
-python3 setup.py test
-%endif
+%pyproject_run_pytest --ignore=tests/autobahn \
+	--ignore=tests/test_proxy_functional.py tests ||:
 
-%if_with docs
-%files docs
-%doc docs/_build/html/*
-%endif
-
-%files -n python3-module-%oname
+%files
 %doc *.txt *.rst examples
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version.dist-info
-%exclude %python3_sitelibdir/%oname/*test*
-%exclude %python3_sitelibdir/%oname/*/*test*
+%python3_sitelibdir/aiohttp
+%python3_sitelibdir/aiohttp-%version.dist-info
+%exclude %python3_sitelibdir/aiohttp/*test*
+%exclude %python3_sitelibdir/aiohttp/*/*test*
 
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/%oname/*test*
-%python3_sitelibdir/%oname/*/*test*
+%files tests
+%python3_sitelibdir/aiohttp/*test*
+%python3_sitelibdir/aiohttp/*/*test*
 
 %changelog
+* Tue Mar 12 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.9.3-alt1
+- 3.9.3 released
+
 * Wed Jan 17 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.9.1-alt1
 - 3.9.1 released
 
