@@ -2,10 +2,19 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define kernel_base_version 6.7
+%define kernel_base_version 6.8
 %define kernel_source kernel-source-%kernel_base_version
+
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
-%add_findreq_skiplist %_datadir/perf-core/tests/*.py
+%add_findreq_skiplist %_prefix/libexec/perf-core/tests/*.py
+%add_findreq_skiplist %_prefix/libexec/perf-core/tests/shell/lib/setup_python.sh
+%add_debuginfo_skiplist %_prefix/libexec/perf-core/dlfilters/dlfilter-test-api-v0.so
+%add_debuginfo_skiplist %_libexecdir/kselftests/sgx/test_encl.elf
+%filter_from_requires /intel_pstate_tracer/d
+# Internal modules of kselftests:
+%add_python3_req_skip _damon_sysfs
+%add_python3_req_skip tdc_config
+%add_python3_req_skip tdc_helper
 
 # from hv_kvp_daemon.c
 %define kvp_config_loc /var/lib/hyperv
@@ -392,7 +401,6 @@ make acpi
 
 %make_build ASFLAGS=-g VERSION=%version \
 	bootconfig \
-	cgroup \
 	firmware \
 	freefall \
 	gpio \
@@ -533,7 +541,6 @@ mkdir -p %buildroot%_datadir/misc
 make -C arch/x86/kcpuid %install_opts install HWDATADIR=%buildroot%_datadir/misc
 make -C arch/x86/intel_sdsi %install_opts install
 %endif
-install -p -m755 cgroup/cgroup_event_listener	%buildroot%_bindir
 install -p -m755 firmware/ihex2fw		%buildroot%_bindir
 install -p -m755 kvm/kvm_stat/kvm_stat		%buildroot%_bindir
 install -p -m755 leds/get_led_device_info.sh	%buildroot%_bindir
@@ -553,10 +560,6 @@ popd
 make nolibc V=1
 cp -a include/nolibc/sysroot/include %buildroot%_includedir/nolibc
 %endif
-
-%add_debuginfo_skiplist %_prefix/libexec/perf-core/dlfilters/dlfilter-test-api-v0.so
-%add_debuginfo_skiplist %_libexecdir/kselftests/sgx/test_encl.elf
-%filter_from_requires /intel_pstate_tracer/d
 
 %check
 banner check
@@ -627,7 +630,6 @@ fi
 %_sbindir/acpidump-linux
 %_sbindir/ec-linux
 %_man8dir/acpidump-linux.*
-%_bindir/cgroup_event_listener
 %_bindir/ihex2fw
 %_sbindir/freefall
 %_bindir/lsgpio
@@ -769,6 +771,10 @@ fi
 %endif
 
 %changelog
+* Tue Mar 12 2024 Vitaly Chikunov <vt@altlinux.org> 6.8-alt1
+- Update to v6.8 (2024-03-10).
+- Remove cgroup_event_listener (moved from tools to samples by upstream).
+
 * Fri Jan 19 2024 Vitaly Chikunov <vt@altlinux.org> 6.7-alt1
 - Update to v6.7 (2024-01-07).
 
