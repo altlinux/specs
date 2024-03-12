@@ -1,5 +1,5 @@
 Name: kvmd
-Version: 3.217
+Version: 3.313
 Release: alt1
 
 Summary: The PiKVM daemon
@@ -84,6 +84,9 @@ rm -v %buildroot%_unitdir/kvmd-certbot.service
 %python3_sitelibdir/kvmd-%version.dist-info
 
 %changelog
+* Mon Mar 11 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.313-alt1
+- 3.313 released
+
 * Mon Sep 18 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.217-alt1
 - 3.217 released
 

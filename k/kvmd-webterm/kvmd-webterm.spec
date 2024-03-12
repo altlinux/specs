@@ -1,5 +1,5 @@
 Name: kvmd-webterm
-Version: 0.42
+Version: 0.48
 Release: alt1
 
 Summary: Web terminal for the PiKVM daemon
@@ -38,5 +38,8 @@ install -pm0644    nginx.*.conf %buildroot%_datadir/kvmd/extras/webterm/
 %_datadir/kvmd/web/extras/webterm
 
 %changelog
+* Thu Mar 07 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.48-alt1
+- 0.48 released
+
 * Wed Dec 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.42-alt1
 - initial

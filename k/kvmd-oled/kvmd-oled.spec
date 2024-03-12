@@ -1,5 +1,5 @@
 Name: kvmd-oled
-Version: 0.19
+Version: 0.26
 Release: alt1
 
 Summary: PiKVM - A small OLED daemon
@@ -34,5 +34,8 @@ install -pm0644 *.ppm %buildroot%_datadir/kvmd-oled/
 %_datadir/kvmd-oled
 
 %changelog
+* Thu Mar 07 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.26-alt1
+- 0.26 released
+
 * Wed Dec 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.19-alt1
 - 0.19 released
