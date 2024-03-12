@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.2.0
+Version: 2.3.1
 Release: alt1
 Summary: pytest plugin which will terminate tests after a certain timeout
 License: MIT
@@ -65,6 +65,9 @@ nevertheless, which is the most important part at this stage.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Mar 11 2024 Stanislav Levin <slev@altlinux.org> 2.3.1-alt1
+- 2.2.0 -> 2.3.1.
+
 * Thu Feb 29 2024 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1
 - 2.1.0 -> 2.2.0.
 
