@@ -30,13 +30,14 @@
 
 Name: snapd
 Version: 2.59.1
-Release: alt1.1
+Release: alt1.2
 Summary: A transactional software package manager
 License: GPLv3
 Group: System/Configuration/Other
 Url: https://%provider_prefix
 Source0: https://%provider_prefix/releases/download/%version/%{name}_%version.no-vendor.tar.xz
 Source1: https://%provider_prefix/releases/download/%version/%{name}_%version.only-vendor.tar.xz
+Patch3500: snapd-loongarch64.patch
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang rpm-build-systemd
@@ -101,6 +102,7 @@ runs properly under an environment with SELinux enabled.
 
 %prep
 %setup -D -b 1
+%patch3500 -p1
 
 # We don't want/need squashfuse in the rpm
 sed -e 's:_ "github.com/snapcore/squashfuse"::g' -i systemd/systemd.go
@@ -463,6 +465,9 @@ fi
 %endif
 
 %changelog
+* Tue Mar 12 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.59.1-alt1.2
+- NMU: fixed FTBFS on LoongArch
+
 * Thu Aug 31 2023 Ivan A. Melnikov <iv@altlinux.org> 2.59.1-alt1.1
 - NMU: mark shellcheck as check-only BR
 
