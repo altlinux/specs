@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.0.12
+Version: 1.0.13
 Release: alt1
 
 Summary: A generator library for concise, unambiguous and URL-safe UUIDs
@@ -52,6 +52,9 @@ rm %buildroot%python3_sitelibdir/COPYING
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Mar 12 2024 Anton Vyatkin <toni@altlinux.org> 1.0.13-alt1
+- new version 1.0.13
+
 * Thu Feb 29 2024 Anton Vyatkin <toni@altlinux.org> 1.0.12-alt1
 - new version 1.0.12
 
