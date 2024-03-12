@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name jq
 
-%def_without check
+%def_with check
 
 Name: python3-module-%pypi_name
 Version: 1.6.0
-Release: alt2
+Release: alt3
 
 Summary: Python bindings for jq
 License: BSD-2-Clause
@@ -15,8 +15,7 @@ Vcs: https://github.com/mwilliamson/jq.py
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-
-%py3_provides %pypi_name
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -36,6 +35,7 @@ This project contains Python bindings for jq.
 
 %prep
 %setup
+%autopatch -p1
 sed -i '/sources=/ s/jq.c/jq.pyx/' setup.py
 sed -i '/link_args_deps/ s/"-lonig"//' setup.py
 
@@ -66,6 +66,9 @@ export JQPY_USE_SYSTEM_LIBS=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jan 09 2024 Anton Zhukharev <ancieg@altlinux.org> 1.6.0-alt3
+- Built with check (fixed the test for libjq 1.7.1).
+
 * Sun Jan 07 2024 Grigory Ustinov <grenka@altlinux.org> 1.6.0-alt2
 - Fixed FTBFS, building without check.
 
