@@ -5,8 +5,6 @@
 %define mIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 %define mIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
-%define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
-
 %def_disable debug
 %def_enable libvidstab
 %def_enable opencv
@@ -21,7 +19,7 @@
 
 Name: %nam%mlt_major
 Version: 7.22.0
-Release: alt2
+Release: alt3
 %K5init no_altplace
 
 Summary: Multimedia framework designed for television broadcasting
@@ -32,12 +30,9 @@ Url: https://www.mltframework.org/
 Source: %nam-%version.tar
 Source1: mlt++-config.h
 Source10: glaxnimate.tar
-# Debian
-Patch20: 01-changed-preset-path.diff
 # ALT
 Patch102: alt-no-version-script.patch
-Patch103: alt-libav.patch
-Patch104: alt-ix86.patch
+Patch103: alt-ix86.patch
 
 # Automatically added by buildreq on Sun Mar 18 2018 (-bi)
 # optimized out: elfutils gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libSDL-devel libX11-devel libavcodec-devel libavformat-devel libavutil-devel libcdio-paranoia libdc1394-22 libgpg-error libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-gui libqt5-svg libqt5-widgets libqt5-xml libraw1394-11 libstdc++-devel libvdpau-devel libx265-130 perl pkg-config python-base python-devel python-modules qt5-base-devel rpm-build-gir swig-data xorg-xproto-devel
@@ -45,12 +40,10 @@ Patch104: alt-ix86.patch
 #BuildRequires: frei0r-devel ladspa_sdk libSDL_image-devel libalsa-devel libavdevice-devel libavformat-devel libexif-devel libfftw3-devel libjack-devel libpulseaudio-devel libsamplerate-devel libsox-devel libswfdec-devel libswscale-devel libxml2-devel python-module-google python3-dev qt5-svg-devel rpm-build-ruby swig
 BuildRequires(pre): rpm-build-kf5 rpm-build-python3 libavformat-devel
 BuildRequires: qt5-svg-devel
+BuildRequires: qt6-svg-devel
 BuildRequires: cmake
 BuildRequires: frei0r-devel libSDL-devel libSDL2-devel libSDL2_image-devel libalsa-devel libexif-devel
-BuildRequires: libavfilter-devel libswscale-devel libavdevice-devel libavformat-devel
-%if %is_ffmpeg
-BuildRequires: libswresample-devel
-%endif
+BuildRequires: libavfilter-devel libswscale-devel libavdevice-devel libavformat-devel libswresample-devel
 BuildRequires: libfftw3-devel libjack-devel libpulseaudio-devel libsamplerate-devel libsox-devel
 BuildRequires: librubberband-devel libvorbis-devel
 BuildRequires: libxml2-devel swig ladspa_sdk
@@ -108,16 +101,8 @@ This module allows to work with %Name using python..
 %setup -n %nam-%version -a10
 rm -rf src/modules/glaxnimate/glaxnimate
 mv glaxnimate src/modules/glaxnimate/
-%if %is_ffmpeg
-%else
-%patch20 -p1
-%endif
 %patch102 -p1
-%if %is_ffmpeg
-%else
 %patch103 -p1
-%endif
-%patch104 -p1
 
 [ -f src/mlt++/config.h ] || \
     install -m 0644 %SOURCE1 src/mlt++/config.h
@@ -135,15 +120,14 @@ sed -i 's,-fno-tree-pre,,' src/modules/xine/CMakeLists.txt
 %add_optflags -std=c++11
 %endif
 export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
-%if %is_ffmpeg
 %add_optflags -DAVDATADIR="%_datadir/ffmpeg/"
-%else
-%add_optflags -DAVDATADIR="%_datadir/avconv/"
-%endif
 %K5build \
     -DSWIG_PYTHON=ON \
     -DMOD_OPENCV=%{?_enable_opencv:ON}%{!?_enable_opencv:OFF} \
+    -DMOD_QT=ON \
+    -DMOD_QT6=ON \
     -DMOD_GLAXNIMATE=ON \
+    -DMOD_GLAXNIMATE_QT6=ON \
     #
 
 %install
@@ -180,6 +164,9 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
 %_pkgconfigdir/mlt++-%mlt_major.pc
 
 %changelog
+* Tue Mar 12 2024 Sergey V Turchin <zerg@altlinux.org> 7.22.0-alt3
+- build with Qt6
+
 * Wed Dec 13 2023 Sergey V Turchin <zerg@altlinux.org> 7.22.0-alt2
 - build glaxnimate module
 
