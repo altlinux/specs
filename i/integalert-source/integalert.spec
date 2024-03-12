@@ -11,7 +11,7 @@
 
 
 Name:     %pname-source
-Version:  0.4.6
+Version:  0.4.8
 Release:  alt1
 
 Summary:  Osec-based integrity checking script and settings
@@ -37,6 +37,10 @@ Obsoletes: integ < 0.4.2-alt2
 
 %description -n %pname
 Osec-based integrity checking script and settings.
+Includes the 'integalert.service' that is configured to run
+before 'sysinit.target' on every boot.
+
+Activates the special 'integ-check-failed.target' on failure.
 
 %package -n installer-feature-integalert-stage2
 Summary: Run integrity check after install (installer files)
@@ -56,13 +60,16 @@ BuildArch: noarch
 Run integrity check after install (chroot files).
 
 %package -n %pname-vm-check
-Summary: Run VM integrity check before vm.target and every 5 mins
+Summary: Run VM integrity check before PVE and/or Libvirtd start and then every 5 mins
 Group: Monitoring
 BuildArch: noarch
 
 %description -n %pname-vm-check
-Includes service that 'integalert vm' is configured to run before
-'vm.target' and every 5 mins (using a timer).
+Includes a service that is configured to run 'integalert vm' and
+'integalert container' before 'pvedaemon.service' and
+'libvirtd.service', and every 5 mins after that (using a timer).
+
+Activates the special 'vm-check-failed.target' on failure.
 
 %package -n %pname-trigger-pve
 Summary: Lock down PVE cluster VMs on integrity failure
@@ -146,10 +153,27 @@ fi
 
 %if_with pve
 %files -n %pname-trigger-pve
-%config(noreplace) %_sysconfdir/osec/integalert_vm/trigger.d/*-pve-*
+%_sysconfdir/osec/integalert_vm/trigger.d/*-pve-*
 %endif
 
 %changelog
+* Tue Mar 12 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.8-alt1
+- Check and lock only the nodes in /etc/pve/qemu-server.
+- Don't exit a trigger if some nodes failed to stop.
+- Be tolerant to spaces in osec report.
+- Install the triggers in overwrite mode.
+- Added lrm_status.tmp.* to exclude list.
+- Fixed errors in VM triggers.
+
+* Mon Feb 19 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.7-alt1
+- Update and fix the package and service descriptions.
+- Added /etc/pve/nodes/*/lrm_status files to exclude list.
+- Fixed 30-pve-lock-nodes (VM_NODE_DIR, thx Varaksa Artem).
+- Fixed PVE triggers: Process only *.conf files related to
+  qemu-server.
+- Fix: Don't try to use the non-existent 'qm lock' command.
+- Fixed typo: OVFM (thx  Varaksa Artem).
+
 * Wed Feb 14 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.6-alt1
 - Make integalert_vm.service and timer depend on pvedaemon.service
   and libvirtd.service.
