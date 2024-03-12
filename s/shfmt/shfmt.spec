@@ -4,7 +4,7 @@
 
 Name: shfmt
 Version: 3.5.1
-Release: alt1
+Release: alt2
 
 Summary: A shell parser, formatter, and interpreter
 License: BSD-3-Clause
@@ -67,5 +67,8 @@ go test -v ./...
 %_man1dir/%name.1.xz
 
 %changelog
+* Tue Mar 12 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.5.1-alt2
+- NMU: fixed FTBFS on LoongArch (updated vendored golang.org/x/sys)
+
 * Tue Aug 02 2022 Ivan Alekseev <qwetwe@altlinux.org> 3.5.1-alt1
 - Initial build
