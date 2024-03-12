@@ -1,6 +1,6 @@
 Name: alterator-netinst
 Version: 1.9.1
-Release: alt4
+Release: alt6
 
 Source:%name-%version.tar
 
@@ -40,6 +40,17 @@ alterator module for network installations management
 %_bindir/alterator-netinst
 
 %changelog
+* Fri Mar 08 2024 Anton Midyukov <antohami@altlinux.org> 1.9.1-alt6
+- bin/alterator-netinst: add missing help about option -v
+- bin/alterator-netinst: fix disable vnc option (Closes: 46975)
+- Add option "Autoinstall" (Closes: 45970)
+- Fix update webpage and cleanup tftpboot directory, when removed selected image
+  (Closes: 40265, 46599)
+
+* Wed Mar 06 2024 Anton Midyukov <antohami@altlinux.org> 1.9.1-alt5
+- bin/alterator-netinst: add bootchain support
+- bin/alterator-netinst: fix unbound variable SERVER_ROLE (Closes: 49051)
+
 * Tue Jun 08 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.9.1-alt4
 - Copy /boot from new images to syslinux directory.
 - Remove user menu.
