@@ -1,6 +1,6 @@
 Name: input-remapper
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: An easy to use tool to change the behaviour of your input devices
 
@@ -20,6 +20,8 @@ AutoProv: no
 
 #Requires: libgtksourceview4-gir
 Requires: typelib(GtkSource) = 4
+
+Requires: python3(pydantic)
 
 %description
 An easy to use tool to change the behaviour of your input devices.
@@ -56,6 +58,9 @@ subst 's|/usr/lib/systemd/system|%_unitdir|' setup.py
 %_datadir/polkit-1/actions/input-remapper.policy
 
 %changelog
+* Tue Mar 12 2024 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt2
+- add Requires: python3(pydantic) (ALT bug 49653)
+
 * Sun Oct 01 2023 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt1
 - new version 2.0.1 (with rpmrb script)
 
