@@ -37,6 +37,12 @@ BuildRequires: /usr/bin/hg
 %define enable_luajittex	0
 %define enable_mfluajit		0
 %endif
+%ifarch loongarch64
+# XXX: no libffcall, no clisp here
+%def_disable xindy
+%else
+%def_enable xindy
+%endif
 
 # in its own package
 %define with_system_lcdf	0
@@ -61,7 +67,7 @@ BuildRequires: /usr/bin/hg
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	%relYear
-Release:	alt0_9
+Release:	alt0_10
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	https://www.tug.org/texlive/LICENSE.TL
@@ -98,8 +104,10 @@ Requires:	texlive-collection-basic
 #-----------------------------------------------------------------------
 BuildRequires:	autoconf-archive
 BuildRequires:	bison
+%if_enabled xindy
 BuildRequires:	clisp
 BuildRequires:	libffcall libffcall-devel
+%endif
 BuildRequires:	libgs-devel
 BuildRequires:	pkgconfig(gmp)
 BuildRequires:	pkgconfig(graphite2)
@@ -149,6 +157,7 @@ Patch7: texlive-dvisvgm-system-libs.patch
 Patch8: mga-fix-build-with-gs10.patch
 Patch9: texlive-use-grep-E-and-grep-F-instead-of-deprecated-egrep-fgrep.patch
 Patch10: CVE-2023-32700.patch
+Patch11: texlive-2022-alt-pngout-mpmath-concurrency.patch
 Source44: import.info
 Provides: dvipng = %{tl_version}
 Provides: lcdf-typetools = %{tl_version}
@@ -362,6 +371,7 @@ cat %_sourcedir/texlive-dvisvgm-system-libs.patch | hg import -  -q -m texlive-d
 cat %_sourcedir/mga-fix-build-with-gs10.patch | hg import -  -q -m mga-fix-build-with-gs10.patch --user "rpmbuild <rpmbuild>"
 cat %_sourcedir/texlive-use-grep-E-and-grep-F-instead-of-deprecated-egrep-fgrep.patch | hg import -  -q -m texlive-use-grep-E-and-grep-F-instead-of-deprecated-egrep-fgrep.patch --user "rpmbuild <rpmbuild>"
 cat %_sourcedir/CVE-2023-32700.patch | hg import -  -q -m CVE-2023-32700.patch --user "rpmbuild <rpmbuild>"
+hg import -q -m "$(basename %PATCH11)" --user "rpmbuild <rpmbuild>" %PATCH11
 
 
 # setup default builtin values, added to paths.h from texmf.cnf
@@ -422,8 +432,13 @@ CONFIGURE_TOP=.. \
 	--enable-missing \
 	--enable-shared \
 	--enable-xdvik \
+%if_enabled xindy
 	--enable-xindy \
 	--enable-xindy-rules \
+%else
+	--disable-xindy \
+	--disable-xindy-rules \
+%endif
 	--with-freetype2-includes=%{_includedir}/freetype2	\
 	--without-system-xpdf \
 	--with-system-cairo \
@@ -583,6 +598,11 @@ rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R %{texmfconfdir}/ls-R
 
 #-----------------------------------------------------------------------
 %changelog
+* Tue Mar 12 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2022-alt0_10
+- NMU: fixed FTBFS on LoongArch (no clisp here yet). While at it fixed
+  sporadic build failures due to missing dependencies between targers
+  in makefiles.
+
 * Fri Mar 08 2024 Igor Vlasenko <viy@altlinux.org> 2022-alt0_9
 - new version (test release)
 
