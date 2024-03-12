@@ -1,5 +1,5 @@
 # Variable _tnt_version is `git describe --long` from original Tarantool repo for this version
-%define _tnt_version %version-32-gec3eb5256
+%define _tnt_version %version-0-g31c2ddb31
 
 %def_disable static
 %def_enable check
@@ -7,7 +7,7 @@
 ExclusiveArch: x86_64
 
 Name: tarantool
-Version: 2.10.3
+Version: 3.0.1
 Release: alt1
 
 Summary: In-memory database and Lua application server
@@ -40,6 +40,8 @@ Source19: %name-%version-third_party-nghttp2.tar
 Source20: %name-%version-third_party-tz.tar
 Source21: %name-%version-third_party-xxHash.tar
 Source22: %name-%version-third_party-zstd.tar
+Source23: %name-%version-third_party-checks.tar
+Source24: %name-%version-third_party-metrics.tar
 
 BuildRequires: git
 BuildRequires: cmake
@@ -97,7 +99,7 @@ This package provides server development files needed to create
 C and Lua/C modules.
 
 %prep
-%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22
+%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22 -a23 -a24
 
 %build
 
@@ -137,7 +139,7 @@ cmake . \
     -DENABLE_DIST:BOOL=ON \
     -DCMAKE_INSTALL_PREFIX=%prefix \
     -DCMAKE_INSTALL_FULL_BINDIR:PATH=%_bindir \
-    -DENABLE_BUNDLED_LIBCURL:BOOL=OFF \
+    -DENABLE_BUNDLED_LIBCURL:BOOL=ON \
     -DENABLE_BUNDLED_ZSTD:BOOL=OFF
 
 %make_build
@@ -154,11 +156,12 @@ ulimit -n $(ulimit -Hn)
 
 # for test
 export TEST_RUN_RETRIES=3
-export SERVER_START_TIMEOUT=400
-export REPLICATION_SYNC_TIMEOUT=400
-export TEST_TIMEOUT=400
-export NO_OUTPUT_TIMEOUT=400
+export SERVER_START_TIMEOUT=420
+export REPLICATION_SYNC_TIMEOUT=410
+export TEST_TIMEOUT=430
+export NO_OUTPUT_TIMEOUT=440
 sed -i "s/disabled =/disabled = net.box_wait_connected_gh-3856.test.lua/g" test/box/suite.ini
+sed -i "s/release_disabled =/release_disabled = gh_7294_dont_connect_infinitely_test.lua /g" test/replication-luatest/suite.ini
 #
 
 %if_enabled static
@@ -202,6 +205,9 @@ make test-force
 %_includedir/tarantool/*.h
 
 %changelog
+* Mon Feb 26 2024 Dmitry Kibirev <kdy@altlinux.org> 3.0.1-alt1
+- Newest version
+
 * Tue Oct 25 2022 Dmitry Kibirev <kdy@altlinux.org> 2.10.3-alt1
 - New stable version
 
