@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 8.6.0
-Release: alt1
+Release: alt2
 Summary: Jupyter protocol implementation and client libraries
 License: BSD-3-Clause
 Group: Development/Python3
@@ -28,6 +28,7 @@ BuildRequires: python3-module-pytest-timeout
 BuildRequires: openssh-clients
 BuildRequires: iproute2
 BuildRequires: python3-module-flaky
+BuildRequires: python3-module-pexpect
 %endif
 
 %py3_provides %oname
@@ -62,6 +63,9 @@ sed -i '/localinterfaces._load_ips_ifconfig/d' tests/test_localinterfaces.py
 
 
 %changelog
+* Tue Mar 12 2024 Anton Vyatkin <toni@altlinux.org> 8.6.0-alt2
+- Fixed FTBFS.
+
 * Tue Nov 07 2023 Anton Vyatkin <toni@altlinux.org> 8.6.0-alt1
 - New version 8.6.0.
 
