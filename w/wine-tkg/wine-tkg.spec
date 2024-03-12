@@ -14,7 +14,7 @@
 %define mono_version 9.0.0
 %define winetricks_version 20240105
 
-%define major 9.2
+%define major 9.4
 %define rel %nil
 %define conflictlist wine-vanilla wine-stable wine wine-proton-tkg wine-etersoft
 
@@ -101,7 +101,6 @@ Source6: %name-%version-bin-scripts.tar
 
 Patch1: 0011-build-fake-binary-makes-autoreq-happy.patch
 Patch2: 0102-fix-build-on-32-bit-systems-with-llvm-https-bugs.win.patch
-Patch3: wine-tkg-alt-fix-belauncher.patch
 
 AutoReq: yes, noperl, nomingw32
 
@@ -464,7 +463,6 @@ develop programs using %name.
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 # Apply local patches
 #name-patches/patchapply.sh
 
@@ -847,6 +845,10 @@ fi
 %endif
 
 %changelog
+* Tue Mar 12 2024 Mikhail Tergoev <fidel@altlinux.org> 1:9.4-alt1
+- updated to 9.4
+- drop unneeded patch: wine-tkg-alt-fix-belauncher
+
 * Mon Feb 12 2024 Mikhail Tergoev <fidel@altlinux.org> 1:9.2-alt1
 - updated to 9.2
 - mono 9.0.0
