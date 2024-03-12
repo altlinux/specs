@@ -1,5 +1,5 @@
 Name: zlib
-Version: 1.2.13
+Version: 1.3.1
 Release: alt1
 
 Summary: The zlib compression and decompression library
@@ -7,6 +7,7 @@ Summary(ru_RU.UTF-8): Библиотека сжатия данных zlib
 License: Zlib
 Group: System/Libraries
 Url: http://zlib.net/
+VCS: https://github.com/madler/zlib
 # http://git.altlinux.org/gears/z/zlib.git
 Source: %name-%version-%release.tar
 
@@ -145,6 +146,9 @@ make test
 %_pkgconfigdir/minizip.pc
 
 %changelog
+* Tue Mar 12 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3.1-alt1
+- v1.2.13 -> v1.3.1.
+
 * Thu Oct 13 2022 Dmitry V. Levin <ldv@altlinux.org> 1.2.13-alt1
 - v1.2.12 -> v1.2.13.
 
