@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gtk
-%define ver_major 4.12
+%define ver_major 4.14
 %define api_ver_major 4
 %define api_ver %api_ver_major.0
 %define binary_ver 4.0.0
@@ -18,13 +18,14 @@
 # broadway (HTML5) gdk backend
 %def_enable broadway
 %def_enable cloudproviders
-# 4.8.0: tracker and vulkan disabled by default. vulkan is still experimental
+# 4.8.0: tracker disabled by default
 %def_disable tracker
-# still experimental
-%def_disable vulkan
+# enabled by default since 4.13.5
+%def_enable vulkan
 # media backends
 # gstreamer enabled by default
 %def_enable gstreamer
+# droped in 4.13.7
 %def_disable ffmpeg
 
 %def_disable sysprof
@@ -36,7 +37,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -52,11 +53,12 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %endif
 Source5: gtk4-icon-cache.filetrigger
 Patch: gtk+-2.16.5-alt-stop-spam.patch
-#Patch10: gtk-4.10.3-paper-plane-reversed-list.patch
+# backported from main
+Patch10: gtk-4.12.3-alt-printdialog-papersize.patch
 
 %define meson_ver 0.63
-%define glib_ver 2.72
-%define gi_ver 1.72
+%define glib_ver 2.76
+%define gi_ver 1.76
 %define cairo_ver 1.14.0
 %define pango_ver 1.50.0
 %define atk_ver 2.15.1
@@ -72,6 +74,7 @@ Patch: gtk+-2.16.5-alt-stop-spam.patch
 %define graphene_ver 1.10
 %define cloudproviders_ver 0.2.5
 %define rsvg_ver 2.52.0
+%define vulkan_ver 1.3
 
 Requires: gtk4-update-icon-cache = %EVR
 Requires: at-spi2-core
@@ -96,8 +99,8 @@ BuildRequires: libepoxy-devel >= %epoxy_ver
 BuildRequires: libgraphene-devel >= %graphene_ver
 BuildRequires: iso-codes-devel
 BuildRequires: libfribidi-devel
-BuildRequires: gtk-update-icon-cache docbook-utils zlib-devel
-
+BuildRequires: docbook-utils zlib-devel
+BuildRequires: pkgconfig(libdrm)
 %if_enabled x11
 BuildRequires: libXdamage-devel libX11-devel libXcursor-devel
 BuildRequires: libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel
@@ -110,7 +113,7 @@ BuildRequires: libXrender-devel libXt-devel
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel >= %xkbcommon_ver wayland-protocols >= %wayland_protocols_ver}
 %{?_enable_cloudproviders:BuildRequires: libcloudproviders-devel >= %cloudproviders_ver}
 %{?_enable_tracker:BuildRequires: tracker3-devel}
-%{?_enable_vulkan:BuildRequires: vulkan-devel}
+%{?_enable_vulkan:BuildRequires: /usr/bin/glslc vulkan-devel >= %vulkan_ver}
 # for examples
 BuildRequires: libcanberra-gtk3-devel libharfbuzz-devel python3-module-pygobject3
 %{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
@@ -226,7 +229,6 @@ the functionality of the installed GTK+3 packages.
 %prep
 %setup -n %_name-%version
 %patch -p1
-#%%patch10 -p1
 
 %build
 %meson \
@@ -308,17 +310,20 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 %files devel
 %_bindir/gtk4-builder-tool
+%_bindir/gtk4-path-tool
 %_bindir/gtk4-rendernode-tool
 %_includedir/gtk-%api_ver/
 %_libdir/libgtk-%api_ver_major.so
 %_pkgconfigdir/gtk%api_ver_major.pc
 %_pkgconfigdir/gtk%api_ver_major-x11.pc
 %_pkgconfigdir/gtk%api_ver_major-unix-print.pc
+%_pkgconfigdir/gtk%api_ver_major-atspi.pc
 %_datadir/gtk-%api_ver/gtk%{api_ver_major}builder.rng
 %_datadir/gettext/its/gtk%{api_ver_major}builder.its
 %_datadir/gettext/its/gtk%{api_ver_major}builder.loc
 %_datadir/gtk-%api_ver/valgrind/
 %{?_enable_man:%_man1dir/gtk%{api_ver_major}-builder-tool.1*
+%_man1dir/gtk4-path-tool.1*
 %_man1dir/gtk4-rendernode-tool.1*}
 
 %if_enabled wayland
@@ -408,6 +413,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Tue Mar 12 2024 Yuri N. Sedunov <aris@altlinux.org> 4.14.0-alt1
+- 4.14.0
+
 * Thu Jan 18 2024 Yuri N. Sedunov <aris@altlinux.org> 4.12.5-alt1
 - 4.12.5
 
