@@ -1,5 +1,5 @@
 Name: libinput-gestures
-Version: 2.74
+Version: 2.76
 Release: alt1
 
 Summary: Actions gestures on your touchpad using libinput
@@ -8,12 +8,10 @@ Group: System/Libraries
 URL: https://github.com/bulletmark/libinput-gestures
 BuildArch: noarch
 
-Source0: %name-%version.tar.gz
+Source: %name-%version.tar
+Patch: %name-%version-alt-missing-module-fix.patch
+Patch1: %name-%version-alt-wmctrl-warnings-disable.patch
 
-Requires: libinput-tools
-Requires: python3
-Requires: xdotool
-Requires: wmctrl
 BuildRequires(pre): rpm-build-python3
 
 %description
@@ -34,11 +32,17 @@ fragile to any version changes in their output format.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 
 %install
 %makeinstall_std
+
+%check
+export LG_WMCTRL_WARNING_OFF_FOR_TESTS=1
+cp -v ./%name ./%name-%version
+./internal-test
 
 %files
 %_sysconfdir/*
@@ -51,5 +55,9 @@ fragile to any version changes in their output format.
 %_prefix/lib/systemd/user/%name.service
 
 %changelog
+* Mon Feb 26 2024 Anton Kurachenko <srebrov@altlinux.org> 2.76-alt1
+- New version 2.76.
+- Internal tests added in the spec.
+
 * Sat Jun 10 2023 Anton Kurachenko <srebrov@altlinux.org> 2.74-alt1
-- Initial build for ALT
+- Initial build for ALT.
