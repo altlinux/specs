@@ -1,6 +1,6 @@
 Name:     createrepo_c
-Version:  1.0.4
-Release:  alt2
+Version:  1.1.0
+Release:  alt1
 Summary:  Creates a common metadata repository
 License:  GPL-2.0+
 Group:    System/Configuration/Packaging
@@ -98,6 +98,9 @@ ln -s modifyrepo_c %buildroot%_bindir/modifyrepo
 %python3_sitelibdir/*
 
 %changelog
+* Tue Mar 12 2024 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
+- New version.
+
 * Mon Mar 11 2024 Andrey Cherepanov <cas@altlinux.org> 1.0.4-alt2
 - FTBFS: required libgio-devel for build.
 
