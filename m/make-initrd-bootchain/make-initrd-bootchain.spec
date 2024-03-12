@@ -8,7 +8,7 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt22
+Release: alt23
 
 Summary: %child modules set for %name
 License: GPL-3.0
@@ -208,6 +208,9 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Thu Mar 07 2024 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt23
+- cifs and nfs: change order to apply defaults
+
 * Wed Mar 06 2024 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt22
 - resolv.conf is now copied during the liveboot-post.d stage
 
