@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.15.6
+Version: 3.1.0
 Release: alt1
 Summary: An abstract syntax tree for Python with inference support
 License: LGPLv2.1+
@@ -20,6 +20,8 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+%add_pyproject_deps_check_filter contributors-txt
+%add_pyproject_deps_check_filter tbump
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 # tests/test_manager.py::IsolatedAstroidManagerTest::test_no_user_warning
@@ -43,7 +45,7 @@ partial trees by inspecting living objects.
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile requirements_test_min.txt
+%pyproject_deps_resync_check_pipreqfile requirements_minimal.txt
 %endif
 
 %build
@@ -55,7 +57,7 @@ partial trees by inspecting living objects.
 rm %buildroot%python3_sitelibdir/%mod_name/test_utils.py
 
 %check
-%pyproject_run_pytest -ra -Wignore
+%pyproject_run_pytest -vra
 
 %files
 %doc ChangeLog README.rst
@@ -63,6 +65,9 @@ rm %buildroot%python3_sitelibdir/%mod_name/test_utils.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 26 2024 Stanislav Levin <slev@altlinux.org> 3.1.0-alt1
+- 2.15.6 -> 3.1.0.
+
 * Wed Jul 19 2023 Stanislav Levin <slev@altlinux.org> 2.15.6-alt1
 - 2.15.5 -> 2.15.6.
 
