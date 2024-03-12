@@ -1,7 +1,7 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.17
+Version: 0.1.18
 Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
@@ -43,6 +43,8 @@ Headers for developing alterator-manager modules.
 %cmakeinstall_std
 mkdir -p %buildroot%alterator_libexecdir
 mkdir -p %buildroot%_datadir/alterator/backends
+mkdir -p %buildroot%_datadir/alterator/backends/user
+mkdir -p %buildroot%_datadir/alterator/backends/system
 mkdir -p %buildroot%_sysconfdir/alterator/backends
 mkdir -p %buildroot%_datadir/polkit-1/actions
 mkdir -p %buildroot%_rpmlibdir/
@@ -52,12 +54,15 @@ mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
 %files
 %_sbindir/%name
 %_datadir/dbus-1/system.d/ru.basealt.alterator_manager.conf
+%_datadir/dbus-1/services/ru.basealt.alterator_manager.service
 %_unitdir/alterator-manager.service
 %_prefix/lib/systemd/user/alterator-manager.service
 %_datadir/polkit-1/actions/ru.basealt.alterator.manager.policy
 %_rpmlibdir/%name.filetrigger
 %dir %alterator_libexecdir
 %dir %_datadir/alterator/backends
+%dir %_datadir/alterator/backends/user
+%dir %_datadir/alterator/backends/system
 %dir %_sysconfdir/alterator/backends
 %doc docs/*
 
@@ -69,6 +74,13 @@ mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
 
 
 %changelog
+* Tue Mar 12 2024 Ivan Savin <svn17@altlinux.org> 0.1.18-alt1
+- Make the service in user mode bus-activatable.
+- Disable authorization check for the default interface in user mode.
+- Update docs/README-ru.md.
+- Add separate directories for .backend files.
+- Add missing argument types to function definitions and declarations.
+
 * Mon Feb 05 2024 Ivan Savin <svn17@altlinux.org> 0.1.17-alt1
 - Add the ability to use the full interface name in backend files.
 - Update docs/README-ru.md.
