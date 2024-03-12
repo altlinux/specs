@@ -1,5 +1,5 @@
 Name: altlinux-repos
-Version: 1.1
+Version: 1.1.1
 Release: alt1
 
 Summary: A set of ALT repos desktop files
@@ -27,6 +27,9 @@ cp -a mirrors repositories %buildroot%_sysconfdir/apt/
 %_sysconfdir/apt/repositories
 
 %changelog
+* Tue Mar 12 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1-alt1
+- repositories/sisyphus.desktop: dropped armh.
+
 * Fri Jan 12 2024 Anton Midyukov <antohami@altlinux.org> 1.1-alt1
 - repositories: add field X-Has-Arches
 
