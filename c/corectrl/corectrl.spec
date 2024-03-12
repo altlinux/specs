@@ -1,5 +1,7 @@
+%def_with tests
+
 Name: corectrl
-Version: 1.3.10
+Version: 1.3.11
 Release: alt1
 Summary: Core control application
 Group: System/Configuration/Hardware
@@ -14,6 +16,10 @@ BuildRequires(pre): cmake
 # Automatically added by buildreq on Sun Oct 02 2022
 BuildRequires: libbotan-devel libdbus-devel libdrm-devel libpolkit-devel qt5-charts-devel qt5-svg-devel qt5-tools-devel quazip-qt5-devel
 BuildRequires: libfmt-devel >= 5.0, libpugixml-devel >= 1.11 ctest nholthaus-units-devel easyloggingpp-devel
+# TODO add trompeloeil too
+%if_with tests
+BuildRequires: catch2-devel
+%endif
 
 %description
 CoreCtrl is a Free and Open Source GNU/Linux application that allows you to
@@ -29,7 +35,9 @@ find . -name CMakeLists.txt -exec sed -i -e 's/stdc++fs/stdc++/g' {} \;
 %build
 %cmake \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  %if_with tests
   -DBUILD_TESTING=TRUE \
+  %endif
   -DWITH_PCI_IDS_PATH=%_datadir/hwdatabase/pci.ids
 %cmake_build
 
@@ -71,6 +79,12 @@ fi
 %_datadir/polkit-1/actions/org.%name.*.policy
 
 %changelog
+* Tue Mar 12 2024 L.A. Kostis <lakostis@altlinux.ru> 1.3.11-alt1
+- 1.3.11.
+
+* Tue Feb 13 2024 L.A. Kostis <lakostis@altlinux.ru> 1.3.10-alt2
+- Build with system catch2.
+
 * Mon Feb 12 2024 L.A. Kostis <lakostis@altlinux.ru> 1.3.10-alt1
 - 1.3.10.
 - Fix unresolved symbols from easyloggingpp.
