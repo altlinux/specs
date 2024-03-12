@@ -15,7 +15,7 @@
 
 Name: tdlib
 Version: 1.8.21
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform library for building Telegram clients
 
@@ -100,7 +100,7 @@ export CC=clang
 export CXX=clang++
 %endif
 
-%cmake -DCMAKE_INSTALL_LIBDIR=%_lib
+%cmake -DCMAKE_INSTALL_LIBDIR=%_lib -DBUILD_SHARED_LIBS=1
 %cmake_build
 
 %install
@@ -124,13 +124,19 @@ rm -fv %buildroot%_libdir/*.a
 %_libdir/libtd*.so
 %_pkgconfigdir/*.pc
 %_libdir/cmake/Td/
+%exclude %_libdir/cmake/Td/TdStaticTarget*
 
 %if_enabled static
 %files devel-static
 %_libdir/libtd*.a
+%_libdir/cmake/Td/TdStaticTarget*
 %endif
 
 %changelog
+* Thu Feb 8 2024 Artem Semenov <savoptik@altlinux.org> 1.8.21-alt2
+- Disabled provision of static targets to CMake;
+- Fix provide libs in devel package (closes: 48693).
+
 * Wed Nov 08 2023 Vitaly Lipatov <lav@altlinux.ru> 1.8.21-alt1
 - new version (1.8.21) with rpmgs script
 
