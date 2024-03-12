@@ -2,8 +2,8 @@
 %define soname 19
 
 Name: dlib
-Version: 19.24.2
-Release: alt3
+Version: 19.24.3
+Release: alt1
 Summary: C++ toolkit containing machine learning algorithms and tools
 License: BSL-1.0
 Group: Engineering
@@ -61,6 +61,7 @@ sed -i -e '/USE_SSE4_INSTRUCTIONS/s| ON | OFF |; /USE_AVX_INSTRUCTIONS/s| ON | O
   -DLIB_USE_CUDA=false \
   -DBUILD_SHARED_LIBS=true \
   -DBLAS_LIBRARIES=%_libdir/libopenblas.so \
+  -DDLIB_JXL_SUPPORT=false \
 #   -DUSE_AVX_INSTRUCTIONS=false \
 #   -DUSE_SSE4_INSTRUCTIONS=false \
 #
@@ -91,6 +92,9 @@ sed -i -e '/USE_SSE4_INSTRUCTIONS/s| ON | OFF |; /USE_AVX_INSTRUCTIONS/s| ON | O
 %endif
 
 %changelog
+* Tue Mar 12 2024 Leontiy Volodin <lvol@altlinux.org> 19.24.3-alt1
+- New version 19.24.3.
+
 * Thu Nov 09 2023 Leontiy Volodin <lvol@altlinux.org> 19.24.2-alt3
 - Built without SSE4 and AVX (ALT #48280).
 
