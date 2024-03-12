@@ -15,7 +15,7 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 82.0
+Version: 83.0
 Release: alt1
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
@@ -160,6 +160,9 @@ cat mkvextract.lang mkvmerge.lang mkvpropedit.lang >> %name.lang
 %endif
 
 %changelog
+* Tue Mar 12 2024 L.A. Kostis <lakostis@altlinux.ru> 83.0-alt1
+- 83.0.
+
 * Sat Jan 06 2024 L.A. Kostis <lakostis@altlinux.ru> 82.0-alt1
 - 82.0.
 
