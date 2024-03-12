@@ -1,5 +1,5 @@
 Name: python3-module-awesomeversion
-Version: 23.11.0
+Version: 24.2.0
 Release: alt1
 
 Summary: Python version manipulations
@@ -30,6 +30,9 @@ BuildRequires: python3(poetry-core)
 %python3_sitelibdir/awesomeversion-%version.dist-info
 
 %changelog
+* Tue Mar 12 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 24.2.0-alt1
+- 24.2.0 released
+
 * Wed Jan 24 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 23.11.0-alt1
 - 23.11.0 released
 
