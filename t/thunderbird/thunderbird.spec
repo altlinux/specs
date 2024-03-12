@@ -17,8 +17,8 @@
 %endif
 
 Name: 	 thunderbird
-Version: 115.8.0
-Release: alt3
+Version: 115.8.1
+Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -584,6 +584,11 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Tue Mar 12 2024 Pavel Vasenkov <pav@altlinux.org> 115.8.1-alt1
+- New version.
+- Security fixes:
+  + CVE-2024-1936 Leaking of encrypted email subjects to other conversations
+
 * Mon Mar 11 2024 Andrey Cherepanov <cas@altlinux.org> 115.8.0-alt3
 - Use maximize icon for mail window too (ALT #49606).
 
