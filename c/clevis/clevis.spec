@@ -1,6 +1,6 @@
 Name:    clevis
-Version: 19
-Release: alt1.1
+Version: 20
+Release: alt1
 Summary: Automated Encryption Framework
 
 License: GPL-3.0-or-later
@@ -52,6 +52,7 @@ or even automated unlocking of LUKS volumes.
 %_datadir/bash-completion/completions/clevis
 %_libexecdir/clevis-luks-udisks2
 %_libexecdir/clevis-luks-askpass
+%_libexecdir/clevis-luks-unlocker
 %_unitdir/clevis-luks-askpass.path
 %_unitdir/clevis-luks-askpass.service
 %dir %_libexecdir/dracut/modules.d/60clevis-pin-null/
@@ -81,6 +82,9 @@ or even automated unlocking of LUKS volumes.
 %_man7dir/clevis-luks-unlockers.7*
 
 %changelog
+* Wed Mar 13 2024 Leontiy Volodin <lvol@altlinux.org> 20-alt1
+- new version
+
 * Tue Oct 24 2023 Leontiy Volodin <lvol@altlinux.org> 19-alt1.1
 - add require
 
