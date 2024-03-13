@@ -5,8 +5,8 @@
 %define service_name kio-fuse
 
 Name: kde5-%rname
-Version: 5.0.1
-Release: alt3
+Version: 5.1.0
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -67,6 +67,9 @@ developing applications that use %name.
 /lib/tmpfiles.d/kio-fuse-tmpfiles.conf
 
 %changelog
+* Wed Mar 13 2024 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt1
+- new version
+
 * Wed Nov 08 2023 Sergey V Turchin <zerg@altlinux.org> 5.0.1-alt3
 - don't force alternate placement
 
