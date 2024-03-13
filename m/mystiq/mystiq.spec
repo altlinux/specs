@@ -1,21 +1,23 @@
 Name: mystiq
-Version: 20.03.23
-Release: alt2
+Version: 23.05.15
+Release: alt1
 
 Summary: Audio/Video converter
 License: GPLv3
 Group: Video
 
 Url: https://mystiqapp.com/
+Vcs: https://github.com/biglinux/MystiQ/
 Source: MystiQ-%version.tar.gz
-
-BuildPreReq: extra-cmake-modules
 
 # Automatically added by buildreq on Fri May 01 2020 (-bi)
 # optimized out: elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libglvnd-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-opengl libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-widgets libqt5-xml libstdc++-devel pkg-config python-base python-modules qt5-base-devel qt5-tools sh4 xz
 BuildRequires: qt5-charts-devel qt5-declarative-devel qt5-multimedia-devel qt5-svg-devel qt5-tools-devel
+BuildRequires: extra-cmake-modules
+BuildRequires: libnotify-devel
 
 Requires: /usr/bin/ffmpeg /usr/bin/ffprobe /usr/bin/sox
+Requires: icon-theme-hicolor
 
 %description
 MystiQ is a GUI for FFmpeg, a powerful media converter.
@@ -37,9 +39,10 @@ qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" PREFIX=%prefix D
 # unsupported as of lcc 1.25.15
 sed -i 's,-fno-fat-lto-objects,,' Makefile
 %endif
-%make_build
+%make_build USE_LIBNOTIFY=1
 
 %install
+sed -i 's/strip$/echo/' Makefile
 make INSTALL_ROOT=%buildroot install
 
 %files
@@ -51,6 +54,9 @@ make INSTALL_ROOT=%buildroot install
 %_man1dir/*
 
 %changelog
+* Wed Mar 13 2024 Andrew A. Vasilyev <andy@altlinux.org> 23.05.15-alt1
+- 23.05.15 (ALT #49494)
+
 * Fri May 14 2021 Michael Shigorin <mike@altlinux.org> 20.03.23-alt2
 - E2K: avoid lcc-unsupported option
 
