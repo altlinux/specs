@@ -1,5 +1,5 @@
 Name: python3-module-home-assistant-intents
-Version: 2024.1.2
+Version: 2024.3.12
 Release: alt1
 
 Summary: Intents for Home Assistant
@@ -13,7 +13,6 @@ BuildArch: noarch
 BuildRequires: rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
-BuildRequires: python3(build)
 BuildRequires: python3(hassil)
 BuildRequires: python3(yaml)
 
@@ -22,16 +21,13 @@ BuildRequires: python3(yaml)
 
 %prep
 %setup
+O=home_assistant_intents/data
+mkdir -p $O && python3 script/merged_output.py $O
 
 %build
-O=package/home_assistant_intents/data
-mkdir -p $O
-python3 -m script.intentfest merged_output $O
-cd package
 %pyproject_build
 
 %install
-cd package
 %pyproject_install
 
 %files
@@ -39,6 +35,9 @@ cd package
 %python3_sitelibdir/home_assistant_intents-%version.dist-info
 
 %changelog
+* Wed Mar 13 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 2024.3.12-alt1
+- 2024.3.12 released
+
 * Fri Jan 19 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 2024.1.2-alt1
 - 2024.1.2 released
 
