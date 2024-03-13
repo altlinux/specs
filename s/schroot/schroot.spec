@@ -2,7 +2,7 @@
 
 Name: schroot
 Version: 1.6.10
-Release: alt2
+Release: alt2.1
 Summary: Execute commands in a chroot environment
 Group: Development/Tools
 License: GPLv3+
@@ -45,6 +45,8 @@ BuildRequires: gettext
 BuildRequires: liblvm2-devel
 BuildRequires: doxygen graphviz
 BuildRequires: po4a >= 0.40
+
+%filter_from_requires /mdconfig/d
 
 %description
 schroot allows users to execute commands or interactive shells in
@@ -189,6 +191,10 @@ rm -rf %buildroot%_mandir/fr
 %_man1dir/dchroot*
 
 %changelog
+* Wed Mar 13 2024 Ivan A. Melnikov <iv@altlinux.org> 1.6.10-alt2.1
+- NMU: get rid of generated dependency on /sbin/mdconfig,
+  which used only on FreeBSD (fixes rebuilding).
+
 * Wed Feb 09 2022 Andrey Limachko <liannnix@altlinux.org> 1.6.10-alt2
 - Fix man building
 
