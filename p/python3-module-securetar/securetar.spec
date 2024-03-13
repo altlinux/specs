@@ -1,10 +1,10 @@
 Name: python3-module-securetar
-Version: 2023.3.0
+Version: 2024.2.1
 Release: alt1
 
 Summary: Secure Tarfile library
 License: Apache-2.0
-Group: Development/Python3
+Group: Development/Python
 Url: https://github.com/pvizeli/securetar
 
 Source0: %name-%version-%release.tar
@@ -37,6 +37,9 @@ BuildRequires: python3(cryptography)
 %python3_sitelibdir/securetar-%version.dist-info
 
 %changelog
+* Wed Mar 13 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 2024.2.1-alt1
+- 2024.2.1 released
+
 * Thu May 04 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.3.0-alt1
 - 2023.3.0 released
 
