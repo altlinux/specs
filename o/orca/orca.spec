@@ -1,10 +1,13 @@
 %def_disable snapshot
 
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 
+# experimental spiel (https://github.com/eeejay/spiel) support disabled by default
+%def_disable spiel
+
 Name: orca
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
@@ -21,39 +24,27 @@ Source: %name-%version%beta.tar
 Source1: voiceman-server
 Source2: %name.watch
 Source3: orca-autostart.desktop
-#Source4: ru.po
-
-#Patch1: orca-3.2.1-alt-voiceman.patch
-Patch2: orca-3.2.1-alt-punc.patch
 
 Requires: typelib(Gtk) = 3.0 typelib(Atspi) = 2.0
+%{?_disable_spiel:%add_typelib_req_skiplist typelib(Spiel)}
+
 Requires: yelp
-#Requires: voiceman
 Requires: at-spi2-core
 # don't speak russian
 Requires: speech-dispatcher-module-flite flite
 # speak russian
 Requires: espeak
+Requires: python3-module-speechd
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildPreReq: /proc
-BuildRequires: libgtk+3-devel >= 3.2
+BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
+BuildRequires: /proc meson yelp-tools
+BuildRequires: libgtk+3-devel >= 3.24
 BuildRequires: libgtk+3-gir
-BuildRequires: libat-spi2-core-devel >= 2.28
-BuildRequires: at-spi2-atk-devel
-BuildRequires: python3-module-pygobject3-devel >= 3.18
-BuildRequires: python3-module-dbus-devel
-BuildRequires: python3-module-pycairo-devel
-BuildRequires: python3-module-pyxdg
-BuildRequires: python3-base
-BuildRequires: yelp-tools
-BuildRequires: python3-module-speechd
-BuildRequires: python3-module-brlapi
-BuildRequires: gstreamer1.0-devel
-
-Requires: python3-module-speechd
+BuildRequires: pkgconfig(atspi-2) >= 2.50.0
+BuildRequires: pkgconfig(atk-bridge-2.0)
+BuildRequires: pkgconfig(pygobject-3.0) >= 3.18
 
 %description
 A flexible, scriptable, extensible screen reader for the GNOME platform
@@ -70,23 +61,16 @@ Jaws For Windows компании Freedom Scientific.
 
 %prep
 %setup -n %name-%version%beta
-#%patch1 -p1
-#%%patch2 -p1
-#cp -f %SOURCE4 po/ru.po
 
 %build
-%autoreconf
-%configure
-%make_build
+%meson \
+%{subst_enable_meson_bool spiel spiel}
+%meson_build
 
 %install
-%makeinstall_std pyexecdir=%python3_sitelibdir
+%meson_install
 
-#%__install -d -m755 %buildroot%_datadir/%name/emacspeak-servers/
-#echo voiceman > %buildroot%_datadir/%name/emacspeak-servers/.servers
-#%__install -pD -m755 %SOURCE1 %buildroot%_datadir/%name/emacspeak-servers/voiceman
-
-install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autostart.desktop
+#install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autostart.desktop
 
 %find_lang --with-gnome %name
 
@@ -100,9 +84,12 @@ install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autost
 %_man1dir/*
 %_datadir/%name/
 %_sysconfdir/xdg/autostart/%name-autostart.desktop
-%_datadir/gdm/greeter/autostart/%name-autostart.desktop
+#%_datadir/gdm/greeter/autostart/%name-autostart.desktop
 
 %changelog
+* Wed Mar 13 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Sat Jan 06 2024 Yuri N. Sedunov <aris@altlinux.org> 45.2-alt1
 - 45.2
 
