@@ -46,7 +46,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Media Sharing Server
@@ -329,6 +329,9 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_man1dir/%name-pulse.1*
 %_man5dir/%name.conf.5*
 %_man5dir/%name-pulse.conf.5*
+%_man5dir/%name-client.conf.5.xz
+%_man5dir/%name-filter-chain.conf.5.xz
+%_man5dir/%name-jack.conf.5.xz
 %endif
 %doc README* NEWS
 
@@ -371,14 +374,14 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_bindir/pw-play
 %_bindir/pw-profiler
 %_bindir/pw-record
+%_bindir/pw-reserve
 %_bindir/pw-top
 %_bindir/pw-v4l2
-%_bindir/pw-reserve
+%_bindir/spa-acp-tool
 %_bindir/spa-inspect
 %_bindir/spa-json-dump
 %_bindir/spa-monitor
 %_bindir/spa-resample
-%_bindir/spa-acp-tool
 %if_enabled man
 %_man1dir/pw-cat.1.*
 %_man1dir/pw-cli.1*
@@ -391,7 +394,14 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_man1dir/pw-mididump.1.*
 %_man1dir/pw-mon.1*
 %_man1dir/pw-profiler.1.*
+%_man1dir/pw-reserve.1*
 %_man1dir/pw-top.1.*
+%_man1dir/pw-v4l2.1*
+%_man1dir/spa-acp-tool.1*
+%_man1dir/spa-inspect.1*
+%_man1dir/spa-json-dump.1*
+%_man1dir/spa-monitor.1*
+%_man1dir/spa-resample.1*
 %endif
 
 %files jack
@@ -401,7 +411,7 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %{?_enable_man:%_man1dir/pw-jack.1*}
 
 %files jack-libs
-%_sysconfdir/ld.so.conf.d/pipewire-jack-%_arch.conf
+%_sysconfdir/ld.so.conf.d/%name-jack-%_arch.conf
 %_libdir/%name-%api_ver/jack/*.so.*
 
 %files jack-libs-devel
@@ -411,6 +421,9 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 
 
 %changelog
+* Wed Mar 13 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
+- 1.0.4
+
 * Fri Feb 02 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
 - 1.0.3
 
