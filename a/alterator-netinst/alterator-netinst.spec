@@ -1,6 +1,6 @@
 Name: alterator-netinst
 Version: 1.9.1
-Release: alt6
+Release: alt7
 
 Source:%name-%version.tar
 
@@ -40,6 +40,13 @@ alterator module for network installations management
 %_bindir/alterator-netinst
 
 %changelog
+* Wed Mar 13 2024 Anton Midyukov <antohami@altlinux.org> 1.9.1-alt7
+- run select image only once after change all options
+- backend3/netinst: disable debug to /tmp/log
+- bin/alterator-netinst: do not remount current image
+- bin/alterator-netinst: fix extra spaces in config, when add vnc
+- bin/alterator-netinst: fix typo in help
+
 * Fri Mar 08 2024 Anton Midyukov <antohami@altlinux.org> 1.9.1-alt6
 - bin/alterator-netinst: add missing help about option -v
 - bin/alterator-netinst: fix disable vnc option (Closes: 46975)
