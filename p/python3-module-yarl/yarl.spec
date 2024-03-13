@@ -1,6 +1,6 @@
 Name: python3-module-yarl
-Version: 1.9.2
-Release: alt2
+Version: 1.9.4
+Release: alt1
 
 Summary: Yet another URL library
 License: Apache-2.0
@@ -13,7 +13,9 @@ BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildRequires: python3(cython)
+BuildRequires: python3(expandvars)
 BuildRequires: python3(pytest)
+BuildRequires: python3(pytest_cov)
 BuildRequires: python3(idna)
 BuildRequires: python3(multidict)
 
@@ -32,13 +34,17 @@ python3 -mcython -3 -o yarl/_quoting_c.c yarl/_quoting_c.pyx
 %pyproject_install
 
 %check
-%pyproject_run -- pytest --import-mode append tests
+export YARL_NO_EXTENSIONS=1
+%pyproject_run_pytest tests
 
 %files
 %python3_sitelibdir/yarl
 %python3_sitelibdir/yarl-%version.dist-info
 
 %changelog
+* Fri Jan 19 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.9.4-alt1
+- 1.9.4 released
+
 * Mon Aug 07 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.9.2-alt2
 - resolved FTBFS due to wrong square brackets handling (upstream commit
   0a94c6e4948e00fff072c0cf367afbf4ac36f906)
