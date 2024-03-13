@@ -1,30 +1,31 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %def_enable pulse
-%define ver_major 2
-%define api_ver 2.0
-%define enc_api_ver 2.1
+%define ver_major 2.1
+%define api_ver_major 2
+%define api_ver 2.2
+%define enc_api_ver 2.2
 %def_disable qt5
 
 Name: guvcview
-Version: %ver_major.0.8.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A GTK UVC video viewer
-License: GPLv3+
+License: GPL-2.0-or-later
 Group: Video
 Url: http://%name.sourceforge.net/
 
 %if_disabled snapshot
-Source: http://download.sourceforge.net/%name/%name-src-%version.tar.gz
+Source: http://download.sourceforge.net/%name/%name-src-%version.tar.bz2
 %else
-Vcs: git://git.code.sf.net/p/guvcview/git-master
+Vcs: git://git.code.sf.net/p/guvcview/git-master.git
 Source: %name-%version.tar
 %endif
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
-BuildPreReq: libSDL2-devel >= 2.0.0
+BuildRequires: libSDL2-devel >= 2.0.0
 BuildRequires: gcc-c++ glibc-kernheaders
 BuildRequires: desktop-file-utils intltool libappstream-glib-devel
 BuildRequires: libavutil-devel libavcodec-devel
@@ -33,8 +34,6 @@ BuildRequires: libv4l-devel libpng-devel libudev-devel libusb-devel
 BuildRequires: libgsl-devel
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
 %{?_enable_qt5:BuildRequires: qt5-base-devel qt5-tools}
-# for autoreconf
-BuildRequires: autoconf-archive
 
 %description
 This project aims at providing a simple GTK interface for capturing and
@@ -57,7 +56,7 @@ This package contains GTK UVC video viewer libraries.
 %package -n lib%name-devel
 Summary: GTK UVC video viewer development files
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 This package contains files necessary to develop applications that use
@@ -67,7 +66,6 @@ This package contains files necessary to develop applications that use
 %setup -n %name%{?_disable_snapshot:-src}-%version
 
 %build
-#export LIBS="$LIBS -lm"
 %{?_enable_qt5: export ac_cv_prog_MOC=%_bindir/moc-qt5}
 %autoreconf
 %configure \
@@ -107,13 +105,16 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_libdir/libgviewencoder-%enc_api_ver.so.*
 
 %files -n lib%name-devel
-%_includedir/%name-%ver_major/
+%_includedir/%name-%api_ver_major/
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
 %exclude %_datadir/doc/%name
 
 %changelog
+* Wed Mar 13 2024 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
+- 2.1.0
+
 * Wed May 04 2022 Yuri N. Sedunov <aris@altlinux.org> 2.0.8.1-alt1
 - updated to v2.0.8-1
 
