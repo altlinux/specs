@@ -1,8 +1,8 @@
 Name: installer-feature-swapfile
 Version: 0.1
-Release: alt1
+Release: alt2
 
-Summary: Clear xprofile
+Summary: Create swap-file
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
 Url: http://www.altlinux.org/Installer/beans
@@ -12,7 +12,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 %description
-Clear /etc/skel/.xprofile for new users.
+Create /swap file and add to /etc/fstab.
 
 %prep
 %setup
@@ -28,5 +28,8 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Wed Mar 13 2024 Sergey V Turchin <zerg@altlinux.org> 0.1-alt2
+- fix package description (closes: 49675)
+
 * Tue Mar 12 2024 Sergey V Turchin <zerg@altlinux.org> 0.1-alt1
 - initial build
