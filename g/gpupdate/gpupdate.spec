@@ -32,7 +32,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.9.13.8
+Version: 0.9.13.9
 Release: alt1
 
 Summary: GPT applier
@@ -183,6 +183,9 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Wed Mar 13 2024 Valery Sinelnikov <greh@altlinux.org> 0.9.13.9-alt1
+- Fixed premature removal of double slash
+
 * Thu Feb 22 2024 Valery Sinelnikov <greh@altlinux.org> 0.9.13.8-alt1
 - Added search for dc on the site
 - Added compatibility support for the oldest versions of SQLAlchemy
