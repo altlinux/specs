@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.7.1
-Release: alt2
+Version: 5.7.2
+Release: alt1
 Summary: Jupyter core package
 License: BSD-3-Clause
 Group: Development/Python3
@@ -55,6 +55,9 @@ sed -i "/addopts/,/]/ s/--color=yes//" pyproject.toml
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Mar 13 2024 Anton Vyatkin <toni@altlinux.org> 5.7.2-alt1
+- New version 5.7.2.
+
 * Wed Feb 21 2024 Anton Vyatkin <toni@altlinux.org> 5.7.1-alt2
 - Fixed FTBFS.
 

@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.14.1
+Version: 5.14.2
 Release: alt1
 
 Summary: Traitlets Python config system
@@ -66,6 +66,9 @@ sed -i 's/"--color=yes",//' pyproject.toml
 %python3_sitelibdir/*/tests
 
 %changelog
+* Wed Mar 13 2024 Anton Vyatkin <toni@altlinux.org> 5.14.2-alt1
+- new version 5.14.2
+
 * Mon Feb 26 2024 Anton Vyatkin <toni@altlinux.org> 5.14.1-alt1
 - new version 5.14.1
 

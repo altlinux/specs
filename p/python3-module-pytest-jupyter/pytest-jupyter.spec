@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 
 Summary: A pytest plugin for testing Jupyter libraries and extensions
@@ -25,6 +25,7 @@ BuildRequires: python3-module-jupyter_core
 BuildRequires: python3-module-nbformat
 BuildRequires: python3-module-ipykernel
 BuildRequires: python3-module-pytest-timeout
+BuildRequires: python3-module-jupyter_server
 %endif
 
 %description
@@ -40,8 +41,7 @@ A set of pytest plugins for Jupyter libraries and extensions.
 %pyproject_install
 
 %check
-sed -i '/pytest_jupyter.jupyter_server/d' tests/conftest.py
-%pyproject_run_pytest --ignore=tests/test_jupyter_server.py
+%pyproject_run_pytest -v
 
 %files
 %doc *.md LICENSE
@@ -49,6 +49,9 @@ sed -i '/pytest_jupyter.jupyter_server/d' tests/conftest.py
 %python3_sitelibdir/pytest_jupyter-%version.dist-info
 
 %changelog
+* Wed Mar 13 2024 Anton Vyatkin <toni@altlinux.org> 0.9.1-alt1
+- New version 0.9.1.
+
 * Thu Feb 22 2024 Anton Vyatkin <toni@altlinux.org> 0.9.0-alt1
 - New version 0.9.0.
 
