@@ -1,7 +1,7 @@
 %define soversion() %(echo "%1" | awk -F. '{print $1"."$2}')
 
 Name: libdatachannel
-Version: 0.19.3
+Version: 0.20.2
 Release: alt1
 Summary: WebRTC network library featuring Data Channels, Media Transport, and WebSockets
 
@@ -60,5 +60,8 @@ developing applications that use %name.
 %_libdir/%name.so
 
 %changelog
+* Wed Mar 13 2024 Anton Midyukov <antohami@altlinux.org> 0.20.2-alt1
+- new version (0.20.2) with rpmgs script
+
 * Mon Nov 13 2023 Anton Midyukov <antohami@altlinux.org> 0.19.3-alt1
 - initial build
