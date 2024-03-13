@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.1.5
-Release: alt1
+Release: alt2
 
 Summary: A new kind of Progress Bar
 License: MIT
@@ -19,6 +19,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-about-time
@@ -61,5 +62,8 @@ rm %buildroot/%_usr/LICENSE
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Tue Mar 12 2024 Alexander Kuznetov <kuznetsovam@altlinux.org> 3.1.5-alt2
+- Add setuptools BR.
+
 * Wed Dec 20 2023 Alexander Kuznetsov <kuznetsovam@altlinux.org> 3.1.5-alt1
 - Initial build.

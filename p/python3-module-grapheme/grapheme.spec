@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.6.0
-Release: alt1
+Release: alt2
 
 Summary: A Python package for working with user perceived characters
 License: MIT
@@ -18,6 +18,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
 %if_with check
 BuildRequires: python3-module-pytest
 %endif
@@ -53,5 +54,8 @@ string manipulation based on graphemes.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Mar 12 2024 Alexander Kuznetov <kuznetsovam@altlinux.org> 0.6.0-alt2
+- Add setuptools BR.
+
 * Thu Feb 29 2024 Alexander Kuznetov <kuznetsovam@altlinux.ru> 0.6.0-alt1
 - Initial build.

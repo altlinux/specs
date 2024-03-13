@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 4.2.1
-Release: alt1
+Release: alt2
 
 Summary: A cool helper for tracking time and throughput of code blocks
 License: MIT
@@ -19,6 +19,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
 %if_with check
 BuildRequires: python3-module-pytest
 %endif
@@ -62,5 +63,8 @@ rm %buildroot/%_usr/LICENSE
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Tue Mar 12 2024 Alexander Kuznetov <kuznetsovam@altlinux.org> 4.2.1-alt2
+- Add setuptools BR.
+
 * Sun Dec 24 2023 Alexander Kuznetsov <kuznetsovam@altlinux.org> 4.2.1-alt1
 - Initial build.

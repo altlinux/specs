@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 2.0.4
+Version: 2.1.0
 Release: alt1
 Summary: Hamcrest framework for matcher objects
 License: BSD
@@ -56,6 +56,9 @@ commonly used.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 06 2024 Alexander Kuznetsov <kuznetsovam@altlinux.org> 2.1.0-alt1
+- 2.0.4 -> 2.1.0
+
 * Fri Jun 23 2023 Stanislav Levin <slev@altlinux.org> 2.0.4-alt1
 - 2.0.2 -> 2.0.4.
 
