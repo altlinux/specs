@@ -3,7 +3,7 @@
 
 Name: pve-qemu-server
 Summary: PVE Qemu Server Tools
-Version: 8.0.10
+Version: 8.1.0
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
@@ -69,6 +69,9 @@ ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-virtio.jpg
 %perl_vendor_privlib/PVE/*.pm
 
 %changelog
+* Wed Mar 13 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.1.0-alt1
+- 8.1.0
+
 * Fri Mar 01 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.0.10-alt1
 - 8.0.10
 
