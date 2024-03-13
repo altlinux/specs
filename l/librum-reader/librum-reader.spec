@@ -1,6 +1,6 @@
 Name: librum-reader
 Version: 0.11.0
-Release: alt1
+Release: alt2
 Summary: Librum is an application designed to make reading enjoyable and straightforward for everyone.
 
 Source:  %name-%version.tar
@@ -30,7 +30,7 @@ License: GPLv3
 BuildRequires: make cmake gcc-c++ qt6-base-devel qt6-declarative-devel qt6-declarative qt6-tools-devel
 BuildRequires: zlib-devel clang16.0-devel  clang16.0-libs
 BuildRequires: python3-module-clang >= 16
-BuildRequires: rpm-macros-qt6
+BuildRequires: rpm-macros-qt6 python3-module-setuptools
 #dependecies to use system libraries instead of submodules 
 BuildRequires: zlib-devel libjbig2dec-devel libfreetype-devel
 BuildRequires: libharfbuzz-devel libfreeglut-devel libcurl-devel
@@ -110,6 +110,9 @@ done
 %_datadir/pixmaps/librum.svg
 
 %changelog
+* Mon Mar 11 2024 Oleg Proskurin <proskur@altlinux.org> 0.11.0-alt2
+- Add setuptools dependency
+
 * Wed Dec 20 2023 Oleg Proskurin <proskur@altlinux.org> 0.11.0-alt1
 - New version
 
