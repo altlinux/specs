@@ -2,7 +2,7 @@
 
 Name: plasma5-%rname
 Version: 5.27.11
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init
 
@@ -14,6 +14,7 @@ License: GPL-2.0-or-later
 Requires: bluez >= 5.0 obexd
 
 Source: %rname-%version.tar
+Patch0: %rname-%version-fix-pairing-bug.patch
 
 # Automatically added by buildreq on Fri Feb 27 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base ruby ruby-stdlibs shared-mime-info
@@ -66,7 +67,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-
+%patch0 -p1
 
 %build
 %K5build \
@@ -101,6 +102,9 @@ mv %buildroot/%_K5xdgmime/bluedevil-mime.xml %buildroot/%_K5xdgmime/kf5-bluedevi
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Mar 14 2024 Ajrat Makhmutov <rauty@altlinux.org> 1:5.27.11-alt2
+- fix pairing bug (closes: 47666)
+
 * Thu Mar 07 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.11-alt1
 - new version
 
