@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: libblake3
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 Summary: The official C implementations of the BLAKE3 cryptographic hash function
 License: Apache-2.0 or CC0-1.0
@@ -99,6 +99,9 @@ rm example
 %files checkinstall
 
 %changelog
+* Wed Mar 13 2024 Vitaly Chikunov <vt@altlinux.org> 1.5.1-alt1
+- Update to 1.5.1 (2024-03-12).
+
 * Thu Sep 21 2023 Vitaly Chikunov <vt@altlinux.org> 1.5.0-alt1
 - Update to 1.5.0 (2023-09-20).
 
