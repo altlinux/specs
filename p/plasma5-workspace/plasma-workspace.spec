@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.27.11
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init
 
@@ -123,6 +123,7 @@ Patch142: alt-fix-lockout-applet.patch
 Patch143: alt-run-etc-profile.patch
 Patch144: alt-def-lookandfeel.patch
 Patch145: alt-add-nvidia-prime-to-menu.patch
+Patch146: alt-fix-wallpaper-confirmation.patch
 
 # Automatically added by buildreq on Sat Mar 21 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig glib2-devel glibc-devel-static kf5-attica-devel kf5-kdoctools-devel kf5-kjs-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcln-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libgst-plugins1.0 libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-script libqt5-sql libqt5-svg libqt5-test libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libwayland-server libxcb-devel libxcbutil-keysyms libxcbutil-keysyms-devel libxkbfile-devel libxml2-devel pkg-config python-base qt5-base-devel qt5-declarative-devel qt5-webkit-devel rpm-build-gir ruby ruby-stdlibs wayland-devel xml-common xml-utils xorg-fixesproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -333,6 +334,7 @@ popd
 %patch143 -p1
 %patch144 -p1
 %patch145 -p1 -b .prime
+%patch146 -p1
 
 pwd
 install -m0644 %SOURCE51 applets/kicker/plugin/
@@ -567,6 +569,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_unitdir_user/plasma-core.target.d/xd
 
 
 %changelog
+* Wed Mar 13 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 1:5.27.11-alt2
+- fix wallpaper confirmation (closes: 47916)
+
 * Thu Mar 07 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.11-alt1
 - new version
 
