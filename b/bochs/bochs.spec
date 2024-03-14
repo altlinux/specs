@@ -1,6 +1,6 @@
 %define _hardened_build 1
 Name:           bochs
-Version:        2.6.11
+Version:        2.8
 Release:        alt2
 Summary:        Portable x86 PC emulator
 License:        LGPLv2+
@@ -19,7 +19,7 @@ Patch12: smp-debug.patch
 Patch13: iasl-filename.patch
 Patch14: bochs-bios-cross-compile.patch
 
-ExcludeArch:    s390x
+ExcludeArch:    aarch64 ppc64le
 
 BuildRequires:  gcc-c++
 BuildRequires:  libXt-devel libXpm-devel libSDL2-devel readline-devel byacc libncurses-devel 
@@ -79,15 +79,15 @@ Header and source files from bochs source.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch3 -p1
-%patch4 -p1
-%patch7 -p0 -z .nonet
-%patch10 -p0
-%patch11 -p0
-%patch12 -p3
-%patch13 -p1
-%patch14 -p1
+#patch0 -p1
+#patch3 -p1
+#patch4 -p1
+#patch7 -p0 -z .nonet
+#patch10 -p0
+#patch11 -p0
+#patch12 -p3
+#patch13 -p1
+#patch14 -p1
 
 # Fix up some man page paths.
 sed -i -e 's|/usr/local/share/|%{_datadir}/|' doc/man/*.*
@@ -158,19 +158,21 @@ install -m 755 bochs-debugger bochs-gdb $RPM_BUILD_ROOT%{_bindir}
 mv $RPM_BUILD_ROOT%{_docdir}/bochs _installed-docs
 rm $RPM_BUILD_ROOT%{_mandir}/man1/bochs-dlx.1*
 
-mkdir -p $RPM_BUILD_ROOT%{_prefix}/include/bochs/disasm
-cp -pr disasm/*.h $RPM_BUILD_ROOT%{_prefix}/include/bochs/disasm/
-cp -pr disasm/*.cc $RPM_BUILD_ROOT%{_prefix}/include/bochs/disasm/
-cp -pr disasm/*.inc $RPM_BUILD_ROOT%{_prefix}/include/bochs/disasm/
-cp -pr config.h $RPM_BUILD_ROOT%{_prefix}/include/bochs/
-mkdir -p $RPM_BUILD_ROOT%{_prefix}/include/bochs/cpu
-cp -pr cpu/*.h $RPM_BUILD_ROOT%{_prefix}/include/bochs/cpu/
-cp -pr cpu/*.cc $RPM_BUILD_ROOT%{_prefix}/include/bochs/cpu/
-mkdir -p $RPM_BUILD_ROOT%{_prefix}/include/bochs/cpu/decoder
-cp -pr cpu/decoder/*.h $RPM_BUILD_ROOT%{_prefix}/include/bochs/cpu/decoder/
-cp -pr cpu/decoder/*.cc $RPM_BUILD_ROOT%{_prefix}/include/bochs/cpu/decoder/
-# Install osdep.h BZ 1786771
-cp -pr osdep.h $RPM_BUILD_ROOT%{_prefix}/include/bochs/disasm/
+mkdir -p $RPM_BUILD_ROOT%{_prefix}/include/bochs/
+
+#mkdir -p $RPM_BUILD_ROOT%{_prefix}/include/bochs/disasm
+#cp -pr disasm/*.h $RPM_BUILD_ROOT%{_prefix}/include/bochs/disasm/
+#cp -pr disasm/*.cc $RPM_BUILD_ROOT%{_prefix}/include/bochs/disasm/
+#cp -pr disasm/*.inc $RPM_BUILD_ROOT%{_prefix}/include/bochs/disasm/
+#cp -pr config.h $RPM_BUILD_ROOT%{_prefix}/include/bochs/
+#mkdir -p $RPM_BUILD_ROOT%{_prefix}/include/bochs/cpu
+#cp -pr cpu/*.h $RPM_BUILD_ROOT%{_prefix}/include/bochs/cpu/
+#cp -pr cpu/*.cc $RPM_BUILD_ROOT%{_prefix}/include/bochs/cpu/
+#mkdir -p $RPM_BUILD_ROOT%{_prefix}/include/bochs/cpu/decoder
+#cp -pr cpu/decoder/*.h $RPM_BUILD_ROOT%{_prefix}/include/bochs/cpu/decoder/
+#cp -pr cpu/decoder/*.cc $RPM_BUILD_ROOT%{_prefix}/include/bochs/cpu/decoder/
+## Install osdep.h BZ 1786771
+#cp -pr osdep.h $RPM_BUILD_ROOT%{_prefix}/include/bochs/disasm/
 
 %files
 %doc _installed-docs/* README-*
@@ -203,6 +205,13 @@ cp -pr osdep.h $RPM_BUILD_ROOT%{_prefix}/include/bochs/disasm/
 %{_prefix}/include/bochs/
 
 %changelog
+* Thu Mar 14 2024 Ilya Mashkin <oddity@altlinux.ru> 2.8-alt2
+- skip patches
+- ExcludeArch: aarch64 ppc64le
+
+* Thu Mar 14 2024 Ilya Mashkin <oddity@altlinux.ru> 2.8-alt1
+- 2.8
+
 * Wed Feb 07 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.6.11-alt2
 - bochs-bios is available on all architectures now
 
