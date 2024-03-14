@@ -4,8 +4,8 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: bin-marcosnils
-Version: 0.17.3
-Release: alt1.1
+Version: 0.17.4
+Release: alt1
 Summary: Effortless binary manager
 License: MIT
 Group: System/Configuration/Packaging
@@ -43,6 +43,9 @@ go test -v ./...
 %_bindir/bin
 
 %changelog
+* Wed Mar 13 2024 Vitaly Chikunov <vt@altlinux.org> 0.17.4-alt1
+- Update to v0.17.4 (2024-03-10).
+
 * Wed Feb 28 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.17.3-alt1.1
 - NMU: fixed FTBFS on LoongArch:
   + -buildmode=pie requires cgo here
