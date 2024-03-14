@@ -1,13 +1,13 @@
 %def_enable snapshot
-%define ver_major 3.0
+%define ver_major 3.1
 %define rdn_name io.gitlab.adhami3310.Impression
 
 %def_disable bootstrap
 %def_disable check
 
 Name: impression
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Impression is a tool to create bootable drives
 License: GPL-3.0
@@ -68,6 +68,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Thu Mar 14 2024 Yuri N. Sedunov <aris@altlinux.org> 3.1.0-alt1
+- 3.1.0
+
 * Mon Feb 19 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt2
 - updated to v3.0.1-15-ge78b301
 
