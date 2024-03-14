@@ -1,5 +1,5 @@
 Name: python3-module-aioapcaccess
-Version: 0.4.2
+Version: 0.5.0
 Release: alt1
 
 Summary: Python reimplementation of apcaccess tool
@@ -40,6 +40,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/aioapcaccess-%version.dist-info
 
 %changelog
+* Thu Mar 14 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.0-alt1
+- 0.5.0 released
+
 * Wed Jan 17 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.2-alt1
 - 0.4.2 released
 
