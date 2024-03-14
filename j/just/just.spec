@@ -4,8 +4,8 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: just
-Version: 1.22.1
-Release: alt2
+Version: 1.25.2
+Release: alt1
 Summary: Just a command runner
 License: CC0-1.0
 Group: Development/Other
@@ -66,6 +66,9 @@ install -Dpm0644 man/just.1 -t %buildroot%_man1dir
 %_datadir/fish/vendor_completions.d/just.fish
 
 %changelog
+* Wed Mar 13 2024 Vitaly Chikunov <vt@altlinux.org> 1.25.2-alt1
+- Update to 1.25.2 (2024-03-10).
+
 * Tue Jan 16 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.22.1-alt2
 - NMU: fixed FTBFS on LoongArch.
 
