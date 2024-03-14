@@ -1,7 +1,7 @@
 %define _hardened_build 1
 Name:           bochs
 Version:        2.8
-Release:        alt2
+Release:        alt3
 Summary:        Portable x86 PC emulator
 License:        LGPLv2+
 Group: Emulators
@@ -18,8 +18,6 @@ Patch11: bochs-2.6.10-slirp-include.patch
 Patch12: smp-debug.patch
 Patch13: iasl-filename.patch
 Patch14: bochs-bios-cross-compile.patch
-
-ExcludeArch:    aarch64 ppc64le
 
 BuildRequires:  gcc-c++
 BuildRequires:  libXt-devel libXpm-devel libSDL2-devel readline-devel byacc libncurses-devel 
@@ -87,7 +85,7 @@ Header and source files from bochs source.
 #patch11 -p0
 #patch12 -p3
 #patch13 -p1
-#patch14 -p1
+%patch14 -p1
 
 # Fix up some man page paths.
 sed -i -e 's|/usr/local/share/|%{_datadir}/|' doc/man/*.*
@@ -205,6 +203,9 @@ mkdir -p $RPM_BUILD_ROOT%{_prefix}/include/bochs/
 %{_prefix}/include/bochs/
 
 %changelog
+* Thu Mar 14 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.8-alt3
+- Build for all architectures again (bochs is a **portable** x86 emulator)
+
 * Thu Mar 14 2024 Ilya Mashkin <oddity@altlinux.ru> 2.8-alt2
 - skip patches
 - ExcludeArch: aarch64 ppc64le
