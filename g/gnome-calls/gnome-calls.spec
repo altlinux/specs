@@ -1,5 +1,5 @@
 %define _name calls
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define xdg_name org.gnome.Calls
 
@@ -87,6 +87,9 @@ xvfb-run %__meson_test
 %doc NEWS README.md
 
 %changelog
+* Thu Mar 14 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Fri Sep 29 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 
