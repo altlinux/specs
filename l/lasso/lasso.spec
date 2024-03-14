@@ -10,7 +10,7 @@
 
 Name:    lasso
 Version: 2.8.2
-Release: alt2
+Release: alt3
 
 Summary: Liberty Alliance Single Sign On
 
@@ -54,7 +54,7 @@ BuildRequires: python3
 %endif
 %if_with python
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildRequires: python3-devel >= 3.12
 BuildRequires: python3-module-lxml
 %endif
 %if_with wsf
@@ -141,6 +141,10 @@ library.
 %autopatch -p1
 sed -i 's|echo $VERSION |echo %version |' configure.ac
 sed -i 's|@VERSION@|%version|' lasso.pc.in
+# without distutils
+sed -i 's|from distutils ||g' configure.ac
+sed -i 's|PYTHON_INC=.*|PYTHON_INC=%_includedir/python%_python3_version|' configure.ac
+sed -i 's|PYTHON_LIB=.*|PYTHON_LIB=%python3_sitelibdir|' configure.ac
 
 %build
 %add_optflags -fPIC
@@ -251,6 +255,9 @@ make check
 %endif
 
 %changelog
+* Thu Mar 14 2024 Leontiy Volodin <lvol@altlinux.org> 2.8.2-alt3
+- Fixed module build for python 3.12.
+
 * Tue Aug 15 2023 Leontiy Volodin <lvol@altlinux.org> 2.8.2-alt2
 - Applied fixes from master branch.
 - Removed obsoleted patches.
