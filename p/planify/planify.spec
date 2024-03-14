@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major
+Version: %ver_major.2
 Release: alt1
 
 Summary: Planify
@@ -24,6 +24,7 @@ Source: %_name-%version.tar
 # to avoid conflict between webki2gtk{4.1,6.0}-debuginfo
 %add_debuginfo_skiplist %_bindir/%rdn_name
 
+%define gtk_ver 4.13.7
 %define adwaita_ver 1.4
 %define ecal_ver 3.45.1
 
@@ -33,6 +34,7 @@ Requires: dconf
 BuildRequires(pre): rpm-macros-meson rpm-build-vala
 BuildRequires: meson vala-tools
 BuildRequires: /usr/bin/appstreamcli desktop-file-utils
+BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(granite-7)
 BuildRequires: pkgconfig(sqlite3)
@@ -98,6 +100,9 @@ This package contains files necessary to develop Planify plugins.
 %_vapidir/%_name.*
 
 %changelog
+* Wed Mar 06 2024 Yuri N. Sedunov <aris@altlinux.org> 4.5.2-alt1
+- 4.5.2
+
 * Thu Feb 22 2024 Yuri N. Sedunov <aris@altlinux.org> 4.5-alt1
 - 4.5
 
