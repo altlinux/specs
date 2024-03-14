@@ -3,7 +3,7 @@
 
 
 Name: dosbox-x
-Version: 2023.10.06
+Version: 2024.03.01
 Release: alt1
 Summary: DOS emulator for running DOS games and applications including Windows 3.x/9x
 License: GPLv2+
@@ -90,6 +90,9 @@ cp contrib/linux/*.metainfo.xml %buildroot%_metainfodir/
 %doc dosbox-x.reference.full.conf
 
 %changelog
+* Thu Mar 14 2024 Artyom Bystrov <arbars@altlinux.org> 2024.03.01-alt1
+- Update to new version
+
 * Tue Feb 20 2024 Artyom Bystrov <arbars@altlinux.org> 2023.10.06-alt1
 - Update to new version
 - Minor reworking of build env (tnx mike@)
