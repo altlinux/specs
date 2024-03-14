@@ -1,7 +1,7 @@
 %define _libexecdir /usr/libexec
 
 Name:           cepces
-Version:        0.3.7
+Version:        0.3.8
 Release:        alt1
 Summary:        Certificate Enrollment through CEP/CES
 Group:          System/Configuration/Other
@@ -113,6 +113,9 @@ fi
 %_libexecdir/certmonger/%name-submit
 
 %changelog
+* Fri Mar 15 2024 Evgeny Sinelnikov <sin@altlinux.org> 0.3.8-alt1
+- Update to latest release, which includes spnego changes.
+
 * Tue Mar 21 2023 Evgeny Sinelnikov <sin@altlinux.org> 0.3.7-alt1
 - Add support the openssl security level
 
