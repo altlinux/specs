@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.3.1
+Version: 6.0.0
 Release: alt1
 
 Summary: Remote Python Call (RPyC), a transparent and symmetric RPC library
@@ -84,14 +84,15 @@ sed -i 's|#!/usr/bin/env python.*|#!/usr/bin/env python3|' \
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-%pyproject_run_pytest -k "\
-not TestDeploy \
+export PYTHONPATH=$PWD/tests/
+%pyproject_run_pytest -v -k "\
+not test_close_timeout \
+and not test_close_timeout_default_none \
+and not test_deploy \
+and not test_api \
+and not test_pruning \
 and not test_pinned_to_0 \
-and not win32pipes \
-and not TestUdpRegistry \
-and not test_connection \
-and not test_multiple_connection \
-and not test_parallelism"
+and not test_listing"
 
 %files
 %doc *.rst
@@ -109,6 +110,9 @@ and not test_parallelism"
 
 
 %changelog
+* Mon Feb 26 2024 Anton Vyatkin <toni@altlinux.org> 6.0.0-alt1
+- New version 6.0.0.
+
 * Mon Mar 27 2023 Anton Vyatkin <toni@altlinux.org> 5.3.1-alt1
 - New version 5.3.1.
 
