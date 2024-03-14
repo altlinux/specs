@@ -1,10 +1,10 @@
-%def_disable check
+%def_without check
 
 Name: pve-network
 Summary: PVE SDN package
-Version: 0.7.3
+Version: 0.9.5
 Release: alt1
-License: GPLv3
+License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
 
@@ -12,7 +12,14 @@ Source: %name-%version.tar
 
 ExclusiveArch: x86_64 aarch64
 
-BuildRequires: perl pve-cluster >= 6.0 pve-doc-generator
+Provides: libpve-network-perl = %EVR
+Requires: ifupdown2
+Requires: pve-common >= 5.0.45
+Requires: pve-cluster >= 8.0.5
+
+BuildRequires: pve-cluster >= 8.0.5
+BuildRequires: pve-doc-generator >= 5.3.3
+BuildRequires: perl
 BuildRequires: perl(CPAN/Meta/YAML.pm)
 BuildRequires: perl(Data/Dumper.pm)
 BuildRequires: perl(Digest/SHA.pm)
@@ -50,17 +57,21 @@ This package contains the experimental SDN library used by Proxmox VE.
 %setup -q -n %name-%version
 
 %install
-%make DESTDIR=%buildroot install
+%make -C src DESTDIR=%buildroot install
 
-%if_enabled check
 %check
-make test
-%endif
+make -C src test
 
 %files
-%perl_vendor_privlib/PVE
+%doc debian/copyright
+%perl_vendor_privlib/PVE/*
+%_unitdir/dnsmasq@.service.d/00-dnsmasq-after-networking.conf
 
 %changelog
+* Thu Mar 14 2024 Andrew A. Vasilyev <andy@altlinux.org> 0.9.5-alt1
+- 0.9.5
+- add copyright file
+
 * Fri Mar 24 2023 Andrew A. Vasilyev <andy@altlinux.org> 0.7.3-alt1
 - 0.7.3
 
