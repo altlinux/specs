@@ -1,6 +1,6 @@
 Name: jot
 Version: 12.4
-Release: alt1
+Release: alt2
 Source: jot-12.4.tar
 Patch: %name-urandom.patch
 Patch1: %name-12.3-nocap.patch
@@ -29,8 +29,9 @@ Athena jot (или просто jot) выводит данные, обычно �
 %patch3 -p1
 
 %build
-#cc -D'__FBSDID(x)=' -D'arc4random()=random()' -g -O2 %name.c -o %name
-cc -D'__FBSDID(x)=' -g -O2 %name.c -o %name
+# arc4random was introduced in glibc 2.36
+cc -D'__FBSDID(x)=' -g -O2 %name.c -o %name || \
+  cc -D'__FBSDID(x)=' -D'arc4random()=random()' -g -O2 %name.c -o %name
 
 %install
 mkdir -p %buildroot%_bindir %buildroot%_man1dir
@@ -46,6 +47,9 @@ sed -n '/REGRESSION_TEST/s@.*`\(.*\)., `\(jot .*\).)@./\2 | cmp tests/regress.\1
 sh -e tests/regressLinux.sh
 
 %changelog
+* Thu Mar 14 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 12.4-alt2
+- Fix build for Elbrus (glibc-2.35)
+
 * Wed Mar 13 2024 Fr. Br. George <george@altlinux.org> 12.4-alt1
 - Autobuild version bump to 12.4
 - Resurrect package
