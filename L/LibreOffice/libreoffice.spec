@@ -1,4 +1,4 @@
-# 24.2.0.3
+# 24.2.2.1
 %def_without python
 %def_with parallelism
 %def_without fetch
@@ -22,7 +22,7 @@
 
 Name: LibreOffice
 %define hversion 24.2
-%define urelease 0.3
+%define urelease 2.1
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -83,6 +83,9 @@ Patch700: alt-013-icu74.patch
 
 # c++ missing headers
 Patch900: alt-014-missing_headers.patch
+
+# convert to unsigned int statfs.f_type
+Patch1000: alt-015-unsigned_f_type.patch
 
 
 %set_verify_elf_method unresolved=relaxed
@@ -329,6 +332,10 @@ Provides additional %{langname} translations and resources for %name. \
 %patch700 -p1
 
 %patch900 -p1
+
+%ifarch i586
+%patch1000 -p1
+%endif
 
 # TODO move officebean to SDK or separate package
 # Hack in -Wl,-rpath=/usr/lib/jvm/jre-11-openjdk/lib
@@ -642,6 +649,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Tue Mar 12 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 24.2.2.1-alt1
+- Update to 24.2.2.1
+
 * Sun Feb 11 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 24.2.0.3-alt1
 - Update to 24.2.0.3
 

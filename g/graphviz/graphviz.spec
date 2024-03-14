@@ -23,8 +23,8 @@
 
 
 Name: graphviz
-Version: 9.0.0
-Release: alt2
+Version: 10.0.1
+Release: alt1
 
 Summary: Graphs visualization tools
 License: EPL-1.0 and GPL-2.0+ with Bison-exception and CPL-1.0
@@ -241,7 +241,8 @@ make %{?_smp_mflags} CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -fno-strict-ove
 %install
 
 %makeinstall_std DESTDIR=%{buildroot} \
-    docdir=%{_docdir}/%{name}-%version
+    docdir=%{_docdir}/%{name}-%version \
+    LUA_INSTALL_DIR=%lua_modulesdir
 
 # Remove metadata from generated PDFs
 pushd %buildroot%_defaultdocdir/%name-%version
@@ -327,7 +328,7 @@ rm -rf %buildroot%gvlibdir/python3/
 %files lua
 %dir %gvlibdir/lua/
 %gvlibdir/lua/*.so
-%_libdir/lua/*/*.so
+%lua_modulesdir/gv.so
 %gvdatadir/demo/modgraph.lua
 %endif
 
@@ -368,6 +369,9 @@ rm -rf %buildroot%gvlibdir/python3/
 # - enable/fix/test language bindings
 
 %changelog
+* Wed Mar 13 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 10.0.1-alt1
+- Updated to upstream 10.0.0
+
 * Mon Nov 06 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 9.0.0-alt2
 - NMU: fixed FTBFS on LoongArch
 
