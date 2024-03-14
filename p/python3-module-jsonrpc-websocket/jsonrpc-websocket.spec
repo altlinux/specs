@@ -1,5 +1,5 @@
 Name: python3-module-jsonrpc-websocket
-Version: 3.1.4
+Version: 3.1.5
 Release: alt1
 
 Summary: JSON-RPC websocket client library for asyncio
@@ -10,7 +10,7 @@ Url: https://pypi.org/project/jsonrpc-websocket/
 Source0: %name-%version-%release.tar
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3
+BuildRequires: rpm-build-pyproject
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 
@@ -32,6 +32,9 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/jsonrpc_websocket-%version.dist-info
 
 %changelog
+* Thu Mar 14 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.1.5-alt1
+- 3.1.5 released
+
 * Thu Jul 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.1.4-alt1
 - 3.1.4 released
 
