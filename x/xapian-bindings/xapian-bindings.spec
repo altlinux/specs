@@ -14,8 +14,8 @@
 %def_without doc
 
 Name: xapian-bindings
-Version: 1.4.24
-Release: alt5
+Version: 1.4.25
+Release: alt1
 
 Summary: Xapian search engine bindings
 License: GPL-2.0-or-later
@@ -154,6 +154,9 @@ rm -rf %buildroot%_defaultdocdir/%name/
 %endif
 
 %changelog
+* Wed Mar 13 2024 Vitaly Chikunov <vt@altlinux.org> 1.4.25-alt1
+- Update to 1.4.25 (2024-03-08).
+
 * Sun Feb 04 2024 Vitaly Chikunov <vt@altlinux.org> 1.4.24-alt5
 - spec: Fix FTBFS after gem-rdoc-6.6.2-alt1 update.
 
