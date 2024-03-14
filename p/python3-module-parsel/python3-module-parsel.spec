@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 1.8.1
+Version: 1.9.0
 Release: alt1
 
 Summary: XML/HTML parsing library
@@ -47,6 +47,9 @@ py.test3
 %doc README*
 
 %changelog
+* Fri Mar 15 2024 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
+- 1.9.0
+
 * Tue Apr 18 2023 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
 - 1.8.1
 
