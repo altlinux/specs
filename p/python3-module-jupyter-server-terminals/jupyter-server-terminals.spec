@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.5.2
+Version: 0.5.3
 Release: alt1
 
 Summary: A Jupyter Server Extension Providing Support for Terminals
@@ -57,6 +57,9 @@ mv %buildroot/usr/etc/jupyter/jupyter_server_config.d/*.json \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Mar 14 2024 Anton Vyatkin <toni@altlinux.org> 0.5.3-alt1
+- New version 0.5.3.
+
 * Tue Jan 23 2024 Anton Vyatkin <toni@altlinux.org> 0.5.2-alt1
 - New version 0.5.2.
 
