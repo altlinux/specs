@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: autorestic
-Version: 1.7.10
+Version: 1.8.1
 Release: alt1
 Summary: Config driven, easy backup CLI for restic
 License: Apache-2.0
@@ -29,7 +29,9 @@ locations. This utility is aimed at making this easier.
 rm cmd/install.go cmd/upgrade.go
 
 %build
+%ifnarch armh %ix86 loongarch64 riscv64
 export CGO_ENABLED=0
+%endif
 export GOFLAGS='-buildmode=pie'
 go build -v
 
@@ -55,5 +57,11 @@ go test -count=1 -cover %{?_is_lp64:-race} -v ./...
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Wed Mar 13 2024 Vitaly Chikunov <vt@altlinux.org> 1.8.1-alt1
+- Update to v1.8.1 (2024-03-13).
+
+* Sat Feb 10 2024 Vitaly Chikunov <vt@altlinux.org> 1.7.11-alt1
+- Update to v1.7.11 (2024-02-09).
+
 * Mon Jan 22 2024 Vitaly Chikunov <vt@altlinux.org> 1.7.10-alt1
 - First import v1.7.10 (2024-01-11).
