@@ -1,5 +1,5 @@
 Name: python3-module-bleak-esphome
-Version: 0.4.1
+Version: 1.0.0
 Release: alt1
 
 Summary: Bleak backend of ESPHome
@@ -38,5 +38,8 @@ BuildRequires: python3(lru)
 %python3_sitelibdir/bleak_esphome-%version.dist-info
 
 %changelog
+* Thu Mar 14 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.0-alt1
+- 1.0.0 released
+
 * Wed Jan 17 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.1-alt1
 - 0.4.1 released
