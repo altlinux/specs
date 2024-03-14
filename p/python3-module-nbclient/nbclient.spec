@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.9.0
+Version: 0.10.0
 Release: alt1
 Summary: A client library for executing notebooks. Formally nbconvert's ExecutePreprocessor
 License: BSD-3-Clause
@@ -61,6 +61,9 @@ NBClient lets you execute notebooks.
 %python3_sitelibdir/%oname-*.dist-info
 
 %changelog
+* Thu Mar 14 2024 Anton Vyatkin <toni@altlinux.org> 0.10.0-alt1
+- New version 0.10.0.
+
 * Wed Nov 08 2023 Anton Vyatkin <toni@altlinux.org> 0.9.0-alt1
 - New version 0.9.0.
 - Drop tests subpackage.
