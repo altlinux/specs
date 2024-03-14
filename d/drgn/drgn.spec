@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name:    drgn
-Version: 0.0.25
+Version: 0.0.26
 Release: alt1
 Summary: Programmable debugger
 License: LGPL-2.1-or-later
@@ -118,6 +118,9 @@ EOF
 %files -n kernel-ci-drgn-debuginfo
 
 %changelog
+* Wed Mar 13 2024 Vitaly Chikunov <vt@altlinux.org> 0.0.26-alt1
+- Update to v0.0.26 (2024-03-11).
+
 * Sun Dec 03 2023 Vitaly Chikunov <vt@altlinux.org> 0.0.25-alt1
 - Update to v0.0.25 (2023-12-01).
 - spec: Update License tag (upstream relicense).
