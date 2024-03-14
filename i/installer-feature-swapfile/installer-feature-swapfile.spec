@@ -1,6 +1,6 @@
 Name: installer-feature-swapfile
-Version: 0.1
-Release: alt2
+Version: 0.2
+Release: alt1
 
 Summary: Create swap-file
 License: GPL-2.0-or-later
@@ -28,6 +28,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Wed Mar 13 2024 Sergey V Turchin <zerg@altlinux.org> 0.2-alt1
+- add btrfs support
+
 * Wed Mar 13 2024 Sergey V Turchin <zerg@altlinux.org> 0.1-alt2
 - fix package description (closes: 49675)
 
