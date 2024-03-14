@@ -50,7 +50,7 @@
 
 Name: blender
 Version: 4.0.2
-Release: alt0.4.1
+Release: alt0.6
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -79,10 +79,12 @@ Patch27: blender-4.0.1-suse-reproducible.patch
 Patch28: blender-4.0.2-alt-hiprt-enable.patch
 Patch29: blender-4.0.2-alt-fix-manpage.patch
 Patch30: blender-alt-fix-clang-linking.patch
-Patch31: blender-4.0.2-rocm-6.x.patch
-Patch32: blender-3.6.1-py312-pylongobject.patch
+Patch31: blender-3.6.1-py312-pylongobject.patch
 
 # upstream fixes to merge
+Patch100: 0001-Cycles-add-ROCm-6-compatibility-for-HIP.patch
+# https://projects.blender.org/blender/blender/pulls/118328
+Patch101: blender-add-pgl-0.6.0-support.patch
 
 Patch2000: blender-e2k-support.patch
 
@@ -287,12 +289,11 @@ This package contains binaries for Nvidia GPUs to use with CUDA.
 %endif
 %patch29 -p1
 %patch30 -p1
-# rocm 6.x not ready yet for
-# production use
-#%%patch31 -p1
-%patch32 -p1
+%patch31 -p1
 
 # upstream patches
+%patch100 -p1
+%patch101 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -446,6 +447,14 @@ popd
 %endif
 
 %changelog
+* Thu Mar 14 2024 L.A. Kostis <lakostis@altlinux.ru> 4.0.2-alt0.6
+- Added patches from upstream:
+  + cycles: added openpgl 0.6.0 support (upstream PR #118328).
+
+* Tue Mar 12 2024 L.A. Kostis <lakostis@altlinux.ru> 4.0.2-alt0.5
+- Added patches from upstream:
+  + hip: added rocm6 compatibility patch.
+
 * Thu Feb 22 2024 Michael Shigorin <mike@altlinux.org> 4.0.2-alt0.4.1
 - E2K: update patch (ilyakurdyukov@).
 
