@@ -9,7 +9,7 @@
 
 Name: simplescreenrecorder
 Version: 0.4.4
-Release: alt4.1
+Release: alt5
 
 Summary: Simple Screen Recording with OpenGL capture
 
@@ -20,6 +20,7 @@ Url: https://www.maartenbaert.be/simplescreenrecorder/
 Source: https://github.com/MaartenBaert/ssr/archive/%version/ssr-%version.tar.gz
 Patch0: simplescreenrecorder-0.4.4-alt-hide-window-on-the-screen-recording.patch
 Patch1: simplescreenrecorder-0.4.4-upstream-fix-for-compatibility-with-ffmpeg6.patch
+Patch2: simplescreenrecorder-0.4.4-alt-fix-russian-translations.patch
 
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
@@ -51,7 +52,10 @@ Obsoletes: simplescreenrecording
 %prep
 %setup -n ssr-%version
 %patch0 -p2
+%if "%(rpmquery --qf '%%{VERSION}' libavformat-devel)" >= "6"
 %patch1 -p1
+%endif
+%patch2 -p1
 f="data/simplescreenrecorder.desktop"
 for s in "GenericName=Simple screen recorder" \
 	"GenericName[ru]=Запись видео с экрана" \
@@ -96,6 +100,10 @@ rm -f %buildroot%_libdir/*.la
 %_datadir/metainfo/*
 
 %changelog
+* Thu Mar 14 2024 Leontiy Volodin <lvol@altlinux.org> 0.4.4-alt5
+- Simplified backporting to p10 branch.
+- Updated russian translations.
+
 * Thu Nov 02 2023 Ivan A. Melnikov <iv@altlinux.org> 0.4.4-alt4.1
 - Introduce with/without glinject knob;
 - Disable glinject on loongarch64 and riscv64.
