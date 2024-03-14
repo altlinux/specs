@@ -19,8 +19,8 @@
 %define api_ver 1.0
 
 Name: gnome-online-accounts
-Version: %ver_major.0
-Release: alt1.2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Provide online accounts information
 Group: Graphical desktop/GNOME
@@ -108,8 +108,6 @@ This package contains development documentation for the %name libraries.
 
 %prep
 %setup
-# libxml/xmlIO.h no longer includes libxml/parser.h
-sed -i '/#include <libxml\/xmlIO.h>/i #include <libxml/parser.h>' src/goabackend/goaewsclient.c
 
 %build
 %meson \
@@ -181,6 +179,9 @@ sed -i '/#include <libxml\/xmlIO.h>/i #include <libxml/parser.h>' src/goabackend
 %endif
 
 %changelog
+* Thu Mar 14 2024 Yuri N. Sedunov <aris@altlinux.org> 3.48.1-alt1
+- 3.48.1
+
 * Sun Jan 07 2024 Yuri N. Sedunov <aris@altlinux.org> 3.48.0-alt1.2
 - explicitly required realmd+systemd-sysvinit to prevent
   apt to resolve /sbin/telinit from sysvinit package
