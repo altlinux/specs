@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define soname 1.12
+%define soname 1.13
 
 %define optflags_lto %nil
 
-%define llvm_ver 15.0
+%define llvm_ver 17.0
 
 %ifnarch x86_64 ppc64le
 %def_without lld
@@ -17,7 +17,7 @@
 %endif
 
 Name: openshadinglanguage
-Version: 1.12.14.0
+Version: 1.13.7.0
 Release: alt0.1
 Summary: Advanced shading language for production GI renderers
 Group: Development/Other
@@ -139,13 +139,20 @@ Open Shading Language (OSL) python3 module.
 
 %build
 export ALTWRAP_LLVM_VERSION=%llvm_ver
+%if_with cuda
+export GCC_VERSION=12
+%endif
 %cmake \
 	-DCMAKE_CXX_STANDARD=17 \
 	-DOSL_BUILD_MATERIALX:BOOL=ON \
 	-DOSL_SHADER_INSTALL_DIR:PATH=%_datadir/%name/shaders/ \
 	-DSTOP_ON_WARNING:BOOL=OFF \
-%if_with lld
-	-DCMAKE_SHARED_LINKER_FLAGS='-fuse-ld=lld -Wl,--build-id=sha1' \
+%if_with lld # https://reviews.llvm.org/D135402
+	-DCMAKE_SHARED_LINKER_FLAGS='-fuse-ld=lld -Wl,--build-id=sha1 -Wl,--undefined-version' \
+%endif
+%ifarch x86_64
+	-DUSE_SIMD="avx2,f16c" \
+	-DUSE_BATCHED="b8_AVX2" \
 %endif
 	%nil
 
@@ -157,6 +164,10 @@ export ALTWRAP_LLVM_VERSION=%llvm_ver
 # Move the OpenImageIO plugin into its default search path
 mkdir -p %buildroot%_libdir/OpenImageIO-%{oiio_major_minor_ver}
 mv %buildroot%_libdir/osl.imageio.so %buildroot%_libdir/OpenImageIO-%{oiio_major_minor_ver}/
+
+# remove examples and unused files
+rm -f %buildroot%_prefix/build-scripts/serialize-bc.py
+rm -f %buildroot%_prefix/cmake/llvm_macros.cmake
 
 %files
 %_bindir/*
@@ -192,6 +203,18 @@ mv %buildroot%_libdir/osl.imageio.so %buildroot%_libdir/OpenImageIO-%{oiio_major
 %python3_sitelibdir/*.so
 
 %changelog
+* Tue Mar 12 2024 L.A. Kostis <lakostis@altlinux.ru> 1.13.7.0-alt0.1
+- 1.13.7.0.
+- Fix build with lld (allow undefined version in lld).
+- x86_64: enable SIMD batched targets.
+- x86_64: disable CUDA (due OptiX requires).
+
+* Tue Feb 13 2024 L.A. Kostis <lakostis@altlinux.ru> 1.13.6.1-alt0.1
+- 1.13.6.1.
+
+* Fri Dec 08 2023 L.A. Kostis <lakostis@altlinux.ru> 1.12.14.0-alt0.2
+- Build with CUDA support.
+
 * Tue Nov 07 2023 L.A. Kostis <lakostis@altlinux.ru> 1.12.14.0-alt0.1
 - Updated to upstream version 1.12.14.0.
 

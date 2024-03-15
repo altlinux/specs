@@ -3,7 +3,7 @@
 %define soname 1
 
 Name: partio
-Version: 1.14.6
+Version: 1.17.3
 Release: alt1
 Summary: A library for particle IO and manipulation
 Group: Development/Other
@@ -139,6 +139,9 @@ find . -name '*.py' | xargs sed -i \
 %_libdir/partio/test
 
 %changelog
+* Thu Mar 14 2024 L.A. Kostis <lakostis@altlinux.ru> 1.17.3-alt1
+- Version 1.17.3.
+
 * Wed Jan 25 2023 Nazarov Denis <nenderus@altlinux.org> 1.14.6-alt1
 - Version 1.14.6
 

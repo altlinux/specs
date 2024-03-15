@@ -50,7 +50,7 @@
 
 Name: blender
 Version: 4.0.2
-Release: alt0.6
+Release: alt0.7
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -85,6 +85,7 @@ Patch31: blender-3.6.1-py312-pylongobject.patch
 Patch100: 0001-Cycles-add-ROCm-6-compatibility-for-HIP.patch
 # https://projects.blender.org/blender/blender/pulls/118328
 Patch101: blender-add-pgl-0.6.0-support.patch
+Patch102: 0001-Cycles-update-OSL-to-work-with-version-1.13.5.patch
 
 Patch2000: blender-e2k-support.patch
 
@@ -294,6 +295,7 @@ This package contains binaries for Nvidia GPUs to use with CUDA.
 # upstream patches
 %patch100 -p1
 %patch101 -p1
+%patch102 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -447,6 +449,10 @@ popd
 %endif
 
 %changelog
+* Thu Mar 14 2024 L.A. Kostis <lakostis@altlinux.ru> 4.0.2-alt0.7
+- Added patches from upstream/main:
+  + cycles: added OSL >= 1.13.5 compatiblity patch.
+
 * Thu Mar 14 2024 L.A. Kostis <lakostis@altlinux.ru> 4.0.2-alt0.6
 - Added patches from upstream:
   + cycles: added openpgl 0.6.0 support (upstream PR #118328).
