@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpui
-Version: 0.2.42
+Version: 0.2.43
 Release: alt1
 
 Summary: Group policy editor
@@ -112,6 +112,11 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Fri Mar 15 2024 Vladimir Rubanov <august@altlinux.org> 0.2.43-alt1
+- 0.2.43-alt1
+- Fixes:
+  + Fix build with samba 4.20.rc4.
+
 * Wed Mar 6 2024 Vladimir Rubanov <august@altlinux.org> 0.2.42-alt1
 - 0.2.42-alt1
 - Features:
