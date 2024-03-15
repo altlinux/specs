@@ -13,8 +13,8 @@
 %global optflags_lto %nil
 
 Name: bluez
-Version: 5.72
-Release: alt2
+Version: 5.73
+Release: alt1
 
 Summary: Bluetooth utilities
 License: GPL-2.0-or-later
@@ -25,8 +25,6 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Packager: L.A. Kostis <lakostis@altlinux.org>
 
-# fc
-Patch10: 0001-Allow-using-obexd-without-systemd-in-the-user-sessio.patch
 Obsoletes: obex-data-server < 0.4.6-alt3
 Conflicts: udev-extras < 169
 
@@ -89,7 +87,6 @@ Zsh completion for %name.
 %prep
 %setup
 %patch -p1
-%patch10 -p1
 
 %build
 %autoreconf
@@ -119,9 +116,6 @@ install -m755 tools/bneptest %buildroot%_bindir/
 install -pD -m755 scripts/bluetooth.alt.init %buildroot%_initdir/bluetoothd
 ln -s bluetooth.service %buildroot%_unitdir/bluetoothd.service
 mkdir -p %buildroot%_libdir/bluetooth/plugins %buildroot%_localstatedir/bluetooth
-# configdir
-mkdir -p %buildroot%_sysconfdir/bluetooth
-cp -a src/main.conf %buildroot%_sysconfdir/bluetooth/
 
 find %buildroot%_libdir -name \*.la -delete
 
@@ -146,9 +140,12 @@ fi
 %doc AUTHORS ChangeLog README
 %attr(555,root,root) %dir %_sysconfdir/bluetooth
 %config %_sysconfdir/bluetooth/main.conf
+%config %_sysconfdir/bluetooth/input.conf
+%config %_sysconfdir/bluetooth/network.conf
 %_initdir/bluetoothd
 %_unitdir/*.service
-%_prefix/lib/systemd/user/obex.service
+%{?_enable_obex:%_prefix/lib/systemd/user/obex.service}
+%{?_enable_obex:%_prefix/lib/systemd/user/dbus-org.bluez.obex.service}
 /lib/udev/rules.d/*-hid2hci.rules
 /lib/udev/hid2hci
 %_bindir/bluemoon
@@ -179,7 +176,7 @@ fi
 %_libexecdir/bluetooth/
 %_datadir/dbus-1/system.d/bluetooth.conf
 %_datadir/dbus-1/system-services/org.bluez.service
-%_datadir/dbus-1/services/org.bluez.obex.service
+%{?_enable_obex:%_datadir/dbus-1/services/org.bluez.obex.service}
 %_localstatedir/bluetooth
 %_man1dir/*.1*
 %_man8dir/*.8*
@@ -205,6 +202,12 @@ fi
 %_datadir/zsh/site-functions/_bluetoothctl
 
 %changelog
+* Fri Mar 15 2024 L.A. Kostis <lakostis@altlinux.ru> 5.73-alt1
+- 5.73.
+- drop obsoleted -fc patch (fixed upstream).
+- conf: added input and network
+- obex: update configuration.
+
 * Sun Jan 28 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.72-alt2
 - enabled MIDI support
 
