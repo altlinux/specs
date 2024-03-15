@@ -3,6 +3,8 @@
 %set_verify_elf_method strict
 
 %define soname 0
+# FIXME!
+%define lversion 24.3
 
 %def_enable alembic
 %def_enable draco
@@ -18,8 +20,8 @@
 %def_enable hdf5
 
 Name: OpenUSD
-Version: 23.11
-Release: alt0.4
+Version: 24.03
+Release: alt0.1
 Summary: Universal Scene Description library
 Group: Development/Other
 License: Apache-2.0
@@ -44,9 +46,8 @@ Patch1: openusd-alt-tbb-disable-debug-relwithdebinfo.patch
 Patch2: embree4.patch
 # SONAME patch from Fedora/RH
 Patch3: 0001-Downstream-only-add-an-SONAME-version.patch
-# https://github.com/PixarAnimationStudios/OpenUSD/pull/2651
-Patch4: OpenColorIO-2.3.patch
-Patch5: remove-distutils.patch
+Patch4: remove-distutils.patch
+Patch5: openusd-pxr-fix-arm64-timings.patch
 
 BuildRequires(pre): cmake rpm-build-python3 ninja-build
 BuildRequires: gcc-c++
@@ -228,7 +229,6 @@ chmod +x uic-wrapper
 	%else
 	-DPXR_BUILD_EMBREE_PLUGIN=OFF \
 	%endif
-     	-DPXR_BUILD_MATERIALX_PLUGIN=OFF \
 	%if_enabled ocio
      	-DPXR_BUILD_OPENCOLORIO_PLUGIN=ON \
 	%else
@@ -261,7 +261,6 @@ chmod +x uic-wrapper
 	%else
 	-DPXR_ENABLE_OSL_SUPPORT=OFF \
 	%endif
-     	-DPXR_ENABLE_MALLOCHOOK_SUPPORT=OFF \
      	-DPXR_ENABLE_PYTHON_SUPPORT=ON \
      	\
      	-DPXR_INSTALL_LOCATION="%_libdir/usd/plugin" \
@@ -311,7 +310,7 @@ do
   PYTHONPATH='%buildroot%python3_sitelibdir' \
   LD_LIBRARY_PATH='%buildroot%_libdir' \
       help2man \
-      --no-info --version-string='%version' \
+      --no-info --version-string='%lversion' \
       --no-discard-stderr --output="%buildroot%_man1dir/$(basename "${cmd}").1" \
       "${cmd}"
 done
@@ -375,7 +374,7 @@ desktop-file-validate %buildroot%_desktopdir/org.openusd.usdview.desktop
 
 %files -n lib%name%soname
 %doc NOTICE.txt README.md LICENSE.txt
-%_libdir/libusd_ms.so.%soname.%version
+%_libdir/libusd_ms.so.%soname.%lversion
 %_libdir/usd
 
 %files devel
@@ -387,6 +386,10 @@ desktop-file-validate %buildroot%_desktopdir/org.openusd.usdview.desktop
 %python3_sitelibdir/pxr
 
 %changelog
+* Fri Mar 15 2024 L.A. Kostis <lakostis@altlinux.ru> 24.03-alt0.1
+- 24.03.
+- cleanup merged patches.
+
 * Tue Jan 02 2024 Grigory Ustinov <grenka@altlinux.org> 23.11-alt0.4
 - NMU: dropped dependency on PySide2.
 
