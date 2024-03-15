@@ -5,7 +5,7 @@
 
 Name:     podman
 Version:  4.9.3
-Release:  alt1
+Release:  alt1.1
 
 Summary:  Manage pods, containers, and container images
 License:  Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND ISC AND MIT AND MPL-2.0
@@ -14,6 +14,7 @@ Vcs:      https://github.com/containers/podman.git
 Url:      https://podman.io/
 
 Source:   %name-%version.tar
+Patch1:   podman-alt-loongarch64-support.patch
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang rpm-macros-systemd
@@ -65,6 +66,7 @@ connections as well.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 export CGO_CFLAGS=$CFLAGS
@@ -155,6 +157,9 @@ rm -f %buildroot%_man5dir/dockerfile*
 %_datadir/user-tmpfiles.d/%name-docker.conf
 
 %changelog
+* Fri Mar 15 2024 Ivan A. Melnikov <iv@altlinux.org> 4.9.3-alt1.1
+- NMU: Fix build on loongarch64.
+
 * Sat Feb 17 2024 Alexey Shabalin <shaba@altlinux.org> 4.9.3-alt1
 - New version 4.9.3.
 
