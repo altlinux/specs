@@ -1,5 +1,5 @@
 Name: nvme
-Version: 2.7.1
+Version: 2.8
 Release: alt1
 Summary: NVM-Express user space tooling for Linux
 License: GPL-2.0+
@@ -74,6 +74,9 @@ if [ $1 = 1 ]; then # 1 : This package is being installed for the first time
 fi
 
 %changelog
+* Fri Mar 15 2024 L.A. Kostis <lakostis@altlinux.ru> 2.8-alt1
+- 2.8.
+
 * Tue Feb 13 2024 L.A. Kostis <lakostis@altlinux.ru> 2.7.1-alt1
 - 2.7.1.
 
