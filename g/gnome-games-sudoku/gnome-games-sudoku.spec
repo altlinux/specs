@@ -3,11 +3,13 @@
 %define _name sudoku
 %define xdg_name org.gnome.Sudoku
 %define __name gnome-%_name
-%define ver_major 45
+%define ver_major 46
 %define _libexecdir %_prefix/libexec
 
+%def_enable check
+
 Name: gnome-games-%_name
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Sudoku game
@@ -17,7 +19,7 @@ Url: https://wiki.gnome.org/Apps/Sudoku
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
 
-Provides:  %__name = %version-%release
+Provides:  %__name = %EVR
 
 %define glib_ver 2.40.0
 %define gtk_ver 4.10.0
@@ -26,13 +28,14 @@ Provides:  %__name = %version-%release
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools gcc-c++
-BuildRequires: yelp-tools %_bindir/appstream-util desktop-file-utils
+BuildRequires: yelp-tools
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk4-devel >= %gtk_ver
 BuildRequires: libadwaita-devel >= %adw_ver
 BuildRequires: libgee0.8-devel libjson-glib-devel
 BuildRequires: libqqwing-devel >= %qqwing_ver
+%{?_enable_check:BuildRequires: %_bindir/appstreamcli desktop-file-utils}
 
 %description
 Sudoku is a logic game with a Japanese name that has recently exploded
@@ -49,6 +52,9 @@ in popularity.
 %meson_install
 %find_lang --with-gnome %__name
 
+%check
+%__meson_test
+
 %files -f %__name.lang
 %_bindir/%__name
 %_desktopdir/%xdg_name.desktop
@@ -59,6 +65,9 @@ in popularity.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Fri Mar 15 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Sat Feb 10 2024 Yuri N. Sedunov <aris@altlinux.org> 45.5-alt1
 - 45.5
 
