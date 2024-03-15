@@ -1,6 +1,6 @@
 Name: rack
 Version: 2.4.1
-Release: alt2
+Release: alt3
 
 Summary: VCV virtual Eurorack host
 License: GPLv3
@@ -110,6 +110,9 @@ install -pm0644 -D rack.desktop %buildroot%_desktopdir/rack.desktop
 %_datadir/rack/sdk
 
 %changelog
+* Fri Mar 15 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.4.1-alt3
+- rack sdk tweaks
+
 * Wed Feb 28 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.4.1-alt2
 - desktop entry packaged
 
