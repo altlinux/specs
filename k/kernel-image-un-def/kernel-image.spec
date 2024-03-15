@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1
 %define kernel_base_version	6.6
-%define kernel_sublevel	.21
+%define kernel_sublevel	.22
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -589,6 +589,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Mar 16 2024 Kernel Bot <kernelbot@altlinux.org> 1:6.6.22-alt1
+- v6.6.22 (2024-03-15).
+
 * Wed Mar 06 2024 Kernel Bot <kernelbot@altlinux.org> 1:6.6.21-alt1
 - v6.6.21 (2024-03-06).
 
