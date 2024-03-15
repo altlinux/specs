@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.4
+%define ver_major 1.5
 %define beta %nil
 %define api_ver 1
 %define xdg_name org.gnome.Adwaita%api_ver
@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: libadwaita
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 Epoch: 1
 
@@ -29,8 +29,8 @@ Source: %name-%version%beta.tar
 %endif
 
 %define meson_ver 0.59
-%define glib_ver 2.72.0
-%define gtk_ver 4.11.3
+%define glib_ver 2.76.0
+%define gtk_ver 4.13.4
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson >= %meson_ver sassc
@@ -144,6 +144,9 @@ xvfb-run -s -noreset %__meson_test
 %endif
 
 %changelog
+* Fri Mar 15 2024 Yuri N. Sedunov <aris@altlinux.org> 1:1.5.0-alt1
+- 1.5.0
+
 * Sun Mar 03 2024 Yuri N. Sedunov <aris@altlinux.org> 1:1.4.4-alt1
 - 1.4.4
 
