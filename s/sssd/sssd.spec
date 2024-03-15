@@ -9,7 +9,7 @@
 
 Name: sssd
 Version: 2.9.4
-Release: alt1
+Release: alt2
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -78,7 +78,7 @@ BuildRequires: libxml2-devel
 BuildRequires: docbook-dtds docbook-style-xsl xsltproc xml-utils
 BuildRequires: libkrb5-devel
 BuildRequires: libcares-devel
-BuildRequires: python3-devel
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: libcheck-devel
 BuildRequires: doxygen
 BuildRequires: libselinux-devel
@@ -883,6 +883,13 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Fri Mar 15 2024 Evgeny Sinelnikov <sin@altlinux.org> 2.9.4-alt2
+- Update 2.9 major release with fixes from upstream:
+  + Fix the build with Samba 4.20.
+  + IFP: don't trigger backtrace in case of ACL check fail.
+  + krb5_child: fix order of calloc arguments.
+  + pam: fix SC auth with multiple certs and missing login name.
+
 * Wed Jan 17 2024 Evgeny Sinelnikov <sin@altlinux.org> 2.9.4-alt1
 - Update to latest 2.9 major release in long-term maintenance (LTM) phase.
 - Fixes from upstream:
