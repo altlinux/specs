@@ -2,7 +2,7 @@
 %global __find_debuginfo_files %nil
 
 Name: kde5-plasma-addon-alt-weather
-Version: 1.0.23
+Version: 1.0.24
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -47,6 +47,16 @@ The weather forecast addon for KDE Workspace 5 Plasma
 %_datadir/metainfo/*
 
 %changelog
+* Fri Mar 15 2024 Slava Aseev <ptrnine@altlinux.org> 1.0.24-alt1
+- Fix:
+  + error tooltip
+  + BusyIndicator size in tray view
+  + typo in russian translation (closes: #49701)
+- Use shorter form for errors in badge
+- Allow to configure badge only if applet is in system tray
+- Validate location search input (closes: #49700)
+- Update version (closes: #49309)
+
 * Tue Mar 05 2024 Slava Aseev <ptrnine@altlinux.org> 1.0.23-alt1
 - Fix wind icon direction (closes: #49614)
 - Make temperature badge configurable
