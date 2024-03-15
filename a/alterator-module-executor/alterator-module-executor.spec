@@ -1,6 +1,6 @@
 Name: alterator-module-executor
 Version: 0.1.11
-Release: alt1
+Release: alt2
 
 Summary: Alterator-manager module for running executable files and scripts
 License: GPL-2
@@ -9,9 +9,9 @@ URL: https://gitlab.basealt.space/alt/alterator-module-executor
 
 BuildRequires: cmake gcc
 BuildRequires: libgio-devel libsystemd-devel libpolkit-devel
-BuildRequires: alterator-manager-devel >= 0.1.10
+BuildRequires: alterator-manager-devel >= 0.1.18
 
-Requires: alterator-manager >= 0.1.11-alt1
+Requires: alterator-manager >= 0.1.18-alt1
 
 Source: %name-%version.tar
 
@@ -34,6 +34,9 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Fri Mar 15 2024 Ivan Savin <svn17@altlinux.org> 0.1.11-alt2
+- Change BuildRequires from alterator-manager-devel >= 0.1.10 to
+  alterator-manager-devel >= 0.1.18.
 * Thu Feb 15 2024 Ivan Savin <svn17@altlinux.org> 0.1.11-alt1
 - Disable UTF-8 channel encoding if return from stdout is enabled as a byte
   array.
