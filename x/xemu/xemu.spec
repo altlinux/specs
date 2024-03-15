@@ -1,5 +1,5 @@
 Name:     xemu
-Version:  0.7.111
+Version:  0.7.119
 Release:  alt1
 
 Summary:  Original Xbox Emulator
@@ -51,6 +51,9 @@ install -vDm644 -t "%buildroot%_iconsdir/hicolor/scalable/apps" ui/icons/xemu.sv
 %doc README.md LICENSE
 
 %changelog
+* Thu Mar 14 2024 Artyom Bystrov <arbars@altlinux.org> 0.7.119-alt1
+- Update to new version
+
 * Mon Aug 21 2023 Artyom Bystrov <arbars@altlinux.org> 0.7.111-alt1
 - Update to new version
 
