@@ -10,7 +10,7 @@
 
 Name: kde5-connect
 Version: 23.08.5
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Communications
@@ -23,7 +23,7 @@ Provides: kde-connect = %version kdeconnect-kde = %version
 Requires: libqt5-quickparticles
 Requires: /usr/bin/sshfs qca-qt5-ossl
 Requires: kf5-kirigami kf5-kirigami-addons
-# KF5PeopleVCard
+Requires: kde5-kpeoplevcard
 
 Source: %rname-%version.tar
 
@@ -167,6 +167,9 @@ done
 #%_K5lib/libkdeconnectsmshelper.so.*
 
 %changelog
+* Fri Mar 15 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt2
+- require kde5-kpeoplevcard
+
 * Fri Feb 16 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
