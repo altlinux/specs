@@ -12,7 +12,7 @@
 
 Name: grub
 Version: 2.06
-Release: alt17
+Release: alt18
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -29,6 +29,8 @@ Source2: gnulib-%version.tar
 
 Source3: 39_memtest
 Source4: grub.filetrigger
+
+Source5: fonts.tar
 
 Source6: grub-autoupdate
 
@@ -53,6 +55,7 @@ BuildRequires: liblzma-devel help2man zlib-devel
 BuildRequires: libdevmapper-devel
 BuildRequires: texinfo
 BuildRequires: libfuse-devel
+BuildRequires: squashfs-tools
 
 # fonts: choose one
 
@@ -220,8 +223,8 @@ build_efi_image() {
 	local mkimage="$1"; shift
 	local dir="$1"; shift
 	local format="$1"; shift
-	"$mkimage" -O "$format" -o "$dir"/grub.efi -d "$dir"/grub-core -p "" \
-		--sbat sbat.csv \
+	"$mkimage" -O "$format" -o "$dir"/grub.efi -d "$dir"/grub-core \
+		-m memdisk.squashfs -p "" --sbat sbat.csv \
 		part_gpt part_apple part_msdos hfsplus fat ext2 btrfs xfs \
 		squash4 normal chain boot configfile diskfilter \
 		minicmd reboot halt search search_fs_uuid search_fs_file \
@@ -231,9 +234,16 @@ build_efi_image() {
 		extcmd keystatus procfs cryptodisk gcry_rijndael gcry_sha1 \
 		gcry_sha256 luks gcry_sha512 gcry_serpent gcry_twofish \
 		crypto pbkdf2 password_pbkdf2 echo regexp tftp \
-		f2fs exfat ntfs ntfscomp \
+		f2fs exfat ntfs ntfscomp memdisk \
 		"$@"
 }
+
+# create memdisk with fonts
+workdir="$(mktemp -d)"
+mkdir -p "$workdir"
+tar -xf %SOURCE5 -C "$workdir"
+mksquashfs "$workdir" memdisk.squashfs -comp xz
+rm -rf "$workdir"
 
 %ifarch %ix86 x86_64
 build_grub build-pc \
@@ -329,6 +339,7 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 
 %files common -f grub.lang
 %dir %_sysconfdir/grub.d
+%dir %_datadir/grub
 %dir %_libdir/grub
 %dir /boot/grub
 /boot/grub/*.pf2
@@ -451,6 +462,9 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Thu Mar 07 2024 Egor Ignatov <egori@altlinux.org> 2.06-alt18
+- EFI image: embed memdisk with default font
+
 * Fri Oct 06 2023 Egor Ignatov <egori@altlinux.org> 2.06-alt17
 - backport upstream NTFS patch set (fixes: CVE-2023-4692, CVE-2023-4693)
   + bump grub SBAT level to 4 and reset grub.altlinux
