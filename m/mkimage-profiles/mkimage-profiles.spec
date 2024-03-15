@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -134,6 +134,21 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Fri Mar 15 2024 Anton Midyukov <antohami@altlinux.org> 1.6.2-alt1
+- grub: access font located in the default path by file name (thanks egori@)
+- pack: add tarball build for DISTRO targets
+- doc: don't build man, cleanup VERSION
+- live: fix 60-live-rescue-root for works on p10
+- live: add livecd menu item for grub in use/live/base instead /use/live
+- drop feature armh-mcom02; cleanup armh support
+- kernel: set default KFLAVOUR for armh to mp
+- slinux: add missing commit from @sem, fix build on Sisyphus
+- slinux: use live as installer and rescue also; add OEM install mode
+- workstation: some fixes for build on Sisyphus
+- workstation: add latests commits for version 10.2 (thanks sem@)
+- server: add latests commits for version 10.2 (thanks jqt4@)
+- server-v: add latests commits (thanks andy@)
+
 * Mon Feb 26 2024 Anton Midyukov <antohami@altlinux.org> 1.6.1-alt1
 - services: add targets for enable/disable bluetooth
 - services: create lists of services to disable/enable in Live with installer
