@@ -3,17 +3,19 @@
 %define _name chess
 %define xdg_name org.gnome.Chess
 %define __name gnome-%_name
-%define ver_major 43
+%define ver_major 46
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
+%def_enable check
+
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A chess game for GNOME
 Group: Games/Boards
-License: GPLv3+
+License: GPL-3.0-or-later
 Url: https://wiki.gnome.org/Apps/Chess
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version%beta.tar.xz
@@ -31,10 +33,11 @@ Requires: gnuchess >= 6.2.3
 
 BuildRequires(pre):rpm-macros-meson
 BuildRequires: meson vala-tools >= %vala_ver
-BuildRequires: yelp-tools /usr/bin/appstream-util desktop-file-utils
+BuildRequires: yelp-tools
 BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: librsvg-devel >= %rsvg_ver gsettings-desktop-schemas-devel
+%{?_enable_check:BuildRequires:/usr/bin/appstreamcli desktop-file-utils}
 
 %description
 A chess game which supports several chess engines, with 2D and optionally
@@ -51,6 +54,9 @@ A chess game which supports several chess engines, with 2D and optionally
 %meson_install
 %find_lang --with-gnome %__name
 
+%check
+%__meson_test
+
 %files -f gnome-%_name.lang
 %_bindir/%__name
 %_desktopdir/%xdg_name.desktop
@@ -62,6 +68,9 @@ A chess game which supports several chess engines, with 2D and optionally
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Fri Mar 15 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 43.2-alt1
 - 43.2
 
