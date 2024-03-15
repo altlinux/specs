@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.52
+%define ver_major 1.54
 
 %def_disable gdu
 %def_disable gtk_doc
@@ -28,12 +28,14 @@
 %def_enable admin
 %def_enable libusb
 %def_enable dnssd
+%def_enable onedrive
+%def_enable wsdd
 %def_enable man
 %def_enable devel_utils
 %def_disable check
 
 Name: gvfs
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -90,10 +92,8 @@ BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: libdbus-devel gtk-doc
 BuildRequires: openssh-clients
-# hotplug backend
 BuildRequires: libgudev-devel >= %gudev_ver
-# required if autoreconf used
-BuildRequires: libgcrypt-devel
+BuildRequires: pkgconfig(libgcrypt) pkgconfig(gcr-4)
 %{?_enable_afc:BuildRequires: libimobiledevice-devel >= %imobiledevice_ver pkgconfig(libplist-2.0)}
 %{?_enable_afp:BuildRequires: libgcrypt-devel >= %gcrypt_ver}
 %{?_enable_archive:BuildRequires: libarchive-devel >= %libarchive_ver}
@@ -116,6 +116,7 @@ BuildRequires: libgcrypt-devel
 %{?_enable_google:BuildRequires: libgdata-devel >= %gdata_ver}
 %{?_enable_admin:BuildRequires: libpolkit-devel libcap-devel}
 %{?_enable_libusb:BuildRequires: libusb-devel >= %libusb_ver}
+%{?_enable_onedrive:BuildRequires: libmsgraph-devel}
 
 BuildRequires: desktop-file-utils
 BuildRequires: gcc-c++ perl-XML-Parser
@@ -205,6 +206,16 @@ Group: System/Libraries
 Requires: %name = %EVR
 Requires: polkit
 
+%package backend-onedrive
+Summary: OneDrive backend for gvfs
+Group: System/Libraries
+Requires: %name = %EVR
+
+%package backend-wsdd
+Summary: WSDD backend for gvfs
+Group: System/Libraries
+Requires: %name = %EVR
+
 %package backends
 Summary: All backends for gvfs
 Group: System/Libraries
@@ -222,6 +233,8 @@ Requires: gvfs-backend-recent-files = %EVR
 %{?_enable_nfs:Requires: gvfs-backend-nfs = %EVR}
 %{?_enable_google:Requires: gvfs-backend-google = %EVR}
 %{?_enable_admin:Requires: gvfs-backend-admin = %EVR}
+%{?_enable_onedrive:Requires: gvfs-backend-onedrive = %EVR}
+%{?_enable_wsdd:Requires: gvfs-backend-wsdd = %EVR}
 
 %description
 gvfs is a userspace virtual filesystem where mount runs as a separate
@@ -284,6 +297,12 @@ This package provides support for mounting google drive using gvfs.
 %description backend-admin
 This package provides admin backend for gvfs based on polkit.
 
+%description backend-onedrive
+This package provides OneDrive backend for gvfs.
+
+%description backend-wsdd
+This package provides WSDD backend for gvfs.
+
 %description backends
 This virtual package contains the all backends for gvfs.
 
@@ -321,6 +340,8 @@ The %name-tests package provides programms for testing GVFS.
         %{?_enable_nfs:-Dnfs=true} \
         %{?_enable_google:-Dgoogle=true} \
         %{?_enable_libusb:-Dlibusb=true} \
+        %{?_enable_onedrive:-Donedrive=true} \
+        %{?_enable_wsdd:-Dwsdd=true} \
         %{?_enable_systemd_login:-Dlogind=true} \
         %{?_enable_gtk_doc:-Dgtk_doc=true} \
         %{?_enable_man:-Dman=true} \
@@ -439,6 +460,16 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
     %exclude %_datadir/%name/mounts/admin.mount
 %endif
 
+%if_enabled onedrive
+    %exclude %_libexecdir/gvfsd-onedrive
+    %exclude %_datadir/%name/mounts/onedrive.mount
+%endif
+
+%if_enabled wsdd
+    %exclude %_libexecdir/gvfsd-wsdd
+    %exclude %_datadir/%name/mounts/wsdd.mount
+%endif
+
 %files devel
 %_includedir/*
 
@@ -532,6 +563,19 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 %_datadir/polkit-1/rules.d/org.gtk.vfs.file-operations.rules
 %endif
 
+%if_enabled onedrive
+%files backend-onedrive
+%_libexecdir/gvfsd-onedrive
+%_datadir/%name/mounts/onedrive.mount
+%endif
+
+%if_enabled wsdd
+%files backend-wsdd
+%_libexecdir/gvfsd-wsdd
+%_datadir/%name/mounts/wsdd.mount
+%config %_datadir/glib-2.0/schemas/org.gnome.system.wsdd.gschema.xml
+%endif
+
 %files backends
 
 %if_enabled installed_tests
@@ -542,6 +586,9 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %changelog
+* Fri Mar 15 2024 Yuri N. Sedunov <aris@altlinux.org> 1.54.0-alt1
+- 1.54.0 (new onedrive and wsdd backends)
+
 * Fri Jan 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1.52.2-alt1
 - 1.52.2
 
