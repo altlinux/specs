@@ -4,15 +4,15 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.11.1
-Release: alt2
+Version: 3.12.0
+Release: alt1
 Summary: Module for text manipulation
 License: MIT
-Group:   Development/Python3
-URL: https://pypi.org/project/jaraco.text/
+Group: Development/Python3
+Url: https://pypi.org/project/jaraco.text/
 VCS: https://github.com/jaraco/jaraco.text
 BuildArch: noarch
-Source:  %name-%version.tar
+Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-%release.patch
 
@@ -51,6 +51,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/jaraco.text-%version.dist-info/
 
 %changelog
+* Thu Mar 14 2024 Stanislav Levin <slev@altlinux.org> 3.12.0-alt1
+- 3.11.1 -> 3.12.0.
+
 * Fri Apr 21 2023 Stanislav Levin <slev@altlinux.org> 3.11.1-alt2
 - Mapped PyPI name to distro's one.
 

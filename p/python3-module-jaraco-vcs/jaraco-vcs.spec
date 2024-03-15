@@ -7,7 +7,7 @@
 %def_with check
 
 Name: python3-module-%pypi_nname
-Version: 1.1.0
+Version: 2.0.0
 Release: alt1
 Summary: Facilities for working with VCS repositories
 License: MIT
@@ -51,5 +51,8 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Thu Mar 14 2024 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1
+- 1.1.0 -> 2.0.0.
+
 * Wed Aug 16 2023 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus.

@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.4.0
-Release: alt2
+Version: 2.6.0
+Release: alt1
 Summary: Classes for orchestrating Python virtual environments
 License: MIT
 Group: Development/Python3
@@ -45,7 +45,8 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_install
 
 %check
-%pyproject_run_pytest -ra
+# requires installation from pypi.org
+%pyproject_run_pytest -ra --ignore=jaraco/envs.py
 
 %files
 %doc README.rst
@@ -54,6 +55,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Thu Mar 14 2024 Stanislav Levin <slev@altlinux.org> 2.6.0-alt1
+- 2.4.0 -> 2.6.0.
+
 * Fri Apr 21 2023 Stanislav Levin <slev@altlinux.org> 2.4.0-alt2
 - Mapped PyPI name to distro's one.
 
