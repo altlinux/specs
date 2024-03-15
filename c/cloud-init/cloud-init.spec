@@ -1,8 +1,8 @@
 %def_enable check
 
 Name:    cloud-init
-Version: 23.1.2
-Release: alt2
+Version: 24.1.1
+Release: alt1
 
 Summary: Cloud instance init scripts
 Group:   System/Configuration/Boot and Init
@@ -53,6 +53,7 @@ BuildRequires: python3-module-configobj python3-module-mock
 BuildRequires: python3-module-oauthlib python3-module-pytest
 BuildRequires: python3-module-pytest-mock
 BuildRequires: python3(netifaces) python3(jsonschema) python3(responses)
+BuildRequires: python3(passlib)
 BuildRequires: shadow-utils passwd
 %endif
 
@@ -179,10 +180,9 @@ make unittest
 %config            %_sysconfdir/cloud/cloud.cfg.d/01_network-manager.cfg
 
 %files
-%doc ChangeLog TODO.rst
+%doc ChangeLog
 %dir               %_sysconfdir/cloud
 %dir               %_sysconfdir/cloud/clean.d
-%doc               %_sysconfdir/cloud/clean.d/README
 %config(noreplace) %_sysconfdir/cloud/*.cfg
 %dir               %_sysconfdir/cloud/cloud.cfg.d
 %config(noreplace) %_sysconfdir/cloud/cloud.cfg.d/*.cfg
@@ -192,7 +192,7 @@ make unittest
 %doc               %_sysconfdir/cloud/cloud.cfg.d/README
 %dir               %_sysconfdir/cloud/templates
 %config(noreplace) %_sysconfdir/cloud/templates/*
-%_sysconfdir/NetworkManager/dispatcher.d/hook-network-manager
+%config %_sysconfdir/systemd/system/sshd-keygen@.service.d/disable-sshd-keygen-if-cloud-init-active.conf
 %_datadir/bash-completion/completions/%name
 /lib/udev/rules.d/66-azure-ephemeral.rules
 %_initdir/*
@@ -207,6 +207,9 @@ make unittest
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Wed Mar 13 2024 Mikhail Gordeev <obirvalger@altlinux.org> 24.1.1-alt1
+- 24.1.1
+
 * Tue Oct 31 2023 Mikhail Gordeev <obirvalger@altlinux.org> 23.1.2-alt2
 - Remove python dependency
 
