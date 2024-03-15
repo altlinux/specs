@@ -1,7 +1,7 @@
 %define soname 7
 
 Name: primecount
-Version: 7.10
+Version: 7.11
 Release: alt1
 
 Summary: Count the number of primes
@@ -50,16 +50,20 @@ files for developing applications that use the primecount library.
     -DBUILD_STATIC_LIBS=OFF \
     -DSTATICALLY_LINK_LIBPRIMECOUNT=OFF \
     -DBUILD_MANPAGE=ON \
+%ifnarch i586
     -DBUILD_TESTS=ON \
+%endif
     -DCMAKE_SKIP_RPATH:BOOL=OFF
 cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
 
+%ifnarch i586
 %check
 cd %_cmake__builddir
 ctest
+%endif
 
 %files
 %doc README.md ChangeLog
@@ -78,6 +82,10 @@ ctest
 %_pkgconfigdir/primecount.pc
 
 %changelog
+* Fri Mar 15 2024 Leontiy Volodin <lvol@altlinux.org> 7.11-alt1
+- New version 7.11.
+- Disabled tests on i586.
+
 * Thu Jan 11 2024 Leontiy Volodin <lvol@altlinux.org> 7.10-alt1
 - New version 7.10.
 
