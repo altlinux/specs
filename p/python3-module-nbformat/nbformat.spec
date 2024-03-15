@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.10.2
+Version: 5.10.3
 Release: alt1
 Summary: The Jupyter Notebook format
 License: BSD-3-Clause
@@ -61,6 +61,9 @@ sed -i '/"check-manifest",/d' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Mar 15 2024 Anton Vyatkin <toni@altlinux.org> 5.10.3-alt1
+- New version 5.10.3.
+
 * Wed Mar 13 2024 Anton Vyatkin <toni@altlinux.org> 5.10.2-alt1
 - New version 5.10.2.
 
