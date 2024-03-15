@@ -3,7 +3,7 @@
 %define major 1
 
 Name: vkd3d
-Version: 1.10
+Version: 1.11
 Release: alt1
 Summary: The vkd3d 3D Graphics Library
 
@@ -112,6 +112,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Fri Mar 15 2024 L.A. Kostis <lakostis@altlinux.ru> 1.11-alt1
+- 1.11.
+
 * Tue Feb 06 2024 L.A. Kostis <lakostis@altlinux.ru> 1.10-alt1
 - 1.10.
 
