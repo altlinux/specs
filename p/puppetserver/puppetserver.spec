@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:       puppetserver
-Version:    6.20.0
-Release:    alt4
+Version:    8.4.0
+Release:    alt1
 Summary:    Server automation framework and application
 License:    Apache-2.0
 Group:      Other
@@ -11,20 +11,24 @@ Url:        https://github.com/puppetlabs/puppetserver
 BuildArch: noarch
 
 Source: %name-%version.tar
+Source1: repository.tar
+Source2: puppetserver.init
+Source3: jruby-gem-home.tar
+Source4: ext.tar
 Source5: %name.service
+Source6: %name.conf
 
-Source1: puppetserver.init
-Source2: jruby-1_7.jar
-Source3: jruby-9k.jar
-Source4: default
+Patch1: puppetserver-alt-fix.patch
+Patch2: puppetserver-alt-set-logback.xml.patch
 
-Patch1: puppetserver-6.13.0-alt.patch
+BuildRequires(pre): rpm-build-java
+BuildRequires(pre): procps
+BuildRequires: leiningen
+BuildRequires: java-11-openjdk-devel
 
-BuildPreReq: /proc
-BuildPreReq: rpm-build-java
-BuildPreReq: rpm-macros-ruby /usr/bin/ruby
-
+Requires: java
 Requires: clojure
+Requires: facter
 Requires: puppet
 Requires: puppetserver-ca
 Requires: gem-multi-json
@@ -46,7 +50,14 @@ control over the Ruby runtime.
 
 %prep
 %setup
-%patch1 -p2
+%patch1 -p1
+%patch2 -p1
+tar xf %SOURCE1 -C ~
+tar xf %SOURCE3
+tar xf %SOURCE4
+sed "s|gem-path: \\[.*\\]|gem-path: [$(echo $(ls /usr/lib/ruby/gems | \
+   sed -e "s,^,/usr/lib/ruby/gems/,") | sed "s/ \\+/, /")]|" \
+   -i resources/ext/config/conf.d/puppetserver.conf
 subst 's|/var/log/puppetlabs|/var/log|' $(find -name '*.xml')
 sed '/name.*environments/a \
         }, \
@@ -59,68 +70,68 @@ sed '/name.*environments/a \
             allow: "*" \
             sort-order: 500 \
             name: "puppetlabs environment_classes"' \
-      -i ext/config/conf.d/auth.conf
+      -i ezbake/config/conf.d/auth.conf
 
+# Set correct version
+subst 's/8\.4\.0/%version/' ext/bin/puppetserver ext/ezbake.manifest
+
+%build
+lein uberjar
 
 %install
 install -d -m 0755 %buildroot%_datadir/%name
 install -d -m 0770 %buildroot%_localstatedir/%name
-install -m 0644 puppet-server-release.jar %buildroot%_datadir/%name
+install -Dpm 0644 target/puppet-server-release.jar  %buildroot%_datadir/%name/puppet-server-release.jar
 install -m 0755 ext/ezbake-functions.sh %buildroot%_datadir/%name
 install -m 0644 ext/ezbake.manifest %buildroot%_datadir/%name
 install -d -m 0755 %buildroot%_sysconfdir/%name
 install -d -m 0755 %buildroot%_sysconfdir/%name/conf.d
 
-install -m 0644 %SOURCE2 %buildroot%_datadir/%name
-install -m 0644 %SOURCE3 %buildroot%_datadir/%name
-  
 install -d -m 0755 %buildroot%_sysconfdir/%name/services.d
 
-install -m 0644 ext/system-config/services.d/bootstrap.cfg %buildroot%_sysconfdir/%name/bootstrap.cfg
-    
-install -m 0644 ext/config/conf.d/puppetserver.conf %buildroot%_sysconfdir/%name/conf.d/puppetserver.conf
-install -m 0644 ext/config/request-logging.xml %buildroot%_sysconfdir/%name/request-logging.xml
-install -m 0644 ext/config/logback.xml %buildroot%_sysconfdir/%name/logback.xml
-install -m 0644 ext/config/conf.d/global.conf %buildroot%_sysconfdir/%name/conf.d/global.conf
-install -m 0644 ext/config/conf.d/web-routes.conf %buildroot%_sysconfdir/%name/conf.d/web-routes.conf
-install -m 0644 ext/config/conf.d/auth.conf %buildroot%_sysconfdir/%name/conf.d/auth.conf
-install -m 0644 ext/config/conf.d/metrics.conf %buildroot%_sysconfdir/%name/conf.d/metrics.conf
-install -m 0644 ext/config/conf.d/webserver.conf %buildroot%_sysconfdir/%name/conf.d/webserver.conf
-install -m 0644 ext/config/services.d/ca.cfg %buildroot%_sysconfdir/%name/services.d/ca.cfg
+install -m 0644 ezbake/system-config/services.d/bootstrap.cfg %buildroot%_sysconfdir/%name/bootstrap.cfg
+install -m 0640 %SOURCE6 %buildroot%_sysconfdir/%name/conf.d/%name.conf
+install -m 0644 resources/ext/config/request-logging.xml %buildroot%_sysconfdir/%name/request-logging.xml
+
+install -m 0644 ezbake/config/logback.xml %buildroot%_sysconfdir/%name/logback.xml
+install -m 0644 ezbake/config/conf.d/global.conf %buildroot%_sysconfdir/%name/conf.d/global.conf
+install -m 0644 ezbake/config/conf.d/web-routes.conf %buildroot%_sysconfdir/%name/conf.d/web-routes.conf
+install -m 0644 ezbake/config/conf.d/auth.conf %buildroot%_sysconfdir/%name/conf.d/auth.conf
+install -m 0644 ezbake/config/conf.d/metrics.conf %buildroot%_sysconfdir/%name/conf.d/metrics.conf
+install -m 0644 ezbake/config/conf.d/webserver.conf %buildroot%_sysconfdir/%name/conf.d/webserver.conf
+install -m 0644 ezbake/config/services.d/ca.cfg %buildroot%_sysconfdir/%name/services.d/ca.cfg
+install -m 0644 ezbake/system-config/services.d/bootstrap.cfg %buildroot%_sysconfdir/%name/services.d/bootstrap.cfg
 
 install -d -m 0755 %buildroot%_datadir/%name/cli
 install -d -m 0755 %buildroot%_datadir/%name/cli/apps
 install -d -m 0755 %buildroot%_bindir
 install -m 0755 ext/bin/puppetserver %buildroot%_bindir/%name
-install -m 0755 ext/cli/reload %buildroot%_datadir/%name/cli/apps/reload
-install -m 0755 ext/cli/stop %buildroot%_datadir/%name/cli/apps/stop
-install -m 0755 ext/cli/gem %buildroot%_datadir/%name/cli/apps/gem
-install -m 0755 ext/cli/irb %buildroot%_datadir/%name/cli/apps/irb
-install -m 0755 ext/cli/foreground %buildroot%_datadir/%name/cli/apps/foreground
-install -m 0755 ext/cli/ruby %buildroot%_datadir/%name/cli/apps/ruby
-install -m 0755 ext/cli/start %buildroot%_datadir/%name/cli/apps/start
-install -m 0755 ext/cli/ca %buildroot%_datadir/%name/cli/apps/ca
-
-install -m 0755 ext/cli_defaults/cli-defaults.sh %buildroot%_datadir/%name/cli/
+install -m 0755 ext/cli/apps/reload %buildroot%_datadir/%name/cli/apps/reload
+install -m 0755 ext/cli/apps/stop %buildroot%_datadir/%name/cli/apps/stop
+install -m 0755 ext/cli/apps/gem %buildroot%_datadir/%name/cli/apps/gem
+install -m 0755 ext/cli/apps/irb %buildroot%_datadir/%name/cli/apps/irb
+install -m 0755 ext/cli/apps/foreground %buildroot%_datadir/%name/cli/apps/foreground
+install -m 0755 ext/cli/apps/ruby %buildroot%_datadir/%name/cli/apps/ruby
+install -m 0755 ext/cli/apps/start %buildroot%_datadir/%name/cli/apps/start
+install -m 0755 ext/cli/apps/ca %buildroot%_datadir/%name/cli/apps/ca
+install -m 0755 ext/cli/cli-defaults.sh %buildroot%_datadir/%name/cli/
 
 install -d -m 0755 %buildroot%_var/run/%name
 install -d -m 0700 %buildroot%_var/log/%name
 install -d -m 0700 %buildroot%_localstatedir/%name/jars
 
-install -d -m 0755 %buildroot%_sysconfdir/default
-install -m 0644 ext/default %buildroot%_sysconfdir/default/%name
+install -Dpm 0644 ext/default %buildroot%_sysconfdir/sysconfig/%name
 
 install -d -m 0755 %buildroot%_sysconfdir/init.d
-install -m 0755 %SOURCE1 %buildroot%_sysconfdir/init.d/%name
+install -m 0755 %SOURCE2 %buildroot%_sysconfdir/init.d/%name
+
+install -Dpm 0644 %SOURCE5 %buildroot%_unitdir/%name.service
 
 install -Dpm 0644 %SOURCE4 %buildroot%_sysconfdir/sysconfig/%name
 install -Dpm 0644 %SOURCE5 %buildroot%_unitdir/%name.service
 
 mkdir -p %buildroot%_tmpfilesdir
 install -m 0644 ext/puppetserver.tmpfiles.conf %buildroot%_tmpfilesdir/
-
-mkdir -p %buildroot%_sysconfdir/logrotate.d
-install -m 0644 ext/puppetserver.logrotate.conf %buildroot%_sysconfdir/logrotate.d/
 
 %pre
 getent group puppet > /dev/null || \
@@ -173,17 +184,23 @@ fi
 %_var/lib/%name
 %_var/run/%name
 %_bindir/%name
-%_sysconfdir/logrotate.d/*
 %_tmpfilesdir/*
 %_sysconfdir/init.d/%name
-%_sysconfdir/default/%name
 
 %changelog
+* Fri Mar 15 2024 Pavel Skrylev <majioa@altlinux.org> 8.4.0-alt1
+- ^ 6.20.0 -> 8.4.0 by cas@ (ALT #38464).
+- Added requires java-17-openjdk by cas@ (ALT #41623).
+- Set current version in executables by cas@ (ALT #47704).
+- Used bundled jruby by cas@ (ALT #47705).
+- * put proper config
+
 * Mon Mar 04 2024 Pavel Skrylev <majioa@altlinux.org> 6.20.0-alt4
 - ! fixed: added proper gem_path to config (closes #49603)
 
 * Mon Mar 04 2024 Andrey Cherepanov <cas@altlinux.org> 6.20.0-alt3
-- puppetserver.service: disable autorestart and standard output type syslog (ALT #49602).
+- puppetserver.service: disable autorestart and standard output type syslog
+  (ALT #49602).
 - Use adapted /etc/sysconfig/puppetserver.
 
 * Wed Feb 21 2024 Andrey Cherepanov <cas@altlinux.org> 6.20.0-alt2
@@ -244,18 +261,18 @@ fi
 * Mon Nov 19 2018 Andrey Bychkov <mrdrew@altlinux.org> 6.0.2-alt1
 - version updated to 6.0.2
 
-* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 6.0.0-alt1.qa1%ubt
+* Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 6.0.0-alt1.qa1
 - NMU: applied repocop patch
 
-* Fri Sep 21 2018 Andrey Bychkov <mrdrew@altlinux.org> 6.0.0-alt1%ubt
+* Fri Sep 21 2018 Andrey Bychkov <mrdrew@altlinux.org> 6.0.0-alt1
 - updated version to 6.0.0 from src
 
-* Wed Sep 12 2018 Andrey Bychkov <mrdrew@altlinux.org> 5.3.5-alt2%ubt
+* Wed Sep 12 2018 Andrey Bychkov <mrdrew@altlinux.org> 5.3.5-alt2
 - chown puppet/ssl for foreground
 
-* Mon Aug 09 2018 Andrey Bychkov <mrdrew@altlinux.org> 5.3.5-alt1%ubt
+* Thu Aug 09 2018 Andrey Bychkov <mrdrew@altlinux.org> 5.3.5-alt1
 - Update version to 5.3.5
 
-* Thu Aug 02 2018 Andrey Bychkov <mrdrew@altlinux.org> 5.3.4-alt1%ubt
+* Thu Aug 02 2018 Andrey Bychkov <mrdrew@altlinux.org> 5.3.4-alt1
 - Initial build in Sisyphus
 
