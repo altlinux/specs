@@ -1,6 +1,6 @@
 Name: onboard
 Version: 1.4.1
-Release: alt5
+Release: alt6
 
 Summary: Simple on-screen Keyboard
 License: GPL-3.0+
@@ -12,7 +12,7 @@ Source1: ru.po
 Patch: build-against-Ayatana-AppIndicator.patch
 Patch1: 1004-fix-ftbfs-python3-12.patch
 
-BuildRequires(pre): etersoft-build-utils rpm-build-gnome python3-devel
+BuildRequires(pre): rpm-build-gnome rpm-macros-python3
 BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
 BuildRequires: intltool
@@ -94,6 +94,9 @@ rm -rf %buildroot%_iconsdir/ubuntu-mono-*
 %_datadir/gnome-shell/extensions/Onboard_Indicator@onboard.org
 
 %changelog
+* Fri Mar 15 2024 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt6
+- NMU: fix BuildRequires(pre)
+
 * Wed Jan 03 2024 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt5
 - Fixed build with python3.12.
 
