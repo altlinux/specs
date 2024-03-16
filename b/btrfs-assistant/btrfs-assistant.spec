@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: btrfs-assistant
-Version: 1.9
+Version: 2.0
 Summary: GUI management tool to make managing a Btrfs filesystem easier
 Release: alt1
 License: GPL-3.0
@@ -15,8 +15,8 @@ BuildRequires: desktop-file-utils
 BuildRequires: gcc-c++
 BuildRequires: libbtrfs-devel
 BuildRequires: libappstream-glib
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-tools-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools-devel
 
 %description
 Btrfs Assistant is a GUI management tool to make managing a Btrfs filesystem easier.
@@ -65,6 +65,10 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%name.metainf
 %_datadir/polkit-1/actions/org.%name.pkexec.policy
 
 %changelog
+* Sat Mar 16 2024 Alexander Makeenkov <amakeenk@altlinux.org> 2.0-alt1
+- Updated to version 2.0.
+- Built with qt6.
+
 * Wed Jan 17 2024 Alexander Makeenkov <amakeenk@altlinux.org> 1.9-alt1
 - Updated to version 1.9.
 
