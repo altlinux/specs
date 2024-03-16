@@ -6,7 +6,7 @@
 
 Name:          ruby
 Version:       %_version
-Release:       alt3
+Release:       alt4
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -259,7 +259,7 @@ Ruby manuals and documentation.
 %package       -n gem
 Epoch:         2
 Version:       3.3.26
-Release:       alt3
+Release:       alt4
 Summary:       Ruby gem executable and framefork
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -276,7 +276,7 @@ Ruby gem executable and framework.
 %package       -n rpm-macros-ruby
 Epoch:         1
 Version:       %_version
-Release:       alt3
+Release:       alt4
 Summary:       rpm macros for Ruby packages
 Group:         Development/Ruby
 
@@ -425,6 +425,9 @@ echo "NOTE: to make the environment variable changes come into effect, please re
 %_rpmmacrosdir/ruby.env
 
 %changelog
+* Fri Mar 15 2024 Pavel Skrylev <majioa@altlinux.org> 3.1.4-alt4
+- + added %%ruby_gemsplugindir and %%ruby_gemplugin macros
+
 * Wed Feb 07 2024 Pavel Skrylev <majioa@altlinux.org> 3.1.4-alt3
 - + allow access to gem cache for ruby group instead of rvm (closes #48325)
 - * rearranged load path (closes #48249)

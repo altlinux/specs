@@ -1,8 +1,11 @@
 %define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname yard
 
 Name:          gem-yard
-Version:       0.9.34
+Version:       0.9.36
 Release:       alt1
 Summary:       YARD is a Ruby Documentation tool. The Y stands for "Yay!"
 License:       MIT
@@ -14,7 +17,7 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-%if_with check
+%if_enabled check
 BuildRequires: gem(rspec) >= 3.10.0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rdoc) >= 6.1.1
@@ -40,7 +43,7 @@ BuildConflicts: gem(rack) >= 3
 %ruby_use_gem_dependency rspec >= 3.10.0,rspec < 4
 Obsoletes:     ruby-yard < %EVR
 Provides:      ruby-yard = %EVR
-Provides:      gem(yard) = 0.9.34
+Provides:      gem(yard) = 0.9.36
 
 
 %description
@@ -51,14 +54,14 @@ custom Ruby constructs such as custom class level definitions.
 
 
 %package       -n yard
-Version:       0.9.34
+Version:       0.9.36
 Release:       alt1
 Summary:       YARD is a Ruby Documentation tool. The Y stands for "Yay!" executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета yard
 Group:         Documentation
 BuildArch:     noarch
 
-Requires:      gem(yard) = 0.9.34
+Requires:      gem(yard) = 0.9.36
 
 %description   -n yard
 YARD is a Ruby Documentation tool. The Y stands for "Yay!" executable(s).
@@ -67,20 +70,20 @@ YARD is a documentation generation tool for the Ruby programming language. It
 enables the user to generate consistent, usable documentation that can be
 exported to a number of formats very easily, and also supports extending for
 custom Ruby constructs such as custom class level definitions.
-
 %description   -n yard -l ru_RU.UTF-8
 Исполнямка для самоцвета yard.
 
 
+%if_enabled    doc
 %package       -n gem-yard-doc
-Version:       0.9.34
+Version:       0.9.36
 Release:       alt1
 Summary:       YARD is a Ruby Documentation tool. The Y stands for "Yay!" documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета yard
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(yard) = 0.9.34
+Requires:      gem(yard) = 0.9.36
 
 %description   -n gem-yard-doc
 YARD is a Ruby Documentation tool. The Y stands for "Yay!" documentation
@@ -90,20 +93,21 @@ YARD is a documentation generation tool for the Ruby programming language. It
 enables the user to generate consistent, usable documentation that can be
 exported to a number of formats very easily, and also supports extending for
 custom Ruby constructs such as custom class level definitions.
-
 %description   -n gem-yard-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета yard.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-yard-devel
-Version:       0.9.34
+Version:       0.9.36
 Release:       alt1
 Summary:       YARD is a Ruby Documentation tool. The Y stands for "Yay!" development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета yard
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(yard) = 0.9.34
+Requires:      gem(yard) = 0.9.36
 Requires:      gem(rspec) >= 3.10.0
 Requires:      gem(rake) >= 0
 Requires:      gem(rdoc) >= 6.1.1
@@ -130,9 +134,9 @@ YARD is a documentation generation tool for the Ruby programming language. It
 enables the user to generate consistent, usable documentation that can be
 exported to a number of formats very easily, and also supports extending for
 custom Ruby constructs such as custom class level definitions.
-
 %description   -n gem-yard-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета yard.
+%endif
 
 
 %prep
@@ -150,6 +154,7 @@ custom Ruby constructs such as custom class level definitions.
 %files
 %doc README.md templates/default/onefile/html/readme.erb
 %ruby_gemspec
+%ruby_gemplugin
 %ruby_gemlibdir
 
 %files         -n yard
@@ -158,15 +163,22 @@ custom Ruby constructs such as custom class level definitions.
 %_bindir/yardoc
 %_bindir/yri
 
+%if_enabled    doc
 %files         -n gem-yard-doc
 %doc README.md templates/default/onefile/html/readme.erb
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-yard-devel
 %doc README.md templates/default/onefile/html/readme.erb
+%endif
 
 
 %changelog
+* Fri Mar 15 2024 Pavel Skrylev <majioa@altlinux.org> 0.9.36-alt1
+- ^ 0.9.34 -> 0.9.36
+
 * Wed Jun 21 2023 Pavel Skrylev <majioa@altlinux.org> 0.9.34-alt1
 - ^ 0.9.27 -> 0.9.34
 

@@ -1,9 +1,9 @@
-%define        __setup_rb GEM_HOME=%ruby_gemhome %__ruby $(which setup-rb 2>/dev/null || which setup)
+%define        __setup_rb GEM_HOME=%ruby_gemhome %__ruby -I "\$(pwd)/lib" $(which setup-rb 2>/dev/null || which setup)
 %define        pkgname setup
 
 Name:          gem-%pkgname
 Version:       5.999.6
-Release:       alt9
+Release:       alt10
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -18,7 +18,8 @@ Source:        %name-%version.tar
 Patch:         patch.patch
 
 BuildRequires(pre): rpm-build-ruby
-
+%add_findreq_skiplist %_libexecdir/**/*
+%add_findprov_skiplist %_libexecdir/**/*
 Requires:      chrpath
 Requires:      setup-rb
 Provides:      gem(setup) = %version
@@ -94,6 +95,10 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Fri Mar 15 2024 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt10
+- + added support for gem plugins
+- ! fixed %%__setup_rb macro
+
 * Wed Nov 22 2023 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt9
 - * BREAK: setup exec moved into %%ruby_bindir
 - * renamed setup.rb to setup-rb
