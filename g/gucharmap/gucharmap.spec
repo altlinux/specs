@@ -8,7 +8,7 @@
 %define unicode_ver 14.0.0
 
 Name: gucharmap
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: gucharmap is a featureful Unicode character map
@@ -134,6 +134,9 @@ character map library.
 %endif
 
 %changelog
+* Sat Mar 16 2024 Yuri N. Sedunov <aris@altlinux.org> 15.1.3-alt1
+- 15.1.3
+
 * Fri Oct 20 2023 Yuri N. Sedunov <aris@altlinux.org> 15.1.2-alt1
 - 15.1.2
 
