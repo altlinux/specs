@@ -19,7 +19,7 @@
 
 Name: phoc
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Display compositor designed for mobile devices
 License: GPL-3.0-or-later
@@ -65,7 +65,7 @@ BuildRequires: pkgconfig(xcb-errors)
 BuildRequires: pkgconfig(hwdata)
 BuildRequires: xorg-xwayland-devel libglvnd-devel libvulkan-devel
 BuildRequires: pkgconfig(libliftoff)}
-%{?_enable_gtk_doc:BuildRequires: gi-docgen pkgconfig(gobject-introspection-1.0)}
+%{?_enable_gtk_doc:BuildRequires: gi-docgen pkgconfig(gobject-introspection-1.0) /usr/bin/g-ir-scanner}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_check:BuildRequires: libgtest-devel xvfb-run mutter-gnome /usr/bin/Xwayland}
 
@@ -128,6 +128,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Sat Mar 16 2024 Yuri N. Sedunov <aris@altlinux.org> 0.37.0-alt1.1
+- fixed BR
+
 * Fri Mar 08 2024 Yuri N. Sedunov <aris@altlinux.org> 0.37.0-alt1
 - 0.37.0
 
