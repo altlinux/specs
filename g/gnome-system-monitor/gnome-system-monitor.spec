@@ -1,49 +1,54 @@
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
+%define xdg_name org.gnome.SystemMonitor
 
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %def_enable systemd
-%def_disable wnck
+%def_disable check
 
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-system-monitor
-Version: %ver_major.0.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Simple process monitor
 License: GPL-2.0
 Group: Monitoring
-Url: https://wiki.gnome.org/Apps/SystemMonitor
+Url: https://apps.gnome.org/SystemMonitor
 
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
+%else
+Source: %name-%version%beta.tar
+%endif
 
-%define glib_ver 2.56.0
-%define gtk_ver 3.22
-%define glibmm_ver 2.46
-%define libgtkmm3_ver 3.3.18
-%define libwnck_ver 3.0.0
+%define glib_ver 2.68.0
+%define gtk_ver 4.12
+%define glibmm_ver 2.68
+%define gtkmm_ver 4.0.0
 %define libgtop_ver 2.38.0
 %define libxml_ver 2.0
 %define rsvg_ver 2.35
-%define handy_ver 1.5.0
+%define adw_ver 1.4.0
 
 Requires: polkit
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome
-BuildRequires: meson gcc-c++ libappstream-glib-devel
+BuildRequires: meson gcc-c++
 BuildRequires: yelp-tools desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: libglibmm-devel >= %glibmm_ver
-BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: libgtkmm3-devel >= %libgtkmm3_ver
+BuildRequires: pkgconfig(glibmm-2.68) >= %glibmm_ver
+BuildRequires: libgtk4-devel >= %gtk_ver
+BuildRequires: pkgconfig(gtkmm-4.0) >= %gtkmm_ver
 BuildRequires: libgtop-devel >= %libgtop_ver
 BuildRequires: libxml2-devel >= %libxml_ver
 BuildRequires: librsvg-devel >= %rsvg_ver
 BuildRequires: libpolkit-devel
-BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
-%{?_enable_wnck:BuildRequires: libwnck3-devel >= %libwnck_ver}
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 %{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils uncrustify}
 
 %description
 Gnome-system-monitor is a simple process and system monitor.
@@ -55,12 +60,15 @@ Gnome-system-monitor is a simple process and system monitor.
 %meson \
     %{?_enable_systemd:-Dsystemd=true} \
     %{?_enable_wnck:-Dwnck=true}
+%nil
 %meson_build
 
 %install
 %meson_install
-
 %find_lang --with-gnome %name
+
+%check
+%__meson_test
 
 %files -f %name.lang
 %_bindir/*
@@ -74,10 +82,13 @@ Gnome-system-monitor is a simple process and system monitor.
 %config %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.%name.enums.xml
 %_iconsdir/hicolor/*/apps/*
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 
 
 %changelog
+* Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0 (ported to GTK4/Libadwaita)
+
 * Sat Sep 16 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0.2-alt1
 - 45.0.2
 
