@@ -4,7 +4,7 @@
 
 Name: vitastor
 Version: 1.4.8
-Release: alt1
+Release: alt1.1
 Summary: Vitastor, a fast software-defined clustered block storage
 Group: System/Base
 
@@ -150,6 +150,8 @@ Vitastor Proxmox VE Plugin.
 %patch -p1
 %ifarch %e2k
 %patch2000 -p1
+# thoughtless regexp converts -O3 to -O33
+sed -i 's/O)\[12\]/O)[1-4]/' src/CMakeLists.txt
 %endif
 tar -xf %SOURCE2 -C cpp-btree
 tar -xf %SOURCE3 -C json11
@@ -265,6 +267,9 @@ fi
 %endif
 
 %changelog
+* Sat Mar 16 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.4.8-alt1.1
+- fixed build for Elbrus
+
 * Sun Mar 03 2024 Alexey Shabalin <shaba@altlinux.org> 1.4.8-alt1
 - 1.4.8
 
