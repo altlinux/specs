@@ -12,7 +12,7 @@
 
 Name: lib%_name
 Version: %ver_major.2
-Release: alt1.1
+Release: alt1.2
 
 Summary: OpenShot Video Library
 Group: System/Libraries
@@ -32,7 +32,9 @@ Patch2000: libopenshot-0.3.0-entityfx-e2k.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 BuildRequires: %name-audio-devel >= 0.3.2
-BuildRequires: /proc cmake gcc-c++ libgomp-devel libunittest-cpp-devel jsoncpp-devel
+BuildRequires: /proc cmake gcc-c++ 
+BuildRequires: python3(setuptools._distutils)
+BuildRequires: libgomp-devel libunittest-cpp-devel jsoncpp-devel
 BuildRequires: libalsa-devel qt5-multimedia-devel qt5-svg-devel libzeromq-cpp-devel
 BuildRequires: libImageMagick-devel zlib-devel
 BuildRequires: libavcodec-devel libavformat-devel libavutil-devel
@@ -109,6 +111,9 @@ This package provides Python3 bindings for OpenShot Video Library.
 %python3_sitelibdir/*
 
 %changelog
+* Sat Mar 16 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1.2
+- fixed BR
+
 * Thu Sep 07 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1.1
 - rebuilt against ffmpeg-6.0 libraries
 
