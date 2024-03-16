@@ -7,7 +7,7 @@
 %endif
 
 Name:    retext
-Version: 8.0.1
+Version: 8.0.2
 Release: alt1
 License: GPL-3.0+
 Summary: Text editor for Markdown and reStructuredText
@@ -100,6 +100,9 @@ python3 setup.py test
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Sat Mar 16 2024 Andrey Cherepanov <cas@altlinux.org> 8.0.2-alt1
+- New version.
+
 * Thu Jun 08 2023 Andrey Cherepanov <cas@altlinux.org> 8.0.1-alt1
 - New version.
 
