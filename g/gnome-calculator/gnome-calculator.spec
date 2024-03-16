@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define api_ver 2
 # GTK interface library
@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: gnome-calculator
-Version: %ver_major.0.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GTK4 based desktop calculator
@@ -40,7 +40,7 @@ Requires: libgci = %EVR
 BuildRequires(pre): rpm-macros-meson rpm-build-licenses rpm-build-gnome
 BuildRequires(pre): rpm-build-gir rpm-build-vala
 BuildRequires: meson vala-tools valadoc
-BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires: yelp-tools /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver libgee0.8-devel >= %gee_ver libxml2-devel
 BuildRequires: libgtk4-devel >= %gtk4_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
@@ -212,6 +212,9 @@ GTK interface library.
 %_datadir/devhelp/books/GCi-%gci_api_ver/
 
 %changelog
+* Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Sat Sep 16 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0.2-alt1
 - 45.0.2
 
