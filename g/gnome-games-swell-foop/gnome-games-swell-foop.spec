@@ -3,16 +3,16 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name swell-foop
-%define ver_major 41
+%define ver_major 46
 %define xdg_name org.gnome.SwellFoop
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: The "Same Game" puzzle
 Group: Games/Boards
-License: GPLv3+
+License: GPL-3.0-or-later
 Url: https://wiki.gnome.org/Apps/Swell-Foop
 
 %if_disabled snapshot
@@ -22,17 +22,17 @@ Vcs: https://gitlab.gnome.org/GNOME/swell-foop.git
 Source: %_name-%version.tar
 %endif
 
-Provides:  %_name = %version-%release
+Provides:  %_name = %EVR
 
-%define glib_ver 2.36.0
-%define gtk_ver 3.22.23
+%define glib_ver 2.78.0
+%define gtk_ver 4.10
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
-BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libclutter-gtk3-devel
-BuildRequires: gsettings-desktop-schemas-devel
-BuildRequires: libgnome-games-support-devel
+BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk_ver
+BuildRequires: pkgconfig(librsvg-2.0)
+BuildRequires: pkgconfig(libgnome-games-support-2)
 
 %description
 The objective of same-gnome is to remove as many balls from the playing
@@ -53,7 +53,6 @@ area in as few moves as possible.
 %files -f %_name.lang
 %attr(-,root,games) %_bindir/%_name
 %_desktopdir/%xdg_name.desktop
-%_datadir/%_name/
 %_iconsdir/hicolor/*x*/apps/%xdg_name.png
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %_datadir/dbus-1/services/%xdg_name.service
@@ -61,6 +60,9 @@ area in as few moves as possible.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0 (ported to GTK4)
+
 * Tue Apr 12 2022 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
 - 41.1
 

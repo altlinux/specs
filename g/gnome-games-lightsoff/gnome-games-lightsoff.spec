@@ -2,11 +2,11 @@
 
 %define _name lightsoff
 %define xdg_name org.gnome.LightsOff
-%define ver_major 40
+%define ver_major 46
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.0.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Lights Off is a puzzle game
@@ -16,17 +16,16 @@ Url: https://wiki.gnome.org/Apps/Lightsoff
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-Provides:  %_name = %version-%release
+Provides:  %_name = %EVR
 
 %define glib_ver 2.40.0
-%define gtk_ver 3.22.0
+%define gtk_ver 3.24.0
 
 BuildRequires(pre): meson
 BuildRequires: vala-tools
-BuildRequires: gsettings-desktop-schemas-devel 
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
-BuildRequires: libclutter-gtk3-devel librsvg-devel
+BuildRequires: librsvg-devel
 
 %description
 Lights Off is a puzzle game, where the objective is to turn off all of
@@ -45,7 +44,7 @@ and its non-diagonal neighbors.
 %find_lang --with-gnome %_name
 
 %files -f %_name.lang
-%attr(-,root,games) %_bindir/%_name
+%_bindir/%_name
 %_desktopdir/%xdg_name.desktop
 %_datadir/%_name/
 %_iconsdir/hicolor/*/*/%{xdg_name}*.*
@@ -55,6 +54,9 @@ and its non-diagonal neighbors.
 %_man6dir/%_name.6*
 
 %changelog
+* Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Fri Mar 19 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0.1-alt1
 - 40.0.1
 
