@@ -1,5 +1,5 @@
 Name: keepassxc
-Version:  2.7.6
+Version:  2.7.7
 Release:  alt1
 
 Summary: KeePassXC Password Safe - light-weight cross-platform password manager
@@ -17,14 +17,18 @@ Source1: keepassx_ru.ts
 %def_without yubikey
 # requires asciidoctor
 %def_enable docs
+%def_without asan
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake ctest gcc-c++
-BuildRequires: qt5-base-devel >= 5.9.5 qt5-tools-devel >= 5.9.5 qt5-svg-devel
+%if_with asan
+BuildRequires: liblsan-devel-static
+%endif
+BuildRequires: qt5-base-devel >= 5.12.0 qt5-tools-devel >= 5.12.0 qt5-svg-devel
 BuildRequires: libbotan-devel >= 2.12
 BuildRequires: libargon2-devel
-BuildRequires: libsodium-devel >= 1.0.12
+BuildRequires: libsodium-devel
 BuildRequires: zlib-devel >= 1.2.0
 BuildRequires: libqrencode4-devel
 BuildRequires: libreadline-devel
@@ -61,12 +65,16 @@ cp -v %SOURCE1 share/translations/keepassx_ru.ts
 %cmake \
   -DWITH_TESTS=ON \
   -DWITH_XC_BROWSER=ON \
+  -DWITH_XC_BROWSER_PASSKEYS=OFF \
   -DWITH_XC_NETWORKING=ON \
   -DWITH_XC_AUTOTYPE=ON \
   -DWITH_XC_SSHAGENT=ON \
   -DWITH_XC_KEESHARE=ON \
   -DWITH_XC_UPDATECHECK=OFF \
   -DWITH_XC_FDOSECRETS=ON \
+%if_with asan
+  -DWITH_ASAN=ON \
+%endif
 %if_enabled docs
   -DWITH_XC_DOCS=ON \
 %else
@@ -79,8 +87,7 @@ cp -v %SOURCE1 share/translations/keepassx_ru.ts
 %cmake_build
 
 %check
-pushd %_target_platform
-make -j%__nprocs test ARGS+="-E test\(cli\|gui\) --output-on-failure"
+%ctest --exclude-regex testcli
 
 %install
 %cmake_install
@@ -98,6 +105,9 @@ make -j%__nprocs test ARGS+="-E test\(cli\|gui\) --output-on-failure"
 %endif
 
 %changelog
+* Sat Mar 16 2024 Pavel Nakonechnyi <zorg@altlinux.org> 2.7.7-alt1
+- updated to v2.7.7
+
 * Sun Aug 20 2023 Pavel Nakonechnyi <zorg@altlinux.org> 2.7.6-alt1
 - updated to v2.7.6
 
