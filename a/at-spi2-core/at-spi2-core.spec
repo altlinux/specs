@@ -1,5 +1,5 @@
 %define _name at-spi2
-%define ver_major 2.51
+%define ver_major 2.52
 %define api_ver_major 2
 %define api_ver 2.0
 %define atk_api_ver 1.0
@@ -13,7 +13,7 @@
 %def_disable check
 
 Name: %_name-core
-Version: %ver_major.91
+Version: %ver_major.0
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
@@ -253,6 +253,9 @@ sed -i 's/\(sphinx-build\)/\1-3/' devel-docs/meson.build
 %endif
 
 %changelog
+* Sat Mar 16 2024 Yuri N. Sedunov <aris@altlinux.org> 2.52.0-alt1
+- 2.52.0
+
 * Wed Mar 13 2024 Yuri N. Sedunov <aris@altlinux.org> 2.51.91-alt1
 - 2.51.91
 
