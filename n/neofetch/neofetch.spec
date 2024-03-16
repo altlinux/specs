@@ -2,13 +2,14 @@
 
 Name: neofetch
 Version: 7.1.0
-Release: alt4
+Release: alt5
 Summary: A command-line system information tool
 License: MIT
 Group: Monitoring
 Url: https://github.com/dylanaraps/neofetch
 Source: %name-%version.tar
 Patch1: alt-logo.patch
+Patch2: alt-gnome-logo.patch
 
 BuildArch: noarch
 
@@ -25,6 +26,7 @@ hardware in an aesthetic and visually pleasing way.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 
@@ -36,6 +38,9 @@ hardware in an aesthetic and visually pleasing way.
 %_man1dir/%name.1.xz
 
 %changelog
+* Sat Mar 16 2024 Alexander Makeenkov <amakeenk@altlinux.org> 7.1.0-alt5
+- Added ALT Gnome logo (closes: #49652).
+
 * Thu Feb 29 2024 Alexander Makeenkov <amakeenk@altlinux.org> 7.1.0-alt4
 - Disabled AutoReq for shell (closes: #49556).
 
