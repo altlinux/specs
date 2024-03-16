@@ -1,7 +1,7 @@
 %define userrldp _rldp-http-proxy
 
 Name: ton
-Version: 2023.06
+Version: 2024.03
 Release: alt1
 
 Summary: TON - The Open Network tools
@@ -31,8 +31,11 @@ Source3: rldp-http-proxy.service
 # Source4-url: https://github.com/google/crc32c/archive/refs/tags/1.1.2.tar.gz
 Source4: %name-crc32c-%version.tar
 
-# Source5-url: https://github.com/facebook/rocksdb/archive/refs/tags/v6.27.3.tar.gz
+# Source5-url: https://github.com/facebook/rocksdb/archive/refs/tags/v8.6.7.tar.gz
 Source5: %name-rocksdb-%version.tar
+
+# Source6-url: https://github.com/supranational/blst/archive/refs/tags/v0.3.11.tar.gz
+Source6: %name-blst-%version.tar
 
 Patch1: 0001-Fix-error-control-reaches-end-of-non-void-function.patch
 
@@ -42,7 +45,9 @@ BuildRequires: gcc-c++
 
 BuildRequires: git-core
 
-BuildRequires: zlib-devel libssl-devel
+BuildRequires: zlib-devel libssl-devel libreadline-devel
+
+BuildRequires: libsodium-devel libsecp256k1-devel
 
 # for storage-daemon
 BuildRequires: libblas-devel libgsl-devel
@@ -136,7 +141,7 @@ storage-daemon-cli
 
 
 %prep
-%setup -a4 -a5
+%setup -a4 -a5 -a6
 %patch1 -p1
 
 %build
@@ -202,6 +207,9 @@ install -m0755 storage/storage-daemon/storage-daemon-cli %buildroot%_bindir/
 
 
 %changelog
+* Sun Mar 17 2024 Vitaly Lipatov <lav@altlinux.ru> 2024.03-alt1
+- new version 2024.03 (with rpmrb script)
+
 * Fri Jul 28 2023 Vitaly Lipatov <lav@altlinux.ru> 2023.06-alt1
 - new version 2023.06 (with rpmrb script)
 - add BuildRequires: libmicrohttpd-devel
