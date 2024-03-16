@@ -21,8 +21,8 @@
 %def_with scudo
 
 Name: telegram-desktop
-Version: 4.15.0
-Release: alt2
+Version: 4.15.5
+Release: alt1
 
 Summary: Telegram Desktop messaging app
 
@@ -379,6 +379,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Sat Mar 16 2024 Vitaly Lipatov <lav@altlinux.ru> 4.15.5-alt1
+- new version 4.15.5 (with rpmrb script)
+
 * Tue Feb 27 2024 Vitaly Lipatov <lav@altlinux.ru> 4.15.0-alt2
 - spec: drop all Qt5 related code
 - add strict require to libqt6-core built with (ALT bug 49495)
