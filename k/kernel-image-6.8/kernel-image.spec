@@ -1,7 +1,7 @@
 Name: kernel-image-6.8
 Release: alt1
 %define kernel_base_version	6.8
-%define kernel_sublevel	.0
+%define kernel_sublevel	.1
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -588,6 +588,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Mar 16 2024 Kernel Bot <kernelbot@altlinux.org> 6.8.1-alt1
+- v6.8.1 (2024-03-15).
+
 * Tue Mar 12 2024 Vitaly Chikunov <vt@altlinux.org> 6.8.0-alt1
 - Rebase to v6.8 (2024-03-10).
 
