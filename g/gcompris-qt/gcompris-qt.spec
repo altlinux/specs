@@ -1,5 +1,5 @@
 Name:    gcompris-qt
-Version: 3.3
+Version: 4.0
 Release: alt1
 Summary: Educational suite for kids 2-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 2 до 10 лет
@@ -10,6 +10,8 @@ URL:     http://www.gcompris.net
 
 Source:  %name-%version.tar
 Source1: submodules.tar
+Source2: gcompris_qt.po
+Source3: gcompris_voices.po
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -69,6 +71,8 @@ GCompris - набор образовательных игр и программ 
 %prep
 %setup
 tar xf %SOURCE1
+install -Dpm0644 %SOURCE2 poqm/ru/gcompris_qt.po
+install -Dpm0644 %SOURCE3 po/ru/gcompris_voices.po
 
 %build
 %cmake \
@@ -92,6 +96,10 @@ tar xf %SOURCE1
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Fri Mar 15 2024 Andrey Cherepanov <cas@altlinux.org> 4.0-alt1
+- New version.
+- Completed Russian translation (thanks Olesya Gerasimenko).
+
 * Thu Jun 08 2023 Andrey Cherepanov <cas@altlinux.org> 3.3-alt1
 - New version.
 
