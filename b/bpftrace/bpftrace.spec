@@ -18,8 +18,8 @@
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name: bpftrace
-Version: 0.20.1
-Release: alt2
+Version: 0.20.2
+Release: alt1
 Summary: High-level tracing language for Linux eBPF
 Group: Development/Debuggers
 License: Apache-2.0
@@ -166,6 +166,10 @@ fi
 %_man8dir/*
 
 %changelog
+* Sun Mar 17 2024 Vitaly Chikunov <vt@altlinux.org> 0.20.2-alt1
+- Update to v0.20.2 (2024-03-07).
+- Fix potential security issue with kheader unpacking.
+
 * Sat Mar 09 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.20.1-alt2
 - NMU: fixed FTBFS on LoongArch
 
