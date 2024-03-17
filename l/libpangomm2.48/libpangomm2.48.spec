@@ -1,14 +1,14 @@
 %def_disable snapshot
 
 %define rname pangomm
-%define ver_major 2.50
+%define ver_major 2.52
 %define api_ver 2.48
 
-%def_enable docs
+%def_disable docs
 %def_enable check
 
 Name: lib%rname%api_ver
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: This library provides a C++ interface to pango
@@ -22,7 +22,7 @@ Source: %rname-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%rname/%ver_major/%rname-%version.tar.xz
 %endif
 
-%define pango_ver 1.50.0
+%define pango_ver 1.52.0
 %define glibmm_api_ver 2.68
 %define glibmm_ver 2.68.0
 %define cairomm_api_ver 1.16
@@ -92,6 +92,9 @@ BuildArch: noarch
 %endif
 
 %changelog
+* Fri Mar 15 2024 Yuri N. Sedunov <aris@altlinux.org> 2.52.0-alt1
+- 2.52.0
+
 * Sun Jan 28 2024 Yuri N. Sedunov <aris@altlinux.org> 2.50.2-alt1
 - 2.50.2
 

@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define rname gtkmm
-%define ver_major 4.12
+%define ver_major 4.14
 %define api_ver 4.0
 
 %def_disable demos
@@ -24,7 +24,7 @@ Source: %rname-%version.tar
 
 Provides: %rname-%api_ver = %version
 
-%define gtk_ver 4.12.0
+%define gtk_ver 4.14.0
 %define glibmm_api_ver 2.68
 %define glibmm_ver 2.68.0
 %define pangomm_api_ver 2.48
@@ -80,7 +80,7 @@ The %name-demos package contains source code of demo programs for %name.
     %{?_disable_atkmm:-Dbuild-atkmm-api=false} \
     %{?_disable_demos:-Dbuild-demos=false} \
     %{?_enable_docs:-Dbuild-documentation=true} \
-    %{?_enable_snapshot:-Dmaintainer-mode=true
+    %{?_enable_snapshot:-Dmaintainer-mode=true \
     -Dbuild-documentation=true}
 %nil
 %meson_build
@@ -114,6 +114,9 @@ xvfb-run %meson_test
 %endif
 
 %changelog
+* Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 4.14.0-alt1
+- 4.14.0
+
 * Wed Aug 09 2023 Yuri N. Sedunov <aris@altlinux.org> 4.12.0-alt1
 - 4.12.0
 
