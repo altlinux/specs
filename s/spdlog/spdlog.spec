@@ -1,7 +1,7 @@
-%define sover 1.12
+%define sover 1.13
 
 Name: spdlog
-Version: 1.12.0
+Version: 1.13.0
 Release: alt1
 
 Summary: Super fast C++ logging library
@@ -14,11 +14,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/gabime/%name/archive/v%version.tar.gz
 Source: %name-%version.tar
-
-# https://github.com/gabime/%name/commit/d8d23a660601a406a1e1aa07380b5b1c5781c190
-Patch0: %name-%version-circular_q-size-fix.patch
-# https://github.com/gabime/%name/commit/2ee8bac78e6525a8ad9a9196e65d502ce390d83a
-Patch1: %name-%version-level_to_string_view-fix.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: ctest
@@ -49,7 +44,7 @@ applications that use %name.
 
 %prep
 %setup
-%autopatch -p1
+#autopatch -p1
 rm -rfv include/spdlog/fmt/bundled/
 
 %build
@@ -68,7 +63,8 @@ export LD_LIBRARY_PATH=$(pwd)/%_cmake__builddir
 %cmake_build --target test
 
 %files -n lib%name%sover
-%_libdir/libspdlog.so.*
+%_libdir/libspdlog.so.%sover
+%_libdir/libspdlog.so.%version
 
 %files -n lib%name-devel
 %doc README.md example/
@@ -76,9 +72,12 @@ export LD_LIBRARY_PATH=$(pwd)/%_cmake__builddir
 %_includedir/spdlog/
 %_libdir/libspdlog.so
 %_libdir/cmake/spdlog
-%_pkgconfigdir/*.pc
+%_pkgconfigdir/spdlog.pc
 
 %changelog
+* Sun Mar 17 2024 Vitaly Lipatov <lav@altlinux.ru> 1.13.0-alt1
+- new version 1.13.0 (with rpmrb script)
+
 * Thu Oct 12 2023 Nazarov Denis <nenderus@altlinux.org> 1.12.0-alt1
 - 1.12.0 released (ALT #47981)
 
