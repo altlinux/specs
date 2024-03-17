@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: shadowsocks-rust
-Version: 1.18.0
+Version: 1.18.2
 Release: alt1
 Summary: A fast tunnel proxy that helps you bypass firewalls
 License: MIT
@@ -16,7 +16,11 @@ Source: %name-%version.tar
 
 BuildRequires: /proc
 BuildRequires: rust-cargo
-%{?!_without_check:%{?!_disable_check:BuildRequires: banner curl python3}}
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: banner
+BuildRequires: curl
+BuildRequires: python3
+}}
 
 %description
 %summary.
@@ -51,7 +55,6 @@ EOF
 cargo build %_smp_mflags --offline --release
 
 %install
-# To avoid: "the rustflags changed"
 cargo install %_smp_mflags --offline --no-track --path .
 mkdir -p %buildroot%_unitdir %buildroot%_sysconfdir/%name
 install -m0644 .gear/%name.service %buildroot%_unitdir/%name-local.service
@@ -77,6 +80,9 @@ install -m0640 .gear/*.json %buildroot%_sysconfdir/%name
 %_bindir/ss*
 
 %changelog
+* Sun Mar 17 2024 Vitaly Chikunov <vt@altlinux.org> 1.18.2-alt1
+- Update to v1.18.2 (2024-03-13).
+
 * Tue Feb 13 2024 Vitaly Chikunov <vt@altlinux.org> 1.18.0-alt1
 - Update to v1.18.0 (2024-02-08).
 
