@@ -1,11 +1,11 @@
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Maps
 
 Name: gnome-maps
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Maps is a map application for GNOME
@@ -25,7 +25,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %define geocode_api_ver 2.0
 %define geocode_ver 3.26.0
 %define geoclue_ver 2.4.0
-%define shumate_ver 1.1
+%define shumate_ver 1.2
 %define gweather_api_ver 4.0
 %define soup_api_ver 3.0
 %define webkit_api_ver 6.0
@@ -63,7 +63,8 @@ BuildRequires: meson >= %meson_ver yelp-tools %_bindir/appstream-util desktop-fi
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: libgjs-devel >= %gjs_ver gobject-introspection-devel
-BuildRequires: pkgconfig(geoclue-2.0) >= %geoclue_ver
+BuildRequires: pkgconfig(libgeoclue-2.0) >= %geoclue_ver
+BuildRequires: pkgconfig(librsvg-2.0)
 BuildRequires: libgee0.8-devel libgeocode-glib%geocode_api_ver-devel
 BuildRequires: libshumate-devel libxml2-devel
 BuildRequires: libportal-devel
@@ -101,6 +102,9 @@ sed -i 's/\(1.0.0\).beta/\1/' meson.build
 %exclude %_datadir/%name/gir-1.0/GnomeMaps-%api_ver.gir
 
 %changelog
+* Sat Mar 16 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Sun Mar 03 2024 Yuri N. Sedunov <aris@altlinux.org> 45.5-alt1
 - 45.5
 

@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %prefix/libexec
-%define ver_major 1.79
+%define ver_major 1.80
 %define _name gjs
 %define api_ver 1.0
 %define mozjs_ver_major 115
@@ -11,7 +11,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.90
+Version: %ver_major.0
 Release: alt1
 
 Summary: Javascript Bindings for GNOME
@@ -60,6 +60,8 @@ Files for development with %name.
 Summary: Tests for the Gjs package
 Group: Development/Other
 Requires: %name = %EVR
+%add_typelib_req_skiplist typelib(versions)
+
 %description tests
 This package provides tests programs that can be used to verify
 the functionality of the installed Gjs library package.
@@ -109,6 +111,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sat Mar 16 2024 Yuri N. Sedunov <aris@altlinux.org> 1.80.0-alt1
+- 1.80.0
+
 * Mon Mar 04 2024 Yuri N. Sedunov <aris@altlinux.org> 1.79.90-alt1
 - 1.79.90
 

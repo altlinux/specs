@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name shumate
-%define ver_major 1.1
+%define ver_major 1.2
 %define beta %nil
 %define api_ver_major 1
 %define api_ver 1.0
@@ -13,7 +13,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Library with GTK4 widget to display maps
@@ -39,6 +39,9 @@ BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: libsoup3.0-devel >= %soup3_ver
+BuildRequires: pkgconfig(json-glib-1.0)
+BuildRequires: pkgconfig(libprotobuf-c)
+BuildRequires: pkgconfig(sysprof-capture-4) gperf
 %{?_enable_introspection:BuildRequires(pre): rpm-build-gir
 BuildRequires: pkgconfig(gobject-introspection-1.0) gir(Gtk) = 4.0}
 %{?_enable_vala:BuildRequires(pre): rpm-build-vala
@@ -141,6 +144,9 @@ xvfb-run -s -noreset %__meson_test -v
 %endif
 
 %changelog
+* Sat Mar 16 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Sat Feb 10 2024 Yuri N. Sedunov <aris@altlinux.org> 1.1.3-alt1
 - 1.1.3
 
