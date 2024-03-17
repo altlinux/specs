@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: git-delta
-Version: 0.16.5
+Version: 0.17.0
 Release: alt1
 Summary: A syntax-highlighting pager for git, diff, and grep output
 Group: Development/Other
@@ -14,7 +14,9 @@ Source: %name-%version.tar
 
 BuildRequires: /proc
 BuildRequires: rust-cargo
-%{?!_without_check:%{?!_disable_check:BuildRequires: git-core}}
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: git-core
+}}
 
 %description
 Code evolves, and we all spend time studying diffs. Delta aims to make
@@ -36,9 +38,6 @@ directory = "vendor"
 verbose = true
 quiet = false
 
-[install]
-root = "%buildroot%_prefix"
-
 [build]
 rustflags = ["-Copt-level=3", "-Cdebuginfo=1", "--cfg=rustix_use_libc"]
 
@@ -59,8 +58,8 @@ install -Dpm0644 etc/completion/completion.fish \
 		%buildroot%_datadir/fish/vendor_completions.d/delta.fish
 
 %check
-target/release/delta --version
-cargo test %_smp_mflags --release --no-fail-fast
+target/release/delta --version | grep -xF 'delta %version'
+cargo test %_smp_mflags --release --no-fail-fast -- --test-threads=1
 
 %define _customdocdir %_docdir/%name
 
@@ -72,6 +71,9 @@ cargo test %_smp_mflags --release --no-fail-fast
 %_datadir/fish/vendor_completions.d/delta.fish
 
 %changelog
+* Sun Mar 17 2024 Vitaly Chikunov <vt@altlinux.org> 0.17.0-alt1
+- Update to 0.17.0 (2024-03-16).
+
 * Mon Jun 05 2023 Vitaly Chikunov <vt@altlinux.org> 0.16.5-alt1
 - Update to 0.16.5 (2023-06-03).
 
