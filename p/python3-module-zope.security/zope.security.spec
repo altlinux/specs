@@ -6,8 +6,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.1
-Release: alt2
+Version: 6.2
+Release: alt1
 Summary: Zope Security Framework
 License: ZPL-2.1
 Group: Development/Python3
@@ -79,6 +79,9 @@ This package contains tests for Zope Security Framework.
 %python3_sitelibdir/%ns_name/%mod_name/__pycache__/testing.*
 
 %changelog
+* Fri Mar 15 2024 Stanislav Levin <slev@altlinux.org> 6.2-alt1
+- 6.1 -> 6.2.
+
 * Tue Aug 08 2023 Stanislav Levin <slev@altlinux.org> 6.1-alt2
 - Mapped PyPI name to distro's one.
 

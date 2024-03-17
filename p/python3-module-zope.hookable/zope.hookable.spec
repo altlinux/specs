@@ -6,18 +6,8 @@
 
 %def_with check
 
-%define descr \
-Support the efficient creation of hookable objects, which are callable \
-objects that are meant to be replaced by other callables, at least \
-optionally. \
-\
-The idea is you create a function that does some default thing and make \
-it hookable. Later, someone can modify what it does by calling its \
-sethook method and changing its implementation.  All users of the \
-function, including those that imported it, will see the change.
-
 Name: python3-module-%pypi_name
-Version: 5.4
+Version: 6.0
 Release: alt1
 Summary: Hookable object support
 License: ZPL-2.1
@@ -41,18 +31,13 @@ BuildRequires(pre): rpm-build-pyproject
 %endif
 
 %description
-%descr
+This package supports the efficient creation of "hookable" objects, which are
+callable objects that are meant to be optionally replaced.
 
-%package tests
-Summary: Tests for zope.hookable
-Group: Development/Python
-Requires: %name = %version-%release
-%py3_requires zope.testing
-
-%description tests
-%descr
-
-This package contains tests for zope.hookable.
+The idea is that you create a function that does some default thing and make it
+hookable. Later, someone can modify what it does by calling its sethook method
+and changing its implementation. All users of the function, including those that
+imported it, will see the change.
 
 %prep
 %setup
@@ -76,12 +61,12 @@ rm %buildroot%python3_sitelibdir/%ns_name/%mod_name/*.c
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 %python3_sitelibdir/%pypi_name-%version-py%_python3_version-nspkg.pth
-%exclude %python3_sitelibdir/*/*/tests
-
-%files tests
-%python3_sitelibdir/*/*/tests
+%exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Fri Mar 15 2024 Stanislav Levin <slev@altlinux.org> 6.0-alt1
+- 5.4 -> 6.0.
+
 * Thu Aug 03 2023 Stanislav Levin <slev@altlinux.org> 5.4-alt1
 - 5.0.1 -> 5.4.
 - Modernized packaging.

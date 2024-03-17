@@ -12,7 +12,7 @@ of the 'zope.i18n' package.
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.0.1
+Version: 6.1.0
 Release: alt1
 Summary: Message Identifiers for internationalization
 License: ZPL-2.1
@@ -77,6 +77,9 @@ This package contains tests for %pypi_name.
 %python3_sitelibdir/%ns_name/%mod_name/__pycache__/tests.*
 
 %changelog
+* Thu Mar 14 2024 Stanislav Levin <slev@altlinux.org> 6.1.0-alt1
+- 6.0.1 -> 6.1.0.
+
 * Fri Aug 04 2023 Stanislav Levin <slev@altlinux.org> 6.0.1-alt1
 - 5.0.1 -> 6.0.1.
 - Modernized packaging.

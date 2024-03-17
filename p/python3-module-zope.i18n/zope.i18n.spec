@@ -4,11 +4,11 @@
 %define ns_name zope
 %define mod_name i18n
 
-%def_without check
+%def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.0
-Release: alt2
+Version: 5.1
+Release: alt1
 Summary: Zope Internationalization Support
 License: ZPL-2.1
 Group: Development/Python3
@@ -27,6 +27,8 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 %pyproject_builddeps_metadata_extra test
+# zope.component.testing is subpackaged
+BuildRequires: python3-module-zope.component-tests
 %endif
 
 %description
@@ -36,17 +38,6 @@ localization.
 * Locale objects for all locales maintained by the ICU project.
 * Gettext-based message catalogs for message strings.
 * Locale discovery for Web-based requests.
-
-%package tests
-Summary: Tests for zope.i18n (Python 3)
-Group: Development/Python3
-Requires: %name = %EVR
-Requires: python3-module-zope.component-tests
-%py3_requires zope.publisher
-%py3_requires zope.testrunner
-
-%description tests
-This package contains tests for %pypi_name.
 
 %prep
 %setup
@@ -65,6 +56,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
+export zope_i18n_compile_mo_files=True
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
@@ -77,13 +69,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests
 %exclude %python3_sitelibdir/%ns_name/%mod_name/locales/tests
 
-%files tests
-%python3_sitelibdir/%ns_name/%mod_name/testing.*
-%python3_sitelibdir/%ns_name/%mod_name/*/testing.*
-%python3_sitelibdir/%ns_name/%mod_name/tests
-%python3_sitelibdir/%ns_name/%mod_name/locales/tests
-
 %changelog
+* Fri Mar 15 2024 Stanislav Levin <slev@altlinux.org> 5.1-alt1
+- 5.0 -> 5.1.
+
 * Tue Aug 08 2023 Stanislav Levin <slev@altlinux.org> 5.0-alt2
 - Mapped PyPI name to distro's one.
 - Modernized packaging.

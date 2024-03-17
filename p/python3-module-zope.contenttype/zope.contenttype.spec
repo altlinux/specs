@@ -1,48 +1,44 @@
 %define _unpackaged_files_terminate_build 1
 
 %define pypi_name zope.contenttype
+%define ns_name zope
+%define mod_name contenttype
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.0
-Release: alt2
+Version: 5.1
+Release: alt1
 
 Summary: Zope contenttype
 License: ZPL-2.1
 Group: Development/Python3
 Url: https://pypi.org/project/zope.contenttype/
 Vcs: https://github.com/zopefoundation/zope.contenttype.git
-
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+# setuptools(pkg_resources) is used by namespace root that is packaged
+# separately at python3-module-zope
+%add_pyproject_deps_runtime_filter setuptools
+Requires: python3-module-zope
+%pyproject_runtimedeps_metadata
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-zope.testrunner
+%pyproject_builddeps_metadata_extra test
 %endif
-
-%py3_requires zope
 
 %description
 A utility module for content-type handling.
 
-%package tests
-Summary: Tests for zope.contenttype
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-A utility module for content-type handling.
-
-This package contains tests for zope.contenttype.
-
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -61,16 +57,16 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/zope/contenttype/
+%dir %python3_sitelibdir/%ns_name/
+%python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%pypi_name-%version.dist-info/
-%exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/*/tests
-
-%files tests
-%python3_sitelibdir/*/*/tests
-
+%python3_sitelibdir/%pypi_name-%version-py%_python3_version-nspkg.pth
+%exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Fri Mar 15 2024 Stanislav Levin <slev@altlinux.org> 5.1-alt1
+- 5.0 -> 5.1.
+
 * Tue Aug 08 2023 Stanislav Levin <slev@altlinux.org> 5.0-alt2
 - Mapped PyPI name to distro's one.
 

@@ -3,10 +3,10 @@
 %define ns_name zope
 %define mod_name interface
 
-%def_without check
+%def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.0
+Version: 6.2
 Release: alt1
 
 Summary: Zope interfaces package
@@ -26,10 +26,8 @@ Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-zope.event
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-zope.testing
+%pyproject_builddeps_metadata_extra test
+BuildRequires: python3-module-zope.testrunner
 %endif
 
 %description
@@ -58,11 +56,12 @@ This package contains tests for %pypi_name.
 %pyproject_install
 
 %check
-export PIP_INDEX_URL=http://host.invalid./
-# copy necessary exec deps
-tox.py3 --sitepackages -e py%{python_version_nodots python3} --notest
-cp -f %_bindir/coverage3 .tox/py%{python_version_nodots python3}/bin/coverage
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
+# per .github/workflows/tests.yml
+# ``python -m unittest discover`` only works with editable
+# installs, so we have to duplicate some work and can't
+# install the built wheel. (zope.testrunner
+# works fine with non-editable installs.)
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.txt *.rst
@@ -78,6 +77,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v -- -v
 %python3_sitelibdir/%ns_name/%mod_name/common/tests/
 
 %changelog
+* Thu Mar 14 2024 Stanislav Levin <slev@altlinux.org> 6.2-alt1
+- 6.0 -> 6.2.
+
 * Fri Aug 04 2023 Stanislav Levin <slev@altlinux.org> 6.0-alt1
 - 5.4.0 -> 6.0.
 - Modernized packaging.

@@ -3,10 +3,10 @@
 %define ns_name zope
 %define mod_name proxy
 
-%def_without check
+%def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.0.0
+Version: 5.2
 Release: alt1
 Summary: Generic Transparent Proxies
 License: ZPL-2.1
@@ -35,19 +35,6 @@ around another object, intervening in the apparent behavior of the
 wrapped object only when necessary to apply the policy (e.g., access
 checking, location brokering, etc.) for which the proxy is responsible.
 
-%package tests
-Summary: Tests for Generic Transparent Proxies
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-Proxies are special objects which serve as mostly-transparent wrappers
-around another object, intervening in the apparent behavior of the
-wrapped object only when necessary to apply the policy (e.g., access
-checking, location brokering, etc.) for which the proxy is responsible.
-
-This package contains tests for Generic Transparent Proxies.
-
 %package devel
 Summary: Development files for %pypi_name
 Group: Development/Python3
@@ -69,20 +56,17 @@ This package contains development files for %pypi_name.
 %pyproject_install
 
 %check
-%pyproject_run -- zope.testrunner --test-path=src
+%pyproject_run -- zope-testrunner --test-path=src
 
 %files
 %doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/*/tests
+%exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 %exclude %_includedir/python3*/%pypi_name/
 %exclude %python3_sitelibdir/%ns_name/%mod_name/*.h
 %exclude %python3_sitelibdir/%ns_name/%mod_name/*.c
-
-%files tests
-%python3_sitelibdir/*/*/tests
 
 %files devel
 %_includedir/python3*/%pypi_name/
@@ -90,6 +74,9 @@ This package contains development files for %pypi_name.
 %python3_sitelibdir/%ns_name/%mod_name/*.c
 
 %changelog
+* Fri Mar 15 2024 Stanislav Levin <slev@altlinux.org> 5.2-alt1
+- 5.0.0 -> 5.2.
+
 * Fri Jul 28 2023 Stanislav Levin <slev@altlinux.org> 5.0.0-alt1
 - 4.3.5 -> 5.0.0.
 

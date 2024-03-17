@@ -1,10 +1,13 @@
-%define oname zope.configuration
+%define _unpackaged_files_terminate_build 1
+%define pypi_name zope.configuration
+%define ns_name zope
+%define mod_name configuration
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 5.0
-Release: alt1.1
+Name: python3-module-%pypi_name
+Version: 5.0.1
+Release: alt1
 
 Summary: Zope Configuration Markup Language (ZCML)
 License: ZPL-2.1
@@ -14,29 +17,19 @@ Url: https://pypi.org/project/zope.configuration
 Vcs: https://github.com/zopefoundation/zope.configuration.git
 
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+# setuptools(pkg_resources) is used by namespace root that is packaged
+# separately at python3-module-zope
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
-Provides: python3-module-%{pep503_name %oname} = %EVR
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-sphinx-devel
-BuildRequires: python3-module-repoze.sphinx.autointerface
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-zope.i18nmessageid
-BuildRequires: python3-module-zope.schema
-BuildRequires: python3-module-wheel
-
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-zope.testrunner
-BuildRequires: python3-module-zope.testing
-BuildRequires: python3-module-zope.schema
-BuildRequires: python3-module-manuel-tests
-BuildRequires: python3-module-manuel
+%pyproject_builddeps_metadata_extra test
 %endif
-
-%py3_requires zope.i18nmessageid
-%py3_requires zope.interface zope.schema
 
 %description
 The zope configuration system provides an extensible system for
@@ -47,46 +40,10 @@ configuration system provide configuration directives in some language
 that express configuration choices. The intent is that the language be
 pluggable. An XML language is provided by default.
 
-%package tests
-Summary: Tests for Zope Configuration Markup Language (ZCML)
-Group: Development/Python3
-Requires: %name = %EVR
-%py3_requires zope.testing
-%add_python3_req_skip bad_to_the_bone
-
-%description tests
-The zope configuration system provides an extensible system for
-supporting various kinds of configurations.
-
-It is based on the idea of configuration directives. Users of the
-configuration system provide configuration directives in some language
-that express configuration choices. The intent is that the language be
-pluggable. An XML language is provided by default.
-
-This package contains tests for Zope Configuration Markup Language
-(ZCML).
-
-%package pickles
-Summary: Pickles for Zope Configuration Markup Language (ZCML)
-Group: Development/Python
-
-%description pickles
-The zope configuration system provides an extensible system for
-supporting various kinds of configurations.
-
-It is based on the idea of configuration directives. Users of the
-configuration system provide configuration directives in some language
-that express configuration choices. The intent is that the language be
-pluggable. An XML language is provided by default.
-
-This package contains pickles for Zope Configuration Markup Language
-(ZCML).
-
 %prep
 %setup
-
-%prepare_sphinx3 .
-ln -s ../objects.inv3 docs/
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -100,32 +57,21 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
 
-export PYTHONPATH=$PWD/src
-sed -i "s|SPHINXBUILD   = sphinx-build|SPHINXBUILD   = py3_sphinx-build|" docs/Makefile
-%make -C docs pickle
-%make -C docs html
-install -d %buildroot%python3_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
-
 %check
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc *.txt *.rst docs/_build/html
-%python3_sitelibdir/zope/configuration/
-%python3_sitelibdir/%oname-%version.dist-info/
-%exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/pickle
-%exclude %python3_sitelibdir/*/*/tests
-
-%files pickles
-%dir %python3_sitelibdir/%oname
-%python3_sitelibdir/*/pickle
-
-%files tests
-%python3_sitelibdir/*/*/tests
+%doc *.txt *.rst
+%dir %python3_sitelibdir/%ns_name/
+%python3_sitelibdir/%ns_name/%mod_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%pypi_name-%version-py%_python3_version-nspkg.pth
+%exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Fri Mar 15 2024 Stanislav Levin <slev@altlinux.org> 5.0.1-alt1
+- 5.0 -> 5.0.1.
+
 * Fri Jul 28 2023 Stanislav Levin <slev@altlinux.org> 5.0-alt1.1
 - NMU: mapped PyPI name to distro's one.
 
