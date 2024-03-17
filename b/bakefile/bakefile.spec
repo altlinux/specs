@@ -1,6 +1,6 @@
 Name: bakefile
-Version: 0.2.12.1
-Release: alt2
+Version: 0.2.13
+Release: alt1
 
 Summary: Native makefiles generator
 
@@ -54,6 +54,9 @@ touch ChangeLog
 %_man1dir/bakefil*.1*
 
 %changelog
+* Sun Mar 17 2024 Vitaly Lipatov <lav@altlinux.ru> 0.2.13-alt1
+- new version 0.2.13 (with rpmrb script)
+
 * Thu Aug 05 2021 Grigory Ustinov <grenka@altlinux.org> 0.2.12.1-alt2
 - Fixed BuildRequires.
 
