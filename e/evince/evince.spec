@@ -2,7 +2,7 @@
 %define xdg_name org.gnome.Evince
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define api_ver_major 3
 %define api_ver %api_ver_major.0
@@ -25,7 +25,7 @@ Release: alt1%beta
 Summary: A document viewer
 Group: Office
 License: GPL-2.0-or-later
-Url: http://www.gnome.org/projects/evince/
+Url: https://apps.gnome.org/Evince
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -231,6 +231,9 @@ using Evince library.
 
 
 %changelog
+* Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Tue Sep 19 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 
