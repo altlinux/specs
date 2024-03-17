@@ -1,7 +1,7 @@
 %define _iconsscaldir  %_iconsdir/hicolor/scalable/apps
 
 Name: byobu
-Version: 5.133
+Version: 6.12
 Release: alt1
 
 Summary: Light-weight, configurable window manager built upon GNU screen
@@ -14,8 +14,7 @@ BuildArch: noarch
 
 Obsoletes: screen-profiles
 
-# source code git mirror: https://github.com/dustinkirkland/byobu
-# Source-url: https://launchpad.net/byobu/trunk/%version/+download/byobu_%version.orig.tar.gz
+# Source-url: https://github.com/dustinkirkland/byobu/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
 Patch1: byobu-python.patch
@@ -25,6 +24,11 @@ Patch1: byobu-python.patch
 %filter_from_requires /\/sbin\/iwconfig/d
 %filter_from_requires /\/bin\/tmux/d
 %filter_from_requires /\/bin\/screen/d
+%filter_from_requires /\/usr\/sbin\/ioreg/d
+%filter_from_requires /\/usr\/sbin\/sysctl/d
+
+%filter_from_requires /snapd/d
+%filter_from_requires /dpkg/d
 
 BuildRequires: rpm-build-python3
 BuildRequires: desktop-file-utils
@@ -45,6 +49,7 @@ and works on most Linux, BSD, and Mac distributions.
 rm -fv usr/bin/*.swp
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -88,6 +93,10 @@ cp -p usr/share/byobu/pixmaps/byobu.svg %buildroot%_iconsscaldir
 %_iconsscaldir/*.svg
 
 %changelog
+* Sun Mar 17 2024 Vitaly Lipatov <lav@altlinux.ru> 6.12-alt1
+- new version (6.12) with rpmgs script
+- change Source URL to github
+
 * Sat Aug 05 2023 Vitaly Lipatov <lav@altlinux.ru> 5.133-alt1
 - new version (5.133) with rpmgs script
 - switch to build from tarball, sync with Fedora
