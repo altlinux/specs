@@ -1,7 +1,7 @@
 %define rdn_name net.sourceforge.liferea
 
 Name: liferea
-Version: 1.15.5
+Version: 1.15.6
 Release: alt1
 
 Summary: A RSS News Reader for GNOME
@@ -65,9 +65,6 @@ Play music and videos directly from Liferea
 %setup
 %patch -p1
 
-# fix compatibility with libxml2-2.12.x
-sed -i '/^#include <libxml\/xmlmemory.h>/i #include <libxml/globals.h>' src/node_type.h
-
 %build
 %autoreconf
 %configure \
@@ -123,6 +120,9 @@ xvfb-run %make_build
 %_libdir/%name/plugins/__pycache__/media-player.*
 
 %changelog
+* Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 1.15.6-alt1
+- updated to v1.15.6-3-g9c2d2499f
+
 * Fri Jan 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1.15.5-alt1
 - 1.15.5
 
