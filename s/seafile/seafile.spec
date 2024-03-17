@@ -1,6 +1,6 @@
 Name: seafile
 Version: 9.0.5
-Release: alt1
+Release: alt2
 
 Summary: Full-fledged cloud storage platform
 
@@ -134,6 +134,9 @@ cp %SOURCE1 .
 %_pkgconfigdir/libseafile.pc
 
 %changelog
+* Thu Mar 07 2024 Michael Shigorin <mike@altlinux.org> 9.0.5-alt2
+- bump release following seafile-client to satisfy its dependency
+
 * Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 9.0.5-alt1
 - new version 9.0.5, cleanup spec
 - update BR, build with websocket support

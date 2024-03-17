@@ -1,32 +1,30 @@
 Name: seafile-client
 Version: 9.0.5
-Release: alt1
+Release: alt2
 
-Summary: Seafile gui client on QT bassed
-
-Group: Networking/File transfer
+Summary: Seafile client GUI (Qt-based)
 License: Apache License
-Url: https://github.com/haiwen/seafile-client
+Group: Networking/File transfer
 
+Url: https://github.com/haiwen/seafile-client
 Packager: Denis Baranov <baraka@altlinux.ru>
 
 # Source-url: https://github.com/haiwen/seafile-client/archive/v%version.tar.gz
-Source: %name-%version.tar
-
+Source0: %name-%version.tar
 Source1: seafile.desktop
 
-Patch: seafile-client-no-return-error.patch
-Patch2: 86ebea086c6b78738b3140c922c909331d2b9a94.patch
-
-ExclusiveArch: %qt6_qtwebengine_arches
+Patch0: seafile-client-no-return-error.patch
+Patch1: 86ebea086c6b78738b3140c922c909331d2b9a94.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires(pre): rpm-macros-qt6
-BuildRequires(pre): rpm-macros-qt6-webengine
-
 BuildRequires: cmake
 BuildRequires: doxygen graphviz
 
+BuildRequires(pre): rpm-macros-qt6-webengine
+
+# use qt6-webengine or qt5-webkit
+%ifarch %qt6_qtwebengine_arches
+BuildRequires: rpm-macros-qt6
 BuildRequires: pkgconfig(Qt6Core)
 BuildRequires: pkgconfig(Qt6Gui)
 BuildRequires: pkgconfig(Qt6Widgets)
@@ -35,8 +33,11 @@ BuildRequires: pkgconfig(Qt6Network)
 BuildRequires: pkgconfig(Qt6Core5Compat)
 BuildRequires: pkgconfig(Qt6WebEngineCore)
 BuildRequires: pkgconfig(Qt6WebEngineWidgets)
-
 BuildRequires: qt6-imageformats
+%else
+BuildRequires: qt5-imageformats qt5-tools-devel
+BuildRequires: qt5-base-devel
+%endif
 
 BuildRequires: libseafile-devel >= %version
 
@@ -49,24 +50,27 @@ BuildRequires: pkgconfig(openssl) >= 0.98
 BuildRequires: pkgconfig(libevent) >= 2.0
 BuildRequires: pkgconfig(zlib) >= 1.2.0
 
-
 Requires: seafile >= %EVR
-Conflicts: libseafile <= 2.0.4
 
 %description
-Seafile desktop gui client.
 Seafile is a full-fledged document collaboration platform.
+This package contains desktop GUI client.
 
 %prep
 %setup
-%patch -p2
-%patch2 -p1
+%patch0 -p2
+%patch1 -p1
 # https://github.com/haiwen/seafile-client/pull/1346
-subst '1iADD_DEFINITIONS(-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_26)' CMakeLists.txt
-cp %SOURCE1 data/
+subst -p '1iADD_DEFINITIONS(-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_26)' \
+	CMakeLists.txt
+cp -a %SOURCE1 data/
 
 %build
+%ifarch %qt6_qtwebengine_arches
 export PATH=%_qt6_bindir:$PATH
+%else
+export PATH=%_qt5_bindir:$PATH
+%endif
 %cmake
 %cmake_build
 
@@ -84,6 +88,10 @@ ln -s seafile-applet %buildroot%_bindir/%name
 %_pixmapsdir/*
 
 %changelog
+* Wed Mar 06 2024 Michael Shigorin <mike@altlinux.org> 9.0.5-alt2
+- switch back to qt5-webkit on arches lacking qt6-webengine
+- spec cleanup (see also ALT#46206)
+
 * Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 9.0.5-alt1
 - new version 9.0.5
 - switch to Qt6 build
