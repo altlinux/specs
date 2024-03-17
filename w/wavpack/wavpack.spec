@@ -1,5 +1,5 @@
 Name: wavpack
-Version: 5.6.0
+Version: 5.7.0
 Release: alt1
 
 Summary: Open audio compression codec
@@ -65,6 +65,9 @@ rm -rv %buildroot%_docdir/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Mar 17 2024 Vitaly Lipatov <lav@altlinux.ru> 5.7.0-alt1
+- new version 5.7.0 (with rpmrb script)
+
 * Sat Dec 31 2022 Vitaly Lipatov <lav@altlinux.ru> 5.6.0-alt1
 - new version 5.6.0 (with rpmrb script)
 
