@@ -18,7 +18,7 @@ Obsoletes: gambas3-%{*} < %EVR \
 %nil
 
 Name:    gambas
-Version: 3.19.0
+Version: 3.19.1
 Release: alt1
 
 Summary: IDE based on a basic interpreter with object extensions
@@ -1934,6 +1934,9 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %appdir/info/gb.highlight.list
 
 %changelog
+* Sun Mar 17 2024 Andrey Cherepanov <cas@altlinux.org> 3.19.1-alt1
+- New version.
+
 * Wed Feb 07 2024 Andrey Cherepanov <cas@altlinux.org> 3.19.0-alt1
 - New version.
 - New component: gb.highlight.
