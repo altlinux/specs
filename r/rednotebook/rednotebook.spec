@@ -1,6 +1,6 @@
 Name: rednotebook
-Version: 2.29.6
-Release: alt2
+Version: 2.32
+Release: alt1
 
 Summary: A desktop diary
 
@@ -52,6 +52,9 @@ and does so in style.
 %python3_sitelibdir/%{name}*.egg-info
 
 %changelog
+* Sun Mar 17 2024 Vitaly Lipatov <lav@altlinux.ru> 2.32-alt1
+- new version 2.32 (with rpmrb script)
+
 * Sun Jul 30 2023 Vitaly Lipatov <lav@altlinux.ru> 2.29.6-alt2
 - drop unused BR: python3-module-yieldfrom
 
