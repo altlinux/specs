@@ -1,5 +1,7 @@
 %define _groupname	mfs
 %define _username	mfs
+%define _groupname99	_nobody99
+%define _username99	_nobody99
 %define _localstatedir	/var/lib
 %define liz_datadir	%_localstatedir/mfs
 %define liz_confdir	%_sysconfdir/mfs
@@ -17,7 +19,7 @@
 Summary: LizardFS - distributed, fault tolerant file system
 Name: lizardfs
 Version: 3.13.0
-Release: alt0.rc4.1
+Release: alt0.rc4.1.1
 License: GPLv3
 Group: System/Servers
 Url: https://www.lizardfs.org/
@@ -253,6 +255,9 @@ for f in *.init ; do
 done
 popd
 
+sed -i 's/LZFS_USER=nobody/LZFS_USER=%_username99/' %buildroot%_initdir/lizardfs-cgiserv
+sed -i 's/User=nobody/User=99/' %buildroot%_unitdir/lizardfs-cgiserv.service
+sed -i 's/LIZARDFSCGISERV_USER=nobody/LIZARDFSCGISERV_USER=%_username99/' %buildroot%_sysconfdir/sysconfig/lizardfs-cgiserv
 rm -f %buildroot%_libdir/*.a
 
 %pre master
@@ -281,6 +286,9 @@ rm -f %buildroot%_libdir/*.a
 %preun chunkserver
 %preun_service %name-chunkserver
 
+%pre cgiserv
+%_sbindir/groupadd -r -f -g 99 %_groupname99 2>/dev/null ||:
+%_sbindir/useradd -u 99 -M -r -d /dev/null -s /bin/null -g %_groupname99 %_username99 2>/dev/null ||:
 %post cgiserv
 %post_service %name-cgiserv
 %preun cgiserv
@@ -439,6 +447,9 @@ rm -f %buildroot%_libdir/*.a
 %_unitdir/lizardfs-uraft.lizardfs-ha-master.service
 
 %changelog
+* Sun Mar 17 2024 Andrew A. Vasilyev <andy@altlinux.org> 3.13.0-alt0.rc4.1.1
+- rename nobody to _nobody99 to fit new crazy changes in verify-unit.brp
+
 * Fri Sep 08 2023 Andrew A. Vasilyev <andy@altlinux.org> 3.13.0-alt0.rc4.1
 - 3.13.0-RC4
 
