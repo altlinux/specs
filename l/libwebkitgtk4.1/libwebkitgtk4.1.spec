@@ -7,15 +7,15 @@
 %if_enabled soup2
 %define api_ver 4.0
 %def_disable webdriver
+%def_disable gtk4
 %else
 %define api_ver 4.1
 %def_disable webdriver
+%def_disable gtk4
 %endif
 
 %define pkglibexecdir %_libexecdir/webkit2gtk-%api_ver
-%define ver_major 2.42
-%define gtk_ver 3.0
-%define gst_ver 1.20
+%define ver_major 2.44
 
 %define oname webkit
 %define _name webkitgtk
@@ -45,7 +45,7 @@
 %def_enable bubblewrap_sandbox
 
 Name: libwebkitgtk%api_ver
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Web browser engine
@@ -62,19 +62,23 @@ Patch: webkitgtk-2.26.1-alt-bwrap_check.patch
 Patch1: webkitgtk-2.35.90-alt-python3.patch
 Patch2: webkitgtk-2.30.0-alt-arm64-return-type.patch
 Patch10: webkitgtk-2.33.90-alt-format.patch
-# https://github.com/WebKit/WebKit/commit/3d5373575695b293b8559155431d0079a6153aff
-Patch20: webkitgtk-2.42.5-up-3d5373575695b293b8559155431d0079a6153aff.patch
+# https://bugs.webkit.org/show_bug.cgi?id=271108
+Patch100: webkitgtk-2.44.0-up-ix86.patch
 Patch2000: webkitgtk-2.34.3-alt-e2k.patch
 
 %define bwrap_ver 0.3.1
 %define soup_ver 2.62
 %define soup_api_ver 3.0
 %define soup3_ver 2.99.9
+%define gtk_ver 3.24
+%define gst_ver 1.20
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-gir rpm-build-python3
 BuildRequires: /proc gcc-c++ cmake unifdef
 %{?_enable_ninja:BuildRequires: ninja-build}
-BuildRequires: ccache libicu-devel >= 5.6.1 bison perl-Switch perl-JSON-PP zlib-devel
+BuildRequires: ccache libicu-devel >= 5.6.1 bison
+BuildRequires: perl-Switch perl-JSON-PP perl-bignum
+BuildRequires: zlib-devel
 BuildRequires: flex >= 2.5.33
 BuildRequires: gperf libjpeg-devel libpng-devel libwebp-devel liblcms2-devel
 BuildRequires: libopenjpeg2.0-devel openjpeg-tools2.0
@@ -115,7 +119,7 @@ BuildRequires: libtasn1-devel libp11-kit-devel libgcrypt-devel
 # for battery status
 BuildRequires: libupower-devel
 # since 2.25.x
-BuildRequires: libwpe-devel libwpebackend-fdo-devel >= 1.8.0
+#BuildRequires: libwpe-devel libwpebackend-fdo-devel >= 1.8.0
 # since 2.31.x
 BuildRequires: libmanette-devel
 %{?_enable_bubblewrap_sandbox:BuildRequires: bubblewrap >= %bwrap_ver xdg-dbus-proxy libseccomp-devel}
@@ -126,6 +130,8 @@ BuildRequires: libmanette-devel
 %{?_enable_speech_synthesis:BuildRequires: flite-devel >= 2.2}
 # since 2.39.x
 %{?_enable_jpegxl:BuildRequires: libjxl-devel}
+# since 2.43.x
+BuildRequires: libbacktrace-devel
 
 %description
 WebKit is an open source web browser engine.
@@ -257,7 +263,7 @@ GObject introspection devel data for the JavaScriptCore library
 #%%patch2 -b .arm64
 %endif
 %patch10 -p1 -b .format
-%patch20 -p1
+%patch100 -p1
 %ifarch %e2k
 %patch2000 -p2 -b .e2k
 %endif
@@ -297,6 +303,7 @@ export PYTHON=%__python3
 %cmake \
 %{?_enable_ninja:-GNinja} \
 -DPORT=GTK \
+%{?_disable_gtk4:-DUSE_GTK4=OFF} \
 -DPYTHON_EXECUTABLE=%__python3 \
 -DCMAKE_BUILD_TYPE=Release \
 -DENABLE_MINIBROWSER=ON \
@@ -396,6 +403,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 2.44.0-alt1
+- 2.44.0
+
 * Tue Feb 06 2024 Yuri N. Sedunov <aris@altlinux.org> 2.42.5-alt1
 - 2.42.5
 
