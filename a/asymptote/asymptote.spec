@@ -1,11 +1,11 @@
 Name: asymptote
-Version: 2.70
-Release: alt1.1
+Version: 2.88
+Release: alt1
 
 Summary: Descriptive vector graphics language
 
 Group: Sciences/Other
-License: GPL
+License: GPLv2
 Url: http://asymptote.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -96,6 +96,9 @@ mv %buildroot%_man1dir/asy.1 %buildroot%_man1dir/asy-asymptote.1
 %_infodir/%name/*.info*
 
 %changelog
+* Sun Mar 17 2024 Vitaly Lipatov <lav@altlinux.ru> 2.88-alt1
+- new version 2.88 (with rpmrb script)
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 2.70-alt1.1
 - NMU:
     + used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
