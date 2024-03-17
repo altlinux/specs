@@ -2,7 +2,7 @@
 
 Name: barrier
 Version: 2.3.3
-Release: alt2.1
+Release: alt2.2
 
 Summary: Keyboard and mouse sharing solution
 License: GPLv2
@@ -13,6 +13,7 @@ URL: https://github.com/debauchee/barrier
 Source: %name-%version.tar
 
 Patch0: %name-%version-%release.patch
+Patch3500: 0001-ProtocolUtil-fixed-FTBFS-with-GCC-13.patch
 
 BuildRequires: libgtest-devel
 BuildRequires: libgmock-devel
@@ -33,6 +34,7 @@ BuildRequires: xvfb-run
 %prep
 %setup
 %patch0 -p1
+%patch3500 -p1
 
 %build
 %cmake
@@ -95,6 +97,9 @@ xvfb-run --server-args='-extension GLX -screen 0 1280x1024x24 -noreset' ./bin/in
 %_man1dir/barriers.1*
 
 %changelog
+* Sun Mar 17 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.3.3-alt2.2
+- NMU: fixed FTBFS with GCC 13 (on LoongArch and possibly riscv).
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 2.3.3-alt2.1
 - NMU: spec: adapted to new cmake macros.
 
