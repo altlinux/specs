@@ -1,7 +1,7 @@
 %def_disable bootstrap
 
 %define bname librsvg
-%define ver_major 2.57
+%define ver_major 2.58
 %define api_ver 2.0
 %define gtk_api_ver 2.0
 %define gtk3_api_ver 3.0
@@ -18,7 +18,7 @@
 %def_disable check
 
 Name: %bname
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -210,6 +210,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.58.0-alt1
+- 2.58.0
+
 * Sat Mar 09 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.57.2-alt1
 - 2.57.2
 
