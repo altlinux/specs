@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define api_ver 6
 %define service_ver 3
@@ -17,7 +17,7 @@
 %endif
 
 Name: sysprof
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Sysprof kernel based performance profiler for Linux
@@ -33,7 +33,7 @@ Source: %name-%version%beta.tar
 
 %define glib_ver 2.76
 %define gtk_ver 4.10
-%define dex_ver 0.4
+%define dex_ver 0.3
 %define panel_ver 1.4
 %define systemd_ver 222
 %define polkit_ver 0.105
@@ -111,6 +111,9 @@ developing applications that use GtkGHex library.
 %_pkgconfigdir/%name-capture-%capture_ver.pc
 
 %changelog
+* Sat Mar 16 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Wed Feb 07 2024 Yuri N. Sedunov <aris@altlinux.org> 45.2-alt1
 - 45.2
 

@@ -2,13 +2,13 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name vte
-%define ver_major 0.74
+%define ver_major 0.76
 %define api_ver 2.91
 # bindigs version for -gtk4 library
 %define bind_ver 3.91
 
 Name: %{_name}3
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 %def_disable static
@@ -26,7 +26,7 @@ License: LGPL-2.0
 Group: Terminals
 Url: http://www.gnome.org/
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
@@ -35,8 +35,8 @@ Source: %_name-%version.tar
 %endif
 
 %define gtk3_ver 3.24.0
-%define gtk4_ver 4.0.1
-%define glib_ver 2.52.0
+%define gtk4_ver 4.12
+%define glib_ver 2.72.0
 %define pango_ver 1.22
 %define gir_ver 0.10.2
 %define tls_ver 3.2.7
@@ -53,6 +53,7 @@ BuildRequires: libgnutls-devel >= %tls_ver
 BuildRequires: libfribidi-devel
 BuildRequires: libpcre2-devel >= %pcre_ver
 BuildRequires: vala-tools libvala-devel
+BuildRequires: pkgconfig(liblz4)
 BuildRequires: pkgconfig(systemd)
 %{?_enable_glade:BuildRequires: libgladeui2.0-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gir_ver %{?_enable_gtk3:libgtk+3-gir-devel}
@@ -65,7 +66,7 @@ VTE is a terminal emulator widget for use with GTK+
 %package utils
 Summary: VTE utilities and test programs
 Group: Terminals
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description utils
 Utilities, samples and test programs distributed with VTE, a terminal
@@ -82,7 +83,7 @@ This package contains the VTE shared libraries.
 %package -n lib%name-devel
 Summary: Development files for VTE
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 VTE is a terminal emulator widget for use with GTK+3. This package
@@ -102,7 +103,7 @@ VTE is a terminal emulator widget for use with GTK+3.
 %package -n lib%name-devel-static
 Summary: Static libraries for VTE
 Group: Development/C
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-devel-static
 VTE is a terminal emulator widget for use with GTK+3. This package
@@ -113,7 +114,7 @@ linked with VTE.
 %package -n lib%name-gir
 Summary: GObject introspection data for the %name library
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-gir
 GObject introspection data for the %name library
@@ -122,8 +123,8 @@ GObject introspection data for the %name library
 Summary: GObject introspection devel data for the %name
 Group: System/Libraries
 BuildArch: noarch
-Requires: lib%name-gir = %version-%release
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-gir = %EVR
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the %name library
@@ -213,6 +214,9 @@ install -p -m644 doc/*.txt %buildroot%pkgdocdir/
 %endif
 
 %changelog
+* Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 0.76.0-alt1
+- 0.76.0
+
 * Sat Dec 16 2023 Yuri N. Sedunov <aris@altlinux.org> 0.74.2-alt1
 - 0.74.2
 

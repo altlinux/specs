@@ -1,13 +1,12 @@
 %def_disable snapshot
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define xdg_name org.gnome.TextEditor
 
-%def_enable gtk_doc
-%def_disable check
+%def_enable check
 
 Name: gnome-text-editor
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A simple Text Editor for GNOME
@@ -22,19 +21,20 @@ Source: %name-%version.tar
 %endif
 
 %define glib_ver 2.73
-%define gtk_ver 4.7
-%define gtksource_ver 5.6.2
+%define gtk_ver 4.10
+%define gtksource_ver 5.10
 %define enchant_ver 2.2.0
-%define adwaita_ver 1.4
+%define adwaita_ver 1.5
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson /usr/bin/appstream-util desktop-file-utils yelp-tools
+BuildRequires: meson yelp-tools
 BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: libgtk4-devel >= %gtk_ver libpcre-devel
+BuildRequires: libgtk4-devel >= %gtk_ver
 BuildRequires: libgtksourceview5-devel >= %gtksource_ver
 BuildRequires: pkgconfig(enchant-2) >= %enchant_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: libeditorconfig-devel
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 Text Editor is a simple editor for GNOME focused on being a good
@@ -66,6 +66,9 @@ general purpose default editor.
 %doc README* NEWS
 
 %changelog
+* Sat Mar 16 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Mon Jan 22 2024 Yuri N. Sedunov <aris@altlinux.org> 45.3-alt1
 - 45.3
 

@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.4
+%define ver_major 1.6
 %define beta %nil
 %define api_ver 1
 %define xdg_name org.gnome.Panel%api_ver
@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: libpanel
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Library with GTK4 widgets for IDE-like applications
@@ -27,7 +27,7 @@ Vcs: https://gitlab.gnome.org/GNOME/libpanel.git
 Source: %name-%version.tar
 %endif
 
-%define meson_ver 0.60
+%define meson_ver 0.63
 %define glib_ver 2.74
 %define gtk_ver 4.8.0
 %define adwaita_ver 1.2
@@ -140,6 +140,9 @@ xvfb-run -s -noreset %__meson_test
 %endif
 
 %changelog
+* Sat Mar 16 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Wed Jan 10 2024 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
 - 1.4.1
 

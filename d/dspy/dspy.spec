@@ -1,4 +1,4 @@
-%define ver_major 1.8
+%define ver_major 1.10
 %define api_ver 1
 %define _name d-spy
 %define xdg_name org.gnome.dspy
@@ -90,6 +90,9 @@ This package provides development files for D-Spy library.
 %_pkgconfigdir/%name-%api_ver.pc
 
 %changelog
+* Sat Mar 16 2024 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - 1.8.0
 

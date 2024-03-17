@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 
 %define xdg_name org.gnome.Builder
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define api_ver %ver_major.0
@@ -42,7 +42,7 @@ Source1: %name-ru.po
 
 %define glib_ver 2.75.0
 %define gtk_ver 4.10
-%define adwaita_ver 1.4
+%define adwaita_ver 1.5
 %define panel_ver 1.4
 %define gtksourceview_api_ver 5
 %define gtksourceview_ver 5.8
@@ -50,7 +50,7 @@ Source1: %name-ru.po
 %define devhelp_ver 3.30.0
 %define xml_ver 2.9.0
 %define vala_ver 0.37
-%define sysprof_ver 3.34.0
+%define sysprof_ver 45
 %define vte_ver 0.70
 %define gtkmm_ver 3.20
 %define gspell_ver 1.8.0
@@ -202,6 +202,9 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %{?_with_help:%_datadir/doc/%name/}
 
 %changelog
+* Sat Mar 16 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 

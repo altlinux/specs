@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 0.4
+%define ver_major 0.6
 %define beta %nil
 %define api_ver 1
 
@@ -12,7 +12,7 @@
 %def_enable check
 
 Name: libdex
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Dex provides Future-based programming for GLib-based applications
@@ -37,7 +37,7 @@ BuildRequires: meson >= %meson_ver
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 %{?_enable_liburing:BuildRequires: liburing-devel >= %uring_ver}
 %{?_enable_introspection:BuildRequires(pre): rpm-build-gir
-BuildRequires: pkgconfig(gobject-introspection-1.0)}
+BuildRequires: pkgconfig(gobject-introspection-1.0) /usr/bin/g-ir-scanner}
 %{?_enable_vala:BuildRequires(pre): rpm-build-vala
 BuildRequires: vala-tools}
 %{?_enable_examples:BuildRequires: libsoup3.0-devel}
@@ -137,6 +137,9 @@ This package contains Dex example programs.
 %endif
 
 %changelog
+* Sat Mar 16 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Fri Jan 12 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt1
 - 0.4.3
 - temporarily disabled liburing support

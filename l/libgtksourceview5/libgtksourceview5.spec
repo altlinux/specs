@@ -1,10 +1,10 @@
 %def_disable snapshot
 %define _name gtksourceview
-%define ver_major 5.10
+%define ver_major 5.12
 %define api_ver 5
 
 %def_disable static
-%def_disable gtk_doc
+%def_disable doc
 %def_enable introspection
 %def_enable vala
 %def_enable installed_tests
@@ -40,7 +40,7 @@ Source: %_name-%version.tar
 %define fribidi_ver 0.19.7
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir rpm-macros-valgrind
-BuildRequires: meson gcc-c++ gtk-doc itstool
+BuildRequires: meson gcc-c++ itstool
 BuildRequires: libgtk4-devel >= %gtk_ver
 BuildRequires: libpcre2-devel >= %pcre2_ver
 BuildRequires: libxml2-devel >= %libxml2_ver
@@ -48,6 +48,7 @@ BuildRequires: libfribidi-devel >= %fribidi_ver
 BuildRequires: perl-XML-Parser zlib-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk4-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools libvala-devel}
+%{?_enable_doc:BuildRequires: gi-docgen}
 %{?_enable_check:BuildRequires: dbus xvfb-run %{?_enable_valgrind:valgrind}
 BuildRequires: fonts-ttf-roboto}
 
@@ -61,7 +62,7 @@ This package contains shared GtkSourceView library.
 %package devel
 Summary: Files to compile applications that use GtkSourceView
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains the files required to develop applications against
@@ -83,7 +84,7 @@ This package provides development documentation for %_name.
 %package gir
 Summary: GObject introspection data for the GtkSourceView library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the GtkSourceView library
@@ -92,8 +93,8 @@ GObject introspection data for the GtkSourceView library
 Summary: GObject introspection devel data for the GtkSourceView library
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the GtkSourceView library
@@ -101,7 +102,7 @@ GObject introspection devel data for the GtkSourceView library
 %package tests
 Summary: Tests for the GtkSourceView library
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 This package provides tests programs that can be used to verify
@@ -114,10 +115,10 @@ the functionality of the installed GtkSourceView library.
 
 %build
 %meson \
-    %{?_enable_gtk_doc:-Dgtk-doc=true} \
+    %{?_enable_doc:-Ddocumentation=true} \
     %{?_disable_introspection:-Dgir=false} \
     %{?_disable_vala:-Dvapi=false} \
-    %{?_enable_installed_tests:-Dinstall_tests=true}
+    %{?_enable_installed_tests:-Dinstall-tests=true}
 %nil
 %meson_build
 
@@ -146,9 +147,9 @@ dbus-run-session xvfb-run %__meson_test
 %endif
 %doc HACKING
 
-%if_enabled gtk_doc
+%if_enabled doc
 %files devel-doc
-%_gtk_docdir/*
+%_datadir/doc/%_name-%api_ver/
 %endif
 
 %if_enabled introspection
@@ -167,6 +168,9 @@ dbus-run-session xvfb-run %__meson_test
 
 
 %changelog
+* Sat Mar 16 2024 Yuri N. Sedunov <aris@altlinux.org> 5.12.0-alt1
+- 5.12.0
+
 * Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 5.10.0-alt1
 - 5.10.0
 
