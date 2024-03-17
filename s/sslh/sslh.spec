@@ -1,5 +1,5 @@
 Name: sslh
-Version: 2.0.1
+Version: 2.1.0
 Release: alt1
 
 Summary: A ssl/ssh multiplexer
@@ -8,8 +8,9 @@ License: GPLv2
 Group: System/Servers
 Url: http://www.rutschle.net/tech/sslh.shtml
 
-# Source-url: http://www.rutschle.net/tech/sslh/sslh-v%version.tar.gz
+# Source-url: https://github.com/yrutschle/sslh/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
+
 Source1: sslh.init
 Source2: sslh.config
 Source3: sslh.service
@@ -28,6 +29,7 @@ still serving HTTPS on that port.
 %setup
 
 %build
+%configure
 %make_build USELIBCONFIG=1 USESYSTEMD=1 USELIBCAP=1 CFLAGS="%optflags -I%_includedir/pcre"
 
 %install
@@ -55,6 +57,10 @@ install -m 644 %SOURCE4 %buildroot%_sysconfdir/%name/sslh.cfg
 %config(noreplace) %_sysconfdir/%name/sslh.cfg
 
 %changelog
+* Sun Mar 17 2024 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
+- new version
+- change Source URL to github
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt1
 - new version 2.0.1 (with rpmrb script)
 
