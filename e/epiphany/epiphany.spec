@@ -3,12 +3,12 @@
 
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define xdg_name org.gnome.Epiphany
 
 Name: epiphany
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Epiphany is a GNOME web browser.
@@ -120,6 +120,9 @@ _EOF_
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Fri Mar 15 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Fri Mar 01 2024 Yuri N. Sedunov <aris@altlinux.org> 45.3-alt1
 - 45.3
 
