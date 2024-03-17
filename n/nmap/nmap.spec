@@ -1,10 +1,10 @@
 Name: nmap
 Version: 7.94
-Release: alt2
+Release: alt3
 Epoch: 20020501
 
 Summary: Network exploration tool and security scanner
-License: NPSL-0.95
+License: ALT-NPSL-0.95
 Group: Monitoring
 Url: http://nmap.org/
 
@@ -46,6 +46,7 @@ Summary: The GTK+ frontend for Nmap
 Group: Monitoring
 BuildArch: noarch
 %_python3_set_noarch
+%add_python3_req_skip gobject
 Requires: %name = %EVR
 
 %description -n zenmap
@@ -145,6 +146,11 @@ rm %buildroot%_datadir/zenmap/su-to-zenmap.sh
 %endif
 
 %changelog
+* Fri Mar 15 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 20020501:7.94-alt3
+- Updated package License: tag (NPSL-0.95 -> ALT-NPSL-0.95) to match
+  common-licenses >= 3.21-alt2.
+- Filtered out python gobject requirement (thx lav@) (ALT#49592).
+
 * Fri Feb 09 2024 Anton Zhukharev <ancieg@altlinux.org> 20020501:7.94-alt2
 - Fixed FTBFS (python 3.12).
 
