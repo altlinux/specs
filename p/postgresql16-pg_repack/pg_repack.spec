@@ -1,9 +1,15 @@
 %define pg_ver 16
+%ifarch loongarch64
+# XXX: psql jit uses LLVM, versions <= 15.
+# These versions do not support LoongArch targets.
+%def_without jit
+%else
 %def_with jit
+%endif
 
 Name: postgresql%pg_ver-pg_repack
 Version: 1.5.0
-Release: alt1
+Release: alt1.1
 
 Summary: pg_repack is a PostgreSQL extension which lets you remove bloat from tables and indexes
 License: BSD
@@ -48,5 +54,8 @@ CLUSTER directly.
 %_datadir/pgsql/extension/*
 
 %changelog
+* Sun Mar 17 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.5.0-alt1.1
+- NMU: fixed FTBFS on LoongArch
+
 * Fri Mar 15 2024 Alexei Takaseev <taf@altlinux.org> 1.5.0-alt1
 - Initial build for ALT Linux
