@@ -29,10 +29,14 @@
 %define lsb_arch ppc64
 %define lib_suffix ()(64bit)
 %endif
+%ifarch loongarch64
+%define lsb_arch loongarch64
+%define lib_suffix ()(64bit)
+%endif
 
 Name: lsb
 Version: 5.0
-Release: alt3
+Release: alt4
 
 Summary: The skeleton package defining packages needed for LSB compliance
 
@@ -50,7 +54,7 @@ Source12: remove_initd
 # lsbinstall -- installation tool for various types of data
 Source21: lsbinstall
 
-ExclusiveArch: %ix86 x86_64 %e2k aarch64 armh mipsel ppc64le
+ExclusiveArch: %ix86 x86_64 %e2k aarch64 armh loongarch64 mipsel ppc64le
 
 Requires: lsb-core = %version
 Requires: lsb-desktop = %version
@@ -267,7 +271,9 @@ Requires: libpthread.so.0%lib_suffix
 Requires: librt.so.1%lib_suffix
 Requires: libssl3.so%lib_suffix
 Requires: libstdc++.so.6%lib_suffix
+%ifnarch loongarch64
 Requires: libutil.so.1%lib_suffix
+%endif
 Requires: libz.so.1%lib_suffix
 # Table 3-2. Standard Library Names defined in the Architecture Specific Parts of the LSB Core Specification
 Requires: libc.so.6%lib_suffix
@@ -284,6 +290,9 @@ Requires: ld-linux-x86-64.so.2%lib_suffix
 %ifarch %e2k
 # see %install section Requires: /lib64/ld-lsb.so.3
 Requires: ld-linux.so.2%lib_suffix
+%endif
+%ifarch loongarch64
+Requires: ld-linux-loongarch-lp64d.so.1%lib_suffix
 %endif
 %ifarch mipsel
 Requires: ld.so.1%lib_suffix
@@ -581,6 +590,9 @@ ln -sf "/lib64/ld-linux-x86-64.so.2" "%buildroot/lib64/ld-lsb-x86-64.so.3"
 %ifarch %e2k
 ln -sf "/lib64/ld-linux.so.2" "%buildroot/lib64/ld-lsb.so.3"
 %endif
+%ifarch loongarch64
+ln -sf "/lib64/ld-linux-loongarch-lp64d.so.1" "%buildroot/lib64/ld-lsb-loongarch64.so.%compat_version"
+%endif
 %ifarch mipsel
 ln -sf "/lib/ld.so.1" "%buildroot/lib/ld-lsb-mipsel.so.3"
 %endif
@@ -629,6 +641,9 @@ touch %buildroot%_sysconfdir/lsb-release.d/trialuse-%version-noarch
 %ifarch %e2k
 /lib64/ld-lsb.so.3
 %endif
+%ifarch loongarch64
+/lib64/ld-lsb-loongarch64.so.%compat_version
+%endif
 %ifarch mipsel
 /lib/ld-lsb-mipsel.so.3
 %endif
@@ -666,6 +681,9 @@ touch %buildroot%_sysconfdir/lsb-release.d/trialuse-%version-noarch
 %_sysconfdir/lsb-release.d/trialuse-%version-noarch
 
 %changelog
+* Mon Mar 18 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 5.0-alt4
+- Support LoongArch architecture (lp64d ABI).
+
 * Mon May 30 2022 Andrey Cherepanov <cas@altlinux.org> 5.0-alt3
 - Removed requirement of /sbin/shutdown because it provided both sysvinit and systemd.
 
