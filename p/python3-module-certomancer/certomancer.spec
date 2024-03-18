@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 
 Summary: PKI testing tool
@@ -71,6 +71,9 @@ service provisioning.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Mar 18 2024 Grigory Ustinov <grenka@altlinux.org> 0.12.0-alt1
+- Automatically updated to 0.12.0.
+
 * Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 0.11.0-alt1
 - Automatically updated to 0.11.0.
 
