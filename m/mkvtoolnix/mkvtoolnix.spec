@@ -16,7 +16,7 @@
 
 Name: mkvtoolnix
 Version: 83.0
-Release: alt1
+Release: alt1.1
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
 Group: Video
@@ -60,6 +60,9 @@ Provides: mkvmerge-gui = %EVR
 Obsoletes: mkvmerge-gui < %EVR
 Requires: %name = %EVR
 Requires: mkvinfo = %EVR
+# without this package it throws
+# Failed to initialize QMediaPlayer "Not available"
+Requires: qt6-multimedia
 
 %description gui
 Matroska is a new multimedia file format aiming to become the new
@@ -160,6 +163,9 @@ cat mkvextract.lang mkvmerge.lang mkvpropedit.lang >> %name.lang
 %endif
 
 %changelog
+* Mon Mar 18 2024 L.A. Kostis <lakostis@altlinux.ru> 83.0-alt1.1
+- gui: add missing qt6-multimedia dependency (closes #49692).
+
 * Tue Mar 12 2024 L.A. Kostis <lakostis@altlinux.ru> 83.0-alt1
 - 83.0.
 
