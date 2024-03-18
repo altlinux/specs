@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -17,6 +17,7 @@ Provides: kde4base-kdialog = %version-%release
 Obsoletes: kde4base-kdialog < %version-%release
 
 Source: %rname-%version.tar
+Patch: alt-getexistingdirectory.patch
 
 # Automatically added by buildreq on Wed Mar 29 2017 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel libdbusmenu-qt52 libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -35,6 +36,7 @@ The syntax is very much inspired from the "dialog" command
 
 %prep
 %setup -n %rname-%version
+%patch -p1
 
 %build
 %K5build
@@ -51,6 +53,9 @@ The syntax is very much inspired from the "dialog" command
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Mar 18 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt2
+- fix select directory with --getexistingdirectory option (closes: 49723) (thanks krf10@alt)
+
 * Fri Feb 16 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
