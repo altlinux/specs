@@ -3,49 +3,53 @@
 %define optflags_lto %nil
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define xdg_name org.gnome.Loupe
 
+%def_enable disable_glycin_sandbox
+%def_enable check
 %def_disable bootstrap
 
 Name: loupe
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Image Viewer
 License: GPL-3.0
 Group: Graphics
-Url: https://gitlab.gnome.org/Incubator/loupe
+Url: https://apps.gnome.org/Loupe
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Vcs: https://gitlab.gnome.org/Incubator/loupe.git
+Vcs: https://gitlab.gnome.org/GNOME/loupe.git
 Source: %name-%version%beta.tar
 %endif
 %{?_enable_snapshot:Source1: %name-%version-cargo.tar}
 
 %define glib_ver 2.76
-%define gtk_ver 4.11.3
+%define gtk_ver 4.13.6
 %define adwaita_ver 1.4
 %define gweather_ver 4.0.0
-%define heif_ver 1.14.2
 %define lcms2_ver 2.12.0
+%define seccomp_ver 2.5.0
 
 Provides: gnome-image-viewer = %EVR
-Requires: glycin-loaders
+Requires: glycin-loaders >= 1.0
+Requires: dconf
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo
-BuildRequires: yelp-tools /usr/bin/appstream-util desktop-file-utils
+BuildRequires: yelp-tools
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(gweather4) >= %gweather_ver
-BuildRequires: pkgconfig(libheif) >= %heif_ver
 BuildRequires: pkgconfig(lcms2) >= %lcms2_ver
 BuildRequires: librsvg-devel libxml2-devel
+BuildRequires: pkgconfig(libseccomp) >= %seccomp_ver
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 %summary
@@ -58,23 +62,32 @@ cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
-%meson
+%meson \
+%{subst_enable_meson_bool disable_glycin_sandbox disable-glycin-sandbox}
+%nil
 %meson_build
 
 %install
 %meson_install
 %find_lang --with-gnome %name
 
+%check
+%__meson_test
+
 %files -f %name.lang
 %_bindir/%name
 %_desktopdir/%xdg_name.desktop
 %_datadir/dbus-1/services/%xdg_name.service
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %_datadir/metainfo/%xdg_name.metainfo.xml
 %doc README*
 
 
 %changelog
+* Fri Mar 15 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Sat Dec 16 2023 Yuri N. Sedunov <aris@altlinux.org> 45.3-alt1
 - 45.3
 
