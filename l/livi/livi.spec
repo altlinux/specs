@@ -1,12 +1,12 @@
 %def_enable snapshot
 
-%define ver_major 0.0
+%define ver_major 0.1
 %define rdn_name org.sigxcpu.Livi
 
 %def_enable check
 
 Name: livi
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: Livi is a Light Video player
@@ -22,7 +22,7 @@ Source: %name-%version.tar
 %endif
 
 %define glib_ver 2.76
-%define gst_ver 1.20
+%define gst_ver 1.22
 %define adw_ver 1.4
 
 Requires: gst-plugins-base1.0 >= %gst_ver
@@ -64,6 +64,9 @@ to make playing hw accelerated videos with hantro and OpenGL simple.
 %doc README* NEWS
 
 %changelog
+* Mon Mar 18 2024 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt1
+- updated to v0.1.0-2-g7c00761
+
 * Sat Jan 20 2024 Yuri N. Sedunov <aris@altlinux.org> 0.0.6-alt1
 - updated to v0.0.6-10-gd2ec9b2
 
