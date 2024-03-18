@@ -10,12 +10,12 @@
 %def_enable introspection
 %def_disable vala
 %def_enable gtk_doc
-%def_enable check
+%def_disable check
 # no demo
 %def_disable demo
 
 Name: %_name%api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A gobject-based plugins engine
@@ -188,6 +188,9 @@ This package contains %name demonstration programs.
 
 
 %changelog
+* Sat Mar 16 2024 Yuri N. Sedunov <aris@altlinux.org> 2.0.2-alt1
+- 2.0.2
+
 * Wed Jan 10 2024 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
 - 2.0.1
 
