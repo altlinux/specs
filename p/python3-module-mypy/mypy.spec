@@ -12,7 +12,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.9.0
-Release: alt1
+Release: alt2
 Summary: Optional static typing for Python 3 and 2 (PEP 484)
 License: MIT
 Group: Development/Python3
@@ -33,6 +33,7 @@ BuildRequires: gcc-c++
 %pyproject_builddeps_check
 # required for mypy/test/testpep561.py
 BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-editables
 %endif
 # Needed to generate the man pages
 BuildRequires: help2man
@@ -133,6 +134,9 @@ rm -r %buildroot%python3_sitelibdir/mypyc/
 %endif
 
 %changelog
+* Mon Mar 18 2024 Stanislav Levin <slev@altlinux.org> 1.9.0-alt2
+- Fixed FTBFS (hatchling 1.22.0).
+
 * Mon Mar 11 2024 Stanislav Levin <slev@altlinux.org> 1.9.0-alt1
 - 1.8.0 -> 1.9.0.
 
