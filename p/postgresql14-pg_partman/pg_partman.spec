@@ -1,9 +1,15 @@
 %define pg_ver 14
+%ifarch loongarch64
+# XXX: PostgreSQL jit relies on LLVM versions <= 15 (due to typed pointers).
+# LoongArch targets are supported by LLVM versions >= 16.
+%def_without jit
+%else
 %def_with jit
+%endif
 
 Name: postgresql%pg_ver-pg_partman
 Version: 5.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: pg_partman is an extension to create and manage both time-based and serial-based table partition sets.
 License: PostgreSQL
@@ -63,6 +69,9 @@ sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
 %doc %_datadir/doc/postgresql/extension/*
 
 %changelog
+* Mon Mar 18 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 5.0.1-alt1.1
+- NMU: fixed FTBFS on LoongArch (disabled jit, no LLVM 15 here).
+
 * Tue Jan 09 2024 Alexei Takaseev <taf@altlinux.org> 5.0.1-alt1
 - 5.0.1
 
