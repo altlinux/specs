@@ -21,7 +21,7 @@
 
 Name: dogtag-pki
 Version: 11.4.3
-Release: alt3
+Release: alt4
 
 Summary: Dogtag PKI Certificate System
 License: %gpl2only
@@ -53,7 +53,6 @@ BuildRequires: libapr1-devel
 
 BuildRequires: libnss-devel
 BuildRequires: zlib-devel
-BuildRequires: selinux-policy-alt
 
 BuildRequires: dogtag-ldapjdk >= %ldapjdk_version
 BuildRequires: pki-resteasy
@@ -755,6 +754,9 @@ fi
 %_datadir/pki/server/webapps/pki/WEB-INF/
 
 %changelog
+* Mon Mar 18 2024 Stanislav Levin <slev@altlinux.org> 11.4.3-alt4
+- Fixed FTBFS (removed obsolete selinux-policy-alt).
+
 * Thu Feb 08 2024 Stanislav Levin <slev@altlinux.org> 11.4.3-alt3
 - Fixed FTBFS (missing tests dependencies).
 
