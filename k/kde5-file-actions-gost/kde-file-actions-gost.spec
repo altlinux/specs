@@ -1,7 +1,7 @@
 %define rname kde-file-actions-gost
 
 Name: kde5-file-actions-gost
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 %K5init
 
@@ -51,6 +51,9 @@ sed -i "s|@LOCALEDATADIR@|%_K5i18n|"  %buildroot/%_K5bin/kde-*crypt-*-gost
 %_K5srv/*crypt-*-gost.desktop
 
 %changelog
+* Mon Mar 18 2024 Sergey V Turchin <zerg at altlinux dot org> 0.8.2-alt1
+- fix detect openssl
+
 * Mon Mar 18 2024 Sergey V Turchin <zerg at altlinux dot org> 0.8.1-alt1
 - fix translations placement
 
