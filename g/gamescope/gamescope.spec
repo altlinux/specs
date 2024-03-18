@@ -4,7 +4,7 @@
 
 Name: gamescope
 Version: 3.14.2
-Release: alt1
+Release: alt2
 
 Summary: SteamOS session compositing window manager
 
@@ -50,6 +50,8 @@ BuildRequires: libXmu-devel
 BuildRequires: libdisplay-info-devel
 BuildRequires: libXcursor-devel
 BuildRequires: libavif-devel
+BuildRequires: spirv-headers
+BuildRequires: libopenvr-devel
 
 ExclusiveArch: x86_64
 
@@ -90,10 +92,13 @@ or corruption will be observed until the stack picks up DRM modifiers support.
 # use system stb
 sed -i "s|dependency('stb')|declare_dependency(include_directories: include_directories('/usr/include/stb'))|g" src/meson.build
 
+# use system spirv headers
+sed -i 's^../thirdparty/SPIRV-Headers/include/spirv/^/usr/include/spirv/^' src/meson.build
+
 %build
 %meson \
 	-Dpipewire=enabled \
-	-Denable_openvr_support=false \
+	-Denable_openvr_support=true \
 	-Dforce_fallback_for=[] \
 	%nil
 
@@ -113,6 +118,10 @@ rm -vr %buildroot/%_pkgconfigdir/vkroots.pc
 %_datadir/vulkan/implicit_layer.d/VkLayer_FROG_gamescope_wsi.*.json
 
 %changelog
+* Mon Mar 18 2024 Mikhail Tergoev <fidel@altlinux.org> 3.14.2-alt2
+- Added support OpenVR.
+- Used system spirv headers.
+
 * Mon Mar 11 2024 Mikhail Tergoev <fidel@altlinux.org> 3.14.2-alt1
 - 3.14.2
 
