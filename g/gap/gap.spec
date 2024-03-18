@@ -1,12 +1,12 @@
 Name: gap
-Version: 4.12.2
+Version: 4.13.0
 Release: alt1
 Summary: System for Computational Discrete Algebra
 License: Zlib and LGPL-3.0+ and GPL-2.0+ and GPL-3.0+
 Group: Sciences/Mathematics
 Url: https://gap-system.org/
 
-Source: https://www.gap-system.org/pub/gap/gap4core/gap-%version-core.zip
+Source: https://github.com/gap-system/gap/releases/download/v%version/gap-%version.tar.gz
 Source2: macros.gap
 Source3: %name-rpmlintrc
 
@@ -41,7 +41,7 @@ Obsoletes: gap-data < %version
 Provides: gap-data = %version
 #Requires: gap-gapdoc >= 1.5.1
 
-%define soname 8
+%define soname 9
 %global gap_sitearch %_libdir/gap/pkg
 %global gap_sitelib  %_datadir/gap/pkg
 
@@ -136,18 +136,6 @@ This subpackage will pull in all optional packages of the GAP distribution.
 #%%patch2 -p0
 #%%patch3 -p0
 %patch4 -p0
-sed -i 's|2.4.6|%{get_version libtool_2.4}|' \
-  cnf/ltmain.sh \
-  cnf/m4/ltversion.m4 \
-  extern/gmp/aclocal.m4 \
-  extern/gmp/configure \
-  extern/gmp/ltmain.sh \
-  hpcgap/extern/gc/configure \
-  hpcgap/extern/gc/ltmain.sh \
-  hpcgap/extern/gc/m4/ltversion.m4 \
-  hpcgap/extern/libatomic_ops/configure \
-  hpcgap/extern/libatomic_ops/ltmain.sh \
-  hpcgap/extern/libatomic_ops/m4/ltversion.m4
 # Don't exist in doc/.
 sed -i 's|ext in css html js txt pdf six lab|xml|' \
   Makefile.rules
@@ -155,20 +143,10 @@ sed -i 's|ext in css html js txt pdf six lab|xml|' \
 %build
 %autoreconf
 %configure
-
-# Get rid of undesirable hardcoded rpaths.
-sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
-    -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
-    -i libtool
-
 %make_build V=1
 
 %install
 %makeinstall_std
-
-# Fixup incomplete installation
-sed -i 's|GAP_LIBS=""|GAP_LIBS="-lgap"|' \
-  %buildroot%_libdir/gap/sysinfo.gap
 
 # ALT-specific extras for RPMs
 mkdir -p "%buildroot%_libexecdir/rpm/macros.d"
@@ -206,6 +184,7 @@ rm -rf %buildroot%_datadir/gap/{CITATION,CONTRIBUTING.md,COPYRIGHT,INSTALL.md,LI
 %_libdir/libgap.so
 %dir %_libdir/gap/
 %_libdir/gap/sysinfo.gap
+%_pkgconfigdir/libgap.pc
 
 %files -n rpm-macros-%name
 %_libexecdir/rpm/macros.d/gap
@@ -213,6 +192,9 @@ rm -rf %buildroot%_datadir/gap/{CITATION,CONTRIBUTING.md,COPYRIGHT,INSTALL.md,LI
 %files full
 
 %changelog
+* Mon Mar 18 2024 Leontiy Volodin <lvol@altlinux.org> 4.13.0-alt1
+- New version 4.13.0.
+
 * Mon Dec 19 2022 Leontiy Volodin <lvol@altlinux.org> 4.12.2-alt1
 - New version (4.12.2).
 
