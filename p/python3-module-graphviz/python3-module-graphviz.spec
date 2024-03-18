@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.20.1
-Release: alt4
+Version: 0.20.2
+Release: alt1
 Summary: Simple Python interface for Graphviz
 License: MIT
 Group: Development/Python3
@@ -52,6 +52,9 @@ BuildRequires: fontconfig
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Mar 18 2024 Stanislav Levin <slev@altlinux.org> 0.20.2-alt1
+- 0.20.1 -> 0.20.2.
+
 * Wed Feb 28 2024 Stanislav Levin <slev@altlinux.org> 0.20.1-alt4
 - Fixed FTBFS.
 
