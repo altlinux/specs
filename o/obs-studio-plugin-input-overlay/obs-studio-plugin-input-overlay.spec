@@ -3,7 +3,7 @@
 
 Name: obs-studio-plugin-input-overlay
 Summary: Show keyboard, gamepad and mouse input on stream (plugin for OBS studio)
-Version: 5.0.4
+Version: 5.0.5
 Release: alt1
 License: GPL-2.0
 Group: Video
@@ -53,5 +53,8 @@ mv %buildroot/usr/obs-plugins/*/input-overlay.so %buildroot%_libdir/obs-plugins
 %_libdir/obs-plugins/input-overlay.so
 
 %changelog
+* Mon Mar 18 2024 Anton Midyukov <antohami@altlinux.org> 5.0.5-alt1
+- new version 5.0.5
+
 * Mon Aug 21 2023 Anton Midyukov <antohami@altlinux.org> 5.0.4-alt1
 - initial build (Closes: 47310)
