@@ -60,7 +60,7 @@
 
 Name: NetworkManager
 Version: 1.46.0
-Release: alt1%git_hash
+Release: alt2%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -689,6 +689,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Mar 18 2024 Mikhail Efremov <sem@altlinux.org> 1.46.0-alt2
+- settings: Use connection.read-only again (closes: #49715).
+
 * Thu Feb 22 2024 Mikhail Efremov <sem@altlinux.org> 1.46.0-alt1
 - Updated to 1.46.0.
 
