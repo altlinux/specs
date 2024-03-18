@@ -1,7 +1,7 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name gnome-bluetooth
-%define ver_major 42
+%define ver_major 46
 %define beta %nil
 %define api_ver 3.0
 %define sover 13
@@ -13,7 +13,7 @@
 %def_enable check
 
 Name: %_name%api_ver
-Version: %ver_major.8
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: The GNOME Bluetooth Subsystem
@@ -178,6 +178,9 @@ dbus-run-session %__meson_test
 %endif
 
 %changelog
+* Mon Mar 18 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- updated to 46.0-2-gba8bd8bd
+
 * Mon Feb 05 2024 Yuri N. Sedunov <aris@altlinux.org> 42.8-alt1
 - 42.8
 
