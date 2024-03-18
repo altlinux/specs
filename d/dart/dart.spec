@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    dart
-Version: 6.13.1
+Version: 6.13.2
 Release: alt1
 
 Summary: DART: Dynamic Animation and Robotics Toolkit
@@ -13,6 +13,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Patch0: dart-alt-cmake-dir.patch
+Patch1: dart-alt-python3.12.patch
 
 ExcludeArch: %ix86 armh
 
@@ -68,7 +69,7 @@ Group: Documentation
 
 %prep
 %setup
-%patch0 -p1
+%autopatch -p1
 
 %build
 %add_optflags -Wno-error=overloaded-virtual=
@@ -97,6 +98,9 @@ subst 's/eigen/eigen3/' %buildroot%_libdir/pkgconfig/%name.pc
 %_defaultdocdir/%name
 
 %changelog
+* Mon Mar 18 2024 Andrey Cherepanov <cas@altlinux.org> 6.13.2-alt1
+- New version.
+
 * Fri Jan 05 2024 Andrey Cherepanov <cas@altlinux.org> 6.13.1-alt1
 - New version.
 
