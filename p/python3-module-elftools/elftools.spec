@@ -1,5 +1,5 @@
 Name: python3-module-elftools
-Version: 0.30
+Version: 0.31
 Release: alt1
 
 Summary: Pure-Python library for parsing and analyzing ELF files
@@ -32,6 +32,9 @@ and DWARF debugging information.
 %python3_sitelibdir/pyelftools-%version-*-info
 
 %changelog
+* Mon Mar 18 2024 Grigory Ustinov <grenka@altlinux.org> 0.31-alt1
+- Automatically updated to 0.31.
+
 * Thu Sep 07 2023 Grigory Ustinov <grenka@altlinux.org> 0.30-alt1
 - Automatically updated to 0.30.
 
