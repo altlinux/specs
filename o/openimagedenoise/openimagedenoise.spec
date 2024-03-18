@@ -3,30 +3,36 @@
 %define build_type RelWithDebInfo
 %set_verify_elf_method strict
 
+%ifarch x86_64
 %def_with hip
 %def_with cuda
+%filter_from_requires /libcudart\.so\.12/d
+%else
+%def_without hip
+%def_without cuda
+%endif
 
 %define oname oidn
 %define soname 2
 
 Name: openimagedenoise
-Version: 2.1.0
-Release: alt2
+Version: 2.2.2
+Release: alt1
 Summary: Intel Open Image Denoise library
 Group: Development/Other
 License: Apache-2.0
 URL: https://www.openimagedenoise.org/
 
-# Library only available on x86_64
-# See https://github.com/OpenImageDenoise/oidn/issues/143
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 aarch64
 
 # https://github.com/OpenImageDenoise/oidn/releases/download/v%version/oidn-%version.src.tar.gz
 Source: %oname-%version.tar
 
 Source2: %name.watch
 
-BuildRequires: cmake gcc-c++
+Patch: oidn-rocm-6.0.0.patch
+
+BuildRequires: cmake
 BuildRequires: python3
 BuildRequires: tbb-devel
 BuildRequires: ispc
@@ -36,6 +42,8 @@ BuildRequires: hip-devel hip-runtime-amd rocm-comgr-devel rocm-device-libs hsa-r
 %endif
 %if_with cuda
 BuildRequires: nvidia-cuda-devel nvidia-cuda-devel-static gcc12-c++
+%else
+BuildRequires: gcc-c++
 %endif
 
 %description
@@ -79,13 +87,14 @@ Intel Open Image Denoise library with HIP support
 %package cuda
 Summary: Intel Open Image Denoise library with CUDA support
 Group: System/Libraries
-Requires: lib%{name}%{soname} = %EVR
+Requires: lib%{name}%{soname} = %EVR, libcudart
 
 %description cuda
 Intel Open Image Denoise library with CUDA support
 
 %prep
 %setup -n %oname-%version
+#%%patch -p2
 
 %build
 %if_with hip
@@ -103,6 +112,7 @@ export GCC_VERSION=12
 	%endif
 	%if_with cuda
 	-DOIDN_DEVICE_CUDA:BOOL=ON \
+	-DOIDN_DEVICE_CUDA_API=RuntimeShared \
 	%endif
 	-DCMAKE_BUILD_TYPE=%build_type \
 	-DCMAKE_STRIP:STRING=""
@@ -153,6 +163,15 @@ chrpath -d %buildroot%_libdir/libOpenImageDenoise_device_cuda.so.%{version}
 %_libdir/cmake/*
 
 %changelog
+* Sat Mar 16 2024 L.A. Kostis <lakostis@altlinux.ru> 2.2.2-alt1
+- Updated to upstream version 2.2.2.
+- aarch64: enable build (officially supported now).
+- x86_64: use shared cudart.
+- x86_64: disable rocm6 patch for now.
+
+* Sun Dec 24 2023 L.A. Kostis <lakostis@altlinux.ru> 2.1.0-alt3
+- Added patch for rocm-6.0.0.
+
 * Sun Dec 10 2023 L.A. Kostis <lakostis@altlinux.ru> 2.1.0-alt2
 - Enabled CUDA support (and downgrade to gcc12 on arches where
   CUDA packaged).

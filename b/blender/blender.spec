@@ -27,9 +27,11 @@
 %ifarch x86_64 aarch64
 %def_with openpgl
 %def_with usd
+%def_with oidn
 %else
 %def_without openpgl
 %def_without usd
+%def_without oidn
 %endif
 
 %ifarch x86_64 ppc64le
@@ -50,7 +52,7 @@
 
 Name: blender
 Version: 4.0.2
-Release: alt0.7
+Release: alt0.8
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -127,9 +129,6 @@ BuildRequires: libwayland-egl-devel wayland-protocols libwayland-cursor-devel li
 BuildRequires: libvulkan-devel
 BuildRequires: libspnav-devel
 BuildRequires: libwebp-devel
-%ifarch x86_64
-BuildRequires: openimagedenoise-devel
-%endif
 %ifarch aarch64
 BuildRequires: sse2neon-devel
 %endif
@@ -172,6 +171,10 @@ BuildRequires: nvidia-cuda-devel
 # .cubin files are ELF files but we still don't know how
 # to handle them.
 %set_verify_elf_skiplist %_datadir/%name/*/scripts/addons/cycles/lib/*.cubin
+%endif
+
+%if_with oidn
+BuildRequires: openimagedenoise-devel
 %endif
 
 %add_python3_path %_datadir/%name/scripts
@@ -449,6 +452,9 @@ popd
 %endif
 
 %changelog
+* Sat Mar 16 2024 L.A. Kostis <lakostis@altlinux.ru> 4.0.2-alt0.8
+- aarch64: build with openimagedenoise support.
+
 * Thu Mar 14 2024 L.A. Kostis <lakostis@altlinux.ru> 4.0.2-alt0.7
 - Added patches from upstream/main:
   + cycles: added OSL >= 1.13.5 compatiblity patch.
