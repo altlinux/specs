@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Characters
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %def_without included_libunistring
@@ -12,8 +12,8 @@ Release: alt1%beta
 
 Summary: Character map application for GNOME
 Group: Text tools
-License: BSD and GPLv2+
-Url: https://wiki.gnome.org/Design/Apps/CharacterMap
+License: BSD-3-Clause
+Url: https://apps.gnome.org/Characters
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -26,7 +26,7 @@ Source: %name-%version.tar
 
 %define gjs_ver 1.50.0
 %define unistring_ver 0.9.5
-%define adwaita_ver 1.2
+%define adwaita_ver 1.4
 
 Requires: libgjs >= %gjs_ver
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
@@ -80,6 +80,9 @@ characters.
 %doc NEWS COPYING README*
 
 %changelog
+* Mon Mar 18 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 
