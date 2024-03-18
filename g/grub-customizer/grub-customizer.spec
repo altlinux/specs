@@ -1,6 +1,6 @@
 Name:    grub-customizer
 Version: 5.2.4
-Release: alt2
+Release: alt3
 Summary: Grub Customizer is a graphical interface to configure the grub2/burg settings
 
 License: GPL-3.0
@@ -9,7 +9,9 @@ URL:     https://launchpad.net/grub-customizer
 
 Source0: https://launchpad.net/grub-customizer/4.0/%{version}/+download/%{name}_%{version}.tar.gz
 Source1: %name.watch
+Source2: %name-ru.po
 Patch1:  grub-customizer-alt-desktop-l10n.patch
+Patch2:  grub-customizer-alt-complete-i18n.patch
 
 BuildRequires(pre): cmake
 BuildRequires:  ctest
@@ -39,8 +41,14 @@ proxies (script output filter), if required.
 %prep
 %setup -q
 %patch1 -p2
+%patch2 -p2
+install -Dpm0644 %SOURCE2 translation/translation-ru.po
+rm -f translation/*.mo
 
 %build
+pushd translation
+sh compile_all.sh
+popd
 %add_optflags -fpermissive -std=c++11
 %cmake
 %cmake_build
@@ -74,6 +82,9 @@ install -m 0644 grub.cfg %buildroot%_sysconfdir/%name/grub.cfg
 %_datadir/polkit-1/actions/net.launchpad.danielrichter2007.pkexec.grub-customizer.policy
 
 %changelog
+* Mon Mar 18 2024 Andrey Cherepanov <cas@altlinux.org> 5.2.4-alt3
+- Complete Russian localization (ALT #38699).
+
 * Mon Mar 11 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 5.2.4-alt2
 - NMU: build for LoongArch (no changes required).
 
