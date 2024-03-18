@@ -1,10 +1,10 @@
 %def_disable snapshot
-%define ver_major 44
+%define ver_major 46
 %define beta %nil
 %define xdg_name org.gnome.SimpleScan
 
-%def_enable check
 %def_enable packagekit
+%def_enable check
 
 Name: simple-scan
 Version: %ver_major.0
@@ -13,7 +13,7 @@ Release: alt1%beta
 Summary: Simple scanning utility
 License: GPL-3.0-or-later
 Group: Graphics
-Url: http://launchpad.net/%name
+Url: https://apps.gnome.org/SimpleScan
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -24,17 +24,17 @@ Source: %name-%version.tar
 Requires: sane xdg-utils gnome-icon-theme colord
 %{?_enable_packagekit:Requires: packagekit}
 
-%define gtk_ver 3.22
+%define gtk_ver 4.10
 %define gusb_ver 0.2.7
-%define handy_ver 1.1.90
+%define adw_ver 1.2
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson yelp-tools libappstream-glib-devel
-BuildRequires: libgtk+3-devel >= %gtk_ver libgusb-devel >= %gusb_ver
+BuildRequires: meson vala-tools yelp-tools /usr/bin/appstreamcli
+BuildRequires: libgtk4-devel >= %gtk_ver libgusb-devel >= %gusb_ver
 BuildRequires: libsane-devel zlib-devel
-BuildRequires: vala-tools libcolord-vala
+BuildRequires: libcolord-vala
 BuildRequires: libcolord-devel libwebp-devel
-BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 %{?_enable_packagekit:BuildRequires: libpackagekit-glib-devel}
 
 %description
@@ -63,10 +63,13 @@ sed -i 's|libsane-hpaio|hplip-sane|' src/app-window.vala
 %_desktopdir/*
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %_man1dir/*
 
 %changelog
+* Mon Mar 18 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0 (ported to GTK4/Libadwaita)
+
 * Sun Mar 19 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
 - 44.0
 
