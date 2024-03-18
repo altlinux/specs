@@ -1,7 +1,8 @@
 %define rname kde-file-actions-gost
+
 Name: kde5-file-actions-gost
-Version: 0.8
-Release: alt2
+Version: 0.8.1
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -32,6 +33,7 @@ The package adds gost-grasshopper encryption to KDE file manager.
 mkdir -p %buildroot/{%_K5bin,%_K5srv}
 install -m 0755 kde-* %buildroot/%_K5bin/
 install -m 0644 *.desktop %buildroot/%_K5srv/
+
 # translations
 find po/* -type d | \
 while read d
@@ -40,6 +42,8 @@ do
     mkdir -p %buildroot/%_K5i18n/$lang/LC_MESSAGES
     msgfmt -o %buildroot/%_K5i18n/$lang/LC_MESSAGES/%rname.mo $d/%rname.po
 done
+sed -i "s|@LOCALEDATADIR@|%_K5i18n|"  %buildroot/%_K5bin/kde-*crypt-*-gost
+
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
@@ -47,6 +51,9 @@ done
 %_K5srv/*crypt-*-gost.desktop
 
 %changelog
+* Mon Mar 18 2024 Sergey V Turchin <zerg at altlinux dot org> 0.8.1-alt1
+- fix translations placement
+
 * Tue Nov 07 2023 Sergey V Turchin <zerg at altlinux dot org> 0.8-alt2
 - don't hardcode alternate placement
 
