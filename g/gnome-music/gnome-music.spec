@@ -1,19 +1,21 @@
 %def_disable snapshot
 
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define xdg_name org.gnome.Music
 %define gst_api_ver 1.0
 %define soup_api_ver 3.0
 %define tracker_api_ver 3.0
 
+%def_enable check
+
 Name: gnome-music
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Music playing application for GNOME3
 Group: Sound
-License: GPLv2+
+License: GPL-2.0-or-later
 Url: https://apps.gnome.org/Music
 
 %if_disabled snapshot
@@ -25,14 +27,13 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %define tracker_ver 3.0
-%define gtk4_ver 4.5.0
-%define adwaita_ver 1.2
+%define gtk4_ver 4.10.0
+%define adwaita_ver 1.5
 %define grilo_ver 0.3.13
 %define python_ver 3.7
 %define mediaart_ver 1.9.1
 %define pygobject_ver 3.36.1
 %define pycairo_ver 1.14.0
-%define goa_ver 3.35.90
 
 Requires: tracker3 tracker-miners3 >= %tracker_ver typelib(Tracker) = %tracker_api_ver
 Requires: grilo-tools >= %grilo_ver grilo-plugins
@@ -50,9 +51,8 @@ BuildRequires: libgrilo-devel >= %grilo_ver grilo-plugins-devel
 BuildRequires: libmediaart2.0-devel >= %mediaart_ver
 BuildRequires: gobject-introspection-devel libgtk4-gir-devel
 BuildRequires: pkgconfig(tracker-sparql-%tracker_api_ver) >= %tracker_ver
-BuildRequires: python3-devel >= %python_ver
 BuildRequires: python3-module-pygobject3-devel >= %pygobject_ver python3-module-pycairo-devel >= %pycairo_ver
-BuildRequires: libgnome-online-accounts-devel >= %goa_ver
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 Music playing application for GNOME3.
@@ -68,6 +68,9 @@ Music playing application for GNOME3.
 %meson_install
 %find_lang --with-gnome --output=%name.lang %name %xdg_name
 
+%check
+%__meson_test
+
 %files -f %name.lang
 %_bindir/%name
 %_datadir/%xdg_name/
@@ -76,10 +79,12 @@ Music playing application for GNOME3.
 %_iconsdir/hicolor/*/*/*.svg
 %python3_sitelibdir_noarch/gnomemusic/
 %_datadir/metainfo/%xdg_name.appdata.xml
-#%_man1dir/%name.1.*
 %doc README* NEWS*
 
 %changelog
+* Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Sun Feb 11 2024 Yuri N. Sedunov <aris@altlinux.org> 45.1-alt1
 - 45.1
 

@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name tracker
-%define ver_major 3.6
+%define ver_major 3.7
 %define beta %nil
 %define api_ver_major 3
 %define api_ver %{api_ver_major}.0
@@ -46,13 +46,10 @@ Requires: dconf
 %define dbus_ver 1.3.1
 %define glib_ver 2.52.0
 %define pango_ver 1.0.0
-%define gtk_ver 3.0.0
 %define upower_ver 0.9.0
-%define gst_ver 1.0
 %define sqlite_ver 3.20.1-alt2
 %define soup_ver 2.40.0
 %define soup3_ver 2.99.2
-%define gupnp_dlna_ver 0.9.4
 
 Requires: libsqlite3 >= %sqlite_ver
 
@@ -61,24 +58,22 @@ BuildRequires(pre): rpm-macros-meson rpm-build-vala rpm-build-gnome rpm-build-gi
 BuildRequires(pre): rpm-build-python3 python3-module-pygobject3
 %add_python3_path %_libdir/%_name-%api_ver/trackertestutils
 }
-BuildRequires: /proc meson gcc-c++
+BuildRequires: /proc meson gcc-c++ vala-tools
 BuildRequires: libxml2-devel libicu-devel libuuid-devel
 BuildRequires: libdbus-devel >= %dbus_ver
-BuildRequires: libgio-devel >= %glib_ver libpango-devel >= %pango_ver libgtk+3-devel >= %gtk_ver
+BuildRequires: libgio-devel >= %glib_ver libpango-devel >= %pango_ver
 %{?_enable_soup2:BuildRequires: libsoup-devel >= %soup_ver}
 %{?_enable_soup3:BuildRequires: libsoup3.0-devel >= %soup3_ver}
 BuildRequires: libjson-glib-devel
 BuildRequires: gobject-introspection-devel
+BuildRequires: pkgconfig(avahi-glib) pkgconfig(avahi-client)
+BuildRequires: sqlite3 libsqlite3-devel >= %sqlite_ver
+BuildRequires: pkgconfig(systemd)
+BuildRequires: bash-completion
 %{?_enable_upower:BuildRequires: libupower-devel >= %upower_ver}
 %{?_enable_stemmer:BuildRequires: libstemmer-devel}
 %{?_enable_docs:BuildRequires: gi-docgen /usr/bin/dot /usr/bin/xmlto}
 %{?_enable_man:BuildRequires: asciidoc-a2x xsltproc}
-BuildRequires: vala-tools
-BuildRequires: sqlite3 libsqlite3-devel >= %sqlite_ver
-BuildRequires: gstreamer%gst_api_ver-devel >= %gst_ver gst-plugins%gst_api_ver-devel >= %gst_ver
-BuildRequires: libgupnp-dlna-devel >= %gupnp_dlna_ver
-BuildRequires: pkgconfig(systemd) libseccomp-devel
-BuildRequires: bash-completion
 
 %description
 Tracker is a powerful desktop-neutral first class object
@@ -166,11 +161,22 @@ sed -i 's|#!.*/bin/env python3|#!/usr/bin/python3|' docs/reference/libtracker-sp
 
 %files -f %name.lang
 %_bindir/%name
+%_bindir/%name-endpoint
+%_bindir/%name-export
+%_bindir/%name-help
+%_bindir/%name-import
+%_bindir/%name-sparql
+%_bindir/%name-sql
 %dir %_libdir/%_name-%api_ver
 %_libexecdir/*
 %dir %_datadir/%name
-#%_datadir/%name/stop-words/
-%_datadir/%name/ontologies/
+%dir %_datadir/%name/commands
+%_datadir/%name/commands/%_name-endpoint.desktop
+%_datadir/%name/commands/%_name-export.desktop
+%_datadir/%name/commands/%_name-help.desktop
+%_datadir/%name/commands/%_name-import.desktop
+%_datadir/%name/commands/%_name-sparql.desktop
+%_datadir/%name/commands/%_name-sql.desktop
 %_datadir/bash-completion/completions/%name
 %_userunitdir/%_name-xdg-portal-%api_ver_major.service
 %_datadir/dbus-1/services/org.freedesktop.portal.Tracker.service
@@ -215,6 +221,9 @@ sed -i 's|#!.*/bin/env python3|#!/usr/bin/python3|' docs/reference/libtracker-sp
 %endif
 
 %changelog
+* Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 3.7.0-alt1
+- 3.7.0
+
 * Sat Sep 16 2023 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 

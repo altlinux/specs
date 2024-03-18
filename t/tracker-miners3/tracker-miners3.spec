@@ -1,6 +1,6 @@
 %set_verify_elf_method unresolved=relaxed
 %define _name tracker-miners
-%define ver_major 3.6
+%define ver_major 3.7
 %define beta %nil
 %define api_ver_major 3
 %define api_ver %api_ver_major.0
@@ -8,7 +8,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name%api_ver_major
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -47,6 +47,10 @@ Patch: %_name-3.2.0-alt-link.patch
 %def_enable libosinfo
 %def_enable playlist
 %def_enable network_manager
+#Has header "linux/landlock.h" : YES 
+#Checking if "landlock is enabled in kernel" runs: NO (1)
+#meson.build:210:4: ERROR: Problem encountered: Landlock was auto-enabled in build options, but is disabled in the kernel
+%def_disable landlock
 %def_enable man
 
 %define glib_ver 2.62
@@ -141,6 +145,7 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 	%{?_enable_icon:-Dicon=true} \
 	%{?_enable_libosinfo:-Diso=enabled} \
 	%{?_enable_playlist:-Dplaylist=enabled} \
+	%{subst_enable_meson_feature landlock landlock} \
 	%{?_disable_man:-Dman=false} \
 	-Dsystemd_user_services_dir='%_userunitdir'
 %nil
@@ -156,20 +161,29 @@ ln -sf %_name-%api_ver/libtracker-extract.so \
 %files -f tracker%api_ver_major-miners.lang
 %_xdgconfigdir/autostart/tracker-miner-fs-%api_ver_major.desktop
 %_xdgconfigdir/autostart/tracker-miner-rss-%api_ver_major.desktop
+%_bindir/tracker3-daemon
+%_bindir/tracker3-extract
+%_bindir/tracker3-index
+%_bindir/tracker3-info
+%_bindir/tracker3-reset
+%_bindir/tracker3-search
+%_bindir/tracker3-status
+%_bindir/tracker3-tag
 %_libdir/%_name-%api_ver/
+%_datadir/tracker3/commands/*.desktop
 # symlink
 %_libdir/libtracker-extract.so
 %_libexecdir/tracker-extract-%api_ver_major
 %_libexecdir/tracker-miner-fs-%api_ver_major
 %_libexecdir/tracker-writeback-%api_ver_major
 %_libexecdir/tracker-miner-fs-control-%api_ver_major
-%_libexecdir/tracker%api_ver_major/
+#%_libexecdir/tracker%api_ver_major/
 %{?_enable_rss:%_libexecdir/tracker-miner-rss-%api_ver_major}
 %_datadir/tracker%api_ver_major-miners/
-%_prefix/lib/systemd/user/tracker-extract*.service
-%_prefix/lib/systemd/user/tracker-miner-fs*.service
-%_prefix/lib/systemd/user/tracker-miner-rss*.service
-%_prefix/lib/systemd/user/tracker-writeback*.service
+#%_userunitdir/tracker-extract*.service
+%_userunitdir/tracker-miner-fs*.service
+%_userunitdir/tracker-miner-rss*.service
+%_userunitdir/tracker-writeback*.service
 %{?_enable_man:
 %_man1dir/tracker-miner-fs-*.*
 %_man1dir/tracker-miner-rss-*.*
@@ -183,8 +197,7 @@ ln -sf %_name-%api_ver/libtracker-extract.so \
 %_man1dir/tracker%api_ver_major-status.1.*
 %_man1dir/tracker%api_ver_major-tag.1.*
 }
-
-%_datadir/dbus-1/services/%xdg_name.Miner.Extract.service
+#%_datadir/dbus-1/services/%xdg_name.Miner.Extract.service
 %_datadir/dbus-1/services/%xdg_name.Miner.Files.service
 %_datadir/dbus-1/services/%xdg_name.Miner.RSS.service
 %_datadir/dbus-1/services/%xdg_name.Writeback.service
@@ -200,6 +213,9 @@ ln -sf %_name-%api_ver/libtracker-extract.so \
 %doc AUTHORS NEWS README*
 
 %changelog
+* Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 3.7.0-alt1
+- 3.7.0
+
 * Tue Oct 31 2023 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 
