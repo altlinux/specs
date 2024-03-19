@@ -7,7 +7,7 @@ BuildRequires: perl(ExtUtils/CBuilder.pm) perl(File/Spec.pm) perl(Module/Build.p
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.47
+Version: 0.48
 Release: alt1
 Summary: write a heap dump file for later analysis
 Group: Development/Perl
@@ -47,6 +47,9 @@ elsewhere.
 %perl_vendor_autolib/*
 
 %changelog
+* Tue Mar 19 2024 Igor Vlasenko <viy@altlinux.org> 0.48-alt1
+- automated CPAN update
+
 * Thu Mar 23 2023 Igor Vlasenko <viy@altlinux.org> 0.47-alt1
 - automated CPAN update
 
