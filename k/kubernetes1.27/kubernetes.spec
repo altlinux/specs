@@ -7,11 +7,11 @@
 %define prog_name            kubernetes
 %define kubernetes_major     1
 %define kubernetes_minor     27
-%define kubernetes_patch     11
+%define kubernetes_patch     12
 
 Name: %prog_name%kubernetes_major.%kubernetes_minor
 Version: %kubernetes_major.%kubernetes_minor.%kubernetes_patch
-Release: alt1.1
+Release: alt1
 Summary: Container cluster management
 
 Group: System/Configuration/Other
@@ -22,7 +22,7 @@ Source: %name-%version.tar
 
 Source2: genmanpages.sh
 Source3: kubernetes-accounting.conf
-Source4: kubeadm.conf
+Source4: 10-kubeadm.conf
 
 #systemd services
 Source10: kube-apiserver.service
@@ -378,7 +378,7 @@ fi
 %_man1dir/kubeadm*
 %_bindir/kubeadm
 %dir %_sysconfdir/systemd/system/kubelet.service.d
-%config(noreplace) %_sysconfdir/systemd/system/kubelet.service.d/kubeadm.conf
+%config(noreplace) %_sysconfdir/systemd/system/kubelet.service.d/10-kubeadm.conf
 
 %files client
 %doc README.md LICENSE
@@ -392,6 +392,9 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Tue Mar 19 2024 Alexey Shabalin <shaba@altlinux.org> 1.27.12-alt1
+- 1.27.12
+
 * Wed Mar 06 2024 Ivan A. Melnikov <iv@altlinux.org> 1.27.11-alt1.1
 - NMU: loongarch64 support
 
