@@ -8,7 +8,7 @@ BuildRequires: perl(Commandable/Invocation.pm) perl(Devel/MAT/Dumper.pm) perl(Ex
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.52
+Version: 0.53
 Release: alt1
 Summary: Perl Memory Analysis Tool
 Group: Development/Perl
@@ -48,6 +48,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Tue Mar 19 2024 Igor Vlasenko <viy@altlinux.org> 0.53-alt1
+- automated CPAN update
+
 * Mon Jan 15 2024 Igor Vlasenko <viy@altlinux.org> 0.52-alt1
 - automated CPAN update
 
