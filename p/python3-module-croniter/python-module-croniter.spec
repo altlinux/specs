@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 
 Summary: Iteration for datetime object with cron like format
@@ -57,6 +57,9 @@ find -name \*.py -exec sed -i '/\/usr\/bin\/env python/{d;q}' {} +
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 2.0.3-alt1
+- 2.0.2 -> 2.0.3.
+
 * Fri Mar 01 2024 Stanislav Levin <slev@altlinux.org> 2.0.2-alt1
 - 1.3.8 -> 2.0.2.
 
