@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Expect
 Name: perl-%dist
-Version: 1.35
+Version: 1.38
 Release: alt1
 
 Summary: Perl Expect interface
@@ -43,6 +43,9 @@ cp -p examples/kibitz/kibitz.man %buildroot%_man1dir/kibitz.pl.1
 %_man1dir/kibitz.pl.1*
 
 %changelog
+* Tue Mar 19 2024 Igor Vlasenko <viy@altlinux.org> 1.38-alt1
+- automated CPAN update
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 1.35-alt1
 - automated CPAN update
 
