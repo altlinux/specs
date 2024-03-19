@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-ExtUtils-CChecker
-Version: 0.11
+Version: 0.12
 Release: alt1
 
 Summary: configure-time utilities for using C headers, libraries, or OS features
@@ -11,7 +11,7 @@ Url: %CPAN ExtUtils-CChecker
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: perl-devel perl(Test/Fatal.pm) perl(Module/Build.pm) perl(ExtUtils/CBuilder.pm)
+BuildRequires: perl-devel perl(Test/Fatal.pm) perl(Module/Build.pm) perl(ExtUtils/CBuilder.pm) perl(Test2/V0.pm)
 
 %description
 %summary
@@ -30,6 +30,9 @@ BuildRequires: perl-devel perl(Test/Fatal.pm) perl(Module/Build.pm) perl(ExtUtil
 %doc Changes README
 
 %changelog
+* Tue Mar 19 2024 Igor Vlasenko <viy@altlinux.org> 0.12-alt1
+- new version
+
 * Thu Jul 15 2021 Igor Vlasenko <viy@altlinux.org> 0.11-alt1
 - new version
 
