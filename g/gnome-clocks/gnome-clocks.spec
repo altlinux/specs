@@ -1,7 +1,9 @@
 %def_disable snapshot
 %define xdg_name org.gnome.clocks
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
+
+%def_enable check
 
 Name: gnome-clocks
 Version: %ver_major.0
@@ -29,13 +31,14 @@ Requires: geoclue2
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools glib2-devel >= %glib_ver
-BuildRequires: /usr/bin/appstream-util desktop-file-utils yelp-tools
+BuildRequires: yelp-tools
 BuildRequires: libgtk4-devel >= %gtk4_ver
 BuildRequires: libgsound-devel pkgconfig(gnome-desktop-4)
 BuildRequires: gobject-introspection-devel libgtk4-gir-devel libgweather4.0-vala
 BuildRequires: libgweather4.0-devel >= %gweather_ver libgeocode-glib2.0-devel >= %geocode_ver
 BuildRequires: libgeoclue2-devel >= %geoclue_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
+%{?_enable_check:BuildRequires:/usr/bin/appstreamcli  desktop-file-utils}
 
 %description
 Clock application designed for GNOME 3
@@ -51,6 +54,9 @@ Clock application designed for GNOME 3
 %meson_install
 %find_lang --with-gnome %name
 
+%check
+%__meson_test
+
 %files -f %name.lang
 %_bindir/%name
 %_datadir/applications/%xdg_name.desktop
@@ -62,6 +68,9 @@ Clock application designed for GNOME 3
 %doc README* NEWS*
 
 %changelog
+* Fri Mar 15 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 

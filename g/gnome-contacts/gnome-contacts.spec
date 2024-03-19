@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define gst_api_ver 1.0
@@ -8,7 +8,7 @@
 %def_without cheese
 
 Name: gnome-contacts
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Contacts manager for GNOME
@@ -23,9 +23,9 @@ Source: %name-%version%beta.tar
 %endif
 
 %define glib_ver 2.64
-%define gtk4_ver 4.10.0
+%define gtk4_ver 4.12.0
 %define adwaita_ver 1.4
-%define vala_ver 0.54
+%define vala_ver 0.56.11
 %define folks_ver 0.15.6
 %define eds_ver 3.42
 %define cheese_ver 3.5.90
@@ -34,7 +34,7 @@ Source: %name-%version%beta.tar
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools
-BuildRequires: yelp-tools xsltproc docbook-dtds docbook-style-xsl /usr/bin/appstream-util valadoc
+BuildRequires: yelp-tools xsltproc docbook-dtds docbook-style-xsl /usr/bin/appstreamcli valadoc
 BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk4_ver pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: libfolks-devel >= %folks_ver libfolks-vala libvala-devel >= %vala_ver
 BuildRequires: libgnome-online-accounts-devel libgee0.8-devel evolution-data-server-devel >= %eds_ver
@@ -72,9 +72,12 @@ BuildRequires: libqrencode-devel >= %libqrencode_ver
 %_iconsdir/hicolor/*/*/*
 %_man1dir/%name.1.*
 %_datadir/metainfo/%xdg_name.appdata.xml
-%doc NEWS README*
+%doc README*
 
 %changelog
+* Mon Mar 18 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Sun Feb 25 2024 Yuri N. Sedunov <aris@altlinux.org> 45.1-alt1
 - 45.1
 

@@ -3,10 +3,11 @@
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.50
-%define ver_base 3.50
+%define ver_major 3.52
+%define ver_base 3.52
 %define ver_lib 1.2
 %define ver_libecal 2.0
+%define sover_libecal 3
 %define ver_serverui4 1.0
 
 %def_disable debug
@@ -32,7 +33,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution Data Server
@@ -68,7 +69,7 @@ Requires: dconf
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-gnome rpm-build-licenses rpm-build-xdg rpm-build-gir
 BuildRequires: cmake gcc-c++ ninja-build
-BuildRequires: gtk-doc >= 1.0
+
 BuildRequires: gnome-common
 BuildRequires: glib2-devel >= %glib_ver
 %{?_enable_gtk3:BuildRequires: libgtk+3-devel >= %gtk3_ver}
@@ -79,8 +80,6 @@ BuildRequires: libsqlite3-devel >= %sqlite_ver
 BuildRequires: libgweather4.0-devel >= %gweather4_ver
 BuildRequires: libical-glib-devel >= %ical_ver
 BuildRequires: libsecret-devel >= %secret_ver
-#%{?_enable_gtk3:BuildRequires: pkgconfig(gcr-%gcr_api_ver-gtk3) >= %gcr_ver}
-#%{?_enable_gtk4:BuildRequires: pkgconfig(gcr-%gcr_api_ver-gtk4) >= %gcr_ver}
 BuildRequires: gperf docbook-utils flex bison libcom_err-devel libnss-devel libnspr-devel zlib-devel libicu-devel
 %{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver liboauth-devel}
 %{?_enable_oauth2_webkitgtk3:BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver) >= %webkit_ver}
@@ -97,6 +96,7 @@ BuildRequires: libical-glib-gir-devel}
 %{?_enable_vala:BuildRequires: vala >= %vala_ver vala-tools >= %vala_ver}
 %{?_enable_canberra:BuildRequires: libcanberra-gtk3-devel}
 %{?_enable_phonenumber:BuildRequires: libphonenumber-devel}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc gi-docgen}
 
 # /usr/libexec/evolution-data-server/csv2vcard uses perl(diagnostics.pm)
 BuildRequires: perl-devel
@@ -234,6 +234,7 @@ ln -s camel-lock-helper-%ver_lib %buildroot%_libexecdir/camel-lock-helper
 %_prefix/lib/systemd/user/evolution-user-prompter.service
 
 %_datadir/pixmaps/*
+%_iconsdir/hicolor/scalable/apps/org.gnome.Evolution-alarm-notify.svg
 %_datadir/GConf/gsettings/evolution-data-server.convert
 %_datadir/glib-2.0/schemas/org.gnome.evolution-data-server.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.Evolution.DefaultSources.gschema.xml
@@ -292,6 +293,9 @@ ln -s camel-lock-helper-%ver_lib %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Fri Mar 15 2024 Yuri N. Sedunov <aris@altlinux.org> 3.52.0-alt1
+- 3.52.0
+
 * Fri Feb 09 2024 Yuri N. Sedunov <aris@altlinux.org> 3.50.4-alt1
 - 3.50.4
 

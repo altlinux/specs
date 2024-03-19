@@ -2,17 +2,20 @@
 
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
-%define api_ver 13
+%define api_ver 14
 %define gst_api_ver 1.0
+
+%def_enable extensions_tool
+%def_enable extensions_app
 %def_disable gtk_doc
 %def_disable check
 # removed in 3.31.x
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
@@ -31,7 +34,7 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 
 %define session_ver 3.26
 %define gjs_ver 1.73.1
-%define mutter_ver 45
+%define mutter_ver %ver_major
 %define gtk_ver 3.16.0
 %define adwaita_ver 1.0
 %define gio_ver 2.56.0
@@ -209,8 +212,10 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %{?_enable_browser_plugin:subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build}
 %build
 %meson \
-	%{?_enable_gtk_doc:-Dgtk_doc=true}
-%{?_enable_snapshot:%meson_build %name-pot %name-update-po}
+    %{?_enable_gtk_doc:-Dgtk_doc=true} \
+    %{subst_enable_meson_bool extensions_tool extensions_tool} \
+    %{subst_enable_meson_bool extensions_app extensions_app} \
+    %{?_enable_snapshot:%meson_build %name-pot %name-update-po}
 #%meson_build %name-pot %name-update-po
 %nil
 %meson_build -v
@@ -223,7 +228,12 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %meson_test
 
 %files
-%_bindir/*
+%_bindir/%name
+%_bindir/%name-extension-prefs
+%_bindir/%name-test-tool
+%{?_enable_extensions_app:%_bindir/gnome-extensions-app}
+%{?_enable_extensions_tool:%_bindir/gnome-extensions
+%_bindir/gnome-shell-extension-tool}
 %_libexecdir/%name-calendar-server
 %_libexecdir/%name-perf-helper
 %_libexecdir/%name-hotplug-sniffer
@@ -240,10 +250,16 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %{?_enable_browser_plugin:%browser_plugins_path/libgnome-shell-browser-plugin.so}
 
 %files data -f %name.lang
-%_datadir/bash-completion/completions/gnome-extensions
+%{?_enable_extensions_tool:%_datadir/bash-completion/completions/gnome-extensions}
 %_desktopdir/%xdg_name.desktop
-%_desktopdir/org.gnome.Extensions.desktop
 %_desktopdir/%xdg_name.Extensions.desktop
+
+%{?_enable_extensions_app:%_desktopdir/org.gnome.Extensions.desktop
+%config %_datadir/glib-2.0/schemas/org.gnome.Extensions.gschema.xml
+%_datadir/metainfo/org.gnome.Extensions.metainfo.xml
+%_datadir/dbus-1/services/org.gnome.Extensions.service
+}
+
 %_desktopdir/%xdg_name.PortalHelper.desktop
 %_datadir/%name/
 %_datadir/dbus-1/services/%xdg_name.CalendarServer.service
@@ -255,7 +271,6 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %_datadir/dbus-1/interfaces/%{xdg_name}SearchProvider2.xml
 %_datadir/dbus-1/interfaces/%xdg_name.Screencast.xml
 %_datadir/dbus-1/interfaces/%xdg_name.Extensions.xml
-%_datadir/dbus-1/services/org.gnome.Extensions.service
 %_datadir/dbus-1/services/%xdg_name.Extensions.service
 %_datadir/dbus-1/services/%xdg_name.Notifications.service
 %_datadir/dbus-1/services/%xdg_name.PortalHelper.service
@@ -264,7 +279,6 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %_datadir/gnome-control-center/keybindings/50-%name-launchers.xml
 %_datadir/gnome-control-center/keybindings/50-%name-system.xml
 %_datadir/gnome-control-center/keybindings/50-%name-screenshots.xml
-%_datadir/xdg-desktop-portal/portals/%name.portal
 %config %_datadir/glib-2.0/schemas/org.gnome.shell.gschema.xml
 %config %_datadir/glib-2.0/schemas/00_org.gnome.shell.gschema.override
 %_userunitdir/%xdg_name-disable-extensions.service
@@ -274,7 +288,7 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 
 %_man1dir/*
 %_iconsdir/hicolor/*/*/*.svg
-%_datadir/metainfo/org.gnome.Extensions.metainfo.xml
+
 %doc README* NEWS
 
 %if_enabled gtk_doc
@@ -284,6 +298,12 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %endif
 
 %changelog
+* Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
+* Mon Mar 04 2024 Yuri N. Sedunov <aris@altlinux.org> 46-alt0.9.rc
+- 46.rc
+
 * Mon Feb 12 2024 Yuri N. Sedunov <aris@altlinux.org> 45.4-alt1
 - 45.4
 

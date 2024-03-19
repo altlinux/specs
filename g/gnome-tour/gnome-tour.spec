@@ -1,4 +1,4 @@
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define xdg_name org.gnome.Tour
 %def_enable check
@@ -25,7 +25,7 @@ BuildRequires: /proc meson rust rust-cargo
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(gtk4) >= %gtk4_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
-%{?_enable_check:BuildRequires: desktop-file-utils %_bindir/appstream-util}
+%{?_enable_check:BuildRequires: desktop-file-utils %_bindir/appstreamcli}
 
 %description
 A guided tour and greeter for GNOME.
@@ -54,6 +54,9 @@ A guided tour and greeter for GNOME.
 %doc NEWS README.md
 
 %changelog
+* Fri Mar 15 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 

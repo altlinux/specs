@@ -1,66 +1,63 @@
 %def_disable snapshot
 
-%define ver_major 3.50
+%define _name gnome-online-accounts
+%define ver_major 3.48
 %define _libexecdir %_prefix/libexec
-%define xdg_name org.gnome.OnlineAccounts
 
 %def_enable backend
 %def_enable kerberos
 %def_enable owncloud
-%def_enable webdav
 %def_enable exchange
 %def_enable google
 %def_enable imap_smtp
 %def_enable windows_live
+# disabled by default
+%def_disable media_server
+%def_enable lastfm
 %def_enable gtk_doc
 %def_enable man
 
 %define api_ver 1.0
 
-Name: gnome-online-accounts
-Version: %ver_major.0
-Release: alt1
+Name: libgoa-backend
+Version: %ver_major.1
+Release: alt2
 
-Summary: Provide online accounts information
-Group: Graphical desktop/GNOME
+Summary: Compat library from old gnome-online-accounts
+Group: System/Legacy libraries
 License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/GnomeOnlineAccounts
 
 %if_enabled snapshot
-Source: %name-%version.tar
+Source: %_name-%version.tar
 %else
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%_name-%version.tar.xz
 %endif
 
-Requires: lib%name = %EVR
-# realmd requires /sbin/telinit provided by sysvinit or systemd-sysvinit packages
-%{?_enable_kerberos:Requires: realmd systemd-sysvinit}
-
 %define glib_ver 2.68
-%define gtk4_ver 4.10
-%define adw_ver 1.4
-#%define oauth_ver 0.9.5
+%define gtk_ver 3.20.0
+%define oauth_ver 0.9.5
 %define rest_ver 0.9.1
 %define soup3_ver 3.0.7
+%define webkit_ver 2.36.4
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson glib2-devel >= %glib_ver
-#BuildRequires: liboauth-devel >= %oauth_ver
+BuildRequires: liboauth-devel >= %oauth_ver
 BuildRequires: pkgconfig(rest-1.0) >= %rest_ver
-BuildRequires: pkgconfig(gcr-4)
+BuildRequires: pkgconfig(gcr-3)
 BuildRequires: pkgconfig(libsoup-3.0) >= %soup3_ver
-BuildRequires: libgtk4-devel >= %gtk4_ver
-BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
-BuildRequires: libjson-glib-devel
-BuildRequires: libsecret-devel libdbus-devel
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libjson-glib-devel libgnome-keyring-devel
+BuildRequires: libnotify-devel libsecret-devel libdbus-devel
 BuildRequires: vala-tools gobject-introspection-devel
-%{?_enable_kerberos:BuildRequires: pkgconfig(krb5)}
+%{?_enable_kerberos:BuildRequires: libkrb5-devel}
+%{?_enable_backend:BuildRequires: pkgconfig(webkit2gtk-4.1) >= %webkit_ver}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_man:BuildRequires: xsltproc}
 
 %description
-gnome-online-accounts provides interfaces so applications and
-libraries in GNOME can access the user's online accounts.
+%summary
 
 %package -n lib%name
 Summary: %name shared libraries
@@ -106,22 +103,21 @@ BuildArch: noarch
 This package contains development documentation for the %name libraries.
 
 %prep
-%setup
-# fix pkgconfig after gtk4 port
-sed -i s'|gtk+-3.0|libadwaita-1|' src/goabackend/meson.build
+%setup -n %_name-%version
 
 %build
 %meson \
-    %{?_enable_man:-Dman=true} \
-    %{?_enable_gtk_doc:-Dgtk_doc=true} \
-    %{?_disable_backend:-Dgoabackend=false} \
-    %{?_disable_exchange:-Dexchange=false} \
-    %{?_disable_google:-Dgoogle=false} \
-    %{?_disable_imap_smtp:-Dimap_smtp=false} \
-    %{?_disable_kerberos:-Dkerberos=false} \
-    %{?_disable_owncloud:-Downcloud=false} \
-    %{?_disable_webdav:-Dwebdav=false} \
-    %{?_disable_windows_live:-Dwindows_live=false}
+	%{?_enable_man:-Dman=true} \
+	%{?_enable_gtk_doc:-Dgtk_doc=true} \
+	%{?_disable_backend:-Dbackend=false} \
+	%{?_enable_media_server:-Dmedia_server=true} \
+	%{?_disable_exchange:-Dexchange=false} \
+	%{?_disable_google:-Dgoogle=false} \
+	%{?_disable_imap_smtp:-Dimap_smtp=false} \
+	%{?_disable_kerberos:-Dkerberos=false} \
+	%{?_disable_lastfm:-Dlastfm=false} \
+	%{?_disable_owncloud:-Downcloud=false} \
+	%{?_disable_windows_live:-Dwindows_live=false}
 %nil
 %meson_build
 
@@ -129,58 +125,58 @@ sed -i s'|gtk+-3.0|libadwaita-1|' src/goabackend/meson.build
 %meson_install
 %find_lang --output=%name.lang %name %{?_enable_telepathy:%name-tpaw}
 
-%files -f %name.lang
-%if_enabled backend
-%_libexecdir/goa-daemon
-%_libexecdir/goa-identity-service
-%_libexecdir/goa-oauth2-handler
-%_desktopdir/%xdg_name.OAuth2.desktop
-%_datadir/glib-2.0/schemas/org.gnome.online-accounts.gschema.xml
-%_datadir/dbus-1/services/org.gnome.Identity.service
-%_datadir/dbus-1/services/%xdg_name.service
-%{?_enable_man:%_man8dir/goa-daemon.*}
-%endif
-%_iconsdir/hicolor/*/*/*.svg
-%{?_enable_telepathy:%_iconsdir/hicolor/scalable/apps/im-*.svg}
-%doc README* NEWS
+#%%files -f %name.lang
+#%if_enabled backend
+#%_libexecdir/goa-daemon
+#%_libexecdir/goa-identity-service
+#%_datadir/glib-2.0/schemas/org.gnome.online-accounts.gschema.xml
+#%_datadir/dbus-1/services/org.gnome.Identity.service
+#%_datadir/dbus-1/services/org.gnome.OnlineAccounts.service
+#%{?_enable_man:%_man8dir/goa-daemon.*}
+#%endif
+#%_iconsdir/hicolor/*/*/*.svg
+#%{?_enable_telepathy:%_iconsdir/hicolor/scalable/apps/im-*.svg}
+#%%doc README NEWS
 
-%files -n lib%name
-%_libdir/libgoa-%api_ver.so.*
-%dir %_libdir/goa-%api_ver
+%files
+#%_libdir/libgoa-%api_ver.so.*
+#%dir %_libdir/goa-%api_ver
 
 %if_enabled backend
 %_libdir/libgoa-backend-%api_ver.so.*
+#%dir %_libdir/goa-%api_ver/web-extensions
+#%_libdir/goa-%api_ver/web-extensions/libgoawebextension.so
 %endif
 
-%files -n lib%name-devel
-%_includedir/goa-%api_ver/
-%dir %_libdir/goa-%api_ver/include
-%_libdir/goa-%api_ver/include/goaconfig.h
-%_libdir/libgoa-%api_ver.so
+#%files -n lib%name-devel
+#%_includedir/goa-%api_ver/
+#%dir %_libdir/goa-%api_ver/include
+#%_libdir/goa-%api_ver/include/goaconfig.h
+#%_libdir/libgoa-%api_ver.so
 
-%if_enabled backend
-%_libdir/libgoa-backend-%api_ver.so
-%_pkgconfigdir/goa-backend-%api_ver.pc
-%endif
+#%if_enabled backend
+#%_libdir/libgoa-backend-%api_ver.so
+#%_pkgconfigdir/goa-backend-%api_ver.pc
+#%endif
 
-%_pkgconfigdir/goa-%api_ver.pc
-%_vapidir/goa-%api_ver.deps
-%_vapidir/goa-%api_ver.vapi
+#%_pkgconfigdir/goa-%api_ver.pc
+#%_vapidir/goa-%api_ver.deps
+#%_vapidir/goa-%api_ver.vapi
 
-%files -n lib%name-gir
-%_typelibdir/Goa-%api_ver.typelib
+#%files -n lib%name-gir
+#%_typelibdir/Goa-%api_ver.typelib
 
-%files -n lib%name-gir-devel
-%_girdir/Goa-%api_ver.gir
+#%files -n lib%name-gir-devel
+#%_girdir/Goa-%api_ver.gir
 
-%if_enabled gtk_doc
-%files -n lib%name-devel-doc
-%_datadir/gtk-doc/html/goa/
-%endif
+#%if_enabled gtk_doc
+#%files -n lib%name-devel-doc
+#%_datadir/gtk-doc/html/goa/
+#%endif
 
 %changelog
-* Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 3.50.0-alt1
-- 3.50.0
+* Tue Mar 19 2024 Yuri N. Sedunov <aris@altlinux.org> 3.48.1-alt2
+- compat library for cinnamon-control-center
 
 * Thu Mar 14 2024 Yuri N. Sedunov <aris@altlinux.org> 3.48.1-alt1
 - 3.48.1

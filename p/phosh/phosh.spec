@@ -15,7 +15,7 @@
 
 Name: phosh
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: A pure Wayland shell for mobile devices
 License: GPL-3.0-or-later
@@ -206,6 +206,9 @@ xvfb-run %__meson_test
 %{?_enable_gtk_doc:%doc %_datadir/doc/%name-%api_ver}
 
 %changelog
+* Sat Mar 09 2024 Yuri N. Sedunov <aris@altlinux.org> 0.37.0-alt1.1
+- rebuilt against libecal-2.0.so.3
+
 * Fri Mar 08 2024 Yuri N. Sedunov <aris@altlinux.org> 0.37.0-alt1
 - 0.37.0
 

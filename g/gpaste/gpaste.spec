@@ -11,7 +11,7 @@
 
 Name: gpaste
 Version: %ver_major
-Release: alt1.1%beta
+Release: alt2%beta
 
 Summary: GPaste is a clipboard management system
 Group: Text tools
@@ -24,6 +24,7 @@ Source: %url/archive/v%version%beta/%_name-%version%beta.tar.gz
 Source: %_name-%version%beta.tar
 %endif
 Patch1: %name-42.0-alt-format.patch
+Patch10: %name-45-up-gnome-46.patch
 
 Requires: lib%name = %EVR
 
@@ -115,6 +116,7 @@ in notification area.
 %ifarch %ix86 armh
 %patch1 -b .format
 %endif
+%patch10 -p1
 
 %build
 %meson \
@@ -189,6 +191,9 @@ in notification area.
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 
 %changelog
+* Fri Mar 08 2024 Yuri N. Sedunov <aris@altlinux.org> 45-alt2
+- gnome-46 support
+
 * Tue Nov 07 2023 Yuri N. Sedunov <aris@altlinux.org> 45-alt1.1
 - libgpaste-gir required for gnome-shell-extension-gpaste subpackage
 

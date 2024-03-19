@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define domain gcampax.github.com
 %define _libexecdir %_prefix/libexec
@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: gnome-shell-extensions
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Shell Extensions
@@ -26,6 +26,8 @@ Source: %name-%version%beta.tar
 %endif
 
 Requires: gnome-shell >= %version
+# for system-monitor
+Requires: typelib(GTop)
 
 # extensions/apps-menu/extension.js
 # const {
@@ -141,7 +143,6 @@ See %_docdir/%name-%version/README for more information.
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/prefs.js
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/stylesheet-dark.css
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/stylesheet-light.css
-%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/windowPicker.js
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/workspaceIndicator.js
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.window-list.gschema.xml
 
@@ -152,9 +153,23 @@ See %_docdir/%name-%version/README for more information.
 %_datadir/gnome-shell/extensions/screenshot-window-sizer@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/screenshot-window-sizer@gnome-shell-extensions.%domain/stylesheet.css
 
+# system-monitor
+%dir %_datadir/gnome-shell/extensions/system-monitor@gnome-shell-extensions.%domain
+%_datadir/glib-2.0/schemas/org.gnome.shell.extensions.system-monitor.gschema.xml
+%_datadir/gnome-shell/extensions/system-monitor@gnome-shell-extensions.%domain/extension.js
+%_datadir/gnome-shell/extensions/system-monitor@gnome-shell-extensions.%domain/metadata.json
+%_datadir/gnome-shell/extensions/system-monitor@gnome-shell-extensions.%domain/stylesheet.css
+%_datadir/gnome-shell/extensions/system-monitor@gnome-shell-extensions.%domain/icons/
+
 %doc NEWS README.md
 
 %changelog
+* Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
+* Mon Mar 04 2024 Yuri N. Sedunov <aris@altlinux.org> 46-alt0.9.rc
+- 46.rc
+
 * Sat Dec 02 2023 Yuri N. Sedunov <aris@altlinux.org> 45.2-alt1
 - 45.2
 

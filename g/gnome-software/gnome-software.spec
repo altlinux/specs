@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define plugins_ver 20
 %define _libexecdir %_prefix/libexec
@@ -36,7 +36,7 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Software manager for GNOME
@@ -186,6 +186,7 @@ _EOF_
 %_datadir/glib-2.0/schemas/org.gnome.software.gschema.xml
 %_datadir/glib-2.0/schemas/00_org.gnome.software.gschema.override
 %_datadir/metainfo/%xdg_name.metainfo.xml
+%_datadir/bash-completion/completions/%name
 %_datadir/metainfo/%xdg_name.Plugin.Epiphany.metainfo.xml
 %{?_enable_flatpak:%_datadir/metainfo/%xdg_name.Plugin.Flatpak.metainfo.xml}
 %{?_enable_fwupd:%_datadir/metainfo/%xdg_name.Plugin.Fwupd.metainfo.xml}
@@ -201,6 +202,9 @@ _EOF_
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Fri Mar 15 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Fri Jan 05 2024 Yuri N. Sedunov <aris@altlinux.org> 45.3-alt1
 - 45.3
 

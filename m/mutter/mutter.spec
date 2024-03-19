@@ -3,10 +3,10 @@
 
 %def_disable snapshot
 
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 # %%ver_major - 32
-%define api_ver 13
+%define api_ver 14
 %define sover 0
 %define xdg_name org.gnome.mutter
 %define _libexecdir %_prefix/libexec
@@ -20,7 +20,7 @@
 %def_disable libdisplay_info
 
 Name: mutter
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 Epoch: 1
 
@@ -34,12 +34,13 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %else
 Source: %name-%version%beta.tar
 %endif
-Patch: mutter-40.0-alt-gsettings_desktop_schemas_dep.patch
 
 %define pkglibdir %_libdir/%name-%api_ver
 %define pkgdatadir %_datadir/%name-%api_ver
 
-%{?_enable_installed_tests:%add_python3_path %_libexecdir/installed-tests/%name-%api_ver/}
+%{?_enable_installed_tests:%add_python3_path %_libexecdir/installed-tests/%name-%api_ver/
+%add_python3_req_skip logind_helpers
+}
 %add_findprov_lib_path %pkglibdir
 %set_typelibdir %pkglibdir
 %set_girdir %pkglibdir
@@ -79,7 +80,7 @@ Requires: lib%name = %EVR
 %{?_enable_remote_desktop:Requires: pipewire >= %pipewire_ver}
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
-BuildRequires: meson /proc xvfb-run
+BuildRequires: meson /proc xvfb-run python3(dbusmock)
 #BuildRequires: catchsegv
 BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: pkgconfig(gdk-pixbuf-2.0)
@@ -88,6 +89,7 @@ BuildRequires: libgtk4-devel >= %gtk4_ver
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libpango-devel >= %pango_ver
 BuildRequires: libcairo-devel >= %cairo_ver
+BuildRequires: pkgconfig(pixman-1)
 BuildRequires: libjson-glib-devel >= %json_glib_ver
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: libXcomposite-devel libXfixes-devel libXrender-devel
@@ -176,7 +178,6 @@ the functionality of the installed Mutter.
 
 %prep
 %setup -n %name-%version%beta
-%patch
 # we have no catchsegv
 sed -i '/catchsegv/d' meson.build
 # https://gitlab.gnome.org/GNOME/mutter/-/issues/2210 (fixed)
@@ -272,6 +273,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 1:46.0-alt1
+- 46.0
+
 * Mon Feb 12 2024 Yuri N. Sedunov <aris@altlinux.org> 1:45.4-alt1
 - 45.4
 

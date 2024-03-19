@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define xdg_name org.gnome.Kiosk
 
@@ -23,8 +23,8 @@ Source: %name-%version%beta.tar
 
 %define glib_ver 2.68.0
 %define gtk4_ver 4.0
-%define mutter_api_ver 13
-%define mutter_ver 45
+%define mutter_api_ver 14
+%define mutter_ver 46
 %define ibus_ver 1.5.24
 
 Requires: dconf gnome-settings-daemon
@@ -49,7 +49,7 @@ Group: Graphical desktop/GNOME
 BuildArch: noarch
 Requires: %name = %EVR
 Requires: gnome-session
-Requires: gedit
+Requires: gnome-text-editor
 
 %description session-script
 This package generates a shell script and the necessary scaffolding to
@@ -109,6 +109,9 @@ sed -i 's|/usr/\(bin/sh\)|\1|' kiosk-script/%name-script
 %_datadir/wayland-sessions/%xdg_name.SearchApp.Session.desktop
 
 %changelog
+* Mon Mar 18 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 

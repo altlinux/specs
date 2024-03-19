@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
@@ -10,7 +10,7 @@
 %def_enable malcontent
 
 Name: gnome-initial-setup
-Version: %ver_major.4.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Initial Setup
@@ -28,7 +28,7 @@ Source: %name-%version%beta.tar
 %define nm_ver 1.2
 %define nma_ver 1.0
 %define glib_ver 2.64.0
-%define gtk4_ver 3.12.0
+%define gtk4_ver 4.12
 %define adwaita_ver 1.4
 %define secret_ver 0.18.8
 %define geoclue_ver 2.4.3
@@ -43,8 +43,6 @@ Source: %name-%version%beta.tar
 
 #Requires: gnome-shell >= 3.37.92 gdm
 #Requires: gnome-online-accounts >= %goa_ver
-# to avoid conflict between webki2gtk{4.1,6.0}-debuginfo
-%add_debuginfo_skiplist %_libexecdir/*
 
 Requires: gdm dconf geoclue2 >= %geoclue_ver
 Requires: gsettings-desktop-schemas >= %gsds_ver
@@ -102,7 +100,6 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %files -f %name.lang
 %_libexecdir/%name
 %_libexecdir/%name-copy-worker
-%_libexecdir/%name-goa-helper
 %_sysconfdir/xdg/autostart/%name-copy-worker.desktop
 %_sysconfdir/xdg/autostart/%name-first-login.desktop
 %_desktopdir/%name.desktop
@@ -120,6 +117,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README* NEWS
 
 %changelog
+* Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Mon Feb 12 2024 Yuri N. Sedunov <aris@altlinux.org> 45.4.1-alt1
 - 45.4.1
 

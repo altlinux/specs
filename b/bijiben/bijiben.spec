@@ -1,59 +1,62 @@
 %def_enable snapshot
 
+%define _name gnome-notes
 %define ver_major 41
 %define beta .alpha
 %define xdg_name org.gnome.Notes
 %define _libexecdir %_prefix/libexec
-# dropped since 40.0
-%def_disable zeitgeist
 
 Name: bijiben
 Version: %ver_major
-Release: alt0.1%beta
+Release: alt0.2%beta
 
-Summary: Note editor for GNOME
+Summary: GNOME Notes
 License: GPL-3.0
 Group: Graphical desktop/GNOME
-Url: https://wiki.gnome.org/Apps/Bijiben
+Url: https://wiki.gnome.org/Apps/Notes
+Vcs: https://gitlab.gnome.org/GNOME/gnome-notes.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Source: %name-%version%beta.tar
+Source: %_name-%version%beta.tar
 %endif
 
-%define glib_ver 2.54
-%define gtk_ver 3.20
+Provides: %_name = %EVR
+# to avoid conflict between webki2gtk{4.1,6.0}-debuginfo
+%add_debuginfo_skiplist %_bindir/* %_libexecdir/*
+
+%define glib_ver 2.68
+%define gtk_ver 4.8
+%define adw_ver 1.2
 %define tracker_api_ver 3.0
 %define tracker_ver 3.0
 %define eds_ver 3.45.1
-%define webkit_api_ver 4.1
-%define webkit_ver 2.36
+%define webkit_api_ver 6.0
+%define webkit_ver 2.40
 
-Requires: dconf tracker-miners3 >= %tracker_ver
+Requires: dconf tracker3 tracker-miners3 >= %tracker_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg
-BuildRequires: meson yelp-tools libappstream-glib-devel
-BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: meson yelp-tools
+BuildRequires: libgtk4-devel >= %gtk_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: pkgconfig(tracker-sparql-%tracker_api_ver) >= %tracker_ver
-BuildRequires: libxml2-devel pkgconfig(webkit2gtk-%webkit_api_ver) >= %webkit_ver
+BuildRequires: libxml2-devel pkgconfig(webkitgtk-%webkit_api_ver) >= %webkit_ver
 BuildRequires: libgnome-online-accounts-devel libuuid-devel
 BuildRequires: evolution-data-server-devel >= %eds_ver libcurl-devel
 BuildRequires: libical-devel libicu-devel libjson-glib-devel
-BuildRequires: pkgconfig(libhandy-1)
-%{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel}
 
 %description
-Bijiben is an attempt to design an intuitive note editor with strong
-desktop integration.
+GNOME Notes (Bijiben) is a simple application for creating, editing and
+viewing notes.
 
 %prep
-%setup -n %name-%version%beta
+%setup -n %_name-%version%beta
 
 %build
 %meson \
-	%{?_enable_zeitgeist:-Dzeitgeist=true} \
 	-Dupdate_mimedb=false
 # SMP-incompatible build
 %meson_build -j 1
@@ -63,7 +66,7 @@ desktop integration.
 %find_lang --with-gnome %name
 
 %check
-%meson_test
+%__meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -79,6 +82,10 @@ desktop integration.
 %doc README* AUTHORS NEWS
 
 %changelog
+* Wed Mar 06 2024 Yuri N. Sedunov <aris@altlinux.org> 41-alt0.2.alpha
+- updated to BIJIBEN_40_0-472-g1e8cc33
+- provides gnome-notes
+
 * Thu Sep 08 2022 Yuri N. Sedunov <aris@altlinux.org> 41-alt0.1.alpha
 - 41.alpha (BIJIBEN_40_0-243-ge700e1a)
 

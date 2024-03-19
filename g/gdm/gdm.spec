@@ -1,7 +1,7 @@
 %def_disable snapshot
 
-%define ver_major 45
-%define beta %nil
+%define ver_major 46
+%define beta .rc
 %define api_ver 1.0
 
 %define _libexecdir %_prefix/libexec
@@ -25,8 +25,8 @@
 %def_enable check
 
 Name: gdm
-Version: %ver_major.0.1
-Release: alt3.1%beta
+Version: %ver_major
+Release: alt0.9%beta
 
 Summary: The GNOME Display Manager
 License: GPL-2.0
@@ -110,6 +110,7 @@ BuildRequires: libdmx-devel
 BuildRequires: librsvg-devel perl-XML-Parser docbook-dtds xsltproc zenity
 BuildRequires: gobject-introspection-devel
 BuildRequires: libdaemon-devel libudev-devel
+BuildRequires: pkgconfig(dconf) pkgconfig(json-glib-1.0)
 %{?_enable_check:BuildRequires: /proc dbus-tools-gui}
 
 %description
@@ -238,6 +239,7 @@ dbus-run-session %__meson_test
 
 %files
 %_sbindir/gdm
+%_bindir/gdm-config
 %_bindir/gdm-screenshot
 %_bindir/gdmflexiserver
 %_libexecdir/gdm-host-chooser
@@ -246,6 +248,7 @@ dbus-run-session %__meson_test
 %_libexecdir/gdm-wayland-session
 %_libexecdir/gdm-x-session
 %_libexecdir/gdm-runtime-config
+%exclude %_libexecdir/gdm-auth-config-redhat
 %_pam_modules_dir/pam_gdm.so
 %_unitdir/gdm.service
 %_userunitdir/gnome-session@gnome-login.target.d/session.conf
@@ -307,6 +310,9 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Mon Mar 04 2024 Yuri N. Sedunov <aris@altlinux.org> 46-alt0.9.rc
+- 46.rc
+
 * Fri Feb 09 2024 Yuri N. Sedunov <aris@altlinux.org> 45.0.1-alt3.1
 - data/61-gdm.rules.in: /usr/lib/systemd/system-sleep/nvidia ->
   /lib/systemd/system-sleep/nvidia (ALT #49345)

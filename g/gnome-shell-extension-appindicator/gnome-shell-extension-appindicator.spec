@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 57
 %define beta %nil
@@ -10,7 +10,7 @@
 
 Name: gnome-shell-extension-appindicator
 Version: %ver_major
-Release: alt1
+Release: alt2
 
 Summary: AppIndicator, KStatusNotifierItem and legacy Tray icons extension for the GNOME Shell
 Group: Graphical desktop/GNOME
@@ -57,6 +57,9 @@ into GNOME Shell, including support for legacy tray icons.
 %doc AUTHORS.md README.md
 
 %changelog
+* Fri Mar 08 2024 Yuri N. Sedunov <aris@altlinux.org> 57-alt2
+- updated to v57-5-g03a7412 (gnome-46 support)
+
 * Fri Aug 18 2023 Yuri N. Sedunov <aris@altlinux.org> 57-alt1
 - 57
 

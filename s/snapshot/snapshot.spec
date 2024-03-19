@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define xdg_name org.gnome.Snapshot
 
@@ -7,27 +7,26 @@
 %def_enable check
 
 Name: snapshot
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Camera
 License: GPL-3.0
 Group: Video
-Url: https://gitlab.gnome.org/Incubator/snapshot
+Url: https:/apps.gnome.org/Snapshot
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Vcs: https://gitlab.gnome.org/Incubator/snapshot.git
+Vcs: https://gitlab.gnome.org/GNOME/snapshot.git
 Source: %name-%version%beta.tar
 %endif
 
 %define glib_ver 2.76
 %define pango_ver 1.51
-%define gtk_ver 4.11.3
-%define adwaita_ver 1.4
+%define gtk_ver 4.14
+%define adwaita_ver 1.5
 %define gst_ver 1.20
-%define heif_ver 1.14.2
 
 Provides: gnome-camera = %EVR
 Requires: gst-plugins-base1.0 >= %gst_ver
@@ -42,8 +41,6 @@ BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(gstreamer-video-1.0) >= %gst_ver
 BuildRequires: pkgconfig(gstreamer-plugins-bad-1.0) >= %gst_ver
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils clippy}
-#BuildRequires: pkgconfig(libheif) >= %heif_ver
-#BuildRequires: librsvg-devel libxml2-devel
 
 %description
 A simple application to take pictures and videos from camera on your
@@ -79,6 +76,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Fri Mar 15 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Thu Dec 28 2023 Yuri N. Sedunov <aris@altlinux.org> 45.2-alt1
 - 45.2
 

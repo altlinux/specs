@@ -1,11 +1,11 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 
 %def_enable check
 
 Name: xdg-desktop-portal-gnome
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Desktop Portal
@@ -15,7 +15,7 @@ Url: https://gitlab.gnome.org/GNOME/xdg-desktop-portal-gnome
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 
-%define xdg_desktop_portal_ver 1.17.0
+%define xdg_desktop_portal_ver 1.18.2
 
 Requires: xdg-desktop-portal-gtk >= 1.14
 Conflicts: xdg-desktop-portal-gtk < 1.12.0
@@ -55,6 +55,9 @@ to provide various portal features.
 
 
 %changelog
+* Mon Mar 18 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Sun Nov 26 2023 Yuri N. Sedunov <aris@altlinux.org> 45.1-alt1
 - 45.1
 

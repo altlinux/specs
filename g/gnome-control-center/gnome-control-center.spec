@@ -3,7 +3,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define api_ver 2.0
 %define xdg_name org.gnome.Settings
@@ -16,8 +16,8 @@
 %def_enable check
 
 Name: gnome-control-center
-Version: %ver_major.3
-Release: alt1.1%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: GNOME Control Center
 License: GPL-2.0-or-later
@@ -29,17 +29,17 @@ Source: %name-%version%beta.tar
 %else
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %endif
-Source1: https://github.com/eggert/tz/blob/main/zone.tab
+Source1: https://raw.githubusercontent.com/eggert/tz/main/zone.tab
 
 %define glib_ver 2.75.0
 %define gtk4_ver 4.9.3
 %define adwaita_ver 1.4
 %define desktop_ver 43
 %define fontconfig_ver 1.0.0
-%define gsds_ver 42
+%define gsds_ver 46
 # nm_client_get_permissions_state()
 %define nm_ver 1.24
-%define goa_ver 3.25.3
+%define goa_ver 3.49.1
 %define acc_ver 0.6.39
 %define sett_daemon_ver 42
 %define bt_api_ver 3.0
@@ -76,6 +76,7 @@ Requires: gnome-bluetooth%bt_api_ver
 Requires: NetworkManager-openvpn-gtk4
 Requires: NetworkManager-pptp-gtk4
 Requires: NetworkManager-vpnc-gtk4
+Requires: NetworkManager-l2tp-gtk4
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-systemd
 BuildRequires: meson desktop-file-utils gtk-doc xsltproc libappstream-glib-devel
@@ -96,7 +97,7 @@ BuildRequires: libpwquality-devel >= %pwq_ver libkrb5-devel libsmbclient-devel
 BuildRequires: gobject-introspection-devel libgtk4-gir-devel
 # for test-endianess
 BuildRequires: glibc-i18ndata
-BuildRequires: libnm-devel >= %nm_ver libmm-glib-devel pkgconfig(libnma-gtk4) gcr-libs-devel
+BuildRequires: libnm-devel >= %nm_ver libmm-glib-devel pkgconfig(libnma-gtk4) pkgconfig(gcr-4)
 BuildRequires: libgnome-online-accounts-devel >= %goa_ver
 BuildRequires: libaccountsservice-devel >= %acc_ver
 BuildRequires: libwacom-devel >= %wacom_ver
@@ -146,8 +147,8 @@ you'll want to install this package.
 %prep
 %setup -n %name-%version%beta
 # define TZ_DATA_FILE "/usr/share/zoneinfo/zone.tab"
-#sed -i 's|zone\.tab|zone1970.tab|' panels/datetime/tz.h
-sed -i 's|\(\/usr\/share\/\)zoneinfo\/\(zone.tab\)|\1%name/\2|' panels/datetime/tz.h
+#sed -i 's|zone\.tab|zone1970.tab|' panels/system/datetime/tz.h
+sed -i 's|\(\/usr\/share\/\)zoneinfo\/\(zone.tab\)|\1%name/\2|' panels/system/datetime/tz.h
 
 %build
 %meson \
@@ -167,10 +168,8 @@ xvfb-run %__meson_test
 
 %files
 %_bindir/%name
-%_libexecdir/cc-remote-login-helper
 %_libexecdir/%name-search-provider
 %_libexecdir/%name-print-renderer
-%_libexecdir/%name-goa-helper
 
 %files data -f %name.lang
 %dir %_datadir/%name
@@ -183,10 +182,11 @@ xvfb-run %__meson_test
 %_iconsdir/gnome-logo-text*.svg
 %_datadir/sounds/gnome/default/alerts/*.ogg
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/polkit-1/actions/org.gnome.controlcenter.datetime.policy
+%_datadir/polkit-1/actions/org.gnome.controlcenter.system.policy
 %_datadir/polkit-1/actions/org.gnome.controlcenter.user-accounts.policy
 %_datadir/polkit-1/rules.d/gnome-control-center.rules
 %_datadir/polkit-1/actions/org.gnome.controlcenter.remote-login-helper.policy
+%_datadir/polkit-1/actions/org.gnome.controlcenter.remote-session-helper.policy
 %_datadir/dbus-1/services/%xdg_name.SearchProvider.service
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
@@ -204,6 +204,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Mon Mar 18 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Tue Feb 27 2024 Yuri N. Sedunov <aris@altlinux.org> 45.3-alt1.1
 - used local copy of zone.tab for datetime panel
 

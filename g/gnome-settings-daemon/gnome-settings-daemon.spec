@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define xdg_name org.gnome.SettingsDaemon
 
@@ -13,7 +13,7 @@
 %def_disable tests
 
 Name: gnome-settings-daemon
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A program that manages general GNOME settings
@@ -26,15 +26,13 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version%beta.tar
 %endif
-# https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/merge_requests/338/diffs?commit_id=d304ae4ed6b8e8e0a56e7e1a4eac4a1698e166c7
-Patch10: %name-45.0-up-show-sleep-warning-conditional-to-chassis-type.patch
 
 %define glib_ver 2.58.0
 %define gtk_ver 3.16
 %define gnome_desktop_ver 3.37.1
 %define notify_ver 0.7.3
 %define pulse_ver 2.0
-%define gsds_ver 43
+%define gsds_ver 46
 %define colord_ver 0.1.9
 %define dconf_ver 0.8
 %define upower_ver 0.99.12
@@ -109,7 +107,6 @@ The %name-tests package provides programms for testing GSD plugins.
 
 %prep
 %setup -n %name-%version%beta
-%patch10 -p1
 
 %build
 %meson \
@@ -190,6 +187,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Fri Dec 22 2023 Yuri N. Sedunov <aris@altlinux.org> 45.1-alt1
 - 45.1
 

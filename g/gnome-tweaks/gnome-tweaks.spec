@@ -1,13 +1,15 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define old_name gnome-tweak-tool
 %define xdg_name org.gnome.tweaks
 %define pypi_name gtweak
 
+%def_enable check
+
 Name: gnome-tweaks
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A tool to customize advanced GNOME 3 options
@@ -24,13 +26,14 @@ Patch: %name-3.27.4-alt-desktop.patch
 
 BuildArch: noarch
 
-%define gsds_ver 45
-%define handy_ver 1.5.0
+%define gsds_ver 46
+%define adw_ver 1.4
+%define pygobject_ver 3.46.0
 
 Requires: gnome-settings-daemon >= %ver_major
 Requires: gsettings-desktop-schemas-devel >= %gsds_ver
 Requires: sound-theme-freedesktop
-Requires: typelib(Gtk) = 3.0 typelib(Handy) = 1
+Requires: typelib(Gtk) = 4.0 typelib(Adw) = 1
 
 Provides: %old_name = %version-%release
 Obsoletes: %old_name < 3.27.4
@@ -38,8 +41,11 @@ Obsoletes: %old_name < 3.27.4
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
 BuildRequires: meson
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
-BuildRequires: python3-module-pygobject3-devel >= 3.10.0
-BuildRequires: pkgconfig(libhandy-1) >= %handy_ver typelib(Handy) = 1
+BuildRequires: pkgconfig(gobject-introspection-1.0)
+BuildRequires: python3-module-pygobject3-devel >= %pygobject_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver typelib(Adw) = 1
+BuildRequires: pkgconfig(gudev-1.0)
+%{?_enable_check:BuildRequires:/usr/bin/appstreamcli desktop-file-utils}
 
 %description
 GNOME Tweaks is an application for changing the advanced settings
@@ -72,6 +78,9 @@ Features:
 %meson_install
 %find_lang %name
 
+%check
+%__meson_test
+
 %files -f %name.lang
 %_bindir/%name
 %python3_sitelibdir_noarch/%pypi_name/
@@ -83,6 +92,9 @@ Features:
 %doc AUTHORS NEWS README*
 
 %changelog
+* Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Mon Feb 12 2024 Yuri N. Sedunov <aris@altlinux.org> 45.1-alt1
 - 45.1
 

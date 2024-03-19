@@ -1,14 +1,14 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Calendar
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
 %def_disable gtk_doc
 
 Name: gnome-calendar
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Calendar application for GNOME
@@ -25,16 +25,16 @@ Source: %name-%version%beta.tar
 BuildRequires(pre): rpm-build-licenses rpm-build-gnome rpm-macros-meson
 
 %define glib_ver 2.68.0
-%define gtk4_ver 4.6.0
+%define gtk4_ver 4.11.2
 %define ical_ver 1.0.1
 %define eds_ver 3.46
 %define gsds_ver 3.21.2
 %define gweather_ver 3.99
 %define geocode_ver 3.26.3
-%define adwaita_ver 1.4
+%define adwaita_ver 1.5
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson yelp-tools /usr/bin/appstream-util
+BuildRequires: meson yelp-tools /usr/bin/appstreamcli
 BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk4_ver
 BuildRequires: libical-devel >= %ical_ver libicu-devel
 BuildRequires: libgnome-online-accounts-devel vala-tools
@@ -42,7 +42,7 @@ BuildRequires: gobject-introspection-devel
 BuildRequires: evolution-data-server-devel >= %eds_ver
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: libgweather4.0-devel >= %gweather_ver
-BuildRequires: libgeoclue2-devel pkgconfig(geocode-glib-2.0) >= %geocode_ver
+BuildRequires: pkgconfig(libgeoclue-2.0) pkgconfig(geocode-glib-2.0) >= %geocode_ver
 BuildRequires: libsoup3.0-devel
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
@@ -92,6 +92,9 @@ This package provides Calendar reference manual.
 %endif
 
 %changelog
+* Mon Mar 18 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Mon Oct 23 2023 Yuri N. Sedunov <aris@altlinux.org> 45.1-alt1
 - 45.1
 

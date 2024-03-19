@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 3.50
 %define api_ver 3.0
@@ -10,7 +10,7 @@
 
 Name: gnome-panel
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: The core programs for the GNOME GUI desktop environment
 License: GPL-2.0-or-later and LGPL-2.0-or-later and GFDL-1.1-or-later
@@ -194,6 +194,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Wed Mar 06 2024 Yuri N. Sedunov <aris@altlinux.org> 3.50.0-alt2
+- updated to 3.50.0-21-g32914fa2f
+
 * Sat Sep 23 2023 Yuri N. Sedunov <aris@altlinux.org> 3.50.0-alt1
 - 3.50.0
 

@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
@@ -12,7 +12,7 @@
 
 Name: gnome-session
 Version: %ver_major.0
-Release: alt1.1%beta
+Release: alt1%beta
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
 Group: Graphical desktop/GNOME
@@ -50,7 +50,7 @@ Requires: xdg-user-dirs
 Requires: icon-theme-hicolor gnome-icon-theme-symbolic gnome-themes-standard
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-systemd
-BuildRequires: meson libGConf2-devel
+BuildRequires: meson
 BuildRequires: libgio-devel glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 # https://bugzilla.gnome.org/show_bug.cgi?id=710383
@@ -59,7 +59,7 @@ BuildRequires: libgnome-desktop3-devel librsvg-devel libjson-glib-devel
 BuildRequires: libX11-devel libXau-devel libXrandr-devel libXrender-devel libXt-devel
 BuildRequires: libSM-devel libXext-devel libXtst-devel libXi-devel libXcomposite-devel
 BuildRequires: libGL-devel libGLES-devel
-BuildRequires: GConf browser-plugins-npapi-devel perl-XML-Parser xorg-xtrans-devel
+BuildRequires: browser-plugins-npapi-devel perl-XML-Parser xorg-xtrans-devel
 BuildRequires: docbook-utils
 %{?_enable_systemd:BuildRequires: pkgconfig(systemd) >= %systemd_ver libpolkit-devel}
 %{?_enable_consolekit:BuildRequires: libdbus-glib-devel}
@@ -145,7 +145,6 @@ export PATH=$PATH:/sbin
 %_datadir/%name/sessions/gnome-dummy.session
 
 %config %_datadir/glib-2.0/schemas/org.gnome.SessionManager.gschema.xml
-%_datadir/GConf/gsettings/%name.convert
 %{?_enable_man:
 %_man1dir/%name-inhibit.*
 %_man1dir/%name-quit.*
@@ -194,6 +193,9 @@ export PATH=$PATH:/sbin
 
 
 %changelog
+* Mon Mar 18 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Tue Oct 10 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1.1
 - moved xsessions to separate subpackage (ALT #47915)
 
