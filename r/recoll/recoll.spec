@@ -7,7 +7,7 @@
 
 Name: recoll
 Version: 1.37.4
-Release: alt1
+Release: alt1.1
 
 Summary: A personal full text search package
 Summary(ru_RU.UTF-8): Программа для полнотекстового поиска по файлам с различными форматами.
@@ -24,6 +24,8 @@ Source4: recoll_uk.qm
 # 1.24.1+ru
 Source5: recoll-searchgui.desktop
 Source100: recoll.watch
+
+Patch0: recoll-alt-default-8bit-encoding-for-ru.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -133,6 +135,7 @@ This package contains Python bindings for Recoll.
 
 %prep
 %setup -n %name-%version%pre
+%patch0 -p2
 
 sed -i 's/openoffice/loffice/' sampleconf/mimeview
 sed -i '/^Categories=/s/=/=Qt;/' desktop/*.desktop
@@ -208,6 +211,9 @@ chrpath -d %buildroot%_bindir/recollindex
 %python3_sitelibdir/*.so
 
 %changelog
+* Tue Mar 19 2024 Andrey Cherepanov <cas@altlinux.org> 1.37.4-alt1.1
+- NMU: set windows-1251 ad default 8-bit encoding for Russian
+
 * Tue Feb 06 2024 Michael Shigorin <mike@altlinux.org> 1.37.4-alt1
 - new version (watch file uupdate)
 
