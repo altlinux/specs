@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist HTML-Parser
 Name: perl-%dist
-Version: 3.81
+Version: 3.82
 Release: alt1
 
 Summary: Parsing and extracting information from HTML documents
@@ -41,6 +41,9 @@ mv t/headparser-http.t t/headparser-http.t.orig
 %perl_vendor_autolib/HTML
 
 %changelog
+* Tue Mar 19 2024 Igor Vlasenko <viy@altlinux.org> 3.82-alt1
+- automated CPAN update
+
 * Tue Jan 31 2023 Igor Vlasenko <viy@altlinux.org> 3.81-alt1
 - automated CPAN update
 
