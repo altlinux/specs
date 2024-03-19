@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 12.1.0
+Version: 12.6.1
 Release: alt1
 Summary: Install packages and run Python with them
 License: MIT
@@ -21,7 +21,6 @@ AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%add_pyproject_deps_check_filter pytest-ruff
 %pyproject_builddeps_metadata_extra testing
 %endif
 
@@ -54,6 +53,9 @@ interpreter run.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 12.6.1-alt1
+- 12.1.0 -> 12.6.1.
+
 * Mon Jul 24 2023 Stanislav Levin <slev@altlinux.org> 12.1.0-alt1
 - 10.1.1 -> 12.1.0.
 
