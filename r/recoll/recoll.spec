@@ -7,7 +7,7 @@
 
 Name: recoll
 Version: 1.37.4
-Release: alt1.1
+Release: alt2
 
 Summary: A personal full text search package
 Summary(ru_RU.UTF-8): Программа для полнотекстового поиска по файлам с различными форматами.
@@ -25,7 +25,7 @@ Source4: recoll_uk.qm
 Source5: recoll-searchgui.desktop
 Source100: recoll.watch
 
-Patch0: recoll-alt-default-8bit-encoding-for-ru.patch
+Patch: recoll-alt-default-8bit-encoding-for-ru.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -54,8 +54,8 @@ BuildRequires: qt5-webkit-devel
 %add_findreq_skiplist %_datadir/%name/examples/*
 
 %description
-Recoll is a personal full text search package based on a very strong
-backend (Xapian), for which it provides an easy to use, feature-rich,
+Recoll is a personal full-text search package based on a very powerful
+Xapian backend, for which it provides an easy to use, feature-rich,
 easy administration interface.
 
 See also recoll-extras package for somewhat more exotic stuff.
@@ -66,7 +66,7 @@ Note that this package has been built without its usual GUI.
 
 %description -l ru_RU.UTF-8
 Recoll - это персональный пакет полнотекстового поиска, основанный на очень
-мощном бэкенде (Xapian), для которого он предоставляет простой в использовании,
+мощном движке Xapian, для которого он предоставляет простой в использовании,
 многофункциональный, простой интерфейс администрирования.
 
 Смотрите также пакет recoll-extras для более сложных вещей.
@@ -98,9 +98,9 @@ This package contains additional helper scripts for recoll which might
 need bulky additional required packages, manual setup, or both.
 
 %description -l ru_RU.UTF-8 extras
-Этот пакет содержит дополнительные вспомогательные скрипты для recoll, которые
-могут потребовать громоздких дополнительных пакетов, ручной установки или
-и того и другого.
+Этот пакет содержит дополнительные вспомогательные скрипты для recoll,
+которые могут потребовать громоздких дополнительных пакетов, ручной установки
+или и того и другого.
 
 %package full
 Summary: All the recommended stuff for Recoll
@@ -109,6 +109,7 @@ BuildArch: noarch
 Requires: %name-extras = %version
 Requires: perl-Image-ExifTool
 Requires: antiword unrtf wv
+Requires: python3-module-%name
 Requires: python3-module-pychm python3-module-lxml
 Requires: aspell aspell-ru-rk
 Requires: xpdf-utils ghostscript-utils
@@ -119,7 +120,7 @@ This package contains just the requirements for additional packages
 that might be of use with Recoll.
 
 %description -l ru_RU.UTF-8 full
-Этот пакет содержит в себе все требуемые элементы для дополнительных пакетов
+Этот пакет содержит в себе все требуемые элементы для дополнительных пакетов,
 которые могут быть полезны при работе с Recoll.
 
 %package -n python3-module-%name
@@ -211,6 +212,10 @@ chrpath -d %buildroot%_bindir/recollindex
 %python3_sitelibdir/*.so
 
 %changelog
+* Tue Mar 19 2024 Michael Shigorin <mike@altlinux.org> 1.37.4-alt2
+- added R: python3-module-%name to -full subpackage
+  (closes: #49729; thx cas@)
+
 * Tue Mar 19 2024 Andrey Cherepanov <cas@altlinux.org> 1.37.4-alt1.1
 - NMU: set windows-1251 ad default 8-bit encoding for Russian
 
