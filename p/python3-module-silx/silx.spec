@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.2
-Release: alt2
+Version: 2.0.1
+Release: alt1
 Summary: Software library for X-Ray data analysis
 License: MIT
 Group: Development/Python3
@@ -26,6 +26,7 @@ BuildRequires: libnumpy-py3-devel
 %if_with check
 %add_pyproject_deps_check_filter 'hdf5plugin$'
 %add_pyproject_deps_check_filter 'pyopencl$'
+%add_pyproject_deps_check_filter 'bitshuffle$'
 %pyproject_builddeps_metadata_extra test
 %pyproject_builddeps_metadata_extra full
 # unbundled scipy.spatial
@@ -47,6 +48,7 @@ Group: Development/Python3
 Requires: %name
 %add_pyproject_deps_runtime_filter 'hdf5plugin$'
 %add_pyproject_deps_runtime_filter 'pyopencl$'
+%add_pyproject_deps_runtime_filter 'bitshuffle$'
 %pyproject_runtimedeps_metadata -- --extra full
 
 %description -n %name+full
@@ -86,14 +88,17 @@ This package contains examples for %pypi_name.
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
-# remove some third-party bundled stuff
-rm -r src/silx/third_party/_local
+# Fix shebangs
+grep -rlE '#!/usr/bin/(env )?python$' | xargs subst 's|^#!/usr/bin/\(env \)\?python$|#!/usr/bin/python3|'
 
 %build
 %pyproject_build
 
 %install
 %pyproject_install
+
+# manually install examples
+cp -a examples %buildroot%python3_sitelibdir/silx/
 
 %check
 %pyproject_run -- python run_tests.py --installed -ra -Wignore --low-mem
@@ -143,6 +148,9 @@ rm -r src/silx/third_party/_local
 %python3_sitelibdir/silx/examples
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 2.0.1-alt1
+- 1.1.2 -> 2.0.1.
+
 * Tue Jul 18 2023 Stanislav Levin <slev@altlinux.org> 1.1.2-alt2
 - Fixed FTBFS (numpy 1.25.0).
 
