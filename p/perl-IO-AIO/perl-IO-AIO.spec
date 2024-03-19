@@ -5,8 +5,8 @@ BuildRequires: perl-podlators
 Epoch: 3
 %define dist IO-AIO
 Name: perl-%dist
-Version: 4.8
-Release: alt1.1
+Version: 4.81
+Release: alt1
 
 Summary: Asynchronous Input/Output
 License: GPL or Artistic
@@ -76,6 +76,9 @@ scripts for %name
 
 
 %changelog
+* Tue Mar 19 2024 Igor Vlasenko <viy@altlinux.org> 3:4.81-alt1
+- automated CPAN update
+
 * Mon Apr 03 2023 Igor Vlasenko <viy@altlinux.org> 3:4.8-alt1.1
 - automated CPAN update
 
