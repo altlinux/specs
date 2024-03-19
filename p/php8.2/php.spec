@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  2
-%define _php_release_version 16
+%define _php_release_version 17
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -465,6 +465,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Tue Mar 19 2024 Anton Farygin <rider@altlinux.ru> 8.2.17-alt1
+- 8.2.16 -> 8.2.17
+
 * Wed Feb 14 2024 Anton Farygin <rider@altlinux.ru> 8.2.16-alt1
 - 8.2.15 -> 8.2.16
 - ALT patches for the build system have been updated to the new version and

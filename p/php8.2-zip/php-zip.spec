@@ -14,7 +14,7 @@ Source2:	php-%php_extension-params.sh
 BuildRequires(pre): rpm-build-php8.2-version
 
 BuildRequires: libzip-devel zlib-devel
-BuildRequires: php-devel = %php_version
+BuildRequires: php-devel = %php_version /proc
 
 %description
 This module enables you to transparently read ZIP compressed archives and the files inside them.
