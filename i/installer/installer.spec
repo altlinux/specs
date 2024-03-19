@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.15.3
+Version: 1.15.4
 Release: alt1
 
 Summary: Installer common parts
@@ -105,6 +105,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Mon Mar 18 2024 Anton Midyukov <antohami@altlinux.org> 1.15.4-alt1
+- install2: set HOSTNAME=localhost.localdomain if HOSTNAME=(none)
+
 * Mon Feb 19 2024 Anton Midyukov <antohami@altlinux.org> 1.15.3-alt1
 - install2: fix debug_shell when boot with make-initrd-bootchain
 - install2: enable unicode for virtual tty's
