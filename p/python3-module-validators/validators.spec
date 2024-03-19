@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.22.0
+Version: 0.23.0
 Release: alt1
 
 Summary: Python data validation for Humans
@@ -21,7 +21,8 @@ Source1: %pyproject_deps_config_name
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra testing
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -34,6 +35,9 @@ schema.
 %setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pdm testing
+%endif
 
 %build
 %pyproject_build
@@ -50,6 +54,9 @@ schema.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 0.23.0-alt1
+- 0.22.0 -> 0.23.0.
+
 * Fri Mar 01 2024 Stanislav Levin <slev@altlinux.org> 0.22.0-alt1
 - 0.21.2 -> 0.22.0.
 
