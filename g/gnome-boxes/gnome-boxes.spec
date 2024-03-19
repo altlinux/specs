@@ -1,16 +1,17 @@
 # since 3.29.x depends on modules in %_libdir/%%name
 %set_verify_elf_method unresolved=relaxed
 
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define xdg_name org.gnome.Boxes
+%def_enable check
 %def_disable installed_tests
 
 Name: gnome-boxes
 Version: %ver_major.0
-Release: alt2%beta
+Release: alt1%beta
 
 Summary: A GNOME 3 application to access virtual systems
 Group: Emulators
@@ -49,8 +50,7 @@ Requires: fuseiso
 Requires: mtools
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson vala-tools
-BuildRequires: yelp-tools /usr/bin/appstream-util /usr/bin/desktop-file-validate
+BuildRequires: meson vala-tools yelp-tools
 BuildRequires: gobject-introspection-devel >= 0.9.6
 BuildRequires: libvala-devel >= 0.28.0.16
 BuildRequires: glib2-devel >= %glib_ver libgio-devel >= %glib_ver
@@ -68,6 +68,8 @@ BuildRequires: libsoup3.0-devel >= %soup3_ver
 BuildRequires: libarchive-devel >= %libarchive_ver
 BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver) >= %webkit_ver
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
+BuildRequires: pkgconfig(libportal-gtk3)
+%{?_enable_check:BuildRequires: yelp-tools /usr/bin/appstreamcli /usr/bin/desktop-file-validate}
 
 %description
 gnome-boxes lets you easily create, setup, access, and use:
@@ -102,6 +104,9 @@ the functionality of the Boxes.
 %meson_install
 %find_lang %name --with-gnome
 
+%check
+%__meson_test
+
 %files -f %name.lang
 %doc README* NEWS
 %_bindir/%name
@@ -125,6 +130,9 @@ the functionality of the Boxes.
 %exclude %_includedir/%name/
 
 %changelog
+* Tue Mar 19 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Sun Mar 03 2024 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt2
 - updated to 45.0-24-g9c5bb93e
 - added libvirt, libvirt-kvm to runtime dependencies (ALT #35457)
