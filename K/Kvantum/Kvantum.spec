@@ -1,5 +1,9 @@
+%def_without clang
+%def_enable qt4
+%def_enable qt5
+
 Name: Kvantum
-Version: 1.0.10
+Version: 1.1.0
 Release: alt1
 
 Summary: SVG-based theme engine for Qt5, KDE and LXQt
@@ -11,12 +15,30 @@ Url: https://github.com/tsujan/Kvantum
 Source: %name-%version.tar.gz
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-BuildPreReq: rpm-build-ninja desktop-file-utils
-BuildRequires: gcc-c++ cmake libX11-devel libXext-devel libqt4-devel qt5-base-devel qt5-tools-devel qt5-svg-devel qt5-x11extras-devel kf5-kwindowsystem-devel icon-theme-hicolor
+BuildPreReq: rpm-build-ninja desktop-file-utils rpm-macros-qt6
+BuildRequires: cmake qt6-svg-devel qt6-tools-devel
+
+%if_with clang
+BuildRequires: clang-devel lld-devel
+%else
+BuildRequires: gcc-c++
+%endif
+
+%if_enabled qt4
+BuildPreReq: rpm-macros-qt4
+BuildRequires: libqt4-devel
+%endif
+
+%if_enabled qt5
+BuildPreReq: rpm-macros-qt5
+BuildRequires: qt5-svg-devel qt5-x11extras-devel kf5-kwindowsystem-devel
+Requires: %name-qt5
+%endif
+
 Requires: %name-data
 
 %description
-Kvantum is an SVG-based theme engine for Qt5, KDE and LXQt, with an emphasis
+Kvantum is an SVG-based theme engine for Qt6, KDE and LXQt, with an emphasis
 on elegance, usability and practicality.
 
 Kvantum has a default dark theme, which is inspired by the default theme of
@@ -27,36 +49,95 @@ photorealistic or cartoonish, 3D or flat, embellished or minimalistic, or
 something in between, and Kvantum will let you control almost every aspect of
 Qt widgets.
 
-Kvantum also comes with extra themes that are installed as root with Qt5
+Kvantum also comes with extra themes that are installed as root with Qt6
 installation and can be selected and activated by using Kvantum Manager.
 
 %package data
-Summary: SVG-based theme engine for Qt5, KDE and LXQt
+Summary: SVG-based theme engine for Qt6, KDE and LXQt
 Group: Graphical desktop/Other
 BuildArch: noarch
 
 %description data
-Kvantum is an SVG-based theme engine for Qt5, KDE and LXQt, with an emphasis
+Kvantum is an SVG-based theme engine for Qt6, KDE and LXQt, with an emphasis
 on elegance, usability and practicality.
 
 This package contains the data needed for Kvantum.
+
+%if_enabled qt4
+%package qt4
+Summary: Qt4 plugins for %name
+Group: Graphical desktop/Other
+
+%description qt4
+This packages provides qt4 plugins for %name.
+%endif
+
+%if_enabled qt5
+%package qt5
+Summary: Qt5 plugins for %name
+Group: Graphical desktop/Other
+
+%description qt5
+This packages provides qt5 plugins for %name.
+%endif
+
+%package qt6
+Summary: Qt6 plugins for %name
+Group: Graphical desktop/Other
+
+%description qt6
+This packages provides qt6 plugins for %name.
 
 %prep
 %setup
 
 %build
+%if_with clang
+%define optflags_lto -flto=thin
+export CC=clang
+export CXX=clang++
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
+%endif
+
 %ifarch %e2k
 # -std=c++03 by default as of lcc 1.23.12
 %add_optflags -std=c++11
 %endif
-%cmake \
+
+%if_enabled qt4
+%cmake -B build4 \
  -GNinja \
  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+ -DENABLE_QT4=ON \
 #
-cmake --build "%_cmake__builddir" -j%__nprocs
+cmake --build "build4" -j%__nprocs
+%endif
+
+%if_enabled qt5
+%cmake -B build5 \
+ -GNinja \
+ -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+ -DENABLE_QT5=ON \
+#
+cmake --build "build5" -j%__nprocs
+%endif
+
+%cmake -B build6 \
+ -GNinja \
+ -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+ -DWITHOUT_KF=ON \
+#
+cmake --build "build6" -j%__nprocs
 
 %install
-%cmake_install
+export DESTDIR="%buildroot"
+%if_enabled qt4
+cmake --install "build4/style" --verbose
+%endif
+%if_enabled qt5
+cmake --install "build5/style" --verbose
+%endif
+cmake --install "build6" --verbose
 
 # desktop-file-validate doesn't recognize LXQt
 sed -i "s|LXQt|X-LXQt|" %buildroot%_desktopdir/kvantummanager.desktop
@@ -69,7 +150,6 @@ desktop-file-validate %buildroot%_desktopdir/kvantummanager.desktop
 %doc ChangeLog NEWS README.md
 %_bindir/kvantummanager
 %_bindir/kvantumpreview
-%_qt5_plugindir/styles/libkvantum.so
 
 %files data -f %name.lang
 %_datadir/Kvantum
@@ -86,7 +166,24 @@ desktop-file-validate %buildroot%_desktopdir/kvantummanager.desktop
 %dir %_iconsdir/hicolor/scalable/apps
 %_iconsdir/hicolor/scalable/apps/kvantum.svg
 
+%if_enabled qt4
+%files qt4
+%_qt4dir/plugins/styles/libkvantum.so
+%endif
+
+%if_enabled qt5
+%files qt5
+%_qt5_plugindir/styles/libkvantum.so
+%endif
+
+%files qt6
+%_qt6_plugindir/styles/libkvantum.so
+
 %changelog
+* Tue Mar 19 2024 Leontiy Volodin <lvol@altlinux.org> 1.1.0-alt1
+- 1.1.0.
+- Switched to qt6 by upstream.
+
 * Tue Apr 11 2023 Leontiy Volodin <lvol@altlinux.org> 1.0.10-alt1
 - 1.0.10.
 
