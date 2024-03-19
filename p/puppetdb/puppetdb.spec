@@ -7,7 +7,7 @@
 
 Name:          puppetdb
 Version:       8.4.1
-Release:       alt1
+Release:       alt2
 Summary:       Centralized Puppet Storage
 License:       Apache-2.0
 Group:         Other
@@ -81,7 +81,7 @@ speed with a powerful API.
 
 %package       -n gem-puppetdb-terminus
 Version:       3.0.0
-Release:       alt1
+Release:       alt2
 Summary:       Connect Puppet to PuppetDB by setting up a terminus for PuppetDB
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -98,7 +98,7 @@ Puppet terminus files to connect to PuppetDB
 %if_enabled    doc
 %package       -n puppetdb-terminus-doc
 Version:       3.0.0
-Release:       alt1
+Release:       alt2
 Summary:       Connect Puppet to PuppetDB by setting up a terminus for PuppetDB documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puppetdb-terminus
 Group:         Development/Documentation
@@ -119,7 +119,7 @@ Puppet terminus files to connect to PuppetDB
 %if_enabled    devel
 %package       -n puppetdb-terminus-devel
 Version:       3.0.0
-Release:       alt1
+Release:       alt2
 Summary:       Connect Puppet to PuppetDB by setting up a terminus for PuppetDB development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puppetdb-terminus
 Group:         Development/Ruby
@@ -168,6 +168,7 @@ install -d -m 0755 %buildroot%_javadir/%name/cli
 install -d -m 0755 %buildroot%_javadir/%name/cli/apps
 install -d -m 0755 %buildroot%_logdir/%name
 install -d -m 0755 %buildroot%_localstatedir/%name
+ln -svr %buildroot%_libexecdir/%name/.m2 %buildroot%_localstatedir/%name/.m2
 
 install resources/ext/ezbake.conf %buildroot%_sysconfdir/%name/ezbake.conf
 install resources/ext/config/conf.d/auth.conf %buildroot%_sysconfdir/%name/conf.d/auth.conf
@@ -184,14 +185,16 @@ install -m 0755 resources/ext/cli/config-migration %buildroot%_javadir/%name/cli
 install -m 0755 resources/ext/cli/upgrade %buildroot%_javadir/%name/cli/apps/upgrade
 #ruby -rerb -e 'File.open("resources/ext/cli/ssl-setup.erb", "w") { |f| f.puts ERB.new(IO.read("%buildroot%_javadir/%name/cli/apps/ssl-setup")).result }'
 #ruby -rerb -e 'File.open("resources/ext/cli/delete-reports.erb", "w") { |f| f.puts ERB.new(IO.read("%buildroot%_javadir/%name/cli/apps/delete-reports")).result }'
+cp -pr .m2 %buildroot%_libexecdir/%name/
 
 %check
 %ruby_test
 
 %pre
 getent group _puppetdb > /dev/null || groupadd -r _puppetdb || :
-useradd -r --gid _puppetdb --home %_localstatedir/%name --shell $(which nologin) \
-    --comment "puppetdb daemon"  _puppetdb || :
+getent passwd _puppetdb >/dev/null || \
+   useradd -r --gid _puppetdb --home %_localstatedir/%name --shell $(which nologin) \
+   --comment "puppetdb daemon"  _puppetdb || :
 
 %post
 %post_service %name
@@ -204,7 +207,7 @@ useradd -r --gid _puppetdb --home %_localstatedir/%name --shell $(which nologin)
 %_libexecdir/%name
 %_unitdir/%name.service
 %dir %_sysconfdir/%name
-%dir %attr(0770,_puppetdb,_puppetdb) %_localstatedir/%name
+%attr(0770,_puppetdb,_puppetdb) %_localstatedir/%name
 %if_enabled initd
 %_initdir/%name
 %_tmpfilesdir/puppetdb.tmpfiles.conf
@@ -252,6 +255,10 @@ useradd -r --gid _puppetdb --home %_localstatedir/%name --shell $(which nologin)
 
 
 %changelog
+* Tue Mar 19 2024 Pavel Skrylev <majioa@altlinux.org> 8.4.1-alt2
+- + added prebuild bundle clojes
+- ! fixed spec minorly
+
 * Fri Mar 15 2024 Pavel Skrylev <majioa@altlinux.org> 8.4.1-alt1
 - ^ 7.12.0 -> 8.4.1
 
