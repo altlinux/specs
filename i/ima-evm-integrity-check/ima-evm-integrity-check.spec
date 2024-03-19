@@ -1,29 +1,39 @@
+%define _unpackaged_files_terminate_build 1
+%def_without old_make_initrd
+
 Name: ima-evm-integrity-check
-Version: 0.5.0
+Version: 0.6.1
 Release: alt1
 
 Summary: IMA/EVM integrity check
 License: %gpl2plus
 Group: System/Base
+Packager: Denis Medvedev <nbr@altlinux.org>
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: make-initrd
+BuildRequires: bash4
 
-Requires: make-initrd-integrity
+BuildArch: noarch
 
-%define _unpackaged_files_terminate_build 1
+Requires: make-initrd-integrity = %version-%release
+%if_without old_make_initrd
+Requires: make-initrd >= 2.0.0
+%endif
+
+Conflicts: cert-distro-updater
 
 %description
-This package make use of the IMA and EVM technologies from the Linux integrity
-subsystem.
-Basically IMA and EVM provide the following functionality:
+This package make use of the IMA and EVM technologies from the Linux
+integrity subsystem. Basically IMA and EVM provide the following
+functionality:
 
-- measurement (hashing) of file content as it is accessed and keeping track of
-  this information in an audit log.
-- appraisal of files, which allows to prevent access when a measurement (hash)
-  or digital signature does not match the expected value.
+- measurement (hashing) of file content as it is accessed and keeping
+  track of this information in an audit log;
+- appraisal of files, which allows to prevent access when
+  a measurement (hash) or digital signature does not match
+  the expected value.
 
 This package requires kernel with corresponding config options enabled.
 
@@ -33,10 +43,13 @@ Group: System/Base
 
 # For put-file utility
 Requires: make-initrd >= 0.7.6-alt1
+%if_with old_make_initrd
+Conflicts: make-initrd >= 2.0.0
+%endif
+
 Requires: keyutils ima-evm-utils
 Requires: filesystem >= 2.3.13-alt1.M80C.1
-
-BuildArch: noarch
+Conflicts: cert-distro-updater
 
 %description -n make-initrd-integrity
 Integrity check feature for make-initrd
@@ -45,43 +58,82 @@ Integrity check feature for make-initrd
 %setup
 
 %build
-LIBDIRS="/%_lib %_libdir"
-if [ %_lib = lib64 ]; then
-	# There is some shared objects too
-	LIBDIRS="$LIBDIRS /lib %_usr/lib"
-fi
-LIBEXECDIRS="%_usr/libexec $LIBDIRS"
-
-sed -r -e "s;@LIBDIRS@;$LIBDIRS;" -e "s;@EXECLIBDIRS@;$LIBEXECDIRS;" integrity-sign.in >integrity-sign
-chmod +x integrity-sign
+%make_build libdir=%_libdir prefix=%_prefix sysconfdir=%_sysconfdir WITH_OLD_MI=%{with old_make_initrd}
 
 %install
-install -pD -m 750 integrity-sign %buildroot%_sbindir/integrity-sign
-
-# make-initrd feature
-mkdir -p %buildroot%_sysconfdir/integrity/
-mkdir -p %buildroot%_datadir/integrity/
-mkdir -p %buildroot%_datadir/make-initrd/features/integrity/
-cp -a make-initrd/*.mk %buildroot%_datadir/make-initrd/features/integrity/
-
-MI_VERSION="$(/usr/sbin/make-initrd --version | sed -n -r 's;^make-initrd version ([[:digit:]]+)\..*;\1;p')"
-if [ -n "$MI_VERSION" ] && [ "$MI_VERSION" -ge 2 ]; then
-	install -pD -m 755 make-initrd/integrity.init %buildroot%_datadir/make-initrd/features/integrity/data/etc/rc.d/init.d/integrity
-else
-	mkdir -p %buildroot%_datadir/make-initrd/features/integrity/data/lib/initrd/modules/
-	cp -a make-initrd/085-integrity %buildroot%_datadir/make-initrd/features/integrity/data/lib/initrd/modules/
-fi
+%makeinstall_std bindir=%_bindir sbindir=%_sbindir sysconfdir=%_sysconfdir datadir=%_datadir unitdir=%_unitdir libdir=%_libdir prefix=%_prefix controldir=%_controldir WITH_OLD_MI=%{with old_make_initrd}
 
 %files
-%doc policy.example
+%doc README
+%_sbindir/integrity-applier
+%_sbindir/integrity-remover
 %_sbindir/integrity-sign
+%_sbindir/signing
+%_controldir/ima_appraise
+%_controldir/ima_hash
+%_sbindir/bootloader-utils.bash
+%_unitdir/signing.service
+%config(noreplace) %_sysconfdir/sysconfig/integrity
+%_sysconfdir/integrity/config
 
 %files -n make-initrd-integrity
-%dir %_sysconfdir/integrity/
-%dir %_datadir/integrity/
-%_datadir/make-initrd/features/integrity
+%dir %_sysconfdir/integrity
+%_datadir/integrity
+%dir %_datadir/make-initrd/features/integrity
+%_datadir/make-initrd/features/integrity/*.mk
+%dir %_datadir/make-initrd/features/integrity/data
+%if_without old_make_initrd
+%dir %_datadir/make-initrd/features/integrity/data/etc
+%dir %_datadir/make-initrd/features/integrity/data/etc/rc.d
+%dir %_datadir/make-initrd/features/integrity/data/etc/rc.d/init.d
+%_datadir/make-initrd/features/integrity/data/etc/rc.d/init.d/integrity
+%else
+%dir %_datadir/make-initrd/features/integrity/data/lib
+%dir %_datadir/make-initrd/features/integrity/data/lib/initrd
+%dir %_datadir/make-initrd/features/integrity/data/lib/initrd/modules
+%_datadir/make-initrd/features/integrity/data/lib/initrd/modules/085-integrity
+%endif
 
 %changelog
+* Tue Mar 19 2024 Paul Wolneykien <manowar@altlinux.org> 0.6.1-alt1
+- Make integalert dependency optional.
+- Fixed exit when integalert is disabled.
+
+* Mon Mar 18 2024 Paul Wolneykien <manowar@altlinux.org> 0.6.0-alt2
+- Fix: Own make-initrd/features/integrity/** directories.
+
+* Mon Mar 18 2024 Paul Wolneykien <manowar@altlinux.org> 0.6.0-alt1
+- signing.service: Output to tty.
+- Install the default IMA policy.
+- Make a configuration shorthand: /etc/integrity/config ->
+  /etc/sysconfig/integrity.
+- Configure modules and files for the 'integrity' make-initrd feature
+  with INTEGRITY_FEATURES variable.
+- Don't create /etc/noupdate.
+- Use /var/lib/integrity_update directory for state files.
+- Don't touch initrd from within integrity-sign script.
+- Fix: Declare the missing -a short option in integrity-applier.
+- Support -G | --disable-graphics option in integrity-applier.
+- Rename: --hash instead of --hashalgo in integrity-sign.
+- Configure the default behavior via /etc/sysconfig/integrity.
+- Added two control facilities: 'ima_appraise' and 'ima_hash'.
+- Read 'ima_hash=' from the kernel command line.
+- Fix/improve 'usage'.
+- Fix/improve some messages.
+- Place temp files in integrity-sign.XXXXXXXX temp dir.
+- Report error on problems with reading the certificate.
+- Exit with error in case of unknown hash algo.
+- Fixed 'verify' action of integrity-sign utility.
+- Add support for generation of GOST keys.
+- Run signing.service manually (thx Denis Medvedev).
+
+* Tue Feb 13 2024 Denis Medvedev <nbr@altlinux.org> 0.5.2-alt1
+- changed operations to manual signing.
+
+* Mon Dec 25 2023 Denis Medvedev <nbr@altlinux.org> 0.5.1-alt1
+- Initial release, based on ima-evm-integrity-check and parts of
+cert-distro-updater
+
 * Tue Apr 09 2019 Mikhail Efremov <sem@altlinux.org> 0.5.0-alt1
 - integrity-sign: Fix chattr tmpdir cleanup.
 - integrity-sign: Create new initrd by default.
@@ -104,6 +156,3 @@ fi
 * Thu Nov 01 2018 Mikhail Efremov <sem@altlinux.org> 0.2-alt0.M80C.1
 - integrity-sign: Make signed files immutable.
 - integrity-sign: Use single command to sign files.
-
-* Wed Oct 24 2018 Mikhail Efremov <sem@altlinux.org> 0.1-alt0.M80C.1
-- Initial build.
