@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define ver_major 46
-%define beta .rc
+%define beta %nil
 %define api_ver 1.0
 
 %define _libexecdir %_prefix/libexec
@@ -25,8 +25,8 @@
 %def_enable check
 
 Name: gdm
-Version: %ver_major
-Release: alt0.9%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: The GNOME Display Manager
 License: GPL-2.0
@@ -310,6 +310,9 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Tue Mar 19 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Mon Mar 04 2024 Yuri N. Sedunov <aris@altlinux.org> 46-alt0.9.rc
 - 46.rc
 
