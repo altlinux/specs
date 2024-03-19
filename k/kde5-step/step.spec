@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Education
@@ -11,6 +11,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Source10: po-add-ru.po
 
 Patch0: fix-example-saving-error.patch
 
@@ -42,6 +43,10 @@ you can not only learn but feel how physics works!
 %setup -n %rname-%version
 %patch0 -p2
 
+mv po/ru/step.po{,.old}
+msgcat --use-first %SOURCE10 po/ru/step.po.old > po/ru/step.po
+rm -f po/ru/step.po.old
+
 %build
 %K5build
 
@@ -67,6 +72,9 @@ you can not only learn but feel how physics works!
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Mar 19 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt2
+- fix russian translation
+
 * Tue Feb 20 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
