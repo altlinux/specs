@@ -18,7 +18,7 @@
 
 Name: zabbix
 Version: 6.0.27
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A network monitor
@@ -31,7 +31,6 @@ Url: http://www.zabbix.com
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
-#%%{?_enable_java:BuildRequires(pre): java-devel-default}
 BuildRequires(pre): libelf-devel rpm-build-webserver-common rpm-macros-apache2
 %{?_enable_agent2:BuildRequires(pre): rpm-build-golang}
 %{?_enable_webservice:BuildRequires(pre): rpm-build-golang}
@@ -47,7 +46,11 @@ BuildRequires: libssh2-devel
 BuildRequires: libunixODBC-devel
 %endif
 
+%ifarch %e2k
+%{?_enable_java:BuildRequires: java-devel rpm-build-java}
+%else
 %{?_enable_java:BuildRequires: java-11-devel rpm-build-java}
+%endif
 
 %if_with pgsql
 BuildRequires: libpq-devel
@@ -769,6 +772,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue Mar 19 2024 Michael Shigorin <mike@altlinux.org> 1:6.0.27-alt2
+- E2K: use whatever java is available
+
 * Tue Feb 27 2024 Alexei Takaseev <taf@altlinux.org> 1:6.0.27-alt1
 - 6.0.27 (Fixes: CVE-2023-32725, CVE-2023-32726, CVE-2023-32727
                  CVE-2023-32728, CVE-2024-22119)
