@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Data-UUID
 Name: perl-%dist
-Version: 1.226
+Version: 1.227
 Release: alt1
 
 Summary: Perl extension for generating Globally/Universally Unique Identifiers (GUIDs/UUIDs)
@@ -9,7 +9,7 @@ License: BSD
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/R/RJ/RJBS/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/G/GT/GTERMARS/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-Pod-Parser perl-devel perl-threads
@@ -40,6 +40,9 @@ applications and components across network-connected systems.
 %perl_vendor_autolib/Data
 
 %changelog
+* Tue Mar 19 2024 Igor Vlasenko <viy@altlinux.org> 1.227-alt1
+- automated CPAN update
+
 * Tue Apr 14 2020 Igor Vlasenko <viy@altlinux.ru> 1.226-alt1
 - automated CPAN update
 
