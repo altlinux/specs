@@ -2,7 +2,7 @@
 %def_without old_make_initrd
 
 Name: ima-evm-integrity-check
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: IMA/EVM integrity check
@@ -95,6 +95,9 @@ Integrity check feature for make-initrd
 %endif
 
 %changelog
+* Tue Mar 19 2024 Paul Wolneykien <manowar@altlinux.org> 0.6.2-alt1
+- Updated README.
+
 * Tue Mar 19 2024 Paul Wolneykien <manowar@altlinux.org> 0.6.1-alt1
 - Make integalert dependency optional.
 - Fixed exit when integalert is disabled.
