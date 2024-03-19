@@ -2,7 +2,7 @@
 BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel perl-ALTLinux-ACL perl(ALTLinux/RepoList.pm)
 # END SourceDeps(oneline)
 Name: autorepo-scripts
-Version: 0.631
+Version: 0.633
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -13,30 +13,23 @@ License: GPLv2+
 Url: https://www.altlinux.org/Autorepo
 Source: %name-%version.tar
 
-Requires: /usr/bin/relative /usr/bin/parentlock /usr/bin/parallel
+Requires: /usr/bin/relative /usr/bin/parallel
+Requires: parentlock-sh-functions
 # for mail
 %filter_from_requires /^mutt/d
 Requires: perl(Date/Format.pm) qa-robot /usr/bin/mutt
-Requires: %name-common = %EVR
 Requires: autorepo-builder = %EVR
 
 %description
 %summary
 
-%package common
-Summary: autorepo scripts common files
-Group: Development/Other
-
-%description common
-%summary
-
-
 %package -n autorepo-builder
 Summary: autorepo builder scripts
 Group: Development/Other
-Requires: autorepo-scripts-common = %EVR
-Requires: hsh-clone-workdir > 0.001
+Requires: parentlock-sh-functions
+Requires: hsh-clone-workdir > 0.002
 Conflicts: autorepo-scripts < 0.622
+Obsoletes: autorepo-scripts-common < 0.632
 
 %description -n autorepo-builder
 %summary
@@ -88,8 +81,6 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %_datadir/%name/templates
 # altnode
 %exclude %_bindir/autorepo-altnode-*
-# common
-%exclude %_bindir/autorepo-lock-sh-functions
 # builder
 %exclude %_bindir/autorepo-build-config
 %exclude %_bindir/autorepo-buildhelper-*
@@ -112,9 +103,6 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %_bindir/autorepo-ls
 %_bindir/autorepo-ls-bad-ugly
 
-%files common
-%_bindir/autorepo-lock-sh-functions
-
 %files -n autorepo-altnode-builder
 %_bindir/autorepo-altnode-builder-statistics
 
@@ -122,6 +110,12 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %_bindir/autorepo-altnode-misc-statistics-wrapper
 
 %changelog
+* Wed Mar 06 2024 Igor Vlasenko <viy@altlinux.org> 0.633-alt1
+- new version
+
+* Fri Jan 20 2023 Igor Vlasenko <viy@altlinux.org> 0.632-alt1
+- test version
+
 * Wed Jan 11 2023 Igor Vlasenko <viy@altlinux.org> 0.631-alt1
 - new version
 
