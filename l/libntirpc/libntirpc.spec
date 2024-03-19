@@ -3,20 +3,20 @@
 %set_verify_elf_method strict
 
 Name: libntirpc
-Version: 5.0
+Version: 5.8
 Release: alt1
 Summary: New Transport Independent RPC Library
 Group: System/Libraries
 License: BSD-3-Clause
 Url: https://github.com/nfs-ganesha/ntirpc
-Vcs: https://github.com/nfs-ganesha/ntirpc.git
+
 Source: %name-%version.tar
-Patch: %name-%version.patch
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake ninja-build
+BuildRequires: cmake
 BuildRequires: libkrb5-devel
 BuildRequires: libnsl2-devel
 BuildRequires: libuserspace-rcu-devel
+BuildRequires: ninja-build
 
 # libtirpc has /etc/netconfig, most machines probably have it anyway
 # for NFS client
@@ -45,7 +45,8 @@ Development headers and auxiliary files for developing with %name.
 
 %prep
 %setup
-%patch -p1
+# Setting LIB_INSTALL_DIR (in %%cmake) breaks libdir= path in libntirpc.pc but
+# because they don't use it later thus it affects nothing so lets not fix it.
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -58,18 +59,24 @@ Development headers and auxiliary files for developing with %name.
 
 %install
 %cmake_install
+# man-pages duplicate libtirpc-devel, so not installed.
+# tests/ contain sole rpcping binary which is not installed and isn't a test
+# (also having incorrect rpath).
 
 %files
+# NEWS and ChangeLog are very old and suggest to view git log.
+%doc AUTHORS COPYING THANKS README
 %_libdir/libntirpc.so.*
-%doc COPYING
-%doc NEWS README
 
 %files devel
 %_libdir/libntirpc.so
-%_includedir/ntirpc/
+%_includedir/ntirpc
 %_pkgconfigdir/libntirpc.pc
 
 %changelog
+* Mon Mar 18 2024 Vitaly Chikunov <vt@altlinux.org> 5.8-alt1
+- Update to v5.8 (2024-03-13).
+
 * Sat Feb 17 2024 Alexey Shabalin <shaba@altlinux.org> 5.0-alt1
 - 5.0
 
