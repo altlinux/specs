@@ -1,7 +1,7 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.18
+Version: 0.1.19
 Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
@@ -46,6 +46,8 @@ mkdir -p %buildroot%_datadir/alterator/backends
 mkdir -p %buildroot%_datadir/alterator/backends/user
 mkdir -p %buildroot%_datadir/alterator/backends/system
 mkdir -p %buildroot%_sysconfdir/alterator/backends
+mkdir -p %buildroot%_sysconfdir/alterator/backends/user
+mkdir -p %buildroot%_sysconfdir/alterator/backends/system
 mkdir -p %buildroot%_datadir/polkit-1/actions
 mkdir -p %buildroot%_rpmlibdir/
 mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
@@ -64,6 +66,8 @@ mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
 %dir %_datadir/alterator/backends/user
 %dir %_datadir/alterator/backends/system
 %dir %_sysconfdir/alterator/backends
+%dir %_sysconfdir/alterator/backends/user
+%dir %_sysconfdir/alterator/backends/system
 %doc docs/*
 
 %files devel
@@ -74,6 +78,10 @@ mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
 
 
 %changelog
+* Tue Mar 19 2024 Ivan Savin <svn17@altlinux.org> 0.1.19-alt1
+- Add new directories for the backend files in /etc.
+- Update docs/README-ru.md.
+
 * Tue Mar 12 2024 Ivan Savin <svn17@altlinux.org> 0.1.18-alt1
 - Make the service in user mode bus-activatable.
 - Disable authorization check for the default interface in user mode.
