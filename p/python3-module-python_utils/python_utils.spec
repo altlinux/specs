@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 3.8.1
+Version: 3.8.2
 Release: alt1
 Summary: A module with some convenient utilities not included with the standard Python install
 License: BSD
@@ -52,6 +52,9 @@ extending it.
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}/
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 3.8.2-alt1
+- 3.8.1 -> 3.8.2.
+
 * Wed Jan 10 2024 Stanislav Levin <slev@altlinux.org> 3.8.1-alt1
 - 3.7.0 -> 3.8.1 (closes: #49018).
 
