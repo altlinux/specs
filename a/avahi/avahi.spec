@@ -5,9 +5,11 @@
 %define autoipd_user _autoipd
 %define avahi_group_priv netadmin
 
+%define _runstatedir /run
+
 Name: avahi
 Version: 0.8
-Release: alt2
+Release: alt3
 
 Summary: Local network service discovery
 License: LGPLv2
@@ -24,9 +26,20 @@ Requires: %name-dnsconfd = %version-%release
 Obsoletes: mdnsresponder
 %endif
 
-BuildRequires: doxygen gcc-c++ glib2-devel graphviz intltool libcap-devel libdaemon-devel >= 0.13-alt2
-BuildRequires: libdbus-devel libexpat-devel libgdbm-devel libgtk+3-devel libevent-devel qt5-base-devel xmltoman
+BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
+BuildRequires: glib2-devel
+BuildRequires: intltool
+BuildRequires: libcap-devel
+BuildRequires: libdaemon-devel >= 0.13-alt2
+BuildRequires: libdbus-devel
+BuildRequires: libevent-devel
+BuildRequires: libexpat-devel
+BuildRequires: libgdbm-devel
+BuildRequires: libgtk+3-devel
+BuildRequires: libsystemd-devel
+BuildRequires: qt5-base-devel
+BuildRequires: xmltoman
 %if_with python
 BuildRequires: python3-devel python3(dbus) pkgconfig(pygobject-3.0)
 %endif
@@ -311,12 +324,11 @@ fi
 %config %_sysconfdir/avahi/services/ssh.service
 %exclude %_sysconfdir/avahi/services/sftp-ssh.service
 
-%config %_sysconfdir/dbus-1/system.d/avahi-dbus.conf
-
 %attr(755, root, root) %_sysconfdir/hooks/resolv.conf.d/reload_avahi-daemon
 
 %_sbindir/avahi-daemon
 
+%_datadir/dbus-1/system.d/avahi-dbus.conf
 %_datadir/dbus-1/system-services/org.freedesktop.Avahi.service
 
 %_datadir/avahi/*
@@ -388,6 +400,7 @@ fi
 %_desktopdir/bssh.desktop
 %_desktopdir/bvnc.desktop
 
+%_man1dir/bshell.*
 %_man1dir/bssh.*
 %_man1dir/bvnc.*
 %_man1dir/avahi-discover.*
@@ -452,6 +465,10 @@ fi
 %endif
 
 %changelog
+* Mon Mar 18 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.8-alt3
+- updated to v0.9-rc1
+- fixes: CVE-2023-38469, CVE-2023-38470, CVE-2023-38471, CVE-2023-38472, CVE-2023-38473
+
 * Wed Apr 28 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8-alt2
 - avoid infinite-loop in avahi-daemon (closes: #39357) (fixes: CVE-2021-3468)
 
