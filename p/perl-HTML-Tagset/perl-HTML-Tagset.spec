@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define dist HTML-Tagset
 Name: perl-%dist
-Version: 3.20
-Release: alt2
+Version: 3.24
+Release: alt1
 
 Summary: Data tables useful in dealing with HTML
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PETDANCE/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -20,7 +21,7 @@ This module contains data tables useful in dealing with HTML.
 It provides no functions or methods.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -29,10 +30,13 @@ It provides no functions or methods.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README.md
 %perl_vendor_privlib/HTML
 
 %changelog
+* Tue Mar 19 2024 Igor Vlasenko <viy@altlinux.org> 3.24-alt1
+- automated CPAN update
+
 * Tue Oct 04 2011 Alexey Tourbin <at@altlinux.ru> 3.20-alt2
 - rebuilt
 
