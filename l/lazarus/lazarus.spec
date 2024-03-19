@@ -3,7 +3,7 @@
 
 Name:    lazarus
 Version: 3.2
-Release: alt1
+Release: alt2
 Epoch:   1
 
 Summary: Lazarus Component Library and IDE
@@ -52,6 +52,7 @@ Requires:   xterm
 Requires:   lazarus-lcl
 # Default LCL
 Requires:   lazarus-gtk
+Requires:   gcc
 
 Provides:   %name-docs = %version
 Obsoletes:  %name-docs < %version
@@ -367,6 +368,9 @@ subst 's|#!.*python$|#!%__python3|' %buildroot%_libdir/lazarus/components/GLScen
 %_libdir/libQt5Pas.so
 
 %changelog
+* Mon Mar 18 2024 Andrey Cherepanov <cas@altlinux.org> 1:3.2-alt2
+- Required gcc.
+
 * Wed Mar 06 2024 Andrey Cherepanov <cas@altlinux.org> 1:3.2-alt1
 - New version.
 
