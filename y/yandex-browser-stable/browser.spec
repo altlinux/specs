@@ -8,8 +8,8 @@
 Summary: Yandex Browser
 License: ALT-YANDEX-BROWSER
 Name: yandex-browser-stable
-Version: 23.11.1.802
-Release: alt2
+Version: 24.1.3.845
+Release: alt1
 Group: Networking/WWW
 Vendor: YANDEX LLC
 Url: http://browser.yandex.ru/
@@ -164,8 +164,10 @@ remove_partner_storage() {
 store_partner_files() {
   local source_dir="%{_libdir}/yandex/browser/$1"
   local destination_dir="%{_localstatedir}/yandex/browser/$1"
-  maybe_create_dir "${destination_dir}"
-  find "${source_dir}" -maxdepth 1 -type f -name "$2" -exec cp -f {} "${destination_dir}" \;
+  if [ -d "${source_dir}" ]; then
+    maybe_create_dir "${destination_dir}"
+    find "${source_dir}" -maxdepth 1 -type f -name "$2" -exec cp -f {} "${destination_dir}" \;
+  fi
 }
 store_partner_data() {
   local partner_config="%{_libdir}/yandex/browser/partner_config"
@@ -174,7 +176,7 @@ store_partner_data() {
     store_partner_file "" "partner_config"
     store_partner_file "" "distrib_info"
     store_partner_file "" "master_preferences"
-    store_partner_file "Extensions" "external_extensions.json"
+    store_partner_file "Extensions" "*.*"
     store_partner_files "resources" "clids*.xml"
     store_partner_files "resources" "tablo*"
     store_partner_files "resources" "*.png"
@@ -205,6 +207,13 @@ exit 0
 # =============== END preun ===============
 
 %changelog
+
+* Tue Mar 19 2024 yabro <yabro@altlinux.org> 24.1.3.845-alt1
+- Browser updated to 24.1.3.845
+ + High CVE-2024-0333: Insufficient data validation in Extensions.
+ + High CVE-2024-0518: Type confusion in V8
+ + High CVE-2024-0517: Out of bounds write in V8
+ + High CVE-2024-0519: Out of bounds memory access in V8
 
 * Tue Dec 18 2023 yabro <yabro@altlinux.org> 23.11.1.802-alt2
 - Removed excessive copy routine from spec-file
