@@ -1,6 +1,6 @@
 Name: python3-module-beniget
 Version: 0.4.1
-Release: alt1
+Release: alt1.1
 Group: Development/Python3
 Summary: A static analyzer for Python code
 License: BSD-3-Clause
@@ -10,6 +10,7 @@ BuildArch: noarch
 
 BuildRequires: python3-dev
 BuildRequires: rpm-build-python3
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-gast
 
@@ -35,5 +36,8 @@ each definition.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 0.4.1-alt1.1
+- NMU: added missing build dependency on setuptools.
+
 * Sun Dec 04 2022 Anton Farygin <rider@altlinux.ru> 0.4.1-alt1
 - first build for Sisyphus

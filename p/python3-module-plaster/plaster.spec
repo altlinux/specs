@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.2
-Release: alt1
+Release: alt1.1
 
 Summary: Application configuration settings abstraction layer
 
@@ -18,6 +18,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 
 %if_with docs
@@ -93,6 +94,9 @@ rm -rf docs/_build/html/.buildinfo
 %endif
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 1.1.2-alt1.1
+- NMU: added missing build dependency on setuptools.
+
 * Thu Dec 29 2022 Anton Vyatkin <toni@altlinux.org> 1.1.2-alt1
 - new version 1.1.2
 

@@ -1,6 +1,6 @@
 Name:     bleachbit
 Version:  4.6.0
-Release:  alt1
+Release:  alt1.1
 
 Summary:  Remove unnecessary files, free space, and maintain privacy
 License:  GPL-3.0+
@@ -19,6 +19,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-gnome
 BuildRequires(pre): rpm-build-gir
 BuildRequires(pre): python3-devel
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
 Requires: typelib(Gtk) = 3.0
@@ -69,6 +70,9 @@ rm -f %buildroot%_datadir/%name/Windows.py*
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 4.6.0-alt1.1
+- NMU: added missing build dependency on setuptools.
+
 * Mon Nov 06 2023 Andrey Cherepanov <cas@altlinux.org> 4.6.0-alt1
 - New version.
 

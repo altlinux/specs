@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 1.8.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python library to natively send files to Trash
 License: BSD-3-Clause
@@ -11,6 +11,7 @@ Group: Development/Python3
 Url: https://github.com/hsoft/send2trash
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-flake8
@@ -48,6 +49,9 @@ natively and on all platforms.
 %python3_sitelibdir/Send2Trash-*.dist-info
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 1.8.0-alt1.1
+- NMU: added missing build dependency on setuptools.
+
 * Tue Dec 06 2022 Anton Farygin <rider@altlinux.ru> 1.8.0-alt1
 - new version 1.8.0
 - enabled tests

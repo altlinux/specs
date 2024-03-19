@@ -5,7 +5,7 @@
 
 Name:          python3-module-%pypiname
 Version:       1.9.5
-Release:       alt1
+Release:       alt1.1
 Summary:       Python HTTP Agent Parser
 License:       MIT
 Group:         Development/Python3
@@ -16,6 +16,7 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 Patch:         %name-%EVR.patch
 BuildRequires(pre): rpm-build-pyproject
+BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 
 
@@ -44,5 +45,8 @@ Features:
 %python3_sitelibdir/%{modname}*/METADATA
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 1.9.5-alt1.1
+- NMU: added missing build dependency on setuptools.
+
 * Fri Mar 01 2024 Pavel Skrylev <majioa@altlinux.org> 1.9.5-alt1
 - Initial build v1.9.5 for Sisyphus.

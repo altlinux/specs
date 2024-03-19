@@ -1,6 +1,6 @@
 Name:    system-config-printer
 Version: 1.5.18
-Release: alt2
+Release: alt2.1
 
 Summary: A printer administration tool
 Group:   System/Configuration/Printing
@@ -21,6 +21,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: autoconf-archive
 BuildRequires: python3-devel
 BuildRequires: python3-module-pyproject-installer
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-cups
 BuildRequires: python3-module-pluggy
@@ -125,6 +126,9 @@ exit 0
 %python3_sitelibdir_noarch/cupshelpers-*.dist-info
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 1.5.18-alt2.1
+- NMU: added missing build dependency on setuptools.
+
 * Sat Nov 25 2023 Arseny Maslennikov <arseny@altlinux.org> 1.5.18-alt2
 - Fixed FTBFS by building python3(cupshelpers) with pyproject_installer
   instead of direct setup.py. As a direct effect of that change, dist-info for

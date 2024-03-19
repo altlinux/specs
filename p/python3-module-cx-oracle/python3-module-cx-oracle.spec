@@ -7,7 +7,7 @@
 
 Name:          python3-module-%pypiname
 Version:       8.3.0.7
-Release:       alt0.git6766bca
+Release:       alt0.git6766bca.1
 Summary:       Python interface to Oracle Database now superseded by python-oracledb
 License:       BSD-3-Clause
 Group:         Development/Python3
@@ -18,6 +18,7 @@ Source:        %name-%version.tar
 Patch:         %name-%EVR.patch
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: libodpic-devel
+BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 %{?!_disable_doc:BuildRequires: python3-module-sphinx-sphinx-build-symlink}
 %if_enabled check
@@ -72,5 +73,8 @@ export ODPIC_INC_DIR=%_includedir/
 %python3_sitelibdir/%{modname}*/METADATA
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 8.3.0.7-alt0.git6766bca.1
+- NMU: added missing build dependency on setuptools.
+
 * Wed Jan 31 2024 Pavel Skrylev <majioa@altlinux.org> 8.3.0.7-alt0.git6766bca
 - Initial build v8.3.0p7 for Sisyphus.

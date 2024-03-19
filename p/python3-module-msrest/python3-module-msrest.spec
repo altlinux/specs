@@ -6,7 +6,7 @@
 
 Name:          python3-module-%pypiname
 Version:       0.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       The runtime library "msrest" for AutoRest generated Python clients
 License:       MIT
 Group:         Development/Python3
@@ -17,6 +17,7 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 Patch:         %name-%EVR.patch
 BuildRequires(pre): rpm-build-pyproject
+BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 %{?!_disable_doc:BuildRequires: python3-module-sphinx-sphinx-build-symlink}
 %if_enabled check
@@ -62,5 +63,8 @@ repo will be soon archived.
 %python3_sitelibdir/%{modname}*/METADATA
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 0.7.1-alt1.1
+- NMU: added missing build dependency on setuptools.
+
 * Thu Aug 17 2023 Pavel Skrylev <majioa@altlinux.org> 0.7.1-alt1
 - Initial build v0.7.1 for Sisyphus.

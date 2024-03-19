@@ -5,7 +5,7 @@
 
 Name:          lib%{pkgname}
 Version:       0.1
-Release:       alt0.git2143fd6.2
+Release:       alt0.git2143fd6.3
 Summary:       A library for k-nearest neighbor search
 License:       BSD-2-Clause
 Group:         Sciences/Mathematics
@@ -23,6 +23,7 @@ BuildRequires: boost-devel
 BuildRequires: boost-program_options-devel
 #BuildRequires: xsimd-devel
 BuildRequires(pre): rpm-build-pyproject
+BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildRequires: python3(numpy)
 BuildRequires: libnumpy-py3-devel
@@ -153,6 +154,9 @@ rows of NumPy matrices.
 
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 0.1-alt0.git2143fd6.3
+- NMU: added missing build dependency on setuptools.
+
 * Mon Mar 04 2024 Pavel Skrylev <majioa@altlinux.org> 0.1-alt0.git2143fd6.2
 - ! fixed placement and containment of find module for the package
 

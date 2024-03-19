@@ -6,7 +6,7 @@
 
 Name: python3-module-babel
 Version: 2.14.0
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: a collection of tools for internationalizing Python applications
@@ -27,6 +27,7 @@ BuildRequires(pre): rpm-macros-sphinx3
 # Automatically added by buildreq on Fri Mar 24 2023
 # optimized out: libgpg-error python-sphinx-objects.inv python3 python3-base python3-dev python3-module-Pygments python3-module-cffi python3-module-charset-normalizer python3-module-pkg_resources python3-module-pytz python3-module-setuptools python3-module-sphinx sh4
 BuildRequires: python3-module-pyproject-installer python3-module-wheel python3-module-sphinx unzip
+BuildRequires: python3-module-setuptools
 
 %if_with import_cldr
 BuildRequires: cldr
@@ -85,6 +86,9 @@ LC_ALL=ru_RU.UTF-8 python3 -m pytest tests # -k "not `sed -E 's/ (.)/ and not \1
 %python3_sitelibdir/*
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 1:2.14.0-alt1.1
+- NMU: added missing build dependency on setuptools.
+
 * Thu Jan 11 2024 Fr. Br. George <george@altlinux.org> 1:2.14.0-alt1
 - Autobuild version bump to 2.14.0
 - Drop CLDR dependency (turns out to be already incorporeted)

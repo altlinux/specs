@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 6.6.0
-Release: alt1
+Release: alt1.1
 
 Summary: Radically simplified static file serving for Python web apps
 
@@ -19,6 +19,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinx_rtd_theme
@@ -70,6 +71,9 @@ export PYTHONPATH=$PWD
 %doc docs/*
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 6.6.0-alt1.1
+- NMU: added missing build dependency on setuptools.
+
 * Sat Oct 21 2023 Grigory Ustinov <grenka@altlinux.org> 6.6.0-alt1
 - Automatically updated to 6.6.0.
 

@@ -6,7 +6,7 @@
 
 Name:          python3-module-%pypiname
 Version:       2.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Pythonic WebAuthn
 License:       MIT
 Group:         Development/Python3
@@ -17,6 +17,7 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 Patch:         %name-%EVR.patch
 BuildRequires(pre): rpm-build-pyproject
+BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 %if_enabled check
 BuildRequires: python3(pytest)
@@ -57,5 +58,8 @@ Simple user session protection.
 %python3_sitelibdir/%{modname}*/METADATA
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1.1
+- NMU: added missing build dependency on setuptools.
+
 * Wed Jan 31 2024 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt1
 - Initial build v2.0.0 for Sisyphus.

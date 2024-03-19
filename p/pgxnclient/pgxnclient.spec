@@ -1,6 +1,6 @@
 Name: pgxnclient
 Version: 1.3.2
-Release: alt2
+Release: alt2.1
 
 Summary: A command line tool to interact with the PostgreSQL Extension Network
 
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
 
@@ -42,6 +43,9 @@ compiling, installing, and removing extensions in PostgreSQL databases.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 1.3.2-alt2.1
+- NMU: added missing build dependency on setuptools.
+
 * Wed Feb 15 2023 Anton Vyatkin <toni@altlinux.org> 1.3.2-alt2
 - NMU: Fix buildrequires.
 

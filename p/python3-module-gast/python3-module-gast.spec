@@ -1,6 +1,6 @@
 Name: python3-module-gast
 Version: 0.5.3
-Release: alt1
+Release: alt1.1
 Group: Development/Python3
 Summary: Python AST that abstracts the underlying Python version
 License: BSD
@@ -11,6 +11,7 @@ BuildArch: noarch
 
 BuildRequires: python3-dev
 BuildRequires: rpm-build-python3
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
 %description 
@@ -36,5 +37,8 @@ as produced by ast.parse from the standard ast module.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 0.5.3-alt1.1
+- NMU: added missing build dependency on setuptools.
+
 * Sat Dec 03 2022 Anton Farygin <rider@altlinux.ru> 0.5.3-alt1
 - first build for Sisyphus, based on specfile from Fedora

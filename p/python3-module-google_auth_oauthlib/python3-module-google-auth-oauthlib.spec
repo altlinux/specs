@@ -7,7 +7,7 @@
 
 Name:          python3-module-%pypiname
 Version:       1.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Google Authentication Library
 License:       Apache-2.0
 Group:         Development/Python3
@@ -18,6 +18,7 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 Patch:         %name-%EVR.patch
 BuildRequires(pre): rpm-build-pyproject
+BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 %if_enabled check
 BuildRequires: python3(pytest)
@@ -53,5 +54,8 @@ This library provides oauthlib integration with google-auth.
 
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1.1
+- NMU: added missing build dependency on setuptools.
+
 * Fri Mar 01 2024 Pavel Skrylev <majioa@altlinux.org> 1.0.0-alt1
 - Initial build v1.0.0 for Sisyphus.

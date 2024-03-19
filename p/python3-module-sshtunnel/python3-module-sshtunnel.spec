@@ -7,7 +7,7 @@
 
 Name:          python3-module-%pypiname
 Version:       0.4.0
-Release:       alt1
+Release:       alt1.1
 Summary:       SSH tunnels to remote server
 License:       MIT
 Group:         Development/Python3
@@ -17,6 +17,7 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 %if_enabled check
 BuildRequires: python3(mock)
@@ -51,5 +52,8 @@ SSH tunnels to remote server.
 
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 0.4.0-alt1.1
+- NMU: added missing build dependency on setuptools.
+
 * Mon Aug 14 2023 Pavel Skrylev <majioa@altlinux.org> 0.4.0-alt1
 - Initial build for Sisyphus.

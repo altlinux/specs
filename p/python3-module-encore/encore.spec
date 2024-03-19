@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 0.8.0
-Release: alt2
+Release: alt2.1
 
 Summary: A Collection of core-level utility modules for Enthought projects
 License: BSD-3-Clause and Apache-2.0
@@ -20,6 +20,7 @@ Patch: encore-0.8.0-unittest-alt-fix.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 %if_with docs
 BuildRequires: python3-module-sphinx
@@ -104,6 +105,9 @@ cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 0.8.0-alt2.1
+- NMU: added missing build dependency on setuptools.
+
 * Tue Jan 23 2024 Anton Vyatkin <toni@altlinux.org> 0.8.0-alt2
 - Fixed FTBFS.
 

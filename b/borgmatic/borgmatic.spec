@@ -1,6 +1,6 @@
 Name: borgmatic
 Version: 1.8.8
-Release: alt1
+Release: alt1.1
 
 Summary: borgmatic (formerly atticmatic) is a simple Python wrapper script for the Borg
 
@@ -17,7 +17,9 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
 
-BuildRequires: python3-module-pyproject-installer python3-module-wheel
+BuildRequires: python3-module-pyproject-installer
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 Requires: borg
 
@@ -56,6 +58,9 @@ rather than having to put them all on the command-line, and handles common error
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 1.8.8-alt1.1
+- NMU: added missing build dependency on setuptools.
+
 * Sun Feb 18 2024 Pavel Vainerman <pv@altlinux.ru> 1.8.8-alt1
 - new version (1.8.8) with rpmgs script
 

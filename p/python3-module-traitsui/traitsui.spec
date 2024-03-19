@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 7.4.3
-Release: alt2
+Release: alt2.1
 Summary: A set of user interface tools designed to complement Traits
 Group: Development/Python3
 License: EPL-1.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause
@@ -18,6 +18,7 @@ Source: %oname-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
 %if_disabled bootstrap
@@ -150,6 +151,9 @@ cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 7.4.3-alt2.1
+- NMU: added missing build dependency on setuptools.
+
 * Wed May 03 2023 Grigory Ustinov <grenka@altlinux.org> 7.4.3-alt2
 - Bootstrap for python3.11.
 

@@ -6,7 +6,7 @@
 
 Name:          python3-module-%pypiname
 Version:       1.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Microsoft Authentication Library extensions (MSAL EX)
 License:       MIT
 Group:         Development/Python3
@@ -17,6 +17,7 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 Patch:         %name-%EVR.patch
 BuildRequires(pre): rpm-build-pyproject
+BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 %{?!_disable_doc:BuildRequires: python3-module-sphinx-sphinx-build-symlink}
 %if_enabled check
@@ -66,5 +67,8 @@ The supported platforms are Windows, Mac and Linux.
 %python3_sitelibdir/%{modname}*/METADATA
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1.1
+- NMU: added missing build dependency on setuptools.
+
 * Thu Aug 17 2023 Pavel Skrylev <majioa@altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus.

@@ -6,7 +6,7 @@
 
 Name:          python3-module-%pypiname
 Version:       3.1.10
-Release:       alt1
+Release:       alt1.1
 Summary:       psycopg is a PostgreSQL database adapter for Python
 License:       LGPL-3.0
 Group:         Development/Python3
@@ -18,6 +18,7 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: postgresql-devel
+BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 %if_enabled doc
 BuildRequires: python3(typing_extensions)
@@ -77,6 +78,9 @@ popd
 
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 3.1.10-alt1.1
+- NMU: added missing build dependency on setuptools.
+
 * Tue Aug 15 2023 Pavel Skrylev <majioa@altlinux.org> 3.1.10-alt1
 - * renamed to python3-module-psycopg, and restored in Sisyphus
 - ^ 1.1.21 -> 3.1.10

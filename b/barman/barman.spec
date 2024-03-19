@@ -1,6 +1,6 @@
 Name: barman
 Version: 3.10.0
-Release: alt1
+Release: alt1.1
 Summary: Backup and Recovery Manager for PostgreSQL
 
 License: GPL-3.0+
@@ -16,7 +16,7 @@ BuildArch: noarch
 
 # Automatically added by buildreq on Thu Oct 12 2023
 # optimized out: libgpg-error python3 python3-base python3-dev python3-module-pkg_resources python3-module-py3dephell python3-module-setuptools sh5
-BuildRequires: python3-module-pyproject-installer python3-module-wheel
+BuildRequires: python3-module-pyproject-installer python3-module-setuptools python3-module-wheel
 
 Requires(pre): shadow-utils
 Requires: python3-module-argcomplete
@@ -149,6 +149,9 @@ getent passwd barman >/dev/null || \
 exit 0
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 3.10.0-alt1.1
+- NMU: added missing build dependency on setuptools.
+
 * Thu Jan 25 2024 Leontiy Volodin <lvol@altlinux.org> 3.10.0-alt1
 - New version 3.10.0.
 

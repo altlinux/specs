@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.42.0
+Version: 0.43.0
 Release: alt1
 Summary: A built-package format for Python3
 License: MIT
@@ -16,7 +16,8 @@ VCS: https://github.com/pypa/wheel.git
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
+# manage deps with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -26,9 +27,6 @@ BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3(system_seed_wheels)
 
 %if_with check
-# missing tests requirement
-BuildRequires: python3-module-setuptools
-
 %pyproject_builddeps_metadata_extra test
 %endif
 
@@ -93,6 +91,9 @@ install -m0644 -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
 %system_wheels_path/%{pep427_name %pypi_name}-%version-*.whl
 
 %changelog
+* Tue Mar 12 2024 Stanislav Levin <slev@altlinux.org> 0.43.0-alt1
+- 0.42.0 -> 0.43.0.
+
 * Thu Dec 07 2023 Stanislav Levin <slev@altlinux.org> 0.42.0-alt1
 - 0.41.3 -> 0.42.0.
 

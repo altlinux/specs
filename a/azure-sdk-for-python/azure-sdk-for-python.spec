@@ -2,7 +2,7 @@
 
 Name:          azure-sdk-for-python
 Version:       20230815
-Release:       alt1
+Release:       alt1.1
 
 Summary:       Azure SDK for Python
 License:       MIT
@@ -11,6 +11,7 @@ Url:           https://azure.github.io/azure-sdk-for-python/
 Vcs:           https://github.com/Azure/azure-sdk-for-python.git
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
 BuildArch:     noarch
@@ -217,5 +218,8 @@ popd
 %python3_sitelibdir/azure_mgmt_subscription*
 
 %changelog
+* Mon Mar 18 2024 Stanislav Levin <slev@altlinux.org> 20230815-alt1.1
+- NMU: added missing build dependency on setuptools.
+
 * Tue Aug 15 2023 Pavel Skrylev <majioa@altlinux.org> 20230815-alt1
 - Initial build for Sisyphus.

@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 1.4.0
-Release: alt1
+Release: alt1.1
 
 Summary: aiopg is a library for accessing a PostgreSQL database from the asyncio
 
@@ -27,6 +27,7 @@ BuildRequires: python3-module-async-timeout
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx-devel python3-module-sphinxcontrib-asyncio
 BuildRequires: python3-module-sqlalchemy
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
 %py3_provides %oname
@@ -70,6 +71,9 @@ rm -f requirements.txt
 %python3_sitelibdir/*
 
 %changelog
+* Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1.1
+- NMU: added missing build dependency on setuptools.
+
 * Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt1
 - Automatically updated to 1.4.0.
 
