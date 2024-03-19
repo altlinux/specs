@@ -1,5 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%define _libexecdir %_prefix/libexec
+
+%set_verify_elf_method strict
+%add_optflags -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
 
 # gcc is broken for these architectures.
 # See: https://github.com/rui314/mold/issues/358
@@ -9,14 +13,8 @@
 %def_with check
 %endif
 
-%def_without third_party
-%def_with lto
-%def_with strict
-
-%define _libexecdir %prefix/libexec
-
 Name: mold
-Version: 2.4.0
+Version: 2.30.0
 Release: alt1
 
 Summary: A Modern Linker
@@ -26,6 +24,7 @@ Url: https://github.com/rui314/mold
 Vcs: https://github.com/rui314/mold
 
 Source0: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -34,13 +33,10 @@ BuildRequires: libstdc++-devel
 BuildRequires: libssl-devel
 BuildRequires: libzstd-devel
 BuildRequires: zlib-devel
-
-%if_without third_party
+BuildRequires: libblake3-devel
 BuildRequires: libmimalloc-devel
 BuildRequires: tbb-devel
 BuildRequires: libxxhash-devel
-%endif
-
 %if_with check
 BuildRequires(pre): /proc
 BuildRequires: ctest
@@ -55,32 +51,17 @@ particularly in rapid debug-edit-rebuild cycles.
 
 %prep
 %setup
-
-# Sse system zstd and zlib always.
-rm -rfv third-party/{zlib,zstd}
-
-%if_without third_party
-rm -rfv third-party/{mimalloc,tbb,xxhash}
-# Use system xxhash.
-sed -i "/xxhash.h/s/.*/#include <xxhash.h>/" common/common.h
-%endif
+%autopatch -p1
+# Do not use vendored libraries.
+rm -rfv third-party/{zlib,zstd,mimalloc,tbb,xxhash,blake3}
 
 %build
-%if_with strict
-%set_verify_elf_method strict
-%add_optflags -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
-%endif
-
 %cmake \
         -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-%if_with lto
 	-DMOLD_LTO=ON \
-%endif
-%if_without third_party
 	-DMOLD_USE_MIMALLOC=ON \
 	-DMOLD_USE_SYSTEM_MIMALLOC=ON \
 	-DMOLD_USE_SYSTEM_TBB=ON \
-%endif
 %if_with check
 	-DBUILD_TESTING=ON \
 %endif
@@ -89,9 +70,6 @@ sed -i "/xxhash.h/s/.*/#include <xxhash.h>/" common/common.h
 
 %install
 %cmake_install
-
-# Remove wrong-installed license file.
-rm -rfv %buildroot%_docdir/mold
 
 %check
 %ctest
@@ -104,6 +82,9 @@ rm -rfv %buildroot%_docdir/mold
 %_man1dir/*mold.1.*
 
 %changelog
+* Tue Mar 19 2024 Anton Zhukharev <ancieg@altlinux.org> 2.30.0-alt1
+- Updated to 2.30.0.
+
 * Wed Dec 06 2023 Anton Zhukharev <ancieg@altlinux.org> 2.4.0-alt1
 - Updated to 2.4.0.
 
