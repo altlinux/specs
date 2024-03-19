@@ -1,91 +1,63 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name djangorestframework
 
-%def_with docs
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.14.0
+Version: 3.15.0
 Release: alt1
 Summary: Web APIs for Django, made easy
 License: BSD
 Group: Development/Python3
 Url: https://pypi.org/project/djangorestframework
-
-# Source-git: https://github.com/encode/django-rest-framework.git
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
+Vcs: https://github.com/encode/django-rest-framework
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%if_with docs
-BuildRequires: python3-module-mkdocs >= 1.0.4-alt2
-BuildRequires: python3(tornado)
-BuildRequires: python3(livereload)
-%endif
-
-%if_with check
-# install_requires=
-BuildRequires: python3(pytz)
-BuildRequires: python3-module-django
-
-BuildRequires: python3(pytest_django)
-BuildRequires: python3-module-django-tests
-BuildRequires: python3-module-django-dbbackend-sqlite3
-%endif
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
 # we have several versions of Django
 # so, we cannot rely on auto-requires
 %filter_from_requires /^python3(django\(\..*\)\?)/d
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+BuildRequires: python3-module-django-dbbackend-sqlite3
+%endif
+
 %description
 Django REST framework is a powerful and flexible toolkit for building
 Web APIs.
 
-%if_with docs
-%package docs
-Summary: Documentation for %pypi_name
-Group: Development/Documentation
-
-%description docs
-Django REST framework is a powerful and flexible toolkit for building
-Web APIs.
-
-This package contains documentation for %pypi_name.
-%endif
-
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements/requirements-testing.txt
+%endif
 
 %build
 %pyproject_build
-
-%if_with docs
-mkdocs build
-%endif
 
 %install
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run -- python runtests.py
 
 %files
 %doc README.md
 %python3_sitelibdir/rest_framework/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
-%if_with docs
-%files docs
-%doc site/*
-%endif
-
 %changelog
+* Mon Mar 18 2024 Stanislav Levin <slev@altlinux.org> 3.15.0-alt1
+- 3.14.0 -> 3.15.0.
+
 * Mon Nov 14 2022 Stanislav Levin <slev@altlinux.org> 3.14.0-alt1
 - 3.13.1 -> 3.14.0.
 
