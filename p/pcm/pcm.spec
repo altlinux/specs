@@ -1,5 +1,5 @@
 Name:    pcm
-Version: 202401
+Version: 202403
 Release: alt1
 
 Summary: Intel Performance Counter Monitor (Intel PCM)
@@ -64,6 +64,9 @@ rm -rv %buildroot%_datadir/doc/PCM
 %_datadir/pcm/
 
 %changelog
+* Wed Mar 20 2024 Anton Palgunov <toxblh@altlinux.org> 202403-alt1
+- new version 202403 (with rpmrb script)
+
 * Tue Feb 27 2024 Anton Palgunov <toxblh@altlinux.org> 202401-alt1
 - new version 202401 (with rpmrb script)
 
