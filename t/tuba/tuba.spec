@@ -1,8 +1,9 @@
 %global xdg_name dev.geopjr.Tuba
+%global alt_name fedi
 
 Name: tuba
-Version: 0.6.3
-Release: alt1.1
+Version: 0.7.0
+Release: alt1
 License: GPL-3.0-only
 Group: Networking/Other
 
@@ -51,10 +52,6 @@ Explore a rede social federada com o Tuba para o GNOME. Mantenha-se conectado
 às suas comunidades favoritas, familiares e amigos com suporte para plataformas
 populares do Fediverse, como Mastodon, GoToSocial, Akkoma &amp; mais!
 
-## %%description -l zh
-## 使用 Tuba for GNOME 探索联合社交网络。支持流行的Fediverse平台如
-## Mastodon、GoToSocial、Akkoma 等，与您喜爱的社区、家人和朋友保持联系！
-
 %prep
 %setup
 
@@ -74,14 +71,21 @@ populares do Fediverse, como Mastodon, GoToSocial, Akkoma &amp; mais!
 %files -f %xdg_name.lang
 %doc LICENSE
 %doc README.md
+%_mandir/man1/%xdg_name.1*
 %_bindir/%xdg_name
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %_datadir/metainfo/%xdg_name.metainfo.xml
+%_datadir/gtksourceview-5/language-specs/%alt_name-*.lang
+%_datadir/gtksourceview-5/styles/%alt_name-*.xml
+%_datadir/gtksourceview-5/styles/%alt_name.xml
 %exclude %_datadir/locale/zh_Hans/LC_MESSAGES/dev.geopjr.Tuba.mo
 
 %changelog
+* Wed Mar 20 2024 Anton Palgunov <toxblh@altlinux.org> 0.7.0-alt1
+- new version 0.7.0 (with rpmrb script)
+
 * Sun Feb 11 2024 Hihin Ruslan <ruslandh@altlinux.ru> 0.6.3-alt1.1
 - Push to Sisyphus
 
