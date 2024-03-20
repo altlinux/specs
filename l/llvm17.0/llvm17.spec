@@ -107,7 +107,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt2
+Release: alt3
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -835,6 +835,8 @@ fi
 	-DCLANG_FORCE_MATCHING_LIBCLANG_SOVERSION:BOOL=ON \
 	-DENABLE_LINKER_BUILD_ID:BOOL=ON \
 	\
+	-DTARGET_loongarch64_CFLAGS:STRING='-mcmodel=medium' \
+	\
 	%if_with clang
 	-DCMAKE_C_COMPILER=clang \
 	-DCMAKE_CXX_COMPILER=clang++ \
@@ -1483,6 +1485,11 @@ ninja -C %builddir check-all || :
 %_datadir/cmake/Modules/*
 
 %changelog
+* Tue Mar 19 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 17.0.6-alt3
+- compiler-rt: build with medium code model on LoongArch. Required for
+  chromium and other non-trivial apps, as the default code model is too
+  tight (maximal code offset is 128 MB)
+
 * Thu Feb 08 2024 L.A. Kostis <lakostis@altlinux.ru> 17.0.6-alt2
 - clang: fix wrong -print-runtime-dir on %%ix86.
 
