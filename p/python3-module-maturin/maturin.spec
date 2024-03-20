@@ -1,6 +1,6 @@
 Name: python3-module-maturin
 Version: 1.5.0
-Release: alt1
+Release: alt1.1
 
 Summary: Rust within Python
 License: MIT
@@ -10,6 +10,7 @@ Url: https://maturin.rs/
 Source0: %name-%version.tar
 Source1: crates.tar
 Source2: pyproject_deps.json
+Patch1:  vendored-crate-libc-loongarch64-ioctls.patch
 
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: rust-cargo /proc
@@ -33,6 +34,12 @@ tar cf %SOURCE1 vendor
 tar xf %SOURCE1
 %endif
 
+# allow patching vendored rust code
+sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+     ./vendor/libc/.cargo-checksum.json
+
+%patch1 -p1 -d vendor/libc
+
 %build
 export CARGO_HOME=${PWD}/cargo
 %pyproject_deps_resync_build
@@ -48,6 +55,11 @@ chmod +x %buildroot%_bindir/maturin
 %python3_sitelibdir/maturin-%version.dist-info
 
 %changelog
+* Wed Mar 20 2024 Ivan A. Melnikov <iv@altlinux.org> 1.5.0-alt1.1
+- NMU: fix FTBFS on loongarch64
+  + backport upstream patch on vendored libc crate
+    that adds more ioctl constants.
+
 * Fri Mar 15 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.0-alt1
 - 1.5.0 released
 
