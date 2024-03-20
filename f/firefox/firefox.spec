@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 123.0.1
+Version: 124.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -223,7 +223,7 @@ export MOZ_CHROME_MULTILOCALE="$(tr '\n' ' ' < .rpm/firefox-l10n.txt)"
 
 MOZ_OPT_FLAGS=()
 
-MOZ_OPT_FLAGS+=( -pipe -O2 -g0 )
+MOZ_OPT_FLAGS+=( -pipe -O2 )
 %ifarch armh
 MOZ_OPT_FLAGS+=( -march=armv7-a -mthumb )
 %endif
@@ -236,11 +236,6 @@ rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
 MOZ_OPT_FLAGS+=( "-Wl,-rpath,$rpath" )
 
 MOZ_OPT_FLAGS+=( -Wno-unused-command-line-argument )
-
-# If MOZ_DEBUG_FLAGS is empty, firefox's build will default it to "-g" which
-# overrides the -g0 from line above and breaks building on s390
-# (OOM when linking, rhbz#1238225)
-export MOZ_DEBUG_FLAGS=" "
 
 export CFLAGS="${MOZ_OPT_FLAGS[*]}"
 export CXXFLAGS="${MOZ_OPT_FLAGS[*]}"
@@ -427,6 +422,22 @@ fi
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Mar 20 2024 Alexey Gladkov <legion@altlinux.ru> 124.0-alt1
+- New release (124.0).
+- Security fixes:
+  + CVE-2024-2605: Windows Error Reporter could be used as a Sandbox escape vector
+  + CVE-2024-2606: Mishandling of WASM register values
+  + CVE-2024-2607: JIT code failed to save return registers on Armv7-A
+  + CVE-2024-2608: Integer overflow could have led to out of bounds write
+  + CVE-2023-5388: NSS susceptible to timing attack against RSA decryption
+  + CVE-2024-2609: Permission prompt input delay could expire when not in focus
+  + CVE-2024-2610: Improper handling of html and body tags enabled CSP nonce leakage
+  + CVE-2024-2611: Clickjacking vulnerability could have led to a user accidentally granting permissions
+  + CVE-2024-2612: Self referencing object could have potentially led to a use-after-free
+  + CVE-2024-2613: Improper handling of QUIC ACK frame data could have led to OOM
+  + CVE-2024-2614: Memory safety bugs fixed in Firefox 124, Firefox ESR 115.9, and Thunderbird 115.9
+  + CVE-2024-2615: Memory safety bugs fixed in Firefox 124
+
 * Wed Mar 06 2024 Alexey Gladkov <legion@altlinux.ru> 123.0.1-alt1
 - New release (123.0.1).
 
