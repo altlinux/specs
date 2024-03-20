@@ -3,7 +3,7 @@
 
 Name: pari
 Version: 2.15.5
-Release: alt1
+Release: alt1.1
 
 Summary: Computer Algebra System for computations in Number Theory
 
@@ -88,6 +88,11 @@ sed -i "s|runpathprefix='.*'|runpathprefix=''|" \
 %install
 %makeinstall_std
 
+# workaround for https://bugzilla.altlinux.org/49749
+for f in $(find "%buildroot%_mandir" -type l); do
+  ln -srf "$(readlink -f "$f")" "$f"
+done
+
 %files gp
 %_bindir/*
 %_datadir/%name
@@ -106,6 +111,9 @@ sed -i "s|runpathprefix='.*'|runpathprefix=''|" \
 %_libdir/libpari.so
 
 %changelog
+* Wed Mar 20 2024 Ivan A. Melnikov <iv@altlinux.org> 2.15.5-alt1.1
+- NMU: adjust man pages symlinks (fixes FTBFS on loongarch64)
+
 * Tue Feb 27 2024 Leontiy Volodin <lvol@altlinux.org> 2.15.5-alt1
 - New version 2.15.5.
 
