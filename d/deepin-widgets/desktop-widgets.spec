@@ -3,14 +3,14 @@
 %def_disable clang
 
 Name: deepin-widgets
-Version: 6.0.14
+Version: 6.0.20
 Release: alt1
 
 Summary: Desktop widgets service/implementation for DDE
 
-License: GPL-3.0
+License: GPL-3.0+
 Group: Graphical desktop/Other
-Url: https://github.com/linuxdeepin/%repo
+Url: https://github.com/linuxdeepin/dde-widgets
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: %name-%version-%release.patch
@@ -80,6 +80,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/cmake/DdeWidgets/DdeWidgetsConfig.cmake
 
 %changelog
+* Wed Mar 20 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.20-alt1
+- New version 6.0.20.
+
 * Fri Nov 24 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.14-alt1
 - Initial build for ALT Sisyphus.
 - Applied fixes from upstream branch.

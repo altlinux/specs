@@ -3,7 +3,7 @@
 %def_without clang
 
 Name: deepin-qt5platform-plugins
-Version: 5.6.22
+Version: 5.6.25
 Release: alt1
 
 Summary: Qt platform integration plugins for Deepin Desktop Environment
@@ -28,7 +28,7 @@ BuildRequires: clang-devel lld-devel
 BuildRequires: gcc-c++
 %endif
 
-Requires: libqt5-core = %_qt5_version
+Requires: libqt5-core = %_qt5_version libqt5-gui = %_qt5_version libqt5-waylandclient = %_qt5_version libqt5-xcbqpa = %_qt5_version
 
 %description
 %repo is the
@@ -69,6 +69,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_qt5_plugindir/wayland-shell-integration/libkwayland-shell.so
 
 %changelog
+* Wed Mar 20 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.25-alt1
+- New version 5.6.25.
+
 * Tue Feb 06 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.22-alt1
 - New version 5.6.22.
 

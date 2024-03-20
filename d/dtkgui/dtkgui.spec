@@ -3,8 +3,8 @@
 %def_disable clang
 
 Name: dtkgui
-Version: 5.6.22
-Release: alt2
+Version: 5.6.25
+Release: alt1
 
 Summary: Deepin Toolkit, gui module for DDE look and feel
 
@@ -76,7 +76,6 @@ export PATH=%_qt5_bindir:$PATH
   -DLIB_INSTALL_DIR=%_libdir \
   -DLIBRARY_INSTALL_DIR=%_lib \
   -DDTK_VERSION=%version \
-  -DVERSION=%version \
   -DBUILD_DOCS=OFF \
   %if_enabled clang
   -DLLVM_USE_LINKER=lld \
@@ -108,6 +107,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/libdtkgui.so
 
 %changelog
+* Wed Mar 20 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.25-alt1
+- New version 5.6.25.
+
 * Tue Mar 05 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.22-alt2
 - Requires: libqt5-core and libqt5-gui = %%_qt5_version.
 

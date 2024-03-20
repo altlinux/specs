@@ -4,12 +4,12 @@
 %def_without docs
 
 Name: dtkcore
-Version: 5.6.22
-Release: alt2
+Version: 5.6.25
+Release: alt1
 
 Summary: Deepin tool kit core modules
 
-License: LGPL-2.1 and LGPL-3.0+ and GPL-3.0
+License: LGPL-2.1+ and LGPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dtkcore
 
@@ -21,7 +21,7 @@ Obsoletes: libdtk5-core < %EVR
 Provides: dtk5-core = %EVR
 Obsoletes: dtk5-core < %EVR
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
+BuildRequires(pre): rpm-build-ninja deepin-desktop-base rpm-macros-qt5
 BuildRequires: cmake rpm-build-python3 dtk6-common-devel gsettings-qt-devel libsystemd-devel qt5-base-devel libuchardet-devel libspdlog-devel
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
@@ -80,10 +80,9 @@ export PATH=%_qt5_bindir:$PATH
 %cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-  -DCMAKE_INSTALL_LIBDIR=%_libdir \
+  -DCMAKE_INSTALL_LIBDIR=%_lib \
   -DDTK_VERSION=%version \
-  -DVERSION=%version \
-  -DLIB_INSTALL_DIR=%_libdir \
+  -DLIBRARY_INSTALL_DIR=%_lib \
   -DD_DSG_APP_DATA_FALLBACK=/var/dsg/appdata \
   -DBUILD_WITH_SYSTEMD=ON \
 %if_without docs
@@ -124,6 +123,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %endif
 
 %changelog
+* Wed Mar 20 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.25-alt1
+- New version 5.6.25.
+
 * Tue Mar 05 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.22-alt2
 - Requires: libqt5-core = %%_qt5_version.
 

@@ -3,7 +3,7 @@
 %def_enable clang
 
 Name: dtkdeclarative
-Version: 5.6.24
+Version: 5.6.25
 Release: alt1
 Summary: Widget development toolkit for Deepin
 Summary(ru): Инструментарий по разработке виджетов для Deepin
@@ -32,10 +32,13 @@ BuildRequires: gcc-c++
 # optimized out: alt-os-release clang17.0 clang17.0-support cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libclang-cpp17 libdouble-conversion3 libdtkcore-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-qmlmodels libqt5-quick libqt5-quickcontrols2 libqt5-quicktemplates2 libqt5-svg libqt5-widgets libqt5-xml libsasl2-3 libssl-devel libstdc++-devel llvm-common llvm17.0-libs pkg-config python3 python3-base qt5-base-devel qt5-declarative-devel qt5-tools sh5
 BuildRequires: cmake libdtkgui-devel qt5-quickcontrols2-devel qt5-tools-devel
 
-Requires: libqt5-core = %_qt5_version
+Requires: libqt5-qml = %_qt5_version libqt5-quick = %_qt5_version libqt5-quickcontrols2 = %_qt5_version
 
 %description
-dtkdeclarative is a widget development toolkit based on QtQuick/QtQml, which is a brand new substitute for dtkwidget. dtkdeclarative is developed based on qtdeclarative. It covers all existing QML widgets and adds plenty of DTK friendly visual effects and color schemes. Compared to dtkwidget. It has:
+dtkdeclarative is a widget development toolkit based on QtQuick/QtQml, which is
+a brand new substitute for dtkwidget. dtkdeclarative is developed based on
+qtdeclarative. It covers all existing QML widgets and adds plenty of DTK
+friendly visual effects and color schemes. Compared to dtkwidget. It has:
 
 - A primitive Qt and Qml code style.
 - Adapted APIs with traditional Qml.
@@ -44,7 +47,11 @@ dtkdeclarative is a widget development toolkit based on QtQuick/QtQml, which is 
 - Abundant effects and colors.
 
 %description -l ru
-dtkdeclarative - это инструментарий для разработки виджетов, основанный на QtQuick / QtQml, который является совершенно новым заменителем dtkwidget. dtkdeclarative разрабатывается на основе qtdeclarative. Он охватывает все существующие виджеты QML и добавляет множество дружественных DTK визуальных эффектов и цветовых схем. По сравнению с дтквиджетом. Имеет:
+dtkdeclarative - это инструментарий для разработки виджетов, основанный на
+QtQuick / QtQml, который является совершенно новым заменителем dtkwidget.
+dtkdeclarative разрабатывается на основе qtdeclarative. Он охватывает все
+существующие виджеты QML и добавляет множество дружественных DTK визуальных
+эффектов и цветовых схем. По сравнению с дтквиджетом. Имеет:
 
 - Примитивный стиль кода Qt и Qml.
 - Адаптированные API с традиционным Qml.
@@ -56,6 +63,7 @@ dtkdeclarative - это инструментарий для разработки
 Summary: Libraries for %name
 Summary(ru): Библиотеки для %name
 Group: System/Libraries
+Requires: libqt5-core = %_qt5_version libqt5-gui = %_qt5_version libqt5-qml = %_qt5_version libqt5-qmlmodels = %_qt5_version libqt5-quick = %_qt5_version
 
 %description -n lib%name%soname
 The package provides libraries for %name.
@@ -147,6 +155,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_datadir/qtcreator/templates/wizards/projects/qml-app-template/
 
 %changelog
+* Wed Mar 20 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.25-alt1
+- New version 5.6.25.
+
 * Fri Mar 01 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.24-alt1
 - New version 5.6.24.
 - Requires: libqt5-core = %%_qt5_version.

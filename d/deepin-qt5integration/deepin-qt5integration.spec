@@ -3,8 +3,8 @@
 %def_without clang
 
 Name: deepin-qt5integration
-Version: 5.6.20.0.2.b020
-Release: alt2
+Version: 5.6.25
+Release: alt1
 
 Summary: Qt platform theme integration plugins for DDE
 
@@ -21,7 +21,7 @@ BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
 BuildRequires: cmake dtk6-common-devel libdtkwidget-devel libgtest-devel libmtdev-devel libqtxdg-devel qt5-base-devel-static qt5-x11extras-devel
 
 # Requires: deepin-qt5platform-plugins
-Requires: libqt5-core = %_qt5_version
+Requires: libqt5-core = %_qt5_version libqt5-gui = %_qt5_version libqt5-widgets = %_qt5_version
 
 %if_with clang
 BuildRequires: clang-devel lld-devel
@@ -58,6 +58,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_qt5_plugindir/styles/libchameleon.so
 
 %changelog
+* Wed Mar 20 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.25-alt1
+- New version 5.6.25.
+
 * Fri Jan 19 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.20.0.2.b020-alt2
 - Requires: libqt5-core = %%_qt5_version.
 
