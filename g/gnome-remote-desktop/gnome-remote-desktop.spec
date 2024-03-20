@@ -1,7 +1,8 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
+%define xdg_name org.gnome.RemoteDesktop
 
 %def_enable vnc
 %def_enable rdp
@@ -10,7 +11,7 @@
 %def_enable man
 
 Name: gnome-remote-desktop
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Remote Desktop
@@ -29,7 +30,7 @@ Source: %name-%version.tar
 %define pw_api_ver 0.3
 %define pw_ver 0.3.49
 %define vnc_ver 0.9.11
-%define freerdp_ver 2.10.0
+%define freerdp_ver 3.1.0
 %define fuse_ver 3.9.1
 %define xkbc_ver 1.0.0
 %define nvenc_ver 11.1.5.0
@@ -37,14 +38,16 @@ Source: %name-%version.tar
 
 Requires: pipewire >= %pw_ver
 Requires: fuse3 >= %fuse_ver
-%{?_enable_rdp:Requires: freerdp >= %freerdp_ver}
+Requires: polkit
+%{?_enable_rdp:Requires: freerdp3 >= %freerdp_ver}
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
 BuildRequires: meson libgio-devel >= %glib_ver libgudev-devel
 BuildRequires: pkgconfig(libpipewire-%pw_api_ver) >= %pw_ver
+BuildRequires: pkgconfig(opus)
 BuildRequires: libtpm2-tss-devel libfdk-aac-devel
 %{?_enable_vnc:BuildRequires: libvncserver-devel >= %vnc_ver}
-%{?_enable_rdp:BuildRequires: libfreerdp-devel >= %freerdp_ver}
+%{?_enable_rdp:BuildRequires: pkgconfig(freerdp3) >= %freerdp_ver}
 %{?_enable_nvenc:BuildRequires: pkgconfig(ffnvcodec) >= %nvenc_ver}
 %{?_enable_man:BuildRequires: /usr/bin/a2x xmllint}
 BuildRequires: libfuse3-devel >= %fuse_ver
@@ -52,7 +55,7 @@ BuildRequires: libxkbcommon-devel >= %xkbc_ver
 BuildRequires: libsecret-devel libnotify-devel libcairo-devel
 BuildRequires: libepoxy-devel libdrm-devel libgbm-devel
 BuildRequires: libei-devel >= %ei_ver
-
+BuildRequires: libdbus-devel libpolkit-devel
 BuildRequires: /bin/dbus-run-session /usr/bin/openssl
 BuildRequires: pipewire wireplumber mutter-gnome
 
@@ -79,17 +82,30 @@ Remote desktop daemon for GNOME using pipewire.
 %files -f %name.lang
 %_bindir/grdctl
 %_libexecdir/%name-daemon
+%_unitdir/%name.service
+%_sysusersdir/%name-sysusers.conf
+%_tmpfilesdir/%name-tmpfiles.conf
 %_userunitdir/%name.service
+%_userunitdir/%name-handover.service
+%_userunitdir/%name-headless.service
+%_desktopdir/%xdg_name.Handover.desktop
 %_datadir/glib-2.0/schemas/org.gnome.desktop.remote-desktop.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.remote-desktop.enums.xml
 %{?_enable_man:%_man1dir/grdctl.1*}
-%{?_enable_nvenc:
 %dir %_datadir/%name
+%{?_enable_nvenc:
 %_datadir/%name/grd-cuda-damage-utils_30.ptx
 %_datadir/%name/grd-cuda-avc-utils_30.ptx}
+%_datadir/%name/grd.conf
+%_datadir/dbus-1/system-services/%xdg_name.service
+%_datadir/dbus-1/system.d/%xdg_name.conf
+%_datadir/polkit-1/actions/org.gnome.remotedesktop.configure-system-daemon.policy
 %doc README*
 
 %changelog
+* Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Sun Oct 22 2023 Yuri N. Sedunov <aris@altlinux.org> 45.1-alt1
 - 45.1
 
