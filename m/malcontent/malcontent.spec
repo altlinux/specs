@@ -7,7 +7,7 @@
 %def_enable ui
 
 Name: malcontent
-Version: 0.11.1
+Version: 0.12.0
 Release: alt1
 
 Summary: Parental controls implementation
@@ -23,7 +23,7 @@ Source: %name-%version.tar
 %endif
 
 %define glib_ver 2.54.2
-%define gtk4_ver 4.6
+%define gtk4_ver 4.12
 %define adwaita_ver 1.0.0
 %define accountsservice_ver 0.6.39
 %define appstream_ver 0.12.10
@@ -31,7 +31,7 @@ Source: %name-%version.tar
 
 Requires: polkit accountsservice >= %accountsservice_ver
 
-BuildRequires(pre): rpm-macros-meson rpm-build-python3
+BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-macros-pam0
 BuildRequires: meson yelp-tools desktop-file-utils /usr/bin/appstream-util
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(dbus-1)
@@ -203,6 +203,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%xdg_name.app
 
 
 %changelog
+* Wed Mar 20 2024 Yuri N. Sedunov <aris@altlinux.org> 0.12.0-alt1
+- 0.12.0
+
 * Sat Mar 18 2023 Yuri N. Sedunov <aris@altlinux.org> 0.11.1-alt1
 - 0.11.1
 
