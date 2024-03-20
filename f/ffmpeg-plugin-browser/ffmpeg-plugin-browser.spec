@@ -166,8 +166,8 @@
 %endif
 
 Name:		ffmpeg-plugin-browser
-Version:	118
-Release:	alt2
+Version:	120
+Release:	alt1
 
 Summary:	FFmpeg built specifically for codec support in special browser
 License:	GPLv3
@@ -179,7 +179,7 @@ Url:		https://chromium.googlesource.com/chromium/third_party/ffmpeg
 Source:		%name-%version.tar
 Source1: find-provides.sh
 Patch1: chromium.patch
-Patch2: ffmpeg-chromium-118.patch
+Patch2: ffmpeg-chromium-120.patch
 Patch3: alt-vulkan-decode-defines.patch
 Patch4: armv6-ffmpeg-no-thumb.patch
 Patch2000: ffmpeg-e2k-simd.patch
@@ -630,6 +630,7 @@ echo 'include $(SRC_PATH)/ffbuild/libffmpeg.mak' >> Makefile
 	--disable-mipsfpu \
 	--extra-libs="-latomic" \
 %endif
+	%{subst_enable doc} \
 	%{subst_enable gpl} \
 	%{subst_enable version3} \
 	%{subst_enable pthreads} \
@@ -784,6 +785,9 @@ tests/checkasm/checkasm
 %_libdir/ffmpeg-plugin-browser/libffmpeg.so
 
 %changelog
+* Tue Mar 19 2024 Sergey V Turchin <zerg@altlinux.org> 120-alt1
+- new version
+
 * Mon Mar 11 2024 Sergey V Turchin <zerg@altlinux.org> 118-alt2
 - update package url
 
