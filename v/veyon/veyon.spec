@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.8.3
-Release: alt1
+Release: alt2
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -32,6 +32,7 @@ Patch1: alt-veyon-libdir.patch
 Patch4: alt-fix-dm-login.patch
 
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: rpm-build-kf5
 BuildRequires: gcc-c++ make cmake
 BuildRequires: qt5-base-devel
@@ -42,7 +43,6 @@ BuildRequires: liblzo2-devel
 BuildRequires: libssl-devel
 BuildRequires: libldap-devel
 BuildRequires: libpam0-devel
-BuildRequires: libproc2-devel
 BuildRequires: libsasl2-devel
 BuildRequires: libpng-devel
 BuildRequires: libXrandr-devel
@@ -53,6 +53,11 @@ BuildRequires: libXtst-devel
 BuildRequires: libfakekey-devel
 BuildRequires: libXcomposite-devel
 BuildRequires: libXcursor-devel
+%if "%(rpmvercmp '%ubt_id' 'M110')" >= "0"
+BuildRequires: libproc2-devel
+%else
+BuildRequires: libprocps-devel
+%endif
 
 %description
 Veyon is a free and open source software
@@ -134,6 +139,9 @@ sed -i "s/QOverload<int>::of(&QComboBox::/(void(QComboBox::*)(int))(\&QComboBox:
 %_datadir/%name
 
 %changelog
+* Mon Mar 18 2024 Ajrat Makhmutov <rauty@altlinux.org> 4.8.3-alt2
+- use libprocps instead libproc2 for branches less than p11
+
 * Thu Mar 07 2024 Ajrat Makhmutov <rauty@altlinux.org> 4.8.3-alt1
 - new version 4.8.3
 
