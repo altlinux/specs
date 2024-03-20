@@ -2,29 +2,23 @@
 %define pypi_name k5test
 
 Name: python3-module-%pypi_name
-Version: 0.10.3
+Version: 0.10.4
 Release: alt1
 Summary: Library for setting up self-contained Kerberos 5 environments
-
-Group: Development/Python3
 License: ISC and MIT
+Group: Development/Python3
 Url: https://pypi.org/project/k5test/
 VCS: https://github.com/pythongssapi/k5test
-
-Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
 BuildArch: noarch
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
 Requires: /usr/bin/krb5-config
 Requires: krb5-kdc
 Requires: krb5-kinit
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %description
 Library for setting up self-contained Kerberos 5 environments, and running
@@ -34,6 +28,8 @@ same name found alongside the MIT Kerberos 5 unit tests.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -41,11 +37,17 @@ same name found alongside the MIT Kerberos 5 unit tests.
 %install
 %pyproject_install
 
+%check
+# there is no upstream tests (.github/workflows/ci.yml)
+
 %files
 %python3_sitelibdir/k5test/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 20 2024 Stanislav Levin <slev@altlinux.org> 0.10.4-alt1
+- 0.10.3 -> 0.10.4.
+
 * Tue Nov 15 2022 Stanislav Levin <slev@altlinux.org> 0.10.3-alt1
 - 0.10.2 -> 0.10.3.
 
