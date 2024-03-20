@@ -91,10 +91,10 @@
 %def_enable vaapi
 %def_enable vdpau
 # VK_HEADER_VERSION
-%if_ver_gteq %vulkan_ver 1.3.238
+%if_ver_gteq %vulkan_ver 1.3.255
 %def_disable vulkan
 %else
-%def_disable vulkan
+%def_enable vulkan
 %endif
 %def_enable zlib
 
@@ -167,7 +167,7 @@
 
 Name:		ffmpeg-plugin-browser
 Version:	120
-Release:	alt1
+Release:	alt2
 
 Summary:	FFmpeg built specifically for codec support in special browser
 License:	GPLv3
@@ -785,6 +785,9 @@ tests/checkasm/checkasm
 %_libdir/ffmpeg-plugin-browser/libffmpeg.so
 
 %changelog
+* Wed Mar 20 2024 Sergey V Turchin <zerg@altlinux.org> 120-alt2
+- enable vulkan when required version available
+
 * Tue Mar 19 2024 Sergey V Turchin <zerg@altlinux.org> 120-alt1
 - new version
 
