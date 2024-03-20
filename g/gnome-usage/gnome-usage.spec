@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define xdg_name org.gnome.Usage
-%define ver_major 45
+%define ver_major 46
 
 Name: gnome-usage
 Version: %ver_major.0
@@ -19,10 +19,10 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Source: %name-%version.tar
 %endif
 
-%define gtk_ver 4.10
+%define gtk_ver 4.14
 %define gtop_ver 2.34.0
 %define accountsservice_ver 0.6.40
-%define adw_ver 1.4
+%define adw_ver 1.5
 
 Requires: accountsservice >= %accountsservice_ver
 
@@ -60,6 +60,9 @@ disk space.
 %doc README* NEWS
 
 %changelog
+* Wed Mar 20 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0 (ported to GTK4/Libadwaita)
 
