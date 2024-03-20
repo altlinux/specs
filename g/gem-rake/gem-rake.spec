@@ -3,7 +3,7 @@
 
 Name:          gem-rake
 Version:       13.1.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby based make-like utility
 License:       MIT
 Group:         Development/Ruby
@@ -24,8 +24,6 @@ BuildRequires: gem(rubocop) >= 0
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 Provides:      gem(rake) = 13.1.0
 
-%ruby_bindir_to %ruby_bindir
-
 %description
 Rake is a Make-like program implemented in Ruby. Tasks and dependencies are
 specified in standard Ruby syntax.
@@ -37,7 +35,7 @@ Rake есть Make-подобная утилита и набор модулей,
 
 %package       -n rake
 Version:       13.1.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby based make-like utility executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета rake
 Group:         Development/Ruby
@@ -57,7 +55,7 @@ specified in standard Ruby syntax.
 
 %package       -n gem-rake-doc
 Version:       13.1.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby based make-like utility documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rake
 Group:         Development/Documentation
@@ -77,7 +75,7 @@ specified in standard Ruby syntax.
 
 %package       -n gem-rake-devel
 Version:       13.1.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby based make-like utility development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rake
 Group:         Development/Ruby
@@ -117,7 +115,7 @@ specified in standard Ruby syntax.
 
 %files         -n rake
 %doc README.rdoc
-%ruby_bindir/rake
+%_bindir/rake
 %ruby_mandir/rake.1.xz
 
 %files         -n gem-rake-doc
@@ -129,6 +127,9 @@ specified in standard Ruby syntax.
 
 
 %changelog
+* Wed Mar 20 2024 Pavel Skrylev <majioa@altlinux.org> 13.1.0-alt1.1
+- * moved rake binary to %%_bindir
+
 * Thu Nov 30 2023 Pavel Skrylev <majioa@altlinux.org> 13.1.0-alt1
 - ^ 13.0.6 -> 13.1.0
 
