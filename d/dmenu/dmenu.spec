@@ -1,5 +1,5 @@
 Name: dmenu
-Version: 5.2
+Version: 5.3
 Release: alt1
 
 Summary: Dynamic menu
@@ -34,6 +34,9 @@ dynamic menu for dwm
 %_man1dir/*
 
 %changelog
+* Wed Mar 20 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 5.3-alt1
+- Updated to 5.3
+
 * Tue Mar 05 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.2-alt1
 - Updated to 5.2
 
