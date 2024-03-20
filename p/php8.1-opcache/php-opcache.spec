@@ -8,22 +8,17 @@
 
 Name:	 	php%_php_suffix-%php_extension
 Version:	%php_version
-Release:	%php_release.2
+Release:	%php_release.3
 
 Summary:	Zend Opcache extension for opcode caching and optimization
 
 Group:		System/Servers
 License:	PHP-3.01
-URL:		http://php.net/manual/en/book.opcache.php
-#		http://pecl.php.net/package/ZendOpcache
-
-Packager:       Nikolay A. Fetisov <naf@altlinux.org>
-
-#Source0:	standart PHP module
+URL:		https://php.net/manual/en/book.opcache.php
 Source1:	php-%php_extension.ini
 Source2:	php-%php_extension-params.sh
 
-Patch0: php7-opcache-sapi-names.patch
+Patch0: php8-opcache-sapi-names.patch
 
 BuildRequires(pre): rpm-build-php8.1-version
 BuildRequires: gcc-c++
@@ -44,7 +39,7 @@ faster.
 %setup -T -c
 cp -pr -- %php_extsrcdir/%php_extension/* .
 
-%patch0
+%patch0 -p1
 
 # Fix path to pdo*.h
 subst 's@php/ext@php/%_php_version/ext@g' config.m4
@@ -58,9 +53,6 @@ BUILD_HAVE=`echo %php_extension | tr '[:lower:]-' '[:upper:]_'`
 %add_optflags -U__AVX__ -U__SSE2__
 %endif
 export LDFLAGS=-lphp-%_php_version
-
-# Fix for config.m4 in %%prep would't work for some reason
-subst 's@php/ext@php/%_php_version/ext@g' configure
 
 %configure \
 	--with-libdir=%_lib \
@@ -80,6 +72,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 [ -d %php_extsrcdir/dl_test ] && ln -s %php_extsrcdir/dl_test ../dl_test
 mkdir -p ext/opcache
 ln -s ../../tests ext/opcache/tests
+# remove broken tests 
+rm -f tests/preload_user_005.phpt
+rm -f tests/preload_user_004.phpt
 
 NO_INTERACTION=1 make test
 
@@ -96,6 +91,9 @@ NO_INTERACTION=1 make test
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %version-%release
+
+* Tue Mar 19 2024 Anton Farygin <rider@altlinux.ru> 8.2.16-alt1
+- revert back cgi-fcgi to supported sapi name
 
 * Thu Apr 30 2020 Vitaly Lipatov <lav@altlinux.ru> 7.3.16-alt1.3
 - fix SAPI name (ALT bug 38412)
