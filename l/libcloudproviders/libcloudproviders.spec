@@ -9,7 +9,7 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Library for integration of cloud storage providers
@@ -85,7 +85,6 @@ Requires: %name = %EVR
 This package provides tests programs that can be used to verify
 the functionality of the installed %_name library.
 
-
 %prep
 %setup
 
@@ -132,6 +131,9 @@ the functionality of the installed %_name library.
 %endif
 
 %changelog
+* Wed Mar 20 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.6-alt1
+- 0.3.6
+
 * Thu Nov 09 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt1
 - 0.3.5
 
