@@ -1,12 +1,12 @@
 %def_enable snapshot
 
-%define ver_major 2024.2
+%define ver_major 2024.3
 %define rdn_name io.github.giantpinkrobots.varia
 
 %def_enable check
 
 Name: varia
-Version: %ver_major.29.2
+Version: %ver_major.20
 Release: alt1
 
 Summary: Download manager based on aria2
@@ -21,10 +21,10 @@ Vcs: https://github.com/giantpinkrobots/varia.git
 Source: %name-%version.tar
 %endif
 
-%define adwaita_ver 1.4
+%define adw_ver 1.4
 
-Requires: /usr/bin/aria2p
-Requires: typelib(Adw) = 1
+Requires: /usr/bin/aria2p /usr/bin/aria2c
+Requires: typelib(Adw) = 1 libadwaita >= %adw_ver
 Requires: dconf yelp
 
 BuildArch: noarch
@@ -66,6 +66,9 @@ It uses the amazing aria2 to handle the downloads.
 %doc README*
 
 %changelog
+* Wed Mar 20 2024 Yuri N. Sedunov <aris@altlinux.org> 2024.3.20-alt1
+- 2024.3.20
+
 * Tue Mar 05 2024 Yuri N. Sedunov <aris@altlinux.org> 2024.2.29.2-alt1
 - 2024.2.29-2
 
