@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 30.1.0
+Version: 30.3.0
 Release: alt1
 Summary: Comprehensive utility library to parse, compare, simplify and normalize license expressions
 License: Apache-2.0
@@ -13,22 +13,15 @@ Url: https://pypi.org/project/license-expression
 VCS: https://github.com/nexB/license-expression.git
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
+%pyproject_runtimedeps_metadata
+# legacy provides, used by obsolete pdm-pep517
 %py3_provides %pypi_name
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools-scm)
-
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# deps
-BuildRequires: python3(boolean.py)
-
-BuildRequires: python3(pytest)
+%pyproject_builddeps_metadata_extra testing
 %endif
 
 %description
@@ -39,17 +32,9 @@ using boolean logic.
 %prep
 %setup
 %autopatch -p1
-
-# setuptools_scm implements a file_finders entry point which returns all files
-# tracked by SCM.
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m 'release'
-    git tag '%version'
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -66,6 +51,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Mar 20 2024 Stanislav Levin <slev@altlinux.org> 30.3.0-alt1
+- 30.1.0 -> 30.3.0.
+
 * Tue Feb 07 2023 Stanislav Levin <slev@altlinux.org> 30.1.0-alt1
 - 30.0.0 -> 30.1.0.
 

@@ -5,30 +5,26 @@
 
 Name: python3-module-%pypi_name
 Version: 4.0
-Release: alt1
-
+Release: alt2
 Summary: Define boolean algebras, create and parse boolean expressions and create custom boolean DSL
 License: BSD-2-Clause
 Group: Development/Python3
-VCS: https://github.com/bastikr/boolean.py.git
 Url: https://pypi.org/project/boolean.py
-
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%if_with check
-BuildRequires: python3(pytest)
-%endif
-
+VCS: https://github.com/bastikr/boolean.py.git
 BuildArch: noarch
-
-%py3_provides %pypi_name
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 This library helps you deal with boolean expressions and algebra with variables
@@ -41,6 +37,11 @@ tokenizers to handle custom expressions.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements-dev.txt
+%endif
 
 %build
 %pyproject_build
@@ -52,9 +53,7 @@ tokenizers to handle custom expressions.
 rm %buildroot%python3_sitelibdir/boolean/test_boolean.py
 
 %check
-# override default `setup.py test`
-%tox_create_default_config
-%tox_check_pyproject -- -vvs boolean
+%pyproject_run_pytest -ra boolean
 
 %files
 %doc README.rst
@@ -62,5 +61,8 @@ rm %buildroot%python3_sitelibdir/boolean/test_boolean.py
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Wed Mar 20 2024 Stanislav Levin <slev@altlinux.org> 4.0-alt2
+- Mapped PyPI name to distro's one.
+
 * Wed Oct 05 2022 Stanislav Levin <slev@altlinux.org> 4.0-alt1
 - Initial build for Sisyphus.
