@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _name connections
 %define xdg_name org.gnome.Connections
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 
 Name: gnome-%_name
@@ -24,6 +24,7 @@ Source: %name-%version.tar
 %define gtk_ver 3.22.0
 %define handy_ver 1.6
 %define fuse_ver 3.9.1
+%define freerdp_ver 2.0.0
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools
@@ -33,7 +34,7 @@ BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(gtk-vnc-2.0)
 # for gtk-frdp
-BuildRequires: pkgconfig(freerdp2)
+BuildRequires: pkgconfig(freerdp2) >= %freerdp_ver
 BuildRequires: pkgconfig(winpr2)
 BuildRequires: pkgconfig(libsecret-1)
 BuildRequires: gobject-introspection-devel gir(Gtk) = 3.0
@@ -72,6 +73,9 @@ BuildRequires: pkgconfig(fuse3) >= %fuse_ver
 %exclude %_libdir/%name/pkgconfig/
 
 %changelog
+* Wed Mar 20 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 
