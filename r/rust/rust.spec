@@ -1,7 +1,7 @@
 Name: rust
 Epoch: 1
 Version: 1.76.0
-Release: alt1
+Release: alt2
 Summary: The Rust Programming Language
 
 %define r_ver 1.75.0
@@ -264,6 +264,9 @@ find vendor \
 cat >env.sh <<EOF
 export RUST_BACKTRACE=1
 export RUSTFLAGS="-Clink-arg=-Wl,-z,relro,-z,now -Clink-args=-fPIC -Copt-level=2"
+%ifarch loongarch64
+export RUSTFLAGS="$RUSTFLAGS -Ccode-model=medium"
+%endif
 # Don't use system libgit2 for now...
 # https://github.com/rust-lang/rust/issues/63476
 #export LIBGIT2_SYS_USE_PKG_CONFIG=1
@@ -467,6 +470,11 @@ rm -rf %rustdir
 %rustlibdir/src
 
 %changelog
+* Thu Mar 14 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:1.76.0-alt2
+- LoongArch: build with medium code model (the default code model limits
+  text offsets to 128 MB, which is not enough for some applications, in
+  particular chromium).
+
 * Sat Feb 10 2024 Alexey Gladkov <legion@altlinux.ru> 1:1.76.0-alt1
 - New version (1.76.0).
 
