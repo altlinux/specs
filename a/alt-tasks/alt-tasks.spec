@@ -1,6 +1,6 @@
 Name: alt-tasks
-Version: 0.9.0
-Release: alt2
+Version: 0.9.1
+Release: alt1
 
 Summary: Utility for observing ALT Linux tasks
 License: GPLv3
@@ -38,6 +38,9 @@ cp COPYING readme.txt %{buildroot}%{_defaultdocdir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Wed Mar 20 2024 Alexey Appolonov <alexey@altlinux.org> 0.9.1-alt1
+- Updated help notes.
+
 * Fri Nov 17 2023 Alexey Appolonov <alexey@altlinux.org> 0.9.0-alt2
 - Corrected copyright notices.
 
