@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name metacity
-%define ver_major 3.50
+%define ver_major 3.52
 %define api_ver 3.0
 %def_disable static
 %def_enable vulkan
@@ -135,6 +135,9 @@ This package contains the lib%name static library.
 %endif
 
 %changelog
+* Wed Mar 20 2024 Yuri N. Sedunov <aris@altlinux.org> 3.52.0-alt1
+- 3.52.0
+
 * Sat Sep 23 2023 Yuri N. Sedunov <aris@altlinux.org> 3.50.0-alt1
 - 3.50.0
 

@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.50
+%define ver_major 3.52
 %define _libexecdir %_prefix/libexec
 %def_with compiz
 
@@ -104,7 +104,8 @@ find ./ -name "*enum-types.[c,h]" -print0 | xargs -r0 rm -f --
     --disable-static \
     --disable-schemas-compile \
     %{?_with_compiz:--with-compiz-session}
-%make_build
+# since 46 gnome-session leaks --systemd option
+%make_build session_management=""
 
 %install
 %makeinstall_std
@@ -129,6 +130,7 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 %_desktopdir/%name.desktop
 %_datadir/gnome-panel/layouts/%name.layout
 %_datadir/desktop-directories/X-GNOME-Flashback-Settings-System.directory
+%_datadir/desktop-directories/X-GNOME-Flashback-Science.directory
 %_datadir/desktop-directories/X-GNOME-Flashback-Settings.directory
 %_datadir/gnome-session/sessions/%name-metacity.session
 %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
@@ -137,6 +139,7 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 %_datadir/glib-2.0/schemas/org.gnome.%name.desktop.enums.xml
 %_datadir/glib-2.0/schemas/org.gnome.%name.desktop.icons.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.%name.keybindings.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.%name.notifications.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.%name.system-indicators.input-sources.gschema.xml
 %_datadir/glib-2.0/schemas/00_gnome-flashback.gschema.override
 %_datadir/gnome-control-center/keybindings/50-gnome-flashback-screenshots.xml
@@ -165,6 +168,9 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 
 %changelog
+* Wed Mar 20 2024 Yuri N. Sedunov <aris@altlinux.org> 3.52.0-alt1
+- 3.52.0
+
 * Sat Sep 23 2023 Yuri N. Sedunov <aris@altlinux.org> 3.50.0-alt1
 - 3.50.0
 
