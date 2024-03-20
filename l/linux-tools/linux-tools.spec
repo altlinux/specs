@@ -22,22 +22,23 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt1
+Release: alt2
 
 Summary: Tools from Linux Kernel tree
 License: GPL-2.0-only
 Group: Development/Tools
 URL: http://www.kernel.org/
-Requires: perf
 Requires: bootconfig
 
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): rpm-build-python3
 BuildRequires: asciidoc
+BuildRequires: asciidoc-a2x
 BuildRequires: banner
 BuildRequires: binutils-devel
 BuildRequires: elfutils-devel
 BuildRequires: flex
+BuildRequires: libalsa-devel
 BuildRequires: libaudit-devel
 BuildRequires: libbpf-devel
 BuildRequires: libcap-devel
@@ -49,6 +50,7 @@ BuildRequires: liblzma-devel
 BuildRequires: libmnl-devel
 BuildRequires: libnl-devel
 BuildRequires: libpfm-devel
+BuildRequires: libpopt-devel
 %ifnarch %arm
 BuildRequires: libnuma-devel
 %endif
@@ -86,6 +88,8 @@ Source32: hypervvssd.rules
 Source33: hypervfcopyd.rules
 
 Patch1: 0002-rtla-basic-loongarch-support.patch
+Patch2: 0001-selftests-mm-Fix-build-with-_FORTIFY_SOURCE.patch
+Patch3: 0001-selftests-lsm-lsm_list_modules_test-List-ALT-specifi.patch
 
 %description
 Various tools from the Linux Kernel source tree.
@@ -94,8 +98,7 @@ Various tools from the Linux Kernel source tree.
 Summary: Performance analysis tools for Linux
 Group: Development/Debuggers
 Conflicts: linux-tools < 5.8
-AutoReq: noperl,nopython
-AutoProv: noperl,nopython
+AutoReqProv: noperl,nopython,nopython3
 
 %description -n perf
 Performance counters for Linux are a new kernel-based subsystem that provide
@@ -115,6 +118,7 @@ Group: System/Libraries
 Summary: Development files for libperf
 Group: Development/C
 Requires: libperf = %EVR
+AutoReqProv: nocpp
 
 %description -n libperf-devel
 %summary.
@@ -231,8 +235,7 @@ manipulation of eBPF programs and maps.
 %package -n kselftests
 Summary: Linux Kernel Selftests
 Group: Development/Tools
-AutoReq: noperl,nopython,noshebang,nolib,noshell
-AutoProv: no
+AutoReqProv: none
 
 %description -n kselftests
 The kernel contains a set of "self tests" under the tools/testing/selftests/
@@ -285,6 +288,14 @@ syscall and type definitions, and the minimal startup code needed to call
 main(). All syscalls are declared as static functions so that they can be
 optimized away by the compiler when not used.
 
+%package host
+Summary: Kernel VM host tools (kvm_stat)
+Group: System/Kernel and hardware
+Provides: kvm_stat
+
+%description host
+%summary.
+
 %prep
 %setup -cT
 tar -xf %kernel_src/%kernel_source.tar
@@ -319,6 +330,11 @@ sed -i 's/-std=gnu99/& -g/' testing/selftests/vDSO/Makefile
 sed -Ei '\!^CFLAGS!s!(-Wl,-rpath=)\./!\1/usr/lib/kselftests/rseq!' testing/selftests/rseq/Makefile
 sed -i 's/-s\b/-g/' testing/selftests/arm64/abi/Makefile testing/selftests/arm64/fp/Makefile
 sed -i '/ln -s/s/-s $(DESTDIR)/-s /' tracing/rtla/Makefile
+sed -Ei 's/(-static-libasan|-fsanitize\S+)//g' testing/selftests/{openat2,fchmodat2}/Makefile
+grep -lrZ -e '-nostdlib' testing/selftests/arm64 | xargs -0 sed -i 's/-nostdlib/-g &/'
+
+# pathfix
+grep -lrZz '#!/usr/bin/env python' | xargs -0 sed -i '1s,#!.*,#!%__python3,'
 
 %build
 %define optflags_lto %nil
@@ -406,13 +422,16 @@ make acpi
 	gpio \
 	iio \
 	leds \
-	selftests \
 	tmon \
 	tracing \
 	mm \
 	%nil
 
+CFLAGS=$EXTRA_CFLAGS %make_build selftests
+
 %make_build -C verification/rv
+
+%make_build kvm_stat
 
 %install
 banner install
@@ -542,7 +561,6 @@ make -C arch/x86/kcpuid %install_opts install HWDATADIR=%buildroot%_datadir/misc
 make -C arch/x86/intel_sdsi %install_opts install
 %endif
 install -p -m755 firmware/ihex2fw		%buildroot%_bindir
-install -p -m755 kvm/kvm_stat/kvm_stat		%buildroot%_bindir
 install -p -m755 leds/get_led_device_info.sh	%buildroot%_bindir
 install -p -m755 leds/led_hw_brightness_mon	%buildroot%_bindir
 install -p -m755 leds/uledmon			%buildroot%_bindir
@@ -560,6 +578,9 @@ popd
 make nolibc V=1
 cp -a include/nolibc/sysroot/include %buildroot%_includedir/nolibc
 %endif
+
+make kvm_stat_install INSTALL_ROOT=%buildroot
+install -Dpm644 kvm/kvm_stat/kvm_stat.service -t %buildroot%_unitdir
 
 %check
 banner check
@@ -624,6 +645,12 @@ fi
 %preun -n hypervfcopyd
 %preun_service hypervfcopyd
 
+%post host
+%post_service kvm_stat
+
+%preun host
+%preun_service kvm_stat
+
 %files
 %doc kernel-source-%version/COPYING
 %_sbindir/acpidbg-linux
@@ -639,7 +666,6 @@ fi
 %_bindir/iio_event_monitor
 %_bindir/lsiio
 %_bindir/iio_generic_buffer
-%_bindir/kvm_stat
 %_bindir/get_led_device_info.sh
 %_bindir/led_hw_brightness_mon
 %_bindir/uledmon
@@ -770,7 +796,19 @@ fi
 %_includedir/nolibc
 %endif
 
+%files host
+%_bindir/kvm_stat
+%_unitdir/kvm_stat.service
+%_man1dir/kvm_stat.1*
+
 %changelog
+* Wed Mar 20 2024 Vitaly Chikunov <vt@altlinux.org> 6.8-alt2
+- spec: Improve kselftests build.
+- linux-tools does not provide perf(1) anymore, install it separately. Almost
+  four years since it's a separate package.
+- kvm_stat(1) tool split out into a separate package linux-tools-host to reduce
+  Python dependencies of the base package.
+
 * Tue Mar 12 2024 Vitaly Chikunov <vt@altlinux.org> 6.8-alt1
 - Update to v6.8 (2024-03-10).
 - Remove cgroup_event_listener (moved from tools to samples by upstream).
