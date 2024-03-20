@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  3
-%define _php_release_version 3
+%define _php_release_version 4
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -462,6 +462,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Tue Mar 19 2024 Anton Farygin <rider@altlinux.ru> 8.3.4-alt1
+- 8.3.3 -> 8.3.4
+
 * Mon Feb 19 2024 Anton Farygin <rider@altlinux.ru> 8.3.3-alt1
 - 8.3.2 -> 8.3.3
 
