@@ -1,10 +1,10 @@
-Name: librtmidi
-Version: 6.0.0
-Release: alt1
+Name: librtmidi5
+Version: 4.0.0
+Release: alt2
 
 Summary: Library for realtime MIDI input/output
 License: MIT
-Group: System/Libraries
+Group: System/Legacy libraries
 Url: https://github.com/thestk/rtmidi
 
 Source: %name-%version-%release.tar
@@ -12,14 +12,6 @@ Source: %name-%version-%release.tar
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(jack)
-
-%package -n librtmidi7
-Summary: RtMidi shared library
-Group: System/Libraries
-
-%package devel
-Summary: Development headers and libraries for RtMidi
-Group: Development/C
 
 %define desc\
 RtMidi is a set of C++ classes (RtMidiIn and RtMidiOut) that provides a common\
@@ -35,12 +27,7 @@ goals:\
 * MIDI device enumeration
 
 %description %desc
-
-%description -n librtmidi7 %desc
 This package contains the shared library.
-
-%description devel %desc
-Development headers and libraries for rtmidi.
 
 %prep
 %setup
@@ -52,19 +39,10 @@ Development headers and libraries for rtmidi.
 %install
 %make_install DESTDIR=%buildroot install
 
-%files -n librtmidi7
+%files
 %_libdir/librtmidi.so.*
 
-%files -n librtmidi-devel
-%doc README.md doc/release.txt
-%_includedir/rtmidi
-%_libdir/librtmidi.so
-%_pkgconfigdir/rtmidi.pc
-
 %changelog
-* Wed Feb 21 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.0.0-alt1
-- 6.0.0 released
-
 * Wed Feb 21 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0.0-alt2
 - rebuilt as legacy library
 

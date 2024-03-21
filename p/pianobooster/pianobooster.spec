@@ -1,6 +1,6 @@
 Name: pianobooster
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: Boost your Piano playing skills
 License: GPLv2
@@ -60,5 +60,8 @@ follow your playing.
 %_man6dir/pianobooster.*
 
 %changelog
+* Thu Mar 21 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.0-alt2
+- rebuilt with recent rtmidi
+
 * Wed Mar 20 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.0-alt1
 - initial
