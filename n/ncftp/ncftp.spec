@@ -1,5 +1,5 @@
 Name: ncftp
-Version: 3.2.6
+Version: 3.2.7
 Release: alt1
 Serial: 1
 
@@ -55,18 +55,18 @@ NcFTP - это улучшенный консольный FTP клиент. Улучшения включают в себя
 #patch4 -p1 -b .eplf
 
 #patch1 -p0 -b .pref
-%patch2 -p1 -b .res
-%patch3 -p1 -b .pmeter
+#patch2 -p1 -b .res
+#patch3 -p1 -b .pmeter
 #patch4 -p1 -b .ncursesw
 #patch5 -p0 -b .no_lfs64_source
-%patch7 -p0 -b .eplf
-%patch8 -p1 -b .help
-%patch9 -p1 -b .gcc10
+#patch7 -p0 -b .eplf
+#patch8 -p1 -b .help
+#patch9 -p1 -b .gcc10
 
 
 %build
 #set_gcc_version 8
-%configure --enable-signals
+%configure --enable-signals --enable-ipv6
 %make_build
 
 %install
@@ -108,6 +108,9 @@ find doc -type f -exec chmod 0644 {} \;
 %_liconsdir/%name.png
 
 %changelog
+* Thu Mar 21 2024 Ilya Mashkin <oddity@altlinux.ru> 1:3.2.7-alt1
+- 3.2.7
+
 * Mon Feb 22 2021 Ilya Mashkin <oddity@altlinux.ru> 1:3.2.6-alt1
 - 3.2.6
 
