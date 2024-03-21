@@ -1,6 +1,6 @@
 Name: nextcloud-client
-Version: 3.11.0
-Release: alt2
+Version: 3.12.2
+Release: alt1
 %K5init no_altplace
 
 Group: Networking/File transfer
@@ -122,6 +122,9 @@ desktop-file-install \
 %_datadir/nemo-python/extensions/*
 
 %changelog
+* Thu Mar 21 2024 Evgeniy Korneechev <ekorneechev@altlinux.org> 3.12.2-alt1
+- new version (ALT#49724)
+
 * Thu Mar 07 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.11.0-alt2
 - NMU: build for more architectures (use qt5-webengine where available,
   build without qt5-webengine elsewhere)
