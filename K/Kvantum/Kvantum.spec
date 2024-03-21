@@ -4,9 +4,9 @@
 
 Name: Kvantum
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
-Summary: SVG-based theme engine for Qt5, KDE and LXQt
+Summary: SVG-based theme engine for Qt6, KDE and LXQt
 License: GPL-3.0-or-later
 Group: Graphical desktop/Other
 
@@ -35,7 +35,7 @@ BuildRequires: qt5-svg-devel qt5-x11extras-devel kf5-kwindowsystem-devel
 Requires: %name-qt5
 %endif
 
-Requires: %name-data
+Requires: %name-data %name-qt6
 
 %description
 Kvantum is an SVG-based theme engine for Qt6, KDE and LXQt, with an emphasis
@@ -180,6 +180,9 @@ desktop-file-validate %buildroot%_desktopdir/kvantummanager.desktop
 %_qt6_plugindir/styles/libkvantum.so
 
 %changelog
+* Thu Mar 21 2024 Leontiy Volodin <lvol@altlinux.org> 1.1.0-alt2
+- Fixed application startup without qt6 module.
+
 * Tue Mar 19 2024 Leontiy Volodin <lvol@altlinux.org> 1.1.0-alt1
 - 1.1.0.
 - Switched to qt6 by upstream.
