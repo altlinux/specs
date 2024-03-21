@@ -3,7 +3,7 @@
 
 Name: signon-ui
 Version: 0.17
-Release: alt5
+Release: alt6
 
 Group: System/Libraries
 Summary: Online Accounts Sign-on Ui
@@ -15,6 +15,7 @@ Requires: dbus
 
 ExcludeArch: %not_qt5_qtwebengine_arches
 Source: signon-ui-%version.tar
+Patch1: 0001-Fix-WebEngine-cache-directory-path.patch
 # FC
 # ALT
 Patch10: alt-fix-compile.patch
@@ -41,6 +42,8 @@ developing applications that use %name.
 
 %prep
 %setup -n signon-ui-%version
+%patch1 -p1
+#
 %patch10 -p1
 %patch11 -p1
 sed -i 's/\/lib/\/%{_lib}/g' common-installs-config.pri
@@ -73,6 +76,10 @@ mkdir -p %buildroot/%_sysconfdir/signon-ui/webkit-options.d
 %_sysconfdir/signon-ui
 
 %changelog
+* Thu Mar 21 2024 Sergey V Turchin <zerg@altlinux.org> 0.17-alt6
+- update to 2023.10.16 snapshot
+- add upstream fix
+
 * Thu Jun 09 2022 Sergey V Turchin <zerg@altlinux.org> 0.17-alt5
 - build only if webengine avalable
 
