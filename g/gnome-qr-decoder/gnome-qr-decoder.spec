@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _name decoder
-%define ver_major 0.4
+%define ver_major 0.5
 %define xdg_name com.belmoussaoui.Decoder
 
 %define optflags_lto %nil
@@ -8,13 +8,13 @@
 %def_disable bootstrap
 
 Name: gnome-qr-%_name
-Version: %ver_major.1
+Version: %ver_major
 Release: alt1
 
 Summary: Scan and Generate QR Codes
 License: GPL-3.0-or-later
 Group: Graphics
-Url: https://gitlab.gnome.org/World/decoder
+Url: https://apps.gnome.org/Decoder
 
 Vcs: https://gitlab.gnome.org/World/decoder.git
 Source: %_name-%version.tar
@@ -24,8 +24,8 @@ Patch: decoder-0.3.3-alt-cargo.toml-zbar.patch
 #Patch1: decoder-0.3.3-alt-cargo.lock-zbar.patch
 
 %define glib_ver 2.76
-%define gtk_ver 4.11.0
-%define adwaita_ver 1.4
+%define gtk_ver 4.13.6
+%define adwaita_ver 1.5
 %define zbar_ver 0.20
 %define gst_api_ver 1.0
 %define gst_ver 1.20
@@ -93,6 +93,9 @@ sed -i 's|"build.rs":"894b33392971ba9dad1dd4e45869478198f86e911e0b29f7e0d9fbf134
 
 
 %changelog
+* Thu Mar 21 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5-alt1
+- 0.5
+
 * Sun Nov 12 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
 - updated to 0.4.1-22-gd494532
 
