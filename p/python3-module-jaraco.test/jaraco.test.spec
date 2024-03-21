@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.3.0
-Release: alt2
+Version: 5.4.0
+Release: alt1
 Summary: Testing support by jaraco
 License: MIT
 Group: Development/Python3
@@ -26,6 +26,8 @@ BuildRequires(pre): rpm-build-pyproject
 
 %if_with check
 %pyproject_builddeps_metadata_extra testing
+# required by jaraco/test/cpython.py
+BuildRequires: python3-test
 %endif
 
 %description
@@ -53,6 +55,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Thu Mar 21 2024 Stanislav Levin <slev@altlinux.org> 5.4.0-alt1
+- 5.3.0 -> 5.4.0.
+
 * Fri Apr 21 2023 Stanislav Levin <slev@altlinux.org> 5.3.0-alt2
 - Mapped PyPI name to distro's one.
 
