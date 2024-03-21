@@ -1,6 +1,6 @@
 Name: bluefish
-Version: 2.2.14
-Release: alt2
+Version: 2.2.15
+Release: alt1
 
 Summary: A GTK3 web development application for experienced users
 
@@ -24,7 +24,7 @@ Patch0: bluefish-2.2.13-strict-aliasing.patch
 
 # Avoid use of /usr/bin/env in shipped scripts
 # Also change /usr/bin/python → /usr/bin/python3 (for now)
-Patch1: bluefish-2.2.12-shellbang.patch
+Patch1: bluefish-2.2.15-shellbang.patch
 
 Patch3: bluefish-2.2.12-fix-command-chmod-a-x.patch
 
@@ -60,7 +60,7 @@ These are common files.
 find data -type f -name \*.py -exec sed -i 's/\r//' {} \;
 
 %patch0
-%patch1
+%patch1 -p2
 %patch3 -p2
 
 # Update russian translation
@@ -111,6 +111,9 @@ cat %{name}_plugin_*.lang >> %name.lang
 %_datadir/xml/%name/*
 
 %changelog
+* Thu Mar 21 2024 Anton Midyukov <antohami@altlinux.org> 2:2.2.15-alt1
+- new version (2.2.15) with rpmgs script
+
 * Wed Oct 11 2023 Anton Midyukov <antohami@altlinux.org> 2:2.2.14-alt2
 - replace %_desktopdir/%name.desktop, %_datadir/metainfo/%name.appdata.xml
   from bluefish-common to bluefish
