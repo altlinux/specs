@@ -1,4 +1,4 @@
-%define ver_major 3.50
+%define ver_major 3.52
 
 Name: alacarte
 Version: %ver_major.0
@@ -47,6 +47,9 @@ specification.
 %doc README* AUTHORS NEWS
 
 %changelog
+* Thu Mar 21 2024 Yuri N. Sedunov <aris@altlinux.org> 3.52.0-alt1
+- 3.52.0
+
 * Sat Sep 23 2023 Yuri N. Sedunov <aris@altlinux.org> 3.50.0-alt1
 - 3.50.0
 
