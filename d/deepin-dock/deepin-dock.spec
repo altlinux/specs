@@ -3,7 +3,7 @@
 %def_without clang
 
 Name: deepin-dock
-Version: 6.0.35.0.3.3eb9
+Version: 6.0.36
 Release: alt1
 Epoch: 1
 
@@ -98,6 +98,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/cmake/DdeDock/DdeDockConfig.cmake
 
 %changelog
+* Thu Mar 21 2024 Leontiy Volodin <lvol@altlinux.org> 1:6.0.36-alt1
+- New version 6.0.36.
+
 * Tue Mar 05 2024 Leontiy Volodin <lvol@altlinux.org> 1:6.0.35.0.3.3eb9-alt1
 - New version 6.0.35-3-g3eb95284.
 - No more needed libqt5-core = %%_qt5_version.
