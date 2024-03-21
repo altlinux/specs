@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-system-monitor
-Version: 6.0.12.0.3.63f2
+Version: 6.0.16.0.2.2e9c
 Release: alt1
 
 Summary: A more user-friendly system monitor
@@ -46,7 +46,6 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
     -DLIB_INSTALL_DIR=%_libdir \
     -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
     -DUSE_DEEPIN_WAYLAND=ON \
-    -DAPP_VERSION=%version \
     -DVERSION=%version
 cmake --build "%_cmake__builddir" -j%__nprocs
 
@@ -96,6 +95,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-manual/manual-assets/application/%name/system-monitor/
 
 %changelog
+* Thu Mar 21 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.16.0.2.2e9c-alt1
+- New version 6.0.16-2-g2e9c86bc.
+
 * Mon Jan 29 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.12.0.3.63f2-alt1
 - New version 6.0.12-3-g63f26873.
 
