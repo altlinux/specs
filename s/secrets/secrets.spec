@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 8
+%define ver_major 9
 %define pypi_name gsecrets
 %define xdg_name org.gnome.World.Secrets
 
@@ -12,7 +12,7 @@ Release: alt1
 
 Summary: A password manager for GNOME
 License: GPL-3.0
-Group: Networking/File transfer
+Group: Graphical desktop/GNOME
 Url: https://gitlab.gnome.org/World/secrets
 
 %if_disabled snapshot
@@ -22,9 +22,9 @@ Vcs: https://gitlab.gnome.org/World/secrets.git
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.73.1
+%define glib_ver 2.74
 %define gtk_ver 4.9
-%define adwaita_ver 1.4
+%define adwaita_ver 1.5
 
 Requires: typelib(Adw) = 1
 Requires: yelp
@@ -40,7 +40,8 @@ BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(gobject-introspection-1.0)
 BuildRequires: pkgconfig(dbus-1)
-BuildRequires: python3(pykeepass) python3(pyotp) python3(validators) python3(zxcvbn)
+BuildRequires: python3(pykeepass) python3(pyotp) python3(validators)
+BuildRequires: python3(zxcvbn) python3(PyKCS11) python3(yubico)
 %{?_enable_check:BuildRequires: python3(pytest) python3(gi) typelib(Gtk) = 4.0}
 
 %description
@@ -75,6 +76,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %doc README*
 
 %changelog
+* Thu Mar 21 2024 Yuri N. Sedunov <aris@altlinux.org> 9.0-alt1
+- 9.0
+
 * Fri Sep 22 2023 Yuri N. Sedunov <aris@altlinux.org> 8.0-alt1
 - 8.0
 
