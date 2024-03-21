@@ -17,8 +17,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 10.1
-Release: alt5
+Version: 10.2
+Release: alt1
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -33,6 +33,8 @@ BuildRequires: libalternatives-devel
 BuildRequires: qt5-base-devel
 
 BuildRequires: ImageMagick fontconfig bc fribidi
+
+BuildRequires: distro-licenses >= 1.3.1
 
 Source: branding.tar
 
@@ -207,6 +209,7 @@ Requires(post): indexhtml-common
 
 %prep
 %setup -n branding
+cp /usr/share/distro-licenses/ALT_Product_License/license.{all,ru}.html.in notes/
 
 %build
 autoconf
@@ -320,6 +323,15 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Mar 01 2024 Andrew A. Vasilyev <andy@altlinux.org> 10.2-alt1
+- version 10.2
+
+* Tue Aug 29 2023 Andrew A. Vasilyev <andy@altlinux.org> 10.1-alt7
+- copy licenses from distro-licenses
+
+* Fri Feb 17 2023 Andrew A. Vasilyev <andy@altlinux.org> 10.1-alt6
+- alterator: Add logo_48.png to browser-qt rcc
+
 * Fri Feb 03 2023 Andrew A. Vasilyev <andy@altlinux.org> 10.1-alt5
 - new slides from annaos@basealt.ru
 
