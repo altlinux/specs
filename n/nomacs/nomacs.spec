@@ -3,8 +3,8 @@
 %global git_build    224
 
 Name: nomacs
-Version: 3.17.2287
-Release: alt2
+Version: 3.17.2295
+Release: alt1
 
 License: GPLv3+ and CC-BY
 Group: Graphics
@@ -13,7 +13,7 @@ Url: http://www.nomacs.org
 
 #Source: https://github.com/%name/%name/archive/%name-%version.tar.gz
 #Source0:	https://github.com/%{github_owner}/%{name}/archive/%{version}.%{build}.tar.gz/%{name}-%{version}.%{git_build}.tar.gz
-Source0:	%name-%version.tar.xz
+Source0:	%name-%version.tar.gz
 Source1:	https://github.com/%{github_owner}/%{name}-plugins/archive/%{version}.tar.gz/%{name}-plugins-3.16.tar.gz
 # desktop entries rename (https://github.com/nomacs/nomacs/issues/528)
 Patch0:		%{name}-3.16.%{git_build}-desktop.diff
@@ -80,7 +80,7 @@ or via LAN is possible. It allows to compare images and spot the differences
 %setup -q
 #patch0
 #patch1
-%patch5 -p1
+#patch5 -p1
 #setup -T -D -a 1 -n %{name}-3.16.%{git_build}
 # plug them in
 #mv nomacs-plugins-%{version}/* ImageLounge/plugins/
@@ -129,6 +129,9 @@ sed -i -e 's|Image Lounge|Image?Lounge|g' %{name}.lang
 
 
 %changelog
+* Thu Mar 21 2024 Ilya Mashkin <oddity@altlinux.ru> 3.17.2295-alt1
+- 3.17.2295
+
 * Fri Nov 17 2023 Ilya Mashkin <oddity@altlinux.ru> 3.17.2287-alt2
 - rebuild with new libexiv2
 
