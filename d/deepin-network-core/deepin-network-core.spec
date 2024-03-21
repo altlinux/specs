@@ -5,7 +5,7 @@
 %define _cmake__builddir BUILD
 
 Name: deepin-network-core
-Version: 2.0.20
+Version: 2.0.22
 Release: alt1
 Summary: Deepin desktop-environment - network core files
 License: LGPL-3.0-or-later
@@ -110,6 +110,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/libdde-network-core.so
 
 %changelog
+* Thu Mar 21 2024 Leontiy Volodin <lvol@altlinux.org> 2.0.22-alt1
+- New version 2.0.22.
+
 * Thu Jan 25 2024 Leontiy Volodin <lvol@altlinux.org> 2.0.20-alt1
 - New version 2.0.20.
 - Updated license tag.
