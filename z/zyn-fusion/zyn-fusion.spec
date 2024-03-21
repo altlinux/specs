@@ -1,6 +1,6 @@
 Name: zyn-fusion
 Version: 3.0.6
-Release: alt2
+Release: alt3
 
 Summary: Zynaddsubfx UI
 License: LGPL-2.1
@@ -18,7 +18,6 @@ BuildRequires: /usr/bin/ruby rake
 %prep
 %setup -c
 sed -ri 's,/opt/zyn-fusion,%_libdir/zyn-fusion,' test-libversion.c
-sed -ri  's,\srake$, /usr/lib/ruby/bin/rake,' Makefile
 
 %build
 make all pack
@@ -35,6 +34,9 @@ ln -srv %buildroot%_libdir/zyn-fusion/zest %buildroot%_bindir/zyn-fusion
 %_libdir/zyn-fusion
 
 %changelog
+* Thu Mar 21 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.6-alt3
+- fixed FTBFS after rake mess, again
+
 * Thu Dec 14 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.6-alt2
 - explicitly require rake for build
 
