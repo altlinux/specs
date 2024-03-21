@@ -2,7 +2,7 @@
 
 %define _name baobab
 %define xdg_name org.gnome.baobab
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
@@ -17,7 +17,8 @@ Url: https://wiki.gnome.org/Apps/DiskUsageAnalyzer
 
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version%beta.tar.xz
 
-Provides: baobab = %version-%release
+Provides: gnome-disk-usage-analyser = %EVR
+Provides: baobab = %EVR
 
 %define gtk4_ver 4.10.0
 %define vala_ver 0.23.3
@@ -62,6 +63,9 @@ popd
 %doc README* NEWS
 
 %changelog
+* Thu Mar 21 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Tue Sep 19 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 
