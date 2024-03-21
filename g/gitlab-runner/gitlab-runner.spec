@@ -2,8 +2,8 @@
 %define config_dir gitlab-runner.d
 
 Name:    gitlab-runner
-Version: 16.1.1
-Release: alt2
+Version: 16.9.1
+Release: alt1
 
 Summary: GitLab Runner is the open source project that is used to run your CI/CD jobs and send the results back to GitLab
 License: MIT
@@ -15,6 +15,7 @@ Source1: %name.service
 Source2: %name.init
 Source3: %name.tmpfiles
 Source4: %name.sysconfig
+Patch0: %name-16.9.1-alt-fix-for-su-command.patch 
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -24,6 +25,7 @@ BuildRequires: golang
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -67,6 +69,12 @@ fi
 %attr(0770,root,gitlab-runner) %dir %_localstatedir/gitlab-runner
 
 %changelog
+* Wed Mar 20 2024 Nikolay Burykin <bne@altlinux.org> 16.9.1-alt1
+- New version 16.9.1
+- Fix:
+  + "/root/.bash_profile: Permission denied" when use shell as an executor (ALT #47620)
+  + failure prepare environment step, when use Docker as an executor (ALT #47621)
+
 * Mon Aug 28 2023 Nikolay Burykin <bne@altlinux.org> 16.1.1-alt2
 - Changed group from Other to Development/Tools
 
