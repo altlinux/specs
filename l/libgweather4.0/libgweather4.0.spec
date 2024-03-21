@@ -14,12 +14,13 @@
 %def_enable introspection
 %def_enable vala
 %def_enable gtk_doc
-# libgweather test suite fails offline, required https://www.aviationweather.gov
 %def_enable check
+# libgweather test suite fails offline, required https://www.aviationweather.gov
+%def_disable online_check
 
 Name: %_name%api_ver
-Version: %ver_major.0
-Release: alt1.2%beta
+Version: %ver_major.2
+Release: alt1%beta
 
 Summary: A library for weather information
 Group: System/Libraries
@@ -144,7 +145,7 @@ sed -i "s|'\(pylint\)'|'\1.py3'|" meson.build
 %find_lang --output=%name.lang %_name-%api_ver %_name-%api_ver-locations
 
 %check
-%__meson_test -v --print-errorlogs --suite lint
+%__meson_test -v --print-errorlogs %{?_disable_online_check:--suite lint}
 
 %files -f %name.lang
 %dir %_libdir/%_name-%api_ver_major
@@ -185,6 +186,9 @@ sed -i "s|'\(pylint\)'|'\1.py3'|" meson.build
 
 
 %changelog
+* Thu Mar 21 2024 Yuri N. Sedunov <aris@altlinux.org> 4.4.2-alt1
+- 4.4.2
+
 * Tue Feb 27 2024 Yuri N. Sedunov <aris@altlinux.org> 4.4.0-alt1.2
 - data subpackage doesn't required for library to work
 
