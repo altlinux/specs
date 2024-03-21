@@ -2,7 +2,7 @@
 
 Name:      appstream-data-1-mobile
 Summary:   ALT Linux AppStream metadata
-Version:   20240226
+Version:   20240321
 Release:   alt1
 Group:     System/Configuration/Packaging
 BuildArch: noarch
@@ -35,6 +35,9 @@ cp -r xmls/* %buildroot%_datadir/app-info/xmls/
 %_datadir/app-info/icons/altlinux
 
 %changelog
+* Thu Mar 21 2024 Kirill Izmestev <felixz@altlinux.org> 20240321-alt1
+- Added applications to exclusive list and updated database.
+
 * Mon Feb 26 2024 Kirill Izmestev <felixz@altlinux.org> 20240226-alt1
 - Added application to exclusive list and updated database.
 - Changed conflicts to appstream-data-desktop.
