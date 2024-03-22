@@ -8,7 +8,7 @@
 
 Name: flac
 Version: 1.4.3
-Release: alt1
+Release: alt2
 
 Summary: An encoder/decoder for the Free Lossless Audio Codec
 License: GPL-2.0-or-later and BSD-3-Clause and GFDL-1.1-or-later
@@ -24,7 +24,9 @@ Requires: lib%name%soversion = %EVR
 %{?_enable_static:BuildRequires: glibc-devel-static}
 
 BuildPreReq: gcc-c++ libogg-devel
+%ifnarch %e2k
 BuildRequires: pandoc
+%endif
 
 %description
 FLAC stands for Free Lossless Audio Codec.  Grossly oversimplified, FLAC is
@@ -163,7 +165,9 @@ done
 
 %files
 %_bindir/*
+%ifnarch %e2k
 %_mandir/man?/*
+%endif
 %flacdocs/
 
 %files -n lib%name%soversion
@@ -198,6 +202,9 @@ done
 %endif
 
 %changelog
+* Fri Mar 22 2024 Michael Shigorin <mike@altlinux.org> 1.4.3-alt2
+- E2K: disable manpages (no pandoc so far)
+
 * Mon Feb 05 2024 Anton Farygin <rider@altlinux.ru> 1.4.3-alt1
 - 1.3.3 -> 1.4.3
 
