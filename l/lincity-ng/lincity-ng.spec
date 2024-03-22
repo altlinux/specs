@@ -1,7 +1,7 @@
 %define prerel %nil
 
 Name: lincity-ng
-Version: 2.9.0
+Version: 2.10.1
 Release: alt1
 
 Summary: LinCity-NG is a city simulation game
@@ -15,9 +15,8 @@ Source: https://github.com/lincity-ng/lincity-ng/archive/refs/tags/%name-%versio
 
 Requires: %name-data = %EVR
 
-# development version uses cmake instead of jam
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: jam cmake gcc-c++
+BuildRequires: cmake gcc-c++
 BuildRequires: pkgconfig(sdl2)
 BuildRequires: pkgconfig(SDL2_gfx)
 BuildRequires: pkgconfig(SDL2_image)
@@ -26,6 +25,8 @@ BuildRequires: pkgconfig(SDL2_ttf)
 BuildRequires: pkgconfig(zlib)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(physfs)
+BuildRequires: pkgconfig(liblzma)
+BuildRequires: pkgconfig(libxslt) xsltproc
 # for compress .wav files
 BuildRequires: vorbis-tools
 
@@ -58,27 +59,17 @@ BuildArch: noarch
 This package contains the data files (graphics, models, audio) necessary to
 play Lincity-NG.
 
-%define _pkgdocdir %_docdir/%name-%version
+%define _pkgdocdir %_docdir/%name
 
 %prep
 %setup -n %name-%name-%version%prerel
-touch CREDITS
-
-
-sed -i "s/CFLAGS += -O3 -g -Wall/CFLAGS += $RPM_OPT_FLAGS/" Jamrules
-sed -i "s/CXXFLAGS += -O3 -g -Wall/CXXFLAGS += $RPM_OPT_FLAGS/" Jamrules
-sed -i 's|lincity-ng.png|lincity-ng|g' lincity-ng.desktop
 
 %build
-NOCONFIGURE=1 ./autogen.sh
-%configure
-jam
-#%%cmake
-#%%cmake_build
+%cmake -DCMAKE_INSTALL_MANDIR=%_man6dir
+%cmake_build
 
 %install
-#%%cmake_install
-DESTDIR=%buildroot jam -sappdocdir=%_pkgdocdir install
+%cmake_install
 
 # Make a symlink to system font, rather than include a copy of DejaVu Sans
 ln -fs %_datadir/fonts/ttf/dejavu/DejaVuSans.ttf %buildroot%_datadir/%name/fonts/sans.ttf
@@ -94,14 +85,18 @@ subst 's/\.wav/.ogg/' %buildroot/%_datadir/%name/sounds/sounds.xml
 
 %files -f %name.lang
 %_bindir/*
+%_desktopdir/*
 
 %files data
-%_desktopdir/*
-%_pixmapsdir/*
 %_datadir/%name/*
+%_iconsdir/hicolor/*x*/apps/%name.png
+%_man6dir/%name.6*
 %doc %_pkgdocdir/
 
 %changelog
+* Fri Mar 22 2024 Yuri N. Sedunov <aris@altlinux.org> 2.10.1-alt1
+- 2.10.1 (ported to CMake build system)
+
 * Mon Feb 26 2024 Yuri N. Sedunov <aris@altlinux.org> 2.9.0-alt1
 - 2.9.0 release (ported to SDL2)
 
