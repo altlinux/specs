@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.139
+Version: 2.9.140
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -122,6 +122,9 @@ make check
 %lang(uz) %_datadir/locale/uz/LC_MESSAGES/*.mo
 
 %changelog
+* Thu Mar 21 2024 Ajrat Makhmutov <rauty@altlinux.org> 2.9.140-alt1
+- alterator-logs: add information about log colors
+
 * Thu Jan 11 2024 Mikhail Efremov <sem@altlinux.org> 2.9.139-alt1
 - altrator-vm: Add Russian translation for WS BtrFS profile.
 

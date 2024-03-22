@@ -1,5 +1,5 @@
 Name: alterator-logs
-Version: 0.9.3
+Version: 0.9.4
 Release: alt1
 
 Summary: Alterator module for system logs
@@ -48,6 +48,10 @@ System logs alterator module.
 touch /var/log/journald
 
 %changelog
+* Thu Mar 21 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.9.4-alt1
+- change text logs web display from textarea to div
+- add journald log formatting using colors by priority
+
 * Wed Mar 06 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.9.3-alt1
 - fix: when changing the log, the number of lines is lost (ALT bug 44392)
 - fix: don't go to first page after resizing
