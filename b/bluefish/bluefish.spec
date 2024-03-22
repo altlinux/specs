@@ -1,10 +1,8 @@
 Name: bluefish
-Version: 2.2.15
-Release: alt1
-
 Summary: A GTK3 web development application for experienced users
-
-Serial: 2
+Version: 2.2.15
+Release: alt2
+Epoch: 2
 
 Url: http://bluefish.openoffice.nl
 License: GPL-3.0-or-later
@@ -28,9 +26,12 @@ Patch1: bluefish-2.2.15-shellbang.patch
 
 Patch3: bluefish-2.2.12-fix-command-chmod-a-x.patch
 
-Requires: bluefish-common = %serial:%version-%release
+Obsoletes: bluefish-common =< %EVR
+
+%add_python3_path %_datadir/%name
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
 BuildRequires: intltool
 BuildRequires: libgtk+3-devel
 BuildRequires: libgucharmap-devel
@@ -42,16 +43,6 @@ BuildRequires: libappstream-glib
 Bluefish is a powerful editor for experienced web designers and programmers.
 Bluefish supports many programming and markup languages, but it focuses on
 editing dynamic and interactive websites
-
-%package common
-Summary: Common files for Bluefish
-Group: Editors
-BuildArch: noarch
-Serial: 2
-
-%description common
-Bluefish is a powerful editor for experienced web designers and programmers.
-These are common files.
 
 %prep
 %setup
@@ -92,13 +83,11 @@ for c in `echo src/plugin_*`; do
 done
 cat %{name}_plugin_*.lang >> %name.lang
 
-%files
+%files -f %name.lang
 %_bindir/*
 %_libdir/%name
 %_desktopdir/%name.desktop
 %_datadir/metainfo/%name.appdata.xml
-
-%files common -f %name.lang
 %exclude %_defaultdocdir/%name
 %doc data/bflang/sample.bflang2 AUTHORS COPYING ChangeLog README TODO
 %dir %_datadir/%name
@@ -111,6 +100,10 @@ cat %{name}_plugin_*.lang >> %name.lang
 %_datadir/xml/%name/*
 
 %changelog
+* Fri Mar 22 2024 Anton Midyukov <antohami@altlinux.org> 2:2.2.15-alt2
+- enable python3 support
+- remove common subpackage
+
 * Thu Mar 21 2024 Anton Midyukov <antohami@altlinux.org> 2:2.2.15-alt1
 - new version (2.2.15) with rpmgs script
 
