@@ -4,8 +4,8 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name:     podman
-Version:  4.9.3
-Release:  alt1.1
+Version:  5.0.0
+Release:  alt1
 
 Summary:  Manage pods, containers, and container images
 License:  Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND ISC AND MIT AND MPL-2.0
@@ -14,11 +14,11 @@ Vcs:      https://github.com/containers/podman.git
 Url:      https://podman.io/
 
 Source:   %name-%version.tar
-Patch1:   podman-alt-loongarch64-support.patch
 
 ExclusiveArch: %go_arches
-BuildRequires(pre): rpm-build-golang rpm-macros-systemd
-BuildRequires: golang go-md2man man-db
+BuildRequires(pre): rpm-macros-golang rpm-macros-systemd
+BuildRequires: rpm-build-golang golang >= 1.20
+BuildRequires: go-md2man man-db
 BuildRequires: libseccomp-devel glib2-devel libgpgme-devel libgpg-error-devel libbtrfs-devel
 BuildRequires: libgio-devel libostree-devel libselinux-devel libdevmapper-devel
 BuildRequires: libassuan-devel libsystemd-devel libsubid-devel
@@ -150,6 +150,7 @@ rm -f %buildroot%_man5dir/dockerfile*
 %_datadir/zsh/site-functions/_%name-remote
 
 %files docker
+%config(noreplace) %_sysconfdir/profile.d/%name-docker.*
 %_bindir/docker
 %_man1dir/docker*
 %exclude %_man1dir/docker-remote*
@@ -157,6 +158,9 @@ rm -f %buildroot%_man5dir/dockerfile*
 %_datadir/user-tmpfiles.d/%name-docker.conf
 
 %changelog
+* Fri Mar 22 2024 Alexey Shabalin <shaba@altlinux.org> 5.0.0-alt1
+- New version 5.0.0 (Fixes: CVE-2024-1753).
+
 * Fri Mar 15 2024 Ivan A. Melnikov <iv@altlinux.org> 4.9.3-alt1.1
 - NMU: Fix build on loongarch64.
 

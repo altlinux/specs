@@ -2,7 +2,7 @@
 %define _libexecdir /usr/libexec
 
 Name: netavark
-Version: 1.9.0
+Version: 1.10.3
 Release: alt1
 License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT
 Summary: OCI network stack
@@ -93,6 +93,9 @@ popd
 %_unitdir/*
 
 %changelog
+* Fri Mar 22 2024 Alexey Shabalin <shaba@altlinux.org> 1.10.3-alt1
+- New version 1.10.3.
+
 * Mon Dec 11 2023 Alexey Shabalin <shaba@altlinux.org> 1.9.0-alt1
 - New version 1.9.0.
 
