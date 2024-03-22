@@ -4,18 +4,18 @@ BuildRequires: /usr/bin/doxygen pkgconfig(bluez) pkgconfig(libusb-1.0)
 BuildRequires: chrpath
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define major           0
+%define major       0
 %define libname     libdivecomputer%{major}
 %define develname   libdivecomputer-devel
 
 Name:       libdivecomputer
-Version:    0.6.0
+Version:    0.8.0
 Release:    alt1_1
 Summary:    Library for communication with dive computers
-License:    LGPL
-Group:      Development/C
-URL:        http://www.divesoftware.org/libdc/index.html
-Source:     http://www.divesoftware.org/libdc/download/libdivecomputer-%{version}.tar.gz
+License:    LGPLv2
+Group:      System/Libraries
+URL:        https://www.libdivecomputer.org/
+Source:     https://www.libdivecomputer.org/releases/%{name}-%{version}.tar.gz
 Source44: import.info
 
 %description
@@ -24,7 +24,7 @@ with dive computers from various manufacturers.
 
 %package -n %{libname}
 Summary:    Libraries for %{name}
-Group:      Development/C
+Group:      System/Libraries
 
 %description -n %{libname}
 Libraries for %{name}.
@@ -43,7 +43,7 @@ Header files and development libraries for %{name}.
 
 %build
 %configure --disable-static
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -70,6 +70,9 @@ done
 
 
 %changelog
+* Fri Mar 22 2024 Igor Vlasenko <viy@altlinux.org> 0.8.0-alt1_1
+- update by mgaimport
+
 * Fri Jun 22 2018 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1_1
 - new version
 
