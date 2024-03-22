@@ -1,7 +1,7 @@
 Name: bluefish
 Summary: A GTK3 web development application for experienced users
 Version: 2.2.15
-Release: alt2
+Release: alt3
 Epoch: 2
 
 Url: http://bluefish.openoffice.nl
@@ -27,6 +27,8 @@ Patch1: bluefish-2.2.15-shellbang.patch
 Patch3: bluefish-2.2.12-fix-command-chmod-a-x.patch
 
 Obsoletes: bluefish-common =< %EVR
+
+AutoProv: nopython3
 
 %add_python3_path %_datadir/%name
 
@@ -100,6 +102,9 @@ cat %{name}_plugin_*.lang >> %name.lang
 %_datadir/xml/%name/*
 
 %changelog
+* Fri Mar 22 2024 Anton Midyukov <antohami@altlinux.org> 2:2.2.15-alt3
+- do not provides python3 modules
+
 * Fri Mar 22 2024 Anton Midyukov <antohami@altlinux.org> 2:2.2.15-alt2
 - enable python3 support
 - remove common subpackage
