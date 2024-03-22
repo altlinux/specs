@@ -1,6 +1,6 @@
 Name: nautilus-open-any-terminal
-Version: 0.4.0
-Release: alt2
+Version: 0.5.1
+Release: alt1
 
 Summary: Extension for nautilus, which adds an context-entry for opening other terminal emulators
 License: GPL-3.0
@@ -50,10 +50,13 @@ And others...
 %python3_sitelibdir/%{pyproject_distinfo nautilus_open_any_terminal}/
 
 %_datadir/glib-2.0/schemas/com.github.stunkymonkey.%name.gschema.xml
-%_datadir/nautilus-python/extensions/open_any_terminal_extension.py
+%_datadir/nautilus-python/extensions/nautilus_open_any_terminal.py
 %_datadir/nautilus-python/extensions/__pycache__/*
 
 %changelog
+* Sat Mar 23 2024 Roman Alifanov <ximper@altlinux.org> 0.5.1-alt1
+- new version 0.5.1 (with rpmrb script)
+
 * Thu Aug 03 2023 Roman Alifanov <ximper@altlinux.org> 0.4.0-alt2
 - renaming to comply with the standart naming of nautilus extensions: nautilus-{sendto,share,image-converter,...}
 - exclude unnecessary %python3_sitelibdir/nautilus_open_any_terminal/locale
