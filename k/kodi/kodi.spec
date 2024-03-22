@@ -1,6 +1,6 @@
 Name: kodi
-Version: 20.4
-Release: alt2
+Version: 20.5
+Release: alt1
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
@@ -205,6 +205,10 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/xsessions/kodi.desktop
 
 %changelog
+* Fri Mar 22 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 20.5-alt1
+- 20.5-Nexus released
+- fixed faults with python addons (closes: 49771)
+
 * Sun Feb 25 2024 Michael Shigorin <mike@altlinux.org> 20.4-alt2
 - E2K: use default java
 
