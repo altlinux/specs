@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define api_ver_major 4
 %define api_ver %api_ver_major.0
@@ -11,12 +11,12 @@
 %def_disable check
 
 Name: ghex
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Binary editor for GNOME
 Group: Development/Tools
-License: GPLv2+
+License: GPL-2.0-or-later
 Url: https://wiki.gnome.org/Apps/Ghex
 
 Vcs: https://gitlab.gnome.org/GNOME/ghex.git
@@ -24,13 +24,14 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major%beta/%name-%versi
 
 %define glib_ver 2.68
 %define gtk4_ver 4.4.0
+%define adw_ver 1.2
 
 Requires: libgtkhex = %EVR
 Requires: dconf yelp
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson glib2-devel >= %glib_ver libgtk4-devel >= %gtk4_ver
-BuildRequires: pkgconfig(libadwaita-1)
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: yelp-tools
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk4-gir-devel}
 %{?_enable_check:BuildRequires: desktop-file-utils /usr/bin/appstream-util}
@@ -120,6 +121,9 @@ GObject introspection devel data for the GtkGHex library.
 %endif
 
 %changelog
+* Fri Mar 22 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Tue Nov 14 2023 Yuri N. Sedunov <aris@altlinux.org> 45.1-alt1
 - 45.1
 

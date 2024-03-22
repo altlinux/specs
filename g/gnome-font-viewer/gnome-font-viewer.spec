@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _unpackaged_files_terminate_build 1
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define xdg_name org.gnome.font-viewer
 
@@ -57,6 +57,9 @@ GNOME Font Viewer is a simple application to preview fonts.
 %doc NEWS
 
 %changelog
+* Fri Mar 22 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Tue Sep 19 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 
