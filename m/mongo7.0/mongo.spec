@@ -3,7 +3,7 @@
 %endif
 
 Name: mongo7.0
-Version: 7.0.6
+Version: 7.0.7
 Release: alt1
 Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
@@ -201,6 +201,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Fri Mar 22 2024 Alexei Takaseev <taf@altlinux.org> 7.0.7-alt1
+- 7.0.7
+
 * Mon Mar 04 2024 Alexei Takaseev <taf@altlinux.org> 7.0.6-alt1
 - 7.0.6
 
