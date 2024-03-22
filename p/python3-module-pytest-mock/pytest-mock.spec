@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.12.0
+Version: 3.14.0
 Release: alt1
 Summary: Thin-wrapper around the mock package for easier use with py.test
 License: MIT
@@ -56,6 +56,9 @@ to worry about undoing patches at the end of a test
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 22 2024 Stanislav Levin <slev@altlinux.org> 3.14.0-alt1
+- 3.12.0 -> 3.14.0.
+
 * Mon Jan 29 2024 Stanislav Levin <slev@altlinux.org> 3.12.0-alt1
 - 3.11.1 -> 3.12.0.
 
