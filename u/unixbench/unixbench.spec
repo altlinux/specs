@@ -1,6 +1,6 @@
 Name: unixbench
 Version: 5.1.2
-Release: alt2.qa1
+Release: alt3
 
 Summary: The BYTE UNIX Benchmarks
 License: Distributable
@@ -22,6 +22,10 @@ The BYTE UNIX Benchmarks packaged for Inquisitor
 %setup
 %patch0 -p1
 %patch1 -p1
+%ifarch %e2k
+# naming conflict with the compiler
+sed -i "s/TMPDIR/BENCH&/g" Makefile Run testdir/sort.src
+%endif
 
 %build
 %make
@@ -42,6 +46,9 @@ cp -a testdir/* %buildroot%_datadir/inquisitor/unixbench-testdir
 # TODO: make less inquisitor-specific?
 
 %changelog
+* Fri Mar 22 2024 Michael Shigorin <mike@altlinux.org> 5.1.2-alt3
+- E2K: workaround for silly ftbfs (ilyakurdyukov@).
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 5.1.2-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
