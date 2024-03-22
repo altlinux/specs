@@ -1,5 +1,5 @@
 Name: kooha
-Version: 2.2.4
+Version: 2.3.0
 Release: alt1
 Epoch: 1
 
@@ -14,7 +14,7 @@ Source1: vendor.tar
 
 BuildPreReq: rpm-macros-meson rpm-build-rust
 BuildRequires: /proc
-BuildRequires: meson glib2-devel libgio-devel libgtk4-devel libadwaita-devel gstreamer1.0-devel gst-plugins1.0-devel libpulseaudio-devel /usr/bin/appstream-util
+BuildRequires: meson glib2-devel libgio-devel libgtk4-devel libadwaita-devel gstreamer1.0-devel gst-plugins1.0-devel libpulseaudio-devel appstream
 
 %description
 %summary.
@@ -58,6 +58,7 @@ EOF
 %_bindir/%name
 %_desktopdir/io.github.seadve.Kooha.desktop
 %_datadir/glib-2.0/schemas/io.github.seadve.Kooha.gschema.xml
+%_datadir/dbus-1/services/io.github.seadve.Kooha.service
 %_iconsdir/hicolor/scalable/apps/io.github.seadve.Kooha.svg
 %_iconsdir/hicolor/symbolic/apps/io.github.seadve.Kooha-symbolic.svg
 %dir %_datadir/%name/
@@ -67,6 +68,9 @@ EOF
 %_datadir/locale/zh_Hant/LC_MESSAGES/%name.mo
 
 %changelog
+* Fri Mar 22 2024 Leontiy Volodin <lvol@altlinux.org> 1:2.3.0-alt1
+- New version 2.3.0.
+
 * Mon Sep 25 2023 Leontiy Volodin <lvol@altlinux.org> 1:2.2.4-alt1
 - New version 2.2.4.
 
