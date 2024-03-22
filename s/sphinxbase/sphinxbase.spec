@@ -17,7 +17,7 @@ BuildRequires: liblapack-devel perl(Pod/Usage.pm) python3-devel
 %define devname		lib%{name}-devel
 
 # rel to bump
-%define rel 9
+%define rel 10
 
 Name:		sphinxbase
 Version:	0.9
@@ -120,7 +120,8 @@ make check
 %{_mandir}/man1/sphinx*
 
 %files -n %{libname}
-%{_libdir}/lib%{name}.so.%{major}*
+%{_libdir}/lib%{name}.so.%{major}
+%{_libdir}/lib%{name}.so.%{major}.*
 
 %files -n %{adlibname}
 %{_libdir}/libsphinxad.so.%{admajor}
@@ -141,6 +142,9 @@ make check
 
 
 %changelog
+* Fri Mar 22 2024 Igor Vlasenko <viy@altlinux.org> 0.9-alt1_0.0.5prealpha.10
+- update by mgaimport
+
 * Tue Jul 05 2022 Igor Vlasenko <viy@altlinux.org> 0.9-alt1_0.0.5prealpha.9
 - update by mgaimport
 
