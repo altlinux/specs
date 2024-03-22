@@ -1,26 +1,26 @@
 %define _unpackaged_files_terminate_build 1
-%define oname threadpoolctl
+%define pypi_name threadpoolctl
+%define mod_name %pypi_name
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 3.1.0
+Name: python3-module-%pypi_name
+Version: 3.4.0
 Release: alt1
 Summary: Thread-pool Controls
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://github.com/joblib/threadpoolctl
-
+Url: https://pypi.org/project/threadpoolctl
+Vcs: https://github.com/joblib/threadpoolctl
 BuildArch: noarch
-
-# https://github.com/joblib/threadpoolctl.git
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(flit.sdist)
-
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: /usr/bin/py.test3
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -33,35 +33,31 @@ that involve nested parallelism so as to mitigate oversubscription issues.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile dev-requirements.txt
+%endif
 
 %build
-# flit build backend
-# generate setup.py for legacy builder
-%__python3 - <<-'EOF'
-from pathlib import Path
-from flit.sdist import SdistBuilder
-
-
-with open("setup.py", "wb") as f:
-    sd_builder = SdistBuilder.from_ini_path(Path("pyproject.toml"))
-    f.write(sd_builder.make_setup_py())
-EOF
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-py.test3 -vv -ra
+%pyproject_run_pytest -ra
 
 %files
-%doc LICENSE
 %doc README.md CHANGES.md
-%python3_sitelibdir/%oname.py
-%python3_sitelibdir/__pycache__/%oname.*
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%mod_name.py
+%python3_sitelibdir/__pycache__/%mod_name.*
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Mar 21 2024 Stanislav Levin <slev@altlinux.org> 3.4.0-alt1
+- 3.1.0 -> 3.4.0.
+
 * Wed Mar 02 2022 Stanislav Levin <slev@altlinux.org> 3.1.0-alt1
 - 2.2.0 -> 3.1.0.
 
