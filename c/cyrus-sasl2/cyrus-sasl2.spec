@@ -1,3 +1,5 @@
+%set_verify_elf_method unresolved=relaxed
+
 # Use "--disable sql" for build without PostgreSQL and MySQL support
 %def_enable sql
 # Use "--disable ldap" for build without LDAP support
@@ -8,17 +10,17 @@
 %def_without sphinx
 
 %define abiversion 3
+%define dbpath %_sysconfdir/sasl2/sasldb2
 
 Name: cyrus-sasl2
 Version: 2.1.28
-Release: alt1
+Release: alt2
 
 Summary: SASL2 is the Simple Authentication and Security Layer
 License: ALT-Cyrus
 Group: System/Libraries
 
 URL: http://www.cyrusimap.org/
-Packager: Vladimir V Kamarzin <vvk@altlinux.ru>
 
 Source0: %name-%version.tar
 Source1: sasldb2
@@ -32,7 +34,7 @@ Source8: README.ALT
 
 Requires: libsasl2-%abiversion = %version-%release
 
-BuildRequires: libcom_err-devel libdb4-devel libkrb5-devel libpam-devel groff-base autoconf automake openssl-devel
+BuildRequires: libcom_err-devel libdb4-devel libkrb5-devel libpam-devel groff-base openssl-devel
 %if_with sphinx
 BuildRequires: perl-Pod-POM-View-Restructured
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
@@ -127,6 +129,8 @@ This package contains documentations for SASL2
 %prep
 %setup
 
+sed -i 's,/etc/sasldb2,%dbpath,g' contrib/change-sasldb2-realm.py docsrc/sasl/options.rst utils/testsuite.c docsrc/sasl/upgrading.rst doc/legacy/*.html
+
 %build
 
 %if_enabled sql
@@ -134,29 +138,15 @@ export CPPFLAGS="`krb5-config --cflags` -I/usr/include/pgsql $CPPFLAG"
 %else
 export CPPFLAGS="`krb5-config --cflags` $CPPFLAG"
 %endif
-
-libtoolize -c -f
-aclocal -I cmulocal -I config
-autoheader
-autoconf
-automake -a -c -f
-
-#pushd saslauthd
-#aclocal -I ../cmulocal -I config -I ../config
-#autoheader
-#autoconf
-#automake -a -c -f
-#popd
-
 %add_optflags %optflags_shared
-#version_script="$(readlink -ev libsasl2.map)"
-#add_optflags -Wl,--version-script=$version_script
 
-%configure	--enable-shared \
+%autoreconf
+%configure \
+		--enable-shared --disable-static \
 		--with-configdir=%_sysconfdir/sasl2 \
 		--libdir=/%_lib \
 		--with-plugindir=%_libdir/sasl2-%abiversion \
-		--with-dbpath=%_sysconfdir/sasl2/sasldb2 \
+		--with-dbpath=%dbpath \
 		--with-dblib=berkeley \
 		--with-devrandom=/dev/urandom \
 		--with-openssl \
@@ -171,18 +161,19 @@ automake -a -c -f
 %if_enabled sql
 		--with-mysql=%_prefix \
 		--with-pgsql=%_prefix \
-		--with-sqlite3==%_prefix \
+		--with-sqlite3=%_prefix \
 		--enable-sql \
 %endif
 		--enable-anon \
 		--enable-cram \
+		--enable-digest \
+		--enable-ntlm \
 		--enable-plain \
 		--enable-login \
 		--enable-gssapi \
-		--enable-ntlm \
-		--enable-digest \
 		--enable-srp \
 		--enable-otp \
+		--enable-auth-sasldb \
 		%{?_without_sphinx: --with-sphinx-build=no} \
 		#
 
@@ -199,7 +190,6 @@ popd
 
 %install
 
-%set_verify_elf_method unresolved=relaxed
 
 mkdir -p %buildroot{%_bindir,%_libdir}
 make install DESTDIR=%buildroot
@@ -313,6 +303,9 @@ ls -l %buildroot%_man3dir/*
 %endif
 
 %changelog
+* Wed Mar 20 2024 Alexey Shabalin <shaba@altlinux.org> 2.1.28-alt2
+- Apply patches from debian and backport from upstream
+
 * Sun Feb 25 2024 Andrey Limachko <liannnix@altlinux.org> 2.1.28-alt1
 - NMU: 2.1.28 (Closes: #49511)
 

@@ -17,7 +17,7 @@
 %def_disable static
 %define contrib_slapo_name addpartial allop allowed authzid autogroup cloak datamorph denyop lastbind noopsrch passwd/sha2 passwd/pbkdf2 trace usn variant vc
 Name: openldap
-Version: 2.6.6
+Version: 2.6.7
 Release: alt1
 
 Obsoletes: openldap2.4 < %version-%release
@@ -69,7 +69,7 @@ Patch1: %name-alt-defaults.patch
 ## Patch created by Alexander Bokovoy <ab@altlinux.ru>
 Patch2: %name-2.3.34-alt-pid.patch
 
-Patch4: %name-2.3.20-alt-makefile.patch
+Patch4: %name-2.6.7-alt-makefile.patch
 
 Patch13: %name-2.4.25-rh-ldaprc-currentdir.patch
 Patch14: %name-2.4.25-rh-reentrant-gethostby.patch
@@ -721,6 +721,9 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Wed Mar 20 2024 Alexey Shabalin <shaba@altlinux.org> 2.6.7-alt1
+- 2.6.7
+
 * Wed Oct 04 2023 Alexey Shabalin <shaba@altlinux.org> 2.6.6-alt1
 - 2.6.6
 
