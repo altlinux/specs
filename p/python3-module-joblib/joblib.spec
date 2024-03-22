@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.3.2
-Release: alt1
+Release: alt2
 
 Summary: Lightweight pipelining: using Python functions as pipeline jobs
 License: BSD
@@ -19,11 +19,8 @@ Source2: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 %pyproject_runtimedeps_metadata
 %pyproject_runtimedeps -- vendored
-# `distributed` is not packaged yet
-%filter_from_requires /python[3]\(\.[[:digit:]]\)\?(distributed\()\|\..*)\)/d
-# debundler
-## filter no longer provided self-dependencies
-%filter_from_requires /python3(joblib\.externals\..*)/d
+# manually manage dependencies with metadata
+AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
@@ -80,13 +77,16 @@ sed -i \
 %pyproject_run_pytest -ra
 
 %files
-%doc *.rst
+%doc CHANGES.rst README.rst
 %python3_sitelibdir/joblib/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/joblib/test*
 %exclude %python3_sitelibdir/joblib/__pycache__/test*
 
 %changelog
+* Thu Mar 21 2024 Stanislav Levin <slev@altlinux.org> 1.3.2-alt2
+- Fixed FTBFS (Python 3.12).
+
 * Thu Aug 10 2023 Stanislav Levin <slev@altlinux.org> 1.3.2-alt1
 - 1.2.0 -> 1.3.2.
 

@@ -4,32 +4,24 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.2.1
+Version: 3.0.0
 Release: alt1
 Summary: Extended pickling support for Python objects
-Group: Development/Python
 License: BSD
-
+Group: Development/Python
 Url: https://pypi.org/project/cloudpickle
 VCS: https://github.com/cloudpipe/cloudpickle
-
 BuildArch: noarch
-
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# synced to dev-requirements.txt
-BuildRequires: python3(pytest)
-BuildRequires: python3(psutil)
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 # for psutil
 BuildRequires: /proc
-BuildRequires: python3(tornado)
 %endif
 
 %description
@@ -43,6 +35,11 @@ interactively in the __main__ module.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile dev-requirements.txt
+%endif
 
 %build
 %pyproject_build
@@ -64,6 +61,9 @@ export PYTHONPATH=tests/cloudpickle_testpkg
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Mar 21 2024 Stanislav Levin <slev@altlinux.org> 3.0.0-alt1
+- 2.2.1 -> 3.0.0.
+
 * Tue Jan 24 2023 Stanislav Levin <slev@altlinux.org> 2.2.1-alt1
 - 2.0.0 -> 2.2.1.
 
