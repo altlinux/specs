@@ -3,11 +3,11 @@
 
 Name: atop
 Version: 2.10.0
-Release: alt2
+Release: alt2.1
 Summary: AT Computing's System & Process Monitor
 License: GPLv2+
 Group: Monitoring
-URL: http://www.%{name}tool.nl
+URL: https://www.atoptool.nl
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -71,6 +71,9 @@ done
 /usr/lib/pm-utils/sleep.d/45atoppm
 
 %changelog
+* Fri Mar 22 2024 Leontiy Volodin <lvol@altlinux.org> 2.10.0-alt2.1
+- Fixed url tag
+
 * Fri Mar 22 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.10.0-alt2
 - Fixed build for Elbrus
 
