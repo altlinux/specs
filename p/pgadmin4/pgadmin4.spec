@@ -2,7 +2,7 @@
 
 Name:          pgadmin4
 Version:       8.3
-Release:       alt1
+Release:       alt2
 Summary:       pgAdmin is the most popular and feature rich Open Source administration and development platform for PostgreSQL
 License:       MIT
 Group:         Networking/WWW
@@ -97,6 +97,7 @@ Requires:      python3(googleapiclient)
 Requires:      python3(google_auth_oauthlib)
 Requires:      python3(werkzeug)
 Requires:      python3(keyring)
+Requires:      python3(typer)
 Requires:      postgresql-common
 
 %description
@@ -211,5 +212,8 @@ ln -sf %_sysconfdir/nginx/sites-available.d/%name.conf %_sysconfdir/nginx/sites-
 
 
 %changelog
+* Fri Mar 22 2024 Pavel Vasenkov <pav@altlinux.org> 8.3-alt2
+- Fixed packages dependencies (Closes: #49747)
+
 * Fri Mar 01 2024 Pavel Skrylev <majioa@altlinux.org> 8.3-alt1
 - First build v8.3 to Sisyphus
