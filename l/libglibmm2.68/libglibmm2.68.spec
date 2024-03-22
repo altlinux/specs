@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define rname glibmm
-%define ver_major 2.78
+%define ver_major 2.80
 %define ver_base 2.68
 %define api_ver %ver_base
 
@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: lib%rname%api_ver
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: C++ wrapper for GLib
@@ -24,7 +24,7 @@ Source: %rname-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/glibmm/%ver_major/%rname-%version.tar.xz
 %endif
 
-%define glib_ver 2.78.0
+%define glib_ver 2.79.3
 %define sigc_ver 3.0.0
 
 %add_perl_lib_path %_libdir/glibmm-%api_ver/proc/pm
@@ -109,6 +109,9 @@ sed -i  '/giomm_tls_client/d' tests/meson.build
 %endif
 
 %changelog
+* Fri Mar 22 2024 Yuri N. Sedunov <aris@altlinux.org> 2.80.0-alt1
+- 2.80.0
+
 * Sat Feb 03 2024 Yuri N. Sedunov <aris@altlinux.org> 2.78.1-alt1
 - 2.78.1
 
