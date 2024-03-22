@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 43
+%define ver_major 45
 %define beta %nil
 %define xdg_name org.gnome.Logs
 
@@ -13,15 +13,15 @@ Release: alt1%beta
 Summary: The GNOME logfile viewer
 Group: Graphical desktop/GNOME
 License: GPL-3.0
-Url: https://wiki.gnome.org/Apps/Logs
+Url: https://apps.gnome.org/Logs
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 
 Requires: gsettings-desktop-schemas
 
 %define glib_ver 2.44
-%define gtk4_ver 4.6
-%define adwaita_ver 1.2.0
+%define gtk4_ver 4.10
+%define adwaita_ver 1.4.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome
 BuildRequires: meson libgio-devel >= %glib_ver
@@ -50,7 +50,6 @@ GNOME Logs is a log viewer for the systemd journal.
 %files -f %name.lang
 %_bindir/%name
 %_desktopdir/%xdg_name.desktop
-%_datadir/%name/
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/%xdg_name.enums.xml
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
@@ -60,6 +59,9 @@ GNOME Logs is a log viewer for the systemd journal.
 %doc NEWS README
 
 %changelog
+* Fri Mar 22 2024 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
+- 45.0
+
 * Sat Sep 24 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
 - 43.0
 
