@@ -10,7 +10,7 @@ BuildRequires(pre): rpm-macros-generic-compat rpm-macros-mageia-compat
 %define develname lib%{name}-devel
 
 Name:           alglib
-Version:        4.00.0
+Version:        4.01.0
 Release:        alt1_1
 Summary:        A numerical analysis and data processing library
 Group:          System/Libraries
@@ -138,6 +138,9 @@ popd
 
 
 %changelog
+* Fri Mar 22 2024 Igor Vlasenko <viy@altlinux.org> 4.01.0-alt1_1
+- update by mgaimport
+
 * Mon Oct 02 2023 Igor Vlasenko <viy@altlinux.org> 4.00.0-alt1_1
 - update by mgaimport
 
