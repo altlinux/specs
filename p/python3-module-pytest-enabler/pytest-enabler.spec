@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.0.0
+Version: 3.1.1
 Release: alt1
 Summary: Pytest plugin for configuration of another plugins
 License: MIT
@@ -51,6 +51,9 @@ the settings if the plugin is not present.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 22 2024 Stanislav Levin <slev@altlinux.org> 3.1.1-alt1
+- 3.0.0 -> 3.1.1.
+
 * Thu Feb 29 2024 Stanislav Levin <slev@altlinux.org> 3.0.0-alt1
 - 2.3.1 -> 3.0.0.
 
