@@ -2,12 +2,12 @@
 %def_disable check
 
 Name: fluent-bit
-Version: 2.2.2
+Version: 3.0.0
 Release: alt1
 
 Summary: Fast data collector for Linux
 
-License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT
+License: Apache-2.0
 Group: Monitoring
 Url: https://github.com/fluent/fluent-bit
 
@@ -20,18 +20,9 @@ Patch2: 0003-jemalloc-add-fPIC-to-CFLAGS.patch
 ExcludeArch: armh ppc64le
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: gcc-c++ binutils
-BuildRequires: cmake
-BuildRequires: flex
-BuildRequires: bison
-BuildRequires: libpq-devel
-BuildRequires: zlib-devel libzstd-devel liblz4-devel
-BuildRequires: libssl-devel
-BuildRequires: libsasl2-devel
-BuildRequires: libyaml-devel
-BuildRequires: libsystemd-devel
-BuildRequires: libcares-devel
-BuildRequires: libedit-devel
+# Automatically added by buildreq on Fri Mar 22 2024
+# optimized out: CUnit cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libp11-kit libsasl2-3 libstdc++-devel pkg-config python3 python3-base sh5 xz
+BuildRequires: gcc-c++ CUnit-devel cmake flex libcares-devel libedit-devel libev-devel libevent-devel libjansson-devel libjemalloc-devel libnghttp3-devel libngtcp2-devel libpq5-devel libsasl2-devel libssl-devel libsystemd-devel libxml2-devel libyaml-devel libzstd-devel zlib-devel
 # libudev-devel BR is needed for systemd input plugin
 BuildRequires: libudev-devel
 %if_enabled check
@@ -112,6 +103,11 @@ ctest
 %_unitdir/%name.service
 
 %changelog
+* Fri Mar 22 2024 Leontiy Volodin <lvol@altlinux.org> 3.0.0-alt1
+- New version.
+- Cleanup BuildRequires.
+- Updated license tag.
+
 * Fri Jan 19 2024 Leontiy Volodin <lvol@altlinux.org> 2.2.2-alt1
 - New version.
 
