@@ -18,7 +18,7 @@
 
 Name: openshadinglanguage
 Version: 1.13.7.0
-Release: alt0.1
+Release: alt0.2
 Summary: Advanced shading language for production GI renderers
 Group: Development/Other
 License: BSD-3-Clause
@@ -151,8 +151,8 @@ export GCC_VERSION=12
 	-DCMAKE_SHARED_LINKER_FLAGS='-fuse-ld=lld -Wl,--build-id=sha1 -Wl,--undefined-version' \
 %endif
 %ifarch x86_64
-	-DUSE_SIMD="avx2,f16c" \
-	-DUSE_BATCHED="b8_AVX2" \
+	-DUSE_SIMD="avx,f16c" \
+	-DUSE_BATCHED="b8_AVX" \
 %endif
 	%nil
 
@@ -203,6 +203,9 @@ rm -f %buildroot%_prefix/cmake/llvm_macros.cmake
 %python3_sitelibdir/*.so
 
 %changelog
+* Fri Mar 22 2024 L.A. Kostis <lakostis@altlinux.ru> 1.13.7.0-alt0.2
+- batched: disable AVX2 (as not every hardware supports it).
+
 * Tue Mar 12 2024 L.A. Kostis <lakostis@altlinux.ru> 1.13.7.0-alt0.1
 - 1.13.7.0.
 - Fix build with lld (allow undefined version in lld).
