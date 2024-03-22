@@ -2,7 +2,7 @@
 
 Name: etckeeper
 Version: 1.18.21
-Release: alt1
+Release: alt2
 Summary: Etckeeper help to keep your /etc directory in VCS repository
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -63,6 +63,9 @@ pl="/var/cache/etckeeper/packagelist.pre-install"
 %_unitdir/%{name}.*
 
 %changelog
+* Thu Mar 21 2024 Vitaly Chikunov <vt@altlinux.org> 1.18.21-alt2
+- pre-install.d/10packagelist: Fix hook run under non-root users.
+
 * Tue Jan 09 2024 Vitaly Chikunov <vt@altlinux.org> 1.18.21-alt1
 - Update to 1.18.21 (2023-11-28).
 
