@@ -2,7 +2,7 @@
 
 Name: cameractrls
 Version: 0.5.15
-Release: alt1
+Release: alt2
 
 Summary: Camera controls
 
@@ -15,12 +15,12 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 
 Requires: python3-module-%name = %EVR
-Requires: python3-module-pygobject3 libgtk4-gir
+Requires: python3-module-pygobject3 libgtk+3-gir
 
 BuildArch: noarch
 
 %description
-It's a standalone Python CLI and GUI (GTK3, GTK4, TK) and camera Viewer (SDL)
+It's a standalone Python CLI and GUI (GTK3) and camera Viewer (SDL)
 to set the camera controls in Linux. It can set the V4L2 controls and it is
 extendable with the non standard controls. Currently it has a Logitech extension
 (LED mode, LED frequency, BRIO FoV, relative Pan/Tilt), Kiyo Pro extension
@@ -51,18 +51,18 @@ popd
 install -Dm755 *.py %buildroot%python3_sitelibdir/CameraCtrls
 
 mkdir -p %buildroot%_bindir
-ln -s %python3_sitelibdir/CameraCtrls/%{name}gtk4.py %buildroot%_bindir/%{name}gtk4
+ln -s %python3_sitelibdir/CameraCtrls/%{name}gtk.py %buildroot%_bindir/%{name}gtk
 ln -s %python3_sitelibdir/CameraCtrls/%name.py %buildroot%_bindir/%name
 
 pushd %buildroot%_desktopdir
-%__subst "s/Exec=.*/Exec=%{name}gtk4/" hu.irl.%name.desktop
+%__subst "s/Exec=.*/Exec=%{name}gtk/" hu.irl.%name.desktop
 %__subst "s/Name=.*/Name=Cameractrls/" hu.irl.%{name}.desktop
 %__subst "/Comment=/aComment[ru]=Управление камерой" hu.irl.%name.desktop
 popd
 
 %files
 %_bindir/%name
-%_bindir/%{name}gtk4
+%_bindir/%{name}gtk
 %_desktopdir/hu.irl.%name.desktop
 %_datadir/appdata/hu.irl.%name.metainfo.xml
 %_iconsdir/hicolor/scalable/apps/hu.irl.%name.svg
@@ -72,6 +72,9 @@ popd
 %python3_sitelibdir/CameraCtrls
 
 %changelog
+* Fri Mar 22 2024 Mikhail Tergoev <fidel@altlinux.org> 0.5.15-alt2
+- used GTK3 stable version %name (ALT bug: 48570)
+
 * Tue Mar 05 2024 Mikhail Tergoev <fidel@altlinux.org> 0.5.15-alt1
 - 0.5.15
 
