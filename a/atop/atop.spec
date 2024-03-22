@@ -3,7 +3,7 @@
 
 Name: atop
 Version: 2.10.0
-Release: alt1
+Release: alt2
 Summary: AT Computing's System & Process Monitor
 License: GPLv2+
 Group: Monitoring
@@ -26,6 +26,11 @@ format for long-term analysis.
 %prep
 %setup
 %patch -p1
+%ifarch %e2k
+# error: cannot open source file "atop.h"
+# because "CFLAGS +=" in the makefile is ignored if CFLAGS is set
+%add_optflags -I.
+%endif
 
 %build
 # fix build with glib2-devel
@@ -66,6 +71,9 @@ done
 /usr/lib/pm-utils/sleep.d/45atoppm
 
 %changelog
+* Fri Mar 22 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.10.0-alt2
+- Fixed build for Elbrus
+
 * Mon Mar 04 2024 Leontiy Volodin <lvol@altlinux.org> 2.10.0-alt1
 - atop 2.10.0
 
