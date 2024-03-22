@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name dash-to-dock
 %define ver_major 89
@@ -11,7 +11,7 @@
 
 Name: gnome-shell-extension-%_name
 Version: %ver_major
-Release: alt1
+Release: alt1.1
 
 Summary: A dock for the GNOME Shell
 Group: Graphical desktop/GNOME
@@ -40,7 +40,7 @@ between windows and desktops. Side and bottom placement options are
 available.
 
 %prep
-%setup -n %_name%{?_disable_snapshot:-extensions.gnome.org-v}%version%beta
+%setup -n %_name%{?_disable_snapshot:-extensions.gnome.org}-%{?_disable_snapshot:v}%version%beta
 
 %build
 %make VERSION=%version
@@ -58,6 +58,9 @@ available.
 %doc README.md
 
 %changelog
+* Fri Mar 22 2024 Yuri N. Sedunov <aris@altlinux.org> 89-alt1.1
+- updated to v89-31-g554f7c5 (gnome-46 support)
+
 * Tue Oct 10 2023 Yuri N. Sedunov <aris@altlinux.org> 89-alt1
 - 89
 
