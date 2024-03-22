@@ -10,8 +10,10 @@
 %def_enable vulkan
 %def_enable wayland
 %def_enable zbar
+%def_enable zxing
 %def_enable faad
 %def_enable faac
+%def_enable lc3
 %def_enable srtp
 %def_disable rtmp
 %def_enable openh264
@@ -37,7 +39,7 @@
 %def_disable doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -74,6 +76,7 @@ BuildRequires: libcelt-devel libxvid-devel
 BuildRequires: libvpx-devel liborc-devel orc libofa-devel libmusicbrainz-devel libass-devel
 %{?_enable_wayland:BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel wayland-protocols}
 %{?_enable_zbar:BuildRequires: libzbar-devel}
+%{?_enable_zxing:BuildRequires: pkgconfig(zxing)}
 BuildRequires: libEGL-devel libwebp-devel libopenjpeg2.0-devel libbluez-devel
 BuildRequires: libsoup-devel libspandsp-devel libfreeaptx-devel
 BuildRequires: libdbus-devel libxml2-devel libgnutls-devel libvdpau-devel
@@ -91,6 +94,7 @@ BuildRequires: flite-devel
 BuildRequires: liborc-test-devel gstreamer1.0-utils
 %{?_enable_faad:BuildRequires: libfaad-devel}
 %{?_enable_faac:BuildRequires: libfaac-devel}
+%{?_enable_lc3:BuildRequires: pkgconfig(lc3)}
 %{?_enable_openh264:BuildRequires: libopenh264-devel >= 1.3.0}
 %{?_enable_opencv:BuildRequires: libopencv-devel}
 %{?_enable_aom:BuildRequires: libaom-devel}
@@ -219,6 +223,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Fri Mar 22 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.1-alt1
+- 1.24.1
+
 * Tue Mar 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.0-alt1
 - 1.24.0
 
