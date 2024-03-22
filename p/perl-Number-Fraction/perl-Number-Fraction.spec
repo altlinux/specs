@@ -1,31 +1,30 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl rpm-macros-mageia-compat
-BuildRequires: perl(Module/Build.pm) perl(Types/Standard.pm) perl-podlators
+BuildRequires: perl(Module/Build.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define upstream_name    Number-Fraction
-%define upstream_version v3.0.4
+%define upstream_version v3.1.0
 
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
 Version:    3.1.0
-Release:    alt1
+Release:    alt1_1
 
 Summary:    Perl extension to model fractions
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        https://metacpan.org/release/%{upstream_name}
-Source0:    http://www.cpan.org/authors/id/D/DA/DAVECROSS/%{upstream_name}-v%{version}.tar.gz
+Source0:    https://cpan.metacpan.org/modules/by-module/Number/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Carp.pm)
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(Moo.pm)
-BuildRequires: perl(MooX/Types/MooseLike/Base.pm)
 BuildRequires: perl(Test/More.pm)
 BuildRequires: perl(Test/Warn.pm)
+BuildRequires: perl(Types/Standard.pm)
 BuildRequires: perl(overload.pm)
 BuildArch:  noarch
 Source44: import.info
@@ -40,7 +39,7 @@ overloading.
 If you use the module in your program in the usual way
 
 %prep
-%setup -q -n %{upstream_name}-v%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -54,10 +53,13 @@ If you use the module in your program in the usual way
 %makeinstall_std
 
 %files
-%doc META.json META.yml README Changes.md Changes.old
+%doc META.json META.yml  README
 %perl_vendor_privlib/*
 
 %changelog
+* Fri Mar 22 2024 Igor Vlasenko <viy@altlinux.org> 3.1.0-alt1_1
+- update by mgaimport
+
 * Tue Mar 19 2024 Igor Vlasenko <viy@altlinux.org> 3.1.0-alt1
 - automated CPAN update
 
