@@ -3,7 +3,7 @@
 
 Name:          openmvg
 Version:       2.1
-Release:       alt1
+Release:       alt2
 Summary:       open Multiple View Geometry
 License:       MPL-2.0
 Group:         System/Libraries
@@ -145,6 +145,19 @@ OpenMVG is developed in C++ and runs on Android, iOS, Linux, macOS, and Windows.
 %prep
 %setup
 %autopatch -p1
+%ifarch %e2k
+# needs to be linked with the -fopenmp option
+sed -i '/include_directories(${OpenMP_C_INCLUDE_DIR})/i add_link_options(-fopenmp)' src/CMakeLists.txt
+# workaround for "extern template class"
+sed -i '1i #define IMAGE_IO_CPP' src/openMVG/image/image_io.cpp
+sed -i '/^extern template/s/.*/#ifndef IMAGE_IO_CPP\n&\n#endif/' src/openMVG/image/image_io.hpp
+# fix num_threads in pragmas
+sed -i -E "/^[[:space:]]*#pragma omp .*[[:space:]]num_threads\(/{s/#/for(long &/;\
+s/(#.*num_threads\()([^()]*)\)/_xxxn=\\2,\\1_xxxn)/;\
+s/#/_xxxc=1;_xxxc;_xxxc=0)\n&/}" src/third_party/flann/src/cpp/flann/algorithms/*.h
+# fix endianness and collision with other LCC
+sed -i 's/defined(__LCC__)/0/;s/defined(__LITTLE_ENDIAN__)/1/' src/nonFree/sift/vl/host.h
+%endif
 
 %build
 cd src
@@ -188,5 +201,8 @@ rm -rf %buildroot%_includedir/openMVG_dependencies/
 
 
 %changelog
+* Fri Mar 22 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.1-alt2
+- Fixed build for Elbrus
+
 * Sat Mar 02 2024 Pavel Skrylev <majioa@altlinux.org> 2.1-alt1
 - Initial build v2.1 for Sisyphus
