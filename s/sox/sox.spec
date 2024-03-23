@@ -5,7 +5,7 @@
 Name: sox
 Summary: A general purpose sound file conversion tool
 Version: 14.4.2
-Release: alt5
+Release: alt6
 License: GPLv2+ and LGPLv2+ and MIT
 Group: Sound
 BuildRequires: glibc-devel-static libalsa-devel libao-devel libflac-devel libgomp-devel libgsm-devel libid3tag-devel liblame-devel libltdl7-devel libmad-devel libmagic-devel libopencore-amrnb-devel libopencore-amrwb-devel libopusfile-devel libpng-devel libsndfile-devel libvorbis-devel libwavpack-devel
@@ -261,6 +261,10 @@ sed -i 's,\-I/lib/modules/`uname -r`/build/include,,' configure*
 %ifarch %e2k
 # still unsupported as of lcc 1.21.24
 sed -i 's,-Wtraditional-conversion,,' configure*
+sed -i -E ":a;/\\\\$/{N;ba};\
+/^[[:space:]]*#pragma omp .*[[:space:]]if\(/{s/#/for(long &/;\
+s/(#.*if *\()([^()]*(\([^()]*(\([^()]*\)[^()]*)*\)[^()]*)*)\)/_xxxi=\\2,\\1_xxxi)/;\
+s/#/_xxxc=1;_xxxc;_xxxc=0)\n&/}" src/effects.c
 %endif
 
 %build
@@ -375,6 +379,9 @@ rm -rf %buildroot%_libdir/sox/*.a
 %files play
 
 %changelog
+* Sat Mar 23 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 14.4.2-alt6
+- Fixed build for Elbrus.
+
 * Mon Oct 18 2021 Grigory Ustinov <grenka@altlinux.org> 14.4.2-alt5
 - Fixed FTBFS.
 
