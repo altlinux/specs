@@ -10,13 +10,14 @@
 
 Name: buildah
 Version: 1.35.1
-Release: alt1
+Release: alt1.1
 Summary: A command line tool used to creating OCI Images
 Group: Development/Other
 License: Apache-2.0
 Url: https://%provider_prefix
 Source: %name-%version.tar
 Patch: %name-%version.patch
+Patch1: vendored-cilium-ebpf-alt-loongarch64-support.patch
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang
@@ -50,6 +51,7 @@ or
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 sed -i '/docs install/d' Makefile
 
 %build
@@ -87,6 +89,9 @@ popd
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Sat Mar 23 2024 Ivan A. Melnikov <iv@altlinux.org> 1.35.1-alt1.1
+- NMU: fix FTBFS on loongarch64.
+
 * Fri Mar 22 2024 Alexey Shabalin <shaba@altlinux.org> 1.35.1-alt1
 - New version 1.35.1 (Fixes: CVE-2024-1753).
 
