@@ -5,7 +5,7 @@
 %def_with compiz
 
 Name: gnome-flashback
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME Flashback session
@@ -53,7 +53,7 @@ Requires: alacarte
 # since 3.20
 Conflicts: notification-daemon < 3.20
 
-BuildRequires(pre): rpm-build-gnome rpm-build-xdg rpm-build-systemd gnome-common
+BuildRequires(pre): rpm-build-gnome rpm-build-xdg rpm-build-systemd rpm-build-xdg gnome-common
 BuildRequires: libgnome-panel-devel >= %panel_ver
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
@@ -104,8 +104,8 @@ find ./ -name "*enum-types.[c,h]" -print0 | xargs -r0 rm -f --
     --disable-static \
     --disable-schemas-compile \
     %{?_with_compiz:--with-compiz-session}
-# since 46 gnome-session leaks --systemd option
-%make_build session_management=""
+%nil
+%make_build
 
 %install
 %makeinstall_std
@@ -119,6 +119,7 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 %make check
 
 %files -f %name.lang
+%_xdgconfigdir/autostart/%name-geoclue-demo-agent.desktop
 %_bindir/%name
 %_libdir/gnome-panel/modules/system_indicators.so
 %exclude %_libdir/gnome-panel/modules/system_indicators.la
@@ -168,6 +169,9 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 
 %changelog
+* Sat Mar 23 2024 Yuri N. Sedunov <aris@altlinux.org> 3.52.1-alt1
+- 3.52.1
+
 * Wed Mar 20 2024 Yuri N. Sedunov <aris@altlinux.org> 3.52.0-alt1
 - 3.52.0
 

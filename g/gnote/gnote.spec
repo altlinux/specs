@@ -2,7 +2,7 @@
 
 %define rdn_name org.gnome.Gnote
 %define _rdn_name org.gnome.gnote
-%define ver_major 45
+%define ver_major 46
 %define api_ver %ver_major
 %define beta %nil
 %define _libexecdir %_prefix/libexec
@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: gnote
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Note-taking application
@@ -33,6 +33,7 @@ BuildRequires: meson gcc-c++
 BuildRequires: yelp-tools desktop-file-utils
 BuildRequires: pkgconfig(glibmm-2.68)  >= %glibmm_ver
 BuildRequires: pkgconfig(gtkmm-4.0) >= %gtkmm_ver
+BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(libxml-2.0) pkgconfig(libxslt)
 BuildRequires: pkgconfig(libsecret-1) >= %libsecret_ver
 BuildRequires: pkgconfig(uuid)
@@ -75,6 +76,9 @@ and consumes fewer resources.
 %exclude %_libdir/lib%name-%api_ver.so
 
 %changelog
+* Sat Mar 23 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Sat Dec 30 2023 Yuri N. Sedunov <aris@altlinux.org> 45.1-alt1
 - 45.1
 
