@@ -1,5 +1,5 @@
 Name: arm-none-eabi-gdb
-Version: 13.2
+Version: 14.2
 Release: alt1
 
 Summary: A GNU source-level debugger for C, C++ and other languages
@@ -10,7 +10,7 @@ Url: https://www.sourceware.org/gdb/
 Source: %name-%version-%release.tar
 
 BuildRequires: gcc-c++ flex makeinfo
-BuildRequires: libtinfo-devel libreadline-devel libgmp-devel libexpat-devel liblzma-devel zlib-devel
+BuildRequires: libtinfo-devel libreadline-devel libgmp-devel libexpat-devel liblzma-devel libmpfr-devel zlib-devel
 
 %description
 GDB is a full featured, command driven debugger.  GDB allows you to
@@ -59,6 +59,9 @@ mkdir -p %buildroot%_libexecdir/%target/share/gdb/auto-load
 %_libexecdir/%target/share/gdb/auto-load
 
 %changelog
+* Fri Mar 22 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 14.2-alt1
+- 14.2 released
+
 * Thu Jun 01 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 13.2-alt1
 - 13.2 released
 

@@ -1,5 +1,5 @@
 Name: arm-none-eabi-binutils
-Version: 2.41
+Version: 2.42
 Release: alt1
 
 Summary: GNU Binary Utility Development Utilities
@@ -65,6 +65,9 @@ rm -r %buildroot%_infodir
 %_man1dir/%target-*.1.*
 
 %changelog
+* Fri Mar 22 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.42-alt1
+- 2.42 released
+
 * Tue Sep 26 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.41-alt1
 - 2.41 released
 
