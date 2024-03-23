@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: libatkmm
-Version: %major.3
+Version: %major.4
 Release: alt1
 
 Summary: A C++ interface for ATK library
@@ -77,7 +77,7 @@ developing atkmm applications.
 %__meson_test
 
 %files
-%doc AUTHORS NEWS
+%doc README* NEWS
 %_libdir/*.so.*
 
 %files devel
@@ -93,6 +93,9 @@ developing atkmm applications.
 %endif
 
 %changelog
+* Sat Mar 23 2024 Yuri N. Sedunov <aris@altlinux.org> 2.28.4-alt1
+- 2.28.4
+
 * Wed Jul 20 2022 Yuri N. Sedunov <aris@altlinux.org> 2.28.3-alt1
 - 2.28.3
 
