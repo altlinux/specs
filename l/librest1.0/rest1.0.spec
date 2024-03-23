@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name rest
 %define ver_major 0.9
@@ -12,12 +12,14 @@
 
 Name: lib%_name%api_ver
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: A library for access to RESTful web services
 Group: System/Libraries
 License: LGPL-2.1-or-later
-Url: http://www.gnome.org
+Url: https://www.gnome.org
+
+Vcs: https://gitlab.gnome.org/GNOME/librest
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
@@ -35,6 +37,7 @@ BuildRequires: pkgconfig(libsoup-2.4)
 BuildRequires: pkgconfig(libsoup-3.0)
 %endif
 %{?_enable_introspection:BuildRequires(pre): rpm-build-gir
+BuildRequires: gobject-introspection-devel
 %if_enabled soup2
 BuildRequires: gir(Soup) = 2.4
 %else
@@ -148,6 +151,9 @@ This package provides demonstration program for the %_name library.
 %endif
 
 %changelog
+* Sat Mar 23 2024 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt2
+- updated to 0.9.1-24-g23f2d27
+
 * Mon Jun 20 2022 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt1
 - 0.9.1 (1.0 API, ported to Meson build system)
 
