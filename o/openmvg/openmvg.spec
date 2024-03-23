@@ -3,7 +3,7 @@
 
 Name:          openmvg
 Version:       2.1
-Release:       alt2
+Release:       alt3
 Summary:       open Multiple View Geometry
 License:       MPL-2.0
 Group:         System/Libraries
@@ -182,6 +182,7 @@ rm -f %buildroot%_libexecdir/pkgconfig/flann.pc
 rm -rf %buildroot%_libdir/openMVG/webgl
 rm -f %buildroot%_libdir/openMVG/sensor_width_camera_database.txt
 rm -rf %buildroot%_includedir/openMVG_dependencies/
+rm -f %buildroot%_libdir/libopenMVG_ceres.a
 
 %files
 %doc *.md AUTHORS LICENSE
@@ -201,6 +202,9 @@ rm -rf %buildroot%_includedir/openMVG_dependencies/
 
 
 %changelog
+* Sat Mar 23 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.1-alt3
+- Fixed FTBFS on LoongArch (remove static library).
+
 * Fri Mar 22 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.1-alt2
 - Fixed build for Elbrus
 
