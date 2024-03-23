@@ -5,13 +5,13 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.0
-Release: alt3
+Version: %ver_major.1
+Release: alt1
 
 Summary: Wikipedia reader for the GNOME Desktop
 License: GPL-3.0-or-later
 Group: Education
-Url: https://github.com/hugolabe/Wike
+Url: https://apps.gnome.org/Wike
 
 BuildArch: noarch
 
@@ -20,11 +20,12 @@ Source0: %name-%version.tar
 
 %add_python3_path %_datadir/%_name
 
+Requires: dconf
 Requires: typelib(Adw) = 1 typelib(WebKit) = 6.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson
-%{?_enable_check:BuildRequires: /usr/bin/desktop-file-validate /usr/bin/appstreamcli}
+%{?_enable_check:BuildRequires: /usr/bin/desktop-file-validate /usr/bin/appstreamcli /usr/bin/glib-compile-schemas}
 
 %description
 Wike is a Wikipedia reader for the GNOME Desktop.
@@ -55,10 +56,12 @@ articles.
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %_datadir/dbus-1/services/%rdn_name.SearchProvider.service
-%dir %_datadir/gnome-shell/search-providers
 %_datadir/gnome-shell/search-providers/%rdn_name.SearchProvider.ini
 
 %changelog
+* Sat Mar 23 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
+- 3.0.1
+
 * Sat Mar 09 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt3
 - prepared for Sisyphus
 
