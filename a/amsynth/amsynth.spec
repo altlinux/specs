@@ -1,8 +1,8 @@
-#define gcc_version 5.0
+#define gcc_version 11.0
 
 Name: amsynth
-Version: 1.13.0
-Release: alt1.3
+Version: 1.13.2
+Release: alt1
 Summary: A classic synthesizer with dual oscillators
 
 License: GPLv2+
@@ -17,22 +17,29 @@ Source3: dssi-%name-plugin.metainfo.xml
 Source4: vst-%name-plugin.metainfo.xml
 Source5: amsynth_ru.po
 
-# Automatically added by buildreq on Sat Dec 10 2022
-# optimized out: fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 ladspa_sdk libX11-devel libalsa-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libjack-devel libpango-devel libstdc++-devel libuuid-devel perl perl-Encode perl-XML-Parser perl-parent pkg-config python3 python3-base sh4 xorg-proto-devel
+
+#set_gcc_version 12
+#BuildRequires: gcc%_gcc_version-c++
+
+# Automatically added by buildreq on Sat Mar 23 2024
+# optimized out: fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 ladspa_sdk libX11-devel libalsa-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libjack-devel libpango-devel libstdc++-devel libuuid-devel perl perl-Encode perl-XML-Parser perl-parent pkg-config python3 python3-base sh4 xorg-proto-devel
 BuildRequires: dssi-devel gcc-c++ glibc-devel-static intltool libgtk+2-devel liblash-devel liblo-devel lv2-devel pandoc
+
+BuildRequires:  gcc-c++
+
+
 
 BuildRequires: liblo-devel libsndfile-devel
 BuildRequires:  autoconf-archive libX11-devel
 
 BuildRequires:  appliance-base-glibc glibc-utils
 BuildRequires:  libgtk2-devel libgtkmm3-devel
-BuildRequires:  pkgconfig(jack) liblash-devel libsndfile-devel libsndfile-utils
+BuildRequires:  libjack-devel liblash-devel libsndfile-devel libsndfile-utils
 BuildRequires:  libGL-devel libEGL-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
+Requires:       libsndfile-utils lash 
 
-Requires:       %name-data = %EVR
-Requires:       libsndfile-utils lash
 
 %description
 Amsynth is a software synthesis that provides a
@@ -45,6 +52,7 @@ classic subtractive synthesizer topology, with:
 - Distortion
 - Reverb
 
+Requires:       %name-data
 
 %package data
 BuildArch: noarch
@@ -66,6 +74,7 @@ Amsynth plugin for the lv2 audio standard
 
 %package -n dssi-amsynth-plugin
 Summary: Amsynth dssi plugin
+BuildRequires: dssi-devel liblo liblo-devel
 Requires: dssi
 Group: Sound
 Requires: %name
@@ -90,15 +99,15 @@ echo ru >> po/LINGUAS
 
 
 %build
-%add_optflags -std=gnu++11
+%add_optflags -std=gnu++11 -fpermissive
 %autoreconf
 
-intltoolize --force
+#intltoolize --force
 
 #./autogen.sh
 
-#%__aclocal
-#%__automake -a
+#__aclocal
+#__automake -a
 
 
 %configure \
@@ -106,7 +115,7 @@ intltoolize --force
 --with-jack \
 --with-gui \
 --with-alsa \
---with-jack \
+--without-jack \
 --with-sndfile \
 --with-lash \
 --with-lv2 \
@@ -171,12 +180,9 @@ install -pDm644 %SOURCE4 %buildroot%_datadir/appdata/
 %_datadir/appdata/vst-%name-plugin.metainfo.xml
 
 %changelog
-* Wed Aug 23 2023 Yuri N. Sedunov <aris@altlinux.org> 1.13.0-alt1.3
-- removed hard jack-audio-conection-kit dependency allow to use pipewire-jack
-
-* Wed Jan 04 2023 Ivan A. Melnikov <iv@altlinux.org> 1.13.0-alt1.2
-- NMU: main package should require data subpackage
-  (closes: #44800).
+* Sat Mar 23 2024 Hihin Ruslan <ruslandh@altlinux.ru> 1.13.2-alt1
+- Version 1.13.2
+- Remove requires to jack-audio-connection-kit
 
 * Sat Dec 10 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1.13.0-alt1.1
 - Fix install sections
