@@ -5,11 +5,11 @@
 %def_disable static
 %def_enable systemd
 %def_enable ibus
-%def_enable onlineaccounts
+%def_disable onlineaccounts
 
 Name: cinnamon-control-center
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Cinnamon Control Center
 License: GPLv2+
@@ -74,7 +74,8 @@ BuildRequires: glibc-i18ndata
 BuildRequires: libnm-devel >= %nm_ver
 BuildRequires: libnma-devel >= %nm_ver
 BuildRequires: libmm-glib-devel
-BuildRequires: libgnome-online-accounts-devel >= %goa_ver colord-devel
+%{?_enable_onlineaccounts:BuildRequires: libgnome-online-accounts-devel >= %goa_ver}
+BuildRequires: colord-devel
 BuildRequires: libclutter-gtk3-devel
 %{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel}
 
@@ -110,7 +111,7 @@ you'll want to install this package.
 %setup
 
 %build
-%meson
+%meson %{?_disable_onlineaccounts:-Donlineaccounts=false}
 %meson_build
 
 %install
@@ -147,6 +148,9 @@ you'll want to install this package.
 
 
 %changelog
+* Sat Mar 23 2024 Anton Midyukov <antohami@altlinux.org> 6.0.1-alt2
+- build without gnome-online-accounts (fix FTBFS with gnome 46)
+
 * Sat Feb 10 2024 Anton Midyukov <antohami@altlinux.org> 6.0.1-alt1
 - 6.0.1
 
