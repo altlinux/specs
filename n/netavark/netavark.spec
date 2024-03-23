@@ -3,7 +3,7 @@
 
 Name: netavark
 Version: 1.10.3
-Release: alt1
+Release: alt1.1
 License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT
 Summary: OCI network stack
 Group: Development/Other
@@ -11,6 +11,7 @@ Url: https://github.com/containers/%name
 Vcs: https://github.com/containers/%name
 Source: %name-%version.tar
 Patch: %name-%version.patch
+Patch1: vendored-nix-loongarch64-support.patch
 ExcludeArch: %arm %ix86
 
 #Recommends: aardvark-dns >= 1.0.3
@@ -68,6 +69,11 @@ rustflags = ["-Copt-level=3", "-Cdebuginfo=1", "--cfg=rustix_use_libc"]
 strip = false
 EOF
 
+%patch1 -p1
+# allow patching vendored rust code
+sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+    ./vendor/nix-0.26.4/.cargo-checksum.json
+
 %build
 %make_build
 
@@ -93,6 +99,9 @@ popd
 %_unitdir/*
 
 %changelog
+* Sat Mar 23 2024 Ivan A. Melnikov <iv@altlinux.org> 1.10.3-alt1.1
+- Fix FTBFS on loongarch64.
+
 * Fri Mar 22 2024 Alexey Shabalin <shaba@altlinux.org> 1.10.3-alt1
 - New version 1.10.3.
 
