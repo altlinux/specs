@@ -3,7 +3,7 @@
 
 Name:    gitlab-runner
 Version: 16.9.1
-Release: alt1
+Release: alt1.1
 
 Summary: GitLab Runner is the open source project that is used to run your CI/CD jobs and send the results back to GitLab
 License: MIT
@@ -15,7 +15,8 @@ Source1: %name.service
 Source2: %name.init
 Source3: %name.tmpfiles
 Source4: %name.sysconfig
-Patch0: %name-16.9.1-alt-fix-for-su-command.patch 
+Patch0: %name-16.9.1-alt-fix-for-su-command.patch
+Patch1: vendored-cilium-ebpf-alt-loongarch64-support.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -26,6 +27,7 @@ BuildRequires: golang
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -69,6 +71,9 @@ fi
 %attr(0770,root,gitlab-runner) %dir %_localstatedir/gitlab-runner
 
 %changelog
+* Sun Mar 24 2024 Ivan A. Melnikov <iv@altlinux.org> 16.9.1-alt1.1
+- NMU: fix FTBFS on loongarch64
+
 * Wed Mar 20 2024 Nikolay Burykin <bne@altlinux.org> 16.9.1-alt1
 - New version 16.9.1
 - Fix:
