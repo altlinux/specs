@@ -1,5 +1,5 @@
 Name:     asusctl
-Version:  5.0.7
+Version:  5.0.9
 Release:  alt1
 
 %define user_service /etc/systemd/user/
@@ -24,11 +24,14 @@ Source2: vendor.tar
 BuildRequires(pre): rpm-macros-rust
 BuildRequires(pre): rust-cargo
 
-BuildRequires: cmake
-
 # Automatically added by buildreq on Mon Oct 31 2022
 # optimized out: ca-trust cmake-modules fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 libfreetype-devel libgpg-error libsasl2-3 libstdc++-devel llvm14.0-libs pkg-config python3 python3-base python3-dev rust sh4
 BuildRequires: cmake fontconfig-devel gcc-c++ libudev-devel python3-module-mpl_toolkits python3-module-setuptools python3-module-zope rust-cargo
+
+Buildrequires: git libayatana-indicator-devel libappindicator-gtk3
+
+BuildRequires: cmake
+
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(cairo-gobject)
 BuildRequires: pkgconfig(atk)
@@ -52,12 +55,11 @@ asusd - утилита для Linux, позволяющая управлять �
 Summary: An experimental GUI for %name
 Group:    System/Configuration/Hardware
 ExclusiveArch: x86_64
+Requires: libappindicator-gtk3 libayatana-appindicator3-1
 
 %description rog-gui
 A one-stop-shop GUI tool for asusd/asusctl. It aims to provide most controls,
 a notification service, and ability to run in the background.
-
-Buildrequires: git
 
 %global rustflags -Clink-arg=-Wl,-z,relro,-z,now
 
@@ -134,6 +136,9 @@ mv %buildroot/usr/lib/udev/rules.d/99-asusd.rules %buildroot/%_udevrulesdir/99-a
 %_datadir/rog-gui/*
 
 %changelog
+* Fri Mar 22 2024 Hihin Ruslan <ruslandh@altlinux.ru> 5.0.9-alt1
+- Version 5.0.9
+
 * Mon Feb 12 2024 Hihin Ruslan <ruslandh@altlinux.ru> 5.0.7-alt1
 - Version 5.0.7
 
