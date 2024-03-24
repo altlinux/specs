@@ -6,10 +6,11 @@
 %define rdn_name io.github.seadve.Mousai
 
 %def_disable bootstrap
+#cargo test failed
 %def_disable check
 
 Name: mousai
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: Identify songs in seconds
@@ -26,14 +27,14 @@ Source: %name-%version.tar
 Source1: %name-%version-cargo.tar
 
 %define glib_ver 2.66
-%define gtk_ver 4.12
-%define adwaita_ver 1.4
-%define gst_ver 1.20
+%define gtk_ver 4.13
+%define adwaita_ver 1.5
+%define gst_ver 1.22
 
 Requires: gst-plugins-base1.0 >= %gst_ver
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson rust-cargo /usr/bin/appstream-util desktop-file-utils
+BuildRequires: meson rust-cargo 
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(gstreamer-1.0) >= %gst_ver
@@ -44,6 +45,7 @@ BuildRequires: pkgconfig(libsoup-3.0)
 BuildRequires: pkgconfig(libpulse-mainloop-glib)
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(dbus-1)
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils clippy}
 
 %description
 Mousai is a simple application that can recognize songs similar to
@@ -79,6 +81,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sun Mar 24 2024 Yuri N. Sedunov <aris@altlinux.org> 0.7.7-alt1
+- 0.7.7
+
 * Mon Nov 20 2023 Yuri N. Sedunov <aris@altlinux.org> 0.7.6-alt1
 - 0.7.6
 

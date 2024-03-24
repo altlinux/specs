@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: overskride
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: A simple but powerful bluetooth app
@@ -78,6 +78,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sun Mar 24 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.7-alt1
+- 0.5.7
+
 * Sat Nov 25 2023 Yuri N. Sedunov <aris@altlinux.org> 0.5.6-alt1
 - first build for Sisyphus
 
