@@ -2,7 +2,7 @@
 
 Name: libpst
 Version: 0.6.76
-Release: alt4
+Release: alt4.1
 Summary: Tools for conversion of Outlook files to mailbox and other formats
 License: %gpl2plus
 Group: System/Libraries
@@ -18,6 +18,7 @@ BuildRequires(pre): rpm-build-python3
 # Automatically added by buildreq on Tue Aug 04 2009
 BuildRequires: ImageMagick-tools gcc-c++ libgd3-devel zlib-devel
 BuildRequires: python3-devel boost-python3-devel
+BuildRequires: python3-module-setuptools
 BuildRequires: libgsf-devel
 BuildRequires: xmlto doxygen graphviz
 
@@ -128,6 +129,9 @@ rm -f %buildroot%_libdir/python*/site-packages/*.la
 %python3_sitelibdir/*.so
 
 %changelog
+* Sun Mar 24 2024 Ivan A. Melnikov <iv@altlinux.org> 0.6.76-alt4.1
+- NMU: fix BR: python3-module-setuptools to fix FTBFS.
+
 * Wed Dec 20 2023 Grigory Ustinov <grenka@altlinux.org> 0.6.76-alt4
 - Fix building with python3.12.
 
