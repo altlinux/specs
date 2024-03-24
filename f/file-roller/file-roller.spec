@@ -2,28 +2,28 @@
 
 %define xdg_name org.gnome.FileRoller
 %define xdg_name1 org.gnome.ArchiveManager
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 %def_disable packagekit
 %def_enable libarchive
 %def_enable nautilus_actions
 
 Name: file-roller
-Version: %ver_major.1
+Version: %ver_major
 Release: alt1%beta
 
 Summary: An archive manager for GNOME
 Summary (ru_RU.UTF-8): Архиватор для GNOME
 Group: File tools
-License: %gpl2plus
-Url: http://fileroller.sourceforge.net
+License: GPL-2.0-or-later
+Url: https://wiki.gnome.org/Apps/FileRoller
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 Patch1: %name-3.3.90-alt-zip_command.patch
 
 %define glib_ver 2.36.0
-%define gtk_ver 3.22.0
-%define handy_ver 1.5
+%define gtk_ver 4.8
+%define adw_ver 1.2
 %define libarchive_ver 3.2
 %define desktop_file_utils_ver 0.8
 %define nau_api_ver 4
@@ -34,13 +34,13 @@ Requires: tar gzip bzip2 ncompress lzop binutils arj lha unrar zip unzip p7zip l
 # Requires: cdrecord # for .iso support
 Requires: dconf gnome-icon-theme
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-licenses
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome
 BuildRequires: meson yelp-tools
 BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
+BuildRequires: libgtk4-devel >= %gtk_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: desktop-file-utils >= %desktop_file_utils_ver
-BuildRequires: libjson-glib-devel libportal-devel libportal-gtk3-devel >= %portal_ver
+BuildRequires: libjson-glib-devel libportal-devel libportal-gtk4-devel >= %portal_ver
 %{?_enable_libarchive:BuildRequires: libarchive-devel >= %libarchive_ver}
 %{?_enable_nautilus_actions:BuildRequires: libnautilus-devel >= 43}
 
@@ -124,6 +124,9 @@ rm -f data/%xdg_name.desktop{,.in}
 %doc AUTHORS NEWS README.md
 
 %changelog
+* Mon Mar 25 2024 Yuri N. Sedunov <aris@altlinux.org> 44-alt1
+- 44 (ported to GTK4/Libadwaita)
+
 * Sun Dec 03 2023 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt1
 - 43.1
 
