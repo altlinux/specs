@@ -1,18 +1,19 @@
 %def_enable check
+%def_disable bootstrap
 
 Name: squeekboard
-Version: 1.23.0
-Release: alt2
+Version: 1.38.0
+Release: alt1
 
 Summary: A Wayland on-screen keyboard
-License: GPLv3
+License: GPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://gitlab.gnome.org/World/Phosh/squeekboard
 
 Vcs: https://gitlab.gnome.org/World/Phosh/squeekboard.git
 Source0: %name-%version.tar
-Source1: crates.tar
-Patch3500: nix-loongarch64.patch
+Source1: %name-%version-crates.tar
+Patch3500: squeekboard-1.23-alt-nix-loongarch64.patch
 
 Provides: osk-wayland
 
@@ -34,14 +35,10 @@ BuildRequires: cargo-vendor-checksum diffstat
 
 %prep
 %setup
-%ifdef bootstrap
-export CARGO_HOME=${PWD}/cargo
-%meson -Donline=true -Dnewer=true
-%meson_build Cargo.toml
-cp %__builddir/Cargo.toml ./
-mkdir cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > cargo/config
-tar cf %SOURCE1 vendor cargo/config
+%if_enabled bootstrap
+mkdir .cargo
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+tar cf %SOURCE1 vendor .cargo/config
 %else
 tar xf %SOURCE1
 %patch3500 -p1
@@ -49,12 +46,10 @@ diffstat -l -p1 %PATCH3500 | sed -re 's@vendor/@@' | xargs -r cargo-vendor-check
 %endif
 
 %build
-export CARGO_HOME=${PWD}/cargo
-%meson -Donline=false -Dnewer=true
+%meson
 %meson_build
 
 %install
-export CARGO_HOME=${PWD}/cargo
 %meson_install
 
 mkdir -p %buildroot%_altdir
@@ -65,7 +60,6 @@ EOF
 %find_lang %name
 
 %check
-export CARGO_HOME=${PWD}/cargo
 %__meson_test
 
 %files -f %name.lang
@@ -74,6 +68,9 @@ export CARGO_HOME=${PWD}/cargo
 %_desktopdir/*.desktop
 
 %changelog
+* Sun Mar 24 2024 Yuri N. Sedunov <aris@altlinux.org> 1.38.0-alt1
+- 1.38.0
+
 * Sat Mar 09 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.23.0-alt2
 - NMU: fixed FTBFS on LoongArch (trivial patch for nix crate)
 
