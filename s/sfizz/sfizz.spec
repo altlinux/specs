@@ -2,7 +2,7 @@
 %define libname libsfizz1
 
 Name:     sfizz
-Version:  1.2.2
+Version:  1.2.3
 Release:  alt2
 
 Summary:  SFZ parser and synthesizer
@@ -18,8 +18,12 @@ Source: %name-ui-%version.tar
 Source1:  sub-merge.sources.txt
 Source2:  sub-merge.unpack.sh
 
-# https://github.com/sfztools/sfizz/issues/1180
-Patch1: sfizz-alt-fix-assertion-failed.patch
+Patch1: 0001-Fix-a-fallthrough.patch
+Patch2: 0001-Fix-a-used-after-free-bug.patch
+Patch3: 0001-Fixed-a-bug-that-causes-invalid-effect-output.patch
+Patch4: 0001-Fixes-an-issue-that-caused-stuck-notes.patch
+Patch5: 0001-Fix-to-pass-a-Polyphony-test.patch
+Patch6: 0001-Avoid-duplicated-LV2_State_-Map-Free-_Path-features-.patch
 
 # import sub-merge sources here
 %(cat %SOURCE1)
@@ -166,6 +170,15 @@ cd library/tests && "$binary"
 
 
 %changelog
+* Sun Mar 24 2024 Ivan A. Melnikov <iv@altlinux.org> 1.2.3-alt2
+- backport a few bugfixes from develop branches
+  + fix issue with stuck nots, esp. after sustain is release
+  + fix use-after-free in ModMatrix
+  + and others.
+
+* Wed Mar 13 2024 Ivan A. Melnikov <iv@altlinux.org> 1.2.3-alt1
+- 1.2.3
+
 * Sat Sep 09 2023 Ivan A. Melnikov <iv@altlinux.org> 1.2.2-alt2
 - fix assertion failure for sustained notes
 
