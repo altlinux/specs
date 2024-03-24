@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: obfuscate
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: Censor private information
@@ -23,13 +23,13 @@ Source: %name-%version.tar
 Source1: %name-%version-cargo.tar
 
 %define gtk_ver 4.0
-%define adwaita_ver 1.0
+%define adwaita_ver 1.5
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo
-BuildRequires: /usr/bin/appstream-util desktop-file-utils
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 Obfuscate lets you redact your private information from any image.
@@ -63,6 +63,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sun Mar 24 2024 Yuri N. Sedunov <aris@altlinux.org> 0.0.10-alt1
+- 0.0.10
+
 * Thu Nov 16 2023 Yuri N. Sedunov <aris@altlinux.org> 0.0.9-alt1
 - first build for Sisyphus (0.0.9-17-gff78a3b)
 
