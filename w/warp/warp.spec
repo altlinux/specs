@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 0.6
+%define ver_major 0.7
 %define rdn_name app.drey.Warp
 
 %define optflags_lto %nil
@@ -9,13 +9,13 @@
 %def_disable bootstrap
 
 Name: warp
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Fast and secure file transfer tool
 License: GPL-3.0
 Group: Networking/File transfer
-Url: https://gitlab.gnome.org/World/warp
+Url: https://apps.gnome.org/Warp
 
 %if_disabled snapshot
 Source: %url/-/archive/v%version/%name-%version.tar.gz
@@ -29,8 +29,8 @@ Source1: %name-%version-cargo.tar
 ExcludeArch: ppc64le
 
 %define glib_ver 2.66
-%define gtk_ver 4.10
-%define adwaita_ver 1.4
+%define gtk_ver 4.13
+%define adwaita_ver 1.5
 
 Requires: yelp
 
@@ -78,6 +78,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sun Mar 24 2024 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
 * Tue Dec 05 2023 Yuri N. Sedunov <aris@altlinux.org> 0.6.2-alt1
 - 0.6.2
 
