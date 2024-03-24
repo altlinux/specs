@@ -6,13 +6,13 @@
 %def_enable check
 
 Name: meld
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Meld Diff Viewer
 License: GPL-2.0-or-later
 Group: Text tools
-Url: http://meld.app
+Url: https://meld.app
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
@@ -25,8 +25,10 @@ BuildArch: noarch
 %define gtk_api_ver 3.0
 %define gtksource_api_ver 4
 
+Requires: dconf
 Requires: typelib(Gtk) = %gtk_api_ver
 Requires: typelib(GtkSource) = %gtksource_api_ver
+Requires: librsvg icon-theme-adwaita
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
 BuildRequires: meson yelp-tools /usr/bin/appstream-util desktop-file-utils
@@ -69,6 +71,9 @@ including Git, Bazaar, Mercurial, Subversion and CVS.
 %doc NEWS README*
 
 %changelog
+* Sun Mar 24 2024 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
+- 3.22.2
+
 * Sun Feb 18 2024 Yuri N. Sedunov <aris@altlinux.org> 3.22.1-alt1
 - 3.22.1
 
