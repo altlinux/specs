@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: geeqie
-Version: 2.3
+Version: 2.4
 Release: alt1
 
 Summary: Graphics file browser utility
@@ -113,6 +113,9 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %doc NEWS README.*
 
 %changelog
+* Sun Mar 24 2024 Yuri N. Sedunov <aris@altlinux.org> 2.4-alt1
+- 2.4
+
 * Fri Mar 08 2024 Yuri N. Sedunov <aris@altlinux.org> 2.3-alt1
 - 2.3
 
