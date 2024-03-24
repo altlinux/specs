@@ -3,9 +3,9 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name:		fscrypt
-Version:	0.3.4
-Release:	alt2
-Summary:	A high-level tool for the management of Linux kernel filesystem encryption
+Version: 0.3.5
+Release: alt1
+Summary:	A tool for managing Linux filesystem encryption
 
 Group:		System/Kernel and hardware
 License:	Apache-2.0
@@ -21,10 +21,12 @@ BuildRequires: golang >= 1.17
 %{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm e2fsprogs expect keyutils}}
 
 %description
-Fscrypt is a high-level tool for the management of Linux filesystem
-encryption (https://www.kernel.org/doc/html/latest/filesystems/fscrypt.html).
-Fscrypt manages metadata, key generation, key wrapping, PAM integration, and
-provides a uniform interface for creating and modifying encrypted directories.
+fscrypt is a high-level tool for the management of Linux native filesystem
+encryption[1]. fscrypt manages metadata, key generation, key wrapping,
+PAM integration, and provides a uniform interface for creating and
+modifying encrypted directories.
+
+[1] https://www.kernel.org/doc/html/latest/filesystems/fscrypt.html
 
 %prep
 %setup
@@ -36,7 +38,7 @@ sed -i '/-trimpath/d' Makefile
 %build
 %make_build \
     CFLAGS="%optflags" \
-    GO_FLAGS="-mod=vendor -buildmode=pie -x" \
+    GO_FLAGS="-buildmode=pie -x" \
     GO_LINK_FLAGS="" \
     TAG_VERSION="v%version-%release"
 
@@ -44,7 +46,7 @@ sed -i '/-trimpath/d' Makefile
 %makeinstall_std \
     PREFIX="/usr" \
     PAM_MODULE_DIR="/%_lib/security"
-rm -r %buildroot/%_datadir/pam-configs
+rm -r %buildroot%_datadir/pam-configs
 install -Dm0644 .gear/%name.pam %buildroot%_sysconfdir/pam.d/%name
 
 %check
@@ -60,6 +62,9 @@ vm-run --kvm=cond --sbin --user --udevd \
 %doc *.md
 
 %changelog
+* Sun Mar 24 2024 Vitaly Chikunov <vt@altlinux.org> 0.3.5-alt1
+- Update to v0.3.5 (2024-03-19). Including security updates.
+
 * Wed Mar 06 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.3.4-alt2
 - NMU: fixed FTBFS on LoongArch (updated vendored golang.org/x/sys module).
 

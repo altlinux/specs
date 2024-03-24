@@ -10,9 +10,9 @@
 %endif
 
 Name:		fscryptctl
-Version:	1.1.0
-Release:	alt1
-Summary:	A low-level tool for the management of Linux kernel filesystem encryption
+Version: 1.2.0
+Release: alt1
+Summary:	A small C tool for Linux filesystem encryption
 
 Group:		System/Kernel and hardware
 License:	Apache-2.0
@@ -25,17 +25,19 @@ Source:     %name-%version.tar
 Requires:   kernel >= 5.4
 
 %description
-Fscryptctl is a low-level tool written in C that handles raw keys and manages
-policies for Linux filesystem encryption, see
-https://www.kernel.org/doc/html/latest/filesystems/fscrypt.html ,
-specifically the "fscrypt" kernel interface which is supported by the ext4,
-f2fs, and UBIFS filesystems.
+fscryptctl is a low-level tool written in C that handles raw keys and
+manages policies for Linux filesystem encryption, see [1], specifically
+the "fscrypt" kernel interface which is supported by the ext4, f2fs,
+UBIFS, and CephFS filesystems.
 
-Fscryptctl is mainly intended for embedded systems which can't use the
-full-featured fscrypt tool (https://github.com/google/fscrypt), or for
-testing or experimenting with the kernel interface to Linux filesystem
-encryption. Fscryptctl does *not* handle key generation, key stretching, key
-wrapping, or PAM integration.
+fscryptctl is mainly intended for embedded systems which can't use
+the full-featured fscrypt tool, or for testing or experimenting with
+the kernel interface to Linux filesystem encryption. fscryptctl does
+*not* handle key generation, key stretching, key wrapping, or PAM
+integration. Most users should use the fscrypt tool instead, which
+supports these features and generally is much easier to use.
+
+[1] https://www.kernel.org/doc/html/latest/filesystems/fscrypt.html
 
 %prep
 %setup
@@ -55,7 +57,7 @@ wrapping, or PAM integration.
 
 %make_install $target \
     DESTDIR=%buildroot \
-    PREFIX="/usr"
+    PREFIX=%_prefix
 
 %if_enabled man
 # duplicates man
@@ -74,6 +76,9 @@ vm-run --kvm=cond --sbin --user make test-all
 %doc *.md
 
 %changelog
+* Sun Mar 24 2024 Vitaly Chikunov <vt@altlinux.org> 1.2.0-alt1
+- Update to v1.2.0 (2024-03-20).
+
 * Mon Jun 05 2023 Vitaly Chikunov <vt@altlinux.org> 1.1.0-alt1
 - Update to v1.1.0 (2023-01-30).
 
