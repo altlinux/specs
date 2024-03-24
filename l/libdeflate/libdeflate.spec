@@ -4,28 +4,24 @@
 %set_verify_elf_method strict
 
 Name: libdeflate
-Version: 1.19
+Version: 1.20
 Release: alt1
-
 Summary: Heavily optimized library for DEFLATE/zlib/gzip compression and decompression
 License: MIT
 Group: System/Libraries
 Url: https://github.com/ebiggers/libdeflate
 
-Source: %name-%version.tar
-
 %define valgrind_arches %ix86 x86_64 aarch64
 # armh is excluded due to https://bugzilla.altlinux.org/43475
 # ppc64le is excluded due to requirement on glibc-core-debuginfo
 
+Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: zlib-devel
 %{?!_without_check:%{?!_disable_check:
-BuildRequires: banner
 BuildRequires: ctest
 %ifarch %valgrind_arches
-BuildRequires: /proc
 BuildRequires: valgrind
 %endif
 }}
@@ -48,6 +44,7 @@ modes that provide a better compression ratio than the zlib's "level 9".
 %package devel
 Summary: Development files for %name
 Group: Development/C
+Requires: %name = %EVR
 
 %description devel
 %summary.
@@ -55,6 +52,7 @@ Group: Development/C
 %package utils
 Summary: Command-line programs which use libdeflate
 Group: Archiving/Compression
+Requires: %name = %EVR
 
 %description utils
 libdeflate itself is a library, but the following command-line programs
@@ -69,8 +67,7 @@ streaming support and therefore does not yet support very large files
 
 %build
 %add_optflags %(getconf LFS_CFLAGS) -Werror
-%ifnarch %e2k
-# unsupported as of lcc 1.25
+%ifarch x86_64
 %add_optflags -fanalyzer
 %endif
 # It's sensitive to build options, avoid "Rebuilding due to new settings".
@@ -83,7 +80,6 @@ streaming support and therefore does not yet support very large files
 %cmake_install
 
 %check
-banner check
 %cmake_build --target test
 
 export PATH=%buildroot%_bindir:$PATH LD_LIBRARY_PATH=%buildroot%_libdir
@@ -121,6 +117,9 @@ b2sum --check test-file.b2sum
 %_bindir/libdeflate-*
 
 %changelog
+* Sun Mar 24 2024 Vitaly Chikunov <vt@altlinux.org> 1.20-alt1
+- Update to v1.20 (2024-03-17).
+
 * Mon Sep 18 2023 Vitaly Chikunov <vt@altlinux.org> 1.19-alt1
 - Update to v1.19 (2023-09-16).
 
