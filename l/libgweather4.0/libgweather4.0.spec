@@ -20,7 +20,7 @@
 
 Name: %_name%api_ver
 Version: %ver_major.2
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: A library for weather information
 Group: System/Libraries
@@ -33,10 +33,10 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version%beta.tar.xz
 Source: %_name-%version%beta.tar
 %endif
 %{?_enable_new_russia:
-# Simferopol & Kerch, Donetsk, Mariupol, Lugansk,
-# Severodonetsk, Lisichansk, Zaporozhye ...
-Patch10: %_name-4.3.2-alt-Novorossia.patch
-Patch11: %_name-4.3.2-alt-Novorossia-po-locations.patch}
+# Simferopol, Sevastopol & Kerch, Donetsk, Mariupol, Lugansk,
+# Severodonetsk, Lisichansk, Zaporozhye, Herson ...
+Patch10: %_name-4.4.2-alt-Novorossia.patch
+Patch11: %_name-4.4.2-alt-Novorossia-po-locations.patch}
 
 %define glib_ver 2.68
 %define soup2_ver 2.44
@@ -186,6 +186,9 @@ sed -i "s|'\(pylint\)'|'\1.py3'|" meson.build
 
 
 %changelog
+* Sun Mar 24 2024 Yuri N. Sedunov <aris@altlinux.org> 4.4.2-alt1.1
+- updated Novorossia patches
+
 * Thu Mar 21 2024 Yuri N. Sedunov <aris@altlinux.org> 4.4.2-alt1
 - 4.4.2
 
