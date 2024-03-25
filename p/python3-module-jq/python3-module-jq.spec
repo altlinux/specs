@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.6.0
-Release: alt3
+Version: 1.7.0
+Release: alt1
 
 Summary: Python bindings for jq
 License: BSD-2-Clause
@@ -66,6 +66,9 @@ export JQPY_USE_SYSTEM_LIBS=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Mar 25 2024 Anton Zhukharev <ancieg@altlinux.org> 1.7.0-alt1
+- Updated to 1.7.0.
+
 * Tue Jan 09 2024 Anton Zhukharev <ancieg@altlinux.org> 1.6.0-alt3
 - Built with check (fixed the test for libjq 1.7.1).
 
