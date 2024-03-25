@@ -18,13 +18,14 @@
 %def_enable broadway
 %def_disable cloudproviders
 %def_disable tracker3
+%def_enable examples
 %def_enable installed_tests
 %def_disable debug
 %def_disable check
 
 Name: libgtk+3
 Version: %ver_major.41
-Release: alt1
+Release: alt1.1
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
@@ -94,8 +95,6 @@ BuildRequires: libharfbuzz-devel libxkbcommon-devel iso-codes-devel
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel  wayland-protocols >= %wayland_protocols_ver}
 %{?_enable_cloudproviders:BuildRequires: libcloudproviders-devel >= %cloudproviders_ver}
 %{?_enable_tracker3:BuildRequires: pkgconfig(tracker-sparql-3.0)}
-# for examples
-BuildRequires: libcanberra-gtk3-devel 
 %{?_enable_check:
 BuildRequires: /proc dbus-tools-gui xvfb-run icon-theme-hicolor gnome-icon-theme-symbolic}
 
@@ -254,6 +253,7 @@ sed -i.glib -e "s|GLIB_MIN_REQUIRED_VERSION|GLIB_VERSION_MIN_REQUIRED|" \
     %{?_enable_gtk_doc:-Dgtk_doc=true} \
     %{?_enable_broadway:-Dbroadway_backend=true} \
     %{?_enable_tracker3:-Dtracker3=true} \
+    %{subst_enable_meson_bool examples examples} \
     %{?_enable_cloudproviders:-Dcloudproviders=true} \
     %{?_enable_installed_tests:-Dinstalled_tests=true} \
     %{?_enable_debug:--buildtype=debug}
@@ -292,9 +292,10 @@ bzip2 -9kf NEWS
 
 mkdir %buildroot%_libdir/gtk-%api_ver/modules
 
-# examples
+%if_enabled examples
 mkdir -p %buildroot/%_docdir/%name-devel-%version/examples
 cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
+%endif
 
 %check
 xvfb-run %__meson_test -v --print-errorlogs
@@ -393,14 +394,16 @@ xvfb-run %__meson_test -v --print-errorlogs
 %_man1dir/gtk3-widget-factory.1.*
 %_man1dir/gtk3-icon-browser.1.*
 %_man1dir/gtk3-demo-application.1.*
-%config %_datadir/glib-2.0/schemas/org.gtk.exampleapp.gschema.xml
+%{?_enable_examples:%config %_datadir/glib-2.0/schemas/org.gtk.exampleapp.gschema.xml}
 
 %files devel-doc
 %_datadir/gtk-doc/html/*
 %exclude %_datadir/gtk-doc/html/gail-libgail-util3
 
+%if_enabled examples
 %files devel-doc-examples
-%doc %_docdir/%name-devel-%version/examples
+%_docdir/%name-devel-%version/examples
+%endif
 
 %if_enabled static
 %files -n %name-devel-static
@@ -440,6 +443,9 @@ xvfb-run %__meson_test -v --print-errorlogs
 %exclude %_man1dir/gtk-update-icon-cache*
 
 %changelog
+* Mon Mar 25 2024 Yuri N. Sedunov <aris@altlinux.org> 3.24.41-alt1.1
+- made "examples" build optional, removed libcanberra-gtk3 from BR
+
 * Wed Jan 24 2024 Yuri N. Sedunov <aris@altlinux.org> 3.24.41-alt1
 - 3.24.41
 
