@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 10.0.12
+Version: 10.0.14
 Release: alt1
 
 Summary: IT and asset management software
@@ -167,12 +167,27 @@ fi
 %files php8.2
 
 %changelog
+* Mon Mar 25 2024 Pavel Zilke <zidex@altlinux.org> 10.0.14-alt1
+- New version 10.0.14
+- Due to a few regressions in the last (10.0.13), an early release is available.
+
+* Mon Mar 25 2024 Pavel Zilke <zidex@altlinux.org> 10.0.13-alt1
+- New version 10.0.13
+- This release fixes a security issue that has been recently discovered. Update is recommended!
+- Security fixes:
+ + CVE-2024-27096 : SQL Injection in through the search engine
+ + CVE-2024-27098 : Blind SSRF using Arbitrary Object Instantiation
+ + CVE-2024-27104 : Stored XSS in dashboards
+ + CVE-2024-27914 : Reflected XSS in debug mode
+ + CVE-2024-27930 : Sensitive fields access through dropdowns
+ + CVE-2024-27937 : Users emails enumeration
+
 * Fri Feb 02 2024 Pavel Zilke <zidex@altlinux.org> 10.0.12-alt1
 - New version 10.0.12
 - This release fixes a security issue that has been recently discovered. Update is recommended!
 - Security fixes:
  + CVE-2024-23645 : Reflected XSS in reports pages
- + CVE-2023-51446 : LDAP Injection during authentication ()
+ + CVE-2023-51446 : LDAP Injection during authentication
 
 * Tue Dec 19 2023 Pavel Zilke <zidex@altlinux.org> 10.0.11-alt2
 - Fix spec (ALT #48856)
