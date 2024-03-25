@@ -3,7 +3,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.7.3
-Release: alt1
+Release: alt1.1
 
 Summary: StrictYAML Python 3 library
 Group: Development/Python3
@@ -15,7 +15,7 @@ Source: https://pypi.io/packages/source/s/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3 python3-devel python3-module-wheel
+BuildRequires(pre): rpm-build-python3 python3-devel python3-module-wheel python3(setuptools)
 %{?_enable_check:BuildRequires: python3-module-pytest python3-module-ruamel-yaml.clib}
 
 %description
@@ -32,13 +32,15 @@ restricted subset of the YAML specification.
 %pyproject_install
 
 %check
-%__python3 setup.py test
 
 %files
 %python3_sitelibdir_noarch/*
 %doc README*
 
 %changelog
+* Mon Mar 25 2024 Yuri N. Sedunov <aris@altlinux.org> 1.7.3-alt1.1
+- fixed BR
+
 * Fri Apr 07 2023 Yuri N. Sedunov <aris@altlinux.org> 1.7.3-alt1
 - first build for Sisyphus
 

@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 5.0.8
-Release: alt1
+Release: alt1.1
 
 Summary: a Python module for easy reading and writing of config files
 License: BSD-3-Clause
@@ -21,7 +21,7 @@ Source: %pypi_name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-wheel
+BuildRequires: python3-devel python3-module-wheel python3(setuptools)
 %{?_enable_check:BuildRequires: python3-module-tox python3-module-flake8 python3-module-pep8}
 
 %description
@@ -46,6 +46,9 @@ tox.py3 -e py%(echo %__python3_version | tr -d .) --sitepackages -o -v
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Mar 25 2024 Yuri N. Sedunov <aris@altlinux.org> 5.0.8-alt1.1
+- fixed BR
+
 * Mon Jan 23 2023 Yuri N. Sedunov <aris@altlinux.org> 5.0.8-alt1
 - 5.0.8
 

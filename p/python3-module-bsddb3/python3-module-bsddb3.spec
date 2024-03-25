@@ -1,44 +1,50 @@
-%define modname bsddb3
+%define pypi_name bsddb3
 %def_disable check
 
-Name: python3-module-%modname
+Name: python3-module-%pypi_name
 Version: 6.2.9
-Release: alt1
+Release: alt1.1
 
 Summary: Python bindings for BerkleyDB
 Group: Development/Python3
 License: BSD-3-Clause
 Url: https://pypi.python.org/pypi/bsddb3/
 
-Source: https://pypi.io/packages/source/b/%modname/%modname-%version.tar.gz
+Source: https://pypi.io/packages/source/b/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(wheel) python3(setuptools)
 BuildRequires: libdb4-devel python3-devel
+BuildRequires: chrpath
 %{?_enable_check:BuildRequires: /proc python3-test}
 
 %description
 This package provides Python 3 wrappers for Berkeley DB                                          .
 
 %prep
-%setup -n %modname-%version
+%setup -n %pypi_name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+chrpath -d %buildroot%python3_sitelibdir/%pypi_name/*.so
 
 %check
 %__python3 test.py
 
 %files
-%python3_sitelibdir/%modname/
-%python3_sitelibdir/%modname-%version-py*.egg-info
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
-%exclude %python3_sitelibdir/%modname/tests/
-%exclude %_includedir/python*/%modname/bsddb.h
+%exclude %python3_sitelibdir/%pypi_name/tests/
+%exclude %_includedir/python*/%pypi_name/bsddb.h
 
 %changelog
+* Mon Mar 25 2024 Yuri N. Sedunov <aris@altlinux.org> 6.2.9-alt1.1
+- fixed build
+
 * Fri Nov 27 2020 Yuri N. Sedunov <aris@altlinux.org> 6.2.9-alt1
 - 6.2.9
 
