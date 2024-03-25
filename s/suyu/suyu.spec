@@ -1,8 +1,8 @@
 %define optflags_lto -flto=thin
 %define llvm_version 17.0
 
-# git describe v%version-master --long
-%define git_descr v0.0.2-master-0-gfec573fd6a
+# git describe v%version --long
+%define git_descr v0.0.2-master-13-gc7d2f08de8
 
 %define sirit_commit ab75463999f4f3291976b079d42d52ee91eebf3f
 %define mbedtls_commit 8c88150ca139e06aa2aae8349df8292a88148ea1
@@ -10,10 +10,11 @@
 %define tzdb_to_nx_date 221202
 
 Name: suyu
-Version: 0.0.2
+Version: 0.0.1
 Release: alt1
+Epoch: 1
 
-Summary: Open-source, non-profit Switch emulator
+Summary: Fully open-source Switch emulator
 License: GPLv3+
 Group: Emulators
 
@@ -24,7 +25,8 @@ ExclusiveArch: x86_64
 
 BuildRequires(pre): libavfilter-devel
 
-Source0: https://gitlab.com/%name-emu/%name/-/archive/v%version-master/%name-v%version-master.tar
+# https://git.%name.dev/%name/%name/archive/v%version.tar.gz
+Source0: %name-v%version.tar
 # https://github.com/ReinUsesLisp/sirit/archive/%sirit_commit/sirit-%sirit_commit.tar.gz
 Source1: sirit-%sirit_commit.tar
 # https://github.com/yuzu-emu/mbedtls/archive/%mbedtls_commit/mbedtls-%mbedtls_commit.tar.gz
@@ -74,6 +76,7 @@ BuildRequires: python-modules-encodings
 BuildRequires: python3-dev
 BuildRequires: python3-module-mpl_toolkits
 BuildRequires: qt6-tools-devel
+BuildRequires: renderdoc-devel
 BuildRequires: spirv-headers
 BuildRequires: unzip
 BuildRequires: zlib-devel
@@ -82,7 +85,7 @@ BuildRequires: zlib-devel
 %name is a familiar C++ based Switch emulator with a focus on compatibility. Completely free and open-source, forever.
 
 %prep
-%setup -n %name-v%version-master -b 1 -b 2 -b 3
+%setup -n %name-v%version -b 1 -b 2 -b 3
 
 %patch0 -p1
 
@@ -141,5 +144,10 @@ unzip %SOURCE4 -d %_target_platform/externals/nx_tzdb/nx_tzdb
 %_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
 
 %changelog
+* Mon Mar 25 2024 Nazarov Denis <nenderus@altlinux.org> 1:0.0.1-alt1
+- Version 0.0.1
+  + upstream reset the versioning scheme
+- Build with RenderDoc
+
 * Thu Mar 21 2024 Nazarov Denis <nenderus@altlinux.org> 0.0.2-alt1
 - Initial build for ALT Linux
