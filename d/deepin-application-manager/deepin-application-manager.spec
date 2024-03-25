@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-application-manager
-Version: 1.1.9
+Version: 1.2.0.0.5.b504
 Release: alt1
 
 Summary: App manager for Deepin
@@ -60,6 +60,7 @@ rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 %dir %_libexecdir/deepin/application-manager/
 %_libexecdir/deepin/application-manager/app-launch-helper
 %_libexecdir/deepin/application-manager/app-update-notifier
+%_libexecdir/deepin/application-manager/dockEnv.sh
 %_unitdir/org.desktopspec.ApplicationUpdateNotifier1.service
 %_userunitdir/org.desktopspec.ApplicationManager1.service
 %dir %_userunitdir/dde-session-initialized.target.wants/
@@ -69,12 +70,19 @@ rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 %_datadir/dbus-1/services/org.desktopspec.ApplicationManager1.service
 %dir %_datadir/%repo/
 %_datadir/%repo/org.desktopspec.*.xml
+%dir %_datadir/deepin/
+%dir %_datadir/deepin/%repo/
+%dir %_datadir/deepin/%repo/hooks.d/
+%_datadir/deepin/%repo/hooks.d/1-dockEnv.json
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/%repo/
 %_datadir/dsg/configs/%repo/com.deepin*.json
 
 %changelog
+* Mon Mar 25 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.0.0.5.b504-alt1
+- New version 1.2.0-5-gb504363.
+
 * Thu Mar 07 2024 Leontiy Volodin <lvol@altlinux.org> 1.1.9-alt1
 - New version 1.1.9.
 
