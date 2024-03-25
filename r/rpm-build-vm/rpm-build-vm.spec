@@ -10,7 +10,7 @@
 
 Name: rpm-build-vm
 Version: 1.65
-Release: alt2
+Release: alt3
 
 Summary: RPM helper to run tests in virtualised environment
 License: GPL-2.0-only
@@ -225,6 +225,9 @@ vm-run --stub-exit=7 && exit 1 || test $? -eq 7
 %endif
 
 %changelog
+* Mon Mar 25 2024 Vitaly Chikunov <vt@altlinux.org> 1.65-alt3
+- Fix ci test on high core systems.
+
 * Mon Mar 11 2024 Vitaly Chikunov <vt@altlinux.org> 1.65-alt2
 - Fix rebuild with gcc-10.
 - Remove BR:busybox for non-sisyphus branches.
