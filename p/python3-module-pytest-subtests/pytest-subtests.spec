@@ -3,14 +3,15 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.11.0
+Version: 0.12.1
 Release: alt1
 
 Summary: Support for unittest subTest() and subtests fixture
 
 License: MIT
 Group:   Development/Python3
-URL:     https://github.com/pytest-dev/pytest-subtests
+URL:     https://pypi.org/project/pytest-subtests
+VCS:     https://github.com/pytest-dev/pytest-subtests
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -48,12 +49,14 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 py.test-3
 
 %files
-%doc *.rst
-%python3_sitelibdir/pytest_subtests.py
-%python3_sitelibdir/__pycache__
+%doc LICENSE *.rst
+%python3_sitelibdir/pytest_subtests
 %python3_sitelibdir/pytest_subtests-%version.dist-info
 
 %changelog
+* Mon Mar 25 2024 Grigory Ustinov <grenka@altlinux.org> 0.12.1-alt1
+- Automatically updated to 0.12.1.
+
 * Tue May 16 2023 Grigory Ustinov <grenka@altlinux.org> 0.11.0-alt1
 - Automatically updated to 0.11.0.
 
