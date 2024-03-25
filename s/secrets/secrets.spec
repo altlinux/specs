@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: secrets
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A password manager for GNOME
@@ -42,7 +42,7 @@ BuildRequires: pkgconfig(gobject-introspection-1.0)
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: python3(pykeepass) python3(pyotp) python3(validators)
 BuildRequires: python3(zxcvbn) python3(PyKCS11) python3(yubico)
-%{?_enable_check:BuildRequires: python3(pytest) python3(gi) typelib(Gtk) = 4.0}
+%{?_enable_check:BuildRequires: python3(pytest) python3(gi) typelib(Gtk) = 4.0 ruff}
 
 %description
 A password manager which integrates perfectly with the GNOME desktop and
@@ -76,6 +76,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %doc README*
 
 %changelog
+* Mon Mar 25 2024 Yuri N. Sedunov <aris@altlinux.org> 9.1-alt1
+- updated to 9.1-2-gc1637e02
+
 * Thu Mar 21 2024 Yuri N. Sedunov <aris@altlinux.org> 9.0-alt1
 - 9.0
 
