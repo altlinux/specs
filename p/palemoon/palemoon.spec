@@ -6,7 +6,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 Name: palemoon
 Version: 33.0.1
 
-Release: alt1
+Release: alt2
 
 License: MPL-2.0 GPL-3.0 and LGPL-2.1+
 Group: Networking/WWW
@@ -47,7 +47,10 @@ Source11: content.tar
 #Source12: xulstore.json
 #Source13: kde.js
 
+Patch10: palemoon-33.0.1-compatversion.patch
+
 #Patch15: palemoon-32.0.1-ppc64le-alt1.patch
+
 
 #Patch1: palemoon_google_add-26.4.0.patch
 Patch16: mozilla_palimoon-29.4.6-cross-desctop.patch
@@ -58,7 +61,7 @@ Patch18: mozilla_palimoon-29.4.6-bug-1153109-enable-stdcxx-compat.patch
 
 Patch22: palemoon_rpath-29.4.6.patch
 
-Patch23: palemoon_version-32.5.0.patch
+Patch23: palemoon_version-33.0.1.patch
 Patch24: palemoon-31.0.0-ui_picker_false.patch
 #Patch25: palemoon-31.3.0.1-lock_impl_posix.patch
 
@@ -77,8 +80,7 @@ Patch115: palemoon-32.4.0-mathops.patch
 Patch116: palemoon-32.4.0-hunspell.patch
 #Patch117: palemoon-32.5.1-locale.patch
 
-#Patch114: mewmoon_branding-31.0.0.patch
-Patch200: %bname-32.5.1-branding.patch
+Patch200: %bname-33.0.1-branding.patch
 
 %set_autoconf_version 2.13
 
@@ -186,8 +188,9 @@ popd
 %setup -T -D -a 2
 %setup -T -D -a 11
 
-%patch24 -p1
+%patch10 -p1
 
+%patch24 -p1
 #patch25 -p1
 
 #patch21 -p1
@@ -496,6 +499,9 @@ install -D -m 644 %SOURCE10 %_builddir/%sname-%version
 %exclude %_includedir/*
 
 %changelog
+* Sun Mar 24 2024 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.0.1-alt2
+- Replace patchs
+
 * Wed Mar 20 2024 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.0.1-alt1
 - Release 33.0.1
 (CVE-2024-1551)
