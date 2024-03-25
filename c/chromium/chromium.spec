@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        122.0.6261.94
+Version:        123.0.6312.58
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -84,8 +84,7 @@ Patch026: 0026-DEBIAN-remove-dependencies-on-third_party-catapult.patch
 Patch027: 0027-Use-system-sysroot-for-rust.patch
 Patch028: 0028-DEBIAN-work-around-incorrect-template-selection.patch
 Patch029: 0029-nullptr_t-without-namespace-std.patch
-Patch030: 0030-Revert-PA-Use-Internal-Partition-in-Scan.patch
-Patch031: 0031-libstdc-fix-static-assertion-in-NodeUuidEquality.patch
+Patch030: 0030-Fix-undefined-symbol-partition_alloc-internal-Intern.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -502,6 +501,21 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Mar 21 2024 Alexey Gladkov <legion@altlinux.ru> 123.0.6312.58-alt1
+- New version (123.0.6312.58).
+- Security fixes:
+  - CVE-2024-2173: Out of bounds memory access in V8.
+  - CVE-2024-2174: Inappropriate implementation in V8.
+  - CVE-2024-2176: Use after free in FedCM.
+  - CVE-2024-2400: Use after free in Performance Manager.
+  - CVE-2024-2625: Object lifecycle issue in V8.
+  - CVE-2024-2626: Out of bounds read in Swiftshader.
+  - CVE-2024-2627: Use after free in Canvas.
+  - CVE-2024-2628: Inappropriate implementation in Downloads.
+  - CVE-2024-2629: Incorrect security UI in iOS.
+  - CVE-2024-2630: Inappropriate implementation in iOS.
+  - CVE-2024-2631: Inappropriate implementation in iOS.
+
 * Wed Feb 28 2024 Alexey Gladkov <legion@altlinux.ru> 122.0.6261.94-alt1
 - New version (122.0.6261.94).
 - Security fixes:
