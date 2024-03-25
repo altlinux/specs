@@ -1,6 +1,6 @@
 Name: alterator-netinst
 Version: 1.9.1
-Release: alt7
+Release: alt8
 
 Source:%name-%version.tar
 
@@ -40,6 +40,9 @@ alterator module for network installations management
 %_bindir/alterator-netinst
 
 %changelog
+* Mon Mar 25 2024 Anton Midyukov <antohami@altlinux.org> 1.9.1-alt8
+- alterator-netinst: fix help for option '-v'
+
 * Wed Mar 13 2024 Anton Midyukov <antohami@altlinux.org> 1.9.1-alt7
 - run select image only once after change all options
 - backend3/netinst: disable debug to /tmp/log
