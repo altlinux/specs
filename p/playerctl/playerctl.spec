@@ -1,6 +1,6 @@
 Name: playerctl
 Version: 2.4.1
-Release: alt1
+Release: alt2
 
 Summary: CLI for MPRIS-compatible players
 License: LGPLv3
@@ -9,7 +9,7 @@ Url: https://github.com/altdesktop/playerctl
 
 Source: %name-%version-%release.tar
 
-BuildRequires: meson gtk-doc
+BuildRequires: meson gtk-doc /usr/bin/g-ir-scanner
 BuildRequires: pkgconfig(gobject-2.0)
 BuildRequires: pkgconfig(gobject-introspection-1.0)
 BuildRequires: pkgconfig(gio-unix-2.0)
@@ -70,5 +70,8 @@ applications using playerctl.
 %_pkgconfigdir/playerctl.pc
 
 %changelog
+* Mon Mar 25 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.4.1-alt2
+- build requirements corrected
+
 * Tue Sep 13 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.4.1-alt1
 - 2.4.1 released
