@@ -2,7 +2,7 @@
 
 Name: cameractrls
 Version: 0.5.15
-Release: alt2
+Release: alt3
 
 Summary: Camera controls
 
@@ -30,7 +30,7 @@ controls with Systemd path+service).
 %package -n python3-module-%name
 Summary: Camera controls python3 module files
 Group: Video
-Requires: python3 libjpeg libSDL2
+Requires: python3 libjpeg libSDL2 libturbojpeg
 %py3_provides %name
 
 %description -n python3-module-%name
@@ -72,6 +72,9 @@ popd
 %python3_sitelibdir/CameraCtrls
 
 %changelog
+* Mon Mar 25 2024 Mikhail Tergoev <fidel@altlinux.org> 0.5.15-alt3
+- added requires: libturbojpeg (ALT bug: 49779)
+
 * Fri Mar 22 2024 Mikhail Tergoev <fidel@altlinux.org> 0.5.15-alt2
 - used GTK3 stable version %name (ALT bug: 48570)
 
