@@ -1,7 +1,7 @@
 %def_with tests
 
 Name: corectrl
-Version: 1.3.11
+Version: 1.4.0
 Release: alt1
 Summary: Core control application
 Group: System/Configuration/Hardware
@@ -15,10 +15,9 @@ Source2: %name.control
 BuildRequires(pre): cmake
 # Automatically added by buildreq on Sun Oct 02 2022
 BuildRequires: libbotan-devel libdbus-devel libdrm-devel libpolkit-devel qt5-charts-devel qt5-svg-devel qt5-tools-devel quazip-qt5-devel
-BuildRequires: libfmt-devel >= 5.0, libpugixml-devel >= 1.11 ctest nholthaus-units-devel easyloggingpp-devel
-# TODO add trompeloeil too
+BuildRequires: libfmt-devel >= 5.0, libpugixml-devel >= 1.11 ctest nholthaus-units-devel libspdlog-devel
 %if_with tests
-BuildRequires: catch2-devel
+BuildRequires: catch-devel trompeloeil-devel
 %endif
 
 %description
@@ -71,14 +70,19 @@ fi
 %attr(710,root,%name) %_bindir/%name
 %_libdir/lib%{name}.so
 %_prefix/libexec/%name
-%_desktopdir/org.%name.%name.desktop
+%_desktopdir/org.corectrl.CoreCtrl.desktop
 %_datadir/dbus-1/system-services/org.%name.*.service
 %_datadir/dbus-1/system.d/org.%name.*.conf
 %_iconsdir/hicolor/*/apps/*.svg
-%_datadir/metainfo/org.%name.%name.appdata.xml
+%_datadir/metainfo/org.corectrl.CoreCtrl.appdata.xml
 %_datadir/polkit-1/actions/org.%name.*.policy
 
 %changelog
+* Sat Mar 23 2024 L.A. Kostis <lakostis@altlinux.ru> 1.4.0-alt1
+- 1.4.0.
+- easyloggingpp->spdlog.
+- catch2->catch.
+
 * Tue Mar 12 2024 L.A. Kostis <lakostis@altlinux.ru> 1.3.11-alt1
 - 1.3.11.
 
