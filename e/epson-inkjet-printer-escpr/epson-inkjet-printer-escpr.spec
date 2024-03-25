@@ -15,8 +15,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 
-%define pkg     epson-inkjet-printer-escpr
-%define ver     1.8.1
+%define pkg epson-inkjet-printer-escpr
+%define ver 1.8.5
 
 %define drivername      epson-inkjet-printer-escpr
 %define driverstr       epson-inkjet-printer-escpr
@@ -38,9 +38,6 @@ Group: System/Configuration/Hardware
 Summary: Epson Inkjet Printer Driver (ESC/P-R) for Linux
 
 Source0: %{name}-%{version}.tar.gz
-# PATCH-FIX-UPSTREAM bug_x86_64.patch -- fix a segfault on x64_64 (probably manifested with GCC7 use)
-# https://aur.archlinux.org/cgit/aur.git/plain/bug_x86_64.patch?h=epson-inkjet-printer-escpr
-Patch0:  bug_x86_64.patch
 
 BuildRequires: libcups-devel
 
@@ -58,13 +55,12 @@ http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX
 # Packaging settings
 %prep
 %setup -q
-%patch0 -p2
 
 %build
 %undefine _configure_gettext
 %autoreconf
 %configure \
-	--disable-static \
+        --disable-static \
         --with-cupsfilterdir=%_libexecdir/cups/filter \
         --with-cupsppddir=%_datadir/cups/model
 make pkgdatadir=%_datadir
@@ -81,6 +77,19 @@ gzip -n9 %buildroot%_datadir/cups/model/%name/*.ppd
 %_datadir/cups/model/%name
 
 %changelog
+* Mon Mar 25 2024 Andrey Cherepanov <cas@altlinux.org> 1.8.5-alt1
+- New version (ALT #49770).
+- Supported new model:
+  + Epson EP-M476T Series
+  + Epson ET-2860 Series
+  + Epson ET-2870 Series
+  + Epson EW-056A Series
+  + Epson EW-456A Series
+  + Epson L1270 Series
+  + Epson L3270 Series
+  + Epson L3280 Series
+  + Epson L5310 Series
+
 * Tue Oct 24 2023 Andrey Cherepanov <cas@altlinux.org> 1.8.1-alt1
 - New version.
 - Supported new model:
