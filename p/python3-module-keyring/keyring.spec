@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 24.3.1
+Version: 25.0.0
 Release: alt1
 
 Summary: Keyring provides an easy way to access the system keyring service
@@ -27,6 +27,8 @@ BuildRequires: python3-module-toml
 BuildRequires: python3-module-importlib-metadata
 BuildRequires: python3-module-secretstorage
 BuildRequires: python3-module-jaraco.classes
+BuildRequires: python3-module-jaraco.functools
+BuildRequires: python3-module-jaraco.context
 %endif
 
 # ALT#46056
@@ -70,6 +72,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Mon Mar 25 2024 Grigory Ustinov <grenka@altlinux.org> 25.0.0-alt1
+- Automatically updated to 25.0.0.
+
 * Fri Mar 01 2024 Grigory Ustinov <grenka@altlinux.org> 24.3.1-alt1
 - Automatically updated to 24.3.1.
 
