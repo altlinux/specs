@@ -1,7 +1,7 @@
 %define repo dde-calendar
 
 Name: deepin-calendar
-Version: 5.12.1
+Version: 5.12.2
 Release: alt1
 
 Summary: Calendar for Deepin Desktop Environment
@@ -52,8 +52,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/%repo/data/huangli.db
 %_datadir/dbus-1/services/com.deepin.Calendar.service
 %_datadir/dbus-1/services/com.deepin.dataserver.Calendar.service
+%_datadir/metainfo/org.deepin.calendar.metainfo.xml
 %_desktopdir/%repo.desktop
 %_sysconfdir/xdg/autostart/dde-calendar-service.desktop
+%dir %_libexecdir/deepin-daemon/
 %_libexecdir/deepin-daemon/dde-calendar-service
 %dir %_libdir/deepin-aiassistant/
 %dir %_libdir/deepin-aiassistant/serivce-plugins/
@@ -70,6 +72,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_userunitdir/com.dde.calendarserver.calendar.timer
 
 %changelog
+* Mon Mar 25 2024 Leontiy Volodin <lvol@altlinux.org> 5.12.2-alt1
+- New version 5.12.2.
+
 * Fri Jan 19 2024 Leontiy Volodin <lvol@altlinux.org> 5.12.1-alt1
 - New version 5.12.1.
 
