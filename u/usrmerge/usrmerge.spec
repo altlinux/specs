@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: usrmerge
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: transition to merged usr
@@ -65,6 +65,12 @@ can be invoked directly by an administrator who knows what they are doing.
 %_prefix/libexec/usrmerge/hier-convert
 
 %changelog
+* Mon Mar 25 2024 Arseny Maslennikov <arseny@altlinux.org> 0.4-alt1
+- 0.3 -> 0.4; see commit history for details.
+  Notably:
+  + Added a resolution rule for byte-for-byte equivalent symlinks.
+    (Closes: 49533)
+
 * Thu Feb 08 2024 Arseny Maslennikov <arseny@altlinux.org> 0.3-alt1
 - 0.2 -> 0.3; see commit history for details.
   Notably:
