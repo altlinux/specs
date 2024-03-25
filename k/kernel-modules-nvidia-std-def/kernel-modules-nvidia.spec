@@ -7,7 +7,7 @@
 %define modesetmodule_name	nvidia-modeset
 %define uvmmodule_name		nvidia-uvm
 %define drmmodule_name		nvidia-drm
-%define package_version	550.54.14
+%define package_version	550.67
 %define module_version	%package_version
 %ifarch %ix86 armh
 %define module_version	390.157
@@ -294,6 +294,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Mar 25 2024 Sergey V Turchin <zerg at altlinux dot org> 550.67-alt1
+- new release (550.67)
 
 * Tue Jan 23 2024 Sergey V Turchin <zerg at altlinux dot org> 550.54.14-alt1
 - new releases (550.54.14, 470.239.06)
