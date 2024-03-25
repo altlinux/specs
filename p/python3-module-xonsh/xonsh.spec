@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.15.0
+Version: 0.15.1
 Release: alt1
 
 Summary: Python-powered, cross-platform, Unix-gazing shell
@@ -16,7 +16,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 # this patch is only needed by ALT, because python in our distribution means python2
-Patch0: %pypi_name-%version-alt-fix-tests-python-to-python3.patch
+Patch0: %pypi_name-0.15.0-alt-fix-tests-python-to-python3.patch
 
 # self-dependencies
 %filter_from_requires /python3(xonsh.ply)/d
@@ -70,5 +70,8 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Mar 22 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.15.1-alt1
+- New version.
+
 * Tue Mar 05 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.15.0-alt1
 - First build for ALT.
