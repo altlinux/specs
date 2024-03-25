@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.140
+Version: 2.9.141
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -122,6 +122,10 @@ make check
 %lang(uz) %_datadir/locale/uz/LC_MESSAGES/*.mo
 
 %changelog
+* Mon Mar 25 2024 Elena Mishina <lepata@altlinux.org> 2.9.141-alt1
+- alterator-update-kernel: fix typo (closes #48969)
+- alterator-netinst: update help, russian translation
+
 * Thu Mar 21 2024 Ajrat Makhmutov <rauty@altlinux.org> 2.9.140-alt1
 - alterator-logs: add information about log colors
 
