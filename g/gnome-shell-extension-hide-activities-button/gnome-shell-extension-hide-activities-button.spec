@@ -2,7 +2,7 @@
 %define uuid Hide_Activities@shay.shayel.org
 
 Name: gnome-shell-extension-%_name
-Version: 45
+Version: 46
 Release: alt1
 
 Summary: Hides the Activities button from the status bar
@@ -34,6 +34,9 @@ cp -ar *.js* %buildroot%_datadir/gnome-shell/extensions/%uuid/
 %_datadir/gnome-shell/extensions/%uuid/
 
 %changelog
+* Mon Mar 25 2024 Roman Alifanov <ximper@altlinux.org> 46-alt1
+- new version 46 (with rpmrb script)
+
 * Wed Sep 20 2023 Roman Alifanov <ximper@altlinux.org> 45-alt1
 - new version 45 (with rpmrb script)
 
