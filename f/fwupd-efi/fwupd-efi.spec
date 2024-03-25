@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fwupd-efi
-Version: 1.4
-Release: alt2
+Version: 1.5
+Release: alt1
 License: LGPLv2+
 
 Group: System/Configuration/Hardware
@@ -18,7 +18,8 @@ BuildRequires: gnu-efi
 BuildRequires: python3-module-pefile
 
 %description
-fwupd-efi is the UEFI binary used with fwupd for installing UEFI firmware updates
+fwupd-efi is the UEFI binary used with fwupd for installing UEFI
+firmware updates.
 
 %package checkinstall
 Group: System/Configuration/Hardware
@@ -27,7 +28,8 @@ Requires: %name = %EVR
 Requires(post): rpm-pesign-checkinstall
 
 %description checkinstall
-fwupd-efi is the UEFI binary used with fwupd for installing UEFI firmware updates
+fwupd-efi is the UEFI binary used with fwupd for installing UEFI
+firmware updates.
 
 This package enables EFI signature verification.
 
@@ -37,6 +39,7 @@ This package enables EFI signature verification.
 
 %build
 %meson \
+    -Defi-ldsdir="%_libdir" \
     -Defi_sbat_distro_id="altlinux" \
     -Defi_sbat_distro_summary="ALT Linux" \
     -Defi_sbat_distro_pkgname="%name" \
@@ -55,6 +58,9 @@ This package enables EFI signature verification.
 %files checkinstall
 
 %changelog
+* Mon Mar 25 2024 Egor Ignatov <egori@altlinux.org> 1.5-alt1
+- 1.5
+
 * Wed Jun 14 2023 Egor Ignatov <egori@altlinux.org> 1.4-alt2
 - add fwupd-efi-checkinstall subpackage for automatic EFI signature
   verification

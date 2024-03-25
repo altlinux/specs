@@ -25,9 +25,9 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.9.13
+Version: 1.9.15
 
-Release: alt2
+Release: alt1
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
 Url: https://github.com/fwupd/fwupd
@@ -79,6 +79,7 @@ BuildRequires: python3-module-pycairo
 BuildRequires: python3-module-pygobject3
 BuildRequires: python3-module-jinja2
 BuildRequires: vala-tools
+BuildRequires: gobject-introspection-devel
 BuildRequires: /proc
 
 %if_enabled uefi
@@ -202,7 +203,7 @@ mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 %find_lang %name
 
 %check
-vm-run --sbin --udevd --kvm=cond --overlay=ext4,30M:/usr/src \
+vm-run --sbin --udevd --kvm=cond --overlay=tmpfs:/usr/src \
        %__meson_test
 
 %files -f %name.lang
@@ -313,6 +314,9 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4,30M:/usr/src \
 %endif
 
 %changelog
+* Mon Mar 25 2024 Egor Ignatov <egori@altlinux.org> 1.9.15-alt1
+- 1.9.15
+
 * Fri Feb 16 2024 Ajrat Makhmutov <rauty@altlinux.org> 1.9.13-alt2
 - build with libpassim
 
