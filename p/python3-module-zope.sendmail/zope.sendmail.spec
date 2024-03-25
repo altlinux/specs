@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.1
+Version: 6.2
 Release: alt1
 Summary: Zope sendmail
 License: ZPL-2.1
@@ -84,6 +84,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Mon Mar 25 2024 Anton Vyatkin <toni@altlinux.org> 6.2-alt1
+- New version 6.2.
+
 * Fri Feb 09 2024 Anton Vyatkin <toni@altlinux.org> 6.1-alt1
 - New version 6.1.
 
