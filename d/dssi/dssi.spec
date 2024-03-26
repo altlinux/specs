@@ -1,73 +1,63 @@
-
 Name: dssi
 Version: 1.1.1
-Release: alt2
+Release: alt3
 
 Summary: Disposable Soft Synth Interface specification & examples
 License: LGPL-2.1
 Group: Sound
-Url: http://%name.sourceforge.net
-Packager: Alex Karpov <karpov@altlinux.ru>
+Url: https://dssi.sourceforge.net
 
-Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.gz
-Patch1: alt-qt5.patch
+Provides: dssi-examples = %version-%release
+Obsoletes: dssi-examples
 
-# Automatically added by buildreq on Mon Apr 06 2009
-BuildRequires: gcc-c++ gcc-fortran glibc-devel-static jackit-devel ladspa_sdk libalsa-devel liblo-devel qt5-base-devel libsamplerate-devel libsndfile-devel
+Source: %name-%version.tar
+
+BuildRequires: gcc-c++ ladspa_sdk
+BuildRequires: pkgconfig(alsa)
+BuildRequires: pkgconfig(liblo)
+BuildRequires: pkgconfig(jack)
+BuildRequires: pkgconfig(samplerate)
+BuildRequires: pkgconfig(sndfile)
+
+%package devel
+Summary: Development stuff for DSSI
+Group: Development/C
 
 %description
-This is the Disposable Soft Synth Interface specification.
-
-%package examples
-Summary: Simple applications that use %name
-Group: Development/C++
-
-%description examples
-This package contains simple apps that use lib%name.
+This package contains simple apps that use DSSI
 dssi_osc_update -- simple DSSI OSC test programs
 dssi_example_host -- a basic example host implementation
 trivial_synth -- a quite useless but fairly clear illustrative synth plugin
 less_trivial_synth -- a synth that actually does some basic synthesis
-less_trivial_synth_qt_gui -- a very simple Qt GUI for the above
-
-%package devel
-Summary: Development stuff for %name
-Group: Development/C++
-Requires: %name = %version
 
 %description devel
-This package contents development stuff for %name.
+This package contents development stuff for DSSI
 
 %prep
-%setup -q
-%patch1 -p1
-%autoreconf
+%setup
 
 %build
-export QTDIR=%_qt5_prefix
-%configure --with-qt
+%autoreconf
+%configure
 %make_build
 
 %install
-%makeinstall 
-%make -C examples distclean
+%makeinstall_std
 
 %files
-%dir %_libdir/%name/
+%doc README doc/RFC.txt
 %_bindir/*
-%doc README
-%doc doc/*
-%_mandir/man1/*
-
-%files examples
-%_libdir/%name/*
-%doc examples
+%_libdir/dssi
+%_man1dir/*.1*
 
 %files devel
-%_includedir/*
-%_libdir/pkgconfig/*
+%_includedir/dssi.h
+%_libdir/pkgconfig/dssi.pc
 
 %changelog
+* Tue Mar 26 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.1.1-alt3
+- rebuilt without qt-based examples
+
 * Tue Jun 29 2021 Sergey V Turchin <zerg@altlinux.org> 1.1.1-alt2
 - port to Qt5
 
