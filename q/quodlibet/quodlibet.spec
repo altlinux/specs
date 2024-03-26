@@ -4,8 +4,8 @@
 %define rdn_name_ef io.github.quodlibet.ExFalso
 
 Name: quodlibet
-Version: 4.5.0
-Release: alt1.1
+Version: 4.7.0
+Release: alt0.dev0
 
 Summary: audio library tagger, manager, and player for GTK+
 Group: Sound
@@ -40,6 +40,8 @@ Requires: gst-plugins-ugly%gst_api_ver
 
 # abnormally detected python3 dep. See quodlibet/util/http.py
 %add_python3_req_skip gi.repository.GObject
+
+%filter_from_requires /python3.raven/d
 
 BuildRequires(pre): rpm-build-gir rpm-build-python3
 BuildRequires: desktop-file-utils
@@ -99,9 +101,13 @@ subst "s|\('share', '\)appdata'|\1metainfo'|" gdist/appdata.py
 %_datadir/metainfo/%rdn_name_ef.appdata.xml
 %_man1dir/exfalso.*
 %python3_sitelibdir_noarch/%name
-%python3_sitelibdir_noarch/%name-%version-py*
+%python3_sitelibdir_noarch/%name-*-py*
 
 %changelog
+* Thu Mar 21 2024 Ildar Mulyukov <ildar@altlinux.ru> 4.7.0-alt0.dev0
+- new version
+- mask excessive dependency on raven (ALT #48073)
+
 * Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 4.5.0-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
