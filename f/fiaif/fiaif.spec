@@ -25,7 +25,7 @@
 
 Name: fiaif
 Version: 1.22.1
-Release: alt4
+Release: alt5
 
 Summary: FIAIF is an Intelligent Firewall for iptables based Linux systems
 Summary(ru_RU.UTF-8): FIAIF - интеллектуальный межсетевой экран для Linux-систем с iptables
@@ -155,6 +155,9 @@ subst 's#CONF_FILES=fiaif.conf#CONF_FILES=fiaif.conf zone.venet#' Makefile
 # Install fresh reserved_networks
 install -m 0644 %SOURCE2 conf/reserved_networks
 
+# Need to re-generate with recent Latex
+rm -f doc/fiaif/fiaif.toc
+
 %build
 DISPLAY=0:0 LANG=RU_ru.UTF-8  [ -f fiaif.ps ] || make fiaif.ps
 
@@ -176,7 +179,7 @@ rm -rf -- $RPM_BUILD_ROOT%_defaultdocdir/%name
 %if_with systemd
 # Installing systemd unit file
 mkdir -p  %buildroot%_unitdir
-install -m 0755 %SOURCE3 %buildroot%_unitdir/%name.service
+install -m 0644 %SOURCE3 %buildroot%_unitdir/%name.service
 %endif
 
 %post
@@ -230,6 +233,10 @@ sed -e 's/LOG_LEVEL=WARNING/LOG_LEVEL=warning/' -i %fiaif_conf/fiaif.conf
 %doc fiaif.ps.gz doc/faq.txt
 
 %changelog
+* Tue Mar 26 2024 Nikolay A. Fetisov <naf@altlinux.org> 1.22.1-alt5
+- Fix build with recent Latex
+- Fix unit file access rights
+
 * Sat Aug 03 2019 Nikolay A. Fetisov <naf@altlinux.org> 1.22.1-alt4
 - Fix work with Bash 4
 - Fix URL
