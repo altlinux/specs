@@ -1,6 +1,6 @@
 Name: xorg-proto-devel
-Version: 2023.2
-Release: alt1.1
+Version: 2024.1
+Release: alt1
 Summary: X.Org combined protocol headers
 License: MIT/X11
 Group: Development/C
@@ -50,6 +50,9 @@ X.Org combined protocol headers
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Tue Mar 26 2024 Valery Inozemtsev <shrek@altlinux.ru> 2024.1-alt1
+- 2024.1
+
 * Wed Oct 04 2023 Ivan A. Melnikov <iv@altlinux.org> 2023.2-alt1.1
 - NMU: drop unused build dependencies
   (fixes build on loongarch64).

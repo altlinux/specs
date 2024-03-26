@@ -1,5 +1,5 @@
 Name: libpciaccess
-Version: 0.17
+Version: 0.18.1
 Release: alt1
 Epoch: 1
 Summary: X.org libpciaccess library
@@ -11,7 +11,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: pciids xorg-util-macros zlib-devel
+BuildRequires: meson pciids xorg-util-macros zlib-devel
 
 %description
 Library providing generic access to the PCI bus and devices
@@ -29,15 +29,13 @@ develop programs which make use of %name
 %patch -p1
 
 %build
-%autoreconf
-%configure \
-	--with-pciids-path=%_datadir/misc \
-	--with-zlib \
-	--disable-static
-%make_build
+%meson \
+	-Dpci-ids=misc \
+	-Dzlib=enabled
+%meson_build
 
 %install
-%make DESTDIR=%buildroot install
+%meson_install
 
 %files
 %_libdir/*.so.*
@@ -48,6 +46,9 @@ develop programs which make use of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Mar 26 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:0.18.1-alt1
+- 0.18.1
+
 * Wed Oct 19 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:0.17-alt1
 - 0.17
 

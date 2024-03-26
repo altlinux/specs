@@ -1,5 +1,5 @@
 Name: libxkbfile
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 Summary: The xkbfile Library
 License: MIT/X11
@@ -10,7 +10,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: libX11-devel xmlto xorg-util-macros xorg-sgml-doctools
+BuildRequires: meson libX11-devel xmlto xorg-util-macros xorg-sgml-doctools
 
 %description
 The xkbfile Library
@@ -29,13 +29,11 @@ develop programs which make use of %name
 %patch -p1
 
 %build
-%autoreconf
-%configure \
-	--disable-static
-%make_build
+%meson
+%meson_build
 
 %install
-%make DESTDIR=%buildroot install
+%meson_install
 
 %files
 %_libdir/*.so.*
@@ -46,6 +44,9 @@ develop programs which make use of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Mar 26 2024 Valery Inozemtsev <shrek@altlinux.ru> 1.1.3-alt1
+- 1.1.3
+
 * Fri Dec 09 2022 Valery Inozemtsev <shrek@altlinux.ru> 1.1.2-alt1
 - 1.1.2
 
