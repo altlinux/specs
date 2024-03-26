@@ -2,8 +2,8 @@
 %def_with check
 
 Name: kitty
-Version: 0.32.2
-Release: alt2
+Version: 0.33.1
+Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
 License: GPL-3.0
@@ -17,7 +17,6 @@ Requires: %name-shell-integration = %EVR
 
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
-Patch1: 0001-setup.py-fixed-check-for-control-flow-protection.patch
 
 # 0.27.0: unmet /usr/pkg/bin/tic
 %add_findreq_skiplist %_libexecdir/kitty/shell-integration/ssh/bootstrap-utils.sh
@@ -42,6 +41,7 @@ BuildRequires: wayland-protocols
 BuildRequires: libwayland-client-devel
 BuildRequires: libwayland-cursor-devel
 
+BuildRequires: simde-devel
 BuildRequires: libGL-devel
 BuildRequires: libpng-devel
 BuildRequires: libssl-devel
@@ -133,7 +133,6 @@ images (kitten icat), manipulating the clipboard (kitten clipboard), etc.
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
 
 # Changing shebangs to python3
 find -type f -name "*.py" -exec sed -e 's|/usr/bin/env python3|%__python3|g'  \
@@ -143,22 +142,6 @@ find -type f -name "*.py" -exec sed -e 's|/usr/bin/env python3|%__python3|g'  \
 # Our gcc enables "_FORTIFY_SOURCE=3" by default, remove defenition
 # form setup.py to avoid error "_FORTIFY_SOURCE" redefined
 sed -i -e "s/-D_FORTIFY_SOURCE=2//" setup.py
-
-# Disable strip for kitten binary
-sed -i -e "/ld_flags.append('-s')/d" -e "s/ld_flags.append('-w')/pass/" setup.py
-
-# Fix arm detection
-sed -i -e "/is_arm/ s/'aarch64'/'aarch64', 'armv8l'/" setup.py
-
-# Disable fcf-protection on unsupported architectures
-%ifarch %ix86 ppc64le
-sed -i -e "s/-fcf-protection=full//" setup.py
-%endif
-
-# 0.32.2: Disable optimizations for kittens/transfer/algorithm.c:init_rsync()
-# because it segfaults due to a bug in gcc10
-sed -i -e '/^init_rsync(/ i__attribute__((optimize("O0")))' \
-    kittens/transfer/algorithm.c
 
 %build
 %add_optflags -Wno-switch
@@ -224,6 +207,9 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %_bindir/kitten
 
 %changelog
+* Tue Mar 26 2024 Egor Ignatov <egori@altlinux.org> 0.33.1-alt1
+- new version 0.33.1
+
 * Mon Mar 11 2024 Egor Ignatov <egori@altlinux.org> 0.32.2-alt2
 - enable shell-integration tests
 - fix build with gcc 10
