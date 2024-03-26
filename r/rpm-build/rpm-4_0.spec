@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.196
+Version: 4.0.4.197
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -386,6 +386,12 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Thu Mar 21 2024 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.197-alt1
+- george@:
+  + scripts/brp-fix-perms.in: Fixed systemd units and man/info permissions.
+  + scripts/brp-verify-unit.in: Dropped validation of already fixed permissions.
+  + scripts/brp-compress.in: Moved permission fix to brp-fix-perms.
+
 * Mon Mar 04 2024 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.196-alt1
 - Moved scripts/find-package and scripts/functions over from our rpm project to
   be installed as part of rpm-build.
