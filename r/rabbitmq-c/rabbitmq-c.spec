@@ -3,8 +3,8 @@
 %global sover 4
 
 Name: rabbitmq-c
-Version: 0.13.0
-Release: alt2
+Version: 0.14.0
+Release: alt1
 
 Summary: RabbitMQ C client
 Group: System/Libraries
@@ -83,6 +83,9 @@ popd
 %_libdir/cmake
 
 %changelog
+* Tue Mar 26 2024 Egor Ignatov <egori@altlinux.org> 0.14.0-alt1
+- 0.14.0
+
 * Thu Nov 23 2023 Egor Ignatov <egori@altlinux.org> 0.13.0-alt2
 - Backport CVE fix (fixes: CVE-2023-35789)
 
