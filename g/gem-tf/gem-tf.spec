@@ -3,16 +3,17 @@
 
 Name:          gem-tf
 Version:       0.4.5
-Release:       alt1
+Release:       alt2
 Summary:       Testing Framework
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           http://github.com/mpapis/tf
 Vcs:           https://github.com/mpapis/tf.git
-Packager:      Pavel Skrylev <majioa@altlinux.org>
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Patch:         fixed-binary.patch
 BuildRequires(pre): rpm-build-ruby
 %if_with check
 BuildRequires: gem(minitest) >= 5
@@ -35,7 +36,7 @@ Testing Framework solely based on plugins. For now only tests using Bash.
 
 %package       -n tf
 Version:       0.4.5
-Release:       alt1
+Release:       alt2
 Summary:       Testing Framework executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета tf
 Group:         Other
@@ -54,7 +55,7 @@ Testing Framework solely based on plugins. For now only tests using Bash.
 
 %package       -n gem-tf-doc
 Version:       0.4.5
-Release:       alt1
+Release:       alt2
 Summary:       Testing Framework documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета tf
 Group:         Development/Documentation
@@ -73,7 +74,7 @@ Testing Framework solely based on plugins. For now only tests using Bash.
 
 %package       -n gem-tf-devel
 Version:       0.4.5
-Release:       alt1
+Release:       alt2
 Summary:       Testing Framework development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета tf
 Group:         Development/Ruby
@@ -94,6 +95,7 @@ Testing Framework solely based on plugins. For now only tests using Bash.
 
 %prep
 %setup
+%autopatch
 
 %build
 %ruby_build
@@ -122,5 +124,8 @@ Testing Framework solely based on plugins. For now only tests using Bash.
 
 
 %changelog
+* Mon Mar 25 2024 Pavel Skrylev <majioa@altlinux.org> 0.4.5-alt2
+- ! fixed load library required for binary (closes #49755)
+
 * Wed Nov 22 2023 Pavel Skrylev <majioa@altlinux.org> 0.4.5-alt1
 - + packaged gem with Ruby Policy 2.0

@@ -6,7 +6,7 @@
 
 Name:          ruby
 Version:       %_version
-Release:       alt4
+Release:       alt4.1
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -94,6 +94,8 @@ This package contains files, necessary to make extension library for Ruby.
 %package       -n %name-devel
 Summary:       Files for development and testing with Ruby
 Group:         Development/C
+BuildArch:     noarch
+
 Requires:      %name = %_version-%release
 Requires:      rvm-devel
 Requires:      libruby-devel = %_version-%release
@@ -225,29 +227,12 @@ Obsoletes:     %name-tools
 irb is the REPL(read-eval&print loop) environment for Ruby programs.
 
 
-%package       -n ri-doc
-Summary:       Ruby ri executable document
-Group:         Development/Documentation
-BuildArch:     noarch
-Requires:      %name = %_version-%release
-Provides:      %name-doc-ri
-Obsoletes:     %name-doc-ri
-
-%description   -n ri-doc
-Ruby is an interpreted scripting language for quick and easy object-oriented
-programming. It has many features for processing text files and performing
-system management tasks (as in Perl). It is simple, straight-forward, and
-extensible.
-
-This package contains Ruby documentation in ri format.
-
-
-%package       doc
+%package       doc-html
 Summary:       Ruby manuals and documentation
 Group:         Development/Documentation
 Requires:      ruby = %_version-%release
 
-%description   doc
+%description   doc-html
 Ruby is an interpreted scripting language for quick and easy object-oriented
 programming. It has many features for processing text files and performing
 system management tasks (as in Perl). It is simple, straight-forward, and
@@ -256,10 +241,29 @@ extensible.
 Ruby manuals and documentation.
 
 
+%package       doc
+Summary:       Ruby executable document in ri format
+Group:         Development/Documentation
+Requires:      %name = %_version-%release
+Provides:      ri-doc = %EVR
+Provides:      %name-doc-ri = %EVR
+Obsoletes:     ri-doc < %EVR
+Obsoletes:     %name-doc-ri < %EVR
+BuildArch:     noarch
+
+%description   doc
+Ruby is an interpreted scripting language for quick and easy object-oriented
+programming. It has many features for processing text files and performing
+system management tasks (as in Perl). It is simple, straight-forward, and
+extensible.
+
+This package contains Ruby documentation in ri format.
+
+
 %package       -n gem
 Epoch:         2
 Version:       3.3.26
-Release:       alt4
+Release:       alt4.1
 Summary:       Ruby gem executable and framefork
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -276,7 +280,7 @@ Ruby gem executable and framework.
 %package       -n rpm-macros-ruby
 Epoch:         1
 Version:       %_version
-Release:       alt4
+Release:       alt4.1
 Summary:       rpm macros for Ruby packages
 Group:         Development/Ruby
 
@@ -407,7 +411,7 @@ echo "NOTE: to make the environment variable changes come into effect, please re
 %_bindir/irb
 %_man1dir/irb.*
 
-%files         doc
+%files         doc-html
 %doc %_docdir/%name/COPYING
 %doc %_docdir/%name/LEGAL
 %doc %_docdir/%name/NEWS*
@@ -416,7 +420,8 @@ echo "NOTE: to make the environment variable changes come into effect, please re
 %doc %_docdir/%name
 %lang(ja) %doc %_docdir/%name/*.ja
 
-%files         -n ri-doc
+%files         doc
+%doc %_docdir/%name/README.md
 %_man1dir/ri.*
 %_datadir/ri/system
 
@@ -425,6 +430,9 @@ echo "NOTE: to make the environment variable changes come into effect, please re
 %_rpmmacrosdir/ruby.env
 
 %changelog
+* Mon Mar 25 2024 Pavel Skrylev <majioa@altlinux.org> 3.1.4-alt4.1
+- * changed names for doc packages: ri is doc, html is doc-html (closes #36294)
+
 * Fri Mar 15 2024 Pavel Skrylev <majioa@altlinux.org> 3.1.4-alt4
 - + added %%ruby_gemsplugindir and %%ruby_gemplugin macros
 
