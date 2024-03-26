@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name blur-my-shell
-%define ver_major 56
+%define ver_major 59
 %define beta %nil
 %define uuid %_name@aunetx
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -27,7 +27,7 @@ Vcs: https://github.com/aunetx/blur-my-shell.git
 Source: %_name-%version%beta.tar
 %endif
 
-Requires: gnome-shell >= 45
+Requires: gnome-shell >= 46
 Requires: typelib(Adw) = 1
 
 BuildRequires: /usr/bin/glib-compile-schemas
@@ -72,6 +72,12 @@ popd
 %doc README.md
 
 %changelog
+* Tue Mar 26 2024 Yuri N. Sedunov <aris@altlinux.org> 59-alt1
+- 59
+
+* Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 57-alt1
+- 57
+
 * Wed Mar 06 2024 Yuri N. Sedunov <aris@altlinux.org> 56-alt1
 - 56
 
