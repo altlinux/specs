@@ -1,7 +1,7 @@
 %define oname SQLAlchemy-Utils
 
 Name: python3-module-%oname
-Version: 0.41.1
+Version: 0.42.2
 Release: alt1
 
 Summary: Various utility functions for SQLAlchemy
@@ -23,6 +23,8 @@ BuildRequires: python3-module-SQLAlchemy >= 1.3
 %prep
 %setup
 
+sed -i 's/0.41.2/%version/' sqlalchemy_utils/__init__.py
+
 %build
 %python3_build
 
@@ -35,6 +37,9 @@ BuildRequires: python3-module-SQLAlchemy >= 1.3
 %python3_sitelibdir/SQLAlchemy_Utils-%version-py%_python3_version.egg-info
 
 %changelog
+* Tue Mar 26 2024 Grigory Ustinov <grenka@altlinux.org> 0.42.2-alt1
+- Automatically updated to 0.42.2.
+
 * Fri Apr 28 2023 Grigory Ustinov <grenka@altlinux.org> 0.41.1-alt1
 - Automatically updated to 0.41.1.
 
