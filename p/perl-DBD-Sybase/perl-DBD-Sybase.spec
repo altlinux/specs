@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DBD-Sybase
 Name: perl-%dist
-Version: 1.23
+Version: 1.24
 Release: alt1
 
 Summary: Sybase database driver (TDS protocol) for the DBI module
@@ -37,6 +37,9 @@ export SYBASE=/usr
 %perl_vendor_autolib/DBD
 
 %changelog
+* Tue Mar 26 2024 Igor Vlasenko <viy@altlinux.org> 1.24-alt1
+- automated CPAN update
+
 * Sat Feb 04 2023 Igor Vlasenko <viy@altlinux.org> 1.23-alt1
 - automated CPAN update
 
