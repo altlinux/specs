@@ -9,7 +9,7 @@
 
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
 Name: python3-module-%oname
-Version: %branch.9
+Version: %branch.11
 Release: alt1
 Source0: %origname-%version.tar
 License: BSD-3-Clause
@@ -184,6 +184,13 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Fri Mar 22 2024 Alexander Burmatov <thatman@altlinux.org> 4.2.11-alt1
+- New version 4.2.11.
+- Fixes a security issue with severity "moderate" and a regression in 4.2.10.
+- Fixes for the following security vulnerabilities:
+  + CVE-2024-24680: Potential denial-of-service in intcomma template filter
+  + CVE-2024-27351: Potential regular expression denial-of-service in django.utils.text.Truncator.words()
+
 * Mon Jan 29 2024 Alexander Burmatov <thatman@altlinux.org> 4.2.9-alt1
 - New version 4.2.9.
 - Fixed a regression in Django 4.2.8.

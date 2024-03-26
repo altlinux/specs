@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.39.1
+Version: 1.43.0
 Release: alt1
 
 Summary: The official Python SDK for Sentry.io
@@ -32,6 +32,7 @@ BuildRequires: python3-module-pytest-localserver
 BuildRequires: python3-module-pysocks
 BuildRequires: python3-module-pip
 BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-pytest-forked
 %endif
 
 %add_findreq_skiplist %python3_sitelibdir/%mod_name/integrations/*
@@ -47,7 +48,7 @@ BuildRequires: python3-module-pytest-asyncio
 
 %install
 %pyproject_install
-rm -rf tests/ingegrations
+rm -rf tests/integrations
 
 %check
 %pyproject_run_pytest -v --ignore tests/integrations/gcp/test_gcp.py \
@@ -62,6 +63,9 @@ rm -rf tests/ingegrations
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Fri Mar 22 2024 Alexander Burmatov <thatman@altlinux.org> 1.43.0-alt1
+- New version 1.43.0.
+
 * Mon Dec 18 2023 Alexander Burmatov <thatman@altlinux.org> 1.39.1-alt1
 - New version 1.39.1 (thx toni@).
 

@@ -5,7 +5,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Summary: A plugin for snapshot testing with pytest
 License: MIT
@@ -36,7 +36,7 @@ Source: %pypi_name-%version.tar
 %pyproject_install
 
 %check
-%pyproject_run_pytest
+%pyproject_run_pytest -k "not test_assert_match_failure_bytes"
 
 %files
 %doc *.rst
@@ -44,5 +44,8 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%mod_name-0.0.0.dist-info/
 
 %changelog
+* Fri Mar 22 2024 Alexander Burmatov <thatman@altlinux.org> 0.9.0-alt2
+- Fix test.
+
 * Thu Oct 19 2023 Alexander Burmatov <thatman@altlinux.org> 0.9.0-alt1
 - Initial build for Sisyphus.

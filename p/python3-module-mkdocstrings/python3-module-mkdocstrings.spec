@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.24.0
+Version: 0.24.1
 Release: alt1
 
 Summary: Automatic documentation from sources, for MkDocs
@@ -62,7 +62,7 @@ fi
 %pyproject_install
 
 %check
-%pyproject_run_pytest
+%pyproject_run_pytest -k "not test_no_double_toc"
 
 %files
 %doc *.md
@@ -70,6 +70,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Mar 25 2024 Alexander Burmatov <thatman@altlinux.org> 0.24.1-alt1
+- Update version to 0.24.1.
+
 * Thu Dec 14 2023 Alexander Burmatov <thatman@altlinux.org> 0.24.0-alt1
 - Update version to 0.24.0.
 

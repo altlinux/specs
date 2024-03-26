@@ -1,7 +1,7 @@
 %def_with docs
 
 Name:    netbox
-Version: 3.6.9
+Version: 3.7.4
 Release: alt1
 
 Summary: The premier source of truth powering network automation
@@ -44,6 +44,7 @@ Requires: python3-module-django-graphiql-debug-toolbar
 Requires: python3-module-Pillow
 Requires: python3-module-bleach
 Requires: python3-module-tablib
+Requires: python3-module-tzdata
 Requires: python3-module-netaddr
 Requires: python3-module-svgwrite
 Requires: python3-module-markdown
@@ -195,6 +196,9 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Fri Mar 22 2024 Alexander Burmatov <thatman@altlinux.org> 3.7.4-alt1
+- New 3.7.4 version.
+
 * Wed Jan 10 2024 Alexander Burmatov <thatman@altlinux.org> 3.6.9-alt1
 - New 3.6.9 version.
 

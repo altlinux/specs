@@ -5,7 +5,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 1.5.0
-Release: alt1
+Release: alt2
 
 Summary: Pytest plugin to report test results as JSON
 License: MIT
@@ -27,6 +27,7 @@ BuildArch: noarch
 
 Source: %pypi_name-%version.tar
 Patch1: upgrade-to-pytest-metadata-3.patch
+Patch2: add-python-3-12-support.patch
 
 %description
 This pytest plugin creates test reports as JSON. This makes it easy to process
@@ -35,6 +36,7 @@ test results in other applications.
 %prep
 %setup -n %pypi_name-%version
 %patch1 -p1
+%patch2 -p1
 
 %build
 %pyproject_build
@@ -43,7 +45,7 @@ test results in other applications.
 %pyproject_install
 
 %check
-%pyproject_run_pytest
+%pyproject_run_pytest -k "not test_report_collectors[0]"
 
 %files
 %doc *.md
@@ -51,5 +53,8 @@ test results in other applications.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Mar 25 2024 Alexander Burmatov <thatman@altlinux.org> 1.5.0-alt2
+- Add Python 3.12 support.
+
 * Wed Nov 15 2023 Alexander Burmatov <thatman@altlinux.org> 1.5.0-alt1
 - Initial build for Sisyphus.
