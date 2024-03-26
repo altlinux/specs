@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.0.1
+Version: 3.1
 Release: alt1
 Epoch: 1
 
@@ -51,9 +51,12 @@ this configuration file.
 
 %files
 %python3_sitelibdir/paste/deploy
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%oname-%version.0.dist-info
 
 %changelog
+* Tue Mar 26 2024 Grigory Ustinov <grenka@altlinux.org> 1:3.1-alt1
+- Automatically updated to 3.1.
+
 * Tue Oct 18 2022 Grigory Ustinov <grenka@altlinux.org> 1:3.0.1-alt1
 - Automatically updated to 3.0.1.
 
