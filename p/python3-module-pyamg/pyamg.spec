@@ -8,7 +8,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 5.0.1
+Version: 5.1.0
 Release: alt1
 
 Summary: PyAMG: Algebraic Multigrid Solvers in Python
@@ -77,6 +77,9 @@ _PYTEST_ARGS=--ignore=pyamg/tests/test_graph.py
 %exclude %python3_sitelibdir/pyamg/*/tests
 
 %changelog
+* Tue Mar 26 2024 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt1
+- Automatically updated to 5.1.0.
+
 * Tue Jul 04 2023 Grigory Ustinov <grenka@altlinux.org> 5.0.1-alt1
 - Automatically updated to 5.0.1.
 
