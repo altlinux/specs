@@ -10,7 +10,7 @@
 
 Name: lib%_name
 Version: 1.7.0
-Release: alt1
+Release: alt1.1
 
 Summary: X.Org X11 XKB parsing library
 Group: System/Libraries
@@ -86,6 +86,10 @@ This package provides xkbcli -- tool to interact with XKB keymaps.
 %prep
 %setup
 
+%ifarch %e2k
+sed -i 's/--undefined-version,//' meson.build
+%endif
+
 %build
 %meson \
 	-Ddefault_library=shared \
@@ -141,6 +145,9 @@ This package provides xkbcli -- tool to interact with XKB keymaps.
 %_man1dir/xkbcli*
 
 %changelog
+* Wed Mar 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1.1
+- E2K: workaround for a lost symbols
+
 * Sun Mar 24 2024 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
 - 1.7.0
 
