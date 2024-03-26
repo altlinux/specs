@@ -4,7 +4,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm)
 # END SourceDeps(oneline)
 %define dist Catalyst-Manual
 Name: perl-%dist
-Version: 5.9012
+Version: 5.9013
 Release: alt1
 Epoch: 1
 
@@ -39,6 +39,9 @@ Task::Catalyst::Tutorial.
 %perl_vendor_privlib/Catalyst*
 
 %changelog
+* Tue Mar 26 2024 Igor Vlasenko <viy@altlinux.org> 1:5.9013-alt1
+- automated CPAN update
+
 * Tue Feb 06 2024 Igor Vlasenko <viy@altlinux.org> 1:5.9012-alt1
 - automated CPAN update
 
