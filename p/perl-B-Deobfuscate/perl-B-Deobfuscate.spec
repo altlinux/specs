@@ -4,7 +4,7 @@
 
 Name: perl-B-Deobfuscate
 Version: 0.20
-Release: alt2
+Release: alt3
 
 Summary: deobfuscate Perl source code
 
@@ -16,6 +16,7 @@ URL: http://search.cpan.org/dist/B-Deobfuscate/
 Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 Source: %real_name-%version.tar
+Patch0: %real_name-0.20-alt-test_fix.patch
 
 BuildArch: noarch
 
@@ -37,6 +38,7 @@ then the resulting program also has obfuscated symbols.
 
 %prep
 %setup -q -n %real_name-%version
+%patch0
 
 %build
 %perl_vendor_build
@@ -51,5 +53,8 @@ then the resulting program also has obfuscated symbols.
 #%%perl_vendor_autolib/B/Deobfuscate*
 
 %changelog
+* Tue Mar 26 2024 Nikolay A. Fetisov <naf@altlinux.org> 0.20-alt3
+- Fix build for Perl 5.38
+
 * Fri Mar 09 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.20-alt2
 - Initial build for ALT Linux Sisyphus
