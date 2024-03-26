@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.1.0
+Version: 5.0.0
 Release: alt1
 Summary: Pytest plugin for measuring coverage
 License: MIT
@@ -62,6 +62,9 @@ export PYTHONPATH_PY3=%_libdir/python3/site-packages
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 26 2024 Stanislav Levin <slev@altlinux.org> 5.0.0-alt1
+- 4.1.0 -> 5.0.0.
+
 * Thu May 25 2023 Stanislav Levin <slev@altlinux.org> 4.1.0-alt1
 - 4.0.0 -> 4.1.0.
 
