@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20240220
+Version: 20240322
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -94,6 +94,53 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/mellanox
 
 %changelog
+* Tue Mar 26 2024 Cronbuild Service <cronbuild@altlinux.org> 20240322-alt1
+- upstream changes (GIT e068ccf0):
+  + mekdiatek: Update mt8186 SOF firmware to v2.0.1 (thx Hailong Fan)
+  + Add firmware for Cirrus CS35L56 for Dell laptops (thx Simon Trimmer)
+  + Montage: update firmware for Mont-TSSE (thx Carrie.Cai)
+  + WHENCE: Link the Raspberry Pi CM4 and 5B to the 4B (thx Peter Robinson)
+  + Intel Bluetooth: Update firmware file for Intel Bluetooth BE200 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for Magnetor Intel
+    Bluetooth AX101 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for Magnetor Intel
+    Bluetooth AX203 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for Magnetor Intel
+    Bluetooth AX211 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for SolarF Intel Bluetooth
+    AX101 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for Solar Intel Bluetooth
+    AX101 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for SolarF Intel Bluetooth
+    AX203 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for Solar Intel Bluetooth
+    AX203 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for SolarF Intel Bluetooth
+    AX211 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for Solar Intel Bluetooth
+    AX211 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for Solar Intel Bluetooth
+    AX210 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for Intel Bluetooth AX200 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for Intel Bluetooth 9560 (thx Kiran K)
+  + Intel Bluetooth: Update firmware file for Intel Bluetooth 9260 (thx Kiran K)
+  + amdgpu: DMCUB updates for various AMDGPU ASICs (thx Wayne Lin)
+  + mediatek: Update MT8173 VPU firmware to v1.1.8 (thx Irui Wang)
+  + imx: sdma: update firmware to v3.6/v4.6 (thx Joy Zou)
+  + update firmware for mediatek bluetooth chip (MT7921) (thx Chris Lu)
+  + iwlwifi: update 9000-family firmwares to core85-89 (thx Miri Korenblit)
+  + rtl_bt: Update RTL8852A BT USB firmware to 0xD9D6_17DA (thx Hilda Wu)
+  + update firmware for MT7921 WiFi device (thx Deren Wu)
+  + update firmware for mediatek bluetooth chip (MT7922) (thx Chris Lu)
+  + update firmware for MT7922 WiFi device (thx Deren Wu)
+  + Add CS35L41 HDA Firmware for Lenovo Thinkbook 16P Laptops (thx Stefan Binding)
+  + amdgpu: Update VCN firmware binaries (thx Mario Limonciello)
+  + Intel IPU2: Add firmware files (thx Sakari Ailus)
+  + brcm: Add nvram for the Acer Iconia One 7 B1-750 tablet (thx Hans de Goede)
+  + i915: Add Xe2LPD DMC v2.18 (thx Gustavo Sousa)
+  + i915: Update MTL DMC v2.21 (thx Gustavo Sousa)
+
 * Tue Feb 20 2024 Cronbuild Service <cronbuild@altlinux.org> 20240220-alt1
 - upstream changes (GIT 97b693d2):
   + update firmware for en8811h 2.5G ethernet phy (thx Lucien Jheng)
