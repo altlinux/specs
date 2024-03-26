@@ -2,7 +2,7 @@
 
 Name: chrony
 Version: 4.5
-Release: alt1
+Release: alt2
 
 Summary: Chrony clock synchronization program
 License: GPLv2
@@ -60,7 +60,8 @@ echo '# Keys used by chronyd for command and NTP authentication' > chrony.keys
 echo '# Pass extra arguments to chronyd' > chronyd.sysconfig
 echo '#CHRONYD_ARGS=' >> chronyd.sysconfig
 
-sed -i -e 's/OPTIONS/CHRONYD_ARGS/' examples/chronyd.service
+sed -i -e 's/OPTIONS/CHRONYD_ARGS/' examples/chronyd.service examples/chronyd-restricted.service
+sed -i -e 's/User=chrony/User=_chrony/' examples/chronyd-restricted.service
 
 %build
 %configure \
@@ -100,8 +101,10 @@ install -pD -m755 examples/chrony.nm-dispatcher.onoffline %buildroot%_sysconfdir
 install -pD -m644 examples/chrony.logrotate %buildroot%_sysconfdir/logrotate.d/chrony
 install -pD -m644 chronyd.sysconfig %buildroot%_sysconfdir/sysconfig/chronyd
 install -pD -m644 examples/chronyd.service %buildroot%_unitdir/chronyd.service
+install -pD -m644 examples/chronyd-restricted.service %buildroot%_unitdir/chronyd-restricted.service
 install -pD -m644 examples/chrony-wait.service %buildroot%_unitdir/chrony-wait.service
 install -pD -m755 %SOURCE3 %buildroot%_sysconfdir/control.d/facilities/chrony
+ln -s chronyd.service %buildroot%_unitdir/chrony.service
 
 install -d %buildroot/lib/systemd/ntp-units.d
 
@@ -125,9 +128,11 @@ echo 'd /run/chrony 0750 _chrony _chrony' >> %buildroot%_tmpfilesdir/chronyd.con
 [ -e %_sysconfdir/%name/chrony.keys ] && mv %_sysconfdir/%name/chrony.keys %_sysconfdir/chrony.keys >/dev/null 2>&1 || :
 
 %post_service chronyd
+%post_service chronyd-restricted
 
 %preun
 %preun_service chronyd
+%preun_service chronyd-restricted
 
 %files
 %doc COPYING NEWS README doc/*.txt
@@ -153,6 +158,10 @@ echo 'd /run/chrony 0750 _chrony _chrony' >> %buildroot%_tmpfilesdir/chronyd.con
 %_man8dir/*
 
 %changelog
+* Mon Mar 25 2024 Alexey Shabalin <shaba@altlinux.org> 4.5-alt2
+- package chronyd-restricted.service
+- add alias chrony.service -> chronyd.service
+
 * Thu Dec 28 2023 Anton Farygin <rider@altlinux.ru> 4.5-alt1
 - 4.4 -> 4.5
 
