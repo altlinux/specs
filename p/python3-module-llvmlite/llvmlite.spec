@@ -10,7 +10,7 @@
 %endif
 
 Name:    python3-module-%oname
-Version: 0.41.0
+Version: 0.42.0
 Release: alt1
 
 Summary: A lightweight LLVM python binding for writing JIT compilers
@@ -68,6 +68,9 @@ export LDFLAGS='-fuse-ld=lld'
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Tue Mar 26 2024 Grigory Ustinov <grenka@altlinux.org> 0.42.0-alt1
+- Automatically updated to 0.42.0.
+
 * Sat Feb 10 2024 Grigory Ustinov <grenka@altlinux.org> 0.41.0-alt1
 - Automatically updated to 0.41.0.
 
