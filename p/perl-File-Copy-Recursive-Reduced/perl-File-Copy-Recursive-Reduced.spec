@@ -6,7 +6,7 @@ BuildRequires: perl(Capture/Tiny.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Copy.
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.007
+Version: 0.008
 Release: alt1
 Summary: Recursive copying of files and directories within Perl 5 toolchain
 Group: Development/Perl
@@ -37,6 +37,9 @@ described as being part of the Perl toolchain.
 %perl_vendor_privlib/F*
 
 %changelog
+* Tue Mar 26 2024 Igor Vlasenko <viy@altlinux.org> 0.008-alt1
+- automated CPAN update
+
 * Mon Sep 25 2023 Igor Vlasenko <viy@altlinux.org> 0.007-alt1
 - automated CPAN update
 
