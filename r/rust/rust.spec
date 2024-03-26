@@ -1,10 +1,10 @@
 Name: rust
 Epoch: 1
-Version: 1.76.0
-Release: alt2
+Version: 1.77.0
+Release: alt1
 Summary: The Rust Programming Language
 
-%define r_ver 1.75.0
+%define r_ver 1.76.0
 
 Group: Development/Other
 License: Apache-2.0 and MIT
@@ -113,7 +113,7 @@ BuildRequires: rust-cargo
 # to support custom-derive plugins like #[proc_macro_derive(Foo)].
 %if_without debuginfo
 # Since 1.12.0: striping debuginfo damages *.so files
-%add_debuginfo_skiplist %_libdir/* %_bindir/*
+%add_debuginfo_skiplist %_libdir/* %_bindir/* %_libexecdir/*
 %endif
 
 %description
@@ -292,6 +292,7 @@ docs = true
 verbose = 2
 vendor = true
 extended = true
+optimized-compiler-builtins = false
 tools = ["cargo", "rust-analyzer", "clippy", "rustfmt", "src"]
 build-stage = 2
 test-stage = 2
@@ -470,6 +471,9 @@ rm -rf %rustdir
 %rustlibdir/src
 
 %changelog
+* Mon Mar 25 2024 Alexey Gladkov <legion@altlinux.ru> 1:1.77.0-alt1
+- New version (1.77.0).
+
 * Thu Mar 14 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:1.76.0-alt2
 - LoongArch: build with medium code model (the default code model limits
   text offsets to 128 MB, which is not enough for some applications, in
