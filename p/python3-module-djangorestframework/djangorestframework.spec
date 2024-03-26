@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.15.0
+Version: 3.15.1
 Release: alt1
 Summary: Web APIs for Django, made easy
 License: BSD
@@ -55,6 +55,9 @@ Web APIs.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 26 2024 Stanislav Levin <slev@altlinux.org> 3.15.1-alt1
+- 3.15.0 -> 3.15.1.
+
 * Mon Mar 18 2024 Stanislav Levin <slev@altlinux.org> 3.15.0-alt1
 - 3.14.0 -> 3.15.0.
 
