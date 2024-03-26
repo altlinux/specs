@@ -4,7 +4,7 @@
 
 Name: proxmox-backup
 Version: 3.1.4.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -203,6 +203,9 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/doc/%name
 
 %changelog
+* Tue Mar 26 2024 Andrew A. Vasilyev <andy@altlinux.org> 1:3.1.4.1-alt2
+- remove subscruption from dashboard
+
 * Fri Feb 02 2024 Andrew A. Vasilyev <andy@altlinux.org> 1:3.1.4.1-alt1
 - 3.1.4-1
 - fix kernel build date detection (ALT #49262)
