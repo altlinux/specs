@@ -3,7 +3,7 @@
 %define real_name Module-Extract-Use
 
 Name: perl-Module-Extract-Use
-Version: 1.051
+Version: 1.052
 Release: alt1
 
 Summary: Perl module to pull out the modules a module explicitly uses
@@ -11,9 +11,9 @@ Summary: Perl module to pull out the modules a module explicitly uses
 License: %artistic_license_v2
 Group: Development/Perl
 
-URL: http://search.cpan.org/dist/Module-Extract-Use/
+URL: https://metacpan.org/release/Module-Extract-Use/
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 Source: %real_name-%version.tar
 
@@ -53,6 +53,9 @@ ln -s -- $(relative %_licensedir/Artistic-2 %_docdir/%name/LICENSE) LICENSE
 %perl_vendor_privlib/Module/Extract/Use*
 
 %changelog
+* Wed Mar 27 2024 Nikolay A. Fetisov <naf@altlinux.org> 1.052-alt1
+- New version
+
 * Thu Feb 10 2022 Nikolay A. Fetisov <naf@altlinux.org> 1.051-alt1
 - New version
 
