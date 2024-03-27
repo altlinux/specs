@@ -16,7 +16,7 @@
 %def_enable check
 
 Name: gnome-control-center
-Version: %ver_major.0
+Version: %ver_major.0.1
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -77,6 +77,12 @@ Requires: NetworkManager-openvpn-gtk4
 Requires: NetworkManager-pptp-gtk4
 Requires: NetworkManager-vpnc-gtk4
 Requires: NetworkManager-l2tp-gtk4
+# for sharing
+Requires: gnome-user-share
+# for media sharing
+Requires: rygel
+# for desktop sharing
+Requires: gnome-remote-desktop
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-systemd
 BuildRequires: meson desktop-file-utils gtk-doc xsltproc libappstream-glib-devel
@@ -204,6 +210,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Wed Mar 27 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0.1-alt1
+- 46.0.1
+
 * Mon Mar 18 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 

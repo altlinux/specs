@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 1.80
 %define api_ver 1.0
@@ -13,7 +13,7 @@
 
 Name: gobject-introspection
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Introspection system for GObject-based libraries
 Group: System/Libraries
@@ -170,6 +170,9 @@ gobject-introspection.
 %endif
 
 %changelog
+* Wed Mar 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1.80.0-alt2
+- updated to 1.80.0-13-g2b5b9397
+
 * Sat Mar 09 2024 Yuri N. Sedunov <aris@altlinux.org> 1.80.0-alt1
 - 1.80.0
 - build against debootstraped glib-2.80.0-alt2

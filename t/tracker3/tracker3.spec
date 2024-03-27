@@ -25,7 +25,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name%api_ver_major
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -221,6 +221,9 @@ sed -i 's|#!.*/bin/env python3|#!/usr/bin/python3|' docs/reference/libtracker-sp
 %endif
 
 %changelog
+* Wed Mar 27 2024 Yuri N. Sedunov <aris@altlinux.org> 3.7.1-alt1
+- 3.7.1
+
 * Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 3.7.0-alt1
 - 3.7.0
 
