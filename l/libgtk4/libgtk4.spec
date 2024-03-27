@@ -38,7 +38,7 @@
 
 Name: lib%_name%api_ver_major
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: The GIMP ToolKit (GTK)
 Group: System/Libraries
@@ -231,6 +231,10 @@ the functionality of the installed GTK+3 packages.
 %patch -p1
 
 %build
+%ifarch %e2k
+%add_optflags -mno-sse4.2
+%endif
+
 %meson \
     %{?_enable_x11:-Dx11-backend=true} \
     %{?_enable_wayland:-Dwayland-backend=true} \
@@ -413,6 +417,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Wed Mar 27 2024 Yuri N. Sedunov <aris@altlinux.org> 4.14.1-alt1.1
+- E2K: disabled sse-4.2
+
 * Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 4.14.1-alt1
 - 4.14.1
 
