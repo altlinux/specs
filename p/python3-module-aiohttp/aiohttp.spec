@@ -1,6 +1,6 @@
 Name: python3-module-aiohttp
 Version: 3.9.3
-Release: alt1
+Release: alt2
 
 Summary: http client/server for asyncio
 License: Apache-2.0
@@ -26,6 +26,13 @@ BuildRequires: python3(re_assert)
 BuildRequires: python3(freezegun)
 BuildRequires: python3(brotli)
 BuildRequires: python3(brotlicffi)
+
+# helpers.py uses async_timeout instead of asyncio if Python < 3.11
+# AutoReq can't find this dependency due to nested import
+%if "%(rpmvercmp %_python3_version 3.11)" < "0"
+BuildRequires: python3(async_timeout)
+Requires: python3(async_timeout)
+%endif
 
 %package tests
 Summary: Tests for aiohttp
@@ -70,6 +77,9 @@ make cythonize
 %python3_sitelibdir/aiohttp/*/*test*
 
 %changelog
+* Mon Mar 25 2024 Alexander Kuznetsov <kuznetsovam@altlinux.org> 3.9.3-alt2
+- Added async_timeout req & BR for Python < 3.11
+
 * Tue Mar 12 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.9.3-alt1
 - 3.9.3 released
 
