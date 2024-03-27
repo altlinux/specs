@@ -1,6 +1,6 @@
 %global import_path github.com/hashicorp/consul
 Name:     consul
-Version:  1.18.0
+Version:  1.18.1
 Release:  alt1
 
 Summary:  Consul is a tool for service discovery and configuration
@@ -48,6 +48,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Wed Mar 27 2024 Mikhail Gordeev <obirvalger@altlinux.org> 1.18.1-alt1
+- new version 1.18.1
+
 * Wed Feb 28 2024 Mikhail Gordeev <obirvalger@altlinux.org> 1.18.0-alt1
 - new version 1.18.0
 
