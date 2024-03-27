@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qucs-s
-Version: 24.1.0
-Release: alt2
+Version: 24.2.0
+Release: alt1
 
 Summary: Circuit simulator
 License: GPL-2.0-or-later
@@ -12,6 +12,8 @@ Url: https://github.com/ra3xdh/qucs_s
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+
+AutoProv: nopython3
 
 Buildrequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -46,7 +48,7 @@ window.
 %patch -p1
 
 %build
-%cmake -DCMAKE_BUILD_TYPE=Release -DUPDATE_TRANSLATIONS=On
+%cmake -DCMAKE_BUILD_TYPE=Release -DUPDATE_TRANSLATIONS=On -DWITH_QT6=on
 %cmake_build
 
 %install
@@ -58,7 +60,7 @@ for l in $(find %buildroot%_datadir/%name/lang -name \*.qm); do
 done > %name.lang
 
 %files
-%doc AUTHORS COPYING README.md README_qucs
+%doc AUTHORS COPYING NEWS.md README.md README_qucs
 %_bindir/*
 %_desktopdir/*
 %_datadir/%name
@@ -66,6 +68,10 @@ done > %name.lang
 %_man1dir/*
 
 %changelog
+* Wed Mar 27 2024 Anton Midyukov <antohami@altlinux.org> 24.2.0-alt1
+- New version 24.2.0
+- do not provide python3 modules
+
 * Sat Feb 17 2024 Anton Midyukov <antohami@altlinux.org> 24.1.0-alt2
 - Update Russian translation
 
