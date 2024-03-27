@@ -28,8 +28,8 @@
 %endif
 
 Name: fio
-Version: 3.36
-Release: alt2
+Version: 3.37
+Release: alt1
 Summary: Flexible I/O Tester
 License: GPL-2.0
 Group: System/Kernel and hardware
@@ -250,6 +250,9 @@ rmdir $PWD
 %files checkinstall
 
 %changelog
+* Wed Mar 27 2024 Vitaly Chikunov <vt@altlinux.org> 3.37-alt1
+- Update to fio-3.37 (2024-03-26).
+
 * Tue Oct 24 2023 Vitaly Chikunov <vt@altlinux.org> 3.36-alt2
 - Split external I/O engine into separate packages.
 - spec: Add checkinstall package.
