@@ -3,7 +3,7 @@
 #
 
 Name: jp2a
-Version: 1.1.1
+Version: 1.2.0
 Release: alt1
 
 Summary: an utility for converting JPEG images to ASCII
@@ -67,6 +67,9 @@ install -pD -m0644 %SOURCE1 %buildroot%rman1dir/%name.1
 /usr/share/man/ru/man1/
 
 %changelog
+* Wed Mar 27 2024 Nikolay A. Fetisov <naf@altlinux.org> 1.2.0-alt1
+- New version
+
 * Thu Nov 25 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.1.1-alt1
 - New version
 
