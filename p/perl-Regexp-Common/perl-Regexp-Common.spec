@@ -16,7 +16,7 @@
 
 Name: perl-Regexp-Common
 Version: 2017060201
-Release: alt1
+Release: alt2
 
 Summary: Regexp-Common - Provide commonly requested regular expressions
 
@@ -29,8 +29,13 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 BuildArch: noarch
 Source: http://www.cpan.org/authors/id/A/AB/ABIGAIL/Regexp-Common-%{version}.tar.gz
 
-# Automatically added by buildreq on Mon Jun 06 2005
-BuildRequires: perl-devel perl(charnames.pm)
+# Automatically added by buildreq on Wed Mar 27 2024
+# optimized out: libgpg-error perl perl-CPAN-Meta-Requirements perl-Encode perl-JSON-PP perl-Parse-CPAN-Meta perl-devel perl-parent perl-unicore python-modules python2-base python3 python3-base python3-dev sh5
+BuildRequires: perl-CPAN-Meta perl-Test-Regexp
+
+# syntax check fails
+%add_findreq_skiplist */Regexp/Common/CC.pm
+%add_findreq_skiplist */Regexp/Common/number.pm
 
 %description
 By default, this module exports a single hash (RE) that stores or generates
@@ -53,6 +58,9 @@ There is an alternative, subroutine-based syntax described in
 %perl_vendor_privlib/Regexp/
 
 %changelog
+* Wed Mar 27 2024 Nikolay A. Fetisov <naf@altlinux.org> 2017060201-alt2
+- Fix build with Perl 5.38.2
+
 * Mon Oct 02 2017 Igor Vlasenko <viy@altlinux.ru> 2017060201-alt1
 - automated CPAN update
 
