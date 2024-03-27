@@ -1,5 +1,5 @@
 Name: rpm-macros-branding
-Version: 1.0.10
+Version: 1.0.11
 Release: alt1
 Summary: RPM helper macros to build branding packages
 License: %gpl2plus
@@ -62,6 +62,7 @@ simply-linux \
 sisyphus-server-light \
 xalt-kworkstation \
 etersoft-ximper \
+uzguard-server \
 uzguard-workstation \
 "
 sed -e "s/@BRANDING_VARIANTS@/$VARIANTS/" -i branding.rpm.macros
@@ -74,6 +75,9 @@ install -m 0644 branding.rpm.macros %buildroot%_rpmmacrosdir/branding
 %_rpmmacrosdir/*
 
 %changelog
+* Wed Mar 27 2024 Andrey Cherepanov <cas@altlinux.org> 1.0.11-alt1
+- Added uzguard-server
+
 * Sun Dec 24 2023 Andrey Cherepanov <cas@altlinux.org> 1.0.10-alt1
 - Added uzguard-workstation
 
