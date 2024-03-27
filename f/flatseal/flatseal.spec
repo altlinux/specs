@@ -5,12 +5,10 @@
 %define beta %nil
 %define rdn_name com.github.tchx84.Flatseal
 %define mozjs_ver 115
-
-# online screenshots
-%def_disable check
+%def_enable check
 
 Name: flatseal
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Manage Flatpak permissions
@@ -39,10 +37,10 @@ Requires: typelib(AppStream) = 1.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson yelp-tools
-BuildRequires: desktop-file-utils /usr/bin/appstream-util
 BuildRequires: libgjs-devel >= %gjs_ver
 BuildRequires: libadwaita-gir-devel >= %adw_ver
 BuildRequires: libwebkitgtk6.0-gir-devel >= %webkit_ver
+%{?_enable_check:BuildRequires: desktop-file-utils /usr/bin/appstreamcli}
 
 %description
 Flatseal is a graphical utility to review and modify permissions for
@@ -70,9 +68,12 @@ Flatpak applications.
 %_iconsdir/hicolor/scalable/apps/%{rdn_name}*.svg
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_datadir/appdata/%rdn_name.appdata.xml
-%doc README* DOCUMENTATION*
+%doc README* DOCUMENTATION* CHANGELOG*
 
 %changelog
+* Wed Mar 27 2024 Yuri N. Sedunov <aris@altlinux.org> 2.1.2-alt1
+- 2.1.2
+
 * Wed Feb 07 2024 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
 - 2.1.1
 
