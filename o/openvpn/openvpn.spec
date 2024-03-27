@@ -16,7 +16,7 @@
 %def_with x509_alt_username
 
 Name: openvpn
-Version: 2.6.8
+Version: 2.6.10
 Release: alt1
 
 Summary: a full-featured SSL VPN solution
@@ -343,6 +343,14 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %endif
 
 %changelog
+* Wed Mar 27 2024 Nikolay A. Fetisov <naf@altlinux.org> 2.6.10-alt1
+- New version
+- Fixes (all CVE are Windows-specific):
+  + CVE-2024-27459: Windows: fix a possible stack overflow
+  + CVE-2024-24974: Windows: disallow remote access to the service pipe
+  + CVE-2024-27903: Windows: disallow loading of plugins from untrusted dirs
+  + CVE-2023-7235: Windows: local privilege escalation via Windows Installer
+ 
 * Fri Nov 17 2023 Nikolay A. Fetisov <naf@altlinux.org> 2.6.8-alt1
 - New version
   - Fix SIGSEGV crash sometimes after an unsuccessful TLS handshake
