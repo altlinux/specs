@@ -5,7 +5,7 @@
 %define mod_name develop
 
 Name: python3-module-%pypi_nname
-Version: 8.9.1
+Version: 8.10.0
 Release: alt1
 Summary: Development utilities
 License: MIT
@@ -46,6 +46,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Wed Mar 27 2024 Stanislav Levin <slev@altlinux.org> 8.10.0-alt1
+- 8.9.1 -> 8.10.0.
+
 * Tue Mar 26 2024 Stanislav Levin <slev@altlinux.org> 8.9.1-alt1
 - 8.8.1 -> 8.9.1.
 
