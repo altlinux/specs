@@ -1,7 +1,7 @@
 ## SPEC file for Perl module IPC::Run3
 
 Name: perl-IPC-Run3
-Version: 0.048
+Version: 0.049
 Release: alt1
 
 Summary: run a subprocess in batch mode (a la system) on Unix, Win32, etc.
@@ -11,7 +11,7 @@ License: BSD, Artistic, or GPL
 Group:   Development/Perl
 
 %define real_name IPC-Run3
-URL: http://search.cpan.org/dist/IPC-Run3/
+URL: https://metacpan.org/release/IPC-Run3/
 
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 BuildArch: noarch
@@ -56,6 +56,9 @@ qx`` / open3() путём  замены их  простым и  написан�
 %perl_vendor_privlib/IPC/Run3*
 
 %changelog
+* Wed Mar 27 2024 Nikolay A. Fetisov <naf@altlinux.org> 0.049-alt1
+- New version
+
 * Sun Sep 14 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.048-alt1
 - New version 0.048
 
