@@ -1,7 +1,8 @@
 %define _libexecdir %_prefix/libexec
+%define twver 0
 
 Name: deepin-terminal
-Version: 6.0.11
+Version: 6.0.12
 Release: alt1
 
 Summary: Default terminal emulation application for Deepin
@@ -75,21 +76,20 @@ export PATH=%_qt5_bindir:$PATH
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
-    -DAPP_VERSION=%version \
     -DVERSION=%version
 cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
-%find_lang %name
+%find_lang --with-qt %name
+%find_lang --with-qt terminalwidget5
 
-%files -f %name.lang
+%files
 %doc README.md
 %doc LICENSE
 %_bindir/%name
 
-%files data
-%_datadir/%name/
+%files data -f %name.lang
 %_iconsdir/hicolor/*/apps/%{name}*
 %_desktopdir/%name.desktop
 %dir %_datadir/deepin-manual/
@@ -97,13 +97,20 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %dir %_datadir/deepin-manual/manual-assets/application/
 %dir %_datadir/deepin-manual/manual-assets/application/%name/
 %_datadir/deepin-manual/manual-assets/application/%name/terminal/
+# outside %%find_lang
+%dir %_datadir/%name/
+%dir %_datadir/%name/translations/
+%_datadir/%name/translations/%name.qm
 
 %files -n libterminalwidget5
 %doc 3rdparty/terminalwidget/{AUTHORS,LICENSE*,CHANGELOG}
-%_libdir/libterminalwidget5.so.*
+%_libdir/libterminalwidget5.so.%{twver}*
 
-%files -n terminalwidget5-data
-%_datadir/terminalwidget5/
+%files -n terminalwidget5-data -f terminalwidget5.lang
+%dir %_datadir/terminalwidget5/
+%dir %_datadir/terminalwidget5/translations/
+%_datadir/terminalwidget5/kb-layouts/
+%_datadir/terminalwidget5/color-schemes/
 
 %files -n libterminalwidget5-devel
 %_libdir/libterminalwidget5.so
@@ -112,6 +119,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_includedir/terminalwidget5/
 
 %changelog
+* Wed Mar 27 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.12-alt1
+- New version 6.0.12.
+- Cleanup spec.
+
 * Tue Mar 05 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.11-alt1
 - New version 6.0.11.
 - Requires: libqt5-widgets = %%_qt5_version.
