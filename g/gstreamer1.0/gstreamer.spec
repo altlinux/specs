@@ -8,12 +8,16 @@
 %def_disable debug
 %def_disable libunwind
 %def_disable libdw
+%ifarch %e2k
+%def_disable ptp_helper
+%else
 %def_enable ptp_helper
+%endif
 %def_disable check
 
 Name: %_name%api_ver
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: GStreamer streaming media framework runtime
 License: LGPLv2+
@@ -122,8 +126,8 @@ export LIBS=-lcxa
 	%{?_enable_check:-Dtests=enabled} \
 	%{?_disable_doc:-Ddoc=disabled} \
 	%{?_enable_debug:-Dgst_debug=true} \
-	%{?_enable_ptp_helper:-Dptp-helper=enabled \
-	-Dptp-helper-permissions="capabilities"}
+	%{subst_enable_meson_feature ptp_helper ptp-helper} \
+	%{?_enable_ptp_helper:-Dptp-helper-permissions="capabilities"}
 %nil
 %meson_build
 
@@ -195,6 +199,9 @@ setcap cap_sys_nice,cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%a
 %_libexecdir/%_name-%api_ver/gst-plugins-doc-cache-generator
 
 %changelog
+* Wed Mar 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.1-alt1.1
+- fixed "ptp_helper" knob (disabled by default for %%e2k)
+
 * Fri Mar 22 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.1-alt1
 - 1.24.1
 
