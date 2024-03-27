@@ -4,7 +4,7 @@
 %def_without aes_gcm
 
 Name: janus
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Janus WebRTC Server
@@ -193,6 +193,9 @@ mkdir -p -- %buildroot%_localstatedir/%name/recordings
 
 
 %changelog
+* Wed Mar 27 2024 Nikolay A. Fetisov <naf@altlinux.org> 1.2.1-alt1
+- New version
+
 * Thu Oct 26 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.2.0-alt1
 - New version
 
