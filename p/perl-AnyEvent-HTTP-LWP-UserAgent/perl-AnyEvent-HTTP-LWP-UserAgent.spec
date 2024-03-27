@@ -2,7 +2,7 @@
 
 Name: perl-AnyEvent-HTTP-LWP-UserAgent
 Version: 0.10
-Release: alt2
+Release: alt3
 
 Summary: Perl module AnyEvent::HTTP::LWP::UserAgent
 
@@ -10,12 +10,13 @@ Summary: Perl module AnyEvent::HTTP::LWP::UserAgent
 
 License: %perl_license
 Group: Development/Perl
-URL: http://search.cpan.org/dist/AnyEvent-HTTP-LWP-UserAgent/
+URL: https://metacpan.org/release/AnyEvent-HTTP-LWP-UserAgent/
 
-Packager: Nikolay Fetisov <naf@altlinux.ru>
+Packager: Nikolay Fetisov <naf@altlinux.org>
 BuildArch: noarch
 
 Source: %real_name-%version.tar
+Patch0: %real_name-0.10-alt-async_tests.patch
 
 BuildRequires(pre): rpm-build-licenses perl-devel
 
@@ -30,6 +31,7 @@ LWP::UserAgent interface but works using AnyEvent::HTTP
 
 %prep
 %setup -q -n %real_name-%version
+%patch0
 
 %build
 %perl_vendor_build
@@ -43,6 +45,9 @@ LWP::UserAgent interface but works using AnyEvent::HTTP
 %perl_vendor_privlib/AnyEvent/HTTP/LWP/UserAgent*
 
 %changelog
+* Wed Mar 27 2024 Nikolay A. Fetisov <naf@altlinux.org> 0.10-alt3
+- Fix build with perl-libwww 6.77
+
 * Sat Jul 29 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.10-alt2
 - Update build requirements
 
