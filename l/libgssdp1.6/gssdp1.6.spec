@@ -6,17 +6,22 @@
 %def_enable gtk_doc
 %def_enable introspection
 %def_enable sniffer
+%ifarch e2k
+%def_disable man
+%else
+%def_enable man
+%endif
 # no ipv6 in hasher
 %def_disable check
 
 Name: lib%_name%api_ver
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 
 Summary: Resource discovery and announcement over SSDP
 Group: System/Libraries
-License: LGPLv2.1+
-Url: http://www.gupnp.org/
+License: LGPL-2.1-or-later
+Url: https://www.gupnp.org/
 
 Vcs: https://gitlab.gnome.org/GNOME/gssdp.git
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
@@ -27,11 +32,12 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %define soup_ver 3.0.6
 
 BuildRequires(pre): rpm-macros-meson >= %meson_ver rpm-build-gir rpm-build-vala
-BuildRequires: meson vala-tools pandoc
+BuildRequires: meson vala-tools 
 BuildRequires: libgio-devel >= %glib_ver libsoup%soup_api_ver-devel >= %soup_ver
 %{?_enable_gtk_doc:BuildRequires: gtk-doc gi-docgen}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libsoup%soup_api_ver-gir-devel}
 %{?_enable_sniffer:BuildRequires: libgtk4-devel}
+%{?_enable_man:BuildRequires: pandoc}
 
 %description
 GSSDP implements resource discovery and announcement over SSDP and is part
@@ -89,7 +95,8 @@ A Device Sniffer tool based on GSSDP framework.
 %meson \
     %{?_enable_gtk_doc:-Dgtk_doc=true} \
     %{?_disable_introspection:-Dintrospection=false} \
-    %{?_disable_sniffer:-Dsniffer=false}
+    %{?_disable_sniffer:-Dsniffer=false} \
+    %{subst_enable_meson_bool man manpages}
 %nil
 %meson_build
 
@@ -126,11 +133,14 @@ A Device Sniffer tool based on GSSDP framework.
 %if_enabled sniffer
 %files -n %_name%ver_major-tools
 %_bindir/%_name-device-sniffer
-%_man1dir/%_name-device-sniffer.1.*
+%{?_enable_man:%_man1dir/%_name-device-sniffer.1.*}
 %endif
 
 
 %changelog
+* Wed Mar 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.3-alt1.1
+- made manpages build optional (disabled by default on %%e2k)
+
 * Fri Nov 03 2023 Yuri N. Sedunov <aris@altlinux.org> 1.6.3-alt1
 - 1.6.3
 
