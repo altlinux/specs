@@ -1,62 +1,59 @@
+%define soname 0
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: libfcgi
-Version: 2.4.0
-Release: alt9
+Version: 2.4.2
+Release: alt1
 
 Summary: FastCGI library
-License: BSD-like
+License: OML
 Group: System/Servers
+URL: https://github.com/FastCGI-Archives/fcgi2
+Source: %name-%version.tar
 
-Url: http://www.fastcgi.org/
-Source: fcgi-%version.tar.gz
-
-Patch: libfcgi-php-changes.patch
-Patch2: libfcgi.cstdio.patch
-Patch3: libfcgi.build.patch
-
-# Automatically added by buildreq on Sun Jun 19 2005
 BuildRequires: gcc-c++ libstdc++-devel
 
 %description
-FastCGI library
+FastCGI is a language independent, scalable, open extension
+to CGI that provides high performance without the limitations
+of server specific APIs.
 
 %package devel
 Summary: FastCGI library
-License: BSD-like
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
-FastCGI library
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
+
 
 %prep
-%setup -q -n fcgi-%version
-%patch -p1
-%patch2 -p2
-%patch3 -p2
+%setup
 
 %build
-touch NEWS AUTHORS ChangeLog
 %autoreconf
 %configure
-# SMP incompatible build
-make
+%make
 
 %install
 %makeinstall
 
+%files
+%doc LICENSE.TERMS README.md
+%_libdir/*.so.%soname
+%_libdir/*.so.%soname.*
+%exclude %_bindir/cgi-fcgi
+
 %files devel
 %_includedir/*.h
 %_libdir/*.so
+%_libdir/pkgconfig/*.pc
 %exclude %_libdir/*.a
 
-%files
-%_libdir/*.so.*
-%exclude %_bindir/cgi-fcgi
-
-%doc LICENSE.TERMS README
-
 %changelog
+* Wed Mar 27 2024 Anton Farygin <rider@altlinux.ru> 2.4.2-alt1
+- 2.4.2 (Fixes: CVE-2012-6687)
+
 * Mon Oct 25 2021 Anton Farygin <rider@altlinux.ru> 2.4.0-alt9
 - NMU: fixed build with LTO
 
