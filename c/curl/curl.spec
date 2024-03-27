@@ -31,7 +31,7 @@
 %endif
 
 Name: curl
-Version: 8.6.0
+Version: 8.7.1
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -208,6 +208,12 @@ popd
 %endif
 
 %changelog
+* Wed Mar 27 2024 Anton Farygin <rider@altlinux.ru> 8.7.1-alt1
+- 8.6.0 -> 8.7.1
+- Fixes:
+   * CVE-2024-2398: HTTP/2 push headers memory-leak
+   * CVE-2024-2004: Usage of disabled protocol
+
 * Wed Jan 31 2024 Anton Farygin <rider@altlinux.ru> 8.6.0-alt1
 - 8.5.0 -> 8.6.0
 - Fixes:
