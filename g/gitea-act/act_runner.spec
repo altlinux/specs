@@ -1,7 +1,7 @@
 %global import_path gitea.com/gitea/act_runner
 
 Name: gitea-act
-Version: 0.2.6
+Version: 0.2.8
 Release: alt1
 
 Summary: Act runner is a runner for Gitea based on Gitea fork of act.
@@ -14,8 +14,8 @@ Source2: %name.service
 
 ExclusiveArch: %go_arches
 
-BuildRequires(pre): rpm-macros-systemd rpm-build-golang
-BuildRequires: golang
+BuildRequires(pre): rpm-macros-systemd rpm-macros-golang
+BuildRequires: rpm-build-golang golang >= 1.21
 
 Requires: docker-engine
 
@@ -38,6 +38,7 @@ export GOPATH="$BUILDDIR:%go_path"
 
 %install
 export BUILDDIR="$PWD/.build"
+export IMPORT_PATH="%import_path"
 export IGNORE_SOURCE=1
 mkdir -p %buildroot{%_bindir,%_unitdir,%_tmpfilesdir,%_sysconfdir/%name,%_sharedstatedir/%name}
 
@@ -72,6 +73,9 @@ usermod -aG docker _%name
 %_unitdir/%name.service
 
 %changelog
+* Wed Mar 27 2024 Alexey Shabalin <shaba@altlinux.org> 0.2.8-alt1
+- 0.2.8
+
 * Tue Sep 26 2023 Alexey Shabalin <shaba@altlinux.org> 0.2.6-alt1
 - 0.2.6
 
