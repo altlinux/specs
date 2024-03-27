@@ -1,5 +1,5 @@
 Name: eget
-Version: 7.7
+Version: 7.8
 Release: alt1
 
 Summary: wget like downloader wrapper with wildcard support
@@ -34,6 +34,12 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Thu Mar 28 2024 Vitaly Lipatov <lav@altlinux.ru> 7.8-alt1
+- eget: replace --check with --check-url and --check-site
+- eget: fix --check using (also allow --check for backward compatibility)
+- eget: hide missed Brave's ipfs error
+- eget: add support for a new IPFS gateways
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 7.7-alt1
 - eget: put PROGNAME set to init_eget func
 - eget: add hack for construct full url from related Location
