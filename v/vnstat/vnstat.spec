@@ -1,7 +1,7 @@
 # SPEC file for vnStat package
 
 Name:    vnstat
-Version: 2.11
+Version: 2.12
 Release: alt1
 
 Summary: console-based network traffic monitor
@@ -18,9 +18,7 @@ Patch0:  %name-%version-%release.patch
 
 Source1: %name.control
 Source2: %{name}d.init
-Source3: %name.cron
-Source4: %{name}d.tmpfiles
-Source5: %{name}-update.sh
+Source3: %{name}d.tmpfiles
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -28,8 +26,6 @@ BuildRequires(pre): rpm-build-licenses
 # optimized out: fontconfig gem-power-assert glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config pkg-config python-base python-modules python3 python3-base python3-dev ruby ruby-coderay ruby-method_source ruby-pry ruby-rake ruby-rdoc ruby-stdlibs sh4 tzdata
 BuildRequires: libgd3-devel libsqlite3-devel
 
-%define cron_freq    5
-%define cron_file    %_sysconfdir/cron.d/%name
 %define data_dir     %_localstatedir/%name
 %define piddir       /var/run/%{name}d
 
@@ -51,10 +47,10 @@ vnStat собирает и выводит статистику потребле�
 и т.д. Отчёты содержат только общее количество принятых и переданных
 байт, упорядоченное по периодам времени и сетевым интерфейсам.
 
-Для накопления статистики vnStat вызывает себя через Cron каждые
-%cron_freq минут; для сохранения статистики используется база несложного
-собственного формата. При запуске из консоли vnStat читает её и выводит
-отчёт по заданным критериям.
+Утилита vnstat предназначена как для вывода статистики из базы данных,
+собираемой сервером vnstatd из пакета %{name}-server, так и без сервера
+vnstatd для интерактивного сбора и вывод данных по конкретному
+сетевому интерфейсу.
 
 %package server
 Summary: optional server for vnstat network traffic monitor
@@ -96,14 +92,10 @@ chmod a-x examples/vnstat.cgi
 %install
 %makeinstall
 /bin/install -pD %SOURCE1  %buildroot%_controldir/%name
-/bin/install -pD -m 0644 %SOURCE3  %buildroot%cron_file
-/bin/sed -e 's#%%cron_freq#%{cron_freq}#' -i %buildroot%cron_file
-/bin/install -pD %SOURCE4  %buildroot%_tmpfilesdir/%{name}d.conf
-
-/bin/install -pD %SOURCE5  %buildroot%_sbindir/%{name}-update
+/bin/install -pD %SOURCE3  %buildroot%_tmpfilesdir/%{name}d.conf
 
 install -pD -m 0755 -- %SOURCE2 %buildroot/%_initdir/%{name}d
-install -pD -m 0755 examples/systemd/vnstat.service %buildroot%_unitdir/%{name}d.service
+install -pD -m 0644 examples/systemd/vnstat.service %buildroot%_unitdir/%{name}d.service
 
 mkdir -p %buildroot%piddir
 mkdir -p %buildroot%data_dir
@@ -117,14 +109,8 @@ mkdir -p %buildroot%data_dir
 # For upgrade from 1.4-alt1 
 /usr/bin/id -Gn %name | /bin/grep -qw proc || %_sbindir/usermod -G proc %name ||:
 
-%post
-# Replace unknown Interface in the configuration
-%_sbindir/%{name}-update config-unknown
-
 
 %post server
-# Create databases for all found network interfaces
-%_sbindir/%{name}-update bases
 %post_service %{name}d
 
 %postun server
@@ -136,11 +122,9 @@ mkdir -p %buildroot%data_dir
 %doc CHANGES FAQ README
 %doc --no-dereference COPYING
 
-%config(noreplace) %cron_file
 %config(noreplace) %_sysconfdir/%name.conf
 
 %_bindir/%name
-%_sbindir/%{name}-update
 %_man1dir/%{name}.*
 %_man5dir/%{name}.*
 
@@ -162,6 +146,11 @@ mkdir -p %buildroot%data_dir
 %_man1dir/%{name}i*
 
 %changelog
+* Wed Mar 27 2024 Nikolay A. Fetisov <naf@altlinux.org> 2.12-alt1
+- New version
+- Remove manual database updates (Closes: 46256)
+- Remove obsolete cron task
+
 * Sat Sep 09 2023 Nikolay A. Fetisov <naf@altlinux.org> 2.11-alt1
 - New version
 
