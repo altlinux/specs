@@ -1,6 +1,6 @@
 Name: python3-module-platformio
-Version: 6.1.13
-Release: alt2
+Version: 6.1.14
+Release: alt1
 
 Summary: PlatformIO Core
 License: Apache-2.0
@@ -42,6 +42,9 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/platformio-%version.dist-info
 
 %changelog
+* Wed Mar 27 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 6.1.14-alt1
+- 6.1.14 released
+
 * Mon Jan 29 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.1.13-alt2
 - dropped check section, most of actual tests are online anyway
 
