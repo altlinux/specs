@@ -3,7 +3,7 @@
 %define repo dde-session-ui
 
 Name: deepin-session-ui
-Version: 6.0.14
+Version: 6.0.16
 Release: alt1
 
 Summary: Deepin desktop-environment - Session UI module
@@ -69,8 +69,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
+%find_lang --with-qt %repo
 
-%files
+%files -f %repo.lang
 %doc README.md
 %doc LICENSE
 %_bindir/dde-license-dialog
@@ -89,11 +90,18 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libexecdir/deepin-daemon/dnetwork-secret-dialog
 %dir %_libexecdir/dde-control-center/
 %_libexecdir/dde-control-center/reset-password-dialog
-%_datadir/%repo/
 %_iconsdir/hicolor/scalable/devices/computer.svg
 %_datadir/dbus-1/services/*.service
+# outside %%find_lang
+%dir %_datadir/%repo/
+%dir %_datadir/%repo/translations/
+%_datadir/%repo/translations/dde-session-ui_es_419.qm
+%_datadir/%repo/translations/dde-session-ui_ky@Arab.qm
 
 %changelog
+* Wed Mar 27 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.16-alt1
+- New version 6.0.16.
+
 * Tue Jan 16 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.14-alt1
 - New version 6.0.14.
 
