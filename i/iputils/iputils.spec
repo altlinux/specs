@@ -1,7 +1,7 @@
 Name: iputils
 %define timestamp 20240117
 Version: %timestamp
-Release: alt1
+Release: alt2
 
 Summary: Utilities for IPv4/IPv6 networking
 License: BSD-3-Clause and GPL-2.0+
@@ -78,9 +78,10 @@ touch %buildroot%sysctl_conf_file
 ln -s tracepath %buildroot%_bindir/tracepath6
 # for backward compatibility
 mkdir -p %buildroot/bin/
-for p in ping ping6 tracepath tracepath6; do
-	ln -s %_bindir/"$p"  %buildroot/bin/"$p"
-done
+ln -s %ping_real_dir/ping %buildroot/bin/ping
+ln -s %ping_real_dir/ping %buildroot/bin/ping6
+ln -s %_bindir/tracepath  %buildroot/bin/tracepath
+ln -s tracepath %buildroot/bin/tracepath6
 
 %pre
 groupadd -r -f iputils ||:
@@ -115,6 +116,9 @@ fi
 %_mandir/man?/*
 
 %changelog
+* Tue Jan 23 2024 Mikhail Gordeev <obirvalger@altlinux.org> 20240117-alt2
+- Make symlinks in %%_bindir with the same contents as in /bin.
+
 * Thu Jan 18 2024 Mikhail Efremov <sem@altlinux.org> 20240117-alt1
 - 20231222 -> 20240117.
 

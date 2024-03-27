@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.197
+Version: 4.0.4.198
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -321,6 +321,7 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %_rpmlibdir/rpmt
 %rpmattr %_rpmlibdir/rpmb
 %rpmattr %_rpmlibdir/debuginfo.*
+%rpmattr %_rpmlibdir/remappath2
 %rpmattr %_rpmlibdir/dump_ld_config
 %rpmattr %_rpmlibdir/filesize
 %rpmattr %_rpmlibdir/relative
@@ -386,6 +387,14 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Tue Mar 26 2024 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.198-alt1
+- brp: Added brp-dupe-bin module to help fix ~20 packages for usrmerge (thx
+  obirvalger@).
+- tools: New tool: remappath2.
+- Re-implemented CanonPath() using remappath2. This allows to skip following
+  some symlinks during path component resolution, so find-requires does not
+  generate dependencies on e. g. /usr/bin/sh.
+
 * Thu Mar 21 2024 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.197-alt1
 - george@:
   + scripts/brp-fix-perms.in: Fixed systemd units and man/info permissions.

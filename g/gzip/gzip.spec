@@ -1,6 +1,6 @@
 Name: gzip
 Version: 1.13
-Release: alt2
+Release: alt3
 
 Summary: The GNU data compression program
 License: GPLv3+
@@ -81,8 +81,9 @@ ln -sf zgrep %buildroot%_bindir/zegrep
 ln -sf zgrep %buildroot%_bindir/zfgrep
 
 # Add compatibility symlinks.
-for i in gzip gunzip zcat; do
-	ln -s ../../bin/gzip %buildroot%_bindir/$i
+ln -s ../../bin/gzip %buildroot%_bindir/gzip
+for i in gunzip zcat; do
+	ln -s gzip %buildroot%_bindir/$i
 done
 
 # Additional utilities.
@@ -137,6 +138,9 @@ rm %buildroot{/bin/zmore,%_man1dir/zmore.1}
 %exclude %_man1dir/zcat.*
 
 %changelog
+* Mon Jan 22 2024 Mikhail Gordeev <obirvalger@altlinux.org> 1.13-alt3
+- Make symlinks in %%_bindir with the same contents as in /bin.
+
 * Tue Sep 19 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.13-alt2
 - Fixed build with disabled check (reported by Michael Shigorin).
 

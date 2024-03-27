@@ -1,6 +1,6 @@
 Name: bzip2
 Version: 1.0.8
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: A file compression utility
@@ -99,8 +99,9 @@ pushd %buildroot
 		ln -s ../../bin/bzip2 .%_bindir/$f
 		ln -s bzip2.1 .%_man1dir/$f.1
 	done
-	for f in bzip2 bunzip2 bzcat; do
-		ln -s ../../bin/bzip2 .%_bindir/$f
+	ln -s ../../bin/bzip2 .%_bindir/bzip2
+	for f in bunzip2 bzcat; do
+		ln -s bzip2 .%_bindir/$f
 	done
 	for f in bzip2recover; do
 		ln -s ../../bin/$f .%_bindir/$f
@@ -162,6 +163,9 @@ install -pm644 CHANGES LICENSE README %buildroot%docdir/
 %docdir/[CR]*
 
 %changelog
+* Mon Jan 22 2024 Mikhail Gordeev <obirvalger@altlinux.org> 1:1.0.8-alt3
+- Make symlinks in %%_bindir with the same contents as in /bin.
+
 * Tue Aug 24 2021 Dmitry V. Levin <ldv@altlinux.org> 1:1.0.8-alt2
 - Added -ffat-lto-objects to %%optflags_lto.
 
