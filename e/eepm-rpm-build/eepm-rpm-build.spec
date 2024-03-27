@@ -8,7 +8,7 @@
 
 Name: eepm-rpm-build
 Version: %major.2
-Release: alt1
+Release: alt2
 
 Summary: Simplified RPM rpmbuild used in epm repack
 
@@ -18,6 +18,9 @@ Url: http://www.rpm.org/
 
 # Source-url: http://ftp.rpm.org/releases/rpm-%verbase/rpm-%version.tar.bz2
 Source: %name-%version.tar
+
+Patch1: add-homedir-_tmpdir-macro.patch
+Patch2: alt-default-macros.patch
 
 BuildRequires: gawk
 #BuildRequires: elfutils-devel >= 0.112
@@ -54,6 +57,9 @@ This rpmbuild built in distro agnostic way to support epm repack.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
+
 %__subst 's|/lib/rpm|/lib/eepm-rpm|' configure.ac Makefile.am rpm.am
 %__subst "s|#%%_source_payload.*|%%_source_payload	%default_payload|" macros.in
 %__subst "s|#%%_binary_payload.*|%%_binary_payload	%default_payload|" macros.in
@@ -141,6 +147,10 @@ rm -rf %buildroot%_mandir/
 %rpmhome/rpmuncompress
 
 %changelog
+* Wed Mar 27 2024 Vitaly Lipatov <lav@altlinux.ru> 4.18.2-alt2
+- add ALT patches for homedir and _tmpdir (ALT bug 49639)
+- set ALT defaults for some base macros
+
 * Mon Feb 26 2024 Vitaly Lipatov <lav@altlinux.ru> 4.18.2-alt1
 - new version 4.18.2 (with rpmrb script)
 
