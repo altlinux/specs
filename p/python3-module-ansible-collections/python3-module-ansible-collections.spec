@@ -1,6 +1,6 @@
 Name:    python3-module-ansible-collections
-Version: 8.4.0
-Release: alt2
+Version: 8.5.0
+Release: alt1
 
 Summary: This repository contains the community.general and some other Ansible Collection
 License: GPL-3.0+ and Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT and MPL-2.0 and PSF-2.0
@@ -71,6 +71,9 @@ rm -rv %buildroot%python3_sitelibdir/ansible_collections/community/postgresql/.a
 %files -n ansible
 
 %changelog
+* Wed Mar 27 2024 Andrey Cherepanov <cas@altlinux.org> 8.5.0-alt1
+- New version.
+
 * Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 8.4.0-alt2
 - remove unused azure scripts
 - fix ansible_collections dir packing
