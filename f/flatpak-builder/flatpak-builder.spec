@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _localstatedir %_var
 %define _libexecdir %_prefix/libexec
@@ -11,7 +11,7 @@
 %def_enable installed_tests
 
 Name: flatpak-builder
-Version: 1.4.2
+Version: 1.4.3
 Release: alt1
 Epoch:1
 
@@ -119,6 +119,9 @@ the functionality of the installed Flatpak-builder.
 %_datadir/installed-tests/%name
 
 %changelog
+* Wed Mar 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1:1.4.3-alt1
+- 1.4.3
+
 * Fri Mar 01 2024 Yuri N. Sedunov <aris@altlinux.org> 1:1.4.2-alt1
 - updated to 1.4.2-2-g8c036e00
 - build with Meson
