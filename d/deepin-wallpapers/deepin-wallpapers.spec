@@ -1,16 +1,16 @@
 Name: deepin-wallpapers
-Version: 1.7.10
+Version: 1.7.16.0.1.354b
 Release: alt1
+
 Summary: Deepin Wallpapers provides wallpapers of DDE
-License: GPL-3.0+
+
+License: CC-BY-4.0
 Group: Graphics
 Url: https://github.com/linuxdeepin/deepin-wallpapers
-Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
 BuildArch: noarch
 
-# BuildRequires(pre): coreutils
 BuildRequires: deepin-api
 
 %description
@@ -18,16 +18,11 @@ BuildRequires: deepin-api
 
 %prep
 %setup -n %name-%version
-#mkdir -p %name-%version
 
 %build
 for _pic in deepin/*; do
   make PICS=$_pic
 done
-
-#for _pic in deepin-community/*; do
-#  make PICS=$_pic
-#done
 
 %make_build
 
@@ -76,10 +71,15 @@ fi
 %dir %_datadir/backgrounds/deepin/
 #%%_datadir/backgrounds/deepin/desktop.jpg
 %_datadir/backgrounds/default_background.jpg
-%_datadir/wallpapers/deepin/
+%dir %_datadir/wallpapers/deepin/
+%_datadir/wallpapers/deepin/*
 %_cachedir/image-blur/*.jpg
 
 %changelog
+* Wed Mar 27 2024 Leontiy Volodin <lvol@altlinux.org> 1.7.16.0.1.354b-alt1
+- New version 1.7.16-1-g354bd34.
+- Updated url tag.
+
 * Mon Apr 19 2021 Leontiy Volodin <lvol@altlinux.org> 1.7.10-alt1
 - New version (1.7.10) with rpmgs script.
 
