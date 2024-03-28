@@ -10,14 +10,14 @@ BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
+BuildRequires: jpackage-17-compat
 %define fedora 34
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %_var
 # %%tomcatname and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define tomcatname tomcat
 %define name tomcat10
-%define version 10.1.5
+%define version 10.1.20
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -51,7 +51,7 @@ BuildRequires: jpackage-default
 %global jspspec 3.1
 %global major_version 10
 %global minor_version 1
-%global micro_version 5
+%global micro_version 20
 %global packdname apache-tomcat-%version-src
 %global servletspec 6.0
 %global elspec 5.0
@@ -75,7 +75,7 @@ BuildRequires: jpackage-default
 Name: tomcat10
 Epoch: 1
 Version: %major_version.%minor_version.%micro_version
-Release: alt2_jvm11
+Release: alt1_jvm17
 Summary: Apache Servlet/JSP Engine, RI for Servlet %servletspec/JSP %jspspec API
 
 License: Apache-2.0
@@ -247,7 +247,7 @@ export OPT_JAR_LIST="xalan-j2-serializer"
 touch HACK
 
 # who needs a build.properties file anyway
-%ant -Dant.build.javac.source=11 -Dant.build.javac.target=11  -Dbase.path="." \
+%ant -Dant.build.javac.source=17 -Dant.build.javac.target=17  -Dbase.path="." \
   -Dbuild.compiler="modern" \
   -Dcommons-daemon.jar="HACK" \
   -Dcommons-daemon.native.src.tgz="HACK" \
@@ -513,6 +513,9 @@ exit 0
 %appdir/ROOT
 
 %changelog
+* Thu Mar 28 2024 Ilfat Aminov <aminov@altlinux.org> 1:10.1.20-alt1_jvm17
+- 10.1.20
+
 * Fri Sep 01 2023 Ilfat Aminov <aminov@altlinux.org> 1:10.1.5-alt2_jvm11
 - change Provides to differ from tomcat 9
 
