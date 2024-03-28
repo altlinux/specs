@@ -2,14 +2,14 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name cartridges
-%define ver_major 2.7
+%define ver_major 2.8
 %define rdn_name hu.kramo.Cartridges
 
 # online screenshots
 %def_disable check
 
 Name: %_name
-Version: %ver_major.4
+Version: %ver_major.1
 Release: alt1
 
 Summary: Cartridges
@@ -27,8 +27,11 @@ Source: %_name-%version.tar
 BuildArch: noarch
 
 %define bp_ver 0.10
+%define adw_ver 1.5
 
-Requires: typelib(Adw) = 1 dconf
+Requires: typelib(Adw) = 1
+Requires: libadwaita-gir >= %adw_ver
+Requires: dconf
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson blueprint-compiler >= %bp_ver typelib(Adw)
@@ -69,6 +72,9 @@ SteamGridDB.
 
 
 %changelog
+* Thu Mar 28 2024 Yuri N. Sedunov <aris@altlinux.org> 2.8.1-alt1
+- 2.8.1
+
 * Sun Mar 10 2024 Yuri N. Sedunov <aris@altlinux.org> 2.7.4-alt1
 - 2.7.4
 
