@@ -1,23 +1,30 @@
 %define _unpackaged_files_terminate_build 1
 %define oname xmlschema
 
+%ifnarch ppc64le
+%def_with check
+%else
 %def_without check
+%endif
 
 Name: python3-module-%oname
-Version: 2.2.3
+Version: 3.2.0
 Release: alt1
 
 Summary: XML Schema validator and data conversion library
+
 License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/xmlschema/
-Vcs: https://github.com/sissaschool/xmlschema
+URL: https://pypi.org/project/xmlschema
+VCS: https://github.com/sissaschool/xmlschema
 
 BuildArch: noarch
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: python3(elementpath)
 BuildRequires: python3(lxml)
 
@@ -35,13 +42,13 @@ The xmlschema library is an implementation of XML Schema for Python.
 
 %build
 export LANG=C.UTF-8
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%tox_check
+%tox_check_pyproject
 
 %files
 %doc LICENSE README.rst
@@ -49,9 +56,12 @@ export LANG=C.UTF-8
 %_bindir/xmlschema-validate
 %_bindir/xmlschema-xml2json
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Mar 28 2024 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
+- Automatically updated to 3.2.0.
+
 * Wed Apr 26 2023 Grigory Ustinov <grenka@altlinux.org> 2.2.3-alt1
 - Automatically updated to 2.2.3.
 
