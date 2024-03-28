@@ -3,17 +3,17 @@
 %define real_name Math-Int64
 
 Name: perl-Math-Int64
-Version: 0.54
-Release: alt1.2
+Version: 0.57
+Release: alt1
 
 Summary: Perl module to manipulate 64 bits integers
 
 License: %perl_license
 Group: Development/Perl
 
-URL: http://search.cpan.org/dist/Math-Int64/
+URL: https://metacpan.org/release/Math-Int64/
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 Source: %real_name-%version.tar
 
@@ -43,6 +43,9 @@ signed and unsigned, to Perl on 32-bit platforms.
 %perl_vendor_autolib/Math/Int64*
 
 %changelog
+* Thu Mar 28 2024 Nikolay A. Fetisov <naf@altlinux.org> 0.57-alt1
+- New version
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.54-alt1.2
 - rebuild with new perl 5.28.1
 
