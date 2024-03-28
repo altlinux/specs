@@ -1,29 +1,32 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+# LFS cannot be used due to hooks.
+%set_verify_elf_method strict,lfs=relaxed,lint=relaxed
+
 Name: gperftools
-Version: 2.10
-Release: alt2
+Version: 2.15
+Release: alt1
 
 Provides: google-perftools
 
-Summary: Performance tools for C++
-Group: Development/Other
-Url: http://github.com/gperftools
-License: BSD
+Summary: Performance tools for C++ (pprof)
+Group: Development/C++
+Url: https://github.com/gperftools/gperftools
+License: BSD-3-Clause
 
 Source: %name-%version.tar.gz
-Requires: binutils
 
-# Automatically added by buildreq on Thu Dec 04 2008
-BuildRequires: gcc-c++ libunwind-devel
-BuildRequires: rpm-build-licenses
+BuildRequires: gcc-c++
+BuildRequires: libunwind-devel
 
 %description
-The %name packages contains some utilities to improve and analyze the
-performance of C++ programs.  This includes an optimized thread-caching
-malloc() and cpu and heap profiling utilities.
+gperftools is a collection of a high-performance multi-threaded
+malloc() implementation, plus some pretty nifty performance analysis
+tools.
 
 %package -n lib%name
-Summary: Performance tools for C++ - shared libraries
-Group: Development/Other
+Summary: Performance tools for C++ (tcmalloc) - shared libraries
+Group: System/Libraries
 Provides: libgoogle-perftools
 
 %description -n lib%name
@@ -31,10 +34,10 @@ The lib%name package is part of %name. It contains shared libraries
 for analize the performance of C++ programs.
 
 %package -n lib%name-devel
-Summary: Performance tools for C++
-Group: Development/Other
-Requires: lib%name = %version-%release
-Provides: %name-devel = %version-%release
+Summary: Performance tools for C++ (tcmalloc)
+Group: Development/C++
+Requires: lib%name = %EVR
+Provides: %name-devel = %EVR
 
 %description -n lib%name-devel
 The lib%name-devel package contains static and debug libraries and header
@@ -42,11 +45,9 @@ files for developing applications that use the %name package.
 
 %prep
 %setup
-# no // in ansi-compiled tests
-sed -i '\@^[ 	]*//@d' src/google/malloc_hook_c.h
 
 %build
-%add_optflags -fpermissive
+%autoreconf
 %configure --disable-static \
 %ifarch loongarch64
 	--enable-minimal \
@@ -60,7 +61,7 @@ sed -i '\@^[ 	]*//@d' src/google/malloc_hook_c.h
 %ifnarch loongarch64
 %files
 %doc %_defaultdocdir/%name
-%_bindir/pprof
+%_bindir/pprof*
 %_man1dir/pprof.*
 %endif
 
@@ -74,6 +75,9 @@ sed -i '\@^[ 	]*//@d' src/google/malloc_hook_c.h
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Mar 27 2024 Vitaly Chikunov <vt@altlinux.org> 2.15-alt1
+- Update to 2.15 (2024-03-27).
+
 * Thu Jul 20 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.10-alt2
 - Basic support of LoongArch: build only tcmalloc (heap profiler and
   checker are not ported yet). Useful since many packages require tcmalloc.
