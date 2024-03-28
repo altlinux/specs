@@ -3,7 +3,7 @@
 %define real_name Dist-Zilla-Plugin-PromptIfStale
 
 Name: perl-Dist-Zilla-Plugin-PromptIfStale
-Version: 0.058
+Version: 0.060
 Release: alt1
 
 Summary: Dist::Zilla module to check at build/release time
@@ -11,7 +11,7 @@ Summary: Dist::Zilla module to check at build/release time
 License: %perl_license
 Group: Development/Perl
 
-URL: http://search.cpan.org/dist/Dist-Zilla-Plugin-PromptIfStale/
+URL: https://metacpan.org/release/Dist-Zilla-Plugin-PromptIfStale/
 
 Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
@@ -21,9 +21,9 @@ BuildArch: noarch
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Thu Dec 15 2022
-# optimized out: libgpg-error perl perl-App-Cmd perl-CPAN-DistnameInfo perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-Class-Method-Modifiers perl-Config-MVP perl-Encode perl-File-pushd perl-HTTP-Message perl-HTTP-Tiny perl-JSON-PP perl-Log-Dispatch perl-Module-CoreList perl-Module-Metadata perl-Module-Runtime perl-Moose perl-Parse-CPAN-Meta perl-Path-Tiny perl-Term-ANSIColor perl-Test-Deep perl-Test-Fatal perl-Try-Tiny perl-YAML-Tiny perl-devel perl-namespace-autoclean perl-parent sh4
-BuildRequires: perl-Dist-Zilla perl-IO-Tty perl-Parse-CPAN-Packages-Fast
+# Automatically added by buildreq on Thu Mar 28 2024
+# optimized out: libgpg-error perl perl-App-Cmd perl-B-Hooks-EndOfScope perl-CPAN perl-CPAN-DistnameInfo perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-Capture-Tiny perl-Carp-Clan perl-Class-Data-Inheritable perl-Class-Load perl-Class-Method-Modifiers perl-Clone perl-Compress-Raw-Zlib perl-Config-INI perl-Config-MVP perl-Config-MVP-Reader-INI perl-Cpanel-JSON-XS perl-Data-OptList perl-Data-Section perl-Devel-Caller perl-Devel-GlobalDestruction perl-Devel-OverloadInfo perl-Devel-StackTrace perl-Dist-CheckConflicts perl-Dist-Zilla perl-Encode perl-Eval-Closure perl-Exception-Class perl-Exporter-Tiny perl-File-Copy-Recursive perl-File-Find-Rule perl-File-Which perl-File-pushd perl-Getopt-Long-Descriptive perl-HTTP-Message perl-HTTP-Tiny perl-IO-Compress perl-IO-Socket-IP perl-IO-Stty perl-IO-Tty perl-IPC-Run perl-JSON-MaybeXS perl-JSON-PP perl-List-MoreUtils perl-List-MoreUtils-XS perl-Log-Dispatch perl-Log-Dispatch-Array perl-Log-Dispatchouli perl-Log-Log4perl perl-MRO-Compat perl-Mixin-Linewise perl-Module-CoreList perl-Module-Implementation perl-Module-Metadata perl-Module-Pluggable perl-Module-Runtime perl-Moo perl-Moose perl-MooseX-LazyRequire perl-MooseX-OneArgNew perl-MooseX-Role-Parameterized perl-MooseX-SetOnce perl-MooseX-Types perl-MooseX-Types-Perl perl-Number-Compare perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-PadWalker perl-Params-Util perl-Params-Validate perl-Params-ValidationCompiler perl-Parse-CPAN-Meta perl-Parse-CPAN-Packages-Fast perl-Path-Tiny perl-PerlIO-utf8_strict perl-Pod-Elemental perl-Pod-Eventual perl-Role-HasMessage perl-Role-Identifiable perl-Role-Tiny perl-Scope-Guard perl-Software-License perl-Specio perl-String-Flogger perl-String-RewritePrefix perl-String-Truncate perl-Sub-Exporter perl-Sub-Exporter-ForMethods perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Sub-Name perl-Sub-Quote perl-Syntax-Keyword-Junction perl-Term-ANSIColor perl-Term-Encoding perl-Test-Deep perl-Test-Fatal perl-Text-Glob perl-Text-Template perl-Throwable perl-Tie-IxHash perl-Tie-RefHash perl-Try-Tiny perl-Variable-Magic perl-YAML-Tiny perl-aliased perl-autobox perl-autodie perl-devel perl-experimental perl-namespace-autoclean perl-namespace-clean perl-parent python-modules python2-base python3 python3-base python3-dev sh5 tzdata
+BuildRequires: perl-Archive-Tar-Wrapper perl-Class-XSAccessor perl-Dist-Zilla-Plugin-CheckExtraTests perl-Dist-Zilla-Plugin-Git perl-Dist-Zilla-Plugin-PromptIfStale perl-JSON-XS perl-Moose-Autobox perl-MooseX-Aliases perl-MooseX-Params-Validate perl-MooseX-SemiAffordanceAccessor perl-MooseX-StrictConstructor perl-Pod-Coverage perl-Pod-Weaver perl-Ref-Util perl-Ref-Util-XS perl-Test-Moose-More perl-YAML perl-strictures
 
 %description
 Perl module Dist::Zilla::Plugin::PromptIfStale is a Dist::Zilla
@@ -51,6 +51,9 @@ is found.
 %perl_vendor_privlib/Dist/Zilla/*
 
 %changelog
+* Thu Mar 28 2024 Nikolay A. Fetisov <naf@altlinux.org> 0.060-alt1
+- New version
+
 * Wed Jul 26 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.058-alt1
 - New version
 
