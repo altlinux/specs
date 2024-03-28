@@ -5,7 +5,7 @@
 %def_with docs
 
 Name:           python3-module-pyghmi
-Version:        1.5.67
+Version:        1.5.68
 Release:        alt1
 
 Summary:        Python General Hardware Management Initiative (IPMI and others)
@@ -105,6 +105,9 @@ popd
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Thu Mar 28 2024 Anton Vyatkin <toni@altlinux.org> 1.5.68-alt1
+- new version 1.5.68
+
 * Mon Feb 12 2024 Anton Vyatkin <toni@altlinux.org> 1.5.67-alt1
 - new version 1.5.67
 
