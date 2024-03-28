@@ -12,7 +12,7 @@
 %define libkf5textcustomeditor libkf5textcustomeditor%sover
 
 Name: kde5-%rname
-Version: 1.5.3
+Version: 1.5.4
 Release: alt1
 %K5init altplace
 
@@ -180,6 +180,9 @@ This package contains the development files for %name.
 #%_K5archdata/mkspecs/modules/qt_?ext*.pri
 
 %changelog
+* Thu Mar 28 2024 Sergey V Turchin <zerg@altlinux.org> 1.5.4-alt1
+- new version
+
 * Wed Jan 17 2024 Sergey V Turchin <zerg@altlinux.org> 1.5.3-alt1
 - new version
 
