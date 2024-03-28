@@ -6,7 +6,7 @@
 %def_enable gtk_doc
 %def_enable introspection
 %def_enable sniffer
-%ifarch e2k
+%ifarch %e2k
 %def_disable man
 %else
 %def_enable man
@@ -16,7 +16,7 @@
 
 Name: lib%_name%api_ver
 Version: %ver_major.3
-Release: alt1.1
+Release: alt1.2
 
 Summary: Resource discovery and announcement over SSDP
 Group: System/Libraries
@@ -138,6 +138,9 @@ A Device Sniffer tool based on GSSDP framework.
 
 
 %changelog
+* Thu Mar 28 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.3-alt1.2
+- fixed typo (e2k -> %%e2k)
+
 * Wed Mar 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.3-alt1.1
 - made manpages build optional (disabled by default on %%e2k)
 
