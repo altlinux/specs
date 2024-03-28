@@ -11,7 +11,7 @@
 
 Name: muon
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: C-implemetation of Meson build system
 License: GPL-3.0-only
@@ -20,8 +20,8 @@ Url: https://github.com/annacrombie/muon
 
 Vcs: https://github.com/annacrombie/muon.git
 Source: %name-%version.tar
-Source1: https://mochiro.moe/wrap/samurai-1.2-32-g81cef5d.tar.gz
-Source2: https://mochiro.moe/wrap/meson-docs-0.64.1-19-g39c6fa4bc.tar.gz
+Source1: https://mochiro.moe/wrap/meson-docs-1.1.1-1-g1c1a31a22.tar.gz
+#Source2: https://mochiro.moe/wrap/samurai-1.2-32-g81cef5d.tar.gz
 Source3: %name.macros
 Source4: %name.env
 
@@ -56,8 +56,8 @@ BuildArch: noarch
 Developpment documentation for %name.
 
 %prep
-%setup -a1 -a2
-mv samurai meson-docs subprojects/
+%setup -a1
+mv meson-docs subprojects/
 mkdir %__builddir
 
 %build
@@ -97,6 +97,9 @@ install -Dpm 0755 %SOURCE4 %buildroot%_rpmmacrosdir/%name.env
 
 
 %changelog
+* Thu Mar 28 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt2
+- updated to 0.2.0-274-ga65caf87
+
 * Sun Apr 09 2023 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - 0.2.0
 

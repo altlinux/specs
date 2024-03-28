@@ -1,4 +1,4 @@
-%define sover 4
+%define sover 5
 
 %def_disable snapshot
 # have no kyua for armh
@@ -9,7 +9,7 @@
 %endif
 
 Name: pkgconf
-Version: 2.1.1
+Version: 2.2.0
 Release: alt1
 
 Summary: Package compiler and linker metadata toolkit
@@ -90,6 +90,9 @@ mkdir -p %buildroot%_datadir/pkgconfig/personality.d
 
 
 %changelog
+* Thu Mar 28 2024 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Sun Feb 04 2024 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
 - 2.1.1
 
