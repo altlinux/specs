@@ -1,16 +1,15 @@
 %define oname sphinx_rtd_theme
 
 Name: python3-module-%oname
-Version: 1.2.2
+Version: 2.0.0
 Release: alt1
 
 Summary: ReadTheDocs.org theme for Sphinx
 
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/sphinx_rtd_theme/
-
-# https://github.com/snide/sphinx_rtd_theme.git
+URL: https://pypi.org/project/sphinx-rtd-theme
+VCS: https://github.com/snide/sphinx_rtd_theme
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -35,11 +34,14 @@ your project outside of that site.
 %pyproject_install
 
 %files
-%doc *.rst
+%doc LICENSE *.rst
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Mar 28 2024 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
+- Automatically updated to 2.0.0.
+
 * Sun Jun 11 2023 Grigory Ustinov <grenka@altlinux.org> 1.2.2-alt1
 - Automatically updated to 1.2.2.
 
