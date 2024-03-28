@@ -11,7 +11,7 @@
 
 
 Name:     %pname-source
-Version:  0.4.8
+Version:  0.4.9
 Release:  alt1
 
 Summary:  Osec-based integrity checking script and settings
@@ -74,6 +74,8 @@ Activates the special 'vm-check-failed.target' on failure.
 %package -n %pname-trigger-pve
 Summary: Lock down PVE cluster VMs on integrity failure
 Group: Monitoring
+# For 'qm block' command:
+Requires: pve-qemu-server >= 7.4.3-alt3
 
 %description -n %pname-trigger-pve
 Lock down PVE cluster VMs on integalert_vm.service failure.
@@ -157,6 +159,9 @@ fi
 %endif
 
 %changelog
+* Thu Mar 28 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.9-alt1
+- Use 'qm block' command in PVE triggers.
+
 * Tue Mar 12 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.8-alt1
 - Check and lock only the nodes in /etc/pve/qemu-server.
 - Don't exit a trigger if some nodes failed to stop.
