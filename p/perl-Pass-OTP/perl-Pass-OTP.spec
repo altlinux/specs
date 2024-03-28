@@ -5,8 +5,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-Pass-OTP
-Version: 1.6
-Release: alt2
+Version: 1.702
+Release: alt1
 
 Summary: Perl implementation of HOTP / TOTP algorithms
 
@@ -57,6 +57,9 @@ sed -e 's/otptool /otptool.pl /g'   -i %buildroot%_man1dir/otptool.pl.1
 %_man1dir/otptool.pl.*
 
 %changelog
+* Thu Mar 28 2024 Nikolay A. Fetisov <naf@altlinux.org> 1.702-alt1
+- New version
+
 * Sun Oct 29 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.6-alt2
 - Ffix file conflict with oathtool package
 
