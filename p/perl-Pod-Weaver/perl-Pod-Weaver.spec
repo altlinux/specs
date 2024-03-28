@@ -3,7 +3,7 @@
 %define real_name Pod-Weaver
 
 Name: perl-Pod-Weaver
-Version: 4.019
+Version: 4.020
 Release: alt1
 
 Summary: Perl module to weave together a Pod document from an outline
@@ -11,7 +11,7 @@ Summary: Perl module to weave together a Pod document from an outline
 License: %perl_license
 Group: Development/Perl
 
-URL: http://search.cpan.org/dist/Pod-Weaver/
+URL: https://metacpan.org/release/Pod-Weaver/
 
 Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
@@ -48,6 +48,9 @@ on an existing Pod document or other provided information.
 %perl_vendor_privlib/Pod/Weaver*
 
 %changelog
+* Thu Mar 28 2024 Nikolay A. Fetisov <naf@altlinux.org> 4.020-alt1
+- New version
+
 * Sat Jan 14 2023 Nikolay A. Fetisov <naf@altlinux.org> 4.019-alt1
 - New version
 
