@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.11.0
+Version: 1.12.0
 Release: alt1
 Summary: Mock out responses from the requests package
 License: Apache-2.0
@@ -62,6 +62,9 @@ whatever ways works best for your project.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Mar 28 2024 Stanislav Levin <slev@altlinux.org> 1.12.0-alt1
+- 1.11.0 -> 1.12.0.
+
 * Thu Jun 08 2023 Stanislav Levin <slev@altlinux.org> 1.11.0-alt1
 - 1.10.0 -> 1.11.0.
 
