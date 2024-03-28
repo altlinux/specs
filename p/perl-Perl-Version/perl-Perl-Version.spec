@@ -3,7 +3,7 @@
 %define real_name Perl-Version
 
 Name: perl-Perl-Version
-Version: 1.013
+Version: 1.017
 Release: alt1
 
 Summary: Perl module to parse and manipulate Perl version strings
@@ -11,9 +11,10 @@ Summary: Perl module to parse and manipulate Perl version strings
 License: %perl_license
 Group: Development/Perl
 
-URL: http://search.cpan.org/dist/Perl-Version/
+URL: https://metacpan.org/release/Perl-Version/
+#URL: https://github.com/briandfoy/perl-version
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
+Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 Source: %real_name-%version.tar
 
@@ -46,12 +47,16 @@ version formatted like the original.
 %perl_vendor_install
 
 %files
-%doc README Changes
+%doc README.pod Changes
 %perl_vendor_privlib/Perl/Version*
 
 %_bindir/perl-reversion
+%_man1dir/perl-reversion*
 
 %changelog
+* Thu Mar 28 2024 Nikolay A. Fetisov <naf@altlinux.org> 1.017-alt1
+- New version
+
 * Sun Sep 14 2014 Nikolay A. Fetisov <naf@altlinux.ru> 1.013-alt1
 - New version
 
