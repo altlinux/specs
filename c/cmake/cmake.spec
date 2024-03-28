@@ -11,8 +11,8 @@
 %define _cmake__builddir build
 
 Name: cmake
-Version: 3.28.3
-Release: alt1.1
+Version: 3.29.0
+Release: alt1
 
 Summary: Cross-platform, open-source make system
 
@@ -184,21 +184,14 @@ CFLAGS="%optflags" CXXFLAGS="%optflags" ../bootstrap \
 	--verbose \
 	--parallel=%__nprocs \
 	--system-libs \
-%if_enabled gui
-	--qt-gui \
-%endif
-%if_enabled docs
-	--sphinx-man \
-	--sphinx-html \
-%endif
+	%{?_enable_gui:--qt-gui} \
+	%{?_enable_docs:--sphinx-man --sphinx-html} \
 	--prefix=%prefix \
 	--datadir=/share/%name \
 	--mandir=/share/man \
 	--docdir=/share/doc/%name-%version \
-%if_enabled jsoncpp_bootstrap
-	--no-system-jsoncpp \
-%endif
-	#
+	%{?_enable_jsoncpp_bootstrap:--no-system-jsoncpp} \
+	%nil
 
 export LD_LIBRARY_PATH=$PWD/Source:$PWD/Source/kwsys/:$PWD/Source/CursesDialog/form%{?_enable_jsoncpp_bootstrap::$PWD/Utilities/cmjsoncpp}
 %make_build VERBOSE=1
@@ -211,12 +204,8 @@ popd
     -DCMAKE_DATA_DIR=share/%name \
     -DCMAKE_DOC_DIR=share/doc/%name-%version \
     -DCMAKE_MAN_DIR=share/man \
-%if_enabled gui
-    -DBUILD_QtDialog=ON \
-%endif
-%if_enabled docs
-    -DSPHINX_HTML=ON -DSPHINX_MAN=ON \
-%endif
+    %{?_enable_gui:-DBUILD_QtDialog=ON} \
+    %{?_enable_docs:-DSPHINX_HTML=ON -DSPHINX_MAN=ON} \
     %nil
 %cmake_build
 %endif
@@ -231,9 +220,6 @@ subst 's|	bin/cmake|	$(CMAKE_COMMAND)|' Makefile
 %endif
 %makeinstall_std
 popd
-
-# TODO: fix in the sources
-#mv %buildroot/usr/lib %buildroot%_libdir || :
 
 %if_enabled jsoncpp_bootstrap
 cp build/Utilities/cmjsoncpp/libcmjsoncpp.so %buildroot%_libdir/
@@ -355,6 +341,10 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Sun Mar 24 2024 Vitaly Lipatov <lav@altlinux.ru> 3.29.0-alt1
+- new version 3.29.0
+- spec: stop using nested if
+
 * Sun Feb 18 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.28.3-alt1.1
 - workaround for ICE on e2k
 
