@@ -1,5 +1,5 @@
 Name: write.sh
-Version: 0.3
+Version: 0.3.1
 Release: alt1
 
 Summary: write Elbrus boot media
@@ -32,5 +32,8 @@ install -pDm755 %SOURCE0 %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Thu Mar 28 2024 Michael Shigorin <mike@altlinux.org> 0.3.1-alt1
+- fix shebang (it's a bash script indeed); thx Roman Pushkov
+
 * Tue Dec 26 2023 Michael Shigorin <mike@altlinux.org> 0.3-alt1
 - initial package (forked off mkimage-profiles 1.4.19-alt1-16-g6fd7ea58e)
