@@ -4,9 +4,9 @@ Summary: The New Moon browser, an unofficial branding of the Pale Moon project b
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 33.0.1
+Version: 33.0.2
 
-Release: alt2
+Release: alt1
 
 License: MPL-2.0 GPL-3.0 and LGPL-2.1+
 Group: Networking/WWW
@@ -87,11 +87,12 @@ Patch200: %bname-33.0.1-branding.patch
 BuildPreReq: gstreamer1.0-devel gst-plugins1.0-devel libpixman-devel
 BuildPreReq: python3-base unzip xorg-cf-files libsndfile-devel
 
-# Automatically added by buildreq on Wed Dec 20 2023
-# optimized out: alt-os-release alternatives fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXfixes-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcrypt-devel libctf-nobfd0 libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel libxcb-devel perl pkg-config python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-distutils python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python2-base python3 python3-base python3-dev python3-module-setuptools sh5 xorg-proto-devel zlib-devel
-BuildRequires: doxygen gcc-c++ libGConf-devel libXcomposite-devel libXdamage-devel libXt-devel libalsa-devel libdbus-glib-devel libgtk+2-devel
-BuildRequires: libgtk+3-devel libhunspell-devel libpixman-devel libpulseaudio-devel libsocket python-devel python-modules-json
-BuildRequires: python-modules-wsgiref unzip yasm zip
+# Automatically added by buildreq on Wed Mar 27 2024
+# optimized out: alt-os-release alternatives fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcrypt-devel libctf-nobfd0 libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel libxcb-devel perl pkg-config python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-distutils python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python2-base python3 python3-base python3-dev sh5 xorg-proto-devel zlib-devel
+BuildRequires: doxygen gcc-c++ libGConf-devel libXt-devel libalsa-devel libdbus-glib-devel libgtk+2-devel
+BuildRequires: libgtk+3-devel libhunspell-devel libpulseaudio-devel libsocket
+BuildRequires: python-devel python-modules-json python-modules-wsgiref python3-module-setuptools
+BuildRequires: unzip yasm zip
 
 
 # BEGIN SourceDeps(oneline):
@@ -112,7 +113,9 @@ BuildRequires(pre): browser-plugins-npapi-devel
 
 BuildPreReq: python-module-future python-modules-json python-modules-wsgiref
 
+BuildPreReq: alsa-plugins libx264-devel libsox-devel transfig alsa-oss alsa-tools alsa-utils libogg-devel liboggz-devel xorg-proto-devel
 BuildPreReq: gstreamer-devel
+
 # set_gcc_version 4.9
 # BuildRequires: gcc%%{_gcc_version}-c++
 
@@ -120,7 +123,8 @@ BuildPreReq: chrpath
 BuildPreReq: autoconf_%_autoconf_version
 
 BuildRequires: libhunspell-devel
-
+# BuildRequires: wayland-devel libwaylandpp-devel libwayland-egl-devel libEGL-devel
+ 
 %description
 The %sname project is a redesign of Mozilla's  Firefox browser component,
 written using the XUL user interface language and designed to be
@@ -140,17 +144,17 @@ Provides: webclient
 
 Conflicts: %bname < 31.0.0
 
-Requires: gst-plugins-bad1.0 
-Requires: gst-plugins-good1.0 
-Requires: gst-plugins-ugly1.0 
-Requires: gst-plugins1.0-tools
-Requires: gstreamer1.0-utils 
+# Requires: gst-plugins-bad1.0 
+# Requires: gst-plugins-good1.0 
+# Requires: gst-plugins-ugly1.0 
+# Requires: gst-plugins1.0-tools
+# Requires: gstreamer1.0-utils 
 
-Requires: libgstreamer1.0 gst-libav
-Requires: gst-plugins-base1.0
+# Requires: libgstreamer1.0 gst-libav
+# Requires: gst-plugins-base1.0
 
 # Protection against fraudulent DigiNotar certificates
-Requires: libnss
+# Requires: libnss
 
 %description -n %bname
 The New Moon browser, an unofficial branding of the Pale Moon project browser
@@ -262,19 +266,24 @@ echo "mk_add_options MOZ_OBJDIR=obj-%_arch" >> .mozconfig
 # echo "mk_add_options MOZ_MAKE_FLAGS=-j${NPROCS:-4}" >> .mozconfig
 echo "mk_add_options MOZ_MAKE_FLAGS=%_smp_mflags" >> .mozconfig
 
-# echo "ac_add_options --enable-rpath"  >> .mozconfig
-
-## echo "ac_add_options --disable-static" >> .mozconfig
 echo "ac_add_options --disable-elf-hack" >> .mozconfig
-echo "ac_add_options --enable-alsa --enable-pulseaudio" >> .mozconfig
-echo "ac_add_options --enable-raw --enable-ffmpeg" >> .mozconfig
+echo "ac_add_options --enable-alsa" >> .mozconfig 
+echo "ac_add_options --enable-pulseaudio" >> .mozconfig
+echo "ac_add_options --enable-raw" >> .mozconfig
+echo "ac_add_options --enable-ffmpeg" >> .mozconfig
+echo "ac_add_options --enable-fmp4" >> .mozconfig
 
 echo "ac_add_options --enable-system-hunspell" >> .mozconfig
 
-echo "ac_add_options --with-pthreads" >> .mozconfig
-
 echo "ac_add_options --x-libraries=%_libdir/X11" >> .mozconfig
 echo "ac_add_options --with-nss-prefix=%_libdir/nss" >> .mozconfig
+
+echo "ac_add_options  --with-system-jpeg" >> .mozconfig
+echo "ac_add_options  --with-system-zlib" >> .mozconfig
+
+
+# echo "ac_add_options  --enable-perf" >> .mozconfig
+# echo "ac_add_options  --with-system-ffi" >> .mozconfig
 
 %ifarch x86_64
  echo "ac_add_options --with-arch=x86-64" >> .mozconfig
@@ -302,8 +311,8 @@ user_pref("intl.locale.matchOS",  true);
 user_pref("general.useragent.locale", "C");
 EOF
 
+
 %build
-%add_optflags %optflags_shared
 %add_optflags %optflags_shared
 
 %add_findprov_lib_path %newmoon_prefix
@@ -499,8 +508,11 @@ install -D -m 644 %SOURCE10 %_builddir/%sname-%version
 %exclude %_includedir/*
 
 %changelog
+* Tue Mar 26 2024 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.0.2-alt1
+- New Version
+
 * Sun Mar 24 2024 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.0.1-alt2
-- Replace patchs
+- Changed patches
 
 * Wed Mar 20 2024 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.0.1-alt1
 - Release 33.0.1
