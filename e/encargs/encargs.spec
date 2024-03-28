@@ -1,6 +1,6 @@
 Name: encargs
 Version: 0.3
-Release: alt1
+Release: alt2
 
 Summary: Execute an encoded command line
 
@@ -10,7 +10,9 @@ URL: https://github.com/bonktree/encargs
 
 # This program can interpret meson.build files, and we would like to avoid
 # dependency on python3.
-BuildRequires: muon rpm-macros-muon
+BuildRequires: muon
+# This version has a correct implementation of %%muon_meson.
+BuildRequires: rpm-macros-muon >= 0.2.0-alt2
 BuildRequires: gcc
 
 Source: %name-%version.tar
@@ -29,35 +31,21 @@ mangled by UNIX shell word split.
 %setup
 
 %build
-muon_fix_setup() {
-   if [ "$#" -ge 4 ]; then
-       case $1:$2 in
-       meson:setup)
-           __s="$3"; __b="$4"; shift 4
-           %_bindir/muon meson setup "$__b" "$__s" "$@"
-           return
-       ;;
-       *) break ;;
-       esac
-   fi
-   %_bindir/muon "$@"
-}
-%define __muon muon_fix_setup
 %muon_meson
-%define __muon %_bindir/muon
 %muon_build
 
 %install
-%define __muon %_bindir/muon
 %muon_install
 
 %check
-%define __muon %_bindir/muon
 %muon_test
 
 %files
 %_bindir/encargs
 
 %changelog
+* Thu Mar 28 2024 Arseny Maslennikov <arseny@altlinux.org> 0.3-alt2
+- Drop macro cludges; no functional change for users.
+
 * Sat Oct 14 2023 Arseny Maslennikov <arseny@altlinux.org> 0.3-alt1
 - Initial build for ALT Sisyphus.
