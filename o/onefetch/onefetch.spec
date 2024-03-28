@@ -1,18 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: onefetch
-Version: 2.18.1
+Version: 2.20.0
 Release: alt1
 
 Summary: Command-line Git information tool
 License: MIT
 Group: Monitoring
-Url: https://onefetch.dev/
+Url: https://onefetch.dev
 Vcs: https://github.com/o2sh/onefetch
 
 Source0: %name-%version.tar
 Source1: vendor.tar
-Source2: .cargo/config.toml
+Source2: config.toml
 BuildRequires(pre): rpm-build-rust
 BuildRequires: rust-cargo
 BuildRequires: rust
@@ -22,7 +22,7 @@ BuildRequires: cmake
 %description
 Onefetch is a command-line Git information tool written in Rust that displays
 project information and code statistics for a local Git repository directly
-to your terminal. The tool is completely offline - no network access is required
+to your terminal. The tool is completely offline - no network access is required.
 
 %prep
 %setup -a 1
@@ -37,10 +37,13 @@ install -Dm 644  docs/onefetch.1 %buildroot%_man1dir/onefetch.1
 
 %files
 %_bindir/%name
-%doc README.md docs/README.ru.md
+%doc README.md docs/README.ru.md LICENSE.md
 %_man1dir/*
 
 %changelog
+* Wed Mar 27 2024 Vladislav Glinkin <smasher@altlinux.org> 2.20.0-alt1
+- Update to 2.20.0
+
 * Tue Oct 10 2023 Vladislav Glinkin <smasher@altlinux.org> 2.18.1-alt1
 - Initial build for ALT
 
