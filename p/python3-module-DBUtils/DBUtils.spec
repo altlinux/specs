@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.1.0
-Release: alt1
+Release: alt2
 
 Summary: Database connections for multi-threaded environments
 License: MIT
@@ -15,6 +15,7 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 
+%filter_from_requires /python3(pg)/d
 %pyproject_runtimedeps_metadata
 # mapping of PyPI name to distro name
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
@@ -51,6 +52,9 @@ of multi-threaded environments.
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Thu Mar 28 2024 Ajrat Makhmutov <rauty@altlinux.org> 3.1.0-alt2
+- Remove autorequirement of PyGreSQL.
+
 * Fri Mar 22 2024 Ajrat Makhmutov <rauty@altlinux.org> 3.1.0-alt1
 - New version.
 
