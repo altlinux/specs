@@ -1,20 +1,23 @@
 %define _unpackaged_files_terminate_build 1
 
-%define oname selenium
+%define pypi_name selenium
+%define mod_name %pypi_name
 
-Name: python3-module-%oname
-Version: 3.14.1
+Name: python3-module-%pypi_name
+Version: 4.19.0
 Release: alt1
 
 Summary: Python bindings for Selenium
 License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/selenium/
+Url: https://pypi.org/project/selenium
 
 Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: selenium-use-without-bundled-libs.patch
-
-BuildRequires(pre): rpm-build-python3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %description
 Python language bindings for Selenium WebDriver.
@@ -25,26 +28,29 @@ Python.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if "%_libexecdir" != "%_libdir"
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
-find %buildroot -type f -name '*.so' -exec rm -f '{}' +
-
 %check
 
 %files
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Mar 28 2024 Stanislav Levin <slev@altlinux.org> 4.19.0-alt1
+- 3.14.1 -> 4.19.0.
+
 * Thu Jan 20 2022 Stanislav Levin <slev@altlinux.org> 3.14.1-alt1
 - 3.0.2 -> 3.14.1.
 
