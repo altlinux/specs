@@ -1,5 +1,5 @@
 Name:       rivalcfg
-Version:    4.11.0
+Version:    4.12.0
 Release:    alt1
 
 Summary:    Configure SteelSeries Rival gaming mice
@@ -48,8 +48,11 @@ touch %buildroot%_udevrulesdir/99-steelseries-rival.rules
 
 
 %changelog
+* Thu Mar 28 2024 L.A. Kostis <lakostis@altlinux.ru> 4.12.0-alt1
+- 4.12.0.
+
 * Wed Feb 07 2024 L.A. Kostis <lakostis@altlinux.ru> 4.11.0-alt1
-- v4.11.0.
+- 4.11.0.
 
 * Tue Sep 05 2023 L.A. Kostis <lakostis@altlinux.ru> 4.10.0-alt1
 - 4.10.0.
