@@ -1,7 +1,10 @@
 %define oname Eve-Elastic
 
+# tests need network
+%def_without check
+
 Name: python3-module-%oname
-Version: 7.3.0
+Version: 7.4.1
 Release: alt1
 
 Summary: Elasticsearch data layer for eve rest framework
@@ -15,6 +18,17 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-eve
+BuildRequires: python3-module-werkzeug
+BuildRequires: python3-module-elasticsearch
+BuildRequires: python3-module-arrow
+BuildRequires: python3-module-ciso8601
+BuildRequires: python3-module-pytz
+%endif
 
 %py3_provides eve_elastic
 
@@ -33,18 +47,24 @@ Features:
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_pytest -v
 
 %files
-%doc *.md *.rst
+%doc README.*
 %python3_sitelibdir/eve_elastic
-%python3_sitelibdir/Eve_Elastic-%version-*.egg-info
+%python3_sitelibdir/Eve_Elastic-%version.dist-info
 
 
 %changelog
+* Thu Mar 28 2024 Anton Vyatkin <toni@altlinux.org> 7.4.1-alt1
+- New version 7.4.1.
+
 * Thu Mar 23 2023 Anton Vyatkin <toni@altlinux.org> 7.3.0-alt1
 - New version 7.3.0.
 
