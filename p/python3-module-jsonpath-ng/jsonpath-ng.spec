@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.3
+Version: 1.6.1
 Release: alt1
 Summary: A final implementation of JSONPath for Python
 License: Apache-2.0
@@ -20,7 +20,6 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%add_pyproject_deps_check_filter coveralls
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -50,8 +49,7 @@ tree.
 %pyproject_install
 
 %check
-# modern pytest + testscenarios don't work, fallback to unittest
-%pyproject_run_unittest
+%pyproject_run_pytest
 
 %files
 %doc README.*
@@ -60,5 +58,8 @@ tree.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Mar 28 2024 Alexandr Shashkin <dutyrok@altlinux.org> 1.6.1-alt1
+- 1.5.3 -> 1.6.1.
+
 * Thu May 11 2023 Stanislav Levin <slev@altlinux.org> 1.5.3-alt1
 - Initial build for Sisyphus.
