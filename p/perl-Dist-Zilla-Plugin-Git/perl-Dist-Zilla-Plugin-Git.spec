@@ -3,15 +3,15 @@
 %define real_name Dist-Zilla-Plugin-Git
 
 Name: perl-Dist-Zilla-Plugin-Git
-Version: 2.048
-Release: alt2
+Version: 2.049
+Release: alt1
 
 Summary: Dist:Zilla plugin to Update git repository after release
 
 License: %perl_license
 Group: Development/Perl
 
-URL: http://search.cpan.org/dist/Dist-Zilla-Plugin-Git/
+URL: https://metacpan.org/release/Dist-Zilla-Plugin-Git/
 
 Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
@@ -45,6 +45,9 @@ work.
 %perl_vendor_privlib/Dist/Zilla/*
 
 %changelog
+* Thu Mar 28 2024 Nikolay A. Fetisov <naf@altlinux.org> 2.049-alt1
+- New version
+
 * Mon Sep 20 2021 Vitaly Lipatov <lav@altlinux.ru> 2.048-alt2
 - update BuildRequires with buildreq
 
