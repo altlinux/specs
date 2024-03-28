@@ -3,7 +3,7 @@
 %define real_name Mozilla-CA
 
 Name: perl-Mozilla-CA
-Version: 20230821
+Version: 20240313
 Release: alt1
 
 Summary: Perl module provides CA cert bundle
@@ -55,6 +55,9 @@ ca-certificates .
 %exclude %perl_vendor_privlib/Mozilla/CA/*
 
 %changelog
+* Thu Mar 28 2024 Nikolay A. Fetisov <naf@altlinux.org> 20240313-alt1
+- New version
+
 * Mon Sep 11 2023 Nikolay A. Fetisov <naf@altlinux.org> 20230821-alt1
 - New version
 
