@@ -1,15 +1,17 @@
 Name: libflif
-Version: 0.3
-Release: alt3
+Version: 0.4
+Release: alt1
 
 Summary: Free Lossless Image Format
+
 License: LGPLv3+ and Apache-2.0
 Group: Development/C
-
 Url: http://flif.info/
+
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
 # Source-url: https://github.com/FLIF-hub/FLIF/archive/v%version.tar.gz
 Source: %name-%version.tar
-Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildRequires: gcc-c++
 BuildRequires: libpng-devel
@@ -109,6 +111,10 @@ cd src
 %_libdir/libflif_dec.so.0
 
 %changelog
+* Thu Mar 28 2024 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt1
+- new version 0.4 (fixes: CVE-2017-14232, CVE-2018-10971,
+  CVE-2018-11507, CVE-2018-12109, CVE-2018-14876, CVE-2019-14373)
+
 * Sat Mar 21 2020 Michael Shigorin <mike@altlinux.org> 0.3-alt3
 - E2K: avoid lcc-unsuported option
 - minor spec cleanup
