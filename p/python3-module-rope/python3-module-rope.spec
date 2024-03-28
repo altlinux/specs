@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.12.0
+Version: 1.13.0
 Release: alt1
 
 Summary: A python refactoring library
@@ -27,6 +27,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_metadata_extra dev
 %pyproject_builddeps_check
 BuildRequires: python3-modules-sqlite3
+BuildRequires: python3-module-pip
 %endif
 
 %description
@@ -55,6 +56,9 @@ BuildRequires: python3-modules-sqlite3
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Mar 28 2024 Anton Zhukharev <ancieg@altlinux.org> 1.13.0-alt1
+- Updated to 1.13.0.
+
 * Wed Feb 07 2024 Anton Zhukharev <ancieg@altlinux.org> 1.12.0-alt1
 - Updated to 1.12.0.
 - Built from upstream VCS.
