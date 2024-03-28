@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        123.0.6312.58
+Version:        123.0.6312.86
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -85,6 +85,7 @@ Patch027: 0027-Use-system-sysroot-for-rust.patch
 Patch028: 0028-DEBIAN-work-around-incorrect-template-selection.patch
 Patch029: 0029-nullptr_t-without-namespace-std.patch
 Patch030: 0030-Fix-undefined-symbol-partition_alloc-internal-Intern.patch
+Patch031: 0031-FEDORA-disable-screen-ai-service.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -501,6 +502,14 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Mar 27 2024 Andrey Cherepanov <cas@altlinux.org> 123.0.6312.86-alt1
+- New version (123.0.6312.86).
+- Security fixes:
+  + CVE-2024-2883: Use after free in ANGLE.
+  + CVE-2024-2885: Use after free in Daw.
+  + CVE-2024-2886: Use after free in WebCodecs.
+  + CVE-2024-2887: Type Confusion in WebAssembly.
+
 * Thu Mar 21 2024 Alexey Gladkov <legion@altlinux.ru> 123.0.6312.58-alt1
 - New version (123.0.6312.58).
 - Security fixes:
