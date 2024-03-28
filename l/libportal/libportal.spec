@@ -14,7 +14,7 @@
 
 Name: libportal
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: Flatpak portal library
@@ -185,6 +185,11 @@ of the installed %name.
 
 %prep
 %setup
+%ifarch %e2k
+# workaround for EDG frontend
+sed -E -i 's/g_autofree ([ a-z]*) \*/g_autofree_edg(\1) /' \
+    libportal/portal-qt5.cpp
+%endif
 
 %build
 %meson \
@@ -280,6 +285,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Thu Mar 28 2024 Yuri N. Sedunov <aris@altlinux.org> 1:0.7.1-alt1.1
+- fixed build for %%e2k (ilyakurdyukov@)
+
 * Sun Sep 10 2023 Yuri N. Sedunov <aris@altlinux.org> 1:0.7.1-alt1
 - 0.7.1
 

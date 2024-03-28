@@ -44,7 +44,7 @@
 
 Name: glib2
 Version: %ver_major.0
-Release: alt2
+Release: alt2.1
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -75,7 +75,7 @@ Patch1: glib-2.53.5-alt-deprecated_paths-nowarning.patch
 Patch2: glib-2.75.4-alt-add-xvt.patch
 Patch3: glib-2.71.3-alt-lfs.patch
 
-Patch2000: glib-2.70.3-alt-e2k.patch
+Patch2000: glib-2.80.0-alt-e2k.patch
 
 %def_with locales
 %if_with locales
@@ -492,6 +492,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Thu Mar 28 2024 Yuri N. Sedunov <aris@altlinux.org> 2.80.0-alt2.1
+- updated e2k patch (ilyakurdyukov@)
+
 * Fri Mar 08 2024 Yuri N. Sedunov <aris@altlinux.org> 2.80.0-alt2
 - debootstrap: built with old gobject-introspection-1.78
 
