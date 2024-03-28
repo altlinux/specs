@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.3.0
+Version: 5.4.0
 Release: alt1
 
 Summary: Tool for managing your YubiKey configuration
@@ -35,7 +35,7 @@ BuildRequires(pre): rpm-build-pyproject
 %endif
 
 %description
-Python 3.6 (or later) library for configuring a YubiKey.
+Python 3.7 (or later) library for configuring a YubiKey.
 
 %prep
 %setup
@@ -66,6 +66,9 @@ install -pD -m0644 man/ykman.1 %buildroot%_man1dir/ykman.1
 %_man1dir/%mod_name.1.*
 
 %changelog
+* Thu Mar 28 2024 Anton Zhukharev <ancieg@altlinux.org> 5.4.0-alt1
+- Updated to 5.4.0.
+
 * Fri Feb 09 2024 Anton Zhukharev <ancieg@altlinux.org> 5.3.0-alt1
 - Updated to 5.3.0.
 
