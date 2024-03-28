@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define ver_major 56
@@ -13,7 +13,7 @@
 
 Name: gnome-shell-extension-gsconnect
 Version: %ver_major
-Release: alt1
+Release: alt2
 
 Summary: GSConnect is a implementation of KDE Connect for GNOME Shell
 Group: Graphical desktop/GNOME
@@ -29,15 +29,15 @@ Vcs: https://github.com/GSConnect//gnome-shell-extension-gsconnect.git
 Source: %name-%version%beta.tar
 %endif
 
-Requires: gnome-shell >= 45
+Requires: gnome-shell >= 46
 Requires: /usr/bin/ffmpeg /usr/bin/fusermount
 Requires: /usr/bin/ssh-keygen /usr/bin/ssh-add
 Requires: fuse-sshfs /usr/bin/openssl
-Requires: libadwaita-gir >= 1.4
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
 BuildRequires: meson eslint libgio-devel libdbus-devel libgtk4-devel
-%{?_enable_check:BuildRequires: xvfb-run %_bindir/gjs typelib(Gdk) = 3.0 typelib(Adw) = 1}
+%{?_enable_check:BuildRequires: xvfb-run %_bindir/gjs typelib(Gdk) = 3.0 typelib(Adw) = 1
+BuildRequires: /usr/bin/appstreamcli /usr/bin/eslint}
 
 %add_python3_path %_datadir/gnome-shell/extensions/%domain %_datadir/nautilus-python/extensions
 # imports.gi.St.Settings.get()
@@ -97,6 +97,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Thu Mar 28 2024 Yuri N. Sedunov <aris@altlinux.org> 56-alt2
+- updated to v56-22-g3e754b0e (gnome-46 supported)
+
 * Mon Nov 06 2023 Yuri N. Sedunov <aris@altlinux.org> 56-alt1
 - 56
 
