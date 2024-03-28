@@ -5,7 +5,7 @@
 %def_with    textstyle
 
 Name: poke
-Version: 3.2
+Version: 3.3
 Release: alt1
 
 Summary: Extensible editor for structured binary data
@@ -67,6 +67,10 @@ This package contains Poke static library.
 
 %endif
 
+# PTY is needed to run tests - disable them inside hasher
+%ifdef __BTE
+%def_without test
+%endif
 
 %prep
 %setup
@@ -152,6 +156,9 @@ chrpath -d %buildroot/%_bindir/poked
 make check
 
 %changelog
+* Thu Mar 28 2024 Nikolay A. Fetisov <naf@altlinux.org> 3.3-alt1
+- New version
+
 * Sat Jan 13 2024 Fr. Br. George <george@altlinux.org> 3.2-alt1
 - Build new version
 - Vendor libtextstyle in (it's safe for no CSS is parsed)
