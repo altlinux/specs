@@ -3,7 +3,7 @@
 %define real_name PAR-Packer
 
 Name: perl-PAR-Packer
-Version: 1.059
+Version: 1.063
 Release: alt1
 
 Summary: Perl module to generate stand-alone executables and ".par" archives
@@ -11,7 +11,7 @@ Summary: Perl module to generate stand-alone executables and ".par" archives
 License: %perl_license
 Group: Development/Perl
 
-URL: http://search.cpan.org/dist/PAR-Packer/
+URL: https://metacpan.org/release/PAR-Packer/
 
 Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
@@ -74,6 +74,9 @@ mv -- %buildroot%_bindir/pp %buildroot%_bindir/par-pp
 
 
 %changelog
+* Thu Mar 28 2024 Nikolay A. Fetisov <naf@altlinux.org> 1.063-alt1
+- New version
+
 * Tue Jul 25 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.059-alt1
 - New version
 
