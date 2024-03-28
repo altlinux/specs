@@ -121,7 +121,7 @@
 
 Name:    samba
 Version: 4.19.5
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2208,6 +2208,18 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Thu Mar 28 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.19.5-alt2
+- Add support 'client force dns canonicalize hostname' global parameter, enables
+  client library tries to resolve canonical name. This feature allows to
+  communicate via kerberos to services using CNAME records without adding SPNs.
+- Fixes updated from upstream for smbd:
+  + If we fail to close file_handle ensure we should reset the fd (Samba#15527).
+  + simplify handling of failing fstat() after unlinking file (Samba#15527).
+- Fixes updated from upstream for gpo:
+  + libgpo: Do not segfault if we don't have a valid security descriptor (Samba#15599).
+  + python:gp: Implement client site lookup in site_dn_for_machine() (Samba#15588).
+  + librpc:idl: Make netlogon_samlogon_response public (Samba#15588).
+
 * Mon Mar 11 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.19.5-alt1
 - Update to stable release of Samba 4.19
 - Fixes from upstream:
