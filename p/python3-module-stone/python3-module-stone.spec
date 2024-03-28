@@ -5,8 +5,8 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 3.3.1
-Release: alt4
+Version: 3.3.2
+Release: alt1
 
 Summary: The Official API Spec Language for Dropbox API V2
 License: MIT
@@ -17,8 +17,7 @@ VCS:     https://github.com/dropbox/stone
 BuildArch: noarch
 
 Source:  %name-%version.tar
-Patch:   stone-3.3.1-alt-drop-distutils.patch
-Patch1:  stone-3.3.1-alt-imp-py312-fix.patch
+Patch:   stone-3.3.2-alt-drop-distutils.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -34,8 +33,7 @@ BuildRequires: python3-module-six
 
 %prep
 %setup
-%patch -p0
-%patch1 -p1
+%patch -p1
 
 # Don't use pytest-runner
 sed -i '/pytest-runner/d' setup.py
@@ -58,6 +56,9 @@ sed -i 's/getargspec/getfullargspec/' stone/frontend/ir_generator.py
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Thu Mar 28 2024 Anton Vyatkin <toni@altlinux.org> 3.3.2-alt1
+- New version 3.3.2.
+
 * Tue Jan 30 2024 Anton Vyatkin <toni@altlinux.org> 3.3.1-alt4
 - Fixed FTBFS (replace deprecated imp).
 
