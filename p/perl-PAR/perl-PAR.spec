@@ -3,7 +3,7 @@
 %define real_name PAR
 
 Name: perl-PAR
-Version: 1.019
+Version: 1.020
 Release: alt1
 
 Summary: Perl Archive Toolkit
@@ -11,7 +11,7 @@ Summary: Perl Archive Toolkit
 License: %perl_license
 Group: Development/Perl
 
-URL: http://search.cpan.org/dist/PAR/
+URL: https://metacpan.org/release/PAR/
 
 Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
@@ -43,6 +43,9 @@ and modules stored inside compressed .par files.
 %perl_vendor_privlib/PAR*
 
 %changelog
+* Thu Mar 28 2024 Nikolay A. Fetisov <naf@altlinux.org> 1.020-alt1
+- New version
+
 * Tue Nov 07 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.019-alt1
 - New version
 
