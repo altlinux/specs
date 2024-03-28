@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.2.11
+Version: 0.2.15
 Release: alt1
 
 Summary: HTML/CSS to PDF converter based on Python
@@ -17,6 +17,8 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -59,26 +61,31 @@ This package contains demos for %oname.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3 -v
+# test_document_cannot_identify_image and test_document_with_broken_image
+# try to download images from network
+py.test-3 -v -k 'not test_document_cannot_identify_image and not test_document_with_broken_image'
 
 %files
 %doc *.txt *.rst
 %_bindir/pisa
 %_bindir/%oname
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %files demos
 %doc demo/*
 
 %changelog
+* Thu Mar 28 2024 Grigory Ustinov <grenka@altlinux.org> 0.2.15-alt1
+- Automatically updated to 0.2.15.
+
 * Tue May 16 2023 Grigory Ustinov <grenka@altlinux.org> 0.2.11-alt1
 - Automatically updated to 0.2.11.
 
