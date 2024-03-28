@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.9.0
-Release: alt2
+Version: 0.11.0
+Release: alt1
 
 Summary: Typer, build great CLIs. Easy to code. Based on Python type hints
 License: MIT
@@ -19,13 +19,23 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 
 %pyproject_runtimedeps_metadata
+%pyproject_runtimedeps_metadata -- --extra all
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
 BuildRequires: /proc
+
+# There's no sense to use the static type checkers for tests
+%add_pyproject_deps_runtime_filter mypy
+%add_pyproject_deps_runtime_filter ruff
+
+# using of coverage module will be cleaned from the tests' files below
+%add_pyproject_deps_runtime_filter coverage
+
+%pyproject_builddeps_check
 %pyproject_builddeps_metadata
-%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_metadata_extra all
 %endif
 
 %description
@@ -50,10 +60,11 @@ The key features are:
 %setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements-tests.txt
+%endif
 
 %build
-# Delete completion for click7 because of there is click > 8 in sisyphus
-rm -v typer/_completion_click7.py
 %pyproject_build
 
 %install
@@ -71,7 +82,7 @@ export COLUMNS=135
 ## test_show_completion and test_install_completion
 # Deselect these tests because of typer doesn't support SH, but this shell is
 # run in hasher.
-%pyproject_run_pytest \
+%pyproject_run_pytest -nauto \
     --deselect="tests/test_completion/test_completion.py::test_show_completion" \
     --deselect="tests/test_completion/test_completion.py::test_install_completion"
 
@@ -81,6 +92,9 @@ export COLUMNS=135
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Mar 28 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.11.0-alt1
+- 0.9.0 -> 0.11.0.
+
 * Sat Oct 21 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.9.0-alt2
 - Fixed FTBFS: deselect some tests for bash completion
 
