@@ -3,10 +3,10 @@
 %define _name lc3
 
 %def_enable tools
-%def_disable check
+%def_enable check
 
 Name: lib%_name
-Version: 1.0.4
+Version: 1.1.0
 Release: alt1
 
 Summary: Low Complexity Communication Codec (LC3)
@@ -72,6 +72,9 @@ This package provides LC3 tools.
 %endif
 
 %changelog
+* Thu Mar 28 2024 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Fri Aug 04 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
 - 1.0.4
 
