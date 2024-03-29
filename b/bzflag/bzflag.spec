@@ -1,6 +1,6 @@
-# commit 1457a094dd4e970e6b1fa1e4d7a053c80adf5fe7
+# commit 523084f9582a67c7847df4e5dd48dd49241bf7dc
 
-%define git_commit 1457a094d
+%define git_commit 5230
 
 %def_enable plugins
 
@@ -9,7 +9,10 @@
 %undefine cvs
 
 Name: bzflag
-Version: 2.5.3
+Version: 2.4.27
+
+Epoch: 1
+
 
 %ifdef git_commit
 Release: alt0.git_1_%git_commit
@@ -245,6 +248,9 @@ mkdir -p %buildroot/var/run/%name
 %_initdir/bzfs
 
 %changelog
+* Fri Mar 29 2024 Hihin Ruslan <ruslandh@altlinux.ru> 1:2.4.27-alt0.git_1_5230
+- Update to git commit 5230
+
 * Tue Nov 21 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2.5.3-alt0.git_1_1457a094d
 - Update to git commit 1457a094d
 
