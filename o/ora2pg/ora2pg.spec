@@ -1,5 +1,5 @@
 Name:    ora2pg
-Version: 24.2
+Version: 24.3
 Release: alt1
 
 Summary: Ora2Pg is a free tool used to migrate an Oracle database to a PostgreSQL compatible schema
@@ -40,5 +40,8 @@ install -Dpm0644 ora2pg.conf.dist %buildroot%_sysconfdir/ora2pg/ora2pg.conf
 %perl_vendor_privlib/Ora2Pg*
 
 %changelog
+* Fri Mar 29 2024 Andrey Cherepanov <cas@altlinux.org> 24.3-alt1
+- New version.
+
 * Fri Mar 22 2024 Andrey Cherepanov <cas@altlinux.org> 24.2-alt1
 - Initial build for Sisyphus
