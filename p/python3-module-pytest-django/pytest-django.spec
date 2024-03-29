@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.5.2
-Release: alt3
+Version: 4.8.0
+Release: alt1
 Summary: A Django plugin for py.test
 License: BSD
 Group: Development/Python3
@@ -51,11 +51,14 @@ export PYTHONPATH=$(pwd)
 %pyproject_run_pytest -ra -Wignore tests
 
 %files
-%doc AUTHORS *.rst
+%doc README.*
 %python3_sitelibdir/pytest_django/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 29 2024 Stanislav Levin <slev@altlinux.org> 4.8.0-alt1
+- 4.5.2 -> 4.8.0.
+
 * Fri May 12 2023 Stanislav Levin <slev@altlinux.org> 4.5.2-alt3
 - Modernized packaging.
 - Fixed FTBFS (pytest-xdist 3).
