@@ -1,33 +1,27 @@
 %define _unpackaged_files_terminate_build 1
-%define oname pygal
+%define pypi_name pygal
+%define mod_name %pypi_name
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 3.0.0
-Release: alt1.1
+Name: python3-module-%pypi_name
+Version: 3.0.4
+Release: alt1
 Summary: A python svg graph plotting library
 License: LGPLv3
 Group: Development/Python3
 Url: https://pypi.org/project/pygal/
-
-# https://github.com/Kozea/pygal.git
+Vcs: https://github.com/Kozea/pygal
+BuildArch: noarch
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
-
-BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(cairosvg)
-BuildRequires: python3(lxml)
-BuildRequires: python3(pyquery)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -37,6 +31,11 @@ documentation is on http://pygal.org
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
@@ -46,18 +45,21 @@ documentation is on http://pygal.org
 mv %buildroot%_bindir/pygal_gen.py{,3}
 
 # don't package tests
-rm -r %buildroot%python3_sitelibdir/%oname/test/
+rm -r %buildroot%python3_sitelibdir/%mod_name/test/
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -ra pygal/test/
 
 %files
 %doc CHANGELOG README*
 %_bindir/pygal_gen.py3
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version.dist-info/
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 29 2024 Stanislav Levin <slev@altlinux.org> 3.0.4-alt1
+- 3.0.0 -> 3.0.4.
+
 * Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1.1
 - NMU: moved on modern pyproject macros.
 
