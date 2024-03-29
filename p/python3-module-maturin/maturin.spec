@@ -1,6 +1,6 @@
 Name: python3-module-maturin
 Version: 1.5.0
-Release: alt1.1
+Release: alt2
 
 Summary: Rust within Python
 License: MIT
@@ -17,6 +17,7 @@ BuildRequires: rust-cargo /proc
 BuildRequires: pkgconfig(bzip2)
 %pyproject_builddeps_build
 
+Requires: rust-cargo /proc
 Requires: python3(tomli)
 Provides: maturin = %version-%release
 Obsoletes: maturin
@@ -55,6 +56,9 @@ chmod +x %buildroot%_bindir/maturin
 %python3_sitelibdir/maturin-%version.dist-info
 
 %changelog
+* Fri Mar 29 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.0-alt2
+- added runtime dependency to rust-cargo
+
 * Wed Mar 20 2024 Ivan A. Melnikov <iv@altlinux.org> 1.5.0-alt1.1
 - NMU: fix FTBFS on loongarch64
   + backport upstream patch on vendored libc crate
