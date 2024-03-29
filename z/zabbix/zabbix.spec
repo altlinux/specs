@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		c5fe8f4d2d2
+%define svnrev		a2688d6f328
 
 %def_with pgsql
 %def_enable java
@@ -17,8 +17,8 @@
 %endif
 
 Name: zabbix
-Version: 6.0.27
-Release: alt2
+Version: 6.0.28
+Release: alt1
 Epoch: 1
 
 Summary: A network monitor
@@ -46,11 +46,7 @@ BuildRequires: libssh2-devel
 BuildRequires: libunixODBC-devel
 %endif
 
-%ifarch %e2k
 %{?_enable_java:BuildRequires: java-devel rpm-build-java}
-%else
-%{?_enable_java:BuildRequires: java-11-devel rpm-build-java}
-%endif
 
 %if_with pgsql
 BuildRequires: libpq-devel
@@ -157,7 +153,6 @@ Summary: %name java gateway
 Group: Monitoring
 Requires: %name-common >= 1:2.0.4-alt1
 Requires: jre-openjdk >= 1.7.0
-BuildArch: noarch
 %filter_from_requires /^\/etc\/sysconfig\/network/d
 %filter_from_requires /^\/etc\/sysconfig\/zabbix-java-gateway/d
 %endif
@@ -772,6 +767,11 @@ fi
 %_includedir/%name
 
 %changelog
+* Thu Mar 28 2024 Alexei Takaseev <taf@altlinux.org> 1:6.0.28-alt1
+- 6.0.28
+- Revert changes from 6.0.26-alt2 and 6.0.27-alt2, no need more.
+- java-gateway now arch-depended
+
 * Tue Mar 19 2024 Michael Shigorin <mike@altlinux.org> 1:6.0.27-alt2
 - E2K: use whatever java is available
 
