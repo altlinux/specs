@@ -3,8 +3,8 @@
 %define proxy_user backup
 
 Name: proxmox-backup
-Version: 3.1.4.1
-Release: alt2
+Version: 3.1.5.1
+Release: alt1
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -26,6 +26,7 @@ BuildRequires: libudev-devel libssl-devel libacl-devel libsystemd-devel libpam-d
 BuildRequires: libsgutils-devel python3-module-sphinx python3-module-docutils python3-module-sphinx-sphinx-build-symlink
 BuildRequires: proxmox-widget-toolkit-dev
 BuildRequires: rsync jq
+BuildRequires: pkgconf
 BuildRequires: /proc
 
 %description
@@ -85,6 +86,7 @@ rm -f docs/installation.rst
 
 %build
 export REPOID=alt
+#export RUST_BACKTRACE=1
 #%make_build PROXY_USER=%proxy_user
 %make PROXY_USER=%proxy_user
 
@@ -203,8 +205,11 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/doc/%name
 
 %changelog
+* Tue Mar 26 2024 Andrew A. Vasilyev <andy@altlinux.org> 1:3.1.5.1-alt1
+- 3.1.5-1
+
 * Tue Mar 26 2024 Andrew A. Vasilyev <andy@altlinux.org> 1:3.1.4.1-alt2
-- remove subscruption from dashboard
+- remove subscription from dashboard
 
 * Fri Feb 02 2024 Andrew A. Vasilyev <andy@altlinux.org> 1:3.1.4.1-alt1
 - 3.1.4-1
