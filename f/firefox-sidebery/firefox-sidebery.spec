@@ -4,7 +4,7 @@
 %define cid	3c078156-979c-498b-8990-85f7987dd929
 
 Name:		%firefox_name-%rname
-Version:	5.0.0
+Version:	5.2.0
 Release:	alt1
 
 Summary:	Firefox extension for managing tabs and bookmarks in sidebar
@@ -42,5 +42,8 @@ install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 %firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Fri Mar 29 2024 Nikolay A. Fetisov <naf@altlinux.org> 5.2.0-alt1
+- New version
+
 * Mon Nov 27 2023 Nikolay A. Fetisov <naf@altlinux.org> 5.0.0-alt1
 - Initial build for ALT Linux Sisyphus
