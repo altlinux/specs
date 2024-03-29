@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name pano
 %define __name gnome-shell-%_name
@@ -12,7 +12,7 @@
 
 Name: gnome-shell-extension-%_name
 Version: %ver_major
-Release: alt1
+Release: alt2
 
 Summary: Next-gen Clipboard manager for Gnome Shell
 Group: Graphical desktop/GNOME
@@ -27,7 +27,7 @@ BuildArch: noarch
 Source: %url/archive/v%version%beta/%_name-%version%beta.tar.gz
 %else
 Vcs: https://github.com/oae/gnome-shell-pano.git
-Source: %_name-%version%beta.tar
+Source: %__name-%version%beta.tar
 %endif
 Source1: %_name-%version%beta-node.tar
 
@@ -74,6 +74,9 @@ popd
 %doc README.md
 
 %changelog
+* Tue Mar 26 2024 Yuri N. Sedunov <aris@altlinux.org> 22-alt2
+- updated to v22-7-gf1756e4 (gnome-46 supported)
+
 * Fri Nov 17 2023 Yuri N. Sedunov <aris@altlinux.org> 22-alt1
 - 22
 
