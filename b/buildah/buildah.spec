@@ -9,8 +9,8 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: buildah
-Version: 1.35.1
-Release: alt1.1
+Version: 1.35.2
+Release: alt1
 Summary: A command line tool used to creating OCI Images
 Group: Development/Other
 License: Apache-2.0
@@ -89,6 +89,9 @@ popd
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Fri Mar 29 2024 Alexey Shabalin <shaba@altlinux.org> 1.35.2-alt1
+- New version 1.35.2 (Fixes: CVE-2024-24786 in protobuf module).
+
 * Sat Mar 23 2024 Ivan A. Melnikov <iv@altlinux.org> 1.35.1-alt1.1
 - NMU: fix FTBFS on loongarch64.
 
