@@ -6,9 +6,9 @@
 # Self-provided by python3(lldb14.0) in a custom path.
 %filter_from_requires /python[0-9.]\+(lldb)/d
 
-%global v_major 17
-%global v_majmin %v_major.0
-%global v_full %v_majmin.6
+%global v_major 18
+%global v_majmin %v_major.1
+%global v_full %v_majmin.2
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -20,7 +20,7 @@
 %global clang_sover %v_major
 %global clang_cpp_sover %v_major
 %global omp_name omp%v_majmin
-%global omp_sover %v_major
+%global omp_sover %v_majmin
 # libomp has own versioning
 %global omp_vmajor 5
 # According to openmp/libomptarget/README.txt
@@ -57,10 +57,6 @@
 AutoReq: nopython
 AutoProv: nopython
 
-# mold needs additional ldflags
-# which pollute llvm-config --ldflags output
-%def_without mold
-
 # Decrease debuginfo verbosity to reduce memory consumption during final library linking
 %ifarch %ix86 %arm mipsel
 %define optflags_debug -g0
@@ -81,23 +77,27 @@ AutoProv: nopython
 %else
 %def_with lldb
 %endif
-%def_with lld
-# disable openmp due soname clash
-%def_without openmp
 
 %def_disable tests
-# disable clang on aarch64 due very long compile time
-%ifarch x86_64 ppc64le
+# this is not for linking but for building :)
+%def_with lld
+
+%ifarch x86_64 ppc64le aarch64
 %def_with clang
+%def_with mold
 %else
 %def_without clang
+%def_without mold
 %endif
+
 %if_with lldb
-%def_with lldb_contrib
+%def_with lldb_full
 %def_with lldb_python
+%def_without lldb_lua
 %else
-%def_without lldb_contrib
+%def_without lldb_full
 %def_without lldb_python
+%def_without lldb_lua
 %endif
 
 %define tarversion %v_full%rcsuffix
@@ -109,7 +109,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt4
+Release: alt0.2
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -120,34 +120,35 @@ Source: llvm-project-%{v_major}.tar
 Patch:  clang-alt-i586-fallback.patch
 Patch1: clang-alt-triple.patch
 Patch2: 0001-alt-llvm-config-Ignore-wrappers-when-looking-for-current.patch
-Patch3: llvm-alt-fix-linking.patch
 Patch4: llvm-alt-triple.patch
 Patch5: compiler-rt-alt-i586-arch.patch
-Patch6: clang-AST-Use-explicit-type-erasure.patch
 Patch7: clang-alt-aarch64-dynamic-linker-path.patch
 Patch8: clang-tools-extra-alt-gcc-0001-clangd-satisfy-ALT-gcc-s-Werror-return-type.patch
 Patch10: llvm-10-alt-python3.patch
-Patch11: RH-0010-PATCH-clang-Produce-DWARF4-by-default.patch
 # TODO: upstream this
 # Patch11: hwasan_symbolize-python3.patch
 Patch12: llvm-12-alt-mips-pcrel-personality.patch
 Patch13: llvm-12-debian-mips-force-nomadd4.patch
-Patch14: llvm-10-alt-riscv64-config-guess.patch
 Patch17: llvm-cmake-pass-ffat-lto-objects-if-using-the-GNU-toolcha.patch
 Patch18: lld-compact-unwind-encoding.h.patch
 Patch19: llvm-alt-cmake-build-with-install-rpath.patch
 Patch20: clang-16-alt-rocm-device-libs-path.patch
-Patch22: clang-D142199.patch
 Patch23: clang-alt-riscv64-dynamic-linker-path.patch
 Patch101: clang-ALT-bug-40628-grecord-command-line.patch
 Patch102: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.patch
 Patch103: clang-alt-nvvm-libdevice.patch
 Patch104: openmp-alt-soname.patch
+# upstream 822142ffdfbe93f213c2c6b3f2aec7fe5f0af072
+Patch105: openmp-libompd-should-not-link-libomp.patch
 
-Patch200: 0001-RuntimeDyld-RISCV-Minimal-riscv64-support.patch
-Patch201: 0002-RuntimeDyld-RISCV-Impleemnd-HI20-and-LO12_I-relocs.patch
-Patch202: 0003-RuntimeDyld-RISCV-Add-PCREL_HI20-and-PCREL_LO12_I-re.patch
-Patch203: 0004-RuntimeDyld-Minimal-LoongArch64-support.patch
+Patch110: RH-0001-clang-tools-extra-Make-test-dependency-on-LLVMHello-.patch
+Patch111: RH-0003-PATCH-clang-Don-t-install-static-libraries.patch
+Patch112: RH-0001-Workaround-a-bug-in-ORC-on-ppc64le.patch
+
+#Patch200: 0001-RuntimeDyld-RISCV-Minimal-riscv64-support.patch
+#Patch201: 0002-RuntimeDyld-RISCV-Impleemnd-HI20-and-LO12_I-relocs.patch
+#Patch202: 0003-RuntimeDyld-RISCV-Add-PCREL_HI20-and-PCREL_LO12_I-re.patch
+#Patch203: 0004-RuntimeDyld-Minimal-LoongArch64-support.patch
 
 # debian patches for openmp
 Patch300: deb-openmp-riscv64.patch
@@ -167,19 +168,28 @@ BuildRequires(pre): rpm-macros-llvm-common
 BuildRequires(pre): cmake >= 3.4.3
 BuildRequires: rpm-build >= 4.0.4-alt112 libncursesw-devel
 BuildRequires: libstdc++-devel libffi-devel perl-Pod-Parser perl-devel
-BuildRequires: python3-module-myst-parser zip zlib-devel binutils-devel ninja-build
-%if_with lldb_contrib
+BuildRequires: zip zlib-devel binutils-devel
+BuildRequires: python3-module-myst-parser graphviz
+BuildRequires: ninja-build
+%if_with lldb
+BuildRequires: pkgconfig(liblzma)
+BuildRequires: swig-devel
+# lldb uses furo sphinx theme
+BuildRequires: python3-module-sphinx_basic_ng python3-module-furo
+%if_with lldb_full
 BuildRequires: pkgconfig(libedit)
 BuildRequires: pkgconfig(ncursesw)
-BuildRequires: pkgconfig(liblzma)
 BuildRequires: pkgconfig(libxml-2.0)
-#BuildRequires: pkgconfig(lua)
-BuildRequires: swig-devel
-BuildRequires: python3-module-sphinx-automodapi
+%endif
+%if_with lldb_lua
+BuildRequires: lua5.3-devel
+%endif
 %if_with lldb_python
 BuildRequires: python3-devel
+# python_api doc rely on it
+BuildRequires: python3-module-sphinx-automodapi
 %endif
-%endif
+%endif #lldb
 %if_with clang
 BuildRequires: %clang_default_name %llvm_default_name-devel %lld_default_name
 %else
@@ -410,7 +420,6 @@ Group: Development/C
 %requires_filesystem
 Requires: clang-devel >= %_llvm_version
 Requires: %clang_name = %EVR
-Requires: %clang_name-tidy-devel-static = %EVR
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
 AutoReq: nopython
@@ -418,31 +427,6 @@ AutoProv: nopython
 
 %description -n %clang_name-devel
 This package contains header files for the Clang compiler.
-
-%package -n %clang_name-tidy-devel-static
-Summary: Static libraries for clang tidy
-Group: Development/C
-%requires_filesystem
-
-# We do not want Python modules to be analyzed by rpm-build-python2.
-AutoReq: nopython
-AutoProv: nopython
-
-%description -n %clang_name-tidy-devel-static
-This package contains static libraries for Clang Tidy.
-
-%package -n %clang_name-devel-static
-Summary: Static libraries for clang
-Group: Development/C
-%requires_filesystem
-Requires: %clang_name-devel = %EVR
-
-# We do not want Python modules to be analyzed by rpm-build-python2.
-AutoReq: nopython
-AutoProv: nopython
-
-%description -n %clang_name-devel-static
-This package contains static libraries for the Clang compiler.
 
 %package -n %clang_name-analyzer
 Summary: A source code analysis framework
@@ -479,7 +463,9 @@ libclang, including clang-format.
 %package -n %clang_name-doc
 Summary: Documentation for Clang
 Group: Documentation
-BuildArch: noarch
+# graphviz on %%ix86 produce png with zero size so make it arch again until
+# the issue will be fixed
+#BuildArch: noarch
 %requires_filesystem
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
@@ -621,10 +607,11 @@ AutoReq: nopython
 AutoProv: nopython
 
 %description -n lib%mlir_name
-MLIR is a novel approach to building reusable and extensible compiler infrastructure.
-MLIR aims to address software fragmentation, improve compilation for
-heterogeneous hardware, significantly reduce the cost of building domain
-specific compilers, and aid in connecting existing compilers together.
+MLIR is a novel approach to building reusable and extensible compiler
+infrastructure.  MLIR aims to address software fragmentation, improve
+compilation for heterogeneous hardware, significantly reduce the cost of
+building domain specific compilers, and aid in connecting existing compilers
+together.
 
 %package -n lib%mlir_name-devel
 Summary: Libraries and header files for MLIR
@@ -636,10 +623,11 @@ AutoReq: nopython
 AutoProv: nopython
 
 %description -n lib%mlir_name-devel
-MLIR is a novel approach to building reusable and extensible compiler infrastructure.
-MLIR aims to address software fragmentation, improve compilation for
-heterogeneous hardware, significantly reduce the cost of building domain
-specific compilers, and aid in connecting existing compilers together.
+MLIR is a novel approach to building reusable and extensible compiler
+infrastructure.  MLIR aims to address software fragmentation, improve
+compilation for heterogeneous hardware, significantly reduce the cost of
+building domain specific compilers, and aid in connecting existing compilers
+together.
 
 This package contains headers and other development files for lib%mlir_name.
 
@@ -653,10 +641,11 @@ AutoReq: nopython
 AutoProv: nopython
 
 %description -n %mlir_name-tools
-MLIR is a novel approach to building reusable and extensible compiler infrastructure.
-MLIR aims to address software fragmentation, improve compilation for
-heterogeneous hardware, significantly reduce the cost of building domain
-specific compilers, and aid in connecting existing compilers together.
+MLIR is a novel approach to building reusable and extensible compiler
+infrastructure.  MLIR aims to address software fragmentation, improve
+compilation for heterogeneous hardware, significantly reduce the cost of
+building domain specific compilers, and aid in connecting existing compilers
+together.
 
 This package contains some bundled tools.
 
@@ -698,6 +687,9 @@ This package contains documentation for the Polly optimizer.
 %package -n lib%omp_name
 Summary: LLVM/OpenMP Host Runtime (libomp)
 Group: System/Libraries
+# libomp soname remains the same
+Conflicts: lib%omp_name < %EVR
+Conflicts: lib%omp_name > %EVR
 %requires_filesystem
 
 %description -n lib%omp_name
@@ -753,36 +745,36 @@ These modules are used by llvm runtimes built outside of llvm tree.
 # done
 %setup -n llvm-project-%{v_major}
 %patch -p1 -b .alt-i586-fallback
-%patch1 -p1 -b .alt-triple
+%patch1 -p2 -b .clang-alt-triple
 %patch2 -p1
 sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
-%patch3 -p1 -b .alt-fix-linking
-%patch4 -p1 -b .alt-triple
+%patch4 -p1 -b .llvm-alt-triple
 %patch5 -p1 -b .alt-i586-arch
-%patch6 -p2
 %patch7 -p1 -b .alt-aarch64-dynamic-linker
 %patch8 -p1
 %patch10 -p1
-%patch11 -p1 -b .clang-DWARF4
 %patch12 -p1
 %patch13 -p1
-%patch14 -p1
-#patch15 -p1
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1 -b .llvm-cmake-build-with-install-rpath
 %patch20 -p1 -b .clang-rocm-device-path
-%patch22 -p1 -b .recommonmark
 %patch23 -p1
 %patch101 -p1
 %patch102 -p2
 %patch103 -p1
 %patch104 -p2
+%patch105 -p1 -b .libompd-do-not-link-libomp
 
-%patch200 -p2
-%patch201 -p2
-%patch202 -p2
-%patch203 -p2
+# RH patches
+%patch110 -p1
+%patch111 -p1
+%patch112 -p1
+
+#%%patch200 -p2
+#%%patch201 -p2
+#%%patch202 -p2
+#%%patch203 -p2
 
 # debian patches
 %patch300 -p1
@@ -793,15 +785,12 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 subst '/^#!.*python$/s|python$|python3|' $(grep -Rl '#!.*python$' *)
 
 %build
-PROJECTS="clang;clang-tools-extra;compiler-rt;mlir;polly"
+PROJECTS="clang;clang-tools-extra;compiler-rt;mlir;polly;openmp"
 %if_with lld
 PROJECTS="$PROJECTS;lld"
 %endif
 %if_with lldb
 PROJECTS="$PROJECTS;lldb"
-%endif
-%if_with openmp
-PROJECTS="$PROJECTS;openmp"
 %endif
 export NPROCS="%__nprocs"
 if [ "$NPROCS" -gt 64 ]; then
@@ -851,9 +840,8 @@ fi
 	-DLLVM_ENABLE_LTO=Thin \
 	%if_with mold
 	-DLLVM_USE_LINKER=mold \
-	-DCMAKE_CXX_LINK_FLAGS="-Wl,--thinlto-jobs=all" \
 	%else
-	-DLLVM_ENABLE_LLD:BOOL=ON \
+	-DLLVM_USE_LINKER=lld \
 	%endif
 	%else
 	-DLLVM_ENABLE_LTO=Off \
@@ -872,11 +860,9 @@ fi
 	-DLLVM_BUILD_TOOLS:BOOL=ON \
 	\
 	-DMLIR_INSTALL_AGGREGATE_OBJECTS=OFF \
-	%if_with openmp
 	-DLIBOMP_INSTALL_ALIASES=OFF \
 	-DOPENMP_LIBDIR_SUFFIX="%_libsuff" \
-	-DOPENMP_INSTALL_LIBDIR=%_libdir \
-	%endif
+	-DOPENMP_INSTALL_LIBDIR=%llvm_libdir \
 	\
 	%if_enabled tests
 	-DLLVM_INCLUDE_TESTS:BOOL=ON \
@@ -934,10 +920,10 @@ for f in LICENSE.TXT NOTES.txt README.txt; do
   ln clang/$f %builddir/clang-docs/
 done
 rm -rf tools/clang/docs/{doxygen*,Makefile*,*.graffle,tools}
+mkdir -p %buildroot%llvm_docdir/lld
 
 install -m 0755 %builddir/%_lib/LLVMHello.so %buildroot%llvm_libdir/
 install -m 0755 %builddir/%_lib/BugpointPasses.so %buildroot%llvm_libdir/
-mkdir -p %buildroot%llvm_docdir/lld
 
 %ifarch %ix86
 cd %buildroot%llvm_libdir/clang/%v_major/lib/*-*-*-*
@@ -949,13 +935,11 @@ cd -
 rm -f %buildroot%llvm_bindir/argdumper
 rm -f %buildroot%llvm_datadir/clang/clang-format-bbedit.applescript
 
-%if_with openmp
 # Remove OpenMP static libraries with equivalent shared libraries
 rm -rf %buildroot%llvm_libdir/libarcher_static.a
 # FIXME! will pack it later
 # those files are needed for libompd (OMP debugger)
 rm -rf %buildroot%llvm_datadir/gdb
-%endif
 
 # Install the clang bash completion.
 mkdir -p %buildroot%_datadir/bash-completion/completions
@@ -995,10 +979,9 @@ find %buildroot%llvm_libdir/*.so* -type f,l \
 paste %_tmppath/shared-objects %_tmppath/shared-object-links | while read object link; do
 	ln -srv "$object" "$link"
 done
-%if_with openmp
+
 # OpenMP needs special handling here
 ln -srv %buildroot%llvm_libdir/libomp.so.%omp_vmajor %buildroot%_libdir/libomp.so.%omp_vmajor
-%endif
 
 # List all packaged binaries in this source package.
 find %buildroot%_bindir/*-%v_major > %_tmppath/PATH-executables
@@ -1082,11 +1065,10 @@ bin	llvm-rc
 bin,man	llvm-readelf
 bin,man	llvm-readobj
 bin,man	llvm-reduce
-bin,man	llvm-remark-size-diff
+bin	llvm-readtapi
 bin	llvm-rtdyld
 bin,man	llvm-size
 bin	llvm-sim
-bin	llvm-tapi-diff
 bin,man	llvm-tli-checker
 bin	llvm-windres
 bin	llvm-split
@@ -1106,6 +1088,7 @@ bin	run-clang-tidy
 bin	sancov
 bin	sanstats
 bin	verify-uselistorder
+bin	tblgen-to-irdl
 
 man	FileCheck
 man	extraclangtools
@@ -1172,13 +1155,16 @@ bin	mlir-reduce
 bin,man	mlir-tblgen
 bin	mlir-translate
 bin	tblgen-lsp-server
+bin	mlir-cat
+bin	mlir-minimal-opt
+bin	mlir-minimal-opt-canonicalize
+bin	mlir-query
 EOExecutableList
 
 emit_filelist >%_tmppath/dyn-files-lib%polly_name-devel <<EOExecutableList
 man	polly
 EOExecutableList
 
-%if_with openmp
 emit_filelist >%_tmppath/dyn-files-lib%omp_name-devel <<EOExecutableList
 %ifarch %libomptarget_arches
 bin	llvm-omp-device-info
@@ -1186,7 +1172,6 @@ bin	llvm-omp-kernel-replay
 %endif
 man	llvmopenmp
 EOExecutableList
-%endif
 
 # Comment out file validation for CMake targets placed
 # in a different package.
@@ -1207,24 +1192,6 @@ sed -i '
 # Shared cmake files for llvm projects
 mkdir -p %buildroot%llvm_datadir/cmake
 cp -ar cmake/Modules %buildroot%llvm_datadir/cmake/
-
-%if_with openmp
-# XXX: libomptarget is NOT supported on LoongArch, but surpisingly some
-# bits are built anyway. Remove those to avoid an rpmbuild error due to
-# unpackaged files
-%ifarch loongarch64
-rm %buildroot%_libdir/libomptarget.so.%omp_sover
-rm %buildroot%llvm_libdir/libomptarget.so.%omp_sover
-rm %buildroot%llvm_libdir/libomptarget.devicertl.a
-rm %buildroot%llvm_libdir/libomptarget-amdgpu-*.bc
-rm %buildroot%llvm_libdir/libomptarget-nvptx-*.bc
-rm %buildroot%llvm_libdir/libomptarget.so
-rm %buildroot%_bindir/llvm-omp-device-info-%v_major
-rm %buildroot%_bindir/llvm-omp-kernel-replay-%v_major
-rm %buildroot%llvm_bindir/llvm-omp-device-info
-rm %buildroot%llvm_bindir/llvm-omp-kernel-replay
-%endif
-%endif
 
 %check
 %if_enabled tests
@@ -1253,7 +1220,7 @@ ninja -C %builddir check-all || :
 %dir %llvm_man1dir
 %dir %llvm_docdir
 %dir %llvm_docdir/LLVM
-%if_with lldb
+%if_with lldb_python
 %dir %llvm_python3_libdir
 %dir %llvm_python3_sitelibdir
 %endif
@@ -1262,12 +1229,14 @@ ninja -C %builddir check-all || :
 %doc llvm/CREDITS.TXT llvm/LICENSE.TXT llvm/README.txt
 
 %files libs
-%llvm_libdir/libLLVM-*.so
-%_libdir/libLLVM-*.so
-%llvm_libdir/libLTO.so.*
-%_libdir/libLTO.so.*
-%llvm_libdir/libRemarks.so.*
-%_libdir/libRemarks.so.*
+%llvm_libdir/libLLVM-%v_major.so
+%_libdir/libLLVM-%v_major.so
+%llvm_libdir/libLLVM.so.%v_majmin
+%_libdir/libLLVM.so.%v_majmin
+%llvm_libdir/libLTO.so.%v_majmin
+%_libdir/libLTO.so.%v_majmin
+%llvm_libdir/libRemarks.so.%v_majmin
+%_libdir/libRemarks.so.%v_majmin
 
 %files tools
 %llvm_datadir/opt-viewer
@@ -1313,14 +1282,12 @@ ninja -C %builddir check-all || :
 %ifarch %hwasan_symbolize_arches
 %exclude %llvm_libdir/clang/%v_major/bin/hwasan_symbolize
 %endif
-%if_with openmp
 %exclude %llvm_libdir/clang/%v_major/include/omp.h
 %ifnarch %arm
 %exclude %llvm_libdir/clang/%v_major/include/omp-tools.h
 %exclude %llvm_libdir/clang/%v_major/include/ompt.h
 %exclude %llvm_libdir/clang/%v_major/include/ompt-multiplex.h
 %endif
-%endif #openmp
 
 %files -n %clang_name-support-shared-runtimes -f %_tmppath/libclang-support-shared-runtimes
 
@@ -1330,12 +1297,6 @@ ninja -C %builddir check-all || :
 %llvm_includedir/clang-tidy
 %llvm_libdir/libclang*.so
 %llvm_libdir/cmake/clang
-%llvm_libdir/libclang*.a
-%exclude %llvm_libdir/libclangTidy*.a
-%llvm_libdir/libfindAllSymbols.a
-
-%files -n %clang_name-tidy-devel-static
-%llvm_libdir/libclangTidy*.a
 
 %files -n %clang_name-analyzer -f %_tmppath/dyn-files-%clang_name-analyzer
 %llvm_libexecdir/c++-analyzer
@@ -1382,18 +1343,18 @@ ninja -C %builddir check-all || :
 %files -n %lldb_name
 %llvm_bindir/lldb
 %_bindir/lldb-%v_major
-%llvm_man1dir/lldb.1*
-%_man1dir/lldb-%v_major.1*
 %llvm_bindir/lldb-argdumper
 %_bindir/lldb-argdumper-%v_major
 %llvm_bindir/lldb-instr
 %_bindir/lldb-instr-%v_major
 %llvm_bindir/lldb-server
 %_bindir/lldb-server-%v_major
+%llvm_man1dir/lldb.1*
+%_man1dir/lldb-%v_major.1*
 %llvm_man1dir/lldb-server.1*
 %_man1dir/lldb-server-%v_major.1*
-%llvm_bindir/lldb-vscode
-%_bindir/lldb-vscode-%v_major
+%llvm_bindir/lldb-dap
+%_bindir/lldb-dap-%v_major
 
 %files -n lib%lldb_name
 %llvm_libdir/liblldb*.so.*
@@ -1402,10 +1363,11 @@ ninja -C %builddir check-all || :
 %files -n lib%lldb_name-devel
 %llvm_includedir/lldb
 %llvm_libdir/liblldb*.so
-# %_libdir/liblldb*.so
 
+%if_with lldb_python
 %files -n python3-module-%lldb_name
 %llvm_python3_sitelibdir/lldb
+%endif # lldb_python
 %endif
 
 %files -n lib%mlir_name
@@ -1419,6 +1381,10 @@ ninja -C %builddir check-all || :
 %llvm_libdir/libmlir_float16_utils.so.*
 %_libdir/libmlir_runner_utils.so.*
 %_libdir/libmlir_float16_utils.so.*
+%llvm_libdir/libmlir_arm_runner_utils.so.*
+%llvm_libdir/libmlir_arm_sme_abi_stubs.so.*
+%_libdir/libmlir_arm_runner_utils.so.*
+%_libdir/libmlir_arm_sme_abi_stubs.so.*
 
 %files -n lib%mlir_name-devel
 %llvm_includedir/mlir
@@ -1429,6 +1395,8 @@ ninja -C %builddir check-all || :
 %llvm_libdir/libmlir_c_runner_utils.so
 %llvm_libdir/libmlir_runner_utils.so
 %llvm_libdir/libmlir_float16_utils.so
+%llvm_libdir/libmlir_arm_runner_utils.so
+%llvm_libdir/libmlir_arm_sme_abi_stubs.so
 %llvm_libdir/cmake/mlir
 
 %files -n %mlir_name-tools -f %_tmppath/dyn-files-%mlir_name-tools
@@ -1461,7 +1429,9 @@ ninja -C %builddir check-all || :
 %files -n lib%polly_name-doc
 %doc %llvm_docdir/LLVM/polly
 
-%if_with openmp
+%files -n lib%omp_name-doc
+%doc %llvm_docdir/LLVM/openmp
+
 %files -n lib%omp_name
 %llvm_libdir/libomp.so.%omp_vmajor
 %_libdir/libomp.so.%omp_vmajor
@@ -1497,18 +1467,36 @@ ninja -C %builddir check-all || :
 %llvm_libdir/libomptarget.so
 %endif
 
-%files -n lib%omp_name-doc
-%doc %llvm_docdir/LLVM/openmp
-%endif #openmp
-
 %files cmake-common-modules
 %dir %llvm_datadir/cmake/Modules
 %llvm_datadir/cmake/Modules/*
 
 %changelog
-* Fri Mar 29 2024 L.A. Kostis <lakostis@altlinux.ru> 17.0.6-alt4
-- openmp: disable build due soname clash with next llvm.
+* Thu Mar 28 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.2-alt0.2
+- Make clang-doc package arch until graphviz issue will be
+  resolved on %%ix86.
+- lldb/BR: untangle sphinx/python3 deps.
+- lldb: lldb_contrib->lldb_full.
+- lldb: lldb-vscode->lldb-dap.
+- mold: make build knob more visible.
+- openmp/libompd: do not link libomp.
 - cmake-modules: move to %%llvm_datadir.
+
+* Mon Mar 25 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.2-alt0.1
+- 18.1.2.
+- Compile with mold on all supported 64-bit arches.
+- Re-apply all patches from llvm17 which still needed.
+- Disable lldb_contrib: (too many deps, will fix them later).
+- Added patches from RH:
+  + clang/unittests: fix ORC bug on ppc64le
+  + clang-tools-extra: make test deps on LLVMHello optional
+  + clang/cmake: don't install static libraries.
+- libomp: added conflicts with previous/next versions.
+- libomp: remove loongarch64 exclusion (offically supported now).
+- BR: added graphviz (clang docs need dot app).
+- cmake-common-modules: added conflicts with previous/next versions.
+- .spec: optimize lldb BR.
+- Disabled loognarch64/risc-v llvmpipe patches.
 
 * Tue Mar 19 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 17.0.6-alt3
 - compiler-rt: build with medium code model on LoongArch. Required for
