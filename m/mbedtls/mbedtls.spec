@@ -1,22 +1,25 @@
 %define optflags_lto %nil
-%define so_tls_version 20
-%define so_crypto_version 15
-%define so_x509_version 6
+%define so_tls_version 21
+%define so_crypto_version 16
+%define so_x509_version 7
+%define framework_commit 750634d3a51eb9d61b59fd5d801546927c946588
 %def_disable static
 
 Name: mbedtls
-Version: 3.5.2
+Version: 3.6.0
 Release: alt1
 
 Summary: Transport Layer Security protocol suite
 License: Apache-2.0 OR GPL-2.0-or-later
 Group: System/Libraries
 
-Url: https://tls.mbed.org/
+Url: https://www.trustedfirmware.org/projects/mbed-tls/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/ARMmbed/%name/archive/v%version/%name-%version.tar.gz
-Source: %name-%version.tar
+Source0: %name-%version.tar
+# https://github.com/Mbed-TLS/%name-framework/archive/%framework_commit/%name-framework-%framework_commit.tar.gz
+Source1: %name-framework-%framework_commit.tar
 
 BuildRequires: cmake
 BuildRequires: libssl-devel
@@ -87,7 +90,8 @@ Group: Development/Tools
 Cryptographic utilities based on mbed TLS
 
 %prep
-%setup
+%setup -b 1
+%__mv -Tf ../%name-framework-%framework_commit framework
 %ifarch %ix86
 %add_optflags -mpclmul -msse2 -maes
 %endif
@@ -133,6 +137,9 @@ rm -rf %buildroot%_bindir
 %_libdir/lib%name.so
 %_libdir/libmbedx509.so
 %_libdir/cmake/MbedTLS
+%_pkgconfigdir/mbedcrypto.pc
+%_pkgconfigdir/mbedtls.pc
+%_pkgconfigdir/mbedx509.pc
 %if_disabled static
 %_libdir/libeverest.a
 %_libdir/libp256m.a
@@ -152,6 +159,10 @@ rm -rf %buildroot%_bindir
 %_libexecdir/%name/*
 
 %changelog
+* Fri Mar 29 2024 Nazarov Denis <nenderus@altlinux.org> 3.6.0-alt1
+- New version 3.6.0.
+- Fix url (ALT #47976)
+
 * Tue Jan 30 2024 Nazarov Denis <nenderus@altlinux.org> 3.5.2-alt1
 - New version 3.5.2.
 
