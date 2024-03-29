@@ -4,7 +4,7 @@
 %define cid	\{b9db16a4-6edc-47ec-a1f4-b86292ed211d\}
 
 Name:		%firefox_name-%rname
-Version:	8.0.0.6
+Version:	8.2.2.8
 Release:	alt1
 
 Summary:	Video DownloadHelper plugin for Firefox
@@ -13,7 +13,7 @@ Summary(ru_RU.UTF-8):	расширение Video DownloadHelper для Firefox
 License:	%mpl 1.1
 Group:		Networking/WWW
 URL:		http://www.downloadhelper.net/
-#URL:		https://addons.mozilla.org/ru/firefox/addon/3006
+#URL:		https://addons.mozilla.org/en-US/firefox/addon/video-downloadhelper/
 BuildArch:      noarch
 
 Source0:	%rname.xpi
@@ -42,6 +42,9 @@ install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 %firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Fri Mar 29 2024 Nikolay A. Fetisov <naf@altlinux.org> 8.2.2.8-alt1
+- New version
+
 * Sat Oct 21 2023 Nikolay A. Fetisov <naf@altlinux.org> 8.0.0.6-alt1
 - New version
 
