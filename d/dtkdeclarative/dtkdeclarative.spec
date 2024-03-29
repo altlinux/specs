@@ -3,7 +3,7 @@
 %def_enable clang
 
 Name: dtkdeclarative
-Version: 5.6.25
+Version: 5.6.26
 Release: alt1
 Summary: Widget development toolkit for Deepin
 Summary(ru): Инструментарий по разработке виджетов для Deepin
@@ -88,6 +88,7 @@ The package provides development files for %name.
 Summary: QtCreator Data files for %name
 Summary(ru): Файлы данных QtCreator для %name
 Group: Development/Tools
+BuildArch: noarch
 
 %description -n qt-creator-data-%name
 QtCreator Data files for %name.
@@ -155,6 +156,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_datadir/qtcreator/templates/wizards/projects/qml-app-template/
 
 %changelog
+* Fri Mar 29 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.26-alt1
+- New version 5.6.26.
+
 * Wed Mar 20 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.25-alt1
 - New version 5.6.25.
 
