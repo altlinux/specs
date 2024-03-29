@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: 	 tellico
-Version: 3.5.3
-Release: alt2
+Version: 3.5.4
+Release: alt1
 
 Summary: A collection manager for KDE
 License: GPL-2.0+
@@ -106,6 +106,9 @@ find %buildroot -type f -print0 |
 %_datadir/knsrcfiles/tellico-*.knsrc
 
 %changelog
+* Fri Mar 29 2024 Andrey Cherepanov <cas@altlinux.org> 3.5.4-alt1
+- New version.
+
 * Wed Jan 03 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.5.3-alt2
 - NMU: use KHTML on architectures where qt5-webengine is not available.
   Build for more architectures (including LoongArch).
