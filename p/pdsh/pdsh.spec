@@ -13,7 +13,7 @@
 %def_with machines
 
 Name: pdsh
-Version: 2.34
+Version: 2.35
 Release: alt1
 
 Summary: Parallel remote shell program
@@ -401,6 +401,9 @@ fi
 ##############################################################################
 
 %changelog
+* Sat Mar 30 2024 Ilya Mashkin <oddity@altlinux.ru> 2.35-alt1
+- 2.35
+
 * Sat Jul 24 2021 Ilya Mashkin <oddity@altlinux.ru> 2.34-alt1
 - 2.34
 - Update License: GPLv2+
