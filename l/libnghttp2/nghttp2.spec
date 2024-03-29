@@ -5,7 +5,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: libnghttp2
-Version: 1.59.0
+Version: 1.60.0
 Release: alt1
 
 Summary: HTTP/2.0 C Library
@@ -15,8 +15,10 @@ License: MIT
 Url: https://github.com/nghttp2/nghttp2
 Source: %name-%version.tar
 
+Source100: %name-%version-tests-munit.tar
+
 BuildRequires: zlib-devel libev-devel libevent-devel libxml2-devel libjansson-devel libssl-devel gcc-c++ CUnit-devel libjemalloc-devel libcares-devel
-BuildRequires: libsystemd-devel
+BuildRequires: libsystemd-devel libicu-devel
 
 %description
 %summary
@@ -36,7 +38,7 @@ Requires: %name = %EVR
 %summary
 
 %prep
-%setup -q
+%setup -a 100
 
 %build
 %autoreconf
@@ -75,6 +77,9 @@ Requires: %name = %EVR
 %exclude %_datadir/nghttp2/fetch-ocsp-response
 
 %changelog
+* Thu Mar 28 2024 Anton Farygin <rider@altlinux.ru> 1.60.0-alt1
+- 1.59.0 -> 1.60.0
+
 * Sat Jan 27 2024 Anton Farygin <rider@altlinux.ru> 1.59.0-alt1
 - 1.59.0
 
