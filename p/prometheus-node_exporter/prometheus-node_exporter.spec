@@ -5,7 +5,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: prometheus-%oname
-Version: 1.6.1
+Version: 1.7.0
 Release: alt1
 Summary: Prometheus exporter for hardware and OS metrics exposed by *NIX kernels.
 
@@ -60,7 +60,7 @@ mkdir -p %buildroot{%_bindir,%_initdir,%_unitdir,%_sysconfdir/sysconfig}
 install -m0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 install -m0755 %SOURCE3 %buildroot%_initdir/%name
 install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
-install -m0644 %SOURCE4 %buildroot%_unitdir/%name.socket
+install -m0644 %SOURCE5 %buildroot%_unitdir/%name.socket
 install -Dpm0644 example-rules.yml %buildroot%_datadir/prometheus/node-exporter/example-rules.yml
 mkdir -p %buildroot%_sharedstatedir/prometheus/node-exporter
 ln -r -s %buildroot%_bindir/%oname %buildroot%_bindir/%name
@@ -89,6 +89,10 @@ sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\nprometheus-node-exporter \\- The Pr
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Fri Mar 29 2024 Alexey Shabalin <shaba@altlinux.org> 1.7.0-alt1
+- 1.7.0
+- Fix install systemd socket unit (ALT#48057)
+
 * Thu Jul 27 2023 Alexey Shabalin <shaba@altlinux.org> 1.6.1-alt1
 - 1.6.1
 
