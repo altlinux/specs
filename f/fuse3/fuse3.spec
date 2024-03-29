@@ -1,9 +1,9 @@
 Name: fuse3
-Version: 3.10.2
+Version: 3.16.2
 Release: alt1
 
 Summary: a tool for creating virtual filesystems
-License: GPL
+License: GPL-2.0-or-later
 Group: System/Kernel and hardware
 
 Url: https://github.com/libfuse/
@@ -14,7 +14,7 @@ Patch: %name-%version-alt.patch
 
 Requires(pre): fuse-common >= 1.1.1
 
-BuildRequires: meson ninja-build libudev-devel
+BuildRequires: meson >= 0.51 ninja-build libudev-devel
 
 %description
 FUSE (Filesystem in USErspace), an excellent tool
@@ -24,6 +24,7 @@ as well as for using them.
 %package -n lib%name
 Group: System/Kernel and hardware
 Summary: tool for creating virtual filesystems
+License: LGPL-2.1-or-later
 Requires: %name = %version-%release
 
 %description -n lib%name
@@ -35,6 +36,7 @@ This package contains shared libraries.
 %package -n lib%name-devel
 Group: System/Kernel and hardware
 Summary: tool for creating virtual filesystems
+License: LGPL-2.1-or-later
 Requires: lib%name = %version-%release
 
 %description -n lib%name-devel
@@ -54,10 +56,6 @@ This package contains development headers.
 %install
 %meson_install
 
-mkdir -p %buildroot/%_lib
-mv %buildroot%_libdir/lib%name.so.* %buildroot/%_lib/
-ln -sf ../../%_lib/lib%name.so.%version %buildroot%_libdir/lib%name.so
-
 rm -fr %buildroot%_sysconfdir/init.d
 
 install -pD %SOURCE1 %buildroot%_bindir/fuserumount3
@@ -76,7 +74,7 @@ fi
 
 %files
 %doc AUTHORS README.md doc/README.NFS doc/kernel.txt
-/usr/sbin/mount.fuse3
+%_sbindir/mount.fuse3
 %attr(4710,root,fuse) %_bindir/fusermount3
 %attr(0755,root,root) %_bindir/fuserumount3
 %_man1dir/*
@@ -88,14 +86,18 @@ fi
 %exclude %_udevrulesdir/99-%name.rules
 
 %files -n lib%name
-/%_lib/lib%name.so.*
+%_libdir/lib%name.so.*
 
 %files -n lib%name-devel
 %_includedir/*
-%_libdir/lib*.so
+%_libdir/lib%name.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Mar 29 2024 Alexey Shabalin <shaba@altlinux.org> 3.16.2-alt1
+- 3.16.2 (Fixed ALT#49805)
+- move library from /lib to /usr/lib, drop support non-usrmerge
+
 * Sun Mar 28 2021 Evgeny Sinelnikov <sin@altlinux.org> 3.10.2-alt1
 - update to latest release requires by newest gvfs from gnome project (fixes: 39759)
 
