@@ -3,7 +3,7 @@
 %def_enable static
 
 Name:    modsecurity
-Version: 3.0.10
+Version: 3.0.12
 Release: alt1
 
 Summary: web application firewall (WAF) engine
@@ -142,6 +142,9 @@ install -m 640 %SOURCE3 %buildroot%_logrotatedir/%name
 %endif
 
 %changelog
+* Fri Mar 29 2024 Nikolay A. Fetisov <naf@altlinux.org> 3.0.12-alt1
+- New version
+
 * Thu Oct 26 2023 Nikolay A. Fetisov <naf@altlinux.org> 3.0.10-alt1
 - New version
 
