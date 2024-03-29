@@ -4,7 +4,7 @@
 %define cid	balyaev@gmail.com
 
 Name:		%firefox_name-%rname
-Version:	2021.6.0
+Version:	2023.11.2
 Release:	alt1
 
 Summary:	MySessions Firefox extension
@@ -48,5 +48,8 @@ install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 %firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Fri Mar 29 2024 Nikolay A. Fetisov <naf@altlinux.org> 2023.11.2-alt1
+- New version
+
 * Tue Jul 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 2021.6.0-alt1
 - Initial build for ALT Linux Sisyphus
