@@ -13,7 +13,7 @@
 
 Name: libdex
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Dex provides Future-based programming for GLib-based applications
 Group: System/Libraries
@@ -27,6 +27,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Vcs: https://gitlab.gnome.org/GNOME/libdex.git
 Source: %name-%version.tar
 %endif
+Patch2000: %name-e2k.patch
 
 %define meson_ver 0.62
 %define glib_ver 2.68
@@ -92,6 +93,9 @@ This package contains Dex example programs.
 
 %prep
 %setup -n %name-%version%beta
+%ifarch %e2k
+%patch2000 -p2
+%endif
 
 %build
 %meson \
@@ -137,6 +141,9 @@ This package contains Dex example programs.
 %endif
 
 %changelog
+* Thu Mar 28 2024 Michael Shigorin <mike@altlinux.org> 0.6.0-alt1.1
+- E2K: add fibers port (ilyakurdyukov@)
+
 * Sat Mar 16 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - 0.6.0
 
