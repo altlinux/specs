@@ -18,7 +18,7 @@
 
 Name: rpcs3
 Version: 0.0.31
-Release: alt1
+Release: alt2
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -53,6 +53,7 @@ Source9: miniupnp-%miniupnp_version.tar
 Source10: rtmidi-%rtmidi_version.tar
 
 Patch0: %name-llvm-version.patch
+Patch1: %name-wolfssl-5.7.0.patch
 
 BuildRequires: /proc
 BuildRequires: clang%llvm_version
@@ -98,6 +99,7 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 %setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10
 
 %patch0 -p1
+%patch1 -p1
 
 %__mv -Tf ../glslang-%glslang_version 3rdparty/glslang/glslang
 %__mv -Tf ../asmjit-%asmjit_commit 3rdparty/asmjit/asmjit
@@ -167,6 +169,9 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Fri Mar 29 2024 Nazarov Denis <nenderus@altlinux.org> 0.0.31-alt2
+- Fix build with wolfSSL 5.7.0
+
 * Tue Mar 05 2024 Nazarov Denis <nenderus@altlinux.org> 0.0.31-alt1
 - Version 0.0.31
 
