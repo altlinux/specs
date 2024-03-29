@@ -1,9 +1,9 @@
-%define ver_major 24.01
+%define ver_major 24.03
 
 %def_disable kde4
 
 Name: mediainfo
-Version: %ver_major.1
+Version: %ver_major
 Release: alt1
 
 Group: File tools
@@ -154,6 +154,9 @@ rm -f %buildroot%_datadir/kde4/services/ServiceMenus/mediainfo-gui.desktop
 %_K5srv/ServiceMenus/%name-gui.desktop
 
 %changelog
+* Fri Mar 29 2024 Yuri N. Sedunov <aris@altlinux.org> 24.03-alt1
+- 24.03
+
 * Thu Feb 01 2024 Yuri N. Sedunov <aris@altlinux.org> 24.01.1-alt1
 - 24.01.1
 
