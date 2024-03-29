@@ -2,7 +2,7 @@
 %def_disable embedded_cryptopp
 
 Name: urbackup-client
-Version: 2.5.24
+Version: 2.5.25
 Release: alt1
 Summary: Efficient Client-Server backup system for Linux and Windows
 Group: Archiving/Backup
@@ -108,6 +108,9 @@ touch %buildroot%_logdir/urbackupclient.log
 %ghost %_logdir/urbackupclient.log
 
 %changelog
+* Fri Mar 29 2024 Alexey Shabalin <shaba@altlinux.org> 2.5.25-alt1
+- 2.5.25
+
 * Mon Jul 03 2023 Alexey Shabalin <shaba@altlinux.org> 2.5.24-alt1
 - 2.5.24
 - build with system cryptopp

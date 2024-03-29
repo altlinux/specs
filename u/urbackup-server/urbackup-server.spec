@@ -2,7 +2,7 @@
 %def_disable embedded_cryptopp
 
 Name: urbackup-server
-Version: 2.5.31
+Version: 2.5.33
 Release: alt1
 
 Summary: Efficient Client-Server backup system for Linux and Windows
@@ -125,6 +125,9 @@ useradd -g urbackup -c 'UrBackup pseudo user' \
 %dir %attr(0755,urbackup,urbackup) %_localstatedir/urbackup
 
 %changelog
+* Fri Mar 29 2024 Alexey Shabalin <shaba@altlinux.org> 2.5.33-alt1
+- 2.5.33
+
 * Mon Jul 03 2023 Alexey Shabalin <shaba@altlinux.org> 2.5.31-alt1
 - 2.5.31
 - build with system cryptopp
