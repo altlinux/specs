@@ -75,7 +75,7 @@ BuildRequires: jpackage-17-compat
 Name: tomcat10
 Epoch: 1
 Version: %major_version.%minor_version.%micro_version
-Release: alt1_jvm17
+Release: alt2_jvm17
 Summary: Apache Servlet/JSP Engine, RI for Servlet %servletspec/JSP %jspspec API
 
 License: Apache-2.0
@@ -513,6 +513,9 @@ exit 0
 %appdir/ROOT
 
 %changelog
+* Fri Mar 29 2024 Ilfat Aminov <aminov@altlinux.org> 1:10.1.20-alt2_jvm17
+- fix tomcat-10.1-JDTCompiler.patch for java 17 build
+
 * Thu Mar 28 2024 Ilfat Aminov <aminov@altlinux.org> 1:10.1.20-alt1_jvm17
 - 10.1.20
 
