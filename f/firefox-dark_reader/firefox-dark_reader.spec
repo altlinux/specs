@@ -4,11 +4,11 @@
 %define cid	addon@darkreader.org
 
 Name:		%firefox_name-%rname
-Version:	4.9.68
+Version:	4.9.80
 Release:	alt1
 
 Summary:	Dark Reader Firefox extension
-Summary(ru_RU.UTF-8):	расширение DuckDuckGo Plus для Firefox
+Summary(ru_RU.UTF-8):	расширение Dark Reader для Firefox
 
 License:	%mit
 Group:		Networking/WWW
@@ -49,6 +49,10 @@ install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 %firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Fri Mar 29 2024 Nikolay A. Fetisov <naf@altlinux.org> 4.9.80-alt1
+- New version
+- Fix Summary on Russian (Closes: 49833)
+
 * Sun Nov 26 2023 Nikolay A. Fetisov <naf@altlinux.org> 4.9.68-alt1
 - New version
 
