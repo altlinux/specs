@@ -5,7 +5,7 @@
 
 
 Name: apache2-%module_name
-Version: 2.4.14.4
+Version: 2.4.15.6
 Release: alt1
 
 Summary: Apache 2.x OpenID Connect Relying Party authentication and authorization module
@@ -90,6 +90,9 @@ ln -s -- $(relative %_licensedir/Apache-2.0 %_docdir/%name/LICENSE.txt) LICENSE.
 %dir %apache2_spooldir/%module_name
 
 %changelog
+* Fri Mar 29 2024 Nikolay A. Fetisov <naf@altlinux.org> 2.4.15.6-alt1
+- New version
+
 * Sun Oct 29 2023 Nikolay A. Fetisov <naf@altlinux.org> 2.4.14.4-alt1
 - New version
 - Switch to use httpd2.filetrigger
