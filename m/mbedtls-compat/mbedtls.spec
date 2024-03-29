@@ -4,8 +4,12 @@
 %define so_x509_version 1
 %def_disable static
 
+%filter_from_provides /^pkgconfig(mbedcrypto)/d
+%filter_from_provides /^pkgconfig(mbedtls)/d
+%filter_from_provides /^pkgconfig(mbedx509)/d
+
 Name: %pkgname-compat
-Version: 2.28.7
+Version: 2.28.8
 Release: alt1
 
 Summary: Transport Layer Security protocol suite
@@ -124,12 +128,15 @@ sed -i 's/-Werror/-Wno-error/' CMakeLists.txt
 %files -n lib%pkgname-compat-devel
 %doc ChangeLog LICENSE README.md
 %dir %_includedir/%pkgname
-%_includedir/%pkgname/*.h
-%dir %_includedir/psa
-%_includedir/psa/*h
+%_includedir/%pkgname
+%_includedir/psa
+%_includedir/everest
 %_libdir/libmbedcrypto.so
 %_libdir/lib%pkgname.so
 %_libdir/libmbedx509.so
+%_pkgconfigdir/mbedcrypto.pc
+%_pkgconfigdir/mbedtls.pc
+%_pkgconfigdir/mbedx509.pc
 
 %if_enabled static
 %files -n lib%pkgname-compat-devel-static
@@ -139,6 +146,9 @@ sed -i 's/-Werror/-Wno-error/' CMakeLists.txt
 %endif
 
 %changelog
+* Fri Mar 29 2024 Nazarov Denis <nenderus@altlinux.org> 2.28.8-alt1
+- Version 2.28.8
+
 * Tue Jan 30 2024 Nazarov Denis <nenderus@altlinux.org> 2.28.7-alt1
 - Version 2.28.7
 
