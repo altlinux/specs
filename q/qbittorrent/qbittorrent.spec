@@ -1,8 +1,8 @@
 %define ltr libtorrent-rasterbar-devel
-%define rel alt3
+%define rel alt1
 
 Name: qbittorrent
-Version: 4.6.3
+Version: 4.6.4
 Epoch: 1
 Release: %rel
 
@@ -106,6 +106,9 @@ make clean
 %_datadir/metainfo/*.xml
 
 %changelog
+* Sat Mar 30 2024 Ilya Mashkin <oddity@altlinux.ru> 1:4.6.4-alt1
+- 4.6.4
+
 * Thu Jan 23 2024 Ilya Mashkin <oddity@altlinux.ru> 1:4.6.3-alt3
 - Fixed typo in the module name
 
