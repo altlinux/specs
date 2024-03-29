@@ -3,7 +3,7 @@
 
 Name: dtkwidget
 Version: 5.6.25
-Release: alt1
+Release: alt2
 Summary: Deepin tool kit widget modules
 License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
@@ -11,9 +11,6 @@ Url: https://github.com/linuxdeepin/dtkwidget
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-
-Provides: libdtk5-widget = %EVR
-Obsoletes: libdtk5-widget < %EVR
 
 # for webp (dci) icons
 Requires: qt5-imageformats
@@ -34,6 +31,8 @@ DtkWidget is Deepin graphical user interface for deepin desktop development.
 %package -n lib%{name}5
 Summary: Libraries for %name
 Group: System/Libraries
+Provides: libdtk5-widget = %EVR
+Obsoletes: libdtk5-widget < %EVR
 Requires: libqt5-core = %_qt5_version
 Requires: libqt5-gui = %_qt5_version
 Requires: libqt5-printsupport = %_qt5_version
@@ -134,6 +133,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_qt5_docdir/dtkwidget.qch
 
 %changelog
+* Fri Mar 29 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.25-alt2
+- Fixed update from libdtk5-widget.
+
 * Wed Mar 20 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.25-alt1
 - New version 5.6.25.
 
