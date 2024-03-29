@@ -167,7 +167,7 @@
 
 Name:		ffmpeg-plugin-browser
 Version:	120
-Release:	alt2
+Release:	alt3
 
 Summary:	FFmpeg built specifically for codec support in special browser
 License:	GPLv3
@@ -612,6 +612,13 @@ echo 'include $(SRC_PATH)/ffbuild/libffmpeg.mak' >> Makefile
 	--mandir=%_mandir \
 	--docdir=%_docdir/%name-%version \
 	--disable-rpath \
+	--disable-all \
+	--disable-autodetect \
+	--disable-error-resilience \
+	--disable-everything \
+	--disable-faan \
+	--disable-iconv \
+	--disable-network \
 %ifarch armh aarch64
 	--enable-v4l2_m2m \
 %endif
@@ -630,97 +637,22 @@ echo 'include $(SRC_PATH)/ffbuild/libffmpeg.mak' >> Makefile
 	--disable-mipsfpu \
 	--extra-libs="-latomic" \
 %endif
-	%{subst_enable doc} \
-	%{subst_enable gpl} \
-	%{subst_enable version3} \
-	%{subst_enable pthreads} \
-	%{subst_enable shared} \
-	%{subst_enable static} \
-	%{subst_enable mmx} \
-	%{subst_enable nonfree} \
-	%{subst_enable ffplay} \
-	%{subst_enable ffprobe} \
-	--enable-avfilter \
-	%{subst_enable avisynth} \
-	%{subst_enable bzlib} \
-	%{subst_enable chromaprint} \
-	%{subst_enable frei0r} \
-	%{subst_enable gnutls} \
-	%{subst_enable ladspa} \
-	%{subst_enable libaom} \
-	%{subst_enable libaribb24} \
-	%{subst_enable libass} \
-	%{subst_enable libbluray} \
-	%{subst_enable libbs2b} \
-	%{subst_enable libcaca} \
-	%{subst_enable libcdio} \
-	%{subst_enable libcelt} \
-	%{subst_enable libcodec2} \
-	%{subst_enable libdav1d} \
-	%{subst_enable libdavs2} \
-	%{subst_enable libdc1394} \
-	%{subst_enable libdrm} \
-	%{subst_enable libflite} \
-	%{subst_enable libfontconfig} \
-	%{subst_enable libfreetype} \
-	%{subst_enable libfribidi} \
-	%{subst_enable libglslang} \
-	%{subst_enable libgme} \
-	%{subst_enable libgsm} \
-	%{subst_enable libilbc} \
-	%{subst_enable libjack} \
-	%{subst_enable libklvanc} \
-	%{subst_enable libkvazaar} \
-	%{subst_enable liblensfun} \
-	%{subst_enable libmfx} \
-	%{subst_enable libmodplug} \
-	%{subst_enable libmp3lame} \
-	%{subst_enable librabbitmq} \
-	%{subst_enable libmysofa} \
-	%{subst_enable_with libopencore_amrnb libopencore-amrnb} \
-	%{subst_enable_with libopencore_amrwb libopencore-amrwb} \
-	%{subst_enable libopenjpeg} \
-	%{subst_enable libopenmpt} \
-	%{subst_enable libopus} \
-	%{subst_enable libpulse} \
-	%{subst_enable librsvg} \
-	%{subst_enable librtmp} \
-	%{subst_enable librubberband} \
-	%{subst_enable libshine} \
-	%{subst_enable libsnappy} \
-	%{subst_enable libsoxr} \
-	%{subst_enable libspeex} \
-	%{subst_enable libssh} \
-	%{subst_enable libtesseract} \
-	%{subst_enable libtheora} \
-	%{subst_enable libtwolame} \
-	%{subst_enable libv4l2} \
-	%{subst_enable libvidstab} \
-	%{subst_enable libvmaf} \
-	%{subst_enable libvorbis} \
-	%{subst_enable libvpx} \
-	%{subst_enable libwebp} \
-	%{subst_enable libx264} \
-	%{subst_enable libx265} \
-	%{subst_enable libxavs2} \
-	%{subst_enable libxml2} \
-	%{subst_enable libxvid} \
-	%{subst_enable libzimg} \
-	%{subst_enable libzmq} \
-	%{subst_enable libzvbi} \
-	%{subst_enable lv2} \
-	%{subst_enable omx} \
-	%{subst_enable openal} \
-	%{subst_enable opencl} \
-	%{subst_enable opengl} \
-	%{subst_enable pocketsphinx} \
-	%{subst_enable sdl2} \
-	%{subst_enable vaapi} \
-	%{subst_enable vapoursynth} \
-	%{subst_enable vdpau} \
-	%{subst_enable vulkan} \
-	%{subst_enable zlib} \
-	%{subst_enable cuvid} \
+	--disable-all \
+	--disable-autodetect \
+	--disable-error-resilience \
+	--disable-everything \
+	--disable-faan \
+	--disable-iconv \
+	--disable-network \
+	--enable-avcodec \
+	--enable-avformat \
+	--enable-avutil \
+	--enable-libopus \
+	--enable-decoder=aac,flac,h264,libopus,mp3,pcm_alaw,pcm_f32le,pcm_mulaw,pcm_s16be,pcm_s16le,pcm_s24be,pcm_s24le,pcm_s32le,pcm_u8,theora,vorbis,vp8 \
+	--enable-demuxer=aac,flac,matroska,mov,mp3,ogg,wav \
+	--enable-parser=aac,flac,h264,mpegaudio,opus,vorbis,vp3,vp8,vp9 \
+	--enable-pic \
+	--enable-static \
 	--enable-hardcoded-tables \
 	--enable-runtime-cpudetect \
 %if_enabled debug
@@ -752,6 +684,8 @@ echo 'include $(SRC_PATH)/ffbuild/libffmpeg.mak' >> Makefile
 
 %install
 %makeinstall_std V=1 STRIP=true install-libffmpeg
+mkdir -p %buildroot/%_libdir/ffmpeg-plugin-browser/
+mv %buildroot/%_libdir/chromium/libffmpeg.so. %buildroot/%_libdir/ffmpeg-plugin-browser/libffmpeg.so
 
 cat > add-provides.c <<__EOF__
 #include <stdio.h>
@@ -785,6 +719,9 @@ tests/checkasm/checkasm
 %_libdir/ffmpeg-plugin-browser/libffmpeg.so
 
 %changelog
+* Fri Mar 29 2024 Sergey V Turchin <zerg@altlinux.org> 120-alt3
+- simplify build options
+
 * Wed Mar 20 2024 Sergey V Turchin <zerg@altlinux.org> 120-alt2
 - enable vulkan when required version available
 
