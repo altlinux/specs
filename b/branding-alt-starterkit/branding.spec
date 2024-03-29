@@ -1,3 +1,5 @@
+%global grub_arches x86_64 aarch64 %ix86
+
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
@@ -15,21 +17,16 @@
 
 Name: branding-%flavour
 Version: 10
-Release: alt5
+Release: alt6
 Epoch: 1
 
 Url: http://en.altlinux.org/starterkits
 
 BuildRequires(pre): rpm-macros-branding
 
-BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-google-droid-sans
-
+BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-sans
 BuildRequires: qt5-base-devel
-BuildRequires: libalternatives-devel
-
-BuildRequires: ImageMagick fontconfig bc libGConf-devel
-BuildRequires: fribidi
-
+BuildRequires: ImageMagick-tools
 BuildRequires: distro-licenses
 
 %define status %nil
@@ -52,13 +49,9 @@ Distro-specific packages with design and texts
 
 %package bootloader
 Group: System/Configuration/Boot and Init
-Summary: Graphical boot logo for grub2, lilo and syslinux
+Summary: Graphical boot logo for grub2
 License: GPLv2+
 
-%ifarch %ix86 x86_64
-BuildRequires: gfxboot >= 4
-%endif #ifarch
-BuildRequires: design-bootloader-source >= 5.0-alt2
 Requires: coreutils
 Provides: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
 
@@ -69,8 +62,7 @@ Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme desig
 %define grub_high black/white
 
 %description bootloader
-Here you find the graphical boot logo.
-Suitable for grub2, lilo and syslinux.
+%summary.
 
 %package bootsplash
 Summary: Theme for splash animations during bootup
@@ -184,16 +176,6 @@ Requires(post): indexhtml-common
 %description indexhtml
 ALT Linux index.html welcome page.
 
-%package xfce-settings
-
-Summary: XFCE settings for %Brand %version %Theme
-License: Distributable
-Group: Graphical desktop/XFce
-%branding_add_conflicts %flavour xfce-settings
-
-%description xfce-settings
-XFCE settings for %Brand %version %Theme
-
 %prep
 %setup -n branding
 cp /usr/share/distro-licenses/ALT_Regular_License/license.{all,ru}.html.in notes/
@@ -252,20 +234,8 @@ popd
 mkdir -p %buildroot/usr/share/install2/slideshow
 install slideshow/* %buildroot/usr/share/install2/slideshow/
 
-#xfce-settings
-pushd xfce-settings
-mkdir -p %buildroot/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml
-mkdir -p %buildroot/etc/skel/.config/xfce4/panel
-mkdir -p %buildroot/etc/skel/.config/autostart
-cp -r etcskel/.config/xfce4/xfconf/xfce-perchannel-xml/* %buildroot/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml
-cp -r etcskel/.config/xfce4/panel/* %buildroot/etc/skel/.config/xfce4/panel
-cp -r etcskel/.config/autostart/* %buildroot/etc/skel/.config/autostart
-popd
-
+%ifarch %grub_arches
 #bootloader
-%pre bootloader
-[ -s /usr/share/gfxboot/%theme ] && rm -fr /usr/share/gfxboot/%theme ||:
-
 %post bootloader
 . shell-config
 shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.txt
@@ -274,15 +244,10 @@ shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 shell_config_set /etc/sysconfig/grub2 GRUB_BACKGROUND ''
 # deprecated
 shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER ''
+%endif
 
 %post indexhtml
 %_sbindir/indexhtml-update
-
-%files bootloader
-%ifarch %ix86 x86_64
-%_datadir/gfxboot/%theme
-%endif #ifarch
-/boot/grub/themes/%theme
 
 #bootsplash
 %post bootsplash
@@ -292,6 +257,13 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %config %_altdir/*.rcc
 /usr/share/alterator-browser-qt/design/*.rcc
 /usr/share/alterator/design/*
+
+%ifarch %grub_arches
+%files bootloader
+/boot/grub/themes/%theme
+%else
+%exclude /boot/grub/themes/%theme
+%endif
 
 %files graphics
 %config /etc/alternatives/packages.d/%name-graphics
@@ -324,11 +296,13 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %indexhtmldir/images
 %_desktopdir/indexhtml.desktop
 
-%files xfce-settings
-%_sysconfdir/skel/.config/xfce4
-%_sysconfdir/skel/.config/autostart/*
-
 %changelog
+* Wed Jan 24 2024 Anton Midyukov <antohami@altlinux.org> 1:10-alt6
+- Drop gfxboot for syslinux
+- Remove xfce-settings subpackage
+- spec: update BR
+- spec: bootloader: build on supported architectures only; update description
+
 * Fri Jan 12 2024 Anton Midyukov <antohami@altlinux.org> 1:10-alt5
 - notes: clean word 'distribution' (Closes: 49057)
 - do not copy indexhtml to alt-notes
