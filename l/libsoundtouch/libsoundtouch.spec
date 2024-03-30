@@ -4,12 +4,12 @@
 %def_enable check
 
 Name: libsoundtouch
-Version: 2.3.2
+Version: 2.3.3
 Release: alt1
 
 Summary: SoundTouch audio processing library
+License: LGPL-2.1-or-later
 Group: System/Libraries
-License: LGPLv2.1
 Url: http://www.surina.net/soundtouch/
 
 %if_disabled snapshot
@@ -18,7 +18,6 @@ Source: %url/%_name-%version.tar.gz
 Vcs: https://codeberg.org/soundtouch/soundtouch.git
 Source: %_name-%version.tar
 %endif
-Patch: %_name-2.3.2-suse-disable-ffast-math.patch
 
 BuildRequires: gcc-c++ libstdc++-devel
 %{?_enable_openmp:BuildRequires: libgomp-devel}
@@ -41,7 +40,6 @@ Libraries/include files for development with %name.
 
 %prep
 %setup -n %_name%{?_enable_snapshot:-%version}
-%patch -p1
 %if_enabled openmp
 %ifarch %e2k
 # for unknown reason, libtool uses the -nostdlib option when linking,
@@ -81,6 +79,9 @@ rm -rf %buildroot/%_prefix/doc
 
 
 %changelog
+* Sat Mar 30 2024 Yuri N. Sedunov <aris@altlinux.org> 2.3.3-alt1
+- 2.3.3
+
 * Sun Jan 29 2023 Yuri N. Sedunov <aris@altlinux.org> 2.3.2-alt1
 - 2.3.2
 - disabled -ffast-math (Suse)
