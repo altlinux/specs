@@ -2,16 +2,19 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: widelands
-Version: 1.1
-Release: alt2.20230624
+Version: 1.2
+Release: alt1
 Epoch: 1
 
 Summary: Open source realtime-strategy game
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Games/Strategy
 
-Url: http://www.widelands.org
+Url: https://www.widelands.org
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
+
+Requires(pre): %name-data = %EVR
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -41,9 +44,18 @@ other free libraries, which is still under development. Widelands is inspired
 by Settlers II (Bluebyte) and is partly similar to it, so if you know it,
 you perhaps will have a thought what Widelands is all about.
 
+%package data
+Summary: Data files for widelands
+Group: Games/Strategy
+Requires(preun): %name = %EVR
+BuildArch: noarch
+
+%description data
+Data files for widelands.
+
 %prep
 %setup
-%autopatch -p1
+%patch -p1
 %ifarch %e2k
 # unsupported as of lcc 1.26.18 (mcst#7644)
 sed -i '/-fno-elide-constructors/d' CMakeLists.txt
@@ -76,9 +88,16 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.appdata.xml
 %_iconsdir/hicolor/*/apps/*.png
 %_datadir/metainfo/*.appdata.xml
 %_desktopdir/*.desktop
+
+%files data
 %_datadir/%name
 
 %changelog
+* Sat Mar 30 2024 Anton Midyukov <antohami@altlinux.org> 1:1.2-alt1
+- New version 1.2
+- correct the License field to match SPDX format
+- separate data package
+
 * Sat Jun 24 2023 Anton Midyukov <antohami@altlinux.org> 1:1.1-alt2.20230624
 - new snapshot
 
