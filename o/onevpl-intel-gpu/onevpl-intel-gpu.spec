@@ -3,7 +3,7 @@
 %def_without devel
 
 Name: onevpl-intel-gpu
-Version: 24.1.3
+Version: 24.2.0
 Release: alt1
 Group: System/Configuration/Hardware
 Summary: Intel oneVPL GPU Runtime
@@ -60,5 +60,8 @@ developing applications that use %name.
 %endif
 
 %changelog
+* Sat Mar 30 2024 Anton Farygin <rider@altlinux.ru> 24.2.0-alt1
+- 24.2.0
+
 * Sun Feb 25 2024 Anton Farygin <rider@altlinux.ru> 24.1.3-alt1
 - first build for ALT
