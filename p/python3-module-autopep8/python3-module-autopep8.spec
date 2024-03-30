@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.4
-Release: alt1.gitaf7399d
+Version: 2.1.0
+Release: alt1
 
 Summary: A tool that automatically formats Python code to conform to the PEP 8 style guide
 License: MIT
@@ -61,6 +61,9 @@ of the formatting issues that can be reported by pycodestyle.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Mar 30 2024 Anton Zhukharev <ancieg@altlinux.org> 2.1.0-alt1
+- Updated to 2.1.0.
+
 * Thu Feb 08 2024 Anton Zhukharev <ancieg@altlinux.org> 2.0.4-alt1.gitaf7399d
 - Updated to af7399d (fixed FTBFS).
 
