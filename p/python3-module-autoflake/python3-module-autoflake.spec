@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 
 Summary: Removes unused imports and unused variables as reported by pyflakes
@@ -63,6 +63,9 @@ find %buildroot%python3_sitelibdir -name 'test_*' -type f -delete
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Mar 30 2024 Anton Zhukharev <ancieg@altlinux.org> 2.3.1-alt1
+- Updated to 2.3.1.
+
 * Mon Feb 19 2024 Anton Zhukharev <ancieg@altlinux.org> 2.3.0-alt1
 - Updated to 2.3.0.
 
