@@ -7,7 +7,7 @@
 Name: libsodium
 Summary: A modern, portable, easy to use crypto library
 Version: 1.0.19
-Release: alt1
+Release: alt2
 License: ISC
 Group: System/Libraries
 Url: https://libsodium.org/
@@ -74,7 +74,7 @@ packages.
 %ifarch x86_64
 %add_optflags -fanalyzer
 %endif
-%add_optflags %(getconf LFS_CFLAGS)
+%add_optflags %(getconf LFS_CFLAGS) -Wno-unused-function -Wno-unused-variable
 %autoreconf
 %configure --disable-static
 %make_build
@@ -87,16 +87,13 @@ packages.
 
 %post checkinstall
 set -xeuo pipefail
-tmp=$(mktemp -d)
-cd $tmp && trap "rm -vrf $tmp" 0
-cat > test.c <<"EOF"
+tmp=$(mktemp -d) && cd "$tmp" && trap "rm -vrf $tmp" 0
+gcc -O -Wextra -Werror -o test -xc - $(pkg-config libsodium --libs) <<"EOF"
 #include <sodium.h>
 #include <stdio.h>
-int main(void) { return printf("%s\n", sodium_version_string()), sodium_init(); }
+int main(void) { return printf("%%s\n", sodium_version_string()), sodium_init(); }
 EOF
-gcc -Wall -Werror -o test test.c $(pkg-config libsodium --libs)
 ./test
-# Double check that internal version is correct one.
 ./test | grep -Fx "%version"
 
 %files devel
@@ -112,6 +109,9 @@ gcc -Wall -Werror -o test test.c $(pkg-config libsodium --libs)
 %files checkinstall
 
 %changelog
+* Fri Mar 29 2024 Vitaly Chikunov <vt@altlinux.org> 1.0.19-alt2
+- Update to 1.0.19-RELEASE-35-g73248a49 (stable branch fixes).
+
 * Fri Sep 15 2023 Vitaly Chikunov <vt@altlinux.org> 1.0.19-alt1
 - Update to 1.0.19 (2023-09-13).
 - Provide libsodium name for packages like python3-module-libnacl.
