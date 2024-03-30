@@ -1,5 +1,5 @@
 Name: gnome-extension-manager
-Version: 0.4.3
+Version: 0.5.0
 Release: alt1
 
 Summary: A utility for browsing and installing GNOME Shell Extensions
@@ -17,7 +17,6 @@ BuildRequires: meson
 BuildRequires: gcc-c++
 BuildRequires: libbacktrace-devel
 BuildRequires: pkgconfig(json-glib-1.0)
-BuildRequires: pkgconfig(pygobject-2.0)
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(gtk4)
 BuildRequires: pkgconfig(libadwaita-1)
@@ -57,6 +56,12 @@ With Extension Manager you can:
 %_datadir/metainfo/*.metainfo.xml
 
 %changelog
+* Sun Mar 31 2024 Roman Alifanov <ximper@altlinux.org> 0.5.0-alt1
+- new version 0.5.0 (with rpmrb script)
+
+* Sun Mar 31 2024 Roman Alifanov <ximper@altlinux.org> 0.4.3-alt2
+- fix rebuild: unnecessary BR removed
+
 * Mon Nov 27 2023 Roman Alifanov <ximper@altlinux.org> 0.4.3-alt1
 - new version 0.4.3 (with rpmrb script)
 
