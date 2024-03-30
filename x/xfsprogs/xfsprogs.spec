@@ -5,7 +5,7 @@
 %endif
 
 Name: xfsprogs
-Version: 6.3.0
+Version: 6.6.0
 Release: alt1
 
 Summary: Utilities for managing the XFS filesystem
@@ -108,6 +108,11 @@ rm -rf %buildroot%_datadir/doc/%name
 
 %find_lang %name
 
+%pre
+%_sbindir/groupadd -r -f _xfsscrub ||:
+%_sbindir/useradd -M -r -d / -s /bin/false -c "Special User for the XFS Scrub service" -g _xfsscrub _xfsscrub >/dev/null 2>&1 ||:
+
+
 %files -f %name.lang
 /sbin/*
 %_sbindir/*
@@ -115,8 +120,10 @@ rm -rf %buildroot%_datadir/doc/%name
 %_unitdir/*.timer
 %dir %_datadir/xfsprogs
 %dir %_datadir/xfsprogs/mkfs
+%dir %_libdir/xfsprogs
+%_libdir/xfsprogs/xfs_scrub_fail
+%_datadir/xfsprogs/xfs_scrub_all.cron
 %_datadir/xfsprogs/mkfs/*.conf
-/%_lib/xfsprogs/xfs_scrub_fail
 %_mandir/man[85]/*
 %doc doc/CHANGES.gz doc/CREDITS README
 
@@ -147,6 +154,10 @@ rm -rf %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Sat Mar 30 2024 Anton Farygin <rider@altlinux.ru> 6.6.0-alt1
+- 6.3.0 -> 6.6.0
+- use _xfsscrub user in th online scrub unit instead of the nobody user
+
 * Sun Jun 04 2023 Anton Farygin <rider@altlinux.ru> 6.3.0-alt1
 - 6.2.0 -> 6.3.0
 
