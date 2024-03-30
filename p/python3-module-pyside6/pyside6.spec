@@ -7,13 +7,18 @@
 # The first version of LLVM which supports LoongArch targets
 %global llvm_version 16.0
 %else
+%ifarch %e2k
+# currently available
+%global llvm_version 13.0
+%else
 %global llvm_version 15.0
+%endif
 %endif
 %global clang_version %(echo %llvm_version | cut -d . -f 1)
 
 Name: python3-module-%mod_name
 Version: 6.6.2
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for the Qt cross-platform application and UI framework
 Group: Development/Python3
@@ -38,7 +43,10 @@ BuildRequires: python3-devel
 BuildRequires: llvm%{llvm_version}
 BuildRequires: llvm%{llvm_version}-devel
 BuildRequires: libmlir%{llvm_version}-devel
+%ifnarch %e2k
+# missing as llvm13.0 13.0.1-alt3.E2K.5
 BuildRequires: libpolly%{llvm_version}-devel
+%endif
 BuildRequires: clang%{llvm_version}-devel
 BuildRequires: clang%{llvm_version}-tools
 BuildRequires: clangd%{llvm_version}
@@ -289,6 +297,9 @@ popd
 %python3_sitelibdir/shiboken6_generator-%version-*.egg-info
 
 %changelog
+* Sun Mar 31 2024 Michael Shigorin <mike@altlinux.org> 6.6.2-alt2
+- E2K: llvm13.0 so far
+
 * Fri Feb 23 2024 Anton Vyatkin <toni@altlinux.org> 6.6.2-alt1
 - new version 6.6.2
 
