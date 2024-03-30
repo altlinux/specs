@@ -1,6 +1,6 @@
 %def_with check
 Name: ethtool
-Version: 6.6
+Version: 6.7
 Release: alt1
 Epoch: 1
 Summary: Ethernet settings tools for network cards
@@ -14,8 +14,6 @@ Summary(ru_RU.UTF-8): утилита настройки Ethernet-карт
 Summary(uk_UA.UTF-8): утил╕та налаштування Ethernet-карток
 
 Source1: ethlist
-
-Conflicts: net-tools <= 1.60-alt15
 
 %description
 This utility allows querying and changing of ethernet card settings,
@@ -53,6 +51,10 @@ make check
 %_datadir/bash-completion
 
 %changelog
+* Sat Mar 30 2024 Anton Farygin <rider@altlinux.ru> 1:6.7-alt1
+- 6.7
+- removed the old conflict with net-tools from 2008
+
 * Fri Jan 19 2024 Anton Farygin <rider@altlinux.ru> 1:6.6-alt1
 - 6.6
 
