@@ -5,7 +5,7 @@
 
 Name: gimp-plugin-%_name
 Version: 2.0.3
-Release: alt3
+Release: alt4
 
 Summary: Gimp plug-in for manipulating textures
 License: GPLv3+
@@ -30,6 +30,9 @@ painted).
 
 %prep
 %setup -n %_name-%version
+# http://gcc.gnu.org/onlinedocs/gcc/Variable-Length.html
+# http://stackoverflow.com/questions/26256533/iso-c-forbids-forward-parameter-declaration
+sed -i '/ThreadedProgressRecord/{:a;n;s/mutexProgress;/mutexProgress/;ba}' lib/progress.h
 sed -i 's|\(#!/usr/bin/\)env \(python\)|\1\22|' PluginScripts/*
 
 %build
@@ -47,6 +50,9 @@ sed -i 's|\(#!/usr/bin/\)env \(python\)|\1\22|' PluginScripts/*
 %doc README.md NEWS
 
 %changelog
+* Sat Mar 30 2024 Michael Shigorin <mike@altlinux.org> 2.0.3-alt4
+- E2K: fix build with non-gcc (ilyakurdyukov@)
+
 * Wed Aug 03 2022 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt3
 - updated to v2.0.3-24-gecfc4e7
 
