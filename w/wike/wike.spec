@@ -6,7 +6,7 @@
 
 Name: %_name
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Wikipedia reader for the GNOME Desktop
 License: GPL-3.0-or-later
@@ -24,7 +24,7 @@ Requires: dconf
 Requires: typelib(Adw) = 1 typelib(WebKit) = 6.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
-BuildRequires: meson
+BuildRequires: meson /usr/bin/glib-compile-resources
 %{?_enable_check:BuildRequires: /usr/bin/desktop-file-validate /usr/bin/appstreamcli /usr/bin/glib-compile-schemas}
 
 %description
@@ -59,6 +59,9 @@ articles.
 %_datadir/gnome-shell/search-providers/%rdn_name.SearchProvider.ini
 
 %changelog
+* Sat Mar 30 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1.1
+- fixed build w/o %%check
+
 * Sat Mar 23 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
 - 3.0.1
 
