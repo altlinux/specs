@@ -2,7 +2,7 @@
 
 Name: pve-network
 Summary: PVE SDN package
-Version: 0.9.5
+Version: 0.9.6
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
@@ -68,6 +68,9 @@ make -C src test
 %_unitdir/dnsmasq@.service.d/00-dnsmasq-after-networking.conf
 
 %changelog
+* Fri Mar 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 0.9.6-alt1
+- 0.9.6
+
 * Thu Mar 14 2024 Andrew A. Vasilyev <andy@altlinux.org> 0.9.5-alt1
 - 0.9.5
 - add copyright file

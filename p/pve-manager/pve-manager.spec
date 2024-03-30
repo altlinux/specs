@@ -4,7 +4,7 @@
 %add_findreq_skiplist %perl_vendor_privlib/PVE/Jobs.pm
 
 %define ver_major 8.1
-%define ver_minor 4
+%define ver_minor 10
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
@@ -22,10 +22,10 @@ BuildRequires(pre): rpm-macros-javascript
 Requires: cstream lzop zstd wget schedutils gdisk hdparm rsync pciutils
 Requires: perl-LWP-Protocol-https
 Requires: pve-common >= 7.2.6 pve-guest-common >= 4.2.1
-Requires: pve-storage >= 7.2.12 pve-cluster >= 7.2.3
+Requires: pve-storage >= 8.1.3 pve-cluster >= 7.2.3
 Requires: pve-vncterm pve-novnc >= 1.2.2 pve-spiceterm pve-xtermjs >= 4.7.1 pve-acme
 Requires: pve-container >= 4.0.9 pve-firewall pve-ha-manager pve-qemu-server >= 7.2.8 pve-i18n >= 1.0.3 pve-docs
-Requires: proxmox-widget-toolkit >= 3.6.0 proxmox-mini-journalreader >= 1.3.1
+Requires: proxmox-widget-toolkit >= 4.1.5 proxmox-mini-journalreader >= 1.3.1
 Requires: fonts-font-awesome javascript-extjs javascript-qrcodejs
 Requires: libproxmox-rs-perl >= 0.2.0 libpve-rs-perl >= 0.7.1
 Requires: perl-Net-SSLeay perl-Term-ReadLine-Gnu
@@ -40,11 +40,11 @@ Source9: basealt_logo-128.png
 Source10: sencha-touch.tgz
 
 BuildRequires: pve-doc-generator >= 7.2.3 xmlto perl-Pod-Parser
-BuildRequires: pve-storage >= 7.2.12 pve-cluster >= 7.2.3
+BuildRequires: pve-storage >= 8.1.3 pve-cluster >= 7.2.3
 BuildRequires: pve-common >= 7.2.6 pve-guest-common >= 4.2.1
 BuildRequires: libpve-cluster-perl >= 6.1.6 libpve-cluster-api-perl >= 7.0.5 pve-container pve-qemu-server >= 7.2.8
-BuildRequires: pve-acme pve-http-server >= 2.0.12 pve-access-control >= 7.0.2
-BuildRequires: proxmox-widget-toolkit >= 3.4.9
+BuildRequires: pve-acme pve-http-server >= 2.0.12 pve-access-control >= 8.1.3
+BuildRequires: proxmox-widget-toolkit >= 4.1.5
 BuildRequires: perl(AptPkg/Cache.pm) perl(File/ReadBackwards.pm) perl(Template.pm) perl(Net/DNS/Resolver.pm)
 BuildRequires: unzip gnupg
 
@@ -141,6 +141,9 @@ rm -f  %buildroot%_man1dir/pve7to8.1*
 %_jsdir/sencha-touch
 
 %changelog
+* Fri Mar 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.1.10-alt1
+- 8.1.10
+
 * Thu Feb 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.1.4-alt1
 - 8.1.4
 - improve ifupdown2 support

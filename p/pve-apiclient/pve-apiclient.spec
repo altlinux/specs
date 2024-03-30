@@ -2,7 +2,7 @@
 
 Name: pve-apiclient
 Summary: PVE API client library
-Version: 3.3.1
+Version: 3.3.2
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
@@ -37,6 +37,9 @@ install -D -m 0644 src/PVE/APIClient/Exception.pm %buildroot%perl_vendor_privlib
 %perl_vendor_privlib/PVE/*
 
 %changelog
+* Fri Mar 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 3.3.2-alt1
+- 3.3.2
+
 * Wed Feb 28 2024 Andrew A. Vasilyev <andy@altlinux.org> 3.3.1-alt1
 - 3.3.1
 

@@ -2,7 +2,7 @@
 
 Name: pve-storage
 Summary: PVE storage management library
-Version: 8.1.0
+Version: 8.1.4
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
@@ -59,6 +59,9 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Fri Mar 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.1.4-alt1
+- 8.1.4
+
 * Wed Mar 13 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.1.0-alt1
 - 8.1.0
 
