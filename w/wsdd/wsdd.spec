@@ -1,5 +1,5 @@
 Name:    wsdd
-Version: 0.7.1
+Version: 0.8
 Release: alt1
 
 Summary: A Web Service Discovery host daemon
@@ -58,5 +58,8 @@ getent passwd _%name > /dev/null || \
 %_man8dir/wsdd.8*
 
 %changelog
+* Sun Mar 31 2024 Andrey Cherepanov <cas@altlinux.org> 0.8-alt1
+- New version.
+
 * Thu Jun 01 2023 Andrey Cherepanov <cas@altlinux.org> 0.7.1-alt1
 - Initial build for Sisyphus.
