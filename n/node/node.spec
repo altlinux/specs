@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define major 20.11
+%define major 20.12
 
 %define nodejs_soversion 115
 %define nodejs_abi %nodejs_soversion
@@ -16,20 +16,20 @@
 
 
 # check deps/npm/package.json for it
-%define npm_version 10.2.4
+%define npm_version 10.5.0
 # separate build npm
 %def_with npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
 # check deps/corepack/package.json
-%define corepackver 0.19.0
+%define corepackver 0.25.2
 %def_without corepack
 
 # check deps/zlib/zlib.h
-%define zlib_version 1.2.13
+%define zlib_version 1.3.0.1
 
 # check deps/cares/include/ares_version.h
-%define c_ares_version 1.20.1
+%define c_ares_version 1.27.0
 
 # check deps/llhttp/include/llhttp.h
 %define llhttp_version 6.0.11
@@ -46,12 +46,12 @@
 %def_with systemuv
 
 # check deps/nghttp2/lib/includes/nghttp2/nghttp2ver.h
-%define libnghttp2_version 1.57.0
+%define libnghttp2_version 1.60.0
 %def_with systemnghttp2
 
 # see deps/v8/src/objects/intl-objects.h for V8_MINIMUM_ICU_VERSION
 # check tools/icu/current_ver.dep
-%define libicu_abi 7.3
+%define libicu_abi 7.4
 # see rpm-macros-features
 %if_feature icu %libicu_abi
 %def_with systemicu
@@ -80,8 +80,8 @@
 %def_with nodejs_abi
 
 Name: node
-Version: %major.1
-Release: alt2
+Version: %major.0
+Release: alt1
 
 Summary: Evented I/O for V8 Javascript
 
@@ -510,6 +510,11 @@ rm -rv %buildroot/usr/share/doc/node/lldb_commands.py
 %endif
 
 %changelog
+* Thu Mar 28 2024 Vitaly Lipatov <lav@altlinux.ru> 20.12.0-alt1
+- 2024-03-26, Version 20.12.0 'Iron' (LTS), @richardlau
+- set npm >= 10.5.0, c-ares >= 1.27.0, zlib >= 1.3.01
+- set libnghttp2 >= 1.60.0, libicu >= 7.4
+
 * Fri Mar 01 2024 Vitaly Lipatov <lav@altlinux.ru> 20.11.1-alt2
 - fix npm config get user-agent output again (ALT bug 43430)
 
