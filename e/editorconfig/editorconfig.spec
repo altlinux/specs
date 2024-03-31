@@ -1,9 +1,10 @@
 %def_enable docs
 %def_disable static
 %{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
+%def_disable check
 
 Name: editorconfig
-Version: 0.12.6
+Version: 0.12.7
 Release: alt1
 
 Summary: Parser for EditorConfig files written in C
@@ -70,6 +71,9 @@ This package contains files needed for development EditorConfig plugins.
 %install
 %cmakeinstall_std
 
+%check
+%cmake_build -t tests
+
 %files
 %_bindir/%name
 %_bindir/%name-%version
@@ -90,6 +94,9 @@ This package contains files needed for development EditorConfig plugins.
 %doc %_cmake__builddir/doc/html}
 
 %changelog
+* Sun Mar 31 2024 Yuri N. Sedunov <aris@altlinux.org> 0.12.7-alt1
+- 0.12.7
+
 * Sat Jan 21 2023 Yuri N. Sedunov <aris@altlinux.org> 0.12.6-alt1
 - 0.12.6
 
