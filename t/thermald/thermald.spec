@@ -6,7 +6,7 @@
 %def_with monitor
 
 Name: thermald
-Version: 2.5.6
+Version: 2.5.7
 Release: alt1
 
 Summary: Thermal daemon for IA
@@ -52,11 +52,11 @@ thermald представляет собой службу, которая упр
 %if_with monitor
 %package monitor
 Summary: Application for monitoring %name
-License: GPLv3+
+License: GPL-3.0-or-later
 Group: Monitoring
 BuildRequires: qt5-base-devel
 BuildRequires: qcustomplot-qt5-devel
-Requires: %name
+Requires: %name = %EVR
 
 %description monitor
 This package contains an Application to monitor %name for system
@@ -181,6 +181,9 @@ exit 0
 %endif
 
 %changelog
+* Sun Mar 31 2024 Anton Midyukov <antohami@altlinux.org> 2.5.7-alt1
+- new version 2.5.7
+
 * Mon Jan 29 2024 Anton Midyukov <antohami@altlinux.org> 2.5.6-alt1
 - new version 2.5.6
 
