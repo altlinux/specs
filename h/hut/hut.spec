@@ -1,7 +1,8 @@
 Name:           hut
-Version:        0.3.0
+Version:        0.4.0
 Release:        alt1
 Source:         %name-v%version.tar.gz
+# go mod vendor
 Source1:        vendor.tar
 Group:          Other
 Summary:        A CLI tool for sr.ht
@@ -35,6 +36,9 @@ Run hut init to get started. Read the man page to learn about all commands.
 %_man1dir/*
 
 %changelog
+* Sun Mar 31 2024 Fr. Br. George <george@altlinux.ru> 0.4.0-alt1
+- Version up; update vendor tree
+
 * Mon Jun 05 2023 Fr. Br. George <george@altlinux.ru> 0.3.0-alt1
 - Version up; update vendor tree
 
