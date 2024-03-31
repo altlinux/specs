@@ -2,31 +2,28 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:		coccinelle
-Version:	1.1.1
-Release:	alt2.1
+Version: 1.2
+Release: alt1
 Summary:	Semantic patching for Linux (spatch)
-
 Group:		Development/C
 License:	GPL-2.0-only
 Url:		http://coccinelle.lip6.fr/
 Vcs:		https://github.com/coccinelle/coccinelle.git
+Provides:	spatch
+Requires:	python3-dev
 
 Source:		%name-%version.tar
-Provides:	spatch
-
 BuildRequires(pre): rpm-build-ocaml >= 1.6.1
 BuildRequires(pre): rpm-build-python3
 BuildRequires:	ocaml >= 3.12.1
 BuildRequires:	ocaml-findlib
-BuildRequires:	ocaml-ocamldoc
 BuildRequires:	ocaml-menhir
-BuildRequires:	ocaml-stdcompat-devel
-BuildRequires:	ocaml-pcre-devel
 BuildRequires:	ocaml-num-devel
+BuildRequires:	ocaml-ocamldoc
 BuildRequires:	ocaml-parmap-devel
+BuildRequires:	ocaml-pcre-devel
+BuildRequires:	ocaml-stdcompat-devel
 BuildRequires:	python3-dev
-
-Requires:	python3-dev
 
 # Bogus internal name
 %filter_from_requires /^python.*(coccinelle)/d
@@ -64,7 +61,7 @@ possible NULL pointer dereference) without transforming them.
 %global demos_summary Demos of coccinelle semantic patches with C code examples
 Summary: %demos_summary
 Group: Documentation
-Requires: %name
+Requires: %name = %EVR
 BuildArch: noarch
 
 %description demos
@@ -76,7 +73,8 @@ They can be applied to the corresponding C code examples by a command like:
 
 and you'll get a normal patch for this C code example.
 
-The tests from coccinelle are also included in this package; they can be run with:
+The tests from coccinelle are also included in this package; they can be run
+with:
 
   spatch --testall --no-update-score-file
 
@@ -85,8 +83,8 @@ in the directory which includes the tests/ subdir (with *.res files).
 %package checkinstall
 %global checkinstall_summary Immediately run some tests for %name
 Summary: %checkinstall_summary
-Group: Other
-Requires: %name-demos
+Group: Development/Other
+Requires: %name-demos = %EVR
 BuildArch: noarch
 
 %description checkinstall
@@ -94,25 +92,18 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{name}-%{version}
-sed -i '1s:^#!/usr/bin/env python$:#!/usr/bin/python3:' tools/pycocci
+sed -i '1s|^#!.*python.*|#!%__python3|' tools/pycocci
 
-# On 32-bit ARM only, use of recent menhir leads to memory exhaustion. Turn
-# down the menhir optimization level to cope.
-%ifarch armh
-sed -i 's/--infer/& -O 1/' Makefile
-%endif
-
-%ifnarch %ocaml_native_arch
 # see https://bugzilla.altlinux.org/48475
 find . -name Makefile | xargs sed -r  -i 's/-custom\s/-output-complete-exe /g'
-%endif
 
 %build
 ./autogen
 %configure \
-	--with-python=%_bindir/python3 \
+	--with-python=%__python3 \
+	%nil
 
-%make_build
+%make_build VERBOSE=1
 
 %install
 %make DESTDIR=%buildroot install
@@ -126,29 +117,25 @@ rm -rf %buildroot%_libdir/coccinelle/python
 install ./tools/pycocci %buildroot%_bindir/pycocci
 
 %check
+PATH=%buildroot%_bindir:$PATH
+spatch --version
+spatch --version | grep -F 'spatch version %version '
 %define run_tests \
 demos=( \
         simple # a simple demo \
         python_identifier # with embedded Python \
 ) \
 for f in "${demos[@]}"; do \
-    %spatch -sp_file demos/"$f".{cocci,c} \
-done \
-%nil
+        spatch -sp_file demos/"$f".{cocci,c} \
+done
 
 export COCCINELLE_HOME=%buildroot%_libdir/coccinelle
 export PYTHONPATH=%buildroot%python3_sitelibdir
-%global spatch %buildroot%_bindir/spatch
 %run_tests
 
 # tests/SCORE_expected.sexp should be generated with previous version
 # of coccinelle by `spatch --testall`.
-%ifarch %ocaml_native_arch
-%global spatch ./spatch.opt
-%else
-%global spatch ./spatch
-%endif
-if yes | %spatch -macro_file standard.h --iso-file standard.iso --testall > log 2>&1; then
+if yes | spatch -macro_file standard.h --iso-file standard.iso --testall > log 2>&1; then
 	echo :: SCORE TEST SUCCESS
 	tail log
 else
@@ -158,8 +145,8 @@ else
 fi
 
 %pre checkinstall -p %_sbindir/sh-safely
+set -xe
 cd %_docdir/%name-demos-%version
-%global spatch spatch
 %run_tests
 
 %files
@@ -180,6 +167,9 @@ cd %_docdir/%name-demos-%version
 %files checkinstall
 
 %changelog
+* Sat Mar 30 2024 Vitaly Chikunov <vt@altlinux.org> 1.2-alt1
+- Update to 1.2 (2024-03-28).
+
 * Wed Feb 28 2024 Ivan A. Melnikov <iv@altlinux.org> 1.1.1-alt2.1
 - NMU: fix build w/o ocamlnative
 
