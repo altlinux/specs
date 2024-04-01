@@ -6,7 +6,7 @@
 
 Name: softhsm
 Version: 2.6.1
-Release: alt2
+Release: alt3
 
 Summary: Software version of a PKCS#11 Hardware Security Module
 License: BSD-2-Clause
@@ -122,6 +122,9 @@ exit 0
 %_includedir/softhsm/
 
 %changelog
+* Tue Mar 26 2024 Stanislav Levin <slev@altlinux.org> 2.6.1-alt3
+- Backported fix for #729 (pcks11 and softHSM segfault on exit).
+
 * Mon Jul 17 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.1-alt2
 - Fixed testsuite with openssl 3.0 (thx to Alexander Bokovoy for the patches).
 
