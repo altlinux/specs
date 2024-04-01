@@ -1,27 +1,28 @@
 %define _unpackaged_files_terminate_build 1
-
-%global import_path gitlab.com/gitlab-org/cli
+%define import_path gitlab.com/gitlab-org/cli
 
 %def_with docs
 
 Name: glab
-Version: 1.36.0
+Version: 1.37.0
 Release: alt1
 
 Summary: A GitLab CLI tool bringing GitLab to your command line
 License: MIT
 Group: Development/Other
 Url: https://gitlab.com/gitlab-org/cli
-
-Source0: %name-%version.tar
-Source1: vendor-%version.tar
+Vcs: https://gitlab.com/gitlab-org/cli
 
 ExclusiveArch: %go_arches
-BuildRequires(pre): rpm-build-golang
 
+Source0: %name-%version.tar
+Source1: %name-%version-vendor.tar
+Patch0: %name-%version-alt.patch
+
+BuildRequires(pre): rpm-build-golang
 %if_with docs
-BuildRequires: python3(sphinx)
-BuildRequires: python3(sphinx_rtd_theme)
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinx_rtd_theme
 %endif
 
 %description
@@ -46,12 +47,12 @@ BuildArch: noarch
 
 %prep
 %setup -a1
+%autopatch -p1
 
 %build
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-
 %golang_prepare
 
 pushd .build/src/%import_path
@@ -81,9 +82,12 @@ mv .man-pages/* %buildroot%_man1dir
 %doc .web-pages/*
 %exclude %_docdir/%name-%version/LICENSE
 %exclude %_docdir/%name-%version/README.md
-%_man1dir/*.1.xz
+%_man1dir/*.1.*
 
 %changelog
+* Mon Apr 01 2024 Anton Zhukharev <ancieg@altlinux.org> 1.37.0-alt1
+- Updated to 1.37.0.
+
 * Wed Dec 20 2023 Anton Zhukharev <ancieg@altlinux.org> 1.36.0-alt1
 - Updated to 1.36.0.
 
