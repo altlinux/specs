@@ -6,7 +6,7 @@
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 6.0.44
+Version: 6.0.47
 Release: alt1
 
 Summary: New control center for Linux Deepin
@@ -92,6 +92,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %dir %_libdir/%repo/
 %dir %_libdir/%repo/modules/
 %_libdir/%repo/modules/libdcc*.so
+%dir %_libdir/dde-grand-search-daemon/
+%dir %_libdir/dde-grand-search-daemon/plugins/
+%dir %_libdir/dde-grand-search-daemon/plugins/searcher/
+%_libdir/dde-grand-search-daemon/plugins/searcher/org.deepin.dde-grand-search.dde-control-center-setting.conf
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.dde.control-center/
@@ -119,6 +123,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/libdcc-widgets.so
 
 %changelog
+* Mon Apr 01 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.47-alt1
+- New version 6.0.47.
+
 * Thu Feb 01 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.44-alt1
 - New version 6.0.44.
 
