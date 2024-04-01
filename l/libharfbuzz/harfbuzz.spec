@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name harfbuzz
-%define ver_major 8.3
+%define ver_major 8.4
 %def_with graphite2
 %def_with icu
 %def_with cairo
@@ -15,7 +15,7 @@
 %endif
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: HarfBuzz is an OpenType text shaping engine
@@ -30,11 +30,18 @@ Vcs: https://github.com/harfbuzz/harfbuzz.git
 Source: %_name-%version.tar
 %endif
 
+%define glib_ver 2.30.0
+%define cairo_ver 1.10.0
+%define icu_ver 49.0
+%define graphite2_ver 1.2.0
+%define freetype_ver 12.0.6
+
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
-BuildRequires: meson gcc-c++ glib2-devel libfreetype-devel libcairo-devel
+BuildRequires: meson gcc-c++ glib2-devel >= %glib_ver
+BuildRequires: pkgconfig(freetype2) >= %freetype_ver libcairo-devel >= %cairo_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
-%{?_with_graphite2:BuildRequires: libgraphite2-devel}
-%{?_with_icu:BuildRequires: libicu-devel}
+%{?_with_graphite2:BuildRequires: libgraphite2-devel >= %graphite2_ver}
+%{?_with_icu:BuildRequires: pkgconfig(icu-uc) >= %icu_ver}
 %{?_enable_docs:BuildRequires: gtk-doc}
 %{?_enable_check:BuildRequires: python3-test fonttools}
 
@@ -200,6 +207,9 @@ GObject introspection devel data for the HarfBuzz library
 %endif
 
 %changelog
+* Mon Apr 01 2024 Yuri N. Sedunov <aris@altlinux.org> 8.4.0-alt1
+- 8.4.0
+
 * Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 8.3.1-alt1
 - 8.3.1
 
