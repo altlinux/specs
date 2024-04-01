@@ -3,8 +3,8 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 7.4.2
-Release: alt2
+Version: 7.5.0
+Release: alt1
 
 Summary: Python implementation of SAML2
 License: Apache-2.0
@@ -61,10 +61,12 @@ that allow you to use it with other frameworks.
 %_bindir/parse_xsd2
 %python3_sitelibdir/saml2
 %python3_sitelibdir/saml2test
-%python3_sitelibdir/utility
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Apr 01 2024 Grigory Ustinov <grenka@altlinux.org> 7.5.0-alt1
+- Automatically updated to 7.5.0.
+
 * Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 7.4.2-alt2
 - drop curl from requires
 
