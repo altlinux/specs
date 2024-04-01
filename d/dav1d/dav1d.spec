@@ -1,5 +1,5 @@
 Name: dav1d
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 %define soversion 7
 
@@ -65,6 +65,9 @@ Development files for dav1d, the AV1 cross-platform Decoder.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Apr 01 2024 Anton Farygin <rider@altlinux.ru> 1.4.1-alt1
+- 1.4.1
+
 * Thu Feb 22 2024 Anton Farygin <rider@altlinux.ru> 1.4.0-alt1
 - 1.4.0
 - a package with the library was renamed in accordance with SharedLibsPolicy
