@@ -1,6 +1,6 @@
 Name:     libmed
 Version:  4.1.0
-Release:  alt2.1
+Release:  alt3
 
 Summary:  Library to store and exchange meshed data or computation result in MED format
 License:  GPLv3 and LGPLv3
@@ -12,6 +12,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source:   med-%version.tar
 
 Patch1: med-4.1.0-fedora-cmake.patch
+Patch2: med-4.1.0-gentoo-build-against-hdf5-1.14.patch
 
 BuildRequires: cmake
 BuildRequires: ctest
@@ -40,6 +41,7 @@ Utilities for work with MED format.
 %prep
 %setup -n med-%{version}_SRC
 %patch1 -p1
+%patch2 -p1
 
 %build
 %cmake \
@@ -76,6 +78,9 @@ popd
 %_bindir/*
 
 %changelog
+* Mon Apr 01 2024 Anton Farygin <rider@altlinux.ru> 4.1.0-alt3
+- NMU: added patch from Gentoo against hdf5 1.14
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 4.1.0-alt2.1
 - NMU: spec: adapted to new cmake macros.
 
