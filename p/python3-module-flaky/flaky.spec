@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.8.0
+Version: 3.8.1
 Release: alt1
 
 Summary: Plugin for nose or py.test that automatically reruns flaky tests
@@ -56,6 +56,9 @@ sed -i 's/3.7.0/%version/' setup.py
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Apr 01 2024 Grigory Ustinov <grenka@altlinux.org> 3.8.1-alt1
+- Automatically updated to 3.8.1.
+
 * Mon Mar 11 2024 Grigory Ustinov <grenka@altlinux.org> 3.8.0-alt1
 - Automatically updated to 3.8.0.
 - Built with check.
