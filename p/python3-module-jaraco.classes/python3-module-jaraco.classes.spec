@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.3.1
+Version: 3.4.0
 Release: alt1
 Summary: Utility functions for Python class constructs
 License: MIT
@@ -52,6 +52,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Mon Apr 01 2024 Stanislav Levin <slev@altlinux.org> 3.4.0-alt1
+- 3.3.1 -> 3.4.0.
+
 * Thu Mar 14 2024 Stanislav Levin <slev@altlinux.org> 3.3.1-alt1
 - 3.3.0 -> 3.3.1.
 
