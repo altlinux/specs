@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.9.0
+Version: 2.10.2
 Release: alt1
 Summary: CSS Cascading Style Sheets library for Python
 License: LGPL-3.0
@@ -16,9 +16,9 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage extras dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
-# optional
-%add_python3_req_skip google.appengine.api
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
@@ -43,7 +43,7 @@ any rendering facilities!
 %pyproject_install
 
 %check
-%pyproject_run_pytest -ra -Wignore
+%pyproject_run_pytest -ra -Wignore -m 'not internet'
 
 %files
 %_bindir/csscapture
@@ -55,6 +55,9 @@ any rendering facilities!
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Apr 01 2024 Stanislav Levin <slev@altlinux.org> 2.10.2-alt1
+- 2.9.0 -> 2.10.2.
+
 * Fri Mar 01 2024 Stanislav Levin <slev@altlinux.org> 2.9.0-alt1
 - 2.7.1 -> 2.9.0.
 
