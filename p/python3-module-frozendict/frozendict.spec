@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-frozendict
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 
 Summary: An immutable dictionary
@@ -25,8 +25,6 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pytest
 %endif
 
-BuildArch: noarch
-
 %description
 frozendict is an immutable wrapper around dictionaries that implements
 the complete mapping interface. It can be used as a drop-in replacement
@@ -35,7 +33,7 @@ for dictionaries where immutability is desired.
 %prep
 %setup
 
-sed -i 's/2.3.10/%version/' src/frozendict/version.py
+sed -i 's/2.4.0/%version/' src/frozendict/version.py
 
 %build
 %pyproject_build
@@ -47,11 +45,14 @@ sed -i 's/2.3.10/%version/' src/frozendict/version.py
 %pyproject_run_pytest
 
 %files
-%doc README.md
+%doc LICENSE.txt README.md
 %python3_sitelibdir/%modulename
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Mon Apr 01 2024 Grigory Ustinov <grenka@altlinux.org> 2.4.1-alt1
+- Automatically updated to 2.4.1.
+
 * Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 2.4.0-alt1
 - Automatically updated to 2.4.0.
 - Build with check.
