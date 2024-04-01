@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: tig
-Version: 2.5.8
+Version: 2.5.9
 Release: alt1
 
 Summary: Text-mode interface for git
@@ -25,6 +25,8 @@ BuildRequires: xmlto
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: /dev/pts
 BuildRequires: git-core
+BuildRequires: git-diff-highlight
+BuildRequires: /proc
 BuildRequires: util-linux
 }}
 
@@ -59,8 +61,11 @@ hardlink -v %buildroot%_datadir
 
 %check
 src/tig -v
+src/tig -v | grep -Fx '%name version %version'
 export C_INCLUDE_PATH=/usr/include/pcre
 script -e -c 'make test' /dev/null
+# This will rebuild everything with ASan.
+script -e -c 'make test-address-sanitizer' /dev/null
 
 %files
 %doc COPYING NEWS.adoc README.adoc doc/manual.adoc
@@ -75,6 +80,9 @@ script -e -c 'make test' /dev/null
 %_datadir/zsh/site-functions/tig-completion.bash
 
 %changelog
+* Mon Apr 01 2024 Vitaly Chikunov <vt@altlinux.org> 2.5.9-alt1
+- Update to tig-2.5.9 (2024-03-29).
+
 * Wed Feb 08 2023 Vitaly Chikunov <vt@altlinux.org> 2.5.8-alt1
 - Update to tig-2.5.8 (2023-02-04).
 
