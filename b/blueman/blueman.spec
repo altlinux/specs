@@ -1,15 +1,22 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name:    blueman
-Version: 2.3.5
-Release: alt2
+Version: 2.4
+Release: alt1
 
 Summary: Blueman is a GTK+ Bluetooth Manager
 License: GPL-3.0-or-later
-Group:   Development/Python3
+Group:   System/Configuration/Hardware
 URL:     https://github.com/blueman-project/blueman
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires(pre): rpm-macros-python3
+BuildRequires(pre): rpm-macros-systemd
+BuildRequires: meson
+BuildRequires: rpm-build-python3 rpm-build-gir
 BuildRequires: python3-dev
 BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: pkgconfig(pygobject-3.0)
@@ -23,99 +30,85 @@ BuildRequires: python3-module-dbus
 Requires: bluez
 Requires: typelib(Gtk) = 3.0
 
-# Build with --disable-appindicator
-%add_typelib_req_skiplist typelib(AppIndicator3)
-
 %add_python3_req_skip gi.repository.GObject
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
+%patch -p1
 
 %build
-# on P9 cython is python-2 executable, use cython3 explicitly
-export CYTHONEXEC=cython3
+%meson  -Dsystemdsystemunitdir=%_unitdir \
+	-Dsystemduserunitdir=%_user_unitdir \
+	-Ddhcp-config-path=%_sysconfdir/dhcp/dhcpd.conf \
+	-Dthunar-sendto=false \
+	-Dpolicykit=true \
+	-Dpulseaudio=true \
+	-Dpythoninstalldir=%python3_sitelibdir \
+	-Dsendto-plugins=[]
 
-%autoreconf
-%configure \
-	--with-dhcp-config=%_sysconfdir/dhcp/dhcpd.conf \
-	--libexecdir=%_libexecdir \
-	--enable-polkit \
-	--disable-static \
-	--disable-appindicator \
-	--enable-settings-integration
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 mkdir -p %buildroot%_altdir
 cat > %buildroot%_altdir/%name <<EOF
 %_bindir/bluetooth-sendto	%_bindir/blueman-sendto	20
 EOF
 
-# cleanup docs
-rm -fr %buildroot/%_datadir/doc
-
-# remove static library
-rm -fr %buildroot/%python3_sitelibdir/_blueman.la
-
-# replace systemd units
-mkdir -p %buildroot/lib/systemd/
-mv %buildroot/usr/lib/systemd/system %buildroot/lib/systemd/
-
 # replace config
 mkdir -p %buildroot%_sysconfdir/dbus-1/system.d
 mv %buildroot%_datadir/dbus-1/system.d/org.blueman.Mechanism.conf \
 	%buildroot%_sysconfdir/dbus-1/system.d
 
+mkdir -p %buildroot%_presetdir
+echo 'enable blueman-mechanism.service' >%buildroot%_presetdir/80-blueman.preset
+
 %find_lang %name
 
 %post
-if [ $1 -eq 1 ] ; then
-# Enable the services we install by default
-/bin/systemctl preset \
-blueman-mechanism.service
->/dev/null 2>&1 || :
-fi
+%post_service blueman-mechanism.service
 
 %preun
-if [ $1 -eq 1 ] ; then
-# Disable the services we install by default
-/bin/systemctl disable \
-blueman-mechanism.service
->/dev/null 2>&1 || :
-fi
+%preun_service blueman-mechanism.service
 
 %files -f %name.lang
-%_altdir/%name
+%_altdir/blueman
 %doc CHANGELOG.md FAQ README.md
-%_bindir/blue*
-%_prefix/lib/systemd/user/blueman-manager.service
+%_bindir/blueman-*
+%_unitdir/blueman-mechanism.service
+%_presetdir/80-blueman.preset
+%_user_unitdir/blueman-applet.service
+%_user_unitdir/blueman-manager.service
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.blueman.Mechanism.conf
 %_datadir/dbus-1/system-services/org.blueman.Mechanism.service
 %_datadir/dbus-1/services/org.blueman.Manager.service
 %_datadir/applications/blueman-*.desktop
 %_datadir/dbus-1/services/org.blueman.Applet.service
-%_datadir/%name
+%_datadir/blueman
 %_datadir/glib-2.0/schemas/org.blueman.gschema.xml
 %_datadir/polkit-1/actions/org.blueman.policy
 %_datadir/polkit-1/rules.d/blueman.rules
-%_datadir/Thunar/sendto/thunar-sendto-blueman.desktop
-%_desktopdir/%name-manager.desktop
+%_desktopdir/blueman-manager.desktop
 %_iconsdir/hicolor/*/*/*
-%_libexecdir/%name-mechanism
+%_libexecdir/blueman-mechanism
 %_libexecdir/blueman-rfcomm-watcher
-%_man1dir/%name-*.1*
-%_prefix/lib/systemd/user/blueman-applet.service
-/lib/systemd/system/blueman-mechanism.service
-%python3_sitelibdir_noarch/blueman
+%_man1dir/blueman-*.1*
+%python3_sitelibdir/blueman
 %python3_sitelibdir/_blueman.so
-%_sysconfdir/xdg/autostart/%name.desktop
+%_sysconfdir/xdg/autostart/blueman.desktop
 
 %changelog
+* Sun Mar 31 2024 Anton Midyukov <antohami@altlinux.org> 2.4-alt1
+- new version 2.4
+- switch to meson
+- disable sendto plugins
+- fix Group fiels to 'System/Configuration/Hardware'
+- fix post/preun blueman-mechanism.service
+
 * Thu Jan 25 2024 Anton Midyukov <antohami@altlinux.org> 2.3.5-alt2
 - fix the location of systemd unit blueman-mechanism.service
 
