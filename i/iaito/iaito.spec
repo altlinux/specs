@@ -1,5 +1,5 @@
 Name: iaito
-Version: 5.8.8
+Version: 5.9.0
 Release: alt1
 
 Summary: GUI for radare2
@@ -10,7 +10,7 @@ Url: https://github.com/radareorg/iaito
 Source: %name-%version-%release.tar
 
 BuildRequires: acr gcc-c++ radare2-devel
-BuildRequires: qt5-base-devel qt5-svg-devel qt5-tools-devel
+BuildRequires: qt6-base-devel qt6-svg-devel qt6-tools-devel
 
 %description
 iaito is the official graphical interface for radare2, a libre
@@ -22,8 +22,8 @@ sed -ri -e '/^QMAKE_CXXFLAGS/ s,$, %optflags,' -e '/QMAKE_LFLAGS.+rpath/d' src/I
 sed -ri -e '/^(iaito|install)/ s,translations,build,' Makefile
 
 %build
-export QMAKE=/usr/bin/qmake-qt5
-export LRELEASE=/usr/bin/lrelease-qt5
+export QMAKE=/usr/bin/qmake-qt6
+export LRELEASE=/usr/bin/lrelease-qt6
 %configure
 %make_build
 
@@ -43,6 +43,9 @@ install -pm0644 -D src/iaito.1 %buildroot%_man1dir/iaito.1
 %_man1dir/iaito.1*
 
 %changelog
+* Mon Apr 01 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 5.9.0-alt1
+- 5.9.0 released
+
 * Wed Dec 20 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.8.8-alt1
 - 5.8.8 released
 
