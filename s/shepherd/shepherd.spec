@@ -6,30 +6,27 @@
 %define bash_completionsdir %_datadir/bash-completion/completions
 
 Name: shepherd
-Version: 0.10.3
+Version: 0.10.4
 Release: alt1
 
 Summary: The GNU Shepherd
 License: GPL-3.0+
 Group: System/Configuration/Boot and Init
 Url: https://www.gnu.org/software/shepherd/
-Vcs: git://git.savannah.gnu.org/shepherd.git
+Vcs: https://git.savannah.gnu.org/cgit/shepherd.git
 
 Source0: %name-%version.tar
-Patch0: %name-0.10.3-alt-fix-runstatedir.patch
+Patch0: %name-%version-alt.patch
 
 Requires: guile-fibers
 Conflicts: sysvinit
 Conflicts: systemd-sysvinit
 
+BuildRequires(pre): /proc
 BuildRequires: guile-devel
 BuildRequires: guile-fibers
 BuildRequires: help2man
 BuildRequires: texinfo
-
-%if_with check
-BuildRequires(pre): /proc
-%endif
 
 %description
 The GNU Shepherd is a service manager written in Guile that looks after
@@ -43,7 +40,7 @@ programming model.
 
 %prep
 %setup
-%patch0 -p1
+%autopatch0 -p1
 
 %build
 %autoreconf
@@ -75,6 +72,9 @@ programming model.
 %bash_completionsdir/herd
 
 %changelog
+* Mon Apr 01 2024 Anton Zhukharev <ancieg@altlinux.org> 0.10.4-alt1
+- Updated to 0.10.4.
+
 * Tue Jan 09 2024 Anton Zhukharev <ancieg@altlinux.org> 0.10.3-alt1
 - Updated to 0.10.3.
 
