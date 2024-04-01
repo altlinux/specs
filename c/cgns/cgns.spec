@@ -14,17 +14,16 @@ American Institute of Aeronautics and Astronautics (AIAA) Recommended \
 Practice.
 
 Name: cgns
-Version: 4.2.0
+Version: 4.4.0
 Release: alt1
 Summary: CFD General Notation System
 Group: Sciences/Mathematics
 License: Free (see license.txt)
 URL: https://github.com/CGNS/CGNS
-
-# https://github.com/CGNS/CGNS.git
+VCS: https://github.com/CGNS/CGNS.git
 Source: %name-%version.tar
 
-Patch1: cgns-alt-install.patch
+Patch1: cgns-4.4.0-alt-install.patch
 
 BuildRequires: cmake gcc-c++ gcc-fortran zlib-devel libGL-devel tk-devel
 BuildRequires: libGLU-devel xorg-xproto-devel libXmu-devel libXtst-devel
@@ -108,11 +107,15 @@ This package contains development files of CGNS.
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/*.so
+%_libdir/cmake/cgns
 
 %files -n lib%name-devel-static
 %_libdir/*.a
 
 %changelog
+* Mon Feb 12 2024 Anton Farygin <rider@altlinux.ru> 4.4.0-alt1
+- 4.2.0 -> 4.4.0
+
 * Wed Jan 19 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 4.2.0-alt1
 - Updated to upstream version 4.2.0.
 
