@@ -4,29 +4,30 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 3.3.2
+Version: 3.4.0
 Release: alt1
 
 Summary: Non-blocking MongoDB driver for Tornado
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/motor/
+URL: https://pypi.org/project/motor
+VCS: https://github.com/mongodb/motor
 
-BuildArch: noarch
-
-# https://github.com/mongodb/motor.git
-# Source-url: https://pypi.io/packages/source/m/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-intro
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-tornado
 BuildRequires: python3-module-pymongo python3-module-gridfs
 BuildRequires: python3(aiohttp)
 
 %py3_provides %oname
 %py3_requires tornado pymongo gridfs
+
+BuildArch: noarch
 
 %description
 Motor is a full-featured, non-blocking MongoDB driver for Python Tornado
@@ -36,20 +37,24 @@ applications.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %python3_prune
 
 %check
-%tox_check
+%tox_check_pyproject
 
 %files
-%doc *.rst
-%python3_sitelibdir/*
+%doc LICENSE *.md
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Apr 01 2024 Grigory Ustinov <grenka@altlinux.org> 3.4.0-alt1
+- Automatically updated to 3.4.0.
+
 * Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 3.3.2-alt1
 - Automatically updated to 3.3.2.
 
