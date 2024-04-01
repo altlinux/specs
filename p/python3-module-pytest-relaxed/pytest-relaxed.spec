@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.1
-Release: alt2
+Version: 2.0.2
+Release: alt1
 Summary: Relaxed test discovery/organization for pytest
 License: BSD-2-Clause
 Group: Development/Python
@@ -57,6 +57,9 @@ it with an underscore.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Apr 01 2024 Stanislav Levin <slev@altlinux.org> 2.0.2-alt1
+- 2.0.1 -> 2.0.2.
+
 * Mon Mar 25 2024 Stanislav Levin <slev@altlinux.org> 2.0.1-alt2
 - Fixed FTBFS (Pytest 8.0).
 
