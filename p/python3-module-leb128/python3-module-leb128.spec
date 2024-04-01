@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.5
+Version: 1.0.7
 Release: alt1
 
 Summary: LEB128 or Little Endian Base 128
@@ -54,6 +54,9 @@ encoding for all integer literals.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Apr 01 2024 Anton Zhukharev <ancieg@altlinux.org> 1.0.7-alt1
+- Updated to 1.0.7.
+
 * Thu Mar 07 2024 Anton Zhukharev <ancieg@altlinux.org> 1.0.5-alt1
 - Built for ALT Sisyphus.
 
