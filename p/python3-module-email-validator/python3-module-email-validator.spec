@@ -6,26 +6,24 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 2.1.0.post1
+Version: 2.1.1
 Release: alt1
 
 Summary: A robust email syntax and deliverability validation library for Python
 License: CC0-1.0
 Group: Development/Python3
 Url: https://pypi.org/project/email-validator
-Vcs: https://github.com/JoshData/python-email-validator.git
+Vcs: https://github.com/JoshData/python-email-validator
 
 BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-
-%py3_provides %pypi_name
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -64,9 +62,9 @@ use pyIsEmail.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-
 %if_with check
 %pyproject_deps_resync_check_pipreqfile test_requirements.txt
 %endif
@@ -87,6 +85,9 @@ use pyIsEmail.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Apr 01 2024 Anton Zhukharev <ancieg@altlinux.org> 2.1.1-alt1
+- Updated to 2.1.1.
+
 * Tue Nov 07 2023 Anton Zhukharev <ancieg@altlinux.org> 2.1.0.post1-alt1
 - Updated to 2.1.0.post1.
 
