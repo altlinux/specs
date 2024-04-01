@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name aiomisc
+%define mod_name %pypi_name
 
 # Very unstable tests.
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 17.3.41
+Version: 17.5.4
 Release: alt1
 
 Summary: Miscellaneous utils for asyncio
@@ -18,17 +19,18 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %add_pyproject_deps_check_filter autodoc
 %add_pyproject_deps_check_filter collective-checkdocs
 %add_pyproject_deps_check_filter coveralls
 %add_pyproject_deps_check_filter grpc-stubs
 %add_pyproject_deps_check_filter grpcio-tools
+%add_pyproject_deps_check_filter grpcio-reflection
 %add_pyproject_deps_check_filter pytest-rst
 %add_pyproject_deps_check_filter sphinx-autobuild
 %add_pyproject_deps_check_filter sphinx-intl
@@ -58,6 +60,7 @@ robust and easier to maintain.
 
 %prep
 %setup
+%autopatch -p1
 
 # fix version in pyproject.toml
 sed -i '/^version/s/= .*$/= "%version"/' pyproject.toml
@@ -69,7 +72,6 @@ sed -i '/^__version__/s/= .*$/= "%version"/' aiomisc/version.py
 
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-
 %if_with check
 %pyproject_deps_resync_check_poetry dev
 %endif
@@ -85,10 +87,13 @@ sed -i '/^__version__/s/= .*$/= "%version"/' aiomisc/version.py
 
 %files
 %doc COPYING README.rst CHANGELOG.md
-%python3_sitelibdir/%{pypi_name}*/
+%python3_sitelibdir/%{mod_name}*/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Apr 01 2024 Anton Zhukharev <ancieg@altlinux.org> 17.5.4-alt1
+- Updated to 17.5.4.
+
 * Wed Feb 07 2024 Anton Zhukharev <ancieg@altlinux.org> 17.3.41-alt1
 - Updated to 17.3.41.
 
