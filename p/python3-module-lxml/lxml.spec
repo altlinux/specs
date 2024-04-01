@@ -1,11 +1,11 @@
-%def_with bootstrap
+%def_without bootstrap
 
-%def_without check
+%def_with check
 
 %define oname lxml
 
 Name: python3-module-lxml
-Version: 4.9.3.0.112.gitc18f89b8
+Version: 5.2.0
 Release: alt1
 
 Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API
@@ -34,6 +34,10 @@ BuildRequires: python3-module-Cython >= 0.18
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
+%if_with check
+BuildRequires: python3-module-lxml-html-clean
+%endif
+
 %description
 lxml is a Pythonic, mature binding for the libxml2 and libxslt libraries.
 It provides safe and convenient access to these libraries using the ElementTree API.
@@ -59,9 +63,6 @@ This package contains documentation for lxml.
 %prep
 %setup
 %patch -p1
-
-# a0 breaks some tests in other packages, for ex: python3(libvirt)
-sed -i 's/5.0.0a0/4.9.3/' src/lxml/__init__.py
 
 find -type f -name '*.c' -print -delete >&2
 
@@ -89,12 +90,15 @@ python3 test.py -vuf
 %files
 %doc *.txt *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-4.9.3.dist-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %files doc
 %doc doc samples
 
 %changelog
+* Mon Apr 01 2024 Grigory Ustinov <grenka@altlinux.org> 5.2.0-alt1
+- Automatically updated to 5.2.0.
+
 * Sat Nov 11 2023 Grigory Ustinov <grenka@altlinux.org> 4.9.3.0.112.gitc18f89b8-alt1
 - Automatically updated to 4.9.3.0.112.gitc18f89b8.
 - Bootstrap for python3.12.
