@@ -8,7 +8,7 @@ epoch:1
 %define kernel_need_version	6.1
 # Used when kernel-source-x.y does not currently exist in repository.
 %define kernel_base_version	6.1
-%define kernel_sublevel .0
+%define kernel_sublevel .77
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -441,6 +441,12 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Mar 29 2024 Dmitry Terekhin <jqt4@altlinux.org> 1:6.1.77-alt1
+- Updated to 6.1.77
+- https://github.com/raspberrypi/linux.git rpi-6.1.y commit d02bd251d7f85e3aec02e5752df2f44a35961360
+- Baikal-M support git.alt/people/asheplyakov/linux.git commit 7991e4a4365b549352cc6c33facae2842e4a3cde
+- Revert 49dc409b78422 to keep Bluetooth working on RPi3B+
+
 * Thu Dec 15 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:6.1.0-alt1
 - Updated to 6.1
 - https://github.com/raspberrypi/linux.git rpi-6.1.y 0a4f128460cf07f865a59daa6468de8e37985b45
