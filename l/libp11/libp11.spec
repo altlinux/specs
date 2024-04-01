@@ -1,10 +1,10 @@
 %define        _unpackaged_files_terminate_build 1
 %define        engines_dir $(pkg-config --variable=enginesdir --silence-errors libcrypto)
-%def_disable   check
+%def_enable    check
 
 Name:          libp11
 Version:       0.4.12.63
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Library for using PKCS#11 modules
 Group:         System/Libraries
 License:       LGPL-2.1-or-later
@@ -103,6 +103,9 @@ rm -r %buildroot%_docdir/%name
 %_includedir/*
 
 %changelog
+* Fri Mar 22 2024 Stanislav Levin <slev@altlinux.org> 0.4.12.63-alt0.2
+- Reenabled testing (closes: #48229).
+
 * Mon Feb 05 2024 Pavel Skrylev <majioa@altlinux.org> 0.4.12.63-alt0.1
 - ^ 0.4.12 -> 0.4.12p63
 - ! fixed FTBFS on check section by disabling it

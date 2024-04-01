@@ -3,7 +3,7 @@
 
 Name: openssl3
 Version: 3.1.5
-Release: alt1
+Release: alt2
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: Apache-2.0
@@ -384,6 +384,9 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Fri Mar 22 2024 Stanislav Levin <slev@altlinux.org> 3.1.5-alt2
+- Backported upstream fix for https://github.com/openssl/openssl/issues/22508.
+
 * Fri Feb 02 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.5-alt1
 - Updated to 3.1.5.
 
