@@ -3,7 +3,7 @@
 
 Name: installer-feature-samba-automount
 Version: 0.1.1
-Release: alt2
+Release: alt3
 
 Summary: Installer stage3 for Samba automounting
 License: GPL
@@ -11,6 +11,8 @@ Group: System/Configuration/Other
 Url: http://www.altlinux.org/Installer/beans
 
 BuildArch: noarch
+
+Requires: samba-client
 
 Source: %name-%version.tar
 
@@ -36,6 +38,9 @@ install -pm755 *.sh %buildroot/%hookdir/
 %hookdir/*
 
 %changelog
+* Mon Apr 01 2024 Sergey V Turchin <zerg@altlinux.org> 0.1.1-alt3
+- require samba-client (closes: 49851)
+
 * Fri Jun 14 2019 Sergey V Turchin <zerg@altlinux.org> 0.1.1-alt2
 - dont use ubt macro
 
