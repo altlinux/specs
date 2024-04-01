@@ -1,23 +1,25 @@
 %define _unpackaged_files_terminate_build 1
-
-%global import_path golang.org/x/tools/gopls
+%define import_path golang.org/x/tools/gopls
 
 Name: gopls
-Version: 0.14.2
+Version: 0.15.2
 Release: alt1
 
 Summary: The Go language server
 License: BSD-3-Clause
 Group: Development/Other
 Url: https://pkg.go.dev/golang.org/x/tools/gopls
-
-Source0: %name-%version.tar
-Source1: vendor.tar
+Vcs: https://cs.opensource.google/go/x/tools
 
 ExclusiveArch: %go_arches
-BuildRequires(pre): rpm-build-golang
+
+Source0: %name-%version.tar
+Source1: %name-%version-vendor.tar
+Patch0: %name-%version-alt.patch
 
 Requires: golang
+
+BuildRequires(pre): rpm-build-golang
 
 %description
 Gopls (pronounced "go please") is an LSP server for Go. The Language
@@ -29,12 +31,12 @@ the most up-to-date documentation.
 
 %prep
 %setup -a1
+%autopatch -p1
 
 %build
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-
 %golang_prepare
 
 cd .build/src/%import_path
@@ -49,6 +51,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Mon Apr 01 2024 Anton Zhukharev <ancieg@altlinux.org> 0.15.2-alt1
+- Updated to 0.15.2.
+
 * Fri Nov 17 2023 Anton Zhukharev <ancieg@altlinux.org> 0.14.2-alt1
 - Updated to 0.14.2.
 
