@@ -7,7 +7,7 @@
 
 Name: deepin-control-center
 Version: 6.0.47
-Release: alt1
+Release: alt2
 
 Summary: New control center for Linux Deepin
 
@@ -16,6 +16,7 @@ Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-control-center
 
 Source: %url/archive/%version/%repo-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 # Requires: deepin-account-faces deepin-api deepin-daemon deepin-qt5integration deepin-network-utils GeoIP-GeoLite-data GeoIP-GeoLite-data-extra gtk-murrine-engine proxychains-ng redshift startdde
 # Requires: libdeepin-pw-check
@@ -56,6 +57,7 @@ Group: Development/Other
 
 %prep
 %setup -n %repo-%version
+%patch -p1
 
 %build
 export PATH=%_qt5_bindir:$PATH
@@ -101,7 +103,7 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %dir %_datadir/dsg/configs/org.deepin.dde.control-center/
 %_datadir/dsg/configs/org.deepin.dde.control-center/org.deepin.dde.control-center*.json
 %_datadir/dsg/configs/org.deepin.region-format.json
-%_datadir/qt5/doc/dde-control-center.qch
+%_datadir/doc/qt5/dde-control-center.qch
 %dir %_datadir/%repo/
 %_datadir/%repo/developdocument.html
 # package translations outside %%find_lang
@@ -123,6 +125,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/libdcc-widgets.so
 
 %changelog
+* Mon Apr 01 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.47-alt2
+- Fixed the path to the qt5 qch file.
+
 * Mon Apr 01 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.47-alt1
 - New version 6.0.47.
 
