@@ -3,7 +3,7 @@
 %def_enable prebuilded_frontend
 
 Name: prometheus
-Version: 2.47.1
+Version: 2.51.1
 Release: alt1
 Summary: Prometheus monitoring system and time series database
 
@@ -16,12 +16,14 @@ Source2: %name.sysconfig
 Source3: %name.init
 Source4: %name.service
 Source5: %name.tmpfiles
+Source6: %name.yml
 
 ExclusiveArch:  %go_arches
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang golang >= 1.21
 #BuildRequires: promu
 %if_disabled prebuilded_frontend
-BuildRequires: npm
+BuildRequires: rpm-build-nodejs
 %endif
 BuildRequires: /proc
 
@@ -101,7 +103,7 @@ rm -rf -- %buildroot%go_root
 #install -m0755 prometheus %buildroot%_bindir/%name
 #install -m0755 promtool %buildroot%_bindir/promtool
 cp -frv console_libraries consoles %buildroot%_datadir/%name/
-install -m0644 documentation/examples/prometheus.yml %buildroot%_sysconfdir/%name/%name.yml
+install -m0644 %SOURCE6 %buildroot%_sysconfdir/%name/%name.yml
 install -m0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 install -m0755 %SOURCE3 %buildroot%_initdir/%name
 install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
@@ -146,6 +148,12 @@ sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\npromtool \\- Tooling for the Promet
 %dir %attr(775, root, %name) %_localstatedir/%name
 
 %changelog
+* Mon Apr 01 2024 Alexey Shabalin <shaba@altlinux.org> 2.51.1-alt1
+- 2.51.1
+- add more hardening options to systemd serrvice
+- add default node exporter 9100 port to config
+- /var/run -> /run in tmpfile
+
 * Fri Oct 06 2023 Alexey Shabalin <shaba@altlinux.org> 2.47.1-alt1
 - 2.47.1
 

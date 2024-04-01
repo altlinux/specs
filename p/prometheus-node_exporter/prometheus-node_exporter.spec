@@ -6,7 +6,7 @@
 
 Name: prometheus-%oname
 Version: 1.7.0
-Release: alt1
+Release: alt2
 Summary: Prometheus exporter for hardware and OS metrics exposed by *NIX kernels.
 
 Group: Development/Other
@@ -85,10 +85,13 @@ sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\nprometheus-node-exporter \\- The Pr
 %_initdir/%name
 %_man1dir/*.1*
 %_datadir/prometheus/node-exporter/example-rules.yml
-%dir %attr(0755,root,prometheus) %_sharedstatedir/prometheus/node-exporter
+%dir %attr(0775,root,prometheus) %_sharedstatedir/prometheus/node-exporter
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Mon Apr 01 2024 Alexey Shabalin <shaba@altlinux.org> 1.7.0-alt2
+- Fix perm of /var/lib/prometheus/node-exporter for textfile
+
 * Fri Mar 29 2024 Alexey Shabalin <shaba@altlinux.org> 1.7.0-alt1
 - 1.7.0
 - Fix install systemd socket unit (ALT#48057)
