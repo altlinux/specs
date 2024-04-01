@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: geoipupdate
-Version: 6.0.0
+Version: 6.1.0
 Release: alt1
 
 Summary: GeoIP update client code
@@ -42,6 +42,9 @@ export GOPATH="%go_path"
 %_bindir/geoipupdate
 
 %changelog
+* Mon Feb 26 2024 Alexander Kuznetsov <kuznetsovam@altlinux.org> 6.1.0-alt1
+- new version 6.1.0
+
 * Mon Jul 17 2023 Egor Ignatov <egori@altlinux.org> 6.0.0-alt1
 - new version 6.0.0
 
