@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 2024.03.02
-Release: alt1
+Release: alt2
 
 Summary: Flexible test automation for Python
 
@@ -50,9 +50,14 @@ for configuration.
 
 %files
 %doc LICENSE *.md
+%_bindir/nox
+%_bindir/tox-to-nox
 %python3_sitelibdir/%pypi_name
 %python3_sitelibdir/%pypi_name-2024.3.2.dist-info
 
 %changelog
+* Tue Apr 02 2024 Grigory Ustinov <grenka@altlinux.org> 2024.03.02-alt2
+- Packaged also executables.
+
 * Mon Apr 01 2024 Grigory Ustinov <grenka@altlinux.org> 2024.03.02-alt1
 - Initial build for Sisyphus (Closes: #49605).
