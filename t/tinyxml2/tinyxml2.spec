@@ -1,6 +1,6 @@
-%define soname 9
+%define soname 10
 Name: tinyxml2
-Version: 9.0.0
+Version: 10.0.0
 Release: alt1
 Summary: Simple, small, efficient, C++ XML parser
 License: Zlib
@@ -75,7 +75,9 @@ doxygen dox
 
 %files -n lib%name.%soname
 %doc readme.md
-%_libdir/*.so.%{soname}*
+%_libdir/*.so.%{soname}
+%_libdir/*.so.%{soname}.*
+
 
 %files -n lib%name-devel
 %_includedir/*
@@ -87,6 +89,9 @@ doxygen dox
 %doc docs/*
 
 %changelog
+* Mon Apr 01 2024 Anton Farygin <rider@altlinux.ru> 10.0.0-alt1
+- 9.0.0 -> 10.0.0
+
 * Fri Dec 31 2021 Anton Farygin <rider@altlinux.ru> 9.0.0-alt1
 - 8.1.0 -> 9.0.0
 
