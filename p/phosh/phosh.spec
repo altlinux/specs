@@ -14,8 +14,8 @@
 %def_disable check
 
 Name: phosh
-Version: %ver_major.0
-Release: alt1.2%beta
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: A pure Wayland shell for mobile devices
 License: GPL-3.0-or-later
@@ -35,7 +35,6 @@ Patch1: %name-0.28.0-alt-tcb-check.patch
 Patch2: %name-0.29.0-alt-service.patch
 # https://bugzilla.altlinux.org/46978
 Patch3: %name-0.29.0-alt-service-dm.patch
-Patch4: %name-0.37-gnome-session-46-compat.patch
 
 Requires: %name-data = %EVR
 # to avoid circular dependency
@@ -122,7 +121,6 @@ This package provides files needed to develop Phosh plugins.
 %patch1 -p2
 %patch2 -p1 -b .alt
 %patch3 -p1 -b .alt-dm
-%patch4 -p2 -b .gnome-session-46
 sed -i 's|\(User=\)1000|\1%dev_uid|' data/%name.service
 # full path to capsh
 sed -i 's|\(capsh\)|/sbin/\1|' data/%name.service
@@ -208,6 +206,9 @@ xvfb-run %__meson_test
 %{?_enable_gtk_doc:%doc %_datadir/doc/%name-%api_ver}
 
 %changelog
+* Mon Apr 01 2024 Yuri N. Sedunov <aris@altlinux.org> 0.37.1-alt1
+- 0.37.1
+
 * Wed Mar 20 2024 Yuri N. Sedunov <aris@altlinux.org> 0.37.0-alt1.2
 - data/phosh-session.in: dropped @session_manager@ option
   incompatible with gnome-session-46 (ALT #49750)
