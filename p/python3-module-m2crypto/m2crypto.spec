@@ -9,7 +9,7 @@
 %endif
 
 Name: python3-module-%oname
-Version: 0.40.1
+Version: 0.41.0
 Release: alt1
 
 Summary: Support for using OpenSSL in python scripts.
@@ -73,6 +73,9 @@ py.test-3 -v
 %python3_sitelibdir/M2Crypto-%version-py%_python3_version.egg-info
 
 %changelog
+* Mon Apr 01 2024 Grigory Ustinov <grenka@altlinux.org> 0.41.0-alt1
+- Automatically updated to 0.41.0.
+
 * Tue Oct 31 2023 Grigory Ustinov <grenka@altlinux.org> 0.40.1-alt1
 - Automatically updated to 0.40.1.
 
