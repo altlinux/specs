@@ -5,7 +5,7 @@
 %define devname lib%name-devel
 
 Name: openvr
-Version: 2.2.3
+Version: 2.5.1
 Release: alt1
 
 Summary: Virtual reality SDK
@@ -75,6 +75,9 @@ rm -rv lib bin
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Mon Apr 01 2024 Mikhail Tergoev <fidel@altlinux.org> 2.5.1-alt1
+- 2.5.1
+
 * Mon Mar 18 2024 Mikhail Tergoev <fidel@altlinux.org> 2.2.3-alt1
 - initial build for ALT Sisyphus
 
