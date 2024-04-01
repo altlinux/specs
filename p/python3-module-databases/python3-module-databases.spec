@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name databases
+%define mod_name %pypi_name
 
 # tests require running DBMSs
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.8.0
+Version: 0.9.0
 Release: alt1
 
 Summary: Async database support for Python
@@ -18,12 +19,13 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
+%add_pyproject_deps_check_filter mkautodoc
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -39,11 +41,11 @@ such as Starlette, Sanic, Responder, Quart, aiohttp, Tornado, or FastAPI.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-
 %if_with check
-%pyproject_deps_resync_check_tox
+%pyproject_deps_resync_check_pipreqfile requirements.txt
 %endif
 
 %build
@@ -57,10 +59,13 @@ such as Starlette, Sanic, Responder, Quart, aiohttp, Tornado, or FastAPI.
 
 %files
 %doc README.md LICENSE.md CHANGELOG.md
-%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Apr 01 2024 Anton Zhukharev <ancieg@altlinux.org> 0.9.0-alt1
+- Updated to 0.9.0.
+
 * Tue Aug 29 2023 Anton Zhukharev <ancieg@altlinux.org> 0.8.0-alt1
 - Updated to 0.8.0.
 
