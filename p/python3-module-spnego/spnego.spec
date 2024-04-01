@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.9.1
-Release: alt2
+Version: 0.10.2
+Release: alt1
 
 Summary: Python SPNEGO authentication library
 
@@ -24,12 +24,14 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
 %if_with check
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-cov
 BuildRequires: python3-module-cryptography
 BuildRequires: python3-module-pytest-mock
 %endif
 
 # This is stuff for windows OS
+# See more ALT#47264
 %add_python3_req_skip spnego._sspi_raw.sspi
 
 %description
@@ -46,8 +48,12 @@ decode raw NTLM/SPNEGO/Kerberos tokens into a human readable format.
 %install
 %pyproject_install
 
+# Hotfix for ALT#47250
+# TypeError: main() missing 1 required positional argument: 'args'
+sed -i 's/main()/main(sys.argv[1:])/' %buildroot%_bindir/pyspnego-parse
+
 %check
-%tox_check_pyproject
+%pyproject_run_pytest
 
 %files
 %doc LICENSE *.md
@@ -56,6 +62,10 @@ decode raw NTLM/SPNEGO/Kerberos tokens into a human readable format.
 %python3_sitelibdir/py%oname-%version.dist-info
 
 %changelog
+* Mon Apr 01 2024 Grigory Ustinov <grenka@altlinux.org> 0.10.2-alt1
+- Automatically updated to 0.10.2.
+- Fixed pyspnego-parse utility (Closes: #47250).
+
 * Wed Aug 02 2023 Grigory Ustinov <grenka@altlinux.org> 0.9.1-alt2
 - Moved on modern pyproject macros.
 
