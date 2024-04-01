@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%modulename
-Version: 0.24.0
+Version: 0.25.0
 Release: alt1
 Summary: Trio - Pythonic async I/O for humans and snake people
 License: MIT or Apache-2.0
@@ -89,6 +89,9 @@ This package contains tests for %modulename.
 %python3_sitelibdir/%modulename/_core/_tests
 
 %changelog
+* Mon Apr 01 2024 Grigory Ustinov <grenka@altlinux.org> 0.25.0-alt1
+- Automatically updated to 0.25.0.
+
 * Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 0.24.0-alt1
 - Automatically updated to 0.24.0.
 - Fixed cringe obninsk-style packaging.
