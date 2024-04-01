@@ -2,10 +2,10 @@
 %define pypi_name hypothesis
 %define mod_name %pypi_name
 
-%def_without check
+%def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.98.4
+Version: 6.100.0
 Release: alt1
 
 Summary: A library for property based testing
@@ -27,6 +27,9 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 %add_pyproject_deps_check_filter dpcontracts
+# there're no tests with crosshair and it isn't presented in Sisyphus
+%add_pyproject_deps_check_filter hypothesis-crosshair
+%add_pyproject_deps_check_filter crosshair-tool
 %pyproject_builddeps_metadata_extra all
 %pyproject_builddeps_check
 # needed by pexpect
@@ -37,6 +40,8 @@ BuildRequires: python3-module-black
 BuildRequires: python3-module-numpy-testing
 # not listed as tests' dependency
 BuildRequires: python3-module-fakeredis
+# pandas.testing is needed, but is in the separate rpm package
+BuildRequires: python3-module-pandas-tests
 %endif
 %add_python3_req_skip dpcontracts pandas
 
@@ -63,7 +68,10 @@ cp %SOURCE1 ./
 %pyproject_install
 
 %check
-%pyproject_run_pytest -ra -nauto tests
+# Ignoring of UserWarning for dateutile.zoneinfo is needed, because there's a
+# flaw of python3-module-dateutil packaging and we don't create and package
+# dateutil-zoneinfo.tar.gz. But it doesn't influence on the test execution.
+%pyproject_run_pytest -ra -nauto -Wignore::UserWarning:dateutil.zoneinfo tests
 
 %files
 %doc README.rst
@@ -78,6 +86,9 @@ cp %SOURCE1 ./
 %python3_sitelibdir/_hypothesis_globals.py
 
 %changelog
+* Mon Apr 01 2024 Alexandr Shashkin <dutyrok@altlinux.org> 6.100.0-alt1
+- 6.98.4 -> 6.100.0.
+
 * Tue Feb 13 2024 Alexandr Shashkin <dutyrok@altlinux.org> 6.98.4-alt1
 - 6.82.3 -> 6.98.4
 
