@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 124.0
+Version: 124.0.1
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -422,6 +422,12 @@ fi
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Mar 26 2024 Ajrat Makhmutov <rauty@altlinux.org> 124.0.1-alt1
+- New release (124.0.1).
+- Security fixes:
+  + CVE-2024-29943: Out-of-bounds access via Range Analysis bypass
+  + CVE-2024-29944: Privileged JavaScript Execution via Event Handlers
+
 * Wed Mar 20 2024 Alexey Gladkov <legion@altlinux.ru> 124.0-alt1
 - New release (124.0).
 - Security fixes:
