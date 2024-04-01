@@ -3,7 +3,7 @@
 %define repo dde-daemon
 
 Name: deepin-daemon
-Version: 6.0.35
+Version: 6.0.36
 Release: alt1
 Epoch: 2
 
@@ -167,6 +167,9 @@ mv -f %buildroot/lib/systemd/user/org.dde.session.Daemon1.service \
 %_datadir/dsg/configs/org.deepin.dde.daemon/*.json
 
 %changelog
+* Mon Apr 01 2024 Leontiy Volodin <lvol@altlinux.org> 2:6.0.36-alt1
+- New version 6.0.36.
+
 * Thu Feb 29 2024 Leontiy Volodin <lvol@altlinux.org> 2:6.0.35-alt1
 - New version 6.0.35.
 - Excluded pulseaudio daemon and utils from requires (ALT #48332).
