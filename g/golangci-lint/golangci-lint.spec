@@ -1,9 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-
-%global import_path github.com/golangci/golangci-lint
+%define import_path github.com/golangci/golangci-lint
 
 Name: golangci-lint
-Version: 1.55.2
+Version: 1.57.2
 Release: alt1
 
 Summary: Fast linters Runner for Go
@@ -12,12 +11,13 @@ Group: Development/Tools
 Url: https://golangci-lint.run
 Vcs: https://github.com/golangci/golangci-lint
 
+ExclusiveArch: %go_arches
+
 Source0: %name-%version.tar
-Source1: vendor.tar
+Source1: %name-%version-vendor.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-golang
-
-ExclusiveArch: %go_arches
 
 %description
 golangci-lint is a fast Go linters runner. It runs linters in parallel,
@@ -26,6 +26,7 @@ and has dozens of linters included.
 
 %prep
 %setup -a1
+%autopatch -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -45,6 +46,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Mon Apr 01 2024 Anton Zhukharev <ancieg@altlinux.org> 1.57.2-alt1
+- Updated to 1.57.2.
+
 * Tue Nov 07 2023 Anton Zhukharev <ancieg@altlinux.org> 1.55.2-alt1
 - Updated to 1.55.2.
 
