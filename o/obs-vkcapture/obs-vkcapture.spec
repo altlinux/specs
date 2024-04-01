@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: obs-vkcapture
-Version: 1.4.9
+Version: 1.5.0
 Release: alt1
 
 Summary: OBS Linux Vulkan/OpenGL game capture
@@ -52,6 +52,9 @@ env OBS_VKCAPTURE=1 command.
 %_datadir/vulkan/implicit_layer.d/obs_vkcapture_64.json
 
 %changelog
+* Mon Apr 01 2024 Mikhail Tergoev <fidel@altlinux.org> 1.5.0-alt1
+- 1.5.0
+
 * Mon Feb 12 2024 Mikhail Tergoev <fidel@altlinux.org> 1.4.9-alt1
 - 1.4.9
 
