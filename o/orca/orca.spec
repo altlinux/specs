@@ -7,7 +7,7 @@
 %def_disable spiel
 
 Name: orca
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
@@ -87,6 +87,9 @@ Jaws For Windows компании Freedom Scientific.
 #%_datadir/gdm/greeter/autostart/%name-autostart.desktop
 
 %changelog
+* Mon Apr 01 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
+- 46.1
+
 * Wed Mar 13 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 

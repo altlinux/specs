@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 1.80
 %define api_ver 1.0
@@ -12,8 +12,8 @@
 %def_enable gtk_doc
 
 Name: gobject-introspection
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Introspection system for GObject-based libraries
 Group: System/Libraries
@@ -170,6 +170,9 @@ gobject-introspection.
 %endif
 
 %changelog
+* Mon Apr 01 2024 Yuri N. Sedunov <aris@altlinux.org> 1.80.1-alt1
+- 1.80.1
+
 * Wed Mar 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1.80.0-alt2
 - updated to 1.80.0-13-g2b5b9397
 
