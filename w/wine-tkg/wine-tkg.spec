@@ -14,7 +14,7 @@
 %define mono_version 9.0.0
 %define winetricks_version 20240105
 
-%define major 9.4
+%define major 9.5
 %define rel %nil
 %define conflictlist wine-vanilla wine-stable wine wine-proton-tkg wine-etersoft
 
@@ -845,6 +845,9 @@ fi
 %endif
 
 %changelog
+* Mon Apr 01 2024 Mikhail Tergoev <fidel@altlinux.org> 1:9.5-alt1
+- updated to 9.5
+
 * Tue Mar 12 2024 Mikhail Tergoev <fidel@altlinux.org> 1:9.4-alt1
 - updated to 9.4
 - drop unneeded patch: wine-tkg-alt-fix-belauncher
