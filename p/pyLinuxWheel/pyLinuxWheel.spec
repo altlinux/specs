@@ -2,7 +2,7 @@
 
 Name: pyLinuxWheel
 Version: 0.6.1
-Release: alt5
+Release: alt6
 
 Summary: A simple utility to configure logitech steering wheels for Linux
 
@@ -71,6 +71,9 @@ cp -rv data/rules/99-logitech-wheel-perms.rules %buildroot/lib/udev/rules.d/
 %_bindir/appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/io.itch.pyLinuxWheel.appdata.xml
 
 %changelog
+* Mon Apr 01 2024 Mikhail Tergoev <fidel@altlinux.org> 0.6.1-alt6
+- minor fixes Russian translation
+
 * Sat Mar 02 2024 Vitaly Lipatov <lav@altlinux.ru> 0.6.1-alt5
 - fix requires
 
