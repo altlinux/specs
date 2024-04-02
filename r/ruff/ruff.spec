@@ -6,7 +6,7 @@
 %define zsh_completionsdir %_datadir/zsh/site-functions
 
 Name: %pypi_name
-Version: 0.3.4
+Version: 0.3.5
 Release: alt1
 
 Summary: An extremely fast Python linter, written in Rust
@@ -94,6 +94,9 @@ export CFLAGS="$CFLAGS -mno-outline-atomics"
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Apr 02 2024 Anton Zhukharev <ancieg@altlinux.org> 0.3.5-alt1
+- Updated to 0.3.5.
+
 * Mon Mar 25 2024 Anton Zhukharev <ancieg@altlinux.org> 0.3.4-alt1
 - Updated to 0.3.4.
 
