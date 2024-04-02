@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: lollypop
-Version: %ver_major.37
+Version: %ver_major.38
 Release: alt1
 
 Summary: Lollypop music player
@@ -38,14 +38,14 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson yelp-tools
-BuildRequires: /usr/bin/appstream-util desktop-file-utils
-BuildRequires: /usr/bin/appstreamcli
 BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver
 BuildRequires: pkgconfig(gobject-introspection-1.0) >= %gi_ver
 BuildRequires: pkgconfig(libsoup-3.0)
 BuildRequires: pkgconfig(pygobject-3.0)
 %{?_enable_check:BuildRequires: typelib(Gtk) = 3.0
-BuildRequires: python3(PIL) python3(textblob) python3(cairo)}
+BuildRequires: python3(PIL) python3(textblob) python3(cairo)
+BuildRequires: /usr/bin/appstream-util desktop-file-utils
+BuildRequires: /usr/bin/appstreamcli /usr/bin/glib-compile-schemas}
 
 %description
 Lollypop is a new GNOME music playing application.
@@ -79,6 +79,9 @@ Lollypop is a new GNOME music playing application.
 %doc README*
 
 %changelog
+* Wed Apr 03 2024 Yuri N. Sedunov <aris@altlinux.org> 1.4.38-alt1
+- 1.4.38
+
 * Fri Jun 30 2023 Yuri N. Sedunov <aris@altlinux.org> 1.4.37-alt1
 - first build for Sisyphus (1.4.36-22-gb2583bd38) (ALT #46720)
 
