@@ -1,6 +1,6 @@
 Name: ebtables
 Version: 2.0.11
-Release: alt2
+Release: alt3
 
 Summary: A filtering tool for a bridging firewall
 License: GPLv2
@@ -25,20 +25,21 @@ Ethernet MAC addresses and implement a brouter.
 
 %install
 %makeinstall_std
-mkdir -p %buildroot/sbin
-ln -sfvr %buildroot%_sbindir/ebtables-legacy %buildroot/sbin/ebtables
-ln -sfvr %buildroot%_sbindir/ebtables-legacy-save %buildroot/sbin/ebtables-save
-ln -sfvr %buildroot%_sbindir/ebtables-legacy-restore %buildroot/sbin/ebtables-restore
+ln -sv ebtables-legacy %buildroot%_sbindir/ebtables
+ln -sv ebtables-legacy-save %buildroot%_sbindir/ebtables-save
+ln -sv ebtables-legacy-restore %buildroot%_sbindir/ebtables-restore
 
 %files
 %doc ChangeLog THANKS
 %config %_sysconfdir/ethertypes
-/sbin/ebtables*
 %_sbindir/*
 %_libdir/libebtc.so.*
 %_man8dir/*
 
 %changelog
+* Tue Apr 02 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.11-alt3
+- put ebtables utility under /usr (closes: 49856)
+
 * Mon Oct 04 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.11-alt2
 - fix path to ebtables-legacy in ebtables-save (closes: 41051)
 
