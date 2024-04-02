@@ -1,5 +1,5 @@
 Name: libcontrol++
-Version: 0.30.0
+Version: 0.31.0
 Release: alt1
 
 Summary: control++ common classes and functions library
@@ -56,6 +56,12 @@ cp src/*.h %{buildroot}%{_includedir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Tue Apr 02 2024 Alexey Appolonov <alexey@altlinux.org> 0.31.0-alt1
+- A new class "TTick" for running a customisable counter in a separate thread;
+- A completed operation is re-printed when finishing the line in the "instant
+  feedback" mode via the TPrinter class;
+- The "TRunMode" class is modified to better suit its purpose.
+
 * Thu Aug 10 2023 Alexey Appolonov <alexey@altlinux.org> 0.30.0-alt1
 - The "OpenAndPerform" function provides more feedback;
 - Modified interface of the "OpenAndPerformOnAllFiles" function (the first arg

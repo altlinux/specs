@@ -1,4 +1,4 @@
-%define libcontrolppver 0.30
+%define libcontrolppver 0.31
 %define confdir %{_sysconfdir}/%{name}
 %define statedir %{_localstatedir}/%{name}
 %define ulim_statedir %{statedir}/ulimits
@@ -6,8 +6,8 @@
 %define testsdir %{statedir}/tests
 
 Name: control++
-Version: 0.21.2
-Release: alt2
+Version: 0.22.0
+Release: alt1
 
 Summary: System configuration tool
 License: GPLv3
@@ -117,6 +117,13 @@ cp -r tests/* %{buildroot}%{testsdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Tue Apr 02 2024 Alexey Appolonov <alexey@altlinux.org> 0.22.0-alt1
+- A concise feedback is provided when the permission mode is being set when
+  the "-v" flag isn't passed;
+- The vector of variants of the absolute path of the control++ executable file
+  is corrected (these paths are checked when setting a "white list" permission
+  mode).
+
 * Wed Jan 24 2024 Alexey Appolonov <alexey@altlinux.org> 0.21.2-alt2
 - Updated manual.
 
