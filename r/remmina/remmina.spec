@@ -3,9 +3,10 @@
 %def_with kwallet
 %def_with gvnc
 %def_with x2go
+%def_with freerdp3
 
 Name: remmina
-Version: 1.4.33
+Version: 1.4.35
 Release: alt1
 Summary: Remote Desktop Client
 
@@ -26,14 +27,18 @@ BuildRequires(pre): cmake >= 3.4.0
 BuildRequires: gcc-c++
 BuildRequires: python3-dev
 BuildRequires: desktop-file-utils xdg-utils
-BuildRequires: gettext pkgconfig(libpcre2-8) pkgconfig(libffi)
+BuildRequires: gettext libcurl-devel pkgconfig(libpcre2-8) pkgconfig(libffi)
 BuildRequires: intltool
 BuildRequires: libappstream-glib
 BuildRequires: libgcrypt-devel libssl-devel
 BuildRequires: libjpeg-devel libtasn1-devel libpng-devel libpixman-devel zlib-devel
 BuildRequires: pkgconfig(glib-2.0) >= 2.30 pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0)
 BuildRequires: pkgconfig(avahi-ui-gtk3) >= 0.6.30 pkgconfig(avahi-client) >= 0.6.30
-BuildRequires: libfreerdp-devel libwinpr-devel
+%if_with freerdp3
+BuildRequires: xfreerdp3 libfreerdp3-devel libwinpr3-devel libfuse3-devel
+%else
+BuildRequires: xfreerdp libfreerdp-devel libwinpr-devel
+%endif
 BuildRequires: libcups-devel
 BuildRequires: pkgconfig(gtk+-3.0) >= 3.14.0 pkgconfig(gdk-pixbuf-2.0) pkgconfig(pango)
 BuildRequires: pkgconfig(atk)
@@ -243,9 +248,11 @@ that shows up under the display manager session menu.
 %build
 %cmake \
     -DCMAKE_BUILD_TYPE=Release \
+    -DWITH_NEWS=OFF \
     -DWITH_APPINDICATOR=OFF \
     -DWITH_AVAHI=ON \
     -DWITH_FREERDP=ON \
+     %{?_with_freerdp3:-DWITH_FREERDP3=ON} \
     -DWITH_GCRYPT=ON \
     -DWITH_GETTEXT=ON \
     -DWITH_LIBSSH=ON \
@@ -356,6 +363,10 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Tue Apr 02 2024 Alexey Shabalin <shaba@altlinux.org> 1.4.35-alt1
+- New version 1.4.35.
+- Build with freerdp3.
+
 * Fri Dec 15 2023 Alexey Shabalin <shaba@altlinux.org> 1.4.33-alt1
 - new version 1.4.33
 
