@@ -21,7 +21,7 @@
 %def_with scudo
 
 Name: telegram-desktop
-Version: 4.15.5
+Version: 4.16.0
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -379,6 +379,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Tue Apr 02 2024 Vitaly Lipatov <lav@altlinux.ru> 4.16.0-alt1
+- new version 4.16.0 (with rpmrb script)
+
 * Sat Mar 16 2024 Vitaly Lipatov <lav@altlinux.ru> 4.15.5-alt1
 - new version 4.15.5 (with rpmrb script)
 
