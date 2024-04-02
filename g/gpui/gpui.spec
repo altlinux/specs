@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpui
-Version: 0.2.43
+Version: 0.2.44
 Release: alt1
 
 Summary: Group policy editor
@@ -112,6 +112,13 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Fri Apr 1 2024 Vladimir Rubanov <august@altlinux.org> 0.2.44-alt1
+- 0.2.44-alt1
+- Fixes:
+  + Fix admx-firefox elements order (Closes: 47727).
+  + Fix memory leak in ini plugin.
+  + Fix file widget in preferences plugin.
+
 * Fri Mar 15 2024 Vladimir Rubanov <august@altlinux.org> 0.2.43-alt1
 - 0.2.43-alt1
 - Fixes:
