@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 10.2
-Release: alt1
+Release: alt2
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -323,6 +323,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Apr 02 2024 Andrew A. Vasilyev <andy@altlinux.org> 10.2-alt2
+- fix resource references
+
 * Fri Mar 01 2024 Andrew A. Vasilyev <andy@altlinux.org> 10.2-alt1
 - version 10.2
 
