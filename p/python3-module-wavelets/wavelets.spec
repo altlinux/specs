@@ -1,5 +1,3 @@
-%define _unpackaged_files_terminate_build 1
-
 # upstream maintain this arch very bad
 %ifarch ppc64le
 %def_without check
@@ -8,14 +6,16 @@
 %define oname wavelets
 
 Name: python3-module-%oname
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
+
 Summary: Wavelet Transforms in Python
+
 License: MIT and BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.org/project/PyWavelets/
+URL: https://pypi.org/project/PyWavelets
+VCS: https://github.com/PyWavelets/pywt
 
-# https://github.com/PyWavelets/pywt.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -78,24 +78,26 @@ pushd %buildroot%python3_sitelibdir &>/dev/null
 
 pytest-3 pywt/tests --verbose -p no:cacheprovider \
 %ifarch ppc64le
-	-k 'not test_cwt_complex and not test_cwt_method_fft'
-	# see https://github.com/PyWavelets/pywt/issues/508
+    -k 'not test_cwt_complex and not test_cwt_method_fft'
+    # see https://github.com/PyWavelets/pywt/issues/508
 %endif
-	%nil
+    %nil
 
 popd &>/dev/null
 
 %files
-%doc LICENSE
-%doc LICENSES_bundled.txt
-%doc README.rst
-%python3_sitelibdir/*
+%doc LICENSE LICENSES_bundled.txt README.rst
+%python3_sitelibdir/pywt
+%python3_sitelibdir/pywavelets-%version.dist-info
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
 %python3_sitelibdir/*/tests
 
 %changelog
+* Tue Apr 02 2024 Grigory Ustinov <grenka@altlinux.org> 1.6.0-alt1
+- Automatically updated to 1.6.0.
+
 * Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 1.5.0-alt1
 - Automatically updated to 1.5.0.
 
