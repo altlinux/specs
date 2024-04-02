@@ -1,17 +1,12 @@
-%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
-%define ubt_id %__ubt_branch_id
 
 %define opencv_ver %{get_version libopencv-devel}
+
+%add_findreq_skiplist %_K5data/digikam/utils/*
 
 # Debian abandon libjasper
 %def_disable jasper
 %def_disable baloo
 %def_enable mysql
-%_K5if_ver_gteq %ubt_id M90
-%def_enable obsolete_kde4
-%else
-%def_disable obsolete_kde4
-%endif
 %_K5if_ver_lt %opencv_ver 3
 %def_disable opencv3
 %else
@@ -27,11 +22,11 @@
 %define label digiKam
 Name: kde5-%rname
 %define ver_major 8
-%define ver_minor 2
+%define ver_minor 3
 %define ver_bugfix 0
 Version: %ver_major.%ver_minor.%ver_bugfix
-Release: alt2
-%K5init %{?_enable_obsolete_kde4:no_altplace}
+Release: alt1
+%K5init no_altplace
 
 %define sover %version
 %define libdigikamdatabase libdigikamdatabase%sover
@@ -44,10 +39,8 @@ Group: Graphics
 Url: http://www.digikam.org/
 
 Provides: digikam = %version-%release
-%if_enabled obsolete_kde4
 Provides: kde4-digikam = %version-%release
 Obsoletes: kde4-digikam < %version-%release
-%endif
 
 Requires: qt5-sql-sqlite
 #Requires: kde5-runtime
@@ -59,7 +52,7 @@ Requires: qt5-sql-mysql
 Requires: icc-profiles
 Requires: /usr/bin/exiftool
 
-BuildRequires(pre): rpm-build-kf5 rpm-macros-qt5-webengine rpm-build-ubt libopencv-devel
+BuildRequires(pre): rpm-build-kf5 rpm-macros-qt5-webengine libopencv-devel
 # Automatically added by buildreq on Wed Jul 20 2016 (-bi)
 # optimized out: boost-devel-headers cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ glib2-devel glibc-devel-static gtk-update-icon-cache kde5-akonadi-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kguiaddons-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel libEGL-devel libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdb4-devel libdbusmenu-qt52 libdc1394-22 libgdk-pixbuf libgpg-error libgphoto2-6 libgphoto2_port-12 libgst-plugins1.0 libical-devel libjson-c libopencore-amrnb0 libopencore-amrwb0 libp11-kit libpangox-compat libpng-devel libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sensors libqt5-sql libqt5-svg libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libraw1394-11 libstdc++-devel libwayland-client libwayland-server libxcbutil-keysyms libxkbfile-devel perl pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-gir rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: doxygen eigen3 extra-cmake-modules flex git-core graphviz kde4-marble-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-libkipi-devel kde5-libksane-devel kde5-pimlibs-devel kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kfilemetadata-devel kf5-ki18n-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-knotifyconfig-devel kf5-sonnet-devel kf5-threadweaver-devel libXres-devel libexiv2-devel libexpat-devel libgomp-devel libgphoto2-devel libjasper-devel libjpeg-devel liblcms2-devel liblensfun-devel liblqr-devel libopencv-devel libtiff-devel libusb-devel python-module-google python3-dev qt4-dbus qt5-multimedia-devel qt5-webkit-devel qt5-x11extras-devel rpm-build-ruby sqlite3 zlib-devel-static
@@ -77,19 +70,20 @@ BuildRequires: libavcodec-devel libavfilter-devel libavformat-devel libavdevice-
 BuildRequires: libswscale-devel libpostproc-devel libswresample-devel
 BuildRequires: liblcms2-devel liblensfun-devel liblqr-devel libtiff-devel libusb-devel libtbb-devel libxml2-devel libxslt-devel
 BuildRequires: libEGL-devel libGL-devel libGLU-devel
+BuildRequires: libraw-devel
 BuildRequires: libImageMagick-devel
 BuildRequires: sqlite3 zlib-devel
 BuildRequires: kde5-marble-devel
 BuildRequires: kde5-akonadi-devel kde5-akonadi-mime-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-kmime-devel kde5-kcalcore-devel
 BuildRequires: kde5-libkipi-devel kde5-libksane-devel kde5-akonadi-contacts-devel
-BuildRequires: kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-kfilemetadata-devel kf5-ki18n-devel kf5-kinit-devel
+BuildRequires: kf5-kdoctools-devel-static kf5-kemoticons-devel kf5-ki18n-devel kf5-kinit-devel
 BuildRequires: kf5-kiconthemes-devel kf5-knotifications-devel
 BuildRequires: kf5-kio-devel kf5-kitemmodels-devel kf5-knotifyconfig-devel kf5-sonnet-devel kf5-threadweaver-devel
 %if_enabled mysql
 BuildRequires: libmysqlclient-devel
 %endif
 %if_enabled baloo
-BuildRequires: kf5-baloo-devel
+BuildRequires: kf5-kfilemetadata-devel kf5-baloo-devel
 %endif
 %if_enabled opencv3
 BuildRequires: libopencv-devel-static
@@ -230,9 +224,6 @@ sed -i '/add_subdirectory.*sv.*/d' doc-translated/CMakeLists.txt
 #while read f ; do
 #    :
 #    sed -i '/^set_target_properties.*digikam.*SOVERSION.*DIGIKAM_VERSION_SHORT/s|\(SOVERSION.*\)DIGIKAM_VERSION_SHORT}|\1DIGIKAM_MAJOR_VERSION}|' $f
-#%if_disabled obsolete_kde4
-#    sed -i 's|${DATA_INSTALL_DIR}/digikam|${KDE_INSTALL_DATADIR_KF5}/digikam|' $f
-#%endif
 #done
 
 %ifarch armh
@@ -260,26 +251,17 @@ sed -i '/set(HAVE_OPENGL TRUE)/ s,TRUE,FALSE,' core/CMakeLists.txt
 %install
 %K5install
 %K5install_move data kconf_update solid
-%if_disabled obsolete_kde4
-%K5install_move data showfoto locale
-%endif
 install -m 0755 %SOURCE10 %buildroot/%_K5bin/digikam_mysql_install_db
 %find_lang --with-kde %rname
 %find_lang --with-kde --append --output=%rname.lang showfoto
 
 %files common
-%dir %_datadir/%rname/
-%if_enabled obsolete_kde4
-%dir %_datadir/showfoto/
-%else
-%dir %_K5data/%rname/
-%dir %_K5data/showfoto/
-%endif
+%dir %_K5data/%rname/*
+%dir %_K5data/showfoto/*
 
 %files
 %_K5bin/%rname
 %_K5bin/digikam_mysql_install_db
-%_datadir/%rname/utils/
 %_K5bin/showfoto
 %_K5bin/cleanup_digikamdb
 %_K5bin/digitaglinktree
@@ -289,29 +271,12 @@ install -m 0755 %SOURCE10 %buildroot/%_K5bin/digikam_mysql_install_db
 %_K5xmlgui/showfoto/
 %_K5notif/%rname.notifyrc
 %_K5data/solid/actions/%rname-*.desktop
-%if_enabled obsolete_kde4
 %_datadir/metainfo/*.xml
-%endif
 
 %files data -f %rname.lang
 #%doc AUTHORS ChangeLog HACKING NEWS README* TODO
-%if_enabled obsolete_kde4
-%_datadir/%rname/about/
-%_datadir/%rname/colorschemes/
-%_datadir/%rname/data/
-%_datadir/%rname/database/
-#%_datadir/%rname/facesengine/
-%_datadir/%rname/geoiface/
-%_datadir/%rname/geolocationedit/
-%_datadir/%rname/metadata/
-%_datadir/%rname/profiles/
-%_datadir/%rname/templates/
-%_datadir/%rname/themes/
-%_datadir/showfoto/*
-%else
 %_K5data/%rname/*
 %_K5data/showfoto/*
-%endif
 %_K5icon/hicolor/*/apps/avplayer.*
 %_K5icon/hicolor/*/apps/%rname.*
 %_K5icon/hicolor/*/apps/dk-*.*
@@ -340,6 +305,9 @@ install -m 0755 %SOURCE10 %buildroot/%_K5bin/digikam_mysql_install_db
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Mon Apr 01 2024 Sergey V Turchin <zerg@altlinux.org> 8.3.0-alt1
+- new version
+
 * Mon Feb 05 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 8.2.0-alt2
 - fix path to images in doc files (closes: 48375)
 
