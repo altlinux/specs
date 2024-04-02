@@ -1,29 +1,22 @@
-#
-# spec file for package tuxpaint-config
-#
-# This file and all modifications and additions to the pristine
-# package are under the same license as the package itself.
-#
-
-# norootforbuild
-
 Name: tuxpaint-config
+Version: 0.0.23
+Release: alt1
+
 Summary: Configuration tool for Tux Paint
+
 Url: http://www.tuxpaint.org/
-License: GPL v2 or later
+License: GPLv2+
 Group: Graphics
-Version: 0.0.12
-Release: alt1.3
 Requires: tuxpaint
 
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 Patch1: tuxpaint-config-docpath.patch
 Patch2: tuxpaint-config-desktop.patch
 # Automatically added by buildreq on Wed Mar 20 2013
 # optimized out: fontconfig libX11-devel libXext-devel libstdc++-devel xorg-xproto-devel
 BuildRequires: gcc-c++ libXft-devel libXinerama-devel libcairo-devel libfltk-devel libpaper-devel libpixman-devel
 
-BuildRequires: desktop-file-utils libXfixes-devel libXcursor-devel
+BuildRequires: libXfixes-devel libXcursor-devel libunibreak5-devel libpango-devel
 
 %description
 Tux Paint has a rich set of configuration options, controllable via
@@ -33,33 +26,24 @@ Tux Paint to suit the needs of their users.
 
 %prep
 %setup
-find . -name CVS | xargs rm -rf
-%patch1
-%patch2
+%patch1 -p1
+%patch2 -p1
 
 %build
-make  PREFIX=%prefix X11_ICON_PREFIX=/usr/include/X11/pixmaps/
+%make_build PREFIX=%prefix X11_ICON_PREFIX=/usr/include/X11/pixmaps/
 
 %install
 mkdir -p %buildroot%_bindir
-make PREFIX=%buildroot%prefix X11_ICON_PREFIX=%buildroot%_includedir/X11/pixmaps/ DOC_PREFIX=%buildroot%_defaultdocdir/%name install
+%make PREFIX=%buildroot%prefix X11_ICON_PREFIX=%buildroot%_includedir/X11/pixmaps/ DOC_PREFIX=%buildroot%_defaultdocdir/%name install
 install -pDm644 src/%name.desktop %buildroot%_desktopdir/%name.desktop
 
 # fix file permissions
 find %buildroot%_defaultdocdir/%name -type f -exec chmod 644 {} \;
 find %buildroot%_mandir -type f -exec chmod 644 {} \;
 
-desktop-file-install --dir %buildroot%_desktopdir \
-	--remove-category=System \
-	--remove-category=SystemSetup \
-	--add-category=Game \
-	--add-category=KidsGame \
-	%buildroot%_desktopdir/tuxpaint-config.desktop
+%find_lang %name
 
-#find_lang %name
-# XXX this turns all the text to ???s
-#files -f %name.lang
-%files
+%files -f %name.lang
 %_bindir/tuxpaint-config
 %doc %_defaultdocdir/%name
 %dir %_includedir/X11/pixmaps
@@ -68,8 +52,12 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/tuxpaint-config/
 %_pixmapsdir/*.png
 %_desktopdir/*.desktop
+%_datadir/icons/hicolor/*/apps/%name.png
 
 %changelog
+* Tue Apr 02 2024 Grigory Ustinov <grenka@altlinux.org> 0.0.23-alt1
+- Build new version.
+
 * Mon Jul 07 2014 Michael Shigorin <mike@altlinux.org> 0.0.12-alt1.3
 - NMU: updated BR:
 

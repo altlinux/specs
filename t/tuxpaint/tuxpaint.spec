@@ -1,5 +1,5 @@
 Name: tuxpaint
-Version: 0.9.29
+Version: 0.9.32
 Release: alt1
 
 Summary: A drawing program for young children
@@ -14,10 +14,11 @@ Source1: %name.desktop
 
 # The databases in [/usr/local/share/applications, /usr/share/applications] could not be updated.
 Patch0: desktop.patch
-Patch1: tuxpaint-0.9.29-e2k-fix_bad_elf_symbol.patch
+Patch1: tuxpaint-0.9.32-e2k-fix_bad_elf_symbol.patch
+Patch2: tuxpaint-pango-cflags.patch
 
 BuildRequires: libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_gfx-devel
-BuildRequires: libSDL2_ttf-devel ImageMagick-tools xdg-utils
+BuildRequires: libSDL2_ttf-devel libSDL2_Pango-devel ImageMagick-tools xdg-utils
 BuildRequires: libpng-devel zlib-devel gettext librsvg-devel libpaper-devel libfribidi-devel
 BuildRequires: libimagequant-devel
 BuildPreReq: gperf
@@ -49,7 +50,8 @@ such as sound effects.
 %package devel
 Summary: Development shared library for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
+
 %description devel
 Development shared library for %name
 
@@ -58,6 +60,7 @@ Development shared library for %name
 %patch0 -p2
 # we can do it not only on e2k
 %patch1 -p2
+%patch2 -p1
 
 subst "s|\$(PREFIX)/lib|%_libdir|g" Makefile
 subst "s|< \$(PLUGIN_LIBS)|< \$(PLUGIN_LIBS) \$(SDL_LIBS) \$(PNG)|g" Makefile
@@ -84,23 +87,24 @@ install -d %buildroot%_datadir/applications
 cp -aRf %SOURCE1 %buildroot%_datadir/applications/
 
 # Remove fonts (see ALT 25339)
-rm -f /usr/share/tuxpaint/fonts/Free*.ttf
+rm -fv /usr/share/tuxpaint/fonts/Free*.ttf
 
 # some chineese docs contains wrong shebang
 rm -fv %buildroot%_datadir/doc/%name-%version/outdated/zh_tw/mkTuxpaintIM.py
 rm -fv %buildroot%_datadir/%name/fonts/locale/zh_tw_docs/maketuxfont.py
+rm -fv %buildroot%_datadir/%name/fonts/locale/zh_tw_docs/do_it.sh
+# contains dependency on fontforge ALT#49865
+rm -fv %buildroot%_datadir/%name/fonts/locale/zh_tw_docs/tuxpaintsubset.pe
 
 # We dont need example library in docs
 rm -fv %buildroot%_datadir/doc/%name-%version/*/tp_magic_example.so
 
 %files -f %name.lang
-# bin files
 %_bindir/tuxpaint*
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/%name.conf
 %_sysconfdir/bash_completion.d/tuxpaint-completion.bash
 %_libdir/%name
-
 
 # docs files
 %_docdir/%name-%version
@@ -109,6 +113,7 @@ rm -fv %buildroot%_datadir/doc/%name-%version/*/tp_magic_example.so
 # data files
 %_datadir/%name
 %_datadir/applications/*
+%_datadir/metainfo/org.tuxpaint.Tuxpaint.appdata.xml
 
 # menu
 %_datadir/pixmaps/*
@@ -119,6 +124,10 @@ rm -fv %buildroot%_datadir/doc/%name-%version/*/tp_magic_example.so
 %_man1dir/tp-magic-config*
 
 %changelog
+* Tue Apr 02 2024 Grigory Ustinov <grenka@altlinux.org> 0.9.32-alt1
+- Build new version.
+- Removed dependency on fontforge (Closes: #49865).
+
 * Wed May 17 2023 Grigory Ustinov <grenka@altlinux.org> 0.9.29-alt1
 - Build new version.
 
