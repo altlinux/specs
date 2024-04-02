@@ -6,7 +6,7 @@
 
 Name: ogre-next
 Version: 2.3.3
-Release: alt2
+Release: alt4
 Summary: Object-Oriented Graphics Rendering Engine 
 # CC-BY-SA is for devel docs
 License: MIT
@@ -15,6 +15,7 @@ Url: https://ogrecave.github.io/ogre-next/api/latest/
 
 # https://github.com/OGRECave/ogre
 Source: %name-%version.tar
+Patch0: 0001-fix-ogre-next-version.patch
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: zziplib-devel libfreetype-devel libgtk+2-devel libois-devel openexr-devel cppunit-devel
@@ -93,6 +94,8 @@ samples.
 %prep
 %setup
 
+%patch0 -p1
+
 %ifarch %e2k
 # strip UTF-8 BOM for lcc < 1.24
 find -type f -print0 -name '*.cpp' -o -name '*.hpp' -name '*.h' |
@@ -121,6 +124,10 @@ find -type f -print0 -name '*.cpp' -o -name '*.hpp' -name '*.h' |
 %install
 %cmakeinstall_std
 
+# cmake macros should be in the cmake directory, not an Ogre directory
+mkdir -p %buildroot%_datadir/cmake/Modules
+mv %buildroot%_libdir/%oname/cmake/* %buildroot%_datadir/cmake/Modules
+
 %files
 %doc AUTHORS
 %_bindir/Ogre*
@@ -143,7 +150,7 @@ find -type f -print0 -name '*.cpp' -o -name '*.hpp' -name '*.h' |
 %files  -n lib%name-devel
 %_libdir/libOgre*.so
 %_libdir/pkgconfig/*
-%_libdir/%oname/cmake
+%_datadir/cmake/Modules
 %_includedir/%oname
 
 #files %name-devel-doc
@@ -153,6 +160,12 @@ find -type f -print0 -name '*.cpp' -o -name '*.hpp' -name '*.h' |
 %_bindir/Sample_*
 
 %changelog
+* Mon Apr  1 2024 Artyom Bystrov <arbars@altlinux.org> 2.3.3-alt4
+- test build
+
+* Tue Jan 30 2024 Artyom Bystrov <arbars@altlinux.org> 2.3.3-alt3
+- Fixed version for pkgconfig files
+
 * Mon Jan 29 2024 Artyom Bystrov <arbars@altlinux.org> 2.3.3-alt2
 - Getting back pkgconfig files
 
