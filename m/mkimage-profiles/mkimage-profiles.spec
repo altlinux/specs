@@ -1,9 +1,9 @@
 Name: mkimage-profiles
-Version: 1.6.2
+Version: 1.6.3
 Release: alt1
 
 Summary: ALT based distribution metaprofile
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Development/Other
 
 Url: http://altlinux.org/m-p
@@ -134,6 +134,17 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Apr 01 2024 Anton Midyukov <antohami@altlinux.org> 1.6.3-alt1
+- grub: do not abort, if grub theme not found
+- add alt-platform-builder
+- education: add latests commits from cas@
+- education: use live as installer and rescue
+- datetime: preset utc and timezone for live also
+- doc/params.txt: add PACK_SQUASHFS_PROCESSORS
+- e2k fixes for alt-worksttation, alt-server, alt-education from mike@
+- expand @KFLAVOUR in package lists
+- services: fix enable/disable bluetooth (fix typo)
+
 * Fri Mar 15 2024 Anton Midyukov <antohami@altlinux.org> 1.6.2-alt1
 - grub: access font located in the default path by file name (thanks egori@)
 - pack: add tarball build for DISTRO targets
