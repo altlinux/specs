@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.141
+Version: 2.9.142
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -122,6 +122,9 @@ make check
 %lang(uz) %_datadir/locale/uz/LC_MESSAGES/*.mo
 
 %changelog
+* Mon Apr 01 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 2.9.142-alt1
+- alterator-vm: add information about disk cleaning
+
 * Mon Mar 25 2024 Elena Mishina <lepata@altlinux.org> 2.9.141-alt1
 - alterator-update-kernel: fix typo (closes #48969)
 - alterator-netinst: update help, russian translation
