@@ -1,10 +1,11 @@
 %define  oname pook
 
-%def_with check
+# tests rely on lots of network
+%def_without check
 
 Name:    python3-module-%oname
-Version: 1.1.1
-Release: alt2
+Version: 1.4.3
+Release: alt1
 
 Summary: HTTP traffic mocking and testing made easy in Python
 
@@ -15,6 +16,7 @@ URL:     https://github.com/h2non/pook
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-hatchling
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -24,6 +26,8 @@ BuildRequires: python3-module-xmltodict
 BuildRequires: python3-module-jsonschema
 BuildRequires: python3-module-requests
 BuildRequires: python3-module-urllib3
+BuildRequires: python3-module-httpx
+BuildRequires: python3-module-pytest-httpbin
 %endif
 
 BuildArch: noarch
@@ -37,24 +41,26 @@ Source:  %name-%version.tar
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # don't install tests in such directory please
 rm -rf %buildroot%python3_sitelibdir/tests
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3 -v -k 'not test_engines'
+%pyproject_run_pytest -k 'not test_engines' --ignore="tests/unit/interceptors" --ignore="tests/integration"
 
 %files
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 %doc LICENSE *.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Apr 02 2024 Grigory Ustinov <grenka@altlinux.org> 1.4.3-alt1
+- Automatically updated to 1.4.3.
+
 * Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 1.1.1-alt2
 - Fixed FTBFS.
 
