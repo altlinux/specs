@@ -1,8 +1,8 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: lazygit
-Version: 0.40.2
-Release: alt2
+Version: 0.41.0
+Release: alt1
 
 Summary: Simple terminal UI for git commands
 License: MIT
@@ -66,6 +66,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Tue Apr 02 2024 Ilya Demyanov <turbid@altlinux.org> 0.41.0-alt1
+- new version
+
 * Thu Mar 07 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.40.2-alt2
 - NMU: fixed FTBFS on LoongArch (trivial patch for creack/pty module)
 
