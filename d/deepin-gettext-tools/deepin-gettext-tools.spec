@@ -1,15 +1,19 @@
 Name: deepin-gettext-tools
-Version: 1.0.10
+Version: 1.0.11
 Release: alt1
+
 Summary: Deepin Gettext Tools
+
 License: GPL-2.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-gettext-tools
+
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
 
 BuildArch: noarch
+
 BuildRequires: python3-devel perl-Config-Tiny perl-Exporter-Tiny perl-XML-LibXML perl-XML-LibXML-PrettyPrint
 Requires: gettext-tools qt5-linguist perl-Config-Tiny perl-Exporter-Tiny perl-XML-LibXML perl-XML-LibXML-PrettyPrint
 
@@ -53,6 +57,9 @@ install -m755 src/update_pot.py %buildroot%_bindir/deepin-update-pot
 %_bindir/deepin-generate-mo
 
 %changelog
+* Wed Apr 03 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.11-alt1
+- New version.
+
 * Wed Jun 22 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.10-alt1
 - Fixed version.
 

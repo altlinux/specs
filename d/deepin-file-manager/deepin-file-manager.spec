@@ -4,7 +4,7 @@
 %def_without clang
 
 Name: deepin-file-manager
-Version: 6.0.40
+Version: 6.0.44
 Release: alt1
 
 Summary: Deepin File Manager
@@ -17,6 +17,8 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: %name-%version-%release.patch
+
+Provides: %repo = %EVR
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
 # Automatically added by buildreq on Thu Oct 26 2023
@@ -34,6 +36,20 @@ Requires: libqt5-gui = %_qt5_version libqt5-widgets = %_qt5_version
 
 %description
 File manager front end of Deepin OS.
+
+%package -n lib%repo%soname
+Summary: Library for %name
+Group: System/Libraries
+
+%description -n lib%repo%soname
+Library for %name.
+
+%package -n lib%repo-devel
+Summary: Development files for %name
+Group: Development/Other
+
+%description -n lib%repo-devel
+Development files for %name.
 
 %package -n libdfm-extension%soname
 Summary: Library for %name extensions
@@ -105,10 +121,8 @@ export PATH=%_qt5_bindir:$PATH
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
     -DSYSTEMD_USER_UNIT_DIR=%_userunitdir \
-    -DAPP_VERSION=%version \
     -DVERSION=%version \
     -DLIB_INSTALL_DIR=%_lib \
-    -DGRANDSEARCHDAEMON_LIB_DIR=%_libdir \
     -DDFM_PLUGIN_DIR=%_libdir/%repo/plugins \
 #
 cmake --build "%_cmake__builddir" -j%__nprocs
@@ -182,8 +196,15 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %dir %_datadir/deepin-debug-config/deepin-debug-config.d/
 %_datadir/deepin-debug-config/deepin-debug-config.d/org.deepin.file-manager.json
 
+%files -n lib%repo%soname
+%_libdir/lib%repo.so.%version
+%_libdir/lib%repo.so.%soname
+
+%files -n lib%repo-devel
+%_libdir/lib%repo.so
+
 %files -n libdfm-extension%soname
-%_libdir/libdfm-extension.so.6*
+%_libdir/libdfm-extension.so.%version
 %_libdir/libdfm-extension.so.%soname
 
 %files -n libdfm-extension-devel
@@ -193,7 +214,7 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_libdir/cmake/dfm-extension/
 
 %files -n libdfm-base%soname
-%_libdir/libdfm-base.so.6*
+%_libdir/libdfm-base.so.%version
 %_libdir/libdfm-base.so.%soname
 
 %files -n libdfm-base-devel
@@ -203,7 +224,7 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_libdir/cmake/dfm-base/
 
 %files -n libdfm-framework%soname
-%_libdir/libdfm-framework.so.6*
+%_libdir/libdfm-framework.so.%version
 %_libdir/libdfm-framework.so.%soname
 
 %files -n libdfm-framework-devel
@@ -221,6 +242,9 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Wed Apr 03 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.44-alt1
+- New version 6.0.44.
+
 * Fri Mar 01 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.40-alt1
 - New version 6.0.40.
 
