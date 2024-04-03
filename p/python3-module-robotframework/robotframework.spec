@@ -4,15 +4,16 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.0.2
-Release: alt2
+Version: 7.0
+Release: alt1
+
 Summary: A generic test automation framework
+
 License: Apache-2.0
 Group: Development/Python3
-BuildArch: noarch
-Url: https://pypi.org/project/robotframework/
+URL: https://pypi.org/project/robotframework
+VCS: https://github.com/robotframework/robotframework
 
-# https://github.com/robotframework/robotframework.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -29,6 +30,8 @@ BuildRequires: python3(tox)
 
 Conflicts: python-module-%oname
 Obsoletes: python-module-%oname
+
+BuildArch: noarch
 
 %description
 Robot Framework is a generic test automation framework for acceptance
@@ -66,6 +69,9 @@ EOF
 %python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Wed Apr 03 2024 Grigory Ustinov <grenka@altlinux.org> 7.0-alt1
+- Automatically updated to 7.0.
+
 * Fri Feb 02 2024 Grigory Ustinov <grenka@altlinux.org> 6.0.2-alt2
 - Moved on modern pyproject macros.
 
