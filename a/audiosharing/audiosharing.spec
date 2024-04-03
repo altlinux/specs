@@ -3,19 +3,20 @@
 %define _name audio-sharing
 %define rdn_name de.haeckerfelix.AudioSharing
 
+%def_enable check
 %def_disable bootstrap
 
 Name: audiosharing
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: Audio Sharing application for GNOME
 License: GPL-3.0
 Group: Sound
-Url: https://gitlab.gnome.org/World/audiosharing
+Url: https://apps.gnome.org/AudioSharing
 
 %if_disabled snapshot
-Source: %url/-/archive/%version/%name-%version.tar.gz
+Source: https://gitlab.gnome.org/World/audiosharing/-/archive/%version/%name-%version.tar.gz
 %else
 Vcs: https://gitlab.gnome.org/World/audiosharing.git
 Source: %name-%version.tar
@@ -23,7 +24,7 @@ Source: %name-%version.tar
 Source1: %name-%version-cargo.tar
 
 %define glib_ver 2.66
-%define gtk_ver 4.0
+%define gtk_ver 4.10
 %define adwaita_ver 1.2
 %define gst_ver 1.16
 
@@ -32,7 +33,6 @@ Requires: libgst-rtsp-server >= %gst_ver
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo git yelp-tools
-BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(gstreamer-1.0) >= %gst_ver
@@ -40,6 +40,7 @@ BuildRequires: pkgconfig(gstreamer-audio-1.0)
 BuildRequires: pkgconfig(gstreamer-plugins-base-1.0)
 BuildRequires: pkgconfig(gstreamer-rtsp-server-1.0)
 BuildRequires: pkgconfig(dbus-1)
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 Running Audio Sharing will automatically share the current audio playback
@@ -74,6 +75,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Wed Apr 03 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.4-alt1
+- updated to 0.2.4-2-gdf8da75
+
 * Tue Jan 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt2
 - updated to 0.2.2-13-gda62bbc
 - fixed Vcs tag
