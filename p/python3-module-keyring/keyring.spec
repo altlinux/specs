@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 25.0.0
+Version: 25.1.0
 Release: alt1
 
 Summary: Keyring provides an easy way to access the system keyring service
@@ -72,6 +72,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Wed Apr 03 2024 Grigory Ustinov <grenka@altlinux.org> 25.1.0-alt1
+- Automatically updated to 25.1.0.
+
 * Mon Mar 25 2024 Grigory Ustinov <grenka@altlinux.org> 25.0.0-alt1
 - Automatically updated to 25.0.0.
 
