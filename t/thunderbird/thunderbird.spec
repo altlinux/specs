@@ -17,7 +17,7 @@
 %endif
 
 Name: 	 thunderbird
-Version: 115.8.1
+Version: 115.9.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -584,6 +584,20 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Wed Apr 03 2024 Pavel Vasenkov <pav@altlinux.org> 115.9.0-alt1
+- New version.
+- Security fixes:
+  + CVE-2024-0743 Crash in NSS TLS method
+  + CVE-2024-2605 Windows Error Reporter could be used as a Sandbox escape vector
+  + CVE-2024-2607 JIT code failed to save return registers on Armv7-A
+  + CVE-2024-2608 Integer overflow could have led to out of bounds write
+  + CVE-2024-2616 Improve handling of out-of-memory conditions in ICU
+  + CVE-2023-5388 NSS susceptible to timing attack against RSA decryption
+  + CVE-2024-2610 Improper handling of html and body tags enabled CSP nonce leakage
+  + CVE-2024-2611 Clickjacking vulnerability could have led to a user accidentally granting permissions
+  + CVE-2024-2612 Self referencing object could have potentially led to a use-after-free
+  + CVE-2024-2614 Memory safety bugs fixed in Firefox 124, Firefox ESR 115.9, and Thunderbird 115.9
+
 * Tue Mar 12 2024 Pavel Vasenkov <pav@altlinux.org> 115.8.1-alt1
 - New version.
 - Security fixes:
