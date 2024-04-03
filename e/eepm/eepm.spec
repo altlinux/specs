@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: eepm
-Version: 3.60.13
+Version: 3.61.5
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -47,9 +47,11 @@ See detailed description here: http://wiki.etersoft.ru/EPM
 %package repack
 Summary: Etersoft EPM package manager (repack requirements)
 Group: System/Configuration/Packaging
-Requires: %name = %EVR
+Requires: %name
+# = %EVR
 Requires: alien dpkg patchelf p7zip
-Requires: /usr/bin/rpmbuild
+# preferable eepm-rpm-build
+#Requires: /usr/bin/rpmbuild
 
 %description repack
 This package has requirements needed for using epm repack on ALT
@@ -92,12 +94,111 @@ a discussion about extra requirements.
 %_sysconfdir/bash_completion.d/serv
 %_sysconfdir/bash_completion.d/eepm
 
-%if "%_vendor" == "alt"
 %files repack
-%endif
 
 
 %changelog
+* Thu Apr 04 2024 Vitaly Lipatov <lav@altlinux.ru> 3.61.5-alt1
+- eget: select IPFS gateway if gateway mode is forced
+- epm play: add obs-linuxbrowser
+- epm play: Added flatpak support
+- epm-mark: add aliases install/remove for manual/auto (dnf compatibility)
+- epm update: run upgrade with used with args
+- epm-repack: drop strict eepm version requires, drop rpm-build requires
+- epm-sh-functions: enable gettext translation
+- add initial po/Makefile
+
+* Wed Apr 03 2024 Vitaly Lipatov <lav@altlinux.ru> 3.61.4-alt1
+- epm-repack-rpm: check package name after spec fixing
+- epm play yandex-messanger: rename package chats to yandex-messenger
+- epm play r7-office-organizer*: fix removing on ALT (fix package name)
+- epm play.d/common.sh: allow a few packages in PKGNAME (assume they with the same version)
+- epm play: add i586-openssl098
+- epm-programs: add --short support
+- epm play telegram: add direct URL support
+- epm play mailruagent: rewritten
+- epm repack cascadeur: rewritten
+- epm pack flashplayer: move all code from repack rule
+- epm pack Telegram: move desktop/icons from repack rule
+- epm pack 64Gram: move icons/desktop from repack rules
+- epm repack cuda-z: move icons/desktop from repack rule
+- epm repack vkteams: move icons/desktop from repack rule
+- epm play: Added snap support
+
+* Tue Apr 02 2024 Vitaly Lipatov <lav@altlinux.ru> 3.61.3-alt1
+- epm play chrome: fix downloading
+- epm play: add popcorn-time
+- epm play: add tradingview
+- epm play element-desktop: add direct URL
+- epm play kyodialog: update to 9.3
+- epm play: add support for run direct script
+- epm play.d/common.sh: do fatal if there are a few packages in PKGNAME
+- epm play onlyoffice: fix is_glibc_enough call
+
+* Mon Apr 01 2024 Vitaly Lipatov <lav@altlinux.ru> 3.61.2-alt1
+- epm play: fix forcing version with --ipfs
+- epm play myoffice: add direct download for known version
+- epm pack snap4arduino: use .tar as intermediate archive
+- epm play librewolf: fix download for ALT 10
+- distr_info: add initial support for OpenMandrivaLx
+- epm play: rewrite r7-office-organizer, add r7-office-organizer-pro
+- epm repack rudesktop: drop original requires
+
+* Mon Apr 01 2024 Vitaly Lipatov <lav@altlinux.ru> 3.61.1-alt1
+- epm release-upgrade: add rule for OpenMandrivaLX (untested)
+- epm repack.d/common.sh: add tags Requires, Conflicts, Provides after main tags
+- epm play: fix icons install for JetBrains products
+- epm repack: add apache-netbeans rule to ignore some deps
+- epm play anydesk: use direct link to workaround against buggy vendor server
+
+* Mon Apr 01 2024 Vitaly Lipatov <lav@altlinux.ru> 3.61.0-alt1
+- epm play angie: update distros
+- epm play: add kyocera-sane
+- epm repack ungoogled-chromium: fix duplication .desktop file
+- epm repack 64gram: disable autoupdate
+- epm pack/repack: download package in any case
+- rsync_alt_contents_index: add warning if rsync check is failed
+- epm play guardant: use repack for all rpm based distros
+- epm pack sidequest: fix icons install
+- epm play virtualhere: replace legacy converting code to epm pack using
+- epm play snap4arduino: rewrite via epm pack
+- epm play sublime: rewrite via epm pack
+- epm play.d: introduce warn_version_is_not_supported() and use it
+- epm play logseq: move repacking to pack.d
+- epm play liteide: move repacking to pack.d
+- epm play: add URL where missed
+- epm play common: switch to update to latest known version
+- epm play common.sh: use last unknown version if --ipfs in use
+- epm play: replace epm tool eget with just eget
+- epm play: add mytonwallet
+- epm repack: add check if the package name is the same as was in play.d script
+- epm pack.d/generic-appimage.sh: improve PRODUCT/VERSION separating
+- epm play xod-ide: fix downloading and repacking
+- epm repack.d/generic-appimage.sh: set PRODUCTCUR (as lowercased PRODUCT) and create link if they differs
+- epm play: cleanup rudesktop download and repacking
+- epm play.d: add override_pkgname and use it
+- epm play telegram: fix beta support
+- epm play: install latest tested version by default
+- epm repack.d/generic.sh: fill only empty Summary
+- eget: add support square brackets as wildcards
+- epm-repack-rpm: run fix spec after repack scripts
+- epm play pantum: full rewrite
+- epm play epsonscan2: rewrite, split epsonscan2-non-free-plugin separately
+- epm play epson-printer-utility: cleanup
+- epm repack: add support for .appimage (low case) extension
+- epm pack.d/generic-appimage.sh: don't override package version with X-AppImage-Version (can be wrong)
+- epm play: fix version issues (installing by version package we get before)
+- epm play.d/common.sh: implement install_pkgurl and install_pack_pkgurl and use it (repack rpm packages for any distro)
+- epm play piktomir: clean up via pack.d/piktomir.sh
+- epm play: remove obsoleted sputnik-browser, net.downloadhelper.coapp.sh
+- epm play cnrdrvcups-ufr2: enable repack for rpm
+- epm play aksusbd: update to 9.15, switch to IPFS
+- epm pack.d/generic-appimage.sh: fix for version started with v
+- epm play: add NotepadNext
+- epm pack: add create_file() and use it
+- epm repack: huge cleanup
+- epm repack: remove unused scripts
+
 * Thu Mar 28 2024 Vitaly Lipatov <lav@altlinux.ru> 3.60.13-alt1
 - epm play: add mailspring
 - epm-remove: stop hi level removing when --noscripts is used
