@@ -1,6 +1,6 @@
 Name: rars
 Version: 1.6
-Release: alt1
+Release: alt2
 
 Summary: RISC-V Assembler and Runtime Simulator
 
@@ -10,6 +10,12 @@ Url: https://github.com/TheThirdOne/rars
 
 Source: %name-%version.tar
 Source1: jsoftfloat.tar
+Patch0001: .gear/0001-Update-pseudo-op-test.patch
+Patch0002: .gear/0002-fix-some-typos.patch
+Patch0003: .gear/0003-MessagesPane-Force-black-text-color-on-yellow-select.patch
+Patch0101: .gear/0101-Made-commandline-memory-accessible-to-observers.patch
+Patch0102: .gear/0102-Provide-a-headless-timer-tool.patch
+Patch0103: .gear/0103-Provide-command-line-parameter-for-HeadlessTimer.patch
 Patch: %name-%version.patch
 
 BuildRequires: java-devel-default ImageMagick-tools
@@ -25,6 +31,12 @@ getting started with RISC-V.
 
 %prep
 %setup -a1
+%patch0001 -p1
+%patch0002 -p1
+%patch0003 -p1
+%patch0101 -p1
+%patch0102 -p1
+%patch0103 -p1
 %patch -p1
 
 cat > %name.desktop <<@@@
@@ -35,7 +47,7 @@ Comment=Develop in assembly language for the RISC-V family of processors
 Exec=%name
 Terminal=false
 Type=Application
-Categories=Development;IDE;Emulator
+Categories=Development;IDE;Emulator;
 Icon=%name
 @@@
 
@@ -62,6 +74,10 @@ done
 %_iconsdir/*/*/apps/*
 
 %changelog
+* Wed Apr 03 2024 Fr. Br. George <george@altlinux.org> 1.6-alt2
+- Update to master
+- Apply headless timer patch
+
 * Sat Feb 10 2024 Fr. Br. George <george@altlinux.org> 1.6-alt1
 - Update to release
 - Update JSoftFloat to bugfix
