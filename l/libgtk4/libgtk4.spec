@@ -37,8 +37,8 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.2
+Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
 Group: System/Libraries
@@ -417,6 +417,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Wed Apr 03 2024 Yuri N. Sedunov <aris@altlinux.org> 4.14.2-alt1
+- 4.14.2
+
 * Wed Mar 27 2024 Yuri N. Sedunov <aris@altlinux.org> 4.14.1-alt1.1
 - E2K: disabled sse-4.2
 
