@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.0.4
+Version: 6.0.5
 Release: alt1
 
 Summary: Multidicts are useful for working with HTTP headers, URL query args etc
@@ -17,6 +17,8 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-Cython
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -31,22 +33,27 @@ It behaves mostly like a dict but it can have several values for the same key.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 rm -vf %buildroot%python3_sitelibdir/%oname/*.{c,pyx}
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3 -v
+# test_circular_imports try to import from the system and the module
+# is installed in the buildroot at this point.
+py.test-3 -v --ignore tests/test_circular_imports.py
 
 %files
 %doc LICENSE *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Apr 03 2024 Grigory Ustinov <grenka@altlinux.org> 6.0.5-alt1
+- Automatically updated to 6.0.5.
+
 * Fri Jan 13 2023 Grigory Ustinov <grenka@altlinux.org> 6.0.4-alt1
 - Automatically updated to 6.0.4.
 
