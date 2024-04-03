@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 Name: dosfstools
 Version: 4.2
-Release: alt2
+Release: alt3
 
 Summary: Utilities to create and check MS-DOS FAT filesystems
-License: GPL
+License: GPLv3
 Group: File tools
-Url: http://daniel-baumann.ch/software/dosfstools/
+Url: https://github.com/dosfstools/dosfstools
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
@@ -53,6 +53,10 @@ make check
 %doc doc/*
 
 %changelog
+* Wed Apr 03 2024 Anton Farygin <rider@altlinux.ru> 4.2-alt3
+- fixed homepage URL (Closes: #49684)
+- updated License according to SPDX
+
 * Sat Jan 22 2022 Anton Midyukov <antohami@altlinux.org> 4.2-alt2
 - enable compat symlinks
 
