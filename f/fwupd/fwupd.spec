@@ -27,7 +27,7 @@ Summary: Firmware update daemon
 Name: fwupd
 Version: 1.9.15
 
-Release: alt1
+Release: alt2
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
 Url: https://github.com/fwupd/fwupd
@@ -36,9 +36,11 @@ Source0: %name-%version.tar
 Source2: fwupd.watch
 Patch0: %name-%version-alt.patch
 
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-ubt
+
 BuildRequires: bash-completion
 BuildRequires: cmake
-BuildRequires: rpm-build-python3
 BuildRequires: git-core
 BuildRequires: gi-docgen
 BuildRequires: libappstream-glib-devel
@@ -66,7 +68,6 @@ BUildRequires: libflashrom-devel
 BuildRequires: libdrm-devel
 BuildRequires: libsoup-devel
 BuildRequires: libsqlite3-devel
-BuildRequires: libpassim-devel
 BuildRequires: libsystemd-devel
 BuildRequires: libtpm2-tss-devel
 BuildRequires: libudev-devel
@@ -81,6 +82,12 @@ BuildRequires: python3-module-jinja2
 BuildRequires: vala-tools
 BuildRequires: gobject-introspection-devel
 BuildRequires: /proc
+
+# Build with passim starting from p11
+# No passim in p10 due to old libsoup3.0 and glib2
+%if "%(rpmvercmp '%ubt_id' 'M110')" >= "0"
+BuildRequires: libpassim-devel
+%endif
 
 %if_enabled uefi
 BuildRequires: libpango-devel
@@ -314,6 +321,9 @@ vm-run --sbin --udevd --kvm=cond --overlay=tmpfs:/usr/src \
 %endif
 
 %changelog
+* Wed Apr 03 2024 Egor Ignatov <egori@altlinux.org> 1.9.15-alt2
+- disable passim for p10 and older branches
+
 * Mon Mar 25 2024 Egor Ignatov <egori@altlinux.org> 1.9.15-alt1
 - 1.9.15
 
