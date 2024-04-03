@@ -9,7 +9,7 @@
 
 Name: avahi
 Version: 0.8
-Release: alt3
+Release: alt4
 
 Summary: Local network service discovery
 License: LGPLv2
@@ -114,6 +114,7 @@ Group: Development/Python
 %package bookmarks
 Summary: Web service showing mDNS/DNS-SD announced HTTP services using the Avahi
 Group: Networking/WWW
+Requires: python3(twisted.internet.gireactor)
 BuildArch: noarch
 
 %package tools
@@ -465,6 +466,9 @@ fi
 %endif
 
 %changelog
+* Wed Apr 03 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.8-alt4
+- complete avahi-browser python deps (closes: 49873)
+
 * Mon Mar 18 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.8-alt3
 - updated to v0.9-rc1
 - fixes: CVE-2023-38469, CVE-2023-38470, CVE-2023-38471, CVE-2023-38472, CVE-2023-38473
