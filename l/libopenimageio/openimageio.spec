@@ -10,8 +10,8 @@
 %define soname 2.5
 
 Name:           lib%oname
-Version:        2.5.7.0
-Release:        alt1.1
+Version:        2.5.8.0
+Release:        alt2
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -26,10 +26,8 @@ Source0:        %name-%version.tar
 
 Source2: %oname.watch
 
-Patch1: %oname-alt-armh-disable-neon.patch
-# https://github.com/AcademySoftwareFoundation/OpenImageIO/issues/4111
-# revert simd change on aarch64
-Patch2: 0001-perf-simd-faster-vint4-load-store-with-unsigned-char.patch
+# https://github.com/AcademySoftwareFoundation/OpenImageIO/pull/4143
+Patch1: 4143.patch
 Patch2000: %oname-e2k.patch
 
 BuildRequires(pre): rpm-build-python3
@@ -139,12 +137,7 @@ Development files for package %name
 
 %prep
 %setup
-%ifarch armh
 %patch1 -p1
-%endif
-%ifarch aarch64
-%patch2 -p1 -R
-%endif
 %ifarch %e2k
 %patch2000 -p1
 # simplifies the patch
@@ -185,6 +178,7 @@ rm -fr src/include/OpenImageIO/detail/pugixml/
 	-DOIIO_USING_IMATH=3 \
 %ifarch armh
 	-DBUILD_OIIOUTIL_ONLY:BOOL=TRUE \
+	-DUSE_SIMD=0 \
 	-DBUILD_DOCS:BOOL=FALSE \
 %else
 	-DBUILD_DOCS:BOOL=TRUE \
@@ -239,6 +233,13 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Wed Feb 21 2024 L.A. Kostis <lakostis@altlinux.ru> 2.5.8.0-alt2
+- aarch64: Apply fix from #PR4143 to address NEON issues.
+- armh: use USE_SIMD=0.
+
+* Wed Feb 21 2024 L.A. Kostis <lakostis@altlinux.ru> 2.5.8.0-alt1
+- 2.5.8.0.
+
 * Tue Feb 20 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.5.7.0-alt1.1
 - Updated patch for Elbrus.
 
