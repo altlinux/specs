@@ -1,15 +1,14 @@
 %add_optflags %optflags_shared
-%define soname 16
+%define soname 18
 
 Name: dcmtk
-Version: 3.6.6
-Release: alt1.1
+Version: 3.6.8
+Release: alt1
 Summary: DCMTK - DICOM Toolkit
 License: MIT
 Group: Graphics
 Url: http://dcmtk.org/dcmtk.php.en
-
-# ftp://dicom.offis.de/pub/dicom/offis/software/dcmtk/dcmtk354/%name-%version.tar.gz
+VCS: https://github.com/DCMTK/dcmtk
 Source: %name-%version.tar
 
 Requires: lib%name%soname = %EVR
@@ -68,7 +67,7 @@ Headers for building software that uses %name.
 
 %files
 %_bindir/*
-%_datadir/dcmtk/
+%_datadir/dcmtk-%version/
 %_docdir/*
 %_man1dir/*
 %config(noreplace) %_sysconfdir/*
@@ -78,11 +77,18 @@ Headers for building software that uses %name.
 %_libdir/*.so.%soname.*
 
 %files -n lib%name-devel
+%_pkgconfigdir/dcmtk.pc
 %_includedir/dcmtk/
 %_libdir/*.so
 %_libdir/cmake/dcmtk/*.cmake
 
 %changelog
+* Tue Jan 30 2024 Anton Farygin <rider@altlinux.ru> 3.6.8-alt1
+- 3.6.8
+
+* Fri Apr 07 2023 Anton Farygin <rider@altlinux.ru> 3.6.7-alt1
+- 3.6.7
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 3.6.6-alt1.1
 - NMU: spec: adapted to new cmake macros.
 

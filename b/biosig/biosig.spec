@@ -3,7 +3,7 @@
 %define soname 3
 
 Name: biosig
-Version: 2.5.2
+Version: 2.6.0
 Release: alt1
 
 Summary: Reading and writing routines for different biosignal data formats
@@ -14,6 +14,7 @@ Url: https://biosig.sourceforge.net/
 Source: %name-%version.tar
 
 Patch1: %name-alt-build-2.5.2.patch
+Patch2: biosig-2.6.0-upstream-numpy.distutils.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel
@@ -117,9 +118,11 @@ modeling, data visualization, and so on.
 Everything in this project is freely available under the
 GNU General Public License.
 
+
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 # sigviewer isn't built here. don't install it's manpage either
 rm -f biosig4c++/doc/sigviewer.1
@@ -155,6 +158,10 @@ rm -f biosig4c++/doc/mexSLOAD.1
 %python3_sitelibdir/Biosig-%version-py%{_python3_version}.egg-info
 
 %changelog
+* Wed Apr 03 2024 Anton Farygin <rider@altlinux.ru> 2.6.0-alt1
+- 2.5.2 -> 2.6.0
+- added upstream fix against numpy.distutils deprecation
+
 * Fri Jan 19 2024 Alexey Shemyakin <alexeys@altlinux.org> 2.5.2-alt1
 - Update to version 2.5.2.
 
