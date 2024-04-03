@@ -18,7 +18,7 @@
 
 Name: python3-module-%mod_name
 Version: 6.6.2
-Release: alt2
+Release: alt3
 
 Summary: Python bindings for the Qt cross-platform application and UI framework
 Group: Development/Python3
@@ -104,6 +104,9 @@ BuildRequires: libqt6-uitools
 BuildRequires: libqt6-webchannel
 BuildRequires: qt6-webchannel-devel
 BuildRequires: qt6-webchannel
+%ifarch x86_64 aarch64
+BuildRequires: qt6-webengine-devel
+%endif
 
 BuildRequires: libqt6-qml
 BuildRequires: libqt6-qmlcompiler
@@ -135,6 +138,8 @@ BuildRequires: xvfb-run
 BuildRequires: mesa-dri-drivers
 BuildRequires: ctest
 BuildRequires: python3-module-pip
+BuildRequires: /proc
+BuildRequires: /dev/pts
 %endif
 
 %description
@@ -256,7 +261,7 @@ ctest \
   --force-new-ctest-process \
   --test-dir pyside6 \
   --parallel %_smp_build_ncpus \
-  --exclude-regex 'pysidetest_new_inherited_functions_test|pysidetest_qvariant_test|registry_existence_test|signals_disconnect_test|support_voidptr_test|QtCore_loggingcategorymacros_test|QtGui_qpen_test|QtGui_timed_app_and_patching_test|QtWidgets_application_test|Qt3DExtras_qt3dextras_test|pyside6-android-deploy_test_pyside6_android_deploy'
+  --exclude-regex 'pysidetest_new_inherited_functions_test|pysidetest_qvariant_test|registry_existence_test|signals_disconnect_test|support_voidptr_test|QtCore_loggingcategorymacros_test|QtGui_qpen_test|QtGui_timed_app_and_patching_test|QtWidgets_application_test|Qt3DExtras_qt3dextras_test|pyside6-android-deploy_test_pyside6_android_deploy|QtWebEngineWidgets_pyside-474-qtwebengineview|QtWebEngineCore_web_engine_custom_scheme|QtWebEngineCore_qwebenginecookiestore_test'
 popd
 
 
@@ -297,6 +302,9 @@ popd
 %python3_sitelibdir/shiboken6_generator-%version-*.egg-info
 
 %changelog
+* Wed Apr 03 2024 Anton Vyatkin <toni@altlinux.org> 6.6.2-alt3
+- Build with QtWebEngineCore and QtWebEngineWidgets(Closes: #49884).
+
 * Sun Mar 31 2024 Michael Shigorin <mike@altlinux.org> 6.6.2-alt2
 - E2K: llvm13.0 so far
 
