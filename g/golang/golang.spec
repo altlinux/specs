@@ -50,7 +50,7 @@
 %def_enable fail_on_tests
 
 Name:    golang
-Version: 1.22.1
+Version: 1.22.2
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -375,6 +375,9 @@ popd
 %files src -f go-src.list
 
 %changelog
+* Wed Apr 03 2024 Alexey Shabalin <shaba@altlinux.org> 1.22.2-alt1
+- New version (1.22.2) (Fixes: CVE-2023-45288).
+
 * Tue Mar 05 2024 Alexey Shabalin <shaba@altlinux.org> 1.22.1-alt1
 - New version (1.22.1) (Fixes: CVE-2024-24783, CVE-2023-45289, CVE-2023-45290).
 
