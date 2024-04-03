@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: autorestic
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 Summary: Config driven, easy backup CLI for restic
 License: Apache-2.0
@@ -57,6 +57,9 @@ go test -count=1 -cover %{?_is_lp64:-race} -v ./...
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Wed Apr 03 2024 Vitaly Chikunov <vt@altlinux.org> 1.8.2-alt1
+- Update to v1.8.2 (2024-03-28).
+
 * Wed Mar 13 2024 Vitaly Chikunov <vt@altlinux.org> 1.8.1-alt1
 - Update to v1.8.1 (2024-03-13).
 
