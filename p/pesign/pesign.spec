@@ -5,7 +5,7 @@
 
 Name: pesign
 Version: 116
-Release: alt1
+Release: alt2
 
 Summary: Signing tool for PE-COFF binaries
 License: GPLv3
@@ -30,15 +30,13 @@ as well as other associated tools.
 %prep
 %setup -n %name-%version-%release
 
-sed -i '/^libexecdir/s/)libexec/)lib/' Make.defaults
-
 %if_without man
 # disable mandoc
 sed -i 's/mandoc/true/' Make.rules
 %endif
 
 # fix error: "_FORTIFY_SOURCE" redefined
-sed -i -e 's/-D_FORTIFY_SOURCE=2/-D_FORTIFY_SOURCE=3/' Make.defaults
+sed -i -e 's/-D_FORTIFY_SOURCE=2//' Make.defaults
 
 # fcf-protection works for i686 processor or newer
 %ifarch i386 i486 i586
@@ -50,17 +48,33 @@ sed -i -e '/-fcf-protection/ s/full/none/' Make.defaults
 sed -i 's,-fshort-wchar,,g' Make.defaults util/Makefile
 %endif
 
+# fix gcc10 issue:
+#password.c:316:32: error: unknown option after '#pragma GCC diagnostic'
+#  316 | #pragma GCC diagnostic ignored "-Wanalyzer-mismatching-deallocation"
+#      |                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%add_optflags -Wno-error=pragmas
+
 %build
-%make_build OPTFLAGS='%optflags'
+%make_build \
+	OPTFLAGS='%optflags' \
+	libexecdir=%_libexecdir \
+	rundir=%_runtimedir
 
 %install
-%makeinstall_std libdir=%_libdir MACROS_DIR=%_rpmmacrosdir
+%makeinstall_std \
+	MACROS_DIR=%_rpmmacrosdir \
+	libdir=%_libdir \
+	libexecdir=%_libexecdir \
+	rundir=%_runtimedir
+
 mv %buildroot%_rpmmacrosdir/{macros.,}pesign
+
 %makeinstall_std -C src install_systemd install_sysvinit \
+	libexecdir=%_libexecdir \
 	INIT_DIR=%_initdir \
 	UNIT_DIR=%_unitdir \
 	TMPFILES_DIR=%_tmpfilesdir \
-	#
+	rundir=%_runtimedir
 
 mkdir -pv %buildroot%_runtimedir/pesign/socketdir/
 mksock -m666 %buildroot%_runtimedir/pesign/socketdir/socket
@@ -113,6 +127,11 @@ fi
 %ghost %_runtimedir/pesign.pid
 
 %changelog
+* Tue Apr 02 2024 Egor Ignatov <egori@altlinux.org> 116-alt2
+- efikeygen: Add support for RSA3072 and RSA4096
+- pesign: Fix signature removal
+- pesign: Fix not asking for token's password
+
 * Thu Jul 13 2023 Egor Ignatov <egori@altlinux.org> 116-alt1
 - new version 116 (Fixes: CVE-2022-3560)
   + rebase ALT commits
