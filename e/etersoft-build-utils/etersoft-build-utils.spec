@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.2.10
+Version: 3.2.11
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -69,6 +69,11 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Thu Apr 04 2024 Vitaly Lipatov <lav@altlinux.ru> 3.2.11-alt1
+- config: fix MENV=sisyphus
+- rpmgs: use recursive submodule update
+- rpmbsh: add git bundle support
+
 * Thu Mar 28 2024 Vitaly Lipatov <lav@altlinux.ru> 3.2.10-alt1
 - rpmgs: case insensitive VCS
 - rpmgs: improve removing libs from windows/winapi cargo modules
