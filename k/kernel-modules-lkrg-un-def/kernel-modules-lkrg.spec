@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define module_name	lkrg
-%define module_version	0.9.7
+%define module_version	0.9.8
 %define module_release	alt1
 
 %define flavour		un-def
@@ -96,6 +96,10 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Wed Apr 03 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 0.9.8-alt1
+- Update to 0.9.8
+- Add 6.7 and 6.8 kflavours
 
 * Fri Oct 05 2023 Vitaly Chikunov <vt@altlinux.org> 0.9.7-alt1
 - Update to 0.9.7 (2023-09-14).

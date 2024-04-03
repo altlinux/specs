@@ -4,10 +4,10 @@
 %define module_version	0.9.8
 %define module_release	alt1
 
-%define flavour		std-def
+%define flavour		6.8
 %define karch		aarch64 %ix86 x86_64
 BuildRequires(pre): rpm-build-kernel
-BuildRequires(pre): kernel-headers-modules-std-def
+BuildRequires(pre): kernel-headers-modules-6.8
 %setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/misc
