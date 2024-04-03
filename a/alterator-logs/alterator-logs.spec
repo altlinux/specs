@@ -1,6 +1,6 @@
 Name: alterator-logs
 Version: 0.9.4
-Release: alt1
+Release: alt2
 
 Summary: Alterator module for system logs
 License: GPL
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 Requires: alterator >= 4.10-alt6
 Requires: alterator-sh-functions >= 0.3-alt1
 Requires: alterator-l10n >= 2.0-alt1
+Requires: jq
 
 Conflicts: alterator-fbi < 5.20-alt3
 Conflicts: alterator-lookout < 2.1-alt1
@@ -48,6 +49,9 @@ System logs alterator module.
 touch /var/log/journald
 
 %changelog
+* Mon Apr 01 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.9.4-alt2
+- require jq
+
 * Thu Mar 21 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.9.4-alt1
 - change text logs web display from textarea to div
 - add journald log formatting using colors by priority
