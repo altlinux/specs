@@ -5,14 +5,15 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 10.2
-Release: alt2
+Version: 14.0
+Release: alt1
 
 Summary: a pytest plugin that re-runs failed tests up to -n times to eliminate flakey failures
 
 License: MPL-2.0
 Group:   Development/Python3
-URL:     https://github.com/pytest-dev/pytest-rerunfailures
+URL:     https://pypi.org/project/pytest-rerunfailures
+VCS:     https://github.com/pytest-dev/pytest-rerunfailures
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -21,7 +22,6 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
 %if_with check
-BuildRequires: python3(tox)
 BuildRequires: python3-module-pytest-xdist
 %endif
 
@@ -53,6 +53,9 @@ Source:  %name-%version.tar
 %python3_sitelibdir/pytest_rerunfailures-%version.dist-info/
 
 %changelog
+* Wed Apr 03 2024 Grigory Ustinov <grenka@altlinux.org> 14.0-alt1
+- Automatically updated to 14.0.
+
 * Sun Jan 28 2024 Grigory Ustinov <grenka@altlinux.org> 10.2-alt2
 - Moved on modern pyproject macros.
 
