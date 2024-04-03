@@ -3,7 +3,7 @@
 %def_disable qt6
 
 Name: ghostwriter
-Version: 23.08.5
+Version: 24.02.1
 Release: alt1
 %if_enabled qt5
 %K5init
@@ -17,6 +17,9 @@ Summary: Cross-platform, aesthetic, distraction-free Markdown editor
 License: GPL-3.0-or-later and CC-BY-SA-4.0 and BSD-2-Clause and BSD-3-Clause and LGPL-2.0-or-later and MIT and Apache-2.0
 Url: https://invent.kde.org/office/ghostwriter
 
+# Requires one of pandoc or multimarkdown or cmark
+#Requires: pandoc
+
 # Requires QtWebEngine. Can be built either with Qt5 or Qt6.
 %if_enabled qt5
 ExcludeArch: %not_qt5_qtwebengine_arches
@@ -27,6 +30,7 @@ ExcludeArch: %not_qt6_qtwebengine_arches
 
 # Source-url: https://github.com/KDE/ghostwriter/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
+Patch1: alt-crash.patch
 
 %if_enabled qt5
 BuildRequires(pre): rpm-macros-qt5 rpm-macros-qt5-webengine
@@ -59,6 +63,7 @@ or your novel.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %if_enabled qt5
@@ -98,6 +103,9 @@ or your novel.
 %_datadir/metainfo/*%{rname}*.xml
 
 %changelog
+* Wed Apr 03 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.1-alt1
+- new version
+
 * Wed Apr 03 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
