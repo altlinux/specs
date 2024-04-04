@@ -3,7 +3,7 @@
 %def_without cmake
 
 Name: deepin-screen-recorder
-Version: 5.12.17
+Version: 6.0.3
 Release: alt1
 
 Summary: Default screen recorder application for Deepin
@@ -69,9 +69,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %qmake_qt5 \
     CONFIG+=nostrip \
     VERSION=%version \
-    DEFINES+="VERSION=%version" \
+    APP_VERSION=%version \
     LIB_INSTALL_DIR=%_libdir \
-    LIBDIR=%_libdir \
+    LIB_DESTINATION=%_lib \
     unix:LIBS+=" -L/%_lib -ludev" \
     %if_enabled clang
         QMAKE_STRIP= -spec linux-clang \
@@ -109,12 +109,15 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %dir %_datadir/deepin-manual/manual-assets/application/
 %dir %_datadir/deepin-manual/manual-assets/application/%name/
 %_datadir/deepin-manual/manual-assets/application/%name/screen-capture/
-%dir %_datadir/dsg/
-%dir %_datadir/dsg/configs/
-%dir %_datadir/dsg/configs/org.deepin.screen-recorder/
-%_datadir/dsg/configs/org.deepin.screen-recorder/org.deepin.screen-recorder.record.json
+# %dir %_datadir/dsg/
+# %dir %_datadir/dsg/configs/
+# %dir %_datadir/dsg/configs/org.deepin.screen-recorder/
+# %_datadir/dsg/configs/org.deepin.screen-recorder/org.deepin.screen-recorder.record.json
 
 %changelog
+* Thu Apr 04 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.3-alt1
+- New version 6.0.3.
+
 * Thu Feb 08 2024 Leontiy Volodin <lvol@altlinux.org> 5.12.17-alt1
 - New version 5.12.17.
 
