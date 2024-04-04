@@ -1,5 +1,5 @@
 Name: nsd
-Version: 4.8.0
+Version: 4.9.0
 Release: alt1
 
 Summary: Name Server Daemon
@@ -89,6 +89,9 @@ fi
 %doc doc contrib %name.conf.sample
 
 %changelog
+* Thu Apr 04 2024 Alexei Takaseev <taf@altlinux.org> 4.9.0-alt1
+- 4.9.0
+
 * Fri Dec 08 2023 Alexei Takaseev <taf@altlinux.org> 4.8.0-alt1
 - 4.8.0
 
