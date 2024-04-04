@@ -1,6 +1,6 @@
-Name:    libSDL2_Pango
+Name:    SDL2_pango
 Version: 2.1.5
-Release: alt1
+Release: alt2
 
 Summary: SDL2 port of SDL_Pango
 
@@ -19,12 +19,20 @@ BuildRequires: libpango-devel
 SDL2_Pango is a library for graphically rendering
 internationalized and tagged text in SDL2 using TrueType fonts.
 
-%package devel
+%package -n lib%name
+Summary: SDL2 port of SDL_Pango
+Group: System/Libraries
+
+%description -n lib%name
+SDL2_Pango is a library for graphically rendering
+internationalized and tagged text in SDL2 using TrueType fonts.
+
+%package -n lib%name-devel
 Summary: Development files for SDL2_pango
 Group: Development/C
-Requires: %name = %EVR
+Requires: lib%name = %EVR
 
-%description devel
+%description -n lib%name-devel
 Development files for SDL2_pango.
 
 %prep
@@ -37,16 +45,19 @@ Development files for SDL2_pango.
 %install
 %makeinstall_std
 
-%files
+%files -n lib%name
 %doc COPYING AUTHORS ChangeLog NEWS README
 %_libdir/*.so.4*
 
-%files devel
+%files -n lib%name-devel
 %doc docs/html/*
 %_includedir/SDL2_Pango.h
 %_libdir/pkgconfig/SDL2_Pango.pc
 %_libdir/*.so
 
 %changelog
+* Thu Apr 04 2024 Grigory Ustinov <grenka@altlinux.org> 2.1.5-alt2
+- Renamed package to be similar with others.
+
 * Tue Apr 02 2024 Grigory Ustinov <grenka@altlinux.org> 2.1.5-alt1
 - Initial build for Sisyphus.

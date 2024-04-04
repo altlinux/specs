@@ -1,6 +1,6 @@
 Name: tuxpaint
 Version: 0.9.32
-Release: alt1
+Release: alt2
 
 Summary: A drawing program for young children
 Summary(ru_RU.UTF8): Простая детская программа для рисования
@@ -18,7 +18,7 @@ Patch1: tuxpaint-0.9.32-e2k-fix_bad_elf_symbol.patch
 Patch2: tuxpaint-pango-cflags.patch
 
 BuildRequires: libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_gfx-devel
-BuildRequires: libSDL2_ttf-devel libSDL2_Pango-devel ImageMagick-tools xdg-utils
+BuildRequires: libSDL2_ttf-devel libSDL2_pango-devel ImageMagick-tools xdg-utils
 BuildRequires: libpng-devel zlib-devel gettext librsvg-devel libpaper-devel libfribidi-devel
 BuildRequires: libimagequant-devel
 BuildPreReq: gperf
@@ -124,6 +124,9 @@ rm -fv %buildroot%_datadir/doc/%name-%version/*/tp_magic_example.so
 %_man1dir/tp-magic-config*
 
 %changelog
+* Thu Apr 04 2024 Grigory Ustinov <grenka@altlinux.org> 0.9.32-alt2
+- Fixed build dependency on libSDL2_pango.
+
 * Tue Apr 02 2024 Grigory Ustinov <grenka@altlinux.org> 0.9.32-alt1
 - Build new version.
 - Removed dependency on fontforge (Closes: #49865).
