@@ -1,5 +1,5 @@
 Name: u-boot-qemu
-Version: 2024.01
+Version: 2024.04
 Release: alt1
 
 Summary: Das U-Boot
@@ -72,6 +72,9 @@ install -pm0644 -D u-boot.bin %buildroot%_datadir/u-boot/%qemu/u-boot.bin
 %_datadir/u-boot/*
 
 %changelog
+* Thu Apr 04 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.04-alt1
+- 2024.04 released
+
 * Fri Jan 12 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 2024.01-alt1
 - 2024.01 released
 
