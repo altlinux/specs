@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: pytest plugin that allows to customize the test execution order
@@ -18,11 +18,11 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -40,9 +40,9 @@ features like ordering relative to other tests.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-
 %if_with check
 %pyproject_deps_resync_check_pipreqfile requirements_dev.txt
 %endif
@@ -62,6 +62,9 @@ features like ordering relative to other tests.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Apr 04 2024 Anton Zhukharev <ancieg@altlinux.org> 1.2.1-alt1
+- Updated to 1.2.1.
+
 * Tue Nov 21 2023 Anton Zhukharev <ancieg@altlinux.org> 1.2.0-alt1
 - Updated to 1.2.0.
 
