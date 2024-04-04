@@ -1,5 +1,5 @@
 Name: node-gyp
-Version: 8.3.0
+Version: 10.1.0
 Release: alt1
 
 Summary: Node.js native addon build tool
@@ -40,12 +40,12 @@ Patch3: node-gyp-system-nodedir.patch
 BuildRequires(pre): rpm-macros-nodejs
 
 #gyp is the actual build framework node-gyp uses
-Requires: gyp >= 0.10.0
+Requires: gyp >= 0.16.1
 
 #this is the standard set of headers expected to build any node native module
 #Requires: rpm-build-nodejs
 #Requires:      npm
-Requires:      node-devel
+Requires:      node-devel >= 16.14.0
 # still used in node-gyp
 Requires:      rpm-build-python3
 
@@ -110,6 +110,14 @@ ln -sf ../lib/node_modules/node-gyp/bin/node-gyp.js %buildroot%_bindir/node-gyp
 %doc README.md LICENSE
 
 %changelog
+* Thu Apr 04 2024 Vitaly Lipatov <lav@altlinux.ru> 10.1.0-alt1
+- new version 10.1.0 (with rpmrb script)
+- set gyp to v0.16.1
+
+* Tue Mar 14 2023 Vitaly Lipatov <lav@altlinux.ru> 9.3.1-alt1
+- new version 9.3.1 (with rpmrb script)
+- set gyp to v0.14.0
+
 * Fri Dec 17 2021 Vitaly Lipatov <lav@altlinux.ru> 8.3.0-alt1
 - new version 8.3.0 (with rpmrb script)
 - set gyp to v0.10.0

@@ -1,7 +1,7 @@
 %define pkg nodejs
 Name: rpm-build-%pkg
 Version: 0.20.7
-Release: alt2
+Release: alt3
 
 Summary: RPM helper scripts for building %pkg packages
 
@@ -23,7 +23,7 @@ Patch3: nodejs.req-alt-utf8.patch
 Provides:      nodejs-packaging = %version
 Requires:      npm
 Requires:      node-devel
-Requires:      node-gyp
+Requires:      node-gyp >= 10.1.0
 
 Requires:      rpm-macros-%pkg
 
@@ -89,6 +89,9 @@ install -Dpm0644 multiver_modules %{buildroot}%{_datadir}/node/multiver_modules
 %_rpmmacrosdir/%pkg
 
 %changelog
+* Fri Apr 05 2024 Vitaly Lipatov <lav@altlinux.ru> 0.20.7-alt3
+- npm_build: do node-gyp configure firstly, set BR: node-gyp >= 10.1.0
+
 * Fri May 14 2021 Vitaly Lipatov <lav@altlinux.ru> 0.20.7-alt2
 - add BR: rpm-build-python3
 
