@@ -4,7 +4,7 @@
 %define libkimageannotator libkimageannotator%sover
 
 Name: kde5-%rname
-Version: 0.6.1
+Version: 0.7.1
 Release: alt1
 %K5init altplace
 
@@ -57,6 +57,7 @@ KF5 library
 
 %build
 %K5build \
+    -DBUILD_WITH_QT6=OFF \
     -DBUILD_SHARED_LIBS=ON \
     -DBUILD_TESTS:BOOL=OFF \
     -DBUILD_EXAMPLE:BOOL=OFF \
@@ -64,14 +65,24 @@ KF5 library
 
 %install
 %K5install
+mkdir %buildroot/%_libdir/cmake/kImageAnnotator/
+for f in %buildroot/%_libdir/cmake/kImageAnnotator-Qt?/* ; do
+    ln -sr $f %buildroot/%_libdir/cmake/kImageAnnotator/
+done
+for f in %buildroot/%_libdir/cmake/kImageAnnotator/* ; do
+    echo "$f" | grep -q '\-Qt[[:digit:]]' \
+	&& ln -sr $f `echo "$f" | sed 's|\-Qt[[:digit:]]||'` \
+	||:
+done
 %find_lang %name --all-name --with-qt
 
 %files common -f %name.lang
 %doc LICENSE* CHANGELOG.md README.md
 
 %files devel
-%_includedir//kImageAnnotator/
+%_includedir//kImageAnnotator-Qt?/
 %_libdir/cmake//kImageAnnotator/
+%_libdir/cmake//kImageAnnotator-Qt?/
 %_K5link/lib*.so
 
 %files -n %libkimageannotator
@@ -79,6 +90,9 @@ KF5 library
 %_K5lib/libkImageAnnotator.so.*
 
 %changelog
+* Thu Apr 04 2024 Sergey V Turchin <zerg@altlinux.org> 0.7.1-alt1
+- new version
+
 * Tue Apr 25 2023 Sergey V Turchin <zerg@altlinux.org> 0.6.1-alt1
 - new version
 

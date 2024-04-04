@@ -4,7 +4,7 @@
 %define libkcolorpicker libkcolorpicker%sover
 
 Name: kde5-%rname
-Version: 0.2.0
+Version: 0.3.1
 Release: alt1
 %K5init altplace
 
@@ -52,6 +52,7 @@ KF5 library
 
 %build
 %K5build \
+    -DBUILD_WITH_QT6=OFF \
     -DBUILD_SHARED_LIBS=ON \
     -DBUILD_TESTS:BOOL=OFF \
     -DBUILD_EXAMPLE:BOOL=OFF \
@@ -59,11 +60,21 @@ KF5 library
 
 %install
 %K5install
+mkdir %buildroot/%_libdir/cmake/kColorPicker/
+for f in %buildroot/%_libdir/cmake/kColorPicker-Qt?/* ; do
+    ln -sr $f %buildroot/%_libdir/cmake/kColorPicker/
+done
+for f in %buildroot/%_libdir/cmake/kColorPicker/* ; do
+    echo "$f" | grep -q '\-Qt[[:digit:]]' \
+	&& ln -sr $f `echo "$f" | sed 's|\-Qt[[:digit:]]||'` \
+	||:
+done
 #find_lang %name --with-kde --all-name
 
 %files devel
-%_includedir/kColorPicker/
+%_includedir/kColorPicker-Qt?/
 %_libdir/cmake/kColorPicker/
+%_libdir/cmake/kColorPicker-Qt?/
 %_K5link/lib*.so
 
 %files -n %libkcolorpicker
@@ -72,6 +83,9 @@ KF5 library
 %_K5lib/libkColorPicker.so.*
 
 %changelog
+* Thu Apr 04 2024 Sergey V Turchin <zerg@altlinux.org> 0.3.1-alt1
+- new version
+
 * Mon Aug 01 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 0.2.0-alt1
 - NMU:
       + new version
