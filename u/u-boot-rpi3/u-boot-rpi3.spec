@@ -1,12 +1,12 @@
 Name: u-boot-rpi3
-Version: 2024.01
+Version: 2024.04
 Release: alt1
 
 Summary: Das U-Boot
 License: GPLv2+
 Group: System/Kernel and hardware
 
-ExclusiveArch: armh aarch64
+ExclusiveArch: aarch64
 
 Source: %name-%version-%release.tar
 
@@ -18,20 +18,14 @@ other processors, which can be installed in a boot ROM and used to
 initialize and test the hardware or to download and run application code.
 This package supports Raspberry Pi 3/4 boards.
 
-%ifarch armh
-%define rpi rpi_3_32b rpi_3_b_plus_32b rpi_4_32b
-%define img kernel7.img
-%endif
-%ifarch aarch64
-%define rpi rpi_3 rpi_3_b_plus rpi_4
+%define rpis rpi_3 rpi_3_b_plus rpi_4 rpi_arm64
 %define img kernel8.img
-%endif
 
 %prep
 %setup
 
 %build
-for board in %rpi; do
+for board in %rpis; do
 	O=build/${board}
 	%make_build DTC=%_bindir/dtc O=${O} ${board}_defconfig all
 	install -pm0644 -D ${O}/u-boot.bin out/${board}/%img
@@ -47,6 +41,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Thu Apr 04 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.04-alt1
+- 2024.04 released
+
 * Thu Jan 11 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 2024.01-alt1
 - 2024.01 released
 
