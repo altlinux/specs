@@ -5,7 +5,7 @@
 %def_without glib
 
 Name: python3-module-pyudev
-Version: 0.24.0
+Version: 0.24.1
 Release: alt1
 
 Group: System/Libraries
@@ -117,6 +117,9 @@ service found in modern linux systems.
 %endif
 
 %changelog
+* Thu Apr 04 2024 Grigory Ustinov <grenka@altlinux.org> 0.24.1-alt1
+- Automatically updated to 0.24.1.
+
 * Sat Sep 17 2022 Grigory Ustinov <grenka@altlinux.org> 0.24.0-alt1
 - 0.24.0
 
