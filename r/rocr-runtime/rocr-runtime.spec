@@ -1,14 +1,18 @@
 %define soname 1
-%define llvm_ver 16.0
+%define llvm_ver 17.0
 
-%def_with llvm_rocm
+%ifarch x86_64
+%def_without llvm_rocm
+%else
+%def_without llvm_rocm
+%endif
 
 # LTO causes segfaults (
 %define optflags_lto %nil
 
 Name: rocr-runtime
-Version: 5.7.1
-Release: alt0.1
+Version: 6.0.0
+Release: alt0.3
 License: MIT
 Summary: HSA Runtime API and runtime for ROCm
 Url: https://github.com/RadeonOpenCompute/ROCR-Runtime
@@ -18,17 +22,17 @@ Source: %name-%version.tar
 Patch0: rocr-image-bitcode-path.patch
 # https://bugs.gentoo.org/716948
 Patch1: rocr-runtime-4.3.0_no-aqlprofiler.patch
+Patch2: rocr-alt-extra-arches-support.patch
 
 BuildRequires(pre): cmake
-BuildRequires: gcc-c++ libelf-devel libdrm-devel hsakmt-rocm-devel = %version rocm-device-libs = %version xxd
+BuildRequires: gcc-c++ libelf-devel libdrm-devel hsakmt-rocm-devel >= %version rocm-device-libs >= %version xxd
 %if_with llvm_rocm
-BuildRequires: clang-rocm-devel = %version clang-rocm-tools = %version llvm-rocm-devel = %version lld-rocm = %version
+BuildRequires: clang-rocm-devel >= %version clang-rocm-tools >= %version llvm-rocm-devel >= %version lld-rocm >= %version
 %else
-BuildRequires: clang%{llvm_ver}-devel llvm%{llvm_ver}-devel lld%{llvm_ver} libmlir%{llvm_ver}-devel mlir%{llvm_ver}-tools libpolly%{llvm_ver}-devel clang%{llvm_ver}-tools clangd%{llvm_ver}
+BuildRequires: clang%{llvm_ver}-devel llvm%{llvm_ver}-devel lld%{llvm_ver}
 %endif
 
-# only x86_64 due cpuid.h requirement
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 ppc64le aarch64 loongarch64
 
 %description
 AMD's implementation of the core HSA Runtime API's.
@@ -52,6 +56,7 @@ HSA Runtime API and runtime for ROCm development headers and library.
 %setup
 %patch0 -p1
 %patch1 -p0
+%patch2 -p1
 
 %build
 %if_with llvm_rocm
@@ -81,6 +86,17 @@ pushd src
 %_libdir/cmake/hsa-runtime64
 
 %changelog
+* Mon Mar 18 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.3
+- BR: relax rocm components version requires.
+- Bootstrap with llvm.
+- Try to enable all 64-bit arches.
+
+* Thu Dec 28 2023 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.2
+- Added loongarch support (upstream PR #168).
+
+* Sun Dec 24 2023 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.1
+- rocm-6.0.0.
+
 * Mon Nov 06 2023 L.A. Kostis <lakostis@altlinux.ru> 5.7.1-alt0.1
 - rocm-5.7.1.
 

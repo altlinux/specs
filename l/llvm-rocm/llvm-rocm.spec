@@ -44,8 +44,8 @@ AutoProv: nopython
 %def_with clang
 
 Name: %llvm_name
-Version: 5.7.1
-Release: alt0.2
+Version: 6.0.2
+Release: alt0.5
 Summary: The LLVM Compiler Infrastructure with ROCm additions
 
 Group: Development/C
@@ -66,6 +66,9 @@ Patch10: llvm-cmake-pass-ffat-lto-objects-if-using-the-GNU-toolcha.patch
 Patch11: lld-compact-unwind-encoding.h.patch
 Patch12: llvm-alt-cmake-build-with-install-rpath.patch
 Patch13: clang-16-alt-rocm-device-libs-path.patch
+Patch14: clang-alt-nvvm-libdevice.patch
+# https://projects.blender.org/blender/blender/issues/112084
+Patch15: 30a3adf50e2d49dfc97c1b614d9b93638eba672d.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -93,8 +96,8 @@ BuildRequires: gcc-c++
 %requires_filesystem
 Requires: llvm >= %_llvm_version
 
-# limit to x86_64 due hsa-rocr requirements
-ExclusiveArch: x86_64
+# 64-bit only
+ExclusiveArch: x86_64 ppc64le aarch64
 
 %description
 LLVM is a compiler infrastructure designed for compile-time, link-time,
@@ -309,6 +312,8 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch11 -p1
 #%%patch12 -p1 -b .llvm-cmake-build-with-install-rpath
 %patch13 -p1 -b .clang-rocm-device-path
+%patch14 -p1
+%patch15 -p1 -R -b .fix-blender-crash
 
 # LLVM 12 and onward deprecate Python 2:
 # https://releases.llvm.org/12.0.0/docs/ReleaseNotes.html
@@ -321,6 +326,11 @@ export NPROCS="%__nprocs"
 if [ "$NPROCS" -gt 64 ]; then
 	export NPROCS=64
 fi
+# ppc64le build consumes more than 128Gb with
+# 64 workers?
+%ifarch ppc64le
+export NPROCS=48
+%endif
 %define builddir %_cmake__builddir
 %define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
 %cmake -G Ninja -S llvm \
@@ -339,7 +349,7 @@ fi
 	-DCMAKE_BUILD_RPATH:STRING='' \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
 	-DLLVM_ENABLE_PROJECTS="$PROJECTS" \
-	-DLLVM_TARGETS_TO_BUILD="AMDGPU;X86" \
+	-DLLVM_TARGETS_TO_BUILD="all" \
 	-DLLVM_ENABLE_LIBCXX:BOOL=OFF \
 	-DLLVM_ENABLE_ZLIB:BOOL=ON \
 	-DLLVM_ENABLE_FFI:BOOL=ON \
@@ -350,6 +360,11 @@ fi
 	-DCLANG_PLUGIN_SUPPORT:BOOL=ON \
 	-DCLANG_FORCE_MATCHING_LIBCLANG_SOVERSION:BOOL=ON \
 	-DENABLE_LINKER_BUILD_ID:BOOL=ON \
+%ifarch ppc64le
+	-DLLVM_DEFAULT_TARGET_TRIPLE:STRING="powerpc64le-unknown-linux-gnu" \
+%else
+	-DLLVM_DEFAULT_TARGET_TRIPLE:STRING="%{_target_cpu}-unknown-linux-gnu" \
+%endif
 	\
 	%if_with clang
 	-DCMAKE_C_COMPILER=clang \
@@ -645,6 +660,30 @@ ninja -C %builddir check-all || :
 %llvm_libdir/liblld*.a
 
 %changelog
+* Thu Apr 04 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0.2-alt0.5
+- Apply fixes:
+  + rollback 30a3adf50e2d49dfc97c1b614d9b93638eba672d to fix
+    memory allocation errors in blender
+    (https://projects.blender.org/blender/blender/issues/112084).
+
+* Wed Mar 20 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0.2-alt0.4
+- Fix arch triple dir (looks like it was broken for all arches).
+
+* Tue Mar 19 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0.2-alt0.3
+- Backported patch from llvm17:
+  + clang: fix CUDA libdevice search path.
+
+* Mon Mar 18 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0.2-alt0.2
+- Relax buildarch requires.
+- Try to build for all targets.
+- Set ExclusiveArch to 64-bit only.
+
+* Mon Mar 18 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0.2-alt0.1
+- Updated to rocm-6.0.2.
+
+* Sat Dec 23 2023 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.1
+- Updated to rocm-6.0.0.
+
 * Mon Nov 06 2023 L.A. Kostis <lakostis@altlinux.ru> 5.7.1-alt0.2
 - Remove bogus conflicts to llvm17.0-devel.
 

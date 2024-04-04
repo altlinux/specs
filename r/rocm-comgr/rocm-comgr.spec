@@ -1,11 +1,14 @@
 %define soname 2
 %define bdir lib/comgr
+%define llvm_ver 17.0
+
+%def_with llvm_rocm
 
 %define optflags_lto %nil
 
 Name: rocm-comgr
-Version: 5.7.1
-Release: alt0.1
+Version: 6.0.2
+Release: alt0.3
 License: NCSA
 Summary: AMD Code Object Manager (Comgr)
 Url: https://github.com/RadeonOpenCompute/ROCm-CompilerSupport
@@ -19,15 +22,18 @@ Patch0: %name-llvm-static.patch
 Patch1: rocm-alt-device-libs-path.patch
 # use llvm-rocm commands
 Patch2: rocm-comgr-use-llvm-rocm.patch
+# get rid of obsoleted llvm::Optional
+Patch3: 0001-llvm-change-from-Optional-to-std-optional-in-support.patch
 
 BuildRequires(pre): cmake
-BuildRequires: llvm-rocm-devel = %version clang-rocm-devel = %version clang-rocm-tools = %version lld-rocm-devel = %version
-BuildRequires: zlib-devel libstdc++-devel rocm-cmake = %version rocm-device-libs = %version ncurses-devel
+%if_with llvm_rocm
+BuildRequires: clang-rocm-devel >= %version clang-rocm-tools >= %version llvm-rocm-devel >= %version lld-rocm-devel >= %version
+%else
+BuildRequires: clang%{llvm_ver}-devel llvm%{llvm_ver}-devel lld%{llvm_ver}-devel
+%endif
+BuildRequires: zlib-devel libstdc++-devel rocm-cmake >= 6.0.0 rocm-device-libs >= 6.0.0 ncurses-devel
 
-# clang segfaults on armh
-# doesn't compile on ix86
-# and llvm-rocm exists only for x86_64
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 ppc64le aarch64
 
 %description
 The Comgr library provides APIs for compiling and inspecting AMDGPU code
@@ -56,11 +62,19 @@ AMD Code Object Manager (Comgr) develpment library and headers
 
 %build
 pushd %{bdir}
+%if_with llvm_rocm
 export ALTWRAP_LLVM_VERSION=rocm
+%else
+export ALTWRAP_LLVM_VERSION=%{llvm_ver}
+%endif
 %cmake \
     -DCMAKE_C_COMPILER=clang \
     -DCMAKE_CXX_COMPILER=clang++ \
+%if_with llvm_rocm
     -DLLD_DIR=%_prefix/lib/llvm-rocm/%_lib/cmake/lld \
+%else
+    -DLLD_DIR=%_prefix/lib/llvm-%{llvm_ver}/%_lib/cmake/lld \
+%endif
     -DCMAKE_CXX_LINKER_FLAGS='-fuse-ld=lld -Wl,--build-id=sha1' \
     -DCMAKE_SHARED_LINKER_FLAGS='-fuse-ld=lld -Wl,--build-id=sha1' \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo
@@ -80,6 +94,20 @@ pushd %{bdir}
 %_libdir/cmake/amd_comgr
 
 %changelog
+* Tue Mar 19 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0.2-alt0.3
+- Build with llvm-rocm for all 64-bit arches.
+
+* Mon Mar 18 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0.2-alt0.2
+- Build on all 64-bit arches.
+- Added patch from amd-stg-open:
+  + [PATCH] [llvm] change from Optional to std::optional
+
+* Mon Mar 18 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0.2-alt0.1
+- rocm-6.0.2.
+
+* Sun Dec 24 2023 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.1
+- rocm-6.0.0.
+
 * Mon Nov 06 2023 L.A. Kostis <lakostis@altlinux.ru> 5.7.1-alt0.1
 - rocm-5.7.1.
 - use sha1 for build-id.

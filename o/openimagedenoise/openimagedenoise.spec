@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 %ifarch x86_64
-%def_with hip
+%def_without hip
 %def_with cuda
 %filter_from_requires /libcudart\.so\.12/d
 %else
@@ -17,7 +17,7 @@
 
 Name: openimagedenoise
 Version: 2.2.2
-Release: alt1
+Release: alt2
 Summary: Intel Open Image Denoise library
 Group: Development/Other
 License: Apache-2.0
@@ -94,7 +94,7 @@ Intel Open Image Denoise library with CUDA support
 
 %prep
 %setup -n %oname-%version
-#%%patch -p2
+%patch -p2
 
 %build
 %if_with hip
@@ -163,6 +163,10 @@ chrpath -d %buildroot%_libdir/libOpenImageDenoise_device_cuda.so.%{version}
 %_libdir/cmake/*
 
 %changelog
+* Thu Mar 21 2024 L.A. Kostis <lakostis@altlinux.ru> 2.2.2-alt2
+- Apply rocm6 patch.
+- Disable HIP for ROCm version upgrade.
+
 * Sat Mar 16 2024 L.A. Kostis <lakostis@altlinux.ru> 2.2.2-alt1
 - Updated to upstream version 2.2.2.
 - aarch64: enable build (officially supported now).

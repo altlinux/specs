@@ -5,12 +5,10 @@
 %define _ninja_build ninja -vvv -j %__nprocs -C %builddir
 %define optflags_lto %nil
 %define bits 64
-# HIP requires some components which are not built
-# yet to ALT (cuda as example)
 %def_with HIP
 
 Name: clr
-Version: 5.7.1
+Version: 6.0.2
 Release: alt0.3
 License: MIT
 Summary: Radeon Open Compute Common Language Runtime
@@ -30,14 +28,23 @@ Patch1: rocclr-gcc-13-fixes.patch
 Patch2: opencl-gcc-13-fixes.patch
 Patch3: hipcc-alt-hardcore-llvm-rocm.patch
 Patch4: hipcc-alt-hipInfo-path.patch
+# https://github.com/ROCm/clr/issues/18
 # https://bugs.gentoo.org/915969
 Patch5: hip-5.7.0-set-correct-alignement.patch
+Patch6: hipcc-alt-remove-isystem.patch
+Patch7: hipamd-pch-fix-arch.patch
 # patches from developer branch
+#Patch101: 0001-SWDEV-431315-mark-stack-as-non-executable-in-hiprtc-.patch
+Patch102: 0001-SWDEV-431399-use-x86-intrinsics-only-x86-platforms.patch
+#Patch103: 0001-SWDEV-435296-Fix-sporatic-segment-fault.patch
+#Patch104: 0001-SWDEV-437817-Fix-hipMemCpy2D-case-that-erroneously-f.patch
+#Patch105: 0001-SWDEV-311271-Release-freed-memory-from-MemPools.patch
+#Patch106: 0001-SWDEV-438299-Fixed-out-of-bounds-memory-access-in-Ex.patch
 
 BuildRequires(pre): cmake /proc ninja-build
-BuildRequires: llvm-rocm-devel = %version clang-rocm-devel = %version clang-rocm-tools = %version
-BuildRequires: zlib-devel libstdc++-devel rocm-cmake = %version rocm-comgr-devel = %version hsa-rocr-devel = %version
-BuildRequires: libX11-devel libnuma-devel libGL-devel
+BuildRequires: llvm-rocm-devel = %version clang-rocm-devel = %version clang-rocm-tools = %version rocm-device-libs >= 6.0.0
+BuildRequires: zlib-devel libstdc++-devel rocm-cmake >= 6.0.0 rocm-comgr-devel = %version hsa-rocr-devel >= 6.0.0
+BuildRequires: libX11-devel libnuma-devel libGL-devel tbb-devel
 %if_with mold
 BuildRequires: mold
 %else
@@ -47,7 +54,7 @@ BuildRequires: lld-rocm
 BuildRequires: python3-module-CppHeaderParser
 %endif
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 ppc64le aarch64
 
 %description
 ROCclr is a virtual device interface that compute runtimes interact with to
@@ -72,7 +79,7 @@ Group: Development/Other
 # perl scripts rely on runtime envs
 AutoReq: yes, noperl
 Requires: clang-rocm = %version clang-rocm-tools = %version clang-rocm-libs-support = %version llvm-rocm = %version lld-rocm = %version glibc-devel gcc
-Requires: rocm-device-libs = %version rocminfo = %version hip-runtime-amd = %EVR
+Requires: rocm-device-libs >= 6.0.0 rocminfo >= 6.0.0 hip-runtime-amd = %EVR
 
 %description -n hip-devel
 HIP: Heterogenous-computing Interface for Portability development libraries and
@@ -94,6 +101,9 @@ This package provides the HIP implementation specifically for AMD platform.
 
 %build
 export ALTWRAP_LLVM_VERSION=rocm
+# we have a valid path in llvm-rocm but it's redefined during build
+# so set another env to correctly set bitcode search path again
+export HIP_DEVICE_LIB_PATH=%_datadir/amdgcn/bitcode
 %_cmake \
     -DUSE_COMGR_LIBRARY=ON \
     -DCMAKE_INSTALL_LIBDIR=%_lib \
@@ -158,9 +168,36 @@ install -p -m 755 %SOURCE4 %buildroot%_sysconfdir/profile.d/
 %endif
 
 %changelog
-* Fri Dec 29 2023 L.A. Kostis <lakostis@altlinux.ru> 5.7.1-alt0.3
-- Apply patches:
-  + hip: set correct alignment for AVX512 (gentoo bug #915969).
+* Tue Mar 19 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0.2-alt0.3
+- Fix build on ppc64le and aarch64:
+  + aarch64: apply CUDA workaround for recent glibc.
+  + all: re-apply
+    0001-SWDEV-431399-use-x86-intrinsics-only-x86-platforms patch
+
+* Tue Mar 19 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0.2-alt0.2
+- Enable build on all 64-bit arches.
+
+* Mon Mar 18 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0.2-alt0.1
+- rocm-6.0.2.
+- hip.sh: set CUDA_PATH.
+- BR: relax requires due inconsistency in ROCm components versioning.
+
+* Thu Dec 28 2023 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.3
+- hipcc: don't use isystem on linux.
+
+* Mon Dec 25 2023 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.2
+- Apply patch from gentoo for correct alignment.
+  (https://bugs.gentoo.org/915969)
+- Apply patches from develop branch:
+  + SWDEV-311271-Release-freed-memory-from-MemPools.patch
+  + SWDEV-431315-mark-stack-as-non-executable-in-hiprtc-.patch
+  + SWDEV-431399-use-x86-intrinsics-only-x86-platforms.patch
+  + SWDEV-435296-Fix-sporatic-segment-fault.patch
+  + SWDEV-437817-Fix-hipMemCpy2D-case-that-erroneously-f.patch
+  + SWDEV-438299-Fixed-out-of-bounds-memory-access-in-Ex.patch
+
+* Sun Dec 24 2023 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.1
+- rocm-6.0.0.
 
 * Mon Nov 06 2023 L.A. Kostis <lakostis@altlinux.ru> 5.7.1-alt0.2
 - hipcc: fix hipInfo search path.

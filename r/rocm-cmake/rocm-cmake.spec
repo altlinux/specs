@@ -1,5 +1,5 @@
 Name: rocm-cmake
-Version: 5.7.1
+Version: 6.0.0
 Release: alt0.1
 License: MIT
 Group: Development/C++
@@ -37,6 +37,9 @@ is required for building some of the libraries that are a part of ROCm.
 %_datadir/rocm/cmake
 
 %changelog
+* Sat Dec 23 2023 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.1
+- rocm-6.0.0.
+
 * Mon Nov 06 2023 L.A. Kostis <lakostis@altlinux.ru> 5.7.1-alt0.1
 - rocm-5.7.1 (technical rebuild).
 

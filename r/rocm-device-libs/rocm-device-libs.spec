@@ -1,8 +1,15 @@
 %define optflags_lto %nil
+%define llvm_ver 17.0
+
+%ifarch x86_64
+%def_without llvm_rocm
+%else
+%def_without llvm_rocm
+%endif
 
 Name: rocm-device-libs
-Version: 5.7.1
-Release: alt0.1
+Version: 6.0.0
+Release: alt0.2
 License: NCSA
 Summary: AMD specific device-side language runtime libraries
 Url: https://github.com/RadeonOpenCompute/ROCm-Device-Libs
@@ -14,12 +21,14 @@ Patch0: cmake-amdgcn-bitcode.patch
 Patch1: cmake-alt-install-prefix.patch
 
 BuildRequires(pre): cmake
-BuildRequires: llvm-rocm-devel = %version clang-rocm-devel = %version clang-rocm-tools = %version lld-rocm = %version
+%if_with llvm_rocm
+BuildRequires: clang-rocm-devel >= %version clang-rocm-tools >= %version llvm-rocm-devel >= %version lld-rocm >= %version
+%else
+BuildRequires: clang%{llvm_ver}-devel llvm%{llvm_ver}-devel lld%{llvm_ver}
+%endif
 BuildRequires: zlib-devel libstdc++-devel rocm-cmake ncurses-devel libffi-devel libxml2-devel
 
-# bitcode itself is arch-agnostic
-# but toolchain is x86_64-only
-ExclusiveArch: x86_64
+BuildArch: noarch
 
 %description
 Set of AMD specific device-side language runtime libraries, specifically: the
@@ -33,7 +42,11 @@ Heterogeneous Compute built-in library.
 %patch1 -p1
 
 %build
+%if_with llvm_rocm
 export ALTWRAP_LLVM_VERSION=rocm
+%else
+export ALTWRAP_LLVM_VERSION=%{llvm_ver}
+%endif
 %cmake \
     -DCMAKE_C_COMPILER=clang \
     -DCMAKE_CXX_COMPILER=clang++ \
@@ -50,6 +63,13 @@ export ALTWRAP_LLVM_VERSION=rocm
 %_datadir/cmake/AMDDeviceLibs
 
 %changelog
+* Mon Mar 18 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.2
+- Boostrap with llvm.
+- x86_64: relax llvm-rocm version requires.
+
+* Sun Dec 24 2023 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.1
+- rocm-6.0.0.
+
 * Mon Nov 06 2023 L.A. Kostis <lakostis@altlinux.ru> 5.7.1-alt0.1
 - rocm-5.7.1.
 

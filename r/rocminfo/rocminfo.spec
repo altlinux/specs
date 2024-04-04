@@ -1,32 +1,34 @@
 Name: rocminfo
-Version: 5.7.1
-Release: alt0.1
+Version: 6.0.0
+Release: alt0.3
 License: NCSA
 Summary: ROCm Application for Reporting System Info
 Url: https://github.com/RadeonOpenCompute/rocminfo
 Group: System/Configuration/Hardware
 
 Source: %name-%version.tar
+Patch: 0001-Escape-backslash-in-regular-expression-strings.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++ hsa-rocr-devel python3-devel
 Requires: pciutils
 
 # hsa-rocr is 64-bit only
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 ppc64le aarch64
 
 %description
 ROCm Application for Reporting System Info.
 
 %prep
 %setup
+%patch -p1
 # https://github.com/RadeonOpenCompute/rocminfo/issues/60
 %ifarch aarch64
 subst '/.*{ROCMINFO_CXX_FLAGS} -m64)/d' CMakeLists.txt
 %endif
 
 %build
-%cmake
+%cmake -DROCRTST_BLD_TYPE=Release
 %cmake_build
 
 %install
@@ -37,6 +39,16 @@ subst '/.*{ROCMINFO_CXX_FLAGS} -m64)/d' CMakeLists.txt
 %_bindir/*
 
 %changelog
+* Tue Mar 19 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.3
+- added python3.12 compatibility patch.
+
+* Mon Mar 18 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.2
+- Enable build on all 64-bit arches.
+
+* Sun Dec 24 2023 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.1
+- rocm-6.0.0.
+- Fix build type.
+
 * Mon Nov 06 2023 L.A. Kostis <lakostis@altlinux.ru> 5.7.1-alt0.1
 - rocm-5.7.1.
 
