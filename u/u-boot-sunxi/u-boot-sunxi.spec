@@ -1,5 +1,5 @@
 Name: u-boot-sunxi
-Version: 2024.01
+Version: 2024.04
 Release: alt1
 
 Summary: Das U-Boot
@@ -7,20 +7,14 @@ License: GPLv2+
 Group: System/Kernel and hardware
 Url: http://linux-sunxi.org/U-Boot
 
-ExclusiveArch: armh aarch64
+ExclusiveArch: aarch64
 
 Source: %name-%version-%release.tar
 
 Provides: u-boot-sunxi64 = %version-%release
 Obsoletes: u-boot-sunxi64
 
-%ifarch aarch64
-%define ATF atf-sunxi >= 2.6
-%else
-%define ATF %nil
-%endif
-
-BuildRequires: %ATF bc ccache dtc >= 1.4 flex libssl-devel
+BuildRequires: atf-sunxi >= 2.10 bc ccache dtc >= 1.4 flex libssl-devel
 BuildRequires: python3(setuptools)
 BuildRequires: python3(libfdt)
 
@@ -39,20 +33,14 @@ See http://linux-sunxi.org/Bootable_SD_card#Bootloader for details.
 export SCP=/dev/null
 export DTC=%_bindir/dtc
 
-%ifarch aarch64
 boards=$(grep -lr MACH_SUN50I configs |sed 's,^configs/\(.\+\)_defconfig,\1,')
-%else
-boards=$(grep -lr 'MACH_SUN[4-9]I' configs |sed 's,^configs/\(.\+\)_defconfig,\1,')
-%endif
 for board in $boards; do
 	O=build/${board}
-%ifarch aarch64
 	export BL31=%_datadir/atf/sun50i_a64/bl31.bin
 	grep -qF SUN50I_H6= configs/${board}_defconfig && \
 		export BL31=%_datadir/atf/sun50i_h6/bl31.bin
 	grep -qF SUN50I_H616= configs/${board}_defconfig && \
 		export BL31=%_datadir/atf/sun50i_h616/bl31.bin
-%endif
 	%make_build HOSTCC='ccache gcc' CC='ccache gcc' O=${O} ${board}_defconfig all
 	install -pm0644 -D ${O}/u-boot-sunxi-with-spl.bin out/${board}/u-boot-sunxi-with-spl.bin
 done
@@ -67,6 +55,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Thu Apr 04 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.04-alt1
+- 2024.04 released
+
 * Wed Jan 10 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 2024.01-alt1
 - 2024.01 released
 
