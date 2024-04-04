@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 45
+%define ver_major 46
 %define xdg_name org.gnome.NautilusPreviewer
 %define api_ver 1.0
 %define gst_api_ver 1.0
@@ -9,15 +9,17 @@
 %def_enable introspection
 %def_enable wayland
 %def_enable x11
+%def_enable check
+
 %define lo_bin %_bindir/libreoffice
 
 Name: sushi
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1
 
 Summary: A quick previewer for Nautilus
+License: GPL-2.0-or-later and LGPL-2.1-or-later
 Group: Graphical desktop/GNOME
-License: GPLv2+
 Url: https://gitlab.gnome.org/GNOME/sushi
 
 %if_disabled snapshot
@@ -38,7 +40,7 @@ Requires: typelib(WebKit2) = 4.1
 
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
-BuildRequires: meson %_bindir/appstream-util desktop-file-utils
+BuildRequires: meson
 BuildRequires: libgtksourceview4-devel libgjs-devel libharfbuzz-devel
 BuildRequires: libevince-devel libepoxy-devel
 BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver) >= %webkit_ver
@@ -54,6 +56,7 @@ manager.
 
 %package -n lib%name
 Summary: Library for the Sushi project
+License: LGPL-2.1-or-later
 Group: System/Libraries
 
 %description -n lib%name
@@ -61,6 +64,7 @@ Library for Sushi project.
 
 %package -n lib%name-devel
 Summary: Development files for Sushi library
+License: LGPL-2.1-or-later
 Group: Development/C
 Requires: lib%name = %EVR
 
@@ -70,6 +74,7 @@ applications that use Sushi library.
 
 %package -n lib%name-gir
 Summary: GObject introspection data for the Sushi library
+License: LGPL-2.1-or-later
 Group: System/Libraries
 Requires: lib%name = %EVR
 
@@ -78,6 +83,7 @@ GObject introspection data for the Sushi library.
 
 %package -n lib%name-gir-devel
 Summary: GObject introspection devel data for the Sushi library
+License: LGPL-2.1-or-later
 Group: System/Libraries
 BuildArch: noarch
 Requires: lib%name-gir = %EVR
@@ -95,11 +101,15 @@ GObject introspection devel data for the Sushi library.
 %meson \
 %{?_disable_wayland:-Dwayland=disabled} \
 %{?_disable_x11:-DX11=disabled}
+%nil
 %meson_build
 
 %install
 %meson_install
 %find_lang %name
+
+%check
+%__meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -114,6 +124,9 @@ GObject introspection devel data for the Sushi library.
 %doc README* AUTHORS NEWS TODO
 
 %changelog
+* Fri Apr 05 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Sun Oct 29 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1.1
 - explicitly required: typelib(GtkSource) = 4,
   typelib(WebKit2) = 4.1 (ALT #48235)
