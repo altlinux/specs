@@ -1,5 +1,5 @@
 Name: kde5-autofs-shares
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 %K5init
 
@@ -10,6 +10,7 @@ Group: Graphical desktop/KDE
 BuildArch: noarch
 
 Requires: kf5-filesystem kde5-kdialog autofs
+Requires: samba-client
 
 Source: %name-%version.tar
 
@@ -23,26 +24,30 @@ This plugin allows mounting samba shares from Dolphin
 
 %install
 install -D -m 0644 autofs-shares-manage.desktop %buildroot/%_K5srv/ServiceMenus/autofs-shares-manage.desktop
-install -D -m 0644 autofs-shares-mount.desktop %buildroot/%_K5start/autofs-shares-mount.desktop
-install -D -m 0755 bin/kde5-autofs-shares-manage %buildroot/%_bindir/kde5-autofs-shares-manage
-install -D -m 0755 bin/kde5-autofs-shares-mount %buildroot/%_bindir/kde5-autofs-shares-mount
+install -D -m 0644 autofs-shares-mount.desktop %buildroot/%_K5start/kde-autofs-shares-mount.desktop
+install -D -m 0755 bin/kde-autofs-shares-manage %buildroot/%_bindir/kde-autofs-shares-manage
+install -D -m 0755 bin/kde-autofs-shares-mount %buildroot/%_bindir/kde-autofs-shares-mount
 # translations
 find po/* -type d | \
 while read d
 do
     lang=`basename $d`
     mkdir -p %buildroot/%_datadir/locale/$lang/LC_MESSAGES
-    msgfmt -o %buildroot/%_datadir/locale/$lang/LC_MESSAGES/%name.mo $d/%name.po
+    msgfmt -o %buildroot/%_datadir/locale/$lang/LC_MESSAGES/kde-autofs-shares.mo $d/kde-autofs-shares.po
 done
 
-%find_lang %name
+%find_lang %name --all-name
 
 %files -f %name.lang
-%_K5start/autofs-shares-mount.desktop
+%_K5start/kde-autofs-shares-mount.desktop
 %_K5srv/ServiceMenus/autofs-shares-manage.desktop
-%_bindir/kde5-autofs-shares-*
+%_bindir/kde-autofs-shares-*
 
 %changelog
+* Thu Apr 04 2024 Sergey V Turchin <zerg@altlinux.org> 0.2.4-alt1
+- rename files for more versatility
+- requires samba-client for samba shares (closes: 49851)
+
 * Mon Oct 02 2023 Sergey V Turchin <zerg@altlinux.org> 0.2.3-alt1
 - update russian translation (closes: 47635)
 - fix autostart desktop-file permissions (closes: 47723)
