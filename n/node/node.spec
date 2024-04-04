@@ -32,7 +32,7 @@
 %define c_ares_version 1.27.0
 
 # check deps/llhttp/include/llhttp.h
-%define llhttp_version 6.0.11
+%define llhttp_version 9.2.1
 # to use internal llhttp
 %def_without systemhttpparser
 
@@ -80,7 +80,7 @@
 %def_with nodejs_abi
 
 Name: node
-Version: %major.0
+Version: %major.1
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -510,6 +510,11 @@ rm -rv %buildroot/usr/share/doc/node/lldb_commands.py
 %endif
 
 %changelog
+* Thu Apr 04 2024 Vitaly Lipatov <lav@altlinux.ru> 20.12.1-alt1
+- 2024-04-03, Version 20.12.1 'Iron' (LTS), @RafaelGSS
+- CVE-2024-27983 - Assertion failed in node::http2::Http2Session::~Http2Session() leads to HTTP/2 server crash- (High)
+- CVE-2024-27982 - HTTP Request Smuggling via Content Length Obfuscation - (Medium)
+
 * Thu Mar 28 2024 Vitaly Lipatov <lav@altlinux.ru> 20.12.0-alt1
 - 2024-03-26, Version 20.12.0 'Iron' (LTS), @richardlau
 - set npm >= 10.5.0, c-ares >= 1.27.0, zlib >= 1.3.01
