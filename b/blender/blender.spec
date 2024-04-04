@@ -12,16 +12,22 @@
 %endif
 
 %ifarch x86_64
+%def_with cuda
 %def_with hip
 # hiprt depends on obsoleted rocm
 # version and segfaults
 # https://github.com/GPUOpen-LibrariesAndSDKs/HIPRTSDK/issues/18
 %def_without hiprt
-%def_with cuda
 %else
+%def_without cuda
 %def_without hip
 %def_without hiprt
-%def_without cuda
+%endif
+
+%ifarch x86_64 ppc64le aarch64
+%def_with mold
+%else
+%def_without mold
 %endif
 
 %ifarch x86_64 aarch64
@@ -34,25 +40,17 @@
 %def_without oidn
 %endif
 
-%ifarch x86_64 ppc64le
-%def_with lld
-# lld doesn't know about gcc lto=auto flags
-# and gcc doesn't know what to do with lto=thin
-%define optflags_lto %nil
-%else
-%def_without lld
-%endif
-
 %ifarch %e2k
 # error: cpio archive too big - 4690M
 %define optflags_debug -g0
 %endif
 
+# https://devtalk.blender.org/t/does-blender-use-jemalloc-and-or-tbb/13388/10
 %def_with jemalloc
 
 Name: blender
-Version: 4.0.2
-Release: alt0.8
+Version: 4.1.0
+Release: alt0.1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -80,20 +78,20 @@ Patch26: blender-4.0.1-alt-pcre.patch
 Patch27: blender-4.0.1-suse-reproducible.patch
 Patch28: blender-4.0.2-alt-hiprt-enable.patch
 Patch29: blender-4.0.2-alt-fix-manpage.patch
+# needed for static clang libs
 Patch30: blender-alt-fix-clang-linking.patch
-Patch31: blender-3.6.1-py312-pylongobject.patch
+Patch31: blender-alt-osl-shader-dir.patch
+# needed for dynamic clang libs
+Patch32: blender-4.1-alt-use-libclang.patch
 
 # upstream fixes to merge
-Patch100: 0001-Cycles-add-ROCm-6-compatibility-for-HIP.patch
-# https://projects.blender.org/blender/blender/pulls/118328
-Patch101: blender-add-pgl-0.6.0-support.patch
-Patch102: 0001-Cycles-update-OSL-to-work-with-version-1.13.5.patch
 
 Patch2000: blender-e2k-support.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-filesystem-devel boost-locale-devel boost-wave-devel boost-python3-devel
 BuildRequires: cmake gcc-c++
+BuildRequires: ninja-build /proc
 BuildRequires: libGLEW-devel libXi-devel
 BuildRequires: libavdevice-devel libavformat-devel libavfilter-devel libswresample-devel
 BuildRequires: libfftw3-devel libjack-devel libopenal-devel libsndfile-devel
@@ -115,7 +113,6 @@ BuildRequires: libfreetype-devel
 BuildRequires: openjpeg-tools2.0
 BuildRequires: alembic-devel
 BuildRequires: openvdb-devel libblosc-devel
-BuildRequires: llvm-devel clang-devel
 BuildRequires: libgomp-devel
 BuildRequires: libgmp-devel libgmpxx-devel
 BuildRequires: libharu-devel
@@ -146,10 +143,6 @@ BuildRequires: /usr/bin/doxygen
 BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink python3-module-sphinx_rtd_theme
 %endif
 
-%if_with lld
-BuildRequires: lld
-%endif
-
 %if_with hip
 BuildRequires: hip-devel
 %endif
@@ -175,6 +168,10 @@ BuildRequires: nvidia-cuda-devel
 
 %if_with oidn
 BuildRequires: openimagedenoise-devel
+%endif
+
+%if_with mold
+BuildRequires: mold
 %endif
 
 %add_python3_path %_datadir/%name/scripts
@@ -292,13 +289,11 @@ This package contains binaries for Nvidia GPUs to use with CUDA.
 %patch28 -p1
 %endif
 %patch29 -p1
-%patch30 -p1
+#%%patch30 -p1
 %patch31 -p1
+#%%patch32 -p1
 
 # upstream patches
-%patch100 -p1
-%patch101 -p1
-%patch102 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -327,15 +322,7 @@ popd
 # needed due to non-standard location of pcre.h header
 %add_optflags "-I%_includedir/pcre"
 
-%add_optflags -fPIC -funsigned-char -fno-strict-aliasing
-
-%ifarch aarch64
-# limit build jobs on aarch64
-if [ %__nprocs -gt 48 ] ; then
-	export NPROCS=48
-fi
-%endif
-%cmake \
+%cmake -G Ninja \
 %if_with hip
 	-DWITH_CYCLES_HIP_BINARIES:BOOL=ON \
 %endif #hip
@@ -357,8 +344,6 @@ fi
 	-DWITH_CODEC_FFMPEG=ON \
 	-DWITH_CXX_GUARDEDALLOC=OFF \
 	-DWITH_INSTALL_PORTABLE=OFF \
-	-DWITH_LLVM=ON \
-	-DWITH_CLANG=ON \
 	-DWITH_PYTHON_SAFETY=OFF \
 	-DWITH_OPENMP=ON \
 	-DWITH_OPENCOLLADA=ON \
@@ -373,6 +358,9 @@ fi
 	-DWITH_USD:BOOL=ON \
 %else
 	-DWITH_USD:BOOL=OFF \
+%endif
+%if_with mold
+	-DWITH_LINKER_MOLD=YES \
 %endif
 	-DWITH_OPENCOLORIO=ON \
 	-DWITH_OPENVDB:BOOL=ON \
@@ -391,16 +379,10 @@ fi
 	-DWITH_ASSERT_ABORT:BOOL=OFF \
 	-DWITH_LINKER_GOLD:BOOL=OFF \
 	-DWITH_OPENSUBDIV:BOOL=ON \
-%if_with lld
-	-DWITH_LINKER_LLD:BOOL=ON \
-	-DCMAKE_EXE_LINKER_FLAGS:STRING="-Wl,--build-id=sha1,--undefined-version" \
-	-DCMAKE_SHARED_LINKER_FLAGS:STRING="-Wl,--build-id=sha1,--undefined-version" \
-	-DCMAKE_MODULE_LINKER_FLAGS:STRING="-Wl,--build-id=sha1,--undefined-version" \
-%endif
 	-DOPENEXR_INCLUDE_DIRS=%_includedir/OpenEXR \
 	%nil
 
-%cmake_build
+ninja-build -v -j %__nprocs -C %_cmake__builddir
 
 %if_with docs
 pushd doc/doxygen
@@ -452,6 +434,24 @@ popd
 %endif
 
 %changelog
+* Wed Apr 03 2024 L.A. Kostis <lakostis@altlinux.ru> 4.1.0-alt0.1
+- Update to 4.1.0:
+  + Rediffed/update -alt patches.
+  + Drop obsoleted/merged patches.
+  + Link with mold on supported 64-bit platforms.
+  + Use ninja-build (~7-8%% faster on x86_64).
+  + Enable LTO.
+  + Cycles: disable HIP on aarch64/ppc64le (will enable after ROCm upgrade).
+  + Cleanup .spec.
+
+* Sun Mar 17 2024 L.A. Kostis <lakostis@altlinux.ru> 4.0.2-alt0.9
+- Fix OSL shader dir.
+- Cycles: enable HIP on aarch64.
+- Added upstream patches from blender-v4.1-release:
+  + Cycles: Remove and update deprecated compiler options for HIP
+  + Fix #112983: Cycles HIP-RT crash on deleting all objects
+  + Fix: Cycles HIP incorrect rendering of clip image textures
+
 * Sat Mar 16 2024 L.A. Kostis <lakostis@altlinux.ru> 4.0.2-alt0.8
 - aarch64: build with openimagedenoise support.
 
