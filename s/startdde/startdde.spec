@@ -2,7 +2,7 @@
 %def_without dlightdm
 
 Name: startdde
-Version: 6.0.13
+Version: 6.0.14
 Release: alt1
 Epoch: 1
 Summary: Starter of deepin desktop environment
@@ -69,6 +69,9 @@ rm -rf %buildroot%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 %endif
 
 %changelog
+* Thu Apr 04 2024 Leontiy Volodin <lvol@altlinux.org> 1:6.0.14-alt1
+- New version 6.0.14.
+
 * Thu Feb 29 2024 Leontiy Volodin <lvol@altlinux.org> 1:6.0.13-alt1
 - New version 6.0.13.
 - Used system lightdm instead lightdm-deepin-greeter again (ALT #49028).
