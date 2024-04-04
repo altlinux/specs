@@ -1,19 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libcppkafka
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 Summary: High level C++ wrapper for rdkafka
 Group: Development/C++
 License: BSD-2-Clause
 Url: https://github.com/mfontanini/cppkafka
-
-# https://github.com/mfontanini/cppkafka
 Source: %name-%version.tar
-Patch0: %name-alt-install.patch
 
 BuildRequires: gcc-c++ rpm-macros-cmake boost-devel cmake librdkafka-devel
-# missing from librdkafka-devel
 BuildRequires: libssl-devel zlib-devel
 
 %description
@@ -32,7 +28,6 @@ Development environment for %name, %summary
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 %cmake
@@ -53,6 +48,9 @@ Development environment for %name, %summary
 %_libdir/cmake/*
 
 %changelog
+* Thu Apr 04 2024 Anton Farygin <rider@altlinux.ru> 0.4.1-alt1
+- 0.4.1
+
 * Sat Nov 27 2021 Anton Farygin <rider@altlinux.ru> 0.4.0-alt1
 - 0.4.0
 
