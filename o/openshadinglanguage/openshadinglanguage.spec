@@ -5,7 +5,11 @@
 
 %define optflags_lto %nil
 
+%ifarch %e2k
+%define llvm_ver 13.0
+%else
 %define llvm_ver 17.0
+%endif
 
 %ifnarch x86_64 ppc64le
 %def_without lld
@@ -18,7 +22,7 @@
 
 Name: openshadinglanguage
 Version: 1.13.7.0
-Release: alt0.2
+Release: alt0.2.1
 Summary: Advanced shading language for production GI renderers
 Group: Development/Other
 License: BSD-3-Clause
@@ -203,6 +207,9 @@ rm -f %buildroot%_prefix/cmake/llvm_macros.cmake
 %python3_sitelibdir/*.so
 
 %changelog
+* Sun Mar 31 2024 Michael Shigorin <mike@altlinux.org> 1.13.7.0-alt0.2.1
+- E2K: llvm13.0 so far.
+
 * Fri Mar 22 2024 L.A. Kostis <lakostis@altlinux.ru> 1.13.7.0-alt0.2
 - batched: disable AVX2 (as not every hardware supports it).
 
