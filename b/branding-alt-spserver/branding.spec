@@ -18,8 +18,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 10
-Release: alt9
+Version: 10.2
+Release: alt2
 Epoch: 1
 Url: https://altsp.su
 
@@ -35,7 +35,7 @@ Source: branding.tar
 
 Group: Graphics
 Summary: System/Base
-License: GPLv2+
+License: GPL-2.0-or-later
 
 %define distro_name ALT SP Server
 %define distro_name_ru Альт СП Сервер
@@ -51,7 +51,7 @@ Group:   System/Configuration/Boot and Init
 Summary: Graphical boot logo for grub2
 Summary(ru_RU.UTF-8): Тема для экрана выбора вариантов загрузки (grub2)
 BuildArch: noarch
-License: GPLv2+
+License: GPL-2.0-or-later
 
 Requires(pre):    coreutils
 Provides:  design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
@@ -93,7 +93,7 @@ This package contains graphics for boot process for %distro_name
 %package alterator
 Summary: Design for alterator for %distro_name
 Summary(ru_RU.UTF-8): Тема для "Центра управления системой" и QT для дистрибутива %distro_name_ru
-License: GPL
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
 BuildArch: noarch
 Provides: design-alterator-browser-%theme  branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt
@@ -138,7 +138,7 @@ This package contains some graphics for %distro_name design.
 BuildArch: noarch
 Summary:  %distro_name release file
 Summary(ru_RU.UTF-8): Описание дистрибутива %distro_name_ru
-License:  GPL
+License:  GPL-2.0-or-later
 Group:    System/Configuration/Other
 Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme  branding-alt-%theme-release
 Obsoletes: %obsolete_list
@@ -286,6 +286,10 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Apr 04 2024 Anton Midyukov <antohami@altlinux.org> 1:10.2-alt2
+- bump version to 10.2
+- convert License fields to SPDX format
+
 * Mon Mar 04 2024 Anton Midyukov <antohami@altlinux.org> 1:10-alt9
 - browser-qt: update icons from branding-alt-spworkstation
 
