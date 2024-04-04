@@ -1,8 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 
+# To run the database build test the clickhouse-server package
+# is needed.
+%ifarch x86_64 aarch64
+%def_with dbtest
+%else
+%def_without dbtest
+%endif
+
 Name:    auditd-plugin-clickhouse-lite
-Version: 0.1.7
-Release: alt1
+Version: 0.1.8
+Release: alt2
 Summary: A lightweight plugin for auditd daemon to send audit data to a Clickhouse database
 Group:   Monitoring
 License: GPLv3+
@@ -15,6 +23,11 @@ BuildRequires: boost-complete
 BuildRequires: libclickhouse-cpp-devel
 BuildRequires: libaudit-devel
 BuildRequires: bats /proc
+
+%if_with dbtest
+BuildRequires: pytest3 python3(clickhouse_test) clickhouse-server
+BuildRequires: python3(clickhouse_driver)
+%endif
 
 # audit 3.0 has changed the location for configs
 Requires: audit >= 3.0-alt1
@@ -48,7 +61,13 @@ install -D -m0755 clickhouse-audit-export \
 		%buildroot/%_bindir/clickhouse-audit-export
 
 %check
-BUILD=%_cmake__builddir ./run-tests.sh normal bench
+CLICKHOUSE_SERVER_CLEANUP=1 BUILD=%_cmake__builddir \
+    ./run-tests.sh normal \
+                   chunked \
+		   bench \
+%if_with dbtest
+		   db
+%endif
 
 %files
 %_prefix/libexec/%name
@@ -62,6 +81,18 @@ BUILD=%_cmake__builddir ./run-tests.sh normal bench
 %_bindir/clickhouse-audit-export
 
 %changelog
+* Thu Apr 04 2024 Paul Wolneykien <manowar@altlinux.org> 0.1.8-alt2
+- Disable database build test on arches where clickhouse-server is
+  not available.
+
+* Thu Apr 04 2024 Paul Wolneykien <manowar@altlinux.org> 0.1.8-alt1
+- Added test checking "build_test.log" is written and processed.
+- Added test checking "test.log" is written to AuditDataRaw table.
+- Added tests that run against a real ClickHouse instance with
+  the help of python3-module-clickhouse-test.
+- Load init_db.sql statement-by-statement, i. e.: allow to place
+  a multi-statement SQL script there.
+
 * Fri Sep 22 2023 Paul Wolneykien <manowar@altlinux.org> 0.1.7-alt1
 - Added tests to check the fix.
 - Fixed various potential loss of data.
