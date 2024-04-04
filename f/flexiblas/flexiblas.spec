@@ -3,7 +3,7 @@
 
 %global major_version 3
 %global minor_version 4
-%global patch_version 1
+%global patch_version 2
 
 Name: flexiblas
 Version: %major_version.%minor_version.%patch_version
@@ -225,6 +225,9 @@ make -C build64 test
 %endif
 
 %changelog
+* Sat Mar 30 2024 Anton Farygin <rider@altlinux.ru> 3.4.2-alt1
+- 3.4.2
+
 * Wed Feb 14 2024 Anton Farygin <rider@altlinux.ru> 3.4.1-alt1
 - 3.4.1
 
