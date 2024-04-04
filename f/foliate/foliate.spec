@@ -3,10 +3,12 @@
 %define ver_major 3.1
 %define rdn_name com.github.johnfactotum.Foliate
 # https://github.com/johnfactotum/foliate-js.git
-%define fjs_ver 35f749d
+%define fjs_ver 04b8789
+
+%def_enable check
 
 Name: foliate
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A simple and modern GTK eBook reader
@@ -27,6 +29,7 @@ BuildArch: noarch
 %define adw_api_ver 1
 %define adw_ver 1.4
 %define webkit_api_ver 6.0
+%define webkit_ver 2.40.1
 %define tracker_api_ver 3.0
 %define gjs_ver 1.76
 %define iso_codes_ver 3.57
@@ -49,10 +52,11 @@ Requires: typelib(Gst) = 1.0
 Requires: typelib(WebKit) = %webkit_api_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
-BuildRequires: meson desktop-file-utils /usr/bin/appstream-util
+BuildRequires: meson
 BuildRequires: libgjs-devel iso-codes-devel >= %iso_codes_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
-BuildRequires: pkgconfig(webkitgtk-6.0)
+BuildRequires: pkgconfig(webkitgtk-6.0) >= %webkit_ver
+%{?_enable_check:BuildRequires: desktop-file-utils /usr/bin/appstreamcli /usr/bin/glib-compile-schemas}
 
 %description
 Foliate is a simple and modern GTK eBook reader with following features:
@@ -77,6 +81,9 @@ mv %name-js-%fjs_ver/* src/%name-js
 %meson_install
 %find_lang --with-gnome --output=%name.lang %name %rdn_name
 
+%check
+%__meson_test
+
 %files -f %name.lang
 %_bindir/%name
 %_desktopdir/%rdn_name.desktop
@@ -89,6 +96,9 @@ mv %name-js-%fjs_ver/* src/%name-js
 
 
 %changelog
+* Thu Apr 04 2024 Yuri N. Sedunov <aris@altlinux.org> 3.1.1-alt1
+- 3.1.1
+
 * Mon Jan 08 2024 Yuri N. Sedunov <aris@altlinux.org> 3.1.0-alt1
 - 3.1.0
 
