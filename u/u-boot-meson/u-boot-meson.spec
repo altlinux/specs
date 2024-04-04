@@ -1,5 +1,5 @@
 Name: u-boot-meson
-Version: 2024.01
+Version: 2024.04
 Release: alt1
 
 Summary: Das U-Boot
@@ -40,6 +40,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Thu Apr 04 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.04-alt1
+- 2024.04 released
+
 * Fri Jan 12 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 2024.01-alt1
 - 2024.01 released
 
