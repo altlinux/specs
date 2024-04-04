@@ -5,7 +5,7 @@
 
 Name: kde5-plasma-addon-ddcci
 Version: 0.1.10
-Release: alt1
+Release: alt2
 Summary: KDE Plasma widget to adjust the brightness of multiple external monitors
 License: MIT
 Group: Graphical desktop/KDE
@@ -23,6 +23,7 @@ BuildRequires: python3-module-poetry
 BuildRequires: python3-module-pytest
 %endif
 
+Requires: ddcutil
 Requires: python3-module-%py_module_name = %EVR
 
 %description
@@ -67,5 +68,8 @@ cd backend && %pyproject_run_pytest
 %python3_sitelibdir/%{pyproject_distinfo %py_module_name}
 
 %changelog
+* Thu Apr 04 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.1.10-alt2
+- Added requires to ddcutil (closes: #49894).
+
 * Sun Mar 31 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.1.10-alt1
 - Initial build for ALT.
