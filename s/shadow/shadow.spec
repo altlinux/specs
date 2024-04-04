@@ -1,5 +1,5 @@
 Name: shadow
-Version: 4.14.6
+Version: 4.14.7
 Release: alt1
 Epoch: 1
 
@@ -483,6 +483,12 @@ rm -f %save_login_defs_file
 %endif
 
 %changelog
+* Thu Apr 04 2024 Mikhail Efremov <sem@altlinux.org> 1:4.14.7-alt1
+- tcb: Use shadowlog variables.
+- Dropped duplicate chmod() call.
+- Dropped most of shadow-4.0.4.1-alt-progname.patch.
+- Updated to 4.14.7.
+
 * Wed Mar 06 2024 Mikhail Efremov <sem@altlinux.org> 1:4.14.6-alt1
 - Updated to 4.14.6.
 
