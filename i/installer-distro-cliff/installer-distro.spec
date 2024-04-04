@@ -1,11 +1,11 @@
 %define distro cliff
 Name: installer-distro-%distro
-Version: 10.0
-Release: alt8
+Version: 10.2
+Release: alt1
 
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
-BuildRequires: alterator-officer
+#BuildRequires: alterator-officer
 Summary: Installer files for the Cliff distro
 
 Source: %name-%version.tar
@@ -15,7 +15,7 @@ Installer files for Cliff distro.
 
 %package common
 Summary: Cliff installer common files
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
 
 %description common
@@ -24,7 +24,7 @@ Needed also for alterator-setup.
 
 %package stage2
 Summary: Cliff installer stage2 files
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
 Provides: installer-%distro-stage2 = %name-%version
 Requires: installer-stage2
@@ -43,13 +43,13 @@ Cliff installer stage2 files.
 
 %package stage3
 Summary: Cliff installer stage3 files
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
 Provides: installer-%distro-stage3 = %name-%version
 Requires: installer-stage3
 #modules
 Requires: alterator-users
-Requires: alterator-officer
+#Requires: alterator-officer
 Requires: alterator-root
 Requires: alterator-net-eth dhcpcd
 Requires: alterator-net-general
@@ -73,7 +73,7 @@ cp -a * %buildroot%install2dir/
 cp -a steps.d/* %buildroot%install2dir/steps 
 
 %files common
-%install2dir/steps/*.desktop
+#%%install2dir/steps/users-officer.desktop
 %install2dir/*.d/*
 
 %files stage2
@@ -85,6 +85,11 @@ cp -a steps.d/* %buildroot%install2dir/steps
 %files stage3
 
 %changelog
+* Thu Apr 04 2024 Anton Midyukov <antohami@altlinux.org> 10.2-alt1
+- remove postinstall.d/remove 01-remove-installer-server-pkgs.sh
+- remove dependency on alterator-officer
+- convert License fields to SPDX format
+
 * Wed Feb 28 2024 Anton Midyukov <antohami@altlinux.org> 10.0-alt8
 - ghost lists of services
 
