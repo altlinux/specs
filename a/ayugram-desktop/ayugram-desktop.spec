@@ -24,7 +24,7 @@
 %def_with scudo
 
 Name: ayugram-desktop
-Version: 4.15.2
+Version: 4.16
 Release: alt1
 
 Summary: Desktop Telegram client with good customization and Ghost mode
@@ -227,16 +227,20 @@ Requires: dbus
 
 
 %description
+AyuGram is a Telegram client with a very pleasant features. 
+
 Telegram is a messaging app with a focus on speed and security, it's super-fast, simple and free.
 You can use Telegram on all your devices at the same time - your messages
 sync seamlessly across any number of your phones, tablets or computers.
 
-With Telegram, you can send messages, photos, videos and files of any type (doc, zip, mp3, etc),
-as well as create groups for up to 1000 people or channels for broadcasting to unlimited audiences.
-You can write to your phone contacts and find people by their usernames.
-As a result, Telegram is like SMS and email combined - and can take care of all your personal
-or business messaging needs.
+AyuGram pretends to be an official application to Telegram.
+If you look at the list of sessions, you'll see yourself using a regular Telegram rather than AyuGram.
+Generally, developer ToS apply only to developers, by restricting their application keys.
+But since we're using official ones, Telegram can't block our client.
+And since it's applied only to developers,
+they can't ban you, except if you're doing bad things that violate user ToS. 
 
+We are not responsible for the possible blocking of your account. Use the client at your own risk.
 
 %prep
 %setup -a1
@@ -391,5 +395,8 @@ ln -s %name %buildroot%_bindir/%oname
 %doc README.md
 
 %changelog
+* Thu Apr 04 2024 Vitaly Lipatov <lav@altlinux.ru> 4.16-alt1
+- new version 4.16 (with rpmrb script)
+
 * Thu Mar 28 2024 Vitaly Lipatov <lav@altlinux.ru> 4.15.2-alt1
 - initial build for ALT Sisyphus
