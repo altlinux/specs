@@ -1,26 +1,21 @@
 %define libname libpci
+%define soname 3
 
 Name: pciutils
-Version: 3.10.0
+Version: 3.11.1
 Release: alt1
 
 Summary: Linux PCI utilities
 License: GPLv2
 Group: System/Kernel and hardware
 
-Url: http://mj.ucw.cz/sw/pciutils/
+Url: https://mj.ucw.cz/sw/pciutils/
+VCS: https://github.com/pciutils/pciutils
 # git://git.kernel.org/pub/scm/utils/pciutils/pciutils.git
 Source: %name-%version.tar
 
 Requires: pciids
-Requires: %libname = %version-%release
-BuildRequires(pre):rpm-build-ubt
-
-# http://www.kernel.org/pub/software/utils/pciutils/
-# http://git.kernel.org/?p=utils/pciutils/pciutils.git
-# git://git.kernel.org/pub/scm/utils/pciutils/pciutils.git
-# http://git.ucw.cz/gitweb/?p=pciutils.git
-# git://git.ucw.cz/pciutils.git
+Requires: %libname = %EVR
 
 Summary(ru_RU.UTF-8): Утилиты для работы с PCI в Linux
 Summary(uk_UA.UTF-8): Утиліти для роботи з PCI в Linux
@@ -48,9 +43,8 @@ devices connected to the PCI bus.
 %package -n %libname-devel
 Summary: Linux PCI development library
 Group: Development/C
-Requires: %libname = %version-%release
-Provides: %name-devel = %version-%release
-Obsoletes: %name-devel < 2.99.1 %name-devel-static < 2.99.1
+Requires: %libname = %EVR
+Provides: %name-devel = %EVR
 
 %description -n %libname-devel
 This package contains PCI library headers.
@@ -77,14 +71,17 @@ This package contains PCI library headers.
 	install install-lib
 
 %files
+%doc README TODO ChangeLog *.lsm
 %_bindir/lspci
 %_sbindir/setpci
+%_sbindir/pcilmr
 %_man8dir/lspci*
 %_man8dir/setpci*
-%doc README TODO ChangeLog *.lsm
+%_man8dir/pcilmr*
 
 %files -n %libname
-%_libdir/*.so.*
+%_libdir/*.so.%soname
+%_libdir/*.so.%soname.*
 
 %files -n %libname-devel
 %_libdir/*.so
@@ -93,6 +90,9 @@ This package contains PCI library headers.
 %_man7dir/pcilib*
 
 %changelog
+* Thu Apr 04 2024 Anton Farygin <rider@altlinux.ru> 3.11.1-alt1
+- 3.11.1
+
 * Sun Jun 04 2023 Anton Farygin <rider@altlinux.ru> 3.10.0-alt1
 - 3.10.0
 
