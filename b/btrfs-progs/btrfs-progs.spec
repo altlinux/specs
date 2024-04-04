@@ -7,7 +7,7 @@
 %endif
 
 Name: btrfs-progs
-Version: 6.7.1
+Version: 6.8
 Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
@@ -138,6 +138,9 @@ vm-run --sbin --udevd --kvm=cond make V=1 TEST_LOG=dump test-mkfs
 %_includedir/*
 
 %changelog
+* Mon Apr 01 2024 Anton Farygin <rider@altlinux.ru> 6.8-alt1
+- 6.7.1 -> 6.8
+
 * Tue Mar 05 2024 Anton Farygin <rider@altlinux.ru> 6.7.1-alt1
 - 6.7.1
 
