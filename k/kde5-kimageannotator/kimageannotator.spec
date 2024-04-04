@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 0.7.1
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -45,7 +45,7 @@ developing applications that use %name.
 %package -n %libkimageannotator
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n %libkimageannotator
 KF5 library
 
@@ -78,6 +78,8 @@ done
 
 %files common -f %name.lang
 %doc LICENSE* CHANGELOG.md README.md
+%dir %_datadir/kImageAnnotator/
+%dir %_datadir/kImageAnnotator/translations/
 
 %files devel
 %_includedir//kImageAnnotator-Qt?/
@@ -90,6 +92,10 @@ done
 %_K5lib/libkImageAnnotator.so.*
 
 %changelog
+* Thu Apr 04 2024 Sergey V Turchin <zerg@altlinux.org> 0.7.1-alt2
+- update requires
+- package data dirs
+
 * Thu Apr 04 2024 Sergey V Turchin <zerg@altlinux.org> 0.7.1-alt1
 - new version
 
