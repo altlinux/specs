@@ -21,7 +21,7 @@
 %def_with scudo
 
 Name: telegram-desktop
-Version: 4.16.0
+Version: 4.16.2
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -42,6 +42,8 @@ Patch5: telegram-desktop-fix-missed-cstdint.patch
 Patch7: telegram-desktop-fix-build-with-make.patch
 Patch8: telegram-desktop-use-external-gsl.patch
 Patch9: telegram-desktop-try-fix-circular-deps.patch
+# FIXME: it is very strange, this fix needed only for local build
+Patch10: telegram-desktop-fix-protoc.patch
 
 # lacks few build deps, still
 # [ppc64le] E: Couldn't find package libdispatch-devel
@@ -237,6 +239,7 @@ or business messaging needs.
 %patch1 -p2
 %patch2 -p2
 %patch5 -p2
+%patch10 -p1
 
 %if_without gsl
 test -d /usr/share/cmake/Microsoft.GSL/ && echo "External Microsoft GSL is incompatible with buggy libstd++ (see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106547), remove libmicrosoft-gsl-devel to correct build" && exit 1
@@ -293,6 +296,7 @@ export PKG_CONFIG_PATH=%_libdir/ffmpeg-static/%_lib/pkgconfig/
 %if_with clang
 %remove_optflags -frecord-gcc-switches
 export CC=clang
+export CXX=clang++
 %endif
 
 # due precompiled headers
@@ -379,6 +383,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Thu Apr 04 2024 Vitaly Lipatov <lav@altlinux.ru> 4.16.2-alt1
+- new version 4.16.2 (with rpmrb script)
+
 * Tue Apr 02 2024 Vitaly Lipatov <lav@altlinux.ru> 4.16.0-alt1
 - new version 4.16.0 (with rpmrb script)
 
