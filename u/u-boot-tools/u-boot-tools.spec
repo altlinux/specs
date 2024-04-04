@@ -1,5 +1,5 @@
 Name: u-boot-tools
-Version: 2024.01
+Version: 2024.04
 Release: alt1
 
 Summary: Das U-Boot
@@ -37,6 +37,9 @@ ln -s fw_printenv %buildroot%_bindir/fw_setenv
 %_bindir/*
 
 %changelog
+* Thu Apr 04 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.04-alt1
+- 2024.04 released
+
 * Wed Jan 10 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 2024.01-alt1
 - 2024.01 released
 
