@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fprintd
-Version: 1.94.2
-Release: alt2
+Version: 1.94.3
+Release: alt1
 
 Summary: D-Bus service for Fingerprint reader access
 License: GPLv2+
@@ -25,8 +25,6 @@ BuildRequires: libpolkit-devel
 BuildRequires: libsystemd-devel
 BuildRequires: libdbus-glib-devel
 BuildRequires: libfprint2-gir-devel
-BuildRequires: libgirepository1.0-devel
-BuildRequires: gobject-introspection-devel
 
 BuildRequires: gtk-doc
 BuildRequires: intltool
@@ -93,7 +91,7 @@ install -m0644 -p %SOURCE1 %buildroot%_sysconfdir/pam.d/
 install -m0644 -p %SOURCE2 %buildroot%_sysconfdir/pam.d/
 
 %check
-%meson_test
+%meson_test -j1
 
 %files -f %name.lang
 %doc README COPYING AUTHORS TODO
@@ -119,6 +117,12 @@ install -m0644 -p %SOURCE2 %buildroot%_sysconfdir/pam.d/
 %_bindir/%name-*
 
 %changelog
+* Thu Apr 04 2024 Egor Ignatov <egori@altlinux.org> 1.94.3-alt1
+- 1.94.3
+
+* Wed Apr 03 2024 Egor Ignatov <egori@altlinux.org> 1.94.2-alt3
+- Remove unnecessary BRs
+
 * Sun Mar 10 2024 Egor Ignatov <egori@altlinux.org> 1.94.2-alt2
 - update Russian translation
 - fix tests
