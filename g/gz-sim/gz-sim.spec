@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1                                                                           
-%define ver 7
+%define ver 8
 
 Name:    gz-sim
-Version: 7.5.0
-Release: alt2
+Version: 8.2.0
+Release: alt1
 
 Summary: Open source robotics simulator. The latest version of Gazebo.
 License: Apache-2.0
@@ -14,7 +14,8 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 
-ExcludeArch: %ix86 armh
+# Same as for ogre-next
+ExclusiveArch: x86_64
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -22,7 +23,7 @@ BuildRequires: gcc-c++
 BuildRequires: python3-dev
 BuildRequires: libprotobuf-devel
 BuildRequires: libfreeimage-devel
-BuildRequires: libogre-devel
+BuildRequires: libogre-next-devel
 BuildRequires: libgperftools-devel
 BuildRequires: libtinyxml2-devel
 BuildRequires: tbb-devel
@@ -101,9 +102,6 @@ Group: Development/C++
 %summary
 %prep
 %setup
-# Use ogre instead of ogre2 by default
-subst 's/OGRE2/OGRE/' `grep -Rl OGRE2 *`
-subst 's/ogre2/ogre/' `grep -Rl ogre2 *`
 
 %build
 %add_optflags -I%_includedir/bullet
@@ -138,6 +136,17 @@ install -Dpm 0644 "%_cmake__builddir"/gz-logo%ver.svg %buildroot%_pixmapsdir/gz-
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Apr 02 2024 Andrey Cherepanov <cas@altlinux.org> 8.2.0-alt1
+- New version.
+- Used ogre2 rendering engine.
+
+* Thu Jan 25 2024 Andrey Cherepanov <cas@altlinux.org> 8.0.0-alt1
+- New version.
+- Built with ogre-next.
+
+* Wed Sep 27 2023 Andrey Cherepanov <cas@altlinux.org> 7.6.0-alt1
+- New version.
+
 * Wed Sep 20 2023 Andrey Cherepanov <cas@altlinux.org> 7.5.0-alt2
 - FTBFS: removed libavresample-devel.
 

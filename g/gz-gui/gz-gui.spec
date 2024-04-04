@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    gz-gui
-Version: 7.2.0
+Version: 8.1.0
 Release: alt1
 
 Summary: Builds on top of Qt to provide widgets which are useful when developing robotics applications, such as a 3D view, plots, dashboard, etc, and can be used together in a convenient unified interface
@@ -13,7 +13,8 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 
-ExcludeArch: %ix86
+# Same as for ogre-next via libgz-rendering-devel
+ExclusiveArch: x86_64
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -62,8 +63,8 @@ Group: Development/C++
 %install
 %ninja_install -C "%_cmake__builddir"
 # Replace libGrid3D.so by libGridConfig.so without RPATH
-rm -f %buildroot%_libdir/gz-gui-7/plugins/libGrid3D.so
-cp %buildroot%_libdir/gz-gui-7/plugins/{libGridConfig.so,libGrid3D.so}
+rm -f %buildroot%_libdir/gz-gui-8/plugins/libGrid3D.so
+cp %buildroot%_libdir/gz-gui-8/plugins/{libGridConfig.so,libGrid3D.so}
 
 %files -n lib%name
 %doc AUTHORS README.md
@@ -80,6 +81,12 @@ cp %buildroot%_libdir/gz-gui-7/plugins/{libGridConfig.so,libGrid3D.so}
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Apr 02 2024 Andrey Cherepanov <cas@altlinux.org> 8.1.0-alt1
+- New version.
+
+* Mon Oct 02 2023 Andrey Cherepanov <cas@altlinux.org> 8.0.0-alt1
+- New version.
+
 * Wed Aug 02 2023 Andrey Cherepanov <cas@altlinux.org> 7.2.0-alt1
 - New version.
 

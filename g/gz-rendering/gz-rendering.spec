@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1                                                                           
 
 Name:    gz-rendering
-Version: 7.4.0
+Version: 8.1.0
 Release: alt1
 
 Summary: C++ library designed to provide an abstraction for different rendering engines. It offers unified APIs for creating 3D graphics applications
@@ -12,9 +12,10 @@ Url:     https://github.com/gazebosim/gz-rendering
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
-Patch0: 0001-Fix-missing-header-in-latest-gcc-build-853.patch
+Patch0: gz-rendering-orge-next-2.3.3.patch
 
-ExcludeArch: %ix86
+# Same as for ogre-next
+ExclusiveArch: x86_64
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -22,7 +23,7 @@ BuildRequires: gcc-c++
 BuildRequires: gz-cmake
 BuildRequires: libprotobuf-devel
 BuildRequires: libfreeimage-devel
-BuildRequires: libogre-devel
+BuildRequires: libogre-next-devel
 BuildRequires: libGL-devel
 BuildRequires: libgz-math-devel >= 6.0.0
 BuildRequires: libgz-common-devel
@@ -50,11 +51,16 @@ Group: Development/C++
 %prep
 %setup
 %patch0 -p1
+subst 's/2\.3\.1/2.3.3/' CMakeLists.txt
 
 %build
 %cmake -GNinja -Wno-dev \
-       -DBUILD_TESTING=OFF
+       -DBUILD_TESTING=OFF \
+       -DUSE_UNOFFICIAL_OGRE_VERSIONS=ON
 %ninja_build -C "%_cmake__builddir"
+cp %_cmake__builddir/lib/libgz-rendering8-ogre2.so.8 %_cmake__builddir
+ln -s libgz-rendering8-ogre2.so.8 %_cmake__builddir/libgz-rendering8-ogre2.so
+ln -s libgz-rendering8-ogre2.so.8 %_cmake__builddir/libgz-rendering-ogre2.so
 
 %install
 %ninja_install -C "%_cmake__builddir"
@@ -63,7 +69,7 @@ Group: Development/C++
 %doc AUTHORS README.md
 %_libdir/lib*.so.*
 %_libdir/lib*.so
-#_libdir/ign-rendering-*
+%_libdir/gz-rendering-*
 %_datadir/gz/gz-rendering*
 
 %files -n lib%{name}-devel
@@ -72,6 +78,13 @@ Group: Development/C++
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Fri Mar 29 2024 Andrey Cherepanov <cas@altlinux.org> 8.1.0-alt1
+- New version.
+
+* Thu Jan 25 2024 Andrey Cherepanov <cas@altlinux.org> 8.0.0-alt1
+- New version.
+- Built with ogre-next.
+
 * Wed Aug 02 2023 Andrey Cherepanov <cas@altlinux.org> 7.4.0-alt1
 - New version.
 

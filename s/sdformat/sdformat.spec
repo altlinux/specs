@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+%def_without python
 
 Name:    sdformat
-Version: 13.5.0
+Version: 14.0.0
 Release: alt1
 
 Summary: Simulation Description Format (SDFormat) parser and description files
@@ -24,6 +25,10 @@ BuildRequires: libgz-math-devel
 BuildRequires: libgz-utils-devel
 BuildRequires: ruby
 BuildRequires: python3-module-psutil
+%if_with python
+BuildRequires: python3-devel
+BuildRequires: pybind11-devel
+%endif
 BuildRequires: gem-rexml
 
 %description
@@ -74,6 +79,9 @@ Group: Development/C++
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Oct 02 2023 Andrey Cherepanov <cas@altlinux.org> 14.0.0-alt1
+- New version.
+
 * Wed Aug 02 2023 Andrey Cherepanov <cas@altlinux.org> 13.5.0-alt1
 - New version.
 

@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    gz-fuel-tools
-Version: 8.0.2
-Release: alt3
+Version: 9.0.0
+Release: alt1
 
 Summary: A client library and command line tools for interacting with Gazebo Fuel servers
 License: Apache-2.0
@@ -62,6 +62,7 @@ Group: Development/C++
 %_libdir/lib*.so
 %_datadir/gz/*.yaml
 %_datadir/gz/*fuel_tools*
+%_datadir/gz/gz2.completion.d/fuel*.bash_completion.sh
 
 %files -n lib%{name}-devel
 %_includedir/gz/fuel_tools*
@@ -69,6 +70,9 @@ Group: Development/C++
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Apr 03 2024 Andrey Cherepanov <cas@altlinux.org> 9.0.0-alt1
+- New version.
+
 * Wed Dec 27 2023 Andrey Cherepanov <cas@altlinux.org> 8.0.2-alt3
 - FTBFS: unified wildcard for sporadic naming.
 

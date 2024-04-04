@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    gz-transport
-Version: 12.2.0
+Version: 13.0.0
 Release: alt1
 
 Summary: Transport library for component communication based on publication/subscription and service calls
@@ -73,6 +73,9 @@ Group: Development/C++
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Oct 02 2023 Andrey Cherepanov <cas@altlinux.org> 13.0.0-alt1
+- New version.
+
 * Wed Aug 02 2023 Andrey Cherepanov <cas@altlinux.org> 12.2.0-alt1
 - New version.
 

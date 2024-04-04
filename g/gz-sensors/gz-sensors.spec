@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    gz-sensors
-Version: 7.2.0
+Version: 8.0.0
 Release: alt1
 
 Summary: Provides numerous sensor models designed to generate realistic data from simulation environments
@@ -13,7 +13,8 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 
-ExcludeArch: %ix86
+# Same as for ogre-next via libgz-rendering-devel
+ExclusiveArch: x86_64
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -67,6 +68,9 @@ Group: Development/C++
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Oct 02 2023 Andrey Cherepanov <cas@altlinux.org> 8.0.0-alt1
+- New version.
+
 * Wed Aug 02 2023 Andrey Cherepanov <cas@altlinux.org> 7.2.0-alt1
 - New version.
 

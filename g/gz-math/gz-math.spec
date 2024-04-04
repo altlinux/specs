@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    gz-math
-Version: 7.2.0
+Version: 7.3.0
 Release: alt1
 
 Summary: General purpose math library for robot applications
@@ -78,6 +78,9 @@ Group: Development/Python3
 %_libdir/python/gz/*.so
 
 %changelog
+* Mon Oct 02 2023 Andrey Cherepanov <cas@altlinux.org> 7.3.0-alt1
+- New version.
+
 * Tue Aug 01 2023 Andrey Cherepanov <cas@altlinux.org> 7.2.0-alt1
 - New version.
 
