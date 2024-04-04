@@ -5,7 +5,7 @@
 
 Name: yggdrasil
 Version: 0.5.5
-Release: alt1
+Release: alt2
 
 Summary: End-to-end encrypted IPv6 networking
 License: LGPLv3
@@ -80,6 +80,9 @@ install -pD -m0644 {,%buildroot%_unitdir/}yggdrasil-default-config.service
 /usr/sbin/groupadd -r -f yggdrasil
 
 %changelog
+* Thu Apr 04 2024 Anton Zhukharev <ancieg@altlinux.org> 0.5.5-alt2
+- Built real 0.5.5.
+
 * Thu Feb 08 2024 Anton Zhukharev <ancieg@altlinux.org> 0.5.5-alt1
 - Updated to 0.5.5.
 
