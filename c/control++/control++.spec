@@ -1,4 +1,4 @@
-%define libcontrolppver 0.31
+%define libcontrolppver 0.32
 %define confdir %{_sysconfdir}/%{name}
 %define statedir %{_localstatedir}/%{name}
 %define ulim_statedir %{statedir}/ulimits
@@ -6,7 +6,7 @@
 %define testsdir %{statedir}/tests
 
 Name: control++
-Version: 0.22.0
+Version: 0.22.1
 Release: alt1
 
 Summary: System configuration tool
@@ -117,6 +117,9 @@ cp -r tests/* %{buildroot}%{testsdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Wed Apr 03 2024 Alexey Appolonov <alexey@altlinux.org> 0.22.1-alt1
+- Setting the mode by the "permissions" unit is much faster.
+
 * Tue Apr 02 2024 Alexey Appolonov <alexey@altlinux.org> 0.22.0-alt1
 - A concise feedback is provided when the permission mode is being set when
   the "-v" flag isn't passed;

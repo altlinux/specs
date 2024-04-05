@@ -1,5 +1,5 @@
 Name: libcontrol++
-Version: 0.31.0
+Version: 0.32.0
 Release: alt1
 
 Summary: control++ common classes and functions library
@@ -56,6 +56,11 @@ cp src/*.h %{buildroot}%{_includedir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Wed Apr 03 2024 Alexey Appolonov <alexey@altlinux.org> 0.32.0-alt1
+- New func "FileIsInThere" that is a fast ver of the "FileIsSomewhereInThere"
+  func without formatting, the set of parameters of the "FileIsSomewhereInThere"
+  func is modified.
+
 * Tue Apr 02 2024 Alexey Appolonov <alexey@altlinux.org> 0.31.0-alt1
 - A new class "TTick" for running a customisable counter in a separate thread;
 - A completed operation is re-printed when finishing the line in the "instant
