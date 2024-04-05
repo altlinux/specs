@@ -1,5 +1,5 @@
 Name:		etcnet
-Version:	0.9.29
+Version:	0.9.30
 Release:	alt1
 
 Summary:	/etc/net network configuration system
@@ -146,6 +146,10 @@ fi
 %files full
 
 %changelog
+* Wed Apr 03 2024 Mikhail Efremov <sem@altlinux.org> 0.9.30-alt1
+- build: Temporary use absolute symlinks for scripts (closes: #49808).
+- build: Don't hardcode relative symlinks.
+
 * Fri May 12 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.29-alt1
 - Initial openconnect support added (see README.oconn).
 
