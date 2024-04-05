@@ -12,8 +12,8 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.58
-Release: alt2
+Version: 2.4.59
+Release: alt1
 Epoch: 1
 
 License: %asl
@@ -67,8 +67,6 @@ Patch1: apache2-2.4.28-alt-all-0.3.patch
 Patch2: apache2-2.4.25-alt-apachectl.patch
 Patch3: apache2-2.4.27-alt-httpd.conf.patch
 Patch4: apache2-2.4.35-tlv1.2-default.patch
-
-Patch5: apache2-2.4.58-upstream-libxml-fixbuild.patch
 
 BuildRequires(pre): rpm-macros-apache2 >= 3.13
 BuildRequires(pre): libssl-devel
@@ -696,7 +694,6 @@ Set DocumentRoot in %apache2_serverdatadir (for https) to support the old config
 %patch2 -p1
 %patch3 -p1 -b .orig
 %patch4 -p2
-%patch5 -p1
 
 # generate ALTLinux Apache layout
 echo "
@@ -1544,6 +1541,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Fri Apr 05 2024 Anton Farygin <rider@altlinux.ru> 1:2.4.59-alt1
+- 2.4.58 -> 2.4.59 (Fixes: CVE-2023-38709, CVE-2024-24795, CVE-2024-27316)
+
 * Wed Feb 07 2024 Anton Farygin <rider@altlinux.ru> 1:2.4.58-alt2
 - added upstream patch against libxml 2.12
 
