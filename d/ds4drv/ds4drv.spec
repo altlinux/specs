@@ -1,6 +1,6 @@
 Name: ds4drv
 Version: 0.5.1
-Release: alt1
+Release: alt2
 
 Summary: A Sony DualShock 4 userspace driver for Linux
 License: MIT
@@ -12,6 +12,8 @@ BuildArch: noarch
 
 # https://github.com/chrippa/%name/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
+
+Patch0: %name-python-3.12.patch
 
 BuildRequires: python3-module-setuptools
 
@@ -28,6 +30,7 @@ Features:
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %python3_build
@@ -47,5 +50,8 @@ Features:
 %_unitdir/%name.service
 
 %changelog
+* Fri Apr 05 2024 Nazarov Denis <nenderus@altlinux.org> 0.5.1-alt2
+- Fix run with python 3.12 (ALT #45143)
+
 * Sun Dec 20 2020 Nazarov Denis <nenderus@altlinux.org> 0.5.1-alt1
 - Initial build for ALT Linux
