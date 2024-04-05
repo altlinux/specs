@@ -23,11 +23,11 @@
 
 %define fwupd_pluginsdir %_libdir/fwupd-%version
 
-Summary: Firmware update daemon
 Name: fwupd
-Version: 1.9.15
+Version: 1.9.16
+Release: alt1
 
-Release: alt2
+Summary: Firmware update daemon
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
 Url: https://github.com/fwupd/fwupd
@@ -321,6 +321,9 @@ vm-run --sbin --udevd --kvm=cond --overlay=tmpfs:/usr/src \
 %endif
 
 %changelog
+* Fri Apr 05 2024 Egor Ignatov <egori@altlinux.org> 1.9.16-alt1
+- 1.9.16
+
 * Wed Apr 03 2024 Egor Ignatov <egori@altlinux.org> 1.9.15-alt2
 - disable passim for p10 and older branches
 
