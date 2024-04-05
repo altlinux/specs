@@ -8,7 +8,7 @@
 
 Name: pnetcdf
 Version: 1.8.1
-Release: alt3
+Release: alt3.1
 Summary: Parallel netCDF: A High Performance API for NetCDF File Access
 License: Open source
 Group: File tools
@@ -98,10 +98,7 @@ source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %add_optflags %optflags_shared -DNDEBUG -Df2cFortran -I%mpidir/lib
-export FCFLAGS="%optflags"
-%ifnarch %e2k
-export FCFLAGS="$FCFLAGS -fallow-argument-mismatch"
-%endif
+export FCFLAGS="%optflags -fallow-argument-mismatch"
 export F90FLAGS="%optflags"
 %autoreconf
 %configure \
@@ -144,6 +141,9 @@ rm -f %buildroot%_libdir/*.a
 %doc doc/*.pdf doc/*.txt examples
 
 %changelog
+* Fri Apr 05 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.8.1-alt3.1
+- The compiler for e2k finally knowns -fallow-argument-mismatch.
+
 * Wed Sep 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.1-alt3
 - Fixed build with LTO.
 
