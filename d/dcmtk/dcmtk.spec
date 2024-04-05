@@ -3,7 +3,7 @@
 
 Name: dcmtk
 Version: 3.6.8
-Release: alt1
+Release: alt1.1
 Summary: DCMTK - DICOM Toolkit
 License: MIT
 Group: Graphics
@@ -42,6 +42,12 @@ Headers for building software that uses %name.
 
 %prep
 %setup
+%ifarch %e2k
+sed -i '/"fenv.h" HAVE_FENV_H/d' CMake/GenerateDCMTKConfigure.cmake
+# unportable magic with va_args
+sed -i 's/ttuple.cc//' ofstd/tests/CMakeLists.txt
+sed -i '/ofstd_tuple/d' ofstd/tests/tests.cc
+%endif
 
 %build
 %add_optflags -fPIC
@@ -83,6 +89,9 @@ Headers for building software that uses %name.
 %_libdir/cmake/dcmtk/*.cmake
 
 %changelog
+* Fri Apr 05 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.6.8-alt1.1
+- Fixed build for Elbrus.
+
 * Tue Jan 30 2024 Anton Farygin <rider@altlinux.ru> 3.6.8-alt1
 - 3.6.8
 
