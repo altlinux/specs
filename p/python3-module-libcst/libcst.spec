@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.2.0
+Version: 1.3.1
 Release: alt1
 
 Summary: A Concrete Syntax Tree (CST) parser and serializer library for Python
@@ -49,6 +49,8 @@ an AST.
 %prep
 %setup -a1
 %autopatch -p1
+echo >> .cargo/config.toml
+cat < vendor_cargoconf.toml >> .cargo/config.toml
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
@@ -84,6 +86,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Apr 04 2024 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1
+- 1.2.0 -> 1.3.1.
+
 * Wed Feb 21 2024 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
 - 1.1.0 -> 1.2.0.
 
