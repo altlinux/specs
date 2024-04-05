@@ -8,7 +8,7 @@
 %def_with gpu
 
 Name: stress-ng
-Version: 0.17.06
+Version: 0.17.07
 Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
@@ -81,10 +81,6 @@ sed -ri 's,"-O([0123])",\1,' stress-ng.h
 %endif
 
 %build
-%ifarch x86_64
-# -Werror cannot be added yet https://github.com/ColinIanKing/stress-ng/issues/365
-%add_optflags -fanalyzer
-%endif
 %ifarch ppc64le
 # Disable LTO as is does not build on ppc64:
 #   https://github.com/ColinIanKing/stress-ng/issues/273
@@ -119,6 +115,9 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Fri Apr 05 2024 Vitaly Chikunov <vt@altlinux.org> 0.17.07-alt1
+- Update to V0.17.07 (2024-04-04).
+
 * Wed Mar 06 2024 Vitaly Chikunov <vt@altlinux.org> 0.17.06-alt1
 - Update to V0.17.06 (2024-03-05).
 
