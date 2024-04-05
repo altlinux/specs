@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-application-manager
-Version: 1.2.1
+Version: 1.2.2.0.2.d541
 Release: alt1
 
 Summary: App manager for Deepin
@@ -17,7 +17,7 @@ Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: cmake libgtest-devel libsystemd-devel python3-module-setuptools qt6-base-devel
+BuildRequires: cmake libgtest-devel libsystemd-devel python3-module-setuptools qt6-base-devel dtk6-common-devel libdtk6core-devel
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -55,6 +55,7 @@ rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 
 %files
 %_bindir/%repo
+%_bindir/dde-am
 %_bindir/app-identifier
 %dir %_libexecdir/deepin/
 %dir %_libexecdir/deepin/application-manager/
@@ -78,8 +79,14 @@ rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/%repo/
 %_datadir/dsg/configs/%repo/com.deepin*.json
+%dir %_datadir/dsg/configs/org.deepin.dde.application-manager/
+%_datadir/dsg/configs/org.deepin.dde.application-manager/org.deepin.dde.am.json
 
 %changelog
+* Fri Apr 05 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.2.0.2.d541-alt1
+- New version 1.2.2-2-gd541c43.
+- Switched to dtk6 by upstream.
+
 * Fri Mar 29 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.1-alt1
 - New version 1.2.1.
 
