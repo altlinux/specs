@@ -6,7 +6,7 @@
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -15,6 +15,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Patch1: alt-hide-settings-help-btn.patch
 
 # Automatically added by buildreq on Mon Jan 11 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ gtk-update-icon-cache kf5-kdoctools-devel libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python-modules python3 python3-base ruby ruby-stdlibs xml-common xml-utils
@@ -65,6 +66,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build \
@@ -103,6 +105,9 @@ KF5 library
 %_K5lib/libkomparedialogpages.so.*
 
 %changelog
+* Fri Apr 05 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt2
+- hide settings dialog help button (closes: 45505)
+
 * Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
