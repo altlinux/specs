@@ -8,7 +8,7 @@
 
 Name: btrfs-progs
 Version: 6.8
-Release: alt1
+Release: alt2
 
 Summary: Utilities for managing the Btrfs filesystem
 License: GPLv2
@@ -120,6 +120,13 @@ mkdir "$HOME/new_tmp"
 TMPDIR="$HOME/new_tmp"
 vm-run --sbin --udevd --kvm=cond make V=1 TEST_LOG=dump test-mkfs
 
+%pretrans -p <lua>
+st = posix.stat("/usr/bin/btrfs")
+if st and st.type == "link" then
+  os.remove(path)
+end
+
+
 %files
 /sbin/*
 %_bindir/*
@@ -138,6 +145,9 @@ vm-run --sbin --udevd --kvm=cond make V=1 TEST_LOG=dump test-mkfs
 %_includedir/*
 
 %changelog
+* Fri Apr 05 2024 Anton Farygin <rider@altlinux.ru> 6.8-alt2
+- added pretrans script against cpio link->file convertation (closes: #49434)
+
 * Mon Apr 01 2024 Anton Farygin <rider@altlinux.ru> 6.8-alt1
 - 6.7.1 -> 6.8
 
