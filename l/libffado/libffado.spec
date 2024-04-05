@@ -2,7 +2,7 @@
 
 Name: libffado
 Version: 2.4.8
-Release: alt1.1
+Release: alt1.2
 
 Summary: Free firewire audio driver library
 License: GPLv2+
@@ -18,7 +18,7 @@ BuildRequires: libalsa-devel
 BuildRequires: pkgconfig(jack)
 BuildRequires: libdbus-c++-devel
 BuildRequires: qt5-dbus
-BuildRequires: python3-dev
+BuildRequires: python3-dev python3-module-setuptools
 BuildRequires: python3-module-PyQt5-devel python3-module-dbus
 # A copy of the imp module that was removed in Python 3.12.
 # It shouldn't be used, should use `importlib.metadata` instead.
@@ -126,6 +126,9 @@ rm -f %buildroot%_datadir/metainfo/ffado-mixer.appdata.xml
 %python3_sitelibdir_noarch/ffado
 
 %changelog
+* Fri Apr 05 2024 L.A. Kostis <lakostis@altlinux.ru> 2.4.8-alt1.2
+- BR: add setuptools python module (fix FTBFS).
+
 * Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 2.4.8-alt1.1
 - NMU: Added zombie-imp to BuildRequires.
 
