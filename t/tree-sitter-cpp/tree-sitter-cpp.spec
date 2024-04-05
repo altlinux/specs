@@ -1,5 +1,5 @@
 Name: tree-sitter-cpp
-Version: 0.20.5
+Version: 0.21.0
 Release: alt1
 
 Summary: C++ grammar for tree-sitter
@@ -29,6 +29,9 @@ install -pm0644 package.json %buildroot%_libdir/tree-sitter-cpp
 %_libdir/tree-sitter-cpp
 
 %changelog
+* Fri Apr 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.21.0-alt1
+- 0.21.0 released
+
 * Mon Feb 19 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.20.5-alt1
 - 0.20.5 released
 
