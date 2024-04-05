@@ -7,7 +7,7 @@
 %def_enable installed_tests
 
 Name: xdg-desktop-portal
-Version: 1.18.2
+Version: 1.18.3
 Release: alt1
 
 Summary: Portal frontend service to Flatpak
@@ -132,6 +132,9 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 %endif
 
 %changelog
+* Fri Apr 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1.18.3-alt1
+- 1.18.3
+
 * Thu Nov 23 2023 Yuri N. Sedunov <aris@altlinux.org> 1.18.2-alt1
 - 1.18.2
 
