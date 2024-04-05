@@ -5,13 +5,14 @@
 %define _prefix /
 %define soname 13
 Name: ipset
-Version: 7.19
+Version: 7.21
 Release: alt1
 
 Summary: Tools for managing sets of IP or ports with iptables
 License: GPLv2
 Group: System/Kernel and hardware
-Url: http://ipset.netfilter.org/
+Url: https://ipset.netfilter.org/
+VCS: git://git.netfilter.org/ipset.git
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -68,19 +69,10 @@ Kernel source modules ipset.
 %build
 %autoreconf
 %configure --with-kmod=no --enable-static=no
-%make_build LIBDIR=/%_lib/ BINDIR=/sbin/
+%make_build LIBDIR=%_libdir SBINDIR=%_sbindir
 %install
-%makeinstall_std exec_prefix=/ sbindir=/sbin libdir=/%_lib pkgconfigdir=/%_pkgconfigdir
+%makeinstall_std exec_prefix=/ sbindir=%_sbindir libdir=%_libdir pkgconfigdir=/%_pkgconfigdir
 mkdir -p %buildroot%_libdir
-
-pushd %buildroot%_libdir
-LIBNAME="$(basename $(ls %buildroot/%_lib/libipset.so.%{soname}.*.*))"
-ln -s ../../%_lib/$LIBNAME libipset.so
-popd
-
-# we don't package the file, so let's remove it
-# to avoid confusing pkgconfiglib.req
-rm -f %buildroot/%_lib/libipset.so
 
 tar xvf %SOURCE0
 mv %name-%version kernel-source-%name-%version
@@ -90,11 +82,12 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 
 %files
 %doc ChangeLog ChangeLog.ippool README
-/sbin/*
+%_sbindir/ipset
+%_sbindir/ipset-translate
 %_man8dir/*
 
 %files -n lib%{name}%{soname}
-%attr(755,root,root) /%_lib/libipset.so.%{soname}*
+%attr(755,root,root) %_libdir/libipset.so.%{soname}*
 
 %files -n lib%{name}-devel
 %_includedir/lib%name/*.h
@@ -106,6 +99,10 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Thu Apr 04 2024 Anton Farygin <rider@altlinux.ru> 7.21-alt1
+- 7.19 -> 7.21
+- moved utilities and libraies in /usr
+
 * Tue Oct 24 2023 Anton Farygin <rider@altlinux.ru> 7.19-alt1
 - 7.17 -> 7.19
 
