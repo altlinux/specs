@@ -7,12 +7,7 @@
 %def_with glvnd
 %def_with ninja
 %def_with pybind11
-%def_without pyside2
-%ifarch loongarch64 %e2k
-%def_without web_mod
-%else
-%def_with web_mod
-%endif
+%def_with pyside
 
 %define oname freecad
 %define ldir %_libdir/%oname
@@ -24,7 +19,7 @@
 
 Name:    freecad
 Version: 0.21.2
-Release: alt5
+Release: alt6
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -47,36 +42,33 @@ Patch5: freecad-vtk9.3.patch
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
 
-ExcludeArch: armh ppc64le
+ExcludeArch: %ix86 armh ppc64le
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-xdg
+BuildRequires(pre): rpm-macros-qt6-webengine
 %if_with ninja
 BuildRequires(pre): rpm-build-ninja
 %endif
 BuildRequires(pre): rpm-build-python3
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-assistant
-BuildRequires: qt5-designer
-BuildRequires: qt5-phonon-devel
-BuildRequires: qt5-svg-devel
-BuildRequires: qt5-tools-devel
-BuildRequires: qt5-tools-devel-static
-%if_with web_mod
-BuildRequires: qt5-webengine-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-assistant
+BuildRequires: qt6-designer
+BuildRequires: qt6-svg-devel
+BuildRequires: qt6-tools-devel
+%ifarch %qt6_qtwebengine_arches
+BuildRequires: qt6-webengine-devel
 %endif
-BuildRequires: qt5-x11extras-devel
-BuildRequires: qt5-xmlpatterns-devel
-%if_with pyside2
-BuildRequires: python3-module-PySide2
-BuildRequires: pyside2-tools
-BuildRequires: python3-module-PySide2-devel
-BuildRequires: python3-module-shiboken2-devel
+%if_with pyside
+BuildRequires: python3-module-pyside6
+BuildRequires: python3-module-pyside6-devel
+BuildRequires: python3-module-shiboken6-devel
+BuildRequires: python3-module-pivy
 %else
 %filter_from_requires /python3(PySide2/d
 %endif
-%define qmake %qmake_qt5
-%define qtbindir %_qt5_bindir
+%define qmake %qmake_qt6
+%define qtbindir %_qt6_bindir
 BuildRequires: python3-devel swig gcc-fortran chrpath
 BuildRequires: boost-devel
 BuildRequires: boost-filesystem-devel
@@ -101,7 +93,7 @@ BuildRequires: gdb
 BuildRequires: libvtk-devel vtk-examples vtk-python3
 BuildRequires: libhdf5-devel
 BuildRequires: libmed-devel libspnav-devel
-BuildRequires: python3-module-matplotlib-qt5
+#BuildRequires: python3-module-matplotlib-qt6
 BuildRequires: libkdtree++-devel
 %if_without bundled_libs
 BuildRequires: libsmesh-devel libnetgen-devel netgen openmpi-devel
@@ -120,7 +112,8 @@ BuildRequires: pybind11-devel
 BuildRequires: python3-module-pycxx-devel
 %endif
 
-%py3_requires matplotlib.backends.backend_qt5
+#%%py3_requires matplotlib.backends.backend_qt6
+%py3_requires pivy
 #py3_provides Fem FreeCAD FreeCADGui Mesh Part MeshPart Drawing ImportGui
 #py3_provides PartGui Sketcher TestSketcherApp Robot RobotGui SketcherGui
 #py3_provides ImageGui PartDesignGui _PartDesign
@@ -177,7 +170,7 @@ sed -i "1i #define OBSERVER_CPP" src/Base/Observer.cpp
 %endif
 
 %build
-export PATH=$PATH:%_qt5_bindir
+export PATH=$PATH:%_qt6_bindir
 %add_optflags -Wl,-rpath,%ldir/lib
 %if_with ninja
 %cmake_insource -GNinja \
@@ -195,8 +188,9 @@ export PATH=$PATH:%_qt5_bindir
     -DFREECAD_USE_PYBIND11=ON \
 %endif
 	-DFREECAD_LIBPACK_USEPYSIDE=OFF \
-	-DBUILD_QT5=ON \
-%if_without web_mod
+	-DBUILD_QT6=ON \
+	-DFREECAD_QT_VERSION=6 \
+%ifnarch %qt6_qtwebengine_arches
 	-DBUILD_WEB=OFF \
 %endif
 %if_without bundled_libs
@@ -287,6 +281,10 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_datadir/thumbnailers/FreeCAD.thumbnailer
 
 %changelog
+* Thu Apr 04 2024 Andrey Cherepanov <cas@altlinux.org> 1:0.21.2-alt6
+- Built with Qt6 and PySide6.
+- Did not build for i586.
+
 * Thu Feb 29 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:0.21.2-alt5
 - Fixed build for Elbrus.
 

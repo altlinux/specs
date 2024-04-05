@@ -1,6 +1,6 @@
 Name: soqt
-Version: 1.6.0
-Release: alt3.2
+Version: 1.6.2
+Release: alt1
 Summary: Qt GUI component toolkit library for Coin
 License: BSD-3-Clause
 Group: Development/Tools
@@ -8,9 +8,7 @@ Url: https://github.com/coin3d/soqt
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
-Source1: cpack-src.tar
-Source2: soanydata-src.tar
-Source3: sogui-src.tar
+Source1: submodules.tar
 Patch1:  SoQt-1.6.0-cmake.patch
 Patch2:  soqt-fix-cmake-3.19.patch
 
@@ -20,7 +18,7 @@ Requires: lib%name = %version-%release
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
-BuildRequires(pre): qt5-base-devel
+BuildRequires(pre): qt6-base-devel
 BuildRequires: gcc-c++
 BuildRequires: libGL-devel
 BuildRequires: libGLU-devel
@@ -79,11 +77,9 @@ This package contains development documentation for SoQt.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
+#patch1 -p1
+#patch2 -p1
 tar xf %SOURCE1
-tar xf %SOURCE2
-tar xf %SOURCE3
 
 %build
 %define _cmake__builddir BUILD
@@ -98,6 +94,9 @@ mkdir -p %buildroot%_includedir/Coin4/
 mv %buildroot%_includedir/Inventor %buildroot%_includedir/Coin4/
 rm -rf %buildroot%_infodir
 rm -rf %buildroot%_man3dir/misc.3*
+
+# Fix INTERFACE_INCLUDE_DIRECTORIES for python3-module-pivy
+subst 's|INTERFACE_INCLUDE_DIRECTORIES.*|INTERFACE_INCLUDE_DIRECTORIES "%_includedir/Coin4"|' %buildroot%_libdir/cmake/SoQt-%version/soqt-export.cmake
 
 %files
 
@@ -118,6 +117,9 @@ rm -rf %buildroot%_man3dir/misc.3*
 %doc %_defaultdocdir/SoQt
 
 %changelog
+* Thu Apr 04 2024 Andrey Cherepanov <cas@altlinux.org> 1.6.2-alt1
+- NMU: built with Qt 6.x.
+
 * Thu Nov 09 2023 Igor Vlasenko <viy@altlinux.org> 1.6.0-alt3.2
 - NMU: added missing BR: libXi-devel,dot
 - NMU: fixed broken headers

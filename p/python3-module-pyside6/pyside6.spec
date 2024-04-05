@@ -18,7 +18,7 @@
 
 Name: python3-module-%mod_name
 Version: 6.6.2
-Release: alt3
+Release: alt3.1
 
 Summary: Python bindings for the Qt cross-platform application and UI framework
 Group: Development/Python3
@@ -208,7 +208,8 @@ export PYTHONPATH=$PWD/%_cmake__builddir/sources
   -DBUILD_TESTS=ON \
   -DQFP_NO_STRIP:BOOL=ON \
   -DCMAKE_SKIP_RPATH:BOOL=ON \
-  -DCMAKE_BUILD_TYPE=RelWithDebInfo
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DFORCE_LIMITED_API=no
 
 %ninja_build -C "%_cmake__builddir"
 
@@ -267,8 +268,8 @@ popd
 
 %files
 %doc README.md
-%_libdir/libpyside6.abi3.so.*
-%_libdir/libpyside6qml.abi3.so.*
+%_libdir/libpyside6.*.so.*
+%_libdir/libpyside6qml.*.so.*
 %_qt6_plugindir/designer/libPySidePlugin.so
 %python3_sitelibdir/PySide6
 %python3_sitelibdir/PySide6-%version-*.egg-info
@@ -277,7 +278,7 @@ popd
 %_datadir/PySide6/
 %_includedir/PySide6/
 %_libdir/libpyside6*.so
-%_libdir/libpyside6qml.abi3.so
+%_libdir/libpyside6qml.*.so
 %_libdir/cmake/PySide6*
 %_libdir/pkgconfig/pyside6.pc
 
@@ -302,6 +303,9 @@ popd
 %python3_sitelibdir/shiboken6_generator-%version-*.egg-info
 
 %changelog
+* Fri Apr 05 2024 Andrey Cherepanov <cas@altlinux.org> 6.6.2-alt3.1
+- NMU: set limited-api=no for use old-style function like PyUnicode_AsUTF8.
+
 * Wed Apr 03 2024 Anton Vyatkin <toni@altlinux.org> 6.6.2-alt3
 - Build with QtWebEngineCore and QtWebEngineWidgets(Closes: #49884).
 

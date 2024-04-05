@@ -1,6 +1,6 @@
 Name: engineering-meta
 Version: p10
-Release: alt10
+Release: alt10.1
 Summary: Metapackage for install Engineering Applications
 Summary(ru_RU.UTF-8): Метапакет для установки инженерных приложений
 Group: Engineering
@@ -47,7 +47,9 @@ Summary: Metapackage for install 3D CAD Applications
 Summary(ru_RU.UTF-8): Мета-пакет для установки 3D САПР
 Group: Engineering
 
+%ifnarch %ix86
 Requires: freecad
+%endif
 Requires: openscad
 Requires: openscad-MCAD
 Requires: openscad-libraries-mcad
@@ -206,6 +208,9 @@ Engineering applications not included in any category.
 %files -n engineering-misc
 
 %changelog
+* Thu Apr 04 2024 Andrey Cherepanov <cas@altlinux.org> p10-alt10.1
+- NMU: freecad is missing for i586.
+
 * Tue Jan 16 2024 Anton Midyukov <antohami@altlinux.org> p10-alt10
 - CAM: add f-engrave, dmap2gcode, gimp-plugin-laser (gcode generators for
   engraving). Thanks to Alexei Mezin
