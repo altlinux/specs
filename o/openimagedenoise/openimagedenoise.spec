@@ -4,20 +4,20 @@
 %set_verify_elf_method strict
 
 %ifarch x86_64
-%def_without hip
 %def_with cuda
 %filter_from_requires /libcudart\.so\.12/d
 %else
-%def_without hip
 %def_without cuda
 %endif
+
+%def_with hip
 
 %define oname oidn
 %define soname 2
 
 Name: openimagedenoise
 Version: 2.2.2
-Release: alt2
+Release: alt3
 Summary: Intel Open Image Denoise library
 Group: Development/Other
 License: Apache-2.0
@@ -30,7 +30,8 @@ Source: %oname-%version.tar
 
 Source2: %name.watch
 
-Patch: oidn-rocm-6.0.0.patch
+Patch0: oidn-rocm-6.0.0.patch
+Patch1: oidn-alt-aarch64-cuda-glibc-fix.patch
 
 BuildRequires: cmake
 BuildRequires: python3
@@ -94,7 +95,18 @@ Intel Open Image Denoise library with CUDA support
 
 %prep
 %setup -n %oname-%version
-%patch -p2
+%patch0 -p2
+
+%ifarch aarch64
+# see https://github.com/OE4T/meta-tegra/pull/1445
+%patch1 -p2
+mkdir -p /tmp/bits
+cat >/tmp/bits/math-vector.h <<EOF
+#include <bits/libm-simd-decl-stubs.h>
+#undef __ADVSIMD_VEC_MATH_SUPPORTED
+#undef __SVE_VEC_MATH_SUPPORTED
+EOF
+%endif
 
 %build
 %if_with hip
@@ -163,6 +175,10 @@ chrpath -d %buildroot%_libdir/libOpenImageDenoise_device_cuda.so.%{version}
 %_libdir/cmake/*
 
 %changelog
+* Thu Apr 04 2024 L.A. Kostis <lakostis@altlinux.ru> 2.2.2-alt3
+- Enable HIP back.
+- aarch64: added build workaround.
+
 * Thu Mar 21 2024 L.A. Kostis <lakostis@altlinux.ru> 2.2.2-alt2
 - Apply rocm6 patch.
 - Disable HIP for ROCm version upgrade.

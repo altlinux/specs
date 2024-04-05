@@ -13,14 +13,12 @@
 
 %ifarch x86_64
 %def_with cuda
-%def_with hip
 # hiprt depends on obsoleted rocm
 # version and segfaults
 # https://github.com/GPUOpen-LibrariesAndSDKs/HIPRTSDK/issues/18
 %def_without hiprt
 %else
 %def_without cuda
-%def_without hip
 %def_without hiprt
 %endif
 
@@ -48,9 +46,12 @@
 # https://devtalk.blender.org/t/does-blender-use-jemalloc-and-or-tbb/13388/10
 %def_with jemalloc
 
+# HIP should work on all 64-bit arches
+%def_with hip
+
 Name: blender
 Version: 4.1.0
-Release: alt0.1
+Release: alt0.2
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -83,6 +84,7 @@ Patch30: blender-alt-fix-clang-linking.patch
 Patch31: blender-alt-osl-shader-dir.patch
 # needed for dynamic clang libs
 Patch32: blender-4.1-alt-use-libclang.patch
+Patch33: blender-alt-cycles-aarch64-hip-cuda-fix.patch
 
 # upstream fixes to merge
 
@@ -295,6 +297,17 @@ This package contains binaries for Nvidia GPUs to use with CUDA.
 
 # upstream patches
 
+%ifarch aarch64
+# see https://github.com/OE4T/meta-tegra/pull/1445
+%patch33 -p1
+mkdir -p /tmp/bits
+cat >/tmp/bits/math-vector.h <<EOF
+#include <bits/libm-simd-decl-stubs.h>
+#undef __ADVSIMD_VEC_MATH_SUPPORTED
+#undef __SVE_VEC_MATH_SUPPORTED
+EOF
+%endif
+
 %ifarch %e2k
 %patch2000 -p1
 # lcc 1.25.15's EDG bug would fail building OPENVDB+TBB otherwise
@@ -434,6 +447,10 @@ popd
 %endif
 
 %changelog
+* Thu Apr 04 2024 L.A. Kostis <lakostis@altlinux.ru> 4.1.0-alt0.2
+- Enable on all supported 64-bit arches.
+- aarch64: added HIP/CUDA build workaround.
+
 * Wed Apr 03 2024 L.A. Kostis <lakostis@altlinux.ru> 4.1.0-alt0.1
 - Update to 4.1.0:
   + Rediffed/update -alt patches.

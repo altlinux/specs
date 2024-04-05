@@ -1,15 +1,15 @@
 %define optflags_lto %nil
 %define llvm_ver 17.0
 
-%ifarch x86_64
-%def_without llvm_rocm
+%ifarch x86_64 ppc64le aarch64
+%def_with llvm_rocm
 %else
 %def_without llvm_rocm
 %endif
 
 Name: rocm-device-libs
 Version: 6.0.0
-Release: alt0.2
+Release: alt0.3
 License: NCSA
 Summary: AMD specific device-side language runtime libraries
 Url: https://github.com/RadeonOpenCompute/ROCm-Device-Libs
@@ -63,6 +63,9 @@ export ALTWRAP_LLVM_VERSION=%{llvm_ver}
 %_datadir/cmake/AMDDeviceLibs
 
 %changelog
+* Thu Mar 21 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.3
+- Rebuild back with llvm-rocm.
+
 * Mon Mar 18 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.2
 - Boostrap with llvm.
 - x86_64: relax llvm-rocm version requires.
