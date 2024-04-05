@@ -2,7 +2,7 @@
 
 Name: mono-addins
 Version: 1.3.3
-Release: alt2
+Release: alt3
 License: MIT
 URL: http://www.go-mono.com
 Group: Development/Other
@@ -48,14 +48,33 @@ Development files for Mono Addin
 
 %files
 %_bindir/mautil
-%_monodir/%name
-%_monogacdir/*
+%dir %_monodir/%name/
+%_monodir/%name/Mono.Addins.CecilReflector.dll
+%_monodir/%name/Mono.Addins.Gui.dll
+%_monodir/%name/Mono.Addins.Setup.dll
+%_monodir/%name/Mono.Addins.dll
+%_monodir/%name/mautil.exe
+
+%_monogacdir/Mono.Addins/
+%_monogacdir/policy.*.Mono.Addins/
+%_monogacdir/Mono.Addins.CecilReflector/
+%_monogacdir/policy.*.Mono.Addins.CecilReflector/
+%_monogacdir/Mono.Addins.Gui/
+%_monogacdir/policy.*.Mono.Addins.Gui/
+%_monogacdir/Mono.Addins.Setup/
+%_monogacdir/policy.*.Mono.Addins.Setup/
 %_man1dir/*.1*
 
 %files devel
+%_monodir/%name/Mono.Addins.MSBuild.dll
+%_monogacdir/Mono.Addins.MSBuild/
+%_monogacdir/policy.*.Mono.Addins.MSBuild/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Apr 05 2024 Vitaly Lipatov <lav@altlinux.ru> 1.3.3-alt3
+- move MSBuild to devel subpackage
+
 * Fri Feb 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.3-alt2
 - Fixed mautil path.
 
