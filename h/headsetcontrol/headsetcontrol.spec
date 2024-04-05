@@ -1,8 +1,9 @@
 
 %define _unpackaged_files_terminate_build 1
+%add_optflags -Wno-error=unused-result
 
 Name:     headsetcontrol
-Version:  2.7.0
+Version:  3.0.0
 Release:  alt1
 
 Summary:  A tool to control certain aspects of USB-connected headsets on Linux
@@ -42,6 +43,9 @@ SteelSeries Arctis 1/7/9/PRO 2019, Corsair VOID (Pro) and others.
 %doc README.md
 
 %changelog
+* Tue Apr 02 2024 Ivan A. Melnikov <iv@altlinux.org> 3.0.0-alt1
+- 3.0.0
+
 * Tue May 02 2023 Ivan A. Melnikov <iv@altlinux.org> 2.7.0-alt1
 - 2.7.0
 
