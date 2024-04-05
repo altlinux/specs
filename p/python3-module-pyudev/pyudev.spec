@@ -1,12 +1,12 @@
-# wait for new wx
 %def_without wx
 %def_without qt4
 %def_without pyside
+%def_without pyside6
 %def_without glib
 
 Name: python3-module-pyudev
 Version: 0.24.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Udev bindings for Python
@@ -26,14 +26,14 @@ found in modern linux systems.
 
 %package -n python3-module-pyudev-qtbase
 Summary: Udev Base mixin class for Qt4,Qt5 support
-Group: Development/Python
+Group: Development/Python3
 Requires: python3-module-pyudev = %EVR
 %description -n python3-module-pyudev-qtbase
 Udev Base mixin class for Qt4,Qt5 support
 
 %package -n python3-module-pyudev-pyqt5
 Summary:            Udev PyQt5 bindings for Python
-Group:              Development/Python
+Group:              Development/Python3
 Requires: python3-module-pyudev = %EVR python3-module-pyudev-qtbase = %EVR
 %description -n python3-module-pyudev-pyqt5
 A Python PyQt5 binding to libudev, the hardware management library and
@@ -49,15 +49,23 @@ service found in modern linux systems.
 
 %package -n python3-module-pyudev-pyside
 Summary:            Udev PySide bindings for Python
-Group:              Development/Python
+Group:              Development/Python3
 Requires: python3-module-pyudev = %EVR
 %description -n python3-module-pyudev-pyside
 A Python PySide binding to libudev, the hardware management library and
 service found in modern linux systems.
 
+%package -n python3-module-pyudev-pyside6
+Summary:            Udev PySide6 bindings for Python
+Group:              Development/Python3
+Requires: python3-module-pyudev = %EVR
+%description -n python3-module-pyudev-pyside6
+A Python PySide6 binding to libudev, the hardware management library and
+service found in modern linux systems.
+
 %package -n python3-module-pyudev-glib
 Summary:            Udev Glib bindings for Python
-Group:              Development/Python
+Group:              Development/Python3
 Requires: python3-module-pyudev = %EVR
 %description -n python3-module-pyudev-glib
 A Python Glib binding to libudev, the hardware management library and
@@ -65,7 +73,7 @@ service found in modern linux systems.
 
 %package -n python3-module-pyudev-wx
 Summary:            Udev Wx bindings for Python
-Group:              Development/Python
+Group:              Development/Python3
 Requires: python3-module-pyudev = %EVR
 %description -n python3-module-pyudev-wx
 A Python Wx binding to libudev, the hardware management library and
@@ -87,6 +95,7 @@ service found in modern linux systems.
 %exclude %python3_sitelibdir/pyudev/_qt_base.p*
 %exclude %python3_sitelibdir/pyudev/glib.p*
 %exclude %python3_sitelibdir/pyudev/pyside.p*
+%exclude %python3_sitelibdir/pyudev/pyside6.p*
 %exclude %python3_sitelibdir/pyudev/wx.p*
 %python3_sitelibdir/pyudev-*
 
@@ -111,12 +120,20 @@ service found in modern linux systems.
 %python3_sitelibdir/pyudev/pyside.p*
 %endif
 
+%if_with pyside6
+%files -n python3-module-pyudev-pyside6
+%python3_sitelibdir/pyudev/pyside6.p*
+%endif
+
 %if_with wx
 %files -n python3-module-pyudev-wx
 %python3_sitelibdir/pyudev/wx.p*
 %endif
 
 %changelog
+* Fri Apr 05 2024 Grigory Ustinov <grenka@altlinux.org> 0.24.1-alt2
+- Splitted pyside6 module to separate subpackage (Closes: #49910).
+
 * Thu Apr 04 2024 Grigory Ustinov <grenka@altlinux.org> 0.24.1-alt1
 - Automatically updated to 0.24.1.
 
