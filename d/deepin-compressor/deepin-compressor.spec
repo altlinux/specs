@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-compressor
-Version: 5.12.25
+Version: 6.0.1
 Release: alt1
 Epoch: 1
 
@@ -17,8 +17,6 @@ Provides: %name-devel = %version
 Obsoletes: %name-devel < %version
 
 Source: %url/archive/%version/%name-%version.tar.gz
-# Applied patch by archlinux:
-# https://patch-diff.githubusercontent.com/raw/linuxdeepin/deepin-compressor/pull/151.patch
 Patch: %name-%version-%release.patch
 
 Requires: p7zip
@@ -84,10 +82,6 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %dir %_libdir/%name/
 %dir %_libdir/%name/plugins/
 %_libdir/%name/plugins/*.so
-%dir %_datadir/dsg/
-%dir %_datadir/dsg/configs/
-%dir %_datadir/dsg/configs/org.deepin.compressor/
-%_datadir/dsg/configs/org.deepin.compressor/org.deepin.compressor.method.json
 %dir %_datadir/deepin-manual/
 %dir %_datadir/deepin-manual/manual-assets/
 %dir %_datadir/deepin-manual/manual-assets/application/
@@ -95,6 +89,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_datadir/deepin-manual/manual-assets/application/%name/archive-manager/
 
 %changelog
+* Fri Apr 05 2024 Leontiy Volodin <lvol@altlinux.org> 1:6.0.1-alt1
+- New version 6.0.1.
+
 * Thu Mar 07 2024 Leontiy Volodin <lvol@altlinux.org> 1:5.12.25-alt1
 - New version 5.12.25.
 
