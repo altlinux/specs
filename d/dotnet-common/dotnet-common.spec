@@ -14,7 +14,7 @@
 
 Name: dotnet-common
 Version: 6.0.1
-Release: alt1
+Release: alt2
 
 Summary: Common dir and files for the .NET Core runtime and libraries
 
@@ -50,6 +50,7 @@ cat <<EOF >macros
 #_dotnet_netstandartrelease
 #_dotnet_sdkmanifestsrelease
 
+%%dotnet_arches %_dotnet_archlist
 %%_dotnet_archlist %_dotnet_archlist
 %%_dotnet_rid %_dotnet_rid
 %%_dotnet_arch %_dotnet_arch
@@ -99,6 +100,9 @@ install -D -m644 macros %buildroot%_rpmmacrosdir/dotnet
 %_rpmmacrosdir/dotnet
 
 %changelog
+* Sat Apr 06 2024 Vitaly Lipatov <lav@altlinux.ru> 6.0.1-alt2
+- add dotnet_arches (as other *_arches)
+
 * Fri Jul 16 2021 Vitaly Lipatov <lav@altlinux.ru> 6.0.1-alt1
 - cleanup to .NET 6
  + add _dotnet_sdk_manifests
