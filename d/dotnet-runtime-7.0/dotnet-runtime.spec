@@ -2,11 +2,11 @@
 %def_enable dotnet_host
 
 %define _dotnet_major 7.0
-%define _dotnet_corerelease 7.0.14
+%define _dotnet_corerelease 7.0.17
 # used for build
-%define _dotnet_sdkrelease 7.0.114
+%define _dotnet_sdkrelease 7.0.117
 %define preview %nil
-%define _dotnet_sdkshortrelease 7.0.114%preview
+%define _dotnet_sdkshortrelease 7.0.117%preview
 
 %define commithash %version-%release
 
@@ -25,7 +25,7 @@
 %endif
 
 Name: dotnet-runtime-%_dotnet_major
-Version: 7.0.14
+Version: 7.0.17
 Release: alt1
 
 Summary: Microsoft .NET Runtime and Microsoft.NETCore.App
@@ -384,6 +384,16 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Fri Apr 05 2024 Vitaly Lipatov <lav@altlinux.ru> 7.0.17-alt1
+- new version (7.0.17) with rpmgs script
+- CVE-2024-0056: Microsoft.Data.SqlClient and System.Data.SqlClient SQL Data provider Information Disclosure Vulnerability
+- CVE-2024-0057: .NET Security Feature bypass Vulnerability
+- CVE-2024-21319: .NET Denial of Service Vulnerability
+- CVE-2024-21386: .NET Denial of Service Vulnerability
+- CVE-2024-21404: .NET Denial of Service Vulnerability
+- CVE-2024-21392: .NET Denial of Service Vulnerability
+- CVE-2024-26190: Microsoft QUIC Denial of Service Vulnerability
+
 * Tue Jan 09 2024 Vitaly Lipatov <lav@altlinux.ru> 7.0.14-alt1
 - .NET 7.0.14
 - CVE-2023-36049: .NET Elevation of Privilege Vulnerability

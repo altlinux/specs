@@ -1,22 +1,22 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 7.0
-%define _dotnet_corerelease 7.0.14
+%define _dotnet_corerelease 7.0.17
 %define _dotnet_sdkmanifestsrelease 7.0.100
-%define _dotnet_sdkrelease 7.0.114
-%define _dotnet_aspnetcorerelease 7.0.14
-%define _dotnet_templatesrelease 7.0.14
-%define _dotnet_coreapprefrelease 7.0.14
-%define _dotnet_aspnetcoreapprefrelease 7.0.14
+%define _dotnet_sdkrelease 7.0.117
+%define _dotnet_aspnetcorerelease 7.0.17
+%define _dotnet_templatesrelease 7.0.17
+%define _dotnet_coreapprefrelease 7.0.17
+%define _dotnet_aspnetcoreapprefrelease 7.0.17
 %define _dotnet_netstandartrelease 2.1.0
 %define preview %nil
-%define _dotnet_coreshortrelease 7.0.14%preview
-%define _dotnet_sdkshortrelease 7.0.114%preview
+%define _dotnet_coreshortrelease 7.0.17%preview
+%define _dotnet_sdkshortrelease 7.0.117%preview
 
 %define _dotnetdir %_libdir/%name
 
 Name: dotnet-bootstrap-%_dotnet_major
-Version: 7.0.14%preview
+Version: 7.0.17%preview
 Release: alt1
 
 Summary: .NET Core SDK binaries
@@ -29,12 +29,13 @@ Group: Development/Other
 # from https://github.com/dotnet/core/tree/master/release-notes/7.0
 
 # x86_64
-# Source-url: https://download.visualstudio.microsoft.com/download/pr/6a0e44c6-f457-43a0-83d2-845e07905189/76f174b1911db5846544dc5b91ce7298/dotnet-sdk-7.0.114-linux-x64.tar.gz
+# Source-url: https://raw.githubusercontent.com/dotnet/core/main/release-notes/%_dotnet_major/%{_dotnet_corerelease}/%{_dotnet_sdkrelease}.md dotnet-sdk-%{_dotnet_sdkrelease}-linux-x64.tar.gz
 Source: %name-%version.tar
 
 # aarch64
-# Source2-url: https://download.visualstudio.microsoft.com/download/pr/64fdef9d-d8bc-44b5-82e8-fe7757f779ab/5a137338f90e0404eb8df034501549b9/dotnet-sdk-7.0.114-linux-arm64.tar.gz
+# Source2-url: https://raw.githubusercontent.com/dotnet/core/main/release-notes/%_dotnet_major/%{_dotnet_corerelease}/%{_dotnet_sdkrelease}.md dotnet-sdk-%{_dotnet_sdkrelease}-linux-arm64.tar.gz
 Source2: %name-aarch64-%version.tar
+
 
 ExclusiveArch: x86_64 aarch64
 
@@ -124,6 +125,16 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Fri Apr 05 2024 Vitaly Lipatov <lav@altlinux.ru> 7.0.17-alt1
+- The .NET 7.0.17 and .NET SDK 7.0.117 releases
+- CVE-2024-0056: Microsoft.Data.SqlClient and System.Data.SqlClient SQL Data provider Information Disclosure Vulnerability
+- CVE-2024-0057: .NET Security Feature bypass Vulnerability
+- CVE-2024-21319: .NET Denial of Service Vulnerability
+- CVE-2024-21386: .NET Denial of Service Vulnerability
+- CVE-2024-21404: .NET Denial of Service Vulnerability
+- CVE-2024-21392: .NET Denial of Service Vulnerability
+- CVE-2024-26190: Microsoft QUIC Denial of Service Vulnerability
+
 * Tue Jan 09 2024 Vitaly Lipatov <lav@altlinux.ru> 7.0.14-alt1
 - The .NET 7.0.14 and .NET SDK 7.0.114 releases
 - CVE-2023-36049: .NET Elevation of Privilege Vulnerability
