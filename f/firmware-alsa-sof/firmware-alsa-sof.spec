@@ -1,5 +1,5 @@
 %global _firmwarepath  /lib/firmware
-%define version_major 2.2.6
+%define version_major 2024.03
 Summary: Firmware and topology files for Sound Open Firmware project
 Name: firmware-alsa-sof
 Version: %version_major
@@ -41,13 +41,13 @@ alsatplg -c /usr/share/alsa/topology/hda-dsp/skl_hda_dsp_generic-tplg.conf \
 
 %install
 mkdir -p  %buildroot%_firmwarepath/intel/
-cp -a sof-tplg-v%version  %buildroot%_firmwarepath/intel/sof-tplg-v%version
-install %SOURCE2 %buildroot%_firmwarepath/intel/sof-tplg-v%version/
-install %SOURCE3 %buildroot%_firmwarepath/intel/sof-tplg-v%version/
-install %SOURCE4 %buildroot%_firmwarepath/intel/sof-tplg-v%version/
-install %SOURCE5 %buildroot%_firmwarepath/intel/sof-tplg-v%version/
-cp -a sof-v%version  %buildroot%_firmwarepath/intel/sof
-ln -s sof-tplg-v%version %buildroot%_firmwarepath/intel/sof-tplg
+for d in sof sof-ipc4 sof-ipc4-tplg sof-tplg; do \
+  cp -a "${d}" %buildroot%_firmwarepath/intel/; \
+done
+install %SOURCE2 %buildroot%_firmwarepath/intel/sof-tplg/
+install %SOURCE3 %buildroot%_firmwarepath/intel/sof-tplg/
+install %SOURCE4 %buildroot%_firmwarepath/intel/sof-tplg/
+install %SOURCE5 %buildroot%_firmwarepath/intel/sof-tplg/
 install -m0644 skl_hda_dsp_generic-tplg.bin %buildroot%_firmwarepath/
 
 # gather files and directories
@@ -63,6 +63,14 @@ sed -i -e 's!^!/lib/firmware/!' alsa-sof-firmware.{files,debug-files,dirs}
 sed -e 's/^/%%dir /' alsa-sof-firmware.dirs >> alsa-sof-firmware.files
 cat alsa-sof-firmware.files
 
+%pretrans -p <lua>
+path = "%{_firmwarepath}/intel/sof-tplg"
+st = posix.stat(path)
+if st and st.type == "link" then
+  os.remove(path)
+end
+
+
 %files -f alsa-sof-firmware.files
 %doc LICENCE*  README*
 %dir %_firmwarepath
@@ -73,6 +81,9 @@ cat alsa-sof-firmware.files
 %files debug -f alsa-sof-firmware.debug-files
 
 %changelog
+* Fri Apr 05 2024 Anton Farygin <rider@altlinux.ru> 2024.03-alt1
+- 2.2.6 -> 2024.03
+
 * Thu Jul 13 2023 Anton Farygin <rider@altlinux.ru> 2.2.6-alt1
 - 2.2.5 -> 2.2.6
 
