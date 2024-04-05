@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.3.0
-Release: alt2
+Version: 5.1.0
+Release: alt1
 Summary: Context managers by Jaraco
 License: MIT
 Group: Development/Python3
@@ -54,6 +54,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Fri Apr 05 2024 Stanislav Levin <slev@altlinux.org> 5.1.0-alt1
+- 4.3.0 -> 5.1.0.
+
 * Fri Apr 21 2023 Stanislav Levin <slev@altlinux.org> 4.3.0-alt2
 - Mapped PyPI name to distro's one.
 
