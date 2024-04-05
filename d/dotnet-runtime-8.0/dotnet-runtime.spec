@@ -2,9 +2,9 @@
 %def_disable dotnet_host
 
 %define _dotnet_major 8.0
-%define _dotnet_corerelease 8.0.2
+%define _dotnet_corerelease 8.0.3
 # used for build
-%define _dotnet_sdkrelease 8.0.102
+%define _dotnet_sdkrelease 8.0.103
 %define preview %nil
 %define _dotnet_sdkshortrelease %_dotnet_sdkrelease%preview
 
@@ -26,7 +26,7 @@
 %endif
 
 Name: dotnet-runtime-%_dotnet_major
-Version: 8.0.2%preview
+Version: 8.0.3%preview
 Release: alt1
 
 Summary: Microsoft .NET Runtime and Microsoft.NETCore.App
@@ -396,6 +396,9 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Fri Apr 05 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.3-alt1
+- new version (8.0.3) with rpmgs script
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.2-alt1
 - .NET 8.0.2 release
 - CVE-2023-36038: .NET Denial of Service Vulnerability

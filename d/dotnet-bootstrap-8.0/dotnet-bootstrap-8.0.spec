@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 8.0
-%define _dotnet_corerelease 8.0.2
+%define _dotnet_corerelease 8.0.3
 #define _dotnet_sdkmanifestsrelease1 %nil
 %define _dotnet_sdkmanifestsrelease 8.0.100
-%define _dotnet_sdkrelease 8.0.102
+%define _dotnet_sdkrelease 8.0.103
 %define _dotnet_aspnetcorerelease %_dotnet_corerelease
 %define _dotnet_templatesrelease %_dotnet_corerelease
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
@@ -17,7 +17,7 @@
 %define _dotnetdir %_libdir/%name
 
 Name: dotnet-bootstrap-%_dotnet_major
-Version: 8.0.2%preview
+Version: 8.0.3%preview
 Release: alt1
 
 Summary: .NET 8 SDK binaries
@@ -30,11 +30,11 @@ Group: Development/Other
 # from https://github.com/dotnet/core/tree/master/release-notes/8.0
 
 # x86_64
-# Source-url: https://download.visualstudio.microsoft.com/download/pr/672cfd95-c7fe-42e3-8b68-30c74f7af88e/ecdaa65fe42b6572ed37d407c26de8a2/dotnet-sdk-8.0.102-linux-x64.tar.gz
+# Source-url: https://raw.githubusercontent.com/dotnet/core/main/release-notes/8.0/%{_dotnet_corerelease}/%{_dotnet_sdkrelease}.md dotnet-sdk-%{_dotnet_sdkrelease}-linux-x64.tar.gz
 Source: %name-%version.tar
 
 # aarch64
-# Source2-url: https://download.visualstudio.microsoft.com/download/pr/23568042-614a-41d3-a6b9-51e178e42977/cb1e1f4f5fb5d46080a60cd14d631660/dotnet-sdk-8.0.102-linux-arm64.tar.gz
+# Source2-url: https://raw.githubusercontent.com/dotnet/core/main/release-notes/8.0/%{_dotnet_corerelease}/%{_dotnet_sdkrelease}.md dotnet-sdk-%{_dotnet_sdkrelease}-linux-arm64.tar.gz
 Source2: %name-aarch64-%version.tar
 
 ExclusiveArch: x86_64 aarch64
@@ -128,6 +128,10 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Fri Apr 05 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.3-alt1
+- CVE-2024-21392: .NET Denial of Service Vulnerability
+- CVE-2024-26190: Microsoft QUIC Denial of Service Vulnerability
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.2-alt1
 - The .NET 8.0.2 and .NET SDK 8.0.2 release
 - CVE-2023-36038: .NET Denial of Service Vulnerability
