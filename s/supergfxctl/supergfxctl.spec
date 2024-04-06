@@ -1,5 +1,5 @@
 Name: supergfxctl
-Version: 5.1.2
+Version: 5.2.1
 Release: alt1
 
 Summary: Super graphics mode controller
@@ -58,5 +58,8 @@ install -D -m 0644 README.md %buildroot%_docdir/%name/README.md
 %_docdir/%name/*
 
 %changelog
+* Sat Apr 06 2024 Vitaly Lipatov <lav@altlinux.ru> 5.2.1-alt1
+- new version 5.2.1 (with rpmrb script)
+
 * Sat Oct 28 2023 Vitaly Lipatov <lav@altlinux.ru> 5.1.2-alt1
 - initial build for ALT Sisyphus (thanks, ROSA!)
