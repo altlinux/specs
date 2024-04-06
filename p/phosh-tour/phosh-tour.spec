@@ -1,10 +1,13 @@
 %def_disable snapshot
 
-%define gmobile_ver v0.0.6
+%define gmobile_ver v0.1.0
 %define rdn_name mobi.phosh.PhoshTour
 
+%def_disable embed_gmobile
+%def_enable check
+
 Name: phosh-tour
-Version: 0.37.0
+Version: 0.38.0
 Release: alt1
 
 Summary: Phosh Tour
@@ -19,23 +22,27 @@ Source: https://gitlab.gnome.org/World/Phosh/phosh-tour/-/archive/v%version/%nam
 %else
 Source: %name-%version.tar
 %endif
-Source1: gmobile-%gmobile_ver.tar
+%{?_enable_embed_gmobile:Source1: gmobile-%gmobile_ver.tar}
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
 BuildRequires: pkgconfig(gtk4) >= 4.12
 BuildRequires: pkgconfig(libadwaita-1) >= 1.4
-# for gmobile
+%if_enabled embed_gmobile
 BuildRequires: pkgconfig(json-glib-1.0)
+BuildRequires: gobject-introspection-devel}
+%else
+BuildRequires: pkgconfig(gmobile)
+%endif
+
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 Simple introduction to phosh.
 
 %prep
-%setup -n %name-%{?_disable_snapshot:v}%version -a1
-rm -r subprojects/gmobile
-mv gmobile-%gmobile_ver subprojects/gmobile
+%setup -n %name-%{?_disable_snapshot:v}%version %{?_enable_embed_gmobile:-a1
+mv gmobile-%gmobile_ver subprojects/gmobile}
 
 %build
 %meson
@@ -43,8 +50,10 @@ mv gmobile-%gmobile_ver subprojects/gmobile
 
 %install
 %meson_install
+%if_enabled embed_gmobile
 rm %buildroot%_libdir/libgmobile.*
 rm %buildroot%_pkgconfigdir/gmobile.pc
+%endif
 
 %find_lang %name
 
@@ -62,6 +71,10 @@ rm %buildroot%_pkgconfigdir/gmobile.pc
 
 
 %changelog
+* Sat Apr 06 2024 Yuri N. Sedunov <aris@altlinux.org> 0.38.0-alt1
+- 0.38.0
+- build against shared gmobile-0.1.0 library
+
 * Wed Mar 27 2024 Yuri N. Sedunov <aris@altlinux.org> 0.37.0-alt1
 - first build for Sisyphus
 
