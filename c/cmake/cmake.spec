@@ -11,7 +11,7 @@
 %define _cmake__builddir build
 
 Name: cmake
-Version: 3.29.0
+Version: 3.29.1
 Release: alt1
 
 Summary: Cross-platform, open-source make system
@@ -23,7 +23,6 @@ Url: http://cmake.org/
 # Source-url: https://gitlab.kitware.com/cmake/cmake/-/archive/v%version/cmake-v%version.tar.bz2
 Source: %name-%version.tar
 
-Source1: %name.macros
 Source2: CMakeCache.txt
 Patch1: alt-fallback-modules-dir.patch
 Patch2: 696d16ae6c5214e314cfc7cb809c2e574bcff651.patch
@@ -54,10 +53,12 @@ Obsoletes: cpack < 2.4.5-alt3
 Provides: cpack = %version-%release
 
 Requires: %name-modules = %version-%release
-Requires: rpm-macros-%name = %version-%release
-
+# TODO: change cmake to rpm-build-cmake in all specs
+Requires: rpm-macros-%name
 
 %add_findreq_skiplist %_datadir/%name/Templates/cygwin-package.sh.in
+
+%filter_from_requires /^gnustep-Backbone.*/d
 
 %description
 CMake is used to control the software compilation process using
@@ -140,17 +141,6 @@ BuildArch: noarch
 
 %description -n bash-completion-%name
 bash completion for CMake
-
-
-%package -n rpm-macros-%name
-Summary: Set of RPM macros for packaging applications that use cmake
-Group: Development/Other
-Conflicts: cmake = 2.8.0-alt1
-Conflicts: rpm-build-compat <= 1.5.1-alt1
-
-%description -n rpm-macros-%name
-Set of RPM macros for packaging applications that use cmake.
-
 
 %prep
 %setup
@@ -235,7 +225,6 @@ mkdir -p %buildroot{%vim_indent_dir,%vim_syntax_dir,%_sysconfdir/bash_completion
 install -m644 Auxiliary/vim/indent/%name.vim %buildroot%vim_indent_dir/%name.vim
 install -m644 Auxiliary/vim/syntax/%name.vim %buildroot%vim_syntax_dir/%name.vim
 rm -rf %buildroot%_datadir/%name/editors/vim
-install -pD -m644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 
 #mv -f %buildroot%_datadir/%name/completions %buildroot%_sysconfdir/bash_completion.d/%name
 rm -vf %buildroot/usr/share/emacs/site-lisp/cmake-mode.el
@@ -335,12 +324,12 @@ popd
 #%_sysconfdir/bash_completion.d/*
 %_datadir/bash-completion/completions/*
 
-%files -n rpm-macros-%name
-%_rpmmacrosdir/*
-
-%filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Sat Apr 06 2024 Vitaly Lipatov <lav@altlinux.ru> 3.29.1-alt1
+- new version 3.29.1 (with rpmrb script)
+- build rpm-macros-cmake subpackage standalone
+
 * Sun Mar 24 2024 Vitaly Lipatov <lav@altlinux.ru> 3.29.0-alt1
 - new version 3.29.0
 - spec: stop using nested if
