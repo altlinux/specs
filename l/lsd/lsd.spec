@@ -4,8 +4,8 @@
 %define cargo_test %rust_test
 
 Name: lsd
-Version: 1.0.0
-Release: alt2
+Version: 1.1.2
+Release: alt1
 
 Summary: Ls command with a lot of pretty colors and some other stuff
 
@@ -45,11 +45,13 @@ EOF
 
 %files
 %doc LICENSE
-%doc CHANGELOG.md
 %doc README.md
 %_bindir/lsd
 
 %changelog
+* Sat Apr 06 2024 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
+- new version 1.1.2 (with rpmrb script)
+
 * Fri Mar 08 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.0.0-alt2
 - NMU: fixed FTBFS on LoongArch
 
