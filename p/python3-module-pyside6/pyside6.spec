@@ -18,7 +18,7 @@
 
 Name: python3-module-%mod_name
 Version: 6.6.2
-Release: alt3.1
+Release: alt3.2
 
 Summary: Python bindings for the Qt cross-platform application and UI framework
 Group: Development/Python3
@@ -34,6 +34,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-ninja
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-qt6
+BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires(pre): cmake
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
@@ -104,7 +105,7 @@ BuildRequires: libqt6-uitools
 BuildRequires: libqt6-webchannel
 BuildRequires: qt6-webchannel-devel
 BuildRequires: qt6-webchannel
-%ifarch x86_64 aarch64
+%ifarch %qt6_qtwebengine_arches
 BuildRequires: qt6-webengine-devel
 %endif
 
@@ -303,6 +304,10 @@ popd
 %python3_sitelibdir/shiboken6_generator-%version-*.egg-info
 
 %changelog
+* Sat Apr 06 2024 Ivan A. Melnikov <iv@altlinux.org> 6.6.2-alt3.2
+- NMU: use rpm-macros-qt6-webengine (enables build with
+  webengine on loongarch64).
+
 * Fri Apr 05 2024 Andrey Cherepanov <cas@altlinux.org> 6.6.2-alt3.1
 - NMU: set limited-api=no for use old-style function like PyUnicode_AsUTF8.
 
