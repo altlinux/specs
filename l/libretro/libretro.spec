@@ -2,7 +2,7 @@
 
 Summary:	An interface for emulator and game ports
 Name:		libretro
-Version:	20200729
+Version:	20240406
 Release:	alt1
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
@@ -19,7 +19,7 @@ BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	pkgconfig(libpcap)
-BuildRequires:	libstdc++-devel
+BuildRequires:	libstdc++-devel-static
 
 Requires: %name-2048
 Requires: %name-bluemsx
@@ -475,6 +475,78 @@ Provides: libretro-core
 %description virtualjaguar
 virtualjaguar core for libretro.
 
+%package bsnes_cplusplus98
+Summary:  bsnes_cplusplus98 core for libretro
+Group: Emulators
+Provides: libretro-core
+
+%description  bsnes_cplusplus98
+ bsnes_cplusplus98 core for libretro.
+
+%package dinothawr
+Summary:  dinothawr core for libretro
+Group: Emulators
+Provides: libretro-core
+
+%description  dinothawr
+ dinothawr core for libretro.
+
+%package gw
+Summary: gw core for libretro
+Group: Emulators
+Provides: libretro-core
+
+%description gw
+ gw core for libretro.
+
+%package lutro
+Summary:  lutro core for libretro
+Group: Emulators
+Provides: libretro-core
+
+%description lutro
+ lutro core for libretro.
+
+%package mame2003
+Summary: mame2003 core for libretro
+Group: Emulators
+Provides: libretro-core
+
+%description mame2003
+ mame2003 core for libretro.
+
+%package mednafen_psx_hw
+Summary: mednafen_psx_hw core for libretro
+Group: Emulators
+Provides: libretro-core
+
+%description mednafen_psx_hw
+ mednafen_psx_hw core for libretro.
+
+%package mednafen_psx
+Summary:  mednafen_psx core for libretro
+Group: Emulators
+Provides: libretro-core
+
+%description  mednafen_psx
+ mednafen_psx core for libretro.
+
+%package pcsx_rearmed
+Summary: pcsx_rearmed core for libretro
+Group: Emulators
+Provides: libretro-core
+
+%description pcsx_rearmed
+ pcsx_rearmed core for libretro.
+
+%package tyrquake
+Summary: tyrquake core for libretro
+Group: Emulators
+Provides: libretro-core
+
+%description tyrquake
+ tyrquake core for libretro
+ 
 %prep
 %setup -q
 
@@ -678,6 +750,55 @@ rm -f %{buildroot}%{_libexecdir}/%{name}/*.info
 %dir %{_libexecdir}/%{name}
 %{_libexecdir}/%{name}/virtualjaguar_libretro.so
 
+%files bsnes_cplusplus98
+%dir %{_libexecdir}/%{name}
+%{_libexecdir}/%{name}/bsnes_cplusplus98_libretro.so
+
+%files dinothawr
+%dir %{_libexecdir}/%{name}
+%{_libexecdir}/%{name}/dinothawr_libretro.so
+
+%files gw
+%dir %{_libexecdir}/%{name}
+%{_libexecdir}/%{name}/gw_libretro.so
+
+%files lutro
+%dir %{_libexecdir}/%{name}
+%{_libexecdir}/%{name}/lutro_libretro.so
+
+%files mame2003
+%dir %{_libexecdir}/%{name}
+%{_libexecdir}/%{name}/mame2003_libretro.so
+
+%files mednafen_psx_hw
+%dir %{_libexecdir}/%{name}
+%{_libexecdir}/%{name}/mednafen_psx_hw_libretro.so
+
+%files mednafen_psx
+%dir %{_libexecdir}/%{name}
+%{_libexecdir}/%{name}/mednafen_psx_libretro.so
+
+%files pcsx_rearmed
+%dir %{_libexecdir}/%{name}
+%{_libexecdir}/%{name}/pcsx_rearmed_libretro.so
+
+%files tyrquake
+%dir %{_libexecdir}/%{name}
+%{_libexecdir}/%{name}/tyrquake_libretro.so
+
 %changelog
+* Sat Apr  6 2024  Artyom Bystrov <arbars@altlinux.org> 20240406-alt1
+- update to new version
+- added new cores:
+  bsnes_cplusplus98
+  dinothawr
+  gw
+  lutro
+  mame2003
+  mednafen_psx
+  mednafen_psx_hw
+  pcsx_rearmed
+  tyrquake 
+
 * Wed Mar 20 2024 Artyom Bystrov <arbars@altlinux.org> 20200729-alt1
 - Initial commit for Sisyphus
