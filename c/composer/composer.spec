@@ -27,7 +27,7 @@
 # Note: /usr/bin/compose still use php command
 
 Name: composer
-Version: 2.7.1
+Version: 2.7.2
 Release: alt1
 
 Summary: Composer helps you declare, manage and install dependencies of PHP projects, ensuring you have the right stack everywhere
@@ -74,7 +74,7 @@ cp %SOURCE4 .
 %build
 # unused date
 # Note! stat -c%%y output is incompatible with date in python!
-export RELDATE="$(stat -c '%%y' CHANGELOG.md | sed -e 's|\.[0-9]* | |')"
+export RELDATE="$(stat -c '%%y' composer.json | sed -e 's|\.[0-9]* | |')"
 #build composer.phar
 %defphp -d phar.readonly=off -d date.timezone='Europe/Moscow' ./compile %version "$RELDATE"
 
@@ -90,6 +90,9 @@ install -m 0644 -D %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Sat Apr 06 2024 Vitaly Lipatov <lav@altlinux.ru> 2.7.2-alt1
+- new version 2.7.2 (with rpmrb script)
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 2.7.1-alt1
 - new version 2.7.1 (with rpmrb script)
 - build with php8.2 by default
