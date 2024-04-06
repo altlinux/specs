@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: phosh-osk-stub
-Version: 0.37.0
+Version: 0.38.0
 Release: alt1
 
 Summary: Phosh OSK Stub
@@ -89,6 +89,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sat Apr 06 2024 Yuri N. Sedunov <aris@altlinux.org> 0.38.0-alt1
+- 0.38.0
+
 * Thu Mar 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.37.0-alt1
 - 0.37.0
 
