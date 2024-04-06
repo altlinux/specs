@@ -1,12 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-# section [ 4] '.rela.plt': relocation 0: invalid symbol index
-%set_verify_elf_method strict,lint=relaxed
+%set_verify_elf_method strict
 
 Name: dropbear
 Summary: A smallish SSH server and client
-Version: 2022.83
-Release: alt2
+Version: 2024.84
+Release: alt1
 License: MIT
 Group: System/Servers
 Url: https://matt.ucc.asn.au/dropbear/dropbear.html
@@ -104,6 +103,9 @@ EOF
 %_bindir/scp
 
 %changelog
+* Fri Apr 05 2024 Vitaly Chikunov <vt@altlinux.org> 2024.84-alt1
+- Update to DROPBEAR_2024.84 (2024-04-04).
+
 * Sun Feb 11 2024 Vitaly Chikunov <vt@altlinux.org> 2022.83-alt2
 - Backport the fix for the Terrapin attack (fixes CVE-2023-48795).
 - Undo static linking (ALT#49349).
