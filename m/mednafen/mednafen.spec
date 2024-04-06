@@ -1,5 +1,5 @@
 Name: mednafen
-Version: 1.32.0
+Version: 1.32.1
 Release: alt1
 
 Summary: Multi-consoles Emulator
@@ -9,7 +9,8 @@ Url: http://mednafen.sourceforge.net/
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 # http://downloads.sourceforge.net/%%name/%%name-%%version.tar.bz2
-Source: %name-%version-UNSTABLE.tar.xz
+#Source: %name-%version-UNSTABLE.tar.xz
+Source: %name-%version.tar.xz
 Patch1: mednafen-e2k.patch
 Patch2: libco-ppc64v2-swap-global.patch
 
@@ -86,6 +87,9 @@ export CXXFLAGS
 
 
 %changelog
+* Sat Apr 06 2024 Ilya Mashkin <oddity@altlinux.ru> 1.32.1-alt1
+- version 1.32.1
+
 * Tue Jan 23 2024 Ilya Mashkin <oddity@altlinux.ru> 1.32.0-alt1
 - version 1.32.0
 
