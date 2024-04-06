@@ -1,8 +1,8 @@
 %define up_name DisplayCAL
 
 Name: displaycal
-Version: 3.9.11
-Release: alt4
+Version: 3.9.12
+Release: alt1
 
 Summary: A graphical user interface for the Argyll CMS display calibration utilities
 
@@ -94,6 +94,9 @@ rm -v %buildroot%python3_sitelibdir/%up_name/{setup.py,postinstall.py}
 
 
 %changelog
+* Sat Apr 06 2024 Vitaly Lipatov <lav@altlinux.ru> 3.9.12-alt1
+- new version 3.9.12 (with rpmrb script)
+
 * Sun Oct 22 2023 Vitaly Lipatov <lav@altlinux.ru> 3.9.11-alt4
 - remove setup.py designed for uninstall only
 
