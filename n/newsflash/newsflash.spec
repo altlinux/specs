@@ -2,14 +2,14 @@
 %define optflags_lto %nil
 
 %define _name news_flash_gtk
-%define ver_major 3.1
+%define ver_major 3.2
 %define rdn_name io.gitlab.news_flash.NewsFlash
 
 %def_disable bootstrap
 %def_enable check
 
 Name: newsflash
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: NewsFlash is a RSS reader
@@ -24,9 +24,6 @@ Vcs: https://gitlab.com/news-flash/news_flash_gtk.git
 Source: %_name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
-
-# [ppc64le] error: failed to run custom build command for `ring v0.16.20`
-#ExcludeArch: ppc64le
 
 %define gtk_ver 4.12
 %define adwaita_ver 1.4
@@ -78,6 +75,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sat Apr 06 2024 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
 * Fri Mar 08 2024 Yuri N. Sedunov <aris@altlinux.org> 3.1.6-alt1
 - 3.1.6
 
