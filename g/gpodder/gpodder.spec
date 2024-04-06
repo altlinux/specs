@@ -3,7 +3,7 @@
 
 Name: gpodder
 Version: 3.11.4
-Release: alt1
+Release: alt1.1
 
 Summary: Media aggregator and podcast client
 License: GPL-3.0-or-later
@@ -17,6 +17,7 @@ Vcs: https://github.com/gpodder/gpodder.git
 Source: %name-%version.tar
 %endif
 Patch: %name-3.11.1-alt-AyatanaAppIndicator.patch
+Patch10: %name-3.11.4-up-python-3.12.patch
 
 BuildArch: noarch
 
@@ -49,6 +50,7 @@ Requires: %_bindir/ffmpeg xdg-utils yt-dlp
 Requires: python3-module-eyeD3
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires: python3(setuptools)
 BuildRequires: python3-devel python3-module-mygpoclient
 BuildRequires: python3-module-feedparser
 BuildRequires: help2man intltool desktop-file-utils
@@ -100,6 +102,9 @@ PYTHON=python3 PYTEST=%_bindir/py.test3 %make unittest
 
 
 %changelog
+* Sat Apr 06 2024 Yuri N. Sedunov <aris@altlinux.org> 3.11.4-alt1.1
+- fixed build with python-3.12
+
 * Thu Oct 12 2023 Yuri N. Sedunov <aris@altlinux.org> 3.11.4-alt1
 - 3.11.4
 

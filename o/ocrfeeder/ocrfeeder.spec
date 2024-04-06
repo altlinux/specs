@@ -1,10 +1,10 @@
-%def_disable snapshot
+%def_enable snapshot
 %define ver_major 0.8
 %define xdg_name org.gnome.OCRFeeder
 
 Name: ocrfeeder
 Version: %ver_major.5
-Release: alt2
+Release: alt3
 
 Summary: OCRFeeder is a document layout analysis and optical character recognition system
 Group: Graphics
@@ -32,7 +32,7 @@ BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: intltool yelp-tools
 BuildRequires: python3-devel python3-module-pygobject3-devel
 BuildRequires: typelib(Gtk) = 3.0 typelib(GooCanvas) = 2.0
-BuildRequires: python3-module-enchant python3-module-Pillow
+BuildRequires: python3(imp) python3(enchant) python3-module-Pillow
 BuildRequires: python3-module-Reportlab python3-module-odfpy
 BuildRequires: python3-module-sane
 
@@ -83,6 +83,9 @@ export PYTHON=%__python3
 %python3_sitelibdir/ocrfeeder
 
 %changelog
+* Sat Apr 06 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.5-alt3
+- updated to 0.8.5-10-geb187ec
+
 * Mon Dec 05 2022 Yuri N. Sedunov <aris@altlinux.org> 0.8.5-alt2
 - python3-module-%%name: explicitly required typelib(GooCanvas) = 2.0
   (ALT #40987)

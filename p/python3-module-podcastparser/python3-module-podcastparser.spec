@@ -1,9 +1,10 @@
+%def_enable snapshot
 %define pypi_name podcastparser
 %def_enable check
 
 Name: python3-module-%pypi_name
 Version: 0.6.10
-Release: alt1
+Release: alt2
 
 Summary: Simple, fast and efficient podcast parser written in Python3.
 Group: Development/Python3
@@ -13,7 +14,11 @@ Url: http://gpodder.org/%pypi_name
 BuildArch: noarch
 
 Vcs: https://github.com/gpodder/podcastparser.git
+%if_disabled snapshot
 Source: https://github.com/gpodder/%pypi_name/archive/%version/%pypi_name-%version.tar.gz
+%else
+Source: %pypi_name-%version.tar
+%endif
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel rpm-build-python3 python3-module-setuptools python3(wheel)
@@ -33,7 +38,7 @@ easy and reliable way of parsing RSS- and Atom-based podcast feeds in Python.
 %pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
+export PYTHONPATH=./
 py.test3
 
 %files
@@ -43,6 +48,9 @@ py.test3
 
 
 %changelog
+* Tue Feb 13 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.10-alt2
+- updated to 0.6.10-4-g03e5477 (fixed build with python-3.12)
+
 * Tue Apr 18 2023 Yuri N. Sedunov <aris@altlinux.org> 0.6.10-alt1
 - 0.6.10
 
