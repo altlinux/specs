@@ -1,5 +1,5 @@
 Name: duplicity
-Version: 2.2.1
+Version: 2.2.3
 Release: alt1
 
 Summary: Untrusted/encrypted backup using rsync algorithm
@@ -70,6 +70,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%name-*.egg-info
 
 %changelog
+* Sat Apr 06 2024 Vitaly Lipatov <lav@altlinux.ru> 2.2.3-alt1
+- new version 2.2.3 (with rpmrb script)
+
 * Mon Feb 19 2024 Vitaly Lipatov <lav@altlinux.ru> 2.2.1-alt1
 - new version 2.2.1 (with rpmrb script)
 - no more rdiffdir binary
