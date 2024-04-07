@@ -51,7 +51,7 @@
 
 Name: blender
 Version: 4.1.0
-Release: alt0.3
+Release: alt0.4
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -451,6 +451,9 @@ popd
 %endif
 
 %changelog
+* Sun Apr 07 2024 L.A. Kostis <lakostis@altlinux.ru> 4.1.0-alt0.4
+- Fix cycles-gfx1031-kernel patch.
+
 * Sun Apr 07 2024 L.A. Kostis <lakostis@altlinux.ru> 4.1.0-alt0.3
 - Applied fixes for cycles:
   + cycles/hip: reduce opt level and enable hipcc-func-supp for
