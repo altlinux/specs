@@ -51,7 +51,7 @@
 
 Name: blender
 Version: 4.1.0
-Release: alt0.2
+Release: alt0.3
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -85,6 +85,9 @@ Patch31: blender-alt-osl-shader-dir.patch
 # needed for dynamic clang libs
 Patch32: blender-4.1-alt-use-libclang.patch
 Patch33: blender-alt-cycles-aarch64-hip-cuda-fix.patch
+# need to send this to upstream
+# https://github.com/ROCm/llvm-project/issues/58#issuecomment-2041433424
+Patch34: blender-cycles-fix-gfx1031-kernel.patch
 
 # upstream fixes to merge
 
@@ -294,6 +297,7 @@ This package contains binaries for Nvidia GPUs to use with CUDA.
 #%%patch30 -p1
 %patch31 -p1
 #%%patch32 -p1
+%patch34 -p1 -b .gfx1030-kernel-fix
 
 # upstream patches
 
@@ -447,8 +451,13 @@ popd
 %endif
 
 %changelog
+* Sun Apr 07 2024 L.A. Kostis <lakostis@altlinux.ru> 4.1.0-alt0.3
+- Applied fixes for cycles:
+  + cycles/hip: reduce opt level and enable hipcc-func-supp for
+    gfx1031 kernel (see https://github.com/ROCm/llvm-project/issues/58)
+
 * Thu Apr 04 2024 L.A. Kostis <lakostis@altlinux.ru> 4.1.0-alt0.2
-- Enable on all supported 64-bit arches.
+- HIP: Enable on all supported 64-bit arches.
 - aarch64: added HIP/CUDA build workaround.
 
 * Wed Apr 03 2024 L.A. Kostis <lakostis@altlinux.ru> 4.1.0-alt0.1
