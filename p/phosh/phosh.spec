@@ -1,10 +1,11 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.37
+%define ver_major 0.38
 %define beta %nil
 %define api_ver 0
 %define rdn_name sm.puri.Phosh
 %define dev_uid 1000
+%define gmobile_ver v0.0.6
 
 %def_enable gtk_doc
 %def_enable man
@@ -14,7 +15,7 @@
 %def_disable check
 
 Name: phosh
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A pure Wayland shell for mobile devices
@@ -30,6 +31,8 @@ Source: %name-%version%beta.tar
 %endif
 Source1: %name.pam
 Source2: sm.puri.OSK0.desktop
+%{?_enable_snapshot:Source3: gmobile-%gmobile_ver.tar}
+
 Patch1: %name-0.28.0-alt-tcb-check.patch
 # https://bugzilla.altlinux.org/46930
 Patch2: %name-0.29.0-alt-service.patch
@@ -84,6 +87,7 @@ BuildRequires: pkgconfig(fribidi)
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(libecal-2.0)
 BuildRequires: pkgconfig(evince-document-3.0)
+BuildRequires: pkgconfig(libsoup-3.0)
 %{?_enable_gtk_doc:BuildRequires: gi-docgen libhandy1-gir-devel}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_check:BuildRequires: xvfb-run dbus at-spi2-core}
@@ -117,7 +121,8 @@ Requires: %name = %EVR
 This package provides files needed to develop Phosh plugins.
 
 %prep
-%setup -n %name-%version%beta
+%setup -n %name-%version%beta %{?_enable_snapshot:-a3
+mv gmobile-%gmobile_ver/* subprojects/gmobile}
 %patch1 -p2
 %patch2 -p1 -b .alt
 %patch3 -p1 -b .alt-dm
@@ -206,6 +211,9 @@ xvfb-run %__meson_test
 %{?_enable_gtk_doc:%doc %_datadir/doc/%name-%api_ver}
 
 %changelog
+* Sun Apr 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.38.0-alt1
+- 0.38.0
+
 * Mon Apr 01 2024 Yuri N. Sedunov <aris@altlinux.org> 0.37.1-alt1
 - 0.37.1
 

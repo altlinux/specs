@@ -1,10 +1,14 @@
-%def_enable snapshot
+%def_disable snapshot
 
+%define ver_major 0.38
 %define gmobile_ver v0.0.6
 %define rdn_name mobi.phosh.MobileSettings
 
+# Linux dmabuf support unavailable
+%def_disable check
+
 Name: phosh-mobile-settings
-Version: 0.37.0
+Version: %ver_major.0
 Release: alt1
 
 Summary: Mobile Settings App for phosh and related components
@@ -22,6 +26,8 @@ Source: %name-%version.tar
 
 Source1: gmobile-%gmobile_ver.tar
 
+%define phoc_ver %ver_major
+
 Requires: dconf lm_sensors3
 
 BuildRequires(pre): rpm-macros-meson
@@ -36,6 +42,7 @@ BuildRequires: pkgconfig(wayland-protocols) >= 1.12
 BuildRequires: pkgconfig(gsound)
 BuildRequires: libsensors3-devel
 BuildRequires: pkgconfig(phosh-plugins)
+%{?_enable_check:BuildRequires: xvfb-run phoc >= %phoc_ver /usr/bin/Xwayland}
 
 # for gmobile
 BuildRequires: pkgconfig(json-glib-1.0)
@@ -59,7 +66,7 @@ rm %buildroot%_pkgconfigdir/gmobile.pc
 %find_lang %name
 
 %check
-%__meson_test
+WLR_RENDERER=pixman xvfb-run %__meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -74,6 +81,9 @@ rm %buildroot%_pkgconfigdir/gmobile.pc
 
 
 %changelog
+* Sat Apr 06 2024 Yuri N. Sedunov <aris@altlinux.org> 0.38.0-alt1
+- 0.38.0
+
 * Fri Mar 08 2024 Yuri N. Sedunov <aris@altlinux.org> 0.37.0-alt1
 - 0.37.0
 

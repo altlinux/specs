@@ -1,12 +1,13 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.37
+%define ver_major 0.38
 %define api_ver 0
 %define beta %nil
 %define rdn_name sm.puri.Phoc
+%define xdg_name mobi.phosh.Phoc
 
 %define dev_uid 500
-%define wlroots_ver 0.17.1
+%define wlroots_ver 0.17.2
 %define gmobile_ver v0.0.6
 
 # since 0.30 system 0.16 may be used but patched version required
@@ -19,7 +20,7 @@
 
 Name: phoc
 Version: %ver_major.0
-Release: alt1.1%beta
+Release: alt1%beta
 
 Summary: Display compositor designed for mobile devices
 License: GPL-3.0-or-later
@@ -117,9 +118,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 
 %files
 %_bindir/%name
-%_desktopdir/%rdn_name.desktop
+%_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/sm.puri.phoc.gschema.xml
-%_iconsdir/hicolor/symbolic/apps/%rdn_name.svg
+%_iconsdir/hicolor/symbolic/apps/%xdg_name.svg
 %{?_enable_man:%_man1dir/%name.1*
 %_man5dir/%name.ini.5*}
 %doc README.md NEWS
@@ -128,6 +129,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Sat Apr 06 2024 Yuri N. Sedunov <aris@altlinux.org> 0.38.0-alt1
+- 0.38.0
+
 * Sat Mar 16 2024 Yuri N. Sedunov <aris@altlinux.org> 0.37.0-alt1.1
 - fixed BR
 
