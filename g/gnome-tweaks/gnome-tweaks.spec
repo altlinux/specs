@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 %define ver_major 46
 %define beta %nil
@@ -10,12 +10,12 @@
 
 Name: gnome-tweaks
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: A tool to customize advanced GNOME 3 options
+License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
-License: GPLv3
-Url: https://wiki.gnome.org/Apps/Tweaks
+Url: https://gitlab.gnome.org/GNOME/gnome-tweaks
 
 %if_enabled snapshot
 Source: %name-%version.tar
@@ -92,6 +92,9 @@ Features:
 %doc AUTHORS NEWS README*
 
 %changelog
+* Sun Apr 07 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt2
+- updated to 46.0-9-g6307804 (ALT #49758)
+
 * Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 
