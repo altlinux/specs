@@ -6,7 +6,7 @@
 
 Name: perl
 Version: 5.38.2
-Release: alt0.1
+Release: alt0.2
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -197,6 +197,14 @@ Requires: perl-Pod-Simple
 Conflicts: perl-base < 1:5.37
 %bootstrap_tagset
 
+%package diagnostics
+Summary: Produce verbose warning diagnostics
+Group: Development/Perl
+BuildArch: noarch
+Requires: perl-base = %EVR
+Conflicts: perl-base <= 1:5.38.2-alt0.1
+%bootstrap_tagset
+
 
 %description
 Perl is a high-level programming language with roots in C, sed, awk
@@ -253,6 +261,13 @@ equivalent text will have identical binary representations.
 This module converts files from pod format (see perlpod) to HTML format.
 It can automatically generate indexes and cross-references, and it keeps
 a cache of things it knows how to cross-reference.
+
+%description diagnostics
+The diagnostics module extends the terse diagnostics normally emitted by both
+the perl compiler and the perl interpreter (from running perl with a -w switch
+or "use warnings"), augmenting them with the more explicative and endearing
+descriptions found in perldiag. splain tool explains perl messages found on
+standard input.
 
 
 %prep
@@ -745,13 +760,11 @@ ln -sf perl-bootstrap-wrapper %buildroot%_bindir/perl
 	%_bindir/perlbug
 	%_bindir/perlthanks
 	%_bindir/prove
-	%_bindir/splain
 	%_bindir/xsubpp
 # perl4-compat scripts
 	%_bindir/h2ph
 	%_bindir/pl2pm
 	%privlib/blib.pm
-	%privlib/diagnostics.pm
 	%privlib/dumpvar.pl
 	%privlib/perl5db.pl
 	%privlib/Dumpvalue.pm
@@ -809,9 +822,6 @@ ln -sf perl-bootstrap-wrapper %buildroot%_bindir/perl
 	%privlib/Test.pm
 %dir	%privlib/Test
 %doc	%privlib/Test/Tutorial.pod
-%dir	%privlib/pod
-# perldiag.pod is NOT a doc; it used by diagnostics.pm
-	%privlib/pod/perldiag.pod
 # Test-Simple pieces
 	%privlib/ok.pm
 	%privlib/Test/Builder*
@@ -984,7 +994,17 @@ ln -sf perl-bootstrap-wrapper %buildroot%_bindir/perl
 	%privlib/Pod/Html/Util.pm
 	%_bindir/pod2html
 
+%files	diagnostics
+	%_bindir/splain
+	%privlib/diagnostics.pm
+%dir	%privlib/pod
+# perldiag.pod is NOT a doc; it used by diagnostics.pm
+%doc	%privlib/pod/perldiag.pod
+
 %changelog
+* Sat Apr 06 2024 Vitaly Lipatov <lav@altlinux.ru> 1:5.38.2-alt0.2
+- split diagnostics to perl-diagnostics subpackage (see #31417)
+
 * Fri Dec 01 2023 Igor Vlasenko <viy@altlinux.org> 1:5.38.2-alt0.1
 - 5.38.0 -> 5.38.2
 - lcc support: perl-5.38.0-alt-e2k-bitfields.patch
