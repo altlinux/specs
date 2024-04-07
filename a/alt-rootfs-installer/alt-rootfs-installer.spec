@@ -1,5 +1,5 @@
 Name: alt-rootfs-installer
-Version: 0.5.9
+Version: 0.5.10
 Release: alt1
 Summary: Installer rootfs archive to any specified block device
 License: GPL-2.0-or-later
@@ -7,9 +7,6 @@ Group: System/Configuration/Other
 Url:  https://git.altlinux.org/people/antohami/packages/alt-rootfs-installer.git
 BuildArch: noarch
 Source0: %name-%version.tar
-
-Provides: arm-rootfs-installer = %EVR
-Obsoletes: arm-rootfs-installer < 0.2
 
 %description
 Allows one to first select a source rootfs archive installer. The rootfs must be
@@ -41,6 +38,13 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Fri Apr 05 2024 Anton Midyukov <antohami@altlinux.org> 0.5.10-alt1
+- Update supported boards for u-boot 2024.04
+- socs-utils: rename function update_cmdline.txt -> update_cmdline_txt
+- alt-rootfs-installer: don't include socs-utils ahead of time
+- alt-rootfs-installer: don't include logging ahead of time
+- spec: drop obsoletes/provides arm-rootfs-installer
+
 * Thu Jul 27 2023 Anton Midyukov <antohami@altlinux.org> 0.5.9-alt1
 - alt-rootfs-installer: set serial console for grub also, cleanup quiet
 - Update list of supported boards for u-boot 2023.07
