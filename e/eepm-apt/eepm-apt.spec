@@ -1,5 +1,5 @@
 Name: eepm-apt
-Version: 3.60.0
+Version: 3.60.1
 Release: alt1
 
 Summary: APT like frontend via Etersoft EPM package manager
@@ -22,6 +22,7 @@ AutoProv:no
 AutoReq:no
 
 # Conflicts: /usr/bin/apt
+Conflicts: apt-aliases
 
 # all requires in eepm package
 # Requires: grep
@@ -52,5 +53,10 @@ See detailed description here: http://wiki.etersoft.ru/EPM
 %_bindir/apt
 
 %changelog
+* Sun Apr 07 2024 Vitaly Lipatov <lav@altlinux.ru> 3.60.1-alt1
+- cleanup text info
+- apt: add warning that apt is fake
+- apt: add undocumented clean, autoremove, policy
+
 * Tue Apr 02 2024 Vitaly Lipatov <lav@altlinux.ru> 3.60.0-alt1
 - initial build for ALT Sisyphus
