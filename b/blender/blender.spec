@@ -46,12 +46,16 @@
 # https://devtalk.blender.org/t/does-blender-use-jemalloc-and-or-tbb/13388/10
 %def_with jemalloc
 
-# HIP should work on all 64-bit arches
+%ifarch loongarch64
+%def_without hip
+%else
+# HIP should work on other 64-bit arches
 %def_with hip
+%endif
 
 Name: blender
 Version: 4.1.0
-Release: alt0.4
+Release: alt0.5
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -92,6 +96,7 @@ Patch34: blender-cycles-fix-gfx1031-kernel.patch
 # upstream fixes to merge
 
 Patch2000: blender-e2k-support.patch
+Patch3500: blender-4.1-loongarch64.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-filesystem-devel boost-locale-devel boost-wave-devel boost-python3-devel
@@ -318,6 +323,7 @@ EOF
 sed -i "/-Werror=return-type/d" CMakeLists.txt
 sed -i 's/"${CMAKE_C_COMPILER_VERSION}" VERSION_LESS/"100" VERSION_LESS/' CMakeLists.txt
 %endif
+%patch3500 -p1
 
 # Delete the bundled FindOpenJPEG to make find_package use the system version
 # instead (the local version hardcodes the openjpeg version so it is not update
@@ -451,6 +457,9 @@ popd
 %endif
 
 %changelog
+* Mon Apr 08 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.1.0-alt0.5
+- NMU: fixed FTBFS on LoongArch
+
 * Sun Apr 07 2024 L.A. Kostis <lakostis@altlinux.ru> 4.1.0-alt0.4
 - Fix cycles-gfx1031-kernel patch.
 
