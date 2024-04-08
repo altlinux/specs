@@ -1,6 +1,6 @@
 Name: kernel-source-rtl8192eu
-Version: 5.2.19.1
-Release: alt8.gitd180e40
+Version: 5.11.2.1
+Release: alt1.git3af9a86
 
 Summary: Realtek rtl8192eu official Linux driver
 License: MIT
@@ -28,6 +28,10 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Mon Apr 08 2024 Andrey Cherepanov <cas@altlinux.org> 5.11.2.1-alt1.git3af9a86
+- New version.
+- Added kernel 6.9 support.
+
 * Sat Apr 22 2023 Andrey Cherepanov <cas@altlinux.org> 5.2.19.1-alt8.gitd180e40
 - Added kernel 6.2 support.
 
