@@ -1,7 +1,7 @@
 # TODO : https://github.com/rust-lang/cargo/issues/7058
 Name: snx-rs
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: Open source VPN client for Checkpoint security gateways
 
@@ -16,6 +16,7 @@ Source1: %name-development-%version.tar
 
 ExcludeArch: %ix86 ppc64le
 
+BuildRequires(pre): rpm-macros-features
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
 # libdbus-sys
@@ -26,8 +27,10 @@ BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(gobject-2.0)
 # gdk-sys
 BuildRequires: pkgconfig(gdk-3.0)
+%if_feature webkit2gtk 4.1
 # webkit2gtk (?)
 BuildRequires: pkgconfig(webkit2gtk-4.1)
+%endif
 
 %description
 Open source Linux client for Checkpoint VPN tunnels.
@@ -55,28 +58,40 @@ debug = 0
 EOF
 subst 's|/opt/snx-rs/||' assets/{snx-rs.service,snx-rs-gui.desktop}
 
+%if_notfeature webkit2gtk 4.1
+subst 's|, "snx-rs-gui"||' Cargo.toml
+%endif
+
 %build
 %rust_build
 
 %install
 %rust_install snx-rs
-%rust_install snx-rs-gui
 %rust_install snxctl
 
 install -D -m 0644 assets/snx-rs.service %buildroot%_unitdir/snx-rs.service
-install -D -m 0644 assets/snx-rs-gui.desktop %buildroot%_desktopdir/snx-rs-gui.desktop
 install -D -m 0644 assets/snx-rs.conf  %buildroot%_sysconfdir/snx-rs/snx-rs.conf
+
+%if_feature webkit2gtk 4.1
+%rust_install snx-rs-gui
+install -D -m 0644 assets/snx-rs-gui.desktop %buildroot%_desktopdir/snx-rs-gui.desktop
+%endif
 
 %files
 %doc README.md
 %_bindir/snx-rs
-%_bindir/snx-rs-gui
 %_bindir/snxctl
-%_unitdir/snx-rs.service
+%if_feature webkit2gtk 4.1
+%_bindir/snx-rs-gui
 %_desktopdir/snx-rs-gui.desktop
+%endif
+%_unitdir/snx-rs.service
 %dir %_sysconfdir/snx-rs/
 %_sysconfdir/snx-rs/snx-rs.conf
 
 %changelog
+* Mon Apr 08 2024 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt2
+- build snx-rs-gui only if webkit2gtk is present
+
 * Sun Apr 07 2024 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt1
 - initial build for ALT Sisyphus
