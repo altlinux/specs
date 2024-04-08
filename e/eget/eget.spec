@@ -1,5 +1,5 @@
 Name: eget
-Version: 7.8
+Version: 7.9
 Release: alt1
 
 Summary: wget like downloader wrapper with wildcard support
@@ -34,6 +34,14 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Mon Apr 08 2024 Vitaly Lipatov <lav@altlinux.ru> 7.9-alt1
+- eget: decode &amp; html entity
+- eget: add support square brackets as wildcards
+- eget: select IPFS gateway if gateway mode is forced
+- eget: add list url support for .md (markdown)
+- eget: always use filter for separated mask
+- eget: fix get response 404 from CloudFlare via range 0-0 downloading (#1)
+
 * Thu Mar 28 2024 Vitaly Lipatov <lav@altlinux.ru> 7.8-alt1
 - eget: replace --check with --check-url and --check-site
 - eget: fix --check using (also allow --check for backward compatibility)
