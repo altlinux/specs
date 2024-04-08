@@ -186,8 +186,8 @@
 %def_without modular_daemons
 
 Name: libvirt
-Version: 9.8.0
-Release: alt5
+Version: 10.2.0
+Release: alt1
 Summary: Library providing a simple API virtualization
 License: GPL-2.0-or-later AND LGPL-2.1-only AND LGPL-2.1-or-later AND OFL-1.1
 Group: System/Libraries
@@ -256,12 +256,12 @@ BuildRequires: libattr-devel attr
 BuildRequires: libacl-devel
 BuildRequires: glib2-devel >= 2.56 libgio-devel
 BuildRequires: libxml2-devel xml-utils xsltproc
-BuildRequires: python3 python3-devel
+BuildRequires: python3 python3-devel python3-module-pytest
 BuildRequires: python3-module-docutils
 BuildRequires: zlib-devel
 BuildRequires: iproute2
 BuildRequires: dmidecode
-BuildRequires: libtirpc-devel /usr/bin/rpcgen
+BuildRequires: libtirpc-devel
 BuildRequires: glibc-utils
 BuildRequires: kmod
 BuildRequires: mdevctl
@@ -862,6 +862,7 @@ rm -f %buildroot%_libexecdir/libvirt-guests.sh
 # delete docs
 rm -rf %buildroot%_datadir/doc/libvirt
 
+rm -f %buildroot/usr/lib/sysusers.d/libvirt-qemu.conf
 
 %if_with qemu
 # We install /etc/libvirt/qemu/networks/autostart/default.xml as ghost
@@ -1403,6 +1404,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Mon Apr 08 2024 Alexey Shabalin <shaba@altlinux.org> 10.2.0-alt1
+- 10.2.0 (Fixes: CVE-2024-1441)
+
 * Thu Mar 21 2024 Alexander Kuznetsov <kuznetsovam@altlinux.org> 9.8.0-alt5
 - Check for negative array lengths before allocation (Fixes: CVE-2024-2494)
 
