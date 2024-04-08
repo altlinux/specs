@@ -2,10 +2,11 @@
 %def_enable gpt
 %def_disable ocfs2
 %def_disable static
+%def_disable pretty_logs
 
 Name: evms
 Version: 2.5.5
-Release: alt75
+Release: alt77
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -18,6 +19,10 @@ BuildRequires: glib2-devel libe2fs-devel libncurses-devel libreadline-devel libu
 BuildRequires: libblkid-devel
 BuildRequires: libcryptsetup-devel >= 1.4.0
 BuildRequires: libbtrfs-devel
+
+%if_enabled pretty_logs
+BuildRequires: gcc-c++
+%endif
 
 %if_with x
 BuildRequires: gtk+-devel
@@ -112,6 +117,7 @@ sed -i /SEGV/d engine/faulthdlr.c
     %{subst_enable ocfs2} \
     %{!?_with_x: --disable-gui --disable-gtktest} \
     %{subst_enable static} \
+    %{subst_enable pretty_logs} \
     #
 
 %make_build LD_LIBRARY_PATH=%buildroot/%_lib
@@ -125,10 +131,11 @@ install -pm0755 tests/evms_deactivate %buildroot/sbin
 install -pm0644 tests/evms_deactivate.8 %buildroot%_man8dir
 install -pm0755 tests/cli_scripts/evms-raid-test %buildroot/%_sbindir
 mv %buildroot/sbin/%{?_with_x:{evmsn,evmsgui}}%{!?_with_x:evmsn} %buildroot%_sbindir/
-for f in %buildroot/%_lib/*.so; do
-ln -sf ../../%_lib/`readlink $f` %buildroot%_libdir/${f##*/}
+
+for f in %buildroot/%_lib/*evms.so; do
+readlink $f && ln -sf ../../%_lib/`readlink $f` %buildroot%_libdir/${f##*/}
 done
-rm -f %buildroot/%_lib/*.so
+rm -f %buildroot/%_lib/*evms-2.5.so
 
 mkdir -p %buildroot%_sysconfdir/sysconfig
 cat <<EOF > %buildroot%_sysconfdir/sysconfig/%name
@@ -148,6 +155,9 @@ EOF
 %config(noreplace) %_sysconfdir/%name.conf
 /%_lib/%name
 /%_lib/lib%name-*.so.*
+%if_enabled pretty_logs
+/%_lib/libevms-logfmt.so
+%endif
 
 %files -n lib%name-devel
 %_libdir/lib%name.so
@@ -174,6 +184,23 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Fri Apr 05 2024 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt77
+- LVM, LUKS: allow installing w/o remount
+- memman: make sure memory pointer is aligned (necessary for device-mapper since
+  kernel 6.6)
+- IMSM: change partitioning scheme
+- RAID: don't use device-mapper on raid0
+
+* Tue Mar 19 2024 Slava Aseev <ptrnine@altlinux.org> 2.5.5-alt76
+- cleanup code (mcpain@)
+- revert to version 2.5.5-alt73 (mcpain@)
+- introduce log formatter to make debugging easier
+- imsm:
+  + fix error while assembling raid without hardware capability
+  + fix segment manager's discovery with imsm volumes
+  + implement deactivation
+  + add some unit tests
+
 * Thu Jan 18 2024 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt75
 - LVM, LUKS: use currect UUID's when creating dm-devices
 
