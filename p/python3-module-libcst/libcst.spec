@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.3.1
-Release: alt1
+Release: alt2
 
 Summary: A Concrete Syntax Tree (CST) parser and serializer library for Python
 License: MIT and Python-2.0 and Apache-2.0
@@ -17,6 +17,8 @@ Source0: %name-%version.tar
 Source1: vendor_rust.tar
 Source2: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+Patch3500: 3500-Update-target-lexicon-version-in-Cargo.lock.patch
+Patch3501: 3501-target-lexicon-loongarch64.patch
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -86,6 +88,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Apr 08 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.3.1-alt2
+- NMU: fixed FTBFS on LoongArch (updated target-lexicon crate).
+
 * Thu Apr 04 2024 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1
 - 1.2.0 -> 1.3.1.
 
