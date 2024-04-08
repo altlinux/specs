@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: stow
-Version: 2.3.1
+Version: 2.4.0
 Release: alt1
 
 Summary: Manage installation of multiple softwares in the same directory tree
@@ -10,7 +10,7 @@ Group: System/Base
 
 BuildArch: noarch
 
-#VCS: https://git.savannah.gnu.org/git/stow.git
+VCS: https://git.savannah.gnu.org/git/stow.git
 Url: https://www.gnu.org/software/stow
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
@@ -58,7 +58,7 @@ rm %buildroot%_defaultdocdir/stow/*.md
 %make check
 
 %files
-%doc COPYING README.md
+%doc NEWS COPYING README.md
 %_bindir/stow
 %_bindir/chkstow
 %_man8dir/stow.8.*
@@ -70,5 +70,8 @@ rm %buildroot%_defaultdocdir/stow/*.md
 %_defaultdocdir/stow
 
 %changelog
+* Mon Apr 08 2024 Egor Ignatov <egori@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
 * Wed Jun 22 2022 Egor Ignatov <egori@altlinux.org> 2.3.1-alt1
 - First build for ALT
