@@ -1,6 +1,6 @@
 Name:    zxtune
 Version: r5056
-Release: alt1
+Release: alt1.1
 
 Summary: Crossplatform chiptune player
 License: GPL
@@ -19,6 +19,10 @@ BuildRequires: qt5-base-devel qt5-tools qt5-wayland-devel make gcc-c++ boost-dev
 
 %prep
 %setup
+%ifarch %e2k
+# name collision with another compiler
+sed -i 's/defined(__LCC__)/0/' 3rdparty/curl/curlbuild.h
+%endif
 
 %build
 %make_build qt.includes=/usr/include/qt5 tools.uic=uic-qt5 tools.moc=moc-qt5 tools.rcc=rcc-qt5 system.zlib=1 release=1 -C ./apps platform=linux
@@ -44,5 +48,8 @@ install -Dpm0644 ./apps/zxtune123/dist/dingux/zxtune.png %buildroot%_iconsdir/%n
 %_iconsdir/%name.png
 
 %changelog
+* Mon Apr 08 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> r5056-alt1.1
+- Fixed build for Elbrus
+
 * Mon Feb 12 2024 Artyom Bystrov <arbars@altlinux.org> r5056-alt1
 - Initial build for Sisyphus
