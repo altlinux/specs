@@ -1,13 +1,13 @@
 %def_enable snapshot
 %define optflags_lto %nil
 
-%define ver_major 2.1
+%define ver_major 3.0
 %define rdn_name de.haeckerfelix.Fragments
 
 %def_disable bootstrap
 
 Name: fragments
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A BitTorrent Client for GNOME
@@ -23,14 +23,14 @@ Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
 
-%define gtk_ver 4.10.1
-%define adwaita_ver 1.4
+%define gtk_ver 4.12
+%define adwaita_ver 1.5
 
 Requires: transmission-daemon
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo git
-BuildRequires: /usr/bin/appstream-util desktop-file-utils
+BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(openssl)
@@ -75,6 +75,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Tue Apr 09 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt1
+- updated to 3.0.0-3-g88d3f0c
+
 * Mon Oct 09 2023 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
 - first build for Sisyphus (v0.2.0-6-gff8c151)
 
