@@ -1,13 +1,11 @@
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %_var
 %define major   5
-%define minor   3
+%define minor   4
 
 %def_without docs
 %def_without examples
 
 Name: assimp
-Version: 5.3.1
+Version: 5.4.0
 Release: alt1
 Summary: Library to import various 3D model formats into applications
 Group: Graphics
@@ -29,9 +27,7 @@ Source1: assimp_generate_tarball.sh
 
 # Un-bundle libraries that are provided by the distribution.
 # Also fixes FTBFS: https://github.com/assimp/assimp/issues/4334
-Patch0: assimp-5.3.1-alt-unbundle.patch
-# Endless sigh...
-Patch1: assimp-5.3.1-alt-fix-version.patch
+Patch0: assimp-5.4.0-alt-unbundle.patch
 
 BuildRequires: boost-complete
 BuildRequires: cmake
@@ -52,8 +48,6 @@ BuildRequires: gcc-c++ python3-devel rpm-build-python3 unzip zip
 
 BuildRequires:  pkgconfig(polyclipping)
 BuildRequires:  rapidjson-devel
-
-Source44: import.info
 
 %description
 Assimp, the Open Asset Import Library, is a free library to import various
@@ -87,7 +81,6 @@ You need to install it if you want to develop programs using assimp.
 %prep
 %setup
 %patch0 -p2
-%patch1 -p2
 
 # Get rid of bundled libs so we can't accidentally build against them
 rm -rf contrib/android-cmake
@@ -144,6 +137,10 @@ rm -rf contrib/zlib
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Apr 08 2024 L.A. Kostis <lakostis@altlinux.ru> 5.4.0-alt1
+- 5.4.0.
+- cleanup .spec and patches.
+
 * Mon Dec 18 2023 L.A. Kostis <lakostis@altlinux.ru> 5.3.1-alt1
 - 5.3.1.
 - Rebase/cleanup all patches.
@@ -181,4 +178,3 @@ rm -rf contrib/zlib
 
 * Sun Jun 12 2016 Igor Vlasenko <viy@altlinux.ru> 3.2-alt1_2
 - converted for ALT Linux by srpmconvert tools
-
