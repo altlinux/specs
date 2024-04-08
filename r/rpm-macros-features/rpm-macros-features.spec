@@ -1,5 +1,5 @@
 Name: rpm-macros-features
-Version: 20240227
+Version: 20240408
 Release: alt1
 
 Summary: RPM macros to check if can build with a feature
@@ -62,6 +62,11 @@ install -D -m644 macros %buildroot/%_rpmmacrosdir/features
 %_rpmmacrosdir/features
 
 %changelog
+* Mon Apr 08 2024 Vitaly Lipatov <lav@altlinux.ru> 20240408-alt1
+- add qt6_webengine feature
+- macros: add osmesa, webkit2gtk
+- macros: update versions
+
 * Tue Feb 27 2024 Vitaly Lipatov <lav@altlinux.ru> 20240227-alt1
 - add glusterfs feature
 - add numactl feature
