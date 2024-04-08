@@ -1,6 +1,6 @@
 Name: libstrophe
 # configure.ac:AC_INIT([libstrophe], [0.8-snapshot], [jack@metajack.im])
-Version: 0.10.1
+Version: 0.13.1
 Release: alt1
 Summary: A lightweight XMPP client library written in C
 Group: System/Libraries
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 
 # Automatically added by buildreq on Sun Jul 22 2018
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libcom_err-devel libkrb5-devel perl pkg-config python-base
-BuildRequires: doxygen libexpat-devel libssl-devel
+BuildRequires: doxygen libexpat-devel libssl-devel zlib-devel
 
 %description
 libstrophe is a lightweight XMPP client library written in C. It has
@@ -46,7 +46,7 @@ doxygen
 rm -fv %buildroot%_libdir/*.a
 
 %check
-make check
+%make check
 
 %files
 %_libdir/*.so.*
@@ -58,6 +58,9 @@ make check
 %_pkgconfigdir/*
 
 %changelog
+* Sat Apr 06 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 0.13.1-alt1
+- Update to upstream 0.13.1
+
 * Wed Oct 20 2021 Grigory Ustinov <grenka@altlinux.org> 0.10.1-alt1
 - Automatically updated to 0.10.1.
 

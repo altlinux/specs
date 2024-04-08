@@ -1,5 +1,11 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%define sover 0
+
 Name: profanity
-Version: 0.9.5
+Version: 0.14.0
 Release: alt1
 Summary: A console based jabber client inspired by irssi
 Group: Networking/Instant messaging
@@ -13,7 +19,7 @@ Url: http://www.profanity.im
 
 # Automatically added by buildreq on Thu Jul 02 2020
 # optimized out: glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libgcrypt-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgpg-error-devel libncurses-devel libsasl2-3 libtinfo-devel perl pkg-config python2-base sh4 xorg-proto-devel
-BuildRequires: libXScrnSaver-devel libcurl-devel libmesode-devel libncursesw-devel libnotify-devel libotr-devel libreadline-devel libsqlite3-devel
+BuildRequires: libXScrnSaver-devel libcurl-devel libncursesw-devel libnotify-devel libotr-devel libreadline-devel libsqlite3-devel libstrophe-devel libsignal-protocol-c-devel libqrencode-devel libgpgme-devel
 
 BuildRequires: libcmocka-devel
 
@@ -24,11 +30,18 @@ BuildRequires: libcmocka-devel
   Supports XMPP chat services
   Command driven user interface
   MUC chat room support
-  OTR message encryption
+  OTR,PGP and OMEMO encryption
   Roster management
   Flexible resource and priority settings
   Desktop notifications
   Unicode support
+                  ___            _
+                 / __)          (_)_
+ ____   ___ ___ | |__ ____ ____  _| |_ _   _
+|  _ \ / __) _ \|  __) _  |  _ \| |  _) | | |
+| | ) | | | (_) | | | ( | | | | | | |_| |_| |
+| ||_/|_|  \___/|_|  \_||_|_| |_|_|\___)__  |
+|_|                                   (____/
 
 %package X11
 Group: Networking/Instant messaging
@@ -42,23 +55,45 @@ Group: Development/C
 Summary: A console based jabber client library
 %description devel
 A console based jabber client development suite
+Requires: lib%name%sover
+
+%package -n lib%name%sover
+Summary: Shared libraries for %name
+Group: Development/C
+%description -n lib%name%sover
+%summary
 
 %prep
 %setup
 %patch -p1
-%patch1 -p1
-touch NEWS README AUTHORS ChangeLog
+#patch1 -p1
 cp %SOURCE1 profrc.exmaple2
 
 %build
 %autoreconf
-LIBS=-pterad %configure --with-libxml2 --enable-notifications --enable-otr
+# App for %%name-X11
+%configure\
+                --with-libxml2\
+                --enable-notifications\
+                --enable-otr\
+                --enable-omemo\
+                --enable-omemo-qrcode\
+                --enable-pgp
 
 %make_build LDFLAGS=-pthread
 mv %name %name.app
 
+# App for %%name
 make distclean
-%configure --with-libxml2 --disable-notifications --enable-otr --without-xscreensaver
+%configure\
+    --with-libxml2\
+    --disable-notifications\
+    --enable-otr\
+    --without-xscreensaver\
+    --enable-omemo\
+    --enable-omemo-qrcode\
+    --enable-pgp
+
 %make_build LDFLAGS=-pthread
 
 %install
@@ -69,11 +104,14 @@ install %name.app %buildroot%_bindir/%name.app
 LC_ALL=C.UTF8 make check
 
 %files
-%doc themes profrc.example*
+%doc themes profrc.example* CHANGELOG README.md
 %_bindir/%name
 %_man1dir/*
 %_datadir/%name
-%_libdir/*.so.*
+
+%files -n lib%name%sover
+%_libdir/*.so.%sover.*
+%_libdir/*.so.%sover
 
 %files X11
 %_bindir/%name.app
@@ -83,6 +121,9 @@ LC_ALL=C.UTF8 make check
 %_libdir/*.so
 
 %changelog
+* Sat Apr 06 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 0.14.0-alt1
+- Update to upstream 0.14.0
+
 * Thu Jul 02 2020 Fr. Br. George <george@altlinux.ru> 0.9.5-alt1
 - Autobuild version bump to 0.9.5
 
