@@ -3,10 +3,12 @@
 
 Name: dcmtk
 Version: 3.6.8
-Release: alt1.1
+Release: alt1.2
+
 Summary: DCMTK - DICOM Toolkit
 License: MIT
 Group: Graphics
+
 Url: http://dcmtk.org/dcmtk.php.en
 VCS: https://github.com/DCMTK/dcmtk
 Source: %name-%version.tar
@@ -17,13 +19,14 @@ BuildRequires: libxml2-devel, libssl-devel, cmake
 BuildRequires: libjpeg-devel
 
 %description
-DCMTK is a collection of libraries and applications implementing large parts 
-the DICOM standard. It includes software for examining, constructing and 
-converting DICOM image files, handling offline media, sending and receiving 
-images over a network connection, as well as demonstrative image storage and 
-worklist servers.
+DCMTK is a collection of libraries and applications implementing large parts
+the DICOM standard. It includes software for examining, constructing and
+converting DICOM image files, handling offline media, sending and receiving
+images over a network connection, as well as demonstrative image storage
+and worklist servers.
 
-Contains patches against latest stable version from http://gna.org/projects/pdcmtk
+Contains patches against latest stable version from
+http://gna.org/projects/pdcmtk
 
 %package -n lib%name%soname
 Summary: %name shared libraries
@@ -39,6 +42,11 @@ Requires: lib%name%soname = %EVR
 
 %description -n lib%name-devel
 Headers for building software that uses %name.
+%ifarch %e2k
+
+NB: a project using tuples from this library will fail to build
+    as va_arg is intermixed with C++ constructor there.
+%endif
 
 %prep
 %setup
@@ -89,6 +97,10 @@ sed -i '/ofstd_tuple/d' ofstd/tests/tests.cc
 %_libdir/cmake/dcmtk/*.cmake
 
 %changelog
+* Mon Apr 08 2024 Michael Shigorin <mike@altlinux.org> 3.6.8-alt1.2
+- E2K: tuple-related note regarding devel subpackage
+- minor spec cleanup
+
 * Fri Apr 05 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.6.8-alt1.1
 - Fixed build for Elbrus.
 
