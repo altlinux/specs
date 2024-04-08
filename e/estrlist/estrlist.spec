@@ -1,5 +1,5 @@
 Name: estrlist
-Version: 0.5
+Version: 0.6
 Release: alt1
 
 Summary: estrlist - string operation utility
@@ -30,6 +30,10 @@ install -D bin/%name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Mon Apr 08 2024 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt1
+- estrlist: print out only to stderr if error
+- estrlist: add contains
+
 * Wed May 04 2022 Vitaly Lipatov <lav@altlinux.ru> 0.5-alt1
 - egrep -> grep -E
 
