@@ -29,8 +29,8 @@
 #%%define _libexecdir %%_prefix/libexec
 
 Name: snapd
-Version: 2.59.1
-Release: alt1.2
+Version: 2.61.3
+Release: alt1
 Summary: A transactional software package manager
 License: GPLv3
 Group: System/Configuration/Other
@@ -42,6 +42,7 @@ Patch3500: snapd-loongarch64.patch
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang rpm-build-systemd
 BuildRequires: libsystemd-devel
+BuildRequires: autoconf-archive
 # for generate manpages
 BuildRequires: /proc
 Requires: snap-confine = %EVR
@@ -199,6 +200,7 @@ install -d -p %buildroot%_sysconfdir/profile.d
 install -d -p %buildroot%_sysconfdir/sysconfig
 install -d -p %buildroot%_sharedstatedir/snapd/assertions
 install -d -p %buildroot%_sharedstatedir/snapd/cookie
+install -d -p %buildroot%_sharedstatedir/snapd/cgroup
 install -d -p %buildroot%_sharedstatedir/snapd/dbus-1/services
 install -d -p %buildroot%_sharedstatedir/snapd/dbus-1/system-services
 install -d -p %buildroot%_sharedstatedir/snapd/desktop/applications
@@ -285,11 +287,6 @@ rm -f %buildroot%_libexecdir/snapd/system-shutdown
 # Remove snapd apparmor service
 rm -f %buildroot%_unitdir/snapd.apparmor.service
 rm -f %buildroot%_libexecdir/snapd/snapd-apparmor
-
-# Remove prompt services
-rm %buildroot%_unitdir/snapd.aa-prompt-listener.service
-rm %buildroot%_userunitdir/snapd.aa-prompt-ui.service
-rm %buildroot%_datadir/dbus-1/services/io.snapcraft.Prompt.service
 
 # Install Polkit configuration
 install -m 644 -D data/polkit/io.snapcraft.snapd.policy %buildroot%_datadir/polkit-1/actions
@@ -413,6 +410,7 @@ fi
 %dir %_sharedstatedir/snapd
 %dir %_sharedstatedir/snapd/assertions
 %dir %_sharedstatedir/snapd/cookie
+%dir %_sharedstatedir/snapd/cgroup
 %dir %_sharedstatedir/snapd/dbus-1
 %dir %_sharedstatedir/snapd/dbus-1/services
 %dir %_sharedstatedir/snapd/dbus-1/system-services
@@ -465,6 +463,9 @@ fi
 %endif
 
 %changelog
+* Thu Apr 04 2024 Alexey Shabalin <shaba@altlinux.org> 2.61.3-alt1
+- 2.61.3
+
 * Tue Mar 12 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.59.1-alt1.2
 - NMU: fixed FTBFS on LoongArch
 
