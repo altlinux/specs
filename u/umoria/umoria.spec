@@ -1,11 +1,13 @@
 Name: umoria
 Version: 5.7.15
-Release: alt1
+Release: alt1.1
+
+Summary: A single player dungeon simulation
 License: GPLv3+
 Group: Games/Adventure
+
 Url: https://umoria.org/
 Source: %name-%version.tar.gz
-Summary: A single player dungeon simulation
 
 Patch0: 0001-No-privilege-drop.patch
 Patch1: 0002-Initialize-a-variable.patch
@@ -24,6 +26,10 @@ C language by James E. Wilson in 1988, and released a Umoria.
 %setup
 %patch0 -p1
 %patch1 -p1
+%ifarch %e2k
+# as of lcc 1.27.14
+sed -i '/-Werror/d' CMakeLists.txt
+%endif
 
 cat > %name << "@@@"
 #!/bin/sh
@@ -41,12 +47,12 @@ cd "$UMOHOME"
 exec "$UMORIA"
 @@@
 
-%define CMHOME %_cmake__builddir/%name
 %build
 %cmake
 %cmake_build
 
 %install
+%define CMHOME %_cmake__builddir/%name
 install -D %name %buildroot%_bindir/%name
 install -D %CMHOME/%name %buildroot%_bindir/%name.bin
 mkdir -p %buildroot%_datadir/%name
@@ -61,6 +67,10 @@ install -D %CMHOME/scores.dat %buildroot%_localstatedir/%name/scores.dat
 %attr(664,root,games) %_localstatedir/%name/scores.dat
 
 %changelog
+* Mon Apr 08 2024 Michael Shigorin <mike@altlinux.org> 5.7.15-alt1.1
+- E2K: ftbfs workaround
+- Minor spec cleanup
+
 * Wed Mar 15 2023 Fr. Br. George <george@altlinux.org> 5.7.15-alt1
 - Autobuild version bump to 5.7.15
 - Fix build on ppc64le
