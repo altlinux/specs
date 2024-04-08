@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20240322
+Version: 20240405
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -94,6 +94,12 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/mellanox
 
 %changelog
+* Mon Apr 08 2024 Cronbuild Service <cronbuild@altlinux.org> 20240405-alt1
+- upstream changes (GIT 2180c887):
+  + i915: Add DG2 HuC 7.10.15 (thx Daniele Ceraolo Spurio)
+  + amdgpu: DMCUB updates for various AMDGPU ASICs (thx Tom Chung)
+  + update firmware for en8811h 2.5G ethernet phy (thx SkyLake.Huang)
+
 * Tue Mar 26 2024 Cronbuild Service <cronbuild@altlinux.org> 20240322-alt1
 - upstream changes (GIT e068ccf0):
   + mekdiatek: Update mt8186 SOF firmware to v2.0.1 (thx Hailong Fan)
