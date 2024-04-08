@@ -7,7 +7,7 @@
 
 Name: mbedtls
 Version: 3.6.0
-Release: alt1
+Release: alt1.1
 
 Summary: Transport Layer Security protocol suite
 License: Apache-2.0 OR GPL-2.0-or-later
@@ -96,8 +96,7 @@ Cryptographic utilities based on mbed TLS
 %add_optflags -mpclmul -msse2 -maes
 %endif
 %ifarch %e2k
-# unsupported as of lcc 1.25.17
-sed -i 's,-Wformat-overflow=2,,' CMakeLists.txt
+sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
 %add_optflags -mno-aes
 %endif
 
@@ -159,6 +158,9 @@ rm -rf %buildroot%_bindir
 %_libexecdir/%name/*
 
 %changelog
+* Mon Apr 08 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.6.0-alt1.1
+- Fixed build for Elbrus
+
 * Fri Mar 29 2024 Nazarov Denis <nenderus@altlinux.org> 3.6.0-alt1
 - New version 3.6.0.
 - Fix url (ALT #47976)
