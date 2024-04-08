@@ -1,5 +1,5 @@
 Name: erc
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 
 Summary: Universal Archive Tool
@@ -50,6 +50,10 @@ See detailed russian description here: http://wiki.etersoft.ru/ERC
 #%_sysconfdir/bash_completion.d/erc
 
 %changelog
+* Mon Apr 08 2024 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
+- ercat: fix to allow filenames with spaces
+- erc: add AppImage unpacking
+
 * Fri Sep 22 2023 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
 - ercat: add --quiet support
 - fixed 7z working with spaces in names
