@@ -1,6 +1,6 @@
 # TODO: build from sources
 Name: electron28
-Version: 28.2.8
+Version: 28.2.10
 Release: alt1
 
 Summary: Build cross platform desktop apps with JavaScript, HTML, and CSS
@@ -63,6 +63,9 @@ patchelf --set-rpath '%_libdir/%name' %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Mon Apr 08 2024 Vitaly Lipatov <lav@altlinux.ru> 28.2.10-alt1
+- new version 28.2.10 (with rpmrb script)
+
 * Tue Mar 26 2024 Vitaly Lipatov <lav@altlinux.ru> 28.2.8-alt1
 - new version 28.2.8 (with rpmrb script)
 
