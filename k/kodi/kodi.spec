@@ -1,5 +1,5 @@
 Name: kodi
-Version: 20.5
+Version: 21.0
 Release: alt1
 
 Summary: Kodi Media Center
@@ -12,16 +12,12 @@ Requires: kodi-data = %version-%release
 Requires: kodi-x11 = %version-%release
 
 Source0: %name-%version-%release.tar
+Source1: groovy.tar
 
 BuildRequires: cmake gcc-c++
 BuildRequires: libcrossguid-devel libflatbuffers-devel libgif-devel liblzo2-devel
 BuildRequires: libunistring-devel libidn2-devel libEGL-devel
-BuildRequires: /proc swig
-%ifarch %e2k
-BuildRequires: java-devel
-%else
-BuildRequires: java-11-devel
-%endif
+BuildRequires: /proc swig java-devel
 BuildRequires: pkgconfig(RapidJSON)
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(bluez)
@@ -53,6 +49,7 @@ BuildRequires: pkgconfig(libcdio)
 BuildRequires: pkgconfig(libcec)
 BuildRequires: pkgconfig(libcrypto)
 BuildRequires: pkgconfig(libcurl)
+BuildRequires: pkgconfig(libdisplay-info)
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(libdvdcss)
 BuildRequires: pkgconfig(libinput)
@@ -81,6 +78,7 @@ BuildRequires: pkgconfig(spdlog)
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(taglib)
 BuildRequires: pkgconfig(tinyxml)
+BuildRequires: pkgconfig(tinyxml2)
 BuildRequires: pkgconfig(udev)
 BuildRequires: pkgconfig(uuid)
 BuildRequires: pkgconfig(vdpau)
@@ -105,6 +103,7 @@ Requires: kodi-data = %version-%release
 Summary: Kodi architecture-independent data
 Group: Video
 BuildArch: noarch
+Requires: python3(sqlite3)
 AutoReqProv: yes,nopython
 
 %package devel
@@ -138,7 +137,6 @@ This package contains X11-specific part of Kodi.
 
 %define __nprocs 8
 %define docdir %_defaultdocdir/%name
-%define cdefs -DGIT_VERSION=%release -DCORE_PLATFORM_NAME="x11 wayland gbm"
 %ifarch armh aarch64
 %define platdefs -DAPP_RENDER_SYSTEM=gles
 %else
@@ -147,6 +145,7 @@ This package contains X11-specific part of Kodi.
 
 %prep
 %setup
+tar xf %SOURCE1 -C %_sourcedir
 %ifarch %e2k
 sed -i "/make_map/s/std::string_view/const char*/g" \
 	xbmc/cores/VideoSettings.h xbmc/utils/ColorUtils.h \
@@ -157,7 +156,10 @@ sed -i "s/HTML_BASIC_COLORS.find(value/&.c_str()/" \
 %endif
 
 %build
-%cmake %cdefs %platdefs
+%cmake  -DTARBALL_DIR=%_sourcedir \
+        -DGIT_VERSION=%release \
+        -DCORE_PLATFORM_NAME="x11 wayland gbm" \
+        %platdefs
 %cmake_build
 
 %install
@@ -194,6 +196,7 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/kodi/system
 %_datadir/kodi/userdata
 %_datadir/kodi/privacy-policy.txt
+%_datadir/wayland-sessions/kodi-gbm.desktop
 
 %files devel
 %_includedir/kodi
@@ -205,6 +208,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/xsessions/kodi.desktop
 
 %changelog
+* Sat Apr 06 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 21.0-alt1
+- 21.0-Omega released
+
 * Fri Mar 22 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 20.5-alt1
 - 20.5-Nexus released
 - fixed faults with python addons (closes: 49771)

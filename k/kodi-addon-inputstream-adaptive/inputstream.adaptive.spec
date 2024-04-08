@@ -1,6 +1,6 @@
 Name: kodi-addon-inputstream-adaptive
-Version: 20.3.14
-Release: alt2
+Version: 21.4.4
+Release: alt1
 
 Summary: Adaptive stream addon for Kodi
 License: GPLv2
@@ -10,7 +10,7 @@ Url: https://github.com/peak3d/inputstream.adaptive/
 Source: %name-%version.tar
 
 BuildRequires: cmake gcc-c++ kodi-devel
-BuildRequires: libexpat-devel libgtest-devel libap4-devel-static
+BuildRequires: libexpat-devel libgtest-devel libap4-devel-static libpugixml-devel
 
 %description
 %summary
@@ -30,6 +30,9 @@ BuildRequires: libexpat-devel libgtest-devel libap4-devel-static
 %_datadir/kodi/addons/*
 
 %changelog
+* Mon Apr 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 21.4.4-alt1
+- 21.4.4 released
+
 * Sat Nov 11 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20.3.14-alt2
 - NMU: fixed FTBFS on LoongArch
 

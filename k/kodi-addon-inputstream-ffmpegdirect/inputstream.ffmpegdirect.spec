@@ -1,6 +1,6 @@
 Name: kodi-addon-inputstream-ffmpegdirect
-Version: 20.5.0
-Release: alt3
+Version: 21.3.5
+Release: alt1
 
 Summary: FFmpeg stream addon for Kodi
 License: GPLv2
@@ -34,6 +34,9 @@ BuildRequires: libpostproc-devel bzlib-devel zlib-devel
 %_datadir/kodi/addons/*
 
 %changelog
+* Mon Apr 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 21.3.5-alt1
+- 21.3.5 released
+
 * Fri Sep 22 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 20.5.0-alt3
 - rebuilt with recent ffmpeg
 
