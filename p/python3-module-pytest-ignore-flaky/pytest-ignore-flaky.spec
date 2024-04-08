@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.0
+Version: 2.2.0
 Release: alt1
 Summary: Ignore failures from flaky tests
 License: MIT
@@ -48,5 +48,8 @@ Ignore failures from flaky tests (pytest plugin).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Apr 08 2024 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1
+- 2.0.0 -> 2.2.0.
+
 * Fri Jul 21 2023 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1
 - Initial build for Sisyphus.
