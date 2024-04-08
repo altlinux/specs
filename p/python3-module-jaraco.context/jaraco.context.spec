@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.1.0
+Version: 5.3.0
 Release: alt1
 Summary: Context managers by Jaraco
 License: MIT
@@ -54,6 +54,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Mon Apr 08 2024 Stanislav Levin <slev@altlinux.org> 5.3.0-alt1
+- 5.1.0 -> 5.3.0.
+
 * Fri Apr 05 2024 Stanislav Levin <slev@altlinux.org> 5.1.0-alt1
 - 4.3.0 -> 5.1.0.
 
