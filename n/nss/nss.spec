@@ -1,6 +1,6 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.98
+Version:	3.99
 Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
@@ -27,6 +27,10 @@ BuildRequires:  libnspr-devel
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 %global unsupported_bindir %_libexecdir/nss
+
+# disable LTO to avoid ssl_gtest failure
+# see https://bugzilla.mozilla.org/show_bug.cgi?id=1890188
+%define optflags_lto %nil
 
 %description
 Network Security Services (NSS) is a set of libraries designed
@@ -116,6 +120,8 @@ ln -s %_bindir/python3 bin/python
 %{?_is_lp64:export USE_64=1}
 
 cd nss
+CFLAGS="%optflags" \
+CXXFLAGS="%optflags" \
 ./build.sh \
 	--gcc \
 	--opt \
@@ -264,6 +270,10 @@ popd
 %files -n lib%name-nssckbi-checkinstall
 
 %changelog
+* Fri Apr 05 2024 Ajrat Makhmutov <rauty@altlinux.org> 3.99-alt1
+- New version (3.99).
+- Build with debuginfo (closes: 49756).
+
 * Sat Feb 24 2024 Alexey Gladkov <legion@altlinux.ru> 3.98-alt1
 - New version (3.98).
 - Certificate Authority Changes:
