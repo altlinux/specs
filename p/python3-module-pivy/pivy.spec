@@ -1,7 +1,7 @@
 %define oname pivy
 Name: python3-module-%oname
 Version: 0.6.8
-Release: alt2.gitd77e175
+Release: alt3.gitd77e175
 Epoch: 2
 Summary: Pivy is a Coin binding for Python
 License: ISC
@@ -37,6 +37,10 @@ applications.
 
 %build
 #add_optflags -I%_includedir/qt4/Qt -fno-strict-aliasing
+%ifarch %e2k
+# error: "Qt requires a C++17 compiler"
+%add_optflags -std=c++17
+%endif
 export PATH=%_qt6_bindir:$PATH
 %python3_build_debug
 
@@ -55,6 +59,9 @@ mv %buildroot%python3_sitelibdir_noarch/%oname \
 %python3_sitelibdir/*
 
 %changelog
+* Tue Apr 09 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2:0.6.8-alt3.gitd77e175
+- Fixed build for Elbrus.
+
 * Thu Apr 04 2024 Andrey Cherepanov <cas@altlinux.org> 2:0.6.8-alt2.gitd77e175
 - New snapshot supporting Qt6 and Python 3.12.
 
