@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.5.0
-Release: alt2
+Version: 1.7.1
+Release: alt1
 
 Summary: Use minify-html, the extremely fast HTML + JS + CSS minifier, with Django.
 License: MIT
@@ -72,6 +72,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/*
 
 %changelog
+* Tue Apr 09 2024 Dmitry Lyalyaev <fruktime@altlinux.org> 1.7.1-alt1
+- 1.5.0 -> 1.7.1
+
 * Fri Jun 09 2023 Dmitry Lyalyaev <fruktime@altlinux.org> 1.5.0-alt2
 - fix FTBFS due to tests failed
 

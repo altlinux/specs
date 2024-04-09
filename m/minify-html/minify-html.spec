@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: minify-html
-Version: 0.10.8
-Release: alt2
+Version: 0.15.0
+Release: alt1
 
 Summary: A Rust HTML minifier
 License: MIT
@@ -14,7 +14,6 @@ ExcludeArch: i586 armh
 
 Source0: %name-%version.tar
 Source1: crates.tar
-Patch1: target-lexicon-loongarch64.patch
 
 BuildRequires: rust-cargo /proc
 BuildRequires: rpm-build-python3 python3-module-setuptools
@@ -38,17 +37,13 @@ This package contains Python bindings.
 %setup -a1
 %ifdef bootstrap
 # collect dependencies for the project
-cargo vendor alt/crates --manifest-path cli/Cargo.toml --sync python/main/Cargo.toml
+cargo vendor alt/crates --manifest-path minhtml/Cargo.toml --sync minify-html-python/Cargo.toml
 tar cf %SOURCE1 alt/crates
 %else
 tar xf %SOURCE1
-pushd alt/crates/target-lexicon
-%patch1 -p1
-popd
-cargo-vendor-checksum --packages target-lexicon --vendor alt/crates
 %endif
 
-cat > python/main/__init__.py << 'E_O_F'
+cat > minify-html-python/__init__.py << 'E_O_F'
 from .minify_html import *
 
 __doc__ = minify_html.__doc__
@@ -56,17 +51,17 @@ E_O_F
 
 %build
 export CARGO_HOME=${PWD}/cargo
-cargo build --manifest-path cli/Cargo.toml --release
-cargo build --manifest-path python/main/Cargo.toml --release
-pushd python/main
-cp target/release/libminify_html.so minify_html.so
+cargo build --manifest-path minhtml/Cargo.toml --release
+cargo build --manifest-path minify-html-python/Cargo.toml --release
+cp target/release/libminify_html_python.so minify-html-python/minify_html.so
+pushd minify-html-python
 %python3_build
 popd
 
 %install
-install -pm0755 -D cli/target/release/minify-html-cli %buildroot%_bindir/minify-html-cli
+install -pm0755 -D target/release/minhtml %buildroot%_bindir/minhtml
 mkdir -p %buildroot%python3_sitelibdir/minify_html
-pushd python/main
+pushd minify-html-python
 install -pm0644 __init__.py %buildroot%python3_sitelibdir/minify_html
 install -pm0644 minify_html.so %buildroot%python3_sitelibdir/minify_html
 %python3_install --install-lib=%python3_sitelibdir --single-version-externally-managed
@@ -74,12 +69,15 @@ popd
 
 %files
 %doc README.md
-%_bindir/minify-html-cli
+%_bindir/minhtml
 
 %files -n python3-module-minify-html
 %python3_sitelibdir/*
 
 %changelog
+* Mon Apr 08 2024 Dmitry Lyalyaev <fruktime@altlinux.org> 0.15.0-alt1
+- v0.10.8 -> v0.15.0
+
 * Fri Jan 19 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.10.8-alt2
 - NMU: fixed FTBFS on LoongArch (patched target-lexicon crate)
 
