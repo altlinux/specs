@@ -1,6 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 %add_python3_path %_libdir/freecad/Mod %_libdir/freecad/Ext/*
 %add_python3_req_skip FreeCADGui FreeCAD
+%ifnarch %qt6_qtwebengine_arches
+%add_python3_req_skip PySide6.QtWebEngineCore PySide6.QtWebEngineWidgets
+%endif
 %add_findprov_skiplist %_libdir/freecad/Mod/* %_libdir/freecad/Ext/*
 %def_with bundled_libs
 %def_without bundled_pycxx
@@ -19,7 +22,7 @@
 
 Name:    freecad
 Version: 0.21.2
-Release: alt6
+Release: alt7
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -281,6 +284,9 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_datadir/thumbnailers/FreeCAD.thumbnailer
 
 %changelog
+* Tue Apr 09 2024 Michael Shigorin <mike@altlinux.org> 1:0.21.2-alt7
+- Avoid PySide6.QtWebEngine* deps on arches lacking those.
+
 * Thu Apr 04 2024 Andrey Cherepanov <cas@altlinux.org> 1:0.21.2-alt6
 - Built with Qt6 and PySide6.
 - Did not build for i586.
