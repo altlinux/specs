@@ -12,7 +12,7 @@ a minimal and fast API targetting the following uses: \
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.0.2
+Version: 2.1.1
 Release: alt1
 
 Summary: Rapid multi-Python deployment
@@ -79,6 +79,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Apr 09 2024 Grigory Ustinov <grenka@altlinux.org> 2.1.1-alt1
+- Automatically updated to 2.1.1.
+
 * Mon Jul 17 2023 Grigory Ustinov <grenka@altlinux.org> 2.0.2-alt1
 - Automatically updated to 2.0.2.
 
