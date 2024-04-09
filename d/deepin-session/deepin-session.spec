@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-session
-Version: 1.2.5
+Version: 1.2.6
 Release: alt1
 
 Summary: Launching DDE components systemd service
@@ -84,6 +84,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_userunitdir/dde-xsettings-checker.service
 
 %changelog
+* Mon Apr 08 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.6-alt1
+- New version 1.2.6.
+
 * Thu Feb 08 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.5-alt1
 - New version 1.2.5.
 

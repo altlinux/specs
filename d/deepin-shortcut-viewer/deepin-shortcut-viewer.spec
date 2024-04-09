@@ -1,5 +1,5 @@
 Name: deepin-shortcut-viewer
-Version: 5.0.7
+Version: 5.0.9
 Release: alt1
 Summary: Deepin Shortcut Viewer
 License: GPL-3.0+
@@ -32,6 +32,9 @@ The program displays a shortcut key window when a JSON data is passed.
 %_bindir/%name
 
 %changelog
+* Tue Apr 09 2024 Leontiy Volodin <lvol@altlinux.org> 5.0.9-alt1
+- New version 5.0.9.
+
 * Thu Dec 15 2022 Leontiy Volodin <lvol@altlinux.org> 5.0.7-alt1
 - New version (5.0.7).
 - Upstream:

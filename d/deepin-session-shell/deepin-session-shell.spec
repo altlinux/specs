@@ -3,7 +3,7 @@
 %define repo dde-session-shell
 
 Name: deepin-session-shell
-Version: 6.0.17
+Version: 6.0.18
 Release: alt1
 
 Summary: Deepin desktop-environment - Session shell module
@@ -104,6 +104,9 @@ chmod +x %buildroot%_bindir/deepin-greeter
 %_libdir/cmake/DdeSessionShell/DdeSessionShellConfig.cmake
 
 %changelog
+* Mon Apr 08 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.18-alt1
+- New version 6.0.18.
+
 * Thu Feb 08 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.17-alt1
 - New version 6.0.17.
 
