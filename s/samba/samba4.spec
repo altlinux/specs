@@ -120,8 +120,8 @@
 %endif
 
 Name:    samba
-Version: 4.19.5
-Release: alt2
+Version: 4.19.6
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2208,6 +2208,13 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Tue Apr 09 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.19.6-alt1
+- Update to maintenance release of Samba 4.19
+- Fixes from upstream (Samba#15580):
+  + Packet marshalling push support missing for
+     CTDB_CONTROL_TCP_CLIENT_DISCONNECTED and
+     CTDB_CONTROL_TCP_CLIENT_PASSED.
+
 * Thu Mar 28 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.19.5-alt2
 - Add support 'client force dns canonicalize hostname' global parameter, enables
   client library tries to resolve canonical name. This feature allows to
