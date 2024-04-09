@@ -1,6 +1,7 @@
+%define soname 1
 Summary: Library for reading Jcat files
 Name: libjcat
-Version: 0.1.14
+Version: 0.2.1
 Release: alt1
 License: LGPLv2+
 Url: https://github.com/hughsie/libjcat
@@ -66,7 +67,8 @@ Executable and data files for installed tests.
 %_datadir/man/man1/*.1*
 %dir %_libdir/girepository-1.0
 %_libdir/girepository-1.0/*.typelib
-%_libdir/libjcat.so.1*
+%_libdir/libjcat.so.%{soname}
+%_libdir/libjcat.so.%{soname}.*
 
 %files devel
 %dir %_datadir/gir-1.0
@@ -87,6 +89,9 @@ Executable and data files for installed tests.
 %dir %_datadir/installed-tests/libjcat
 
 %changelog
+* Tue Apr 09 2024 Anton Farygin <rider@altlinux.ru> 0.2.1-alt1
+- 0.2.1
+
 * Sun Jun 25 2023 Anton Farygin <rider@altlinux.ru> 0.1.14-alt1
 - 0.1.14
 
