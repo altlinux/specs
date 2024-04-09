@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.9.1
+Version: 0.10.1
 Release: alt1
 
 Summary: A pytest plugin for testing Jupyter libraries and extensions
@@ -49,6 +49,9 @@ A set of pytest plugins for Jupyter libraries and extensions.
 %python3_sitelibdir/pytest_jupyter-%version.dist-info
 
 %changelog
+* Tue Apr 09 2024 Anton Vyatkin <toni@altlinux.org> 0.10.1-alt1
+- New version 0.10.1.
+
 * Wed Mar 13 2024 Anton Vyatkin <toni@altlinux.org> 0.9.1-alt1
 - New version 0.9.1.
 
