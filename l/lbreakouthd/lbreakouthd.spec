@@ -1,5 +1,5 @@
 Name: lbreakouthd
-Version: 1.1.6
+Version: 1.1.7
 Release: alt1
 Summary: Classic Breakout-Style Game
 License: GPLv2+
@@ -38,6 +38,8 @@ and must destroy bricks at the top by bouncing balls against them.
 mkdir -p %buildroot%_datadir/%name/levels
 tar -xf %SOURCE1 -C %buildroot%_datadir/%name/levels
 
+mkdir -p %buildroot%_datadir/applications
+cp %buildroot%_datadir/games/applications/%name.desktop %buildroot%_datadir/applications/%name.desktop
 %find_lang %name
 
 %files -f %name.lang
@@ -51,10 +53,15 @@ tar -xf %SOURCE1 -C %buildroot%_datadir/%name/levels
 %attr(2711,root,games) %_gamesbindir/%name
 %_gamesbindir/%name
 %_datadir/%name
+%_datadir/applications/%name.desktop
 %_datadir/games/applications/%name.desktop
 %attr(664,games,games) %_localstatedir/games/%name.hscr
 
 %changelog
+* Tue Apr 09 2024 Ilya Mashkin <oddity@altlinux.ru> 1.1.7-alt1
+- 1.1.7
+- Copy desktop file to standard location (Closes: #49005)
+
 * Tue Jan 23 2024 Ilya Mashkin <oddity@altlinux.ru> 1.1.6-alt1
 - 1.1.6
 
