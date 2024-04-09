@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.3.2
-Release: alt2
+Version: 1.4.0
+Release: alt1
 
 Summary: Lightweight pipelining: using Python functions as pipeline jobs
 License: BSD
@@ -84,6 +84,9 @@ sed -i \
 %exclude %python3_sitelibdir/joblib/__pycache__/test*
 
 %changelog
+* Tue Apr 09 2024 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
+- 1.3.2 -> 1.4.0.
+
 * Thu Mar 21 2024 Stanislav Levin <slev@altlinux.org> 1.3.2-alt2
 - Fixed FTBFS (Python 3.12).
 
