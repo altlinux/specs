@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.13.2
+Version: 1.14.2
 Release: alt1
 
 Summary: Support for many storage backends in Django
@@ -50,12 +50,15 @@ versions of Django. Check the Trove classifiers in setup.py to be sure.
 %pyproject_run_pytest tests/test_utils.py tests/test_ftp.py --ds=tests.settings
 
 %files
-%doc *.rst LICENSE AUTHORS
+%doc *.rst LICENSE
 %python3_sitelibdir/storages/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 
 %changelog
+* Tue Apr 09 2024 Dmitry Lyalyaev <fruktime@altlinux.org> 1.14.2-alt1
+- 1.13.2 -> 1.14.2
+
 * Fri Sep 01 2023 Dmitry Lyalyaev <fruktime@altlinux.org> 1.13.2-alt1
 - New version 1.13.2
   + Migrate to pyproject macros
