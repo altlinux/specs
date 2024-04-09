@@ -1,6 +1,6 @@
 Name: kvmd-fan
 Version: 0.30
-Release: alt1
+Release: alt2
 
 Summary: Fan controller daemon
 License: GPLv3
@@ -12,7 +12,6 @@ Source: %name-%version-%release.tar
 BuildRequires: libiniparser-devel
 BuildRequires: libmicrohttpd-devel
 BuildRequires: libgpiod-devel >= 2.1
-BuildRequires: libwiringpi-devel-static
 
 %description
 %summary
@@ -22,7 +21,7 @@ BuildRequires: libwiringpi-devel-static
 sed -ri '/^_CFLAGS/ s,$, %optflags -I%_includedir/iniparser,' Makefile
 
 %build
-make
+make WITH_WIRINGPI_STUB=yes
 
 %install
 install -pm0755 -D kvmd-fan %buildroot%_bindir/kvmd-fan
@@ -36,6 +35,9 @@ install -pm0644 -D /dev/null %buildroot%_sysconfdir/kvmd/fan.ini
 %_bindir/kvmd-fan
 
 %changelog
+* Tue Apr 09 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.30-alt2
+- rebuilt without long obsolete wiringpi
+
 * Mon Mar 11 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.30-alt1
 - 0.30 released
 
