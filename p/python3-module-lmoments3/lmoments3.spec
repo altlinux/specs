@@ -4,14 +4,13 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 Summary: Estimate linear moments for statistical distribution functions
 License: GPLv3
 Group: Development/Python3
-Url: https://pypi.org/project/lmoments3/
-
-# https://github.com/OpenHydrology/lmoments3.git
+URL: https://pypi.org/project/lmoments3
+VCS: https://github.com/OpenHydrology/lmoments3
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -37,6 +36,10 @@ frequently used in Extreme Value Analyses.
 
 sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
 
+sed -i  -e '/import versioneer/d' \
+        -e 's/version=.*/version="%version",/' \
+        -e '/cmdclass=versioneer/d' setup.py
+
 %build
 %pyproject_build
 
@@ -48,11 +51,14 @@ sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
 %tox_check_pyproject
 
 %files
-%doc *.rst docs/source/*.rst
+%doc LICENSE *.rst docs/source/*.rst
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Apr 09 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.6-alt1
+- Automatically updated to 1.0.6.
+
 * Wed May 17 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.5-alt1
 - Automatically updated to 1.0.5.
 - Build with check.
