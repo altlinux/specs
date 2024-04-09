@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: usrmerge
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: transition to merged usr
@@ -64,7 +64,49 @@ can be invoked directly by an administrator who knows what they are doing.
 %files hier-convert
 %_prefix/libexec/usrmerge/hier-convert
 
+%package block
+Summary: Install this to block installation of filesystem >= 3
+Group: Other
+AutoReq: no
+Conflicts: filesystem >= 3
+
+%description block
+This metapackage contains nothing. Its purpose is to keep the filesystem
+package in a system compatible with unmerged-usr, if this is temporarily
+desired on some machine.
+
+%files block
+
+%package ensure
+Summary: Install this to convert to merged-usr
+Group: Other
+AutoReq: no
+Requires(pre): usrmerge-hier-convert
+# We want /proc to pass usrmerge-ensure's install check;
+# its %%pre script runs hier-convert.
+Requires(pre): /proc
+
+%description ensure
+This metapackage contains nothing. Its purpose is to automatically enforce the
+migration to merged-usr when installed.
+
+%files ensure
+
+%pre ensure -p <lua>
+hier_convert_prog = "%_prefix/libexec/usrmerge/hier-convert"
+print("%name-ensure-%EVR: Starting usrmerge-hier-convert...")
+assert(os.execute(hier_convert_prog))
+
 %changelog
+* Tue Apr 09 2024 Arseny Maslennikov <arseny@altlinux.org> 0.5-alt1
+- 0.4 -> 0.5; see commit history for details.
+  Notably:
+  + Taught hier-convert to fix symlinks in unmerged dirs pointing
+    to a location which usrmerge maps to itself. (Closes: 49472)
+- Introduced new subpackages:
+  + usrmerge-block;
+  + usrmerge-ensure.
+
 * Mon Mar 25 2024 Arseny Maslennikov <arseny@altlinux.org> 0.4-alt1
 - 0.3 -> 0.4; see commit history for details.
   Notably:
