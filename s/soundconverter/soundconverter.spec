@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: soundconverter
-Version: 4.0.4
+Version: 4.0.5
 Release: alt1
 
 Summary: A simple sound converter application for GNOME
@@ -11,7 +11,7 @@ Group: Sound
 
 Url: https://github.com/kassoulet/soundconverter
 Source: %name-%version.tar
-Patch: soundconverter-4.0.0-drop-unity.patch
+Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
@@ -35,7 +35,7 @@ It reads and writes anything the GStreamer library can.
 
 %prep
 %setup
-%autopatch -p1
+%patch -p1
 
 %build
 %pyproject_build
@@ -72,6 +72,9 @@ rm -r %buildroot%_datadir/doc/%name
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Tue Apr 09 2024 Anton Midyukov <antohami@altlinux.org> 4.0.5-alt1
+- New version 4.0.5
+
 * Fri Jul 28 2023 Anton Midyukov <antohami@altlinux.org> 4.0.4-alt1
 - New version 4.0.4
 - Migration to PEP517
