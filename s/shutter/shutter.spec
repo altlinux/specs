@@ -7,7 +7,7 @@
 BuildRequires: perl(Carp/Always.pm) perl(Encode.pm) perl(Encode/Locale.pm) perl(File/Copy/Recursive.pm) perl(File/Which.pm) perl(Glib.pm) perl(Glib/Object/Introspection.pm) perl(Glib/Object/Subclass.pm) perl(GooCanvas2.pm) perl(GooCanvas2/CairoTypes.pm) perl(Gtk3.pm) perl(Gtk3/ImageView.pm) perl(HTTP/Request/Common.pm) perl(HTTP/Status.pm) perl(Image/Magick.pm) perl(JSON/MaybeXS.pm) perl(LWP/UserAgent.pm) perl(Locale/gettext.pm) perl(Moo.pm) perl(Net/DBus.pm) perl(Net/DBus/Reactor.pm) perl(Net/FTP.pm) perl(Number/Bytes/Human.pm) perl(Pango.pm) perl(Path/Class.pm) perl(Pod/Usage.pm) perl(Proc/Killfam.pm) perl(Proc/Simple.pm) perl(Sort/Naturally.pm) perl(URI.pm) perl(URI/Split.pm) perl(WebService/Gyazo/B.pm) perl(X11/Protocol.pm) perl(XML/Simple.pm) perl(diagnostics.pm)
 # END SourceDeps(oneline)
 Name: shutter
-Version: 0.99.4
+Version: 0.99.5
 Release: alt1
 
 Summary: Shutter is a feature-rich screenshot program
@@ -31,7 +31,6 @@ Requires: perl-File-Copy-Recursive
 Requires: perl-Proc-Simple
 Requires: perl-Sort-Naturally
 Requires: perl-Regexp-Parser
-Requires: perl-devel
 Requires: perl-Perl-Tidy
 Requires: perl-Carp-Always
 Requires: perl-GooCanvas2
@@ -90,6 +89,9 @@ cp -a share %buildroot/usr
 %_iconsdir/HighContrast/scalable/apps/shutter*
 
 %changelog
+* Tue Apr 09 2024 Anton Vyatkin <toni@altlinux.org> 0.99.5-alt1
+- New version 0.99.5 (Closes: #49928).
+
 * Tue Mar 14 2023 Anton Vyatkin <toni@altlinux.org> 0.99.4-alt1
 - New version 0.99.4.
 
