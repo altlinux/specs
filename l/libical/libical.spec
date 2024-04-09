@@ -33,8 +33,8 @@
 %endif
 
 Name: libical
-Version: 3.0.17
-Release: alt1.1
+Version: 3.0.18
+Release: alt1
 
 Summary: An implementation of basic iCAL protocols
 Group: System/Libraries
@@ -47,7 +47,7 @@ Source: %url/%name/releases/download/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
 %endif
 
-%define tzdata_ver 2023c
+%define tzdata_ver 2024a
 %define glib_ver 2.38
 %define xml2_ver 2.7.3
 %{?_with_system_tzdata:Requires: tzdata >= %tzdata_ver}
@@ -224,6 +224,9 @@ library.
 
 
 %changelog
+* Sun Mar 31 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.18-alt1
+- 3.0.18
+
 * Tue Dec 12 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0.17-alt1.1
 - prepared build with builtin tzdata for p10 and below
 
