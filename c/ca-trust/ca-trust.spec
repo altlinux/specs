@@ -6,7 +6,7 @@
 %define hooks_dir %_prefix/libexec/ca-trust/update.d
 
 Name: ca-trust
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 
 Summary: CA certificates and associated trust infrastructure
@@ -86,8 +86,10 @@ popd
 mkdir -p -m 755 %buildroot%pkidir/java
 mkdir -p -m 755 %buildroot%pkidir/tls/certs
 mkdir -p -m 755 %buildroot%catrustdir/source/{anchors,blacklist}
+ln -s blacklist %buildroot%catrustdir/source/blocklist
 mkdir -p -m 755 %buildroot%catrustdir/extracted/{pem,openssl,java}
 mkdir -p -m 755 %buildroot%_datadir/pki/ca-trust-source/{anchors,blacklist}
+ln -s blacklist %buildroot%_datadir/pki/ca-trust-source/blocklist
 mkdir -p -m 755 %buildroot%_datadir/ca-certificates
 mkdir -p -m 755 %buildroot%hooks_dir
 mkdir -p -m 755 %buildroot%_bindir
@@ -178,6 +180,9 @@ fi
 %hooks_dir/40-extract-directory-hash.hook
 
 %changelog
+* Tue Apr 09 2024 Mikhail Efremov <sem@altlinux.org> 0.1.6-alt1
+- Fixed blacklists.
+
 * Wed Feb 07 2024 Mikhail Efremov <sem@altlinux.org> 0.1.5-alt1
 - Use xmlto for the xml-to-man conversion.
 
