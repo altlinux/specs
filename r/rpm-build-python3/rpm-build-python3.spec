@@ -1,6 +1,6 @@
 Name: rpm-build-python3
-Version: 0.1.24
-Release: alt2
+Version: 0.1.25
+Release: alt1
 
 Summary: RPM helper macros to rebuild python3 packages
 License: GPLv2+
@@ -139,6 +139,9 @@ popd
 %_rpmlibdir/py3-check-importable
 
 %changelog
+* Mon Apr 08 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1.25-alt1
+- Implement %%python3_fix_shebang macro (thx to vt) (closes #49815).
+
 * Thu Oct 05 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1.24-alt2
 - python3.req.files:used quotes for test argument (closes #47847)
 
