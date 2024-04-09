@@ -1,6 +1,7 @@
 Name: furnace
-Version: 0.6pre17
+Version: 0.6.2
 Release: alt1
+Epoch: 1
 Summary: Chiptune tracker supporting many console soundchips
 License: GPL-3.0
 Group: Sound
@@ -77,7 +78,7 @@ install -D -m 0644 $N.png %buildroot%_iconsdir/hicolor/${N}x${N}/apps/%name.png
 done
 
 mkdir %buildroot%_datadir/metainfo/
-install -D -m 0644 ./res/furnace.appdata.xml %buildroot%_datadir/metainfo/
+install -D -m 0644 ./res/furnace.appdata.xml.in %buildroot%_datadir/metainfo/furnace.appdata.xml
 
 %files
 %doc README.md CONTRIBUTING.md
@@ -92,6 +93,9 @@ install -D -m 0644 ./res/furnace.appdata.xml %buildroot%_datadir/metainfo/
 %_docdir/%name
 
 %changelog
+* Tue Apr  9 2024 Artyom Bystrov <arbars@altlinux.org> 1:0.6.2-alt1
+- New version
+
 * Tue Oct 3 2023 Artyom Bystrov <arbars@altlinux.org> 0.6pre17-alt1
 - New version
 
