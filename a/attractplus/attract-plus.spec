@@ -1,8 +1,8 @@
 %define optflags_lto %nil
 
 Name: attractplus
-Version: 3.0.5
-Release: alt2
+Version: 3.0.7
+Release: alt1
 
 Summary: Arcade-like front-end for emulators
 Summary(ru_RU.UTF-8): Оболочка в стиле аркадных автоматов для эмуляторов
@@ -49,8 +49,6 @@ Mac OS X и Windows.
 %prep
 %setup -n %name-%version
 
-
-
 %build
 %make_build OPTIMISE="%optflags" prefix=%_prefix
 
@@ -64,9 +62,19 @@ convert util/linux/attract-mode.png -scale ${N}x${N} $N.xpm;
 install -D -m 0644 $N.xpm %buildroot%_iconsdir/hicolor/${N}x${N}/apps/%name.xpm
 done
 
-install -Dm644 util/linux/attract-mode.appdata.xml %buildroot%_datadir/appdata/%name.appdata.xml
-install -Dm644 util/linux/attract-mode.desktop         %buildroot%_desktopdir/%name.desktop
+mkdir -p %buildroot%_desktopdir
+cat > %buildroot%_desktopdir/%name.desktop << EOF
+[Desktop Entry]
+Name=Attract-Mode Plus
+Comment=Emulator Frontend
+Exec=attractplus
+Terminal=false
+Type=Application
+Categories=Game;Emulator;
+Icon=%name
+EOF
 
+install -Dm644 util/linux/attract-mode.appdata.xml %buildroot%_datadir/appdata/%name.appdata.xml
 
 %files
 %dir %_datadir/attract
@@ -78,6 +86,11 @@ install -Dm644 util/linux/attract-mode.desktop         %buildroot%_desktopdir/%n
 %_iconsdir/hicolor/*/apps/%name.xpm
 
 %changelog
+* Thu Feb 29 2024 Artyom Bystrov <arbars@altlinux.org> 3.0.7-alt1
+- update to new version
+- change desktop file
+- minor spec cleanup
+
 * Fri Sep  8 2023 Artyom Bystrov <arbars@altlinux.org> 3.0.5-alt2
 - Make buildable on P10
 
