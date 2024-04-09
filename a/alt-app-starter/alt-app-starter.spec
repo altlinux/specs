@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-app-starter
-Version: 1.3.0
-Release: alt2
+Version: 1.3.1
+Release: alt1
 Group: Graphical desktop/KDE
 Summary: The tool to run programs as another user
 License: GPLv2
@@ -45,6 +45,9 @@ This tool was designed to work with KDE.
 %_K5xdgapp/*.desktop
 
 %changelog
+* Tue Mar 19 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.1-alt1
+- change the order of elements (closes: 49387)
+
 * Thu Nov 09 2023 Sergey V Turchin <zerg at altlinux dot org> 1.3.0-alt2
 - don't hardcode alternate placement
 
