@@ -1,6 +1,6 @@
 Name: tzdata
-Version: 2023c
-Release: alt2
+Version: 2024a
+Release: alt1
 
 Summary: Timezone data
 # tzdata itself is Public Domain, but tzupdate is GPLv2+,
@@ -36,10 +36,16 @@ This package contains timezone data source for use by tz compilers.
 
 %prep
 %setup -n %srcname
+mkdir .rearguard
+cp -a -t .rearguard -- *
 xz -9k NEWS
 
 %build
-make MANTXTS= CFLAGS='%optflags' VERSION=%version
+%define make_args CC='%__cc' CFLAGS='%optflags' MANTXTS= VERSION=%version
+make %make_args
+
+%define rearguard tzdata%version-rearguard.tar.gz
+make -C .rearguard %rearguard %make_args
 
 %install
 case "$(rpm --eval %%_priority_distbranch)" in
@@ -56,10 +62,8 @@ cp -al %buildroot%_datadir/zoneinfo/[A-Z]* %buildroot%_datadir/zoneinfo/posix/
 
 install -pDm755 tzupdate %buildroot%_sbindir/tzupdate
 
-rearguard=tzdata%version-rearguard.tar.gz
-make $rearguard MANTXTS= VERSION=%version
 mkdir -p %buildroot%srcdir
-tar -xf $rearguard -C %buildroot%srcdir
+tar -xf .rearguard/%rearguard -C %buildroot%srcdir
 echo '%name%version' > %buildroot%srcdir/VERSION
 
 # Hardlink identical files together.
@@ -67,7 +71,7 @@ echo '%name%version' > %buildroot%srcdir/VERSION
 
 %check
 for f in *.html; do touch check_"$f"; done
-make -k check MANTXTS=
+make -k check %make_args
 
 # test basic glibc compatibility
 cat > expected <<'EOF'
@@ -101,6 +105,9 @@ diff -u expected output || {
 %srcdir/
 
 %changelog
+* Sat Apr 06 2024 Dmitry V. Levin <ldv@altlinux.org> 2024a-alt1
+- 2023c -> 2024a (closes: #49855).
+
 * Sat Jul 15 2023 Dmitry V. Levin <ldv@altlinux.org> 2023c-alt2
 - Reintroduced tzdata.zi and leapseconds text data files
   that were removed earlier in 2017c-alt2 (closes: #46949).
