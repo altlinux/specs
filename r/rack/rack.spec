@@ -1,6 +1,6 @@
 Name: rack
-Version: 2.4.1
-Release: alt3
+Version: 2.5.0
+Release: alt1
 
 Summary: VCV virtual Eurorack host
 License: GPLv3
@@ -12,7 +12,7 @@ ExclusiveArch: aarch64 x86_64
 Source0: %name-%version-%release.tar
 Source1: deps-%version-%release.tar
 
-BuildRequires: cmake gcc-c++
+BuildRequires: cmake gcc-c++ jq
 BuildRequires: /usr/bin/convert
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(glew)
@@ -110,6 +110,9 @@ install -pm0644 -D rack.desktop %buildroot%_desktopdir/rack.desktop
 %_datadir/rack/sdk
 
 %changelog
+* Tue Apr 09 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.5.0-alt1
+- 2.5.0 released
+
 * Fri Mar 15 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.4.1-alt3
 - rack sdk tweaks
 
