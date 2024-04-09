@@ -150,8 +150,8 @@
 # }}}
 
 Name: qemu
-Version: 8.2.1
-Release: alt2
+Version: 8.2.2
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -1363,6 +1363,10 @@ popd
 %exclude %docdir/LICENSE
 
 %changelog
+* Mon Apr 08 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.2-alt1
+- 8.2.2.
+- backkport patches (Fixes:  CVE-2024-26327, CVE-2024-26328).
+
 * Mon Mar 04 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 8.2.1-alt2
 - LoongArch KVM support from https://github.com/loongson/qemu.git,
   branch kvm-loongarch, commit 432f4cf89493f2a1ac144018224e7d1b4fbc31a4.
