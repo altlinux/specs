@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.30.5
+Version: 1.31.1
 Release: alt1
 
 Summary: PostgreSQL interface library
@@ -17,8 +17,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-hatchling
 %if_with check
 BuildRequires: python3-module-scramp
 BuildRequires: python3-module-pytz
@@ -53,12 +52,15 @@ sed -i '9a version = "%version"' pyproject.toml
 %pyproject_run_pytest -v -k 'test_converters'
 
 %files
-%doc README.rst LICENSE
+%doc README.*
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 
 %changelog
+* Tue Apr 09 2024 Anton Vyatkin <toni@altlinux.org> 1.31.1-alt1
+- New version 1.31.1.
+
 * Fri Feb 23 2024 Anton Vyatkin <toni@altlinux.org> 1.30.5-alt1
 - New version 1.30.5.
 
