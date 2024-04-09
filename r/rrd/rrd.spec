@@ -2,7 +2,7 @@
 
 Name: rrd
 Version: 1.8.0
-Release: alt2
+Release: alt3
 %define native rrdtool
 %define abiversion 8
 %define rrdcached_user root
@@ -22,7 +22,6 @@ Source0: http://oss.oetiker.ch/rrdtool/pub/%native-%version.tar
 Source1: rrdcached.init
 Source2: rrdcached.sysconfig
 Source3: rrdcached.service
-Source4: rrdcached.socket
 Source10: MRTG-HOWTO
 
 Patch0: rrd-1.7.2-alt-build-tcl.patch
@@ -289,7 +288,6 @@ mkdir -p %buildroot{%_initdir,%_unitdir,%_sysconfdir/sysconfig}
 mkdir -p %buildroot%_localstatedir/lib/rrdcached/{db,journal}
 install -m755 %SOURCE1 %buildroot%_initdir/rrdcached
 install -m644 %SOURCE3 %buildroot%_unitdir/rrdcached.service
-install -m644 %SOURCE4 %buildroot%_unitdir/rrdcached.socket
 
 sed -e 's|@@USER@@|%rrdcached_user|g' < %SOURCE2 > %buildroot%_sysconfdir/sysconfig/rrdcached
 
@@ -370,6 +368,9 @@ rm -rf %buildroot/usr/share/tcl
 #   (the tcl one looks broken too as of 1.5.4-alt2.1)
 
 %changelog
+* Tue Apr 09 2024 Alexey Shabalin <shaba@altlinux.org> 1.8.0-alt3
+- removed rrdcached.socket
+
 * Sun Oct 29 2023 Igor Vlasenko <viy@altlinux.org> 1.8.0-alt2
 - NMU: perl 5.38 support
 
