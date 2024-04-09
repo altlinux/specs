@@ -1,9 +1,9 @@
 Name: osinfo-db-tools
-Version: 1.10.0
+Version: 1.11.0
 Release: alt1
 
 Summary: Tools for managing the osinfo database
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Development/Tools
 
 Url: http://libosinfo.org/
@@ -17,7 +17,7 @@ BuildRequires: pkgconfig(libxml-2.0) >= 2.6.0
 BuildRequires: pkgconfig(libxslt) >= 1.0.0
 BuildRequires: pkgconfig(libarchive) >= 3.0.0
 BuildRequires: pkgconfig(json-glib-1.0)
-BuildRequires: pkgconfig(libsoup-2.4)
+BuildRequires: pkgconfig(libsoup-3.0)
 
 BuildRequires: perl-podlators
 BuildRequires: python3
@@ -55,6 +55,10 @@ sed -i '/requires GCC or CLang/d' meson.build
 %_man1dir/*
 
 %changelog
+* Tue Apr 09 2024 Alexey Shabalin <shaba@altlinux.org> 1.11.0-alt1
+- New version 1.11.0.
+- Build with soup3.
+
 * Wed Mar 23 2022 Alexey Shabalin <shaba@altlinux.org> 1.10.0-alt1
 - new version 1.10.0
 
