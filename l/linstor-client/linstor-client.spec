@@ -3,7 +3,7 @@
 
 Name: linstor-client
 Summary: Linstor Client
-Version: 1.21.1
+Version: 1.22.0
 Release: alt1
 Group: Development/Python3
 License: GPLv3
@@ -46,6 +46,9 @@ install -D -m 0644 scripts/bash_completion/linstor %buildroot%_sysconfdir/bash_c
 %endif
 
 %changelog
+* Thu Apr 04 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.22.0-alt1
+- 1.22.0
+
 * Thu Feb 22 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.21.1-alt1
 - 1.21.1
 
