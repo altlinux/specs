@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: libglibmm
-Version: %major.6
+Version: %major.7
 Release: alt1
 
 Summary: C++ wrapper for GLib
@@ -86,7 +86,7 @@ sed -i  '/giomm_tls_client/d' tests/meson.build
 %__meson_test
 
 %files
-%doc AUTHORS NEWS
+%doc NEWS
 %_libdir/*.so.*
 
 %files devel
@@ -104,6 +104,9 @@ sed -i  '/giomm_tls_client/d' tests/meson.build
 %endif
 
 %changelog
+* Tue Apr 09 2024 Yuri N. Sedunov <aris@altlinux.org> 2.66.7-alt1
+- 2.66.7
+
 * Mon Apr 03 2023 Yuri N. Sedunov <aris@altlinux.org> 2.66.6-alt1
 - 2.66.6
 
