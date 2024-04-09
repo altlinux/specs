@@ -6,7 +6,7 @@
 
 Name: xfsprogs
 Version: 6.6.0
-Release: alt1
+Release: alt2
 
 Summary: Utilities for managing the XFS filesystem
 License: LGPL-2.1 and GPL-2.0
@@ -154,6 +154,10 @@ rm -rf %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Tue Apr 02 2024 Anton Midyukov <antohami@altlinux.org> 6.6.0-alt2
+- NMU: xfs_scrub_fail.in: hide systemctl, systemd-escape program in variables
+  (Closes: 49860)
+
 * Sat Mar 30 2024 Anton Farygin <rider@altlinux.ru> 6.6.0-alt1
 - 6.3.0 -> 6.6.0
 - use _xfsscrub user in th online scrub unit instead of the nobody user
