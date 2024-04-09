@@ -9,7 +9,7 @@
 %def_without check
 
 Name: ipython3
-Version: 8.22.2
+Version: 8.23.0
 Release: alt1
 Summary: An enhanced interactive Python 3 shell
 License: BSD-3-Clause
@@ -223,6 +223,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Tue Apr 09 2024 Anton Vyatkin <toni@altlinux.org> 8.23.0-alt1
+- New version 8.23.0.
+
 * Mon Mar 11 2024 Anton Vyatkin <toni@altlinux.org> 8.22.2-alt1
 - New version 8.22.2.
 - Drop gobject require used for obsoleted gtk2 (see ALT bug #41092).
