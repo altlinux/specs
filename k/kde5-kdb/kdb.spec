@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 3.2.0
-Release: alt4
+Release: alt5
 %K5init altplace
 
 Group: System/Libraries
@@ -79,6 +79,10 @@ Requires: %name-common = %version-%release
 
 %prep
 %setup -n %rname-%version
+%ifarch %e2k
+# EDG frontend throws error for every "override [[nodiscard]]"
+sed -i '$a #undef Q_REQUIRED_RESULT\n#define Q_REQUIRED_RESULT' src/KDbConnection.h
+%endif
 
 %build
 export PATH=$PWD/bin:$PATH
@@ -121,6 +125,9 @@ sed -i 's|[[:space:]]KF5CoreAddons||' %buildroot/%_pkgconfigdir/KDb3.pc
 %_K5lib/libKDb3.so.*
 
 %changelog
+* Wed Apr 10 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.2.0-alt5
+- fix build for Elbrus
+
 * Thu Feb 10 2022 Sergey V Turchin <zerg@altlinux.org> 3.2.0-alt4
 - fix find postgresql 14
 
