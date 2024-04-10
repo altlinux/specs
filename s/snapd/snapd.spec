@@ -30,7 +30,7 @@
 
 Name: snapd
 Version: 2.61.3
-Release: alt1
+Release: alt1.1
 Summary: A transactional software package manager
 License: GPLv3
 Group: System/Configuration/Other
@@ -102,7 +102,7 @@ runs properly under an environment with SELinux enabled.
 %endif
 
 %prep
-%setup -D -b 1
+%setup -b 1
 %patch3500 -p1
 
 # We don't want/need squashfuse in the rpm
@@ -113,11 +113,11 @@ sed -e 's:_ "github.com/snapcore/squashfuse"::g' -i systemd/systemd.go
 sed -e "s:/usr/lib/environment.d/:/lib/environment.d/:g" -i data/systemd-env/Makefile
 sed -e 's:${prefix}/lib/systemd/system-environment-generators:/lib/systemd/system-environment-generators:g' -i cmd/configure.ac
 
-%build
 # Build snapd
 mkdir -p src/github.com/snapcore
 ln -s ../../../ src/github.com/snapcore/snapd
 
+%build
 #export BUILDDIR="$PWD/.gopath"
 #export GOPATH="$BUILDDIR:%go_path"
 
@@ -463,6 +463,11 @@ fi
 %endif
 
 %changelog
+* Wed Apr 10 2024 Ivan A. Melnikov <iv@altlinux.org> 2.61.3-alt1.1
+- NMU:
+  + restore loongarch64 fix FTBFS;
+  + minor spec cleanup.
+
 * Thu Apr 04 2024 Alexey Shabalin <shaba@altlinux.org> 2.61.3-alt1
 - 2.61.3
 
