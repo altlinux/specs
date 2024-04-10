@@ -7,7 +7,7 @@
 
 Name:          puppetdb
 Version:       8.4.1
-Release:       alt2
+Release:       alt3
 Summary:       Centralized Puppet Storage
 License:       Apache-2.0
 Group:         Other
@@ -81,7 +81,7 @@ speed with a powerful API.
 
 %package       -n gem-puppetdb-terminus
 Version:       3.0.0
-Release:       alt2
+Release:       alt3
 Summary:       Connect Puppet to PuppetDB by setting up a terminus for PuppetDB
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -98,7 +98,7 @@ Puppet terminus files to connect to PuppetDB
 %if_enabled    doc
 %package       -n puppetdb-terminus-doc
 Version:       3.0.0
-Release:       alt2
+Release:       alt3
 Summary:       Connect Puppet to PuppetDB by setting up a terminus for PuppetDB documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puppetdb-terminus
 Group:         Development/Documentation
@@ -119,7 +119,7 @@ Puppet terminus files to connect to PuppetDB
 %if_enabled    devel
 %package       -n puppetdb-terminus-devel
 Version:       3.0.0
-Release:       alt2
+Release:       alt3
 Summary:       Connect Puppet to PuppetDB by setting up a terminus for PuppetDB development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puppetdb-terminus
 Group:         Development/Ruby
@@ -199,6 +199,8 @@ getent passwd _puppetdb >/dev/null || \
 %post
 %post_service %name
 
+echo 'NOTE: To complete update/install procedure, make sure you have followed manuals at https://www.altlinux.org/Puppetdb' 1>&2
+
 %preun
 %preun_service %name
 
@@ -255,6 +257,10 @@ getent passwd _puppetdb >/dev/null || \
 
 
 %changelog
+* Fri Mar 22 2024 Pavel Skrylev <majioa@altlinux.org> 8.4.1-alt3
+- ! fixed default sysconfig environment
+- ! fixed pdb run script allowing using the JAVA_HOME variable
+
 * Tue Mar 19 2024 Pavel Skrylev <majioa@altlinux.org> 8.4.1-alt2
 - + added prebuild bundle clojes
 - ! fixed spec minorly
