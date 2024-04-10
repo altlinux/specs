@@ -3,8 +3,8 @@
 %def_without ivman
 %def_without blueberry
 Name: icewm-startup
-Version: 0.215
-Release: alt2
+Version: 0.216
+Release: alt1
 
 Summary: simple pluggable IceWM autostart manager
 
@@ -13,7 +13,7 @@ License: GPLv2+
 Group: Graphical desktop/Icewm
 Url: http://git.altlinux.org
 
-Packager: Dmitriy Khanzhin <jinn@altlinux.org>
+Packager: Igor Vlasenko <viy@altlinux.org>
 #Source: %name-%version.tar.bz2
 Source1: XXkb.conf
 
@@ -27,7 +27,6 @@ Requires: icewm >= 1.2.25
 %description
 Simple pluggable icewm autostart manager is a generic IceWM startup script
 which allows one to configure IceWM default autostart via installing corresponding rpm plug-ins.
-
 %description -l ru_RU.UTF-8
 менеджер автозапуска программ IceWM
 позволяет путем установки rpm расширений просто настраивать
@@ -78,7 +77,6 @@ AutoReq: no
 %description blueberry-tray
 blueberry is the Bluetooth devices graphical configuration utility.
 This package provides blueberry-tray plug-in for IceWM autostart manager.
-
 %description -l ru_RU.UTF-8 blueberry-tray
 blueberry является графической утилитой для настройки и работы с Bluetooth устройствами.
 Установите этот пакет, если вы хотите запускать blueberry-tray при старте IceWM.
@@ -105,9 +103,7 @@ Summary: desklaunch autostart at IceWM startup
 Summary(ru_RU.UTF-8): автозапуск desklaunch при старте IceWM
 Requires: %name desklaunch
 AutoReq: no
-%endif #desklaunch
 
-%if_with desklaunch
 %description desklaunch
 desklaunch plug-in for simple pluggable IceWM autostart manager.
 desklaunch is only launched for users that have ~/.desklaunchrc.
@@ -137,7 +133,11 @@ Requires: %name grun
 AutoReq: no
 
 %description grun
-grun plug-in for setup dialog of launching applications in console mode.
+grun plug-in for enable the launch of applications using the "Run..."
+menu item in the root menu.
+%description -l ru_RU.UTF-8 grun
+запуск grun для обеспечения возможности запуска программ с помощью
+пункта «Выполнить...» в главном меню.
 
 %package idesk
 Group: Graphical desktop/Icewm
@@ -180,7 +180,6 @@ for mount and unmount operations, udev for device detection and DBus
 for take information about external mounting and unmounting.
 
 This package provides mount-tray plug-in for IceWM autostart manager.
-
 %description -l ru_RU.UTF-8 mount-tray
 mount-tray - это небольшой аплет для монтирования и размонтирования
 извлекаемых устройств наподобие USB флешки, CD или DVD-ROM.
@@ -190,19 +189,23 @@ mount-tray - это небольшой аплет для монтировани�
 %package networkmanager
 Group: Graphical desktop/Icewm
 Summary: start gnome networkmanager applet
-Requires: %name ModemManager NetworkManager-applet-gtk
-Requires: NetworkManager-wifi usb-modeswitch
+Requires: %name ModemManager NetworkManager NetworkManager-l2tp-gtk3
+Requires: /usr/bin/nm-applet /usr/bin/nmtui usb-modeswitch
+Requires: /usr/libexec/polkit-1/polkit-gnome-authentication-agent-1
 AutoReq: no
 
 %description networkmanager
-networkmanager plug-in for simple network configuration.
-Start gnome networkmanager applet into tray.
+NetworkManager plug-in for simplify network configuration.
+Start the NetworkManager applet in tray.
+%description -l ru_RU.UTF-8 networkmanager
+Запуск NetworkManager applet для упрощения настройки сетевых подключений
 
 %package notification-daemon
 Group: Graphical desktop/Icewm
 Summary: notification-daemon autostart at IceWM startup
 Summary(ru_RU.UTF-8): автозапуск notification-daemon при старте IceWM
 Requires: %name
+Requires: notification-daemon
 Requires: /usr/bin/nm-applet
 Requires: /usr/libexec/polkit-1/polkit-gnome-authentication-agent-1
 AutoReq: no
@@ -210,7 +213,6 @@ AutoReq: no
 %description notification-daemon
 notification-daemon provides a notification server according to Desktop Notifications Specification.
 This package provides notification-daemon plug-in for IceWM autostart manager.
-
 %description -l ru_RU.UTF-8 notification-daemon
 notification-daemon используется для отображения уведомлений от других программ.
 Установите этот пакет, если вы хотите запускать notification-daemon при старте IceWM.
@@ -289,7 +291,6 @@ AutoReq: no
 %description update-menus
 update-menus plug-in for simple pluggable IceWM autostart manager.
 Does autoupdate of user menu at IceWM startup. (~/.icewm/menu).
-
 %description -l ru_RU.UTF-8 update-menus
 update-menus plug-in для менеджера автозапуска программ IceWM.
 автообновление меню пользователя при старте IceWM.
@@ -304,6 +305,13 @@ Summary: xtdesktop autostart at IceWM startup
 Summary(ru_RU.UTF-8): автозапуск xtdesktop при старте IceWM
 Requires: %name xtdesktop
 AutoReq: no
+
+%description xtdesktop
+xtdesktop plug-in for simple pluggable IceWM autostart manager.
+xtdesktop is only launched for users that have ~/.xtdeskrc.
+%description -l ru_RU.UTF-8 xtdesktop
+xtdesktop plug-in для менеджера автозапуска программ IceWM.
+Плагин запускает xtdesktop только при наличии ~/.xtdeskrc.
 %endif #xtdesktop
 
 %package xscreensaver
@@ -317,15 +325,6 @@ AutoReq: no
 xscreensaver plug-in for icewm startup.
 %description -l ru_RU.UTF-8 xscreensaver
 Включение хранителя экрана xscreensaver для IceWM.
-
-%if_with xtdesktop
-%description xtdesktop
-xtdesktop plug-in for simple pluggable IceWM autostart manager.
-xtdesktop is only launched for users that have ~/.xtdeskrc.
-%description -l ru_RU.UTF-8 xtdesktop
-xtdesktop plug-in для менеджера автозапуска программ IceWM.
-Плагин запускает xtdesktop только при наличии ~/.xtdeskrc.
-%endif #xtdesktop
 
 %package xxkb
 Group: Graphical desktop/Icewm
@@ -703,6 +702,13 @@ fi
 %icewmconfdir/XXkb.conf
 
 %changelog
+* Thu Apr 04 2024 Dmitriy Khanzhin <jinn@altlinux.org> 0.216-alt1
+- networkmanager: added l2tp module, nmtui
+- notification-daemon: added forgotten requires
+- xxkb-tray: fixed warning in startup
+- improved some descriptions
+- reverted back the original packager
+
 * Sat Dec 23 2023 Anton Midyukov <antohami@altlinux.org> 0.215-alt2
 - NMU: disable build blueberry-tray
 
