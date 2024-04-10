@@ -18,10 +18,9 @@
 %def_without system_fonts
 %def_without ninja
 %def_without ffmpeg_static
-%def_with scudo
 
 Name: telegram-desktop
-Version: 4.16.4
+Version: 4.16.6
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -322,9 +321,6 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
     -DDESKTOP_APP_DISABLE_CRASH_REPORTS:BOOL=ON \
     -DDESKTOP_APP_DISABLE_SPELLCHECK:BOOL=OFF \
     -DQT_VERSION_MAJOR=6 \
-%if_without scudo
-    -DDESKTOP_APP_DISABLE_SCUDO=ON \
-%endif
 %if_with wayland
     -DDESKTOP_APP_DISABLE_WAYLAND_INTEGRATION:BOOL=OFF \
 %else
@@ -383,6 +379,13 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Wed Apr 10 2024 Vitaly Lipatov <lav@altlinux.ru> 4.16.6-alt1
+- new version 4.16.6 (with rpmrb script)
+
+* Wed Apr 10 2024 Vitaly Lipatov <lav@altlinux.ru> 4.16.5-alt1
+- new version 4.16.5 (with rpmrb script)
+- upstream reverted scudo to jemalloc
+
 * Sun Apr 07 2024 Vitaly Lipatov <lav@altlinux.ru> 4.16.4-alt1
 - new version 4.16.4 (with rpmrb script)
 
