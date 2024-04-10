@@ -1,6 +1,6 @@
 Name:           retroarch
 Version:        1.18.0
-Release:        alt1
+Release:        alt1.1
 Summary:        Emulator frontend
 License:        GPL-3.0-only
 Group:          Emulators
@@ -75,7 +75,7 @@ have, such as real-time rewinding and game-aware shading.
 %package mobile
 Summary:  Setup for mobile devices
 Group:    Emulators
-Provides: retroarch
+Requires: retroarch
 
 %description mobile
 Config file and desktop file for mobile devices like Pinephone Pro
@@ -156,7 +156,7 @@ fdupes -rdN %{buildroot}
 
 
 %changelog
-* Sun Mar 24 2024 2024 Artyom Bystrov <arbars@altlinux.org> 1.18.0-alt1
+* Sun Mar 24 2024 2024 Artyom Bystrov <arbars@altlinux.org> 1.18.0-alt1.1
 - update to new version
 - added cfg file for mobile devices
 
