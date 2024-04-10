@@ -1,7 +1,7 @@
 %define repo dde-calendar
 
 Name: deepin-calendar
-Version: 5.12.2
+Version: 5.13.0
 Release: alt1
 
 Summary: Calendar for Deepin Desktop Environment
@@ -72,6 +72,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_userunitdir/com.dde.calendarserver.calendar.timer
 
 %changelog
+* Wed Apr 10 2024 Leontiy Volodin <lvol@altlinux.org> 5.13.0-alt1
+- New version 5.13.0.
+
 * Mon Mar 25 2024 Leontiy Volodin <lvol@altlinux.org> 5.12.2-alt1
 - New version 5.12.2.
 
