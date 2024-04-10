@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 46
 %define beta %nil
@@ -8,7 +8,7 @@
 
 Name: orca
 Version: %ver_major.1
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
 Summary(ru_RU.UTF-8): Программа экранного доступа для людей с ограничениями по зрению
@@ -25,7 +25,7 @@ Source1: voiceman-server
 Source2: %name.watch
 Source3: orca-autostart.desktop
 
-Requires: typelib(Gtk) = 3.0 typelib(Atspi) = 2.0
+Requires: typelib(Gtk) = 3.0 typelib(Gtk) = 4.0 typelib(Atspi) = 2.0
 %{?_disable_spiel:%add_typelib_req_skiplist typelib(Spiel)}
 
 Requires: yelp
@@ -61,6 +61,7 @@ Jaws For Windows компании Freedom Scientific.
 
 %prep
 %setup -n %name-%version%beta
+sed -i 's/\(enableBraille[[:space:]]*= \)True/\1False/' src/orca/settings.py
 
 %build
 %meson \
@@ -84,9 +85,14 @@ Jaws For Windows компании Freedom Scientific.
 %_man1dir/*
 %_datadir/%name/
 %_sysconfdir/xdg/autostart/%name-autostart.desktop
-#%_datadir/gdm/greeter/autostart/%name-autostart.desktop
 
 %changelog
+* Wed Apr 10 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt2
+- updated to ORCA_46_1-3-g02f91c115 (improved russian translation)
+- explicitly required both typelib(Gtk) 3.0 and 4.0
+- disabled Braille (brltty) support by default
+  as a workaround for ALT #49977
+
 * Mon Apr 01 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
 - 46.1
 
