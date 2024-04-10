@@ -1,6 +1,6 @@
 Name: rpm-macros-qt6-webengine
-Version: 0.1
-Release: alt1
+Version: 0.2
+Release: alt2
 
 BuildArch: noarch
 
@@ -24,5 +24,11 @@ cp %SOURCE0 %buildroot%_rpmmacrosdir/qt6-webengine
 %_rpmmacrosdir/qt6-webengine
 
 %changelog
+* Tue Apr 09 2024 Sergey V Turchin <zerg@altlinux.org> 0.2-alt2
+- bump release
+
+* Tue Apr 09 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.2-alt1
+- Added LoongArch to list of supported architectures
+
 * Fri Jun 03 2022 Sergey V Turchin <zerg@altlinux.org> 0.1-alt1
 - initial build

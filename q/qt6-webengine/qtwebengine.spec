@@ -26,7 +26,7 @@
 
 Name: qt6-webengine
 Version: 6.6.2
-Release: alt1
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt6 - QtWebEngine components
@@ -42,6 +42,9 @@ Patch1: alt-ftbfs.patch
 Patch200: remove_catapult_3rdparty.patch
 Patch201: remove_catapult_core.patch
 Patch202: compressing_files.patch
+# LoongArch
+Patch3500: qt6-webengine-6.6.2-loongarch64.patch
+Patch3501: loongarch-don-t-break-other-arches.patch
 
 BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires(pre): rpm-macros-qt6 qt6-tools
@@ -189,6 +192,10 @@ Requires: libqt6-core = %_qt6_version
 %patch200 -p1
 %patch201 -p1
 %patch202 -p1
+%ifarch loongarch64
+%patch3500 -p2
+%patch3501 -p2
+%endif
 #
 #ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 
@@ -402,6 +409,15 @@ done
 %_pkgconfigdir/Qt?*.pc
 
 %changelog
+* Wed Apr 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt3
+- apply LoongArch patches only for loongarch64 build
+
+* Fri Feb 23 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 6.6.2-alt2
+- Added LoongArch support patch from
+  https://github.com/AOSC-Dev/chromium-loongarch64
+  commit 651c6a0455330c97
+- Fixup LoongArch patch to not break break other arches
+
 * Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
 - new version
 
