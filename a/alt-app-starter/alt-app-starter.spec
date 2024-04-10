@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-app-starter
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 Group: Graphical desktop/KDE
 Summary: The tool to run programs as another user
@@ -45,6 +45,9 @@ This tool was designed to work with KDE.
 %_K5xdgapp/*.desktop
 
 %changelog
+* Wed Apr 10 2024 Sergey V Turchin <zerg at altlinux dot org> 1.3.3-alt1
+- require CXX 17
+
 * Wed Apr 10 2024 Sergey V Turchin <zerg at altlinux dot org> 1.3.2-alt1
 - fix parsing program arguments
 
