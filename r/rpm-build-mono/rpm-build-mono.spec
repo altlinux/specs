@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rpm-build-mono
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: RPM helper macros and dependency utils to build Mono packages
@@ -37,6 +37,9 @@ install -pD -m755 mono.prov.files %buildroot%_rpmlibdir/mono.prov.files
 %_rpmlibdir/mono*
 
 %changelog
+* Sat Apr 06 2024 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
+- rpm-build-mono.macros: add mono_arches
+
 * Thu Nov 12 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.0-alt1
 - Updated stdlibs list.
 
