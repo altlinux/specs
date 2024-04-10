@@ -46,16 +46,16 @@
 # https://devtalk.blender.org/t/does-blender-use-jemalloc-and-or-tbb/13388/10
 %def_with jemalloc
 
-%ifarch loongarch64
-%def_without hip
-%else
-# HIP should work on other 64-bit arches
+%ifarch x86_64 ppc64le aarch64
+# HIP should work on other 64-bit arches but clr needs to get built first
 %def_with hip
+%else
+%def_without hip
 %endif
 
 Name: blender
 Version: 4.1.0
-Release: alt0.5
+Release: alt0.5.1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -323,7 +323,9 @@ EOF
 sed -i "/-Werror=return-type/d" CMakeLists.txt
 sed -i 's/"${CMAKE_C_COMPILER_VERSION}" VERSION_LESS/"100" VERSION_LESS/' CMakeLists.txt
 %endif
+%ifarch loongarch64
 %patch3500 -p1
+%endif
 
 # Delete the bundled FindOpenJPEG to make find_package use the system version
 # instead (the local version hardcodes the openjpeg version so it is not update
@@ -457,6 +459,9 @@ popd
 %endif
 
 %changelog
+* Wed Apr 10 2024 Michael Shigorin <mike@altlinux.org> 4.1.0-alt0.5.1
+- NMU: align hip arches with those for clr, even
+
 * Mon Apr 08 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.1.0-alt0.5
 - NMU: fixed FTBFS on LoongArch
 
