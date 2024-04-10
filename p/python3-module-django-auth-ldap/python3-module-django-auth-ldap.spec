@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.3.0
+Version: 4.8.0
 Release: alt1
 
 Summary: Django authentication backend that authenticates against an LDAP service.
@@ -52,6 +52,9 @@ python3 -Wa -b -m django test --settings tests.settings
 
 
 %changelog
+* Wed Apr 10 2024 Dmitry Lyalyaev <fruktime@altlinux.org> 4.8.0-alt1
+- 4.3.0 -> 4.8.0
+
 * Tue Jun 13 2023 Dmitry Lyalyaev <fruktime@altlinux.org> 4.3.0-alt1
 - new version 4.3.0
 
