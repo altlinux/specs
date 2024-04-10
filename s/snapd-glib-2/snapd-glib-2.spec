@@ -13,7 +13,7 @@
 %def_disable check
 
 Name: snapd-glib-%api_ver
-Version: 1.64
+Version: 1.65
 Release: alt1
 
 Group: System/Libraries
@@ -24,7 +24,7 @@ Url: https://github.com/snapcore/snapd-glib
 Vcs: https://github.com/snapcore/snapd-glib.git
 Source: https://github.com/snapcore/%_name/releases/download/%version/%_name-%version.tar.xz
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gir %{?_enable_vala:rpm-build-vala} %{?_enable_qt:rpm-macros-qt5}
+BuildRequires(pre): rpm-macros-meson rpm-build-gir %{?_enable_vala:rpm-build-vala} %{?_enable_qt:rpm-macros-qt6}
 BuildRequires: meson gcc-c++
 BuildRequires: gobject-introspection-devel
 BuildRequires: pkgconfig(gio-2.0)
@@ -35,9 +35,9 @@ BuildRequires: pkgconfig(libsoup-3.0)
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_docs:BuildRequires: gtk-doc}
 %{?_enable_qt:
-BuildRequires: pkgconfig(Qt5Core)
-BuildRequires: pkgconfig(Qt5Network)}
-%{?_enable_qml:BuildRequires: pkgconfig(Qt5Qml)}
+BuildRequires: pkgconfig(Qt6Core)
+BuildRequires: pkgconfig(Qt6Network)}
+%{?_enable_qml:BuildRequires: pkgconfig(Qt6Qml)}
 
 %description
 %name is a libsoup-3.0 based library that provides an interface to
@@ -48,7 +48,7 @@ Summary: Library providing a Glib interface to snapd (API 2)
 Group: System/Libraries
 
 %description -n %libsnapd_glib
-snapd-qt is a libsoup-3.0 based library that provides an interface to
+snapd-glib is a libsoup-3.0 based library that provides an interface to
 communicate with snapd for Glib based applications.
 
 %package devel
@@ -61,7 +61,7 @@ This package provides the files for developing applications
 that use %name to communicate with snapd.
 
 %package -n %libsnapd_qt
-Summary: Library providing a Qt5 interface to snapd (API 2)
+Summary: Library providing a Qt6 interface to snapd (API 2)
 Group: System/Libraries
 Requires: %libsnapd_glib = %EVR
 
@@ -69,12 +69,12 @@ Requires: %libsnapd_glib = %EVR
 snapd-qt is a library that provides an interface to communicate
 with snapd for Qt based applications.
 
-%package -n qt5-qml-snapd-%api_ver
-Summary: Library providing a Qt5 QML interface to snapd (API 2)
+%package -n qt6-qml-snapd-%api_ver
+Summary: Library providing a Qt6 QML interface to snapd (API 2)
 Group: System/Libraries
 Requires: %libsnapd_qt = %EVR
 
-%description -n qt5-qml-snapd-%api_ver
+%description -n qt6-qml-snapd-%api_ver
 snapd-qt-qml is a library that provides an interface to communicate
 with snapd for Qt QML based applications.
 
@@ -146,8 +146,8 @@ for snapd-qt to verify the functionality of snapd-qt.
 %_libdir/libsnapd-qt-%api_ver.so.%{sover}*
 
 %if_enabled qml
-%files -n qt5-qml-snapd-%api_ver
-%_qt5_qmldir/Snapd%api_ver/
+%files -n qt6-qml-snapd-%api_ver
+%_qt6_qmldir/Snapd%api_ver/
 %endif
 
 %files -n snapd-qt-%api_ver-devel
@@ -157,11 +157,14 @@ for snapd-qt to verify the functionality of snapd-qt.
 %_libdir/cmake/Snapd%api_ver/
 
 %files -n snapd-qt-%api_ver-tests
-%_libexecdir/installed-tests/%_name-%api_ver/*-qt
-%_datadir/installed-tests/%_name-%api_ver/*-qt.test
+%_libexecdir/installed-tests/%_name-%api_ver/*-qt6
+%_datadir/installed-tests/%_name-%api_ver/*-qt6.test
 %endif
 
 %changelog
+* Wed Apr 10 2024 Yuri N. Sedunov <aris@altlinux.org> 1.65-alt1
+- 1.65 (ported to qt6)
+
 * Sat Sep 09 2023 Yuri N. Sedunov <aris@altlinux.org> 1.64-alt1
 - first build for Sisyphus
 
