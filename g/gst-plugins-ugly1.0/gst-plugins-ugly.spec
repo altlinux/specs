@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: %_name-ugly%api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A set of encumbered GStreamer plugins
@@ -97,6 +97,9 @@ collection.
 %endif
 
 %changelog
+* Wed Apr 10 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.2-alt1
+- 1.24.2
+
 * Fri Mar 22 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.1-alt1
 - 1.24.1
 
