@@ -1,5 +1,5 @@
 Name: epmgpi
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: Etersoft EPM GUI Package Installer
@@ -10,14 +10,13 @@ Url: http://wiki.etersoft.ru/EPM
 
 BuildArch: noarch
 
-# Source-url: https://gitlab.eterfund.ru/ximper/epmgpi/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
 Requires: yad notify-send eepm eepm-repack bash
 
 %description
 EPM GUI Package Installer was created to install packages 
-(.rpm .deb .AppImage) by means of epm repack in GUI execution.
+(.rpm .deb .AppImage .run) by means of epm repack in GUI execution.
 
 %prep
 %setup
@@ -32,5 +31,10 @@ EPM GUI Package Installer was created to install packages
 %_pixmapsdir/%name.svg
 
 %changelog
+* Wed Apr 10 2024 Roman Alifanov <ximper@altlinux.org> 1.1-alt1
+- one file extension check has been removed (eepm does this)
+- added .run file support
+- clear spec
+
 * Mon Nov 20 2023 Roman Alifanov <ximper@altlinux.org> 1.0-alt1
 - initial build for sisyphus
