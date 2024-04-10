@@ -10,8 +10,8 @@ BuildRequires: libdbus-devel
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		imsettings
-Version:	1.8.3
-Release:	alt1_1
+Version:	1.8.9
+Release:	alt1
 License:	LGPLv2+
 URL:		https://gitlab.com/tagoh/%{name}/
 BuildRequires:	desktop-file-utils
@@ -363,6 +363,9 @@ fi
 %{_libdir}/imsettings/libimsettings-systemd-qt.so
 
 %changelog
+* Thu Apr 11 2024 Ilya Mashkin <oddity@altlinux.ru> 1.8.9-alt1
+- 1.8.9
+
 * Sun Jan 02 2022 Igor Vlasenko <viy@altlinux.org> 1.8.3-alt1_1
 - update to new release by fcimport
 
