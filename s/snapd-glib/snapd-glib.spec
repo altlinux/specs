@@ -12,7 +12,7 @@
 %define libsnapd_qt libsnapd-qt%{sffx}%{sover}
 %define libsnapd_glib libsnapd-glib%{sffx}%{sover}
 Name: snapd-glib
-Version: 1.64
+Version: 1.65
 Release: alt1
 
 Group: System/Libraries
@@ -21,7 +21,6 @@ License: LGPL-2.0-or-later
 Url: https://github.com/snapcore/%name
 
 Source: snapd-glib-%version.tar
-Patch1: alt-opt-soup2.patch
 
 BuildRequires: gtk-doc
 BuildRequires: meson
@@ -96,12 +95,17 @@ that use snapd-qt to communicate with snapd.
 
 %prep
 %setup
-%if_enabled soup2
-%patch1 -p1
-%endif
 
 %build
-%meson
+%meson \
+    -Dqt5=true \
+    -Dqt6=false \
+%if_enabled soup2
+    -Dsoup2=true \
+%else
+    -Dsoup2=false \
+%endif
+    #
 %meson_build
 
 %install
@@ -143,6 +147,9 @@ that use snapd-qt to communicate with snapd.
 #%_datadir/installed-tests/snapd-glib/*-qt.test
 
 %changelog
+* Wed Apr 10 2024 Sergey V Turchin <zerg@altlinux.org> 1.65-alt1
+- new version
+
 * Thu Aug 31 2023 Sergey V Turchin <zerg@altlinux.org> 1.64-alt1
 - new version (closes: 47349)
 
