@@ -1,6 +1,6 @@
 Name: synaptic-kde
 Version: 1.0
-Release: alt3
+Release: alt4
 
 Summary: Usermode KDE bindings for synaptic
 Group: System/Configuration/Packaging
@@ -9,7 +9,8 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-Requires: synaptic yelp
+Requires: synaptic
+# yelp
 
 %description
 Synaptic is a graphical front-end for APT (Advanced Package Tool).
@@ -28,6 +29,9 @@ install -pD -m644 synaptic-kde.desktop %buildroot/%_desktopdir/
 %_desktopdir/synaptic-kde.desktop
 
 %changelog
+* Wed Apr 10 2024 Sergey V Turchin <zerg@altlinux.org> 1.0-alt4
+- don't require yelp
+
 * Tue Nov 13 2018 Sergey V Turchin <zerg@altlinux.org> 1.0-alt3
 - require yelp
 
