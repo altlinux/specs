@@ -12,7 +12,7 @@
 %def_disable bootstrap
 
 Name: loupe
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: GNOME Image Viewer
@@ -81,10 +81,13 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %_datadir/metainfo/%xdg_name.metainfo.xml
-%doc README*
+%doc README* NEWS
 
 
 %changelog
+* Wed Apr 10 2024 Yuri N. Sedunov <aris@altlinux.org> 46.2-alt1
+- 46.2
+
 * Wed Apr 03 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
 - 46.1
 
