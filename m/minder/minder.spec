@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: minder
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Mind-mapping application
@@ -27,7 +27,6 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools
-BuildRequires: /usr/bin/appstream-util desktop-file-utils
 BuildRequires: pkgconfig(gobject-2.0)
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(cairo)
@@ -41,6 +40,7 @@ BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(libmarkdown)
 BuildRequires: pkgconfig(granite)
 BuildRequires: vapi(granite)
+%{?_enable_check:BuildRequires: /usr/bin/appstream-util desktop-file-utils}
 
 %description
 Quickly create visual mind-maps using the keyboard and automatic layout.
@@ -64,7 +64,6 @@ Quickly create visual mind-maps using the keyboard and automatic layout.
 %_desktopdir/%rdn_name.desktop
 %_datadir/%name/
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
-#%_datadir/dbus-1/services/%rdn_name.service
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.appdata.xml
 %_datadir/mime/packages/%rdn_name.xml
@@ -72,6 +71,9 @@ Quickly create visual mind-maps using the keyboard and automatic layout.
 
 
 %changelog
+* Thu Apr 11 2024 Yuri N. Sedunov <aris@altlinux.org> 1.16.4-alt1
+- 1.16.4
+
 * Tue Feb 13 2024 Yuri N. Sedunov <aris@altlinux.org> 1.16.3-alt1
 - 1.16.3
 
