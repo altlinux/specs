@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.9.1
+Version: 0.11.0
 Release: alt1
 
 Summary: Parser for 'pyproject.toml'
@@ -18,19 +18,14 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-
-%py3_provides %pypi_name
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
-%pyproject_builddeps_metadata
+%pyproject_builddeps_metadata_extra all
 %pyproject_builddeps_check
-BuildRequires: python3-module-consolekit
-BuildRequires: python3-module-sdjson
-BuildRequires: python3-module-pyproject-examples
 %endif
 
 %description
@@ -38,9 +33,9 @@ BuildRequires: python3-module-pyproject-examples
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-
 %if_with check
 %pyproject_deps_resync_check_pipreqfile tests/requirements.txt
 %endif
@@ -64,6 +59,9 @@ BuildRequires: python3-module-pyproject-examples
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Apr 11 2024 Anton Zhukharev <ancieg@altlinux.org> 0.11.0-alt1
+- Updated to 0.11.0.
+
 * Fri Jul 21 2023 Anton Zhukharev <ancieg@altlinux.org> 0.9.1-alt1
 - Updated to 0.9.1.
 
