@@ -1,13 +1,13 @@
 %define ltr libtorrent-rasterbar-devel
-%define rel alt1
+%define rel alt2
 
 Name: qbittorrent
 Version: 4.6.4
 Epoch: 1
 Release: %rel
 
-Summary: qBittorrent is a bittorrent client written in C++ / Qt5 using the good libtorrent library
-Summary(ru_RU.UTF-8): qBittorrent - bittorrent клиент написанный на C++ / Qt5, использующий библиотеку libtorrent.
+Summary: qBittorrent is a bittorrent client written in C++ / Qt6 using the good libtorrent library
+Summary(ru_RU.UTF-8): qBittorrent - bittorrent клиент написанный на C++ / Qt6, использующий библиотеку libtorrent.
 License: GPLv2+
 Group: Networking/File transfer
 Url: http://qbittorrent.org
@@ -16,13 +16,14 @@ Source: %name-%version.tar.gz
 Patch3500: ax_boost_base-loongarch64.patch
 
 BuildPreReq: desktop-file-utils
-
+BuildRequires(pre): rpm-build-ninja
 BuildRequires: boost-devel boost-filesystem boost-filesystem-devel boost-datetime boost-program-options-devel boost-asio-devel
-BuildRequires: gcc-c++ qt5-base-devel qt5-tools qt5-svg-devel
+BuildRequires: gcc-c++  qt6-base-devel qt6-tools qt6-svg-devel qt6-tools-devel qt6-qtbase-gui libqt6-gui cmake 
+# qt5-base-devel qt5-tools qt5-svg-devel systemd systemd-devel
 BuildRequires: GeoIP-Lite-Country
 BuildRequires: libnotify-devel
 BuildRequires: zlib-devel
-BuildRequires: gnu-config
+BuildRequires: gnu-config libappstream-glib 
 BuildRequires: rpm-build-python3 rpm-macros-python3
 
 %if "%rel" == "alt0.M80P"
@@ -34,7 +35,7 @@ Requires: python3-module-ctypesgen
 Requires: GeoIP-Lite-Country
 
 %description
-qBittorrent is a bittorrent client written in C++ / Qt5 using the good
+qBittorrent is a bittorrent client written in C++ / Qt6 using the good
 libtorrent-rasterbar library (By Arvid Nordberg). qBittorrent is
 free / open-source software released under the GNU GPL license.
 qBittorrent aims to be a good alternative to all other bittorrent
@@ -42,7 +43,7 @@ clients. The Author is Christophe Dumez, French Student in
 computer science (IT).
 
 %description -l ru_RU.UTF8
-qBittorrent - клиент bittorrent написанный на C++ / Qt5, использующий
+qBittorrent - клиент bittorrent написанный на C++ / Qt6, использующий
 библиотеку libtorrent-rasterbar (Arvid Nordberg). qBittorrent свободное
 ПО с открытым исходным кодом, распространяющийся под лицензией GNU GPL.
 qBittorrent стремится быть хорошей альтернативой всем другим bittorrent
@@ -51,7 +52,7 @@ qBittorrent стремится быть хорошей альтернативо�
 %package nox
 Summary: qbittorrent version without GUI (WebUI version)
 Group: Networking/File transfer
-
+BuildRequires: systemd systemd-devel
 %description nox
 WebUI version of qbittorrent.
 
@@ -76,26 +77,51 @@ sed -i -E '/inline namespace/h;/^ *Q_ENUM_NS\(/{G;s/Q_ENUM_NS/&2/;s/\)\n.*inline
 %endif
 
 %build
-%ifarch %e2k 
-%add_optflags -std=c++14
-%endif
 
-./bootstrap.sh
-cp -aft build-aux/ /usr/share/gnu-config/config.{guess,sub}
-%_configure_script --prefix=%buildroot%_usr
-%make_build
+mkdir build-nox
+pushd build-nox
+%cmake \
+ -DSYSTEMD=ON \
+ -Wno-dev \
+ -GNinja \
+ -DQT6=ON \
+ -DGUI=OFF \
+ ..
+%cmake_build
+popd
+
+# Build gui version
+mkdir build
+pushd build
+%cmake \
+ -Wno-dev \
+ -DQT6=ON \
+ -GNinja \
+ ..
+%cmake_build
+popd
 
 %install
-%make_install DESTDIR=%buildroot install
-install -Dp -m 0644 ./dist/unix/org.qbittorrent.qBittorrent.desktop %buildroot%_desktopdir/org.qbittorrent.qBittorrent.desktop
-make clean
-%_configure_script --prefix=%buildroot%_usr --disable-gui
-%make_build
-%make_install DESTDIR=%buildroot install
+# install headless version
+pushd build-nox
+%cmake_install
+popd
+
+# install gui version
+pushd build
+%cmake_install
+popd
+
+desktop-file-install \
+  --dir=%{buildroot}%{_datadir}/applications/ \
+  %{buildroot}%{_datadir}/applications/org.qbittorrent.qBittorrent.desktop
+
+
 
 %files nox
 %_bindir/%name-nox
 %_man1dir/%name-nox.*
+%_unitdir/qbittorrent-nox@.service
 
 %files
 %doc AUTHORS COPYING INSTALL README.* Changelog
@@ -106,6 +132,10 @@ make clean
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Apr 11 2024 Ilya Mashkin <oddity@altlinux.ru> 1:4.6.4-alt2
+- Build with Qt6 instead of Qt5 (Closes: #40723, #44079)
+- Add BR systemd-devel for qbittorrent-nox
+
 * Sat Mar 30 2024 Ilya Mashkin <oddity@altlinux.ru> 1:4.6.4-alt1
 - 4.6.4
 
