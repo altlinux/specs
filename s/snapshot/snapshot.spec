@@ -7,11 +7,11 @@
 %def_enable check
 
 Name: snapshot
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: GNOME Camera
-License: GPL-3.0
+License: GPL-3.0-or-later
 Group: Video
 Url: https:/apps.gnome.org/Snapshot
 
@@ -76,6 +76,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Thu Apr 11 2024 Yuri N. Sedunov <aris@altlinux.org> 46.2-alt1
+- 46.2
+
 * Sun Mar 31 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
 - 46.1
 
