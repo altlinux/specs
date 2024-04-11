@@ -1,6 +1,6 @@
 Name: radare2
 Version: 5.9.0
-Release: alt1
+Release: alt2
 
 Summary: A reverse engineering framework
 License: LGPL-3.0-or-later
@@ -10,13 +10,13 @@ Url: http://radare.org/
 Source: %name-%version.tar
 
 BuildRequires: meson
-BuildRequires: capstone-devel
+BuildRequires: libcapstone-devel
 BuildRequires: liblz4-devel
 BuildRequires: libmagic-devel
 BuildRequires: libuv-devel
 BuildRequires: libxxhash-devel
 BuildRequires: libzip-devel
-BuildRequires: openssl-devel
+BuildRequires: libssl-devel
 BuildRequires: zlib-devel
 
 %package devel
@@ -69,6 +69,9 @@ cp -r libr/include/heap %buildroot%_includedir/libr
 %_includedir/libr
 
 %changelog
+* Thu Apr 11 2024 Alexey Shabalin <shaba@altlinux.org> 5.9.0-alt2
+- BR: capstone-devel -> libcapstone-devel, openssl-devel -> libssl-devel
+
 * Mon Apr 01 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 5.9.0-alt1
 - 5.9.0 released
 
