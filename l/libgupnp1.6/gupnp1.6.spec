@@ -12,7 +12,7 @@
 
 Name: lib%_name%api_ver
 Version: %ver_major.6
-Release: alt1
+Release: alt1.1
 
 Summary: A framework for creating UPnP devices and control points
 Group: System/Libraries
@@ -90,6 +90,10 @@ GObject introspection devel data for the gUPnP library
 %setup -n %_name-%version
 # fix manpage building
 sed -i '/\--nowrite/d' doc/meson.build
+%ifarch %e2k
+# workaround for mcst#8784 as of lcc 1.27.14
+sed -i 's/-Werror/-Wno-error/g' meson.build
+%endif
 
 %build
 %meson \
@@ -133,6 +137,9 @@ sed -i '/\--nowrite/d' doc/meson.build
 
 
 %changelog
+* Thu Apr 11 2024 Michael Shigorin <mike@altlinux.org> 1.6.6-alt1.1
+- E2K: lcc 1.27 ftbfs workaround (ilyakurdyukov@; mcst#8784)
+
 * Fri Nov 03 2023 Yuri N. Sedunov <aris@altlinux.org> 1.6.6-alt1
 - 1.6.6
 
