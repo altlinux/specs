@@ -11,7 +11,7 @@
 
 Name: corosync
 Version: 3.1.8
-Release: alt1
+Release: alt2
 Summary: The Corosync Cluster Engine and Application Programming Interfaces
 License: BSD
 Group: System/Base
@@ -113,7 +113,7 @@ mkdir -p m4
 %makeinstall_std -C init
 touch %buildroot%_sysconfdir/corosync/corosync.conf
 %if_enabled dbus
-install -p -D -m644 %_builddir/%name-%version/conf/corosync-signals.conf %buildroot/%_sysconfdir/dbus-1/system.d/corosync-signals.conf
+install -p -D -m644 conf/corosync-signals.conf %buildroot%_datadir/dbus-1/system.d/corosync-signals.conf
 %endif
 
 #Initscripts
@@ -167,7 +167,7 @@ ln -r -s \
 %_unitdir/corosync.service
 %_unitdir/corosync-notifyd.service
 %if_enabled dbus
-%_sysconfdir/dbus-1/system.d/corosync-signals.conf
+%_datadir/dbus-1/system.d/corosync-signals.conf
 %endif
 %_initrddir/corosync
 %_initrddir/corosync-notifyd
@@ -204,6 +204,10 @@ ln -r -s \
 %endif
 
 %changelog
+* Thu Apr 11 2024 Alexey Shabalin <shaba@altlinux.org> 3.1.8-alt2
+- Fix up the library .versions files
+- Moved system dbus config from /etc to /usr/share
+
 * Tue Nov 21 2023 Alexey Shabalin <shaba@altlinux.org> 3.1.8-alt1
 - 3.1.8
 
