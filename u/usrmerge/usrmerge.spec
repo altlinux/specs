@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: usrmerge
-Version: 0.5
+Version: 0.6
 Release: alt1
 
 Summary: transition to merged usr
@@ -67,6 +67,7 @@ can be invoked directly by an administrator who knows what they are doing.
 %package block
 Summary: Install this to block installation of filesystem >= 3
 Group: Other
+BuildArch: noarch
 AutoReq: no
 Conflicts: filesystem >= 3
 
@@ -80,6 +81,7 @@ desired on some machine.
 %package ensure
 Summary: Install this to convert to merged-usr
 Group: Other
+BuildArch: noarch
 AutoReq: no
 Requires(pre): usrmerge-hier-convert
 # We want /proc to pass usrmerge-ensure's install check;
@@ -98,6 +100,11 @@ print("%name-ensure-%EVR: Starting usrmerge-hier-convert...")
 assert(os.execute(hier_convert_prog))
 
 %changelog
+* Thu Apr 11 2024 Arseny Maslennikov <arseny@altlinux.org> 0.6-alt1
+- 0.5 -> 0.6; see commit history for details.
+  Notably:
+  + Made hier-convert to call fsync(2) just after the conversion.
+
 * Tue Apr 09 2024 Arseny Maslennikov <arseny@altlinux.org> 0.5-alt1
 - 0.4 -> 0.5; see commit history for details.
   Notably:
