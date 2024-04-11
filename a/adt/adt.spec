@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: adt
-Version: 0.1.2
-Release: alt1
+Version: 0.1.3
+Release: alt3
 
 Summary: ALT Diagnostic tool
 License: GPLv2+
@@ -24,6 +24,7 @@ BuildRequires: desktop-file-utils ImageMagick-tools
 
 Requires: alterator-manager
 Requires: alterator-module-executor
+Requires: alterator-interface-diag
 
 Source0: %name-%version.tar
 
@@ -39,6 +40,8 @@ ADT (Alt Diagnostic Tool) is a utility for diagnosing software problems using th
 
 %install
 %cmakeinstall_std
+mkdir -p %buildroot%_datadir/alterator/applications
+install -v -p -m 644 -D setup/adt.application %buildroot%_datadir/alterator/applications
 
 %files
 %doc README.md
@@ -46,8 +49,23 @@ ADT (Alt Diagnostic Tool) is a utility for diagnosing software problems using th
 
 %_bindir/adt
 %_desktopdir/adt.desktop
+%_datadir/alterator/applications/adt.application
+%_iconsdir/hicolor/scalable/apps/adt.svg
+%_datadir/alterator/backends/adt.backend
 
 %changelog
+* Tue Apr 02 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.3-alt3
+- add main icon
+- fix exec field in .desktop file
+
+* Wed Feb 28 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.3-alt2
+- add the ability to use custom icons for the tools
+- align with specification
+
+* Fri Dec 15 2023 Aleksey Saprunov <sav@altlinux.org> 0.1.3-alt1
+- add Report method for diagnostic tool
+- adaptation for Alterator Entry
+
 * Tue Oct 17 2023 Aleksey Saprunov <sav@altlinux.org> 0.1.2-alt1
 - Changed method names for the interface alterator-manager 1.18
 - fix alterator.interface.diag1 documentation
