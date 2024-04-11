@@ -4,16 +4,16 @@
 %def_with check
 
 Name: python3-module-%modname
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 
-Summary: template library written in Python
+Summary: A super-fast templating language that borrows the best ideas from the existing templating languages.
 
 Group: Development/Python3
 License: MIT
-Url: http://www.makotemplates.org
+URL: https://pypi.org/project/Mako
+VCS: https://github.com/sqlalchemy/mako
 
-# Source-url: http://pypi.io/packages/source/M/Mako/Mako-%version.tar.gz
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -94,6 +94,9 @@ py.test-3 -v
 %python3_sitelibdir/mako/testing
 
 %changelog
+* Thu Apr 11 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.3-alt1
+- Automatically updated to 1.3.3.
+
 * Wed Jan 31 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.2-alt1
 - Automatically updated to 1.3.2.
 
