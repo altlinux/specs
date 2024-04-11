@@ -6,7 +6,7 @@
 
 Name: python3-module-%mod_name
 Version: 3.0.2
-Release: alt1
+Release: alt2
 
 Summary: Werkzeug is one of the most advanced WSGI utility modules
 License: BSD-3-Clause
@@ -66,6 +66,9 @@ more structure and patterns for defining powerful applications.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Apr 11 2024 Anton Zhukharev <ancieg@altlinux.org> 3.0.2-alt2
+- Fixed FTBFS (pytest-xprocess 1.0.1).
+
 * Mon Mar 25 2024 Anton Zhukharev <ancieg@altlinux.org> 3.0.2-alt1
 - Updated to 3.0.2.
 

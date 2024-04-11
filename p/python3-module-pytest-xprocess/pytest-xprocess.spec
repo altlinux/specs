@@ -4,7 +4,7 @@
 #%%def_disable check
 
 Name:    python3-module-%srcname
-Version: 0.23.0
+Version: 1.0.1
 Release: alt1
 
 Summary: Pytest plugin to manage external processes across test runs
@@ -59,9 +59,12 @@ pytest3 -v
 %files
 %python3_sitelibdir/%modulename
 %python3_sitelibdir/pytest_%modulename-%version.dist-info
-%doc *.md
+%doc *.rst
 
 %changelog
+* Thu Apr 11 2024 Anton Zhukharev <ancieg@altlinux.org> 1.0.1-alt1
+- Updated to 1.0.1.
+
 * Wed Dec 06 2023 Anton Zhukharev <ancieg@altlinux.org> 0.23.0-alt1
 - new version (0.23.0) with rpmgs script
 
