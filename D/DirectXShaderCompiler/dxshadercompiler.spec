@@ -6,8 +6,8 @@
 %endif
 
 Name: DirectXShaderCompiler
-Version: 1.7.2212.1
-Release: alt0.4
+Version: 1.8.2403
+Release: alt0.1
 Summary: DirectX Shader Compiler
 Group: Development/C++
 License: Apache-2.0 with LLVM-exception
@@ -19,7 +19,6 @@ Source0: %name-%version.tar
 # see https://github.com/microsoft/DirectXShaderCompiler/issues/5079#issuecomment-1480210642
 Source1: DirectX-Headers.tar
 Patch0: alt-spirv-tools-shared.patch
-Patch1: 0001-Compilation-warning-fixes-5179.patch
 Patch2000: alt-e2k.patch
 
 ExclusiveArch: %ix86 x86_64 aarch64 %e2k
@@ -30,6 +29,7 @@ Obsoletes: lib%{rname}3
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++ ninja-build spirv-headers libspirv-tools-devel python3-devel git-core
+BuildRequires: directx-headers
 
 %description
 The DirectX Shader Compiler project includes a compiler and related tools used
@@ -40,7 +40,6 @@ graphics, games, and computation can use it to generate shader programs.
 %prep
 %setup -n %name-%version -a1
 %patch0 -p1
-%patch1 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -68,6 +67,12 @@ cp -ar %_cmake__builddir/bin/dxc* %buildroot%_bindir/
 %_libdir/lib%{rname}.so
 
 %changelog
+* Thu Mar 14 2024 L.A. Kostis <lakostis@altlinux.ru> 1.8.2403-alt0.1
+- Updated to v1.8.2403.
+
+* Wed Feb 07 2024 L.A. Kostis <lakostis@altlinux.ru> 1.7.2308-alt0.1
+- Updated to v1.7.2308.
+
 * Fri Jun 30 2023 L.A. Kostis <lakostis@altlinux.ru> 1.7.2212.1-alt0.4
 - Added a fix to compile with gcc-13.
 
