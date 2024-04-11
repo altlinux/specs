@@ -1,20 +1,40 @@
-#============================================================================
-# Please do not edit!
-# Created by specgen utility from files in specs/ subdir
-#============================================================================
 Name: sox
 Summary: A general purpose sound file conversion tool
 Version: 14.4.2
-Release: alt6
+Release: alt7
 License: GPLv2+ and LGPLv2+ and MIT
 Group: Sound
 BuildRequires: glibc-devel-static libalsa-devel libao-devel libflac-devel libgomp-devel libgsm-devel libid3tag-devel liblame-devel libltdl7-devel libmad-devel libmagic-devel libopencore-amrnb-devel libopencore-amrwb-devel libopusfile-devel libpng-devel libsndfile-devel libvorbis-devel libwavpack-devel
 %def_with pulse
-Packager: Denis Smirnov <mithraen@altlinux.org>
-Url: http://%name.sourceforge.net/
+Url: https://sourceforge.net/projects/sox/
 Source: %name-%version.tar
 Source1: soxeffect
-Patch: %name.dyn.patch
+Patch1: sox-14.4.2-fix-build.patch
+Patch2: sox-14.4.2-debian-CVE-2017-15371.patch
+Patch3: sox-14.4.2-debian-CVE-2019-8355.patch
+Patch4: sox-14.4.2-debian-CVE-2021-33844.patch
+Patch5: sox-14.4.2-debian-CVE-2017-15370.patch
+Patch6: sox-14.4.2-debian-CVE-2019-8356.patch
+Patch7: sox-14.4.2-debian-CVE-2021-3643.patch
+Patch8: sox-14.4.2-debian-CVE-2017-11332.patch
+Patch9: sox-14.4.2-debian-CVE-2019-8357.patch
+Patch10: sox-14.4.2-debian-CVE-2021-40426.patch
+Patch11: sox-14.4.2-debian-CVE-2017-11359.patch
+Patch12: sox-14.4.2-debian-CVE-2023-32627-filter-null-sampling-rate-in-VOC-code.patch
+Patch13: sox-14.4.2-debian-CVE-2022-31650.patch
+Patch14: sox-14.4.2-debian-CVE-2017-15372.patch
+Patch15: sox-14.4.2-debian-CVE-2017-11358.patch
+Patch16: sox-14.4.2-debian-CVE-2022-31651.patch
+Patch17: sox-14.4.2-debian-CVE-2017-15642.patch
+Patch18: sox-14.4.2-debian-CVE-2019-13590.patch
+Patch19: sox-14.4.2-debian-CVE-2019-8354.patch
+Patch20: sox-14.4.2-debian-CVE-2021-23159.patch
+Patch21: sox-14.4.2-debian-wavpack-check-errors.patch
+Patch22: sox-14.4.2-debian-xa-validate-channel-count.patch
+Patch23: sox-14.4.2-debian-handle-vorbis-analysis-headerout-errors.patch
+Patch24: sox-14.4.2-debian-fix-hcom-big-endian.patch
+Patch25: sox-14.4.2-debian-fix-resource-leak-comments.patch
+Patch26: sox-14.4.2-debian-fix-resource-leak-hcom.patch
 Requires: sox-play = %version-%release
 Requires: sox-base = %version-%release
 Requires: libsox-fmt-alsa = %version-%release
@@ -49,7 +69,7 @@ Summary: The SoX sound file format converter headers files and libraries
 Group: Sound
 Requires: %name = %version-%release
 Obsoletes: sox-devel < %version-%release
-Provides:  sox-devel = %version-%release
+Provides: sox-devel = %version-%release
 
 %description -n libsox-devel
 This package contains the headers and library needed for compiling
@@ -209,7 +229,6 @@ Group: Development/C
 %description -n libsox3
 This package contains libraries for SoX
 
-
 %package base
 Summary: A general purpose sound file conversion tool
 Group: Sound
@@ -223,7 +242,6 @@ formats and perform simple sound manipulation functions,
 including sound effects.
 Install the %name package if you'd like to convert sound file formats
 or manipulate some sounds.
-
 
 %package play
 Summary: A general purpose sound file conversion tool
@@ -243,7 +261,6 @@ including sound effects.
 Install the %name package if you'd like to convert sound file formats
 or manipulate some sounds.
 
-
 %description
 SoX (Sound eXchange) is a sound file format converter for Linux,
 UNIX and DOS PCs. The self-described 'Swiss Army knife of sound
@@ -253,10 +270,9 @@ including sound effects.
 Install the %name package if you'd like to convert sound file formats
 or manipulate some sounds.
 
-
 %prep
 %setup
-%patch -p2
+%autopatch -p2
 sed -i 's,\-I/lib/modules/`uname -r`/build/include,,' configure*
 %ifarch %e2k
 # still unsupported as of lcc 1.21.24
@@ -377,8 +393,20 @@ rm -rf %buildroot%_libdir/sox/*.a
 %_man7dir/*
 
 %files play
-
 %changelog
+* Thu Mar 28 2024 Andrey Kovalev <ded@altlinux.org> 14.4.2-alt7
+- Added patches from debian and fix vulnerabilities (Fixes: CVE-2017-15371,
+CVE-2019-8355, CVE-2021-33844, CVE-2017-15370, CVE-2019-8356, CVE-2021-3643,
+CVE-2017-11332, CVE-2019-8357, CVE-2021-40426, CVE-2017-11359, CVE-2023-32627,
+CVE-2022-31650, CVE-2017-15372, CVE-2017-11358, CVE-2022-31651, CVE-2017-15642,
+CVE-2019-13590, CVE-2019-8354, CVE-2021-23159):
+    + fixed hcom big endian
+    + fixed resource leak comments
+    + fixed resource leak hcom
+    + added handle vorbis analysis headerout errors
+    + added wavpack check errors
+    + added xa validate channel count
+
 * Sat Mar 23 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 14.4.2-alt6
 - Fixed build for Elbrus.
 
