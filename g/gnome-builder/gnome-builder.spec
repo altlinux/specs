@@ -22,7 +22,7 @@
 %def_without gvls
 
 Name: gnome-builder
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Builder - Develop software for GNOME
@@ -72,6 +72,7 @@ Requires(pre): %name-data = %EVR
 # src/libide/gui/ide-application-plugins.c
 Requires: typelib(WebKit) = %webkit_api_ver
 Requires: typelib(Jsonrpc) = 1.0
+Requires: typelib(Json) = 1.0
 
 %{?_with_autotools:Requires: automake autoconf libtool}
 #%{?_with_flatpak:Requires: flatpak-builder}
@@ -202,6 +203,9 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %{?_with_help:%_datadir/doc/%name/}
 
 %changelog
+* Thu Apr 11 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
+- 46.1
+
 * Sat Mar 16 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 
