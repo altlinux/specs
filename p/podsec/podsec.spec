@@ -9,7 +9,7 @@
 
 Name: podsec
 Version: 1.0.10
-Release: alt5
+Release: alt6
 
 Summary: Set of scripts for Podman Security
 License: GPLv2+
@@ -57,14 +57,13 @@ Requires: rootlesskit >= 1.1.0
 Requires: slirp4netns >= 1.1.12
 Requires: crun >= 1.8.1
 Requires: systemd-container
-Requires: kubernetes-common
+Requires: kubernetes-kubeadm
 Requires: kubernetes-crio
-Requires: cri-o
 Requires: cri-tools
+%filter_from_requires /\/usr\/bin\/crio/d
 %filter_from_requires /\/usr\/bin\/kubeadm/d
-%filter_from_requires /kubernetes-client/d
-%filter_from_requires /kubernetes-kubeadm/d
-%filter_from_requires /kubernetes-kubelet/d
+%filter_from_requires /\/usr\/bin\/kubectl/d
+%filter_from_requires /\/usr\/bin\/kubelet/d
 %filter_from_requires /\/etc\/kubernetes\/kubelet/d
 
 %description k8s
@@ -206,6 +205,10 @@ useradd -r -M -g %u7s_admin_grp -d %u7s_admin_homedir -G %kubernetes_grp,systemd
 %_mandir/man?/podsec-save-oci*
 
 %changelog
+* Tue Apr 09 2024 Alexey Kostarev <kaf@altlinux.org> 1.0.10-alt6
+- 1.0.10
+
+
 * Fri Mar 01 2024 Alexey Kostarev <kaf@altlinux.org> 1.0.10-alt5
 - 1.0.10
 
