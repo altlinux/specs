@@ -1,63 +1,53 @@
-%define _unpackaged_files_terminate_build 1
 %define oname derpconf
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.8.1
-Release: alt2.1
+Version: 0.8.4
+Release: alt1
 
 Summary: derpconf abstracts loading configuration files for your app
+
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/derpconf/
-# https://github.com/globocom/derpconf.git
+URL: https://pypi.org/project/derpconf
+VCS: https://github.com/globocom/derpconf
+
 BuildArch: noarch
 
-Source0: https://pypi.python.org/packages/98/2d/4703d2f342faf2d66970f67d7664f24facca299b16983365f3c8ee20a0cd/%{oname}-%{version}.tar.gz
-
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-# A copy of the imp module that was removed in Python 3.12.
-# It shouldn't be used, should use `importlib.metadata` instead.
-BuildRequires: python3-module-zombie-imp
-
-%if_with check
-BuildRequires: python3-module-gevent python3-module-coverage
-BuildRequires: python3-module-colorama python3-module-tox
-BuildRequires: python3-module-six
-%endif
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %py3_provides %oname
-
 
 %description
 derpconf abstracts loading configuration files for your app. derpconf
 was extracted from thumbor.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
     $(find ./ -name '*.py')
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
-
-%if_with check
-%check
-python3 setup.py test
-%endif
+%pyproject_install
 
 %files
-%doc *.md
-%python3_sitelibdir/*
-
+%doc LICENSE *.md
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Apr 11 2024 Grigory Ustinov <grenka@altlinux.org> 0.8.4-alt1
+- Build new version.
+
 * Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt2.1
 - NMU: Added zombie-imp to BuildRequires.
 
