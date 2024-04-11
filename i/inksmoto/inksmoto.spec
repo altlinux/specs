@@ -1,7 +1,6 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python3 rpm-macros-fedora-compat
-BuildRequires: /usr/bin/pathfix.py
 # END SourceDeps(oneline)
 # internal py
 %filter_from_requires /^python3.inksmoto./d
@@ -10,7 +9,7 @@ BuildRequires: /usr/bin/pathfix.py
 %define _localstatedir %{_var}
 Name: inksmoto
 Version: 0.7.0
-Release: alt2_32
+Release: alt2_32.1
 Summary: The new xmoto level editor for Inkscape
 
 License: GPL-2.0-only
@@ -39,7 +38,7 @@ Inksmoto Level Editor is written in Python, it's an Inkscape extension.
 %patch1 -p1
 
 %build
-pathfix.py -pni "%{__python3} %{py3_shbang_opts}" .
+%python3_fix_shebang .
 
 %install
 mkdir -p %{buildroot}%{_datadir}/inkscape/extensions
@@ -56,6 +55,9 @@ cp -pr inksmoto %{buildroot}%{_datadir}/inkscape/extensions/
 %doc AUTHORS INSTALL README
 
 %changelog
+* Thu Apr 11 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 0.7.0-alt2_32.1
+- NMU: replace pathfix.py with %%python3_fix_shebang
+
 * Thu Oct 12 2023 Igor Vlasenko <viy@altlinux.org> 0.7.0-alt2_32
 - update to new release by fcimport
 

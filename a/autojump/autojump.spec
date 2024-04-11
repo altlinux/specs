@@ -1,7 +1,6 @@
 Group: Shells
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python3
-BuildRequires: /usr/bin/pathfix.py
 # END SourceDeps(oneline)
 Requires: bash-completion
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -10,7 +9,7 @@ Requires: bash-completion
 
 Name:           autojump
 Version:        22.5.3
-Release:        alt1_7
+Release:        alt1_7.1
 
 Summary:        A fast way to navigate your filesystem from the command line
 
@@ -64,7 +63,7 @@ autojump-fish is designed to work with fish shell.
 # Use system argparse
 sed -i 's|autojump_argparse|argparse|' bin/%{name}
 # Fix shebangs, non .py files need to be specified manually, so we provide bin/* as well as .
-pathfix.py -i %{__python3} -pn . ./bin/*
+%python3_fix_shebang . ./bin/*
 sed -i '1{/^#!/d}' bin/%{name}_*.py
 
 %build
@@ -104,6 +103,9 @@ mv %{buildroot}%{_bindir}/%{name}_*.py %{buildroot}%{python3_sitelibdir_noarch}/
 %config(noreplace) %{_datadir}/%{name}/%{name}.fish
 
 %changelog
+* Thu Apr 11 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 22.5.3-alt1_7.1
+- NMU: replace pathfix.py with %%python3_fix_shebang
+
 * Sat Jul 24 2021 Grigory Ustinov <grenka@altlinux.org> 22.5.3-alt1_7
 - NMU: fixed BuildRequires.
 

@@ -1,13 +1,13 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python3 rpm-macros-fedora-compat
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/pathfix.py
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           monsterz
 Version:        0.7.1
-Release:        alt3_34
+Release:        alt3_34.1
 Summary:        Puzzle game, similar to Bejeweled or Zookeeper
 License:        WTFPL
 URL:            http://sam.zoy.org/monsterz/
@@ -41,7 +41,7 @@ board again. Chain reactions earn you even more points.
 %patch1 -p1
 %patch2 -p0
 %patch3 -p1
-pathfix.py -pni "%{__python3} %{py3_shbang_opts}" .
+%python3_fix_shebang .
 
 %build
 %make_build prefix=%{_usr} datadir=%{_datadir} pkgdatadir=%{_datadir}/%{name} CFLAGS="%{optflags}"
@@ -93,6 +93,9 @@ install -pm0644 graphics/icon.png %{buildroot}%{_datadir}/icons/hicolor/64x64/ap
 
 
 %changelog
+* Thu Apr 11 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 0.7.1-alt3_34.1
+- NMU: Replace pathfix with %%python3_fix_shebang.
+
 * Thu Oct 12 2023 Igor Vlasenko <viy@altlinux.org> 0.7.1-alt3_34
 - update to new release by fcimport
 
