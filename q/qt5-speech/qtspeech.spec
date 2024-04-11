@@ -2,7 +2,7 @@
 %global qt_module qtspeech
 
 Name: qt5-speech
-Version: 5.15.12
+Version: 5.15.13
 Release: alt1
 
 Group: System/Libraries
@@ -106,6 +106,9 @@ ln -s %_includedir src/plugins/tts/flite/flite
 %_qt5_examplesdir/*
 
 %changelog
+* Thu Apr 04 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.13-alt1
+- new version
+
 * Wed Jan 10 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.12-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %global qt_module qtxmlpatterns
 
 Name: qt5-xmlpatterns
-Version: 5.15.12
+Version: 5.15.13
 Release: alt1
 %if "%version" == "%{get_version qt5-tools-common}"
 %def_disable bootstrap
@@ -110,6 +110,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Thu Apr 04 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.13-alt1
+- new version
+
 * Wed Jan 10 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.12-alt1
 - new version
 
