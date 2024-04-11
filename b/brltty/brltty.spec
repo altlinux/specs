@@ -1,7 +1,6 @@
 %define _libexecdir %_prefix/libexec
 %define qIF_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
 %define _localstatedir %_var
-%define optflags_lto %nil
 %filter_from_requires /^sudo$/d
 
 %define pkg_version 6.6
@@ -27,11 +26,11 @@
 
 Name: brltty
 Version: %pkg_version
-Release: alt1
+Release: alt2
 
 Summary: Braille display driver for Linux/Unix
 Group: System/Servers
-License: GPLv2+
+License: GPL-2.0-or-later
 Url: http://mielke.cc/brltty/
 
 Vcs: https://github.com/brltty/brltty.git
@@ -44,6 +43,8 @@ Source44: import.info
 Patch1: brltty-4.5-alt-fix-python-syntax.patch
 Patch2: fix-speechd-includes.patch
 Patch4: brltty-5.6-fix_brltty-systemd-wrapper_path.patch
+# from https://src.fedoraproject.org/rpms/brltty/c/ee571d6d4793c76970cd5930c3769c0f029dd38f?branch=rawhide
+Patch5: brltty-6.6-cython3.patch
 
 %define cython_ver 0.18
 
@@ -80,7 +81,7 @@ Speech Dispatcher, please install also package %name-speech-dispatcher.
 %package speech-dispatcher
 Summary: Speech Dispatcher driver for BRLTTY
 Group: System/Servers
-License: GPLv2+
+License: GPL-2.0-or-later
 Requires: %name = %pkg_version-%release
 
 %description speech-dispatcher
@@ -90,7 +91,7 @@ This package provides the Speech Dispatcher driver for BRLTTY.
 %package xw
 Summary: XWindow driver for BRLTTY
 Group: System/Servers
-License: GPLv2+
+License: GPL-2.0-or-later
 
 Requires: %name = %pkg_version-%release
 %description xw
@@ -101,7 +102,7 @@ This package provides the XWindow driver for BRLTTY.
 Summary: AtSpi driver for BRLTTY
 Group: System/Servers
 # The data files are licensed under LGPLv2+, see the README file.
-License: GPLv2+ and LGPLv2+
+License: GPL-2.0-or-later and LGPL-2.0-or-later
 BuildRequires: libat-spi-devel
 Requires: %name = %pkg_version-%release
 %description at-spi
@@ -113,7 +114,7 @@ This package provides the AtSpi driver for BRLTTY.
 Summary: AtSpi2 driver for BRLTTY
 Group: System/Servers
 # The data files are licensed under LGPLv2+, see the README file.
-License: GPLv2+ and LGPLv2+
+License: GPL-2.0-or-later and LGPL-2.0-or-later
 Requires: %name = %pkg_version-%release
 
 %description at-spi2
@@ -123,7 +124,7 @@ This package provides the AtSpi2 driver for BRLTTY.
 %package -n brlapi
 Version: %api_ver
 Group: File tools
-License: LGPLv2+
+License: LGPL-2.0-or-later
 Summary: Application Programming Interface for BRLTTY
 Requires: %name = %pkg_version-%release
 
@@ -137,7 +138,7 @@ a refreshable braille display.
 %package -n brlapi-devel
 Version: %api_ver
 Group: Development/C
-License: LGPLv2+
+License: LGPL-2.0-or-later
 Requires: brlapi = %api_ver-%release
 Summary: Headers, static archive, and documentation for BrlAPI
 
@@ -157,7 +158,7 @@ which directly accesses a refreshable braille display.
 Version: %api_ver
 Summary: Tcl binding for BrlAPI
 Group: Development/Tcl
-License: LGPLv2+
+License: LGPL-2.0-or-later
 Requires: brlapi = %api_ver-%release
 
 %description -n tcl-brlapi
@@ -167,7 +168,7 @@ This package provides the Tcl binding for BrlAPI.
 Version: %api_ver
 Summary: Python binding for BrlAPI
 Group: Development/Python
-License: LGPLv2+
+License: LGPL-2.0-or-later
 Requires: brlapi = %api_ver-%release
 
 %description -n python3-module-brlapi
@@ -177,7 +178,7 @@ This package provides the Python3 binding for BrlAPI.
 Version: %api_ver
 Summary: Java binding for BrlAPI
 Group: Development/Java
-License: LGPLv2+
+License: LGPL-2.0-or-later
 Requires: brlapi = %api_ver-%release
 
 %description -n brlapi-java
@@ -188,7 +189,7 @@ This package provides the Java binding for BrlAPI.
 Version: %api_ver
 Summary: OCaml binding for BrlAPI
 Group: Development/Other
-License: LGPLv2+
+License: LGPL-2.0-or-later
 Requires: brlapi = %api_ver-%release
 
 %description -n ocaml-brlapi
@@ -200,6 +201,7 @@ This package provides the OCaml binding for BrlAPI.
 %qIF_ver_gteq %libspeechd_ver 0.8
 %patch2 -p2
 %endif
+%patch5 -p1
 sed -i 's;\/usr\(/bin/true\);\1;' Autostart/Systemd/brltty-device@.service
 
 %build
@@ -404,6 +406,11 @@ chmod +x %buildroot%_bindir/%name-config.sh
 %endif
 
 %changelog
+* Thu Apr 11 2024 Anton Midyukov <antohami@altlinux.org> 6.6-alt2
+- Enable LTO
+- Fix the Cython 3 crash (add patch from Fedora) (Closes: 49977)
+- Convert License fields to SPDX format
+
 * Sat Dec 09 2023 Anton Midyukov <antohami@altlinux.org> 6.6-alt1
 - 6.6 (Closes: 48429)
 
