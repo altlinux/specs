@@ -13,7 +13,7 @@
 
 Name: mission-center
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: Mission Center
 License: GPL-3.0
@@ -94,6 +94,9 @@ sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/sys_info_v2/mem_info.rs
 
 
 %changelog
+* Thu Apr 11 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.4-alt2
+- updated to v0.4.4-2-65-g8a1122d (ALT #49691)
+
 * Sun Feb 11 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.4-alt1
 - updated to v0.4.4-2
 
