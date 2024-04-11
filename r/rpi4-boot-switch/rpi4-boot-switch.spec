@@ -11,7 +11,7 @@
 %define rpicmd cmdline.txt
 
 Name: rpi4-boot-switch
-Version: 0.13
+Version: 0.14
 Release: alt1
 Summary: Switch of boot mode for Raspberry Pi 4
 License: GPL-2.0-or-later
@@ -129,6 +129,11 @@ sed -i 's/^arm_64bit=/# arm_64bit=/ ; s/.bin/_32b.bin/g' \
 %_rpmlibdir/%ftrigger2
 
 %changelog
+* Tue Apr 09 2024 Dmitry Terekhin <jqt4@altlinux.org> 0.14-alt1
+- config.txt: add hdmi_ignore_edid_audio=1
+- config.txt: add disabled option 'max_framebuffers=2' (Closes: 42920)
+- rpi4-boot-nouboot: uncomment vc4-fkms-v3d with any prefix
+
 * Tue Dec 20 2022 Dmitry Terekhin <jqt4@altlinux.org> 0.13-alt1
 - rpi4-boot-uboot: don't change default in extlinux.conf (Closes: 43007)
 
