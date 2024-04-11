@@ -13,7 +13,7 @@
 %define libsnapd_glib libsnapd-glib%{sffx}%{sover}
 Name: snapd-glib
 Version: 1.65
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Library providing a GLib interface to snapd
@@ -21,6 +21,7 @@ License: LGPL-2.0-or-later
 Url: https://github.com/snapcore/%name
 
 Source: snapd-glib-%version.tar
+Patch1: alt-missing-include.patch
 
 BuildRequires: gtk-doc
 BuildRequires: meson
@@ -95,6 +96,7 @@ that use snapd-qt to communicate with snapd.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %meson \
@@ -147,6 +149,9 @@ that use snapd-qt to communicate with snapd.
 #%_datadir/installed-tests/snapd-glib/*-qt.test
 
 %changelog
+* Thu Apr 11 2024 Sergey V Turchin <zerg@altlinux.org> 1.65-alt2
+- package missing include
+
 * Wed Apr 10 2024 Sergey V Turchin <zerg@altlinux.org> 1.65-alt1
 - new version
 
