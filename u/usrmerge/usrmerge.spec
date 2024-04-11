@@ -2,7 +2,7 @@
 
 Name: usrmerge
 Version: 0.6
-Release: alt1
+Release: alt2
 
 Summary: transition to merged usr
 
@@ -96,10 +96,14 @@ migration to merged-usr when installed.
 
 %pre ensure -p <lua>
 hier_convert_prog = "%_prefix/libexec/usrmerge/hier-convert"
-print("%name-ensure-%EVR: Starting usrmerge-hier-convert...")
+-- Ensure log messages are line-buffered.
+os.execute("printf '%%s\n' '%name-ensure-%EVR: Starting usrmerge-hier-convert...'")
 assert(os.execute(hier_convert_prog))
 
 %changelog
+* Thu Apr 11 2024 Arseny Maslennikov <arseny@altlinux.org> 0.6-alt2
+- Fixed output of usrmerge-ensure scripts when standard output is a file.
+
 * Thu Apr 11 2024 Arseny Maslennikov <arseny@altlinux.org> 0.6-alt1
 - 0.5 -> 0.6; see commit history for details.
   Notably:
