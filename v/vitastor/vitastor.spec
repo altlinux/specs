@@ -3,8 +3,8 @@
 %set_verify_elf_method strict
 
 Name: vitastor
-Version: 1.4.8
-Release: alt1.1
+Version: 1.6.0
+Release: alt1
 Summary: Vitastor, a fast software-defined clustered block storage
 Group: System/Base
 
@@ -21,10 +21,10 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ ninja-build
 
 BuildRequires: pkgconfig(liburing)
+BuildRequires: pkgconfig(libnl-3.0) pkgconfig(libnl-genl-3.0)
 BuildRequires: libgperftools-devel
 BuildRequires: node >= 10
-BuildRequires: libjerasure-devel
-# BuildRequires: libisa-l-devel
+BuildRequires: libjerasure-devel pkgconfig(libisal)
 BuildRequires: libgf-complete-devel
 BuildRequires: rdma-core-devel
 
@@ -123,6 +123,13 @@ Summary: Vitastor SDS blk library
 
 %description -n lib%name-blk
 Vitastor SDS blk library.
+
+%package -n lib%name-kv
+Group: System/Libraries
+Summary: Vitastor shared key/value database library
+
+%description -n lib%name-kv
+Vitastor shared key/value database library.
 
 %package -n lib%name-devel
 Group: Development/C++
@@ -249,6 +256,7 @@ fi
 
 %files nfs
 %_bindir/%name-nfs
+%_bindir/vitastor-kv
 
 %files -n lib%name-blk
 %_libdir/lib%{name}_blk.so.*
@@ -256,7 +264,11 @@ fi
 %files -n lib%name-client
 %_libdir/lib%{name}_client.so.*
 
+%files -n lib%name-kv
+%_libdir/lib%{name}_kv.so.*
+
 %files -n lib%name-devel
+%_bindir/vitastor-kv-stress
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*.pc
@@ -267,6 +279,9 @@ fi
 %endif
 
 %changelog
+* Thu Apr 11 2024 Alexey Shabalin <shaba@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Sat Mar 16 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.4.8-alt1.1
 - fixed build for Elbrus
 
