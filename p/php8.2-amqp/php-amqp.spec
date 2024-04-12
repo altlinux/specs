@@ -41,16 +41,16 @@ install -D -m 644 %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 %check
 NO_INTERACTION=1 php run-tests.php --offline
 
-%files
-%php_extdir/*
-
-%doc README.md CREDITS DEVELOPMENT.md UPGRADING.md
-
 %post
 %php_extension_postin
 
 %preun
 %php_extension_preun
+
+%files
+%doc README.md CREDITS DEVELOPMENT.md UPGRADING.md
+%php_extdir/*
+%php_extconf/%php_extension
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
