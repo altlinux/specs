@@ -5,12 +5,13 @@
 
 %define optflags_lto %nil
 
+%def_enable qr
 %def_enable check
 %def_disable bootstrap
 
 Name: warp
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Fast and secure file transfer tool
 License: GPL-3.0
@@ -33,6 +34,7 @@ ExcludeArch: ppc64le
 %define adwaita_ver 1.5
 
 Requires: yelp
+%{?_enable_qr:Requires: gst-plugins-bad1.0}
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo
@@ -40,6 +42,7 @@ BuildRequires: yelp-tools
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(dbus-1)
+%{?_enable_qr:BuildRequires: pkgconfig(zbar) pkgconfig(gstreamer-plugins-bad-1.0)}
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils clippy}
 
 %description
@@ -59,7 +62,9 @@ cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
-%meson
+%meson \
+    %{subst_enable_meson_feature qr qr-code-scanning}
+%nil
 %meson_build
 
 %install
@@ -78,6 +83,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sat Apr 13 2024 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1.1
+- explicitly enabled qr-code support (ALT #50014)
+
 * Sun Mar 24 2024 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
 - 0.7.0
 
