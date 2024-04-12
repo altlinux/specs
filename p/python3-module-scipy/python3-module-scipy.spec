@@ -11,7 +11,7 @@
 
 Name: python3-module-%modname
 Version: %ver_major.%ver_minor
-Release: alt2.1
+Release: alt2.2
 
 Summary: SciPy is the library of scientific codes
 License: BSD-3-Clause
@@ -68,6 +68,9 @@ BuildRequires: python3-module-pooch
 %else
 %add_python3_req_skip numpy.testing
 %endif
+
+# special/_precompute/struve_convergence.py
+%add_python3_req_skip matplotlib.pyplot
 
 %description
 SciPy is the library of scientific codes built on top of NumPy.
@@ -179,6 +182,9 @@ popd
 %_includedir/%modname-py3
 
 %changelog
+* Fri Apr 12 2024 Vitaly Lipatov <lav@altlinux.ru> 1.11.4-alt2.2
+- mask matplotlib.pyplot require
+
 * Tue Jan 23 2024 Michael Shigorin <mike@altlinux.org> 1.11.4-alt2.1
 - E2K: fix build (ilyakurdyukov@).
 
