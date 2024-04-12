@@ -32,7 +32,7 @@
 
 Name: qt5-webengine
 Version: 5.15.16
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -88,7 +88,7 @@ BuildRequires: libxkbcommon-devel
 %if_enabled system_ffmpeg
 BuildRequires: libavcodec-devel libavutil-devel libavformat-devel
 %endif
-BuildRequires: libvpx-devel libopus-devel
+BuildRequires: libvpx-devel libopus-devel pipewire-libs-devel
 BuildRequires: /proc
 BuildRequires: flex libicu-devel libEGL-devel
 BuildRequires: libgio-devel libkrb5-devel
@@ -456,6 +456,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Fri Apr 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt3
+- update build requires
+
 * Mon Jan 22 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt2
 - build with python2
 
