@@ -22,8 +22,8 @@
 
 Name: uhd
 Url: https://github.com/EttusResearch/uhd
-Version: 4.4.0.0
-Release: alt3.1
+Version: 4.6.0.0
+Release: alt1
 License: GPLv3+
 Group: Engineering
 Summary: Universal Hardware Driver for Ettus Research products
@@ -41,7 +41,9 @@ ExcludeArch: %ix86 %arm
 Patch: uhd-4.3.0.0-python3-fix.patch
 Patch1: disable-uhd_image_downloader_test.patch
 Patch2: uhd-4.4.0.0-gcc13.patch
-Patch3: uhd-4.4.0.0-dpdk-v22.11.patch
+Patch3: uhd-4.6.0.0-dpdk-fix-build-with-new-DPDK-23.11.patch
+Patch4: uhd-4.6.0.0-host-fix-compiling-with-gcc-13.2.patch
+Patch5: uhd-4.6.0.0-host-lib-uhd-dpdk-fix-issue-compiling-with-gcc-13.2.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 BuildRequires: ctest cmake
@@ -118,6 +120,7 @@ Group: Development/Python3
 Summary: Python 3 module for usrp (part %name)
 Requires: lib%name = %EVR
 %add_python3_req_skip usrp_mpm.libpyusrp_periphs
+%add_python3_req_skip usrp_mpm.chips.ic_reg_maps.x4xx_rfdc_regmap
 
 # self-provide from %python3_sitelibdir/uhd/libpyuhd.cpython-311.so
 %add_python3_req_skip uhd.libpyuhd.paths
@@ -251,6 +254,10 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %python3_sitelibdir/usrp_mpm/
 
 %changelog
+* Thu Apr 11 2024 Alexey Shabalin <shaba@altlinux.org> 4.6.0.0-alt1
+- NMU: 4.6.0.0
+- fix build with DPDK 23.11 LTS
+
 * Thu Aug 17 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 4.4.0.0-alt3.1
 - NMU: ingored unmet dependency
 

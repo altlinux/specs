@@ -2,7 +2,7 @@
 %define rpmstate /run/openvswitch-rpm-state-
 
 Name: ovn
-Version: 23.09.0
+Version: 24.03.1
 Release: alt1
 
 Summary: Open Virtual Network support
@@ -24,7 +24,7 @@ Obsoletes: openvswitch-ovn-common < 2.14.0
 Provides: openvswitch-ovn = %EVR
 Obsoletes: openvswitch-ovn < 2.14.0
 Requires: lib%name = %EVR
-Requires: openvswitch >= 2.14.0
+Requires: openvswitch >= 3.3.0
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-systemd
@@ -402,6 +402,9 @@ fi
 %_datadir/%name/scripts/ovn-bugtool-*
 
 %changelog
+* Wed Apr 10 2024 Alexey Shabalin <shaba@altlinux.org> 24.03.1-alt1
+- 24.03.1
+
 * Tue Oct 10 2023 Alexey Shabalin <shaba@altlinux.org> 23.09.0-alt1
 - 23.09.0
 

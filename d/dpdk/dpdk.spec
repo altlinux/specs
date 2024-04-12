@@ -8,10 +8,9 @@
 
 %def_enable afxdp
 
-
 Name: dpdk
-Version: 22.11.3
-Release: alt2
+Version: 23.11.0
+Release: alt1
 Url: http://dpdk.org
 License: BSD-3-Clause AND GPL-2.0-only AND LGPL-2.1-only
 Summary: Set of libraries and drivers for fast packet processing
@@ -30,10 +29,10 @@ ExclusiveArch: x86_64 %{ix86} aarch64 ppc64le riscv64 loongarch64
 
 BuildRequires(pre): meson >= 0.53.2
 BuildRequires(pre): rpm-build-python3
-BuildRequires: glibc-kernheaders libpcap-devel zlib-devel libssl-devel
+BuildRequires: glibc-kernheaders libpcap-devel zlib-devel libssl-devel libisal-devel
 BuildRequires: libnuma-devel libelf-devel libfdt-devel libjansson-devel
 BuildRequires: rdma-core-devel libmnl-devel python3(elftools)
-%{?_enable_afxdp:BuildRequires: libbpf-devel}
+%{?_enable_afxdp:BuildRequires: libbpf-devel libxdp-devel}
 %{?_enable_docs:BuildRequires: doxygen /usr/bin/sphinx-build python3-module-sphinx_rtd_theme}
 Requires: lib%name = %EVR
 
@@ -52,8 +51,12 @@ to use the Data Plane Development Kit.
 %package devel
 Summary: Data Plane Development Kit development files
 Group: System/Libraries
-Requires: %name = %EVR
 Provides: lib%name-devel = %EVR
+Requires: %name = %EVR
+Requires: pkgconfig(libmlx5) pkgconfig(libibverbs) pkgconfig(libcrypto)
+Requires: pkgconfig(libxdp) >= 1.2.2 pkgconfig(libbpf) pkgconfig(zlib)
+Requires: pkgconfig(jansson) pkgconfig(libmana) pkgconfig(libmlx4)
+Requires: pkgconfig(libpcap) pkgconfig(libisal) pkgconfig(libelf)
 
 %description devel
 This package contains the headers and other files needed for developing
@@ -139,6 +142,7 @@ rm -f %buildroot%_libdir/*.a
 %if_with tools
 %files tools
 %_bindir/dpdk-pdump
+%_bindir/dpdk-graph
 %_bindir/dpdk-test
 %_bindir/dpdk-test-*
 %_bindir/dpdk-*.py
@@ -151,6 +155,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Wed Apr 10 2024 Alexey Shabalin <shaba@altlinux.org> 23.11.0-alt1
+- Update to LTS release 23.11.0.
+
 * Tue Oct 17 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 22.11.3-alt2
 - NMU: build on LoongArch.
 
