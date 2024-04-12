@@ -1,5 +1,5 @@
 Name: synthv1
-Version: 0.9.34
+Version: 0.9.90
 Release: alt1
 
 Summary: Polyphonic additive synthesizer
@@ -47,6 +47,7 @@ This package contains LV2 plugin.
 %files
 %doc LICENSE README
 %_bindir/synthv1_jack
+%_datadir/synthv1
 %_datadir/metainfo/*.xml
 %_datadir/mime/packages/*.xml
 %_desktopdir/*.desktop
@@ -56,7 +57,11 @@ This package contains LV2 plugin.
 
 %files -n lv2-synthv1-plugin
 %_libdir/lv2/*
+%_datadir/synthv1
 
 %changelog
+* Fri Apr 12 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.9.90-alt1
+- 0.9.90 released
+
 * Thu Mar 21 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.34-alt1
 - initial

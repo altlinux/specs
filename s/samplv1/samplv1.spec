@@ -1,5 +1,5 @@
 Name: samplv1
-Version: 0.9.34
+Version: 0.9.90
 Release: alt1
 
 Summary: Polyphonic sampler
@@ -37,7 +37,6 @@ This package contains LV2 plugin.
 
 %prep
 %setup
-sed -i 's,COMMAND strip,COMMAND :,' src/CMakeLists.txt
 
 %build
 %cmake
@@ -49,6 +48,7 @@ sed -i 's,COMMAND strip,COMMAND :,' src/CMakeLists.txt
 %files
 %doc LICENSE README
 %_bindir/samplv1_jack
+%_datadir/samplv1
 %_datadir/metainfo/*.xml
 %_datadir/mime/packages/*.xml
 %_desktopdir/*.desktop
@@ -58,7 +58,11 @@ sed -i 's,COMMAND strip,COMMAND :,' src/CMakeLists.txt
 
 %files -n lv2-samplv1-plugin
 %_libdir/lv2/*
+%_datadir/samplv1
 
 %changelog
+* Fri Apr 12 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.9.90-alt1
+- 0.9.90 released
+
 * Thu Mar 21 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.34-alt1
 - initial
