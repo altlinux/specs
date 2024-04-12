@@ -10,7 +10,7 @@
 
 Name: usbguard
 Version: 1.1.2
-Release: alt1
+Release: alt2
 
 Group: System/Servers
 Summary: A tool for implementing USB device usage policy
@@ -139,7 +139,7 @@ asciidoctor -v -b html README.adoc -o README.html
 %make INSTALL='install -p' DESTDIR=%buildroot install-am
 
 # Overwrite configuration with distribution defaults
-mkdir -p %buildroot%_sysconfdir/usbguard
+mkdir -p %buildroot%_sysconfdir/usbguard/rules.d/
 install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/usbguard/usbguard-daemon.conf
 
 %files common
@@ -149,8 +149,9 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/usbguard/usbguard-daemon.conf
 %_sbindir/usbguard-daemon
 %_bindir/usbguard
 %dir %_localstatedir/log/usbguard
-%dir %_sysconfdir/usbguard
-%dir %_sysconfdir/usbguard/IPCAccessControl.d
+%dir %_sysconfdir/usbguard/
+%dir %_sysconfdir/usbguard/rules.d/
+%dir %_sysconfdir/usbguard/IPCAccessControl.d/
 %config(noreplace) %attr(0600,root,root) %_sysconfdir/usbguard/usbguard-daemon.conf
 %config(noreplace) %attr(0600,root,root) %_sysconfdir/usbguard/rules.conf
 %_unitdir/usbguard.service
@@ -185,6 +186,9 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/usbguard/usbguard-daemon.conf
 %endif
 
 %changelog
+* Fri Apr 12 2024 Sergey V Turchin <zerg@altlinux.org> 1.1.2-alt2
+- package /etc/usbguard/rules.d/
+
 * Mon Jul 03 2023 Sergey V Turchin <zerg@altlinux.org> 1.1.2-alt1
 - new version
 
