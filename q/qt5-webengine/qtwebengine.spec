@@ -24,15 +24,15 @@
 
 %define ffmpeg_ver %{get_version libavformat-devel}
 #define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
-%IF_ver_gteq %ffmpeg_ver 6
+#IF_ver_gteq %ffmpeg_ver 6
 %def_disable system_ffmpeg
-%else
-%def_enable system_ffmpeg
-%endif
+#else
+#def_enable system_ffmpeg
+#endif
 
 Name: qt5-webengine
 Version: 5.15.16
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -456,6 +456,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Fri Apr 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt4
+- always use internal ffmpeg
+
 * Fri Apr 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt3
 - update build requires
 
