@@ -4,7 +4,7 @@
 Name: pve-qemu-server
 Summary: PVE Qemu Server Tools
 Version: 8.1.1
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -69,6 +69,9 @@ ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-virtio.jpg
 %perl_vendor_privlib/PVE/*.pm
 
 %changelog
+* Fri Apr 12 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.1.1-alt2
+- fix merge error with is_native_arch() (ALT #50005)
+
 * Fri Mar 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.1.1-alt1
 - 8.1.1
 
