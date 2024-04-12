@@ -1,7 +1,7 @@
 # -*- mode: RPM-SPEC; tab-width: 8; fill-column: 70; -*- 
 
 Name: alterator-datetime
-Version: 4.8.3
+Version: 4.9.0
 Release: alt1
 
 Summary: alterator module for date/time setup
@@ -68,6 +68,10 @@ Helper functions for %name.
 %_bindir/alterator-datetime-functions
 
 %changelog
+* Fri Apr 12 2024 Mikhail Efremov <sem@altlinux.org> 4.9.0-alt1
+- all: Use link timezones.
+- datetime-functions: Move list_zone() to obsoleted functions.
+
 * Mon Dec 25 2023 Andrey Cherepanov <cas@altlinux.org> 4.8.3-alt1
 - defaultzones: add Asia/Tashkent for Uzbek locale
 
