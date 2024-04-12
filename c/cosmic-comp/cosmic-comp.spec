@@ -1,6 +1,6 @@
 Name: cosmic-comp
-Version: 0
-Release: alt3.git4bf1acb
+Version: 0.0.1012.895e
+Release: alt1
 
 Summary: Wayland compositor for the COSMIC DE
 
@@ -30,33 +30,28 @@ cat >> .cargo/config <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
+[source."git+https://github.com/DioxusLabs/taffy?rev=7781c70"]
+git = "https://github.com/DioxusLabs/taffy"
+rev = "7781c70"
+replace-with = "vendored-sources"
+
 [source."git+https://github.com/Drakulix/id-tree.git?branch=feature/copy_clone"]
 git = "https://github.com/Drakulix/id-tree.git"
 branch = "feature/copy_clone"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/Smithay/smithay-egui.git?rev=0a4d573"]
+[source."git+https://github.com/Smithay/smithay-egui.git?rev=cdc652e0"]
 git = "https://github.com/Smithay/smithay-egui.git"
-rev = "0a4d573"
+rev = "cdc652e0"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/edfloreshz/directories-rs"]
-git = "https://github.com/edfloreshz/directories-rs"
+[source."git+https://github.com/gfx-rs/wgpu?rev=20fda69"]
+git = "https://github.com/gfx-rs/wgpu"
+rev = "20fda69"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/hecrj/cosmic-text.git?rev=b85d6a4f2376f8a8a7dadc0f8bcb89d4db10a1c9"]
-git = "https://github.com/hecrj/cosmic-text.git"
-rev = "b85d6a4f2376f8a8a7dadc0f8bcb89d4db10a1c9"
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/hecrj/glyphon.git?rev=26f92369da3704988e3e27f0b35e705c6b2de203"]
-git = "https://github.com/hecrj/glyphon.git"
-rev = "26f92369da3704988e3e27f0b35e705c6b2de203"
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/ids1024/smithay?branch=xwayland-keyboard-grab"]
-git = "https://github.com/ids1024/smithay"
-branch = "xwayland-keyboard-grab"
+[source."git+https://github.com/jackpot51/rust-atomicwrites"]
+git = "https://github.com/jackpot51/rust-atomicwrites"
 replace-with = "vendored-sources"
 
 [source."git+https://github.com/pop-os/cosmic-protocols?branch=main"]
@@ -64,14 +59,37 @@ git = "https://github.com/pop-os/cosmic-protocols"
 branch = "main"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/pop-os/libcosmic/?rev=42d7baf"]
-git = "https://github.com/pop-os/libcosmic/"
-rev = "42d7baf"
+[source."git+https://github.com/pop-os/cosmic-text.git"]
+git = "https://github.com/pop-os/cosmic-text.git"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/pop-os/softbuffer?tag=cosmic-2.0-old"]
+[source."git+https://github.com/pop-os/glyphon.git?tag=v0.5.0"]
+git = "https://github.com/pop-os/glyphon.git"
+tag = "v0.5.0"
+replace-with = "vendored-sources"
+
+[source."git+https://github.com/pop-os/libcosmic/"]
+git = "https://github.com/pop-os/libcosmic/"
+replace-with = "vendored-sources"
+
+[source."git+https://github.com/pop-os/smithay-clipboard?tag=pop-mime-types"]
+git = "https://github.com/pop-os/smithay-clipboard"
+tag = "pop-mime-types"
+replace-with = "vendored-sources"
+
+[source."git+https://github.com/pop-os/softbuffer?tag=cosmic-4.0"]
 git = "https://github.com/pop-os/softbuffer"
-tag = "cosmic-2.0-old"
+tag = "cosmic-4.0"
+replace-with = "vendored-sources"
+
+[source."git+https://github.com/pop-os/window_clipboard.git?tag=pop-mime-types"]
+git = "https://github.com/pop-os/window_clipboard.git"
+tag = "pop-mime-types"
+replace-with = "vendored-sources"
+
+[source."git+https://github.com/smithay//smithay?rev=ba0121a"]
+git = "https://github.com/smithay//smithay"
+rev = "ba0121a"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
@@ -112,6 +130,9 @@ install -Dm0755 "data/cosmic-service" "%buildroot%_bindir/cosmic-service"
 %_prefix/lib/systemd/user/cosmic-comp.service
 
 %changelog
+* Fri Apr 12 2024 Leontiy Volodin <lvol@altlinux.org> 0.0.1012.895e-alt1
+- New version 0-1012-g895ea6aec.
+
 * Wed Aug 09 2023 Leontiy Volodin <lvol@altlinux.org> 0-alt3.git4bf1acb
 - Updated from git commit 4bf1acb954ec6690e5ed91bbf76d54a5d9db4996.
 
