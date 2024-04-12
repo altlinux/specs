@@ -14,7 +14,7 @@
 
 Name: audacity
 Version: 3.4.2
-Release: alt1.2
+Release: alt1.3
 
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
@@ -138,6 +138,9 @@ For the most up to date manual content, use the on-line manual.
 %setup -n %name-sources-%version
 %autopatch -p1
 
+sed -i 's/"lv2 >= .* >= 0.10.6"//' cmake-proxies/CMakeLists.txt
+%add_optflags -isystem /usr/include/suil-0 -lsuil-0
+
 %ifarch %e2k
 # EDG frontend bug workaround
 sed -i "/std::initializer_list/s/static//" src/prefs/GUIPrefs.cpp
@@ -250,6 +253,9 @@ patchelf --print-needed %buildroot/%_libdir/audacity/modules/mod-mp3.so | grep -
 %_datadir/%name/help
 
 %changelog
+* Fri Apr 12 2024 Michael Shigorin <mike@altlinux.org> 3.4.2-alt1.3
+- FTBFS workaround (ilyakurdyukov@)
+
 * Wed Feb 07 2024 Ivan A. Melnikov <iv@altlinux.org> 3.4.2-alt1.2
 - Add libturbojpeg build dependency (fixes FTBFS)
 
