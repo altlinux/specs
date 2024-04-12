@@ -11,8 +11,8 @@
 %endif
 
 Name: python3-module-%oname
-Version: 2023.10
-Release: alt2
+Version: 2024.4
+Release: alt1
 
 Summary: Image IO for fable
 
@@ -47,6 +47,10 @@ floats)
 %prep
 %setup
 
+# Hotfix for 2024.4 unmet dependency python3(fabio._version)
+sed -i "s/\.\._version/\.\.version/" \
+    src/fabio/app/eiger2crysalis.py src/fabio/app/densify.py
+
 # remove some third-party bundled stuff
 rm -rv src/fabio/third_party/_local
 
@@ -73,6 +77,9 @@ python3 run_tests.py --installed
 %exclude %python3_sitelibdir/%oname/benchmark/*
 
 %changelog
+* Fri Apr 12 2024 Grigory Ustinov <grenka@altlinux.org> 2024.4-alt1
+- Automatically updated to 2024.4.
+
 * Mon Jan 01 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2023.10-alt2
 - NMU: fixed FTBFS during the initial build.
 
