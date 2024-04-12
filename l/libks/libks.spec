@@ -1,6 +1,6 @@
-%define soversion 1
+%define soversion 2
 Name: libks
-Version: 1.8.2
+Version: 2.0.4
 Release: alt1
 Summary: Foundational support for signalwire C products 
 Group: System/Libraries
@@ -44,15 +44,18 @@ cp copyright %_cmake__builddir/
 %ninja_install -C %_cmake__builddir
 
 %files -n %name%soversion
-%_libdir/libks.so.%{soversion}*
+%_libdir/libks2.so.%{soversion}*
 
 %files devel
-%doc %_docdir/libks/copyright
-%_includedir/libks
-%_libdir/pkgconfig/libks.pc
-%_libdir/libks.so
+%doc %_docdir/libks2/copyright
+%_includedir/libks2
+%_libdir/pkgconfig/libks2.pc
+%_libdir/libks2.so
 
 %changelog
+* Fri Apr 12 2024 Anton Farygin <rider@altlinux.ru> 2.0.4-alt1
+- 1.8.2 -> 2.0.4
+
 * Tue Feb 28 2023 Anton Farygin <rider@altlinux.ru> 1.8.2-alt1
 - 1.8.0 -> 1.8.2
 
