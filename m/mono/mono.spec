@@ -12,7 +12,7 @@
 
 Name: mono
 Version: 6.12.0.199
-Release: alt1
+Release: alt2
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -1405,6 +1405,9 @@ done
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Fri Apr 05 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 6.12.0.199-alt2
+- Repair source tree after previous release with mixed versions in srpm.
+
 * Mon Feb 19 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 6.12.0.199-alt1
 - Updated to upstream version 6.12.0.199 (Closes: #46650).
 - Submodules scheme update(git->https) to avoid internal restriction.
