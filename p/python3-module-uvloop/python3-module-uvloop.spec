@@ -5,10 +5,10 @@
 
 Name: python3-module-%pypi_name
 Version: 0.19.0
-Release: alt2
+Release: alt3
 
 Summary: Ultra fast asyncio event loop
-License: MIT Apache-2.0
+License: MIT and Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/uvloop/
 Vcs: https://github.com/MagicStack/uvloop
@@ -67,6 +67,9 @@ uvloop is implemented in Cython and uses libuv under the hood.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Apr 12 2024 Anton Zhukharev <ancieg@altlinux.org> 0.19.0-alt3
+- Fixed FTBFS (libuv 1.48.0).
+
 * Tue Dec 19 2023 Anton Zhukharev <ancieg@altlinux.org> 0.19.0-alt2
 - Fixed building with cython>3.
 
