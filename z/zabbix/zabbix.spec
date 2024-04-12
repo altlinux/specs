@@ -18,7 +18,7 @@
 
 Name: zabbix
 Version: 6.0.28
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A network monitor
@@ -177,6 +177,13 @@ Requires: php8.2-gd php8.2-libs php8.2-mbstring php8.2-mysqli php8.2-openssl php
 Requires: zabbix-phpfrontend-engine = %EVR
 BuildArch: noarch
 
+%package phpfrontend-php8.3
+Summary: zabbix web frontend, edition for php8.3
+Group: Monitoring
+Requires: php8.3-gd php8.3-libs php8.3-mbstring php8.3-mysqli php8.3-openssl php8.3-pgsql php8.3-sockets
+Requires: zabbix-phpfrontend-engine = %EVR
+BuildArch: noarch
+
 %package phpfrontend-apache2
 Summary: %name-phpfrontend's apache2 config files
 Group: Monitoring
@@ -197,6 +204,14 @@ Group: Monitoring
 Requires: %name-phpfrontend-apache2
 Requires: apache2-httpd-prefork-like
 Requires: apache2-mod_php8.2
+BuildArch: noarch
+
+%package phpfrontend-apache2-mod_php8.3
+Summary: Requirements for the use of apache2-mod_php8.3
+Group: Monitoring
+Requires: %name-phpfrontend-apache2
+Requires: apache2-httpd-prefork-like
+Requires: apache2-mod_php8.3
 BuildArch: noarch
 
 %package doc
@@ -318,6 +333,10 @@ in to zabbix phpfrontend
 Contains requirements for the use of apache2-mod_php8.2
 in to zabbix phpfrontend
 
+%description phpfrontend-apache2-mod_php8.3
+Contains requirements for the use of apache2-mod_php8.3
+in to zabbix phpfrontend
+
 %description phpfrontend-engine
 a php frontend for zabbix - core
 
@@ -326,6 +345,9 @@ zabbix web frontend, edition for php8.1
 
 %description phpfrontend-php8.2
 zabbix web frontend, edition for php8.2
+
+%description phpfrontend-php8.3
+zabbix web frontend, edition for php8.3
 
 %description doc
 %name network monitor (README, ChangeLog)
@@ -750,12 +772,14 @@ fi
 
 %files phpfrontend-php8.1
 %files phpfrontend-php8.2
+%files phpfrontend-php8.3
 
 %files phpfrontend-apache2
 %config(noreplace) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
 %files phpfrontend-apache2-mod_php8.1
 %files phpfrontend-apache2-mod_php8.2
+%files phpfrontend-apache2-mod_php8.3
 
 %files doc
 %doc AUTHORS NEWS README INSTALL ChangeLog.bz2
@@ -767,6 +791,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Fri Apr 12 2024 Alexei Takaseev <taf@altlinux.org> 1:6.0.28-alt2
+- Add support php 8.3 (ALT #46487)
+
 * Thu Mar 28 2024 Alexei Takaseev <taf@altlinux.org> 1:6.0.28-alt1
 - 6.0.28
 - Revert changes from 6.0.26-alt2 and 6.0.27-alt2, no need more.
