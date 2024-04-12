@@ -9,7 +9,7 @@
 
 Name: lib%_name
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: A GObject to SQLite object mapper
 Group: System/Libraries
@@ -29,9 +29,9 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
 BuildRequires: meson
 BuildRequires: libgio-devel >= %glib_ver libsqlite3-devel >= %sqlite_ver
+BuildRequires: libgdk-pixbuf-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel python3-module-pygobject3-devel}
 %{?_enable_gtk_doc:BuildRequires: gi-docgen}
-%{?_enable_check:BuildRequires: libgdk-pixbuf-devel}
 
 %description
 Gom provides an object mapper from GObjects to SQLite. It helps you write
@@ -113,6 +113,9 @@ This package contains development documentation for the Gom library.
 %endif
 
 %changelog
+* Fri Apr 12 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.1-alt1.1
+- fixed BR with disabled %%check
+
 * Thu Apr 11 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.1-alt1
 - 0.5.1
 
