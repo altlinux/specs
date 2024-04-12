@@ -2,7 +2,7 @@
 
 Name: alterator-module-categories
 Version: 0.1.1
-Release: alt1
+Release: alt2
 
 Summary: Categories interface for alterator browser.
 License: GPLv2+
@@ -13,44 +13,44 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 
-Requires: alterator-module-executor
+Requires: alterator-module-executor alterator-entry bash
 
 %description
-Object categories interface for alterator browser operating via D-Bus.
+Scripts and D-Bus inteface to work with categories in Alterator.
 
 %prep
 %setup
 
 %install
 mkdir -p %buildroot%_datadir/dbus-1/interfaces
-#mkdir -p %buildroot%_sysconfdir/polkit-1/rules.d
 mkdir -p %buildroot%_datadir/polkit-1/actions
-
-# for alterator-manager autorestart
 mkdir -p %buildroot%_datadir/alterator/backends
-
 mkdir -p %buildroot%_datadir/alterator/categories
 mkdir -p %buildroot%_libexecdir/%name
 
-install -v -p -m 644 -D ru.basealt.alterator.categories.xml %buildroot%_datadir/dbus-1/interfaces
-#install -v -p -m 644 -D 49-alterator-module-categories.rules %buildroot%_sysconfdir/polkit-1/rules.d
-install -v -p -m 644 -D ru.basealt.alterator.categories.policy %buildroot%_datadir/polkit-1/actions
+install -v -p -m 644 -D ru.basealt.alterator.categories1.xml %buildroot%_datadir/dbus-1/interfaces
+install -v -p -m 644 -D ru.basealt.alterator.categories1.policy %buildroot%_datadir/polkit-1/actions
 install -v -p -m 644 -D categories.backend %buildroot%_datadir/alterator/backends
 install -v -p -m 755 -D category-info %buildroot%_libexecdir/%name
 install -v -p -m 755 -D list-categories %buildroot%_libexecdir/%name
 
 %files
+%doc LICENSE
 %dir %_datadir/alterator/backends
 %dir %_datadir/alterator/categories
 %dir %_libexecdir/%name
 %_datadir/alterator/backends/categories.backend
-%_datadir/polkit-1/actions/ru.basealt.alterator.categories.policy
+%_datadir/polkit-1/actions/ru.basealt.alterator.categories1.policy
 %_libexecdir/%name/category-info
 %_libexecdir/%name/list-categories
-%_datadir/dbus-1/interfaces/ru.basealt.alterator.categories.xml
-#%_sysconfdir/polkit-1/rules.d/49-alterator-module-categories.rules
+%_datadir/dbus-1/interfaces/ru.basealt.alterator.categories1.xml
 
 %changelog
+* Tue Apr 02 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.1-alt2
+- fix comply with spec
+- fix shellcheck warning to use bash instead of sh
+- remove rules
+
 * Mon Jan 29 2024 Evgeny Sinelnikov <sin@altlinux.org> 0.1.1-alt1
 - first build for Sisyphus
 

@@ -2,7 +2,7 @@
 
 Name: alterator-module-legacy
 Version: 0.1.1
-Release: alt1
+Release: alt2
 
 Summary: Alterator manager backends generator for support the old alterator modules.
 License: GPLv2+
@@ -19,6 +19,7 @@ BuildRequires: python3-devel
 Requires: alterator-standalone
 Requires: alterator-module-executor
 Requires: alterator-interface-application
+Requires: zenity
 
 Provides: alterator-interface-legacy = %version-%release
 
@@ -42,8 +43,8 @@ install -v -p -m 755 -D alterator-generate-legacy-backends %buildroot%_libexecdi
 install -v -p -m 755 -D alterator-object-run %buildroot%_libexecdir/%name
 install -v -b -m 644 -D alterator-module-legacy.backend %buildroot%_alterator_datadir/backends/legacy.backend
 install -v -p -m 644 -D alterator-object-run.application %buildroot%_alterator_datadir/applications
-install -v -p -m 644 -D ru.basealt.alterator.legacy.xml %buildroot%_datadir/dbus-1/interfaces
-install -v -p -m 644 -D ru.basealt.alterator.legacy.policy %buildroot%_datadir/polkit-1/actions
+install -v -p -m 644 -D ru.basealt.alterator.legacy1.xml %buildroot%_datadir/dbus-1/interfaces
+install -v -p -m 644 -D ru.basealt.alterator.legacy1.policy %buildroot%_datadir/polkit-1/actions
 
 %postun
 if [ $1 = 0 ]; then
@@ -59,10 +60,15 @@ fi
 %_libexecdir/%name/alterator-generate-legacy-backends
 %_libexecdir/%name/alterator-object-run
 %_alterator_datadir/applications/*.application
-%_datadir/dbus-1/interfaces/ru.basealt.alterator.legacy.xml
-%_datadir/polkit-1/actions/ru.basealt.alterator.legacy.policy
+%_datadir/dbus-1/interfaces/ru.basealt.alterator.legacy1.xml
+%_datadir/polkit-1/actions/ru.basealt.alterator.legacy1.policy
 
 %changelog
+* Tue Apr 02 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.1-alt2
+- brought up to specification
+- added errors to run output
+- added termination of runnig acc with dialog
+
 * Mon Jan 29 2024 Evgeny Sinelnikov <sin@altlinux.org> 0.1.1-alt1
 - first build for Sisyphus
 

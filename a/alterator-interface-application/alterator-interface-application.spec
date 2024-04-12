@@ -2,7 +2,7 @@
 
 Name: alterator-interface-application
 Version: 0.1.1
-Release: alt1
+Release: alt2
 
 Summary: Local applications interface for alterator browser.
 License: GPLv2+
@@ -23,14 +23,17 @@ Local applications interface for alterator browser.
 mkdir -p %buildroot%_datadir/dbus-1/interfaces
 mkdir -p %buildroot%_datadir/polkit-1/actions
 
-install -v -p -m 644 -D ru.basealt.alterator.application.xml %buildroot%_datadir/dbus-1/interfaces
-install -v -p -m 644 -D ru.basealt.alterator.application.policy %buildroot%_datadir/polkit-1/actions
+install -v -p -m 644 -D ru.basealt.alterator.application1.xml %buildroot%_datadir/dbus-1/interfaces
+install -v -p -m 644 -D ru.basealt.alterator.application1.policy %buildroot%_datadir/polkit-1/actions
 
 %files
-%_datadir/polkit-1/actions/ru.basealt.alterator.application.policy
-%_datadir/dbus-1/interfaces/ru.basealt.alterator.application.xml
+%_datadir/polkit-1/actions/ru.basealt.alterator.application1.policy
+%_datadir/dbus-1/interfaces/ru.basealt.alterator.application1.xml
 
 %changelog
+* Tue Apr 02 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.1-alt2
+- added versions to interfaces
+
 * Mon Jan 29 2024 Evgeny Sinelnikov <sin@altlinux.org> 0.1.1-alt1
 - first build for Sisyphus
 
