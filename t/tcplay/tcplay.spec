@@ -1,6 +1,6 @@
 Name: tcplay
-Version: 2.0
-Release: alt2
+Version: 3.3
+Release: alt1
 
 Summary: TrueCrypt implementation
 License: BSD-2-Clause
@@ -9,7 +9,7 @@ Url: https://github.com/bwalex/tc-play
 
 Packager: Alexey Appolonov <alexey@altlinux.org>
 
-# https://github.com/bwalex/tc-play/archive/v2.0.tar.gz
+# https://github.com/bwalex/tc-play/archive/refs/tags/v3.3.tar.gz
 Source: %{name}-%{version}.tar
 
 Patch1: %name-2.0-alt-glibc_update.patch
@@ -57,13 +57,19 @@ rm %buildroot/%_libdir/lib%{name}.a
 
 %files -n lib%{name}
 %doc README.md LICENSE CHANGELOG
-%_libdir/lib%{name}.so.2.0
+%_libdir/lib%{name}.so.%{version}
 
 %files -n %{name}-devel
 %_includedir/%{name}_api.h
 %_libdir/lib%{name}.so
 
 %changelog
+* Sat Apr 13 2024 Alexey Appolonov <alexey@altlinux.org> 3.3-alt1
+- Added support for VeraCrypt volumes;
+- Fixed various memory leak/use-after-free bugs;
+- Added new "--prompt-passphrase" option to reduce unlock time when both a
+  passphrase and keyfiles are required.
+
 * Mon Nov 11 2019 Alexey Appolonov <alexey@altlinux.org> 2.0-alt2
 - Build with glibc 2.30.
 
