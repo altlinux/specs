@@ -2,7 +2,7 @@
 %define pg_ver 15
 
 Name: postgresql%pg_ver-postgis
-Version: 3.3.4
+Version: 3.4.2
 Release: alt1
 
 Summary: Geographic Information Systems Extensions to PostgreSQL %pg_ver
@@ -72,12 +72,13 @@ install -d %buildroot%_includedir
 rm -rf %buildroot%_libdir/liblwgeom.a
 
 %files
+%doc %_docdir/postgis
 %doc %_docdir/postgis-%version
 %doc %_datadir/doc/postgresql/extension/README.address_standardizer
 %_bindir/*
 %_man1dir/*
-%_datadir/pgsql/applications/shp2pgsql-gui.desktop
-%_datadir/pgsql/icons/hicolor/*/apps/shp2pgsql-gui.png
+%_datadir/applications/shp2pgsql-gui.desktop
+%_datadir/icons/hicolor/*/apps/shp2pgsql-gui.png
 %_bindir/create_template_postgis
 %_libdir/pgsql/postgis*.so
 %ifnarch %e2k
@@ -85,10 +86,12 @@ rm -rf %buildroot%_libdir/liblwgeom.a
 %endif
 %_libdir/pgsql/address_standardizer*.so
 %_datadir/pgsql/contrib/postgis-*/*.sql
-%_datadir/pgsql/contrib/postgis-*/*.pl
 %_datadir/pgsql/extension
 
 %changelog
+* Sat Apr 13 2024 Andrey Cherepanov <cas@altlinux.org> 3.4.2-alt1
+- New version.
+
 * Sat Aug 12 2023 Andrey Cherepanov <cas@altlinux.org> 3.3.4-alt1
 - New version.
 
