@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: skrooge
-Version: 2.31.0
+Version: 2.32.0
 Release: alt1
 Summary: Personal finances manager for KF5
 License: %gpl2plus
@@ -68,12 +68,13 @@ BuildRequires: libqca-qt5-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libsqlcipher-devel
 BuildRequires: qt5-declarative-devel
+BuildRequires: qt5-quickcontrols2-devel
 BuildRequires: qt5-script-devel
 BuildRequires: qt5-svg-devel
 BuildRequires: qt5-tools-devel
+BuildRequires: qt5-webengine-devel
 BuildRequires: qt5-webkit-devel
 BuildRequires: qt5-xmlpatterns-devel
-BuildRequires: qt5-webengine-devel
 
 Requires: libgrantlee_templates5
 Requires: kf5-kinit kf5-kio
@@ -118,6 +119,9 @@ cp -f %SOURCE1 po/ru/skrooge.po
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Thu Apr 11 2024 Andrey Cherepanov <cas@altlinux.org> 2.32.0-alt1
+- New version 2.32.0.
+
 * Fri Oct 13 2023 Andrey Cherepanov <cas@altlinux.org> 2.31.0-alt1
 - New version 2.31.0.
 
