@@ -1,6 +1,6 @@
 Name: rars
 Version: 1.6
-Release: alt2
+Release: alt3
 
 Summary: RISC-V Assembler and Runtime Simulator
 
@@ -16,6 +16,7 @@ Patch0003: .gear/0003-MessagesPane-Force-black-text-color-on-yellow-select.patch
 Patch0101: .gear/0101-Made-commandline-memory-accessible-to-observers.patch
 Patch0102: .gear/0102-Provide-a-headless-timer-tool.patch
 Patch0103: .gear/0103-Provide-command-line-parameter-for-HeadlessTimer.patch
+Patch0201: .gear/0201-Fix-64bit-CSR-loading-into-32bit-register.patch
 Patch: %name-%version.patch
 
 BuildRequires: java-devel-default ImageMagick-tools
@@ -37,6 +38,7 @@ getting started with RISC-V.
 %patch0101 -p1
 %patch0102 -p1
 %patch0103 -p1
+%patch0201 -p1
 %patch -p1
 
 cat > %name.desktop <<@@@
@@ -74,6 +76,9 @@ done
 %_iconsdir/*/*/apps/*
 
 %changelog
+* Sat Apr 13 2024 Fr. Br. George <george@altlinux.org> 1.6-alt3
+- Apply CSR32 bugfix patch
+
 * Wed Apr 03 2024 Fr. Br. George <george@altlinux.org> 1.6-alt2
 - Update to master
 - Apply headless timer patch
