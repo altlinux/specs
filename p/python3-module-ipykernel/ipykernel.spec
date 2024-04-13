@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.29.3
-Release: alt2
+Version: 6.29.4
+Release: alt1
 
 Summary: IPython Kernel for Jupyter
 License: BSD-3-Clause
@@ -15,6 +15,7 @@ Url: https://pypi.org/project/ipykernel/
 VCS: https://github.com/ipython/ipykernel.git
 
 Source: %name-%version.tar
+Patch: ipykernel-6.29.4-pytest8-fix.patch
 
 BuildArch: noarch
 
@@ -36,8 +37,8 @@ BuildRequires: python3-module-tornado
 BuildRequires: /proc
 BuildRequires: /dev/pts
 BuildRequires: python3-module-ipyparallel
-BuildRequires: xvfb-run
 BuildRequires: python3-module-trio
+BuildRequires: python3-module-pexpect
 %endif
 
 %add_python3_req_skip gtk gobject
@@ -57,6 +58,7 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch -p1
 sed -i 's/--color=yes//' pyproject.toml
 
 %build
@@ -69,7 +71,7 @@ sed -i 's/--color=yes//' pyproject.toml
 cp -r tests/ %buildroot%python3_sitelibdir/%oname/
 
 %check
-%pyproject_run -- xvfb-run pytest -v -W default tests/inprocess/
+%pyproject_run_pytest --ignore tests/test_eventloop.py tests/
 
 %files
 %doc README.*
@@ -84,6 +86,9 @@ cp -r tests/ %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Tue Apr 09 2024 Anton Vyatkin <toni@altlinux.org> 6.29.4-alt1
+- New version 6.29.4.
+
 * Sat Mar 02 2024 Vitaly Lipatov <lav@altlinux.ru> 6.29.3-alt2
 - NMU: drop gobject require used for obsoleted gtk2 (see ALT bug #41092)
 

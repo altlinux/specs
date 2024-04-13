@@ -5,7 +5,7 @@
 %def_with bootstrap
 
 Name: python3-module-%oname
-Version: 8.7.0
+Version: 8.8.0
 Release: alt1
 Summary: Interactive Parallel Computing with IPython
 License: BSD-3-Clause
@@ -105,6 +105,9 @@ export TMPDIR=/tmp
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Tue Apr 09 2024 Anton Vyatkin <toni@altlinux.org> 8.8.0-alt1
+- New version 8.8.0.
+
 * Wed Mar 06 2024 Anton Vyatkin <toni@altlinux.org> 8.7.0-alt1
 - New version 8.7.0.
 
