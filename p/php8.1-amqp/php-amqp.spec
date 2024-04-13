@@ -1,7 +1,7 @@
 %define php_extension amqp
 
 Name: php%_php_suffix-%php_extension
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1.%php_version
 
 Summary: PHP extension to communicate with any AMQP compliant server
@@ -41,22 +41,25 @@ install -D -m 644 %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 %check
 NO_INTERACTION=1 php run-tests.php --offline
 
-%files
-%php_extdir/*
-
-%doc README.md CREDITS DEVELOPMENT.md UPGRADING.md
-
 %post
 %php_extension_postin
 
 %preun
 %php_extension_preun
 
+%files
+%doc README.md CREDITS DEVELOPMENT.md UPGRADING.md
+%php_extdir/*
+%php_extconf/%php_extension
+
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %version-%release
 
-* Tue Nov 15 2023 Alexey Shemyakin <alexeys@altlinux.org> 2.1.1-alt1.%php_version
+* Mon Feb 19 2024 Anton Farygin <rider@altlinux.ru> 2.1.2-alt1
+- 2.1.1 -> 2.1.2
+
+* Tue Nov 15 2023 Alexey Shemyakin <alexeys@altlinux.org> 2.1.1-alt1
 - Update to version 2.1.1.
 
 * Tue Oct 10 2023 Alexey Shemyakin <alexeys@altlinux.org> 2.1.0-alt1

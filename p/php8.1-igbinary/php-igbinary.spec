@@ -8,6 +8,7 @@ Summary:        Replacement for the standard PHP serializer
 Group:		System/Servers
 License:        BSD-3-Clause
 Url:            https://pecl.php.net/package/igbinary
+VCS:		https://github.com/igbinary/igbinary
 Source:         php-%php_extension-%version.tar
 
 Source1: igbinary.ini

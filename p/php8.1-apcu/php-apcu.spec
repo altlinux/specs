@@ -1,16 +1,13 @@
 %define		php_extension	apcu
 %define 	real_name	APCu
-
 Name:	 	php%_php_suffix-%php_extension
-Version:	5.1.22
+Version:	5.1.23
 Epoch:		1
 Release:	alt1.%_php_release_version
-
 Summary:	PHP extension APCu - APC User Cache
-
 License:	PHP-3.01
 Group:		System/Servers
-URL:		http://pecl.php.net/package/APCu
+URL:		https://pecl.php.net/package/APCu
 VCS:		https://github.com/krakjoe/apcu
 
 Source0:	php-%php_extension-%version.tar
@@ -64,15 +61,14 @@ NO_INTERACTION=1 make test
 %php_extconf/%php_extension
 %php_extdir/*
 
-%post
-%php_extension_postin
-
-%preun
-%php_extension_preun
-
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} 1:%version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Tue Jan 09 2024 Anton Farygin <rider@altlinux.ru> 1:5.1.23-alt1
+- 5.1.23
+- built from upstream git
+- removed post-scripts
 
 * Tue Jan 10 2023 Anton Farygin <rider@altlinux.ru> 1:5.1.22-alt1
 - updated to 5.1.22

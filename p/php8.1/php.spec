@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  1
-%define _php_release_version 27
+%define _php_release_version 28
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -390,7 +390,7 @@ rm -f ext/standard/tests/file/bug69442.phpt
 rm -f ext/posix/tests/posix_ttyname_error_wrongparams.phpt
 rm -f ext/standard/tests/general_functions/sys_getloadavg.phpt
 
-if ! make -j${NPROCS:-16} test; then
+if ! make -Onone -j${NPROCS:-16} test; then
   set +x
   for f in $(find .. -name \*.diff -type f -print); do
     if ! grep -q XFAIL "${f/.diff/.phpt}"
@@ -470,6 +470,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Fri Apr 12 2024 Anton Farygin <rider@altlinux.ru> 8.1.28-alt1
+- 8.1.27 -> 8.1.28 (Fixes: CVE-2024-1874, CVE-2024-2756, CVE-2024-3096)
+
 * Sun Dec 24 2023 Anton Farygin <rider@altlinux.ru> 8.1.27-alt1
 - 8.1.26 -> 8.1.27
 
