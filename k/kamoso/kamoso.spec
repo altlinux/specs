@@ -1,7 +1,7 @@
 %def_without ru_doc
 
 Name:    kamoso
-Version: 24.02.1
+Version: 24.02.2
 Release: alt1
 
 Group:   Video
@@ -57,9 +57,11 @@ BuildRequires: gst-plugins1.0-devel
 BuildRequires: qt5-quickcontrols
 BuildRequires: qt5-quickcontrols2-devel
 
-Requires: libkf5quickaddons
-Requires: kf5-purpose
 Requires: kf5-ki18n-common
+Requires: kf5-kio
+Requires: kf5-purpose
+Requires: libkf5quickaddons
+Requires: qt5-quickcontrols
 
 %description
 Kamoso is an application to take pictures and videos out of your webcam.
@@ -99,6 +101,10 @@ itstool -m $TMPDIR/kamoso.mo -o ru/ doc/index.docbook
 %_K5notif/%name.notifyrc
 
 %changelog
+* Sat Apr 13 2024 Andrey Cherepanov <cas@altlinux.org> 24.02.2-alt1
+- New version.
+- Added explicit dependencies (ALT #49994, #49995).
+
 * Fri Mar 22 2024 Andrey Cherepanov <cas@altlinux.org> 24.02.1-alt1
 - New version.
 
