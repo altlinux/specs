@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 Summary: XML-RPC for asyncio
 License: BSD-3-Clause
@@ -55,6 +55,9 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Sat Apr 13 2024 Anton Vyatkin <toni@altlinux.org> 0.8.0-alt1
+- New version 0.8.0.
+
 * Fri Sep 15 2023 Anton Vyatkin <toni@altlinux.org> 0.7.0-alt1
 - New version 0.7.0.
 
