@@ -5,8 +5,8 @@
 %endif
 
 Name:    blosc2
-Version: 2.13.2
-Release: alt2
+Version: 2.14.4
+Release: alt1
 
 Summary: A fast, compressed, persistent binary data store library for C
 License: BSD-3-Clause
@@ -98,6 +98,9 @@ rm -rf internal-complibs
 %_libdir/cmake/Blosc2
 
 %changelog
+* Sat Apr 13 2024 Anton Vyatkin <toni@altlinux.org> 2.14.4-alt1
+- New version 2.14.4.
+
 * Mon Mar 04 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.13.2-alt2
 - NMU: added a proper synchronization to `init_shuffle_implementation`.
   Now tests pass properly on LoongArch (and possibly other weakly ordered
