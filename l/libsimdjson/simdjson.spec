@@ -5,7 +5,7 @@
 
 Name: libsimdjson
 Version: 3.9.1
-Release: alt1
+Release: alt1.1
 Summary: Parsing gigabytes of JSON per second
 License: Apache-2.0
 Group: System/Libraries
@@ -13,6 +13,7 @@ Url: https://simdjson.org/
 Vcs: https://github.com/simdjson/simdjson
 
 Source: %name-%version.tar
+Patch: simdjson-loongarch-link-flags.patch
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -33,6 +34,7 @@ Requires: %name = %EVR
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %cmake \
@@ -62,6 +64,9 @@ cd jsonexamples
 %_pkgconfigdir/simdjson.pc
 
 %changelog
+* Sat Apr 13 2024 Ivan A. Melnikov <iv@altlinux.org> 3.9.1-alt1.1
+- NMU: Fix FTBFS on loongarch64.
+
 * Fri Apr 12 2024 Vitaly Chikunov <vt@altlinux.org> 3.9.1-alt1
 - Update to v3.9.1 (2024-04-05).
 
