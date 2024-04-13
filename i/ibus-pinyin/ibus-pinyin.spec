@@ -1,19 +1,15 @@
 Name:    ibus-pinyin
-Version: 1.5.0
-Release: alt7
+Version: 1.5.1
+Release: alt1
 Summary: The Chinese Pinyin and Bopomofo engines for IBus input platform
 
 License: GPL-2.0+
 Group: System/Libraries
-URL: http://code.google.com/p/ibus
-Source0: http://ibus.googlecode.com/files/%{name}-%{version}.tar.gz
-Patch0: ibus-pinyin-fixes-lua-compile.patch
-Patch1: ibus-pinyin-support-set-content-type-method.patch
-Patch2:  ibus-pinyin-fix-python3.patch
+URL: https://github.com/ibus/ibus-pinyin
+Source0: %name-%version.tar
 
 Packager:   Andrey Cherepanov <cas@altlinux.org>
 
-%add_python3_path %_datadir/%name
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: glib2-devel sqlite3 gcc-c++ python-devel
 BuildRequires: gnome-common
@@ -27,14 +23,13 @@ BuildRequires: libibus-devel >= 1.5.4
 BuildRequires: opencc-devel
 BuildRequires: pyzy-devel
 
+%add_python3_path %_datadir/%name
+
 %description
 The Chinese Pinyin and Bopomofo input methods for IBus platform.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p2
 # Replace doublequotes to singlequotes for sqlite3
 subst "s|\\\\\"|\\\\'|g" data/db/english/english.awk
 
@@ -64,6 +59,9 @@ subst "s|\\\\\"|\\\\'|g" data/db/english/english.awk
 %_desktopdir/*.desktop
 
 %changelog
+* Sat Apr 13 2024 Andrey Cherepanov <cas@altlinux.org> 1.5.1-alt1
+- New version from https://github.com/ibus/ibus-pinyin
+
 * Sun Apr 09 2023 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt7
 - FTBFS: replaced doublequotes to singlequotes for sqlite3.
 
