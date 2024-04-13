@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        123.0.6312.86
+Version:        123.0.6312.122
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -31,6 +31,7 @@ License:        BSD-3-Clause and LGPL-2.1+
 Group:          Networking/WWW
 Url:            https://www.chromium.org
 
+# Get sources from https://chromium.woolyss.com/
 Source0:        chromium.tar.zst
 
 Source30:       master_preferences
@@ -502,6 +503,14 @@ EOF
 %_altdir/%name
 
 %changelog
+* Sat Apr 13 2024 Andrey Cherepanov <cas@altlinux.org> 123.0.6312.122-alt1
+- New version (123.0.6312.122).
+- Security fixes:
+  + CVE-2024-3157: Out of bounds write in Compositing.
+  + CVE-2024-3516: Heap buffer overflow in ANGLE.
+  + CVE-2024-3515: Use after free in Dawn.
+- Use vaapi flags from Fedora defaults.
+
 * Wed Mar 27 2024 Andrey Cherepanov <cas@altlinux.org> 123.0.6312.86-alt1
 - New version (123.0.6312.86).
 - Security fixes:
