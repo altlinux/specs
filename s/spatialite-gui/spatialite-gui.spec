@@ -1,7 +1,7 @@
 %global pre beta1
 Name: spatialite-gui
 Version: 2.1.0
-Release: alt3
+Release: alt4
 Summary: GUI to manage Spatialite databases
 
 Group: Databases
@@ -63,6 +63,9 @@ install -pm 0644 gnome_resource/%name.png %buildroot%_datadir/pixmaps
 %_datadir/icons/hicolor/*/apps/%name.png
 
 %changelog
+* Sat Apr 13 2024 Ilya Mashkin <oddity@altlinux.ru> 2.1.0-alt4
+- rebuild with new libxlsxwriter
+
 * Fri Oct 13 2023 Ilya Mashkin <oddity@altlinux.ru> 2.1.0-alt3
 - rebuild with new libxlsxwriter
 
