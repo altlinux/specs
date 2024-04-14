@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: far2l
-Version: 2.6.0
+Version: 2.6.1
 Release: alt1
 
 Summary: Linux port of FAR v2
@@ -47,6 +47,7 @@ BuildRequires: libX11-devel
 %filter_from_requires /^perl-Image-ExifTool/d
 %filter_from_requires /^gnustep-Backbone$/d
 %filter_from_requires /^git-diff-highlight$/d
+%filter_from_requires /^plasma5-kde-cli-tools/d
 
 %description
 Linux port of FAR v2.
@@ -90,6 +91,9 @@ Used code from projects:
 %_man1dir/far2l.*
 
 %changelog
+* Sun Apr 14 2024 Anton Midyukov <antohami@altlinux.org> 2.6.1-alt1
+- new version (2.6.1) with rpmgs script
+
 * Sat Feb 24 2024 Anton Midyukov <antohami@altlinux.org> 2.6.0-alt1
 - new version (2.6.0) with rpmgs script
 
