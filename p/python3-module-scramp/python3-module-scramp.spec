@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 1.4.4
+Version: 1.4.5
 Release: alt1
 
 Summary: Python implementation of the SCRAM protocol
@@ -17,7 +17,7 @@ Source: %oname-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
+BuildRequires: python3-module-hatchling
 %if_with check
 BuildRequires: python3-module-asn1crypto
 BuildRequires: python3-module-passlib
@@ -40,14 +40,16 @@ sed -i '9a version = "%version"' pyproject.toml
 %pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3 -v -x test
+%pyproject_run_pytest -v
 
 %files
-%doc *.rst LICENSE
+%doc README.*
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Sun Apr 14 2024 Anton Vyatkin <toni@altlinux.org> 1.4.5-alt1
+- New version 1.4.5.
+
 * Fri Mar 24 2023 Anton Vyatkin <toni@altlinux.org> 1.4.4-alt1
 - Initial build for Sisyphus
