@@ -1,8 +1,8 @@
 %def_disable static
 
 Name:    libomniORB
-Version: 4.3.0
-Release: alt3.1
+Version: 4.3.2
+Release: alt1
 
 Summary: ORB from AT&T (core libraries)
 
@@ -123,6 +123,7 @@ for the omniORB package (COS module).
 %patch1 -p 0
 
 %build
+export PYTHON=/usr/bin/python3
 %configure \
 	%{subst_enable static} \
 	--disable-thread-tracing \
@@ -216,6 +217,9 @@ install -p -D -m 644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/omninames
 %endif
 
 %changelog
+* Sun Apr 14 2024 Pavel Vainerman <pv@altlinux.ru> 4.3.2-alt1
+- new version (4.3.2) with rpmgs script
+
 * Tue Dec 19 2023 Grigory Ustinov <grenka@altlinux.org> 4.3.0-alt3.1
 - NMU: Add build dependency on setuptools.
 
