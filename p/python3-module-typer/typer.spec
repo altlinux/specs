@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.11.0
+Version: 0.12.3
 Release: alt1
 
 Summary: Typer, build great CLIs. Easy to code. Based on Python type hints
@@ -17,9 +17,9 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Source2: clean_coverage.py
 
 %pyproject_runtimedeps_metadata
-%pyproject_runtimedeps_metadata -- --extra all
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
@@ -72,9 +72,7 @@ The key features are:
 
 %check
 # Clean of the using coverage module, because we don't needs to it.
-find tests -name *.py -type f -exec sed -i 's/-m coverage run //g' {} \; \
-    -exec sed -i 's/"-m", "coverage", "run",//g' {} \; \
-    -exec sed -i -e '/"-m",$/,+2d' {} \;
+%SOURCE2 tests/
 # Increase terminal line size, because some tests (test_not_exists from
 # test_tutorial002.py and test_tutorial002_an.py) don't pass at narrow
 # terminals.
@@ -87,11 +85,15 @@ export COLUMNS=135
     --deselect="tests/test_completion/test_completion.py::test_install_completion"
 
 %files
+%_bindir/%pypi_name
 %doc README.md docs
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Apr 15 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.12.3-alt1
+- 0.11.0 -> 0.12.3.
+
 * Thu Mar 28 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.11.0-alt1
 - 0.9.0 -> 0.11.0.
 
