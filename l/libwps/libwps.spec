@@ -1,16 +1,19 @@
 Name: libwps
 Version: 0.4.12
-Release: alt1
+Release: alt2
+
 Summary: Library for reading and converting Microsoft Works word processor documents
 License: LGPL
 Group: System/Libraries
-Url: http://libwps.sourceforge.net/
 
+Url: http://libwps.sourceforge.net/
 Source: %name-%version.tar.xz
 
 BuildRequires: gcc-c++
 BuildRequires: boost-devel-headers
-BuildRequires: pkgconfig(librevenge-0.0) pkgconfig(librevenge-stream-0.0) pkgconfig(librevenge-generators-0.0)
+BuildRequires: pkgconfig(librevenge-0.0)
+BuildRequires: pkgconfig(librevenge-stream-0.0)
+BuildRequires: pkgconfig(librevenge-generators-0.0)
 
 BuildRequires: doxygen
 BuildRequires: gperf
@@ -47,9 +50,6 @@ The %name-doc package contains documentation files for %name
 %setup
 
 %build
-%ifarch e2k
-%add_optflags -std=c++11
-%endif
 mkdir -p m4
 %autoreconf
 %configure --disable-silent-rules --disable-static --disable-werror
@@ -77,6 +77,10 @@ rm -rf %buildroot%_defaultdocdir/%name
 %doc docs/doxygen/html
 
 %changelog
+* Mon Apr 15 2024 Michael Shigorin <mike@altlinux.org> 0.4.12-alt2
+- E2K: drop the old kudge (reverts 0.4.7-alt2 change)
+- Minor spec cleanup
+
 * Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 0.4.12-alt1
 - Autobuild version bump to 0.4.12
 
