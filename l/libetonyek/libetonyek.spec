@@ -1,21 +1,21 @@
 Name: libetonyek
 Version: 0.1.10
-Release: alt1
-Summary: A library for import of Apple Keynote presentations
+Release: alt2
 
-Group: System/Libraries
+Summary: A library for import of Apple Keynote presentations
 License: MPL-2.0
+Group: System/Libraries
+
 # https://gerrit.libreoffice.org/#/admin/projects/libetonyek
 Url: http://www.freedesktop.org/wiki/Software/libetonyek/
 Source: %name-%version.tar.xz
-Patch2: libetonyek-0.1.9-ALT-C++11.patch
-
-BuildRequires: cppunit-devel
+Patch: libetonyek-0.1.9-ALT-C++11.patch
 
 # Automatically added by buildreq on Mon Sep 21 2015
 # optimized out: boost-devel-headers gnu-config libstdc++-devel pkg-config xz
 BuildRequires: doxygen gcc-c++ libglm-devel librevenge-devel libxml2-devel mdds-devel zlib-devel
 BuildRequires: liblangtag-devel mdds-devel
+BuildRequires: cppunit-devel
 
 %description
 libetonyek is library providing ability to interpret and import Apple
@@ -48,17 +48,15 @@ Currently supported: XHTML, raw, text.
 
 %prep
 %setup
-%patch2 -p1
-## XXX hack out mdds=1.0 (too low)
-#sed -i 's/mdds-1.0/mdds/' configure.ac
-%ifarch e2k
-# FTBFS against boost 1.65 with lcc 1.21.20
-%add_optflags -fno-error-always-inline
-%endif
+%patch -p1
 
 %build
 %autoreconf
-%configure --disable-silent-rules --disable-static --disable-werror --with-mdds=2.1
+%configure \
+	--disable-silent-rules \
+	--disable-static \
+	--disable-werror \
+	--with-mdds=2.1
 sed -i \
     -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
     -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
@@ -93,6 +91,10 @@ make check
 %_bindir/*
 
 %changelog
+* Mon Apr 15 2024 Michael Shigorin <mike@altlinux.org> 0.1.10-alt2
+- E2K: drop the old kudge (reverts 0.1.6-alt4 change)
+- Minor spec cleanup
+
 * Fri Oct 13 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1.10-alt1
 - Updated to upstream 0.1.10
 - Skipped patch 0001-glm-force-dmat3-initialization-needed-from-v0.9.9.0.patch
