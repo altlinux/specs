@@ -1,14 +1,15 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 1.3
+%define ver_major 1.4
 %define rdn_name net.nokyan.Resources
 
+%def_enable check
 %def_disable bootstrap
 
 Name: resources
 Version: %ver_major.0
-Release: alt2.1
+Release: alt1
 
 Summary: System monitor
 License: GPL-3.0-or-later
@@ -25,8 +26,8 @@ Source1: %name-%version-cargo.tar
 
 ExcludeArch: ppc64le
 
-%define gtk_ver 4.8
-%define adwaita_ver 1.4
+%define gtk_ver 4.10
+%define adwaita_ver 1.5
 
 Requires: dconf /usr/sbin/dmidecode polkit
 
@@ -37,9 +38,9 @@ Requires: %_libdir/libnvidia-ml.so
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson git rust-cargo
-BuildRequires: /usr/bin/appstream-util desktop-file-utils
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
+%{?_enable_check:BuildRequires: /usr/bin/appstream-util desktop-file-utils /usr/bin/glib-compile-schemas}
 
 %description
 Resources is a simple yet powerful monitor for your system resources and
@@ -84,6 +85,9 @@ sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/utils/memory.rs
 
 
 %changelog
+* Mon Apr 15 2024 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Wed Jan 31 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt2.1
 - added %%_libdir/libnvidia-ml.so to runtime dependencies (ALT #49236)
 

@@ -9,16 +9,17 @@
 %define _libexecdir %_prefix/libexec
 
 %def_disable static
-%def_enable gtk_doc
+%def_enable docs
 %def_enable man
 %def_enable pixbuf_loader
 %def_enable introspection
 %def_enable vala
+%def_enable avif
 %def_disable installed_tests
 %def_disable check
 
 Name: %bname
-Version: %ver_major.0
+Version: %ver_major.90
 Release: alt1
 Epoch: 1
 
@@ -43,7 +44,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.
 %define freetype_ver 2.9
 %define harfbuzz_ver 2.0.0
 
-BuildRequires: /proc rust >= %rust_ver rust-cargo
+BuildRequires: rpm-macros-meson %{?_enable_introspection:rpm-build-gir} %{?_enable_vala:rpm-build-vala}
+BuildRequires: meson /proc rust >= %rust_ver rust-cargo rust-cargo-c
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libpango-devel >= %pango_ver
 BuildRequires: libgtk+3-devel >= %gtk3_ver
@@ -52,14 +54,11 @@ BuildRequires: libcairo-devel >= %cairo_ver
 BuildRequires: libfreetype-devel >= %freetype_ver
 BuildRequires: libharfbuzz-devel >= %harfbuzz_ver
 BuildRequires: libX11-devel libXt-devel zlib-devel
-%{?_enable_gtk_doc:BuildRequires: gi-docgen}
-%{?_enable_man:BuildRequires: python3-module-docutils}
-%{?_enable_introspection:
-BuildRequires(pre): rpm-build-gir
-BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
-%{?_enable_vala:
-BuildRequires(pre): rpm-build-vala
-BuildRequires: vala-tools >= %vala_ver}
+%{?_enable_avif:BuildRequires: pkgconfig(dav1d)}
+%{?_enable_docs:BuildRequires: gi-docgen}
+%{?_enable_man:BuildRequires: /usr/bin/rst2man}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
+%{?_enable_vala:BuildRequires: vala-tools >= %vala_ver}
 %{?_enable_check:BuildRequires: libgtest-devel}
 
 %description
@@ -146,25 +145,22 @@ cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
-%add_optflags %(getconf LFS_CFLAGS)
-%autoreconf
-%configure \
-	%{subst_enable static} \
-	%{?_enable_introspection:--enable-introspection=yes} \
-	%{?_disable_gtk_doc:--disable-gtk-doc} \
-	%{?_enable_pixbuf_loader:--enable-pixbuf-loader} \
-	%{?_enable_vala:--enable-vala=yes} \
-	%{?_enable_installed_tests:--enable-installed-tests} \
-	--docdir=%_datadir/doc/%name
+%meson \
+    %{subst_enable_meson_feature introspection introspection} \
+    %{subst_enable_meson_feature docs docs} \
+    %{subst_enable_meson_feature pixbuf_loader pixbuf-loader} \
+    %{subst_enable_meson_feature vala vala} \
+    %{subst_enable_meson_feature avif avif} \
+    %{subst_enable_meson_feature check tests}
 %nil
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %check
-%make -k check VERBOSE=1
+%__meson_test
 
 %files -f %name.lang
 %_libdir/*.so.*
@@ -176,9 +172,10 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_includedir/*
 %_libdir/*.so
 %_libdir/pkgconfig/%bname-%gtk_api_ver.pc
-%{?_enable_vala:%_vapidir/%name-%api_ver.vapi}
+%{?_enable_vala:%_vapidir/%name-%api_ver.vapi
+%_vapidir/%name-%api_ver.deps}
 
-%if_enabled gtk_doc
+%if_enabled docs
 %files devel-doc
 %_datadir/doc/Rsvg-%api_ver
 %endif
@@ -207,9 +204,10 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_datadir/installed-tests/RSVG/
 %endif
 
-%{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
-
 %changelog
+* Sat Apr 13 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.58.90-alt1
+- 2.58.90 (ported to Meson build system)
+
 * Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.58.0-alt1
 - 2.58.0
 
