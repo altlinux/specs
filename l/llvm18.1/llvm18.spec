@@ -8,7 +8,7 @@
 
 %global v_major 18
 %global v_majmin %v_major.1
-%global v_full %v_majmin.2
+%global v_full %v_majmin.3
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -109,7 +109,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.2
+Release: alt0.1
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -1472,6 +1472,9 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Sun Apr 14 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.3-alt0.1
+- Update to 18.1.3.
+
 * Thu Mar 28 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.2-alt0.2
 - Make clang-doc package arch until graphviz issue will be
   resolved on %%ix86.
