@@ -1,6 +1,6 @@
 Name: cool-retro-term
 Version: 1.2.0
-Release: alt2
+Release: alt3
 
 Summary: Cool Retro Terminal
 License: GPLv3+
@@ -17,7 +17,7 @@ BuildRequires: pkgconfig(Qt5Quick)
 BuildRequires: qt5-declarative-devel qt5-qmltermwidget 
 BuildRequires: desktop-file-utils qt5-quickcontrols2-devel
 
-Requires: qt5-graphicaleffects qt5-qmltermwidget 
+Requires: qt5-graphicaleffects qt5-qmltermwidget qt5-declarative-common 
 Requires: qt5-quickcontrols qt5-quickcontrols2
 
 %description
@@ -53,6 +53,9 @@ desktop-file-install \
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Mon Apr 15 2024 Ilya Mashkin <oddity@altlinux.ru> 1.2.0-alt3
+- Add BR qt5-declarative-common 
+
 * Sat Oct 07 2023 Ilya Mashkin <oddity@altlinux.ru> 1.2.0-alt2
 - Build with system qt5-qmltermwidget  (Closes: #44546)
 
