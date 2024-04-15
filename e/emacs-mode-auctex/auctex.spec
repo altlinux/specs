@@ -11,7 +11,7 @@
 
 Name: emacs-mode-%ModeName
 Version: 13.3
-Release: alt1
+Release: alt2
 
 Summary: Enhanced LaTeX mode for GNU Emacs
 License: GPLv3
@@ -157,15 +157,15 @@ mkdir -p $RPM_BUILD_ROOT%_emacslispdir/auctex/style/
 mkdir -p $RPM_BUILD_ROOT%_emacslispdir/auctex/images/
 
 
-cp $RPM_BUILD_ROOT/usr/share/emacs/29.3/site-lisp/auctex.el $RPM_BUILD_ROOT%_emacslispdir/site-start.d/
-cp $RPM_BUILD_ROOT/usr/share/emacs/29.3/site-lisp/preview-latex.el $RPM_BUILD_ROOT%_emacslispdir/site-start.d/
-cp $RPM_BUILD_ROOT/usr/share/emacs/29.3/site-lisp/tex-site.el $RPM_BUILD_ROOT%_emacslispdir/
+cp $RPM_BUILD_ROOT/usr/share/emacs/%emacs_version/site-lisp/auctex.el $RPM_BUILD_ROOT%_emacslispdir/site-start.d/
+cp $RPM_BUILD_ROOT/usr/share/emacs/%emacs_version/site-lisp/preview-latex.el $RPM_BUILD_ROOT%_emacslispdir/site-start.d/
+cp $RPM_BUILD_ROOT/usr/share/emacs/%emacs_version/site-lisp/tex-site.el $RPM_BUILD_ROOT%_emacslispdir/
 
-mv -f $RPM_BUILD_ROOT/usr/share/emacs/29.3/site-lisp/auctex/*.el $RPM_BUILD_ROOT%_emacslispdir/auctex/
-mv -f $RPM_BUILD_ROOT/usr/share/emacs/29.3/site-lisp/auctex/style/*.el $RPM_BUILD_ROOT%_emacslispdir/auctex/style/
-mv -f $RPM_BUILD_ROOT/usr/share/emacs/29.3/site-lisp/auctex/images/*.xpm $RPM_BUILD_ROOT%_emacslispdir/auctex/images/
-mv -f $RPM_BUILD_ROOT/usr/share/emacs/29.3/site-lisp/auctex/style/*.elc $RPM_BUILD_ROOT%_emacslispdir/auctex/style/
-mv -f $RPM_BUILD_ROOT/usr/share/emacs/29.3/site-lisp/auctex/*.elc $RPM_BUILD_ROOT%_emacslispdir/auctex/
+mv -f $RPM_BUILD_ROOT/usr/share/emacs/%emacs_version/site-lisp/auctex/*.el $RPM_BUILD_ROOT%_emacslispdir/auctex/
+mv -f $RPM_BUILD_ROOT/usr/share/emacs/%emacs_version/site-lisp/auctex/style/*.el $RPM_BUILD_ROOT%_emacslispdir/auctex/style/
+mv -f $RPM_BUILD_ROOT/usr/share/emacs/%emacs_version/site-lisp/auctex/images/*.xpm $RPM_BUILD_ROOT%_emacslispdir/auctex/images/
+mv -f $RPM_BUILD_ROOT/usr/share/emacs/%emacs_version/site-lisp/auctex/style/*.elc $RPM_BUILD_ROOT%_emacslispdir/auctex/style/
+mv -f $RPM_BUILD_ROOT/usr/share/emacs/%emacs_version/site-lisp/auctex/*.elc $RPM_BUILD_ROOT%_emacslispdir/auctex/
 
 # Create these .nosearch files to keep the directories from the elisp search path
 touch %buildroot%_emacslispdir/auctex/.nosearch
@@ -203,6 +203,9 @@ touch %buildroot%_emacslispdir/auctex/style/.nosearch
 %endif
 
 %changelog
+* Mon Apr 15 2024 Ilya Mashkin <oddity@altlinux.ru> 13.3-alt2
+- use emacs_version macro
+
 * Mon Apr 15 2024 Ilya Mashkin <oddity@altlinux.ru> 13.3-alt1
 - 13.3
 
