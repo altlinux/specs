@@ -1,18 +1,17 @@
 Name: bodr
 Version: 10
-Release: alt1
+Release: alt1.1
 
 Summary: Blue Obelisk Data Repository
 Group: Sciences/Chemistry
 License: MIT
-Url: http://www.blueobelisk.org
+Url: http://sourceforge.net/projects/bodr/
 
 Source: http://downloads.sourceforge.net/%name/%name-%version.tar.bz2
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Mon Mar 15 2010
-BuildRequires: perl-devel xml-utils xsltproc
+BuildRequires: perl-devel perl(diagnostics.pm) xml-utils xsltproc
 
 %description
 The Blue Obelisk Movement is the name used by a diverse Internet group
@@ -43,6 +42,9 @@ use this repository to make their software interoperable.
 %doc %pkgdocdir
 
 %changelog
+* Mon Apr 15 2024 Yuri N. Sedunov <aris@altlinux.org> 10-alt1.1
+- fixed BR
+
 * Sat Jan 04 2014 Yuri N. Sedunov <aris@altlinux.org> 10-alt1
 - new version
 
