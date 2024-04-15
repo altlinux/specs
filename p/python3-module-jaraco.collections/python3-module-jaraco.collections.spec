@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.0.0
+Version: 5.0.1
 Release: alt1
 Summary: Collection objects similar to those in stdlib by jaraco
 License: MIT
@@ -53,6 +53,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Mon Apr 15 2024 Stanislav Levin <slev@altlinux.org> 5.0.1-alt1
+- 5.0.0 -> 5.0.1.
+
 * Thu Mar 14 2024 Stanislav Levin <slev@altlinux.org> 5.0.0-alt1
 - 4.3.0 -> 5.0.0.
 
