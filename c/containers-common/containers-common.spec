@@ -3,19 +3,18 @@
 # These vendored components must have the same version. If it is not the case,
 # pick the oldest version on c/image, c/common, c/storage vendored in
 # Buildah/Podman/Skopeo.
-%global skopeo_branch main
-%global podman_branch main
-%global buildah_branch main
+
 %global image_branch  main
-%global common_branch main
+%global common_branch v%{version}
 %global storage_branch main
 %global shortnames_branch main
 
+
 %global github_containers https://raw.githubusercontent.com/containers
 
-Epoch: 1
+Epoch: 2
 Name: containers-common
-Version: 3
+Version: 0.58.1
 Release: alt1
 License: Apache-2.0
 Group: System/Configuration/Other
@@ -36,8 +35,8 @@ Source12: %github_containers/image/%image_branch/docs/containers-transports.5.md
 Source13: %github_containers/image/%image_branch/registries.conf
 Source14: %github_containers/common/%common_branch/docs/containers-mounts.conf.5.md
 Source15: %github_containers/shortnames/%shortnames_branch/shortnames.conf
-Source16: %github_containers/skopeo/%skopeo_branch/default.yaml
-Source17: %github_containers/skopeo/%skopeo_branch/default-policy.json
+Source16: %github_containers/image/%image_branch/default.yaml
+Source17: %github_containers/image/%image_branch/default-policy.json
 Source18: %github_containers/storage/%storage_branch/docs/containers-storage.conf.5.md
 Source19: %github_containers/storage/%storage_branch/storage.conf
 Source23: %github_containers/common/%common_branch/docs/Containerfile.5.md
@@ -66,8 +65,10 @@ Requires: crun
 # netavark build for not all arches
 #Requires: netavark >= 1.6.0
 Requires: slirp4netns
+Requires: passt
 Requires: iptables
 Requires: nftables
+# Recommends: qemu-user-static
 
 %description extra
 This subpackage will handle dependencies common to Podman and Buildah which are
@@ -110,6 +111,12 @@ cp man5/containerignore.5 man5/.containerignore.5
 install -dp %buildroot%_sysconfdir/containers/{certs.d,oci/hooks.d,systemd}
 install -dp %buildroot%_sharedstatedir/containers/sigstore
 install -dp %buildroot%_datadir/containers/systemd
+install -dp %{buildroot}%_prefix/lib/containers/storage
+install -dp -m 700 %buildroot%_prefix/lib/containers/storage/overlay-images
+touch %buildroot%_prefix/lib/containers/storage/overlay-images/images.lock
+install -dp -m 700 %buildroot%_prefix/lib/containers/storage/overlay-layers
+touch %buildroot%_prefix/lib/containers/storage/overlay-layers/layers.lock
+
 install -Dp -m0644 default.yaml -t %buildroot%_sysconfdir/containers/registries.d
 install -Dp -m0644 storage.conf -t %buildroot%_datadir/containers
 install -Dp -m0644 registries.conf -t %buildroot%_sysconfdir/containers
@@ -128,7 +135,7 @@ install -m0644 seccomp.json %buildroot%_datadir/containers/seccomp.json
 install -m0644 containers.conf %buildroot%_datadir/containers/containers.conf
 
 # install secrets patch directory
-install -d -p -m 755 %buildroot/%_datadir/alt/secrets
+install -d -p -m 755 %buildroot%_datadir/alt/secrets
 
 %files
 %dir %_sysconfdir/containers
@@ -138,6 +145,12 @@ install -d -p -m 755 %buildroot/%_datadir/alt/secrets
 %dir %_sysconfdir/containers/registries.conf.d
 %dir %_sysconfdir/containers/registries.d
 %dir %_sysconfdir/containers/systemd
+%dir %_prefix/lib/containers/storage
+%dir %_prefix/lib/containers/storage/overlay-images
+%dir %_prefix/lib/containers/storage/overlay-layers
+%_prefix/lib/containers/storage/overlay-images/images.lock
+%_prefix/lib/containers/storage/overlay-layers/layers.lock
+
 %config(noreplace) %_sysconfdir/containers/policy.json
 %config(noreplace) %_sysconfdir/containers/registries.conf
 %config(noreplace) %_sysconfdir/containers/registries.conf.d/000-shortnames.conf
@@ -153,6 +166,11 @@ install -d -p -m 755 %buildroot/%_datadir/alt/secrets
 %files extra
 
 %changelog
+* Mon Apr 15 2024 Alexey Shabalin <shaba@altlinux.org> 2:0.58.1-alt1
+- Update sources
+- Add support for additionalstore /usr/lib/containers/storage
+- Add passt to R: in extra package
+
 * Thu Dec 07 2023 Alexey Shabalin <shaba@altlinux.org> 1:3-alt1
 - Update sources
 
