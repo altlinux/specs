@@ -1,5 +1,5 @@
 Name: kodi-addon-inputstream-adaptive
-Version: 21.4.4
+Version: 21.4.5
 Release: alt1
 
 Summary: Adaptive stream addon for Kodi
@@ -9,7 +9,7 @@ Url: https://github.com/peak3d/inputstream.adaptive/
 
 Source: %name-%version.tar
 
-BuildRequires: cmake gcc-c++ kodi-devel
+BuildRequires: cmake gcc-c++ kodi-devel rapidjson-devel
 BuildRequires: libexpat-devel libgtest-devel libap4-devel-static libpugixml-devel
 
 %description
@@ -30,6 +30,9 @@ BuildRequires: libexpat-devel libgtest-devel libap4-devel-static libpugixml-deve
 %_datadir/kodi/addons/*
 
 %changelog
+* Mon Apr 15 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 21.4.5-alt1
+- 21.4.5 released
+
 * Mon Apr 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 21.4.4-alt1
 - 21.4.4 released
 
