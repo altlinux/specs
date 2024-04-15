@@ -7,7 +7,7 @@
 
 Name: python3-module-%oname
 Version: 24.1.0
-Release: alt1
+Release: alt2
 Summary: Fancy PyPI READMEs with Hatch
 License: MIT
 Group: Development/Python3
@@ -50,6 +50,9 @@ about the first impression of their project's PyPI landing page.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Mon Apr 15 2024 Stanislav Levin <slev@altlinux.org> 24.1.0-alt2
+- Fixed FTBFS (hatchling 1.23.0).
+
 * Wed Jan 24 2024 Vladimir Didenko <cow@altlinux.org> 24.1.0-alt1
 - 23.1.0 -> 24.1.0.
 

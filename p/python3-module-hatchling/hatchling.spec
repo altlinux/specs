@@ -2,7 +2,7 @@
 %define pypi_name hatchling
 
 Name: python3-module-%pypi_name
-Version: 1.22.5
+Version: 1.23.0
 Release: alt1
 Summary: Modern, extensible Python build backend
 License: MIT
@@ -45,6 +45,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Apr 15 2024 Stanislav Levin <slev@altlinux.org> 1.23.0-alt1
+- 1.22.5 -> 1.23.0.
+
 * Fri Apr 05 2024 Stanislav Levin <slev@altlinux.org> 1.22.5-alt1
 - 1.22.4 -> 1.22.5.
 

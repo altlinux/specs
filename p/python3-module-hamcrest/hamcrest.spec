@@ -6,7 +6,7 @@
 
 Name: python3-module-%mod_name
 Version: 2.1.0
-Release: alt1
+Release: alt2
 Summary: Hamcrest framework for matcher objects
 License: BSD
 Group: Development/Python3
@@ -56,6 +56,9 @@ commonly used.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Apr 15 2024 Stanislav Levin <slev@altlinux.org> 2.1.0-alt2
+- Fixed FTBFS (hatchling 1.23.0).
+
 * Wed Mar 06 2024 Alexander Kuznetsov <kuznetsovam@altlinux.org> 2.1.0-alt1
 - 2.0.4 -> 2.1.0
 
