@@ -10,7 +10,7 @@
 %define _aucstatedir %_localstatedir/%ModeName
 
 Name: emacs-mode-%ModeName
-Version: 13.1
+Version: 13.3
 Release: alt1
 
 Summary: Enhanced LaTeX mode for GNU Emacs
@@ -124,11 +124,20 @@ You need to install %name-el only if you intend to modify any of the
 %configure --with-emacs=%emacsbin --with-tex-input-dirs=/usr/share/texmf/tex 
 %make_build 
 
+# Build documentation in various formats
+
+#pushd doc
+#make extradist
+#popd
+
 %install
 install -d $RPM_BUILD_ROOT{%_emacslispdir/site-start.d,%_infodir}
 
 %define _makeinstall_target install
-%makeinstall %_makeinstall_target
+#makeinstall %_makeinstall_target
+%makeinstall_std
+
+###make_install
 install -d %buildroot/etc/emacs/site-start.d
 install -m 644 %SOURCE1 %buildroot/etc/emacs/site-start.d/auctex.el
 
@@ -141,6 +150,26 @@ ln -s -f %_licensedir/GPL-2 COPYING
 rm -f $RPM_BUILD_ROOT/%_infodir/dir
 mkdir -p $RPM_BUILD_ROOT/%_docdir/%name-%version/
 mv -f $RPM_BUILD_ROOT/%_docdir/auctex/* $RPM_BUILD_ROOT/%_docdir/%name-%version/
+
+mkdir -p $RPM_BUILD_ROOT%_emacslispdir/auctex/
+mkdir -p $RPM_BUILD_ROOT%_emacslispdir/auctex/style/
+
+mkdir -p $RPM_BUILD_ROOT%_emacslispdir/auctex/images/
+
+
+cp $RPM_BUILD_ROOT/usr/share/emacs/29.3/site-lisp/auctex.el $RPM_BUILD_ROOT%_emacslispdir/site-start.d/
+cp $RPM_BUILD_ROOT/usr/share/emacs/29.3/site-lisp/preview-latex.el $RPM_BUILD_ROOT%_emacslispdir/site-start.d/
+cp $RPM_BUILD_ROOT/usr/share/emacs/29.3/site-lisp/tex-site.el $RPM_BUILD_ROOT%_emacslispdir/
+
+mv -f $RPM_BUILD_ROOT/usr/share/emacs/29.3/site-lisp/auctex/*.el $RPM_BUILD_ROOT%_emacslispdir/auctex/
+mv -f $RPM_BUILD_ROOT/usr/share/emacs/29.3/site-lisp/auctex/style/*.el $RPM_BUILD_ROOT%_emacslispdir/auctex/style/
+mv -f $RPM_BUILD_ROOT/usr/share/emacs/29.3/site-lisp/auctex/images/*.xpm $RPM_BUILD_ROOT%_emacslispdir/auctex/images/
+mv -f $RPM_BUILD_ROOT/usr/share/emacs/29.3/site-lisp/auctex/style/*.elc $RPM_BUILD_ROOT%_emacslispdir/auctex/style/
+mv -f $RPM_BUILD_ROOT/usr/share/emacs/29.3/site-lisp/auctex/*.elc $RPM_BUILD_ROOT%_emacslispdir/auctex/
+
+# Create these .nosearch files to keep the directories from the elisp search path
+touch %buildroot%_emacslispdir/auctex/.nosearch
+touch %buildroot%_emacslispdir/auctex/style/.nosearch
 
 
 %files
@@ -156,6 +185,8 @@ mv -f $RPM_BUILD_ROOT/%_docdir/auctex/* $RPM_BUILD_ROOT/%_docdir/%name-%version/
 %exclude %_texmfmain/tex/latex/preview/preview.sty
 %exclude %_emacslispdir/auctex/*.el
 %exclude %_emacslispdir/auctex/style/*.el
+%_emacslispdir/auctex/.nosearch
+%_emacslispdir/auctex/style/.nosearch
 
 %files el 
 %_emacslispdir/auctex/*.el
@@ -172,6 +203,9 @@ mv -f $RPM_BUILD_ROOT/%_docdir/auctex/* $RPM_BUILD_ROOT/%_docdir/%name-%version/
 %endif
 
 %changelog
+* Mon Apr 15 2024 Ilya Mashkin <oddity@altlinux.ru> 13.3-alt1
+- 13.3
+
 * Wed Mar 30 2022 Ilya Mashkin <oddity@altlinux.ru> 13.1-alt1
 - add BR emacs-common rpm-build-emacs to fix FTBFS
 - skip patches
