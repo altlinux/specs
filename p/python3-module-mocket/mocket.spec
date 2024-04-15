@@ -3,14 +3,15 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 3.12.4
+Version: 3.12.5
 Release: alt1
 
 Summary: Python socket mock framework
 
 License: BSD-3-Clause
 Group:   Development/Python3
-URL:     https://github.com/mindflayer/python-mocket
+URL:     https://pypi.org/project/mocket
+VCS:     https://github.com/mindflayer/python-mocket
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -44,8 +45,6 @@ included, with gevent/asyncio/SSL support.
 
 %prep
 %setup
-# gitignored by upstream, nessesary for setup.py
-touch requirements.txt
 
 %build
 %pyproject_build
@@ -70,6 +69,9 @@ py.test-3 -k "not test_file_object and \
 %doc LICENSE *.rst
 
 %changelog
+* Mon Apr 15 2024 Grigory Ustinov <grenka@altlinux.org> 3.12.5-alt1
+- Automatically updated to 3.12.5.
+
 * Tue Feb 27 2024 Grigory Ustinov <grenka@altlinux.org> 3.12.4-alt1
 - Automatically updated to 3.12.4.
 
