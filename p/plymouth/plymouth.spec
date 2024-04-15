@@ -1,20 +1,21 @@
 %define _unpackaged_files_terminate_build 1
 %define _allowed_nonstrict_interdeps plymouth-system-theme,plymouth-theme-fade-in
 %add_findreq_skiplist %_unitdir/systemd-ask-password-plymouth.service
+%add_findreq_skiplist %_datadir/plymouth/themes/spinfinity/header-image.png
 
-%define plymouthdaemon_execdir /sbin
-%define plymouthclient_execdir /bin
-%define plymouth_libdir /%_lib
+%define plymouthdaemon_execdir %_sbindir
+%define plymouthclient_execdir %_bindir
+%define plymouth_libdir /%_libdir
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
 
 Name: plymouth
-Version: 22.02.122
-Release: alt3.20221016
+Version: 24.004.60
+Release: alt2
 Epoch: 1
 
 Summary: Graphical Boot Animation and Logger
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Base
 
 Url: http://www.freedesktop.org/wiki/Software/Plymouth
@@ -27,12 +28,15 @@ Requires(post): plymouth-scripts
 Requires: lib%name = %EVR
 
 BuildRequires: /proc
+BuildRequires: meson
+BuildRequires: pkgconfig(libevdev)
+BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: pkgconfig(xkeyboard-config)
 BuildRequires: pkgconfig(libpng) >= 1.2.16
 BuildRequires: pkgconfig(libudev)
 BuildRequires: pkgconfig(pangocairo) >= 1.21.0
 BuildRequires: pkgconfig(gtk+-3.0) >= 3.14.0
 BuildRequires: pkgconfig(libdrm)
-BuildRequires: pkgconfig(systemd)
 BuildRequires: xsltproc docbook-dtds docbook-style-xsl intltool
 
 Conflicts: bootsplash
@@ -269,29 +273,27 @@ background and featuring ALT logo.
 %build
 export SYSTEMD_ASK_PASSWORD_AGENT="/sbin/systemd-tty-ask-password-agent"
 export UDEVADM="/sbin/udevadm"
+%meson \
+	-Dtracing=true \
+	-Dlogo=%_datadir/design/current/icons/system-logo.png \
+	-Dbackground-start-color-stop=0x0073B3 \
+	-Dbackground-end-color-stop=0x00457E \
+	-Dbackground-color=0x3391cd \
+	-Dsystemd-integration=true \
+	-Dsystemd-system-unitdir=%_unitdir \
+	-Dsystemd-ask-password-agent=/sbin/systemd-tty-ask-password-agent \
+	-Ddocs=true
 
-%autoreconf
-%configure \
-	--disable-static				\
-	--enable-tracing				\
-	--enable-documentation				\
-	--with-logo=%_datadir/design/current/icons/system-logo.png	\
-	--with-background-start-color-stop=0x0073B3	\
-	--with-background-end-color-stop=0x00457E	\
-	--with-background-color=0x3391cd		\
-	--disable-gdm-transition			\
-	--without-rhgb-compat-link			\
-	--with-system-root-install			\
-	--enable-systemd-integration			\
-	--with-systemdunitdir=%_unitdir			\
-	--with-system-root-install			\
-	--with-release-file=/etc/os-release \
-	--with-runtimedir=/run
-
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
+# workaround for create symlink with meson
+mkdir -p %buildroot/%_datadir/design/current/icons
+touch %buildroot/%_datadir/design/current/icons/system-logo.png
+
+%meson_install
+
+rm -r %buildroot/%_datadir/design
 
 # Glow isn't quite ready for primetime
 rm -rf %buildroot%_datadir/plymouth/glow/
@@ -366,7 +368,7 @@ fi \
 
 
 %files -f %name.lang
-%doc AUTHORS NEWS README.md
+%doc AUTHORS README.md
 %dir %_datadir/plymouth
 %dir %_datadir/plymouth/themes
 %dir %_libdir/plymouth/renderers
@@ -428,7 +430,8 @@ fi \
 %_libexecdir/plymouth/plymouth-populate-initrd
 
 %files plugin-label
-%_libdir/plymouth/label.so
+%_libdir/plymouth/label-pango.so
+%_libdir/plymouth/label-freetype.so
 
 %files plugin-fade-throbber
 %_libdir/plymouth/fade-throbber.so
@@ -472,6 +475,13 @@ fi \
 %files system-theme
 
 %changelog
+* Mon Apr 15 2024 Anton Midyukov <antohami@altlinux.org> 1:24.004.60-alt2
+- Set paths for systemd via meson options
+
+* Mon Jan 08 2024 Anton Midyukov <antohami@altlinux.org> 1:24.004.60-alt1
+- New version
+- build with meson
+
 * Tue Aug 29 2023 Anton Midyukov <antohami@altlinux.org> 1:22.02.122-alt3.20221016
 - Add upstream commit:
   "drm: Use first output for panel info if there is no builtin display"
