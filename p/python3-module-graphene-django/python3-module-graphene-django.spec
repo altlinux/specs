@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 
 Summary: Build powerful, efficient, and flexible GraphQL APIs with seamless Django integration
@@ -67,6 +67,9 @@ a high level of performance.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Apr 15 2024 Anton Vyatkin <toni@altlinux.org> 3.2.1-alt1
+- (NMU) New version 3.2.1.
+
 * Tue Jan 09 2024 Alexander Burmatov <thatman@altlinux.org> 3.2.0-alt1
 - New 3.2.0 version.
 

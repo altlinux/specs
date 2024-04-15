@@ -5,7 +5,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.6.3
-Release: alt1
+Release: alt2
 
 Summary: It helps to use fixtures in pytest.mark.parametrize
 License: MIT
@@ -22,12 +22,14 @@ BuildRequires: python3-module-pytest
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
+Patch: fix-pytest8.patch
 
 %description
 %summary.
 
 %prep
 %setup -n %pypi_name-%version
+%patch -p1
 
 %build
 %pyproject_build
@@ -45,5 +47,8 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Apr 15 2024 Anton Vyatkin <toni@altlinux.org> 0.6.3-alt2
+- (NMU) Fixed FTBFS.
+
 * Mon Oct 23 2023 Alexander Burmatov <thatman@altlinux.org> 0.6.3-alt1
 - Initial build for Sisyphus.
