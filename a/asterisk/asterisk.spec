@@ -10,7 +10,7 @@
 %endif
 
 Name: asterisk
-Version: 20.5.1
+Version: 20.7.0
 Release: alt1
 
 Summary: Open source PBX
@@ -171,7 +171,7 @@ fgrep -rl '/usr/bin/env python' %buildroot%_datadir|xargs sed -i 's,env python,p
 #{{{
 
 %files
-%doc ChangeLogs/ChangeLog-20.5.0.md COPYING CREDITS LICENSE README* UPGRADE*.txt
+%doc ChangeLogs/ChangeLog-*.md COPYING CREDITS LICENSE README*
 %doc configs/samples configs/basic-pbx
 
 %_initdir/asterisk
@@ -319,6 +319,9 @@ fgrep -rl '/usr/bin/env python' %buildroot%_datadir|xargs sed -i 's,env python,p
 #}}}
 
 %changelog
+* Mon Apr 15 2024 Ilya Demyanov <turbid@altlinux.org> 20.7.0-alt1
+- 20.7.0
+
 * Fri Dec 15 2023 Alexei Takaseev <taf@altlinux.org> 20.5.1-alt1
 - 20.5.1
 
