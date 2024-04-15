@@ -6,7 +6,7 @@
 
 Name:          ruby
 Version:       %_version
-Release:       alt4.1
+Release:       alt4.3
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -18,6 +18,7 @@ Source1:       %name.sh.erb
 Source3:       ruby.macros.erb
 Source4:       ruby.env
 Source5:       static.tar
+Source2000:    %name-e2k.patch
 Patch1:        use_system_dirs.patch
 Patch2:        single_instantiating.patch
 Patch3:        alt_support_multiple_gem_trees.patch
@@ -38,6 +39,8 @@ BuildRequires: gem(rake) >= 12.3.3
 %if_without check
 BuildConflicts: ruby
 %endif
+# at least while bootstrapping on %%e2k
+BuildRequires: /proc
 
 # Ruby built using LTO cannot rebuild itself because of segfaults
 %define        optflags_lto %nil
@@ -208,7 +211,6 @@ Group:         Development/Ruby
 BuildArch:     noarch
 Requires:      %name-stdlibs = %_version-%release
 Provides:      %_bindir/erb
-Obsoletes:     %name-tools
 
 %description   -n erb
 ERB template library executable and manual.
@@ -220,8 +222,6 @@ Group:         Development/Ruby
 BuildArch:     noarch
 Requires:      %name-stdlibs = %_version-%release
 Provides:      %_bindir/irb
-Obsoletes:     %name-tools
-%obsolete      %name-tool-irb
 
 %description   -n irb
 irb is the REPL(read-eval&print loop) environment for Ruby programs.
@@ -245,10 +245,6 @@ Ruby manuals and documentation.
 Summary:       Ruby executable document in ri format
 Group:         Development/Documentation
 Requires:      %name = %_version-%release
-Provides:      ri-doc = %EVR
-Provides:      %name-doc-ri = %EVR
-Obsoletes:     ri-doc < %EVR
-Obsoletes:     %name-doc-ri < %EVR
 BuildArch:     noarch
 
 %description   doc
@@ -260,27 +256,8 @@ extensible.
 This package contains Ruby documentation in ri format.
 
 
-%package       -n gem
-Epoch:         2
-Version:       3.3.26
-Release:       alt4.1
-Summary:       Ruby gem executable and framefork
-Group:         Development/Ruby
-BuildArch:     noarch
-Requires:      %name-stdlibs = %_version-%release
-Provides:      %{name}gems = %version
-Provides:      %name-tools
-Obsoletes:     %{name}gems
-Obsoletes:     %name-tools
-
-%description   -n gem
-Ruby gem executable and framework.
-
-
 %package       -n rpm-macros-ruby
 Epoch:         1
-Version:       %_version
-Release:       alt4.1
 Summary:       rpm macros for Ruby packages
 Group:         Development/Ruby
 
@@ -288,9 +265,27 @@ Group:         Development/Ruby
 rpm macros for Ruby packages.
 
 
+# must be the last one as it has a Version: of its own
+%package       -n gem
+Epoch:         2
+Version:       3.3.26
+Summary:       Ruby gem executable and framefork
+Group:         Development/Ruby
+BuildArch:     noarch
+Requires:      %name-stdlibs = %_version-%release
+# for gem-* as of 20240415
+Provides:      rubygems = %version
+
+%description   -n gem
+Ruby gem executable and framework.
+
+
 %prep
-%setup -q -a5
+%setup -a5
 %autopatch -p1
+%ifarch %e2k
+patch -p1 -i %SOURCE2000
+%endif
 cp -r static/* ./
 
 %install
@@ -303,6 +298,9 @@ INSTALL=/bin/install rvm reinstall . \
    --enable-shared \
 %ifarch %valgrind_arches
    --enable-valgrind \
+%endif
+%ifarch %e2k
+   --disable-jit-support \
 %endif
    --enable-rubygems \
    --enable-use-system-dirs \
@@ -430,6 +428,15 @@ echo "NOTE: to make the environment variable changes come into effect, please re
 %_rpmmacrosdir/ruby.env
 
 %changelog
+* Mon Apr 15 2024 Michael Shigorin <mike@altlinux.org> 3.1.4-alt4.3
+- get P: rubygems back
+
+* Mon Apr 15 2024 Michael Shigorin <mike@altlinux.org> 3.1.4-alt4.2
+- E2K: add platform patch (ilyakurdyukov@)
+- add BR: /proc to fix build on %%e2k
+- gem subpackage (inter)dep fixup
+- minor spec cleanup (see also ALT#46206)
+
 * Mon Mar 25 2024 Pavel Skrylev <majioa@altlinux.org> 3.1.4-alt4.1
 - * changed names for doc packages: ri is doc, html is doc-html (closes #36294)
 
