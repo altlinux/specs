@@ -2,20 +2,19 @@
 %define oname sqlparse
 
 Name: python3-module-%oname
-Version: 0.4.4
+Version: 0.5.0
 Release: alt1
 Summary: Non-validating SQL parser
 License: BSD
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/sqlparse/
-
-# https://github.com/andialbrecht/sqlparse.git
-Source0: %{name}-%{version}.tar.gz
+URL: https://pypi.org/project/sqlparse
+VCS: https://github.com/andialbrecht/sqlparse
+Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-flit
+BuildRequires: python3-module-hatchling
 BuildRequires: python3-module-sphinx
 
 Conflicts: python-module-%oname
@@ -81,6 +80,9 @@ install -p -m644 docs/*.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Tue Apr 16 2024 Grigory Ustinov <grenka@altlinux.org> 0.5.0-alt1
+- Automatically updated to 0.5.0.
+
 * Mon Apr 24 2023 Grigory Ustinov <grenka@altlinux.org> 0.4.4-alt1
 - Automatically updated to 0.4.4.
 
