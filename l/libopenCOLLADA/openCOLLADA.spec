@@ -19,7 +19,7 @@ Group: System/Libraries
 
 Name:           libopenCOLLADA
 Version:        0
-Release:        alt7.git%{shortcommit}
+Release:        alt8.git%{shortcommit}
 License:        MIT
 Summary:        Collada 3D import and export libraries
 Url:            https://collada.org/mediawiki/index.php/OpenCOLLADA
@@ -35,6 +35,9 @@ Patch2:         OpenCOLLADA-caad49c-alt-fix-libbuffer-link.patch
 
 # https://github.com/KhronosGroup/OpenCOLLADA/issues/570
 Patch3:         openCOLLADA-pcre.patch
+
+# https://github.com/KhronosGroup/OpenCOLLADA/pull/527
+Patch4: 	openCOLLADA-fix-clang-compile.patch
 
 Source44: import.info
 Provides: openCOLLADA = %{version}-%{release}
@@ -93,6 +96,7 @@ XML validator for COLLADA files, based on the COLLADASaxFrameworkLoader.
 %patch1 -p1 -b .gcc6
 %patch2 -p2
 %patch3 -p1
+%patch4 -p1 -b .clang
 
 # Remove unused bundled libraries
 rm -rf Externals/{Cg,expat,lib3ds,LibXML,MayaDataModel,pcre,zlib,zziplib}
@@ -159,6 +163,9 @@ cp -a Externals/MathMLSolver/include/* %{buildroot}%{_includedir}/MathMLSolver/
 
 
 %changelog
+* Tue Apr 16 2024 L.A. Kostis <lakostis@altlinux.ru> 0-alt8.gitcaad49c
+- NMU: applied patch to compile with clang (upstream PR #527).
+
 * Thu Oct 18 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0-alt7.gitcaad49c
 - NMU: updated devel dependencies.
 
