@@ -1,20 +1,22 @@
 %define oname yaql
-# Version 2.0.0 doesn't support recent sphinx
-%def_without docs
+%def_with docs
+%def_with check
 
 Name: python3-module-%oname
-Version: 2.0.0
+Version: 3.0.0
 Release: alt1
 
 Summary: YAQL - Yet Another Query Language
 
 Group: Development/Python3
 License: Apache-2.0
-Url: https://pypi.org/project/yaql
+URL: https://pypi.org/project/yaql
 
 Source: %oname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr
 BuildRequires: python3-module-babel
 BuildRequires: python3-module-ply
@@ -23,6 +25,10 @@ BuildRequires: python3-module-dateutil
 %if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme
+%endif
+
+%if_with check
+BuildRequires: python3-module-stestr
 %endif
 
 BuildArch: noarch
@@ -60,24 +66,34 @@ rm -rf %oname.egg-info
 rm -rf {test-,}requirements.txt
 
 %build
-%python3_build
+%pyproject_build
 
 %if_with docs
-# disabling git call for last modification date from git repo
-sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
-python3 setup.py build_sphinx
-# Fix hidden-file-or-dir warnings
-rm -fr doc/build/html/.buildinfo
+export PYTHONPATH="$PWD"
+# generate html docs
+sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
-%python3_install
+%pyproject_install
+
+%if_with docs
+# install man page
+install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
+%endif
+
+%check
+%__python3 -m stestr run
 
 %files
 %doc README.rst
 %_bindir/%oname
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
@@ -85,10 +101,16 @@ rm -fr doc/build/html/.buildinfo
 
 %if_with docs
 %files doc
-%doc doc/build/html
+%doc html
+%_man1dir/%oname.1.xz
 %endif
 
 %changelog
+* Tue Apr 16 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
+- Build new version.
+- Build with docs.
+- Build with check.
+
 * Fri Jun 10 2022 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
 - Build new version.
 
