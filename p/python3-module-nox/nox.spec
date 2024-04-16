@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2024.04.15
-Release: alt1
+Version: 2024.4.15
+Release: alt2
 
 Summary: Flexible test automation for Python
 
@@ -53,9 +53,12 @@ for configuration.
 %_bindir/nox
 %_bindir/tox-to-nox
 %python3_sitelibdir/%pypi_name
-%python3_sitelibdir/%pypi_name-2024.4.15.dist-info
+%python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Tue Apr 16 2024 Grigory Ustinov <grenka@altlinux.org> 2024.4.15-alt2
+- Fixed version of package.
+
 * Tue Apr 16 2024 Grigory Ustinov <grenka@altlinux.org> 2024.04.15-alt1
 - Automatically updated to 2024.04.15.
 
