@@ -1,5 +1,5 @@
 Name: texworks
-Version: 0.6.8
+Version: 0.6.9
 Release: alt1
 
 Summary: A simple IDE for authoring TeX documents
@@ -7,7 +7,8 @@ Summary(ru_RU.UTF-8): Простой редактор для документо�
 
 License: GPL-2.0
 Group: Publishing
-Url: http://tug.org/texworks/
+URL: http://tug.org/texworks
+VCS: https://github.com/TeXworks/texworks
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -84,6 +85,9 @@ install -m 644 -D %SOURCE2 %buildroot/%_docdir/%name
 %_docdir/%name/TeXworks-manual-en.pdf
 
 %changelog
+* Tue Apr 16 2024 Grigory Ustinov <grenka@altlinux.org> 0.6.9-alt1
+- Automatically updated to 0.6.9.
+
 * Wed May 17 2023 Grigory Ustinov <grenka@altlinux.org> 0.6.8-alt1
 - Build new version.
 
