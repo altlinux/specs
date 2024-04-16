@@ -49,7 +49,7 @@
 Name: vim
 %define branch 9.1
 Version: %branch.0050
-Release: alt2
+Release: alt3
 Epoch: 4
 
 Summary: VIsual editor iMproved
@@ -609,6 +609,9 @@ cd -
 ls src/shadow/vim
 mv src/shadow src/build-enhanced
 # }}}
+
+cc %optflags alt/vi_wrapper.c -o alt/vi_wrapper
+
 # }}}
 # {{{ install section
 %install
@@ -638,8 +641,15 @@ done
 # 2}}}
 # {{{2 Set up links for minimal and gui versions
 %if_enabled minimal
+install -p -m755 alt/vi_wrapper %buildroot/bin/vi_wrapper
+install -p -m755 alt/vi_wrapper %buildroot%_bindir/vi_wrapper
+
 for i in ex rvi rview ; do
-	ln -s -f vi "%buildroot/bin/$i"
+	ln -s vi_wrapper "%buildroot/bin/$i"
+done
+
+for i in ex rview ; do
+	ln -s -f vi_wrapper "%buildroot/usr/bin/$i"
 done
 %endif
 
@@ -985,6 +995,7 @@ fi
 %if_enabled minimal
 %files minimal
 /bin/*
+%_bindir/vi_wrapper
 %endif
 # }}}
 # {{{ vim-console files
@@ -1053,6 +1064,9 @@ fi
 
 # {{{ changelog
 %changelog
+* Tue Apr 16 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:9.1.0050-alt3
+- Added a wrapper helper for ex and rvi to facilitate Usrmerge (ALT#49541).
+
 * Thu Jan 25 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:9.1.0050-alt2
 - Reverted upstream commit "patch 9.1.0041: xxd -i may generate incorrect C
   statements" to fix regression in xxd -i output (ALT#49180).
