@@ -3,7 +3,7 @@
 
 Name: qt6-wayland
 Version: 6.6.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt6 - Wayland platform support and QtCompositor module
@@ -36,7 +36,8 @@ Common package for %name
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common = %EVR
+Requires: %name-common
+Requires: libwayland-client-devel libwayland-cursor-devel
 Requires: qt6-base-devel
 %description devel
 %summary.
@@ -44,7 +45,7 @@ Requires: qt6-base-devel
 %package devel-static
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: %name-devel
 %description devel-static
 %summary.
@@ -53,14 +54,14 @@ Requires: %name-devel
 BuildArch: noarch
 Summary: Document for developing apps which will use Qt6 %qt_module
 Group: Development/KDE and QT
-Requires: %name-common = %EVR
+Requires: %name-common
 %description doc
 This package contains documentation for Qt6 %qt_module
 
 %package -n libqt6-compositor
 Summary: Qt6 library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-compositor
 %summary
@@ -68,7 +69,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-waylandcompositor
 Summary: Qt6 library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-waylandcompositor
 %summary
@@ -76,7 +77,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-waylandclient
 Summary: Qt6 library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-waylandclient
 %summary
@@ -84,7 +85,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-waylandeglclienthwintegration
 Summary: Qt6 library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-waylandeglclienthwintegration
 %summary
@@ -92,7 +93,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-waylandeglcompositorhwintegration
 Summary: Qt6 library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-waylandeglcompositorhwintegration
 %summary
@@ -100,7 +101,7 @@ Requires: libqt6-core = %_qt6_version
 %package -n libqt6-wlshellintegration
 Summary: Qt6 library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-wlshellintegration
 %summary
@@ -181,6 +182,9 @@ done
 %endif
 
 %changelog
+* Tue Apr 16 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt2
+- update requires
+
 * Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
 - new version
 
