@@ -13,9 +13,6 @@
 
 %ifarch x86_64
 %def_with cuda
-# hiprt depends on obsoleted rocm
-# version and segfaults
-# https://github.com/GPUOpen-LibrariesAndSDKs/HIPRTSDK/issues/18
 %def_without hiprt
 %else
 %def_without cuda
@@ -54,8 +51,8 @@
 %endif
 
 Name: blender
-Version: 4.1.0
-Release: alt0.5.1
+Version: 4.1.1
+Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -81,7 +78,6 @@ Patch24: blender-2.90-alt-non-x86_64-linking.patch
 Patch25: blender-3.4.1-gcc-13-fix.patch
 Patch26: blender-4.0.1-alt-pcre.patch
 Patch27: blender-4.0.1-suse-reproducible.patch
-Patch28: blender-4.0.2-alt-hiprt-enable.patch
 Patch29: blender-4.0.2-alt-fix-manpage.patch
 # needed for static clang libs
 Patch30: blender-alt-fix-clang-linking.patch
@@ -89,9 +85,11 @@ Patch31: blender-alt-osl-shader-dir.patch
 # needed for dynamic clang libs
 Patch32: blender-4.1-alt-use-libclang.patch
 Patch33: blender-alt-cycles-aarch64-hip-cuda-fix.patch
-# need to send this to upstream
+# need to send this to upstream:
+# gfx900 needs -O1 on Linux too, otherwise it will fail
 # https://github.com/ROCm/llvm-project/issues/58#issuecomment-2041433424
-Patch34: blender-cycles-fix-gfx1031-kernel.patch
+Patch34: blender-cycles-fix-hip-kernels.patch
+Patch35: blender-4.1-alt-hiprt-enable.patch
 
 # upstream fixes to merge
 
@@ -295,14 +293,11 @@ This package contains binaries for Nvidia GPUs to use with CUDA.
 %patch25 -p1
 %patch26 -p1
 %patch27 -p1
-%if_with hiprt
-%patch28 -p1
-%endif
 %patch29 -p1
 #%%patch30 -p1
 %patch31 -p1
 #%%patch32 -p1
-%patch34 -p1 -b .gfx1030-kernel-fix
+%patch34 -p1 -b .hip-kernels-fixes
 
 # upstream patches
 
@@ -459,6 +454,11 @@ popd
 %endif
 
 %changelog
+* Tue Apr 16 2024 L.A. Kostis <lakostis@altlinux.ru> 4.1.1-alt1
+- Update to 4.1.1.
+- cycles: update hip kernels patch (apply opt workaround for 
+  gfx900 not only on windows).
+
 * Wed Apr 10 2024 Michael Shigorin <mike@altlinux.org> 4.1.0-alt0.5.1
 - NMU: align hip arches with those for clr, even
 
