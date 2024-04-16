@@ -19,7 +19,7 @@ Summary: The Mozilla Firefox project is a redesign of Mozilla's browser (ESR ver
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (версия ESR)
 
 Name: firefox-esr
-Version: 115.9.1
+Version: 115.10.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -547,6 +547,19 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Apr 16 2024 Pavel Vasenkov <pav@altlinux.org> 115.10.0-alt1
+- New ESR version.
+- Security fixes
+  + CVE-2024-3852 GetBoundName in the JIT returned the wrong object
+  + CVE-2024-3854 Out-of-bounds-read after mis-optimized switch statement
+  + CVE-2024-3857 Incorrect JITting of arguments led to use-after-free during garbage collection
+  + CVE-2024-2609 Permission prompt input delay could expire when not in focus
+  + CVE-2024-3859 Integer-overflow led to out-of-bounds-read in the OpenType sanitizer
+  + CVE-2024-3861 Potential use-after-free due to AlignedBuffer self-move
+  + CVE-2024-3863 Download Protections were bypassed by .xrm-ms files on Windows
+  + CVE-2024-3302 Denial of Service using HTTP/2 CONTINUATION frames
+  + CVE-2024-3864 Memory safety bug fixed in Firefox 125, Firefox ESR 115.10, and Thunderbird 115.10
+
 * Wed Apr 03 2024 Pavel Vasenkov <pav@altlinux.org> 115.9.1-alt1
 - New ESR version.
 - Security fixes
