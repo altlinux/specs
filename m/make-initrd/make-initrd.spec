@@ -1,6 +1,6 @@
 Name: make-initrd
-Version: 2.44.0
-Release: alt2
+Version: 2.45.0
+Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -388,6 +388,16 @@ fi
 %endif
 
 %changelog
+* Tue Apr 16 2024 Alexey Gladkov <legion@altlinux.ru> 2.45.0-alt1
+- New version (2.45.0).
+- Runtime:
+  + Rewrite ueventd-mounts.
+  + Remove initlog utility.
+- Feature bcache:
+  + New feature allows boot from bcache block device.
+- Feature network:
+  + Read also siaddr and wins DHCP-options.
+
 * Thu Mar 07 2024 Alexey Gladkov <legion@altlinux.ru> 2.44.0-alt2
 - Avoid unmets on e2k.
 
