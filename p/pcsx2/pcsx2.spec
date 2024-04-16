@@ -16,7 +16,7 @@
 
 Name: pcsx2
 Version: 1.7.5397
-Release: alt1
+Release: alt2
 
 Summary: Playstation 2 console emulator
 License: GPLv3 and LGPLv3
@@ -153,7 +153,7 @@ echo "#define SVN_REV $(echo %svn_rev)ll
 %__mkdir_p %buildroot%_bindir %buildroot%_libexecdir/%name
 %__install -Dp -m0755 %_target_platform/bin/%name-qt %buildroot%_libexecdir/%name/%name-qt
 %__ln_s %_libexecdir/%name/%name-qt %buildroot%_bindir/%name-qt
-%__cp -r %_target_platform/bin/resources %buildroot%_libexecdir/%name
+%__cp -r %_target_platform/bin/{resources,translations} %buildroot%_libexecdir/%name
 %__install -Dp -m0644 %_target_platform/bin/resources/icons/AppIconLarge.png %buildroot%_iconsdir/hicolor/256x256/apps/PCSX2.png
 %__install -Dp -m0644 .github/workflows/scripts/linux/%name-qt.desktop %buildroot%_desktopdir/%name-qt.desktop
 
@@ -168,6 +168,9 @@ echo "#define SVN_REV $(echo %svn_rev)ll
 %_iconsdir/hicolor/256x256/apps/PCSX2.png
 
 %changelog
+* Tue Apr 16 2024 Nazarov Denis <nenderus@altlinux.org> 1.7.5397-alt2
+- Pack translations (ALT #49912)
+
 * Fri Jan 05 2024 Nazarov Denis <nenderus@altlinux.org> 1.7.5397-alt1
 - Version 1.7.5397
 
