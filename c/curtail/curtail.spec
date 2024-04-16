@@ -1,18 +1,17 @@
 %def_enable snapshot
 
 %define _name curtail
-%define ver_major 1.8
+%define ver_major 1.9
 %define xdg_name com.github.huluti.Curtail
 
-# online screenshots
-%def_disable check
+%def_enable check
 
 Name: curtail
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: An Image Compressor for GNOME
-License: GPL-3.0
+License: GPL-3.0-or-later
 Group: Graphics
 Url: https://apps.gnome.org/Curtail
 
@@ -26,7 +25,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 %add_python3_path %_datadir/%name
 
-%define adwaita_ver 1.4
+%define adwaita_ver 1.5
 
 Requires: typelib(Adw) = 1
 Requires: yelp
@@ -38,8 +37,8 @@ Requires: oxipng
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson yelp-tools
-BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 Curtail is a useful image compressor that supports PNG, JPEG, WebP and
@@ -72,6 +71,9 @@ whether keep or not metadata of images.
 %doc README*
 
 %changelog
+* Tue Apr 16 2024 Yuri N. Sedunov <aris@altlinux.org> 1.9.1-alt1
+- 1.9.1
+
 * Wed Nov 29 2023 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - updated to 1.8.0-6-gc67c19c
 

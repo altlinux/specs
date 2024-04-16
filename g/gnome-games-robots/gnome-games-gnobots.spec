@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %define _name robots
@@ -8,28 +9,37 @@
 
 Name: gnome-games-%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Gnome version of robots game for BSD games collection
+License: GPL-3.0-or-later
 Group: Games/Boards
-License: GPLv3+
 Url: https://wiki.gnome.org/Apps/Robots
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
+%else
+Source: %__name-%version.tar
+%endif
 
-Provides:  %__name = %version-%release
+Provides:  %__name = %EVR
 Obsoletes: gnome-games-gnobots
-Provides:  gnome-games-gnobots = %version-%release
+Provides:  gnome-games-gnobots = %EVR
 
-%define glib_ver 2.32.0
-%define gtk_ver 3.24.0
+%define glib_ver 2.36.0
+%define gtk_ver 4.10
+%define adw_ver 1.2
+
+Requires: gst-plugins-base1.0
 
 BuildRequires(pre): meson
-BuildRequires: vala-tools
-BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires: vala-tools yelp-tools
 BuildRequires: gsettings-desktop-schemas-devel
-BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
-BuildRequires: libgsound-devel libgnome-games-support-devel >= 1.8.0
+BuildRequires: libgio-devel >= %glib_ver pkgconfig(gtk4) >= %gtk_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver pkgconfig(librsvg-2.0)
+BuildRequires: pkgconfig(libgnome-games-support-2)
+BuildRequires: pkgconfig(gstreamer-1.0)
+%{?_enable_check:BuildRequires: /usr/bin/appstream-util desktop-file-utils}
 
 %description
 GNOME Robots is a development of the original Gnome Robots game which
@@ -41,6 +51,7 @@ systems.
 %setup -n %__name-%version
 
 %build
+%add_optflags -lm
 %meson
 %meson_build
 
@@ -48,8 +59,11 @@ systems.
 %meson_install
 %find_lang --with-gnome %__name
 
+%check
+%__meson_test
+
 %files -f gnome-%_name.lang
-%attr(2711,root,games) %_bindir/%__name
+%_bindir/%__name
 %_desktopdir/%xdg_name.desktop
 %_datadir/%__name
 %_iconsdir/hicolor/*/*/*.*
@@ -59,6 +73,9 @@ systems.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Tue Apr 16 2024 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt2
+- updated to 40.0-106-g6aa594b (ported to GTK4/Libadwaita)
+
 * Sun Mar 21 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 

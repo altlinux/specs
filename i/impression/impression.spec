@@ -1,16 +1,16 @@
 %def_enable snapshot
-%define ver_major 3.1
+%define ver_major 3.2
 %define rdn_name io.gitlab.adhami3310.Impression
 
 %def_disable bootstrap
-%def_disable check
+%def_enable check
 
 Name: impression
 Version: %ver_major.0
 Release: alt1
 
 Summary: Impression is a tool to create bootable drives
-License: GPL-3.0
+License: GPL-3.0-or-later
 Group: System/Configuration/Other
 Url: https://gitlab.com/adhami3310/Impression
 
@@ -23,16 +23,16 @@ Source: %name-%version.tar
 Source1: %name-%version-cargo.tar
 
 %define gtk_ver 4.10
-%define adwaita_ver 1.2
+%define adwaita_ver 1.5
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo
 BuildRequires: blueprint-compiler
-BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver gir(Adw)
 BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(dbus-1)
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils /usr/bin/glib-compile-schemas}
 
 %description
 A tool to write images to portable drives like flash drives or memory
@@ -61,13 +61,15 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_desktopdir/%rdn_name.desktop
 %_datadir/%name/
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
-#%_datadir/dbus-1/services/%rdn_name.service
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc PRESS* README*
 
 
 %changelog
+* Tue Apr 16 2024 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
 * Thu Mar 14 2024 Yuri N. Sedunov <aris@altlinux.org> 3.1.0-alt1
 - 3.1.0
 
