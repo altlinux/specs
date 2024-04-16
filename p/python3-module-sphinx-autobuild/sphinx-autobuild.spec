@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2024.02.04
+Version: 2024.04.13
 Release: alt1
 
 Summary: Watch a Sphinx directory and rebuild the documentation when a change is detected
@@ -22,6 +22,8 @@ BuildRequires: python3-module-flit
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-livereload
 BuildRequires: python3-module-colorama
+BuildRequires: python3-module-starlette
+BuildRequires: python3-module-uvicorn
 %endif
 
 BuildArch: noarch
@@ -49,9 +51,12 @@ Also includes a livereload enabled web server.
 %doc *.rst
 %_bindir/sphinx-autobuild
 %python3_sitelibdir/sphinx_autobuild
-%python3_sitelibdir/sphinx_autobuild-2024.2.4.dist-info
+%python3_sitelibdir/sphinx_autobuild-2024.4.13.dist-info
 
 %changelog
+* Tue Apr 16 2024 Grigory Ustinov <grenka@altlinux.org> 2024.04.13-alt1
+- Automatically updated to 2024.04.13.
+
 * Sat Feb 10 2024 Grigory Ustinov <grenka@altlinux.org> 2024.02.04-alt1
 - Automatically updated to 2024.02.04.
 
