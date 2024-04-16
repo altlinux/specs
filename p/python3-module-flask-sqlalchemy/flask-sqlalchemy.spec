@@ -1,33 +1,33 @@
 %define oname Flask-SQLAlchemy
 %def_without docs
-%def_with tests
+%def_with check
 
 Name: python3-module-flask-sqlalchemy
-Version: 3.0.3
+Version: 3.1.1
 Release: alt1
 
 Summary: Adds SQLAlchemy support to your Flask application
 
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
+URL: https://pypi.org/project/Flask-SQLAlchemy
 VCS: https://github.com/pallets-eco/flask-sqlalchemy.git
-Url: https://pypi.org/project/Flask-SQLAlchemy
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
+Patch: stop-using-utcnow.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-flit
 BuildRequires: python3-module-pdm-pep517
 
-%if_with tests
+%if_with check
 BuildRequires: python3-module-sqlalchemy
 BuildRequires: python3-module-flask
 BuildRequires: python3-module-greenlet
@@ -57,6 +57,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch -p1
 
 %if_with docs
 %prepare_sphinx3 .
@@ -75,10 +76,9 @@ export PYTHONPATH=$PWD
 %install
 %pyproject_install
 
-%if_with tests
 %check
 %tox_check_pyproject
-%endif
+
 %files
 %doc README.rst
 %python3_sitelibdir/*
@@ -89,6 +89,9 @@ export PYTHONPATH=$PWD
 %endif
 
 %changelog
+* Tue Apr 16 2024 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt1
+- Build new version.
+
 * Tue Mar 21 2023 Danil Shein <dshein@altlinux.org> 3.0.3-alt1
 - new version 3.0.3
   + migrate to pyproject_installer
