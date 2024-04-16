@@ -3,15 +3,15 @@
 %add_findreq_skiplist %_unitdir/systemd-ask-password-plymouth.service
 %add_findreq_skiplist %_datadir/plymouth/themes/spinfinity/header-image.png
 
-%define plymouthdaemon_execdir %_sbindir
-%define plymouthclient_execdir %_bindir
+%define plymouthdaemon_execdir /sbin
+%define plymouthclient_execdir /bin
 %define plymouth_libdir /%_libdir
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
 
 Name: plymouth
 Version: 24.004.60
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Graphical Boot Animation and Logger
@@ -313,6 +313,12 @@ mkdir -p %buildroot%_datadir/plymouth/themes/charge
 cp charge.plymouth %buildroot%_datadir/plymouth/themes/charge
 cp %buildroot%_datadir/plymouth/themes/glow/{box,bullet,entry,lock}.png %buildroot%_datadir/plymouth/themes/charge
 
+# don't put plymouth client and daemon in the prefix
+mkdir -p %buildroot/sbin
+mv %buildroot%_sbindir/plymouthd %buildroot/sbin/
+mkdir -p %buildroot/bin
+mv %buildroot%_bindir/plymouth %buildroot/bin/
+
 # add startup integration
 mkdir -p %buildroot%_sysconfdir/sysconfig
 install -m 0640 sysconfig %buildroot%_sysconfdir/sysconfig/bootsplash
@@ -475,6 +481,9 @@ fi \
 %files system-theme
 
 %changelog
+* Tue Apr 16 2024 Anton Midyukov <antohami@altlinux.org> 1:24.004.60-alt3
+- don't put plymouth client and daemon in the prefix
+
 * Mon Apr 15 2024 Anton Midyukov <antohami@altlinux.org> 1:24.004.60-alt2
 - Set paths for systemd via meson options
 
