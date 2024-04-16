@@ -1,9 +1,7 @@
-%define PCRE /usr/include/pcre/
-
 %define with_sce 1
 
 Name: openscap
-Version: 1.3.4
+Version: 1.3.10
 Release: alt1
 
 Summary: Set of open source libraries enabling integration of the SCAP line of standards
@@ -14,31 +12,38 @@ URL: http://www.open-scap.org/
 # https://github.com/OpenSCAP/%{name}/releases/download/%{version}/%{name}-%{version}.tar.gz
 Source0: %{name}-%{version}.tar
 
+Patch1: %{name}-1.3.10-alt-rpmPushMacro.patch
+Patch2: %{name}-1.3.10-alt-rpmvercmp.patch
+
 BuildRequires: cmake >= 3
 BuildRequires: gcc
 BuildRequires: gcc-c++
-BuildRequires: swig libxml2-devel libxslt-devel perl-XML-Parser
+BuildRequires: swig
+BuildRequires: libxml2-devel
+BuildRequires: libxslt-devel
 BuildRequires: rpm-devel
+BuildRequires: rpm-build-python3
 BuildRequires: libgcrypt-devel
-BuildRequires: pcre-devel
 BuildRequires: libacl-devel
-BuildRequires: libselinux-devel libcap-devel
+BuildRequires: libselinux-devel
+BuildRequires: libcap-devel
 BuildRequires: libblkid-devel
 BuildRequires: bzip2-devel
 BuildRequires: asciidoc
 BuildRequires: openldap-devel
 BuildRequires: libGConf-devel
 BuildRequires: libdbus-devel
-BuildRequires: python3-devel
 %ifdef with_check
 BuildRequires: ctest
 BuildRequires: perl-XML-XPath
 BuildRequires: bzip2
 %endif
-Obsoletes: python2-openscap
-Obsoletes: openscap-content-sectool
-Obsoletes: openscap-extra-probes
-Obsoletes: openscap-extra-probes-sql
+
+# 1.3.4 --> 1.3.10
+BuildRequires: libpcre2-devel
+BuildRequires: libxmlsec1-devel
+BuildRequires: libxmlsec1-openssl-devel
+BuildRequires: opendbx-devel
 
 %description
 OpenSCAP is a set of open source libraries providing an easier path
@@ -68,6 +73,7 @@ developing applications that use %{name}.
 Summary: Python 3 bindings for %{name}
 Group: Development/Python3
 
+BuildRequires: python3-devel
 Requires: %{name}%{?_isa} = %{version}-%{release}
 Provides: openscap-python = %{version}-%{release}
 
@@ -81,6 +87,7 @@ libraries can be used by python3.
 Summary: OpenSCAP Perl Library
 Group: Development/Perl
 
+BuildRequires: perl-XML-Parser
 Requires: %{name} = %{version}-%{release}
 Requires: perl
 Provides: openscap-perl = %{version}-%{release}
@@ -168,6 +175,8 @@ Tool for scanning Atomic containers.
 %prep
 %setup -q
 mkdir build
+%patch1 -p2
+%patch2 -p2
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -175,9 +184,10 @@ mkdir build
 cd build
 cmake %{?_cmake_skip_rpath} \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=yes \
-	-DCMAKE_C_FLAGS:STRING="%{optflags} -I%{PCRE}" \
-	-DCMAKE_CXX_FLAGS:STRING="%{optflags} -I%{PCRE}" \
-	-DPCRE_INCLUDE_DIR="%{PCRE}" \
+	-DCMAKE_C_FLAGS:STRING="%{optflags}" \
+	-DCMAKE_CXX_FLAGS:STRING="%{optflags}" \
+	-DPCRE_INCLUDE_DIR="%{_includedir}" \
+	-DWITH_PCRE2=ON \
 	-DCMAKE_INSTALL_PREFIX="%{prefix}" \
 	-DINCLUDE_INSTALL_DIR:PATH="%{_includedir}" \
 	-DLIB_INSTALL_DIR:PATH="%{_libdir}" \
@@ -285,6 +295,9 @@ cp AUTHORS NEWS README.md COPYING docs/oscap-scan.cron \
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Tue Apr 16 2024 Alexey Appolonov <alexey@altlinux.org> 1.3.10-alt1
+- New version.
+
 * Fri Apr 09 2021 Alexey Appolonov <alexey@altlinux.org> 1.3.4-alt1
 - New version;
 - Build of the openscap-engine-sce package is enabled.
