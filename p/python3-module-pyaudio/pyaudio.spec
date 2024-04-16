@@ -1,8 +1,4 @@
 Group: Development/Python3
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-# END SourceDeps(oneline)
 %define oldname pyaudio
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -10,16 +6,19 @@ BuildRequires: python3-module-setuptools
 %global sum Python bindings for PortAudio
 
 Name:		python3-module-pyaudio
-Version:	0.2.11
-Release:	alt1_7
+Version:	0.2.14
+Release:	alt1
 License:	MIT
 Url:		http://people.csail.mit.edu/hubert/pyaudio/
-Source0:	https://files.pythonhosted.org/packages/ab/42/b4f04721c5c5bfc196ce156b3c768998ef8c0ae3654ed29ea5020c749a6b/PyAudio-0.2.11.tar.gz
+Source0:	https://files.pythonhosted.org/packages/ab/42/b4f04721c5c5bfc196ce156b3c768998ef8c0ae3654ed29ea5020c749a6b/PyAudio-%version.tar.gz
 Summary:	%{sum}
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires:  gcc
 BuildRequires:	libportaudio2-devel
 BuildRequires:	python3-devel
+BuildRequires:	python3-module-setuptools
+BuildRequires:	python3-module-wheel
 Source44: import.info
 
 %description
@@ -32,23 +31,21 @@ a variety of platforms.
 %prep
 %setup -q -n PyAudio-%{version}
 
-# remove some pre-built binaries
-rm -rf packaging
-
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%doc README CHANGELOG
-%{python3_sitelibdir}/*.py*
-%{python3_sitelibdir}/__pycache__/*.py*
-%{python3_sitelibdir}/*.so
-%{python3_sitelibdir}/*egg-info
+%doc README.md CHANGELOG LICENSE.txt
+%python3_sitelibdir/pyaudio
+%python3_sitelibdir/PyAudio-%version.dist-info
 
 %changelog
+* Wed Apr 17 2024 Grigory Ustinov <grenka@altlinux.org> 0.2.14-alt1
+- Build new version.
+
 * Mon May 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.2.11-alt1_7
 - rename package and spec refactoring
 
