@@ -3,7 +3,7 @@
 
 Name: lxqt-session
 Version: 1.4.0
-Release: alt1
+Release: alt2
 
 Summary: Session manager
 License: LGPL-2.1
@@ -17,7 +17,7 @@ Patch1: alt-settings.patch
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
 BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel
-BuildRequires: qtxdg-tools
+BuildRequires: qtxdg-tools-devel
 BuildRequires: kf5-kwindowsystem-devel
 BuildRequires: rpm-build-xdg libqtxdg-devel xdg-utils xdg-user-dirs
 BuildRequires: libudev-devel
@@ -25,6 +25,8 @@ BuildRequires: libproc2-devel
 
 Requires: lxqt-themes
 Requires: xdg-utils
+# separate devel package from qtxdg-tools 3.12.0-alt2
+Requires: qtxdg-tools >= 3.12.0-alt2
 
 Provides: razorqt-session = %version
 Obsoletes: razorqt-session < 0.7.0
@@ -62,6 +64,9 @@ install -pDm644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/08lxqt
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Tue Apr 16 2024 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt2
+- Requires: qtxdg-tools >= 3.12.0-alt2
+
 * Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
 - New version 1.4.0.
 

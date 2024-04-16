@@ -1,10 +1,10 @@
 Name:     qtxdg-tools
 Version:  3.12.0
-Release:  alt1
+Release:  alt2
 
 Summary:  libqtxdg user tools
 License:  LGPL-2.1
-Group:    System/Libraries
+Group:    Graphical desktop/Other
 Url:      https://github.com/lxqt/qtxdg-tools
 
 Source:   %name-%version.tar
@@ -19,7 +19,15 @@ Requires: libqtxdg >= %version
 Obsoletes: qtxdg-mat <= %version
 
 %description
-%summary
+%summary.
+
+%package devel
+Summary: cmake modules for %name
+Group: Development/Other
+Requires: %name = %EVR
+
+%description devel
+cmake modules for %name.
 
 %prep
 %setup
@@ -29,14 +37,19 @@ Obsoletes: qtxdg-mat <= %version
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %_bindir/*
-%_datadir/cmake/%name
 %doc *.md
 
+%files devel
+%_datadir/cmake/%name
+
 %changelog
+* Tue Apr 16 2024 Anton Midyukov <antohami@altlinux.org> 3.12.0-alt2
+- Separate devel package
+
 * Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 3.12.0-alt1
 - New version 3.12.0.
 
