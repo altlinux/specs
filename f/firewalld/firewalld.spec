@@ -1,5 +1,5 @@
 Name: firewalld
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 
 Summary: A firewall daemon with D-BUS interface providing a dynamic firewall
@@ -160,6 +160,9 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %endif
 
 %changelog
+* Tue Apr 16 2024 Mikhail Efremov <sem@altlinux.org> 2.1.2-alt1
+- Updated to 2.1.2.
+
 * Wed Jan 31 2024 Mikhail Efremov <sem@altlinux.org> 2.1.1-alt1
 - Updated to 2.1.1.
 
