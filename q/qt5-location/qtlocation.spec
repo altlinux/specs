@@ -6,7 +6,7 @@
 
 Name: qt5-location
 Version: 5.15.13
-Release: alt1
+Release: alt1.1
 
 Group: System/Libraries
 Summary: Qt5 - QtLocation component
@@ -105,10 +105,6 @@ Requires: qt5-quickcontrols
 %patch1 -p1
 syncqt.pl-qt5 -version %version
 
-%ifarch e2k
-sed -i 's|-ftree-vectorize||' src/3rdparty/*/*.pro
-%endif
-
 %build
 %qmake_qt5
 %make_build
@@ -163,6 +159,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Mon Apr 15 2024 Michael Shigorin <mike@altlinux.org> 5.15.13-alt1.1
+- spec: drop obsolete e2kv3-only hack for old lcc
+
 * Thu Apr 04 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.13-alt1
 - new version
 
