@@ -2,7 +2,7 @@
 %def_without check
 
 Name:    python3-module-%modulename
-Version: 3.2.2
+Version: 3.2.4
 Release: alt1
 
 Summary: Prometheus Proxmox VE Exporter
@@ -49,6 +49,9 @@ install -pDm0644 pve.yml %buildroot%_sysconfdir/pve.yml
 %python3_sitelibdir/*
 
 %changelog
+* Wed Apr 17 2024 Andrew A. Vasilyev <andy@altlinux.org> 3.2.4-alt1
+- 3.2.4
+
 * Thu Feb 08 2024 Andrew A. Vasilyev <andy@altlinux.org> 3.2.2-alt1
 - 3.2.2
 
