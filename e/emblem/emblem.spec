@@ -1,5 +1,5 @@
 %def_enable snapshot
-%define ver_major 1.3
+%define ver_major 1.4
 %define rdn_name org.gnome.design.Emblem
 
 %def_disable bootstrap
@@ -22,16 +22,15 @@ Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
 
-%define gtk_ver 4.11
-%define adwaita_ver 1.4
+%define gtk_ver 4.14
+%define adwaita_ver 1.5
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo
-BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(libxml-2.0)
-%{?_enable_check:BuildRequires: clippy}
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils clippy}
 
 %description
 Generate projects avatars for your Matrix rooms and git forges from a
@@ -66,6 +65,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Tue Apr 16 2024 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- updated to 1.4.0-2-g7de26cf
+
 * Thu Sep 28 2023 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - first build for Sisyphus (1.3.0-1-g644fa35)
 
