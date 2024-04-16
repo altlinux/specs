@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: lightdm-kde-greeter
-Version: 0.4.18
+Version: 0.4.19
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE5 Greeter
@@ -96,6 +96,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Mon Apr 15 2024 Anton Golubev <golubevan@altlinux.org> 0.4.19-alt1
+- navigate buttons with arrows and activate by enter (Closes: 48929)
+
 * Thu Jan 25 2024 Anton Golubev <golubevan@altlinux.org> 0.4.18-alt1
 - re-layout PSK input dialog (Closes: 48123)
 - make avatars more like locker in the breeze theme (Closes: 47950)
