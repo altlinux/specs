@@ -1,7 +1,7 @@
 %define pypi_name pyasyncore
 
 Name: python3-module-%pypi_name
-Version: 1.0.2
+Version: 1.0.4
 Release: alt1
 
 Summary: Make asyncore available for Python 3.12 onwards
@@ -42,5 +42,8 @@ chmod ugo-x README.md LICENSE
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Apr 16 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.4-alt1
+- Build new version.
+
 * Tue Nov 21 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt1
 - Initial build for Sisyphus.
