@@ -1,4 +1,3 @@
-
 # XXX: packaged binaries contain GPU-targeted IR code. Native
 # linker is not used for building them. %%optflags_lto apply only when
 # building native binaries, and LTO causes problems on LoongArch.
@@ -6,17 +5,18 @@
 %global optflags_lto %nil
 # libclc itself can be built by any LLVM but newer is preferred
 # cause it contains better optimisations and improvements
-%global llvm_version 17.0
+%global llvm_version 18.1
 
 Name: libclc
-Version: 17.0.4
-Release: alt2
+Version: 18.1.2
+Release: alt1
 Summary: An open source implementation of the OpenCL 1.1 library requirements
 License: BSD
 Group: System/Libraries
 URL: https://libclc.llvm.org
 
-Source: https://github.com/llvm/llvm-project/releases/tag/llvmorg-%version/%name-%version.src.tar.xz
+# https://github.com/llvm/llvm-project/releases/download/llvmorg-%version/%name-%version.src.tar.xz
+Source: %name-%version.src.tar
 Patch: libclc-llvm-spirv-path.patch
 
 BuildRequires(pre): cmake /proc
@@ -87,6 +87,9 @@ export ALTWRAP_LLVM_VERSION=%{llvm_version}
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Thu Mar 28 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.2-alt1
+- 18.1.2.
+
 * Fri Nov 10 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 17.0.4-alt2
 - NMU: fixed FTBFS on LoongArch:
   + disable LTO (not used when building bitcode, causes problems on LoongArch)

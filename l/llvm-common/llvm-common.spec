@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%global _llvm_version 17.0
+%global _llvm_version 18.1
 
 Name: llvm-common
-Version: 17.0.0
-Release: alt2
+Version: 18.1.0
+Release: alt1
 
 Summary: Common directories, symlinks and tool selection for LLVM
 License: Apache-2.0 with LLVM-exception
@@ -173,6 +173,15 @@ Provides: llvm-common-libpolly-devel = %EVR
 Requires: libpolly%_llvm_version-devel
 Requires(pre,postun): %name = %version-%release
 
+%package -n libomp-devel
+Summary: Provides libomp-devel
+License: Apache-2.0 with LLVM-exception
+Group: Development/C
+BuildArch: noarch
+Provides: llvm-common-libomp-devel = %EVR
+Requires: libomp%_llvm_version-devel
+Requires(pre,postun): %name = %version-%release
+
 %description -n rpm-macros-%name
 This package contains RPM macros related to LLVM packaging.
 
@@ -226,6 +235,9 @@ This package contains common symlinks to wrap MLIR bundled tools.
 
 %description -n libpolly-devel
 This package pulls in libpollyXXX-devel.
+
+%description -n libomp-devel
+This package pulls in libompXXX-devel
 
 %prep
 %setup -cT
@@ -497,6 +509,8 @@ which %__clang_versioned || { echo 'Skipping the test of llvm-alt-tool-wrapper.'
 
 %files -n libpolly-devel
 
+%files -n libomp-devel
+
 %package tooltests-checkinstall
 Summary: Tests to be run as part of checkinstall
 Group: Development/Other
@@ -531,6 +545,12 @@ for i in %_CI_tests_execdir/[0-9]*; do
 done
 
 %changelog
+* Wed Mar 27 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.0-alt1
+- Bump llvm_version to 18.1.
+
+* Mon Jan 01 2024 L.A. Kostis <lakostis@altlinux.ru> 17.0.0-alt3
+- Added libomp-devel.
+
 * Tue Oct 03 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 17.0.0-alt2
 - lldb is not available on Loongarch [yet].
 

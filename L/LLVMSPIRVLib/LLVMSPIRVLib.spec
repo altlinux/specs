@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
-%define llvm_ver_major 17.0
-%define git 6c1910a9
+%define llvm_ver_major 18.1
+%define git 1745c78f
 
 # FIXME!
 %define optflags_lto %nil
 
 Name:    LLVMSPIRVLib
-Version: 17.0.0
-Release: alt3.g%{git}
+Version: 18.1.0
+Release: alt1.g%{git}
 Summary: A tool and a library for bi-directional translation between SPIR-V and LLVM IR
 Group:   Development/C++
 License: MIT
@@ -87,8 +87,11 @@ command line utility for translating between LLVM bitcode and SPIR-V binary.
 %_bindir/llvm-spirv
 
 %changelog
+* Fri Mar 29 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.0-alt1.g1745c78f
+- Rebased to v18.1.0-3-g1745c78f.
+
 * Sat Mar 09 2024 L.A. Kostis <lakostis@altlinux.ru> 17.0.0-alt3.g6c1910a9
-- GIT 6c1910a9 (fixes FTBFS with new spirv-tools).
+- GIT 6c1910a9 (fixes FTBFS with new spirv-headers).
 - disable OpenSYCL patch (needs refactoring).
 
 * Mon Jan 08 2024 L.A. Kostis <lakostis@altlinux.ru> 17.0.0-alt2
