@@ -12,7 +12,7 @@
 %ifarch %ix86 armh
 %define module_version	390.157
 %endif
-%define module_release	alt1
+%define module_release	alt2
 %define flavour		std-def
 %define karch x86_64 aarch64 %ix86
 
@@ -243,7 +243,8 @@ if ! [ -e %buildroot/%module_local_dir/uvm-%kversion-%flavour-%krelease-%module_
 fi
 
 echo -n "%module_version" >%buildroot/%nvidia_workdir/%kversion-%flavour-%krelease
-ln -s `relative %nvidia_workdir/%kversion-%flavour-%krelease %module_version_dir/%module_name` %buildroot/%module_version_dir/%module_name
+# absolute symlink because old branches compatibility
+ln -s %nvidia_workdir/%kversion-%flavour-%krelease %buildroot/%module_version_dir/%module_name
 ln -s nvidia %buildroot/%module_version_dir/%modesetmodule_name
 ln -s nvidia %buildroot/%module_version_dir/%drmmodule_name
 ln -s nvidia %buildroot/%module_version_dir/%uvmmodule_name
@@ -294,6 +295,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Apr 17 2024 Sergey V Turchin <zerg at altlinux dot org> 550.67-alt2
+- make absolute symlink for usrmerge workaround (closes: 50024)
 
 * Mon Mar 25 2024 Sergey V Turchin <zerg at altlinux dot org> 550.67-alt1
 - new release (550.67)
