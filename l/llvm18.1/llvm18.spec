@@ -109,7 +109,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.1
+Release: alt0.2
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -494,6 +494,8 @@ Summary: LLD - The LLVM Linker
 Group: Development/C
 %requires_filesystem
 Requires: lld >= %_llvm_version
+# /proc needed for normal operation
+Requires: /proc
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
 AutoReq: nopython
@@ -1472,6 +1474,9 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Wed Apr 17 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.3-alt0.2
+- lld: added /proc to requires.
+
 * Sun Apr 14 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.3-alt0.1
 - Update to 18.1.3.
 
