@@ -3,8 +3,8 @@
 %global import_path github.com/project-zot/zot
 
 Name: zot
-Version: 2.0.1
-Release: alt2
+Version: 2.0.3
+Release: alt1
 
 Summary: zot - A production-ready vendor-neutral OCI-native container image registry (purely based on OCI Distribution Specification)
 License: Apache-2.0
@@ -20,6 +20,8 @@ Source3: config.json
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang rpm-build-nodejs
 BuildRequires: golang
+# to download trivy database, etc.
+Requires: ca-certificates
 
 %description
 zot: a production-ready vendor-neutral OCI image registry -
@@ -27,8 +29,7 @@ images stored in OCI image format,
 distribution specification on-the-wire, that's it!
 
 %prep
-%setup
-tar -xvf %SOURCE1
+%setup -a 1
 # don't need modcheck, it calls go mod tidy
 sed -i 's/^binary: modcheck build-metadata$/binary: build-metadata/' Makefile
 sed -i 's/^cli: modcheck build-metadata$/cli: build-metadata/' Makefile
@@ -112,6 +113,12 @@ useradd -r -g _%name -M -d %_localstatedir/%name -s /dev/null -c "Zot registry u
 %_datadir/fish/vendor_completions.d/zli.fish
 
 %changelog
+* Wed Apr 17 2024 Alexander Stepchenko <geochip@altlinux.org> 2.0.3-alt1
+- 2.0.1 -> 2.0.3
+
+* Mon Mar 11 2024 Alexander Stepchenko <geochip@altlinux.org> 2.0.1-alt3
+- Add ca-certificates to the requires.
+
 * Thu Feb 29 2024 Alexander Stepchenko <geochip@altlinux.org> 2.0.1-alt2
 - Use rpm-build-nodejs in BuildRequires instead of npm >= 18
 
