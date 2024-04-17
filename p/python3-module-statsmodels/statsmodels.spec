@@ -3,11 +3,16 @@
 %define pypi_name statsmodels
 %define mod_name %pypi_name
 
+# quite a few tests fail on armh. disable it for now
+%ifnarch armh
 %def_with check
+%else
+%def_without check
+%endif
 
 Name: python3-module-%pypi_name
-Version: 0.14.0
-Release: alt2
+Version: 0.14.2
+Release: alt1
 Epoch: 1
 Summary: Statistical computations and models for Python
 License: BSD-3-Clause
@@ -25,10 +30,12 @@ Obsoletes: python3-module-scikits.statsmodels <= 0.11.1-alt2.1
 
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
+BuildRequires: libnumpy-py3-devel
 %if_with check
 %pyproject_builddeps_metadata_extra develop
 # compat.pandas => pandas.testing
 BuildRequires: python3-module-pandas-tests
+BuildRequires: python3-module-numpy-testing
 %endif
 
 %description
@@ -50,10 +57,7 @@ and inference for statistical models.
 %install
 %pyproject_install
 
-%ifnarch armh
 %check
-# quite a few tests fail on armh. disable it for now
-%endif
 %pyproject_run -- bash -s <<-'ENDUNITTEST'
 set -eu
 mkdir empty
@@ -68,6 +72,9 @@ ENDUNITTEST
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 17 2024 Stanislav Levin <slev@altlinux.org> 1:0.14.2-alt1
+- 0.14.0 -> 0.14.2.
+
 * Thu Dec 07 2023 Stanislav Levin <slev@altlinux.org> 1:0.14.0-alt2
 - Backported fix for build against Cython 3.0.
 
