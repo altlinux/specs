@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.8.3
-Release: alt1.1
+Version: 0.9.1
+Release: alt1
 
 Summary: A hatch plugin to help build Jupyter packages
 License: BSD-3-Clause
@@ -24,7 +24,7 @@ BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-mock
 BuildRequires: python3-module-build
 BuildRequires: python3-module-pip
-BuildRequires: python3-module-tomli
+BuildRequires: python3-module-tomli_w
 %endif
 
 %description
@@ -44,7 +44,7 @@ sed -i 's/--color=yes//' pyproject.toml
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
-%pyproject_run_pytest
+%pyproject_run_pytest -v tests/
 
 %files
 %doc *.md
@@ -53,6 +53,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%{pyproject_distinfo hatch_jupyter_builder}
 
 %changelog
+* Sat Apr 13 2024 Anton Vyatkin <toni@altlinux.org> 0.9.1-alt1
+- New version 0.9.1.
+
 * Tue Sep 19 2023 Stanislav Levin <slev@altlinux.org> 0.8.3-alt1.1
 - NMU: fixed FTBFS (build 1.0).
 
