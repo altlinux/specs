@@ -8,8 +8,8 @@
 %endif
 
 Name: postgresql%pg_ver-pg_partman
-Version: 5.0.1
-Release: alt1.1
+Version: 5.1.0
+Release: alt1
 
 Summary: pg_partman is an extension to create and manage both time-based and serial-based table partition sets.
 License: PostgreSQL
@@ -69,6 +69,9 @@ sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
 %doc %_datadir/doc/postgresql/extension/*
 
 %changelog
+* Wed Apr 17 2024 Alexei Takaseev <taf@altlinux.org> 5.1.0-alt1
+- 5.1.0
+
 * Mon Mar 18 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 5.0.1-alt1.1
 - NMU: fixed FTBFS on LoongArch (disabled jit, no LLVM 15 here).
 
