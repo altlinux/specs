@@ -5,7 +5,7 @@
 
 Name: isa-l
 Version: 2.31.0
-Release: alt1
+Release: alt1.1
 
 Summary: Intelligent Storage Acceleration Library
 
@@ -54,6 +54,11 @@ The package provides tools for %name.
 %prep
 %setup
 %autopatch -p1
+%ifarch %e2k
+# because MSCT enables SSE4.2 by default, but only provides slow SSE4.2 emulation
+%add_optflags -mno-sse4.2
+sed -i "s/__x86_64__/__e2k__/" igzip/huffman.h
+%endif
 
 %build
 %autoreconf
@@ -90,6 +95,9 @@ The package provides tools for %name.
 %_man1dir/igzip.1.xz
 
 %changelog
+* Tue Apr 16 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.31.0-alt1.1
+- Fixed build for Elbrus.
+
 * Tue Jan 23 2024 Leontiy Volodin <lvol@altlinux.org> 2.31.0-alt1
 - New version 2.31.0.
 
