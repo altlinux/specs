@@ -13,6 +13,7 @@
 %def_enable zxing
 %def_enable faad
 %def_enable faac
+%def_enable fdkaac
 %def_enable lc3
 %def_enable srtp
 %def_disable rtmp
@@ -40,7 +41,7 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -102,6 +103,7 @@ BuildRequires: liborc-test-devel gstreamer1.0-utils
 %{?_enable_vulkan:BuildRequires: vulkan-devel glslc}
 %{?_enable_rtmp:BuildRequires: librtmp-devel}
 %{?_enable_chromaprint:BuildRequires: libchromaprint-devel}
+%{?_enable_fdkaac:BuildRequires: pkgconfig(fdk-aac)}
 # webrtc-audio-processing for webrtcdsp
 BuildRequires: libwebrtc-devel >= 0.3
 # since 1.13.x
@@ -223,6 +225,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Wed Apr 17 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.2-alt1.1
+- enabled "Fraunhofer FDK AAC Codec plugin" (ALT #48981)
+
 * Wed Apr 10 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.2-alt1
 - 1.24.2
 
