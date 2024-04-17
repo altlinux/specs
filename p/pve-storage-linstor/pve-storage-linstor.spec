@@ -1,13 +1,11 @@
 
 Name: pve-storage-linstor
-Version: 7.0.1
+Version: 8.0.0
 Release: alt1
 
 Summary: LINSTOR Proxmox Plugin
 Group: System/Servers
 License: GPLv2+
-
-Packager: Andrew A. Vasilyev <andy@altlinux.org>
 
 Url: https://github.com/LINBIT/linstor-proxmox
 Vcs: https://github.com/LINBIT/linstor-proxmox.git
@@ -21,7 +19,7 @@ BuildRequires: pve-storage
 BuildRequires: perl-JSON-XS
 BuildRequires: perl(REST/Client.pm)
 Requires: pve-manager
-Requires: linstor-controller >= 1.23.0
+Requires: linstor-controller >= 1.27.0
 # Requires: linstor-satellite >= 1.23.0
 
 %add_perl_lib_path %buildroot%perl_vendor_privlib
@@ -59,6 +57,9 @@ fi
 %_cachedir/linstor-proxmox/
 
 %changelog
+* Wed Apr 17 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.0.0-alt1
+- 8.0.0
+
 * Thu Jun 15 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.0.1-alt1
 - 7.0.1 (fix performance regression introduced with 7.0.0)
 
