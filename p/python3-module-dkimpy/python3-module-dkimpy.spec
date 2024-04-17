@@ -1,18 +1,31 @@
-%define modulename dkim
-Name: python3-module-dkimpy
-Version: 1.0.5
-Release: alt2
+%define _unpackaged_files_terminate_build 1
+%define pypi_name dkimpy
+%define mod_name dkim
+
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 1.1.6
+Release: alt1
 Summary: Python 3 module for DKIM and ARC signing and verification
 License: BSD-2-Clause
-Url: https://code.launchpad.net/dkimpy
-BuildArch: noarch
 Group: Development/Python
+Url: https://pypi.org/project/dkimpy/
+Vcs: https://git.launchpad.net/dkimpy
+BuildArch: noarch
 Source0: %name-%version.tar
 Patch0: 0001-Don-t-rely-on-relative-import.patch
-BuildRequires: python3-devel
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-authres
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+# dkim/dknewkey.py
+Requires: /usr/bin/openssl
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata_extra testing
+# dkim/dknewkey.py
+BuildRequires: /usr/bin/openssl
+%endif
 
 %description
 Python 3 module that implements DKIM (DomainKeys Identified Mail) email signing
@@ -21,26 +34,33 @@ verification. Supports both RSA and Ed25519 signing and verification.
 It also provides helper scripts for key generation and command line signing and
 verification.
 
-
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run -- python -m unittest dkim.tests.test_suite
 
 %files
 %doc ChangeLog README.md LICENSE
 %_bindir/*
 %_man1dir/*.1*
-%python3_sitelibdir/%modulename
-%exclude %python3_sitelibdir/%modulename/__main__.py
-%python3_sitelibdir/dkimpy-*.egg-info
+%python3_sitelibdir/%mod_name/
+%exclude %python3_sitelibdir/%mod_name/__main__.py
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Apr 15 2024 Stanislav Levin <slev@altlinux.org> 1.1.6-alt1
+- 1.0.5 -> 1.1.6.
+
 * Thu Mar 11 2021 Stanislav Levin <slev@altlinux.org> 1.0.5-alt2
 - Fixed wrong auto-generated dependency on python3(tests).
 
