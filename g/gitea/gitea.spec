@@ -4,7 +4,7 @@
 %def_enable tarball
 
 Name:    gitea
-Version: 1.21.10
+Version: 1.21.11
 Release: alt1
 
 Summary: Git with a cup of tea, painless self-hosted git service
@@ -117,6 +117,9 @@ useradd -r -g %name -c 'Gitea daemon' \
 
 
 %changelog
+* Wed Apr 17 2024 Alexey Shabalin <shaba@altlinux.org> 1.21.11-alt1
+- 1.21.11
+
 * Wed Mar 27 2024 Alexey Shabalin <shaba@altlinux.org> 1.21.10-alt1
 - 1.21.10
 
