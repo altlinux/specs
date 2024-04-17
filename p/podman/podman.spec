@@ -5,7 +5,7 @@
 
 Name:     podman
 Version:  5.0.1
-Release:  alt1
+Release:  alt2
 
 Summary:  Manage pods, containers, and container images
 License:  Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND ISC AND MIT AND MPL-2.0
@@ -14,6 +14,7 @@ Vcs:      https://github.com/containers/podman.git
 Url:      https://podman.io/
 
 Source:   %name-%version.tar
+Patch:    %name-%version.patch
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang rpm-macros-systemd
@@ -158,6 +159,9 @@ rm -f %buildroot%_man5dir/dockerfile*
 %_datadir/user-tmpfiles.d/%name-docker.conf
 
 %changelog
+* Wed Apr 17 2024 Alexey Shabalin <shaba@altlinux.org> 5.0.1-alt2
+- v5.0 branch snapshot.
+
 * Mon Apr 15 2024 Alexey Shabalin <shaba@altlinux.org> 5.0.1-alt1
 - New version 5.0.1.
 
