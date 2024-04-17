@@ -1,5 +1,5 @@
 Name: hasher
-Version: 1.7.3
+Version: 1.7.4
 Release: alt1
 
 Summary: Modern safe package building technology
@@ -70,6 +70,10 @@ fi
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Wed Apr 17 2024 Arseny Maslennikov <arseny@altlinux.org> 1.7.4-alt1
+- create_entry_header: source /etc/default-environment in the chroot if
+  present.
+
 * Wed Apr 17 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.7.3-alt1
 - hsh, hsh-initroot: documented the mandatory argument for the --predb-prog
   option;
