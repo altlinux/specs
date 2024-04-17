@@ -1,5 +1,5 @@
 Name: iptables
-Version: 1.8.7
+Version: 1.8.10
 Release: alt1
 
 Summary: Tools for managing Linux kernel packet filtering capabilities
@@ -26,6 +26,8 @@ BuildRequires: libnetfilter_conntrack-devel
 %if_enabled nftables
 BuildRequires: bison flex libmnl-devel libnftnl-devel
 %endif
+
+%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-createimage python3 iproute2 iputils ebtables nftables}}
 
 %description
 iptables is used to set up, maintain, and inspect the tables of IP
@@ -122,6 +124,15 @@ sed s/NFPROTO_IPV4/NFPROTO_IPV6/ extensions/libipt_NETFLOW.c \
 
 %make_build V=1
 
+%check
+vm-run \
+	--kvm=cond \
+	--rootfs \
+	--sbin \
+	--append='lsm=selinux' \
+	--modules='xt_SECMARK ebt_pkttype' \
+	make check VERBOSE=1
+
 %install
 %makeinstall_std
 
@@ -200,7 +211,6 @@ fi
 
 %files
 %config(noreplace) %_sysconfdir/sysconfig/iptables*
-%doc INCOMPATIBILITIES
 %config %_initdir/iptables
 %config %_unitdir/iptables.service
 /sbin/*
@@ -256,6 +266,13 @@ fi
 %endif
 
 %changelog
+* Wed Apr 17 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.8.10-alt1
+- v1.8.7 -> v1.8.10.
+- Utilized the rpm-build-vm-createimage package (thx Vitaly Chikunov) to run
+  the testsuite.
+- Backported upstream fix for xtables_ipaddr_to_numeric static buffer
+  (thx Vitaly Chikunov).
+
 * Fri Jan 15 2021 Dmitry V. Levin <ldv@altlinux.org> 1.8.7-alt1
 - v1.8.6 -> v1.8.7.
 
