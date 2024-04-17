@@ -1,6 +1,6 @@
 Name: ifupdown2
 Version: 3.2.0.8
-Release: alt1
+Release: alt2
 Summary: Network Interface Management tool similar to ifupdown
 License: GPL-2
 Group: System/Base
@@ -12,6 +12,7 @@ Source1: %name.tar
 Source2: ip-brctl
 Source3: ip-brctl.8
 Patch1: 0001-ALT-change-path-to-ifup-ifdown-ifreload.patch
+Patch2: 0002-ALT-python-3.12-compatibility.patch
 
 BuildArch: noarch
 
@@ -42,6 +43,7 @@ are available under /usr/share/doc/ifupdown2/examples.
 tar -xf %SOURCE1
 pushd %name
 %patch1 -p1
+%patch2 -p1
 for p in `cat ../debian/patches/series`; do
     patch -p1 < ../debian/patches/$p
 done
@@ -107,6 +109,9 @@ fi
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Wed Apr 17 2024 Andrew A. Vasilyev <andy@altlinux.org> 3.2.0.8-alt2
+- ALT: python-3.12 compatibility
+
 * Mon Dec 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 3.2.0.8-alt1
 - Initial build for ALT.
 
