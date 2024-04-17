@@ -3,8 +3,8 @@
 %set_verify_elf_method strict
 
 Name: gamescope
-Version: 3.14.2
-Release: alt2
+Version: 3.14.3
+Release: alt1
 
 Summary: SteamOS session compositing window manager
 
@@ -14,6 +14,7 @@ Url: https://github.com/Plagman/gamescope
 
 Source: %name-%version.tar
 Source1: submodules-%name-%version.tar
+Source2: stb.pc
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -24,7 +25,8 @@ BuildRequires: libliftoff-devel
 BuildRequires: libbenchmark-devel
 BuildRequires: libglm-devel
 BuildRequires: hwdata-devel
-BuildRequires: libwlroots-devel
+# subprojects: Use Joshua-Ashton personal wlroots fork for with branch for now
+# BuildRequires: libwlroots-devel
 BuildRequires: pipewire-libs-devel
 BuildRequires: libX11-devel
 BuildRequires: libXdamage-devel
@@ -43,7 +45,6 @@ BuildRequires: wayland-protocols
 BuildRequires: libxkbcommon-devel
 BuildRequires: libcap-devel
 BuildRequires: libSDL2-devel
-BuildRequires: libstb-devel
 BuildRequires: glslang-devel
 BuildRequires: libinput-devel
 BuildRequires: libXmu-devel
@@ -52,6 +53,13 @@ BuildRequires: libXcursor-devel
 BuildRequires: libavif-devel
 BuildRequires: spirv-headers
 BuildRequires: libopenvr-devel
+BuildRequires: libpixman-devel
+BuildRequires: libseat1-devel
+BuildRequires: xorg-xwayland-devel
+BuildRequires: libxcbutil-devel
+BuildRequires: libxcbutil-errors-devel
+BuildRequires: pkgconfig(libdecor-0)
+BuildRequires: pkgconfig(xcb-ewmh)
 
 ExclusiveArch: x86_64
 
@@ -89,27 +97,34 @@ or corruption will be observed until the stack picks up DRM modifiers support.
 %prep
 %setup -a1
 
-# use system stb
-sed -i "s|dependency('stb')|declare_dependency(include_directories: include_directories('/usr/include/stb'))|g" src/meson.build
+mkdir -p pkgconfig
+cp -v %SOURCE2 pkgconfig/stb.pc
 
 # use system spirv headers
 sed -i 's^../thirdparty/SPIRV-Headers/include/spirv/^/usr/include/spirv/^' src/meson.build
 
 %build
+export PKG_CONFIG_PATH=pkgconfig
 %meson \
 	-Dpipewire=enabled \
+	-Dbenchmark=enabled \
+	-Ddrm_backend=enabled \
+	-Dsdl2_backend=enabled \
+	-Davif_screenshots=enabled \
+	\
+	-Denable_gamescope=true \
 	-Denable_openvr_support=true \
+	-Denable_gamescope_wsi_layer=true \
+	\
+	-Drt_cap=disabled \
+	\
 	-Dforce_fallback_for=[] \
 	%nil
 
 %meson_build -v
 
 %install
-%meson_install
-
-# remove vkroots devel files
-rm -vr %buildroot%_includedir/vkroots.h
-rm -vr %buildroot/%_pkgconfigdir/vkroots.pc
+DESTDIR=%buildroot meson install -C %_cmake__builddir --skip-subprojects
 
 %files
 %doc LICENSE README.md
@@ -118,6 +133,9 @@ rm -vr %buildroot/%_pkgconfigdir/vkroots.pc
 %_datadir/vulkan/implicit_layer.d/VkLayer_FROG_gamescope_wsi.*.json
 
 %changelog
+* Wed Apr 17 2024 Mikhail Tergoev <fidel@altlinux.org> 3.14.3-alt1
+- 3.14.3
+
 * Mon Mar 18 2024 Mikhail Tergoev <fidel@altlinux.org> 3.14.2-alt2
 - Added support OpenVR.
 - Used system spirv headers.
