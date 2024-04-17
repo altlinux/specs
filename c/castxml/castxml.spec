@@ -12,8 +12,8 @@
 %endif
 
 Name:    castxml
-Version: 0.6.2
-Release: alt3
+Version: 0.6.5
+Release: alt1
 
 Summary: C-family abstract syntax tree XML output tool
 
@@ -100,6 +100,9 @@ popd
 %_datadir/%name/empty.cpp
 
 %changelog
+* Wed Apr 17 2024 L.A. Kostis <lakostis@altlinux.ru> 0.6.5-alt1
+- NMU: Updated to upstream release version 0.6.5.
+
 * Mon Feb 26 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.6.2-alt3
 - Fixed build for Elbrus (missing BR).
 
