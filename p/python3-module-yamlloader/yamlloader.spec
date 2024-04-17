@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.3.2
+Version: 1.4.1
 Release: alt1
 Summary: Ordered YAML loader and dumper for PyYAML
 License: MIT
@@ -51,6 +51,9 @@ preservation of insertion order is a language feature of regular dicts.).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Apr 15 2024 Stanislav Levin <slev@altlinux.org> 1.4.1-alt1
+- 1.3.2 -> 1.4.1.
+
 * Thu Aug 03 2023 Stanislav Levin <slev@altlinux.org> 1.3.2-alt1
 - 1.2.2 -> 1.3.2.
 
