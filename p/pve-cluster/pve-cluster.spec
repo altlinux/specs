@@ -4,11 +4,10 @@
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
 Version: 8.0.5
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://git.proxmox.com/
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 ExclusiveArch: x86_64 aarch64
 Requires: chrony ntpdate corosync fuse rrd-cached >= 1.7.2-alt3 ksmtuned openvswitch
@@ -161,6 +160,10 @@ fi
 %perl_vendor_privlib/PVE/Notify.pm
 
 %changelog
+* Tue Apr 16 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.0.5-alt2
+- improve pve-cluster.service
+- add commits from upstream/master
+
 * Wed Feb 28 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.0.5-alt1
 - 8.0.5
 
