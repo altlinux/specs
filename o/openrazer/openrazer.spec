@@ -1,15 +1,16 @@
 %def_with check
 %define dkms_name openrazer-driver
-%define dkms_version 3.7.0
+%define dkms_version 3.8.0
 
 Name: openrazer
-Version: 3.7.0
-Release: alt2
+Version: 3.8.0
+Release: alt1
 
 Summary: Open source driver and user-space daemon for managing Razer devices
 License: GPL-2.0
 Group: System/Kernel and hardware
-URL: https://github.com/openrazer/openrazer
+URL: https://openrazer.github.io
+Vcs: https://github.com/openrazer/openrazer
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -58,8 +59,7 @@ Python library for accessing the daemon from Python.
 
 %prep
 %setup
-%patch -p1
-%patch1 -p1
+%autopatch -p1
 
 %build
 # noop
@@ -77,7 +77,7 @@ mv -v "$f" %buildroot/lib/udev/
 done
 
 %check
-#functional test
+# functional test
 export OR_SKIP_CHECK_PLUGDEV_FOR_TESTS=1
 eval $(dbus-launch --sh-syntax)
 ./scripts/ci/setup-fakedriver.sh
@@ -127,6 +127,9 @@ fi
 %python3_sitelibdir/%name-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Apr 17 2024 Anton Kurachenko <srebrov@altlinux.org> 3.8.0-alt1
+- New version 3.8.0.
+
 * Wed Feb 14 2024 Anton Kurachenko <srebrov@altlinux.org> 3.7.0-alt2
 - Functional tests added in the spec.
 
