@@ -8,7 +8,7 @@
 
 Name: freerdp
 Version: 2.11.5
-Release: alt1
+Release: alt3
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -18,7 +18,11 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Source1: freerdp-server.service
+Source2: freerdp-login.sh
+Source3: freerdp-logout.sh
+Source4: freerdp.sysconfig
 Patch0: %name-alt-pam-check.patch
+Patch1: %name-alt-connection-scripts.patch
 Patch2000: %name-e2k.patch
 
 Requires: xfreerdp = %EVR
@@ -206,6 +210,7 @@ the RDP protocol.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -317,6 +322,13 @@ $setrpath '$ORIGIN' %buildroot%_libdir/freerdp2/liburbdrc-client-libusb.so
 # Install freerdp-server.service
 install -Dpm0644 %SOURCE1 %buildroot%_libexecdir/systemd/user/freerdp-server.service
 
+# Install connection scripts
+install -Dpm0755 %SOURCE2 %buildroot%_sysconfdir/freerdp/freerdp-login.sh
+install -Dpm0755 %SOURCE3 %buildroot%_sysconfdir/freerdp/freerdp-logout.sh
+
+# Install default configuration for freerdp-server.service
+install -Dpm0644 %SOURCE4 %buildroot%_sysconfdir/sysconfig/freerdp-server
+
 %files
 
 %files -n xfreerdp
@@ -337,6 +349,9 @@ install -Dpm0644 %SOURCE1 %buildroot%_libexecdir/systemd/user/freerdp-server.ser
 %files server
 %_bindir/freerdp-proxy
 %config(noreplace) %_libexecdir/systemd/user/freerdp-server.service
+%config(noreplace) %attr(0755, root, root) %_sysconfdir/freerdp/freerdp-login.sh
+%config(noreplace) %attr(0755, root, root) %_sysconfdir/freerdp/freerdp-logout.sh
+%config(noreplace) %_sysconfdir/sysconfig/freerdp-server
 %attr(2711, root, chkpwd) %_bindir/freerdp-shadow-cli
 %_man1dir/freerdp-shadow-cli.*
 
@@ -382,6 +397,19 @@ install -Dpm0644 %SOURCE1 %buildroot%_libexecdir/systemd/user/freerdp-server.ser
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Mon Apr 15 2024 Andrey Cherepanov <cas@altlinux.org> 2.11.5-alt3
+- freerdp-server: added /etc/sysconfig/freerdp-server with preconfigured options.
+
+* Sat Apr 13 2024 Andrey Cherepanov <cas@altlinux.org> 2.11.5-alt2
+- freerdp-shadow-cli: added /on-connect and /on-disconnect scripts support.
+  Usage: freerdp-shadow-cli \
+           /on-connect:/etc/freerdp/freerdp-login.sh \
+           /on-disconnect:/etc/freerdp/freerdp-logout.sh
+
+  All monitors and input devices on server are disabled upon user login.
+  All monitors and input devices on server are enabled upon user
+  disconnecting.
+
 * Sun Feb 11 2024 Andrey Cherepanov <cas@altlinux.org> 2.11.5-alt1
 - New version.
 
