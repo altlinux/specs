@@ -2,7 +2,7 @@
 
 Name: os-prober
 Version: 1.77
-Release: alt3
+Release: alt4
 
 Summary: Operating systems detector
 License: GPLv2+
@@ -15,6 +15,7 @@ Source0: %name-%version.tar
 Patch: %name-1.42-UUID-rootdev-alt.patch
 Patch1: %name-1.77-alt-grub2-detect-auto-reference.patch
 Patch2: %name-1.77-alt-grub2-skip-30_os-prober-parsing.patch
+Patch3: %name-1.77-alt-check-identical-uuid-of-root.patch
 
 %description
 This is a small package that may be depended on by any bootloader
@@ -26,6 +27,7 @@ them, and work out how to boot other linux installs.
 %patch -p1
 %patch1 -p1 
 %patch2 -p1
+%patch3 -p1
 
 %build
 %make_build
@@ -64,6 +66,9 @@ mkdir -p %buildroot%_localstatedir/%name
 %_localstatedir/%name
 
 %changelog
+* Wed Apr 17 2024 Anton Midyukov <antohami@altlinux.org> 1.77-alt4
+- Skip partitions with UUID identical the UUID of '/'
+
 * Fri Mar 20 2020 Nikolai Kostrigin <nickel@altlinux.org> 1.77-alt3
 - fix grub2-skip-30_os-prober-parsing patch
 
