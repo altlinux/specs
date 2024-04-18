@@ -7,8 +7,8 @@
 %def_enable vulkan_interop
 
 Name: mpv
-Version: 0.37.0
-Release: alt1.1
+Version: 0.38.0
+Release: alt1
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 License: GPLv2+
@@ -152,6 +152,9 @@ rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 %_libdir/libmpv.so.*
 
 %changelog
+* Thu Apr 18 2024 L.A. Kostis <lakostis@altlinux.ru> 0.38.0-alt1
+- 0.38.0.
+
 * Fri Dec 15 2023 L.A. Kostis <lakostis@altlinux.ru> 0.37.0-alt1.1
 - Enable vulkan_interop back.
 
