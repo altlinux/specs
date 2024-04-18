@@ -9,7 +9,7 @@
 %def_without system_tests
 # skip enginepkcs11 tests
 # https://github.com/openssl/openssl/issues/22508
-%def_without enginepkcs11
+%def_with enginepkcs11
 
 # common directory for documentation
 %define docdir %_docdir/bind-%version
@@ -27,8 +27,8 @@
 %endif
 
 Name: bind
-Version: 9.18.25
-%define src_version 9.18.25
+Version: 9.18.26
+%define src_version 9.18.26
 Release: alt1
 
 Summary: ISC BIND - DNS server
@@ -81,8 +81,8 @@ BuildRequires: python3(sphinx_rtd_theme)
 %if_with check
 # for backtraces
 BuildRequires: gdb
+BuildRequires: python3-module-dnspython
 %if_with system_tests
-BuildRequires: python3(dns)
 BuildRequires: python3(hypothesis)
 # /usr/bin/gnutls-cli is required by doth tests
 BuildRequires: gnutls-utils
@@ -602,6 +602,9 @@ fi
 %endif
 
 %changelog
+* Thu Apr 18 2024 Stanislav Levin <slev@altlinux.org> 9.18.26-alt1
+- 9.18.25 -> 9.18.26.
+
 * Wed Mar 20 2024 Stanislav Levin <slev@altlinux.org> 9.18.25-alt1
 - 9.18.24 -> 9.18.25.
 
