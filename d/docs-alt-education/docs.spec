@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.2
-Release: alt4
+Release: alt5
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,12 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Thu Apr 18 2024 Elena Mishina <lepata@altlinux.org> 10.2-alt5
+- small improvements
+- fix some typos (closes: 48145)
+- fix name partition (closes: 48207)
+- update screen
+
 * Thu Oct 12 2023 Elena Mishina <lepata@altlinux.org> 10.2-alt4
 - update educational-resources: nextcloud, veyon, moodle (closes: 47958)
 - fix typo
