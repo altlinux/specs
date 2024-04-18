@@ -2,39 +2,25 @@
 %define pypi_name pyproject-metadata
 %define mod_name pyproject_metadata
 
-%define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
-
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.7.1
+Version: 0.8.0
 Release: alt1
 Summary: PEP 621 metadata parsing
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/pyproject-metadata
-VCS: https://github.com/FFY00/python-pyproject-metadata.git
+VCS: https://github.com/pypa/pyproject-metadata
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
-# PyPI wellknown name
-%py3_provides %pypi_name
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# dependencies
-BuildRequires: python3(packaging)
-
-BuildRequires: python3(pytest)
-%if %tomli
-BuildRequires: python3(tomli)
-%endif
+%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
@@ -48,6 +34,8 @@ file (e.g. PKG-INFO).
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -64,5 +52,8 @@ file (e.g. PKG-INFO).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Apr 18 2024 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1
+- 0.7.1 -> 0.8.0.
+
 * Fri Feb 10 2023 Stanislav Levin <slev@altlinux.org> 0.7.1-alt1
 - Initial build for Sisyphus.

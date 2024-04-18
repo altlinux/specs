@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 
 Summary: The build backend used by PDM that supports latest packaging standards
@@ -100,6 +100,9 @@ sed -i \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Apr 18 2024 Stanislav Levin <slev@altlinux.org> 2.2.1-alt1
+- 2.2.0 -> 2.2.1.
+
 * Mon Apr 15 2024 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1
 - 2.1.8 -> 2.2.0.
 
