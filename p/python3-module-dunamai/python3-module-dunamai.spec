@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%{pypi_name}
-Version: 1.19.2
+Version: 1.20.0
 Release: alt1
 
 Summary: Dynamic version generation
@@ -60,5 +60,8 @@ git config --global user.name "Your Name"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Apr 18 2024 Anton Kurachenko <srebrov@altlinux.org> 1.20.0-alt1
+- New version 1.20.0.
+
 * Sat Mar 09 2024 Anton Kurachenko <srebrov@altlinux.org> 1.19.2-alt1
 - Initial build for Sisyphus.
