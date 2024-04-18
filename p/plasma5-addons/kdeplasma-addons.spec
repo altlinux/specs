@@ -15,7 +15,7 @@
 
 Name: plasma5-addons
 Version: 5.27.11
-Release: alt2
+Release: alt4
 Epoch: 1
 %K5init
 
@@ -37,9 +37,8 @@ Source: %rname-%version.tar
 Patch2: alt-sover.patch
 Patch3: alt-weather-usability.patch
 Patch4: alt-color-picker.patch
-Patch5: alt-fixed-comic-widget-crash.patch
-Patch6: alt-def-dict.patch
-Patch7: alt-fix-applet-size-alignment.patch
+Patch5: alt-def-dict.patch
+Patch6: alt-fix-applet-size-alignment.patch
 
 # Automatically added by buildreq on Mon Mar 30 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils glib2-devel kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libdbusmenu-qt52 libgio-devel libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms libxcbutil-keysyms-devel libxkbfile-devel pkg-config python-base qt5-base-devel ruby ruby-stdlibs scim-libs xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -110,9 +109,11 @@ KF5 library
 %patch2 -p1
 #%patch3 -p1
 #%patch4 -p2
-%patch5 -p2
+%patch5 -p1
 %patch6 -p1
-%patch7 -p1
+
+# exclude applet
+sed -i '/^add_subdirectory(comic)/d' applets/CMakeLists.txt
 
 # disable krunners by default
 for d in runners/*/*.json ; do
@@ -136,13 +137,11 @@ touch touch-%_arch
 %files common -f %name.lang
 %doc touch-%_arch LICENSES/*
 %_K5icon/*/*/*/*.*
-%_datadir/qlogging-categories5/*.*categories
+#%_datadir/qlogging-categories5/*.*categories
 
 %files
-%_K5data/knsrcfiles/*.knsrc
 %_K5plug/kf5/krunner/kcms/*.so
 %_K5plug/plasma/applets/*.so
-%_K5plug/kpackage/packagestructure/*.so
 %_K5plug/plasmacalendarplugins/*
 %_K5plug/potd/
 %_K5plug/kf5/krunner/*.so
@@ -151,8 +150,11 @@ touch touch-%_arch
 %_K5qml/org/kde/plasma/wallpapers/potd/
 %_kf5_data/plasma/*
 %_K5data/kwin/*
-%_K5srvtyp/*
 %_datadir/metainfo/*.xml
+# comic
+#%_K5data/knsrcfiles/*.knsrc
+#%_K5plug/kpackage/packagestructure/*.so
+#%_K5srvtyp/*
 
 %files devel
 %_K5inc/plasma/potdprovider/
@@ -168,6 +170,13 @@ touch touch-%_arch
 %_K5lib/libplasmapotdprovidercore.so.%plasmapotdprovidercore_sover
 
 %changelog
+* Thu Apr 18 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.11-alt4
+- remove comic applet
+
+* Thu Apr 18 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 1:5.27.11-alt3
+- added content alignment to center when changing applet width
+- applet scaling updated
+
 * Mon Apr 15 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 1:5.27.11-alt2
 - fix incorrect applet size
 - fix incorrect scaling in the grouping applet (closes: 43967)
