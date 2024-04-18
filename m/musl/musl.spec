@@ -4,7 +4,7 @@
 
 Name: musl
 Version: 1.2.5
-Release: alt1
+Release: alt2
 Group: System/Libraries
 Summary: Implementation of the C standard library
 License: MIT
@@ -111,7 +111,8 @@ export CC='gcc -mlong-double-64'
 #   "Most importantly [...] distributions should not change the dynamic
 #   linker location to /lib64 or anything else, since this breaks ABI."
 mkdir -p %buildroot/lib
-ln -rs %buildroot%_libdir/%soname %buildroot/lib/%ldname
+mv %buildroot%_libdir/%soname %buildroot/lib/%ldname
+ln -rs %buildroot/lib/%ldname %buildroot%_libdir/%soname
 mkdir %buildroot%_sysconfdir
 cat <<-EOF > %buildroot%_sysconfdir/%ldpath
 	%_libdir
@@ -161,6 +162,9 @@ grep -Ex 'ldso="/lib/%ldname"' %buildroot%_bindir/ld.musl-clang
 %_datadir/%name-checkinstall
 
 %changelog
+* Tue Apr 02 2024 Vitaly Chikunov <vt@altlinux.org> 1.2.5-alt2
+- Exchange ldso symlink and binary (ALT#49857).
+
 * Sun Mar 03 2024 Vitaly Chikunov <vt@altlinux.org> 1.2.5-alt1
 - Update to v1.2.5 (2024-02-29).
 
