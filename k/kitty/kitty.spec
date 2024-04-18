@@ -2,7 +2,7 @@
 %def_with check
 
 Name: kitty
-Version: 0.33.1
+Version: 0.34.0
 Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
@@ -16,6 +16,7 @@ Requires: %name-terminfo = %EVR
 Requires: %name-shell-integration = %EVR
 
 Source: %name-%version.tar
+Source1: %name-%version-vendor.tar
 Patch0: %name-%version-alt.patch
 
 # 0.27.0: unmet /usr/pkg/bin/tic
@@ -131,7 +132,7 @@ can be used on all UNIX-like servers for remote control (kitten @), viewing
 images (kitten icat), manipulating the clipboard (kitten clipboard), etc.
 
 %prep
-%setup
+%setup -a 1
 %patch0 -p1
 
 # Changing shebangs to python3
@@ -207,6 +208,9 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %_bindir/kitten
 
 %changelog
+* Wed Apr 17 2024 Egor Ignatov <egori@altlinux.org> 0.34.0-alt1
+- new version 0.34.0
+
 * Tue Mar 26 2024 Egor Ignatov <egori@altlinux.org> 0.33.1-alt1
 - new version 0.33.1
 
