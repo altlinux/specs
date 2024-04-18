@@ -1,5 +1,5 @@
 Name: eget
-Version: 7.9
+Version: 7.10
 Release: alt1
 
 Summary: wget like downloader wrapper with wildcard support
@@ -34,6 +34,12 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Thu Apr 18 2024 Vitaly Lipatov <lav@altlinux.ru> 7.10-alt1
+- added parameters needed to replace wget with eget in winetricks (eterbug #16749)
+- eget: improve message about unaccessible ipfs
+- eget: add pinata.cloud ipfs gateway, disable local Brave ipfs instance
+- eget: use only selected ipfs gateway when EGET_IPFS_GATEWAY is set
+
 * Mon Apr 08 2024 Vitaly Lipatov <lav@altlinux.ru> 7.9-alt1
 - eget: decode &amp; html entity
 - eget: add support square brackets as wildcards
