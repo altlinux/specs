@@ -4,7 +4,7 @@
 %define dmusic_ver 1
 
 Name: deepin-music
-Version: 7.0.3.0.4.8ae2
+Version: 7.0.5
 Release: alt1
 
 Summary: Awesome music player with brilliant and tweakful UI Deepin-UI based
@@ -70,7 +70,6 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DLIB_INSTALL_DIR=%_libdir \
-    -DAPP_VERSION=%version \
     -DVERSION=%version
 cmake --build %_cmake__builddir -j%__nprocs
 
@@ -105,6 +104,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/lib%repo.so
 
 %changelog
+* Thu Apr 18 2024 Leontiy Volodin <lvol@altlinux.org> 7.0.5-alt1
+- New version 7.0.5.
+
 * Tue Mar 05 2024 Leontiy Volodin <lvol@altlinux.org> 7.0.3.0.4.8ae2-alt1
 - New version 7.0.3-4-g8ae2ac1c.
 - No more needed libqt5-core = %%_qt5_version.
