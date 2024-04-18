@@ -1,5 +1,5 @@
 Name: shadow
-Version: 4.14.7
+Version: 4.15.1
 Release: alt1
 Epoch: 1
 
@@ -376,7 +376,7 @@ rm -f %save_login_defs_file
 %_man8dir/newusers.*
 %_man8dir/user*.*
 %endif
-%doc README TODO
+%doc README
 %exclude %_bindir/groupmems
 %if_enabled man
 %exclude %_man8dir/groupmems.*
@@ -483,6 +483,11 @@ rm -f %save_login_defs_file
 %endif
 
 %changelog
+* Thu Apr 18 2024 Mikhail Efremov <sem@altlinux.org> 1:4.15.1-alt1
+- Fixed bogus date in the changelog.
+- Dropped obsoleted patches.
+- Updated to 4.15.1.
+
 * Thu Apr 04 2024 Mikhail Efremov <sem@altlinux.org> 1:4.14.7-alt1
 - tcb: Use shadowlog variables.
 - Dropped duplicate chmod() call.
@@ -939,7 +944,7 @@ rm -f %save_login_defs_file
 * Thu Nov 06 1997 Cristian Gafton <gafton@redhat.com>
 - added forgot lastlog command to the spec file
 
-* Mon Oct 26 1997 Cristian Gafton <gafton@redhat.com>
+* Sun Oct 26 1997 Cristian Gafton <gafton@redhat.com>
 - obsoletes adduser
 
 * Thu Oct 23 1997 Cristian Gafton <gafton@redhat.com>
