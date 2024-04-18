@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: lightdm-kde-greeter
-Version: 0.4.19
+Version: 0.4.20
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE5 Greeter
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires(pre): rpm-build-qml
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: lightdm-devel
@@ -63,7 +64,11 @@ This is a fork of KDE4-based LightDM greeter engine for KDE5.
 %setup
 
 %build
-%K5build -DGREETER_IMAGES_DIR=%_var/lib/ldm/%name/images
+%K5build \
+%_K5if_ver_gteq %ubt_id M110
+        -DGREETER_WAYLAND_SESSIONS_FIRST=ON \
+%endif
+        -DGREETER_IMAGES_DIR=%_var/lib/ldm/%name/images
 
 %install
 %K5install
@@ -96,6 +101,10 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Thu Apr 18 2024 Anton Golubev <golubevan@altlinux.org> 0.4.20-alt1
+- return to menu when pressing Enter (Closes: 48929)
+- show Wayland sessions first in the session list, for p11+ (Closes: 49969)
+
 * Mon Apr 15 2024 Anton Golubev <golubevan@altlinux.org> 0.4.19-alt1
 - navigate buttons with arrows and activate by enter (Closes: 48929)
 
