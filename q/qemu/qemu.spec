@@ -151,7 +151,7 @@
 
 Name: qemu
 Version: 8.2.2
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -872,7 +872,9 @@ run_configure \
 	--disable-oss \
 	--disable-pa \
 	--disable-parallels \
+%ifarch %ix86
 	--disable-pie \
+%endif
 	--disable-pipewire \
 	--disable-pixman \
 	--disable-plugins \
@@ -1363,6 +1365,10 @@ popd
 %exclude %docdir/LICENSE
 
 %changelog
+* Tue Apr 16 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.2-alt2
+- Revert "linux-user: Adjust brk for load_bias" (see QEMU#1913)
+- use --disable-pie on ix86 only
+
 * Mon Apr 08 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.2-alt1
 - 8.2.2.
 - backkport patches (Fixes:  CVE-2024-26327, CVE-2024-26328).
