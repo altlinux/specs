@@ -8,8 +8,10 @@
 %define ver_major 3.40
 %define _libexecdir %_prefix/libexec
 
+%def_enable check
+
 Name: gnome-games-%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Classic Chinese Tile Game
@@ -23,19 +25,19 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%versio
 Source: %__name-%version.tar
 %endif
 
-Provides:  %__name = %version-%release
+Provides:  %__name = %EVR
 
 %define glib_ver 2.72.0
 %define gtk4_ver 4.5.0
 %define rsvg_ver 2.46
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson vala-tools
-BuildRequires: yelp-tools /usr/bin/appstream-util desktop-file-utils
+BuildRequires: meson vala-tools yelp-tools 
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk4-devel >= %gtk4_ver libadwaita-devel
 BuildRequires: librsvg-devel >= %rsvg_ver
+%{?_enable_check:BuildRequires: /usr/bin/appstream-util desktop-file-utils /usr/bin/glib-compile-schemas}
 
 %description
 Gnome Mahjongg, or Mahjongg for short, is a solitaire (one player)
@@ -52,6 +54,9 @@ version of the classic Eastern tile game, Mahjongg.
 %meson_install
 %find_lang --with-gnome %__name
 
+%check
+%__meson_test
+
 %files -f gnome-%_name.lang
 %_bindir/%__name
 %_desktopdir/%xdg_name.desktop
@@ -63,6 +68,9 @@ version of the classic Eastern tile game, Mahjongg.
 %_man6dir/%__name.*
 
 %changelog
+* Thu Apr 18 2024 Yuri N. Sedunov <aris@altlinux.org> 3.40.1-alt1
+- 3.40.1
+
 * Wed May 31 2023 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
 - 3.40.0 (ported to GTK4/Libadwaita)
 

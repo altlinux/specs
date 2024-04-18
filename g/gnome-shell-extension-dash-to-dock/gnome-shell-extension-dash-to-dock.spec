@@ -1,7 +1,7 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name dash-to-dock
-%define ver_major 89
+%define ver_major 90
 %define beta %nil
 %define uuid %_name@micxgx.gmail.com
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -11,7 +11,7 @@
 
 Name: gnome-shell-extension-%_name
 Version: %ver_major
-Release: alt1.1
+Release: alt1
 
 Summary: A dock for the GNOME Shell
 Group: Graphical desktop/GNOME
@@ -58,6 +58,9 @@ available.
 %doc README.md
 
 %changelog
+* Thu Apr 18 2024 Yuri N. Sedunov <aris@altlinux.org> 90-alt1
+- 90
+
 * Fri Mar 22 2024 Yuri N. Sedunov <aris@altlinux.org> 89-alt1.1
 - updated to v89-31-g554f7c5 (gnome-46 support)
 
