@@ -3,11 +3,11 @@
 %def_enable check
 
 Name: passim
-Version: 0.1.5
+Version: 0.1.7
 Release: alt1
-Summary: Local caching server
 
-License: LGPLv2.1
+Summary: Local caching server
+License: LGPL-2.1-only
 Group: System/Servers
 Url: https://github.com/hughsie/passim
 
@@ -16,7 +16,6 @@ Source: %name-%version.tar
 Requires: lib%name%abiversion = %EVR
 
 BuildRequires(pre): rpm-macros-meson
-
 BuildRequires: meson
 BuildRequires: gobject-introspection-devel
 BuildRequires: libsystemd-devel
@@ -57,25 +56,26 @@ Files for development with %name.
 %meson_install
 # remove sample data file
 rm -v %buildroot%_localstatedir/passim/data/*-HELLO.md
+%find_lang %name
 
 %check
 %__meson_test
 appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.freedesktop.Passim.metainfo.xml
 
-%files
+%files -f %name.lang
 %doc README.md LICENSE
 %_bindir/passim
 %_unitdir/passim.service
 %_libdir/girepository-1.0/Passim-1.0.typelib
 %_libexecdir/passimd
 %_localstatedir/passim
+%_iconsdir/hicolor/scalable/apps/org.freedesktop.Passim.png/
 %_datadir/dbus-1/interfaces/org.freedesktop.Passim.xml
 %_datadir/dbus-1/system-services/org.freedesktop.Passim.service
 %_datadir/dbus-1/system.d/org.freedesktop.Passim.conf
-%_iconsdir/hicolor/*/apps/*Passim*.*
 %_datadir/metainfo/org.freedesktop.Passim.metainfo.xml
 %_datadir/passim
-%_man1dir/passim.1.xz
+%_man1dir/passim.1*
 /lib/sysusers.d/passim.conf
 %config(noreplace) %_sysconfdir/passim.conf
 
@@ -90,5 +90,8 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.freedeskt
 %_pkgconfigdir/passim.pc
 
 %changelog
+* Thu Apr 18 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.1.7-alt1
+- New version.
+
 * Fri Feb 16 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.1.5-alt1
 - First build for ALT.
