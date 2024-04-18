@@ -7,8 +7,8 @@
 %def_without mbedtls
 
 Name: freerdp
-Version: 2.11.5
-Release: alt3
+Version: 2.11.6
+Release: alt1
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -397,6 +397,16 @@ install -Dpm0644 %SOURCE4 %buildroot%_sysconfdir/sysconfig/freerdp-server
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Thu Apr 18 2024 Andrey Cherepanov <cas@altlinux.org> 2.11.6-alt1
+- New version
+- Security fixes:
+  + CVE-2024-32041 [Low[ OutOfBound Read in zgfx_decompress_segment
+  + CVE-2024-32039 Integer overflow & OutOfBound Write in clear_decompress_residual_data
+  + CVE-2024-32040 integer underflow in nsc_rle_decode
+  + CVE-2024-32458 OutOfBound Read in planar_skip_plane_rle
+  + CVE-2024-32459 OutOfBound Read in ncrush_decompress
+  + CVE-2024-32460 OutOfBound Read in interleaved_decompress
+
 * Mon Apr 15 2024 Andrey Cherepanov <cas@altlinux.org> 2.11.5-alt3
 - freerdp-server: added /etc/sysconfig/freerdp-server with preconfigured options.
 
