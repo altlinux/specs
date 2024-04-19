@@ -27,7 +27,7 @@
 %def_enable libcap_ng
 
 Name: rsyslog
-Version: 8.2312.0
+Version: 8.2404.0
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -77,7 +77,7 @@ BuildRequires: iproute2
 BuildRequires: /usr/bin/rst2man
 BuildRequires: /usr/bin/lsb_release
 
-%define mod_dir /%_lib/%name
+%define mod_dir %_libdir/%name
 
 %description
 Rsyslog is an enhanced multi-threaded syslogd supporting, among others, MySQL,
@@ -395,8 +395,6 @@ all other functions:
 export HIREDIS_CFLAGS=-I/usr/include/hiredis
 export HIREDIS_LIBS=-lhiredis
 %configure \
-	--sbindir=/sbin \
-	--libdir=/%_lib \
 	--disable-static \
 	--disable-testbench \
 	%{subst_enable elasticsearch} \
@@ -535,7 +533,7 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/ommail.so
 %mod_dir/omruleset.so
 
-/sbin/rsyslogd
+%_sbindir/rsyslogd
 %_mandir/man?/rsyslog*
 
 %files classic
@@ -687,6 +685,11 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/fmhttp.so
 
 %changelog
+* Fri Apr 19 2024 Alexey Shabalin <shaba@altlinux.org> 8.2404.0-alt1
+- New version 8.2404.0.
+- Move modules from /lib to /usr/lib.
+- Move /sbin/rsyslogd to /usr/sbin/rsyslogd.
+
 * Tue Dec 19 2023 Alexey Shabalin <shaba@altlinux.org> 8.2312.0-alt1
 - New version 8.2312.0.
 
