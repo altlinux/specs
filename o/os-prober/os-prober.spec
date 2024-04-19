@@ -2,7 +2,7 @@
 
 Name: os-prober
 Version: 1.77
-Release: alt4
+Release: alt5
 
 Summary: Operating systems detector
 License: GPLv2+
@@ -16,6 +16,7 @@ Patch: %name-1.42-UUID-rootdev-alt.patch
 Patch1: %name-1.77-alt-grub2-detect-auto-reference.patch
 Patch2: %name-1.77-alt-grub2-skip-30_os-prober-parsing.patch
 Patch3: %name-1.77-alt-check-identical-uuid-of-root.patch
+Patch4: %name-1.77-alt-dmdevfs-use-for-raid.patch
 
 %description
 This is a small package that may be depended on by any bootloader
@@ -28,6 +29,7 @@ them, and work out how to boot other linux installs.
 %patch1 -p1 
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %make_build
@@ -66,6 +68,9 @@ mkdir -p %buildroot%_localstatedir/%name
 %_localstatedir/%name
 
 %changelog
+* Fri Apr 19 2024 Anton Midyukov <antohami@altlinux.org> 1.77-alt5
+- Find partitions involved in a RAID via /dev/mapper (evms)
+
 * Wed Apr 17 2024 Anton Midyukov <antohami@altlinux.org> 1.77-alt4
 - Skip partitions with UUID identical the UUID of '/'
 
