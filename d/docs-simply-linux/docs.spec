@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.2
-Release: alt4
+Release: alt5
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,11 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Fri Apr 19 2024 Elena Mishina <lepata@altlinux.org> 10.2-alt5
+- fix prepare boot-disk (closes #48282, #48281)
+- small improvements
+- update screen
+
 * Tue Oct 24 2023 Elena Mishina <lepata@altlinux.org> 10.2-alt4
 - update to latest public distr
 
