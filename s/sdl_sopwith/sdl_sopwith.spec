@@ -2,7 +2,7 @@
 %define _name sdl-%__name
 
 Name: sdl_%__name
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: Classic scrolling shoot'em
@@ -46,6 +46,9 @@ install -pD -m644 %SOURCE2 %buildroot%_desktopdir/%__name.desktop
 %exclude %_docdir/%_name
 
 %changelog
+* Fri Apr 19 2024 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
+- 2.5.0
+
 * Sun Feb 11 2024 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
 - 2.4.0
 
