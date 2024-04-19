@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 57
+%define ver_major 58
 %define beta %nil
 %define uuid appindicatorsupport@rgcjonas.gmail.com
 %define xdg_name org.gnome.shell.extensions.appindicator
@@ -10,7 +10,7 @@
 
 Name: gnome-shell-extension-appindicator
 Version: %ver_major
-Release: alt2
+Release: alt1
 
 Summary: AppIndicator, KStatusNotifierItem and legacy Tray icons extension for the GNOME Shell
 Group: Graphical desktop/GNOME
@@ -28,6 +28,7 @@ Source: %name-%version%beta.tar
 
 Requires: gnome-shell >= 45
 Requires: typelib(Gtk) = 4.0
+Requires: typelib(AyatanaAppIndicator3)
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson /usr/bin/glib-compile-schemas jq eslint
@@ -57,6 +58,9 @@ into GNOME Shell, including support for legacy tray icons.
 %doc AUTHORS.md README.md
 
 %changelog
+* Fri Apr 19 2024 Yuri N. Sedunov <aris@altlinux.org> 58-alt1
+- 58
+
 * Fri Mar 08 2024 Yuri N. Sedunov <aris@altlinux.org> 57-alt2
 - updated to v57-5-g03a7412 (gnome-46 support)
 

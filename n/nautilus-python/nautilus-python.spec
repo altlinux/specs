@@ -5,16 +5,18 @@
 %def_enable docs
 
 Name: nautilus-python
-Version: %ver_major
-Release: alt1.1%beta
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: Python bindings for Nautilus
 Group: Development/Python3
-License: GPLv2+
+License: GPL-2.0-or-later
 Url: https://www.gnome.org/
 
 Provides: python-module-nautilus = %version-%release
 Obsoletes: python-module-nautilus
+
+Requires: typelib(Nautilus) = 4.0
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -92,6 +94,9 @@ mkdir -p %buildroot%_datadir/nautilus-python/extensions/__pycache__
 %exclude %_docdir/%name
 
 %changelog
+* Fri Apr 19 2024 Yuri N. Sedunov <aris@altlinux.org> 4.0.1-alt1
+- 4.0.1
+
 * Fri Aug 04 2023 Yuri N. Sedunov <aris@altlinux.org> 4.0-alt1.1
 - packaged /usr/share/nautilus-python/extensions/__pycache__ (ALT# 47116)
 

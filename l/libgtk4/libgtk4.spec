@@ -37,7 +37,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -417,6 +417,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Fri Apr 19 2024 Yuri N. Sedunov <aris@altlinux.org> 4.14.3-alt1
+- 4.14.3
+
 * Wed Apr 03 2024 Yuri N. Sedunov <aris@altlinux.org> 4.14.2-alt1
 - 4.14.2
 

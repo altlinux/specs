@@ -1,14 +1,14 @@
 %def_disable snapshot
 
 %define _name Flatseal
-%define ver_major 2.1
+%define ver_major 2.2
 %define beta %nil
 %define rdn_name com.github.tchx84.Flatseal
 %define mozjs_ver 115
 %def_enable check
 
 Name: flatseal
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Manage Flatpak permissions
@@ -16,15 +16,16 @@ License: GPL-3.0
 Group: Development/Tools
 Url: https://github.com/tchx84/Flatseal
 
-%if_disabled snapshot
 Vcs: https://github.com/tchx84/Flatseal.git
+
+%if_disabled snapshot
 Source: %url/archive/v%version/%name-%version.tar.gz
 %else
 Source: %_name-%version.tar
 %endif
 
 %define gjs_ver 1.73.1
-%define adw_ver 1.4
+%define adw_ver 1.5
 %define webkit_ver 2.40
 
 Requires: libgjs >= %gjs_ver
@@ -71,6 +72,9 @@ Flatpak applications.
 %doc README* DOCUMENTATION* CHANGELOG*
 
 %changelog
+* Fri Apr 19 2024 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Wed Mar 27 2024 Yuri N. Sedunov <aris@altlinux.org> 2.1.2-alt1
 - 2.1.2
 
