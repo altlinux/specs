@@ -5,7 +5,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: toybox
-Version: 0.8.10
+Version: 0.8.11
 Release: alt1
 Summary: All-in-one Linux command line
 License: 0BSD
@@ -72,5 +72,8 @@ size toybox
 /bin/toybox
 
 %changelog
+* Fri Apr 12 2024 Vitaly Chikunov <vt@altlinux.org> 0.8.11-alt1
+- Update to 0.8.11 (2024-04-08).
+
 * Sat Oct 07 2023 Vitaly Chikunov <vt@altlinux.org> 0.8.10-alt1
 - First import 0.8.10-70-g47946f24 (2023-10-06).
