@@ -2,12 +2,12 @@
 
 %define oname shapely
 
-%def_without check
+%def_with check
 # Need module numpydoc and bootstrapped package
 %def_without doc
 
 Name: python3-module-%oname
-Version: 2.0.3
+Version: 2.0.4
 Release: alt1
 
 Summary: Planar geometries, predicates, and operations
@@ -15,7 +15,7 @@ License: BSD
 Group: Development/Python3
 
 Url: http://pypi.python.org/pypi/Shapely
-# https://github.com/Toblerity/Shapely.git
+# Source-url: https://github.com/Toblerity/Shapely.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx3
@@ -25,6 +25,7 @@ BuildRequires: python3-module-packaging
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-numpy-testing
 BuildRequires: xvfb-run
+BuildRequires: python3-module-matplotlib
 %if_with doc
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinxcontrib-websupport
@@ -95,6 +96,7 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %if_with check
 %check
 export LC_ALL=en_US.UTF-8
+export PYTHONPATH="${PWD}/_stub:%buildroot%python3_sitelibdir"
 
 xvfb-run python3 setup.py test
 python3 setup.py build_ext -i
@@ -116,6 +118,10 @@ py.test3 -vv
 %endif
 
 %changelog
+* Thu Apr 18 2024 Anton Midyukov <antohami@altlinux.org> 2.0.4-alt1
+- New version 2.0.4
+- Enable check
+
 * Sat Feb 17 2024 Andrey Cherepanov <cas@altlinux.org> 2.0.3-alt1
 - New version.
 
