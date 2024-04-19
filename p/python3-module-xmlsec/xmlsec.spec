@@ -3,14 +3,15 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.3.13
+Version: 1.3.14
 Release: alt1
 
 Summary: Python bindings for the XML Security Library
 
 License: MIT
 Group: Development/Python3
-Url: https://github.com/mehcode/python-xmlsec
+URL: https://pypi.org/project/xmlsec
+VCS: https://github.com/mehcode/python-xmlsec
 
 Source: %name-%version.tar
 
@@ -46,6 +47,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Apr 19 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.14-alt1
+- Automatically updated to 1.3.14.
+
 * Wed Mar 29 2023 Grigory Ustinov <grenka@altlinux.org> 1.3.13-alt1
 - Build new version.
 
