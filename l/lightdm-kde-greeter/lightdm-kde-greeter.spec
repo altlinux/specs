@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: lightdm-kde-greeter
-Version: 0.4.20
+Version: 0.4.21
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE5 Greeter
@@ -101,6 +101,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Fri Apr 19 2024 Anton Golubev <golubevan@altlinux.org> 0.4.21-alt1
+- close menu when pressing side arrow (Closes: 48929)
+
 * Thu Apr 18 2024 Anton Golubev <golubevan@altlinux.org> 0.4.20-alt1
 - return to menu when pressing Enter (Closes: 48929)
 - show Wayland sessions first in the session list, for p11+ (Closes: 49969)
