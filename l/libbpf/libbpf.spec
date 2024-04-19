@@ -4,13 +4,12 @@
 %set_verify_elf_method strict
 
 Name: libbpf
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 Summary: Stand-alone build of libbpf from the Linux kernel
 Group: System/Libraries
 License: BSD-2-Clause or LGPL-2.1
 Url: https://github.com/libbpf/libbpf
-Vcs: https://github.com/libbpf/libbpf.git
 
 Source: %name-%version.tar
 
@@ -53,6 +52,9 @@ cd src
 %_pkgconfigdir/libbpf.pc
 
 %changelog
+* Fri Apr 12 2024 Vitaly Chikunov <vt@altlinux.org> 1.4.0-alt1
+- Update to v1.4.0 (2024-03-25).
+
 * Fri Jan 05 2024 Vitaly Chikunov <vt@altlinux.org> 1.3.0-alt1
 - Update to v1.3.0 (2023-11-22).
 
