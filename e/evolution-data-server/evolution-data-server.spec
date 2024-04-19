@@ -33,7 +33,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Evolution Data Server
@@ -83,7 +83,7 @@ BuildRequires: libsecret-devel >= %secret_ver
 BuildRequires: gperf docbook-utils flex bison libcom_err-devel libnss-devel libnspr-devel zlib-devel libicu-devel
 %{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver liboauth-devel}
 %{?_enable_oauth2_webkitgtk3:BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver) >= %webkit_ver}
-%{?_enable_oauth2_webkitgtk4:BuildRequires: pkgconfig(webkit2gtk-5.0) >= %webkit_ver}
+%{?_enable_oauth2_webkitgtk4:BuildRequires: pkgconfig(webkit2gtk-6.0) >= %webkit_ver}
 BuildRequires: libjson-glib-devel
 %{?_enable_uoa:BuildRequires: libaccounts-glib-devel}
 %{?_enable_introspection:
@@ -99,7 +99,7 @@ BuildRequires: libical-glib-gir-devel}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc gi-docgen}
 
 # /usr/libexec/evolution-data-server/csv2vcard uses perl(diagnostics.pm)
-BuildRequires: perl-devel
+BuildRequires: perl(diagnostics.pm)
 
 %if_with openldap
 BuildRequires: libldap-devel
@@ -293,6 +293,9 @@ ln -s camel-lock-helper-%ver_lib %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Fri Apr 19 2024 Yuri N. Sedunov <aris@altlinux.org> 3.52.1-alt1
+- 3.52.1
+
 * Fri Mar 15 2024 Yuri N. Sedunov <aris@altlinux.org> 3.52.0-alt1
 - 3.52.0
 
