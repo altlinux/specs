@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 9.7.1
-Release: alt1
+Release: alt1.1
 
 Summary: Tools to supplement packaging Python releases
 License: MIT
@@ -12,34 +12,41 @@ URL:     https://github.com/jaraco/jaraco.packaging
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools_scm
-BuildRequires: python3-module-toml
+# build backend and its deps
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools-scm
+BuildRequires: python3-module-wheel
 
 BuildArch: noarch
 
 Source:  %modulename-%version.tar
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %modulename} = %EVR
 
 %description
 %summary
 
 %prep
 %setup -n %modulename-%version
-echo 'import setuptools; setuptools.setup()' > setup.py
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 rm -rf %buildroot/%_bindir/
 
 %files
 %python3_sitelibdir/jaraco/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%modulename-%version.dist-info/
 
 %changelog
+* Fri Apr 19 2024 Stanislav Levin <slev@altlinux.org> 9.7.1-alt1.1
+- NMU: mapped PyPI name to distro's one.
+
 * Thu Apr 18 2024 Andrey Cherepanov <cas@altlinux.org> 9.7.1-alt1
 - New version.
 
