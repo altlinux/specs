@@ -1,9 +1,8 @@
-
 %global import_path github.com/aquasecurity/trivy
 %global _unpackaged_files_terminate_build 1
 
 Name: trivy
-Version: 0.49.1
+Version: 0.50.1
 Release: alt1
 Summary: A Fast Vulnerability Scanner for Containers
 
@@ -55,8 +54,13 @@ Requires: trivy-db
 %setup
 
 %build
+# replace default node-collector image source
 find . -type f -exec \
-	sed -i "s/ghcr.io\/aquasecurity\/node-collector:0.0.9/registry.altlinux.org\/alt\/k8s-trivy-node-collector:%_priority_distbranch/g" {} +
+	sed -i "s/ghcr.io\/aquasecurity\/node-collector:0.0.9/registry.altlinux.org\/k8s-%_priority_distbranch\/trivy-node-collector:0.0.9/g" {} +
+
+# replace default trivy-db image source
+find . -type f -exec \
+	sed -i "s/ghcr.io\/aquasecurity\/trivy-db/registry.altlinux.org\/alt\/trivy-db/g" {} +
 
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
@@ -96,6 +100,9 @@ rm -rf -- %buildroot%go_root
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Thu Apr 18 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.50.1-alt1
+- 0.49.1 -> 0.50.1 
+
 * Thu Feb 08 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.49.1-alt1
 - 0.49.0 -> 0.49.1 
 

@@ -1,8 +1,8 @@
-%global import_path github.com/alt-cloud/trivy-db
+%global import_path github.com/aquasecurity/trivy-db
 %global _unpackaged_files_terminate_build 1
 
 Name: trivy-db-tool
-Version: 0.1.0
+Version: 0.2.0
 Release: alt1
 Summary: trivy-db is a CLI tool and a library to manipulate Trivy DB
 
@@ -27,7 +27,6 @@ BuildRequires: /proc
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-export GOFLAGS="-mod=vendor"
 export CGO_ENABLED=0
 
 %golang_prepare
@@ -46,7 +45,8 @@ rm -rf -- "%buildroot%go_root"
 %_bindir/trivy-db
 
 %changelog
+* Fri Apr 19 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.2.0-alt1
+- 0.1.0 -> 0.2.0 
+
 * Thu Dec 28 2023 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.1.0-alt1
 - Initial build for ALT 
-
-
