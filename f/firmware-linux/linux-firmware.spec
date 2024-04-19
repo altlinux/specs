@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20240405
+Version: 20240419
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -94,6 +94,69 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/mellanox
 
 %changelog
+* Fri Apr 19 2024 Cronbuild Service <cronbuild@altlinux.org> 20240419-alt1
+- upstream changes (GIT 055dfa8e):
+  + Add tuning parameter configs for CS35L41 Firmware (thx Stefan Binding)
+  + Fix firmware names for Laptop SSID 104316a3 (thx Stefan Binding)
+  + Add CS35L41 HDA Firmware for Lenovo Legion Slim 7 16ARHA7 (thx Stefan Binding)
+  + update firmware for mediatek bluetooth chip (MT7922) (thx Chris Lu)
+  + update firmware for MT7922 WiFi device (thx Deren Wu)
+  + iwlwifi: add gl FW for core87-44 release (thx Miri Korenblit)
+  + iwlwifi: add ty/So/Ma firmwares for core87-44 release (thx Miri Korenblit)
+  + iwlwifi: update cc/Qu/QuZ firmwares for core87-44 release (thx Miri Korenblit)
+  + nvidia: Update Tegra210 XUSB firmware to v50.29 (thx JC Kuo)
+  + amdgpu: update beige goby firmware (thx Alex Deucher)
+  + amdgpu: update dimgrey cavefish firmware (thx Alex Deucher)
+  + amdgpu: update psp 13.0.11 firmware (thx Alex Deucher)
+  + amdgpu: update gc 11.0.4 firmware (thx Alex Deucher)
+  + amdgpu: update navy flounder firmware (thx Alex Deucher)
+  + amdgpu: update renoir firmware (thx Alex Deucher)
+  + amdgpu: update vcn 4.0.2 firmware (thx Alex Deucher)
+  + amdgpu: update sdma 6.0.1 firmware (thx Alex Deucher)
+  + amdgpu: update psp 13.0.4 firmware (thx Alex Deucher)
+  + amdgpu: update gc 11.0.1 firmware (thx Alex Deucher)
+  + amdgpu: update sienna cichlid firmware (thx Alex Deucher)
+  + amdgpu: update vega20 firmware (thx Alex Deucher)
+  + amdgpu: update yellow carp firmware (thx Alex Deucher)
+  + amdgpu: update green sardine firmware (thx Alex Deucher)
+  + amdgpu: update vega12 firmware (thx Alex Deucher)
+  + amdgpu: update raven2 firmware (thx Alex Deucher)
+  + amdgpu: update vcn 4.0.4 firmware (thx Alex Deucher)
+  + amdgpu: update smu 13.0.7 firmware (thx Alex Deucher)
+  + amdgpu: update sdma 6.0.2 firmware (thx Alex Deucher)
+  + amdgpu: update ipsp 13.0.7 firmware (thx Alex Deucher)
+  + amdgpu: update gc 11.0.2 firmware (thx Alex Deucher)
+  + amdgpu: update vega10 firmware (thx Alex Deucher)
+  + amdgpu: update raven firmware (thx Alex Deucher)
+  + amdgpu: update navi14 firmware (thx Alex Deucher)
+  + amdgpu: update smu 13.0.10 firmware (thx Alex Deucher)
+  + amdgpu: update sdma 6.0.3 firmware (thx Alex Deucher)
+  + amdgpu: update psp 13.0.10 firmware (thx Alex Deucher)
+  + amdgpu: update gc 11.0.3 firmware (thx Alex Deucher)
+  + amdgpu: update vcn 3.1.2 firmware (thx Alex Deucher)
+  + amdgpu: update psp 13.0.5 firmware (thx Alex Deucher)
+  + amdgpu: update gc 10.3.6 firmware (thx Alex Deucher)
+  + amdgpu: update navi12 firmware (thx Alex Deucher)
+  + amdgpu: update arcturus firmware (thx Alex Deucher)
+  + amdgpu: update vangogh firmware (thx Alex Deucher)
+  + amdgpu: update navi10 firmware (thx Alex Deucher)
+  + amdgpu: update vcn 4.0.3 firmware (thx Alex Deucher)
+  + amdgpu: update smu 13.0.6 firmware (thx Alex Deucher)
+  + amdgpu: update psp 13.0.6 firmware (thx Alex Deucher)
+  + amdgpu: update gc 9.4.3 firmware (thx Alex Deucher)
+  + amdgpu: update vcn 4.0.0 firmware (thx Alex Deucher)
+  + amdgpu: update smu 13.0.0 firmware (thx Alex Deucher)
+  + amdgpu: update sdma 6.0.0 firmware (thx Alex Deucher)
+  + amdgpu: update psp 13.0.0 firmware (thx Alex Deucher)
+  + amdgpu: update gc 11.0.0 firmware (thx Alex Deucher)
+  + amdgpu: update  firmware (thx Alex Deucher)
+  + amdgpu: update aldebaran firmware (thx Alex Deucher)
+  + amdgpu: update psp 13.0.8 firmware (thx Alex Deucher)
+  + amdgpu: update gc 10.3.7 firmware (thx Alex Deucher)
+  + mediatek: Update MT8173 VPU firmware to v1.1.9 (thx Irui Wang)
+  + ath10k: WCN3990: hw1.0: add qcm2290 firmware API file (thx Dmitry Baryshkov)
+  + ath10k: WCN3990: hw1.0: move firmware back from qcom/ location (thx Dmitry Baryshkov)
+
 * Mon Apr 08 2024 Cronbuild Service <cronbuild@altlinux.org> 20240405-alt1
 - upstream changes (GIT 2180c887):
   + i915: Add DG2 HuC 7.10.15 (thx Daniele Ceraolo Spurio)
