@@ -10,8 +10,8 @@
 %define soname 2.5
 
 Name:           lib%oname
-Version:        2.5.8.0
-Release:        alt2
+Version:        2.5.10.1
+Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -26,8 +26,6 @@ Source0:        %name-%version.tar
 
 Source2: %oname.watch
 
-# https://github.com/AcademySoftwareFoundation/OpenImageIO/pull/4143
-Patch1: 4143.patch
 Patch2000: %oname-e2k.patch
 
 BuildRequires(pre): rpm-build-python3
@@ -54,11 +52,13 @@ BuildRequires:  freetype2-devel
 BuildRequires:  libfmt-devel
 BuildRequires:  openvdb-devel
 %ifnarch %e2k
+# util 50075 will be fixed we need dcmtk too
+BuildRequires:  dcmtk libxml2-devel
 BuildRequires:  libdcmtk-devel
 %endif
 BuildRequires:  libopencv-devel
-BuildRequires: libavcodec-devel libavformat-devel libswscale-devel
-BuildRequires: libheif-devel libPtex-devel
+BuildRequires:  libavcodec-devel libavformat-devel libswscale-devel
+BuildRequires:  libheif-devel libPtex-devel
 
 # WARNING: OpenColorIO and OpenImageIO are cross dependent.
 # If an ABI incompatible update is done in one, the other also needs to be
@@ -137,7 +137,6 @@ Development files for package %name
 
 %prep
 %setup
-%patch1 -p1
 %ifarch %e2k
 %patch2000 -p1
 # simplifies the patch
@@ -233,18 +232,23 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Thu Apr 18 2024 L.A. Kostis <lakostis@altlinux.ru> 2.5.10.1-alt1
+- Updated to upstream version 2.5.10.1.
+- BR: added dcmtk (bug #50075 workaround).
+- BR: added libxml2-devel (another dcmtk -devel missing req).
+
 * Wed Feb 21 2024 L.A. Kostis <lakostis@altlinux.ru> 2.5.8.0-alt2
 - aarch64: Apply fix from #PR4143 to address NEON issues.
 - armh: use USE_SIMD=0.
 
 * Wed Feb 21 2024 L.A. Kostis <lakostis@altlinux.ru> 2.5.8.0-alt1
-- 2.5.8.0.
+- Updated to upstream version 2.5.8.0.
 
 * Tue Feb 20 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.5.7.0-alt1.1
 - Updated patch for Elbrus.
 
 * Wed Jan 24 2024 L.A. Kostis <lakostis@altlinux.ru> 2.5.7.0-alt1
-- 2.5.7.0.
+- Updated to upstream version 2.5.7.0.
 - aarch64: revert simd optimisations (see upstream issue #4111).
 
 * Thu Nov 16 2023 L.A. Kostis <lakostis@altlinux.ru> 2.5.5.0-alt2
