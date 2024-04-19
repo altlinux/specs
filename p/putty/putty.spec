@@ -1,6 +1,6 @@
 Name: putty
-Version: 0.78
-Release: alt2
+Version: 0.81
+Release: alt1
 
 Summary: Free SSH, Telnet and Rlogin client
 License: MIT
@@ -13,8 +13,10 @@ Source2: %name-%version.tar.gz.gpg
 Source3: putty.desktop
 Source4: %name.watch
 Packager: Michael Shigorin <mike@altlinux.org>
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: libgtk+3-devel libgtk+3 libgtk+3-gir-devel rpm-macros-cmake cmake ImageMagick-tools libpcre2-devel bzip2 libffi-devel bzlib-devel halibut libbrotli-devel 
 
-BuildRequires: libgtk+3-devel rpm-macros-cmake cmake ImageMagick-tools
 
 %description
 This is the Unix port of the popular Windows ssh client, PuTTY. It
@@ -45,6 +47,7 @@ sed -i 's/G_APPLICATION_FLAGS_NONE/G_APPLICATION_DEFAULT_FLAGS/' \
 %add_optflags -Wno-error=deprecated-declarations
 %endif
 export CFLAGS=" -DNOT_X_WINDOWS -Wno-error=unused-function"
+
 mkdir %{_cmake__builddir}
 
 cd %{_cmake__builddir}
@@ -56,6 +59,7 @@ make
 make -C ../icons putty-48.png
 
 make -C doc
+
 
 mkdir -p %buildroot{%_bindir,%_man1dir}
 %makeinstall_std prefix=%prefix mandir=%_mandir
@@ -83,6 +87,17 @@ install -pDm644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %_liconsdir/*.png
 
 %changelog
+* Fri Apr 19 2024 Ilya Mashkin <oddity@altlinux.ru> 0.81-alt1
+- 0.81
+- Fixed a critical vulnerability in the use of 521-bit ECDSA keys (ecdsa-sha2-nistp521) (fixes: CVE-2024-31497)
+
+* Sat Apr 13 2024 Ilya Mashkin <oddity@altlinux.ru> 0.80-alt2
+- Add more BR
+
+* Sat Apr 13 2024 Ilya Mashkin <oddity@altlinux.ru> 0.80-alt1
+- 0.80 (Closes: #49049)
+- Fixed Terrapin vulnerability in some SSH protocol extensions (fixes: CVE-2023-48795)
+
 * Mon Dec 12 2022 Michael Shigorin <mike@altlinux.org> 0.78-alt2
 - E2K: build fixes (clmul, gtk issues) by ilyakurdyukov@
 
