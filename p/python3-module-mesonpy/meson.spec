@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.15.0
-Release: alt2.1
+Version: 0.16.0
+Release: alt1
 
 Summary: Meson PEP 517 Python build backend
 License: MIT
@@ -31,6 +31,7 @@ BuildRequires: python3-module-pytest-mock
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch: 225a26d8c854987897448b17478166570c7be777.patch
 # mapping from PyPI name (actual PyPI name is meson-python)
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
 Provides: python3-module-meson-python = %EVR
@@ -46,6 +47,7 @@ for more details.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %pyproject_build
@@ -63,6 +65,9 @@ for more details.
 %python3_sitelibdir/%{pyproject_distinfo meson_python}
 
 %changelog
+* Fri Apr 19 2024 Grigory Ustinov <grenka@altlinux.org> 0.16.0-alt1
+- Automatically updated to 0.16.0.
+
 * Tue Feb 20 2024 Stanislav Levin <slev@altlinux.org> 0.15.0-alt2.1
 - NMU: mapped PyPI name to distro's one.
 
