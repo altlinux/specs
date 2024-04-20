@@ -1,6 +1,6 @@
 Name: cool-retro-term
 Version: 1.2.0
-Release: alt3
+Release: alt4
 
 Summary: Cool Retro Terminal
 License: GPLv3+
@@ -53,6 +53,9 @@ desktop-file-install \
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Sat Apr 20 2024 Ilya Mashkin <oddity@altlinux.ru> 1.2.0-alt4
+- Rebuild with new qt5-qmltermwidget
+
 * Mon Apr 15 2024 Ilya Mashkin <oddity@altlinux.ru> 1.2.0-alt3
 - Add BR qt5-declarative-common 
 
