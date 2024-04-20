@@ -3,7 +3,7 @@
 %define pypi_name pyTelegramBotAPI
 
 Name: python3-module-%modulename
-Version: 4.15.2
+Version: 4.17.0
 Release: alt1
 
 Summary: Python Telegram bot api
@@ -15,6 +15,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(hatchling)
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 
@@ -38,10 +39,12 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 %files
 %python3_sitelibdir/%modulename
-%python3_sitelibdir/%pypi_name-%version.dist-info
-
+%python3_sitelibdir/%{pyproject_distinfo pytelegrambotapi}
 
 %changelog
+* Fri Apr 19 2024 Alexander Makeenkov <amakeenk@altlinux.org> 4.17.0-alt1
+- Updated to version 4.17.0.
+
 * Mon Jan 15 2024 Alexander Makeenkov <amakeenk@altlinux.org> 4.15.2-alt1
 - Updated to version 4.15.2.
 
