@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.2
-Release: alt1
+Release: alt1.1
 
 Summary: Utilities to read/write Python types to/from HDF5 files, including MATLAB v7.3 MAT files
 License: BSD-2-Clause
@@ -85,7 +85,7 @@ export PYTHONPATH=$PWD
 cp -fR doc/build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-%pyproject_run_pytest -k 'not test_has_required_non_lazy'
+%pyproject_run_pytest -k 'not test_has_required_lazy'
 
 %files
 %doc COPYING.txt *.rst
@@ -102,6 +102,9 @@ cp -fR doc/build/pickle %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Sat Apr 20 2024 Anton Vyatkin <toni@altlinux.org> 0.2-alt1.1
+- Fixed FTBFS.
+
 * Thu Mar 23 2023 Anton Vyatkin <toni@altlinux.org> 0.2-alt1
 - new version 0.2
 
