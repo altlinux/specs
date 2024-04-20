@@ -2,7 +2,7 @@
 %def_with check
 
 Name: python3-module-synology-dsm
-Version: 2.3.0
+Version: 2.4.2
 Release: alt1
 Summary: Asynchronous Python API for Synology DSM
 License: MIT
@@ -44,5 +44,8 @@ BuildRequires: python3-module-pytest-asyncio
 %exclude %_bindir/synologydsm-api
 
 %changelog
+* Fri Apr 19 2024 Alexander Makeenkov <amakeenk@altlinux.org> 2.4.2-alt1
+- Updated to version 2.4.2.
+
 * Sat Feb 10 2024 Alexander Makeenkov <amakeenk@altlinux.org> 2.3.0-alt1
 - Initial build for ALT.
