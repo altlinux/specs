@@ -2,7 +2,7 @@
 
 Name: sos
 Version: 4.6.0
-Release: alt2
+Release: alt3
 
 Summary: A set of tools to gather troubleshooting information from a system
 License: GPL-2.0+
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-
+%py3_requires pkg_resources magic
 
 %description
 Sos is a set of tools that gathers information about system
@@ -65,6 +65,9 @@ rm -rf %buildroot/usr/config/
 %_man5dir/sos.conf.5*
 
 %changelog
+* Sat Apr 20 2024 Andrey Cherepanov <cas@altlinux.org> 4.6.0-alt3
+- NMU: added runtime requirements (ALT #50102)
+
 * Thu Oct 26 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 4.6.0-alt2
 - NMU:
     + cleaned up spec
