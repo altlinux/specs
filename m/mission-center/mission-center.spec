@@ -12,8 +12,8 @@
 %def_disable check
 
 Name: mission-center
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.5.2
+Release: alt1
 
 Summary: Mission Center
 License: GPL-3.0
@@ -94,6 +94,9 @@ sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/sys_info_v2/mem_info.rs
 
 
 %changelog
+* Sun Apr 21 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.5.2-alt1
+- v0.4.5-2
+
 * Thu Apr 11 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.4-alt2
 - updated to v0.4.4-2-65-g8a1122d (ALT #49691)
 
