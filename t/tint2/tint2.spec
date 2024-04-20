@@ -4,7 +4,7 @@
 
 Name: tint2
 Version: 17.0.2
-Release: alt1
+Release: alt2
 Summary: Simple panel/taskbar made for modern x window managers
 
 Group: Graphical desktop/Other
@@ -12,6 +12,7 @@ License: GPLv2
 Url: https://gitlab.com/o9000/tint2
 
 Source: %name-%version.tar
+Patch0: tint2-undefined-reference-to-symbol.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
@@ -29,6 +30,7 @@ other window managers (GNOME, KDE, etc...).
 
 %prep
 %setup -q %name-%version
+%patch0 -p2
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -55,6 +57,9 @@ other window managers (GNOME, KDE, etc...).
 %_datadir/mime/packages/tint2conf.xml
 
 %changelog
+* Sat Apr 20 2024 Konstantin Rybakov <kastet@altlinux.org> 17.0.2-alt2
+- Fix build error undefined-reference-to-symbol
+
 * Thu Dec 09 2021 Konstantin Rybakov <kastet@altlinux.org> 17.0.2-alt1
 - Updated to upstream version 17.0.2
 
