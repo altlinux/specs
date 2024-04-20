@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%modname
-Version: 2.4.0
-Release: alt3
+Version: 2.5.0
+Release: alt1
 Summary: Library for communicating with a Redmine project management application.
 License: Apache-2.0
 Group: Development/Python3
@@ -16,7 +16,6 @@ BuildArch: noarch
 # https://github.com/maxtepkeev/python-redmine/
 Source: %name-%version.tar
 Patch1: disable-tests-coverage.patch
-Patch2: alt-fix-tests.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
@@ -36,7 +35,6 @@ provides a simple but powerful Pythonic API inspired by a well-known Django ORM.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 
 %build
 %pyproject_build
@@ -54,6 +52,9 @@ provides a simple but powerful Pythonic API inspired by a well-known Django ORM.
 %python3_sitelibdir/redminelib
 
 %changelog
+* Fri Apr 19 2024 Alexander Makeenkov <amakeenk@altlinux.org> 2.5.0-alt1
+- Updated to version 2.5.0.
+
 * Sat Jan 20 2024 Alexander Makeenkov <amakeenk@altlinux.org> 2.4.0-alt3
 - Fixed tests.
 
