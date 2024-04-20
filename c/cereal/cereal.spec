@@ -3,8 +3,8 @@
 %global debug_package %nil
 
 Name: cereal
-Version: 1.3.0
-Release: alt1.1
+Version: 1.3.2
+Release: alt1
 
 Summary: A header-only C++11 serialization library
 License: BSD
@@ -19,7 +19,7 @@ Patch: d7b68df.patch
 BuildRequires: gcc-c++
 BuildRequires: boost-program_options-devel
 BuildRequires: cmake >= 3.0
-BuildRequires: ctest
+BuildRequires: ctest rpm-macros-cmake
 
 %description
 cereal is a header-only C++11 serialization library. cereal takes arbitrary
@@ -43,7 +43,7 @@ This package contains development headers and libraries for the cereal library
 
 %prep
 %setup
-%patch -p1
+#patch -p1
 %ifarch %e2k
 # works around an internal error in EDG frontend (mcst#6699)
 sed -i "/String& decomposition = String.*;/{s/;/{};/;s/=/);Result(bool x):Result(x,/}" \
@@ -63,9 +63,13 @@ sed -i "/String& decomposition = String.*;/{s/;/{};/;s/=/);Result(bool x):Result
 %files devel
 %doc README.md
 %_includedir/%name
-%_datadir/cmake/%name
+#_datadir/cmake/%name
+%_libdir/cmake/%name/*
 
 %changelog
+* Sat Apr 20 2024 Ilya Mashkin <oddity@altlinux.ru> 1.3.2-alt1
+- 1.3.2
+
 * Wed Apr 27 2022 Michael Shigorin <mike@altlinux.org> 1.3.0-alt1.1
 - E2K: EDG ICE workaround by ilyakurdyukov@ (mcst#6699)
 
