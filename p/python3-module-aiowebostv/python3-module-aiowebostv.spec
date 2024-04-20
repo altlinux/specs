@@ -2,7 +2,7 @@
 %define module_name aiowebostv
 
 Name: python3-module-%module_name
-Version: 0.3.3
+Version: 0.4.0
 Release: alt1
 Summary: Python library to control LG webOS based TV devices
 License: Apache-2.0
@@ -33,5 +33,8 @@ BuildRequires: python3-module-wheel
 %python3_sitelibdir/%{pyproject_distinfo %module_name}
 
 %changelog
+* Fri Apr 19 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.4.0-alt1
+- Updated to version 0.4.0.
+
 * Sat Feb 10 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.3.3-alt1
 - Initial build for ALT.
