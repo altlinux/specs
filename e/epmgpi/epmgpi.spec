@@ -1,5 +1,5 @@
 Name: epmgpi
-Version: 1.3
+Version: 1.4
 Release: alt1
 
 Summary: Etersoft EPM GUI Package Installer
@@ -31,6 +31,12 @@ EPM GUI Package Installer was created to install packages
 %_pixmapsdir/%name.svg
 
 %changelog
+* Tue Apr 16 2024 Roman Alifanov <ximper@altlinux.org> 1.4-alt1
+- log is visible after package installation error (ALT bug 50026)
+- small fix for use in the terminal
+- big refactoring
+- added ban on starting from root
+
 * Mon Apr 15 2024 Roman Alifanov <ximper@altlinux.org> 1.3-alt1
 - added argument handling and some fixes (ALT bug 49986)
 
