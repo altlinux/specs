@@ -1,9 +1,10 @@
+%def_enable snapshot
 %def_enable old_headers
 %def_enable check
 
 Name: lv2
 Version: 1.18.10
-Release: alt1.1
+Release: alt2
 
 Summary: Audio Plugin Standard
 # lv2specgen template.html is CC-AT-SA
@@ -12,7 +13,12 @@ Group: System/Libraries
 Url: http://lv2plug.in
 
 Vcs: https://github.com/lv2/lv2.git
-Source: http://lv2plug.in/spec/lv2-%version.tar.xz
+%if_disabled snapshot
+Source: http://lv2plug.in/spec/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
+
 Source1: lv2-1.18.4-include-symlinks
 Patch1: %name-1.18.10-alt-codespell.patch
 
@@ -148,6 +154,9 @@ sed -i '1s|^#!.*|#!%__python3|' lv2specgen/lv2specgen.py
 %_docdir/%name/
 
 %changelog
+* Sat Apr 20 2024 Yuri N. Sedunov <aris@altlinux.org> 1.18.10-alt2
+- updated to v1.18.10-39-ge9d9432
+
 * Sat Oct 07 2023 Yuri N. Sedunov <aris@altlinux.org> 1.18.10-alt1.1
 - fixed misspellings found by codespell-2.2.6
 
