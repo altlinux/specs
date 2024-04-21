@@ -4,7 +4,7 @@
 %set_verify_elf_method rpath=relaxed
 
 Name: zig
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 Summary: General-purpose programming language and toolchain for maintaining robust, optimal, and reusable software
 # TODO: Zig lib is bundled with a lot of third party with other licenses.
@@ -15,28 +15,29 @@ Vcs: https://github.com/ziglang/zig/
 Requires: /proc
 
 # https://ziglang.org/download/0.10.0/release-notes.html#Support-Table
-# aarch64: OK  1:07:59
-#    armh: UnknownArchitecture
-#    i586: FileTooBig
-# ppc64le: panic: reached unreachable code
-#  x86-64: OK    29:00
+# aarch64: OK  1:03:53
+#    armh: -
+#    i586: LLVM ERROR: out of memory
+# ppc64le: zig2: Segmentation fault
+#  x86-64: OK    31:37
 ExclusiveArch: %zig_arches
 
 Source: %name-%version.tar
 
-%define llvm_ver 16
+%define llvm_ver 17
+%define llvm_pkgver %llvm_ver.0
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-zig
 # /proc is required or zig will output FileNotFound
 BuildRequires: chrpath
-BuildRequires: clang%llvm_ver.0-devel
+BuildRequires: clang%llvm_pkgver-devel
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libstdc++-devel
 BuildRequires: libtinfo-devel
 BuildRequires: libxml2-devel
-BuildRequires: lld%llvm_ver.0-devel
-BuildRequires: llvm%llvm_ver.0-devel
+BuildRequires: lld%llvm_pkgver-devel
+BuildRequires: llvm%llvm_pkgver-devel
 BuildRequires: /proc
 BuildRequires: zlib-devel
 
@@ -81,8 +82,8 @@ chrpath -d %buildroot%_bindir/zig
 PATH=%buildroot%_bindir:$PATH
 zig version
 zig env
-zig run test/standalone/hello_world/hello.zig
-zig run test/standalone/hello_world/hello_libc.zig -lc
+zig run test/standalone/simple/hello_world/hello.zig
+zig run test/standalone/simple/hello_world/hello_libc.zig -lc
 # Run upstream tests from ci/x86_64-linux-debug.sh
 cd %_cmake__builddir
 zig test ../test/behavior.zig -I../test
@@ -93,20 +94,24 @@ zig version
 zig run %_defaultdocdir/%name/hello.zig
 t=$(mktemp -d)
 cd "$t"
-%__zig init-exe
+%__zig init
 %zig_build run
 %zig_test
-rm -rf -- "$t"
+rm -rf -- "$t" "$HOME/.cache/zig"
 
 %files
 %define _customdocdir %_docdir/%name
-%doc LICENSE README.md test/standalone/hello_world/*.zig doc/langref.html.in
+%doc LICENSE README.md test/standalone/simple/hello_world/*.zig doc/langref.html.in
 %_bindir/zig
 %_prefix/lib/zig
 
 %files checkinstall
 
 %changelog
+* Sat Apr 20 2024 Vitaly Chikunov <vt@altlinux.org> 0.12.0-alt1
+- Update to 0.12.0 (2024-04-19).
+- Switch to LLVM 17.
+
 * Sat Aug 12 2023 Vitaly Chikunov <vt@altlinux.org> 0.11.0-alt1
 - Update to 0.11.0 (2023-08-03).
 - spec: Add simplest checkinstall package with a test.
