@@ -3,7 +3,7 @@
 %define _pseudouser_group    _pcp
 %define _pseudouser_home     %_sharedstatedir/pcp
 %define _unpackaged_files_terminate_build 1
-
+%define optflags_lto %nil
 
 %define _localstatedir /var
 %define _libexecdir /usr/libexec
@@ -15,8 +15,8 @@
 %define _logconfdir %_sharedstatedir/pcp/config/pmlogconf
 
 Name: pcp
-Version: 5.2.0
-Release: alt2
+Version: 6.2.1
+Release: alt1
 Summary: System-level performance monitoring and performance management
 License: GPLv2+ and LGPLv2+ and CC-BY-SA-3.0
 Group: Monitoring
@@ -43,6 +43,7 @@ BuildRequires: qt5-base-devel qt5-svg-devel gcc-c++
 
 BuildRequires: perl-devel
 BuildRequires: python3-devel
+BuildRequires: python3-module-distutils-extra
 
 BuildRequires: perl-autodie
 BuildRequires: perl-Class-DBI
@@ -56,6 +57,7 @@ BuildRequires: perl-TimeDate
 BuildRequires: perl-Spreadsheet-WriteExcel
 BuildRequires: perl-XML-LibXML
 BuildRequires: perl-XML-TokeParser
+BuildRequires: perl-Net-LDAP-Server
 
 BuildRequires: chrpath
 BuildRequires: postfix
@@ -65,8 +67,8 @@ Requires: libpcopilot = %EVR
 Requires(post): pcp-conf
 
 # PCP discovery service now provided by pmfind
-Obsoletes: pcp-manager-debuginfo < 5.2.0
-Obsoletes: pcp-manager < 5.2.0
+Obsoletes: pcp-manager-debuginfo < 6.2.1
+Obsoletes: pcp-manager < 6.2.1
 
 %description
 Performance Co-Pilot (PCP) provides a framework and services to support
@@ -293,6 +295,7 @@ find -type f,d -name 'libpcp*' | sort -r | sed 'p;s:\(.*\)libpcp:\1libpcopilot:'
 mv src/include/pcp src/include/pcopilot
 sed -i -e 's:include/pcp/:include/pcopilot/:g' configure.ac 
 sed -i -e 's:SUBDIRS = pcp:SUBDIRS = pcopilot:' src/include/GNUmakefile
+sed -i -e 's:/usr/lib/tmpfiles.d/pcp-reboot-init.conf:/lib/tmpfiles.d/pcp-reboot-init.conf:' GNUmakefile
 grep -rl '/include/pcp' | xargs sed -i \
 -e '/PCP_INC_DIR/s:/include/pcp:/include/pcopilot:g' \
 -e 's:/include/pcp/:/include/pcopilot/:g' \
@@ -381,7 +384,6 @@ rm %buildroot%_includedir/pcopilot/configsz.h
 rm %buildroot%_includedir/pcopilot/platformsz.h
 
 rm -r %buildroot%_sharedstatedir/pcp/config/pmchart/
-rm -r %buildroot%_datadir/pcp-gui/pixmaps/
 
 touch %buildroot/%_pmnsdir/root \
         %buildroot/%_pmnsdir/root.prev \
@@ -430,6 +432,7 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_pmdasdir/proc/
 %_pmdasdir/root/
 %_pmdasdir/xfs/
+%_pmdasdir/zfs/
 %_bindir/dbpmda
 %_bindir/pcp
 %_bindir/pcp2csv
@@ -452,6 +455,8 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_bindir/pmlogctl
 %_bindir/pmlogextract
 %_bindir/pmlogger
+%_bindir/pmcheck
+%_bindir/pcp2openmetrics
 %_bindir/pmloglabel
 %_bindir/pmlogmv
 %_bindir/pmlogpaste
@@ -464,6 +469,11 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_bindir/pmstore
 %_bindir/pmtrace
 %_bindir/pmval
+%_bindir/pmlogdump
+%_bindir/pmlogredact
+%_bindir/pmlogreduce
+%_bindir/pmlogrewrite
+%_bindir/pmrepconf
 %dir %_libexecdir/pcp
 %dir %_libexecdir/pcp/bin
 %_libexecdir/pcp/bin/chkhelp
@@ -489,7 +499,6 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_libexecdir/pcp/bin/pmiestatus
 %_libexecdir/pcp/bin/pmlock
 %_libexecdir/pcp/bin/pmlogconf
-#%_libexecdir/pcp/bin/pmlogconf-setup
 %_libexecdir/pcp/bin/pmlogextract
 %_libexecdir/pcp/bin/pmlogger
 %_libexecdir/pcp/bin/pmlogger_check
@@ -509,6 +518,21 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_libexecdir/pcp/bin/pmsleep
 %_libexecdir/pcp/bin/pmwtf
 %_libexecdir/pcp/bin/telnet-probe
+%_libexecdir/pcp/bin/pcp-buddyinfo
+%_libexecdir/pcp/bin/pcp-geolocate
+%_libexecdir/pcp/bin/pcp-meminfo
+%_libexecdir/pcp/bin/pcp-netstat
+%_libexecdir/pcp/bin/pcp-ps
+%_libexecdir/pcp/bin/pcp-reboot-init
+%_libexecdir/pcp/bin/pcp-slabinfo
+%_libexecdir/pcp/bin/pcp-ss
+%_libexecdir/pcp/bin/pcp-zoneinfo
+%_libexecdir/pcp/bin/pmie_farm
+%_libexecdir/pcp/bin/pmie_webhook
+%_libexecdir/pcp/bin/pmlogger_farm
+%_libexecdir/pcp/bin/pmlogger_janitor
+%_libexecdir/pcp/bin/pmlogredact
+%_libexecdir/pcp/bin/runaspcp
 # todo: move to subpackages
 %dir %_libexecdir/pcp/lib
 %dir %_libexecdir/pcp/pmdas
@@ -527,13 +551,10 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_libexecdir/pcp/pmdas/elasticsearch
 %_libexecdir/pcp/pmdas/gfs2
 %_libexecdir/pcp/pmdas/gluster
-%_libexecdir/pcp/pmdas/gluster
 %_libexecdir/pcp/pmdas/gpfs
 %_libexecdir/pcp/pmdas/gpsd
 %_libexecdir/pcp/pmdas/haproxy
 %_libexecdir/pcp/pmdas/jbd2
-%_libexecdir/pcp/pmdas/jbd2
-%_libexecdir/pcp/pmdas/kvm
 %_libexecdir/pcp/pmdas/kvm
 %_libexecdir/pcp/pmdas/linux
 %_libexecdir/pcp/pmdas/lmsensors
@@ -545,7 +566,6 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_libexecdir/pcp/pmdas/mic
 %_libexecdir/pcp/pmdas/mmv
 %_libexecdir/pcp/pmdas/mounts
-%_libexecdir/pcp/pmdas/mssql
 %_libexecdir/pcp/pmdas/named
 %_libexecdir/pcp/pmdas/netcheck
 %_libexecdir/pcp/pmdas/netfilter
@@ -564,7 +584,6 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_libexecdir/pcp/pmdas/redis
 %_libexecdir/pcp/pmdas/roomtemp
 %_libexecdir/pcp/pmdas/root
-%_libexecdir/pcp/pmdas/rpm
 %_libexecdir/pcp/pmdas/rsyslog
 %_libexecdir/pcp/pmdas/samba
 %_libexecdir/pcp/pmdas/sample
@@ -580,16 +599,38 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_libexecdir/pcp/pmdas/txmon
 %_libexecdir/pcp/pmdas/unbound
 %_libexecdir/pcp/pmdas/weblog
-%_libexecdir/pcp/pmdas/weblog
 %_libexecdir/pcp/pmdas/xfs
 %_libexecdir/pcp/pmdas/zimbra
 %_libexecdir/pcp/pmdas/zswap
+%_libexecdir/pcp/pmdas/denki
+%_libexecdir/pcp/pmdas/farm
+%_libexecdir/pcp/pmdas/hacluster
+%_libexecdir/pcp/pmdas/overhead
+%_libexecdir/pcp/pmdas/podman
+%ifarch x86_64
+%_libexecdir/pcp/pmdas/resctrl
+%endif
+%_libexecdir/pcp/pmdas/sockets
+%_libexecdir/pcp/pmdas/zfs
+%dir %_libexecdir/pcp/pmdas/uwsgi
+%_libexecdir/pcp/pmdas/uwsgi/Install
+%_libexecdir/pcp/pmdas/uwsgi/Remove
+%_libexecdir/pcp/pmdas/uwsgi/pmdauwsgi.python
 %_libexecdir/pcp/pmns
+%_libexecdir/pcp/lib/checkproc.sh
 %_libexecdir/pcp/lib/bashproc.sh
 %_libexecdir/pcp/lib/pmdaproc.sh
 %_libexecdir/pcp/lib/rc-proc.sh
 %_libexecdir/pcp/lib/rc-proc.sh.minimal
 %_libexecdir/pcp/lib/utilproc.sh
+%dir %_confdir/pmlogredact
+%config(noreplace) %_confdir/pmlogredact/network
+%config(noreplace) %_confdir/pmlogredact/usernames
+%dir %_confdir/overhead
+%dir %_confdir/overhead/conf.d
+%config(noreplace) %_confdir/overhead/conf.d/default.conf
+%dir %_confdir/overhead/examples
+%config(noreplace) %_confdir/overhead/examples/sample.conf
 %dir %_confdir/bind2
 %config(noreplace) %_confdir/bind2/bind2.conf
 %dir %_confdir/derived
@@ -597,16 +638,25 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %config(noreplace) %_confdir/derived/iostat.conf
 %config(noreplace) %_confdir/derived/mssql.conf
 %config(noreplace) %_confdir/derived/proc.conf
+%config(noreplace) %_confdir/derived/denki.conf
 %dir %_confdir/haproxy
 %config(noreplace) %_confdir/haproxy/haproxy.conf
+%config(noreplace) %_confdir/tls.conf
+%dir %_confdir/sockets
+%config(noreplace) %_confdir/sockets/filter.conf
+%dir %_confdir/kvm
+%config(noreplace) %_confdir/kvm/kvm.conf
+%config(noreplace) %_confdir/indom.conf
+%config(noreplace) %_confdir/labels.conf
+%dir %_confdir/elasticsearch
+%config(noreplace) %_confdir/elasticsearch/elasticsearch.conf
 %dir %_confdir/linux
 %config(noreplace) %_confdir/linux/samplebandwidth.conf
+%config(noreplace) %_confdir/linux/interfaces.conf
 %dir %_confdir/lustre
 %config(noreplace) %_confdir/lustre/lustre.conf
 %dir %_confdir/mounts
 %config(noreplace) %_confdir/mounts/mounts.conf
-%dir %_confdir/mssql
-%config(noreplace) %_confdir/mssql/mssql.conf
 %dir %_confdir/netcheck
 %config(noreplace) %_confdir/netcheck/netcheck.conf
 %dir %_confdir/nginx
@@ -617,21 +667,9 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %config(noreplace) %_confdir/pipe/sample.conf
 %dir %_confdir/pmafm
 %config(noreplace) %_confdir/pmafm/pcp
-%config(noreplace) %_confdir/pmafm/pcp-gui
 %dir %_confdir/pmchart
-%config(noreplace) %_confdir/pmchart/Apache
-%config(noreplace) %_confdir/pmchart/Cisco
-%config(noreplace) %_confdir/pmchart/Sample
-%config(noreplace) %_confdir/pmchart/Sendmail
-%config(noreplace) %_confdir/pmchart/Web.Alarms
-%config(noreplace) %_confdir/pmchart/Web.Allservers
-%config(noreplace) %_confdir/pmchart/Web.Perserver.Bytes
-%config(noreplace) %_confdir/pmchart/Web.Perserver.Requests
-%config(noreplace) %_confdir/pmchart/Web.Requests
-%config(noreplace) %_confdir/pmchart/Web.Volume
-%config(noreplace) %_confdir/pmchart/shping.CPUTime
-%config(noreplace) %_confdir/pmchart/shping.RealTime
 %dir %_confdir/pmie
+%config(noreplace) %_confdir/pmie/rc
 %dir %_confdir/pmie/class.d
 %config(noreplace) %_confdir/pmie/class.d/pmfind
 %dir %_confdir/pmieconf
@@ -651,12 +689,34 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %config(noreplace) %_confdir/pmieconf/entropy/available
 %dir %_confdir/pmieconf/filesys
 %config(noreplace) %_confdir/pmieconf/filesys/filling
+%config(noreplace) %_confdir/pmieconf/filesys/vfs_files
 %dir %_confdir/pmieconf/global
 %config(noreplace) %_confdir/pmieconf/global/parameters
 %config(noreplace) %_confdir/pmieconf/global/pcp_actions
 %dir %_confdir/pmieconf/memory
 %config(noreplace) %_confdir/pmieconf/memory/exhausted
 %config(noreplace) %_confdir/pmieconf/memory/swap_low
+%config(noreplace) %_confdir/pmieconf/memory/oom_kill
+%dir %_confdir/pmieconf/openvswitch
+%config(noreplace) %_confdir/pmieconf/openvswitch/errors
+%config(noreplace) %_confdir/pmieconf/openvswitch/mtu_exceeded_drops
+%config(noreplace) %_confdir/pmieconf/openvswitch/rx_drops
+%config(noreplace) %_confdir/pmieconf/openvswitch/rx_qos_drops
+%config(noreplace) %_confdir/pmieconf/openvswitch/tx_drops
+%config(noreplace) %_confdir/pmieconf/openvswitch/tx_failure_drops
+%config(noreplace) %_confdir/pmieconf/openvswitch/tx_qos_drops
+%config(noreplace) %_confdir/pmieconf/openvswitch/tx_retries
+%config(noreplace) %_confdir/pmieconf/openvswitch/vhost_notification
+%config(noreplace) %_confdir/pmieconf/openvswitch/vhost_tx_contention
+%dir %_confdir/pmieconf/perdisk
+%config(noreplace) %_confdir/pmieconf/perdisk/average_queue_length
+%config(noreplace) %_confdir/pmieconf/perdisk/average_wait_time
+%config(noreplace) %_confdir/pmieconf/perdisk/bandwidth
+%config(noreplace) %_confdir/pmieconf/perdisk/iops
+%dir %_confdir/pmieconf/power
+%config(noreplace) %_confdir/pmieconf/power/thermal_throttle
+%dir %_confdir/pmieconf/testing
+%config(noreplace) %_confdir/pmieconf/testing/test_actions
 %dir %_confdir/pmieconf/network
 %config(noreplace) %_confdir/pmieconf/network/tcplistenoverflows
 %config(noreplace) %_confdir/pmieconf/network/tcpqfulldocookies
@@ -677,11 +737,15 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %config(noreplace) %_confdir/pmieconf/shping/status
 %dir %_confdir/pmieconf/zeroconf
 %config(noreplace) %_confdir/pmieconf/zeroconf/all_threads
+%dir %_confdir/uwsgi
+%config(noreplace) %_confdir/uwsgi/uwsgi.conf
 %dir %_confdir/pmlogconf
 %dir %_confdir/pmlogconf/apache
 %config(noreplace) %_confdir/pmlogconf/apache/processes
 %config(noreplace) %_confdir/pmlogconf/apache/summary
 %config(noreplace) %_confdir/pmlogconf/apache/uptime
+%dir %_confdir/pmlogconf/uwsgi
+%config(noreplace) %_confdir/pmlogconf/uwsgi/summary
 %dir %_confdir/pmlogconf/cpu
 %config(noreplace) %_confdir/pmlogconf/cpu/percpu
 %config(noreplace) %_confdir/pmlogconf/cpu/summary
@@ -705,17 +769,12 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %config(noreplace) %_confdir/pmlogconf/kernel/bufcache-activity
 %config(noreplace) %_confdir/pmlogconf/kernel/bufcache-all
 %config(noreplace) %_confdir/pmlogconf/kernel/inode-cache
-%config(noreplace) %_confdir/pmlogconf/kernel/interrupts-irix
 %config(noreplace) %_confdir/pmlogconf/kernel/load
-%config(noreplace) %_confdir/pmlogconf/kernel/memory-irix
 %config(noreplace) %_confdir/pmlogconf/kernel/memory-linux
-%config(noreplace) %_confdir/pmlogconf/kernel/queues-irix
 %config(noreplace) %_confdir/pmlogconf/kernel/read-write-data
 %config(noreplace) %_confdir/pmlogconf/kernel/summary-linux
 %config(noreplace) %_confdir/pmlogconf/kernel/summary-windows
-%config(noreplace) %_confdir/pmlogconf/kernel/syscalls-irix
 %config(noreplace) %_confdir/pmlogconf/kernel/syscalls-linux
-%config(noreplace) %_confdir/pmlogconf/kernel/syscalls-percpu-irix
 %config(noreplace) %_confdir/pmlogconf/kernel/vnodes
 %dir %_confdir/pmlogconf/kvm
 %config(noreplace) %_confdir/pmlogconf/kvm/kvm
@@ -734,13 +793,10 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %config(noreplace) %_confdir/pmlogconf/memory/swap-activity
 %config(noreplace) %_confdir/pmlogconf/memory/swap-all
 %config(noreplace) %_confdir/pmlogconf/memory/swap-config
-%config(noreplace) %_confdir/pmlogconf/memory/tlb-irix
 %config(noreplace) %_confdir/pmlogconf/memory/vmstat
 %config(noreplace) %_confdir/pmlogconf/memory/zoneinfo
 %dir %_confdir/pmlogconf/mmv
 %config(noreplace) %_confdir/pmlogconf/mmv/summary
-%dir %_confdir/pmlogconf/mssql
-%config(noreplace) %_confdir/pmlogconf/mssql/summary
 %dir %_confdir/pmlogconf/netcheck
 %config(noreplace) %_confdir/pmlogconf/netcheck/summary
 %dir %_confdir/pmlogconf/netfilter
@@ -760,44 +816,35 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %config(noreplace) %_confdir/pmlogconf/networking/nfs4-client
 %config(noreplace) %_confdir/pmlogconf/networking/nfs4-server
 %config(noreplace) %_confdir/pmlogconf/networking/other-protocols
+%config(noreplace) %_confdir/pmlogconf/networking/perprocess-linux
+%config(noreplace) %_confdir/pmlogconf/networking/persocket-linux
 %config(noreplace) %_confdir/pmlogconf/networking/rpc
-%config(noreplace) %_confdir/pmlogconf/networking/socket-irix
 %config(noreplace) %_confdir/pmlogconf/networking/socket-linux
 %config(noreplace) %_confdir/pmlogconf/networking/softnet
 %config(noreplace) %_confdir/pmlogconf/networking/streams
-%config(noreplace) %_confdir/pmlogconf/networking/tcp-activity-irix
 %config(noreplace) %_confdir/pmlogconf/networking/tcp-activity-linux
 %config(noreplace) %_confdir/pmlogconf/networking/tcp-all
 %config(noreplace) %_confdir/pmlogconf/networking/udp-all
-%config(noreplace) %_confdir/pmlogconf/networking/udp-packets-irix
 %config(noreplace) %_confdir/pmlogconf/networking/udp-packets-linux
 %config(noreplace) %_confdir/pmlogconf/networking/udp6
 %dir %_confdir/pmlogconf/nginx
 %config(noreplace) %_confdir/pmlogconf/nginx/summary
 %dir %_confdir/pmlogconf/openvswitch
 %config(noreplace) %_confdir/pmlogconf/openvswitch/summary
+%dir %_confdir/pmlogconf/openmetrics
+%config(noreplace) %_confdir/pmlogconf/openmetrics/kepler
 %dir %_confdir/pmlogconf/oracle
 %config(noreplace) %_confdir/pmlogconf/oracle/summary
 %dir %_confdir/pmlogconf/platform
 %config(noreplace) %_confdir/pmlogconf/platform/hinv
 %config(noreplace) %_confdir/pmlogconf/platform/linux
+%dir %_confdir/pmlogconf/rsyslog
+%config(noreplace) %_confdir/pmlogconf/rsyslog/summary
 %dir %_confdir/pmlogconf/rabbitmq
 %config(noreplace) %_confdir/pmlogconf/rabbitmq/summary
-%dir %_confdir/pmlogconf/sgi
-%config(noreplace) %_confdir/pmlogconf/sgi/cpu-evctr
-%config(noreplace) %_confdir/pmlogconf/sgi/craylink
-%config(noreplace) %_confdir/pmlogconf/sgi/efs
-%config(noreplace) %_confdir/pmlogconf/sgi/hub
-%config(noreplace) %_confdir/pmlogconf/sgi/kaio
-%config(noreplace) %_confdir/pmlogconf/sgi/node-memory
-%config(noreplace) %_confdir/pmlogconf/sgi/numa
-%config(noreplace) %_confdir/pmlogconf/sgi/numa-summary
-%config(noreplace) %_confdir/pmlogconf/sgi/xbow
-%config(noreplace) %_confdir/pmlogconf/sgi/xlv-activity
-%config(noreplace) %_confdir/pmlogconf/sgi/xlv-stripe-io
-%config(noreplace) %_confdir/pmlogconf/sgi/xvm-all
-%config(noreplace) %_confdir/pmlogconf/sgi/xvm-ops
-%config(noreplace) %_confdir/pmlogconf/sgi/xvm-stats
+%dir %_confdir/pmlogconf/services
+%config(noreplace) %_confdir/pmlogconf/services/pmproxy
+%config(noreplace) %_confdir/pmlogconf/services/redis
 %dir %_confdir/pmlogconf/shping
 %config(noreplace) %_confdir/pmlogconf/shping/summary
 %dir %_confdir/pmlogconf/sqlserver
@@ -848,13 +895,12 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %config(noreplace) %_confdir/pmlogconf/tools/vector-summary
 %config(noreplace) %_confdir/pmlogconf/tools/vmstat
 %config(noreplace) %_confdir/pmlogconf/tools/vmstat-summary
-%dir  %_confdir/pmlogconf/v1.0
-%config(noreplace) %_confdir/pmlogconf/v1.0/C2
-%config(noreplace) %_confdir/pmlogconf/v1.0/C3
-%config(noreplace) %_confdir/pmlogconf/v1.0/D3
-%config(noreplace) %_confdir/pmlogconf/v1.0/K0
-%config(noreplace) %_confdir/pmlogconf/v1.0/S0
-%config(noreplace) %_confdir/pmlogconf/v1.0/S1
+%config(noreplace) %_confdir/pmlogconf/tools/atop-zfs
+%config(noreplace) %_confdir/pmlogconf/tools/atop-zswap
+%config(noreplace) %_confdir/pmlogconf/tools/htop
+%config(noreplace) %_confdir/pmlogconf/tools/htop-proc
+%config(noreplace) %_confdir/pmlogconf/tools/htop-summary
+%config(noreplace) %_confdir/pmlogconf/tools/htop-zfs
 %dir %_confdir/pmlogconf/zeroconf
 %config(noreplace) %_confdir/pmlogconf/zeroconf/atop-proc
 %config(noreplace) %_confdir/pmlogconf/zeroconf/interrupts
@@ -864,9 +910,16 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %config(noreplace) %_confdir/pmlogconf/zeroconf/pidstat-summary
 %config(noreplace) %_confdir/pmlogconf/zeroconf/tapestat
 %config(noreplace) %_confdir/pmlogconf/zeroconf/xfs-perdev
+%config(noreplace) %_confdir/pmlogconf/zeroconf/disk
+%config(noreplace) %_confdir/pmlogconf/zeroconf/filesystem
+%config(noreplace) %_confdir/pmlogconf/zeroconf/numa
+%config(noreplace) %_confdir/pmlogconf/zeroconf/rpc
+%config(noreplace) %_confdir/pmlogconf/zeroconf/tty
 %dir %_confdir/pmlogconf/zimbra
 %config(noreplace) %_confdir/pmlogconf/zimbra/all
 %dir %_confdir/pmlogger
+%config(noreplace) %_confdir/pmlogger/options.pmstat
+%config(noreplace) %_confdir/pmlogger/rc
 %dir %_confdir/pmlogger/class.d
 %config(noreplace) %_confdir/pmlogger/class.d/pmfind
 %config(noreplace) %_confdir/pmlogger/config.pmstat
@@ -888,7 +941,10 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %config(noreplace) %_confdir/pmlogrewrite/proc_kernel_ulong.conf
 %config(noreplace) %_confdir/pmlogrewrite/proc_kernel_ulong_migrate.conf
 %config(noreplace) %_confdir/pmlogrewrite/proc_scheduler.conf
-%config(noreplace) %_confdir/pmlogrewrite/rpm_migrate.conf
+%config(noreplace) %_confdir/pmlogrewrite/kvm_fixups.conf
+%config(noreplace) %_confdir/pmlogrewrite/linux_mem_fixups.conf
+%config(noreplace) %_confdir/pmlogrewrite/linux_xfs_perdev_buffer.conf
+%config(noreplace) %_confdir/pmlogrewrite/pmproxy_fixups.conf
 %dir %_confdir/proc
 %config(noreplace) %_confdir/proc/samplehotproc.conf
 %dir %_confdir/rabbitmq
@@ -921,14 +977,11 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_logconfdir/nginx
 %_logconfdir/oracle
 %_logconfdir/platform
-%_logconfdir/sgi
 %_logconfdir/shping
 %_logconfdir/sqlserver
 %_logconfdir/storage
 %_logconfdir/tools
-%_logconfdir/v1.0
 %_logconfdir/zimbra
-%_logconfdir/mssql
 %_logconfdir/netcheck
 %_logconfdir/openvswitch
 %_logconfdir/rabbitmq
@@ -942,7 +995,6 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %dir %attr(0775,%_pseudouser_user,%_pseudouser_group) %_tempsdir
 %dir %attr(0775,%_pseudouser_user,%_pseudouser_group) %_tempsdir/pmie
 %dir %attr(0775,%_pseudouser_user,%_pseudouser_group) %_tempsdir/pmlogger
-%dir %attr(0700,root,root) %_tempsdir/pmcd
 
 %dir %_datadir/pcp/lib
 %_datadir/pcp/lib/ReplacePmnsSubtree
@@ -953,6 +1005,18 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_datadir/pcp/lib/rc-proc.sh
 %_datadir/pcp/lib/rc-proc.sh.minimal
 %_datadir/pcp/lib/unlockpmns
+%_datadir/pcp/lib/
+%_datadir/pcp/lib/checkproc.sh
+%dir %_datadir/pcp/lib/pmcheck
+%_datadir/pcp/lib/pmcheck/pmcd
+%_datadir/pcp/lib/pmcheck/pmda-overhead
+%_datadir/pcp/lib/pmcheck/pmda-postgresql
+%_datadir/pcp/lib/pmcheck/pmda-redis
+%_datadir/pcp/lib/pmcheck/pmda-sample
+%_datadir/pcp/lib/pmcheck/pmda-uwsgi
+%_datadir/pcp/lib/pmcheck/pmie
+%_datadir/pcp/lib/pmcheck/pmlogger
+%_datadir/pcp/lib/pmcheck/pmproxy
 
 %dir %attr(0775,%_pseudouser_user,%_pseudouser_group) %_logsdir
 %attr(0775,%_pseudouser_user,%_pseudouser_group) %_logsdir/pmcd
@@ -975,12 +1039,21 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_unitdir/pmlogger_check.timer
 %_unitdir/pmlogger_daily.service
 %_unitdir/pmlogger_daily.timer
-%_unitdir/pmlogger_daily-poll.service
-%_unitdir/pmlogger_daily-poll.timer
 %_unitdir/pmie_check.service
 %_unitdir/pmie_check.timer
 %_unitdir/pmie_daily.service
 %_unitdir/pmie_daily.timer
+%_unitdir/pcp-geolocate.service
+%_unitdir/pcp-reboot-init.service
+%_unitdir/pmie_farm.service
+%_unitdir/pmie_farm_check.service
+%_unitdir/pmie_farm_check.timer
+%_unitdir/pmlogger_farm.service
+%_unitdir/pmlogger_farm_check.service
+%_unitdir/pmlogger_farm_check.timer
+%ifarch x86_64
+%_unitdir/sys-fs-resctrl.mount
+%endif
 %config(noreplace) %_sysconfdir/sysconfig/pmie_timers
 %config(noreplace) %_sysconfdir/sysconfig/pmlogger_timers
 %config(noreplace) %_sysconfdir/sasl2/pmcd.conf
@@ -988,6 +1061,7 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %config(noreplace) %_sysconfdir/sysconfig/pmproxy
 %config(noreplace) %_sysconfdir/sysconfig/pmcd
 %config(noreplace) %_sysconfdir/sysconfig/pmfind
+%config(noreplace) %_sysconfdir/sysconfig/pmlogger_farm
 %config %_sysconfdir/pcp.env
 %dir %_confdir/labels
 %dir %_confdir/pmcd
@@ -997,23 +1071,19 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %dir %_confdir/pmproxy
 %config(noreplace) %_confdir/pmproxy/pmproxy.options
 %config(noreplace) %_confdir/pmproxy/pmproxy.conf
-%dir %_confdir/pmie
+%config(noreplace) %_confdir/pmproxy/rc
 %dir %_confdir/pmie/control.d
 %config(noreplace) %_confdir/pmie/control
 %config(noreplace) %_confdir/pmie/control.d/local
-%dir %_confdir/pmlogger
 %dir %_confdir/pmlogger/control.d
 %config(noreplace) %_confdir/pmlogger/control
 %config(noreplace) %_confdir/pmlogger/control.d/local
-%dir %attr(0775,%_pseudouser_user,%_pseudouser_group) %_confdir/nssdb
 %dir %_confdir/discover
 %config(noreplace) %_confdir/discover/pcp-kube-pods.conf
 
 %ghost %dir %attr(0775,%_pseudouser_user,%_pseudouser_group) /run/pcp
 %_sharedstatedir/pcp/config/pmafm
-%exclude %_sharedstatedir/pcp/config/pmafm/pcp-gui
 %dir %attr(0775,%_pseudouser_user,%_pseudouser_group) %_sharedstatedir/pcp/config/pmie
-#%_sharedstatedir/pcp/config/pmie/*
 %_sharedstatedir/pcp/config/pmieconf
 %dir %attr(0775,%_pseudouser_user,%_pseudouser_group) %_sharedstatedir/pcp/config/pmlogger
 %_sharedstatedir/pcp/config/pmlogger/*
@@ -1029,8 +1099,6 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 
 %_bindir/pmiostat
 %_bindir/pmrep
-%_libexecdir/pcp/bin/pcp-atop
-%_libexecdir/pcp/bin/pcp-atopsar
 %_libexecdir/pcp/bin/pcp-dmcache
 %_libexecdir/pcp/bin/pcp-dstat
 %_libexecdir/pcp/bin/pcp-free
@@ -1048,19 +1116,31 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %dir %_confdir/pmrep
 %config(noreplace) %_confdir/dstat/*
 %config(noreplace) %_confdir/pmrep/*
+%config(noreplace) /lib/tmpfiles.d/pcp-reboot-init.conf
 
 %files zeroconf
 %_libexecdir/pcp/bin/pmlogger_daily_report
-%_unitdir/pmlogger_daily_report.service
-%_unitdir/pmlogger_daily_report.timer
-%_unitdir/pmlogger_daily_report-poll.service
-%_unitdir/pmlogger_daily_report-poll.timer
 %_sharedstatedir/pcp/config/pmlogconf/zeroconf
+%_datadir/pcp/zeroconf/pmlogger
+%_datadir/pcp/lib/pmcheck/zeroconf
 
 %files conf
 %dir %_includedir/pcopilot
 %dir %_localstatedir/lib/pcp
 %dir %_localstatedir/lib/pcp/config
+%dir %_localstatedir/lib/pcp/config/pmlogconf
+%dir %_localstatedir/lib/pcp/config/pmlogconf/uwsgi
+%config %_localstatedir/lib/pcp/config/pmlogconf/uwsgi/summary
+%dir %_localstatedir/lib/pcp/config/pmlogconf/openmetrics
+%config %_localstatedir/lib/pcp/config/pmlogconf/openmetrics/kepler
+%dir %_localstatedir/lib/pcp/config/pmlogconf/rsyslog
+%config %_localstatedir/lib/pcp/config/pmlogconf/rsyslog/summary
+%dir %_localstatedir/lib/pcp/config/pmlogconf/services
+%config %_localstatedir/lib/pcp/config/pmlogconf/services/pmproxy
+%config %_localstatedir/lib/pcp/config/pmlogconf/services/redis
+%dir %_localstatedir/lib/pcp/config/pmlogredact
+%config %_localstatedir/lib/pcp/config/pmlogredact/network
+%config %_localstatedir/lib/pcp/config/pmlogredact/usernames
 %_includedir/pcopilot/builddefs
 %_includedir/pcopilot/buildrules
 %config %_sysconfdir/pcp.conf
@@ -1075,8 +1155,12 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_libdir/libpcopilot_trace.so.2
 %_libdir/libpcopilot_import.so.1
 %_libdir/libpcopilot_web.so.1
+%_libdir/libpcopilot_archive.so.1
+%_libdir/libpcopilot_fault.so.3
 
 %files -n libpcopilot-devel
+%_libdir/libpcopilot_archive.so
+%_libdir/libpcopilot_fault.so
 %_libdir/libpcopilot.so
 %_libdir/libpcopilot_gui.so
 %_libdir/libpcopilot_mmv.so
@@ -1087,6 +1171,7 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_libdir/pkgconfig/libpcopilot.pc
 %_libdir/pkgconfig/libpcopilot_pmda.pc
 %_libdir/pkgconfig/libpcopilot_import.pc
+%_libdir/pkgconfig/libpcopilot_archive.pc
 %_includedir/pcopilot/*.h
 
 %files devel
@@ -1122,7 +1207,6 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %exclude %perl_vendorarch/PCP/LogImport.pm
 %perl_vendorarch/Slurm/*
 %perl_vendorarch/Slurm.pm
-%_pmdasdir/mssql
 %_pmdasdir/netcheck
 %_pmdasdir/bonding
 %_pmdasdir/bind2
@@ -1168,7 +1252,6 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_pmdasdir/openvswitch
 %_pmdasdir/rabbitmq
 %_pmdasdir/roomtemp
-%_pmdasdir/rpm
 %_pmdasdir/sendmail
 %_pmdasdir/shping
 %_pmdasdir/smart
@@ -1176,6 +1259,16 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_pmdasdir/systemd
 %_pmdasdir/trace
 %_pmdasdir/weblog
+%_pmdasdir/sockets
+%ifarch x86_64
+%_pmdasdir/resctrl
+%endif
+%_pmdasdir/podman
+%_pmdasdir/overhead
+%_pmdasdir/hacluster
+%_pmdasdir/farm
+%_pmdasdir/denki
+%_pmdasdir/uwsgi
 
 %files export-tools
 %_bindir/pcp2graphite
@@ -1232,6 +1325,9 @@ cd $PCP_PMNS_DIR && ./Rebuild -s && rm -f .NeedRebuild
 %_datadir/pcp/demos/tutorials/*.tar.gz
 
 %changelog
+* Thu Apr 18 2024 Mikhail Chernonog <snowmix@altlinux.org> 6.2.1-alt1
+- 5.2.0 -> 6.2.1
+
 * Sat Sep 18 2021 Stanislav Levin <slev@altlinux.org> 5.2.0-alt2
 - Fixed FTBFS.
 
