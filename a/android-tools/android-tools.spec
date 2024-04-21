@@ -1,10 +1,10 @@
 # requires pandoc
 %def_enable docs
-%global llvm_version 17.0
+%global llvm_version 18.1
 
 Name: android-tools
 Version: 34.0.4
-Release: alt3
+Release: alt4
 
 Summary: Android Debug CLI tools
 License: APL
@@ -40,6 +40,7 @@ Patch15: stub-out-fastdeploy.patch
 Patch16: Implement-const_iterator-operator.patch
 Patch17: Update_casting_type.patch
 Patch18: typos.patch
+Patch19: Drop-gki-dependency-from-mkbootimg.patch
 
 # Debian, from boringssl package
 Patch100: Revert-Remove-support-for-ppc64le.patch
@@ -129,6 +130,7 @@ choice.
 %patch16 -p1
 %patch17 -p1
 %patch18 -p1
+%patch19 -p1
 
 pushd external/boringssl
 %patch100 -p1
@@ -335,6 +337,10 @@ done
 %aprefix
 
 %changelog
+* Sun Apr 21 2024 Pavel Nakonechnyi <zorg@altlinux.org> 34.0.4-alt4
+- Minor updates from Debian (adb bash completion and mkbootimg deps fix)
+- Use LLVM 18.1
+
 * Mon Mar 11 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 34.0.4-alt3
 - NMU: fixed FTBFS on LoongArch for real:
   + libunwindstack: implemented AsmGetRegs for LoongArch. Makes ELF symbol
