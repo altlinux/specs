@@ -8,6 +8,8 @@
 # timeout multiplier for tests
 %define timeout 2
 
+# sinc 2.42.11 others -- ani, bmp, icns, ico, pnm, qtif, tga, xbm, xpm
+%def_enable others
 %def_enable gtk_doc
 %def_enable man
 %def_enable introspection
@@ -15,7 +17,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.10
+Version: %ver_major.11
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -124,6 +126,8 @@ the functionality of the installed GdkPixBuf library.
 install -p -m644 %_sourcedir/%_name.map %_name/compat.map
 install -p -m644 %_sourcedir/%_name.lds %_name/compat.lds
 
+sed -i 's/enabled_loaders_contains/enabled_loaders.contains/' tests/meson.build
+
 %build
 %ifarch %e2k
 # till lcc ~1.23
@@ -133,9 +137,9 @@ export LIBS=-lcxa
 	%{?_enable_gtk_doc:-Dgtk_doc=true} \
 	%{?_disable_man:-Dman=false} \
 	%{?_disable_introspection:-Dintrospection=disabled} \
-	%{?_enable_libjasper:-Djasper=true} \
 	%{?_disable_installed_tests:-Dinstalled_tests=false} \
-	-Dbuiltin_loaders='png'
+	-Dbuiltin_loaders='png' \
+	%{subst_enable_meson_feature others others}
 %nil
 %meson_build
 
@@ -171,19 +175,22 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 %dir %_libdir/%_name-%api_ver/%binary_ver
 %dir %_libdir/%_name-%api_ver/%binary_ver/loaders
 %_libdir/%_name-%api_ver/%binary_ver/%_name-query-loaders
+%{?_enable_others:
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-ani.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-bmp.so
-%_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-gif.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-icns.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-ico.so
-%_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-jpeg.so
-#%_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-png.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-pnm.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-qtif.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-tga.so
-%_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-tiff.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-xbm.so
 %_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-xpm.so
+}
+%_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-gif.so
+%_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-jpeg.so
+# builtin
+#%_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-png.so
+%_libdir/%_name-%api_ver/%binary_ver/loaders/libpixbufloader-tiff.so
 %ghost %_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 %_datadir/thumbnailers/gdk-pixbuf-thumbnailer.thumbnailer
 %{?_enable_man:%_man1dir/gdk-pixbuf-query-loaders*}
@@ -226,6 +233,9 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 
 
 %changelog
+* Fri Apr 19 2024 Yuri N. Sedunov <aris@altlinux.org> 2.42.11-alt1
+- 2.42.11
+
 * Tue Oct 25 2022 Yuri N. Sedunov <aris@altlinux.org> 2.42.10-alt1
 - 2.42.10
 

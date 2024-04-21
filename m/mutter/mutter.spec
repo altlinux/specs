@@ -20,7 +20,7 @@
 %def_disable libdisplay_info
 
 Name: mutter
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 Epoch: 1
 
@@ -273,6 +273,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Sun Apr 21 2024 Yuri N. Sedunov <aris@altlinux.org> 1:46.1-alt1
+- 46.1
+
 * Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 1:46.0-alt1
 - 46.0
 

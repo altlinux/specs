@@ -1,9 +1,10 @@
 %def_disable snapshot
 
-%define ver_major 45
+%define ver_major 46
 %define beta %nil
 %define xdg_name org.gnome.Polari
-%define mozjs_ver 102
+
+%def_enable check
 
 Name: polari
 Version: %ver_major.0
@@ -24,11 +25,12 @@ Source: %name-%version.tar
 
 %define gtk4_ver 4.10.0
 %define gjs_ver 1.73.1
+%define adw_ver 1.5
 
 Requires: libgjs >= %gjs_ver
-Requires: telepathy-logger
 Requires: telepathy-mission-control
 Requires: telepathy-idle
+Requires: tracker3
 
 %set_typelibdir %_libdir/%name/girepository-1.0
 
@@ -48,17 +50,19 @@ Requires: typelib(Polari)
 Requires: typelib(Secret)
 Requires: typelib(TelepathyGLib)
 Requires: typelib(TelepathyLogger)
+Requires: typelib(Tracker) = 3.0
 Requires: typelib(Soup) = 3.0
 Requires: typelib(WebKit2) = 4.1
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson gtk-doc yelp-tools
-BuildRequires: desktop-file-utils libappstream-glib-devel
-BuildRequires: libgjs-devel >= %gjs_ver  %_bindir/js%mozjs_ver
+BuildRequires: libgjs-devel >= %gjs_ver
 BuildRequires: libgtk4-devel >= %gtk4_ver libtelepathy-glib-devel
+BuildRequires: pkgconfig(tracker-sparql-3.0)
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libsoup-gir-devel
-BuildRequires: libsecret-gir-devel
+BuildRequires: libsecret-gir-devel gir(Tracker) = 3.0
 BuildRequires: libtelepathy-glib-gir-devel libtelepathy-logger-gir-devel
+%{?_enable_check:BuildRequires: desktop-file-utils /usr/bin/appstreamcli}
 
 %description
 Polari is a simple IRC Client that is designed to integrate seamlessly
@@ -73,8 +77,10 @@ with GNOME 3 Desktop.
 
 %install
 %meson_install
-
 %find_lang --with-gnome --output=%name.lang %name %xdg_name
+
+%check
+%__meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -87,11 +93,14 @@ with GNOME 3 Desktop.
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.Client.Polari.service
 %_datadir/telepathy/clients/Polari.client
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc AUTHORS NEWS
 
 
 %changelog
+* Sun Apr 21 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Sun Sep 17 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1
 - 45.0
 

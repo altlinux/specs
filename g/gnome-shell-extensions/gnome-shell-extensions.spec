@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: gnome-shell-extensions
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: GNOME Shell Extensions
@@ -28,6 +28,7 @@ Source: %name-%version%beta.tar
 Requires: gnome-shell >= %version
 # for system-monitor
 Requires: typelib(GTop)
+Requires: gnome-system-monitor >= %ver_major
 
 # extensions/apps-menu/extension.js
 # const {
@@ -164,6 +165,9 @@ See %_docdir/%name-%version/README for more information.
 %doc NEWS README.md
 
 %changelog
+* Sun Apr 21 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
+- 46.1
+
 * Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 
