@@ -1,6 +1,6 @@
 Name: gdu
 Version: 5.27.0
-Release: alt1
+Release: alt2
 
 Summary: Fast disk usage analyzer with console interface written in Go
 
@@ -33,7 +33,7 @@ However HDDs work as well, but the performance gain is not so huge.
 
 %build
 export GOFLAGS="-mod=vendor -trimpath -modcacherw -pgo=default.pgo"
-export LDFLAGS="-s -w -extldflags -static -X 'github.com/dundee/gdu/v5/build.Version=%version-%release'"
+export LDFLAGS="-s -w -X 'github.com/dundee/gdu/v5/build.Version=%version-%release'"
 #export CGO_ENABLED=0
 %gobuild github.com/dundee/gdu/v5/cmd/gdu
 #go build -o dist/%name
@@ -48,5 +48,8 @@ install -Dpm 0755 %name.1 %buildroot%_man1dir/gdu.1
 %_bindir/%name
 
 %changelog
+* Mon Apr 22 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 5.27.0-alt2
+- NMU: fixed FTBFS on LoongArch (don't try to build a static binary)
+
 * Wed Apr 17 2024 Vitaly Lipatov <lav@altlinux.ru> 5.27.0-alt1
 - initial build for ALT Sisyphus
