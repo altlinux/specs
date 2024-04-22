@@ -2,7 +2,7 @@
 
 Name: kde5-kcm-wacomtablet
 Version: 3.2.0
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Summary: KDE Config Module for Wacom Tablets
@@ -12,7 +12,9 @@ URL: https://invent.kde.org/plasma/wacomtablet
 Vcs: https://invent.kde.org/plasma/wacomtablet.git
 
 Source: %rname-%version.tar
+Source1: po.tar
 Patch: %name-%version-alt-qt5.15-build-fix.patch
+Patch1: %name-%version-alt-add-translations.patch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules
@@ -53,8 +55,8 @@ All tablets can be set up as long as they are found with the wacom kernel
 module.
 
 %prep
-%setup -n %rname-%version
-%patch -p1
+%setup -a1 -n %rname-%version
+%autopatch -p1
 
 %build
 %K5build
@@ -79,6 +81,9 @@ module.
 %_datadir/wacomtablet/*
 
 %changelog
+* Mon Apr 22 2024 Anton Kurachenko <srebrov@altlinux.org> 3.2.0-alt3
+- Added translations(#50074).
+
 * Sat Feb 03 2024 Anton Kurachenko <srebrov@altlinux.org> 3.2.0-alt2
 - Fixed missing BuildReq.
 - Changed homepage link.
