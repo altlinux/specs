@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 9.0
+%define ver_major 9.1
 
 %def_disable bootstrap
 %def_enable check
@@ -48,6 +48,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README* CHANGELOG* MANUAL*
 
 %changelog
+* Mon Apr 22 2024 Yuri N. Sedunov <aris@altlinux.org> 9.1.0-alt1
+- 9.1.0
+
 * Wed Oct 11 2023 Yuri N. Sedunov <aris@altlinux.org> 9.0.0-alt1
 - 9.0.0
 
