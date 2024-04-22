@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%modname
-Version: 3.6.1
+Version: 4.0.0
 Release: alt1
 
 Summary: A Django app for render a form field as a TinyMCE editor
@@ -13,7 +13,6 @@ Url: https://pypi.org/project/django-tinymce
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch1: alt-fix-tests.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
@@ -33,7 +32,6 @@ django-tinymce is a Django application that contains a widget to render a form f
 
 %prep
 %setup
-%patch1 -p1
 
 sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 
@@ -58,6 +56,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%{pyproject_distinfo %modname}
 
 %changelog
+* Mon Apr 22 2024 Alexander Makeenkov <amakeenk@altlinux.org> 4.0.0-alt1
+- Updated to version 4.0.0.
+
 * Sat Jan 20 2024 Alexander Makeenkov <amakeenk@altlinux.org> 3.6.1-alt1
 - Updated to version 3.6.1.
 - Fixed tests.
