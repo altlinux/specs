@@ -1,8 +1,8 @@
 %define  modulename jaraco.packaging
 
 Name:    python3-module-%modulename
-Version: 9.7.1
-Release: alt1.1
+Version: 10.1.0
+Release: alt1
 
 Summary: Tools to supplement packaging Python releases
 License: MIT
@@ -44,6 +44,9 @@ rm -rf %buildroot/%_bindir/
 %python3_sitelibdir/%modulename-%version.dist-info/
 
 %changelog
+* Mon Apr 22 2024 Andrey Cherepanov <cas@altlinux.org> 10.1.0-alt1
+- New version.
+
 * Fri Apr 19 2024 Stanislav Levin <slev@altlinux.org> 9.7.1-alt1.1
 - NMU: mapped PyPI name to distro's one.
 
