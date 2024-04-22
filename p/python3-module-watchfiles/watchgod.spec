@@ -1,6 +1,6 @@
 Name: python3-module-watchfiles
 Version: 0.21.0
-Release: alt1
+Release: alt2
 
 Summary: Simple, modern file watching and code reload in python.
 License: MIT
@@ -9,6 +9,7 @@ Url: https://pypi.org/project/watchfiles/
 
 Source0: %name-%version.tar
 Source1: crates.tar
+Patch3500: target-lexicon-loongarch64.patch
 
 BuildRequires: maturin >= 0.14.17
 BuildRequires: rpm-build-python3
@@ -32,6 +33,7 @@ cargo vendor
 tar cf %SOURCE1 vendor
 %else
 tar xf %SOURCE1
+%patch3500 -p1
 %endif
 sed -ri '/^version/ s,"[^"]+","%version",' Cargo.toml
 
@@ -48,6 +50,9 @@ export CARGO_HOME=${PWD}/cargo
 %python3_sitelibdir/watchfiles-%version.dist-info
 
 %changelog
+* Mon Apr 22 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.21.0-alt2
+- NMU: restored LoongArch support
+
 * Fri Apr 19 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.21.0-alt1
 - 0.21.0 released
 
