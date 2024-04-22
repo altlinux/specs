@@ -1,5 +1,5 @@
 Name: tree-sitter
-Version: 0.22.2
+Version: 0.22.5
 Release: alt1
 
 Summary: Parser generator tool and an incremental parsing library
@@ -87,6 +87,9 @@ install -m 0755 target/release/%name %buildroot%_bindir
 %_bindir/%name
 
 %changelog
+* Mon Apr 22 2024 Vladimir Didenko <cow@altlinux.ru> 0.22.5-alt1
+- new version
+
 * Thu Mar 21 2024 Vladimir Didenko <cow@altlinux.ru> 0.22.2-alt1
 - new version
 
