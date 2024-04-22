@@ -1,5 +1,5 @@
 Name: alterator-kiosk
-Version: 1.11
+Version: 1.12
 Release: alt1
 
 Source: %name-%version.tar
@@ -13,7 +13,6 @@ BuildArch: noarch
 
 BuildRequires: alterator
 Requires: kiosk
-Requires: kiosk-profiles = %EVR
 
 %description
 alterator module for managing kiosk mode
@@ -23,6 +22,7 @@ Summary: profiles for kiosk
 License: GPLv2+
 Group: System/Configuration/Other
 BuildArch: noarch
+Requires: alterator-kiosk = %EVR
 
 %description -n kiosk-profiles
 profiles for kiosk
@@ -55,6 +55,9 @@ install -Dm 0644 %SOURCE2 %buildroot%_unitdir/kiosk.service
 %_man5dir/kiosk-profiles.5.xz
 
 %changelog
+* Mon Apr 22 2024 Oleg Solovyov <mcpain@altlinux.org> 1.12-alt1
+- profiles: require alterator-kiosk
+
 * Tue Nov 07 2023 Oleg Solovyov <mcpain@altlinux.org> 1.11-alt1
 - update profiles
 
