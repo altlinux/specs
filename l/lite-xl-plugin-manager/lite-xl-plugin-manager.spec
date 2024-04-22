@@ -2,7 +2,7 @@
 
 Name: lite-xl-plugin-manager
 Version: 1.2.9
-Release: alt1
+Release: alt2
 
 Summary: A lite-xl plugin manager
 License: MIT
@@ -38,9 +38,10 @@ Conforms to SCPS3.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
-%meson -Dstatic=true
+%meson -Dstatic=true -Dversion="%version"
 %meson_build
 
 %install
@@ -51,6 +52,9 @@ Conforms to SCPS3.
 %_bindir/lpm
 
 %changelog
+* Mon Apr 22 2024 Anton Zhukharev <ancieg@altlinux.org> 1.2.9-alt2
+- Fixed version detection.
+
 * Mon Apr 22 2024 Anton Zhukharev <ancieg@altlinux.org> 1.2.9-alt1
 - Built for ALT Sisyphus (closes: #50115).
 
