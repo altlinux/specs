@@ -8,7 +8,7 @@
 
 Name: btrfs-progs
 Version: 6.8
-Release: alt2
+Release: alt3
 
 Summary: Utilities for managing the Btrfs filesystem
 License: GPLv2
@@ -123,7 +123,7 @@ vm-run --sbin --udevd --kvm=cond make V=1 TEST_LOG=dump test-mkfs
 %pretrans -p <lua>
 st = posix.stat("/usr/bin/btrfs")
 if st and st.type == "link" then
-  os.remove(path)
+  os.remove("/usr/bin/btrfs")
 end
 
 
@@ -145,6 +145,9 @@ end
 %_includedir/*
 
 %changelog
+* Mon Apr 22 2024 Anton Farygin <rider@altlinux.ru> 6.8-alt3
+- fixed pretrans script (closes: #49434)
+
 * Fri Apr 05 2024 Anton Farygin <rider@altlinux.ru> 6.8-alt2
 - added pretrans script against cpio link->file convertation (closes: #49434)
 
