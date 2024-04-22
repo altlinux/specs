@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.3
+Version: 1.6.0
 Release: alt1
 
 Summary: Project documentation with Markdown
@@ -20,7 +20,6 @@ Patch0: %name-%version-alt.patch
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-BuildRequires: python3-module-setuptools
 %if_with check
 %pyproject_builddeps_metadata
 %endif
@@ -43,13 +42,12 @@ configuration file.
 
 %install
 %pyproject_install
-rm -r %buildroot%python3_sitelibdir/mkdocs/tests/
 
 # unbundle font-awesome fonts
 FONT_AWESOME_FONTS='%_datadir/fonts-font-awesome/fonts'
 
 fonts_bundled=
-for f in $(find -P %buildroot%python3_sitelibdir/mkdocs/themes/*/fonts/ -name 'fontawesome-webfont.*' -type f);
+for f in $(find -P %buildroot%python3_sitelibdir/mkdocs/themes/*/*/fonts/ -name 'fontawesome-webfont.*' -type f);
 do
     printf "Found fontawesome font: '%%s'\n" "$f"
     font_name="$(basename "$f")"
@@ -75,6 +73,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Apr 22 2024 Anton Vyatkin <toni@altlinux.org> 1.6.0-alt1
+- New version 1.6.0.
+
 * Mon Feb 05 2024 Anton Vyatkin <toni@altlinux.org> 1.5.3-alt1
 - New version 1.5.3.
 
