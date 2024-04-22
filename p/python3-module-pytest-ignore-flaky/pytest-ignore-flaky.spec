@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 Summary: Ignore failures from flaky tests
 License: MIT
@@ -29,6 +29,7 @@ Ignore failures from flaky tests (pytest plugin).
 %prep
 %setup
 %autopatch -p1
+%pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -43,11 +44,13 @@ Ignore failures from flaky tests (pytest plugin).
 
 %files
 %doc README.*
-%python3_sitelibdir/%mod_name.py
-%python3_sitelibdir/__pycache__/%mod_name.*
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Apr 22 2024 Stanislav Levin <slev@altlinux.org> 2.2.1-alt1
+- 2.2.0 -> 2.2.1.
+
 * Mon Apr 08 2024 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1
 - 2.0.0 -> 2.2.0.
 
