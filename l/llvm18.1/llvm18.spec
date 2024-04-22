@@ -24,7 +24,7 @@
 # libomp has own versioning
 %global omp_vmajor 5
 # According to openmp/libomptarget/README.txt
-%global libomptarget_arches x86_64 aarch64 ppc64le
+%global libomptarget_arches x86_64 aarch64 loongarch64 ppc64le
 %ifarch ppc64le
 %global libomp_arch ppc64
 %else
@@ -109,7 +109,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.2
+Release: alt0.3
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -145,10 +145,10 @@ Patch110: RH-0001-clang-tools-extra-Make-test-dependency-on-LLVMHello-.patch
 Patch111: RH-0003-PATCH-clang-Don-t-install-static-libraries.patch
 Patch112: RH-0001-Workaround-a-bug-in-ORC-on-ppc64le.patch
 
-#Patch200: 0001-RuntimeDyld-RISCV-Minimal-riscv64-support.patch
-#Patch201: 0002-RuntimeDyld-RISCV-Impleemnd-HI20-and-LO12_I-relocs.patch
-#Patch202: 0003-RuntimeDyld-RISCV-Add-PCREL_HI20-and-PCREL_LO12_I-re.patch
-#Patch203: 0004-RuntimeDyld-Minimal-LoongArch64-support.patch
+Patch200: 0001-RuntimeDyld-RISCV-Minimal-riscv64-support.patch
+Patch201: 0002-RuntimeDyld-RISCV-Impleemnd-HI20-and-LO12_I-relocs.patch
+Patch202: 0003-RuntimeDyld-RISCV-Add-PCREL_HI20-and-PCREL_LO12_I-re.patch
+Patch203: 0004-RuntimeDyld-Minimal-LoongArch64-support.patch
 
 # debian patches for openmp
 Patch300: deb-openmp-riscv64.patch
@@ -773,10 +773,10 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch111 -p1
 %patch112 -p1
 
-#%%patch200 -p2
-#%%patch201 -p2
-#%%patch202 -p2
-#%%patch203 -p2
+%patch200 -p2
+%patch201 -p2
+%patch202 -p2
+%patch203 -p2
 
 # debian patches
 %patch300 -p1
@@ -1438,13 +1438,15 @@ ninja -C %builddir check-all || :
 %llvm_libdir/libomp.so.%omp_vmajor
 %_libdir/libomp.so.%omp_vmajor
 %ifarch %libomptarget_arches
+%ifnarch loongarch64
 %llvm_libdir/libomptarget.rtl.amdgpu.so.%omp_sover
 %llvm_libdir/libomptarget.rtl.cuda.so.%omp_sover
 %llvm_libdir/libomptarget.rtl.%libomp_arch.so.%omp_sover
-%llvm_libdir/libomptarget.so.%omp_sover
 %_libdir/libomptarget.rtl.amdgpu.so.%omp_sover
 %_libdir/libomptarget.rtl.cuda.so.%omp_sover
 %_libdir/libomptarget.rtl.%libomp_arch.so.%omp_sover
+%endif
+%llvm_libdir/libomptarget.so.%omp_sover
 %_libdir/libomptarget.so.%omp_sover
 %endif
 
@@ -1460,9 +1462,11 @@ ninja -C %builddir check-all || :
 %endif
 %llvm_libdir/cmake/openmp
 %ifarch %libomptarget_arches
+%ifnarch loongarch64
 %llvm_libdir/libomptarget.rtl.amdgpu.so
 %llvm_libdir/libomptarget.rtl.cuda.so
 %llvm_libdir/libomptarget.rtl.%libomp_arch.so
+%endif
 %llvm_libdir/libomptarget.devicertl.a
 %llvm_libdir/libomptarget-amdgpu-*.bc
 %llvm_libdir/libomptarget-nvptx-*.bc
@@ -1474,6 +1478,12 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Thu Apr 18 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 18.1.3-alt0.3
+- Fixed FTBFS on LoongArch: do package libomptarget (partially
+  supported as of LLVM 18.1).
+- Re-enabled MCJIT patches for riscv64 and LoongArch (a subset
+  of relocations just enough for llvmpipe to work).
+
 * Wed Apr 17 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.3-alt0.2
 - lld: added /proc to requires.
 
