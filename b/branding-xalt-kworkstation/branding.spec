@@ -29,7 +29,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -181,8 +181,6 @@ BuildArch: noarch
 Summary: MATE settings for %ProductName
 License: Distributable
 Group:   Graphical desktop/GNOME
-Requires: beesu
-Requires: dconf
 %description mate-settings
 MATE settings for %ProductName
 
@@ -192,8 +190,6 @@ Summary: GNOME settings for %ProductName
 License: Distributable
 Group: Graphical desktop/GNOME
 Requires(pre): /usr/bin/gconftool-2
-Requires: gtk2-theme-mist
-#PreReq: gnome-panel
 Provides: gnome-theme-%brand-%theme = %version-%release
 Provides: metacity-theme-%brand-%theme = %version-%release
 Provides: metacity-theme
@@ -483,10 +479,12 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %ghost %indexhtmldir/index.html
 %indexhtmldir/*
 %_desktopdir/indexhtml.desktop
-%_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
-%_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
+%_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Mon Apr 22 2024 Sergey V Turchin <zerg at altlinux dot org> 10.3.0-alt2
+- move desktop links to /usr/share/kio_desktop/
+
 * Mon Feb 12 2024 Sergey V Turchin <zerg at altlinux dot org> 10.3.0-alt1
 - new version
 
