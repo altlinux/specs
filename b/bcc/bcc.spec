@@ -19,8 +19,8 @@
 %endif
 
 Name:		bcc
-Version: 0.29.1
-Release: alt3
+Version: 0.30.0
+Release: alt1
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -194,6 +194,7 @@ subst '/add_subdirectory(tests)/d' CMakeLists.txt
 subst '/add_subdirectory(examples)/d' CMakeLists.txt
 
 %remove_optflags -frecord-gcc-switches
+%add_optflags -fdebug-default-version=4
 export CC=clang
 export CXX=clang++
 %cmake \
@@ -306,6 +307,9 @@ rm -f /tmp/vm.* /tmp/initramfs-*.img
 %files checkinstall
 
 %changelog
+* Sun Apr 21 2024 Vitaly Chikunov <vt@altlinux.org> 0.30.0-alt1
+- Update to v0.30.0 (2024-03-24).
+
 * Mon Mar 04 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.29.1-alt3
 - NMU: spec: adjusted for LoongArch:
   + do NOT use lld (as of llvm 17 lld is incompatible with the GNU ld one).
