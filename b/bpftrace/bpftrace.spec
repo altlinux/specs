@@ -19,7 +19,7 @@
 
 Name: bpftrace
 Version: 0.20.3
-Release: alt1
+Release: alt2
 Summary: High-level tracing language for Linux eBPF
 Group: Development/Debuggers
 License: Apache-2.0
@@ -41,14 +41,12 @@ Source5: libbpf-1.tar
 Source6: libbpf-2.tar
 ExclusiveArch:	x86_64 aarch64 loongarch64
 
-%define llvm_min 11
+%define llvm_ver 17
+%define llvm_pkgver %llvm_ver.0
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: binutils-devel
 BuildRequires: cereal-devel
-BuildRequires: clang-devel >= %llvm_min
-BuildRequires: clang-devel-static >= %llvm_min
-BuildRequires: clangd >= %llvm_min
-BuildRequires: clang-tools >= %llvm_min
+BuildRequires: clang%llvm_pkgver-devel
 BuildRequires: cmake
 BuildRequires: flex
 BuildRequires: libbcc-devel
@@ -59,10 +57,9 @@ BuildRequires: libpcap-devel
 BuildRequires: libstdc++-devel
 BuildRequires: libstdc++-devel-static
 %if_with lld
-BuildRequires: lld >= %llvm_min
+BuildRequires: lld%llvm_pkgver
 %endif
-BuildRequires: llvm-devel >= %llvm_min
-BuildRequires: llvm-devel-static >= %llvm_min
+BuildRequires: llvm%llvm_pkgver-devel
 BuildRequires: /proc
 BuildRequires: python3-module-setuptools
 # Assuming 'kernel' dependency will bring un-def kernel
@@ -94,8 +91,8 @@ sed -i 's/@.*@/True/' tests/runtime/engine/cmake_vars.py
 
 %build
 %remove_optflags -frecord-gcc-switches
-export CC=clang
-export CXX=clang++
+export CC=clang-%llvm_ver
+export CXX=clang++-%llvm_ver
 %if_with lld
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
@@ -105,7 +102,8 @@ export Clang_DIR=/usr/share/cmake/Modules/clang
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DBUILD_TESTING:BOOL=OFF \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
-	-DLLVM_DIR=$(llvm-config --cmakedir) \
+	-DLLVM_DIR=$(llvm-config-%llvm_ver --cmakedir) \
+	-DLLVM_REQUESTED_VERSION=%llvm_ver \
 	-DOFFLINE_BUILDS:BOOL=ON \
 	-DALLOW_UNSAFE_PROBE:BOOL=ON \
 	-DUSE_SYSTEM_BPF_BCC:BOOL=ON \
@@ -128,9 +126,9 @@ popd
 %check
 %_cmake__builddir/src/bpftrace --version	 # not requires root
 vm-run %_cmake__builddir/src/bpftrace --info # should be fast enough even w/o kvm
-[ -w /dev/kvm ] && vm-run %_cmake__builddir/src/bpftrace -l 'kprobe:*_sleep_*'
-if [ -w /dev/kvm ]; then
-	# Great run-time tests
+vm-run --kvm=cond %_cmake__builddir/src/bpftrace -l 'kprobe:*_sleep_*'
+if kvm-ok; then
+	## Great run-time tests
 
 	# Some fail due to no BUILD_TESTING
 	.gear/delete-blocks syscalls:	tests/runtime/*
@@ -166,6 +164,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Mon Apr 22 2024 Vitaly Chikunov <vt@altlinux.org> 0.20.3-alt2
+- Fix FTBFS Do not build with Clang/LLVM 18.
+
 * Thu Apr 04 2024 Vitaly Chikunov <vt@altlinux.org> 0.20.3-alt1
 - Update to v0.20.3 (2024-03-25).
 
