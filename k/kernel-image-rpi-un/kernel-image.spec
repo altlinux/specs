@@ -5,10 +5,10 @@
 Name: kernel-image-rpi-un
 Release: alt1
 epoch:1
-%define kernel_need_version	6.1
+%define kernel_need_version	6.6
 # Used when kernel-source-x.y does not currently exist in repository.
-%define kernel_base_version	6.1
-%define kernel_sublevel .77
+%define kernel_base_version	6.6
+%define kernel_sublevel .23
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -441,6 +441,12 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Apr 18 2024 Dmitry Terekhin <jqt4@altlinux.org> 1:6.6.23-alt1
+- Updated to 6.6.23
+- https://github.com/raspberrypi/linux.git rpi-6.6.y commit 8c3e7a55220cb7cb13131bb8dccd37694537eb97
+- Baikal-M support git.alt/people/asheplyakov/linux.git commit c4451cc76e1dd58fb02887a34daaa49972dd8e1a
+- Add RPi5 support
+
 * Fri Mar 29 2024 Dmitry Terekhin <jqt4@altlinux.org> 1:6.1.77-alt1
 - Updated to 6.1.77
 - https://github.com/raspberrypi/linux.git rpi-6.1.y commit d02bd251d7f85e3aec02e5752df2f44a35961360
