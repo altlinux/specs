@@ -1,7 +1,7 @@
 %def_with debug
 
 Name: 	 qcad
-Version: 3.29.6.0
+Version: 3.29.6.2
 Release: alt1
 
 Summary: A professional CAD system
@@ -154,6 +154,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sun Apr 21 2024 Andrey Cherepanov <cas@altlinux.org> 3.29.6.2-alt1
+- New version.
+
 * Thu Mar 28 2024 Andrey Cherepanov <cas@altlinux.org> 3.29.6.0-alt1
 - New version.
 
