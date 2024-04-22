@@ -1,6 +1,6 @@
 Name: rootfiles
 Version: alt
-Release: alt12
+Release: alt13
 
 Summary: The basic required files for the root user's directory
 License: GPLv2+
@@ -31,6 +31,10 @@ chmod -R go-rwx %buildroot/root
 %dir /root/tmp
 
 %changelog
+* Thu Apr 04 2024 Arseny Maslennikov <arseny@altlinux.org> alt-alt13
+- .bashrc, .zshenv: dropped the PATH setting.
+- .tcshrc: put /bin after /usr/bin.
+
 * Tue Jun 19 2018 Dmitry V. Levin <ldv@altlinux.org> alt-alt12
 - Synced with etcskel:
   + .bash*: enhanced comments;

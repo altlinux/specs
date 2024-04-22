@@ -1,5 +1,5 @@
 Name: setup
-Version: 2.2.20
+Version: 2.2.21
 Release: alt1
 
 Summary: Initial set of configuration files
@@ -52,6 +52,7 @@ find %buildroot%_sysconfdir/profile.d -type l |
 %files -f profile.list
 %config(noreplace) %verify(not md5 size mtime) %_sysconfdir/passwd
 %config(noreplace) %verify(not md5 size mtime) %_sysconfdir/group
+%config(noreplace) %_sysconfdir/default-environment
 %config(noreplace) %_sysconfdir/exports
 %config(noreplace) %_sysconfdir/filesystems
 %config(noreplace) %verify(not md5 size mtime) %_sysconfdir/fstab
@@ -72,6 +73,11 @@ find %buildroot%_sysconfdir/profile.d -type l |
 %_datadir/base-passwd
 
 %changelog
+* Mon Apr 01 2024 Arseny Maslennikov <arseny@altlinux.org> 2.2.21-alt1
+- /etc/profile: put /bin after /usr/bin. This makes much more sense in
+  merged-usr environments.
+- /etc/shells: added canonical locations of all shells.
+
 * Tue Nov 07 2023 Arseny Maslennikov <arseny@altlinux.org> 2.2.20-alt1
 - Install the default overflowuid defined by Linux (incl. our kernels) as the
   nobody user and group. The user and group 99 are installed as _nobody99.

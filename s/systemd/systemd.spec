@@ -99,7 +99,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.10
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://systemd.io/
 Group: System/Configuration/Boot and Init
@@ -228,6 +228,7 @@ BuildRequires: pkgconfig(fdisk) >= 2.32
 %{?_enable_tests:BuildRequires: rpm-build-python3 diffutils}
 
 Requires: dbus >= %dbus_ver
+Conflicts: filesystem < 3
 Requires: filesystem >= 2.3.10-alt1
 Requires: agetty
 Requires: acl
@@ -715,6 +716,10 @@ Conflicts: startup < 0.9.9.14
 %prep
 %setup -q
 %patch1 -p1
+# Procedural patches for filesystem >= 3 support.
+# To be dropped after upgrade to >= 255.
+subst 's/environmentdir = rootprefixdir/environmentdir = prefixdir/' meson.build
+subst '/mount.ddi/s!rootsbindir!'"prefixdir / get_option('sbindir')"'!' meson.build
 
 %build
 
@@ -1676,7 +1681,7 @@ fi
 %_bindir/systemd-delta
 %_bindir/systemd-detect-virt
 %_bindir/systemd-dissect
-/sbin/mount.ddi
+%_sbindir/mount.ddi
 %_bindir/systemd-id128
 %_bindir/systemd-mount
 %_bindir/systemd-umount
@@ -1755,8 +1760,8 @@ fi
 %endif
 %endif
 
-%dir %_env_dir
-%_env_dir/99-environment.conf
+%dir %_prefix%_env_dir
+%_prefix%_env_dir/99-environment.conf
 %_mandir/man[58]/*environment*
 #%%dir %%_systemd_dir/system.conf.d
 #%%_systemd_dir/system.conf.d/env-path.conf
@@ -2439,6 +2444,13 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Thu Apr 18 2024 Arseny Maslennikov <arseny@altlinux.org> 1:254.10-alt2
+- Adapted the package for filesystem >= 3:
+  + put /bin after /usr/bin in default PATH for spawned processes;
+  + fix symlink targets which were relative for standalone legacy directories.
+  This makes us incompatible with filesystem < 3.
+  See https://altlinux.org/Usrmerge for more information.
+
 * Tue Mar 05 2024 Alexey Shabalin <shaba@altlinux.org> 1:254.10-alt1
 - 254.10
 - Increase vm.max_map_count (ALT#48094)

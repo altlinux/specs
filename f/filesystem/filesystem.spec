@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: filesystem
-Version: 2.3.19
+Version: 3.1
 Release: alt1
 
 Summary: The basic directory layout for a GNU/Linux system
@@ -8,12 +10,17 @@ Group: System/Base
 
 Source0: %name-dir.list
 Source1: %name-link.list
-Source2: %name-dir64.list
-source3: %name-dir-x32.list
+Source2: %name-dir-64.list
+Source3: %name-link-64.list
+source4: %name-dir-x32.list
+source5: %name-link-x32.list
 # Traditional MCST paths:
-Source4: %name-dir-e2k32.list
+Source6: %name-dir-e2k32.list
+Source7: %name-link-e2k32.list
+Source16: %name-arch-dir-i586.list
+Source17: %name-arch-dir-x86_64.list
 
-PreReq: setup
+Requires(pre,postun): setup
 
 Provides: /var/empty /var/lock/serial
 Provides: /media /proc /run /selinux /srv /sys
@@ -35,13 +42,46 @@ permissions for the directories.
 %setup -cT
 
 %build
+emit_list() {
+	[ -r %_sourcedir/%name-arch-$1-$2.list ] || return 0
+	cat %_sourcedir/%name-arch-$1-$2.list
+}
+
 {
-	cat %_sourcedir/%name-dir.list
+	cat %_sourcedir/%name-link.list
+%ifarch %ix86
+	emit_list link i586
+%endif
+%ifarch x86_64
+	emit_list link x86_64
+%endif
 %if "%_lib" == "lib64"
-	cat %_sourcedir/%name-dir64.list
+	cat %_sourcedir/%name-link-64.list
 %endif
 %ifarch x32
-	cat %_sourcedir/%name-dir64.list
+	cat %_sourcedir/%name-link-64.list
+%endif
+%ifarch x86_64 x32
+	cat %_sourcedir/%name-link-x32.list
+%endif
+%ifarch %e2k
+	cat %_sourcedir/%name-link-e2k32.list
+%endif
+} > link-t-s.list
+
+{
+	cat %_sourcedir/%name-dir.list
+%ifarch %ix86
+	emit_list dir i586
+%endif
+%ifarch x86_64
+	emit_list dir x86_64
+%endif
+%if "%_lib" == "lib64"
+	cat %_sourcedir/%name-dir-64.list
+%endif
+%ifarch x32
+	cat %_sourcedir/%name-dir-64.list
 %endif
 %ifarch x86_64 x32
 	cat %_sourcedir/%name-dir-x32.list
@@ -55,6 +95,18 @@ permissions for the directories.
 	cat dir.list
 	echo '%%defattr(-,root,root,-)'
 	cut -d' ' -f1 < %_sourcedir/%name-link.list
+%if "%_lib" == "lib64"
+	cut -d' ' -f1 < %_sourcedir/%name-link-64.list
+%endif
+%ifarch x32
+	cut -d' ' -f1 < %_sourcedir/%name-link-64.list
+%endif
+%ifarch x86_64 x32
+	cut -d' ' -f1 < %_sourcedir/%name-link-x32.list
+%endif
+%ifarch %e2k
+	cut -d' ' -f1 < %_sourcedir/%name-link-e2k32.list
+%endif
 } > list
 
 %install
@@ -66,11 +118,67 @@ done < dir.list
 
 while read source target; do
 	ln -s "$target" "%buildroot$source"
-done < %_sourcedir/%name-link.list
+done < link-t-s.list
 
 %files -f list
 
+%pretrans -p <lua>
+migrate = false
+if posix.stat("/usr") then
+  -- See if we need to migrate to merged-usr.
+  for i, d in pairs({
+"/bin",
+"/sbin",
+"/lib",
+%if "%_lib" == "lib64"
+"/lib64",
+%endif
+%ifarch x32
+"/lib64",
+%endif
+%ifarch x86_64 x32
+"/libx32",
+%endif
+%ifarch e2k32
+"/lib32",
+%endif
+}) do
+    local dt = posix.stat(d, "type")
+    if dt == "directory" then
+      migrate = true
+    end
+  end
+end
+
+if migrate then
+  -- We cannot use built-in print in case standard output
+  -- is not line-buffered, e. g. points to a file.
+  -- We know the shell is available at this point, so use it
+  -- to print log lines.
+  function print_l(s)
+    os.execute('printf "%%s: %%s\n" "%name-%EVR" "' .. s .. '"')
+  end
+  print_l("Migration is needed before the package can be installed.")
+  hier_convert_prog = "/usr/libexec/usrmerge/hier-convert"
+  if not posix.stat(hier_convert_prog) then
+    error("Looks like usrmerge-hier-convert is not installed. Aborting.")
+  end
+  print_l("Starting usrmerge-hier-convert...")
+  assert(os.execute(hier_convert_prog))
+end
+
 %changelog
+* Sat Apr 06 2024 Arseny Maslennikov <arseny@altlinux.org> 3.1-alt1
+- Added a pre-transaction hook to migrate existing root hierarchies on
+  upgrades.
+
+* Fri Mar 01 2024 Arseny Maslennikov <arseny@altlinux.org> 3.0-alt1
+- Replaced the following directories with symlinks to /usr:
+  + /bin;
+  + /sbin;
+  + /lib*.
+  See https://altlinux.org/Usrmerge for more info.
+
 * Thu Nov 16 2023 Arseny Maslennikov <arseny@altlinux.org> 2.3.19-alt1
 - Removed /var/nobody altogether.
 
