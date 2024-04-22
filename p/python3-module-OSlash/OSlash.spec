@@ -4,15 +4,15 @@
 
 Name:    python3-module-%oname
 Version: 0.6.3
-Release: alt3
+Release: alt4
 
 Summary: Functors, Applicatives, And Monads in Python
 
 License: MIT
 Group:   Development/Python3
 URL:     https://pypi.org/project/OSlash
+VCS:     https://github.com/dbrattli/OSlash
 
-# https://github.com/dbrattli/OSlash
 Source:  %name-%version.tar
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
@@ -57,11 +57,14 @@ sed -i 's/readfp/read_file/' versioneer.py
 %tox_check_pyproject
 
 %files
-%doc *.md
+%doc LICENSE *.md
 %python3_sitelibdir/oslash
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Apr 22 2024 Grigory Ustinov <grenka@altlinux.org> 0.6.3-alt4
+- Very tiny spec refactoring.
+
 * Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 0.6.3-alt3
 - Fixed FTBFS.
 
