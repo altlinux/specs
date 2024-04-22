@@ -8,7 +8,7 @@
 
 Name: footage
 Version: %ver_major.2
-Release: alt0.1
+Release: alt0.2
 
 Summary: Simple video editor for GNOME
 License: GPL-3.0
@@ -27,10 +27,18 @@ Source1: %name-%version-cargo.tar
 %define adwaita_ver 1.5
 %define gst_ver 1.22.8
 
+Requires: gstreamer1.0-utils
 Requires: gst-plugins-bad1.0 >= 1.22.8
+Requires: gst-plugins-ugly1.0
 Requires: gstreamer-editing-services
+Requires: gstreamer-vaapi
 Requires: gst-libav
 Requires: gst-plugin-gtk4
+Requires: ffmpeg a52dec fdkaac
+Requires: x264 x265
+Requires: gstreamer1-svt-av1 svt-av1
+Requires: libmpeg2
+#Requires: vo-aacenc
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo blueprint-compiler
@@ -76,6 +84,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README* PRESS*
 
 %changelog
+* Mon Apr 22 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt0.2
+- updated runtime dependencies
+
 * Fri Apr 19 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt0.1
 - first build for Sisyphus (v1.3.2-1-g072c586)
 
