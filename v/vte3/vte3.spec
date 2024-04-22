@@ -8,7 +8,7 @@
 %define bind_ver 3.91
 
 Name: %{_name}3
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 %def_disable static
@@ -35,7 +35,7 @@ Source: %_name-%version.tar
 %endif
 
 %define gtk3_ver 3.24.0
-%define gtk4_ver 4.12
+%define gtk4_ver 4.14
 %define glib_ver 2.72.0
 %define pango_ver 1.22
 %define gir_ver 0.10.2
@@ -214,6 +214,9 @@ install -p -m644 doc/*.txt %buildroot%pkgdocdir/
 %endif
 
 %changelog
+* Mon Apr 22 2024 Yuri N. Sedunov <aris@altlinux.org> 0.76.1-alt1
+- 0.76.1
+
 * Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 0.76.0-alt1
 - 0.76.0
 
