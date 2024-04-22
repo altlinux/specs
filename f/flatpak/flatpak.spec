@@ -14,15 +14,13 @@
 %def_disable check
 
 Name: flatpak
-Version: 1.14.5
+Version: 1.14.6
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
 Group: Development/Tools
 License: LGPLv2.1+
 Url: https://flatpak.org/
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Vcs: https://github.com/flatpak/flatpak.git
 # Source-url: https://github.com/flatpak/flatpak/releases/download/%version/%name-%version.tar.xz
@@ -222,6 +220,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Mon Apr 22 2024 Yuri N. Sedunov <aris@altlinux.org> 1.14.6-alt1
+- 1.14.6 (fixed CVE-2024-32462)
+
 * Sat Dec 09 2023 Yuri N. Sedunov <aris@altlinux.org> 1.14.5-alt1
 - 1.14.5
 
