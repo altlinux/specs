@@ -1,5 +1,5 @@
 Name: mmc-utils
-Version: 0.0.20230928
+Version: 0.0.20240329
 Release: alt1
 
 Summary: Tool for configuring MMC storage devices from userspace
@@ -20,7 +20,6 @@ Source: %name-%version.tar
 
 %install
 %make_install DESTDIR=%buildroot prefix=%_prefix install
-install -pm0644 -D man/mmc.1 %buildroot%_man1dir/mmc.1
 
 %files
 %doc README
@@ -28,5 +27,8 @@ install -pm0644 -D man/mmc.1 %buildroot%_man1dir/mmc.1
 %_man1dir/mmc.1*
 
 %changelog
+* Mon Apr 22 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.0.20240329-alt1
+- manpage updated
+
 * Thu Nov 23 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20230928-alt1
 - initial
