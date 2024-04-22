@@ -2,7 +2,7 @@
 
 Name: ansible-core
 Summary: A radically simple IT automation system
-Version: 2.16.5
+Version: 2.16.6
 Release: alt1
 
 Group:   System/Configuration/Other
@@ -86,6 +86,9 @@ rm -rf %buildroot%python3_sitelibdir/ansible_test
 %python3_sitelibdir/%{rname}*
 
 %changelog
+* Sun Apr 21 2024 Andrey Cherepanov <cas@altlinux.org> 2.16.6-alt1
+- New version.
+
 * Mon Apr 01 2024 Andrey Cherepanov <cas@altlinux.org> 2.16.5-alt1
 - New version.
 
@@ -94,6 +97,8 @@ rm -rf %buildroot%python3_sitelibdir/ansible_test
 
 * Fri Feb 02 2024 Andrey Cherepanov <cas@altlinux.org> 2.16.3-alt1
 - New version.
+- Security fixes:
+  + CVE-2024-0690: Address issue where ANSIBLE_NO_LOG was ignored
 
 * Wed Dec 13 2023 Andrey Cherepanov <cas@altlinux.org> 2.16.2-alt1
 - New version.
@@ -101,6 +106,8 @@ rm -rf %buildroot%python3_sitelibdir/ansible_test
 * Mon Dec 11 2023 Andrey Cherepanov <cas@altlinux.org> 2.16.1-alt1
 - New version.
 - Update apt_repo and apt_rpm from community.general 8.1.0 (ALT #48091).
+- Security fixes:
+  + CVE-2023-5764: Ansible template injection vulnerability
 
 * Fri Dec 01 2023 Andrey Cherepanov <cas@altlinux.org> 2.16.0-alt2
 - Excluded python3 library to python3-module-ansible.
@@ -108,6 +115,8 @@ rm -rf %buildroot%python3_sitelibdir/ansible_test
 
 * Thu Nov 09 2023 Andrey Cherepanov <cas@altlinux.org> 2.16.0-alt1
 - New version.
+- Security fixes:
+  + CVE-2023-5115: An absolute path traversal attack existed
 
 * Sun Oct 15 2023 Andrey Cherepanov <cas@altlinux.org> 2.15.5-alt1
 - New version.
