@@ -5,7 +5,7 @@ Summary: CUPS driver for Brother P-touch label printers
 %define orig_name ptouch-driver
 
 Name: printer-driver-ptouch
-Version: 1.6
+Version: 1.7
 Release: alt1
 
 Provides: %orig_name = %version
@@ -48,6 +48,9 @@ rm -rf %buildroot%_datadir/foomatic/db/source/printer/
 %_prefix/lib/cups/filter/*
 
 %changelog
+* Mon Apr 22 2024 Oleg Solovyov <mcpain@altlinux.org> 1.7-alt1
+- New version 1.7
+
 * Tue Sep 28 2021 Oleg Solovyov <mcpain@altlinux.org> 1.6-alt1
 - New version 1.6
 
