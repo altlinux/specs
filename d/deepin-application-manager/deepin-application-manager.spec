@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-application-manager
-Version: 1.2.2.0.2.d541
+Version: 1.2.4.0.1.g6096
 Release: alt1
 
 Summary: App manager for Deepin
@@ -83,6 +83,9 @@ rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 %_datadir/dsg/configs/org.deepin.dde.application-manager/org.deepin.dde.am.json
 
 %changelog
+* Mon Apr 22 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.4.0.1.g6096-alt1
+- New version 1.2.4-1-g6096.
+
 * Fri Apr 05 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.2.0.2.d541-alt1
 - New version 1.2.2-2-gd541c43.
 - Switched to dtk6 by upstream.

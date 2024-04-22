@@ -2,7 +2,7 @@
 %def_enable docs
 
 Name: dtk6widget
-Version: 6.0.9
+Version: 6.0.11
 Release: alt1
 
 Summary: Deepin tool kit widget modules
@@ -134,5 +134,8 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_qt6_docdir/dtkwidget.qch
 
 %changelog
+* Mon Apr 22 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.11-alt1
+- New version 6.0.11.
+
 * Tue Apr 02 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.9-alt1
 - Initial build for ALT Sisyphus.
