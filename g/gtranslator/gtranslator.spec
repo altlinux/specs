@@ -1,14 +1,15 @@
 %def_disable snapshot
 
 %define ver_major 46
+%define beta %nil
 %define api_ver 3.0
 %define xdg_name org.gnome.Gtranslator
 
 %def_disable gtk_doc
 
 Name: gtranslator
-Version: %ver_major.0
-Release: alt1
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: A GNOME po file editor with many bells and whistles.
 License: GPLv3
@@ -97,6 +98,9 @@ This package contains documentation needed to develop %name plugins.
 %_datadir/gtk-doc/html/%name/}
 
 %changelog
+* Mon Apr 22 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1%beta
+- 46.1
+
 * Thu Mar 21 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 

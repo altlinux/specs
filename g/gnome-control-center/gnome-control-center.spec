@@ -16,7 +16,7 @@
 %def_enable check
 
 Name: gnome-control-center
-Version: %ver_major.0.1
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -38,7 +38,7 @@ Source1: https://raw.githubusercontent.com/eggert/tz/main/zone.tab
 %define fontconfig_ver 1.0.0
 %define gsds_ver 46
 # nm_client_get_permissions_state()
-%define nm_ver 1.24
+%define nm_ver 1.46
 %define goa_ver 3.49.1
 %define acc_ver 0.6.39
 %define sett_daemon_ver 42
@@ -166,7 +166,7 @@ sed -i 's|\(\/usr\/share\/\)zoneinfo\/\(zone.tab\)|\1%name/\2|' panels/system/da
 
 %install
 %meson_install
-cp %SOURCE1 %buildroot%_datadir/%name/
+sed -e '/Simferopol/d' %SOURCE1 > %buildroot%_datadir/%name/zone.tab
 %find_lang --with-gnome --output=%name.lang %name-%api_ver %name-%api_ver-timezones %_name
 
 %check
@@ -210,6 +210,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Mon Apr 22 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
+- 46.1
+
 * Wed Mar 27 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0.1-alt1
 - 46.0.1
 
