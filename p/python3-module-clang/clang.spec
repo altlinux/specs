@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define oname clang
+%define llvm_ver 18.1
 
 %def_without check
 
 Name:       python3-module-%oname
-Version:    16.0.6
-Release:    alt2
+Version:    18.1.1
+Release:    alt1
 
 Summary:    Libclang python bindings
 License:    Apache-2.0
@@ -18,8 +19,8 @@ Source0:    %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-BuildRequires: clang16.0-devel
-BuildRequires: llvm16.0-devel
+BuildRequires: clang%{llvm_ver}-devel
+BuildRequires: llvm%{llvm_ver}-devel
 
 %description
 The aim of this project is to make the clang.cindex
@@ -42,7 +43,8 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 # Using system libclang.so
-libdir=$(llvm-config-16 --libdir)
+export ALTWRAP_LLVM_VERSION=%llvm_ver
+libdir=$(llvm-config --libdir)
 ln -s $libdir/libclang.so %buildroot%python3_sitelibdir/%oname/native/libclang.so
 
 %files
@@ -51,6 +53,9 @@ ln -s $libdir/libclang.so %buildroot%python3_sitelibdir/%oname/native/libclang.s
 %python3_sitelibdir/lib%oname-%version.dist-info
 
 %changelog
+* Tue Apr 23 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.1-alt1
+- NMU: update to llvm-18.
+
 * Thu Nov 23 2023 Anton Vyatkin <toni@altlinux.org> 16.0.6-alt2
 - Using system lib.
 
@@ -61,7 +66,8 @@ ln -s $libdir/libclang.so %buildroot%python3_sitelibdir/%oname/native/libclang.s
 - New version 15.0.6.1
 
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 6.0.0.2-alt1.1
-- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from
+  dependencies.
 
 * Thu Feb 06 2020 Andrey Bychkov <mrdrew@altlinux.org> 6.0.0.2-alt1
 - Version updated to 6.0.0.2
