@@ -1,15 +1,15 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name Graphs
 %define pypi_name graphs
-%define ver_major 1.7
+%define ver_major 1.8
 %define api_ver 1
 %define rdn_name se.sjoerd.%_name
 
 %def_enable check
 
 Name: graphs
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Plot and manipulate data with Graphs
@@ -24,14 +24,16 @@ Vcs: https://github.com/Sjoerd1993/Graphs.git
 Source: %name-%version.tar
 %endif
 
-%define adwaita_ver 1.4
+%define adwaita_ver 1.5
 
-Requires: dconf
+Requires: dconf yelp
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir rpm-build-vala
 BuildRequires: meson vala-tools blueprint-compiler /usr/bin/g-ir-compiler
+BuildRequires: yelp-tools
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver gir(Adw) = 1
-%{?_enable_check:BuildRequires: /usr/bin/appstream-util desktop-file-utils}
+BuildRequires: pkgconfig(gee-0.8)
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 # TODO: python tests
 #BuildRequires: python3(pytest) typelib(Adw) = 1}
 
@@ -49,7 +51,7 @@ Group: System/Libraries
 This package contains shared library needed %_name to work.
 
 %prep
-%setup -n %name-%version
+%setup -n %{?_disable_snapshot:%_name}%{?_enable_snapshot:%name}-%version
 sed -i "s/'pytest'/'py.test3'/" tests/meson.build
 
 %build
@@ -79,6 +81,9 @@ sed -i "s/'pytest'/'py.test3'/" tests/meson.build
 %_typelibdir/%_name-%api_ver.typelib
 
 %changelog
+* Tue Apr 23 2024 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Tue Feb 06 2024 Yuri N. Sedunov <aris@altlinux.org> 1.7.2-alt1
 - updated to v1.7.2-2-g975ae74
 
