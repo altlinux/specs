@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 
 Summary: Plugin and hook calling mechanisms for python
@@ -48,6 +48,9 @@ specific details.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Apr 22 2024 Stanislav Levin <slev@altlinux.org> 1.5.0-alt1
+- 1.4.0 -> 1.5.0.
+
 * Mon Jan 29 2024 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
 - 1.3.0 -> 1.4.0.
 
