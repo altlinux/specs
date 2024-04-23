@@ -120,7 +120,7 @@
 %def_disable check
 
 Name: weston
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Reference compositor for Wayland
@@ -324,6 +324,9 @@ ln -sf %name/libexec_%{name}.so.%exec_soname \
 %_datadir/pkgconfig/lib%name-%api_ver-protocols.pc
 
 %changelog
+* Tue Apr 23 2024 Yuri N. Sedunov <aris@altlinux.org> 13.0.1-alt1
+- 13.0.1
+
 * Wed Nov 29 2023 Yuri N. Sedunov <aris@altlinux.org> 13.0.0-alt1
 - 13.0.0
 
