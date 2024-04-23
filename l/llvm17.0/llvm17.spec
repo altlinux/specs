@@ -57,10 +57,6 @@
 AutoReq: nopython
 AutoProv: nopython
 
-# mold needs additional ldflags
-# which pollute llvm-config --ldflags output
-%def_without mold
-
 # Decrease debuginfo verbosity to reduce memory consumption during final library linking
 %ifarch %ix86 %arm mipsel
 %define optflags_debug -g0
@@ -89,8 +85,10 @@ AutoProv: nopython
 # disable clang on aarch64 due very long compile time
 %ifarch x86_64 ppc64le
 %def_with clang
+%def_with mold
 %else
 %def_without clang
+%def_without mold
 %endif
 %if_with lldb
 %def_with lldb_contrib
@@ -109,7 +107,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt4
+Release: alt4.1
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -143,6 +141,8 @@ Patch101: clang-ALT-bug-40628-grecord-command-line.patch
 Patch102: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.patch
 Patch103: clang-alt-nvvm-libdevice.patch
 Patch104: openmp-alt-soname.patch
+# https://github.com/llvm/llvm-project/pull/68273
+Patch105: scudo-fix-assert-capability-68273.patch
 
 Patch200: 0001-RuntimeDyld-RISCV-Minimal-riscv64-support.patch
 Patch201: 0002-RuntimeDyld-RISCV-Impleemnd-HI20-and-LO12_I-relocs.patch
@@ -508,6 +508,8 @@ Summary: LLD - The LLVM Linker
 Group: Development/C
 %requires_filesystem
 Requires: lld >= %_llvm_version
+# /proc needed for normal operation
+Requires: /proc
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
 AutoReq: nopython
@@ -778,6 +780,7 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch102 -p2
 %patch103 -p1
 %patch104 -p2
+%patch105 -p1
 
 %patch200 -p2
 %patch201 -p2
@@ -851,9 +854,8 @@ fi
 	-DLLVM_ENABLE_LTO=Thin \
 	%if_with mold
 	-DLLVM_USE_LINKER=mold \
-	-DCMAKE_CXX_LINK_FLAGS="-Wl,--thinlto-jobs=all" \
 	%else
-	-DLLVM_ENABLE_LLD:BOOL=ON \
+	-DLLVM_USE_LINKER=lld \
 	%endif
 	%else
 	-DLLVM_ENABLE_LTO=Off \
@@ -1506,6 +1508,11 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Tue Apr 23 2024 L.A. Kostis <lakostis@altlinux.ru> 17.0.6-alt4.1
+- Fix FTBFS: scudo: Fix the use of ASSERT_CAPABILITY in TSD (upstream PR#68273).
+- x86_64/ppc64le: compile with mold.
+- lld: added /proc to requires.
+
 * Fri Mar 29 2024 L.A. Kostis <lakostis@altlinux.ru> 17.0.6-alt4
 - openmp: disable build due soname clash with next llvm.
 - cmake-modules: move to %%llvm_datadir.
