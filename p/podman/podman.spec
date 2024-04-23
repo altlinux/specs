@@ -5,7 +5,7 @@
 
 Name:     podman
 Version:  5.0.2
-Release:  alt1
+Release:  alt1.1
 
 Summary:  Manage pods, containers, and container images
 License:  Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND ISC AND MIT AND MPL-2.0
@@ -23,6 +23,8 @@ BuildRequires: libseccomp-devel glib2-devel libgpgme-devel libgpg-error-devel li
 BuildRequires: libgio-devel libostree-devel libselinux-devel libdevmapper-devel
 BuildRequires: libassuan-devel libsystemd-devel libsubid-devel
 BuildRequires: /proc
+
+Conflicts: filesystem < 3
 
 Requires: catatonit
 Requires: conmon >= 2.1.7
@@ -99,6 +101,7 @@ go build -o test/version/version ./test/version/
 popd
 
 %install
+%define _systemdgeneratordir %_prefix/lib/systemd/system-generators
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path:$PWD"
@@ -124,6 +127,7 @@ rm -f %buildroot%_man5dir/dockerignore*
 rm -f %buildroot%_man5dir/dockerfile*
 
 %files
+%define _systemdgeneratordir %_prefix/lib/systemd/system-generators
 %_bindir/%name
 %_bindir/%{name}sh
 %_datadir/bash-completion/completions/%name
@@ -158,6 +162,11 @@ rm -f %buildroot%_man5dir/dockerfile*
 %_datadir/user-tmpfiles.d/%name-docker.conf
 
 %changelog
+* Tue Apr 23 2024 Arseny Maslennikov <arseny@altlinux.org> 5.0.2-alt1.1
+- NMU: Made the system unit generator compatible with merged-usr.
+  Added a conflict on filesystem < 3 for the same reason.
+  See https://altlinux.org/Usrmerge for more information.
+
 * Fri Apr 19 2024 Alexey Shabalin <shaba@altlinux.org> 5.0.2-alt1
 - New version 5.0.2.
 
