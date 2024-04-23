@@ -2,7 +2,7 @@
 
 Summary: Empty firefox dependency holder on platforms that don't have one
 Name: %realname-unmet-holder
-Version: 124.0.2
+Version: 125.0.1
 Release: alt1
 Group: Networking/WWW
 License: GPL-3.0
@@ -17,6 +17,9 @@ firefox does not exist, something must provide such a dependency.
 %files
 
 %changelog
+* Wed Apr 17 2024 Ajrat Makhmutov <rauty@altlinux.org> 125.0.1-alt1
+- New release (125.0.1).
+
 * Wed Apr 03 2024 Ajrat Makhmutov <rauty@altlinux.org> 124.0.2-alt1
 - New release (124.0.2).
 

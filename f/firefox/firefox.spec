@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 124.0.2
+Version: 125.0.1
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -21,6 +21,7 @@ Patch007: 0007-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch008: 0008-ALT-fix-double_t-redefinition.patch
 Patch009: 0009-build-Disable-Werror.patch
 Patch010: 0010-Add-dbus-cflags.patch
+Patch011: 0011-FEDORA-enable-vaapi.patch
 ### End Patches
 
 %define _unpackaged_files_terminate_build 1
@@ -138,13 +139,12 @@ Requires: libnspr >= %nspr_version
 Requires: libnss >= %nss_version
 
 %description
-The Mozilla Firefox project is a redesign of Mozilla's browser component,
-written using the XUL user interface language and designed to be
-cross-platform.
+Mozilla Firefox is an open-source web browser, designed
+for standards compliance, performance and portability.
 
 %description -l ru_RU.UTF-8
-Интернет-браузер Mozilla Firefox - кроссплатформенная модификация браузера Mozilla,
-созданная с использованием языка XUL для описания интерфейса пользователя.
+Mozilla Firefox - это веб-браузер с открытым исходным кодом, разработанный
+с учетом соответствия стандартам, производительности и переносимости.
 
 %package -n firefox-config-privacy
 Summary:	Firefox configuration with the paranoid privacy settings
@@ -422,6 +422,27 @@ fi
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Apr 17 2024 Ajrat Makhmutov <rauty@altlinux.org> 125.0.1-alt1
+- New version (125.0.1).
+- Update description (closes: 49990).
+- Enable VAAPI.
+- Security fixes:
+  + CVE-2024-3852: GetBoundName in the JIT returned the wrong object
+  + CVE-2024-3853: Use-after-free if garbage collection runs during realm initialization
+  + CVE-2024-3854: Out-of-bounds-read after mis-optimized switch statement
+  + CVE-2024-3855: Incorrect JIT optimization of MSubstr leads to out-of-bounds reads
+  + CVE-2024-3856: Use-after-free in WASM garbage collection
+  + CVE-2024-3857: Incorrect JITting of arguments led to use-after-free during garbage collection
+  + CVE-2024-3858: Corrupt pointer dereference in js::CheckTracedThing<js::Shape>
+  + CVE-2024-3859: Integer-overflow led to out-of-bounds-read in the OpenType sanitizer
+  + CVE-2024-3860: Crash when tracing empty shape lists
+  + CVE-2024-3861: Potential use-after-free due to AlignedBuffer self-move
+  + CVE-2024-3862: Potential use of uninitialized memory in MarkStack assignment operator on self-assignment
+  + CVE-2024-3863: Download Protections were bypassed by .xrm-ms files on Windows
+  + CVE-2024-3302: Denial of Service using HTTP/2 CONTINUATION frames
+  + CVE-2024-3864: Memory safety bug fixed in Firefox 125, Firefox ESR 115.10, and Thunderbird 115.10
+  + CVE-2024-3865: Memory safety bugs fixed in Firefox 125
+
 * Wed Apr 03 2024 Ajrat Makhmutov <rauty@altlinux.org> 124.0.2-alt1
 - New release (124.0.2).
 
