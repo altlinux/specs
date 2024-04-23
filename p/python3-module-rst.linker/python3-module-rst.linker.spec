@@ -1,7 +1,7 @@
 %define  modulename rst.linker
 
 Name:    python3-module-%modulename
-Version: 2.4.0
+Version: 2.6.0
 Release: alt1
 
 Summary: rst.linker provides a routine for adding links and performing other custom replacements to reStructuredText files as a Sphinx extension
@@ -14,33 +14,39 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-setuptools_scm
 BuildRequires: python3-module-toml
+BuildRequires: python3-module-wheel
 
 BuildArch: noarch
 
 Source:  %modulename-%version.tar
+
+%filter_from_requires /python3(jaraco)/d
+%py3_requires jaraco.vcs
 
 %description
 %{summary}.
 
 %prep
 %setup -n %modulename-%version
-echo 'import setuptools; setuptools.setup()' > setup.py
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 %files
 %python3_sitelibdir/rst/*.py
 %python3_sitelibdir/rst/__pycache__/*
 %python3_sitelibdir/rst.linker*
-%python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue Apr 23 2024 Andrey Cherepanov <cas@altlinux.org> 2.6.0-alt1
+- New version.
+- Built using pyproject macros.
+
 * Sat Jan 28 2023 Andrey Cherepanov <cas@altlinux.org> 2.4.0-alt1
 - New version.
 
