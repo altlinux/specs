@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.27.11
-Release: alt3
+Release: alt4
 Epoch: 1
 %K5init
 
@@ -394,6 +394,7 @@ done
 sed -i 's|^Exec=.*|Exec=%_K5bin/krunner|' %buildroot/%_K5dbus_srv/org.kde.krunner.service
 
 mkdir -p %buildroot/%_K5xdgconf/plasma-workspace/env/
+mkdir -p %buildroot/%_K5data/kio_desktop/DesktopLinks/
 
 mkdir -p %buildroot/%_bindir
 mkdir -p %buildroot/%_kf5_bin
@@ -446,6 +447,7 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_unitdir_user/plasma-core.target.d/xd
 %dir %_kf5_data/plasma/look-and-feel/
 %dir %_K5xdgconf/plasma-workspace/
 %dir %_K5xdgconf/plasma-workspace/env/
+%dir %_K5data/kio_desktop/DesktopLinks/
 %dir %_K5plug/kpackage/
 %dir %_K5qml/org/kde/plasma/workspace/
 %dir %_K5qml/org/kde/plasma/private/
@@ -573,6 +575,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_unitdir_user/plasma-core.target.d/xd
 
 
 %changelog
+* Tue Apr 23 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.11-alt4
+- package DesktopLinks directory
+
 * Mon Apr 01 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 1:5.27.11-alt3
 - fix reset/default buttons kcms/regionlang (closes: 47058)
   fix error message overlap and time regex in kcms/nightcolor (closes: 45586)
