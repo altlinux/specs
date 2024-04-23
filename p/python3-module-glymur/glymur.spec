@@ -2,20 +2,19 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.13.0
+Version: 0.13.1
 Release: alt1
 
-Summary: Python interface to OpenJPEG library for reading and writing JPEG 2000 images.
+Summary: Python interface to OpenJPEG library for reading and writing JPEG 2000 images
 
 License: MIT
 Group:   Development/Python3
-URL:     https://github.com/quintusdias/glymur
+URL:     https://pypi.org/project/Glymur
+VCS:     https://github.com/quintusdias/glymur
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev
-
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
@@ -32,20 +31,16 @@ BuildArch: noarch
 Source:  %name-%version.tar
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
-sed -i 's/0.12.8/0.12.9/' setup.cfg
 
 %build
 %pyproject_build
 
 %install
 %pyproject_install
-
-# don't install tests in such directory please
-rm -rf %buildroot%python3_sitelibdir/tests
 
 %check
 %pyproject_run_pytest
@@ -58,6 +53,9 @@ rm -rf %buildroot%python3_sitelibdir/tests
 %python3_sitelibdir/Glymur-%version.dist-info
 
 %changelog
+* Tue Apr 23 2024 Grigory Ustinov <grenka@altlinux.org> 0.13.1-alt1
+- Automatically updated to 0.13.1.
+
 * Mon Apr 22 2024 Grigory Ustinov <grenka@altlinux.org> 0.13.0-alt1
 - Automatically updated to 0.13.0.
 
