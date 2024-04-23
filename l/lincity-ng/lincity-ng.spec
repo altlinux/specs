@@ -1,7 +1,7 @@
 %define prerel %nil
 
 Name: lincity-ng
-Version: 2.10.1
+Version: 2.10.2
 Release: alt1
 
 Summary: LinCity-NG is a city simulation game
@@ -94,6 +94,9 @@ subst 's/\.wav/.ogg/' %buildroot/%_datadir/%name/sounds/sounds.xml
 %doc %_pkgdocdir/
 
 %changelog
+* Tue Apr 23 2024 Yuri N. Sedunov <aris@altlinux.org> 2.10.2-alt1
+- 2.10.2
+
 * Fri Mar 22 2024 Yuri N. Sedunov <aris@altlinux.org> 2.10.1-alt1
 - 2.10.1 (ported to CMake build system)
 
