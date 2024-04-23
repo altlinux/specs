@@ -56,18 +56,18 @@
 
 Name: %llvm_name
 Version: %v_full
-Release: alt4.1
+Release: alt4.2
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
 License: Apache-2.0 with LLVM-exception
 Url: http://llvm.org
-Source0: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/llvm-%tarversion.src.tar.xz
-Source1: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/clang-%tarversion.src.tar.xz
-Source2: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/clang-tools-extra-%tarversion.src.tar.xz
-Source3: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/lld-%tarversion.src.tar.xz
-Source4: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/compiler-rt-%tarversion.src.tar.xz
-Source5: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/lldb-%tarversion.src.tar.xz
+Source0: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/llvm-%tarversion.src.tar
+Source1: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/clang-%tarversion.src.tar
+Source2: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/clang-tools-extra-%tarversion.src.tar
+Source3: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/lld-%tarversion.src.tar
+Source4: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/compiler-rt-%tarversion.src.tar
+Source5: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/lldb-%tarversion.src.tar
 Patch:  clang-alt-i586-fallback.patch
 Patch1: clang-alt-triple.patch
 Patch2: 0001-alt-llvm-config-Ignore-wrappers-when-looking-for-current.patch
@@ -86,6 +86,7 @@ Patch15: llvm-cmake-resolve-symlinks-in-LLVMConfig.cmake.patch
 Patch16: clang-cmake-resolve-symlinks-in-ClangConfig.cmake.patch
 Patch17: llvm-cmake-pass-ffat-lto-objects-if-using-the-GNU-toolcha.patch
 Patch18: lld-compact-unwind-encoding.h.patch
+Patch19: llvm-gcc13-add-cstdint.patch
 
 Patch101: clang-ALT-bug-40628-grecord-command-line.patch
 
@@ -378,6 +379,7 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' lib/Support/Unix/Path.inc
 %patch16 -p1
 %patch17 -p1
 %patch18 -p1
+%patch19 -p2
 
 %patch101 -p1
 
@@ -843,6 +845,9 @@ ninja -C BUILD check-all || :
 #doc %llvm_docdir/lldb
 
 %changelog
+* Tue Apr 23 2024 L.A. Kostis <lakostis@altlinux.ru> 12.0.1-alt4.2
+- fix FTBFS: llvm: add cstdint to compile with gcc13.
+
 * Sat Apr 23 2022 Arseny Maslennikov <arseny@altlinux.org> 12.0.1-alt4.1
 - [Fix] Merge *-devel-static into *-devel across supported LLVM major versions,
   including llvm-devel.
