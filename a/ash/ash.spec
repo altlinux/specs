@@ -1,7 +1,7 @@
 Summary: A smaller version of the Bourne shell
 Name: ash
 Version: 0.5.11.18.g6f6d1f2
-Release: alt1
+Release: alt2
 
 License: BSD-3-Clause
 Group: Shells
@@ -78,16 +78,13 @@ mkdir -p %buildroot/lib/mkinitrd/initramfs/bin
 
 install -m755 -pD build-dynamic/sh.dynamic %buildroot/bin/%name
 install -m755 -pD build-static/sh.static %buildroot/bin/%name.static
-ln -s %name %buildroot/bin/bsh
 ln -s %name %buildroot/bin/dash
 
 install -m644 -pD src/dash.1 %buildroot/%_man1dir/%name.1
-ln -s %name.1 %buildroot/%_man1dir/bsh.1
 ln -s %name.1 %buildroot/%_man1dir/dash.1
 
 %files
 /bin/%name
-/bin/bsh
 /bin/dash
 %_man1dir/*
 
@@ -95,6 +92,10 @@ ln -s %name.1 %buildroot/%_man1dir/dash.1
 /bin/%name.static
 
 %changelog
+* Wed Apr 24 2024 Alexey Gladkov <legion@altlinux.ru> 0.5.11.18.g6f6d1f2-alt2
+- Remove symlink /bin/bsh to avoid conflict with beanshell after merging /bin
+  and /usr/bin (ALT#50148).
+
 * Wed Aug 04 2021 Alexey Gladkov <legion@altlinux.ru> 0.5.11.18.g6f6d1f2-alt1
 - New release (0.5.11) and update from upstream git.
 - Update local patches.
