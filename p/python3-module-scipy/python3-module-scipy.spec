@@ -11,7 +11,7 @@
 
 Name: python3-module-%modname
 Version: %ver_major.%ver_minor
-Release: alt2.2
+Release: alt3
 
 Summary: SciPy is the library of scientific codes
 License: BSD-3-Clause
@@ -28,6 +28,7 @@ Source3: %name-%version-scipy-_lib-boost_math.tar
 Source4: %name-%version-scipy-_lib-highs.tar
 Source5: %name-%version-scipy-_lib-unuran.tar
 Source6: %name-%version-scipy-sparse-linalg-_propack-PROPACK.tar
+Source7: datasets.tar
 
 # will be released with scipy 1.8.0
 
@@ -88,7 +89,7 @@ SciPy is the library of scientific codes built on top of NumPy.
 This package contains development files of SciPy.
 
 %prep
-%setup -a2 -a3 -a4 -a5 -a6
+%setup -a2 -a3 -a4 -a5 -a6 -a7
 %patch0 -p1
 install -p -m644 %SOURCE1 .
 sed -i 's|@LIBDIR@|%_libdir|g' site.cfg doc/Makefile
@@ -182,6 +183,9 @@ popd
 %_includedir/%modname-py3
 
 %changelog
+* Tue Apr 23 2024 Stanislav Levin <slev@altlinux.org> 1.11.4-alt3
+- Packaged datasets.
+
 * Fri Apr 12 2024 Vitaly Lipatov <lav@altlinux.ru> 1.11.4-alt2.2
 - mask matplotlib.pyplot require
 

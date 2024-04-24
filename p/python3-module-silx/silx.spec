@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.1
+Version: 2.1.0
 Release: alt1
 Summary: Software library for X-Ray data analysis
 License: MIT
@@ -126,7 +126,6 @@ cp -a examples %buildroot%python3_sitelibdir/silx/
 %exclude %python3_sitelibdir/silx/*/*/__pycache__/conftest.*
 
 %files -n %name+full
-
 %files tests
 %python3_sitelibdir/silx/test
 %python3_sitelibdir/silx/*/test
@@ -148,6 +147,9 @@ cp -a examples %buildroot%python3_sitelibdir/silx/
 %python3_sitelibdir/silx/examples
 
 %changelog
+* Mon Apr 22 2024 Stanislav Levin <slev@altlinux.org> 2.1.0-alt1
+- 2.0.1 -> 2.1.0.
+
 * Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 2.0.1-alt1
 - 1.1.2 -> 2.0.1.
 
