@@ -7,7 +7,7 @@
 %def_without mbedtls
 
 Name: freerdp
-Version: 2.11.6
+Version: 2.11.7
 Release: alt1
 
 Group: Networking/Remote access
@@ -397,6 +397,9 @@ install -Dpm0644 %SOURCE4 %buildroot%_sysconfdir/sysconfig/freerdp-server
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Wed Apr 24 2024 Andrey Cherepanov <cas@altlinux.org> 2.11.7-alt1
+- New version.
+
 * Thu Apr 18 2024 Andrey Cherepanov <cas@altlinux.org> 2.11.6-alt1
 - New version
 - Security fixes:
