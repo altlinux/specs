@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        123.0.6312.122
+Version:        124.0.6367.60
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -87,6 +87,14 @@ Patch028: 0028-DEBIAN-work-around-incorrect-template-selection.patch
 Patch029: 0029-nullptr_t-without-namespace-std.patch
 Patch030: 0030-Fix-undefined-symbol-partition_alloc-internal-Intern.patch
 Patch031: 0031-FEDORA-disable-screen-ai-service.patch
+Patch032: 0032-FEDORA-libavif-deps.patch
+Patch033: 0033-ALT-rename-std::powf.patch
+Patch034: 0034-DEBIAN-uint-includes.patch
+Patch035: 0035-DEBIAN-fps-optional.patch
+Patch036: 0036-DEBIAN-span-optional.patch
+Patch037: 0037-DEBIAN-webgpu-optional.patch
+Patch038: 0038-DEBIAN-extractor-bitset.patch
+Patch039: 0039-DEBIAN-atomic.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -503,6 +511,24 @@ EOF
 %_altdir/%name
 
 %changelog
+* Sat Apr 20 2024 Andrey Cherepanov <cas@altlinux.org> 124.0.6367.60-alt1
+- New version (124.0.6367.60).
+- Security fixes:
+  + CVE-2024-3832: Object corruption in V8.
+  + CVE-2024-3833: Object corruption in WebAssembly.
+  + CVE-2024-3914: Use after free in V8.
+  + CVE-2024-3834: Use after free in Downloads.
+  + CVE-2024-3837: Use after free in QUIC.
+  + CVE-2024-3838: Inappropriate implementation in Autofill.
+  + CVE-2024-3839: Out of bounds read in Fonts.
+  + CVE-2024-3840: Insufficient policy enforcement in Site Isolation.
+  + CVE-2024-3841: Insufficient data validation in Browser Switcher.
+  + CVE-2024-3843: Insufficient data validation in Downloads.
+  + CVE-2024-3844: Inappropriate implementation in Extensions.
+  + CVE-2024-3845: Inappropriate implementation in Network.
+  + CVE-2024-3846: Inappropriate implementation in Prompts.
+  + CVE-2024-3847: Insufficient policy enforcement in WebUI.
+
 * Sat Apr 13 2024 Andrey Cherepanov <cas@altlinux.org> 123.0.6312.122-alt1
 - New version (123.0.6312.122).
 - Security fixes:
