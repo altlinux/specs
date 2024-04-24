@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: lightdm-kde-greeter
-Version: 0.4.21
+Version: 0.4.22
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE5 Greeter
@@ -12,7 +12,7 @@ Url: http://git.altlinux.org/gears/l/lightdm-kde-greeter.git
 
 Source: %name-%version.tar
 
-%K5init altplace
+%K5init
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires(pre): rpm-build-qml
@@ -84,6 +84,7 @@ mkdir -p %buildroot%_altdir
 printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters/lightdm-kde-greeter.desktop\t300\n' > %buildroot%_altdir/lightdm-kde-greeter
 
 %files -f %name.lang
+%config(noreplace) %_sysconfdir/lightdm/lightdm-kde-greeter.conf
 %_altdir/lightdm-kde-greeter
 %_sbindir/lightdm-kde-greeter
 %_datadir/xgreeters/lightdm-kde-greeter.desktop
@@ -101,6 +102,11 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Wed Apr 24 2024 Anton Golubev <golubevan@altlinux.org> 0.4.22-alt1
+- use build-time set default background everywhere
+- add default configuration file (Closes: 49221)
+- remove altplace
+
 * Fri Apr 19 2024 Anton Golubev <golubevan@altlinux.org> 0.4.21-alt1
 - close menu when pressing side arrow (Closes: 48929)
 
