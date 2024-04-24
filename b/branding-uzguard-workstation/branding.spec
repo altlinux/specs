@@ -1,3 +1,5 @@
+%global _unpackaged_files_terminate_build 1
+
 %define brand uzguard
 %define Brand Uzguard
 %define theme workstation
@@ -26,7 +28,7 @@
 
 Name: branding-%flavour
 Version: 1.0
-Release: alt0.1
+Release: alt0.2
 
 %ifarch %ix86 x86_64
 BuildRequires: gfxboot >= 4
@@ -405,6 +407,7 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 /usr/share/alterator-browser-qt/design/*.rcc
 /usr/share/alterator/design/*
 %_sysconfdir/alterator/sysconfig/lang/langlist.ru_RU
+%_sysconfdir/alterator/sysconfig/lang/langlist.uz_UZ
 
 %files graphics
 %config /etc/alternatives/packages.d/%name-graphics
@@ -430,8 +433,8 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 %files kde-settings
 %_datadir/kf5/konsole/%Theme.profile
 /etc/skel/.config/autostart/nm-applet.desktop
-/etc/skel/.config/kdeglobals
-/etc/skel/.config/konsolerc
+/etc/skel/.config/k*
+/etc/skel/.config/plasma*
 
 %files fvwm-settings
 %_sysconfdir/skel/.fvwm2rc
@@ -445,8 +448,8 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 /etc/skel/.wm-select
 /etc/skel/.config
 %exclude /etc/skel/.config/autostart/nm-applet.desktop
-%exclude /etc/skel/.config/konsolerc
-%exclude /etc/skel/.config/kdeglobals
+%exclude /etc/skel/.config/k*
+%exclude /etc/skel/.config/plasma*
 /etc/skel/.face
 /etc/skel/.gconf
 /etc/skel/.gtkrc-2.0
@@ -470,7 +473,7 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 
 %files menu
 /usr/share/slinux-style
-/etc/xdg/menus/xfce-applications-merged/50-xfce-applications.menu
+/etc/xdg/menus/applications-merged/50-applications.menu
 /usr/share/desktop-directories/altlinux-wine.directory
 
 %files system-settings
@@ -478,5 +481,10 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Tue Apr 23 2024 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.2
+- kde-settings: make panel thinker and use all-application menubutton icon.
+- menu: use computer icon for acc.
+- alterator: package langlist for uz_UZ
+
 * Mon Mar 25 2024 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.1
 - New branding uzguard-workstation (alpha version).
