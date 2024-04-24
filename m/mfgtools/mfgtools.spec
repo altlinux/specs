@@ -1,5 +1,5 @@
 Name: mfgtools
-Version: 1.5.109
+Version: 1.5.179
 Release: alt1
 
 Summary: Freescale/NXP I.MX Chip image deploy tools
@@ -17,7 +17,7 @@ Patch3: alt-fix-progress-indicator.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
-BuildRequires: bzip2-devel zlib-devel libusb-devel libssl-devel libzstd-devel
+BuildRequires: bzip2-devel zlib-devel libusb-devel libssl-devel libzstd-devel libtinyxml2-devel
 
 Provides: uuu
 
@@ -47,6 +47,7 @@ sed -i 's,-no-pie,,' uuu/CMakeLists.txt
 %cmake_install
 
 mkdir -p %buildroot%_udevrulesdir
+# the rules below are produced by the tool itself: `uuu -udev`
 cat <<EOT >> %buildroot%_udevrulesdir/99-uuu.rules
 SUBSYSTEM=="usb", ATTRS{idVendor}=="1fc9", ATTRS{idProduct}=="012f", TAG+="uaccess"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="1fc9", ATTRS{idProduct}=="0129", TAG+="uaccess"
@@ -57,6 +58,8 @@ SUBSYSTEM=="usb", ATTRS{idVendor}=="1fc9", ATTRS{idProduct}=="0146", TAG+="uacce
 SUBSYSTEM=="usb", ATTRS{idVendor}=="1fc9", ATTRS{idProduct}=="014a", TAG+="uaccess"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="1fc9", ATTRS{idProduct}=="014b", TAG+="uaccess"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="1fc9", ATTRS{idProduct}=="014e", TAG+="uaccess"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="1fc9", ATTRS{idProduct}=="0159", TAG+="uaccess"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="1fc9", ATTRS{idProduct}=="015d", TAG+="uaccess"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="15a2", ATTRS{idProduct}=="0076", TAG+="uaccess"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="15a2", ATTRS{idProduct}=="0054", TAG+="uaccess"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="15a2", ATTRS{idProduct}=="0061", TAG+="uaccess"
@@ -90,6 +93,9 @@ EOT
 %_udevrulesdir/*
 
 %changelog
+* Wed Apr 24 2024 Pavel Nakonechnyi <zorg@altlinux.org> 1.5.179-alt1
+- updated to 1.5.179
+
 * Sun Jun 25 2023 Pavel Nakonechnyi <zorg@altlinux.org> 1.5.109-alt1
 - updated to 1.5.109
 
