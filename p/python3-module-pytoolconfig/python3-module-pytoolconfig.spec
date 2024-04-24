@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.3.1
-Release: alt1
+Release: alt1.1
 
 Summary: Python tool configuration
 License: LGPL-3.0
@@ -33,6 +33,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_metadata_extra gendocs
 %pyproject_builddeps_check
 BuildRequires: python3-module-tabulate
+BuildRequires: python3-module-sphinx
 %endif
 
 %description
@@ -65,6 +66,9 @@ configuration file.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 24 2024 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1.1
+- NMU: fixed FTBFS (rpm-build-pyproject 0.0.5).
+
 * Fri Feb 09 2024 Anton Zhukharev <ancieg@altlinux.org> 1.3.1-alt1
 - Updated to 1.3.1.
 

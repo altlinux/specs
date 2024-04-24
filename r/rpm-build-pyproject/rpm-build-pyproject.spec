@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rpm-build-pyproject
-Version: 0.0.4
+Version: 0.0.5
 Release: alt1
 Summary: Extra RPM macros for packaging Python projects
 License: GPLv2+
@@ -21,7 +21,7 @@ Summary: Extra RPM macros for packaging Python projects
 Group: Development/Other
 BuildArch: noarch
 Conflicts: %name < %version
-Requires: python3-module-pyproject-installer >= 0.5.1
+Requires: python3-module-pyproject-installer >= 0.5.3
 
 %description -n rpm-macros-pyproject
 %summary.
@@ -39,6 +39,9 @@ install -pD -m0644 macros/pyproject -t %buildroot%_rpmmacrosdir/
 %doc docs/*
 
 %changelog
+* Fri Apr 12 2024 Stanislav Levin <slev@altlinux.org> 0.0.5-alt1
+- Added support for pipenv deps.
+
 * Fri Jun 02 2023 Stanislav Levin <slev@altlinux.org> 0.0.4-alt1
 - Added support for hatch and pdm deps.
 

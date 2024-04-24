@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.8.0
+Version: 2.8.1
 Release: alt1
 
 Summary: Calculate the distance between 2 points on Earth
@@ -13,17 +13,17 @@ License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/haversine/
 VCS: https://github.com/mapado/haversine.git
-Source0: %name-%version.tar
-
 BuildArch: noarch
-BuildRequires(pre): rpm-build-python3
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(numpy.testing)
-BuildRequires: python3(pytest)
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+BuildRequires: python3-module-numpy-testing
 %endif
 
 %description
@@ -32,6 +32,12 @@ located by their latitude and longitude.
 
 %prep
 %setup
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipenv Pipfile dev-packages
+%endif
 
 %build
 %pyproject_build
@@ -48,6 +54,9 @@ located by their latitude and longitude.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Apr 09 2024 Stanislav Levin <slev@altlinux.org> 2.8.1-alt1
+- 2.8.0 -> 2.8.1.
+
 * Wed Mar 01 2023 Stanislav Levin <slev@altlinux.org> 2.8.0-alt1
 - 2.5.1 -> 2.8.0.
 
