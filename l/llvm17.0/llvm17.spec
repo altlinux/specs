@@ -107,7 +107,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt4.1
+Release: alt4.2
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -180,8 +180,9 @@ BuildRequires: python3-module-sphinx-automodapi
 BuildRequires: python3-devel
 %endif
 %endif
+# tooling should match the version
 %if_with clang
-BuildRequires: %clang_default_name %llvm_default_name-devel %lld_default_name
+BuildRequires: clang%{v_majmin} llvm%{v_majmin}-devel lld%{v_majmin}
 %else
 BuildRequires: gcc-c++
 %endif
@@ -813,6 +814,9 @@ fi
 %define builddir %_cmake__builddir
 %define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
 %add_optflags -Wno-error=return-type
+%if_with clang
+export ALTWRAP_LLVM_VERSION=%{v_majmin}
+%endif
 %cmake -G Ninja -S llvm \
 	-DPACKAGE_VENDOR="%vendor" \
 %ifnarch loongarch64
@@ -1508,6 +1512,9 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Wed Apr 24 2024 L.A. Kostis <lakostis@altlinux.ru> 17.0.6-alt4.2
+- Built with the llvm-17/clang-17 (closes #50137).
+
 * Tue Apr 23 2024 L.A. Kostis <lakostis@altlinux.ru> 17.0.6-alt4.1
 - Fix FTBFS: scudo: Fix the use of ASSERT_CAPABILITY in TSD (upstream PR#68273).
 - x86_64/ppc64le: compile with mold.
