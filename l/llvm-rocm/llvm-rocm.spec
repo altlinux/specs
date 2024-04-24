@@ -7,6 +7,7 @@
 %global proj rocm
 # rocm llvm uses llvm17 as codebase
 %global v_major 17
+%global v_majmin %{v_major}.0
 
 %global llvm_name llvm-%proj
 %global clang_name clang-%proj
@@ -45,7 +46,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: 6.0.2
-Release: alt0.5
+Release: alt0.6
 Summary: The LLVM Compiler Infrastructure with ROCm additions
 
 Group: Development/C
@@ -87,7 +88,7 @@ BuildRequires: rpm-build >= 4.0.4-alt112 libncursesw-devel
 BuildRequires: libstdc++-devel libffi-devel perl-Pod-Parser perl-devel
 BuildRequires: zip zlib-devel binutils-devel ninja-build hsa-rocr-devel
 %if_with clang
-BuildRequires: %clang_default_name %llvm_default_name-devel %lld_default_name rocm-device-libs
+BuildRequires: clang%{v_majmin} llvm%{v_majmin}-devel lld%{v_majmin} rocm-device-libs
 %else
 BuildRequires: gcc-c++
 %endif
@@ -272,6 +273,7 @@ Summary: LLD - The LLVM Linker
 Group: Development/C
 %requires_filesystem
 Requires: lld >= %_llvm_version
+Requires: /proc
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
 AutoReq: nopython
@@ -331,6 +333,9 @@ fi
 %ifarch ppc64le
 export NPROCS=48
 %endif
+%if_with clang
+export export ALTWRAP_LLVM_VERSION=%{v_majmin}
+%endif
 %define builddir %_cmake__builddir
 %define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
 %cmake -G Ninja -S llvm \
@@ -349,7 +354,7 @@ export NPROCS=48
 	-DCMAKE_BUILD_RPATH:STRING='' \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
 	-DLLVM_ENABLE_PROJECTS="$PROJECTS" \
-	-DLLVM_TARGETS_TO_BUILD="all" \
+	-DLLVM_TARGETS_TO_BUILD="AMDGPU;host" \
 	-DLLVM_ENABLE_LIBCXX:BOOL=OFF \
 	-DLLVM_ENABLE_ZLIB:BOOL=ON \
 	-DLLVM_ENABLE_FFI:BOOL=ON \
@@ -660,6 +665,11 @@ ninja -C %builddir check-all || :
 %llvm_libdir/liblld*.a
 
 %changelog
+* Wed Apr 24 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0.2-alt0.6
+- Fix FTBFS: use llvm-17/clang-17.
+- lld: add /proc to requires.
+- build targets: reduce to AMDGPU;host.
+
 * Thu Apr 04 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0.2-alt0.5
 - Apply fixes:
   + rollback 30a3adf50e2d49dfc97c1b614d9b93638eba672d to fix
