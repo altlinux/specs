@@ -11,7 +11,7 @@
 %define oname freerdp
 
 Name: freerdp%sover
-Version: 3.5.0
+Version: 3.5.1
 Release: alt1
 
 Group: Networking/Remote access
@@ -420,6 +420,9 @@ rm -rf %buildroot%_datadir/FreeRDP/images/test_*.*
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Wed Apr 24 2024 Andrey Cherepanov <cas@altlinux.org> 3.5.1-alt1
+- New version.
+
 * Thu Apr 18 2024 Andrey Cherepanov <cas@altlinux.org> 3.5.0-alt1
 - New version.
 - Security fixes:
