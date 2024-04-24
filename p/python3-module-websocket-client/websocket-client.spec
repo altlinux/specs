@@ -3,14 +3,14 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 
 Summary: WebSocket client for Python with low level API options
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.org/project/websocket-client
+URL: https://pypi.org/project/websocket-client
 VCS: https://github.com/websocket-client/websocket-client
 
 Source: %name-%version.tar
@@ -68,6 +68,9 @@ py.test-3 -v websocket/tests
 %python3_sitelibdir/*/tests
 
 %changelog
+* Wed Apr 24 2024 Grigory Ustinov <grenka@altlinux.org> 1.8.0-alt1
+- Automatically updated to 1.8.0.
+
 * Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 1.7.0-alt1
 - Automatically updated to 1.7.0.
 
