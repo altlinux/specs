@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admc
-Version: 0.16.0
+Version: 0.16.1
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -110,6 +110,15 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Tue Apr 16 2024 Semyon Knyazev <samael@altlinux.org> 0.16.1-alt1
+- Fixed policy link deletion: OU's child link items are deleted from
+tree after removal from policy widget. (closes: 49670)
+- Update backend files for Samba 4.20 compatibility.
+- Fix admin domain definition method.
+- Fix crash after optional attributes load.
+- Fix optional attribute display bugs with enabled LAPS.
+- Fix crashing after domain object properties apply changes.
+
 * Tue Feb 20 2024 Semyon Knyazev <samael@altlinux.org> 0.16.0-alt1
 - Add drag&drop policy link order changing to links tab in the policy OU
   widget.
