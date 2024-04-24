@@ -1,7 +1,7 @@
 %global pkg_name github.com/docker/buildx
 
 Name:     docker-buildx
-Version:  0.13.1
+Version:  0.14.0
 Release:  alt1
 
 Summary:  Docker CLI plugin for extended build capabilities with BuildKit
@@ -46,6 +46,9 @@ install -D -m 0755 .build/%name %buildroot%{_libexecdir}/docker/cli-plugins/%nam
 %{_libexecdir}/docker/cli-plugins/%name
 
 %changelog
+* Wed Apr 24 2024 Vladimir Didenko <cow@altlinux.org> 0.14.0-alt1
+- New version
+
 * Thu Mar 21 2024 Vladimir Didenko <cow@altlinux.org> 0.13.1-alt1
 - New version
 
