@@ -4,7 +4,7 @@
 
 Name: resource-agents
 Summary: Open Source HA Reusable Cluster Resource Scripts
-Version: 4.13.0
+Version: 4.14.0
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Url: https://github.com/ClusterLabs/resource-agents
@@ -174,6 +174,8 @@ sed -i '1 i #!%__python3' heartbeat/ocf.py
 export PYTHON=%__python3
 %add_optflags -Wno-error=format
 %autoreconf
+export ac_cv_path_RM=/bin/rm
+export ac_cv_path_BASH_SHELL=/bin/bash
 %configure	\
 		--with-version=%version \
 		SYSTEMD_UNIT_DIR=%_unitdir \
@@ -354,6 +356,9 @@ rm -f %buildroot%_datadir/cluster/drbd.*
 %_mandir/man8/ldirectord.8*
 
 %changelog
+* Wed Apr 24 2024 Andrew A. Vasilyev <andy@altlinux.org> 4.14.0-alt1
+- 4.14.0
+
 * Wed Oct 11 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.13.0-alt1
 - 4.13.0
 
