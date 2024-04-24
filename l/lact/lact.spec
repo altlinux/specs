@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lact
-Version: 0.5.3
-Release: alt1.1
+Version: 0.5.4
+Release: alt1
 
 Summary: Linux AMDGPU Control Application
 License: MIT
@@ -19,8 +19,6 @@ Source0: LACT-%version.tar
 Source1: crates.tar
 
 Source2: config
-
-Patch1:  vendored-crate-libc-loongarch64-ioctls.patch
 
 BuildRequires: blueprint-compiler
 BuildRequires: libdrm-devel
@@ -48,8 +46,6 @@ tar xf %SOURCE1
 sed -i -e 's/"files":{[^}]*}/"files":{}/' \
      ./vendor/libc/.cargo-checksum.json
 
-%patch1 -p1 -d vendor/libc
-
 %build
 export CARGO_HOME=${PWD}/cargo
 cargo build --release --offline
@@ -71,6 +67,9 @@ DESTDIR=%buildroot PREFIX=%prefix make install
 %_unitdir/%{name}d.service
 
 %changelog
+* Wed Apr 24 2024 Nazarov Denis <nenderus@altlinux.org> 0.5.4-alt1
+- New version 0.5.4.
+
 * Wed Mar 20 2024 Ivan A. Melnikov <iv@altlinux.org> 0.5.3-alt1.1
 - NMU: fix FTBFS on loongarch64
   + backport upstream patch on vendored libc crate
