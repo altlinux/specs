@@ -1,23 +1,24 @@
 %define oname re
 Name: libre
-Version: 0.6.1
+Version: 3.11.0
 Release: alt1
 
-Summary: Library for real-time communications with async IO support and a complete SIP stack
+Summary: Generic library for real-time communications with async IO support
 
-License: BSD Revised
+License: BSD-3-Clause
 Group: System/Libraries
-Url: http://www.creytiv.com/re.html
+Url: https://github.com/baresip/re
 
+# Source-url: %url/archive/refs/tags/v%version.tar.gz
+Source: %oname-%version.tar
 
-Source: http://www.creytiv.com/pub/%oname-%version.tar
-
-BuildRequires: libssl-devel zlib-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++ libssl-devel zlib-devel
 
 %description
 Libre is a portable and generic library for real-time communications
-with async IO support and a complete SIP stack with support for SDP,
-RTP/RTCP, STUN/TURN/ICE, BFCP and DNS Client.
+with async IO support and a complete SIP stack with support for protocols
+such as SDP, RTP/RTCP, STUN/TURN/ICE, BFCP, HTTP and DNS Client.
 
 %package devel
 Summary: Development files for %name
@@ -29,27 +30,33 @@ The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
 %prep
-%setup -n %oname-%version
+%setup -q -n %oname-%version
 
 %build
-%make_build RELEASE=1
+%cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo
+%cmake_build
 
 %install
-%makeinstall_std LIBDIR=%_libdir
-rm -f %buildroot%_libdir/lib%oname.a
+%cmake_install
+rm -f %buildroot/%_libdir/%name.a
 
 %files
-%doc docs/*
-# FIXME?
-%_libdir/lib%oname.so
+%doc CHANGELOG.md LICENSE README.md
+%_libdir/%name.so.2*
 
 %files devel
 %_includedir/%oname/
-%_datadir/%oname/
-#%_libdir/lib%oname.so
-%_pkgconfigdir/*.pc
+%_libdir/%name.so
+%_libdir/cmake/%name/
+%_libdir/cmake/%oname/
+%_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Apr 18 2024 Ilya Demyanov <turbid@altlinux.org> 3.11.0-alt1
+- new version 3.11.0
+- switch to cmake build system
+- update description, urls and license
+
 * Mon Mar 30 2020 Vitaly Lipatov <lav@altlinux.ru> 0.6.1-alt1
 - new version 0.6.1 (with rpmrb script)
 
