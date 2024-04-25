@@ -32,7 +32,7 @@
 
 Name: curl
 Version: 8.7.1
-Release: alt1
+Release: alt2
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -167,6 +167,7 @@ export PATH=/sbin:/usr/sbin:$PATH
 	--enable-openssl-auto-load-config \
 	--with-gssapi \
 	--enable-websockets \
+	--enable-versioned-symbols \
 	%{subst_with libssh2} \
 	--with-ca-bundle=%_datadir/ca-certificates/ca-bundle.crt
 
@@ -208,6 +209,9 @@ popd
 %endif
 
 %changelog
+* Wed Apr 24 2024 Andrey Cherepanov <cas@altlinux.org> 8.7.1-alt2
+- NMU: build with --enable-versioned-symbols
+
 * Wed Mar 27 2024 Anton Farygin <rider@altlinux.ru> 8.7.1-alt1
 - 8.6.0 -> 8.7.1
 - Fixes:
