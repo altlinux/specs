@@ -8,7 +8,7 @@
 
 Name: freerdp
 Version: 2.11.7
-Release: alt1
+Release: alt1.1
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -213,6 +213,7 @@ the RDP protocol.
 %patch1 -p1
 %ifarch %e2k
 %patch2000 -p1
+sed -i '/set(CMAKE_INSTALL_RPATH /d' CMakeLists.txt
 %endif
 
 %build
@@ -397,6 +398,9 @@ install -Dpm0644 %SOURCE4 %buildroot%_sysconfdir/sysconfig/freerdp-server
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Thu Apr 25 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.11.7-alt1.1
+- E2K: rpath fix.
+
 * Wed Apr 24 2024 Andrey Cherepanov <cas@altlinux.org> 2.11.7-alt1
 - New version.
 
