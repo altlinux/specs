@@ -4,7 +4,7 @@
 %define mod_name %pypi_name
 
 Name: python3-module-%pypi_name
-Version: 4.19.0
+Version: 4.20.0
 Release: alt1
 
 Summary: Python bindings for Selenium
@@ -48,6 +48,9 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Apr 25 2024 Stanislav Levin <slev@altlinux.org> 4.20.0-alt1
+- 4.19.0 -> 4.20.0.
+
 * Thu Mar 28 2024 Stanislav Levin <slev@altlinux.org> 4.19.0-alt1
 - 3.14.1 -> 4.19.0.
 
