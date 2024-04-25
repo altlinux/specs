@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.1
+Version: 1.2.1
 Release: alt1
 Summary: Simple, correct PEP 517 build frontend
 License: MIT
@@ -20,6 +20,8 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 %pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_metadata_extra uv
+%pyproject_builddeps_metadata_extra virtualenv
 %endif
 
 %description
@@ -61,6 +63,9 @@ Requires: python3-module-%pypi_name
 %_bindir/pyproject-build
 
 %changelog
+* Fri Mar 29 2024 Stanislav Levin <slev@altlinux.org> 1.2.1-alt1
+- 1.1.1 -> 1.2.1.
+
 * Fri Mar 01 2024 Stanislav Levin <slev@altlinux.org> 1.1.1-alt1
 - 1.0.3 -> 1.1.1.
 
