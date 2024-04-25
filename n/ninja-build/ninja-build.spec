@@ -3,8 +3,8 @@
 %def_with docs
 
 Name:           ninja-build
-Version:        1.11.1
-Release:        alt2
+Version:        1.12.0
+Release:        alt1
 
 Summary:        A small build system with a focus on speed
 Group:          Development/Tools
@@ -111,6 +111,9 @@ install -Dpm 644 %SOURCE3 %buildroot%_rpmmacrosdir/ninja-build
 %files -n rpm-build-ninja
 
 %changelog
+* Thu Apr 25 2024 Andrey Cherepanov <cas@altlinux.org> 1.12.0-alt1
+- New version.
+
 * Fri May 12 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.11.1-alt2
 - Simplified the bootstrap sequence.
 
