@@ -2,7 +2,7 @@
 
 Name: kde5-kcm-wacomtablet
 Version: 3.2.0
-Release: alt3
+Release: alt4
 %K5init altplace
 
 Summary: KDE Config Module for Wacom Tablets
@@ -81,6 +81,9 @@ module.
 %_datadir/wacomtablet/*
 
 %changelog
+* Thu Apr 25 2024 Anton Kurachenko <srebrov@altlinux.org> 3.2.0-alt4
+- Improvement for ru translation(#50074).
+
 * Mon Apr 22 2024 Anton Kurachenko <srebrov@altlinux.org> 3.2.0-alt3
 - Added translations(#50074).
 
