@@ -3,7 +3,7 @@
 
 Name: python3-module-%modname
 Version: 0.4
-Release: alt1
+Release: alt1.1
 
 Summary: lazy_loader makes it easy to load subpackages and functions on demand
 Group: Development/Python3
@@ -16,7 +16,7 @@ Source: https://pypi.io/packages/source/l/%modname/%modname-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-wheel python3-module-flit-core
+BuildRequires: python3-module-wheel python3(setuptools)
 %{?_enable_check:BuildRequires: python3(pytest-cov) python3(pre_commit)}
 
 %description
@@ -41,6 +41,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %doc README* CHANGELOG*
 
 %changelog
+* Thu Apr 25 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4-alt1.1
+- fixed BR
+
 * Sat Apr 06 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4-alt1
 - 0.4
 
