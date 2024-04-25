@@ -3,8 +3,8 @@
 %set_verify_elf_method strict
 
 Name: ode
-Version: 0.16.2
-Release: alt3
+Version: 0.16.5
+Release: alt1
 Summary: The Open Dynamics Engine (ODE)
 License: LGPLv2.1+
 Group: Graphics
@@ -169,6 +169,9 @@ install -p -m644 %SOURCE1 %SOURCE2 \
 %_libdir/%name/
 
 %changelog
+* Thu Apr 25 2024 Andrey Cherepanov <cas@altlinux.org> 0.16.5-alt1
+- New version.
+
 * Wed Sep 27 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.16.2-alt3
 - LoongArch patch removed.
 - Build fix that should work for any architectures.
