@@ -1,5 +1,5 @@
 Name: alt-rootfs-installer
-Version: 0.5.10
+Version: 0.5.11
 Release: alt1
 Summary: Installer rootfs archive to any specified block device
 License: GPL-2.0-or-later
@@ -38,6 +38,9 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Thu Apr 25 2024 Anton Midyukov <antohami@altlinux.org> 0.5.11-alt1
+- SUPPORTED-BOARDS: fix lists
+
 * Fri Apr 05 2024 Anton Midyukov <antohami@altlinux.org> 0.5.10-alt1
 - Update supported boards for u-boot 2024.04
 - socs-utils: rename function update_cmdline.txt -> update_cmdline_txt
