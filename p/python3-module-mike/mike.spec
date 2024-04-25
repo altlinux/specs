@@ -1,25 +1,25 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name mike
 
+%def_with check
+
 Name: python3-module-%pypi_name
-Version: 1.1.2
-Release: alt2
-
+Version: 2.0.0
+Release: alt1
 Summary: Deploy multiple versions of your MkDocs
-
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/mike
-
-Source: mike-%version.tar
-
+Vcs: https://github.com/jimporter/mike
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata_extra test
+%endif
 
 %description
 Mike is a Python utility to easily deploy multiple versions of your
@@ -29,13 +29,18 @@ documentation for bfg9000.The parsing module is an alternative approach
 to creating and executing
 
 %prep
-%setup -n mike-%version
+%setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
 
 %install
 %pyproject_install
+
+%check
+%pyproject_run_unittest -v
 
 %files
 %doc *.md
@@ -44,6 +49,9 @@ to creating and executing
 %_bindir/mike
 
 %changelog
+* Thu Apr 25 2024 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1
+- 1.1.2 -> 2.0.0.
+
 * Wed Nov 09 2022 Stanislav Levin <slev@altlinux.org> 1.1.2-alt2
 - Fixed FTBFS (flit_core 3.7.1).
 
