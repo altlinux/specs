@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 Summary: XML-RPC for asyncio
 License: BSD-3-Clause
@@ -34,12 +34,6 @@ coroutine is implemented.
 %prep
 %setup
 
-cat >> pyproject.toml <<EOF
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
-EOF
-
 %build
 %pyproject_build
 
@@ -55,6 +49,9 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Thu Apr 25 2024 Anton Vyatkin <toni@altlinux.org> 0.8.1-alt1
+- New version 0.8.1.
+
 * Sat Apr 13 2024 Anton Vyatkin <toni@altlinux.org> 0.8.0-alt1
 - New version 0.8.0.
 
