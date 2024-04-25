@@ -4,7 +4,7 @@
 %set_verify_elf_method strict unresolved=relaxed
 
 Name: uftrace
-Version: 0.15.1
+Version: 0.16
 Release: alt1
 Summary: Function graph tracer for C/C++/Rust/Python
 License: GPL-2.0-only
@@ -93,6 +93,9 @@ timeout 120 %make_build pytest V=1
 %_datadir/bash-completion/completions/uftrace
 
 %changelog
+* Thu Apr 25 2024 Vitaly Chikunov <vt@altlinux.org> 0.16-alt1
+- Update to v0.16 (2024-04-24).
+
 * Sat Jan 13 2024 Vitaly Chikunov <vt@altlinux.org> 0.15.1-alt1
 - Update to v0.15.1 (2024-01-11).
 
