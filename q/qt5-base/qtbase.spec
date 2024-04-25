@@ -37,7 +37,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.15.13
-Release: alt1
+Release: alt2
 %if "%version" == "%{get_version qt5-tools-common}"
 %def_disable bootstrap
 %else
@@ -63,6 +63,7 @@ Patch2: kde-5.15-rev-f8ad329f7ee.patch
 Patch51: qtbase-opensource-src-5.7.1-QT_VERSION_CHECK.patch
 Patch52: qtbase-opensource-src-5.7.1-moc_macros.patch
 Patch53: qtbase-use-wayland-on-gnome.patch
+Patch54: qtbase-everywhere-src-5.14.2-no_relocatable.patch
 # SuSE
 Patch100: disable-rc4-ciphers-bnc865241.diff
 # ALT
@@ -402,6 +403,7 @@ done
 %patch51 -p1
 %patch52 -p1
 %patch53 -p1
+%patch54 -p1
 #
 %patch100 -p1
 #
@@ -505,6 +507,7 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
     -no-sse2 \
 %endif
     -no-reduce-relocations \
+    -no-feature-relocatable \
     -system-doubleconversion \
     -opengl %opengl_type -egl -eglfs -kms \
     -xcb-native-painting \
@@ -867,6 +870,9 @@ make check -k ||:
 
 
 %changelog
+* Wed Apr 24 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.13-alt2
+- build with -no-feature-relocatable
+
 * Thu Apr 04 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.13-alt1
 - new version
 
