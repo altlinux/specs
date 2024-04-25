@@ -1,7 +1,7 @@
 Summary: A smaller version of the Bourne shell
 Name: ash
 Version: 0.5.11.18.g6f6d1f2
-Release: alt2
+Release: alt3
 
 License: BSD-3-Clause
 Group: Shells
@@ -54,20 +54,27 @@ sed -i -e 's,\$(tempfile),`mktemp -t ash.XXXXXX`,' src/mkbuiltins
 %build
 BUILD_FLAGS="%optflags_warnings -Wunused-function -Wunused-label -Wunused-variable -Wunused-value"
 
+Werror="-Werror"
+# On e2k, lcc ignores the GCC pragma, which leads to compilation errors. We
+# won't wait for lcc to fix it and just turn off -Werror.
+%ifarch %e2k
+Werror=
+%endif
+
 %autoreconf
 %define _configure_script ../configure
 rm -rf build-dynamic build-static
 mkdir -p build-dynamic build-static
 
 cd build-dynamic
-	export CFLAGS="$BUILD_FLAGS -Werror"
+	export CFLAGS="$BUILD_FLAGS $Werror"
 	%configure --disable-dependency-tracking
 	%make_build
 	mv src/dash sh.dynamic
 cd -
 
 cd build-static
-	export CFLAGS="$BUILD_FLAGS -Werror"
+	export CFLAGS="$BUILD_FLAGS $Werror"
 	%configure --disable-dependency-tracking --enable-static
 	%make_build
 	mv src/dash sh.static
@@ -92,6 +99,9 @@ ln -s %name.1 %buildroot/%_man1dir/dash.1
 /bin/%name.static
 
 %changelog
+* Thu Apr 25 2024 Alexey Gladkov <legion@altlinux.ru> 0.5.11.18.g6f6d1f2-alt3
+- Turn off -Werror on e2k.
+
 * Wed Apr 24 2024 Alexey Gladkov <legion@altlinux.ru> 0.5.11.18.g6f6d1f2-alt2
 - Remove symlink /bin/bsh to avoid conflict with beanshell after merging /bin
   and /usr/bin (ALT#50148).
