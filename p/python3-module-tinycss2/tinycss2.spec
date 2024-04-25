@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.2.1
+Version: 1.3.0
 Release: alt1
 
 Summary: A tiny CSS parser
@@ -16,22 +16,16 @@ VCS: https://github.com/Kozea/tinycss2.git
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-
 # submodule
 # tests/css-parsing-tests from https://github.com/SimonSapin/css-parsing-tests
 Source1: css-parsing-tests.tar
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(flit_core)
-
+Source2: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# deps
-BuildRequires: python3(webencodings)
-
-BuildRequires: python3(pytest)
+%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
@@ -46,6 +40,8 @@ CSS modules.
 %prep
 %setup -a1
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -54,8 +50,7 @@ CSS modules.
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -ra
 
 %files
 %doc README.rst docs/changelog.rst
@@ -63,6 +58,9 @@ CSS modules.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Apr 25 2024 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
+- 1.2.1 -> 1.3.0.
+
 * Tue Oct 18 2022 Stanislav Levin <slev@altlinux.org> 1.2.1-alt1
 - 1.1.1 -> 1.2.1.
 
