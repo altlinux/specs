@@ -1,5 +1,5 @@
 Name: ocsinventory-agent
-Version: 2.10.0
+Version: 2.10.2
 Release: alt1
 Epoch: 1
 
@@ -101,6 +101,9 @@ rm -f %buildroot%perl_vendorlib/Ocsinventory/postinst.pl
 %_var/lib/%name
 
 %changelog
+* Thu Apr 25 2024 Andrey Cherepanov <cas@altlinux.org> 1:2.10.2-alt1
+- New version.
+
 * Tue Oct 18 2022 Andrey Cherepanov <cas@altlinux.org> 1:2.10.0-alt1
 - New version.
 
