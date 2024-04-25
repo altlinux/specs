@@ -1,5 +1,5 @@
 Name: rpm-macros-branding
-Version: 1.0.11
+Version: 1.0.12
 Release: alt1
 Summary: RPM helper macros to build branding packages
 License: %gpl2plus
@@ -28,6 +28,8 @@ alt-spworkstation \
 alt-starterkit \
 alt-workstation \
 alt-tonk \
+alt-mobile \
+alt-mobile-sisyphus \
 altlinux-backup-server \
 altlinux-centaurus \
 altlinux-desktop \
@@ -75,6 +77,9 @@ install -m 0644 branding.rpm.macros %buildroot%_rpmmacrosdir/branding
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Apr 11 2024 Anton Midyukov <antohami@altlinux.org> 1.0.12-alt1
+- Added alt-mobile, alt-mobile-sisyphus
+
 * Wed Mar 27 2024 Andrey Cherepanov <cas@altlinux.org> 1.0.11-alt1
 - Added uzguard-server
 
