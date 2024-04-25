@@ -1,6 +1,6 @@
 Name: libetpan
 Version: 1.9.4
-Release: alt4
+Release: alt5
 
 Summary: This mail library  provide a portable, efficient middleware for different kinds of mail access
 License: BSD-3-Clause
@@ -25,6 +25,13 @@ Patch7: Missing-boundary-fix-384.patch
 Patch8: CVE-2020-15953-2.patch
 Patch9: Fix-buffer-overwrite-for-empty-string-in-remove_trai.patch
 
+# Patch from upstream pull request
+# https://github.com/dinhvh/libetpan/pull/436
+Patch100: Fix-charconv-double-free.patch
+# Patch from upstream pull request
+# https://github.com/dinhvh/libetpan/pull/427
+Patch101: Fix-FD_SET-undefined-behavior.patch
+
 %def_with gnutls
 %def_without openssl
 
@@ -33,8 +40,9 @@ Patch9: Fix-buffer-overwrite-for-empty-string-in-remove_trai.patch
 # FIXME: Is it really needed g++?
 BuildRequires: gcc-c++
 
-%{?_with_gnutls:BuildRequires: libgnutls-devel libgcrypt-devel libgpg-error-devel zlib-devel}
+%{?_with_gnutls:BuildRequires: libgnutls-devel}
 %{?_with_openssl:BuildRequires: libssl-devel}
+BuildRequires: zlib-devel
 BuildRequires: libsasl2-devel
 BuildRequires: liblmdb-devel
 BuildRequires: liblockfile-devel libexpat-devel libcurl-devel
@@ -70,6 +78,10 @@ program which use lib%name.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+
+%patch100 -p1
+%patch101 -p1
+
 ln -s README.md README
 
 %build
@@ -101,6 +113,14 @@ install -Dm0755 %SOURCE1 %buildroot%_bindir/%name-config
 %_libdir/%name.so
 
 %changelog
+* Wed Apr 24 2024 Mikhail Efremov <sem@altlinux.org> 1.9.4-alt5
+- smtp: Use sockaddr_storage instead of sockaddr.
+- Don't link against unused libraries.
+- Patches from upstream pull requests:
+  + Fix mailsmtp_init_with_ip for IPv6 on Linux;
+  + Prevent a FD_SET undefined behavior;
+  + Fix charconv() double-free.
+
 * Tue Nov 07 2023 Mikhail Efremov <sem@altlinux.org> 1.9.4-alt4
 - Patches from upstream git:
   + Fix buffer overwrite for empty string in remove_trailing_eol
