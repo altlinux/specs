@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.1.4
-Release: alt1
+Release: alt1.1
 
 Summary: Extract icons from Windows PE files (.exe/.dll)
 License: MIT
@@ -23,6 +23,14 @@ Source: %pypi_name-%version.tar
 %description
 %summary
 
+%package -n icoextract-thumbnailer
+Summary: Thumbnailer for files (.exe/.dll)
+Group: Graphics
+Requires: %name = %EVR
+
+%description -n icoextract-thumbnailer
+%summary
+
 %prep
 %setup -n %pypi_name-%version
 
@@ -31,6 +39,7 @@ Source: %pypi_name-%version.tar
 
 %install
 %pyproject_install
+install -Dm644 exe-thumbnailer.thumbnailer %buildroot%_datadir/thumbnailers/exe-thumbnailer.thumbnailer
 
 %check
 #%%tox_create_default_config
@@ -38,10 +47,19 @@ Source: %pypi_name-%version.tar
 
 %files
 %doc *.md
-%_bindir/*
+%_bindir/icoextract
+%_bindir/icolist
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
+%files -n icoextract-thumbnailer
+%_bindir/exe-thumbnailer
+%dir %_datadir/thumbnailers/
+%_datadir/thumbnailers/exe-thumbnailer.thumbnailer
+
 %changelog
+* Thu Apr 25 2024 Ivan Mazhukin <vanomj@altlinux.org> 0.1.4-alt1.1
+- NMU: added subpackage for thumbnailers
+
 * Wed Sep 13 2023 Andrey Cherepanov <cas@altlinux.org> 0.1.4-alt1
 - Initial build for Sisyphus.
