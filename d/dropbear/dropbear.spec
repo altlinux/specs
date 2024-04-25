@@ -4,7 +4,7 @@
 
 Name: dropbear
 Summary: A smallish SSH server and client
-Version: 2024.84
+Version: 2024.85
 Release: alt1
 License: MIT
 Group: System/Servers
@@ -103,6 +103,9 @@ EOF
 %_bindir/scp
 
 %changelog
+* Thu Apr 25 2024 Vitaly Chikunov <vt@altlinux.org> 2024.85-alt1
+- Update to DROPBEAR_2024.85 (2024-04-25).
+
 * Fri Apr 05 2024 Vitaly Chikunov <vt@altlinux.org> 2024.84-alt1
 - Update to DROPBEAR_2024.84 (2024-04-04).
 
