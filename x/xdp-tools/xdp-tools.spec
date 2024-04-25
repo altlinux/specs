@@ -1,17 +1,17 @@
 Name: xdp-tools
-Version: 1.3.1
-Release: alt2
+Version: 1.4.2
+Release: alt1
 Summary: Utilities and example programs for use with XDP
 License: GPL-2.0 and LGPL-2.1 and BSD-2-Clause
 Group: Development/Tools
-URL: https://github.com/xdp-project/xdp-tools
+Url: https://github.com/xdp-project/xdp-tools
 
-Source0: xdp-tools-%{version}.tar
+Source0: xdp-tools-%version.tar
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define llvm_version 16.0
+%define llvm_version 17.0
 
 %add_debuginfo_skiplist  %_libdir/bpf/*.o
 %add_verify_elf_skiplist %_libdir/bpf/*.o
@@ -32,7 +32,7 @@ BuildRequires: pkgconfig(libpcap)
 BuildRequires: pkgconfig(zlib)
 
 # Always keep xdp-tools and libxdp packages in sync
-Requires: libxdp = %{version}-%{release}
+Requires: libxdp = %version-%release
 
 %description
 Utilities and example programs for use with XDP.
@@ -43,23 +43,20 @@ Group: System/Libraries
 
 %description -n libxdp
 The libxdp package contains the libxdp library for managing XDP programs,
-used by the %{name} package
-
+used by the %name package
 
 %package -n libxdp-devel
 Summary: Development files for libxdp
 Group: Development/C
-Requires: libxdp = %{version}-%{release}
+Requires: libxdp = %version-%release
 
 %description -n libxdp-devel
 The libxdp-devel package contains headers used for building XDP programs using
 libxdp.
 
-
 %prep
-%setup -q
+%setup
 %autopatch -p1
-
 
 %build
 export LIBDIR='%_libdir'
@@ -73,7 +70,6 @@ export ALTWRAP_LLVM_VERSION="%llvm_version"
 
 ./configure
 make V=1
-
 
 %install
 export DESTDIR='%buildroot'
@@ -93,7 +89,6 @@ rm -rf -- %buildroot%_datadir/xdp-tools
 
 # static libs
 rm -f -- %buildroot%_libdir/*.a
-
 
 %files
 %_sbindir/xdp-filter
@@ -119,10 +114,13 @@ rm -f -- %buildroot%_libdir/*.a
 %_libdir/pkgconfig/libxdp.pc
 
 %changelog
+* Thu Apr 25 2024 L.A. Kostis <lakostis@altlinux.ru> 1.4.2-alt1
+- 1.4.2.
+- Fix FTBFS: bump llvm version to 17.
+
 * Thu Sep 28 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.3.1-alt2
 - Build with clang/llvm 16 (earlier versions can't target LoongArch).
 
 * Tue May 30 2023 Alexey Gladkov <legion@altlinux.ru> 1.3.1-alt1
 - First build.
-
 
