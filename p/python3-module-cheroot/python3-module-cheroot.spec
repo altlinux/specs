@@ -6,7 +6,7 @@
 %def_without tests
 
 Name:    python3-module-%modulename
-Version: 10.0.0
+Version: 10.0.1
 Release: alt1
 
 Summary: Cheroot is the high-performance, pure-Python HTTP server used by CherryPy
@@ -89,6 +89,9 @@ tox.py3 --sitepackages -v
 %endif
 
 %changelog
+* Thu Apr 25 2024 Andrey Cherepanov <cas@altlinux.org> 10.0.1-alt1
+- New version.
+
 * Sun May 21 2023 Andrey Cherepanov <cas@altlinux.org> 10.0.0-alt1
 - New version.
 
