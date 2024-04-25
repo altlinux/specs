@@ -1,7 +1,7 @@
 %define oname itsdangerous
 
 Name: python3-module-%oname
-Version: 2.1.2
+Version: 2.2.0
 Release: alt1
 Summary: Various helpers to pass trusted data to untrusted environments and back
 License: BSD-3-Clause
@@ -13,7 +13,10 @@ Source: %oname-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-flit-core
 
 %description
 It's Dangerous
@@ -26,16 +29,20 @@ back safe and sound.
 %setup -n %oname-%version
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%doc README.rst docs/*.rst
+%doc README.md docs/*.rst
 %python3_sitelibdir/*
 
 %changelog
+* Thu Apr 25 2024 Andrey Cherepanov <cas@altlinux.org> 2.2.0-alt1
+- New version.
+- Built using pyproject macros.
+
 * Fri Mar 25 2022 Andrey Cherepanov <cas@altlinux.org> 2.1.2-alt1
 - New version.
 
