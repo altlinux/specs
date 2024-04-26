@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Play your music elegantly
@@ -66,6 +66,9 @@ large music collection.
 
 
 %changelog
+* Fri Apr 26 2024 Yuri N. Sedunov <aris@altlinux.org> 3.5.2-alt1
+- 3.5.2
+
 * Sun Jan 14 2024 Yuri N. Sedunov <aris@altlinux.org> 3.5.1-alt1
 - 3.5.1
 
