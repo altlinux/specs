@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 %define ver_major 46
 %define beta %nil
@@ -9,8 +9,8 @@
 %def_enable check
 
 Name: gnome-tweaks
-Version: %ver_major.0
-Release: alt2%beta
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: A tool to customize advanced GNOME 3 options
 License: GPL-3.0-or-later
@@ -92,6 +92,9 @@ Features:
 %doc AUTHORS NEWS README*
 
 %changelog
+* Fri Apr 26 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
+- 46.1
+
 * Sun Apr 07 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt2
 - updated to 46.0-9-g6307804 (ALT #49758)
 
