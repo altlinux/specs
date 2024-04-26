@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        124.0.6367.60
+Version:        124.0.6367.78
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -95,6 +95,7 @@ Patch036: 0036-DEBIAN-span-optional.patch
 Patch037: 0037-DEBIAN-webgpu-optional.patch
 Patch038: 0038-DEBIAN-extractor-bitset.patch
 Patch039: 0039-DEBIAN-atomic.patch
+#Patch040: 0040-ALT-ninja-build1.12.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -511,6 +512,13 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Apr 25 2024 Andrey Cherepanov <cas@altlinux.org> 124.0.6367.78-alt1
+- New version (124.0.6367.78).
+- Security fixes:
+  + CVE-2024-4058: Type Confusion in ANGLE.
+  + CVE-2024-4059: Out of bounds read in V8 API.
+  + CVE-2024-4060: Use after free in Dawn.
+
 * Sat Apr 20 2024 Andrey Cherepanov <cas@altlinux.org> 124.0.6367.60-alt1
 - New version (124.0.6367.60).
 - Security fixes:
