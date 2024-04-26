@@ -2,8 +2,8 @@
 %define import_path github.com/git-lfs/git-lfs/v3
 
 Name: git-lfs
-Version: 3.4.1
-Release: alt2
+Version: 3.5.1
+Release: alt1
 
 Summary: Git extension for versioning large files
 License: MIT
@@ -56,9 +56,12 @@ done
 %files
 %doc CHANGELOG.md README.md LICENSE.md
 %_bindir/%name
-%_man1dir/*.xz
+%_man1dir/*.1.*
 
 %changelog
+* Wed Apr 24 2024 Artem Krasovskiy <aibure@altlinux.org> 3.5.1-alt1
+- Update version
+
 * Tue Jan 23 2024 Artem Krasovskiy <aibure@altlinux.org> 3.4.1-alt2
 - Packaged man pages
 
