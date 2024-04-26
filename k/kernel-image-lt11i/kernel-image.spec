@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-lt11i
-Release: alt1
+Release: alt2
 epoch:1
 %define kernel_need_version	6.1
 # Used when kernel-source-x.y does not currently exist in repository.
@@ -236,6 +236,7 @@ install -Dp -m644 .config %buildroot/boot/config-$KernelVer
 make modules_install INSTALL_MOD_PATH=%buildroot
 
 make dtbs_install INSTALL_DTBS_PATH=%buildroot/boot/devicetree/$KernelVer
+mv %buildroot/boot/devicetree/$KernelVer/freescale/*.dtb %buildroot/boot/devicetree/$KernelVer/
 mkdir -p %buildroot/lib/devicetree
 ln -s /boot/devicetree/$KernelVer %buildroot/lib/devicetree/$KernelVer
 
@@ -423,6 +424,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Apr 26 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.1.55-alt2
+- LT11i-iMX8MP-Kernel-6.1.55
+
 * Tue Feb 06 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.1.55-alt1
 - 6.1.55
 
