@@ -1,20 +1,20 @@
 %def_with check
 
 Name: polychromatic
-Version: 0.8.3
-Release: alt2
+Version: 0.9.0
+Release: alt1
 
 Summary: RGB lighting interface utilites
 License: GPL-3.0
 Group: System/Kernel and hardware
 URL: https://github.com/polychromatic/polychromatic
 
-ExclusiveArch: %qt5_qtwebengine_arches
+ExclusiveArch: %qt6_qtwebengine_arches
 
 Source: %name-%version.tar
 Patch: %name-%version-alt-run_daemon-commands-fix.patch
 
-BuildRequires(pre): rpm-macros-qt5-webengine
+BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-build-python3
 BuildRequires: sassc
@@ -63,6 +63,9 @@ eval $(dbus-launch --sh-syntax)
 %_man1dir/%name-*
 
 %changelog
+* Fri Apr 26 2024 Anton Kurachenko <srebrov@altlinux.org> 0.9.0-alt1
+- New version 0.9.0.
+
 * Sun Feb 11 2024 Anton Kurachenko <srebrov@altlinux.org> 0.8.3-alt2
 - Integration test added in the spec.
 
