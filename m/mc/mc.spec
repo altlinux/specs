@@ -4,7 +4,7 @@
 
 Name: mc
 Version: 4.8.30
-Release: alt4
+Release: alt5
 
 # '-gitYYYYMMDD' or ''
 %define ver_date '-git20230916'
@@ -129,12 +129,21 @@ sed 's|@@VERSION@@|%version-%release%ver_date|' -i mc-version.h
 #%%autoreconf
 ./autogen.sh
 
+# "search-engine" should be named "regexp-engine"
+# pcre2 is broken on e2k, any of Regex= from "misc/mc.ext.ini.in" doesn't work
+# until any .zip file is opened (zip file uses "Shell="), mc may be missing
+# proper pcre2 initialization, which is done by .zip plugin
 %configure %{?_with_smb:--enable-vfs-smb --with-smb-configdir=%_sysconfdir/samba} \
 	PYTHON=%__python3 \
 	--enable-extcharset \
 	--enable-vfs-undelfs \
 	--enable-vfs-sftp \
-	--with-search-engine=pcre2
+%ifarch %e2k
+	--with-search-engine=glib \
+%else
+	--with-search-engine=pcre2 \
+%endif
+	%nil
 
 %make_build
 
@@ -226,6 +235,9 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 %files full
 
 %changelog
+* Fri Apr 26 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.8.30-alt5
+- e2k: fixed Regex for extensions
+
 * Tue Oct 03 2023 Sergey Y. Afonin <asy@altlinux.org> 4.8.30-alt4
 - updated to 20230916 git snapshot (mc.ext.ini-escape.patch included)
 - built with --enable-vfs-sftp (ALT #44181)
