@@ -4,7 +4,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.9.2
-Release: alt3.20240203
+Release: alt4.20240203
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программное обеспечение для управления станками c ЧПУ
@@ -50,6 +50,9 @@ BuildRequires: dos2unix
 
 Obsoletes: %name-data =< %EVR
 Requires: lib%name = %EVR
+
+# for Axis
+Requires: libGLU
 
 # for qtvcp
 Requires: python3-module-PyQt5-devel
@@ -237,6 +240,9 @@ rm %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Sat Apr 27 2024 Anton Midyukov <antohami@altlinux.org> 2.9.2-alt4.20240203
+- Add missing dependency on libGLU (fix empty screen in Axis)
+
 * Sat Mar 02 2024 Vitaly Lipatov <lav@altlinux.ru> 2.9.2-alt3.20240203
 - filter out python3(glib) require (fix incorrect autoreq) (see ALT bug #41092)
 
