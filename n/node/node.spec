@@ -80,7 +80,7 @@
 %def_with nodejs_abi
 
 Name: node
-Version: %major.1
+Version: %major.2
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -98,6 +98,7 @@ Source7: nodejs_native.req.files
 
 Patch1: node18-system-openssl.patch
 Patch2: npm-disable-internal-node-gyp.patch
+Patch3: npm-disable-update-notifier.patch
 
 BuildRequires(pre): rpm-macros-nodejs
 BuildRequires(pre): rpm-build-intro >= 2.1.14
@@ -280,6 +281,7 @@ As a result, Corepack doesn't have any effect at all on the way you use npm.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %if_with systemv8
 # hack against https://bugzilla.altlinux.org/show_bug.cgi?id=32573#c3
@@ -510,6 +512,11 @@ rm -rv %buildroot/usr/share/doc/node/lldb_commands.py
 %endif
 
 %changelog
+* Sat Apr 27 2024 Vitaly Lipatov <lav@altlinux.ru> 20.12.2-alt1
+- 2024-04-10, Version 20.12.2 'Iron' (LTS), @RafaelGSS
+- CVE-2024-27980: Command injection via args parameter of child_process.spawn without shell option enabled on Windows
+- npm: disable update notifier
+
 * Thu Apr 04 2024 Vitaly Lipatov <lav@altlinux.ru> 20.12.1-alt1
 - 2024-04-03, Version 20.12.1 'Iron' (LTS), @RafaelGSS
 - CVE-2024-27983 - Assertion failed in node::http2::Http2Session::~Http2Session() leads to HTTP/2 server crash- (High)
