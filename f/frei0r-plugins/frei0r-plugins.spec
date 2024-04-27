@@ -1,23 +1,27 @@
-%def_with opencv
-
 %define bname frei0r
-%define major_ver 1
-%define minor_ver 7
+%define major_ver 2
+%define minor_ver 3
+%define api_ver 1
+
+%def_with opencv
+# no documentation yet
+%def_disable doc
 
 Name: %bname-plugins
-Version: %major_ver.%minor_ver.0
-Release: alt2
+Version: %major_ver.%minor_ver.2
+Release: alt1
 
 Summary: Frei0r - a minimalistic plugin API for video effects
-License: GPL-2.0+
+License: GPL-2.0-or-later
 Group: Video
-
 Url: https://frei0r.dyne.org
-# git https://github.com/dyne/frei0r.git
+
+Vcs: https://github.com/dyne/frei0r.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: gcc-c++
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++
 BuildRequires: libgavl-devel >= 0.2.3
 BuildRequires: doxygen fonts-ttf-dejavu graphviz
 BuildRequires: libcairo-devel >= 1.0.0
@@ -31,7 +35,7 @@ to solve the recurring reimplementation or adaptation issue of standard effect
 %package -n frei0r-devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n frei0r-devel
 The %name-devel package contains libraries and header files for
@@ -48,54 +52,50 @@ This package contains development documentation for %name
 %package facedetect
 Summary: Face detect plugin for %name
 Group: Video
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: libopencv-utils
 
 %description facedetect
 Face detect plugin for %name
 
 %prep
-%setup
+%setup -n %name-%version
 %patch -p1
 
 %build
-# hack for compilation with opencv4 support
-%add_optflags $(pkg-config --cflags opencv4)
-
-mkdir -p m4
-%autoreconf
-%configure --disable-static
-
-# workaround cvconfig.h
-ln -s config.h include/cvconfig.h
-
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 
 %files
-%dir %_libdir/%bname-%major_ver
-%_libdir/%bname-%major_ver/*.so
+%dir %_libdir/%bname-%api_ver
+%_libdir/%bname-%api_ver/*.so
 %if_with opencv
-%exclude %_libdir/%bname-%major_ver/facebl0r.so
-%exclude %_libdir/%bname-%major_ver/facedetect.so
+%exclude %_libdir/%bname-%api_ver/facebl0r.so
+%exclude %_libdir/%bname-%api_ver/facedetect.so
 %endif
 
 %files -n frei0r-devel
-%_includedir/frei0r.h
-%_pkgconfigdir/*.pc
+%_includedir/%bname.h
+%_pkgconfigdir/%bname.pc
 
+%if_enabled doc
 %files -n frei0r-devel-doc
 %_defaultdocdir/%name/*
+%endif
 
 %if_with opencv
 %files facedetect
-%_libdir/%bname-%major_ver/facebl0r.so
-%_libdir/%bname-%major_ver/facedetect.so
+%_libdir/%bname-%api_ver/facebl0r.so
+%_libdir/%bname-%api_ver/facedetect.so
 %endif
 
 %changelog
+* Fri Apr 26 2024 Yuri N. Sedunov <aris@altlinux.org> 2.3.2-alt1
+- updated to v2.3.2-16-gfdc9f32 (ported to CMake build system)
+
 * Tue Apr 07 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7.0-alt2
 - Rebuilt with opencv-4.3.0.
 
