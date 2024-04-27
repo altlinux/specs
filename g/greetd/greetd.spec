@@ -1,13 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%set_verify_elf_method strict,lfs=relaxed
 
 %define _pseudouser_user     _greeter
 %define _pseudouser_group    _greeter
 %define _pseudouser_home     %_var/empty
 
 Name: greetd
-Version: 0.9.0
+Version: 0.10.0
 Release: alt1
 Summary: Generic greeter daemon
 License: GPL-3.0
@@ -43,6 +42,22 @@ replace-with = "vendored-sources"
 
 [source.vendored-sources]
 directory = "vendor"
+
+[term]
+verbose = true
+quiet = false
+
+[install]
+root = "%buildroot%_prefix"
+
+[build]
+rustflags = ["-Copt-level=3", "-Cdebuginfo=1", "--cfg=rustix_use_libc"]
+
+[profile.release]
+strip = false
+
+[dependencies]
+rustix = { features = ["cc"] }
 EOF
 
 %build
@@ -101,6 +116,11 @@ install -Dm644 config.toml %buildroot%_sysconfdir/greetd/config.toml
 %_man7dir/*.7*
 
 %changelog
+* Fri Apr 26 2024 Anton Midyukov <antohami@altlinux.org> 0.10.0-alt1
+- NMU:
+  + update to upstream version 0.10.0
+  + pack debuginfo.
+
 * Mon Dec 11 2023 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1
 - NMU: update to upstream version 0.9.0.
 
