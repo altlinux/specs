@@ -19,7 +19,7 @@
 %def_disable check
 
 Name: %bname
-Version: %ver_major.90
+Version: %ver_major.91
 Release: alt1
 Epoch: 1
 
@@ -39,7 +39,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.
 %define pango_ver 1.46
 %define gtk3_ver 3.10.0
 %define libxml2_ver 2.9.0
-%define cairo_ver 1.17.1
+%define cairo_ver 1.18.0
 %define vala_ver 0.18
 %define freetype_ver 2.9
 %define harfbuzz_ver 2.0.0
@@ -151,7 +151,7 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
     %{subst_enable_meson_feature pixbuf_loader pixbuf-loader} \
     %{subst_enable_meson_feature vala vala} \
     %{subst_enable_meson_feature avif avif} \
-    %{subst_enable_meson_feature check tests}
+    %{subst_enable_meson_bool check tests}
 %nil
 %meson_build
 
@@ -205,6 +205,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %endif
 
 %changelog
+* Sat Apr 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.58.91-alt1
+- 2.58.91
+
 * Sat Apr 13 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.58.90-alt1
 - 2.58.90 (ported to Meson build system)
 
