@@ -5,11 +5,10 @@
 %define oname ipython
 
 %def_with doc
-# upstream not ready for pytest 8
-%def_without check
+%def_with check
 
 Name: ipython3
-Version: 8.23.0
+Version: 8.24.0
 Release: alt1
 Summary: An enhanced interactive Python 3 shell
 License: BSD-3-Clause
@@ -147,11 +146,9 @@ ln -s ../objects.inv docs/source/
 %endif
 
 %build
-export LANG="en_US.UTF-8"
 %pyproject_build
 
 %install
-export LANG="en_US.UTF-8"
 %pyproject_install
 
 %if_with doc
@@ -164,7 +161,17 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %check
-%pyproject_run_pytest -v
+export PYTHONPATH=%buildroot%python3_sitelibdir
+# Ensure that the user's .pythonrc.py is not invoked during any tests.
+export PYTHONSTARTUP=""
+# Scale timeouts 4 times
+export IPYTHON_TESTING_TIMEOUT_SCALE=4
+# To prevent _pytest.pathlib.ImportPathMismatchError, we are
+# testing directly in buildroot
+pushd %buildroot%python3_sitelibdir/IPython
+py.test-3 -v
+rm -rf .pytest_cache __pycache__/tmp*.pyc
+popd
 
 %files
 %doc COPYING.rst LICENSE
@@ -223,6 +230,10 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Sat Apr 27 2024 Anton Vyatkin <toni@altlinux.org> 8.24.0-alt1
+- New version 8.24.0.
+- Build with check.
+
 * Tue Apr 09 2024 Anton Vyatkin <toni@altlinux.org> 8.23.0-alt1
 - New version 8.23.0.
 
