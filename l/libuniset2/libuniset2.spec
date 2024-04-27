@@ -27,7 +27,7 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.35.1
+Version: 2.35.2
 Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
@@ -81,7 +81,7 @@ BuildRequires: libmosquitto-devel
 %endif
 
 %if_enabled opcua
-BuildRequires: libopen62541-devel libopen62541pp-devel >= 0.12.0-alt1
+BuildRequires: libopen62541-devel libopen62541pp-devel >= 0.13.0-alt1
 %endif
 
 
@@ -675,6 +675,9 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Sat Apr 27 2024 Pavel Vainerman <pv@altlinux.ru> 2.35.2-alt1
+- (opcua): updated for open62541pp 0.13.0
+
 * Mon Apr 08 2024 Pavel Vainerman <pv@altlinux.ru> 2.35.1-alt1
 - (opcua): supported subscription, thresholds
 
