@@ -1,5 +1,5 @@
 Name: python3-module-sqlalchemy
-Version: 2.0.28
+Version: 2.0.29
 Release: alt1
 
 Summary: Python SQL toolkit and Object Relational Mapper
@@ -20,7 +20,8 @@ BuildRequires: python3(wheel)
 BuildRequires: python3(cython)
 BuildRequires: python3(pytest)
 BuildRequires: python3(typing_extensions)
-BuildRequires: python3(mypy)
+BuildRequires: python3(greenlet)
+BuildRequires: python3(xdist)
 
 # Make sure that at least the Python built-in sqlite driver
 # is present (and can be used by SQLAlchemy--among other things--
@@ -63,7 +64,7 @@ This package contains tests for SQLAlchemy.
 %add_python3_req_skip sqlalchemy.testing.provision
 
 %check
-%pyproject_run_pytest test
+%pyproject_run_pytest -m "not memory_intensive and not mypy" test
 
 %files
 %python3_sitelibdir/*
@@ -73,6 +74,9 @@ This package contains tests for SQLAlchemy.
 %python3_sitelibdir/*/testing
 
 %changelog
+* Fri Apr 26 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.29-alt1
+- 2.0.29 released
+
 * Mon Mar 18 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.28-alt1
 - 2.0.28 released
 
