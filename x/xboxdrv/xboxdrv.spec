@@ -1,6 +1,6 @@
 Name: xboxdrv
 Version: 0.8.8
-Release: alt2.2
+Release: alt2.3
 
 Summary: Xbox/Xbox360 USB Gamepad Driver for Userspace
 License: GPLv3
@@ -60,6 +60,9 @@ scons \
 %_man1dir/%name.1*
 
 %changelog
+* Sat Apr 27 2024 Ivan A. Melnikov <iv@altlinux.org> 0.8.8-alt2.3
+- NMU: fix building with boost 1.85.0+.
+
 * Thu Feb 08 2024 Ivan A. Melnikov <iv@altlinux.org> 0.8.8-alt2.2
 - NMU: respect %%optflags when building
   (fixes build with boost 1.84.0+).

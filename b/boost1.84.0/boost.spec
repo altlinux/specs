@@ -2,7 +2,7 @@
 %define boost_include %_includedir/%name
 %define boost_doc %_docdir/%name
 
-%def_with devel
+%def_without devel
 %if_with devel
 %def_with boost_build
 %def_with devel_static
@@ -30,15 +30,6 @@
 %def_with long_double
 %endif
 
-# See: http://gcc.gnu.org/bugzilla/show_bug.cgi?id=80753
-# Architectures: %%e2k + %%libquadmath_arches
-# from https://git.altlinux.org/gears/g/gcc-defaults.git?a=blob;f=gcc-defaults.spec
-%ifarch %ix86 x86_64 ppc64le %e2k
-%def_with libquadmath
-%else
-%def_without libquadmath
-%endif
-
 # context
 %def_with context
 %def_with coroutine
@@ -53,7 +44,7 @@
 %add_findreq_skiplist  %_datadir/b2/src/tools/doxproc.py
 
 %define ver_maj 1
-%define ver_min 85
+%define ver_min 84
 %define ver_rel 0
 
 %define namesuff %{ver_maj}.%{ver_min}.%{ver_rel}
@@ -66,10 +57,10 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 
-Name: boost
+Name: boost%namesuff
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt2
+Release: alt4
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -82,7 +73,7 @@ Source: boost-%version.tar
 Patch65: boost-1.83.0-fedora-build-optflags.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1318383
-Patch82: boost-1.85.0-alt-no-rpath.patch
+Patch82: boost-1.83.0-fedora-no-rpath.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1541035
 Patch83: boost-1.83.0-fedora-b2-build-flags.patch
@@ -90,8 +81,8 @@ Patch83: boost-1.83.0-fedora-b2-build-flags.patch
 # https://lists.boost.org/Archives/boost/2020/04/248812.php
 Patch88: boost-1.73.0-fedora-cmakedir.patch
 
-# https://github.com/boostorg/charconv/issues/182
-Patch89: boost-1.85.0-upstream-ppc64le-charconv-workaround.patch
+# https://github.com/boostorg/spirit/pull/783
+Patch89: boost-1.84.0-alt-fix-karma-includes.patch
 
 Patch2000: boost-1.83-e2k-makecontext.patch
 
@@ -109,13 +100,6 @@ BuildRequires: %mpiimpl-devel
 %endif
 
 BuildRequires: gcc-c++ libstdc++-devel zlib-devel bzlib-devel libicu-devel
-
-%if_with libquadmath
-BuildRequires: libquadmath-devel
-%if_with devel_static
-BuildRequires: libquadmath-devel-static
-%endif
-%endif
 
 Provides: %name-complete = %EVR
 Obsoletes: %name-complete < %EVR
@@ -212,7 +196,6 @@ Group: Development/C++
 
 Requires(pre,postun): %name-devel-headers = %EVR
 Requires: libboost_atomic%version = %EVR
-Requires: libboost_charconv%version = %EVR
 Requires: libboost_chrono%version = %EVR
 Requires: libboost_container%version = %EVR
 Requires: libboost_contract%version = %EVR
@@ -267,7 +250,10 @@ Obsoletes: %name-units-devel < %EVR
 Provides: %name-process-devel = %EVR
 Obsoletes: %name-process-devel < %EVR
 
-%if_with libquadmath
+# See: http://gcc.gnu.org/bugzilla/show_bug.cgi?id=80753
+# Architectures: %%e2k + %%libquadmath_arches
+# from https://git.altlinux.org/gears/g/gcc-defaults.git?a=blob;f=gcc-defaults.spec
+%ifarch %ix86 x86_64 ppc64le %e2k
 Requires: libquadmath-devel
 %endif
 
@@ -751,10 +737,6 @@ Requires: %name-signals-devel = %EVR
 Requires: %name-timer-devel = %EVR
 Requires: %name-wave-devel = %EVR
 
-%if_with libquadmath
-Requires: libquadmath-devel-static
-%endif
-
 Obsoletes: program_options-devel-static
 Provides: boost-datetime-devel-static = %EVR
 Provides: boost-filesystem-devel-static = %EVR
@@ -802,19 +784,6 @@ coordinating multiple threads through atomic variables. It implements
 the interface as defined by the C++11 standard, but makes this feature
 available for platforms lacking system/compiler support for this
 particular C++11 feature.
-
-
-%package -n libboost_charconv%version
-Summary: Boost.Charconv Library
-Group: Development/C++
-
-%description -n libboost_charconv%version
-Boost.Charconv converts character buffers to numbers, and numbers
-to character buffers. Charconv is locale-independent, non-allocating,
-non-throwing and only requires a minimum of C++11. It provides
-functionality similar to that found in std::printf or std::strtod with
-substantial performance increases. This library can also be used in place
-of the standard library <charconv>.
 
 
 %package -n libboost_chrono%version
@@ -1769,9 +1738,6 @@ rm -rf %buildroot%_libdir/*math_tr1l*.so*
 %files -n libboost_atomic%version
 %_libdir/*_atomic*.so.*
 
-%files -n libboost_charconv%version
-%_libdir/*_charconv*.so.*
-
 %files -n libboost_chrono%version
 %_libdir/*_chrono*.so.*
 
@@ -1942,11 +1908,8 @@ done
 
 
 %changelog
-* Thu Apr 18 2024 Ivan A. Melnikov <iv@altlinux.org> 1:1.85.0-alt2
-- Disable long double support for Boost.Charconv on ppc64le
-
-* Tue Apr 16 2024 Ivan A. Melnikov <iv@altlinux.org> 1:1.85.0-alt1
-- 1.85.0
+* Tue Apr 16 2024 Ivan A. Melnikov <iv@altlinux.org> 1:1.84.0-alt4
+- rebuild as compat package without development files
 
 * Tue Feb 13 2024 Michael Shigorin <mike@altlinux.org> 1:1.84.0-alt3
 - E2K: use the patch in the intended way (thx Krylov)

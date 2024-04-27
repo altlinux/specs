@@ -2,7 +2,7 @@
 
 Name:    synfigstudio
 Version: 1.5.1
-Release: alt3
+Release: alt3.1
 
 Summary: Synfig studio - animation program
 License: GPLv2+
@@ -123,7 +123,7 @@ find -name subs.m4 | xargs sed -i 's, -pg,,;s, -fprofile-arcs,,'
 %endif
 
 %build
-%add_optflags -fpermissive -std=c++11 -I%_includedir/sigc++-2.0 -I%_libdir/sigc++-2.0/include
+%add_optflags -fpermissive -std=c++14 -I%_includedir/sigc++-2.0 -I%_libdir/sigc++-2.0/include
 export PKG_CONFIG_PATH=../local-pkg-config:$PKG_CONFIG_PATH
 %undefine _configure_gettext
 %define rpm_synfig_dir %_builddir/%name-%version/synfig-core/src/synfig/.libs
@@ -224,6 +224,9 @@ echo /usr/share/locale/zh-Hant/LC_MESSAGES/synfigstudio.mo >> %name.lang
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Apr 19 2024 Ivan A. Melnikov <iv@altlinux.org> 1.5.1-alt3.1
+- NMU: build with C++14 (fixes build with boost 1.85.0).
+
 * Tue Sep 19 2023 Artyom Bystrov <arbars@altlinux.org> 1.5.1-alt3
 - Move to mlt7.
 
