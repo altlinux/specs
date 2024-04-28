@@ -1,13 +1,13 @@
+%undefine __cmake_in_source_build
 Name: wxMaxima
-Version: 23.10.0
-Release: alt1
+Version: 24.02.2
+Release: alt2
 
 Summary: GUI for the computer algebra system Maxima
 License: GPL-2.0+
 Group: Sciences/Mathematics
 
 Url: https://wxmaxima-developers.github.io/wxmaxima
-Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source0: %name-%version.tar
 Source5: wxmaxima-ru.po.bz2
@@ -28,6 +28,8 @@ BuildRequires: libxml2-devel
 BuildRequires: makeinfo
 BuildRequires: po4a doxygen
 BuildRequires: zlib-devel
+BuildRequires: dos2unix
+BuildRequires: GraphicsMagick
 
 ExclusiveArch: %ix86 x86_64 armh aarch64 %e2k
 
@@ -46,18 +48,41 @@ wxMaxima provides 2d formated display of maxima output.
 
 %prep
 %setup
+#  -n wxmaxima-Version-%{version} -p1
 #bzcat %SOURCE5 >locales/wxMaxima/ru.po
 #patch -p1
 %ifarch %e2k
 sed -i "/std::unique_ptr<T>() &&/{P;s/&&/\&/}" src/cells/CellList.h
 %endif
-
+dos2unix data/io.github.wxmaxima_developers.wxMaxima.desktop
 %build
-%cmake -GNinja
-%ninja_build -C "%_cmake__builddir"
+
+%cmake
+%cmake_build
+
+#
+mkdir -p %buildroot%_datadir/wxmaxima
 
 %install
-%ninja_install -C "%_cmake__builddir"
+%cmake_install
+
+
+# app icon
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/{scalable,48x48,64x64,128x128}/apps/
+cp -alf \
+  %{buildroot}%{_datadir}/pixmaps/io.github.wxmaxima_developers.wxMaxima.svg \
+  %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/
+cp -alf \
+  %{buildroot}%{_datadir}/pixmaps/io.github.wxmaxima_developers.wxMaxima.png \
+  %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/
+gm convert -resize 64x64 \
+  %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/io.github.wxmaxima_developers.wxMaxima.png \
+  %{buildroot}%{_datadir}/icons/hicolor/64x64/apps/io.github.wxmaxima_developers.wxMaxima.png
+gm convert -resize 48x48 \
+  %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/io.github.wxmaxima_developers.wxMaxima.png \
+  %{buildroot}%{_datadir}/icons/hicolor/48x48/apps/io.github.wxmaxima_developers.wxMaxima.png
+
+
 # icons
 install -pD -m644 data/wxmaxima-16.xpm %buildroot%_miconsdir/%name.xpm
 install -pD -m644 data/wxmaxima-32.xpm %buildroot%_niconsdir/%name.xpm
@@ -69,6 +94,7 @@ install -pD -m644 data/wxmaxima-32.xpm %buildroot%_niconsdir/%name.xpm
 %_desktopdir/*%name.desktop
 %_niconsdir/%name.xpm
 %_miconsdir/%name.xpm
+%_datadir/icons/hicolor/*/*/*
 %dir %_datadir/%name
 %_datadir/%name/*
 %_datadir/bash-completion/completions/wxmaxima
@@ -83,6 +109,27 @@ install -pD -m644 data/wxmaxima-32.xpm %buildroot%_niconsdir/%name.xpm
 %_datadir/metainfo/*wxMaxima.appdata.xml
 
 %changelog
+* Sun Apr 28 2024 Ilya Mashkin <oddity@altlinux.ru> 24.02.2-alt2
+- Fix build
+
+* Sat Apr 13 2024 Ilya Mashkin <oddity@altlinux.ru> 24.02.2-alt1
+- 24.02.2
+
+* Thu Mar 14 2024 Ilya Mashkin <oddity@altlinux.ru> 24.02.1-alt3
+- Temporary add extra wxmaxima datadir
+
+* Thu Mar 14 2024 Ilya Mashkin <oddity@altlinux.ru> 24.02.1-alt2
+- Build with cmake
+
+* Thu Mar 14 2024 Ilya Mashkin <oddity@altlinux.ru> 24.02.1-alt1
+- 24.02.1
+
+* Tue Jan 09 2024 Ilya Mashkin <oddity@altlinux.ru> 23.12.0-alt1
+- 23.12.0
+
+* Fri Nov 24 2023 Ilya Mashkin <oddity@altlinux.ru> 23.11.0-alt1
+- 23.11.0
+
 * Wed Oct 04 2023 Andrey Cherepanov <cas@altlinux.org> 23.10.0-alt1
 - New version.
 
