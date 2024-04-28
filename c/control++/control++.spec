@@ -6,7 +6,7 @@
 %define testsdir %{statedir}/tests
 
 Name: control++
-Version: 0.22.1
+Version: 0.23.0
 Release: alt1
 
 Summary: System configuration tool
@@ -117,6 +117,12 @@ cp -r tests/* %{buildroot}%{testsdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Sun Apr 28 2024 Alexey Appolonov <alexey@altlinux.org> 0.23.0-alt1
+- Sub-modes of every macro mode are displayed using the "control++ --list"
+  command, the "control++ --conf" command is deprecated;
+- Modified output format of the "control++ --list" command;
+- Corrected additional feedback that occurs during the compliance check.
+
 * Wed Apr 03 2024 Alexey Appolonov <alexey@altlinux.org> 0.22.1-alt1
 - Setting the mode by the "permissions" unit is much faster.
 
