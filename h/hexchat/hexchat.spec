@@ -4,13 +4,12 @@
 
 Summary: A popular and easy to use graphical IRC (chat) client
 Name: hexchat
-Version: 2.16.1
+Version: 2.16.2
 Release: alt1
 License: GPLv2+
 Group: Networking/IRC
 Url: https://hexchat.github.io
-
-# https://github.com/hexchat/hexchat.git
+VCS: https://github.com/hexchat/hexchat.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -28,6 +27,7 @@ BuildRequires: pkgconfig(libpci)
 BuildRequires: pkgconfig(lua)
 BuildRequires: perl-devel perl(ExtUtils/Embed.pm)
 BuildRequires: python3(cffi)
+BuildRequires: python3(setuptools)
 
 Requires: enchant2
 
@@ -89,6 +89,9 @@ This package contains the development files for %name.
 %_pkgconfigdir/*
 
 %changelog
+* Sun Apr 28 2024 Anton Farygin <rider@altlinux.ru> 2.16.2-alt1
+- 2.16.2
+
 * Wed Feb 16 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 2.16.1-alt1
 - Updated to upstream version 2.16.1.
 
