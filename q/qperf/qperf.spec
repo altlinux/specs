@@ -1,13 +1,13 @@
 Name: qperf
 Summary: Measure socket and RDMA performance
 Version: 0.4.11
-Release: alt1
+Release: alt2
 Group: Networking/Other
 License: %gpl2only
 Url: https://github.com/linux-rdma/qperf
 Source: %name-%version.tar
 BuildRequires(pre): rpm-build-licenses
-Buildrequires: librdmacm-devel perl-devel
+Buildrequires: librdmacm-devel perl-devel perl-diagnostics
 
 %description
 Measure socket and RDMA performance.
@@ -31,6 +31,9 @@ install -D -m 0644 {src,%buildroot%_man1dir}/%name.1
 %_man1dir/*
 
 %changelog
+* Sun Apr 28 2024 Anton Farygin <rider@altlinux.ru> 0.4.11-alt2
+- fixed FTBFS
+
 * Fri Aug 20 2021 Anton Farygin <rider@altlinux.ru> 0.4.11-alt1
 - new version
 
