@@ -1,3 +1,4 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %def_disable static
 
 %ifarch armh
@@ -5,8 +6,8 @@
 %endif
 
 Name: xfsprogs
-Version: 6.6.0
-Release: alt2
+Version: 6.7.0
+Release: alt1
 
 Summary: Utilities for managing the XFS filesystem
 License: LGPL-2.1 and GPL-2.0
@@ -16,17 +17,14 @@ Url: http://xfs.org
 Source: %name-%version-%release.tar
 Patch0: %name-%version-alt.patch
 
-Requires: libxfs = %version-%release
-Conflicts: xfsdump < 3.0.0-alt1
-
-BuildPreReq: rpm-build >= 4.0.4-alt96.11
-
+Requires: libxfs = %EVR
 # makefiles are buggy
 BuildConflicts: libxfs-devel
 
 BuildRequires: libuuid-devel libblkid-devel 
 BuildRequires: libsystemd-devel rpm-build-python3
 BuildRequires: libinih-devel libuserspace-rcu-devel
+BuildRequires: libedit-devel
 
 %description
 XFS is a high performance journaling filesystem which originated
@@ -85,25 +83,22 @@ If you install libxfs-devel-static, you'll also want to install xfsprogs.
 %patch0 -p1
 
 %build
+export tagname=CC
 make configure
 %configure \
-	--libdir=/%_lib \
-	--libexecdir=%_libdir
-make DEBUG=-DNDEBUG LIBTOOL="`pwd`/libtool"
+	--libexecdir=%_libdir \
+	--enable-lto=no \
+	--enable-blkid=yes \
+	--enable-editline=yes
+%make_build DEBUG=-DNDEBUG
 
 %install
-make DIST_ROOT=%buildroot install install-dev
+%make DIST_ROOT=%buildroot PKG_INC_DIR=%_includedir/xfs PKG_ROOT_SBIN_DIR=%_sbindir PKG_ROOT_LIB_DIR=%_libdir install install-dev 
 mkdir -p %buildroot%_libdir
 
-for f in %buildroot/%_lib/*.so; do
-	t=`objdump -p "$f" |awk '/SONAME/ {print $2}'`
-	[ -n "$t" ]
-	ln -nsf ../../%_lib/"$t" "%buildroot%_libdir/${f##*/}"
-done
 # don't use crontab 
 rm -f %buildroot/%_lib/xfsprogs/xfs_scrub_all.cron
 # Workaround bug in makefiles
-rm -f %buildroot/%_lib/*.{so,*a}
 rm -rf %buildroot%_datadir/doc/%name
 
 %find_lang %name
@@ -114,7 +109,6 @@ rm -rf %buildroot%_datadir/doc/%name
 
 
 %files -f %name.lang
-/sbin/*
 %_sbindir/*
 %_unitdir/*.service
 %_unitdir/*.timer
@@ -128,7 +122,7 @@ rm -rf %buildroot%_datadir/doc/%name
 %doc doc/CHANGES.gz doc/CREDITS README
 
 %files -n libxfs
-/%_lib/*.so.*
+%_libdir/*.so.*
 
 %files -n libxfs-devel
 %_libdir/*.so
@@ -154,6 +148,11 @@ rm -rf %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Sat Apr 27 2024 Anton Farygin <rider@altlinux.ru> 6.7.0-alt1
+- 6.6.0 -> 6.7.0
+- built with libedit
+- cleanup spec
+
 * Tue Apr 02 2024 Anton Midyukov <antohami@altlinux.org> 6.6.0-alt2
 - NMU: xfs_scrub_fail.in: hide systemctl, systemd-escape program in variables
   (Closes: 49860)
