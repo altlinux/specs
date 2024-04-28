@@ -2,8 +2,11 @@
 # .so.0 is for version 3.x, .so.1 is 4.x
 %define sover 1
 
+%def_enable docs
+%def_enable check
+
 Name: lib%_name
-Version: 4.1
+Version: 4.2
 Release: alt1
 
 Group: Development/C
@@ -14,6 +17,8 @@ Url: http://ndevilla.free.fr/iniparser/
 Vcs: https://github.com/ndevilla/iniparser.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+
+%{?_enable_docs:BuildRequires: doxygen}
 
 %description
 iniParser is an ANSI C library to parse "INI-style" files,
@@ -45,7 +50,8 @@ sed -i 's|\/lib|/%_lib|
         s|\(-I${includedir}\)|\1/%_name|' %_name.pc
 
 %build
-%make_build CFLAGS='%optflags %optflags_shared %(getconf LFS_CFLAGS)' libiniparser.so.%sover
+%make_build CFLAGS='%optflags %optflags_shared %(getconf LFS_CFLAGS)' \
+    libiniparser.so.%sover %{?_enable_docs:docs}
 
 %install
 %define docdir %_docdir/%name-%version
@@ -54,7 +60,10 @@ install -pm644 %name.so.%sover %buildroot%_libdir/
 ln -s %name.so.%sover %buildroot%_libdir/%name.so
 install -pm644 src/*.h  %buildroot%_includedir/%_name/
 install -pm644 %_name.pc  %buildroot%_pkgconfigdir/
-install -pm644 LICENSE html/* %buildroot%docdir/
+install -pm644 LICENSE %{?_enable_docs:html/*} %buildroot%docdir/
+
+%check
+%make -k check VERBOSE=1
 
 %files -n %name%sover
 %_libdir/%name.so.%sover
@@ -66,9 +75,13 @@ install -pm644 LICENSE html/* %buildroot%docdir/
 %_includedir/%_name/
 %_pkgconfigdir/%_name.pc
 %dir %docdir
-%docdir/*.*
+%{?_enable_docs:%docdir/*.*}
 
 %changelog
+* Sun Apr 28 2024 Yuri N. Sedunov <aris@altlinux.org> 4.2-alt1
+- 4.2
+- enabled %%check
+
 * Tue Dec 21 2021 Yuri N. Sedunov <aris@altlinux.org> 4.1-alt1
 - updated to v4.1-11-gdeb85ad (bumped soname)
 - moved headers to %%_includedir/iniparser
