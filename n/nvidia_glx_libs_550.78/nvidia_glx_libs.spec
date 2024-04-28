@@ -16,7 +16,7 @@
 %endif
 
 %define nv_version 550
-%define nv_release 67
+%define nv_release 78
 %define nv_minor   %nil
 %define pkg_rel alt1
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
@@ -259,6 +259,9 @@ done
 %endif
 
 %changelog
+* Sun Apr 28 2024 Sergey V Turchin <zerg@altlinux.org> 550.78-alt1
+- new version
+
 * Mon Mar 25 2024 Sergey V Turchin <zerg@altlinux.org> 550.67-alt1
 - new version
 

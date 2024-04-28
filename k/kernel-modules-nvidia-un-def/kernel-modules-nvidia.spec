@@ -7,12 +7,12 @@
 %define modesetmodule_name	nvidia-modeset
 %define uvmmodule_name		nvidia-uvm
 %define drmmodule_name		nvidia-drm
-%define package_version	550.67
+%define package_version	550.78
 %define module_version	%package_version
 %ifarch %ix86 armh
 %define module_version	390.157
 %endif
-%define module_release	alt2
+%define module_release	alt1
 %define flavour		un-def
 %define karch x86_64 aarch64 %ix86
 
@@ -295,6 +295,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sat Apr 27 2024 Sergey V Turchin <zerg at altlinux dot org> 550.78-alt1
+- new release (550.78)
 
 * Wed Apr 17 2024 Sergey V Turchin <zerg at altlinux dot org> 550.67-alt2
 - make absolute symlink for usrmerge workaround (closes: 50024)
