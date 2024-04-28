@@ -6,7 +6,7 @@
 
 Name:     nextpnr
 Version:  0.7
-Release:  alt1
+Release:  alt2
 
 Summary:  portable FPGA place and route tool
 License:  ISC
@@ -15,6 +15,8 @@ Url:      https://github.com/YosysHQ/nextpnr
 
 # Source-url: %url/archive/refs/tags/%name-%version.tar.gz
 Source: %name-%version.tar
+# https://github.com/YosysHQ/nextpnr/commit/b4d9750631493a9f98c99e011c59204c37659fba.patch
+Patch: nextpnr-0.7-Fix-header-files-for-boost-1.85.patch
 
 ExcludeArch: %arm
 
@@ -41,6 +43,7 @@ route tool.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake \
@@ -65,6 +68,9 @@ route tool.
 %doc *.md docs/*
 
 %changelog
+* Sun Apr 28 2024 Anton Midyukov <antohami@altlinux.org> 0.7-alt2
+- fix build with boost 1.85
+
 * Sun Feb 04 2024 Anton Midyukov <antohami@altlinux.org> 0.7-alt1
 - new version (0.7) with rpmgs script
 
