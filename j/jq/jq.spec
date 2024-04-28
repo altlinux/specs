@@ -1,10 +1,11 @@
 %def_disable static
 %def_disable docs
+%define soname 1
 
 Name: jq
 %define lname lib%name
 Version: 1.7.1
-Release: alt1
+Release: alt2
 Summary: Command-line JSON processor
 Group: Development/Other
 Source: %name-%version.tar
@@ -15,7 +16,7 @@ License: BSD
 Requires: %lname = %EVR
 
 BuildRequires: flex  liboniguruma-devel
-%{?!_disable_check:BuildRequires: /proc valgrind ruby-tools}
+%{?!_disable_check:BuildRequires: /proc valgrind}
 
 %description
 %name is a command-line JSON processor.
@@ -76,7 +77,8 @@ cat ./test-suite.log
 %_man1dir/*
 
 %files -n %lname
-%_libdir/*.so.*
+%_libdir/*.so.%soname
+%_libdir/*.so.%soname.*
 
 %files -n %lname-devel
 %_includedir/*
@@ -89,6 +91,9 @@ cat ./test-suite.log
 %endif
 
 %changelog
+* Sun Apr 28 2024 Anton Farygin <rider@altlinux.ru> 1.7.1-alt2
+- removed ruby-tools from BuildRequires (fix FTBFS)
+
 * Sat Dec 30 2023 Anton Farygin <rider@altlinux.ru> 1.7.1-alt1
 - 1.7 -> 1.7.1
 
