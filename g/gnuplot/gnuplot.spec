@@ -1,20 +1,21 @@
-%define ver_major 5.4
+%define ver_major 6.0
 %def_with emacs
 
 Name: gnuplot
 Epoch: 1
-Version: 5.4.8
+Version: 6.0.0
 Release: alt1
 
 Summary: A program for plotting mathematical expressions and data
 Summary(ru_RU.UTF-8): Программа для построения графиков математических выражений и данных
 
 License: gnuplot and MIT
-Group: Sciences/Other
-URL: http://www.gnuplot.info/
+Group: Sciences/Mathematics
+URL: http://www.gnuplot.info
+VCS: https://git.code.sf.net/p/gnuplot/gnuplot-main
 
-Source0: %name-%version.tar
-Source2: http://www.gnuplot.info/faq/faq.pdf
+Source: %name-%version.tar
+
 Source3: %name.desktop
 Source4: %name.menu
 
@@ -24,57 +25,52 @@ Source12: %name.48.png
 
 Source14: gnuplot-emacs.el
 
-Patch1: gnuplot-5.0.6-gentoo-no-picins.patch
+Patch1: gnuplot-6.0.0-debian-no-picins.patch
 # these from fedora
 Patch2: gnuplot-4.2.0-fonts.patch
-Patch3: gnuplot-4.6.1-plot-sigsegv.patch
 Patch4: gnuplot-5.2.2-doc.patch
-# this from suse
-Patch5: gnuplot-5.4.4-libgd.patch
 # ALT 34350
 Patch6: gnuplot-5.4.0-fix-help.patch
 
 Patch7: gnuplot-5.4.4-add_russian_translation.patch
 
 BuildRequires(pre): rpm-build-tex
-BuildPreReq: desktop-file-utils
-BuildRequires: fonts-ttf-liberation
-BuildRequires: gcc-c++ ghostscript-module-X groff-base libXt-devel libncurses-devel libreadline-devel xorg-cf-files zlib-devel libgd3-devel libpng-devel libjpeg-devel libgif-devel
-BuildRequires: libcerf-devel
-BuildRequires: texinfo latex2html
-BuildRequires: dblatex
+BuildRequires: gcc-c++ libcerf-devel libgd3-devel libreadline-devel libncurses-devel
+BuildRequires: libopenspecfun-devel
 %{?_with_emacs:BuildRequires: emacs-common}
 
+# for docs
+BuildRequires: /usr/bin/pdflatex texlive-texmf
 # for wxt terminal
-BuildRequires: libcairo-devel libpango-devel libwxGTK3.0-devel
+BuildRequires: libcairo-devel libpango-devel libwxGTK3.2-devel
 # for qt terminal
-BuildRequires: qt5-base-devel qt5-svg-devel qt5-tools
+BuildRequires: qt6-base-devel qt6-svg-devel qt6-5compat-devel qt6-tools
 # for lua/TikZ
-BuildRequires: lua-devel tex(pgf.sty)
+BuildRequires: lua-devel
 
 Requires(post,postun): desktop-file-utils
 Requires: fonts-ttf-dejavu
 Requires: %name-common-x11 = %EVR
 
 %package common
-Group: Sciences/Other
+Group: Sciences/Mathematics
 Summary: The common gnuplot parts
 BuildArch: noarch
 Conflicts: %name < %EVR
 
 %package common-x11
-Group: Sciences/Other
+Group: Sciences/Mathematics
 Summary: The common-x11 gnuplot parts
 Requires: %name-common = %EVR
 Conflicts: %name < %EVR
 
 %package minimal
-Group: Sciences/Other
+Group: Sciences/Mathematics
 Summary: Minimal version of program for plotting mathematical expressions and data
 Requires: %name-common = %EVR
 
 %package qt
-Group: Sciences/Other
+Group: Sciences/Mathematics
 Summary: Qt interface for gnuplot
 Requires: %name-common-x11 = %EVR
 
@@ -84,7 +80,7 @@ Summary: Documentation of bindings for the gnuplot main application
 BuildArch: noarch
 
 %package demo
-Group: Sciences/Other
+Group: Sciences/Mathematics
 Summary: Demo gnuplot applications
 BuildArch: noarch
 
@@ -146,14 +142,11 @@ plotting tool
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 %patch4 -p1
-%patch5 -p1
 %patch6 -p1
 %patch7 -p1
 
 %build
-#export CFLAGS="$RPM_OPT_FLAGS -fno-fast-math"
 %ifarch %e2k
 # lcc 1.23.12 is -std=c++03 by default but c++11 capable;
 # src/qtterminal/qt_term.cpp compilation needs that
@@ -193,11 +186,11 @@ cd -
 ln -s ../wx/src/gnuplot src/
 export PERL5LIB=$(pwd)/docs:$(pwd)/docs/htmldocs
 ln -s ../VERSION docs/VERSION
-make -C docs pdf
+%make_build -C docs allterm-ja.h
+%make_build -C docs pdf
 export GNUPLOT_PS_DIR=../../term/PostScript
-make -C docs/psdoc ps_symbols.ps ps_fontfile_doc.pdf
-rm -rf docs/htmldocs/images.idx
-make -C docs gih
+%make_build -C docs/psdoc ps_symbols.ps ps_fontfile_doc.pdf
+%make_build -C docs gih
 
 %install
 # install wx
@@ -215,7 +208,6 @@ install -p -m 755 minimal/src/%name %buildroot%_bindir/%name-minimal
 
 # install docs
 %makeinstall_std -C docs
-install -p -m644 %SOURCE2 %buildroot/%_datadir/%name
 
 # Add alternatives for gnuplot
 mkdir -p %buildroot%_altdir
@@ -235,8 +227,8 @@ install -D -pm644 %SOURCE12  %buildroot/%_liconsdir/%name.png
 cp docs/%{name}.gih %buildroot%_datadir/%name/%ver_major/
 
 # cleanup before add to doc
-rm -f demo/Makefile*
-rm -f demo/html/Makefile*
+rm -v demo/Makefile*
+rm -v demo/html/Makefile*
 
 %files
 %_bindir/gnuplot-wx
@@ -275,6 +267,11 @@ rm -f demo/html/Makefile*
 %doc demo
 
 %changelog
+* Tue Apr 02 2024 Grigory Ustinov <grenka@altlinux.org> 1:6.0.0-alt1
+- Updated to 6.0.0 (Closes: #49015).
+- Built with libwxGTK3.2.
+- Built with qt6.
+
 * Tue Jul 11 2023 Grigory Ustinov <grenka@altlinux.org> 1:5.4.8-alt1
 - Updated to 5.4.8.
 
