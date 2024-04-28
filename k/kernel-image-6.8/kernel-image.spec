@@ -1,7 +1,7 @@
 Name: kernel-image-6.8
 Release: alt1
 %define kernel_base_version	6.8
-%define kernel_sublevel	.7
+%define kernel_sublevel	.8
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -9,7 +9,7 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
 %define flavour		%( s='%name'; printf %%s "${s#kernel-image-}" )
 %define base_flavour	%( s='%flavour'; printf %%s "${s%%%%-*}" )
-%define sub_flavour	%( s='%flavour'; printf %%s "${s#*-}" )
+%define sub_flavour	%( s='%flavour'; expr + "$s" : '[[:digit:]]\\+\\.[[:digit:]]\\+$' >/dev/null && s=def; printf %%s "${s#*-}" )
 
 # Build options
 # You can change compiler version by editing this line:
@@ -588,6 +588,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Apr 27 2024 Kernel Bot <kernelbot@altlinux.org> 6.8.8-alt1
+- v6.8.8 (2024-04-27).
+- Restore kernel and kernel-headers provides.
+- config: CONFIG_CONSOLE_LOGLEVEL_QUIET=3 (ALT#50098).
+
 * Wed Apr 17 2024 Kernel Bot <kernelbot@altlinux.org> 6.8.7-alt1
 - v6.8.7 (2024-04-17).
 
