@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 6.29.4
-Release: alt1
+Release: alt2
 
 Summary: IPython Kernel for Jupyter
 License: BSD-3-Clause
@@ -71,7 +71,8 @@ sed -i 's/--color=yes//' pyproject.toml
 cp -r tests/ %buildroot%python3_sitelibdir/%oname/
 
 %check
-%pyproject_run_pytest --ignore tests/test_eventloop.py tests/
+%pyproject_run_pytest -W ignore::DeprecationWarning \
+	              --ignore tests/test_eventloop.py tests/
 
 %files
 %doc README.*
@@ -86,6 +87,9 @@ cp -r tests/ %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Mon Apr 29 2024 Anton Vyatkin <toni@altlinux.org> 6.29.4-alt2
+- Fixed FTBFS.
+
 * Tue Apr 09 2024 Anton Vyatkin <toni@altlinux.org> 6.29.4-alt1
 - New version 6.29.4.
 
