@@ -1,8 +1,8 @@
 Name: openssl-gost-engine
 Version: 3.0.2
-Release: alt3
+Release: alt4
 
-License: BSD-style
+License: Apache-2.0
 Summary: A reference implementation of the Russian GOST crypto algorithms for OpenSSL
 
 Group: System/Libraries
@@ -14,8 +14,7 @@ Source1: openssl-gost.control
 Source2: openssl-gost-control-check.sh
 Source3: libprov.tar
 
-#Patch0: %name-%version-mac-iv.patch
-#Patch1: %name-%version-gost89-ecb.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -41,8 +40,7 @@ GOST file digesting utilites.
 
 %prep
 %setup -a3
-#%patch0 -p1
-#%patch1 -p1
+%patch -p1
 
 %build
 %ifarch %e2k
@@ -83,6 +81,11 @@ CTEST_OUTPUT_ON_FAILURE=1 \
 %_man1dir/gost*sum*
 
 %changelog
+* Thu Apr 11 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.0.2-alt4
+- Fixed License: tag (BSD-style -> Apache-2.0).
+- Added a ctrl command to set whole IV for magma and grasshopper ciphers
+  (needed for openssh-gostcrypto for ctr cipher modes).
+
 * Tue Mar 12 2024 Paul Wolneykien <manowar@altlinux.org> 3.0.2-alt3
 - Fix: Require OpenSSL >= 3.0.0 to build.
 

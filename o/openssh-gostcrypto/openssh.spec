@@ -1,10 +1,10 @@
 %define oname openssh
 Name: openssh-gostcrypto
-Version: 8.6p1
-Release: alt4.gost
+Version: 9.6p1
+Release: alt1.gost
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
-License: SSH-OpenSSH and ALT-Public-Domain and BSD-3-clause and Beerware
+License: SSH-OpenSSH and ALT-Public-Domain and BSD-3-Clause and Beerware
 Group: Networking/Remote access
 Url: http://www.openssh.com/portable.html
 # git://git.altlinux.org/gears/o/openssh.git
@@ -21,7 +21,6 @@ Source: %name-%version-%release.tar
 %def_with openssl
 %def_without security_key_builtin
 %def_with zlib
-
 %def_with ssl_engine
 
 %{expand: %%global _libexecdir %_libexecdir/openssh}
@@ -52,7 +51,7 @@ Group: Networking/Remote access
 Provides: openssh-clients = %EVR
 Conflicts: openssh-clients
 Requires: %oname-common-gostcrypto = %EVR
-Requires: openssl-gost-engine >= 1.1.0.3.0.255.ge3af41d-alt1
+Requires: openssl-gost-engine >= 3.0.2-alt4
 
 %package -n %oname-keysign-gostcrypto
 Summary: OpenSSH helper program for hostbased authentication
@@ -183,6 +182,10 @@ export ac_cv_path_NROFF=/usr/bin/nroff
 export ac_cv_path_PATH_PASSWD_PROG=/usr/bin/passwd
 export ac_cv_path_PROG_LASTLOG=/usr/bin/lastlog
 export ac_cv_path_xauth_path=/usr/bin/xauth
+
+# For some reason this function fails with gost-engine ciphers,
+# but the fallback seems to work.
+export ac_cv_func_EVP_CIPHER_CTX_get_updated_iv=no
 
 %configure \
 	--sysconfdir=%confdir \
@@ -333,6 +336,30 @@ fi
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Mon Apr 29 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.6p1-alt1.gost
+- Updated gostcrypto patchset for openssh 9.6p1.
+
+* Wed Jan 24 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.6p1-alt1
+- Updated to V_9_6_P1.
+
+* Tue Jan 16 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.5p1-alt2
+- Backported upstream security fix for Terrapin attack (fixes CVE-2023-48795).
+
+* Wed Oct 04 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.5p1-alt1
+- Updated to V_9_5_P1.
+
+* Thu Aug 10 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.4p1-alt1
+- Updated to 9.4p1.
+
+* Wed Jul 19 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.3p2-alt1
+- Updated to 9.3p2.
+
+* Mon Jul 17 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.3p1-alt1
+- Updated to 9.3p1.
+- Changed the ssh-agent -u patch to return exit code 1 instead of 255 on error
+  (ALT#45029).
+- openssh-server: replaced deprecated PreReq: tag with Requires(pre,post).
+
 * Thu Jun 29 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 8.6p1-alt4.gost
 - Updated -gostcrypto version.
 
