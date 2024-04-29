@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: usrmerge
-Version: 0.6
-Release: alt2
+Version: 0.7
+Release: alt1
 
 Summary: transition to merged usr
 
@@ -36,6 +36,7 @@ CFLAGS="${CFLAGS:-%optflags}"; export CFLAGS;
 %files
 %dir %_prefix/libexec/usrmerge
 %_prefix/libexec/usrmerge/mv-xchg
+%_prefix/libexec/usrmerge/realpath-1
 
 # Unfortunately, we cannot make the base package noarch and put arch-specific
 # tools in a subpackage; we have to do quite the opposite.
@@ -64,27 +65,27 @@ can be invoked directly by an administrator who knows what they are doing.
 %files hier-convert
 %_prefix/libexec/usrmerge/hier-convert
 
-%package block
-Summary: Install this to block installation of filesystem >= 3
-Group: Other
-BuildArch: noarch
-AutoReq: no
-Conflicts: filesystem >= 3
-
-%description block
-This metapackage contains nothing. Its purpose is to keep the filesystem
-package in a system compatible with unmerged-usr, if this is temporarily
-desired on some machine.
-
-%files block
-
+##package block
+#Summary: Install this to block installation of filesystem >= 3
+#Group: Other
+#BuildArch: noarch
+#AutoReq: no
+#Conflicts: filesystem >= 3
+#
+##description block
+#This metapackage contains nothing. Its purpose is to keep the filesystem
+#package in a system compatible with unmerged-usr, if this is temporarily
+#desired on some machine.
+#
+##files block
+#
 %package ensure
 Summary: Install this to convert to merged-usr
 Group: Other
 BuildArch: noarch
 AutoReq: no
 Requires(pre): usrmerge-hier-convert
-# We want /proc to pass usrmerge-ensure's install check;
+# We want /proc access so usrmerge-ensure passes install check;
 # its %%pre script runs hier-convert.
 Requires(pre): /proc
 
@@ -101,6 +102,12 @@ os.execute("printf '%%s\n' '%name-ensure-%EVR: Starting usrmerge-hier-convert...
 assert(os.execute(hier_convert_prog))
 
 %changelog
+* Mon Apr 29 2024 Arseny Maslennikov <arseny@altlinux.org> 0.7-alt1
+- 0.6 -> 0.7; see commit history for details.
+  Notably:
+  + Fixed handling of certain symlinks displaced by the conversion.
+- Removed the usrmerge-block subpackage. It did not work as-is anyway. :)
+
 * Thu Apr 11 2024 Arseny Maslennikov <arseny@altlinux.org> 0.6-alt2
 - Fixed output of usrmerge-ensure scripts when standard output is a file.
 
