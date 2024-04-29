@@ -2,7 +2,7 @@
 %define soname 3
 
 Name: pciutils
-Version: 3.11.1
+Version: 3.12.0
 Release: alt1
 
 Summary: Linux PCI utilities
@@ -90,6 +90,9 @@ This package contains PCI library headers.
 %_man7dir/pcilib*
 
 %changelog
+* Mon Apr 29 2024 Anton Farygin <rider@altlinux.ru> 3.12.0-alt1
+- 3.12.0
+
 * Thu Apr 04 2024 Anton Farygin <rider@altlinux.ru> 3.11.1-alt1
 - 3.11.1
 
