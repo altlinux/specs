@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20240419
+Version: 20240426
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -94,6 +94,24 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/mellanox
 
 %changelog
+* Mon Apr 29 2024 Cronbuild Service <cronbuild@altlinux.org> 20240426-alt1
+- upstream changes (GIT fc21f475):
+  + amdgpu: DMCUB updates for various AMDGPU ASICs (thx Wayne Lin)
+  + Add firmware for Cirrus CS35L56 for various HP laptops (thx Simon Trimmer)
+  + i915: Update Xe2LPD DMC to v2.20 (thx Dnyaneshwar Bhadane)
+  + Remove Calibration Firmware and Tuning for CS35L41 (thx Stefan Binding)
+  + Add firmware for Lenovo Thinkbook 13X (thx Stefan Binding)
+  + ASoC: tas2781: Add dsp firmware for Thinkpad ICE-1 laptop (thx Shenghao Ding)
+  + amdgpu: add DMCUB 3.5 firmware (thx Alex Deucher)
+  + amdgpu: add VPE 6.1.0 firmware (thx Alex Deucher)
+  + amdgpu: add VCN 4.0.5 firmware (thx Alex Deucher)
+  + amdgpu: add UMSCH 4.0.0 firmware (thx Alex Deucher)
+  + amdgpu: add SDMA 6.1.0 firmware (thx Alex Deucher)
+  + amdgpu: add PSP 14.0.0  firmware (thx Alex Deucher)
+  + amdgpu: add GC 11.5.0 firmware (thx Alex Deucher)
+  + amdgpu: update license date (thx Alex Deucher)
+  + Montage: update firmware for Mont-TSSE (thx Carrie.Cai)
+
 * Fri Apr 19 2024 Cronbuild Service <cronbuild@altlinux.org> 20240419-alt1
 - upstream changes (GIT 055dfa8e):
   + Add tuning parameter configs for CS35L41 Firmware (thx Stefan Binding)
