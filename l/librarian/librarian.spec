@@ -1,29 +1,36 @@
-%define oname rarian
+%def_enable snapshot
+%define _name rarian
 %define major 0.8
 # The version of Scrollkeeper that Rarian obsoletes
 %define skversion 0.3.14
 
 %def_disable static
+%def_disable check
+%{?_enable_check:%def_with check}
 
 Name: librarian
-Version: %major.1
-Release: alt7
+Version: %major.5
+Release: alt1
 
 Summary: A documentation meta-data library
 
-License: %gpllgpl2plus 
+License: GPL-2.0-or-later
 Group: System/Libraries
 Url: http://rarian.freedesktop.org/
 
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
+Vcs: https://gitlab.freedesktop.org/rarian/rarian.git
+%if_disabled snapshot
+Source: https://gitlab.freedesktop.org/rarian/rarian/-/releases/%version/downloads/assets/%_name-%version.tar.bz2
+%else
+Source: %_name-%version.tar
+%endif
 
-Source: %gnome_ftp/%oname/%major/%oname-%version.tar.bz2
 Source1: scrollkeeper-omf.dtd
 Source2: scrollkeeper-cl.dtd
 Source3: scrollkeeper.filetrigger
 
-Provides: %oname-compat = %version-%release
-Obsoletes: %oname-compat < %version-%release
+Provides: %_name-compat = %EVR
+Obsoletes: %_name-compat < %version-%release
 
 Provides: scrollkeeper = %skversion.rarian.%version-%release
 Provides: libscrollkeeper = %skversion.rarian.%version-%release
@@ -34,7 +41,8 @@ Requires(pre): xml-common, xml-utils, docbook-dtds
 
 BuildRequires(pre): rpm-build-compat rpm-build-licenses
 BuildRequires(pre): rpm-build-gnome >= 0.8
-BuildRequires: gcc-c++ xsltproc
+BuildRequires: gcc-c++ tinyxml-devel xsltproc
+%{?_enable_check:BuildRequires: libcheck-devel man-db info man-pages}
 
 %description
 Rarian is a documentation meta-data library that allows access to
@@ -44,7 +52,7 @@ for scrollkeeper.
 %package devel
 Summary: Development files for libRarian
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Obsoletes: libscrollkeeper-devel < %skversion.rarian
 
 %description devel
@@ -55,29 +63,34 @@ the Rarian library ("librarian").
 %package static
 Summary: Static Rarian library
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description static
 Static Rarian library (librarian).
 %endif
 
 %prep
-%setup -n %oname-%version
+%setup -n %_name-%version
 
 %build
+echo %version > .tarball-version
+export VERSION=%version
 # all mainstreams sets localstatedir in var, but ALT sets it in /var/lib :(
 %autoreconf
+%add_optflags %(getconf LFS_CFLAGS)
+export ac_cv_path_have_bash=/bin/bash
 %configure \
 	%{subst_enable static} \
 	--enable-omf-read \
 	--disable-skdb-update \
-	--localstatedir=%_var
+	--localstatedir=%_var \
+	%{subst_with check}
 %nil
 %make_build
 
 %install
 install -d %buildroot%_omfdir
-install -d %buildroot%_localstatedir/%oname/
+install -d %buildroot%_localstatedir/%_name/
 
 %makeinstall_std
 
@@ -87,6 +100,11 @@ install -pD -m 644 %SOURCE2 %buildroot%_datadir/xml/scrollkeeper/dtds/scrollkeep
 
 # posttrans filetrigger
 install -pD -m 755 %SOURCE3 %buildroot%_rpmlibdir/scrollkeeper.filetrigger
+
+%check
+#export LC_ALL=en_US.utf8
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%make -k check VERBOSE=1
 
 %post
 %_bindir/rarian-sk-update
@@ -115,13 +133,13 @@ install -pD -m 755 %SOURCE3 %buildroot%_rpmlibdir/scrollkeeper.filetrigger
 %_datadir/help/
 %_datadir/xml/scrollkeeper/dtds/
 %_rpmlibdir/scrollkeeper.filetrigger
-%dir %_localstatedir/%oname/
+%dir %_localstatedir/%_name/
 %dir %_omfdir
 
 %files devel
 %_libdir/librarian.so
-%_includedir/%oname/
-%_pkgconfigdir/%oname.pc
+%_includedir/%_name/
+%_pkgconfigdir/%_name.pc
 
 %if_enabled static
 %files static
@@ -129,6 +147,10 @@ install -pD -m 755 %SOURCE3 %buildroot%_rpmlibdir/scrollkeeper.filetrigger
 %endif
 
 %changelog
+* Mon Apr 29 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.5-alt1
+- updated to 0.8.5-2-g1d3d4b0
+- added Vcs tag, updated BR
+
 * Sat Aug 28 2021 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt7
 - disabled build of static library
 - used newer automake
