@@ -1,13 +1,13 @@
 %add_python3_path %_datadir/waf3
 Name: waf
-Version: 2.0.26
+Version: 2.0.27
 Release: alt1
 
 Summary: A Python-based build system
 License: BSD
 Group: Development/Other
 
-URL: http://code.google.com/p/waf/
+URL: https://gitlab.com/ita1024/waf
 VCS: https://gitlab.com/ita1024/waf
 Source: %name-%version.tar
 Patch0: waf-1.6.2-libdir.patch
@@ -88,6 +88,9 @@ rm -f docs/sphinx/build/html/.buildinfo
 %_datadir/waf3
 
 %changelog
+* Mon Apr 29 2024 Anton Farygin <rider@altlinux.ru> 2.0.27-alt1
+- 2.0.27
+
 * Thu Jan 11 2024 Anton Farygin <rider@altlinux.ru> 2.0.26-alt1
 - 2.0.26
 
