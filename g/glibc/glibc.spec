@@ -1,7 +1,7 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.38.0.66.ge1135387de
+Version: 2.38.0.76.e9f05fa1c6
 
 Release: alt1
 Epoch: 6
@@ -778,6 +778,10 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Mon Apr 29 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.38.0.76.e9f05fa1c6-alt1
+- Updated to glibc-2.38-76-ge9f05fa1c6 (fixes CVE-2024-33599, CVE-2024-33600,
+  CVE-2024-33601, CVE-2024-33602).
+
 * Mon Apr 22 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.38.0.66.ge1135387de-alt1
 - Updated to glibc-2.38-66-ge1135387de (fixes: CVE-2024-2961).
 
