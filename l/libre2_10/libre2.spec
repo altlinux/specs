@@ -1,17 +1,13 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oldname re2
-%define soname 11
-Name: libre2
-Version: 20240401
-Release: alt1
+Name: libre2_10
+Version: 20230301
+Release: alt2
 Summary: C++ fast alternative to backtracking RE engines
 Group: System/Libraries
 License: BSD-3-Clause
 Url: https://github.com/google/re2/
 Source0: %name-%version.tar
-BuildRequires: gcc-c++ libabseil-cpp-devel
-Provides: re2 = %EVR
+BuildRequires: gcc-c++
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake ctest
@@ -29,25 +25,14 @@ In contrast, RE2 uses automata theory to guarantee that regular expression
 searches run in time linear in the size of the input, at the expense of some
 missing features (e.g back references and generalized assertions).
 
-%package -n %{name}_%soname
+%package -n libre2
 Summary: C++ fast alternative to backtracking RE engines
 Group: System/Libraries
 
-%description -n %{name}_%soname
+%description -n libre2
 RE2 is a C++ library providing a fast, safe, thread-friendly alternative to
 backtracking regular expression engines like those used in PCRE, Perl, and
 Python.
-
-%package devel
-Summary: C++ header files and library symbolic links for re2
-Group: Development/Other
-Requires: %{name}_%soname = %EVR
-Provides: re2-devel = %EVR
-
-%description devel
-This package contains the C++ header files and symbolic links to the shared
-libraries for %oldname. If you would like to develop programs using %oldname,
-you will need to install %name-devel.
 
 %prep
 %setup
@@ -63,28 +48,19 @@ you will need to install %name-devel.
 %cmake_install
 
 # Suppress the static library
-find %buildroot -name '%name.a' -delete
+find %buildroot -name 'libre2.a' -delete
 
 %check
 ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process %_smp_mflags
 
-%files -n %{name}_%soname
+%files -n libre2
 %doc LICENSE
-%doc README
-%_libdir/%name.so.%soname
-%_libdir/%name.so.%soname.*
-
-
-%files devel
-%_includedir/%oldname
-%_libdir/%name.so
-%_pkgconfigdir/%oldname.pc
-%_libdir/cmake/%oldname
+%doc AUTHORS CONTRIBUTORS README
+%_libdir/libre2.so.*
 
 %changelog
-* Sun Apr 28 2024 Anton Farygin <rider@altlinux.ru> 20240401-alt1
-- update to 2024-04-01
-- renamed according shared libs policy
+* Mon Apr 29 2024 Anton Farygin <rider@altlinux.ru> 20230301-alt2
+- built as compat library without the devel package
 
 * Wed Apr 19 2023 Alexey Shabalin <shaba@altlinux.org> 20230301-alt1
 - update to 2023-03-01
