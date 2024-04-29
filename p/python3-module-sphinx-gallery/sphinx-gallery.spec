@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.15.0
+Version: 0.16.0
 Release: alt1
 Summary: Sphinx extension for automatic generation of an example gallery
 License: BSD-3-Clause
@@ -15,6 +15,7 @@ Vcs: https://github.com/sphinx-gallery/sphinx-gallery.git
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -34,6 +35,7 @@ BuildRequires: python3(joblib)
 BuildRequires: python3-module-Pillow
 
 BuildRequires: python3(pytest)
+BuildRequires: python3(lxml)
 %endif
 
 %description
@@ -41,6 +43,7 @@ A Sphinx extension that builds an HTML version of any Python script and puts it 
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -48,14 +51,7 @@ A Sphinx extension that builds an HTML version of any Python script and puts it 
 %install
 %pyproject_install
 
-# outdated script requiring dropped easy_install
-rm %buildroot%_bindir/copy_sphinxgallery.sh
-
-# drop `.py` suffix to avoid clash as Python module
-mv %buildroot%_bindir/sphx_glr_python_to_jupyter{.py,}
-
 %check
-sed -i '/addopts/d' pyproject.toml
 # some tests need jupyterlite_sphinx which not packaged yet
 %pyproject_run_pytest --durations=5 -ra \
  --deselect=sphinx_gallery/tests/test_docs_resolv.py::test_embed_code_links_get_data \
@@ -66,14 +62,16 @@ sed -i '/addopts/d' pyproject.toml
  --deselect=sphinx_gallery/tests/test_gen_gallery.py::test_create_jupyterlite_contents_with_jupyterlite_disabled_via_config
 
 %files
-%doc LICENSE
 %doc README.rst RELEASES.md CHANGES.rst
-%_bindir/sphx_glr_python_to_jupyter
+%_bindir/sphinx_gallery_py2jupyter
 %python3_sitelibdir/sphinx_gallery
 %python3_sitelibdir/sphinx_gallery-%version.dist-info
 %exclude %python3_sitelibdir/sphinx_gallery/tests
 
 %changelog
+* Mon Apr 29 2024 Anton Vyatkin <toni@altlinux.org> 0.16.0-alt1
+- New version 0.16.0.
+
 * Tue Nov 28 2023 Anton Vyatkin <toni@altlinux.org> 0.15.0-alt1
 - New version 0.15.0.
 
