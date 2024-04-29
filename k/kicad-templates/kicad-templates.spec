@@ -4,7 +4,7 @@
 Name: kicad-templates
 Summary: Templates projects for kicad (creation of electronic schematic diagrams)
 Summary(ru_RU.UTF-8): Примеры проектов для kicad (разработка печатных плат)
-Version: 8.0.0
+Version: 8.0.2
 Release: alt1
 License: GPL-3.0-or-later
 Group: Engineering
@@ -45,6 +45,9 @@ Kicad-%name содержит примеры проектов для kicad.
 %_datadir/kicad/template/*
 
 %changelog
+* Mon Apr 29 2024 Anton Midyukov <antohami@altlinux.org> 8.0.2-alt1
+- new version (8.0.2) with rpmgs script
+
 * Sun Mar 03 2024 Anton Midyukov <antohami@altlinux.org> 8.0.0-alt1
 - new version (8.0.0) with rpmgs script
 
