@@ -6,7 +6,7 @@
 
 Name:          gem-x25519
 Version:       1.0.10
-Release:       alt1
+Release:       alt2
 Summary:       Public key cryptography library providing the X25519 Elliptic Curve Diffie-Hellman function
 License:       BSD-3-Clause
 Group:         Development/Ruby
@@ -100,7 +100,7 @@ Diffie-Hellman function as described in RFC 7748.
 
 %prep
 %setup
-%autopatch
+%autopatch -p1
 
 %build
 %ruby_build
@@ -131,5 +131,8 @@ Diffie-Hellman function as described in RFC 7748.
 
 
 %changelog
+* Mon Apr 29 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.0.10-alt2
+- NMU: fixed FTBFS on LoongArch (and possibly riscv64)
+
 * Thu Apr 18 2024 Pavel Skrylev <majioa@altlinux.org> 1.0.10-alt1
 - + packaged gem with Ruby Policy 2.0
