@@ -1,7 +1,7 @@
 %def_without kde5
 
 Name:    systray-x
-Version: 0.9.8
+Version: 0.9.9
 Release: alt1
 
 Summary: A system tray extension for Thunderbird 68+
@@ -63,6 +63,9 @@ unzip -d %buildroot%tbird_arch_extensionsdir/systray-x@Ximi1970 systray-x@Ximi19
 %tbird_arch_extensionsdir/systray-x@Ximi1970
 
 %changelog
+* Sat Apr 27 2024 Andrey Cherepanov <cas@altlinux.org> 0.9.9-alt1
+- New version.
+
 * Fri Dec 15 2023 Andrey Cherepanov <cas@altlinux.org> 0.9.8-alt1
 - New version.
 
