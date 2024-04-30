@@ -2,7 +2,7 @@
 %define php_version 8.2
 
 Name: nextcloud
-Version: 27.1.4
+Version: 28.0.5
 Release: alt1
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
@@ -167,6 +167,9 @@ ssl_generate "nextcloud"
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Tue Apr 30 2024 Andrey Cherepanov <cas@altlinux.org> 28.0.5-alt1
+- New version.
+
 * Mon Dec 04 2023 Andrey Cherepanov <cas@altlinux.org> 27.1.4-alt1
 - New version (fixes: CVE-2023-48306, CVE-2023-48305, CVE-2023-48304,
   CVE-2023-48303, CVE-2023-48302, CVE-2023-48301, CVE-2023-48239,
