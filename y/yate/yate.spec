@@ -1,6 +1,6 @@
 Name: yate
 Version: 6.1.0
-Release: alt3
+Release: alt4
 
 Summary: Yet Another Telephony Engine
 
@@ -226,6 +226,11 @@ for small to large scale projects.
 %patch -p2
 %patch1 -p1
 %patch3500 -p1
+%ifarch %e2k
+sed -i 's/HAVE_BLOCK_RETURN/&_NO/;s/YSTRING(s) /&String/' yateclass.h
+sed -i '/#error Please add support/c \
+#define WEBRTC_ARCH_64_BITS\n\#define WEBRTC_ARCH_LITTLE_ENDIAN' libs/miniwebrtc/typedefs.h
+%endif
 
 %build
 %configure --enable-sctp --enable-tdmcard --enable-dahdi --without-coredumper
@@ -491,6 +496,9 @@ cp -p packing/yate.logrotate %buildroot%_sysconfdir/logrotate.d/yate
 %config(noreplace) %_sysconfdir/yate/zlibcompress.conf
 
 %changelog
+* Tue Apr 30 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 6.1.0-alt4
+- Fixed build for Elbrus
+
 * Sun Nov 05 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 6.1.0-alt3
 - NMU: fixed FTBFS on LoongArch
 
