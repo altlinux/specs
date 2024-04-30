@@ -24,7 +24,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium-gost
-Version:        121.0.6167.160
+Version:        124.0.6367.78
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -32,6 +32,7 @@ License:        BSD-3-Clause and LGPL-2.1+
 Group:          Networking/WWW
 Url:            https://www.chromium.org
 
+# Get sources from https://chromium.woolyss.com/
 Source0:        chromium.tar.zst
 
 Source30:       master_preferences
@@ -85,11 +86,21 @@ Patch022: 0022-Revert-Use-aggregate-init-designed-initializers-more.patch
 Patch023: 0023-Add-missing-headers.patch
 Patch024: 0024-Disable-unsupported-compiler-flags.patch
 Patch025: 0025-Fix-rust-clang-path.patch
-Patch026: 0026-FEDORA-Fix-invalid-escape-sequence.patch
-Patch027: 0027-DEBIAN-remove-dependencies-on-third_party-catapult.patch
-Patch028: 0028-Use-system-sysroot-for-rust.patch
-Patch029: 0029-DEBIAN-work-around-incorrect-template-selection.patch
-Patch030: 0030-nullptr_t-without-namespace-std.patch
+Patch026: 0026-DEBIAN-remove-dependencies-on-third_party-catapult.patch
+Patch027: 0027-Use-system-sysroot-for-rust.patch
+Patch028: 0028-DEBIAN-work-around-incorrect-template-selection.patch
+Patch029: 0029-nullptr_t-without-namespace-std.patch
+Patch030: 0030-Fix-undefined-symbol-partition_alloc-internal-Intern.patch
+Patch031: 0031-FEDORA-disable-screen-ai-service.patch
+Patch032: 0032-FEDORA-libavif-deps.patch
+Patch033: 0033-ALT-rename-std::powf.patch
+Patch034: 0034-DEBIAN-uint-includes.patch
+Patch035: 0035-DEBIAN-fps-optional.patch
+Patch036: 0036-DEBIAN-span-optional.patch
+Patch037: 0037-DEBIAN-webgpu-optional.patch
+Patch038: 0038-DEBIAN-extractor-bitset.patch
+Patch039: 0039-DEBIAN-atomic.patch
+#Patch040: 0040-ALT-ninja-build1.12.patch
 ### End Patches
 
 # Specific C-G patch
@@ -529,7 +540,6 @@ EOF
 
 %files
 %doc AUTHORS LICENSE
-%dir %_datadir/gnome-control-center
 %dir %_datadir/gnome-control-center/default-apps
 %dir %_sysconfdir/%name
 %dir %_sysconfdir/%name/policies
@@ -546,8 +556,81 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Apr 30 2024 Fr. Br. George <george@altlinux.org> 124.0.6367.78-alt1
+- GOST version
+
+* Thu Apr 25 2024 Andrey Cherepanov <cas@altlinux.org> 124.0.6367.78-alt1
+- New version (124.0.6367.78).
+- Security fixes:
+  + CVE-2024-4058: Type Confusion in ANGLE.
+  + CVE-2024-4059: Out of bounds read in V8 API.
+  + CVE-2024-4060: Use after free in Dawn.
+
+* Sat Apr 20 2024 Andrey Cherepanov <cas@altlinux.org> 124.0.6367.60-alt1
+- New version (124.0.6367.60).
+- Security fixes:
+  + CVE-2024-3832: Object corruption in V8.
+  + CVE-2024-3833: Object corruption in WebAssembly.
+  + CVE-2024-3914: Use after free in V8.
+  + CVE-2024-3834: Use after free in Downloads.
+  + CVE-2024-3837: Use after free in QUIC.
+  + CVE-2024-3838: Inappropriate implementation in Autofill.
+  + CVE-2024-3839: Out of bounds read in Fonts.
+  + CVE-2024-3840: Insufficient policy enforcement in Site Isolation.
+  + CVE-2024-3841: Insufficient data validation in Browser Switcher.
+  + CVE-2024-3843: Insufficient data validation in Downloads.
+  + CVE-2024-3844: Inappropriate implementation in Extensions.
+  + CVE-2024-3845: Inappropriate implementation in Network.
+  + CVE-2024-3846: Inappropriate implementation in Prompts.
+  + CVE-2024-3847: Insufficient policy enforcement in WebUI.
+
+* Sat Apr 13 2024 Andrey Cherepanov <cas@altlinux.org> 123.0.6312.122-alt1
+- New version (123.0.6312.122).
+- Security fixes:
+  + CVE-2024-3157: Out of bounds write in Compositing.
+  + CVE-2024-3516: Heap buffer overflow in ANGLE.
+  + CVE-2024-3515: Use after free in Dawn.
+- Use vaapi flags from Fedora defaults.
+
+* Wed Mar 27 2024 Andrey Cherepanov <cas@altlinux.org> 123.0.6312.86-alt1
+- New version (123.0.6312.86).
+- Security fixes:
+  + CVE-2024-2883: Use after free in ANGLE.
+  + CVE-2024-2885: Use after free in Daw.
+  + CVE-2024-2886: Use after free in WebCodecs.
+  + CVE-2024-2887: Type Confusion in WebAssembly.
+
+* Thu Mar 21 2024 Alexey Gladkov <legion@altlinux.ru> 123.0.6312.58-alt1
+- New version (123.0.6312.58).
+- Security fixes:
+  - CVE-2024-2173: Out of bounds memory access in V8.
+  - CVE-2024-2174: Inappropriate implementation in V8.
+  - CVE-2024-2176: Use after free in FedCM.
+  - CVE-2024-2400: Use after free in Performance Manager.
+  - CVE-2024-2625: Object lifecycle issue in V8.
+  - CVE-2024-2626: Out of bounds read in Swiftshader.
+  - CVE-2024-2627: Use after free in Canvas.
+  - CVE-2024-2628: Inappropriate implementation in Downloads.
+  - CVE-2024-2629: Incorrect security UI in iOS.
+  - CVE-2024-2630: Inappropriate implementation in iOS.
+  - CVE-2024-2631: Inappropriate implementation in iOS.
+
 * Thu Feb 29 2024 Fr. Br. George <george@altlinux.org> 121.0.6167.160-alt1
 - GOST version
+
+* Wed Feb 28 2024 Alexey Gladkov <legion@altlinux.ru> 122.0.6261.94-alt1
+- New version (122.0.6261.94).
+- Security fixes:
+  - CVE-2024-1669: Out of bounds memory access in Blink.
+  - CVE-2024-1670: Use after free in Mojo.
+  - CVE-2024-1671: Inappropriate implementation in Site Isolation.
+  - CVE-2024-1672: Inappropriate implementation in Content Security Policy.
+  - CVE-2024-1673: Use after free in Accessibility.
+  - CVE-2024-1674: Inappropriate implementation in Navigation.
+  - CVE-2024-1675: Insufficient policy enforcement in Download.
+  - CVE-2024-1676: Inappropriate implementation in Navigation.
+  - CVE-2024-1938: Type Confusion in V8.
+  - CVE-2024-1939: Type Confusion in V8.
 
 * Thu Feb 08 2024 Alexey Gladkov <legion@altlinux.ru> 121.0.6167.160-alt1
 - New version (121.0.6167.160).
