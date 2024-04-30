@@ -1,6 +1,6 @@
 Name: fvwm3
-Version: 1.0.8
-Release: alt2
+Version: 1.1.0
+Release: alt1
 
 Summary: F(?) Virtual Window Manager, the successor to fvwm2
 License: GPLv2+
@@ -9,6 +9,7 @@ Url: http://www.fvwm.org/
 
 # https://github.com/fvwmorg/fvwm3
 Source: %name-%version.tar
+Patch1: 0001-rename-perl-fvwm.patch
 
 BuildRequires: asciidoctor /usr/bin/pod2man
 BuildRequires: libbson-devel libevent-devel libfribidi-devel
@@ -42,6 +43,7 @@ scripts for fvwm3 window manager, the successor to fvwm2.
 
 %prep
 %setup -q
+%patch1 -p2
 
 %build
 %autoreconf
@@ -112,6 +114,9 @@ install -p -D -m644 COPYING NEWS *.md -t $RPM_BUILD_ROOT%_docdir/%name-%version/
 %_mandir/man1/Fvwm3Perl.1*
 
 %changelog
+* Tue Apr 30 2024 Vladislav Zavjalov <slazav@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Thu Oct 19 2023 Vladislav Zavjalov <slazav@altlinux.org> 1.0.8-alt2
 - rename binaries and man pages to avoid conflicts with fvwm2
 
