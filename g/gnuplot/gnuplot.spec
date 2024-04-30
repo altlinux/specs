@@ -4,7 +4,7 @@
 Name: gnuplot
 Epoch: 1
 Version: 6.0.0
-Release: alt1
+Release: alt2
 
 Summary: A program for plotting mathematical expressions and data
 Summary(ru_RU.UTF-8): Программа для построения графиков математических выражений и данных
@@ -148,9 +148,8 @@ plotting tool
 
 %build
 %ifarch %e2k
-# lcc 1.23.12 is -std=c++03 by default but c++11 capable;
-# src/qtterminal/qt_term.cpp compilation needs that
-export CXXFLAGS+=-std=c++11
+# Qt6 requirement
+export CXXFLAGS+=-std=c++17
 %endif
 
 %define configure_opts --with-readline=gnu --enable-history-file --without-row-help --with-texdir=%_texmfmain/%name --with-lua --with-gihdir=%name/%ver_major
@@ -267,6 +266,9 @@ rm -v demo/html/Makefile*
 %doc demo
 
 %changelog
+* Tue Apr 30 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:6.0.0-alt2
+- e2k: qt6 requires c++17
+
 * Tue Apr 02 2024 Grigory Ustinov <grenka@altlinux.org> 1:6.0.0-alt1
 - Updated to 6.0.0 (Closes: #49015).
 - Built with libwxGTK3.2.
