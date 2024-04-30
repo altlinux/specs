@@ -27,7 +27,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.8.0-openjdk
-%define version 1.8.0.382.b05
+%define version 1.8.0.402.b05
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -295,7 +295,7 @@ BuildRequires: /proc rpm-build-java
 # note, following three variables are sedded from update_sources if used correctly. Hardcode them rather there.
 %global shenandoah_project openjdk
 %global shenandoah_repo shenandoah-jdk8u
-%global shenandoah_revision shenandoah-jdk8u382-b05
+%global shenandoah_revision shenandoah-jdk8u402-b05
 # Define old aarch64/jdk8u tree variables for compatibility
 %global project         %{shenandoah_project}
 %global repo            %{shenandoah_repo}
@@ -380,8 +380,8 @@ BuildRequires: /proc rpm-build-java
 %global __jar_repack 0
 
 Name:    java-%{javaver}-%{origin}
-Version: %{javaver}.%{updatever}.%{buildver}
-Release: alt0_%{?eaprefix}%{rpmrelease}%{?extraver}%{?dist}
+Version: %{javaver}.%{updatever}.b06
+Release: alt1_%{?eaprefix}%{rpmrelease}%{?extraver}%{?dist}
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -417,7 +417,7 @@ URL:      http://openjdk.java.net/
 # FILE_NAME_ROOT=%%{shenandoah_project}-%%{shenandoah_repo}-${VERSION}
 # REPO_ROOT=<path to checked-out repository> generate_source_tarball.sh
 # where the source is obtained from http://hg.openjdk.java.net/%%{project}/%%{repo}
-Source0: %{shenandoah_project}-%{shenandoah_repo}-%{shenandoah_revision}.tar.xz
+Source0: gnu-andrew-%{shenandoah_revision}-ea.tar.xz
 
 # Custom README for -src subpackage
 Source2: README.md
@@ -1018,6 +1018,10 @@ if [ $prioritylength -ne 7 ] ; then
  echo "priority must be 7 digits in total, violated"
  exit 14
 fi
+
+# For new tarball subdirectory
+ln -s %{shenandoah_revision} openjdk
+
 # For old patches
 ln -s %{top_level_dir_name} jdk8
 
@@ -1144,7 +1148,7 @@ export NUM_PROC=${NUM_PROC:-1}
 # Honor %%_smp_ncpus_max
 [ ${NUM_PROC} -gt %{?_smp_ncpus_max} ] && export NUM_PROC=%{?_smp_ncpus_max}
 %endif
-%ifarch aarch64
+%ifarch x86_64 aarch64
 export NUM_PROC=2
 %else
 export NUM_PROC=4
@@ -1231,6 +1235,7 @@ function buildjdk() {
 
     make \
 	JAVAC_FLAGS=-g \
+	JOBS=$NUM_PROC \
 	LOG=trace \
 	SCTP_WERROR= \
 	${maketargets} || ( pwd; find ${top_srcdir_abs_path} ${top_builddir_abs_path} -name "hs_err_pid*.log" | xargs cat && false )
@@ -2128,6 +2133,22 @@ fi
 %endif
 
 %changelog
+* Tue Feb 06 2024 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.402.b06-alt1_1jpp8
+- New version.
+- Security fixes:
+  - CVE-2024-20918
+  - CVE-2024-20919
+  - CVE-2024-20921
+  - CVE-2024-20926
+  - CVE-2024-20945
+  - CVE-2024-20952
+  - CVE-2023-22067
+  - CVE-2023-22081
+
+* Tue Oct 24 2023 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.382.b05-alt1_1jpp8
+- Set JOBS for number of cores.
+- FTBFS: reduced number of threads to prevent race condition on x86_64.
+
 * Thu Aug 24 2023 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.382.b05-alt0_1jpp8
 - New version.
 - Seciruty fixes:
