@@ -1,6 +1,6 @@
 Name: cadabra2
 Version: 2.4.5.4
-Release: alt1
+Release: alt2
 
 %def_with gui
 %def_without jupiter
@@ -21,7 +21,8 @@ BuildRequires: libgmpxx-devel libpcrecpp-devel
 BuildRequires: boost-program_options-devel boost-filesystem-devel
 BuildRequires: boost-signals-devel boost-asio-devel
 BuildRequires: libssl-devel
-# python3-module-mpl_to
+BuildRequires: python3-module-setuptools
+
 %if_with gui
 BuildRequires: icon-theme-hicolor libgtkmm3-devel tbb-devel
 # this only needed if I use cmake_build instead of make_build(?):
@@ -96,6 +97,9 @@ kernel for Jupyter
 %endif
 
 %changelog
+* Sun Apr 28 2024 Vladislav Zavjalov <slazav@altlinux.org> 2.4.5.4-alt2
+- add BuildRequires: python3-module-setuptools
+
 * Mon Jan 29 2024 Vladislav Zavjalov <slazav@altlinux.org> 2.4.5.4-alt1
 - v.2.4.5.4
 
