@@ -8,7 +8,7 @@
 %endif
 
 Name: python3-module-%oname
-Version: 3.3.0
+Version: 3.3.1
 Release: alt1
 
 Summary: XML Schema validator and data conversion library
@@ -32,6 +32,10 @@ BuildRequires: python3(lxml)
 BuildRequires: /proc
 BuildRequires: python3(tox)
 BuildRequires: python3-module-memory_profiler
+# these are optional
+BuildRequires: python3-module-mypy
+BuildRequires: python3-module-jinja2
+# lxml-stubs is not packaged yet
 %endif
 
 %description
@@ -48,6 +52,8 @@ export LANG=C.UTF-8
 %pyproject_install
 
 %check
+# Increase verbosity of check
+sed -i 's/unittest/unittest -v/' tox.ini
 %tox_check_pyproject
 
 %files
@@ -59,6 +65,9 @@ export LANG=C.UTF-8
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Apr 30 2024 Grigory Ustinov <grenka@altlinux.org> 3.3.1-alt1
+- Automatically updated to 3.3.1.
+
 * Fri Apr 19 2024 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1
 - Automatically updated to 3.3.0.
 
