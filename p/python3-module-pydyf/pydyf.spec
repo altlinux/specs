@@ -2,7 +2,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.9.0
+Version: 0.10.0
 Release: alt1
 
 Summary: A low-level PDF creator
@@ -10,8 +10,8 @@ Summary: A low-level PDF creator
 License: BSD-3-Clause
 Group:   Development/Python3
 URL:     https://pypi.org/project/pydyf
+VCS:     https://github.com/CourtBouillon/pydyf
 
-# https://github.com/CourtBouillon/pydyf
 Source:  %name-%version.tar
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
@@ -41,7 +41,7 @@ BuildArch: noarch
 
 %check
 %tox_create_default_config
-%tox_check_pyproject -- -k'not test_text'
+%tox_check_pyproject
 
 %files
 %doc *.rst
@@ -49,6 +49,9 @@ BuildArch: noarch
 %python3_sitelibdir/*.dist-info
 
 %changelog
+* Tue Apr 30 2024 Grigory Ustinov <grenka@altlinux.org> 0.10.0-alt1
+- Automatically updated to 0.10.0.
+
 * Tue Feb 27 2024 Grigory Ustinov <grenka@altlinux.org> 0.9.0-alt1
 - Automatically updated to 0.9.0.
 
