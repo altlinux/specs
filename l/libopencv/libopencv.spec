@@ -12,7 +12,6 @@
 %def_without unicap
 %def_with swig
 %def_with python3
-%def_without xine
 %def_without octave
 %def_without gstreamer
 %def_with ffmpeg
@@ -31,23 +30,22 @@
 
 %{?_with_ffmpeg:%set_without gstreamer}
 %{?_with_ffmpeg:%set_without quicktime}
-%{?_with_xine:%set_without quicktime}
 %{?_with_1394libs:%set_without quicktime}
 %{?_with_v4l:%set_without quicktime}
 
 %define bname opencv
 %define Name OpenCV
-%define sover 4.8
+%define sover 4.9
+%define sover2 409
 Name: lib%bname
 Epoch: 1
-Version: 4.8.1
+Version: 4.9.0
 Release: alt1
 Summary: Open Source Computer Vision Library
-License: Distributable
+License: BSD-3-Clause AND Apache-2.0 AND ISC
 Group: System/Libraries
 URL: https://opencv.org
-
-# https://github.com/opencv/opencv.git
+VCS: https://github.com/opencv/opencv.git
 Source: %bname-%version.tar
 # https://github.com/opencv/opencv_contrib.git
 Source1: %bname-contrib-%version.tar
@@ -83,7 +81,6 @@ BuildRequires: ceres-solver-devel
 %{?_with_ffmpeg:BuildRequires: libavformat-devel libswscale-devel libswresample-devel}
 %{?_with_gstreamer:BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel}
 %{?_with_gtk:BuildRequires: libgtk+3-devel}
-%{?_with_xine:BuildRequires: libxine-devel}
 %{?_with_python3:
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -247,8 +244,6 @@ This package contains %Name examples.
 %prep
 %setup -b 1
 %patch1 -p1
-pushd ../%bname-contrib-%version >/dev/null
-popd >/dev/null
 %patch2 -p1
 %ifarch %e2k
 %patch2000 -p1
@@ -273,7 +268,6 @@ rm -fR 3rdparty/{ffmpeg,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib,protob
 	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
 	-DWITH_UNICAP:BOOL=%{?_with_unicap:ON}%{!?_with_unicap:OFF} \
 	-DWITH_QUICKTIME:BOOL=%{?_with_quicktime:ON}%{!?_with_quicktime:OFF} \
-	-DWITH_XINE:BOOL=%{?_with_xine:ON}%{!?_with_xine:OFF} \
 	-DWITH_FFMPEG:BOOL=%{?_with_ffmpeg:ON}%{!?_with_ffmpeg:OFF} \
 	-DWITH_GSTREAMER=%{?_with_gstreamer:ON}%{!?_with_gstreamer:OFF} \
 	-DWITH_OPENGL:BOOL=ON \
@@ -345,7 +339,8 @@ EOF
 
 %files -n lib%bname%sover
 %doc README.md
-%_libdir/*.so.*
+%_libdir/*.so.%sover.*
+%_libdir/*.so.%sover2
 %dir %_datadir/%Name
 %dir %_datadir/%Name-%version
 %_datadir/%Name-%version/licenses
@@ -381,6 +376,10 @@ EOF
 %_datadir/%Name/quality
 
 %changelog
+* Sun Apr 28 2024 Anton Farygin <rider@altlinux.ru> 1:4.9.0-alt1
+- 4.8.1 -> 4.9.0
+- fixed License tag
+
 * Wed Oct 25 2023 Aleksei Kalinin <kaa@altlinux.org> 1:4.8.1-alt1
 - Updated to upstream version 4.8.1.
 - spec: Generate and validate list of provided mods (by slev@).
