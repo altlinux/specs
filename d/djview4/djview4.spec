@@ -1,6 +1,6 @@
 Name: djview4
 Version: 4.12.0
-Release: alt3.3
+Release: alt4
 
 Summary: DjVu viewers, encoders and utilities (QT4 based version)
 License: GPLv2+
@@ -14,7 +14,6 @@ Patch1: djview-4.8-rh-include.patch
 Patch2: djview-4.12-alt-disable-fseeko.patch
 
 %def_disable static
-%define qtdir %_libdir/qt4
 %add_optflags -D_FILE_OFFSET_BITS=64
 
 Provides: djvu-viewer = %EVR
@@ -23,9 +22,7 @@ Obsoletes: djvu-viewer < %EVR
 BuildRequires: libdjvu-devel >= 3.5.25
 BuildRequires: browser-plugins-npapi-devel
 
-# Automatically added by buildreq on Thu Jan 28 2021
-# optimized out: fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libICE-devel libImageMagick6-common libSM-devel libX11-devel libXext-devel libcairo-gobject libgdk-pixbuf libglvnd-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-webkit-devel libstdc++-devel perl pkg-config python-modules python2-base python3 python3-base sh4 tzdata xorg-proto-devel
-BuildRequires: ImageMagick-tools gcc-c++ libXt-devel libdjvu-devel libtiff-devel selinux-policy-alt
+BuildRequires: ImageMagick-tools gcc-c++ libXt-devel libdjvu-devel libtiff-devel
 BuildRequires: qt5-base-devel qt5-tools
 
 %description
@@ -99,6 +96,9 @@ ln -s %buildroot%_bindir/djview4 djview
 %_iconsdir/hicolor/scalable/mimetypes/*
 
 %changelog
+* Wed May 01 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.12.0-alt4
+- Removed obsolete deps from selinux-policy-alt.
+
 * Tue Sep 19 2023 Artyom Bystrov <arbars@altlinux.org> 4.12.0-alt3.3
 - Removed obsolete deps from BR (python3 packages).
 
