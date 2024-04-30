@@ -4,16 +4,16 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 1.8.2
+Version: 1.8.3
 Release: alt1
 
 Summary: Plumbum: shell combinators library
 
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/plumbum
+URL: https://pypi.org/project/plumbum
+VCS: https://github.com/tomerfiliba/plumbum
 
-# https://github.com/tomerfiliba/plumbum.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -131,6 +131,9 @@ cp -fR experiments %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Tue Apr 30 2024 Grigory Ustinov <grenka@altlinux.org> 1.8.3-alt1
+- Automatically updated to 1.8.3.
+
 * Mon Jun 12 2023 Grigory Ustinov <grenka@altlinux.org> 1.8.2-alt1
 - Automatically updated to 1.8.2.
 
