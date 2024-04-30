@@ -40,8 +40,8 @@
 %def_disable doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.2
-Release: alt1.1
+Version: %ver_major.3
+Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -225,6 +225,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Tue Apr 30 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.3-alt1
+- 1.24.3
+
 * Wed Apr 17 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.2-alt1.1
 - enabled "Fraunhofer FDK AAC Codec plugin" (ALT #48981)
 
