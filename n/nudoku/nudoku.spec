@@ -1,5 +1,5 @@
 Name:     nudoku
-Version:  3.0.0
+Version:  4.0.0
 Release:  alt1
 
 Summary:  ncurses based sudoku game
@@ -17,7 +17,14 @@ BuildRequires: libncursesw-devel
 BuildRequires: libcairo-devel
 
 %description
-%summary.
+Can't code? Can't hack? Can't do anything cool on the command line? This game
+will give you an excuse to spend some time in the terminal nevertheless.
+
+Be a cool kid, be in the terminal. Play nudoku!
+
+As a bonus you will even learn the basic vi movement commands.
+
+nudoku can also generate PDF files, containing sudokus.
 
 %prep
 %setup
@@ -37,6 +44,9 @@ BuildRequires: libcairo-devel
 %_man6dir/%name.6.*
 
 %changelog
+* Tue Apr 30 2024 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
+- Automatically updated to 4.0.0.
+
 * Mon Dec 25 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
 - Automatically updated to 3.0.0.
 
