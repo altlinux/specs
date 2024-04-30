@@ -3,13 +3,14 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 3.0.3
+Version: 3.1.0
 Release: alt1
 
 Summary: Capture C-level stdout/stderr in Python
 License: MIT
 Group:   Development/Python3
-URL:     https://github.com/minrk/wurlitzer
+URL:     https://pypi.org/project/wurlitzer
+VCS:     https://github.com/minrk/wurlitzer
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -27,7 +28,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
@@ -48,5 +49,8 @@ py.test-3 test.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Apr 30 2024 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
+- Automatically updated to 3.1.0.
+
 * Tue Jun 13 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.3-alt1
 - Initial build for Sisyphus.
