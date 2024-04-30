@@ -3,16 +3,16 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 25.1.0
+Version: 25.2.0
 Release: alt1
 
 Summary: Keyring provides an easy way to access the system keyring service
 
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/keyring
+URL: https://pypi.org/project/keyring
+VCS: https://github.com/jaraco/keyring
 
-Vcs: https://github.com/jaraco/keyring
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -72,6 +72,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Tue Apr 30 2024 Grigory Ustinov <grenka@altlinux.org> 25.2.0-alt1
+- Automatically updated to 25.2.0.
+
 * Wed Apr 03 2024 Grigory Ustinov <grenka@altlinux.org> 25.1.0-alt1
 - Automatically updated to 25.1.0.
 
