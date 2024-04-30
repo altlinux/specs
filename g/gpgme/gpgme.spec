@@ -18,7 +18,7 @@
 
 Name: gpgme
 Version: 1.23.2
-Release: alt1
+Release: alt2
 
 Summary: GnuPG Made Easy is a library designed to make access to GnuPG easier for applications
 License: LGPLv2.1+
@@ -48,7 +48,7 @@ Patch16: gost-constants.patch
 %def_disable static
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 
-BuildRequires(pre): python-devel python3-devel
+BuildRequires(pre): python-devel python3-devel python3(setuptools)
 BuildRequires: /proc gcc-c++ gnupg2 libgpg-error-devel libpth-devel libstdc++-devel libassuan-devel >= 2.0
 BuildRequires: texinfo
 BuildRequires: qt5-base-devel swig
@@ -250,6 +250,9 @@ find %buildroot%python3_sitelibdir/gpg-%version-py*egg-info \
 %_libdir/libqgpgme.so.%qgpgme_sover.*
 
 %changelog
+* Tue Apr 30 2024 Paul Wolneykien <manowar@altlinux.org> 1.23.2-alt2
+- Fixed FTBFS by adding python3(setuptools) to build dependencies.
+
 * Tue Feb 13 2024 Cronbuild Service <cronbuild@altlinux.org> 1.23.2-alt1
 - New version 1.23.2.
 
