@@ -1,9 +1,9 @@
 %def_without check
 
 Name: drbd9
-Version: 9.2.8
+Version: 9.2.9
 Release: alt1
-%define githash e163b05a76254c0f51f999970e861d72bb16409a
+%define githash e624a7fc7a48b1d1e26290fc6cf03ab5cf119570
 
 Summary: The Linux kernel code for DRBD9
 License: GPLv2
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-build-kernel
 %if_with check
 BuildRequires: coccinelle >= 1.0.8
 BuildRequires: libelf-devel
-BuildRequires: kernel-headers-modules-std-def kernel-headers-modules-un-def kernel-headers-modules-ovz-el7
+BuildRequires: kernel-headers-modules-std-def kernel-headers-modules-un-def
 %endif
 
 %description
@@ -53,7 +53,6 @@ cd ..
 tar -cf %kernel_srcdir/kernel-source-%name-%version.tar %name-%version
 
 %check
-make -C drbd KDIR=/lib/modules/*-ovz*/build -k
 make -C drbd KDIR=/lib/modules/*-std-def-*/build -k
 make -C drbd KDIR=/lib/modules/*-un-def-*/build -k
 
@@ -64,6 +63,9 @@ make -C drbd KDIR=/lib/modules/*-un-def-*/build -k
 %doc README.md COPYING
 
 %changelog
+* Tue Apr 30 2024 Andrew A. Vasilyev <andy@altlinux.org> 9.2.9-alt1
+- 9.2.9
+
 * Wed Mar 06 2024 Andrew A. Vasilyev <andy@altlinux.org> 9.2.8-alt1
 - 9.2.8
 
