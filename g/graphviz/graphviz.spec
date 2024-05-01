@@ -23,7 +23,7 @@
 
 
 Name: graphviz
-Version: 10.0.1
+Version: 11.0.0
 Release: alt1
 
 Summary: Graphs visualization tools
@@ -369,6 +369,9 @@ rm -rf %buildroot%gvlibdir/python3/
 # - enable/fix/test language bindings
 
 %changelog
+* Wed May 01 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 11.0.0-alt1
+- Updated to upstream 11.0.0
+
 * Wed Mar 13 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 10.0.1-alt1
 - Updated to upstream 10.0.0
 
