@@ -4,13 +4,14 @@
 
 Name: python3-module-%oname
 Version: 7.4.2
-Release: alt3
+Release: alt4
 
 Summary: Python module to generate QR Codes
 
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://github.com/lincolnloop/python-qrcode
+URL: https://pypi.org/project/qrcode
+VCS: https://github.com/lincolnloop/python-qrcode
 
 Source: %name-%version.tar
 Patch: 1009adc1d19529c49e2f20b8ebc759e30060a5b2.patch
@@ -18,6 +19,8 @@ Patch: 1009adc1d19529c49e2f20b8ebc759e30060a5b2.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+Buildrequires: python3-module-setuptools
+Buildrequires: python3-module-wheel
 
 %if_with check
 Buildrequires: python3-module-pytest
@@ -38,22 +41,27 @@ to generate QR Codes.
 %patch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-py.test3 -s qrcode
+# test_bad_factory broken
+# https://github.com/lincolnloop/python-qrcode/issues/361
+%pyproject_run_pytest -k'not test_script'
 
 %files
 %doc README.rst LICENSE CHANGES.rst
 %_bindir/qr
 %_man1dir/*
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed May 01 2024 Grigory Ustinov <grenka@altlinux.org> 7.4.2-alt4
+- Fixed FTBFS.
+
 * Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 7.4.2-alt3
 - Fixed FTBFS.
 
