@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 3.6.1
-Release: alt1
+Release: alt2
 Summary: Python interface to PROJ
 License: MIT
 Group: Development/Python3
@@ -14,6 +14,7 @@ Url: https://pypi.python.org/pypi/pyproj/
 VCS: https://github.com/pyproj4/pyproj
 
 Source: %name-%version.tar
+Patch: pyproj-3.6.1-fix-test-with-proj-9.4.0.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -37,6 +38,7 @@ transformations library)
 
 %prep
 %setup
+%patch -p1
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -67,6 +69,9 @@ py.test-3 -m "not network"
 
 
 %changelog
+* Wed May 01 2024 Anton Vyatkin <toni@altlinux.org> 3.6.1-alt2
+- Fixed FTBFS.
+
 * Thu Sep 21 2023 Anton Vyatkin <toni@altlinux.org> 3.6.1-alt1
 - New version 3.6.1.
 
