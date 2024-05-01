@@ -1,9 +1,9 @@
 %define optflags_lto %nil
 
-%define llvm_version 17.0
+%define llvm_version 18.1
 
-%define git_ver 16163
-%define git_commit ef8afa78737dd426941b204187b6838ad74420f1
+%define git_ver 16395
+%define git_commit c16e176fbebc81aeef02a10faa75592a311f28fd
 
 %define glslang_version 13.1.1
 %define asmjit_commit 416f7356967c1f66784dc1580fe157f9406d8bff
@@ -12,13 +12,13 @@
 %define spirv_headers_version vulkan-sdk-1.3.268.0
 %define spirv_tools_version 2023.5.rc1
 %define cubeb_commit 70b4e3db7822de4d534959885cda109d6edbee36
-%define soundtouch_commit ced3ce8d5ecc5aef8a5156fea206a37b33774bf3
-%define miniupnp_version miniupnpd_2_3_4
+%define soundtouch_commit 394e1f58b23dc80599214d2e9b6a5e0dfd0bbe07
+%define miniupnp_version miniupnpd_2_3_6
 %define rtmidi_version 6.0.0
 
 Name: rpcs3
-Version: 0.0.31
-Release: alt2
+Version: 0.0.32
+Release: alt1
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -51,9 +51,6 @@ Source8: soundtouch-%soundtouch_commit.tar
 Source9: miniupnp-%miniupnp_version.tar
 # https://github.com/thestk/rtmidi/archive/refs/tags/%rtmidi_version/rtmidi-%rtmidi_version.tar.gz
 Source10: rtmidi-%rtmidi_version.tar
-
-Patch0: %name-llvm-version.patch
-Patch1: %name-wolfssl-5.7.0.patch
 
 BuildRequires: /proc
 BuildRequires: clang%llvm_version
@@ -97,9 +94,6 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 
 %prep
 %setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10
-
-%patch0 -p1
-%patch1 -p1
 
 %__mv -Tf ../glslang-%glslang_version 3rdparty/glslang/glslang
 %__mv -Tf ../asmjit-%asmjit_commit 3rdparty/asmjit/asmjit
@@ -169,6 +163,9 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Wed May 01 2024 Nazarov Denis <nenderus@altlinux.org> 0.0.32-alt1
+- Version 0.0.32
+
 * Fri Mar 29 2024 Nazarov Denis <nenderus@altlinux.org> 0.0.31-alt2
 - Fix build with wolfSSL 5.7.0
 
