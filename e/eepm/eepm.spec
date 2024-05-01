@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: eepm
-Version: 3.62.6
+Version: 3.62.8
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -101,6 +101,33 @@ a discussion about extra requirements.
 
 
 %changelog
+* Wed May 01 2024 Vitaly Lipatov <lav@altlinux.ru> 3.62.8-alt1
+- epm play: add --no-sandbox to raindrop (eterbug #17298)
+- epm-upgrade: do usrmerge only when real epm upgrade
+- add translate keywords to po/Makefile (eterbug #17278)
+- add new functions for translate
+- epm full-upgrade: fix --no-flatpak option (eterbug #17308)
+- epm repack duplicati.sh: drop unneeded python things
+- epm repack geogebra-classic: skip using ALT only macro when eepm-rpm-rebuild is used
+- epm repack common.sh: improve error about missed target
+- epm play rstudio: fix URL
+- epm repack atom: drop unneeded python rules
+
+* Tue Apr 30 2024 Vitaly Lipatov <lav@altlinux.ru> 3.62.7-alt1
+- epm play: use snap name for downloading snap (not rpm package name)
+- bash completion update (eterbug #17251)
+- epm play: install xdg-desktop-portal backends for flatpak (eterbug #17245)
+- epm-download: allow install a few packages by mask (improve heuristic)
+- epm play anydesk: update for new upstream package placement
+- epm play: rename NotepadNext and OrcaSlicer to lower character registry
+- epm play notepad-next: allow set version
+- epm list --available: use cached list for --short, don't fallback to package manager with --direct
+- epm-check_updated_repo: use epm_vardir, not /var/lib/rpm
+- bash_completion/eepm: use epm list --quiet --short --direct instead of direct using /var/lib/eepm/available-packages
+- epm play yandex-browser: fix RedOS case
+- epm upgrade: move upgrade to usrmerged filesystem to epm upgrade
+- epm: use set_sudo before store_output to fix sudo with password issue
+
 * Thu Apr 25 2024 Vitaly Lipatov <lav@altlinux.ru> 3.62.6-alt1
 - epm play switch-to-nvidia: remove libGLUT and  libGLU, translate output console into English
 - epm play: add Trezor Suite
