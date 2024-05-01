@@ -4,7 +4,7 @@
 %define soname 11
 Name: libre2
 Version: 20240401
-Release: alt1
+Release: alt2
 Summary: C++ fast alternative to backtracking RE engines
 Group: System/Libraries
 License: BSD-3-Clause
@@ -51,6 +51,9 @@ you will need to install %name-devel.
 
 %prep
 %setup
+%ifarch %e2k
+%add_optflags -std=c++17
+%endif
 
 %build
 %cmake \
@@ -82,6 +85,9 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_libdir/cmake/%oldname
 
 %changelog
+* Wed May 01 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 20240401-alt2
+- fix e2k build
+
 * Sun Apr 28 2024 Anton Farygin <rider@altlinux.ru> 20240401-alt1
 - update to 2024-04-01
 - renamed according shared libs policy
