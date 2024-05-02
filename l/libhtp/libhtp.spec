@@ -4,7 +4,7 @@
 
 Name: libhtp
 Epoch: 1
-Version: 0.5.45
+Version: 0.5.48
 Release: alt1
 Summary: LibHTP is a security-aware parser for the HTTP protocol and the related bits and pieces
 License: BSD-3-Clause
@@ -70,6 +70,9 @@ Development headers and libraries for %name.
 %_pkgconfigdir/htp.pc
 
 %changelog
+* Thu May 02 2024 Alexey Shabalin <shaba@altlinux.org> 1:0.5.48-alt1
+- New version 0.5.48.
+
 * Mon Aug 21 2023 Alexey Shabalin <shaba@altlinux.org> 1:0.5.45-alt1
 - New version 0.5.45.
 
