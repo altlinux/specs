@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.15.4
+Version: 1.15.5
 Release: alt1
 
 Summary: Installer common parts
@@ -105,6 +105,10 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Sat Apr 06 2024 Anton Midyukov <antohami@altlinux.org> 1.15.5-alt1
+- initinstall: allow run additional scripts from install-scripts.tar
+  (Closes: 49907)
+
 * Mon Mar 18 2024 Anton Midyukov <antohami@altlinux.org> 1.15.4-alt1
 - install2: set HOSTNAME=localhost.localdomain if HOSTNAME=(none)
 
