@@ -1,5 +1,5 @@
 Name: libnpupnp
-Version: 6.1.1
+Version: 6.1.2
 Release: alt1
 
 Summary: UPnP library derived from the pupnp
@@ -9,7 +9,7 @@ Url: https://framagit.org/medoc92/npupnp
 
 Source: %name-%version-%release.tar
 
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ meson
 BuildRequires: libcurl-devel libexpat-devel libmicrohttpd-devel
 
 %package devel
@@ -31,12 +31,11 @@ applications using libnpupnp.
 %setup
 
 %build
-%autoreconf
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%meson_install
 
 %files
 %_libdir/libnpupnp.so.*
@@ -48,6 +47,9 @@ applications using libnpupnp.
 %_pkgconfigdir/*
 
 %changelog
+* Thu May 02 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 6.1.2-alt1
+- 6.1.2 released
+
 * Thu Mar 14 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.1.1-alt1
 - 6.1.1 released
 
