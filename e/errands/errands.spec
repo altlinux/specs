@@ -1,14 +1,14 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name Errands
-%define ver_major 45
+%define ver_major 46
 %define rdn_name io.github.mrvladus.List
 
 %def_enable check
 
 Name: errands
-Version: %ver_major.1.9
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: Todo application for GNOME
 License: MIT
@@ -22,7 +22,7 @@ Vcs: https://github.com/mrvladus/Errands.git
 Source: %name-%version.tar
 %endif
 
-%define adwaita_ver 1.2
+%define adwaita_ver 1.4
 
 Requires: typelib(Adw) = 1 typelib(GtkSource) = 5
 Requires: yelp
@@ -41,6 +41,7 @@ BuildRequires: pkgconfig(gtksourceview-5)
 BuildRequires: pkgconfig(pygobject-3.0)
 BuildRequires: pkgconfig(libsecret-1)
 BuildRequires: pkgconfig(goa-1.0)
+BuildRequires: pkgconfig(libportal)
 %{?_enable_check:BuildRequires: python3(pytest) desktop-file-utils /usr/bin/appstreamcli}
 
 %description
@@ -64,12 +65,16 @@ Todo application for those who prefer simplicity.
 %attr(0755,root,root) %_bindir/%name
 %_datadir/%name/
 %_desktopdir/%rdn_name.desktop
+%_datadir/dbus-1/services/%rdn_name.service
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README*
 
 %changelog
+* Thu May 02 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- updated to 46.0-1-g0b8f689
+
 * Tue Feb 27 2024 Yuri N. Sedunov <aris@altlinux.org> 45.1.9-alt1.1
 - explicitly required typelib(GtkSource) = 5 (ALT #49507)
 

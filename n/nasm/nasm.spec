@@ -1,7 +1,7 @@
 %def_enable check
 
 Name: nasm
-Version: 2.16.01
+Version: 2.16.03
 Release: alt1
 
 Summary: The Netwide Assembler, a portable x86 assembler with Intel-like syntax
@@ -68,6 +68,9 @@ python3 travis/nasm-t.py run
 %doc doc/nasmdoc.pdf doc/nasmdoc.txt.gz doc/html
 
 %changelog
+* Wed May 01 2024 Yuri N. Sedunov <aris@altlinux.org> 2.16.03-alt1
+- 2.16.03
+
 * Wed Apr 12 2023 Yuri N. Sedunov <aris@altlinux.org> 2.16.01-alt1
 - 2.16.01
 
