@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.3.3
+Version: 0.3.4
 Release: alt1
 
 Summary: Simple image creator
@@ -88,6 +88,12 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Thu May 02 2024 Alexey Gladkov <legion@altlinux.ru> 0.3.4-alt1
+- mki-pack-*: add option '-joliet-long' for mkisofs
+- mki-pack-*: replace UUID_ISO_SHRT with UUID_ISO
+- mki-copy-grub*: search root by file with the name $UUID_ISO, if defined
+- mki-copy-grubpcboot: add more modules to bios.img
+
 * Wed Feb 14 2024 Alexey Gladkov <legion@altlinux.ru> 0.3.3-alt1
 - Add HSH_INSTALL_PROC support in mki-install.
 
