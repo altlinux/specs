@@ -1,7 +1,7 @@
 Name: kernel-image-6.8
 Release: alt1
 %define kernel_base_version	6.8
-%define kernel_sublevel	.8
+%define kernel_sublevel	.9
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -588,6 +588,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu May 02 2024 Kernel Bot <kernelbot@altlinux.org> 6.8.9-alt1
+- v6.8.9 (2024-05-02).
+
 * Sat Apr 27 2024 Kernel Bot <kernelbot@altlinux.org> 6.8.8-alt1
 - v6.8.8 (2024-04-27).
 - Restore kernel and kernel-headers provides.
