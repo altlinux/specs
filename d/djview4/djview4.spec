@@ -1,6 +1,6 @@
 Name: djview4
 Version: 4.12.0
-Release: alt4
+Release: alt5
 
 Summary: DjVu viewers, encoders and utilities (QT4 based version)
 License: GPLv2+
@@ -12,6 +12,7 @@ Source: djview-%version.tar
 
 Patch1: djview-4.8-rh-include.patch
 Patch2: djview-4.12-alt-disable-fseeko.patch
+Patch3500: djview-4.12-alt-loongarch64.patch
 
 %def_disable static
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -49,6 +50,7 @@ Highlights:
 %setup -n djview-%version
 %patch1 -p1
 %patch2 -p1
+%patch3500 -p1
 
 sed -i '/^#/d' desktopfiles/djvulibre-djview4.desktop
 %ifarch %e2k
@@ -96,6 +98,9 @@ ln -s %buildroot%_bindir/djview4 djview
 %_iconsdir/hicolor/scalable/mimetypes/*
 
 %changelog
+* Thu May 02 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.12.0-alt5
+- Fixed FTBFS on LoongArch.
+
 * Wed May 01 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.12.0-alt4
 - Removed obsolete deps from selinux-policy-alt.
 
