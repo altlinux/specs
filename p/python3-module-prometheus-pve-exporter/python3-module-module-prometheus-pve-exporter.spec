@@ -2,7 +2,7 @@
 %def_without check
 
 Name:    python3-module-%modulename
-Version: 3.3.0
+Version: 3.4.0
 Release: alt1
 
 Summary: Prometheus Proxmox VE Exporter
@@ -13,8 +13,9 @@ URL:     https://github.com/prometheus-pve/prometheus-pve-exporter.git
 BuildArch: noarch
 
 Source: %modulename-%version.tar
+Source1: %modulename.service
 
-Provides: prometheus-pve-exporter = %EVR
+Provides: %modulename = %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
@@ -36,7 +37,19 @@ for use by the Prometheus monitoring system.
 
 %install
 %pyproject_install
-install -pDm0644 pve.yml %buildroot%_sysconfdir/pve.yml
+install -pDm0644 pve.yml %buildroot%_sysconfdir/prometheus/pve.yml
+install -pDm0644 %SOURCE1 %buildroot%_unitdir/%modulename.service
+
+%pre
+groupadd -r -f prometheus 2>/dev/null ||:
+useradd -r -g prometheus -c 'Prometheus PVE exporter user' \
+        -d /var/lib/prometheus prometheus 2>/dev/null ||:
+
+%post
+%post_service %modulename
+
+%preun
+%preun_service %modulename
 
 %check
 #%%tox_create_default_config
@@ -44,11 +57,15 @@ install -pDm0644 pve.yml %buildroot%_sysconfdir/pve.yml
 
 %files
 %doc README.rst
-%config(noreplace) %_sysconfdir/pve.yml
+%config(noreplace) %_sysconfdir/prometheus/pve.yml
+%_unitdir/*
 %_bindir/*
 %python3_sitelibdir/*
 
 %changelog
+* Thu May 02 2024 Andrew A. Vasilyev <andy@altlinux.org> 3.4.0-alt1
+- 3.4.0
+
 * Sun Apr 28 2024 Andrew A. Vasilyev <andy@altlinux.org> 3.3.0-alt1
 - 3.3.0
 
