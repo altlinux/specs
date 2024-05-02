@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%{pypi_name}
-Version: 1.20.0
+Version: 1.21.0
 Release: alt1
 
 Summary: Dynamic version generation
@@ -60,6 +60,9 @@ git config --global user.name "Your Name"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu May 02 2024 Anton Kurachenko <srebrov@altlinux.org> 1.21.0-alt1
+- New version 1.21.0.
+
 * Thu Apr 18 2024 Anton Kurachenko <srebrov@altlinux.org> 1.20.0-alt1
 - New version 1.20.0.
 
