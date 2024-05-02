@@ -1,42 +1,53 @@
 %define  modulename cssselect2
 
+%def_with check
+
 Name:    python3-module-%modulename
-Version: 0.2.1
-Release: alt1.1
+Version: 0.7.0
+Release: alt1
 
 Summary: CSS selectors for Python ElementTree
 License: BSD-3-Clause
 Group:   Development/Python3
 URL:     https://pypi.org/project/cssselect2
-# https://github.com/Kozea/cssselect2
-
-Packager: Mikhail Gordeev <obirvalger@altlinux.org>
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+Vcs:     https://github.com/Kozea/cssselect2
 
 BuildArch: noarch
 
-Source:  %modulename-%version.tar
+Source:  %name-%version.tar
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-flit-core
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-webencodings
+BuildRequires: python3-module-tinycss2
+%endif
 
 %description
 %summary.
 
 %prep
-%setup -n %modulename-%version
+%setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_pytest -v
 
 %files
+%doc README.*
 %python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info
-%doc *.rst
+%python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Thu May 02 2024 Anton Vyatkin <toni@altlinux.org> 0.7.0-alt1
+- New version 0.7.0.
+
 * Mon Aug 05 2019 Grigory Ustinov <grenka@altlinux.org> 0.2.1-alt1.1
 - NMU: Little spec refactoring.
 
