@@ -1,6 +1,6 @@
 Name: python3-module-aiohttp
-Version: 3.9.3
-Release: alt2
+Version: 3.9.5
+Release: alt1
 
 Summary: http client/server for asyncio
 License: Apache-2.0
@@ -18,6 +18,7 @@ BuildRequires: python3(multidict)
 
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest-cov)
+BuildRequires: python3(pytest-mock)
 BuildRequires: python3(attr)
 BuildRequires: python3(yarl)
 BuildRequires: python3(aiosignal)
@@ -62,7 +63,7 @@ make cythonize
 %pyproject_install
 
 %check
-%pyproject_run_pytest --ignore=tests/autobahn \
+%pyproject_run_pytest -m 'not dev_mode and not internal' --ignore=tests/autobahn \
 	--ignore=tests/test_proxy_functional.py tests ||:
 
 %files
@@ -77,6 +78,9 @@ make cythonize
 %python3_sitelibdir/aiohttp/*/*test*
 
 %changelog
+* Thu May 02 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.9.5-alt1
+- 3.9.5 released
+
 * Mon Mar 25 2024 Alexander Kuznetsov <kuznetsovam@altlinux.org> 3.9.3-alt2
 - Added async_timeout req & BR for Python < 3.11
 
