@@ -1,5 +1,5 @@
 Name: fnott
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 
 Summary: Notification daemon for wlroots-based Wayland compositor
@@ -15,6 +15,7 @@ BuildRequires: pkgconfig(fcft) >= 3.0.0
 BuildRequires: pkgconfig(fontconfig)
 BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(pixman-1)
+BuildRequires: pkgconfig(systemd)
 BuildRequires: pkgconfig(tllist)
 BuildRequires: pkgconfig(wayland-protocols)
 BuildRequires: pkgconfig(wayland-client)
@@ -39,6 +40,8 @@ wlroots-based Wayland compositors.
 %_sysconfdir/xdg/fnott
 %_bindir/fnott
 %_bindir/fnottctl
+%_libexecdir/systemd/user/*.service
+%_datadir/dbus-1/services/*.service
 %_datadir/zsh/site-functions/_fnott*
 %_desktopdir/fnott.desktop
 %_man1dir/fnott.1*
@@ -46,6 +49,9 @@ wlroots-based Wayland compositors.
 %_man5dir/fnott.ini.5*
 
 %changelog
+* Thu May 02 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.6.0-alt1
+- 1.6.0 released
+
 * Thu Apr 18 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.0-alt1
 - 1.5.0 released
 
