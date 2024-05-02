@@ -4,7 +4,7 @@
 
 %define	TDSVER 7.4
 %define	name freetds
-%define	release alt1
+%define	release alt2
 %define	version 1.4.10
 
 Name:		%name
@@ -24,7 +24,7 @@ Patch1: %name-alt-revert-dblib-fix-TDS_DONE_RESULT-empty-rowsets.patch
 
 # Automatically added by buildreq on Sun Aug 19 2018
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libcom_err-devel libkrb5-devel libncurses-devel libtinfo-devel libunixODBC-devel-compat perl pkg-config python-base python-modules python3 python3-base python3-dev ruby sh3
-BuildRequires: doxygen glibc-devel-static libgnutls-devel libreadline-devel libssl-devel libunixODBC-devel
+BuildRequires: doxygen glibc-devel-static libgnutls-devel libreadline-devel libssl-devel libunixODBC-devel libkrb5-devel
 
 %if_enabled static
 BuildRequires: glibc-devel-static
@@ -126,6 +126,7 @@ useful utilities.
 	--enable-odbc \
 	--disable-debug \
 	--with-openssl \
+	--enable-krb5 \
 	%{subst_enable static}
 
 %make_build
@@ -171,6 +172,9 @@ useful utilities.
 
 
 %changelog
+* Thu May 02 2024 Pavel Vasenkov <pav@altlinux.org> 1.4.10-alt2
+- Add build with kerberos (Closes: #50204)
+
 * Wed Mar 27 2024 Nikolay A. Fetisov <naf@altlinux.org> 1.4.10-alt1
 - New version
 
