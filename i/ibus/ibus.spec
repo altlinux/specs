@@ -23,7 +23,7 @@
 %def_enable gtk_doc
 
 Name: ibus
-Version: 1.5.29
+Version: 1.5.30
 Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
@@ -50,7 +50,7 @@ Patch10: %name-1385349-segv-bus-proxy.patch
 %define gtk4_binary_version %(pkg-config --variable=gtk_binary_version gtk4)
 %endif
 
-%define unicode_ver 15.0
+%define unicode_ver 15.1
 
 Requires: iso-codes setxkbmap xmodmap
 Requires: lib%name = %EVR
@@ -85,7 +85,7 @@ BuildRequires: libnotify-devel
 %{?_enable_dconf:BuildRequires: libdconf-devel /proc dbus-tools-gui dconf}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel libxkbcommon-devel}
 # since 1.5.14
-%{?_enable_emoji_dict:BuildRequires: cldr-emoji-annotation-devel >= 42
+%{?_enable_emoji_dict:BuildRequires: cldr-emoji-annotation-devel >= 45
 BuildRequires: unicode-emoji >= %unicode_ver unicode-ucd >= %unicode_ver gir(Gtk) = 3.0}
 %{?_enable_appindicator:BuildRequires: qt5-base-devel libdbusmenu-gtk3-devel}
 %{?_enable_check:BuildRequires: xvfb-run gnome-desktop-testing}
@@ -366,6 +366,9 @@ xvfb-run %make -k check VERBOSE=1
 %endif
 
 %changelog
+* Thu May 02 2024 Yuri N. Sedunov <aris@altlinux.org> 1.5.30-alt1
+- 1.5.30
+
 * Fri Nov 17 2023 Yuri N. Sedunov <aris@altlinux.org> 1.5.29-alt1
 - 1.5.29
 
