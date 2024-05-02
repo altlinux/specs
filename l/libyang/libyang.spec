@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+%define soname 2
 
 Name: libyang
-Version: 2.1.55
+Version: 2.1.148
 Release: alt1
 Summary: YANG data modeling language library
 Url: https://github.com/CESNET/libyang
@@ -17,19 +18,35 @@ BuildRequires: pkgconfig(libpcre2-8) >= 10.21
 Libyang is YANG data modeling language parser and toolkit
 written (and providing API) in C.
 
+%package -n %name%soname
+Summary: YANG data modeling language library
+Group: System/Libraries
+
+%description -n %name%soname
+Libyang is YANG data modeling language parser and toolkit
+written (and providing API) in C.
+
 %package devel
 Summary: Development files for libyang
 Group: Development/C
-Requires: %name = %EVR
+Requires: %name%soname = %EVR
 Requires: pkgconfig(libpcre2-8) >= 10.21
 
 %description devel
 Headers of libyang library.
 
+%package modules
+Summary: YANG modules for libyang
+Group: System/Libraries
+Conflicts: %name < 2.1.148
+
+%description modules
+YANG modules for libyang.
+
 %package tools
 Summary: YANG validator tools
 Group: Other
-Requires: %name = %EVR
+Requires: %name%soname = %EVR
 
 %description tools
 YANG validator tools.
@@ -45,8 +62,10 @@ YANG validator tools.
 %cmake_install
 mkdir -p %buildroot%_datadir/yang
 
-%files
-%_libdir/*.so.*
+%files -n %name%soname
+%_libdir/*.so.%{soname}*
+
+%files modules
 %_datadir/yang
 
 %files tools
@@ -59,6 +78,9 @@ mkdir -p %buildroot%_datadir/yang
 %_includedir/%name
 
 %changelog
+* Thu May 02 2024 Alexey Shabalin <shaba@altlinux.org> 2.1.148-alt1
+- New version 2.1.148.
+
 * Wed May 03 2023 Alexey Shabalin <shaba@altlinux.org> 2.1.55-alt1
 - New version 2.1.55.
 
