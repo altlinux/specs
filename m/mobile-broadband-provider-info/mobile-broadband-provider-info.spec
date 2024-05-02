@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: mobile-broadband-provider-info
-Version: 20230416
+Version: 20240407
 Release: alt1
 
 Summary: Mobile Broadband Service Provider Database
@@ -18,6 +18,8 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
 BuildRequires: xsltproc
 %{?_enable_check:BuildRequires: xmllint}
 
@@ -28,18 +30,17 @@ associated network and plan information.
 %prep
 %setup
 # subst date as version for git snapshot
-%{?_enable_snapshot:sed -i -e 's|, [0-9]*,|, %version,|' configure.ac}
+#%{?_enable_snapshot:sed -i -e 's|, [0-9]*,|, %version,|' configure.ac}
 
 %build
-%autoreconf
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-%make check
+%__meson_test
 
 %files
 %_datadir/%name/
@@ -47,6 +48,9 @@ associated network and plan information.
 %doc COPYING README
 
 %changelog
+* Thu May 02 2024 Yuri N. Sedunov <aris@altlinux.org> 20240407-alt1
+- 20240407
+
 * Mon Apr 17 2023 Yuri N. Sedunov <aris@altlinux.org> 20230416-alt1
 - 20230416
 
