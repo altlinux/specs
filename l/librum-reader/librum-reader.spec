@@ -1,42 +1,31 @@
 Name: librum-reader
-Version: 0.11.0
-Release: alt2
+Version: 0.12.2
+Release: alt1
 Summary: Librum is an application designed to make reading enjoyable and straightforward for everyone.
 
 Source:  %name-%version.tar
-Source1: %name-%version-libs-di.tar
-Source2: %name-%version-libs-mupdf-thirdparty-extract.tar
-Source3: %name-%version-libs-mupdf-thirdparty-mujs.tar
-Source4: %name-%version-libs-mupdf.tar
-Source5: %name-%version-libs-rapidfuzz-cpp.tar
+Source1: %name-%version-libs-mupdf.tar
+Source2: %name-%version-libs-mupdf-thirdparty-lcms2.tar
+Source3: %name-%version-libs-mupdf-thirdparty-extract.tar
+Source4: %name-%version-libs-mupdf-thirdparty-mujs.tar
+Source5: %name-%version-libs-di.tar
 
-Patch0: alt-fix_version_number.patch
-# patch mupdf python script to build mupdf as static lib and link it with mupdfcpp
-Patch1: alt-force_static_mupdf_build.patch
-Patch2: alt-force_python_to_link_statically_mupdf_with_mupdfcpp.patch
-# add version and soversion to shared libs
-Patch3: alt-add_soversion_for_adapters.patch
-Patch4: alt-add_soversion_for_domain.patch
-Patch5: alt-add_soversion_for_infrastructure.patch
-Patch6: alt-add_soversion_for_presentation.patch
-
-
-Group: Office 
+Patch0: python_mupdf_build.patch
+Patch1: cmake_build.patch
+Group: Office
 Url: https://github.com/Librum-Reader/Librum
 License: GPLv3
-#forked version with OPDS servers support from
-# Url: https://github.com/3036662/librum-reader_OPDS
 
 BuildRequires: make cmake gcc-c++ qt6-base-devel qt6-declarative-devel qt6-declarative qt6-tools-devel
-BuildRequires: zlib-devel clang16.0-devel  clang16.0-libs
-BuildRequires: python3-module-clang >= 16
+BuildRequires: zlib-devel clang17.0-devel
+BuildRequires: python3-module-clang >= 17
 BuildRequires: rpm-macros-qt6 python3-module-setuptools
-#dependecies to use system libraries instead of submodules 
+#dependecies to use system libraries instead of submodules
 BuildRequires: zlib-devel libjbig2dec-devel libfreetype-devel
 BuildRequires: libharfbuzz-devel libfreeglut-devel libcurl-devel
 BuildRequires: libleptonica-devel tesseract-devel
-BuildRequires: gdcm-devel libopenjpeg2.0-devel libgumbo-devel liblcms2-devel
-BuildRequires: libtinyxml2-devel boost-devel-headers libwebp-devel libzip-devel libzip-utils
+BuildRequires: gdcm-devel libgumbo-devel liblcms2-devel
+BuildRequires: rapidfuzz-cpp-devel libopenjpeg2.0-devel mupdf-devel bzlib-devel libopenjpeg2.0-devel
 
 %description
 Librum is an application designed to make reading enjoyable and straightforward for everyone.
@@ -52,9 +41,8 @@ Requires: libqt6-concurrent libqt6-labsanimation libqt6-labsfolderlistmodel libq
 Requires: libqt6-labswavefrontmesh libqt6-openglwidgets libqt6-printsupport libqt6-qmlcompiler libqt6-qmlcore
 Requires: libqt6-qmllocalstorage libqt6-qmlworkerscript libqt6-qmlxmllistmodel libqt6-quickdialogs2 libqt6-quickdialogs2quickimpl
 Requires: libqt6-quickdialogs2utils libqt6-quicklayouts libqt6-quickparticles  libqt6-quickshapes libqt6-quicktest libqt6-quickwidgets
-Requires: libqt6-sql libqt6-svg libqt6-test libqt6-xml 
-Requires: gdcm libopenjpeg2.0 liblcms2 
-Requires: libwebp libzip-utils
+Requires: libqt6-sql libqt6-svg libqt6-test libqt6-xml
+Requires: gdcm libopenjpeg2.0 liblcms2
 
 %package client
 Summary: executable file for package
@@ -65,22 +53,19 @@ Requires: %name-lib
 executable for librum package
 
 %prep
-%setup -a1 -a2 -a3 -a4 -a5 
-%patch0 
-%patch1 
-%patch2
-%patch3 
-%patch4
-%patch5
-%patch6 
+%setup -a0 -a1 -a2 -a3 -a4 -a5
+
+%patch0
+%patch1
 
 %build
 # patch correct library dest
 for file in $(find . -name CMakeLists.txt )
 do
-  sed -i "s/DESTINATION lib/DESTINATION %_lib/g" $file 
+  sed -i "s/DESTINATION lib/DESTINATION %_lib/g" $file
 done
-%cmake  -DBUILD_TEST=Off -DNO_VENV=On -DCMAKE_PREFIX_PATH=%_qt6_bindir
+
+%cmake -DNO_VENV=On -DCMAKE_PREFIX_PATH=%_qt6_bindir
 %cmake_build
 
 %install
@@ -88,15 +73,15 @@ done
 
 %files lib
 %_libdir/libadapters.so.0
-%_libdir/libadapters.so.0.11
+%_libdir/libadapters.so.0.12
 %_libdir/libdomain.so.0
-%_libdir/libdomain.so.0.11
+%_libdir/libdomain.so.0.12
 %_libdir/libinfrastructure.so.0
-%_libdir/libinfrastructure.so.0.11
+%_libdir/libinfrastructure.so.0.12
 %_libdir/libpresentation.so.0
-%_libdir/libpresentation.so.0.11
+%_libdir/libpresentation.so.0.12
 %_libdir/libapplication.so.0
-%_libdir/libapplication.so.0.11
+%_libdir/libapplication.so.0.12
 %_libdir/libreadermupdfcpp.so.1
 %ghost %_libdir/libadapters.so
 %ghost %_libdir/libapplication.so
@@ -110,6 +95,9 @@ done
 %_datadir/pixmaps/librum.svg
 
 %changelog
+* Thu May 02 2024 Oleg Proskurin <proskur@altlinux.org> 0.12.2-alt1
+- New version
+
 * Mon Mar 11 2024 Oleg Proskurin <proskur@altlinux.org> 0.11.0-alt2
 - Add setuptools dependency
 
@@ -117,7 +105,7 @@ done
 - New version
 
 * Mon Dec 04 2023 Oleg Proskurin <proskur@altlinux.org> 0.10.2-alt1
-- New version 
+- New version
 
 * Tue Nov 07 2023 Oleg Proskurin <proskur@altlinux.org> 0.10.1-alt1
 - New version
@@ -127,3 +115,4 @@ done
 
 * Mon Oct 09 2023 Oleg Proskurin <proskur@altlinux.org> 0.9.2-alt1
 - Initial Build
+
