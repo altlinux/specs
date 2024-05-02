@@ -1,36 +1,28 @@
-%define bname frei0r
-%define major_ver 2
-%define minor_ver 3
-%define api_ver 1
-
+%define _unpackaged_files_terminate_build 1
 %def_with opencv
-# no documentation yet
-%def_disable doc
 
-Name: %bname-plugins
-Version: %major_ver.%minor_ver.2
-Release: alt1
+Name: frei0r-plugins
+Version: 2.3.2
+Release: alt2
 
 Summary: Frei0r - a minimalistic plugin API for video effects
 License: GPL-2.0-or-later
 Group: Video
 Url: https://frei0r.dyne.org
-
 Vcs: https://github.com/dyne/frei0r.git
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++
-BuildRequires: libgavl-devel >= 0.2.3
-BuildRequires: doxygen fonts-ttf-dejavu graphviz
-BuildRequires: libcairo-devel >= 1.0.0
+Source: %name-%version.tar
+
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: doxygen
+BuildRequires: libcairo-devel
 %{?_with_opencv:BuildRequires: libopencv-devel}
 
 %description
-It is a minimalistic plugin API for video sources and filters. The behaviour of
-the effects can be controlled from the host by simple parameters. The intent is
-to solve the recurring reimplementation or adaptation issue of standard effect
+The frei0r project is a collection of free and open
+source video effects plugins that can be used with
+a variety of video editing and processing software.
 
 %package -n frei0r-devel
 Summary: Development files for %name
@@ -38,8 +30,7 @@ Group: Development/C
 Requires: %name = %EVR
 
 %description -n frei0r-devel
-The %name-devel package contains libraries and header files for
-developing applications that use %name.
+Frei0r - a minimalistic plugin API for video effects.
 
 %package -n frei0r-devel-doc
 Summary: Development documentation for %name
@@ -47,52 +38,63 @@ Group: Development/Documentation
 BuildArch: noarch
 
 %description -n frei0r-devel-doc
-This package contains development documentation for %name
+This package contains development documentation for %name.
 
-%package facedetect
-Summary: Face detect plugin for %name
+%if_with opencv
+%package opencv
+Summary: Frei0r plugins using OpenCV
 Group: Video
-Requires: %name = %EVR
 Requires: libopencv-utils
 
-%description facedetect
-Face detect plugin for %name
+%description opencv
+Frei0r plugins that use the OpenCV computer vision framework.
+%endif
 
 %prep
-%setup -n %name-%version
-%patch -p1
+%setup
 
 %build
-%cmake
+%cmake \
+	%{?_without_opencv:-DWITHOUT_OPENCV:BOOL=ON} \
+	%nil
 %cmake_build
+
+pushd doc
+doxygen Doxyfile
+popd
 
 %install
 %cmake_install
 
 %files
-%dir %_libdir/%bname-%api_ver
-%_libdir/%bname-%api_ver/*.so
+%dir %_libdir/frei0r-1
+%_libdir/frei0r-1/*.so
 %if_with opencv
-%exclude %_libdir/%bname-%api_ver/facebl0r.so
-%exclude %_libdir/%bname-%api_ver/facedetect.so
+%exclude %_libdir/frei0r-1/facebl0r.so
+%exclude %_libdir/frei0r-1/facedetect.so
 %endif
 
 %files -n frei0r-devel
-%_includedir/%bname.h
-%_pkgconfigdir/%bname.pc
+%_includedir/frei0r.h
+%_pkgconfigdir/frei0r.pc
 
-%if_enabled doc
 %files -n frei0r-devel-doc
-%_defaultdocdir/%name/*
-%endif
+%doc doc/html
 
 %if_with opencv
-%files facedetect
-%_libdir/%bname-%api_ver/facebl0r.so
-%_libdir/%bname-%api_ver/facedetect.so
+%files opencv
+%dir %_libdir/frei0r-1
+%_libdir/frei0r-1/facebl0r.so
+%_libdir/frei0r-1/facedetect.so
 %endif
 
 %changelog
+* Thu May 02 2024 Ajrat Makhmutov <rauty@altlinux.org> 2.3.2-alt2
+- Rename the facedetect subpackage to opencv.
+- Don't require other plugins for frei0r-plugins-opencv.
+- New code documentation in frei0r-devel-doc.
+- Correct the descriptions of frei0r-plugins and frei0r-devel.
+
 * Fri Apr 26 2024 Yuri N. Sedunov <aris@altlinux.org> 2.3.2-alt1
 - updated to v2.3.2-16-gfdc9f32 (ported to CMake build system)
 
