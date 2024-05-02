@@ -1,5 +1,5 @@
 Name: python3-module-aiodhcpwatcher
-Version: 0.8.1
+Version: 1.0.0
 Release: alt1
 
 Summary: Watch for DHCP packets with asyncio
@@ -30,6 +30,9 @@ BuildRequires: python3(poetry-core)
 %python3_sitelibdir/aiodhcpwatcher-%version.dist-info
 
 %changelog
+* Thu May 02 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.0-alt1
+- 1.0.0 released
+
 * Fri Mar 15 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8.1-alt1
 - 0.8.1 released
 
