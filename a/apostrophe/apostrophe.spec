@@ -1,49 +1,64 @@
 %def_enable snapshot
 %define _name apostrophe
-%define ver_major 2.6
+%define ver_major 3.0
 %define rdn_name org.gnome.gitlab.somas.Apostrophe
+%define reveal_ver 5.1.0
 
 Name: %_name
-Version: %ver_major.3
+Version: %ver_major
 Release: alt1
 
 Summary: GTK-based distraction free Markdown editor
 License: GPL-3.0-or-later
 Group: Editors
-Url: https://gitlab.gnome.org/World/apostrophe
+Url: https://apps.gnome.org/Apostrophe
+
+Vcs: https://gitlab.gnome.org/World/apostrophe.git
 
 %if_disabled snapshot
-Source: %url/-/archive/v%version/%_name-%version.tar.gz
+Source: https://gitlab.gnome.org/World/apostrophe/-/archive/v%version/%_name-%version.tar.gz
 %else
-Vcs: https://gitlab.gnome.org/World/apostrophe.git
 Source: %_name-%version.tar
 %endif
+Source1: https://github.com/hakimel/reveal.js/archive/%reveal_ver/reveal.js-%reveal_ver.tar.gz
+Patch1: apostrophe-3.0-alt-embed-reveal.patch
 
 BuildArch: noarch
 
-%define gtk_api_ver 3.0
-%define gtk_ver 3.24
-%define handy_ver 1.0.0
-%define webkit_api_ver 4.0
+%define gtk_api_ver 4.0
+%define gtk_ver 4.0.0
+%define adw_ver 1.4
+%define gtksource_api_ver 5
+%define webkit_api_ver 6.0
 
-Requires: pandoc
+Requires: pandoc dconf
 Requires: typelib(Gtk) = %gtk_api_ver
-Requires: typelib(WebKit2) = %webkit_api_ver
+Requires: typelib(WebKit) = %webkit_api_ver
+%add_typelib_req_skiplist typelib(WebKit2)
+Requires: typelib(GtkSource) = %gtksource_api_ver
+Requires: typelib(Spelling) = 1
+# optional
+#Requires: /usr/bin/pdftex
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
-BuildRequires: meson sassc /usr/bin/appstream-util desktop-file-utils
+BuildRequires: meson
 BuildRequires: gobject-introspection-devel
-BuildRequires: gir(Gtk) = 3.0
-BuildRequires: gir(Handy) = 1
+BuildRequires: gir(Gtk) = %gtk_api_ver
+BuildRequires: gir(Adw) = 1
+#BuildRequires: reveal.js >= %reveal_ver
+%{?_enable_check: /usr/bin/appstreamcli desktop-file-utils /usr/bin/glib-compile-schemas}
 
 %description
-Apostrophe is a GTK+ based distraction free Markdown editor, mainly
+Apostrophe is a GTK4 based distraction free Markdown editor, mainly
 developed by Wolf Vollprecht and Manuel Genoves. It uses pandoc as
 back-end for parsing Markdown and offers a very clean and sleek user
 interface.
 
 %prep
-%setup -n %_name-%version
+%setup -n %_name-%version -a1
+%patch1 -b .reveal
+mkdir -p %name/libs/reveal.js
+cp -r reveal.js-%reveal_ver/* %name/libs/reveal.js
 
 %build
 %meson
@@ -51,7 +66,14 @@ interface.
 
 %install
 %meson_install
+
+mkdir -p %buildroot/%_datadir/%name/libs/reveal.js
+cp -r reveal.js-%reveal_ver/* %buildroot/%_datadir/%name/libs/reveal.js
+
 %find_lang %_name
+
+%check
+%__meson_test
 
 %files -f %_name.lang
 %_bindir/%_name
@@ -61,10 +83,13 @@ interface.
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
-%doc README* NEWS
+%doc README* NEWS*
 
 
 %changelog
+* Thu May 02 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt1
+- 3.0
+
 * Sat Apr 30 2022 Yuri N. Sedunov <aris@altlinux.org> 2.6.3-alt1
 - 2.6.3
 
