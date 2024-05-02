@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name Errands
 %define ver_major 46
@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: errands
-Version: %ver_major.0
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: Todo application for GNOME
@@ -72,6 +72,9 @@ Todo application for those who prefer simplicity.
 %doc README*
 
 %changelog
+* Thu May 02 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0.1-alt1
+- 46.0.1
+
 * Thu May 02 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - updated to 46.0-1-g0b8f689
 
