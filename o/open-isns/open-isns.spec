@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: open-isns
-Version: 0.101
+Version: 0.102
 Release: alt1
 Summary: The iSNS daemon and utility programs
 
@@ -36,6 +38,9 @@ Development files for iSNS
 %prep
 %setup
 %patch -p1
+%if "%_lib" == "lib"
+sed -i -e 's|libdir=/usr/lib64|libdir=%_libdir|' libisns.pc
+%endif
 
 %build
 %autoreconf
@@ -73,8 +78,12 @@ install -p -m 755 -D %SOURCE2 %buildroot%_initdir/isnsd
 %dir %_includedir/libisns
 %_includedir/libisns/*.h
 %_libdir/libisns.so
+%_pkgconfigdir/*.pc
 
 %changelog
+* Thu May 02 2024 Alexey Shabalin <shaba@altlinux.org> 0.102-alt1
+- 0.102
+
 * Sun Apr 11 2021 Alexey Shabalin <shaba@altlinux.org> 0.101-alt1
 - 0.101
 
