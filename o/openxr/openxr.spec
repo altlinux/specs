@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: openxr
-Version: 1.0.34
+Version: 1.1.36
 Release: alt1
 
 Summary: An API for writing VR and AR software
@@ -94,6 +94,9 @@ rm -v %buildroot%_docdir/openxr/LICENSE
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu May 02 2024 Mikhail Tergoev <fidel@altlinux.org> 1.1.36-alt1
+- 1.1.36
+
 * Tue Mar 26 2024 Mikhail Tergoev <fidel@altlinux.org> 1.0.34-alt1
 - initial build for ALT Sisyphus
 
