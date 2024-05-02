@@ -5,7 +5,7 @@
 %def_enable tls
 
 Name: memcached
-Version: 1.6.23
+Version: 1.6.26
 Release: alt1
 
 Summary: memcached - memory caching daemon
@@ -112,11 +112,14 @@ fi
 %_man1dir/%name-tool.*
 
 %changelog
+* Thu May 02 2024 Alexey Shabalin <shaba@altlinux.org> 1.6.26-alt1
+- New version 1.6.26.
+
 * Mon Feb 05 2024 Alexey Shabalin <shaba@altlinux.org> 1.6.23-alt1
 - New version 1.6.23.
 
 * Wed Nov 01 2023 Anton Farygin <rider@altlinux.ru> 1.6.22-alt1
-- New version 1.6.22.
+- New version 1.6.22 (Fixes: CVE-2023-46852, CVE-2023-46853).
 
 * Thu Sep 07 2023 Alexey Shabalin <shaba@altlinux.org> 1.6.21-alt1
 - New version 1.6.21.
@@ -137,10 +140,10 @@ fi
 - removed -Werror for Elbrus build
 
 * Sat Sep 04 2021 Alexey Shabalin <shaba@altlinux.org> 1.6.10-alt1
-- new version 1.6.10
+- new version 1.6.10 (Fixes: CVE-2021-37519)
 
 * Tue Nov 24 2020 Alexey Shabalin <shaba@altlinux.org> 1.6.9-alt1
-- new version 1.6.9
+- new version 1.6.9 (Fixes: CVE-2022-48571)
 
 * Sat May 16 2020 Alexey Shabalin <shaba@altlinux.org> 1.6.6-alt1
 - new version 1.6.6
@@ -149,7 +152,7 @@ fi
 - new version 1.6.5
 
 * Wed Apr 08 2020 Alexey Shabalin <shaba@altlinux.org> 1.6.3-alt1
-- new version 1.6.3
+- new version 1.6.3 (Fixes: CVE-2020-22570)
 
 * Wed Mar 25 2020 Alexey Shabalin <shaba@altlinux.org> 1.6.2-alt1
 - new version 1.6.2 (ALT #38273)
