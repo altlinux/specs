@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _name planify
-%define ver_major 4.6
+%define ver_major 4.7
 %define rdn_name io.github.alainm23.%_name
 
 %def_enable check
@@ -33,7 +33,6 @@ Requires: dconf
 
 BuildRequires(pre): rpm-macros-meson rpm-build-vala
 BuildRequires: meson vala-tools
-BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(granite-7)
@@ -48,6 +47,7 @@ BuildRequires: pkgconfig(libical-glib)
 BuildRequires: pkgconfig(libportal-gtk4)
 BuildRequires: pkgconfig(gxml-0.20)
 BuildRequires: pkgconfig(libsecret-1)
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 Planner with Todoist support.
@@ -100,6 +100,9 @@ This package contains files necessary to develop Planify plugins.
 %_vapidir/%_name.*
 
 %changelog
+* Thu May 02 2024 Yuri N. Sedunov <aris@altlinux.org> 4.7-alt1
+- updated to 4.7-3-g6659323b
+
 * Tue Apr 16 2024 Yuri N. Sedunov <aris@altlinux.org> 4.6-alt1
 - updated to 4.6-2-g311942b4
 
