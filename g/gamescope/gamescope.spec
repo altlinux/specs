@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: gamescope
-Version: 3.14.3
+Version: 3.14.11
 Release: alt1
 
 Summary: SteamOS session compositing window manager
@@ -133,6 +133,9 @@ DESTDIR=%buildroot meson install -C %_cmake__builddir --skip-subprojects
 %_datadir/vulkan/implicit_layer.d/VkLayer_FROG_gamescope_wsi.*.json
 
 %changelog
+* Thu May 02 2024 Mikhail Tergoev <fidel@altlinux.org> 3.14.11-alt1
+- 3.14.11
+
 * Wed Apr 17 2024 Mikhail Tergoev <fidel@altlinux.org> 3.14.3-alt1
 - 3.14.3
 
