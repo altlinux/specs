@@ -1,6 +1,6 @@
 %define mversion	7
 %define dversion	%mversion.1.1
-%define drelease	27
+%define drelease	31
 %define qlev		Q16HDRI
 %define mgkdir		ImageMagick
 %define soname		10
@@ -41,6 +41,7 @@ BuildRequires: bzlib-devel curl gcc-c++ glibc-devel-static graphviz groff-base i
 
 BuildRequires: libjpeg-devel liblcms2-devel liblzma-devel libwebp-devel libgraphviz-devel libjasper-devel libjbig-devel liblcms-devel libtiff-devel libwmf-devel libxml2-devel perl-devel chrpath liblqr-devel libltdl-devel perl-parent
 BuildRequires: libheif-devel libraw-devel libraqm-devel libflif-devel libzstd-devel libfftw3-devel
+BuildRequires: libpango-devel 
 %ifnarch armh
 BuildRequires: libjxl-devel
 %endif
@@ -269,6 +270,10 @@ mv %buildroot%_docdir/%name-%mversion %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Thu May 02 2024 Anton Farygin <rider@altlinux.ru> 7.1.1.31-alt1
+- 7.1.1.27 -> 7.1.1.31
+- built with enabled pango support (closes: #50167)
+
 * Thu Feb 01 2024 Anton Farygin <rider@altlinux.ru> 7.1.1.27-alt1
 - 7.1.1.24 -> 7.1.1.27
 - built with enabled JPEG XL support
