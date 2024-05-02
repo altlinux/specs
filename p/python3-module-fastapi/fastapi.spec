@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.110.2
+Version: 0.110.3
 Release: alt1
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
@@ -25,6 +25,7 @@ BuildRequires(pre): rpm-build-pyproject
 
 %if_with check
 %pyproject_builddeps_metadata
+%pyproject_builddeps_metadata -- --extra all
 %pyproject_builddeps_check
 %endif
 
@@ -80,8 +81,11 @@ cat requirements-docs-tests.txt requirements-tests.txt > alt-requirements-tests.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu May 02 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.110.3-alt1
+- 0.110.2 -> 0.110.3.
+
 * Sun Apr 21 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.110.2-alt1
-0.110.1 -> 0.110.2.
+- 0.110.1 -> 0.110.2.
 
 * Thu Apr 04 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.110.1-alt1
 - 0.110.0 -> 0.110.1.
