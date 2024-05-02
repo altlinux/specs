@@ -1,6 +1,6 @@
 Name: mnt
 Summary: Mount hotplug devices as normal user
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 License: GPLv2
 Group: System/Base
@@ -19,12 +19,17 @@ Source: %name-%version.tar
 %install
 install -D -m 755 mnt %buildroot%_bindir/mnt
 install -D -m 755 umnt %buildroot%_bindir/umnt
+install -D -m 755 alsblk %buildroot%_bindir/alsblk
 
 %files
 %_bindir/mnt
 %_bindir/umnt
+%_bindir/alsblk
 
 %changelog
+* Tue Apr 16 2024 Hihin Ruslan <ruslandh@altlinux.ru> 1.0.5-alt1
+- Add alsblk
+
 * Tue Dec 26 2023 Hihin Ruslan <ruslandh@altlinux.ru> 1.0.4-alt1
 - Add mnt -a and alsblk
 
