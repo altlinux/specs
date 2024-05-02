@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.2.1
+Version: 2.3.0
 Release: alt1
 
 Summary: The build backend used by PDM that supports latest packaging standards
@@ -20,7 +20,8 @@ Source1: debundler.py.in
 %endif
 Source2: pyproject_deps.json
 Patch: %name-%version-alt.patch
-
+# manage deps with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 # namespace root
 %py3_requires pdm
@@ -29,12 +30,8 @@ Patch: %name-%version-alt.patch
 %pyproject_runtimedeps -- vendored
 %endif
 
-# self-dependencies
-%filter_from_requires /python3(pdm\.backend\._vendor\..*)/d
-
 %if_with vendored
 # self-contained deps
-%add_findreq_skiplist %python3_sitelibdir/pdm/backend/_vendor/*
 %add_findprov_skiplist %python3_sitelibdir/pdm/backend/_vendor/*
 %endif
 
@@ -51,6 +48,9 @@ BuildRequires(pre): rpm-build-pyproject
 %add_pyproject_deps_check_filter vendoring
 %pyproject_builddeps -- pdm_test --exclude %pyproject_deps_check_filter
 %pyproject_builddeps -- pdm_dev --exclude %pyproject_deps_check_filter
+# required by tests/pdm/backend/hooks/version/test_scm.py
+BuildRequires: /usr/bin/git
+BuildRequires: /usr/bin/hg
 %endif
 
 %description
@@ -100,6 +100,9 @@ sed -i \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu May 02 2024 Stanislav Levin <slev@altlinux.org> 2.3.0-alt1
+- 2.2.1 -> 2.3.0.
+
 * Thu Apr 18 2024 Stanislav Levin <slev@altlinux.org> 2.2.1-alt1
 - 2.2.0 -> 2.2.1.
 
