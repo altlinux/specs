@@ -7,8 +7,8 @@
 %endif
 
 Name: btrfs-progs
-Version: 6.8
-Release: alt3
+Version: 6.8.1
+Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
 License: GPLv2
@@ -145,6 +145,9 @@ end
 %_includedir/*
 
 %changelog
+* Fri May 03 2024 Anton Farygin <rider@altlinux.ru> 6.8.1-alt1
+- 6.8 -> 6.8.1
+
 * Mon Apr 22 2024 Anton Farygin <rider@altlinux.ru> 6.8-alt3
 - fixed pretrans script (closes: #49434)
 
