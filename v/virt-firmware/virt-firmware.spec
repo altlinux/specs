@@ -1,6 +1,6 @@
 
 Name: virt-firmware
-Version: 24.1.1
+Version: 24.4
 Release: alt1
 Summary: Tools for virtual machine firmware volumes
 Group: Emulators
@@ -96,6 +96,9 @@ install -m 755 systemd/99-uki-uefi-setup.install %buildroot%prefix/lib/kernel/in
 %prefix/lib/kernel/install.d/99-uki-uefi-setup.install
 
 %changelog
+* Fri May 03 2024 Alexey Shabalin <shaba@altlinux.org> 24.4-alt1
+- New version 24.4.
+
 * Thu Jan 25 2024 Alexey Shabalin <shaba@altlinux.org> 24.1.1-alt1
 - new version 24.1.1
 - merge python3-module-virt-firmware-peutils to python3-module-virt-firmware
