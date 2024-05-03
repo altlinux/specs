@@ -6,7 +6,7 @@
 %define libname libaccounts-qt5%sover
 
 Name: accounts-qt5
-Version: 1.16
+Version: 1.17
 Release: alt1
 
 Group: System/Libraries
@@ -91,6 +91,9 @@ rm -rf %buildroot/%_docdir/accounts-qt/
 %endif
 
 %changelog
+* Fri May 03 2024 Sergey V Turchin <zerg@altlinux.org> 1.17-alt1
+- new version
+
 * Mon Sep 30 2019 Sergey V Turchin <zerg@altlinux.org> 1.16-alt1
 - new version
 
