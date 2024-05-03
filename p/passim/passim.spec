@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: passim
-Version: 0.1.7
+Version: 0.1.8
 Release: alt1
 
 Summary: Local caching server
@@ -90,6 +90,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.freedeskt
 %_pkgconfigdir/passim.pc
 
 %changelog
+* Thu May 02 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.1.8-alt1
+- New version.
+
 * Thu Apr 18 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.1.7-alt1
 - New version.
 
