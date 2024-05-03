@@ -1,15 +1,20 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: efivar
-Version: 38
+Version: 39
 Release: alt1
+
 Summary: Tools to manage UEFI variables
 License: LGPLv2.1
 Group: System/Kernel and hardware
+
 Url: https://github.com/rhinstaller/efivar
+Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
+
 Requires: %name-libs = %version-%release
 
 BuildRequires: libpopt-devel libabigail
-Source0: %name-%version.tar
-Patch0: %name-%version-%release.patch
 
 %description
 efivar provides a simple command line interface to the UEFI variable facility.
@@ -18,7 +23,6 @@ efivar provides a simple command line interface to the UEFI variable facility.
 Summary: Library to manage UEFI variables
 Provides: %name-libs = %EVR
 Group: System/Libraries
-
 
 %description -n lib%name
 Library to allow for the simple manipulation of UEFI variables.
@@ -58,6 +62,9 @@ make libdir=%_libdir bindir=%_bindir CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FL
 %_libdir/*.so.*
 
 %changelog
+* Tue Feb 06 2024 Egor Ignatov <egori@altlinux.org> 39-alt1
+- 38 -> 39
+
 * Sat Jul 08 2023 Anton Farygin <rider@altlinux.ru> 38-alt1
 - 37 -> 38
 
