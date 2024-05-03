@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.4.0
+Version: 1.4.2
 Release: alt1
 
 Summary: Lightweight pipelining: using Python functions as pipeline jobs
@@ -84,6 +84,9 @@ sed -i \
 %exclude %python3_sitelibdir/joblib/__pycache__/test*
 
 %changelog
+* Fri May 03 2024 Stanislav Levin <slev@altlinux.org> 1.4.2-alt1
+- 1.4.0 -> 1.4.2.
+
 * Tue Apr 09 2024 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
 - 1.3.2 -> 1.4.0.
 
