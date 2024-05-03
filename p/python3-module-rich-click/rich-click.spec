@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.7.4
+Version: 1.8.0
 Release: alt1
 Summary: Format click help output nicely with rich
 License: MIT
@@ -58,6 +58,9 @@ ENDTEST
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu May 02 2024 Stanislav Levin <slev@altlinux.org> 1.8.0-alt1
+- 1.7.4 -> 1.8.0.
+
 * Tue Mar 12 2024 Stanislav Levin <slev@altlinux.org> 1.7.4-alt1
 - 1.7.3 -> 1.7.4.
 

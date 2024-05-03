@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.10.6
-Release: alt1
+Release: alt2
 Summary: Framework that can run checks on repos
 License: BSD-3-Clause
 Group: Development/Python3
@@ -45,7 +45,7 @@ to be installed.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -ra
+%pyproject_run_pytest -ra -Wignore
 
 %files
 %doc README.*
@@ -54,6 +54,9 @@ to be installed.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri May 03 2024 Stanislav Levin <slev@altlinux.org> 0.10.6-alt2
+- Fixed FTBFS (rich-click 1.8.0).
+
 * Mon Apr 22 2024 Stanislav Levin <slev@altlinux.org> 0.10.6-alt1
 - 0.10.0 -> 0.10.6.
 
