@@ -1,21 +1,29 @@
 %define module_name pycares
 %def_with docs
+%def_without check
 
 Name: python3-module-%module_name
-Version: 4.1.2
-Release: alt2
+Version: 4.4.0
+Release: alt1
 
 Summary: Python interface for c-ares
 
 License: MIT
 Group: Development/Python3
-Url: http://github.com/saghul/pycares
+URL: https://pypi.org/project/pycares
+VCS: http://github.com/saghul/pycares
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libcares-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-cffi
+
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %if_with docs
 BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme
@@ -32,23 +40,30 @@ requests and name resolves asynchronously.
 %build
 export PYCARES_USE_SYSTEM_LIB=1
 export LANG=en_US.UTF-8
-%python3_build
+%pyproject_build
 %if_with docs
 make -C docs html SPHINXBUILD=py3_sphinx-build
 %endif
 
 %install
 export LANG=en_US.UTF-8
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_pytest
 
 %files
-%python3_sitelibdir/pycares*
+%python3_sitelibdir/%module_name
+%python3_sitelibdir/%module_name-%version.dist-info
 %doc README.rst LICENSE ChangeLog
 %if_with docs
 %doc docs/_build/html
 %endif
 
 %changelog
+* Fri May 03 2024 Grigory Ustinov <grenka@altlinux.org> 4.4.0-alt1
+- Automatically updated to 4.4.0.
+
 * Fri Feb 09 2024 Grigory Ustinov <grenka@altlinux.org> 4.1.2-alt2
 - Fixed FTBFS.
 
