@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.4.0
+Version: 3.5.0
 Release: alt1
 Summary: Thread-pool Controls
 License: BSD-3-Clause
@@ -55,6 +55,9 @@ that involve nested parallelism so as to mitigate oversubscription issues.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri May 03 2024 Stanislav Levin <slev@altlinux.org> 3.5.0-alt1
+- 3.4.0 -> 3.5.0.
+
 * Thu Mar 21 2024 Stanislav Levin <slev@altlinux.org> 3.4.0-alt1
 - 3.1.0 -> 3.4.0.
 
