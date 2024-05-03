@@ -3,7 +3,7 @@
 %global import_path github.com/project-zot/zot
 
 Name: zot
-Version: 2.0.3
+Version: 2.0.4
 Release: alt1
 
 Summary: zot - A production-ready vendor-neutral OCI-native container image registry (purely based on OCI Distribution Specification)
@@ -46,7 +46,7 @@ export GOPATH="$BUILDDIR:%go_path"
 
 %golang_prepare
 
-cd .build/src/%import_path
+cd "$BUILDDIR/src/%import_path"
 # build the web ui
 pushd zui/
 npm run build
@@ -66,7 +66,7 @@ popd
 export BUILDDIR="$PWD/.build"
 export IGNORE_SOURCES=1
 
-cd .build/src/%import_path
+cd "$BUILDDIR/src/%import_path"
 
 install -Dm 755 ./bin/zot-linux-%go_hostarch %buildroot%_bindir/%name
 install -Dm 755 ./bin/zli-linux-%go_hostarch %buildroot%_bindir/zli
@@ -113,6 +113,10 @@ useradd -r -g _%name -M -d %_localstatedir/%name -s /dev/null -c "Zot registry u
 %_datadir/fish/vendor_completions.d/zli.fish
 
 %changelog
+* Fri May 03 2024 Alexander Stepchenko <geochip@altlinux.org> 2.0.4-alt1
+- 2.0.3 -> 2.0.4
+- Change the default trivy-db URL in the config.
+
 * Wed Apr 17 2024 Alexander Stepchenko <geochip@altlinux.org> 2.0.3-alt1
 - 2.0.1 -> 2.0.3
 
