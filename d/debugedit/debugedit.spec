@@ -1,5 +1,5 @@
 Name: debugedit
-Version: 5.0.0.19.5bad
+Version: 5.0.0.27.6dd2
 Release: alt1
 
 Summary: A collection of debuginfo utilities
@@ -44,6 +44,9 @@ rm %buildroot%_man1dir/find-debuginfo.1
 %doc README find-debuginfo find-debuginfo.1
 
 %changelog
+* Fri May 03 2024 Dmitry V. Levin <ldv@altlinux.org> 5.0.0.27.6dd2-alt1
+- 5.0-19-g5bade25 -> 5.0-27-g6dd28bb (closes: #50067).
+
 * Fri Apr 21 2023 Dmitry V. Levin <ldv@altlinux.org> 5.0.0.19.5bad-alt1
 - 5.0-2-gae27211 -> 5.0-19-g5bade25 (closes: #45958).
 
