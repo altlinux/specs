@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.15.1
+Version: 0.16.0
 Release: alt1
 
 Summary: Python-powered, cross-platform, Unix-gazing shell
@@ -15,12 +15,11 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
-# this patch is only needed by ALT, because python in our distribution means python2
-Patch0: %pypi_name-0.15.0-alt-fix-tests-python-to-python3.patch
 
 # self-dependencies
 %filter_from_requires /python3(xonsh.ply)/d
 %pyproject_runtimedeps_metadata
+Provides: %pypi_name = %EVR
 
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -57,7 +56,12 @@ Xonsh (pronounced conch) is meant for the daily use of experts and novices alike
 %pyproject_install
 
 %check
-export PATH=$PATH:%buildroot%_bindir
+# for compatibility tests
+mkdir -p "$HOME/bin"
+ln -fs %__python3 "$HOME/bin/python"
+ln -fs %_bindir/pytest3 "$HOME/bin/pytest"
+
+export PATH="$PATH:%buildroot%_bindir:$HOME/bin"
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %__python3 -m xonsh run-tests.xsh test -- \
     --timeout=240 -vvvra
@@ -70,6 +74,11 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Apr 24 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.16.0-alt1
+- New version.
+- Provide pypi name.
+- Fix FTBFS: xfail for test_virtualenv_activator.
+
 * Fri Mar 22 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.15.1-alt1
 - New version.
 
