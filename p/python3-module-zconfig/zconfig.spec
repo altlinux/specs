@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.0
+Version: 4.1
 Release: alt1
 
 Summary: Python configuration module from Zope
@@ -93,6 +93,9 @@ sed -i 's/unittest.TestCase.assertRaisesRegexp/unittest.TestCase.assertRaisesReg
 
 
 %changelog
+* Fri May 03 2024 Anton Vyatkin <toni@altlinux.org> 4.1-alt1
+- New version 4.1.
+
 * Thu Jan 25 2024 Anton Vyatkin <toni@altlinux.org> 4.0-alt1
 - New version 4.0.
 
