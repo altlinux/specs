@@ -11,7 +11,7 @@
 %def_enable pyverbs
 
 Name: rdma-core
-Version: 50.0
+Version: 51.0
 Release: alt1
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
@@ -46,6 +46,7 @@ Conflicts: infiniband-diags < 2.0.0
 %define docdir %_docdir/%name-%version
 
 %filter_from_requires /^\/lib\/systemd\/systemd-modules-load/d
+%filter_from_requires /^\/usr\/lib\/systemd\/systemd-modules-load/d
 
 %description
 RDMA core userspace infrastructure and documentation, including initialization
@@ -85,6 +86,8 @@ Provides: libcxgb4 = %EVR
 Obsoletes: libcxgb4 < %EVR
 Provides: libipathverbs = %EVR
 Obsoletes: libipathverbs < %EVR
+Provides: libhns = %EVR
+Obsoletes: libhns < %EVR
 %if_enabled dma_coherent
 Provides: libmlx4 = %EVR
 Obsoletes: libmlx4 < %EVR
@@ -110,7 +113,7 @@ Device-specific plug-in ibverbs userspace drivers are included:
 - libcxgb4: Chelsio T4 iWARP HCA
 - libefa: Amazon Elastic Fabric Adapter
 - libhfi1: Intel Omni-Path HFI
-- libhns: HiSilicon Hip06 SoC
+- libhns: HiSilicon Hip08+ SoC
 - libipathverbs: QLogic InfiniPath HCA
 - libirdma: Intel Ethernet Connection RDMA
 - libmlx4: Mellanox ConnectX-3 InfiniBand HCA (except arm, s390)
@@ -382,6 +385,8 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %if_enabled dma_coherent
 %_man3dir/efadv*
 %_man7dir/efadv*
+%_man3dir/hnsdv*
+%_man7dir/hnsdv*
 %_man3dir/mlx5dv*
 %_man3dir/manadv*
 %_man7dir/manadv*
@@ -397,6 +402,7 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %_libdir/libibverbs/*.so
 %if_enabled dma_coherent
 %_libdir/libefa.so.*
+%_libdir/libhns.so.*
 %_libdir/libmana.so.*
 %_libdir/libmlx5.so.*
 %_libdir/libmlx4.so.*
@@ -612,6 +618,9 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %endif
 
 %changelog
+* Fri May 03 2024 Alexey Shabalin <shaba@altlinux.org> 51.0-alt1
+- New version 51.0.
+
 * Fri Jan 26 2024 Alexey Shabalin <shaba@altlinux.org> 50.0-alt1
 - New version 50.0.
 - Add python3-module-pyverbs package
