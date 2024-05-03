@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.1.38
+Version: 0.1.39
 Release: alt1
 Summary: An extremely fast Python package installer and resolver
 License: MIT
@@ -58,5 +58,8 @@ export OPENSSL_INCLUDE_DIR="%_includedir"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri May 03 2024 Stanislav Levin <slev@altlinux.org> 0.1.39-alt1
+- 0.1.38 -> 0.1.39.
+
 * Thu Apr 25 2024 Stanislav Levin <slev@altlinux.org> 0.1.38-alt1
 - Initial build for Sisyphus.
