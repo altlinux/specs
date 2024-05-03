@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 0.10.1
+Version: 0.10.2
 Release: alt1
 
 Summary: A python package for music and audio analysis
@@ -51,6 +51,9 @@ py.test-3 tests
 
 
 %changelog
+* Fri May 03 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.2-alt1
+- 0.10.2
+
 * Fri Aug 18 2023 Yuri N. Sedunov <aris@altlinux.org> 0.10.1-alt1
 - 0.10.1
 
