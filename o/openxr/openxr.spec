@@ -2,7 +2,7 @@
 
 Name: openxr
 Version: 1.1.36
-Release: alt1
+Release: alt2
 
 Summary: An API for writing VR and AR software
 
@@ -11,6 +11,7 @@ Url: https://github.com/KhronosGroup/OpenXR-SDK-Source
 Group: System/Libraries
 
 Source: %name-%version.tar
+Patch3500: openxr-1.1.36-alt-loongarch64.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
@@ -57,6 +58,7 @@ want to compile applications using the OpenXR library.
 
 %prep
 %setup
+%patch3500 -p1
 
 %build
 %cmake \
@@ -94,6 +96,9 @@ rm -v %buildroot%_docdir/openxr/LICENSE
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri May 03 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.1.36-alt2
+- NMU: fixed FTBFS on LoongArch
+
 * Thu May 02 2024 Mikhail Tergoev <fidel@altlinux.org> 1.1.36-alt1
 - 1.1.36
 
