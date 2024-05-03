@@ -2,7 +2,7 @@
 %def_with check
 
 Name: libtalloc
-Version: 2.4.1
+Version: 2.4.2
 Release: alt1
 Epoch: 1
 
@@ -92,6 +92,9 @@ make test
 %_libdir/libpytalloc-util.cpython*.so
 
 %changelog
+* Mon Mar 11 2024 Evgeny Sinelnikov <sin@altlinux.org> 1:2.4.2-alt1
+- Update to latest release for samba-4.20
+
 * Mon Nov 06 2023 Evgeny Sinelnikov <sin@altlinux.org> 1:2.4.1-alt1
 - Update to latest release for samba-4.19
 

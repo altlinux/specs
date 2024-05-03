@@ -8,7 +8,7 @@
 %endif
 
 Name: libldb
-Version: 2.8.0
+Version: 2.9.0
 Release: alt1
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
@@ -29,9 +29,9 @@ BuildRequires: nss_wrapper >= 1.1.15
 BuildRequires: resolv_wrapper >= 1.1.8
 BuildRequires: uid_wrapper >= 1.3.0
 BuildRequires: pam_wrapper >= 1.1.4
-BuildRequires: libtdb-devel >= 1.4.9
-BuildRequires: libtalloc-devel >= 2.4.1
-BuildRequires: libtevent-devel >= 0.15.0
+BuildRequires: libtdb-devel >= 1.4.10
+BuildRequires: libtalloc-devel >= 2.4.2
+BuildRequires: libtevent-devel >= 0.16.1
 %if_with mdb
 BuildRequires: liblmdb-devel >= 0.9.16
 %endif
@@ -42,9 +42,9 @@ BuildRequires: python3-module-tdb
 BuildRequires: python3-module-talloc-devel
 BuildRequires: python3-module-tevent
 
-Requires: libtdb >= 1.4.9
-Requires: libtalloc >= 2.4.1
-Requires: libtevent >= 0.15.0
+Requires: libtdb >= 1.4.10
+Requires: libtalloc >= 2.4.2
+Requires: libtevent >= 0.16.1
 %if_with mdb
 Requires: liblmdb >= 0.9.16
 %endif
@@ -185,6 +185,9 @@ make test
 %_pkgconfigdir/pyldb-util.cpython-*.pc
 
 %changelog
+* Mon Mar 11 2024 Evgeny Sinelnikov <sin@altlinux.org> 2.9.0-alt1
+- Update to the 2.9.0 for samba-4.20.x releases
+
 * Mon Nov 06 2023 Evgeny Sinelnikov <sin@altlinux.org> 2.8.0-alt1
 - Update to the 2.8.0 for samba-4.19.x releases
 

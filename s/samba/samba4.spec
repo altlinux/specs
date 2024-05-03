@@ -14,7 +14,7 @@
 %define libdcerpc_so_version 0
 %define libndr_krb5pac_so_version 0
 %define libndr_nbt_so_version 0
-%define libndr_so_version 3
+%define libndr_so_version 4
 %define libndr_standard_so_version 0
 %define libnetapi_so_version 1
 %define libsamba_credentials_so_version 1
@@ -120,7 +120,7 @@
 %endif
 
 Name:    samba
-Version: 4.19.6
+Version: 4.20.0
 Release: alt1
 
 Group:   System/Servers
@@ -245,22 +245,22 @@ BuildRequires: libdbus-devel
 %endif
 
 %if_without talloc
-BuildRequires: libtalloc-devel >= 2.4.1
+BuildRequires: libtalloc-devel >= 2.4.2
 BuildRequires: python3-module-talloc-devel
 %endif
 
 %if_without tevent
-BuildRequires: libtevent-devel >= 0.15.0
+BuildRequires: libtevent-devel >= 0.16.1
 BuildRequires: python3-module-tevent
 %endif
 
 %if_without tdb
-BuildRequires: libtdb-devel >= 1.4.9
+BuildRequires: libtdb-devel >= 1.4.10
 BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-%define ldb_version 2.8.0
+%define ldb_version 2.9.0
 BuildRequires: libldb-devel = %ldb_version
 BuildRequires: python3-module-pyldb-devel
 %endif
@@ -1016,6 +1016,9 @@ pushd ../%rname-%version-separate-heimdal-server
 popd
 %endif
 
+# Make sure we do not build with heimdal code
+rm -rfv third_party/heimdal
+
 %make_build NPROCS=%__nprocs V=2 -Onone
 
 pushd pidl
@@ -1209,9 +1212,9 @@ rm -f %buildroot%_samba_dc_mod_libdir/python%_python3_version/samba/third_party/
 %endif
 
 # remove cmocka library
-rm -f %buildroot%_samba_mod_libdir/libcmocka-samba4.so
+rm -f %buildroot%_samba_mod_libdir/libcmocka-private-samba.so
 %if_with separate_heimdal_server
-rm -f %buildroot%_samba_dc_mod_libdir/libcmocka-samba4.so
+rm -f %buildroot%_samba_dc_mod_libdir/libcmocka-private-samba.so
 %endif
 
 # move pkgconfig to standart path:
@@ -1367,6 +1370,7 @@ control role-sambashare enabled
 %_samba_libexecdir/rpcd_mdssvc
 %_samba_libexecdir/rpcd_spoolss
 %_samba_libexecdir/rpcd_winreg
+%_samba_libexecdir/rpcd_witness
 %if_with doc
 %_man8dir/samba-dcerpcd.8*
 %endif
@@ -1483,6 +1487,7 @@ control role-sambashare enabled
 #_bindir/smbta-util
 %_bindir/smbtar
 %_bindir/smbtree
+%_bindir/wspsearch
 %_altdir/samba-printing
 # Samba CUPS backend for printing with Kerberos support or not controlled
 # by whether the samba-krb5-printing package is installed or not:
@@ -1509,6 +1514,7 @@ control role-sambashare enabled
 %_man1dir/smbget.1*
 %exclude %_man1dir/smbtar.1*
 %_man1dir/smbtree.1*
+%_man1dir/wspsearch.1*
 %_man5dir/smbpasswd.5*
 %_man8dir/smbpasswd.8*
 %_man8dir/smbspool.8*
@@ -1544,7 +1550,7 @@ control role-sambashare enabled
 %_man1dir/ldbrename.1*
 %_man1dir/ldbsearch.1*
 %endif
-%_samba_mod_libdir/libldb-cmdline-samba4.so
+%_samba_mod_libdir/libldb-cmdline-private-samba.so
 %endif
 
 %files common-client
@@ -1697,78 +1703,78 @@ control role-sambashare enabled
 %_samba_libdir/libtevent-util.so.%{libtevent_util_so_version}*
 
 # common libraries
-%_samba_mod_libdir/libCHARSET3-samba4.so
-%_samba_mod_libdir/libLIBWBCLIENT-OLD-samba4.so
-%_samba_mod_libdir/libMESSAGING-SEND-samba4.so
-%_samba_mod_libdir/libaddns-samba4.so
-%_samba_mod_libdir/libasn1util-samba4.so
-%_samba_mod_libdir/libauth-unix-token-samba4.so
-%_samba_mod_libdir/libauthkrb5-samba4.so
-%_samba_mod_libdir/libcli-cldap-samba4.so
-%_samba_mod_libdir/libcli-ldap-common-samba4.so
-%_samba_mod_libdir/libcli-ldap-samba4.so
-%_samba_mod_libdir/libcli-nbt-samba4.so
-%_samba_mod_libdir/libcliauth-samba4.so
-%_samba_mod_libdir/libclidns-samba4.so
-%_samba_mod_libdir/libcluster-samba4.so
-%_samba_mod_libdir/libcmdline-samba4.so
-%_samba_mod_libdir/libcmdline-contexts-samba4.so
-%_samba_mod_libdir/libcommon-auth-samba4.so
+%_samba_mod_libdir/libCHARSET3-private-samba.so
+%_samba_mod_libdir/libLIBWBCLIENT-OLD-private-samba.so
+%_samba_mod_libdir/libMESSAGING-SEND-private-samba.so
+%_samba_mod_libdir/libaddns-private-samba.so
+%_samba_mod_libdir/libasn1util-private-samba.so
+%_samba_mod_libdir/libauth-unix-token-private-samba.so
+%_samba_mod_libdir/libauthkrb5-private-samba.so
+%_samba_mod_libdir/libcli-cldap-private-samba.so
+%_samba_mod_libdir/libcli-ldap-common-private-samba.so
+%_samba_mod_libdir/libcli-ldap-private-samba.so
+%_samba_mod_libdir/libcli-nbt-private-samba.so
+%_samba_mod_libdir/libcliauth-private-samba.so
+%_samba_mod_libdir/libclidns-private-samba.so
+%_samba_mod_libdir/libcluster-private-samba.so
+%_samba_mod_libdir/libcmdline-private-samba.so
+%_samba_mod_libdir/libcmdline-contexts-private-samba.so
+%_samba_mod_libdir/libcommon-auth-private-samba.so
 %if_with clustering_support
-%_samba_mod_libdir/libctdb-event-client-samba4.so
+%_samba_mod_libdir/libctdb-event-client-private-samba.so
 %endif
-%_samba_mod_libdir/libdbwrap-samba4.so
-%_samba_mod_libdir/libdcerpc-samba-samba4.so
+%_samba_mod_libdir/libdbwrap-private-samba.so
+%_samba_mod_libdir/libdcerpc-samba-private-samba.so
 %if_with dc
-%_samba_mod_libdir/libdfs-server-ad-samba4.so
+%_samba_mod_libdir/libdfs-server-ad-private-samba.so
 %endif
-%_samba_mod_libdir/libevents-samba4.so
-%_samba_mod_libdir/libflag-mapping-samba4.so
-%_samba_mod_libdir/libgenrand-samba4.so
-%_samba_mod_libdir/libgensec-samba4.so
-%_samba_mod_libdir/libinterfaces-samba4.so
-%_samba_mod_libdir/libiov-buf-samba4.so
-%_samba_mod_libdir/libkrb5samba-samba4.so
-%_samba_mod_libdir/libldbsamba-samba4.so
-%_samba_mod_libdir/liblibcli-lsa3-samba4.so
-%_samba_mod_libdir/libmessages-dgm-samba4.so
-%_samba_mod_libdir/libmessages-util-samba4.so
-%_samba_mod_libdir/libmsghdr-samba4.so
-%_samba_mod_libdir/libndr-samba4.so
-%_samba_mod_libdir/libndr-samba-samba4.so
-%_samba_mod_libdir/libnetif-samba4.so
-%_samba_mod_libdir/libnpa-tstream-samba4.so
-%_samba_mod_libdir/libposix-eadb-samba4.so
+%_samba_mod_libdir/libevents-private-samba.so
+%_samba_mod_libdir/libflag-mapping-private-samba.so
+%_samba_mod_libdir/libgenrand-private-samba.so
+%_samba_mod_libdir/libgensec-private-samba.so
+%_samba_mod_libdir/libinterfaces-private-samba.so
+%_samba_mod_libdir/libiov-buf-private-samba.so
+%_samba_mod_libdir/libkrb5samba-private-samba.so
+%_samba_mod_libdir/libldbsamba-private-samba.so
+%_samba_mod_libdir/liblibcli-lsa3-private-samba.so
+%_samba_mod_libdir/libmessages-dgm-private-samba.so
+%_samba_mod_libdir/libmessages-util-private-samba.so
+%_samba_mod_libdir/libmsghdr-private-samba.so
+%_samba_mod_libdir/libndr-samba-private-samba.so
+%_samba_mod_libdir/libndr-samba4-private-samba.so
+%_samba_mod_libdir/libnetif-private-samba.so
+%_samba_mod_libdir/libnpa-tstream-private-samba.so
+%_samba_mod_libdir/libposix-eadb-private-samba.so
 %if_without libwbclient
-%_samba_mod_libdir/libreplace-samba4.so
+%_samba_mod_libdir/libreplace-private-samba.so
 %_samba_mod_libdir/libwbclient.so.*
 %endif
-%_samba_mod_libdir/libsamba-cluster-support-samba4.so
-%_samba_mod_libdir/libsamba-debug-samba4.so
-%_samba_mod_libdir/libsamba-modules-samba4.so
-%_samba_mod_libdir/libsamba-security-samba4.so
-%_samba_mod_libdir/libsamba-sockets-samba4.so
-%_samba_mod_libdir/libsamba3-util-samba4.so
-%_samba_mod_libdir/libsamdb-common-samba4.so
-%_samba_mod_libdir/libsecrets3-samba4.so
-%_samba_mod_libdir/libserver-id-db-samba4.so
-%_samba_mod_libdir/libserver-role-samba4.so
-%_samba_mod_libdir/libshares-samba4.so
-%_samba_mod_libdir/libsmb-transport-samba4.so
-%_samba_mod_libdir/libsmbd-shim-samba4.so
-%_samba_mod_libdir/libsmbpasswdparser-samba4.so
-%_samba_mod_libdir/libstable-sort-samba4.so
-%_samba_mod_libdir/libsocket-blocking-samba4.so
-%_samba_mod_libdir/libsys-rw-samba4.so
-%_samba_mod_libdir/libtalloc-report-printf-samba4.so
-%_samba_mod_libdir/libtalloc-report-samba4.so
-%_samba_mod_libdir/libtdb-wrap-samba4.so
-%_samba_mod_libdir/libtime-basic-samba4.so
-%_samba_mod_libdir/libtorture-samba4.so
-%_samba_mod_libdir/libutil-reg-samba4.so
-%_samba_mod_libdir/libutil-setid-samba4.so
-%_samba_mod_libdir/libutil-tdb-samba4.so
-%_samba_mod_libdir/libxattr-tdb-samba4.so
+%_samba_mod_libdir/libsamba-cluster-support-private-samba.so
+%_samba_mod_libdir/libsamba-debug-private-samba.so
+%_samba_mod_libdir/libsamba-modules-private-samba.so
+%_samba_mod_libdir/libsamba-security-private-samba.so
+%_samba_mod_libdir/libsamba-sockets-private-samba.so
+%_samba_mod_libdir/libsamba3-util-private-samba.so
+%_samba_mod_libdir/libsamdb-common-private-samba.so
+%_samba_mod_libdir/libsecrets3-private-samba.so
+%_samba_mod_libdir/libserver-id-db-private-samba.so
+%_samba_mod_libdir/libserver-role-private-samba.so
+%_samba_mod_libdir/libshares-private-samba.so
+%_samba_mod_libdir/libsmb-transport-private-samba.so
+%_samba_mod_libdir/libsmbd-shim-private-samba.so
+%_samba_mod_libdir/libsmbpasswdparser-private-samba.so
+%_samba_mod_libdir/libstable-sort-private-samba.so
+%_samba_mod_libdir/libsocket-blocking-private-samba.so
+%_samba_mod_libdir/libsys-rw-private-samba.so
+%_samba_mod_libdir/libtalloc-report-printf-private-samba.so
+%_samba_mod_libdir/libtalloc-report-private-samba.so
+%_samba_mod_libdir/libtdb-wrap-private-samba.so
+%_samba_mod_libdir/libtime-basic-private-samba.so
+%_samba_mod_libdir/libtorture-private-samba.so
+%_samba_mod_libdir/libutil-reg-private-samba.so
+%_samba_mod_libdir/libutil-setid-private-samba.so
+%_samba_mod_libdir/libutil-tdb-private-samba.so
+%_samba_mod_libdir/libxattr-tdb-private-samba.so
 
 %files libs
 # libraries needed by the public libraries
@@ -1779,34 +1785,34 @@ control role-sambashare enabled
 %dir %_samba_mod_libdir/pdb
 %_samba_mod_libdir/pdb
 
-%_samba_mod_libdir/libREG-FULL-samba4.so
-%_samba_mod_libdir/libRPC-SERVER-LOOP-samba4.so
-%_samba_mod_libdir/libRPC-WORKER-samba4.so
+%_samba_mod_libdir/libREG-FULL-private-samba.so
+%_samba_mod_libdir/libRPC-SERVER-LOOP-private-samba.so
+%_samba_mod_libdir/libRPC-WORKER-private-samba.so
 
-%_samba_mod_libdir/libMESSAGING-samba4.so
-%_samba_mod_libdir/libads-samba4.so
-%_samba_mod_libdir/libauth-samba4.so
-%_samba_mod_libdir/libcli-smb-common-samba4.so
-%_samba_mod_libdir/libcli-spoolss-samba4.so
-%_samba_mod_libdir/libdcerpc-pkt-auth-samba4.so
-%_samba_mod_libdir/libdcerpc-samba4.so
-%_samba_mod_libdir/libgpext-samba4.so
-%_samba_mod_libdir/libgpo-samba4.so
-%_samba_mod_libdir/libgse-samba4.so
-%_samba_mod_libdir/libhttp-samba4.so
-%_samba_mod_libdir/liblibcli-netlogon3-samba4.so
-%_samba_mod_libdir/liblibsmb-samba4.so
-%_samba_mod_libdir/libmscat-samba4.so
-%_samba_mod_libdir/libmsrpc3-samba4.so
-%_samba_mod_libdir/libnet-keytab-samba4.so
+%_samba_mod_libdir/libMESSAGING-private-samba.so
+%_samba_mod_libdir/libads-private-samba.so
+%_samba_mod_libdir/libauth-private-samba.so
+%_samba_mod_libdir/libcli-smb-common-private-samba.so
+%_samba_mod_libdir/libcli-spoolss-private-samba.so
+%_samba_mod_libdir/libdcerpc-pkt-auth-private-samba.so
+%_samba_mod_libdir/libdcerpc-samba4-private-samba.so
+%_samba_mod_libdir/libgpext-private-samba.so
+%_samba_mod_libdir/libgpo-private-samba.so
+%_samba_mod_libdir/libgse-private-samba.so
+%_samba_mod_libdir/libhttp-private-samba.so
+%_samba_mod_libdir/liblibcli-netlogon3-private-samba.so
+%_samba_mod_libdir/liblibsmb-private-samba.so
+%_samba_mod_libdir/libmscat-private-samba.so
+%_samba_mod_libdir/libmsrpc3-private-samba.so
+%_samba_mod_libdir/libnet-keytab-private-samba.so
 
-%_samba_mod_libdir/libprinter-driver-samba4.so
-%_samba_mod_libdir/libprinting-migrate-samba4.so
-%_samba_mod_libdir/libregistry-samba4.so
-%_samba_mod_libdir/libsmbclient-raw-samba4.so
-%_samba_mod_libdir/libsmbldaphelper-samba4.so
-%_samba_mod_libdir/libsmbd-base-samba4.so
-%_samba_mod_libdir/libtrusts-util-samba4.so
+%_samba_mod_libdir/libprinter-driver-private-samba.so
+%_samba_mod_libdir/libprinting-migrate-private-samba.so
+%_samba_mod_libdir/libregistry-private-samba.so
+%_samba_mod_libdir/libsmbclient-raw-private-samba.so
+%_samba_mod_libdir/libsmbldaphelper-private-samba.so
+%_samba_mod_libdir/libsmbd-base-private-samba.so
+%_samba_mod_libdir/libtrusts-util-private-samba.so
 
 %if_with ldb
 %_samba_libdir/libldb.so.*
@@ -1872,15 +1878,15 @@ control role-sambashare enabled
 %_samba_mod_libdir/libkdc-samba4.so.2
 %_samba_mod_libdir/libkdc-samba4.so.2.0.0
 %endif #!mitkrb5
-%_samba_mod_libdir/libad-claims-samba4.so
-%_samba_mod_libdir/libauth4-samba4.so
-%_samba_mod_libdir/libauthn-policy-util-samba4.so
-%_samba_mod_libdir/libdb-glue-samba4.so
-%_samba_mod_libdir/libdnsserver-common-samba4.so
-%_samba_mod_libdir/libdsdb-module-samba4.so
-%_samba_mod_libdir/libdsdb-garbage-collect-tombstones-samba4.so
-%_samba_mod_libdir/libpac-samba4.so
-%_samba_mod_libdir/libscavenge-dns-records-samba4.so
+%_samba_mod_libdir/libad-claims-private-samba.so
+%_samba_mod_libdir/libauth4-private-samba.so
+%_samba_mod_libdir/libauthn-policy-util-private-samba.so
+%_samba_mod_libdir/libdb-glue-private-samba.so
+%_samba_mod_libdir/libdnsserver-common-private-samba.so
+%_samba_mod_libdir/libdsdb-module-private-samba.so
+%_samba_mod_libdir/libdsdb-garbage-collect-tombstones-private-samba.so
+%_samba_mod_libdir/libpac-private-samba.so
+%_samba_mod_libdir/libscavenge-dns-records-private-samba.so
 %if_with ldb_modules
 %if_with separate_heimdal_server
 %_samba_mod_libdir/ldb.mit
@@ -1904,31 +1910,31 @@ control role-sambashare enabled
 %dir %_samba_mod_libdir/gensec
 %_samba_mod_libdir/gensec
 %if_without mitkrb5
-%_samba_mod_libdir/libHDB-SAMBA4-samba4.so
-%_samba_mod_libdir/libasn1-samba4.so.*
-%_samba_mod_libdir/libcom_err-samba4.so.*
-%_samba_mod_libdir/libgssapi-samba4.so.*
-%_samba_mod_libdir/libhcrypto-samba4.so.*
-%_samba_mod_libdir/libhdb-samba4.so.*
-%_samba_mod_libdir/libheimbase-samba4.so.*
-%_samba_mod_libdir/libhx509-samba4.so.*
-%_samba_mod_libdir/libkrb5-samba4.so.*
-%_samba_mod_libdir/libroken-samba4.so.*
-%_samba_mod_libdir/libwind-samba4.so.*
+%_samba_mod_libdir/libHDB-SAMBA4-private-samba.so
+%_samba_mod_libdir/libasn1-private-samba.so
+%_samba_mod_libdir/libcom_err-private-samba.so
+%_samba_mod_libdir/libgssapi-private-samba.so
+%_samba_mod_libdir/libhcrypto-private-samba.so
+%_samba_mod_libdir/libhdb-private-samba.so
+%_samba_mod_libdir/libheimbase-private-samba.so
+%_samba_mod_libdir/libhx509-private-samba.so
+%_samba_mod_libdir/libkrb5-private-samba.so
+%_samba_mod_libdir/libroken-private-samba.so
+%_samba_mod_libdir/libwind-private-samba.so
 %else
 %_samba_libdir/krb5/plugins/kdb/samba.so
 %endif #!mitkrb5
-%_samba_mod_libdir/libprocess-model-samba4.so
-%_samba_mod_libdir/libservice-samba4.so
+%_samba_mod_libdir/libprocess-model-private-samba.so
+%_samba_mod_libdir/libservice-private-samba.so
 %_samba_mod_libdir/process_model
 %_samba_mod_libdir/service
 %_samba_libdir/libdcerpc-server.so.*
 %if_with ntvfs
-%_samba_mod_libdir/libntvfs-samba4.so
+%_samba_mod_libdir/libntvfs-private-samba.so
 %endif
 %else
 %doc README.dc-libs
-%_samba_mod_libdir/libdnsserver-common-samba4.so
+%_samba_mod_libdir/libdnsserver-common-private-samba.so
 %endif
 
 %if_with ldb_modules
@@ -1962,7 +1968,7 @@ control role-sambashare enabled
 %if_with libwbclient
 %files -n libwbclient
 %_libdir/libwbclient.so.%{libwbclient_so_version}*
-%_samba_mod_libdir/libreplace-samba4.so
+%_samba_mod_libdir/libreplace-private-samba.so
 
 %files -n libwbclient-devel
 %dir %_includedir/samba-4.0
@@ -2013,9 +2019,9 @@ control role-sambashare enabled
 %_bindir/traffic_replay
 #%_samba_libdir/libtorture.so.*
 %if_with dc
-%_samba_mod_libdir/libdlz-bind9-for-torture-samba4.so
+%_samba_mod_libdir/libdlz-bind9-for-torture-private-samba.so
 %else
-%_samba_mod_libdir/libdsdb-module-samba4.so
+%_samba_mod_libdir/libdsdb-module-private-samba.so
 %endif
 %if_with doc
 %_man1dir/gentest.1*
@@ -2029,9 +2035,9 @@ control role-sambashare enabled
 
 %if_with testsuite
 # files to ignore in testsuite mode
-%_samba_mod_libdir/libnss-wrapper-samba4.so
-%_samba_mod_libdir/libsocket-wrapper-samba4.so
-%_samba_mod_libdir/libuid-wrapper-samba4.so
+%_samba_mod_libdir/libnss-wrapper-private-samba.so
+%_samba_mod_libdir/libsocket-wrapper-private-samba.so
+%_samba_mod_libdir/libuid-wrapper-private-samba.so
 %endif
 
 %files usershares
@@ -2063,8 +2069,8 @@ control role-sambashare enabled
 %_sysconfdir/NetworkManager/dispatcher.d/30-winbind
 %_samba_mod_libdir/idmap
 %_samba_mod_libdir/nss_info
-%_samba_mod_libdir/libnss-info-samba4.so
-%_samba_mod_libdir/libidmap-samba4.so
+%_samba_mod_libdir/libnss-info-private-samba.so
+%_samba_mod_libdir/libidmap-private-samba.so
 %if_with separate_heimdal_server
 %_altdir/samba-mit-winbind
 %_samba_mod_libdir/sbin/winbindd
@@ -2208,6 +2214,28 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Tue Apr 09 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.20.0-alt1
+- Update to stable release of Samba 4.20
+- Major changes from upstream:
+  + The password access tool "samba-tool user getpassword" and the password sync
+    tool "samba-tool user syncpasswords" allow attributes to be chosen for output.
+  + samba-tool has been extended to provide client-side support for Group Managed
+    Service accounts (reading the current and previous gMSA password and writing
+    a Kerberos Ticket Granting Ticket (TGT) to a local credentials cache).
+  + Windows Search Protocol (WSP) experimental command line client "wspsearch".
+  + 'smbcacls' has been extended to allow DACLs to be saved and restored to/from
+    a file (in interchangeable format with windows cmd line tool 'icacls.exe').
+  + samba-tool now allows users to be associated with claims, the creation and
+    management of authentication policies and silos.
+  + AD DC support for Authentication Silos and Authentication Policies with
+    (functional level must be set to 2012_R2 or later / 2016 latest supported).
+  + Support of Conditional ACEs, Resource Attribute ACEs and the Security
+    Descriptor Definition Language (SDDL) extensions for conditional ACEs and
+    resource attribute ACEs.
+  + The Workstation Service Remote Protocol [MS-WKST] calls NetWkstaGetInfo
+    and NetWkstaEnumUsers) returns the list of locally logged on users, which
+    getting the list from utmp, is not Y2038 safe and has been removed.
+
 * Tue Apr 09 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.19.6-alt1
 - Update to maintenance release of Samba 4.19
 - Fixes from upstream (Samba#15580):

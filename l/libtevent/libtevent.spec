@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %def_with check
 
-%global talloc_version 2.4.1
+%global talloc_version 2.4.2
 
 Name: libtevent
-Version: 0.15.0
+Version: 0.16.1
 Release: alt1
 Summary: The tevent library
 License: LGPLv3+
@@ -84,6 +84,9 @@ make test < /dev/null
 %python3_sitelibdir/__pycache__/tevent.*
 
 %changelog
+* Mon Mar 11 2024 Evgeny Sinelnikov <sin@altlinux.org> 0.16.1-alt1
+- New version for samba-4.20
+
 * Mon Nov 06 2023 Evgeny Sinelnikov <sin@altlinux.org> 0.15.0-alt1
 - New version for samba-4.19
 

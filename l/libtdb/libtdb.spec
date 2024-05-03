@@ -3,7 +3,7 @@
 %def_with check
 
 Name: libtdb
-Version: 1.4.9
+Version: 1.4.10
 Release: alt1
 
 Summary: A trivial database system
@@ -121,6 +121,9 @@ make test
 %python3_sitelibdir/__pycache__/_tdb_text.cpython*.py*
 
 %changelog
+* Mon Mar 11 2024 Evgeny Sinelnikov <sin@altlinux.org> 1.4.10-alt1
+- Update to release for samba-4.20
+
 * Mon Nov 06 2023 Evgeny Sinelnikov <sin@altlinux.org> 1.4.9-alt1
 - Update to release for samba-4.19
 

@@ -52,7 +52,7 @@
 Name: freeipa
 # don't forget to update .gear/rules
 Version: 4.11.1
-Release: alt2
+Release: alt3
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -1097,6 +1097,9 @@ fi
 %python3_sitelibdir/ipaplatform-*.egg-info/
 
 %changelog
+* Wed Apr 17 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.11.1-alt3
+- Fixed compatibility with Samba 4.20 (closes: #50065).
+
 * Fri Jan 26 2024 Stanislav Levin <slev@altlinux.org> 4.11.1-alt2
 - Backported fix for cryptography 42.0.0.
 
