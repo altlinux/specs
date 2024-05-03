@@ -2,14 +2,14 @@
 %def_enable static
 
 Name: libusb
-Version: 1.0.26
-Release: alt3
+Version: 1.0.27
+Release: alt1
 
 Summary: Libusb is a library which allows userspace access to USB devices
 License: LGPLv2.1
 Group: System/Libraries
 VCS: https://github.com/libusb/libusb.git
-Url: http://libusb.info/
+Url: https://libusb.info/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -64,15 +64,7 @@ popd
 %install
 %makeinstall_std
 
-mkdir -p %buildroot/%_lib
-for f in %buildroot%_libdir/lib*.so; do
-	t=$(readlink "$f")
-	ln -sf ../../%_lib/"$t" "$f"
-done
-cp -a %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
-
 %files
-/%_lib/%name-*.so.*
 %_libdir/%name-*.so.*
 %doc AUTHORS README NEWS TODO
 
@@ -90,6 +82,9 @@ cp -a %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 %doc doc/api-1.0
 
 %changelog
+* Fri May 03 2024 Alexey Shabalin <shaba@altlinux.org> 1.0.27-alt1
+- New version 1.0.27.
+
 * Sat Jul 29 2023 Arseny Maslennikov <arseny@altlinux.org> 1.0.26-alt3
 - NMU: Adapted for the /usr merge.
   See also: https://altlinux.org/Usrmerge.
