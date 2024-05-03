@@ -2,7 +2,7 @@
 
 Name: fapolicyd
 Summary: Application Whitelisting Daemon
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 License: GPL-3.0-or-later
 Group: System/Base
@@ -186,5 +186,8 @@ fi
 %ghost %attr(660,%name,%name) %verify(not md5 size mtime) %_localstatedir/lib/%name/lock.mdb
 
 %changelog
+* Fri May 03 2024 Alexey Shabalin <shaba@altlinux.org> 1.3.3-alt1
+- New version 1.3.3.
+
 * Mon Sep 18 2023 Alexey Shabalin <shaba@altlinux.org> 1.3.2-alt1
 - Initial build.
