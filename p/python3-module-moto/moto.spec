@@ -8,7 +8,7 @@
 %def_without full_testsuite
 
 Name: python3-module-%pypi_name
-Version: 4.1.13
+Version: 5.0.6
 Release: alt1
 
 Summary: A library that allows your python tests to easily mock out the boto library
@@ -20,19 +20,19 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manage deps with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%add_pyproject_deps_check_filter pytest-ordering
-%add_pyproject_deps_check_filter surer
 %add_pyproject_deps_check_filter cfn-lint
 %add_pyproject_deps_check_filter py-partiql-parser
-%add_pyproject_deps_check_filter sshpubkeys
+%add_pyproject_deps_check_filter joserfc
+%add_pyproject_deps_check_filter antlr4-python3-runtime
 %pyproject_builddeps_metadata_extra all
 %pyproject_builddeps_metadata_extra server
 %pyproject_builddeps_check
-BuildRequires: python3-module-sure
 %endif
 
 %description
@@ -66,10 +66,14 @@ export TESTS=tests/test_core
 %files
 %doc README.*
 %_bindir/moto_server
+%_bindir/moto_proxy
 %python3_sitelibdir/%pypi_name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri May 03 2024 Stanislav Levin <slev@altlinux.org> 5.0.6-alt1
+- 4.1.13 -> 5.0.6.
+
 * Wed Jul 19 2023 Stanislav Levin <slev@altlinux.org> 4.1.13-alt1
 - 4.0.5 -> 4.1.13.
 
