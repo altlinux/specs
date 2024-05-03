@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: tpm2-tss
-Version: 4.0.1
+Version: 4.1.0
 Release: alt1
 Summary: TPM2.0 Software Stack
 # The entire source code is under BSD except implementation.h and tpmb.h which
@@ -23,9 +23,11 @@ BuildRequires: pkgconfig
 BuildRequires: libsystemd-devel
 BuildRequires: libgcrypt-devel
 BuildRequires: openssl-devel
-BuildRequires: libjson-c-devel
+BuildRequires: libjson-c-devel >= 0.13
 BuildRequires: libcurl-devel
 BuildRequires: libuuid-devel
+BuildRequires: libusb-devel
+BuildRequires: libftdi1-devel
 %if_enabled check
 BuildRequires: libuthash-devel
 BuildRequires: procps
@@ -122,6 +124,9 @@ useradd -g tss -c 'TPM2 Software Stack User' \
 %_man7dir/*
 
 %changelog
+* Fri May 03 2024 Alexey Shabalin <shaba@altlinux.org> 4.1.0-alt1
+- New version 4.1.0 (Fixes: CVE-2024-29040).
+
 * Sat Feb 18 2023 Alexey Shabalin <shaba@altlinux.org> 4.0.1-alt1
 - 4.0.1 (Fixes: CVE-2023-22745)
 

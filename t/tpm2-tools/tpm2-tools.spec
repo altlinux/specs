@@ -2,7 +2,7 @@
 %define _localstatedir %_var
 
 Name: tpm2-tools
-Version: 5.5
+Version: 5.7
 Release: alt1
 Summary: A bunch of TPM testing toolS build upon tpm2-tss
 Group: System/Configuration/Other
@@ -17,6 +17,8 @@ BuildRequires: pandoc
 BuildRequires: pkgconfig(cmocka)
 BuildRequires: pkgconfig(libcurl)
 BuildRequires: pkgconfig(openssl) libssl-devel pkgconfig(libcrypto) >= 1.1.0
+BuildRequires: pkgconfig(tss2-fapi) >= 3.0
+BuildRequires: pkgconfig(tss2-tctildr)
 BuildRequires: pkgconfig(tss2-mu) >= 3.1.0
 BuildRequires: pkgconfig(tss2-sys) >= 3.1.0
 BuildRequires: pkgconfig(tss2-esys) >= 3.1.0
@@ -50,11 +52,14 @@ echo %version > VERSION
 %_man1dir/*
 
 %changelog
+* Fri May 03 2024 Alexey Shabalin <shaba@altlinux.org> 5.7-alt1
+- New version 5.7 (Fixes: CVE-2024-29038, CVE-2024-29039).
+
 * Sat Feb 18 2023 Alexey Shabalin <shaba@altlinux.org> 5.5-alt1
 - new version 5.5
 
 * Mon Nov 01 2021 Alexey Shabalin <shaba@altlinux.org> 5.2-alt1
-- new version 5.2
+- new version 5.2 (Fixes: CVE-2021-3565).
 
 * Tue Aug 31 2021 Alexey Shabalin <shaba@altlinux.org> 5.1.1-alt2
 - Up release for greater then in fedoraimport.
