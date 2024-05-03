@@ -2,7 +2,7 @@
 
 Name:     velero
 Version:  1.13.2
-Release:  alt1
+Release:  alt2
 
 Summary:  Backup and migrate Kubernetes applications and their persistent volumes
 License:  Apache-2.0
@@ -12,6 +12,7 @@ Url:      https://velero.io/
 
 ExclusiveArch: %go_arches
 Source:   %name-%version.tar
+Patch3500: kopia-localfs-loongarch64.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -23,6 +24,7 @@ and persistent volumes.
 
 %prep
 %setup
+%patch3500 -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -47,6 +49,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Fri May 03 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.13.2-alt2
+- NMU: fixed FTBFS on LoongArch
+
 * Thu May 02 2024 Nikolay Burykin <bne@altlinux.org> 1.13.2-alt1
 - 1.13.2
 
