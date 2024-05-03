@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: iotas
-Version: %ver_major.13
+Version: %ver_major.14
 Release: alt1
 
 Summary: Simple note taking with Nextcloud Notes
@@ -77,6 +77,9 @@ on sync with Nextcloud Notes.
 %doc README*
 
 %changelog
+* Fri May 03 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.14-alt1
+- 0.2.14
+
 * Fri Apr 19 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.13-alt1
 - 0.2.13
 
