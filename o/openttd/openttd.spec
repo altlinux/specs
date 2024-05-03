@@ -1,7 +1,7 @@
-%define daterev 20230205
-%define gitsnapshot 2ebc601d97aa431e5d8aebfe4a7bbfdabf29dc75
-%define version_major 13
-%define version_minor 4
+%define daterev 20240413
+%define gitsnapshot b3c704a6306027de4aad575c8e394a2d8a1878f9
+%define version_major 14
+%define version_minor 0
 
 Name: openttd
 Version: %version_major.%version_minor
@@ -14,7 +14,7 @@ Group: Games/Strategy
 Url: http://www.openttd.org
 Source: %name-%version.tar
 Source1: %name.watch
-Patch: %name-13.0-alt.patch
+Patch: %name-14.0-alt.patch
 
 Requires: TiMidity++
 Requires: fonts-ttf-dejavu
@@ -31,9 +31,10 @@ An open source clone of the Microprose game "Transport Tycoon Deluxe".
 %prep
 %setup
 %patch -p1
+echo "%version	%daterev	0	%gitsnapshot	1	1	`echo %daterev|cut -c 1-4`" >.ottdrev
+echo "%version" >.version
 
 %build
-echo "%version	%daterev	0	%gitsnapshot	1	1	`echo %daterev|cut -c 1-4`" >.ottdrev
 %cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_DATADIR=share/games
 %cmake_build
 
@@ -49,6 +50,9 @@ echo "%version	%daterev	0	%gitsnapshot	1	1	`echo %daterev|cut -c 1-4`" >.ottdrev
 %_man6dir/*
 
 %changelog
+* Fri May 03 2024 Anton Farygin <rider@altlinux.ru> 14.0-alt1
+- 13.4 -> 14.0
+
 * Tue Feb 13 2024 Anton Farygin <rider@altlinux.ru> 13.4-alt1
 - 13.0 -> 13.4
 
