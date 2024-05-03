@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: usbredir
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 Summary: USB network redirection protocol libraries
 Group: System/Libraries
@@ -95,6 +95,9 @@ in another (virtual) machine
 %_man1dir/usbredirect.1*
 
 %changelog
+* Fri May 03 2024 Alexey Shabalin <shaba@altlinux.org> 0.14.0-alt1
+- New version 0.14.0.
+
 * Thu Oct 13 2022 Alexey Shabalin <shaba@altlinux.org> 0.13.0-alt1
 - new version 0.13.0
   Release 0.13.0 drops usbredirserver binary so we now have renamed
