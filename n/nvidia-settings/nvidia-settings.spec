@@ -1,8 +1,11 @@
 %def_enable translation
 
+%define sover 0
+%define libxnvctrl libxnvctrl%sover
+
 Name: nvidia-settings
 Version: 550.78
-Release: alt1
+Release: alt2
 
 Group: System/Configuration/Hardware
 Summary: Tool for configuring the NVIDIA driver
@@ -22,6 +25,7 @@ Patch1: xlibs.patch
 Patch2: cflags.patch
 Patch3: alt-ui-modules-dir.patch
 Patch4: add-error-popup.patch
+Patch5: libxnvctrl_so_0.patch
 Patch100: nvidia-settings-440.59-alt-integrate-translation.patch
 
 # Automatically added by buildreq on Mon May 13 2013 (-bi)
@@ -49,13 +53,22 @@ configuring the current settings.  When nvidia-settings exits, it
 queries the current settings from the X server and saves them to
 the configuration file.
 
-%package devel
+%package -n libxnvctrl-devel
 Group: Development/Other
 Summary: Development files for %name
-Provides: libXNVCtrl-devel = %version-%release
-Obsoletes: libXNVCtrl-devel < %version-%release
-%description devel
+Provides:  nvidia-settings-devel = %EVR libXNVCtrl-devel = %EVR
+Obsoletes: nvidia-settings-devel < %EVR libXNVCtrl-devel < %EVR
+%description -n libxnvctrl-devel
 Development files for %name
+
+%package -n %libxnvctrl
+Group: System/Libraries
+Summary: Development files for %name
+Provides: libXNVCtrl = %EVR
+Obsoletes: libXNVCtrl < %EVR
+%description -n %libxnvctrl
+This library provides the NV-CONTROL API for communicating with
+the proprietary NVIDIA driver.
 
 %prep
 %setup -q
@@ -63,6 +76,7 @@ Development files for %name
 %patch2 -p1
 %patch3 -p1
 %patch4 -p2
+%patch5 -p1
 %if_enabled translation
 mkdir -p po/msg
 #%patch100 -p1
@@ -79,6 +93,7 @@ sed -i -E 's|LIBDIR[[:space:]]+=[[:space:]].*|LIBDIR = $(DESTDIR)$(PREFIX)/%_lib
 %add_optflags %optflags_shared
 %make_build PREFIX=%prefix CFLAGS="%optflags"       NV_VERBOSE=1 DEBUG=1 NV_KEEP_UNSTRIPPED_BINARIES=1 -C src/libXNVCtrl
 %make_build PREFIX=%prefix LOCAL_CFLAGS="%optflags" NV_VERBOSE=1 DEBUG=1 NV_KEEP_UNSTRIPPED_BINARIES=1
+%make_build PREFIX=%prefix CFLAGS="%optflags"       NV_VERBOSE=1 DEBUG=1 NV_KEEP_UNSTRIPPED_BINARIES=1 -C src/libXNVCtrl libXNVCtrl.so
 
 
 %install
@@ -107,7 +122,8 @@ mkdir -p %buildroot/%_desktopdir
 install -m 0644 %SOURCE5 %buildroot/%_desktopdir/
 
 mkdir -p %buildroot/%_libdir
-install -m 0644 src/_out/Linux_*/libXNVCtrl.a %buildroot/%_libdir/
+#install -m 0644 src/_out/Linux_*/libXNVCtrl.a %buildroot/%_libdir/
+install -m 0644 src/libXNVCtrl/libXNVCtrl.so* %buildroot/%_libdir/
 
 mkdir -p %buildroot/%_includedir/NVCtrl/
 install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
@@ -123,12 +139,20 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %_desktopdir/%name.desktop
 %_iconsdir/*/*/apps/%name.png
 
-%files devel
+%files -n %libxnvctrl
+%_libdir/libXNVCtrl.so.%sover
+%_libdir/libXNVCtrl.so.*
+
+%files -n libxnvctrl-devel
 %doc doc/FRAMELOCK.txt doc/NV-CONTROL-API.txt samples/README samples/*.{c,h}
 %_includedir/NVCtrl/
-%_libdir/*.a
+%_libdir/lib*.so
+#%_libdir/lib*.a
 
 %changelog
+* Fri May 03 2024 Sergey V Turchin <zerg@altlinux.org> 550.78-alt2
+- build shared libXNVCtrl
+
 * Fri Apr 26 2024 Sergey V Turchin <zerg@altlinux.org> 550.78-alt1
 - new version
 
