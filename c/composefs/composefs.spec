@@ -1,5 +1,8 @@
+%global _unpackaged_files_terminate_build 1
+%define lname libcomposefs
+
 Name: composefs
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 Summary: Tools to handle creating and mounting composefs images
 
@@ -17,8 +20,6 @@ project combines several underlying Linux features to provide a very
 flexible mechanism to support read-only mountable filesystem trees,
 stacking on top of an underlying "lower" Linux filesystem.
 
-Please see https://github.com/containers/composefs for more information.
-
 %package -n lib%name-devel
 Summary: Devel files for %name
 Group: Development/C
@@ -26,7 +27,7 @@ Requires: %name = %EVR
 Requires: lib%name = %EVR
 
 %description -n lib%name-devel
-%summary.
+Devel files for %name.
 
 %package -n lib%name
 Group: System/Libraries
@@ -34,7 +35,7 @@ Summary: Libraries files for %name
 License: LGPL-2.1-or-later AND (GPL-2.0-only OR Apache-2.0)
 
 %description -n lib%name
-%summary.
+Library files for %name.
 
 %prep
 %setup
@@ -55,13 +56,16 @@ mkdir -p %buildroot/sbin
 ln -sf %_sbindir/mount.composefs %buildroot/sbin/mount.composefs
 rm -rf %buildroot%_libdir/libcomposefs.la
 
-%files -n lib%name-devel
-%_includedir/libcomposefs
-%_libdir/libcomposefs.so
+#%check
+#%make check
+
+%files -n %lname-devel
+%_includedir/%lname/*.h
+%_libdir/%lname.so
 %_pkgconfigdir/%name.pc
 
-%files -n lib%name
-%_libdir/libcomposefs.so.*
+%files -n %lname
+%_libdir/%lname.so.*
 
 %files
 %doc COPYING COPYING.LIB COPYING.LESSERv3 COPYINGv3 LICENSE.Apache-2.0 BSD-2-Clause.txt
@@ -73,6 +77,8 @@ rm -rf %buildroot%_libdir/libcomposefs.la
 %_mandir/man*/*
 
 %changelog
+* Thu May 02 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.0.3-alt1
+- 1.0.2 -> 1.0.3 
+
 * Tue Dec 19 2023 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.0.2-alt1
 - Initial build for ALT 
-
