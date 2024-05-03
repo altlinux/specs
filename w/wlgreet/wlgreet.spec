@@ -1,18 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%set_verify_elf_method strict,lfs=relaxed
 
 Name: wlgreet
-Version: 0.3
-Release: alt3
+Version: 0.5.0
+Release: alt1
 Summary: Wayland greeter for greetd
 License: GPL-3.0
 Group: Graphical desktop/Other
 Url: https://git.sr.ht/~kennylevinsen/wlgreet
-
+VCS: https://git.sr.ht/~kennylevinsen/wlgreet
 Source: %name-%version.tar
 Source1: %name-%version-vendor.tar
-Patch1: 0001-Use-libc-which-supports-LoongArch.patch
 
 BuildRequires: /proc
 BuildRequires: rust
@@ -26,7 +24,6 @@ due to it lacking wlr-layer-shell-unstable support.
 
 %prep
 %setup -a1
-%patch1 -p1
 
 mkdir -p .cargo
 cat > .cargo/config <<EOF
@@ -35,6 +32,12 @@ replace-with = "vendored-sources"
 
 [source.vendored-sources]
 directory = "vendor"
+
+[build]
+rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
+
+[profile.release]
+strip = false
 EOF
 
 %build
@@ -56,6 +59,9 @@ cargo test --release
 %_bindir/*
 
 %changelog
+* Fri May 03 2024 Anton Farygin <rider@altlinux.ru> 0.5.0-alt1
+- 0.3 -> 0.5.0
+
 * Thu Nov 02 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.3-alt3
 - NMU: fixed FTBFS on LoongArch.
 
