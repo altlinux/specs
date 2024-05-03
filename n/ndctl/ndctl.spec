@@ -3,11 +3,11 @@
 %def_disable check
 
 Name: ndctl
-Version: 78
+Version: 79
 Release: alt1
 
 Summary: Manage NVDIMM subsystem devices (Non-volatile Memory)
-License: LGPL-2.1
+License: LGPL-2.1 and GPL-2.0
 Group: System/Base
 Url: https://github.com/pmem/ndctl
 
@@ -33,14 +33,12 @@ BuildRequires: pkgconfig(libtracefs)
 BuildRequires: asciidoctor asciidoc xmlto
 
 %description
-Utility library for managing the "libnvdimm" subsystem. The "libnvdimm"
-subsystem defines a kernel device model and control message interface for
-platform NVDIMM resources like those defined by the ACPI 6+ NFIT (NVDIMM
-Firmware Interface Table).
+Utility library for managing the libnvdimm (non-volatile memory device)
+sub-system in the Linux kernel
 
 %package -n lib%name
-Summary: Management library for "libnvdimm" subsystem devices (Non-volatile Memory)
-License: LGPLv2
+Summary: Management library for "libnvdimm" subsystem devices
+License: LGPL-2.1
 Group: System/Libraries
 Requires: libdaxctl = %EVR
 
@@ -49,7 +47,7 @@ Libraries for %name.
 
 %package -n lib%name-devel
 Summary: Development files for libndctl
-License: LGPLv2
+License: LGPL-2.1
 Group: Development/C
 Requires: lib%name = %EVR
 
@@ -59,7 +57,7 @@ developing applications that use %name.
 
 %package -n daxctl
 Summary: Manage Device-DAX instances
-License: GPLv2
+License: GPL-2.0
 Group: System/Base
 Requires: lib%name = %EVR
 Requires: libdaxctl = %EVR
@@ -73,7 +71,7 @@ filesystem.
 
 %package -n libdaxctl
 Summary: Management library for "Device DAX" devices
-License: LGPLv2
+License: LGPL-2.1
 Group: System/Libraries
 
 %description -n libdaxctl
@@ -83,7 +81,7 @@ control API for these devices.
 
 %package -n libdaxctl-devel
 Summary: Development files for libdaxctl
-License: LGPLv2
+License: LGPL-2.1
 Group: Development/C
 Requires: libdaxctl = %EVR
 
@@ -96,7 +94,7 @@ mappings of performance / feature-differentiated memory.
 %package -n cxl
 Summary: Manage CXL devices
 Group: System/Base
-License: GPLv2
+License: GPL-2.0
 Requires: libcxl = %EVR
 
 %description -n cxl
@@ -105,7 +103,7 @@ the Linux kernel CXL devices.
 
 %package -n libcxl
 Summary: Management library for CXL devices
-License: LGPLv2
+License: LGPL-2.1
 Group: System/Libraries
 
 %description -n libcxl
@@ -113,7 +111,7 @@ libcxl is a library for enumerating and communicating with CXL devices.
 
 %package -n libcxl-devel
 Summary: Development files for libcxl
-License: LGPLv2
+License: LGPL-2.1
 Group: Development/C
 Requires: libcxl = %EVR
 
@@ -200,6 +198,9 @@ sed -i 's|/usr\(/bin/systemd-escape\)|\1|' daxctl/90-daxctl-device.rules
 %_man3dir/*cxl*
 
 %changelog
+* Fri May 03 2024 Yuri N. Sedunov <aris@altlinux.org> 79-alt1
+- 79
+
 * Fri Aug 04 2023 Yuri N. Sedunov <aris@altlinux.org> 78-alt1
 - 78
 
