@@ -2,7 +2,7 @@
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-loongarch64
-Version: 202308
+Version: 20240430
 Release: alt1
 Summary: UEFI firmware for loongarch virtual machines
 
@@ -17,8 +17,6 @@ Source2: edk2-platforms.tar
 #Vcs-Git: https://github.com/tianocore/edk2-non-osi.git
 Source3: edk2-non-osi.tar
 Source4: 80-edk2-loongarch64.json
-
-Patch1: 0001-BaseTools-GenFw-Add-support-for-LOONGARCH64-relax-re.patch
 
 ExclusiveArch: x86_64 loongarch64
 BuildArch: noarch
@@ -49,10 +47,6 @@ mkdir -p edk2/Conf
 tar -x -f %SOURCE0 --strip-components=1 -C edk2
 tar -x -f %SOURCE2 --strip-components=1 -C edk2-platforms
 tar -x -f %SOURCE3 --strip-components=1 -C edk2-non-osi
-
-cd edk2
-%patch1 -p1
-cd ..
 
 %build
 export PYTHON_COMMAND=%__python3
@@ -88,5 +82,15 @@ install -pm 644 -t %buildroot%_datadir/qemu/firmware %SOURCE4
 %_datadir/qemu/firmware/*edk2-loongarch*.json
 
 %changelog
+* Thu May 02 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 20240430-alt1
+- edk2 stable20402-231-g0c74aa2073 (commit 0c74aa2073e48b21)
+- edk2-platforms commit 73cfdc4afff3e641:
+  + Support loading UEFI code from flash (like other architectures do).
+    Note: qemu commit c6e9847fc4becba5 is required to actually load UEFI
+    from a (virtual) flash device.
+- edk2-non-osi commit 054cacf8819f82c9
+- spec:
+  + dropped GenFW patch (applied upstream)
+
 * Mon Nov 13 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 202308-alt1
 - Initial build
