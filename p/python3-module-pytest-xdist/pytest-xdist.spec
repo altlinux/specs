@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.5.0
+Version: 3.6.1
 Release: alt1
 Summary: pytest xdist plugin for distributed testing, most importantly across multiple CPUs
 License: MIT
@@ -54,6 +54,9 @@ number of available CPUs, and distribute the tests randomly across them.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri May 03 2024 Stanislav Levin <slev@altlinux.org> 3.6.1-alt1
+- 3.5.0 -> 3.6.1.
+
 * Thu Feb 29 2024 Stanislav Levin <slev@altlinux.org> 3.5.0-alt1
 - 3.4.0 -> 3.5.0.
 
