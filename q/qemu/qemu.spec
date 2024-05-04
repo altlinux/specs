@@ -151,7 +151,7 @@
 
 Name: qemu
 Version: 8.2.2
-Release: alt3
+Release: alt4
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -1363,6 +1363,9 @@ popd
 %exclude %docdir/LICENSE
 
 %changelog
+* Fri May 03 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 8.2.2-alt4
+- LoongArch: load UEFI via pflash (like other architectures do).
+
 * Fri Apr 19 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.2-alt3
 - Revert use --disable-pie on ix86 only.
 
