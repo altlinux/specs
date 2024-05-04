@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: smartmontools
-Version: 7.2
+Version: 7.4
 Release: alt1
 
 Summary: Control and monitor storage systems using S.M.A.R.T.
@@ -27,6 +27,7 @@ Obsoletes: smartsuite
 # Automatically added by buildreq on Thu Mar 13 2008
 BuildRequires: gcc-c++
 BuildRequires: libsystemd-devel
+BuildRequires: libcap-ng-devel
 
 %description
 This package contains two utility programs (smartctl and smartd) to
@@ -53,12 +54,13 @@ smartmontools themselves.
 %setup
 %patch1 -p1
 %patch2 -p1
-fgrep -lZ /usr/local/bin/mail *.in |
+grep -FlZ /usr/local/bin/mail *.in |
 	xargs -r0 sed -i 's,/usr/local/bin/mail,/bin/mail,g' --
-fgrep -lZ /usr/local/etc/sysconfig *.am *.in |
+grep -FlZ /usr/local/etc/sysconfig *.am *.in |
 	xargs -r0 sed -i 's,/usr/local/etc/sysconfig,/etc/sysconfig,g' --
 
 %build
+%autoreconf
 %define docdir %_docdir/%name-%version
 %configure --docdir=%docdir \
 	--with-libsystemd \
@@ -107,6 +109,10 @@ install -pD -m755 %_sourcedir/smartmontools-update-drivedb \
 %_sysconfdir/cron.monthly/smartmontools-update-drivedb
 
 %changelog
+* Sat May 04 2024 Andrew Savchenko <bircoph@altlinux.org> 7.4-alt1
+- Update to 7.4.
+- Add capabilities support for dropping unneeded privileges.
+
 * Fri Jan 01 2021 Michael Shigorin <mike@altlinux.org> 7.2-alt1
 - Updated to 7.2.
 
