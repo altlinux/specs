@@ -15,7 +15,7 @@
 
 Name: sbcl
 Summary: Steel Bank Common Lisp
-Version: 2.4.3
+Version: 2.4.4
 Release: alt1
 Group: Development/Lisp
 License: BSD
@@ -255,6 +255,9 @@ popd
 %_infodir/*.info*
 
 %changelog
+* Sat May 04 2024 Ilya Mashkin <oddity@altlinux.ru> 2.4.4-alt1
+- 2.4.4
+
 * Sat Apr 06 2024 Ilya Mashkin <oddity@altlinux.ru> 2.4.3-alt1
 - 2.4.3
 
