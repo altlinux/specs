@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: secrets
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A password manager for GNOME
@@ -76,6 +76,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %doc README*
 
 %changelog
+* Sat May 04 2024 Yuri N. Sedunov <aris@altlinux.org> 9.4-alt1
+- updated to 9.4-1-gf121ced7
+
 * Mon Apr 01 2024 Yuri N. Sedunov <aris@altlinux.org> 9.3-alt1
 - updated to 9.3-3-g402a759f
 

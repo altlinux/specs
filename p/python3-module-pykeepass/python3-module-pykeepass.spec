@@ -1,12 +1,13 @@
 # no tests in tarball
 %def_enable snapshot
+%define beta .post1
 %define pypi_name pykeepass
 
 %def_enable check
 
 Name: python3-module-%pypi_name
 Version: 4.0.7
-Release: alt1
+Release: alt1%beta
 
 Summary: Python library to interact with KeePass databases
 Group: Development/Python3
@@ -15,9 +16,9 @@ Url: https://pypi.org/project/%pypi_name
 
 Vcs: https://github.com/libkeepass/pykeepass.git
 %if_disabled snapshot
-Source: https://pypi.io/packages/source/p/%pypi_name/%pypi_name-%version.tar.gz
+Source: https://pypi.io/packages/source/p/%pypi_name/%pypi_name-%version%beta.tar.gz
 %else
-Source: %pypi_name-%version.tar
+Source: %pypi_name-%version%beta.tar
 %endif
 
 BuildArch: noarch
@@ -33,7 +34,7 @@ BuildRequires: dos2unix
 Python library to interact with KeePass databases.
 
 %prep
-%setup -n %pypi_name-%version
+%setup -n %pypi_name-%version%beta
 dos2unix pyproject.toml
 sed -i 's|^\(packages = .*%{pypi_name}\"\)|\1, "pykeepass.kdbx_parsing"|' pyproject.toml
 
@@ -54,6 +55,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 
 
 %changelog
+* Sat May 04 2024 Yuri N. Sedunov <aris@altlinux.org> 4.0.7-alt1.post1
+- 4.0.7.post1 (4.0.7-11-g66bc409)
+
 * Fri Mar 01 2024 Yuri N. Sedunov <aris@altlinux.org> 4.0.7-alt1
 - updated to 4.0.7-1-g769ee25
 - enabled %%check

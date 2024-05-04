@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: oo7
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Secret Service provider
@@ -52,6 +52,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Sat May 04 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
+- 0.3.1
+
 * Sat Feb 24 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
 - first preview for Sisyphus (0.3.0-5-gad713f5)
 
