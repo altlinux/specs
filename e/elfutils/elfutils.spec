@@ -1,6 +1,6 @@
 Name: elfutils
-Version: 0.189.0.46.27a8
-Release: alt2
+Version: 0.191
+Release: alt1
 
 Summary: A collection of utilities and DSOs to handle ELF files and DWARF data
 License: GPLv3+ and (GPLv2+ or LGPLv3+)
@@ -52,6 +52,15 @@ Elfutils is a collection of utilities, including
 - eu-readelf (to see the raw ELF file structures),
 - eu-elflint (to check for well-formed ELF files),
 - eu-elfcompress (to compress or decompress ELF sections).
+
+%package srcfiles
+Summary: srcfiles utility from elfutils collection
+License: GPLv3+
+Group: File tools
+Requires: %name = %EVR
+
+%description srcfiles
+This package contains srcfiles utility from elfutils collection.
 
 %package devel
 Summary: Development libraries to handle compiled objects
@@ -279,6 +288,11 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %_bindir/eu-strip
 %_bindir/eu-unstrip
 %_man1dir/eu-*
+%exclude %_man1dir/eu-srcfiles.*
+
+%files srcfiles
+%_bindir/eu-srcfiles
+%_man1dir/eu-srcfiles.*
 
 %files devel
 
@@ -375,6 +389,10 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sat May 04 2024 Dmitry V. Levin <ldv@altlinux.org> 0.191-alt1
+- elfutils-0.189-46-g27a84961 -> elfutils-0.191.
+- Packaged new eu-srcfiles utility into a separate subpackage.
+
 * Sat Jan 27 2024 Vitaly Chikunov <vt@altlinux.org> 0.189.0.46.27a8-alt2
 - spec: Fix build with disabled debuginfod_urls/libdebuginfod.
 
