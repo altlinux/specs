@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: xpdf
-Version: 4.04
+Version: 4.05
 Release: alt1
 
 Summary: The PDF viewer and tools
@@ -33,7 +33,7 @@ Patch3: xpdf-shared-libs.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
-BuildRequires: libcups-devel qt5-base-devel libpaper-devel libpng-devel
+BuildRequires: libcups-devel qt6-base-devel libpaper-devel libpng-devel
 BuildRequires: libfreetype-devel fontconfig-devel zlib-devel
 BuildRequires: desktop-file-utils librsvg-utils
 
@@ -122,7 +122,7 @@ sed -i \
     "s|/usr/local/etc|%_sysconfdir|;
      s|/usr/local|%_prefix|;
      s|^#fontFile|fontFile|;
-     s|/ghostscript/fonts|/type1/urw|;
+     s|/ghostscript/fonts|/fonts/type1/urw|;
      s|^#textEncoding|textEncoding|;
      s|^#enableFreeType|enableFreeType|;
      s|^#antialias|antialias|;
@@ -211,9 +211,11 @@ done
 %_bindir/xpdf*
 %exclude %_man1dir/xpdf.1*
 %_man1dir/xpdf*
+%dir %_libdir/xpdf
 %_libdir/xpdf/*.so
 
 %files i18n
+%dir %_datadir/xpdf
 %_datadir/xpdf/*
 
 %files desktop
@@ -221,6 +223,37 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat May 04 2024 Andrew Savchenko <bircoph@altlinux.org> 4.05-alt1
+- Update xpdf to version 4.05
+- Migrate to Qt6
+- Update Chinese simplifiend and Korean language files to version 2023-dec-05
+- Fix type1 urw fonts path (ALT bug 48335)
+- Fixes:
+  - CVE-2018-7453 PDF object loop in AcroForm::scanField
+  - CVE-2018-16369 PDF object loop in AcroForm::scanField
+  - CVE-2019-9587 PDF object loop in Catalog::countPageTree
+  - CVE-2019-9588 PDF object loop in Catalog::countPageTree
+  - CVE-2019-16088 PDF object loop in Catalog::countPageTree
+  - CVE-2022-30524 logic bug in text extractor led to invalid memory access
+  - CVE-2022-30775 integer overflow in rasterizer
+  - CVE-2022-33108 PDF object loop in Catalog::countPageTree
+  - CVE-2022-36561 PDF object loop in AcroForm::scanField
+  - CVE-2022-38222 logic bug in JBIG2 decoder
+  - CVE-2022-38334 PDF object loop in Catalog::countPageTree
+  - CVE-2022-38928 missing bounds check in CFF font converter caused null pointer dereference
+  - CVE-2022-41842 PDF object loop in Catalog::countPageTree
+  - CVE-2022-41843 missing bounds check in CFF font parser caused invalid memory access
+  - CVE-2022-41844 PDF object loop in AcroForm::scanField
+  - CVE-2022-43071 PDF object loop in Catalog::readPageLabelTree2
+  - CVE-2022-43295 PDF object loop in Catalog::countPageTree
+  - CVE-2022-45586 PDF object loop in Catalog::countPageTree
+  - CVE-2022-45587 PDF object loop in Catalog::countPageTree
+  - CVE-2023-2662 Divide-by-zero in Xpdf 4.04 due to bad color space object
+  - CVE-2023-2663 PDF object loop in Catalog::readPageLabelTree2
+  - CVE-2023-2664 PDF object loop in Catalog::readEmbeddedFileTree
+  - CVE-2023-3044 Divide-by-zero in Xpdf 4.04 due to very large page size
+  - CVE-2023-3436 Deadlock in Xpdf 4.04 due to PDF object stream references
+
 * Sun May 15 2022 Andrew Savchenko <bircoph@altlinux.org> 4.04-alt1
 - Version bump
 - Many bugfixes, including security, including:
