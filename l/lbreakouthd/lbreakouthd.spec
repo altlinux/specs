@@ -1,5 +1,5 @@
 Name: lbreakouthd
-Version: 1.1.7
+Version: 1.1.8
 Release: alt1
 Summary: Classic Breakout-Style Game
 License: GPLv2+
@@ -45,7 +45,7 @@ cp %buildroot%_datadir/games/applications/%name.desktop %buildroot%_datadir/appl
 %files -f %name.lang
 %doc Changelog README TODO
 #_datadir/games/icons/lbreakouthd256.gif
-%_datadir/games/icons/hicolor/*/apps/lbreakouthd.png
+%_datadir/games/icons/lbreakouthd.png
 %dir %_datadir/games/%name/themes/
 %_datadir/games/%name/themes/*
 %dir %_datadir/games/%name/levels/
@@ -58,6 +58,9 @@ cp %buildroot%_datadir/games/applications/%name.desktop %buildroot%_datadir/appl
 %attr(664,games,games) %_localstatedir/games/%name.hscr
 
 %changelog
+* Sat May 04 2024 Ilya Mashkin <oddity@altlinux.ru> 1.1.8-alt1
+- 1.1.8
+
 * Tue Apr 09 2024 Ilya Mashkin <oddity@altlinux.ru> 1.1.7-alt1
 - 1.1.7
 - Copy desktop file to standard location (Closes: #49005)
