@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _name letterpress
-%define ver_major 2.0
+%define ver_major 2.1
 %define rdn_name io.gitlab.gregorni.Letterpress
 
 %def_enable check
@@ -29,10 +29,11 @@ BuildArch: noarch
 
 Requires: jp2a
 Requires: typelib(Adw) = 1
+Requires: dconf
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson blueprint-compiler >= %bp_ver typelib(Adw)
-%{?_enable_check:BuildRequires: /usr/bin/appstream-util desktop-file-utils}
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils /usr/bin/glib-compile-schemas}
 
 %description
 Letterpress converts your images into a picture made up of ASCII
@@ -51,6 +52,7 @@ lowering the zoom factor.
 %meson_install
 %find_lang --with-gnome %_name
 
+%check
 %__meson_test
 
 %files -f %_name.lang
@@ -59,11 +61,14 @@ lowering the zoom factor.
 %_datadir/%_name/
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.*
-%_datadir/appdata/%rdn_name.*.xml
+%_datadir/metainfo/%rdn_name.*.xml
 %doc README*
 
 
 %changelog
+* Sat May 04 2024 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt1
+- 2.1
+
 * Wed Oct 04 2023 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt1
 - first preview for Sisyphus (2.0-12-ge6d8a39)
 

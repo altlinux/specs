@@ -1,7 +1,7 @@
 %define modname schema
 
 Name: python3-module-%modname
-Version: 0.7.5
+Version: 0.7.7
 Release: alt1
 
 Summary: Simple data validation library
@@ -17,7 +17,7 @@ BuildArch: noarch
 Requires: python3-module-contextlib2 >= 0.5.5
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3(wheel) python3(setuptools)
 
 %description
 %modname is a library for validating Python data structures, such as
@@ -29,16 +29,19 @@ Python data-types.
 %setup -n %modname-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %python3_sitelibdir_noarch/*
 %doc README*
 
 %changelog
+* Sat May 04 2024 Yuri N. Sedunov <aris@altlinux.org> 0.7.7-alt1
+- 0.7.7
+
 * Mon Dec 06 2021 Yuri N. Sedunov <aris@altlinux.org> 0.7.5-alt1
 - 0.7.5
 
