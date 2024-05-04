@@ -1,7 +1,5 @@
 %define optflags_lto %nil
 
-%define llvm_version 18.1
-
 %define git_ver 16395
 %define git_commit c16e176fbebc81aeef02a10faa75592a311f28fd
 
@@ -18,7 +16,7 @@
 
 Name: rpcs3
 Version: 0.0.32
-Release: alt1
+Release: alt2
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -52,8 +50,10 @@ Source9: miniupnp-%miniupnp_version.tar
 # https://github.com/thestk/rtmidi/archive/refs/tags/%rtmidi_version/rtmidi-%rtmidi_version.tar.gz
 Source10: rtmidi-%rtmidi_version.tar
 
+BuildPreReq: liblzma-devel
+
 BuildRequires: /proc
-BuildRequires: clang%llvm_version
+BuildRequires: clang
 BuildRequires: cmake
 BuildRequires: doxygen
 BuildRequires: glslang
@@ -64,6 +64,7 @@ BuildRequires: libSDL2-devel
 BuildRequires: libalsa-devel
 BuildRequires: libavformat-devel
 BuildRequires: libcurl-devel
+BuildRequires: libedit-devel
 BuildRequires: libevdev-devel
 BuildRequires: libfaudio-devel
 BuildRequires: libffi-devel
@@ -73,6 +74,7 @@ BuildRequires: libpng-devel
 BuildRequires: libpugixml-devel
 BuildRequires: libswresample-devel
 BuildRequires: libswscale-devel
+BuildRequires: libtinfo-devel
 BuildRequires: libudev-devel
 BuildRequires: libusb-devel
 BuildRequires: libwayland-cursor-devel
@@ -81,9 +83,9 @@ BuildRequires: libwayland-server-devel
 BuildRequires: libwolfssl-devel
 BuildRequires: libxml2-devel
 BuildRequires: libxxhash-devel
-BuildRequires: lld%llvm_version
-BuildRequires: llvm%llvm_version-devel
-BuildRequires: llvm%llvm_version-gold
+BuildRequires: lld
+BuildRequires: llvm
+BuildRequires: llvm-devel
 BuildRequires: ninja-build
 BuildRequires: pipewire-jack-libs-devel
 BuildRequires: qt6-multimedia-devel
@@ -121,8 +123,6 @@ echo "// This is a generated file.
 " > %name/git-version.h
 
 %build
-export ALTWRAP_LLVM_VERSION=%llvm_version
-
 %add_optflags -L%_libdir/pipewire-0.3/jack
 
 %cmake \
@@ -142,7 +142,7 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 	-DUSE_SYSTEM_XXHASH:BOOL=TRUE \
 	-DUSE_SYSTEM_WOLFSSL:BOOL=TRUE \
 	-DUSE_SYSTEM_FAUDIO:BOOL=TRUE \
-	-DLLVM_DIR:PATH=%_libexecdir/llvm-%llvm_version/%_lib/cmake/llvm \
+	-DLLVM_DIR:PATH=$(llvm-config --cmakedir) \
 	-GNinja \
 	-Wno-dev
 
@@ -163,6 +163,10 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Sat May 04 2024 Nazarov Denis <nenderus@altlinux.org> 0.0.32-alt2
+- Build with current LLVM
+- Update build requires
+
 * Wed May 01 2024 Nazarov Denis <nenderus@altlinux.org> 0.0.32-alt1
 - Version 0.0.32
 
