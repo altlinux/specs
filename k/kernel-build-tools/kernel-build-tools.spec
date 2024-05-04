@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kernel-build-tools
-Version: 0.120
-Release: alt2
+Version: 0.121
+Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
 License: GPL-2.0-or-later
@@ -35,15 +35,9 @@ Conflicts: rpm-build < 4.0.4-alt1
 # satisfied, but kernel-modules-s have kernel-headers-modules-@kflavour@
 # there causing unmet. As a workaround hack this package creates fake
 # provides on the _excluded_ arches.
-%ifnarch %ix86 x86_64 ppc64le aarch64
-Provides: kernel-headers-modules-std-def
-%endif
-%ifnarch %ix86 x86_64 ppc64le
-Provides: kernel-headers-modules-un-def
-Provides: kernel-headers-modules-std-debug
-%endif
 %ifnarch x86_64 aarch64
 Provides: kernel-headers-modules-centos
+Provides: kernel-headers-modules-rt
 %endif
 %ifnarch x86_64
 Provides: kernel-headers-modules-ovz-el7
@@ -102,6 +96,9 @@ kernel packaging conventions.
 %_rpmlibdir/kernel.req*
 
 %changelog
+* Sat May 04 2024 Vitaly Chikunov <vt@altlinux.org> 0.121-alt1
+- Added fake P:kernel-headers-modules-rt.
+
 * Fri Jun 16 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.120-alt2
 - Defined base_arch for LoongArch.
 - Disabled some check on LoongArch (libfaketime is not available).
