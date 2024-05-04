@@ -3,7 +3,7 @@
 
 Name: apcupsd
 Version: 3.14.14
-Release: alt3
+Release: alt4
 Packager: Sergey Y. Afonin <asy@altlinux.ru>
 
 Summary: Power management software for APC UPS hardware
@@ -86,6 +86,7 @@ tar xzf %{SOURCE1}
 
 %build
 
+export ac_cv_path_SCRIPTSHELL=/bin/sh
 export ac_cv_path_MAIL=/bin/mail
 export ac_cv_path_ETAGS=/usr/bin/ctags
 export ac_cv_path_CTAGS=/usr/bin/ctags
@@ -182,11 +183,14 @@ gzip ChangeLog
 %endif
 
 %changelog
+* Fri May 03 2024 Arseny Maslennikov <arseny@altlinux.org> 3.14.14-alt4
+- Manually passed /bin/sh to autoconf as the script shell to fix FTBFS.
+
 * Thu Jul 27 2023 Artyom Bystrov <arbars@altlinux.org> 3.14.14-alt3
-- Reworking fix with autoconf (tnx to glebfm@)
+- Reworked fix with autoconf (tnx to glebfm@)
 
 * Tue Jul 25 2023 Artyom Bystrov <arbars@altlinux.org> 3.14.14-alt2
-- Use autoconf_2.60
+- Used autoconf_2.60
 
 * Sun Jul 10 2016 Sergey Y. Afonin <asy@altlinux.ru> 3.14.14-alt1
 - New version
