@@ -9,7 +9,7 @@
 %endif
 
 Name: ispc
-Version: 1.22.0
+Version: 1.23.0
 Release: alt1
 Summary: Intel Implicit SPMD Program Compiler
 License: BSD-3-Clause
@@ -18,6 +18,11 @@ Group: Development/C
 %define docdir %_docdir/%name-%version
 
 Source: %name-%version.tar
+
+# https://github.com/ispc/ispc/pull/2788
+Patch0: %name-llvm-18-support.patch
+# https://github.com/ispc/ispc/pull/2828/commits/35117d72db54ce99b7fe2a1ce67467c81c9e10a6
+Patch1: %name-fix-llvm-17-warning.patch
 
 # Story: https://pharr.org/matt/blog/2018/04/30/ispc-all.html
 Vcs: https://github.com/ispc/ispc.git
@@ -80,6 +85,7 @@ This package will try to build all %name examples.
 
 %prep
 %setup
+%autopatch -p1
 sed -i 's/clangFrontend.*clangLex/clang-cpp/' CMakeLists.txt
 
 %build
@@ -170,6 +176,12 @@ ispc --support-matrix
 %endif
 
 %changelog
+* Wed Apr 17 2024 L.A. Kostis <lakostis@altlinux.ru> 1.23.0-alt1
+- 1.23.0.
+- Added patches from upstream:
+  + added llvm18.1 support (PR#2788)
+  + fix compile warning with llvm17.
+
 * Sun Dec 03 2023 L.A. Kostis <lakostis@altlinux.ru> 1.22.0-alt1
 - 1.22.0.
 
