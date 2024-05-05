@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,unresolved=relaxed
 
 Name: nbdkit
-Version: 1.37.10
+Version: 1.39.4
 Release: alt1
 Summary: NBD server with stable plugin ABI and permissive license
 License: BSD-3-Clause
@@ -84,9 +84,8 @@ grep -rlZ 'mke2fs -' | xargs -rt0 sed -i 's!mke2fs -!/sbin/&!'
 
 %build
 %ifarch %ix86
-# Workaround for 'Wrong result for 90.25%, got 0.9025, expected 0.9025' (on x86
-# w/o SSE) in test-public.
-%add_optflags -fexcess-precision=standard
+# Workaround for precision problems.
+%add_optflags -ffloat-store
 %endif
 %autoreconf
 # nbdkit tool is usable for non-root user so force install into bin. Also
@@ -110,9 +109,8 @@ find %buildroot%_libdir -name '*.la' -delete
 ./nbdkit --dump-config
 # Upstream tests.
 %make_build check || {
-	# Skip 'SKIP's.
-	awk /^FAIL/ RS= ORS='\n\n' tests/test-suite.log
-	exit 1
+	find -name test-suite.log -exec cat {} +
+	exit 2
 }
 
 %post checkinstall
@@ -145,6 +143,9 @@ nbdkit -U - memory 1G --run 'nbdinfo "$uri"'
 %files checkinstall
 
 %changelog
+* Fri May 03 2024 Vitaly Chikunov <vt@altlinux.org> 1.39.4-alt1
+- Update to v1.39.4 (2024-04-20).
+
 * Thu Mar 07 2024 Vitaly Chikunov <vt@altlinux.org> 1.37.10-alt1
 - Update to v1.37.10 (2024-03-04).
 
