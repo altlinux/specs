@@ -14,7 +14,7 @@
 %endif
 
 Name: chatty
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: SMS, MMS and XMPP messaging application for GNOME
@@ -31,7 +31,7 @@ Source: %name-%version.tar
 
 %define glib_ver 2.66
 %define gtk4_ver 4.12
-%define adw_ver 1.4
+%define adw_ver 1.5
 %define desktop_ver 43
 
 Requires: dconf yelp
@@ -55,6 +55,7 @@ BuildRequires: libphonenumber-devel
 BuildRequires: pkgconfig(gsettings-desktop-schemas) >= %desktop_ver
 BuildRequires: libfeedback-devel
 BuildRequires: pkgconfig(mm-glib)
+BuildRequires: pkgconfig(gtksourceview-5)
 %{?_enable_purple:BuildRequires: libpurple-devel}
 %{?_enable_check:BuildRequires: xvfb-run gnupg2}
 # for libcmatrix subproject
@@ -94,6 +95,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sun May 05 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1
+- 0.8.3
+
 * Tue Mar 19 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1
 - 0.8.2
 
