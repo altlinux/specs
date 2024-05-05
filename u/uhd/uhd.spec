@@ -23,8 +23,8 @@
 Name: uhd
 Url: https://github.com/EttusResearch/uhd
 Version: 4.6.0.0
-Release: alt1
-License: GPLv3+
+Release: alt2
+License: GPL-3.0-or-later
 Group: Engineering
 Summary: Universal Hardware Driver for Ettus Research products
 
@@ -44,6 +44,8 @@ Patch2: uhd-4.4.0.0-gcc13.patch
 Patch3: uhd-4.6.0.0-dpdk-fix-build-with-new-DPDK-23.11.patch
 Patch4: uhd-4.6.0.0-host-fix-compiling-with-gcc-13.2.patch
 Patch5: uhd-4.6.0.0-host-lib-uhd-dpdk-fix-issue-compiling-with-gcc-13.2.patch
+Patch6: uhd-4.6.0.0-lib-Replace-deprecated-boost-filesystem-usage.patch
+Patch7: uhd-4.6.0-fix-compilation-with-boost-1.85.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 BuildRequires: ctest cmake
@@ -254,6 +256,10 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %python3_sitelibdir/usrp_mpm/
 
 %changelog
+* Sat May 04 2024 Anton Midyukov <antohami@altlinux.org> 4.6.0.0-alt2
+- fix compilation with boost 1.85
+- convert License to SPDX
+
 * Thu Apr 11 2024 Alexey Shabalin <shaba@altlinux.org> 4.6.0.0-alt1
 - NMU: 4.6.0.0
 - fix build with DPDK 23.11 LTS
