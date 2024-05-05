@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 3.4
+%define ver_major 3.5
 %define rdn_name org.kop316.antispam
 
 %def_enable check
@@ -22,7 +22,7 @@ Source: %name-%version.tar
 %endif
 
 %define gtk_ver 4.6
-%define adwaita_ver 1.4
+%define adwaita_ver 1.5
 
 Requires: gnome-calls
 
@@ -61,6 +61,9 @@ hangs up depending on the user's preferences.
 
 
 %changelog
+* Sun May 05 2024 Yuri N. Sedunov <aris@altlinux.org> 3.5-alt1
+- 3.5
+
 * Sat Feb 24 2024 Yuri N. Sedunov <aris@altlinux.org> 3.4-alt1
 - updated to 3.4-2-ga739995
 
