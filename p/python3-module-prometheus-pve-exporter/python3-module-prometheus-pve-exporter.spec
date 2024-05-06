@@ -2,7 +2,7 @@
 %def_without check
 
 Name:    python3-module-%modulename
-Version: 3.4.0
+Version: 3.4.1
 Release: alt1
 
 Summary: Prometheus Proxmox VE Exporter
@@ -20,6 +20,7 @@ Provides: %modulename = %EVR
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
+BuildRequires: rpm-build-systemd
 %if_with check
 BuildRequires: python3(pyflakes)
 BuildRequires: python3(pylint)
@@ -46,10 +47,13 @@ useradd -r -g prometheus -c 'Prometheus PVE exporter user' \
         -d /var/lib/prometheus prometheus 2>/dev/null ||:
 
 %post
-%post_service %modulename
+%systemd_user_post %modulename.service
 
 %preun
-%preun_service %modulename
+%systemd_user_preun %modulename.service
+
+%postun
+%systemd_user_postun %modulename.service
 
 %check
 #%%tox_create_default_config
@@ -63,6 +67,10 @@ useradd -r -g prometheus -c 'Prometheus PVE exporter user' \
 %python3_sitelibdir/*
 
 %changelog
+* Mon May 06 2024 Andrew A. Vasilyev <andy@altlinux.org> 3.4.1-alt1
+- 3.4.1
+- fix spec name and add systemd macro
+
 * Thu May 02 2024 Andrew A. Vasilyev <andy@altlinux.org> 3.4.0-alt1
 - 3.4.0
 
