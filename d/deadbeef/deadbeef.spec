@@ -5,7 +5,7 @@
 %set_verify_elf_method textrel=relaxed 
 Name: deadbeef
 Version: 1.9.6
-Release: alt1
+Release: alt1.1
 Summary: DeaDBeeF is an audio player
 Url: https://github.com/Alexey-Yakovenko/deadbeef
 
@@ -17,7 +17,7 @@ License: Zlib and GPLv2 and LGPLv2.1
 # Source-url: https://sourceforge.net/projects/deadbeef/files/travis/linux/%version/deadbeef-%version.tar.bz2
 Source: %name-%version.tar
 
-ExcludeArch: ppc64le aarch64
+ExcludeArch: ppc64le
 
 BuildRequires: clang intltool swig gcc-c++
 BuildRequires:perl(Exporter.pm) perl(FindBin.pm) perl(IO/Handle.pm) perl(IPC/Open2.pm) perl(IPC/Open3.pm) perl(Locale/Country.pm) perl(Locale/Language.pm) perl(base.pm)
@@ -567,6 +567,12 @@ ReplayGain-Scanner plugin for DeaDBeeF
 %patch2000 -p1
 %endif
 %patch1 -p1
+%ifnarch %ix86 x86_64 %e2k
+sed -i \
+	external/ddb_dsp_libretro/Makefile.am \
+	-re 's/^(.*)\s+([-]msse3)\s+(.*)$/\1 \3/g'
+%add_optflags -Wno-unused-variable
+%endif
 sed -i '/m4/ d' Makefile.am
 
 %build
@@ -761,6 +767,10 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-incomplete
 
 %changelog
+* Mon May 06 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.9.6-alt1.1
+- NMU: fixed FTBFS on arm64 and LoongArch (SSE3 is available only on
+  some x86 machines).
+
 * Wed May 01 2024 Ivan Mazhukin <vanomj@altlinux.org> 1.9.6-alt1
 - new version (1.9.6) with rpmgs script
 - switched to use tarball
