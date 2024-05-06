@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admc
-Version: 0.16.1
+Version: 0.16.2
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -110,6 +110,11 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Fri May 3 2024 Semyon Knyazev <samael@altlinux.org> 0.16.2-alt1
+- Fix OU insufficient access for users with delegation. Users with
+  delegated OU rights can do corresponding allowed actions. In particular,
+  user/group creation/deletion, OU creation and policy (un)link.
+
 * Tue Apr 16 2024 Semyon Knyazev <samael@altlinux.org> 0.16.1-alt1
 - Fixed policy link deletion: OU's child link items are deleted from
 tree after removal from policy widget. (closes: 49670)
