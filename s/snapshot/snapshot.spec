@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: snapshot
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: GNOME Camera
@@ -76,6 +76,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Mon May 06 2024 Yuri N. Sedunov <aris@altlinux.org> 46.3-alt1
+- 46.3
+
 * Thu Apr 11 2024 Yuri N. Sedunov <aris@altlinux.org> 46.2-alt1
 - 46.2
 
