@@ -11,12 +11,13 @@
 
 Name: telepathy-glib
 Version: 0.24.2
-Release: alt2
+Release: alt3
 
 Summary: Telepathy framework - GLib connection manager library
 License: LGPL-2.1
 Group: System/Libraries
 Url: https://telepathy.freedesktop.org/wiki/TelepathyGLib
+Patch10: telepathy-glib-0.24.2-up-test-cm.patch
 
 %if_disabled snapshot
 Source: https://telepathy.freedesktop.org/releases/telepathy-glib/%name-%version.tar.gz
@@ -36,8 +37,8 @@ BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libdbus-glib-devel >= %dbus_ver
 BuildRequires: gtk-doc
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver}
-%{?_enable_vala:BuildPreReq: vala >= %vala_ver vala-tools >= %vala_ver}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gir_ver}
+%{?_enable_vala:BuildRequires: vala-tools >= %vala_ver}
 %{?_enable_check:BuildRequires: /proc dbus-tools-gui}
 
 %description
@@ -49,7 +50,7 @@ Summary: Telepathy framework - GLib connection manager library
 Group: System/Libraries
 
 Obsoletes: %name
-Provides: %name = %version-%release
+Provides: %name = %EVR
 
 %description -n lib%name
 This package contains telepathy-glib, a GLib-based library for Telepathy
@@ -58,10 +59,10 @@ components.
 %package -n lib%name-devel
 Summary: Development libraries and header files for %name
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 Obsoletes: %name-devel
-Provides: %name-devel = %version-%release
+Provides: %name-devel = %EVR
 
 %description -n lib%name-devel
 Development libraries and header files for %name.
@@ -78,7 +79,7 @@ This package contains development documentation for the %name
 %package -n lib%name-gir
 Summary: GObject introspection data for the %name library
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-gir
 GObject introspection data for the %name library
@@ -87,7 +88,7 @@ GObject introspection data for the %name library
 Summary: GObject introspection devel data for the %name
 Group: System/Libraries
 BuildArch: noarch
-Requires: lib%name-gir = %version-%release
+Requires: lib%name-gir = %EVR
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the %name library
@@ -96,7 +97,7 @@ GObject introspection devel data for the %name library
 Summary: Vala language bindings for the %name library
 Group: Development/Other
 BuildArch: noarch
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-vala
 This package provides Vala language bindings for the %name library
@@ -104,7 +105,7 @@ This package provides Vala language bindings for the %name library
 %package -n lib%name-tests
 Summary: Tests for the %name package
 Group: Development/Other
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-tests
 This package provides tests programs that can be used to verify
@@ -112,6 +113,7 @@ the functionality of the installed %name library package.
 
 %prep
 %setup
+%patch10 -p1
 sed -i 's;\(\/bin\/python\)$;\13;' tests/*.py
 sed -i 's;\(env python\)$;\13;' examples/client/python/*.py
 
@@ -132,7 +134,7 @@ sed -i 's;\(env python\)$;\13;' examples/client/python/*.py
 
 %check
 export TP_TESTS_NO_TIMEOUT=1
-%make check CHECK_VERBOSE=1
+%make -k check CHECK_VERBOSE=1
 
 %files -n lib%name
 %doc AUTHORS ChangeLog
@@ -173,6 +175,9 @@ export TP_TESTS_NO_TIMEOUT=1
 %endif
 
 %changelog
+* Sun May 05 2024 Yuri N. Sedunov <aris@altlinux.org> 0.24.2-alt3
+- fixed test-cm for newer glib (upstream patch)
+
 * Thu Feb 04 2021 Yuri N. Sedunov <aris@altlinux.org> 0.24.2-alt2
 - updated sources to actual telepathy-glib-0.24.2 tarball
 
