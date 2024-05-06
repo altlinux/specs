@@ -7,7 +7,7 @@
 
 Name: DirectXShaderCompiler
 Version: 1.8.2403
-Release: alt0.1
+Release: alt0.2
 Summary: DirectX Shader Compiler
 Group: Development/C++
 License: Apache-2.0 with LLVM-exception
@@ -20,8 +20,9 @@ Source0: %name-%version.tar
 Source1: DirectX-Headers.tar
 Patch0: alt-spirv-tools-shared.patch
 Patch2000: alt-e2k.patch
+Patch3500: alt-loongarch64.patch
 
-ExclusiveArch: %ix86 x86_64 aarch64 %e2k
+ExclusiveArch: %ix86 x86_64 aarch64 %e2k loongarch64
 
 Provides: lib%{rname}-devel = %EVR, lib%{rname} = %EVR
 # upstream commit 6d3574a34b7180d75df3a893fe12447c6231a450 removed sonames
@@ -44,6 +45,7 @@ graphics, games, and computation can use it to generate shader programs.
 %ifarch %e2k
 %patch2000 -p1
 %endif
+%patch3500 -p1
 cp -aLt autoconf -- /usr/share/automake/config.{guess,sub}
 
 %build
@@ -67,6 +69,9 @@ cp -ar %_cmake__builddir/bin/dxc* %buildroot%_bindir/
 %_libdir/lib%{rname}.so
 
 %changelog
+* Mon May 06 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.8.2403-alt0.2
+- NMU: build for LoongArch.
+
 * Thu Mar 14 2024 L.A. Kostis <lakostis@altlinux.ru> 1.8.2403-alt0.1
 - Updated to v1.8.2403.
 
