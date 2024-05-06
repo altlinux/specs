@@ -1,5 +1,5 @@
 Name:    msd
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 Summary: Program for organizing IP TV streaming on the network via HTTP.
 
@@ -52,7 +52,7 @@ install -pDm0644 %SOURCE4		%buildroot%_sysconfdir/sysconfig/%name
 
 
 %files
-%doc LICENSE README.md
+%doc LICENSE readme.md
 %config(noreplace) %_sysconfdir/%name
 %_initdir/*
 %_sysconfdir/sysconfig/%name
@@ -60,5 +60,8 @@ install -pDm0644 %SOURCE4		%buildroot%_sysconfdir/sysconfig/%name
 %_unitdir/*
 
 %changelog
+* Mon May 06 2024 Alexei Takaseev <taf@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
 * Fri Feb 19 2021 Alexei Takaseev <taf@altlinux.org> 3.1.0-alt1
 - Initial build for ALT Sisyphus
