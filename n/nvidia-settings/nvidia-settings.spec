@@ -5,7 +5,7 @@
 
 Name: nvidia-settings
 Version: 550.78
-Release: alt2
+Release: alt3
 
 Group: System/Configuration/Hardware
 Summary: Tool for configuring the NVIDIA driver
@@ -123,7 +123,7 @@ install -m 0644 %SOURCE5 %buildroot/%_desktopdir/
 
 mkdir -p %buildroot/%_libdir
 #install -m 0644 src/_out/Linux_*/libXNVCtrl.a %buildroot/%_libdir/
-install -m 0644 src/libXNVCtrl/libXNVCtrl.so* %buildroot/%_libdir/
+cp -ar src/libXNVCtrl/libXNVCtrl.so* %buildroot/%_libdir/
 
 mkdir -p %buildroot/%_includedir/NVCtrl/
 install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
@@ -150,6 +150,9 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 #%_libdir/lib*.a
 
 %changelog
+* Mon May 06 2024 Sergey V Turchin <zerg@altlinux.org> 550.78-alt3
+- fix library symlinks
+
 * Fri May 03 2024 Sergey V Turchin <zerg@altlinux.org> 550.78-alt2
 - build shared libXNVCtrl
 
