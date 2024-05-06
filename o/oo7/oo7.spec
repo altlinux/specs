@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: oo7
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Secret Service provider
@@ -52,6 +52,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Mon May 06 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
+- 0.3.2
+
 * Sat May 04 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
 - 0.3.1
 
