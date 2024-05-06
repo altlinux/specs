@@ -1,5 +1,5 @@
 Name: python3-module-aioesphomeapi
-Version: 23.0.0
+Version: 24.3.0
 Release: alt1
 
 Summary: Python API to ESPHome devices
@@ -32,6 +32,9 @@ BuildRequires: python3(cython)
 %python3_sitelibdir/aioesphomeapi-%version.dist-info
 
 %changelog
+* Mon May 06 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 24.3.0-alt1
+- 24.3.0 released
+
 * Thu Mar 14 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 23.0.0-alt1
 - 23.0.0 released
 
