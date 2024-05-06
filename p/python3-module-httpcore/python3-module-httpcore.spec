@@ -1,7 +1,7 @@
 %define  modulename httpcore
 
 Name:    python3-module-%modulename
-Version: 1.0.2
+Version: 1.0.5
 Release: alt1
 
 Summary: A minimal HTTP client
@@ -56,6 +56,9 @@ Some things HTTP Core does do:
 %python3_sitelibdir/*.dist-info
 
 %changelog
+* Mon May 06 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.5-alt1
+- 1.0.5
+
 * Fri Jan 26 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.2-alt1
 - 1.0.2
 
