@@ -2,7 +2,7 @@
 %def_disable bootstrap
 
 Name: squeekboard
-Version: 1.38.0
+Version: 1.39.0
 Release: alt1
 
 Summary: A Wayland on-screen keyboard
@@ -68,6 +68,9 @@ EOF
 %_desktopdir/*.desktop
 
 %changelog
+* Mon May 06 2024 Yuri N. Sedunov <aris@altlinux.org> 1.39.0-alt1
+- 1.39.0
+
 * Sun Mar 24 2024 Yuri N. Sedunov <aris@altlinux.org> 1.38.0-alt1
 - 1.38.0
 
