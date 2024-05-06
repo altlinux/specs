@@ -5,7 +5,7 @@
 
 Name: deepin-pw-check
 Version: 6.0.2
-Release: alt1
+Release: alt2
 
 Summary: Verify the validity of the password for DDE
 
@@ -118,6 +118,9 @@ export GO111MODULE=off
 %_libdir/libdeepin_pw_check.a
 
 %changelog
+* Mon May 06 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.2-alt2
+- Fixed FTBFS.
+
 * Fri Dec 01 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.2-alt1
 - New version 6.0.2.
 - Used independent vendoring of submodules again.
