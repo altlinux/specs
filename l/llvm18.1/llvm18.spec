@@ -8,7 +8,7 @@
 
 %global v_major 18
 %global v_majmin %v_major.1
-%global v_full %v_majmin.3
+%global v_full %v_majmin.5
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -109,7 +109,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.3
+Release: alt0.1
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -1478,6 +1478,12 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Mon May 06 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.5-alt0.1
+- Update to 18.1.5.
+
+* Mon Apr 22 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.4-alt0.1
+- Update to 18.1.4.
+
 * Thu Apr 18 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 18.1.3-alt0.3
 - Fixed FTBFS on LoongArch: do package libomptarget (partially
   supported as of LLVM 18.1).
