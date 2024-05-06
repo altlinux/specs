@@ -1,5 +1,5 @@
 Name:    coppwr
-Version: 1.5.1
+Version: 1.6.0
 Release: alt1
 
 Summary: Low level control GUI for the PipeWire multimedia server
@@ -29,7 +29,7 @@ it.
 
 %prep
 %setup
-%patch1 -p1 
+%patch1 -p1
 diffstat -p1 -l %PATCH1 | sed -re 's@vendor/@@' | xargs cargo-vendor-checksum -f
 
 mkdir -p .cargo
@@ -37,14 +37,14 @@ cat >> .cargo/config <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/dimtpap/egui_node_graph.git?rev=b6f7f02d31fdb74b120691a6c221f10d60864d5c"]
+[source."git+https://github.com/dimtpap/egui_node_graph.git?rev=3e99a2af2025e72365a4ec5048011041a85002e5"]
 git = "https://github.com/dimtpap/egui_node_graph.git"
-rev = "b6f7f02d31fdb74b120691a6c221f10d60864d5c"
+rev = "3e99a2af2025e72365a4ec5048011041a85002e5"
 replace-with = "vendored-sources"
 
-[source."git+https://gitlab.freedesktop.org/dimtpap/pipewire-rs.git?rev=7bd8b2d3c5d91f56b20c345e97244fff9e58ea0f"]
+[source."git+https://gitlab.freedesktop.org/dimtpap/pipewire-rs.git?rev=605d15996f3258b3e1cc34e445dfbdf16a366c7e"]
 git = "https://gitlab.freedesktop.org/dimtpap/pipewire-rs.git"
-rev = "7bd8b2d3c5d91f56b20c345e97244fff9e58ea0f"
+rev = "605d15996f3258b3e1cc34e445dfbdf16a366c7e"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
@@ -77,6 +77,9 @@ install -Dm644 assets/icon/32.png %buildroot/%_datadir/icons/hicolor/32x32/apps/
 %_datadir/icons/hicolor/*/apps/io.github.dimtpap.coppwr.*
 
 %changelog
+* Mon May 06 2024 Mikhail Gordeev <obirvalger@altlinux.org> 1.6.0-alt1
+- new version 1.6.0
+
 * Thu Jan 25 2024 Mikhail Gordeev <obirvalger@altlinux.org> 1.5.1-alt1
 - new version 1.5.1
 
