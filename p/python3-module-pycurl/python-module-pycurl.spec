@@ -2,7 +2,7 @@
 %define oversion %(echo %version | sed -e "s|\\.|_|g")
 
 Name: python3-module-pycurl
-Version: 7.45.2
+Version: 7.45.3
 Release: alt1
 
 Summary: Python bindings to libcurl
@@ -40,6 +40,9 @@ This module provides the Python bindings to libcurl.
 %python3_sitelibdir/*
 
 %changelog
+* Mon May 06 2024 Anton Farygin <rider@altlinux.ru> 7.45.3-alt1
+- update to 7.45.3
+
 * Sat Apr 01 2023 Anton Farygin <rider@altlinux.ru> 7.45.2-alt1
 - update to 7.45.2
 
