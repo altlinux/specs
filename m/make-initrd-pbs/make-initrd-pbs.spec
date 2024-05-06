@@ -2,8 +2,8 @@
 %define child pbs
 
 Name: %parent-%child
-Version: 1.0.3
-Release: alt2
+Version: 1.0.4
+Release: alt1
 
 Summary: This feature is needed to create a file recovery image used by Proxmox backup client
 License: GPL-3.0
@@ -32,6 +32,9 @@ cp -r pbs %buildroot%_datadir/%parent/features
 %_datadir/%parent/features/pbs
 
 %changelog
+* Fri May 03 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.0.4-alt1
+- v1.0.3 -> v1.0.4 
+
 * Fri Oct 13 2023 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.0.3-alt2
 - remove ntfs-3g package 
 
