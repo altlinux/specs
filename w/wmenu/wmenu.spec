@@ -1,5 +1,5 @@
 Name: wmenu
-Version: 0.1.7
+Version: 0.1.8
 Release: alt1
 
 Summary: Dynamic menu for Sway
@@ -34,8 +34,12 @@ It provides a Wayland-native dmenu replacement which maintains the look and feel
 %files
 %doc LICENSE README*
 %_bindir/wmenu
+%_bindir/wmenu-run
 %_man1dir/wmenu.1*
 
 %changelog
+* Mon May 06 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.1.8-alt1
+- 0.1.8 released
+
 * Tue Mar  5 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.1.7-alt1
 - initial
