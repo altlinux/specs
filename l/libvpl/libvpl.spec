@@ -1,8 +1,8 @@
 %def_with check
-%add_optflags -Wno-deprecated-declarations
+%add_optflags -Wno-deprecated-declarations -Wno-address
 %global soversion 2
 Name: libvpl
-Version: 2.10.2
+Version: 2.11.0
 Release: alt1
 Summary: Intel Video Processing Library
 License: MIT
@@ -14,9 +14,14 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
 BuildRequires: pkgconfig(libva)
 BuildRequires: pkgconfig(wayland-client)
+BuildRequires: pkgconfig(wayland-protocols)
 BuildRequires: pkgconfig(pciaccess)
 BuildRequires: pkgconfig(wayland-client++)
 BuildRequires: pkgconfig(xcb-dri3)
+BuildRequires: pkgconfig(libffi)
+BuildRequires: pkgconfig(xau)
+BuildRequires: pkgconfig(xdmcp)
+BuildRequires: pkgconfig(libdrm)
 %if_with check
 BuildRequires: ctest /proc
 %endif
@@ -47,12 +52,6 @@ Requires: libvpl%soversion = %EVR
 This package contains the development headers and pkgconfig files for
 the Intel Video Processing Library.
 
-%package samples
-Summary: Examples for the Intel Video Processing Library
-Group: Development/C
-
-%description samples
-This package contains example applications for the Intel Video Processing Library.
 
 %prep
 %setup
@@ -60,7 +59,6 @@ This package contains example applications for the Intel Video Processing Librar
 
 %build
 %cmake \
-      -DBUILD_TOOLS=OFF \
       -DBUILD_TESTS=ON \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_INSTALL_SYSCONFDIR:PATH='/etc' \
@@ -93,5 +91,8 @@ This package contains example applications for the Intel Video Processing Librar
 %_datadir/vpl/
 
 %changelog
+* Fri May 03 2024 Anton Farygin <rider@altlinux.ru> 2.11.0-alt1
+- 2.10.2 -> 2.11.0
+
 * Sun Feb 25 2024 Anton Farygin <rider@altlinux.ru> 2.10.2-alt1
 - first build for ALT
