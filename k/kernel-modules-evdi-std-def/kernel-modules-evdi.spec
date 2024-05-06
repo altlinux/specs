@@ -1,5 +1,5 @@
 %define module_name	evdi
-%define module_version	1.14.1
+%define module_version	1.14.4
 %define module_release	alt1
 
 %define flavour		std-def
@@ -31,8 +31,6 @@ PreReq: coreutils
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 ExclusiveArch: %karch
 
-Patch: %module_name-%module_version-centos9.patch
-
 %description
 Extensible Virtual Display Interface
 
@@ -45,11 +43,6 @@ the libevdi library.
 %prep
 tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
-
-# centos backported some fixes for 5.15+
-if [ %flavour == "centos" ]; then
-%patch -p1
-fi
 
 %build
 %make_build -C %_usrsrc/linux-%kversion-%flavour M=`pwd` V=1 modules
@@ -65,6 +58,16 @@ install evdi.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon May 06 2024 L.A. Kostis <lakostis@altlinux.org> 1.14.4-alt1
+- Updated to 1.14.4.
+- Cleanup unused/merged patches.
+
+* Thu Jan 04 2024 L.A. Kostis <lakostis@altlinux.org> 1.14.1-alt3
+- Update 6.6 patch to include -centos9.
+
+* Sat Dec 02 2023 L.A. Kostis <lakostis@altlinux.org> 1.14.1-alt2
+- Apply patch to compile with kernel 6.6 (upstream PR#436).
 
 * Tue Sep 05 2023 L.A. Kostis <lakostis@altlinux.org> 1.14.1-alt1
 - Updated to 1.14.1.

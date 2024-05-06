@@ -1,10 +1,10 @@
 %define module_name	evdi
 %define module_version	1.14.4
-%define module_release	alt1
+%define module_release	alt2
 
-%define flavour		un-def
-%define karch %ix86 x86_64 armh aarch64
-BuildRequires(pre): kernel-headers-modules-un-def
+%define flavour		rt
+%define karch x86_64 aarch64
+BuildRequires(pre): kernel-headers-modules-rt
 %setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
@@ -58,6 +58,9 @@ install evdi.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon May 06 2024 L.A. Kostis <lakostis@altlinux.org> 1.14.4-alt2
+- km-rules: added -rt kernel.
 
 * Mon May 06 2024 L.A. Kostis <lakostis@altlinux.org> 1.14.4-alt1
 - Updated to 1.14.4.
