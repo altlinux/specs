@@ -3,7 +3,7 @@
 
 Name: ioprocess
 Version: 1.4.2
-Release: alt1
+Release: alt2
 Summary: Slave process to perform risky IO
 
 Group: System/Base
@@ -13,7 +13,7 @@ Url: https://github.com/oVirt/ioprocess
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: pkgconfig(glib-2.0) pkgconfig(gthread-2.0)
 BuildRequires: libyajl-devel
 BuildRequires: schedutils
@@ -52,6 +52,9 @@ Python bindings for ioprocess
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Mon May 06 2024 Alexey Shabalin <shaba@altlinux.org> 1.4.2-alt2
+- Fix build with python-3.12.
+
 * Mon Aug 23 2021 Alexey Shabalin <shaba@altlinux.org> 1.4.2-alt1
 - Initial build.
 
