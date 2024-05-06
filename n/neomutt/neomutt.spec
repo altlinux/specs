@@ -6,7 +6,7 @@
 
 Name: neomutt
 Version: 20240425
-Release: alt1
+Release: alt1.1
 Summary: A version of Mutt with added features
 License: GPL-2.0-only and ALT-Public-Domain
 Group: Networking/Mail
@@ -83,6 +83,8 @@ for color terminals, MIME, OpenPGP, and a threaded sorting mode.
 %ifarch %e2k
 # can't find BerkeleyDB due to silly warning from LCC
 sed -i 's/-E | tail -1/-w &/' auto.def
+# error: expression must have a constant value
+sed -i -E 's/.*struct ExpandoDefinition \*const (.*NoPadding) =(.*);/#define \1\2/' mutt_config.c send/config.c
 %endif
 
 %build
@@ -133,6 +135,9 @@ make -s test
 %_datadir/neomutt
 
 %changelog
+* Mon May 06 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 20240425-alt1.1
+- Fixed build for Elbrus.
+
 * Wed May 01 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 20240425-alt1
 - Update to 20240425 (2024-04-25).
 
