@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.2.1
-Release: alt1
+Release: alt2
 Summary: Execute remote commands or processes
 Group: Development/Python3
 
@@ -11,12 +11,12 @@ Url: https://github.com/alfredodeza/remoto
 
 # https://github.com/alfredodeza/remoto.git
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 BuildRequires: python3-devel
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-execnet
-BuildRequires: python3-module-mock
 BuildRequires: python3-module-setuptools
 Requires: python3-module-execnet
 
@@ -25,6 +25,7 @@ Execute remote commands or processes.
 
 %prep
 %setup
+%patch -p1
 
 %build
 export REMOTO_NO_VENDOR=1
@@ -44,6 +45,9 @@ py.test3 -v remoto/tests
 %doc LICENSE README.rst
 
 %changelog
+* Mon May 06 2024 Alexey Shabalin <shaba@altlinux.org> 1.2.1-alt2
+- Fix tests
+
 * Fri Sep 10 2021 Alexey Shabalin <shaba@altlinux.org> 1.2.1-alt1
 - new version 1.2.1
 
