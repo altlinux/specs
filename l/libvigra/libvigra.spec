@@ -10,7 +10,7 @@
 
 Name: lib%_name
 Version: 1.11.2
-Release: alt1
+Release: alt2
 
 Summary: Generic Programming for Computer Vision
 License: MIT
@@ -31,9 +31,7 @@ BuildRequires: openexr-devel >= 3
 BuildRequires: doxygen
 %{?_with_hdf5:BuildRequires: libhdf5-devel}
 %{?_enable_python:BuildRequires: boost-python3-devel libnumpy-devel}
-%ifnarch e2k
 BuildRequires: libgomp-devel
-%endif
 
 Provides: %_name
 Obsoletes: %_name
@@ -80,11 +78,6 @@ This package provides Python3 bindings for VIGRA library.
 # fix shebang
 sed -i 's|\(#!\/usr\/bin\/\)env \(python\)|\1\23|' config/vigra-config.in
 
-%ifarch e2k
-# unsupported as of lcc 1.21.20
-sed -i 's,-ftemplate-depth=900,,' CMakeLists.txt
-%endif
-
 %build
 %add_optflags %(getconf LFS_CFLAGS)
 %cmake \
@@ -92,9 +85,6 @@ sed -i 's,-ftemplate-depth=900,,' CMakeLists.txt
 %{?_enable_python:-DWITH_VIGRANUMPY:BOOL=ON -DPYTHON_VERSION=3} \
 %if_with hdf5
 	-DWITH_HDF5:BOOL=ON \
-%endif
-%ifarch e2k
-	-DSUFFICIENT_TEMPLATE_DEPTH:BOOL=TRUE \
 %endif
 	-DWITH_OPENEXR:BOOL=ON \
 	-DDOCINSTALL:STRING=share/doc
@@ -123,6 +113,10 @@ sed -i 's,-ftemplate-depth=900,,' CMakeLists.txt
 
 
 %changelog
+* Mon May 06 2024 Yuri N. Sedunov <aris@altlinux.org> 1.11.2-alt2
+- updated to 1-11-2-23-gd4250a02
+- removed obsolete E2K stuff
+
 * Mon Feb 12 2024 Yuri N. Sedunov <aris@altlinux.org> 1.11.2-alt1
 - updated to 1-11-2-22-g502d5bc7
 - removed upstreamed patch from previous release
