@@ -4,7 +4,7 @@
 %define libkrdccore libkrdccore%sover
 
 Name: kde5-%rname
-Version: 23.08.5
+Version: 24.02.2
 Release: alt1
 %K5init
 
@@ -22,11 +22,12 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcompletion-devel kf5-kdelibs4support kf5-kdnssd-devel kf5-kdoctools-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kservice-devel kf5-kwallet-devel kf5-kxmlgui-devel libvncserver-devel python-module-google python3-dev rpm-build-ruby xfreerdp
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel
-BuildRequires: libvncserver-devel xfreerdp libssh-devel
+BuildRequires: libvncserver-devel libssh-devel
+BuildRequires: libfreerdp-devel xfreerdp freerdp-plugins-standard
 BuildRequires: kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcompletion-devel kf5-kdelibs4support kf5-kdnssd-devel
 BuildRequires: kf5-kdoctools-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-knotifications-devel kf5-knotifyconfig-devel
 BuildRequires: kf5-kservice-devel kf5-kwallet-devel kf5-kxmlgui-devel
-BuildRequires: kf5-kwindowsystem-devel kf5-kactivities-devel
+BuildRequires: kf5-kwindowsystem-devel kf5-kactivities-devel kf5-kio-devel
 
 %description
 Remote Desktop Client.
@@ -79,7 +80,7 @@ KF5 library
 %_K5plug/krdc/
 %_K5xdgapp/org.kde.krdc.desktop
 %_K5cfg/krdc.kcfg
-%_K5data/kio/servicemenus/*rdc*.desktop
+#%_K5data/kio/servicemenus/*rdc*.desktop
 %_datadir/metainfo/*.xml
 
 %files devel
@@ -92,6 +93,12 @@ KF5 library
 %_K5lib/libkrdccore.so.*
 
 %changelog
+* Thu May 02 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.2-alt1
+- new version
+
+* Thu Apr 11 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.1-alt1
+- new version
+
 * Fri Feb 16 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 

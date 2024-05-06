@@ -16,7 +16,7 @@
 
 %define rname k3b
 Name: kde5-%rname
-Version: 23.08.5
+Version: 24.02.2
 Release: alt1
 %K5init no_altplace
 
@@ -148,10 +148,10 @@ fi
 %_K5xdgapp/org.kde.%rname.desktop
 %_K5data/solid/actions/%{rname}_*.desktop
 %_K5data/%rname/
+%_K5data/kio/servicemenus/*%{rname}*.desktop
 %_K5xdgmime/*%{rname}*.xml
-%_K5srv/ServiceMenus/%{rname}*.desktop
-%_K5srvtyp/%{rname}plugin.desktop
-%_K5xmlgui/%rname/
+#%_K5srvtyp/%{rname}plugin.desktop
+#%_K5xmlgui/%rname/
 %_K5notif/%rname.notifyrc
 %_K5icon/hicolor/*/apps/%rname.*
 %_K5icon/hicolor/*/mimetypes/application-x-%rname.*
@@ -178,6 +178,12 @@ fi
 %_K5inc/k3b*.h
 
 %changelog
+* Thu May 02 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.2-alt1
+- new version
+
+* Thu Apr 11 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.1-alt1
+- new version
+
 * Fri Feb 16 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 

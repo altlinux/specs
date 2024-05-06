@@ -8,7 +8,7 @@
 
 %define rname kipi-plugins
 Name: kde5-%rname
-Version: 23.08.5
+Version: 24.02.2
 Release: alt1
 %K5init
 
@@ -192,6 +192,12 @@ done
 %_K5lib/libKF5kipiplugins.so.%libsover.*
 
 %changelog
+* Thu May 02 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.2-alt1
+- new version
+
+* Thu Apr 11 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.1-alt1
+- new version
+
 * Fri Feb 16 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
