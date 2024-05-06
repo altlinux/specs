@@ -9,7 +9,7 @@
 
 Summary: A clients-server system for collecting checksums of mail messages
 Name: DCC
-Version: 2.3.168
+Version: 2.3.169
 Release: alt0.1
 License: MIT-0
 Group: System/Servers
@@ -87,6 +87,9 @@ ln -s %mylibexec_dir/cron-dccd %buildroot%_sysconfdir/cron.daily/cron-dcc
 %_man8dir/*
 
 %changelog
+* Mon May 06 2024 L.A. Kostis <lakostis@altlinux.ru> 2.3.169-alt0.1
+- 3.1.169.
+
 * Sat Feb 19 2022 L.A. Kostis <lakostis@altlinux.ru> 2.3.168-alt0.1
 - 2.3.168.
 - systemd: fix stale socket.
