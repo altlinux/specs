@@ -1,6 +1,6 @@
 Name: python3-module-telegram-bot
-Version: 13.15
-Release: alt2
+Version: 21.0.1
+Release: alt1
 
 Summary: Python interface for the Telegram Bot API
 License: LGPLv3
@@ -14,6 +14,19 @@ BuildRequires: rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 
+BuildRequires: python3(pytest)
+BuildRequires: python3(pytest-asyncio)
+BuildRequires: python3(xdist)
+BuildRequires: python3(flaky)
+
+BuildRequires: python3(anyio)
+BuildRequires: python3(cachetools)
+BuildRequires: python3(h2)
+BuildRequires: python3(httpx)
+BuildRequires: python3(pytz)
+BuildRequires: python3(socksio)
+BuildRequires: python3(tornado)
+
 %description
 %summary
 
@@ -26,11 +39,18 @@ BuildRequires: python3(wheel)
 %install
 %pyproject_install
 
+%check
+# some tests are online
+%pyproject_run_pytest -n auto --dist=loadgroup -m no_req ||:
+
 %files
 %python3_sitelibdir/telegram
 %python3_sitelibdir/python_telegram_bot-%version.dist-info
 
 %changelog
+* Wed Mar 27 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 21.0.1-alt1
+- 21.0.1 released
+
 * Wed Mar 27 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 13.15-alt2
 - keep vendored copy of urllib3 (closes: 49817)
 
