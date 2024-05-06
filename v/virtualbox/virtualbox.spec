@@ -65,8 +65,8 @@
 
 
 Name: virtualbox
-Version: 7.0.14
-Release: alt2
+Version: 7.0.18
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -914,6 +914,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Fri May 03 2024 Aleksei Kalinin <kaa@altlinux.org> 7.0.18-alt1
+- Update to newest version 7.0.18
+
 * Mon Feb 12 2024 Valery Sinelnikov <greh@altlinux.org> 7.0.14-alt2
 - Removed unneeded execution permission in systemd unit file
 

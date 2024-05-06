@@ -1,5 +1,5 @@
 %define module_name	virtualbox-addition
-%define module_version  7.0.14
+%define module_version  7.0.18
 %define module_release	alt1
 
 %define flavour		std-def
@@ -99,6 +99,9 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri May 03 2024 Aleksei Kalinin <kaa@altlinux.org> 7.0.18-alt1
+- Updated template for virtualbox 7.0.18
 
 * Wed Jan 17 2024 Valery Sinelnikov <greh@altlinux.org> 7.0.14-alt1
 - Updated template for virtualbox 7.0.14
