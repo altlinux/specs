@@ -1,31 +1,44 @@
 Name: python3-module-aiodns
-Version: 1.1.1
-Release: alt2
-License: BSD
-Group: Development/Python3
-Summary: Asynchronous DNS resolutions
-Source0: https://pypi.python.org/packages/3b/45/dcee156eabca900af3a1bab8acb9531636b13db4b677d44ba468a43969e0/aiodns-%{version}.tar.gz
+Version: 3.2.0
+Release: alt1
+
+Summary: Simple DNS resolver for asyncio
+License: MIT
+Group: Development/Python
+Url: https://github.com/saghul/aiodns
+
+Source0: %name-%version-%release.tar
+
 BuildArch: noarch
-BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+BuildRequires: rpm-build-pyproject
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(pycares)
 
 %description
-Aiodns provides a simple way for doing asynchronous DNS resolutions with
-a synchronous looking interface by using pycares.
+%summary
 
 %prep
-%setup -n aiodns-%{version}
+%setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%python3_sitelibdir_noarch/*
+%python3_sitelibdir/aiodns
+%python3_sitelibdir/aiodns-%version.dist-info
+
+%check
+#online tests
+%pyproject_run -- python3 tests.py ||:
 
 %changelog
+* Fri May 03 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.2.0-alt1
+- 3.2.0 released
+
 * Thu May 27 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.1-alt2
 - Drop python2 support.
 
@@ -45,5 +58,4 @@ a synchronous looking interface by using pycares.
 
 * Fri Jan 09 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt1.git20141207
 - Initial build for Sisyphus
-
 
