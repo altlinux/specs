@@ -3,7 +3,7 @@
 
 Name: mobile-broadband-provider-info
 Version: 20240407
-Release: alt1
+Release: alt1.1
 
 Summary: Mobile Broadband Service Provider Database
 Group: System/Configuration/Networking
@@ -20,8 +20,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
-BuildRequires: xsltproc
-%{?_enable_check:BuildRequires: xmllint}
+BuildRequires: xsltproc xmllint
 
 %description
 This package contains listings of mobile broadband (3G) providers and
@@ -48,6 +47,9 @@ associated network and plan information.
 %doc COPYING README
 
 %changelog
+* Mon May 06 2024 Yuri N. Sedunov <aris@altlinux.org> 20240407-alt1.1
+- fixed BR with disabled %%check
+
 * Thu May 02 2024 Yuri N. Sedunov <aris@altlinux.org> 20240407-alt1
 - 20240407
 
