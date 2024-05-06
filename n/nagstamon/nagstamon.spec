@@ -15,7 +15,7 @@ BuildRequires: python3-module-importlib-metadata
 %define _localstatedir %_var
 Name:           nagstamon
 Version:        3.10.1
-Release:        alt2
+Release:        alt3
 Summary:        Nagios status monitor for the desktop
 License:        GPLv2
 Group:          Monitoring
@@ -23,6 +23,7 @@ Url:            http://nagstamon.ifw-dresden.de/
 Source:         %name-%version.tar
 %py3_requires   secretstorage sip keyring requests_gssapi gssapi importlib-metadata
 BuildArch:      noarch
+
 Patch1:         %name-%version-init-translator.patch
 Patch2:         nagstamon-3.0.1-alt-default-values-in-config.patch
 Patch3:         %name-%version-system-config.patch
@@ -30,6 +31,8 @@ Patch4:         %name-%version-abstract-socket.patch
 # https://github.com/HenriWahl/Nagstamon/issues/907
 Patch6:         nagstamon-3.5.0-version-without-OS.patch
 Patch7:         %name-%version-use-gssapi.patch
+Patch8:         %name-%version-use-icinga2apic.patch
+
 Source44:       import.info
 Source1:        all.ts
 Source2:        all.qm
@@ -43,12 +46,7 @@ servers.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch6 -p1
-%patch7 -p1
+%autopatch1 -p1
 
 cp %SOURCE1 %SOURCE2 Nagstamon/QUI/
 
@@ -88,6 +86,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue Apr 02 2024 Paul Wolneykien <manowar@altlinux.org> 3.10.1-alt3
+- Use icinga2apic Python module (patch).
+
 * Wed Apr 26 2023 Paul Wolneykien <manowar@altlinux.org> 3.10.1-alt2
 - Fix: Require python3-module-importlib-metadata at runtime.
 - Try to use requests_gssapi module on Linux (patch).
