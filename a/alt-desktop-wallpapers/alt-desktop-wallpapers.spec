@@ -1,7 +1,7 @@
 %define rname desktop-wallpapers
 
 Name: alt-desktop-wallpapers
-Version: 0.3.0
+Version: 11.0.0
 Release: alt1
 %K5init no_altplace
 
@@ -63,6 +63,9 @@ popd 1>/dev/null
 %_pixmapsdir/*
 
 %changelog
+* Mon May 06 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt1
+- new version
+
 * Fri Apr 29 2022 Sergey V Turchin <zerg at altlinux dot org> 0.3.0-alt1
 - add more wallpapers
 
