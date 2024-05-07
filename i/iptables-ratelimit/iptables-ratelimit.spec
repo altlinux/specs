@@ -1,11 +1,8 @@
 Name: iptables-ratelimit
 Version: 0.3.3
-Release: alt1
+Release: alt2
 Summary: ipt-ratelimit module implements traffic policing
 Group: System/Libraries
-
-Packager: Alexei Takaseev <taf@altlinux.ru>
-
 License: GPLv2
 Url: https://github.com/aabc/ipt-ratelimit
 Source0: %name-%version.tar
@@ -54,6 +51,9 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Tue May 07 2024 Alexei Takaseev <taf@altlinux.org> 0.3.3-alt2
+- Fix build with iptables 1.8.10
+
 * Thu Apr 21 2022 Alexei Takaseev <taf@altlinux.org> 0.3.3-alt1
 - 0.3.3
 
