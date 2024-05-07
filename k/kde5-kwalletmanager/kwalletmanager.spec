@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt2
+Release: alt3
 %K5init
 
 Group: Graphical desktop/KDE
@@ -83,6 +83,9 @@ cp -ar po/ru/docs/kwallet5 po/ru/docs/kwalletmanager5
 
 
 %changelog
+* Fri Apr 26 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 23.08.5-alt3
+- update handbook fix patch
+
 * Mon Apr 22 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 23.08.5-alt2
 - fix display of screenshots in handbook
 
