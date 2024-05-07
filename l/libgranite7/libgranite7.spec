@@ -4,7 +4,8 @@
 
 %define _name granite
 %define rdn_name io.elementary.%_name-%api_ver_major
-%define ver_major 7.4
+%define ver_major 7.5
+%define namespace Granite
 %define api_ver_major 7
 %define api_ver 7.0
 %define sover 7
@@ -106,6 +107,7 @@ GObject introspection devel data for the Granite library.
 %files -f %_name-%api_ver_major.lang
 %_libdir/*.so.%{sover}*
 %_iconsdir/hicolor/*/*/*.svg
+%_datadir/themes/%namespace/
 %_datadir/metainfo/%_name-%api_ver_major.metainfo.xml
 %doc README*
 
@@ -121,13 +123,16 @@ GObject introspection devel data for the Granite library.
 %_desktopdir/%rdn_name.demo.desktop
 
 %files gir
-%_typelibdir/Granite-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Granite-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 
 
 %changelog
+* Tue May 07 2024 Yuri N. Sedunov <aris@altlinux.org> 7.5.0-alt1
+- 7.5.0
+
 * Tue Nov 21 2023 Yuri N. Sedunov <aris@altlinux.org> 7.4.0-alt1
 - 7.4.0
 
