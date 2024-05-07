@@ -4,7 +4,7 @@
 
 Name: warzone2100
 Version: 4.4.2
-Release: alt1
+Release: alt2
 Summary: Warzone 2100 Resurrection Project (RTS 3D game)
 License: GPLv2+ and CC-BY-SA-3.0
 Group: Games/Strategy
@@ -41,6 +41,7 @@ Source12: %name-%version-data-fonts.tar
 Source13: %name-%version-3rdparty-quickjs-wz.tar
 Source14: %name-%version-3rdparty-basis_universal.tar
 Source15: %name-%version-data-terrain_overrides-classic.tar
+Source16: %name-%version-3rdparty-re2.tar
 
 Source1000: %name.watch
 # https://github.com/Warzone2100/data-terrain-high/releases/download/v1/high.wz
@@ -61,7 +62,6 @@ BuildRequires: cmake
 BuildRequires: libminiupnpc-devel
 BuildRequires: libutfcpp-devel
 BuildRequires: libutf8proc-devel
-BuildRequires: libre2-devel
 BuildRequires: libsodium-devel
 BuildRequires: libcurl-devel
 BuildRequires: libsqlite3-devel
@@ -92,7 +92,7 @@ BuildArch: noarch
 Game data for warzone2100.
 
 %prep
-%setup -a1 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15
+%setup -a1 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -142,6 +142,9 @@ rm -rf %buildroot%_iconsdir/net.wz2100.warzone2100.png
 %_datadir/warzone2100
 
 %changelog
+* Tue May 07 2024 Elizaveta Morozova <morozovaes@altlinux.org> 4.4.2-alt2
+- Built with bundled re2.
+
 * Mon Dec 04 2023 Elizaveta Morozova <morozovaes@altlinux.org> 4.4.2-alt1
 - Updated version.
 
