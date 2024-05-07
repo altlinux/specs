@@ -1,6 +1,6 @@
 Name: cups
-Version: 2.4.7
-Release: alt2
+Version: 2.4.8
+Release: alt1
 
 Summary: Common Unix Printing System - server package
 License: Apache-2.0
@@ -55,7 +55,7 @@ Patch501: ALT-build_po.patch
 Patch502: ALT-remove_BSD.patch
 Patch503: ALT-enable-631.patch
 Patch504: ALT-1.6.2-lpd-utf8.patch
-Patch506: ALT-1.6.2-lspp-SE.patch
+Patch506: ALT-2.4.8-lspp-SE.patch
 Patch507: ALT-1.7.0-docroot-i18n.patch
 Patch508: ALT-644.patch
 Patch509: ALT-1.7.2-local_ipv6.patch
@@ -63,8 +63,6 @@ Patch511: ALT-pwg-raster-attributes.patch
 Patch512: ALT-2.1.0-lpd-sanitizer.patch
 Patch513: ALT-fc-lspp.patch
 Patch514: ALT-checkpo.patch
-# should be removed - see https://github.com/OpenPrinting/cups/issues/804 and https://github.com/OpenPrinting/libcupsfilters/issues/38
-Patch515: ALT-pantun-PR805-hotfix.patch
 
 # ALT SE related patches
 Patch552: ALT-ipp-alt-extension-copy-document.patch
@@ -181,7 +179,6 @@ services using the main CUPS library "libcups".
 %patch512 -p2
 %patch513 -p1
 %patch514 -p1
-%patch515 -p1
 
 # ALT SE related patches
 %patch552 -p1
@@ -403,6 +400,9 @@ fi
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 
 %changelog
+* Tue May 07 2024 Anton Farygin <rider@altlinux.ru> 2.4.8-alt1
+- 2.4.8
+
 * Mon Oct 30 2023 Anton Farygin <rider@altlinux.ru> 2.4.7-alt2
 - add hotfix from Alexander Pevzner for Pantum driverless printing (closes: #48114)
 - removed Ubuntu-0012-Debian-Use-dpkg-architecture-in-cups-config-to-make-.patch (closes: #38564)
