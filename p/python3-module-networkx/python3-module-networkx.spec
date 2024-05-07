@@ -1,11 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%def_disable check
+%def_with check
+%define pypi_name networkx
 
-%define oname networkx
-
-Name:           python3-module-%oname
+Name:           python3-module-%pypi_name
 Epoch:          2
-Version:        2.8.8
+Version:        3.3
 Release:        alt1
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python3
@@ -16,19 +15,16 @@ BuildArch:      noarch
 
 # https://github.com/networkx/networkx.git
 Source:         %name-%version.tar
-
-Patch1:         %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-decorator >= 4.3.0
-BuildRequires: python3-module-yaml >= 5.3
-BuildRequires: python3-module-lxml >= 4.5
-BuildRequires: python3-module-gdal >= 1.10.0
-%if_enabled check
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-numpy-testing
-BuildRequires: python3-module-pandas-tests
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires: python3-devel 
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+BuildRequires: python3-module-pytest python3-module-pytest-cov
+BuildRequires: python3-module-numpy python3-module-numpy-testing
+BuildRequires: python3-module-lxml python3-module-pandas
+BuildRequires: python3-module-matplotlib python3-module-fonttools
 %endif
 
 Requires: %name-drawing = %EVR
@@ -77,54 +73,47 @@ This package contains tests for NetworkX.
 
 %prep
 %setup
-%patch1 -p1
-
-find -type f -name '*.py' -exec sed -i \
-	's|#!/usr/bin/env python|#!/usr/bin/env python3|' '{}' +
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-
-rm -rf %buildroot%_defaultdocdir
+%pyproject_install
 
 %check
-py.test3 --durations=10 --pyargs networkx
+%pyproject_run_pytest -vra
 
 %files
 
 %files core
 %doc LICENSE.txt
 %doc README.rst CODE_OF_CONDUCT.rst CONTRIBUTING.rst
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py*.egg-info
-%exclude %python3_sitelibdir/%oname/drawing
-%exclude %python3_sitelibdir/%oname/readwrite/nx_shp.py
-%exclude %python3_sitelibdir/%oname/readwrite/__pycache__/nx_shp.*
-%exclude %python3_sitelibdir/%oname/tests
-%exclude %python3_sitelibdir/%oname/conftest.py
-%exclude %python3_sitelibdir/%oname/__pycache__/conftest.*
-%exclude %python3_sitelibdir/%oname/testing
-%exclude %python3_sitelibdir/%oname/*/tests
-%exclude %python3_sitelibdir/%oname/*/*/tests
+%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/%pypi_name-%version.dist-info
+%exclude %python3_sitelibdir/%pypi_name/drawing
+%exclude %python3_sitelibdir/%pypi_name/tests
+%exclude %python3_sitelibdir/%pypi_name/conftest.py
+%exclude %python3_sitelibdir/%pypi_name/__pycache__/conftest.*
+%exclude %python3_sitelibdir/%pypi_name/*/tests
+%exclude %python3_sitelibdir/%pypi_name/*/*/tests
 
 %files drawing
-%python3_sitelibdir/%oname/drawing
-%python3_sitelibdir/%oname/readwrite/nx_shp.py
-%python3_sitelibdir/%oname/readwrite/__pycache__/nx_shp.*
-%exclude %python3_sitelibdir/%oname/drawing/tests
+%python3_sitelibdir/%pypi_name/drawing
+%exclude %python3_sitelibdir/%pypi_name/drawing/tests
 
 %files tests
-%python3_sitelibdir/%oname/conftest.py
-%python3_sitelibdir/%oname/__pycache__/conftest.*
-%python3_sitelibdir/%oname/tests
-%python3_sitelibdir/%oname/testing
-%python3_sitelibdir/%oname/*/tests
-%python3_sitelibdir/%oname/*/*/tests
+%python3_sitelibdir/%pypi_name/conftest.py
+%python3_sitelibdir/%pypi_name/__pycache__/conftest.*
+%python3_sitelibdir/%pypi_name/tests
+%python3_sitelibdir/%pypi_name/*/tests
+%python3_sitelibdir/%pypi_name/*/*/tests
 
 %changelog
+* Mon May 06 2024 Anton Farygin <rider@altlinux.ru> 2:3.3-alt1
+- 2.8.8 -> 3.3
+
 * Sat Dec 03 2022 Anton Farygin <rider@altlinux.ru> 2:2.8.8-alt1
 - 2.6.3 -> 2.8.8
 
