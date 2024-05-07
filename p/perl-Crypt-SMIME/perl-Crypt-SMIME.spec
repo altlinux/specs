@@ -7,8 +7,8 @@ BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: openssl
 Name:           perl-%real_name
-Version:        0.28
-Release:        alt2
+Version:        0.30
+Release:        alt1
 Summary:        S/MIME message signing, verification, encryption and decryption
 License:        %perl_license
 URL:            https://metacpan.org/release/%real_name
@@ -64,6 +64,9 @@ echo '\.perl.req$' >> MANIFEST.SKIP
 %perl_vendor_archlib/Crypt*
 
 %changelog
+* Tue May 07 2024 L.A. Kostis <lakostis@altlinux.ru> 0.30-alt1
+- 0.30.
+
 * Wed Nov 10 2021 L.A. Kostis <lakostis@altlinux.ru> 0.28-alt2
 - Rebuild by human.
 
