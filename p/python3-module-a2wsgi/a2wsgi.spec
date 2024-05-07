@@ -1,5 +1,5 @@
 Name: python3-module-a2wsgi
-Version: 1.7.0
+Version: 1.10.4
 Release: alt1
 
 Summary: Convert WSGI app from/to ASGI app
@@ -38,5 +38,8 @@ BuildRequires: python3(httpx)
 %python3_sitelibdir/a2wsgi-%version.dist-info
 
 %changelog
+* Tue May 07 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.10.4-alt1
+- 1.10.4 released
+
 * Thu May 04 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.0-alt1
 - 1.7.0 released
