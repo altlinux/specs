@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 BuildArch: noarch
-Version: 2.0.4
+Version: 3.0.2
 Release: alt1
 Summary: The fastest markdown parser in pure Python
 License: BSD
@@ -11,11 +11,12 @@ Url: https://pypi.python.org/pypi/mistune/
 
 # https://github.com/lepture/mistune.git
 Source: %name-%version.tar
-
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 BuildRequires: rpm-build-python3
-BuildRequires: python3-module-wheel
-BuildRequires: python3-module-setuptools
-BuildRequires: /usr/bin/py.test3
+BuildRequires: python3-module-pytest
 
 %py3_provides %oname
 
@@ -31,6 +32,8 @@ Features:
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -39,13 +42,17 @@ Features:
 %pyproject_install
 
 %check
-py.test3
+%pyproject_run_pytest -vra
+
 
 %files
 %doc *.rst docs/*.rst
 %python3_sitelibdir/*
 
 %changelog
+* Tue May 07 2024 Anton Farygin <rider@altlinux.ru> 3.0.2-alt1
+- 2.0.4 -> 3.0.2
+
 * Sun Dec 04 2022 Anton Farygin <rider@altlinux.ru> 2.0.4-alt1
 - 0.8.3 -> 2.0.4
 
