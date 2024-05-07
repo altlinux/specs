@@ -1,8 +1,9 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define libname libfeedback
-%define ver_major 0.2
+%define ver_major 0.3
+%define namespace Lfb
 %define api_ver 0.0
 
 %def_enable introspection
@@ -12,8 +13,8 @@
 %def_enable check
 
 Name: feedbackd
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: Feedback library for GNOME
 Group: System/Servers
@@ -31,6 +32,7 @@ Requires: %libname = %EVR
 
 %define glib_ver 2.66
 %define gudev_ver 232
+%define gmobile_ver 0.1.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson
@@ -39,6 +41,7 @@ BuildRequires: pkgconfig(gsound)
 BuildRequires: pkgconfig(gudev-1.0) >= %gudev_ver
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(systemd)
+BuildRequires: pkgconfig(gmobile) >= %gmobile_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
@@ -88,6 +91,7 @@ GObject introspection devel data for %libname
 
 %prep
 %setup -n %name-%{?_disable_snapshot:v}%version
+# ALT #47557
 sed -i 's|-G %name|-G users|' debian/feedbackd.udev
 
 %build
@@ -132,13 +136,20 @@ install -D -m644 debian/%name.udev %buildroot%_udevrulesdir/90-%name.rules
 
 %if_enabled introspection
 %files -n %libname-gir
-%_typelibdir/Lfb-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files -n %libname-gir-devel
-%_girdir/Lfb-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 %changelog
+* Tue May 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+- build against shared gmobile-0.1.0 library
+
+* Wed Mar 27 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt2
+- updated to v0.2.1-15-g7588eca
+
 * Wed Sep 13 2023 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1.1
 - 90-feedbackd.rules: use "-G users" instead of "-G feedbackd"
   as argument for fbd-ledctrl (ALT #47557)
