@@ -1,19 +1,21 @@
 %def_enable snapshot
 
 %define _name gxml
+%define namespace GXml
 %define ver_major 0.20
 %define api_ver 0.20
+
 %def_enable introspection
 %def_enable docs
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.3
-Release: alt1.1
+Version: %ver_major.4
+Release: alt1
 
 Summary: GXml provides a GObject API for manipulating XML
 Group: System/Libraries
-License: LGPLv2.1+
+License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/GXml
 
 %if_disabled snapshot
@@ -22,13 +24,13 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source: %_name-%version.tar
 %endif
 
-%define glib_ver 2.32
+%define glib_ver 2.72
 %define vala_ver 0.34.6
-%define gee_ver 0.10.5
-%define xml2_ver 2.7
+%define gee_ver 0.20.5
+%define xml2_ver 2.9.13
 
 BuildRequires(pre): rpm-macros-meson rpm-build-vala
-BuildRequires: meson libvala-devel >= %vala_ver vala-tools
+BuildRequires: meson vala-tools
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgee0.8-devel >= %gee_ver
 BuildRequires: libxml2-devel >= %xml2_ver
@@ -44,7 +46,7 @@ Core API.
 %package devel
 Summary: Development files for GXml
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains libraries and header files needed for
@@ -53,7 +55,7 @@ development using GXml.
 %package gir
 Summary: GObject introspection data for the GXml library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the GXml library
@@ -62,8 +64,8 @@ GObject introspection data for the GXml library
 Summary: GObject introspection devel data for the GXml library
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the GXml library.
@@ -84,8 +86,8 @@ find ./ -type f -print0| xargs -r0 subst 's|gxml//xlibxml.h|gxml/xlibxml.h|' --
 
 %build
 %meson \
-	%{?_enable_docs:-Ddocs=true} \
-	%{?_enable_introspection:-Dintrospection=true}
+    %{?_enable_docs:-Ddocs=true} \
+    %{?_enable_introspection:-Dintrospection=true}
 %nil
 %meson_build
 
@@ -94,7 +96,6 @@ find ./ -type f -print0| xargs -r0 subst 's|gxml//xlibxml.h|gxml/xlibxml.h|' --
 %find_lang --output=%_name.lang %_name GXml-%api_ver
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
 %__meson_test
 
 %files -f %_name.lang
@@ -105,24 +106,26 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_includedir/%_name-%api_ver/
 %_libdir/%name-%api_ver.so
 %_pkgconfigdir/%_name-%api_ver.pc
-%_vapidir/%_name-%api_ver.deps
 %_vapidir/%_name-%api_ver.vapi
 
 %if_enabled introspection
 %files gir
-%_typelibdir/GXml-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/GXml-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 %if_enabled docs
 %files devel-doc
 #%_datadir/gtk-doc/html/%_name/
-%_datadir/devhelp/books/GXml-%api_ver/
+%_datadir/devhelp/books/%namespace-%api_ver/
 %endif
 
 %changelog
+* Tue May 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.20.4-alt1
+- updated to 0.20.4-19-g54a9251
+
 * Wed Mar 09 2022 Yuri N. Sedunov <aris@altlinux.org> 0.20.3-alt1.1
 - added some fonts to BR to fix docs build
 
