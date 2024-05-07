@@ -2,7 +2,7 @@
 
 Name: plasma5-%rname
 Version: 5.27.11
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Networking/WWW
@@ -52,6 +52,8 @@ Requires: %name-common = %version-%release
 
 %prep
 %setup -n %rname-%version
+# Remove unnecessary category
+sed -i 's|\(Categories=.*\)\(WebBrowser\);\w\+|\1Network;\2|' ./app/org.kde.aura-browser.desktop.cmake
 
 %build
 %K5build \
@@ -69,6 +71,9 @@ Requires: %name-common = %version-%release
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Apr 24 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 5.27.11-alt2
+- correct app category definition (closes: 49847)
+
 * Thu Mar 07 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt1
 - new version
 
