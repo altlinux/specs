@@ -4,7 +4,7 @@
 
 Name: efitools
 Version: 1.9.2
-Release: alt2
+Release: alt3
 Summary: UEFI secure boot toolkit
 Group: Development/Other
 License: GPL-2.0-only
@@ -13,6 +13,7 @@ Url: https://git.kernel.org/pub/scm/linux/kernel/git/jejb/efitools.git
 # Doc: https://blog.hansenpartnership.com/uefi-secure-boot/
 
 Source: %name-%version.tar
+Patch3500: alt-loongarch64.patch
 ExcludeArch: ppc64le
 BuildRequires: gnu-efi
 BuildRequires: help2man
@@ -26,6 +27,7 @@ Useful tools for manipulating UEFI secure boot platforms.
 
 %prep
 %setup
+%patch3500 -p1
 
 %build
 %make_build
@@ -40,6 +42,9 @@ Useful tools for manipulating UEFI secure boot platforms.
 %_man1dir/*.1*
 
 %changelog
+* Tue May 07 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.9.2-alt3
+- NMU: fixed FTBFS on LoongArch.
+
 * Wed Feb 17 2021 Vitaly Chikunov <vt@altlinux.org> 1.9.2-alt2
 - Fix ALT beekeeper rebuild failures.
 
