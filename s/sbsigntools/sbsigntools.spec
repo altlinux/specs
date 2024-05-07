@@ -5,7 +5,7 @@
 
 Name: sbsigntools
 Version: 0.9.5
-Release: alt2
+Release: alt3
 Summary: Signing utility for UEFI secure boot
 License: GPL-3.0-or-later
 Url: https://git.kernel.org/pub/scm/linux/kernel/git/jejb/sbsigntools.git
@@ -14,6 +14,7 @@ Url: https://git.kernel.org/pub/scm/linux/kernel/git/jejb/sbsigntools.git
 Group: Development/Other
 
 Source: %name-%version.tar
+Patch3500: alt-loongarch64.patch
 
 ExcludeArch: ppc64le
 BuildRequires: binutils-devel
@@ -28,6 +29,7 @@ Tools to add signatures to EFI binaries and drivers.
 
 %prep
 %setup
+%patch3500 -p1
 
 %build
 %define optflags_lto %nil
@@ -53,6 +55,9 @@ Tools to add signatures to EFI binaries and drivers.
 %_man1dir/*.1*
 
 %changelog
+* Tue May 07 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.9.5-alt3
+- NMU: support LoongArch 64-bit PE/COFF images.
+
 * Thu Jun 22 2023 Vitaly Chikunov <vt@altlinux.org> 0.9.5-alt2
 - Disable LTO build to fix gcc-13 false positive error.
 
