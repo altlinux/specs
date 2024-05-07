@@ -8,7 +8,7 @@
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Education
@@ -19,6 +19,7 @@ License: GPLv2+ / LGPLv2+
 Requires: kf5-kirigami
 
 Source: %rname-%version.tar
+Patch0: alt-add-display-imported-commands.patch
 
 # Automatically added by buildreq on Wed Mar 30 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ gtk-update-icon-cache kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libgpg-error libgst-plugins1.0 libncurses-devel libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-sensors libqt5-sql libqt5-svg libqt5-test libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libtinfo-devel libxcbutil-keysyms python-base python-modules python3 qt5-base-devel qt5-declarative-devel rpm-build-python3 xml-common xml-utils
@@ -46,6 +47,7 @@ however, one does not need to know MathML to use KAlgebra.
 
 %prep
 %setup -n %rname-%version
+%patch0 -p1
 
 %build
 %K5build
@@ -67,6 +69,9 @@ however, one does not need to know MathML to use KAlgebra.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Sat Apr 27 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 23.08.5-alt2
+- add display of imported commands from script (closes: 49909)
+
 * Tue Feb 20 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
