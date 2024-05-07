@@ -1,7 +1,7 @@
-%define rev r1905950
+%define rev r1916528
 
 Name: spamassassin-rules
-Version: 4.0.0
+Version: 4.0.1
 Release: alt1
 
 Summary: Rules for SpamAssassin
@@ -34,6 +34,9 @@ install -pm644 *.cf %buildroot%_datadir/spamassassin
 %_datadir/spamassassin
 
 %changelog
+* Tue May 07 2024 L.A. Kostis <lakostis@altlinux.ru> 4.0.1-alt1
+- 4.0.1 (r1916528).
+
 * Tue Jun 27 2023 L.A. Kostis <lakostis@altlinux.ru> 4.0.0-alt1
 - 4.0.0 (r1905950).
 
