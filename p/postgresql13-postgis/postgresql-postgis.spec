@@ -3,7 +3,7 @@
 
 Name: postgresql%pg_ver-postgis
 Version: 3.4.2
-Release: alt1
+Release: alt1.1
 
 Summary: Geographic Information Systems Extensions to PostgreSQL %pg_ver
 Summary(ru_RU.UTF-8): Геоинформационные расширения для PostgreSQL %pg_ver
@@ -81,7 +81,7 @@ rm -rf %buildroot%_libdir/liblwgeom.a
 %_datadir/icons/hicolor/*/apps/shp2pgsql-gui.png
 %_bindir/create_template_postgis
 %_libdir/pgsql/postgis*.so
-%ifnarch %e2k
+%ifnarch %e2k loongarch64
 %_libdir/pgsql/bitcode
 %endif
 %_libdir/pgsql/address_standardizer*.so
@@ -89,6 +89,9 @@ rm -rf %buildroot%_libdir/liblwgeom.a
 %_datadir/pgsql/extension
 
 %changelog
+* Tue May 07 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.4.2-alt1.1
+- NMU: fixed FTBFS on LoongArch (jit is not available here).
+
 * Sat Apr 13 2024 Andrey Cherepanov <cas@altlinux.org> 3.4.2-alt1
 - New version.
 
