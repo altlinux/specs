@@ -1,6 +1,6 @@
 Name: tinyproxy
 Version: 1.11.1
-Release: alt1
+Release: alt2
 
 Summary: A small, efficient HTTP/SSL proxy daemon
 License: GPLv2
@@ -16,8 +16,7 @@ Source4: %name.logrotate
 Source5: %name.tmpfiles
 Source6: %name.sysconfig
 
-BuildRequires: make
-BuildRequires: gcc
+BuildRequires: make gcc /usr/bin/pod2man
 
 %description
 tinyproxy is a small, efficient HTTP/SSL proxy daemon that is very useful in a
@@ -34,6 +33,7 @@ resource intensive, or a security risk.
 %setup
 
 %build
+%autoreconf
 %configure --enable-reverse \
 	   --enable-transparent \
 	   --enable-xtinyproxy \
@@ -88,6 +88,9 @@ fi
 %attr(2770,root,%tinyproxy_group) %dir %tinyproxy_logdir
 
 %changelog
+* Tue May 07 2024 Nikolay Burykin <bne@altlinux.org> 1.11.1-alt2
+- Fix (CVE-2023-49606)
+
 * Wed Apr 05 2023 Nikolay Burykin <bne@altlinux.org> 1.11.1-alt1
 - New version 1.11.1
 
