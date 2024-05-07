@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-Pygments
-Version: 2.17.2
+Version: 2.18.0
 Release: alt1
 Summary: Pygments is a syntax highlighting package written in Python
 License: BSD-2-Clause
@@ -68,6 +68,9 @@ rm -fv %buildroot%python3_sitelibdir/pygments/sphinxext.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon May 06 2024 Stanislav Levin <slev@altlinux.org> 2.18.0-alt1
+- 2.17.2 -> 2.18.0.
+
 * Wed Nov 22 2023 Stanislav Levin <slev@altlinux.org> 2.17.2-alt1
 - 2.16.1 -> 2.17.2.
 
