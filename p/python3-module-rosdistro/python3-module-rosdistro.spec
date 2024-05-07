@@ -1,8 +1,8 @@
 %define  modulename rosdistro
 
 Name:    python3-module-%modulename
-Version: 0.9.0
-Release: alt2
+Version: 0.9.1
+Release: alt1
 
 Summary: Tools to work with catkinized rosdistro files
 License: BSD-3-Clause
@@ -39,6 +39,9 @@ Patch:   remove-distutils-for-python-3.12.patch
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue May 07 2024 Andrey Cherepanov <cas@altlinux.org> 0.9.1-alt1
+- New version.
+
 * Tue Oct 17 2023 Grigory Ustinov <grenka@altlinux.org> 0.9.0-alt2
 - Dropped dependency on distutils.
 
