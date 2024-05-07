@@ -1,9 +1,9 @@
 %define rname markdownpart
 
 Name: kde5-%rname
-Version: 23.08.2
+Version: 23.08.5
 Release: alt1
-%K5init no_appdata
+%K5init
 
 Group: Graphical desktop/KDE
 Summary: KPart for rendering Markdown content
@@ -39,9 +39,12 @@ Extends: Ark, Kate, KDevelop, Konqueror, Krusader.
 %files -f %name.lang
 %doc README* LICENSES/*
 %_K5plug/kf5/parts/markdownpart.so
-#%_K5srv/markdownpart.desktop
+%_datadir/metainfo/*.xml
 
 %changelog
+* Tue May 07 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
+- new version
+
 * Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
 
