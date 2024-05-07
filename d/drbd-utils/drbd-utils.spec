@@ -1,11 +1,13 @@
 %def_without xen
-%define githash fdd9a4d603a9dc99d110d8bd0e288d7c0b6f586e
+%define githash ba2ce9037989b6141222c7901d1219cf852949f1
 %define gitdiff c6e62702d5e4fb2cf6b3fa27e67cb0d4b399a30b
 %define _localstatedir %_var
 %global optflags_lto %optflags_lto -ffat-lto-objects
+# Fake unmet detection:
+%filter_from_requires /^.usr.lib.lsb.init-functions/d
 
 Name: drbd-utils
-Version: 9.27.0
+Version: 9.28.0
 Release: alt1
 
 Summary: DRBD user-land tools and scripts
@@ -188,6 +190,9 @@ make test
 %_datadir/cluster/drbd.metadata
 
 %changelog
+* Mon May 06 2024 Andrew A. Vasilyev <andy@altlinux.org> 9.28.0-alt1
+- 9.28.0
+
 * Fri Dec 22 2023 Andrew A. Vasilyev <andy@altlinux.org> 9.27.0-alt1
 - 9.27.0
 
@@ -292,5 +297,5 @@ make test
 - Fixed build (man page packaging)
 
 * Mon Sep 01 2014 Lenar Shakirov <snejok@altlinux.ru> 8.9.0-alt1
-- First build for ALT as separate package "%name" (based on Fedora 8.9.0-8.fc21.src)
+- First build for ALT as separate package "drbd-utils" (based on Fedora 8.9.0-8.fc21.src)
 
