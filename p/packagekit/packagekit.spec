@@ -6,7 +6,7 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.2.5.0.0.30
-Release:   alt1
+Release:   alt2
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -305,6 +305,9 @@ Immediately test PackageKit when installing this package.
 
 
 %changelog
+* Tue May 07 2024 Sergey V Turchin <zerg@altlinux.org> 1.2.5.0.0.30-alt2
+- Don't use old appstream define.
+
 * Mon Jul 17 2023 Ivan Zakharyaschev <imz@altlinux.org> 1.2.5.0.0.30-alt1
 - Build PACKAGEKIT_1_2_5-30-g8957e9e49 with a fix for
   https://github.com/PackageKit/PackageKit/issues/539 (random crash).
