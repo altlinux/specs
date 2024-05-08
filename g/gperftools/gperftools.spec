@@ -5,7 +5,7 @@
 
 Name: gperftools
 Version: 2.15
-Release: alt1
+Release: alt1.1
 
 Provides: google-perftools
 
@@ -48,22 +48,16 @@ files for developing applications that use the %name package.
 
 %build
 %autoreconf
-%configure --disable-static \
-%ifarch loongarch64
-	--enable-minimal \
-%endif
-	%nil
+%configure --disable-static
 %make_build
 
 %install
 %make_install DESTDIR=%buildroot install
 
-%ifnarch loongarch64
 %files
 %doc %_defaultdocdir/%name
 %_bindir/pprof*
 %_man1dir/pprof.*
-%endif
 
 %files -n lib%name
 %_libdir/lib*.so.*
@@ -75,6 +69,9 @@ files for developing applications that use the %name package.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed May 08 2024 Ivan A. Melnikov <iv@altlinux.org> 2.15-alt1.1
+- NMU: full build on loongarch64
+
 * Wed Mar 27 2024 Vitaly Chikunov <vt@altlinux.org> 2.15-alt1
 - Update to 2.15 (2024-03-27).
 
