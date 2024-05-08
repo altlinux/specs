@@ -3,9 +3,20 @@
 
 %def_with check
 
+%define add_python_extra() \
+%{expand:%%package -n %%name+%{1} \
+Summary: %%summary \
+Group: Development/Python3 \
+Requires: %%name \
+%{expand:%%pyproject_runtimedeps_metadata -- --extra %{1}} \
+%%description -n %%name+%{1}' \
+Extra "%{1}" for %%pypi_name. \
+%%files -n %%name+%{1} \
+}
+
 Name: python3-module-%pypi_name
 Version: 1.2.1
-Release: alt1
+Release: alt2
 Summary: Simple, correct PEP 517 build frontend
 License: MIT
 Group: Development/Python3
@@ -15,6 +26,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage extras dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -23,6 +36,8 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_metadata_extra uv
 %pyproject_builddeps_metadata_extra virtualenv
 %endif
+
+%add_python_extra uv
 
 %description
 A simple, correct PEP 517 build frontend.
@@ -63,6 +78,9 @@ Requires: python3-module-%pypi_name
 %_bindir/pyproject-build
 
 %changelog
+* Wed May 08 2024 Stanislav Levin <slev@altlinux.org> 1.2.1-alt2
+- Added uv subpackage.
+
 * Fri Mar 29 2024 Stanislav Levin <slev@altlinux.org> 1.2.1-alt1
 - 1.1.1 -> 1.2.1.
 

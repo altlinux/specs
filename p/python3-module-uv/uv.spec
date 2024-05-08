@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.1.39
+Version: 0.1.41
 Release: alt1
 Summary: An extremely fast Python package installer and resolver
 License: MIT
@@ -33,6 +33,7 @@ Designed as a drop-in replacement for common pip and pip-tools workflows.
 %prep
 %setup -a1
 %autopatch -p1
+cat < vendor_cargoconf.toml >> .cargo/config.toml
 export OPENSSL_NO_VENDOR=1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
@@ -58,6 +59,9 @@ export OPENSSL_INCLUDE_DIR="%_includedir"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed May 08 2024 Stanislav Levin <slev@altlinux.org> 0.1.41-alt1
+- 0.1.39 -> 0.1.41.
+
 * Fri May 03 2024 Stanislav Levin <slev@altlinux.org> 0.1.39-alt1
 - 0.1.38 -> 0.1.39.
 
