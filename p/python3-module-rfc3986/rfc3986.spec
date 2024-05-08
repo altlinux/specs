@@ -1,38 +1,40 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name rfc3986
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.4.0
-Release: alt1.1
+Version: 2.0.0
+Release: alt1
 Summary: Validating URI References per RFC 3986
-Group: Development/Python3
 License: Apache-2.0
-Url: https://pypi.python.org/pypi/rfc3986
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-
+Group: Development/Python3
+Url: https://pypi.org/project/rfc3986/
+Vcs: https://github.com/python-hyper/rfc3986
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(idna)
-BuildRequires: python3(pytest_cov)
-BuildRequires: python3(tox)
+%pyproject_builddeps_metadata_extra idna2008
+%pyproject_builddeps_check
 %endif
 
 %description
 A Python implementation of RFC 3986 including validation and authority parsing.
 
-%py3_requires idna
-
 %prep
 %setup
 %patch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile dev-requirements.txt
+%endif
 
 %build
 %pyproject_build
@@ -41,15 +43,17 @@ A Python implementation of RFC 3986 including validation and authority parsing.
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -ra tests
 
 %files
 %doc README.rst LICENSE
-%python3_sitelibdir/rfc3986/
-%python3_sitelibdir/rfc3986-%version.dist-info/
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed May 08 2024 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1
+- 1.4.0 -> 2.0.0.
+
 * Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt1.1
 - NMU: moved on modern pyproject macros.
 

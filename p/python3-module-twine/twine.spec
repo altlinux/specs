@@ -1,43 +1,28 @@
-%define oname twine
+%define _unpackaged_files_terminate_build 1
+%define pypi_name twine
+%define mod_name %pypi_name
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 4.0.2
-Release: alt2
-
-Summary: Collection of utilities for interacting with PyPI
+Name: python3-module-%pypi_name
+Version: 5.0.0
+Release: alt1
+Summary: Collection of utilities for publishing packages on PyPI
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/twine/
 Vcs: https://github.com/pypa/twine
-
-Source: %name-%version.tar
-
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools_scm
-BuildRequires: python3-module-wheel
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-keyring
-BuildRequires: python3-module-rich
-BuildRequires: python3-module-pkginfo
-BuildRequires: python3-module-urllib3
-BuildRequires: python3-module-rfc3986
-BuildRequires: python3-module-requests
-BuildRequires: python3-module-requests_toolbelt
-BuildRequires: python3-module-readme-renderer
-BuildRequires: python3-module-importlib-metadata
-BuildRequires: python3-module-secretstorage
-BuildRequires: python3-module-jaraco.classes
-BuildRequires: python3-module-pretend
-BuildRequires: python3-module-build
-BuildRequires: python3-module-munch
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
-
-%py3_provides %oname
 
 %description
 Twine is a utility for interacting with PyPI.
@@ -46,34 +31,36 @@ artifacts for both new and existing projects.
 
 %prep
 %setup
-
-# pytest-socket dep relevant only to test_integration, and upstream
-# disables it anyway
-sed -i '/--disable-socket/d' pytest.ini
+%autopatch -p1
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
 %pyproject_install
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PYTHONPATH=%buildroot%python3_sitelibdir
-python3 -m pytest --ignore-glob '*integration*.py' -k "\
-not test_exception_handling \
-and not test_http_exception_handling" \
--W ignore::pytest.PytestRemovedIn8Warning
+# some tests rely on colors in output
+# (see tests/test_main.py::test_exception_handling)
+export TERM=xterm
+%pyproject_run_pytest -ra
 
 %files
-%doc AUTHORS *.rst docs/*.rst LICENSE
+%doc README.*
 %_bindir/*
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%{pyproject_distinfo %oname}
-
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue May 07 2024 Stanislav Levin <slev@altlinux.org> 5.0.0-alt1
+- 4.0.2 -> 5.0.0.
+
 * Sun Feb 11 2024 Grigory Ustinov <grenka@altlinux.org> 4.0.2-alt2
 - Fixed FTBFS.
 
