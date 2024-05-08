@@ -5,7 +5,7 @@
 
 Name: plasma5-%rname
 Version: 5.27.11
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init
 
@@ -106,6 +106,9 @@ KF5 library
 %_K5lib/libbreezecommon5.so.*
 
 %changelog
+* Wed May 08 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.11-alt2
+- fix project version
+
 * Thu Mar 07 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.11-alt1
 - new version
 
