@@ -1,16 +1,16 @@
 %define lua lua5.1
 
 Name: ZeroBraneStudio
-Version: 1.90
-Release: alt2
+Version: 2.01
+Release: alt1
 Summary: lightweight cross-platform Lua IDE
 License: MIT
 Group: Development/Other
 Url: http://studio.zerobrane.com/
 BuildArch: noarch
+Vcs: https://github.com/pkulchenko/ZeroBraneStudio
 
-# https://github.com/pkulchenko/ZeroBraneStudio
-Source: https://github.com/pkulchenko/ZeroBraneStudio/archive/%version.tar.gz
+Source: https://github.com/pkulchenko/ZeroBraneStudio/archive/%version.tar.gz#/%name-%version.tar.gz
 Source88: %name.watch
 
 Requires: wxlua lua5.1(socket) lua5.1(lfs) lua5.1(lpeg)
@@ -34,10 +34,6 @@ rm -rf bin \
 	zbstudio/ZeroBraneStudio.app \
 	lualibs/{socket{,.lua},mime.lua} \
 	lualibs/re.lua \
-; echo FIXME: Leaving \
-	lualibs/{copas,coxpcall} \
-	lualibs/mobdebug \
-	lualibs/lua_{lexer,parser}_loose.lua \
 
 %install
 sed -r -i "/ide.config.stylesoutshell/ i ide.config.path.lua = '%_bindir/%lua'" src/main.lua
@@ -50,9 +46,11 @@ desktop-file-install \
 	--set-key=Exec --set-value='sh -c "cd %_datadir/%name ; exec %lua src/main.lua"' \
 	--dir=%buildroot%_desktopdir zbstudio/res/zbstudio.desktop
 
-#
 %add_findreq_skiplist %_datadir/%name/zbstudio.sh
 %add_findreq_skiplist %_datadir/%name/build/*
+%add_findreq_skiplist %_datadir/%name/lualibs/*.lua
+%add_findreq_skiplist %_datadir/%name/lualibs/*/*.lua
+%add_findreq_skiplist %_datadir/%name/lualibs/*/*/*.lua
 
 %files
 %doc CHANGELOG.md CONTRIBUTING.md LICENSE README*
@@ -61,6 +59,9 @@ desktop-file-install \
 %_desktopdir/*.desktop
 
 %changelog
+* Sat Dec 09 2023 Ildar Mulyukov <ildar@altlinux.ru> 2.01-alt1
+- new version
+
 * Tue Aug 22 2023 Ildar Mulyukov <ildar@altlinux.ru> 1.90-alt2
 - fix build with newer autodep system
 
