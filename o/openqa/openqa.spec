@@ -22,11 +22,11 @@
 %nil
 %endif
 
-%define t_requires perl(DBD/Pg.pm) perl(Mojolicious/Plugin/RenderFile.pm) perl(DBIx/Class/Schema/Config.pm) perl(DBIx/Class/OptimisticLocking.pm) perl(Config/IniFiles.pm) perl(SQL/Translator.pm) perl(Date/Format.pm) perl(File/Copy/Recursive.pm) perl(DateTime/Format/Pg.pm) perl(Net/OpenID/Consumer.pm) perl(aliased.pm) perl(Config/Tiny.pm) perl(DBIx/Class/DynamicDefault.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(IO/Socket/SSL.pm) perl(Data/Dump.pm) perl(Text/Markdown.pm) perl(Net/DBus.pm) perl(IPC/Run.pm) perl(Archive/Extract.pm) perl(CSS/Minifier/XS.pm) perl(JavaScript/Minifier/XS.pm) perl(Time/ParseDate.pm) perl(Time/Piece.pm) perl(Time/Seconds.pm) perl(Sort/Versions.pm) perl(BSD/Resource.pm) perl(Cpanel/JSON/XS.pm) perl(YAML/PP.pm) perl(YAML/XS.pm) perl(IPC/Run.pm) perl(CommonMark.pm) perl(DBIx/Class.pm) perl-Package-Generator perl(Mojo/SQLite.pm) perl(Mojolicious.pm) perl(Mojolicious/Plugin/AssetPack.pm) perl(Mojo/IOLoop/ReadWriteProcess.pm) perl(Minion.pm) perl(Minion/Backend/SQLite.pm) perl(Test/Compile.pm) perl(Test/Fatal.pm) perl(Test/MockModule.pm) perl(Test/MockObject.pm) perl(Test/Mojo.pm) perl(Test/Output.pm) perl(Test/Pod.pm) perl(Test/Warnings.pm) perl(Perl/Critic.pm) perl(DBD/SQLite.pm) perl(DBIx/Class/DeploymentHandler.pm) perl(SQL/SplitStatement.pm) perl(IPC/Cmd.pm) perl(Module/Load/Conditional.pm) perl(CPAN/Meta/YAML.pm) perl(JSON/Validator.pm) perl(Test/Exception.pm) perl(Text/Diff.pm) perl(Test/Strict.pm) perl(Mojo/RabbitMQ/Client.pm) perl(Test/Most.pm) python3-module-setuptools yamllint jq curl shellcheck perl(Test/More.pm) perl(Mojolicious/Plugin/OAuth2.pm) python3-module-jsbeautifier git-core perl(File/Map.pm) perl(Filesys/Df.pm) perl(Module/Loaded.pm) bsdcat bsdtar perl(Text/Glob.pm)
+%define t_requires perl(DBD/Pg.pm) perl(Mojolicious/Plugin/RenderFile.pm) perl(DBIx/Class/Schema/Config.pm) perl(DBIx/Class/OptimisticLocking.pm) perl(Config/IniFiles.pm) perl(SQL/Translator.pm) perl(Date/Format.pm) perl(File/Copy/Recursive.pm) perl(DateTime/Format/Pg.pm) perl(Net/OpenID/Consumer.pm) perl(aliased.pm) perl(Config/Tiny.pm) perl(DBIx/Class/DynamicDefault.pm) perl(DBIx/Class/Storage/Statistics.pm) perl(IO/Socket/SSL.pm) perl(Data/Dump.pm) perl(Text/Markdown.pm) perl(Net/DBus.pm) perl(IPC/Run.pm) perl(Archive/Extract.pm) perl(CSS/Minifier/XS.pm) perl(JavaScript/Minifier/XS.pm) perl(Time/ParseDate.pm) perl(Time/Piece.pm) perl(Time/Seconds.pm) perl(Sort/Versions.pm) perl(BSD/Resource.pm) perl(Cpanel/JSON/XS.pm) perl(YAML/PP.pm) perl(YAML/XS.pm) perl(IPC/Run.pm) perl(CommonMark.pm) perl(DBIx/Class.pm) perl-Package-Generator perl(Mojo/SQLite.pm) perl(Mojolicious.pm) perl(Mojolicious/Plugin/AssetPack.pm) perl(Mojo/IOLoop/ReadWriteProcess.pm) perl(Minion.pm) perl(Minion/Backend/SQLite.pm) perl(Test/Compile.pm) perl(Test/Fatal.pm) perl(Test/MockModule.pm) perl(Test/MockObject.pm) perl(Test/Mojo.pm) perl(Test/Output.pm) perl(Test/Pod.pm) perl(Test/Warnings.pm) perl(Perl/Critic.pm) perl(DBD/SQLite.pm) perl(DBIx/Class/DeploymentHandler.pm) perl(SQL/SplitStatement.pm) perl(IPC/Cmd.pm) perl(Module/Load/Conditional.pm) perl(CPAN/Meta/YAML.pm) perl(JSON/Validator.pm) perl(Test/Exception.pm) perl(Text/Diff.pm) perl(Test/Strict.pm) perl(Mojo/RabbitMQ/Client.pm) perl(Test/Most.pm) python3-module-setuptools yamllint jq curl shellcheck perl(Test/More.pm) perl(Mojolicious/Plugin/OAuth2.pm) python3-module-jsbeautifier git-core perl(File/Map.pm) perl(Filesys/Df.pm) perl(Module/Loaded.pm) bsdcat bsdtar perl(Text/Glob.pm) perl(Test/Code/TidyAll.pm)
 
 Name: openqa
 Version: 4.6
-Release: alt14
+Release: alt15
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -38,11 +38,11 @@ Source0: %name-%version.tar
 # itself if avoidable (it's a security risk), and the tests don't work
 # without the asset cache present. This should be re-generated any
 # time Source0 changes.
-Source1: cache.tar
+Source2: node_modules.tar
 #Please check $ git grep geekotest
 Patch0: addpseudouser.patch
 Patch1: rmsysusers.patch
-#BuildArch: noarch
+BuildArch: noarch
 
 BuildRequires: %t_requires
 BuildRequires: spectool postgresql15-server systemd os-autoinst osc
@@ -200,10 +200,10 @@ writing, etc., covering both openQA and the os-autoinst test engine.
 
 %prep
 %setup -n %name-%version
-tar xf %SOURCE1 -C assets
+tar xf %SOURCE2
 %patch0 -p1
 %patch1 -p1
-sed -i -e 's|../fonts/|https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/fonts/|g' assets/cache/cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css
+#sed -i -e 's|../fonts/|https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/fonts/|g' assets/cache/cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css
 sed -i -e 's|/usr/lib/systemd/|/lib/systemd/|'  systemd/systemd-openqa-generator
 sed -i -e 's|/usr/lib/systemd/|/lib/systemd/|' -e 's|/usr/lib/tmpfiles.d|/lib/tmpfiles.d|'  Makefile
 sed -i -e 's|https://|cache/|' -e 's|http://|cache/|' assets/assetpack.def
@@ -283,6 +283,7 @@ rm -f t/42-screenshots.t
 rm -f t/ui/*.t
 # we don't really need the tidy test
 rm -f t/00-tidy.t
+rm -f external/os-autoinst-common/xt/00-tidy.t
 
 rm -rf %buildroot/DB
 export LC_ALL=en_US.UTF-8
@@ -352,6 +353,8 @@ fi
 %_unitdir/openqa-enqueue-result-cleanup.timer
 %_unitdir/openqa-enqueue-bug-cleanup.service
 %_unitdir/openqa-enqueue-bug-cleanup.timer
+%_unitdir/openqa-minion-restart.service
+%_unitdir/openqa-minion-restart.path
 %_tmpfilesdir/openqa-webui.conf
 # web libs
 %dir %_datadir/openqa/lib
@@ -366,6 +369,7 @@ fi
 %_datadir/openqa/templates
 %_datadir/openqa/public
 %_datadir/openqa/assets
+%_datadir/openqa/node_modules
 %_datadir/openqa/dbicdh
 %_datadir/openqa/script/configure-web-proxy
 %dir %_datadir/openqa/script
@@ -507,11 +511,11 @@ fi
 %files single-instance-nginx
 
 %changelog
-* Mon Dec 25 2023 Alexandr Antonov <aas@altlinux.org> 4.6-alt14
+* Thu Apr 02 2024 Alexandr Antonov <aas@altlinux.org> 4.6-alt15
 - update to current version
 
-* Mon Oct 23 2023 Alexandr Antonov <aas@altlinux.org> 4.6-alt13.1
-- merge p10 changes
+* Mon Dec 25 2023 Alexandr Antonov <aas@altlinux.org> 4.6-alt14
+- update to current version
 
 * Fri Oct 13 2023 Alexandr Antonov <aas@altlinux.org> 4.6-alt13
 - update to current version
@@ -527,9 +531,6 @@ fi
 
 * Tue Mar 28 2023 Pavel Skrylev <majioa@altlinux.org> 4.6-alt9.2
 - ! fixed build deps to ruby gems and some syntax
-
-* Tue Mar 28 2023 Pavel Skrylev <majioa@altlinux.org> 4.6-alt2.1
-- ! deps to ruby gems
 
 * Thu Feb 09 2023 Alexei Takaseev <taf@altlinux.org> 4.6-alt9.1
 - Change BR: postgresql10-server -> postgresql15-server
