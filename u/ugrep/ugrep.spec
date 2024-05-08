@@ -5,19 +5,22 @@
 %set_verify_elf_method strict
 
 Name: ugrep
-Version: 5.1.4
+Version: 6.0.0
 Release: alt1
-
 Summary: Universal grep: a feature-rich grep implementation with focus on speed
 License: BSD-3-Clause
-Group: File tools
-
+Group: Text tools
 Url: https://ugrep.com
 Vcs: https://github.com/Genivia/ugrep
+AutoReq: noshell
+Conflicts: ugrep-indexer <= 1.0.0
+
+# aarch64: False positive.
+# i586: https://github.com/Genivia/ugrep/issues/389
+%define valgrind_arches x86_64
+
 Source0: https://github.com/Genivia/ugrep/archive/v%version.tar.gz#/%{name}-%{version}.tar.gz
 Source100: ugrep.watch
-AutoReq: noshell
-
 BuildRequires: bzlib-devel
 BuildRequires: gcc-c++
 BuildRequires: hardlink
@@ -28,11 +31,18 @@ BuildRequires: liblzma-devel
 BuildRequires: libpcre2-devel
 BuildRequires: libzstd-devel
 BuildRequires: zlib-devel
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: bzip3
+%ifarch %valgrind_arches
+BuildRequires: valgrind
+%endif
+}}
 
 %description
-Ugrep supports an interactive query UI and can search file systems, source
-code, text, binary files, archives, compressed files, documents and use
-fuzzy search.
+A more powerful, ultra fast, user-friendly, compatible grep. Includes a
+TUI, Google-like Boolean search with AND/OR/NOT, fuzzy search, hexdumps,
+searches (nested) archives (zip, 7z, tar, pax, cpio), compressed files
+(gz, Z, bz2, lzma, xz, lz4, zstd, brotli), pdfs, docs, and more
 
 %prep
 %setup
@@ -53,19 +63,45 @@ fuzzy search.
 hardlink -v %buildroot%_bindir
 
 %check
-bin/ugrep --version | bin/ugrep '^%name \Q%version\E\s'
+bin/ugrep --version | bin/ugrep '^%name \Q%version\E\s' # Shows features list.
 %make_build test
+# Organic smoke testing.
+%ifarch %valgrind_arches
+# Valgrind does not treat --track-fds reports as errors (and they are
+# suppressed with -q). Grep logs for 'Open file descriptor'.
+%define valgrind valgrind --error-exitcode=2 --track-fds=yes --trace-children=yes --track-origins=yes
+# ./bin is used instead of %%buildroot%%_bindir becasue of stripped binaries there.
+PATH=$PWD/bin:$PATH
+%else
+%define valgrind %nil
+PATH=%buildroot%_bindir:$PATH
+%endif
+%valgrind ugrep-indexer -I -v
+  bzip2 -k README.md
+  bzip3 -k README.md
+  gzip -k README.md
+  xz -k README.md
+  zstd -k README.md
+%valgrind ugrep-indexer -I -v -z | grep -w '5 new files indexed'
+%valgrind ugrep -r -z -I -l 'std::chrono' --stats
+%valgrind ugrep -r -z -I -l 'std::chrono' --stats --index | grep -w '1 matching' # src/ugrep.cpp
+%valgrind ugrep-indexer -d
 
 %files
 %doc README.md LICENSE.txt
-%_bindir/*
-%_man1dir/*.1*
-%_datadir/%name
+%_bindir/ug*
+%_man1dir/ug*.1*
+%_datadir/ugrep
 %_datadir/bash-completion/completions/ug*
 %_datadir/fish/vendor_completions.d/ug*
 %_datadir/zsh/site-functions/_ug*
 
 %changelog
+* Tue May 07 2024 Vitaly Chikunov <vt@altlinux.org> 6.0.0-alt1
+- Update to 6.0.0 (2024-05-07).
+- Now includes the ugrep-indexer(1) tool that was previously in a separate
+  package.
+
 * Thu Apr 25 2024 Vitaly Chikunov <vt@altlinux.org> 5.1.4-alt1
 - Update to 5.1.4 (2024-04-25).
 
