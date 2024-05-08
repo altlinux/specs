@@ -2,7 +2,7 @@
 
 Name: drbd-reactor
 Version: 1.4.1
-Release: alt1
+Release: alt1.1
 Summary: React to DRBD events via plugins.
 
 Group: System/Servers
@@ -10,7 +10,7 @@ License: Apache-2.0
 URL: https://www.github.com/LINBIT/drbd-reactor
 Vcs: https://www.github.com/LINBIT/drbd-reactor.git
 Source: %name-%version.tar
-ExclusiveArch: x86_64 aarch64 ppc64le
+ExclusiveArch: x86_64 aarch64 loongarch64 ppc64le
 
 BuildRequires(pre): rpm-macros-rust rpm-macros-systemd
 BuildRequires: rust-cargo
@@ -86,6 +86,9 @@ install -D -m644 example/ctl.completion.bash %buildroot%_datadir/bash-completion
 %_man5dir/drbd-reactor.prometheus.5*
 
 %changelog
+* Wed May 08 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.4.1-alt1.1
+- NMU: build for LoongArch
+
 * Tue May 07 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1-alt1
 - v1.4.1
 
