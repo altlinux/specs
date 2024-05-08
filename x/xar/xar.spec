@@ -1,6 +1,6 @@
 Name: xar
 Version: 1.6.1
-Release: alt4
+Release: alt5
 
 Summary: The XAR project aims to provide an easily extensible archive format
 License: BSD-3-Clause
@@ -10,12 +10,12 @@ Source: %name-%version.tar
 #patch: xar-1.5.3-alt-config.patch
 Patch1: xar-1.5.3-ext2.patch
 Patch2: xar-1.6.1-openssl-1.1.patch
+Patch3: xar-1.6.1-alt-char-unsigned.patch
 Requires: lib%name = %version-%release
-
-ExclusiveArch: %ix86 x86_64 %e2k
 
 # Automatically added by buildreq on Sat Dec 17 2011
 BuildRequires: bzlib-devel libacl-devel libe2fs-devel libssl-devel libxml2-devel xsltproc zlib-devel liblzma-devel
+BuildRequires: rsync
 
 %description
 The XAR project aims to provide an easily extensible archive format.
@@ -58,6 +58,7 @@ build XAR-based software.
 #%patch -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 # get rid of RPATH.
 sed -ri 's/(RPATH=)".*/\1/' xar/configure.ac
 sed '/^\. functions/iset -x' -i xar/test/*
@@ -76,7 +77,9 @@ cd xar
 %check
 cd xar
 # prepare test data
-cp -a /bin test-bin || true
+rm -rf test/%_builddir
+mkdir -p test-bin
+rsync -aH --delete /usr/bin/ test-bin/
 %__subst "s|/bin$|$(pwd)/test-bin|g" test/*
 %__subst "s|bin |test-bin |g" test/*
 %__subst "s| bin$| test-bin|g" test/*
@@ -105,6 +108,12 @@ find .
 %_libdir/*.so
 
 %changelog
+* Wed May 08 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.6.1-alt5
+- NMU:
+  + Fixed FTBFS on architectures where char is unsigned.
+  + Build on all architectures (including LoongArch).
+  + Use /usr/bin for test archive. Fixes usrmerge fallout.
+
 * Fri Dec 31 2021 Michael Shigorin <mike@altlinux.org> 1.6.1-alt4
 - actually builds on %%e2k
 
