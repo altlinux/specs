@@ -18,7 +18,7 @@
 %define contrib_slapo_name addpartial allop allowed authzid autogroup cloak datamorph denyop lastbind noopsrch passwd/sha2 passwd/pbkdf2 trace usn variant vc
 Name: openldap
 Version: 2.6.7
-Release: alt1
+Release: alt2
 
 Obsoletes: openldap2.4 < %version-%release
 
@@ -304,13 +304,13 @@ export CFLAGS="%optflags -Wno-format-extra-args -fno-strict-aliasing -DNDEBUG -D
 export STRIP=""
 # enable experimental support for LDAP over UDP (LDAP_CONNECTIONLESS)
 export CFLAGS="${CFLAGS} -DLDAP_CONNECTIONLESS"
+export PKG_CONFIG=pkg-config
 
 #shtoolize all
 #aclocal
 #autoconf
 #libtoolize --force --install
 %autoreconf
-
 %configure \
 	%{subst_enable static} \
 	--enable-syslog \
@@ -374,7 +374,6 @@ export CFLAGS="${CFLAGS} -DLDAP_CONNECTIONLESS"
 %if_enabled debug
 	--enable-debug \
 %endif
-
 
 %__subst 's/^AC_CFLAGS.*/& %optflags_shared/' libraries/librewrite/Makefile
 
@@ -721,6 +720,9 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Wed May 08 2024 Alexey Shabalin <shaba@altlinux.org> 2.6.7-alt2
+- Fixed FTBFS (fixed search systemdsystemunitdir by define pkg-config)
+
 * Wed Mar 20 2024 Alexey Shabalin <shaba@altlinux.org> 2.6.7-alt1
 - 2.6.7
 
