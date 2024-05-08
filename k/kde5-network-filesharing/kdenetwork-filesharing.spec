@@ -3,7 +3,7 @@
 
 Name: kde5-network-filesharing
 Version: 23.08.5
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -12,6 +12,7 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 #Requires: %req_samba_pkgs
+Requires: /usr/bin/testparm
 
 Source: %rname-%version.tar
 Source10: ru-add.po
@@ -72,6 +73,9 @@ rm -f po/ru/kfileshare.po.old
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed May 08 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt2
+- require testparm utility (closes: 50117)
+
 * Fri Feb 16 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
