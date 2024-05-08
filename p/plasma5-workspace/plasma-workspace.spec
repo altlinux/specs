@@ -30,14 +30,14 @@
 
 %def_enable qalculate
 %_K5if_ver_gteq %ubt_id M90
-%def_enable appstream
+%def_disable appstream
 %else
 %def_disable appstream
 %endif
 
 Name: plasma5-workspace
 Version: 5.27.11
-Release: alt4
+Release: alt5
 Epoch: 1
 %K5init
 
@@ -575,6 +575,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_unitdir_user/plasma-core.target.d/xd
 
 
 %changelog
+* Wed May 08 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.11-alt5
+- temporary disable appstream runner
+
 * Tue Apr 23 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.11-alt4
 - package DesktopLinks directory
 
