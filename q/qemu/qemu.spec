@@ -150,8 +150,8 @@
 # }}}
 
 Name: qemu
-Version: 8.2.2
-Release: alt4
+Version: 8.2.3
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -1363,6 +1363,9 @@ popd
 %exclude %docdir/LICENSE
 
 %changelog
+* Tue May 07 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.3-alt1
+- 8.2.3 (Fixes:  CVE-2024-3446, CVE-2024-3447, CVE-2024-3567).
+
 * Fri May 03 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 8.2.2-alt4
 - LoongArch: load UEFI via pflash (like other architectures do).
 
