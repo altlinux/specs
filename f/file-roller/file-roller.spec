@@ -9,7 +9,7 @@
 %def_enable nautilus_actions
 
 Name: file-roller
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: An archive manager for GNOME
@@ -124,6 +124,9 @@ rm -f data/%xdg_name.desktop{,.in}
 %doc AUTHORS NEWS README.md
 
 %changelog
+* Wed May 08 2024 Yuri N. Sedunov <aris@altlinux.org> 44.2-alt1
+- 44.2
+
 * Wed Apr 10 2024 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1
 - 44.1
 
