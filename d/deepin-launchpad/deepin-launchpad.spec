@@ -3,43 +3,36 @@
 %def_disable clang
 
 Name: deepin-launchpad
-Version: 0.4.6
-Release: alt2
+Version: 0.5.0
+Release: alt1
 
 Summary: Launcher for DDE - next generation
 
 License: GPL-3.0-or-later
 Group: Graphical desktop/Other
-Url: https://github.com/linuxdeepin/%repo
+Url: https://github.com/linuxdeepin/deepin-launchpad
 
 Provides: %repo = %EVR
 Conflicts: deepin-launcher
 Obsoletes: deepin-launcher
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-# fix build with AppStreamQt < 1.0
-Patch1: deepin-lauchpad-upstream-AppStreamQt1_1.patch
-Patch2: deepin-lauchpad-upstream-AppStreamQt1.patch
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
+BuildRequires(pre): rpm-build-ninja
 %if_enabled clang
 BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
-BuildRequires: cmake qt5-tools-devel qt5-declarative-devel qt5-svg-devel qt5-quickcontrols2-devel libgtest-devel dtk6-common-devel dtkcore libdtkgui-devel libappstream-qt-devel libsystemd-devel libgio-devel
+BuildRequires: cmake dtk6-common-devel libappstream-qt6-devel libdtk6gui-devel libgio-devel qt6-declarative-devel qt6-svg-devel qt6-tools-devel libsystemd-devel
 
-Requires: libqt5-gui = %_qt5_version
+Requires: qt6-declarative qt6-5compat
 
 %description
 %summary.
 
 %prep
 %setup -n %repo-%version
-%if "%(get_version libappstream-qt-devel)" < "1"
-%patch1 -p1 -R
-%patch2 -p1 -R
-%endif
 
 %build
 %if_enabled clang
@@ -47,7 +40,7 @@ export CC="clang"
 export CXX="clang++"
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-export PATH=%_qt5_bindir:$PATH
+export PATH=%_qt6_bindir:$PATH
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -73,6 +66,12 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/dsg/configs/dde-launchpad/org.deepin.dde.launchpad.appsmodel.json
 
 %changelog
+* Wed May 08 2024 Leontiy Volodin <lvol@altlinux.org> 0.5.0-alt1
+- New version 0.5.0.
+- Switched to qt6 and dtk6 by upstream.
+- No more needed for qt hardlock requires.
+- Built with appstream v1.
+
 * Mon Mar 11 2024 Leontiy Volodin <lvol@altlinux.org> 0.4.6-alt2
 - Applied improvements for easy rebuilding with appstream v1.
 

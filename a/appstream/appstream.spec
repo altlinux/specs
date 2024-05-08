@@ -1,9 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 %def_without docs
 
+%define sover 5
+%define sover_compose 0
+%define sover_qt 3
+%define libappstream libappstream%sover
+%define libappstream_compose libappstream-compose%sover_compose
+%define libappstreamqt5 libappstreamqt5_%sover_qt
+%define libappstreamqt6 libappstreamqt6_%sover_qt
+
 Name:    appstream
-Version: 0.16.4
-Release: alt2
+Version: 1.0.2
+Release: alt1.1
 
 Summary: Utilities to generate, maintain and access the AppStream Xapian database
 # library; LGPLv2+, tools: GPLv2+
@@ -13,7 +21,7 @@ Group:   System/Configuration/Packaging
 Url:     http://www.freedesktop.org/wiki/Distributions/AppStream/
 # VCS:   https://github.com/ximion/appstream
 Source:  appstream-%version.tar
-Patch:   appstream-0.15.5-meson-build.patch
+Patch1: alt-qt5.patch
 
 BuildRequires(pre): meson
 BuildRequires: gcc-c++
@@ -35,19 +43,21 @@ BuildRequires: protobuf-compiler
 %if_with docs
 BuildRequires: daps
 %endif
-BuildRequires: qt5-base-devel
+BuildRequires: qt6-base-devel qt6-tools
+BuildRequires: qt5-base-devel qt5-tools
 BuildRequires: xmlto
 BuildRequires: gtk-doc
 BuildRequires: libsoup-devel
 BuildRequires: /proc
 BuildRequires: libxmlb-devel
-BuildRequires: qt5-tools
 BuildRequires: libsystemd-devel
 BuildRequires: libcairo-devel
 BuildRequires: libgdk-pixbuf-devel
 BuildRequires: libgdk-pixbuf-gir-devel
 BuildRequires: libpango-devel
 BuildRequires: librsvg-devel
+BuildRequires: libzstd-devel
+BuildRequires: gi-docgen
 
 #Requires: appstream-data
 
@@ -62,55 +72,90 @@ Group:   System/Configuration/Packaging
 %description compose
 %summary.
 
-%package -n libappstream-compose
+%package -n %libappstream_compose
 Summary: Library for generating AppStream data
 Group: System/Libraries
+Provides: libappstream-compose = %EVR
+Obsoletes: libappstream-compose < %EVR
+%description -n %libappstream_compose
+%summary.
 
-%description -n libappstream-compose
+%package -n libappstream-compose-gir
+Summary: GObject introspection for libappstream-compose
+Group: System/Libraries
+Conflicts: libappstream-compose < %version-%release
+Requires: %libappstream_compose
+
+%description -n libappstream-compose-gir
+%summary.
+
+%package -n libappstream-gir
+Summary: GObject introspection for libappstream
+Group: System/Libraries
+Conflicts: libappstream < %version-%release
+Requires: %libappstream
+
+%description -n libappstream-gir
 %summary.
 
 %package -n libappstream-compose-devel
 Summary: Development files for %name
 Group: Development/C
+Requires: libappstream-compose-gir
 
 %description -n libappstream-compose-devel
 %summary.
 
-%package -n libappstream
+%package -n %libappstream
 Summary: Library to access AppStream services
 Group: System/Libraries
 
-%description -n libappstream
+%description -n %libappstream
 %summary.
 
 %package -n libappstream-devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name
+Requires: libappstream-gir
 Provides: %name-devel = %EVR
 Obsoletes: %name-devel < %EVR
 
 %description -n libappstream-devel
 %summary.
 
-%package -n libappstream-qt
+%package -n %libappstreamqt5
 Summary: Qt bindings for %name
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name
 Provides: %name-qt = %EVR
 Obsoletes: %name-qt < %EVR
 
-%description -n libappstream-qt
+%description -n %libappstreamqt5
+%summary.
+
+%package -n %libappstreamqt6
+Summary: Qt bindings for %name
+Group: System/Libraries
+Requires: %name
+
+%description -n %libappstreamqt6
 %summary.
 
 %package -n libappstream-qt-devel
 Summary: Development files for %name-qt bindings
 Group: Development/KDE and QT
-Requires: %name-qt = %version-%release
 Provides: %name-qt-devel = %EVR
 Obsoletes: %name-qt-devel < %EVR
 
 %description -n libappstream-qt-devel
+%summary.
+
+%package -n libappstream-qt6-devel
+Summary: Development files for %name-qt bindings
+Group: Development/KDE and QT
+
+%description -n libappstream-qt6-devel
 %summary.
 
 %package doc
@@ -123,13 +168,21 @@ BuildArch: noarch
 
 %prep
 %setup
-%patch -p1
+%patch1 -p1 -b .qt
 %ifarch %e2k
 # workaround for EDG frontend
 sed -i "s|g_autofree gchar \*\*|g_autofree_edg(gchar*)|" qt/pool.cpp
 sed -i "s|g_autofree gchar \*|g_autofree_edg(gchar)|" qt/spdx.cpp
 sed -i "s/-Werror=shadow/-Wno-error=shadow/" meson.build
 %endif
+# prepare qt5 build
+cp -ar qt/cmake/AppStreamQt{,6}Config.cmake.in
+cp -ar qt/cmake/AppStreamQt{,6}ConfigVersion.cmake.in
+cat qt/cmake/AppStreamQt5Config.cmake.in >qt/cmake/AppStreamQtConfig.cmake.in
+cat qt/cmake/AppStreamQt5ConfigVersion.cmake.in >qt/cmake/AppStreamQtConfigVersion.cmake.in
+sed -i 's|libAppStreamQt|libAppStreamQt6|g' qt/cmake/AppStreamQt6Config.cmake.in
+cp -ar qt qt5
+sed -i 's|qt-versions|qt-versions5|' qt5/meson.build
 
 %build
 %meson -Dqt=true \
@@ -152,6 +205,16 @@ mkdir -p %buildroot/var/cache/app-info/{icons,xapian,xmls}
 touch %buildroot/var/cache/app-info/cache.watch
 rm -f %buildroot%_datadir/installed-tests/appstream/metainfo-validate.test
 
+pushd %buildroot/%_libdir/cmake/
+cp -ar AppStreamQt5 AppStreamQt
+mv AppStreamQt/AppStreamQt{5,}Config.cmake
+mv AppStreamQt/AppStreamQt{5,}ConfigVersion.cmake
+sed -i 's|AppStreamQt5|AppStreamQt|g' AppStreamQt/AppStreamQtConfig.cmake
+sed -i 's|AppStreamQt|AppStreamQt5|g' AppStreamQt/AppStreamQtConfig.cmake
+popd
+cp -ar %buildroot/%_includedir/AppStreamQt5 %buildroot/%_includedir/AppStreamQt
+ln -s libAppStreamQt5.so %buildroot/%_libdir/libAppStreamQt.so
+
 %find_lang %name
 
 %check
@@ -159,7 +222,7 @@ rm -f %buildroot%_datadir/installed-tests/appstream/metainfo-validate.test
 
 %files -f appstream.lang
 %doc AUTHORS MAINTAINERS NEWS README.md RELEASE
-%config(noreplace) %_sysconfdir/appstream.conf
+%config(noreplace) %_datadir/appstream/appstream.conf
 %_bindir/appstreamcli
 %dir %_datadir/app-info/
 %dir %_datadir/app-info/icons
@@ -173,8 +236,11 @@ rm -f %buildroot%_datadir/installed-tests/appstream/metainfo-validate.test
 %_datadir/gettext/its/metainfo.*
 %_datadir/metainfo/org.freedesktop.appstream.cli.*.xml
 
-%files -n libappstream
+%files -n %libappstream
 %_libdir/libappstream.so.*
+%_libdir/libappstream.so.%sover
+
+%files -n libappstream-gir
 %_libdir/girepository-1.0/AppStream-1.0.typelib
 
 %files -n libappstream-devel
@@ -183,13 +249,25 @@ rm -f %buildroot%_datadir/installed-tests/appstream/metainfo-validate.test
 %_libdir/pkgconfig/appstream.pc
 %_datadir/gir-1.0/AppStream-1.0.gir
 
-%files -n libappstream-qt
-%_libdir/libAppStreamQt.so.*
+%files -n %libappstreamqt5
+%_libdir/libAppStreamQt5.so.*
+%_libdir/libAppStreamQt5.so.%sover_qt
+%files -n %libappstreamqt6
+%_libdir/libAppStreamQt6.so.*
+%_libdir/libAppStreamQt6.so.%sover_qt
 
 %files -n libappstream-qt-devel
 %_includedir/AppStreamQt/
+%_includedir/AppStreamQt5/
 %_libdir/cmake/AppStreamQt/
+%_libdir/cmake/AppStreamQt5/
+%_libdir/libAppStreamQt5.so
 %_libdir/libAppStreamQt.so
+
+%files -n libappstream-qt6-devel
+%_includedir/AppStreamQt6/
+%_libdir/cmake/AppStreamQt6/
+%_libdir/libAppStreamQt6.so
 
 %files doc
 %_defaultdocdir/%name
@@ -201,8 +279,11 @@ rm -f %buildroot%_datadir/installed-tests/appstream/metainfo-validate.test
 %_man1dir/appstreamcli-compose.1*
 %_datadir/metainfo/org.freedesktop.appstream.compose.metainfo.xml
 
-%files -n libappstream-compose
+%files -n %libappstream_compose
 %_libdir/libappstream-compose.so.*
+%_libdir/libappstream-compose.so.%sover_compose
+
+%files -n libappstream-compose-gir
 %_libdir/girepository-1.0/AppStreamCompose-1.0.typelib
 
 %files -n libappstream-compose-devel
@@ -212,6 +293,13 @@ rm -f %buildroot%_datadir/installed-tests/appstream/metainfo-validate.test
 %_datadir/gir-1.0/AppStreamCompose-1.0.gir
 
 %changelog
+* Mon May 06 2024 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt1.1
+- NMU: build Qt5 and Qt6 libs
+- NMU: apply shared libs policy
+
+* Mon Mar 11 2024 Andrey Cherepanov <cas@altlinux.org> 1.0.2-alt1
+- New version (ALT #49646).
+
 * Thu Dec 14 2023 Andrey Cherepanov <cas@altlinux.org> 0.16.4-alt2
 - Built with -Dcompose=true (ALT #48797).
 
