@@ -3,7 +3,7 @@
 
 Name: plasma5-sdk
 Version: 5.27.11
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Development/KDE and QT
@@ -16,6 +16,8 @@ Provides: kf5-plasma-sdk = %EVR
 Obsoletes: kf5-plasma-sdk < %EVR
 
 Source: %rname-%version.tar
+Patch: alt-cuttlefish-external-open.patch
+Patch1: alt-fix-lnf-double-create.patch
 
 # Automatically added by buildreq on Tue Apr 28 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils kf5-attica-devel libEGL-devel libGL-devel libcloog-isl4 libdbusmenu-qt52 libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sql libqt5-svg libqt5-test libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base qt5-base-devel qt5-declarative-devel ruby ruby-stdlibs
@@ -61,6 +63,8 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch -p1
+%patch1 -p1
 
 %build
 %K5build \
@@ -84,6 +88,10 @@ KF5 library
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue May 07 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 5.27.11-alt2
+- fix Open with External Program option in cuttlefish (Closes: 45136)
+  fix lookandfeelexplorer creating theme called twice (Closes: 46601)
+
 * Thu Mar 07 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt1
 - new version
 
