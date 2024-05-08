@@ -7,8 +7,8 @@
 %define brushes_ver 1.0
 
 Name: gimp
-Version: %ver_major.36
-Release: alt2
+Version: %ver_major.38
+Release: alt1
 
 Summary: The GNU Image Manipulation Program
 License: %gpl3only
@@ -125,6 +125,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_datadir/aclocal/*
 
 %changelog
+* Wed May 08 2024 Valery Inozemtsev <shrek@altlinux.ru> 2.10.38-alt1
+- 2.10.38
+
 * Tue Dec 26 2023 Valery Inozemtsev <shrek@altlinux.ru> 2.10.36-alt2
 - sets the browser used by the help system
 
