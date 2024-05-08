@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Education
@@ -11,6 +11,8 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 Source: %rname-%version.tar
+Patch0: alt-fix-saving-softimage-pic.patch
+Patch1: alt-fix-hiding-statusbar.patch
 
 # Automatically added by buildreq on Wed Mar 23 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ gtk-update-icon-cache kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python-modules python3 qt5-base-devel rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils
@@ -30,6 +32,8 @@ KmPlot is a program to plot graphs of functions, their integrals or derivatives.
 
 %prep
 %setup -n %rname-%version
+%patch0 -p1
+%patch1 -p1
 
 %build
 %K5build
@@ -50,6 +54,10 @@ KmPlot is a program to plot graphs of functions, their integrals or derivatives.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue May 07 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 23.08.5-alt2
+- fix statusbar display switching (closes: 45557)
+- fix saving to Softimage PIC (closes: 44919)
+
 * Tue Feb 20 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
