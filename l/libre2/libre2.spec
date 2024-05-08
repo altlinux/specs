@@ -3,7 +3,7 @@
 %define oldname re2
 %define soname 11
 Name: libre2
-Version: 20240401
+Version: 20240501
 Release: alt2
 Summary: C++ fast alternative to backtracking RE engines
 Group: System/Libraries
@@ -85,6 +85,9 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_libdir/cmake/%oldname
 
 %changelog
+* Wed May 08 2024 Anton Farygin <rider@altlinux.ru> 20240501-alt2
+- 20240401 -> 20240501
+
 * Wed May 01 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 20240401-alt2
 - fix e2k build
 
