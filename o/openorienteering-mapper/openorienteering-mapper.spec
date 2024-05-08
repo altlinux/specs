@@ -4,7 +4,7 @@
 
 Name: openorienteering-mapper
 Version: 0.9.5
-Release: alt5
+Release: alt6
 
 Summary: OpenOrienteering Mapper program for orienteering mapmaking
 License: GPLv3
@@ -26,6 +26,7 @@ BuildRequires: qt5-sensors-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: qt5-serialport-devel
 BuildRequires: sqlite3
+BuildRequires: libsqlite3-devel
 BuildRequires: libtiff-devel
 %if_with check
 BuildRequires: ctest
@@ -90,6 +91,9 @@ cmake --build %_cmake__builddir/test -j%__nprocs
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Wed May 08 2024 Nikolai Kostrigin <nickel@altlinux.org> 0.9.5-alt6
+- FTBFS: add libsqlite3-devel to BR:
+
 * Fri Oct 20 2023 Andrey Cherepanov <cas@altlinux.org> 0.9.5-alt5
 - FTBFS: remove qt5-sql-sqlite3
 
