@@ -12,7 +12,7 @@
 %endif
 
 Name:    castxml
-Version: 0.6.5
+Version: 0.6.6
 Release: alt1
 
 Summary: C-family abstract syntax tree XML output tool
@@ -100,6 +100,9 @@ popd
 %_datadir/%name/empty.cpp
 
 %changelog
+* Tue May 07 2024 L.A. Kostis <lakostis@altlinux.ru> 0.6.6-alt1
+- NMU: Updated to upstream release version 0.6.6.
+
 * Wed Apr 17 2024 L.A. Kostis <lakostis@altlinux.ru> 0.6.5-alt1
 - NMU: Updated to upstream release version 0.6.5.
 
