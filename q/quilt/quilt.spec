@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: quilt
-Version: 0.67
-Release: alt2
+Version: 0.68
+Release: alt1
 
 Summary: Scripts for working with series of patches
 License: GPLv2+
@@ -31,6 +31,7 @@ found at http://userweb.kernel.org/~akpm/stuff/patch-scripts.tar.gz.
 
 %build
 %define docdir %_docdir/%name
+export ac_cv_path_BASH=/bin/bash
 %configure \
 	--with-awk=gawk \
 	--with-diffstat=diffstat \
@@ -57,6 +58,9 @@ install -pm644 AUTHORS NEWS TODO doc/README.EMACS doc/*.pdf COPYING \
 %docdir/
 
 %changelog
+* Wed May 08 2024 Vitaly Chikunov <vt@altlinux.org> 0.68-alt1
+- Update to v0.68 (2024-03-27).
+
 * Thu Sep 21 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.67-alt2
 - Backported upstream change to avoid warnings with grep >= 3.8
   (thx Jean Delvare).
