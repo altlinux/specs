@@ -5,7 +5,7 @@
 
 Name: pesign
 Version: 116
-Release: alt2
+Release: alt3
 
 Summary: Signing tool for PE-COFF binaries
 License: GPLv3
@@ -80,6 +80,13 @@ mkdir -pv %buildroot%_runtimedir/pesign/socketdir/
 mksock -m666 %buildroot%_runtimedir/pesign/socketdir/socket
 touch %buildroot%_runtimedir/pesign.pid
 
+mkdir -pv %buildroot%_sysconfdir/sysconfig
+cat > %buildroot%_sysconfdir/sysconfig/pesign <<EOF
+# This is the environment file for pesign daemon.
+
+EXTRAOPTIONS=
+EOF
+
 #cleanup
 rm -f %buildroot/etc/rpm/macros.pesign
 
@@ -114,6 +121,7 @@ fi
 %config(noreplace) %_sysconfdir/popt.d/pesign.popt
 %config(noreplace) %_sysconfdir/pesign/groups
 %config(noreplace) %_sysconfdir/pesign/users
+%config(noreplace) %_sysconfdir/sysconfig/pesign
 %_rpmmacrosdir/pesign
 %if_with man
 %_mandir/man?/*
@@ -127,6 +135,9 @@ fi
 %ghost %_runtimedir/pesign.pid
 
 %changelog
+* Wed May 08 2024 Egor Ignatov <egori@altlinux.org> 116-alt3
+- pesign-client: fix 'could not access socket' error
+
 * Tue Apr 02 2024 Egor Ignatov <egori@altlinux.org> 116-alt2
 - efikeygen: Add support for RSA3072 and RSA4096
 - pesign: Fix signature removal
