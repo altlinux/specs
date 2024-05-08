@@ -1,10 +1,14 @@
 %define pg_ver 15
 %define prog_name repmgr
+%ifarch loongarch64
+%def_without jit
+%else
 %def_with jit
+%endif
 
 Name: postgresql%pg_ver-%prog_name
 Version: 5.4.1
-Release: alt1
+Release: alt1.1
 Summary: Replication Manager for PostgreSQL Clusters
 Group: Databases
 License: GPL-3.0
@@ -101,6 +105,9 @@ echo "ALTER EXTENSION repmgr UPDATE;                                            
 %doc doc/html
 
 %changelog
+* Wed May 08 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 5.4.1-alt1.1
+- NMU: fixed FTBFS on LoongArch (jit is not available here)
+
 * Tue Jul 04 2023 Alexei Takaseev <taf@altlinux.org> 5.4.1-alt1
 - 5.4.1
 
