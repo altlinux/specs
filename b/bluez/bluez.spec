@@ -13,7 +13,7 @@
 %global optflags_lto %nil
 
 Name: bluez
-Version: 5.73
+Version: 5.75
 Release: alt1
 
 Summary: Bluetooth utilities
@@ -202,6 +202,9 @@ fi
 %_datadir/zsh/site-functions/_bluetoothctl
 
 %changelog
+* Tue May 07 2024 L.A. Kostis <lakostis@altlinux.ru> 5.75-alt1
+- 5.75.
+
 * Fri Mar 15 2024 L.A. Kostis <lakostis@altlinux.ru> 5.73-alt1
 - 5.73.
 - drop obsoleted -fc patch (fixed upstream).
