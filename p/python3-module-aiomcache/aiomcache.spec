@@ -3,7 +3,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 
 Summary: Minimal pure python memcached client
@@ -17,8 +17,9 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
-BuildRequires: python3-module-typing_extensions
 BuildRequires: python3-module-docker
 BuildRequires: python3-module-memcached
 BuildRequires: python3-module-pytest-asyncio
@@ -34,23 +35,23 @@ asyncio (PEP 3156) library to work with memcached.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-sed -i 's/docker_mod.Client/docker_mod.client/g' tests/conftest.py
-%tox_create_default_config
-%tox_check
+%pyproject_run_pytest -v
 
 %files
-%doc LICENSE *.rst examples
+%doc README.* CHANGES.*
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-*.egg-info
-%exclude %python3_sitelibdir/tests
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed May 08 2024 Anton Vyatkin <toni@altlinux.org> 0.8.2-alt1
+- New version 0.8.2.
+
 * Wed Apr 05 2023 Anton Vyatkin <toni@altlinux.org> 0.8.1-alt1
 - New version 0.8.1.
 
