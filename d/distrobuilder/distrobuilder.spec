@@ -1,7 +1,7 @@
 %global import_path github.com/lxc/distrobuilder
 Name:     distrobuilder
 Version:  2.1
-Release:  alt2
+Release:  alt3
 
 Summary:  System container image builder for LXC and LXD
 License:  Apache-2.0
@@ -14,6 +14,7 @@ Source:   %name-%version.tar
 
 Patch1: unset-tmpdir-in-alt-ci-example.patch
 Patch2: distrobuilder-2.1-gentoo-glibc-2.36-fix.patch
+Patch3500: alt-x-sys-loongarch64.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -27,6 +28,7 @@ Requires: squashfs-tools
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3500 -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -49,6 +51,9 @@ export IGNORE_SOURCES=1
 %doc *.md doc
 
 %changelog
+* Wed May 08 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.1-alt3
+- NMU: fixed FTBFS on LoongArch
+
 * Fri Aug 25 2023 Mikhail Gordeev <obirvalger@altlinux.org> 2.1-alt2
 - Fix rebuild
 
