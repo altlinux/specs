@@ -1,5 +1,5 @@
 Name: python3-module-aiohttp-isal
-Version: 0.2.0
+Version: 0.3.1
 Release: alt1
 
 Summary: isal support for aiohttp
@@ -30,5 +30,8 @@ BuildRequires: python3(poetry.core)
 %python3_sitelibdir/aiohttp_isal-%version.dist-info
 
 %changelog
+* Wed May 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.3.1-alt1
+- 0.3.1 released
+
 * Thu May 02 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.2.0-alt1
 - 0.2.0 released
