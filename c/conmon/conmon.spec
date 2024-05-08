@@ -1,5 +1,5 @@
 Name: conmon
-Version: 2.1.10
+Version: 2.1.11
 Release: alt1
 # due to typo in version :(
 Epoch: 1
@@ -24,13 +24,14 @@ BuildRequires: pkgconfig(libseccomp) >= 2.5.2
 %prep
 %setup
 %patch -p1
+echo %version > VERSION
 
 %build
 export GIT_COMMIT=%release
-%make_build CFLAGS+="%(getconf LFS_CFLAGS) -Wno-error=deprecated-declarations"
+%make_build CFLAGS+="%(getconf LFS_CFLAGS) -Wno-error=deprecated-declarations" DEBUGFLAG="-g" GOMD2MAN=go-md2man
 
 %install
-%makeinstall_std PREFIX=%_usr
+%makeinstall_std PREFIX=%_usr GOMD2MAN=go-md2man
 
 %files
 %doc README.md
@@ -38,6 +39,9 @@ export GIT_COMMIT=%release
 %_man8dir/conmon.*
 
 %changelog
+* Wed May 08 2024 Alexey Shabalin <shaba@altlinux.org> 1:2.1.11-alt1
+- New version 2.1.11.
+
 * Mon Dec 25 2023 Alexey Shabalin <shaba@altlinux.org> 1:2.1.10-alt1
 - New version 2.1.10.
 
