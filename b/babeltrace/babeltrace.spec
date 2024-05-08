@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: babeltrace
-Version: 1.5.8
-Release: alt2
+Version: 1.5.11
+Release: alt1
 Summary: Trace conversion program
 License: LGPLv2
 Group: System/Libraries
@@ -13,7 +13,7 @@ Patch0: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: elfutils-devel flex glib2-devel glibc-kernheaders-generic libpopt-devel libuuid-devel
-BuildRequires: python3-dev swig >= 2.0
+BuildRequires: python3-dev python3-module-setuptools swig >= 2.0
 
 %description
 Babeltrace provides trace reading and writing libraries, as well as a trace
@@ -102,6 +102,9 @@ rm -rf %buildroot%_datadir/doc
 %python3_sitelibdir/*
 
 %changelog
+* Wed May 08 2024 Alexey Shabalin <shaba@altlinux.org> 1.5.11-alt1
+- 1.5.11
+
 * Thu Jun 30 2022 Alexey Shabalin <shaba@altlinux.org> 1.5.8-alt2
 - fix obsoletes in devel subpackage
 
