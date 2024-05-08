@@ -1,10 +1,10 @@
 %define _name elementaryicons
-%define ver_major 7.3
+%define ver_major 8.0
 %define rdn_name io.elementary.icons
 %def_disable palettes
 
 Name: elementary-icon-theme
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Named, vector icons for elementary OS
@@ -50,6 +50,9 @@ and its desktop environment: Pantheon.
 %doc README*
 
 %changelog
+* Wed May 08 2024 Yuri N. Sedunov <aris@altlinux.org> 8.0.0-alt1
+- 8.0.0
+
 * Fri Aug 25 2023 Yuri N. Sedunov <aris@altlinux.org> 7.3.1-alt1
 - 7.3.1
 
