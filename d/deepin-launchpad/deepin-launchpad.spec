@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-launchpad
-Version: 0.5.0
+Version: 0.6.9
 Release: alt1
 
 Summary: Launcher for DDE - next generation
@@ -33,6 +33,9 @@ Requires: qt6-declarative qt6-5compat
 
 %prep
 %setup -n %repo-%version
+sed -i 's|AppStreamQt|AppStreamQt6|' \
+  CMakeLists.txt \
+  desktopintegration.cpp
 
 %build
 %if_enabled clang
@@ -66,6 +69,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/dsg/configs/dde-launchpad/org.deepin.dde.launchpad.appsmodel.json
 
 %changelog
+* Wed May 08 2024 Leontiy Volodin <lvol@altlinux.org> 0.6.9-alt1
+- New version 0.6.9.
+
 * Wed May 08 2024 Leontiy Volodin <lvol@altlinux.org> 0.5.0-alt1
 - New version 0.5.0.
 - Switched to qt6 and dtk6 by upstream.
