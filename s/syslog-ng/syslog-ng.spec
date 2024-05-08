@@ -22,7 +22,7 @@
 
 Name: syslog-ng
 Version: 3.34.1
-Release: alt1
+Release: alt2
 
 Summary: syslog-ng daemon
 Group: System/Kernel and hardware
@@ -54,6 +54,7 @@ BuildRequires: libssl-devel libuuid-devel libivykis-devel
 BuildRequires: xsltproc docbook-style-xsl
 
 BuildRequires: python3-dev
+BuildRequires: python3-module-setuptools
 %add_python3_path %_libdir/syslog-ng/python/syslogng
 %add_python3_path %_libdir/syslog-ng/python/syslogng/debuggercli
 %add_python3_req_skip editline.editline
@@ -99,6 +100,9 @@ Source Configuration Library plugins for syslog-ng configuration files
 Summary: DEBUg buNdle generator for syslog-ng
 Group: System/Kernel and hardware
 BuildArch: noarch
+
+# relax dependency on /usr/bin/pkginfo, assumed solaris tool
+%filter_from_requires /^python\(3\)\?-module-pkginfo$/d
 
 %description debun
 The syslog-ng-debun tool collects and saves information about your
@@ -541,6 +545,9 @@ fi
 %endif
 
 %changelog
+* Tue May 07 2024 Stanislav Levin <slev@altlinux.org> 3.34.1-alt2
+- relaxed runtime dependency on pkginfo.
+
 * Sun Oct 31 2021 Sergey Y. Afonin <asy@altlinux.org> 3.34.1-alt1
 - 3.34.1
 - updated License tag to SPDX syntax, fixed GPL/LGPL versions
