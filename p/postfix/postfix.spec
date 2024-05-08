@@ -1,5 +1,5 @@
 Name: postfix
-Version: 3.8.3
+Version: 3.8.6
 Release: alt1
 Epoch: 1
 
@@ -662,6 +662,11 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %endif #with tls
 
 %changelog
+* Wed May 01 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.8.6-alt1
+- Updated to 3.8.6 (ALT#49734) (fixes CVE-2023-51764).
+- Fixed the pluginization patch to remove (harmless) warnings related to
+  loading of unimplemented mkmap_ plugins (ALT#48908).
+
 * Wed Dec 06 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.8.3-alt1
 - Updated to 3.8.3.
 - Fixed repocop specfile-useradd-n warning.
