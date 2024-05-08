@@ -25,7 +25,7 @@
 
 Name:    qt-creator
 Version: 12.0.0
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform IDE for Qt
 License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause and BSL-1.0 and ALT-Public-Domain
@@ -162,9 +162,10 @@ tar xf %SOURCE1
 #subst 's,share\/doc\/qtcreator,share\/qtcreator\/doc,' doc/doc.pri src/plugins/help/helpplugin.cpp
 %patch0 -p1
 %ifarch %e2k
-# strip UTF-8 BOM, lcc 1.23 won't ignore it yet
-find src -type f -print0 -name '*.cpp' -o -name '*.h' |
-	xargs -r0 sed -ri 's,^\xEF\xBB\xBF,,'
+# fix ICE
+sed -i 's/acceptor = acceptor/acceptor/' src/plugins/projectexplorer/projectexplorer.cpp
+# error: no instance of constructor matches the argument list
+sed -i '/~Payload()/i Payload() {}' src/plugins/perfprofiler/perfprofilerflamegraphmodel.cpp
 %endif
 # Use Python3 for Python scripts
 subst 's@#!.*python[23]\?@#!%__python3@' `find . -name \*.py` \
@@ -173,10 +174,6 @@ subst 's@#!.*python[23]\?@#!%__python3@' `find . -name \*.py` \
 %build
 export QTDIR=%_qt6_prefix
 export PATH="%{_qt6_bindir}:$PATH"
-%ifarch %e2k
-# fool sqlite into building with lcc
-sed -i 's,^QMAKE_CFLAGS_WARN_ON.*$,& -D__INTEL_COMPILER,' src/libs/3rdparty/sqlite/sqlite.pri
-%endif
 %if_with ClangCodeModel
 export LLVM_INSTALL_DIR="%_prefix"
 %remove_optflags -frecord-gcc-switches
@@ -227,6 +224,9 @@ subst '/<releases>/i \ <pkgname>qt-creator</pkgname>' %buildroot%_datadir/metain
 %_datadir/qtcreator/*
 
 %changelog
+* Tue May 07 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 12.0.0-alt2
+- Fixed build for Elbrus.
+
 * Mon Nov 27 2023 Andrey Cherepanov <cas@altlinux.org> 12.0.0-alt1
 - New version.
 
