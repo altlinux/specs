@@ -1,7 +1,7 @@
 %global import_path github.com/docker/distribution
 Name:     docker-registry
 Version:  2.8.3
-Release:  alt1
+Release:  alt2
 
 Summary:  The Docker toolset to pack, ship, store, and deliver content
 License:  Apache-2.0
@@ -14,6 +14,7 @@ Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 Source:   %name-%version.tar
 Source1:  docker-registry.service
 Source2:  config.yml
+Patch3500: alt-panicwrap-loongarch64.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -23,6 +24,7 @@ BuildRequires: golang
 
 %prep
 %setup
+%patch3500 -p1
 
 %build
 export GO111MODULE=auto
@@ -63,6 +65,9 @@ mkdir -p %buildroot/%_localstatedir/%name
 %dir %_localstatedir/%name
 
 %changelog
+* Wed May 08 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.8.3-alt2
+- NMU: fixed FTBFS on LoongArch.
+
 * Tue Oct 31 2023 Mikhail Gordeev <obirvalger@altlinux.org> 2.8.3-alt1
 - New version 2.8.3.
 
