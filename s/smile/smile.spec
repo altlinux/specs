@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: %_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: An emoji picker
@@ -33,7 +33,9 @@ Requires: dconf font(notocoloremoji)
 Requires: typelib(Adw) = 1
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
-BuildRequires: meson /usr/bin/glib-compile-resources
+BuildRequires: meson
+BuildRequires: libgio-devel
+BuildRequires: /usr/bin/glib-compile-resources /usr/bin/gtk4-update-icon-cache
 %{?_enable_check:BuildRequires: /usr/bin/appstream-util desktop-file-utils /usr/bin/glib-compile-schemas}
 
 %description
@@ -66,6 +68,9 @@ ln -sf ../../fonts/ttf/google-noto-emoji/NotoColorEmoji.ttf \
 %doc README*
 
 %changelog
+* Tue May 07 2024 Yuri N. Sedunov <aris@altlinux.org> 2.9.5-alt1
+- 2.9.5
+
 * Fri Apr 05 2024 Yuri N. Sedunov <aris@altlinux.org> 2.9.4-alt1
 - 2.9.4
 

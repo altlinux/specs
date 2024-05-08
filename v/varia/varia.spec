@@ -1,12 +1,12 @@
 %def_enable snapshot
 
-%define ver_major 2024.3
+%define ver_major 2024.5
 %define rdn_name io.github.giantpinkrobots.varia
 
 %def_enable check
 
 Name: varia
-Version: %ver_major.20
+Version: %ver_major.7
 Release: alt1
 
 Summary: Download manager based on aria2
@@ -66,6 +66,9 @@ It uses the amazing aria2 to handle the downloads.
 %doc README*
 
 %changelog
+* Wed May 08 2024 Yuri N. Sedunov <aris@altlinux.org> 2024.5.7-alt1
+- 2024.5.7
+
 * Wed Mar 20 2024 Yuri N. Sedunov <aris@altlinux.org> 2024.3.20-alt1
 - 2024.3.20
 
