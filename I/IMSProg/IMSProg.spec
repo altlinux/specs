@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: IMSProg
-Version: 1.3.7
+Version: 1.3.8
 Release: alt1
 
 Summary: I2C, SPI and MicroWire EEPROM/Flash chip programmer for CH341a devices
@@ -81,6 +81,10 @@ rm %buildroot%_bindir/IMSProg_database_update
 rm %buildroot%_desktopdir/IMSProg_database_update.desktop
 rm %buildroot%_pixmapsdir/IMSProg_database_update.png
 
+# remove extra appdata
+rm %buildroot%_datadir/metainfo/imsprog.database.update.appdata.xml
+rm %buildroot%_datadir/metainfo/imsprog.editor.appdata.xml
+
 # rename README
 cp IMSProg_editor/README.md IMSProg_editor.md
 cp IMSProg_programmer/README.md IMSProg_programmer.md
@@ -95,6 +99,7 @@ cp IMSProg_programmer/README.md IMSProg_programmer.md
 %_desktopdir/IMSProg.desktop
 %_desktopdir/IMSProg_editor.desktop
 #%%_desktopdir/IMSProg_database_update.desktop
+%_datadir/metainfo/imsprog.appdata.xml
 %_udevrulesdir/99-CH341.rules
 %_pixmapsdir/chipEdit64.png
 %_pixmapsdir/IMSProg64.png
@@ -102,6 +107,9 @@ cp IMSProg_programmer/README.md IMSProg_programmer.md
 %_man1dir/*.1.*
 
 %changelog
+* Wed May 08 2024 Anton Midyukov <antohami@altlinux.org> 1.3.8-alt1
+- new version
+
 * Sun Apr 28 2024 Anton Midyukov <antohami@altlinux.org> 1.3.7-alt1
 - new version
 
