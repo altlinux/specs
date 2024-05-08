@@ -4,7 +4,7 @@
 
 Name: telepathy-haze
 Version: 0.8.1
-Release: alt1
+Release: alt1.1
 
 Summary: a connection manager built around libpurple
 License: GPLv2+
@@ -24,6 +24,7 @@ BuildRequires: libpurple-devel >= 2.0.12 libtelepathy-glib-devel >= 0.13.9
 BuildRequires: xsltproc
 %if_enabled check
 BuildRequires: python3-module-twisted-words python3-module-twisted-core-gui
+BuildRequires: python3(twisted.internet.gireactor)
 BuildRequires: python3-module-cffi python3-module-service-identity
 BuildRequires: python3-module-pygobject3-pygtkcompat
 BuildRequires: /proc dbus-tools-gui python3-module-dbus
@@ -57,6 +58,9 @@ work acceptably, and others will probably work too.
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.ConnectionManager.haze.service
 
 %changelog
+* Wed May 08 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1.1
+- updated BR for %%check
+
 * Wed Nov 11 2020 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
 - 0.8.1 (ported tests to Python3)
 
