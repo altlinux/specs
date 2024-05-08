@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict,rpath=relaxed,unresolved=relaxed
+%define ver_major 14.2
 
 Name: ogre
-Version: 13.5.1
+Version: %ver_major.4
 Release: alt1
 Summary: Object-Oriented Graphics Rendering Engine
 # CC-BY-SA is for devel docs
@@ -11,8 +12,7 @@ License: MIT
 Group: System/Libraries
 Url: https://www.ogre3d.org/
 ExcludeArch: %ix86
-
-# https://github.com/OGRECave/ogre
+VCS: https://github.com/OGRECave/ogre
 Source: %name-%version.tar
 
 # https://github.com/ocornut/imgui
@@ -43,11 +43,11 @@ details of using the underlying system libraries like Direct3D and
 OpenGL and provides an interface based on world objects and other
 intuitive classes.
 
-%package -n lib%name
+%package -n lib%name%ver_major
 Summary: Object-oriented Graphics Rendering Engine (libraries)
 Group: System/Libraries
 
-%description -n lib%name
+%description -n lib%name%ver_major
 Ogre is a complete object-oriented 3D rendering engine. It supports
 different rendering subsystems but only the OpenGL system is useful
 for Linux.
@@ -57,7 +57,7 @@ This package contains the Ogre library and plugins.
 %package -n lib%name-devel
 Summary: Object-oriented Graphics Rendering Engine (development files)
 Group: Development/C
-Requires: lib%name = %EVR
+Requires: lib%name%ver_major = %EVR
 
 %description -n lib%name-devel
 Ogre is a complete object-oriented 3D rendering engine. It supports
@@ -127,17 +127,17 @@ find -type f -print0 -name '*.cpp' -o -name '*.hpp' -name '*.h' |
 %_bindir/Ogre*
 %_bindir/Test_Ogre*
 %_bindir/VRMLConverter
-%dir %_datadir/OGRE
-%_datadir/OGRE/GLX_backdrop.png
-%config(noreplace) %_datadir/OGRE/plugins.cfg
-%config(noreplace) %_datadir/OGRE/resources.cfg
-%_datadir/OGRE/Media
+%dir %_datadir/OGRE-%ver_major
+%_datadir/OGRE-%ver_major/GLX_backdrop.png
+%config(noreplace) %_datadir/OGRE-%ver_major/plugins.cfg
+%config(noreplace) %_datadir/OGRE-%ver_major/resources.cfg
+%_datadir/OGRE-%ver_major/Media
 
-%exclude %_datadir/OGRE/samples.cfg
+%exclude %_datadir/OGRE-%ver_major/samples.cfg
 
-%files -n lib%name
+%files -n lib%name%ver_major
 %dir %_libdir/OGRE
-%_libdir/libOgre*.so.*
+%_libdir/libOgre*.so.%ver_major
 %_libdir/OGRE/*.so*
 
 %files  -n lib%name-devel
@@ -150,11 +150,14 @@ find -type f -print0 -name '*.cpp' -o -name '*.hpp' -name '*.h' |
 %_defaultdocdir/OGRE
 
 %files samples
-%config(noreplace) %_datadir/OGRE/samples.cfg
+%config(noreplace) %_datadir/OGRE-%ver_major/samples.cfg
 %_bindir/SampleBrowser
 %_libdir/OGRE/Samples
 
 %changelog
+* Wed May 08 2024 Anton Farygin <rider@altlinux.ru> 14.2.4-alt1
+- 13.5.1 -> 14.2.4
+
 * Sun Nov 20 2022 Anton Farygin <rider@altlinux.ru> 13.5.1-alt1
 - 13.2.4 -> 13.5.1
 
