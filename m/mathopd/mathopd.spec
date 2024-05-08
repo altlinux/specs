@@ -1,5 +1,5 @@
 Name: mathopd
-Version: 1.6b15
+Version: 1.6b16
 Release: alt1
 
 Summary: Fast, lightweight, non-forking HTTP server for UN*X systems.
@@ -19,7 +19,7 @@ Source7: %name.cron
 Source9: TODO
 Source10: %name.sysconfig
 
-Patch0: %name-1.5p5-alt-pidfile.patch
+Patch0: %name-1.6b16-alt-pidfile.patch
 Patch1: %name-alt-dircgi.patch
 Patch2: %name-alt-largefile.patch
 Patch3: %name-alt-make.patch
@@ -66,7 +66,7 @@ Mathopd выполняется как один-единственный проц
 
 %prep
 %setup -q
-%patch0 -p1
+%patch0 -p2
 cp -a %SOURCE6 ./dir_cgi.c
 %patch1 -p1
 %ifarch %ix86
@@ -119,6 +119,9 @@ id -un %name >/dev/null 2>&1 || /usr/sbin/useradd -s /dev/null -d %mylogdir -r %
 echo "NOTE: %name account still exist, remove it manually if you need"
 
 %changelog
+* Wed May 08 2024 L.A. Kostis <lakostis@altlinux.ru> 1.6b16-alt1
+- Version 1.6b16.
+
 * Tue Feb 07 2023 L.A. Kostis <lakostis@altlinux.ru> 1.6b15-alt1
 - Version 1.6p15.
 - Fix License.
@@ -134,10 +137,10 @@ echo "NOTE: %name account still exist, remove it manually if you need"
 - fix getline issue.
 
 * Sun Jan 13 2008 L.A. Kostis <lakostis@altlinux.ru> 1.5p6-alt1
-- NMU.
-- 1.5p6.
-- enable all whistles: largefile, sendfile, -lcrypt.
-- add webserver to Provides (#13989).
+- NMU:
+  + Version 1.5p6.
+  + enable all whistles: largefile, sendfile, -lcrypt.
+  + add webserver to Provides (#13989).
 
 * Tue Oct 31 2006 Ilya Evseev <evseev@altlinux.ru> 1.5p5-alt3
 - improvements for dir_cgi: display dates and sizes
