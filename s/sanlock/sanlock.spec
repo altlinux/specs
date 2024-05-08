@@ -2,7 +2,7 @@
 %define _localstatedir /var
 
 Name: sanlock
-Version: 3.9.0
+Version: 3.9.2
 Release: alt1
 Summary: A shared storage lock manager
 
@@ -104,10 +104,11 @@ make -C reset \
 install -D -m 0644 init.d/sanlock.service.native %buildroot%_unitdir/sanlock.service
 install -D -m 0644 init.d/sanlock.tmpfile %buildroot%_tmpfilesdir/sanlock.conf
 install -D -m 0755 init.d/sanlock %buildroot%_initddir/sanlock
-install -D -m 0644 init.d/wdmd.service.native %buildroot%_unitdir/wdmd.service
+install -D -m 0644 init.d/wdmd.service %buildroot%_unitdir/wdmd.service
 install -D -m 0644 init.d/wdmd.tmpfile %buildroot%_tmpfilesdir/wdmd.conf
 install -D -m 0644 init.d/wdmd.module %buildroot%_modulesloaddir/wdmd.conf
 install -D -m 0755 init.d/wdmd %buildroot%_initddir/wdmd
+install -D -m 0755 init.d/systemd-wdmd %buildroot/lib/systemd/systemd-wdmd
 install -D -m 0644 init.d/fence_sanlockd.service %buildroot%_unitdir/fence_sanlockd.service
 install -D -m 0644 init.d/fence_sanlockd.tmpfile %buildroot%_tmpfilesdir/fence_sanlockd.conf
 install -D -m 0755 init.d/fence_sanlockd %buildroot%_initddir/fence_sanlockd
@@ -153,6 +154,7 @@ useradd -r -d -M /run/%name -s /bin/false -c "sanlock user" -g %name -G disk %na
 %_unitdir/sanlock.service
 %_tmpfilesdir/sanlock.conf
 %_unitdir/wdmd.service
+/lib/systemd/systemd-wdmd
 %_tmpfilesdir/wdmd.conf
 %_modulesloaddir/wdmd.conf
 %_initddir/sanlock
@@ -195,6 +197,9 @@ useradd -r -d -M /run/%name -s /bin/false -c "sanlock user" -g %name -G disk %na
 %_man8dir/sanlk-reset*
 
 %changelog
+* Fri May 03 2024 Alexey Shabalin <shaba@altlinux.org> 3.9.2-alt1
+- 3.9.2
+
 * Mon Jan 15 2024 Alexey Shabalin <shaba@altlinux.org> 3.9.0-alt1
 - 3.9.0
 
