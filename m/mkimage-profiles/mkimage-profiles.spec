@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.6.3
+Version: 1.6.4
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -134,6 +134,19 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Wed May 08 2024 Anton Midyukov <antohami@altlinux.org> 1.6.4-alt1
+- live: disable ldconfig.service by using livecd-no-ldconfig.service
+  (Closes: 40802)
+- stage2: do not remove cjk and legacy fonts
+- Do not add menu items for SUBPROFILES
+- live: add use/live/rescue/extra as an analogue of use/rescue
+- regular.mk: initial regular-rescue-live
+- install2, live: add missing e2fsprogs
+- cleanup: create postinstall script for cleanup package for live with installer
+- init: add missing mingetty to sysvinit
+- mobile.mk: renaming of targets
+- server-v: apply commits from @andy
+
 * Mon Apr 01 2024 Anton Midyukov <antohami@altlinux.org> 1.6.3-alt1
 - grub: do not abort, if grub theme not found
 - add alt-platform-builder
