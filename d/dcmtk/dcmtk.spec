@@ -3,7 +3,7 @@
 
 Name: dcmtk
 Version: 3.6.8
-Release: alt1.2
+Release: alt2
 
 Summary: DCMTK - DICOM Toolkit
 License: MIT
@@ -39,6 +39,8 @@ Group: System/Libraries
 Summary: Headers for building software that uses %name
 Group: Development/C
 Requires: lib%name%soname = %EVR
+Requires: %name = %EVR
+Requires: libxml2-devel
 
 %description -n lib%name-devel
 Headers for building software that uses %name.
@@ -97,6 +99,9 @@ sed -i '/ofstd_tuple/d' ofstd/tests/tests.cc
 %_libdir/cmake/dcmtk/*.cmake
 
 %changelog
+* Thu May 09 2024 Anton Farygin <rider@altlinux.ru> 3.6.8-alt2
+- added lost dependencies to the devel package (closes: #50075)
+
 * Mon Apr 08 2024 Michael Shigorin <mike@altlinux.org> 3.6.8-alt1.2
 - E2K: tuple-related note regarding devel subpackage
 - minor spec cleanup
