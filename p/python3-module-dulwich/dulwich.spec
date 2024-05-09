@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 0.21.5
-Release: alt2
+Version: 0.22.1
+Release: alt1
 
 Summary: Python Git Library
 License: Apache-2.0 or GPL-2.0-or-later
@@ -22,6 +22,7 @@ BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
 %{?_enable_check:BuildRequires: python3(tox)
 BuildRequires: python3(urllib3)
 BuildRequires: python3(fastimport)}
+BuildRequires: python3-module-setuptools-rust rust rust-cargo
 #gpg.errors.GPGMEError: GPGME: Invalid crypto engine
 #BuildRequires: python3(gpg) /usr/bin/gpg
 
@@ -52,6 +53,19 @@ This package contains tests for dulwich.
 %setup -n %pypi_name-%version
 
 %build
+mkdir -p .cargo
+cat > .cargo/config << EOF
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"
+
+[profile.release]
+strip = "none"
+lto= "thin"
+debug = "full"
+EOF
 %pyproject_build
 
 %install
@@ -79,6 +93,11 @@ popd
 %python3_sitelibdir/*/contrib
 
 %changelog
+* Thu May 09 2024 L.A. Kostis <lakostis@altlinux.ru> 0.22.1-alt1
+- NMU:
+  + 0.22.1.
+  + added rust BR.
+
 * Thu May 18 2023 Grigory Ustinov <grenka@altlinux.org> 0.21.5-alt2
 - Bootstrap for python3.11.
 

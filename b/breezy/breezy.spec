@@ -5,8 +5,8 @@
 %def_with bzr
 
 Name: breezy
-Version: 3.2.2
-Release: alt1.2
+Version: 3.3.7
+Release: alt1
 
 Summary: Breezy is a fork of the Bazaar version control system
 License: GPL-2.0-or-later
@@ -15,7 +15,8 @@ Group: Development/Other
 Url: https://github.com/breezy-team/breezy.git
 Packager: Anatoly Kitaykin <cetus@altlinux.ru>
 
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Source1: %name-cargo.tar
 
 Patch0: %name-%version-alt.patch
 Patch1: drop-distutils.patch
@@ -26,6 +27,12 @@ BuildRequires: python3-module-six
 BuildRequires: python3-module-Cython
 BuildRequires: python3-module-configobj
 BuildRequires: python3-module-packaging
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools-rust
+BuildRequires: python3-module-tzlocal
+BuilDrequires: python3-module-yaml
+BuildRequires: rust rust-cargo
+BuildRequires: python3(setuptools-gettext)
 
 %if_with check
 
@@ -44,6 +51,8 @@ BuildRequires: python3-module-subunit
 
 Conflicts: %name-doc < %version-%release
 Conflicts: bzr-git-remote
+
+Requires: python3-module-tzlocal
 
 %description
 Breezy (or brz) is a fork of the Bazaar version control system.
@@ -88,18 +97,31 @@ This package contains 'bzr' alias for breezy 'brz' command.
 %endif
 
 %prep
-%setup
+%setup -a1
 %patch0 -p1
 %patch1 -p1
 
 %build
 %add_optflags -fno-strict-aliasing
 
-%python3_build
+mkdir -p .cargo
+cat > .cargo/config << EOF
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "cargo"
+
+[profile.release]
+strip = "none"
+lto= "thin"
+debug = "full"
+EOF
+%pyproject_build
 
 %install
-
-%python3_install --install-data=%_datadir
+%__make man1/brz.1
+%pyproject_install
 
 %if_with bzr
 ln -s brz %buildroot%_bindir/bzr
@@ -110,9 +132,9 @@ ln -s brz %buildroot%_bindir/bzr
 install -dm0755 %buildroot%breezy_docdir
 install -m0644 BRANCH.TODO CODE_OF_CONDUCT.md INSTALL NEWS README.rst SECURITY.md TODO %buildroot%breezy_docdir
 cp -a doc contrib %buildroot%breezy_docdir
-# Hack! Need a subst in setup.py
-cp -a breezy/locale %buildroot%_datadir
 %find_lang %name
+install -dm0755 %buildroot%_man1dir
+install -m0644 man1/brz.1 %buildroot%_man1dir/
 
 %check
 %python3_build check
@@ -151,6 +173,11 @@ cp -a breezy/locale %buildroot%_datadir
 %endif
 
 %changelog
+* Wed May 08 2024 L.A. Kostis <lakostis@altlinux.ru> 3.3.7-alt1
+- NMU:
+  + 3.3.7.
+  + added rust BR.
+
 * Fri Oct 27 2023 Anton Vyatkin <toni@altlinux.org> 3.2.2-alt1.2
 - NMU: Dropped dependency on distutils.
 
