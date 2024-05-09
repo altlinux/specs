@@ -1,6 +1,6 @@
 %define module_name	virtualbox-addition
 %define module_version  7.0.18
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		std-def
 %define karch x86_64 %ix86
@@ -99,6 +99,9 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu May 09 2024 Aleksei Kalinin <kaa@altlinux.org> 7.0.18-alt2
+- Merged p10 branch
 
 * Fri May 03 2024 Aleksei Kalinin <kaa@altlinux.org> 7.0.18-alt1
 - Updated template for virtualbox 7.0.18

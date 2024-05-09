@@ -22,7 +22,7 @@
 %def_disable debug
 
 %def_with manual
-%def_without manualbuild
+%def_with manualbuild
 %def_without manualchm
 %def_without manualsdk
 %def_with additions
@@ -66,7 +66,7 @@
 
 Name: virtualbox
 Version: 7.0.18
-Release: alt1
+Release: alt2
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -164,6 +164,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: libpam-devel
 %if_with manualbuild
 BuildRequires: texlive-latex-recommended
+BuildRequires: texlive-fontsextra texlive-texmf
 BuildRequires: docbook-style-xsl
 BuildRequires: /usr/bin/chmcmd
 %endif
@@ -178,7 +179,7 @@ BuildRequires: libvpx-devel
 %endif
 BuildRequires: rpm-build-xdg rpm-macros-pam
 BuildRequires: /proc
-PreReq: %name-common = %version-%release
+Requires(pre,postun): %name-common = %version-%release
 
 %description
 VirtualBox is a powerful PC virtualization solution allowing
@@ -311,10 +312,10 @@ Sources for VirtualBox kernel module for OSE Video DRM.
 Summary: VirtualBox module support files
 Group: System/Configuration/Other
 # due to new_summary function and is_builtin_mode bugfix
-PreReq: control >= 0.7.2-alt1
-PreReq: shadow-utils
+Requires(pre,postun): control >= 0.7.2-alt1
+Requires(pre,postun): shadow-utils
 # due to /bin/mountpoint
-PreReq: sysvinit-utils
+Requires(pre,postun): sysvinit-utils
 # for automatic adding group vboxusers to system roles (users, powerusers, localadmins)
 Requires: libnss-role >= 0.5.1
 
@@ -700,7 +701,7 @@ mkdir -p %buildroot%_defaultdocdir/%name-doc-%version
 %if_with manual
 %if_with manualbuild
 install -m644 UserManual.pdf %buildroot%_defaultdocdir/%name-doc-%version/
-cp -r ../obj/manual/en_US/HTMLHelp %buildroot%_defaultdocdir/%name-doc-%version/HTML
+cp -r ../obj/manual/en_US/qhelp/* %buildroot%_defaultdocdir/%name-doc-%version/
 %endif
 %if_with manualchm
 install -m644 VirtualBox.chm %buildroot%_defaultdocdir/%name-doc-%version/
@@ -914,6 +915,11 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Thu May 09 2024 Aleksei Kalinin <kaa@altlinux.org> 7.0.18-alt2
+- Fixed missing documentation (closes: #44367)
+- Fixed PreReq rpmbuild warning
+- Merged with 'p10' branch
+
 * Fri May 03 2024 Aleksei Kalinin <kaa@altlinux.org> 7.0.18-alt1
 - Update to newest version 7.0.18
 
