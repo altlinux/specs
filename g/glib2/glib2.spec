@@ -43,8 +43,8 @@
 %endif
 
 Name: glib2
-Version: %ver_major.0
-Release: alt2.1
+Version: %ver_major.2
+Release: alt1
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -249,6 +249,7 @@ the functionality of the installed glib2/libgio packages.
 %patch1
 %patch2 -p1 -b .xvt
 %patch3 -p1
+
 %ifarch %e2k
 subst "/subdir('fuzzing')/d" meson.build
 sed -i 's|-Werror|-Wno-error|' gobject/tests/meson.build
@@ -426,7 +427,11 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 
 %if_enabled doc
 %files doc
+%_datadir/doc/girepository-%api_ver/
 %_datadir/doc/glib-%api_ver/
+%_datadir/doc/glib-unix-%api_ver/
+%_datadir/doc/gmodule-%api_ver/
+%_datadir/doc/gobject-%api_ver/
 %endif
 
 %files -n libgio
@@ -483,6 +488,12 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %exclude %_datadir/glib-%api_ver/gdb/
 %exclude %_datadir/glib-%api_ver/valgrind/
 
+%if_enabled doc
+%files -n libgio-doc
+%_datadir/doc/gio-2.0/
+%_datadir/doc/gio-unix-2.0/
+%endif
+
 %if_enabled installed_tests
 %files tests
 %_libexecdir/installed-tests/glib/
@@ -492,6 +503,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Thu May 09 2024 Yuri N. Sedunov <aris@altlinux.org> 2.80.2-alt1
+- 2.80.2 (fixed CVE-2024-34397)
+
 * Thu Mar 28 2024 Yuri N. Sedunov <aris@altlinux.org> 2.80.0-alt2.1
 - updated e2k patch (ilyakurdyukov@)
 
