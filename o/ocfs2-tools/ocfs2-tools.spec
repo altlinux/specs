@@ -2,11 +2,10 @@
 %def_without ocfs2console
 Summary: Tools for managing the Oracle Cluster Filesystem 2
 Name: ocfs2-tools
-Version: 1.8.7
-Release: alt2
+Version: 1.8.8
+Release: alt1
 License: GPLv2
 Group: System/Kernel and hardware
-# https://github.com/markfasheh/ocfs2-tools
 Source: %name-%version.tar
 Source1: cluster.conf
 
@@ -14,7 +13,8 @@ Patch0: ocfs2-tools-initscript.patch
 Patch1: ocfs2-tools-service.patch
 Patch2: ocfs2-tools-add_sysmacros.h.patch
 
-Url: http://oss.oracle.com/projects/ocfs2-tools/
+Url: https://github.com/markfasheh/ocfs2-tools
+VCS: https://github.com/markfasheh/ocfs2-tools
 BuildRequires: e2fsprogs-devel, glib2-devel, readline-devel, ncurses-devel, libe2fs-devel, libuuid-devel, libaio-devel
 BuildRequires: libcorosync-devel, libpacemaker-devel, libdlm-devel
 
@@ -138,6 +138,9 @@ sed -i -e '1s,^#!/usr/bin/python *,#!/usr/bin/python2 ,' %buildroot/usr/sbin/ocf
 %_includedir/ocfs2-kernel/*.h
 
 %changelog
+* Thu May 09 2024 Anton Farygin <rider@altlinux.ru> 1.8.8-alt1
+- 1.8.7 -> 1.8.8
+
 * Mon Oct 04 2021 Anton Farygin <rider@altlinux.ru> 1.8.7-alt2
 - fixed build with LTO
 
