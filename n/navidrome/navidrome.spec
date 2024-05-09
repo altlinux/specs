@@ -2,7 +2,7 @@
 %global import_path github.com/navidrome/navidrome
 
 Name: navidrome
-Version: 0.51.1
+Version: 0.52.0
 Release: alt1
 Summary: Modern Music Server and Streamer compatible with Subsonic/Airsonic
 License: GPL-3.0
@@ -19,6 +19,8 @@ BuildRequires: gcc-c++
 BuildRequires: golang
 BuildRequires: npm
 BuildRequires: libtag-devel
+
+Requires: ffmpeg
 
 %description
 Navidrome is an open source web-based music collection server and streamer.
@@ -73,5 +75,8 @@ install -m 0644 %SOURCE4 %buildroot%_sysconfdir/navidrome.toml
 %dir %attr(750, navidrome, navidrome) %_sharedstatedir/navidrome
 
 %changelog
+* Thu May 09 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.52.0-alt1
+- Updated to version 0.52.0.
+
 * Mon Mar 18 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.51.1-alt1
 - Initial build for ALT.
