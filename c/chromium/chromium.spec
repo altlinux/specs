@@ -5,7 +5,7 @@
 %global build_parallel_jobs %__nprocs
 %endif
 
-%global llvm_version 17.0
+%global llvm_version 18.1
 
 %set_verify_elf_method rpath=relaxed textrel=relaxed lfs=relaxed lint=relaxed
 %add_debuginfo_skiplist %_libdir/* %_bindir/*
@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        124.0.6367.118
+Version:        124.0.6367.155
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -512,6 +512,13 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu May 09 2024 Andrey Cherepanov <cas@altlinux.org> 124.0.6367.155-alt1
+- New version (124.0.6367.155).
+- Security fixes:
+  + CVE-2024-4558: Use after free in ANGLE.
+  + CVE-2024-4559: Heap buffer overflow in WebAudio.
+- Built using LLVM 18.1.
+
 * Wed May 01 2024 Andrey Cherepanov <cas@altlinux.org> 124.0.6367.118-alt1
 - New version (124.0.6367.118).
 - Security fixes:
