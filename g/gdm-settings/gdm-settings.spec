@@ -3,7 +3,7 @@
 
 %define _name gdm-settings
 %define pypi_name gdms
-%define ver_major 4.3
+%define ver_major 4.4
 %define rdn_name io.github.realmazharhussain.GdmSettings
 
 %def_enable check
@@ -16,23 +16,24 @@ Summary: GDM Settings
 License: AGPL-3.0
 Group: Graphical desktop/GNOME
 Url: https://github.com/gdm-settings/gdm-settings
+Vcs: https://github.com/gdm-settings/gdm-settings.git
 
 %if_disabled snapshot
 Source: %url/archive/v%version/%_name-%version.tar.gz
 %else
-Vcs: https://github.com/gdm-settings/gdm-settings.git
 Source: %_name-%version.tar
 %endif
 
 BuildArch: noarch
 
 %define bp_ver 0.10
+%define adw_ver 1.4
 
 Requires: typelib(Adw) = 1 dconf /usr/bin/pkexec
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson blueprint-compiler >= %bp_ver
-BuildRequires: pkgconfig(libadwaita-1) typelib(Adw)
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver typelib(Adw)
 BuildRequires: pkgconfig(pygobject-3.0)
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
@@ -67,6 +68,9 @@ Python and uses LibAdwaita for graphical interface.
 
 
 %changelog
+* Thu May 09 2024 Yuri N. Sedunov <aris@altlinux.org> 4.4-alt1
+- 4.4
+
 * Thu Feb 29 2024 Yuri N. Sedunov <aris@altlinux.org> 4.3-alt1
 - 4.3
 
