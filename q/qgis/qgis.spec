@@ -8,8 +8,8 @@
 %def_enable server
 
 Name:    qgis
-Version: 3.36.0
-Release: alt3
+Version: 3.36.2
+Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPL-3.0+ with exceptions
@@ -378,6 +378,9 @@ rm -rf %buildroot%_datadir/%name/FindQGIS.cmake \
 %endif
 
 %changelog
+* Thu May 09 2024 Andrey Cherepanov <cas@altlinux.org> 3.36.2-alt1
+- New version.
+
 * Sat Mar 09 2024 Andrey Cherepanov <cas@altlinux.org> 3.36.0-alt3
 - Rebuilt with grass 8.3.2.
 
