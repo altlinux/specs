@@ -25,16 +25,14 @@
 #
 
 Name: qtrvsim
-Version: 0.9.6
-Release: alt2
+Version: 0.9.7
+Release: alt1
 Summary: RISC-V CPU simulator for education purposes
 License: GPLv3+
 Group: Emulators
 Url: https://github.com/cvut/qtrvsim
-Source: qtrvsim_0.9.6.orig.tar.xz
+Source: %name-%version.tar.gz
 Patch: qtrvsim-return-type.patch
-Patch101: 0001-GUI-fix-crash-when-no-tab-is-selected.patch
-
 
 BuildRequires: qt5-base-devel qt5-tools
 BuildRequires: cmake ctest
@@ -53,7 +51,6 @@ RISC-V CPU simulator for education purposes with pipeline and cache visualizatio
 %prep
 %setup
 %patch -p1
-%patch101 -p1 
 
 %build
 %cmake
@@ -84,6 +81,9 @@ make -C %_cmake__builddir test
 %doc README.md docs/user/*.md
 
 %changelog
+* Thu May 09 2024 Fr. Br. George <george@altlinux.org> 0.9.7-alt1
+- Autobuild version bump to 0.9.7
+
 * Thu Feb 08 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.9.6-alt2
 - NMU: trimmed build dependencies (qt5-webengine and co are not required,
   see CMakeLists.txt and dependencies of binary packages).
