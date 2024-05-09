@@ -24,7 +24,7 @@
 %def_with scudo
 
 Name: ayugram-desktop
-Version: 4.16
+Version: 4.16.8
 Release: alt1
 
 Summary: Desktop Telegram client with good customization and Ghost mode
@@ -395,6 +395,9 @@ ln -s %name %buildroot%_bindir/%oname
 %doc README.md
 
 %changelog
+* Wed May 08 2024 Vitaly Lipatov <lav@altlinux.ru> 4.16.8-alt1
+- new version 4.16.8 (with rpmrb script)
+
 * Thu Apr 04 2024 Vitaly Lipatov <lav@altlinux.ru> 4.16-alt1
 - new version 4.16 (with rpmrb script)
 
