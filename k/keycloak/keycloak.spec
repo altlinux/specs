@@ -1,5 +1,5 @@
 Name:    keycloak
-Version: 24.0.3
+Version: 24.0.4
 Release: alt1
 
 Summary: Open Source Identity and Access Management For Modern Applications and Services
@@ -48,5 +48,8 @@ tar xf quarkus/dist/target/%name-%version.tar.gz --strip=1 -C %buildroot%_datadi
 %_datadir/%name
 
 %changelog
+* Thu May 09 2024 Andrey Cherepanov <cas@altlinux.org> 24.0.4-alt1
+- New version.
+
 * Sat Apr 27 2024 Andrey Cherepanov <cas@altlinux.org> 24.0.3-alt1
 - Initial build for Sisyphus (ALT #44193).
