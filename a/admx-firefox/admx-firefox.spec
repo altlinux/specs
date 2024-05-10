@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admx-firefox
-Version: 5.8
+Version: 5.10
 Release: alt1
 
 Summary: Firefox-specific ADMX policy templates
@@ -48,6 +48,9 @@ done
 %_destdir/*/*.adml
 
 %changelog
+* Fri May 10 2024 Evgeny Sinelnikov <sin@altlinux.org> 5.10-alt1
+- Update Policy templates for Firefox 125 and Firefox ESR 115.10
+
 * Tue Mar 05 2024 Valentin Sokolov <sova@altlinux.org> 5.8-alt1
 - Update Policy templates for Firefox 123 and Firefox ESR 115.8
 
