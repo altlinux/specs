@@ -2,21 +2,23 @@
 %define _unpackaged_files_terminate_build 1
 %define ver_major 43
 %define beta .beta
-%define xdg_name org.gnome.SoundRecorder
+%define binary_name vocalis
+%define rdn_name app.drey.Vocalis
 %define gst_api_ver 1.0
 
 Name: gnome-sound-recorder
 Version: %ver_major
-Release: alt0.5%beta
+Release: alt0.6%beta
 
 Summary: Sound Recorder for GNOME
 Group: Sound
-License: GPLv2+
-Url: https://wiki.gnome.org/Design/Apps/SoundRecorder
+License: LGPL-2.0-or-later
+Url: https://wiki.gnome.org/Apps/SoundRecorder
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
+Vcs: https://gitlab.gnome.org/World/vocalis
 Source: %name-%version%beta.tar
 %endif
 
@@ -24,7 +26,8 @@ BuildArch: noarch
 
 Obsoletes: gnome-media-common
 Obsoletes: gnome-media-grecord
-Provides:  gnome-media-grecord = %version-%release
+Provides:  gnome-media-grecord = %EVR
+Provides:  %binary_name = %EVR
 
 %define glib_ver 2.44
 %define gtk_ver 4.4.0
@@ -68,19 +71,23 @@ The GNOME application for record and play sound files.
 
 %install
 %meson_install
-%find_lang --with-gnome --output=%name.lang %xdg_name
+%find_lang --with-gnome --output=%name.lang %rdn_name
 
 %files -f %name.lang
-%_bindir/%name
-%_datadir/%xdg_name
-%_desktopdir/%xdg_name.desktop
-%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_bindir/vocalis
+%_datadir/%rdn_name
+%_desktopdir/%rdn_name.desktop
+%_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/apps/*
-%_datadir/metainfo/%xdg_name.metainfo.xml
+%_datadir/metainfo/%rdn_name.metainfo.xml
 %doc NEWS README*
 
 
 %changelog
+* Fri May 10 2024 Yuri N. Sedunov <aris@altlinux.org> 43-alt0.6.beta
+- 43.beta-85-g809aa25 (renamed to vocalis, updated translations)
+- spec: provides vocalis, fixed License, Url tags
+
 * Fri Oct 13 2023 Yuri N. Sedunov <aris@altlinux.org> 43-alt0.5.beta
 - updated to 43.beta-51-gaffa6c5
 
