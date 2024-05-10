@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admx-msi-setup
-Version: 0.1.0
-Release: alt3
+Version: 0.1.1
+Release: alt1
 
 Summary: ADMX msi file downloader and extractor
 License: GPLv2+
@@ -30,6 +30,10 @@ install -D %name.sh %buildroot/%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Fri May 10 2024 Evgeny Sinelnikov <sin@altlinux.org> 0.1.1-alt1
+- Update Administrative Templates (.admx) default source URL:
+  Windows 10 October 2020 Update -> Windows 10 2022 Update (22H2).
+
 * Mon Jul 19 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.1.0-alt3
 - Don't stop with error if DESTDIR already exists
 
