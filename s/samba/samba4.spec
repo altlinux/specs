@@ -120,7 +120,7 @@
 %endif
 
 Name:    samba
-Version: 4.20.0
+Version: 4.20.1
 Release: alt1
 
 Group:   System/Servers
@@ -1339,6 +1339,7 @@ control role-sambashare enabled
 %attr(755,root,root) %_initdir/nmb
 %_unitdir/nmb.service
 %_unitdir/smb.service
+%_unitdir/samba-bgqd.service
 
 %dir %_samba_mod_libdir/vfs
 %_samba_mod_libdir/vfs/*.so
@@ -2214,6 +2215,18 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Fri May 10 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.20.1-alt1
+- Update to stable release of Samba 4.20
+- Add support separate builds generated with samba-pidl.
+- Major changes from upstream:
+  + dns update debug message is too noisy (Samba#15630).
+  + Do not fail PAC validation for RFC8009 checksums types (Samba#15635).
+  + Improve performance of lookup_groupmem() in idmap_ad (Samba#15605).
+  + Smbcacls incorrectly propagates inheritance with Inherit-Only
+    flag (Samba#15636).
+  + http library doesn't support 'chunked transfer encoding' (Samba#15611).
+  + Provide a systemd service file for the background queue daemon (Samba#15600).
+
 * Tue Apr 09 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.20.0-alt1
 - Update to stable release of Samba 4.20
 - Major changes from upstream:
