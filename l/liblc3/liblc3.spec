@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Low Complexity Communication Codec (LC3)
@@ -16,6 +16,7 @@ Url: https://github.com/google/liblc3
 
 Vcs: https://github.com/google/liblc3.git
 Source: https://github.com/google/liblc3/archive/v%version/%name-%version.tar.gz
+Patch10: liblc3-1.1.1-up-rpath.diff
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson libgomp-devel
@@ -43,6 +44,7 @@ This package provides LC3 tools.
 
 %prep
 %setup
+%patch10 -p1 -R
 
 %build
 %meson \
@@ -72,6 +74,9 @@ This package provides LC3 tools.
 %endif
 
 %changelog
+* Sat Apr 20 2024 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
+- 1.1.1
+
 * Thu Mar 28 2024 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - 1.1.0
 
