@@ -5,7 +5,7 @@
 %global import_path github.com/xtaci/kcptun
 Name:     kcptun
 Version: 20230811
-Release: alt1
+Release: alt2
 
 Summary:  A Stable & Secure Tunnel based on KCP with N:M multiplexing and FEC
 License:  MIT
@@ -13,6 +13,7 @@ Group:    Networking/Other
 Url:      https://github.com/xtaci/kcptun
 
 Source:   %name-%version.tar
+Patch3500: alt-github.com-templexxx-cpu-support-LoongArch.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -29,6 +30,7 @@ reliability in the network with packet losses.
 
 %prep
 %setup
+%patch3500 -p1
 
 %build
 export LDFLAGS="-X main.VERSION=%version"
@@ -75,6 +77,9 @@ install -m0640 .gear/*.json  %buildroot%_sysconfdir/%name
 %_unitdir/*.service
 
 %changelog
+* Fri May 10 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 20230811-alt2
+- NMU: fixed FTBFS on LoongArch.
+
 * Mon Sep 04 2023 Vitaly Chikunov <vt@altlinux.org> 20230811-alt1
 - Update to v20230811 (2023-08-11).
 
