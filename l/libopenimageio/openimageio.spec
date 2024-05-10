@@ -10,7 +10,7 @@
 %define soname 2.5
 
 Name:           lib%oname
-Version:        2.5.10.1
+Version:        2.5.11.0
 Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
@@ -52,8 +52,6 @@ BuildRequires:  freetype2-devel
 BuildRequires:  libfmt-devel
 BuildRequires:  openvdb-devel
 %ifnarch %e2k
-# util 50075 will be fixed we need dcmtk too
-BuildRequires:  dcmtk libxml2-devel
 BuildRequires:  libdcmtk-devel
 %endif
 BuildRequires:  libopencv-devel
@@ -232,6 +230,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Fri May 10 2024 L.A. Kostis <lakostis@altlinux.ru> 2.5.11.0-alt1
+- Updated to upstream version 2.5.11.0.
+
 * Thu Apr 18 2024 L.A. Kostis <lakostis@altlinux.ru> 2.5.10.1-alt1
 - Updated to upstream version 2.5.10.1.
 - BR: added dcmtk (bug #50075 workaround).
