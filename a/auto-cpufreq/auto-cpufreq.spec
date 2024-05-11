@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: auto-cpufreq
-Version: 2.2.0
+Version: 2.3.0
 Release: alt1
 
 Summary: Automatic CPU speed & power optimizer
@@ -42,14 +42,12 @@ monitoring of laptop's battery state, CPU usage, CPU temperature and system load
 mkdir -p %buildroot%_datadir/%name
 cp -rv scripts/ %buildroot%_datadir/%name
 install -D -m 0644 scripts/org.%name.pkexec.policy -t %buildroot%_datadir/polkit-1/actions
-install -D -m 0644 scripts/%name.service -t %buildroot%_unitdir
 install -D -m 0755 scripts/%name-gtk.desktop -t %buildroot%_datadir/applications
 install -D -m 0755 images/icon.png %buildroot%_datadir/pixmaps/%name.png
 
 %files
 %_bindir/%name
 %_bindir/%name-gtk
-%_unitdir/%name.service
 %dir %_datadir/%name
 %dir %_datadir/%name/scripts
 %_datadir/%name/scripts/%{name}*
@@ -67,5 +65,8 @@ install -D -m 0755 images/icon.png %buildroot%_datadir/pixmaps/%name.png
 %python3_sitelibdir/%{pyproject_distinfo auto_cpufreq}
 
 %changelog
+* Sat May 11 2024 Anton Kurachenko <srebrov@altlinux.org> 2.3.0-alt1
+- New version 2.3.0.
+
 * Fri Mar 15 2024 Anton Kurachenko <srebrov@altlinux.org> 2.2.0-alt1
 - Initial build for Sisyphus.
