@@ -11,7 +11,7 @@
 
 Name:    appstream
 Version: 1.0.2
-Release: alt1.1
+Release: alt1.2
 
 Summary: Utilities to generate, maintain and access the AppStream Xapian database
 # library; LGPLv2+, tools: GPLv2+
@@ -171,8 +171,9 @@ BuildArch: noarch
 %patch1 -p1 -b .qt
 %ifarch %e2k
 # workaround for EDG frontend
-sed -i "s|g_autofree gchar \*\*|g_autofree_edg(gchar*)|" qt/pool.cpp
-sed -i "s|g_autofree gchar \*|g_autofree_edg(gchar)|" qt/spdx.cpp
+sed -i 's/fromUtf8(res)/fromUtf8((gchar*)res)/' qt/*.cpp
+find -name '*.cpp' -type f -exec \
+	sed -E -i 's/g_autofree (gchar \**)\*/g_autofree_edg(\1) /' {} \;
 sed -i "s/-Werror=shadow/-Wno-error=shadow/" meson.build
 %endif
 # prepare qt5 build
@@ -293,6 +294,9 @@ ln -s libAppStreamQt5.so %buildroot/%_libdir/libAppStreamQt.so
 %_datadir/gir-1.0/AppStreamCompose-1.0.gir
 
 %changelog
+* Sat May 11 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.0.2-alt1.2
+- Fixed build for Elbrus.
+
 * Mon May 06 2024 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt1.1
 - NMU: build Qt5 and Qt6 libs
 - NMU: apply shared libs policy
