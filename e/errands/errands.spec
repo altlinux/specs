@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: errands
-Version: %ver_major.0.4
+Version: %ver_major.0.5
 Release: alt1
 
 Summary: Todo application for GNOME
@@ -67,11 +67,15 @@ Todo application for those who prefer simplicity.
 %_desktopdir/%rdn_name.desktop
 %_datadir/dbus-1/services/%rdn_name.service
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
-%_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
+%_iconsdir/hicolor/*/apps/*.svg
+%_iconsdir/%rdn_name.Source.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README*
 
 %changelog
+* Sun May 12 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0.5-alt1
+- 46.0.5
+
 * Wed May 08 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0.4-alt1
 - 46.0.4
 
