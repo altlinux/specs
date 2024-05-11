@@ -1,7 +1,7 @@
 %define git %nil
 
 Name: libopus
-Version: 1.5.1
+Version: 1.5.2
 Release: alt1
 
 Summary: Opus Audio Codec library
@@ -54,9 +54,9 @@ printf 'PACKAGE_VERSION="%s"\n' '%version' > package_version
        -Drtcd=disabled \
 %endif
 %ifarch x86_64 aarch64
-       -Denable-deep-plc=true \
-       -Denable-dred=true \
-       -Denable-osce=true
+       -Ddeep-plc=enabled \
+       -Ddred=enabled \
+       -Dosce=enabled
 %endif
 %meson_build
 
@@ -85,6 +85,9 @@ printf 'PACKAGE_VERSION="%s"\n' '%version' > package_version
 %endif
 
 %changelog
+* Fri May 10 2024 L.A. Kostis <lakostis@altlinux.ru> 1.5.2-alt1
+- 1.5.2.
+
 * Tue Mar 05 2024 L.A. Kostis <lakostis@altlinux.ru> 1.5.1-alt1
 - 1.5.1.
 - libopus: enable ML functionality on supported arches (which increases the
