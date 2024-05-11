@@ -1,6 +1,6 @@
 Name: telegram-send
 Version: 0.37
-Release: alt1
+Release: alt2
 
 Summary: Send messages and files over Telegram from the command-line
 License: GPL-3.0
@@ -9,7 +9,6 @@ Url: https://github.com/rahiel/telegram-send
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch: %name-%version-alt-shebang-fix.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -23,7 +22,6 @@ can be easily called from other programs.
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 %pyproject_build
@@ -38,5 +36,8 @@ can be easily called from other programs.
 %python3_sitelibdir/%{pyproject_distinfo telegram_send}
 
 %changelog
+* Sat May 11 2024 Anton Kurachenko <srebrov@altlinux.org> 0.37-alt2
+- Removed the patch file (unneeded).
+
 * Fri May 10 2024 Anton Kurachenko <srebrov@altlinux.org> 0.37-alt1
 - Initial build for Sisyphus.
