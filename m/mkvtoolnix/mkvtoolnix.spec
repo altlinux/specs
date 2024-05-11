@@ -15,8 +15,8 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 83.0
-Release: alt1.1
+Version: 84.0
+Release: alt1
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
 Group: Video
@@ -28,7 +28,7 @@ Patch1: ax_boost_base_morearch.patch
 
 Provides: mkvmerge = %EVR
 
-BuildRequires(pre): rpm-build-xdg rpm-build-ruby
+BuildRequires(pre): rpm-build-xdg
 BuildRequires: gcc-c++ boost-devel boost-filesystem-devel zlib-devel libmagic-devel
 BuildRequires: libgmp-devel
 BuildRequires: libvorbis-devel libogg-devel
@@ -40,6 +40,7 @@ BuildRequires: libgtest-devel
 BuildRequires: libpcre2-devel
 BuildRequires: libutfcpp-devel
 BuildRequires: nlohmann-json-devel
+BuildRequires: rake
 
 %{?_enable_qt:BuildRequires: qt6-base-devel qt6-tools qt6-multimedia-devel qt6-svg-devel cmark-devel}
 %{?_with_flac:BuildRequires: libflac-devel}
@@ -110,10 +111,10 @@ export CXXFLAGS="$CXXFLAGS -I%_includedir/qt6 -I%_includedir/qt6/QtCore -I%_incl
     %{subst_with dvdread} \
     %nil
 
-%ruby_bindir/rake V=1
+rake V=1
 
 %install
-%ruby_bindir/rake DESTDIR=%buildroot install
+rake DESTDIR=%buildroot install
 
 %find_lang --with-man %name
 %find_lang --with-man %name-gui
@@ -125,8 +126,8 @@ export CXXFLAGS="$CXXFLAGS -I%_includedir/qt6 -I%_includedir/qt6/QtCore -I%_incl
 cat mkvextract.lang mkvmerge.lang mkvpropedit.lang >> %name.lang
 
 %check
-%ruby_bindir/rake V=1 tests:unit
-%ruby_bindir/rake V=1 tests:run_unit
+rake V=1 tests:unit
+rake V=1 tests:run_unit
 
 %files -f %name.lang
 %doc COPYING
@@ -163,6 +164,10 @@ cat mkvextract.lang mkvmerge.lang mkvpropedit.lang >> %name.lang
 %endif
 
 %changelog
+* Sat May 11 2024 L.A. Kostis <lakostis@altlinux.ru> 84.0-alt1
+- 84.0.
+- update rake location (again).
+
 * Mon Mar 18 2024 L.A. Kostis <lakostis@altlinux.ru> 83.0-alt1.1
 - gui: add missing qt6-multimedia dependency (closes #49692).
 
