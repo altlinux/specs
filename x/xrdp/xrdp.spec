@@ -1,6 +1,6 @@
 %global _unpackaged_files_terminate_build 1
 Name: 	 xrdp
-Version: 0.9.25.1
+Version: 0.10.0
 Release: alt1
 
 Summary: An open source remote desktop protocol (RDP) server
@@ -34,7 +34,7 @@ Patch14: xrdp-alt-add-comment-about-windows_xp.patch
 Patch16: xrdp-alt-ppc64le-support.patch
 
 # Fedora patches
-Patch21: xrdp-0.9.4-service.patch
+Patch21: xrdp-service.patch
 Patch22: xrdp-0.9.6-script-interpreter.patch
 Patch23: xrdp-0.9.9-sesman.patch
 Patch24: xrdp-0.9.10-scripts-libexec.patch
@@ -63,6 +63,13 @@ BuildRequires: nasm
 BuildRequires: libgbm-devel
 BuildRequires: libepoxy-devel
 BuildRequires: libdrm-devel
+BuildRequires: imlib2-devel
+BuildRequires: libfreetype-devel
+BuildRequires: libpixman-devel
+BuildRequires: fdkaac
+BuildRequires: libjpeg-devel
+BuildRequires: liblame-devel
+BuildRequires: libfdk-aac-devel
 
 Requires: xorg-drv-xrdp = %EVR
 Requires: xinitrc
@@ -155,6 +162,14 @@ done
 	   --enable-rfxcodec \
 	   --enable-opus \
 	   --enable-painter \
+	   --enable-pixman \
+	   --with-imlib2=yes \
+	   --enable-tjpeg \
+	   --with-freetype2=yes \
+	   --enable-mp3lame \
+	   --enable-vsock \
+	   --enable-rdpsndaudin \
+	   --enable-fdkaac \
 	   --with-systemdsystemunitdir=%systemd_unitdir
 pushd xorgxrdp
 PKG_CONFIG_PATH=../pkgconfig ./configure --enable-glamor
@@ -260,6 +275,7 @@ fi
 %config(noreplace) %_sysconfdir/xrdp/sesman.ini
 %config(noreplace) %_sysconfdir/xrdp/xrdp.ini
 %_bindir/xrdp*
+%_libexecdir/xrdp/*
 %_sbindir/xrdp*
 %_libdir/%name
 %_logrotatedir/%name
@@ -277,6 +293,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Sun May 12 2024 Andrey Cherepanov <cas@altlinux.org> 0.10.0-alt1
+- New version.
+
 * Thu Mar 14 2024 Andrey Cherepanov <cas@altlinux.org> 0.9.25.1-alt1
 - New version.
 
