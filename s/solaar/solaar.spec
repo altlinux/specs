@@ -1,5 +1,5 @@
 Name:    solaar
-Version: 1.1.12
+Version: 1.1.13
 Release: alt1
 
 Summary: Device manager for Logitech Unifying Receiver
@@ -70,6 +70,9 @@ tools/po-compile.sh
 %doc docs
 
 %changelog
+* Sun May 12 2024 Andrey Cherepanov <cas@altlinux.org> 1.1.13-alt1
+- New version.
+
 * Mon Apr 29 2024 Andrey Cherepanov <cas@altlinux.org> 1.1.12-alt1
 - New version.
 
