@@ -5,17 +5,18 @@
 %def_without glib
 
 Name: python3-module-pyudev
-Version: 0.24.1
-Release: alt2
+Version: 0.24.3
+Release: alt1
 
-Group: System/Libraries
 Summary: Udev bindings for Python
-Url: https://pypi.org/project/pyudev
+
 License: LGPLv2.1+
+Group: System/Libraries
+URL: https://pypi.org/project/pyudev
+VCS: https://github.com/pyudev/pyudev
 
 BuildArch: noarch
 
-# https://github.com/pyudev/pyudev
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -131,6 +132,9 @@ service found in modern linux systems.
 %endif
 
 %changelog
+* Sun May 12 2024 Grigory Ustinov <grenka@altlinux.org> 0.24.3-alt1
+- Automatically updated to 0.24.3.
+
 * Fri Apr 05 2024 Grigory Ustinov <grenka@altlinux.org> 0.24.1-alt2
 - Splitted pyside6 module to separate subpackage (Closes: #49910).
 
