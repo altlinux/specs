@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  2
-%define _php_release_version 18
+%define _php_release_version 19
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -54,6 +54,7 @@ Patch19: php7-7.4-XFAIL-openssl-tests-with-internet-requires.patch
 Patch20: php7-7.4-fix-run-openssl-tests-server.patch
 Patch21: php-8.2-alt-test-dh7787.patch
 Patch22: php-8.2-altlinux-mbstring-test.patch
+Patch23: php-8.2.19-gh13856-alt-fix.patch
 
 Patch2000: php-8.1-e2k.patch
 
@@ -178,6 +179,7 @@ in use by other PHP-related packages.
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
+%patch23 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -465,6 +467,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Sun May 12 2024 Anton Farygin <rider@altlinux.ru> 8.2.19-alt1
+- 8.2.18 -> 8.2.19
+
 * Fri Apr 12 2024 Anton Farygin <rider@altlinux.ru> 8.2.18-alt1
 - 8.2.17 -> 8.2.18 (Fixes: CVE-2024-1874, CVE-2024-2756, CVE-2024-3096)
 
