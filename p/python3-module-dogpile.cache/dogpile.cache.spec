@@ -4,16 +4,16 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 
 Summary: A caching front-end based on the Dogpile lock
 
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/dogpile.cache/
+URL: https://pypi.org/project/dogpile.cache
+VCS: https://github.com/sqlalchemy/dogpile.cache
 
-# https://github.com/sqlalchemy/dogpile.cache
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -68,11 +68,14 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %tox_check_pyproject
 
 %files
-%doc *.rst
+%doc LICENSE *.rst
 %python3_sitelibdir/%mname
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sun May 12 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.3-alt1
+- Automatically updated to 1.3.3.
+
 * Fri Mar 01 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.2-alt1
 - Automatically updated to 1.3.2.
 
