@@ -1,14 +1,15 @@
 %define oname pre-commit
 
 Name:    python3-module-%oname
-Version: 3.7.0
+Version: 3.7.1
 Release: alt1
 
 Summary: A framework for managing and maintaining multi-language pre-commit hooks
 
 License: MIT
 Group:   Development/Python3
-URL:     https://github.com/pre-commit/pre-commit
+URL:     https://pypi.org/project/pre-commit
+VCS:     https://github.com/pre-commit/pre-commit
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -34,12 +35,15 @@ Source:  %name-%version.tar
 # tests need lots of network, git and other stuff
 
 %files
-%doc *.md
+%doc LICENSE *.md
 %_bindir/%oname
 %python3_sitelibdir/pre_commit
 %python3_sitelibdir/pre_commit-%version-py%_python3_version.egg-info
 
 %changelog
+* Sun May 12 2024 Grigory Ustinov <grenka@altlinux.org> 3.7.1-alt1
+- Automatically updated to 3.7.1.
+
 * Mon Mar 25 2024 Grigory Ustinov <grenka@altlinux.org> 3.7.0-alt1
 - Automatically updated to 3.7.0.
 
