@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: vcmi
-Version: 1.4.5
+Version: 1.5.0
 Release: alt1
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
@@ -11,7 +11,7 @@ Group: Games/Strategy
 
 Url: http://wiki.vcmi.eu/index.php?title=Main_Page
 Source0: %name-%version.tar
-#Patch: %name-%version-%release.patch
+Patch: %name-%version-%release.patch
 
 # Currently only luajit compiles with VCMI
 ExclusiveArch: %luajit_arches
@@ -27,6 +27,7 @@ BuildRequires: boost-locale-devel
 BuildRequires: boost-program_options-devel
 BuildRequires: boost-asio-devel
 BuildRequires: boost-interprocess-devel
+BuildRequires: boost-geometry-devel
 BuildRequires: pkgconfig(libavcodec)
 BuildRequires: pkgconfig(libavdevice)
 BuildRequires: pkgconfig(libavformat)
@@ -84,8 +85,7 @@ VCMI - это фанатский проект с открытым исходны
 
 %prep
 %setup
-%autopatch -p1
-rm -rv AI/FuzzyLite
+%patch -p1
 
 %ifarch %e2k
 # unsupported as of lcc 1.24.11
@@ -97,7 +97,8 @@ rm -rv AI/FuzzyLite
        -DCMAKE_INSTALL_LIBDIR=%_lib \
        -DCMAKE_SKIP_RPATH=OFF \
        -DENABLE_TEST=OFF \
-       -DFORCE_BUNDLED_FL=OFF
+       -DFORCE_BUNDLED_FL=OFF \
+       -DENABLE_INNOEXTRACT=OFF
 
 %cmake_build
 
@@ -118,6 +119,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/%name/
 
 %changelog
+* Sat May 11 2024 Anton Midyukov <antohami@altlinux.org> 1.5.0-alt1
+- Newv version 1.5.0
+
 * Wed Feb 07 2024 Anton Midyukov <antohami@altlinux.org> 1.4.5-alt1
 - New version 1.4.5.
 
