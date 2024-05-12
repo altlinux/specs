@@ -2,12 +2,13 @@
 
 Name: perl-Mojo-IOLoop-ReadWriteProcess
 Version: 0.34
-Release: alt1
+Release: alt2
 Summary: Execute external programs or internal code blocks as separate process
 License: Artistic-1.0 or GPL-1.0+
 Group: Development/Perl
 Url: http://search.cpan.org/dist/Mojo-IOLoop-ReadWriteProcess/
 Source0: http://www.cpan.org/authors/id/S/SZ/SZARATE/Mojo-IOLoop-ReadWriteProcess-%{version}.tar.gz
+Patch3500: alt-prctl-loongarch64.patch
 BuildArch: noarch
 
 BuildRequires: perl-devel perl(Test/Exception.pm)
@@ -25,6 +26,7 @@ Mojo::IOLoop::ReadWriteProcess is yet another process manager.
 
 %prep
 %setup -q -n Mojo-IOLoop-ReadWriteProcess-%{version}
+%patch3500 -p1
 
 %ifnarch %ix86 x86_64
 # following test may fail on some architectures
@@ -43,6 +45,9 @@ rm -f t/12_mocked_container.t
 %doc Changes README.md
 
 %changelog
+* Sat May 11 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.34-alt2
+- NMU: support prctl on LoongArch, required for os-autoinst
+
 * Mon Sep 25 2023 Igor Vlasenko <viy@altlinux.org> 0.34-alt1
 - automated CPAN update
 
