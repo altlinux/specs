@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 
 Summary: A basic implementation of the __geo_interface__
@@ -23,6 +23,7 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-typing_extensions
 BuildRequires: python3-module-hypothesis
+BuildRequires: python3-module-more-itertools
 %endif
 
 %py3_provides %oname
@@ -50,6 +51,9 @@ data.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Sun May 12 2024 Anton Vyatkin <toni@altlinux.org> 1.5.0-alt1
+- New version 1.5.0.
+
 * Tue Mar 26 2024 Anton Vyatkin <toni@altlinux.org> 1.4.0-alt1
 - New version 1.4.0.
 
