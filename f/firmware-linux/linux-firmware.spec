@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20240426
+Version: 20240510
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -94,6 +94,23 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/mellanox
 
 %changelog
+* Sun May 12 2024 Cronbuild Service <cronbuild@altlinux.org> 20240510-alt1
+- upstream changes (GIT b9d2bf23):
+  + amdgpu: DMCUB updates for various AMDGPU ASICs (thx Alex Hung)
+  + Amphion: Update vpu firmware (thx Ming Qian)
+  + Update firmware file for Intel BlazarU core (thx Kiran K)
+  + Update firmware file for Intel Bluetooth Magnetor core (thx Kiran K)
+  + Update firmware file for Intel Bluetooth Solar core (thx Kiran K)
+  + i915: Add BMG DMC v2.06 (thx Gustavo Sousa)
+  + Add CS35L41 HDA Firmware for Asus HN7306 (thx Stefan Binding)
+  + Update firmware tuning for HP Consumer Laptop (thx Stefan Binding)
+  + amdgpu: DMCUB updates for various AMDGPU ASICs (thx Tom Chung)
+  + rtl_bt: Update RTL8822C BT UART firmware to 0x0FD6_407B (thx Hilda Wu)
+  + rtl_bt: Update RTL8822C BT USB firmware to 0x0ED6_407B (thx Hilda Wu)
+  + cirrus: cs35l56: Add firmware for Cirrus CS35L56 for various
+    ASUS laptops (thx Simon Trimmer)
+  + Add firmware and tuning for Lenovo Y770S (thx Stefan Binding)
+
 * Mon Apr 29 2024 Cronbuild Service <cronbuild@altlinux.org> 20240426-alt1
 - upstream changes (GIT fc21f475):
   + amdgpu: DMCUB updates for various AMDGPU ASICs (thx Wayne Lin)
