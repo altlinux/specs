@@ -2,13 +2,15 @@
 %def_enable snapshot
 
 Name: zam-plugins
-Version: 4.2
+Version: 4.3
 Release: alt1
 
-Summary: A collection of LV2/LADSPA/JACK audio plugins
+Summary: A collection of JACK/LADSPA/LV2/VST*/CLAP audio plugins
 Group: Sound
 License: GPL-2.0-or-later and ISC
 Url: http://www.zamaudio.com/
+
+Vcs: https://github.com/zamaudio/zam-plugins.git
 
 %if_disabled snapshot
 Source: https://github.com/zamaudio/%name/archive/%version/%name-%version.tar.gz
@@ -25,7 +27,7 @@ BuildRequires: zita-convolver-devel >= 3.1.0
 BuildRequires: libX11-devel libglvnd-devel
 
 %description
-zam-plugins is a collection of LV2/LADSPA/VST/JACK audio plugins
+zam-plugins is a collection of JACK/LADSPA/LV2/VST*/CLAP audio plugins
 for sound processing developed in-house at ZamAudio.
 
 %package -n lv2-zam-plugins
@@ -110,6 +112,9 @@ export HAVE_ZITA_CONVOLVER=true
 %doc README.md NOTICE.*
 
 %changelog
+* Sun May 12 2024 Yuri N. Sedunov <aris@altlinux.org> 4.3-alt1
+- 4.3
+
 * Mon Nov 13 2023 Yuri N. Sedunov <aris@altlinux.org> 4.2-alt1
 - 4.2
 - new vst- and clap- subpackages
