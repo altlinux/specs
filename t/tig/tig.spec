@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: tig
-Version: 2.5.9
+Version: 2.5.10
 Release: alt1
 
 Summary: Text-mode interface for git
@@ -40,7 +40,9 @@ Git commands.
 %setup
 
 %build
+# pcre-config(1) does not report this path alone without `-I`.
 export C_INCLUDE_PATH=/usr/include/pcre
+# Note: Does not pass `-fanalyzer -Werror -Wno-unused-variable` (LTO off).
 %add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure
@@ -52,12 +54,11 @@ install -pD -m755 contrib/tig-pick %buildroot%_bindir/tig-pick
 install -pD -m644 doc/tig.1 %buildroot%_man1dir/tig.1
 install -pD -m644 doc/tigrc.5 %buildroot%_man5dir/tigrc.5
 install -pD -m644 doc/tigmanual.7 %buildroot%_man7dir/tigmanual.7
-mkdir -p %buildroot%_datadir/tig
-install -p -m644 contrib/*.tigrc %buildroot%_datadir/tig/
+install -pD -m644 contrib/*.tigrc -t %buildroot%_datadir/tig
 install -pD -m644 contrib/tig-completion.bash %buildroot%_datadir/bash-completion/completions/tig
 install -pD -m644 contrib/tig-completion.bash %buildroot%_datadir/zsh/site-functions/tig-completion.bash
 install -pD -m644 contrib/tig-completion.zsh  %buildroot%_datadir/zsh/site-functions/_tig
-hardlink -v %buildroot%_datadir
+hardlink -y memcmp -v %buildroot%_datadir
 
 %check
 src/tig -v
@@ -80,6 +81,9 @@ script -e -c 'make test-address-sanitizer' /dev/null
 %_datadir/zsh/site-functions/tig-completion.bash
 
 %changelog
+* Sun May 12 2024 Vitaly Chikunov <vt@altlinux.org> 2.5.10-alt1
+- Update to tig-2.5.10 (2024-05-10).
+
 * Mon Apr 01 2024 Vitaly Chikunov <vt@altlinux.org> 2.5.9-alt1
 - Update to tig-2.5.9 (2024-03-29).
 
