@@ -1,21 +1,25 @@
-%define version 0.9.6.1
 %define modulename vobject
 
-Name: python3-module-vobject
-Version: %version
-Release: alt2
-Packager: Andrey Cherepanov <cas@altlinux.org>
+Name: python3-module-%modulename
+Version: 0.9.7
+Release: alt1
 
 Summary: Python module for parsing and generating vCard files
-License: ASL 1.1
+
+License: Apache-2.0
 Group: Development/Python3
-Url: http://vobject.skyhouseconsulting.com
+URL: https://pypi.org/project/vobject
+VCS: https://github.com/py-vobject/vobject
+
 BuildArch: noarch
 
-Source0: %modulename-%version.tar
-#VCS: https://github.com/eventable/vobject
+Source: %name-%version.tar
+
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 vobject is intended to be a full featured Python package for parsing
@@ -26,21 +30,27 @@ files are supported, and all data should be imported, but only a few
 components are understood in a sophisticated way.
 
 %prep
-%setup -n %modulename-%version
+%setup
 # remove win32 files
 rm -f vobject/win32tz.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc ACKNOWLEDGEMENTS.txt LICENSE-2.0.txt README.md
-%python3_sitelibdir/%{modulename}*
+%_bindir/change_tz
+%_bindir/ics_diff
+%python3_sitelibdir/%modulename
+%python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Sun May 12 2024 Grigory Ustinov <grenka@altlinux.org> 0.9.7-alt1
+- Automatically updated to 0.9.7 (Closes: #50335).
+
 * Sun Jul 25 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.6.1-alt2
 - Drop python2 support.
 
