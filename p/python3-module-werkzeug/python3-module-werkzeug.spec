@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 3.0.2
-Release: alt2
+Version: 3.0.3
+Release: alt1
 
 Summary: Werkzeug is one of the most advanced WSGI utility modules
 License: BSD-3-Clause
@@ -61,11 +61,14 @@ more structure and patterns for defining powerful applications.
 %pyproject_run_pytest -vra -k "not test_reloader_sys_path and not test_exclude_patterns"
 
 %files
-%doc LICENSE.rst CHANGES.rst README.rst
+%doc LICENSE.txt CHANGES.rst README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon May 13 2024 Anton Zhukharev <ancieg@altlinux.org> 3.0.3-alt1
+- Updated to 3.0.3.
+
 * Thu Apr 11 2024 Anton Zhukharev <ancieg@altlinux.org> 3.0.2-alt2
 - Fixed FTBFS (pytest-xprocess 1.0.1).
 
