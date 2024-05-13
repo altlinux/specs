@@ -4,16 +4,16 @@
 %define mod_name %pypi_name
 
 Name: python3-module-pynput
-Version: 1.7.6
-Release: alt2
+Version: 1.7.7
+Release: alt1
 
 Summary: Monitor and control user input devices
 
 License: LGPLv3
 Group: Development/Python3
-Url: https://github.com/moses-palmer/pynput
+Url: https://pypi.org/project/pynput/
+Vcs: https://github.com/moses-palmer/pynput
 BuildArch: noarch
-# Source-url: %__pypi_url %pypi_name
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 %pyproject_runtimedeps_metadata
@@ -45,6 +45,9 @@ rm -v lib/pynput/*/*darwin* lib/pynput/*/*win32*
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon May 13 2024 Stanislav Levin <slev@altlinux.org> 1.7.7-alt1
+- 1.7.6 -> 1.7.7.
+
 * Thu Jul 20 2023 Stanislav Levin <slev@altlinux.org> 1.7.6-alt2
 - Fixed FTBFS (missing build dependency on six).
 
