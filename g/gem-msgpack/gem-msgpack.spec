@@ -1,32 +1,45 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname msgpack
 
 Name:          gem-msgpack
-Version:       1.5.6
+Version:       1.7.2
 Release:       alt1
 Summary:       MessagePack implementation for Ruby
-License:       Apache 2.0
+License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://github.com/msgpack/msgpack-ruby
 Vcs:           https://github.com/msgpack/msgpack-ruby.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
+Patch:         license.patch
 BuildRequires(pre): rpm-build-ruby
+%if_enabled check
 BuildRequires: gem(bundler) >= 0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rake-compiler) >= 1.1.2
-BuildRequires: gem(rspec) >= 3.3 gem(rspec) < 4
+BuildRequires: gem(rspec) >= 3.3
+BuildRequires: gem(ruby_memcheck) >= 0
 BuildRequires: gem(yard) >= 0
 BuildRequires: gem(json) >= 0
-BuildRequires: gem(benchmark-ips) >= 2.10.0 gem(benchmark-ips) < 2.11
+BuildRequires: gem(benchmark-ips) >= 2.10.0
+BuildRequires: gem(rubocop) >= 0.82.0
+BuildRequires: gem(simplecov) >= 0
+BuildConflicts: gem(rspec) >= 4
+BuildConflicts: gem(benchmark-ips) >= 2.11
+BuildConflicts: gem(rubocop) >= 2
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rubocop >= 1.27.0,rubocop < 2
+%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
 %ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
 Obsoletes:     ruby-msgpack < %EVR
 Provides:      ruby-msgpack = %EVR
-Provides:      gem(msgpack) = 1.5.6
+Provides:      gem(msgpack) = 1.7.2
 
 
 %description
@@ -41,15 +54,16 @@ but could not for technical reasons (binary data, size, speed ...), MessagePack
 is a perfect replacement.
 
 
+%if_enabled    doc
 %package       -n gem-msgpack-doc
-Version:       1.5.6
+Version:       1.7.2
 Release:       alt1
 Summary:       MessagePack implementation for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета msgpack
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(msgpack) = 1.5.6
+Requires:      gem(msgpack) = 1.7.2
 Obsoletes:     msgpack-doc
 Provides:      msgpack-doc
 
@@ -68,24 +82,32 @@ is a perfect replacement.
 
 %description   -n gem-msgpack-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета msgpack.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-msgpack-devel
-Version:       1.5.6
+Version:       1.7.2
 Release:       alt1
 Summary:       MessagePack implementation for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета msgpack
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(msgpack) = 1.5.6
+Requires:      gem(msgpack) = 1.7.2
 Requires:      gem(bundler) >= 0
 Requires:      gem(rake) >= 0
 Requires:      gem(rake-compiler) >= 1.1.2
-Requires:      gem(rspec) >= 3.3 gem(rspec) < 4
+Requires:      gem(rspec) >= 3.3
+Requires:      gem(ruby_memcheck) >= 0
 Requires:      gem(yard) >= 0
 Requires:      gem(json) >= 0
-Requires:      gem(benchmark-ips) >= 2.10.0 gem(benchmark-ips) < 2.11
+Requires:      gem(benchmark-ips) >= 2.10.0
+Requires:      gem(rubocop) >= 0.82.0
+Requires:      gem(simplecov) >= 0
+Conflicts:     gem(rspec) >= 4
+Conflicts:     gem(benchmark-ips) >= 2.11
+Conflicts:     gem(rubocop) >= 2
 Conflicts:     libmsgpack-devel
 
 %description   -n gem-msgpack-devel
@@ -103,10 +125,12 @@ is a perfect replacement.
 
 %description   -n gem-msgpack-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета msgpack.
+%endif
 
 
 %prep
 %setup
+%autopatch
 
 %build
 %ruby_build
@@ -123,16 +147,24 @@ is a perfect replacement.
 %ruby_gemlibdir
 %ruby_gemextdir
 
+%if_enabled    doc
 %files         -n gem-msgpack-doc
 %doc README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-msgpack-devel
 %doc README.md
 %ruby_includedir/*
+%endif
 
 
 %changelog
+* Wed May 08 2024 Pavel Skrylev <majioa@altlinux.org> 1.7.2-alt1
+- ^ 1.5.6 -> 1.7.2
+- * relicensed
+
 * Wed Sep 21 2022 Pavel Skrylev <majioa@altlinux.org> 1.5.6-alt1
 - ^ 1.4.5 -> 1.5.6
 
