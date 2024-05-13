@@ -2,7 +2,7 @@
 
 Name: alterator-usbguard
 Version: 0.1.1
-Release: alt1
+Release: alt2
 Summary: alterator module to control usb devices
 Group: System/Configuration/Other
 License: %gpl2plus
@@ -44,6 +44,9 @@ Alterator Module to control USB devices via USBGuard.
 
 
 %changelog
+* Mon May 13 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.1.1-alt2
+- e2k build fix
+
 * Tue May 07 2024 Oleg Proskurin <proskur@altlinux.org> 0.1.1-alt1
 - New version
 
