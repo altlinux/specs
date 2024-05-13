@@ -1,10 +1,10 @@
 %def_without clang
-%def_enable qt4
+%def_disable qt4
 %def_enable qt5
 
 Name: Kvantum
-Version: 1.1.0
-Release: alt2
+Version: 1.1.1
+Release: alt1
 
 Summary: SVG-based theme engine for Qt6, KDE and LXQt
 License: GPL-3.0-or-later
@@ -180,6 +180,10 @@ desktop-file-validate %buildroot%_desktopdir/kvantummanager.desktop
 %_qt6_plugindir/styles/libkvantum.so
 
 %changelog
+* Mon May 13 2024 Leontiy Volodin <lvol@altlinux.org> 1.1.1-alt1
+- New version 1.1.1.
+- Disabled qt4 module (task 272104).
+
 * Thu Mar 21 2024 Leontiy Volodin <lvol@altlinux.org> 1.1.0-alt2
 - Fixed application startup without qt6 module.
 
