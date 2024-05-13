@@ -1,5 +1,5 @@
 Name: rack
-Version: 2.5.1
+Version: 2.5.2
 Release: alt1
 
 Summary: VCV virtual Eurorack host
@@ -110,6 +110,9 @@ install -pm0644 -D rack.desktop %buildroot%_desktopdir/rack.desktop
 %_datadir/rack/sdk
 
 %changelog
+* Mon May 13 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.5.2-alt1
+- 2.5.2 released
+
 * Thu Apr 18 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.5.1-alt1
 - 2.5.1 released
 
