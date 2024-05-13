@@ -1,7 +1,7 @@
 %def_with check
 
 Name: gping
-Version: 1.16.0
+Version: 1.16.1
 Release: alt1
 Summary: Ping, but with a graph
 License: MIT
@@ -44,6 +44,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Mon May 13 2024 Anastasia Osmolovskaya <lola@altlinux.org> 1.16.1-alt1
+- Updated to version 1.16.1
+
 * Sun Dec 10 2023 Alexander Makeenkov <amakeenk@altlinux.org> 1.16.0-alt1
 - Updated to version 1.16.0.
 
