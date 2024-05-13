@@ -1,5 +1,5 @@
 Name: upmpdcli
-Version: 1.8.9
+Version: 1.8.10
 Release: alt1
 
 Summary: UPnP front-end to the Music Player Daemon
@@ -9,7 +9,8 @@ Url: http://www.lesbonscomptes.com/upmpdcli
 
 Source: %name-%version-%release.tar
 
-BuildRequires: gcc-c++ libmpdclient-devel libupnpp-devel >= 0.21.0
+BuildRequires: gcc-c++ meson
+BuildRequires: libcurl-devel libmpdclient-devel libupnpp-devel >= 0.21.0
 BuildRequires: libmicrohttpd-devel jsoncpp-devel rpm-build-python3
 
 %package plugins
@@ -45,12 +46,12 @@ popular streaming services like Google Music
 %setup
 
 %build
-%autoreconf
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
+rm %buildroot%_sysconfdir/upmpdcli.conf-dist
 install -pm0755 -D upmpdcli.init %buildroot%_initdir/upmpdcli
 install -pm0644 -D upmpdcli.sysconfig %buildroot%_sysconfdir/sysconfig/upmpdcli
 install -pm0644 -D upmpdcli.service %buildroot%_unitdir/upmpdcli.service
@@ -98,11 +99,9 @@ rm -rf %buildroot%_datadir/%name/web
 %_initdir/upmpdcli
 %_unitdir/upmpdcli.service
 
-%_bindir/scctl
 %_bindir/upmpdcli
 
 %_datadir/%name
-%exclude %_datadir/%name/Analog-Input
 %exclude %_datadir/%name/cdplugins
 %exclude %_datadir/%name/radio_scripts
 %exclude %_datadir/%name/rdpl2stream
@@ -113,13 +112,15 @@ rm -rf %buildroot%_datadir/%name/web
 %dir %attr(0770,root,_upmpd) %_cachedir/%name
 
 %files plugins
-%_datadir/%name/Analog-Input
 %_datadir/%name/cdplugins
 %_datadir/%name/radio_scripts
 %_datadir/%name/rdpl2stream
 %_datadir/%name/src_scripts
 
 %changelog
+* Mon May 13 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.8.10-alt1
+- 1.8.10 released
+
 * Thu Mar 28 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.8.9-alt1
 - 1.8.9 released
 
