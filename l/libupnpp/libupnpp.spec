@@ -1,5 +1,5 @@
 Name: libupnpp
-Version: 0.26.3
+Version: 0.26.4
 Release: alt1
 
 Summary: C++ wrapper for libupnp
@@ -9,7 +9,7 @@ Url: http://www.lesbonscomptes.com/upmpdcli
 
 Source: %name-%version-%release.tar
 
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ meson
 BuildRequires: libcurl-devel libexpat-devel libnpupnp-devel >= 6.0
 
 %description
@@ -32,13 +32,11 @@ This package contains development part of %name
 %setup
 
 %build
-%autoreconf
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-rm -vf %buildroot%_libdir/*.a
+%meson_install
 
 %files
 %_libdir/*.so.*
@@ -49,6 +47,9 @@ rm -vf %buildroot%_libdir/*.a
 %_pkgconfigdir/libupnpp.pc
 
 %changelog
+* Mon May 13 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.26.4-alt1
+- 0.26.4 released
+
 * Mon Apr 15 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.26.3-alt1
 - 0.26.3 released
 
