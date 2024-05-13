@@ -2,7 +2,7 @@
 
 Name: plasma5-systemmonitor
 Version: 5.27.11
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -95,6 +95,9 @@ Requires: %name-common
 #%_K5lib/libplasma-systemmonitor.so.*
 
 %changelog
+* Mon May 13 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt2
+- fix for domain users uids
+
 * Thu Mar 07 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt1
 - new version
 
