@@ -2,7 +2,7 @@
 
 %define _name extension-list
 %define ver_major 46
-%define beta .beta
+%define beta %nil
 %define uuid %_name@tu.berry
 %define xdg_name org.gnome.shell.extensions.%_name
 
@@ -13,8 +13,8 @@
 %def_enable check
 
 Name: gnome-shell-extension-%_name
-Version: %ver_major
-Release: alt0.5%beta
+Version: %ver_major.1
+Release: alt1%beta
 
 %define gettext_domain %name
 
@@ -64,6 +64,9 @@ Simple GNOME Shell extension manager in the top panel.
 %doc README.md
 
 %changelog
+* Mon May 13 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
+- 46.1
+
 * Fri Mar 08 2024 Yuri N. Sedunov <aris@altlinux.org> 46-alt0.5.beta
 - 46.beta
 
