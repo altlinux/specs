@@ -21,7 +21,7 @@
 
 Name: plasma5-%rname
 Version: 5.27.11
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Group: System/Configuration/Packaging
@@ -184,9 +184,9 @@ KF5 library
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p1
+#%patch7 -p1 -b .pk-disable-launch
 %patch8 -p2
-#patch9 -p1
+#patch9 -p1 -b .show-reboot-checkbox
 %patch10 -p2
 #%patch11 -p1 -b .autoreboot
 %patch12 -p1
@@ -295,6 +295,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K5start \
 
 
 %changelog
+* Mon May 13 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt2
+- enable launch button for packagekit apps
+
 * Thu Mar 07 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt1
 - new version
 
