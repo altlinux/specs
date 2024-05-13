@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.12.4
+Version: 0.12.5
 Release: alt1
 Summary: Style preserving TOML library
 License: MIT
@@ -21,7 +21,7 @@ Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%add_pyproject_deps_check_filter furo sphinx
+%add_pyproject_deps_check_filter furo
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -56,6 +56,9 @@ documents from scratch using the provided helpers.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon May 13 2024 Stanislav Levin <slev@altlinux.org> 0.12.5-alt1
+- 0.12.4 -> 0.12.5.
+
 * Tue Feb 27 2024 Stanislav Levin <slev@altlinux.org> 0.12.4-alt1
 - 0.12.3 -> 0.12.4.
 
