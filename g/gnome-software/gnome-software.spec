@@ -16,7 +16,12 @@
 %def_enable fwupd
 %endif
 %def_enable flatpak
+%ifarch %e2k
+%def_disable snap
+%else
 %def_enable snap
+%endif
+
 %def_disable limba
 %def_enable packagekit
 %def_enable webapps
@@ -37,7 +42,7 @@
 
 Name: gnome-software
 Version: %ver_major.1
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Software manager for GNOME
 License: GPLv2+
@@ -202,6 +207,9 @@ _EOF_
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Mon May 13 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1.1
+- disabled snap support for %%e2k
+
 * Thu Apr 25 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
 - 46.1
 
