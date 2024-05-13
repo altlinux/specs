@@ -2,7 +2,7 @@
 
 Name: schroot
 Version: 1.6.10
-Release: alt2.1
+Release: alt2.2
 Summary: Execute commands in a chroot environment
 Group: Development/Tools
 License: GPLv3+
@@ -31,6 +31,7 @@ Patch20: fix-bash-completion.patch
 # ALT patches
 Patch50: schroot-alt-configs.patch
 Patch51: schroot-fix-man-building.patch
+Patch52: schroot-alt-fix-for-boost-1.85.0.patch
 
 BuildRequires: gcc-c++
 BuildRequires: cmake
@@ -104,6 +105,7 @@ functionality is available in the next generation tool called schroot.
 
 %patch50 -p1
 %patch51 -p1
+%patch52 -p1
 
 # Release-Date and Released-By fields are taken from Debian tarball for this version
 cat > VERSION << END
@@ -191,6 +193,9 @@ rm -rf %buildroot%_mandir/fr
 %_man1dir/dchroot*
 
 %changelog
+* Mon May 13 2024 Ivan A. Melnikov <iv@altlinux.org> 1.6.10-alt2.2
+- NMU: fix building with boost 1.85.0
+
 * Wed Mar 13 2024 Ivan A. Melnikov <iv@altlinux.org> 1.6.10-alt2.1
 - NMU: get rid of generated dependency on /sbin/mdconfig,
   which used only on FreeBSD (fixes rebuilding).
