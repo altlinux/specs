@@ -1,6 +1,6 @@
 Name: noisetorch
 Version: 0.12.2
-Release: alt2
+Release: alt3
 
 Summary: Real-time microphone noise suppression on Linux
 
@@ -44,10 +44,11 @@ popd
 go generate
 # -tags release would enable the auto-updater (update.go)
 
-CGO_ENABLED=0 GOOS=linux go build \
-%ifnarch ppc64 loongarch64
-    -buildmode=pie \
+GOOS=linux \
+%ifnarch loongarch64 %ix86
+CGO_ENABLED=0 \
 %endif
+go build -buildmode=pie \
     -a -ldflags '-w -X main.version=%version -X main.distribution=rpm' .
 
 %install
@@ -64,6 +65,9 @@ install -D -m 755 noisetorch %buildroot/%_bindir/noisetorch
 %_iconsdir/hicolor/256x256/apps/noisetorch.png
 
 %changelog
+* Mon May 13 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.12.2-alt3
+- NMU: fixed FTBFS (enable cgo if required for PIE)
+
 * Sat Nov 04 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.12.2-alt2
 - NMU: fixed FTBFS on LoongArch
 
