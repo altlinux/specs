@@ -7,7 +7,7 @@
 %endif
 
 Name: mixxx
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 
 Summary: Free digital DJ software
@@ -49,9 +49,6 @@ Mixxx - это бесплатная, с открытым исходным код
 
 %prep
 %setup
-# 0.20.2 includes syntax fixes only
-sed -i '/LIBDJINTEROP_VERSION/s|0.20.1|0.20.2|' \
-  CMakeLists.txt
 
 %build
 %if_enabled clang
@@ -94,6 +91,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_udevrulesdir/69-%name-usb-uaccess.rules
 
 %changelog
+* Mon May 13 2024 Leontiy Volodin <lvol@altlinux.org> 2.4.1-alt1
+- New version 2.4.1.
+
 * Mon Feb 26 2024 Leontiy Volodin <lvol@altlinux.org> 2.4.0-alt1
 - New version 2.4.0.
 - Cleanup BRs.
