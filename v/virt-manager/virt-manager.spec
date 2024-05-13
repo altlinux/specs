@@ -3,7 +3,7 @@
 
 Name: virt-manager
 Version: 4.1.0
-Release: alt2
+Release: alt3
 Summary: Virtual Machine Manager
 
 Group: Emulators
@@ -17,6 +17,9 @@ Source: %name-%version.tar
 Source2: %name-ru.po
 Patch0001: 0001-fixed-build-with-python3-module-docutils-on-p9-branch.patch
 # Patch: %%name-%%version-%%release.patch
+Patch0002: 0002-Add-loongarch-support.patch
+Patch0003: 0003-Add-some-default-device-support-for-loongarch.patch
+Patch0004: 0004-Add-test-cases-for-loongarch.patch
 
 Requires: virt-manager-common = %EVR
 Requires: libvirt-client
@@ -83,7 +86,7 @@ machine).
 %prep
 %setup
 #%%patch -p1
-%patch0001 -p1
+%autopatch -p1
 cp -f %SOURCE2 po/ru.po
 
 %build
@@ -135,6 +138,9 @@ done
 %_man1dir/virt-xml.1*
 
 %changelog
+* Mon May 13 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.1.0-alt3
+- NMU: support LoongArch guests
+
 * Wed Apr 05 2023 Alexey Shabalin <shaba@altlinux.org> 4.1.0-alt2
 - updated Russian translation
 
