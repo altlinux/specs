@@ -4,7 +4,7 @@
 
 Name: openjfx
 Version: 17.0.10.0.7
-Release: alt1
+Release: alt2
 Epoch: 3
 
 Summary: Rich client application platform for Java
@@ -44,7 +44,7 @@ Source27: pom-swt.xml
 Source28: pom-web.xml
 Source29: build.xml
 
-ExclusiveArch: x86_64
+ExclusiveArch: aarch64 loongarch64 x86_64
 
 Requires: java-17-openjdk
 
@@ -163,6 +163,9 @@ cp -a modules/javafx.graphics/mvn-lib{decora,javafx_font,javafx_font_freetype,ja
 %doc README.md
 
 %changelog
+* Mon May 13 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 3:17.0.10.0.7-alt2
+- Build for aarch64 and LoongArch (no changes required).
+
 * Fri May 10 2024 Andrey Cherepanov <cas@altlinux.org> 3:17.0.10.0.7-alt1
 - New version.
 - Built from upstream tag.
