@@ -2,7 +2,7 @@
 
 Name: os-autoinst
 Version: 4.6
-Release: alt15
+Release: alt16
 Summary: OS-level test automation
 License: GPLv2+
 Group: Development/Tools
@@ -70,7 +70,7 @@ Requires: /usr/bin/qemu-img
 Requires: optipng
 Requires: qemu >= 2.0.0
 
-ExclusiveArch: i586 x86_64 ppc64le aarch64
+ExclusiveArch: i586 x86_64 ppc64le aarch64 loongarch64
 
 %add_perl_lib_path %buildroot%_libexecdir/os-autoinst
 %add_python3_lib_path %_libexecdir/os-autoinst
@@ -144,6 +144,9 @@ export OPENQA_TEST_TIMEOUT_SCALE_CI=10
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Sat May 11 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.6-alt16
+- NMU: build for LoongArch (no changes required)
+
 * Thu Apr 02 2024 Alexandr Antonov <aas@altlinux.org> 4.6-alt15
 - update to current version
 
