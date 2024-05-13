@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 Name: 	 xrdp
 Version: 0.10.0
-Release: alt1
+Release: alt2
 
 Summary: An open source remote desktop protocol (RDP) server
 
@@ -125,6 +125,9 @@ tar xf %SOURCE6
 %patch25 -p1
 %patch28 -p1
 %patch31 -p1
+%ifarch %e2k
+sed -i 's/-Werror/-Wno-error/g' configure.ac
+%endif
 
 cp %SOURCE3 %name-init
 
@@ -141,10 +144,6 @@ echo '#!/bin/bash -l
 %build
 %add_optflags -I%_includedir/libdrm
 %add_optflags -Wno-error=int-to-pointer-cast
-%ifarch %e2k
-# 0.9.14: expression has no effect (ssl.h, onoff)
-%add_optflags -Wno-error=unused-value
-%endif
 %ifarch %ix86
 %add_optflags -fPIC
 %set_verify_elf_method textrel=relaxed
@@ -293,6 +292,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Mon May 13 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.10.0-alt2
+- E2K: build fix
+
 * Sun May 12 2024 Andrey Cherepanov <cas@altlinux.org> 0.10.0-alt1
 - New version.
 
