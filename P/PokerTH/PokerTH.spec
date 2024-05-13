@@ -2,7 +2,7 @@
 
 Name: PokerTH
 Version: 1.1.2
-Release: alt7
+Release: alt8
 
 Summary: Texas Hold'em poker game
 Group: Games/Cards
@@ -17,6 +17,9 @@ Patch1: PokerTH-upstream-boost-compat-1.patch
 Patch2: PokerTH-upstream-boost-compat-2.patch
 
 Patch3: %name-%version-alt-boost-1.73.0-compat.patch
+
+# https://github.com/pokerth/pokerth/pull/427
+Patch4: PokerTH-1.1.2-upstream-boost-1.85.0-compat.patch
 
 BuildRequires: boost-asio-devel boost-filesystem-devel boost-program_options-devel boost-interprocess-devel gcc-c++ libSDL-devel libSDL_mixer-devel libcurl-devel libgnutls-openssl-devel libgsasl-devel qt5-base-devel
 
@@ -56,6 +59,7 @@ pushd src/third_party/websocketpp
 popd
 
 %patch3 -p2
+%patch4 -p1
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -91,6 +95,9 @@ rm %buildroot%_datadir/pokerth/data/fonts/DejaVuSans-Bold.ttf
 %_pixmapsdir/pokerth.png
 
 %changelog
+* Mon May 13 2024 Ivan A. Melnikov <iv@altlinux.org> 1.1.2-alt8
+- NMU: fix FTBFS with new boost.
+
 * Wed Jun 30 2021 Mikhail Efremov <sem@altlinux.org> 1.1.2-alt7
 - Fixed data package License tag.
 - Don't use rpm-build-licenses.
