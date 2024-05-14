@@ -1,5 +1,7 @@
+%define libnvme_ver 1.9
+
 Name: nvme
-Version: 2.8
+Version: 2.9.1
 Release: alt1
 Summary: NVM-Express user space tooling for Linux
 License: GPL-2.0+
@@ -7,7 +9,7 @@ Group: System/Configuration/Hardware
 Url: https://github.com/linux-nvme/nvme-cli/
 Source: %name-%version.tar
 BuildRequires(pre): meson
-BuildRequires: libjson-c-devel libnvme-devel >= 1.6 zlib-devel
+BuildRequires: libjson-c-devel libnvme-devel >= %{libnvme_ver} zlib-devel
 Requires(post): util-linux
 
 %description
@@ -74,6 +76,9 @@ if [ $1 = 1 ]; then # 1 : This package is being installed for the first time
 fi
 
 %changelog
+* Tue May 14 2024 L.A. Kostis <lakostis@altlinux.ru> 2.9.1-alt1
+- 2.9.1.
+
 * Fri Mar 15 2024 L.A. Kostis <lakostis@altlinux.ru> 2.8-alt1
 - 2.8.
 
