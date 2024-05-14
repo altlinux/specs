@@ -5,7 +5,7 @@
 %define oname lxml
 
 Name: python3-module-lxml
-Version: 5.2.1
+Version: 5.2.2
 Release: alt1
 
 Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API
@@ -13,11 +13,9 @@ Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt 
 License: BSD-3-Clause AND GPL-2.0-or-later
 Group: Development/Python3
 URL: https://pypi.org/project/lxml
+VCS: https://github.com/lxml/lxml
 
-# https://github.com/lxml/lxml
 Source: %name-%version.tar
-
-Patch: Skip-failing-test-test_html_prefix_nsmap.patch
 
 %if_without bootstrap
 # Used for tests only, but depends on lxml itself,
@@ -62,7 +60,6 @@ This package contains documentation for lxml.
 
 %prep
 %setup
-%patch -p1
 
 find -type f -name '*.c' -print -delete >&2
 
@@ -96,6 +93,9 @@ python3 test.py -vuf
 %doc doc samples
 
 %changelog
+* Tue May 14 2024 Grigory Ustinov <grenka@altlinux.org> 5.2.2-alt1
+- Automatically updated to 5.2.2.
+
 * Tue Apr 02 2024 Grigory Ustinov <grenka@altlinux.org> 5.2.1-alt1
 - Automatically updated to 5.2.1.
 
