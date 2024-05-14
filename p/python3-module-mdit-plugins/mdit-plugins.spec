@@ -7,13 +7,13 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 Summary: Collection of core plugins for markdown-it-py 
 License: MIT
 Group: Development/Python3
-Url: https://mdit-py-plugins.readthedocs.io/
-Vcs: https://github.com/executablebooks/mdit-py-plugins
+URL: https://pypi.org/project/mdit-py-plugins
+VCS: https://github.com/executablebooks/mdit-py-plugins
 
 BuildArch: noarch
 
@@ -51,11 +51,14 @@ Collection of core plugins for markdown-it-py.
 %pyproject_run_pytest -ra tests
 
 %files
-%doc README.md
+%doc LICENSE README.md
 %python3_sitelibdir/%mname/
 %python3_sitelibdir/%{pyproject_distinfo %mname}
 
 %changelog
+* Tue May 14 2024 Grigory Ustinov <grenka@altlinux.org> 0.4.1-alt1
+- Automatically updated to 0.4.1.
+
 * Tue Jul 11 2023 Andrey Limachko <liannnix@altlinux.org> 0.4.0-alt1
 - 0.3.5 -> 0.4.0
 
