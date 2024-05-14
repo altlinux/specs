@@ -3,7 +3,7 @@
 %define popIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 %define popIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
-%def_disable compat
+%def_enable compat
 %def_enable jpeg2000
 
 %if_disabled compat
@@ -29,15 +29,15 @@
 %endif
 
 %define rname poppler
-%define somajor 134
+%define somajor 130
 %define somajor_cpp 0
 %define somajor_qt 3
 %define somajor_qt4 4
 %define somajor_qt5 1
 %define somajor_qt6 3
 %define somajor_glib 8
-%define major 24
-%define minor 02
+%define major 23
+%define minor 08
 %define bugfix 0
 
 %if_disabled compat
@@ -47,7 +47,7 @@
 %endif
 Name: %pkgname
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt5
 
 %if_disabled compat
 %define poppler_devel lib%rname-devel
@@ -76,11 +76,13 @@ Release: alt1
 
 Group: Publishing
 Summary: PDF rendering library
-License: (GPL-2.0-only OR GPL-3.0-only) AND GPL-2.0-or-later AND LGPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
+License: GPL-2.0-or-later
 Url: http://poppler.freedesktop.org/
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 Source: %rname-%version.tar
+# upstream
+Patch1: nss-backend-crash.patch
 # ALT
 Patch10: alt-e2k.patch
 Patch11: alt-openjpeg-version.patch
@@ -313,6 +315,7 @@ GObject introspection devel data for the Poppler library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 %patch10 -p1
 %patch11 -p1
 
@@ -450,8 +453,8 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
-* Tue May 14 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.0-alt1
-- new version
+* Tue May 14 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.0-alt5
+- build only compat library
 
 * Tue Feb 27 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.0-alt4
 - fix to build with new openjpeg
