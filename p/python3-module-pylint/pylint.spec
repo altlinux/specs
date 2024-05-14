@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.1.0
-Release: alt2
+Version: 3.1.1
+Release: alt1
 Summary: Python code static checker
 License: GPLv2+
 Group: Development/Python3
@@ -82,6 +82,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue May 14 2024 Stanislav Levin <slev@altlinux.org> 3.1.1-alt1
+- 3.1.0 -> 3.1.1.
+
 * Wed May 08 2024 Stanislav Levin <slev@altlinux.org> 3.1.0-alt2
 - Fixed FTBFS (astroid 3.2.0).
 
