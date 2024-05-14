@@ -2,12 +2,13 @@ Name:		selfie
 # date '+%%y%%m%%d'
 # https://github.com/cksystemsteaching/selfie
 Version:	180722
-Release:	alt1
+Release:	alt2
 License:	BSD
 Source:		%name-%version.tar
+Patch:		alt-fix-nonx86-ftbfs.patch
 Group:		Education
 Summary:	Self-compiling C compiler, a tiny self-executing RISC-V emulator, and a tiny self-hosting RISC-V hypervisor.
-ExclusiveArch:	x86_64
+ExcludeArch:	armh %ix86
 URL:		http://selfie.cs.uni-salzburg.at/
 
 %description
@@ -21,9 +22,13 @@ teaching systems engineering, hence the name.
 
 %prep
 %setup
+%patch -p1
 
 %build
 make
+
+%check
+make compile
 
 %install
 install -D -m755 selfie %buildroot%_bindir/selfie
@@ -33,6 +38,12 @@ install -D -m755 selfie %buildroot%_bindir/selfie
 %_bindir/*
 
 %changelog
+* Tue May 14 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 180722-alt2
+- Fixed FTBFS on non-x86 architectures (skip `-m64`: it's default on
+  x86_64 and makes no sense on other architectures).
+  Build for all 64-bit architectures.
+- Run a basic check (self compilation).
+
 * Sun Jul 22 2018 Fr. Br. George <george@altlinux.ru> 180722-alt1
 - Initial build
 
