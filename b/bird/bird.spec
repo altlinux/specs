@@ -8,7 +8,7 @@
 
 Name: bird%_suffix
 Version: 2.15.1
-Release: alt1
+Release: alt2
 Summary: BIRD Internet Routing Daemon
 
 Group: Networking/Other
@@ -111,6 +111,9 @@ make test
 %_sbindir/birdcl
 
 %changelog
+* Tue May 14 2024 Sergey Y. Afonin <asy@altlinux.org> 2.15.1-alt2
+- removed expect-group option from init.d/bird (ALT #50356)
+
 * Thu May 02 2024 Anton Farygin <rider@altlinux.ru> 2.15.1-alt1
 - 2.15.1
 
