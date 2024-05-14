@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        124.0.6367.201
+Version:        124.0.6367.207
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -512,6 +512,11 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue May 14 2024 Andrey Cherepanov <cas@altlinux.org> 124.0.6367.207-alt1
+- New version (124.0.6367.207).
+- Security fixes:
+  + CVE-2024-4761: Out of bounds write in V8.
+
 * Sun May 12 2024 Andrey Cherepanov <cas@altlinux.org> 124.0.6367.201-alt1
 - New version (124.0.6367.201).
 - Security fixes:
