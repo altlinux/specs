@@ -9,8 +9,8 @@
 %endif
 
 Name: rpm-build-vm
-Version: 1.65
-Release: alt3
+Version: 1.66
+Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
 License: GPL-2.0-only
@@ -225,6 +225,9 @@ vm-run --stub-exit=7 && exit 1 || test $? -eq 7
 %endif
 
 %changelog
+* Tue May 14 2024 Vitaly Chikunov <vt@altlinux.org> 1.66-alt1
+- Fix --secureboot boot hanging.
+
 * Mon Mar 25 2024 Vitaly Chikunov <vt@altlinux.org> 1.65-alt3
 - Fix ci test on high core systems.
 
