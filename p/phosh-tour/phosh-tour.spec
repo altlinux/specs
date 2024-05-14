@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: phosh-tour
-Version: 0.38.0
+Version: 0.39.0
 Release: alt1
 
 Summary: Phosh Tour
@@ -71,6 +71,9 @@ rm %buildroot%_pkgconfigdir/gmobile.pc
 
 
 %changelog
+* Wed May 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.39.0-alt1
+- 0.39.0
+
 * Sat Apr 06 2024 Yuri N. Sedunov <aris@altlinux.org> 0.38.0-alt1
 - 0.38.0
 - build against shared gmobile-0.1.0 library

@@ -1,7 +1,9 @@
 %def_enable snapshot
 
 %def_enable introspection
+%def_enable hwdb
 %def_enable gtk_doc
+%def_enable man
 %def_enable tests
 %def_enable examples
 %def_disable installed_tests
@@ -10,7 +12,7 @@
 
 %define _name gmobile
 %define namespace Gm
-%define ver_major 0.1
+%define ver_major 0.2
 %define api_ver_major 0
 %define api_ver 0
 %define sover 0
@@ -38,6 +40,7 @@ BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(json-glib-1.0)
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_gtk_doc:BuildRequires: gi-docgen}
+%{?_enable_man:BuildRequires: /usr/bin/rst2man}
 
 %description
 gmobile carries some helpers for glib based environments on mobile devices.
@@ -102,12 +105,15 @@ the functionality of the installed %_name library.
 
 %prep
 %setup -n %_name-%version
+sed -i "s|\(udevdir = \)prefix / 'lib' / 'udev'|\1'/lib/udev'|" meson.build
 
 %build
 %meson \
     -Ddefault_library=shared \
     %{subst_enable_meson_bool introspection introspection} \
+    %{subst_enable_meson_bool hwdb hwdb} \
     %{subst_enable_meson_bool gtk_doc gtk_doc} \
+    %{subst_enable_meson_bool man man} \
     %{subst_enable_meson_bool tests tests} \
     %{subst_enable_meson_bool examples examples}
 %nil
@@ -123,6 +129,10 @@ rm %buildroot%_libdir/%name.a
 
 %files -f %name.lang
 %_libdir/%name.so.*
+%{?_enable_hwdb:
+%_udevrulesdir/61-%_name.rules
+%_udevhwdbdir/61-%_name-wakeup.hwdb}
+%{?_enable_hwdb:%{?_enable_man:%_man5dir/%_name.udev.5*}}
 %doc NEWS README*
 
 %files devel
@@ -158,6 +168,9 @@ rm %buildroot%_libdir/%name.a
 
 
 %changelog
+* Mon May 13 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
+- 0.2.0
+
 * Sat Apr 06 2024 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt1
 - first build for sisyphus (v0.1.0-5-g7d55bed)
 
