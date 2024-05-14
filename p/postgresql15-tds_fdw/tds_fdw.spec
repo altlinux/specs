@@ -1,11 +1,15 @@
 %define pg_ver 15
 %define prog_name tds_fdw
+%ifarch loongarch64
+%def_without jit
+%else
 %def_with jit
+%endif
 
 Summary: TDS Foreign data wrapper
 Name: postgresql%pg_ver-%prog_name
 Version: 2.0.3
-Release: alt3
+Release: alt4
 License: PostgreSQL
 Group: Databases
 Url: https://github.com/tds-fdw/tds_fdw
@@ -49,6 +53,9 @@ This is a PostgreSQL foreign data wrapper that can connect to databases that use
 %_datadir/pgsql/extension/*
 
 %changelog
+* Tue May 14 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.0.3-alt4
+- NMU: fixed FTBFS on LoongArch
+
 * Fri Dec 02 2022 Alexei Takaseev <taf@altlinux.org> 2.0.3-alt3
 - Add conflits to old postgresql-tds_fdw
 
