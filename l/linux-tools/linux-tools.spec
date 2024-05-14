@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define kernel_base_version 6.8
+%define kernel_base_version 6.9
 %define kernel_source kernel-source-%kernel_base_version
 
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
@@ -22,7 +22,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt2
+Release: alt1
 
 Summary: Tools from Linux Kernel tree
 License: GPL-2.0-only
@@ -88,7 +88,6 @@ Source32: hypervvssd.rules
 Source33: hypervfcopyd.rules
 
 Patch1: 0002-rtla-basic-loongarch-support.patch
-Patch2: 0001-selftests-mm-Fix-build-with-_FORTIFY_SOURCE.patch
 Patch3: 0001-selftests-lsm-lsm_list_modules_test-List-ALT-specifi.patch
 
 %description
@@ -340,6 +339,7 @@ grep -lrZz '#!/usr/bin/env python' | xargs -0 sed -i '1s,#!.*,#!%__python3,'
 %define optflags_lto %nil
 banner build
 cd %kernel_source
+MAKEFLAGS=-s make kernelversion | grep -Fx '%version.0'
 # Pre-build headers for selftests, or else 'error: missing kernel header files.'
 %make_build headers
 cd tools
@@ -674,6 +674,7 @@ fi
 %_sbindir/page-types
 %_sbindir/slabinfo
 %_sbindir/page_owner_sort
+%_sbindir/thpmaps
 %_sbindir/pfrut
 %_man8dir/pfrut.*
 %ifarch %ix86 x86_64
@@ -779,7 +780,7 @@ fi
 %_bindir/osnoise
 %_bindir/rtla
 %_bindir/timerlat
-%_sbindir/latency-collector
+%_bindir/latency-collector
 %_man1dir/rtla*
 
 %files -n bootconfig
@@ -802,6 +803,9 @@ fi
 %_man1dir/kvm_stat.1*
 
 %changelog
+* Mon May 13 2024 Vitaly Chikunov <vt@altlinux.org> 6.9-alt1
+- Update to v6.9 (2024-05-12).
+
 * Wed Mar 20 2024 Vitaly Chikunov <vt@altlinux.org> 6.8-alt2
 - spec: Improve kselftests build.
 - linux-tools does not provide perf(1) anymore, install it separately. Almost
