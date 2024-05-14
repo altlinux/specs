@@ -26,7 +26,7 @@
 
 Name: openqa
 Version: 4.6
-Release: alt15
+Release: alt15.1
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -61,7 +61,7 @@ Requires: optipng
 Requires: dbus git-core 
 Requires: perl(YAML/XS.pm)
 
-ExclusiveArch: i586 x86_64 ppc64le aarch64
+ExclusiveArch: i586 x86_64 ppc64le aarch64 loongarch64
 
 %description
 openQA is a testing framework that allows you to test GUI applications on one
@@ -511,6 +511,9 @@ fi
 %files single-instance-nginx
 
 %changelog
+* Tue May 14 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.6-alt15.1
+- NMU: build on LoongArch (no changes required)
+
 * Thu Apr 02 2024 Alexandr Antonov <aas@altlinux.org> 4.6-alt15
 - update to current version
 
