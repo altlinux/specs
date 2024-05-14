@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.14
+Version: 0.15
 Release: alt1
 Summary: Automatically conversion of .ini/.cfg files to TOML equivalents
 License: MPL-2.0
@@ -78,6 +78,9 @@ Extra 'full' for %pypi_name.
 %files lite
 %files full
 %changelog
+* Tue May 14 2024 Stanislav Levin <slev@altlinux.org> 0.15-alt1
+- 0.14 -> 0.15.
+
 * Mon Apr 22 2024 Stanislav Levin <slev@altlinux.org> 0.14-alt1
 - 0.13 -> 0.14.
 
