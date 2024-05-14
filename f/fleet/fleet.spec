@@ -1,7 +1,7 @@
 %global import_path github.com/fleetdm/fleet
 Name:     fleet
 Version:  3.6.0
-Release:  alt1
+Release:  alt2
 
 Summary:  The premier osquery fleet manager.
 License:  MIT
@@ -11,6 +11,7 @@ Url:      https://github.com/fleetdm/fleet
 Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 Source:   %name-%version.tar
+Patch0001: 0001-Updated-vendored-golang.org-x-sys-for-LoongArch-supp.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -20,6 +21,7 @@ BuildRequires: golang
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -43,6 +45,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Tue May 14 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.6.0-alt2
+- NMU: fixed FTBFS on LoongArch (updated vendored golang.org/x/sys).
+
 * Thu Jan 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.6.0-alt1
 - Updated to upstream version 3.6.0 (Fixes: CVE-2020-26276).
 
