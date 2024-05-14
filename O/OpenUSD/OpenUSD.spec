@@ -4,7 +4,7 @@
 
 %define soname 0
 # FIXME!
-%define lversion 24.3
+%define lversion 24.5
 
 %def_enable alembic
 %def_enable draco
@@ -20,7 +20,7 @@
 %def_enable hdf5
 
 Name: OpenUSD
-Version: 24.03
+Version: 24.05
 Release: alt0.1
 Summary: Universal Scene Description library
 Group: Development/Other
@@ -47,12 +47,13 @@ Patch2: embree4.patch
 # SONAME patch from Fedora/RH
 Patch3: 0001-Downstream-only-add-an-SONAME-version.patch
 Patch4: remove-distutils.patch
-Patch5: openusd-pxr-fix-arm64-timings.patch
 
 BuildRequires(pre): cmake rpm-build-python3 ninja-build
 BuildRequires: gcc-c++
+# tbb and embree still need boost
+BuildRequires: boost-devel boost-python3-devel
 BuildRequires: tbb-devel
-BuildRequires: boost-devel boost-python3-devel pkgconfig(blosc) pkgconfig(dri) opensubdiv-devel
+BuildRequires: pkgconfig(blosc) pkgconfig(dri) opensubdiv-devel
 BuildRequires: imath-devel >= 3.0 openexr-devel pkgconfig(Qt5)
 BuildRequires: python3-module-OpenGL python3-module-jinja2 python3-dev
 BuildRequires: dos2unix help2man libstb-devel
@@ -328,6 +329,7 @@ desktop-file-validate %buildroot%_desktopdir/org.openusd.usdview.desktop
 %_bindir/usdGenSchema
 %_bindir/usdcat
 %_bindir/usdchecker
+%_bindir/hdGenSchema
 %if_enabled draco
 %_bindir/usdcompress
 %endif
@@ -353,6 +355,7 @@ desktop-file-validate %buildroot%_desktopdir/org.openusd.usdview.desktop
 %_man1dir/usdGenSchema.1*
 %_man1dir/usdcat.1*
 %_man1dir/usdchecker.1*
+%_man1dir/hdGenSchema.1*
 %if_enabled draco
 %_man1dir/usdcompress.1*
 %endif
@@ -386,6 +389,10 @@ desktop-file-validate %buildroot%_desktopdir/org.openusd.usdview.desktop
 %python3_sitelibdir/pxr
 
 %changelog
+* Tue May 14 2024 L.A. Kostis <lakostis@altlinux.ru> 24.05-alt0.1
+- 24.05.
+- cleanup merged patches.
+
 * Fri Mar 15 2024 L.A. Kostis <lakostis@altlinux.ru> 24.03-alt0.1
 - 24.03.
 - cleanup merged patches.

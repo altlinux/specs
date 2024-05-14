@@ -52,7 +52,7 @@
 
 Name: blender
 Version: 4.1.1
-Release: alt1
+Release: alt2
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -90,6 +90,8 @@ Patch33: blender-alt-cycles-aarch64-hip-cuda-fix.patch
 # https://github.com/ROCm/llvm-project/issues/58#issuecomment-2041433424
 Patch34: blender-cycles-fix-hip-kernels.patch
 Patch35: blender-4.1-alt-hiprt-enable.patch
+# https://projects.blender.org/blender/blender/pulls/121636
+Patch36: blender-4.1-usd-compile-fix.patch
 
 # upstream fixes to merge
 
@@ -298,6 +300,7 @@ This package contains binaries for Nvidia GPUs to use with CUDA.
 %patch31 -p1
 #%%patch32 -p1
 %patch34 -p1 -b .hip-kernels-fixes
+%patch36 -p1
 
 # upstream patches
 
@@ -454,9 +457,12 @@ popd
 %endif
 
 %changelog
+* Tue May 14 2024 L.A. Kostis <lakostis@altlinux.ru> 4.1.1-alt2
+- usd/hydra: Apply fix to compile with recent USD (upstream PR #121636).
+
 * Tue Apr 16 2024 L.A. Kostis <lakostis@altlinux.ru> 4.1.1-alt1
 - Update to 4.1.1.
-- cycles: update hip kernels patch (apply opt workaround for 
+- cycles: update hip kernels patch (apply opt workaround for
   gfx900 not only on windows).
 
 * Wed Apr 10 2024 Michael Shigorin <mike@altlinux.org> 4.1.0-alt0.5.1
