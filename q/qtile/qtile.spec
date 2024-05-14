@@ -1,17 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 
+%define wlroots_sover 11
+
 %def_without check
 %def_without docs
 
 Name: qtile
-Version: 0.23.0
+Version: 0.25.0
 Release: alt1
 
 Summary: A full-featured, hackable tiling window manager written and configured in Python
 License: MIT
 Group: Graphical desktop/Other
 
-#VCS: https://github.com/qtile/qtile
+VCS: https://github.com/qtile/qtile
 Url: http://www.qtile.org/
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
@@ -31,7 +33,7 @@ BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-xcffib
 BuildRequires: python3-module-xkbcommon
 BuildRequires: libxcbutil-icccm-devel
-BuildRequires: libwlroots-devel
+BuildRequires: libwlroots%wlroots_sover-devel
 BuildRequires: libcairo-devel
 BuildRequires: libpango-devel
 BuildRequires: libXcursor-devel
@@ -126,6 +128,9 @@ find %buildroot -name '*.abi3*' -exec rename '.abi3' '' {} \;
 %_datadir/wayland-sessions/qtile-wayland.desktop
 
 %changelog
+* Fri Apr 19 2024 Egor Ignatov <egori@altlinux.org> 0.25.0-alt1
+- new version 0.25.0
+
 * Wed Sep 27 2023 Egor Ignatov <egori@altlinux.org> 0.23.0-alt1
 - new version 0.23.0
 

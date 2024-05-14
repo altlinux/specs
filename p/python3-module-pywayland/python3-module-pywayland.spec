@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-pywayland
-Version: 0.4.16
+Version: 0.4.17
 Release: alt1
 
 Summary: Python bindings for the libwayland library
@@ -35,7 +35,7 @@ pure Python.
 %setup
 %patch0 -p1
 
-sed -i -e 's/pywayland_scanner/scanner/' setup.cfg
+sed -i -e 's/pywayland_scanner/scanner/' pyproject.toml
 
 %build
 %__python3 ./pywayland/ffi_build.py
@@ -62,6 +62,9 @@ mkdir -p $XDG_RUNTIME_DIR
 %python3_sitelibdir/%{pyproject_distinfo pywayland}
 
 %changelog
+* Fri Apr 19 2024 Egor Ignatov <egori@altlinux.org> 0.4.17-alt1
+- new version 0.4.17
+
 * Wed Sep 27 2023 Egor Ignatov <egori@altlinux.org> 0.4.16-alt1
 - new version 0.4.16
 

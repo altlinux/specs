@@ -2,7 +2,7 @@
 
 Name: libwlroots%soversion
 Version: 0.16.2
-Release: alt3
+Release: alt4
 
 Summary: Modular Wayland compositor library
 License: MIT
@@ -57,13 +57,15 @@ BuildRequires: pkgconfig(xwayland)
 %description
 %summary
 
-#%package -n libwlroots-devel
-#Summary: Development files for libwlroots
-#Group: Development/C
-#Requires: %name = %version-%release
+%package -n libwlroots%soversion-devel
+Summary: Development files for libwlroots%soversion
+Group: Development/C
+Requires: %name = %EVR
+Conflicts: libwlroots-devel
+AutoProv: nopkgconfig
 
-#%description -n libwlroots-devel
-#This package provides development files for libwlroots library.
+%description -n libwlroots%soversion-devel
+This package provides development files for libwlroots%soversion library.
 
 %prep
 %setup -n wlroots
@@ -80,9 +82,6 @@ fi
 
 %install
 %meson_install
-rm -rf %buildroot%_includedir/wlr
-rm %buildroot%_libdir/libwlroots.so
-rm %buildroot%_pkgconfigdir/wlroots.pc
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
@@ -92,12 +91,15 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/libwlroots.so.*
 %doc README.md LICENSE
 
-#%files -n libwlroots-devel
-#%_includedir/wlr
-#%_libdir/libwlroots.so
-#%_pkgconfigdir/wlroots.pc
+%files -n libwlroots%soversion-devel
+%_includedir/wlr
+%_libdir/libwlroots.so
+%_pkgconfigdir/wlroots.pc
 
 %changelog
+* Fri Apr 19 2024 Egor Ignatov <egori@altlinux.org> 0.16.2-alt4
+- package devel with soversion
+
 * Sat Feb 24 2024 Roman Alifanov <ximper@altlinux.org> 0.16.2-alt3
 - devel is not packed
 
