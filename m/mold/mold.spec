@@ -14,7 +14,7 @@
 %endif
 
 Name: mold
-Version: 2.30.0
+Version: 2.31.0
 Release: alt1
 
 Summary: A Modern Linker
@@ -71,6 +71,9 @@ rm -rfv third-party/{zlib,zstd,mimalloc,tbb,xxhash,blake3}
 %install
 %cmake_install
 
+# remove wrong-installed documentation files
+rm %buildroot%_defaultdocdir/%name/LICENSE*
+
 %check
 %ctest
 
@@ -82,6 +85,9 @@ rm -rfv third-party/{zlib,zstd,mimalloc,tbb,xxhash,blake3}
 %_man1dir/*mold.1.*
 
 %changelog
+* Tue May 14 2024 Anton Zhukharev <ancieg@altlinux.org> 2.31.0-alt1
+- Updated to 2.31.0.
+
 * Tue Mar 19 2024 Anton Zhukharev <ancieg@altlinux.org> 2.30.0-alt1
 - Updated to 2.30.0.
 
