@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: IMSProg
-Version: 1.3.8
+Version: 1.3.9
 Release: alt1
 
 Summary: I2C, SPI and MicroWire EEPROM/Flash chip programmer for CH341a devices
@@ -17,7 +17,7 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
 BuildRequires: qt5-base-devel
-BuildRequires: qt5-tools
+BuildRequires: qt5-tools-devel
 BuildRequires: pkgconfig(libusb-1.0)
 
 %description
@@ -107,6 +107,9 @@ cp IMSProg_programmer/README.md IMSProg_programmer.md
 %_man1dir/*.1.*
 
 %changelog
+* Mon May 13 2024 Anton Midyukov <antohami@altlinux.org> 1.3.9-alt1
+- new version
+
 * Wed May 08 2024 Anton Midyukov <antohami@altlinux.org> 1.3.8-alt1
 - new version
 
