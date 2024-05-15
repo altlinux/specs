@@ -2,7 +2,7 @@
 %define import_path github.com/exercism/cli
 
 Name: exercism-cli
-Version: 3.3.0
+Version: 3.4.0
 Release: alt1
 
 Summary: A Go based command line tool for exercism.org
@@ -47,6 +47,9 @@ export IGNORE_SOURCES=1
 %_bindir/exercism
 
 %changelog
+* Wed May 15 2024 Anton Zhukharev <ancieg@altlinux.org> 3.4.0-alt1
+- Updated to 3.4.0.
+
 * Thu Feb 15 2024 Anton Zhukharev <ancieg@altlinux.org> 3.3.0-alt1
 - Updated to 3.3.0.
 
