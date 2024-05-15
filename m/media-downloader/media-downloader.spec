@@ -1,5 +1,5 @@
 Name: media-downloader
-Version: 4.4.0
+Version: 4.6.0
 Release: alt1
 
 Summary: GUI frontend to multiple CLI based downloading programs
@@ -65,6 +65,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_pixmapsdir/%name.png
 
 %changelog
+* Wed May 15 2024 Ivan Mazhukin <vanomj@altlinux.org> 4.6.0-alt1
+- new version 4.6.0 (with rpmrb script)
+
 * Tue Mar 05 2024 Ivan Mazhukin <vanomj@altlinux.org> 4.4.0-alt1
 - new version (4.4.0) with rpmgs script
 - build with qt6
