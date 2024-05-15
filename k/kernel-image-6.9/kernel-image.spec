@@ -1,5 +1,5 @@
 Name: kernel-image-6.9
-Release: alt1
+Release: alt2
 %define kernel_base_version	6.9
 %define kernel_sublevel	.0
 %define kernel_extra_version	%nil
@@ -588,6 +588,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed May 15 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.9.0-alt2
+- Bumped release to pesign with the new key.
+
 * Tue May 14 2024 Vitaly Chikunov <vt@altlinux.org> 6.9.0-alt1
 - Rebase to v6.9 (2024-05-12).
 
