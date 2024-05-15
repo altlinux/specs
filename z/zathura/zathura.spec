@@ -10,19 +10,19 @@
 %endif
 
 Name: zathura
-Version: 0.5.4
-Release: alt2
+Version: 0.5.6
+Release: alt1
 
 Summary: A lightweight document viewer
 License: Zlib
 Group: Office
 Url: https://pwmt.org/projects/%name/
-Vcs: git://pwmt.org/zathura.git
+Vcs: https://github.com/pwmt/zathura.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson
-BuildRequires: libgirara-devel >= 0.4.1-alt1
+BuildRequires: libgirara-devel >= 0.4.4-alt1
 BuildRequires: intltool libgtk+3-devel libsqlite3-devel python3-module-docutils libmagic-devel zlib-devel
 BuildRequires: libsynctex-devel
 BuildRequires: libseccomp-devel
@@ -94,6 +94,10 @@ mkdir -p %buildroot%_libdir/zathura
 %_datadir/dbus-1/interfaces/org.pwmt.*
 
 %changelog
+* Mon May 13 2024 Mikhail Efremov <sem@altlinux.org> 0.5.6-alt1
+- Updated Vcs tag.
+- Updated to 0.5.6.
+
 * Sun Jan 14 2024 Mikhail Efremov <sem@altlinux.org> 0.5.4-alt2
 - Disabled tests.
 

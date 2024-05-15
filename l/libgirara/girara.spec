@@ -1,5 +1,5 @@
 %define _name girara
-%define _soname 3
+%define _soname 4
 %define _unpackaged_files_terminate_build 1
 
 # Tests disabled for now: they cause hasher-priv to freeze
@@ -12,21 +12,21 @@
 %endif
 
 Name: lib%_name
-Version: 0.4.2
+Version: 0.4.4
 Release: alt1
 
 Summary: GTK-based minimalistic user interface library
 License: Zlib
 Group: System/Libraries
 URL: https://pwmt.org/projects/girara
-Vcs: https://git.pwmt.org/pwmt/girara.git
+Vcs: https://github.com/pwmt/girara.git
 Source: %name-%version.tar
 
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson
 
-BuildRequires: libgtk+3-devel >= 3.4 libnotify-devel libpango-devel
+BuildRequires: libgtk+3-devel >= 3.4 libpango-devel
 BuildRequires: intltool
 %{?!_without_check:%{?!_disable_check:BuildRequires: libcheck-devel xvfb-run}}
 
@@ -50,7 +50,6 @@ developing applications that use %name.
 
 %build
 %meson \
-	-Dnotify=enabled \
 	-Djson=disabled \
 	-Dtests=%tests
 
@@ -74,6 +73,11 @@ developing applications that use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon May 13 2024 Mikhail Efremov <sem@altlinux.org> 0.4.4-alt1
+- Dropped libnotify dependence.
+- Updated Vcs tag.
+- Updated to 0.4.4.
+
 * Sun Jan 14 2024 Mikhail Efremov <sem@altlinux.org> 0.4.2-alt1
 - Disabled tests.
 - Updated to 0.4.2.
