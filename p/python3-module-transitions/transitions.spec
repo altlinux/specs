@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.9.0
-Release: alt2
+Version: 0.9.1
+Release: alt1
 
 Summary: A lightweight, object-oriented Python state machine implementation
 License: MIT
@@ -20,7 +20,6 @@ Source1: %pyproject_deps_config_name
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%add_pyproject_deps_check_filter pytest-runner
 %pyproject_builddeps_metadata
 %pyproject_builddeps -- check_pipfile1 --exclude %pyproject_deps_check_filter
 %pyproject_builddeps -- check_pipfile2 --exclude %pyproject_deps_check_filter
@@ -60,6 +59,9 @@ Python.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed May 15 2024 Stanislav Levin <slev@altlinux.org> 0.9.1-alt1
+- 0.9.0 -> 0.9.1.
+
 * Fri May 12 2023 Stanislav Levin <slev@altlinux.org> 0.9.0-alt2
 - Fixed FTBFS (pytest-xdist 3).
 
