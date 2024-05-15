@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt3
+Release: alt4
 %K5init
 
 Group: Graphical desktop/KDE
@@ -83,6 +83,9 @@ cp -ar po/ru/docs/kwallet5 po/ru/docs/kwalletmanager5
 
 
 %changelog
+* Wed May 15 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 23.08.5-alt4
+- fix the menu display when clicking on "File" (closes: 50170)
+
 * Fri Apr 26 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 23.08.5-alt3
 - update handbook fix patch
 
