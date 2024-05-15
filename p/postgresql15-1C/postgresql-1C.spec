@@ -19,8 +19,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     15
-%define postgresql_minor     5
-%define postgresql_altrel    4
+%define postgresql_minor     7
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -523,6 +523,12 @@ then
    cp -fp postmaster postgres %_libdir/%PGSQL/backup
 fi
 
+echo "########################################################################"
+echo "                             Attention!"
+echo "               For PostgreSQL 15.6 and old need to run the file"
+echo " /usr/share/pgsql/fix-CVE-2024-4317.sql for all databases in an existing"
+echo " cluster."
+
 %post server
 echo PGLIB=%_datadir/%PGSQL >> ~postgres/.bash_profile
 echo PGDATA=%_localstatedir/%PGSQL/data >> ~postgres/.bash_profile
@@ -885,6 +891,8 @@ fi
 %attr(700,postgres,postgres)  %dir %_localstatedir/%PGSQL/backups
 %attr(700,postgres,postgres)  %dir %_localstatedir/%PGSQL/data
 %_unitdir/*
+# Fix CVE-2024-4317
+%_datadir/%PGSQL/fix-CVE-2024-4317.sql
 
 %files server-devel
 %_bindir/pg_server_config
@@ -971,6 +979,10 @@ fi
 %endif
 
 %changelog
+* Wed May 15 2024 Alexei Takaseev <taf@altlinux.org> 15.7-alt1
+- 15.7 (Fixes CVE-2024-4317)
+- Update 1C patch
+
 * Mon Feb 12 2024 Alexei Takaseev <taf@altlinux.org> 15.5-alt4
 - Update 1C patch
 - Fixes CVE-2024-0985
