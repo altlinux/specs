@@ -1,6 +1,6 @@
 Name: make-initrd
 Version: 2.45.0
-Release: alt2
+Release: alt2.1
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -68,6 +68,8 @@ AutoReq: noshell, noshebang
 Source0: %name-%version.tar
 
 Patch0: 0001-Fix-quiet-mode.patch
+Patch1: 0002-plymouth-fix-plymouth-showing-when-drm-is-not-ready.patch
+Patch2: 0003-udev-do-not-show-the-error-that-it-is-impossible.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -390,6 +392,10 @@ fi
 %endif
 
 %changelog
+* Mon Apr 22 2024 Anton Midyukov <antohami@altlinux.org> 2.45.0-alt2.1
+- fix plymouth showing, when drm is not ready (ALT#50076)
+- udev: do not show the error that it is impossible to set the log level.
+
 * Wed Apr 17 2024 Alexey Gladkov <legion@altlinux.ru> 2.45.0-alt2
 - Fix quiet mode (ALT#50053).
 
