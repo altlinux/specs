@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.38
+%define ver_major 0.39
 %define api_ver 0
 %define beta %nil
 %define rdn_name sm.puri.Phoc
@@ -8,12 +8,13 @@
 
 %define dev_uid 500
 %define wlroots_ver 0.17.2
-%define gmobile_ver v0.0.6
+%define gmobile_ver 0.1.0
 
 # since 0.30 system 0.16 may be used but patched version required
-# but 0.34.0 required patched 0.17 version
+# but 0.39.0 required patched 0.17.2 version
 %def_enable embed_wlroots
 %{?_enable_embed_wlroots:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
+%def_disable embed_gmobile
 %def_enable gtk_doc
 %def_enable man
 %def_disable check
@@ -33,10 +34,11 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Vcs: https://gitlab.gnome.org/World/Phosh/phoc.git
 Source: %name-%version%beta.tar
 %endif
-Source1: gmobile-%gmobile_ver.tar
+%{?_enable_embed_gmobile:Source1: gmobile-%gmobile_ver.tar}
 %{?_enable_embed_wlroots:Source2: wlroots-%wlroots_ver.tar}
 
 %define glib_ver 2.74
+%define gmobile_ver 0.1.0
 %define wayland_proto_ver 1.15
 %define gnome_desktop_ver 43
 
@@ -58,7 +60,7 @@ BuildRequires: pkgconfig(wayland-egl)
 BuildRequires: pkgconfig(wayland-protocols) >= %wayland_proto_ver
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(xcb-icccm)
-
+%{?_disable_embed_gmobile:BuildRequires: pkgconfig(gmobile) >= %gmobile_ver}
 %{?_disable_embed_wlroots:BuildRequires: pkgconfig(wlroots) >= 0.17.1}
 %{?_enable_embed_wlroots:BuildRequires: libgbm-devel libseat1-devel
 BuildRequires: pkgconfig(xcb-renderutil)
@@ -85,8 +87,8 @@ This package provides development documentation for Phoc wayland
 compositor.
 
 %prep
-%setup -n %name-%version%beta -a1 %{?_enable_embed_wlroots:-a2}
-mv gmobile-%gmobile_ver subprojects/gmobile
+%setup -n %name-%version%beta %{?_enable_embed_gmobile:-a1} %{?_enable_embed_wlroots:-a2}
+%{?_enable_embed_gmobile:mv gmobile-%gmobile_ver subprojects/gmobile}
 %{?_enable_embed_wlroots:mv wlroots-%wlroots_ver subprojects/wlroots
 pushd subprojects/wlroots
 patch -p1 < ../packagefiles/wlroots/0001-Revert-layer-shell-error-on-0-dimension-without-anch.patch
@@ -110,8 +112,9 @@ rm -r %buildroot%_includedir/wlr
 rm %buildroot%_libdir/libwlroots.a
 rm %buildroot%_pkgconfigdir/wlroots.pc}
 
+%{?_enable_embed_gmobile:
 rm %buildroot%_libdir/libgmobile.*
-rm %buildroot%_pkgconfigdir/gmobile.pc
+rm %buildroot%_pkgconfigdir/gmobile.pc}
 
 %check
 WLR_RENDERER=pixman xvfb-run %__meson_test
@@ -122,13 +125,18 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/glib-2.0/schemas/sm.puri.phoc.gschema.xml
 %_iconsdir/hicolor/symbolic/apps/%xdg_name.svg
 %{?_enable_man:%_man1dir/%name.1*
-%_man5dir/%name.ini.5*}
+%_man5dir/%name.ini.5*
+%_man5dir/%name.gsettings.5*}
 %doc README.md NEWS
 
 %files devel-doc
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Tue May 14 2024 Yuri N. Sedunov <aris@altlinux.org> 0.39.0-alt1
+- updated to v0.39.0-2-g5666185
+- build against shared gmobile-0.2.0 library
+
 * Sat Apr 06 2024 Yuri N. Sedunov <aris@altlinux.org> 0.38.0-alt1
 - 0.38.0
 
