@@ -1,6 +1,6 @@
 Name: gource
 Version: 0.54
-Release: alt2
+Release: alt3
 
 Summary: OpenGL-based 3D visualisation tool for source control repositories
 License: GPL-3.0-only
@@ -12,6 +12,10 @@ Url: http://gource.io/
 Source0: %name-main-%version.tar
 Source1: %name-core-%version.tar
 Patch3500: %name-ax_boost_base.patch
+
+# Patch from upstream git.
+# Must be dropped when new version will be released.
+Patch100: Fix-build-with-Boost-1.85.0.patch
 
 Requires: fonts-ttf-freefont
 
@@ -42,6 +46,7 @@ files and directories.
 %setup
 tar xf %_sourcedir/%name-core-%version.tar -C src/
 %patch3500 -p1
+%patch100 -p1
 
 %build
 %autoreconf
@@ -57,6 +62,10 @@ tar xf %_sourcedir/%name-core-%version.tar -C src/
 %_man1dir/*
 
 %changelog
+* Wed May 15 2024 Mikhail Efremov <sem@altlinux.org> 0.54-alt3
+- Patch from upstream:
+  + Fix build with Boost-1.85.0.
+
 * Fri Dec 15 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.54-alt2
 - NMU: fixed FTBFS on LoongArch.
 
