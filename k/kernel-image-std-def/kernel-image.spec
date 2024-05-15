@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt1
+Release: alt2
 epoch:2
 %define kernel_base_version	6.1
 %define kernel_sublevel	.90
@@ -604,6 +604,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed May 15 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:6.1.90-alt2
+- Bumped release to pesign with the new key.
+
 * Thu May 02 2024 Kernel Bot <kernelbot@altlinux.org> 2:6.1.90-alt1
 - v6.1.90 (2024-05-02).
 
