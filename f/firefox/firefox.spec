@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 125.0.3
+Version: 126.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -422,6 +422,26 @@ fi
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue May 14 2024 Ajrat Makhmutov <rauty@altlinux.org> 126.0-alt1
+- New version (126.0).
+- Security fixes:
+  + CVE-2024-4764: Use-after-free when audio input connected with multiple consumers
+  + CVE-2024-4367: Arbitrary JavaScript execution in PDF.js
+  + CVE-2024-4765: Web application manifests could have been overwritten via hash collision
+  + CVE-2024-4766: Fullscreen notification could have been obscured on Firefox for Android
+  + CVE-2024-4767: IndexedDB files retained in private browsing mode
+  + CVE-2024-4768: Potential permissions request bypass via clickjacking
+  + CVE-2024-4769: Cross-origin responses could be distinguished between script and non-script content-types
+  + CVE-2024-4770: Use-after-free could occur when printing to PDF
+  + CVE-2024-4771: Failed allocation could lead to use-after-free
+  + CVE-2024-4772: Use of insecure rand() function to generate nonce
+  + CVE-2024-4773: URL bar could be cleared after network error
+  + CVE-2024-4774: Undefined behavior in ShmemCharMapHashEntry()
+  + CVE-2024-4775: Invalid memory access in the built-in profiler
+  + CVE-2024-4776: Window may remain disabled after file dialog is shown in full-screen
+  + CVE-2024-4777: Memory safety bugs fixed in Firefox 126, Firefox ESR 115.11, and Thunderbird 115.11
+  + CVE-2024-4778: Memory safety bugs fixed in Firefox 126
+
 * Tue Apr 30 2024 Ajrat Makhmutov <rauty@altlinux.org> 125.0.3-alt1
 - New version (125.0.3).
 
