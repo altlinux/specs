@@ -1,5 +1,5 @@
 Name: kernel-image-un-def
-Release: alt1
+Release: alt2
 epoch:1
 %define kernel_base_version	6.6
 %define kernel_sublevel	.30
@@ -589,6 +589,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed May 15 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:6.6.30-alt2
+- Bumped release to pesign with the new key.
+
 * Thu May 02 2024 Kernel Bot <kernelbot@altlinux.org> 1:6.6.30-alt1
 - v6.6.30 (2024-05-02).
 
