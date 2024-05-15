@@ -12,7 +12,7 @@
 
 Name: grub
 Version: 2.06
-Release: alt18
+Release: alt19
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -462,6 +462,9 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Wed May 15 2024 Egor Ignatov <egori@altlinux.org> 2.06-alt19
+- bumped release to pesign with the new key
+
 * Thu Mar 07 2024 Egor Ignatov <egori@altlinux.org> 2.06-alt18
 - EFI image: embed memdisk with default font
 

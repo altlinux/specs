@@ -4,7 +4,7 @@
 
 Name: shim
 Version: 15.8
-Release: alt1
+Release: alt2
 
 Summary: First-stage UEFI bootloader
 License: BSD
@@ -101,6 +101,9 @@ popd
 %_datadir/shim/%version/ia32/*
 
 %changelog
+* Wed May 08 2024 Egor Ignatov <egori@altlinux.org> 15.8-alt2
+- replace altlinux-ca.cer
+
 * Thu Feb 01 2024 Egor Ignatov <egori@altlinux.org> 15.8-alt1
 - new version
 - update shim-15.8-alt-Bump-grub-SBAT-revocation-to-4 patch

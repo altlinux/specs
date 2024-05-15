@@ -1,5 +1,5 @@
 Name: alt-uefi-certs
-Version: 2.0
+Version: 3.0
 Release: alt1
 
 Summary: A set of ALT Linux certificates to verify UEFI binaries
@@ -8,7 +8,6 @@ Group: System/Kernel and hardware
 
 Url: http://en.altlinux.org/UEFI_SecureBoot_mini-HOWTO
 Source: %name-%version.tar
-Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: rpm-macros-uefi >= 0.5
 BuildArch: noarch
@@ -42,6 +41,9 @@ install -pDm644 altlinux-ca.cer %buildroot%_efi_keydir/altlinux.cer
 %_efi_keydir/altlinux.cer
 
 %changelog
+* Wed May 08 2024 Egor Ignatov <egori@altlinux.org> 3.0-alt1
+- replace ALT UEFI SB CA 2021 with ALT Linux Secure Boot CA 2024
+
 * Tue Aug 03 2021 Nikolai Kostrigin <nickel@altlinux.org> 2.0-alt1
 - replaced ALT UEFI SB CA 2013 certificate with ALT UEFI SB CA 2021
 

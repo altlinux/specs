@@ -2,7 +2,7 @@
 
 Name: fwupd-efi
 Version: 1.5
-Release: alt1
+Release: alt2
 License: LGPLv2+
 
 Group: System/Configuration/Hardware
@@ -58,6 +58,9 @@ This package enables EFI signature verification.
 %files checkinstall
 
 %changelog
+* Wed May 15 2024 Egor Ignatov <egori@altlinux.org> 1.5-alt2
+- bumped release to pesign with the new key
+
 * Mon Mar 25 2024 Egor Ignatov <egori@altlinux.org> 1.5-alt1
 - 1.5
 

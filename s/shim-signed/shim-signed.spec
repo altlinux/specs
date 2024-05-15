@@ -1,6 +1,6 @@
 Name: shim-signed
-Version: 15.4
-Release: alt2
+Version: 15.8
+Release: alt1
 
 Summary: UEFI RestrictedBoot shim signed by Microsoft
 License: BSD
@@ -16,9 +16,7 @@ ExclusiveArch: x86_64
 This package contains shim binaries signed by "Microsoft
 Windows UEFI Driver Publisher" key for both EFI x64 and EFI ia32
 architectures. MokManager (as mm*.efi) and fallback (as fb*.efi)
-utilities signed by "ALT UEFI SB Signer 2013" are provided as well.
-
-See https://github.com/rhboot/shim-review/issues/47 for details.
+utilities signed by "ALT Linux Secure Boot Signer" are provided as well.
 
 %prep
 %setup
@@ -40,6 +38,9 @@ for pefile in $(ls %buildroot%_efi_bindir/*.efi | rev | cut -d/ -f1 | rev);
 %attr(0644,root,root) %_libexecdir/shim/BOOT*.CSV
 
 %changelog
+* Mon Apr 29 2024 Egor Ignatov <egori@altlinux.org> 15.8-alt1
+- new shim version
+
 * Thu Feb 10 2022 Nikolai Kostrigin <nickel@altlinux.org> 15.4-alt2
 - replace with binaries rebuilt with multiple upstream fixes
   + address https://github.com/fwupd/firmware-lenovo/issues/129
