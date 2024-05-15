@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.38
+%define ver_major 0.39
 %define gmobile_ver v0.0.6
 %define rdn_name mobi.phosh.MobileSettings
 
@@ -42,7 +42,7 @@ BuildRequires: pkgconfig(wayland-protocols) >= 1.12
 BuildRequires: pkgconfig(gsound)
 BuildRequires: libsensors3-devel
 BuildRequires: pkgconfig(phosh-plugins)
-%{?_enable_check:BuildRequires: xvfb-run phoc >= %phoc_ver /usr/bin/Xwayland}
+%{?_enable_check:BuildRequires: xvfb-run phoc >= %phoc_ver phosh /usr/bin/Xwayland}
 
 # for gmobile
 BuildRequires: pkgconfig(json-glib-1.0)
@@ -66,7 +66,7 @@ rm %buildroot%_pkgconfigdir/gmobile.pc
 %find_lang %name
 
 %check
-WLR_RENDERER=pixman xvfb-run %__meson_test
+xvfb-run %__meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -81,6 +81,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 
 
 %changelog
+* Wed May 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.39.0-alt1
+- 0.39.0
+
 * Sat Apr 06 2024 Yuri N. Sedunov <aris@altlinux.org> 0.38.0-alt1
 - 0.38.0
 

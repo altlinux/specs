@@ -1,15 +1,16 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.38
+%define ver_major 0.39
 %define beta %nil
+%define namespace Phosh
 %define api_ver 0
 %define rdn_name sm.puri.Phosh
 %define dev_uid 1000
-%define gmobile_ver v0.0.6
 
+# introspection is disabled by default
+%def_enable introspection
 %def_enable gtk_doc
 %def_enable man
-
 # not installed
 %def_disable tools
 %def_disable check
@@ -31,7 +32,6 @@ Source: %name-%version%beta.tar
 %endif
 Source1: %name.pam
 Source2: sm.puri.OSK0.desktop
-%{?_enable_snapshot:Source3: gmobile-%gmobile_ver.tar}
 
 Patch1: %name-0.28.0-alt-tcb-check.patch
 # https://bugzilla.altlinux.org/46930
@@ -51,21 +51,25 @@ Requires: iio-sensor-proxy
 Requires: fonts-ttf-google-lato
 # since 0.36
 Requires: /sbin/capsh
+# since 0.39, specific X-GNOME directories
+Requires: gnome-menus-x-gnome
 
 # squeekboard provides osk-wayland
 Requires: /usr/bin/osk-wayland
 
-BuildRequires(pre): rpm-macros-meson rpm-build-systemd
+%define gmobile_ver 0.1.0
+
+BuildRequires(pre): rpm-macros-meson rpm-build-systemd %{?_enable_introspection:rpm-build-gir}
 BuildRequires: meson
 BuildRequires: desktop-file-utils
 BuildRequires: pam-devel
 BuildRequires: libcallaudio-devel
 BuildRequires: libfeedback-devel
+BuildRequires: pkgconfig(gmobile) >= %gmobile_ver
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(gcr-3) >= 3.7.5
-BuildRequires: pkgconfig(gio-2.0) >= 2.76
+BuildRequires: pkgconfig(gio-2.0) >= 2.76.0
 BuildRequires: pkgconfig(gio-unix-2.0) >= 2.58
-BuildRequires: pkgconfig(glib-2.0) >= 2.74.0
 BuildRequires: pkgconfig(gnome-desktop-3.0) >= 43
 BuildRequires: pkgconfig(gsettings-desktop-schemas) >= 42
 BuildRequires: pkgconfig(gobject-2.0) >= 2.50.0
@@ -88,7 +92,9 @@ BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(libecal-2.0)
 BuildRequires: pkgconfig(evince-document-3.0)
 BuildRequires: pkgconfig(libsoup-3.0)
-%{?_enable_gtk_doc:BuildRequires: gi-docgen libhandy1-gir-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel
+BuildRequires: gir(Gcr) = 3 gir(Handy) = 1 gir(NM) = 1.0 gir(GnomeDesktop) = 3.0}
+%{?_enable_gtk_doc:BuildRequires: gi-docgen}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_check:BuildRequires: xvfb-run dbus at-spi2-core}
 
@@ -121,8 +127,7 @@ Requires: %name = %EVR
 This package provides files needed to develop Phosh plugins.
 
 %prep
-%setup -n %name-%version%beta %{?_enable_snapshot:-a3
-mv gmobile-%gmobile_ver/* subprojects/gmobile}
+%setup -n %name-%version%beta
 %patch1 -p2
 %patch2 -p1 -b .alt
 %patch3 -p1 -b .alt-dm
@@ -133,18 +138,16 @@ sed -i 's|\(capsh\)|/sbin/\1|' data/%name.service
 %build
 %meson \
     -Dsystemd=true \
-    %{?_enable_gtk_doc:-Dgtk_doc=true} \
-    %{?_enable_man:-Dman=true} \
-    %{?_enable_tools:-Dtools=true} \
+    %{subst_enable_meson_bool introspection introspection} \
+    %{subst_enable_meson_bool gtk_doc gtk_doc} \
+    %{subst_enable_meson_bool man man} \
+    %{subst_enable_meson_bool tools tools} \
     -Dphoc_tests=disabled
 %nil
 %meson_build
 
 %install
 %meson_install
-rm %buildroot%_libdir/libgmobile.*
-rm %buildroot%_pkgconfigdir/gmobile.pc
-
 install -pD -m644 %SOURCE1 %buildroot%_sysconfdir/pam.d/%name
 install -Dpm 0644 data/phosh.service %buildroot%_unitdir/phosh.service
 
@@ -180,7 +183,9 @@ xvfb-run %__meson_test
 %_libdir/%name/plugins/lib%name-plugin-caffeine-quick-setting.so
 %_libdir/%name/plugins/lib%name-plugin-simple-custom-quick-setting.so
 %_libdir/%name/plugins/simple-custom-quick-setting.plugin
-
+%_libdir/%name/plugins/lib%name-plugin-night-light-quick-setting.so
+%_libdir/%name/plugins//night-light-quick-setting.plugin
+#%{?_enable_introspection:%_typelibdir/%namespace-%api_ver.typelib}
 %doc NEWS README.md
 
 %files data
@@ -208,9 +213,13 @@ xvfb-run %__meson_test
 %files devel
 %_includedir/%name/
 %_pkgconfigdir/%name-plugins.pc
+#%{?_enable_introspection:%_girdir/%namespace-%api_ver.gir}
 %{?_enable_gtk_doc:%doc %_datadir/doc/%name-%api_ver}
 
 %changelog
+* Wed May 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.39.0-alt1
+- 0.39.0
+
 * Sun Apr 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.38.0-alt1
 - 0.38.0
 
