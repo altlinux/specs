@@ -17,7 +17,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.11
+Version: %ver_major.12
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -71,7 +71,7 @@ an image loading and rendering library for Gdk.
 %package devel
 Summary: Development files for GdkPixBuf applications
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 GdkPixBuf is an image loading and rendering library for Gdk.
@@ -94,17 +94,17 @@ applications.
 %package gir
 Summary: GObject introspection data for the GdkPixBuf library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the GdkPixBuf library
 
 %package gir-devel
 Summary: GObject introspection devel data for the GdkPixBuf library
-Group: System/Libraries
+Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the GdkPixBuf library
@@ -112,7 +112,7 @@ GObject introspection devel data for the GdkPixBuf library
 %package tests
 Summary: Tests for the GdkPixBuf library
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 This package provides tests programs that can be used to verify
@@ -125,8 +125,6 @@ the functionality of the installed GdkPixBuf library.
 
 install -p -m644 %_sourcedir/%_name.map %_name/compat.map
 install -p -m644 %_sourcedir/%_name.lds %_name/compat.lds
-
-sed -i 's/enabled_loaders_contains/enabled_loaders.contains/' tests/meson.build
 
 %build
 %ifarch %e2k
@@ -233,6 +231,9 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 
 
 %changelog
+* Wed May 15 2024 Yuri N. Sedunov <aris@altlinux.org> 2.42.12-alt1
+- 2.42.12
+
 * Fri Apr 19 2024 Yuri N. Sedunov <aris@altlinux.org> 2.42.11-alt1
 - 2.42.11
 
