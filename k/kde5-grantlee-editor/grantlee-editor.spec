@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -16,6 +16,8 @@ License: GPLv2+ / LGPLv2+
 ExcludeArch: %not_qt5_qtwebengine_arches
 
 Source: %rname-%version.tar
+Patch0: alt-fix-display-theme-content.patch
+Patch1: alt-fix-save-theme-btn.patch
 
 # Automatically added by buildreq on Tue Mar 21 2017 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ grantlee5-devel kde5-libkleo-devel kf5-attica-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdoctools kf5-kdoctools-devel kf5-ki18n-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libEGL-devel libGL-devel libgpg-error libgpg-error-devel libgpgme-devel libgst-plugins1.0 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-script libqt5-sensors libqt5-sql libqt5-svg libqt5-webchannel libqt5-webengine libqt5-webenginecore libqt5-webenginewidgets libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libstdc++-devel libxcbutil-keysyms perl pkg-config python-base python-modules python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-webchannel-devel rpm-build-python3 xml-common xml-utils
@@ -60,6 +62,8 @@ Requires: %name-common = %version-%release
 
 %prep
 %setup -n %rname-%version
+%patch0 -p1
+%patch1 -p1
 
 %build
 %K5build
@@ -91,6 +95,10 @@ Requires: %name-common = %version-%release
 %_K5lib/libgrantleethemeeditor.so.*
 
 %changelog
+* Tue May 14 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 23.08.5-alt2
+- fix theme saving when clicking on "Save theme" (closes: 44822)
+- fix display of theme contents (closes: 44823)
+
 * Fri Feb 16 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
