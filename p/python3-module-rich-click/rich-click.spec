@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 Summary: Format click help output nicely with rich
 License: MIT
@@ -20,7 +20,8 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata
+%add_pyproject_deps_check_filter rich-codex
+%pyproject_builddeps_metadata_extra dev
 %endif
 
 %description
@@ -40,16 +41,11 @@ formatted with rich, with minimal customisation required.
 %pyproject_install
 
 %check
-# .github/workflows/test-examples.yml
-%pyproject_run -- bash -s <<-'ENDTEST'
-set -eu
-
-for f in examples/*py
-do
-    echo -e "\n\n$f"
-    python $f --help || exit 1;
-done
-ENDTEST
+# .github/workflows/pytest.yml
+# https://rich.readthedocs.io/en/latest/console.html?highlight=term#terminal-detection
+# by default it's set to dumb in hasher
+export TERM=xterm
+%pyproject_run_pytest -ra
 
 %files
 %doc README.*
@@ -58,6 +54,9 @@ ENDTEST
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed May 15 2024 Stanislav Levin <slev@altlinux.org> 1.8.2-alt1
+- 1.8.1 -> 1.8.2.
+
 * Wed May 08 2024 Stanislav Levin <slev@altlinux.org> 1.8.1-alt1
 - 1.8.0 -> 1.8.1.
 
