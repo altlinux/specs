@@ -3,7 +3,7 @@
 
 Name:          lib%oname
 Version:       0.9.12
-Release:       alt1
+Release:       alt2
 Group:         Development/C
 Summary:       Core c99 package for AWS SDK for C
 License:       Apache-2.0
@@ -43,6 +43,9 @@ configuration, data structures, and error handling.
 %prep
 %setup
 %autopatch
+%ifarch %e2k
+sed -i 's/has_avx2(void);/has_avx2(void){return 1;}/' source/encoding.c
+%endif
 
 %build
 %cmake \
@@ -73,5 +76,8 @@ cd %_cmake__builddir
 
 
 %changelog
+* Thu May 16 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.9.12-alt2
+- Fixed build for Elbrus
+
 * Tue Jan 02 2024 Pavel Skrylev <majioa@altlinux.org> 0.9.12-alt1
 - Initial build for Sisyphus
