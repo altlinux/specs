@@ -1,13 +1,13 @@
 Name: pulseview
 Version: 0.5.0
-Release: alt0.20230409
+Release: alt0.20240314
 
 Summary: sigrok -- signal analysis software suite
 License: GPLv3
 Group: Development/Other
 Url: https://sigrok.org/
 
-Requires: libqt5-svg
+Requires: libqt6-svg
 
 Source: %name-%version-%release.tar
 
@@ -15,7 +15,7 @@ BuildRequires: gcc-c++ cmake
 BuildRequires: glib2-devel libglibmm-devel
 BuildRequires: libsigrokcxx-devel >= 0.5.1 libsigrokdecode-devel >= 0.5.2
 BuildRequires: boost-devel boost-filesystem-devel boost-multiprecision-devel
-BuildRequires: qt5-base-devel qt5-svg-devel qt5-tools-devel
+BuildRequires: qt6-base-devel qt6-svg-devel qt6-tools-devel
 
 %description
 The sigrok project aims at creating a portable, cross-platform,
@@ -43,6 +43,9 @@ cmake . -DCMAKE_INSTALL_PREFIX=%prefix
 %_man1dir/pulseview.1*
 
 %changelog
+* Thu May 16 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.5.0-alt0.20240314
+- git snapshot pulseview-unreleased-813-gd00efc65
+
 * Thu Apr 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.0-alt0.20230409
 - git snapshot pulseview-unreleased-793-g292b6ebc
 

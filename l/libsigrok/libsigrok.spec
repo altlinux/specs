@@ -1,6 +1,6 @@
 Name: libsigrok
 Version: 0.6.0
-Release: alt0.20230409
+Release: alt0.20240101
 
 Summary: sigrok -- signal analysis software suite
 License: GPLv3
@@ -9,11 +9,11 @@ Url: https://sigrok.org/
 
 Source: %name-%version-%release.tar
 
-BuildRequires: gcc-c++ doxygen
+BuildRequires: gcc-c++ doxygen python3-dev swig
 BuildRequires: glib2-devel libzip-devel libserialport-devel
 BuildRequires: libftdi1-devel libusb-devel libieee1284-devel
-BuildRequires: libhidapi-devel libbluez-devel
-BuildRequires: libcheck-devel libglibmm-devel python3-dev swig
+BuildRequires: libhidapi-devel libbluez-devel libcheck-devel
+BuildRequires: libglibmm-devel libhidapi-devel zlib-devel
 BuildRequires: rpm-build-python3 python3-module-setuptools
 BuildRequires: libnumpy-py3-devel pkgconfig(pygobject-3.0)
 
@@ -79,7 +79,7 @@ this package provides Python bindings for libsigrok
 
 %build
 %autoreconf
-%configure --disable-static
+%configure --runstatedir=/run --disable-static
 %make_build
 
 %install
@@ -115,6 +115,9 @@ install -pm0644 contrib/61-libsigrok-uaccess.rules %buildroot%_udevrulesdir/
 %python3_sitelibdir/libsigrok-%version-*-info
 
 %changelog
+* Thu May 16 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.6.0-alt0.20240101
+- git snapshot libsigrok-unreleased-1740-gb503d24c
+
 * Thu Apr 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.0-alt0.20230409
 - git snapshot libsigrok-unreleased-1635-g5bce22ac
 
