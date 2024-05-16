@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ykman-gui
-Version: 1.2.5
+Version: 1.2.6
 Release: alt1
 
 Summary: Application for configuring any YubiKey over all USB interfaces
 License: BSD-2-Clause
 Group: System/Configuration/Hardware
 Url: https://github.com/Yubico/yubikey-manager-qt
+Vcs: https://github.com/Yubico/yubikey-manager-qt
 
 Source: %name-%version.tar
 
@@ -28,7 +29,7 @@ Requires: python3(ykman)
 Requires: pyotherside
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
@@ -54,9 +55,12 @@ desktop-file-install --dir %buildroot%_desktopdir resources/ykman-gui.desktop
 %doc COPYING NEWS
 %_bindir/*
 %_desktopdir/*
-%attr(644,root,root) %_iconsdir/hicolor/*/apps/*
+%_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Thu May 16 2024 Anton Zhukharev <ancieg@altlinux.org> 1.2.6-alt1
+- Updated to 1.2.6.
+
 * Tue Mar 28 2023 Anton Zhukharev <ancieg@altlinux.org> 1.2.5-alt1
 - New version.
 
