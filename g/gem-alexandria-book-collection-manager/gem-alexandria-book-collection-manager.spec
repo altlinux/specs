@@ -3,7 +3,7 @@
 
 Name:          gem-alexandria-book-collection-manager
 Version:       0.7.10
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Alexandria is a GNOME application to help you manage your book collection
 License:       GPL-2.0+
 Group:         Development/Ruby
@@ -88,8 +88,6 @@ Conflicts:     gem(psych) >= 4.1
 Conflicts:     gem(zoom) >= 0.6
 Provides:      gem(alexandria-book-collection-manager) = 0.7.10
 
-%ruby_bindir_to %ruby_bindir
-
 %description
 Alexandria is a GNOME application to help you manage your book
 collection.
@@ -103,7 +101,7 @@ Alexandria:
 
 %package       -n alexandria
 Version:       0.7.10
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Alexandria is a GNOME application to help you manage your book collection executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета alexandria-book-collection-manager
 Group:         Books/Other
@@ -124,7 +122,7 @@ executable(s).
 
 %package       -n gem-alexandria-book-collection-manager-doc
 Version:       0.7.10
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Alexandria is a GNOME application to help you manage your book collection documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета alexandria-book-collection-manager
 Group:         Development/Documentation
@@ -159,8 +157,8 @@ documentation files.
 
 %files         -n alexandria
 %doc README.md
-%ruby_bindir/alexandria
-%ruby_mandir/alexandria.1.xz
+%_bindir/alexandria
+%_mandir/alexandria.1.xz
 
 %files         -n gem-alexandria-book-collection-manager-doc
 %doc README.md
@@ -168,6 +166,9 @@ documentation files.
 
 
 %changelog
+* Tue May 14 2024 Pavel Skrylev <majioa@altlinux.org> 0.7.10-alt1.2
+- ! rollback bindir to %%_bindir
+
 * Wed Nov 29 2023 Pavel Skrylev <majioa@altlinux.org> 0.7.10-alt1.1
 - ! fixed bindir in spec
 

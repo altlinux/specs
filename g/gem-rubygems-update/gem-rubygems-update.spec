@@ -5,7 +5,8 @@
 %define        gemname rubygems-update
 
 Name:          gem-rubygems-update
-Version:       3.5.6
+Epoch:         2
+Version:       3.5.9
 Release:       alt1
 Summary:       Library packaging and distribution for Ruby
 License:       Ruby or MIT
@@ -16,15 +17,14 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Patch:         add_exec_gem.patch
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_ignore_names warbler,templates,rubyforge,bar,demo,rubygems-update[doc]
-Requires:      /usr/bin/gem
 Obsoletes:     ruby-rubygems-update < %EVR
 Provides:      ruby-rubygems-update = %EVR
-Provides:      gem(rubygems-update) = 3.5.6
+Provides:      gem(rubygems-update) = 3.5.9
 
 
 %description
@@ -41,13 +41,13 @@ our guide on publishing a Gem at guides.rubygems.org
 
 
 %package       -n gem-bundler
-Version:       2.5.6
+Version:       2.5.9
 Release:       alt1
 Summary:       Library packaging and distribution for Ruby
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Provides:      gem(bundler) = 2.5.6
+Provides:      gem(bundler) = 2.5.9
 
 %description   -n gem-bundler
 Bundler manages an application's dependencies through its entire life, across
@@ -55,40 +55,43 @@ many machines, systematically and repeatably
 
 
 %package       -n bundle
-Version:       2.5.6
+Version:       2.5.9
 Release:       alt1
 Summary:       Library packaging and distribution for Ruby executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета bundler
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(bundler) = 2.5.6
+Requires(pre): alternatives >= 0:0.2.0-alt0.12
+Requires:      gem(bundler) = 2.5.9
 
 %description   -n bundle
 Library packaging and distribution for Ruby executable(s).
 
 Bundler manages an application's dependencies through its entire life, across
 many machines, systematically and repeatably
+
 %description   -n bundle -l ru_RU.UTF-8
 Исполнямка для самоцвета bundler.
 
 
 %if_enabled    doc
 %package       -n gem-bundler-doc
-Version:       2.5.6
+Version:       2.5.9
 Release:       alt1
 Summary:       Library packaging and distribution for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета bundler
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(bundler) = 2.5.6
+Requires:      gem(bundler) = 2.5.9
 
 %description   -n gem-bundler-doc
 Library packaging and distribution for Ruby documentation files.
 
 Bundler manages an application's dependencies through its entire life, across
 many machines, systematically and repeatably
+
 %description   -n gem-bundler-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета bundler.
 %endif
@@ -96,36 +99,38 @@ many machines, systematically and repeatably
 
 %if_enabled    devel
 %package       -n gem-bundler-devel
-Version:       2.5.6
+Version:       2.5.9
 Release:       alt1
 Summary:       Library packaging and distribution for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета bundler
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(bundler) = 2.5.6
+Requires:      gem(bundler) = 2.5.9
 
 %description   -n gem-bundler-devel
 Library packaging and distribution for Ruby development package.
 
 Bundler manages an application's dependencies through its entire life, across
 many machines, systematically and repeatably
+
 %description   -n gem-bundler-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета bundler.
 %endif
 
 
-%package       -n update-rubygems
-Version:       3.5.6
+%package       -n gem
+Version:       3.5.9
 Release:       alt1
 Summary:       Library packaging and distribution for Ruby executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета rubygems-update
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rubygems-update) = 3.5.6
+Requires(pre): alternatives >= 0:0.2.0-alt0.12
+Requires:      gem(rubygems-update) = 3.5.9
 
-%description   -n update-rubygems
+%description   -n gem
 Library packaging and distribution for Ruby executable(s).
 
 RubyGems is a package management framework for Ruby.
@@ -138,20 +143,21 @@ these packages in your Ruby environment.
 RubyGems is also a client for RubyGems.org, a public repository of Gems that
 allows you to publish a Gem that can be shared and used by other developers. See
 our guide on publishing a Gem at guides.rubygems.org
-%description   -n update-rubygems -l ru_RU.UTF-8
+
+%description   -n gem -l ru_RU.UTF-8
 Исполнямка для самоцвета rubygems-update.
 
 
 %if_enabled    doc
 %package       -n gem-rubygems-update-doc
-Version:       3.5.6
+Version:       3.5.9
 Release:       alt1
 Summary:       Library packaging and distribution for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rubygems-update
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rubygems-update) = 3.5.6
+Requires:      gem(rubygems-update) = 3.5.9
 
 %description   -n gem-rubygems-update-doc
 Library packaging and distribution for Ruby documentation files.
@@ -166,21 +172,20 @@ these packages in your Ruby environment.
 RubyGems is also a client for RubyGems.org, a public repository of Gems that
 allows you to publish a Gem that can be shared and used by other developers. See
 our guide on publishing a Gem at guides.rubygems.org
+
 %description   -n gem-rubygems-update-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета rubygems-update.
-%endif
 
 
-%if_enabled    devel
 %package       -n gem-rubygems-update-devel
-Version:       3.5.6
+Version:       3.5.9
 Release:       alt1
 Summary:       Library packaging and distribution for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rubygems-update
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rubygems-update) = 3.5.6
+Requires:      gem(rubygems-update) = 3.5.9
 
 %description   -n gem-rubygems-update-devel
 Library packaging and distribution for Ruby development package.
@@ -195,6 +200,7 @@ these packages in your Ruby environment.
 RubyGems is also a client for RubyGems.org, a public repository of Gems that
 allows you to publish a Gem that can be shared and used by other developers. See
 our guide on publishing a Gem at guides.rubygems.org
+
 %description   -n gem-rubygems-update-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета rubygems-update.
 %endif
@@ -202,12 +208,24 @@ our guide on publishing a Gem at guides.rubygems.org
 
 %prep
 %setup
+%autopatch
 
 %build
 %ruby_build
 
 %install
 %ruby_install
+
+rm -rf %buildroot%_bindir/*
+mkdir -p %buildroot%_altdir/
+cat <<EOF >>%buildroot%_altdir/gem
+%{_bindir}/gem %ruby_gemlibdir/exe/gem 100
+%{_bindir}/update_rubygems %ruby_gemlibdir/exe/update_rubygems 100
+EOF
+cat <<EOF >>%buildroot%_altdir/bundle
+%{_bindir}/bundle %ruby_gemlibdir/exe/bundle 100
+%{_bindir}/bundler %ruby_gemlibdir/exe/bundler 100
+EOF
 
 %check
 %ruby_test
@@ -219,18 +237,17 @@ our guide on publishing a Gem at guides.rubygems.org
 
 %files         -n gem-bundler
 %doc README.md
-%ruby_gemspecdir/bundler-2.5.6.gemspec
-%ruby_gemslibdir/bundler-2.5.6
+%ruby_gemspecdir/bundler-2.5.9.gemspec
+%ruby_gemslibdir/bundler-2.5.9
 
 %files         -n bundle
 %doc README.md
-%_bindir/bundle
-%_bindir/bundler
+%_altdir/bundle
 
 %if_enabled    doc
 %files         -n gem-bundler-doc
 %doc README.md
-%ruby_gemsdocdir/bundler-2.5.6
+%ruby_gemsdocdir/bundler-2.5.9
 %endif
 
 %if_enabled    devel
@@ -238,9 +255,9 @@ our guide on publishing a Gem at guides.rubygems.org
 %doc README.md
 %endif
 
-%files         -n update-rubygems
+%files         -n gem
 %doc README.md
-%_bindir/update_rubygems
+%_altdir/gem
 
 %if_enabled    doc
 %files         -n gem-rubygems-update-doc
@@ -254,6 +271,11 @@ our guide on publishing a Gem at guides.rubygems.org
 
 
 %changelog
+* Sun Apr 21 2024 Pavel Skrylev <majioa@altlinux.org> 2:3.5.9-alt1
+- ^ 3.5.6 -> 3.5.9
+- + added gem executable, replacing gem package with new epoch
+- + added binary alternatives
+
 * Fri Mar 15 2024 Pavel Skrylev <majioa@altlinux.org> 3.5.6-alt1
 - ^ 3.2.19 -> 3.5.6
 

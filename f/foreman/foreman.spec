@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       3.5.1
-Release:       alt8.1
+Release:       alt9
 Summary:       An application that automates the lifecycle of servers
 License:       MIT
 Group:         System/Servers
@@ -22,6 +22,7 @@ Source9:       foreman.po
 Source10:      public.tar
 Source11:      foreman-jobs.service
 Source12:      foreman-jobs.sysconfig
+Patch7:        rack-3.patch
 Patch6:        rails_6.patch
 Patch5:        asciidoctor-doc.patch
 Patch3:        invalid_premission.patch
@@ -78,6 +79,7 @@ BuildRequires: gem(dynflow) >= 1.6.5
 BuildRequires: gem(daemons) >= 0
 BuildRequires: gem(bcrypt) >= 3.1
 BuildRequires: gem(get_process_mem) >= 0
+BuildRequires: gem(rackup) >= 0
 BuildRequires: gem(rack-cors) >= 1.0.2
 BuildRequires: gem(jwt) >= 2.2.1
 BuildRequires: gem(graphql) >= 1.8.0
@@ -217,6 +219,7 @@ Requires:      gem(dynflow) >= 1.6.5
 Requires:      gem(daemons) >= 0
 Requires:      gem(bcrypt) >= 3.1
 Requires:      gem(get_process_mem) >= 0
+Requires:      gem(rackup) >= 0
 Requires:      gem(rack-cors) >= 1.0.2
 Requires:      gem(jwt) >= 2.2.1
 Requires:      gem(graphql) >= 1.8.0
@@ -343,7 +346,7 @@ foundation.
 
 %package       -n foreman-doc
 Version:       3.5.1
-Release:       alt8.1
+Release:       alt9
 Summary:       An application that automates the lifecycle of servers documentation files
 Group:         Development/Documentation
 BuildArch:     noarch
@@ -509,6 +512,9 @@ railsctl cleanup %name
 
 
 %changelog
+* Tue May 14 2024 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt9
+- ! fixed dep to rack server for new rack 3x
+
 * Thu Feb 29 2024 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt8.1
 - ! fixed right to service and conf files
 

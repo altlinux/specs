@@ -1,8 +1,11 @@
 %define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname childprocess
 
 Name:          gem-childprocess
-Version:       4.1.0
+Version:       5.0.0
 Release:       alt1
 Summary:       Cross-platform Ruby library for managing child processes
 License:       MIT
@@ -14,7 +17,7 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-%if_with check
+%if_enabled check
 BuildRequires: gem(rspec) >= 3.0
 BuildRequires: gem(yard) >= 0.0
 BuildRequires: gem(rake) >= 0
@@ -27,39 +30,42 @@ BuildConflicts: gem(coveralls) >= 1.0
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 Obsoletes:     ruby-childprocess < %EVR
 Provides:      ruby-childprocess = %EVR
-Provides:      gem(childprocess) = 4.1.0
+Provides:      gem(childprocess) = 5.0.0
 
 
 %description
 Cross-platform Ruby library for managing child processes.
 
 
+%if_enabled    doc
 %package       -n gem-childprocess-doc
-Version:       4.1.0
+Version:       5.0.0
 Release:       alt1
 Summary:       Cross-platform Ruby library for managing child processes documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета childprocess
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(childprocess) = 4.1.0
+Requires:      gem(childprocess) = 5.0.0
 
 %description   -n gem-childprocess-doc
 Cross-platform Ruby library for managing child processes documentation files.
 
 %description   -n gem-childprocess-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета childprocess.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-childprocess-devel
-Version:       4.1.0
+Version:       5.0.0
 Release:       alt1
 Summary:       Cross-platform Ruby library for managing child processes development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета childprocess
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(childprocess) = 4.1.0
+Requires:      gem(childprocess) = 5.0.0
 Requires:      gem(rspec) >= 3.0
 Requires:      gem(yard) >= 0.0
 Requires:      gem(rake) >= 0
@@ -72,6 +78,7 @@ Cross-platform Ruby library for managing child processes development package.
 
 %description   -n gem-childprocess-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета childprocess.
+%endif
 
 
 %prep
@@ -91,15 +98,22 @@ Cross-platform Ruby library for managing child processes development package.
 %ruby_gemspec
 %ruby_gemlibdir
 
+%if_enabled    doc
 %files         -n gem-childprocess-doc
 %doc README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-childprocess-devel
 %doc README.md
+%endif
 
 
 %changelog
+* Mon Apr 15 2024 Pavel Skrylev <majioa@altlinux.org> 5.0.0-alt1
+- ^ 4.1.0 -> 5.0.0
+
 * Wed Nov 29 2023 Pavel Skrylev <majioa@altlinux.org> 4.1.0-alt1
 - ^ 3.0.0 -> 4.1.0
 

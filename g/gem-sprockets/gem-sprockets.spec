@@ -4,7 +4,7 @@
 Name:          gem-sprockets
 Epoch:         1
 Version:       4.2.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Rack-based asset packaging system
 License:       MIT
 Group:         Development/Ruby
@@ -62,7 +62,7 @@ BuildConflicts: gem(concurrent-ruby) >= 2
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rack >= 2.2.2,rack < 3
+%ruby_use_gem_dependency rack >= 2.2.2,rack < 4
 %ruby_use_gem_dependency rake >= 13.0.1,rake < 14
 %ruby_use_gem_dependency rack-test >= 1.1.0,rack-test < 2
 Requires:      gem(rack) >= 2.2.2
@@ -82,7 +82,7 @@ CoffeeScript, Sass and SCSS.
 
 %package       -n sprockets
 Version:       4.2.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Rack-based asset packaging system executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета sprockets
 Group:         Development/Ruby
@@ -104,7 +104,7 @@ CoffeeScript, Sass and SCSS.
 
 %package       -n gem-sprockets-doc
 Version:       4.2.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Rack-based asset packaging system documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета sprockets
 Group:         Development/Documentation
@@ -151,6 +151,9 @@ CoffeeScript, Sass and SCSS.
 
 
 %changelog
+* Tue Apr 23 2024 Pavel Skrylev <majioa@altlinux.org> 1:4.2.0-alt1.1
+- ! fixed dep to rack
+
 * Fri Mar 10 2023 Pavel Skrylev <majioa@altlinux.org> 1:4.2.0-alt1
 - ^ 4.0.2.1 -> 4.2.0 (no devel)
 

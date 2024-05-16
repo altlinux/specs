@@ -6,7 +6,7 @@
 
 Name:          ruby
 Version:       %_version
-Release:       alt4.3
+Release:       alt4.4
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -15,6 +15,7 @@ Vcs:           https://github.com/ruby/ruby.git
 
 Source0:       %name-%_version.tar
 Source1:       %name.sh.erb
+Source2:       ruby-stdlibs.alternatives.erb
 Source3:       ruby.macros.erb
 Source4:       ruby.env
 Source5:       static.tar
@@ -44,9 +45,8 @@ BuildRequires: /proc
 
 # Ruby built using LTO cannot rebuild itself because of segfaults
 %define        optflags_lto %nil
+Requires(pre): alternatives >= 0:0.2.0-alt0.12
 Requires:      %lname = %_version-%release
-Requires:      ruby-stdlibs = %_version-%release
-Requires:      gem irb erb
 Requires:      /bin/install
 %define obsolete() \
 Provides:      %1 = %_version-%release \
@@ -120,8 +120,10 @@ purposes.
 %package       -n %name-stdlibs
 Summary:       Standard Ruby libraries
 Group:         Development/Ruby
+Requires(pre): alternatives >= 0:0.2.0-alt0.12
 Requires:      %lname = %_version-%release
 Requires:      ruby = %_version-%release
+Provides:      rubygems = 3.3.26
 Provides:      rdoc = 6.4.0
 Provides:      bundle = 2.3.26
 Provides:      %name-libs = %_version-%release
@@ -205,28 +207,6 @@ extensible.
 This package contains standard Ruby runtime libraries.
 
 
-%package       -n erb
-Summary:       ERB template library
-Group:         Development/Ruby
-BuildArch:     noarch
-Requires:      %name-stdlibs = %_version-%release
-Provides:      %_bindir/erb
-
-%description   -n erb
-ERB template library executable and manual.
-
-
-%package       -n irb
-Summary:       Interactive Ruby Shell
-Group:         Development/Ruby
-BuildArch:     noarch
-Requires:      %name-stdlibs = %_version-%release
-Provides:      %_bindir/irb
-
-%description   -n irb
-irb is the REPL(read-eval&print loop) environment for Ruby programs.
-
-
 %package       doc-html
 Summary:       Ruby manuals and documentation
 Group:         Development/Documentation
@@ -263,21 +243,6 @@ Group:         Development/Ruby
 
 %description   -n rpm-macros-ruby
 rpm macros for Ruby packages.
-
-
-# must be the last one as it has a Version: of its own
-%package       -n gem
-Epoch:         2
-Version:       3.3.26
-Summary:       Ruby gem executable and framefork
-Group:         Development/Ruby
-BuildArch:     noarch
-Requires:      %name-stdlibs = %_version-%release
-# for gem-* as of 20240415
-Provides:      rubygems = %version
-
-%description   -n gem
-Ruby gem executable and framework.
 
 
 %prep
@@ -352,15 +317,17 @@ mkdir -p \
    %buildroot%_bindir/ \
    %buildroot%_sysconfdir/bashrc.d/ \
    %buildroot%_libdir \
+   %buildroot%_altdir \
    %buildroot%_docdir/%name
 
 cp COPYING LEGAL NEWS* README.md README.EXT *.ja %buildroot%_docdir/%name/
-while read -d " " i; do ln -s ../../%_libexecdir/%name/bin/$i %buildroot%_bindir/; done <<< "ruby erb irb gem "
 ln -s %name-3.1.pc %buildroot%_pkgconfigdir/%name.pc
+ln -rvs %buildroot%_libexecdir/%name/bin/ruby %buildroot%{_bindir}/ruby
 # install ruby macros
 install -D -p -m 0644 %SOURCE4 %buildroot%_rpmmacrosdir/ruby.env
-%__ruby -e 'File.open("%buildroot%_rpmmacrosdir/ruby", "w") { |f| f.puts ERB.new(IO.read("%SOURCE3")).result }'
 %__ruby -e 'File.open("%buildroot%_sysconfdir/bashrc.d/%name.sh", "w") { |f| f.puts ERB.new(IO.read("%SOURCE1")).result }'
+%__ruby -e 'File.open("%buildroot%_altdir/%name-stdlibs", "w") { |f| f.puts ERB.new(IO.read("%SOURCE2")).result }'
+%__ruby -e 'File.open("%buildroot%_rpmmacrosdir/ruby", "w") { |f| f.puts ERB.new(IO.read("%SOURCE3")).result }'
 
 %check
 %make test
@@ -373,7 +340,6 @@ usermod -a -G ruby root
 echo "NOTE: to make the environment variable changes come into effect, please relogin the terminal session" 1>&2
 
 %files
-%_libexecdir/%name/bin
 %_bindir/%name
 %_man1dir/%name.*
 %dir %_datadir/ri
@@ -393,20 +359,11 @@ echo "NOTE: to make the environment variable changes come into effect, please re
 %files         -n %name-devel
 
 %files         stdlibs
-%exclude %_libexecdir/%name/bin
 %_libexecdir/%name
+%_altdir/%name-stdlibs
 %_libdir/%name
-
-%files         -n gem
-%_bindir/gem
-
-%files         -n erb
-%_bindir/erb
 %_man1dir/erb.*
-
-%files         -n irb
 %lang(ja) %doc doc/irb/*.ja
-%_bindir/irb
 %_man1dir/irb.*
 
 %files         doc-html
@@ -428,6 +385,11 @@ echo "NOTE: to make the environment variable changes come into effect, please re
 %_rpmmacrosdir/ruby.env
 
 %changelog
+* Sun Apr 21 2024 Pavel Skrylev <majioa@altlinux.org> 3.1.4-alt4.4
+- * symlinks to internal ruby binaries use alternatives engine;
+- - droppen unnecessary executable packages like irb, erb, gem;
+- - droppen unnecessary part of PATH in bashrc.d (closes #49903)
+
 * Mon Apr 15 2024 Michael Shigorin <mike@altlinux.org> 3.1.4-alt4.3
 - get P: rubygems back
 

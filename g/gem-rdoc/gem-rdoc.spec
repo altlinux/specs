@@ -6,7 +6,7 @@
 
 Name:          gem-rdoc
 Version:       6.6.3.1
-Release:       alt1
+Release:       alt1.1
 Summary:       RDoc produces HTML and online documentation for Ruby projects
 License:       Ruby
 Group:         Development/Ruby
@@ -46,12 +46,13 @@ rdoc and ri tools for generating and displaying online documentation.
 
 %package       -n rdoc
 Version:       6.6.3.1
-Release:       alt1
+Release:       alt1.1
 Summary:       RDoc produces HTML and online documentation for Ruby projects executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета rdoc
 Group:         Other
 BuildArch:     noarch
 
+Requires(pre): alternatives >= 0:0.2.0-alt0.12
 Requires:      gem(rdoc) = 6.6.3.1
 Obsoletes:     ruby-tool-rdoc
 Obsoletes:     ruby-tools
@@ -70,12 +71,13 @@ rdoc and ri tools for generating and displaying online documentation.
 
 %package       -n ri
 Version:       6.6.3.1
-Release:       alt1
+Release:       alt1.1
 Summary:       RDoc produces HTML and online documentation for Ruby projects executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета rdoc
 Group:         Other
 BuildArch:     noarch
 
+Requires(pre): alternatives >= 0:0.2.0-alt0.12
 Requires:      gem(rdoc) = 6.6.3.1
 
 %description   -n ri
@@ -91,7 +93,7 @@ rdoc and ri tools for generating and displaying online documentation.
 %if_enabled    doc
 %package       -n gem-rdoc-doc
 Version:       6.6.3.1
-Release:       alt1
+Release:       alt1.1
 Summary:       RDoc produces HTML and online documentation for Ruby projects documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rdoc
 Group:         Development/Documentation
@@ -113,7 +115,7 @@ rdoc and ri tools for generating and displaying online documentation.
 %if_enabled    devel
 %package       -n gem-rdoc-devel
 Version:       6.6.3.1
-Release:       alt1
+Release:       alt1.1
 Summary:       RDoc produces HTML and online documentation for Ruby projects development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rdoc
 Group:         Development/Ruby
@@ -149,6 +151,15 @@ rdoc and ri tools for generating and displaying online documentation.
 %install
 %ruby_install
 
+rm -rf %buildroot%_bindir/*
+mkdir -p %buildroot%_altdir/
+cat <<EOF >>%buildroot%_altdir/ri
+%{_bindir}/ri %ruby_gemlibdir/exe/ri 100
+EOF
+cat <<EOF >>%buildroot%_altdir/rdoc
+%{_bindir}/rdoc %ruby_gemlibdir/exe/rdoc 100
+EOF
+
 %check
 %ruby_test
 
@@ -159,12 +170,11 @@ rdoc and ri tools for generating and displaying online documentation.
 
 %files         -n rdoc
 %doc README.rdoc
-%_bindir/rdoc
+%_altdir/rdoc
 
 %files         -n ri
 %doc README.rdoc
-%_bindir/rdoc
-%_bindir/ri
+%_altdir/ri
 %_mandir/ri*
 
 %if_enabled    doc
@@ -180,6 +190,9 @@ rdoc and ri tools for generating and displaying online documentation.
 
 
 %changelog
+* Sun Apr 21 2024 Pavel Skrylev <majioa@altlinux.org> 6.6.3.1-alt1.1
+- + added executables alternatives for ri, rdoc
+
 * Mon Mar 25 2024 Pavel Skrylev <majioa@altlinux.org> 6.6.3.1-alt1
 - ^ 6.6.2 -> 6.6.3.1
 - ! fixed use system dirs feature

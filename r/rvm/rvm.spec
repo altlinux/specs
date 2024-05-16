@@ -2,7 +2,7 @@
 
 Name:          rvm
 Version:       1.29.12.125
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Ruby enVironment Manager (RVM)
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -115,7 +115,6 @@ popd
 ls %buildroot%_libexecdir/%name/bin/*| while read f; do fn="$(basename "$f")"; ln -s %_libexecdir/%name/bin/"$fn" %buildroot%_bindir/"$fn"; done
 cp -rp %buildroot%_libexecdir/%name/config/* %buildroot%_sysconfdir/%name/
 cat > %buildroot%_sysconfdir/bashrc.d/%name.sh << PROFILE
-export PATH="%_cachedir/ruby/gemie/bin:%_libexecdir/%name/bin:\$PATH:/usr/bin:/bin"
 [[ -s "%_libexecdir/%name/scripts/rvm" ]] && source "%_libexecdir/%name/scripts/rvm" # Load RVM into a shell session *as a function*
 PROFILE
 
@@ -144,6 +143,9 @@ exit 0
 %dir %attr(775,root,rvm) %_logdir/%name
 
 %changelog
+* Thu Apr 25 2024 Pavel Skrylev <majioa@altlinux.org> 1.29.12.125-alt0.2
+- - removed PATH variable from bashrc
+
 * Wed Feb 07 2024 Pavel Skrylev <majioa@altlinux.org> 1.29.12.125-alt0.1
 - ^ 1.29.12 -> 1.29.12p125
 - ! clean up pre script

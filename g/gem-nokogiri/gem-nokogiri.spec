@@ -2,10 +2,11 @@
 %def_enable    check
 %def_enable    doc
 %def_enable    devel
+%def_enable    java
 %define        gemname nokogiri
 
 Name:          gem-nokogiri
-Version:       1.16.2
+Version:       1.16.4
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
 License:       MIT
@@ -15,6 +16,7 @@ Vcs:           https://github.com/sparklemotion/nokogiri.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
+Patch:         shutdown-libxml2-warning.patch
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libxml2-devel
 BuildRequires: libxslt-devel
@@ -82,7 +84,7 @@ Conflicts:     gem(mini_portile2) >= 2.9
 Conflicts:     gem(racc) >= 2
 Obsoletes:     ruby-nokogiri < %EVR
 Provides:      ruby-nokogiri = %EVR
-Provides:      gem(nokogiri) = 1.16.2
+Provides:      gem(nokogiri) = 1.16.4
 
 
 %description
@@ -92,14 +94,14 @@ contanis Ruby libraries for Nokogiri.
 
 
 %package       -n nokogiri
-Version:       1.16.2
+Version:       1.16.4
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета nokogiri
 Group:         Development/Other
 BuildArch:     noarch
 
-Requires:      gem(nokogiri) = 1.16.2
+Requires:      gem(nokogiri) = 1.16.4
 
 %description   -n nokogiri
 Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
@@ -115,14 +117,14 @@ contanis Ruby libraries for Nokogiri.
 
 %if_enabled    doc
 %package       -n gem-nokogiri-doc
-Version:       1.16.2
+Version:       1.16.4
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета nokogiri
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(nokogiri) = 1.16.2
+Requires:      gem(nokogiri) = 1.16.4
 
 %description   -n gem-nokogiri-doc
 Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) documentation
@@ -138,14 +140,14 @@ contanis Ruby libraries for Nokogiri.
 
 %if_enabled    devel
 %package       -n gem-nokogiri-devel
-Version:       1.16.2
+Version:       1.16.4
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета nokogiri
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(nokogiri) = 1.16.2
+Requires:      gem(nokogiri) = 1.16.4
 Requires:      gem(mutex_m) >= 0
 Requires:      gem(bundler) >= 2.1.4
 Requires:      gem(rake) >= 13.1.0
@@ -166,7 +168,9 @@ Requires:      gem(rubocop-shopify) >= 2.14.0
 Requires:      gem(rdoc) >= 6.1.1
 Requires:      libxml2-devel
 Requires:      libxslt-devel
+%if_enabled java
 Requires:      java-devel
+%endif
 Requires:      zlib-devel
 Conflicts:     gem(bundler) >= 3
 Conflicts:     gem(rake) >= 14
@@ -199,6 +203,7 @@ contanis Ruby libraries for Nokogiri.
 
 %prep
 %setup
+%autopatch
 
 %build
 %ruby_build
@@ -210,28 +215,33 @@ contanis Ruby libraries for Nokogiri.
 %ruby_test
 
 %files
-%doc README.md
+%doc LICENSE-DEPENDENCIES.md LICENSE.md README.md CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
 %files         -n nokogiri
-%doc README.md
+%doc LICENSE-DEPENDENCIES.md LICENSE.md README.md CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md
 %_bindir/nokogiri
 
 %if_enabled    doc
 %files         -n gem-nokogiri-doc
-%doc README.md
+%doc LICENSE-DEPENDENCIES.md LICENSE.md README.md CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-nokogiri-devel
-%doc README.md
+%doc LICENSE-DEPENDENCIES.md LICENSE.md README.md CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md
 %ruby_includedir/*
 %endif
 
+
 %changelog
+* Sun Apr 21 2024 Pavel Skrylev <majioa@altlinux.org> 1.16.4-alt1
+- ^ 1.16.2 -> 1.16.4
+- ! protected java with if clause (closes #47259)
+
 * Fri Feb 09 2024 Pavel Skrylev <majioa@altlinux.org> 1.16.2-alt1
 - ^ 1.15.5 -> 1.16.2
 - ! fixed CVE-2024-25062
