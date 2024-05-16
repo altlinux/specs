@@ -1,7 +1,7 @@
 %def_disable bootstrap
 
 Name: libcap-ng
-Version: 0.8.4
+Version: 0.8.5
 Release: alt1
 
 Summary: An alternate posix capabilities library
@@ -10,6 +10,7 @@ Group: System/Libraries
 
 Url: http://people.redhat.com/sgrubb/libcap-ng
 Source: %name-%version.tar
+Patch0: 0001-Fix-python-path-when-invoking-py-compile-54.patch
 
 BuildRequires: kernel-headers
 BuildRequires: libattr-devel
@@ -63,6 +64,7 @@ lets you set the file system based capabilities.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 # from autogen.sh
@@ -133,6 +135,9 @@ rm -f %buildroot%python3_sitelibdir/*.{a,la}
 %endif
 
 %changelog
+* Thu May 16 2024 Anton Zhukharev <ancieg@altlinux.org> 0.8.5-alt1
+- (NMU) Updated to 0.8.5.
+
 * Wed Dec 27 2023 Anton Zhukharev <ancieg@altlinux.org> 0.8.4-alt1
 - (NMU) Updated to 0.8.4.
 
