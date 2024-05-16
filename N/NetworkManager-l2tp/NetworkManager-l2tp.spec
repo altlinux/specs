@@ -8,7 +8,7 @@
 %def_with gtk4
 
 Name: NetworkManager-l2tp
-Version: 1.20.12
+Version: 1.20.16
 Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -120,6 +120,9 @@ This package contains files for GTK4 applications to use %name.
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed May 15 2024 Mikhail Efremov <sem@altlinux.org> 1.20.16-alt1
+- Updated to 1.20.16.
+
 * Thu Feb 22 2024 Mikhail Efremov <sem@altlinux.org> 1.20.12-alt1
 - Updated to 1.20.12.
 
