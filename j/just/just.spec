@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: just
-Version: 1.25.2
+Version: 1.26.0
 Release: alt1
 Summary: Just a command runner
 License: CC0-1.0
@@ -56,6 +56,18 @@ install -Dpm0644 completions/just.zsh  %buildroot%_datadir/zsh/site-functions/_j
 install -Dpm0644 completions/just.fish %buildroot%_datadir/fish/vendor_completions.d/just.fish
 install -Dpm0644 man/just.1 -t %buildroot%_man1dir
 
+%check
+cargo test %_smp_mflags --release --offline --no-fail-fast
+PATH=%buildroot%_bindir:$PATH
+cat > justfile <<EOF
+_help:
+	@just --list
+version:
+	just --version
+EOF
+just | grep -Ez '^Available recipes:\s*version\s$'
+just version | grep -Fx '%name %version'
+
 %files
 %define _customdocdir %_docdir/%name
 %doc LICENSE *.md examples
@@ -66,6 +78,9 @@ install -Dpm0644 man/just.1 -t %buildroot%_man1dir
 %_datadir/fish/vendor_completions.d/just.fish
 
 %changelog
+* Thu May 16 2024 Vitaly Chikunov <vt@altlinux.org> 1.26.0-alt1
+- Update to 1.26.0 (2024-05-14).
+
 * Wed Mar 13 2024 Vitaly Chikunov <vt@altlinux.org> 1.25.2-alt1
 - Update to 1.25.2 (2024-03-10).
 
