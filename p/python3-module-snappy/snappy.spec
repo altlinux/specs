@@ -5,26 +5,35 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.6.1
-Release: alt2.1
+Version: 0.7.0
+Release: alt1
 
 Summary: Python library for the snappy compression library from Google
 
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.org/project/python-snappy
+URL: https://pypi.org/project/python-snappy
+VCS: https://github.com/intake/python-snappy
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: libsnappy-devel
-BuildRequires: python3-module-cffi
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-cramjam
+BuildRequires: python3-module-crc32c
+%endif
 
 %py3_provides %pypi_name
 Provides: python3-module-%pypi_name
 
 %add_python3_req_skip snappy._snappy_cffi
+
+BuildArch: noarch
 
 %description
 Python bindings for the snappy compression library from Google.
@@ -33,25 +42,26 @@ Python bindings for the snappy compression library from Google.
 %setup
 
 %build
-%add_optflags -fno-strict-aliasing
-%python3_build
+%pyproject_build
+
+%install
+%pyproject_install
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %__python3 test_formats.py
 %__python3 test_hadoop_snappy.py
-%__python3 test_snappy_cffi.py
 %__python3 test_snappy.py
-
-%install
-%python3_install
 
 %files
 %doc AUTHORS *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/python_%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/python_%oname-%version.dist-info
 
 %changelog
+* Thu May 16 2024 Grigory Ustinov <grenka@altlinux.org> 0.7.0-alt1
+- Automatically updated to 0.7.0.
+
 * Thu Aug 17 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.6.1-alt2.1
 - NMU: ignored unmet dependency
 
