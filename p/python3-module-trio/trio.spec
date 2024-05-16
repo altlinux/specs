@@ -5,13 +5,13 @@
 %def_with check
 
 Name: python3-module-%modulename
-Version: 0.25.0
+Version: 0.25.1
 Release: alt1
 Summary: Trio - Pythonic async I/O for humans and snake people
 License: MIT or Apache-2.0
 Group: Development/Python3
-Url: https://pypi.org/project/trio/
-Vcs: https://github.com/python-trio/trio
+URL: https://pypi.org/project/trio
+VCS: https://github.com/python-trio/trio
 BuildArch: noarch
 Source: %name-%version.tar
 
@@ -89,6 +89,9 @@ This package contains tests for %modulename.
 %python3_sitelibdir/%modulename/_core/_tests
 
 %changelog
+* Thu May 16 2024 Grigory Ustinov <grenka@altlinux.org> 0.25.1-alt1
+- Automatically updated to 0.25.1.
+
 * Mon Apr 01 2024 Grigory Ustinov <grenka@altlinux.org> 0.25.0-alt1
 - Automatically updated to 0.25.0.
 
