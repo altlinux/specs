@@ -1,22 +1,21 @@
-%define _unpackaged_files_terminate_build 1
 %define oname dictdiffer
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.8.1
-Release: alt2
+Version: 0.9.0
+Release: alt1
 
 Summary: Dictdiffer is a module that helps you to diff and patch dictionaries
+
 License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/dictdiffer/
+URL: https://pypi.org/project/dictdiffer
+VCS: https://github.com/inveniosoftware/dictdiffer
 
 BuildArch: noarch
 
-# https://github.com/inveniosoftware/dictdiffer.git
 Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools_scm)
@@ -33,7 +32,6 @@ Dictdiffer is a library that helps you to diff and patch dictionaries.
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 # SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
@@ -47,14 +45,18 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_install
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%tox_check_pyproject
+rm -v pytest.ini
+%pyproject_run_pytest
 
 %files
-%doc *.rst LICENSE
-%python3_sitelibdir/*
+%doc LICENSE *.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu May 16 2024 Grigory Ustinov <grenka@altlinux.org> 0.9.0-alt1
+- Automatically updated to 0.9.0.
+
 * Fri Feb 02 2024 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt2
 - Moved on modern pyptoject macros.
 
