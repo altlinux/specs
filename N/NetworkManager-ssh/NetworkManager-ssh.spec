@@ -1,16 +1,14 @@
 %define nm_version 1.1.90
-%define nm_applet_version 1.1.90
-%define nm_applet_name NetworkManager-applet-gtk
 %define git_date %nil
 #define git_date .git20151024
 
-%def_without libnm_glib
-
 %define _unpackaged_files_terminate_build 1
 
+%def_with gtk4
+
 Name: NetworkManager-ssh
-Version: 1.2.12
-Release: alt2%git_date
+Version: 1.2.13
+Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for SSH
@@ -21,14 +19,10 @@ Patch: %name-%version-%release.patch
 
 BuildRequires: intltool
 BuildRequires: libnm-devel >= %nm_version
-BuildRequires: libnma-devel >= %nm_applet_version
-%if_with libnm_glib
-BuildRequires: NetworkManager-devel >= %nm_version
-BuildRequires: libnm-glib-vpn-devel >= %nm_version
-BuildRequires: libnm-gtk-devel >= %nm_applet_version
-%endif
+BuildRequires: libnma-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libsecret-devel
+%{?_with_gtk4:BuildRequires: libgtk4-devel libnma-gtk4-devel}
 
 Requires: NetworkManager-daemon   >= %nm_version
 Requires: openssh-clients
@@ -37,18 +31,40 @@ Requires: openssh-clients
 This package contains software for integrating VPN capabilities with
 the OpenSSH server with NetworkManager.
 
-%package gtk
-Summary: Applications for use %name with %nm_applet_name
+%package gtk-common
+Summary: Common part of %name GTK support
 Group: Graphical desktop/GNOME
-Requires: %nm_applet_name >= %nm_applet_version
 Requires: %name = %version-%release
+
+%description gtk-common
+This package contains common part for %name GTK support.
+
+%package gtk3
+Summary: Files for GTK3 applications to use %name
+Group: Graphical desktop/GNOME
+Requires: %name-gtk-common = %version-%release
 
 Obsoletes: %name-gnome < 0.9.1-alt2
 Provides: %name-gnome = %version-%release
 
-%description gtk
-This package contains applications for use with
-NetworkManager panel applet.
+Obsoletes: %name-gtk < 1.2.13-alt1
+Provides: %name-gtk = %version-%release
+
+%description gtk3
+This package contains files for GTK3 applications to use %name.
+
+%if_with gtk4
+%package gtk4
+Summary: Files for GTK4 applications to use %name
+Group: Graphical desktop/GNOME
+Requires: %name-gtk-common = %version-%release
+
+Obsoletes: %name-gnome < 0.9.1-alt2
+Provides: %name-gnome = %version-%release
+
+%description gtk4
+This package contains files for GTK4 applications to use %name.
+%endif
 
 %prep
 %setup
@@ -60,9 +76,8 @@ NetworkManager panel applet.
 	--disable-static \
 	--libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
-%if_without libnm_glib
 	--without-libnm-glib \
-%endif
+	%{subst_with gtk4} \
 	--disable-silent-rules \
 	--enable-more-warnings=error
 %make_build
@@ -77,24 +92,31 @@ make check
 %files
 %doc AUTHORS README README.md
 %_libexecdir/NetworkManager/nm-ssh-service
+%_libdir/NetworkManager/libnm-vpn-plugin-ssh.so
 %config %_sysconfdir/dbus-1/system.d/nm-ssh-service.conf
-%if_with libnm_glib
-%config %_sysconfdir/NetworkManager/VPN/nm-ssh-service.name
-%endif
 %config %_libexecdir/NetworkManager/VPN/nm-ssh-service.name
 
-%files gtk -f %name.lang
-%if_with libnm_glib
-%_libdir/NetworkManager/libnm-ssh-properties.so
-%endif
+%files gtk-common -f %name.lang
 %_libexecdir/NetworkManager/nm-ssh-auth-dialog
-%_datadir/gnome-vpn-properties/*
-%_libdir/NetworkManager/libnm-vpn-plugin-ssh.so
-%_datadir/appdata/*.xml
+%_datadir/metainfo/*.xml
+
+%files gtk3
+%_libdir/NetworkManager/libnm-gtk3-vpn-plugin-ssh-editor.so
+
+%if_with gtk4
+%files gtk4
+%_libdir/NetworkManager/libnm-gtk4-vpn-plugin-ssh-editor.so
+%endif
 
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Thu May 16 2024 Mikhail Efremov <sem@altlinux.org> 1.2.13-alt1
+- Added gtk4 subpackage.
+- Droped support for libnm-glib build.
+- Fixed AppStream metadata path.
+- Updated to 1.2.13.
+
 * Tue Oct 10 2023 Mikhail Efremov <sem@altlinux.org> 1.2.12-alt2
 - Require openssh-clients instead of openssh.
 - Updated Vcs tag.
