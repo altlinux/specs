@@ -3,7 +3,7 @@
 Name:      appstream-data-desktop
 Summary:   ALT Linux AppStream metadata
 Version:   20240405
-Release:   alt1
+Release:   alt2
 Group:     System/Configuration/Packaging
 BuildArch: noarch
 License:   CC0 and CC-BY and CC-BY-SA and GFDL
@@ -23,18 +23,21 @@ required for GNOME Software Center or KDE Discover.
 %setup
 
 %install
-mkdir -p %buildroot%_datadir/app-info/xmls
-mkdir -p %buildroot%_datadir/app-info/icons
+mkdir -p %buildroot%_datadir/swcatalog/xml
+mkdir -p %buildroot%_datadir/swcatalog/icons
 
-cp -r icons/* %buildroot%_datadir/app-info/icons/
-cp -r xmls/* %buildroot%_datadir/app-info/xmls/
+cp -r icons/* %buildroot%_datadir/swcatalog/icons/
+cp -r xmls/* %buildroot%_datadir/swcatalog/xml/
 #cp -r manual-%version/* %buildroot%_datadir/app-info/xmls/
 
 %files
-%_datadir/app-info/xmls/*
-%_datadir/app-info/icons/altlinux
+%_datadir/swcatalog/xml/*
+%_datadir/swcatalog/icons/altlinux
 
 %changelog
+* Thu May 16 2024 Ajrat Makhmutov <rauty@altlinux.org> 20240405-alt2
+- NMU: Rename the installation directories (ALT #50312).
+
 * Fri Apr 05 2024 Kirill Izmestev <felixz@altlinux.org> 20240405-alt1
 - Updated database.
 
