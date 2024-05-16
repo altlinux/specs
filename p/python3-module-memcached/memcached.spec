@@ -1,21 +1,22 @@
-%define _unpackaged_files_terminate_build 1
 %define modulename python-memcached
 
 Name: python3-module-memcached
-Version: 1.59
+Version: 1.62
 Release: alt1
 
 Summary: A Python module for memcached daemon
 Group: Development/Python3
 License: Python-2.0
-Url: https://github.com/linsomniac/python-memcached
+URL: https://pypi.org/project/python-memcached
+VCS: https://github.com/linsomniac/python-memcached
 
-Source0: https://pypi.python.org/packages/f7/62/14b2448cfb04427366f24104c9da97cf8ea380d7258a3233f066a951a8d8/python-memcached-%{version}.tar.gz
+Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-six
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %py3_provides memcache
 
@@ -24,20 +25,27 @@ BuildRequires: python3-module-six
 distributed memory object caching system.
 
 %prep
-%setup -n python-memcached-%{version}
+%setup
+
+sed -i 's/1.60/%version/' memcache.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc ChangeLog PKG-INFO test-requirements.txt README.md
-%python3_sitelibdir/*
-%doc README* PKG-INFO ChangeLog
+%python3_sitelibdir/memcache.py
+%python3_sitelibdir/__pycache__/
+%python3_sitelibdir/python_memcached-%version.dist-info
+
 
 %changelog
+* Thu May 16 2024 Grigory Ustinov <grenka@altlinux.org> 1.62-alt1
+- Build new version.
+
 * Mon Apr 25 2022 Grigory Ustinov <grenka@altlinux.org> 1.59-alt1
 - Build new version.
 
