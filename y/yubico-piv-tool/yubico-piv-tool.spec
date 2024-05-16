@@ -5,7 +5,7 @@
 %add_optflags -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
 
 Name: yubico-piv-tool
-Version: 2.5.1
+Version: 2.5.2
 Release: alt1
 
 Summary: Command line tool for the YubiKey PIV application
@@ -73,6 +73,9 @@ Group: Development/Other
 %_libdir/pkgconfig/ykcs11.pc
 
 %changelog
+* Thu May 16 2024 Anton Zhukharev <ancieg@altlinux.org> 2.5.2-alt1
+- Updated to 2.5.2.
+
 * Wed Feb 14 2024 Anton Zhukharev <ancieg@altlinux.org> 2.5.1-alt1
 - Updated to 2.5.1.
 
