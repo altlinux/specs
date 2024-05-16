@@ -1,6 +1,6 @@
-%define nm_version 1.7.0
-#define git_hash %nil
-%define git_hash .ge1c5978
+%define nm_version 1.46.0
+%define git_hash %nil
+#define git_hash .ge1c5978
 
 %def_with gtk4
 
@@ -9,11 +9,11 @@
 %ifarch %e2k
 %define more_warnings no
 %else
-%define more_warnings error
+%define more_warnings yes
 %endif
 
 Name: NetworkManager-openvpn
-Version: 1.10.3
+Version: 1.11.0
 Release: alt1%git_hash
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -117,6 +117,10 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Thu May 16 2024 Mikhail Efremov <sem@altlinux.org> 1.11.0-alt1
+- Don't treat warnings as errors.
+- Updated to 1.11.0.
+
 * Mon Apr 24 2023 Mikhail Efremov <sem@altlinux.org> 1.10.3-alt1.ge1c5978
 - Upstream git snapshot (master branch).
 
