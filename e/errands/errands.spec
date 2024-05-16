@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name Errands
 %define ver_major 46
@@ -8,7 +8,7 @@
 
 Name: errands
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Todo application for GNOME
 License: MIT
@@ -73,6 +73,9 @@ Todo application for those who prefer simplicity.
 %doc README*
 
 %changelog
+* Thu May 16 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt2
+- updated to 46.1-12-g70e474c, fixed (ALT #50375)
+
 * Tue May 14 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
 - 46.1
 
