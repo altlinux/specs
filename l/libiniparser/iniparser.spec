@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: 4.2
+Version: 4.2.1
 Release: alt1
 
 Group: Development/C
@@ -78,6 +78,9 @@ install -pm644 LICENSE %{?_enable_docs:html/*} %buildroot%docdir/
 %{?_enable_docs:%docdir/*.*}
 
 %changelog
+* Thu May 16 2024 Yuri N. Sedunov <aris@altlinux.org> 4.2.1-alt1
+- 4.2.1
+
 * Sun Apr 28 2024 Yuri N. Sedunov <aris@altlinux.org> 4.2-alt1
 - 4.2
 - enabled %%check
