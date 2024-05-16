@@ -6,8 +6,8 @@
 %def_disable check
 
 Name: %_name
-Version: %ver_major.2
-Release: alt1.1
+Version: %ver_major.4
+Release: alt1
 
 Summary: A character drawing utility for the GNOME Desktop
 License: GPL-3.0-or-later
@@ -58,6 +58,9 @@ sed -i "s/\('appstream\)-util'/\1cli'/" data/meson.build
 %doc README.*
 
 %changelog
+* Thu May 16 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt1
+- 0.3.4
+
 * Sun Apr 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1.1
 - first build for Sisyphus
 
