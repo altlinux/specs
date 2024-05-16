@@ -2,7 +2,7 @@
 
 Name: extreme-tuxracer
 Epoch: 1
-Version: 0.8.3
+Version: 0.8.4
 Release: alt1
 
 Summary: High speed arctic racing game based on Tux Racer
@@ -54,6 +54,9 @@ This package provides noarch data needed for Extreme Tux Racer to work.
 %_datadir/metainfo/net.sourceforge.extremetuxracer.metainfo.xml
 
 %changelog
+* Thu May 16 2024 Grigory Ustinov <grenka@altlinux.org> 1:0.8.4-alt1
+- Build new version.
+
 * Tue Jul 18 2023 Grigory Ustinov <grenka@altlinux.org> 1:0.8.3-alt1
 - Build new version.
 
