@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.0
+Version: 6.0.1
 Release: alt1
 
 Summary: PyGreSQL is a Python module that interfaces to a PostgreSQL database
@@ -67,5 +67,8 @@ popd
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Thu May 16 2024 Ajrat Makhmutov <rauty@altlinux.org> 6.0.1-alt1
+- New version.
+
 * Sat Feb 24 2024 Ajrat Makhmutov <rauty@altlinux.org> 6.0-alt1
 - First build for ALT.
