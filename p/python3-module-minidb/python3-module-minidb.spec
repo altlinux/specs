@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.7
+Version: 2.0.8
 Release: alt1
 
 Summary: A simple SQLite3-based store for Python objects
@@ -52,6 +52,9 @@ Store Python objects in SQLite 3. Concise, pythonic API. Fun to use.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu May 16 2024 Anton Zhukharev <ancieg@altlinux.org> 2.0.8-alt1
+- Updated to 2.0.8.
+
 * Sat Dec 30 2023 Anton Zhukharev <ancieg@altlinux.org> 2.0.7-alt1
 - Built for ALT Sisyphus.
 
