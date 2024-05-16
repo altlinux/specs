@@ -1,5 +1,5 @@
 Name: alterator
-Version: 5.4.3
+Version: 5.4.4
 Release: alt1
 
 Summary: ALT Linux configurator engine
@@ -181,6 +181,9 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Wed May 15 2024 Paul Wolneykien <manowar@altlinux.org> 5.4.4-alt1
+- Allow a hostname to start with a digit (RFC 1123).
+
 * Thu Sep 14 2023 Anton Midyukov <antohami@altlinux.org> 5.4.3-alt1
 - NMU: Replace /var/run -> /run, /var/lock -> /run/lock (closes: 35882)
 
