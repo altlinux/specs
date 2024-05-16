@@ -5,7 +5,7 @@
 %define libsepol_ver 3.6
 
 Name: setools
-Version: 4.4.4
+Version: 4.5.1
 Release: alt1
 License: %gpl2plus
 URL: https://github.com/SELinuxProject/setools/wiki
@@ -120,6 +120,9 @@ egrep 'apol\.1' %name.lang > %name-gui.lang
 %python3_sitelibdir/setoolsgui
 
 %changelog
+* Thu May 16 2024 Anton Zhukharev <ancieg@altlinux.org> 4.5.1-alt1
+- (NMU) Updated to 4.5.1.
+
 * Tue Dec 26 2023 Anton Zhukharev <ancieg@altlinux.org> 4.4.4-alt1
 - (NMU) Updated to 4.4.4.
 
