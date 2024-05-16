@@ -2,7 +2,7 @@
 %def_with selinux
 
 Name: iproute2
-Version: 6.8.0
+Version: 6.9.0
 Release: alt1
 
 Summary: Advanced IP routing and network devices configuration tools
@@ -98,6 +98,9 @@ done
 %attr(700,root,root) %dir %_localstatedir/arpd
 
 %changelog
+* Wed May 15 2024 Arseny Maslennikov <arseny@altlinux.org> 6.9.0-alt1
+- 6.8.0 -> 6.9.0.
+
 * Wed Mar 13 2024 Arseny Maslennikov <arseny@altlinux.org> 6.8.0-alt1
 - 6.7.0 -> 6.8.0.
   + Note that upstream has dropped support for the rudimentary tc ipt action.
