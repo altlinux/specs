@@ -24,8 +24,8 @@
 %def_disable check
 
 Name: libgtk+3
-Version: %ver_major.41
-Release: alt1.1
+Version: %ver_major.42
+Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
@@ -443,6 +443,9 @@ xvfb-run %__meson_test -v --print-errorlogs
 %exclude %_man1dir/gtk-update-icon-cache*
 
 %changelog
+* Thu May 16 2024 Yuri N. Sedunov <aris@altlinux.org> 3.24.42-alt1
+- 3.24.42
+
 * Mon Mar 25 2024 Yuri N. Sedunov <aris@altlinux.org> 3.24.41-alt1.1
 - made "examples" build optional, removed libcanberra-gtk3 from BR
 
