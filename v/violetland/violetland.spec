@@ -1,6 +1,6 @@
 Name: violetland
 Version: 0.5
-Release: alt2.1
+Release: alt2.2
 Summary: An open source cross-platform game similar to Crimsonland
 Group: Games/Arcade
 License: GPLv3
@@ -8,7 +8,7 @@ Url: http://violetland.github.io/
 Source: %version.tar.gz
 Source1: GettextTranslate.cmake
 Source2: FindLibintl.cmake
-Patch: violetland-v0.4.3-boost1.51.patch
+Patch: violetland-v0.5-boost-1.85.0.patch
 
 Requires: %name-data
 
@@ -45,7 +45,7 @@ This package contanis data files required for the game
 
 %prep
 %setup
-#patch -p1
+%patch -p1
 cp %SOURCE1 lib/CMake-Gettext/
 install -D %SOURCE2 lib/fcitx/cmake/FindLibintl.cmake
 
@@ -118,6 +118,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_gamesdatadir/%name/*
 
 %changelog
+* Fri May 17 2024 Ivan A. Melnikov <iv@altlinux.org> 0.5-alt2.2
+- NMU: fix building with boost 1.85.0.
+
 * Thu May 31 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5-alt2.1
 - NMU: rebuilt with boost-1.67.0
 
