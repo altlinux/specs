@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.15.5
+Version: 1.15.6
 Release: alt1
 
 Summary: Installer common parts
@@ -105,6 +105,10 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Tue May 14 2024 Ajrat Makhmutov <rauty@altlinux.org> 1.15.6-alt1
+- add an alternative to the pkg step in the form
+  of two new steps: pkg-groups and pkg-install
+
 * Sat Apr 06 2024 Anton Midyukov <antohami@altlinux.org> 1.15.5-alt1
 - initinstall: allow run additional scripts from install-scripts.tar
   (Closes: 49907)

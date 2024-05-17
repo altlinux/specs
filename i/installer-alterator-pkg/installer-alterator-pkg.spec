@@ -1,5 +1,5 @@
 Name: installer-alterator-pkg
-Version: 3.1.4
+Version: 3.1.5
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -57,6 +57,15 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Tue May 14 2024 Ajrat Makhmutov <rauty@altlinux.org> 3.1.5-alt1
+- write the amount of space needed to a file in bytes
+- add the ability to select additional packages before partitioning the disks
+  + write selected packages to a file and read them during installation
+  + do not install packages after selecting
+    if the disk is not already partitioned
+  + mount virtual filesystem only before installing packages
+- allow to go back one step if the disk is not partitioned yet
+
 * Sun Jan 28 2024 Anton Midyukov <antohami@altlinux.org> 3.1.4-alt1
 - initinstall.d/90-pkg.sh: fix mkdir /var/lib/install3 when run from not '/'
 
