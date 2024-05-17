@@ -2,10 +2,11 @@
 %global import_path github.com/containers/podman
 %define _libexecdir %_usr/libexec
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%define _systemdgeneratordir %_prefix/lib/systemd/system-generators
 
 Name:     podman
-Version:  5.0.2
-Release:  alt1.1
+Version:  5.0.3
+Release:  alt1
 
 Summary:  Manage pods, containers, and container images
 License:  Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND ISC AND MIT AND MPL-2.0
@@ -101,7 +102,6 @@ go build -o test/version/version ./test/version/
 popd
 
 %install
-%define _systemdgeneratordir %_prefix/lib/systemd/system-generators
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path:$PWD"
@@ -127,7 +127,6 @@ rm -f %buildroot%_man5dir/dockerignore*
 rm -f %buildroot%_man5dir/dockerfile*
 
 %files
-%define _systemdgeneratordir %_prefix/lib/systemd/system-generators
 %_bindir/%name
 %_bindir/%{name}sh
 %_datadir/bash-completion/completions/%name
@@ -162,6 +161,9 @@ rm -f %buildroot%_man5dir/dockerfile*
 %_datadir/user-tmpfiles.d/%name-docker.conf
 
 %changelog
+* Fri May 17 2024 Alexey Shabalin <shaba@altlinux.org> 5.0.3-alt1
+- New version 5.0.3 (Fixes: CVE-2024-3727).
+
 * Tue Apr 23 2024 Arseny Maslennikov <arseny@altlinux.org> 5.0.2-alt1.1
 - NMU: Made the system unit generator compatible with merged-usr.
   Added a conflict on filesystem < 3 for the same reason.
