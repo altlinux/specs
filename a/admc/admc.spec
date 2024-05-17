@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admc
-Version: 0.16.2
+Version: 0.16.3
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -110,6 +110,10 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Tue May 15 2024 Semyon Knyazev <samael@altlinux.org> 0.16.3-alt1
+- Fix crashes after OU/user creation attempts by users with
+  corresponding delegated rights.
+
 * Fri May 3 2024 Semyon Knyazev <samael@altlinux.org> 0.16.2-alt1
 - Fix OU insufficient access for users with delegation. Users with
   delegated OU rights can do corresponding allowed actions. In particular,
