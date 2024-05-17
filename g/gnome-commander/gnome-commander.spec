@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: gnome-commander
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 %define xdg_name org.gnome.%name
@@ -88,6 +88,9 @@ rm -f %buildroot%_libdir/libgcmd.a
 
 
 %changelog
+* Fri May 17 2024 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
+- 1.16.2
+
 * Sat Jul 08 2023 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt1
 - 1.16.1
 
