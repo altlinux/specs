@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 5.4.0
-Release: alt1
+Release: alt3
 Summary: Testing support by jaraco
 License: MIT
 Group: Development/Python3
@@ -17,6 +17,8 @@ Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
+# required by jaraco/test/cpython.py
+Requires: python3-test
 
 # mapping from PyPI name
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
@@ -47,7 +49,7 @@ BuildRequires: python3-test
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra
+%pyproject_run_pytest -vra -oconsider_namespace_packages=True
 
 %files
 %doc README.rst
@@ -55,6 +57,12 @@ BuildRequires: python3-test
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Thu May 16 2024 Stanislav Levin <slev@altlinux.org> 5.4.0-alt3
+- Added missing runtime dependency on python3-test.
+
+* Mon May 06 2024 Stanislav Levin <slev@altlinux.org> 5.4.0-alt2
+- Fixed FTBFS (Pytest 8.1.1).
+
 * Thu Mar 21 2024 Stanislav Levin <slev@altlinux.org> 5.4.0-alt1
 - 5.3.0 -> 5.4.0.
 
