@@ -1,11 +1,10 @@
-%define _unpackaged_files_terminate_build 1
 %define oname snappy
 %define pypi_name python-snappy
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Summary: Python library for the snappy compression library from Google
@@ -50,15 +49,17 @@ Python bindings for the snappy compression library from Google.
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %__python3 test_formats.py
-%__python3 test_hadoop_snappy.py
 %__python3 test_snappy.py
 
 %files
-%doc AUTHORS *.rst
+%doc LICENSE AUTHORS *.rst
 %python3_sitelibdir/%oname
 %python3_sitelibdir/python_%oname-%version.dist-info
 
 %changelog
+* Fri May 17 2024 Grigory Ustinov <grenka@altlinux.org> 0.7.1-alt1
+- Automatically updated to 0.7.1.
+
 * Thu May 16 2024 Grigory Ustinov <grenka@altlinux.org> 0.7.0-alt1
 - Automatically updated to 0.7.0.
 
