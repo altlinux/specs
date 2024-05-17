@@ -1,7 +1,7 @@
 Name: kernel-image-6.8
-Release: alt2
+Release: alt1
 %define kernel_base_version	6.8
-%define kernel_sublevel	.9
+%define kernel_sublevel	.10
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -588,6 +588,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri May 17 2024 Kernel Bot <kernelbot@altlinux.org> 6.8.10-alt1
+- v6.8.10 (2024-05-17).
+
 * Wed May 15 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.8.9-alt2
 - Bumped release to pesign with the new key.
 
