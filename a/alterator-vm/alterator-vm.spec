@@ -1,5 +1,5 @@
 Name: alterator-vm
-Version: 0.4.40
+Version: 0.4.41
 Release: alt1
 
 Summary: Alterator module for volume management
@@ -37,6 +37,10 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Tue May 14 2024 Oleg Solovyov <mcpain@altlinux.org> 0.4.41-alt1
+- place after "pkg" step
+- fail if not enough space for installation
+
 * Fri Apr 05 2024 Oleg Solovyov <mcpain@altlinux.org> 0.4.40-alt1
 - fix crash if LUKS partition is created on IMSM
 - use new IMSM partition format
