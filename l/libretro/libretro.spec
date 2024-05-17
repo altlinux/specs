@@ -3,7 +3,7 @@
 Summary:	An interface for emulator and game ports
 Name:		libretro
 Version:	20240406
-Release:	alt1
+Release:	alt2
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
 Group:		Emulators
@@ -515,6 +515,8 @@ Provides: libretro-core
 %description mame2003
  mame2003 core for libretro.
 
+# needs jit
+%ifnarch %e2k
 %package mednafen_psx_hw
 Summary: mednafen_psx_hw core for libretro
 Group: Emulators
@@ -538,6 +540,7 @@ Provides: libretro-core
 
 %description pcsx_rearmed
  pcsx_rearmed core for libretro.
+%endif
 
 %package tyrquake
 Summary: tyrquake core for libretro
@@ -549,6 +552,15 @@ Provides: libretro-core
  
 %prep
 %setup -q
+%ifarch %e2k
+# error: in "goto *expr", expr must have type "void *"
+# but "labels as values" are slow with LCC, better to disable it
+sed -i '/defined(__ICC)/c #if 0' \
+	libretro-mednafen_supergrafx/mednafen/pce_fast/ioread.inc \
+	libretro-mednafen_pce_fast/libretro.cpp
+sed -i 's/#ifdef _MSC_VER/#if 1/' libretro-mednafen_{vb,pcfx}/mednafen/hw_cpu/v810/v810_oploop.inc
+sed -i 's/HAVE_COMPUTED_GOTO/0/' libretro-beetle_psx/mednafen/psx/cpu.cpp
+%endif
 
 %build
 
@@ -770,6 +782,7 @@ rm -f %{buildroot}%{_libexecdir}/%{name}/*.info
 %dir %{_libexecdir}/%{name}
 %{_libexecdir}/%{name}/mame2003_libretro.so
 
+%ifnarch %e2k
 %files mednafen_psx_hw
 %dir %{_libexecdir}/%{name}
 %{_libexecdir}/%{name}/mednafen_psx_hw_libretro.so
@@ -781,12 +794,16 @@ rm -f %{buildroot}%{_libexecdir}/%{name}/*.info
 %files pcsx_rearmed
 %dir %{_libexecdir}/%{name}
 %{_libexecdir}/%{name}/pcsx_rearmed_libretro.so
+%endif
 
 %files tyrquake
 %dir %{_libexecdir}/%{name}
 %{_libexecdir}/%{name}/tyrquake_libretro.so
 
 %changelog
+* Thu May 16 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 20240406-alt2
+- Fixed build for Elbrus
+
 * Sat Apr  6 2024  Artyom Bystrov <arbars@altlinux.org> 20240406-alt1
 - update to new version
 - added new cores:
