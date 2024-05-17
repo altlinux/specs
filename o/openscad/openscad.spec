@@ -3,7 +3,7 @@
 
 Name: openscad
 Version: 2021.01
-Release: alt4.1
+Release: alt4.2
 
 Summary: The Programmers Solid 3D CAD Modeller
 
@@ -27,6 +27,7 @@ Patch2: %name-2021.01-fix-overloaded-join.patch
 Patch3: CVE-2022-0496.patch
 # https://github.com/openscad/openscad/commit/84addf3c1efbd51d8ff424b7da276400bbfa1a4b
 Patch4: CVE-2022-0497.patch
+Patch5: openscad-2021.01-alt-fix-for-boost-1.85.0.patch
 
 # needed cgal-devel on armh
 ExcludeArch: armh
@@ -175,6 +176,9 @@ popd
 %_datadir/%name/libraries/MCAD
 
 %changelog
+* Fri May 17 2024 Ivan A. Melnikov <iv@altlinux.org> 2021.01-alt4.2
+- NMU: Fix building with boost 1.85.0.
+
 * Tue Apr 25 2023 Michael Shigorin <mike@altlinux.org> 2021.01-alt4.1
 - E2K (thx ilyakurdyukov@):
   + avoid BR: lib3mf for now (BR chain boils down to go)
