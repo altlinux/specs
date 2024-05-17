@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define major 20.12
+%define major 20.13
 
 %define nodejs_soversion 115
 %define nodejs_abi %nodejs_soversion
@@ -16,7 +16,7 @@
 
 
 # check deps/npm/package.json for it
-%define npm_version 10.5.0
+%define npm_version 10.5.2
 # separate build npm
 %def_with npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
@@ -80,7 +80,7 @@
 %def_with nodejs_abi
 
 Name: node
-Version: %major.2
+Version: %major.1
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -512,6 +512,10 @@ rm -rv %buildroot/usr/share/doc/node/lldb_commands.py
 %endif
 
 %changelog
+* Fri May 17 2024 Vitaly Lipatov <lav@altlinux.ru> 20.13.1-alt1
+- 2024-05-09, Version 20.13.1 'Iron' (LTS), @marco-ippolito
+- npm updated to 10.5.2
+
 * Sat Apr 27 2024 Vitaly Lipatov <lav@altlinux.ru> 20.12.2-alt1
 - 2024-04-10, Version 20.12.2 'Iron' (LTS), @RafaelGSS
 - CVE-2024-27980: Command injection via args parameter of child_process.spawn without shell option enabled on Windows
