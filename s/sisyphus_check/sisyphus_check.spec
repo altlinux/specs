@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.69
+Version: 0.8.70
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -35,6 +35,13 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Wed May 15 2024 Alexey Shabalin <shaba@altlinux.org> 0.8.70-alt1
+- 186-check-systemd: new check, disallows packages containing
+  system or user units files outside /lib/systemd/system/,
+  /usr/lib/systemd/system/, /usr/lib/systemd/user/.
+- 185-check-udev: allow udev rules in /usr/lib/udev/rules.d/.
+- Revert "check_fhs: disallow path names starting with /usr/lib/tmpfiles.d/"
+
 * Tue Nov 14 2023 Arseny Maslennikov <arseny@altlinux.org> 0.8.69-alt1
 - Disallowed file objects whose owner or group is nobody.
 
