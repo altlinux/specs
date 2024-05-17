@@ -4,15 +4,15 @@
 # /dev/mapper interface in 2.6.x kernels
 
 %def_enable selinux
-%define _root_sbindir /sbin
 
 # defaults from configure
 # crypto backend (gcrypt/openssl/nss/kernel/nettle)
 %define default_crypto_backend openssl
 %define default_luks_format LUKS2
+%define _tmpfilesdir %(pkg-config --variable=tmpfilesdir systemd 2>/dev/null)
 
 Name: cryptsetup
-Version: 2.6.1
+Version: 2.7.2
 Release: alt1
 
 Summary: Utility to setup a encrypted disks with LUKS support
@@ -30,7 +30,8 @@ Patch0: %name-%version-%release.patch
 
 Requires: lib%name = %version-%release
 
-# Automatically added by buildreq on Sun Nov 15 2009
+#BuildRequires(pre): rpm-macros-meson
+#BuildRequires: meson >= 0.64
 BuildRequires: libdevmapper-devel libpopt-devel libuuid-devel
 BuildRequires: libudev-devel
 BuildRequires: libpasswdqc-devel
@@ -167,8 +168,6 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %build
 %autoreconf
 %configure \
-    --sbindir=%_root_sbindir \
-    --libdir=/%_lib \
     --with-crypto_backend=%default_crypto_backend \
     --with-default-luks-format=%default_luks_format \
     --disable-internal-argon2 \
@@ -177,62 +176,63 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
 %make
 
+#%meson \
+#    -Dargon-implementation=libargon2 \
+#    -Dcrypto-backend=%default_crypto_backend \
+#    -Ddefault-luks-format=%default_luks_format \
+#    -Ddefault-luks2-lock-dir-perms=0700 \
+#    -Dpasswdqc=/etc/passwdqc.conf
+
+#%meson_build
+
 gcc debian/askpass.c -o debian/askpass
 
 %install
-%make DESTDIR=%buildroot install
-# move libcryptsetup.so to %%_libdir
-rm %buildroot/%_lib/libcryptsetup.so
-mkdir -p %buildroot%_libdir
-for f in %buildroot/%_lib/libcryptsetup.so.??; do
-    ln -fnrs "$f" %buildroot/%_libdir/libcryptsetup.so
-done
-mv %buildroot/%_lib/pkgconfig %buildroot/%_libdir
-
-mkdir -p %buildroot/%_sbindir
-ln -fnrs %buildroot/%_root_sbindir/%name %buildroot/%_sbindir/%name
+%makeinstall_std
+#%meson_install
 
 install -Dpm 755 debian/cryptdisks-early.init %buildroot%_sysconfdir/rc.d/scripts/cryptdisks-early
 install -Dpm 755 debian/cryptdisks.init %buildroot%_sysconfdir/rc.d/scripts/cryptdisks
-mkdir -p %buildroot/lib/%name
+mkdir -p %buildroot%_libdir/%name
 install -Dpm 644 debian/cryptdisks.functions %buildroot%_sysconfdir/rc.d/init.d/cryptdisks.functions
 install -Dpm 600 debian/cryptdisks.default %buildroot%_sysconfdir/sysconfig/cryptdisks
-mkdir -p %buildroot/lib/%name/checks
-install -Dpm 755 debian/checks/blkid %buildroot/lib/%name/checks/blkid
-install -Dpm 755 debian/checks/un_blkid %buildroot/lib/%name/checks/un_blkid
-install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
+mkdir -p %buildroot%_libdir/%name/checks
+install -Dpm 755 debian/checks/blkid %buildroot%_libdir/%name/checks/blkid
+install -Dpm 755 debian/checks/un_blkid %buildroot%_libdir/%name/checks/un_blkid
+install -Dpm 755 debian/askpass %buildroot%_libdir/%name/askpass
 
-rm -rf %buildroot/%_lib/*.la
-rm -rf %buildroot/%_lib/%name/*.la
+rm -rf %buildroot%_libdir/*.la
+rm -rf %buildroot%_libdir/%name/*.la
 
 %find_lang %name
 
 %check
 %make check
+#export LD_LIBRARY_PATH=$(pwd)/%{__builddir}/src/shared:$(pwd)/%{__builddir}
+#%meson_test
 
 %files -f %name.lang
 %doc docs/*
 %doc AUTHORS FAQ.md README.md
 %doc --no-dereference COPYING COPYING.LGPL
 %doc README.ALT.utf-8
-%_root_sbindir/*
-%exclude %_root_sbindir/cryptsetup-ssh
-%_sbindir/%name
+%_sbindir/*
+%exclude %_sbindir/cryptsetup-ssh
 %_man8dir/*
 %exclude %_man8dir/cryptsetup-ssh.*
 %attr(600,root,root) %config(noreplace) %_sysconfdir/sysconfig/cryptdisks
 %_sysconfdir/rc.d/scripts/cryptdisks-early
 %_sysconfdir/rc.d/scripts/cryptdisks
-%dir /lib/%name
+%dir %_libdir/%name
 %_sysconfdir/rc.d/init.d/cryptdisks.functions
-/lib/%name/askpass
-%dir /lib/%name/checks
-/lib/%name/checks/*
+%_libdir/%name/askpass
+%dir %_libdir/%name/checks
+%_libdir/%name/checks/*
 %_tmpfilesdir/cryptsetup.conf
 
 %files -n lib%name
-/%_lib/lib%name.so.*
-%dir /%_lib/%name
+%_libdir/lib%name.so.*
+%dir %_libdir/%name
 
 %files -n lib%name-devel
 %_includedir/lib%name.h
@@ -240,11 +240,14 @@ rm -rf %buildroot/%_lib/%name/*.la
 %_pkgconfigdir/*
 
 %files ssh-token
-/%_lib/%name/libcryptsetup-token-ssh.so
+%_libdir/%name/libcryptsetup-token-ssh.so
 %_man8dir/cryptsetup-ssh.*
-%_root_sbindir/cryptsetup-ssh
+%_sbindir/cryptsetup-ssh
 
 %changelog
+* Fri May 17 2024 Alexey Shabalin <shaba@altlinux.org> 2.7.2-alt1
+- 2.7.2.
+
 * Wed Aug 09 2023 Alexey Shabalin <shaba@altlinux.org> 2.6.1-alt1
 - 2.6.1.
 
