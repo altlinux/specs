@@ -2,13 +2,13 @@
 %def_without old_make_initrd
 
 Name: ima-evm-integrity-check
-Version: 0.6.2
+Version: 0.7.2
 Release: alt1
 
 Summary: IMA/EVM integrity check
 License: %gpl2plus
 Group: System/Base
-Packager: Denis Medvedev <nbr@altlinux.org>
+Packager: Paul Wolneykien <manowar@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -21,6 +21,8 @@ Requires: make-initrd-integrity = %version-%release
 %if_without old_make_initrd
 Requires: make-initrd >= 2.0.0
 %endif
+
+Requires: /usr/bin/chattr
 
 Conflicts: cert-distro-updater
 
@@ -61,20 +63,21 @@ Integrity check feature for make-initrd
 %make_build libdir=%_libdir prefix=%_prefix sysconfdir=%_sysconfdir WITH_OLD_MI=%{with old_make_initrd}
 
 %install
-%makeinstall_std bindir=%_bindir sbindir=%_sbindir sysconfdir=%_sysconfdir datadir=%_datadir unitdir=%_unitdir libdir=%_libdir prefix=%_prefix controldir=%_controldir WITH_OLD_MI=%{with old_make_initrd}
+%makeinstall_std bindir=%_bindir sbindir=%_sbindir sysconfdir=%_sysconfdir datadir=%_datadir unitdir=%_unitdir libdir=%_libdir prefix=%_prefix controldir=%_controldir mandir=%_mandir WITH_OLD_MI=%{with old_make_initrd}
 
 %files
 %doc README
 %_sbindir/integrity-applier
 %_sbindir/integrity-remover
 %_sbindir/integrity-sign
-%_sbindir/signing
 %_controldir/ima_appraise
 %_controldir/ima_hash
 %_sbindir/bootloader-utils.bash
-%_unitdir/signing.service
+%_unitdir/*
 %config(noreplace) %_sysconfdir/sysconfig/integrity
 %_sysconfdir/integrity/config
+%_man7dir/*.7.*
+%_man8dir/*.8.*
 
 %files -n make-initrd-integrity
 %dir %_sysconfdir/integrity
@@ -95,6 +98,37 @@ Integrity check feature for make-initrd
 %endif
 
 %changelog
+* Fri May 17 2024 Paul Wolneykien <manowar@altlinux.org> 0.7.2-alt1
+- Fixed manpage sections.
+- Fix: Explicitly insert GOST kernel modules for Streebog hashes.
+- Fix: Require /usr/bin/chattr.
+- Added GOST_PARAMSET option (undocumented).
+- Fix and secure shell code mostly related to ignoring -e option.
+- Fix: Output file names to file log.
+- Fixed notes about /var/log/integrity-sign.log.
+
+* Fri May 17 2024 Paul Wolneykien <manowar@altlinux.org> 0.7.1-alt1
+- Added copyright information.
+
+* Fri May 17 2024 Paul Wolneykien <manowar@altlinux.org> 0.7.0-alt1
+- Added manual pages!!!
+- Add 'ima-' prefix to systemd units.
+- Updated README.
+- Fixed getting IMA hash from the Linux kernel command line.
+- Use pipe mode (padd) when adding kmk-user with keyctl.
+- Allow to run the whole cycle in automatic mode (with file signing
+  log at /var/log/integrity-sign.log).
+- Make integrity-applier a multitool (initialization and signing
+  operations).
+- integrity-sign: Make file signing error fatal.
+- integrity-sign: Change verbosity.
+- integrity-sign: Fixed file verification action.
+- integrity-sign: Fixed EVM key symlink.
+- integrity-sign: Fixed option parser.
+- integrity-sign: Fixed usage.
+- Setup the default policy to also check kernel modules.
+- Added comments to the default config (hash algorithms and EVM).
+
 * Tue Mar 19 2024 Paul Wolneykien <manowar@altlinux.org> 0.6.2-alt1
 - Updated README.
 
