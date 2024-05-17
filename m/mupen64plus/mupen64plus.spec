@@ -1,6 +1,6 @@
 Name: mupen64plus
 Version: 2.5
-Release: alt1
+Release: alt1.1
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Summary: Nintendo 64 Emulator
 License: GPLv2+ and CC-BY-SA
@@ -9,6 +9,7 @@ Url: http://www.mupen64plus.org/
 Source: https://github.com/mupen64plus/mupen64plus-core/releases/download/2.5/mupen64plus-bundle-src-2.5.tar.gz
 Patch5: mupen64plus-multiple-definitions.patch
 Patch6: mupen64plus-make-archs.patch
+Patch7: mupen64plus-fix-for-boost-1.85.0.patch
 
 BuildRequires: pkgconfig(SDL_ttf)
 BuildRequires: pkgconfig(lirc)
@@ -44,6 +45,7 @@ Development files for mupen64plus
 %setup -n %name-bundle-src-%version
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 # Need to avoid filename conflicts so they can be included in the package
 cp -a source/mupen64plus-rsp-hle/LICENSES LICENSE-rsp-hle
@@ -101,6 +103,9 @@ desktop-file-validate %buildroot/%_datadir/applications/mupen64plus.desktop
 %_libdir/libmupen64plus.so
 
 %changelog
+* Fri May 17 2024 Ivan A. Melnikov <iv@altlinux.org> 2.5-alt1.1
+- NMU: fix building with boost 1.85.0
+
 * Sat Jul 16 2022 Ilya Mashkin <oddity@altlinux.ru> 2.5-alt1
 - Build for Sisyphus
 
