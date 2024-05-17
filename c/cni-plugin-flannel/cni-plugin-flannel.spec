@@ -1,13 +1,13 @@
 %global import_path github.com/flannel-io/cni-plugin
 Name:     cni-plugin-flannel
 Epoch:    1
-Version:  1.2.0
+Version:  1.4.0
 Release:  alt1
 
 Summary:  A CNI network plugin that is powered by flannel
 License:  Apache-2.0
 Group:    Other
-Url:      https://%import_path
+Url:      https://github.com/flannel-io/cni-plugin
 
 Source:   %name-%version.tar
 
@@ -59,6 +59,9 @@ rm %buildroot%_bindir/cni-plugin
 %doc README.md RELEASING.md LICENSE
 
 %changelog
+* Fri May 17 2024 Alexander Stepchenko <geochip@altlinux.org> 1:1.4.0-alt1
+- 1.2.0 -> 1.4.0
+
 * Mon Oct 16 2023 Alexander Stepchenko <geochip@altlinux.org> 1:1.2.0-alt1
 - 1.1.2 -> 1.2.0
 
