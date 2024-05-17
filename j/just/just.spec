@@ -5,7 +5,7 @@
 
 Name: just
 Version: 1.26.0
-Release: alt1
+Release: alt1.1
 Summary: Just a command runner
 License: CC0-1.0
 Group: Development/Other
@@ -13,7 +13,6 @@ Url: https://just.systems/
 Vcs: https://github.com/casey/just
 
 Source: %name-%version.tar
-Patch1: just-target-loongarch64.patch
 BuildRequires: /proc
 BuildRequires: rust-cargo
 BuildRequires: cargo-vendor-checksum diffstat
@@ -23,8 +22,6 @@ just is a handy way to save and run project-specific commands.
 
 %prep
 %setup
-%patch1 -p1
-diffstat -l -p1 < %PATCH1 | sed -re 's@vendor/@@' | xargs -r cargo-vendor-checksum -f
 
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
@@ -78,6 +75,9 @@ just version | grep -Fx '%name %version'
 %_datadir/fish/vendor_completions.d/just.fish
 
 %changelog
+* Fri May 17 2024 Ivan A. Melnikov <iv@altlinux.org> 1.26.0-alt1.1
+- Drop obsolete loongarch64 fix.
+
 * Thu May 16 2024 Vitaly Chikunov <vt@altlinux.org> 1.26.0-alt1
 - Update to 1.26.0 (2024-05-14).
 
