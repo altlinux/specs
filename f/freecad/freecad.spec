@@ -22,7 +22,7 @@
 
 Name:    freecad
 Version: 0.21.2
-Release: alt7
+Release: alt7.1
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -41,6 +41,13 @@ Patch2: freecad-0.19.2-alt-boost-link.patch
 Patch3: freecad-alt-fix-icon-name-in-menu.patch
 Patch4: freecad-unbundled-pycxx.patch
 Patch5: freecad-vtk9.3.patch
+
+# https://github.com/FreeCAD/FreeCAD/pull/13570
+Patch6: freecad-upstream-pr13570-fix-for-boost-1.85.0.patch
+
+# Part of https://github.com/FreeCAD/FreeCAD/pull/13226
+# fixes build with boost 1.85.0+
+Patch7: freecad-upstream-fix-copy-option-deprecation.patch
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
@@ -160,6 +167,8 @@ rm -rf src/3rdParty
 rm -rf src/CXX
 %endif
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 %ifarch %e2k
 sed -i "/-fext-numeric-literals/d" src/Mod/Path/App/CMakeLists.txt
@@ -284,6 +293,9 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_datadir/thumbnailers/FreeCAD.thumbnailer
 
 %changelog
+* Mon May 13 2024 Ivan A. Melnikov <iv@altlinux.org> 1:0.21.2-alt7.1
+- NMU: fix building with boost 1.85.0.
+
 * Tue Apr 09 2024 Michael Shigorin <mike@altlinux.org> 1:0.21.2-alt7
 - Avoid PySide6.QtWebEngine* deps on arches lacking those.
 
