@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: victorialogs
-Version: 0.5.0
+Version: 0.7.0
 Release: alt1
 Summary: Log management and log analytics system from VictoriaMetrics
 
@@ -72,8 +72,8 @@ install -m644 %SOURCE2 %buildroot%_unitdir/%name.service
 install -m644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
 
 %pre
-%_sbindir/groupadd -r -f _%name 2>/dev/null ||:
-%_sbindir/useradd -r -g _%name -c 'Victoria Logs Daemon' \
+groupadd -r -f _%name 2>/dev/null ||:
+useradd -r -g _%name -c 'Victoria Logs Daemon' \
         -s /sbin/nologin -M -d %_sharedstatedir/victoria-logs _%name 2>/dev/null ||:
 %post
 %post_service %name
@@ -89,6 +89,9 @@ install -m644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
 %doc docs/VictoriaLogs/QuickStart.md docs/VictoriaLogs/README.md docs/VictoriaLogs/data-ingestion
 
 %changelog
+* Fri May 17 2024 Alexey Shabalin <shaba@altlinux.org> 0.7.0-alt1
+- New version 0.7.0.
+
 * Mon Mar 04 2024 Alexey Shabalin <shaba@altlinux.org> 0.5.0-alt1
 - New version 0.5.0.
 
