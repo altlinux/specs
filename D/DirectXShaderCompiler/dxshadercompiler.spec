@@ -7,7 +7,7 @@
 
 Name: DirectXShaderCompiler
 Version: 1.8.2403
-Release: alt0.2
+Release: alt0.3
 Summary: DirectX Shader Compiler
 Group: Development/C++
 License: Apache-2.0 with LLVM-exception
@@ -69,6 +69,9 @@ cp -ar %_cmake__builddir/bin/dxc* %buildroot%_bindir/
 %_libdir/lib%{rname}.so
 
 %changelog
+* Fri May 17 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.8.2403-alt0.3
+- Fixed build for Elbrus
+
 * Mon May 06 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.8.2403-alt0.2
 - NMU: build for LoongArch.
 
