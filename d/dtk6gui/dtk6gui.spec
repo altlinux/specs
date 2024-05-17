@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: dtk6gui
-Version: 6.0.11
+Version: 6.0.16
 Release: alt1
 
 Summary: Deepin Toolkit, gui module for DDE look and feel
@@ -105,6 +105,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/lib%name.so
 
 %changelog
+* Fri May 17 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.16-alt1
+- New version 6.0.16.
+
 * Mon Apr 22 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.11-alt1
 - New version 6.0.11.
 

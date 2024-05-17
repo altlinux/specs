@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-launchpad
-Version: 0.6.9
+Version: 0.6.12
 Release: alt1
 
 Summary: Launcher for DDE - next generation
@@ -69,6 +69,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/dsg/configs/dde-launchpad/org.deepin.dde.launchpad.appsmodel.json
 
 %changelog
+* Fri May 17 2024 Leontiy Volodin <lvol@altlinux.org> 0.6.12-alt1
+- New version 0.6.12.
+
 * Wed May 08 2024 Leontiy Volodin <lvol@altlinux.org> 0.6.9-alt1
 - New version 0.6.9.
 
