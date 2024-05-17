@@ -3,21 +3,22 @@
 %define oname ptpython
 
 Name: python3-module-%oname
-Version: 3.0.25
+Version: 3.0.26
 Release: alt1
 Summary: Python REPL build on top of prompt_toolkit
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.org/project/ptpython/
+URL: https://pypi.org/project/ptpython
+VCS: https://github.com/jonathanslenders/ptpython
 
 BuildArch: noarch
 
-# https://github.com/jonathanslenders/ptpython.git
-Source: ptpython-%version.tar.gz
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-prompt_toolkit python3-module-setuptools python3-module-wheel
 BuildRequires: python3(pygments)
+
 Provides: %oname = %version.%release
 Provides: %{oname}3 = %version.%release
 Obsoletes: %{oname}3 < %version.%release
@@ -37,7 +38,7 @@ Provides: %oname-ipython = %version.%release
 %summary
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
 %pyproject_build
@@ -60,6 +61,9 @@ Provides: %oname-ipython = %version.%release
 %python3_sitelibdir/%oname/*ipython*
 
 %changelog
+* Fri May 17 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.26-alt1
+- Build new version.
+
 * Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.25-alt1
 - NMU: Build new version.
 
