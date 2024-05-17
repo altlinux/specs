@@ -4,9 +4,9 @@
 %def_enable    devel
 %define        gemname kindlerb
 
-Name:          ruby-kindlerb
+Name:          gem-kindlerb
 Version:       1.2.1
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Kindle periodical format ebook generation tool
 License:       MIT
 Group:         Development/Ruby
@@ -26,6 +26,8 @@ BuildRequires: gem(mustache) >= 0
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 Requires:      gem(nokogiri) >= 0
 Requires:      gem(mustache) >= 0
+Obsoletes:     ruby-kindlerb < %EVR
+Provides:      ruby-kindlerb = %EVR
 Provides:      gem(kindlerb) = 1.2.1
 
 
@@ -40,7 +42,7 @@ templating OPF and NCX files.
 
 %package       -n setupkindlerb
 Version:       1.2.1
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Kindle periodical format ebook generation tool executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета kindlerb
 Group:         Other
@@ -65,7 +67,7 @@ templating OPF and NCX files.
 %if_enabled    doc
 %package       -n gem-kindlerb-doc
 Version:       1.2.1
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Kindle periodical format ebook generation tool documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета kindlerb
 Group:         Development/Documentation
@@ -91,7 +93,7 @@ templating OPF and NCX files.
 %if_enabled    devel
 %package       -n gem-kindlerb-devel
 Version:       1.2.1
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Kindle periodical format ebook generation tool development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета kindlerb
 Group:         Development/Ruby
@@ -148,6 +150,9 @@ templating OPF and NCX files.
 
 
 %changelog
+* Fri May 17 2024 Pavel Skrylev <majioa@altlinux.org> 1.2.1-alt0.2
+- * rename to proper name
+
 * Tue Apr 23 2024 Pavel Skrylev <majioa@altlinux.org> 1.2.1-alt0.1
 - ^ 1.2.0 -> 1.2.1pre
 

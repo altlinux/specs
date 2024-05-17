@@ -2,7 +2,7 @@
 
 Name:          rvm
 Version:       1.29.12.125
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby enVironment Manager (RVM)
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -119,9 +119,7 @@ cat > %buildroot%_sysconfdir/bashrc.d/%name.sh << PROFILE
 PROFILE
 
 %pre           devel
-ln -sf /proc/self/fd /dev/fd >/dev/null 2>&1 || true
-
-exit 0
+ln -sf /proc/self/fd /dev/fd >/dev/null 2>&1 || exit 0
 
 %files
 %doc README* CHANGELOG* CONTRIBUTING* FORMATTING* HACKING* VERSION
@@ -143,6 +141,9 @@ exit 0
 %dir %attr(775,root,rvm) %_logdir/%name
 
 %changelog
+* Fri May 17 2024 Pavel Skrylev <majioa@altlinux.org> 1.29.12.125-alt0.3
+- ! fixed dep to true binary for devel in per section (closes #50385)
+
 * Thu Apr 25 2024 Pavel Skrylev <majioa@altlinux.org> 1.29.12.125-alt0.2
 - - removed PATH variable from bashrc
 
