@@ -2,8 +2,8 @@
 
 Name:      appstream-data-desktop
 Summary:   ALT Linux AppStream metadata
-Version:   20240405
-Release:   alt2
+Version:   20240517
+Release:   alt1
 Group:     System/Configuration/Packaging
 BuildArch: noarch
 License:   CC0 and CC-BY and CC-BY-SA and GFDL
@@ -35,6 +35,9 @@ cp -r xmls/* %buildroot%_datadir/swcatalog/xml/
 %_datadir/swcatalog/icons/altlinux
 
 %changelog
+* Fri May 17 2024 Kirill Izmestev <felixz@altlinux.org> 20240517-alt1
+- Updated database.
+
 * Thu May 16 2024 Ajrat Makhmutov <rauty@altlinux.org> 20240405-alt2
 - NMU: Rename the installation directories (ALT #50312).
 
