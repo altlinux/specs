@@ -3,7 +3,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 2.0.9
+Version: 2.3.1
 Release: alt1
 
 Summary: http client library for gevent
@@ -57,6 +57,9 @@ py.test-3 -m 'not online' -k 'not test_brotli_response'
 %python3_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
+* Sat May 18 2024 Grigory Ustinov <grenka@altlinux.org> 2.3.1-alt1
+- Build new version.
+
 * Fri Apr 28 2023 Grigory Ustinov <grenka@altlinux.org> 2.0.9-alt1
 - Build new version.
 - Build without check for python3.11.
