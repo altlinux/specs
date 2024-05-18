@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.9.3
+Version: 0.9.4
 Release: alt1
 
 Summary: A next generation Python CMake adaptor and Python API for plugins
@@ -70,5 +70,8 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat May 18 2024 Grigory Ustinov <grenka@altlinux.org> 0.9.4-alt1
+- Automatically updated to 0.9.4.
+
 * Fri May 17 2024 Grigory Ustinov <grenka@altlinux.org> 0.9.3-alt1
 - Initial build for Sisyphus.
