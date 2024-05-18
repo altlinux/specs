@@ -1,7 +1,7 @@
 %def_enable snapshot
 %define optflags_lto %nil
 
-%define ver_major 0.4
+%define ver_major 0.5
 %define rdn_name com.rafaelmardojai.SharePreview
 
 %def_disable bootstrap
@@ -16,10 +16,11 @@ License: GPL-3.0-or-later
 Group: Networking/Other
 Url: https://apps.gnome.org/SharePreview
 
+Vcs: https://github.com/rafaelmardojai/share-preview.git
+
 %if_disabled snapshot
 Source: https://github.com/rafaelmardojai/share-preview/archive/%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/rafaelmardojai/share-preview.git
 Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
@@ -70,6 +71,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sat May 18 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
+- updated to 0.5.0-9-g66a8aa4
+
 * Fri Dec 29 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - first build for Sisyphus (0.4.0-14-g37de45a)
 
