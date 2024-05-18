@@ -5,7 +5,7 @@
 
 Name: psmisc
 Version: 23.6
-Release: alt1
+Release: alt2
 
 Summary: Miscellaneous utilities that use proc filesystem
 License: GPL-2.0-only
@@ -18,7 +18,7 @@ Source: %name-%version.tar
 BuildRequires: libncurses-devel %{?_enable_selinux:libselinux-devel}
 BuildRequires: libseccomp-devel
 BuildRequires: libcap-devel
-%{?!_without_check:%{?!_disable_check:BuildRequires: banner dejagnu rpm-build-vm >= 1.9 strace /proc}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: banner dejagnu rpm-build-vm >= 1.9 nc strace /proc}}
 %ifarch %e2k
 # required for asan
 %{?!_without_check:%{?!_disable_check:BuildRequires: libcompiler_rt}}
@@ -103,6 +103,9 @@ my_tests() {
   fuser -m . -u  >/dev/null
   fuser -m . -4  >/dev/null
   fuser -m . -6  >/dev/null
+  nc -l socks &
+  fuser -v socks/tcp
+  kill %%1
   pslog $$
 }
 export -f my_tests
@@ -129,7 +132,8 @@ PATH=src:$PATH
 mkdir asan
 cd asan
 # detect_leaks=0 or configure will fail to detect malloc due to leak in test
-ASAN_OPTIONS=detect_leaks=0 CFLAGS=-fsanitize=address \
+export ASAN_OPTIONS=detect_leaks=0
+CFLAGS=-fsanitize=address \
      ../configure %{subst_enable selinux} --disable-harden-flags -q --disable-sandbox
 %make_build -s
 my_tests
@@ -143,6 +147,9 @@ make check
 %doc AUTHORS ChangeLog COPYING README.md
 
 %changelog
+* Sat May 18 2024 Vitaly Chikunov <vt@altlinux.org> 23.6-alt2
+- Allow networked fuser calls (ALT#50384).
+
 * Wed Dec 28 2022 Vitaly Chikunov <vt@altlinux.org> 23.6-alt1
 - Update to v23.6 (2022-12-09).
 
