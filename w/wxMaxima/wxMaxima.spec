@@ -1,7 +1,7 @@
 %undefine __cmake_in_source_build
 Name: wxMaxima
-Version: 24.02.2
-Release: alt2
+Version: 24.05.0
+Release: alt1
 
 Summary: GUI for the computer algebra system Maxima
 License: GPL-2.0+
@@ -109,6 +109,9 @@ install -pD -m644 data/wxmaxima-32.xpm %buildroot%_niconsdir/%name.xpm
 %_datadir/metainfo/*wxMaxima.appdata.xml
 
 %changelog
+* Sat May 18 2024 Ilya Mashkin <oddity@altlinux.ru> 24.05.0-alt1
+- 24.05.0
+
 * Sun Apr 28 2024 Ilya Mashkin <oddity@altlinux.ru> 24.02.2-alt2
 - Fix build
 
