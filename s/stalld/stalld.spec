@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: stalld
-Version: 1.17.2
+Version: 1.19.3
 Release: alt1
 Summary: Daemon that finds starving tasks and gives them a temporary boost
 
@@ -36,12 +36,17 @@ sed -i '1s!/usr/bin/bash!/bin/bash!' scripts/throttlectl.sh
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
-%make_build CFLAGS='%optflags -DVERSION=\"%version\"'
+# USE_BPF=0: https://gitlab.com/rt-linux-tools/stalld/-/issues/17
+%make_build CFLAGS='%optflags -DVERSION=\"%version\"' USE_BPF=0
 
 %install
-%makeinstall_std
-%makeinstall_std -C redhat UNITDIR=%_unitdir
+%makeinstall_std UNITDIR=%_unitdir USE_BPF=0
 rm %buildroot/usr/share/licenses/stalld/gpl-2.0.txt
+
+%check
+./stalld --version | grep -Fx '%version'
+# Not much to test.
+# https://gitlab.com/rt-linux-tools/stalld/-/issues/23
 
 %post
 %post_service stalld.service
@@ -58,6 +63,9 @@ rm %buildroot/usr/share/licenses/stalld/gpl-2.0.txt
 %_man8dir/stalld.8*
 
 %changelog
+* Sat May 18 2024 Vitaly Chikunov <vt@altlinux.org> 1.19.3-alt1
+- Update to v1.19.3 (2024-05-16).
+
 * Wed Dec 28 2022 Vitaly Chikunov <vt@altlinux.org> 1.17.2-alt1
 - Update to v1.17.2 (2022-12-21).
 
