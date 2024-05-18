@@ -2,7 +2,7 @@
 %def_with check
 
 Name: python3-module-%oname.core
-Version: 4.5.2
+Version: 4.5.4
 Release: alt1
 
 Summary: Chameleon Template Compiler
@@ -24,6 +24,7 @@ BuildPreReq: python3-module-sphinx_rtd_theme
 
 %if_with check
 BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -72,7 +73,7 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 cp -fR _build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest
 
 %files
 %doc *.txt *.rst
@@ -90,6 +91,9 @@ cp -fR _build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc _build/html/*
 
 %changelog
+* Sat May 18 2024 Grigory Ustinov <grenka@altlinux.org> 4.5.4-alt1
+- Automatically updated to 4.5.4.
+
 * Wed Jan 31 2024 Grigory Ustinov <grenka@altlinux.org> 4.5.2-alt1
 - Automatically updated to 4.5.2.
 
