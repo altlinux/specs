@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ libX11-devel pkgconfig(lcms
 %define _localstatedir %{_var}
 %define fontpkgname texstudio
 Name:           texstudio
-Version:        4.7.3
+Version:        4.8.0
 Release:        alt1
 
 Summary:        A feature-rich editor for LaTeX documents
@@ -21,10 +21,11 @@ Patch1:         texstudio-use-system-qtsingleapplication-instead-of-bundled-on.p
 Patch2:         texstudio-disable-update-check.patch
 # don't muck with default build flags
 Patch3:         texstudio-wtf_flags.patch
-
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
 BuildRequires:  qt5-base-devel
-BuildRequires:  qt5-tools qt5-tools-devel
-BuildRequires:  qt5-tools-devel qt5-tools-devel-static
+BuildRequires:  qt5-tools qt5-tools-devel qt5-script-devel
+#BuildRequires:  qt5-tools-devel qt5-tools-devel-static
 BuildRequires:  qt5-svg-devel
 BuildRequires:  qt5-script-devel 
 BuildRequires:  hunspell-utils libhunspell-devel
@@ -34,7 +35,7 @@ BuildRequires:  libpoppler-qt5-devel
 BuildRequires:  libqtsingleapplication-qt5-devel
 BuildRequires:  libqtermwidget-devel qt5-multimedia-devel
 BuildRequires:  quazip-qt5-devel
-BuildRequires:  zlib-devel libpoppler-cpp-devel qt5-declarative-devel
+BuildRequires:  zlib-devel libpoppler-cpp-devel qt5-declarative-devel qt5-assistant
 
 Requires:       tex(latex)
 Requires:       tex(preview.sty)
@@ -63,26 +64,19 @@ all necessary LaTeX tools.
 rm -rf {hunspell,qtsingleapplication,quazip}
 
 %build
-mkdir %{_target_platform}
-pushd %{_target_platform}
-%qmake_qt5 \
-%ifnarch %{ix86} x86_64 %{arm}
-    NO_CRASH_HANDLER=1 \
-%endif
-    USE_SYSTEM_HUNSPELL=1 \
-    USE_SYSTEM_QTSINGLEAPPLICATION=1 \
-    INTERNAL_TERMINAL=1 \
-    USE_SYSTEM_QUAZIP=1 \
-    QUAZIP_LIB="`pkg-config --libs quazip1-qt5`" \
-    QUAZIP_INCLUDE="`pkg-config --cflags-only-I quazip1-qt5 |
-      sed 's/-I//g'`" \
-    ../texstudio.pro
-popd
 
-%make_build -C %{_target_platform}
+%cmake \
+%ifnarch %{ix86} x86_64 %{arm}
+    -DTEXSTUDIO_ENABLE_CRASH_HANDLER=OFF \
+%endif
+
+%cmake_build
 
 %install
-make install INSTALL_ROOT=$RPM_BUILD_ROOT -C %{_target_platform}
+%cmake_install
+
+#install
+#make install INSTALL_ROOT=$RPM_BUILD_ROOT -C %{_target_platform}
 
 install -Dp -m 0644 utilities/texstudio16x16.png \
     $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/16x16/apps/texstudio.png
@@ -126,6 +120,8 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE1}
 %{_datadir}/texstudio/*.js
 %{_datadir}/texstudio/th_*.dat
 %{_datadir}/texstudio/*.html
+%{_datadir}/texstudio/CHANGELOG.md
+%{_datadir}/texstudio/README*.txt
 %{_datadir}/applications/texstudio.desktop
 %{_datadir}/metainfo/texstudio.metainfo.xml
 %{_datadir}/icons/hicolor/*/apps/*.png
@@ -134,6 +130,9 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE1}
 %doc utilities/AUTHORS utilities/COPYING utilities/manual/CHANGELOG.txt
 
 %changelog
+* Sat May 18 2024 Ilya Mashkin <oddity@altlinux.ru> 4.8.0-alt1
+- 4.8.0
+
 * Thu Mar 07 2024 Ilya Mashkin <oddity@altlinux.ru> 4.7.3-alt1
 - 4.7.3
 
