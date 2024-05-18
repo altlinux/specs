@@ -1,19 +1,18 @@
 %define oname zmq
 
 %def_with bootstrap
-# included patch totally destroys tests=(
 %def_with check
 
 Name: python3-module-%oname
-Version: 25.1.2
+Version: 26.0.3
 Release: alt1
 
 Summary: Software library for fast, message-based applications
 
 Group: Development/Python3
 License: LGPLv3+ and BSD-3-Clause
-Url: http://www.zeromq.org/bindings:python
-# http://github.com/zeromq/pyzmq.git
+URL: https://pypi.org/project/pyzmq
+VCS: https://github.com/zeromq/pyzmq
 Source: %name-%version.tar
 
 Provides: python3-module-pyzmq
@@ -25,6 +24,9 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-Cython
 BuildRequires: python3-module-packaging
 BuildRequires: python3-module-tornado
+BuildRequires: python3-module-scikit-build-core
+BuildRequires: cmake
+BuildRequires: gcc-c++
 %if_without bootstrap
 BuildRequires: python3-module-cffi
 BuildRequires: python3-module-numpy
@@ -78,12 +80,22 @@ This package contains the headers for the python bindings.
 %add_python3_req_skip zmq.backend.cffi._cffi
 %add_python3_req_skip zmq.eventloop.minitornado.ioloop
 %add_python3_req_skip zmq.eventloop.minitornado.log
+# https://cython.readthedocs.io/en/latest/src/tutorial/pure.html#cimports
+%add_python3_req_skip cython.cimports.cpython
+%add_python3_req_skip cython.cimports.libc.errno
+%add_python3_req_skip cython.cimports.libc.stdint
+%add_python3_req_skip cython.cimports.libc.stdio
+%add_python3_req_skip cython.cimports.libc.stdlib
+%add_python3_req_skip cython.cimports.libc.string
+%add_python3_req_skip cython.cimports.zmq.backend.cython._externs
+%add_python3_req_skip cython.cimports.zmq.backend.cython.libzmq
+%add_python3_req_skip cython.cimports.zmq.utils.buffers
 
 %prep
 %setup
-cp setup.cfg.template setup.cfg
-subst "s|/usr/local/lib|%_libdir|" setup.cfg
-subst "s|/usr/local/include|%_includedir|" setup.cfg
+
+# remove the Cython .c files in order to regenerate them:
+find . -name "*.c" | xargs rm -v
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -106,7 +118,7 @@ cd ..
 py.test3 --pyargs zmq -v --asyncio-mode auto -k "not test_cython"
 
 %files
-%doc README.md LICENSE.LESSER LICENSE.BSD CONTRIBUTING.md AUTHORS.md examples/
+%doc README.md LICENSE.md CONTRIBUTING.md AUTHORS.md examples/
 %python3_sitelibdir/*.dist-info
 %python3_sitelibdir/%oname
 %exclude %python3_sitelibdir/%oname/tests
@@ -119,6 +131,9 @@ py.test3 --pyargs zmq -v --asyncio-mode auto -k "not test_cython"
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Fri May 17 2024 Grigory Ustinov <grenka@altlinux.org> 26.0.3-alt1
+- Automatically updated to 26.0.3.
+
 * Fri Jan 26 2024 Grigory Ustinov <grenka@altlinux.org> 25.1.2-alt1
 - Automatically updated to 25.1.2.
 
