@@ -3,7 +3,7 @@
 %def_with check
 
 Name:     python3-module-%oname
-Version:  0.37.3
+Version:  0.39.1
 Release:  alt1
 
 Summary:  An opinionated HarfBuzz Python binding
@@ -50,6 +50,9 @@ py.test-3 -v
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Sat May 18 2024 Grigory Ustinov <grenka@altlinux.org> 0.39.1-alt1
+- Build new version.
+
 * Mon Dec 04 2023 Grigory Ustinov <grenka@altlinux.org> 0.37.3-alt1
 - Build new version.
 
