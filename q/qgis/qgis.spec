@@ -8,7 +8,7 @@
 %def_enable server
 
 Name:    qgis
-Version: 3.36.2
+Version: 3.36.3
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
@@ -378,6 +378,9 @@ rm -rf %buildroot%_datadir/%name/FindQGIS.cmake \
 %endif
 
 %changelog
+* Sat May 18 2024 Andrey Cherepanov <cas@altlinux.org> 3.36.3-alt1
+- New version.
+
 * Thu May 09 2024 Andrey Cherepanov <cas@altlinux.org> 3.36.2-alt1
 - New version.
 
