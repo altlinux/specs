@@ -4,16 +4,16 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.1.3
+Version: 2.3.3
 Release: alt2
 
 Summary: A quick unittest-compatible framework for repeating a test function over many fixtures
 
 License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/repeated-test/
+URL: https://pypi.org/project/repeated-test
+VCS: https://github.com/epsy/repeated_test
 
-# Source-url: https://pypi.io/packages/source/r/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -22,10 +22,6 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(setuptools_scm)
 BuildRequires: python3(wheel)
-
-%if_with check
-BuildRequires: python3(tox)
-%endif
 
 # PEP503 normalized name
 %py3_provides repeated-test
@@ -42,15 +38,12 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_install
 
 # strip tests
 rm -r %buildroot%python3_sitelibdir/%oname/tests/
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%tox_create_default_config
 %tox_check_pyproject
 
 %files
@@ -59,6 +52,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Sat May 18 2024 Grigory Ustinov <grenka@altlinux.org> 2.3.3-alt2
+- Build new version.
+
 * Sun Jan 28 2024 Grigory Ustinov <grenka@altlinux.org> 2.1.3-alt2
 - Moved on modern pyproject macros.
 
