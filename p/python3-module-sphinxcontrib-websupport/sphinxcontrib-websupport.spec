@@ -1,22 +1,27 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname sphinxcontrib-websupport
 
+%def_with check
+
 Name:           python3-module-%oname
-Version:        1.2.4
-Release:        alt2
+Version:        1.2.7
+Release:        alt1
 Summary:        Sphinx API for Web Apps
-License:        BSD
+License:        BSD-2-Clause
 Group:          Development/Python3
-URL:            http://sphinx-doc.org/
+URL:            https://pypi.org/project/sphinxcontrib-websupport
+VCS:            https://github.com/sphinx-doc/sphinxcontrib-websupport
 
 BuildArch:      noarch
 
-# https://github.com/sphinx-doc/sphinxcontrib-websupport.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-flit
+
+%if_with check
+BuildRequires: python3-module-jinja2
+BuildRequires: python3-module-sphinx-tests
+%endif
 
 %description
 sphinxcontrib-websupport provides a Python API to easily integrate Sphinx
@@ -26,18 +31,24 @@ documentation into your Web application.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%tox_check_pyproject
 
 %files
 %doc LICENSE README.rst
 %python3_sitelibdir/sphinxcontrib/websupport
-%python3_sitelibdir/sphinxcontrib_websupport-%{version}*-py3.*-*.pth
-%python3_sitelibdir/sphinxcontrib_websupport-%{version}*-py3.*.egg-info
+%python3_sitelibdir/sphinxcontrib_websupport-%{version}.dist-info
 
 %changelog
+* Sat May 18 2024 Grigory Ustinov <grenka@altlinux.org> 1.2.7-alt1
+- Automatically updated to 1.2.7.
+- Built with check.
+
 * Wed Feb 02 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.4-alt2
 - Fixed build.
 
