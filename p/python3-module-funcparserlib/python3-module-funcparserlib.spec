@@ -1,10 +1,9 @@
-%define _unpackaged_files_terminate_build 1
 %define  modulename funcparserlib
 
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: Recurisve descent parsing library for Python based on functional combinators
@@ -16,10 +15,6 @@ VCS:     https://github.com/vlasovskikh/funcparserlib
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-poetry
-
-%if_with check
-BuildRequires: python3(tox)
-%endif
 
 BuildArch: noarch
 
@@ -64,6 +59,9 @@ well as a tiny lexer generator for token position tracking.
 %python3_sitelibdir/%modulename-%version.dist-info/
 
 %changelog
+* Sat May 18 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt1
+- Automatically updated to 1.0.1.
+
 * Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1
 - Automatically updated to 1.0.0.
 
