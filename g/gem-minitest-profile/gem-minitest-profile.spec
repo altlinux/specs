@@ -6,7 +6,7 @@
 
 Name:          gem-minitest-profile
 Version:       0.0.2
-Release:       alt1
+Release:       alt2
 Summary:       Outputter to display the slowest tests in a minitest suite
 License:       MIT
 Group:         Development/Ruby
@@ -17,12 +17,12 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-%if_enabled check
-BuildRequires: gem(bundler) >= 1.3
-BuildRequires: gem(rake) >= 0
 BuildRequires: gem(minitest) >= 5.0
-BuildConflicts: gem(bundler) >= 3
 BuildConflicts: gem(minitest) >= 6
+%if_enabled check
+BuildRequires: gem(rake) >= 0
+BuildRequires: gem(bundler) >= 1.3
+BuildConflicts: gem(bundler) >= 3
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
@@ -108,5 +108,8 @@ Outputter to display the slowest tests in a minitest suite development package.
 
 
 %changelog
+* Sat May 18 2024 Michael Shigorin <mike@altlinux.org> 0.0.2-alt2
+- spec: fix BR: --without check
+
 * Tue Apr 23 2024 Pavel Skrylev <majioa@altlinux.org> 0.0.2-alt1
 - + packaged gem with Ruby Policy 2.0
