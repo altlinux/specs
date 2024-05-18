@@ -4,7 +4,7 @@
 
 Name: writefreely
 Version: 0.15.0
-Release: alt1
+Release: alt2
 Packager: Pavel Nakonechnyi <zorg@altlinux.org>
 
 Summary: Federated blogging from write.as
@@ -15,7 +15,7 @@ Url: https://writefreely.org/
 BuildRequires(pre): rpm-macros-golang
 BuildRequires(pre): rpm-build-golang
 BuildRequires(pre): rpm-macros-systemd
-BuildRequires: lessjs go-bindata sqlite
+BuildRequires: lessjs go-bindata
 BuildRequires: rpm-build-nodejs node node-webpack node-webpack-cli
 
 Source: %name-%version.tar
@@ -127,6 +127,9 @@ echo "writefreely: database migration might be needed, see https://blog.writefre
 %preun_systemd writefreely
 
 %changelog
+* Sat May 18 2024 Pavel Nakonechnyi <zorg@altlinux.org> 0.15.0-alt2
+- remove sqlite build dependency (closes #50379)
+
 * Sun May 05 2024 Pavel Nakonechnyi <zorg@altlinux.org> 0.15.0-alt1
 - version 0.15.0
 
