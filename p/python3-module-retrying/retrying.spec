@@ -1,8 +1,8 @@
 %define sname retrying
 
 Name: python3-module-%sname
-Version: 1.3.3
-Release: alt2
+Version: 1.3.4
+Release: alt1
 Summary: Retrying library
 Group: Development/Python3
 License: Apache-2.0
@@ -33,6 +33,9 @@ rm -rf %sname.egg-info
 %python3_sitelibdir/*
 
 %changelog
+* Sat May 18 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.4-alt1
+- Build new version.
+
 * Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.3-alt2
 - Drop python2 support.
 
