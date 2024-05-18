@@ -3,7 +3,7 @@
 %define oname sqlanydb
 
 Name: python3-module-%oname
-Version: 1.0.13
+Version: 1.0.14
 Release: alt1
 Epoch: 1
 License: Apache-2.0
@@ -14,7 +14,7 @@ Summary(ru_RU.UTF-8): Интерфейс к БД Sybase Anywhere для Python
 
 Url: https://pypi.org/project/sqlanydb
 
-Source: %oname-%version.tar.gz
+Source: %oname-%version.tar
 
 Requires: libfreetds >= 0.64
 
@@ -38,6 +38,9 @@ This interface conforms to PEP 249.
 %python3_sitelibdir/*
 
 %changelog
+* Sat May 18 2024 Grigory Ustinov <grenka@altlinux.org> 1:1.0.14-alt1
+- Build new version.
+
 * Wed May 17 2023 Grigory Ustinov <grenka@altlinux.org> 1:1.0.13-alt1
 - Build new version.
 
