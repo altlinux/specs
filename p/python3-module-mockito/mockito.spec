@@ -4,20 +4,20 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.2.2
-Release: alt2
+Version: 1.5.0
+Release: alt1
 
 Summary: Spying framework
 License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/mockito/
+URL: https://pypi.org/project/mockito
+VCS: https://github.com/kaste/mockito-python
 BuildArch: noarch
 
-Source0: %name-%version.tar
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildRequires: python3(hatchling)
 
 %if_with check
 BuildRequires: python3(numpy)
@@ -44,10 +44,13 @@ Mockito is a spying framework based on Java library with the same name.
 
 %files
 %doc AUTHORS *.rst
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version.dist-info/
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sat May 18 2024 Grigory Ustinov <grenka@altlinux.org> 1.5.0-alt1
+- Automatically updated to 1.5.0.
+
 * Wed Jan 31 2024 Grigory Ustinov <grenka@altlinux.org> 1.2.2-alt2
 - Moved on modern pyproject macros.
 
