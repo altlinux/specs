@@ -4,7 +4,7 @@
 %define _libexecdir /usr/libexec
 
 Name: flannel
-Version: 0.24.2
+Version: 0.25.1
 Release: alt1
 
 Summary: flannel is a network fabric for containers
@@ -35,7 +35,6 @@ a layer 3 network fabric designed for Kubernetes.
 export GOFLAGS="-mod=vendor"
 
 CGO_ENABLED=1 go build -ldflags " \
-    -s -w \
     -X %import_path/pkg/version.Version=%version \
     " -o dist ./...
 
@@ -58,6 +57,9 @@ install -D -p -m 0755 %SOURCE4 %buildroot%_tmpfilesdir/%name.conf
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Sat May 18 2024 Alexander Stepchenko <geochip@altlinux.org> 0.25.1-alt1
+- 0.24.2 -> 0.25.1
+
 * Fri Jan 19 2024 Alexander Stepchenko <geochip@altlinux.org> 0.24.2-alt1
 - 0.23.0 -> 0.24.2
 - fix flannel displaying wrong version information
