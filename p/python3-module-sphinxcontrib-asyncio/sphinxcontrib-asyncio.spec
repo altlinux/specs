@@ -2,16 +2,17 @@
 %define oname %mname-asyncio
 
 Name: python3-module-%oname
-Version: 0.2.0
-Release: alt4
+Version: 0.3.0
+Release: alt1
 Summary: Sphinx extension for adding asyncio-specific markups
 
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/sphinxcontrib-asyncio
+URL: https://pypi.org/project/sphinxcontrib-asyncio
+VCS: https://github.com/aio-libs/sphinxcontrib-asyncio
 BuildArch: noarch
 
-Source: https://pypi.python.org/packages/03/52/14e11f82a263a6b4c3c66738952f557ee78cde51077cbd949fbf739fa9b4/%oname-%version.tar.gz
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
@@ -22,7 +23,7 @@ BuildRequires(pre): rpm-build-python3
 Sphinx extension for adding asyncio-specific markups.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
 %python3_build
@@ -38,6 +39,9 @@ Sphinx extension for adding asyncio-specific markups.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat May 18 2024 Grigory Ustinov <grenka@altlinux.org> 0.3.0-alt1
+- Build new version.
+
 * Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 0.2.0-alt4
 - Drop python2 support.
 
