@@ -4,16 +4,16 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.4.0
-Release: alt2
+Version: 1.4.2
+Release: alt1
 
 Summary: A python implementation of mongodb queries
 License: Public domain
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/mongoquery/
+URL: https://pypi.org/project/mongoquery
+VCS: https://github.com/kapouille/mongoquery
 BuildArch: noarch
 
-# https://github.com/kapouille/mongoquery.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -21,7 +21,6 @@ BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 
 %if_with check
-# install_requires=
 BuildRequires: python3(six)
 
 BuildRequires: python3(pytest)
@@ -50,10 +49,13 @@ by JSON or YAML parsers.
 
 %files
 %doc *.rst
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version.dist-info/
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sat May 18 2024 Grigory Ustinov <grenka@altlinux.org> 1.4.2-alt1
+- Automatically updated to 1.4.2.
+
 * Sun Jan 28 2024 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt2
 - Moved on modern pyproject macros.
 
