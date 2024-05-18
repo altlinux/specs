@@ -1,26 +1,32 @@
-%define _unpackaged_files_terminate_build 1
 %define oname geojson
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 2.5.0
+Version: 3.1.0
 Release: alt1
 
 Summary: Python bindings and utilities for GeoJSON
-License: BSD
+
+License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/geojson/
-# https://github.com/frewsxcv/python-geojson.git
+URL: https://pypi.org/project/geojson
+VCS: https://github.com/jazzband/geojson
+
 BuildArch: noarch
 
-Source0: https://pypi.python.org/packages/56/2d/44abe5d3fda94b524e93a8e0f8c83d1e890a9e97e3791f40483a28ccb971/%{oname}-%{version}.tar.gz
-
-Patch: d88e32f1b05ad287a8d612e6f61ed7432fc72957.patch
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %py3_provides %oname
 %py3_requires json
-
 
 %description
 This library contains:
@@ -44,21 +50,21 @@ This library contains:
 This package contains examples for %oname.
 
 %prep
-%setup -q -n %{oname}-%{version}
-%patch -p1
+%setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test
+%pyproject_run_pytest
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/*/examples.*
 %exclude %python3_sitelibdir/*/*/examples.*
 
@@ -66,8 +72,10 @@ This package contains examples for %oname.
 %python3_sitelibdir/*/examples.*
 %python3_sitelibdir/*/*/examples.*
 
-
 %changelog
+* Sat May 18 2024 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
+- Build new version.
+
 * Tue Apr 06 2021 Grigory Ustinov <grenka@altlinux.org> 2.5.0-alt1
 - Build new version.
 
