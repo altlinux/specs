@@ -1,22 +1,27 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname pretend
+
+%def_with check
 
 Name: python3-module-%oname
 Version: 1.0.9
-Release: alt1
+Release: alt2
 Summary: A library for stubbing in Python
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/pretend
+URL: https://pypi.org/project/pretend
+VCS: https://github.com/alex/pretend
 
 BuildArch: noarch
 
-# https://github.com/alex/pretend.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-pytest
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 Pretend is a library to make stubbing with Python easier.
@@ -25,22 +30,24 @@ Pretend is a library to make stubbing with Python easier.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-py.test3 -v
+%pyproject_run_pytest
 
 %files
-%doc LICENSE.rst
-%doc README.rst
+%doc LICENSE.rst README.rst
 %python3_sitelibdir/%{oname}.py
 %python3_sitelibdir/__pycache__/%{oname}.*
-%python3_sitelibdir/%oname-%version-py%{_python3_version}.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sun May 19 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.9-alt2
+- Moved on modern pyproject macros.
+
 * Tue Jun 22 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.9-alt1
 - Updated to upstream version 1.0.9.
 - Disabled module for python-2.
