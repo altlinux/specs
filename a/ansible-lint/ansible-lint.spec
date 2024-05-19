@@ -1,5 +1,5 @@
 Name: ansible-lint
-Version: 6.22.2
+Version: 24.5.0
 Release: alt1
 
 Summary: Best practices checker for Ansible
@@ -11,6 +11,7 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 BuildRequires(pre): rpm-macros-python3
+BuildRequires: python3-devel >= 3.10
 BuildRequires: rpm-build-python3 %pyproject_buildrequires
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-tox python3-module-pip python3-module-wheel
@@ -53,6 +54,9 @@ echo "ref-names: tag: v%version" > .git_archival.txt
 %python3_sitelibdir/*
 
 %changelog
+* Sun May 19 2024 Alexey Shabalin <shaba@altlinux.org> 24.5.0-alt1
+- New version 24.5.0.
+
 * Tue Jan 30 2024 Alexey Shabalin <shaba@altlinux.org> 6.22.2-alt1
 - new version 6.22.2
 
