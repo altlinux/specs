@@ -6,7 +6,7 @@
 %endif
 
 Name: guacamole-server
-Version: 1.5.4
+Version: 1.5.5
 Release: alt1
 Summary: Server-side native components that form the Guacamole proxy
 License: Apache-2.0
@@ -259,6 +259,9 @@ useradd -r -g %username -c 'Guacamole proxy daemon' \
 %attr(750,%username,%username) %_sharedstatedir/guacd/share
 
 %changelog
+* Sun May 19 2024 Alexey Shabalin <shaba@altlinux.org> 1.5.5-alt1
+- New version 1.5.5.
+
 * Mon Dec 25 2023 Alexander Burmatov <thatman@altlinux.org> 1.5.4-alt1
 - New version 1.5.4 (Fixes: CVE-2023-43826).
 
