@@ -4,24 +4,23 @@
 %set_verify_elf_method strict
 
 Name: liburing
-Version: 2.5
+Version: 2.6
 Release: alt1
-
 Summary: The io_uring library
 License: (GPL-2.0-only AND LGPL-2.1-or-later) OR MIT
 Group: System/Libraries
-
 Url: http://git.kernel.dk/cgit/liburing
 # Author's Vcs and CI: https://github.com/axboe/liburing
+
 Source: %name-%version.tar
 Patch: liburing-e2k.patch
 
 BuildRequires: gcc-c++
-%{?!_without_check:%{?!_disable_check:BuildRequires: strace /proc}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: strace /proc rpm-build-vm iproute2}}
 
 %description
-Provides native async IO for the Linux 5.1+ kernel, in a fast
-and efficient manner, for both buffered and O_DIRECT.
+Provides native async IO for the Linux kernel, in a fast and efficient
+manner, for both buffered and O_DIRECT.
 
 liburing provides helpers to setup and teardown io_uring instances,
 and also a simplified interface for applications that don't need
@@ -59,39 +58,27 @@ rm %buildroot%_libdir/liburing*.a
 # Reuse probe test as a tool to test that io_uring is available.
 install -Dp test/probe.t %buildroot%_bindir/io_uring_ok
 
-%define _customdocdir %_docdir/%name
-
 %check
+uname -rm
 # List of available probes
 test/probe.t
 strace -v test/probe.t
 
 # Almost all tests fail on ppc64le, so there is no point to even try.
-%ifnarch ppc64le %e2k
+%ifnarch %e2k
 TEST_EXCLUDE="
-	500f9fbadef8.t
-	accept.t
-	cq-overflow.t
-	eeed8b54e0df.t
-	file-verify.t
-	fpos.t
-	hardlink.t
-	io-cancel.t
-	iopoll.t
-	io_uring_register.t
-	link-timeout.t
-	personality.t
-	read-before-exit.t
-	read-write.t
-	recv-msgall-stream.t
-	ringbuf-read.t
-	rsrc_tags.t
-	sq-poll-dup.t
-	sq-poll-share.t
-	sync-cancel.t
-	wq-aff.t
-" make runtests
+%ifarch ppc64le
+	buf-ring-nommap.t
+	recv-multishot.t
+	send-zerocopy.t
 %endif
+%ifarch %ix86
+	sqpoll-sleep.t
+%endif
+" vm-run --ext4 make runtests
+%endif
+
+%define _customdocdir %_docdir/%name
 
 %files
 %_bindir/io_uring_ok
@@ -101,20 +88,26 @@ TEST_EXCLUDE="
 %files devel
 %doc README COPYING COPYING.GPL SECURITY.md CHANGELOG examples/*.c
 %exclude %_docdir/%name/LICENSE
-%_includedir/*
-%_libdir/%{name}*.so
-%_pkgconfigdir/%{name}*.pc
-%_man2dir/*
-%_man3dir/*
-%_man7dir/*
+%_includedir/liburing*
+%_libdir/liburing*.so
+%_pkgconfigdir/liburing*.pc
+%_man2dir/io_uring*.2*
+%_man3dir/IO_URING*.3*
+%_man3dir/__io_uring*.3*
+%_man3dir/io_uring*.3*
+%_man7dir/io_uring.7*
 
 %changelog
+* Wed May 01 2024 Vitaly Chikunov <vt@altlinux.org> 2.6-alt1
+- Update to liburing-2.6 (2024-04-30).
+
 * Sun Nov 05 2023 Vitaly Chikunov <vt@altlinux.org> 2.5-alt1
 - Update to liburing-2.5 (2023-11-04).
 
 * Sun Jun 11 2023 Vitaly Chikunov <vt@altlinux.org> 2.4-alt1
 - Update to liburing-2.4-0-gb4ee310 (2023-06-09).
 - FFI support.
+- Nolibc build (default selected by the upstream, which turns off hardening).
 
 * Thu Apr 27 2023 Michael Shigorin <mike@altlinux.org> 2.3-alt3
 - E2K: fix build (ilyakurdyukov@).
