@@ -1,45 +1,44 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname pandocfilters
 
 Name: python3-module-%oname
-Version: 1.4.3
+Version: 1.5.1
 Release: alt1
 Summary: Utilities for writing pandoc filters in python
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://github.com/jgm/pandocfilters
+URL: https://pypi.org/project/pandocfilters
+VCS: https://github.com/jgm/pandocfilters
 
 BuildArch: noarch
 
-# https://github.com/jgm/pandocfilters.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-fixes.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 A python module for writing pandoc filters.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%doc LICENSE
-%doc README
+%doc LICENSE *.md *.rst
 %python3_sitelibdir/*.py
 %python3_sitelibdir/__pycache__/*
-%python3_sitelibdir/%oname-%version-py*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sun May 19 2024 Grigory Ustinov <grenka@altlinux.org> 1.5.1-alt1
+- Automatically updated to 1.5.1.
+
 * Mon Jun 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.3-alt1
 - Updated to upstream version 1.4.3.
 - Disabled build for python-2.
