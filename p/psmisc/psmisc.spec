@@ -5,7 +5,7 @@
 
 Name: psmisc
 Version: 23.6
-Release: alt2
+Release: alt3
 
 Summary: Miscellaneous utilities that use proc filesystem
 License: GPL-2.0-only
@@ -103,7 +103,7 @@ my_tests() {
   fuser -m . -u  >/dev/null
   fuser -m . -4  >/dev/null
   fuser -m . -6  >/dev/null
-  nc -l socks &
+  nc -l socks & sleep 1
   fuser -v socks/tcp
   kill %%1
   pslog $$
@@ -147,6 +147,9 @@ make check
 %doc AUTHORS ChangeLog COPYING README.md
 
 %changelog
+* Sun May 19 2024 Vitaly Chikunov <vt@altlinux.org> 23.6-alt3
+- spec: check: Fix FTBFS (reported by ALT beekeeper).
+
 * Sat May 18 2024 Vitaly Chikunov <vt@altlinux.org> 23.6-alt2
 - Allow networked fuser calls (ALT#50384).
 
