@@ -1,20 +1,26 @@
-%define _unpackaged_files_terminate_build 1
+%def_without check
 
 Name: python3-module-pydicom
-Version: 2.1.2
+Version: 2.4.4
 Release: alt1
+
 Summary: Read, modify and write DICOM files with python code
+
 License: BSD-3-Clause and MIT
 Group: Sciences/Medicine
-Url: https://pydicom.github.io/pydicom/dev
+URL: https://pypi.org/project/pydicom
+VCS: https://github.com/pydicom/pydicom
 
 BuildArch: noarch
 
-# https://github.com/pydicom/pydicom.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildRequires: python3-module-flit
+
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 pydicom is a pure Python package for working with DICOM files.
@@ -49,24 +55,27 @@ This package contains tests for pydicom.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_pytest
 
 %files
-%doc LICENSE
-%doc README.md CONTRIBUTING.md
-%doc examples
-%python3_sitelibdir/dicom.py
-%python3_sitelibdir/__pycache__/*
+%doc LICENSE README.md CONTRIBUTING.md examples
+%_bindir/pydicom
 %python3_sitelibdir/pydicom
+%python3_sitelibdir/pydicom-%version.dist-info
 %exclude %python3_sitelibdir/pydicom/tests
-%python3_sitelibdir/pydicom-%version-py*.egg-info
 
 %files tests
 %python3_sitelibdir/pydicom/tests
 
 %changelog
+* Sun May 19 2024 Grigory Ustinov <grenka@altlinux.org> 2.4.4-alt1
+- Automatically updated to 2.4.4.
+
 * Mon May 31 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.1.2-alt1
 - Initial build for ALT.
