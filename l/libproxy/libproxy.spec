@@ -8,8 +8,8 @@
 %def_without duktape
 
 Name: libproxy
-Version: 0.5.3
-Release: alt1.2
+Version: 0.5.6
+Release: alt1
 Summary: A library that provides automatic proxy configuration management
 
 Group: System/Libraries
@@ -20,8 +20,9 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-meson 
-BuildRequires: meson >= 0.59.0 rpm-build-vala vala-tools rpm-build-gir gir(Gio) = 2.0
-BuildRequires: pkgconfig(glib-2.0) >= 2.71.3 pkgconfig(gio-2.0) >= 2.71.3
+BuildRequires: meson >= 0.59.0 rpm-build-vala vala-tools rpm-build-gir
+BuildRequires: pkgconfig(glib-2.0) >= 2.71.3 pkgconfig(gio-2.0) >= 2.71.3 pkgconfig(gobject-2.0)
+BuildRequires: pkgconfig(gobject-introspection-1.0) /usr/bin/g-ir-scanner gir(Gio) = 2.0
 BuildRequires: gi-docgen
 %{?_with_curl:BuildRequires: pkgconfig(libcurl)}
 %{?_with_gnome:BuildRequires: pkgconfig(gsettings-desktop-schemas)}
@@ -95,12 +96,14 @@ Development docs package for %name libraries.
 
 %build
 %meson \
+    -Drelease=true \
     %{?_without_curl:-Dcurl=false} \
     %{?_without_gnome:-Dconfig-gnome=false} \
     %{?_without_kde:-Dconfig-kde=false} \
     %{?_without_env:-Dconfig-env=false} \
     %{?_without_sysconfig:-Dconfig-sysconfig=false} \
     %{?_without_duktape:-Dpacrunner-duktape=false} \
+    -Dconfig-xdp=true \
     -Dconfig-windows=false \
     -Dconfig-osx=false
 
@@ -135,6 +138,9 @@ Development docs package for %name libraries.
 %_defaultdocdir/libproxy-1.0
 
 %changelog
+* Sun May 19 2024 Alexey Shabalin <shaba@altlinux.org> 0.5.6-alt1
+- New version 0.5.6.
+
 * Thu Dec 07 2023 Michael Shigorin <mike@altlinux.org> 0.5.3-alt1.2
 - un-bootstrap (build with duktape again)
 
