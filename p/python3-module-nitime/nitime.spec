@@ -1,28 +1,23 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname nitime
 
-%def_with bootstrap
-
 Name: python3-module-%oname
-Version: 0.8.1
+Version: 0.10.2
 Release: alt1
 Summary: Nitime: timeseries analysis for neuroscience data
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.org/project/nitime/
+URL: https://pypi.org/project/nitime
+VCS: https://github.com/nipy/nitime
 
 BuildArch: noarch
 
-# https://github.com/nipy/nitime.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libnumpy-py3-devel
-
-%if_with bootstrap
-%add_python3_req_skip nitime.six.moves
-%endif
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-wheel
 
 %description
 Nitime is library of tools and algorithms for the analysis of
@@ -52,21 +47,17 @@ This package contains tests for Nitime.
 %prep
 %setup
 
-## python2 -> python3
-sed -i 's|#!/usr/bin/env python$|#!/usr/bin/env python3|' \
-    $(find ./ -type f \( -name '*.py' -o -name 'build_release' \
-                      -o -name 'ex2rst' -o -name 'release' \))
-##
-
 %build
-%python3_build_debug
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%doc README.txt THANKS
-%python3_sitelibdir/*
+%doc LICENSE README.txt THANKS
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/*/tests
 
@@ -74,8 +65,10 @@ sed -i 's|#!/usr/bin/env python$|#!/usr/bin/env python3|' \
 %python3_sitelibdir/*/tests
 %python3_sitelibdir/*/*/tests
 
-
 %changelog
+* Sun May 19 2024 Grigory Ustinov <grenka@altlinux.org> 0.10.2-alt1
+- Automatically updated to 0.10.2.
+
 * Wed Aug 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.1-alt1
 - Updated to upstream version 0.8.1.
 
