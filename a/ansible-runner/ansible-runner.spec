@@ -2,32 +2,32 @@
 %def_disable check
 
 Name: %pypi_name
-Version: 2.3.5
+Version: 2.4.0
 Release: alt1
 Summary: A tool and python library to interface with Ansible
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://github.com/ansible/ansible-runner
+Url: https://ansible-runner.readthedocs.io
+Vcs: https://github.com/ansible/ansible-runner
 Source: %name-%version.tar
 BuildArch: noarch
 
 # Requires: (ansible-core or ansible)
 
 BuildRequires(pre): rpm-build-python3 rpm-build-pyproject
-BuildRequires: python3-devel
+BuildRequires: python3-devel >= 3.9
 %pyproject_builddeps_build
 %pyproject_runtimedeps_metadata
 
 BuildRequires: ansible-core
 BuildRequires: python3(mock)
-BuildRequires: python3(pbr)
 BuildRequires: python3(pip)
 BuildRequires: python3(psutil)
 BuildRequires: python3(pexpect)
+BuildRequires: python3(packaging)
 BuildRequires: python3(yaml)
-BuildRequires: python3(setuptools)
-BuildRequires: python3(six)
+BuildRequires: python3(setuptools) python3(setuptools-scm)
 BuildRequires: python3(daemon)
 BuildRequires: python3(wheel)
 %if_enabled check
@@ -61,11 +61,9 @@ standalone tool, or imported into a python project.
 %setup
 
 %build
-export PBR_VERSION=%version
 %pyproject_build
 
 %install
-export PBR_VERSION=%version
 %pyproject_install
 
 %check
@@ -75,9 +73,11 @@ export PBR_VERSION=%version
 %doc README.md LICENSE.md
 %_bindir/*
 %python3_sitelibdir/*
-%_datadir/%name/utils
 
 %changelog
+* Sun May 19 2024 Alexey Shabalin <shaba@altlinux.org> 2.4.0-alt1
+- New version 2.4.0.
+
 * Tue Mar 05 2024 Alexey Shabalin <shaba@altlinux.org> 2.3.5-alt1
 - New version 2.3.5.
 
