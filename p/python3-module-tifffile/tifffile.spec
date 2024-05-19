@@ -3,20 +3,20 @@
 %define oname tifffile
 
 Name: python3-module-%oname
-Version: 2021.8.8
+Version: 2024.5.10
 Release: alt1
 Summary: Read and write TIFF(r) files
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://www.lfd.uci.edu/~gohlke/
+URL: https://pypi.org/project/tifffile
+VCS: https://github.com/cgohlke/tifffile
 
 BuildArch: noarch
 
-# https://github.com/cgohlke/tifffile.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-setuptools
 BuildRequires: pytest3 python3-module-numpy-testing python3-module-lxml python3(fsspec)
 
 %description
@@ -60,7 +60,8 @@ and the Open Microscopy Environment consortium, respectively.
 export PYTHONDONTWRITEBYTECODE=1
 export PYTEST_ADDOPTS='-p no:cacheprovider'
 export PYTHONPATH=%buildroot%python3_sitelibdir
-pytest-3 -v tests \
+# test_write_5GB_bigtiff and test_write_imagej_raw are too long and can crash builder
+pytest-3 -v tests -k 'not test_write_5GB_bigtiff and not test_write_imagej_raw' \
 	--deselect=tests/test_tifffile.py::test_issue_infinite_loop \
 	--deselect=tests/test_tifffile.py::test_issue_jpeg_ia \
 	--deselect=tests/test_tifffile.py::test_func_pformat_xml \
@@ -87,6 +88,9 @@ pytest-3 -v tests \
 %python3_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
+* Sun May 19 2024 Grigory Ustinov <grenka@altlinux.org> 2024.5.10-alt1
+- Automatically updated to 2024.5.10.
+
 * Fri Aug 20 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2021.8.8-alt1
 - Updated to upstream version 2021.8.8.
 
