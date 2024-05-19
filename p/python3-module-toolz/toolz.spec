@@ -1,21 +1,21 @@
-%define _unpackaged_files_terminate_build 1
 %define oname toolz
 
 Name: python3-module-%oname
-Version: 0.9.0
-Release: alt2
+Version: 0.12.1
+Release: alt1
 
 Summary: List processing tools and functional utilities
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/toolz/
+URL: https://pypi.org/project/toolz
+VCS: https://github.com/pytoolz/toolz
 BuildArch: noarch
 
-# Source-url: https://pypi.io/packages/source/t/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 A set of utility functions for iterators, functions, and dictionaries.
@@ -23,21 +23,29 @@ A set of utility functions for iterators, functions, and dictionaries.
 %prep
 %setup
 
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
+sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+# https://github.com/pytoolz/toolz/issues/564
+%tox_check_pyproject -- -k'not test_shakespeare'
 
 %files
-%doc *.rst
-%python3_sitelibdir/*
-
+%doc LICENSE.txt *.rst *.md
+%python3_sitelibdir/tlz
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sun May 19 2024 Grigory Ustinov <grenka@altlinux.org> 0.12.1-alt1
+- Built new version.
+- Built with check.
+
 * Tue Nov 19 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.0-alt2
 - python2 disabled
 
