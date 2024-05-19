@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.110.3
+Version: 0.111.0
 Release: alt1
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
@@ -19,6 +19,11 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: fastapi-0.95.1-alt-fix-databases-tests-connections.patch
 
+# Some packages require fastapi-slim, but it's fastapi with the no installed
+# certain requirements.
+Provides: %name-slim = %EVR
+# Filter fastapi-cli, because it's needed for managing fastapi project.
+%add_pyproject_deps_runtime_filter fastapi-cli
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -81,6 +86,9 @@ cat requirements-docs-tests.txt requirements-tests.txt > alt-requirements-tests.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun May 19 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.111.0-alt1
+- 0.110.3 -> 0.111.0.
+
 * Thu May 02 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.110.3-alt1
 - 0.110.2 -> 0.110.3.
 
