@@ -1,5 +1,5 @@
 Name: neovim
-Version: 0.9.5
+Version: 0.10.0
 Release: alt1
 
 Summary: heavily refactored vim fork
@@ -33,6 +33,7 @@ ExcludeArch: armh
 
 Provides: nvim = %EVR
 Requires: %name-runtime = %EVR
+Requires: lua5.1(lpeg)
 
 %package runtime
 Summary: heavily refactored vim fork - runtime files
@@ -73,6 +74,9 @@ install -pm0644 runtime/nvim.png -Dt %buildroot%_pixmapsdir
 
 install -pm0644 %SOURCE2 %buildroot%_datadir/nvim
 
+# dependency is handled manually since the lua5.1-module-lpeg doesn't provide "Provides: lpeg.so"
+%filter_from_requires /lpeg.so/d
+
 %files -f nvim.lang
 %doc LICENSE.txt
 %_bindir/nvim
@@ -92,6 +96,9 @@ install -pm0644 %SOURCE2 %buildroot%_datadir/nvim
 %_datadir/nvim/sysinit.vim
 
 %changelog
+* Sun May 19 2024 Vladimir Didenko <cow@altlinux.org> 0.10.0-alt1
+- New version
+
 * Thu Jan 11 2024 Vladimir Didenko <cow@altlinux.org> 0.9.5-alt1
 - New version
 
