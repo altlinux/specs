@@ -1,17 +1,14 @@
-Name: maim
-Version:  5.7.4
-Release: alt1
+Name:          maim
+Version:       5.8.0
+Release:       alt1
+Summary:       maim (make image) takes screenshots of your desktop.
+License:       GPLv3
+Group:         Graphics
+Url:           https://github.com/naelstrof/maim
+Vcs:           https://github.com/naelstrof/maim.git
 
-Summary:  maim (make image) takes screenshots of your desktop.
-License: GPLv3
-Group: Graphics
-Url: https://github.com/naelstrof/maim
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-Source:   %name-%version.tar
-
-BuildRequires(pre): rpm-macros-cmake
+Source:        %name-%version.tar
+BuildRequires(pre): rpm-macros-cmake rpm-build-ruby
 BuildRequires: cmake gcc-c++
 BuildRequires: libslop-devel >= 7.5
 BuildRequires: zlib-devel
@@ -25,7 +22,6 @@ a region, and relies on slop to query for regions. maim is supposed to be
 an improved scrot.
 
 Features:
-
  * Takes screenshots of your desktop, and saves it in png or jpg format.
  * Takes screenshots predetermined regions or windows, useful for automation.
  * Allows a users to select a region, or window, before taking a screenshot
@@ -52,6 +48,9 @@ Features:
 %doc COPYING README.md
 
 %changelog
+* Mon May 20 2024 Pavel Skrylev <majioa@altlinux.org> 5.8.0-alt1
+- ^ 5.7.4 -> 5.8.0
+
 * Sat Aug 21 2021 Vitaly Lipatov <lav@altlinux.ru> 5.7.4-alt1
 - new version 5.7.4
 
@@ -73,7 +72,9 @@ Features:
 - Switch to manual installation, because in Source isn't install command
 - Add Documentation
 - Add %%changelog
+
 * Mon Oct 20 2014 rneuhauser@suse.cz
 - maim-2.3.17
+
 * Fri Oct 17 2014 rneuhauser@suse.cz
 - maim-2.2.13
