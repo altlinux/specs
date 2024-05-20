@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%define soname 14
 %set_verify_elf_method strict
 
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: libnghttp2
-Version: 1.61.0
+Version: 1.62.1
 Release: alt1
 
 Summary: HTTP/2.0 C Library
@@ -71,12 +72,16 @@ Requires: %name = %EVR
 %doc README.rst AUTHORS COPYING ChangeLog
 
 %files
-%_libdir/libnghttp2.so.*
+%_libdir/libnghttp2.so.%soname
+%_libdir/libnghttp2.so.%soname.*
 %exclude %_libdir/libnghttp2.a
 %exclude %_datadir/doc/nghttp2/README.rst
 %exclude %_datadir/nghttp2/fetch-ocsp-response
 
 %changelog
+* Sun May 19 2024 Anton Farygin <rider@altlinux.ru> 1.62.1-alt1
+- 1.61.0 -> 1.62.1
+
 * Fri Apr 05 2024 Anton Farygin <rider@altlinux.ru> 1.61.0-alt1
 - 1.60.0 -> 1.61.0 (Fixes: CVE-2024-28182)
 
