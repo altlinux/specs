@@ -9,7 +9,7 @@
 
 Name: flatseal
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: Manage Flatpak permissions
 License: GPL-3.0
@@ -23,10 +23,13 @@ Source: %url/archive/v%version/%name-%version.tar.gz
 %else
 Source: %_name-%version.tar
 %endif
+# https://aur.archlinux.org/cgit/aur.git/tree/appstream.patch?h=flatseal
+Patch10: %name-2.2.0-aur-appstream-1.0.patch
 
 %define gjs_ver 1.73.1
 %define adw_ver 1.5
 %define webkit_ver 2.40
+%define appstream_ver 1.0
 
 Requires: libgjs >= %gjs_ver
 Requires: flatpak
@@ -35,12 +38,14 @@ Requires: yelp
 Requires: typelib(Adw) = 1
 Requires: typelib(WebKit) = 6.0
 Requires: typelib(AppStream) = 1.0
+Requires: libappstream-gir >= %appstream_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson yelp-tools
 BuildRequires: libgjs-devel >= %gjs_ver
 BuildRequires: libadwaita-gir-devel >= %adw_ver
 BuildRequires: libwebkitgtk6.0-gir-devel >= %webkit_ver
+BuildRequires: pkgconfig(appstream) >= %appstream_ver
 %{?_enable_check:BuildRequires: desktop-file-utils /usr/bin/appstreamcli}
 
 %description
@@ -49,6 +54,7 @@ Flatpak applications.
 
 %prep
 %setup -n %_name-%version
+%patch10 -p1
 
 %build
 %meson
@@ -72,6 +78,9 @@ Flatpak applications.
 %doc README* DOCUMENTATION* CHANGELOG*
 
 %changelog
+* Mon May 20 2024 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt2
+- applied AUR patch for AppStream-1.0.0 (ALT #50396)
+
 * Fri Apr 19 2024 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
 - 2.2.0
 
