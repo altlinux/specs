@@ -4,7 +4,7 @@
 #%%def_disable check
 
 Name:    python3-module-%srcname
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: Pytest plugin to manage external processes across test runs
@@ -53,8 +53,7 @@ rm -r *.egg-info
 %pyproject_install
 
 %check
-export PYTHONPATH=%buildroot/%python3_sitelibdir/
-pytest3 -v
+%pyproject_run -- pytest -vra
 
 %files
 %python3_sitelibdir/%modulename
@@ -62,6 +61,9 @@ pytest3 -v
 %doc *.rst
 
 %changelog
+* Mon May 20 2024 Anton Zhukharev <ancieg@altlinux.org> 1.0.2-alt1
+- Updated to 1.0.2.
+
 * Thu Apr 11 2024 Anton Zhukharev <ancieg@altlinux.org> 1.0.1-alt1
 - Updated to 1.0.1.
 
