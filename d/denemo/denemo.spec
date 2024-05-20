@@ -1,28 +1,27 @@
 %def_enable    jack
 %def_enable    fluidsynth
+%def_enable    lash
+%def_enable    guile_2_2
 %def_enable    doc
 
 Name:          denemo
-Version:       2.5.0
+Version:       2.6.0
 Release:       alt1
-
 Summary:       WYSIWYG musical score editor, and frontend for Lilypond
 Summary(ru_RU.UTF-8): Нотный редактор с поддержкой Lilypond
 Group:         Sound
 License:       GPLv3+
 Url:           http://www.denemo.org/
 Vcs:           https://github.com/denemo/denemo.git
-Packager:      Ildar Mulyukov <ildar@altlinux.ru>
 
 Source:        %name-%version.tar
-
+Source1:       %name.conf
+BuildRequires: xmllint
 BuildRequires: convert
 BuildRequires: gtk-doc
 BuildRequires: intltool
 BuildRequires: flex
-BuildRequires: guile
 BuildRequires: glib2-devel
-BuildRequires: guile-devel
 BuildRequires: libxml2-devel
 BuildRequires: librsvg-devel
 BuildRequires: libsndfile-devel
@@ -34,19 +33,15 @@ BuildRequires: librubberband-devel
 BuildRequires: libportaudio2-devel
 BuildRequires: libfftw3-devel
 BuildRequires: libportmidi-devel
-%if_enabled jack
-BuildRequires: jackit-devel
-Requires: jackd
-%endif
-%if_enabled fluidsynth
-BuildRequires: libfluidsynth-devel
-%endif
-%if_enabled lash
-BuildRequires: liblash-devel
-%endif
-
+%{?!_disable_jack:BuildRequires: jackit-devel}
+%{?!_disable_fluidsynth:BuildRequires: libfluidsynth-devel}
+%{?!_disable_lash:BuildRequires: liblash-devel}
+%{?!_disable_guile_2_2:BuildRequires: guile guile-devel}
 Requires:      lilypond
 Requires:      TiMidity++
+%{?!_disable_jack:BuildRequires: jackd}
+
+%add_optflags -L/%_lib -lm
 
 %description
 Denemo is a music notation program for Linux and Windows that lets you rapidly
@@ -58,7 +53,7 @@ Denemo itself does not engrave the music - it uses LilyPond which generates
 beautiful sheet music to the highest publishing standards. Denemo just displays
 the music so you can enter and edit the music efficiently.
 
-%description -l ru_RU.UTF-8
+%description   -l ru_RU.UTF-8
 Denemo - графический WYSIWYG редактор партитур, поддерживает ввод с
 клавиатуры компьютера и midi-клавиатуры, или даже с микрофона, подключённого
 к звуковой карте компьютера. Для вывода нотных записей на печать использует
@@ -80,6 +75,7 @@ Csound воспроизвести ее. Об этих и других продв
 %build
 %autoreconf
 %configure \
+	%{subst_enable guile_2_2} \
 	%{subst_enable jack} \
 	%{subst_enable fluidsynth} \
 	%{subst_enable doc} \
@@ -89,14 +85,20 @@ Csound воспроизвести ее. Об этих и других продв
 %install
 %make_install DESTDIR=%buildroot install
 mkdir -p %buildroot%_sysconfdir/%name
-install -m644 denemo.conf %buildroot%_sysconfdir/%name
+install -m644 %SOURCE1 %buildroot%_sysconfdir/%name
 
 find %buildroot -name 'Makefile*' -exec rm -f {} \;
 mv %buildroot%_datadir/fonts/{truetype,ttf}
-mkdir -p %buildroot%_iconsdir/hicolor/{48x48,32x32,16x16}/apps/
-convert %buildroot%_pixmapsdir/%name.png -resize 48x48 %buildroot%_liconsdir/%name.png
-convert %buildroot%_pixmapsdir/%name.png -resize 32x32 %buildroot%_niconsdir/%name.png
-convert %buildroot%_pixmapsdir/%name.png -resize 16x16 %buildroot%_miconsdir/%name.png
+mkdir -p %buildroot%_iconsdir/hicolor/{48x48,32x32,16x16}/apps/ \
+         %buildroot%_pixmapsdir/ \
+         %buildroot%_desktopdir \
+         %buildroot%_datadir/appdata
+convert pixmaps/%{name}128x128.png -resize 48x48 %buildroot%_liconsdir/%name.png
+convert pixmaps/%{name}128x128.png -resize 32x32 %buildroot%_niconsdir/%name.png
+convert pixmaps/%{name}128x128.png -resize 16x16 %buildroot%_miconsdir/%name.png
+install -m644 pixmaps/%name.png %buildroot%_pixmapsdir/%name.png
+install -m644 pixmaps/org.denemo.Denemo.desktop %buildroot%_desktopdir/%name.desktop
+xmllint org.denemo.Denemo.appdata.xml.in > %buildroot%_datadir/appdata/%name.appdata.xml
 xz ChangeLog
 %find_lang %name
 
@@ -115,6 +117,10 @@ fc-cache %_datadir/fonts/ttf/%name ||:
 %doc AUTHORS ChangeLog* LICENSE_OFL.txt NEWS README*
 
 %changelog
+* Mon May 20 2024 Pavel Skrylev <majioa@altlinux.org> 2.6.0-alt1
+- ^ 2.4.0 -> 2.6.0
+- ! fixed compilation without explicitly defined math (-lm) library
+
 * Mon Mar 01 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5.0-alt1
 - 2.5.0 released
 
