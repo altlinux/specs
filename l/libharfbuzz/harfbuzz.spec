@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name harfbuzz
-%define ver_major 8.4
+%define ver_major 8.5
 %def_with graphite2
 %def_with icu
 %def_with cairo
@@ -207,6 +207,9 @@ GObject introspection devel data for the HarfBuzz library
 %endif
 
 %changelog
+* Tue May 14 2024 Yuri N. Sedunov <aris@altlinux.org> 8.5.0-alt1
+- 8.5.0
+
 * Mon Apr 01 2024 Yuri N. Sedunov <aris@altlinux.org> 8.4.0-alt1
 - 8.4.0
 
