@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 44
+%define ver_major 46
 %define beta %nil
 %define xdg_name org.gnome.Geary
 # see meson_options.txt
@@ -12,7 +12,7 @@
 %def_enable libunwind
 
 Name: geary
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Email client
@@ -28,8 +28,8 @@ Source: %name-%version.tar
 
 %define glib_ver 2.66
 %define vala_ver 0.48.11
-%define gtk_ver 3.24.23
-%define sqlite_ver 3.12.0
+%define gtk_ver 3.24.24
+%define sqlite_ver 3.24
 %define gcr_ver 3.10.1
 %define webkit_ver 2.30
 %define gmime_ver 3.2.4
@@ -41,8 +41,8 @@ Source: %name-%version.tar
 
 Requires: dconf gnome-keyring gcr
 
-BuildRequires(pre): meson
-BuildRequires: vala-tools >= %vala_ver libvala-devel
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson vala-tools >= %vala_ver
 BuildRequires: desktop-file-utils yelp-tools libappstream-glib-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
@@ -101,6 +101,9 @@ Geary's development.
 %doc AUTHORS NEWS README* THANKS
 
 %changelog
+* Mon May 20 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Fri Aug 18 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1
 - 44.1
 
