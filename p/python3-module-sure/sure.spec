@@ -4,37 +4,26 @@
 %def_with check
 
 Name: python3-module-%modname
-
-Version: 2.0.0
-Release: alt1.1
-
-Summary: An idiomatic testing library for python with powerful and flexible assertions.
-
-Group: Development/Python3
+Version: 2.0.1
+Release: alt1
+Summary: Utility belt for automated testing in python for python
 License: GPLv3+
-URL: https://github.com/gabrielfalcao/sure
-
+Group: Development/Python3
+Url: https://pypi.org/project/sure/
+Vcs: https://github.com/gabrielfalcao/sure
 BuildArch: noarch
-
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# install_requires=
-BuildRequires: python3(mock)
-BuildRequires: python3(six)
-
-BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
+# nose is deprecated and was removed from sisyphus
+%add_pyproject_deps_check_filter rednose
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
-
-# try-except import
-%py3_requires mock
 
 %description
 An idiomatic testing library for python with powerful and flexible assertions.
@@ -44,6 +33,11 @@ should.js.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile development.txt
+%endif
 
 %build
 %pyproject_build
@@ -52,16 +46,18 @@ should.js.
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -ra -o=addopts=''
 
 %files
 %_bindir/%modname
-%doc README.rst COPYING
+%doc README.rst
 %python3_sitelibdir/%modname
 %python3_sitelibdir/%modname-%version.dist-info/
 
 %changelog
+* Fri May 17 2024 Stanislav Levin <slev@altlinux.org> 2.0.1-alt1
+- 2.0.0 -> 2.0.1.
+
 * Sat Jan 27 2024 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1.1
 - NMU: moved on modern pyproject macros.
 
