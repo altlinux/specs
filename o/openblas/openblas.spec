@@ -28,7 +28,7 @@
 
 
 Name: openblas
-Version: 0.3.26
+Version: 0.3.27
 Release: alt1
 
 Summary: Optimized BLAS library based on GotoBLAS2 1.13 
@@ -159,6 +159,9 @@ F_COMPILER="GFORTRAN" C_COMPILER="GCC" \
 %exclude %_libdir/*.a
 
 %changelog
+* Fri May 17 2024 Stanislav Levin <slev@altlinux.org> 0.3.27-alt1
+- 0.3.26 -> 0.3.27.
+
 * Fri Feb 02 2024 Stanislav Levin <slev@altlinux.org> 0.3.26-alt1
 - 0.3.23 -> 0.3.26.
 
