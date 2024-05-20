@@ -5,13 +5,14 @@
 %endif
 
 Name: pyotherside
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 
 Summary: A Qt plugin providing access to a Python 3 interpreter from QML
 License: ISC
 Group: System/Libraries
-Url: https://github.com/thp/pyotherside
+Url: https://thp.io/2011/pyotherside/
+Vcs: https://github.com/thp/pyotherside
 
 Source: %name-%version.tar
 
@@ -33,20 +34,23 @@ asynchronous mobile and Desktop UIs with Python.
 %qmake_qt5 CONFIG+=nostrip pyotherside.pro
 %make_build
 
-%check
-xvfb-run ./tests/tests
-
 %install
 %install_qt5
 %make_install
 
 rm -f %buildroot%_qt5_datadir/tests/qtquicktests/qtquicktests
 
+%check
+xvfb-run ./tests/tests
+
 %files
 %doc LICENSE examples
-%_qt5_qmldir/
+%_qt5_qmldir/*
 
 %changelog
+* Mon May 20 2024 Anton Zhukharev <ancieg@altlinux.org> 1.6.1-alt1
+- Updated to 1.6.1.
+
 * Wed Sep 28 2022 Anton Zhukharev <ancieg@altlinux.org> 1.6.0-alt1
 - 1.5.9 -> 1.6.0
 
