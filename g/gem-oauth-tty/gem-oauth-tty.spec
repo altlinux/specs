@@ -6,13 +6,13 @@
 
 Name:          gem-oauth-tty
 Version:       1.0.5.2
-Release:       alt0.1
+Release:       alt0.2
 Summary:       OAuth 1.0 TTY CLI
 License:       MIT
 Group:         Development/Ruby
 Url:           https://gitlab.com/oauth-xx/oauth-tty
 Vcs:           https://gitlab.com/oauth-xx/oauth-tty.git
-Packager:      Pavel Skrylev <majioa@altlinux.org>
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
@@ -56,11 +56,10 @@ BuildConflicts: gem(simplecov) >= 1
 BuildConflicts: gem(simplecov-lcov) >= 1
 BuildConflicts: gem(curb) >= 1.1
 BuildConflicts: gem(minitest) >= 6
-BuildConflicts: gem(rack) >= 3
+BuildConflicts: gem(rack) >= 4
 BuildConflicts: gem(webmock) > 3.19.0
 BuildConflicts: gem(em-http-request) >= 1.2
 BuildConflicts: gem(rake) >= 14
-BuildConflicts: gem(rubocop-lts) >= 23
 BuildConflicts: gem(version_gem) >= 2
 %endif
 
@@ -68,7 +67,8 @@ BuildConflicts: gem(version_gem) >= 2
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
 %ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
-%ruby_use_gem_dependency rubocop-lts >= 22.0.1,rubocop-lts < 23
+%ruby_use_gem_dependency rubocop-lts >= 23.0
+%ruby_use_gem_dependency rack >= 3.0
 Requires:      gem(version_gem) >= 1.1.1
 Requires:      gem(oauth) >= 1.1.0
 Conflicts:     gem(version_gem) >= 2
@@ -82,7 +82,7 @@ OAuth 1.0 TTY Command Line Interface.
 
 %package       -n oauth
 Version:       1.0.5.2
-Release:       alt0.1
+Release:       alt0.2
 Summary:       OAuth 1.0 TTY CLI executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета oauth-tty
 Group:         Other
@@ -101,7 +101,7 @@ OAuth 1.0 TTY Command Line Interface.
 %if_enabled    doc
 %package       -n gem-oauth-tty-doc
 Version:       1.0.5.2
-Release:       alt0.1
+Release:       alt0.2
 Summary:       OAuth 1.0 TTY CLI documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета oauth-tty
 Group:         Development/Documentation
@@ -121,7 +121,7 @@ OAuth 1.0 TTY Command Line Interface.
 %if_enabled    devel
 %package       -n gem-oauth-tty-devel
 Version:       1.0.5.2
-Release:       alt0.1
+Release:       alt0.2
 Summary:       OAuth 1.0 TTY CLI development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета oauth-tty
 Group:         Development/Ruby
@@ -163,11 +163,10 @@ Conflicts:     gem(simplecov) >= 1
 Conflicts:     gem(simplecov-lcov) >= 1
 Conflicts:     gem(curb) >= 1.1
 Conflicts:     gem(minitest) >= 6
-Conflicts:     gem(rack) >= 3
+Conflicts:     gem(rack) >= 4
 Conflicts:     gem(webmock) > 3.19.0
 Conflicts:     gem(em-http-request) >= 1.2
 Conflicts:     gem(rake) >= 14
-Conflicts:     gem(rubocop-lts) >= 23
 
 %description   -n gem-oauth-tty-devel
 OAuth 1.0 TTY CLI development package.
@@ -180,7 +179,7 @@ OAuth 1.0 TTY Command Line Interface.
 
 %prep
 %setup
-# %autopatch # raises dep exception in prod due to runtime dep to oauth
+# %autopatch # NOTE raises dep exception in prod due to runtime dep to oauth
 
 %build
 %ruby_build
@@ -213,6 +212,9 @@ OAuth 1.0 TTY Command Line Interface.
 
 
 %changelog
+* Mon May 20 2024 Pavel Skrylev <majioa@altlinux.org> 1.0.5.2-alt0.2
+- ! dep to rack and rubocop-lts
+
 * Mon Mar 25 2024 Pavel Skrylev <majioa@altlinux.org> 1.0.5.2-alt0.1
 - ^ 1.0.5 -> 1.0.5p2
 - ! fixed dep to oauth gem

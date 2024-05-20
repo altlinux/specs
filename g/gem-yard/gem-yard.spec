@@ -6,7 +6,7 @@
 
 Name:          gem-yard
 Version:       0.9.36
-Release:       alt1
+Release:       alt1.1
 Summary:       YARD is a Ruby Documentation tool. The Y stands for "Yay!"
 License:       MIT
 Group:         Development/Ruby
@@ -34,13 +34,14 @@ BuildRequires: gem(rack) >= 2.0
 BuildRequires: gem(gettext) >= 0
 BuildConflicts: gem(rdoc) >= 7
 BuildConflicts: gem(samus) >= 3.1
-BuildConflicts: gem(rack) >= 3
+BuildConflicts: gem(rack) >= 4
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
 %ruby_use_gem_dependency rspec >= 3.10.0,rspec < 4
+%ruby_use_gem_dependency rack >= 3.0,rack < 4
 Obsoletes:     ruby-yard < %EVR
 Provides:      ruby-yard = %EVR
 Provides:      gem(yard) = 0.9.36
@@ -55,7 +56,7 @@ custom Ruby constructs such as custom class level definitions.
 
 %package       -n yard
 Version:       0.9.36
-Release:       alt1
+Release:       alt1.1
 Summary:       YARD is a Ruby Documentation tool. The Y stands for "Yay!" executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета yard
 Group:         Documentation
@@ -77,7 +78,7 @@ custom Ruby constructs such as custom class level definitions.
 %if_enabled    doc
 %package       -n gem-yard-doc
 Version:       0.9.36
-Release:       alt1
+Release:       alt1.1
 Summary:       YARD is a Ruby Documentation tool. The Y stands for "Yay!" documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета yard
 Group:         Development/Documentation
@@ -101,7 +102,7 @@ custom Ruby constructs such as custom class level definitions.
 %if_enabled    devel
 %package       -n gem-yard-devel
 Version:       0.9.36
-Release:       alt1
+Release:       alt1.1
 Summary:       YARD is a Ruby Documentation tool. The Y stands for "Yay!" development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета yard
 Group:         Development/Ruby
@@ -124,7 +125,7 @@ Requires:      gem(rack) >= 2.0
 Requires:      gem(gettext) >= 0
 Conflicts:     gem(rdoc) >= 7
 Conflicts:     gem(samus) >= 3.1
-Conflicts:     gem(rack) >= 3
+Conflicts:     gem(rack) >= 4
 
 %description   -n gem-yard-devel
 YARD is a Ruby Documentation tool. The Y stands for "Yay!" development
@@ -176,6 +177,9 @@ custom Ruby constructs such as custom class level definitions.
 
 
 %changelog
+* Mon May 20 2024 Pavel Skrylev <majioa@altlinux.org> 0.9.36-alt1.1
+- ! dep to rack gem
+
 * Fri Mar 15 2024 Pavel Skrylev <majioa@altlinux.org> 0.9.36-alt1
 - ^ 0.9.34 -> 0.9.36
 
