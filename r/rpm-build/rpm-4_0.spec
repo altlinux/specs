@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.198
+Version: 4.0.4.199
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -387,6 +387,13 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Fri May 17 2024 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.199-alt1
+- vt@:
+  + Allowed env shebang with split-string arguments (ALT#50059).
+- shaba@:
+  + systemd-services.req.files: add /usr/lib/systemd/system for system units,
+    since that is a valid unit file location on merged-usr systems.
+
 * Tue Mar 26 2024 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.198-alt1
 - brp: Added brp-dupe-bin module to help fix ~20 packages for usrmerge (thx
   obirvalger@).
