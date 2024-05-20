@@ -1,5 +1,6 @@
 %define _name gupnp-dlna
 %define ver_major 0.12
+%define namespace GUPnPDLNA
 %define api_ver 2.0
 
 %def_enable introspection
@@ -8,19 +9,21 @@
 
 Name: libgupnp-dlna
 Version: %ver_major.0
-Release: alt1
-Summary: A collection of helpers for building UPnP AV applications
+Release: alt2
+Summary: GUPnP DLNA library
 
 Group: System/Libraries
-License: LGPL-2.1
+License: LGPL-2.0-or-later
 Url: http://www.gupnp.org/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
 BuildRequires: libgio-devel >= 2.58 pkgconfig(libxml-2.0) >= 2.5.0
 BuildRequires: pkgconfig(gstreamer-1.0) >= 1.0 pkgconfig(gstreamer-pbutils-1.0) >= 1.0
 %{?_enable_introspection:
-BuildRequires: pkgconfig(gobject-introspection-1.0) >= 1.36.0
+BuildRequires: pkgconfig(gobject-introspection-1.0) >= 1.36.0 /usr/bin/g-ir-scanner
 BuildRequires: gir(GObject) = 2.0 gir(Gst) = 1.0 gir(GstPbutils) = 1.0}
 %{?_enable_vala:
 BuildRequires: vala-tools >= 0.18 rpm-build-vala libvala-devel
@@ -33,13 +36,13 @@ GUPnP is an object-oriented open source framework for creating UPnP
 devices and control points, written in C using GObject and libsoup.
 The GUPnP API is intended to be easy to use, efficient and flexible.
 
-GUPnP-dlna is a collection of helpers for building DLNA (Digital
+GUPnP DLNA is a collection of helpers for building DLNA (Digital
 Living Network Alliance) compliant applications using GUPnP.
 
 %package devel
 Summary: Development package for %_name
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Contains libraries and header files for developing applications that
@@ -48,7 +51,7 @@ use %_name.
 %package gir
 Summary: GObject introspection data for the %_name
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the %_name
@@ -57,7 +60,8 @@ GObject introspection data for the %_name
 Summary: GObject introspection devel data for the %_name
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-devel = %EVR
+Requires: %name-gir = %EVR
 
 %description gir-devel
 GObject introspection devel data for the %_name
@@ -75,24 +79,22 @@ Contains developer documentation for %_name.
 %setup -n %_name-%version
 
 %build
-%autoreconf
-%configure --disable-static \
-	%{?_enable_gtk_doc:--enable-gtk-doc}
+%meson \
+    %{?_enable_gtk_doc:-Dgtk_doc=true}
 %nil
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-%make check
+%__meson_test
 
 %files
 %_bindir/*
 %_libdir/lib*.so.*
 %_datadir/%{_name}*
 %_libdir/%_name/*.so
-%exclude %_libdir/%_name/*.la
 %doc AUTHORS NEWS README TODO
 
 %files devel
@@ -105,16 +107,19 @@ Contains developer documentation for %_name.
 
 %if_enabled introspection
 %files gir
-%_typelibdir/GUPnPDLNA*-%api_ver.typelib
+%_typelibdir/%{namespace}*-%api_ver.typelib
 
 %files gir-devel
-%_girdir/GUPnPDLNA*-%api_ver.gir
+%_girdir/%{namespace}*-%api_ver.gir
 %endif
 
 %{?_enable_gtk_doc:%files devel-doc
 %_datadir/gtk-doc/html/*}
 
 %changelog
+* Mon May 20 2024 Yuri N. Sedunov <aris@altlinux.org> 0.12.0-alt2
+- switched to Meson build system
+
 * Sun Sep 19 2021 Yuri N. Sedunov <aris@altlinux.org> 0.12.0-alt1
 - 0.12.0
 
