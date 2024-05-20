@@ -12,12 +12,12 @@
 
 Name: WindowMaker
 Version: 0.96.0
-Release: alt1
+Release: alt2
 Packager: %packager
 
 Summary: A window manager for the X Window System
 Group: Graphical desktop/Window Maker
-License: GPL
+License: GPLv2+
 URL: http://windowmaker.org
 
 Source0: %name-%version.tar
@@ -167,7 +167,7 @@ Utility for root window image setting
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1 -R
-#%%patch3 -p1 -R
+%patch3 -p1 -R
 
 sed -i 's,/usr/lib/GNUstep,%gnustepdir,g' \
 	altlinux/etc/X11/WindowMaker/WMWindowAttributes
@@ -311,6 +311,9 @@ rm -rf %buildroot%_mandir/cs
 %_bindir/wmsetbg
 
 %changelog
+* Sun May 19 2024 Michael Shigorin <mike@altlinux.org> 0.96.0-alt2
+- Re-enable fullscreen patch (see 0.95.8-alt2; thx ilyakurdyukov@).
+
 * Mon Aug 07 2023 Andrey Bergman <vkni@altlinux.org> 0.96.0-alt1
 - Update to version 0.96.0
 
