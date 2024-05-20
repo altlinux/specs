@@ -1,14 +1,14 @@
 %def_enable profiling
+%def_enable check
 
 Name: 7-zip
-Version: 23.01
-Release: alt2
+Version: 24.05
+Release: alt1
 Group: Archiving/Compression
 License: LGPLv2+ with UnRAR-exception
 Url: https://www.7-zip.org
 Source: %name-%version.tar.xz
 Source1: check.tar
-Patch1: nostrip.patch
 Patch2: dangling-pointer.patch
 Patch3: uninitialized.patch
 Patch100: ALT-armh.patch
@@ -39,10 +39,9 @@ BuildRequires: gcc-c++
 
 %prep
 %setup -a1
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch100 -p1
+##patch100 -p1
 %ifarch %e2k
 %patch2000 -p1
 %add_optflags -msse4.1 -mno-sse4.2
@@ -62,7 +61,7 @@ s@7zCon.sfx@%buildroot%_libdir/7z/7zCon.sfx@g
 
 %ifarch %arm
 %define optflags_lto %nil
-%add_optflags -mno-unaligned-access
+%add_optflags -mno-unaligned-access -DZ7_DISABLE_ARM_NEON
 # error: 'compressedSize' may be used uninitialized
 sed -i 's/UInt64 compressedSize;/UInt64 compressedSize = 0;/' \
 	CPP/7zip/Archive/Chm/ChmHandler.cpp
@@ -75,6 +74,7 @@ pgo_flags="-fprofile-generate -fprofile-update=atomic"
 %endif
 
 %make_build -C CPP/7zip/Bundles/Alone2 -f ../../cmpl_gcc.mak \
+        DEBUG_BUILD=1 \
 %if_enabled profiling
 	LOCAL_FLAGS="%optflags $pgo_flags" LD_arch="$pgo_flags" \
 %else
@@ -98,6 +98,7 @@ rm -f b/g/*.o
 popd
 # build with profile
 %make_build -C CPP/7zip/Bundles/Alone2 -f ../../cmpl_gcc.mak \
+        DEBUG_BUILD=1 \
 	LOCAL_FLAGS="%optflags -fprofile-use" \
 	MY_LIBS="" \
 %ifarch %e2k
@@ -107,6 +108,7 @@ popd
 %endif
 
 %make_build -C CPP/7zip/Bundles/SFXCon -f makefile.gcc \
+        DEBUG_BUILD=1 \
 %ifarch %e2k
 	CFLAGS_WARN="-Wno-error -O%_optlevel" \
 %endif
@@ -121,11 +123,16 @@ install -D CPP/7zip/Bundles/SFXCon/_o/7zCon %buildroot%_libdir/7z/7zCon.sfx
 %_bindir/*
 %_libdir/7z
 
+%if_enabled check
 %check
 cd p7zip/check
 sh check.sh %buildroot%_bindir/7zz
+%endif
 
 %changelog
+* Mon May 20 2024 Fr. Br. George <george@altlinux.org> 24.05-alt1
+- Manual version bump to 24.05
+
 * Tue Mar 05 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 23.01-alt2
 - update patch for Elbrus
 - compile with profiling
