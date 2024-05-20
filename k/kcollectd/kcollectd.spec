@@ -4,7 +4,7 @@
 
 Name: kcollectd
 Version: 0.12.1
-Release: alt1
+Release: alt1.1
 
 Summary: collectd graphing frontend for KDE
 License: %gpl3plus
@@ -18,6 +18,7 @@ Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 Patch1: %name-0.12.0-alt-desktop_fix.patch
+Patch2: %name-0.12.1-alt-fix-build-with-boost-1.85.0.patch
 
 BuildRequires(pre): rpm-build-licenses rpm-build-xdg
 
@@ -38,6 +39,7 @@ as a chart recorder.
 %patch0 -p1
 
 %patch1
+%patch2 -p1
 
 mv -f -- COPYING COPYING.GPL3.orig
 ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/COPYING) COPYING
@@ -69,6 +71,9 @@ mv -f %buildroot/%_desktopdir/net.aerusso.kcollectd.desktop %buildroot%_desktopd
 
 
 %changelog
+* Mon May 20 2024 Ivan A. Melnikov <iv@altlinux.org> 0.12.1-alt1.1
+- NMU: fix building with boost 1.85.0
+
 * Thu Oct 26 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.12.1-alt1
 - New version
 
