@@ -2,6 +2,7 @@
 %define pypi_name build
 
 %def_with check
+%def_with uv
 
 %define add_python_extra() \
 %{expand:%%package -n %%name+%{1} \
@@ -16,16 +17,19 @@ Extra "%{1}" for %%pypi_name. \
 
 Name: python3-module-%pypi_name
 Version: 1.2.1
-Release: alt2
+Release: alt3
+
 Summary: Simple, correct PEP 517 build frontend
 License: MIT
 Group: Development/Python3
+
 Url: https://pypi.org/project/build
 VCS: https://github.com/pypa/build.git
 BuildArch: noarch
-Source: %name-%version.tar
+Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-Patch0: %name-%version-alt.patch
+Patch: %name-%version-alt.patch
+
 # manually manage extras dependencies with metadata
 AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
@@ -37,13 +41,15 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_metadata_extra virtualenv
 %endif
 
+%if_with uv
 %add_python_extra uv
+%endif
 
 %description
 A simple, correct PEP 517 build frontend.
 
-build will invoke the PEP 517 hooks to build a distribution package. It is a
-simple build tool and does not perform any dependency management.
+build will invoke the PEP 517 hooks to build a distribution package.
+It is a simple build tool and does not perform any dependency management.
 
 %package -n pyproject-build
 Summary: Executable for python-build
@@ -78,6 +84,10 @@ Requires: python3-module-%pypi_name
 %_bindir/pyproject-build
 
 %changelog
+* Sun May 19 2024 Michael Shigorin <mike@altlinux.org> 1.2.1-alt3
+- Made uv subpackage conditional (on by default)
+  since python3-module-uv is lacking on e2k right now.
+
 * Wed May 08 2024 Stanislav Levin <slev@altlinux.org> 1.2.1-alt2
 - Added uv subpackage.
 
