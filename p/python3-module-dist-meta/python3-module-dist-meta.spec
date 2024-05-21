@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Summary: Parse and create Python distribution metadata
@@ -19,13 +19,11 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-
-%py3_provides %pypi_name
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -36,9 +34,9 @@ BuildRequires(pre): rpm-build-pyproject
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-
 %if_with check
 %pyproject_deps_resync_check_pipreqfile tests/requirements.txt
 %endif
@@ -58,6 +56,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue May 21 2024 Anton Zhukharev <ancieg@altlinux.org> 0.8.1-alt1
+- Updated to 0.8.1.
+
 * Fri Jul 21 2023 Anton Zhukharev <ancieg@altlinux.org> 0.8.0-alt1
 - Updated to 0.8.0.
 
