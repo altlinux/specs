@@ -1,4 +1,4 @@
-%define git_version 7fe91d5d5842e04be3b4f514d6dd990c54b29c76
+%define git_version 531c0d11a1c5d39fbfe6aa8a521f023abf3bf3e2
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
@@ -57,8 +57,8 @@
 %endif
 
 Name: ceph
-Version: 18.2.1
-Release: alt2.1
+Version: 18.2.2
+Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -1855,6 +1855,9 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Fri May 17 2024 Alexey Shabalin <shaba@altlinux.org> 18.2.2-alt1
+- 18.2.2
+
 * Thu Feb 08 2024 Ivan A. Melnikov <iv@altlinux.org> 18.2.1-alt2.1
 - NMU: fix building with boost 1.84.0-alt1
 
