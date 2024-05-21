@@ -1,6 +1,6 @@
 %def_with ffmpeg
 # X264 backend not implemented, please review your configuration!
-%def_without x264
+%def_with x264
 %def_without directfb
 # see https://github.com/FreeRDP/FreeRDP/issues/4348
 %def_without gss
@@ -8,7 +8,7 @@
 
 Name: freerdp
 Version: 2.11.7
-Release: alt1.1
+Release: alt2
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -86,6 +86,7 @@ BuildRequires: chrpath
 %else
 BuildRequires: patchelf
 %endif
+BuildRequires: libopenh264-devel
 
 %description
 freerdp implements Remote Desktop Protocol (RDP), used in a number of Microsoft
@@ -254,7 +255,7 @@ sed -i '/set(CMAKE_INSTALL_RPATH /d' CMakeLists.txt
     -DWITH_LIBRARY_VERSIONING=ON \
     -DWITH_MANPAGES=ON \
     %{?_with_mbetls:-DWITH_MBEDTLS=ON} \
-    -DWITH_OPENH264=OFF \
+    -DWITH_OPENH264=ON \
     -DWITH_OPENSSL=ON \
     -DWITH_PCSC=ON \
     -DWITH_PULSE=ON \
@@ -398,6 +399,9 @@ install -Dpm0644 %SOURCE4 %buildroot%_sysconfdir/sysconfig/freerdp-server
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Tue May 21 2024 Andrey Cherepanov <cas@altlinux.org> 2.11.7-alt2
+- Fix connect to Windows 10 (ALT #50394).
+
 * Thu Apr 25 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.11.7-alt1.1
 - E2K: rpath fix.
 
