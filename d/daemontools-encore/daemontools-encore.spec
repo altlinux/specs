@@ -5,7 +5,7 @@
 Name: daemontools-encore
 Summary: Daemontools by DJB
 Version: 1.10
-Release: alt1
+Release: alt2
 License: Public domain
 Group: System/Servers
 Url: http://untroubled.org/daemontools-encore/
@@ -21,6 +21,7 @@ Summary: Daemontools and other packages shared files
 Group: System/Base
 Requires(pre): startup
 Requires(post): daemontools-common = %version-%release
+Requires(post): daemontools-utils = %version-%release
 
 %description -n daemontools
 Daemontools and other packages shared files
@@ -32,6 +33,14 @@ BuildArch: noarch
 
 %description -n daemontools-common
 Daemontools and other packages shared files
+
+
+%package -n daemontools-utils
+Summary: Daemontools programs and utilities
+Group: System/Base
+
+%description -n daemontools-utils
+Daemontools programs and utilities
 
 
 %package -n rpm-macros-daemontools
@@ -74,7 +83,7 @@ mkdir -p %buildroot/bin
 make install DESTDIR=%buildroot
 mkdir -p %buildroot/bin %buildroot%_sysconfdir/daemontools.d
 install -D -m644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
-install -D -m644 %SOURCE2 %buildroot/lib/systemd/system/daemontools.service
+install -D -m644 %SOURCE2 %buildroot%_unitdir/daemontools.service
 
 %post -n daemontools
 if [ ! -f %_sysconfdir/inittab ]; then
@@ -102,6 +111,12 @@ fi
 
 %files -n daemontools
 %doc CHANGES* ChangeLog LICENSE README TODO
+%_unitdir/daemontools.service
+
+%files -n daemontools-common
+%dir %_sysconfdir/daemontools.d
+
+%files -n daemontools-utils
 /bin/envdir
 /bin/envuidgid
 /bin/fghack
@@ -120,16 +135,17 @@ fi
 /bin/svup
 /bin/tai64n
 /bin/tai64nlocal
-/lib/systemd/system/daemontools.service
 %_man8dir/*
-
-%files -n daemontools-common
-%dir %_sysconfdir/daemontools.d
 
 %files -n rpm-macros-daemontools
 %_rpmmacrosdir/%name
 
 %changelog
+* Tue May 21 2024 Paul Wolneykien <manowar@altlinux.org> 1.10-alt2
+- Move all programs and manual pages to the separate
+  'daemontools-utils' package.
+- Use %%_unitdir macro to install and package unit files.
+
 * Tue Mar 14 2017 Denis Smirnov <mithraen@altlinux.ru> 1.10-alt1
 - first build for Sisyphus
 
