@@ -6,7 +6,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt78
+Release: alt79
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -184,6 +184,9 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Tue May 21 2024 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt79
+- re-read partition table once per disk (not when RAID has been assembled)
+
 * Fri Apr 26 2024 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt78
 - MBR, GPT: don't create device mapping if parent is a disk (Closes: #48723)
 
