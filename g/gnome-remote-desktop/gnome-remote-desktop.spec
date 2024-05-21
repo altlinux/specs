@@ -11,7 +11,7 @@
 %def_enable man
 
 Name: gnome-remote-desktop
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: GNOME Remote Desktop
@@ -82,6 +82,7 @@ Remote desktop daemon for GNOME using pipewire.
 %files -f %name.lang
 %_bindir/grdctl
 %_libexecdir/%name-daemon
+%_libexecdir/%name-enable-service
 %_unitdir/%name.service
 %_sysusersdir/%name-sysusers.conf
 %_tmpfilesdir/%name-tmpfiles.conf
@@ -100,9 +101,14 @@ Remote desktop daemon for GNOME using pipewire.
 %_datadir/dbus-1/system-services/%xdg_name.service
 %_datadir/dbus-1/system.d/%xdg_name.conf
 %_datadir/polkit-1/actions/org.gnome.remotedesktop.configure-system-daemon.policy
+%_datadir/polkit-1/actions/org.gnome.remotedesktop.enable-system-daemon.policy
+%_datadir/polkit-1/rules.d/20-%name.rules
 %doc README*
 
 %changelog
+* Tue May 21 2024 Yuri N. Sedunov <aris@altlinux.org> 46.2-alt1
+- 46.2 (fixed CVE-2024-5148)
+
 * Thu Apr 18 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
 - 46.1
 
