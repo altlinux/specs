@@ -5,7 +5,7 @@
 
 Name:    makedumpfile
 Version: 1.7.5
-Release: alt1
+Release: alt2
 Summary: Make vmcore smaller by filtering and compressing pages
 Group:   System/Kernel and hardware
 License: GPL-2.0-only
@@ -34,6 +34,7 @@ The makedumpfile can make a Linux crash dump smaller.
 
 %prep
 %setup
+sed -i 's/-leppic/& -ldl/' Makefile
 
 %build
 export CFLAGS="%optflags"
@@ -58,6 +59,9 @@ install -Dm0755 eppic_makedumpfile.so %buildroot%_libdir/%name/eppic_makedumpfil
 %_libdir/%name
 
 %changelog
+* Tue May 21 2024 Vitaly Chikunov <vt@altlinux.org> 1.7.5-alt2
+- spec: Fix verify-elf error for eppic_makedumpfile.so.
+
 * Fri Apr 12 2024 Vitaly Chikunov <vt@altlinux.org> 1.7.5-alt1
 - Update to 1.7.5 (2024-04-12).
 
