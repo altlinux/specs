@@ -1,5 +1,5 @@
 Name: kmscube
-Version: 0.0.20230802
+Version: 0.0.20240215
 Release: alt1
 
 Summary: Bare metal graphics demo using DRM/KMS 
@@ -32,6 +32,9 @@ OpenGL or OpenGL ES.
 %_bindir/texturator
 
 %changelog
+* Tue May 21 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.0.20240215-alt1
+- up to 6ab022f
+
 * Tue Sep 26 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20230802-alt1
 - up to ea6c5d1
 
