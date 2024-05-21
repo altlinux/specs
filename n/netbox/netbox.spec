@@ -1,7 +1,7 @@
 %def_with docs
 
 Name:    netbox
-Version: 3.7.4
+Version: 3.7.8
 Release: alt1
 
 Summary: The premier source of truth powering network automation
@@ -196,6 +196,9 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Mon May 20 2024 Alexander Burmatov <thatman@altlinux.org> 3.7.8-alt1
+- New 3.7.8 version.
+
 * Fri Mar 22 2024 Alexander Burmatov <thatman@altlinux.org> 3.7.4-alt1
 - New 3.7.4 version.
 

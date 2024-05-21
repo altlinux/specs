@@ -9,7 +9,7 @@
 
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
 Name: python3-module-%oname
-Version: %branch.11
+Version: %branch.13
 Release: alt1
 Source0: %origname-%version.tar
 License: BSD-3-Clause
@@ -184,6 +184,12 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Mon May 20 2024 Alexander Burmatov <thatman@altlinux.org> 4.2.13-alt1
+- New version 4.2.13.
+- Fixed a crash in Django 4.2 when validating email max line lengths with
+content decoded using the surrogateescape error handling scheme.
+- Fixes a packaging error in 4.2.12.
+
 * Fri Mar 22 2024 Alexander Burmatov <thatman@altlinux.org> 4.2.11-alt1
 - New version 4.2.11.
 - Fixes a security issue with severity "moderate" and a regression in 4.2.10.
