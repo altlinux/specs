@@ -4,8 +4,8 @@
 %def_with prebuild_webui
 
 Name: traefik
-Version: 2.11.2
-Release: alt2
+Version: 2.11.3
+Release: alt1
 Summary: The Cloud Native Edge Router
 
 License: MIT
@@ -146,6 +146,9 @@ install -d -m 755 %buildroot%_sharedstatedir/%name
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Tue May 21 2024 Alexey Shabalin <shaba@altlinux.org> 2.11.3-alt1
+- 2.11.3
+
 * Wed May 08 2024 Alexey Shabalin <shaba@altlinux.org> 2.11.2-alt2
 - Fix web static assets
 
