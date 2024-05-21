@@ -1,17 +1,17 @@
 %def_with inotify
 %def_without fam
 %def_enable qtgui
-%def_enable webkit
+%def_disable webkit
 
 %define pre %nil
 
 Name: recoll
-Version: 1.37.4
+Version: 1.38.1
 Release: alt2
 
 Summary: A personal full text search package
 Summary(ru_RU.UTF-8): Программа для полнотекстового поиска по файлам с различными форматами.
-License: %gpl2plus
+License: GPLv2+
 Group: File tools
 
 Url: http://recoll.org
@@ -28,7 +28,8 @@ Source100: recoll.watch
 Patch: recoll-alt-default-8bit-encoding-for-ru.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
-
+BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ libaspell-devel ImageMagick
 %{?_with_fam:BuildRequires: libfam-devel}
 BuildRequires: libxapian-devel >= 0.9
@@ -41,12 +42,14 @@ BuildRequires: libxslt-devel
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: rpm-build-python3
-BuildRequires: chrpath
+BuildRequires: chrpath libxdf-devel findutils liblzma-devel
+BuildRequires: meson rpm-macros-meson cmake libmagic-devel libmagic
 
 %if_enabled qtgui
-BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools-devel libXt-devel xorg-cf-files
+BuildRequires: qt6-base-devel qt6-tools qt6-svg-devel qt6-tools-devel qt6-qtbase-gui libqt6-gui libXt-devel xorg-cf-files
+#qt5-base-devel qt5-x11extras-devel qt5-tools-devel libXt-devel xorg-cf-files
 %if_enabled webkit
-BuildRequires: qt5-webkit-devel
+#BuildRequires: qt5-webkit-devel
 %endif
 %endif
 
@@ -115,6 +118,7 @@ Requires: aspell aspell-ru-rk
 Requires: xpdf-utils ghostscript-utils
 Requires: mutagen
 
+
 %description full
 This package contains just the requirements for additional packages
 that might be of use with Recoll.
@@ -145,22 +149,27 @@ sed -i '/^Categories=/s/=/=Qt;/' desktop/*.desktop
 cp -a %SOURCE5 desktop/
 
 %build
-export CXXFLAGS="%optflags" PATH="$PATH:%_libdir/qt5/bin"
-export QMAKE=qmake-qt5
-%configure \
-	%{subst_with inotify} \
-	%{subst_with fam} \
-	%{subst_enable qtgui} \
-	%{subst_enable webkit} \
-	#
-%make_build
+export CXXFLAGS="%optflags" PATH="$PATH:%_libdir/qt6/bin"
+export QMAKE=qmake-qt6
+
+
+%meson \
+      -Dwebkit=false 
+#      -DRECOLL_QT6_BUILD=1 \
+#      -DRECOLL_ENABLE_WEBENGINE=1
+
+# 1.38.{0,1} often fails to link given enough cores available;
+# meson-based build is race-prone here (cf. #348496 try 1/2)
+%meson_build || %meson_build
+
 gzip --best --keep --force ChangeLog
 for s in 128 96 72 64 36 32 24 22 16; do
     convert -depth 8 -resize ${s}x$s desktop/%name{.xcf,-$s.png}
 done
 
 %install
-%makeinstall_std INSTALL_ROOT=%buildroot
+%meson_install
+
 for s in 128 96 72 64 36 32 24 22 16; do
     install -pDm644 desktop/%name-$s.png %buildroot%_iconsdir/hicolor/${s}x$s/apps/%name.png
 done
@@ -179,7 +188,7 @@ chrpath -d %buildroot%_bindir/recollindex
 %files
 %_bindir/*
 # librecoll gets installed with no soname on intent: no ABI warranty
-%_libdir/lib%{name}-*.so
+%_libdir/lib%{name}.so.*
 %_datadir/%name
 %exclude %_datadir/%name/filters/rcllyx
 %exclude %_datadir/%name/filters/*.py
@@ -190,6 +199,8 @@ chrpath -d %buildroot%_bindir/recollindex
 %_pixmapsdir/*
 %_desktopdir/*
 %endif
+%_libexecdir/systemd/user/recollindex.service
+%_libexecdir/systemd/system/recoll*.service
 %_man1dir/*
 %_man5dir/*
 %doc ChangeLog.* README
@@ -206,12 +217,26 @@ chrpath -d %buildroot%_bindir/recollindex
 %files full
 
 %files -n python3-module-%name
-%python3_sitelibdir/*.egg-info
+#python3_sitelibdir/*.egg-info
 %python3_sitelibdir/%name/
 %python3_sitelibdir/recollchm/
 %python3_sitelibdir/*.so
 
 %changelog
+* Tue May 21 2024 Michael Shigorin <mike@altlinux.org> 1.38.1-alt2
+- kludge to workaround meson build SMP race around linking
+
+* Mon May 20 2024 Michael Shigorin <mike@altlinux.org> 1.38.1-alt1
+- new version (watch file uupdate)
+- fix linking (thx ilyakurdyukov@)
+
+* Tue May 07 2024 Ilya Mashkin <oddity@altlinux.ru> 1.38.0-alt2
+- Build for Sisyphus with meson and qt6, no webkit
+
+* Mon Apr 29 2024 Michael Shigorin <mike@altlinux.org> 1.38.0-alt1
+- new version (watch file uupdate)
+- de-macrify License: (made no sense at all)
+
 * Tue Mar 19 2024 Michael Shigorin <mike@altlinux.org> 1.37.4-alt2
 - added R: python3-module-%name to -full subpackage
   (closes: #49729; thx cas@)
