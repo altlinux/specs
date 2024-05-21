@@ -1,13 +1,17 @@
 %define optflags_lto -flto=thin
-%define llvm_version 17.0
 
-# git show -s --format=%ci upstream/pcsx2 | sed 's/[ :-]//g' | sed 's/\(.\{,14\}\).*/\1/'
-%define svn_rev 20240105164436
+%define version_hi 1
+%define version_mid 7
+%define version_lo 5684
+
+# git log v%version_hi.%version_mid.%version_lo -1 --format=%cd --date=local
+%define git_date Sat Apr 6 10:43:13 2024
+# git rev-parse v%version_hi.%version_mid.%version_lo
+%define git_hash 49c199e7e8e9a0edfd37b6cb7c6acb253beeef1e
 
 %define gtest_version 1.12.1
 %define vulkan_headers_version 1.3.272
 %define glslang_version 11.7.1
-%define rcheevos_commit 3cadf84c30bbc050c0fec79d26e1c8ff504bda42
 %define fmt_commit 5cfd28d476c6859617878f951931b8ce7d36b9df
 %define rapidyaml_version 0.4.1
 %define c4core_commit d35c7c9bf370134595699d791e6ff8db018ddc8d
@@ -15,8 +19,8 @@
 %define debugbreak_commit 5dcbe41d2bd4712c8014aa7e843723ad7b40fd74
 
 Name: pcsx2
-Version: 1.7.5397
-Release: alt2
+Version: %version_hi.%version_mid.%version_lo
+Release: alt1
 
 Summary: Playstation 2 console emulator
 License: GPLv3 and LGPLv3
@@ -56,20 +60,18 @@ Source1: googletest-release-%gtest_version.tar
 Source2: Vulkan-Headers-%vulkan_headers_version.tar
 # https://github.com/KhronosGroup/glslang/archive/%glslang_version/glslang-%glslang_version.tar.gz
 Source3: glslang-%glslang_version.tar
-# https://github.com/RetroAchievements/rcheevos/archive/%rcheevos_commit/rcheevos-%rcheevos_commit.tar.gz
-Source4: rcheevos-%rcheevos_commit.tar
 # https://github.com/fmtlib/fmt/archive/%fmt_commit/fmt-%fmt_commit.tar.gz
-Source5: fmt-%fmt_commit.tar
+Source4: fmt-%fmt_commit.tar
 # https://github.com/biojppm/rapidyaml/archive/v%rapidyaml_version/rapidyaml-%rapidyaml_version.tar.gz
-Source6: rapidyaml-%rapidyaml_version.tar
+Source5: rapidyaml-%rapidyaml_version.tar
 # https://github.com/biojppm/c4core/archive/%c4core_commit/c4core-%c4core_commit.tar.gz
-Source7: c4core-%c4core_commit.tar
+Source6: c4core-%c4core_commit.tar
 # https://github.com/biojppm/cmake/archive/%cmake_commit/cmake-%cmake_commit.tar.gz
-Source8: cmake-%cmake_commit.tar
+Source7: cmake-%cmake_commit.tar
 # https://github.com/biojppm/debugbreak/archive/%debugbreak_commit/debugbreak-%debugbreak_commit.tar.gz
-Source9: debugbreak-%debugbreak_commit.tar
+Source8: debugbreak-%debugbreak_commit.tar
 
-BuildRequires: clang%llvm_version
+BuildRequires: clang
 BuildRequires: ctest
 BuildRequires: extra-cmake-modules
 BuildRequires: libGLU-devel
@@ -100,9 +102,8 @@ BuildRequires: libudev-devel
 BuildRequires: libwayland-egl-devel
 BuildRequires: libwebp-devel
 BuildRequires: libzstd-devel
-BuildRequires: lld%llvm_version
-BuildRequires: llvm%llvm_version
-BuildRequires: llvm%llvm_version-gold
+BuildRequires: lld
+BuildRequires: llvm
 BuildRequires: ninja-build
 BuildRequires: qt6-tools-devel
 
@@ -111,12 +112,11 @@ PCSX2 is an emulator for the playstation 2 video game console. It is written mos
 There is still lot of on going work to improve compatibility & speed.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8
 
 %__mv -Tf ../googletest-release-%gtest_version 3rdparty/gtest
 %__mv -Tf ../Vulkan-Headers-%vulkan_headers_version 3rdparty/vulkan-headers
 %__mv -Tf ../glslang-%glslang_version 3rdparty/glslang/glslang
-%__mv -Tf ../rcheevos-%rcheevos_commit 3rdparty/rcheevos/rcheevos
 %__mv -Tf ../fmt-%fmt_commit 3rdparty/fmt/fmt
 %__mv -Tf ../rapidyaml-%rapidyaml_version 3rdparty/rapidyaml/rapidyaml
 %__mv -Tf ../c4core-%c4core_commit 3rdparty/rapidyaml/rapidyaml/ext/c4core
@@ -124,8 +124,6 @@ There is still lot of on going work to improve compatibility & speed.
 %__mv -Tf ../debugbreak-%debugbreak_commit 3rdparty/rapidyaml/rapidyaml/ext/c4core/src/c4/ext/debugbreak
 
 %build
-export ALTWRAP_LLVM_VERSION=%llvm_version
-
 %cmake \
 	-DCMAKE_C_COMPILER:STRING=clang \
 	-DCMAKE_CXX_COMPILER:STRING=clang++ \
@@ -142,10 +140,14 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 	-GNinja \
 	-Wno-dev
 
-echo "#define SVN_REV $(echo %svn_rev)ll 
-#define GIT_TAG \"v$(echo %version)\"
+echo "#define GIT_TAG \"v$(echo %version)\"
 #define GIT_TAGGED_COMMIT 1
-#define GIT_REV \"\"" > %_cmake__builddir/common/include/svnrev.h
+#define GIT_TAG_HI  $(echo %version_hi)
+#define GIT_TAG_MID $(echo %version_mid)
+#define GIT_TAG_LO  $(echo %version_lo)
+#define GIT_REV \"v$(echo %version)\"
+#define GIT_HASH \"$(echo %git_hash)\"
+#define GIT_DATE \"$(echo %git_date)\"" > %_cmake__builddir/common/include/svnrev.h
 
 %cmake_build
 
@@ -168,6 +170,9 @@ echo "#define SVN_REV $(echo %svn_rev)ll
 %_iconsdir/hicolor/256x256/apps/PCSX2.png
 
 %changelog
+* Tue May 21 2024 Nazarov Denis <nenderus@altlinux.org> 1.7.5684-alt1
+- Version 1.7.5684
+
 * Tue Apr 16 2024 Nazarov Denis <nenderus@altlinux.org> 1.7.5397-alt2
 - Pack translations (ALT #49912)
 
