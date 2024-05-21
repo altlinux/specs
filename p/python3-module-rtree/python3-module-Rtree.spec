@@ -1,37 +1,36 @@
 %define _unpackaged_files_terminate_build 1
-%define oname rtree
-%define srcname Rtree
+%define pypi_name Rtree
+%define mod_name rtree
 
-# check failed on i586
-%ifarch %ix86
-%def_disable check
-%endif
+%def_with check
 
-Name: python3-module-%oname
-Version: 0.9.4
+Name: python3-module-%mod_name
+Version: 1.2.0
 Release: alt1
 
 Summary: R-Tree spatial index for Python GIS
-
-License: LGPLv2.1
+License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/Rtree/
-
-# https://github.com/Toblerity/rtree.git
-# Source-url: https://files.pythonhosted.org/packages/source/R/%srcname/%srcname-%version.tar.gz
-Source: %name-%version.tar
+Url: https://pypi.org/project/Rtree/
+Vcs: https://github.com/Toblerity/rtree
 
 BuildArch: noarch
 
-BuildRequires: spatialindex-devel
-BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-numpy
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 
+%pyproject_runtimedeps_metadata
+# PyPI well known name
+Provides: python3-module-%pypi_name = %EVR
 Requires: spatialindex
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+BuildRequires: spatialindex
+%endif
 
 %description
 Rtree is a ctypes Python wrapper of libspatialindex that provides a
@@ -48,54 +47,38 @@ Python user. These features include:
 * Custom storage implementation (to implement spatial indexing in ZODB,
   for example)
 
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-Rtree is a ctypes Python wrapper of libspatialindex that provides a
-number of advanced spatial indexing features for the spatially curious
-Python user.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
+%autopatch -p1
 
-# Delete junk from tarball.
-rm -rf Rtree.egg-info
-find . -name '*.pyc' -delete
-rm setup.cfg
-rm -rf docs/build
+# remove setup.py to make the package noarch
+rm setup.py
 
-%prepare_sphinx3 docs
-ln -s ../objects.inv docs/source/
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-
-%make -C docs html SPHINXBUILD=sphinx-build-3
+%pyproject_install
 
 %check
-export LC_ALL=en_US.UTF-8
-
-PYTHONPATH="%buildroot%python3_sitelibdir" \
-    py.test3 -ra tests
-PYTHONPATH="%buildroot%python3_sitelibdir" \
-    py.test3 -ra --doctest-modules rtree
+%pyproject_run_pytest -vra
 
 %files
-%doc *.txt *.md
-%python3_sitelibdir/*
-
-%files docs
-%doc docs/build/html/*
+%doc CHANGES.rst CREDITS.txt LICENSE.txt README.md
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Tue May 21 2024 Anton Zhukharev <ancieg@altlinux.org> 1.2.0-alt1
+- Updated to 1.2.0.
+- Built from upstream VCS.
+
 * Tue Jul 27 2021 Anton Midyukov <antohami@altlinux.org> 0.9.4-alt1
 - new version (0.9.4) with rpmgs script
 - enable check

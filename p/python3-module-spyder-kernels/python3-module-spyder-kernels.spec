@@ -1,52 +1,67 @@
-%def_without test
+%define _unpackaged_files_terminate_build 1
+%define pypi_name spyder-kernels
+%define mod_name spyder_kernels
 
-Name: python3-module-spyder-kernels
-Version: 2.4.4
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 2.5.1
 Release: alt1
 
-License: MIT
-Group: Development/Python
-Url: https://github.com/spyder-ide/spyder-kernels
-
 Summary: Jupyter Kernels for the Spyder console
-
-# Source-url: https://github.com/spyder-ide/spyder-kernels/archive/v%version.tar.gz
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-Source: %name-%version.tar
+License: MIT
+Group: Development/Python3
+Url: https://pypi.org/project/spyder-kernels/
+Vcs: https://github.com/spyder-ide/spyder-kernels
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3 rpm-build-intro
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 
-BuildRequires: python3-module-cloudpickle python3-module-flaky
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata_extra test
+BuildRequires: xvfb-run
+BuildRequires: python3-module-pandas-tests
+%endif
 
 %description
 Package that provides Jupyter kernels for use with the consoles of Spyder,
 the Scientific Python Development Environment.
 
-These kernels can launched either through Spyder itself
-or in an independent Python session, and allow for interactive
-or file-based execution of Python code inside Spyder.
+These kernels can launched either through Spyder itself or in an independent
+Python session, and allow for interactive or file-based execution of Python
+code inside Spyder.
 
 %prep
 %setup
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
-%if_with test
 %check
-%python3_test
-%endif
+%pyproject_run -- xvfb-run -- pytest -vra
 
 %files
-%python3_sitelibdir/*
+%doc AUTHORS.txt CHANGELOG.md LICENSE.txt README.md
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue May 21 2024 Anton Zhukharev <ancieg@altlinux.org> 2.5.1-alt1
+- Updated to 2.5.1.
+- Built from upstream VCS.
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 2.4.4-alt1
 - new version 2.4.4 (with rpmrb script)
 

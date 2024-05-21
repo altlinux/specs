@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 8.6.1
-Release: alt1
+Release: alt2
 Summary: Jupyter protocol implementation and client libraries
 License: BSD-3-Clause
 Group: Development/Python3
@@ -32,6 +32,10 @@ BuildRequires: python3-module-pexpect
 %endif
 
 %py3_provides %oname
+
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %oname} = %EVR
 
 %description
 jupyter_client contains the reference implementation of the Jupyter protocol.
@@ -63,6 +67,9 @@ sed -i '/localinterfaces._load_ips_ifconfig/d' tests/test_localinterfaces.py
 
 
 %changelog
+* Tue May 21 2024 Anton Zhukharev <ancieg@altlinux.org> 8.6.1-alt2
+- Mapped PyPI name to distro's one.
+
 * Wed Mar 13 2024 Anton Vyatkin <toni@altlinux.org> 8.6.1-alt1
 - New version 8.6.1.
 

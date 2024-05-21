@@ -1,43 +1,73 @@
-Name: python3-module-QtAwesome
-Version: 1.2.3
-Release: alt2
+%define _unpackaged_files_terminate_build 1
+%define pypi_name QtAwesome
+%define mod_name qtawesome
 
-License: MIT
-Group: Development/Python
-Url: https://github.com/spyder-ide/qtawesome
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 1.3.1
+Release: alt1
 
 Summary: Iconic fonts in PyQt and PySide applications
-
-# Source-url: https://github.com/spyder-ide/qtawesome/archive/v%version.tar.gz
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-Source: %name-%version.tar
+License: MIT
+Group: Development/Python3
+Url: https://pypi.org/project/QtAwesome/
+Vcs: https://github.com/spyder-ide/qtawesome
 
 BuildArch: noarch
 
-Provides: python3-module-qtawesome
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python3 rpm-build-intro
+%pyproject_runtimedeps_metadata
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+BuildRequires: xvfb-run
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-qt
+BuildRequires: python3-module-pyqt5
+%endif
 
 %description
-QtAwesome enables iconic fonts such as Font Awesome and Elusive Icons in PyQt and PySide applications.
+QtAwesome enables iconic fonts such as Font Awesome and Elusive Icons in PyQt
+and PySide applications.
 
 It started as a Python port of the QtAwesome C++ library by Rick Blommers.
 
 %prep
 %setup
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run -- xvfb-run -- python3 example.py
+%pyproject_run -- xvfb-run -- pytest -vra
 
 %files
-%_bindir/*
-%python3_sitelibdir/*
+%doc CHANGELOG.md LICENSE.txt README.md
+%_bindir/qta-browser
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Tue May 21 2024 Anton Zhukharev <ancieg@altlinux.org> 1.3.1-alt1
+- Updated to 1.3.1.
+- Built from upstream VCS.
+- Mapped PyPI name to distro's one.
+
 * Fri Oct 13 2023 Anton Zhukharev <ancieg@altlinux.org> 1.2.3-alt2
 - (NMU) Provided PEP503-normalized project name.
 
