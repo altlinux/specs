@@ -5,8 +5,8 @@
 #  %%set_verify_elf_method strict
 
 Name:		rr
-Version:	5.7.0
-Release:	alt1
+Version: 5.8.0
+Release: alt1
 Summary:	Record and Replay Framework
 Group:		Development/Debuggers
 License:	MIT and BSD and Apache-2.0
@@ -45,6 +45,8 @@ rr currently requires either:
 - Certain AArch64 microarchitectures (e.g. ARM Neoverse N1 or the Apple
   Silicon M-series).
 
+# Version 5.8.0 is manually tested on i9-10900.
+# 98% tests passed, 24 tests failed out of 1515
 %package testsuite
 Summary: Test suite for rr (debugger)
 Group: Development/Other
@@ -55,9 +57,11 @@ Requires: ctest
 %description testsuite
 %summary.
 Prerequisites:
-- Supported hardware
+- Supported hardware (Intel 64)
 - echo 1 > /proc/sys/kernel/perf_event_paranoid
 - echo 0 > /proc/sys/kernel/userns_restrict
+# cd /usr/lib64/rr/testsuite/obj
+# ctest
 
 %package checkinstall
 Summary: CI test for %name
@@ -85,6 +89,7 @@ rm -rf %buildroot%_datadir/rr/src
 %brp_strip_none %_libdir/rr/librr*.so
 # verify-elf: ERROR: ./usr/lib64/rr/testsuite/obj/bin/constructor: RPATH contains illegal entry "/usr/src/RPM/BUILD": /usr/src/RPM/BUILD/rr-5.6.0/x86_64-alt-linux/lib/rr
 patchelf --set-rpath '%_libdir/rr' %buildroot%_libdir/rr/testsuite/obj/bin/constructor
+patchelf --set-rpath '%_libdir/rr' %buildroot%_libdir/rr/testsuite/obj/bin/step_into_lib
 
 # https://github.com/rr-debugger/rr/issues/3625#issuecomment-1763326259
 # debuginfo should not be stripped out of testsuite.
@@ -120,6 +125,9 @@ file %_libdir/rr/testsuite/obj/bin/alternate_thread_diversion | grep 'with debug
 %files checkinstall
 
 %changelog
+* Tue May 21 2024 Vitaly Chikunov <vt@altlinux.org> 5.8.0-alt1
+- Update to 5.8.0 (2024-05-20).
+
 * Mon Oct 16 2023 Vitaly Chikunov <vt@altlinux.org> 5.7.0-alt1
 - Update to 5.7.0 (2023-10-03).
 - Testsuite should not have debuginfo stripped or separated.
