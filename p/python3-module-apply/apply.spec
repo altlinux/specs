@@ -1,71 +1,51 @@
 %define oname apply
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.5
+Version: 1.7
 Release: alt1
 
 Summary: An apply function for Python 2 and 3.
-License: BSD
+License: BSD-2-Clause
 Group: Development/Python3
-Url: https://github.com/stefanholek/apply
+Url: https://pypi.org/project/apply
+Vcs: https://github.com/stefanholek/apply
 BuildArch: noarch
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-sphinx
-
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
-%summary
-
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %version-%release
-
-%description tests
-An apply function for Python 2 and 3.
-
-This package contains tests for %oname.
-
-%package docs
-Summary: Docs for %oname
-Group: Development/Python3
-Requires: %name = %version-%release
-
-%description docs
-An apply function for Python 2 and 3.
-
-This package contains docs for %oname.
+%summary.
 
 %prep
 %setup
 
-sed -i 's|../bin/sphinx-build|sphinx-build-3|' docs/Makefile
+sed -i '/^tag_build =.*/d' setup.cfg
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
-export PYTHONPATH=$PWD
-%make -C docs html
+%check
+%pyproject_run_unittest discover -v
 
 %files
-%doc *.rst LICENSE
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/%oname/tests/
-
-%files tests
-%python3_sitelibdir/%oname/tests/
-
-%files docs
-%doc docs/_build/html
+%doc README.*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 
 %changelog
+* Wed May 22 2024 Anton Vyatkin <toni@altlinux.org> 1.7-alt1
+- New version 1.7.
+
 * Mon Feb 03 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.5-alt1
 - Initial build.
 
