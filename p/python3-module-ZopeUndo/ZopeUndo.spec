@@ -1,22 +1,31 @@
 %define _unpackaged_files_terminate_build 1
 %define oname ZopeUndo
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 4.1
-Release: alt2
+Version: 6.0
+Release: alt1
 
 Summary: ZODB undo support for Zope2
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/ZopeUndo/
+Url: https://pypi.org/project/ZopeUndo
+Vcs: https://github.com/zopefoundation/ZopeUndo
 BuildArch: noarch
 
-# https://github.com/zopefoundation/ZopeUndo.git
-Source0: https://pypi.python.org/packages/ce/40/51bc73896bdc23e1e16db55530c54f293d40d0a2c41e5a79efd4ea66dc1c/%{oname}-%{version}.zip
+Source: %name-%version.tar
+
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %oname} = %EVR
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: unzip
-
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-zope.testrunner
+%endif
 
 %description
 This package is used to support the Prefix object that Zope 2 uses for
@@ -30,7 +39,7 @@ allow it to support Zope 2's undo log , without pulling in all of Zope
 %package tests
 Summary: Tests for ZopeUndo
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 This package is used to support the Prefix object that Zope 2 uses for
@@ -40,20 +49,21 @@ management.
 This package contains tests for ZopeUndo.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test
+%pyproject_run -- zope-testrunner --test-path=src -vv
 
 %files
-%doc *.txt *.rst
-%python3_sitelibdir/*
+%doc README.*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
@@ -61,6 +71,9 @@ This package contains tests for ZopeUndo.
 
 
 %changelog
+* Wed May 22 2024 Anton Vyatkin <toni@altlinux.org> 6.0-alt1
+- New version 6.0.
+
 * Mon Dec 09 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.1-alt2
 - python2 disabled
 
