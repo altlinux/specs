@@ -6,7 +6,7 @@
 
 Name:          gem-puppet
 Version:       8.4.0
-Release:       alt1.1
+Release:       alt2
 Summary:       A network tool for managing many disparate systems
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -23,7 +23,7 @@ Source4:       auth.conf
 Source5:       puppet.conf
 Patch1:        puppet-alt-adjust-default-paths.patch
 Patch2:        puppet-fix-locale-loading.patch
-Patch3:        puppet-alt-aptrpm-osfamily.patch
+Patch3:        puppet-alt-aptrpm.patch
 Patch4:        fix_yaml.patch
 Patch5:        ronn.patch
 BuildRequires(pre): rpm-build-ruby
@@ -112,6 +112,7 @@ Requires:      gem(deep_merge) >= 1.0
 Requires:      gem(scanf) >= 1.0
 Requires:      gem(CFPropertyList) >= 3.0.6
 Requires:      puppet = %EVR
+Requires:      facter
 Conflicts:     gem(facter) >= 5
 Conflicts:     gem(semantic_puppet) >= 2.0
 Conflicts:     gem(puppet-resource_api) >= 2.0
@@ -134,7 +135,7 @@ with obviously discrete elements like packages, services, and files.
 
 %package       -n puppet
 Version:       8.4.0
-Release:       alt1.1
+Release:       alt2
 Summary:       A network tool for managing many disparate systems executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета puppet
 Group:         System/Servers
@@ -159,7 +160,7 @@ with obviously discrete elements like packages, services, and files.
 %if_enabled    doc
 %package       -n gem-puppet-doc
 Version:       8.4.0
-Release:       alt1.1
+Release:       alt2
 Summary:       A network tool for managing many disparate systems documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puppet
 Group:         Development/Documentation
@@ -182,7 +183,7 @@ with obviously discrete elements like packages, services, and files.
 %if_enabled    devel
 %package       -n gem-puppet-devel
 Version:       8.4.0
-Release:       alt1.1
+Release:       alt2
 Summary:       A network tool for managing many disparate systems development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puppet
 Group:         Development/Ruby
@@ -386,6 +387,10 @@ sed -e "s,sample.server.name,$(hostname)," \
 
 
 %changelog
+* Wed May 22 2024 Pavel Skrylev <majioa@altlinux.org> 8.4.0-alt2
+- + dep to facter
+- ! fixed proper ALT package version detection without long suffix
+
 * Wed Feb 14 2024 Pavel Skrylev <majioa@altlinux.org> 8.4.0-alt1.1
 - ! maked dep to CFPropertyList gem more strict
 
