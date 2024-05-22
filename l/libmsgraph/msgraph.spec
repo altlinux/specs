@@ -12,7 +12,7 @@
 %define api_ver 0.1
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GObject wrapper for the Microsoft Graph API
@@ -131,6 +131,9 @@ the functionality of the installed %_name library.
 
 
 %changelog
+* Wed May 22 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt1
+- 0.2.2
+
 * Tue Mar 05 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
 - 0.2.1
 
