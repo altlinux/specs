@@ -5,7 +5,7 @@
 
 Name: flannel
 Version: 0.25.1
-Release: alt1
+Release: alt2
 
 Summary: flannel is a network fabric for containers
 License: Apache-2.0
@@ -57,16 +57,19 @@ install -D -p -m 0755 %SOURCE4 %buildroot%_tmpfilesdir/%name.conf
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Wed May 22 2024 Alexander Stepchenko <geochip@altlinux.org> 0.25.1-alt2
+- Add CVE fixes information to the changelog.
+
 * Sat May 18 2024 Alexander Stepchenko <geochip@altlinux.org> 0.25.1-alt1
 - 0.24.2 -> 0.25.1
 
 * Fri Jan 19 2024 Alexander Stepchenko <geochip@altlinux.org> 0.24.2-alt1
-- 0.23.0 -> 0.24.2
+- 0.23.0 -> 0.24.2 (Fixes: CVE-2023-48795)
 - fix flannel displaying wrong version information
 - use full url in the Url directive
 
 * Wed Nov 29 2023 Alexander Stepchenko <geochip@altlinux.org> 0.23.0-alt1
-- 0.22.3 -> 0.23.0
+- 0.22.3 -> 0.23.0 (Fixes: CVE-2023-44487, CVE-2023-39325)
 
 * Wed Oct 04 2023 Alexander Stepchenko <geochip@altlinux.org> 0.22.3-alt1
 - 0.22.0 -> 0.22.3
