@@ -1,5 +1,9 @@
+%set_verify_elf_method strict
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 Name: sg3_utils
-Version: 1.47
+Version: 1.48
 Release: alt1
 
 Summary: Utilities for devices that use SCSI command sets
@@ -67,14 +71,10 @@ sed -i s/2:0:0/1:0:0/ lib/Makefile.*
 ln -s libsgutils.so %buildroot%_libdir/libsgutils2.so
 
 mkdir -p %buildroot%_udevrulesdir
-for rulesname in 54-before-scsi-sg3_id 55-scsi-sg3_id 58-scsi-sg3_symlink 40-usb-blacklist 59-fc-wwpn-id; do
+for rulesname in 00-scsi-sg3_config 54-before-scsi-sg3_id 55-scsi-sg3_id 58-scsi-sg3_symlink 40-usb-blacklist 59-fc-wwpn-id; do
     install -m 644 scripts/$rulesname.rules %buildroot%_udevrulesdir/
 done
 install -m 755 scripts/fc_wwpn_id %buildroot%_udevrulesdir/../
-
-%set_verify_elf_method strict
-%define _unpackaged_files_terminate_build 1
-%define _stripped_files_terminate_build 1
 
 %files
 %_bindir/*
@@ -94,6 +94,9 @@ install -m 755 scripts/fc_wwpn_id %buildroot%_udevrulesdir/../
 %_udevrulesdir/../fc_wwpn_id
 
 %changelog
+* Mon May 06 2024 Alexey Shabalin <shaba@altlinux.org> 1.48-alt1
+- 1.47 -> 1.48.
+
 * Wed Aug 24 2022 Alexey Shabalin <shaba@altlinux.org> 1.47-alt1
 - 1.46 -> 1.47.
 - Add udev-rules-sgutils package.
