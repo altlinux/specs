@@ -3,7 +3,7 @@
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt87
+Release: alt88
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -587,6 +587,9 @@ exec 1>&2
 %_datadir/%name/tests/
 
 %changelog
+* Tue May 21 2024 Ivan A. Melnikov <iv@altlinux.org> 0.5.15lorg2-alt88
+- Backport columnar output for apt-get from Debian.
+
 * Fri Mar 15 2024 Andrey Cherepanov <cas@altlinux.org> 0.5.15lorg2-alt87
 - Ignore check reason-phrase element in HTTP header (ALT #49694).
 
