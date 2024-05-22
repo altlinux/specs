@@ -1,6 +1,6 @@
 Name: rust
 Epoch: 1
-Version: 1.77.1
+Version: 1.78.0
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -14,8 +14,6 @@ URL: http://www.rust-lang.org/
 Source: %name-%version.tar
 
 Patch0001: 0001-ALT-Disable-lint-tests.patch
-Patch0002: 0002-ALT-gdb-Fix-libdir.patch
-Patch0003: 0003-Fix-version-check.patch
 
 %def_without bootstrap
 %def_without bundled_llvm
@@ -30,6 +28,7 @@ Patch0003: 0003-Fix-version-check.patch
 Obsoletes: %name-analysis < 1.69.0
 
 Requires: /proc
+Requires: gcc
 
 BuildRequires: /proc
 
@@ -105,7 +104,8 @@ BuildRequires: rust-cargo
 %endif
 
 %define rust_triple %r_arch-unknown-linux-gnu%abisuff
-%define rustlibdir %_libdir/rustlib
+%define _common_libdir %prefix/lib
+%define rustlibdir %_common_libdir/rustlib
 %define _libexecdir /usr/libexec
 
 # While we don't want to encourage dynamic linking to rust shared libraries, as
@@ -123,7 +123,7 @@ segfaults, and guarantees thread safety.
 %package gdb
 Group: Development/Other
 Summary: run rust compiler under gdb
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 Requires: gdb
 AutoReq: nopython,nopython3
 AutoProv: nopython,nopython3
@@ -150,21 +150,10 @@ Requires: rust
 Cargo is a tool that allows Rust projects to declare their various dependencies
 and ensure that you'll always get a repeatable build.
 
-%package cargo-doc
-Summary: Documentation for Cargo
-Group: Development/Documentation
-BuildArch: noarch
-# Cargo no longer builds its own documentation
-# https://github.com/rust-lang/cargo/pull/4904
-Requires: rust-doc = %epoch:%version-%release
-
-%description cargo-doc
-This package includes HTML documentation for Cargo.
-
 %package -n rustfmt
 Summary: Tool to find and fix Rust formatting issues
 Group: Development/Tools
-Requires: rust-cargo = %epoch:%version-%release
+Requires: rust-cargo = %EVR
 
 %description -n rustfmt
 A tool for formatting Rust code according to style guidelines.
@@ -172,7 +161,7 @@ A tool for formatting Rust code according to style guidelines.
 %package analyzer
 Summary: A Rust compiler front-end for IDEs
 Group: Development/Tools
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 Obsoletes: rls <= 1:1.71.0-alt1
 
 %description analyzer
@@ -185,7 +174,7 @@ Summary: Lints to catch common mistakes and improve your Rust code
 Group: Development/Tools
 License: MPL-2.0
 Requires: rust-cargo
-Requires: %name = %epoch:%version-%release
+Requires: %name = %EVR
 
 %description -n clippy
 A collection of lints to catch common mistakes and improve your Rust code.
@@ -215,10 +204,6 @@ popd
 patchelf --set-interpreter /lib64/ld-linux-aarch64.so.1 %rustdir/bin/cargo
 patchelf --set-interpreter /lib64/ld-linux-aarch64.so.1 %rustdir/bin/rustc
 %endif
-
-%else
-# Fix libdir path for bootstrap
-sed -i 's/Path::new("lib")/Path::new("%_lib")/' src/bootstrap/src/core/builder.rs
 %endif
 
 # This only affects the transient rust-installer, but let it use our dynamic xz-libs
@@ -300,7 +285,6 @@ doc-stage = 2
 
 [install]
 prefix = "%prefix"
-libdir = "%_lib"
 
 [rust]
 channel = "stable"
@@ -345,6 +329,12 @@ python3 x.py install
 
 rm -f -- %buildroot/%_libdir/lib*.so.old
 
+# Make sure the shared libraries are in the proper libdir
+if [ "%_libdir" != "%_common_libdir" ]; then
+	mkdir -pv %buildroot%_libdir
+	mv %buildroot%_common_libdir/*.so %buildroot%_libdir
+fi
+
 # The libdir libraries are identical to those under rustlib/.  It's easier on
 # library loading if we keep them in libdir, but we do need them in rustlib/
 # to support dynamic linking for compiler plugins, so we'll symlink.
@@ -377,6 +367,15 @@ find %buildroot/%_bindir -type f -name '*.old' -delete
 # Drop compiled python
 find %buildroot/%rustlibdir/etc -type f -name '*.pyc' -delete
 %add_python3_path %rustlibdir/etc
+
+pushd %buildroot%_docdir
+mv -v rustc         rustc-%version
+mv -v docs          rust-doc-%version
+mv -v cargo         rust-cargo-%version
+mv -v rustfmt       rustfmt-%version
+mv -v clippy        rust-clippy-%version
+mv -v rust-analyzer rust-analyzer-%version
+popd
 
 %check
 . ./env.sh
@@ -418,8 +417,7 @@ rm -rf %rustdir
 
 
 %files
-%exclude %_datadir/doc/rust
-%doc COPYRIGHT LICENSE-APACHE LICENSE-MIT README.md
+%doc %_docdir/rustc-%version
 %_bindir/rustc
 %_bindir/rustdoc
 %_libdir/lib*.so
@@ -440,37 +438,39 @@ rm -rf %rustdir
 %exclude %rustlibdir/etc/lldb_*
 
 %files doc
-%_datadir/doc/%name
-%exclude %_datadir/doc/%name/html/cargo
+%doc %_docdir/rust-doc-%version
 
 %files cargo
-%doc src/tools/cargo/{LICENSE-APACHE,LICENSE-MIT,LICENSE-THIRD-PARTY,README.md}
+%doc %_docdir/rust-cargo-%version
 %_bindir/cargo
 %_man1dir/cargo*.1*
 %_sysconfdir/bash_completion.d/cargo
 %_datadir/zsh/site-functions/_cargo
 
-%files cargo-doc
-%_datadir/doc/rust/html/cargo
-
 %files -n rustfmt
+%doc %_docdir/rustfmt-%version
 %_bindir/rustfmt
 %_bindir/cargo-fmt
-%doc src/tools/rustfmt/{README.md,CHANGELOG.md,Configurations.md,LICENSE-APACHE,LICENSE-MIT}
 
 %files analyzer
+%doc %_docdir/rust-analyzer-%version
 %_bindir/rust-analyzer
-%doc src/tools/rust-analyzer/{README.md,LICENSE-APACHE,LICENSE-MIT}
 
 %files -n clippy
+%doc %_docdir/rust-clippy-%version
 %_bindir/cargo-clippy
 %_bindir/clippy-driver
-%doc src/tools/clippy/{README.md,CHANGELOG.md,LICENSE*}
 
 %files src
 %rustlibdir/src
 
 %changelog
+* Tue May 14 2024 Ajrat Makhmutov <rauty@altlinux.org> 1:1.78.0-alt1
+- New version (1.78.0).
+- Move rustlib into /usr/lib/ (closes: 49687).
+- Remove the cargo-doc package. Now all documentation is in rust-doc.
+- Require gcc for rustc (closes: 49831).
+
 * Tue Apr 02 2024 Ajrat Makhmutov <rauty@altlinux.org> 1:1.77.1-alt1
 - New version (1.77.1).
 

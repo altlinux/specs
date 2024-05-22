@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
 Version: 126.0
-Release: alt1
+Release: alt2
 License: MPL-2.0
 Group: Networking/WWW
 URL: https://www.mozilla.org/firefox/
@@ -422,6 +422,9 @@ fi
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Fri May 17 2024 Ajrat Makhmutov <rauty@altlinux.org> 126.0-alt2
+- Update encoding_rs to 0.8.34 to deal with rustc changes.
+
 * Tue May 14 2024 Ajrat Makhmutov <rauty@altlinux.org> 126.0-alt1
 - New version (126.0).
 - Security fixes:
