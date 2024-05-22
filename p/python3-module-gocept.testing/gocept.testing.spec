@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.0
-Release: alt2
+Version: 4.0
+Release: alt1
 
 Summary: A collection of test helpers, additional assertions, and the like
 License: MIT
@@ -50,6 +50,9 @@ This package collects various helpers for writing tests.
 
 
 %changelog
+* Wed May 22 2024 Anton Vyatkin <toni@altlinux.org> 4.0-alt1
+- New version 4.0.
+
 * Tue Jan 23 2024 Anton Vyatkin <toni@altlinux.org> 3.0-alt2
 - Fix FTBFS.
 
