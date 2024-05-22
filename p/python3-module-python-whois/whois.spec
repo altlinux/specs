@@ -1,25 +1,31 @@
 %define _unpackaged_files_terminate_build 1
 %define oname whois
+%define pypi_name python-whois
 
-%def_disable check
+%def_with check
 
-Name: python3-module-%oname
-Version: 0.6.4
-Release: alt2
+Name: python3-module-%pypi_name
+Version: 0.9.4
+Release: alt1
 
 Summary: Whois querying and parsing of domain registration information
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/python-whois
+Url: https://pypi.org/project/python-whois
 BuildArch: noarch
 
-Source0: https://pypi.python.org/packages/4e/7d/dafe428145b6e712d12442abef54167e530ba54bf7ae6cf9e654233eabfb/python-%{oname}-%{version}.tar.gz
+Provides: python3-module-%oname = %EVR
+Obsoletes: python3-module-%oname < %EVR
+
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
 BuildRequires: python3-module-pytest
-
-%py3_provides %oname
-
+BuildRequires: python3-module-dateutil
+%endif
 
 %description
 Whois querying and parsing of domain registration information.
@@ -30,26 +36,37 @@ Goal:
 * Able to extract data for all the popular TLDs (com, org, net, ...)
 * Query a WHOIS server directly instead of going through an intermediate
   web service like many others do.
-* Works with Python 2.4+ and no external dependencies
 
 %prep
-%setup -q -n python-%{oname}-%{version}
+%setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-python3 setup.py test -v
+# disable online tests
+%pyproject_run_pytest -v -k "\
+not test_ipv4 \
+and not test_ipv6 \
+and not test-il_parse \
+and not test_choose_server \
+and not test_simple_ascii_domain \
+and not test_simple_unicode_domain"
 
 %files
-%doc *.rst
-%python3_sitelibdir/*
+%doc README.*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/python_whois-%version.dist-info
 
 
 %changelog
+* Wed May 22 2024 Anton Vyatkin <toni@altlinux.org> 0.9.4-alt1
+- new version 0.9.4
+- rename package to use PyPI name
+
 * Wed Nov 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.6.4-alt2
 - disable python2
 
