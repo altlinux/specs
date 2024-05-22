@@ -16,7 +16,7 @@
 
 Name: MySQL
 Version: 8.0.37
-Release: alt1
+Release: alt1.1
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -72,7 +72,7 @@ Patch126: boost-1.77.0-boostfix_multiprecision_issue_419-ppc64le.patch
 # Patches for mysql-shell
 Patch201: mysql-shell-8.0.26-alt-link-secret-store-login-path-with-ssl.patch
 
-Patch2000: mysql-8.0.35-alt-e2k.patch
+Patch2000: mysql-8.0.37-alt-e2k.patch
 
 # Automatically added by buildreq on Tue Nov 20 2018 (-bi)
 # optimized out: cmake cmake-modules control elfutils glibc-kernheaders-generic glibc-kernheaders-x86 libcrypt-devel libsasl2-3 libstdc++-devel libtinfo-devel perl pkg-config python-base sh3 xz
@@ -402,8 +402,6 @@ popd
 %patch2000 -p1
 sed -i "/using __base/{N;N;s/^.*using __base.*EncodeBase.*friend __base.*$/EncodeBase_EDG/}" \
 	router/src/mysql_protocol/include/mysqlrouter/classic_protocol_codec_*.h
-sed -i "/#include <filesystem>/c #define preferred_separator preferred_separator_1\n#include <experimental/filesystem>\nnamespace std { namespace filesystem = experimental::filesystem; }" \
-	mysql-shell/{configure.cmake,mysqlshdk/libs/storage/backend/directory.cc}
 sed -i "s/-Werror/-Wno-error/" mysql-shell/cmake/compiler.cmake
 # error: cpio archive too big - 4381M
 %define optflags_debug -g0
@@ -919,6 +917,9 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Wed May 22 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 8.0.37-alt1.1
+- update alt-e2k patch: 8.0.35 -> 8.0.37
+
 * Sun May 19 2024 Nikolai Kostrigin <nickel@altlinux.org> 8.0.37-alt1
 - new version
   + (fixes: CVE-2024-20993, CVE-2024-20994, CVE-2024-20998, CVE-2024-21000)
