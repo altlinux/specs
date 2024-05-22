@@ -1,5 +1,5 @@
 Name: doxygen
-Version: 1.10.0
+Version: 1.11.0
 Release: alt1
 Epoch: 1
 
@@ -130,9 +130,11 @@ cd BUILD && make tests
 %files doc
 %_defaultdocdir/%name-%version
 %exclude %_defaultdocdir/%name-%version/README.md
-%exclude %_man1dir/doxy[is]*
 
 %changelog
+* Wed May 22 2024 Ivan A. Melnikov <iv@altlinux.org> 1:1.11.0-alt1
+- 1.11.0.
+
 * Tue Dec 26 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.10.0-alt1
 - 1.10.0;
 - require fonts-ttf-dejavu (fixes broken graphviz diagrams).
