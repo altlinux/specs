@@ -2,7 +2,7 @@
 %def_without old_make_initrd
 
 Name: ima-evm-integrity-check
-Version: 0.7.2
+Version: 0.7.3
 Release: alt1
 
 Summary: IMA/EVM integrity check
@@ -98,6 +98,10 @@ Integrity check feature for make-initrd
 %endif
 
 %changelog
+* Wed May 22 2024 Paul Wolneykien <manowar@altlinux.org> 0.7.3-alt1
+- Fix: Combine x509 certificate and private key in one file for
+  signing.
+
 * Fri May 17 2024 Paul Wolneykien <manowar@altlinux.org> 0.7.2-alt1
 - Fixed manpage sections.
 - Fix: Explicitly insert GOST kernel modules for Streebog hashes.
