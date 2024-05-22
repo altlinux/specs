@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: gcc-common
-Version: 1.4.27
+Version: 1.4.28
 Release: alt1
 
 Summary: Common directories, symlinks and selection utility for the GNU Compiler Collection
@@ -148,7 +150,6 @@ for n in gnatbind gnatchop gnatclean gnatfind gnatgcc gnatkr gnatlink gnatls gna
 done
 %endif
 
-ln -s ..%_bindir/cpp %buildroot/lib/cpp
 ln -s g++ %buildroot%_bindir/c++
 %ifnarch %e2k
 ln -s gtreelang %buildroot%_bindir/tree1
@@ -180,7 +181,6 @@ gcc --version
 cpp --version
 
 %files
-/lib/*
 %_libdir/gcc*
 %_libexecdir/gcc*
 %_bindir/gcc_wrapper
@@ -228,6 +228,9 @@ cpp --version
 %endif
 
 %changelog
+* Wed May 22 2024 Arseny Maslennikov <arseny@altlinux.org> 1.4.28-alt1
+- Removed the /lib/cpp legacy symlink.
+
 * Mon Dec 07 2020 Ivan Savin <svn17@altlinux.org> 1.4.27-alt1
 - Add support buildcache via GCC_USE_BUILDCACHE environment variable.
 
