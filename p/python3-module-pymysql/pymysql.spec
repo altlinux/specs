@@ -1,19 +1,18 @@
-%define _unpackaged_files_terminate_build 1
 %define modulename pymysql
 
 Name: python3-module-%modulename
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: This pure Python MySQL client provides a DB-API to a MySQL database.
 
 License: MIT
 Group: Development/Python3
-Url: http://code.google.com/p/pymysql/
+URL: https://pypi.org/project/PyMySQL
+VCS: https://github.com/PyMySQL/PyMySQL
 
 BuildArch: noarch
 
-# https://github.com/PyMySQL/PyMySQL.git
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -39,6 +38,9 @@ talking directly to the server via the binary client/server protocol.
 %python3_sitelibdir/PyMySQL-%version.dist-info
 
 %changelog
+* Wed May 22 2024 Grigory Ustinov <grenka@altlinux.org> 1.1.1-alt1
+- Automatically updated to 1.1.1.
+
 * Wed Jul 12 2023 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
 - Automatically updated to 1.1.0.
 
