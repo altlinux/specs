@@ -1,7 +1,7 @@
 Name: lsmount
 Summary: List all hotplug storage devices
-Version: 1.0
-Release: alt3
+Version: 1.1
+Release: alt1
 License: GPLv2
 Group: System/Base
 BuildArch: noarch
@@ -29,6 +29,9 @@ install -D -m 755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Wed May 22 2024 Hihin Ruslan <ruslandh@altlinux.ru> 1.1-alt1
+- fix (ALT #43796)
+
 * Sat Aug 09 2014 Denis Smirnov <mithraen@altlinux.ru> 1.0-alt3
 - add Url tag
 
