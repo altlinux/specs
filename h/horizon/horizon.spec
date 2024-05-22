@@ -1,6 +1,6 @@
 Name: horizon
-Version: 2.5.0
-Release: alt1.2
+Version: 2.6.0
+Release: alt1
 
 Summary: Horizon is a free EDA package
 License: GPL-3.0-or-later
@@ -10,13 +10,14 @@ Url: https://github.com/horizon-eda/horizon
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires: meson cmake
 BuildRequires: gcc-c++ libgtkmm3-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libzip-devel
 BuildRequires: libuuid-devel
 BuildRequires: libepoxy-devel
 BuildRequires: librsvg-devel
-BuildRequires: libpodofo0.9-devel
+BuildRequires: libpodofo-devel
 BuildRequires: libzeromq-cpp-devel
 BuildRequires: libgit2-devel
 BuildRequires: libcurl-devel
@@ -28,31 +29,32 @@ BuildRequires: libarchive-devel
 BuildRequires: libspnav-devel
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
 %autopatch -p1
 
 %build
-%add_optflags -I%_includedir/glibmm-2.4 -I%_libdir/glibmm-2.4/include
-%add_optflags -I%_includedir/glib-2.0 -I%_libdir/glib-2.0/include
-%add_optflags -I%_includedir/sigc++-2.0
-%add_optflags -I%_includedir/glm
-export CXXFLAGS='%optflags' 
-%make_build \
-%ifarch loongarch64 riscv64
-	GOLD= \
-%endif
-	%nil
+#add_optflags -I%_includedir/glibmm-2.4 -I%_libdir/glibmm-2.4/include
+#add_optflags -I%_includedir/glib-2.0 -I%_libdir/glib-2.0/include
+#add_optflags -I%_includedir/sigc++-2.0
+#add_optflags -I%_includedir/glm
+#export CXXFLAGS='%optflags'
+%meson
+%meson_build
+#ifarch loongarch64 riscv64
+#	GOLD= \
+#endif
+#	%nil
 
 
 %install
-%makeinstall_std PREFIX=%prefix \
-%ifarch loongarch64 riscv64
-	GOLD= \
-%endif
-	%nil
+%meson_install
+#ifarch loongarch64 riscv64
+#	GOLD= \
+#endif
+#	%nil
 
 %files
 %_bindir/*
@@ -62,6 +64,9 @@ export CXXFLAGS='%optflags'
 %doc *.md
 
 %changelog
+* Tue May 21 2024 Anton Midyukov <antohami@altlinux.org> 2.6.0-alt1
+- nnew version 2.6.0
+
 * Sat Mar 02 2024 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt1.2
 - NMU: build with libpodofo0.9-devel (0.10 is not supported yet)
 
