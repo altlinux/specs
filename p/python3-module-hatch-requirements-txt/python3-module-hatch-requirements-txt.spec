@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.4.1
-Release: alt1
+Release: alt1.git1aa21b8
 
 Summary: Hatchling plugin to read project dependencies from requirements.txt
 License: MIT
@@ -55,6 +55,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu May 23 2024 Anton Zhukharev <ancieg@altlinux.org> 0.4.1-alt1.git1aa21b8
+- Fixed FTBFS (updated to 1aa21b8).
+
 * Fri Feb 09 2024 Anton Zhukharev <ancieg@altlinux.org> 0.4.1-alt1
 - Updated to 0.4.1.
 
