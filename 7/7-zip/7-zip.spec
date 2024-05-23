@@ -3,7 +3,7 @@
 
 Name: 7-zip
 Version: 24.05
-Release: alt1
+Release: alt2
 Group: Archiving/Compression
 License: LGPLv2+ with UnRAR-exception
 Url: https://www.7-zip.org
@@ -12,7 +12,6 @@ Source1: check.tar
 Patch2: dangling-pointer.patch
 Patch3: uninitialized.patch
 Patch100: ALT-armh.patch
-Patch2000: 7zip-e2k.patch
 Summary: Official 7-zip for linux, the file archiver with a high compression ratio
 Provides: 7zz = %version-%release
 
@@ -43,7 +42,6 @@ BuildRequires: gcc-c++
 %patch3 -p1
 ##patch100 -p1
 %ifarch %e2k
-%patch2000 -p1
 %add_optflags -msse4.1 -mno-sse4.2
 %endif
 
@@ -130,6 +128,9 @@ sh check.sh %buildroot%_bindir/7zz
 %endif
 
 %changelog
+* Thu May 23 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 24.05-alt2
+- remove obsolete patch for Elbrus
+
 * Mon May 20 2024 Fr. Br. George <george@altlinux.org> 24.05-alt1
 - Manual version bump to 24.05
 
