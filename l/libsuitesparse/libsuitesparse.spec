@@ -23,7 +23,7 @@
 
 Name: libsuitesparse
 Version: 7.7.0
-Release: alt1
+Release: alt2
 
 Summary: Shared libraries for sparse matrix calculations
 License: BSD-3-Clause AND LGPL-2.1-or-later AND GPL-2.0-or-later
@@ -285,8 +285,8 @@ to all SuiteSparse libraries.
 %setup
 %ifarch %e2k
 # -fopenmp must also be set when linking
-sed -i '/CF += $(CFOPENMP)/a LDFLAGS += $(CFOPENMP)' \
-    SuiteSparse_config/SuiteSparse_config.mk
+sed -i '/cmake_minimum_required/a add_link_options(-fopenmp)' \
+	SuiteSparse_config/CMakeLists.txt
 %endif
 
 %build
@@ -378,6 +378,9 @@ sed -i '/CF += $(CFOPENMP)/a LDFLAGS += $(CFOPENMP)' \
 %_bindir/suitesparse_mongoose
 
 %changelog
+* Thu May 23 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 7.7.0-alt2
+- fix e2k build
+
 * Sun May 12 2024 Anton Farygin <rider@altlinux.ru> 7.7.0-alt1
 - 5.10.1 -> 7.7.0
 - split package according shared libs policy
