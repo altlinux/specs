@@ -1,6 +1,6 @@
 %define distro kworkstation
 Name: installer-distro-%distro
-Version: 10.1
+Version: 10.2
 Release: alt1
 
 Summary: Installer files for Centaurus distro
@@ -65,6 +65,9 @@ cp -a * %buildroot%install2dir/
 %install2dir/*.d/*
 %files stage3
 %changelog
+* Thu Apr 25 2024 Ajrat Makhmutov <rauty@altlinux.org> 10.2-alt1
+- select additional applications before partitioning the disk
+
 * Tue Oct 31 2023 Sergey V Turchin <zerg@altlinux.org> 10.1-alt1
 - fork from installer-distro-centaurus
 - don't force some services
