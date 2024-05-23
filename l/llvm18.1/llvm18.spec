@@ -8,7 +8,7 @@
 
 %global v_major 18
 %global v_majmin %v_major.1
-%global v_full %v_majmin.5
+%global v_full %v_majmin.6
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -1478,6 +1478,9 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Thu May 23 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.6-alt0.1
+- Update to 18.1.6.
+
 * Mon May 06 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.5-alt0.1
 - Update to 18.1.5.
 
