@@ -1,10 +1,10 @@
 %define base_name apt-conf
 %define distro branch
-%define Distro p10 branch
+%define Distro p11 branch
 
 Name: %base_name-%distro
-Version: 10.0
-Release: alt3
+Version: 11.0
+Release: alt1
 
 Summary: A set of apt configuration files for %distribution %Distro
 License: GPL-2.0-or-later
@@ -29,7 +29,7 @@ This package contains default apt configuration for %distribution %Distro.
 %setup
 
 %build
-%make_build REPOSITORIES=p10
+%make_build REPOSITORIES=p11
 
 %install
 %makeinstall
@@ -48,6 +48,10 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Thu May 23 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 11.0-alt1
+- Built for p11 branch.
+- Added [p11] key to the vendor.list.
+
 * Wed May 24 2023 Denis Medvedev <nbr@altlinux.org> 10.0-alt3
 - bump version to allow c10f1 update
 

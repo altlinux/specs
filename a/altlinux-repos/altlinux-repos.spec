@@ -1,5 +1,5 @@
 Name: altlinux-repos
-Version: 1.1.1
+Version: 11.0
 Release: alt1
 
 Summary: A set of ALT repos desktop files
@@ -27,6 +27,9 @@ cp -a mirrors repositories %buildroot%_sysconfdir/apt/
 %_sysconfdir/apt/repositories
 
 %changelog
+* Thu May 23 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 11.0-alt1
+- Added p11 branch.
+
 * Tue Mar 12 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1-alt1
 - repositories/sisyphus.desktop: dropped armh.
 
