@@ -1,7 +1,7 @@
 %define clang_arches %ix86 x86_64 aarch64 ppc64el armh mipsel
 
 Name: mk-configure
-Version: 0.38.3
+Version: 0.39.0
 Release: alt1
 
 Summary: Build system on top of bmake
@@ -98,6 +98,7 @@ unset MAKEFLAGS
 # The following tests are disabled because
 # lua.pc does not provide INSTALL_{C,L}MOD
 export NOSUBDIR='hello_lua hello_lua2 hello_lua3 lua_dirs'
+export USE_FORT=no # -D_FORTIFY_SOURCE is the default on AltLinux
 bmake test
 bmake nodeps-cleandir-examples
 bmake nodeps-cleandir-tests
@@ -123,6 +124,9 @@ bmake nodeps-cleandir-tests
 # - add %%config %%_sysconfdir/rpm/macros.mkcmake (extra source)
 
 %changelog
+* Thu May 23 2024 Aleksey Cheusov <cheusov@altlinux.org> 0.39.0-alt1
+- 0.39.0
+
 * Thu Dec 14 2023 Aleksey Cheusov <cheusov@altlinux.org> 0.38.3-alt1
 - 0.38.3
 
