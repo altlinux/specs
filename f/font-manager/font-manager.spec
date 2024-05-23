@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %set_verify_elf_method unresolved=relaxed
 
 %define _libexecdir %_prefix/libexec
@@ -10,8 +10,8 @@
 %define nautilus_extdir %_libdir/nautilus/extensions-4
 
 Name: font-manager
-Version: 0.8.8
-Release: alt3
+Version: 0.8.9
+Release: alt1
 
 Summary: A font management application for the GNOME desktop
 License: GPL-3.0
@@ -90,6 +90,9 @@ Enlightenment, and even KDE.
 
 
 %changelog
+* Thu May 23 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.9-alt1
+- 0.8.9
+
 * Sun May 19 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.8-alt3
 - updated to 0.8.8-68-g4c15fe6c
 - enabled nautilus support again
