@@ -2,8 +2,8 @@
 %define flavors	x11-gl,drm-gl,x11-glesv2,drm-glesv2,wayland-gl,wayland-glesv2
 
 Name:		glmark2
-Version:	2021.12
-Release:	alt6
+Version:	2023.01
+Release:	alt1
 
 Summary:	an OpenGL 2.0 and ES 2.0 benchmark
 Url:		https://github.com/glmark2/glmark2
@@ -149,6 +149,9 @@ export CXXFLAGS="${CFLAGS}"
 %_datadir/%name
 
 %changelog
+* Thu May 23 2024 Ivan A. Melnikov <iv@altlinux.org> 2023.01-alt1
+- 2023.01
+
 * Sun Feb 04 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2021.12-alt6
 - Recover from fallout caused by switching to meson.
   Actually include data files into common subpackage.
