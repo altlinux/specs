@@ -1,23 +1,25 @@
-%define _unpackaged_files_terminate_build 1
 %define oname pylru
 
 Name:       python3-module-%oname
-Version:    1.0.9
-Release:    alt2
+Version:    1.2.1
+Release:    alt1
 
 Summary:    A least recently used (LRU) cache implementation
-License:    GPL
+
+License:    GPLv2
 Group:      Development/Python3
-Url:        https://pypi.python.org/pypi/pylru/
+URL:        https://pypi.org/project/pylru
+VCS:        https://github.com/jlhutch/pylru
 
 BuildArch:  noarch
 
-# https://github.com/jlhutch/pylru.git
-Source0: https://pypi.python.org/packages/c0/7d/0de1055632f3871dfeaabe5a3f0510317cd98b93e7b792b44e4c7de2b17b/%{oname}-%{version}.tar.gz
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-%py3_provides %oname
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
+%py3_provides %oname
 
 %description
 Pylru implements a true LRU cache along with several support classes.
@@ -27,20 +29,24 @@ delete) all run in a constant amount of time.
 
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%doc *.txt
-%python3_sitelibdir/*
-
+%doc *.txt *.rst
+%python3_sitelibdir/%oname.py
+%python3_sitelibdir/__pycache__
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu May 23 2024 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt1
+- Build new version.
+
 * Mon Feb 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.9-alt2
 - Build for python2 disabled.
 
