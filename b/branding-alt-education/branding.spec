@@ -2,9 +2,9 @@
 %define Brand ALT
 %define theme education
 %define Theme Education
-%define codename FalcoRusticolus
-%define status %nil
-%define status_en %nil
+%define codename FalcoVespertinus
+%define status ALPHA
+%define status_en ALPHA
 %define flavour %brand-%theme
 
 %define gtk_theme Breeze-Education
@@ -25,14 +25,8 @@
 %define design_graphics_abi_bugfix 0
 
 Name: branding-%flavour
-Version: 10.2
-Release: alt3.1
-
-%ifarch %ix86 x86_64
-BuildRequires: gfxboot >= 4
-BuildRequires: design-bootloader-source >= 7.3-alt1
-BuildRequires: cpio
-%endif
+Version: 11.0
+Release: alt0.1.alpha
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -63,11 +57,7 @@ Summary(ru_RU.UTF-8): Тема для экрана выбора варианто
 License: GPL-2.0
 
 Requires(pre): coreutils
-Provides:  design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
 %branding_add_conflicts %flavour bootloader
-
-%define grub_normal white/light-blue
-%define grub_high black/light-gray
 
 %description bootloader
 Here you find the graphical boot logo for %distro_name.
@@ -83,7 +73,10 @@ Summary(ru_RU.UTF-8): Тема для экрана загрузки для ди�
 License:  Distributable
 Group:    System/Configuration/Boot and Init
 Provides: plymouth-theme-%theme
+Requires: plymouth-theme-bgrt-alt
 Requires: plymouth-plugin-script
+Requires: plymouth-plugin-label
+Requires: fonts-ttf-dejavu
 Requires(pre): plymouth
 
 %branding_add_conflicts %flavour bootsplash
@@ -321,7 +314,7 @@ sed -i 's,#alt-education,&-e2k,' indexhtml/index-*.html.in
 
 %build
 autoconf
-THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' PRODUCT_LOGO='%distro_logo' CODENAME='%codename' GTK_THEME='%gtk_theme' KDE_THEME='%kde_theme' ICON_THEME='%icon_theme' WINDOW_THEME='%window_theme' XFWM4_COMPOSITING='%xfwm4_compositing' ./configure
+THEME=%theme CTHEME=%Theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' PRODUCT_LOGO='%distro_logo' CODENAME='%codename' GTK_THEME='%gtk_theme' KDE_THEME='%kde_theme' ICON_THEME='%icon_theme' WINDOW_THEME='%window_theme' XFWM4_COMPOSITING='%xfwm4_compositing' ./configure
 make
 
 %install
@@ -334,35 +327,11 @@ touch %buildroot%_sysconfdir/os-release
 
 find %buildroot -name \*.in -delete
 
-#bootloader
-%pre bootloader
-%ifarch %ix86 x86_64
-[ -s /usr/share/gfxboot/%theme ] && rm -fr  /usr/share/gfxboot/%theme ||:
-%endif
-%ifarch %ix86 x86_64 aarch64
-[ -s /boot/splash/%theme ] && rm -fr  /boot/splash/%theme ||:
-%endif
-
 %post bootloader
 %ifarch %ix86 x86_64 aarch64
-%__ln_s -nf %theme/message /boot/splash/message
-. /etc/sysconfig/i18n
-lang=$(echo $LANG | cut -d. -f 1)
-cd boot/splash/%theme/
-echo $lang > lang
-[ "$lang" = "C" ] || echo lang | cpio -o --append -F message
 . shell-config
-shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.txt
-#shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme
-shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_NORMAL %grub_normal
-shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
-%endif
-
-%ifarch %ix86 x86_64 aarch64
-%preun bootloader
-[ $1 = 0 ] || exit 0
-[ "`readlink /boot/splash/message`" != "%theme/message" ] ||
-    %__rm -f /boot/splash/message
+shell_config_del /etc/sysconfig/grub2 GRUB_THEME
+shell_config_del /etc/sysconfig/grub2 GRUB_BACKGROUND
 %endif
 
 %post indexhtml
@@ -376,19 +345,11 @@ sed -i '/pam_env\.so/ {
 ' %_sysconfdir/pam.d/lightdm-greeter
 
 %files bootloader
-%ifarch %ix86 x86_64
-%_datadir/gfxboot/%theme
-/boot/splash/%theme
-%endif
-/boot/grub/themes/%theme
 
 #bootsplash
 %post bootsplash
 %ifarch %ix86 x86_64 aarch64
-subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
-[ -f /etc/sysconfig/grub2 ] && \
-      subst "s|GRUB_WALLPAPER=.*|GRUB_WALLPAPER=/usr/share/plymouth/themes/%theme/grub.jpg|" \
-             /etc/sysconfig/grub2 ||:
+subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %endif
 
 %post mate-settings
@@ -415,10 +376,10 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 %config /etc/alternatives/packages.d/%name-graphics
 %_datadir/design
 %_iconsdir/hicolor/*/apps/alt-%theme.svg
+%exclude %_datadir/design/%theme/icons/system-logo.png
 
 %files bootsplash
-%_datadir/plymouth/themes/%theme/*
-%_pixmapsdir/system-logo.png
+%_datadir/design/%theme/icons/system-logo.png
 
 %files release
 %_sysconfdir/altlinux-release
@@ -483,6 +444,12 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Fri Apr 19 2024 Andrey Cherepanov <cas@altlinux.org> 11.0-alt0.1.alpha
+- Alpha version of 11.0.
+- xfce-settings: use clock applet instead of datetime.
+- kde-settings: use themed profile instead of hardcoded.
+- bootspash: use plymouth-theme-bgrt-alt.
+
 * Thu Nov 02 2023 Michael Shigorin <mike@altlinux.org> 10.2-alt3.1
 - E2K: link to platform-specific distribution manual (rm#115880)
 
