@@ -2,10 +2,10 @@
 
 Name: osec
 Version: 1.3.2
-Release: alt1
+Release: alt2
 
 Summary: Lightweight file permission checker
-License: GPL3
+License: GPL-3
 Group: System/Base
 Url: https://github.com/legionus/osec
 
@@ -118,6 +118,9 @@ rm -f %osec_statedir/osec.db.*
 %_bindir/osec_rpm_reporter
 
 %changelog
+* Thu May 23 2024 Alexey Gladkov <legion@altlinux.ru> 1.3.2-alt2
+- Update license tag (ALT#50428).
+
 * Sat Feb 24 2024 Alexey Gladkov <legion@altlinux.ru> 1.3.2-alt1
 - New version (1.3.2).
 - Fix infinite loop (ALT#49446).
