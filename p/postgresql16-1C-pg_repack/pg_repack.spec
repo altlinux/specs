@@ -1,4 +1,4 @@
-%define pg_ver 15-1C
+%define pg_ver 16-1C
 %ifarch loongarch64
 # XXX: psql jit uses LLVM, versions <= 15.
 # These versions do not support LoongArch targets.

@@ -1,4 +1,4 @@
-%define pg_ver 15-1C
+%define pg_ver 16-1C
 
 Name: postgresql%pg_ver-pg_checksums
 Version: 1.1

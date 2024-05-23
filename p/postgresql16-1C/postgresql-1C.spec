@@ -18,8 +18,8 @@
 %set_autoconf_version 2.60
 
 %define prog_name            postgresql
-%define postgresql_major     15
-%define postgresql_minor     7
+%define postgresql_major     16
+%define postgresql_minor     3
 %define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
@@ -577,12 +577,12 @@ if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
 
-%triggerpostun -- %{prog_name}15-1C-server
+%triggerpostun -- %{prog_name}16-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
 
-%triggerpostun -- %{prog_name}16-server
+%triggerpostun -- %{prog_name}16-1C-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
@@ -836,7 +836,6 @@ fi
 %_bindir/pg_controldata
 %_bindir/pg_ctl
 %_bindir/postgres
-%_bindir/postmaster
 %_bindir/pg_upgrade
 %_bindir/pg_rewind
 %_bindir/pg_receivewal
@@ -849,7 +848,6 @@ fi
 %_man1dir/pg_ctl.1*
 %_man1dir/pg_upgrade.1*
 %_man1dir/postgres.1*
-%_man1dir/postmaster.1*
 %_man1dir/pg_rewind.1*
 %_man1dir/pg_receivewal.1*
 %_man1dir/pg_resetwal.1*
@@ -861,6 +859,8 @@ fi
 %_libdir/%PGSQL/plpgsql.so
 %_datadir/%PGSQL/extension/plpgsql-*.sql
 %_datadir/%PGSQL/extension/plpgsql.control
+%_libdir/%PGSQL/basebackup_to_shell.so
+%_libdir/%PGSQL/basic_archive.so
 %_libdir/%PGSQL/dbcopies_decoding.so
 %_libdir/%PGSQL/dict_snowball.so
 %_libdir/%PGSQL/*_and_*.so
@@ -979,6 +979,9 @@ fi
 %endif
 
 %changelog
+* Thu May 23 2024 Alexei Takaseev <taf@altlinux.org> 16.3-alt1
+- 16.3
+
 * Wed May 15 2024 Alexei Takaseev <taf@altlinux.org> 15.7-alt1
 - 15.7 (Fixes CVE-2024-4317)
 - Update 1C patch
