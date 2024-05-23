@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: box64
-Version: 0.2.6
+Version: 0.2.8
 Release: alt1.1
 
 Summary: Linux Userspace x86_64 Emulator with a twist
@@ -69,6 +69,13 @@ mv %buildroot/etc/binfmt.d %buildroot/lib/
 %sysroot
 
 %changelog
+* Wed May 22 2024 Ivan A. Melnikov <iv@altlinux.org> 0.2.8-alt1.1
+- disable loongarch64 extensions in dynarec
+  (segfault workaround).
+
+* Wed May 22 2024 Ivan A. Melnikov <iv@altlinux.org> 0.2.8-alt1
+- 0.2.8
+
 * Mon Dec 18 2023 Ivan A. Melnikov <iv@altlinux.org> 0.2.6-alt1.1
 - Fix build on loongarch64.
 
