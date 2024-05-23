@@ -16,8 +16,8 @@
 %define altbranch %_priority_distbranch
 
 Name: branding-%flavour
-Version: 10
-Release: alt6
+Version: 11
+Release: alt1
 Epoch: 1
 
 Url: http://en.altlinux.org/starterkits
@@ -42,17 +42,18 @@ Source: branding.tar
 
 Group: Graphics
 Summary: System/Base
-License: GPLv2+
+License: GPL-2.0-or-later
 
 %description
 Distro-specific packages with design and texts
 
 %package bootloader
 Group: System/Configuration/Boot and Init
-Summary: Graphical boot logo for grub2
-License: GPLv2+
+Summary: Graphical settings for grub2
+License: GPL-2.0-or-later
 
 Requires: coreutils
+Requires(pre): grub-common
 Provides: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
 
 Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme
@@ -80,7 +81,7 @@ This package contains graphics for boot process, displayed via Plymouth
 
 %package alterator
 Summary: Design for alterator for %Brand %Theme
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
 BuildArch: noarch
 Provides: design-alterator-browser-%theme branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt
@@ -238,12 +239,9 @@ install slideshow/* %buildroot/usr/share/install2/slideshow/
 #bootloader
 %post bootloader
 . shell-config
-shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.txt
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_NORMAL %grub_normal
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 shell_config_set /etc/sysconfig/grub2 GRUB_BACKGROUND ''
-# deprecated
-shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER ''
 %endif
 
 %post indexhtml
@@ -260,9 +258,6 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 
 %ifarch %grub_arches
 %files bootloader
-/boot/grub/themes/%theme
-%else
-%exclude /boot/grub/themes/%theme
 %endif
 
 %files graphics
@@ -297,6 +292,12 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Fri Mar 29 2024 Anton Midyukov <antohami@altlinux.org> 1:11-alt1
+- bump version for branch p11
+- bootloader: remove grub theme, add dependency on grub-common
+- correct the License fields to match SPDX format
+- drop product-logo, images for grub; update background images
+
 * Wed Jan 24 2024 Anton Midyukov <antohami@altlinux.org> 1:10-alt6
 - Drop gfxboot for syslinux
 - Remove xfce-settings subpackage
