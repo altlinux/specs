@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.4.3
+Version:  1.4.4
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -35,6 +35,9 @@ install -Dpm 644 %name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %_man8dir/%name.8*
 
 %changelog
+* Wed May 22 2024 Andrey Cherepanov <cas@altlinux.org> 1.4.4-alt1
+- Added p11 branch and priority_distbranch for p10, p11 and sisyphus.
+
 * Sun May 28 2023 Vitaly Lipatov <lav@altlinux.ru> 1.4.3-alt1
 - Replaced print ; exit 1 with die.
 - Replaced print with warn.
