@@ -2,6 +2,8 @@
 
 %define _unpackaged_files_terminate_build 1
 %define dracutlibdir %prefix/lib/dracut
+%define bash_completion_dir %(pkg-config --variable=completionsdir bash-completion)
+%define _unitdir %(pkg-config --variable=systemdsystemunitdir systemd)
 %def_enable documentation
 
 # We ship a .pc file but don't want to have a dep on pkg-config. We
@@ -11,8 +13,8 @@
 %filter_from_requires /^\/usr\/share\/pkgconfig/d
 
 Name: dracut
-Version: 060
-Release: alt0.1
+Version: 101
+Release: alt1
 
 Summary: Initramfs generator using udev
 Group: System/Base
@@ -22,8 +24,8 @@ Group: System/Base
 # except util/* which is GPLv2
 License: GPLv2+ and LGPLv2+ and GPLv2
 
-Vcs: https://github.com/dracutdevs/dracut.git
-Url: https://dracut.wiki.kernel.org/
+Vcs: https://github.com/dracut-ng/dracut-ng.git
+Url: https://github.com/dracut-ng/dracut-ng/wiki/
 
 Source: %name-%version.tar
 
@@ -42,7 +44,7 @@ BuildRequires: asciidoc xsltproc
 Requires: bash >= 4
 Requires: coreutils
 Requires: cpio
-Requires: filesystem
+Requires: filesystem >= 3
 Requires: findutils
 Requires: grep
 Requires: kmod
@@ -197,7 +199,7 @@ echo "DRACUT_VERSION=%version" > dracut-version.sh
 %build
 %configure \
 	--systemdsystemunitdir=%_unitdir \
-	--bashcompletiondir=$(pkg-config --variable=completionsdir bash-completion) \
+	--bashcompletiondir=%bash_completion_dir \
 	--libdir=%prefix/lib \
 	%{subst_enable documentation}
 
@@ -208,9 +210,6 @@ echo "DRACUT_VERSION=%version" > dracut-version.sh
      libdir=%prefix/lib
 
 echo "DRACUT_VERSION=%version-%release" > %buildroot%dracutlibdir/dracut-version.sh
-
-# compatibility symlinks
-mkdir -p %buildroot/sbin
 
 # Cleanup
 rm -fr -- %buildroot%dracutlibdir/modules.d/01fips
@@ -265,9 +264,9 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %doc README.md docs/HACKING.md AUTHORS NEWS.md dracut.html docs/dracut.png docs/dracut.svg
 %endif
 %doc COPYING
-%_sbindir/dracut
-%_datadir/bash-completion/completions/dracut
-%_datadir/bash-completion/completions/lsinitrd
+%_bindir/dracut
+%bash_completion_dir/dracut
+%bash_completion_dir/lsinitrd
 %_bindir/lsinitrd
 %dir %dracutlibdir
 %dir %dracutlibdir/modules.d
@@ -430,6 +429,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/35network-legacy
 %dracutlibdir/modules.d/40network
 %dracutlibdir/modules.d/45ifcfg
+%dracutlibdir/modules.d/45net-lib
 %dracutlibdir/modules.d/45url-lib
 %dracutlibdir/modules.d/90kernel-network-modules
 %dracutlibdir/modules.d/90qemu-net
@@ -463,7 +463,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %doc %_man8dir/dracut-catimages.8*
 %endif
 
-%_sbindir/dracut-catimages
+%_bindir/dracut-catimages
 %dir /boot/dracut
 %dir %_var/lib/dracut
 %dir %_var/lib/dracut/overlay
@@ -489,6 +489,10 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 #%dracutlibdir/modules.d/98integrity
 
 %changelog
+* Thu May 23 2024 Alexey Shabalin <shaba@altlinux.org> 101-alt1
+- 101
+- Switch to new upstream https://github.com/dracut-ng/dracut-ng.git
+
 * Sun Dec 10 2023 Alexey Shabalin <shaba@altlinux.org> 060-alt0.1
 - 060 pre-release
 
