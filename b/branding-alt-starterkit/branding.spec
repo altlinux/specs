@@ -7,7 +7,7 @@
 
 %define theme starterkit
 %define Theme starter kit
-%define codename Hypericum
+%define codename Salvia
 %define brand alt
 %define Brand ALT
 %define flavour %brand-%theme
@@ -17,7 +17,7 @@
 
 Name: branding-%flavour
 Version: 11
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Url: http://en.altlinux.org/starterkits
@@ -292,6 +292,9 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Thu May 23 2024 Anton Midyukov <antohami@altlinux.org> 1:11-alt2
+- assign code name Salvia
+
 * Fri Mar 29 2024 Anton Midyukov <antohami@altlinux.org> 1:11-alt1
 - bump version for branch p11
 - bootloader: remove grub theme, add dependency on grub-common
