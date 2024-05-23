@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _name planify
 %define ver_major 4.7
 %define rdn_name io.github.alainm23.%_name
@@ -7,7 +7,7 @@
 
 Name: %_name
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: Planify
 License: GPL-3.0-or-later
@@ -100,6 +100,9 @@ This package contains files necessary to develop Planify plugins.
 %_vapidir/%_name.*
 
 %changelog
+* Thu May 23 2024 Yuri N. Sedunov <aris@altlinux.org> 4.7.4-alt2
+- updated to 4.7.4-5-g72ae6d16
+
 * Sun May 19 2024 Yuri N. Sedunov <aris@altlinux.org> 4.7.4-alt1
 - 4.7.4
 
