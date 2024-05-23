@@ -1,6 +1,28 @@
 %def_disable check
 %define _unpackaged_files_terminate_build 1
 %define _localstatedir %_var
+
+# usr merged path
+%define _binfmtdir %_prefix/lib/binfmt.d
+%define _env_dir %_prefix/lib/environment.d
+%define _journal_catalogdir %_prefix/lib/systemd/catalog
+%define _modprobedir %_prefix/lib/modprobe.d
+%define _modules_loaddir %_prefix/lib/modules-load.d
+%define _presetdir %_prefix/lib/systemd/system-preset
+%define _user_presetdir %_prefix/lib/systemd/user-preset
+%define _sysctldir %_prefix/lib/sysctl.d
+%define _sysusersdir %_prefix/lib/sysusers.d
+%define _systemd_dir %_prefix/lib/systemd
+%define _tmpfilesdir %_prefix/lib/tmpfiles.d
+%define _unitdir %_prefix/lib/systemd/system
+%define _user_unitdir %_prefix/lib/systemd/user
+%define _udev_hwdbdir %_prefix/lib/udev/hwdb.d
+%define _udev_rulesdir %_prefix/lib/udev/rules.d
+%define _gen_dir %_prefix/lib/systemd/system-generators
+%define _user_gen_dir %_prefix/lib/systemd/user-generators
+%define _env_gen_dir %_prefix/lib/systemd/system-environment-generators
+%define _user_env_gen_dir %_prefix/lib/systemd/user-environment-generators
+
 %add_findreq_skiplist %_x11sysconfdir/xinit.d/*
 %add_findreq_skiplist %_prefix/lib/kernel/install.d/*
 %add_findreq_skiplist %_unitdir/local.service
@@ -49,7 +71,8 @@
 %def_disable efi
 %def_disable bootloader
 %endif
-%def_disable p11kit
+%def_enable p11kit
+%def_enable libfido2
 %def_enable utmp
 %def_enable xz
 %def_enable zlib
@@ -94,12 +117,12 @@
 %define mmap_min_addr 32768
 %endif
 
-%define ver_major 254
+%define ver_major 255
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.10
-Release: alt2
+Version: %ver_major.6
+Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
 Group: System/Configuration/Boot and Init
@@ -209,6 +232,7 @@ BuildRequires: pkgconfig(fdisk) >= 2.32
 %{?_enable_gcrypt:BuildRequires: libgcrypt-devel >= 1.4.5 libgpg-error-devel >= 1.12}
 %{?_enable_openssl:BuildRequires: pkgconfig(openssl) >= 1.1.0}
 %{?_enable_p11kit:BuildRequires: pkgconfig(p11-kit-1) >= 0.23.3}
+%{?_enable_libfido2:BuildRequires: pkgconfig(libfido2)}
 %{?_enable_qrencode:BuildRequires: libqrencode-devel >= 3}
 %{?_enable_microhttpd:BuildRequires: pkgconfig(libmicrohttpd) >= 0.9.33}
 %{?_enable_gnutls:BuildRequires: pkgconfig(gnutls) >= 3.1.4}
@@ -248,11 +272,13 @@ Provides: %name-services = %EVR
 Obsoletes: %name-services < %EVR
 
 #utils
-Provides: /sbin/systemctl
-Provides: /bin/systemctl
-Provides: /usr/bin/systemctl
+Provides: /sbin/systemctl /bin/systemctl /usr/bin/systemctl /usr/sbin/systemctl
 Provides: /bin/journalctl
 Provides: /sbin/journalctl
+Provides: /sbin/systemd-modules-load /sbin/systemd-shutdown /sbin/systemd-sysctl /sbin/systemd-sysusers
+Provides: /sbin/systemd-sysusers /sbin/systemd-tmpfiles
+Provides: /lib/systemd/systemd-reply-password /lib/systemd/systemd-logind /lib/systemd/systemd-vconsole-setup
+Provides: /lib/systemd/systemd-update-helper
 Provides: journalctl = %EVR
 Obsoletes: journalctl < %EVR
 Obsoletes: libsystemd-shared < %EVR
@@ -442,6 +468,7 @@ and are deactivated (unmounted) when the last session of the user ends.
 %package sysvinit
 Group: System/Configuration/Boot and Init
 Summary: systemd System V init tools
+Conflicts: filesystem < 3
 Requires: %name = %EVR
 # Obsoletes: SysVinit
 Provides: SysVinit = 2.88-alt0.1
@@ -449,6 +476,7 @@ Provides: SysVinit = 2.88-alt0.1
 Conflicts: upstart
 Conflicts: SysVinit
 BuildArch: noarch
+Provides: /sbin/init /sbin/reboot /sbin/halt /sbin/poweroff /sbin/shutdown /sbin/telinit /sbin/runlevel
 
 %description sysvinit
 Drop-in replacement for the System V init tools of systemd.
@@ -551,6 +579,7 @@ Group: System/Kernel and hardware
 Summary: Tool to build Unified Kernel Images
 Requires: %name = %EVR
 #BuildArch: noarch
+BuildRequires: python3(pefile) python3(PIL) python3(zstd)
 %py3_requires pefile PIL zstd
 
 %description ukify
@@ -580,6 +609,7 @@ This package contains:
 Group: System/Configuration/Hardware
 Summary: udev - an userspace implementation of devfs
 License: GPLv2+
+Conflicts: filesystem < 3
 Requires: shadow-utils dmsetup kmod >= 15 util-linux >= 2.27.1 losetup >= 2.19.1
 Provides: hotplug = 2004_09_23-alt18
 Obsoletes: hotplug < 2004_09_23-alt18
@@ -587,10 +617,10 @@ Provides: udev-extras = %EVR
 Obsoletes: udev-extras < %EVR
 Provides: udev-rules = %EVR
 Obsoletes: udev-rules < %EVR
-Provides: /etc/udev/rules.d /lib/udev/rules.d
+Provides: /etc/udev/rules.d /lib/udev/rules.d %_prefix/lib/udev/rules.d
 Provides: udev-hwdb = %EVR
 Obsoletes: udev-hwdb < %EVR
-Provides: /etc/udev/hwdb.d /lib/udev/hwdb.d
+Provides: /etc/udev/hwdb.d /lib/udev/hwdb.d %_prefix/lib/udev/hwdb.d /sbin/udevadm
 Conflicts: util-linux <= 2.22-alt2
 Conflicts: DeviceKit
 Conflicts: make-initrd < 2.2.10
@@ -638,6 +668,8 @@ Requires: %name-utils = %EVR
 Group: Development/Other
 License: LGPLv2+
 %add_findreq_skiplist /usr/lib/systemd/tests/testdata/units/testsuite-50.sh
+%add_findreq_skiplist /usr/lib/systemd/tests/testdata/units/testsuite-58.sh
+%add_findreq_skiplist /usr/lib/systemd/tests/testdata/units/testsuite-70.cryptsetup.sh
 %add_findreq_skiplist /usr/lib/systemd/tests/testdata/units/testsuite-81.fstab-generator.sh
 
 %description tests
@@ -665,6 +697,8 @@ Requires: %name-modules-common = %EVR
 Provides: %name-utils = %EVR
 Obsoletes: %name-utils < %EVR
 Conflicts: systemd
+Conflicts: filesystem < 3
+Provides: /sbin/systemd-modules-load /sbin/systemd-shutdown /sbin/systemd-sysctl /sbin/systemd-sysusers /sbin/systemd-sysusers /sbin/systemd-tmpfiles
 
 %description utils-standalone
 This package contains standalone utils from systemd:
@@ -716,10 +750,6 @@ Conflicts: startup < 0.9.9.14
 %prep
 %setup -q
 %patch1 -p1
-# Procedural patches for filesystem >= 3 support.
-# To be dropped after upgrade to >= 255.
-subst 's/environmentdir = rootprefixdir/environmentdir = prefixdir/' meson.build
-subst '/mount.ddi/s!rootsbindir!'"prefixdir / get_option('sbindir')"'!' meson.build
 
 %build
 
@@ -736,9 +766,7 @@ subst '/mount.ddi/s!rootsbindir!'"prefixdir / get_option('sbindir')"'!' meson.bu
         %{?_enable_static_libudev:-Dstatic-libudev=pic} \
         %{?_enable_standalone_binaries:-Dstandalone-binaries=true} \
         -Dxinitrcdir=%_sysconfdir/X11/xinit.d \
-        -Drootlibdir=/%_lib \
         -Dpamlibdir=/%_lib/security \
-        -Dsplit-usr=true \
         -Dsplit-bin=true \
         -Dsysvinit-path=%_initdir \
         -Dsysvrcnd-path=%_sysconfdir/rc.d \
@@ -797,6 +825,7 @@ subst '/mount.ddi/s!rootsbindir!'"prefixdir / get_option('sbindir')"'!' meson.bu
         %{?_enable_gnutls:-Dgnutls=true} \
         %{?_enable_openssl:-Dopenssl=true } \
         %{?_enable_p11kit:-Dp11kit=true } \
+        %{?_enable_libfido2:-Dlibfido2=true } \
         %{?_enable_libcurl:-Dlibcurl=true} \
         %{?_enable_libidn:-Dlibidn=true} \
         %{?_enable_libidn2:-Dlibidn2=true} \
@@ -865,7 +894,7 @@ rm -f %buildroot/usr/lib/rpm/macros.d/macros.systemd
 # remove linuxia32.elf.stub
 # debugedit: Failed to update file: invalid section entry size
 %ifarch %ix86
-rm -f %buildroot%_prefix%_systemd_dir/boot/efi/linuxia32.elf.stub
+rm -f %buildroot%_systemd_dir/boot/efi/linuxia32.elf.stub
 %endif
 
 %if_disabled tpm2
@@ -889,13 +918,13 @@ install -m644 %SOURCE4 %buildroot%_unitdir/altlinux-openresolv.path
 install -m644 %SOURCE5 %buildroot%_unitdir/altlinux-openresolv.service
 install -m644 %SOURCE68 %buildroot%_unitdir/altlinux-simpleresolv.path
 install -m644 %SOURCE69 %buildroot%_unitdir/altlinux-simpleresolv.service
-ln -s ../altlinux-openresolv.path %buildroot%_unitdir/multi-user.target.wants
-ln -s ../altlinux-simpleresolv.path %buildroot%_unitdir/multi-user.target.wants
+ln -r -s %buildroot%_unitdir/altlinux-openresolv.path %buildroot%_unitdir/multi-user.target.wants/altlinux-openresolv.path
+ln -r -s %buildroot%_unitdir/altlinux-simpleresolv.path %buildroot%_unitdir/multi-user.target.wants/altlinux-simpleresolv.path
 install -m644 %SOURCE6 %buildroot%_unitdir/altlinux-libresolv.path
 install -m644 %SOURCE7 %buildroot%_unitdir/altlinux-libresolv.service
-ln -s ../altlinux-libresolv.path %buildroot%_unitdir/multi-user.target.wants
+ln -r -s %buildroot%_unitdir/altlinux-libresolv.path %buildroot%_unitdir/multi-user.target.wants/altlinux-libresolv.path
 install -m644 %SOURCE27 %buildroot%_unitdir/altlinux-first_time.service
-ln -s ../altlinux-first_time.service %buildroot%_unitdir/basic.target.wants
+ln -r -s %buildroot%_unitdir/altlinux-first_time.service %buildroot%_unitdir/basic.target.wants/altlinux-first_time.service
 ln -s systemd-random-seed.service %buildroot%_unitdir/random.service
 ln -s systemd-reboot.service %buildroot%_unitdir/reboot.service
 ln -s systemd-halt.service %buildroot%_unitdir/halt.service
@@ -918,13 +947,11 @@ rm -f %buildroot%_unitdir/local-fs.target.wants/tmp.mount
 
 find %buildroot \( -name '*.la' \) -exec rm {} \;
 mkdir -p %buildroot/{sbin,bin}
-ln -r -s %buildroot%_systemd_dir/systemd %buildroot/sbin/systemd
+ln -r -s %buildroot%_systemd_dir/systemd %buildroot/%_sbindir/systemd
 
-ln -r -s %buildroot%_systemd_dir/systemd-{binfmt,modules-load,shutdown,sysctl} %buildroot/sbin/
 # for compatibility with older systemd pkgs which expected it at /sbin/:
-ln -r -s %buildroot/bin/systemctl %buildroot/sbin/
-ln -r -s %buildroot/bin/systemctl %buildroot%_bindir/
-ln -r -s %buildroot/bin/journalctl %buildroot/sbin/
+ln -r -s %buildroot%_bindir/systemctl %buildroot/%_sbindir/
+ln -r -s %buildroot%_bindir/udevadm %buildroot/%_sbindir/
 
 # add defaults services
 ln -r -s %buildroot%_unitdir/remote-fs.target %buildroot%_unitdir/multi-user.target.wants
@@ -964,19 +991,19 @@ install -Dm0644 %SOURCE8 %buildroot%_sysconfdir/sysctl.d/99-sysctl.conf
 ln -r -s %buildroot%_sysconfdir/sysctl.d/99-sysctl.conf %buildroot%_sysconfdir/sysctl.conf
 
 # Make sure directories in /var exist
-mkdir -p %buildroot%_localstatedir%_systemd_dir/coredump
-mkdir -p %buildroot%_localstatedir%_systemd_dir/catalog
-mkdir -p %buildroot%_localstatedir%_systemd_dir/backlight
-mkdir -p %buildroot%_localstatedir%_systemd_dir/rfkill
-mkdir -p %buildroot%_localstatedir%_systemd_dir/linger
-mkdir -p %buildroot%_localstatedir%_systemd_dir/journal-upload
-mkdir -p %buildroot%_localstatedir/lib/private/systemd/journal-upload
+mkdir -p %buildroot%_sharedstatedir/%name/coredump
+mkdir -p %buildroot%_sharedstatedir/%name/catalog
+mkdir -p %buildroot%_sharedstatedir/%name/backlight
+mkdir -p %buildroot%_sharedstatedir/%name/rfkill
+mkdir -p %buildroot%_sharedstatedir/%name/linger
+mkdir -p %buildroot%_sharedstatedir/%name/journal-upload
+mkdir -p %buildroot%_sharedstatedir/private/systemd/journal-upload
 mkdir -p %buildroot%_cachedir/private
-mkdir -p %buildroot%_localstatedir%_systemd_dir/timesync
-touch %buildroot%_localstatedir%_systemd_dir/catalog/database
+mkdir -p %buildroot%_sharedstatedir/%name/timesync
+touch %buildroot%_sharedstatedir/%name/catalog/database
 touch %buildroot%_sysconfdir/udev/hwdb.bin
-touch %buildroot%_localstatedir%_systemd_dir/random-seed
-touch %buildroot%_localstatedir%_systemd_dir/timesync/clock
+touch %buildroot%_sharedstatedir/%name/random-seed
+touch %buildroot%_sharedstatedir/%name/timesync/clock
 mkdir -p %buildroot%_logdir/journal
 mkdir -p %buildroot%_logdir/private
 %if_enabled microhttpd
@@ -992,7 +1019,7 @@ touch %buildroot%_sysconfdir/machine-info
 
 # Make sure the system.conf drop-in dirs exist
 mkdir -p %buildroot{%_systemd_dir,%_sysconfdir/systemd}/system.conf.d
-mkdir -p %buildroot{%prefix%_systemd_dir,%_sysconfdir/systemd}/user.conf.d
+mkdir -p %buildroot{%_systemd_dir,%_sysconfdir/systemd}/user.conf.d
 
 # Make sure the shutdown/sleep drop-in dirs exist
 mkdir -p %buildroot%_systemd_dir/system-shutdown
@@ -1028,7 +1055,7 @@ install -D -m 0644 -t %buildroot%_sysctldir/ %SOURCE47
 
 install -D -m 0664 -t %buildroot%_systemd_dir/network/ %SOURCE25
 
-sed -i 's|#!/usr/bin/env python3|#!%__python3|' %buildroot%_prefix%_systemd_dir/tests/run-unit-tests.py
+sed -i 's|#!/usr/bin/env python3|#!%__python3|' %buildroot%_systemd_dir/tests/run-unit-tests.py
 
 mkdir -p %buildroot%_sysconfdir/systemd/network
 mkdir -p %buildroot%_sysconfdir/systemd/nspawn
@@ -1061,10 +1088,9 @@ install -pD -m755 %SOURCE79 %buildroot%_rpmlibdir/systemd-modules-load.filetrigg
 install -pD -m755 %SOURCE80 %buildroot%_rpmlibdir/systemd-user.filetrigger
 
 # alternatives
-for f in systemd-modules-load systemd-repart systemd-shutdown systemd-sysctl systemd-sysusers systemd-tmpfiles; do
-        mv %buildroot/sbin/$f %buildroot/sbin/$f.shared
+for f in busctl systemd-repart systemd-sysusers systemd-tmpfiles; do
+        mv %buildroot%_bindir/$f %buildroot%_bindir/$f.shared
 done
-mv %buildroot%_bindir/busctl %buildroot%_bindir/busctl.shared
 install -pD -m644 %SOURCE81 %buildroot/%_altdir/systemd-modules-load-shared
 install -pD -m644 %SOURCE82 %buildroot/%_altdir/systemd-modules-load-standalone
 install -pD -m644 %SOURCE83 %buildroot/%_altdir/systemd-repart-shared
@@ -1095,8 +1121,8 @@ vm.mmap_min_addr = %mmap_min_addr
 EOF
 
 # define default PATH for system and user
-mkdir -p %buildroot%_prefix%_systemd_dir/user.conf.d
-install -m 0644 %SOURCE11 %buildroot%_prefix%_systemd_dir/user.conf.d/env-path.conf
+mkdir -p %buildroot%_systemd_dir/user.conf.d
+install -m 0644 %SOURCE11 %buildroot%_systemd_dir/user.conf.d/env-path.conf
 #mkdir -p %%buildroot%%_prefix/systemd/system.conf.d
 #install -m 0644 %%SOURCE12 %%buildroot%%_prefix/systemd/system.conf.d/env-path.conf
 
@@ -1109,8 +1135,8 @@ install -p -m755 %SOURCE19 %buildroot%_initdir/udevd
 ln -s systemd-udevd.service %buildroot%_unitdir/udevd.service
 
 # compatibility symlinks to udevd binary
-ln -r -s %buildroot%_systemd_dir/systemd-udevd %buildroot/lib/udev/udevd
-ln -r -s %buildroot%_systemd_dir/systemd-udevd %buildroot/sbin/udevd
+ln -r -s %buildroot%_systemd_dir/systemd-udevd %buildroot%_prefix/lib/udev/udevd
+ln -r -s %buildroot%_systemd_dir/systemd-udevd %buildroot%_sbindir/udevd
 
 install -p -m644 %SOURCE22 %buildroot%_sysconfdir/scsi_id.config
 
@@ -1125,14 +1151,14 @@ tmpfs_options="size=5m"
 EOF
 
 # Install symlinks for rules which are needed in initramfs
-mkdir -p %buildroot/lib/udev/initramfs-rules.d
+mkdir -p %buildroot%_prefix/lib/udev/initramfs-rules.d
 for f in \
     50-udev-default.rules \
     60-persistent-storage.rules \
     80-drivers.rules
 do
     ln -s ../rules.d/"$f" \
-        %buildroot/lib/udev/initramfs-rules.d/
+        %buildroot%_prefix/lib/udev/initramfs-rules.d/
 done
 # Create ghost files
 touch %buildroot%_sysconfdir/udev/hwdb.bin
@@ -1177,9 +1203,9 @@ systemctl daemon-reexec &>/dev/null || {
 }
 
 # Move old stuff around in /var/lib
-[ -d %_localstatedir%_systemd_dir/random-seed ] && rm -rf %_localstatedir%_systemd_dir/random-seed >/dev/null 2>&1 || :
-[ -e %_localstatedir/lib/random-seed ] && mv %_localstatedir/lib/random-seed %_localstatedir%_systemd_dir/random-seed >/dev/null 2>&1 || :
-[ -e %_localstatedir/lib/backlight ] && mv %_localstatedir/lib/backlight %_localstatedir%_systemd_dir/backlight >/dev/null 2>&1 || :
+[ -d %_sharedstatedir/%name/random-seed ] && rm -rf %_sharedstatedir/%name/random-seed >/dev/null 2>&1 || :
+[ -e %_sharedstatedir/random-seed ] && mv %_sharedstatedir/random-seed %_sharedstatedir/%name/random-seed >/dev/null 2>&1 || :
+[ -e %_sharedstatedir/backlight ] && mv %_sharedstatedir/backlight %_sharedstatedir/%name/backlight >/dev/null 2>&1 || :
 
 %_systemd_dir/systemd-random-seed save >/dev/null 2>&1 || :
 
@@ -1322,13 +1348,13 @@ useradd -g systemd-timesync -c 'systemd Time Synchronization' \
 
 
 %post timesyncd
-if [ -L %_localstatedir%_systemd_dir/timesync ]; then
-    rm %_localstatedir%_systemd_dir/timesync
-    mv %_localstatedir/lib/private/systemd/timesync %_localstatedir%_systemd_dir/timesync
+if [ -L %_sharedstatedir/%name/timesync ]; then
+    rm %_sharedstatedir/%name/timesync
+    mv %_sharedstatedir/private/systemd/timesync %_sharedstatedir/%name/timesync
 fi
-if [ -f %_localstatedir%_systemd_dir/clock ] ; then
-    mkdir -p %_localstatedir%_systemd_dir/timesync
-    mv %_localstatedir%_systemd_dir/clock %_localstatedir%_systemd_dir/timesync/
+if [ -f %_sharedstatedir/%name/clock ] ; then
+    mkdir -p %_sharedstatedir/%name/timesync
+    mv %_sharedstatedir/%name/clock %_sharedstatedir/%name/timesync/
 fi
 
 %post_systemd_postponed systemd-timesyncd.service
@@ -1470,10 +1496,10 @@ useradd -g systemd-journal-remote -c 'Journal Remote' \
 %endif
 
 if [ $1 -eq 1 ] ; then
-    if [ -f %_localstatedir%_systemd_dir/journal-upload/state -a ! -L %_localstatedir%_systemd_dir/journal-upload ] ; then
-        mkdir -p %_localstatedir/lib/private/systemd/journal-upload
-        mv %_localstatedir%_systemd_dir/journal-upload/state %_localstatedir/lib/private/systemd/journal-upload/
-        rmdir %_localstatedir%_systemd_dir/journal-upload || :
+    if [ -f %_sharedstatedir/%name/journal-upload/state -a ! -L %_sharedstatedir/%name/journal-upload ] ; then
+        mkdir -p %_sharedstatedir/private/systemd/journal-upload
+        mv %_sharedstatedir/%name/journal-upload/state %_sharedstatedir/private/systemd/journal-upload/
+        rmdir %_sharedstatedir/%name/journal-upload || :
      fi
 fi
 %endif
@@ -1544,6 +1570,8 @@ fi
 %dir %_sysconfdir/systemd/system.conf.d
 %dir %_sysconfdir/systemd/user
 %dir %_sysconfdir/systemd/user.conf.d
+%dir %_systemd_dir/user.conf.d
+%_systemd_dir/user.conf.d/env-path.conf
 
 %_sysconfdir/profile.d/systemd.sh
 
@@ -1564,9 +1592,9 @@ fi
 %_rpmlibdir/systemd.filetrigger
 %_rpmlibdir/systemd-user.filetrigger
 
-%dir /%_lib/systemd
-/%_lib/systemd/libsystemd-core-%ver_major.so
-/%_lib/systemd/libsystemd-shared-%ver_major.so
+%dir %_libdir/%name
+%_libdir/%name/libsystemd-core-%ver_major.so
+%_libdir/%name/libsystemd-shared-%ver_major.so
 
 %dir %_systemd_dir
 %dir %_systemd_dir/system.conf.d
@@ -1576,78 +1604,80 @@ fi
 %_sysusersdir/README
 %_tmpfilesdir/README
 
-/sbin/systemctl
-/bin/systemctl
+%_sbindir/systemctl
 %_bindir/systemctl
 %_man1dir/systemctl.*
 
-/bin/journalctl
-/sbin/journalctl
+%_bindir/journalctl
 %_man1dir/journalctl.*
 %if_enabled sysusers
 %_sysusersdir/systemd-journal.conf
 %endif
 
-/bin/systemd-escape
+%_bindir/systemd-escape
 %_mandir/*/*escape*
 
-/bin/systemd-creds
+%_bindir/systemd-creds
 %_man1dir/systemd-creds*
 
-/sbin/systemd-tmpfiles.shared
+%_bindir/systemd-tmpfiles.shared
 %_altdir/systemd-tmpfiles-shared
 %_mandir/*/*tmpfiles*
 %_tmpfilesdir/systemd-tmp.conf
 %_systemd_dir/systemd-binfmt
-/sbin/systemd-binfmt
 %_rpmlibdir/systemd-binfmt.filetrigger
 %_mandir/*/*binfmt*
 
-/sbin/systemd-sysusers.shared
+%_bindir/systemd-sysusers.shared
 %_altdir/systemd-sysusers-shared
 %_mandir/*/*sysusers*
 
 %_systemd_dir/systemd-modules-load
-/sbin/systemd-modules-load.shared
 %_altdir/systemd-modules-load-shared
 %_mandir/*/*modules-load*
 
-/sbin/systemd-repart.shared
+%_bindir/systemd-repart.shared
 %_altdir/systemd-repart-shared
 %_mandir/*/*repart*
+%_systemd_dir/repart
 
 %_systemd_dir/systemd-shutdown
-/sbin/systemd-shutdown.shared
 %_altdir/systemd-shutdown-shared
 %_man8dir/systemd-shutdown*
 
 %_systemd_dir/systemd-sysctl
-/sbin/systemd-sysctl.shared
 %_altdir/systemd-sysctl-shared
 %_mandir/*/*sysctl*
 
 %_systemd_dir/systemd-backlight
 %_mandir/*/*backlight*
-%ghost %dir %_localstatedir%_systemd_dir/backlight
+%ghost %dir %_sharedstatedir/%name/backlight
 
 %_systemd_dir/systemd-battery-check
 %_mandir/*/*battery-check*
 
-/sbin/systemd-machine-id-setup
+%_bindir/systemd-machine-id-setup
 %_man8dir/systemd-machine-id-*
 
-/bin/systemd-confext
+%_bindir/systemd-confext
 %_man8dir/systemd-confext.*
 
-/bin/systemd-sysext
+%_bindir/systemd-sysext
 %_man8dir/systemd-sysext.*
 
-/usr/bin/systemd-cryptenroll
+%_bindir/systemd-cryptenroll
 %_man1dir/systemd-cryptenroll.*
 %_man5dir/veritytab.*
 
+%_bindir/varlinkctl
+%_man1dir/varlinkctl.*
+
+%_systemd_dir/systemd-executor
+%_systemd_dir/systemd-storagetm
+%_man8dir/systemd-storagetm.*
+
 %if_enabled firstboot
-/sbin/systemd-firstboot
+%_bindir/systemd-firstboot
 %_man8dir/systemd-firstboot.*
 %endif
 
@@ -1656,12 +1686,12 @@ fi
 %ghost %config(noreplace) %_sysconfdir/vconsole.conf
 %ghost %config(noreplace) %_sysconfdir/locale.conf
 
-/sbin/systemd
-/sbin/systemd-ask-password
-/bin/systemd-inhibit
+%_sbindir/systemd
+%_bindir/systemd-ask-password
+%_bindir/systemd-inhibit
 
-/bin/systemd-notify
-/sbin/systemd-tty-ask-password-agent
+%_bindir/systemd-notify
+%_bindir/systemd-tty-ask-password-agent
 
 %if_enabled pstore
 /etc/systemd/pstore.conf
@@ -1686,8 +1716,8 @@ fi
 %_bindir/systemd-mount
 %_bindir/systemd-umount
 %_bindir/systemd-path
-/bin/systemd-run
-/bin/loginctl
+%_bindir/systemd-run
+%_bindir/loginctl
 %_systemd_dir/systemd-logind
 %_bindir/userdbctl
 %_systemd_dir/systemd-userdbd
@@ -1712,6 +1742,8 @@ fi
 %_bindir/systemd-ac-power
 %_systemd_dir/systemd-cgroups-agent
 %if_enabled libcryptsetup
+%dir %_libdir/cryptsetup
+%_bindir/systemd-cryptsetup
 %_systemd_dir/systemd-cryptsetup
 %_systemd_dir/systemd-integritysetup
 %_systemd_dir/systemd-veritysetup
@@ -1720,6 +1752,15 @@ fi
 %_mandir/*/*cryptsetup*
 %_man8dir/systemd-integritysetup*
 %_man8dir/systemd-veritysetup*
+%if_enabled tpm2
+%_libdir/cryptsetup/libcryptsetup-token-systemd-tpm2.so
+%endif
+%if_enabled libfido2
+%_libdir/cryptsetup/libcryptsetup-token-systemd-fido2.so
+%endif
+%if_enabled p11kit
+%_libdir/cryptsetup/libcryptsetup-token-systemd-pkcs11.so
+%endif
 %endif
 %_systemd_dir/systemd-boot-check-no-failures
 %_systemd_dir/systemd-fsck
@@ -1747,27 +1788,36 @@ fi
 %_systemd_dir/systemd-sulogin-shell
 %_systemd_dir/systemd-xdg-autostart-condition
 
+%_bindir/bootctl
+%_man5dir/systemd.pcrlock*
 %if_enabled tpm2
 %_systemd_dir/systemd-measure
-%_systemd_dir/systemd-pcrphase
-%dir /%_lib/cryptsetup
-/%_lib/cryptsetup/libcryptsetup-token-systemd-tpm2.so
-%_man1dir/systemd-measure*
-%_man8dir/systemd-pcrphase*
-%_man8dir/systemd-pcrfs*
+%_systemd_dir/systemd-pcrlock
+%_prefix/lib/pcrlock.d
 %if_enabled bootloader
+%_systemd_dir/systemd-pcrextend
+%_systemd_dir/systemd-tpm2-setup
+%_man1dir/bootctl.*
+%_man1dir/systemd-measure*
+%_man8dir/systemd-pcrlock*
 %_man8dir/systemd-pcrfs*
+%_man8dir/systemd-pcrphase*
+%_man8dir/systemd-pcrextend*
+%_man8dir/systemd-tpm2-setup*
 %endif
 %endif
 
-%dir %_prefix%_env_dir
-%_prefix%_env_dir/99-environment.conf
+%dir %_env_dir
+%_env_dir/99-environment.conf
 %_mandir/man[58]/*environment*
 #%%dir %%_systemd_dir/system.conf.d
 #%%_systemd_dir/system.conf.d/env-path.conf
 
-%dir %_unitdir
-%_unitdir/*
+%_unitdir
+%_user_unitdir
+%_user_presetdir
+%_user_gen_dir
+%_user_env_gen_dir
 
 %exclude %_unitdir/system.slice.d/10-oomd-per-slice-defaults.conf
 %exclude %_user_unitdir/slice.d/10-oomd-per-slice-defaults.conf
@@ -1917,21 +1967,19 @@ fi
 %_mandir/*/*oom*
 
 %exclude %_man3dir/*
-%exclude %_mandir/*/*sysusers*
 %exclude %_datadir/factory
 %exclude %_tmpfilesdir/etc.conf
 
-%_prefix%_systemd_dir
 %_gen_dir
 %_env_gen_dir
 %if_enabled efi
 %exclude %_gen_dir/systemd-bless-boot-generator
 %if_enabled bootloader
-%exclude %_prefix%_systemd_dir/boot
+%exclude %_systemd_dir/boot
 %endif
 %endif
 %if_enabled tests
-%exclude %_prefix%_systemd_dir/tests
+%exclude %_systemd_dir/tests
 %endif
 
 %dir %_systemd_dir/system-shutdown
@@ -1990,16 +2038,18 @@ fi
 
 %ghost %dir %attr(2755, root, systemd-journal) %verify(not mode) %_logdir/journal
 %ghost %attr(0700,root,root) %dir %_logdir/private
-%ghost %attr(0700,root,root) %dir %_localstatedir/cache/private
-%ghost %attr(0700,root,root) %dir %_localstatedir/lib/private
+%ghost %attr(0700,root,root) %dir %_cachedir/private
+%ghost %attr(0700,root,root) %dir %_sharedstatedir/private
 %_logdir/README.logs
-%dir %_localstatedir%_systemd_dir
-%dir %_localstatedir%_systemd_dir/catalog
-%ghost %dir %_localstatedir/lib/private/systemd
+%dir %_sharedstatedir/%name
+%dir %_sharedstatedir/%name/catalog
+%_systemd_dir/catalog
+
+%ghost %dir %_sharedstatedir/private/systemd
 %_rpmlibdir/journal-catalog.filetrigger
-%ghost %_localstatedir%_systemd_dir/catalog/database
-%ghost %_localstatedir%_systemd_dir/random-seed
-%ghost %dir %_localstatedir%_systemd_dir/linger
+%ghost %_sharedstatedir/%name/catalog/database
+%ghost %_sharedstatedir/%name/random-seed
+%ghost %_sharedstatedir/%name/linger
 
 %_datadir/bash-completion/completions/*
 %exclude %_datadir/bash-completion/completions/udevadm
@@ -2008,7 +2058,7 @@ fi
 
 %_defaultdocdir/%name-%version
 # may be need adapt for ALTLinux?
-/sbin/kernel-install
+%_bindir/kernel-install
 %_man8dir/kernel-install.*
 %dir %_sysconfdir/kernel
 %dir %_sysconfdir/kernel/install.d
@@ -2019,11 +2069,11 @@ fi
 %exclude %_prefix/lib/kernel/install.d/50-depmod.install
 
 %files -n libsystemd
-/%_lib/libsystemd.so.*
+%_libdir/libsystemd.so.*
 
 %files -n libsystemd-devel
-/%_lib/*.so
-%exclude /%_lib/*udev*.so
+%_libdir/*.so
+%exclude %_libdir/*udev*.so
 %_pkgconfigdir/*.pc
 %exclude %_pkgconfigdir/*udev*.pc
 %_datadir/pkgconfig/systemd.pc
@@ -2035,29 +2085,31 @@ fi
 
 %if_enabled static_libsystemd
 %files -n libsystemd-devel-static
-/%_lib/libsystemd.a
+%_libdir/libsystemd.a
 %endif
 
 %files -n libnss-systemd
-/%_lib/libnss_systemd.so.*
+%_libdir/libnss_systemd.so.*
 %_man8dir/*nss?systemd.*
 
 %files -n libnss-myhostname
-/%_lib/libnss_myhostname.so.*
+%_libdir/libnss_myhostname.so.*
 %_man8dir/*myhostname.*
 
 %files -n libnss-mymachines
-/%_lib/libnss_mymachines.so.*
+%_libdir/libnss_mymachines.so.*
 %_man8dir/*mymachines.*
 
 %files -n libnss-resolve
-/%_lib/libnss_resolve.so.*
+%_libdir/libnss_resolve.so.*
 %_man8dir/*nss*resolve*
 
 %files -n pam_%name
 %config %_sysconfdir/pam.d/systemd-user
 /%_lib/security/pam_systemd.so
+/%_lib/security/pam_systemd_loadkey.so
 %_man8dir/pam_systemd.*
+%_man8dir/pam_systemd_loadkey.*
 
 %if_enabled homed
 %files -n pam_%{name}_home
@@ -2081,13 +2133,13 @@ fi
 %endif
 
 %files sysvinit
-/sbin/init
-/sbin/reboot
-/sbin/halt
-/sbin/poweroff
-/sbin/shutdown
-/sbin/telinit
-/sbin/runlevel
+%_sbindir/init
+%_sbindir/reboot
+%_sbindir/halt
+%_sbindir/poweroff
+%_sbindir/shutdown
+%_sbindir/telinit
+%_sbindir/runlevel
 %_man1dir/init*
 %_man8dir/halt*
 %_man8dir/reboot*
@@ -2122,7 +2174,7 @@ fi
 
 %if_enabled networkd
 %files networkd
-/bin/networkctl
+%_bindir/networkctl
 %config(noreplace) %_sysconfdir/systemd/networkd.conf
 %config(noreplace) %_sysconfdir/systemd/resolved.conf
 %_datadir/dbus-1/system.d/org.freedesktop.resolve1.conf
@@ -2144,7 +2196,7 @@ fi
 %_bindir/resolvectl
 %_bindir/systemd-resolve
 # TODO: Provides: /sbin/resolvconf ?
-%exclude /sbin/resolvconf
+%exclude %_sbindir/resolvconf
 %_tmpfilesdir/systemd-network.conf
 # TODO: package systemd-resolve.conf
 %exclude %_tmpfilesdir/systemd-resolve.conf
@@ -2152,12 +2204,13 @@ fi
 %_unitdir/systemd-network-generator.service
 %_unitdir/*resolv*
 %_unitdir/*/*resolv*
-%_systemd_dir/network/80-ethernet.network.example
+%_systemd_dir/network/80-6rd-tunnel.network
+%_systemd_dir/network/80-auto-link-local.network.example
 %_systemd_dir/network/80-container-host0.network
 %_systemd_dir/network/80-wifi-adhoc.network
 %_systemd_dir/network/80-wifi-ap.network.example
 %_systemd_dir/network/80-wifi-station.network.example
-%_systemd_dir/network/80-6rd-tunnel.network
+%_systemd_dir/network/89-ethernet.network.example
 %_mandir/*/*networkd*
 %_mandir/*/systemd-network-generator*
 %_mandir/*/*netdev*
@@ -2187,7 +2240,7 @@ fi
 %dir %_sysconfdir/systemd/nspawn
 %_datadir/dbus-1/system.d/org.freedesktop.machine1.conf
 %_datadir/dbus-1/system.d/org.freedesktop.import1.conf
-/bin/machinectl
+%_bindir/machinectl
 %_bindir/systemd-nspawn
 %_systemd_dir/import-pubring.gpg
 %_tmpfilesdir/systemd-nspawn.conf
@@ -2231,7 +2284,7 @@ fi
 %dir %_systemd_dir/portable
 %dir %_systemd_dir/portable/profile
 %_systemd_dir/portable/profile/*
-/bin/portablectl
+%_bindir/portablectl
 %_systemd_dir/systemd-portabled
 %_datadir/dbus-1/system-services/org.freedesktop.portable1.service
 %if_enabled polkit
@@ -2252,8 +2305,8 @@ fi
 %_unitdir/systemd-time-wait-sync.service
 %_mandir/*/*timesyncd*
 %_mandir/*/*time-wait-sync*
-%ghost %dir %_localstatedir%_systemd_dir/timesync
-%ghost %_localstatedir%_systemd_dir/timesync/clock
+%ghost %dir %_sharedstatedir/%name/timesync
+%ghost %_sharedstatedir/%name/timesync/clock
 %if_enabled sysusers
 %_sysusersdir/systemd-timesync.conf
 %endif
@@ -2283,8 +2336,8 @@ fi
 
 %if_enabled libcurl
 %config(noreplace) %_sysconfdir/systemd/journal-upload.conf
-%ghost %dir %_localstatedir%_systemd_dir/journal-upload
-%ghost %dir %_localstatedir/lib/private/systemd/journal-upload
+%ghost %dir %_sharedstatedir/%name/journal-upload
+%ghost %dir %_sharedstatedir/private/systemd/journal-upload
 %_systemd_dir/systemd-journal-upload
 %_unitdir/systemd-journal-upload.service
 %_man8dir/systemd-journal-upload*
@@ -2293,14 +2346,6 @@ fi
 
 %if_enabled efi
 %files boot-efi
-%_bindir/bootctl
-%_systemd_dir/systemd-bless-boot
-%_gen_dir/systemd-bless-boot-generator
-%_unitdir/systemd-boot-random-seed.service
-%_unitdir/sysinit.target.wants/systemd-boot-random-seed.service
-%_unitdir/systemd-bless-boot.service
-%_unitdir/systemd-boot-update.service
-%_man1dir/bootctl.*
 %_man5dir/loader*
 %_man7dir/systemd-boot*
 %_man7dir/sd-boot*
@@ -2308,15 +2353,21 @@ fi
 %_man8dir/systemd-boot*
 %exclude %_man8dir/systemd-boot-check*
 %if_enabled bootloader
-%dir %_prefix%_systemd_dir/boot
-%dir %_prefix%_systemd_dir/boot/efi
-%_prefix%_systemd_dir/boot/efi/*
-
+%_gen_dir/systemd-bless-boot-generator
+%_systemd_dir/systemd-bless-boot
+%_unitdir/systemd-bless-boot.service
+%_unitdir/systemd-boot-random-seed.service
+%_unitdir/sysinit.target.wants/systemd-boot-random-seed.service
+%_unitdir/systemd-boot-update.service
+%dir %_systemd_dir/boot
+%dir %_systemd_dir/boot/efi
+%_systemd_dir/boot/efi/*
 %endif
 %endif
 
 %if_enabled bootloader
 %files ukify
+%_bindir/ukify
 %_systemd_dir/ukify
 %_man1dir/ukify.*
 %endif
@@ -2332,7 +2383,7 @@ fi
 %_man1dir/*coredumpctl.*
 %_man5dir/coredump.conf.*
 %_man8dir/systemd-coredump*
-%dir %_localstatedir%_systemd_dir/coredump
+%dir %_sharedstatedir/%name/coredump
 %if_enabled sysusers
 %_sysusersdir/systemd-coredump.conf
 %endif
@@ -2358,24 +2409,24 @@ fi
 %_bindir/busctl.standalone
 %_altdir/systemd-busctl-standalone
 
-/sbin/systemd-modules-load.standalone
+%_systemd_dir/systemd-modules-load.standalone
 %_altdir/systemd-modules-load-standalone
 
-/sbin/systemd-repart.standalone
+%_bindir/systemd-repart.standalone
 %_altdir/systemd-repart-standalone
 
-/sbin/systemd-shutdown.standalone
+%_systemd_dir/systemd-shutdown.standalone
 %_altdir/systemd-shutdown-standalone
 
-/sbin/systemd-sysctl.standalone
+%_systemd_dir/systemd-sysctl.standalone
 %_altdir/systemd-sysctl-standalone
 
 %if_enabled sysusers
-/sbin/systemd-sysusers.standalone
+%_bindir/systemd-sysusers.standalone
 %_altdir/systemd-sysusers-standalone
 %endif #sysuser
 
-/sbin/systemd-tmpfiles.standalone
+%_bindir/systemd-tmpfiles.standalone
 %_altdir/systemd-tmpfiles-standalone
 %endif
 
@@ -2387,15 +2438,15 @@ fi
 
 %if_enabled tests
 %files tests
-%_prefix%_systemd_dir/tests
+%_systemd_dir/tests
 %endif
 
 %files -n libudev1
-/%_lib/libudev.so.*
+%_libdir/libudev.so.*
 
 %files -n libudev-devel
 %_includedir/libudev.h
-/%_lib/libudev.so
+%_libdir/libudev.so
 %_pkgconfigdir/libudev.pc
 %_datadir/pkgconfig/udev.pc
 %_man3dir/udev*
@@ -2403,7 +2454,7 @@ fi
 
 %if_enabled static_libudev
 %files -n libudev-devel-static
-/%_lib/libudev.a
+%_libdir/libudev.a
 %endif
 
 %files -n udev
@@ -2420,10 +2471,11 @@ fi
 %dir %_systemd_dir/network
 %_systemd_dir/network/*.link
 %_tmpfilesdir/static-nodes-permissions.conf
-/lib/udev
-/sbin/udevadm
-/sbin/udevd
-/sbin/systemd-hwdb
+%_prefix/lib/udev
+%_bindir/udevadm
+%_sbindir/udevadm
+%_sbindir/udevd
+%_bindir/systemd-hwdb
 %_systemd_dir/systemd-udevd
 %_rpmlibdir/udev.filetrigger
 %_rpmlibdir/udev-hwdb.filetrigger
@@ -2444,6 +2496,11 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Mon May 13 2024 Alexey Shabalin <shaba@altlinux.org> 1:255.6-alt1
+- 255.6
+- Migrate from /lib to /usr/lib (usrmerge).
+- Build with p11kit and fido2 support.
+
 * Thu Apr 18 2024 Arseny Maslennikov <arseny@altlinux.org> 1:254.10-alt2
 - Adapted the package for filesystem >= 3:
   + put /bin after /usr/bin in default PATH for spawned processes;

@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: systemd-boot-trigger
-Version: 1.0
-Release: alt7
+Version: 1.1
+Release: alt1
 
 Summary: Filetrigger for systemd-boot
 License: GPL-2.0-only
@@ -28,6 +28,9 @@ install -p -m755 -D filetrigger %buildroot%_rpmlibdir/systemd-boot.filetrigger
 %_rpmlibdir/systemd-boot.filetrigger
 
 %changelog
+* Wed May 22 2024 Alexey Shabalin <shaba@altlinux.org> 1.1-alt1
+- Fixed path for kernel-install, sinse systemd-255 moved to /usr/bin
+
 * Mon Sep 05 2022 Alexey Shabalin <shaba@altlinux.org> 1.0-alt7
 - Build for gnu-efi arch only supported.
 
