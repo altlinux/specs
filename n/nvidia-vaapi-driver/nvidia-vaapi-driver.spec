@@ -1,7 +1,7 @@
 %define git %nil
 
 Name: nvidia-vaapi-driver
-Version: 0.0.11
+Version: 0.0.12
 Release: alt1
 
 Summary: VA-API implementation that uses NVDEC as a backend
@@ -9,7 +9,7 @@ License: MIT/X11
 Group: System/Libraries
 Url: https://github.com/elFarto/nvidia-vaapi-driver
 
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: %ix86 x86_64 aarch64
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -47,6 +47,12 @@ parameter nvidia-drm.modeset=1
 %_libdir/dri/nvidia_drv_video.so
 
 %changelog
+* Thu May 23 2024 L.A. Kostis <lakostis@altlinux.ru> 0.0.12-alt1
+- 0.0.12.
+
+* Mon Nov 06 2023 L.A. Kostis <lakostis@altlinux.ru> 0.0.11-alt2
+- Added aarch64.
+
 * Mon Nov 06 2023 L.A. Kostis <lakostis@altlinux.ru> 0.0.11-alt1
 - 0.0.11.
 
