@@ -1,9 +1,9 @@
 Name: volumes-profile-regular
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: Volumes description for ALT Linux Regular builds
-License: GPL
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
 
 Url: http://en.altlinux.org/regular
@@ -27,6 +27,10 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Thu May 23 2024 Anton Midyukov <antohami@altlinux.org> 0.5.2-alt1
+- reorder profiles
+- fix License for SPDX compliance
+
 * Mon Oct 09 2023 Anton Midyukov <antohami@altlinux.org> 0.5.1-alt1
 - add btrfs with subvolumes support
 
