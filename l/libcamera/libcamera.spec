@@ -5,7 +5,7 @@
 
 Name: libcamera
 Version: 0.3.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A complex camera support library for Linux
@@ -73,7 +73,8 @@ This package contains development part of libcamera.
 %ifarch %e2k
 sed -i "s|_symbol('QOpenGLWidget', |(|" src/apps/qcam/meson.build
 # workaround for EDG frontend
-sed -i "s|g_autofree gchar \*|g_autofree_edg(gchar) |" src/gstreamer/gstlibcamerasrc.cpp
+sed -i "s|g_autofree gchar \*|g_autofree_edg(gchar) |" src/gstreamer/gstlibcamera*.cpp
+sed -i "s|get(camera_name)|get((gchar*)camera_name)|" src/gstreamer/gstlibcamerasrc.cpp
 sed -i "s|\"caps\", caps|\"caps\", (GstCaps*)caps|" src/gstreamer/gstlibcameraprovider.cpp
 %endif
 
@@ -144,6 +145,9 @@ mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu May 23 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:0.3.0-alt2
+- fix e2k build
+
 * Mon May 20 2024 Yuri N. Sedunov <aris@altlinux.org> 1:0.3.0-alt1
 - 0.3.0
 
