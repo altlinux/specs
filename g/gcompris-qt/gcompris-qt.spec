@@ -1,5 +1,5 @@
 Name:    gcompris-qt
-Version: 4.0
+Version: 4.1
 Release: alt1
 Summary: Educational suite for kids 2-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 2 до 10 лет
@@ -96,6 +96,9 @@ install -Dpm0644 %SOURCE3 po/ru/gcompris_voices.po
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Thu May 23 2024 Andrey Cherepanov <cas@altlinux.org> 4.1-alt1
+- New version.
+
 * Fri Mar 15 2024 Andrey Cherepanov <cas@altlinux.org> 4.0-alt1
 - New version.
 - Completed Russian translation (thanks Olesya Gerasimenko).
