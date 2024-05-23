@@ -6,8 +6,8 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.38.1
-Release: alt2
+Version: 1.38.2
+Release: alt1
 
 Summary: A personal full text search package
 Summary(ru_RU.UTF-8): Программа для полнотекстового поиска по файлам с различными форматами.
@@ -223,6 +223,9 @@ chrpath -d %buildroot%_bindir/recollindex
 %python3_sitelibdir/*.so
 
 %changelog
+* Thu May 23 2024 Michael Shigorin <mike@altlinux.org> 1.38.2-alt1
+- new version (watch file uupdate)
+
 * Tue May 21 2024 Michael Shigorin <mike@altlinux.org> 1.38.1-alt2
 - kludge to workaround meson build SMP race around linking
 
