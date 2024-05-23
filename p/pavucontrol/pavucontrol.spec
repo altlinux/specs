@@ -1,15 +1,21 @@
 Name: pavucontrol
-Version: 5.0
-Release: alt3
+Version: 6.0
+Release: alt1
 
 Summary: PulseAudio Volume Control
 Group: Sound
 License: GPLv2
-Url: http://pulseaudio.org
+Url: https://freedesktop.org/software/pulseaudio/pavucontrol/
 
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ intltool libcanberra-gtk3-devel libgtkmm3-devel libjson-glib-devel libsigc++2-devel libpulseaudio-devel lynx
+BuildRequires: gcc-c++ lynx meson
+BuildRequires: pkgconfig(gtkmm-4.0)
+BuildRequires: pkgconfig(sigc++-3.0)
+BuildRequires: pkgconfig(libcanberra)
+BuildRequires: pkgconfig(libpulse)
+BuildRequires: pkgconfig(libpulse-mainloop-glib)
+BuildRequires: pkgconfig(json-glib-1.0)
 
 %description
 PulseAudio Volume Control (pavucontrol) is a simple GTK based volume
@@ -17,28 +23,30 @@ control tool ("mixer") for the Polypaudio sound server. In
 contrast to classic mixer tools this one allows you to control both
 the volume of hardware devices and of each playback stream seperately.
 
+%define _customdocdir %_defaultdocdir/%name
+
 %prep
 %setup
 
 %build
-%add_optflags -std=c++11
-%autoreconf
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%meson_install
 
 %find_lang %name
 
 %files -f %name.lang
-%_bindir/*
-%dir %_datadir/pavucontrol/
-%_datadir/pavucontrol/pavucontrol.glade
-%_datadir/applications/pavucontrol.desktop
-%doc README doc/README.html doc/style.css
+%_bindir/pavucontrol
+%_datadir/metainfo/*.xml
+%_datadir/doc/pavucontrol
+%_desktopdir/*.desktop
 
 %changelog
+* Thu May 23 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 6.0-alt1
+- 6.0 released
+
 * Mon Sep 04 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.0-alt3
 - updated from v5.0-64-geba9ca6, translations mostly
 
