@@ -1,31 +1,35 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname matplotlib
+
+# 9 failed tests with dateutil
+%def_without check
 
 %def_with gtk4
 %def_with qt5
+%def_with qt6
 %def_with wx
 
 Name: python3-module-%oname
-Version: 3.7.5
+Version: 3.8.4
 Release: alt1
 
 Summary: Matlab(TM) style python plotting package
 
 License: see LICENSE
 Group: Development/Python3
-Url: http://matplotlib.sourceforge.net
-# https://github.com/matplotlib/matplotlib.git
-Packager: Python Development Team <python@packages.altlinux.org>
+URL: https://pypi.org/project/matplotlib
+# https://matplotlib.sourceforge.net
+VCS: https://github.com/matplotlib/matplotlib
 
 Source: %oname-%version.tar
 Source1: mplsetup.cfg
 
 Patch: matplotlibrc-path-search-fix.patch
-Patch1: matplotlib-Set-FreeType-version-to-2.12.1-and-update-tolerances.patch
+Patch1: matplotlib-Set-FreeType-version-to-2.13.0-and-update-tolerances.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools-scm
+BuildRequires: python3-module-wheel
 
 BuildRequires: gcc-c++
 BuildRequires: tk-devel
@@ -36,9 +40,24 @@ BuildRequires: libqhull-devel
 BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-pybind11
 
-%{?_with_qt5:BuildRequires: python3-module-PyQt5}
+%if_with check
+BuildRequires: xvfb-run
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-Pillow
+BuildRequires: python3-module-pyparsing
+BuildRequires: python3-module-cycler
+BuildRequires: python3-module-dateutil
+BuildRequires: python3-module-kiwisolver
+BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-numpy-tests
+BuildRequires: python3-module-fonttools
+BuildRequires: python3-module-contourpy
+%endif
 
-Requires: python3-module-%oname-gtk3
+%{?_with_qt5:BuildRequires: python3-module-PyQt5}
+%{?_with_qt6:BuildRequires: python3-module-PyQt6}
+
+Requires: python3-module-%oname-tk
 Requires: python3-module-mpl_toolkits = %EVR
 Requires: %name-data = %EVR
 %add_python3_req_skip builtins fontTools
@@ -52,6 +71,18 @@ in python scripts, interactively from the python shell (ala matlab
 or mathematica), in web application servers generating dynamic
 charts, or embedded in GTK or WX applications; see backends.
 
+%if_with qt6
+%package qt6
+Summary: qt6 backend for %oname
+Group: Development/Python3
+Requires: %name = %EVR
+%py3_requires PyQt6
+
+%description qt6
+qt6 backend for %oname.
+%endif
+
+%if_with qt5
 %package qt5
 Summary: qt5 backend for %oname
 Group: Development/Python3
@@ -60,6 +91,7 @@ Requires: %name = %EVR
 
 %description qt5
 qt5 backend for %oname.
+%endif
 
 %package cairo
 Summary: Cairo backend for %oname
@@ -159,63 +191,61 @@ Data used by python-matplotlib
 
 install -p -m644 %SOURCE1 .
 
-# The setup procedure wants certifi to download packages over https
-sed -i '/"certifi>=.*"/ d' setup.py
-
 %build
 %add_optflags -fno-strict-aliasing
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build_debug
+%pyproject_build
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 cp -fR lib/mpl_toolkits %buildroot%python3_sitelibdir/
 
 # don't package tests
-rm -r %buildroot%python3_sitelibdir/%oname/testing
-rm -r %buildroot%python3_sitelibdir/%oname/tests
+rm -rv %buildroot%python3_sitelibdir/%oname/testing
+rm -rv %buildroot%python3_sitelibdir/%oname/tests
 rm -rv %buildroot%python3_sitelibdir/mpl_toolkits/*/tests
 
-# Use gtk by default
-subst "s|WXAgg|GTK3Cairo|g" \
-	%buildroot%python3_sitelibdir/%oname/mpl-data/matplotlibrc
-
-export PYTHONPATH=%buildroot%python3_sitelibdir
-
-sed -i 's|^\(backend\).*|\1 : GTK3Cairo|' \
-	%buildroot%python3_sitelibdir/%oname/mpl-data/matplotlibrc
+# Use tk by default
+sed -i 's/#backend: Agg/backend: tkAgg/' \
+    %buildroot%python3_sitelibdir/%oname/mpl-data/matplotlibrc
 
 mkdir -p %buildroot%_datadir/matplotlib
 mv %buildroot%python3_sitelibdir/matplotlib/mpl-data \
    %buildroot%_datadir/matplotlib
 
-%pre
-# fonts
-%define reduce_fonts cmex10.ttf cmmi10.ttf cmr10.ttf cmsy10.ttf
-rm -f %python3_sitelibdir/%oname/mpl-data/fonts/ttf/Vera*.ttf
-for i in %reduce_fonts
-do
-	rm -f %python3_sitelibdir/%oname/mpl-data/fonts/ttf/$i
-done
+%check
+# These files confuse pytest, and we want to test the installed copy.
+rm -rv build*/
+PYTHONPATH=%buildroot%python3_sitelibdir \
+MPLCONFIGDIR=%buildroot%python3_sitelibdir/%oname/mpl-data/matplotlibrc \
+xvfb-run -a -s "-screen 0 640x480x24" \
+py.test-3 --pyargs matplotlib \
+                           mpl_toolkits.axes_grid1 \
+                           mpl_toolkits.axisartist \
+                           mpl_toolkits.mplot3d \
+                           -m "not network" \
+# image comparison failures due to precisions dicrepancies to the x86 produced references
+                           -k "not png and not svg and not pdf" \
+# problems with math fonts
+                           --deselect tests/test_mathtext.py
 
 %files
 %doc README.md
 %python3_sitelibdir/*.py*
 %python3_sitelibdir/__pycache__
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %dir %python3_sitelibdir/matplotlib
-%python3_sitelibdir/matplotlib-*-nspkg.pth
 %python3_sitelibdir/matplotlib/*.py*
 %python3_sitelibdir/matplotlib/*.so
 %python3_sitelibdir/matplotlib/__pycache__
 %python3_sitelibdir/matplotlib/_api
 %python3_sitelibdir/matplotlib/axes
 %python3_sitelibdir/matplotlib/backends
-%python3_sitelibdir/matplotlib/cbook
 %python3_sitelibdir/matplotlib/projections
 %python3_sitelibdir/matplotlib/style
 %python3_sitelibdir/matplotlib/tri
+%python3_sitelibdir/matplotlib/py.typed
 %exclude %python3_sitelibdir/matplotlib/backends/_backend_tk.py
 %exclude %python3_sitelibdir/matplotlib/backends/_backend_gtk.py
 %exclude %python3_sitelibdir/matplotlib/backends/backend_cairo.*
@@ -328,6 +358,12 @@ done
 %python3_sitelibdir/matplotlib/backends/__pycache__/qt_compat.*.py*
 %endif
 
+%if_with qt6
+%files qt6
+# This is handled by backend_qt*.py (no number), so the package exists only for
+# the dependencies.
+%endif
+
 %if_with wx
 %files wx
 %doc README.md
@@ -353,6 +389,11 @@ done
 %_datadir/matplotlib/mpl-data
 
 %changelog
+* Wed Apr 10 2024 Grigory Ustinov <grenka@altlinux.org> 3.8.4-alt1
+- Automatically updated to 3.8.4 (Closes: #45501).
+- Added python3-module-matplotlib-qt6 subpackage (Closes: #49264).
+- Made tkAgg default backend.
+
 * Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 3.7.5-alt1
 - New version 3.7.5.
 
