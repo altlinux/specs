@@ -9,8 +9,8 @@
 %endif
 
 Name: test-with-clickhouse
-Version: 0.1.2
-Release: alt2
+Version: 0.1.3
+Release: alt1
 
 Group: Development/Python3
 Summary: A wrapper to run tests against ClickHouse server
@@ -20,10 +20,12 @@ License: GPLv2+
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(setuptools) python3(wheel) python3(pytest)
+BuildRequires: python3(setuptools) python3(wheel)
 
 %if_with tests
+BuildRequires: python3(pytest)
 BuildRequires: clickhouse-server /proc
+BuildRequires: python3(clickhouse_driver)
 %endif
 
 %description
@@ -56,6 +58,11 @@ A wrapper to run tests against ClickHouse server.
 %python3_sitelibdir_noarch/%rname-%version.dist-info
 
 %changelog
+* Thu Apr 18 2024 Paul Wolneykien <manowar@altlinux.org> 0.1.3-alt1
+- Add support to test UDFs and with UDFs.
+- Add configuration parameters to the ClickHouseTestServer()
+  constructor.
+
 * Thu Apr 04 2024 Paul Wolneykien <manowar@altlinux.org> 0.1.2-alt2
 - Disable build test on arches where clickhouse-server is not
   available.
