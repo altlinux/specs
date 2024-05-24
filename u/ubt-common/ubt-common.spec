@@ -1,16 +1,16 @@
 
 %define branch_prefix .
-%define branch_id S3
+%define branch_id S4
 %define branch_suffix %%nil
 
 Name: ubt-common
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Group: Development/Other
 Summary: Common Universal Branch Tag
 Url: http://www.altlinux.org
-License: GPL
+License: LGPL-3.0-only
 
 BuildArch: noarch
 
@@ -40,6 +40,9 @@ __EOF__
 %_rpmmacrosdir/ubt
 
 %changelog
+* Fri May 24 2024 Sergey V Turchin <zerg@altlinux.org> 0.5-alt1
+- update branch_id
+
 * Thu Jul 22 2021 Sergey V Turchin <zerg@altlinux.org> 0.4-alt1
 - update branch_id
 
