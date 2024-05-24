@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cgal
-Version: 5.3
-Release: alt2
+Version: 5.6.1
+Release: alt1
 
 Summary: Easy access to efficient and reliable geometric algorithms
-License: Free for non-commertial use
+License: LGPLv3+ and GPLv3+ and Boost
 Group: Sciences/Mathematics
 
 Url: https://www.cgal.org/
-# https://github.com/CGAL/cgal/releases
+VCS: https://github.com/CGAL/cgal
 # Source0-url: https://github.com/CGAL/cgal/archive/refs/tags/v%version.tar.gz
 Source0: CGAL-%version.tar
 # Source1-url: https://github.com/CGAL/cgal/releases/download/v%version/CGAL-%version-doc_html.tar.xz
@@ -77,15 +77,13 @@ Thid package contains development documentation for CGAL.
 
 %install
 %cmake_install
-
 install -d %buildroot%_docdir/%name
 cp -fR doc_html %buildroot%_docdir/%name
-#cp -fR examples %buildroot%_docdir/%name
 # due to python2 scripts
 rm -rfv %buildroot%_libdir/cmake/CGAL/Help
 
 %files devel
-#_bindir/*
+%_bindir/*
 %_man1dir/*
 %_includedir/*
 %_libdir/cmake/CGAL
@@ -94,6 +92,10 @@ rm -rfv %buildroot%_libdir/cmake/CGAL/Help
 %doc %_docdir/%{name}*
 
 %changelog
+* Wed May 22 2024 Anton Farygin <rider@altlinux.ru> 5.6.1-alt1
+- 5.3 -> 5.6.1
+- fixed License tag (closes: #43102)
+
 * Sat Jan 15 2022 Michael Shigorin <mike@altlinux.org> 5.3-alt2
 - E2K: lcc 1.25 pretends to be like gcc7 (but builds cgal just fine)
 - minor spec cleanup
