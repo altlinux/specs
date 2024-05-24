@@ -1,21 +1,27 @@
 %define oname pycosat
 
-%def_disable check
+%def_with check
 
 Name: python3-module-%oname
-Version: 0.6.1
-Release: alt5
+Version: 0.6.6
+Release: alt1
 
 Summary: Bindings to picosat (a SAT solver)
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/pycosat/
-# https://github.com/ContinuumIO/pycosat.git
+URL: https://pypi.org/project/pycosat
+VCS: https://github.com/conda/pycosat
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: libpicosat-devel
+
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 ExclusiveArch: x86_64 %ix86
 
@@ -33,29 +39,33 @@ files have been extracted from the picosat source (picosat-954.tar.gz).
 %prep
 %setup
 
-rm -f picosat.*
+rm -v picosat.*
+
+# upstream only applies proper flags when build is invoked with --inplace
+sed -i "s/if .--inplace. in sys.argv:/if True:/" setup.py
 
 %build
 %add_optflags -fno-strict-aliasing -DDONT_INCLUDE_PICOSAT
-
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-rm -fR build
-py.test-%_python3_version
+%pyproject_run_pytest
 
 %files
-%doc CHANGELOG *.rst examples
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/test*
-%exclude %python3_sitelibdir/*/test*
-
+%doc LICENSE AUTHORS.md CHANGELOG.md *.rst examples
+%python3_sitelibdir/__pycache__
+%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%oname.cpython*.so
+%python3_sitelibdir/test_pycosat.py
 
 %changelog
+* Fri May 24 2024 Grigory Ustinov <grenka@altlinux.org> 0.6.6-alt1
+- Automatically updated to 0.6.6.
+- Build with check.
+
 * Wed Nov 20 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.6.1-alt5
 - python2 disabled
 
