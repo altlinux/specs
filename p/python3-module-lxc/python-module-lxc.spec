@@ -1,18 +1,21 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname lxc
 
 Name: python3-module-%oname
-Version: 3.0.4
-Release: alt2
+Version: 5.0.0
+Release: alt1
+
 Summary: This repository provides python3 bindings for the LXC container API.
 
-License: GPL
+License: LGPLv2+
 Group: Development/Python3
-Url: https://github.com/lxc/python3-lxc
+URL: https://pypi.org/project/lxc
+VCS: https://github.com/lxc/python3-lxc
 
-Source: lxc-%version.tar.gz
-BuildRequires:  python3-devel python3-module-setuptools lxc-devel pkgconfig
+Source: %name-%version.tar
+
+BuildRequires:  python3-module-setuptools
+BuildRequires:  python3-module-wheel
+BuildRequires:  lxc-devel
 BuildRequires:  gcc
 
 %description
@@ -24,19 +27,21 @@ package contains the Python3 binding for LXC.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
-
-%check
-%__python3 setup.py test
+%pyproject_install
 
 %files
 %doc README.md examples COPYING
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/_lxc.cpython*.so
+%python3_sitelibdir/python3_lxc-%version.dist-info
 
 %changelog
+* Fri May 24 2024 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
+- Automatically updated to 5.0.0.
+
 * Thu Nov 05 2020 Alexandr Antonov <aas@altlinux.org> 3.0.4-alt2
 - fix url for *.spec
 
