@@ -1,21 +1,25 @@
 %define oname cobs
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.0.0
-Release: alt2
+Version: 1.2.1
+Release: alt1
 
 Summary: Consistent Overhead Byte Stuffing (COBS)
+
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/cobs/
+URL: https://pypi.org/project/cobs
+VCS: https://github.com/cmcqueen/cobs-python
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-modules-unittest
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %py3_provides %oname
-
 
 %description
 The cobs package is provided, which contains modules containing
@@ -36,21 +40,20 @@ This package contains tests for %oname.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py build_ext -i
-pushd python3
-%__python3 -m cobs.cobs.test -v
-%__python3 -m cobs.cobsr.test -v
-popd
+export PYTHONPATH=%buildroot%python3_sitelibdir
+python3 -m cobs.cobs.test
+python3 -m cobs.cobsr.test
 
 %files
-%doc *.txt
-%python3_sitelibdir/*
+%doc *.txt *.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/*/*/test.*
 %exclude %python3_sitelibdir/*/*/*/test.*
 
@@ -58,8 +61,10 @@ popd
 %python3_sitelibdir/*/*/test.*
 %python3_sitelibdir/*/*/*/test.*
 
-
 %changelog
+* Fri May 24 2024 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt1
+- Build new version.
+
 * Thu Feb 06 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.0-alt2
 - Build for python2 disabled.
 
