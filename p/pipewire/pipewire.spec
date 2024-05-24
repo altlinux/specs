@@ -46,7 +46,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: Media Sharing Server
@@ -421,6 +421,9 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 
 
 %changelog
+* Fri May 24 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.7-alt1
+- 1.0.7
+
 * Thu May 09 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.6-alt1
 - 1.0.6
 
