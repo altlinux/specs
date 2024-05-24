@@ -4,7 +4,7 @@
 %def_with markdown
 
 Name: icewm
-Version: 3.4.7
+Version: 3.5.0
 Release: alt1
 Epoch:3
 
@@ -148,6 +148,9 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Fri May 24 2024 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.5.0-alt1
+- 3.5.0
+
 * Wed Apr 03 2024 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.4.7-alt1
 - 3.4.7
 
