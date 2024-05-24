@@ -42,7 +42,7 @@
 %define minor	8
 %define bugfix	7
 %define beta	%nil
-%define rlz alt26
+%define rlz alt50
 
 Name: %rname%major
 Version: %major.%minor.%bugfix
@@ -945,6 +945,13 @@ install -d -m 0755 %buildroot/%qtdir/imports/QtWebKit
 %make INSTALL_ROOT=%buildroot install -C src/plugins/sqldrivers/sqlite2
 %endif
 
+%qIF_ver_gteq %ubt_id M120
+cat >>%buildroot/%_includedir/%name/Qt/qstring.h <<__EOF__
+#ifndef I_AM_NOT_ALTLINUX_PACKAGER
+#error Qt4 is discontinued.
+#endif
+__EOF__
+%endif
 
 %if_enabled docs
 # apply docs
@@ -1493,6 +1500,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 
 %changelog
+* Fri May 24 2024 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt50
+- Qt4 is discontinued
+
 * Tue Sep 26 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.8.7-alt26
 - NMU: build with -fpermissive to avoid FTBFS with GCC 13
 
