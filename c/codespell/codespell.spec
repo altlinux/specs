@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: codespell
-Version: 2.2.6
+Version: 2.3.0
 Release: alt1
 Summary: Check code for common misspellings
 Group: Development/Tools
@@ -21,6 +21,7 @@ BuildRequires: python3-module-wheel
 BuildRequires: pytest3
 BuildRequires: python3-module-chardet
 BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-dependency
 }}
 
 %description
@@ -80,6 +81,9 @@ echo Millenium  > /tmp/example.txt
 %_datadir/codespell
 
 %changelog
+* Fri May 24 2024 Vitaly Chikunov <vt@altlinux.org> 2.3.0-alt1
+- Update to v2.3.0 (2024-05-21).
+
 * Tue Oct 03 2023 Vitaly Chikunov <vt@altlinux.org> 2.2.6-alt1
 - Update to v2.2.6 (2023-09-30).
 - Fix man page generation error.
