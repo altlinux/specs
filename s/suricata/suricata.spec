@@ -10,7 +10,7 @@
 %endif
 
 Name: suricata
-Version: 6.0.10
+Version: 6.0.19
 Release: alt1
 
 Summary: Intrusion Detection System
@@ -148,6 +148,9 @@ useradd -r -g _suricata -c 'Suricata User' \
 %_datadir/%name
 
 %changelog
+* Fri May 24 2024 Alexander Danilov <admsasha@altlinux.org> 6.0.19-alt1
+- 6.0.19 (Fixes: CVE-2023-35852, CVE-2023-35852)
+
 * Mon Mar 27 2023 Alexey Shabalin <shaba@altlinux.org> 6.0.10-alt1
 - 6.0.10
 
