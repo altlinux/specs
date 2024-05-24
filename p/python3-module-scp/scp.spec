@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.14.5
+Version: 0.15.0
 Release: alt1
 Summary: scp module for paramiko
 License: LGPL-2.1-or-later
@@ -54,6 +54,9 @@ export SCPPY_PORT=10022
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri May 24 2024 Stanislav Levin <slev@altlinux.org> 0.15.0-alt1
+- 0.14.5 -> 0.15.0.
+
 * Tue Apr 09 2024 Stanislav Levin <slev@altlinux.org> 0.14.5-alt1
 - 0.13.6 -> 0.14.5.
 
