@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%modname
-Version: 4.11.0
-Release: alt2
+Version: 4.12.0
+Release: alt1
 
 Summary: Python Typing Extensions
 
@@ -15,8 +15,6 @@ URL: https://pypi.org/project/typing-extensions
 VCS: https://github.com/python/typing_extensions
 
 Source: %name-%version.tar
-# Fixing https://github.com/dbrattli/OSlash/issues/35
-Patch: 78d5c5ec67c6b0ab8c150e1604f4a93116ec92d1.patch
 
 BuildArch: noarch
 Provides: python3-module-typing-extensions = %EVR
@@ -48,7 +46,6 @@ must be compatible with multiple Python versions or requires experimental types.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %pyproject_build
@@ -66,6 +63,9 @@ must be compatible with multiple Python versions or requires experimental types.
 %python3_sitelibdir/%modname-%version.dist-info
 
 %changelog
+* Fri May 24 2024 Grigory Ustinov <grenka@altlinux.org> 4.12.0-alt1
+- Automatically updated to 4.12.0.
+
 * Mon Apr 22 2024 Grigory Ustinov <grenka@altlinux.org> 4.11.0-alt2
 - Applied patch fixing working with python>=3.12.2.
 
