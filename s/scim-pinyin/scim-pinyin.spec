@@ -8,7 +8,7 @@ Summary: Smart Pinyin IMEngine for Smart Common Input Method platform
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 License: GPLv2
 Group: System/Libraries
-Url: http://www.scim-im.org/projects/imengines/
+Url: https://github.com/scim-im/scim-pinyin
 Source0: http://dl.sourceforge.net/scim/%name-%version.tar.gz
 
 BuildRequires: scim-devel gtk2-devel gettext gettext-devel autoconf automake libtool

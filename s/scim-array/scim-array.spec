@@ -5,7 +5,7 @@ Summary: SCIM Array 30 Input Method Engine
 
 Group: System/Libraries
 License: GPLv2+
-Url: http://scimarray.openfoundry.org/
+Url: https://github.com/tzhuan/scim-array
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source0: http://of.openfoundry.org/download_path/scimarray/%version/%name-%version.tar.gz
 #Patch0:        %name.patch

@@ -9,7 +9,7 @@ Release:        alt1
 Summary:        Chewing Chinese input method for SCIM
 
 License:        GPLv2+
-Url:            http://chewing.csie.net/
+Url:            https://github.com/chewing/scim-chewing
 Group:          System/Libraries
 Source:         http://chewing.googlecode.com/files/%{name}-%{version}.tar.gz
 Patch0:         scim-chewing-0.3.5-libchewing04.patch
