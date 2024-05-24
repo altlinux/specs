@@ -6,7 +6,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt79
+Release: alt80
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -184,6 +184,9 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Thu May 23 2024 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt80
+- initalize partition table after disk discovery
+
 * Tue May 21 2024 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt79
 - re-read partition table once per disk (not when RAID has been assembled)
 
