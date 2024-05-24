@@ -1,22 +1,21 @@
-# -*- coding: utf-8 -*-
-%define _unpackaged_files_terminate_build 1
-
 Name: python3-module-patiencediff
-Version: 0.2.4
+Version: 0.2.15
 Release: alt1
 
-Summary: This package contains the implementation of the patiencediff algorithm, as first described by Bram Cohen.
-License: GPLv2
-Group: Development/Python
+Summary: This package contains the implementation of the patiencediff algorithm, as first described by Bram Cohen
 
-Url: https://github.com/breezy-team/patiencediff
+License: GPLv2
+Group: Development/Python3
+URL: https://pypi.org/project/patiencediff
+VCS: https://github.com/breezy-team/patiencediff
+
 Packager: Anatoly Kitaikin <cetus@altlinux.org>
 
-Source: patiencediff-%version.tar
-
-Patch0: %name-%version-%release.patch
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 This package contains the implementation of the patiencediff algorithm, as first described by Bram Cohen.
@@ -35,8 +34,6 @@ The package comes with two implementations:
  - A C implementation implementation (_patiencediff_c.c); this implementation is faster, but requires a C compiler
    and is less readable
 
-This module is built for python %__python_version
-
 %package tests
 Summary: patiencediff tests
 Group: Development/Other
@@ -47,25 +44,28 @@ Requires: %name = %version-%release
 This package contains tools and test suites for testing patiencediff python module.
 
 %prep
-%setup -n patiencediff-%version
-%patch0 -p1
+%setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install --install-lib %python3_sitelibdir
+%pyproject_install
 
 %files
+%doc AUTHORS README.rst
+%_bindir/patiencediff
 %python3_sitelibdir/patiencediff
 %exclude %python3_sitelibdir/patiencediff/test*
-%python3_sitelibdir/*.egg-info
-%doc AUTHORS README.rst
+%python3_sitelibdir/patiencediff-%version.dist-info
 
 %files tests
 %python3_sitelibdir/patiencediff/test*
 
 %changelog
+* Fri May 24 2024 Grigory Ustinov <grenka@altlinux.org> 0.2.15-alt1
+- Automatically updated to 0.2.15.
+
 * Fri Oct 21 2022 Anatoly Kitaykin <cetus@altlinux.org> 0.2.4-alt1
 - Release 0.2.4
 
