@@ -1,5 +1,5 @@
 Name: alterator-vm
-Version: 0.4.41
+Version: 0.4.42
 Release: alt1
 
 Summary: Alterator module for volume management
@@ -37,6 +37,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Fri May 24 2024 Oleg Solovyov <mcpain@altlinux.org> 0.4.42-alt1
+- not enough space: check subvolumes
+
 * Tue May 14 2024 Oleg Solovyov <mcpain@altlinux.org> 0.4.41-alt1
 - place after "pkg" step
 - fail if not enough space for installation
