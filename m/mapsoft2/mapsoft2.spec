@@ -1,5 +1,5 @@
 Name:         mapsoft2
-Version:      2.3
+Version:      2.4
 Release:      alt1
 
 Summary:      mapsoft2 - programs for working with maps and geodata
@@ -16,7 +16,6 @@ BuildRequires: libjpeg-devel libgif-devel libtiff-devel libpng-devel libdb4.7-de
 BuildRequires: librsvg-devel libcurl-devel
 BuildRequires: /usr/bin/pod2man /usr/bin/pod2html /usr/bin/unzip
 BuildRequires: transfig ImageMagick-tools
-
 %description
 mapsoft2 - programs for working with maps and geodata
 
@@ -24,6 +23,7 @@ mapsoft2 - programs for working with maps and geodata
 Summary: mapsoft-vmap-data - example of data and scripts for vector map handling
 Group: Sciences/Geosciences
 Requires: %name = %version-%release
+BuildRequires: perl-Text-Iconv
 BuildArch: noarch
 
 %description vmap-data
@@ -50,12 +50,73 @@ export SKIP_IMG_DIFFS=1
 %_datadir/mapsoft2/maps_menu.json
 
 %files vmap-data
+%_bindir/vmaps.sh
+%_bindir/vmaps_get_fig
+%_bindir/vmaps_in
+%_bindir/vmaps_mbtiles
+%_bindir/vmaps_out
+%_bindir/vmaps_preview
+%_bindir/vmaps_sqlitedb
+%_bindir/vmaps_wp_parse
+%_bindir/vmaps_wp_update
 %_datadir/mapsoft2/render.cfg
 %_datadir/mapsoft2/types.cfg
 %_datadir/mapsoft2/pics
+%_datadir/mapsoft2/slazav.typ
+%_datadir/mapsoft2/map_templ.htm
 %_datadir/xfig/Libraries/*
 
 %changelog
+* Fri May 24 2024 Vladislav Zavjalov <slazav@altlinux.org> 2.4-alt1
+- Rewrite SRTM interface (work is not finished). Support for data with
+  different resolution, do not use srtm_width.txt file (note that ALOS has
+  different resolution at high latitudes, previously it was just
+  rescaled). Simplify interpolation code, allow switching between nearest,
+  linear, cubic interpolation. Do not use interpolation in graphical
+  layers when low-resolution picture is needed. Remove automatic
+  interpolation of holes. Use overlays: manual creation/interpolation of
+  holes and saving this information. Fix error with drawing of a
+  semi-transparent srtm layer. Optimize contour finding.
+- Rewrite GeoTrk class: now it is MultiLine<double,GeoTpt>
+  instead of GeoTpt array with segment start flags. Massive
+  changes in all code working with tracks.
+- Add vxi module (VXI-11 interface)
+- build system:
+  - preliminary check for pkg-config libs.
+  - remove support for local pkg-config files
+  - PROG_DEPS variable - dependence on executables
+- geom:
+  - Line/Multiline definition with separate coordinate and point types
+    MultiLine<double,GeoTpt>
+  - Point, Rect, Line, Multiline: divide/multiply by point
+  - Line, Multiline: npts method
+  - MultiLine: add_point, add_segment, del_last_point methods
+  - poly_tools.h: fix a mess with 2d/non-2d functions, use arbitrary
+    distance functions (for using with GeoTrk)
+  - poly_tools.h: poly_cross_2d: find crossings of two closed lines
+- geo_data/filters: add --trk_reduce_acc, --trk_reduce_num options
+- geo_data/geo_utils.h:
+  - add geo_length_2d function for Line and MultiLine
+  - add geo_bearing_2d function
+- fig: write fractional font size
+- downloader: set log_level via options; change default 0 (no messages)
+- ocad: rewrite code, but still do not include it in vmap system
+- vmap2: add dpi setting in type configuration (affects only font size in fig output)
+- image:
+  - support for 64/48 bit images
+  - change internal representation of IMAGE_1 and IMAGE_24 formats
+  - fix memory handling
+  - support for PNM format 48/24/16/8/1-bit images
+  - add 64/48 bit support for tiff format
+  - a few image filters (some code transferred from me ph_scan repo):
+    image_invert, image_crop, image_autocrop, image_autolevel, image_ir_undust
+- a few modifications in vmap-data
+- rewrite ms2xyz program,
+  - --ref <trk> - calculating distances along a reference track
+  - --break segment - restart calculation on every segment
+- Add new filters to ms2img program. Now I'm using it to process images
+  after film scanning: cropping, color levels, removing dust with IR channel.
+
 * Fri Oct 20 2023 Vladislav Zavjalov <slazav@altlinux.org> 2.3-alt1
 - fixes for macOS build (thanks to Nikolay Korotkiy)
 - impreve module building system: use make program to extract dependencies from Makefiles.
