@@ -4,8 +4,8 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: vgrep
-Version: 2.6.1
-Release: alt2
+Version: 2.8.0
+Release: alt1
 Summary: a user-friendly pager for grep
 License: GPL-3.0
 Group: Text tools
@@ -45,6 +45,9 @@ install -D -p -m 0644 docs/vgrep.1 %buildroot%_man1dir/vgrep.1
 %_man1dir/vgrep.1*
 
 %changelog
+* Fri May 24 2024 Vitaly Chikunov <vt@altlinux.org> 2.8.0-alt1
+- Update to v2.8.0 (2024-05-20).
+
 * Mon Nov 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.6.1-alt2
 - NMU: fixed FTBFS on LoongArch.
 
