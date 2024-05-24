@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        124.0.6367.207
+Version:        125.0.6422.76
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -89,13 +89,25 @@ Patch030: 0030-Fix-undefined-symbol-partition_alloc-internal-Intern.patch
 Patch031: 0031-FEDORA-disable-screen-ai-service.patch
 Patch032: 0032-FEDORA-libavif-deps.patch
 Patch033: 0033-ALT-rename-std::powf.patch
-Patch034: 0034-DEBIAN-uint-includes.patch
-Patch035: 0035-DEBIAN-fps-optional.patch
-Patch036: 0036-DEBIAN-span-optional.patch
-Patch037: 0037-DEBIAN-webgpu-optional.patch
-Patch038: 0038-DEBIAN-extractor-bitset.patch
-Patch039: 0039-DEBIAN-atomic.patch
-#Patch040: 0040-ALT-ninja-build1.12.patch
+Patch034: 0034-DEBIAN-span-optional.patch
+Patch040: 0040-DEBIAN-appservice-include.patch
+Patch041: 0041-DEBIAN-lens-include.patch
+Patch042: 0042-DEBIAN-mojo-bindings-include.patch
+#Patch043: 0043-DEBIAN-mojo-null.patch
+Patch044: 0044-DEBIAN-mojo.patch
+Patch045: 0045-DEBIAN-ninja.patch
+Patch046: 0046-DEBIAN-no-vector-consts.patch
+Patch047: 0047-DEBIAN-ruy-include.patch
+Patch048: 0048-DEBIAN-tabstrip-include.patch
+Patch049: 0049-DEBIAN-vulkan-include.patch
+Patch050: 0050-DEBIAN-bad-font-gc0000.patch
+Patch051: 0051-DEBIAN-bad-font-gc000.patch
+Patch052: 0052-DEBIAN-bad-font-gc00.patch
+Patch053: 0053-DEBIAN-bad-font-gc0.patch
+Patch054: 0054-DEBIAN-bad-font-gc1.patch
+Patch055: 0055-DEBIAN-bad-font-gc11.patch
+Patch056: 0056-DEBIAN-bad-font-gc2.patch
+Patch057: 0057-DEBIAN-bad-font-gc3.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -512,6 +524,23 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed May 22 2024 Andrey Cherepanov <cas@altlinux.org> 125.0.6422.76-alt1
+- New version (125.0.6422.76).
+- Security fixes:
+  + CVE-2024-5157: Use after free in Scheduling.
+  + CVE-2024-5158: Type Confusion in V8.
+  + CVE-2024-5159: Heap buffer overflow in ANGLE.
+  + CVE-2024-5160: Heap buffer overflow in Dawn.
+
+* Sat May 18 2024 Andrey Cherepanov <cas@altlinux.org> 125.0.6422.60-alt1
+- New version (125.0.6422.60).
+- Security fixes:
+  + CVE-2024-4947: Type Confusion in V8.
+  + CVE-2024-4948: Use after free in Dawn.
+  + CVE-2024-4949: Use after free in V8.
+  + CVE-2024-4950: Inappropriate implementation in Downloads.
+- Apply patches from Debian to fix webpage hangs.
+
 * Tue May 14 2024 Andrey Cherepanov <cas@altlinux.org> 124.0.6367.207-alt1
 - New version (124.0.6367.207).
 - Security fixes:
