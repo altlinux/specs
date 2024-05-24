@@ -1,6 +1,6 @@
 Name: smcroute
 Version: 2.5.7
-Release: alt1
+Release: alt2
 
 Summary: Static Multicast Routing Daemon
 License: GPLv2
@@ -38,11 +38,13 @@ touch %buildroot%_sysconfdir/smcroute.conf
 %preun
 %preun_service %name
 
+%define _systemunitdir %(pkg-config --variable systemdsystemunitdir systemd)
+
 %files
 %doc %docdir
 %config(noreplace) %_sysconfdir/smcroute.conf
 %_initdir/smcroute
-%_unitdir/smcroute.service
+%_systemunitdir/smcroute.service
 
 %_sbindir/smcroute
 %_sbindir/smcrouted
@@ -53,6 +55,9 @@ touch %buildroot%_sysconfdir/smcroute.conf
 %_man8dir/smcroutectl.*
 
 %changelog
+* Fri May 24 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.5.7-alt2
+- rebuilt with usrmerged paths
+
 * Mon May 13 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.5.7-alt1
 - 2.5.7 released
 
