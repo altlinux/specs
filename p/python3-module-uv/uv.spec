@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.1.45
+Version: 0.2.2
 Release: alt1
 Summary: An extremely fast Python package installer and resolver
 License: MIT
@@ -59,6 +59,9 @@ export OPENSSL_INCLUDE_DIR="%_includedir"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri May 24 2024 Stanislav Levin <slev@altlinux.org> 0.2.2-alt1
+- 0.1.45 -> 0.2.2.
+
 * Tue May 21 2024 Stanislav Levin <slev@altlinux.org> 0.1.45-alt1
 - 0.1.44 -> 0.1.45.
 
