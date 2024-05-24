@@ -20,7 +20,8 @@
 %else
 %def_disable no_sse2
 %endif
-%def_disable python3
+%def_enable python3
+%def_disable system_re2
 
 %define ffmpeg_ver %{get_version libavformat-devel}
 #define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
@@ -32,7 +33,7 @@
 
 Name: qt5-webengine
 Version: 5.15.16
-Release: alt4
+Release: alt5
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -65,10 +66,12 @@ Patch43: disable-catapult.patch
 Patch44: python3.patch
 Patch45: chromium-python3.patch
 Patch46: python3.11.patch
-Patch47: system-nspr-prtime.patch
-Patch48: system-icu-utf.patch
-Patch49: system-lcms2.patch
-Patch50: system-openjpeg2.patch
+Patch47: python3.12-imp.patch
+Patch48: python3.12-six.patch
+Patch49: system-nspr-prtime.patch
+Patch50: system-icu-utf.patch
+Patch51: system-lcms2.patch
+Patch52: system-openjpeg2.patch
 # ALT
 Patch101: alt-pepflashplayer.patch
 Patch102: alt-fix-shrank-by-one-character.patch
@@ -77,6 +80,7 @@ Patch104: qtwebengine-everywhere-src-5.15.0-add-ppc64le-support.patch
 Patch105: alt-openh264-x86-no-asm.patch
 Patch106: qtwebengine-everywhere-src-5.12.6-alt-armh.patch
 Patch107: alt-js-check-size.patch
+Patch108: alt-libre2-11.patch
 
 # Automatically added by buildreq on Sun Apr 03 2016
 # optimized out: fontconfig fontconfig-devel gcc-c++ glib2-devel kf5-attica-devel kf5-kjs-devel libEGL-devel libGL-devel libX11-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXext-devel libXfixes-devel libXi-devel libXrandr-devel libXrender-devel libXtst-devel libfreetype-devel libgpg-error libharfbuzz-devel libharfbuzz-icu libicu-devel libnspr-devel libqt5-clucene libqt5-core libqt5-gui libqt5-help libqt5-network libqt5-positioning libqt5-qml libqt5-quick libqt5-sql libqt5-webchannel libqt5-widgets libstdc++-devel libxml2-devel pkg-config python-base python-modules python-modules-compiler python-modules-email python-modules-encodings python-modules-multiprocessing python-modules-xml python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-phonon-devel qt5-tools qt5-webchannel-devel qt5-webkit-devel xorg-compositeproto-devel xorg-damageproto-devel xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-scrnsaverproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
@@ -95,7 +99,10 @@ BuildRequires: libgio-devel libkrb5-devel
 BuildRequires: git-core gperf libalsa-devel libcap-devel libdbus-devel libevent-devel libexpat-devel libjpeg-devel pkgconfig(libopenjp2) libminizip-devel libnss-devel
 BuildRequires: libharfbuzz-devel fontconfig-devel
 BuildRequires: libdrm-devel gyp libudev-devel libxml2-devel jsoncpp-devel liblcms2-devel
-BuildRequires: libopus-devel libpci-devel libpng-devel libprotobuf-devel libpulseaudio-devel libre2-devel libsnappy-devel libsrtp2-devel
+BuildRequires: libopus-devel libpci-devel libpng-devel libprotobuf-devel libpulseaudio-devel libsnappy-devel libsrtp2-devel
+%if_enabled system_re2
+BuildRequires: libre2-devel
+%endif
 BuildRequires: libwebp-devel libxslt-devel ninja-build protobuf-compiler libva-devel libvdpau-devel
 BuildRequires: node-yargs node-terser
 %if_enabled python3
@@ -219,11 +226,13 @@ popd
 %patch44 -p1
 %patch45 -p1
 %patch46 -p1
-%endif
 %patch47 -p1
 %patch48 -p1
+%endif
 %patch49 -p1
 %patch50 -p1
+%patch51 -p1
+%patch52 -p1
 #
 %patch101 -p1
 %patch102 -p1
@@ -232,14 +241,18 @@ popd
 %patch105 -p1
 %patch106 -p1
 %patch107 -p1
+%if_enabled system_re2
+%patch108 -p1
+%endif
 
 # delete all "toolprefix = " lines from build/toolchain/linux/BUILD.gn, as we
 # never cross-compile in native Fedora RPMs, fixes ARM and aarch64 FTBFS
 sed -i -e '/toolprefix = /d' -e 's/\${toolprefix}//g' \
   src/3rdparty/chromium/build/toolchain/linux/BUILD.gn
-# http://bugzilla.redhat.com/1337585
+%if_enabled system_re2
 # can't just delete, but we'll overwrite with system headers to be on the safe side
 cp -bv /usr/include/re2/*.h src/3rdparty/chromium/third_party/re2/src/re2/
+%endif
 # add compile flags
 sed -i 's|"-fPIC"|"-DPIC","-fPIC"|' src/3rdparty/chromium/build/config/compiler/BUILD.gn
 sed -i 's|"-fPIC"|"-DPIC","-fPIC"|' src/3rdparty/chromium/third_party/*/BUILD.gn
@@ -278,6 +291,11 @@ install -m 0644 %SOURCE101 src/3rdparty/chromium/third_party/catapult/tracing/th
 pushd src/3rdparty/chromium/third_party/jstemplate
     cat util.js jsevalcontext.js jstemplate.js exports.js >jstemplate_compiled.js
 popd
+
+%if_enabled system_re2
+# conflict with internal re2 headers
+cp -bv /usr/include/re2/*.h src/3rdparty/chromium/third_party/re2/src/re2/
+%endif
 
 # generate qtwebengine-3rdparty.qdoc, it is missing from the tarball
 pushd src/3rdparty
@@ -456,6 +474,10 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Thu May 02 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt5
+- build with python3
+- build without system libre2
+
 * Fri Apr 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt4
 - always use internal ffmpeg
 
