@@ -1,7 +1,11 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname rexml
 
 Name:          gem-rexml
-Version:       3.2.5
+Version:       3.2.8
 Release:       alt1
 Summary:       REXML is an XML toolkit for Ruby
 License:       BSD-2-Clause
@@ -13,13 +17,19 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+%if_enabled check
 BuildRequires: gem(bundler) >= 0
 BuildRequires: gem(rake) >= 0
+BuildRequires: gem(benchmark_driver) >= 0
 BuildRequires: gem(test-unit) >= 0
+BuildRequires: gem(test-unit-ruby-core) >= 0
+BuildRequires: gem(strscan) >= 3.0.9
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Provides:      gem(rexml) = 3.2.5
+Requires:      gem(strscan) >= 3.0.9
+Provides:      gem(rexml) = 3.2.8
 
 
 %description
@@ -34,15 +44,16 @@ REXML supports both tree and stream document parsing. Stream parsing is faster
 features such as XPath.
 
 
+%if_enabled    doc
 %package       -n gem-rexml-doc
-Version:       3.2.5
+Version:       3.2.8
 Release:       alt1
 Summary:       REXML is an XML toolkit for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rexml
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rexml) = 3.2.5
+Requires:      gem(rexml) = 3.2.8
 
 %description   -n gem-rexml-doc
 REXML is an XML toolkit for Ruby documentation files.
@@ -59,20 +70,24 @@ features such as XPath.
 
 %description   -n gem-rexml-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета rexml.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-rexml-devel
-Version:       3.2.5
+Version:       3.2.8
 Release:       alt1
 Summary:       REXML is an XML toolkit for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rexml
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rexml) = 3.2.5
+Requires:      gem(rexml) = 3.2.8
 Requires:      gem(bundler) >= 0
 Requires:      gem(rake) >= 0
+Requires:      gem(benchmark_driver) >= 0
 Requires:      gem(test-unit) >= 0
+Requires:      gem(test-unit-ruby-core) >= 0
 
 %description   -n gem-rexml-devel
 REXML is an XML toolkit for Ruby development package.
@@ -89,6 +104,7 @@ features such as XPath.
 
 %description   -n gem-rexml-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета rexml.
+%endif
 
 
 %prep
@@ -108,15 +124,22 @@ features such as XPath.
 %ruby_gemspec
 %ruby_gemlibdir
 
+%if_enabled    doc
 %files         -n gem-rexml-doc
 %doc README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-rexml-devel
 %doc README.md
+%endif
 
 
 %changelog
+* Fri May 24 2024 Pavel Skrylev <majioa@altlinux.org> 3.2.8-alt1
+- ^ 3.2.5 -> 3.2.8
+
 * Thu Sep 02 2021 Pavel Skrylev <majioa@altlinux.org> 3.2.5-alt1
 - ^ 3.2.4 -> 3.2.5
 
