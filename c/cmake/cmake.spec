@@ -11,7 +11,7 @@
 %define _cmake__builddir build
 
 Name: cmake
-Version: 3.29.1
+Version: 3.29.3
 Release: alt1
 
 Summary: Cross-platform, open-source make system
@@ -326,6 +326,9 @@ popd
 
 
 %changelog
+* Thu May 09 2024 Vitaly Lipatov <lav@altlinux.ru> 3.29.3-alt1
+- new version 3.29.3 (with rpmrb script)
+
 * Sat Apr 06 2024 Vitaly Lipatov <lav@altlinux.ru> 3.29.1-alt1
 - new version 3.29.1 (with rpmrb script)
 - build rpm-macros-cmake subpackage standalone
