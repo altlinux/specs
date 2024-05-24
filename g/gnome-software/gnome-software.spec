@@ -41,8 +41,8 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.1
-Release: alt1.1%beta
+Version: %ver_major.2
+Release: alt1%beta
 
 Summary: Software manager for GNOME
 License: GPLv2+
@@ -207,6 +207,9 @@ _EOF_
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Fri May 24 2024 Yuri N. Sedunov <aris@altlinux.org> 46.2-alt1
+- 46.2
+
 * Mon May 13 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1.1
 - disabled snap support for %%e2k
 
