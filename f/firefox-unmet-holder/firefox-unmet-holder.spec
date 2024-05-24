@@ -3,10 +3,11 @@
 Summary: Empty firefox dependency holder on platforms that don't have one
 Name: %realname-unmet-holder
 Version: 126.0
-Release: alt2
+Release: alt3
 Group: Networking/WWW
 License: GPL-3.0
 Provides: %realname = %version-%release
+Conflicts: gnome-kiosk-search-appliance
 ExclusiveArch: %{ix86} ppc64le
 
 %description
@@ -17,6 +18,9 @@ firefox does not exist, something must provide such a dependency.
 %files
 
 %changelog
+* Fri May 24 2024 Anton Farygin <rider@altlinux.ru> 126.0-alt3
+- added conflict with gnome-kiosk-search-appliance to help fix ALT bug #49863
+
 * Fri May 17 2024 Ajrat Makhmutov <rauty@altlinux.org> 126.0-alt2
 - New release.
 
