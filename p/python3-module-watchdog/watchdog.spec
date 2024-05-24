@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.0.0
+Version: 4.0.1
 Release: alt1
 
 Summary: Filesystem events monitoring
@@ -59,6 +59,9 @@ export NO_SUDO=YES
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri May 24 2024 Stanislav Levin <slev@altlinux.org> 4.0.1-alt1
+- 4.0.0 -> 4.0.1.
+
 * Fri Mar 01 2024 Stanislav Levin <slev@altlinux.org> 4.0.0-alt1
 - 3.0.0 -> 4.0.0.
 
