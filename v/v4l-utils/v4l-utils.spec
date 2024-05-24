@@ -1,6 +1,6 @@
 Name: v4l-utils
 Version: 1.26.1
-Release: alt1
+Release: alt2
 
 Summary: Collection of video4linux support libraries and utilities
 License: GPLv2+
@@ -85,6 +85,8 @@ also serve as a generic video/TV viewer application.
 %install
 %meson_install
 
+%define _udevdir %(pkg-config --variable=udevdir udev)
+
 %files
 %doc ChangeLog COPYING README.*
 
@@ -108,8 +110,8 @@ also serve as a generic video/TV viewer application.
 
 %files -n ir-keytable
 %config(noreplace) %_sysconfdir/rc_maps.cfg
-/lib/udev/rules.d/70-infrared.rules
-/lib/udev/rc_keymaps
+%_udevdir/rules.d/70-infrared.rules
+%_udevdir/rc_keymaps
 %_bindir/ir-keytable
 %_man1dir/ir-keytable.1*
 %_man5dir/rc_keymap.5*
@@ -143,6 +145,9 @@ also serve as a generic video/TV viewer application.
 %endif
 
 %changelog
+* Fri May 24 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.26.1-alt2
+- rebuilt with usrmerged paths
+
 * Wed Dec 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.26.1-alt1
 - 1.26.1 released
 
