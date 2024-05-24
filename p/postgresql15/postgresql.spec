@@ -18,7 +18,7 @@
 %define prog_name            postgresql
 %define postgresql_major     15
 %define postgresql_minor     7
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -504,7 +504,7 @@ cat pg_archivecleanup-%postgresql_major.lang > contrib.lang
 # They will be needed to do a dump of the old version's database.
 # All output redirected to /dev/null.
 exec &>/dev/null
-if [ $1 -gt 1 -a -d %_libdir/%PGSQL ]
+if [ -d %_libdir/%PGSQL ]
 then
     if [ ! -d %_libdir/%PGSQL/backup ]; then
         mkdir -p %_libdir/%PGSQL/backup
@@ -516,13 +516,18 @@ fi
 %pre server
 exec &>/dev/null
 
-if [ $1 -gt 1 ]
+if [ -d %_libdir/%PGSQL ]
 then
    if [ ! -d %_libdir/%PGSQL/backup ]; then
        mkdir -p %_libdir/%PGSQL/backup
    fi
    cd %_bindir
-   cp -fp postmaster postgres %_libdir/%PGSQL/backup
+   cp -fp pg_controldata pg_ctl pg_resetwal postgres %_libdir/%PGSQL/backup
+
+   # Need for PG 15 and older
+   if [ -f %_bindir/postmaster ]; then
+       cp -fp postmaster %_libdir/%PGSQL/backup
+   fi
 fi
 
 echo "########################################################################"
@@ -971,6 +976,9 @@ fi
 %endif
 
 %changelog
+* Fri May 24 2024 Alexei Takaseev <taf@altlinux.org> 15.7-alt3
+- Fix copy to %%_libdir/%%PGSQL/backup
+
 * Thu May 23 2024 Alexei Takaseev <taf@altlinux.org> 15.7-alt2
 - Conflicts: 15-1C -> 16-1C
 
