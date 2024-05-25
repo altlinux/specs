@@ -1,15 +1,20 @@
 Name: python3-module-pykcs11
-Version: 1.5.10
+Version: 1.5.16
 Release: alt1
+
 Summary: A complete PKCS#11 wrapper for Python
+
 Group: Development/Python3
 License: GPLv2
-URL: https://github.com/LudovicRousseau/PyKCS11
+URL: https://pypi.org/project/PyKCS11
+VCS: https://github.com/LudovicRousseau/PyKCS11
 
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++ swig
-BuildRequires: rpm-build-python3 python3-module-setuptools python3-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 A complete PKCS#11 wrapper for Python. You can use any PKCS#11 (aka CryptoKi)
@@ -35,18 +40,22 @@ This package contains documentation.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%python3_sitelibdir/*
+%python3_sitelibdir/PyKCS11
+%python3_sitelibdir/PyKCS11-%version.dist-info
 
 %files docs
 %doc README.md samples/
 
 %changelog
+* Sat May 25 2024 Grigory Ustinov <grenka@altlinux.org> 1.5.16-alt1
+- Automatically updated to 1.5.16.
+
 * Fri Jan 01 2021 Grigory Ustinov <grenka@altlinux.org> 1.5.10-alt1
 - Automatically updated to 1.5.10.
 
