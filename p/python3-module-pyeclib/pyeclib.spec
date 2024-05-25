@@ -1,17 +1,17 @@
 %define oname pyeclib
 
 Name:           python3-module-%oname
-Version:        1.6.0
-Release:        alt4
-Summary:        Python interface to erasure codes
-Group:          Development/Python3
+Version:        1.6.1
+Release:        alt1
 
+Summary:        Python interface to erasure codes
+
+Group:          Development/Python3
 License:        BSD
 URL:            https://pypi.org/project/pyeclib
+
 Source0:        %oname-%version.tar
 
-BuildRequires:  python3-devel
-BuildRequires:  python3-module-setuptools
 BuildRequires:  liberasurecode-devel >= 1.0.7
 BuildRequires:  chrpath
 
@@ -31,13 +31,16 @@ or through the C interface liberasurecode.
 %install
 %python3_install
 
-find "%buildroot%python3_sitelibdir" -name "pyeclib_c.cpython-*.so" | xargs chrpath -d
+find "%buildroot%python3_sitelibdir" -name "pyeclib_c.*.so" | xargs chrpath -d
 
 %files
 %doc README.rst
 %python3_sitelibdir/*
 
 %changelog
+* Sat May 25 2024 Grigory Ustinov <grenka@altlinux.org> 1.6.1-alt1
+- Build new version.
+
 * Mon Dec 13 2021 Grigory Ustinov <grenka@altlinux.org> 1.6.0-alt4
 - Fix building with python3.10.
 
