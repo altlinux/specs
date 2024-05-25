@@ -1,8 +1,8 @@
 %define oname prctl
 
 Name: python3-module-%oname
-Version: 1.7
-Release: alt2
+Version: 1.8.1
+Release: alt1
 
 Group: Development/Python3
 License: GPL
@@ -65,6 +65,9 @@ make -C docs html
 
 
 %changelog
+* Sat May 25 2024 Grigory Ustinov <grenka@altlinux.org> 1.8.1-alt1
+- Automatically updated to 1.8.1.
+
 * Fri Jan 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.7-alt2
 - Porting on Python3.
 
