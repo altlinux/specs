@@ -1,5 +1,5 @@
 Name:    libg15render
-Version: 3.0.4
+Version: 3.0.5
 Release: alt1
 
 Summary: Library to render text and shapes into a buffer usable by the Logitech G15 Gaming Keyboard.
@@ -47,5 +47,8 @@ rm -f %buildroot%_defaultdocdir/%name-3.0/*
 %_man3dir/*.3*
 
 %changelog
+* Sat May 25 2024 Andrey Cherepanov <cas@altlinux.org> 3.0.5-alt1
+- New version.
+
 * Mon Jan 30 2023 Andrey Cherepanov <cas@altlinux.org> 3.0.4-alt1
 - Initial build for Sisyphus.
