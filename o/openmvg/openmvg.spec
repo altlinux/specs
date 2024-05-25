@@ -3,7 +3,7 @@
 
 Name:          openmvg
 Version:       2.1
-Release:       alt3
+Release:       alt4
 Summary:       open Multiple View Geometry
 License:       MPL-2.0
 Group:         System/Libraries
@@ -154,7 +154,9 @@ sed -i '/^extern template/s/.*/#ifndef IMAGE_IO_CPP\n&\n#endif/' src/openMVG/ima
 # fix num_threads in pragmas
 sed -i -E "/^[[:space:]]*#pragma omp .*[[:space:]]num_threads\(/{s/#/for(long &/;\
 s/(#.*num_threads\()([^()]*)\)/_xxxn=\\2,\\1_xxxn)/;\
-s/#/_xxxc=1;_xxxc;_xxxc=0)\n&/}" src/third_party/flann/src/cpp/flann/algorithms/*.h
+s/#/_xxxc=1;_xxxc;_xxxc=0)\n&/}" \
+	src/third_party/flann/src/cpp/flann/algorithms/*.h \
+	src/third_party/ceres-solver/internal/ceres/*.h
 # fix endianness and collision with other LCC
 sed -i 's/defined(__LCC__)/0/;s/defined(__LITTLE_ENDIAN__)/1/' src/nonFree/sift/vl/host.h
 %endif
@@ -202,6 +204,9 @@ rm -f %buildroot%_libdir/libopenMVG_ceres.a
 
 
 %changelog
+* Sat May 25 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.1-alt4
+- fix e2k build again
+
 * Sat Mar 23 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.1-alt3
 - Fixed FTBFS on LoongArch (remove static library).
 
