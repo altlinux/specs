@@ -1,21 +1,23 @@
 %define oldname python-uinput
 
 Name: python3-module-uinput
-Version: 0.11.2
-Release: alt2
+Version: 1.0.1
+Release: alt1
 
 Summary: Pythonic API to the Linux uinput kernel module
 
 License: GPLv3
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/python-uinput
+URL: https://pypi.org/project/python-uinput
+VCS: https://github.com/pyinput/python-uinput
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: http://pypi.python.org/packages/source/p/%oldname/%oldname-%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: rdma-core-devel
 BuildRequires: libudev-devel
 
@@ -37,20 +39,23 @@ which allows attaching userspace device drivers into kernel.
 sed -i 's/distutils.sysconfig as //' src/__init__.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 chmod a-x examples/*
 
 %files
 %doc COPYING examples
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/python_uinput-%version.dist-info
 %python3_sitelibdir/_libsuinput.*.so
 %python3_sitelibdir/uinput/
 
 %changelog
+* Sat May 25 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt1
+- Build new version.
+
 * Sat Oct 21 2023 Grigory Ustinov <grenka@altlinux.org> 0.11.2-alt2
 - Dropped dependency on distutils.
 
