@@ -1,7 +1,7 @@
 Name: kernel-image-6.9
 Release: alt1
 %define kernel_base_version	6.9
-%define kernel_sublevel	.1
+%define kernel_sublevel	.2
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -588,6 +588,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat May 25 2024 Kernel Bot <kernelbot@altlinux.org> 6.9.2-alt1
+- v6.9.2 (2024-05-25).
+
 * Fri May 17 2024 Kernel Bot <kernelbot@altlinux.org> 6.9.1-alt1
 - v6.9.1 (2024-05-17).
 
