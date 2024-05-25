@@ -122,7 +122,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.6
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://systemd.io/
 Group: System/Configuration/Boot and Init
@@ -1168,6 +1168,29 @@ echo ".so man8/systemd-udevd.8" > %buildroot%_man8dir/udevd.8
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1378974
 install -D -m644 -t %buildroot%_unitdir/systemd-udev-trigger.service.d/ %SOURCE10
+
+# p11 compatibility: Bring exported dir paths in line with rpm macros and with
+# packages as they currently are in the repository.
+# In the future, remove this when all packages install their files in the
+# corresponding directories under %_prefix; this has to be coordinated.
+sed -i 's,^\(udev_dir\)=.*,\1=/lib/udev,' %buildroot%_datadir/pkgconfig/udev.pc
+sed -i 's,^\(root_prefix\)=.*,\1=,' %buildroot%_datadir/pkgconfig/systemd.pc
+sed -i 's,^\(prefix\)=.*,\1=%_prefix,' %buildroot%_datadir/pkgconfig/systemd.pc
+for d in systemd_util_dir \
+         systemd_system_preset_dir \
+         systemd_system_unit_dir \
+         systemd_system_generator_dir \
+         systemd_sleep_dir \
+         systemd_shutdown_dir \
+         tmpfiles_dir \
+         sysusers_dir \
+         sysctl_dir \
+         binfmt_dir \
+         modules_load_dir \
+         ; \
+do
+    sed -i "s,^\($d\)=\${prefix},\1=\${rootprefix}," %buildroot%_datadir/pkgconfig/systemd.pc
+done
 
 %check
 export LD_LIBRARY_PATH=$(pwd)/%{__builddir}/src/shared:$(pwd)/%{__builddir}
@@ -2496,6 +2519,10 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Sat May 25 2024 Arseny Maslennikov <arseny@altlinux.org> 1:255.6-alt2
+- Fix compatibility with packages which install files outside %%_prefix, IOW,
+  in the legacy unmerged-usr locations. (thanks to sin@)
+
 * Mon May 13 2024 Alexey Shabalin <shaba@altlinux.org> 1:255.6-alt1
 - 255.6
 - Migrate from /lib to /usr/lib (usrmerge).
