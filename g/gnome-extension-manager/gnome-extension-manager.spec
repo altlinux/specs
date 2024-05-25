@@ -1,5 +1,5 @@
 Name: gnome-extension-manager
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 
 Summary: A utility for browsing and installing GNOME Shell Extensions
@@ -56,6 +56,9 @@ With Extension Manager you can:
 %_datadir/metainfo/*.metainfo.xml
 
 %changelog
+* Sat May 25 2024 Roman Alifanov <ximper@altlinux.org> 0.5.1-alt1
+- new version 0.5.1 (with rpmrb script)
+
 * Sun Mar 31 2024 Roman Alifanov <ximper@altlinux.org> 0.5.0-alt1
 - new version 0.5.0 (with rpmrb script)
 
