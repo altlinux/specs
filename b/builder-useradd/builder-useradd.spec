@@ -1,12 +1,11 @@
 Name: builder-useradd
-Version: 1.6
+Version: 1.7
 Release: alt1
 Summary: Add user and configure hasher and gear for him/her
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
-Packager: Dmitry Terekhin <jqt4@altlinux.org>
 Requires: git-core gear hasher
-Url: https://git.altlinux.org/people/jqt4/packages/builder-useradd.git
+Url: https://git.altlinux.org/gears/b/builder-useradd.git
 BuildArch: noarch
 Source0: %name
 Source1: README.ru
@@ -35,6 +34,13 @@ install -m 644 %SOURCE2 ./
 %_sbindir/%name
 
 %changelog
+* Sat May 25 2024 Anton Midyukov <antohami@altlinux.org> 1.7-alt1
+- Add p11 repo, drop p9 repo, drop armh, ppc64le
+- setup .profile, .screenrc for live only
+- convert License field to SPDX format
+- update Url
+- cleanup Packager
+
 * Sun Dec 04 2022 Anton Midyukov <antohami@altlinux.org> 1.6-alt1
 - remove Yandex Mirror from generated apt source lists.
   Yandex Mirror is broken.
