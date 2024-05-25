@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pkgname
-Version: 2.32.1
+Version: 2.32.2
 Release: alt1
 
 Summary: HTTP library, written in Python, for human beings
@@ -58,6 +58,9 @@ rm -rf requests/cacert.pem
 %python3_sitelibdir/%{pyproject_distinfo %pkgname}/
 
 %changelog
+* Fri May 24 2024 Stanislav Levin <slev@altlinux.org> 2.32.2-alt1
+- 2.32.1 -> 2.32.2.
+
 * Tue May 21 2024 Stanislav Levin <slev@altlinux.org> 2.32.1-alt1
 - 2.31.0 -> 2.32.1.
 
