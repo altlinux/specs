@@ -1,8 +1,8 @@
 %define soversion 12
 
 Name: libwlroots
-Version: 0.17.1
-Release: alt2
+Version: 0.17.3
+Release: alt1
 
 Summary: Modular Wayland compositor library
 License: MIT
@@ -12,7 +12,7 @@ Url: https://gitlab.freedesktop.org/wlroots/wlroots
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-# Source-url: https://gitlab.freedesktop.org/wlroots/wlroots/-/archive/%version/wlroots-%version.tar.gz
+# Source-url: https://gitlab.freedesktop.org/wlroots/wlroots/-/releases/%version/downloads/wlroots-%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): meson
@@ -110,6 +110,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/wlroots.pc
 
 %changelog
+* Sat May 25 2024 Roman Alifanov <ximper@altlinux.org> 0.17.3-alt1
+- new version 0.17.3 (with rpmrb script)
+
 * Tue Feb 27 2024 Roman Alifanov <ximper@altlinux.org> 0.17.1-alt2
 - reworking package to save history of tasks in the future
 
