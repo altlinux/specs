@@ -1,6 +1,6 @@
 %define _name iplookup
 %define __name %{_name}-gtk
-%define ver_major 0.3.3
+%define ver_major 0.3.4
 %define rdn_name io.github.bytezz.IPLookup
 
 # online screenshots
@@ -8,7 +8,7 @@
 
 Name: %__name
 Version: %ver_major
-Release: alt2
+Release: alt1
 
 Summary: An IP address information search utility for the GNOME Desktop
 License: GPL-3.0-or-later
@@ -22,7 +22,7 @@ Source0: %__name-%version.tar
 
 %add_python3_path %_datadir/%_name
 
-Requires: typelib(Adw) = 1
+Requires: typelib(Adw) = 1 dconf
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson gtk4-update-icon-cache
@@ -58,6 +58,9 @@ sed -i "s/\('appstream\)-util'/\1cli'/" data/meson.build
 %doc README.*
 
 %changelog
+* Sat May 25 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt1
+- 0.3.4
+
 * Sat Apr 13 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt2
 - prepared for Sisyphus
 
