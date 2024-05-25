@@ -2,8 +2,8 @@
 %define cfg %_builddir/%name-%version/
 
 Name:    lazarus
-Version: 3.2
-Release: alt2
+Version: 3.4
+Release: alt1
 Epoch:   1
 
 Summary: Lazarus Component Library and IDE
@@ -368,6 +368,9 @@ subst 's|#!.*python$|#!%__python3|' %buildroot%_libdir/lazarus/components/GLScen
 %_libdir/libQt5Pas.so
 
 %changelog
+* Sat May 25 2024 Andrey Cherepanov <cas@altlinux.org> 1:3.4-alt1
+- New version.
+
 * Mon Mar 18 2024 Andrey Cherepanov <cas@altlinux.org> 1:3.2-alt2
 - Required gcc.
 
