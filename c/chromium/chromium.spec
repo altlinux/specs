@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        125.0.6422.76
+Version:        125.0.6422.112
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -524,6 +524,11 @@ EOF
 %_altdir/%name
 
 %changelog
+* Sat May 25 2024 Andrey Cherepanov <cas@altlinux.org> 125.0.6422.112-alt1
+- New version (125.0.6422.112).
+- Security fixes:
+  + CVE-2024-5274: Type Confusion in V8.
+
 * Wed May 22 2024 Andrey Cherepanov <cas@altlinux.org> 125.0.6422.76-alt1
 - New version (125.0.6422.76).
 - Security fixes:
