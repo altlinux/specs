@@ -2,7 +2,7 @@
 %def_without check
 
 Name:           python3-module-pymongo
-Version:        4.3.3
+Version:        4.7.2
 Release:        alt1
 
 Summary:        Python driver for MongoDB
@@ -10,8 +10,9 @@ Summary:        Python driver for MongoDB
 Group:          Development/Python3
 # All code is ASL 2.0 except bson/time64*.{c,h} which is MIT
 License:        Apache-2.0 and MIT
-URL:            http://api.mongodb.org/python
-Source0:        http://pypi.python.org/packages/source/p/pymongo/pymongo-%{version}.tar.gz
+URL:            https://pypi.org/project/pymongo
+VCS:            https://github.com/mongodb/mongo-python-driver
+Source:         %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -42,7 +43,7 @@ embedding of objects and arrays within other objects and arrays.  This package
 contains the python3 version of this module.
 
 %prep
-%setup -n pymongo-%{version}
+%setup
 
 %build
 %pyproject_build
@@ -55,19 +56,22 @@ contains the python3 version of this module.
 %tox_check_pyproject
 
 %files
-%doc LICENSE README.rst doc
+%doc LICENSE README.md doc
 %python3_sitelibdir/pymongo
 %python3_sitelibdir/%{pyproject_distinfo pymongo}
 
 %files -n python3-module-gridfs
-%doc LICENSE README.rst doc
+%doc LICENSE README.md doc
 %python3_sitelibdir/gridfs
 
 %files -n python3-module-bson
-%doc LICENSE README.rst doc
+%doc LICENSE README.md doc
 %python3_sitelibdir/bson
 
 %changelog
+* Sat May 25 2024 Grigory Ustinov <grenka@altlinux.org> 4.7.2-alt1
+- Build new version.
+
 * Tue Jan 31 2023 Grigory Ustinov <grenka@altlinux.org> 4.3.3-alt1
 - Build new version.
 
