@@ -1,10 +1,10 @@
 Name: kernel-image-rt
 %define kernel_base_version	6.1
-%define kernel_sublevel	.90
-%define kernel_rt_release	rt30
+%define kernel_sublevel	.91
+%define kernel_rt_release	rt31
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
-Release: alt2.%kernel_rt_release
+Release: alt1.%kernel_rt_release
 
 %define krelease	%release
 
@@ -607,6 +607,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat May 25 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.91-alt1.rt31
+- v6.1.91-rt31 (2024-05-24).
+
 * Wed May 15 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.1.90-alt2.rt30
 - Bumped release to pesign with the new key.
 
