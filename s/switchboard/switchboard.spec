@@ -1,41 +1,40 @@
 %def_disable snapshot
-%define ver_major 6.0
-%define api_ver 2.0
+%define ver_major 8.0
+%define api_ver 3
 
 Name: switchboard
 %define xdg_name org.pantheon.%name
-%define rdn_name io.elementary.%name
-Version: %ver_major.2
+%define rdn_name io.elementary.settings
+Version: %ver_major.0
 Release: alt1
 
 Summary: Modular Desktop Settings Hub for elementary OS
 License: LGPL-2.1
 Group: Graphical desktop/Other
-Url: https://github.com/elementary/%name
+Url: https://github.com/elementary/switchboard
+
+Vcs: https://github.com/elementary/switchboard.git
 
 %if_disabled snapshot
 Source: %url/archive/%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/elementary/switchboard.git
 Source: %name-%version.tar
 %endif
 
-Provides: %rdn_name = %version-%release
-Requires: lib%name = %version-%release
+Provides: %rdn_name = %EVR
+Requires: lib%name = %EVR
 
-%define granite_ver 5.4.0
+%define granite_ver 7.0.0
+%define adw_ver 1.4
 
 BuildRequires(pre): rpm-macros-meson rpm-build-vala
-BuildRequires: meson vala-tools gcc-c++ libappstream-glib-devel
-BuildRequires: libgranite-devel >= %granite_ver 
-BuildRequires: pkgconfig(libhandy-1)
-BuildRequires: libclutter-gtk3-devel
-BuildRequires: libgranite-vala
+BuildRequires: meson vala-tools gcc-c++ sassc
+BuildRequires: pkgconfig(granite-7) >= %granite_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
+BuildRequires: vapi(granite-7)
 
 %description
-This project is about the container app only and its library. For plugins
-that handle the settings, please refer to
-https://launchpad.net/pantheon-plugs.
+This package provides Switchboard a system settings application for Elementary OS.
 
 %package -n lib%name
 Summary: Switchboard Library
@@ -47,7 +46,7 @@ This package provides shared library needed for Switchboard to work.
 %package -n lib%name-devel
 Summary: Switchboard Library - development files
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 This package contains files that are needed to develop Switchboard plugins.
@@ -81,6 +80,9 @@ This package contains files that are needed to develop Switchboard plugins.
 %_vapidir/%name-%api_ver.vapi
 
 %changelog
+* Sat May 25 2024 Yuri N. Sedunov <aris@altlinux.org> 8.0.0-alt1
+- 8.0.0 (ported to GTK4)
+
 * Wed Jun 15 2022 Yuri N. Sedunov <aris@altlinux.org> 6.0.2-alt1
 - 6.0.2
 
