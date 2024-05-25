@@ -1,5 +1,5 @@
 Name: rbw
-Version: 1.10.0
+Version: 1.10.2
 Release: alt1
 
 Summary: Unofficial bitwarden cli
@@ -57,6 +57,9 @@ install -Dm 644 fish-completions %buildroot%_datadir/fish/vendor_completions.d/r
 %_datadir/zsh/site-functions/_rbw
 
 %changelog
+* Sat May 25 2024 Ivan Mazhukin <vanomj@altlinux.org> 1.10.2-alt1
+- new version 1.10.2 (with rpmrb script)
+
 * Wed May 08 2024 Ivan Mazhukin <vanomj@altlinux.org> 1.10.0-alt1
 - initial build for ALT Sisyphus
 
