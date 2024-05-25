@@ -1,17 +1,16 @@
-%define _unpackaged_files_terminate_build 1
 %define oname setproctitle
 
 %def_enable check
 
 Name: python3-module-%oname
-Version: 1.3.1
+Version: 1.3.3
 Release: alt1
 
 Summary: A library to allow customization of the process title
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/setproctitle/
-VCS: https://github.com/dvarrazzo/py-setproctitle.git
+URL: https://pypi.org/project/setproctitle
+VCS: https://github.com/dvarrazzo/py-setproctitle
 
 Source: %name-%version.tar
 
@@ -43,10 +42,14 @@ tools such as ps and top).
 %tox_check_pyproject -- -k "not embedded" -vra
 
 %files
-%doc *.rst
-%python3_sitelibdir/*
+%doc COPYRIGHT *.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sat May 25 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.3-alt1
+- Automatically updated to 1.3.3.
+
 * Fri Sep 16 2022 Danil Shein <dshein@altlinux.org> 1.3.1-alt1
 - new version 1.3.1
   + migrate to pyproject
