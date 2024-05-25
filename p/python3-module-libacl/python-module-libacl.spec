@@ -1,23 +1,26 @@
 %define oname libacl
 
 Name: python3-module-%oname
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 
 Summary: POSIX.1e ACLs for python
 License: LGPLv2.1+
 Group: Development/Python3
 
-URL: http://pylibacl.sourceforge.net/
+URL: https://pypi.org/project/pylibacl
+VCS: https://github.com/iustin/pylibacl
 
-#Source-url: https://pypi.io/packages/source/p/pylibacl/pylibacl-%version.tar.gz
-# Source-git: https://github.com/iustin/pylibacl.git
 Source: %name-%version.tar
 Patch: libacl-0.5.2-alt-doc.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: libacl-devel time python3-module-sphinx
+BuildRequires: libacl-devel
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-recommonmark
 
 %description
 python-libacl is a C extension module for Python which implements
@@ -36,19 +39,23 @@ ln -s ../objects.inv doc/
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make SPHINXBUILD="sphinx-build-3" doc
 
 %files
-%python3_sitelibdir/*
-%doc NEWS README.md doc/html
+%doc *.md doc/html
+%python3_sitelibdir/posix1e.cpython-*.so
+%python3_sitelibdir/pylibacl-%version.dist-info
 
 %changelog
+* Sat May 25 2024 Grigory Ustinov <grenka@altlinux.org> 0.7.0-alt1
+- Automatically updated to 0.7.0.
+
 * Mon Dec 12 2022 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt1
 - Build new version.
 
