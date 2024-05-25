@@ -1,15 +1,22 @@
+%def_enable snapshot
 %define ver_major 42
 
 Name: gnome-nettool
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GNOME interface for various networking tools
-License: GPL-2.0-only
+License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
-Url: http://www.gnome.org
+Url: https://www.gnome.org
 
+Vcs: https://gitlab.gnome.org/GNOME/gnome-nettool.git
+
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 Obsoletes: gnome-netinfo
 Provides: gnome-netinfo = %version-%release
@@ -52,6 +59,9 @@ sed -E -i "s/\('(desktop|appdata)'\,/(/" data/meson.build
 %doc README NEWS TODO ChangeLog
 
 %changelog
+* Sat May 25 2024 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt2
+- updated to 42-0-24-ge464bea
+
 * Wed Apr 06 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0 (ported to Meson build system)
 
