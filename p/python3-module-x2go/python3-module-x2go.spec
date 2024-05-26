@@ -2,9 +2,9 @@
 
 Name:    python3-module-%modulename
 Version: 0.6.1.4
-Release: alt2
+Release: alt3
 Summary: Python module providing X2Go client API
-Group:	 Communications 
+Group:   Communications
 
 License: AGPL-3.0-or-later
 URL:     https://www.x2go.org/
@@ -46,6 +46,9 @@ Python applications by providing a Python-based X2Go client API.
 %patch0 -p1
 %patch1 -p0
 
+# Hotfix for working with python3.12
+sed -i 's/SafeConfigParser/ConfigParser/g' x2go/inifiles.py
+
 %build
 %pyproject_build
 
@@ -57,6 +60,9 @@ Python applications by providing a Python-based X2Go client API.
 %python3_sitelibdir/x2go*
 
 %changelog
+* Sun May 26 2024 Grigory Ustinov <grenka@altlinux.org> 0.6.1.4-alt3
+- Fixed working with python3.12 (Closes: #49785).
+
 * Mon Oct 16 2023 Anton Vyatkin <toni@altlinux.org> 0.6.1.4-alt2
 - Dropped dependency on distutils.
 
