@@ -1,5 +1,5 @@
 Name: libxslt
-Version: 1.1.37
+Version: 1.1.39
 Release: alt1
 
 Summary: Library providing XSLT support
@@ -131,7 +131,7 @@ cat > %buildroot%_libdir/libexslt.so << '__EOF__'
 /* GNU ld script */
 GROUP(libexslt.so.0 AS_NEEDED(-lxslt))
 __EOF__
-install -pm644 AUTHORS Copyright FEATURES NEWS README %buildroot%pkgdocdir/
+install -pm644 AUTHORS Copyright FEATURES NEWS README.md %buildroot%pkgdocdir/
 
 %check
 make check
@@ -143,7 +143,7 @@ make check
 %pkgdocdir/Copyright
 %pkgdocdir/FEATURES
 %pkgdocdir/NEWS
-%pkgdocdir/README
+%pkgdocdir/README.md
 
 %files -n xsltproc
 %_bindir/xsltproc
@@ -184,6 +184,9 @@ make check
 %endif # enabled python
 
 %changelog
+* Sun May 26 2024 Arseny Maslennikov <arseny@altlinux.org> 1.1.39-alt1
+- v1.1.37 -> v1.1.39.
+
 * Tue Sep 27 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.37-alt1
 - Updated to v1.1.37.
 
