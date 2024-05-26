@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Cartridges
@@ -71,6 +71,9 @@ SteamGridDB.
 
 
 %changelog
+* Sun May 26 2024 Yuri N. Sedunov <aris@altlinux.org> 2.8.5-alt1
+- 2.8.5
+
 * Mon Apr 29 2024 Yuri N. Sedunov <aris@altlinux.org> 2.8.4-alt1
 - 2.8.4
 
