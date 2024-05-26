@@ -1,9 +1,9 @@
 %define uname   MangoHud
-%define srcname %uname-v%version-1-Source
+%define srcname %uname-v%version-Source
 %define srcpath %uname-v%version
 
 Name: mangohud
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 Summary: A Vulkan overlay layer for monitoring FPS, temperatures, CPU/GPU load and more
@@ -15,7 +15,8 @@ Source: https://github.com/flightlessmango/%uname/releases/download/v%version/%s
 
 Patch0: %name-python3.patch
 
-BuildRequires: appstream
+BuildRequires: appstream 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: git-core
 BuildRequires: glslang
@@ -27,9 +28,10 @@ BuildRequires: libspdlog-devel
 BuildRequires: libstdc++-devel-static
 BuildRequires: libvulkan-devel
 BuildRequires: libwayland-client-devel
+BuildRequires: libxkbcommon-devel
+BuildRequires: libxnvctrl-devel
 BuildRequires: meson
 BuildRequires: nlohmann-json-devel
-BuildRequires: nvidia-settings-devel
 BuildRequires: python3-dev
 BuildRequires: python3-module-mako
 
@@ -86,7 +88,8 @@ easy visual comparison between benchmarks.
 %doc LICENSE
 %_bindir/%name
 %_bindir/%{name}ctl
-%_libdir/%name/
+%dir %_libdir/%name
+%_libdir/%name/libMangoHud*.so
 %_man1dir/%name.1*
 %_datadir/icons/hicolor/scalable/*/*.svg
 %_datadir/vulkan/implicit_layer.d/*Mango*.json
@@ -95,12 +98,16 @@ easy visual comparison between benchmarks.
 
 %files -n mangoapp
 %_bindir/mangoapp
+%_libdir/%name/libMangoApp.so
 %_man1dir/mangoapp.1*
 
 %files -n mangoplot
 %_bindir/mangoplot
 
 %changelog
+* Sun May 26 2024 Nazarov Denis <nenderus@altlinux.org> 0.7.2-alt1
+- 0.7.2
+
 * Tue Feb 13 2024 Nazarov Denis <nenderus@altlinux.org> 0.7.1-alt1
 - 0.7.1
 
