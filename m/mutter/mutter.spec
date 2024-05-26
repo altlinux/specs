@@ -20,7 +20,7 @@
 %def_disable libdisplay_info
 
 Name: mutter
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 Epoch: 1
 
@@ -51,6 +51,7 @@ Source: %name-%version%beta.tar
 
 #https://lists.altlinux.org/pipermail/sisyphus-incominger/2016-October/444041.html
 
+%define drm_ver 2.4.118
 %define gtk_ver 3.20.0
 %define gtk4_ver 4.0.0
 %define gi_ver 0.9.5
@@ -111,7 +112,7 @@ BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel >= %lcms_ver
 BuildRequires: pkgconfig(libei-1.0) pkgconfig(libeis-1.0) >= %eis_ver
 %{?_enable_remote_desktop:BuildRequires: pipewire-libs-devel >= %pipewire_ver}
 # for mutter native backend
-BuildRequires: libdrm-devel libsystemd-devel libgudev-devel >= %gudev_ver
+BuildRequires: libdrm-devel >= %drm_ver libsystemd-devel libgudev-devel >= %gudev_ver
 BuildRequires: libGL-devel libGLES-devel xorg-xwayland-devel >= %xwayland_ver %_bindir/cvt
 BuildRequires: libdbus-devel
 %{?_enable_egl_device:BuildRequires: libEGL-devel}
@@ -273,6 +274,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Sun May 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1:46.2-alt1
+- 46.2
+
 * Sun Apr 21 2024 Yuri N. Sedunov <aris@altlinux.org> 1:46.1-alt1
 - 46.1
 
