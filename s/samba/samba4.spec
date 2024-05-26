@@ -121,7 +121,7 @@
 
 Name:    samba
 Version: 4.20.1
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2215,6 +2215,9 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Sun May 26 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.20.1-alt2
+- Fix clean memory for force dns canonicalize destination hostname option.
+
 * Fri May 10 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.20.1-alt1
 - Update to stable release of Samba 4.20
 - Add support separate builds generated with samba-pidl.
