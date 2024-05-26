@@ -18,8 +18,8 @@
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name: bpftrace
-Version: 0.20.3
-Release: alt2
+Version: 0.20.4
+Release: alt1
 Summary: High-level tracing language for Linux eBPF
 Group: Development/Debuggers
 License: Apache-2.0
@@ -164,6 +164,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Sun May 26 2024 Vitaly Chikunov <vt@altlinux.org> 0.20.4-alt1
+- Update to v0.20.4 (2024-05-21).
+
 * Mon Apr 22 2024 Vitaly Chikunov <vt@altlinux.org> 0.20.3-alt2
 - Fix FTBFS Do not build with Clang/LLVM 18.
 
