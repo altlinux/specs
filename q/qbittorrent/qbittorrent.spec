@@ -1,8 +1,8 @@
 %define ltr libtorrent-rasterbar-devel
-%define rel alt2
+%define rel alt1
 
 Name: qbittorrent
-Version: 4.6.4
+Version: 4.6.5
 Epoch: 1
 Release: %rel
 
@@ -132,6 +132,9 @@ desktop-file-install \
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon May 27 2024 Ilya Mashkin <oddity@altlinux.ru> 1:4.6.5-alt1
+- 4.6.5
+
 * Thu Apr 11 2024 Ilya Mashkin <oddity@altlinux.ru> 1:4.6.4-alt2
 - Build with Qt6 instead of Qt5 (Closes: #40723, #44079)
 - Add BR systemd-devel for qbittorrent-nox
