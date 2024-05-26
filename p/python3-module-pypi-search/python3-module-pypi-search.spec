@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 2.0
-Release: alt1
+Release: alt2
 
 Summary: Get Information on Python Packages From PyPI
 License: MIT
@@ -33,6 +33,8 @@ open up the PyPI website.
 %prep
 %setup -n %modulename-%version
 
+sed -i 's/os/shutil/' pypi_search/main.py
+
 %build
 %pyproject_build
 
@@ -46,6 +48,9 @@ open up the PyPI website.
 %python3_sitelibdir/%{pyproject_distinfo pypi_search}
 
 %changelog
+* Sun May 26 2024 Grigory Ustinov <grenka@altlinux.org> 2.0-alt2
+- Fixed piping output (Closes: #45069).
+
 * Wed Aug 23 2023 Andrey Cherepanov <cas@altlinux.org> 2.0-alt1
 - New version.
 
