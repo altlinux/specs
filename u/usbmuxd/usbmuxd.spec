@@ -6,17 +6,18 @@
 
 Name: usbmuxd
 Version: 1.1.1
-Release: alt1
+Release: alt1.1
 
 Summary: Daemon for communicating with Apple's iPod Touch and iPhone
 Group: System/Servers
 License: GPL-2.0 and GPL-3.0
 Url: http://www.libimobiledevice.org/
 
+Vcs: https://github.com/libimobiledevice/usbmuxd.git
+
 %if_disabled snapshot
 Source: http://www.libimobiledevice.org/downloads/%name-%version.tar.bz2
 %else
-# VCS: https://github.com/libimobiledevice/usbmuxd.git
 Source: %name-%version.tar
 %endif
 
@@ -53,16 +54,19 @@ the device to be accessed simultaneously.
 %pre
 /usr/sbin/groupadd -rf %_group ||:
 /usr/sbin/useradd -M -r -s /dev/null -c "USB Multiplex Daemon" \
-	-d %_localstatedir/empty -g %_group %_group &>/dev/null ||:
+    -d %_localstatedir/empty -g %_group %_group &>/dev/null ||:
 
 %files
 %_sbindir/usbmuxd
-/lib/udev/rules.d/39-%name.rules
+%_udevrulesdir/39-%name.rules
 %_unitdir/%name.service
 %_man8dir/%name.*
 %doc AUTHORS README* NEWS
 
 %changelog
+* Sat May 25 2024 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1.1
+- spec: used %%_udevrulesdir
+
 * Tue Jun 16 2020 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
 - 1.1.1 release
 
