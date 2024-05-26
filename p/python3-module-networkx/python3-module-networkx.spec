@@ -5,7 +5,7 @@
 Name:           python3-module-%pypi_name
 Epoch:          2
 Version:        3.3
-Release:        alt1
+Release:        alt2
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python3
 License:        BSD-3-Clause
@@ -111,6 +111,10 @@ This package contains tests for NetworkX.
 %python3_sitelibdir/%pypi_name/*/*/tests
 
 %changelog
+* Sun May 26 2024 Grigory Ustinov <grenka@altlinux.org> 2:3.3-alt2
+- Removed dependency from python3-module-networkx-core
+  to python3-module-networkx-drawing again (Closes: #39559).
+
 * Mon May 06 2024 Anton Farygin <rider@altlinux.ru> 2:3.3-alt1
 - 2.8.8 -> 3.3
 
