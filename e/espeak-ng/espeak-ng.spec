@@ -1,15 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 
+%define sover 1
+%define libname libespeak-ng%sover
+
 Name: espeak-ng
 Version: 1.51.1
-Release: alt2
+Release: alt3
 
 Summary: eSpeak NG Text-to-Speech
 
 License: GPL-3.0-or-later
 Group: Sound
 Url: https://github.com/espeak-ng/espeak-ng
-Requires: lib%name
+
 Provides: espeak = %version-%release
 Obsoletes: espeak < %version-%release
 
@@ -36,27 +39,32 @@ created by Jonathan Duddington. It uses spectral formant synthesis by default
 which sounds robotic, but can be configured to use Klatt formant synthesis
 or MBROLA to give it a more natural sound.
 
-%package -n lib%name
+%package -n %libname
 Group: Sound
 Summary: Lib files for espeak-ng
-Requires: %name = %EVR
+Provides: libespeak-ng = %EVR
+Obsoletes: libespeak-ng < %EVR
 
-%description -n lib%name
+%description -n %libname
 Lib files for espeak-ng
 
-%package -n lib%name-devel
+%package devel
 Group: Development/C++
 Summary: Development files for espeak-ng
-Requires: %name = %EVR
+Provides: libespeak-ng-devel = %EVR
+Obsoletes: libespeak-ng-devel < %EVR
+Provides: libespeak-devel = %version-%release
+Obsoletes: libespeak-devel < %version-%release
+Provides: espeak-devel = %version-%release
 
-%description -n lib%name-devel
+%description devel
 Development files for eSpeak NG, a software speech synthesizer.
 
 %package vim
 Group: Sound
 Summary: Vim syntax highlighting for espeak-ng data files
 BuildArch: noarch
-Requires: %name = %EVR
+Requires: %name
 
 %description vim
 %summary
@@ -92,11 +100,11 @@ rm -vr %buildroot%_datadir/vim/registry
 %_man1dir/speak-ng.1.xz
 %_man1dir/espeak-ng.1.xz
 
-%files -n lib%name
-%_libdir/libespeak-ng.so.1
-%_libdir/libespeak-ng.so.1.*
+%files -n %libname
+%_libdir/libespeak-ng.so.%sover
+%_libdir/libespeak-ng.so.*
 
-%files -n lib%name-devel
+%files devel
 %_pkgconfigdir/espeak-ng.pc
 %_libdir/libespeak-ng.so
 %_includedir/espeak-ng
@@ -108,6 +116,9 @@ rm -vr %buildroot%_datadir/vim/registry
 %_datadir/vim/vimfiles/syntax/espeakrules.vim
 
 %changelog
+* Mon May 27 2024 Artem Semenov <savoptik@altlinux.org> 1.51.1-alt3
+- The libespeak and libespeak-devel package has been replaced
+
 * Mon May 27 2024 Artem Semenov <savoptik@altlinux.org> 1.51.1-alt2
 - The espeak package has been replaced (ALT bug: 50440)
 
