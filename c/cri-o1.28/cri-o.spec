@@ -13,7 +13,7 @@
 %define prog_name            cri-o
 %define cri_o_major          1
 %define cri_o_minor          28
-%define cri_o_patch          4
+%define cri_o_patch          6
 
 Name: %prog_name%cri_o_major.%cri_o_minor
 Version: %cri_o_major.%cri_o_minor.%cri_o_patch
@@ -21,7 +21,7 @@ Release: alt1
 Summary: Kubernetes Container Runtime Interface for OCI-based containers
 Group: Development/Other
 License: Apache-2.0
-URL: https://%provider_prefix
+URL: https://github.com/cri-o/cri-o
 ExclusiveArch: %go_arches
 
 Source: %name-%version.tar
@@ -137,6 +137,14 @@ install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/ne
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Wed May 22 2024 Alexander Stepchenko <geochip@altlinux.org> 1.28.6-alt1
+- 1.28.4 -> 1.28.6
+- Fixes:
+  * CVE-2023-48795: golang.org/x/crypto/ssh
+  * CVE-2024-24786: google.golang.org/protobuf
+  * CVE-2024-28180: gopkg.in/go-jose/go-jose.v2
+  * CVE-2024-3154: CRI-O vulnerable to an arbitrary systemd property injection
+
 * Tue Mar 05 2024 Alexey Shabalin <shaba@altlinux.org> 1.28.4-alt1
 - 1.28.4.
 

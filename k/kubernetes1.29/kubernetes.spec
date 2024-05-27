@@ -6,8 +6,8 @@
 
 %define prog_name            kubernetes
 %define kubernetes_major     1
-%define kubernetes_minor     27
-%define kubernetes_patch     14
+%define kubernetes_minor     29
+%define kubernetes_patch     5
 
 Name: %prog_name%kubernetes_major.%kubernetes_minor
 Version: %kubernetes_major.%kubernetes_minor.%kubernetes_patch
@@ -43,8 +43,8 @@ Source27: crio.conf
 Source28: 99-kubernetes-cri.conf
 
 Patch1: runc-alt-loongarch64-support.patch
-Patch2: bbolt-alt-loongarch-support.patch
-Patch3: kubernets-alt-loongarch64-support.patch
+Patch2: kubernets-alt-loongarch64-support.patch
+Patch3: ebpf-alt-loongarch64-support.patch
 
 Provides: %prog_name = %EVR
 Conflicts: %prog_name < %EVR
@@ -393,14 +393,20 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
-* Thu May 23 2024 Alexander Stepchenko <geochip@altlinux.org> 1.27.14-alt1
-- 1.27.12 -> 1.27.14 (Fixes: CVE-2024-3177)
+* Thu May 23 2024 Alexander Stepchenko <geochip@altlinux.org> 1.29.5-alt1
+- 1.28.10 -> 1.29.5
 
-* Tue Mar 19 2024 Alexey Shabalin <shaba@altlinux.org> 1.27.12-alt1
-- 1.27.12
+* Thu May 23 2024 Alexander Stepchenko <geochip@altlinux.org> 1.28.10-alt1
+- 1.28.8 -> 1.28.10 (Fixes: CVE-2024-3177, CVE-2023-45288)
 
-* Wed Mar 06 2024 Ivan A. Melnikov <iv@altlinux.org> 1.27.11-alt1.1
+* Tue Mar 19 2024 Alexey Shabalin <shaba@altlinux.org> 1.28.8-alt1
+- 1.28.8
+
+* Wed Mar 06 2024 Ivan A. Melnikov <iv@altlinux.org> 1.28.7-alt1.1
 - NMU: loongarch64 support
+
+* Tue Mar 05 2024 Alexey Shabalin <shaba@altlinux.org> 1.28.7-alt1
+- 1.28.7
 
 * Tue Mar 05 2024 Alexey Shabalin <shaba@altlinux.org> 1.27.11-alt1
 - 1.27.11

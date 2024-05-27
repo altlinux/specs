@@ -7,16 +7,17 @@
 %define prog_name            kubernetes
 %define kubernetes_major     1
 %define kubernetes_minor     26
-%define kubernetes_patch     14
+%define kubernetes_patch     15
 
 Name: %prog_name%kubernetes_major.%kubernetes_minor
 Version: %kubernetes_major.%kubernetes_minor.%kubernetes_patch
-Release: alt1.1
+Release: alt1
 Summary: Container cluster management
 
 Group: System/Configuration/Other
 License: Apache-2.0
-Url: https://%import_path
+Url: https://kubernetes.io
+Vcs: https://github.com/kubernetes/kubernetes
 Source: %name-%version.tar
 
 
@@ -392,6 +393,9 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Thu May 23 2024 Alexander Stepchenko <geochip@altlinux.org> 1.26.15-alt1
+- 1.26.14 -> 1.26.15 (Fixes: CVE-2024-24786)
+
 * Wed Mar 06 2024 Ivan A. Melnikov <iv@altlinux.org> 1.26.14-alt1.1
 - NMU: loongarch64 support
 

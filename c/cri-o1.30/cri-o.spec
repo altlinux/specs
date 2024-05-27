@@ -12,8 +12,8 @@
 
 %define prog_name            cri-o
 %define cri_o_major          1
-%define cri_o_minor          27
-%define cri_o_patch          6
+%define cri_o_minor          30
+%define cri_o_patch          1
 
 Name: %prog_name%cri_o_major.%cri_o_minor
 Version: %cri_o_major.%cri_o_minor.%cri_o_patch
@@ -33,7 +33,7 @@ Conflicts: %prog_name > %EVR
 
 Requires: containers-common
 Requires: runc
-Requires: cni-plugins
+Requires: cni-plugins >= 1.4.0
 Requires: conntrack-tools
 Requires: iproute2
 Requires: iptables
@@ -41,7 +41,7 @@ Requires: socat
 Requires: conmon
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires(pre): golang >= 1.20
+BuildRequires(pre): golang >= 1.21
 BuildRequires: glib2-devel
 BuildRequires: glibc-devel-static
 BuildRequires: libbtrfs-devel
@@ -120,11 +120,9 @@ install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/ne
 
 %files
 %_bindir/crio
-%_bindir/crio-status
 %_bindir/pinns
 %_man5dir/crio.conf.*
 %_man8dir/crio.*
-%_man8dir/crio-status.*
 %dir %_sysconfdir/crio
 %config(noreplace) %_sysconfdir/crio/crio.conf
 %_sysconfdir/cni/net.d/100-crio-bridge.conflist.sample
@@ -137,13 +135,22 @@ install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/ne
 %_datadir/zsh/site-functions/*
 
 %changelog
-* Wed May 22 2024 Alexander Stepchenko <geochip@altlinux.org> 1.27.6-alt1
-- 1.27.4 -> 1.27.6
+* Thu May 23 2024 Alexander Stepchenko <geochip@altlinux.org> 1.30.1-alt1
+- 1.29.4 -> 1.30.1
+
+* Wed May 22 2024 Alexander Stepchenko <geochip@altlinux.org> 1.29.4-alt1
+- 1.28.6 -> 1.29.4
+
+* Wed May 22 2024 Alexander Stepchenko <geochip@altlinux.org> 1.28.6-alt1
+- 1.28.4 -> 1.28.6
 - Fixes:
   * CVE-2023-48795: golang.org/x/crypto/ssh
   * CVE-2024-24786: google.golang.org/protobuf
   * CVE-2024-28180: gopkg.in/go-jose/go-jose.v2
   * CVE-2024-3154: CRI-O vulnerable to an arbitrary systemd property injection
+
+* Tue Mar 05 2024 Alexey Shabalin <shaba@altlinux.org> 1.28.4-alt1
+- 1.28.4.
 
 * Tue Mar 05 2024 Alexey Shabalin <shaba@altlinux.org> 1.27.4-alt1
 - 1.27.4.

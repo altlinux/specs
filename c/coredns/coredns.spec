@@ -1,6 +1,6 @@
 %global import_path github.com/coredns/coredns
 Name:     coredns
-Version:  1.10.1
+Version:  1.11.1
 Release:  alt1
 
 Summary:  CoreDNS is a DNS server that chains plugins
@@ -9,6 +9,7 @@ Group:    Other
 Url:      https://github.com/coredns/coredns
 
 Source:   %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -18,6 +19,7 @@ BuildRequires: golang
 
 %prep
 %setup
+%patch -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -43,13 +45,16 @@ export IGNORE_SOURCES=1
 %golang_install
 
 %files
-%_bindir/*
+%_bindir/coredns
 %doc *.md
 %_man1dir/*
 %_man5dir/*
 %_man7dir/*
 
 %changelog
+* Sat May 25 2024 Alexander Stepchenko <geochip@altlinux.org> 1.11.1-alt1
+- 1.10.1 -> 1.11.1
+
 * Fri Nov 03 2023 Alexander Stepchenko <geochip@altlinux.org> 1.10.1-alt1
 - 1.10.0 -> 1.10.1
 

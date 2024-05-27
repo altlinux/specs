@@ -7,7 +7,7 @@
 %define prog_name            kubernetes
 %define kubernetes_major     1
 %define kubernetes_minor     28
-%define kubernetes_patch     8
+%define kubernetes_patch     10
 
 Name: %prog_name%kubernetes_major.%kubernetes_minor
 Version: %kubernetes_major.%kubernetes_minor.%kubernetes_patch
@@ -16,7 +16,8 @@ Summary: Container cluster management
 
 Group: System/Configuration/Other
 License: Apache-2.0
-Url: https://%import_path
+Url: https://kubernetes.io/
+Vcs: https://github.com/kubernetes/kubernetes
 Source: %name-%version.tar
 
 
@@ -392,6 +393,9 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Thu May 23 2024 Alexander Stepchenko <geochip@altlinux.org> 1.28.10-alt1
+- 1.28.8 -> 1.28.10 (Fixes: CVE-2024-3177, CVE-2023-45288)
+
 * Tue Mar 19 2024 Alexey Shabalin <shaba@altlinux.org> 1.28.8-alt1
 - 1.28.8
 
