@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt3
+Release: alt4
 %K5init
 
 Group: Graphical desktop/KDE
@@ -13,7 +13,8 @@ License: GPL-3.0-or-later
 ExcludeArch: %not_qt5_qtwebengine_arches
 
 Requires: kde5-akonadi
-Requires: kde5-korganizer
+Requires: kde5-akonadi-calendar
+Requires: kde5-kmail-account-wizard
 
 Source: %rname-%version.tar
 Patch0: fix-menubar-display.patch
@@ -71,6 +72,9 @@ Conflicts: kde5-pim-common < 16.12
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon May 27 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt4
+- clean requires
+
 * Tue May 14 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 23.08.5-alt3
 - fix contact save (closes: 48725)
 
