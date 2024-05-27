@@ -4,18 +4,18 @@
 
 %def_disable bootstrap
 %def_disable docs
+%def_with check
 
 %define oname mayavi
 
 Name:           Mayavi
-Version:        4.8.1.0.83.gdb518f88
+Version:        4.8.2
 Release:        alt1
 Summary:        Scientific data 3-dimensional visualizer
 
 Group:          Graphics
-License:        BSD and BSD-3-Clause and BSD-style and EPL-1.0 and LGPL and LGPLv2+ and LGPLv3+
+License:        BSD-3-Clause and EPL-1.0 and LGPL-2.1 and LGPL-3.0
 URL:            http://code.enthought.com/projects/mayavi/
-
 VCS:            https://github.com/enthought/mayavi.git
 Source:         %name-%version.tar
 Source1:        Mayavi.desktop
@@ -27,11 +27,14 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-Cython
-BuildRequires: libnumpy-py3-devel
-BuildRequires: python3-module-vtk /proc
-BuildRequires: desktop-file-utils
 BuildRequires: vtk-python3
-BuildRequires: libGL-devel libGLU-devel
+BuildRequires: libnumpy-py3-devel
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-pyface
+BuildRequires: xvfb-run
+%endif
 %if_enabled docs
 BuildRequires: python3-module-setupdocs
 BuildRequires: python3-module-sphinx-devel
@@ -171,6 +174,10 @@ ln -s %_liconsdir/mayavi2.png %buildroot%_niconsdir/
 find %buildroot%python3_sitelibdir -type f -name '*py' -exec \
 	sed -i -e '1!b' -e '/^\#\!\/usr\/bin\/env python$/d' '{}' +
 
+%check
+export ETS_TOOLKIT=null
+%pyproject_run -- xvfb-run pytest -v --pyargs mayavi
+
 %files
 %doc image_LICENSE*.txt LICENSE_COLORBREWER.txt LICENSE.txt LICENSE_YORICK.txt
 %doc DEVELOPING.rst README.rst README-tvtk.txt
@@ -206,6 +213,9 @@ find %buildroot%python3_sitelibdir -type f -name '*py' -exec \
 %endif
 
 %changelog
+* Mon May 27 2024 Anton Vyatkin <toni@altlinux.org> 4.8.2-alt1
+- New version 4.8.2.
+
 * Sun Mar 17 2024 Anton Vyatkin <toni@altlinux.org> 4.8.1.0.83.gdb518f88-alt1
 - Updated to upstream 4.8.1-83-gdb518f88.
 
