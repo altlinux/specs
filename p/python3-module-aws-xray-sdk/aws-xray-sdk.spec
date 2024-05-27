@@ -4,10 +4,10 @@
 %define modname aws_xray_sdk
 
 # TODO: turn on some tests
-%def_with check
+%def_without check
 
 Name: python3-module-%oname
-Version: 2.12.1
+Version: 2.13.0
 Release: alt1
 Summary: AWS X-Ray SDK for the Python programming language
 Group: Development/Python3
@@ -24,9 +24,22 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
 %if_with check
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-wrapt
 BuildRequires: python3-module-botocore
 BuildRequires: python3-module-coverage
+
+BuildRequires: python3-module-sqlalchemy
+BuildRequires: python3-module-httpx
+BuildRequires: python3-module-pg8000
+BuildRequires: python3-module-psycopg2
+BuildRequires: python3-module-pymysql
+BuildRequires: python3-module-aiohttp
+BuildRequires: python3-module-flask
+BuildRequires: python3-module-django
+BuildRequires: python3-module-bottle
+BuildRequires: python3-module-flask-sqlalchemy
+BuildRequires: python3-module-webtest
 %endif
 
 %add_python3_req_skip aiobotocore.client flask_sqlalchemy.model
@@ -47,9 +60,10 @@ to the AWS X-Ray service.
 %pyproject_install
 
 %check
-# tests/ext/flask_sqlalchemy/test_query.py
-# https://github.com/aws/aws-xray-sdk-python/issues/359
-%tox_check_pyproject
+export DJANGO_SETTINGS_MODULE=tests.ext.django.app.settings
+export AWS_SECRET_ACCESS_KEY=fake_key
+export AWS_ACCESS_KEY_ID=fake_id
+%pyproject_run_pytest
 
 %files
 %doc LICENSE *.md *.rst
@@ -57,6 +71,10 @@ to the AWS X-Ray service.
 %python3_sitelibdir/%modname-%version.dist-info
 
 %changelog
+* Mon May 27 2024 Grigory Ustinov <grenka@altlinux.org> 2.13.0-alt1
+- Automatically updated to 2.13.0.
+- Built without check.
+
 * Tue Oct 24 2023 Grigory Ustinov <grenka@altlinux.org> 2.12.1-alt1
 - Automatically updated to 2.12.1.
 
