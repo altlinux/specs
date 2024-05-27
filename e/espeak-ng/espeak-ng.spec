@@ -2,7 +2,7 @@
 
 Name: espeak-ng
 Version: 1.51.1
-Release: alt1
+Release: alt2
 
 Summary: eSpeak NG Text-to-Speech
 
@@ -10,6 +10,8 @@ License: GPL-3.0-or-later
 Group: Sound
 Url: https://github.com/espeak-ng/espeak-ng
 Requires: lib%name
+Provides: espeak = %version-%release
+Obsoletes: espeak < %version-%release
 
 Source: %name-%version.tar
 
@@ -25,7 +27,7 @@ BuildRequires: pcaudiolib-devel
 
 # Backported from:
 # https://github.com/espeak-ng/espeak-ng/commit/58f1e0b6a4e6aa55621c6f01118994d01fd6f68c
-Patch0: %name-%version-CVE-2023-49990-4.patch
+Patch: %name-%version-CVE-2023-49990-4.patch
 
 %description
 The eSpeak NG (Next Generation) Text-to-Speech program is an open source speech
@@ -76,10 +78,6 @@ rm -rf src/include/compat/endian.h src/compat/getopt.c android/
 rm -vf %buildroot%_libdir/libespeak-ng-test.so*
 rm -vf %buildroot%_libdir/*.{a,la}
 
-# Remove files conflicting with espeak
-rm -v %buildroot%_bindir/{speak,espeak}
-rm -vr %buildroot%_includedir/espeak
-
 # Move Vim files
 mv %buildroot%_datadir/vim/addons %buildroot%_datadir/vim/vimfiles
 rm -vr %buildroot%_datadir/vim/registry
@@ -88,6 +86,8 @@ rm -vr %buildroot%_datadir/vim/registry
 %doc COPYING COPYING.* README.md CHANGELOG.md
 %_bindir/speak-ng
 %_bindir/espeak-ng
+%_bindir/speak
+%_bindir/espeak
 %_datadir/espeak-ng-data
 %_man1dir/speak-ng.1.xz
 %_man1dir/espeak-ng.1.xz
@@ -100,6 +100,7 @@ rm -vr %buildroot%_datadir/vim/registry
 %_pkgconfigdir/espeak-ng.pc
 %_libdir/libespeak-ng.so
 %_includedir/espeak-ng
+%_includedir/espeak
 
 %files vim
 %_datadir/vim/vimfiles/ftdetect/espeakfiletype.vim
@@ -107,6 +108,9 @@ rm -vr %buildroot%_datadir/vim/registry
 %_datadir/vim/vimfiles/syntax/espeakrules.vim
 
 %changelog
+* Mon May 27 2024 Artem Semenov <savoptik@altlinux.org> 1.51.1-alt2
+- The espeak package has been replaced (ALT bug: 50440)
+
 * Tue Mar 19 2024 Artem Semenov <savoptik@altlinux.org> 1.51.1-alt1
 - Initial build for ALT Sisyphus (ALT bug: 49726)
   + (fixes: CVE-2023-49990 CVE-2023-49991 CVE-2023-49992 CVE-2023-49993 CVE-2023-49994)
