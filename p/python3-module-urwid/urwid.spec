@@ -1,24 +1,36 @@
-%define _unpackaged_files_terminate_build 1
 %define oname urwid
 
+%def_with check
+
 Name: python3-module-urwid
-Version: 2.3.4
+Version: 2.6.12
 Release: alt1
 
 Summary: Urwid is a console user interface library for Python.
 
 License: LGPLv2.1
 Group: Development/Python3
-Url: http://excess.org/urwid
+URL: https://pypi.org/project/urwid
+VCS: https://github.com/urwid/urwid
 
-# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-intro >= 2.1.3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools-scm
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: /dev/pts
+BuildRequires: python3-module-typing-extensions
+BuildRequires: python3-module-wcwidth
+BuildRequires: python3-module-coverage
+BuildRequires: python3-modules-curses
+%endif
 
 %py3_provides %oname
+
+BuildArch:     noarch
 
 %description
 Urwid is a console user interface library for Python. Urwid is released
@@ -42,18 +54,25 @@ useful for text console application developers:
 %setup
 
 %build
-%add_optflags -fno-strict-aliasing
-%python3_build_debug
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%tox_check_pyproject
 
 %files
 %doc *.rst examples
-%python3_sitelibdir/*
-
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sat May 25 2024 Grigory Ustinov <grenka@altlinux.org> 2.6.12-alt1
+- Build new version.
+- Build with check.
+
 * Sun Jan 14 2024 Grigory Ustinov <grenka@altlinux.org> 2.3.4-alt1
 - Build new version for python3.12.
 

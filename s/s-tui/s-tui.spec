@@ -1,6 +1,6 @@
 Name: s-tui
 Version: 1.1.4
-Release: alt1
+Release: alt1.1
 
 Summary: CPU performance monitoring and testing
 Summary(ru_RU.UTF-8): Мониторинг и тестирование производительности процессора
@@ -65,6 +65,9 @@ Raspberry-Pi 4,3,2,1. Все показания снимаются с датчи
 find s_tui/ -name "*.py" -exec sed -i 's|#!%_bindir/env python|#%_bindir/python3|' {} ";"
 find s_tui/ -name "*.py" -exec sed -i 's|#!%_bindir/python|#%_bindir/python3|' {} ";"
 
+# https://github.com/urwid/urwid/pull/655/commits
+sed -i 's/curses_display/display.curses/g' s_tui/s_tui.py
+
 %build
 %pyproject_build
 
@@ -78,5 +81,8 @@ find s_tui/ -name "*.py" -exec sed -i 's|#!%_bindir/python|#%_bindir/python3|' {
 %python3_sitelibdir_noarch/s_tui-%version.dist-info
 
 %changelog
+* Sat May 25 2024 Grigory Ustinov <grenka@altlinux.org> 1.1.4-alt1.1
+- NMU: fix working with new urwid
+
 * Thu Mar 02 2023 Evgeny Chuck <koi@altlinux.org> 1.1.4-alt1
 - new version (1.1.4) with rpmgs script
