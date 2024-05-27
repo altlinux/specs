@@ -9,7 +9,7 @@
 
 Name: python3-module-%pypi_name
 Epoch: 1
-Version: 69.5.1
+Version: 70.0.0
 Release: alt1
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -175,6 +175,9 @@ cp -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
 %system_wheels_path/setuptools-%version-*.whl
 
 %changelog
+* Fri May 24 2024 Stanislav Levin <slev@altlinux.org> 1:70.0.0-alt1
+- 69.5.1 -> 70.0.0.
+
 * Mon Apr 15 2024 Stanislav Levin <slev@altlinux.org> 1:69.5.1-alt1
 - 69.2.0 -> 69.5.1.
 
