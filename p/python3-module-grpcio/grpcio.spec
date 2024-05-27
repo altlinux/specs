@@ -5,7 +5,7 @@
 %define oname grpcio
 
 Name: python3-module-%oname
-Version: 1.60.0
+Version: 1.64.0
 Release: alt1
 Summary: HTTP/2-based RPC framework
 License: Apache-2.0
@@ -13,21 +13,19 @@ Group: Development/Python3
 Url: https://pypi.org/project/grpcio
 
 Source: %oname-%version.tar
-Patch: 6f663b3da872704ea0be234c364bf482a0a4977b.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ zlib-devel libcares-devel
 BuildRequires: libssl-devel
 BuildRequires: libre2-devel
 BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3(Cython) python3(six)
+BuildRequires: python3(Cython) python3(six) python3(wheel)
 
 %description
 HTTP/2-based RPC framework.
 
 %prep
 %setup -n %oname-%version
-%patch -p1
 %ifarch %e2k
 # EDG frontend fails at this
 sed -i "/static_assert(value.empty()/{N;d}" third_party/abseil-cpp/absl/strings/internal/string_constant.h
@@ -41,14 +39,16 @@ rm -rf third_party/re2
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags -Wno-return-type
 
+export GRPC_PYTHON_CFLAGS="%optflags"
 export GRPC_PYTHON_BUILD_WITH_CYTHON=1
 export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=1
 export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
 export GRPC_PYTHON_BUILD_SYSTEM_CARES=1
 export GRPC_PYTHON_BUILD_SYSTEM_RE2=1
 
-%python3_build_debug
+%pyproject_build
 
 %install
 export GRPC_PYTHON_BUILD_WITH_CYTHON=1
@@ -57,7 +57,7 @@ export GRPC_PYTHON_BUILD_SYSTEM_ZLIB=1
 export GRPC_PYTHON_BUILD_SYSTEM_CARES=1
 export GRPC_PYTHON_BUILD_SYSTEM_RE2=1
 
-%python3_install
+%pyproject_install
 
 %check
 export GRPC_PYTHON_BUILD_WITH_CYTHON=1
@@ -73,6 +73,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Wed May 22 2024 Ajrat Makhmutov <rauty@altlinux.org> 1.64.0-alt1
+- Updated to upstream version 1.64.0.
+
 * Tue Dec 19 2023 Grigory Ustinov <grenka@altlinux.org> 1.60.0-alt1
 - Updated to upstream version 1.60.0.
 
