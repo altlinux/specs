@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: A simple Python wheel builder for simple projects
@@ -67,6 +67,9 @@ whey:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon May 27 2024 Anton Zhukharev <ancieg@altlinux.org> 0.1.1-alt1
+- Updated to 0.1.1.
+
 * Thu Apr 11 2024 Anton Zhukharev <ancieg@altlinux.org> 0.1.0-alt1
 - Updated to 0.1.0.
 
