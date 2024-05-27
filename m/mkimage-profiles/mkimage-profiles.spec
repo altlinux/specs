@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.6.4
+Version: 1.6.5
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -134,6 +134,11 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon May 27 2024 Anton Midyukov <antohami@altlinux.org> 1.6.5-alt1
+- live: do not cleanup docs
+- init: add systemd-sysvinit or sysvinit to altinst
+- live-install: do not add live installer step, when is not needed
+
 * Wed May 08 2024 Anton Midyukov <antohami@altlinux.org> 1.6.4-alt1
 - live: disable ldconfig.service by using livecd-no-ldconfig.service
   (Closes: 40802)
