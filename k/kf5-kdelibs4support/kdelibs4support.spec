@@ -4,7 +4,7 @@
 %add_findreq_skiplist %_libdir/cmake/*.py
 
 Name: kf5-%rname
-Version: 5.115.0
+Version: 5.116.0
 Release: alt1
 %K5init altplace
 
@@ -136,6 +136,9 @@ rm -rf %buildroot/%_libdir/cmake/KF5KDELibs4Support/FindSIP.*
 %_K5lib/libKF5KDELibs4Support.so.*
 
 %changelog
+* Thu May 23 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt1
+- new version
+
 * Mon Feb 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.115.0-alt1
 - new version
 

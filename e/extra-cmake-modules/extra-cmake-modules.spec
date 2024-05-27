@@ -13,14 +13,14 @@
 %add_python3_req_skip clang
 %add_python3_req_skip clang.cindex
 %endif
-%add_python3_req_skip PyQt5.Qt
+%add_python3_req_skip PyQt6.Qt
 
 AutoReq: yes, nopython
 AutoProv: yes, nopython nopython3
 %add_python3_path %_datadir/ECM/find-modules
 
 Name: extra-cmake-modules
-Version: 5.115.0
+Version: 6.2.0
 Release: alt1
 
 Group: Development/Other
@@ -42,11 +42,8 @@ Patch2: alt-fix-python-install-dirs.patch
 Patch3: alt-find-clang-library.patch
 Patch4: alt-remove-c90.patch
 
-# Automatically added by buildreq on Thu Nov 17 2016 (-bi)
-# optimized out: bzr cmake-modules fontconfig libqt4-clucene libqt4-core libqt4-devel libqt4-gui libqt4-help libqt4-network libqt4-sql libqt4-sql-sqlite policycoreutils python-base python-module-4Suite-XML python-module-IPy python-module-PyStemmer python-module-Pygments python-module-babel python-module-cffi python-module-cssselect python-module-docutils python-module-enum34 python-module-google python-module-httplib2 python-module-imagesize python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-mimeparse python-module-numpy python-module-pyasn1 python-module-pygobject3 python-module-pytz python-module-serial python-module-setuptools python-module-six python-module-slip python-module-snowballstemmer python-module-sphinx python-module-twisted-core python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-logging python-modules-multiprocessing python-modules-unittest python3 python3-base rpm-build-python3 ruby xz
-#BuildRequires: cmake ctags dblatex gyp libicu56 openbabel python-module-BeautifulSoup python-module-Pillow python-module-Reportlab python-module-alabaster python-module-bzr-fastimport python-module-cups python-module-ecdsa python-module-ed25519 python-module-html5lib python-module-nss python-module-polib python-module-pyExcelerator python-module-pycrypto python-module-pygraphviz python-module-pyparsing python-module-sphinx_rtd_theme python-modules-tkinter python3-dev rpm-build-gir ruby-stdlibs time
 BuildRequires(pre): rpm-build-python3
-BuildRequires: cmake qt5-tools qt5-tools-devel
+BuildRequires: cmake qt6-tools qt6-tools-devel
 %if_enabled doc
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 %endif
@@ -64,10 +61,10 @@ Additional modules for CMake build system needed by KDE Frameworks.
 
 # can't do %%ifarch here becouse noarch build
 if [ "$(arch)" = "e2k" ]; then
-	# kf5-kcoreaddons linking warning gets fatal otherwise (mcst#3675)
+	# kf6-kcoreaddons linking warning gets fatal otherwise (mcst#3675)
 	sed -i 's|-Wl,--fatal-warnings|-Wl,--no-warn-shared-textrel|' \
 		kde-modules/KDECompilerSettings.cmake
-	# kf5-ki18n ftbfs with -Werror=missing-return (mcst#7001)
+	# kf6-ki18n ftbfs with -Werror=missing-return (mcst#7001)
 	sed -i 's|-Werror|-Wno-error|g' \
 		kde-modules/KDECompilerSettings.cmake
 fi
@@ -90,7 +87,14 @@ fi
 %doc %_man7dir/*
 %endif
 
+
 %changelog
+* Mon May 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.0-alt1
+- new version (closes: 50202)
+
+* Mon Apr 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.0-alt1
+- new version
+
 * Mon Feb 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.115.0-alt1
 - new version
 

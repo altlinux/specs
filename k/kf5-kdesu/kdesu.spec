@@ -3,7 +3,7 @@
 %define kdesu_user_dir %_localstatedir/%kdesu_user
 
 Name: kf5-%rname
-Version: 5.115.0
+Version: 5.116.0
 Release: alt1
 %K5init altplace
 
@@ -93,6 +93,9 @@ mkdir -p %buildroot/%kdesu_user_dir
 %_K5lib/libKF5Su.so.*
 
 %changelog
+* Thu May 23 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt1
+- new version
+
 * Mon Feb 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.115.0-alt1
 - new version
 

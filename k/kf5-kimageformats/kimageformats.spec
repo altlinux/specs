@@ -2,7 +2,7 @@
 %def_enable heif
 
 Name: kf5-%rname
-Version: 5.115.0
+Version: 5.116.0
 Release: alt1
 %K5init altplace
 
@@ -69,6 +69,9 @@ Requires: kf5-filesystem
 
 
 %changelog
+* Thu May 23 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt1
+- new version
+
 * Mon Feb 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.115.0-alt1
 - new version
 
