@@ -1,6 +1,6 @@
 Name: installer-alterator-pkg
 Version: 3.1.5
-Release: alt1
+Release: alt2
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
 %add_findreq_skiplist %_datadir/install2/initinstall.d/*
@@ -57,6 +57,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Tue May 21 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 3.1.5-alt2
+- disable edit for group details textbox (Closes: 45939)
+
 * Tue May 14 2024 Ajrat Makhmutov <rauty@altlinux.org> 3.1.5-alt1
 - write the amount of space needed to a file in bytes
 - add the ability to select additional packages before partitioning the disks
