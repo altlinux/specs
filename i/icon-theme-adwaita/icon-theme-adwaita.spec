@@ -3,7 +3,7 @@
 %define beta %nil
 
 Name: icon-theme-adwaita
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Adwaita icon theme
@@ -43,6 +43,9 @@ Adwaita icon theme for GTK.
 %doc AUTHORS NEWS COPYING
 
 %changelog
+* Mon May 27 2024 Yuri N. Sedunov <aris@altlinux.org> 46.2-alt1
+- 46.2
+
 * Mon Mar 18 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 
