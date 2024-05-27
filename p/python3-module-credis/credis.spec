@@ -1,23 +1,23 @@
 %define oname credis
 
 Name: python3-module-%oname
-Version: 1.0.5
-Release: alt2
+Version: 2.0.2
+Release: alt1
 
 Summary: High performance redis client implemented with cython
 License: Free
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/credis/
+URL: https://pypi.org/project/credis
+VCS: https://github.com/yihuang/credis
 
-# https://github.com/yihuang/credis.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-Cython
+BuildRequires: python3-module-poetry
 
 %py3_provides %oname
 %py3_requires hiredis
-
 
 %description
 Minimal redis client written in cython, 5X faster than redis-py.
@@ -25,22 +25,21 @@ Minimal redis client written in cython, 5X faster than redis-py.
 %prep
 %setup
 
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
-
 %build
-%add_optflags -fno-strict-aliasing
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc *.rst benchmark test
-%python3_sitelibdir/*
-
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon May 27 2024 Grigory Ustinov <grenka@altlinux.org> 2.0.2-alt1
+- Build new version.
+
 * Fri Nov 29 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.5-alt2
 - python2 disabled
 
