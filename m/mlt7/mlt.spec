@@ -19,7 +19,7 @@
 
 Name: %nam%mlt_major
 Version: 7.22.0
-Release: alt3
+Release: alt4
 %K5init no_altplace
 
 Summary: Multimedia framework designed for television broadcasting
@@ -126,8 +126,10 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
     -DMOD_OPENCV=%{?_enable_opencv:ON}%{!?_enable_opencv:OFF} \
     -DMOD_QT=ON \
     -DMOD_QT6=ON \
+%ifnarch %e2k
     -DMOD_GLAXNIMATE=ON \
     -DMOD_GLAXNIMATE_QT6=ON \
+%endif
     #
 
 %install
@@ -164,6 +166,9 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
 %_pkgconfigdir/mlt++-%mlt_major.pc
 
 %changelog
+* Sun May 26 2024 Michael Shigorin <mike@altlinux.org> 7.22.0-alt4
+- E2K: skip glaxnimate for now (ftbfs with lcc 1.27.14)
+
 * Tue Mar 12 2024 Sergey V Turchin <zerg@altlinux.org> 7.22.0-alt3
 - build with Qt6
 
