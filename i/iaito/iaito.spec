@@ -1,5 +1,5 @@
 Name: iaito
-Version: 5.9.0
+Version: 5.9.2
 Release: alt1
 
 Summary: GUI for radare2
@@ -43,6 +43,9 @@ install -pm0644 -D src/iaito.1 %buildroot%_man1dir/iaito.1
 %_man1dir/iaito.1*
 
 %changelog
+* Mon May 27 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 5.9.2-alt1
+- 5.9.2 released
+
 * Mon Apr 01 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 5.9.0-alt1
 - 5.9.0 released
 

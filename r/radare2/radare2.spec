@@ -1,6 +1,6 @@
 Name: radare2
-Version: 5.9.0
-Release: alt2
+Version: 5.9.2
+Release: alt1
 
 Summary: A reverse engineering framework
 License: LGPL-3.0-or-later
@@ -69,6 +69,9 @@ cp -r libr/include/heap %buildroot%_includedir/libr
 %_includedir/libr
 
 %changelog
+* Mon May 27 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 5.9.2-alt1
+- 5.9.2 released
+
 * Thu Apr 11 2024 Alexey Shabalin <shaba@altlinux.org> 5.9.0-alt2
 - BR: capstone-devel -> libcapstone-devel, openssl-devel -> libssl-devel
 
