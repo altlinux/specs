@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20240510
+Version: 20240519
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -94,6 +94,10 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/mellanox
 
 %changelog
+* Mon May 27 2024 Cronbuild Service <cronbuild@altlinux.org> 20240519-alt1
+- upstream changes (GIT ec8627ef):
+  + amdgpu: add new ISP 4.1.1 firmware (thx Pratap Nirujogi)
+
 * Sun May 12 2024 Cronbuild Service <cronbuild@altlinux.org> 20240510-alt1
 - upstream changes (GIT b9d2bf23):
   + amdgpu: DMCUB updates for various AMDGPU ASICs (thx Alex Hung)
