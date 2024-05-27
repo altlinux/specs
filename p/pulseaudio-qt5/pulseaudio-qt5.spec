@@ -1,10 +1,10 @@
 %define rname pulseaudio-qt
 
-%define sover 4
+%define sover 5
 %define libkf5pulseaudioqt libkf5pulseaudioqt%sover
 
 Name: pulseaudio-qt5
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 
 Group: System/Libraries
@@ -58,6 +58,9 @@ Summary: %name library
 %_pkgconfigdir/KF5PulseAudioQt.pc
 
 %changelog
+* Mon May 27 2024 Sergey V Turchin <zerg@altlinux.org> 1.5.0-alt1
+- new version
+
 * Wed Jan 10 2024 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt1
 - new version
 
