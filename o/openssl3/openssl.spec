@@ -3,7 +3,7 @@
 
 Name: openssl3
 Version: 3.1.5
-Release: alt2
+Release: alt3
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: Apache-2.0
@@ -31,7 +31,7 @@ Provides: libcrypto = %version-%release
 Provides: openssl-providers = %EVR
 Obsoletes: openssl-providers < %EVR
 # due to openssl.cnf
-Conflicts: libcrypto7, libssl7, libssl6 < 0.9.8d-alt6, libcrypto10 < 1.0.3, libcrypto1.1 <= 1.1.1u-alt1
+Conflicts: libcrypto7, libssl7, libssl6 < 0.9.8d-alt6, libcrypto10 < 1.0.3, libcrypto1.1 <= 1.1.1w-alt1
 # due to openssldir migration
 Conflicts: openssl < 0:0.9.8d-alt1
 # due to runtime openssl version check
@@ -384,6 +384,9 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Mon May 27 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.5-alt3
+- Updated Conflicts: with libcrypto1.1.
+
 * Fri Mar 22 2024 Stanislav Levin <slev@altlinux.org> 3.1.5-alt2
 - Backported upstream fix for https://github.com/openssl/openssl/issues/22508.
 
