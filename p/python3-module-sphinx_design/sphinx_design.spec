@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.6.0
-Release: alt1
+Release: alt2
 Summary: A sphinx extension for designing beautiful, view size responsive web components
 License: MIT
 Group: Development/Python3
@@ -16,6 +16,9 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 %pyproject_runtimedeps_metadata
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
@@ -47,6 +50,9 @@ BuildRequires: python3-module-sphinx-tests
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon May 27 2024 Stanislav Levin <slev@altlinux.org> 0.6.0-alt2
+- Mapped PyPI name to distro's one.
+
 * Mon May 27 2024 Stanislav Levin <slev@altlinux.org> 0.6.0-alt1
 - 0.2.0 -> 0.6.0.
 
