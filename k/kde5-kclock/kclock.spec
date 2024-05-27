@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -16,6 +16,7 @@ Requires: %name-common
 Source: %rname-%version.tar
 Patch1: alt-bindir.patch
 Patch2: alt-clean-countries.patch
+Patch3: alt-buttons-size.patch
 
 # Automatically added by buildreq on Fri Aug 27 2021 (-bi)
 # optimized out: cmake cmake-modules debugedit elfutils fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 kf5-kconfig-devel kf5-kcoreaddons-common kf5-kcoreaddons-devel kf5-kjobwidgets-common kf5-kwidgetsaddons-common kf5-kwindowsystem-devel libctf-nobfd0 libdbusmenu-qt52 libglvnd-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-printsupport libqt5-qml libqt5-qmlmodels libqt5-quick libqt5-quickcontrols2 libqt5-quicktemplates2 libqt5-sql libqt5-svg libqt5-test libqt5-texttospeech libqt5-waylandclient libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstdc++-devel libwayland-client libwayland-cursor libxcbutil-keysyms python-modules python2-base python3 python3-base python3-module-paste qt5-base-common qt5-base-devel qt5-declarative-devel rpm-build-file rpm-build-python3 rpm-build-qml rpm-macros-python sh4 tzdata
@@ -58,6 +59,7 @@ Requires: %name-common
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %K5build
@@ -86,6 +88,9 @@ Requires: %name-common
 
 
 %changelog
+* Mon May 27 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 23.08.5-alt2
+- adjust buttons sizes to fit translations (closes: 48206)
+
 * Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
