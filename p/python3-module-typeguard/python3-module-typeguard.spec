@@ -1,9 +1,9 @@
 %define oname typeguard
 
-%def_without check
+%def_with check
 
 Name: python3-module-typeguard
-Version: 4.2.1
+Version: 4.3.0
 Release: alt1
 Summary: Run-time type checker for Python
 License: MIT
@@ -49,6 +49,10 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon May 27 2024 Grigory Ustinov <grenka@altlinux.org> 4.3.0-alt1
+- Automatically updated to 4.3.0.
+- Build with check.
+
 * Sun May 19 2024 Grigory Ustinov <grenka@altlinux.org> 4.2.1-alt1
 - Automatically updated to 4.2.1.
 
