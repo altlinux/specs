@@ -2,7 +2,7 @@
 %def_enable snapshot
 
 %define _name Tangram
-%define ver_major 3.0
+%define ver_major 3.1
 %define beta %nil
 %define rdn_name re.sonny.Tangram
 %define mozjs_ver 115
@@ -13,11 +13,12 @@ Release: alt1%beta
 
 Summary: Browser for pinned tabs
 License: GPL-3.0
-Group: Office
+Group: Networking/WWW
 Url: https://apps.gnome.org/Tangram
 
-%if_disabled snapshot
 Vcs: https://github.com/sonnyp/Tangram.git
+
+%if_disabled snapshot
 Source: https://github.com/sonnyp/Tangram/archive/v%version/%name-%version%beta.tar.gz
 %else
 Source: %name-%version.tar
@@ -80,6 +81,9 @@ sed -i 's|\(^#!/usr/bin/\)env -S \(gjs -m\)|\1\2|' src/bin.js
 
 
 %changelog
+* Mon May 27 2024 Yuri N. Sedunov <aris@altlinux.org> 3.1-alt1
+- 3.1
+
 * Mon Nov 13 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt1
 - first build for Sisyphus (v3.0-1-g7de723e)
 
