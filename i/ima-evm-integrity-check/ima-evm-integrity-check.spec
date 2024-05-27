@@ -2,7 +2,7 @@
 %def_without old_make_initrd
 
 Name: ima-evm-integrity-check
-Version: 0.7.3
+Version: 0.7.4
 Release: alt1
 
 Summary: IMA/EVM integrity check
@@ -98,6 +98,12 @@ Integrity check feature for make-initrd
 %endif
 
 %changelog
+* Mon May 27 2024 Paul Wolneykien <manowar@altlinux.org> 0.7.4-alt1
+- Fix file signing log output: stderr or file.
+- Fix log of errors when signing the files.
+- Write log to /var/log/integrity-sign.log by default.
+- Add --log-stderr option.
+
 * Wed May 22 2024 Paul Wolneykien <manowar@altlinux.org> 0.7.3-alt1
 - Fix: Combine x509 certificate and private key in one file for
   signing.
