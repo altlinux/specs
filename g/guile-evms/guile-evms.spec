@@ -1,6 +1,6 @@
 Name: guile-evms
-Version: 0.6.5
-Release: alt5
+Version: 0.6.6
+Release: alt1
 
 Summary: Guile bindings for EVMS
 License: GPLv2
@@ -41,6 +41,9 @@ make install DESTDIR=%buildroot
 %guile_godir/evms.go
 
 %changelog
+* Mon May 27 2024 Oleg Solovyov <mcpain@altlinux.org> 0.6.6-alt1
+- remove /usr from mountpoints
+
 * Wed Jan 24 2024 Oleg Solovyov <mcpain@altlinux.org> 0.6.5-alt5
 - evms_*_replace was removed in evms 2.5.5-alt76
 - allow /boot inside LVM (Closes: #49698)
