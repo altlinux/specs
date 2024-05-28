@@ -1,13 +1,13 @@
 
 Name: maliit-keyboard
 Version: 2.3.1
-Release: alt3
+Release: alt4
 %K5init no_altplace
 
 Group: System/Libraries
 Summary: Virtual Keyboard
 License: LGPL-3.0-only and BSD
-Url: http://www.maliit.org
+Url: https://maliit.github.io/
 
 Provides: maliit-plugins = %version
 Obsoletes: maliit-plugins < %version
@@ -64,6 +64,9 @@ rm -rf %buildroot/%_defaultdocdir/maliit-plugins/html
 %_datadir/glib-2.0/schemas/org.maliit.keyboard.maliit.gschema.xml
 
 %changelog
+* Tue May 28 2024 Sergey V Turchin <zerg@altlinux.org> 2.3.1-alt4
+- update package url
+
 * Mon Oct 02 2023 Sergey V Turchin <zerg@altlinux.org> 2.3.1-alt3
 - fix to fix to launch settings
 
