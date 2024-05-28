@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 24.02.2
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -14,6 +14,7 @@ Url: http://www.kde.org
 License: LGPL-2.1-only OR LGPL-3.0-only
 
 Source: %rname-%version.tar
+Patch1: alt-headers-place.patch
 
 #BuildRequires: extra-cmake-modules qt5-base-devel
 #BuildRequires: libsane-devel
@@ -56,6 +57,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build \
@@ -82,6 +84,9 @@ KF5 library
 %_K5lib/libKSaneCore.so.*
 
 %changelog
+* Tue May 28 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.2-alt2
+- fix headers placement
+
 * Thu May 02 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.2-alt1
 - new version
 
