@@ -2,11 +2,12 @@
 
 Name: polkit
 Version: 124
-Release: alt1
+Release: alt2
 
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
 Group: System/Libraries
+
 URL: http://www.freedesktop.org/wiki/Software/PolicyKit
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
@@ -70,7 +71,8 @@ Group: System/Libraries
 BuildArch: noarch
 
 %description default-rules
-contains a configuration file that describes that a user in the wheel group is an administrator
+Contains a configuration file that describes that a user in the wheel group
+is an administrator.
 
 %prep
 %setup
@@ -79,9 +81,6 @@ contains a configuration file that describes that a user in the wheel group is a
 touch ChangeLog
 
 %build
-%ifarch %e2k
-%add_optflags -std=gnu++11
-%endif
 %meson \
 	-D authfw=pam \
 	-D examples=false \
@@ -143,6 +142,10 @@ touch ChangeLog
 %_girdir/*.gir
 
 %changelog
+* Tue May 28 2024 Michael Shigorin <mike@altlinux.org> 124-alt2
+- E2K: drop a kludge for old lcc (see 0.115-alt2)
+- minor spec cleanup
+
 * Thu Feb 08 2024 Valery Inozemtsev <shrek@altlinux.ru> 124-alt1
 - 124
 - new subpackage polkit-default-rules containing 50-default.rules
