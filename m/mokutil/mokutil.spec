@@ -1,21 +1,21 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: mokutil
-Version: 0.5.0
+Version: 0.7.1
 Release: alt1
 Epoch: 1
 
-Summary: Tool to manage UEFI Secure Boot MoK Keys
+Summary: The utility to manipulate machine owner keys
 License: GPLv3+
 Group: System/Kernel and hardware
 Url: https://github.com/lcp/mokutil
-#Git: https://github.com/lcp/mokutil.git
 Source: %name-%version.tar
 
 BuildRequires: gnu-efi
 BuildRequires: efivar-devel
-BuildRequires: efivar
 BuildRequires: openssl-devel
-BuildRequires: openssl
 BuildRequires: libkeyutils-devel
+
 Conflicts: shim0.4-unsigned
 
 ExclusiveArch: x86_64
@@ -42,6 +42,9 @@ make PREFIX=%prefix LIBDIR=%_libdir DESTDIR=%buildroot install
 %_datadir/bash-completion/completions/mokutil
 
 %changelog
+* Tue May 28 2024 Egor Ignatov <egori@altlinux.org> 1:0.7.1-alt1
+- new version
+
 * Tue Jul 27 2021 Nikolai Kostrigin <nickel@altlinux.org> 1:0.5.0-alt1
 - new version
   + spec: add libkeyutils-devel to BR
