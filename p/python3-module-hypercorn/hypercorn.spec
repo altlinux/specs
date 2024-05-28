@@ -4,21 +4,21 @@
 %define mod_name %pypi_nname
 
 %define add_python_extra() \
-%{expand:%%package -n %%name+%{1} \
+%{expand:%%package -n %%name+%1 \
 Summary: %%summary \
 Group: Development/Python3 \
 Requires: %%name \
-%{expand:%%pyproject_runtimedeps_metadata -- --extra %{1}} \
-%%description -n %%name+%{1}' \
-Extra "%{1}" for %%pypi_name. \
-%%files -n %%name+%{1} \
+%{expand:%%pyproject_runtimedeps_metadata -- --extra %1} \
+%%description -n %%name+%1' \
+Extra "%1" for %%pypi_name. \
+%%files -n %%name+%1 \
 }
 
 %def_with check
 
 Name: python3-module-%pypi_nname
-Version: 0.16.0
-Release: alt2
+Version: 0.17.2
+Release: alt1
 Summary: A ASGI Server based on Hyper libraries
 License: MIT
 Group: Development/Python3
@@ -75,6 +75,9 @@ using the aioquic library.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue May 28 2024 Stanislav Levin <slev@altlinux.org> 0.17.2-alt1
+- 0.16.0 -> 0.17.2.
+
 * Mon May 27 2024 Stanislav Levin <slev@altlinux.org> 0.16.0-alt2
 - Fixed FTBFS (trio 0.25.0).
 
