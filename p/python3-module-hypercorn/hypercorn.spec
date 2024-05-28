@@ -18,7 +18,7 @@ Extra "%{1}" for %%pypi_name. \
 
 Name: python3-module-%pypi_nname
 Version: 0.16.0
-Release: alt1
+Release: alt2
 Summary: A ASGI Server based on Hyper libraries
 License: MIT
 Group: Development/Python3
@@ -75,5 +75,8 @@ using the aioquic library.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon May 27 2024 Stanislav Levin <slev@altlinux.org> 0.16.0-alt2
+- Fixed FTBFS (trio 0.25.0).
+
 * Mon Feb 05 2024 Stanislav Levin <slev@altlinux.org> 0.16.0-alt1
 - Initial build for Sisyphus.
