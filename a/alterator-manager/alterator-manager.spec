@@ -1,7 +1,7 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.19
+Version: 0.1.20
 Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
@@ -78,6 +78,12 @@ mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
 
 
 %changelog
+* Tue May 28 2024 Ivan Savin <svn17@altlinux.org> 0.1.20-alt1
+- Add GetAllObjects and GetAllInterfaces to ru.basealt.alterator.manager
+  on /ru/basealt/alterator.
+- Rename output parameter of GetSignals from objects to signals
+  (ru.basealt.alterator.manager /ru/basealt/alterator).
+
 * Tue Mar 19 2024 Ivan Savin <svn17@altlinux.org> 0.1.19-alt1
 - Add new directories for the backend files in /etc.
 - Update docs/README-ru.md.
