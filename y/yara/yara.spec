@@ -6,7 +6,7 @@
 %define sover 10
 
 Name: yara
-Version: 4.5.0
+Version: 4.5.1
 Release: alt1
 License: BSD-3-Clause and Apache-2.0
 Group: Development/Tools
@@ -50,6 +50,7 @@ Development files for YARA.
 %setup
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 #	--disable-static
 # make[2]: *** No rule to make target 'libyara/.libs/libyara.a', needed by 'test-arena'.  Stop.
@@ -96,6 +97,9 @@ yara main.rule -r . | grep MAIN.*yara.spec
 %_pkgconfigdir/yara.pc
 
 %changelog
+* Sun May 26 2024 Vitaly Chikunov <vt@altlinux.org> 4.5.1-alt1
+- Update to v4.5.1 (2024-05-25).
+
 * Wed Feb 14 2024 Vitaly Chikunov <vt@altlinux.org> 4.5.0-alt1
 - Update to v4.5.0 (2024-02-13).
 
