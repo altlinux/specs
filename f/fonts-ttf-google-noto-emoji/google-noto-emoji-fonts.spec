@@ -16,8 +16,9 @@ Group: System/Fonts/True type
 
 
 Name:           fonts-ttf-google-noto-emoji
-Version:        20210716
-Release:        alt1_2
+Version:        2.042
+Release:        alt1
+Epoch:          1
 Summary:        Google a.'Noto Emojia.' Black-and-White emoji font
 
 # In noto-emoji-fonts source
@@ -156,6 +157,9 @@ fi
 
 
 %changelog
+* Sat May 25 2024 Ajrat Makhmutov <rauty@altlinux.org> 1:2.042-alt1
+- new version (closes: 49013)
+
 * Sun Feb 20 2022 Igor Vlasenko <viy@altlinux.org> 20210716-alt1_2
 - new version
 
