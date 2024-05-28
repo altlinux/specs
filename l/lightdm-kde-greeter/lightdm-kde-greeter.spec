@@ -4,11 +4,11 @@
 
 Name: lightdm-kde-greeter
 Version: 0.4.22
-Release: alt1
+Release: alt2
 Group: Graphical desktop/Other
 Summary: LightDM KDE5 Greeter
 License: GPL-3.0+
-Url: http://git.altlinux.org/gears/l/lightdm-kde-greeter.git
+Url: https://invent.kde.org/plasma/lightdm-kde-greeter.git
 
 Source: %name-%version.tar
 
@@ -102,6 +102,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Tue May 28 2024 Anton Golubev <golubevan@altlinux.org> 0.4.22-alt2
+- remerge upstream, further development will be on invent.kde.org
+
 * Wed Apr 24 2024 Anton Golubev <golubevan@altlinux.org> 0.4.22-alt1
 - use build-time set default background everywhere
 - add default configuration file (Closes: 49221)
