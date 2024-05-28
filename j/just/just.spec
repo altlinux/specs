@@ -4,8 +4,8 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: just
-Version: 1.26.0
-Release: alt1.1
+Version: 1.27.0
+Release: alt1
 Summary: Just a command runner
 License: CC0-1.0
 Group: Development/Other
@@ -16,6 +16,9 @@ Source: %name-%version.tar
 BuildRequires: /proc
 BuildRequires: rust-cargo
 BuildRequires: cargo-vendor-checksum diffstat
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: python3
+}}
 
 %description
 just is a handy way to save and run project-specific commands.
@@ -54,7 +57,10 @@ install -Dpm0644 completions/just.fish %buildroot%_datadir/fish/vendor_completio
 install -Dpm0644 man/just.1 -t %buildroot%_man1dir
 
 %check
-cargo test %_smp_mflags --release --offline --no-fail-fast
+
+# `--color=never -- --color=never` does not work but I leave it there, so I don't
+# try to find it again.
+cargo test %_smp_mflags --release --offline --no-fail-fast --color=never -- --color=never
 PATH=%buildroot%_bindir:$PATH
 cat > justfile <<EOF
 _help:
@@ -75,6 +81,9 @@ just version | grep -Fx '%name %version'
 %_datadir/fish/vendor_completions.d/just.fish
 
 %changelog
+* Sun May 26 2024 Vitaly Chikunov <vt@altlinux.org> 1.27.0-alt1
+- Update to 1.27.0 (2024-05-25).
+
 * Fri May 17 2024 Ivan A. Melnikov <iv@altlinux.org> 1.26.0-alt1.1
 - Drop obsolete loongarch64 fix.
 
