@@ -1,7 +1,7 @@
 
 Name: maliit-framework
 Version: 2.3.0
-Release: alt1
+Release: alt2
 %define sover 2
 %define libmaliit libmaliit%sover
 %define libmaliit_glib libmaliit-glib%sover
@@ -9,7 +9,7 @@ Release: alt1
 
 Group: System/Libraries
 Summary: Maliit Input Method Framework
-Url: http://www.maliit.org
+Url: https://maliit.github.io/
 License: LGPL-2.1-only
 %K5init no_altplace
 
@@ -24,6 +24,8 @@ BuildRequires: cmake doxygen graphviz libgtk+3-devel
 BuildRequires: pkgconfig(xkbcommon) pkgconfig(xfixes)
 BuildRequires: wayland-protocols libwayland-cursor-devel libwayland-egl-devel
 BuildRequires: qt5-base-devel-static qt5-svg-devel qt5-wayland-devel
+# reduce configure build messages
+BuildRequires: pkgconfig(libffi) pkgconfig(xdmcp) libpcre2-devel
 
 %description
 Core server and libraries for the Maliit Input Methods Framework
@@ -133,6 +135,7 @@ export PATH=%_qt5_bindir:$PATH
     -DMALIIT_SERVER_ARGUMENTS="" \
     -Denable-dbus-activation:BOOL=ON \
     -Denable-qt5-inputcontext:BOOL=ON \
+    -Denable-hwkeyboard:BOOL=ON \
     -Denable-wayland-gtk=ON \
     -Denable-wayland=ON \
     -Denable-xcb=ON \
@@ -219,6 +222,9 @@ rm -rf %buildroot/%_docdir/maliit-framework-doc
 #%_libdir/gtk-3.0/3.0.0/immodules/libim-maliit.so*
 
 %changelog
+* Tue May 28 2024 Sergey V Turchin <zerg@altlinux.org> 2.3.0-alt2
+- update package url
+
 * Tue Jan 24 2023 Sergey V Turchin <zerg@altlinux.org> 2.3.0-alt1
 - new version
 
