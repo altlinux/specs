@@ -2,7 +2,7 @@
 
 Name:    1c-preinstall
 Version: 8.3
-Release: alt15
+Release: alt16
 
 Summary: Set correct environment for 1C:Enterprise platform
 License: GPL-2.0
@@ -26,7 +26,6 @@ Requires: libbrotlidec
 Requires: libcairo
 Requires: libcairo-gobject
 Requires: libcom_err
-Requires: libcrypto1.1
 Requires: libcups
 Requires: libdatrie
 Requires: libdbus
@@ -52,7 +51,6 @@ Requires: libgtk+3
 Requires: libharfbuzz
 Requires: libharfbuzz-icu
 Requires: libICE
-# Requires: libicu69
 Requires: libidn2
 Requires: libkeyutils
 Requires: libkrb5
@@ -68,7 +66,6 @@ Requires: libselinux
 Requires: libSM
 Requires: libsoup
 Requires: libsqlite3
-Requires: libssl1.1
 Requires: libsystemd
 Requires: libthai
 Requires: libunistring2
@@ -116,6 +113,10 @@ Tested with 1C:Enterprise platform version %tested_version
 %files
 
 %changelog
+* Tue May 28 2024 Pavel Isopenko <pauli@altlinux.org> 8.3-alt16
+- clarification of dependencies: minus libcrypto1.1 and libssl1.1 (ALT #50479)
+
+
 * Thu May 16 2024 Pavel Isopenko <pauli@altlinux.org> 8.3-alt15
 - Return into Sisyphus
 
