@@ -3,7 +3,7 @@
 %define oname ptpython
 
 Name: python3-module-%oname
-Version: 3.0.26
+Version: 3.0.27
 Release: alt1
 Summary: Python REPL build on top of prompt_toolkit
 License: BSD-3-Clause
@@ -61,6 +61,9 @@ Provides: %oname-ipython = %version.%release
 %python3_sitelibdir/%oname/*ipython*
 
 %changelog
+* Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.27-alt1
+- Automatically updated to 3.0.27.
+
 * Fri May 17 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.26-alt1
 - Build new version.
 
