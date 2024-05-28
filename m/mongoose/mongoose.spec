@@ -10,7 +10,7 @@
 
 Name: mongoose
 Version: 7.14
-Release: alt1
+Release: alt2
 
 Summary: An easy-to-use self-sufficient web server
 License: MIT
@@ -89,6 +89,8 @@ install -Dpm 0644 %libname.a %buildroot%_libdir/
 %__mkdir -p %buildroot%_includedir
 install -Dpm 0644 %name.h %buildroot%_includedir
 
+%add_debuginfo_skiplist %_libdir/%libname.so
+
 %files
 %doc README.md LICENSE
 
@@ -105,5 +107,8 @@ install -Dpm 0644 %name.h %buildroot%_includedir
 %endif
 
 %changelog
+* Tue May 28 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 7.14-alt2
+- don't create a libmongoose.so.debug
+
 * Mon May 27 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 7.14-alt1
 - Initial build for ALT Linux
