@@ -1,6 +1,6 @@
 Name: ppsspp
 Version: 1.17.1
-Release: alt1
+Release: alt2
 
 Summary: PlayStation Portable Emulator
 License: GPL-2.0-or-later
@@ -66,6 +66,15 @@ Requires: %name-common = %EVR
 PPSSPP is a PSP emulator written in C++, and translates PSP CPU instructions directly into optimized x86, x64 and ARM machine code, using JIT recompilers (dynarecs).
 This build headless only.
 
+%package libretro
+Summary: PlayStation Portable Emulator (libretro frontend)
+Group: Emulators
+Requires: retroarch
+
+%description libretro
+PPSSPP is a PSP emulator written in C++, and translates PSP CPU instructions directly into optimized x86, x64 and ARM machine code, using JIT recompilers (dynarecs).
+This build using the libretro frontend.
+
 %package qt
 Summary: PlayStation Portable Emulator (Qt frontend)
 Group: Emulators
@@ -107,6 +116,28 @@ export CPLUS_INCLUDE_PATH=%_includedir/libzip
 
 %cmake_build
 
+# Build libretro versions
+
+%define _cmake__builddir %_target_platform-libretro
+
+%cmake \
+	-DCMAKE_BUILD_TYPE:STRING=Release \
+	-DUSE_SYSTEM_SNAPPY:BOOL=TRUE \
+	-DUSE_SYSTEM_LIBZIP:BOOL=TRUE \
+	-DUSE_SYSTEM_FFMPEG:BOOL=TRUE \
+	-DUSE_SYSTEM_ZSTD:BOOL=TRUE \
+	-DUSE_SYSTEM_MINIUPNPC:BOOL=TRUE \
+	-DLIBRETRO:BOOL=TRUE \
+	-DLIBZIP_INCLUDE_DIR=%_includedir \
+%ifarch %arm
+	-DUSING_GLES2:BOOL=TRUE \
+%else
+	-DOpenGL_GL_PREFERENCE:STRING=GLVND \
+%endif
+	-Wno-dev
+
+%cmake_build
+
 # Build Qt version
 
 %define _cmake__builddir %_target_platform-qt
@@ -133,6 +164,8 @@ export CPLUS_INCLUDE_PATH=%_includedir/libzip
 %define _cmake__builddir %_target_platform
 %cmake_install
 %__install -Dp -m0755 %_target_platform/PPSSPPHeadless %buildroot%_bindir/
+%__mkdir_p %buildroot%_libexecdir/libretro
+%__install -Dp -m0644 %_target_platform-libretro/lib/%{name}_libretro.so %buildroot%_libexecdir/libretro/
 
 %define _cmake__builddir %_target_platform-qt
 %cmake_install
@@ -151,11 +184,17 @@ export CPLUS_INCLUDE_PATH=%_includedir/libzip
 %files headless
 %_bindir/PPSSPPHeadless
 
+%files libretro
+%_libexecdir/libretro/%{name}_libretro.so
+
 %files qt
 %_bindir/PPSSPPQt
 %_desktopdir/PPSSPPQt.desktop
 
 %changelog
+* Tue May 28 2024 Nazarov Denis <nenderus@altlinux.org> 1.17.1-alt2
+- Build libretro frontend
+
 * Thu Feb 15 2024 Nazarov Denis <nenderus@altlinux.org> 1.17.1-alt1
 - new version (1.17.1) with rpmgs script
 
