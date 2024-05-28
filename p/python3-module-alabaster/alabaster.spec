@@ -1,42 +1,60 @@
-%define oname alabaster
+%define _unpackaged_files_terminate_build 1
+%define pypi_name alabaster
+%define mod_name %pypi_name
 
-Name: python3-module-%oname
-Version: 0.7.6
-Release: alt4
+%def_with check
 
-Summary: A configurable sidebar-enabled Sphinx theme
+Name: python3-module-%pypi_name
+Version: 0.7.16
+Release: alt1
+Summary: A light, configurable Sphinx theme
 License: BSD
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/alabaster/
-# https://github.com/bitprophet/alabaster.git
+Vcs: https://github.com/sphinx-doc/alabaster
 BuildArch: noarch
-
 Source: %name-%version.tar
-Patch: %name-0.7.6-alt-valid-xhtml.patch
-
-BuildRequires(pre): rpm-build-python3
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+BuildRequires: /usr/bin/sphinx-build
+%endif
 
 %description
-This theme is a modified "Kr" Sphinx theme from @kennethreitz
-(especially as used in his [Requests](https://python-requests.org)
-project), which was itself originally based on @mitsuhiko's theme used
-for [Flask](http://flask.pocoo.org/) & related projects.
+%pypi_name is a visually (c)lean, responsive, configurable theme for the Sphinx
+documentation system. It requires Python 3.9 or newer and Sphinx 3.4 or newer.
+
+It began as a third-party theme, and is still maintained separately, but as of
+Sphinx 1.3, Alabaster is an install-time dependency of Sphinx and is selected as
+the default theme.
 
 %prep
 %setup
-%patch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+# see .github/workflows/test.yml
+%pyproject_run -- sphinx-build -M html ./docs ./build -j=auto -T -W --keep-going
 
 %files
-%doc *.rst
-%python3_sitelibdir/*
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue May 28 2024 Stanislav Levin <slev@altlinux.org> 0.7.16-alt1
+- 0.7.6 -> 0.7.16.
+
 * Mon Aug 02 2021 Grigory Ustinov <grenka@altlinux.org> 0.7.6-alt4
 - Drop python2 support.
 
