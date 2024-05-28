@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: victorialogs
-Version: 0.7.0
+Version: 0.10.0
 Release: alt1
 Summary: Log management and log analytics system from VictoriaMetrics
 
@@ -14,6 +14,7 @@ Source0: %name-%version.tar
 
 Source2: %name.service
 Source3: %name.sysconfig
+Patch: %name-%version.patch
 
 #ExclusiveArch:  %go_arches
 ExclusiveArch: x86_64 aarch64
@@ -45,6 +46,7 @@ VictoriaLogs provides the following key features:
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 export BUILDDIR="$PWD/.gopath"
@@ -89,6 +91,10 @@ useradd -r -g _%name -c 'Victoria Logs Daemon' \
 %doc docs/VictoriaLogs/QuickStart.md docs/VictoriaLogs/README.md docs/VictoriaLogs/data-ingestion
 
 %changelog
+* Tue May 28 2024 Alexey Shabalin <shaba@altlinux.org> 0.10.0-alt1
+- New version 0.10.0.
+- Fix use Environment in systemd unit (ALT#50398).
+
 * Fri May 17 2024 Alexey Shabalin <shaba@altlinux.org> 0.7.0-alt1
 - New version 0.7.0.
 
