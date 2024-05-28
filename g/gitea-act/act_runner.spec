@@ -2,7 +2,7 @@
 
 Name: gitea-act
 Version: 0.2.10
-Release: alt2
+Release: alt3
 
 Summary: Act runner is a runner for Gitea based on Gitea fork of act.
 License: MIT
@@ -73,6 +73,9 @@ useradd -r -g _%name -s /dev/null -c "gitea-act services" -M -d %_sharedstatedir
 %_unitdir/%name.service
 
 %changelog
+* Tue May 28 2024 Alexey Shabalin <shaba@altlinux.org> 0.2.10-alt3
+- Update to upstream snapshot 2024-05-27.
+
 * Tue May 07 2024 Alexey Shabalin <shaba@altlinux.org> 0.2.10-alt2
 - Fixed service type
 
