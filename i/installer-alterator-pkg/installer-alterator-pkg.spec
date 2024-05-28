@@ -1,6 +1,6 @@
 Name: installer-alterator-pkg
-Version: 3.1.5
-Release: alt2
+Version: 3.1.6
+Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
 %add_findreq_skiplist %_datadir/install2/initinstall.d/*
@@ -57,6 +57,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Mon May 27 2024 Ajrat Makhmutov <rauty@altlinux.org> 3.1.6-alt1
+- fix the selection of applications for the single stage pkg after vm
+
 * Tue May 21 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 3.1.5-alt2
 - disable edit for group details textbox (Closes: 45939)
 
