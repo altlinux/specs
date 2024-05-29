@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.0
-Release: alt1.1
+Version: 1.1.0
+Release: alt1
 Summary: Jupyter Notebook as a Jupyter Server extension
 License: BSD-3-Clause
 Group: Development/Python3
@@ -89,6 +89,9 @@ mv %buildroot/usr/etc/jupyter/jupyter_server_config.d/nbclassic.json \
 %python3_sitelibdir/%pypi_name/*/tests
 
 %changelog
+* Wed May 29 2024 Anton Vyatkin <toni@altlinux.org> 1.1.0-alt1
+- new version 1.1.0
+
 * Wed Aug 16 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 1.0.0-alt1.1
 - NMU: ignore unmet dependency
 
