@@ -7,7 +7,7 @@
 %global import_path k8s.io/minikube
 
 Name: minikube
-Version: 1.32.0
+Version: 1.33.1
 Release: alt1
 
 Summary: Run Kubernetes locally
@@ -65,6 +65,9 @@ mkdir -p %buildroot%zsh_completionsdir
 %zsh_completionsdir/_%name
 
 %changelog
+* Wed May 29 2024 Alexander Stepchenko <geochip@altlinux.org> 1.33.1-alt1
+- 1.32.0 -> 1.31.1
+
 * Mon Jan 22 2024 Alexander Stepchenko <geochip@altlinux.org> 1.32.0-alt1
 - 1.31.2 -> 1.32.0 (ALT #49047)
 - Drop the %%__mkdir_p macro.
