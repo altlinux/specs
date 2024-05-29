@@ -1,6 +1,6 @@
 Name: libtomlplusplus
 Version: 3.4.0
-Release: alt2
+Release: alt3
 
 Summary: Header-only TOML config file parser and serializer for C++17
 
@@ -30,6 +30,10 @@ Header-only TOML config file parser and serializer for C++17.
 
 %prep
 %setup
+%ifarch %e2k
+sed -E -i '/for \(auto\&.*tbl\)/{N;s/(for \((auto\&*) \[[^,]*, ([^,]*))(\].*)/\11\4\2\3=\31;/}' \
+	include/toml++/impl/{*_formatter,parser}.inl
+%endif
 
 %build
 %meson
@@ -50,6 +54,9 @@ Header-only TOML config file parser and serializer for C++17.
 %_pkgconfigdir/tomlplusplus.pc
 
 %changelog
+* Wed May 29 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.4.0-alt3
+- fix e2k build
+
 * Wed Jan 24 2024 Roman Alifanov <ximper@altlinux.org> 3.4.0-alt2
 - NMU: switch to meson for the pkconfig file (and in general for more correct build)
 
