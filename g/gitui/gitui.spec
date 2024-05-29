@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: gitui
-Version: 0.25.2
+Version: 0.26.2
 Release: alt1
 Summary: Blazing fast terminal-ui for git written in rust
 License: MIT
@@ -49,8 +49,13 @@ EOF
 sed -i '/^default =/s/"vendor-openssl"//' Cargo.toml
 # There should not be non-source precompiled files.
 find vendor \( -name '*.a' -o -name '*.lib' -o -name '*.dll' -o -name '*.obj' \) | grep . && exit 1
+mkdir -p $HOME/bin
+echo -e '#!/bin/sh\ntest $1 = rev-parse && echo %release' > $HOME/bin/git
+chmod a+rx $HOME/bin/git
 
 %build
+export RUST_BACKTRACE=full
+export GITUI_RELEASE=1
 cargo build %_smp_mflags --offline --release
 cargo tree --no-dedupe --target all --prefix none --format '{l}' | sort -u > LICENSE.dependencies
 
@@ -58,7 +63,7 @@ cargo tree --no-dedupe --target all --prefix none --format '{l}' | sort -u > LIC
 install -Dp target/release/%name -t %buildroot%_bindir
 
 %check
-%buildroot%_bindir/gitui --version | grep -Fx '%name %version'
+%buildroot%_bindir/gitui --version | grep -Px '%name \Q%version\E \S+ \(%release\)'
 # This recompiles.
 cargo test  %_smp_mflags --release
 
@@ -68,6 +73,9 @@ cargo test  %_smp_mflags --release
 %_bindir/gitui
 
 %changelog
+* Wed May 29 2024 Vitaly Chikunov <vt@altlinux.org> 0.26.2-alt1
+- Update to v0.26.2 (2024-05-18).
+
 * Wed Apr 03 2024 Vitaly Chikunov <vt@altlinux.org> 0.25.2-alt1
 - Update to v0.25.2 (2024-03-22).
 
