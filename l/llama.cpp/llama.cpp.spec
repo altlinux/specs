@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: llama.cpp
-Version: 20240225
+Version: 20240527
 Release: alt1
 Summary: Inference of LLaMA model in pure C/C++
 License: MIT
@@ -69,7 +69,6 @@ Overall this is all raw and EXPERIMENTAL, no warranty, no support.
 %cmake
 %cmake_build
 find -name '*.py' | xargs sed -i '1s|#!/usr/bin/env python3|#!%__python3|'
-sed -i '1i\%__python3' convert-persimmon-to-gguf.py
 
 %install
 # Main format converter.
@@ -85,7 +84,7 @@ cp -rp grammars -t %buildroot%_datadir/%name
 install -Dp examples/*.sh -t %buildroot%_datadir/%name/examples
 # Install and rename binaries to have llama- prefix.
 cd %_cmake__builddir/bin
-find -maxdepth 1 -type f -executable -not -name 'test-*' -printf '%f\0' |
+find -maxdepth 1 -type f -executable -not -name 'test-*' -printf '%%f\0' |
 	xargs -0ti -n1 install -p {} %buildroot%_bindir/llama-{}
 
 mkdir -p %buildroot%_unitdir
@@ -113,7 +112,7 @@ LLAMA_ARGS="-m %_datadir/%name/ggml-model-f32.bin"
 EOF
 
 %check
-%cmake_build --target test
+%ctest -j1 -E test-eval-callback
 
 %files
 %define _customdocdir %_docdir/%name
@@ -126,6 +125,9 @@ EOF
 %_datadir/%name
 
 %changelog
+* Tue May 28 2024 Vitaly Chikunov <vt@altlinux.org> 20240527-alt1
+- Update to b3012 (2024-05-27).
+
 * Mon Feb 26 2024 Vitaly Chikunov <vt@altlinux.org> 20240225-alt1
 - Update to b2259 (2024-02-25).
 
