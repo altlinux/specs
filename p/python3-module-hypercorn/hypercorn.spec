@@ -17,7 +17,7 @@ Extra "%1" for %%pypi_name. \
 %def_with check
 
 Name: python3-module-%pypi_nname
-Version: 0.17.2
+Version: 0.17.3
 Release: alt1
 Summary: A ASGI Server based on Hyper libraries
 License: MIT
@@ -75,6 +75,9 @@ using the aioquic library.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed May 29 2024 Stanislav Levin <slev@altlinux.org> 0.17.3-alt1
+- 0.17.2 -> 0.17.3.
+
 * Tue May 28 2024 Stanislav Levin <slev@altlinux.org> 0.17.2-alt1
 - 0.16.0 -> 0.17.2.
 
