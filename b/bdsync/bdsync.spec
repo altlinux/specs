@@ -1,6 +1,6 @@
 Name: bdsync
 Version: 0.11.2
-Release: alt3
+Release: alt3.1
 
 Summary: Remote sync for block devices
 
@@ -14,7 +14,9 @@ Source: %name-%version.tar
 Patch1: bdsync-0.10-buildflags.patch
 
 BuildRequires: libssl-devel
+%ifnarch %e2k
 BuildRequires: pandoc
+%endif
 
 %description
 Bdsync can be used to synchronize block devices over a network. It generates
@@ -33,7 +35,11 @@ block devices.
 %patch1 -p1
 
 %build
+%ifarch %e2k
+%make_build %name
+%else
 %make_build
+%endif
 
 %check
 make test
@@ -42,15 +48,22 @@ make test
 mkdir -p %buildroot/%_bindir/
 mkdir -p %buildroot/%_man1dir/
 cp %name %buildroot/%_bindir/%name
+%ifnarch %e2k
 cp %name.1 %buildroot/%_man1dir/%name.1
+%endif
 
 %files
 %doc COPYING
 %doc README.md
 %_bindir/%name
+%ifnarch %e2k
 %_man1dir/%name.1*
+%endif
 
 %changelog
+* Wed Apr 27 2022 Michael Shigorin <mike@altlinux.org> 0.11.2-alt3.1
+- E2K: avoid pandoc (not available yet)
+
 * Mon Aug 16 2021 Vitaly Lipatov <lav@altlinux.ru> 0.11.2-alt3
 - manually build for ALT Sisyphus
 
