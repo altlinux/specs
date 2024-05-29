@@ -5,8 +5,8 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: libmaa
-Version: 1.4.7
-Release: alt6
+Version: 1.5.1
+Release: alt1
 
 Summary: Library providing many low-level data structures
 License: MIT
@@ -65,12 +65,9 @@ This package contains development documentation for libmaa.
 %install
 %_mkc_env
 %mkcmake_install
+%mkcmake install-doc DESTDIR=%buildroot
 
 %files
-%libmaa_docdir/README
-%libmaa_docdir/LICENSE
-%libmaa_docdir/TODO
-%libmaa_docdir/NEWS
 %_libdir/*.so.*
 
 %files devel
@@ -79,8 +76,15 @@ This package contains development documentation for libmaa.
 
 %files devel-doc
 %libmaa_docdir/libmaa.600dpi.ps
+%libmaa_docdir/README
+%libmaa_docdir/LICENSE
+%libmaa_docdir/TODO
+%libmaa_docdir/NEWS
 
 %changelog
+* Wed May 29 2024 Aleksey Cheusov <cheusov@altlinux.org> 1.5.1-alt1
+- Version 1.5.1
+
 * Sat Feb 10 2024 Grigory Ustinov <grenka@altlinux.org> 1.4.7-alt6
 - Dropped devel-static subpackage (Closes: #39377).
 
