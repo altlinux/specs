@@ -4,7 +4,7 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 3.6.0
+Version: 4.0.1
 Release: alt1
 
 Summary: Client for OpenStack Reservation Service
@@ -112,6 +112,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt1
+- Automatically updated to 4.0.1.
+
 * Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 3.6.0-alt1
 - Automatically updated to 3.6.0.
 

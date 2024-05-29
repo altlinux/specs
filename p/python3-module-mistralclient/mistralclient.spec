@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.0.0
-Release: alt1.2
+Version: 5.2.0
+Release: alt1
 
 Summary: OpenStack Mistral Client Library
 
@@ -38,8 +38,8 @@ BuildRequires: python3-module-tempest >= 17.1.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-os-client-config >= 1.28.0
-BuildRequires: python3-module-hacking >= 3.0.1
 BuildRequires: python3-module-requests-mock >= 1.2.0
+BuildRequires: python3-module-hacking >= 3.0.1
 BuildRequires: python3-module-docutils >= 0.11
 %endif
 
@@ -135,6 +135,9 @@ install -pDm 644 tools/mistral.bash_completion \
 %endif
 
 %changelog
+* Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 5.2.0-alt1
+- Automatically updated to 5.2.0.
+
 * Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1.2
 - Dropped build dependency on python3-module-reno.
 

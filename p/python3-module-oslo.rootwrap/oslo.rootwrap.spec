@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 7.0.1
-Release: alt1.1
+Version: 7.2.0
+Release: alt1
 
 Summary: OpenStack Oslo Rootwrap
 
@@ -23,6 +23,9 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-hacking >= 6.1.0
+BuildRequires: python3-module-oslotest >= 3.2.0
+BuildRequires: python3-module-pre-commit >= 2.6.0
 
 %if_with check
 BuildRequires(pre): schedutils
@@ -32,11 +35,8 @@ BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-eventlet >= 0.18.2
-BuildRequires: python3-module-bandit >= 1.6.0
+BuildRequires: python3-module-bandit >= 1.7.0
 BuildRequires: /proc
-BuildRequires: python3-module-hacking >= 3.0.1
-BuildRequires: python3-module-oslotest >= 3.2.0
-BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
 %if_with docs
@@ -118,6 +118,9 @@ TEST_EVENTLET=1 %__python3 -m stestr run tests.test_functional_eventlet
 %endif
 
 %changelog
+* Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 7.2.0-alt1
+- Automatically updated to 7.2.0.
+
 * Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 7.0.1-alt1.1
 - Dropped build dependency on python3-module-reno.
 

@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.5.1
-Release: alt1.2
+Version: 2.7.0
+Release: alt1
 
 Summary: Client Library for OpenStack Zaqar Messaging API
 
@@ -24,14 +24,13 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-requests >= 2.14.2
-BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-jsonschema >= 2.6.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.log >= 3.36.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-keystoneauth1 >= 3.4.0
-BuildRequires: python3-module-osc-lib >= 1.8.0
+BuildRequires: python3-module-osc-lib >= 2.1.0
 
 %if_with check
 BuildRequires: python3-module-fixtures >= 3.0.0
@@ -41,7 +40,7 @@ BuildRequires: python3-module-stestr >= 1.0.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-ddt >= 1.0.1
 BuildRequires: python3-module-osc-lib-tests
-BuildRequires: python3-module-hacking >= 3.0
+BuildRequires: python3-module-hacking >= 6.1.0
 BuildRequires: python3-module-requests-mock >= 1.2.0
 %endif
 
@@ -117,6 +116,9 @@ install -pDm 644 man/python-%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 2.7.0-alt1
+- Automatically updated to 2.7.0.
+
 * Fri Oct 20 2023 Grigory Ustinov <grenka@altlinux.org> 2.5.1-alt1.2
 - Dropped dependency on distutils.
 

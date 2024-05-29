@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.4.0
-Release: alt2
+Version: 4.5.0
+Release: alt1
 
 Summary: OpenStack Image API Client Library
 
@@ -31,7 +31,7 @@ BuildRequires: python3-module-wrapt >= 1.7.0
 BuildRequires: python3-module-OpenSSL >= 17.1.0
 
 %if_with check
-BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-hacking >= 6.1.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-os-client-config >= 1.28.0
 BuildRequires: python3-module-stestr >= 2.0.0
@@ -123,6 +123,9 @@ install -pDm 644 tools/glance.bash_completion \
 %endif
 
 %changelog
+* Wed May 29 2024 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt1
+- Automatically updated to 4.5.0.
+
 * Wed Feb 07 2024 Grigory Ustinov <grenka@altlinux.org> 4.4.0-alt2
 - Bring back normal package.
 

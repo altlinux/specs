@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.1.1
-Release: alt1.1
+Version: 2.3.0
+Release: alt1
 
 Summary: OpenStack Common code for writing OpenStack upgrade checks
 
@@ -29,7 +29,7 @@ BuildRequires: python3-module-oslo.utils >= 4.5.0
 BuildRequires: python3-module-oslo.policy >= 2.0.0
 
 %if_with check
-BuildRequires: python3-module-hacking >= 3.0
+BuildRequires: python3-module-hacking >= 6.1.0
 BuildRequires: python3-module-oslotest >= 3.5.0
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-oslo.serialization >= 2.21.1
@@ -111,6 +111,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt1
+- Automatically updated to 2.3.0.
+
 * Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 2.1.1-alt1.1
 - Dropped build dependency on python3-module-reno.
 

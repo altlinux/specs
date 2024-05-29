@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 8.2.0
-Release: alt1.1
+Version: 8.4.0
+Release: alt1
 
 Summary: Client library for OpenStack DBaaS API
 
@@ -33,7 +33,6 @@ BuildRequires: python3-module-osc-lib >= 1.8.0
 BuildRequires: python3-module-openstackclient >= 3.12.0
 
 %if_with check
-BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-httplib2 >= 0.9.1
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-fixtures >= 3.0.0
@@ -122,6 +121,9 @@ install -pDm 644 man/python-%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 8.4.0-alt1
+- Automatically updated to 8.4.0.
+
 * Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 8.2.0-alt1.1
 - Dropped build dependency on python3-module-reno.
 

@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.2.0
+Version: 5.0.0
 Release: alt1
 
 Summary: Generic Key Manager interface for OpenStack
@@ -30,7 +30,7 @@ BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-keystoneauth1 >= 3.4.0
 BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-requests >= 2.18.0
-BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-hacking >= 6.1.0
 
 %if_with check
 BuildRequires: python3-module-coverage >= 4.0
@@ -40,7 +40,6 @@ BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-bandit >= 1.6.0
 BuildRequires: python3-module-pifpaf >= 0.10.0
-BuildRequires: python3-module-pyflakes >= 2.1.1
 BuildRequires: python3-module-requests-mock >= 1.2.0
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-testscenarios >= 0.4
@@ -119,6 +118,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
+- Automatically updated to 5.0.0.
+
 * Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
 - Automatically updated to 4.2.0.
 

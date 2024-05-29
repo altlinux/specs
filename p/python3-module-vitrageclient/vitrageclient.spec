@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.7.0
-Release: alt1.1
+Version: 5.0.0
+Release: alt1
 
 Summary: OpenStack Vitrage Client API Library
 
@@ -34,6 +34,7 @@ BuildRequires: python3-module-oslotest >= 3.3.0
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-testtools >= 2.3.0
 BuildRequires: python3-module-pydot >= 1.4.1
+BuildRequires: python3-module-oslo.log >= 4.4.0
 BuildRequires: python3-module-hacking >= 3.0.1
 BuildRequires: python3-module-testscenarios >= 0.5.0
 %endif
@@ -97,7 +98,9 @@ install -pDm 644 tools/vitrage.bash_completion \
   %buildroot%_sysconfdir/bash_completion.d/vitrage.bash_completion
 
 %check
-%__python3 -m stestr run
+# Ignore unit tests failing with networkx >= 3.2.0
+# https://storyboard.openstack.org/#!/story/2011120
+%__python3 -m stestr run --exclude-regex '(TopologyShowTest.test_graphml_emitter|TopologyShowTest.test_dot_emitter)'
 
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
@@ -118,6 +121,9 @@ install -pDm 644 tools/vitrage.bash_completion \
 %endif
 
 %changelog
+* Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
+- Automatically updated to 5.0.0.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 4.7.0-alt1.1
 - Moved on modern pyproject macros.
 

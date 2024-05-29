@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.6.0
-Release: alt1.2
+Version: 5.0.0
+Release: alt1
 
 Summary: OpenStack Client Library for Zun
 
@@ -124,6 +124,9 @@ install -pDm 644 tools/zun.bash_completion \
 %endif
 
 %changelog
+* Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
+- Automatically updated to 5.0.0.
+
 * Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 4.6.0-alt1.2
 - Dropped build dependency on python3-module-reno.
 

@@ -4,8 +4,8 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 9.3.0
-Release: alt1.2
+Version: 9.5.0
+Release: alt1
 
 Summary: OpenStack Block Storage API Client Library
 
@@ -37,8 +37,8 @@ BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-testtools >= 2.4.0
 BuildRequires: python3-module-stestr >= 3.1.0
 BuildRequires: python3-module-oslo.serialization >= 4.1.0
-BuildRequires: python3-module-hacking >= 4.0.0
 BuildRequires: python3-module-requests-mock >= 1.2.0
+BuildRequires: python3-module-hacking >= 4.0.0
 %endif
 
 %if_with docs
@@ -124,6 +124,9 @@ install -pDm 644 tools/cinder.bash_completion \
 %endif
 
 %changelog
+* Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 1:9.5.0-alt1
+- Automatically updated to 9.5.0.
+
 * Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 1:9.3.0-alt1.2
 - Dropped build dependency on python3-module-reno.
 

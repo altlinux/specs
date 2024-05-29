@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 18.3.0
-Release: alt1.1
+Version: 18.6.0
+Release: alt1
 
 Summary: Client library for OpenStack Compute API
 
@@ -27,6 +27,9 @@ BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-prettytable >= 0.7.2
 BuildRequires: python3-module-stevedore >= 2.0.1
+BuildRequires: python3-module-iso8601 >= 0.1.11
+BuildRequires: python3-module-hacking >= 6.1.0
+BuildRequires: python3-module-osprofiler >= 1.4.0
 
 %if_with check
 BuildRequires(pre): openssl
@@ -44,8 +47,6 @@ BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-testscenarios >= 0.4
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-tempest >= 17.1.0
-BuildRequires: python3-module-iso8601 >= 0.1.11
-BuildRequires: python3-module-osprofiler >= 1.4.0
 %endif
 
 %if_with docs
@@ -128,6 +129,9 @@ install -pDm 644 tools/nova.bash_completion \
 %endif
 
 %changelog
+* Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 18.6.0-alt1
+- Automatically updated to 18.6.0.
+
 * Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 18.3.0-alt1.1
 - Dropped build dependency on python3-module-reno.
 

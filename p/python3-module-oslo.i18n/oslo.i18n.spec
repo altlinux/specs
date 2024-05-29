@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 6.0.0
-Release: alt1.2
+Version: 6.3.0
+Release: alt1
 
 Summary: OpenStack Oslo i18n library
 
@@ -29,10 +29,10 @@ BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-oslotest >= 3.2.0
-BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-hacking >= 6.1.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-testscenarios >= 0.4
-BuildRequires: python3-module-bandit >= 1.6.0
+BuildRequires: python3-module-bandit >= 1.7.0
 BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
@@ -112,6 +112,9 @@ install -pDm 644 man/osloi18n.1 %buildroot%_man1dir/osloi18n.1
 %endif
 
 %changelog
+* Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 6.3.0-alt1
+- Automatically updated to 6.3.0.
+
 * Thu Aug 17 2023 Ivan A. Melnikov <iv@altlinux.org> 6.0.0-alt1.2
 - NMU: fix build with python 3.11
 

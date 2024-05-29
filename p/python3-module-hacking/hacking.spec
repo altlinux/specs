@@ -4,28 +4,26 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.0.1
+Version: 6.1.0
 Release: alt1
 
 Summary: OpenStack Hacking Guideline Enforcement
 License: Apache-2.0
 Group: Development/Python3
 BuildArch: noarch
-Url: https://pypi.python.org/pypi/hacking/
+URL: https://pypi.org/project/hacking
+VCS: https://github.com/openstack/hacking
 
-# https://github.com/openstack-dev/hacking.git
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(pbr)
 
-# build backend and its deps
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 
 %if_with check
-# install_requires=
 BuildRequires: python3(flake8)
 
 BuildRequires: python3(stestr)
@@ -53,7 +51,7 @@ export PBR_VERSION=%version
 %pyproject_install
 
 # don't ship tests
-rm -r %buildroot%python3_sitelibdir/hacking/tests/
+rm -rv %buildroot%python3_sitelibdir/hacking/tests/
 
 %check
 export PBR_VERSION=%version
@@ -61,10 +59,13 @@ export PBR_VERSION=%version
 
 %files
 %doc *.rst doc/source/*.rst
-%python3_sitelibdir/hacking/
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%python3_sitelibdir/hacking
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon May 27 2024 Grigory Ustinov <grenka@altlinux.org> 6.1.0-alt1
+- Automatically updated to 6.1.0.
+
 * Fri Jul 28 2023 Grigory Ustinov <grenka@altlinux.org> 6.0.1-alt1
 - Automatically updated to 6.0.1.
 

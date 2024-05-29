@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 14.0.0
+Version: 15.0.0
 Release: alt1
 
 Summary: OpenStack Oslo Database library
@@ -37,7 +37,7 @@ BuildRequires: python3-module-testscenarios >= 0.4
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-eventlet >= 0.18.2
 BuildRequires: python3-module-oslotest >= 3.2.0
-BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-hacking >= 6.1.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-stestr >= 2.0.0
@@ -123,6 +123,9 @@ install -pDm 644 man/oslodb.1 %buildroot%_man1dir/oslodb.1
 %endif
 
 %changelog
+* Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 15.0.0-alt1
+- Automatically updated to 15.0.0.
+
 * Tue Sep 12 2023 Grigory Ustinov <grenka@altlinux.org> 14.0.0-alt1
 - Automatically updated to 14.0.0.
 

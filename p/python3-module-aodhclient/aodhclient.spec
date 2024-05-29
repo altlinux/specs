@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.3.0
-Release: alt1.1
+Version: 3.5.1
+Release: alt1
 
 Summary: Python client library for OpenStack Aodh
 
@@ -34,6 +34,7 @@ BuildRequires: python3-module-pyparsing
 BuildRequires: python3-module-stestr
 BuildRequires: python3-module-tempest
 BuildRequires: python3-module-oslotest
+BuildRequires: python3-module-os-client-config >= 1.28.0
 %endif
 
 %if_with docs
@@ -109,6 +110,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 3.5.1-alt1
+- Automatically updated to 3.5.1.
+
 * Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1.1
 - Dropped build dependency on python3-module-reno.
 

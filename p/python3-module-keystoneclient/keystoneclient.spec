@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.1.0
-Release: alt1.1
+Version: 5.4.0
+Release: alt1
 
 Summary: Client Library for OpenStack Identity
 
@@ -28,15 +28,16 @@ BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-requests >= 2.14.2
-BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-packaging >= 20.4
+BuildRequires: python3-module-oslotest >= 3.2.0
+BuildRequires: python3-module-tempest >= 17.1.0
 
 %if_with check
 BuildRequires(pre): openssl
 BuildRequires: python3-module-lxml >= 4.5.0
 BuildRequires: python3-module-fixtures >= 3.0.0
-BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-hacking >= 6.1.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-keyring >= 5.5.1
 BuildRequires: python3-module-oauthlib >= 0.6.2
@@ -48,8 +49,6 @@ BuildRequires: python3-module-testscenarios >= 0.4
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-bandit >= 1.1.0
 BuildRequires: python3-module-keystoneauth1-tests
-BuildRequires: python3-module-oslotest >= 3.2.0
-BuildRequires: python3-module-tempest >= 17.1.0
 %endif
 
 %if_with docs
@@ -125,6 +124,9 @@ install -pDm 644 man/python-%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 5.4.0-alt1
+- Automatically updated to 5.4.0.
+
 * Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt1.1
 - Dropped build dependency on python3-module-reno.
 

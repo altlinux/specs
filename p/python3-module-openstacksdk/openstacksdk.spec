@@ -1,10 +1,10 @@
 %define oname openstacksdk
-%def_without check
+%def_with check
 %def_with docs
 
 Name: python3-module-%oname
-Version: 1.3.1
-Release: alt1.1
+Version: 3.0.0
+Release: alt1
 
 Summary: An SDK for building applications to work with OpenStack
 
@@ -22,7 +22,6 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-yaml >= 3.13
-BuildRequires: python3-module-appdirs >= 1.3.0
 BuildRequires: python3-module-requestsexceptions >= 1.2.0
 BuildRequires: python3-module-jsonpatch >= 1.16
 BuildRequires: python3-module-os-service-types >= 1.7.0
@@ -49,6 +48,7 @@ BuildRequires: python3-module-testscenarios >= 0.4
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-prometheus_client
 BuildRequires: python3-module-requests-mock >= 1.2.0
+BuildRequires: python3-module-platformdirs >= 3
 %endif
 
 %if_with docs
@@ -119,7 +119,9 @@ cp openstack/config/*.json %buildroot%python3_sitelibdir/openstack/config
 %check
 export OS_LOG_CAPTURE=true
 export OS_TEST_TIMEOUT=30
-%__python3 -m stestr run
+# test_unsupported_version_override and test_create_unknown_proxy
+# are fragile warning-based tests, also excluded in gentoo
+%__python3 -m stestr run --exclude-regex '(test_unsupported_version_override|test_create_unknown_proxy)'
 
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
@@ -139,6 +141,10 @@ export OS_TEST_TIMEOUT=30
 %endif
 
 %changelog
+* Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
+- Automatically updated to 3.0.0.
+- Built with check.
+
 * Fri Mar 01 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.1-alt1.1
 - Built without check.
 

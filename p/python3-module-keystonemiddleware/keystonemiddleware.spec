@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 10.5.0
+Version: 10.6.0
 Release: alt1
 
 Summary: Middleware for OpenStack Identity
@@ -14,8 +14,6 @@ Url: https://pypi.org/project/keystonemiddleware
 
 Source: %oname-%version.tar
 Source1: %oname.watch
-
-Patch: keystonemiddleware-do-not-use-utcnow.patch
 
 BuildArch: noarch
 
@@ -86,7 +84,6 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
-%patch -p1
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -131,6 +128,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 10.6.0-alt1
+- Automatically updated to 10.6.0.
+
 * Sun Jan 28 2024 Grigory Ustinov <grenka@altlinux.org> 10.5.0-alt1
 - Automatically updated to 10.5.0.
 

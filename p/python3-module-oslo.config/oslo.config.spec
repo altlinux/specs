@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 9.1.0
+Version: 9.4.0
 Release: alt1
 
 Summary: OpenStack Oslo Configuration API
@@ -37,12 +37,12 @@ BuildRequires: python3-module-mock >= 2.0
 BuildRequires: python3-module-stestr >= 2.1.0
 BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-oslo.log >= 3.36.0
-BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-hacking >= 6.1.0
 BuildRequires: python3-module-testscenarios >= 0.4
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-mypy >= 0.720
 BuildRequires: python3-module-coverage >= 4.0
-BuildRequires: python3-module-bandit >= 1.6.0
+BuildRequires: python3-module-bandit >= 1.7.0
 BuildRequires: python3-module-requests-mock
 BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
@@ -51,6 +51,7 @@ BuildRequires: python3-module-pre-commit >= 2.6.0
 BuildRequires: python3-module-sphinx >= 1.2.1
 BuildRequires: python3-module-openstackdocstheme
 BuildRequires: python3-module-sphinxcontrib-apidoc
+BuildRequires: python3-module-yaml
 %endif
 
 %description
@@ -128,6 +129,9 @@ install -pDm 644 man/osloconfig.1 %buildroot%_man1dir/osloconfig.1
 %endif
 
 %changelog
+* Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 9.4.0-alt1
+- Automatically updated to 9.4.0.
+
 * Wed Nov 01 2023 Grigory Ustinov <grenka@altlinux.org> 9.1.0-alt1
 - Automatically updated to 9.1.0.
 

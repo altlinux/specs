@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.3.0
-Release: alt1.1
+Version: 3.5.0
+Release: alt1
 
 Summary: OpenStack Orchestration API Client Library
 
@@ -33,7 +33,7 @@ BuildRequires: python3-module-yaml >= 3.12
 BuildRequires: python3-module-requests >= 2.14.2
 
 %if_with check
-BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-hacking >= 6.1.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-stestr >= 2.0.0
@@ -41,7 +41,6 @@ BuildRequires: python3-module-tempest >= 17.1.0
 BuildRequires: python3-module-testscenarios >= 0.4
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-requests-mock >= 1.2.0
-BuildRequires: python3-module-babel
 BuildRequires: python3-module-iso8601 >= 0.1.11
 %endif
 
@@ -123,6 +122,9 @@ install -pDm 644 tools/heat.bash_completion \
 %endif
 
 %changelog
+* Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 3.5.0-alt1
+- Automatically updated to 3.5.0.
+
 * Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1.1
 - Dropped build dependency on python3-module-reno.
 

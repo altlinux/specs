@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.2.0
-Release: alt1.2
+Version: 6.0.1
+Release: alt1
 
 Summary: OpenStack DNS-as-a-Service - Client
 
@@ -37,9 +37,9 @@ BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-tempest >= 25.0.0
 BuildRequires: python3-module-osc-lib-tests
+BuildRequires: python3-module-requests-mock >= 1.2.0
 BuildRequires: python3-module-jsonschema >= 3.2.0
 BuildRequires: python3-module-debtcollector >= 1.2.0
-BuildRequires: python3-module-requests-mock >= 1.2.0
 %endif
 
 %if_with docs
@@ -117,6 +117,9 @@ install -pDm 644 man/python-%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 6.0.1-alt1
+- Automatically updated to 6.0.1.
+
 * Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 5.2.0-alt1.2
 - Dropped build dependency on python3-module-reno.
 

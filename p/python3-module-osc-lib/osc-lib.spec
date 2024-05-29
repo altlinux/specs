@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.8.0
+Version: 3.0.1
 Release: alt1
 
 Summary: OpenStackClient Library
@@ -33,9 +33,9 @@ BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-stestr >= 1.0.0
 BuildRequires: python3-module-testtools >= 2.2.0
+BuildRequires: python3-module-requests-mock >= 1.1.0
 BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-oslotest >= 3.2.0
-BuildRequires: python3-module-requests-mock >= 1.1.0
 BuildRequires: python3-module-osprofiler >= 1.4.0
 %endif
 
@@ -112,6 +112,9 @@ install -pDm 644 man/openstackclientclibase.1 %buildroot%_man1dir/openstackclien
 %endif
 
 %changelog
+* Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
+- Automatically updated to 3.0.1.
+
 * Mon May 15 2023 Grigory Ustinov <grenka@altlinux.org> 2.8.0-alt1
 - Automatically updated to 2.8.0.
 
