@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: desktop-theme-deepin
-Version: 1.0.9
+Version: 1.0.13
 Release: alt1
 
 Summary: Deepin desktop theme.
@@ -75,7 +75,14 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_datadir/dsg/icons/organic-glass/
 %_datadir/dsg/icons/macaron/
 %_datadir/dsg/icons/square/
+%_datadir/dsg/icons/bloom-classic/
+%_datadir/dsg/icons/bloom-dark/
+%_datadir/dsg/icons/bloom/
+%_datadir/dsg/icons/vintage/
 
 %changelog
+* Wed May 29 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.13-alt1
+- New version 1.0.13.
+
 * Fri Nov 24 2023 Leontiy Volodin <lvol@altlinux.org> 1.0.9-alt1
 - Initial build for ALT Sisyphus.
