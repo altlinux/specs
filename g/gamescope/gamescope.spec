@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: gamescope
-Version: 3.14.11
+Version: 3.14.18
 Release: alt1
 
 Summary: SteamOS session compositing window manager
@@ -15,6 +15,8 @@ Url: https://github.com/Plagman/gamescope
 Source: %name-%version.tar
 Source1: submodules-%name-%version.tar
 Source2: stb.pc
+
+Patch1: gamescope-alt-NestedRefresh60.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -96,6 +98,7 @@ or corruption will be observed until the stack picks up DRM modifiers support.
 
 %prep
 %setup -a1
+%patch1 -p1
 
 mkdir -p pkgconfig
 cp -v %SOURCE2 pkgconfig/stb.pc
@@ -129,10 +132,15 @@ DESTDIR=%buildroot meson install -C %_cmake__builddir --skip-subprojects
 %files
 %doc LICENSE README.md
 %_bindir/gamescope
+%_bindir/gamescopestream
 %_libdir/libVkLayer_FROG_gamescope_wsi_*.so
 %_datadir/vulkan/implicit_layer.d/VkLayer_FROG_gamescope_wsi.*.json
 
 %changelog
+* Wed May 29 2024 Mikhail Tergoev <fidel@altlinux.org> 3.14.18-alt1
+- 3.14.18
+- Nested refresh = 60 and unfocused = 30 by default (ALT bug: 50107)
+
 * Thu May 02 2024 Mikhail Tergoev <fidel@altlinux.org> 3.14.11-alt1
 - 3.14.11
 
