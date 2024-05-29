@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -13,6 +13,9 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Source1: rtf.tar
+Patch0: kf5-kfilemetadata-5.115.0-rosa-add-rtf-extractor.patch
+Patch1: kf5-kfilemetadata-5.115.0-rosa-search-non-utf-content.patch
 
 # Automatically added by buildreq on Thu Feb 26 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils fontconfig libavcodec-devel libavutil-devel libcloog-isl4 libopencore-amrnb0 libopencore-amrwb0 libpoppler1-qt5 libqt5-core libqt5-gui libqt5-xml libstdc++-devel pkg-config python-base ruby ruby-stdlibs
@@ -25,7 +28,7 @@ BuildRequires: libexiv2-devel
 %endif
 BuildRequires: libattr-devel
 BuildRequires: libavdevice-devel libavformat-devel libpostproc-devel libswscale-devel
-BuildRequires: kf5-karchive-devel kf5-ki18n-devel kf5-kconfig-devel kf5-kcoreaddons-devel
+BuildRequires: kf5-karchive-devel kf5-ki18n-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kcodecs-devel
 
 %description
 KFileMetaData provides a simple library for extracting the text and metadata
@@ -57,6 +60,10 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%autopatch -p1
+pushd src/extractors
+    tar xvf %SOURCE1
+popd
 
 %build
 %K5build
@@ -81,6 +88,10 @@ KF5 library
 %_K5plug/kf5/kfilemetadata/
 
 %changelog
+* Tue May 28 2024 Ajrat Makhmutov <rauty@altlinux.org> 5.116.0-alt2
+- add RTF format support
+- add non-UTF content search support
+
 * Thu May 23 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt1
 - new version
 
