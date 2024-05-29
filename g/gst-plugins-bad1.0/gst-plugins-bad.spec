@@ -19,6 +19,7 @@
 %def_disable rtmp
 %def_enable openh264
 %def_enable chromaprint
+%def_enable v4l2codecs
 %def_enable gpl
 
 %ifnarch %e2k
@@ -40,7 +41,7 @@
 %def_disable doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -104,6 +105,7 @@ BuildRequires: liborc-test-devel gstreamer1.0-utils
 %{?_enable_rtmp:BuildRequires: librtmp-devel}
 %{?_enable_chromaprint:BuildRequires: libchromaprint-devel}
 %{?_enable_fdkaac:BuildRequires: pkgconfig(fdk-aac)}
+%{?_enable_v4l2codecs:BuildRequires: glibc-kernheaders pkgconfig(gudev-1.0)}
 # webrtc-audio-processing for webrtcdsp
 BuildRequires: libwebrtc-devel >= 0.3
 # since 1.13.x
@@ -225,6 +227,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Wed May 29 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.4-alt1
+- 1.24.4
+
 * Tue Apr 30 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.3-alt1
 - 1.24.3
 
