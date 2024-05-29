@@ -25,7 +25,7 @@
 %def_enable check
 
 Name: gdm
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: The GNOME Display Manager
@@ -310,6 +310,9 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Wed May 29 2024 Yuri N. Sedunov <aris@altlinux.org> 46.2-alt1
+- 46.2
+
 * Tue Mar 19 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 
