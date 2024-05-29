@@ -3,17 +3,16 @@
 %def_disable static
 
 Name: a52dec
-Version: 0.7.4
-Release: alt9
+Version: 0.8.0
+Release: alt1
 
 Summary: Library for decoding ATSC A/52 streams
 Summary(ru_RU.UTF-8): Библиотека для декодирования потоков ATSC A/52
 Group: Sound
-License: GPL
-Url: http://%_name.sourceforge.net
+License: GPL-2.0
+URL: https://git.adelielinux.org/community/a52dec
 
-Source: %url/files/%name-%version.tar.gz
-Patch: a52dec-0.7.4-alt-DSO.patch
+Source: %name-%version.tar
 Requires: %_name = %version-%release
 
 %if_enabled static
@@ -74,7 +73,6 @@ Static version of %_name libraries.
 
 %prep
 %setup
-%patch -p2
 
 %build
 %add_optflags %optflags_shared
@@ -103,6 +101,7 @@ rm -f %buildroot%_libdir/*.la
 %files -n %_name-devel
 %_includedir/*
 %_libdir/*.so
+%_libdir/pkgconfig/%_name.pc
 %doc doc/%_name.txt
 
 %if_enabled static
@@ -111,6 +110,9 @@ rm -f %buildroot%_libdir/*.la
 %endif
 
 %changelog
+* Wed May 29 2024 Grigory Ustinov <grenka@altlinux.org> 0.8.0-alt1
+- Build new version.
+
 * Wed Jun 06 2018 Grigory Ustinov <grenka@altlinux.org> 0.7.4-alt9
 - Add russian descriptions (Closes: #22773).
 
