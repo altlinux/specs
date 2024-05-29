@@ -1,6 +1,6 @@
 Name: alterator-vm
 Version: 0.4.42
-Release: alt2
+Release: alt3
 
 Summary: Alterator module for volume management
 License: GPL
@@ -37,6 +37,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Wed May 29 2024 Oleg Solovyov <mcpain@altlinux.org> 0.4.42-alt3
+- fix crash after auto-creating bios boot partition
+
 * Tue May 28 2024 Oleg Solovyov <mcpain@altlinux.org> 0.4.42-alt2
 - not enough space: typo
 
