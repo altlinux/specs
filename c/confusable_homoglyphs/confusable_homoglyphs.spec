@@ -1,16 +1,16 @@
-%define _unpackaged_files_terminate_build 1
-
 Name: confusable_homoglyphs
-Version: 3.0.0
-Release: alt2
+Version: 3.2.0
+Release: alt1
 
-Summary: A homoglyph is two or more very similar graphemes, characters, or glyphs.
+Summary: A homoglyph is two or more very similar graphemes, characters, or glyphs
+
 License: MIT
 Group: Text tools
-Url: https://pypi.python.org/pypi/confusable_homoglyphs/
+URL: https://pypi.org/project/confusable-homoglyphs
+VCS: https://git.sr.ht/~valhalla/confusable_homoglyphs
+
 BuildArch: noarch
 
-# git clone https://github.com/vhf/confusable_homoglyphs
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -78,8 +78,8 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 %python3_install
 
 export PYTHONPATH=%buildroot%python3_sitelibdir
-%make -C docs pickle
-%make -C docs html
+%make SPHINXBUILD="sphinx-build-3" -C docs pickle
+%make SPHINXBUILD="sphinx-build-3" -C docs html
 
 install -d %buildroot%python3_sitelibdir/%name
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%name/
@@ -104,8 +104,10 @@ mv tests/ %buildroot/%python3_sitelibdir/%name/
 %files -n python3-module-%name-tests
 %python3_sitelibdir/%name/tests
 
-
 %changelog
+* Wed May 29 2024 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
+- Automatically updated to 3.2.0.
+
 * Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt2
 - Fixed FTBFS.
 
