@@ -1,14 +1,16 @@
 %def_disable snapshot
 %define _name enchant
+%define ver_major 2.8
 %define api_ver 2
 
 %def_enable aspell
+%def_disable hspell
 %def_enable voikko
 %def_disable relocatable
 %def_disable check
 
 Name: %_name%api_ver
-Version: 2.6.4
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -17,18 +19,20 @@ Group: Text tools
 License: LGPL-2.1
 Url: https://abiword.github.io/%_name/
 
+Vcs: https://github.com/AbiWord/enchant.git
+
 %if_disabled snapshot
 Source: https://github.com/AbiWord/%_name/releases/download/v%version/%_name-%version.tar.gz
 %else
-Vcs: https://github.com/AbiWord/enchant.git
 Source: %_name-%version.tar
 %endif
 
 Requires:  lib%name = %EVR
 
-BuildRequires: gcc-c++ glib2-devel libdbus-glib-devel libhunspell-devel
+BuildRequires: vala-tools gcc-c++ libgio-devel libhunspell-devel
 BuildRequires: groff
 %{?_enable_aspell:BuildRequires: libaspell-devel}
+%{?_enable_hspell:BuildRequires: libhspell-devel}
 %{?_enable_voikko:BuildRequires: libvoikko-devel}
 %{?_enable_check:BuildRequires: libunittest-cpp-devel}
 
@@ -62,9 +66,7 @@ sed -i 's|\(AC_PREREQ(\[2.\)71|\169|' configure.ac
 %autoreconf
 %configure --disable-static \
     --disable-gcc-warnings \
-    %{subst_enable relocatable} \
-    --with-hunspell-dir=%_datadir/myspell \
-    %{?_enable_aspell:--with-aspell-dir=%_libdir/aspell} \
+    %{?_enable_check:--enable-relocatable}
 %nil
 %make_build
 
@@ -86,7 +88,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %dir %_libdir/%_name-%api_ver
 %_libdir/%_name-%api_ver/*.so
 %_datadir/%_name-%api_ver/
-%doc AUTHORS README NEWS
+%doc AUTHORS README* NEWS
 
 %exclude %_libdir/%_name-%api_ver/*.la
 
@@ -96,6 +98,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Wed May 29 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.8.0-alt1
+- 2.8.0
+
 * Tue Feb 06 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.6.4-alt1
 - rollback to 2.6.4
 
