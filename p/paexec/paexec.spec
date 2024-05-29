@@ -1,6 +1,6 @@
 Name: paexec
 Version: 1.1.5
-Release: alt1
+Release: alt2
 
 Summary: paexec distributes tasks over network or CPUs
 
@@ -17,7 +17,7 @@ BuildRequires: %_bindir/pod2man
 BuildRequires: mk-configure >= 0.34.2-alt4
 BuildRequires: rpm-macros-mk-configure
 BuildRequires: runawk
-BuildRequires: libmaa-devel
+BuildRequires: libmaa-devel >= 1.5.1
 
 Requires: runawk
 
@@ -63,6 +63,9 @@ export USE_TEST_BUFSIZES='1 10 100 1000'
 %doc examples
 
 %changelog
+* Thu May 30 2024 Aleksey Cheusov <cheusov@altlinux.org> 1.1.5-alt2
+- Requires libmaa >= 1.5.1
+
 * Wed May 29 2024 Aleksey Cheusov <cheusov@altlinux.org> 1.1.5-alt1
 - 1.1.5-alt1
 
