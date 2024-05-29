@@ -2,7 +2,7 @@
 
 Name: plasma5-welcome
 Version: 5.27.11
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -81,6 +81,9 @@ mkdir -p %buildroot/%_datadir/plasma-welcome-extra-pages{,-pre}
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed May 29 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt2
+- fix russian translation
+
 * Thu Mar 07 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt1
 - new version
 
