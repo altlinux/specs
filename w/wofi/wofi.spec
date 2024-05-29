@@ -1,18 +1,20 @@
 Name: wofi
-Version: 1.3
-Release: alt3
+Version: 1.4.1
+Release: alt1
 
 Summary: launcher/menu program for wlroots based wayland compositors such as sway
 License: GPLv3
 Group: Graphical desktop/Other
 
 Url: https://hg.sr.ht/~scoopta/wofi
-# is used hg-git
+
+# Source-url: https://hg.sr.ht/~scoopta/wofi/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires: meson
 BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: pkgconfig(gio-unix-2.0)
+BuildRequires: pkgconfig(gdk-pixbuf-2.0)
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires(pre): rpm-macros-meson
 
@@ -49,6 +51,10 @@ Summary: Development package for %name
 %_man3dir/*
 
 %changelog
+* Wed May 29 2024 Roman Alifanov <ximper@altlinux.org> 1.4.1-alt1
+- new version (1.4.1) with rpmgs script
+- move to tarball
+
 * Sun Nov 06 2022 Roman Alifanov <ximper@altlinux.org> 1.3-alt3
 - Added comment on use of hg-git
 
