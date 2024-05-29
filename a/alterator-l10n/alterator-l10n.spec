@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.142
+Version: 2.9.143
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -122,6 +122,9 @@ make check
 %lang(uz) %_datadir/locale/uz/LC_MESSAGES/*.mo
 
 %changelog
+* Tue May 28 2024 Oleg Solovyov <mcpain@altlinux.org> 2.9.143-alt1
+- alterator-vm: add space warnings
+
 * Mon Apr 01 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 2.9.142-alt1
 - alterator-vm: add information about disk cleaning
 
