@@ -2,7 +2,7 @@
 %define oname appier
 
 Name: python3-module-%oname
-Version: 1.33.4
+Version: 1.33.5
 Release: alt1
 
 Summary: Appier Framework
@@ -56,6 +56,9 @@ This package contains tests for Appier Framework.
 %python3_sitelibdir/*/test
 
 %changelog
+* Wed May 29 2024 Grigory Ustinov <grenka@altlinux.org> 1.33.5-alt1
+- Automatically updated to 1.33.5.
+
 * Fri May 10 2024 Grigory Ustinov <grenka@altlinux.org> 1.33.4-alt1
 - Automatically updated to 1.33.4.
 
