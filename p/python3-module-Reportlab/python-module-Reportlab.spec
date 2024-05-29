@@ -1,8 +1,10 @@
 %define rname reportlab
 %define oname Reportlab
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 3.6.13
+Version: 4.2.0
 Release: alt1
 
 Summary: The Reportlab Toolkit
@@ -20,6 +22,13 @@ BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python3-module-sphinx
 BuildRequires: libfreetype-devel
+
+%if_with check
+BuildRequires: python3-module-Pillow
+BuildRequires: python3-module-chardet
+%endif
+
+BuildArch: noarch
 
 %description
 The ReportLab Toolkit.
@@ -49,6 +58,9 @@ This package contains documentation for Reportlab Toolkit.
 %python3_install
 %python3_prune
 
+%check
+python3 setup.py tests
+
 %files
 %doc *.txt
 %python3_sitelibdir/%rname/
@@ -57,6 +69,10 @@ This package contains documentation for Reportlab Toolkit.
 %files docs
 %doc docs/build/html docs/userguide demos
 %changelog
+* Wed May 29 2024 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
+- Build new version.
+- Build with check.
+
 * Sun Oct 01 2023 Vitaly Lipatov <lav@altlinux.ru> 3.6.13-alt1
 - new version 3.6.13 (with rpmrb script)
 
