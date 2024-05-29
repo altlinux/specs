@@ -26,7 +26,7 @@
 
 Name: openqa
 Version: 4.6
-Release: alt15.1
+Release: alt16.git1c98e2217
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -511,6 +511,10 @@ fi
 %files single-instance-nginx
 
 %changelog
+* Tue May 28 2024 Alexandr Antonov <aas@altlinux.org> 4.6-alt16.git1c98e2217
+- update to current version
+- Commit hash: 1c98e2217
+
 * Tue May 14 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.6-alt15.1
 - NMU: build on LoongArch (no changes required)
 
