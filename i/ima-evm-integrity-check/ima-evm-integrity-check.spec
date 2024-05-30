@@ -2,7 +2,7 @@
 %def_without old_make_initrd
 
 Name: ima-evm-integrity-check
-Version: 0.7.4
+Version: 0.7.5
 Release: alt1
 
 Summary: IMA/EVM integrity check
@@ -49,6 +49,8 @@ Requires: make-initrd >= 0.7.6-alt1
 Conflicts: make-initrd >= 2.0.0
 %endif
 
+Requires: coreutils grep kmod mount
+
 Requires: keyutils ima-evm-utils
 Requires: filesystem >= 2.3.13-alt1.M80C.1
 Conflicts: cert-distro-updater
@@ -63,17 +65,16 @@ Integrity check feature for make-initrd
 %make_build libdir=%_libdir prefix=%_prefix sysconfdir=%_sysconfdir WITH_OLD_MI=%{with old_make_initrd}
 
 %install
-%makeinstall_std bindir=%_bindir sbindir=%_sbindir sysconfdir=%_sysconfdir datadir=%_datadir unitdir=%_unitdir libdir=%_libdir prefix=%_prefix controldir=%_controldir mandir=%_mandir WITH_OLD_MI=%{with old_make_initrd}
+%makeinstall_std bindir=%_bindir sbindir=%_sbindir sysconfdir=%_sysconfdir datadir=%_datadir unitdir=%_unitdir presetdir=%_presetdir libdir=%_libdir prefix=%_prefix controldir=%_controldir mandir=%_mandir WITH_OLD_MI=%{with old_make_initrd}
+
+%add_findreq_skiplist %_datadir/make-initrd/features/integrity/data/etc/rc.d/init.d/integrity
 
 %files
 %doc README
-%_sbindir/integrity-applier
-%_sbindir/integrity-remover
-%_sbindir/integrity-sign
-%_controldir/ima_appraise
-%_controldir/ima_hash
-%_sbindir/bootloader-utils.bash
+%_sbindir/*
+%_controldir/*
 %_unitdir/*
+%_presetdir/*
 %config(noreplace) %_sysconfdir/sysconfig/integrity
 %_sysconfdir/integrity/config
 %_man7dir/*.7.*
@@ -98,6 +99,25 @@ Integrity check feature for make-initrd
 %endif
 
 %changelog
+* Thu May 30 2024 Paul Wolneykien <manowar@altlinux.org> 0.7.5-alt1
+- Use 0x80000002 as the default EVM mode.
+- Automatically enable --with-evm for integrity-sign --verify if EVM
+  is enabled in the kernel.
+- Fix: Disable autoreq for integrity initrd script.
+- Added notes about new features (README and man).
+- Pass explicit EVM option via state file to Stage II.
+- Fix: Reconfigure bootloader on each stage.
+- Fix: Delete old /var/lib/integrity_update/default.
+- Don't touch filesystem immutable bit in EVM mode.
+- Added option --without-evm.
+- Run make-initrd with normal log output.
+- Allow to cancel loading the system if IMA policy fails to load.
+- Check loading of IMA and EVM policy at system boot (ima-check.service).
+- Load IMA policy at initrd stage only when ima_appraise=enforce.
+- Run make-initrd with normal log output.
+- Fixed OpenSSL GOST module path when copying to initrd.
+- Fix: Abort on some make-initrd errors.
+
 * Mon May 27 2024 Paul Wolneykien <manowar@altlinux.org> 0.7.4-alt1
 - Fix file signing log output: stderr or file.
 - Fix log of errors when signing the files.
