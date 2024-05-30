@@ -1,20 +1,24 @@
 %define oname sphinx-argparse
 
 Name: python3-module-%oname
-Version: 0.2.5
-Release: alt2
+Version: 0.4.0
+Release: alt1
 
 Summary: Sphinx extension that automatically document argparse commands and options
+
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/sphinx-argparse/
+URL: https://pypi.org/project/sphinx-argparse
+VCS: https://github.com/sphinx-doc/sphinx-argparse
+
 BuildArch: noarch
 
-# https://github.com/ribozz/sphinx-argparse.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-sphinx python3-module-pytest
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-poetry
+BuildRequires: python3-module-pkg_resources
 BuildRequires: python3-module-sphinx_rtd_theme
 BuildRequires: python3-module-pytest python3-module-commonmark
 
@@ -54,12 +58,12 @@ This package contains documentation for %oname.
 sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
-export PYTHONPATH=$PWD
+export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs pickle
 %make -C docs html
 
@@ -67,11 +71,12 @@ install -d %buildroot%python3_sitelibdir/%oname
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-%__python3 setup.py test
+%pyproject_run_pytest
 
 %files
 %doc *.md
-%python3_sitelibdir/*
+%python3_sitelibdir/sphinxarg
+%python3_sitelibdir/sphinx_argparse-%version.dist-info
 %exclude %python3_sitelibdir/*/pickle
 
 %files pickles
@@ -80,8 +85,10 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %files docs
 %doc docs/_build/html/*
 
-
 %changelog
+* Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 0.4.0-alt1
+- Build new version.
+
 * Sat Apr 03 2021 Grigory Ustinov <grenka@altlinux.org> 0.2.5-alt2
 - Fixed BuildRequires.
 
