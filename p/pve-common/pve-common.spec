@@ -2,8 +2,8 @@
 
 Name: pve-common
 Summary: PVE base library
-Version: 8.1.1
-Release: alt2
+Version: 8.1.2
+Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -77,8 +77,12 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Thu May 30 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.1.2-alt1
+- 8.1.2
+- fix for pvecm updatecerts to work with IPv6 link-local addrs (ALT #41408)
+
 * Wed Apr 03 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.1.1-alt2
-- add MTU support
+- add MTU support (ALT #49307)
 
 * Wed Mar 13 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.1.1-alt1
 - 8.1.1
