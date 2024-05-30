@@ -3,8 +3,8 @@
 %set_verify_elf_method strict
 
 Name: lightdm-kde-greeter
-Version: 0.4.22
-Release: alt2
+Version: 0.4.23
+Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE5 Greeter
 License: GPL-3.0+
@@ -102,6 +102,12 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Wed May 29 2024 Anton Golubev <golubevan@altlinux.org> 0.4.23-alt1
+- consider permissions and device availability in the NetworkManager
+  widget
+- add an option in the config to hide network widget
+- show hostname in the upper left corner
+
 * Tue May 28 2024 Anton Golubev <golubevan@altlinux.org> 0.4.22-alt2
 - remerge upstream, further development will be on invent.kde.org
 
