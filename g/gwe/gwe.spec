@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    gwe
-Version: 0.15.8
+Version: 0.15.9
 Release: alt1
 
 Summary: System utility designed to provide information, control the fans and overclock your NVIDIA card
@@ -59,6 +59,9 @@ and overclock your NVIDIA video card and graphics processor.
 %_iconsdir/hicolor/symbolic/apps/*.svg
 
 %changelog
+* Thu May 30 2024 Andrey Cherepanov <cas@altlinux.org> 0.15.9-alt1
+- New version.
+
 * Tue May 28 2024 Andrey Cherepanov <cas@altlinux.org> 0.15.8-alt1
 - New version.
 
