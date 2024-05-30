@@ -19,7 +19,7 @@
 
 Name: %{_name}2
 Version: 2.10.1
-Release: alt1
+Release: alt2
 
 Summary: Disk Management Service (Second Edition)
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.0
@@ -32,7 +32,7 @@ Source: https://github.com/storaged-project/%_name/releases/download/%_name-%ver
 Source: %_name-%version.tar
 %endif
 Source1: %name.control
-Patch20: udisks-2.10.0-disable-sanitize-log.patch
+Patch10: udisks-2.10.1-up-Ignore-ID_ATA-on-USB-devices.patch
 
 Obsoletes: %_name
 
@@ -171,7 +171,7 @@ This package contains UDisks module for iSCSI configuration.
 
 %prep
 %setup -n %_name-%version
-#%%patch20 -p2
+%patch10 -p1
 
 %build
 %autoreconf
@@ -291,6 +291,12 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Thu May 30 2024 Yuri N. Sedunov <aris@altlinux.org> 2.10.1-alt2
+- removed useless udisks-2.10.0-disable-sanitize-log.patch
+  disabled in previous release
+- applied upstream fix "Ignore ID_ATA on USB devices" proposed
+  in https://github.com/storaged-project/udisks/pull/1214
+
 * Fri Sep 08 2023 Yuri N. Sedunov <aris@altlinux.org> 2.10.1-alt1
 - 2.10.1
 - disabled "disable-sanitize-log.patch" from previous release
