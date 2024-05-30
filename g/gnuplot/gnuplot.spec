@@ -3,8 +3,8 @@
 
 Name: gnuplot
 Epoch: 1
-Version: 6.0.0
-Release: alt2
+Version: 6.0.1
+Release: alt1
 
 Summary: A program for plotting mathematical expressions and data
 Summary(ru_RU.UTF-8): Программа для построения графиков математических выражений и данных
@@ -266,6 +266,9 @@ rm -v demo/html/Makefile*
 %doc demo
 
 %changelog
+* Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 1:6.0.1-alt1
+- Automatically updated to 6.0.1.
+
 * Tue Apr 30 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:6.0.0-alt2
 - e2k: qt6 requires c++17
 
