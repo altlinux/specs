@@ -11,9 +11,10 @@
 # FIXME! needs running dbus-daemon
 %def_disable test
 %def_enable cli
+%def_enable midi
 
 Name: bluez-alsa
-Version: 4.1.1
+Version: 4.2.0
 Release: alt1
 Epoch: 5
 Summary: BlueZ ALSA backend for Linux
@@ -26,7 +27,7 @@ Packager: L.A. Kostis <lakostis@altlinux.ru>
 Source: %name-%version.tar
 
 Patch0: %name-%version-%release.patch
-Patch1: %name-4.0.0-alt-libfreeaptx.patch
+Patch1: %name-fix-include-freeaptx.patch
 
 Provides: alsa-plugins-bluealsa = %EVR, bluealsa = %EVR
 
@@ -63,7 +64,7 @@ Summary: Bash completion for %name
 Group: Shells
 BuildArch: noarch
 Requires: bash-completion
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n bash-completion-%name
 Bash completion for %name.
@@ -92,8 +93,10 @@ by pressing a key. To quit the program press the 'q' key, or use Ctrl-C.
 	%{subst_enable debug} \
 	%{subst_enable test} \
 	%{subst_enable cli} \
+	%{subst_enable midi} \
 	%{?_enable_aptx:--with-libfreeaptx --enable-aptx --enable-aptx-hd} \
 	--with-alsaconfdir=%_datadir/alsa/alsa.conf.d \
+	--with-systemdsystemunitdir=%_unitdir \
 	--with-bash-completion \
 	--with-bluealsauser=%b_user \
 	--with-bluealsaaplayuser=%b_user \
@@ -127,7 +130,7 @@ install -m0700 -d %buildroot%_localstatedir/%b_user
 %exclude %_bindir/hcitop
 %_libdir/alsa-lib/*.so
 %_datadir/alsa/alsa.conf.d/*.conf
-%_sysconfdir/dbus-1/system.d/*.conf
+%_datadir/dbus-1/system.d/*.conf
 %_unitdir/*.service
 %_man1dir/*
 %exclude %_man1dir/hcitop.1*
@@ -143,6 +146,11 @@ install -m0700 -d %buildroot%_localstatedir/%b_user
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Fri May 24 2024 L.A. Kostis <lakostis@altlinux.ru> 5:4.2.0-alt1
+- 4.2.0.
+- remove freeaptx patch (upstream fixed it).
+- enable LE MIDI support.
+
 * Sat Jul 01 2023 L.A. Kostis <lakostis@altlinux.ru> 5:4.1.1-alt1
 - 4.1.1.
 
