@@ -2,8 +2,8 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 126.0
-Release: alt2
+Version: 126.0.1
+Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
 URL: https://www.mozilla.org/firefox/
@@ -149,9 +149,8 @@ Mozilla Firefox - это веб-браузер с открытым исходн�
 %package -n firefox-config-privacy
 Summary:	Firefox configuration with the paranoid privacy settings
 Group:		System/Configuration/Networking
-BuildArch:	noarch
 
-Requires: %name >= %version-%release
+Requires: %name
 
 %description -n firefox-config-privacy
 Settings disable:
@@ -422,6 +421,10 @@ fi
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed May 29 2024 Ajrat Makhmutov <rauty@altlinux.org> 126.0.1-alt1
+- New version (126.0.1).
+- Package firefox-config-privacy for firefox architectures only.
+
 * Fri May 17 2024 Ajrat Makhmutov <rauty@altlinux.org> 126.0-alt2
 - Update encoding_rs to 0.8.34 to deal with rustc changes.
 
@@ -476,13 +479,14 @@ fi
 - New release (124.0.2).
 
 * Tue Apr 02 2024 Ajrat Makhmutov <rauty@altlinux.org> 124.0.1-alt2
-- Fix version detection (closes: 49859).
-
-* Tue Mar 26 2024 Ajrat Makhmutov <rauty@altlinux.org> 124.0.1-alt1
-- New release (124.0.1).
+- Really updated to 124.0.1 this time (closes: 49859).
 - Security fixes:
   + CVE-2024-29943: Out-of-bounds access via Range Analysis bypass
   + CVE-2024-29944: Privileged JavaScript Execution via Event Handlers
+
+* Tue Mar 26 2024 Ajrat Makhmutov <rauty@altlinux.org> 124.0.1-alt1
+- Version 124.0 is still here. A mistake was made by the maintainer
+  and the source code was not updated. The changelog has been edited.
 
 * Wed Mar 20 2024 Alexey Gladkov <legion@altlinux.ru> 124.0-alt1
 - New release (124.0).
