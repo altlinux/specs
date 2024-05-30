@@ -1,9 +1,9 @@
 %define _upver 1.3.4
-%define _datever 20200120
+%define _datever 20240123
 
 Name: mawk
 Version: %_upver.%_datever
-Release: alt3
+Release: alt1
 
 Summary: Implementation of New/POSIX AWK
 License: GPLv2+
@@ -50,6 +50,9 @@ This package contains examples for mawk.
 %doc examples/
 
 %changelog
+* Thu May 30 2024 Aleksey Cheusov <cheusov@altlinux.org> 1.3.4.20240123-alt1
+- 1.3.4.20240123
+
 * Wed May 20 2020 Aleksey Cheusov <cheusov@altlinux.org> 1.3.4.20200120-alt3
 - Minor clean-ups for spec
 
