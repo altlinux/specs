@@ -1,10 +1,10 @@
 %define oname openstackclient
-%def_without check
+%def_with check
 %def_with docs
 
 Name: python3-module-%oname
-Version: 6.2.0
-Release: alt1.2
+Version: 6.6.0
+Release: alt1
 
 Summary: OpenStack Command-line Client
 
@@ -15,6 +15,8 @@ Url: https://pypi.org/project/python-openstackclient
 Source: %oname-%version.tar
 Source1: %oname.watch
 
+Patch: fix_tests_on_python3.12.patch
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -23,10 +25,9 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-cliff >= 3.5.0
 BuildRequires: python3-module-iso8601 >= 0.1.11
-BuildRequires: python3-module-openstacksdk >= 0.103.0
+BuildRequires: python3-module-openstacksdk >= 2.0.0
 BuildRequires: python3-module-osc-lib >= 2.3.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
-BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-keystoneclient >= 3.17.0
 BuildRequires: python3-module-novaclient >= 9.1.0
 BuildRequires: python3-module-cinderclient >= 3.3.0
@@ -45,8 +46,9 @@ BuildRequires: python3-module-tempest >= 17.1.0
 BuildRequires: python3-module-wrapt >= 1.7.0
 BuildRequires: python3-module-ddt >= 1.0.1
 BuildRequires: python3-module-osc-lib-tests
-BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-requests-mock >= 1.2.0
+BuildRequires: python3-module-cryptography >= 2.7
+BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-osprofiler >= 1.4.0
 %endif
 
@@ -83,6 +85,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
+%patch -p1
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -128,6 +131,10 @@ install -pDm 644 man/openstack.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 6.6.0-alt1
+- Automatically updated to 6.6.0.
+- Built with check.
+
 * Fri Mar 01 2024 Grigory Ustinov <grenka@altlinux.org> 6.2.0-alt1.2
 - Built without check.
 

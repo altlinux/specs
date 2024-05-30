@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 6.7.0
+Version: 6.8.0
 Release: alt1
 
 Summary: OpenStack Cinder brick library for managing local volume attaches
@@ -134,6 +134,9 @@ mv %buildroot/usr/etc/os-brick/rootwrap.d/*.filters %buildroot%_sysconfdir/%onam
 %endif
 
 %changelog
+* Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 6.8.0-alt1
+- Automatically updated to 6.8.0.
+
 * Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 6.7.0-alt1
 - Automatically updated to 6.7.0.
 

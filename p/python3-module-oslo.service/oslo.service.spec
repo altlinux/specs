@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.4.0
+Version: 3.5.0
 Release: alt1
 
 Summary: OpenStack Oslo Service library
@@ -123,6 +123,9 @@ install -pDm 644 man/osloservice.1 %buildroot%_man1dir/osloservice.1
 %endif
 
 %changelog
+* Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 3.5.0-alt1
+- Automatically updated to 3.5.0.
+
 * Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 3.4.0-alt1
 - Automatically updated to 3.4.0.
 

@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 14.7.0
+Version: 14.8.0
 Release: alt1
 
 Summary: OpenStack Oslo Messaging API
@@ -53,8 +53,8 @@ BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-bandit >= 1.7.0
 BuildRequires: python3-module-eventlet >= 0.23.0
 BuildRequires: python3-module-pyngus >= 2.2.0
-BuildRequires: python3-module-futurist >= 1.2.0
 BuildRequires: python3-module-oslo.context >= 5.3.0
+BuildRequires: python3-module-futurist >= 1.2.0
 BuildRequires: python3-module-pre-commit >= 2.6.0
 BuildRequires: python3-module-greenlet >= 0.4.15
 %endif
@@ -138,6 +138,9 @@ install -pDm 644 man/oslomessaging.1 %buildroot%_man1dir/oslomessaging.1
 %endif
 
 %changelog
+* Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 1:14.8.0-alt1
+- Automatically updated to 14.8.0.
+
 * Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 1:14.7.0-alt1
 - Automatically updated to 14.7.0.
 

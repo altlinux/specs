@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 8.4.0
+Version: 8.5.0
 Release: alt1
 
 Summary: Client library for OpenStack DBaaS API
@@ -23,7 +23,6 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-prettytable >= 0.7.2
 BuildRequires: python3-module-requests >= 2.14.2
-BuildRequires: python3-module-simplejson >= 3.5.1
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-keystoneauth1 >= 3.4.0
@@ -121,6 +120,9 @@ install -pDm 644 man/python-%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 8.5.0-alt1
+- Automatically updated to 8.5.0.
+
 * Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 8.4.0-alt1
 - Automatically updated to 8.4.0.
 

@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.4.1
-Release: alt1.1
+Version: 3.0.0
+Release: alt1
 
 Summary: Useful additions to futures, from the future
 
@@ -110,6 +110,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
+- Automatically updated to 3.0.0.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 2.4.1-alt1.1
 - Moved on modern pyproject macros.
 

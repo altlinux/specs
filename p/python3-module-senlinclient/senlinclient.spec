@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.0.0
-Release: alt1.1
+Version: 3.1.0
+Release: alt1
 
 Summary: OpenStack Clustering API Client Library
 
@@ -18,7 +18,7 @@ Source1: %oname.watch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools >= 21.0.0
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-prettytable
@@ -46,7 +46,6 @@ BuildRequires: python3-module-osc-lib-tests
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-requests-mock >= 1.2.0
 BuildRequires: python3-module-oslotest >= 3.2.0
-BuildRequires: python3-module-setuptools >= 21.0.0
 BuildRequires: python3-module-testscenarios >= 0.4
 %endif
 
@@ -122,6 +121,9 @@ install -pDm 644 man/senlin.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
+- Automatically updated to 3.1.0.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1.1
 - Moved on modern pyproject macros.
 

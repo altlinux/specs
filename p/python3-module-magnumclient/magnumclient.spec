@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.4.0
+Version: 4.5.0
 Release: alt1
 
 Summary: OpenStack Client library for Magnum API
@@ -129,6 +129,9 @@ install -pDm 644 tools/magnum.bash_completion \
 %endif
 
 %changelog
+* Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt1
+- Automatically updated to 4.5.0.
+
 * Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 4.4.0-alt1
 - Automatically updated to 4.4.0.
 

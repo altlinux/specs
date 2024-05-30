@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.6.0
+Version: 4.7.0
 Release: alt1
 
 Summary: OpenStack Command Line Interface Formulation Framework
@@ -27,17 +27,17 @@ BuildRequires: python3-module-stevedore >= 2.0.1
 BuildRequires: python3-module-yaml >= 3.10.0
 
 %if_with check
-BuildRequires: python3-module-sphinx >= 2.0.0
+BuildRequires: python3-module-sphinx >= 5.0.0
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-stestr >= 1.0.0
 BuildRequires: python3-module-testscenarios >= 0.4
-BuildRequires: python3-module-coverage >= 4.0
-BuildRequires: python3-module-bandit >= 1.1.0
+BuildRequires: python3-module-coverage >= 5.0
+BuildRequires: python3-module-fixtures >= 3.0.0
 %endif
 
 %if_with docs
-BuildRequires: python3-module-sphinx >= 2.0.0
+BuildRequires: python3-module-sphinx >= 5.0.0
 BuildRequires: python3-module-importlib_metadata >= 4.4
 BuildRequires: python3-module-autopage >= 0.4.0
 %endif
@@ -109,6 +109,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 4.7.0-alt1
+- Automatically updated to 4.7.0.
+
 * Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 4.6.0-alt1
 - Automatically updated to 4.6.0.
 

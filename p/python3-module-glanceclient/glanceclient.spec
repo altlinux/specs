@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.5.0
+Version: 4.6.0
 Release: alt1
 
 Summary: OpenStack Image API Client Library
@@ -123,6 +123,9 @@ install -pDm 644 tools/glance.bash_completion \
 %endif
 
 %changelog
+* Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 4.6.0-alt1
+- Automatically updated to 4.6.0.
+
 * Wed May 29 2024 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt1
 - Automatically updated to 4.5.0.
 

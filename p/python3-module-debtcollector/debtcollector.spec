@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.5.0
-Release: alt1.2
+Version: 3.0.0
+Release: alt1
 
 Summary: A collection of Python deprecation patterns and strategies
 
@@ -25,9 +25,9 @@ BuildRequires: python3-module-wrapt >= 1.7.0
 
 %if_with check
 BuildRequires: python3-module-fixtures >= 3.0.0
-BuildRequires: python3-module-hacking >= 3.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-hacking >= 6.1.0
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
@@ -111,6 +111,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
+- Automatically updated to 3.0.0.
+
 * Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 2.5.0-alt1.2
 - Dropped build dependency on python3-module-reno.
 

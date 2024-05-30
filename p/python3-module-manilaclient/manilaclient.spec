@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.8.0
+Version: 4.9.0
 Release: alt1
 
 Summary: Client library for OpenStack Manila API.
@@ -123,6 +123,9 @@ install -pDm 644 tools/manila.bash_completion \
 %endif
 
 %changelog
+* Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 4.9.0-alt1
+- Automatically updated to 4.9.0.
+
 * Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 4.8.0-alt1
 - Automatically updated to 4.8.0.
 

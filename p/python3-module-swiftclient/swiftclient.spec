@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.5.0
+Version: 4.6.0
 Release: alt1
 
 Summary: OpenStack Object Storage API Client Library
@@ -108,6 +108,9 @@ install -pDm 644 tools/swift.bash_completion \
 %endif
 
 %changelog
+* Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 4.6.0-alt1
+- Automatically updated to 4.6.0.
+
 * Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt1
 - Automatically updated to 4.5.0.
 
