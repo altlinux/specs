@@ -6,7 +6,7 @@
 
 Name: dovecot
 Version: 2.3.21
-Release: alt1
+Release: alt2
 
 Summary: Dovecot secure IMAP/POP3 server
 License: MIT
@@ -18,8 +18,6 @@ Url: http://www.dovecot.org/
 Source0: %name-%version.tar
 Source1: dovecot.pam
 Source2: dovecot.init
-# XXX doesn't work for now
-Source3: dovecot-auth.control
 Source4: http://www.unicode.org/Public/UNIDATA/UnicodeData.txt
 Source5: %name.watch
 Source6: 90-dovecot.filetrigger
@@ -40,6 +38,7 @@ Requires(pre,postun): mailboxes-control
 
 BuildRequires: bzlib-devel
 BuildRequires: gcc-c++
+BuildRequires: libexpat-devel
 BuildRequires: libkrb5-devel
 BuildRequires: libldap-devel
 BuildRequires: libmysqlclient-devel
@@ -101,17 +100,18 @@ xz -9 ChangeLog
 export ACLOCAL='aclocal -I .'
 %autoreconf
 %configure \
-	    --localstatedir=%_var                   \
-	    --with-moduledir=%_libdir/%name/modules \
-	    --disable-static                        \
-	    --with-ssl=openssl                      \
-	    --with-ssldir=%_ssldir                  \
-	    --with-pgsql                            \
-	    --with-mysql                            \
-	    --with-sqlite                           \
-	    --with-ldap                             \
-	    --with-gssapi                           \
-	    #
+    --localstatedir=%_var \
+    --with-moduledir=%_libdir/%name/modules \
+    --disable-static \
+    --with-ssl=openssl \
+    --with-ssldir=%_ssldir \
+    --with-gssapi=plugin \
+    --with-ldap=plugin \
+    --with-sql=plugin \
+    --with-mysql \
+    --with-pgsql \
+    --with-solr \
+    --with-sqlite \
 
 # setup right ssl directory
 sed -i 's|/etc/ssl|%_ssldir|' doc/mkcert.sh doc/example-config/conf.d/10-ssl.conf
@@ -161,8 +161,8 @@ rm -f %buildroot%_man1dir/dovecot-sysreport.1*
 mkdir -p %buildroot%_tmpfilesdir
 cat >%buildroot%_tmpfilesdir/%name.conf<<END
 d /run/dovecot 0755 root root -
-d /run/dovecot/empty 0750 root root -
-d /run/dovecot/login 0700 root root -
+d /run/dovecot/empty 0755 root root -
+d /run/dovecot/login 0750 root dovenull -
 END
 
 install -pD %SOURCE6 %buildroot%_rpmlibdir/90-%name.filetrigger
@@ -221,6 +221,12 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Fri May 31 2024 Andrey Cherepanov <cas@altlinux.org> 2.3.21-alt2
+- Fixed tmpfile rule permission (ALT #39249).
+- Completely removed control dovecot-auth (ALT #28373).
+- Built with SOLR support (ALT #41251).
+- Built gssapi and ldap support as plugins (ALT #49253).
+
 * Mon Sep 18 2023 Andrey Cherepanov <cas@altlinux.org> 2.3.21-alt1
 - Updated to 2.3.21.
 
