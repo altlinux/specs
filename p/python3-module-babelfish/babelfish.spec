@@ -4,17 +4,17 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.6.0
-Release: alt2.1
+Version: 0.6.1
+Release: alt1
 
 Summary: A module to work with countries and languages
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.org/project/babelfish/
+URL: https://pypi.org/project/babelfish
+VCS: https://github.com/Diaoul/babelfish
 
 BuildArch: noarch
 
-# https://github.com/Diaoul/babelfish.git
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
@@ -50,6 +50,9 @@ BabelFish is a Python library to work with countries and languages.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri May 31 2024 Grigory Ustinov <grenka@altlinux.org> 0.6.1-alt1
+- Automatically updated to 0.6.1.
+
 * Fri Jan 26 2024 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt2.1
 - NMU: fixed FTBFS.
 
