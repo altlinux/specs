@@ -2,9 +2,18 @@
 %define _libexecdir /usr/libexec
 %define proxy_user backup
 
+%ifdef _priority_distbranch
+%define altbranch %_priority_distbranch
+%else
+%define altbranch %(rpm --eval %%_priority_distbranch)
+%endif
+%if "%altbranch" == "%nil"
+%define altbranch sisyphus
+%endif
+
 Name: proxmox-backup
 Version: 3.1.5.1
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -26,7 +35,9 @@ BuildRequires: libudev-devel libssl-devel libacl-devel libsystemd-devel libpam-d
 BuildRequires: libsgutils-devel python3-module-sphinx python3-module-docutils python3-module-sphinx-sphinx-build-symlink
 BuildRequires: proxmox-widget-toolkit-dev
 BuildRequires: rsync jq
+%if "%altbranch" == "sisyphus" || "%altbranch" == "p11"
 BuildRequires: pkgconf
+%endif
 BuildRequires: /proc
 
 %description
@@ -209,6 +220,9 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/doc/%name
 
 %changelog
+* Fri May 31 2024 Andrew A. Vasilyev <andy@altlinux.org> 1:3.1.5.1-alt3
+- fix build for p10
+
 * Fri May 31 2024 Andrew A. Vasilyev <andy@altlinux.org> 1:3.1.5.1-alt2
 - add 60-proxmox-backup-server.rules for tapes
 
