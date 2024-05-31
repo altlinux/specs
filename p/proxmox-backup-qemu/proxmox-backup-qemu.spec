@@ -3,7 +3,7 @@
 Name: proxmox-backup-qemu
 Summary: Proxmox Backup Server client library for QEMU
 Version: 1.4.1
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: Archiving/Backup
 Url: https://git.proxmox.com/?p=proxmox-backup-qemu.git
@@ -77,6 +77,9 @@ ln -s libproxmox_backup_qemu.so.0 %buildroot%_libdir/libproxmox_backup_qemu.so
 %_libdir/*.so
 
 %changelog
+* Wed Apr 03 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1-alt2
+- update cargo vendor
+
 * Mon Dec 04 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1-alt1
 - 1.4.1
 

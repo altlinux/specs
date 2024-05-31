@@ -3,7 +3,7 @@
 
 Name: proxmox-perl-rs
 Version: 0.3.3
-Release: alt1
+Release: alt2
 Summary: PVE and PMG common parts which have been ported to Rust
 License: AGPL-3.0+
 Group: Development/Other
@@ -73,6 +73,10 @@ sed -i 's|/usr/lib/perlmod/genpackage.pl|./genpackage.pl|'  common/pkg/Makefile 
 # Build only in pve-rs:
 pushd pve-rs
 %make
+popd
+pushd common/pkg
+%make
+popd
 
 %install
 pushd pve-rs
@@ -103,6 +107,9 @@ LD_LIBRARY_PATH='$LD_LIBRARY_PATH:../target/release' make check
 
 
 %changelog
+* Wed Apr 03 2024 Andrew A. Vasilyev <andy@altlinux.org> 0.3.3-alt2
+- update cargo vendor
+
 * Thu Feb 22 2024 Andrew A. Vasilyev <andy@altlinux.org> 0.3.3-alt1
 - Update:
   + libproxmox-rs-perl 0.3.3

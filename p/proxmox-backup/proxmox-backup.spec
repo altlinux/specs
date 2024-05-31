@@ -4,7 +4,7 @@
 
 Name: proxmox-backup
 Version: 3.1.5.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -63,6 +63,7 @@ simple command line tool to create and restore backups.
 %package file-restore
 Summary: Proxmox Backup single file restore tools for pxar and block device backups
 Group: Archiving/Backup
+Requires: pve-backup-restore-image pve-qemu >= 5.0.0
 Provides: pve-backup-file-restore = %EVR
 Obsoletes: pve-backup-file-restore < %EVR
 
@@ -110,10 +111,12 @@ for u in proxmox-backup.service proxmox-backup-proxy.service proxmox-backup-dail
 done
 
 install -dm755 %buildroot%_datadir/bash-completion/completions
+install -dm755 %buildroot%_udevrulesdir
 pushd debian
 for b in *.bc ; do
     install -m644 $b %buildroot%_datadir/bash-completion/completions/${b%%.*}
 done
+install -m644 proxmox-backup-server.udev %buildroot%_udevrulesdir/60-proxmox-backup-server.rules
 popd
 
 mkdir -p %buildroot%_sysconfdir/%name
@@ -180,6 +183,7 @@ usermod -a -G tape %proxy_user ||:
 %_man1dir/proxmox-backup-proxy.1*
 %_man1dir/proxmox-backup-debug.1*
 %_man5dir/*.5*
+%_udevrulesdir/60-proxmox-backup-server.rules
 
 %files client
 %doc debian/copyright
@@ -205,6 +209,9 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/doc/%name
 
 %changelog
+* Fri May 31 2024 Andrew A. Vasilyev <andy@altlinux.org> 1:3.1.5.1-alt2
+- add 60-proxmox-backup-server.rules for tapes
+
 * Tue Mar 26 2024 Andrew A. Vasilyev <andy@altlinux.org> 1:3.1.5.1-alt1
 - 3.1.5-1
 
