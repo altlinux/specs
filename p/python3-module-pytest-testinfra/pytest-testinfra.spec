@@ -1,31 +1,47 @@
 %define _unpackaged_files_terminate_build 1
 
-%define oname pytest-testinfra
+%define pypi_name pytest-testinfra
+%define mod_name testinfra
 
-Name: python3-module-%oname
-Version: 10.0.0
+%def_with check
+
+%define add_python_extra() \
+%{expand:%%package -n %%name+%1 \
+Summary: %%summary \
+Group: Development/Python3 \
+Requires: %%name \
+%{expand:%%pyproject_runtimedeps_metadata -- --extra %1} \
+%%description -n %%name+%1' \
+Extra "%1" for %%pypi_name. \
+%%files -n %%name+%1 \
+}
+
+Name: python3-module-%pypi_name
+Version: 10.1.1
 Release: alt1
 Summary: pytest plugin for infrastructure testing
 License: Apache-2.0
 Group: Development/Python3
-Url: https://github.com/pytest-dev/pytest-testinfra
-
+Url: https://pypi.org/project/pytest-testinfra/
+Vcs: https://github.com/pytest-dev/pytest-testinfra
 BuildArch: noarch
-
-# https://github.com/pytest-dev/pytest-testinfra.git
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-# Testing requirements
-BuildRequires: ansible
-BuildRequires: python3(pytest)
-BuildRequires: python3(salt)
-BuildRequires: python3(winrm)
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+# manually manage extra dependencies with metadata
+AutoReq: yes, nopython3
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 BuildRequires: /proc
+%endif
+
+%add_python_extra ansible
+%add_python_extra paramiko
+%add_python_extra winrm
+%add_python_extra salt
 
 %description
 With Testinfra you can write unit tests in Python to test actual state of your
@@ -35,26 +51,31 @@ plugin to the powerful Pytest test engine
 
 %prep
 %setup
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile test-requirements.txt
+%endif
 
 %build
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_install
 
 %check
-%__python3 -m pytest test -v
+%pyproject_run_pytest -ra test
 
 %files
-%doc LICENSE
 %doc CHANGELOG.rst README.rst
-%python3_sitelibdir/testinfra/
-%python3_sitelibdir/pytest_testinfra-*.dist-info/
-
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri May 31 2024 Stanislav Levin <slev@altlinux.org> 10.1.1-alt1
+- 10.0.0 -> 10.1.1.
+
 * Mon Dec 18 2023 Slava Aseev <ptrnine@altlinux.org> 10.0.0-alt1
 - New version
 

@@ -7,7 +7,7 @@
 
 Name:       python3-module-%mod_name
 Version:    0.4.3
-Release:    alt1
+Release:    alt2
 
 Summary:    Python library for Windows Remote Management
 License:    MIT
@@ -42,6 +42,9 @@ BuildRequires: python3(wheel)
 %endif
 
 %py3_provides %pypi_name
+
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 
 %description
 %pypi_name is a Python client for the Windows Remote Management (WinRM)
@@ -82,6 +85,9 @@ py.test3 -v winrm/tests/
 
 
 %changelog
+* Fri May 31 2024 Stanislav Levin <slev@altlinux.org> 0.4.3-alt2
+- Mapped PyPI name to distro's one.
+
 * Mon Oct 23 2023 Anton Vyatkin <toni@altlinux.org> 0.4.3-alt1
 - NMU: New version 0.4.3.
 
