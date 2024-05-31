@@ -1,6 +1,6 @@
 Name: python3-module-potr
-Version: 1.0.1
-Release: alt2
+Version: 1.0.2
+Release: alt1
 Summary: Python Off-The-Record encryption
 Group: Development/Python3
 License: LGPLv3+
@@ -24,9 +24,12 @@ This is a pure Python OTR implementation; it does not bind to libotr.
 
 %files
 %doc src/tools/convertkey.py CHANGELOG PKG-INFO
-%python3_sitelibdir_noarch/*
+%python3_sitelibdir/*
 
 %changelog
+* Fri May 31 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt1
+- Build new version.
+
 * Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt2
 - Drop python2 support.
 
