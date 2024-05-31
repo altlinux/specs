@@ -12,8 +12,8 @@
 %def_enable check
 
 Name: libdex
-Version: %ver_major.0
-Release: alt1.1%beta
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: Dex provides Future-based programming for GLib-based applications
 Group: System/Libraries
@@ -141,6 +141,9 @@ This package contains Dex example programs.
 %endif
 
 %changelog
+* Fri May 31 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
+- 0.6.1
+
 * Thu Mar 28 2024 Michael Shigorin <mike@altlinux.org> 0.6.0-alt1.1
 - E2K: add fibers port (ilyakurdyukov@)
 

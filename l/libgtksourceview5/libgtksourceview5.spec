@@ -20,7 +20,7 @@
 %endif
 
 Name: lib%{_name}%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GtkSourceView text widget library
@@ -137,7 +137,6 @@ dbus-run-session xvfb-run %__meson_test
 %doc AUTHORS NEWS README*
 
 %files devel
-%_bindir/%_name%api_ver-widget
 %_includedir/%_name-%api_ver/
 %_libdir/lib%_name-%api_ver.so
 %_pkgconfigdir/%_name-%api_ver.pc
@@ -162,12 +161,16 @@ dbus-run-session xvfb-run %__meson_test
 
 %if_enabled installed_tests
 %files tests
+%_bindir/%_name%api_ver-widget
 %_libexecdir/installed-tests/%_name-%api_ver/
 %_datadir/installed-tests/%_name-%api_ver/
 %endif
 
 
 %changelog
+* Fri May 31 2024 Yuri N. Sedunov <aris@altlinux.org> 5.12.1-alt1
+- 5.12.1
+
 * Sat Mar 16 2024 Yuri N. Sedunov <aris@altlinux.org> 5.12.0-alt1
 - 5.12.0
 

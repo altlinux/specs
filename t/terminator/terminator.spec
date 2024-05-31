@@ -4,8 +4,8 @@
 %def_enable check
 
 Name: terminator
-Version: %ver_major.3
-Release: alt1.1
+Version: %ver_major.4
+Release: alt1
 
 Summary: Store and run multiple GNOME terminals in one window
 Group: Terminals
@@ -21,7 +21,6 @@ Source: %name-%version.tar
 
 # fc
 Patch: %name-1.91-fc-fix-desktop-file.patch
-Patch1: %name-2.1.2-alt-no-pytest-runner.patch
 
 BuildArch: noarch
 
@@ -50,7 +49,6 @@ different tasks.
 %setup
 sed -i '/#! \?\/usr.*/d' terminatorlib/*.py
 %patch
-%patch1 -b .no-pytest-runner
 
 %build
 %pyproject_build
@@ -79,6 +77,9 @@ xvfb-run py.test-3
 %doc README* CHANGELOG*
 
 %changelog
+* Fri May 31 2024 Yuri N. Sedunov <aris@altlinux.org> 2.1.4-alt1
+- 2.1.4
+
 * Fri Nov 10 2023 Yuri N. Sedunov <aris@altlinux.org> 2.1.3-alt1.1
 - explicitly required typelib(Vte) = 2.91
 
