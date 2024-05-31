@@ -1,6 +1,6 @@
 Name: sdcc
 Version: 4.4.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Small Device C Compiler
@@ -66,6 +66,8 @@ sed -ri '/^extern char \*(copying|warranty)/ s,char ,const char ,' \
 	sim/ucsim/globals.h
 
 %build
+#https://github.com/boostorg/container/issues/281
+%define _optlevel 1
 %configure \
 	--docdir=%_docdir/%name-%version \
 	--enable-werror=no \
@@ -92,6 +94,9 @@ rm -vf %buildroot%_man1dir/serialview*
 %_docdir/%name-%version
 
 %changelog
+* Thu May 30 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1:4.4.0-alt2
+- fixed build with boost 1.85
+
 * Wed Jan 31 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:4.4.0-alt1
 - 4.4.0
 
