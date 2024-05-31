@@ -1,6 +1,6 @@
 Name: e4rat
 Version: 0.2.3
-Release: alt9
+Release: alt9.1
 
 Summary: e4rat is a toolset to accelerate the boot process as well as application startups
 
@@ -18,6 +18,7 @@ Patch3: %name-%version-alt-toolchain-compat.patch
 Patch4: %name-%version-alt-boost-1.73.0-compat.patch
 Patch5: %name-%version-alt-boost-1.76.0-compat.patch
 Patch6: %name-%version-alt-audit-3.0.7-compat.patch
+Patch7: %name-%version-alt-fix-for-boost-1.85.0.patch
 
 Requires: lsof
 
@@ -49,6 +50,7 @@ types and/or earlier versions of extended filesystems are not supported.
 %patch4 -p2
 %patch5 -p2
 %patch6 -p2
+%patch7 -p2
 
 %build
 %cmake_insource
@@ -74,6 +76,9 @@ rm -f %buildroot%_libdir/libe4rat-core.a
 %dir %_localstatedir/%name
 
 %changelog
+* Fri May 31 2024 Ivan A. Melnikov <iv@altlinux.org> 0.2.3-alt9.1
+- NMU: fix build with boost 1.85.0
+
 * Mon Jul 31 2023 Vitaly Lipatov <lav@altlinux.ru> 0.2.3-alt9
 - Rebuilt with boost-1.82.0.
 
