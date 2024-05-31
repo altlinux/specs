@@ -1,12 +1,13 @@
 Name: midish
-Version: 1.3.0
+Version: 1.3.3
 Release: alt1
 Summary: MIDI sequencer/filter
 Group: Sound
-Url: http://www.midish.org/
+URL: http://www.midish.org
+VCS: https://caoua.org/git/midish
 License: BSD
 
-Source: %name.tar
+Source: %name-%version.tar
 
 # Automatically added by buildreq on Wed Aug 02 2017
 BuildRequires: libalsa-devel libreadline-devel
@@ -29,7 +30,7 @@ Important features:
     - system exclusive messages handling
 
 %prep
-%setup -n %name
+%setup
 
 %build
 ./configure --prefix=/usr
@@ -48,6 +49,9 @@ mv %buildroot/usr/share/doc/midish inst_docs
 %doc README manual.html examples
 
 %changelog
+* Fri May 31 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.3-alt1
+- Build new version.
+
 * Wed Aug 14 2019 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
 - Build new version.
 
