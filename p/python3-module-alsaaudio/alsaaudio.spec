@@ -1,20 +1,22 @@
 %define oname alsaaudio
 
 Name: python3-module-%oname
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 
 Summary: Wrapper for accessing the ALSA API from Python
 
 License: PSF
 Group: Development/Python3
-Url: https://pypi.org/project/pyalsaaudio
+URL: https://pypi.org/project/pyalsaaudio
+VCS: https://github.com/larsimmisch/pyalsaaudio
 
-# https://github.com/larsimmisch/pyalsaaudio
 Source: %name-%version.tar
 
 BuildRequires: libalsa-devel
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 This package contains wrappers for accessing the ALSA API from Python. It
@@ -25,17 +27,20 @@ sequencer support is low on our priority list, but volunteers are welcome.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc *.md
 %python3_sitelibdir/%oname.cpython-*.so
-%python3_sitelibdir/py%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/py%oname-%version.dist-info
 
 %changelog
+* Fri May 31 2024 Grigory Ustinov <grenka@altlinux.org> 0.11.0-alt1
+- Automatically updated to 0.11.0.
+
 * Thu May 18 2023 Grigory Ustinov <grenka@altlinux.org> 0.10.0-alt1
 - Automatically updated to 0.10.0.
 
