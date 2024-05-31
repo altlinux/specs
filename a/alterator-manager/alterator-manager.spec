@@ -1,7 +1,7 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.20
+Version: 0.1.21
 Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
@@ -78,6 +78,11 @@ mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager-user.service \
 
 
 %changelog
+* Fri May 31 2024 Ivan Savin <svn17@altlinux.org> 0.1.21-alt1
+- Add missing g_module_close() and remove unnecessary g_free().
+- Add parameter 'object' to method 'GetSignals' on object /ru/basealt/alterator
+  in interface ru.baseatl.alterator.manager.
+
 * Tue May 28 2024 Ivan Savin <svn17@altlinux.org> 0.1.20-alt1
 - Add GetAllObjects and GetAllInterfaces to ru.basealt.alterator.manager
   on /ru/basealt/alterator.
