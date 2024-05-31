@@ -7,7 +7,7 @@
 %def_enable oidc_auth
 
 Name: ocserv
-Version: 1.2.4
+Version: 1.3.0
 Release: alt1
 
 Summary: OpenConnect SSL VPN server
@@ -45,6 +45,7 @@ BuildRequires: gperf
 BuildRequires: haproxy
 BuildRequires: openconnect
 BuildRequires: curl
+BuildRequires: ipcalc
 BuildRequires: gssntlmssp
 BuildRequires: /proc
 %if_enabled man
@@ -109,9 +110,9 @@ export PATH=/sbin:/usr/sbin:$PATH
 %make check VERBOSE=1
 
 %pre
-%_sbindir/groupadd -r -f %name 2>/dev/null ||:
-%_sbindir/useradd -r -g %name -G %name  -c 'Ocserv VPN Daemon' \
-        -s /sbin/nologin  -d %_localstatedir/lib/%name %name 2>/dev/null ||:
+groupadd -r -f %name 2>/dev/null ||:
+useradd -r -g %name -G %name  -c 'Ocserv VPN Daemon' \
+        -s /sbin/nologin  -d %_sharedstatedir/%name %name 2>/dev/null ||:
 
 %post
 %post_service %name
@@ -121,10 +122,10 @@ export PATH=/sbin:/usr/sbin:$PATH
 
 %files
 %doc NEWS COPYING README.md
-%dir %_localstatedir/lib/ocserv
-%dir %_sysconfdir/ocserv
-%config(noreplace) %_sysconfdir/ocserv/ocserv.conf
-%config(noreplace) %_sysconfdir/pam.d/ocserv
+%dir %_sharedstatedir/%name
+%dir %_sysconfdir/%name
+%config(noreplace) %_sysconfdir/%name/%{name}.conf
+%config(noreplace) %_sysconfdir/pam.d/%name
 %if_enabled man
 %_man8dir/*
 %endif
@@ -134,11 +135,14 @@ export PATH=/sbin:/usr/sbin:$PATH
 %_sbindir/%name
 %_sbindir/%name-worker
 %_libexecdir/%name-fw
-%_localstatedir/lib/ocserv/profile.xml
-%_unitdir/%name.service
+%_sharedstatedir/ocserv/profile.xml
+%_unitdir/%{name}.service
 %_initdir/%name
 
 %changelog
+* Fri May 31 2024 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt1
+- New version 1.3.0.
+
 * Fri Jan 26 2024 Alexey Shabalin <shaba@altlinux.org> 1.2.4-alt1
 - New version 1.2.4.
 
