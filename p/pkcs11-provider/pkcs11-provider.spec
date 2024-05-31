@@ -3,7 +3,7 @@
 %def_with check
 
 Name: pkcs11-provider
-Version: 0.3
+Version: 0.4
 Release: alt1
 Summary: A PKCS#11 provider for OpenSSL 3.0+
 License: Apache-2.0
@@ -12,10 +12,11 @@ Url: https://github.com/latchset/pkcs11-provider
 Source: %name-%version.tar
 
 # BUILD.md
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
 BuildRequires: openssl-devel >= 3.0.7
 BuildRequires: pkgconfig(p11-kit-1)
 BuildRequires: gcc
-BuildRequires: autoconf-archive
 
 %if_with check
 BuildRequires: /dev/pts
@@ -39,27 +40,23 @@ compatible to previous versions as well.
 %setup
 
 %build
-%autoreconf
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-
-# don't package libtool's .la files
-rm %buildroot%_libdir/ossl-modules/*.la
-
-cp -a HOWTO.md %buildroot%_docdir/%name/
+%meson_install
 
 %check
-# per upstream comment: do not run them in parrallel
-make check || { cat tests/*.log; exit 1; }
+%meson_test
 
 %files
-%doc %_docdir/%name
+%doc HOWTO.md README.md
 %_man7dir/provider-pkcs11.*
 %_libdir/ossl-modules/pkcs11.so
 
 %changelog
+* Mon May 27 2024 Stanislav Levin <slev@altlinux.org> 0.4-alt1
+- 0.3 -> 0.4.
+
 * Thu Feb 29 2024 Stanislav Levin <slev@altlinux.org> 0.3-alt1
 - Initial build for Sisyphus.
