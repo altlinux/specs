@@ -4,7 +4,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: cni
-Version: 1.1.2
+Version: 1.2.0
 Release: alt1
 Summary: Container Network Interface - networking for Linux containers
 Group: Development/Other
@@ -16,7 +16,8 @@ ExclusiveArch: %go_arches
 Provides: containernetworking-cni = %EVR
 Provides: cnitool = %EVR
 
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang golang >= 1.21
 BuildRequires: /proc
 
 %description
@@ -65,6 +66,9 @@ rm -f %buildroot%_bindir/{noop,sleep}
 %_bindir/*
 
 %changelog
+* Fri May 31 2024 Alexey Shabalin <shaba@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Sun Jan 22 2023 Alexey Shabalin <shaba@altlinux.org> 1.1.2-alt1
 - 1.1.2
 
