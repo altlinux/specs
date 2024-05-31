@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        125.0.6422.112
+Version:        125.0.6422.141
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -524,6 +524,17 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri May 31 2024 Andrey Cherepanov <cas@altlinux.org> 125.0.6422.141-alt1
+- New version (125.0.6422.141).
+- Security fixes:
+  + CVE-2024-5493: Heap buffer overflow in WebRTC.
+  + CVE-2024-5494: Use after free in Dawn.
+  + CVE-2024-5495: Use after free in Dawn.
+  + CVE-2024-5496: Use after free in Media Session.
+  + CVE-2024-5497: Out of bounds memory access in Keyboard Inputs.
+  + CVE-2024-5498: Use after free in Presentation API.
+  + CVE-2024-5499: Out of bounds write in Streams API.
+
 * Sat May 25 2024 Andrey Cherepanov <cas@altlinux.org> 125.0.6422.112-alt1
 - New version (125.0.6422.112).
 - Security fixes:
