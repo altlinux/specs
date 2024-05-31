@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: tpm2-tss
-Version: 4.1.0
+Version: 4.1.3
 Release: alt1
 Summary: TPM2.0 Software Stack
 # The entire source code is under BSD except implementation.h and tpmb.h which
@@ -124,6 +124,9 @@ useradd -g tss -c 'TPM2 Software Stack User' \
 %_man7dir/*
 
 %changelog
+* Fri May 31 2024 Alexey Shabalin <shaba@altlinux.org> 4.1.3-alt1
+- New version 4.1.3.
+
 * Fri May 03 2024 Alexey Shabalin <shaba@altlinux.org> 4.1.0-alt1
 - New version 4.1.0 (Fixes: CVE-2024-29040).
 
