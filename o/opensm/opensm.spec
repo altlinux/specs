@@ -6,12 +6,12 @@
 Name: opensm
 %define lname lib%name
 Summary: InfiniBand subnet manager and administration
-Version: 3.3.22
+Version: 3.3.24
 Release: alt1
-License: %gpl2only
+License: GPL-2.0-only
 Group: Networking/Other
-URL: http://openib.org
-# https://github.com/linux-rdma/opensm.git
+Url: https://github.com/linux-rdma/opensm
+Vcs: https://github.com/linux-rdma/opensm.git
 Source0: %name-%version.tar
 Source1: %name.init
 Source2: %name.service
@@ -22,7 +22,6 @@ Requires: lib%name = %version-%release
 Provides: %{name}2 = %version-%release
 Obsoletes: %{name}2 < %version-%release
 
-BuildRequires(pre): rpm-build-licenses
 BuildRequires: flex rdma-core-devel 
 
 %description
@@ -87,7 +86,7 @@ install -D -m 0755 %SOURCE1 %buildroot%_initdir/%name
 install -D -m 0644 %SOURCE2 %buildroot%_unitdir/%name.service
 install -D -m 0755 %SOURCE3 %buildroot%_libexecdir/%name-launch
 install -D -m 0644 scripts/opensm.logrotate %buildroot%_logrotatedir/opensm
-cat > %buildroot/%_sysconfdir/sysconfig/%name <<__CONF__
+cat > %buildroot%_sysconfdir/sysconfig/%name <<__CONF__
 OSM_ARGS=
 OSM_HOSTS=
 __CONF__
@@ -128,6 +127,9 @@ rm -f %buildroot/etc/init.d/opensmd
 %endif
 
 %changelog
+* Fri May 31 2024 Alexey Shabalin <shaba@altlinux.org> 3.3.24-alt1
+- 3.3.24
+
 * Sat Jul 20 2019 Alexey Shabalin <shaba@altlinux.org> 3.3.22-alt1
 - 3.3.22
 

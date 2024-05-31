@@ -1,5 +1,4 @@
 %define _unpackaged_files_terminate_build 1
-%define sysmodprobedir /lib/modprobe.d
 %define _libexecdir  /usr/libexec
 %define _localstatedir %_var
 
@@ -11,7 +10,7 @@
 %def_enable pyverbs
 
 Name: rdma-core
-Version: 51.0
+Version: 52.0
 Release: alt1
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
@@ -267,7 +266,7 @@ sed -i '/rdma_man_get_prebuilt(/a execute_process(COMMAND "echo" " " OUTPUT_FILE
     -DCMAKE_INSTALL_MANDIR:PATH=%_mandir \
     -DCMAKE_INSTALL_SYSCONFDIR:PATH=%_sysconfdir \
     -DCMAKE_INSTALL_SYSTEMD_SERVICEDIR:PATH=%_unitdir \
-    -DCMAKE_INSTALL_SYSTEMD_BINDIR:PATH=/lib/systemd \
+    -DCMAKE_INSTALL_SYSTEMD_BINDIR:PATH=%_systemd_util_dir \
     -DCMAKE_INSTALL_INITDDIR:PATH=%_initdir \
     -DCMAKE_INSTALL_RUNDIR:PATH=%_runtimedir \
     -DCMAKE_INSTALL_DOCDIR:PATH=%docdir \
@@ -292,10 +291,10 @@ mkdir -p %buildroot%_sysconfdir/rdma
 
 mkdir -p %buildroot%_libexecdir
 mkdir -p %buildroot%_udevrulesdir
-mkdir -p %buildroot%sysmodprobedir
+mkdir -p %buildroot%_modprobedir
 %if_enabled dma_coherent
 install -D -m0644 redhat/rdma.mlx4.conf %buildroot%_sysconfdir/rdma/mlx4.conf
-install -D -m0644 redhat/rdma.mlx4.sys.modprobe %buildroot%sysmodprobedir/libmlx4.conf
+install -D -m0644 redhat/rdma.mlx4.sys.modprobe %buildroot%_modprobedir/libmlx4.conf
 install -D -m0755 redhat/rdma.mlx4-setup.sh %buildroot%_libexecdir/mlx4-setup.sh
 %endif
 rm -f %buildroot%_sysconfdir/rdma/modules/rdma.conf
@@ -343,7 +342,7 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %if_enabled dma_coherent
 %config(noreplace) %_sysconfdir/rdma/mlx4.conf
 %config(noreplace) %_sysconfdir/modprobe.d/mlx4.conf
-%sysmodprobedir/libmlx4.conf
+%_modprobedir/libmlx4.conf
 %_libexecdir/mlx4-setup.sh
 %endif
 %config(noreplace) %_sysconfdir/rdma/modules/infiniband.conf
@@ -618,6 +617,9 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %endif
 
 %changelog
+* Fri May 31 2024 Alexey Shabalin <shaba@altlinux.org> 52.0-alt1
+- New version 52.0.
+
 * Fri May 03 2024 Alexey Shabalin <shaba@altlinux.org> 51.0-alt1
 - New version 51.0.
 
