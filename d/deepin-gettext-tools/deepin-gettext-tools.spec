@@ -1,6 +1,6 @@
 Name: deepin-gettext-tools
 Version: 1.0.11
-Release: alt1
+Release: alt2
 
 Summary: Deepin Gettext Tools
 
@@ -15,7 +15,6 @@ Source: %url/archive/%version/%name-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires: python3-devel perl-Config-Tiny perl-Exporter-Tiny perl-XML-LibXML perl-XML-LibXML-PrettyPrint
-Requires: gettext-tools qt5-linguist perl-Config-Tiny perl-Exporter-Tiny perl-XML-LibXML perl-XML-LibXML-PrettyPrint
 
 %description
 The tools of gettext function wrapper.
@@ -30,10 +29,11 @@ generate-mo - scan po files and generate mo files according to the ini file.
 
 # fix shebang
 find -iname "*.py" | xargs sed -i '1s|.*|#!%__python3|'
-%__subst '1s|.*|#!%__perl|' src/desktop_ts_convert.pl
+sed -i '1s|env perl|perl|' src/desktop_ts_convert.pl
+# fix syntax
+sed -i '/source_dirs/s|re.split(|re.split(r|' src/update_pot.py
 
-%__subst 's|sudo cp|cp|' src/generate_mo.py
-%__subst 's|lconvert|lconvert-qt5|; s|deepin-lupdate|lupdate-qt5|' src/update_pot.py
+sed -i 's|sudo cp|cp|g' src/generate_mo.py
 
 %build
 %install
@@ -57,6 +57,10 @@ install -m755 src/update_pot.py %buildroot%_bindir/deepin-update-pot
 %_bindir/deepin-generate-mo
 
 %changelog
+* Fri May 31 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.11-alt2
+- Removed obsoleted requires.
+- Fixed python3 syntax.
+
 * Wed Apr 03 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.11-alt1
 - New version.
 
