@@ -4,12 +4,12 @@
 
 Name: zot
 Version: 2.0.4
-Release: alt1
+Release: alt2
 
-Summary: zot - A production-ready vendor-neutral OCI-native container image registry (purely based on OCI Distribution Specification)
+Summary: A production-ready vendor-neutral OCI-native container image registry (purely based on OCI Distribution Specification)
 License: Apache-2.0
 Group: Other
-Url: https://zotregistry.dev/
+Url: https://zotregistry.dev
 Vcs: https://github.com/project-zot/zot
 
 Source: %name-%version.tar
@@ -24,7 +24,7 @@ BuildRequires: golang
 Requires: ca-certificates
 
 %description
-zot: a production-ready vendor-neutral OCI image registry -
+A production-ready vendor-neutral OCI image registry -
 images stored in OCI image format,
 distribution specification on-the-wire, that's it!
 
@@ -52,7 +52,10 @@ pushd zui/
 npm run build
 popd
 
-%make COMMIT=%release ZUI_BUILD_PATH="$BUILDDIR/src/%import_path/zui/build" binary cli bench
+%make RELEASE_TAG=v%version \
+      COMMIT=%version-%release \
+      ZUI_BUILD_PATH="$BUILDDIR/src/%import_path/zui/build" \
+      binary cli bench
 
 ./bin/zot-linux-%go_hostarch completion bash > zot.bash
 ./bin/zot-linux-%go_hostarch completion zsh > zot.zsh
@@ -75,13 +78,13 @@ install -Dm 755 ./bin/zb-linux-%go_hostarch %buildroot%_bindir/zb
 install -Dm 644 %SOURCE2 %buildroot%_unitdir/%name.service
 install -Dm 644 %SOURCE3 %buildroot%_sysconfdir/%name/config.json
 
-install -Dm 755 zot.bash %buildroot%_datadir/bash-completion/completions/%name
-install -Dm 755 zot.zsh %buildroot%_datadir/zsh/site-functions/_%name
-install -Dm 755 zot.fish %buildroot%_datadir/fish/vendor_completions.d/%name.fish
+install -Dm 644 zot.bash %buildroot%_datadir/bash-completion/completions/%name
+install -Dm 644 zot.zsh %buildroot%_datadir/zsh/site-functions/_%name
+install -Dm 644 zot.fish %buildroot%_datadir/fish/vendor_completions.d/%name.fish
 
-install -Dm 755 zli.bash %buildroot%_datadir/bash-completion/completions/zli
-install -Dm 755 zli.zsh %buildroot%_datadir/zsh/site-functions/_zli
-install -Dm 755 zli.fish %buildroot%_datadir/fish/vendor_completions.d/zli.fish
+install -Dm 644 zli.bash %buildroot%_datadir/bash-completion/completions/zli
+install -Dm 644 zli.zsh %buildroot%_datadir/zsh/site-functions/_zli
+install -Dm 644 zli.fish %buildroot%_datadir/fish/vendor_completions.d/zli.fish
 
 mkdir -p %buildroot%_localstatedir/%name
 
@@ -113,6 +116,10 @@ useradd -r -g _%name -M -d %_localstatedir/%name -s /dev/null -c "Zot registry u
 %_datadir/fish/vendor_completions.d/zli.fish
 
 %changelog
+* Fri May 31 2024 Alexander Stepchenko <geochip@altlinux.org> 2.0.4-alt2
+- Fix output with --version.
+- Make completion files non-executable.
+
 * Fri May 03 2024 Alexander Stepchenko <geochip@altlinux.org> 2.0.4-alt1
 - 2.0.3 -> 2.0.4
 - Change the default trivy-db URL in the config.
