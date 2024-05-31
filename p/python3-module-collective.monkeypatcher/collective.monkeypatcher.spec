@@ -1,12 +1,11 @@
-%define _unpackaged_files_terminate_build 1
 %define mname collective
 %define oname %mname.monkeypatcher
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.2
-Release: alt2
+Version: 1.2.1
+Release: alt1
 Summary: Support for applying monkey patches late in the startup cycle
 License: BSD
 Group: Development/Python3
@@ -105,6 +104,9 @@ install -p -m644 build/lib/%mname/__init__.py \
 %python3_sitelibdir/%mname/__init__.py*
 
 %changelog
+* Fri May 31 2024 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt1
+- Automatically updated to 1.2.1.
+
 * Fri Feb 02 2024 Grigory Ustinov <grenka@altlinux.org> 1.2-alt2
 - Moved on modern pyproject macros.
 
