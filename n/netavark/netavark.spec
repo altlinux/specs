@@ -1,9 +1,11 @@
 %global _unpackaged_files_terminate_build 1
 %define _libexecdir /usr/libexec
+# nftables or iptables
+%define default_fw nftables
 
 Name: netavark
-Version: 1.10.3
-Release: alt1.1
+Version: 1.11.0
+Release: alt1
 License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT
 Summary: OCI network stack
 Group: Development/Other
@@ -14,7 +16,7 @@ Patch: %name-%version.patch
 Patch1: vendored-nix-loongarch64-support.patch
 ExcludeArch: %arm %ix86
 
-#Recommends: aardvark-dns >= 1.0.3
+Requires: aardvark-dns >= %version
 Provides: container-network-stack = 2
 
 BuildRequires(pre): rpm-macros-rust rpm-macros-systemd
@@ -75,7 +77,7 @@ sed -i -e 's/"files":{[^}]*}/"files":{}/' \
     ./vendor/nix-0.26.4/.cargo-checksum.json
 
 %build
-%make_build
+NETAVARK_DEFAULT_FW=%{default_fw} %make_build
 
 pushd docs
 go-md2man -in %name.1.md -out %name.1
@@ -99,6 +101,10 @@ popd
 %_unitdir/*
 
 %changelog
+* Fri May 31 2024 Alexey Shabalin <shaba@altlinux.org> 1.11.0-alt1
+- New version 1.11.0.
+- Switch default firewall to nftables.
+
 * Sat Mar 23 2024 Ivan A. Melnikov <iv@altlinux.org> 1.10.3-alt1.1
 - Fix FTBFS on loongarch64.
 

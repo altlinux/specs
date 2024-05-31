@@ -5,7 +5,7 @@
 %define _systemdgeneratordir %_prefix/lib/systemd/system-generators
 
 Name:     podman
-Version:  5.0.3
+Version:  5.1.0
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -161,6 +161,9 @@ rm -f %buildroot%_man5dir/dockerfile*
 %_datadir/user-tmpfiles.d/%name-docker.conf
 
 %changelog
+* Fri May 31 2024 Alexey Shabalin <shaba@altlinux.org> 5.1.0-alt1
+- New version 5.1.0.
+
 * Fri May 17 2024 Alexey Shabalin <shaba@altlinux.org> 5.0.3-alt1
 - New version 5.0.3 (Fixes: CVE-2024-3727).
 

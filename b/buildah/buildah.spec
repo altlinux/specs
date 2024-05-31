@@ -9,7 +9,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: buildah
-Version: 1.35.4
+Version: 1.36.0
 Release: alt1
 Summary: A command line tool used to creating OCI Images
 Group: Development/Other
@@ -17,7 +17,6 @@ License: Apache-2.0
 Url: https://%provider_prefix
 Source: %name-%version.tar
 Patch: %name-%version.patch
-Patch1: vendored-cilium-ebpf-alt-loongarch64-support.patch
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang
@@ -51,7 +50,6 @@ or
 %prep
 %setup
 %patch -p1
-%patch1 -p1
 sed -i '/docs install/d' Makefile
 
 %build
@@ -89,6 +87,9 @@ popd
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Fri May 31 2024 Alexey Shabalin <shaba@altlinux.org> 1.36.0-alt1
+- New version 1.36.0.
+
 * Fri May 17 2024 Alexey Shabalin <shaba@altlinux.org> 1.35.4-alt1
 - New version 1.35.4 (Fixes: CVE-2024-3727).
 
