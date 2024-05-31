@@ -5,7 +5,7 @@
 
 Name: simde
 Summary: SIMD Everywhere: Portable implementations of SIMD intrinsics
-Version: 0.8.0
+Version: 0.8.2
 Release: alt1
 License: MIT
 Group: Development/C
@@ -55,6 +55,9 @@ grep -Fx "#define SIMDE_VERSION_MICRO $c" simde/simde-common.h
 %_includedir/simde
 
 %changelog
+* Thu May 30 2024 Vitaly Chikunov <vt@altlinux.org> 0.8.2-alt1
+- Update to v0.8.2 (2024-04-30).
+
 * Sun Mar 17 2024 Vitaly Chikunov <vt@altlinux.org> 0.8.0-alt1
 - Update to v0.8.0 (2024-03-07).
 
