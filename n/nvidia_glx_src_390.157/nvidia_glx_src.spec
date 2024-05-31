@@ -27,7 +27,7 @@
 %define nv_version 390
 %define nv_release 157
 %define nv_minor %nil
-%define pkg_rel alt229
+%define pkg_rel alt230
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -296,11 +296,11 @@ install -m 0644 10_nvidia.json %buildroot/%_datadir/glvnd/egl_vendor.d/%{version
 mkdir -p %buildroot/%_datadir/egl/egl_external_platform.d
 install -m 0644 10_nvidia_wayland.json %buildroot/%_datadir/egl/egl_external_platform.d/%{version}_nvidia_wayland.json
 mkdir -p %buildroot/%_datadir/vulkan/icd.d/
-install -m 0644 nvidia_icd.json.template %buildroot/%_datadir/vulkan/icd.d/%{version}_nvidia_icd.json
+install -m 0644 nvidia_icd.json.template %buildroot/%nv_lib_dir/nvidia_icd.json
 %if_enabled glvnd
-sed -i '/\"library_path\"/s|\"library_path\".*:.*\".*\"|"library_path": "libGLX_nvidia.so.0"|' %buildroot/%_datadir/vulkan/icd.d/%{version}_nvidia_icd.json
+sed -i '/\"library_path\"/s|\"library_path\".*:.*\".*\"|"library_path": "libGLX_nvidia.so.0"|' %buildroot/%nv_lib_dir/nvidia_icd.json
 %else
-sed -i '/\"library_path\"/s|\"library_path\".*:.*\".*\"|"library_path": "libGL.so.1"|' %buildroot/%_datadir/vulkan/icd.d/%{version}_nvidia_icd.json
+sed -i '/\"library_path\"/s|\"library_path\".*:.*\".*\"|"library_path": "libGL.so.1"|' %buildroot/%nv_lib_dir/nvidia_icd.json
 %endif
 
 # kernel-source install
@@ -367,7 +367,7 @@ fi
 %_datadir/nvidia/nvidia-application-profiles-%version-rc
 %_datadir/nvidia/nvidia-application-profiles-%version-key-documentation
 %_datadir/glvnd/egl_vendor.d/%{version}_nvidia.json
-%_datadir/vulkan/icd.d/%{version}_nvidia_icd.json
+%nv_lib_dir/nvidia_icd.json
 %_datadir/egl/egl_external_platform.d/%{version}_nvidia_wayland.json
 
 %if_enabled package_egl_wayland
@@ -382,6 +382,9 @@ fi
 %endif
 
 %changelog
+* Fri May 31 2024 Sergey V Turchin <zerg@altlinux.org> 390.157-alt230
+- move nvidia_icd.json for switching
+
 * Mon Dec 04 2023 Sergey V Turchin <zerg@altlinux.org> 390.157-alt229
 - add fix against 6.6 kernel
 

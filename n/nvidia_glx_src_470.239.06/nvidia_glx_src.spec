@@ -24,7 +24,7 @@
 %define nv_version 470
 %define nv_release 239
 %define nv_minor   06
-%define pkg_rel alt250
+%define pkg_rel alt251
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -302,14 +302,14 @@ install -m 0644 10_nvidia_wayland.json %buildroot/%_datadir/egl/egl_external_pla
 mkdir -p %buildroot/%_datadir/vulkan/icd.d/
 NVIDIA_ICD_JSON="nvidia_icd.json.template"
 [ -e "$NVIDIA_ICD_JSON" ] || NVIDIA_ICD_JSON="nvidia_icd.json"
-install -m 0644 "$NVIDIA_ICD_JSON" %buildroot/%_datadir/vulkan/icd.d/%{version}_nvidia_icd.json
+install -m 0644 "$NVIDIA_ICD_JSON" %buildroot/%nv_lib_dir/nvidia_icd.json
 %if_enabled glvnd
-sed -i '/\"library_path\"/s|\"library_path\".*:.*\".*\"|"library_path": "libGLX_nvidia.so.0"|' %buildroot/%_datadir/vulkan/icd.d/%{version}_nvidia_icd.json
+sed -i '/\"library_path\"/s|\"library_path\".*:.*\".*\"|"library_path": "libGLX_nvidia.so.0"|' %buildroot/%nv_lib_dir/nvidia_icd.json
 %else
-sed -i '/\"library_path\"/s|\"library_path\".*:.*\".*\"|"library_path": "libGL.so.1"|' %buildroot/%_datadir/vulkan/icd.d/%{version}_nvidia_icd.json
+sed -i '/\"library_path\"/s|\"library_path\".*:.*\".*\"|"library_path": "libGL.so.1"|' %buildroot/%nv_lib_dir/nvidia_icd.json
 %endif
 mkdir -p %buildroot/%_datadir/vulkan/implicit_layer.d/
-install -m 0644 nvidia_layers.json %buildroot/%_datadir/vulkan/implicit_layer.d/%{version}_nvidia_layers.json
+install -m 0644 nvidia_layers.json %buildroot/%nv_lib_dir/nvidia_layers.json
 
 %if_enabled kernelsource
 # kernel-source install
@@ -396,8 +396,8 @@ fi
 %_datadir/nvidia/nvidia-application-profiles-%version-rc
 %_datadir/nvidia/nvidia-application-profiles-%version-key-documentation
 %_datadir/glvnd/egl_vendor.d/%{version}_nvidia.json
-%_datadir/vulkan/icd.d/%{version}_nvidia_icd.json
-%_datadir/vulkan/implicit_layer.d/%{version}_nvidia_layers.json
+%nv_lib_dir/nvidia_icd.json
+%nv_lib_dir/nvidia_layers.json
 %_datadir/egl/egl_external_platform.d/%{version}_nvidia_wayland.json
 
 %ifnarch aarch64
@@ -411,6 +411,9 @@ fi
 %endif
 
 %changelog
+* Fri May 31 2024 Sergey V Turchin <zerg@altlinux.org> 470.239.06-alt251
+- move nvidia_icd.json and nvidia_layers.json for switching
+
 * Thu Feb 29 2024 Sergey V Turchin <zerg@altlinux.org> 470.239.06-alt250
 - new version
 

@@ -23,7 +23,7 @@
 %define nv_version 550
 %define nv_release 78
 %define nv_minor %nil
-%define pkg_rel alt275
+%define pkg_rel alt276
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -240,6 +240,12 @@ install -m 0755 %SOURCE4 %buildroot/%_bindir/
 %__ln_s ../..%nv_etclib_sym_dir/libnvidia-allocator.so.1 %buildroot/%x11_lib_dir/libnvidia-allocator.so.1
 %__ln_s ../libnvidia-allocator.so.1 %buildroot/%x11_lib_dir/gbm/nvidia-drm_gbm.so
 
+mkdir -p %buildroot/%_datadir/vulkan/icd.d/
+ln -s /dev/null %buildroot/%nv_etclib_sym_dir/nvidia_icd.json
+ln -s `relative %nv_etclib_sym_dir/nvidia_icd.json %_datadir/vulkan/icd.d/nvidia_icd.json` %buildroot/%_datadir/vulkan/icd.d/nvidia_icd.json
+mkdir -p %buildroot/%_datadir/vulkan/implicit_layer.d/
+ln -s /dev/null %buildroot/%nv_etclib_sym_dir/nvidia_layers.json
+ln -s `relative %nv_etclib_sym_dir/nvidia_layers.json %_datadir/vulkan/implicit_layer.d/nvidia_layers.json` %buildroot/%_datadir/vulkan/implicit_layer.d/nvidia_layers.json
 
 # nvidia_drv.o
 if false ; then
@@ -324,6 +330,10 @@ fi
 %nv_etclib_sym_dir/libGLX_nvidia.so.?
 %nv_etclib_sym_dir/libnvidia-allocator.so.?
 #%nv_etclib_sym_dir/nvidia.xinf
+%nv_etclib_sym_dir/nvidia_icd.json
+%nv_etclib_sym_dir/nvidia_layers.json
+%_datadir/vulkan/icd.d/nvidia_icd.json
+%_datadir/vulkan/implicit_layer.d/nvidia_layers.json
 %nv_etclib_sym_dir/current
 %_sysconfdir/libnvidiacurrent
 %if "%_lib" == "lib64"
@@ -357,6 +367,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Fri May 31 2024 Sergey V Turchin <zerg@altlinux.org> 550.78-alt276
+- switch vulkan icd
+
 * Fri Apr 26 2024 Sergey V Turchin <zerg@altlinux.org> 550.78-alt275
 - new version
 
