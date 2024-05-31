@@ -1,24 +1,23 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname crochet
 
 Name: python3-module-%oname
-Version: 1.9.0
-Release: alt4
+Version: 2.1.1
+Release: alt1
 
 Summary: Use Twisted anywhere!
+
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/crochet
+URL: https://pypi.org/project/crochet
+VCS: https://github.com/itamarst/crochet
 
 BuildArch: noarch
 
-# https://github.com/itamarst/crochet.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-docs.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-twisted-core-test python3-module-wrapt
+BuildRequires: python3-module-twisted-core-test
+BuildRequires: python3-module-wrapt
 BuildRequires: python3-module-service-identity
 BuildRequires: python3-module-sphinx
 
@@ -79,7 +78,6 @@ This package contains pickles for %oname.
 
 %prep
 %setup
-%patch1 -p1
 
 sed -i 's|sphinx-build|&-3|' docs/Makefile
 
@@ -118,6 +116,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/*/pickle
 
 %changelog
+* Fri May 31 2024 Grigory Ustinov <grenka@altlinux.org> 2.1.1-alt1
+- Automatically updated to 2.1.1.
+
 * Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 1.9.0-alt4
 - Fixed FTBFS.
 
