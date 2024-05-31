@@ -1,5 +1,5 @@
 Name:         mapsoft2
-Version:      2.4
+Version:      2.5
 Release:      alt1
 
 Summary:      mapsoft2 - programs for working with maps and geodata
@@ -67,6 +67,16 @@ export SKIP_IMG_DIFFS=1
 %_datadir/xfig/Libraries/*
 
 %changelog
+* Fri May 31 2024 Vladislav Zavjalov <slazav@altlinux.org> 2.5-alt1
+A few bug fixes:
+- err: fix problems with NaN values and with multiple evaluations in assert scripts
+- geom/line_walker: avoid NaN values for lines with repeated points
+- fig: fix scaling/shifting
+- srtm: fix error in find_peaks(), fix error with getting points between tiles
+- vmap2gobj: fix problem with short_expand feature applied to zero-length lines
+- vmap2: optional scale argument to fig_pic command in types file
+- viewer/gobj_multi: set trivial cnv in constructor, check for NULL cnv
+
 * Fri May 24 2024 Vladislav Zavjalov <slazav@altlinux.org> 2.4-alt1
 - Rewrite SRTM interface (work is not finished). Support for data with
   different resolution, do not use srtm_width.txt file (note that ALOS has
