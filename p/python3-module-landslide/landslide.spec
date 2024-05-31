@@ -1,21 +1,21 @@
-%define _unpackaged_files_terminate_build 1
 %define oname landslide
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.1.6
-Release: alt3
+Version: 2.0.0
+Release: alt1
 
 Summary: Lightweight markup language-based html5 slideshow generator
-License: ASLv2.0
+
+License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/landslide
+URL: https://pypi.org/project/landslide
+VCS: https://github.com/adamzap/landslide
+
 BuildArch: noarch
 
-# https://github.com/adamzap/landslide.git
 Source: %name-%version.tar
-Patch: landslide-1.1.6-Support-markdown-v3.0.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
@@ -39,13 +39,6 @@ fancy HTML5 slideshow.
 
 %prep
 %setup
-%patch -p1
-
-# unpin deps
-sed -i 's/==/>=/g' setup.py requirements.txt
-
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
 
 %build
 %pyproject_build
@@ -58,11 +51,14 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 %files
 %doc *.md examples
-%_bindir/landslide
-%python3_sitelibdir/landslide/
-%python3_sitelibdir/*.dist-info/
+%_bindir/%oname
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri May 31 2024 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
+- Build new version.
+
 * Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 1.1.6-alt3
 - Moved on modern pyproject macros.
 
