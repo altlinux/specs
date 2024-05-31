@@ -1,12 +1,12 @@
 %define sover 0
-%define git 0b027ba
+%define git %nil
 %define build_type RelWithDebInfo
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type
 %define optflags_lto %nil
 
 Name: spirv-tools
-Version: 2023.6
-Release: alt0.2.g%{git}
+Version: 2024.2
+Release: alt0.1.rc1
 Epoch: 1
 
 Summary: API and commands for processing SPIR-V modules
@@ -24,7 +24,7 @@ BuildRequires(pre): cmake ninja-build
 BuildRequires: gcc-c++
 BuildRequires: python3-devel
 # due sdk requires
-BuildRequires: spirv-headers >= 2:1.5.5-alt12
+BuildRequires: spirv-headers >= 2:1.5.5-alt13
 
 %description
 The package includes an assembler, binary module parser,
@@ -96,6 +96,9 @@ ninja \
 %_datadir/cmake/SPIRV-Tools*
 
 %changelog
+* Thu May 30 2024 L.A. Kostis <lakostis@altlinux.ru> 1:2024.2-alt0.1.rc1
+- Updated to 2024.2.rc1 (for sdk-1.3.283.0).
+
 * Mon Mar 11 2024 L.A. Kostis <lakostis@altlinux.ru> 1:2023.6-alt0.2.g0b027ba
 - GIT 0b027ba (to fix FTBFS with new spirv-headers).
 
