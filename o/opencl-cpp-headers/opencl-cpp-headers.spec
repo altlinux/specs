@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: opencl-cpp-headers
-Version: 2023.12.14
+Version: 2024.05.08
 Release: alt1
 
 Summary: OpenCL API C++ bindings
@@ -46,7 +46,9 @@ BuildArch: noarch
 %_datadir/pkgconfig/%orig_name.pc
 
 %changelog
+* Fri May 31 2024 L.A. Kostis <lakostis@altlinux.ru> 2024.05.08-alt1
+- v2024.05.08 (OpenCL 3.0.16).
+
 * Mon Jan 08 2024 L.A. Kostis <lakostis@altlinux.ru> 2023.12.14-alt1
 - Initial build for ALTLinux.
-
 
