@@ -4,7 +4,7 @@
 
 Name: openorienteering-mapper
 Version: 0.9.5
-Release: alt6
+Release: alt7
 
 Summary: OpenOrienteering Mapper program for orienteering mapmaking
 License: GPLv3
@@ -28,6 +28,7 @@ BuildRequires: qt5-serialport-devel
 BuildRequires: sqlite3
 BuildRequires: libsqlite3-devel
 BuildRequires: libtiff-devel
+BuildRequires: zlib-devel
 %if_with check
 BuildRequires: ctest
 %endif
@@ -91,6 +92,9 @@ cmake --build %_cmake__builddir/test -j%__nprocs
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Jun 01 2024 Andrey Cherepanov <cas@altlinux.org> 0.9.5-alt7
+- FTBFS: add zlib-devel to BR:
+
 * Wed May 08 2024 Nikolai Kostrigin <nickel@altlinux.org> 0.9.5-alt6
 - FTBFS: add libsqlite3-devel to BR:
 
