@@ -4,9 +4,9 @@
 %set_verify_elf_method strict
 
 Name: CImg
-Version: 3.3.2
+Version: 3.3.6
 Release: alt1
-Summary: The CImg Library is a small and open-source C++ toolkit for image processing
+Summary: The CImg Library is a header-only C++ toolkit for image processing
 License: CECILL or CECILL-C
 Group: Development/C++
 Url: https://cimg.eu/
@@ -40,6 +40,7 @@ algorithms in C++.
 %install
 install -Dpm644 CImg.h -t %buildroot%_includedir
 install -Dpm644 plugins/*.h -t %buildroot%_includedir/%name/plugins
+# Architecture independent pkgconfig dir.
 install -Dpm644 resources/CImg.pc -t %buildroot%_datadir/pkgconfig
 
 %check
@@ -53,6 +54,9 @@ examples/CImg_demo || :
 %_datadir/pkgconfig/CImg.pc
 
 %changelog
+* Sat Jun 01 2024 Vitaly Chikunov <vt@altlinux.org> 3.3.6-alt1
+- Update to v.3.3.6 (2024-05-13).
+
 * Mon Dec 04 2023 Vitaly Chikunov <vt@altlinux.org> 3.3.2-alt1
 - Update to v.3.3.2 (2023-11-09).
 
