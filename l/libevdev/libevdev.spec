@@ -5,13 +5,14 @@
 %def_enable check
 
 Name: libevdev
-Version: 1.13.1
+Version: 1.13.2
 Release: alt1
 
 Summary: kernel evdev device wrapper library
 Group: System/Libraries
 License: MIT and GPL-2.0
 Url: https://www.freedesktop.org/wiki/Software/libevdev
+
 Vcs: https://gitlab.freedesktop.org/libevdev/libevdev.git
 
 %if_disabled snapshot
@@ -63,7 +64,7 @@ that are needed to write applications that use %name.
 %_man1dir/libevdev-tweak-device.1.*
 %_man1dir/touchpad-edge-detector.1.*
 %_man1dir/mouse-dpi-tool.1.*
-%doc COPYING
+%doc README* COPYING
 
 %files devel
 %_includedir/%name-%api_ver/
@@ -72,6 +73,9 @@ that are needed to write applications that use %name.
 %_man3dir/%name.3.*
 
 %changelog
+* Fri May 31 2024 Yuri N. Sedunov <aris@altlinux.org> 1.13.2-alt1
+- 1.13.2
+
 * Fri May 05 2023 Yuri N. Sedunov <aris@altlinux.org> 1.13.1-alt1
 - 1.13.1
 
