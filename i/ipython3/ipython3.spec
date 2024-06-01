@@ -8,7 +8,7 @@
 %def_with check
 
 Name: ipython3
-Version: 8.24.0
+Version: 8.25.0
 Release: alt1
 Summary: An enhanced interactive Python 3 shell
 License: BSD-3-Clause
@@ -19,8 +19,6 @@ Vcs: https://github.com/ipython/ipython.git
 BuildArch: noarch
 
 Source: %name-%version.tar
-
-Patch1: %name-alt-docs.patch
 
 %add_findreq_skiplist %python3_sitelibdir/IPython/utils/eventful.py
 
@@ -138,7 +136,6 @@ This package contains tests for Python-3.
 
 %prep
 %setup
-%patch1 -p1
 
 %if_with doc
 %prepare_sphinx3 docs
@@ -230,6 +227,9 @@ popd
 %endif
 
 %changelog
+* Sat Jun 01 2024 Anton Vyatkin <toni@altlinux.org> 8.25.0-alt1
+- New version 8.25.0.
+
 * Sat Apr 27 2024 Anton Vyatkin <toni@altlinux.org> 8.24.0-alt1
 - New version 8.24.0.
 - Build with check.
