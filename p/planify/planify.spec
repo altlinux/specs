@@ -1,13 +1,13 @@
 %def_enable snapshot
 %define _name planify
-%define ver_major 4.7
+%define ver_major 4.8
 %define rdn_name io.github.alainm23.%_name
 
 %def_enable check
 
 Name: %_name
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major
+Release: alt1
 
 Summary: Planify
 License: GPL-3.0-or-later
@@ -88,6 +88,9 @@ This package contains files necessary to develop Planify plugins.
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/appdata/%rdn_name.appdata.xml
+%_datadir/gtksourceview-5/language-specs/markdownpp.lang
+%_datadir/gtksourceview-5/styles/markdown.xml
+%_datadir/gtksourceview-5/styles/markdown_dark.xml
 %doc README*
 
 %files -n lib%_name
@@ -100,6 +103,9 @@ This package contains files necessary to develop Planify plugins.
 %_vapidir/%_name.*
 
 %changelog
+* Sat Jun 01 2024 Yuri N. Sedunov <aris@altlinux.org> 4.8-alt1
+- updated to 4.8-1-gb7323667
+
 * Thu May 23 2024 Yuri N. Sedunov <aris@altlinux.org> 4.7.4-alt2
 - updated to 4.7.4-5-g72ae6d16
 
