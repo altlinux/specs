@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: shadowsocks-rust
-Version: 1.18.3
+Version: 1.19.0
 Release: alt1
 Summary: A fast tunnel proxy that helps you bypass firewalls
 License: MIT
@@ -14,6 +14,7 @@ Vcs: https://github.com/shadowsocks/shadowsocks-rust
 
 Source: %name-%version.tar
 
+BuildRequires: openssl-devel
 BuildRequires: /proc
 BuildRequires: rust-cargo
 %{?!_without_check:%{?!_disable_check:
@@ -52,7 +53,11 @@ strip = false
 EOF
 
 %build
-cargo build %_smp_mflags --offline --release
+export RUST_BACKTRACE=full
+cargo build %_smp_mflags --offline --release \
+%ifarch %ix86 x86_64 aarch64
+	--features full
+%endif
 
 %install
 cargo install %_smp_mflags --offline --no-track --path .
@@ -62,6 +67,7 @@ install -m0644 .gear/%name.service %buildroot%_unitdir/%name-server.service
 install -m0640 .gear/*.json %buildroot%_sysconfdir/%name
 
 %check
+target/release/ssmanager --version | grep -Fx 'shadowsocks %version'
 .gear/ss-test.sh
 
 %post
@@ -80,6 +86,10 @@ install -m0640 .gear/*.json %buildroot%_sysconfdir/%name
 %_bindir/ss*
 
 %changelog
+* Fri May 31 2024 Vitaly Chikunov <vt@altlinux.org> 1.19.0-alt1
+- Update to v1.19.0 (2024-05-26).
+- x86(-64), aarch64: Feature list changed from 'default' to 'full'.
+
 * Fri Apr 26 2024 Vitaly Chikunov <vt@altlinux.org> 1.18.3-alt1
 - Update to v1.18.3 (2024-04-21).
 
