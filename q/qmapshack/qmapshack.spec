@@ -1,6 +1,6 @@
 Name: qmapshack
 Version: 1.17.1
-Release: alt1
+Release: alt1.1
 Summary: GPS mapping and management tool
 Group: Sciences/Geosciences
 
@@ -17,7 +17,7 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-qt5-webengine
 # Automatically added by buildreq on Sun Jul 30 2023
 # optimized out: cmake-modules freexl gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libcairo-gobject libcrypt-devel libcurl-devel libdouble-conversion3 libgdk-pixbuf libglvnd-devel libgpg-error libhdf5-103 libhdf5-hl-100 libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-help libqt5-network libqt5-positioning libqt5-printsupport libqt5-qml libqt5-qmlmodels libqt5-quick libqt5-quickwidgets libqt5-sql libqt5-webchannel libqt5-webenginecore libqt5-webenginewidgets libqt5-widgets libqt5-xml libquazip1-qt5_1.0.0 librabbitmq-c4 libsasl2-3 libssl-devel libstdc++-devel libudev-devel libunixODBC-devel libx265-199 libxerces-c ocl-icd pkg-config python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel routino-data sh4 zlib-devel
-BuildRequires: cmake libalglib-devel libgdal-devel libjpeg-devel libproj-devel libroutino-devel libtiff-devel qt5-tools-devel qt5-webengine-devel quazip-qt5-devel
+BuildRequires: cmake libalglib-devel libgdal-devel libjpeg-devel libproj-devel libroutino-devel libtiff-devel qt5-tools-devel qt5-webengine-devel quazip-qt5-devel libsqlite3-devel
 
 ExclusiveArch: %qt5_qtwebengine_arches
 
@@ -78,6 +78,9 @@ QMapShack.
 %_mandir/man1/qmt_*.*
 
 %changelog
+* Sat Jun 01 2024 Andrey Cherepanov <cas@altlinux.org> 1.17.1-alt1.1
+- NMU: FTBFS: built with libsqlite3-devel.
+
 * Wed Jan 24 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.17.1-alt1
 - Updated to 1.17.1.
 
