@@ -3,16 +3,16 @@
 %def_with check
 
 Name:           python3-module-%oname
-Version:        3.0.1
-Release:        alt2
+Version:        3.0.2
+Release:        alt1
 
 Summary:        A Python namespace control and lazy-import mechanism
 
 License:        MIT
 Group:          Development/Python3
-URL:            http://pypi.python.org/pypi/apipkg
+URL:            https://pypi.org/project/apipkg
+VCS:            https://github.com/pytest-dev/apipkg
 
-# https://github.com/pytest-dev/apipkg
 Source:        %name-%version.tar
 
 BuildArch:      noarch
@@ -46,9 +46,12 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
 %files
 %python3_sitelibdir/%oname
-%python3_sitelibdir/*.dist-info*
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sun Jun 02 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.2-alt1
+- Automatically updated to 3.0.2.
+
 * Thu Jun 15 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt2
 - Build with check.
 
