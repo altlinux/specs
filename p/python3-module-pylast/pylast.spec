@@ -1,18 +1,32 @@
 %define oname pylast
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.0.0
-Release: alt1.git20140825.2
+Version: 5.3.0
+Release: alt1
+
 Summary: A Python interface to Last.fm (and other API compatible social networks)
+
 License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/pylast/
+URL: https://pypi.org/project/pylast
+VCS: https://github.com/pylast/pylast
 
-# https://github.com/pylast/pylast.git
 Source: %name-%version.tar
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-vcs
+BuildRequires: python3-module-setuptools-scm
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-httpx
+BuildRequires: python3-module-flaky
+%endif
 
 %description
 A Python interface to Last.fm and other api-compatible websites such as
@@ -22,16 +36,25 @@ Libre.fm.
 %setup
 
 %build
-%python3_build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_pytest
 
 %files
 %doc *.yaml *.md
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sun Jun 02 2024 Grigory Ustinov <grenka@altlinux.org> 5.3.0-alt1
+- Automatically updated to 5.3.0.
+- Built with check.
+
 * Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1.git20140825.2
 - Drop python2 support.
 
