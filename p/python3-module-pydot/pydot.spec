@@ -1,21 +1,35 @@
 %define oname pydot
 
+# 3 tests failing
+# FAIL: test_graph_with_shapefiles (__main__.TestGraphAPI.test_graph_with_shapefiles)
+# FAIL: test_graphviz_regression_tests (__main__.TestGraphAPI.test_graphviz_regression_tests)
+# FAIL: test_my_regression_tests (__main__.TestGraphAPI.test_my_regression_tests)
+%def_without check
+
 Name: python3-module-%oname
-Version: 1.4.2
+Version: 2.0.0
 Release: alt1
 
 Summary: Python interface to Graphiz's Dot
 
 License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/pydot
+URL: https://pypi.org/project/pydot
+VCS: https://github.com/pydot/pydot
 
-Source: %oname-%version.tar.bz2
+Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+%if_with check
 BuildRequires: python3-module-pyparsing
+BuildRequires: python3-module-chardet
+BuildRequires: graphviz
+%endif
 
 Requires: %_bindir/dot
 
@@ -29,19 +43,27 @@ environments like TeXmacs, or output in any of the format's supported
 by the Graphviz tools dot, neato, twopi.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir
+python3 test/pydot_unittest.py
 
 %files
 %doc ChangeLog
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sun Jun 02 2024 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
+- Automatically updated to 2.0.0.
+
 * Fri Jul 09 2021 Grigory Ustinov <grenka@altlinux.org> 1.4.2-alt1
 - Build new version.
 - Drop python2 support.
