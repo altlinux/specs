@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20231114
+%define orig_timestamp 20240531
 %define orig_rev %nil
 
 Name: firmware-intel-ucode
-Version: 23
+Version: 26
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -50,6 +50,134 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Sat Jun 01 2024 L.A. Kostis <lakostis@altlinux.ru> 2:26-alt1.20240531
+- Synced with debian/3.2024531.1 (original changelog below):
+  + New upstream microcode datafile 20240531
+  + Fix unspecified functional issues on Pentium Silver N/J5xxx,
+    Celeron N/J4xxx
+  + Updated Microcodes:
+    sig 0x000706a1, pf_mask 0x01, 2024-04-19, rev 0x0042, size 76800
+
+* Sat Jun 01 2024 L.A. Kostis <lakostis@altlinux.ru> 2:25-alt1.20240514
+- Synced with debian/3.20240514.1 (original changelog below):
+  + New upstream microcode datafile 20240514
+    - Mitigations for INTEL-SA-01051 (CVE-2023-45733)
+      Hardware logic contains race conditions in some Intel Processors may
+      allow an authenticated user to potentially enable partial information
+      disclosure via local access.
+    - Mitigations for INTEL-SA-01052 (CVE-2023-46103)
+      Sequence of processor instructions leads to unexpected behavior in
+      Intel Core Ultra Processors may allow an authenticated user to
+      potentially enable denial of service via local access.
+    - Mitigations for INTEL-SA-01036 (CVE-2023-45745,  CVE-2023-47855)
+      Improper input validation in some Intel TDX module software before
+      version 1.5.05.46.698 may allow a privileged user to potentially enable
+      escalation of privilege via local access.
+    - Fix for unspecified functional issues on 4th gen and 5th gen Xeon
+      Scalable, 12th, 13th and 14th gen Intel Core processors, as well as for
+      Core i3 N-series processors.
+  + Updated microcodes:
+    sig 0x000806f8, pf_mask 0x87, 2024-02-05, rev 0x2b0005c0, size 581632
+    sig 0x000806f7, pf_mask 0x87, 2024-02-05, rev 0x2b0005c0
+    sig 0x000806f6, pf_mask 0x87, 2024-02-05, rev 0x2b0005c0
+    sig 0x000806f5, pf_mask 0x87, 2024-02-05, rev 0x2b0005c0
+    sig 0x000806f4, pf_mask 0x87, 2024-02-05, rev 0x2b0005c0
+    sig 0x000806f8, pf_mask 0x10, 2024-02-05, rev 0x2c000390, size 614400
+    sig 0x000806f6, pf_mask 0x10, 2024-02-05, rev 0x2c000390
+    sig 0x000806f5, pf_mask 0x10, 2024-02-05, rev 0x2c000390
+    sig 0x000806f4, pf_mask 0x10, 2024-02-05, rev 0x2c000390
+    sig 0x00090672, pf_mask 0x07, 2023-12-05, rev 0x0035, size 224256
+    sig 0x00090675, pf_mask 0x07, 2023-12-05, rev 0x0035
+    sig 0x000b06f2, pf_mask 0x07, 2023-12-05, rev 0x0035
+    sig 0x000b06f5, pf_mask 0x07, 2023-12-05, rev 0x0035
+    sig 0x000906a3, pf_mask 0x80, 2023-12-05, rev 0x0433, size 222208
+    sig 0x000906a4, pf_mask 0x80, 2023-12-05, rev 0x0433
+    sig 0x000906a4, pf_mask 0x40, 2023-12-07, rev 0x0007, size 119808
+    sig 0x000b0671, pf_mask 0x32, 2024-01-25, rev 0x0123, size 215040
+    sig 0x000b06e0, pf_mask 0x11, 2023-12-07, rev 0x0017, size 138240
+    sig 0x000c06f2, pf_mask 0x87, 2024-02-05, rev 0x21000230, size 552960
+    sig 0x000c06f1, pf_mask 0x87, 2024-02-05, rev 0x21000230
+
+* Sat Jun 01 2024 L.A. Kostis <lakostis@altlinux.ru> 2:24-alt1.20240312
+- Synced with debian/20240312.1 (original changelog below):
+  + New upstream microcode datafile 20240312
+    - Mitigations for INTEL-SA-INTEL-SA-00972 (CVE-2023-39368):
+      Protection mechanism failure of bus lock regulator for some Intel
+      Processors may allow an unauthenticated user to potentially enable
+      denial of service via network access.
+    - Mitigations for INTEL-SA-INTEL-SA-00982 (CVE-2023-38575):
+      Non-transparent sharing of return predictor targets between contexts in
+      some Intel Processors may allow an authorized user to potentially
+      enable information disclosure via local access.  Affects SGX as well.
+    - Mitigations for INTEL-SA-INTEL-SA-00898 (CVE-2023-28746), aka RFDS:
+      Information exposure through microarchitectural state after transient
+      execution from some register files for some Intel Atom Processors and
+      E-cores of Intel Core Processors may allow an authenticated user to
+      potentially enable information disclosure via local access.  Enhances
+      VERW instruction to clear stale register buffers.  Affects SGX as well.
+      Requires kernel update to be effective.
+    - Mitigations for INTEL-SA-INTEL-SA-00960 (CVE-2023-22655), aka TECRA:
+      Protection mechanism failure in some 3rd and 4th Generation Intel Xeon
+      Processors when using Intel SGX or Intel TDX may allow a privileged
+      user to potentially enable escalation of privilege via local access.
+      NOTE: effective only when loaded by firmware.  Allows SMM firmware to
+      attack SGX/TDX.
+    - Mitigations for INTEL-SA-INTEL-SA-01045 (CVE-2023-43490):
+      Incorrect calculation in microcode keying mechanism for some Intel
+      Xeon D Processors with Intel SGX may allow a privileged user to
+      potentially enable information disclosure via local access.
+  + Fixes for other unspecified functional issues on many processors
+  + Updated microcodes:
+    sig 0x00050653, pf_mask 0x97, 2023-07-28, rev 0x1000191, size 36864
+    sig 0x00050656, pf_mask 0xbf, 2023-07-28, rev 0x4003605, size 38912
+    sig 0x00050657, pf_mask 0xbf, 2023-07-28, rev 0x5003605, size 37888
+    sig 0x0005065b, pf_mask 0xbf, 2023-08-03, rev 0x7002802, size 30720
+    sig 0x00050665, pf_mask 0x10, 2023-08-03, rev 0xe000015, size 23552
+    sig 0x000506f1, pf_mask 0x01, 2023-10-05, rev 0x003e, size 11264
+    sig 0x000606a6, pf_mask 0x87, 2023-09-14, rev 0xd0003d1, size 307200
+    sig 0x000606c1, pf_mask 0x10, 2023-12-05, rev 0x1000290, size 299008
+    sig 0x000706a1, pf_mask 0x01, 2023-08-25, rev 0x0040, size 76800
+    sig 0x000706a8, pf_mask 0x01, 2023-08-25, rev 0x0024, size 76800
+    sig 0x000706e5, pf_mask 0x80, 2023-09-14, rev 0x00c4, size 114688
+    sig 0x000806c1, pf_mask 0x80, 2023-09-13, rev 0x00b6, size 111616
+    sig 0x000806c2, pf_mask 0xc2, 2023-09-13, rev 0x0036, size 98304
+    sig 0x000806d1, pf_mask 0xc2, 2023-09-13, rev 0x0050, size 104448
+    sig 0x000806ec, pf_mask 0x94, 2023-07-16, rev 0x00fa, size 106496
+    sig 0x000806f8, pf_mask 0x87, 2024-01-03, rev 0x2b000590, size 579584
+    sig 0x000806f7, pf_mask 0x87, 2024-01-03, rev 0x2b000590
+    sig 0x000806f6, pf_mask 0x87, 2024-01-03, rev 0x2b000590
+    sig 0x000806f5, pf_mask 0x87, 2024-01-03, rev 0x2b000590
+    sig 0x000806f4, pf_mask 0x87, 2024-01-03, rev 0x2b000590
+    sig 0x00090661, pf_mask 0x01, 2023-09-26, rev 0x0019, size 20480
+    sig 0x00090672, pf_mask 0x07, 2023-09-19, rev 0x0034, size 224256
+    sig 0x00090675, pf_mask 0x07, 2023-09-19, rev 0x0034
+    sig 0x000b06f2, pf_mask 0x07, 2023-09-19, rev 0x0034
+    sig 0x000b06f5, pf_mask 0x07, 2023-09-19, rev 0x0034
+    sig 0x000906a3, pf_mask 0x80, 2023-09-19, rev 0x0432, size 222208
+    sig 0x000906a4, pf_mask 0x80, 2023-09-19, rev 0x0432
+    sig 0x000906c0, pf_mask 0x01, 2023-09-26, rev 0x24000026, size 20480
+    sig 0x000906e9, pf_mask 0x2a, 2023-09-28, rev 0x00f8, size 108544
+    sig 0x000906ea, pf_mask 0x22, 2023-07-26, rev 0x00f6, size 105472
+    sig 0x000906ec, pf_mask 0x22, 2023-07-26, rev 0x00f6, size 106496
+    sig 0x000906ed, pf_mask 0x22, 2023-07-27, rev 0x00fc, size 106496
+    sig 0x000a0652, pf_mask 0x20, 2023-07-16, rev 0x00fa, size 97280
+    sig 0x000a0653, pf_mask 0x22, 2023-07-16, rev 0x00fa, size 97280
+    sig 0x000a0655, pf_mask 0x22, 2023-07-16, rev 0x00fa, size 97280
+    sig 0x000a0660, pf_mask 0x80, 2023-07-16, rev 0x00fa, size 97280
+    sig 0x000a0661, pf_mask 0x80, 2023-07-16, rev 0x00fa, size 96256
+    sig 0x000a0671, pf_mask 0x02, 2023-09-14, rev 0x005e, size 108544
+    sig 0x000b0671, pf_mask 0x32, 2023-12-14, rev 0x0122, size 215040
+    sig 0x000b06a2, pf_mask 0xe0, 2023-12-07, rev 0x4121, size 220160
+    sig 0x000b06a3, pf_mask 0xe0, 2023-12-07, rev 0x4121
+    sig 0x000b06e0, pf_mask 0x11, 2023-09-25, rev 0x0015, size 138240
+  + New microcodes:
+    sig 0x000a06a4, pf_mask 0xe6, 2024-01-03, rev 0x001c, size 136192
+    sig 0x000b06a8, pf_mask 0xe0, 2023-12-07, rev 0x4121, size 220160
+    sig 0x000c06f2, pf_mask 0x87, 2023-11-20, rev 0x21000200, size 549888
+    sig 0x000c06f1, pf_mask 0x87, 2023-11-20, rev 0x21000200
+
+
+
 * Tue Nov 14 2023 L.A. Kostis <lakostis@altlinux.ru> 2:23-alt1.20231114
 - New upstream microcode datafile 20231114:
   + Security updates for INTEL-SA-00950 (CVE-2023-23583).
