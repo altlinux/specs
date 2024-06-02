@@ -3,12 +3,12 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 %define sover 0
-%define git 2de1265f
+%define git 2ccc81fd
 %def_enable static
 
 Name: spirv-cross
-Version: 0.57.0
-Release: alt0.3.g%{git}
+Version: 0.59.0
+Release: alt0.1.g%{git}
 Epoch: 1
 
 Summary: tool to parse and convert SPIR-V to other shader languages
@@ -108,6 +108,12 @@ sed -i "s/make_msl_version(1, 2)/make_msl_version(1, 2, 0)/" spirv_msl.hpp
 %endif
 
 %changelog
+* Fri May 31 2024 L.A. Kostis <lakostis@altlinux.ru> 1:0.59.0-alt0.1.g2ccc81fd
+- Updated to GIT 2ccc81fd (sdk-1.3.283.0).
+
+* Fri Mar 08 2024 L.A. Kostis <lakostis@altlinux.ru> 1:0.58.0-alt0.1.g117161dd
+- Updated to GIT 117161dd (sdk-1.3.275.0).
+
 * Wed Nov 15 2023 L.A. Kostis <lakostis@altlinux.ru> 1:0.57.0-alt0.3.g2de1265f
 - Enable packaging of static libraries and -cli (closes #48404).
 
