@@ -1,8 +1,8 @@
 # SPEC file for litmus package
 
 Name:    litmus
-Version: 0.14.0
-Release: alt2.git.9fbc73d
+Version: 0.15.0
+Release: alt1
 
 Summary: a WebDAV server test suite
 Summary(ru_RU.UTF-8): утилита тестирования серверов WebDAV
@@ -23,8 +23,9 @@ Patch1:  %name-0.14-alt-neon_0.31.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Sun Mar 20 2011
-BuildRequires: libexpat-devel libkeyutils-devel libneon-devel libssl-devel zlib-devel
+# Automatically added by buildreq on Sun Jun 02 2024
+# optimized out: libgpg-error perl pkg-config python-modules python2-base python3 python3-base python3-dev sh5
+BuildRequires: libneon-devel perl-parent
 
 %description
 litmus is a WebDAV server test suite, which aims to test whether
@@ -46,7 +47,7 @@ digest and basic authentication, TLS/SSL, and proxy servers.
 
 tar -x --strip-components=1 -f %SOURCE1
 
-%patch1
+#%%patch1
 
 mv -f -- COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
@@ -66,14 +67,16 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 mv -- ChangeLog.CVS ChangeLog
 
 %files  -f %name.lang
-%doc FAQ README THANKS TODO ChangeLog NEWS
+%doc FAQ README.md THANKS TODO NEWS
 %doc --no-dereference COPYING
 
 %_bindir/%name
 %_libexecdir/%{name}*
-%_datadir/%{name}*
 
 %changelog
+* Sun Jun 02 2024 Nikolay A. Fetisov <naf@altlinux.org> 0.15.0-alt1
+- New version
+
 * Wed Dec 07 2022 Nikolay A. Fetisov <naf@altlinux.org> 0.14.0-alt2.git.9fbc73d
 - Restore from orphaned
 - Rebuild with libneon 0.32
