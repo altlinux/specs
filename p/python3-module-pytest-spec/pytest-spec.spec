@@ -1,23 +1,30 @@
-%define _unpackaged_files_terminate_build 1
 %define oname pytest-spec
 
-%def_disable check
+%def_with check
 
 Name: python3-module-%oname
-Version: 1.1.0
-Release: alt3
+Version: 3.2.0
+Release: alt1
 
 Summary: pytest plugin to display test execution output like a SPECIFICATION
+
 License: GPLv2+
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/pytest-spec/
+URL: https://pypi.org/project/pytest-spec
+VCS: https://github.com/pchomik/pytest-spec
+
 BuildArch: noarch
 
-# https://github.com/pchomik/pytest-spec.git
-Source0: https://pypi.python.org/packages/96/d1/68ced04b24b93203db875e0123c288b5993732fda2be5f3859907e4a40a4/%{oname}-%{version}.tar.gz
+Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-poetry
+
+%if_with check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-mock
+BuildRequires: python3-module-six
+%endif
 
 %py3_provides pytest_spec
 
@@ -34,25 +41,29 @@ Available features:
 * Method under test may be highlighted (method) like in example.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test
-export PYTHONPATH=$PWD
-py.test-%_python3_version -vv
+# remove extra pytest dependencies
+sed -i '/addopts/d' setup.cfg
+%pyproject_run_pytest
 
 %files
-%doc *.rst PKG-INFO
-%python3_sitelibdir/*
-
+%doc *.md *txt
+%python3_sitelibdir/pytest_spec
+%python3_sitelibdir/pytest_spec-%version.dist-info
 
 %changelog
+* Sun Jun 02 2024 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
+- Build new version.
+- Build with check.
+
 * Mon May 30 2022 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt3
 - Fixed BuildRequires.
 
