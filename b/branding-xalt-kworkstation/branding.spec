@@ -16,7 +16,7 @@
 
 %define Theme Workstation K
 %define smalltheme kworkstation
-%define codename Sorbaronia Mitschurinii
+%define codename Nemorosa
 %define brand alt
 %define Brand ALT
 %define fakebrand xalt
@@ -29,7 +29,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt0.2
+Release: alt0.3
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -482,6 +482,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Mon Jun 03 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.3
+- update codename
+
 * Fri May 31 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.2
 - update background images
 
