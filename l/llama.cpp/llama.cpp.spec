@@ -4,9 +4,10 @@
 %set_verify_elf_method strict
 
 Name: llama.cpp
-Version: 20240527
-Release: alt1
-Summary: Inference of LLaMA model in pure C/C++
+Version: 3072
+Release: alt1.20240603
+Epoch: 1
+Summary: LLM inference in C/C++
 License: MIT
 Group: Sciences/Computer science
 Url: https://github.com/ggerganov/llama.cpp
@@ -21,14 +22,20 @@ Requires: python3(glob)
 Requires: python3(os)
 Requires: python3(pip)
 Requires: python3(struct)
+%add_findreq_skiplist %_datadir/%name/examples/*
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
-BuildRequires: ctest
 BuildRequires: gcc-c++
+BuildRequires: libcurl-devel
+BuildRequires: libopenblas-devel
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: ctest
+BuildRequires: tinyllamas-gguf
+}}
 
 %description
-Plain C/C++ implementation (of inference of LLaMA model) without
+Plain C/C++ implementation (of inference of many LLM models) without
 dependencies. AVX, AVX2 and AVX512 support for x86 architectures.
 Mixed F16/F32 precision. 1.5-bit, 2-bit, 3-bit, 4-bit, 5-bit, 6-bit, and
 8-bit integer quantization for faster inference and reduced memory use.
@@ -41,12 +48,13 @@ Supported models:
    Baichuan 1 & 2 + derivations, Aquila 1 & 2, Starcoder models, Refact,
    Persimmon 8B, MPT, Bloom, Yi models, StableLM models, Deepseek models,
    Qwen models, PLaMo-13B, Phi models, GPT-2, Orion 14B, InternLM2,
-   CodeShell, Gemma
+   CodeShell, Gemma, Mamba, Grok-1, Xverse, Command-R models, SEA-LION,
+   GritLM-7B + GritLM-8x7B, OLMo, GPT-NeoX + Pythia
 
 Multimodal models:
 
    LLaVA 1.5 models, BakLLaVA, Obsidian, ShareGPT4V, MobileVLM 1.7B/3B
-   models, Yi-VL
+   models, Yi-VL, Mini CPM, Moondream, Bunny
 
 NOTE 1: You will need to:
 
@@ -64,28 +72,41 @@ Overall this is all raw and EXPERIMENTAL, no warranty, no support.
 
 %prep
 %setup
+sed -i '/BLA_SIZEOF_INTEGER/s/8/ANY/' CMakeLists.txt
+cat <<-EOF >> scripts/build-info.cmake
+	set(BUILD_NUMBER $(tr -d '[:alpha:]' <<< '%version'))
+	set(BUILD_COMMIT "%release")
+EOF
 
 %build
-%cmake
+%cmake \
+	-DLLAMA_BLAS=ON \
+	-DLLAMA_BLAS_VENDOR=OpenBLAS \
+	-DLLAMA_CURL=ON \
+	%nil
+grep ^LLAMA %_cmake__builddir/CMakeCache.txt | sort | tee build-options.txt
 %cmake_build
 find -name '*.py' | xargs sed -i '1s|#!/usr/bin/env python3|#!%__python3|'
 
 %install
-# Main format converter.
-install -Dp convert.py %buildroot%_bindir/llama-convert
-# Additional and experimental converters.
+# Format converters.
 install -Dp convert-*.py -t %buildroot%_bindir
-# Python requirements file.
+ln -s convert-hf-to-gguf.py %buildroot%_bindir/llama-convert
+# Python requirements files.
 install -Dpm644 requirements.txt -t %buildroot%_datadir/%name
+cp -a requirements -t %buildroot%_datadir/%name
 # Additional data.
 cp -rp prompts -t %buildroot%_datadir/%name
 cp -rp grammars -t %buildroot%_datadir/%name
 # Not all examples.
 install -Dp examples/*.sh -t %buildroot%_datadir/%name/examples
+install -Dp examples/*.py -t %buildroot%_datadir/%name/examples
 # Install and rename binaries to have llama- prefix.
 cd %_cmake__builddir/bin
-find -maxdepth 1 -type f -executable -not -name 'test-*' -printf '%%f\0' |
+find -maxdepth 1 -type f -executable -not -name 'test-*' -not -name 'llama-*' -printf '%%f\0' |
 	xargs -0ti -n1 install -p {} %buildroot%_bindir/llama-{}
+find -maxdepth 1 -type f -executable -name 'llama-*' -printf '%%f\0' |
+	xargs -0ti -n1 install -p {} -t %buildroot%_bindir
 
 mkdir -p %buildroot%_unitdir
 cat <<'EOF' >%buildroot%_unitdir/llama.service
@@ -112,11 +133,17 @@ LLAMA_ARGS="-m %_datadir/%name/ggml-model-f32.bin"
 EOF
 
 %check
+%_cmake__builddir/bin/main --version |& grep -Fx 'version: %version (%release)'
+# test-eval-callback wants network.
 %ctest -j1 -E test-eval-callback
+PATH=%buildroot%_bindir:$PATH
+llama-main -m %_datadir/tinyllamas/stories260K.gguf -p "Hello" -s 42 -n 500
+llama-main -m %_datadir/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -n 33 |
+	grep 'Once upon a time, there was a boy named Tom. Tom had a big box of colors.'
 
 %files
 %define _customdocdir %_docdir/%name
-%doc LICENSE README.md docs
+%doc LICENSE README.md docs build-options.txt
 %_bindir/llama-*
 %_bindir/convert-*.py
 %_unitdir/llama.service
@@ -125,6 +152,12 @@ EOF
 %_datadir/%name
 
 %changelog
+* Mon Jun 03 2024 Vitaly Chikunov <vt@altlinux.org> 1:3072-alt1.20240603
+- Update to b3072 (2024-06-03).
+- The version scheme now matches the upstream build number more closely,
+  instead of using the commit date.
+- Build with libcurl and OpenBLAS support.
+
 * Tue May 28 2024 Vitaly Chikunov <vt@altlinux.org> 20240527-alt1
 - Update to b3012 (2024-05-27).
 
