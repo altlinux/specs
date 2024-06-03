@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 23.12.11
+Version: 24.6.1
 Release: alt1
 
 Summary: ISO country, subdivision, language, currency and script definitions
@@ -62,6 +62,9 @@ This package contains tests for %oname
 
 
 %changelog
+* Mon Jun 03 2024 Anton Vyatkin <toni@altlinux.org> 24.6.1-alt1
+- New version 24.6.1.
+
 * Wed Dec 13 2023 Anton Vyatkin <toni@altlinux.org> 23.12.11-alt1
 - New version 23.12.11.
 
