@@ -11,7 +11,7 @@
 
 
 Name:     %pname-source
-Version:  0.4.9
+Version:  0.4.10
 Release:  alt1
 
 Summary:  Osec-based integrity checking script and settings
@@ -87,7 +87,7 @@ Lock down PVE cluster VMs on integalert_vm.service failure.
 %make_build
 
 %install
-%makeinstall_std sbindir=/sbin sysconfdir=%_sysconfdir datadir=%_datadir unitdir=%_unitdir  presetdir=/lib/systemd/system-preset WITH_PVE=%{with pve}
+%makeinstall_std sbindir=/sbin sysconfdir=%_sysconfdir datadir=%_datadir unitdir=%_unitdir presetdir=%_presetdir WITH_PVE=%{with pve} logrotatedir=%_logrotatedir
 
 %post -n %pname
 # On package update (don't check the $1 value due to package
@@ -142,15 +142,18 @@ fi
 
 %files -n %pname
 %_unitdir/integalert.service
-/lib/systemd/system-preset/65-integrity.preset
+%_unitdir/integ-check-failed.target
+%_presetdir/*
 /sbin/integalert
 %dir %_sysconfdir/osec/integalert*
 %config(noreplace) %_sysconfdir/osec/integalert*/*.conf
 %_sysconfdir/osec/integalert*/sender
 %dir %_sysconfdir/osec/integalert*/trigger.d
+%config(noreplace) %_logrotatedir/integalert*.conf
 
 %files -n %pname-vm-check
 %_unitdir/integalert_vm.service
+%_unitdir/vm-check-failed.target
 %_unitdir/integalert_vm.timer
 
 %if_with pve
@@ -159,6 +162,14 @@ fi
 %endif
 
 %changelog
+* Mon Jun 03 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.10-alt1
+- Add new sender.conf to define logging properties.
+- Generate and install logrotate configuration (100 weekly).
+- Add profile name to log tag.
+- Write last log to /var/log/integalert/lastlog and continuous log
+  to /var/log/integalert/integalert.log
+- Install and package the special failing targets.
+
 * Thu Mar 28 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.9-alt1
 - Use 'qm block' command in PVE triggers.
 
