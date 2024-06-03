@@ -1,17 +1,23 @@
 %define oname statsd
 
 Name: python3-module-%oname
-Version: 3.3.0
+Version: 4.0.1
 Release: alt1
+
 Summary: A simple statsd client
+
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/statsd/
-Source: %name-%version.tar.gz
+URL: https://pypi.org/project/statsd
+VCS: https://github.com/jsocol/pystatsd
+
+Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 statsd is a friendly front-end to Graphite. This is a Python client for
@@ -21,18 +27,22 @@ the statsd daemon.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%doc AUTHORS CHANGES *.rst
-%python3_sitelibdir/*
+%doc LICENSE AUTHORS *.rst *.md
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/*/tests.*
 %exclude %python3_sitelibdir/*/*/tests.*
 
 %changelog
+* Mon Jun 03 2024 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt1
+- Build new version.
+
 * Mon Sep 26 2022 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1
 - Build new version.
 
