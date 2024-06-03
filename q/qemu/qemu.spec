@@ -150,7 +150,7 @@
 # }}}
 
 Name: qemu
-Version: 8.2.3
+Version: 8.2.4
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -630,6 +630,7 @@ This package provides the spice chardev driver for QEMU.
 Summary: QEMU guest agent
 Group: Emulators
 Requires: %name-aux = %EVR
+Requires: udev-rules-hotplug-cpu
 
 %description guest-agent
 QEMU is a generic and open source processor emulator which achieves a good
@@ -1363,6 +1364,10 @@ popd
 %exclude %docdir/LICENSE
 
 %changelog
+* Fri May 31 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.4-alt1
+- 8.2.4
+- Add udev-rules-hotplug-cpu requires to qemu-guest-agent.
+
 * Tue May 07 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.3-alt1
 - 8.2.3 (Fixes:  CVE-2024-3446, CVE-2024-3447, CVE-2024-3567).
 
