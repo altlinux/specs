@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -72,7 +72,7 @@ mkdir -p %buildroot/%kdesu_user_dir
 %find_lang %name --all-name
 %K5find_qtlang %name --all-name
 
-%pre
+%pre -n libkf5desu
 /usr/sbin/useradd -M -r -d %kdesu_user_dir -s /sbin/nologin -c 'KDE SU wrapper' %kdesu_user 2>/dev/null || :
 
 %files common -f %name.lang
@@ -93,6 +93,9 @@ mkdir -p %buildroot/%kdesu_user_dir
 %_K5lib/libKF5Su.so.*
 
 %changelog
+* Mon Jun 03 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt2
+- fix create user
+
 * Thu May 23 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt1
 - new version
 
