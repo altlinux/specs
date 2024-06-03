@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: %_name
-Version: %ver_major
+Version: %ver_major.2
 Release: alt1
 
 Summary: Play your music elegantly
@@ -15,7 +15,7 @@ Group: Sound
 Url: https://gitlab.gnome.org/neithern/g4music
 
 %if_disabled snapshot
-Source: %url/archive/v%version/%_name-%version.tar.gz
+Source: %url/-/archive/v%version/%_name-%version.tar.gz
 %else
 Vcs: https://gitlab.gnome.org/neithern/g4music.git
 Source: %_name-%version.tar
@@ -66,6 +66,9 @@ large music collection.
 
 
 %changelog
+* Mon Jun 03 2024 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
+- 3.6.2
+
 * Sun May 26 2024 Yuri N. Sedunov <aris@altlinux.org> 3.6-alt1
 - updated to v3.6-1-gf0469bd
 
