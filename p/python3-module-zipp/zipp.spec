@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.19.0
+Version: 3.19.1
 Release: alt1
 
 Summary: A pathlib-compatible Zipfile object wrapper
@@ -23,7 +23,7 @@ Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra testing
+%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
@@ -51,6 +51,9 @@ A pathlib-compatible Zipfile object wrapper.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 03 2024 Stanislav Levin <slev@altlinux.org> 3.19.1-alt1
+- 3.19.0 -> 3.19.1.
+
 * Mon May 27 2024 Stanislav Levin <slev@altlinux.org> 3.19.0-alt1
 - 3.18.2 -> 3.19.0.
 
