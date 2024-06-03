@@ -5,7 +5,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.2
+Version: 6.0
 Release: alt1
 
 Summary: Translucent persistent objects
@@ -30,6 +30,7 @@ BuildRequires: python3-module-zope.testrunner
 BuildRequires: python3-module-manuel
 BuildRequires: python3-module-manuel-tests
 BuildRequires: python3-module-cffi
+BuildRequires: python3-module-zope.deferredimport
 %endif
 
 %py3_provides persistent.TimeStamp
@@ -119,6 +120,9 @@ rm -f docs/_build/html/.buildinfo
 %python3_sitelibdir/%oname/*.h
 
 %changelog
+* Mon Jun 03 2024 Anton Vyatkin <toni@altlinux.org> 6.0-alt1
+- New version 6.0.
+
 * Tue Feb 20 2024 Anton Vyatkin <toni@altlinux.org> 5.2-alt1
 - New version 5.2.
 
