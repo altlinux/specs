@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.15.1
-Release: alt1
+Release: alt2
 Summary: Web APIs for Django, made easy
 License: BSD
 Group: Development/Python3
@@ -55,6 +55,9 @@ Web APIs.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon May 06 2024 Stanislav Levin <slev@altlinux.org> 3.15.1-alt2
+- Fixed FTBFS (Pytest 8.2.0).
+
 * Tue Mar 26 2024 Stanislav Levin <slev@altlinux.org> 3.15.1-alt1
 - 3.15.0 -> 3.15.1.
 

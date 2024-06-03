@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.0
-Release: alt4
+Release: alt5
 
 Summary: Bootstrap confidence interval estimation routines for Numpy/Scipy/Pandas
 License: BSD-3-Clause
@@ -14,6 +14,8 @@ Url: https://pypi.org/project/scikits.bootstrap/
 VCS: https://github.com/cgevans/scikits-bootstrap.git
 
 Source: %name-%version.tar
+# backported from d9ebd7e727595cabbc8e949584396a42b14a90d5
+Patch0: scikits.bootstrap-1.1.0-fix-pytest-8-compatibility.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -35,6 +37,7 @@ statistics lies satisfies some criteria, e.g., lies in some interval.
 
 %prep
 %setup
+%autopatch -p1
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
@@ -51,11 +54,10 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %endif
 
 %check
-%ifnarch %ix86
-%pyproject_run_pytest -v -W ignore::pytest.PytestRemovedIn8Warning
-%else
-%pyproject_run_pytest -v -k 'not test_abc_simple' -W ignore::pytest.PytestRemovedIn8Warning
+%ifarch %ix86
+%define pytest_args -k 'not test_abc_simple'
 %endif
+%pyproject_run_pytest -ra %{?pytest_args}
 
 %files
 %doc LICENSE *.md
@@ -63,6 +65,9 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu May 30 2024 Stanislav Levin <slev@altlinux.org> 1.1.0-alt5
+- Fixed FTBFS (Pytest 8.2.0).
+
 * Sun Apr 14 2024 Anton Vyatkin <toni@altlinux.org> 1.1.0-alt4
 - Fix build when --without-check.
 

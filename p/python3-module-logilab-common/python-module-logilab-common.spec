@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2.0.0
-Release: alt2
+Release: alt3
 
 Summary: Collection of low-level Python packages and modules used by Logilab projects
 License: LGPLv2.1+
@@ -17,6 +17,7 @@ BuildArch: noarch
 Source: %oname-%version.tar
 Patch0: logilab-1.10.0-alt-urllib2.patch
 Patch1: lc-2.0.0-unittest-alt-fix.patch
+Patch2: lc-2.0.0-tests-make-tests-compatible-with-pytest-8.2.0.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -48,6 +49,7 @@ designed to ease:
 %setup -n %oname-%version
 %patch0 -p1
 %patch1 -p2
+%patch2 -p2
 
 %build
 %pyproject_build
@@ -66,6 +68,9 @@ rm -f %buildroot%_bindir/logilab-pytest
 %python3_sitelibdir/logilab_common-%version-*-nspkg.pth
 
 %changelog
+* Wed May 29 2024 Stanislav Levin <slev@altlinux.org> 2.0.0-alt3
+- Fixed FTBFS (Pytest 8.2.0).
+
 * Fri Jan 26 2024 Anton Vyatkin <toni@altlinux.org> 2.0.0-alt2
 - Fixed FTBFS.
 

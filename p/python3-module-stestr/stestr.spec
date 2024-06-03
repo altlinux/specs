@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 4.1.0
-Release: alt2
+Release: alt2.1
 
 Summary: stestr is parallel Python test runner
 
@@ -95,11 +95,8 @@ rm -rf html/.{doctrees,buildinfo}
 %pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-%buildroot%_bindir/%oname init
-# local tox.ini is too creepy
-%tox_create_default_config
-%tox_check_pyproject -- -k 'not test_history_list and not test_history_remove'
+# synced to .github/workflows/main.yml and tox.ini
+%pyproject_run -- stestr run
 
 %files
 %doc LICENSE *.rst
@@ -115,6 +112,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %doc LICENSE html
 
 %changelog
+* Fri May 17 2024 Stanislav Levin <slev@altlinux.org> 4.1.0-alt2.1
+- NMU: fixed FTBFS (Pytest 8.2.0).
+
 * Fri Mar 01 2024 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt2
 - Fixed FTBFS.
 

@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 8.1.3
-Release: alt1
+Release: alt2
 Summary: Interactive Widgets for the Jupyter Notebook
 License: BSD-3-Clause
 Group: Development/Python3
@@ -14,6 +14,8 @@ Url: https://pypi.org/project/ipywidgets
 Vcs: https://github.com/jupyter-widgets/ipywidgets.git
 BuildArch: noarch
 Source: %name-%version.tar
+# https://github.com/jupyter-widgets/ipywidgets/pull/3903
+Patch: ipywidgets-Fix-compatibility-with-pytest-8.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -61,6 +63,7 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 cd python/ipywidgets/
@@ -72,7 +75,7 @@ cd python/ipywidgets/
 
 %check
 cd python/ipywidgets/
-%pyproject_run_pytest -v -W ignore::pytest.PytestRemovedIn8Warning
+%pyproject_run_pytest -v
 
 %files
 %doc README.md CONTRIBUTING.md LICENSE
@@ -86,6 +89,9 @@ cd python/ipywidgets/
 %python3_sitelibdir/%oname/widgets/tests
 
 %changelog
+* Fri May 31 2024 Stanislav Levin <slev@altlinux.org> 8.1.3-alt2
+- Fixed FTBFS (Pytest 8.2.0).
+
 * Tue May 28 2024 Anton Vyatkin <toni@altlinux.org> 8.1.3-alt1
 - New version 8.1.3.
 

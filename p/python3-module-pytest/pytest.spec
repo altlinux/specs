@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.0.2
+Version: 8.2.0
 Release: alt1
 Summary: Python test framework
 License: MIT
@@ -21,7 +21,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
-%pyproject_builddeps_metadata_extra testing
+%pyproject_builddeps_metadata_extra dev
 BuildRequires: /dev/pts
 BuildRequires: /dev/shm
 %endif
@@ -81,6 +81,9 @@ export TERM=xterm
 %_bindir/pytest-3
 
 %changelog
+* Fri May 03 2024 Stanislav Levin <slev@altlinux.org> 8.2.0-alt1
+- 8.0.2 -> 8.2.0.
+
 * Mon Feb 26 2024 Stanislav Levin <slev@altlinux.org> 8.0.2-alt1
 - 8.0.1 -> 8.0.2.
 

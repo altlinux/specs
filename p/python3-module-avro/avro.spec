@@ -5,25 +5,23 @@
 
 Name: python3-module-%oname
 Version: 1.11.3
-Release: alt2
+Release: alt3
 
 Summary: Avro is a serialization and RPC framework
 License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/avro/
+Url: https://pypi.org/project/avro/
 
 Source: %name-%version.tar
 Patch: avro-alt-test-timeout.patch
 Patch1: drop-distutils.patch
+Patch2: avro-tests-make-test_server_with_path-conditional.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-%if_with check
-BuildRequires: python3-module-pytest
-%endif
 
 %py_provides %oname
 
@@ -64,8 +62,7 @@ This package contains tests for %oname.
 
 %prep
 %setup
-%patch -p1
-%patch1 -p1
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -74,11 +71,9 @@ This package contains tests for %oname.
 %pyproject_install
 
 %check
-# test_server_with_path: tries to connect to apache.org
-%pyproject_run_pytest -v -k 'not test_server_with_path'
+%pyproject_run_unittest -v
 
 %files
-%doc PKG-INFO
 %_bindir/%oname
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%{pyproject_distinfo %oname}
@@ -86,10 +81,12 @@ This package contains tests for %oname.
 
 %files tests
 %python3_sitelibdir/%oname/test
-%doc PKG-INFO
 
 
 %changelog
+* Mon May 20 2024 Stanislav Levin <slev@altlinux.org> 1.11.3-alt3
+- Fixed FTBFS (Pytest 8.2.0).
+
 * Thu Oct 12 2023 Anton Vyatkin <toni@altlinux.org> 1.11.3-alt2
 - drop distutils dependency
 

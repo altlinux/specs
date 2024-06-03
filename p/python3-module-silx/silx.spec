@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.1.0
-Release: alt1
+Release: alt2
 Summary: Software library for X-Ray data analysis
 License: MIT
 Group: Development/Python3
@@ -147,6 +147,9 @@ cp -a examples %buildroot%python3_sitelibdir/silx/
 %python3_sitelibdir/silx/examples
 
 %changelog
+* Thu May 30 2024 Stanislav Levin <slev@altlinux.org> 2.1.0-alt2
+- Fixed FTBFS (Pytest 8.2.0).
+
 * Mon Apr 22 2024 Stanislav Levin <slev@altlinux.org> 2.1.0-alt1
 - 2.0.1 -> 2.1.0.
 

@@ -1,23 +1,27 @@
 %define _unpackaged_files_terminate_build 1
+%define pypi_name dbus-next
+%define mod_name dbus_next
 
 %def_with check
 
-Name: python3-module-dbus-next
+Name: python3-module-%pypi_name
 Version: 0.2.3
-Release: alt2
-
+Release: alt3
 Summary: The next great DBus library for Python with asyncio support
 License: MIT
 Group: Development/Python3
+Url: https://pypi.org/project/dbus-next/
+Vcs: https://github.com/altdesktop/python-dbus-next
 BuildArch: noarch
-
-# VCS: https://github.com/altdesktop/python-dbus-next
-Url: https://python-dbus-next.readthedocs.io
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildRequires: rpm-macros-python3
-BuildRequires: rpm-build-python3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%endif
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -32,27 +36,33 @@ The next great DBus library for Python.
 %prep
 %setup
 %patch0 -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-#See: https://lists.altlinux.org/pipermail/devel/2022-December/217237.html
-sed -e 's|unix:tmpdir=/run/dbus/users|unix:abstract=/usr/src/tmp|' \
-    /usr/share/dbus-1/session.conf > /usr/src/rpmb-dbus-1-session.conf
+# flaky and order-dependent test
+# https://github.com/altdesktop/python-dbus-next/issues/161
+%pyproject_run -- /bin/dbus-run-session \
+    python -m pytest --ignore=test/test_disconnect.py
 
-/bin/dbus-run-session --config-file=/usr/src/rpmb-dbus-1-session.conf \
-                      -- %__python3 -m pytest test
+%pyproject_run -- /bin/dbus-run-session \
+    python -m pytest test/test_disconnect.py
 
 %files
 %doc LICENSE README.md
-%python3_sitelibdir_noarch/dbus_next
-%python3_sitelibdir_noarch/*.egg-info
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon May 20 2024 Stanislav Levin <slev@altlinux.org> 0.2.3-alt3
+- Fixed FTBFS (Pytest 8.2.0).
+
 * Sun Mar 26 2023 Egor Ignatov <egori@altlinux.org> 0.2.3-alt2
 - Fix FTBFS: change dbus session daemon socket path for tests
 

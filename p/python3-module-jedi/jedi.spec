@@ -1,112 +1,66 @@
+%define _unpackaged_files_terminate_build 1
+
+%define pypi_name jedi
+%define mod_name %pypi_name
+
 %def_enable check
 
-Name: python3-module-jedi
+Name: python3-module-%pypi_name
 Version: 0.19.1
-Release: alt1
+Release: alt2
 Summary: An autocompletion tool for Python that can be used for text editors
 License: MIT
 Group: Development/Python
-Url: https://pypi.python.org/pypi/jedi/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-# https://github.com/davidhalter/jedi.git
-Source: jedi-%version.tar.gz
+Url: https://pypi.org/project/jedi/
+Vcs: https://github.com/davidhalter/jedi
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx3
-# Automatically added by buildreq on Mon Feb 01 2021
-# optimized out: ca-trust python-modules python-sphinx-objects.inv python2-base python3 python3-base python3-dev python3-module-Pygments python3-module-alabaster python3-module-babel python3-module-cffi python3-module-chardet python3-module-cryptography python3-module-docutils python3-module-idna python3-module-imagesize python3-module-jinja2 python3-module-markupsafe python3-module-openssl python3-module-packaging python3-module-pkg_resources python3-module-pytz python3-module-requests python3-module-sphinx python3-module-urllib3 sh4 xz
-BuildRequires: ctags python3-module-setuptools python3-module-sphinx_rtd_theme python3-module-sphinxcontrib-applehelp python3-module-sphinxcontrib-devhelp python3-module-sphinxcontrib-htmlhelp python3-module-sphinxcontrib-jsmath python3-module-sphinxcontrib-qthelp python3-module-sphinxcontrib-serializinghtml python3-module-sphinxcontrib-jquery
-
-BuildRequires: python3-module-parso
-
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Source2: modules.tar
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_enabled check
-BuildRequires: python3-module-pytest python3-modules-sqlite3
+%pyproject_builddeps_metadata_extra testing
+# sqlite3 is subpackaged but required by test_sqlite3_conversion
+BuildRequires: python3-modules-sqlite3
 %endif
 
 %description
-Jedi is an autocompletion tool for Python that can be used in
-IDEs/editors. Jedi works. Jedi is fast. It understands all of the basic
-Python syntax elements including many builtin functions.
+Jedi is a static analysis tool for Python that is typically used in IDEs/editors
+plugins. Jedi has a focus on autocompletion and goto functionality. Other
+features include refactoring, code search and finding references.
 
-Additionaly, Jedi suports two different goto functions and has support
-for renaming as well as Pydoc support and some other IDE features.
-
-%package pickles
-Summary: Pickles for jedi
-Group: Development/Python
-
-%description pickles
-Jedi is an autocompletion tool for Python that can be used in
-IDEs/editors. Jedi works. Jedi is fast. It understands all of the basic
-Python syntax elements including many builtin functions.
-
-Additionaly, Jedi suports two different goto functions and has support
-for renaming as well as Pydoc support and some other IDE features.
-
-This package contains pickles for jedi.
-
-%package docs
-Summary: Documentation for jedi
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-Jedi is an autocompletion tool for Python that can be used in
-IDEs/editors. Jedi works. Jedi is fast. It understands all of the basic
-Python syntax elements including many builtin functions.
-
-Additionaly, Jedi suports two different goto functions and has support
-for renaming as well as Pydoc support and some other IDE features.
-
-This package contains documentation for jedi.
+Jedi has a simple API to work with. There is a reference implementation as a
+VIM-Plugin. Autocompletion in your REPL is also possible, IPython uses it
+natively and for the CPython REPL you can install it. Jedi is well tested and
+bugs should be rare.
 
 %prep
-%setup -n jedi-%version
-
-sed -i 's|env python|env python3|' sith.py
-
-ln -s ../objects.inv docs/
+%setup -a2
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build_debug
-
-%prepare_sphinx3 .
-%make -C docs pickle SPHINXBUILD=py3_sphinx-build BUILDDIR=_build3
-%make -C docs html SPHINXBUILD=py3_sphinx-build BUILDDIR=_build3
+%pyproject_build
 
 %install
-install -D -m755 sith.py %buildroot%_bindir/sith.py
+%pyproject_install
 
-%python3_install
-
-cp -fR docs/_build3/pickle %buildroot%python3_sitelibdir/jedi/
-
-%define failed_tests \\\
-	test_find_system_environments \\\
-	test_scanning_venvs \\\
-	test_create_environment_venv_path \\\
-	test_create_environment_executable \\\
-        test_string_annotation[annotations10-result10- \\\
-        test_string_annotation[annotations13-result13- \\\
-        test_venv_and_pths
 %check
-python3 -m pytest -k "not `echo %failed_tests | sed 's/ / and not /g'`"
+%pyproject_run_pytest -ra
 
 %files
-%doc *.txt *.rst
-%_bindir/*
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/pickle
-
-%files pickles
-%python3_sitelibdir/*/pickle
-
-%files docs
-%doc docs/_build3/html/*
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue May 28 2024 Stanislav Levin <slev@altlinux.org> 0.19.1-alt2
+- Fixed FTBFS (Pytest 8.2.0).
+
 * Thu Feb 08 2024 Anton Zhukharev <ancieg@altlinux.org> 0.19.1-alt1
 - Updated to 0.19.1.
 

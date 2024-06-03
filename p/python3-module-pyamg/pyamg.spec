@@ -1,5 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pyamg
+%define mod_name %pypi_name
 
 %ifarch ppc64le
 %def_without check
@@ -9,7 +10,7 @@
 
 Name: python3-module-%pypi_name
 Version: 5.1.0
-Release: alt1
+Release: alt2
 
 Summary: PyAMG: Algebraic Multigrid Solvers in Python
 License: MIT
@@ -64,10 +65,14 @@ fi
 %check
 # https://github.com/pyamg/pyamg/issues/342
 %ifarch i586
-_PYTEST_ARGS=--ignore=pyamg/tests/test_graph.py
+%define _pytest_args -k 'not test_bellman_ford and not test_lloyd_cluster'
 %endif
-%tox_create_default_config
-%tox_check_pyproject -- -vra --import-mode=importlib . ${_PYTEST_ARGS-}
+%pyproject_run -- bash -s <<-'ENDTESTS'
+set -eux
+mkdir empty
+cd empty
+python -m pytest -ra -Wignore --pyargs %mod_name %{?_pytest_args}
+ENDTESTS
 
 %files
 %doc *.txt *.md
@@ -77,6 +82,9 @@ _PYTEST_ARGS=--ignore=pyamg/tests/test_graph.py
 %exclude %python3_sitelibdir/pyamg/*/tests
 
 %changelog
+* Tue May 07 2024 Stanislav Levin <slev@altlinux.org> 5.1.0-alt2
+- Fixed FTBFS (Pytest 8.1.1).
+
 * Tue Mar 26 2024 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt1
 - Automatically updated to 5.1.0.
 

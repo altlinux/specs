@@ -14,7 +14,7 @@
 
 Name: python3-module-%oname
 Version: 5.2.1
-Release: alt1
+Release: alt2
 
 Summary: Easy access to NIfTI images from within Python
 License: MIT
@@ -26,6 +26,7 @@ BuildArch: noarch
 
 Source: %oname-%version.tar
 Patch: drop-distutils.patch
+Patch1: nibabel-5.2.1-tests-replace-deprecated-nose-fixtures-with-pytest-s.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
@@ -92,7 +93,7 @@ This package contains pickles for NiBabel.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %if_enabled docs
 sed -i 's|@PYVER@|%_python3_version|g' doc/Makefile
@@ -159,6 +160,9 @@ cp -fR build/pickle %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname/*/tests
 
 %changelog
+* Wed May 29 2024 Stanislav Levin <slev@altlinux.org> 5.2.1-alt2
+- Fixed FTBFS (Pytest 8.2.0).
+
 * Tue Feb 27 2024 Anton Vyatkin <toni@altlinux.org> 5.2.1-alt1
 - New version 5.2.1.
 
