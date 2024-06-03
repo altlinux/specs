@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 7.0
+Version: 7.1
 Release: alt1
 Summary: Provides a restricted execution environment for Python, e.g. for running untrusted code
 License: ZPL-2.1
@@ -54,6 +54,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Mon Jun 03 2024 Grigory Ustinov <grenka@altlinux.org> 7.1-alt1
+- Automatically updated to 7.1.
+
 * Wed Jan 31 2024 Grigory Ustinov <grenka@altlinux.org> 7.0-alt1
 - NMU: Automatically updated to 7.0.
 
