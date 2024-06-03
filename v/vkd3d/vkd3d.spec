@@ -3,7 +3,7 @@
 %define major 1
 
 Name: vkd3d
-Version: 1.11
+Version: 1.12
 Release: alt1
 Summary: The vkd3d 3D Graphics Library
 
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 # Automatically added by buildreq on Sat Mar 25 2023 (-ba)
-BuildRequires: flex libspirv-tools-devel libvulkan-devel spirv-headers wine-devel-tools
+BuildRequires: flex libvulkan-devel libspirv-tools-devel spirv-headers wine-devel-tools
 
 %if_enabled demos
 BuildRequires: libxcb-devel libxcbutil-devel libxcbutil-keysyms-devel libxcbutil-icccm-devel
@@ -70,8 +70,9 @@ Requires: lib%{name}%{major} = %EVR
 %autoreconf
 %configure \
   %{subst_enable demos} \
-  %{subst_enable_tests} \
+  %{subst_enable tests} \
   --with-spirv-tools
+  %nil
 
 %build
 %make_build
@@ -112,6 +113,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Mon Jun 03 2024 L.A. Kostis <lakostis@altlinux.ru> 1.12-alt1
+- 1.12.
+
 * Fri Mar 15 2024 L.A. Kostis <lakostis@altlinux.ru> 1.11-alt1
 - 1.11.
 
