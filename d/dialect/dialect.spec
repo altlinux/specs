@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _name dialect
-%define ver_major 2.3
+%define ver_major 2.4
 %define rdn_name app.drey.Dialect
 
 %def_enable check
@@ -89,6 +89,9 @@ Features:
 
 
 %changelog
+* Mon Jun 03 2024 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
 * Thu Apr 04 2024 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
 - 2.3.0
 
