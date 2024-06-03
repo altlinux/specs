@@ -1,8 +1,10 @@
 %define oname unidecode
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.04.17
-Release: alt1.git20141218.1.3
+Version: 1.3.8
+Release: alt1
 Summary: ASCII transliterations of Unicode text
 License: GPLv2
 Group: Development/Python3
@@ -13,6 +15,13 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-mypy
+%endif
 
 %py3_provides %oname
 
@@ -29,16 +38,24 @@ an article title).
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%tox_check_pyproject
 
 %files
-%doc ChangeLog README tools
-%python3_sitelibdir/*
+%doc LICENSE README.rst tools
+%_bindir/%oname
+%python3_sitelibdir/%oname
+%python3_sitelibdir/Unidecode-%version.dist-info
 
 %changelog
+* Mon Jun 03 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.8-alt1
+- Automatically updated to 1.3.8.
+
 * Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 0.04.17-alt1.git20141218.1.3
 - Drop python2 support.
 
