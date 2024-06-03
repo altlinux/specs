@@ -1,11 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%define lvm2version 2.03.22
-%define dmversion 1.02.196
+%define lvm2version 2.03.24
+%define dmversion 1.02.198
 
-%define _sbindir /sbin
-%define usrsbindir %_prefix/sbin
 %define _runtimedir /run
 %define _lockdir /run/lock
 %define _libexecdir %_prefix/libexec
@@ -152,6 +150,7 @@ Group: System/Kernel and hardware
 Requires: libdevmapper = %dmversion-%release
 Requires: lsblk udev >= 150-alt4
 Provides: device-mapper = %dmversion-%release
+Provides: /sbin/dmsetup
 
 %description -n dmsetup
 Utilities for low level logical volume management.
@@ -286,7 +285,7 @@ mv libdm/ioctl/libdevmapper.a .
 	--enable-write_install \
 	%{subst_enable cmdlib} \
 	--with-usrlibdir=%_libdir \
-	--with-usrsbindir=%usrsbindir \
+	--with-usrsbindir=%_sbindir \
 	--enable-dmeventd \
 	--with-udevdir=%_udevrulesdir \
 	%{subst_enable lvmpolld} \
@@ -324,26 +323,6 @@ chmod -R u+rwX %buildroot
 ### device-mapper part
 
 %{?_enable_static:install -pm755 libdevmapper.a %buildroot%_libdir/}
-
-mkdir -p %buildroot/%_lib
-
-# Relocate shared library from %_libdir/ to /%_lib/.
-for f in `ls %buildroot%_libdir/libdevmapper.so`; do
-	t=`objdump -p "$f" |awk '/SONAME/ {print $2}'`
-	[ -n "$t" ]
-	ln -sf ../../%_lib/"$t" "$f"
-done
-
-mv %buildroot%_libdir/libdevmapper.so.1.02 %buildroot/%_lib/
-mv %buildroot%_libdir/libdevmapper-event.so.1.02 %buildroot/%_lib/
-
-pushd %buildroot%_libdir
-rm -f libdevmapper-event.so
-ln -sf ../../%_lib/libdevmapper-event.so.1.02 ./libdevmapper-event.so
-popd
-
-# Fix pkgconfig file.
-subst '/^Version:/ s/"\([^[:space:]]\+\)[^"]*"/\1/' %buildroot%_pkgconfigdir/*
 
 # provide a symlink for devmapper.pc
 ln -sf devmapper.pc %buildroot%_pkgconfigdir/libdevmapper.pc
@@ -390,12 +369,17 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %exclude %_sbindir/dmstats
 %exclude %_sbindir/blkdeactivate
 %exclude %_sbindir/dmeventd
+%if_enabled cmirrord
+%exclude %_sbindir/cmirrord
+%endif
 %{?_enable_static:%exclude %_sbindir/*.static}
 %_mandir/man?/*
 %exclude %_man8dir/dmsetup*
 %exclude %_man8dir/dmstats*
 %exclude %_man8dir/blkdeactivate*
+%if_enabled cmirrord
 %exclude %_man8dir/cmirrord*
+%endif
 %config(noreplace) %_sysconfdir/lvm/lvm.conf
 %config(noreplace) %_sysconfdir/lvm/lvmlocal.conf
 %config(noreplace) %verify(not md5 mtime size) %_sysconfdir/lvm/profile/*.profile
@@ -436,7 +420,7 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %_includedir/lvm2cmd.h
 
 %files -n libdevmapper
-/%_lib/libdevmapper.so.*
+%_libdir/libdevmapper.so.*
 
 %files -n libdevmapper-devel
 %_libdir/libdevmapper.so
@@ -463,7 +447,7 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %_unitdir/dm-event.socket
 
 %files -n libdevmapper-event
-/%_lib/libdevmapper-event.so.*
+%_libdir/libdevmapper-event.so.*
 %_libdir/libdevmapper-event-*.so*
 %dir %_libdir/device-mapper
 %_libdir/device-mapper/libdevmapper-event-*.so*
@@ -484,7 +468,7 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 
 %if_enabled cmirrord
 %files cmirrord
-%usrsbindir/cmirrord
+%_sbindir/cmirrord
 %_man8dir/cmirrord*
 %_unitdir/lvm2-cmirrord.service
 %endif
@@ -500,6 +484,10 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %endif
 
 %changelog
+* Mon May 27 2024 Alexey Shabalin <shaba@altlinux.org> 2.03.24-alt1
+- 2.03.24
+- move utils and libs to /usr
+
 * Thu Sep 07 2023 Alexey Shabalin <shaba@altlinux.org> 2.03.22-alt1
 - 2.03.22
 
