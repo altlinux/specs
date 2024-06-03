@@ -1,5 +1,5 @@
 Name: startup-rescue
-Version: 0.49.1
+Version: 0.50
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
@@ -69,6 +69,10 @@ install -pm755 rescue-remote.init %buildroot%_initdir/rescue-remote
 %_bindir/*
 
 %changelog
+* Mon Jun 03 2024 Anton Midyukov <antohami@altlinux.org> 0.50-alt1
+- rescue-remote.init: do not require ip=dhcp for run livecd-net-eth
+  (Closes: 50526)
+
 * Mon Mar 04 2024 Anton Midyukov <antohami@altlinux.org> 0.49.1-alt1
 - rescue-shell: fix condition for run rescue-launcher
 
