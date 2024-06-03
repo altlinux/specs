@@ -6,7 +6,7 @@
 # As ubuntu
 %define gcc_ver 9
 
-%define _vk_api_version 1.3.279
+%define _vk_api_version 1.3.280
 
 %def_with clang
 %def_with wayland
@@ -22,7 +22,7 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2024.Q1.3
+Version: 2024.Q2.1
 Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
@@ -35,7 +35,7 @@ Requires: vulkan-filesystem
 
 BuildRequires(pre): rpm-macros-cmake /proc
 BuildRequires: cmake ninja-build python3-devel python3-module-jinja2 curl libxcb-devel libssl-devel llvm-devel
-BuildRequires: libX11-devel libxshmfence-devel libXrandr-devel glslang libdxcompiler-devel
+BuildRequires: libX11-devel libxshmfence-devel libXrandr-devel glslang libdxcompiler-devel python3-module-ruamel-yaml
 %if_with wayland
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
 BuildRequires: libffi-devel
@@ -57,9 +57,6 @@ Source7: cwpack.tar
 Source8: VK_LAYER_AMD_switchable_graphics.json
 Source9: llvm-dialects.tar
 
-# https://github.com/GPUOpen-Drivers/gpurt/pull/8
-Patch: gpurt-dxc-fix.patch
-
 %description
 The AMD Open Source Driver for Vulkan(r) is an open-source Vulkan driver for
 Radeon(tm) graphics adapters on Linux(r). It is built on top of AMD's Platform
@@ -76,10 +73,6 @@ mv %_builddir/llvm/llvm %_builddir/llvm-project
 cp -ar %_builddir/llvm/{cmake,third-party} %_builddir/llvm-project/
 # llvm-dialects hack
 rm -rf %_builddir/llpc/imported/llvm-dialects && ln -s %_builddir/llvm-dialects %_builddir/llpc/imported/llvm-dialects
-
-pushd %_builddir/gpurt
-%patch -p1
-popd
 
 %build
 # build amdvlk.so
@@ -125,6 +118,17 @@ sed -e 's|@API_VERSION@|%_vk_api_version|g' %SOURCE8 > %buildroot%_vkldir/$(base
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Mon Jun 03 2024 L.A. Kostis <lakostis@altlinux.ru> 2024.Q2.1-alt1
+- BR: added python3-module-ruamel-yaml (for gpurt).
+- 2024-05-15 update:
+  + icd: bump vulkan version
+  + llvm-dialects: Updated to 55e176fb88bc
+  + llvm-project: Updated to 45cdb88c143d
+  + gpurt: Updated to e0f12d951395
+  + llpc: Updated to 8252cfa83e03
+  + pal: Updated to c789abc769d2
+  + xgl: Updated to f6a447e31ae7
+
 * Thu Apr 11 2024 L.A. Kostis <lakostis@altlinux.ru> 2024.Q1.3-alt1
 - gpurt: fix compile with recent DXC (upstream PR#8).
 - 2024-03-26 update:
