@@ -1,19 +1,22 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: libslirp
 Version: 4.8.0
-Release: alt1
+Release: alt2
 Summary: A general purpose TCP-IP emulator
 Group: System/Libraries
 License: BSD-3-Clause
-Url: https://gitlab.freedesktop.org/slirp/%name
+Url: https://gitlab.freedesktop.org/slirp/libslirp
 Source: %name-%version.tar
 
 BuildRequires(pre): meson
 BuildRequires: glib2-devel
 
 %description
-A general purpose TCP-IP emulator used by virtual machine hypervisors
-to provide virtual networking services.
+libslirp is a user-mode networking library used by virtual machines,
+containers, and various tools.
 
 %package devel
 Summary: Development files for %name
@@ -30,13 +33,17 @@ echo "%version" > .tarball-version
 
 %build
 %meson
-%meson_build
+%meson_build --verbose
 
 %install
 %meson_install
 
+%check
+grep -Fx '#define SLIRP_VERSION_STRING "%version"' %buildroot%_includedir/slirp/libslirp-version.h
+%meson_test
+
 %files
-%doc README.md COPYRIGHT
+%doc README.md COPYRIGHT CHANGELOG.md
 %_libdir/%name.so.0*
 
 %files devel
@@ -45,6 +52,9 @@ echo "%version" > .tarball-version
 %_pkgconfigdir/slirp.pc
 
 %changelog
+* Sat Jun 01 2024 Vitaly Chikunov <vt@altlinux.org> 4.8.0-alt2
+- spec: Add post-build checks.
+
 * Fri May 31 2024 Alexey Shabalin <shaba@altlinux.org> 4.8.0-alt1
 - New version 4.8.0.
 
