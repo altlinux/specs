@@ -1,16 +1,16 @@
-%define _unpackaged_files_terminate_build 1
 %define  modulename slugify
 
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 6.1.1
-Release: alt3
+Version: 8.0.4
+Release: alt1
 
 Summary: Returns unicode slugs
 License: MIT
 Group:   Development/Python3
-URL:     https://github.com/un33k/python-slugify
+URL:     https://pypi.org/project/python-slugify
+VCS:     https://github.com/un33k/python-slugify
 
 Provides: python3-module-python-%modulename = %EVR
 
@@ -19,7 +19,6 @@ BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 
 %if_with check
-# install_requires=
 BuildRequires: python3(text_unidecode)
 
 BuildRequires: python3(tox)
@@ -48,10 +47,14 @@ A Python slugify application that handles unicode.
 python3 test.py
 
 %files
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/python_slugify-%version.dist-info/
+%_bindir/%modulename
+%python3_sitelibdir/%modulename
+%python3_sitelibdir/python_slugify-%version.dist-info
 
 %changelog
+* Mon Jun 03 2024 Grigory Ustinov <grenka@altlinux.org> 8.0.4-alt1
+- Automatically updated to 8.0.4.
+
 * Sat Jan 27 2024 Grigory Ustinov <grenka@altlinux.org> 6.1.1-alt3
 - Moved on modern pyproject macros.
 
