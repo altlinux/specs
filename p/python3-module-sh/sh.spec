@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.6
+Version: 2.0.7
 Release: alt1
 Summary: Python subprocess replacement
 License: MIT
@@ -19,9 +19,7 @@ Source1: %pyproject_deps_config_name
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%add_pyproject_deps_check_filter coveralls
 %add_pyproject_deps_check_filter rstcheck
-%add_pyproject_deps_check_filter sphinx-rtd-theme
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 BuildRequires: /dev/pts
@@ -65,6 +63,9 @@ export SH_TESTS_RUNNING=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 03 2024 Stanislav Levin <slev@altlinux.org> 2.0.7-alt1
+- 2.0.6 -> 2.0.7.
+
 * Thu Aug 10 2023 Stanislav Levin <slev@altlinux.org> 2.0.6-alt1
 - 2.0.5 -> 2.0.6.
 
