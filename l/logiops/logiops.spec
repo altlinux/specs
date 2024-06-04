@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: logiops
-Version: 0.3.2
-Release: alt1.1
+Version: 0.3.4
+Release: alt1
 
 Summary: An unofficial userspace driver for HID++ Logitech devices
 License: GPL-3.0
@@ -55,6 +55,9 @@ cp -r logid.cfg %buildroot%_sysconfdir/
 %_datadir/dbus-1/system.d/pizza.pixl.LogiOps.conf
 
 %changelog
+* Tue Jun 04 2024 Obidin Oleg <nofex@altlinux.org> 0.3.4-alt1
+- 0.3.2 -> 0.3.4
+
 * Fri May 26 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.3.2-alt1.1
 - Fixed build for Elbrus
 
