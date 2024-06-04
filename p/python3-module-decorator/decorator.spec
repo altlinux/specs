@@ -1,21 +1,23 @@
-%define _unpackaged_files_terminate_build 1
 %define modname decorator
 
 Name: python3-module-%modname
-Version: 4.4.2
-Release: alt2
+Version: 5.1.1
+Release: alt1
 
 Summary: Better living through Python with decorators
-License: BSD-style
-Group: Development/Python3
-Url: http://pypi.python.org/pypi/decorator
-Vcs: https://github.com/micheles/decorator.git
 
-Source0: https://files.pythonhosted.org/packages/source/d/%modname/%modname-%version.tar.gz
+License: BSD-2-Clause
+Group: Development/Python3
+URL: https://pypi.org/project/decorator
+VCS: https://github.com/micheles/decorator
+
+Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 Python decorators are an interesting example of why syntactic sugar
@@ -34,22 +36,25 @@ since:
 
 * decorators are explicit.
 
-                     Michele Simionato <michele simionato at gmail com>
-
 %prep
-%setup -n %modname-%version
+%setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%python3_sitelibdir/*
 %doc CHANGES.md LICENSE.txt README.rst
+%python3_sitelibdir/%modname.py
+%python3_sitelibdir/__pycache__
+%python3_sitelibdir/%modname-%version.dist-info
 
 %changelog
+* Tue Jun 04 2024 Grigory Ustinov <grenka@altlinux.org> 5.1.1-alt1
+- Build new version.
+
 * Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 4.4.2-alt2
 - Drop python2 support.
 
