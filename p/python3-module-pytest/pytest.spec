@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.2.0
+Version: 8.2.1
 Release: alt1
 Summary: Python test framework
 License: MIT
@@ -15,8 +15,9 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-
 %pyproject_runtimedeps_metadata
+# manually manage dependencies with metadata
+AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
@@ -81,6 +82,9 @@ export TERM=xterm
 %_bindir/pytest-3
 
 %changelog
+* Mon Jun 03 2024 Stanislav Levin <slev@altlinux.org> 8.2.1-alt1
+- 8.2.0 -> 8.2.1.
+
 * Fri May 03 2024 Stanislav Levin <slev@altlinux.org> 8.2.0-alt1
 - 8.0.2 -> 8.2.0.
 
