@@ -1,23 +1,23 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname requests-kerberos
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.14.0
+Version: 0.15.0
 Release: alt1
 
 Summary: A Kerberos authentication handler for python-requests
 
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/requests-kerberos
+URL: https://pypi.org/project/requests-kerberos
+VCS: https://github.com/requests/requests-kerberos
 
-# https://github.com/requests/requests-kerberos.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-kerberos
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-mock
@@ -44,20 +44,23 @@ supports mutual authentication.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-python3 -m pytest --verbose
+%pyproject_run_pytest
 
 %files
 %doc AUTHORS README.rst HISTORY.rst LICENSE
 %python3_sitelibdir/requests_kerberos
-%python3_sitelibdir/requests_kerberos-%version-*.egg-info
+%python3_sitelibdir/requests_kerberos-%version.dist-info
 
 %changelog
+* Tue Jun 04 2024 Grigory Ustinov <grenka@altlinux.org> 0.15.0-alt1
+- Automatically updated to 0.15.0.
+
 * Wed Jun 08 2022 Grigory Ustinov <grenka@altlinux.org> 0.14.0-alt1
 - Automatically updated to 0.14.0.
 
