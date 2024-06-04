@@ -33,7 +33,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.10.0
+Version: 0.10.1
 Release: alt1
 
 Summary: GPT applier
@@ -185,6 +185,9 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Tue Jun 04 2024 Valery Sinelnikov <greh@altlinux.org> 0.10.1-alt1
+- Added handling of unexpected data types when writing to dconf
+
 * Mon May 13 2024 Valery Sinelnikov <greh@altlinux.org> 0.10.0-alt1
 - A method for storing registry keys obtained from GPOs (Group Policy Objects)
   has undergone significant repairs. We have switched from using SQLite
