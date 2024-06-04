@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    blueman
-Version: 2.4.1
+Version: 2.4.2
 Release: alt1
 
 Summary: Blueman is a GTK+ Bluetooth Manager
@@ -102,6 +102,9 @@ echo 'enable blueman-mechanism.service' >%buildroot%_presetdir/80-blueman.preset
 %_sysconfdir/xdg/autostart/blueman.desktop
 
 %changelog
+* Tue Jun 04 2024 Anton Midyukov <antohami@altlinux.org> 2.4.2-alt1
+- new version 2.4.2
+
 * Wed Apr 10 2024 Anton Midyukov <antohami@altlinux.org> 2.4.1-alt1
 - new version 2.4.1
 
