@@ -1,23 +1,25 @@
 %define oname tweepy
 
 Name:    python3-module-%oname
-Version: 4.13.0
+Version: 4.14.0
 Release: alt1
 
 Summary: Twitter library for python
 
 License: MIT
 Group:   Development/Python3
-URL:     https://github.com/tweepy/tweepy
+URL:     https://pypi.org/project/tweepy
+VCS:     https://github.com/tweepy/tweepy
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildArch: noarch
 
-Source0: %oname-%version.tar
+Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 Provides: tweepy = %version
 
@@ -26,7 +28,7 @@ A library for accessing the Twitter.com API. Supports OAuth, covers the
 entire API, and streaming API.
 
 %prep
-%setup -q -n tweepy-%version
+%setup
 
 %build
 %pyproject_build
@@ -42,6 +44,9 @@ rm -rf %buildroot%python3_sitelibdir/examples
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Tue Jun 04 2024 Grigory Ustinov <grenka@altlinux.org> 4.14.0-alt1
+- Automatically updated to 4.14.0.
+
 * Mon Apr 03 2023 Andrey Cherepanov <cas@altlinux.org> 4.13.0-alt1
 - New version.
 
