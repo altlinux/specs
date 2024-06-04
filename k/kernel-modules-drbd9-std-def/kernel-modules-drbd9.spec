@@ -1,5 +1,5 @@
 %define module_name     drbd9
-%define module_version  9.2.9
+%define module_version  9.2.10
 %define module_release  alt1
 %define flavour         std-def
 %define karch x86_64 aarch64 ppc64le
@@ -48,7 +48,8 @@ make -C drbd KDIR=/lib/modules/*/build
 
 %install
 install -d %buildroot/%module_dir
-install -m644 -D drbd/build-current/drbd*.ko drbd/build-current/drbd-kernel-compat/handshake/handshake.ko %buildroot/%module_dir/
+# Before 5.4: drbd/build-current/drbd-kernel-compat/handshake/handshake.ko
+install -m644 -D drbd/build-current/drbd*.ko %buildroot/%module_dir/
 
 %files
 %module_dir/*.ko
