@@ -37,7 +37,7 @@ BuildRequires: /usr/bin/hg
 %define enable_luajittex	0
 %define enable_mfluajit		0
 %endif
-%ifarch loongarch64
+%ifarch loongarch64 riscv64
 # XXX: no libffcall, no clisp here
 %def_disable xindy
 %else
@@ -67,7 +67,7 @@ BuildRequires: /usr/bin/hg
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	%relYear
-Release:	alt0_10
+Release:	alt0_11
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	https://www.tug.org/texlive/LICENSE.TL
@@ -598,6 +598,9 @@ rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R %{texmfconfdir}/ls-R
 
 #-----------------------------------------------------------------------
 %changelog
+* Tue Jun 04 2024 Ivan A. Melnikov <iv@altlinux.org> 2022-alt0_11
+- NMU: fix FTBFS on riscv64 (no clisp here either).
+
 * Tue Mar 12 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2022-alt0_10
 - NMU: fixed FTBFS on LoongArch (no clisp here yet). While at it fixed
   sporadic build failures due to missing dependencies between targers
