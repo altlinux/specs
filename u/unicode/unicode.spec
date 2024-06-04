@@ -1,13 +1,12 @@
-%define _unpackaged_files_terminate_build 1
-
 Name: unicode
-Version: 2.9
+Version: 3.1
 Release: alt1
 
 Summary: display unicode character properties
 License: GPLv3
 Group: Text tools
-Url: http://kassiopeia.juls.savba.sk/~garabik/software/unicode/
+Url: http://kassiopeia.juls.savba.sk/~garabik/software/unicode.html
+VCS: https://github.com/garabik/unicode
 BuildArch: noarch
 
 Source0: %name-%version.tar
@@ -22,8 +21,6 @@ unicode database for a given name.
 %prep
 %setup
 
-sed -i 's/2.8/%version/' setup.py
-
 %build
 %python3_build
 
@@ -34,9 +31,12 @@ sed -i 's/2.8/%version/' setup.py
 %doc README* COPYING
 %_bindir/%name
 %_bindir/paracode
-%python3_sitelibdir/%name-%version-*
+%python3_sitelibdir/%name-%version-py%_python3_version.egg-info
 
 %changelog
+* Tue Jun 04 2024 Grigory Ustinov <grenka@altlinux.org> 3.1-alt1
+- Build new version.
+
 * Mon Jun 19 2023 Grigory Ustinov <grenka@altlinux.org> 2.9-alt1
 - Build new version (Closes: #46493).
 
