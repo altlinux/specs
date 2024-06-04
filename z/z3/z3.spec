@@ -1,14 +1,11 @@
-%define _unpackaged_files_terminate_build 1
-
 Name: z3
-Version: 4.8.8
-Release: alt1.1
+Version: 4.13.0
+Release: alt1
 Summary: High-performance theorem prover
 License: MIT
 Group: Sciences/Mathematics
 Url: https://github.com/Z3Prover/z3
 
-# https://github.com/Z3Prover/z3.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-make
@@ -95,9 +92,7 @@ python3 -c "import z3; print (z3.get_version_string())"
 python3 examples/python/example.py
 
 %files
-%doc LICENSE.txt
-%doc README-CMake.md README.md
-%doc RELEASE_NOTES
+%doc LICENSE.txt *.md
 %_bindir/*
 
 %files -n lib%name
@@ -107,15 +102,19 @@ python3 examples/python/example.py
 %_includedir/*
 %_libdir/*.so
 %_libdir/cmake/%name
+%_libdir/pkgconfig/z3.pc
 
 %files -n lib%name-devel-docs
 %doc examples
 %_defaultdocdir/Z3
 
 %files -n python3-module-%name
-%python3_sitelibdir_noarch/*
+%python3_sitelibdir_noarch/%name
 
 %changelog
+* Tue Jun 04 2024 Grigory Ustinov <grenka@altlinux.org> 4.13.0-alt1
+- Automatically updated to 4.13.0.
+
 * Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 4.8.8-alt1.1
 - NMU: Fixed FTBFS.
 
