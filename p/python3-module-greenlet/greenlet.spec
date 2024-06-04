@@ -1,23 +1,31 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname greenlet
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 3.0.1
+Version: 3.0.3
 Release: alt1
 
 Summary: Lightweight in-process concurrent programming
 
 License: MIT
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/greenlet
+URL: https://pypi.org/project/greenlet
+VCS: https://github.com/python-greenlet/greenlet
 
-# Source-url: %__pypi_url %oname
-Source: %oname-%version.tar
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-psutil
+BuildRequires: python3-module-objgraph
+BuildRequires: /proc
+%endif
 
 %description
 The greenlet package is a spin-off of Stackless, a version of CPython
@@ -48,27 +56,35 @@ Requires: %name = %EVR
 %summary.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
-%python3_prune
+%pyproject_install
 
 %check
-%__python3 setup.py test -v
+cd /
+PYTHONPATH="%buildroot%python3_sitelibdir" \
+  python3 -m unittest discover -v \
+  -s "%buildroot%python3_sitelibdir/greenlet/tests" \
+  -t "%buildroot%python3_sitelibdir"
 
 %files
 %doc AUTHORS CHANGES.rst LICENSE* README*
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %files devel
 %doc AUTHORS CHANGES.rst LICENSE* README*
 %_includedir/python%_python3_version%_python3_abiflags/greenlet
 
 %changelog
+* Tue Jun 04 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.3-alt1
+- Build new version.
+- Build with check.
+
 * Thu Nov 09 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
 - Build new version.
 
