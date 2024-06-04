@@ -7,7 +7,7 @@
 %def_disable bootstrap
 
 Name: fragments
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A BitTorrent Client for GNOME
@@ -25,16 +25,17 @@ Source1: %name-%version-cargo.tar
 
 %define gtk_ver 4.12
 %define adwaita_ver 1.5
+%define tr_ver 4.0.5
 
-Requires: transmission-daemon
+Requires: transmission-daemon >= %tr_ver
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo git
-BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(dbus-1)
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 BuildRequires: pkgconfig(libcurl)
 
@@ -49,7 +50,7 @@ Note: Fragments requires running transmission daemon.
 %setup -n %name-%version %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
@@ -75,6 +76,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Tue Jun 04 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
+- 3.0.1
+
 * Tue Apr 09 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt1
 - updated to 3.0.0-3-g88d3f0c
 
