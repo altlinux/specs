@@ -4,13 +4,14 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.5.0
+Version: 1.0.1
 Release: alt1
 
 Summary: Automatically link across pages in MkDocs
 License: ISC
 Group:   Development/Python3
-URL:     https://github.com/mkdocstrings/autorefs
+URL:     https://pypi.org/project/mkdocs-autorefs
+VCS:     https://github.com/mkdocstrings/autorefs
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-wheel
@@ -21,6 +22,7 @@ BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-markdown
 BuildRequires: python3-module-mkdocs
+BuildRequires: python3-module-pymdown-extensions
 %endif
 
 BuildArch: noarch
@@ -59,5 +61,8 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jun 04 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt1
+- Automatically updated to 1.0.1.
+
 * Wed Oct 25 2023 Alexander Burmatov <thatman@altlinux.org> 0.5.0-alt1
 - Initial build for Sisyphus.
