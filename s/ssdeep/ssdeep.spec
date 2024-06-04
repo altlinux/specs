@@ -1,14 +1,13 @@
 Name: ssdeep
-Version: 2.13
-Release: alt2
+Version: 2.14.1
+Release: alt1
 
 Summary: Context Triggered Piecewise Hashing values
 License: GPLv2+
 Group: File tools
 
 Url: http://ssdeep.sourceforge.net
-Source0: http://dl.sourceforge.net/project/%name/%name-%version/%name-%version.tar.gz
-Source1: %name.watch
+Source: %name-%version.tar
 
 BuildRequires: gcc-c++
 
@@ -16,12 +15,6 @@ BuildRequires: gcc-c++
 ssdeep is a program for computing and matching Context Triggered Piecewise
 Hashing values. It is based on a spam detector called spamsum by Andrews
 Trigdell
-
-Authors:
---------
-    Jesse Kornblum
-
-See some examples here: http://www.forensicswiki.org/wiki/Ssdeep
 
 %package -n libfuzzy
 License: GPLv2+
@@ -43,6 +36,7 @@ API for libfuzzy, %summary
 %setup
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -64,6 +58,9 @@ rm -fv %buildroot%_libdir/*.a
 %_includedir/*
 
 %changelog
+* Tue Jun 04 2024 Grigory Ustinov <grenka@altlinux.org> 2.14.1-alt1
+- Build new version.
+
 * Wed Oct 20 2021 Grigory Ustinov <grenka@altlinux.org> 2.13-alt2
 - fixed FTBFS.
 
