@@ -7,8 +7,8 @@
 %endif
 
 Name: zbar
-Version: 0.23.92
-Release: alt5
+Version: 0.23.93
+Release: alt1
 %define libname libzbar
 
 Summary: A library for scanning and decoding bar codes
@@ -17,7 +17,6 @@ Group: Graphics
 License: GPLv2+
 Url: https://github.com/mchehab/zbar
 Source: %name-%version.tar
-Patch: 0002-python-enum-fix-build-for-Python-3.11.patch
 
 BuildRequires: glibc-devel-static libImageMagick-devel libdbus-devel libgtk+3-devel libjpeg-devel libv4l-devel python3-dev xmlto
 
@@ -194,10 +193,6 @@ scanning widget.
 
 %prep
 %setup
-%patch -p1
-
-# hotfix for python3.12
-sed -i 's/ob_digit/long_value.ob_digit/g' python/enum.c
 
 # TODO
 sed -i 's/gtk+-2.0/gtk+-3.0/' zbar-gtk.pc.in
@@ -275,6 +270,9 @@ export LIBS=-lm
 %endif
 
 %changelog
+* Tue Jun 04 2024 Grigory Ustinov <grenka@altlinux.org> 0.23.93-alt1
+- Automatically updated to 0.23.93.
+
 * Wed Jan 03 2024 Grigory Ustinov <grenka@altlinux.org> 0.23.92-alt5
 - Add python3.12 support.
 
