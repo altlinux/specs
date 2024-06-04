@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fooyin
-Version: 0.4.2
+Version: 0.4.4
 Release: alt1
 
 Summary: Music player built around customisation
@@ -49,7 +49,7 @@ deeper level of control.
 %find_lang %name --with-qt
 
 # Remove development libraries
-rm -v %buildroot%_libdir/libfooyin*.so
+rm -fv %buildroot%_libdir/libfooyin*.so
 
 %files -f %name.lang
 %dir %_docdir/%name
@@ -59,12 +59,15 @@ rm -v %buildroot%_libdir/libfooyin*.so
 %dir %_datadir/%name/translations
 %_datadir/applications/*.desktop
 %_datadir/metainfo/*.xml
-%_datadir/icons/hicolor/*/apps/fooyin.*
+%_datadir/icons/hicolor/*/apps/org.fooyin.fooyin.*
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins
 %_libdir/%name/plugins/fyplugin_*.so
 %_libdir/libfooyin_*.so.*
 
 %changelog
+* Tue Jun 04 2024 Anton Kurachenko <srebrov@altlinux.org> 0.4.4-alt1
+- New version 0.4.4.
+
 * Mon May 27 2024 Anton Kurachenko <srebrov@altlinux.org> 0.4.2-alt1
 - Initial build for ALT.
