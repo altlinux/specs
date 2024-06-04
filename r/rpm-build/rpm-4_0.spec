@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.199
+Version: 4.0.4.200
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -200,6 +200,20 @@ gettextize --force --quiet --no-changelog --symlink
 install -pv -m0644 /usr/share/automake/mkinstalldirs .
 autoreconf -fisv -I m4
 # avoid extra build dependencies
+# ...Also, make the paths here compatible with
+# historical ALT locations (which look like they were modelled after the
+# useless LSB paper).
+export MKDIR=/bin/mkdir
+export ac_cv_path___CAT=/bin/cat
+export ac_cv_path___CHGRP=/bin/chgrp
+export ac_cv_path___CHMOD=/bin/chmod
+export ac_cv_path___CHOWN=/bin/chown
+export ac_cv_path___CP=/bin/cp
+export ac_cv_path___MKDIR=/bin/mkdir
+export ac_cv_path___MV=/bin/mv
+export ac_cv_path___RM=/bin/rm
+export ac_cv_path___SED=/bin/sed
+export ac_cv_path___TAR=/bin/tar
 export ac_cv_path___CPIO=/bin/cpio
 export ac_cv_path___UNZIP=/usr/bin/unzip
 export ac_cv_path___LZMA=/usr/bin/lzma
@@ -387,6 +401,10 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Tue Jun 04 2024 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.200-alt1
+- Bring embedded PATH lists in line with current merged-usr ALT practice.
+  (Closes: 50527)
+
 * Fri May 17 2024 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.199-alt1
 - vt@:
   + Allowed env shebang with split-string arguments (ALT#50059).
