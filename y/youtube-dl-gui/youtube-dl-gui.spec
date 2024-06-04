@@ -1,16 +1,16 @@
 %define modulename youtube_dl_gui
 
 Name: youtube-dl-gui
-Version: 1.8.4
+Version: 1.8.5
 Release: alt1
 
 Summary: Front-end GUI of the popular youtube-dl media downloader
 
 License: Unlicense
 Group: Networking/File transfer
-Url: https://github.com/oleksis/youtube-dl-gui
+URL: https://yt-dlg.github.io/yt-dlg
+VCS: https://github.com/oleksis/youtube-dl-gui
 
-# Source-url: https://github.com/oleksis/youtube-dl-gui/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
 Source1: youtube-dl-gui.desktop
@@ -28,8 +28,6 @@ BuildRequires(pre): rpm-build-intro
 %py3_use polib >= 1.1.0
 %py3_use wx <= 4.2.1
 %py3_use wx >= 4.0.7
-
-#BuildRequires: python3-module-json
 
 Requires: %_bindir/xdg-open
 Requires: python3-module-%modulename = %EVR
@@ -73,6 +71,9 @@ desktop-file-install \
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue Jun 04 2024 Grigory Ustinov <grenka@altlinux.org> 1.8.5-alt1
+- new version 1.8.5
+
 * Sat Jan 14 2023 Grigory Ustinov <grenka@altlinux.org> 1.8.4-alt1
 - new version 1.8.4
 
