@@ -2,21 +2,31 @@
 
 %def_with bootstrap
 %def_without docs
+%def_with check
 
 Name: python3-module-%oname
-Version: 3.0.0
-Release: alt1.1
+Version: 3.1.0
+Release: alt1
 
 Summary: A library for deferring decorator actions
-License: BSD-derived
+
+License: BSD-4-Clause
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/venusian
+URL: https://pypi.org/project/venusian
+VCS: https://github.com/Pylons/venusian
+
 BuildArch: noarch
 
-# git://github.com/Pylons/venusian.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-pytest-cov
+%endif
+
 %if_with docs
 BuildRequires: python3-module-sphinx
 %endif
@@ -82,10 +92,10 @@ sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 %endif
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with docs
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -98,9 +108,13 @@ popd
 
 cp -fR tests/ %buildroot%python3_sitelibdir/%oname/
 
+%check
+%tox_check_pyproject
+
 %files
-%doc *.txt
-%python3_sitelibdir/*
+%doc *.txt *.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/%oname/tests
 %if_with docs
 %exclude %python3_sitelibdir/%oname/pickle
@@ -117,8 +131,10 @@ cp -fR tests/ %buildroot%python3_sitelibdir/%oname/
 %doc docs/_build/html/*
 %endif
 
-
 %changelog
+* Tue Jun 04 2024 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
+- Build new version.
+
 * Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 3.0.0-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
