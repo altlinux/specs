@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 2.1.2
+Version: 2.2.0
 Release: alt1
 
 Summary: Python library of web-related functions
@@ -52,6 +52,9 @@ extract arguments from urls
 %doc README*
 
 %changelog
+* Wed Jun 05 2024 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Thu Aug 03 2023 Yuri N. Sedunov <aris@altlinux.org> 2.1.2-alt1
 - 2.1.2
 
