@@ -6,7 +6,7 @@
 
 Name: dovecot
 Version: 2.3.21
-Release: alt2
+Release: alt3
 
 Summary: Dovecot secure IMAP/POP3 server
 License: MIT
@@ -34,7 +34,7 @@ Requires(pre,postun): mailboxes-control
 # TODO remove this when splitting into modules
 %add_findreq_skiplist %_libexecdir/dovecot/decode2text.sh
 
-%filter_from_requires /systemd/d
+%filter_from_requires /systemctl/d
 
 BuildRequires: bzlib-devel
 BuildRequires: gcc-c++
@@ -221,6 +221,9 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Wed Jun 05 2024 Andrey Cherepanov <cas@altlinux.org> 2.3.21-alt3
+- Remove autoreq on systemctl (ALT #50542).
+
 * Fri May 31 2024 Andrey Cherepanov <cas@altlinux.org> 2.3.21-alt2
 - Fixed tmpfile rule permission (ALT #39249).
 - Completely removed control dovecot-auth (ALT #28373).
