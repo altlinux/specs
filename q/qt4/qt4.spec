@@ -42,7 +42,7 @@
 %define minor	8
 %define bugfix	7
 %define beta	%nil
-%define rlz alt50
+%define rlz alt51
 
 Name: %rname%major
 Version: %major.%minor.%bugfix
@@ -946,7 +946,7 @@ install -d -m 0755 %buildroot/%qtdir/imports/QtWebKit
 %endif
 
 %qIF_ver_gteq %ubt_id M120
-cat >>%buildroot/%_includedir/%name/Qt/qstring.h <<__EOF__
+cat >>%buildroot/%_includedir/%name/QtCore/qstring.h <<__EOF__
 #ifndef I_AM_NOT_ALTLINUX_PACKAGER
 #error Qt4 is discontinued.
 #endif
@@ -1500,6 +1500,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 
 
 %changelog
+* Wed Jun 05 2024 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt51
+- Qt4 is discontinued
+
 * Fri May 24 2024 Sergey V Turchin <zerg@altlinux.org> 4.8.7-alt50
 - Qt4 is discontinued
 
