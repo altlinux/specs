@@ -1,7 +1,7 @@
-%define git 5e9dd41
+%define git %nil
 %define module_name	v4l2loopback
-%define module_version	0.12.7
-%define module_release	alt1.g%{git}
+%define module_version	0.13.2
+%define module_release	alt1
 
 %define flavour		std-def
 %define karch %ix86 x86_64 aarch64 ppc64le armh
@@ -62,6 +62,12 @@ install v4l2loopback.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Jun 5 2024 L.A. Kostis <lakostis@altlinux.org> 0.13.2-alt1
+- 0.13.2.
+
+* Thu Aug 3 2023 L.A. Kostis <lakostis@altlinux.org> 0.12.7-alt2.g9ba7e29
+- GIT 9ba7e29.
 
 * Wed Nov 2 2022 L.A. Kostis <lakostis@altlinux.org> 0.12.7-alt1.g5e9dd41
 - GIT 5e9dd41.

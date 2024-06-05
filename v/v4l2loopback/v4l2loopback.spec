@@ -1,7 +1,7 @@
-%define git 5e9dd41
+%define git %nil
 %define module_name	v4l2loopback
-%define module_version	0.12.7
-%define module_release	alt1.g%{git}
+%define module_version	0.13.2
+%define module_release	alt1
 %define module_source_dir %nil
 
 Name: %module_name
@@ -50,6 +50,9 @@ Utilites for %module_name.
 %prep
 %setup
 %patch -p1
+pushd utils
+subst 's,CPPFLAGS\ +=\(.*\),CPPFLAGS += \1 $(RPM_OPT_FLAGS),' Makefile
+popd
 
 %build
 make utils
@@ -74,6 +77,16 @@ tar -c kernel-source-%module_name-%module_version | bzip2 -c > \
 %attr(644,root,root) %_usrsrc/kernel/sources/kernel-source-%module_name-%version.tar.bz2
 
 %changelog
+* Wed Jun 05 2024 L.A. Kostis <lakostis@altlinux.ru> 0.13.2-alt1
+- 0.13.2.
+
+* Thu Aug 03 2023 L.A. Kostis <lakostis@altlinux.ru> 0.12.7-alt3.g9ba7e29
+- Updated to GIT 9ba7e29 (v0.12.7-397-g9ba7e29).
+- v4l2loopback: fix compile on 32-bit platforms.
+
+* Wed Nov 02 2022 L.A. Kostis <lakostis@altlinux.ru> 0.12.7-alt2.g5e9dd41
+- Use opt flags for utils.
+
 * Wed Nov 02 2022 L.A. Kostis <lakostis@altlinux.ru> 0.12.7-alt1.g5e9dd41
 - Updated to GIT 5e9dd41.
 
