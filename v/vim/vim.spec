@@ -49,7 +49,7 @@
 Name: vim
 %define branch 9.1
 Version: %branch.0050
-Release: alt3
+Release: alt4
 Epoch: 4
 
 Summary: VIsual editor iMproved
@@ -318,7 +318,6 @@ BuildArch: noarch
 PreReq: coreutils
 PreReq: alternatives >= 0.2.0-alt0.7
 PreReq: %name-X11-gui
-Requires: menu >= 2.1.25-alt4
 Requires: %name-common = %epoch:%version-%release
 Provides: %name = %epoch:%version-%release
 Provides: %_bindir/vim
@@ -1064,6 +1063,9 @@ fi
 
 # {{{ changelog
 %changelog
+* Wed Jun 05 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:9.1.0050-alt4
+- Dropped R: menu.
+
 * Tue Apr 16 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:9.1.0050-alt3
 - Added a wrapper helper for ex and rvi to facilitate Usrmerge (ALT#49541).
 
