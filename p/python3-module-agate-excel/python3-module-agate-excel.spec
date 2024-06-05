@@ -1,7 +1,7 @@
 %define  modulename agate-excel
 
 Name:    python3-module-%modulename
-Version: 0.2.2
+Version: 0.4.1
 Release: alt1
 
 Summary: Adds read support for Excel files (xls and xlsx) to agate.
@@ -35,5 +35,8 @@ Source:  %modulename-%version.tar
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed Jun 05 2024 Mikhail Gordeev <obirvalger@altlinux.org> 0.4.1-alt1
+- New version 0.4.1.
+
 * Wed Feb 07 2018 Mikhail Gordeev <obirvalger@altlinux.org> 0.2.2-alt1
 - Initial build for Sisyphus
