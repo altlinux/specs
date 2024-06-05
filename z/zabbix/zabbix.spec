@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		680df722d6b
+%define svnrev		49955f1fb5c
 
 %def_with pgsql
 %def_enable java
@@ -17,12 +17,12 @@
 %endif
 
 Name: zabbix
-Version: 6.0.30
+Version: 7.0.0
 Release: alt1
 Epoch: 1
 
 Summary: A network monitor
-License: GPLv2
+License: AGPL-3.0-only
 Group: Monitoring
 
 Url: http://www.zabbix.com
@@ -214,6 +214,38 @@ Requires: apache2-httpd-prefork-like
 Requires: apache2-mod_php8.3
 BuildArch: noarch
 
+%package phpfrontend-nginx
+Summary: %name-phpfrontend's nginx config files
+Group: Monitoring
+Requires: nginx
+Requires: %name-common
+BuildArch: noarch
+
+%package phpfrontend-nginx-php8.1-fpm-fcgi
+Summary: Requirements for the use of php8.1-fpm-fcgi
+Group: Monitoring
+Requires: %name-phpfrontend-nginx
+Requires: %name-phpfrontend-php8.1
+Requires: php8.1-fpm-fcgi
+BuildArch: noarch
+
+%package phpfrontend-nginx-php8.2-fpm-fcgi
+Summary: Requirements for the use of php8.2-fpm-fcgi
+Group: Monitoring
+Requires: %name-phpfrontend-nginx
+Requires: %name-phpfrontend-php8.2
+Requires: php8.2-fpm-fcgi
+BuildArch: noarch
+
+%package phpfrontend-nginx-php8.3-fpm-fcgi
+Summary: Requirements for the use of php8.3-fpm-fcgi
+Group: Monitoring
+Requires: %name-phpfrontend-nginx
+Requires: %name-phpfrontend-php8.3
+Requires: php8.3-fpm-fcgi
+
+BuildArch: noarch
+
 %package doc
 Summary: %name network monitor documentation (README, ChangeLog, Manual)
 Group: Monitoring
@@ -335,6 +367,21 @@ in to zabbix phpfrontend
 
 %description phpfrontend-apache2-mod_php8.3
 Contains requirements for the use of apache2-mod_php8.3
+in to zabbix phpfrontend
+
+%description phpfrontend-nginx
+zabbix's nginx config files
+
+%description phpfrontend-nginx-php8.1-fpm-fcgi
+Contains requirements for the use of php8.1-fpm-fcgi
+in to zabbix phpfrontend
+
+%description phpfrontend-nginx-php8.2-fpm-fcgi
+Contains requirements for the use of php8.2-fpm-fcgi
+in to zabbix phpfrontend
+
+%description phpfrontend-nginx-php8.3-fpm-fcgi
+Contains requirements for the use of php8.3-fpm-fcgi
 in to zabbix phpfrontend
 
 %description phpfrontend-engine
@@ -501,6 +548,9 @@ cp -r ui %buildroot%webserver_webappsdir/%name/
 # apache2 config
 install -pDm0644 sources/%name.conf %buildroot%_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
+# nginx config
+install -pDm0644 sources/%name.nginx %buildroot%_sysconfdir/%name/%{name}_nginx.conf
+
 # start scripts
 install -pDm0755 sources/%{name}_agentd.init %buildroot%_initdir/%{name}_agentd
 install -pDm0644 sources/%{name}_agentd.service %buildroot%_unitdir/%{name}_agentd.service
@@ -533,7 +583,7 @@ install -pDm0644 sources/%{name}_web_service.service %buildroot%_unitdir/%{name}
 install -pDm0400 sources/%name.sudo %buildroot%_sysconfdir/sudoers.d/%name
 
 # include files
-cp include/* %buildroot%_includedir/%name
+cp -r include/* %buildroot%_includedir/%name
 
 %if_enabled java
 # delete unnecessary files from java gateway
@@ -556,6 +606,9 @@ cat src/zabbix_java/settings.sh | sed \
 
 # ChangeLog
 bzip2 ChangeLog
+
+# remove Makefile* files from database/*
+find ./database/postgresql  -name 'Makefile*' -exec rm '{}' ';'
 
 %pre common
 /usr/sbin/groupadd -r -f %zabbix_group ||:
@@ -675,12 +728,11 @@ fi
 
 %files common-database-mysql
 %doc database/mysql/*.sql
+%doc database/mysql/option-patches/*.sql
 
 %if_with pgsql
 %files common-database-pgsql
-%doc database/postgresql/*.sql
-%doc database/postgresql/tsdb_history_pk_upgrade_no_compression
-%doc database/postgresql/tsdb_history_pk_upgrade_with_compression
+%doc database/postgresql/*.sql database/postgresql/timescaledb
 %endif
 
 %files server-common
@@ -781,6 +833,13 @@ fi
 %files phpfrontend-apache2-mod_php8.2
 %files phpfrontend-apache2-mod_php8.3
 
+%files phpfrontend-nginx
+%config(noreplace) %_sysconfdir/%name/%{name}_nginx.conf
+
+%files phpfrontend-nginx-php8.1-fpm-fcgi
+%files phpfrontend-nginx-php8.2-fpm-fcgi
+%files phpfrontend-nginx-php8.3-fpm-fcgi
+
 %files doc
 %doc AUTHORS NEWS README INSTALL ChangeLog.bz2
 
@@ -791,6 +850,11 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue Jun 04 2024 Alexei Takaseev <taf@altlinux.org> 1:7.0.0-alt1
+- 7.0.0
+- Change license to AGPL-3.0-only
+- Add support nginx frontend
+
 * Tue May 21 2024 Alexei Takaseev <taf@altlinux.org> 1:6.0.30-alt1
 - 6.0.30
 
