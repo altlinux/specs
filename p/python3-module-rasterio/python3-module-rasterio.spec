@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.3.9
-Release: alt3
+Version: 1.3.10
+Release: alt1
 
 License: BSD-3-Clause
 Group: Development/Python3
@@ -16,8 +16,6 @@ Summary: Fast and direct raster I/O for use with Numpy and SciPy
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
-# backported from 35a5906f57d42f67f79632fe5eb5523acdd42798
-Patch0: rasterio-1.3.9-Add-a-rio-create-command.-3023.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -55,7 +53,6 @@ more fun.
 
 %prep
 %setup
-%autopatch -p1
 subst "s|/usr/local/share/proj|/usr/share/proj|" setup.py
 
 # Drop dependency on distutils
@@ -72,7 +69,8 @@ rm -rf %oname # Don't try unbuilt copy.
 # Ignore some tests using network access
 %pyproject_run_pytest -ra \
     -m 'not network and not wheel' \
-    -k 'not test_rio_env_no_credentials and not test_datasetreader_ctor_url and not test_read_boundless and not test_resampling_rms and not test_merge_precision[precision0] and not test_merge_precision[precision1]' \
+    -k 'not test_rio_env_no_credentials and not test_datasetreader_ctor_url and not test_read_boundless and not test_resampling_rms and not test_merge_precision[precision0] and not test_merge_precision[precision1] and not test_create_sidecar_mask and not test_update_tags' \
+    -W ignore::pytest.PytestRemovedIn9Warning
 
 %files
 %doc *.txt *.rst docs/ examples/
@@ -81,6 +79,9 @@ rm -rf %oname # Don't try unbuilt copy.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Sat Jun 01 2024 Andrey Cherepanov <cas@altlinux.org> 1.3.10-alt1
+- New version 1.3.10
+
 * Wed May 29 2024 Stanislav Levin <slev@altlinux.org> 1.3.9-alt3
 - Fixed FTBFS (Pytest 8.2.0).
 

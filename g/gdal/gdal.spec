@@ -6,9 +6,11 @@
 %def_without libtiff
 %def_without geotiff
 
+%define sover 35
+
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
-Version: 3.8.5
+Version: 3.9.0
 Release: alt1
 Group: Sciences/Geosciences
 
@@ -82,6 +84,13 @@ This package contains documentation for the GDAL/OGR library
 and utilities.
 %endif
 
+%package plugins
+Summary: Plugins for GDAL
+Group: Sciences/Geosciences
+
+%description plugins
+This package contains various pluginsfor GDAL.
+
 %package scripts
 Summary: Scripts for GDAL
 Group: Sciences/Geosciences
@@ -90,17 +99,17 @@ BuildArch: noarch
 %description scripts
 This package contains various scripts for GDAL (written in python)
 
-%package -n %libname
+%package -n %libname%sover
 Summary: Libraries required for the GDAL library
 Group: Sciences/Geosciences
+Requires: %name-plugins = %EVR
 
-%description -n %libname
+%description -n %libname%sover
 Libraries required for the GDAL library
 
 %package -n %libname-devel
 Summary: Development files for using the GDAL library
 Group: Development/C
-Requires: %libname = %version-%release
 
 %description -n lib%name-devel
 Development files for using the GDAL library
@@ -108,7 +117,7 @@ Development files for using the GDAL library
 %package -n python3-module-%name
 Summary: The Python bindings for the GDAL library
 Group: Development/Python3
-Requires: %libname = %version
+Requires: %libname%sover = %version
 Requires: %name
 Provides: python3-module-osgeo = %version
 
@@ -189,6 +198,8 @@ popd
 
 %files
 %_datadir/%name
+%_bindir/pct2rgb
+%_bindir/rgb2pct
 %_bindir/ogr*
 %_bindir/gdal*
 %_bindir/nearblack
@@ -208,8 +219,14 @@ popd
 %doc *.md *.txt doc/build/html
 %endif
 
+%files plugins
+%_libdir/gdalplugins/drivers.ini
+
 %files scripts
 %_bindir/*.py
+
+%files -n %libname%sover
+%_libdir/*.so.%{sover}*
 
 %files -n %libname-devel
 %_bindir/gdal-config
@@ -218,14 +235,14 @@ popd
 %_pkgconfigdir/gdal.pc
 %_man1dir/gdal-config.1*
 
-%files -n %libname
-%_libdir/*.so.*
-%_libdir/gdalplugins/drivers.ini
-
 %files -n python3-module-%name
 %python3_sitelibdir/*
 
 %changelog
+* Tue May 21 2024 Andrey Cherepanov <cas@altlinux.org> 3.9.0-alt1
+- New version.
+- Applied shared libs policy.
+
 * Mon Apr 08 2024 Andrey Cherepanov <cas@altlinux.org> 3.8.5-alt1
 - New version.
 

@@ -1,6 +1,8 @@
+%define gdal_version 35
+
 Name: mysql-workbench-community
 Version: 8.0.33
-Release: alt2.2
+Release: alt2.3
 
 Summary: A MySQL visual database modeling tool
 
@@ -136,7 +138,7 @@ BuildRequires: libantlr4-devel
 BuildRequires: java-11-openjdk
 
 # Runtime dependencies
-Requires: libpcrecpp3 libmysqlcppconn7 libantlr4 libvsqlite++ libgdal
+Requires: libpcrecpp3 libmysqlcppconn7 libantlr4 libvsqlite++ libgdal%gdal_version
 
 %description
 MySQL Workbench is modeling tool that allows you to
@@ -250,6 +252,9 @@ cp %_builddir/%name-%version/images/icons/MySQLWorkbenchDocIcon32x32.png %buildr
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Sun Jun 02 2024 Andrey Cherepanov <cas@altlinux.org> 8.0.33-alt2.3
+- NMU: requires libgdal with soversion made according Shared Libs Policy.
+
 * Wed Jan 03 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 8.0.33-alt2.2
 - NMU: fixed FTBFS on aarch64 (char is unsigned on ARM).
   Fixed FTBFS on LoongArch (disabled LTO to avoid assert in ld).
