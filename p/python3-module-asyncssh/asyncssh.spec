@@ -1,26 +1,34 @@
 %define oname asyncssh
 
-%def_disable check
+%def_with check
 
 Name: python3-module-%oname
-Version: 1.17.0
-Release: alt2
+Version: 2.14.2
+Release: alt1
 
 Summary: AsyncSSH: Asynchronous SSHv2 client and server library
 
 License: Eclipse Public License v1.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/asyncssh/
+URL: https://pypi.org/project/asyncssh
+VCS: https://github.com/ronf/asyncssh
 
-# https://github.com/ronf/asyncssh.git
-# Source-url: https://pypi.io/packages/source/a/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-intro
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pytest
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-typing-extensions
+BuildRequires: python3-module-bcrypt
+BuildRequires: python3-module-OpenSSL
+BuildRequires: openssl
+BuildRequires: openssh-clients
+%endif
 
 %py3_provides %oname
 %py3_requires asyncio
@@ -36,21 +44,25 @@ framework.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
-rm -f %buildroot%python3_sitelibdir/%oname/*_win32*
+rm -v %buildroot%python3_sitelibdir/%oname/*_win32*
 
 %check
-python3 setup.py test
+%pyproject_run_unittest
 
 %files
 %doc COPYRIGHT LICENSE README* examples
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Jun 05 2024 Grigory Ustinov <grenka@altlinux.org> 2.14.2-alt1
+- Build new version.
+
 * Mon Aug 02 2021 Grigory Ustinov <grenka@altlinux.org> 1.17.0-alt2
 - Drop python2 support.
 
