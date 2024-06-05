@@ -36,19 +36,10 @@
 %def_enable lto
 %endif
 
-# NOTE: ONLY use sanitizers for debug purposes
-%def_disable sanitizers
-
-%ifarch %e2k %arm
-%define more_warnings no
-%else
-%define more_warnings error
-%endif
-
 %if_with iwd
-%define iwd_support yes
+%define iwd_support true
 %else
-%define iwd_support no
+%define iwd_support false
 %endif
 
 %define _name %name-daemon
@@ -59,8 +50,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.46.0
-Release: alt2%git_hash
+Version: 1.48.0
+Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -79,6 +70,8 @@ Source11: NetworkManager.init
 Source12: ifcfg-rh-plugin.conf
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): meson
+
 # For tests
 %{?!_without_check:%{?!_disable_check:BuildPreReq: dbus dhcpcd dhcp-client}}
 %{?!_without_check:%{?!_disable_check:BuildRequires: python3-module-dbus python3-module-pexpect}}
@@ -86,7 +79,7 @@ Patch: %name-%version-%release.patch
 # For /etc/machine-id
 %{?!_without_check:%{?!_disable_check:BuildRequires: systemd}}
 
-BuildPreReq: intltool libgcrypt-devel libtool
+BuildRequires: intltool libgcrypt-devel libtool
 BuildRequires: iproute2 ppp-devel
 BuildRequires: libdbus-glib-devel >= %libdbus_glib_version
 BuildRequires: libpolkit1-devel libnss-devel libgio-devel libuuid-devel gtk-doc
@@ -344,97 +337,98 @@ GObject introspection devel data for the NetworkManager (libnm).
 %patch -p1
 
 %build
-%add_optflags -fpie
-export LDFLAGS=-pie
-%autoreconf
-%configure \
+%meson \
 	--libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
-	--docdir=%_defaultdocdir/%name-%version \
-	--disable-static \
-	--with-crypto=nss \
-	--with-dhclient=/sbin/dhclient \
-	--with-dhcpcd=yes \
-	--with-config-dhcp-default=internal \
-	--with-dnsmasq=/usr/sbin/dnsmasq \
-	--enable-gtk-doc=yes \
-	--with-config-dns-rc-manager-default=auto \
-	--with-resolvconf=/sbin/resolvconf \
-	--enable-concheck \
-	--with-pppd-plugin-dir=%_libdir/pppd/%ppp_version \
-	--enable-ppp=yes \
-	--with-system-ca-path=/var/lib/ssl/certs \
-	--enable-tests=%tests \
-	%{?_enable_systemd:--with-systemdsystemunitdir=/lib/systemd/system} \
+	-Dcrypto=nss \
+	-Ddhclient=/sbin/dhclient \
+	-Ddhcpcd=true \
+	-Dconfig_dhcp_default=internal \
+	-Ddnsmasq=/usr/sbin/dnsmasq \
+	-Ddocs=true \
+	-Dconfig_dns_rc_manager_default=auto \
+	-Dresolvconf=/sbin/resolvconf \
+	-Dconcheck=true \
+	-Dpppd_plugin_dir=%_libdir/pppd/%ppp_version \
+	-Dppp=true \
+	-Dsystem_ca_path=/var/lib/ssl/certs \
+	-Dtests=%tests \
 %if_enabled systemd
-	--with-session-tracking=systemd \
-	--with-suspend-resume=systemd \
-	--with-config-logging-backend-default=journal \
+	-Dsystemdsystemunitdir=%_unitdir \
+	-Dsession_tracking=systemd \
+	-Dsuspend_resume=systemd \
+	-Dconfig_logging_backend_default=journal \
 %else
-	--with-session-tracking=ck \
-	--with-suspend-resume=upower \
-	--with-config-logging-backend-default=syslog \
+	-Dsession_tracking=ck \
+	-Dsuspend_resume=upower \
+	-Dconfig_logging_backend_default=syslog \
 %endif
-	--with-udev-dir=/lib/udev \
-	--enable-polkit=yes \
-	--with-polkit-agent-helper-1=/usr/libexec/polkit-1/polkit-agent-helper-1 \
-	--enable-modify-system=no \
-	--enable-etcnet-alt \
+	-Dudev_dir=/lib/udev \
+	-Dpolkit=true \
+	-Dpolkit_agent_helper_1=/usr/libexec/polkit-1/polkit-agent-helper-1 \
+	-Dmodify_system=false \
+	-Detcnet_alt=true \
 %if_enabled ifcfg
-	--enable-ifcfg-rh \
+	-Difcfg_rh=true \
 %else
-	--disable-ifcfg-rh \
+	-Difcfg_rh=false \
 %endif
-	--with-config-migrate-ifcfg-rh-default=no \
-	--disable-ifupdown \
-	--with-config-plugins-default='etcnet-alt' \
-	--with-modem-manager-1 \
-	%{subst_enable teamdctl} \
-	%{subst_enable ovs} \
-%if_enabled nmtui
-	--with-nmtui=yes \
+	-Dconfig_migrate_ifcfg_rh_default=false \
+	-Difupdown=false \
+	-Dconfig_plugins_default='etcnet-alt' \
+	-Dmodem_manager=true \
+	-Dmobile_broadband_provider_info_database=%_datadir/mobile-broadband-provider-info/serviceproviders.xml \
+%if_enabled teamdctl
+	-Dteamdctl=true \
 %else
-	--with-nmtui=no \
+	-Dteamdctl=false \
+%endif
+%if_enabled ovs
+	-Dovs=true \
+%else
+	-Dovs=false \
+%endif
+%if_enabled nmtui
+	-Dnmtui=true \
+%else
+	-Dnmtui=false \
 %endif
 %if_enabled bluez5dun
-	--enable-bluez5-dun \
+	-Dbluez5_dun=true \
 %else
-	--disable-bluez5-dun \
+	-Dbluez5_dun=false \
 %endif
-	--enable-introspection=auto \
-	%{subst_enable lto} \
-	%{subst_enable vala} \
+	-Dintrospection=true \
+%if_enabled lto
+	-Db_lto=true \
+%else
+	-Db_lto=false \
+%endif
+%if_enabled vala
+	-Dvapi=true \
+%else
+	-Dvapi=false \
+%endif
 %if_enabled nmcloudsetup
-	--with-nm-cloud-setup=yes \
+	-Dnm_cloud_setup=true \
 %else
-	--with-nm-cloud-setup=no \
+	-Dnm_cloud_setup=false \
 %endif
-	--with-libaudit=yes-disabled-by-default \
-	--with-ofono=no \
-	--with-libpsl=yes \
-	--enable-firewalld-zone \
-	--with-nft=/usr/sbin/nft \
-	--with-iptables=/sbin/iptables \
-%if_enabled sanitizers
-	--with-address-sanitizer=yes \
-	--enable-undefined-sanitizer \
-%else
-	--without-address-sanitizer \
-	--disable-undefined-sanitizer \
-%endif
-	--with-iwd=%iwd_support \
-	--with-config-wifi-backend-default=wpa_supplicant \
-	--with-dist-version=%version-%release \
-	--disable-silent-rules \
-	--enable-more-warnings=%more_warnings
+	-Dlibaudit=yes-disabled-by-default \
+	-Dofono=false \
+	-Dlibpsl=true \
+	-Dfirewalld_zone=true \
+	-Dnft=/usr/sbin/nft \
+	-Diptables=/sbin/iptables \
+	-Diwd=%iwd_support \
+	-Dconfig_wifi_backend_default=wpa_supplicant \
+	-Dselinux=false \
+	-Ddist_version=%version-%release
 
-%make_build
-
-# Set charset utf8 for utf8 man page
-sed -i '1i .\\" -*- mode: troff; coding: utf8 -*-' man/nmcli-examples.7
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 mkdir -p %buildroot%_bindir
 mkdir -p %buildroot%_sysconfdir/NetworkManager/VPN
@@ -488,7 +482,7 @@ install -Dm0644 %SOURCE12 %buildroot%_sysconfdir/NetworkManager/conf.d/40-ifcfg-
 %endif
 
 %check
-make check
+%meson_test
 
 %pre daemon
 # Workaround for upgrade
@@ -580,10 +574,10 @@ fi
 %_datadir/polkit-1/actions/*.policy
 %_datadir/bash-completion/completions/*
 %config(noreplace) %_sysconfdir/sysconfig/%name
-%{?_enable_systemd:/lib/systemd/system/%name.service}
-%{?_enable_systemd:/lib/systemd/system/%name-wait-online.service}
-%{?_enable_systemd:/lib/systemd/system/%name-dispatcher.service}
-%{?_enable_systemd:/lib/systemd/system/nm-priv-helper.service}
+%{?_enable_systemd:%_unitdir/%name.service}
+%{?_enable_systemd:%_unitdir/%name-wait-online.service}
+%{?_enable_systemd:%_unitdir/%name-dispatcher.service}
+%{?_enable_systemd:%_unitdir/nm-priv-helper.service}
 %if_enabled nmcloudsetup
 %exclude %dispatcherdir/90-nm-cloud-setup.sh
 %exclude %dispatcherdir/no-wait.d/90-nm-cloud-setup.sh
@@ -642,8 +636,8 @@ fi
 %if_enabled nmcloudsetup
 %files cloud-setup
 %_libexecdir/NetworkManager/nm-cloud-setup
-%{?_enable_systemd:/lib/systemd/system/nm-cloud-setup.service}
-%{?_enable_systemd:/lib/systemd/system/nm-cloud-setup.timer}
+%{?_enable_systemd:%_unitdir/nm-cloud-setup.service}
+%{?_enable_systemd:%_unitdir/nm-cloud-setup.timer}
 %dispatcherdir/90-nm-cloud-setup.sh
 %dispatcherdir/no-wait.d/90-nm-cloud-setup.sh
 %dispatcherdir/pre-up.d/90-nm-cloud-setup.sh
@@ -685,10 +679,24 @@ fi
 %_datadir/gir-1.0/NM-1.0.gir
 %endif
 
-%exclude %nmplugindir/*.la
-%exclude %_libdir/pppd/%ppp_version/*.la
-
 %changelog
+* Tue Jun 04 2024 Mikhail Efremov <sem@altlinux.org> 1.48.0-alt1
+- Updated to 1.48.0.
+
+* Mon May 20 2024 Mikhail Efremov <sem@altlinux.org> 1.47.91-alt1
+- Use %%_unitdir macro.
+- build: Fixed example server.conf install path.
+- Dropped nmcli-examples(7) fix.
+- Switched to meson build.
+- nm-settings: Load etcnet-alt by default if needed.
+- etcnet-alt: Add meson build support.
+- Updated to 1.47.91 (1.48-rc2).
+
+* Wed May 15 2024 Mikhail Efremov <sem@altlinux.org> 1.47.90-alt1
+- etcnet-alt: Check that connection is read-only in tests.
+- etcent-alt: Normalize connection in tests.
+- Updated to 1.47.90 (1.48-rc1).
+
 * Mon Mar 18 2024 Mikhail Efremov <sem@altlinux.org> 1.46.0-alt2
 - settings: Use connection.read-only again (closes: #49715).
 
