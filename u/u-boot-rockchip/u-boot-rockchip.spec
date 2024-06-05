@@ -1,6 +1,6 @@
 Name: u-boot-rockchip
 Version: 2024.04
-Release: alt1
+Release: alt1.1
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -69,6 +69,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Jun 04 2024 Anton Midyukov <antohami@altlinux.org> 2024.04-alt1.1
+- add anbernic-rg552-rk3399_defconfig
+
 * Thu Apr 04 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.04-alt1
 - 2024.04 released
 
