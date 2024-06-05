@@ -1,7 +1,7 @@
 %define modulename application
 
 Name:    python3-module-%modulename
-Version: 3.0.6
+Version: 3.0.7
 Release: alt1
 
 Summary: Basic building blocks for Python applications
@@ -46,6 +46,9 @@ logic itself.
 %python3_sitelibdir/python3_%{pyproject_distinfo %modulename}
 
 %changelog
+* Wed Jun 05 2024 Andrey Cherepanov <cas@altlinux.org> 3.0.7-alt1
+- New version.
+
 * Tue Jul 04 2023 Andrey Cherepanov <cas@altlinux.org> 3.0.6-alt1
 - New version.
 - Using %%pyproject macros.
