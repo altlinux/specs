@@ -5,7 +5,7 @@
 
 Name: python3-module-%module_name
 Version: 0.8.1
-Release: alt8
+Release: alt9
 Summary: A Python client to use the TestLink API
 License: Apache-2.0
 Group: Development/Python3
@@ -40,6 +40,9 @@ TestLink-API-Python-client is a Python XML-RPC client for TestLink.
 %python3_sitelibdir/%pypi_name-%version.dist-info/METADATA
 
 %changelog
+* Tue Jun 04 2024 Evgeny Shesteperov <alimektor@altlinux.org> 0.8.1-alt9
+- Added updateTestSuiteParentID function.
+
 * Mon May 27 2024 Evgeny Shesteperov <alimektor@altlinux.org> 0.8.1-alt8
 - Added updateTestCaseVersionToTheLatest function.
 
