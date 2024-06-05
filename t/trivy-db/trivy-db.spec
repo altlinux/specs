@@ -1,5 +1,5 @@
 Name:    trivy-db
-Version: 20240601
+Version: 20240605
 Release: alt2
 
 Summary: Database for Trivy
@@ -39,6 +39,9 @@ fi
 %attr(0644,_trivy,_trivy) %_sharedstatedir/trivy/db/*
 
 %changelog
+* Wed Jun 05 2024 Cronbuild Service <cronbuild@altlinux.org> 20240605-alt2
+- repocop cronbuild 20240605. At your service.
+
 * Sat Jun 01 2024 Cronbuild Service <cronbuild@altlinux.org> 20240601-alt2
 - repocop cronbuild 20240601. At your service.
 
