@@ -7,7 +7,7 @@
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt4.g%{git}
+Release: alt5.g%{git}
 Provides: kernel-source-%module_name-%module_version
 Summary: Anbox kernel modules sources
 License: GPLv3/GPLv2
@@ -51,6 +51,16 @@ tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %_udevrulesdir/99-anbox.rules
 
 %changelog
+* Wed Jun 05 2024 L.A. Kostis <lakostis@altlinux.ru> 14-alt5.gae26ba2
+- Apply fixes from kernel 6.9:
+  + binder_alloc: list_lru_{add,del}->list_lru_{add,del}_obj
+- Apply fixes for kernels 6.8+:
+  + binder: s/close_fd_get_file()/file_close_fd()/g
+- Apply fixes for kernels 6.7+:
+  + binder_alloc: fix use-after-free in shinker's callback
+  + binder_alloc: dynamically allocate the android-binder shrinker
+  + binderfs: Convert to using the new inode timestamp accessor functions.
+
 * Sun Dec 03 2023 L.A. Kostis <lakostis@altlinux.ru> 14-alt4.gae26ba2
 - Apply fixes from kernel-6.6:
   + binderfs: Drop unused #include <linux/radix-tree.h>
