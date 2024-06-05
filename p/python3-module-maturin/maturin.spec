@@ -1,5 +1,5 @@
 Name: python3-module-maturin
-Version: 1.5.1
+Version: 1.6.0
 Release: alt1
 
 Summary: Rust within Python
@@ -17,12 +17,11 @@ BuildRequires: pkgconfig(bzip2)
 %pyproject_builddeps_build
 
 Requires: rust-cargo /proc
-Requires: python3(tomli)
 Provides: maturin = %version-%release
 Obsoletes: maturin
 
 %description
-Build and publish crates with pyo3, rust-cpython and cffi bindings
+Build and publish crates with pyo3, cffi and uniffi bindings
 as well as rust binaries as python packages.
 
 %prep
@@ -49,6 +48,9 @@ chmod +x %buildroot%_bindir/maturin
 %python3_sitelibdir/maturin-%version.dist-info
 
 %changelog
+* Wed Jun 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.6.0-alt1
+- 1.6.0 released
+
 * Tue Apr 16 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.1-alt1
 - 1.5.1 released
 
