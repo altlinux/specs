@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20240519
+Version: 20240604
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -94,6 +94,63 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/mellanox
 
 %changelog
+* Wed Jun 05 2024 Cronbuild Service <cronbuild@altlinux.org> 20240604-alt1
+- upstream changes (GIT 22643bb4):
+  + amdgpu: update yellow carp firmware (thx Alex Deucher)
+  + amdgpu: update VCN 4.0.4 firmware (thx Alex Deucher)
+  + amdgpu: update SDMA 6.0.2 firmware (thx Alex Deucher)
+  + amdgpu: update PSP 13.0.7 firmware (thx Alex Deucher)
+  + amdgpu: update GC 11.0.2 firmware (thx Alex Deucher)
+  + amdgpu: update navi10 firmware (thx Alex Deucher)
+  + amdgpu: update raven2 firmware (thx Alex Deucher)
+  + amdgpu: update raven firmware (thx Alex Deucher)
+  + amdgpu: update SMU 13.0.10 firmware (thx Alex Deucher)
+  + amdgpu: update SDMA 6.0.3 firmware (thx Alex Deucher)
+  + amdgpu: update PSP 13.0.10 firmware (thx Alex Deucher)
+  + amdgpu: update GC 11.0.3 firmware (thx Alex Deucher)
+  + amdgpu: update VCN 3.1.2 firmware (thx Alex Deucher)
+  + amdgpu: update PSP 13.0.5 firmware (thx Alex Deucher)
+  + amdgpu: update psp 13.0.8 firmware (thx Alex Deucher)
+  + amdgpu: update vega20 firmware (thx Alex Deucher)
+  + amdgpu: update vega12 firmware (thx Alex Deucher)
+  + amdgpu: update vega10 firmware (thx Alex Deucher)
+  + amdgpu: update VCN 4.0.0 firmware (thx Alex Deucher)
+  + amdgpu: update smu 13.0.0 firmware (thx Alex Deucher)
+  + amdgpu: update SDMA 6.0.0 firmware (thx Alex Deucher)
+  + amdgpu: update PSP 13.0.0 firmware (thx Alex Deucher)
+  + amdgpu: update GC 11.0.0 firmware (thx Alex Deucher)
+  + amdgpu: update picasso firmware (thx Alex Deucher)
+  + amdgpu: update beige goby firmware (thx Alex Deucher)
+  + amdgpu: update vangogh firmware (thx Alex Deucher)
+  + amdgpu: update dimgrey cavefish firmware (thx Alex Deucher)
+  + amdgpu: update green sardine firmware (thx Alex Deucher)
+  + amdgpu: update navy flounder firmware (thx Alex Deucher)
+  + amdgpu: update PSP 13.0.11 firmware (thx Alex Deucher)
+  + amdgpu: update GC 11.0.4 firmware (thx Alex Deucher)
+  + amdgpu: update VCN 4.0.2 firmware (thx Alex Deucher)
+  + amdgpu: update SDMA 6.0.1 firmware (thx Alex Deucher)
+  + amdgpu: update PSP 13.0.4 firmware (thx Alex Deucher)
+  + amdgpu: update GC 11.0.1 firmware (thx Alex Deucher)
+  + amdgpu: update sienna cichlid firmware (thx Alex Deucher)
+  + amdgpu: update VCN 4.0.5 firmware (thx Alex Deucher)
+  + amdgpu: update PSP 14.0.0 firmware (thx Alex Deucher)
+  + amdgpu: update GC 11.5.0 firmware (thx Alex Deucher)
+  + amdgpu: update navi14 firmware (thx Alex Deucher)
+  + amdgpu: update SMU 13.0.6 firmware (thx Alex Deucher)
+  + amdgpu: update PSP 13.0.6 firmware (thx Alex Deucher)
+  + amdgpu: update GC 9.4.3 firmware (thx Alex Deucher)
+  + amdgpu: update renoir firmware (thx Alex Deucher)
+  + amdgpu: update navi12 firmware (thx Alex Deucher)
+  + amdgpu: update aldebaran firmware (thx Alex Deucher)
+  + amdgpu: add support for PSP 14.0.1 (thx Mario Limonciello)
+  + amdgpu: add support for VPE 6.1.1 (thx Mario Limonciello)
+  + amdgpu: add support for VCN 4.0.6 (thx Mario Limonciello)
+  + amdgpu: add support for SDMA 6.1.1 (thx Mario Limonciello)
+  + amdgpu: add support for GC 11.5.1 (thx Mario Limonciello)
+  + amdgpu: Add support for DCN 3.5.1 (thx Mario Limonciello)
+  + cnm: update chips&media wave521c firmware. (thx Nas Chung)
+  + Add ordinary firmware for RTL8821AU device (thx Larry Finger)
+
 * Mon May 27 2024 Cronbuild Service <cronbuild@altlinux.org> 20240519-alt1
 - upstream changes (GIT ec8627ef):
   + amdgpu: add new ISP 4.1.1 firmware (thx Pratap Nirujogi)
