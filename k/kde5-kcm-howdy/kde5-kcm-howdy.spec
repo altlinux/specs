@@ -1,7 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
-Name: kde5-kcm-howdy
-Version: 0.1.1
+%define rname kcm-howdy
+
+Name: kde5-%rname
+Version: 0.1.3
 Release: alt1
 
 Summary: KDE Workspace 5 Howdy configuration module
@@ -41,6 +43,8 @@ BuildRequires: libopenblas-devel
 
 Requires: howdy
 
+%define module_config_file %_xdgconfigdir/%rname/%rname.ini
+
 %description
 KDE Workspace 5 Howdy configuration module
 
@@ -48,7 +52,9 @@ KDE Workspace 5 Howdy configuration module
 %setup
 
 %build
-%K5build -DUSE_AUTO_VECTOR=OFF
+%K5build \
+    -DUSE_AUTO_VECTOR=OFF \
+    -DMODULE_CONFIG_FILE="%module_config_file"
 
 %install
 %K5install
@@ -56,7 +62,13 @@ KDE Workspace 5 Howdy configuration module
 
 %find_lang --with-kde --append --output=%name.lang kcm_howdy
 
+%post
+# Get the minimum UID from login.defs
+UID_MIN=$(awk '/^UID_MIN/ {print $2}' /etc/login.defs 2>/dev/null)
+sed -i "s/^minimum-uid=.*/minimum-uid=$UID_MIN/" %module_config_file
+
 %files -f %name.lang
+%config %module_config_file
 %_K5xdgapp/kcm_howdy.desktop
 %_K5plug/plasma/kcms/systemsettings/kcm_howdy.so
 %_K5data/kpackage/kcms/kcm_howdy/
@@ -69,6 +81,17 @@ KDE Workspace 5 Howdy configuration module
 %_K5dbus_sys_srv/org.kde.kcontrol.kcmhowdy.service
 
 %changelog
+* Wed Jun 05 2024 Anton Golubev <golubevan@altlinux.org> 0.1.3-alt1
+- better display of labels in dark theme
+- get MIN_UID from login.defs when installing and updating
+
+* Tue Apr 16 2024 Anton Golubev <golubevan@altlinux.org> 0.1.2-alt1
+- add initial setup wizard
+- recommend IR cameras (ALT #48796)
+- improve font scaling in preview
+- add the ability to test only one model
+- edit other users models
+
 * Tue Dec 05 2023 Anton Golubev <golubevan@altlinux.org> 0.1.1-alt1
 - make more proper ScrollViews (ALT #48540)
 - use utf-8 for model name (ALT #48538)
