@@ -1,5 +1,5 @@
 Name: alt-rootfs-installer
-Version: 0.5.11
+Version: 0.5.12
 Release: alt1
 Summary: Installer rootfs archive to any specified block device
 License: GPL-2.0-or-later
@@ -38,6 +38,9 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Thu Jun 06 2024 Anton Midyukov <antohami@altlinux.org> 0.5.12-alt1
+- add anbernic-rg552-rk3399 support
+
 * Thu Apr 25 2024 Anton Midyukov <antohami@altlinux.org> 0.5.11-alt1
 - SUPPORTED-BOARDS: fix lists
 
