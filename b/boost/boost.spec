@@ -69,7 +69,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt2
+Release: alt3
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -92,6 +92,10 @@ Patch88: boost-1.73.0-fedora-cmakedir.patch
 
 # https://github.com/boostorg/charconv/issues/182
 Patch89: boost-1.85.0-upstream-ppc64le-charconv-workaround.patch
+
+# https://bugzilla.altlinux.org/50506
+# https://github.com/boostorg/container/issues/281
+Patch90: boost-1.85.0-upstream-ub-in-container-flat-map.patch
 
 Patch2000: boost-1.83-e2k-makecontext.patch
 
@@ -1942,6 +1946,10 @@ done
 
 
 %changelog
+* Wed Jun 05 2024 Ivan A. Melnikov <iv@altlinux.org> 1:1.85.0-alt3
+- Backport upstream fix for UB in Boost.Containers flat_map
+  (ALT#50506).
+
 * Thu Apr 18 2024 Ivan A. Melnikov <iv@altlinux.org> 1:1.85.0-alt2
 - Disable long double support for Boost.Charconv on ppc64le
 
