@@ -1,13 +1,13 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 0.2
+%define ver_major 0.8
 %define rdn_name org.gnome.World.Iotas
 
 %def_enable check
 
 Name: iotas
-Version: %ver_major.14
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple note taking with Nextcloud Notes
@@ -77,6 +77,9 @@ on sync with Nextcloud Notes.
 %doc README*
 
 %changelog
+* Thu Jun 06 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Fri May 03 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.14-alt1
 - 0.2.14
 
