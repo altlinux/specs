@@ -11,7 +11,7 @@
 
 Name: plymouth
 Version: 24.004.60
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Graphical Boot Animation and Logger
@@ -271,7 +271,7 @@ background and featuring ALT logo.
 # sed -i 's/fade-in/charge/g' src/plymouthd.defaults
 
 %build
-export SYSTEMD_ASK_PASSWORD_AGENT="/sbin/systemd-tty-ask-password-agent"
+export SYSTEMD_ASK_PASSWORD_AGENT="systemd-tty-ask-password-agent"
 export UDEVADM="/sbin/udevadm"
 %meson \
 	-Dtracing=true \
@@ -281,7 +281,7 @@ export UDEVADM="/sbin/udevadm"
 	-Dbackground-color=0x3391cd \
 	-Dsystemd-integration=true \
 	-Dsystemd-system-unitdir=%_unitdir \
-	-Dsystemd-ask-password-agent=/sbin/systemd-tty-ask-password-agent \
+	-Dsystemd-ask-password-agent=systemd-tty-ask-password-agent \
 	-Ddocs=true
 
 %meson_build
@@ -481,6 +481,9 @@ fi \
 %files system-theme
 
 %changelog
+* Thu Jun 06 2024 Anton Midyukov <antohami@altlinux.org> 1:24.004.60-alt4
+- do not use full PATH for systemd-tty-ask-password-agent
+
 * Tue Apr 16 2024 Anton Midyukov <antohami@altlinux.org> 1:24.004.60-alt3
 - don't put plymouth client and daemon in the prefix
 
