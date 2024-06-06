@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
-%define wlroots_sover 11
+%define wlroots_sover %nil
 
 %def_without check
 %def_without docs
 
 Name: qtile
-Version: 0.25.0
-Release: alt1.1
+Version: 0.26.0
+Release: alt1
 
 Summary: A full-featured, hackable tiling window manager written and configured in Python
 License: MIT
@@ -127,6 +127,9 @@ find %buildroot -name '*.abi3*' -exec rename '.abi3' '' {} \;
 %_datadir/wayland-sessions/qtile-wayland.desktop
 
 %changelog
+* Thu May 30 2024 Egor Ignatov <egori@altlinux.org> 0.26.0-alt1
+- new version 0.26.0
+
 * Wed May 29 2024 Grigory Ustinov <grenka@altlinux.org> 0.25.0-alt1.1
 - NMU: drop unnessesary build dependency on python3(bowler).
 

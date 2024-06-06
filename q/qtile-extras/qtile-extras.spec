@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qtile-extras
-Version: 0.25.0
+Version: 0.26.0
 Release: alt1
 
 Summary: A collection of mods made by elParaguayo for Qtile
@@ -47,5 +47,8 @@ sed -i '/strava/d' %buildroot%python3_sitelibdir_noarch/qtile_extras/widget/__in
 %python3_sitelibdir_noarch/qtile_extras-*.dist-info
 
 %changelog
+* Thu Jun 06 2024 Egor Ignatov <egori@altlinux.org> 0.26.0-alt1
+- 0.26.0
+
 * Fri Apr 19 2024 Egor Ignatov <egori@altlinux.org> 0.25.0-alt1
 - First build for ALT.

@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
-%define wlroots_sover 11
+%define wlroots_sover %nil
 
 %def_with check
 
 Name: python3-module-pywlroots
-Version: 0.16.7
+Version: 0.17.0
 Release: alt1
 
 Summary: Python binding to the wlroots library using cffi
@@ -60,6 +60,9 @@ find %buildroot -name '*.abi3*' -exec rename '.abi3' '' {} \;
 %python3_sitelibdir/%{pyproject_distinfo pywlroots}
 
 %changelog
+* Thu May 30 2024 Egor Ignatov <egori@altlinux.org> 0.17.0-alt1
+- new version 0.17.0
+
 * Fri Apr 19 2024 Egor Ignatov <egori@altlinux.org> 0.16.7-alt1
 - new version 0.16.7
 
