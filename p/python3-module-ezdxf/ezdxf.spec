@@ -1,10 +1,9 @@
-%define _unpackaged_files_terminate_build 1
 %define pypi_name ezdxf
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: Python 3 package for manipulating DXF drawings
@@ -57,6 +56,9 @@ sed -i '1 {/env python/ d}' src/ezdxf/addons/drawing/qtviewer.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jun 06 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.1-alt1
+- Automatically updated to 1.3.1.
+
 * Thu May 02 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
 - Automatically updated to 1.3.0.
 
