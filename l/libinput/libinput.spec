@@ -1,5 +1,7 @@
 %def_disable snapshot
 
+%define _udevdir %(pkg-config --variable=udevdir udev)
+
 %define _libexecdir %_prefix/libexec
 %def_enable libwacom
 %def_enable debug_gui
@@ -8,8 +10,8 @@
 %def_enable install_tests
 
 Name: libinput
-Version: 1.25.0
-Release: alt1.1
+Version: 1.26.0
+Release: alt1
 
 Summary: Input devices library
 Group: System/Libraries
@@ -28,7 +30,7 @@ Source: %name-%version.tar
 %define mtdev_ver 1.1.0
 %define evdev_ver 1.10
 
-BuildRequires(pre): rpm-macros-meson rpm-build-python3
+BuildRequires(pre): rpm-macros-meson rpm-build-python3 pkgconfig(udev)
 # for %%valgrind_arches
 BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: meson gcc-c++
@@ -108,7 +110,7 @@ the functionality of the installed libinput library.
        %{?_disable_documentation:-Ddocumentation=false} \
        %{?_disable_tests:-Dtests=false} \
        %{?_enable_install_tests:-Dinstall-tests=true} \
-       -Dudev-dir=/lib/udev
+       -Dudev-dir=%_udevdir
 %meson_build
 
 %install
@@ -191,6 +193,9 @@ the functionality of the installed libinput library.
 %endif
 
 %changelog
+* Thu Jun 06 2024 Yuri N. Sedunov <aris@altlinux.org> 1.26.0-alt1
+- 1.26.0
+
 * Tue Feb 13 2024 Yuri N. Sedunov <aris@altlinux.org> 1.25.0-alt1.1
 - fixed build with disable=debug_gui
 

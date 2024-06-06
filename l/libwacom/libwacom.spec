@@ -1,6 +1,7 @@
 %def_disable snapshot
+%define _udevdir %(pkg-config --variable=udevdir udev)
 
-%define ver_major 2.11
+%define ver_major 2.12
 %define sover 9
 %def_disable docs
 
@@ -31,7 +32,7 @@ Source: %name-%version.tar
 Requires: %name-data = %EVR
 Requires: python3-module-pyudev python3-module-libevdev
 
-BuildRequires(pre): rpm-macros-meson rpm-macros-valgrind rpm-build-python3
+BuildRequires(pre): rpm-macros-meson rpm-macros-valgrind rpm-build-python3 pkgconfig(udev)
 BuildRequires: /proc meson glib2-devel libgudev-devel libxml2-devel
 BuildRequires: pkgconfig(libevdev)
 %{?_enable_docs:BuildRequires: doxygen graphviz}
@@ -82,7 +83,7 @@ developing applications that use %name.
 
 %build
 %meson \
-    -Dudev-dir='/lib/udev' \
+    -Dudev-dir='%_udevdir' \
     %{?_disable_docs:-Ddocumentation=disabled} \
     %{?_disable_tests:-Dtests=disabled} \
     %{?optflags_lto:-Db_lto=true}
@@ -125,6 +126,9 @@ mkdir -p %buildroot%_sysconfdir/%name
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Jun 06 2024 Yuri N. Sedunov <aris@altlinux.org> 2.12.0-alt1
+- 2.12.0
+
 * Mon Apr 15 2024 Yuri N. Sedunov <aris@altlinux.org> 2.11.0-alt1
 - 2.11.0
 
