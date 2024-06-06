@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.2.1
+Version: 8.2.2
 Release: alt1
 Summary: Python test framework
 License: MIT
@@ -82,6 +82,9 @@ export TERM=xterm
 %_bindir/pytest-3
 
 %changelog
+* Wed Jun 05 2024 Stanislav Levin <slev@altlinux.org> 8.2.2-alt1
+- 8.2.1 -> 8.2.2.
+
 * Mon Jun 03 2024 Stanislav Levin <slev@altlinux.org> 8.2.1-alt1
 - 8.2.0 -> 8.2.1.
 
