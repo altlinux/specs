@@ -24,7 +24,7 @@
 %def_with scudo
 
 Name: ayugram-desktop
-Version: 4.16.8
+Version: 5.1.2
 Release: alt1
 
 Summary: Desktop Telegram client with good customization and Ghost mode
@@ -53,6 +53,8 @@ Patch20: telegram-desktop-fix-protoc.patch
 # [ppc64le] E: Couldn't find package libdispatch-devel
 # [ppc64le] /usr/bin/ld.default: /usr/lib64/libtg_owt.a: error adding symbols: file in wrong format
 ExcludeArch: ppc64le
+# [aarch64] error: cpio archive too big - 4103M
+ExcludeArch: aarch64
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-compat >= 2.1.5
@@ -395,6 +397,10 @@ ln -s %name %buildroot%_bindir/%oname
 %doc README.md
 
 %changelog
+* Wed Jun 05 2024 Vitaly Lipatov <lav@altlinux.ru> 5.1.2-alt1
+- new version 5.1.2 (with rpmrb script)
+- disabled build on aarch64 (cpio archive too big - 4103M)
+
 * Wed May 08 2024 Vitaly Lipatov <lav@altlinux.ru> 4.16.8-alt1
 - new version 4.16.8 (with rpmrb script)
 
