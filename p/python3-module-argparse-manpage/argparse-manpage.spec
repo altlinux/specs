@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.5
-Release: alt2
+Version: 4.6
+Release: alt1
 Summary: Build manual page from python's ArgumentParser object
 License: Apache-2.0
 Group: Development/Python3
@@ -72,6 +72,9 @@ mv %buildroot%_bindir/argparse-manpage{,.py3}
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jun 06 2024 Stanislav Levin <slev@altlinux.org> 4.6-alt1
+- 4.5 -> 4.6.
+
 * Mon Nov 20 2023 Stanislav Levin <slev@altlinux.org> 4.5-alt2
 - Dropped dependency on distutils (removed in Python3.12).
 
