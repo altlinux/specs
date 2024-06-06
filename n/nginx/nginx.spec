@@ -1,7 +1,7 @@
 Name: nginx
 Summary: Fast HTTP server
-Version: 1.24.0
-Release: alt6
+Version: 1.26.1
+Release: alt1
 License: BSD
 Group: System/Servers
 BuildRequires: libpcre2-devel libssl-devel perl-devel zlib-devel libkrb5-devel
@@ -17,12 +17,15 @@ BuildRequires: libxml2-devel libxslt-devel
 %def_with xslt
 %def_without debug
 %def_with geoip
+%def_with geoip2
 %def_with push_stream
 %def_with spnego
 %def_enable cache_purge
 %def_enable rtmp
 %define modpath %_libdir/%name
-Url: http://sysoev.ru/nginx
+Url: https://nginx.org
+VCS: https://trac.nginx.org/nginx/browser/nginx
+# R/O git mirror https://github.com/nginx/nginx
 Source: %url/%name-%version.tar
 Source1: %name.conf.in
 Source2: %name.init
@@ -38,10 +41,10 @@ Source13: ngx_http_auth_pam_module.tar
 Source14: spnego-http-auth-nginx-module.tar
 Source15: nginx-accept_language-module.tar
 Source16: nginx-push-stream-module.tar
+Source17: nginx-geoip2-module.tar
 Source100: %name.watch
 
 Patch0: cache-purge-fix-compatibility.patch
-Patch1: nginx-upstream-http2-cdda286c0f1b.patch
 
 Requires(pre): shadow-utils
 Requires(post): sed
@@ -53,15 +56,29 @@ Provides: webserver
 %define nginx_log %_logdir/%name
 %define configs %buildroot{%_unitdir/%name.service,%_sysconfdir/logrotate.d/%name,%nginx_etc/{%name.conf,sites-available.d/default.conf}}
 
+%if_with geoip
 %package geoip
 Summary: GeoIP module for nginx
 Group: System/Servers
-%def_with geoip
 Requires: GeoIP-Lite-City GeoIP-Lite-Country
 Requires: %name = %EVR
 
 %description geoip
 GeoIP module for nginx
+%endif
+
+%if_with geoip2
+%package geoip2
+Summary: GeoIP2 module for nginx
+Group: System/Servers
+Requires: %name = %EVR
+BuildRequires: libmaxminddb-devel
+
+%description geoip2
+ngx_http_geoip2_module - creates variables with values from the maxmind geoip2
+databases based on the client IP (default) or from a specific variable
+(supports both IPv4 and IPv6)
+%endif
 
 %if_with accept_language
 %package accept_language
@@ -136,14 +153,13 @@ Fast HTTP server, extremely useful as an Apache frontend
 
 
 %prep
-%setup -a 7 -a 10 -a 13 -a 14 -a 15 -a 16
+%setup -a7 -a10 -a13 -a14 -a15 -a16 -a17
 sed -i 's/INSTALLSITEMAN3DIR=.*/INSTALLDIRS=vendor/' auto/lib/perl/make
 cp -f %SOURCE11 conf/mime.types
 
 pushd cache_purge
 %patch0 -p1
 popd
-%patch1 -p1
 
 %build
 ./configure \
@@ -180,6 +196,9 @@ popd
 %endif
 %if_with geoip
 	--with-http_geoip_module=dynamic \
+%endif
+%if_with geoip2
+	--add-dynamic-module=nginx-geoip2-module \
 %endif
 %if_with accept_language
 	--add-dynamic-module=nginx-accept_language-module \
@@ -335,6 +354,14 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %config(noreplace) %nginx_etc/modules-available.d/http_geoip.conf
 %modpath/ngx_http_geoip_module.so
 
+%if_with geoip2
+%files geoip2
+%config(noreplace) %nginx_etc/modules-available.d/http_geoip2.conf
+%config(noreplace) %nginx_etc/modules-available.d/stream_geoip2.conf
+%modpath/ngx_http_geoip2_module.so
+%modpath/ngx_stream_geoip2_module.so
+%endif
+
 %if_with image_filter
 %files image_filter
 %config(noreplace) %nginx_etc/modules-available.d/http_image_filter.conf
@@ -374,6 +401,11 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Thu Jun 06 2024 Anton Farygin <rider@altlinux.ru> 1.26.1-alt1
+- 1.24.0 -> 1.26.1
+- built geoip2 module
+- updated rtmp and steam modules
+
 * Fri Mar 01 2024 Andrey Cherepanov <cas@altlinux.org> 1.24.0-alt6
 - added push_stream module
 
