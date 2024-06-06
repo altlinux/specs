@@ -2,7 +2,7 @@
 
 Name:     siglo
 Version:  0.9.9
-Release:  alt1
+Release:  alt2
 
 Summary:  GTK companion application for InfiniTime watch
 
@@ -17,6 +17,8 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Patch0:  %name-%version-%release.patch
 Patch1:  %name-alt-0.9.9-desktop.patch
+
+Patch2:  %name-github-0.9.9-resource_uploading.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-python3
@@ -44,6 +46,8 @@ etc.
 %patch0 -p1
 
 %patch1
+
+%patch2 -p1
 
 mv -f -- LICENSE LICENSE.MPL-2.0.orig
 ln -s -- $(relative %_licensedir/MPL-2.0 %_docdir/%name/LICENSE) LICENSE
@@ -74,6 +78,9 @@ mv  %buildroot%_sysconfdir/systemd/user/siglo.service %buildroot%_prefix/lib/sys
 %_datadir/glib-2.0/schemas/*
 
 %changelog
+* Wed Jun 05 2024 Nikolay A. Fetisov <naf@altlinux.org> 0.9.9-alt2
+- Add support for resource uploading
+
 * Tue Dec 06 2022 Nikolay A. Fetisov <naf@altlinux.org> 0.9.9-alt1
 - New version
 
