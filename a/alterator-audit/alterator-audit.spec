@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-audit
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 BuildArch: noarch
 
@@ -46,6 +46,9 @@ test -e %_sysconfdir/audit/audit.rules.old && mv %_sysconfdir/audit/audit.rules.
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Jun 06 2024 Egor Ignatov <egori@altlinux.org> 0.3.3-alt1
+- Replace direct call to SysVinit with alterator service abstraction.
+
 * Wed Oct 25 2023 Elena Mishina <lepata@altlinux.org> 0.3.2-alt1
 - Fix for translate
 

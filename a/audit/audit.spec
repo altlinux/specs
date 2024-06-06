@@ -2,103 +2,114 @@
 %def_disable static
 %def_without bootstrap
 %def_with ldap
-%def_without prelude
 
 Name: audit
-Version: 3.1.2
-Release: alt2.1
+Version: 4.0.1
+Release: alt1
+
 Summary: User space tools for Linux kernel 2.6+ auditing
-License: GPL
+License: GPL-2.0-or-later and LGPL-2.1-or-later
 Group: Monitoring
-URL: https://people.redhat.com/sgrubb/audit/
+
+URL: https://people.redhat.com/sgrubb/audit
+VCS: https://github.com/linux-audit/audit-userspace
+
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
-Requires: lib%{name}1 = %EVR
-Requires: service >= 0.5.26-alt1
+Requires: libaudit1 = %EVR
 
 %if_without bootstrap
-# Automatically added by buildreq on Wed Mar 04 2009
 BuildRequires(pre): rpm-build-python3
-BuildRequires: libkrb5-devel perl-XML-Parser python-devel swig intltool
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
+
+BuildRequires: swig
+BuildRequires: automake
+BuildRequires: perl-XML-Parser
+BuildRequires: libkrb5-devel
 BuildRequires: libcap-ng-devel
 %endif
 
-%{?_enable_static:BuildRequires: glibc-devel-static}
-%{?_with_prelude:BuildRequires: libprelude-devel}
-%{?_with_ldap:BuildRequires: libldap-devel}
+%if_enabled static
+BuildRequires: glibc-devel-static
+%endif
+
+%if_with ldap
+BuildRequires: libldap-devel
+%endif
 
 %description
 The audit package contains the user space utilities for
 storing and searching the audit records generate by
 the audit subsystem in the Linux 2.6+ kernel.
 
-%package -n lib%{name}1
+%package -n libaudit1
 Summary: Dynamic library for audit framework
-License: LGPL
+License: LGPL-2.1-or-later
 Group: System/Libraries
-Provides: lib%name = %EVR
+Provides: libaudit = %EVR
 Obsoletes: libaudit = 2.0.4-alt1
 
-%description -n lib%{name}1
+%description -n libaudit1
 This package contains the dynamic libraries needed for
 applications to use the audit framework.
 
 %package -n libauparse0
 Summary: Dynamic library for audit framework
-License: LGPL
+License: LGPL-2.1-or-later
 Group: System/Libraries
-Conflicts: lib%name = 2.0.4-alt1
-Conflicts: lib%name < 1.7.16-alt2
+Conflicts: libaudit = 2.0.4-alt1
+Conflicts: libaudit < 1.7.16-alt2
 
 %description -n libauparse0
 This package contains the dynamic libraries needed for
 applications to use the audit framework.
 
-%package -n lib%name-devel
+%package -n libaudit-devel
 Summary: Header files and static library for libaudit
-License: LGPL
+License: LGPL-2.1-or-later
 Group: Development/C
-Requires: lib%{name}1 = %EVR
+Requires: libaudit1 = %EVR
 Requires: libauparse0 = %EVR
 
-%description -n lib%name-devel
+%description -n libaudit-devel
 This package contains the static libraries and header
 files needed for developing applications that need to use the audit
 framework libraries.
 
-%package -n python-module-%name
-Summary: Python bindings for libaudit
-License: LGPL
-Group: Development/Python
-Requires: lib%{name}1 = %EVR
-
-%description -n python-module-%name
-The python-module-%name package contains the bindings so that libaudit
-and libauparse can be used by python.
-
-%package -n python3-module-%name
+%package -n python3-module-audit
 Summary: Python3 bindings for libaudit
-License: LGPL
+License: LGPL-2.1-or-later
 Group: Development/Python3
-Requires: lib%{name}1 = %EVR
+Requires: libaudit1 = %EVR
 
-%description -n python3-module-%name
-The python3-module-%name package contains the bindings so that libaudit
+%description -n python3-module-audit
+The python3-module-audit package contains the bindings so that libaudit
 and libauparse can be used by python.
 
 %prep
 %setup
 %patch0 -p1
 
+# set initdir to _unitdir for compatibility with usr-merged systems
+sed -i 's|^initdir = .*|initdir = %_unitdir|' init.d/Makefile.am
+
+# correct sbindir in init scripts
+sed -i 's|/sbin/auditctl|%_sbindir/auditctl|' init.d/*
+
+# workaround automake strictness settings
+touch README
+
 %build
+export PYTHON=python3
+export PYTHON3=python3
 %autoreconf
 
 %configure \
-	--sbindir=/sbin \
+	--sbindir=%_sbindir \
 	--libdir=%_libdir \
+	--libexecdir=%prefix/libexec \
 	--with-aarch64 \
 	--with-arm \
 	--with-libcap-ng=auto \
@@ -106,139 +117,120 @@ and libauparse can be used by python.
 	--enable-experimental \
 	--with-io_uring \
 %if_with bootstrap
-	--without-python \
 	--without-python3 \
 %else
 	--enable-gssapi-krb5 \
 %endif
-	%{?!_with_ldap:--disable-zos-remote} \
-	%{subst_enable static} \
-	%{subst_with prelude}
+%if_without ldap
+	--disable-zos-remote \
+%endif
+	%{subst_enable static}
 
 %make_build
 
-%check
-%make check
-
 %install
+export PYTHON=python3
+export PYTHON3=python3
 %makeinstall_std
 
-install -d %buildroot%_logdir/%name
-install -d %buildroot/%_libdir/%name
+install -d %buildroot%_logdir/audit
+install -d %buildroot%_libdir/audit
 
-#move shared library to %_lib
-install -d %buildroot/%_lib
-mv %buildroot/%_libdir/*.so.* %buildroot/%_lib/
-for i in libaudit libauparse;do
-LIBNAME=$(readlink %buildroot/%_libdir/$i.so)
-ln -sf  ../../%_lib/${LIBNAME##*/}  %buildroot/%_libdir/$i.so
-done
+install -pD -m644 rules/10-base-config.rules \
+        %buildroot%_sysconfdir/audit/rules.d/10-base-config.rules
 
-#replace init script
-install -Dpm755 %name.init %buildroot/%_initdir/%{name}d
-
-#install rotate script
-install -Dpm755 %name.cron %buildroot/%_sysconfdir/cron.weekly/%{name}d
-
-install -pD -m644 init.d/%{name}d.service %buildroot%_unitdir/%{name}d.service
-install -pD -m755 init.d/%{name}d.condrestart %buildroot/usr/libexec/service/legacy-actions/%{name}d/condrestart
-install -pD -m755 init.d/%{name}d.rotate %buildroot/usr/libexec/service/legacy-actions/%{name}d/rotate
-install -pD -m755 init.d/%{name}d.stop %buildroot/usr/libexec/service/legacy-actions/%{name}d/stop
-install -pD -m755 init.d/%{name}d.restart %buildroot/usr/libexec/service/legacy-actions/%{name}d/restart
-install -pD -m644 rules/10-base-config.rules %buildroot%_sysconfdir/%name/rules.d/10-base-config.rules
-install -pD -m755 init.d/%{name}-functions %buildroot/usr/libexec/audit-functions
+%check
+export PYTHON=python3
+export PYTHON3=python3
+%make check
 
 %post
-%post_service %{name}d
+%post_service auditd
 if [ $1 -gt 1 ]; then
-       service %{name}d condrestart ||:
+    service auditd condrestart ||:
 fi
 
 %preun
-%preun_service %{name}d
+%preun_service auditd
 if [ $1 -eq 0 ]; then
-	service %{name}d stop ||:
+    service auditd stop ||:
 fi
 
 %files
-%doc README ChangeLog contrib
-%config(noreplace) %_sysconfdir/cron.weekly/%{name}d
-%config(noreplace) %_sysconfdir/sysconfig/auditd
-%_initdir/%{name}d
-%attr(700,root,root) %_logdir/%name
-%config %_unitdir/%{name}d.service
-
-/sbin/ausearch
-/sbin/aureport
-%_bindir/auvirt
-%attr(750,root,root) /sbin/auditctl
-%attr(750,root,root) /sbin/augenrules
-%attr(750,root,root) /sbin/auditd
-%attr(750,root,root) /sbin/autrace
-%attr(750,root,root) /sbin/audisp-remote
-%attr(750,root,root) /sbin/audisp-syslog
-%attr(750,root,root) /sbin/audisp-af_unix
-%attr(750,root,root) /sbin/audisp-ids
-%attr(750,root,root) /sbin/audisp-statsd
-%if_with prelude
-%attr(750,root,root) /sbin/audisp-prelude
-%endif
+%doc README.md ChangeLog contrib init.d/auditd.cron
+%_bindir/aulastlog
+%_bindir/aulast
+%_bindir/ausyscall
+%_sbindir/ausearch
+%_sbindir/aureport
+%attr(750,root,root) %_sbindir/auditctl
+%attr(750,root,root) %_sbindir/augenrules
+%attr(750,root,root) %_sbindir/auditd
+%attr(750,root,root) %_sbindir/audisp-af_unix
+%attr(750,root,root) %_sbindir/audisp-filter
+%attr(750,root,root) %_sbindir/audisp-ids
+%attr(750,root,root) %_sbindir/audisp-remote
+%attr(750,root,root) %_sbindir/audisp-statsd
+%attr(750,root,root) %_sbindir/audisp-syslog
 %if_with ldap
-%attr(750,root,root) /sbin/audispd-zos-remote
+%attr(750,root,root) %_sbindir/audispd-zos-remote
 %endif
-%attr(750,root,root) %_bindir/aulastlog
-%attr(750,root,root) %_bindir/aulast
-%attr(750,root,root) %_bindir/ausyscall
 
+%attr(700,root,root) %_logdir/audit
+%_unitdir/auditd.service
+%_unitdir/audit-rules.service
 
+%_datadir/audit-rules
 %_man5dir/*
 %_man8dir/*
 %_man7dir/*
 
-%_datadir/%name/
+%attr(700,root,root) %dir %_sysconfdir/audit
+%config(noreplace) %attr(600,root,root) %_sysconfdir/audit/auditd.conf
+%config(noreplace) %attr(600,root,root) %_sysconfdir/audit/audit-stop.rules
 
-%attr(700,root,root) %dir %_sysconfdir/%name
-%config(noreplace) %attr(600,root,root) %_sysconfdir/%name/auditd.conf
-%config(noreplace) %attr(600,root,root) %_sysconfdir/%name/audit-stop.rules
-%attr(700,root,root) %dir %_sysconfdir/%name/rules.d
-%config(noreplace) %attr(600,root,root) %_sysconfdir/%name/rules.d/*.rules
+%attr(700,root,root) %dir %_sysconfdir/audit/rules.d
+%config(noreplace) %attr(600,root,root) %_sysconfdir/audit/rules.d/*.rules
 
 %attr(700,root,root) %dir %_sysconfdir/audit/plugins.d
-%config(noreplace) %attr(640,root,root) /etc/audit/plugins.d/*.conf
+%config(noreplace) %attr(640,root,root) %_sysconfdir/audit/plugins.d/*.conf
 
-%config(noreplace) %attr(640,root,root) /etc/audit/audisp-remote.conf
-%config(noreplace) %attr(640,root,root) /etc/audit/zos-remote.conf
-%config(noreplace) %attr(640,root,root) /etc/audit/ids.conf
-%config(noreplace) %attr(640,root,root) /etc/audit/audisp-statsd.conf
+%config(noreplace) %attr(640,root,root) %_sysconfdir/audit/audisp-remote.conf
+%config(noreplace) %attr(640,root,root) %_sysconfdir/audit/zos-remote.conf
+%config(noreplace) %attr(640,root,root) %_sysconfdir/audit/ids.conf
+%config(noreplace) %attr(640,root,root) %_sysconfdir/audit/audisp-statsd.conf
+%config(noreplace) %attr(640,root,root) %_sysconfdir/audit/audisp-filter.conf
 
-%attr(700,root,root) %dir %_libdir/audit
-/usr/libexec/service/legacy-actions/%{name}d
+/usr/libexec/service/legacy-actions/auditd
 
-/usr/libexec/audit-functions
-
-%files -n lib%{name}1
-/%_lib/libaudit.so.*
-%config(noreplace) %attr(600,root,root) /etc/libaudit.conf
+%files -n libaudit1
+%_libdir/libaudit.so.*
+%config(noreplace) %attr(600,root,root) %_sysconfdir/libaudit.conf
 
 %files -n libauparse0
-/%_lib/libauparse.so.*
+%_libdir/libauparse.so.*
 
-%files -n lib%name-devel
+%files -n libaudit-devel
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*
 %_man3dir/*
-%_aclocaldir/%name.m4
+%_aclocaldir/audit.m4
 
 %if_without bootstrap
-%files -n python-module-%name
-%python_sitelibdir/*
-
-%files -n python3-module-%name
-%python3_sitelibdir/*
+%files -n python3-module-audit
+%python3_sitelibdir/audit.py
+%python3_sitelibdir/_audit.la
+%python3_sitelibdir/_audit.so
+%python3_sitelibdir/auparse.la
+%python3_sitelibdir/auparse.so
+%python3_sitelibdir/__pycache__/*
 %endif
 
 %changelog
+* Thu Jun 06 2024 Egor Ignatov <egori@altlinux.org> 4.0.1-alt1
+- new version 4.0.1
+
 * Wed Dec 20 2023 Grigory Ustinov <grenka@altlinux.org> 3.1.2-alt2.1
 - NMU: Add build dependency on setuptools.
 
