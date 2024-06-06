@@ -3,7 +3,7 @@
 %def_with check
 
 Name: pkcs11-provider
-Version: 0.4
+Version: 0.5
 Release: alt1
 Summary: A PKCS#11 provider for OpenSSL 3.0+
 License: Apache-2.0
@@ -55,6 +55,9 @@ compatible to previous versions as well.
 %_libdir/ossl-modules/pkcs11.so
 
 %changelog
+* Thu Jun 06 2024 Stanislav Levin <slev@altlinux.org> 0.5-alt1
+- 0.4 -> 0.5.
+
 * Mon May 27 2024 Stanislav Levin <slev@altlinux.org> 0.4-alt1
 - 0.3 -> 0.4.
 
