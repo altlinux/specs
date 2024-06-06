@@ -21,9 +21,9 @@
 # version-release
 
 %define nv_version 550
-%define nv_release 78
-%define nv_minor %nil
-%define pkg_rel alt276
+%define nv_release 90
+%define nv_minor 07
+%define pkg_rel alt277
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -367,6 +367,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Thu Jun 06 2024 Sergey V Turchin <zerg@altlinux.org> 550.90.07-alt277
+- new version
+
 * Fri May 31 2024 Sergey V Turchin <zerg@altlinux.org> 550.78-alt276
 - switch vulkan icd
 

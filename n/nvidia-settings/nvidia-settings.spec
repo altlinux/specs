@@ -4,8 +4,8 @@
 %define libxnvctrl libxnvctrl%sover
 
 Name: nvidia-settings
-Version: 550.78
-Release: alt3
+Version: 550.90.07
+Release: alt1
 
 Group: System/Configuration/Hardware
 Summary: Tool for configuring the NVIDIA driver
@@ -150,6 +150,9 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 #%_libdir/lib*.a
 
 %changelog
+* Thu Jun 06 2024 Sergey V Turchin <zerg@altlinux.org> 550.90.07-alt1
+- new version
+
 * Mon May 06 2024 Sergey V Turchin <zerg@altlinux.org> 550.78-alt3
 - fix library symlinks
 
