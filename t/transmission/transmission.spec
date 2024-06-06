@@ -7,7 +7,7 @@
 %define dname transmission-daemon
 
 Name: transmission
-Version: 4.0.5
+Version: 4.0.6
 Release: alt1
 
 Group: Networking/File transfer
@@ -239,6 +239,9 @@ fi
 %attr(1770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Thu Jun 06 2024 Mikhail Tergoev <fidel@altlinux.org> 4.0.6-alt1
+- updated to upstream version 4.0.6 (ALT bug: 50544)
+
 * Tue Jan 09 2024 Mikhail Tergoev <fidel@altlinux.org> 4.0.5-alt1
 - updated to upstream version 4.0.5 (ALT bug: 48784)
 
