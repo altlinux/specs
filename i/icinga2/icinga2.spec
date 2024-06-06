@@ -38,7 +38,7 @@ Group:          Monitoring
 
 Name:           icinga2
 Version:        2.14.0
-Release:        alt5.1
+Release:        alt6
 URL:            https://www.icinga.com/
 Source:         https://github.com/Icinga/%name/archive/v%version/%name-%version.tar
 
@@ -46,8 +46,8 @@ Patch0:         icinga2-graphite.patch
 Patch1:         icinga2-vim_syntax.patch
 Patch2:         icinga2-fix-unitdir-alt.patch
 Patch3:         icinga2-fix-plugin-loader-path.patch
+Patch4:         icinga2-global-commands-zone.patch
 
-Requires:       %name-bin = %version-%release
 Requires:       %name-common = %version-%release
 Requires:       vim-%name = %version-%release
 Requires:       nano-%name = %version-%release
@@ -86,14 +86,6 @@ BuildRequires:  postgresql-devel
 
 %description
 Meta package for Icinga 2 Core and DB IDO.
-
-%package bin
-Summary:        Icinga 2 binaries and libraries
-Group:          Monitoring
-
-%description bin
-Icinga 2 is a general-purpose network monitoring application.
-This subpackage provides the binaries for Icinga 2 Core.
 
 %package common
 Summary:        Common Icinga 2 configuration
@@ -150,6 +142,7 @@ Provides Nano syntax highlighting for icinga2.
 %patch1 -p1
 %patch2 -p2
 %patch3 -p2
+%patch4 -p1
 
 %ifarch %e2k
 # compiler bug workaround
@@ -314,7 +307,6 @@ fi
 %exclude %_sysconfdir/%name/features-enabled/ido-mysql.conf
 %exclude %_sysconfdir/%name/features-enabled/ido-pgsql.conf
 
-%files bin
 %defattr(-,root,root,-)
 %doc README.md NEWS AUTHORS CHANGELOG.md
 %dir %_libdir/%name
@@ -327,7 +319,6 @@ fi
 
 %files common
 %defattr(-,root,root,-)
-%doc README.md NEWS AUTHORS CHANGELOG.md tools/syntax
 %_sysconfdir/bash_completion.d/%name
 %attr(0750,%icinga_user,%icinga_group) %dir %_datadir/%name/include
 %_datadir/%name/include/*
@@ -339,7 +330,6 @@ fi
 
 %files ido-mysql
 %defattr(-,root,root,-)
-%doc README.md NEWS AUTHORS CHANGELOG.md
 %config(noreplace) %attr(0640,%icinga_user,%icinga_group) %_sysconfdir/%name/features-available/ido-mysql.conf
 %_libdir/%name/libmysql_shim*
 %_datadir/icinga2-ido-mysql
@@ -347,7 +337,6 @@ fi
 
 %files ido-pgsql
 %defattr(-,root,root,-)
-%doc README.md NEWS AUTHORS CHANGELOG.md
 %config(noreplace) %attr(0640,%icinga_user,%icinga_group) %_sysconfdir/%name/features-available/ido-pgsql.conf
 %_libdir/%name/libpgsql_shim*
 %_datadir/icinga2-ido-pgsql
@@ -363,6 +352,11 @@ fi
 %_datadir/nano/%name.nanorc
 
 %changelog
+* Thu Jun 06 2024 Paul Wolneykien <manowar@altlinux.org> 2.14.0-alt6
+- Fix: Package common doc files into the main package.
+- Include files from icinga2-bin package into the main package.
+- Pre-define the "global-commands" zone (patch).
+
 * Thu Feb 08 2024 Ivan A. Melnikov <iv@altlinux.org> 2.14.0-alt5.1
 - NMU: fix building with boost 1.84.0-alt1
 
