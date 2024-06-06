@@ -1,7 +1,7 @@
 %add_findreq_skiplist %_libdir/imhex/plugins/*
 
 Name: imhex
-Version: 1.33.2
+Version: 1.34.0
 Release: alt1
 
 Summary: A hex editor for reverse engineers and programmers
@@ -46,6 +46,7 @@ sed -i '/generateSDKDirectory()/d' CMakeLists.txt
     -DCMAKE_BUILD_TYPE=RelWithDebInfo      \
     -DIMHEX_STRIP_RELEASE=OFF              \
     -DIMHEX_OFFLINE_BUILD=ON               \
+    -DIMHEX_ENABLE_UNIT_TESTS=ON           \
     -DUSE_SYSTEM_NLOHMANN_JSON=ON          \
     -DUSE_SYSTEM_FMT=ON                    \
     -DUSE_SYSTEM_CURL=ON                   \
@@ -88,6 +89,9 @@ rm -fv %buildroot%_bindir/imhex-updater
 %_datadir/metainfo/*
 
 %changelog
+* Thu Jun 06 2024 Mikhail Tergoev <fidel@altlinux.org> 1.34.0-alt1
+- updated to upstream 1.34.0
+
 * Mon Apr 01 2024 Mikhail Tergoev <fidel@altlinux.org> 1.33.2-alt1
 - updated to upstream 1.33.2
 
