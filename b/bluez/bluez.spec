@@ -13,8 +13,8 @@
 %global optflags_lto %nil
 
 Name: bluez
-Version: 5.75
-Release: alt1
+Version: 5.76
+Release: alt1.1
 
 Summary: Bluetooth utilities
 License: GPL-2.0-or-later
@@ -103,6 +103,7 @@ export MISC_CFLAGS="%optflags %(getconf LFS_CFLAGS)"
 	--enable-tools \
 	--enable-hid2hci \
 	--localstatedir=%_var \
+	--with-systemdsystemunitdir=%_unitdir \
 	%{subst_enable deprecated} \
 	%{subst_enable experimental}
 %make_build
@@ -202,6 +203,12 @@ fi
 %_datadir/zsh/site-functions/_bluetoothctl
 
 %changelog
+* Thu May 30 2024 L.A. Kostis <lakostis@altlinux.ru> 5.76-alt1.1
+- use systemdunitdir from macros.
+
+* Fri May 24 2024 L.A. Kostis <lakostis@altlinux.ru> 5.76-alt1
+- 5.76.
+
 * Tue May 07 2024 L.A. Kostis <lakostis@altlinux.ru> 5.75-alt1
 - 5.75.
 
