@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 
 %define _name news_flash_gtk
-%define ver_major 3.2
+%define ver_major 3.3
 %define rdn_name io.gitlab.news_flash.NewsFlash
 
 %def_disable bootstrap
@@ -44,6 +44,8 @@ BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(sqlite3)
+# since 3.3.0 for video player based on libclapper
+BuildRequires: pkgconfig(clapper-gtk-0.0)
 
 %description
 %summary
@@ -52,7 +54,7 @@ BuildRequires: pkgconfig(sqlite3)
 %setup -n %_name-%version %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
@@ -75,6 +77,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Thu Jun 06 2024 Yuri N. Sedunov <aris@altlinux.org> 3.3.0-alt1
+- 3.3.0
+
 * Sat Apr 06 2024 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
 - 3.2.0
 

@@ -3,8 +3,8 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 1.8.1
-Release: alt1.1
+Version: 1.8.2
+Release: alt1
 
 Summary: A Python library for fetch and check data files
 Group: Development/Python3
@@ -62,6 +62,9 @@ py.test3 %pypi_name/tests
 
 
 %changelog
+* Thu Jun 06 2024 Yuri N. Sedunov <aris@altlinux.org> 1.8.2-alt1
+- 1.8.2
+
 * Mon Apr 22 2024 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1.1
 - rebuilt with python3_req_method=strict (ALT #50120)
 - split tests to separate subpackage
