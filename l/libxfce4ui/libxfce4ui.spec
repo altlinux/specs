@@ -10,8 +10,10 @@
 %def_enable gudev
 %endif
 
+%def_disable docs
+
 Name: libxfce4ui
-Version: 4.18.6
+Version: 4.19.5
 Release: alt1
 
 Summary: Various GTK widgets for Xfce
@@ -27,7 +29,8 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: gtk-doc intltool libSM-devel libstartup-notification-devel libxfce4util-devel >= 4.17.2-alt1 libxfconf-devel xorg-cf-files
+BuildRequires: libxfce4util-devel >= 4.17.2-alt1 libxfconf-devel
+BuildRequires: libX11-devel libICE-devel libSM-devel libstartup-notification-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libgladeui2.0-devel
 %{?_enable_glibtop:BuildRequires: libgtop-devel}
@@ -35,6 +38,8 @@ BuildRequires: libgladeui2.0-devel
 %{?_enable_epoxy:BuildRequires: libepoxy-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libxfce4util-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools libxfce4util-vala}
+# NOTE: gtk-doc is required by build system even if docs are disabled.
+BuildRequires: gtk-doc
 
 Requires: %name-common = %version-%release
 
@@ -49,6 +54,7 @@ Various GTK widgets for Xfce.
 %description -l ru_RU.UTF-8
 Набор виджетов GTK для Xfce.
 
+%if_enabled docs
 %package devel-doc
 Summary: Development documentation for %name
 Group: Development/Documentation
@@ -57,6 +63,7 @@ Conflicts: %name-devel < %version-%release
 
 %description devel-doc
 This package contains development documentation for %name.
+%endif
 
 %package common
 Summary: Common files for %name
@@ -132,7 +139,8 @@ This package contains the 'About Xfce' dialog.
 %configure \
 	--disable-static \
 	--enable-maintainer-mode \
-	--enable-gtk-doc \
+	--enable-x11 \
+	--enable-wayland \
 	--enable-startup-notification \
 	--enable-gladeui2 \
 	%{subst_enable glibtop} \
@@ -141,6 +149,11 @@ This package contains the 'About Xfce' dialog.
 	%{subst_enable introspection} \
 	%{subst_enable vala} \
 	--enable-tests \
+%if_enabled docs
+	--enable-gtk-doc \
+%else
+	--disable-gtk-doc \
+%endif
 	--enable-debug=minimum
 %make_build
 
@@ -151,8 +164,10 @@ This package contains the 'About Xfce' dialog.
 %check
 make check
 
+%if_enabled docs
 %files devel-doc
 %doc %_datadir/gtk-doc/html/%name
+%endif
 
 %files common -f %name.lang
 %doc README.md NEWS AUTHORS
@@ -194,6 +209,10 @@ make check
 %_desktopdir/xfce4-about.desktop
 
 %changelog
+* Tue May 28 2024 Mikhail Efremov <sem@altlinux.org> 4.19.5-alt1
+- Dropped html documentation.
+- Updated to 4.19.5.
+
 * Fri Mar 08 2024 Mikhail Efremov <sem@altlinux.org> 4.18.6-alt1
 - Updated to 4.18.6.
 

@@ -7,13 +7,11 @@
 # (at least for now).
 %def_disable gsettings
 
-# Workaround for ALT bug #45542.
-# Should be dropped when/if the issue will be fixed.
-%def_disable check
+%def_disable docs
 
 Name: lib%_name
-Version: 4.18.2
-Release: alt2
+Version: 4.19.2
+Release: alt1
 
 Summary: Hierarchical configuration system for Xfce
 Summary (ru_RU.UTF-8): Система конфигурации Xfce
@@ -33,7 +31,9 @@ BuildRequires: libxfce4util-devel >= 4.17.3
 BuildRequires: libgio-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
-BuildRequires: gtk-doc intltool
+# NOTE: gtk-doc is required by build system even if docs are disabled.
+BuildRequires: gtk-doc
+
 # For tests:
 %{?!_without_check:%{?!_disable_check:BuildRequires: dbus-tools-gui xvfb-run}}
 
@@ -105,7 +105,6 @@ Vala bindings for %name.
 %prep
 %setup -n %_name-%version
 %patch -p1
-%xfce4_cleanup_version
 
 %build
 %xfce4reconf
@@ -119,7 +118,11 @@ Vala bindings for %name.
 %else
 	--disable-gsettings-backend \
 %endif
+%if_enabled docs
 	--enable-gtk-doc \
+%else
+	--disable-gtk-doc \
+%endif
 	--enable-debug=minimum
 %make_build
 
@@ -143,7 +146,9 @@ xvfb-run make -k check
 %endif
 
 %files devel
+%if_enabled docs
 %doc %_datadir/gtk-doc/html/%_name
+%endif
 %_includedir/xfce4/xfconf-0
 %_pkgconfigdir/*.pc
 %_libdir/*.so
@@ -168,6 +173,11 @@ xvfb-run make -k check
 %endif
 
 %changelog
+* Tue May 28 2024 Mikhail Efremov <sem@altlinux.org> 4.19.2-alt1
+- devel: Dropped html documentation.
+- Enabled tests.
+- Updated to 4.19.2.
+
 * Thu Oct 19 2023 Mikhail Efremov <sem@altlinux.org> 4.18.2-alt2
 - Patches from upstream git (closes: #48061):
   + cache: Fix overwritten error;

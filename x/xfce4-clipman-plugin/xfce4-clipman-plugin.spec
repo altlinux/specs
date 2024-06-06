@@ -1,6 +1,6 @@
 Name: xfce4-clipman-plugin
 Version: 1.6.6
-Release: alt1
+Release: alt2
 
 Summary: Clipboard history plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Менеджер буфера обмена для Xfce
@@ -13,13 +13,7 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-# NOTE: Wayland support can't be enabled for now: it requires wlr-protocols.
-# The wlr-protocols must be packaged as separate package or used as submodule
-# for xfce4-clipman-plugin.
-# See upstream commit 6788d44163f5d1203b5de3b78a0910ca1786950c.
-# wlr-protocols project:
-# https://gitlab.freedesktop.org/wlroots/wlr-protocols.git
-%def_disable wayland
+%def_enable wayland
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfconf-devel libxfce4util-devel
@@ -82,6 +76,9 @@ Clipman это менеджер буфера обмена для Xfce. Он со
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Fri May 31 2024 Mikhail Efremov <sem@altlinux.org> 1.6.6-alt2
+- Enabled wayland support.
+
 * Fri Mar 01 2024 Mikhail Efremov <sem@altlinux.org> 1.6.6-alt1
 - Updated to 1.6.6.
 

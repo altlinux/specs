@@ -2,9 +2,10 @@
 
 %def_without builtin_menu
 %def_enable introspection
+%def_disable docs
 
 Name: lib%_name
-Version: 4.18.2
+Version: 4.19.1
 Release: alt1
 
 Summary: Implementation of the freedesktop.org menu specification
@@ -21,9 +22,9 @@ BuildRequires: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
 BuildRequires: libxfce4util-devel >= 4.15.6-alt1 libxfce4ui-gtk3-devel >= 4.15.7-alt1
 BuildRequires: glib2-devel >= 2.14
 BuildRequires: libgtk+3-devel
-BuildRequires: gtk-doc
-BuildRequires: intltool
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libxfce4util-gir-devel libxfce4ui-gtk3-gir-devel}
+# NOTE: gtk-doc is required by build system even if docs are disabled.
+BuildRequires: gtk-doc
 
 Obsoletes: libxfce4menu
 Requires: xfce-freedesktop-menu
@@ -66,6 +67,7 @@ Requires: %name-devel = %EVR
 GObject introspection devel data for %name.
 %endif
 
+%if_enabled docs
 %package devel-doc
 Summary: Development files for %name
 License: GFDL-1.1+
@@ -75,6 +77,7 @@ BuildArch: noarch
 
 %description devel-doc
 This package contains development documentation for %name.
+%endif
 
 %package gtk3
 Summary: Common GTK+3 part of %name
@@ -146,7 +149,11 @@ BuildArch: noarch
 %configure \
     --disable-static \
 	%{subst_enable introspection} \
-    --enable-gtk-doc \
+%if_enabled docs
+	--enable-gtk-doc \
+%else
+	--disable-gtk-doc \
+%endif
 	--enable-debug=minimum
 %make_build
 
@@ -191,8 +198,10 @@ rm -rf %buildroot%_datadir/locale/uz@Latn/
 %_datadir/gir-1.0/Garcon-*.gir
 %endif
 
+%if_enabled docs
 %files devel-doc
 %doc %_datadir/gtk-doc/html/%_name
+%endif
 
 %files gtk3
 %_libdir/%name-gtk3-1.so.*
@@ -213,6 +222,10 @@ rm -rf %buildroot%_datadir/locale/uz@Latn/
 
 
 %changelog
+* Tue May 28 2024 Mikhail Efremov <sem@altlinux.org> 4.19.1-alt1
+- Dropped html documentation.
+- Updated to 4.19.1.
+
 * Mon Feb 05 2024 Mikhail Efremov <sem@altlinux.org> 4.18.2-alt1
 - Updated to 4.18.2.
 

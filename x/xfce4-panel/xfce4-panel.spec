@@ -1,10 +1,11 @@
 %def_enable introspection
 %def_enable vala
+%def_disable docs
 #define git_hash .g1870071c
 %define git_hash %nil
 
 Name: xfce4-panel
-Version: 4.18.6
+Version: 4.19.4
 Release: alt1%git_hash
 
 Summary: Panel for Xfce
@@ -21,11 +22,15 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 BuildRequires: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
 BuildRequires: libxfce4util-devel >= 4.17.2-alt1
 BuildRequires: libxfce4ui-gtk3-devel >= 4.17.1-alt1 libexo-gtk3-devel >= 0.11.2 libgarcon-gtk3-devel >= 4.17.0
-BuildRequires: gtk-doc libwnck3-devel libXext-devel
+Buildrequires: libxfce4windowing-devel >= 4.19.3-alt1
+BuildRequires: libX11-devel libwnck3-devel
 BuildRequires: libgtk+3-devel
+BuildRequires: libwayland-client-devel libgtk-layer-shell-devel
 BuildRequires: libdbusmenu-gtk3-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libxfce4util-gir-devel >= 4.15.6-alt1}
 %{?_enable_vala:BuildRequires: vala-tools libxfce4util-vala >= 4.15.6-alt1}
+# NOTE: gtk-doc is required by build system even if docs are disabled.
+BuildRequires: gtk-doc
 
 Requires: xfce4-common
 
@@ -42,6 +47,7 @@ Obsoletes: xfce4-showdesktop-plugin, xfce4-windowlist-plugin
 %description -l ru_RU.UTF-8
 Данный пакет содержит в себе панель для окружения рабочего стола Xfce.
 
+%if_enabled docs
 %package -n libxfce4panel-devel-doc
 Summary: Documentation files to build Xfce panel plugins
 Group: Development/Documentation
@@ -52,6 +58,7 @@ BuildArch: noarch
 
 %description -n libxfce4panel-devel-doc
 This package contains files to develop plugins for Xfce panel.
+%endif
 
 %package -n libxfce4panel-gtk3
 Summary: Library for Xfce panel (GTK+3)
@@ -115,7 +122,11 @@ Vala bindings for libxfce4panel-gtk3.
 	--enable-maintainer-mode \
 	%{subst_enable introspection} \
 	%{subst_enable vala} \
+%if_enabled docs
 	--enable-gtk-doc \
+%else
+	--disable-gtk-doc \
+%endif
 	--enable-debug=minimum
 %make_build
 
@@ -134,8 +145,10 @@ Vala bindings for libxfce4panel-gtk3.
 %_desktopdir/*.desktop
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
+%if_enabled docs
 %files -n libxfce4panel-devel-doc
 %doc %_datadir/gtk-doc/html/libxfce4panel-*/
+%endif
 
 %files -n libxfce4panel-gtk3
 %_libdir/%libxfce4panel_name_gtk3.so.*
@@ -160,6 +173,10 @@ Vala bindings for libxfce4panel-gtk3.
 %endif
 
 %changelog
+* Tue May 28 2024 Mikhail Efremov <sem@altlinux.org> 4.19.4-alt1
+- Dropped html documentation.
+- Updated to 4.19.4.
+
 * Thu Feb 29 2024 Mikhail Efremov <sem@altlinux.org> 4.18.6-alt1
 - Updated to 4.18.6.
 

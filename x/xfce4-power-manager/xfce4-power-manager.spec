@@ -1,5 +1,5 @@
 Name: xfce4-power-manager
-Version: 4.18.3
+Version: 4.19.3
 Release: alt1
 Summary: Power management for the Xfce desktop environment
 Summary (ru_RU.UTF8): Утилита расширенного управления питанием для Xfce
@@ -13,13 +13,14 @@ Vcs: https://gitlab.xfce.org/xfce/xfce4-power-manager.git
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4util libxfconf-devel libxfce4panel-gtk3-devel
+BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libxfce4util >= 4.19.2 libxfconf-devel libxfce4panel-gtk3-devel
 BuildRequires: libxfce4ui-gtk3-devel >= 4.18.4
-BuildRequires: libXext-devel
-BuildRequires: libXrandr-devel
-BuildRequires: libnotify-devel >= 0.4.1
+BuildRequires: libX11-devel libXext-devel libXrandr-devel
+BuildRequires: libwayland-client-devel wayland-devel wayland-protocols wlr-protocols
+BuildRequires: libnotify-devel >= 0.7.8
 BuildRequires: libupower-devel
+BuildRequires: libpolkit-devel
 BuildRequires: gettext
 
 Requires: polkit
@@ -47,8 +48,9 @@ applications to prevent automatic sleep actions via the power manager.
 %xfce4reconf
 %configure \
 	--enable-maintainer-mode \
+	--enable-x11 \
+	--enable-wayland \
 	--enable-polkit \
-	--enable-network-manager \
 	--with-backend=linux \
 	--enable-debug=minimum
 %make_build
@@ -74,6 +76,12 @@ applications to prevent automatic sleep actions via the power manager.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Jun 03 2024 Mikhail Efremov <sem@altlinux.org> 4.19.3-alt1
+- Updated to 4.19.3.
+
+* Thu May 30 2024 Mikhail Efremov <sem@altlinux.org> 4.19.2-alt1
+- Updated to 4.19.2.
+
 * Thu Nov 30 2023 Mikhail Efremov <sem@altlinux.org> 4.18.3-alt1
 - Dropped %%xfce4_drop_gitvtag macro.
 - Required libxfce4ui >= 4.18.4.

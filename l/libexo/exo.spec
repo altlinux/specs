@@ -1,7 +1,8 @@
 %define _name exo
+%def_disable docs
 
 Name: lib%_name
-Version: 4.18.0
+Version: 4.19.0
 Release: alt1
 
 Summary: Extension library to Xfce
@@ -18,7 +19,8 @@ Patch: %_name-%version-%release.patch
 BuildRequires: rpm-build-xfce4  xfce4-dev-tools >= 4.15 libxfce4util-devel >= 4.17.2
 BuildRequires: libgtk+3-devel libxfce4ui-gtk3-devel
 BuildRequires: glib2-devel >= 2.66
-BuildRequires: gtk-doc intltool
+# NOTE: gtk-doc is required by build system even if docs are disabled.
+BuildRequires: gtk-doc
 
 Requires: %name-common = %version-%release
 # There is no longer python bindings for exo.
@@ -73,6 +75,7 @@ This package contains development files required for packaging
 %name-based software.
 This is a GTK+3 version.
 
+%if_enabled docs
 %package devel-doc
 Summary: Documentation files for %name
 Group: Development/Documentation
@@ -82,20 +85,22 @@ Conflicts: %name-gtk3-devel < %version-%release
 %description devel-doc
 This package contains documentation files required for packaging
 %name-based software.
+%endif
 
 %prep
 %setup -n %_name-%version
 %patch -p1
-
-# Don't use git tag in version.
-%xfce4_drop_gitvtag libexo_version_tag configure.ac.in
 
 %build
 %xfce4reconf
 %configure \
 	--disable-static \
 	--enable-maintainer-mode \
+%if_enabled docs
 	--enable-gtk-doc \
+%else
+	--disable-gtk-doc \
+%endif
 	--enable-debug=minimum
 
 # Seems there is race in desktop files processing
@@ -125,10 +130,16 @@ make check
 %_libdir/%name-2.so
 %_pkgconfigdir/%_name-2.pc
 
+%if_enabled docs
 %files devel-doc
 %_datadir/gtk-doc/html/%{_name}*
+%endif
 
 %changelog
+* Tue May 28 2024 Mikhail Efremov <sem@altlinux.org> 4.19.0-alt1
+- Dropped html documentation.
+- Updated to 4.19.0.
+
 * Thu Dec 15 2022 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
 - Updated descriptions.
 - Updated to 4.18.0.

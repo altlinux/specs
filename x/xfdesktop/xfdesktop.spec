@@ -1,6 +1,6 @@
 Name: xfdesktop
-Version: 4.18.1
-Release: alt1
+Version: 4.19.2
+Release: alt2.gdbdf20d6
 
 Summary: Desktop manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Менеджер рабочего стола Xfce
@@ -13,9 +13,12 @@ Vcs: https://gitlab.xfce.org/xfce/xfdesktop.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libthunar-devel libgarcon-devel libgarcon-gtk3-devel libxfce4panel-gtk3-devel libxfconf-devel libexo-gtk3-devel libxfce4ui-gtk3-devel
-BuildRequires: intltool libwnck3-devel time xorg-cf-files
+BuildRequires(pre): rpm-build-xfce4 >= 0.2.0-alt1 xfce4-dev-tools
+BuildRequires: libthunar-devel libgarcon-devel libgarcon-gtk3-devel libxfce4panel-gtk3-devel libxfconf-devel libexo-gtk3-devel libxfce4ui-gtk3-devel
+BuildRequires: libxfce4windowing-devel >= 4.19.3
+BuildRequires: libX11-devel
+BuildRequires: libgtk-layer-shell-devel
+Buildrequires: time
 BuildRequires: libnotify-devel
 
 Requires: exo-utils
@@ -31,13 +34,14 @@ Requires: exo-utils
 %prep
 %setup
 %patch -p1
+%xfce4_cleanup_version
 
 %build
-# Don't use git tag in version.
-%xfce4_drop_gitvtag xfdesktop_version_tag configure.ac.in
 %xfce4reconf
 %configure \
 	--enable-maintainer-mode \
+	--enable-x11 \
+	--enable-wayland \
 	--enable-notifications \
 	--enable-thunarx \
 	--enable-desktop-icons \
@@ -60,6 +64,12 @@ Requires: exo-utils
 %_datadir/backgrounds/xfce
 
 %changelog
+* Tue Jun 04 2024 Mikhail Efremov <sem@altlinux.org> 4.19.2-alt2.gdbdf20d6
+- Upstream git snapshot (master branch).
+
+* Thu May 30 2024 Mikhail Efremov <sem@altlinux.org> 4.19.2-alt1
+- Updated to 4.19.2.
+
 * Sat Jan 21 2023 Mikhail Efremov <sem@altlinux.org> 4.18.1-alt1
 - Updated to 4.18.1.
 

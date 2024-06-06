@@ -1,5 +1,5 @@
 Name: xfce4-session
-Version: 4.18.3
+Version: 4.19.2
 Release: alt2
 
 Summary: Session manager for Xfce desktop environment
@@ -12,16 +12,18 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 Vcs: https://gitlab.xfce.org/xfce/xfce4-session.git
 Source: %name-%version.tar
 Source1: xfce.wmsession
+Source2: xfce4-xscreensaver.desktop
 
 Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfconf-devel libxfce4ui-gtk3-devel >= 4.18.2
+BuildRequires: libxfce4util-devel >= 4.19.2 libxfconf-devel >= 4.12.0 libxfce4ui-gtk3-devel >= 4.18.4
+BuildRequires: libxfce4windowing-devel >= 4.19.2
 # gdk-pixbuf-csource needed in maintainer mode
 BuildRequires: libgdk-pixbuf-devel
 BuildRequires: libpolkit-devel
-BuildRequires: libdbus-glib-devel
-BuildRequires: iceauth intltool libSM-devel libwnck3-devel xorg-cf-files
+BuildRequires: libX11-devel iceauth libICE-devel libSM-devel libwnck3-devel
+BuildRequires: libgtk-layer-shell-devel
 
 Requires: wm-common-freedesktop
 Requires: xfce4-about
@@ -45,19 +47,20 @@ Conflicts: xfce4-screensaver < 0.1.10-alt1
 %patch -p1
 
 %build
-# Don't use git tag in version.
-%xfce4_drop_gitvtag xfsm_version_tag configure.ac.in
 %xfce4reconf
 %configure \
 	--disable-static \
 	--enable-maintainer-mode \
 	--with-backend=linux \
+	--enable-x11 \
+	--enable-wayland \
 	--enable-debug=minimum
 %make_build
 
 %install
 %makeinstall_std
 install -Dm0644 %SOURCE1 %buildroot%_x11sysconfdir/wmsession.d/10Xfce4
+install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/xfce4-xscreensaver.desktop
 %find_lang %name
 
 %files -f %name.lang
@@ -75,8 +78,18 @@ install -Dm0644 %SOURCE1 %buildroot%_x11sysconfdir/wmsession.d/10Xfce4
 %_mandir/man?/*
 %_datadir/xsessions/*.desktop
 %_datadir/polkit-1/actions/*.policy
+%_datadir/wayland-sessions/xfce-wayland.desktop
+%_datadir/xdg-desktop-portal/xfce-portals.conf
 
 %changelog
+* Wed Jun 05 2024 Mikhail Efremov <sem@altlinux.org> 4.19.2-alt2
+- Packaged autostart xscreensaver desktop file again.
+
+* Thu May 30 2024 Mikhail Efremov <sem@altlinux.org> 4.19.2-alt1
+- xinitrc: Don't use absolute path for sd_booted.
+- xinitrc: Dropped old Xkb settings migration.
+- Updated to 4.19.2.
+
 * Wed May 31 2023 Mikhail Efremov <sem@altlinux.org> 4.18.3-alt2
 - Avoid xfce4-screensaver dependence.
 

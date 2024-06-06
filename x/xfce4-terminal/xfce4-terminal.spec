@@ -1,6 +1,6 @@
 Name: xfce4-terminal
 Version: 1.1.3
-Release: alt1
+Release: alt2
 
 Summary: Terminal emulator application for Xfce
 Summary (ru_RU.UTF-8): Эмулятор терминала для Xfce
@@ -12,10 +12,13 @@ Vcs: https://gitlab.xfce.org/apps/xfce4-terminal.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+%def_enable wayland
+
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools >= 4.18.1
 BuildRequires: libxfconf-devel >= 4.16 libxfce4ui-gtk3-devel >= 4.17.5
 BuildRequires: libpcre2-devel
 BuildRequires: docbook-dtds docbook-style-xsl intltool libvte3-devel
+%{?_enable_wayland:Buildrequires: libgtk-layer-shell-devel}
 BuildRequires: xsltproc
 
 Requires: xfce4-common
@@ -44,6 +47,8 @@ xfce4-terminal - легкий и удобный эмулятор термина�
 %xfce4reconf
 %configure \
 	--enable-maintainer-mode \
+	--enable-x11 \
+	%{subst_enable wayland} \
 	--enable-debug=minimum
 %make_build
 
@@ -66,6 +71,9 @@ __EOF__
 %_desktopdir/*
 
 %changelog
+* Fri May 31 2024 Mikhail Efremov <sem@altlinux.org> 1.1.3-alt2
+- Explicitly enabled wayland support.
+
 * Fri Mar 01 2024 Mikhail Efremov <sem@altlinux.org> 1.1.3-alt1
 - Updated to 1.1.3.
 

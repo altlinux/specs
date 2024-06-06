@@ -3,7 +3,7 @@
 %def_enable gepub
 
 Name: tumbler
-Version: 4.18.2
+Version: 4.19.1
 Release: alt1
 
 Summary: A thumbnail D-Bus service
@@ -21,12 +21,14 @@ Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4util-devel >= 4.17.1
-BuildRequires: gtk-doc intltool libfreetype-devel libgio-devel libgtk+2-devel libjpeg-devel libpng-devel
+BuildRequires: libfreetype-devel libgio-devel libgtk+2-devel libjpeg-devel libpng-devel
 BuildRequires: libpoppler-glib-devel libgsf-devel libcurl-devel
 %{?!_with_bootstrap:BuildRequires: libopenraw-gnome-devel}
 %{?_enable_ffmpeg:BuildRequires: libffmpegthumbnailer-devel}
 %{?_enable_gstreamer:BuildRequires: libgdk-pixbuf-devel gstreamer1.0-devel gst-plugins1.0-devel}
 %{?_enable_gepub:BuildRequires: libgepub-devel libgdk-pixbuf-devel}
+# NOTE: gtk-doc is required by build system even if docs are disabled.
+BuildRequires: gtk-doc
 
 %define _unpackaged_files_terminate_build 1
 
@@ -65,7 +67,9 @@ Development files and headers for %name
 	%{?_disable_ffmpeg:--disable-ffmpeg-thumbnailer} \
 	%{?_disable_gstreamer:--disable-gstreamer-thumbnailer} \
 	%{?_disable_gepub:--disable-gepub-thumbnailer} \
-	--disable-static
+	--disable-static \
+	--disable-gtk-doc
+
 %make_build
 
 %install
@@ -78,7 +82,7 @@ Development files and headers for %name
 %_prefix/libexec/%name-1
 %_libdir/%name-1
 %_datadir/dbus-1/services/*.service
-%_usr/lib/systemd/user/*.service
+%_user_unitdir/*.service
 %_iconsdir/hicolor/*/apps/*
 
 %exclude %_libdir/%name-1/plugins/*.la
@@ -93,6 +97,11 @@ Development files and headers for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu May 30 2024 Mikhail Efremov <sem@altlinux.org> 4.19.1-alt1
+- Exlicitly disabled gtk-doc
+- Use _user_unitdir macro
+- Updated to 4.19.1.
+
 * Thu Nov 30 2023 Mikhail Efremov <sem@altlinux.org> 4.18.2-alt1
 - Updated to 4.18.2.
 

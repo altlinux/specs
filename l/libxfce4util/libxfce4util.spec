@@ -1,8 +1,9 @@
 %def_enable introspection
 %def_enable vala
+%def_disable docs
 
 Name: libxfce4util
-Version: 4.18.2
+Version: 4.19.3
 Release: alt1
 
 Summary: Utility library for the Xfce desktop environment
@@ -15,13 +16,14 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Vcs: https://gitlab.xfce.org/xfce/libxfce4util.git
 Source: %name-%version.tar
-Patch0: %name-%version-%release.patch
+Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-# Automatically added by buildreq on Wed Jan 13 2010
-BuildRequires: glib2-devel gtk-doc intltool
+BuildRequires: glib2-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
+# NOTE: gtk-doc is required by build system even if docs are disabled.
+BuildRequires: gtk-doc
 
 %define _unpackaged_files_terminate_build 1
 
@@ -82,7 +84,11 @@ Vala bindings for %name.
 	--enable-maintainer-mode \
 	%{subst_enable introspection} \
 	%{subst_enable vala} \
+%if_enabled docs
 	--enable-gtk-doc \
+%else
+	--disable-gtk-doc \
+%endif
 	--enable-debug=minimum
 %make_build
 
@@ -96,7 +102,9 @@ Vala bindings for %name.
 %_sbindir/*
 
 %files devel
+%if_enabled docs
 %doc %_datadir/gtk-doc/html/%name
+%endif
 %dir %_includedir/xfce4/
 %_includedir/xfce4/libxfce4util
 %_pkgconfigdir/*.pc
@@ -116,6 +124,11 @@ Vala bindings for %name.
 %endif
 
 %changelog
+* Thu May 23 2024 Mikhail Efremov <sem@altlinux.org> 4.19.3-alt1
+- devel: Dropped html documentation.
+- Fixed Patch tag.
+- Updated to 4.19.3.
+
 * Tue Feb 06 2024 Mikhail Efremov <sem@altlinux.org> 4.18.2-alt1
 - Updated to 4.18.2.
 

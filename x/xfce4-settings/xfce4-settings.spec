@@ -1,5 +1,5 @@
 Name: xfce4-settings
-Version: 4.18.4
+Version: 4.19.2
 Release: alt1
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
@@ -18,10 +18,12 @@ Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools > 4.5
 BuildRequires: libxfce4ui-gtk3-devel libexo-gtk3-devel libxfconf-devel libgarcon-devel >= 0.1.10
-BuildRequires: libXcursor-devel libXi-devel libXrandr-devel libnotify-devel libxklavier-devel
+BuildRequires: libX11-devel libXcursor-devel libXi-devel libXrandr-devel libnotify-devel libxklavier-devel
+BuildRequires: libwayland-client-devel wayland-devel wlr-protocols libgtk-layer-shell-devel
 %{?_enable_upower:BuildRequires: libupower-devel >= 0.99.4-alt2}
 BuildRequires: libcolord-devel
 BuildRequires: xorg-drv-libinput-devel
+BuildRequires: xml-utils
 # For xfce4-compose-mail script
 BuildRequires: rpm-build-python3
 
@@ -52,6 +54,8 @@ for the Xfce desktop.
 	--enable-debug=minimum \
 	--enable-maintainer-mode \
 	--disable-silent-rules \
+	--enable-x11 \
+	--enable-wayland \
 	--enable-libnotify \
 %if_enabled upower
 	--enable-upower-glib \
@@ -62,7 +66,6 @@ for the Xfce desktop.
 	--enable-xorg-libinput \
 	--enable-libxklavier \
 	--enable-sound-settings \
-	--enable-pluggable-dialogs \
 	--enable-colord
 %make
 
@@ -72,20 +75,25 @@ for the Xfce desktop.
 install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 
 %files -f %name.lang
-%doc README.md TODO NEWS COPYING AUTHORS
+%doc README.md NEWS COPYING AUTHORS
 %_bindir/*
 %_libdir/xfce4/*
+%_libdir/gtk-3.0/modules/*.so
 %config(noreplace) %_sysconfdir/xdg/autostart/*
 %config(noreplace) %_sysconfdir/xdg/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
 %_sysconfdir/xdg/menus/xfce-settings-manager.menu
 %config(noreplace) %_sysconfdir/xdg/xfce4/helpers.rc
 %exclude %_datadir/xfce4/helpers/debian-*.desktop
 %_datadir/xfce4/*
-
 %_desktopdir/*.desktop
 %_iconsdir/*/*/*/*.*
 
+%exclude %_libdir/gtk-3.0/modules/*.la
+
 %changelog
+* Wed May 29 2024 Mikhail Efremov <sem@altlinux.org> 4.19.2-alt1
+- Updated to 4.19.2.
+
 * Thu Nov 30 2023 Mikhail Efremov <sem@altlinux.org> 4.18.4-alt1
 - Updated to 4.18.4.
 

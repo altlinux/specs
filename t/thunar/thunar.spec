@@ -1,5 +1,11 @@
+%def_disable docs
+# Upstream tests are broken for now:
+# new function thunarx_provider_module_unuse is not
+# in the thunarx.symbols list.
+%def_disable check
+
 Name: thunar
-Version: 4.18.10
+Version: 4.19.2
 Release: alt1
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
@@ -11,18 +17,19 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Vcs: https://gitlab.xfce.org/xfce/thunar.git
 Source: %name-%version.tar
-Source1: for_translation_thunar_master_ru.po
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-xfce4 >= 0.1.0
 
 BuildRequires: xfce4-dev-tools
-BuildRequires: libxfce4panel-gtk3-devel >= 4.12.0 libxfconf-devel >= 4.12.0 libexo-gtk3-devel >= 4.17.0
+BuildRequires: libxfce4panel-gtk3-devel >= 4.12.0 libxfconf-devel >= 4.12.0 libexo-gtk3-devel >= 4.19.0
 BuildRequires: libxfce4util >= 4.17.2 libxfce4ui-gtk3-devel >= 4.17.6
-BuildRequires: gtk-doc intltool libSM-devel libexif-devel libpcre2-devel
+BuildRequires: intltool libSM-devel libexif-devel libpcre2-devel
 BuildRequires: libpango-devel
 BuildRequires: libnotify-devel libgudev-devel
 BuildRequires: desktop-file-utils
+# NOTE: gtk-doc is required by build system even if docs are disabled.
+BuildRequires: gtk-doc
 
 %define _unpackaged_files_terminate_build 1
 
@@ -62,6 +69,7 @@ Provides: libThunar = %version-%release
 %description -n lib%name
 This package contains libraries for %name.
 
+%if_enabled docs
 %package -n lib%name-devel-doc
 Summary: Development documentation for lib%name
 Group: Development/Documentation
@@ -70,14 +78,11 @@ BuildArch: noarch
 
 %description -n lib%name-devel-doc
 This package contains development documentation for lib%name.
+%endif
 
 %prep
 %setup
 %patch -p1
-
-# Merge our own and upstream Russian translations
-msgcat --use-first -o merged_ru.po %SOURCE1 po/ru.po
-mv -f merged_ru.po po/ru.po
 
 %build
 %xfce4reconf
@@ -89,7 +94,11 @@ mv -f merged_ru.po po/ru.po
 	--enable-pcre2 \
 	--enable-gio-unix \
 	--with-custom-thunarx-dirs-enabled=no \
+%if_enabled docs
 	--enable-gtk-doc \
+%else
+	--disable-gtk-doc \
+%endif
 	--enable-debug=minimum
 %make_build
 
@@ -132,12 +141,20 @@ make check
 %_includedir/thunarx-*/
 %_libdir/*.so
 
+%if_enabled docs
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Thu May 30 2024 Mikhail Efremov <sem@altlinux.org> 4.19.2-alt1
+- Disabled tests.
+- Use upstream Russian translation.
+- Dropped html documentation.
+- Updated to 4.19.2.
+
 * Tue Jan 02 2024 Mikhail Efremov <sem@altlinux.org> 4.18.10-alt1
 - Updated to 4.18.10.
 

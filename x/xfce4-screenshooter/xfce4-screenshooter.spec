@@ -2,7 +2,7 @@
 %define git_date %nil
 
 Name: xfce4-screenshooter
-Version: 1.10.4
+Version: 1.10.6
 Release: alt1%git_date
 
 Summary: Screenshot Xfce4 panel plugin
@@ -16,11 +16,13 @@ Vcs: https://gitlab.xfce.org/apps/xfce4-screenshooter.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel libexo-gtk3-devel libxfconf-devel
-BuildPreReq: libxml2-devel libXi-devel
+BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel libexo-gtk3-devel libxfconf-devel
+BuildRequires: libX11-devel libXi-devel libXext-devel libXfixes-devel libXtst-devel
+BuildRequires: wayland-devel libwayland-client-devel wlr-protocols
+BuildRequires: libxml2-devel
 BuildRequires: libpango-devel >= 1.44.0
-BuildRequires: intltool libsoup3.0-devel libXext-devel libXfixes-devel
+BuildRequires: libsoup3.0-devel
 
 BuildRequires: help2man
 
@@ -48,13 +50,12 @@ A plugin for the Xfce panel is also available.
 %prep
 %setup
 %patch -p1
-# Don't use git tag in version.
-#sed -i 's/m4_define(\[xfce4_screenshooter_version_tag\], \[git\])/m4_define(\[xfce4_screenshooter_version_tag\], \[\])/' configure.ac.in
-mkdir m4/
 
 %build
 %xfce4reconf
 %configure \
+	--enable-x11 \
+	--enable-wayland \
     --enable-debug=minimum
 %make_build
 
@@ -71,11 +72,18 @@ mkdir m4/
 %_datadir/applications/*.desktop
 %_datadir/metainfo/*.xml
 %_bindir/xfce4-screenshoot*
+%_libexecdir/xfce4/screenshooter/
 %_mandir/man1/xfce4-screenshooter*
 
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu May 30 2024 Mikhail Efremov <sem@altlinux.org> 1.10.6-alt1
+- Updated to 1.10.6.
+
+* Mon Feb 05 2024 Mikhail Efremov <sem@altlinux.org> 1.10.5-alt1
+- Updated to 1.10.5.
+
 * Mon May 15 2023 Mikhail Efremov <sem@altlinux.org> 1.10.4-alt1
 - Updated to 1.10.4.
 
