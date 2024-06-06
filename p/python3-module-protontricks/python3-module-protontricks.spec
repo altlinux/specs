@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.11.1
-Release: alt1
+Release: alt2
 
 Summary: A wrapper that does winetricks things for Proton enabled games, requires Winetricks
 License: GPL-3.0
@@ -20,6 +20,7 @@ Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
+Requires: winetricks
 Provides: %pypi_name = %EVR
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -58,6 +59,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jun 06 2024 Anton Zhukharev <ancieg@altlinux.org> 1.11.1-alt2
+- Added winetricks requirement (closes 50554).
+
 * Wed Feb 21 2024 Anton Zhukharev <ancieg@altlinux.org> 1.11.1-alt1
 - Updated to 1.11.1.
 
