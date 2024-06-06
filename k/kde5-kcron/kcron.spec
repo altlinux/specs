@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -13,6 +13,8 @@ License: GPLv2+ / LGPLv2+
 #Requires: /usr/sbin/crond
 
 Source: %rname-%version.tar
+Patch1: alt-reset-button.patch
+Patch2: kde-parsefile.patch
 
 # Automatically added by buildreq on Wed Sep 30 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python3 python3-base ruby ruby-stdlibs xml-common xml-utils
@@ -52,6 +54,8 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
+%patch2 -p1
 
 %build
 %K5build
@@ -73,6 +77,9 @@ KF5 library
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Jun 04 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 23.08.5-alt2
+- kcm fixes (closes 43297)
+
 * Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
