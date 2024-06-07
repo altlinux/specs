@@ -1,34 +1,33 @@
 %define _unpackaged_files_terminate_build 1
-%define oname zope.exceptions
+%define pypi_name zope.exceptions
+%define ns_name zope
+%define mod_name exceptions
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 5.0.1
-Release: alt2
+Name: python3-module-%pypi_name
+Version: 5.1
+Release: alt1
 
 Summary: Zope Exceptions
 License: ZPL-2.1
 Group: Development/Python3
 Url: https://pypi.org/project/zope.exceptions/
 Vcs: https://github.com/zopefoundation/zope.exceptions.git
-
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+# setuptools(pkg_resources) is used by namespace root that is packaged
+# separately at python3-module-zope
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
-Provides: python3-module-%{pep503_name %oname} = %EVR
-
-BuildRequires(pre): rpm-build-intro >= 2.2.5
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
-
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(zope.interface)
-BuildRequires: python3(zope.testrunner)
+%pyproject_builddeps_metadata_extra test
 %endif
-
-%py3_requires zope
 
 %description
 This package contains exception interfaces and implementations which are
@@ -37,13 +36,14 @@ packages.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
 
 %install
 %pyproject_install
-%python3_prune
 
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
@@ -51,16 +51,22 @@ mv %buildroot%python3_sitelibdir_noarch/* \
         %buildroot%python3_sitelibdir/
 %endif
 
+# don't ship tests
+rm -r %buildroot%python3_sitelibdir/%ns_name/%mod_name/tests
+
 %check
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.txt README.*
-%python3_sitelibdir/zope/exceptions/
-%python3_sitelibdir/%oname-%version.dist-info/
+%python3_sitelibdir/%ns_name/%mod_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
 
 %changelog
+* Fri Jun 07 2024 Stanislav Levin <slev@altlinux.org> 5.1-alt1
+- 5.0.1 -> 5.1.
+
 * Thu Aug 03 2023 Stanislav Levin <slev@altlinux.org> 5.0.1-alt2
 - Mapped PyPI name to distro's one.
 
@@ -86,7 +92,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 4.2.0-alt3
-- NMU: remove %ubt from release
+- NMU: remove %%ubt from release
 
 * Wed Feb 14 2018 Stanislav Levin <slev@altlinux.org> 4.2.0-alt2.S1
 - Fix a wrong logic of packaging for non x86_64 arch
