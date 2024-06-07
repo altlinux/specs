@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.27.11
-Release: alt6
+Release: alt7
 Epoch: 1
 %K5init
 
@@ -577,6 +577,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_unitdir_user/plasma-core.target.d/xd
 
 
 %changelog
+* Fri Jun 07 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.11-alt7
+- update to 5.27.11.1 (fixes: CVE-2024-36041)
+
 * Mon May 13 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.11-alt6
 - enable appstream runner
 
