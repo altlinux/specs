@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.2.2
+Version: 3.2.3
 Release: alt1
 Summary: Python code static checker
 License: GPLv2+
@@ -61,16 +61,7 @@ for i in $(ls); do
 done
 
 %check
-# upstream tests depend on order of execution which was broken with pytest 8
-# issue tracker: https://github.com/pylint-dev/pylint/pull/9483
-%pyproject_run_pytest -ra --benchmark-disable \
-    --ignore=tests/test_functional.py \
-    --ignore=tests/test_regr.py \
-    tests/
-
-%pyproject_run_pytest -ra --benchmark-disable \
-    tests/test_functional.py \
-    tests/test_regr.py
+%pyproject_run_pytest -ra --benchmark-disable tests
 
 %files
 %doc README.rst
@@ -82,6 +73,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jun 07 2024 Stanislav Levin <slev@altlinux.org> 3.2.3-alt1
+- 3.2.2 -> 3.2.3.
+
 * Mon May 20 2024 Stanislav Levin <slev@altlinux.org> 3.2.2-alt1
 - 3.2.0 -> 3.2.2.
 
