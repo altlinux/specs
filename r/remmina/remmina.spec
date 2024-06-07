@@ -7,7 +7,7 @@
 
 Name: remmina
 Version: 1.4.35
-Release: alt1
+Release: alt2
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
@@ -363,6 +363,11 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Fri Jun 07 2024 Alexey Shabalin <shaba@altlinux.org> 1.4.35-alt2
+- Backport patches:
+  + rdp/rdp-plugin: Fix faulty color depth check
+  + [REM-3104]
+
 * Tue Apr 02 2024 Alexey Shabalin <shaba@altlinux.org> 1.4.35-alt1
 - New version 1.4.35.
 - Build with freerdp3.
