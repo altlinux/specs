@@ -2,10 +2,10 @@
 %def_with opencv
 
 Name: frei0r-plugins
-Version: 2.3.2
-Release: alt2
+Version: 2.3.3
+Release: alt1
 
-Summary: Frei0r - a minimalistic plugin API for video effects
+Summary: A free software collection of video effect plugins
 License: GPL-2.0-or-later
 Group: Video
 Url: https://frei0r.dyne.org
@@ -27,7 +27,6 @@ a variety of video editing and processing software.
 %package -n frei0r-devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %EVR
 
 %description -n frei0r-devel
 Frei0r - a minimalistic plugin API for video effects.
@@ -89,6 +88,11 @@ popd
 %endif
 
 %changelog
+* Fri Jun 07 2024 Ajrat Makhmutov <rauty@altlinux.org> 2.3.3-alt1
+- New version.
+- Don't require plugins for frei0r-devel.
+- Correct the summary of the frei0r-plugins.
+
 * Thu May 02 2024 Ajrat Makhmutov <rauty@altlinux.org> 2.3.2-alt2
 - Rename the facedetect subpackage to opencv.
 - Don't require other plugins for frei0r-plugins-opencv.
