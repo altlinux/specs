@@ -9,7 +9,7 @@
 %define _localstatedir /var
 
 Name: kea
-Version: 2.4.1
+Version: 2.6.0
 Release: alt1
 Summary: DHCPv4, DHCPv6 and DDNS server from ISC
 
@@ -34,6 +34,7 @@ BuildRequires: libmysqlclient-devel
 BuildRequires: postgresql-devel
 BuildRequires: liblog4cplus-devel
 BuildRequires: procps
+BuildRequires: /usr/bin/xmllint
 %{?_with_radius: BuildRequires: freeradius-devel}
 BuildRequires: python3-devel
 BuildRequires: python3-module-sphinx
@@ -179,8 +180,8 @@ sed -i -e s/\"output\".*/\"output\":\ \"stdout\",/ -e s@\/\/\ \"pattern@\"patter
 #    %%buildroot%%_sysconfdir/kea/kea-netconf.conf  # TODO: no support for netconf/sysconf yet
 
 %pre
-%_sbindir/groupadd -r -f _kea
-%_sbindir/useradd -M -r -d /var/lib/%name -s /bin/false -c "Kea DHCP User" -g _kea _kea >/dev/null 2>&1 ||:
+groupadd -r -f _kea
+useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Kea DHCP User" -g _kea _kea >/dev/null 2>&1 ||:
 
 
 %post
@@ -228,6 +229,9 @@ sed -i -e s/\"output\".*/\"output\":\ \"stdout\",/ -e s@\/\/\ \"pattern@\"patter
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Jun 07 2024 Alexey Shabalin <shaba@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
 * Wed Dec 06 2023 Alexey Shabalin <shaba@altlinux.org> 2.4.1-alt1
 - 2.4.1
 
