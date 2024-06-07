@@ -33,7 +33,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.10.1
+Version: 0.10.2
 Release: alt1
 
 Summary: GPT applier
@@ -185,6 +185,10 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Fri Jun 07 2024 Valery Sinelnikov <greh@altlinux.org> 0.10.2-alt1
+- Added some fixes to dconf_registry and scripts
+- Fixed windows registry key reading for loopback
+
 * Tue Jun 04 2024 Valery Sinelnikov <greh@altlinux.org> 0.10.1-alt1
 - Added handling of unexpected data types when writing to dconf
 
