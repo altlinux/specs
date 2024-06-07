@@ -8,7 +8,7 @@
 
 Name: orca
 Version: %ver_major.1
-Release: alt2%beta
+Release: alt3%beta
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
 Summary(ru_RU.UTF-8): Программа экранного доступа для людей с ограничениями по зрению
@@ -33,7 +33,7 @@ Requires: at-spi2-core
 # don't speak russian
 Requires: speech-dispatcher-module-flite flite
 # speak russian
-Requires: espeak
+Requires: espeak-ng
 Requires: python3-module-speechd
 
 BuildArch: noarch
@@ -87,6 +87,9 @@ sed -i 's/\(enableBraille[[:space:]]*= \)True/\1False/' src/orca/settings.py
 %_sysconfdir/xdg/autostart/%name-autostart.desktop
 
 %changelog
+* Thu Jun 06 2024 Artem Semenov <savoptik@altlinux.org> 46.1-alt3
+- Changed espeak to espeak-ng
+
 * Wed Apr 10 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt2
 - updated to ORCA_46_1-3-g02f91c115 (improved russian translation)
 - explicitly required both typelib(Gtk) 3.0 and 4.0

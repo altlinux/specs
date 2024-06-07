@@ -6,7 +6,7 @@
 
 Name: speech-dispatcher
 Version: 0.11.5
-Release: alt1
+Release: alt2
 
 Summary: A speech output processing service
 License: GPL-2.0-or-later
@@ -24,7 +24,7 @@ BuildRequires: libdotconf-devel >= 0.3
 BuildRequires: gcc-c++ glib2-devel glibc-devel-static intltool
 BuildRequires: libXau-devel  libltdl7-devel
 BuildRequires: libalsa-devel libao-devel
-BuildRequires: flite-devel  libespeak-devel svox-pico
+BuildRequires: flite-devel  libespeak-ng-devel svox-pico
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-base python3-devel
 BuildRequires: libsndfile-devel libpulseaudio-devel
@@ -103,7 +103,7 @@ This python module allows programmsaccess speech-dispatcher service.
 %add_optflags -D_FILE_OFFSET_BITS=64
 
 %autoreconf
-%configure --with-espeak \
+%configure --with-espeak-ng \
 	   --with-flite  \
 	   --with-pico \
 	   --with-pulse \
@@ -139,7 +139,7 @@ find %buildroot%_libdir -name '*.la' -delete
 %_libdir/%name/spd*.so
 %dir %_libdir/%name-modules
 %_libdir/%name-modules/sd_dummy
-%_libdir/%name-modules/sd_espeak
+%_libdir/%name-modules/sd_espeak*
 %_libdir/%name-modules/sd_generic
 %_libdir/%name-modules/sd_cicero
 %_datadir/sounds/%name
@@ -172,6 +172,9 @@ find %buildroot%_libdir -name '*.la' -delete
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Thu Jun 06 2024 Artem Semenov <savoptik@altlinux.org> 0.11.5-alt2
+- Changed espeak to espeak-ng
+
 * Sat Dec 09 2023 Anton Midyukov <antohami@altlinux.org> 0.11.5-alt1
 - 0.11.5 (Closes: 48428)
 
