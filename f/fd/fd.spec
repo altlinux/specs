@@ -1,5 +1,5 @@
 Name: fd
-Version: 9.0.0
+Version: 10.1.0
 Release: alt1
 Summary: A simple, fast and user-friendly alternative to 'find'
 License: MIT and Apache-2.0
@@ -59,6 +59,9 @@ install -Dm 0644 contrib/completion/_%name %buildroot%_datadir/zsh/site-function
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Fri Jun 07 2024 Alexander Makeenkov <amakeenk@altlinux.org> 10.1.0-alt1
+- Updated to version 10.1.0.
+
 * Tue Dec 19 2023 Alexander Makeenkov <amakeenk@altlinux.org> 9.0.0-alt1
 - Updated to version 9.0.0.
 
