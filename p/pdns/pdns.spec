@@ -4,7 +4,7 @@
 %define _pkgdocdir %_docdir/%name
 
 Name: pdns
-Version: 4.8.4
+Version: 4.9.1
 Release: alt1
 Summary: A modern, advanced and high performance authoritative-only nameserver
 Group: System/Servers
@@ -15,7 +15,7 @@ Patch4: %name-4.2.2-alt-fix-missing-include.patch
 ExcludeArch: %ix86 %arm %mips32 ppc
 
 BuildRequires: gcc-c++ boost-program_options-devel curl libcurl-devel libsqlite3-devel
-BuildRequires: systemd-devel /bin/systemctl
+BuildRequires: systemd-devel systemd
 BuildRequires: boost-devel
 BuildRequires: liblua5-devel
 BuildRequires: bison flex ragel
@@ -201,8 +201,8 @@ mkdir -p %buildroot%_localstatedir/%name
 %make_build -C pdns check || cat pdns/test-suite.log
 
 %pre
-%_sbindir/groupadd -r -f %name
-%_sbindir/useradd -M -r -d %_localstatedir/%name -s /bin/false -c "PowerDNS user" -g %name %name >/dev/null 2>&1 ||:
+groupadd -r -f %name
+useradd -M -r -d %_localstatedir/%name -s /bin/false -c "PowerDNS user" -g %name %name >/dev/null 2>&1 ||:
 
 %post
 # Fix permissions for config on update
@@ -274,24 +274,12 @@ fi
 %_man1dir/sdig.1.*
 
 %files backend-mysql
-%_pkgdocdir/schema.mysql.sql
-%_pkgdocdir/dnssec-3.x_to_3.4.0_schema.mysql.sql
-%_pkgdocdir/nodnssec-3.x_to_3.4.0_schema.mysql.sql
-%_pkgdocdir/3.4.0_to_4.1.0_schema.mysql.sql
-%_pkgdocdir/4.1.0_to_4.2.0_schema.mysql.sql
-%_pkgdocdir/4.2.0_to_4.3.0_schema.mysql.sql
-%_pkgdocdir/4.3.0_to_4.7.0_schema.mysql.sql
+%_pkgdocdir/*schema.mysql.sql
 %_pkgdocdir/enable-foreign-keys.mysql.sql
 %_libdir/%name/libgmysqlbackend.so
 
 %files backend-postgresql
-%_pkgdocdir/schema.pgsql.sql
-%_pkgdocdir/dnssec-3.x_to_3.4.0_schema.pgsql.sql
-%_pkgdocdir/nodnssec-3.x_to_3.4.0_schema.pgsql.sql
-%_pkgdocdir/3.4.0_to_4.1.0_schema.pgsql.sql
-%_pkgdocdir/4.1.0_to_4.2.0_schema.pgsql.sql
-%_pkgdocdir/4.2.0_to_4.3.0_schema.pgsql.sql
-%_pkgdocdir/4.3.0_to_4.7.0_schema.pgsql.sql
+%_pkgdocdir/*schema.pgsql.sql
 %_libdir/%name/libgpgsqlbackend.so
 
 %files backend-pipe
@@ -309,16 +297,7 @@ fi
 %_libdir/%name/liblua2backend.so
 
 %files backend-sqlite
-%_pkgdocdir/schema.sqlite3.sql
-%_pkgdocdir/dnssec-3.x_to_3.4.0_schema.sqlite3.sql
-%_pkgdocdir/nodnssec-3.x_to_3.4.0_schema.sqlite3.sql
-%_pkgdocdir/3.4.0_to_4.0.0_schema.sqlite3.sql
-%_pkgdocdir/4.0.0_to_4.2.0_schema.sqlite3.sql
-%_pkgdocdir/4.2.0_to_4.3.0_schema.sqlite3.sql
-%_pkgdocdir/4.3.0_to_4.3.1_schema.sqlite3.sql
-%_pkgdocdir/4.3.1_to_4.7.0_schema.sqlite3.sql
-%_pkgdocdir/bind-dnssec.4.2.0_to_4.3.0_schema.sqlite3.sql
-%_pkgdocdir/bind-dnssec.schema.sqlite3.sql
+%_pkgdocdir/*schema.sqlite3.sql
 %_libdir/%name/libgsqlite3backend.so
 
 %files backend-geoip
@@ -336,6 +315,9 @@ fi
 %_unitdir/ixfrdist@.service
 
 %changelog
+* Fri Jun 07 2024 Alexey Shabalin <shaba@altlinux.org> 4.9.1-alt1
+- 4.9.1
+
 * Sat Feb 10 2024 Alexey Shabalin <shaba@altlinux.org> 4.8.4-alt1
 - 4.8.4
 
