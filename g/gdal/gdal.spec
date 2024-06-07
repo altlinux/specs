@@ -11,7 +11,7 @@
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
 Version: 3.9.0
-Release: alt1
+Release: alt2
 Group: Sciences/Geosciences
 
 License: MIT
@@ -87,6 +87,7 @@ and utilities.
 %package plugins
 Summary: Plugins for GDAL
 Group: Sciences/Geosciences
+Conflicts: libgdal < 3.9.0
 
 %description plugins
 This package contains various pluginsfor GDAL.
@@ -103,6 +104,7 @@ This package contains various scripts for GDAL (written in python)
 Summary: Libraries required for the GDAL library
 Group: Sciences/Geosciences
 Requires: %name-plugins = %EVR
+Obsoletes: libgdal < 3.9.0
 
 %description -n %libname%sover
 Libraries required for the GDAL library
@@ -239,6 +241,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jun 07 2024 Andrey Cherepanov <cas@altlinux.org> 3.9.0-alt2
+- Set conflicts on libgdal < 3.9.0 for gdal-plugins (ALT #50561).
+
 * Tue May 21 2024 Andrey Cherepanov <cas@altlinux.org> 3.9.0-alt1
 - New version.
 - Applied shared libs policy.
