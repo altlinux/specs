@@ -4,10 +4,10 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
-Summary: python library for doing approximate and phonetic matching of strings
+Summary: Python library for doing approximate and phonetic matching of strings
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/jellyfish/
@@ -31,7 +31,7 @@ BuildRequires: python3-module-pytest
 %endif
 
 %description
-ellyfish is a library for approximate & phonetic matching of strings.
+Jellyfish is a library for approximate & phonetic matching of strings.
 
 %prep
 %setup -a2 -a3
@@ -62,6 +62,9 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jun 07 2024 Ajrat Makhmutov <rauty@altlinux.org> 1.0.4-alt1
+- Updated to 1.0.4.
+
 * Sun Dec 31 2023 Anton Zhukharev <ancieg@altlinux.org> 1.0.3-alt1
 - Updated to 1.0.3.
 
