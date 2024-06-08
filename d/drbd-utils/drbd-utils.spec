@@ -8,7 +8,7 @@
 
 Name: drbd-utils
 Version: 9.28.0
-Release: alt1
+Release: alt1.1
 
 Summary: DRBD user-land tools and scripts
 License: GPLv2+
@@ -190,6 +190,9 @@ make test
 %_datadir/cluster/drbd.metadata
 
 %changelog
+* Sat Jun 08 2024 Michael Shigorin <mike@altlinux.org> 9.28.0-alt1.1
+- fix build on Elbrus through respecting CXXFLAGS (proposed upstream)
+
 * Mon May 06 2024 Andrew A. Vasilyev <andy@altlinux.org> 9.28.0-alt1
 - 9.28.0
 
