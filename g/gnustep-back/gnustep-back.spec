@@ -2,7 +2,7 @@
 
 Name: gnustep-back    
 Version: 0.31.0
-Release: alt1
+Release: alt2
 Summary: The GNUstep back-end library
 License: LGPL-2.1+ and GPL-3.0+
 Group: Graphical desktop/GNUstep
@@ -16,7 +16,7 @@ BuildRequires: libfreetype-devel libX11-devel libXt-devel libXext-devel
 BuildRequires: libXmu-devel libICE-devel libXft-devel libGL-devel
 BuildRequires: libart_lgpl-devel libglitz-devel libcairo-devel
 BuildRequires: gnustep-make-devel gnustep-base-devel
-BuildRequires: gnustep-gui-devel = %version
+BuildRequires: gnustep-gui-devel >= %version
 BuildRequires: libXcursor-devel libXfixes-devel
 BuildRequires: fonts-type1-urw gnustep-gui-doc
 BuildRequires: texinfo /proc
@@ -24,7 +24,7 @@ BuildRequires: libgmp-devel libgnutls-devel libgcrypt-devel
 BuildRequires: libxslt-devel libffi-devel libicu-devel
 
 Requires: gnustep-base
-Requires: gnustep-gui = %version
+Requires: gnustep-gui >= %version
 Requires: fonts-ttf-core
 
 %description 
@@ -100,6 +100,9 @@ gzip ChangeLog
 %_docdir/GNUstep
 
 %changelog
+* Sat Jun 08 2024 Andrey Cherepanov <cas@altlinux.org> 0.31.0-alt2
+- Required gnustep-gui version greater than or equal to version of gnustep-back.
+
 * Thu May 30 2024 Andrey Cherepanov <cas@altlinux.org> 0.31.0-alt1
 - New version.
 

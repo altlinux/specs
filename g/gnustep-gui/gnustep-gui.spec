@@ -3,7 +3,7 @@
 %def_without objc2
 
 Name: gnustep-gui
-Version: 0.31.0
+Version: 0.31.1
 Release: alt1
 Summary: The GNUstep GUI library
 License: LGPL-2.1+ and GPL-3.0+
@@ -149,6 +149,9 @@ rm -fR %buildroot%_infodir
 %_docdir/GNUstep
 
 %changelog
+* Fri Jun 07 2024 Andrey Cherepanov <cas@altlinux.org> 0.31.1-alt1
+- New version.
+
 * Thu May 30 2024 Andrey Cherepanov <cas@altlinux.org> 0.31.0-alt1
 - New version.
 
