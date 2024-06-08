@@ -2,7 +2,7 @@
 %define ver_major 1.0
 
 Name: xdg-desktop-portal-xapp
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Xapp Desktop Portal
@@ -22,6 +22,7 @@ BuildRequires: meson
 BuildRequires: pkgconfig(xdg-desktop-portal) >= %xdg_desktop_portal_ver
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libxapps-devel
+BuildRequires: libgtk+3-devel
 
 %description
 A backend implementation for xdg-desktop-portal that is using GTK
@@ -48,6 +49,9 @@ and various pieces of Cinnamon/MATE/Xfce4 infrastructure.
 
 
 %changelog
+* Sat Jun 08 2024 Anton Midyukov <antohami@altlinux.org> 1.0.5-alt1
+- new version (1.0.5) with rpmgs script
+
 * Fri Dec 01 2023 Anton Midyukov <antohami@altlinux.org> 1.0.4-alt1
 - new version (1.0.4) with rpmgs script
 
