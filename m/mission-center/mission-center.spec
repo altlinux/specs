@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 
 %define binary_name missioncenter
-%define ver_major 0.4
+%define ver_major 0.5
 %define rdn_name io.missioncenter.MissionCenter
 # src/sys_info_v2/gatherer/3rdparty/nvtop/nvtop.json
 %define nvtop_ver 45a1796375cd617d16167869bb88e5e69c809468
@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: mission-center
-Version: %ver_major.5.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Mission Center
@@ -94,6 +94,9 @@ sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/sys_info_v2/mem_info.rs
 
 
 %changelog
+* Sat Jun 08 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Sun Apr 21 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.5.2-alt1
 - v0.4.5-2
 
