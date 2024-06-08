@@ -3,7 +3,7 @@
 
 Name: git-retry
 Version: 0.0.20230216
-Release: alt2
+Release: alt3
 Summary: Bootstrap function to retry a git command
 License: BSD-3-Clause
 Group: Development/Tools
@@ -46,6 +46,9 @@ git retry init
 %_man1dir/*.1*
 
 %changelog
+* Sun May 19 2024 Vitaly Chikunov <vt@altlinux.org> 0.0.20230216-alt3
+- Match "Couldn't connect to server" error as transient.
+
 * Fri Feb 17 2023 Vitaly Chikunov <vt@altlinux.org> 0.0.20230216-alt2
 - Update transient error messages list to handle ssh and contemporary curl.
 
