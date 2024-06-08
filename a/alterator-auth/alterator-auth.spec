@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.44.9
+Version: 0.44.10
 Release: alt1
 
 Summary: Alterator module for system wide auth settings
@@ -169,6 +169,10 @@ rm -f %buildroot%_libexecdir/alterator/hooks/auth
 %files -n task-auth-freeipa
 
 %changelog
+* Thu May 30 2024 Andrey Limachko <liannnix@altlinux.org> 0.44.10-alt1
+- system-auth: ad: change from admin credential to host for correct
+  ACL issuance during DNS registration (thx Sozonov Evgenii)
+
 * Sun Feb 25 2024 Andrey Limachko <liannnix@altlinux.org> 0.44.9-alt1
 - system-auth: ad: enable winbind service in sssd mode
 
