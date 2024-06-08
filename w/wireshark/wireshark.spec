@@ -10,7 +10,7 @@
 
 Name: wireshark
 Version: 4.2.5
-Release: alt1
+Release: alt2
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
 Group: Monitoring
@@ -20,6 +20,7 @@ VCS: https://gitlab.com/wireshark/wireshark.git
 Source: http://www.wireshark.org/download/src/%name-%version.tar
 Source2: %name.control
 Source3: %name.watch
+Patch0: %name-%version-%release.patch
 
 BuildRequires: control doxygen flex gcc-c++ libadns-devel libcap-devel libcom_err-devel libgnutls-openssl-devel libgcrypt-devel zlib-devel
 BuildRequires: libkrb5-devel libpcap-devel libportaudio2-devel libssl-devel python3 unzip xml-utils xsltproc perl-Pod-Parser perl-devel
@@ -111,6 +112,7 @@ extensions.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 # Some plugins use C++ and need lcxa. It can't be loaded
@@ -224,6 +226,9 @@ _EOF_
 %_libdir/cmake/%name
 
 %changelog
+* Sat Jun 08 2024 Anton Farygin <rider@altlinux.ru> 4.2.5-alt2
+- applied fix 52084eab from the upstream git (Closes: #50418)
+
 * Mon May 20 2024 Anton Farygin <rider@altlinux.ru> 4.2.5-alt1
 - 4.2.5 (Fixes: CVE-2024-4855, CVE-2024-4854, CVE-2024-4853)
 
