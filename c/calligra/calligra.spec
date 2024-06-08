@@ -8,7 +8,7 @@
 
 Name: calligra
 Version: 3.2.1
-Release: alt6
+Release: alt7
 Epoch: 0
 %K5init no_altplace
 %define libname lib%name
@@ -53,6 +53,7 @@ Patch50: poppler-22.04_1.patch
 Patch51: poppler-22.04_2.patch
 # ALT
 Patch103: alt-disable-products.patch
+Patch104: alt-fix-crash-adding-bibl.patch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: kf5-attica-devel boost-devel eigen3 gcc-c++ glib2-devel rpm-build-python
@@ -220,6 +221,7 @@ Requires: %name-common = %EVR
 %patch51 -p1
 #
 %patch103 -p1
+%patch104 -p1
 
 # fix docs names
 for subd in po/*/docs/{sheets,stage} ; do
@@ -236,6 +238,12 @@ for subd in po/*/docs/{sheets,stage} ; do
 	    ;;
     esac
 done
+
+# remove duplicate templates
+pushd words/templates/Wordprocessing >/dev/null
+ls | grep -E ".A4" | xargs -I {} \
+    echo 'sed -i "s|{}||" CMakeLists.txt; rm -f {}' | sh
+popd >/dev/null
 
 %build
 %K5build \
@@ -470,6 +478,10 @@ done
 %exclude %_K5lib/libkookularGenerator_odt.so*
 
 %changelog
+* Fri Jun 07 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 0:3.2.1-alt7
+- fix a crach when duplicating the bibliography (closes: 42875)
+- remove duplicate templates (closes: 42876)
+
 * Fri Aug 04 2023 Sergey V Turchin <zerg@altlinux.org> 0:3.2.1-alt6
 - fix to show translated docs
 
