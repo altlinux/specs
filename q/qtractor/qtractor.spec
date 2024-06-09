@@ -1,6 +1,6 @@
 Name: qtractor
 Version: 0.9.90
-Release: alt1
+Release: alt2
 
 Summary: Audio/MIDI multi-track sequencer
 License: GPLv2
@@ -41,8 +41,9 @@ specially dedicated to the personal home-studio.
 %prep
 %setup
 %ifarch %e2k
-sed -i.e2k "/#if defined(__GNUC__)/s|#|#ifdef __e2k__\nreturn true;\n#el|" \
+sed -i "/#if defined(__GNUC__)/s|#|#ifdef __e2k__\nreturn true;\n#el|" \
   src/qtractor{AudioEngine,AudioMonitor,InsertPlugin,WsolaTimeStretcher}.cpp
+sed -i "s/'\\\\0'/QChar(&)/" src/qtractorPluginForm.cpp
 %endif
 
 %build
@@ -73,6 +74,9 @@ desktop-file-edit \
 %_man1dir/qtractor.1*
 
 %changelog
+* Sun Jun 09 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.9.90-alt2
+- fix e2k build
+
 * Fri Apr 12 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.9.90-alt1
 - 0.9.90 released
 
