@@ -1,17 +1,20 @@
+%def_disable static
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 Name: libelfin
 Version: 0.3
-Release: alt3
+Release: alt4
 
 Summary: C++11 library for reading ELF binaries and DWARFv4 debug information.
 License: GPL
-Group: Terminals
+Group: Development/Debug
 
 Url: https://github.com/aclements/libelfin
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Sat Oct 17 2020
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libstdc++-devel python-modules python2-base python3 python3-base python3-dev sh4 tzdata
-BuildRequires: gcc-c++ python3-module-mpl_toolkits selinux-policy-alt
+BuildRequires: gcc-c++ python3-module-mpl_toolkits
 
 %package devel
 Summary: Development files for programs which will use the Elfin library
@@ -51,13 +54,13 @@ which use Elfin library.
 
 %prep
 %setup
-%ifarch %e2k
-# lcc 1.25.23 ftbfs workaround
-sed -i 's,-Werror,& -Wno-error=return-type,g' */Makefile
-%endif
 
 %build
-%make PREFIX=%_exec_prefix LIBDIR=/%_lib MANPREFIX=%_mandir
+%make \
+	CXXFLAGS="%optflags" \
+	PREFIX=%_exec_prefix \
+	LIBDIR=/%_lib \
+	MANPREFIX=%_mandir
 
 %install
 %define docdir %_docdir/%name-%version
@@ -83,10 +86,19 @@ install -pm644 examples/* %buildroot%docdir/examples/
 %_libdir/*.so
 %_includedir/*
 
+%if_enabled static
 %files devel-static
 %_libdir/*.a
+%endif
 
 %changelog
+* Sun Jun 09 2024 Michael Shigorin <mike@altlinux.org> 0.3-alt4
+- Honour optflags.
+- Drop BR: selinux-policy-alt (looks like a mistake).
+- Minor spec cleanup (0.3-alt2 kludge not needed anymore).
+- Disable static library by default; add -ffat-lto-object (GIMPLE).
+- Fix Group:.
+
 * Mon Sep 25 2023 Artyom Bystrov <arbars@altlinux.org> 0.3-alt3
 - Fix FTBFS.
 
