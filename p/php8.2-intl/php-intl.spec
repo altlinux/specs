@@ -38,10 +38,6 @@ phpize
 
 BUILD_HAVE=`echo %php_extension | tr '[:lower:]-' '[:upper:]_'`
 %add_optflags -fPIC -L%_libdir
-%ifarch %e2k
-# lcc-1.23.12: char16_t is undefined otherwise; see also mcst#4060
-%add_optflags -std=gnu++11
-%endif
 export LDFLAGS=-lphp-%_php_version
 %configure \
 	--with-php-config=%_bindir/php-config \
