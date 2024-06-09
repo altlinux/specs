@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: mission-center
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Mission Center
@@ -57,7 +57,7 @@ Monitor your CPU, Memory, Disk, Network and GPU usage with Mission Center.
 %{?_enable_bootstrap:
 mkdir .cargo
 cargo vendor --no-delete -s src/sys_info_v2/gatherer/Cargo.toml \
-| sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+| sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 pushd nvtop-%nvtop_ver
@@ -94,6 +94,9 @@ sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/sys_info_v2/mem_info.rs
 
 
 %changelog
+* Sun Jun 09 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.1-alt1
+- 0.5.1
+
 * Sat Jun 08 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - 0.5.0
 
