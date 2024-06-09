@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: liboqs
-Version: 0.10.0
+Version: 0.10.1
 Release: alt1
 Summary: C library for prototyping and experimenting with quantum-resistant cryptography
 License: MIT and BSD-3-Clause and Apache-2.0 and ALT-Public-Domain and CC0-1.0
@@ -105,7 +105,7 @@ export LD_LIBRARY_PATH=$PWD/build/lib
 # https://github.com/open-quantum-safe/liboqs/wiki/Minimal-example-of-a-post-quantum-KEM
   cc -Ibuild/include -Lbuild/lib tests/example_kem.c -o example_kem -loqs
   ./example_kem
-timeout 222 %ninja_build -C build run_tests
+time timeout --kill-after=300 200 %ninja_build -C build run_tests
 
 %files
 %doc LICENSE.txt README.md RELEASE.md SECURITY.md
@@ -123,6 +123,9 @@ timeout 222 %ninja_build -C build run_tests
 %_bindir/oqs-*
 
 %changelog
+* Sat Jun 08 2024 Vitaly Chikunov <vt@altlinux.org> 0.10.1-alt1
+- Update to 0.10.1 (2024-06-07).
+
 * Tue Mar 26 2024 Vitaly Chikunov <vt@altlinux.org> 0.10.0-alt1
 - Update to 0.10.0 (2024-03-23).
 
