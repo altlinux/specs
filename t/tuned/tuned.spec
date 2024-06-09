@@ -2,40 +2,38 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _libexecdir %_prefix/libexec
-%define tuneddir %_prefix/lib/tuned
+%define _tuneddir %_prefix/lib/tuned
+%define tuneddir %_tuneddir/profiles
 
 Name: tuned
-Version: 2.22.1
+Version: 2.23.0
 Release: alt1
-
 Summary: A dynamic adaptive system tuning daemon
-
 License: GPL-2.0-or-later
 Group: System/Configuration/Hardware
 Url: https://tuned-project.org/
 Vcs: https://github.com/redhat-performance/tuned
+BuildArch: noarch
+
+Requires: ethtool
+Requires: hdparm
+Requires: polkit
+Requires: util-linux
+Requires: virt-what
 
 # Source-url: https://github.com/redhat-performance/tuned/archive/v%version.tar.gz
 Source: %name-%version.tar
 Source1: tuned.init
 Source2: recommend.conf
 
-BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-intro
-BuildRequires: desktop-file-utils
+BuildRequires(pre): rpm-build-python3
 BuildRequires: asciidoctor
+BuildRequires: desktop-file-utils
 BuildRequires: python3-dev
-
-Requires: virt-what
-Requires: ethtool
-Requires: hdparm
-Requires: util-linux
-Requires: polkit
-
-# BuildRequires for 'make test'
+%{?!_without_check:%{?!_disable_check:
 BuildRequires: rpm-build-vm
+}}
 
 %py3_use decorator
 %py3_use pyudev
@@ -265,8 +263,11 @@ rm %buildroot%_man7dir/tuned-profiles-cpu-partitioning.7*
 rm -rf %buildroot%tuneddir/cpu-partitioning
 rm -rf %buildroot%tuneddir/cpu-partitioning-powersave
 
+# Some scripts source it from the old location.
+ln -s profiles/functions %buildroot%_tuneddir
+
 %check
-[ -w /dev/kvm ] && vm-run make test
+vm-run --kvm=cond make test
 
 %post
 %post_service %name
@@ -334,12 +335,15 @@ fi
 %exclude %_sysconfdir/tuned/realtime*variables.conf
 %dir %_sysconfdir/tuned/
 %dir %_libexecdir/%name/
+%dir %_tuneddir/
+%_tuneddir/functions
 %dir %tuneddir/
 %tuneddir/balanced/
 %tuneddir/desktop/
 %tuneddir/functions/
 %tuneddir/hpc-compute/
 %tuneddir/latency-performance/
+%tuneddir/balanced-battery/
 %tuneddir/network-latency/
 %tuneddir/network-throughput/
 %tuneddir/powersave/
@@ -479,6 +483,9 @@ fi
 %_man7dir//tuned-profiles-openshift.7*
 
 %changelog
+* Sun Jun 09 2024 Vitaly Chikunov <vt@altlinux.org> 2.23.0-alt1
+- Update to v2.23.0 (2024-06-06).
+
 * Thu Feb 29 2024 Vitaly Chikunov <vt@altlinux.org> 2.22.1-alt1
 - Update to v2.22.1 (2024-02-22).
 
