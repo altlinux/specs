@@ -1,6 +1,6 @@
 Name: obs-studio-plugin-vaapi
 Version: 0.4.1
-Release: alt1
+Release: alt2
 
 Summary: OBS Studio VAAPI support via GStreamer
 
@@ -25,14 +25,17 @@ Requires: gst-plugins-good1.0
 Requires: gst-plugins-bad1.0
 Requires: gst-plugins-ugly1.0
 
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: %ix86 x86_64 %e2k
 
 %description
-GStreamer based VAAPI encoder implementation. Taken out of the GStreamer OBS plugin as a standalone plugin.
-Simply because the FFMPEG VAAPI implementation shows performance bottlenecks on some AMD hardware.
+GStreamer based VAAPI encoder implementation.
+Taken out of the GStreamer OBS plugin as a standalone plugin.
+Simply because the FFMPEG VAAPI implementation shows performance bottlenecks
+on some AMD hardware.
 Supports H.264 and H.265.
 Note that not all options in the encoder properties may be working.
-VAAPI is just an interface and it is up to the GPU hardware and driver what is actually supported.
+VAAPI is just an interface and it is up to the GPU hardware and driver
+what is actually supported.
 Not all options make sense to change.
 
 %prep
@@ -54,6 +57,9 @@ Not all options make sense to change.
 %_libdir/obs-plugins/obs-vaapi.so
 
 %changelog
+* Mon Jun 10 2024 Michael Shigorin <mike@altlinux.org> 0.4.1-alt2
+- EA += %%e2k
+
 * Tue Dec 05 2023 Mikhail Tergoev <fidel@altlinux.org> 0.4.1-alt1
 - 0.4.1
 
