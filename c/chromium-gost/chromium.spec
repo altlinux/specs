@@ -6,7 +6,7 @@
 %global build_parallel_jobs %__nprocs
 %endif
 
-%global llvm_version 17.0
+%global llvm_version 18.1
 
 %set_verify_elf_method rpath=relaxed textrel=relaxed lfs=relaxed lint=relaxed
 %add_debuginfo_skiplist %_libdir/* %_bindir/*
@@ -24,7 +24,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium-gost
-Version:        124.0.6367.78
+Version:        125.0.6422.112
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -94,13 +94,25 @@ Patch030: 0030-Fix-undefined-symbol-partition_alloc-internal-Intern.patch
 Patch031: 0031-FEDORA-disable-screen-ai-service.patch
 Patch032: 0032-FEDORA-libavif-deps.patch
 Patch033: 0033-ALT-rename-std::powf.patch
-Patch034: 0034-DEBIAN-uint-includes.patch
-Patch035: 0035-DEBIAN-fps-optional.patch
 Patch036: 0036-DEBIAN-span-optional.patch
-Patch037: 0037-DEBIAN-webgpu-optional.patch
-Patch038: 0038-DEBIAN-extractor-bitset.patch
-Patch039: 0039-DEBIAN-atomic.patch
+Patch040: 0040-DEBIAN-appservice-include.patch
+Patch041: 0041-DEBIAN-lens-include.patch
+Patch042: 0042-DEBIAN-mojo-bindings-include.patch
 #Patch040: 0040-ALT-ninja-build1.12.patch
+Patch044: 0044-DEBIAN-mojo.patch
+Patch045: 0045-DEBIAN-ninja.patch
+Patch046: 0046-DEBIAN-no-vector-consts.patch
+Patch047: 0047-DEBIAN-ruy-include.patch
+Patch048: 0048-DEBIAN-tabstrip-include.patch
+Patch049: 0049-DEBIAN-vulkan-include.patch
+Patch050: 0050-DEBIAN-bad-font-gc0000.patch
+Patch051: 0051-DEBIAN-bad-font-gc000.patch
+Patch052: 0052-DEBIAN-bad-font-gc00.patch
+Patch053: 0053-DEBIAN-bad-font-gc0.patch
+Patch054: 0054-DEBIAN-bad-font-gc1.patch
+Patch055: 0055-DEBIAN-bad-font-gc11.patch
+Patch056: 0056-DEBIAN-bad-font-gc2.patch
+Patch057: 0057-DEBIAN-bad-font-gc3.patch
 ### End Patches
 
 # Specific C-G patch
@@ -556,6 +568,55 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu May 30 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 125.0.6422.112-alt1
+- Update chromium to 125.0.6422.112
+- Update chromium-gost to 125.0.6422.112
+
+* Sat May 25 2024 Andrey Cherepanov <cas@altlinux.org> 125.0.6422.112-alt1
+- New version (125.0.6422.112).
+- Security fixes:
+  + CVE-2024-5274: Type Confusion in V8.
+
+* Wed May 22 2024 Andrey Cherepanov <cas@altlinux.org> 125.0.6422.76-alt1
+- New version (125.0.6422.76).
+- Security fixes:
+  + CVE-2024-5157: Use after free in Scheduling.
+  + CVE-2024-5158: Type Confusion in V8.
+  + CVE-2024-5159: Heap buffer overflow in ANGLE.
+  + CVE-2024-5160: Heap buffer overflow in Dawn.
+
+* Sat May 18 2024 Andrey Cherepanov <cas@altlinux.org> 125.0.6422.60-alt1
+- New version (125.0.6422.60).
+- Security fixes:
+  + CVE-2024-4947: Type Confusion in V8.
+  + CVE-2024-4948: Use after free in Dawn.
+  + CVE-2024-4949: Use after free in V8.
+  + CVE-2024-4950: Inappropriate implementation in Downloads.
+- Apply patches from Debian to fix webpage hangs.
+
+* Tue May 14 2024 Andrey Cherepanov <cas@altlinux.org> 124.0.6367.207-alt1
+- New version (124.0.6367.207).
+- Security fixes:
+  + CVE-2024-4761: Out of bounds write in V8.
+
+* Sun May 12 2024 Andrey Cherepanov <cas@altlinux.org> 124.0.6367.201-alt1
+- New version (124.0.6367.201).
+- Security fixes:
+  + CVE-2024-4671: Use after free in Visuals.
+
+* Thu May 09 2024 Andrey Cherepanov <cas@altlinux.org> 124.0.6367.155-alt1
+- New version (124.0.6367.155).
+- Security fixes:
+  + CVE-2024-4558: Use after free in ANGLE.
+  + CVE-2024-4559: Heap buffer overflow in WebAudio.
+- Built using LLVM 18.1.
+
+* Wed May 01 2024 Andrey Cherepanov <cas@altlinux.org> 124.0.6367.118-alt1
+- New version (124.0.6367.118).
+- Security fixes:
+  + CVE-2024-4331: Use after free in Picture In Picture.
+  + CVE-2024-4368: Use after free in Dawn.
+
 * Tue Apr 30 2024 Fr. Br. George <george@altlinux.org> 124.0.6367.78-alt1
 - GOST version
 
