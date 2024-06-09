@@ -1,11 +1,11 @@
 Name:     libiec61850
-Version:  1.5.0
+Version:  1.5.3
 Release:  alt1
 
 Summary:  Open source libraries for IEC 61850 and IEC 60870-5-104
-License:  GPLv3
-Group:    Other
-Url:      https://libiec61850.com/libiec61850/
+License:  GPL-3.0
+Group:    System/Libraries
+Url:      https://github.com/mz-automation/libiec61850
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -59,6 +59,9 @@ Development files for %name as static library.
 %_libdir/*.a
 
 %changelog
+* Sun Jun 09 2024 Andrey Cherepanov <cas@altlinux.org> 1.5.3-alt1
+- New version (fixes CVE-2022-21159, CVE-2022-1302, CVE-2021-45769).
+
 * Thu Sep 23 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt1
 - New version (Fixes: CVE-2020-15158).
 
