@@ -1,8 +1,8 @@
 Name:     asusctl
 Version:  5.0.9
-Release:  alt1
+Release:  alt2.1
 
-%define user_service /etc/systemd/user/
+%define user_service %_unitdir/user
 
 Summary:  A control daemon, CLI tools, and a collection of crates for interacting with ASUS ROG laptops 
 License:  MPL-2.0
@@ -18,17 +18,17 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 Source:  %name-%version.tar
 Source1: README.ru
 Source2: vendor.tar
-#Patch1: asusctl-4.3.1-systemd.patch
 
 
-BuildRequires(pre): rpm-macros-rust
+BuildRequires(pre): rpm-macros-rust rpm-macros-systemd >= 5
 BuildRequires(pre): rust-cargo
 
 # Automatically added by buildreq on Mon Oct 31 2022
 # optimized out: ca-trust cmake-modules fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 libfreetype-devel libgpg-error libsasl2-3 libstdc++-devel llvm14.0-libs pkg-config python3 python3-base python3-dev rust sh4
-BuildRequires: cmake fontconfig-devel gcc-c++ libudev-devel python3-module-mpl_toolkits python3-module-setuptools python3-module-zope rust-cargo
+BuildRequires: libgtk+3-devel libudev-devel python3-module-setuptools python3-module-zope rust-cargo
+Buildrequires: git libayatana-indicator-devel libappindicator-gtk3 libxkbcommon-x11-devel 
 
-Buildrequires: git libayatana-indicator-devel libappindicator-gtk3
+# For Version 6.x BuildRequires: libgbm-devel libinput-devel libseat1-devel libxkbcommon-devel python3-module-setuptools python3-module-zope rust-cargo
 
 BuildRequires: cmake
 
@@ -41,10 +41,11 @@ BuildRequires: pkgconfig(gdk-3.0)
 
 
 %description
-asusctl for ASUS ROG
-https://asus-linux.org
 asusd is a utility for Linux to control many aspects of various ASUS laptops
 but can also be used with non-asus laptops with reduced features.
+
+Asusctl for ASUS ROG https://asus-linux.org
+
 
 %description -l ru_RU.utf8
 asusd - утилита для Linux, позволяющая управлять многими аспектами различных ноутбуков ASUS.
@@ -68,7 +69,7 @@ a notification service, and ability to run in the background.
 #%%patch1 -p1
 
 mkdir .cargo
-cat >.cargo/config <<EOF
+cat >.cargo/config.toml <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
@@ -91,7 +92,7 @@ EOF
 
 %build
 export RUSTFLAGS="%rustflags"
-#RUST_BACKTRACE=1 
+RUST_BACKTRACE=1 
 %rust_build
 
 %install
@@ -108,20 +109,16 @@ mkdir -p %buildroot/%_udevrulesdir
 mv %buildroot/usr/lib/udev/rules.d/99-asusd.rules %buildroot/%_udevrulesdir/99-asusd.rules
 
 
-#rm -rf %buildroot/usr/lib/
-
-
 %files
 %_bindir/*
 %exclude %_bindir/rog-control-center
 %doc README.ru *.md
-#%%_sysconfdir/asusd
 %_datadir/asusd
 %_datadir/dbus-1/system.d/*.conf
-#_datadir/fish/vendor_completions.d/*
-#_datadir/zsh/site-functions/*
 %_udevrulesdir/*.rules
+
 %_unitdir/*.service
+
 %user_service/*.service
 %_iconsdir/hicolor/512x512/apps/*
 %exclude %_iconsdir/hicolor/512x512/apps/rog-control-center.png
@@ -129,13 +126,18 @@ mv %buildroot/usr/lib/udev/rules.d/99-asusd.rules %buildroot/%_udevrulesdir/99-a
 
 %files rog-gui
 %_bindir/rog-control-center
-#dir %_desktopdir
 %_desktopdir/rog-control-center.desktop
 
 %_iconsdir/hicolor/512x512/apps/rog-control-center.png
 %_datadir/rog-gui/*
 
 %changelog
+* Sun Jun 09 2024 Hihin Ruslan <ruslandh@altlinux.ru> 5.0.9-alt2.1
+- Fix usrmerge troubles
+
+* Sun Jun 09 2024 Hihin Ruslan <ruslandh@altlinux.ru> 5.0.9-alt2
+- Clean and fix spec
+
 * Fri Mar 22 2024 Hihin Ruslan <ruslandh@altlinux.ru> 5.0.9-alt1
 - Version 5.0.9
 
