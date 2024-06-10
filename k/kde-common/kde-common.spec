@@ -1,232 +1,38 @@
-
-%define major 15
-%define minor 12
-%define bugfix 1
-
 Name: kde-common
-Version: %major.%minor.%bugfix
+Version: 24.1
 Release: alt1
 
-Summary: The basic directory layout for KDE
-License: Public Domain
+Summary: The basic files for KDE
+License: GPL-3.0-or-later
 Group: System/Base
 
-Obsoletes: kde3-common < %version-%release
-Provides: kde3-common = %version-%release
+BuildArch: noarch
 
-BuildRequires: kde-common-devel >= 4.4.0
+Requires: kf6-filesystem
+#Requires: kde-filesystem
+
+Source1: kdeglobals
+
+BuildRequires: rpm-build-xdg
 
 %description
-The %name package is one of the basic KDE packages that is installed on
-a %distribution system; %name contains the basic directory layout
-for the K Desktop Environment, including the correct permissions for the
-directories.
+%{summary}.
 
 %install
-mkdir -p %buildroot/%_sysconfdir/kde/config/kdm
-mkdir -p %buildroot/%_sysconfdir/kde-profile/default
-pushd %buildroot/%_sysconfdir
-	mkdir -p kde/xdg/menus/applications-merged
-popd
-mkdir -p %buildroot/%_datadir
-pushd %buildroot/%_datadir
-	mkdir -p applications/kde
-#
-	mkdir -p doc/HTML
-	for lng in %_kde_langlist; do
-	mkdir -p doc/HTML/${lng}/common
-	done
-	mkdir -p alt/kde
-	mkdir -p kde/locale/en_US
-	mkdir -p kde/locale/l10n
-	mkdir -p apps/profiles
-	mkdir -p autostart
-	mkdir -p config
-	mkdir -p config.kcfg
-	mkdir -p mimelnk/{all,application,audio,fonts,image,inode,interface,kdedevice,message,model,multipart,print,text,video}
-	mkdir -p services/{kconfiguredialog,kded,searchproviders,useragentstrings}
-	mkdir -p servicetypes
-	mkdir -p templates
-	mkdir -p icons/crystalsvg/{16x16,22x22,32x32,48x48,64x64,128x128,scalable}/{actions,apps,devices,filesystems,mimetypes}
-
-	mkdir -p applnk/.hidden
-	mkdir -p applnk/Applications
-	mkdir -p applnk/Development
-	mkdir -p applnk/Editors
-	mkdir -p applnk/Edutainment/{,French}
-	mkdir -p applnk/Games/{Arcade,Board,Card,Strategy,Tactic,TacticStrategy,Roguelikes}
-	mkdir -p applnk/Graphics
-	mkdir -p applnk/Internet/Terminal
-	mkdir -p applnk/Multimedia
-	mkdir -p applnk/Office
-	mkdir -p applnk/Settingsmenu
-	mkdir -p applnk/Settings/{Components,Databases,FileBrowsing,Help,Information,Network,Peripherals}
-	mkdir -p applnk/Settings/{Personalization,PowerControl,Sound,System,WebBrowsing}
-	mkdir -p applnk/Settings/LookNFeel/{Desktop,Themes,Windows}
-	mkdir -p applnk/System/{ScreenSavers,Terminal}
-	mkdir -p applnk/Toys
-	mkdir -p applnk/Utilities
-popd
-
-mkdir -p %buildroot/%_libdir
-pushd %buildroot/%_libdir
-    mkdir -p kde3/plugins/styles
-popd
-
-
-# KDE3 new
-
-mkdir -p %buildroot/%_K3bindir
-mkdir -p %buildroot/%_K3sbindir
-mkdir -p %buildroot/%_kde3_iconsdir
-for lng in %_kde_langlist; do
-mkdir -p %buildroot/%_K3doc/${lng}/common
-done
-#
-mkdir -p %buildroot/%_sysconfdir/kde/xdg/menus/applications-merged
-mkdir -p %buildroot/%_K3includedir
-mkdir -p %buildroot/%_K3conf
-mkdir -p %buildroot/%_K3cfg
-mkdir -p %buildroot/%_K3libdir/kconf4_update_bin
-mkdir -p %buildroot/%_K3link
-mkdir -p %buildroot/%_K3lib/imports/org/kde
-mkdir -p %buildroot/%_K3plug/{imageformats,phonon_platform,script,styles}
-mkdir -p %buildroot/%_K3exec
-mkdir -p %buildroot/%_K3start
-mkdir -p %buildroot/%_K3xdg_apps
-mkdir -p %buildroot/%_K3xdg_dirs
-mkdir -p %buildroot/%_K3apps/kstyle/themes
-mkdir -p %buildroot/%_K3emo
-mkdir -p %buildroot/%_K3snd
-mkdir -p %buildroot/%_K3doc/en/common
-mkdir -p %buildroot/%_K3tmpl/.source
-mkdir -p %buildroot/%_K3wall
-#
-for lng in %_kde_langlist; do
-mkdir -p %buildroot/%_K3i18n/${lng}/LC_MESSAGES
-mkdir -p %buildroot/%_K3i18n/${lng}/LC_SCRIPTS
-done
-
-mkdir -p %buildroot/%_K3srv
-mkdir -p %buildroot/%_K3srvtyp
-
-mkdir -p %buildroot/%_K3iconsdir/crystalsvg/{16x16,22x22,32x32,48x48,64x64,128x128,scalable}/{actions,animations,apps,categories,devices,emblems,emotes,filesystems,intl,mimetypes,places,status}/
-mkdir -p %buildroot/%_K3iconsdir/crystalsvg/8x8/emblems
-mkdir -p %buildroot/%_K3iconsdir/crystalsvg/scalable/{actions,animations,apps,categories,devices,emblems,emotes,filesystems,intl,mimetypes,places,status}/small/{16x16,22x22,32x32,48x48,64x64}/
-mkdir -p %buildroot/%_K3iconsdir/crystalsvg/scalable/{actions,apps,categories,devices,emblems,emotes,filesystems,intl,mimetypes,places,status}/small/{16x16,22x22,32x32,48x48,64x64}/
-mkdir -p %buildroot/%_K3iconsdir/crystalsvg/scalable/apps/alternativ/
-mkdir -p %buildroot/%_kde3_iconsdir/hicolor/{16x16,22x22,32x32,48x48,64x64,128x128,scalable}/{actions,animations,apps,categories,devices,emblems,emotes,filesystems,intl,mimetypes,places,status}/
-mkdir -p %buildroot/%_kde3_iconsdir/hicolor/scalable/{actions,animations,apps,categories,devices,emblems,emotes,filesystems,intl,mimetypes,places,status}/small/{16x16,22x22,32x32,48x48,64x64}/
-mkdir -p %buildroot/%_kde3_iconsdir/hicolor/scalable/{actions,apps,categories,devices,emblems,emotes,filesystems,intl,mimetypes,places,status}/small/{16x16,22x22,32x32,48x48,64x64}/
-mkdir -p %buildroot/%_kde3_iconsdir/hicolor/scalable/apps/alternativ/
-mkdir -p %buildroot/%_sysconfdir/kde/custom/share/config
-ln -s custom %buildroot/%_sysconfdir/kde/current
-ln -s . %buildroot/%_K3datadir/share
-ln -s `relative %_K3bindir %_K3datadir/bin` %buildroot/%_K3datadir/bin
-
-pushd %buildroot/%_K3datadir
-	mkdir -p applnk/.hidden
-	mkdir -p applnk/Applications
-	mkdir -p applnk/Development
-	mkdir -p applnk/Editors
-	mkdir -p applnk/Edutainment/French
-	mkdir -p applnk/Games/{Arcade,Board,Card,Strategy,Tactic,TacticStrategy,Roguelikes}
-	mkdir -p applnk/Graphics
-	mkdir -p applnk/Internet/Terminal
-	mkdir -p applnk/Multimedia
-	mkdir -p applnk/Office
-	mkdir -p applnk/Settingsmenu
-	mkdir -p applnk/Settings/{Components,Databases,FileBrowsing,Help,Information,Network,Peripherals}
-	mkdir -p applnk/Settings/{Personalization,PowerControl,Sound,System,WebBrowsing}
-	mkdir -p applnk/Settings/LookNFeel/{Desktop,Themes,Windows}
-	mkdir -p applnk/System/{ScreenSavers,Terminal}
-	mkdir -p applnk/Toys
-	mkdir -p applnk/Utilities
-popd
-
-
-# KDE4
-
-mkdir -p %buildroot/%_kde4_bindir
-mkdir -p %buildroot/%_kde4_sbindir
-mkdir -p %buildroot/%_kde4_iconsdir
-mkdir -p %buildroot/%_kde4_xdg_apps
-mkdir -p %buildroot/%_kde4_xdg_dirs
-for lng in %_kde_langlist; do
-mkdir -p %buildroot/%_K4doc/${lng}/common
-done
-#
-mkdir -p %buildroot/%_sysconfdir/kde4/xdg/menus/applications-merged
-mkdir -p %buildroot/%_K4includedir
-mkdir -p %buildroot/%_K4conf
-mkdir -p %buildroot/%_K4cfg
-mkdir -p %buildroot/%_K4libdir/kconf4_update_bin
-mkdir -p %buildroot/%_K4link
-mkdir -p %buildroot/%_libdir/kde4link
-mkdir -p %buildroot/%_K4lib/imports/org/kde
-mkdir -p %buildroot/%_K4lib/platformimports/touch/org/kde/
-mkdir -p %buildroot/%_K4plug/{imageformats,phonon_platform,script,styles}
-mkdir -p %buildroot/%_K4exec
-mkdir -p %buildroot/%_K4start
-mkdir -p %buildroot/%_K4xdg_apps
-mkdir -p %buildroot/%_K4xdg_dirs
-mkdir -p %buildroot/%_K4apps{/kstyle/themes,/plasma/plasmoids}
-mkdir -p %buildroot/%_K4emo
-mkdir -p %buildroot/%_K4snd
-mkdir -p %buildroot/%_K4doc/en/common
-mkdir -p %buildroot/%_K4tmpl/.source
-mkdir -p %buildroot/%_K4wall
-mkdir -p %buildroot/%_K4datadir/env
-#
-for lng in %_kde_langlist; do
-mkdir -p %buildroot/%_K4i18n/${lng}/LC_MESSAGES
-mkdir -p %buildroot/%_K4i18n/${lng}/LC_SCRIPTS
-done
-
-mkdir -p %buildroot/%_K4srv
-mkdir -p %buildroot/%_K4srvtyp
-
-mkdir -p %buildroot/%_K4iconsdir/oxygen/{16x16,22x22,32x32,48x48,64x64,128x128,scalable}/{actions,animations,apps,categories,devices,emblems,emotes,filesystems,intl,mimetypes,places,status}/
-mkdir -p %buildroot/%_K4iconsdir/oxygen/8x8/emblems
-mkdir -p %buildroot/%_K4iconsdir/oxygen/scalable/{actions,animations,apps,categories,devices,emblems,emotes,filesystems,intl,mimetypes,places,status}/small/{16x16,22x22,32x32,48x48,64x64}/
-mkdir -p %buildroot/%_K4iconsdir/oxygen/scalable/{actions,animations,apps,categories,devices,emblems,emotes,filesystems,intl,mimetypes,places,status}/hidef/
-mkdir -p %buildroot/%_K4iconsdir/oxygen/scalable/{actions,apps,categories,devices,emblems,emotes,filesystems,intl,mimetypes,places,status}/small/{16x16,22x22,32x32,48x48,64x64}/
-mkdir -p %buildroot/%_K4iconsdir/oxygen/scalable/{actions,apps,categories,devices,emblems,emotes,filesystems,intl,mimetypes,places,status}/hidef/
-mkdir -p %buildroot/%_K4iconsdir/oxygen/scalable/apps/alternativ/
-mkdir -p %buildroot/%_kde4_iconsdir/hicolor/{16x16,22x22,32x32,48x48,64x64,128x128,scalable}/{actions,animations,apps,categories,devices,emblems,emotes,filesystems,intl,mimetypes,places,status}/
-mkdir -p %buildroot/%_kde4_iconsdir/hicolor/scalable/{actions,animations,apps,categories,devices,emblems,emotes,filesystems,intl,mimetypes,places,status}/small/{16x16,22x22,32x32,48x48,64x64}/
-mkdir -p %buildroot/%_kde4_iconsdir/hicolor/scalable/{actions,apps,categories,devices,emblems,emotes,filesystems,intl,mimetypes,places,status}/small/{16x16,22x22,32x32,48x48,64x64}/
-mkdir -p %buildroot/%_kde4_iconsdir/hicolor/scalable/apps/alternativ/
-mkdir -p %buildroot/%_sysconfdir/kde4/custom/share/config
-ln -s custom %buildroot/%_sysconfdir/kde4/current
-ln -s . %buildroot/%_K4datadir/share
-ln -s `relative %_kde4_bindir %_K4datadir/bin` %buildroot/%_K4datadir/bin
-ln -s `relative %_libdir %_K4datadir/lib` %buildroot/%_K4datadir/lib
-
+# configs
+mkdir -p %buildroot/%_xdgconfigdir/
+install -m 0644 %SOURCE1 %buildroot/%_xdgconfigdir/
 
 %files
-%_sysconfdir/kde/
-%_sysconfdir/kde-profile/
-%_sysconfdir/kde4/
-%_libdir/*
-%_datadir/*
-#
-%_K3bindir
-%_K3sbindir
-%_K3includedir
-#
-%dir %_libexecdir/kde4
-%_kde4_bindir
-%_kde4_sbindir
-%_K4includedir
-%exclude %dir %_docdir
-%exclude %dir %_iconsdir
-%exclude %dir %_datadir/applications
-%exclude %dir %_datadir/desktop-directories
-%exclude %dir %_datadir/wallpapers
-
+%config(noreplace) %_xdgconfigdir/kdeglobals
 
 %changelog
+* Thu Jun 06 2024 Sergey V Turchin <zerg@altlinux.org> 24.1-alt1
+- redesign for KDE6
+
+* Wed May 15 2024 Sergey V Turchin <zerg@altlinux.org> 0.1-alt1
+- initial build
+
 * Fri Jan 22 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.1-alt1
 - new version
 

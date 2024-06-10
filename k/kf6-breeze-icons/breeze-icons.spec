@@ -1,0 +1,135 @@
+%define rname breeze-icons
+
+Name: kf6-%rname
+Version: 6.2.0
+Release: alt1
+%K6init no_altplace
+
+Group: Graphical desktop/KDE
+Summary: Breeze icons theme
+Url: http://www.kde.org
+License: LGPL-3.0-only
+
+Source: %rname-%version.tar
+Patch1: alt-icons-defaults.patch
+
+BuildRequires(pre): rpm-build-kf6
+BuildRequires: extra-cmake-modules gcc-c++ qt6-base-devel
+BuildRequires: icon-naming-utils xml-utils python3-module-lxml
+
+%description
+%summary
+
+%package -n icon-theme-breeze
+Summary: Breeze icons theme
+Group: Graphics
+BuildArch: noarch
+Provides: kde4-icon-theme = %version-%release
+%description -n icon-theme-breeze
+%summary
+
+%package devel
+Group: Development/KDE and QT
+Summary: Development files for %name
+%description devel
+The %name-devel package files for developing applications that use %name.
+
+
+%prep
+%setup -n %rname-%version
+%patch1 -p1
+
+chmod a+x *.sh
+
+# remove some icons
+for n in 'yandex-browser.*' ; do
+    find ./ -type f -name $n | while read f; do rm -f $f;  done
+done
+
+%build
+%K6build
+
+%install
+%K6install
+
+# 5858 7498
+for t in %buildroot/%_iconsdir/* ; do
+    [ -d $t ] || continue
+    theme_subdir=`basename $t`
+    mkdir %buildroot/%_iconsdir/tmp-$theme_subdir
+    pushd $t
+    ls -1d */* | \
+    while read subdir ; do
+	[ -d $subdir ] || continue
+	ctx=`dirname $subdir`
+	sz=`basename $subdir`
+	mkdir -p %buildroot/%_iconsdir/tmp-$theme_subdir/$sz
+	ln -s $t/$ctx/$sz %buildroot/%_iconsdir/tmp-$theme_subdir/$sz/$ctx
+    done
+    popd
+done
+
+for t in %buildroot/%_iconsdir/tmp-* ; do
+    [ -d $t ] || continue
+    pushd $t
+	ls -1d * | \
+	while read sz ; do
+	    [ -d $sz ] || continue
+	    pushd $sz
+	    ls -1d * | \
+	    while read ctx ; do
+		[ -d $ctx ] || continue
+		%_libexecdir/icon-name-mapping -c $ctx
+	    done
+	    popd
+	done
+    popd
+done
+
+rm -rf %buildroot/%_iconsdir/tmp-*
+
+# remove unappropriate icons symlinks
+for i in calc
+do
+    find %buildroot/%_iconsdir -type l \( -name ${i}.png -o -name ${i}.svg \) | \
+	while read f; do rm -f ${f} ||: ; done
+done
+
+# fix broken symlinks
+find %buildroot/%_iconsdir -type l | \
+while read l ; do
+    [ -e $l ] || rm -f $l
+done
+
+# create custom icons
+for e in \
+    "inode-directory application-x-smb-share" \
+    #
+do
+    icon_from=`echo "$e"| cut -d\  -f1`
+    icon_to=`echo "$e"| cut -d\  -f2`
+    find %buildroot/%_iconsdir/ -name ${icon_from}.svg | \
+    while read p; do
+	icon_dir=`dirname $p`
+	ln -s ${icon_from}.svg $icon_dir/${icon_to}.svg ||:
+    done
+done
+
+%files -n icon-theme-breeze
+%doc COPYING*
+%_iconsdir/breeze*/
+
+%files devel
+%_libdir/cmake/KF6BreezeIcons/
+
+
+%changelog
+* Mon May 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.0-alt1
+- new version
+
+* Mon Apr 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.0-alt1
+- bump release
+
+* Mon Apr 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.0-alt0
+- initial build
+
