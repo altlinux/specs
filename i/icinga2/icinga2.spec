@@ -38,9 +38,11 @@ Group:          Monitoring
 
 Name:           icinga2
 Version:        2.14.0
-Release:        alt6
+Release:        alt7
 URL:            https://www.icinga.com/
-Source:         https://github.com/Icinga/%name/archive/v%version/%name-%version.tar
+
+Source0:        https://github.com/Icinga/%name/archive/v%version/%name-%version.tar
+Source1:        icinga2-register-host
 
 Patch0:         icinga2-graphite.patch
 Patch1:         icinga2-vim_syntax.patch
@@ -210,6 +212,9 @@ mkdir -p %buildroot%_var/spool/%name/tmp
 ln -srf %buildroot%_sysconfdir/%name/features-available/*.conf \
         %buildroot%_sysconfdir/%name/features-enabled/
 
+# Install the self-serfice script:
+install -D -m0755 %SOURCE1 %buildroot%_sbindir/icinga2-register-host
+
 %post
 %post_service %name
 
@@ -316,6 +321,7 @@ fi
 %_datadir/%name
 %exclude %_datadir/%name/include
 %_mandir/man8/%name.8.*
+%_sbindir/icinga2-register-host
 
 %files common
 %defattr(-,root,root,-)
@@ -352,6 +358,12 @@ fi
 %_datadir/nano/%name.nanorc
 
 %changelog
+* Mon Jun 10 2024 Paul Wolneykien <manowar@altlinux.org> 2.14.0-alt7
+- Additionally, pre-define "global-commands" zone with node setup
+  CLI command.
+- Added script "icinga2-register-host" to setup the node via Icinga2
+  Director self-service API.
+
 * Thu Jun 06 2024 Paul Wolneykien <manowar@altlinux.org> 2.14.0-alt6
 - Fix: Package common doc files into the main package.
 - Include files from icinga2-bin package into the main package.
