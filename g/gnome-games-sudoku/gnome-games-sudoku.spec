@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GNOME Sudoku game
@@ -65,6 +65,9 @@ in popularity.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Jun 10 2024 Yuri N. Sedunov <aris@altlinux.org> 46.2-alt1
+- 46.2
+
 * Mon May 06 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
 - 46.1
 
