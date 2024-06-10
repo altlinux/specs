@@ -2,23 +2,28 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name pango
-%define ver_major 1.52
+%define ver_major 1.54
 %define api_ver 1.0
 %define module_ver 1.8.0
 %def_disable static
 %def_enable docs
 %def_enable introspection
-%def_enable installed_tests
+# no installed tests since 1.54.0
+%def_disable installed_tests
 %def_enable xft
 %def_enable fontconfig
 %def_enable freetype
 %def_enable cairo
 %def_enable libthai
 %def_disable sysprof
+%ifarch %ix86 armh
 %def_disable check
+%else
+%def_enable check
+%endif
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -47,7 +52,7 @@ Obsoletes: %_name < %version
 Obsoletes: gscript
 
 # from meson.build
-%define meson_ver 0.60.0
+%define meson_ver 0.63.0
 %define glib_ver 2.62
 %define cairo_ver 1.12.10
 %define gi_docgen_ver 2021.3
@@ -153,8 +158,7 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
     %{?_disable_cairo:-Dcairo=disabled} \
     %{?_disable_libthai:-Dlibthai=disabled} \
     %{?_disable_introspection:-Dintrospection=disabled} \
-    %{?_enable_docs:-Dgtk_doc=true} \
-    %{?_enable_installed_tests:-Dinstall-tests=true} \
+    %{subst_enable_meson_bool docs documentation} \
     %{?_enable_sysprof:-Dsysprof=enabled}
 %nil
 %meson_build
@@ -218,6 +222,9 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 
 %changelog
+* Mon Jun 10 2024 Yuri N. Sedunov <aris@altlinux.org> 1.54.0-alt1
+- 1.54.0
+
 * Sun Mar 31 2024 Yuri N. Sedunov <aris@altlinux.org> 1.52.2-alt1
 - 1.52.2
 
