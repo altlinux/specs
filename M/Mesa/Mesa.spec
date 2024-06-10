@@ -10,7 +10,7 @@
 %define radeon_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k loongarch64 riscv64
 %define vulkan_radeon_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k loongarch64 riscv64
 %define nouveau_arches %ix86 x86_64 armh aarch64 ppc64le mipsel %e2k riscv64
-#define vulkan_nouveau_arches %ix86 x86_64 armh aarch64 ppc64le mipsel %e2k
+%define vulkan_nouveau_arches %ix86 x86_64 armh aarch64 ppc64le mipsel %e2k
 %define intel_arches %ix86 x86_64
 %define vulkan_intel_arches %ix86 x86_64
 %define vulkan_virtio_arches %ix86 x86_64 aarch64 ppc64le mipsel loongarch64 riscv64
@@ -74,9 +74,9 @@
 %ifarch %vulkan_radeon_arches
 %vulkan_drivers_add amd
 %endif
-#ifarch #vulkan_nouveau_arches
-#vulkan_drivers_add nouveau-experimental
-#endif
+%ifarch %vulkan_nouveau_arches
+%vulkan_drivers_add nouveau
+%endif
 %ifarch %vulkan_virtio_arches
 %vulkan_drivers_add virtio
 %endif
@@ -92,8 +92,8 @@
 %endif
 %vulkan_drivers_add swrast
 
-%define ver_major 24.0
-%define ver_minor 9
+%define ver_major 24.1
+%define ver_minor 1
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -116,13 +116,16 @@ BuildRequires: libdrm-devel libexpat-devel libselinux-devel libxcb-devel libSM-d
 BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel libvdpau-devel xorg-proto-devel libxshmfence-devel
 BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwayland-client-devel libwayland-server-devel
 BuildRequires: libwayland-egl-devel python3-module-mako wayland-protocols libsensors-devel libzstd-devel
-BuildRequires: libglvnd-devel rpm-build-python3 glslang python3-module-docutils
+BuildRequires: libglvnd-devel rpm-build-python3 glslang python3-module-docutils python3-module-ply
 BuildRequires: llvm-devel clang-devel
 %ifarch %gallium_opencl_arches
 BuildRequires: libclc-devel libLLVMSPIRVLib-devel libspirv-tools-devel
 %endif
-%ifarch %vulkan_intel_arches %vulkan_radeon_arches %vulkan_virtio_arches
+%ifarch %vulkan_intel_arches %vulkan_radeon_arches %vulkan_virtio_arches %vulkan_nouveau_arches
 BuildRequires: libvulkan-devel
+%endif
+%ifarch %vulkan_nouveau_arches
+BuildRequires: cbindgen rust rust-bindgen
 %endif
 %ifnarch %e2k
 BuildRequires: libunwind-devel
@@ -330,6 +333,8 @@ Mesa-based DRI drivers
 %setup -q
 %patch -p1
 
+tar -xf subprojects.tar
+
 %build
 %meson \
 	-Dplatforms=x11,wayland \
@@ -369,12 +374,16 @@ Mesa-based DRI drivers
 	-Dgles1=disabled \
 	-Dopengl=true \
 	-Dselinux=true \
-	-Dglvnd=true \
+	-Dglvnd=enabled \
 	-Ddri-drivers-path=%_libdir/X11/modules/dri \
 	-Db_ndebug=true \
 %ifarch %gallium_opencl_arches
 	-Dgallium-opencl=icd \
 %endif
+#ifarch %vulkan_nouveau_arches
+#	--wrap-mode=nofallback \
+#	--force-fallback-for=syn,paste
+#endif
 #
 
 %meson_build -v
@@ -559,10 +568,10 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_libdir/X11/modules/dri/nouveau_*dri.so
 %_libdir/dri/nouveau_drv_video.so
 %_libdir/vdpau/libvdpau_nouveau.so*
-#ifarch #vulkan_nouveau_arches
-#_libdir/libvulkan_nouveau.so
-#_datadir/vulkan/icd.d/nouveau_icd*.json
-#endif
+%ifarch %vulkan_nouveau_arches
+%_libdir/libvulkan_nouveau.so
+%_datadir/vulkan/icd.d/nouveau_icd*.json
+%endif
 %ifarch %gallium_opencl_arches
 %_libdir/gallium-pipe/pipe_nouveau.so
 %endif
@@ -608,6 +617,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Mon Jun 10 2024 Valery Inozemtsev <shrek@altlinux.ru> 4:24.1.1-alt1
+- 24.1.1
+
 * Fri Jun 07 2024 Valery Inozemtsev <shrek@altlinux.ru> 4:24.0.9-alt1
 - 24.0.9
 
