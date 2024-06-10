@@ -5,7 +5,7 @@
 
 Name: dtc
 Version: 1.7.0
-Release: alt1
+Release: alt2
 
 Summary: Device Tree Compiler for Flat Device Trees
 License: GPL-2.0-or-later
@@ -78,6 +78,8 @@ This package provides python bindings for libfdt
 # lcc 1.23 doesn't do -MG and there's -Werror=pointer-arith there
 sed -i 's,-MG ,,;s,-Werror,,' Makefile
 echo '#define DTC_VERSION "%version"' > version_gen.h
+# LCC can't compile tests/trees.S
+sed -i "/subdir('tests')/d" meson.build
 %endif
 
 %build
@@ -131,6 +133,9 @@ rm -f %buildroot%_bindir/ftdump
 %endif
 
 %changelog
+* Mon Jun 10 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.7.0-alt2
+- fix e2k build
+
 * Thu Feb 16 2023 Alexey Shabalin <shaba@altlinux.org> 1.7.0-alt1
 - 1.7.0
 - switch to meson build
