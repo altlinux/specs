@@ -1,5 +1,5 @@
 Name: kodi-addon-pvr-hts
-Version: 21.2.3
+Version: 21.2.4
 Release: alt1
 
 Summary: PVR TVheadend addon for Kodi
@@ -28,6 +28,9 @@ BuildRequires: cmake gcc-c++ kodi-devel
 %_datadir/kodi/addons/pvr.hts
 
 %changelog
+* Mon Jun 10 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 21.2.4-alt1
+- 21.2.4 released
+
 * Tue May 21 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 21.2.3-alt1
 - 21.2.3 released
 
