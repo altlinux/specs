@@ -1,6 +1,6 @@
 %def_with doc
 Name:    csvkit
-Version: 1.1.1
+Version: 2.0.0
 Release: alt1
 
 Summary: A suite of utilities for converting to and working with CSV, the king of tabular file formats
@@ -17,14 +17,12 @@ BuildRequires: python3-dev python3-module-setuptools
 BuildArch: noarch
 
 Source:  %name-%version.tar
-Patch0: csvkit-1.0.2-alt-disable-import-sphinx_rtd_them.patch
 
 %description
 %summary.
 
 %prep
 %setup -n %name-%version
-%patch0 -p1
 
 %build
 %python3_build
@@ -66,6 +64,9 @@ cp docs/_build/man/*.1 %buildroot%_man1dir
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon May 27 2024 Mikhail Gordeev <obirvalger@altlinux.org> 2.0.0-alt1
+- New version 2.0.0.
+
 * Mon Apr 24 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.1-alt1
 - New version 1.1.1.
 
