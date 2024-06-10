@@ -1,6 +1,6 @@
 Name: ucpp
 Version: 1.3.5
-Release: alt1
+Release: alt2
 
 Summary: C preprocessor compliant to ISO C99
 License: BSD
@@ -68,5 +68,8 @@ mv README.utf8 README
 
 
 %changelog
+* Mon Jun 10 2024 Michael Shigorin <mike@altlinux.org> 1.3.5-alt2
+- bump R: to override autoimports package
+
 * Sun Jun 09 2024 Michael Shigorin <mike@altlinux.org> 1.3.5-alt1
 - initial release (spec based on mageia and opensuse ones)
