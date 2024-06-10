@@ -10,7 +10,7 @@
 
 Name: branding-%flavour
 Version: 2024.04
-Release: alt1
+Release: alt2
 
 Url: https://www.altlinux.org/ALT_Mobile
 
@@ -105,6 +105,22 @@ Conflicts: design-graphics-default
 %description graphics
 This package contains some graphics for ALT design.
 
+%package indexhtml
+BuildArch: noarch
+Summary:  HTML welcome page for %distro_name
+Summary(ru_RU.UTF-8): Стартовая страница для дистрибутива %distro_name_ru
+License:  distributable
+Group:    System/Base
+Provides: indexhtml indexhtml-%theme = %version indexhtml-Desktop = 1:5.0
+%branding_add_conflicts %flavour indexhtml
+
+%description indexhtml
+%distro_name welcome page.
+
+%description indexhtml -l ru_RU.UTF-8
+В данном пакете содержится стартовая страница для дистрибутива
+%distro_name_ru.
+
 %package phosh-settings
 Summary: Distribution settings for Phosh
 License: GPL-3.0-or-later
@@ -163,6 +179,11 @@ cat >%buildroot/etc/alternatives/packages.d/%name-graphics <<__EOF__
 %_datadir/design/current	%_datadir/design/%theme	%artworks_weight
 __EOF__
 
+# indexhtml
+pushd indexhtml
+%makeinstall
+popd
+
 # notes
 pushd notes
 %makeinstall
@@ -190,10 +211,18 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %config /etc/alternatives/packages.d/%name-graphics
 %_datadir/design
 
+%files indexhtml
+%ghost %_defaultdocdir/indexhtml/index.html
+%_defaultdocdir/indexhtml/*
+%_desktopdir/*
+
 %files phosh-settings
 %_sysconfdir/dconf/db/local.d/00_background
 %_sysconfdir/skel/.config/gtk-3.0/gtk.css
 
 %changelog
+* Sat Jun 08 2024 Anton Midyukov <antohami@altlinux.org> 2024.04-alt2
+- Add indexhtml
+
 * Wed Apr 24 2024 Anton Midyukov <antohami@altlinux.org> 2024.04-alt1
 - initial build
