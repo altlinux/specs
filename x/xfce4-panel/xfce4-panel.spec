@@ -6,7 +6,7 @@
 
 Name: xfce4-panel
 Version: 4.19.4
-Release: alt1%git_hash
+Release: alt2%git_hash
 
 Summary: Panel for Xfce
 Summary(ru_RU.UTF-8): Панель для окружения рабочего стола Xfce
@@ -120,6 +120,8 @@ Vala bindings for libxfce4panel-gtk3.
 %configure \
 	--disable-static \
 	--enable-maintainer-mode \
+	--enable-x11 \
+	--enable-wayland \
 	%{subst_enable introspection} \
 	%{subst_enable vala} \
 %if_enabled docs
@@ -173,6 +175,11 @@ Vala bindings for libxfce4panel-gtk3.
 %endif
 
 %changelog
+* Mon Jun 10 2024 Mikhail Efremov <sem@altlinux.org> 4.19.4-alt2
+- Dropped non-existent plugin from default panel configuration
+  (closes: #50585).
+- Explicitly enabled both Wayland and X11 support.
+
 * Tue May 28 2024 Mikhail Efremov <sem@altlinux.org> 4.19.4-alt1
 - Dropped html documentation.
 - Updated to 4.19.4.
