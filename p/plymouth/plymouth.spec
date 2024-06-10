@@ -11,7 +11,7 @@
 
 Name: plymouth
 Version: 24.004.60
-Release: alt4
+Release: alt5.20240608
 Epoch: 1
 
 Summary: Graphical Boot Animation and Logger
@@ -481,6 +481,9 @@ fi \
 %files system-theme
 
 %changelog
+* Sun Jun 09 2024 Anton Midyukov <antohami@altlinux.org> 1:24.004.60-alt5.20240608
+- new snapshot
+
 * Thu Jun 06 2024 Anton Midyukov <antohami@altlinux.org> 1:24.004.60-alt4
 - do not use full PATH for systemd-tty-ask-password-agent
 
