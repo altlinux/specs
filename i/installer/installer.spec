@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.15.6
+Version: 1.15.7
 Release: alt1
 
 Summary: Installer common parts
@@ -105,6 +105,11 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Mon Jun 10 2024 Anton Midyukov <antohami@altlinux.org> 1.15.7-alt1
+- preinstall.d/08-crypttab.sh: add lsblk for get MAJ:MIN of devices
+  (Closes: 50589)
+- preinstall.d/08-crypttab.sh: add luks feature to initrd, if swap on luks
+
 * Tue May 14 2024 Ajrat Makhmutov <rauty@altlinux.org> 1.15.6-alt1
 - add an alternative to the pkg step in the form
   of two new steps: pkg-groups and pkg-install
