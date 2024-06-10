@@ -1,5 +1,5 @@
 Name: ltris
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 Serial: 1
 
@@ -73,13 +73,16 @@ sed -i -e 's,^Icon=.*,Icon=%name,' %buildroot%_desktopdir/%name.desktop
 %attr(2711, root, games) %_gamesbindir/*
 %attr(-, games, games) %_localstatedir/games/%name.hscr
 %_gamesdatadir/%name
-%_datadir/games/icons/ltris.png
+%_datadir/games/icons/hicolor/48x48/apps/ltris.png
 %_desktopdir/%name.desktop
 %_niconsdir/%name.xpm
 %_miconsdir/%name.xpm
 %_liconsdir/%name.xpm
 
 %changelog
+* Mon Jun 10 2024 Ilya Mashkin <oddity@altlinux.ru> 1:1.3.2-alt1
+- 1.3.2
+
 * Sun Apr 28 2024 Ilya Mashkin <oddity@altlinux.ru> 1:1.3.1-alt1
 - 1.3.1
 
