@@ -6,7 +6,7 @@
 %endif
 
 Name: xfsprogs
-Version: 6.7.0
+Version: 6.8.0
 Release: alt1
 
 Summary: Utilities for managing the XFS filesystem
@@ -148,6 +148,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Mon Jun 10 2024 Anton Farygin <rider@altlinux.ru> 6.8.0-alt1
+- 6.7.0 -> 6.8.0
+
 * Sat Apr 27 2024 Anton Farygin <rider@altlinux.ru> 6.7.0-alt1
 - 6.6.0 -> 6.7.0
 - built with libedit
