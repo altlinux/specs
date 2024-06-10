@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.15.7
+Version: 1.15.8
 Release: alt1
 
 Summary: Installer common parts
@@ -105,8 +105,12 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Mon Jun 10 2024 Anton Midyukov <antohami@altlinux.org> 1.15.8-alt1
+- 50-instkernel.sh: look for dependencies for the swap partition when
+  make-initrd (Closes: 44828)
+
 * Mon Jun 10 2024 Anton Midyukov <antohami@altlinux.org> 1.15.7-alt1
-- preinstall.d/08-crypttab.sh: add lsblk for get MAJ:MIN of devices
+- preinstall.d/08-crypttab.sh: use lsblk for get MAJ:MIN of devices
   (Closes: 50589)
 - preinstall.d/08-crypttab.sh: add luks feature to initrd, if swap on luks
 
