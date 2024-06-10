@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.2.0
+Version: 8.3.0
 Release: alt1
 
 Summary: A collection of helpers and mock objects for unit tests and doc tests
@@ -52,6 +52,9 @@ rm -r %buildroot%python3_sitelibdir/testfixtures/tests/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 10 2024 Stanislav Levin <slev@altlinux.org> 8.3.0-alt1
+- 8.2.0 -> 8.3.0.
+
 * Fri May 03 2024 Stanislav Levin <slev@altlinux.org> 8.2.0-alt1
 - 8.1.0 -> 8.2.0.
 
