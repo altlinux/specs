@@ -1,6 +1,6 @@
 Name:           nwg-launchers
 Version:        0.7.1.1
-Release:        alt1
+Release:        alt2
 Summary:        GTK launchers and menu for sway and i3
 License:        GPL-3.0-or-later
 Group:          Graphical desktop/Other
@@ -21,6 +21,10 @@ GTK-based launchers: application grid, button bar, dmenu for sway and other wind
 %prep
 %setup
 %patch0 -p1
+%ifarch %e2k
+sed -E -i 's/(\[prefix, parser)(\].*)/\11\2auto\&parser=parser1;/' \
+	grid/on_desktop_entry.h
+%endif
 
 %build
 %meson
@@ -44,5 +48,8 @@ GTK-based launchers: application grid, button bar, dmenu for sway and other wind
 %_datadir/nwg-launchers/icon-missing.svg
 
 %changelog
+* Mon Jun 10 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.7.1.1-alt2
+- Fixed build for Elbrus
+
 * Fri May 17 2024 Artyom Bystrov <arbars@altlinux.org> 0.7.1.1-alt1
 - Initial commit rot Sisyphus
