@@ -1,8 +1,8 @@
 %def_disable bootstrap
 
 Name: xfce4
-Version: 4.18
-Release: alt3
+Version: 4.19
+Release: alt1
 Summary: Set of Xfce4 Desktop installers.
 License: GPLv2+
 Group: Graphical desktop/XFce
@@ -65,6 +65,11 @@ Requires: xfwm4-theme-greybird
 Requires: xfce4-notifyd-theme-greybird
 # for trash and network in Thunar
 Requires: gvfs gvfs-backends
+# Defult xfce4-panel plugins
+Requires: xfce4-notification-plugin
+Requires: xfce4-pulseaudio-plugin
+# For xfce4-pulseaudio-plugin
+Requires: pavucontrol
 
 %description default
 %name-default is a virtual package to provide default installation
@@ -90,12 +95,12 @@ Requires: xfce4-diskperf-plugin \
 Requires: xfce4-docklike-plugin \
 Requires: xfce4-eyes-plugin \
 Requires: xfce4-fsguard-plugin \
+Requires: xfce4-generic-slider-plugin \
 Requires: xfce4-genmon-plugin \
 Requires: xfce4-mailwatch-plugin \
 Requires: xfce4-mount-plugin \
 Requires: xfce4-netload-plugin \
 Requires: xfce4-notes-plugin \
-Requires: xfce4-notification-plugin \
 Requires: xfce4-places-plugin \
 Requires: xfce4-sensors-plugin \
 Requires: xfce4-smartbookmark-plugin \
@@ -119,9 +124,6 @@ Requires: xfce-polkit
 #Requires: desktop-screensaver-modules-xscreensaver-gl
 %commonreqs
 Requires: xfce4-clipman-plugin
-Requires: xfce4-pulseaudio-plugin
-# For xfce4-pulseaudio-plugin
-Requires: pavucontrol
 
 # No xfce4-mpc-plugin on aarch64
 #Requires: xfce4-mpc-plugin
@@ -164,6 +166,11 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4
 %endif
 
 %changelog
+* Mon Jun 10 2024 Mikhail Efremov <sem@altlinux.org> 4.19-alt1
+- full->default: Move xfce4-pulseaudio-plugin and pavucontrol.
+- full->default: Move xfce4-notification-plugin.
+- full,regular: Add xfce4-generic-slider-plugin.
+
 * Fri May 19 2023 Mikhail Efremov <sem@altlinux.org> 4.18-alt3
 - full,regular: Drop xfce4-windowck-plugin.
 
