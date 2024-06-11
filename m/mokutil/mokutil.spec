@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mokutil
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 Epoch: 1
 
@@ -42,6 +42,9 @@ make PREFIX=%prefix LIBDIR=%_libdir DESTDIR=%buildroot install
 %_datadir/bash-completion/completions/mokutil
 
 %changelog
+* Tue Jun 11 2024 Egor Ignatov <egori@altlinux.org> 1:0.7.2-alt1
+- new version
+
 * Tue May 28 2024 Egor Ignatov <egori@altlinux.org> 1:0.7.1-alt1
 - new version
 
