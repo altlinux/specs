@@ -5,7 +5,7 @@
 %def_without pylint
 
 Name: freeipa-healthcheck
-Version: 0.16
+Version: 0.17
 Release: alt1
 
 Summary: Check the health of a FreeIPA installation
@@ -27,7 +27,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
-BuildRequires: python3-module-ipaserver
+BuildRequires: freeipa-server
 BuildRequires: python3(pytest)
 BuildRequires: /proc
 
@@ -135,6 +135,9 @@ export PYTHONPATH="$(pwd)"
 %python3_sitelibdir/ipahealthcheck/core/
 
 %changelog
+* Wed Jun 05 2024 Stanislav Levin <slev@altlinux.org> 0.17-alt1
+- 0.16 -> 0.17.
+
 * Thu Dec 21 2023 Stanislav Levin <slev@altlinux.org> 0.16-alt1
 - 0.12 -> 0.16.
 
