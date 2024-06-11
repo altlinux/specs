@@ -1,7 +1,7 @@
 
 Name: cbindgen
 Version: 0.26.0
-Release: alt1
+Release: alt2
 Summary: cbindgen creates C/C++11 headers for Rust libraries which expose a public C API
 License: MPL-2.0
 Group: File tools
@@ -27,8 +27,12 @@ replace-with = "vendored-sources"
 
 [source.vendored-sources]
 directory = "vendor"
-EOF
 
+[profile.release]
+strip = "none"
+lto= "thin"
+debug = "full"
+EOF
 
 %build
 %rust_build
@@ -41,6 +45,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Tue Jun 11 2024 L.A. Kostis <lakostis@altlinux.ru> 0.26.0-alt2
+- build with debuginfo.
+
 * Fri Jun 07 2024 L.A. Kostis <lakostis@altlinux.ru> 0.26.0-alt1
 - 0.26.0.
 
