@@ -51,8 +51,8 @@
 
 Name: freeipa
 # don't forget to update .gear/rules
-Version: 4.11.1
-Release: alt4
+Version: 4.11.2
+Release: alt1
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -228,6 +228,12 @@ Requires: slapi-nis >= %slapi_nis_version
 # member.
 Conflicts: nss-ldapd < 0.8.4
 
+%add_python3_path %_datadir/ipa/
+%add_python3_compile_exclude %_datadir/ipa/
+# not public packages and modules
+%filter_from_provides /python3(wsgi\(\..*\)\?)/d
+%filter_from_provides /python3(migration\(\..*\)\?)/d
+
 %description server
 IPA is an integrated solution to provide centrally managed Identity (users,
 hosts, services), Authentication (SSO, 2FA), and Authorization
@@ -272,8 +278,6 @@ Summary: Common files used by IPA server
 Group: System/Base
 Requires: %name-client-common = %EVR
 Requires: apache2-base >= %apache_version
-%add_python3_path %_datadir/ipa/
-%add_python3_compile_exclude %_datadir/ipa/
 
 %description server-common
 IPA is an integrated solution to provide centrally managed Identity (users,
@@ -506,7 +510,7 @@ Requires: sshpass
 Requires: iptables
 Requires: drill
 # Tests have a huge amount useless Provides
-%set_findprov_skiplist %python3_sitelibdir/ipatests/*
+%filter_from_provides /python3(ipatests\(\..*\)\?)/d
 
 %description -n python3-module-ipatests
 IPA is an integrated solution to provide centrally managed Identity (users,
@@ -634,10 +638,6 @@ mkdir -p %buildroot%_sharedstatedir/bind/dynamic
 touch %buildroot%_sharedstatedir/bind/zone/dyndb-ldap/ipa
 touch %buildroot%_sharedstatedir/ipa/pki-ca/publish
 touch %buildroot%_sysconfdir/ipa/kdcproxy/ipa-kdc-proxy.conf
-
-mkdir -p %buildroot%_runtimedir
-install -d -m 0700 %buildroot%_runtimedir/ipa
-install -d -m 0700 %buildroot%_runtimedir/ipa/ccaches
 
 # install filetrigger
 mkdir -p %buildroot%_rpmlibdir
@@ -879,6 +879,9 @@ fi
 %attr(644,root,root) %_unitdir/ipa-otpd@.service
 %attr(644,root,root) %_unitdir/ipa-ccache-sweep.service
 %attr(644,root,root) %_unitdir/ipa-ccache-sweep.timer
+%attr(644,root,root) %_unitdir/ipa-custodia.service
+%ghost %attr(644,root,root) %etc_systemd_dir/httpd2.service.d/ipa.conf
+%_tmpfilesdir/ipa.conf
 # END
 %attr(755,root,root) %plugin_dir/libipa_pwd_extop.so
 %attr(755,root,root) %plugin_dir/libipa_enrollment_extop.so
@@ -921,23 +924,21 @@ fi
 %_man1dir/ipa-cert-fix.1*
 %_man1dir/ipa-acme-manage.1*
 %_man8dir/ipactl.8*
+# WSGI applications
+%_datadir/ipa/wsgi.py
+%_datadir/ipa/migration/migration.py
+%_datadir/ipa/kdcproxy.wsgi
+%_datadir/ipa/wsgi/plugins.py
 
 %_rpmlibdir/freeipa-server.filetrigger
 
 %files -n python3-module-ipaserver
 %python3_sitelibdir/ipaserver/
-%python3_sitelibdir/ipaserver-*.egg-info/
+%python3_sitelibdir/ipaserver-%version-py%_python3_version.egg-info/
 
 %files server-common
-%dir %attr(0700,root,root) %_runtimedir/ipa
-%dir %attr(0700,root,root) %_runtimedir/ipa/ccaches
 %dir %attr(0755,root,root) %_sysconfdir/ipa/kdcproxy
 %config(noreplace) %_sysconfdir/ipa/kdcproxy/kdcproxy.conf
-/lib/tmpfiles.d/ipa.conf
-%attr(644,root,root) %_unitdir/ipa-custodia.service
-%ghost %attr(644,root,root) %etc_systemd_dir/httpd2.service.d/ipa.conf
-%_datadir/ipa/wsgi.py
-%_datadir/ipa/kdcproxy.wsgi
 %_datadir/ipa/ipaca*.ini
 %_datadir/ipa/*.ldif
 %exclude %_datadir/ipa/ipa-cldap-conf.ldif
@@ -947,9 +948,10 @@ fi
 %_datadir/ipa/profiles/
 %dir %_datadir/ipa/html
 %_datadir/ipa/html/*.html
-%_datadir/ipa/migration/
+%dir %_datadir/ipa/migration/
+%_datadir/ipa/migration/index.html
 %_datadir/ipa/ui/
-%_datadir/ipa/wsgi/
+%dir %_datadir/ipa/wsgi/
 %dir %_sysconfdir/ipa
 %dir %_sysconfdir/ipa/html
 %config(noreplace) %_sysconfdir/ipa/html/ssbrowser.html
@@ -1014,7 +1016,7 @@ fi
 
 %files -n python3-module-ipatests
 %python3_sitelibdir/ipatests/
-%python3_sitelibdir/ipatests-*.egg-info
+%python3_sitelibdir/ipatests-%version-py%_python3_version.egg-info/
 %_bindir/ipa-run-tests
 %_bindir/ipa-test-config
 %_bindir/ipa-test-task
@@ -1064,7 +1066,7 @@ fi
 %files -n python3-module-ipaclient
 %python3_sitelibdir/ipaclient/
 %exclude %python3_sitelibdir/ipaclient/install/ipa_client_automount.py
-%python3_sitelibdir/ipaclient-*.egg-info/
+%python3_sitelibdir/ipaclient-%version-py%_python3_version.egg-info/
 
 %files client-common
 %dir %attr(0755,root,root) %_sysconfdir/ipa/
@@ -1093,11 +1095,14 @@ fi
 %python3_sitelibdir/ipapython/
 %python3_sitelibdir/ipalib/
 %python3_sitelibdir/ipaplatform/
-%python3_sitelibdir/ipapython-*.egg-info/
-%python3_sitelibdir/ipalib-*.egg-info/
-%python3_sitelibdir/ipaplatform-*.egg-info/
+%python3_sitelibdir/ipapython-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/ipalib-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/ipaplatform-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Jun 10 2024 Stanislav Levin <slev@altlinux.org> 4.11.2-alt1
+- 4.11.1 -> 4.11.2 (fixes: CVE-2024-3183, CVE-2024-2698).
+
 * Tue May 28 2024 Stanislav Levin <slev@altlinux.org> 4.11.1-alt4
 - Added missing tests dependency on gnupg2.
 
