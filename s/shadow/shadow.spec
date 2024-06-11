@@ -1,6 +1,6 @@
 Name: shadow
 Version: 4.15.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Utilities for managing shadow password files and user/group accounts
@@ -483,6 +483,9 @@ rm -f %save_login_defs_file
 %endif
 
 %changelog
+* Tue Jun 11 2024 Mikhail Efremov <sem@altlinux.org> 1:4.15.1-alt2
+- audit_help: Supressed unused-result warning.
+
 * Thu Apr 18 2024 Mikhail Efremov <sem@altlinux.org> 1:4.15.1-alt1
 - Fixed bogus date in the changelog.
 - Dropped obsoleted patches.
