@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 126.0.1
+Version: 127.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -421,6 +421,25 @@ fi
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Jun 11 2024 Ajrat Makhmutov <rauty@altlinux.org> 127.0-alt1
+- New version (127.0).
+- Security fixes:
+  + CVE-2024-5687: An incorrect principal could have been used when opening new tabs
+  + CVE-2024-5688: Use-after-free in JavaScript object transplant
+  + CVE-2024-5689: User confusion and possible phishing vector via Firefox Screenshots
+  + CVE-2024-5690: External protocol handlers leaked by timing attack
+  + CVE-2024-5691: Sandboxed iframes were able to bypass sandbox restrictions to open a new window
+  + CVE-2024-5692: Bypass of file name restrictions during saving
+  + CVE-2024-5693: Cross-Origin Image leak via Offscreen Canvas
+  + CVE-2024-5694: Use-after-free in JavaScript Strings
+  + CVE-2024-5695: Memory Corruption using allocation using out-of-memory conditions
+  + CVE-2024-5696: Memory Corruption in Text Fragments
+  + CVE-2024-5697: Website was able to detect when Firefox was taking a screenshot of them
+  + CVE-2024-5698: Data-list could have overlaid address bar
+  + CVE-2024-5699: Cookie prefixes not treated as case-sensitive
+  + CVE-2024-5700: Memory safety bugs fixed in Firefox 127, Firefox ESR 115.12, and Thunderbird 115.12
+  + CVE-2024-5701: Memory safety bugs fixed in Firefox 127
+
 * Wed May 29 2024 Ajrat Makhmutov <rauty@altlinux.org> 126.0.1-alt1
 - New version (126.0.1).
 - Package firefox-config-privacy for firefox architectures only.
