@@ -3,28 +3,43 @@
 %define _libexecdir %_prefix/libexec
 
 Name: lib%_name
-Version: 23.08.5
+Version: 24.05.0
 Release: alt1
 
 Summary: KDE Partition Manager core library
 Group: System/Libraries
-License: GPLv3
+License: GPL-3.0-or-later
 Url: https://github.com/KDE/%_name
 
 Source: https://download.kde.org/stable/release-service/%version/src/%_name-%version.tar.xz
 #Source: %url/archive/v%version/%_name-%version.tar.gz
 
-Provides: %_name = %version-%release
+Provides: %_name = %EVR
 
 %define blkid_ver 2.30
+%define ecm_ver 5.240.0
+%define qt_ver 6.5.0
 
 Requires: sfdisk polkit ntfs-3g exfatprogs btrfs-progs
 
-BuildRequires(pre): rpm-build-kf5
-BuildRequires: gcc-c++ extra-cmake-modules %_bindir/appstreamcli
-BuildRequires: libdbus-devel libatasmart-devel libblkid-devel >= %blkid_ver libparted-devel
-BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel libqca-qt5-devel
-BuildRequires: libpolkitqt5-qt5-devel
+BuildRequires(pre): rpm-build-kf6
+BuildRequires: gcc-c++ extra-cmake-modules >= %ecm_ver
+BuildRequires: %_bindir/appstreamcli
+#BuildRequires: libdbus-devel libatasmart-devel libblkid-devel >= %blkid_ver libparted-devel
+#BuildRequires: kf6-ki18n-devel kf6-kiconthemes-devel kf6-kio-devel libqca-qt6-devel
+#BuildRequires: libpolkitqt6-qt6-devel
+BuildRequires: pkgconfig(blkid) >= %blkid_ver
+BuildRequires: pkgconfig(libparted)
+BuildRequires: pkgconfig(Qt6Core) >= %qt_ver
+BuildRequires: pkgconfig(Qt6DBus)
+BuildRequires: pkgconfig(Qt6Gui)
+BuildRequires: pkgconfig(polkit-qt6-core-1)
+#BuildRequires: pkgconfig(KF6I18n)
+BuildRequires: kf6-ki18n-devel
+#BuildRequires: pkgconfig(KF6CoreAddons)
+BuildRequires: kf6-kcoreaddons-devel
+#BuildRequires: pkgconfig(KF6WidgetsAddons)
+BuildRequires: kf6-kwidgetsaddons-devel
 
 %description
 %_name is a Library for managing partitions. Common code for KDE
@@ -33,8 +48,8 @@ Partition Manager and other projects.
 %package devel
 Summary: Development files for icclib
 Group: Development/C
-Requires: %name = %version-%release
-Provides: %_name-devel = %version-%release
+Requires: %name = %EVR
+Provides: %_name-devel = %EVR
 
 %description devel
 %_name is a Library for managing partitions. Common code for KDE
@@ -47,27 +62,30 @@ using %_name.
 %setup -n %_name-%version
 
 %build
-%K5build
+%K6build
 
 %install
-%K5install
+%K6install
 %find_lang --all-name %_name
 
 %files -f %_name.lang
 %_libexecdir/%{_name}_externalcommand
 %_datadir/dbus-1/system-services/%xdg_name.helperinterface.service
 %_datadir/dbus-1/system.d/%xdg_name.helperinterface.conf
-%_K5lib/*.so.*
-%_K5plug/%_name/*.so
+%_K6lib/*.so.*
+%_K6plug/%_name/*.so
 %_datadir/polkit-1/actions/%xdg_name.externalcommand.policy
 
 %files devel
 %_includedir/%_name/
-%_K5lib/cmake/KPMcore/
-%_K5link/*.so
+%_K6lib/cmake/KPMcore/
+%_K6link/*.so
 
 
 %changelog
+* Wed Jun 12 2024 Yuri N. Sedunov <aris@altlinux.org> 24.05.0-alt1
+- 24.05.0 (ported to KF6)
+
 * Thu Feb 15 2024 Yuri N. Sedunov <aris@altlinux.org> 23.08.5-alt1
 - 23.08.5
 

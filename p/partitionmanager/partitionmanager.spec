@@ -2,11 +2,11 @@
 %define xdg_name org.kde.partitionmanager
 
 Name: partitionmanager
-Version: 23.08.5
+Version: 24.05.0
 Release: alt1
 
 Summary: KDE Partition Manager
-License: GPLv3
+License: GPL-3.0-or-later
 Group: Graphical desktop/KDE
 Url: https://apps.kde.org/%name
 
@@ -18,21 +18,23 @@ Vcs: https://github.com/KDE/partitionmanager.git
 Source: %name-%version.tar
 %endif
 
-%K5init no_altplace appdata
+%K6init no_altplace appdata
 
-%define qt_ver 5.15.2
+%define qt_ver 6.5.0
 %define kpmcore_ver %version
 
 Requires: libkpmcore >= %kpmcore_ver
 Requires: qca-qt5-ossl lvm2 cryptsetup polkit
 
-BuildRequires(pre): rpm-build-kf5
-BuildRequires: gcc-c++ extra-cmake-modules qt5-base-devel >= %qt_ver
-BuildRequires: kf5-kcrash-devel kf5-kdoctools-devel kf5-ki18n-devel
-BuildRequires: kf5-kiconthemes-devel kf5-kio-devel kf5-kdbusaddons-devel
-BuildRequires: libpolkitqt5-qt5-devel kf5-kdoctools
-BuildRequires: libkpmcore-devel >= %kpmcore_ver libatasmart-devel libblkid-devel
-BuildRequires: libappstream-glib-devel
+BuildRequires(pre): rpm-build-kf6
+BuildRequires: gcc-c++ extra-cmake-modules
+BuildRequires: libkpmcore-devel >= %kpmcore_ver
+BuildRequires: pkgconfig(Qt6Core) >= %qt_ver
+BuildRequires: qt6-declarative-devel
+BuildRequires: pkgconfig(polkit-qt6-core-1)
+BuildRequires: kf6-kcrash-devel kf6-kdoctools-devel kf6-ki18n-devel
+BuildRequires: kf6-kiconthemes-devel kf6-kio-devel kf6-kdbusaddons-devel
+BuildRequires: kf6-kdoctools
 
 %description
 KDE Partition Manager is a utility program to help you manage the disk
@@ -49,23 +51,26 @@ file systems.
 %setup
 
 %build
-%K5build
+%K6build
 
 %install
-%K5install
+%K6install
 %find_lang %name --all-name --with-kde
 
 %files -f %name.lang
-%_K5bin/%name
-%_K5xdgapp/%xdg_name.desktop
-%_K5icon/*/*/apps/%name.*
-%_K5cfg/%name.kcfg
-%_K5xmlgui/%name/
+%_K6bin/%name
+%_K6xdgapp/%xdg_name.desktop
+%_K6icon/*/*/apps/%name.*
+%_K6cfg/%name.kcfg
+#%_K6xmlgui/%name/
 %_datadir/metainfo/%xdg_name.appdata.xml
 %_datadir/solid/actions/open_in_%name.desktop
 %doc README*
 
 %changelog
+* Wed Jun 12 2024 Yuri N. Sedunov <aris@altlinux.org> 24.05.0-alt1
+- 24.05.0 (ported to KF6)
+
 * Thu Feb 15 2024 Yuri N. Sedunov <aris@altlinux.org> 23.08.5-alt1
 - 23.08.5
 
