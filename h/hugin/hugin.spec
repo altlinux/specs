@@ -9,7 +9,7 @@
 
 Name: hugin
 Version: 2023.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: hugin - Goal: an easy to use cross-platform GUI for Panorama Tools.
 Group: Graphics
@@ -19,6 +19,8 @@ Url: https://hugin.sourceforge.net/
 #tarball: https://downloads.sourceforge.net/%name/%name-%version.tar.bz2
 Source: %name-%version.tar
 Patch1: Add-translations-in-desktop-files.patch
+Patch2: Fix-build-without-distutils.patch
+Patch3: Fix-deprecated-boost-filesystem-usage.patch
 
 %define boost_ver 1.54
 %define pano_ver 2.9.21
@@ -57,6 +59,8 @@ panorama, stitch any series of overlapping pictures and much more.
 %prep
 %setup
 %patch1 -p2
+%patch2 -p1
+%patch3 -p1
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -101,6 +105,12 @@ done
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Wed Jun 12 2024 Ivan A. Melnikov <iv@altlinux.org> 2023.0.0-alt1.1
+- NMU fix FTBFS
+  + add change from upstream to fix build with Boost 1.85.0
+  + partially backport change from upstream to fix build
+    without distutils
+
 * Sun Nov 12 2023 Yuri N. Sedunov <aris@altlinux.org> 2023.0.0-alt1
 - 2023.0.0
 
