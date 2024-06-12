@@ -4,8 +4,8 @@
 %filter_from_requires /^python3(gajim.gui/d
 
 Name: gajim
-Version: 1.8.4
-Release: alt2
+Version: 1.9.0
+Release: alt1
 
 Summary: a Jabber client written in PyGTK
 License: GPL-3.0-only
@@ -25,7 +25,7 @@ Requires: python3 >= 3.10
 %filter_from_requires /^typelib(AppIndicator3)/d
 
 Requires: libgtk+3-gir libgtksourceview4-gir
-Requires: python3-module-nbxmpp >= 4.5.3
+Requires: python3-module-nbxmpp >= 5.0.0
 Requires: typelib(AyatanaAppIndicator3)
 # gajim >= 1.8 has imcoropated OMEMO support
 Obsoletes: gajim-plugin-omemo <= 2.9.0-alt1 python3-module-gajim-omemo <= 2.9.0-alt1
@@ -37,7 +37,7 @@ Obsoletes: gajim-plugin-omemo <= 2.9.0-alt1 python3-module-gajim-omemo <= 2.9.0-
 %py3_requires OpenSSL
 %py3_requires cairo
 
-%add_python3_req_skip winsdk.windows.ui winsdk.windows.ui.viewmanagement
+%add_python3_req_skip winsdk.windows.ui winsdk.windows.ui.viewmanagement winrt.windows.ui winrt.windows.ui.viewmanagement
 
 %ifarch %e2k
 BuildRequires: librpmconstant-devel
@@ -47,7 +47,7 @@ Requires: librpmconstant0
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: libgtk+3-devel python3-devel python3-module-setuptools libsoup-gir-devel libgtksourceview4-gir-devel pyproject-build rpm-macros-python3 python3-module-build
-BuildRequires: python3-module-nbxmpp >= 4.5.3
+BuildRequires: python3-module-nbxmpp >= 5.0.0
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildArch: noarch
@@ -110,7 +110,7 @@ end
 #_bindir/%name-history-manager
 %_man1dir/*
 %_datadir/applications/%appid.desktop
-%_datadir/metainfo/%appid.appdata.xml
+%_datadir/metainfo/%appid.metainfo.xml
 %_datadir/icons/hicolor/scalable/apps/%appid.svg
 %_datadir/icons/hicolor/scalable/apps/%appid-symbolic.svg
 %python3_sitelibdir/%name
@@ -123,6 +123,9 @@ end
 
 
 %changelog
+* Wed Jun 12 2024 Ilya Mashkin <oddity@altlinux.ru> 1.9.0-alt1
+- 1.9.0
+
 * Mon Nov 27 2023 Ilya Mashkin <oddity@altlinux.ru> 1.8.4-alt2
 - Fix build on Elbrus
 
