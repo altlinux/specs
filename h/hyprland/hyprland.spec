@@ -2,7 +2,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: hyprland
-Version: 0.38.0
+Version: 0.41.0
 Release: alt1
 
 Summary: Hyprland is a dynamic tiling Wayland compositor that doesn't sacrifice on its looks
@@ -12,7 +12,7 @@ Group: Graphical desktop/Other
 Url: https://github.com/hyprwm/Hyprland
 
 ExcludeArch: i586 armh
-Patch0: hyprland-0.25.0-native-udis86.patch
+Patch0: hyprland-0.40.0-native-udis86.patch
 
 # Source-url: https://github.com/hyprwm/Hyprland/releases/download/v%version/source-v%version.tar.gz
 Source: %name-%version.tar
@@ -21,10 +21,10 @@ BuildRequires(pre): rpm-macros-meson
 
 BuildRequires: meson
 BuildRequires: jq
-BuildRequires: git
 
 BuildRequires: pkgconfig(hyprcursor)
 BuildRequires: pkgconfig(hyprlang)
+BuildRequires: pkgconfig(hyprwayland-scanner)
 
 BuildRequires: gcc-c++ >= 11
 BuildRequires: glslang-devel
@@ -42,6 +42,7 @@ BuildRequires: pkgconfig(pixman-1) >= 0.42.0
 BuildRequires: libpixman
 BuildRequires: pkgconfig(vulkan) >= 1.2.182
 BuildRequires: pkgconfig(pango)
+BuildRequires: pkgconfig(uuid)
 
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-protocols) >= 1.26
@@ -52,6 +53,7 @@ BuildRequires: pkgconfig(wayland-egl)
 
 BuildRequires: pkgconfig(xcb)
 BuildRequires: pkgconfig(xcb-icccm)
+BuildRequires: pkgconfig(xcb-errors)
 BuildRequires: pkgconfig(xcb-renderutil)
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(xwayland)
@@ -78,15 +80,17 @@ Group: Development/C++
 %setup
 %patch0 -p1
 
+subst '/^version_h = run_command/d' meson.build
+
 %build
-%meson -Dwlroots:xcb-errors=disabled -Dwlroots:examples=false
+%meson -Dwlroots:xcb-errors=enabled -Dwlroots:examples=false
 %meson_build
 
 %install
 %meson_install
-rm -rf %buildroot%_includedir
+rm -rf %buildroot%_includedir/%name
 rm -rf %buildroot%_libdir/libwlroots.a
-rm -rf %buildroot%_pkgconfigdir/wlroots.pc
+rm -rf %buildroot%_datadir/pkgconfig/wlroots.pc
 
 %files
 %doc README.md LICENSE
@@ -101,12 +105,28 @@ rm -rf %buildroot%_pkgconfigdir/wlroots.pc
 %_datadir/wayland-sessions/%name.desktop
 %_datadir/xdg-desktop-portal/%name-portals.conf
 
+%_datadir/bash-completion/completions/hyprctl
+%_datadir/bash-completion/completions/hyprpm
+
+%_datadir/fish/vendor_completions.d/hyprctl.fish
+%_datadir/fish/vendor_completions.d/hyprpm.fish
+
+%_datadir/zsh/site-functions/_hyprctl
+%_datadir/zsh/site-functions/_hyprpm
+
 %files devel
 %_datadir/pkgconfig/%name-protocols.pc
 %_datadir/pkgconfig/%name.pc
 %_datadir/hyprland-protocols/
 
 %changelog
+* Wed Jun 12 2024 Roman Alifanov <ximper@altlinux.org> 0.41.0-alt1
+- new version 0.41.0 (with rpmrb script) (ALT bug 50618)
+
+* Mon May 20 2024 Roman Alifanov <ximper@altlinux.org> 0.40.0-alt1
+- new version 0.40.0 (with rpmrb script)
+- patch updated
+
 * Thu Apr 04 2024 Roman Alifanov <ximper@altlinux.org> 0.38.0-alt1
 - new version 0.38.0 (with rpmrb script)
 
