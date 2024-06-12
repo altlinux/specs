@@ -3,7 +3,7 @@
 %define oname avldrums
 
 Name:    lv2-%oname-plugins
-Version: 0.6.1
+Version: 0.7.3
 Release: alt1
 Summary: A simple drum sample player plugin
 
@@ -101,6 +101,9 @@ done
 %_datadir/%oname
 
 %changelog
+* Wed Jun 12 2024 Ivan A. Melnikov <iv@altlinux.org> 0.7.3-alt1
+- 0.7.3
+
 * Fri Jun 30 2023 Ivan A. Melnikov <iv@altlinux.org> 0.6.1-alt1
 - 0.6.1
 
