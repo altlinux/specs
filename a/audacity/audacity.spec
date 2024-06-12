@@ -1,20 +1,23 @@
 # Ensure no unpackaged files
 %global _unpackaged_files_terminate_build 1
 
+# Stable docs path across the versions
+%define _customdocdir %_defaultdocdir/%name
+
 # wc-config --cflags to add -I/usr/include/wx-3.1
 # wx-config --libs: https://github.com/audacity/audacity/issues/552
 # libmp3lame: https://github.com/audacity/audacity/issues/2166
 %add_optflags %(wx-config --cflags || :) -DDISABLE_DYNAMIC_LOADING_LAME=1
 
-%ifarch armh
+%ifarch armh %ix86
 %add_optflags -DPFFFT_SIMD_DISABLE=1
 %endif
 
 %define add_libs %(wx-config --libs || :) -lmp3lame
 
 Name: audacity
-Version: 3.4.2
-Release: alt1.3
+Version: 3.5.1
+Release: alt1
 
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
@@ -28,12 +31,16 @@ Source0: %name-sources-%version.tar
 Source1: %name-manual-%version.tar
 # XXX
 Source2: loffice-libcxx-wrapper.sh
+Source3: README.ALT
 
-Patch0001: 0001-Desktop-file-fix-exec-command.patch
+# Patch0001: 0001-Desktop-file-fix-exec-command.patch
 Patch0002: 0002-Use-home-directory-for-temp-dir-instead-of-var-tmp-t.patch
 Patch0003: 0003-Fix-building-with-system-sbsms.patch
 Patch0005: 0005-Fix-lv2-external-gui.patch
 Patch0006: 0006-Find-modules-in-lib64.patch
+Patch0007: 0007-Manual-document-session-path.patch
+Patch0008: 0008-Fix-release-build-warning.patch
+
 Source2000: audacity-e2k.patch
 
 BuildRequires: gcc-c++
@@ -136,7 +143,10 @@ For the most up to date manual content, use the on-line manual.
 
 %prep
 %setup -n %name-sources-%version
+mkdir manual
+tar -xf %SOURCE1 --strip-components=1 -C manual
 %autopatch -p1
+cp %SOURCE3 .
 
 sed -i 's/"lv2 >= .* >= 0.10.6"//' cmake-proxies/CMakeLists.txt
 %add_optflags -isystem /usr/include/suil-0 -lsuil-0
@@ -159,11 +169,15 @@ install -m0755 %SOURCE2 ./g++
 export CXX="$PWD/g++"
 export CC="$(command -v gcc)"
 
+# disable assertions checked via wxASSERT
+%add_optflags -DwxDEBUG_LEVEL=0
+
 %cmake \
 %ifarch %e2k
   -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
   -DCMAKE_INSTALL_RPATH:PATH='$ORIGIN/../' \
 %endif
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
   -Daudacity_lib_preference:STRING=system \
   -Daudacity_has_networking=no \
   -Daudacity_conan_enabled=Off \
@@ -195,8 +209,7 @@ export CC="$(command -v gcc)"
 
 %install
 %cmakeinstall_std
-tar -xf %SOURCE1 -C %buildroot%_datadir/%name
-mv %buildroot%_datadir/%name/{%name-manual-%version,help}
+cp -a manual/manual %buildroot%_datadir/%name/help
 rm -rf %buildroot%_defaultdocdir/%name
 rm -rf %buildroot%_datadir/%name/include
 # Remove a helper script that runs audacity in GitHub CI builds
@@ -233,7 +246,7 @@ patchelf --print-needed %buildroot/%_libdir/audacity/modules/mod-mp3.so | grep -
 # [...] | grep -q libavcodec
 
 %files -f %name.lang
-%doc CHANGELOG.txt CODE_OF_CONDUCT.md CONTRIBUTING.md LICENSE.txt README.md
+%doc CHANGELOG.txt CODE_OF_CONDUCT.md CONTRIBUTING.md LICENSE.txt README.md README.ALT
 %_bindir/audacity
 %_libdir/audacity
 %_mandir/man?/*
@@ -253,6 +266,16 @@ patchelf --print-needed %buildroot/%_libdir/audacity/modules/mod-mp3.so | grep -
 %_datadir/%name/help
 
 %changelog
+* Wed Jun 12 2024 Ivan A. Melnikov <iv@altlinux.org> 3.5.1-alt1
+- 3.5.1.
+- build in release mode, disabling wxASSERT (altbug#44359).
+
+* Mon Apr 22 2024 Ivan A. Melnikov <iv@altlinux.org> 3.5.0-alt0.2
+- Disabe certain SIMD optimizations on %%ix86 to fix build.
+
+* Mon Apr 22 2024 Ivan A. Melnikov <iv@altlinux.org> 3.5.0-alt0.1
+- 3.5.0
+
 * Fri Apr 12 2024 Michael Shigorin <mike@altlinux.org> 3.4.2-alt1.3
 - FTBFS workaround (ilyakurdyukov@)
 
