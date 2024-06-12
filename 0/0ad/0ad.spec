@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
 Version: 0.0.26
-Release: alt0_8_alpha
+Release: alt0_9_alpha
 
 Group: Games/Strategy
 Summary: Free, open-source realtime strategy game of ancient warfare
@@ -28,6 +28,7 @@ Patch5: 0ad-0.0.25-i586.patch
 Patch6: 0ad-fix-build-with-gcc13.patch
 Patch7: 0ad-fix-build-with-libfmt10.patch
 Patch8: 0ad-0.0.26-ps_xml.patch
+Patch9: 0ad-0.0.26_alpha-gentoo-boost-1.85.patch
 
 # disabled i586 build to unblock wxGTK3.0 rebuild; please remove later
 # ExcludeArch: %ix86
@@ -82,6 +83,7 @@ educational celebration of game development and ancient history.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p2
+%patch9 -p1
 
 # update shebangs from python to python3
 find . -name '*.py' -o -name 'cxxtestgen' | xargs sed -i \
@@ -145,6 +147,9 @@ cp -a binaries/data/* %buildroot%_datadir/0ad/
 %_datadir/0ad/*
 
 %changelog
+* Wed Jun 12 2024 Ivan A. Melnikov <iv@altlinux.org> 1:0.0.26-alt0_9_alpha
+- NMU: apply patch from Gentoo to fix building with boost 1.85.0.
+
 * Mon Feb 05 2024 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.0.26-alt0_8_alpha
 - Fix spec
 
