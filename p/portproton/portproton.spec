@@ -1,6 +1,12 @@
+%add_findreq_skiplist %_bindir/portproton
+AutoProv: no
+
+%define i586_req_l1 libvulkan.so.1 libGL.so.1 libgio-2.0.so.0 libnm.so.0 libnss3.so libunwind.so.8
+%define i586_req_l2 libVkLayer_MESA_device_select.so libgamemodeauto.so.0 libnsl.so.1
+
 Name: portproton
 Version: 1.5
-Release: alt1
+Release: alt2
 
 Summary: Installer for PortProton
 
@@ -11,37 +17,67 @@ Url: https://github.com/Castro-Fidel/PortProton_ALT
 Source: %name-%version.tar
 
 Requires: bubblewrap cabextract zstd gawk tar xz pciutils coreutils file
-Requires: curl icoutils wmctrl xdg-utils desktop-file-utils yad
+Requires: curl wmctrl xdg-utils desktop-file-utils yad
 Requires: libvulkan1 vulkan-tools libd3d libGL gamemode fontconfig xrdb
 Requires: libcurl libgio libnm libnsl1 libnss glibc-nss glibc-pthread
-Requires: /usr/bin/convert
+Requires: /usr/bin/convert exiftool icoextract-thumbnailer
 
-# TODO: 32-bit dependencies
-# Requires: i586-libvulkan1 i586-libd3d i586-libGL i586-libgio i586-libnm
-# Requires: i586-libnsl1 i586-libnss i586-glibc-nss i586-glibc-pthread
-# Requires: i586-libunwind i586-xorg-dri-swrast
+# Requires 32-bit meta package:
+# Requires: portproton-dependency
 
-ExclusiveArch: x86_64
+ExclusiveArch: i586 x86_64
 
 %description
 Installer PortProton for Windows games.
+
+%package dependency
+Group: Games/Other
+Summary: Metapackage for installing 32-bit dependencies for PortProton.
+ExclusiveArch: i586
+Provides: %name-dependency
+%description dependency
+%summary
 
 %prep
 %setup
 
 %build
 %install
+# 32-bit dependencies:
+%ifarch i586
+mkdir -p %buildroot%_libdir/%name
+for lib in %i586_req_l1 %i586_req_l2 ; do
+    ln -s /usr/lib/$lib %buildroot%_libdir/%name/
+done
+ln -s /usr/lib/d3d/d3dadapter9.so.1.0.0 %buildroot%_libdir/%name/
+ln -s /usr/lib/vdpau/libvdpau_gallium.so.1.0.0 %buildroot%_libdir/%name/
+# ln -s /lib/libpthread.so.0 %buildroot%_libdir/%name/
+# ln -s /lib/libnss_dns.so.2 %buildroot%_libdir/%name/
+%endif
+
+%ifarch x86_64
 install -Dm755 %name %buildroot%_bindir/%name
 install -Dm644 %name.desktop %buildroot%_desktopdir/%name.desktop
 install -Dm644 %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
+%endif
 
+%ifarch i586
+%files dependency
+%_libdir/%name
+%endif
+
+%ifarch x86_64
 %files
 %doc LICENSE
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
+%endif
 
 %changelog
+* Thu Jun 13 2024 Mikhail Tergoev <fidel@altlinux.org> 1.5-alt2
+- added meta package for installation 32-bit dependencies
+
 * Tue Feb 13 2024 Mikhail Tergoev <fidel@altlinux.org> 1.5-alt1
 - updated to v1.5
 - drop requires: libMesaOpenCL
