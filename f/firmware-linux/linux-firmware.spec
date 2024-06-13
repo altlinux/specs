@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20240604
+Version: 20240612
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -94,6 +94,12 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/mellanox
 
 %changelog
+* Thu Jun 13 2024 Cronbuild Service <cronbuild@altlinux.org> 20240612-alt1
+- upstream changes (GIT 776320a9):
+  + cirrus: cs35l56: Update firmware for Cirrus CS35L56 for various
+    ASUS laptops (thx Simon Trimmer)
+  + Add firmware for Lenovo Thinkbooks (thx Stefan Binding)
+
 * Wed Jun 05 2024 Cronbuild Service <cronbuild@altlinux.org> 20240604-alt1
 - upstream changes (GIT 22643bb4):
   + amdgpu: update yellow carp firmware (thx Alex Deucher)
