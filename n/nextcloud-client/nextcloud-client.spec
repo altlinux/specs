@@ -1,5 +1,5 @@
 Name: nextcloud-client
-Version: 3.12.2
+Version: 3.13.0
 Release: alt1
 %K5init no_altplace
 
@@ -22,7 +22,11 @@ Patch4: %name-2.3.3-alt-fix-help-url.patch
 Patch5: alt-move-deleted-to-trash.patch
 Patch6: alt-fix-fortify-source.patch
 
-BuildRequires(pre): rpm-macros-qt5-webengine
+%add_python3_path %_datadir/caja-python/extensions
+%add_python3_path %_datadir/nautilus-python/extensions
+%add_python3_path %_datadir/nemo-python/extensions
+
+BuildRequires(pre): rpm-macros-qt5-webengine rpm-build-python3 rpm-build-gir
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: doxygen extra-cmake-modules graphviz kf5-kio-devel libqtkeychain-qt5-devel libsqlite3-devel libssl-devel python3-dev qt5-tools-devel qt5-webkit-devel zlib-devel
 %ifarch %qt5_qtwebengine_arches
@@ -49,6 +53,9 @@ KDE5 %name integration
 Summary: MATE %name integration
 Group: Graphical desktop/MATE
 Requires: %name
+Requires: python3-module-caja
+BuildArch: noarch
+
 %description mate
 MATE %name integration
 
@@ -56,6 +63,9 @@ MATE %name integration
 Summary: GNOME %name integration
 Group: Graphical desktop/GNOME
 Requires: %name
+Requires: nautilus-python
+BuildArch: noarch
+
 %description gnome
 GNOME %name integration
 
@@ -63,6 +73,9 @@ GNOME %name integration
 Summary: Cinnamon %name integration
 Group: Graphical desktop/Other
 Requires: %name
+Requires: nemo-python
+BuildArch: noarch
+
 %description cinnamon
 Cinnamon %name integration
 
@@ -113,15 +126,22 @@ desktop-file-install \
 #%_K5srv/*nextcloud*.desktop
 
 %files mate
-%_datadir/caja-python/extensions/*
+%_datadir/caja-python/extensions/*.py
+%_datadir/caja-python/extensions/__pycache__/*
 
 %files gnome
-%_datadir/nautilus-python/extensions/*
+%_datadir/nautilus-python/extensions/*.py
+%_datadir/nautilus-python/extensions/__pycache__/*
 
 %files cinnamon
-%_datadir/nemo-python/extensions/*
+%_datadir/nemo-python/extensions/*.py
+%_datadir/nemo-python/extensions/__pycache__/*
 
 %changelog
+* Tue May 21 2024 Evgeniy Korneechev <ekorneechev@altlinux.org> 3.13.0-alt1
+- new version
+- fixed runtime dependencies for -caja, -nautilus and -nemo noarch subpackages (ALT#50357). thanks aris@
+
 * Thu Mar 21 2024 Evgeniy Korneechev <ekorneechev@altlinux.org> 3.12.2-alt1
 - new version (ALT#49724)
 
