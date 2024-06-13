@@ -1,5 +1,5 @@
 Name: s3backer
-Version: 2.1.2
+Version: 2.1.3
 Release: alt1
 
 Summary: FUSE-based single file backing store via Amazon S3
@@ -7,10 +7,11 @@ License: GPLv2
 Group: System/Kernel and hardware
 Url: https://github.com/archiecobbs/s3backer
 
-Requires: fuse
+Requires: fuse %_sbindir/nbd-client
 
 Source: %name-%version-%release.tar
-BuildRequires: libcurl-devel libexpat-devel libfuse-devel libssl-devel libzstd-devel zlib-devel
+BuildRequires: libcurl-devel libexpat-devel libfuse-devel libssl-devel
+BuildRequires: libzstd-devel nbdkit-devel zlib-devel
 
 %description
 s3backer is a filesystem that contains a single file backed by the Amazon S3.
@@ -24,6 +25,8 @@ rather than a filesystem.
 %setup
 
 %build
+export ac_cv_path_NBD_CLIENT_EXECUTABLE=%_sbindir/nbd-client
+export ac_cv_path_MODPROBE_EXECUTABLE=%_sbindir/modprobe
 %autoreconf
 %configure
 %make_build
@@ -36,9 +39,13 @@ rather than a filesystem.
 %files
 %doc README
 %_bindir/s3backer
+%_libdir/nbdkit/plugins/nbdkit-s3backer-plugin.so
 %_man1dir/s3backer.1*
 
 %changelog
+* Thu Jun 13 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.1.3-alt1
+- 2.1.3 released
+
 * Thu Apr 25 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.1.2-alt1
 - 2.1.2 released
 
