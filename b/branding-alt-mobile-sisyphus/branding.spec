@@ -10,7 +10,7 @@
 
 Name: branding-%flavour
 Version: 2024.04
-Release: alt2
+Release: alt3
 
 Url: https://www.altlinux.org/ALT_Mobile
 
@@ -221,6 +221,9 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/gtk-3.0/gtk.css
 
 %changelog
+* Thu Jun 13 2024 Anton Midyukov <antohami@altlinux.org> 2024.04-alt3
+- indexhtml: install fonts
+
 * Sat Jun 08 2024 Anton Midyukov <antohami@altlinux.org> 2024.04-alt2
 - Add indexhtml
 
