@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 0.1
+%define ver_major 0.2
 %define rdn_name org.sigxcpu.Livi
 
 %def_enable check
@@ -27,6 +27,8 @@ Source: %name-%version.tar
 
 Requires: gst-plugins-base1.0 >= %gst_ver
 Requires: gst-libav
+# since 0.2.0 "Allow to use gtk4paintablesink instead of in-tree sink"
+Requires: gst-plugin-gtk4
 Requires: dconf
 
 BuildRequires(pre): rpm-macros-meson
@@ -64,6 +66,9 @@ to make playing hw accelerated videos with hantro and OpenGL simple.
 %doc README* NEWS
 
 %changelog
+* Thu Jun 13 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
+- 0.2.0
+
 * Mon Mar 18 2024 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt1
 - updated to v0.1.0-2-g7c00761
 
