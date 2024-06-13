@@ -5,7 +5,7 @@
 %def_with check
 
 Name: certmonger
-Version: 0.79.19
+Version: 0.79.20
 Release: alt1
 Summary: Certificate status monitor and PKI enrollment client
 License: GPL-3.0-or-later
@@ -156,6 +156,9 @@ getcert refresh-ca -a >/dev/null 2>&1 || help
 %_man8dir/certmonger.8.*
 
 %changelog
+* Tue Jun 11 2024 Stanislav Levin <slev@altlinux.org> 0.79.20-alt1
+- 0.79.19 -> 0.79.20.
+
 * Thu Dec 21 2023 Stanislav Levin <slev@altlinux.org> 0.79.19-alt1
 - 0.79.18 -> 0.79.19.
 
