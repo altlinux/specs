@@ -4,13 +4,13 @@
 %def_disable check
 
 Name: editorconfig
-Version: 0.12.7
+Version: 0.12.8
 Release: alt1
 
 Summary: Parser for EditorConfig files written in C
 Group: Development/Other
 License: BSD-2-Clause
-Url: https://%name.org
+Url: https://editorconfig.org
 
 %define srcname %name-core-c
 Vcs: https://github.com/%name/%srcname
@@ -94,6 +94,9 @@ This package contains files needed for development EditorConfig plugins.
 %doc %_cmake__builddir/doc/html}
 
 %changelog
+* Thu Jun 13 2024 Yuri N. Sedunov <aris@altlinux.org> 0.12.8-alt1
+- 0.12.8
+
 * Sun Mar 31 2024 Yuri N. Sedunov <aris@altlinux.org> 0.12.7-alt1
 - 0.12.7
 
