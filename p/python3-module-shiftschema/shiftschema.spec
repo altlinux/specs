@@ -1,32 +1,28 @@
 %define _unpackaged_files_terminate_build 1
-%define oname shiftschema
+%define pypi_name shiftschema
+%define mod_name %pypi_name
 
+# doesn't work because of nose usage
 %def_without check
 
-Name: python3-module-%oname
-Version: 0.3.0
+Name: python3-module-%pypi_name
+Version: 0.3.1
 Release: alt1
-Summary: Python3 filtering and validation library
+Summary: Filtering and validation library for arbitrary data structures
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/shiftschema/
-
-# https://github.com/projectshift/shift-schema.git
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-
+Vcs: https://github.com/projectshift/shift-schema
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-# bad pattern in upstream for reading its own version (self-import)
-BuildRequires: python3(bleach)
-BuildRequires: python3(slugify)
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(flask_wtf)
-BuildRequires: python3(nose)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -41,30 +37,31 @@ and your domain logic, not your views or forms logic.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements.txt
+%endif
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    {envbindir}/nosetests -v {posargs:tests}
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -s false --develop
+# doesn't work because of nose usage
+%pyproject_run -- ./cli test
 
 %files
 %doc README.md
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 10 2024 Stanislav Levin <slev@altlinux.org> 0.3.1-alt1
+- 0.3.0 -> 0.3.1.
+
 * Thu Mar 10 2022 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1
 - 0.0.11 -> 0.3.0.
 
