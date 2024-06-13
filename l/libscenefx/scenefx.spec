@@ -2,7 +2,7 @@
 
 Name:     libscenefx
 Version:  0.1
-Release:  alt1
+Release:  alt2
 
 Summary:  A drop-in wlroots replacement that allows eye-candy effects
 License:  MIT
@@ -56,7 +56,7 @@ This package provides development files for %name library.
 
 %files -n %name%soversion
 %doc README.md
-%_libdir/%name.so.*
+%_libdir/%name.so.%soversion
 
 %files -n %name-devel
 %_includedir/scenefx/
@@ -64,5 +64,8 @@ This package provides development files for %name library.
 %_pkgconfigdir/scenefx.pc
 
 %changelog
+* Thu Jun 13 2024 Roman Alifanov <ximper@altlinux.org> 0.1-alt2
+- correction of files section (to avoid errors when the soversion changes)
+
 * Fri May 24 2024 Roman Alifanov <ximper@altlinux.org> 0.1-alt1
 - initial build for sisyphus
