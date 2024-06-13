@@ -1,5 +1,5 @@
 Name: xapp-thumbnailers
-Version: 1.2.3
+Version: 1.2.4
 Release: alt1
 
 Summary: Thumbnailers for GTK Desktop Environments
@@ -60,6 +60,14 @@ Requires: %name = %EVR
 %description -n xapp-vorbiscomment-thumbnailer
 %summary
 
+%package -n xapp-gimp-thumbnailer
+Summary: Thumbnailer for gimp files
+Group: Graphics
+Requires: %name = %EVR
+
+%description -n xapp-gimp-thumbnailer
+%summary
+
 %prep
 %setup
 
@@ -70,6 +78,8 @@ Requires: %name = %EVR
 
 %install
 %meson_install
+
+chmod 755 %buildroot/usr/bin/xapp-vorbiscomment-thumbnailer
 
 %files
 %python3_sitelibdir/XappThumbnailers/
@@ -99,7 +109,17 @@ Requires: %name = %EVR
 %dir %_datadir/thumbnailers/
 %_datadir/thumbnailers/xapp-vorbiscomment-thumbnailer.thumbnailer
 
+%files -n xapp-gimp-thumbnailer
+%_bindir/xapp-gimp-thumbnailer
+%dir %_datadir/thumbnailers/
+%_datadir/thumbnailers/xapp-gimp-thumbnailer.thumbnailer
+
 %changelog
+* Wed Jun 12 2024 Ivan Mazhukin <vanomj@altlinux.org> 1.2.4-alt1
+- new version (1.2.4) with rpmgs script
+- added subpackage for gimp thumbnailers
+- fixed xapp-vorbiscomment-thumbnailer bin permissions
+
 * Fri Apr 26 2024 Ivan Mazhukin <vanomj@altlinux.org> 1.2.3-alt1
 - initial build for ALT Sisyphus
 
