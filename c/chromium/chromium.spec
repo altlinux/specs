@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        125.0.6422.141
+Version:        126.0.6478.55
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -74,7 +74,7 @@ Patch015: 0015-DEBIAN-use-system-jpeg-library.patch
 Patch016: 0016-DEBIAN-use-system-libevent-library.patch
 Patch017: 0017-DEBIAN-work-around-a-clang-bug-with-libstdc.patch
 Patch018: 0018-Use-yandex-search-as-default.patch
-Patch019: 0019-GENTOO-EnumTable-crash.patch
+Patch019: 0019-DEBIAN-gpu-header.patch
 Patch020: 0020-ALT-Do-not-hardcode-flatbuffer-version.patch
 Patch021: 0021-FEDORA-System-brotli.patch
 Patch022: 0022-Revert-Use-aggregate-init-designed-initializers-more.patch
@@ -90,16 +90,14 @@ Patch031: 0031-FEDORA-disable-screen-ai-service.patch
 Patch032: 0032-FEDORA-libavif-deps.patch
 Patch033: 0033-ALT-rename-std::powf.patch
 Patch034: 0034-DEBIAN-span-optional.patch
-Patch040: 0040-DEBIAN-appservice-include.patch
-Patch041: 0041-DEBIAN-lens-include.patch
-Patch042: 0042-DEBIAN-mojo-bindings-include.patch
-#Patch043: 0043-DEBIAN-mojo-null.patch
+Patch035: 0035-DEBIAN-quiche-deque.patch
+Patch040: 0040-DEBIAN-realtime-reporting.patch
+Patch041: 0041-DEBIAN-blink-header.patch
+Patch042: 0042-DEBIAN-urlvisit-header.patch
+Patch043: 0043-DEBIAN-accessibility-format.patch
 Patch044: 0044-DEBIAN-mojo.patch
-Patch045: 0045-DEBIAN-ninja.patch
-Patch046: 0046-DEBIAN-no-vector-consts.patch
 Patch047: 0047-DEBIAN-ruy-include.patch
 Patch048: 0048-DEBIAN-tabstrip-include.patch
-Patch049: 0049-DEBIAN-vulkan-include.patch
 Patch050: 0050-DEBIAN-bad-font-gc0000.patch
 Patch051: 0051-DEBIAN-bad-font-gc000.patch
 Patch052: 0052-DEBIAN-bad-font-gc00.patch
@@ -524,6 +522,28 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Jun 13 2024 Andrey Cherepanov <cas@altlinux.org> 126.0.6478.55-alt1
+- New version (126.0.6478.55) (ALT #50621).
+- Security fixes:
+  + CVE-2024-5830: Type Confusion in V8.
+  + CVE-2024-5831: Use after free in Dawn.
+  + CVE-2024-5832: Use after free in Dawn.
+  + CVE-2024-5833: Type Confusion in V8.
+  + CVE-2024-5834: Inappropriate implementation in Dawn.
+  + CVE-2024-5835: Heap buffer overflow in Tab Groups.
+  + CVE-2024-5836: Inappropriate Implementation in DevTools.
+  + CVE-2024-5837: Type Confusion in V8.
+  + CVE-2024-5838: Type Confusion in V8.
+  + CVE-2024-5839: Inappropriate Implementation in Memory Allocator.
+  + CVE-2024-5840: Policy Bypass in CORS.
+  + CVE-2024-5841: Use after free in V8.
+  + CVE-2024-5842: Use after free in Browser UI.
+  + CVE-2024-5843: Inappropriate implementation in Downloads.
+  + CVE-2024-5844: Heap buffer overflow in Tab Strip.
+  + CVE-2024-5845: Use after free in Audio.
+  + CVE-2024-5846: Use after free in PDFium.
+  + CVE-2024-5847: Use after free in PDFium.
+
 * Fri May 31 2024 Andrey Cherepanov <cas@altlinux.org> 125.0.6422.141-alt1
 - New version (125.0.6422.141).
 - Security fixes:
