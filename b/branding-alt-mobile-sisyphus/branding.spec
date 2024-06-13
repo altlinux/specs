@@ -10,7 +10,7 @@
 
 Name: branding-%flavour
 Version: 2024.04
-Release: alt3
+Release: alt4
 
 Url: https://www.altlinux.org/ALT_Mobile
 
@@ -197,6 +197,9 @@ cp -ar phosh/* %buildroot/
 %post bootsplash
 subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 
+%post indexhtml
+%_sbindir/indexhtml-update
+
 %files release
 %_sysconfdir/buildreqs/packages/ignore.d/*
 %_sysconfdir/*-release
@@ -221,6 +224,9 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/gtk-3.0/gtk.css
 
 %changelog
+* Fri Jun 14 2024 Anton Midyukov <antohami@altlinux.org> 2024.04-alt4
+- indexhtml: add postcript for run indexhtml-update
+
 * Thu Jun 13 2024 Anton Midyukov <antohami@altlinux.org> 2024.04-alt3
 - indexhtml: install fonts
 
