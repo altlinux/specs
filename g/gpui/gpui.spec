@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpui
-Version: 0.2.44
+Version: 0.2.45
 Release: alt1
 
 Summary: Group policy editor
@@ -112,6 +112,11 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Fri Jun 6 2024 Vladimir Rubanov <august@altlinux.org> 0.2.45-alt1
+- 0.2.45-alt1
+- Fixes:
+  + Fix creation of gpt.ini while saving.
+
 * Fri Apr 1 2024 Vladimir Rubanov <august@altlinux.org> 0.2.44-alt1
 - 0.2.44-alt1
 - Fixes:
