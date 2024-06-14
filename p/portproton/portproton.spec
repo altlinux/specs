@@ -1,12 +1,14 @@
 %add_findreq_skiplist %_bindir/portproton
 AutoProv: no
 
+%define xdg_name ru.linux_gaming.PortProton
+
 %define i586_req_l1 libvulkan.so.1 libGL.so.1 libgio-2.0.so.0 libnm.so.0 libnss3.so libunwind.so.8
 %define i586_req_l2 libVkLayer_MESA_device_select.so libgamemodeauto.so.0 libnsl.so.1
 
 Name: portproton
-Version: 1.5
-Release: alt2
+Version: 1.6.1
+Release: alt1
 
 Summary: Installer for PortProton
 
@@ -22,7 +24,7 @@ Requires: libvulkan1 vulkan-tools libd3d libGL gamemode fontconfig xrdb
 Requires: libcurl libgio libnm libnsl1 libnss glibc-nss glibc-pthread
 Requires: /usr/bin/convert exiftool icoextract-thumbnailer
 
-# Requires 32-bit meta package:
+# Requires 32-bit meta package (needed create arepo defore build base package):
 # Requires: portproton-dependency
 
 ExclusiveArch: i586 x86_64
@@ -57,8 +59,9 @@ ln -s /usr/lib/vdpau/libvdpau_gallium.so.1.0.0 %buildroot%_libdir/%name/
 
 %ifarch x86_64
 install -Dm755 %name %buildroot%_bindir/%name
-install -Dm644 %name.desktop %buildroot%_desktopdir/%name.desktop
-install -Dm644 %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
+install -Dm644 %xdg_name.desktop %buildroot%_desktopdir/%xdg_name.desktop
+install -Dm644 %xdg_name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%xdg_name.svg
+install -Dm644 %xdg_name.metainfo.xml %buildroot%_datadir/metainfo/%xdg_name.metainfo.xml
 %endif
 
 %ifarch i586
@@ -70,11 +73,16 @@ install -Dm644 %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %files
 %doc LICENSE
 %_bindir/%name
-%_desktopdir/%name.desktop
-%_iconsdir/hicolor/scalable/apps/%name.svg
+%_desktopdir/%xdg_name.desktop
+%_iconsdir/hicolor/scalable/apps/%xdg_name.svg
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %endif
 
 %changelog
+* Fri Jun 14 2024 Mikhail Tergoev <fidel@altlinux.org> 1.6.1-alt1
+- updated to v1.6.1
+- added metainfo
+
 * Thu Jun 13 2024 Mikhail Tergoev <fidel@altlinux.org> 1.5-alt2
 - added meta package for installation 32-bit dependencies
 
