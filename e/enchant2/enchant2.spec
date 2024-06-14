@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: %_name%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 Epoch: 1
 
@@ -98,6 +98,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Fri Jun 14 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.8.1-alt1
+- 2.8.1
+
 * Wed May 29 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.8.0-alt1
 - 2.8.0
 
