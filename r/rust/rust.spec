@@ -1,6 +1,6 @@
 Name: rust
 Epoch: 1
-Version: 1.78.0
+Version: 1.79.0
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -267,7 +267,7 @@ CLANG_RUNTIME_DIR=`clang -print-runtime-dir`
 test -r "$CLANG_RUNTIME_DIR/libclang_rt.profile.a"
 
 cat > config.toml <<EOF
-changelog-seen = 2
+change-id = 123711
 [build]
 cargo = "%cargo"
 rustc = "%rustc"
@@ -465,6 +465,9 @@ rm -rf %rustdir
 %rustlibdir/src
 
 %changelog
+* Fri Jun 14 2024 Ajrat Makhmutov <rauty@altlinux.org> 1:1.79.0-alt1
+- New version (1.79.0).
+
 * Tue May 14 2024 Ajrat Makhmutov <rauty@altlinux.org> 1:1.78.0-alt1
 - New version (1.78.0).
 - Move rustlib into /usr/lib/ (closes: 49687).
