@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 1.6.3
+Version: 1.6.4
 Release: alt1
 
 Summary: Time-handling functionality from netcdf4-python
@@ -11,8 +11,8 @@ Summary: Time-handling functionality from netcdf4-python
 License: MIT and GPLv3
 Group:   Development/Python3
 URL:     https://pypi.org/project/cftime
+VCS:     https://github.com/Unidata/cftime
 
-# https://github.com/Unidata/cftime
 Source:  %name-%version.tar
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
@@ -53,6 +53,9 @@ py.test-3 -v \
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Fri Jun 14 2024 Grigory Ustinov <grenka@altlinux.org> 1.6.4-alt1
+- Automatically updated to 1.6.4.
+
 * Sat Oct 21 2023 Grigory Ustinov <grenka@altlinux.org> 1.6.3-alt1
 - Automatically updated to 1.6.3.
 
