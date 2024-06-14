@@ -6,7 +6,7 @@
 
 Name:    vault
 Version: 1.13.12
-Release: alt2
+Release: alt3
 
 Summary: A tool for secrets management, encryption as a service, and privileged access management
 License: MPL-2.0
@@ -105,6 +105,24 @@ setcap -q cap_ipc_lock+ep %_bindir/%name 2>/dev/null ||:
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Fri Jun 14 2024 Nikolay Burykin <bne@altlinux.org> 1.13.12-alt3
+- Bump go.mod for avoiding security risks
+- Security fixes:
+  + GHSA-9763-4f94-gfch
+  + CVE-2023-50658
+  + GHSA-mhpq-9638-x6pw
+  + CVE-2024-28180
+  + CVE-2024-27304
+  + GHSA-7jwh-3vrq-q3m8
+  + CVE-2024-27289
+  + CVE-2024-27304
+  + GHSA-7jwh-3vrq-q3m8
+  + GHSA-5x4g-q5rc-36jp
+  + CVE-2023-48795
+  + CVE-2023-45288
+  + CVE-2024-24786
+  + CVE-2023-45288
+
 * Wed Mar 06 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.13.12-alt2
 - NMU: fixed FTBFS on LoongArch (patched vendored gopsutil and bbolt)
 
