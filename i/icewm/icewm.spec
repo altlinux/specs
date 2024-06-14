@@ -4,7 +4,7 @@
 %def_with markdown
 
 Name: icewm
-Version: 3.5.0
+Version: 3.5.1
 Release: alt1
 Epoch:3
 
@@ -31,7 +31,6 @@ Source6: start%realname
 Source7: IceWM.xpm
 Source8: %realname.wmsession
 Source9: README.ALT
-Source11: restart
 Source12: icewm-old-changelog.bz2
 
 Patch0: %realname-%version-%release.patch
@@ -77,7 +76,7 @@ Extra themes that included to IceWM distribution
 
 %build
 %cmake	-DPREFIX=%_prefix \
-	-DCFGDIR=%_sysconfdir/X11/%realname \
+	-DCFGDIR=%_x11sysconfdir/%realname \
 	-DLIBDIR=%_x11x11dir/%realname \
 	-DDOCDIR=%_icewmdocdir \
 	-DCONFIG_IMLIB2=on \
@@ -106,17 +105,16 @@ install -pD -m644 %SOURCE3 %buildroot%_miconsdir/%realname.png
 install -pD -m644 %SOURCE4 %buildroot%_niconsdir/%realname.png
 install -pD -m644 %SOURCE5 %buildroot%_liconsdir/%realname.png
 install -pD -m644 %SOURCE7 %buildroot%_pixmapsdir/IceWM.xpm
-install -pD -m644 %SOURCE8 %buildroot%_sysconfdir/X11/wmsession.d/04IceWM
+install -pD -m644 %SOURCE8 %buildroot%_x11sysconfdir/wmsession.d/04IceWM
 install -m644 %SOURCE9 README.ALT
 install -m644 %SOURCE12 %buildroot%_icewmdocdir/icewm-old-changelog.bz2
 install -m644 AUTHORS %buildroot%_icewmdocdir/AUTHORS
 install -m644 NEWS %buildroot%_icewmdocdir/NEWS
 install -m644 README.md %buildroot%_icewmdocdir/README.md
 
-mkdir -p %buildroot%_sysconfdir/X11/%realname
+mkdir -p %buildroot%_x11sysconfdir/%realname
 
 install -m 755 %SOURCE6 %buildroot%_bindir/start%realname
-install -m 755 %SOURCE11 %buildroot%_sysconfdir/X11/%realname/restart
 
 %find_lang  %realname
 
@@ -125,10 +123,9 @@ rm -f %buildroot/%_bindir/%realname-set-gnomewm
 rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 
 %files -f %realname.lang
-%dir %_sysconfdir/X11/%realname
-%config(noreplace) %_sysconfdir/X11/%realname/restart
+%dir %_x11sysconfdir/%realname
 %config(noreplace) %_sysconfdir/menu-methods/*
-%_sysconfdir/X11/wmsession.d/*
+%_x11sysconfdir/wmsession.d/*
 %_bindir/*
 %dir %_x11x11dir/%realname
 %_x11x11dir/%realname/*
@@ -148,6 +145,11 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Fri Jun 14 2024 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.5.1-alt1
+- 3.5.1
+- fixed showing of processes status by htop
+- removed unused restart script
+
 * Fri May 24 2024 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.5.0-alt1
 - 3.5.0
 
