@@ -1,5 +1,5 @@
 Name: rapidyaml
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 
 Summary: A library to parse and emit YAML
@@ -80,6 +80,9 @@ This package contains development headers and examples.
 %_libdir/libryml.so
 
 %changelog 
+* Fri Jun 14 2024 Nazarov Denis <nenderus@altlinux.org> 0.7.0-alt1
+- Version 0.7.0
+
 * Wed May 15 2024 Nazarov Denis <nenderus@altlinux.org> 0.6.0-alt1
 - Version 0.6.0
 
