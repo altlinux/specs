@@ -8,7 +8,7 @@ AutoProv: no
 
 Name: portproton
 Version: 1.6.1
-Release: alt1
+Release: alt2
 
 Summary: Installer for PortProton
 
@@ -22,7 +22,7 @@ Requires: bubblewrap cabextract zstd gawk tar xz pciutils coreutils file
 Requires: curl wmctrl xdg-utils desktop-file-utils yad
 Requires: libvulkan1 vulkan-tools libd3d libGL gamemode fontconfig xrdb
 Requires: libcurl libgio libnm libnsl1 libnss glibc-nss glibc-pthread
-Requires: /usr/bin/convert exiftool icoextract-thumbnailer
+Requires: /usr/bin/convert /usr/bin/exiftool /usr/bin/icoextract
 
 # Requires 32-bit meta package (needed create arepo defore build base package):
 # Requires: portproton-dependency
@@ -79,6 +79,9 @@ install -Dm644 %xdg_name.metainfo.xml %buildroot%_datadir/metainfo/%xdg_name.met
 %endif
 
 %changelog
+* Fri Jun 14 2024 Mikhail Tergoev <fidel@altlinux.org> 1.6.1-alt2
+- fix build for branch p10
+
 * Fri Jun 14 2024 Mikhail Tergoev <fidel@altlinux.org> 1.6.1-alt1
 - updated to v1.6.1
 - added metainfo
