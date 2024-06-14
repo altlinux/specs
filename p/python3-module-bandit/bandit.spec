@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 1.7.8
+Version: 1.7.9
 Release: alt1
 
 Summary: Bandit is a tool designed to find common security issues in Python code
@@ -69,6 +69,9 @@ export PBR_VERSION=%version
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Fri Jun 14 2024 Grigory Ustinov <grenka@altlinux.org> 1.7.9-alt1
+- Automatically updated to 1.7.9.
+
 * Tue Mar 26 2024 Grigory Ustinov <grenka@altlinux.org> 1.7.8-alt1
 - Automatically updated to 1.7.8.
 
