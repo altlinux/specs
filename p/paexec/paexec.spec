@@ -1,6 +1,6 @@
 Name: paexec
-Version: 1.1.5
-Release: alt2
+Version: 1.1.6
+Release: alt1
 
 Summary: paexec distributes tasks over network or CPUs
 
@@ -63,6 +63,12 @@ export USE_TEST_BUFSIZES='1 10 100 1000'
 %doc examples
 
 %changelog
+* Fri Jun 14 2024 Aleksey Cheusov <cheusov@altlinux.org> 1.1.6-alt1
+- 1.1.6-alt1
+
+    option -n: ignore leading spaces and tabs
+    add more tests
+
 * Thu May 30 2024 Aleksey Cheusov <cheusov@altlinux.org> 1.1.5-alt2
 - Requires libmaa >= 1.5.1
 
