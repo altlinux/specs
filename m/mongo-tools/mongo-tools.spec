@@ -19,7 +19,7 @@
 %global import_path     %{provider_prefix}
 
 Name: mongo-tools
-Version: 100.9.4
+Version: 100.9.5
 Release: alt1
 
 Summary: Mongo client tools
@@ -75,6 +75,9 @@ install -p -m 644 man/* %{buildroot}%{_man1dir}/
 %_man1dir/*.1*
 
 %changelog
+* Sat Jun 15 2024 Andrey Cherepanov <cas@altlinux.org> 100.9.5-alt1
+- New version.
+
 * Mon Feb 12 2024 Andrey Cherepanov <cas@altlinux.org> 100.9.4-alt1
 - New version (ALT #49305).
 - Fixed summary.
