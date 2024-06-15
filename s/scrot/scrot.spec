@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: scrot
-Version: 1.10
+Version: 1.11.1
 Release: alt1
 
 Summary: Screen-shot capture using Imlib 2
@@ -37,6 +37,9 @@ dynamic loaders of imlib2.
 %_defaultdocdir/%name-%version/
 
 %changelog
+* Sat Jun 15 2024 Dmitriy Khanzhin <jinn@altlinux.org> 1.11.1-alt1
+- 1.11.1
+
 * Fri Jan 12 2024 Dmitriy Khanzhin <jinn@altlinux.org> 1.10-alt1
 - 1.10-58-ge46d19f (by git describe --tags)
 - Updated BuildRequires
