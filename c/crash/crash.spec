@@ -5,16 +5,20 @@
 
 Name:    crash
 Version: 8.0.5
-Release: alt1
+Release: alt2
 Summary: Linux kernel crash utility
 Group:   Development/Debuggers
 License: GPL-3.0-only
 Url:     https://crash-utility.github.io/
-Vcs:     https://github.com/crash-utility/crash.git
+Vcs:     https://github.com/crash-utility/crash
 # Docs:  https://crash-utility.github.io/crash_whitepaper.html
 # Mailing list: https://www.redhat.com/archives/crash-utility/
 # Extensions Url: https://crash-utility.github.io/extensions.html
 # Extensions Vcs: https://github.com/crash-utility/crash-extensions.git
+
+# Crash calls a lot of tools.
+# Non essential requires: bzip2 file findutils gzip less xz
+Requires: binutils
 
 Source0: %name-%version.tar
 Source1: gdb-10.2.tar.gz
@@ -36,6 +40,17 @@ Whitepaper: https://crash-utility.github.io/crash_whitepaper.html
 Note: You will need -debuginfo package for the current kernel installed
       for this tool to work!
 
+%package -n kernel-ci-crash-debuginfo
+Summary: CI test for %name
+Group: Development/Other
+Requires(post): crash = %EVR
+Requires(post): kernel-image-un-def-debuginfo
+Requires(post): rpm-build-vm
+
+%description -n kernel-ci-crash-debuginfo
+%summary with a workaround for 'sisyphus_check: check-deps ERROR: package
+dependencies violation' for a kernel-image.
+
 %prep
 %setup
 install -m644 %SOURCE1 .
@@ -45,7 +60,7 @@ tar xvf crash-extensions/ptdump-1.0.7.tar.gz -C extensions --strip-components=1
 
 %build
 %add_optflags $(getconf LFS_CFLAGS)
-%make_build --output-sync=none RPMPKG=%version-%release CFLAGS="%optflags" CXXFLAGS="%optflags" V=1
+%make_build RPMPKG=%version-%release CFLAGS="%optflags" CXXFLAGS="%optflags" V=1
 # Build what builds. Does not support -j.
 %make -ki extensions
 
@@ -56,6 +71,31 @@ install -Dp -m0644 defs.h  %buildroot%_includedir/crash/defs.h
 mkdir -p %buildroot%_libdir/crash/extensions
 install -p -m0644 extensions/*.so %buildroot%_libdir/crash/extensions
 
+%ifnarch armh
+# armh: crash: cannot find a live memory device
+#       due to no PROC_KCORE support on arm.
+%post -n kernel-ci-crash-debuginfo
+set -exu
+%ifarch %ix86
+KVER=$(cd /lib/modules; ls | head -1)
+echo -e "6.6\n$KVER" | sort -CV || {
+	# WARNING: could not find MAGIC_START!
+	# WARNING: cannot read linux_banner string
+	echo >&2 "Linux $KVER is too old for %_arch (skipping test)."
+	exit 0
+}
+%endif
+vm-run --kvm=only --heredoc <<-EOF1
+	crash <<EOF2 |& tee crash.log
+	ps
+	exit
+	EOF2
+EOF1
+grep 'KERNEL: /usr/lib/debug/.*lib/modules/.*/vmlinux' crash.log
+grep 'DUMPFILE: /proc/kcore' crash.log
+grep -F '[swapper/0]' crash.log
+%endif
+
 %files
 %doc README COPYING3
 %_bindir/crash
@@ -63,7 +103,13 @@ install -p -m0644 extensions/*.so %buildroot%_libdir/crash/extensions
 %_man8dir/crash.8*
 %_libdir/crash
 
+%files -n kernel-ci-crash-debuginfo
+
 %changelog
+* Fri Jun 14 2024 Vitaly Chikunov <vt@altlinux.org> 8.0.5-alt2
+- Fix FTBFS in p10.
+- spec: Add CI package with a smoke test.
+
 * Thu Apr 25 2024 Vitaly Chikunov <vt@altlinux.org> 8.0.5-alt1
 - Update to 8.0.5 (2024-04-23).
 
