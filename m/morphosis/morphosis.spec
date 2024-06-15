@@ -5,17 +5,17 @@
 %def_enable check
 
 Name: morphosis
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Documents converter for the Gnome Desktop
 License: GPL-3.0-or-later
 Group: Text tools
-Url: https://gitlab.gnome.org/Monster/morphosis
+Url: https://gitlab.gnome.org/World/morphosis
 
 BuildArch: noarch
 
-Vcs: https://gitlab.gnome.org/Monster/morphosis.git
+Vcs: https://gitlab.gnome.org/World/morphosis.git
 Source: %name-%version.tar
 
 %add_python3_path %_datadir/%name
@@ -56,6 +56,9 @@ Libadwaita. Conversions are done with Pandoc.
 %doc README.*
 
 %changelog
+* Sat Jun 15 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt1
+- 1.3
+
 * Tue Jun 04 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2-alt1
 - 1.2
 
