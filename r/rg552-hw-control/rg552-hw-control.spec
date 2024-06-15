@@ -1,6 +1,6 @@
 Name: rg552-hw-control
 Version: 0.1
-Release: alt2
+Release: alt3
 
 Summary: Set of tools for hardware control on Anbernic RG552
 
@@ -29,6 +29,9 @@ for service in rg552-fancontrol.service rg552-wifi.service; do
 install -Dm0644 $service %buildroot%_unitdir/$service
 done
 
+mkdir -p %buildroot%_presetdir
+install -m 0644 20-rg552-hardware.preset %buildroot%_presetdir/
+
 %post
 
 %post_service rg552-fancontrol.service
@@ -42,8 +45,12 @@ done
 %files
 %_bindir/*
 %_unitdir/*.service
+%_presetdir/20-rg552-hardware.preset
 
 %changelog
+* Sat Jun 15 2024 Artyom Bystrov <arbars@altlinux.org> 0.1-alt3
+- Add preset file
+
 * Tue Jun  4 2024 Artyom Bystrov <arbars@altlinux.org> 0.1-alt2
 - Add post section
 
