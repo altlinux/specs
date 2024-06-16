@@ -1,6 +1,6 @@
 Name: nano
-Version: 7.2
-Release: alt1.1
+Version: 8.0
+Release: alt1
 
 Summary: a user-friendly editor, a Pico clone with enhancements
 License: %gpl3plus & %fdl v1.2+
@@ -11,11 +11,11 @@ Packager: Artem Zolochevskiy <azol@altlinux.org>
 
 # https://nano-editor.org/dist/v5/nano-5.8.tar.xz
 Source:  %name-%version.tar
-Patch1:  %name-7.2-build.patch
+Patch1:  %name-8.0-build.patch
 
 BuildRequires(pre): rpm-build-licenses
-# Automatically added by buildreq on Thu Sep 07 2023
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config groff-base libgpg-error libncurses-devel libtinfo-devel perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-parent pkg-config sh4 shared-mime-info xz
+# Automatically added by buildreq on Sun Jun 16 2024
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config groff-base libgpg-error libncurses-devel libtinfo-devel perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-parent perl-unicore pkg-config sh5 shared-mime-info xz
 BuildRequires: groff-extra libmagic-devel libncursesw-devel makeinfo
 
 # Manually added
@@ -38,6 +38,7 @@ Dektop file to %name
 
 %prep
 %setup
+
 %patch1 -p1
 
 
@@ -90,6 +91,9 @@ desktop-file-install --dir %buildroot%_desktopdir .alt/%name.desktop
 %_liconsdir/*
 
 %changelog
+* Sun Jun 16 2024 Hihin Ruslan <ruslandh@altlinux.ru> 8.0-alt1
+- update to 8.0 (Closes: #50609)
+
 * Fri Sep 08 2023 Hihin Ruslan <ruslandh@altlinux.ru> 7.2-alt1.1
 - move %name.png to %name-desktop 
 
