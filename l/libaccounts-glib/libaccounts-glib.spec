@@ -1,139 +1,113 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python3
-# END SourceDeps(oneline)
+# Not in sisyphus yet.
+# See https://bugzilla.altlinux.org/43275.
 %filter_from_requires /dbus-test-runner/d
 %add_optflags %optflags_shared
+
+Name: libaccounts-glib
+Version: 1.27
+Release: alt1
+
+Summary: Accounts framework for Linux and POSIX based platforms
+License: LGPLv2
 Group: System/Libraries
-%add_optflags %optflags_shared
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:           libaccounts-glib
-Version:        1.25
-Release:        alt1_2
-Summary:        Accounts framework for Linux and POSIX based platforms
-License:        LGPLv2
+Url: https://gitlab.com/accounts-sso/libaccounts-glib
 
-# workaround for GitLab bug that puts commit hash into tarball root directory name
-# https://gitlab.com/gitlab-org/gitlab/-/issues/214535
-%global ver_str VERSION_%{version}
+Source: %name-%version.tar
 
-URL:            https://gitlab.com/accounts-sso/libaccounts-glib
-Source0:        %{url}/-/archive/%{ver_str}/%{name}-%{ver_str}.tar.gz
-
-BuildRequires:  gcc
-BuildRequires:  meson >= 0.48.0
-BuildRequires:  python3-devel
-BuildRequires:  python3-module-pygobject3
-BuildRequires:  vala vala-tools
-
-BuildRequires:  pkgconfig(gio-2.0) >= 2.26
-BuildRequires:  pkgconfig(gio-unix-2.0)
-BuildRequires:  pkgconfig(glib-2.0) >= 2.26
-BuildRequires:  pkgconfig(gobject-2.0) >= 2.35.1
-BuildRequires:  pkgconfig(gobject-introspection-1.0)
-BuildRequires:  pkgconfig(libxml-2.0)
-BuildRequires:  pkgconfig(sqlite3) >= 3.7.0
-
-# dependencies for building docs
-BuildRequires:  gtk-doc gtk-doc-mkpdf
-
-# dependencies for tests
-BuildRequires:  pkgconfig(check)
-Source44: import.info
-
+BuildRequires(pre): rpm-build-python3
+BuildRequires: gcc
+BuildRequires: meson >= 0.48.0
+BuildRequires: gobject-introspection-devel
 # package contains python3-gobject overrides
+BuildRequires: python3-devel
+BuildRequires: python3-module-pygobject3
+BuildRequires: vala vala-tools
+BuildRequires: pkgconfig(gio-2.0) >= 2.26
+BuildRequires: pkgconfig(gio-unix-2.0)
+BuildRequires: pkgconfig(glib-2.0) >= 2.26
+BuildRequires: pkgconfig(gobject-2.0) >= 2.35.1
+BuildRequires: pkgconfig(gobject-introspection-1.0)
+BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(sqlite3) >= 3.7.0
+# dependencies for building docs
+BuildRequires: gtk-doc gtk-doc-mkpdf
+# dependencies for tests
+BuildRequires: pkgconfig(check)
 
 %description
-%{summary}.
-
+%summary.
 
 %package devel
+Summary: Development files for %name
 Group: Development/C
-Summary:        Development files for %{name}
-Requires:       %{name} = %{version}-%{release}
+Requires: %name = %EVR
 
 %description devel
-The %{name}-devel package contains libraries and header files for
-developing applications that use %{name}.
-
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
 
 %package docs
+Summary: Documentation for %name
 Group: System/Libraries
-Summary:        Documentation for %{name}
-BuildArch:      noarch
+BuildArch: noarch
 
 %description docs
-The %{name}-docs package contains documentation for %{name}.
-
+The %name-docs package contains documentation for %name.
 
 %prep
-%setup -q -n %{name}-%{ver_str}
-
-
+%setup
 
 %build
 %meson
 %meson_build
 
-
 %install
 %meson_install
-
 # create data directories
-mkdir -p %{buildroot}%{_datadir}/accounts/{applications,providers,services,service_types}
-
+mkdir -p %buildroot%_datadir/accounts/{applications,providers,services,service_types}
 
 %check
 # some tests fail without either dbus-test-runner (not packaged) or X11 session
-%meson_test || :
-
+export LD_LIBRARY_PATH=%buildroot%_libdir:$LD_LIBRARY_PATH
+%meson_test || true
 
 %files
 %doc --no-dereference COPYING
 %doc README.md NEWS
-
-%{_bindir}/ag-backup
-%{_bindir}/ag-tool
-
-%{_libdir}/libaccounts-glib.so.0
-%{_libdir}/libaccounts-glib.so.%{version}
-%{_libdir}/girepository-1.0/Accounts-1.0.typelib
-
-%dir %{_datadir}/xml/accounts/schema/dtd
-%{_datadir}/xml/accounts/schema/dtd/accounts-*.dtd
-
-%dir %{_datadir}/xml/
-%dir %{_datadir}/xml/accounts/
-%dir %{_datadir}/xml/accounts/schema/
-%dir %{_datadir}/accounts/
-%dir %{_datadir}/accounts/applications/
-%dir %{_datadir}/accounts/providers/
-%dir %{_datadir}/accounts/services/
-%dir %{_datadir}/accounts/service_types/
-
-%{python3_sitelibdir}/gi/overrides/Accounts.py
-%{python3_sitelibdir}/gi/overrides/__pycache__/*
-
+%_bindir/ag-backup
+%_bindir/ag-tool
+%_libdir/libaccounts-glib.so.0
+%_libdir/libaccounts-glib.so.%version
+%_libdir/girepository-1.0/Accounts-1.0.typelib
+%dir %_datadir/xml/accounts/schema/dtd
+%_datadir/xml/accounts/schema/dtd/accounts-*.dtd
+%dir %_datadir/xml/
+%dir %_datadir/xml/accounts/
+%dir %_datadir/xml/accounts/schema/
+%dir %_datadir/accounts/
+%dir %_datadir/accounts/applications/
+%dir %_datadir/accounts/providers/
+%dir %_datadir/accounts/services/
+%dir %_datadir/accounts/service_types/
 
 %files devel
-%{_includedir}/libaccounts-glib/
-
-%{_libdir}/libaccounts-glib.so
-%{_libdir}/pkgconfig/libaccounts-glib.pc
-
-%{_datadir}/dbus-1/interfaces/*.xml
-%{_datadir}/gettext/its/accounts-*.its
-%{_datadir}/gettext/its/accounts-*.loc
-%{_datadir}/gir-1.0/Accounts-1.0.gir
-%{_datadir}/vala/vapi/libaccounts-glib.deps
-%{_datadir}/vala/vapi/libaccounts-glib.vapi
-
+%_includedir/libaccounts-glib/
+%_libdir/libaccounts-glib.so
+%_libdir/pkgconfig/libaccounts-glib.pc
+%_datadir/dbus-1/interfaces/*.xml
+%_datadir/gettext/its/accounts-*.its
+%_datadir/gettext/its/accounts-*.loc
+%_datadir/gir-1.0/Accounts-1.0.gir
+%_datadir/vala/vapi/libaccounts-glib.deps
+%_datadir/vala/vapi/libaccounts-glib.vapi
 
 %files docs
-%doc %{_datadir}/gtk-doc/html/libaccounts-glib/
-
+%doc %_datadir/gtk-doc/html/libaccounts-glib/
 
 %changelog
+* Sun Jun 16 2024 Ajrat Makhmutov <rauty@altlinux.org> 1.27-alt1
+- New version (closes: 50602).
+
 * Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.25-alt1_2
 - update to new release by fcimport
 
@@ -199,4 +173,3 @@ mkdir -p %{buildroot}%{_datadir}/accounts/{applications,providers,services,servi
 
 * Sat Dec 17 2011 Igor Vlasenko <viy@altlinux.ru> 0.45-alt1_2
 - initial import by fcimport
-
