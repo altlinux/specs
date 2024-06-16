@@ -1,8 +1,6 @@
 Name:     asusctl
 Version:  5.0.9
-Release:  alt2.1
-
-%define user_service %_unitdir/user
+Release:  alt2.2
 
 Summary:  A control daemon, CLI tools, and a collection of crates for interacting with ASUS ROG laptops 
 License:  MPL-2.0
@@ -101,8 +99,6 @@ export RUSTFLAGS="%rustflags"
 install -m644 %SOURCE1 %_builddir/%name-%version
 %makeinstall_std
 
-mkdir -p %buildroot/%user_service
-mv %buildroot/usr/lib/systemd/user/asusd-user.service %buildroot/%user_service/asusd-user.service
 mkdir -p %buildroot/%_unitdir
 mv %buildroot/usr/lib/systemd/system/asusd.service %buildroot/%_unitdir/asusd.service
 mkdir -p %buildroot/%_udevrulesdir
@@ -119,7 +115,7 @@ mv %buildroot/usr/lib/udev/rules.d/99-asusd.rules %buildroot/%_udevrulesdir/99-a
 
 %_unitdir/*.service
 
-%user_service/*.service
+%_user_unitdir/*.service
 %_iconsdir/hicolor/512x512/apps/*
 %exclude %_iconsdir/hicolor/512x512/apps/rog-control-center.png
 %_iconsdir/hicolor/scalable/*
@@ -132,6 +128,9 @@ mv %buildroot/usr/lib/udev/rules.d/99-asusd.rules %buildroot/%_udevrulesdir/99-a
 %_datadir/rog-gui/*
 
 %changelog
+* Sun Jun 16 2024 Hihin Ruslan <ruslandh@altlinux.ru> 5.0.9-alt2.2
+- Replace %%user_service to %%_user_unitdir
+
 * Sun Jun 09 2024 Hihin Ruslan <ruslandh@altlinux.ru> 5.0.9-alt2.1
 - Fix usrmerge troubles
 
