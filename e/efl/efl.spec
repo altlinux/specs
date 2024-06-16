@@ -16,11 +16,13 @@
 # fb requires tslib?
 %def_disable tslib
 %def_enable egl
-# disabled buy default
-%def_disable ibus
+%def_disable scim
+# disabled by default
+%def_enable ibus
+# glib required for ibus support
+%def_enable glib
 %def_enable gstreamer
 %def_enable emotion
-%def_disable elogind
 %def_enable avahi
 # disabled by default in 1.26.0
 %def_disable json
@@ -32,6 +34,7 @@
 %def_enable jxl
 %endif
 %def_disable physics
+%def_disable rlottie
 
 # elua disabled by default
 %ifarch %luajit_arches
@@ -45,7 +48,7 @@
 
 Name: efl
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Enlightenment Foundation Libraries
 Group: System/Libraries
@@ -65,6 +68,8 @@ Patch2000: efl-1.25.1-alt-e2k.patch
 %add_findreq_skiplist %_libdir/evas/utils/evas_generic_pdf_loader.libreoffice
 #Requires: LibreOffice
 
+%{?_enable_ibus:Requires: ibus}
+
 BuildRequires(pre): rpm-macros-meson rpm-macros-luajit rpm-build-python3 rpm-build-systemd
 BuildRequires: meson gcc-c++ glibc-kernheaders glib2-devel libcheck-devel lcov doxygen
 BuildRequires: libpng-devel libjpeg-devel libopenjpeg2.0-devel libtiff-devel
@@ -81,22 +86,26 @@ BuildRequires: libudev-devel libGL-devel libgnutls-devel
 %{?_enable_x11:
 BuildRequires: libX11-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXext-devel
 BuildRequires: libXfixes-devel libXinerama-devel libXrandr-devel libXrender-devel libXScrnSaver-devel
-BuildRequires: libXtst-devel libXcursor-devel libXp-devel libXi-devel scim-devel
+BuildRequires: libXtst-devel libXcursor-devel libXp-devel libXi-devel
 BuildRequires: libxkbcommon-x11-devel}
 %{?_enable_drm:BuildRequires: libdrm-devel libgbm-devel libinput-devel}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-server-devel libwayland-cursor-devel
 BuildRequires: wayland-protocols libxkbcommon-devel >= 0.6.0 libuuid-devel libwayland-egl-devel}
+BuildRequires: pkgconfig(rlottie)
 
 %{?_enable_elua:BuildRequires: libluajit-devel}
 %ifnarch %e2k
 BuildRequires: libunwind-devel
 %endif
+%{?_enable_scim:BuildRequires: scim-devel}
 %{?_enable_ibus:BuildRequires: libibus-devel}
 %{?_enable_tslib:BuildRequires: libts-devel}
 %{?_enable_egl:BuildRequires: libEGL-devel libwayland-egl-devel}
 %{?_enable_gstreamer:BuildRequires: gst-plugins%gst_api_ver-devel}
 %{?_enable_avahi:BuildRequires: libavahi-glib-devel}
 %{?_enable_physics:BuildRequires: libbullet3-devel}
+%{?_enable_rlottie:BuildRequires: pkgconfig(rlottie)}
+
 # for elementary
 BuildRequires: /proc dbus-tools-gui doxygen /usr/bin/convert
 # for evas_generic_loaders
@@ -106,7 +115,6 @@ BuildRequires: librsvg-devel
 BuildRequires: gst-plugins1.0-devel
 BuildRequires: zlib-devel
 BuildRequires: libraw-devel libgomp-devel
-%{?_enable_elogind:BuildRequires: libelogind-devel}
 
 %description
 EFL is a collection of libraries for handling many common tasks a
@@ -251,17 +259,18 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 
 %build
 %meson \
-	%{?_disable_x11:-Dx11=false} \
-	%{?_enable_wayland:-Dwl=true} \
-	%{?_enable_drm:-Ddrm=true} \
-	%{?_enable_fb:-Dfb=true} \
-	%{?_enable_elogind:-Delogind=true} \
-	%{?_enable_elua:-Delua=true} \
-	%{?_enable_tslib:-Dtslib=true} \
-	%{?_disable_gstreamer:-Dgstreamer=false} \
-	%{?_enable_avahi:-Davahi=true} \
-	%{?_enable_physics:-Dphysics=true} \
+	%{subst_enable_meson_bool x11 x11} \
+	%{subst_enable_meson_bool wayland wl} \
+	%{subst_enable_meson_bool drm drm} \
+	%{subst_enable_meson_bool fb fb} \
+	%{subst_enable_meson_bool elua elua} \
+	%{subst_enable_meson_bool tslib tslib} \
+	%{subst_enable_meson_bool gstreamer gstreamer} \
+	%{subst_enable_meson_bool avahi avahi} \
+	%{subst_enable_meson_bool physics physics} \
 	-Devas-loaders-disabler="[%{?_disable_json:'json',}%{?_disable_avif: 'avif',}%{?_disable_heif: 'heif',}%{?_disable_jxl: 'jxl'}]" \
+	%{?_disable_scim:-Decore-imf-loaders-disabler="['scim']"} \
+	%{subst_enable_meson_bool glib glib} \
 	-Dmount-path=/bin/mount \
 	-Dunmount-path=/bin/umount \
 	-Deject-path=%_bindir/eject
@@ -446,6 +455,9 @@ export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_fi
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Sun Jun 16 2024 Yuri N. Sedunov <aris@altlinux.org> 1.27.0-alt1.1
+- rebuilt with ibus support instead of scim (ALT #50655)
+
 * Sun Dec 24 2023 Yuri N. Sedunov <aris@altlinux.org> 1.27.0-alt1
 - 1.27.0
 
