@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.11.1
+Version: 2.12.0
 Release: alt1
 
 Summary: Python style guide checker
@@ -56,6 +56,9 @@ mv %buildroot%_bindir/pycodestyle{,.py3}
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 17 2024 Stanislav Levin <slev@altlinux.org> 2.12.0-alt1
+- 2.11.1 -> 2.12.0.
+
 * Wed Feb 07 2024 Anton Zhukharev <ancieg@altlinux.org> 2.11.1-alt1
 - Updated to 2.11.1.
 - Distributed under MIT license.
