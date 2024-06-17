@@ -7,9 +7,9 @@
 Name: cura
 Epoch: 1
 Version: 5.4.0
-Release: alt2
+Release: alt3
 Summary: 3D printer control software
-License: LGPLv3+
+License: LGPL-3.0-or-later
 
 Group: Engineering
 Url: https://github.com/Ultimaker/Cura
@@ -62,6 +62,7 @@ BuildRequires: python3(importlib_metadata)
 %endif
 
 %py3_requires serial zeroconf
+%py3_requires stl
 Requires: python3-module-savitar
 Requires: Uranium = 5.4.0
 Requires: CuraEngine = %epoch:%version
@@ -158,6 +159,10 @@ desktop-file-validate %buildroot%_datadir/applications/com.ultimaker.cura.deskto
 %_libexecdir/%name
 
 %changelog
+* Tue Jun 18 2024 Anton Midyukov <antohami@altlinux.org> 1:5.4.0-alt3
+- add dependency on python3(stl) (Closes: 49331)
+- spec: convert License to SPDX format
+
 * Mon Jan 29 2024 Anton Midyukov <antohami@altlinux.org> 1:5.4.0-alt2
 - fix build with python 3.12
 
