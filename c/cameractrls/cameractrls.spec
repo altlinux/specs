@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cameractrls
-Version: 0.6.5
+Version: 0.6.6
 Release: alt1
 
 Summary: Camera controls
@@ -72,6 +72,9 @@ popd
 %python3_sitelibdir/CameraCtrls
 
 %changelog
+* Mon Jun 17 2024 Mikhail Tergoev <fidel@altlinux.org> 0.6.6-alt1
+- 0.6.6
+
 * Thu Jun 06 2024 Mikhail Tergoev <fidel@altlinux.org> 0.6.5-alt1
 - 0.6.5
 
