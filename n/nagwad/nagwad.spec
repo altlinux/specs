@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define icinga_user icinga
 
 Name: 	  nagwad
-Version:  0.10.5
+Version:  0.11.0
 Release:  alt1
 
-Summary:  Nagios watch daemon
+Summary:  System journal event scanner and handler
 License:  GPLv3
 Group:    Monitoring
 Url: 	  http://git.altlinux.org/people/manowar/packages/nagwad.git
@@ -14,12 +15,12 @@ Source:   %name-%version.tar
 BuildRequires: discount libaudit-devel
 
 %description
-Daemon that listens to journald and generates alerts based on journal messages
-Example configuration works with alterator-ports-access. It provides Nagios
-alerts when unauthorized USB devices are inserted.
+Daemon that continuously reads the system journal and generates events
+based on journal messages. The example configuration contains
+templates to pass the events further to Icinga and Nagios.
 
 %package service
-Summary: Nagios watch daemon
+Summary: System journal event scanner and handler
 Group:   Monitoring
 
 BuildArch: noarch
@@ -33,9 +34,9 @@ Requires: %name-audit = %version-%release
 Conflicts: integ <= 0.4.2-alt2
 
 %description service
-Daemon that listens to journald and generates alerts based on journal messages
-Example configuration works with alterator-ports-access. It provides Nagios
-alerts when unauthorized USB devices are inserted.
+Daemon that continuously reads the system journal and generates events
+based on journal messages. The example configuration contains
+templates to pass the events further to Icinga and Nagios.
 
 %package nagios
 Summary: Nagios templates for a nagwad node
@@ -56,7 +57,7 @@ BuildArch: noarch
 These are Nagios configuration templates for monitoring a nagwad-node.
 
 %package icinga
-Summary: Icinga-2 configuration for a nagwad node
+Summary: Icinga-2 configuration for a nagwad node (agent)
 Group:   Monitoring
 BuildArch: noarch
 Requires: %name-service = %version-%release
@@ -64,6 +65,36 @@ Requires: icinga2
 
 %description icinga
 These are Icinga-2 configuration templates for monitoring a nagwad-node.
+
+%package icinga-master
+Summary: Icinga-2 master node configuration to monitor nagwad nodes
+Group:   Monitoring
+BuildArch: noarch
+Requires: icinga2
+
+%description icinga-master
+These are Icinga-2 configuration templates for a master node to
+be automatically distributed to Icinga 2 agents.
+
+%package icinga-agent
+Summary: Icinga-2 agent/satellite node configuration to monitor nagwad nodes
+Group:   Monitoring
+BuildArch: noarch
+Requires: icinga2
+
+%description icinga-agent
+These are Icinga-2 configuration templates for a agent/satellite node.
+
+%package icinga-push
+Summary: An event post-processing script to push check results to an Icinga-2 inctance
+Group:   Monitoring
+BuildArch: noarch
+Requires: %name-service = %version-%release
+
+%description icinga-push
+An event post-processing script to push check results to an Icinga-2
+inctance (so-called passive checks). It can work without an Icinga2
+agent installed on the node.
 
 %package nagstamon
 Summary: Nagstamon actions for a nagwad node
@@ -164,17 +195,19 @@ fi
 usermod -a -G %name %icinga_user
 
 %files service
-%doc README.md signal.html signal.md
+%doc README.md README.html signal.md signal.html
 %_sbindir/nagwad
+%_man8dir/nagwad.8.*
 %_unitdir/nagwad.*
 %_libexecdir/nagios/plugins/*
 %dir %_sysconfdir/nagwad
+%config(noreplace) %_sysconfdir/nagwad/nagwad.conf
 %config(noreplace) %_sysconfdir/nagwad/*.regexp
 %config(noreplace) %_sysconfdir/nagwad/*.sed
-%dir %_sysconfdir/nagwad/process-event.d
-%config(noreplace) %_sysconfdir/nagwad/process-event.d/[0-9]*
-%dir %_sysconfdir/nagwad/process-event.d/eperm-skip.d
-%config(noreplace) %_sysconfdir/nagwad/process-event.d/eperm-skip.d/*.regexp
+%dir %_sysconfdir/nagwad/filter-event.d
+%config(noreplace) %_sysconfdir/nagwad/filter-event.d/[0-9]*
+%dir %_sysconfdir/nagwad/filter-event.d/eperm-skip.d
+%config(noreplace) %_sysconfdir/nagwad/filter-event.d/eperm-skip.d/*.regexp
 /var/log/nagwad
 
 %files audit
@@ -188,7 +221,19 @@ usermod -a -G %name %icinga_user
 
 %files icinga
 %doc conf/icinga/nagwad.json
-%config(noreplace) %_sysconfdir/icinga2/conf.d/*.conf
+%config(noreplace) %_sysconfdir/icinga2/conf.d/nagwad.conf
+
+%files icinga-master
+%doc conf/icinga/nagwad.json
+%config(noreplace) %_sysconfdir/icinga2/conf.d/nagwad-master.conf
+%config(noreplace) %_sysconfdir/icinga2/zones.d/global-commands/*.conf
+
+%files icinga-agent
+%config(noreplace) %_sysconfdir/icinga2/conf.d/nagwad-agent.conf
+
+%files icinga-push
+%_sysconfdir/nagwad/process-event.d/10-push-icinga
+%config(noreplace) %_sysconfdir/nagwad/process-event.d/push-icinga.conf
 
 %files nagstamon
 %config(noreplace) %_sysconfdir/nagstamon/actions/*.conf
@@ -201,6 +246,49 @@ usermod -a -G %name %icinga_user
 %_bindir/nsca-shell
 
 %changelog
+* Mon Jun 17 2024 Paul Wolneykien <manowar@altlinux.org> 0.11.0-alt1
+- Added icinga-agent package (also without "check_nagwad" command in main conf).
+- Fix: Use 4-space indentation for code blocks in the docs.
+- Fix the docs: full-format HTML files.
+- Add more doc info about the `10-eperm` post-filter.
+- Generate README.html too.
+- Add manual page: nagwad(8).
+- Update description in the spec.
+- Added administration utility subcommands to list, view and mark
+  the events as fixed.
+- signal.md: Mention `icinga2-usersyncd` service and
+  `icinga2-register-host` script.
+- Added more docs on nagwad in Russian (signal.md and HTML).
+- Updated README (FIXED events and configuration).
+- Fix: Default log user is now root, not nagios.
+- Spell-check README.
+- Fix documented output format of a filer.
+- Updating documentation (English).
+- Added "nagwad-status" to conf/nagios.
+- Added "nagwad-status" service to Icinga templates.
+- Make nagwad lock its PID-file.
+- Write and delete PID-file only when PIDFILE is defined.
+- Make check_nagwad without arguments to check for nagwad service
+  itself.
+- Make check_nagwad ignore FIXED events.
+- Rename Icinga Director template services using the scheme "d-nagwad-<filter>".
+- Rename Icinga template services using the scheme "nagwad-<filter>".
+- Write logs to /var/log/nagwad/<BOOT_ID>.
+- Simplify and speedup check for already registered events by using
+  MD5 naming.
+- Added icinga-push package with the post-processing script pushing
+  events via Icinga 2 REST API.
+- Run postprocess scripts from $CONFDIR/process-event.d/ dir.
+- Move postprocessing filters to filter-event.d/.
+- Speed-up processing by using the united sed script file.
+- Clean up old logs if MAXAGE is set and is not 0.
+- Read /etc/nagwad/nagwad.conf if exists.
+- Fix nagwad.json: Assign "d-nagwad-service-set" for all
+  "d-nagwad-nodes".
+- Added icinga-master package with global commands.
+- Make check_nagwad to return the newest event.
+- Make unpackaged files terminate build.
+
 * Thu Feb 15 2024 Paul Wolneykien <manowar@altlinux.org> 0.10.5-alt1
 - Fix: Added missing 'd-nagwad-nodes' host group.
 
@@ -248,7 +336,7 @@ usermod -a -G %name %icinga_user
 - Allow post-filters to add text to messages.
 - Match each event with previously registered events and ignore
   duplicates.
-- Support event post-processing filters in /etc/nagwad/process-event.d.
+- Support event post-processing filters in /etc/nagwad/filter-event.d.
 - Process the journal starting from the current boot.
 - Process the message with no leading whitespace by default.
 - check_nagwad: Don't print minor accidental errors.
