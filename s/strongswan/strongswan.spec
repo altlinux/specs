@@ -1,51 +1,14 @@
+%define _unpackaged_files_terminate_build 1
+%define _libexecdir /usr/libexec
 #set capability dropping library.
 #Currently supported values are "libcap" and "native".
 %define capabilities libcap
-%def_enable addrblock
-%def_enable agent
-%def_enable ccm
-%def_enable cisco_quirks
-%def_enable cmd
-%def_enable ctr
-%def_enable curl
-%def_enable dhcp
-%def_enable eap_aka
-%def_enable eap_gtc
-%def_enable eap_identity
-%def_enable eap_md5
-%def_enable eap_mschapv2
-%def_enable eap_radius
-%def_enable eap_sim
-%def_enable eap_sim-file
-%def_enable eap_tls
-%def_enable eap_tnc
-%def_enable eap_ttls
-%def_enable farp
-%def_enable gcm
-%def_enable ha
-%def_enable kernel_klips
-%def_enable kernel_netlink
-%def_enable kernel_pfkey
-%def_enable ldap
-%def_enable medcli
-%def_enable mediation
-%def_enable nat_transport
-%def_enable ntru
-%def_enable openssl
-%def_enable pkcs11
-%def_enable self_test
-%def_enable smartcard
-%def_enable smp
-%def_enable sql
-%def_enable stroke
-%def_enable swanctl
-%def_disable dumm
+%def_enable gcrypt
+%def_enable eap_sim_pcsc
 %def_disable load_tests
-%def_disable manager
-%def_disable medsrv
-%def_disable mysql
 %def_enable nm
-%def_disable sqlite
+%def_enable tpm
+%def_enable sqlite
 %def_disable static
 %def_disable uci
 %def_disable unit_tests
@@ -54,16 +17,10 @@
 # explanation by Tobias Brunner (11 May 2010)
 %def_disable integrity-test
 
-%ifarch %ix86
-%def_enable padlock
-%else
-%def_disable padlock
-%endif
-
 %define beta %nil
 
 Name: strongswan
-Version: 5.9.13
+Version: 5.9.14
 Release: alt1
 
 Summary: strongSwan IPsec implementation
@@ -73,25 +30,27 @@ Group: System/Servers
 # git://git.strongswan.org/strongswan.git
 Url: http://www.strongswan.org
 Source0: %name-%version%beta.tar.gz
-Source1: ipsec.init
-Source2: ipsec.service
+Source1: %name.init
 Source100: strongswan.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Mon Jul 02 2012
 # optimized out: pkg-config
-BuildRequires: flex gperf libcap-devel libcurl-devel libgmp-devel libldap-devel libpam-devel libssl-devel libxml2-devel
+BuildRequires: flex gperf libcap-devel libcurl-devel libgmp-devel libldap-devel libpam-devel libssl-devel
+BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(json-c)
+BuildRequires: pkgconfig(libip4tc)
+%{?_enable_tpm:BuildRequires: pkgconfig(tss2-sys) pkgconfig(tss2-esys)}
+%{?_enable_eap_sim_pcsc:BuildRequires: pkgconfig(libpcsclite)}
+%{?_enable_gcrypt:BuildRequires: libgcrypt-devel libgpg-error-devel}
+%{?_enable_sqlite:BuildRequires: libsqlite3-devel}
+%{?_enable_nm:BuildRequires: pkgconfig(gthread-2.0) pkgconfig(libnm)}
 BuildRequires: pkgconfig(systemd)
-
-%if_enabled nm
-BuildRequires: libnm-devel
-%endif
 
 Provides: libstrongswan = %version-%release
 Obsoletes: libstrongswan < 4.3
 
 %define pkgdocdir %_docdir/%name-%version
-%add_verify_elf_skiplist %_libdir/ipsec/plugins/*.so
 
 %description
 strongSwan is a free implementation of IPsec & IKE for Linux. IPsec is the
@@ -123,81 +82,149 @@ Group: System/Servers
 NetworkManager plugin integrates a subset of Strongswan capabilities
 to NetworkManager.
 
+%package sqlite
+Summary: SQLite support for strongSwan
+Group: System/Servers
+Requires: %name = %EVR
+
+%description sqlite
+The sqlite plugin adds an SQLite database backend to strongSwan.
+ 
+%package tnc-imcvs
+Summary: Trusted network connect (TNC)'s IMC/IMV functionality
+Group: System/Servers
+Requires: %name = %EVR
+Requires: %name-sqlite = %EVR
+
+%description tnc-imcvs
+This package provides Trusted Network Connect's (TNC) architecture support.
+It includes support for TNC client and server (IF-TNCCS), IMC and IMV message
+exchange (IF-M), interface between IMC/IMV and TNC client/server (IF-IMC
+and IF-IMV). It also includes PTS based IMC/IMV for TPM based remote
+attestation, SWID IMC/IMV, and OS IMC/IMV. It's IMC/IMV dynamic libraries
+modules can be used by any third party TNC Client/Server implementation
+possessing a standard IF-IMC/IMV interface. In addition, it implements
+PT-TLS to support TNC over TLS.
+
 %prep
 %setup -n %name-%version%beta
 
 %build
 %autoreconf
 %configure \
-	--sysconfdir=%_sysconfdir/%name \
-	--libexecdir=%_libdir/%name \
-	--bindir=%_libexecdir/%name \
-	%{subst_enable addrblock} \
-	%{subst_enable agent} \
-	%{subst_enable ccm} \
-	%{subst_enable cmd} \
-	%{subst_enable ctr} \
-	%{subst_enable curl} \
-	%{subst_enable dhcp} \
-	%{subst_enable dumm} \
-	%{subst_enable farp} \
-	%{subst_enable gcm} \
-	%{subst_enable ha} \
-	%{subst_enable ldap} \
-	%{subst_enable manager} \
-	%{subst_enable medcli} \
-	%{subst_enable mediation} \
-	%{subst_enable medsrv} \
-	%{subst_enable mysql} \
-	%{subst_enable ntru} \
-	%{subst_enable openssl} \
-	%{subst_enable padlock} \
-	%{subst_enable smartcard} \
-	%{subst_enable smp} \
-	%{subst_enable sql} \
-	%{subst_enable sqlite} \
 	%{subst_enable static} \
-	%{subst_enable stroke} \
-	%{subst_enable swanctl} \
+	--with-ipsec-script=%name \
+	--sysconfdir=%_sysconfdir/%name \
+	--with-ipsecdir=%_libexecdir/%name \
+	--bindir=%_libexecdir/%name \
+	--with-ipseclibdir=%_libdir/%name \
+	--with-piddir=/run \
+	--with-nm-ca-dir=%_sysconfdir/%name/ipsec.d/cacerts/ \
+	--enable-bypass-lan \
+	--enable-acert \
+	--enable-addrblock \
+	--enable-agent \
+	--enable-ccm \
+	--enable-cmd \
+	--enable-ctr \
+	--enable-curl \
+	--enable-chapoly \
+	--enable-dhcp \
+	--enable-duplicheck \
+	%{subst_enable gcrypt} \
+	--enable-farp \
+	--enable-gcm \
+	--enable-ha \
+	--enable-ipseckey \
+	--enable-ldap \
+	--enable-led \
+	--enable-medcli \
+	--enable-mediation \
+	--enable-newhope \
+	--enable-ntru \
+	--enable-openssl \
+	--enable-pkcs11 \
+	--enable-smp \
+	--enable-sql \
+	--enable-sqlite \
+	--enable-stroke \
+	--enable-swanctl \
+	--enable-unity \
+	%{subst_enable tpm} \
 	%{subst_enable uci} \
 	%{subst_enable nm} \
+	--enable-systemd \
+	--with-systemdsystemunitdir=%_unitdir \
 	--with-capabilities=%capabilities \
-	%{subst_enable pkcs11} \
-	--with-default-pkcs11=%_libdir/pkcs11/opensc-pkcs11.so \
-	%{?_enable_cisco_quirks: --enable-cisco-quirks} \
 	%{?_enable_unit_tests: --enable-unit-tests} \
 	%{?_enable_load_tests: --enable-load-tests} \
-	%{?_enable_eap_radius: --enable-eap-radius} \
-	%{?_enable_eap_identity: --enable-eap-identity} \
-	%{?_enable_eap_mschapv2: --enable-eap-mschapv2} \
-	%{?_enable_eap_tls: --enable-eap-tls} \
-	%{?_enable_eap_ttls: --enable-eap-ttls} \
-	%{?_enable_eap_tnc: --enable-eap-tnc} \
-	%{?_enable_eap_sim: --enable-eap-sim} \
-	%{?_enable_eap_sim_file: --enable-eap-sim-file} \
-	%{?_enable_eap_md5: --enable-eap-md5} \
-	%{?_enable_eap_gtc: --enable-eap-gtc} \
-	%{?_enable_eap_aka: --enable-eap-aka} \
+	--enable-eap-dynamic \
+	--enable-eap-radius \
+	--enable-eap-identity \
+	--enable-eap-mschapv2 \
+	--enable-eap-peap \
+	--enable-eap-tls \
+	--enable-eap-ttls \
+	--enable-eap-tnc \
+	--enable-eap-sim \
+	--enable-eap-sim-file \
+	%{?_enable_eap_sim_pcsc: --enable-eap-sim-pcsc} \
+	--enable-eap-md5 \
+	--enable-eap-gtc \
+	--enable-eap-aka \
+	--enable-eap-aka-3gpp \
+	--enable-eap-aka-3gpp2 \
+	--enable-ext-auth \
+	--enable-xauth-eap \
+	--enable-xauth-pam \
+	--enable-xauth-noauth \
+	--enable-tnc-ifmap \
+	--enable-tnc-pdp \
+	--enable-tnc-imc \
+	--enable-tnc-imv \
+	--enable-tnccs-20 \
+	--enable-tnccs-11 \
+	--enable-tnccs-dynamic \
+	--enable-imc-test \
+	--enable-imv-test \
+	--enable-imc-scanner \
+	--enable-imv-scanner  \
+	--enable-imc-attestation \
+	--enable-imv-attestation \
+	--enable-imv-os \
+	--enable-imc-os \
+	--enable-imc-swima \
+	--enable-imv-swima \
+	--enable-imc-hcd \
+	--enable-imv-hcd \
+	--enable-vici \
 	%{?_enable_kernel_netlink: --enable-kernel-netlink} \
 	%{?_enable_kernel_pfkey: --enable-kernel-pfkey} \
-	%{?_enable_kernel_klips: --enable-kernel-klips} \
-	%{?_enable_nat_transport: --enable-nat-transport} \
 	%{?_enable_integrity_test: --enable-integrity-test} \
-	%{?_enable_self_test: --enable-self-test}
+	%ifarch x86_64 %{ix86}
+	--enable-aesni \
+	%endif
+	--enable-kernel-libipsec \
+	CPPFLAGS="-DSTARTER_ALLOW_NON_ROOT" \
+	%nil
 
 #
+
+# disable certain plugins in the daemon configuration by default
+for p in bypass-lan; do
+    echo -e "\ncharon.plugins.${p}.load := no" >> conf/plugins/${p}.opt
+done
+ 
+# ensure manual page is regenerated with local configuration
+rm -f src/ipsec/_ipsec.8
+
 %make_build
 
 %install
 %makeinstall_std
-mkdir -p %buildroot{%pkgdocdir,%systemd_unitdir}
 
-install -pDm755 %SOURCE1 %buildroot%_initdir/ipsec
-install -pm644 %SOURCE2 %buildroot%systemd_unitdir/
-install -pm644 ChangeLog NEWS README TODO %buildroot%pkgdocdir/
-rm -f %buildroot%_libdir/lib%name.{a,so}
+install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 rm -f testing/do-tests* testing/Makefile.*
-cp -a testing/ %buildroot%pkgdocdir/
 
 # It is the file in the package whose name matches the format emacs or vim uses 
 # for backup and autosave files. It may have been installed by  accident.
@@ -205,61 +232,113 @@ find $RPM_BUILD_ROOT \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -d
 # failsafe cleanup if the file is declared as %%doc
 find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 
+# prefix man pages
+for i in %buildroot%_mandir/*/*; do
+    if echo "$i" | grep -vq '/strongswan[^\/]*$'; then
+        mv "$i" "`echo "$i" | sed -re 's|/([^/]+)$|/strongswan_\1|'`"
+    fi
+done
+find %buildroot -type f -name '*.la' -delete
+# delete unwanted library files - no consumers, so no -devel package
+rm -f %buildroot%_libdir/%name/*.so
+
+
+%post
+if sd_booted; then
+    %post_service_posttrans_restart strongswan.service strongswan-starter.service
+else
+    %post_service_posttrans_restart strongswan
+fi
+
+%preun
+if sd_booted; then
+    %preun_service strongswan.service strongswan-starter.service
+else
+    %preun_service strongswan
+fi
+
+# since 5.9.14 we have 'strongswan' chkconfig entry instead of 'ipsec' one
+%triggerun -- %name < 5.9.14
+if [ $2 -gt 0 ]; then
+# This is strongswan upgrade.
+        chkconfig ipsec >/dev/null 2>&1 && ipsec_enabled=1 || ipsec_enabled=0
+        chkconfig --del ipsec
+        chkconfig --add strongswan
+        if [ $ipsec_enabled -eq 1 ] ; then
+            chkconfig strongswan on
+        fi
+fi
+
 %files
-%dir %pkgdocdir
-%pkgdocdir/[A-Z]*
-%attr(700,root,root) %dir %_sysconfdir/%name
-%attr(700,root,root) %dir %_sysconfdir/%name/ipsec.d/
-%attr(700,root,root) %dir %_sysconfdir/%name/ipsec.d/acerts
-%attr(700,root,root) %dir %_sysconfdir/%name/ipsec.d/aacerts
-%attr(700,root,root) %dir %_sysconfdir/%name/ipsec.d/ocspcerts
-%attr(700,root,root) %dir %_sysconfdir/%name/ipsec.d/certs
-%attr(700,root,root) %dir %_sysconfdir/%name/ipsec.d/cacerts
-%attr(700,root,root) %dir %_sysconfdir/%name/ipsec.d/crls
-%attr(700,root,root) %dir %_sysconfdir/%name/ipsec.d/private
-%attr(700,root,root) %dir %_sysconfdir/%name/%name.d/*/
-%attr(700,root,root) %dir %_sysconfdir/%name/%name.d/
-%attr(700,root,root) %dir %_sysconfdir/%name/swanctl/
-%config(noreplace) %_sysconfdir/%name/swanctl/swanctl.conf
-%config(noreplace) %_sysconfdir/%name/%name.d/*/*.conf
-%config(noreplace) %_sysconfdir/%name/%name.d/*.conf
-%config(noreplace) %_sysconfdir/%name/%name.conf
-%config(noreplace) %_sysconfdir/%name/ipsec.conf
-%config(noreplace) %_sysconfdir/%name/ipsec.secrets
-%config(noreplace) %_initdir/ipsec
-%_unitdir/ipsec.service
+%doc ChangeLog NEWS README TODO
+%attr(755,root,root) %dir %_sysconfdir/%name
+%config(noreplace) %_sysconfdir/%name/*
+%_initdir/strongswan
+%_unitdir/strongswan.service
 %_unitdir/strongswan-starter.service
-%_datadir/%name/
-%dir %_libdir/%name/
-%dir %_libdir/%name/ipsec/
-%_libdir/%name/ipsec/charon
-%_libdir/%name/ipsec/starter
-%_libdir/%name/ipsec/stroke
-%_libdir/%name/ipsec/_updown
-%_libdir/%name/ipsec/xfrmi
-%_libdir/ipsec/
+%_datadir/%name
+%_libexecdir/%name
+%_libdir/%name
 %_sbindir/charon-cmd
-%_sbindir/ipsec
+%_sbindir/charon-systemd
+%_sbindir/%name
 %_sbindir/swanctl
-%_libexecdir/%name/pki
-%_libexecdir/%name/pt-tls-client
-%_man1dir/pt-tls-client.*
+%_man1dir/*
 %_man5dir/*
 %_man8dir/*
 
-%files testing
-%pkgdocdir/testing/
+%if_enabled nm
+%exclude %_libexecdir/%name/charon-nm
+%endif
+%if_enabled sqlite
+%exclude %_libdir/%name/plugins/libstrongswan-sqlite.so
+%endif
+%exclude %_libdir/%name/imcvs
+%exclude %_libdir/strongswan/libimcv.so.*
+%exclude %_libdir/strongswan/libtnccs.so.*
+%exclude %_libdir/%name/plugins/libstrongswan-*tnc*.so
+%exclude %_libexecdir/strongswan/attest
+%exclude %_libexecdir/strongswan/pt-tls-client
+%exclude %_datadir/strongswan/swidtag
 
+%files testing
+%doc testing
+
+%if_enabled nm
 %files charon-nm
 %_datadir/dbus-1/system.d/nm-strongswan-service.conf
-%_libdir/%name/ipsec/charon-nm
+%_libexecdir/%name/charon-nm
+%endif
 
+%if_enabled sqlite
+%files sqlite
+%_libdir/%name/plugins/libstrongswan-sqlite.so
+%endif
+
+%files tnc-imcvs
+%_sbindir/sw-collector
+%_sbindir/sec-updater
+%_libdir/strongswan/imcvs
+%_libdir/strongswan/libimcv.so.*
+%_libdir/strongswan/libtnccs.so.*
+%_libdir/strongswan/plugins/libstrongswan-*tnc*.so
+%_libexecdir/strongswan/attest
+%_libexecdir/strongswan/pt-tls-client
+%_datadir/strongswan/swidtag
 
 # TODO:
 # - libstrongswan{,-devel} subpackages
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Mon Jun 17 2024 Alexey Shabalin <shaba@altlinux.org> 5.9.14-alt1
+- new version 5.9.14
+- define _libexecdir as /usr/libexec
+- update configure options (add build with tpm, eap-peap and other)
+- add sqlite and tnc-imcvs subpackages
+- rename sbin script and service to strongswan
+- add %%post and %%preun sections
+
 * Fri Dec 01 2023 Michael Shigorin <mike@altlinux.org> 5.9.13-alt1
 - new version (watch file uupdate)
 
