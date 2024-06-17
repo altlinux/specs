@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fooyin
-Version: 0.4.4
+Version: 0.4.5
 Release: alt1
 
 Summary: Music player built around customisation
@@ -66,6 +66,9 @@ rm -fv %buildroot%_libdir/libfooyin*.so
 %_libdir/libfooyin_*.so.*
 
 %changelog
+* Mon Jun 17 2024 Anton Kurachenko <srebrov@altlinux.org> 0.4.5-alt1
+- New version 0.4.5.
+
 * Tue Jun 04 2024 Anton Kurachenko <srebrov@altlinux.org> 0.4.4-alt1
 - New version 0.4.4.
 
