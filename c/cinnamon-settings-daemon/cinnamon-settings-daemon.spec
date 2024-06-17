@@ -1,4 +1,4 @@
-%define ver_major 6.0
+%define ver_major 6.2
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
@@ -11,10 +11,11 @@ Version: %ver_major.0
 Release: alt1
 
 Summary: A program that manages general Cinnamon settings
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://github.com/linuxmint/cinnamon-settings-daemon
 
+# Source-url: https://github.com/linuxmint/cinnamon-settings-daemon/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -119,6 +120,10 @@ developing applications that use %name.
 %_pkgconfigdir/*
 
 %changelog
+* Fri Jun 14 2024 Anton Midyukov <antohami@altlinux.org> 6.2.0-alt1
+- 6.2.0
+- spec: convert License to SPDX format
+
 * Fri Dec 01 2023 Anton Midyukov <antohami@altlinux.org> 6.0.0-alt1
 - 6.0.0
 

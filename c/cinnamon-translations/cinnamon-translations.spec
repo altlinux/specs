@@ -1,7 +1,7 @@
-%define ver_major 6.0
+%define ver_major 6.2
 
 Name: cinnamon-translations
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Translations for Cinnamon
@@ -100,6 +100,9 @@ cp -Rp usr/share/locale/* %{buildroot}%{_datadir}/locale
 %files -n cinnamon-settings-daemon-translations -f cinnamon-settings-daemon.lang
 
 %changelog
+* Sun Jun 16 2024 Anton Midyukov <antohami@altlinux.org> 6.2.0-alt1
+- 6.2.0
+
 * Fri Jan 05 2024 Anton Midyukov <antohami@altlinux.org> 6.0.2-alt1
 - 6.0.2
 

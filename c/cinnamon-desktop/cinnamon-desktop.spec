@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 6.0
+%define ver_major 6.2
 %define api_ver 3.0
 %def_disable static
 %def_enable gtk_doc
@@ -14,6 +14,7 @@ License: GPLv2+ and LGPLv2+ and MIT
 Group: Graphical desktop/GNOME
 Url: https://github.com/linuxmint/cinnamon-desktop
 
+# Source-url: https://github.com/linuxmint/cinnamon-desktop/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -154,6 +155,9 @@ GObject introspection devel data for the %name library
 
 
 %changelog
+* Fri Jun 14 2024 Anton Midyukov <antohami@altlinux.org> 6.2.0-alt1
+- 6.2.0
+
 * Fri Dec 01 2023 Anton Midyukov <antohami@altlinux.org> 6.0.0-alt1
 - 6.0.0
 

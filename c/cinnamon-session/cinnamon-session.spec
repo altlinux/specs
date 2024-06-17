@@ -1,13 +1,16 @@
-%define ver_major 6.0
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
+%define ver_major 6.2
 %define _libexecdirname libexec
 %define _libexecdir %_prefix/%_libexecdirname
 %define _name cinnamon
 
 Name: %{_name}-session
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
-License: GPLv2+
+License: GPL-2.0-or-later
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
 Group: Graphical desktop/GNOME
 URL: https://github.com/linuxmint/cinnamon-session
@@ -114,6 +117,7 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 
 %files -f %name.lang
 %_bindir/*
+%_prefix/libexec/cinnamon-session-binary
 %_libexecdir/cinnamon-session-check-accelerated
 %_libexecdir/cinnamon-session-check-accelerated-helper
 %dir %_datadir/%name
@@ -136,6 +140,10 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %_datadir/wayland-sessions/%{_name}-wayland.desktop
 
 %changelog
+* Fri Jun 14 2024 Anton Midyukov <antohami@altlinux.org> 6.2.0-alt1
+- 6.2.0
+- spec: convert License to SPDX format
+
 * Sat Feb 10 2024 Anton Midyukov <antohami@altlinux.org> 6.0.4-alt1
 - 6.0.4
 

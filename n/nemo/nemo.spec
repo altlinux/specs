@@ -1,16 +1,16 @@
 %define api_ver 3.0
-%define ver_major 6.0
+%define ver_major 6.2
 
 %def_enable exempi
 %def_enable introspection
 %def_enable selinux
 
 Name: nemo
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: default file manager for Cinnamon
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 URL: https://github.com/linuxmint/nemo
 
@@ -43,6 +43,9 @@ Requires: shared-mime-info
 Requires: common-licenses
 Requires: gvfs >= 1.9.1
 
+%add_python3_path %_datadir/nemo/actions %_datadir/nemo/layout-editor
+AutoProv: nopython3
+
 BuildPreReq: meson rpm-build-gnome rpm-build-gir rpm-build-python3
 BuildPreReq: pkgconfig >= %pkgconfig_ver
 BuildPreReq: desktop-file-utils >= %desktop_file_utils_ver
@@ -65,6 +68,7 @@ BuildRequires: libX11-devel xorg-xproto-devel
 BuildRequires: docbook-utils gtk-doc
 BuildRequires: python3-module-polib python3-module-pygobject3
 BuildRequires: libxapps-devel >= 1.0.4
+BuildRequires: pkgconfig(json-glib-1.0)
 %{?_enable_exempi:BuildPreReq: libexempi-devel >= %exempi_ver}
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
@@ -183,6 +187,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Sun Jun 16 2024 Anton Midyukov <antohami@altlinux.org> 6.2.0-alt1
+- 6.2.0
+
 * Fri Dec 29 2023 Anton Midyukov <antohami@altlinux.org> 6.0.2-alt1
 - 6.0.2
 

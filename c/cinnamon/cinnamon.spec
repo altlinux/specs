@@ -1,11 +1,11 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 6.0.4
+Version: 6.2.0
 Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 
 Url: https://github.com/linuxmint/cinnamon
@@ -66,6 +66,7 @@ BuildRequires: gobject-introspection >= %gi_ver libupower-gir-devel libgudev-gir
 BuildRequires: libcinnamon-menus-gir-devel
 BuildRequires: gst-plugins1.0-devel
 BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: libpolkit-gir-devel
 
 # for barriers
 BuildRequires: libXfixes-devel >= 5.0
@@ -185,7 +186,7 @@ desktop-file-validate %buildroot%_desktopdir/cinnamon-wayland.desktop
 %exclude %_datadir/xsessions/*.desktop
 %exclude %_datadir/wayland-sessions/*.desktop
 %exclude %_datadir/cinnamon-session/sessions/*.session
-%_datadir/xdg-desktop-portal/x-cinnamon-portals.conf
+#_datadir/xdg-desktop-portal/x-cinnamon-portals.conf
 %_datadir/cinnamon/
 %_datadir/dbus-1/services/org.Cinnamon.HotplugSniffer.service
 %_datadir/dbus-1/services/org.Cinnamon.Melange.service
@@ -206,6 +207,9 @@ desktop-file-validate %buildroot%_desktopdir/cinnamon-wayland.desktop
 %endif
 
 %changelog
+* Sun Jun 16 2024 Anton Midyukov <antohami@altlinux.org> 6.2.0-alt1
+- 6.2.0
+
 * Fri Jan 05 2024 Anton Midyukov <antohami@altlinux.org> 6.0.4-alt1
 - 6.0.4
 

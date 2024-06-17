@@ -4,11 +4,11 @@
 %define sover 0
 
 Name: muffin
-Version: 6.0.1
+Version: 6.2.0
 Release: alt1
 
 Summary: Window and compositing manager based on Clutter
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 
 Url: https://github.com/linuxmint/muffin
@@ -191,6 +191,9 @@ ln -sf %name/lib%name-cogl-%api_ver.so.%sover \
 %_datadir/glib-2.0/schemas/org.cinnamon.*.xml
 
 %changelog
+* Sat Jun 15 2024 Anton Midyukov <antohami@altlinux.org> 6.2.0-alt1
+- 6.2.0
+
 * Fri Dec 29 2023 Anton Midyukov <antohami@altlinux.org> 6.0.1-alt1
 - 6.0.1
 

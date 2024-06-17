@@ -1,12 +1,12 @@
-%define ver_major 6.0
+%define ver_major 6.2
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-screensaver
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Cinnamon Screensaver
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://github.com/linuxmint/cinnamon-screensaver
 
@@ -124,6 +124,10 @@ install -pm640 %SOURCE1 %buildroot/%_sysconfdir/pam.d/%name
 %_datadir/gir-1.0/*
 
 %changelog
+* Fri Jun 14 2024 Anton Midyukov <antohami@altlinux.org> 6.2.0-alt1
+- 6.2.0
+- spec: convert License to SPDX format
+
 * Mon Jan 29 2024 Anton Midyukov <antohami@altlinux.org> 6.0.3-alt1
 - 6.0.3
 

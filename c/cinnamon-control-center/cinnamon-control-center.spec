@@ -1,21 +1,21 @@
-%define ver_major 6.0
+%define ver_major 6.2
 %define api_ver 1.0
 
 %def_disable debug
 %def_disable static
 %def_enable systemd
 %def_enable ibus
-%def_disable onlineaccounts
 
 Name: cinnamon-control-center
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Cinnamon Control Center
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://github.com/linuxmint/cinnamon-control-center
-#Source-url: https://github.com/linuxmint/cinnamon-control-center/archive/refs/tags/%version.tar.gz
+
+# Source-url: https://github.com/linuxmint/cinnamon-control-center/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
 # From configure.ac
@@ -30,12 +30,13 @@ Source: %name-%version.tar
 %define notify_ver 0.7.3
 %define nm_ver 1.2.0
 %define gnome_menus_ver 3.5.5
-%define goa_ver 3.5.90
 %define sett_daemon_ver 0.0.1
 %define systemd_ver 40
 %define ibus_ver 1.4.99
 
-Requires: %name-data = %version-%release
+Provides: cinnamon-control-center-data = %EVR
+Obsoletes: cinnamon-control-center-data <= %EVR
+
 Requires: %name-translations
 
 # For /usr/share/gnome
@@ -44,7 +45,6 @@ Requires: cinnamon-settings-daemon
 # for graphical passwd changing apps
 Requires: accountsservice
 #Requires: userpasswd
-Requires: gnome-online-accounts >= %goa_ver
 BuildPreReq: rpm-build-gnome >= 0.9
 
 # From configure.in
@@ -74,7 +74,6 @@ BuildRequires: glibc-i18ndata
 BuildRequires: libnm-devel >= %nm_ver
 BuildRequires: libnma-devel >= %nm_ver
 BuildRequires: libmm-glib-devel
-%{?_enable_onlineaccounts:BuildRequires: libgnome-online-accounts-devel >= %goa_ver}
 BuildRequires: colord-devel
 BuildRequires: libclutter-gtk3-devel
 %{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel}
@@ -88,18 +87,10 @@ sounds, and mouse behavior).
 
 If you install Cinnamon, you need to install control-center.
 
-%package data
-Summary: Arch independent files for Cinnamon Control Center
-Group: Networking/Instant messaging
-BuildArch: noarch
-
-%description data
-This package provides noarch data needed for Cinnamon Control Center to work.
-
 %package devel
 Summary: Cinnamon Control Center development files
 Group: Development/GNOME and GTK+
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 If you're interested in developing panels for the Cinnamon control center,
@@ -111,7 +102,7 @@ you'll want to install this package.
 %setup
 
 %build
-%meson %{?_disable_onlineaccounts:-Donlineaccounts=false}
+%meson
 %meson_build
 
 %install
@@ -119,19 +110,16 @@ you'll want to install this package.
 
 %find_lang %name-timezones
 
-%files
+%files -f %name-timezones.lang
 #cinnamon-control-center binary doesn't work at x64 so temporary disable it.
 %exclude %_bindir/*
-%dir %_libdir/%{name}-1/panels
-%_libdir/%{name}-1/panels/libcolor.so
-%_libdir/%{name}-1/panels/libdisplay.so
-%_libdir/%{name}-1/panels/libnetwork.so
-%_libdir/%{name}-1/panels/libregion.so
-%_libdir/%{name}-1/panels/libwacom-properties.so
-%{?_enable_onlineaccounts:%_libdir/%{name}-1/panels/libonline-accounts.so}
+%dir %_libdir/%name-1/panels
+%_libdir/%name-1/panels/libcolor.so
+%_libdir/%name-1/panels/libdisplay.so
+%_libdir/%name-1/panels/libnetwork.so
+%_libdir/%name-1/panels/libregion.so
+%_libdir/%name-1/panels/libwacom-properties.so
 %_libdir/*.so.*
-
-%files data -f %name-timezones.lang
 %dir %_datadir/%name
 %_datadir/%name/ui
 %_iconsdir/hicolor/*/*/*
@@ -142,12 +130,17 @@ you'll want to install this package.
 
 %files devel
 %_pkgconfigdir/*.pc
-%dir %_includedir/%name-1/lib%{name}/
-%_includedir/%name-1/lib%{name}/*
+%dir %_includedir/%name-1/lib%name/
+%_includedir/%name-1/lib%name/*
 %_libdir/*.so
 
-
 %changelog
+* Fri Jun 14 2024 Anton Midyukov <antohami@altlinux.org> 6.2.0-alt1
+- 6.2.0
+- spec: cleanup gnome-online-accounts
+- spec: convert License to SPDX format
+- drop data subpackage
+
 * Sat Mar 23 2024 Anton Midyukov <antohami@altlinux.org> 6.0.1-alt2
 - build without gnome-online-accounts (fix FTBFS with gnome 46)
 

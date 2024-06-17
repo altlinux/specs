@@ -1,7 +1,7 @@
-%define ver_major 6.0
+%define ver_major 6.2
 
 Name: cinnamon-meta
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Cinnamon desktop meta package
@@ -96,6 +96,9 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Sun Jun 16 2024 Anton Midyukov <antohami@altlinux.org> 6.2.0-alt1
+- bump version
+
 * Sat Jan 13 2024 Anton Midyukov <antohami@altlinux.org> 6.0.4-alt1
 - bump version
 - cinnamon-regular: add pix
