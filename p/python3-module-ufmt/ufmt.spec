@@ -4,8 +4,19 @@
 
 %def_with check
 
+%define add_python_extra() \
+%{expand:%%package -n %%name+%1 \
+Summary: %%summary \
+Group: Development/Python3 \
+Requires: %%name \
+%{expand:%%pyproject_runtimedeps_metadata -- --extra %1} \
+%%description -n %%name+%1' \
+Extra "%1" for %%pypi_name. \
+%%files -n %%name+%1 \
+}
+
 Name: python3-module-%pypi_name
-Version: 2.6.0
+Version: 2.7.0
 Release: alt1
 Summary: Safe, atomic formatting with black and usort
 License: MIT
@@ -16,6 +27,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage extra dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -27,6 +40,8 @@ BuildRequires(pre): rpm-build-pyproject
 # black is runtime dependency but it's filtered out by default
 BuildRequires: python3-module-black
 %endif
+
+%add_python_extra lsp
 
 %description
 %pypi_name is a safe, atomic code formatter for Python built on top of black and
@@ -70,6 +85,9 @@ rm -r %buildroot%python3_sitelibdir/%pypi_name/tests/
 %_bindir/%pypi_name
 
 %changelog
+* Mon Jun 17 2024 Stanislav Levin <slev@altlinux.org> 2.7.0-alt1
+- 2.6.0 -> 2.7.0.
+
 * Fri May 03 2024 Stanislav Levin <slev@altlinux.org> 2.6.0-alt1
 - 2.5.1 -> 2.6.0.
 
