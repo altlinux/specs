@@ -6,7 +6,7 @@
 # As ubuntu
 %define gcc_ver 9
 
-%define _vk_api_version 1.3.280
+%define _vk_api_version 1.3.285
 
 %def_with clang
 %def_with wayland
@@ -22,7 +22,7 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2024.Q2.1
+Version: 2024.Q2.2
 Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
@@ -118,6 +118,15 @@ sed -e 's|@API_VERSION@|%_vk_api_version|g' %SOURCE8 > %buildroot%_vkldir/$(base
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Tue Jun 18 2024 L.A. Kostis <lakostis@altlinux.ru> 2024.Q2.2-alt1
+- 2024-06-05 update:
+  + icd: bump vulkan version
+  + llvm-project: Updated to c3793ad7bf21
+  + gpurt: Updated to c0196c83e76c
+  + llpc: Updated to 6c770c7d276d
+  + pal: Updated to 2076667db1fa
+  + xgl: Updated to 3abea9dfab5a
+
 * Mon Jun 03 2024 L.A. Kostis <lakostis@altlinux.ru> 2024.Q2.1-alt1
 - BR: added python3-module-ruamel-yaml (for gpurt).
 - 2024-05-15 update:
