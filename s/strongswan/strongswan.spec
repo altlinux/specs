@@ -15,13 +15,13 @@
 # this one requires that libhydra and libcharon be
 # underlinked on purpose, contact mike@ for email
 # explanation by Tobias Brunner (11 May 2010)
-%def_disable integrity-test
+%def_disable integrity_test
 
 %define beta %nil
 
 Name: strongswan
 Version: 5.9.14
-Release: alt1
+Release: alt2
 
 Summary: strongSwan IPsec implementation
 License: GPLv2+
@@ -245,14 +245,16 @@ rm -f %buildroot%_libdir/%name/*.so
 
 %post
 if sd_booted; then
-    %post_service_posttrans_restart strongswan.service strongswan-starter.service
+    %post_service_posttrans_restart strongswan.service
+    %post_service_posttrans_restart strongswan-starter.service
 else
     %post_service_posttrans_restart strongswan
 fi
 
 %preun
 if sd_booted; then
-    %preun_service strongswan.service strongswan-starter.service
+    %preun_service strongswan.service
+    %preun_service strongswan-starter.service
 else
     %preun_service strongswan
 fi
@@ -331,6 +333,9 @@ fi
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Tue Jun 18 2024 Alexey Shabalin <shaba@altlinux.org> 5.9.14-alt2
+- fixed %%post and %%preun scripts
+
 * Mon Jun 17 2024 Alexey Shabalin <shaba@altlinux.org> 5.9.14-alt1
 - new version 5.9.14
 - define _libexecdir as /usr/libexec
