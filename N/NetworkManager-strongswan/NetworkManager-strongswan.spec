@@ -1,7 +1,8 @@
-%def_without libnm_glib
+%define _unpackaged_files_terminate_build 1
+%def_with gtk4
 
 Name: NetworkManager-strongswan
-Version: 1.5.2
+Version: 1.6.0
 Release: alt1
 
 Summary: NetworkManager strongSwan IPSec VPN plug-in
@@ -20,32 +21,41 @@ BuildRequires: pkgconfig(libnm) >= 1.1.0
 BuildRequires: pkgconfig(libnma) >= 1.1.0
 BuildRequires: intltool
 BuildRequires: libtool
-
-%if_with libnm_glib
-BuildRequires: pkgconfig(dbus-glib-1) >= 0.30
-BuildRequires: pkgconfig(NetworkManager) >= 1.1.0
-BuildRequires: pkgconfig(libnm-util)
-BuildRequires: pkgconfig(libnm-glib)
-BuildRequires: pkgconfig(libnm-glib-vpn)
-BuildRequires: pkgconfig(libnm-gtk)
-%endif
+%{?_with_gtk4:BuildRequires: pkgconfig(gtk4) >= 4.0 pkgconfig(libnma-gtk4) >= 1.8.33}
 
 Requires: NetworkManager
-Requires: strongswan-charon-nm >= 5.8.3
+Requires: strongswan-charon-nm >= 5.9.14
 
 %description
 This package contains software for integrating the strongSwan IPSec VPN
 with NetworkManager.
 
-%package gnome
-Summary: NetworkManager VPN plugin for strongswan - GNOME files
-Group: System/Servers
+%package gtk-common
+Summary: Common part of %name GTK support
+Group: Graphical desktop/GNOME
+Requires: %name = %EVR
 
-Requires: NetworkManager-strongswan = %EVR
+%description gtk-common
+This package contains common part for %name GTK support.
 
-%description gnome
-This package contains software for integrating the strongSwan IPSec VPN
-with the graphical desktop.
+%package gtk3
+Summary: Files for GTK3 applications to use %name
+Group: Graphical desktop/GNOME
+Requires: %name-gtk-common = %EVR
+
+Obsoletes: %name-gnome < 1.6.0
+Provides: %name-gnome = %EVR
+
+%description gtk3
+This package contains files for GTK3 applications to use %name.
+
+%package gtk4
+Summary: Files for GTK4 applications to use %name
+Group: Graphical desktop/GNOME
+Requires: %name-gtk-common = %EVR
+
+%description gtk4
+This package contains files for GTK4 applications to use %name.
 
 %prep
 %setup
@@ -53,10 +63,8 @@ with the graphical desktop.
 %build
 %configure \
         --disable-static \
-%if_without libnm_glib
-        --without-libnm-glib \
-%endif
-        --with-charon=%_libdir/strongswan/ipsec/charon-nm \
+        --with-charon=/usr/libexec/strongswan/charon-nm \
+        %{subst_with gtk4} \
         --enable-more-warnings=no
 %make_build
 
@@ -64,24 +72,33 @@ with the graphical desktop.
 %makeinstall_std
 %find_lang %name
 
-%files -f %name.lang
-%_libexecdir/NetworkManager/VPN/nm-strongswan-service.name
+%files
 %doc NEWS
-
-%files gnome
-%_datadir/gnome-vpn-properties/strongswan
-%_libexecdir/NetworkManager/nm-strongswan-auth-dialog
+%_libexecdir/NetworkManager/VPN/nm-strongswan-service.name
 %_libdir/NetworkManager/libnm-vpn-plugin-strongswan.so
 %exclude %_libdir/NetworkManager/libnm-vpn-plugin-strongswan.la
-#_datadir/appdata/NetworkManager-strongswan.appdata.xml
 
-%if_with libnm_glib
-%_libdir/NetworkManager/libnm-*-properties.so
-%_sysconfdir/NetworkManager/VPN/nm-strongswan-service.name
-%exclude %_libdir/NetworkManager/libnm-strongswan-properties.la
+%files gtk-common -f %name.lang
+%_libexecdir/NetworkManager/nm-strongswan-auth-dialog
+%_datadir/metainfo/*.xml
+
+%files gtk3
+%_libdir/NetworkManager/libnm-vpn-plugin-strongswan-editor.so
+%exclude %_libdir/NetworkManager/libnm-vpn-plugin-strongswan-editor.la
+
+%if_with gtk4
+%files gtk4
+%_libdir/NetworkManager/libnm-gtk4-vpn-plugin-strongswan-editor.so
+%exclude %_libdir/NetworkManager/libnm-gtk4-vpn-plugin-strongswan-editor.la
 %endif
 
 %changelog
+* Tue Jun 18 2024 Alexey Shabalin <shaba@altlinux.org> 1.6.0-alt1
+- new version 1.6.0
+- dropped libnm-glib support from spec
+- added gtk-common and gtk4 subpackages
+- rename 'gnome' subpackage to 'gtk3'
+
 * Sat Aug 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1.5.2-alt1
 - new version 1.5.2 (with rpmrb script)
 
