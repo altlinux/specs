@@ -20,7 +20,7 @@
 
 Name:           icingaweb2
 Version:        2.12.1
-Release:        alt3
+Release:        alt4
 
 Summary:        Icinga Web
 License:        GPL-2.0-or-later
@@ -44,6 +44,7 @@ Provides:       icinga2-web
 Requires:       %name-cli = %version-%release
 Requires:       %name-common = %version-%release
 Requires:       %name-php = %version-%release
+Requires:       %name-style
 Requires:       webserver-common
 
 BuildArch:      noarch
@@ -124,6 +125,15 @@ Requires:       nginx
 %description nginx
 Dependenices and configuration files to run Icinga Web with Nginx
 web server.
+
+%package style-classic
+Summary:        Classic styles for Icinga Web 2
+Group:          System/Configuration/Other
+Provides:       %name-style = %version-%release
+Conflicts:      %name-style
+
+%description style-classic
+Classic styles (branding) for Icinga Web 2.
 
 %prep
 %setup
@@ -235,6 +245,11 @@ fi
 %_datadir/%name/doc
 %_datadir/%name/modules
 %_datadir/%name/public
+%exclude %_datadir/%name/public/img
+%exclude %_datadir/%name/application/fonts
+%exclude %_datadir/%name/modules/doc/public/css
+%exclude %_datadir/%name/modules/monitoring/public/css
+%exclude %_datadir/%name/public/css
 %_datadir/%name/schema
 %dir %webdir
 %dir %webdir/tmp
@@ -270,7 +285,18 @@ fi
 %config(noreplace) %_sysconfdir/nginx/sites-available.d/%name.conf
 %ghost %_sysconfdir/nginx/sites-enabled.d/%name.conf
 
+%files style-classic
+%_datadir/%name/public/img
+%_datadir/%name/application/fonts
+%_datadir/%name/modules/doc/public/css
+%_datadir/%name/modules/monitoring/public/css
+%_datadir/%name/public/css
+
 %changelog
+* Tue Jun 18 2024 Paul Wolneykien <manowar@altlinux.org> 2.12.1-alt4
+- Extract CSS and fonts to "icingaweb2-style-classic".
+- Extract images to the separate "icingaweb2-style-classic" package.
+
 * Tue Feb 13 2024 Paul Wolneykien <manowar@altlinux.org> 2.12.1-alt3
 - Make icingaweb2-php-pgsql depend on php-pgsql (thx Elena Mishina).
 
