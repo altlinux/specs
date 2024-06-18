@@ -1,7 +1,7 @@
 %define py_name yt_dlp
 
 Name: yt-dlp
-Version: 2023.12.30
+Version: 2024.05.27
 Release: alt1
 
 Summary: A tool for downloading from video services for offline watching
@@ -15,9 +15,13 @@ BuildArch: noarch
 
 Requires: python3-module-%py_name = %EVR
 
-# Automatically added by buildreq on Sun Aug 20 2023
-# optimized out: libgpg-error python3 python3-base python3-dev python3-module-pkg_resources python3-module-setuptools sh4
-BuildRequires: python3-module-pyproject-installer python3-module-wheel
+# The curl_cffi module is optional (but recommended) and
+# is not currently packaged in ALT.
+%add_python3_req_skip curl_cffi.const curl_cffi.requests
+
+# Automatically added by buildreq on Tue Jun 18 2024
+# optimized out: libgpg-error python3 python3-base python3-dev python3-module-packaging python3-module-pathspec python3-module-pluggy python3-module-trove-classifiers sh5
+BuildRequires: python3-module-hatchling python3-module-pyproject-installer python3-module-setuptools
 
 BuildRequires(pre): rpm-build-python3
 
@@ -71,6 +75,9 @@ rm -r %buildroot%python3_sitelibdir/%py_name/__pyinstaller
 %python3_sitelibdir/%py_name-*.dist-info
 
 %changelog
+* Tue Jun 18 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 2024.05.27-alt1
+- Updated to 2024.05.27.
+
 * Fri Jan 05 2024 Cronbuild Service <cronbuild@altlinux.org> 2023.12.30-alt1
 - Updated to 2023.12.30.
 
