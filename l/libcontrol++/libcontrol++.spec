@@ -1,5 +1,5 @@
 Name: libcontrol++
-Version: 0.32.0
+Version: 0.33.0
 Release: alt1
 
 Summary: control++ common classes and functions library
@@ -56,6 +56,12 @@ cp src/*.h %{buildroot}%{_includedir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Tue Jun 18 2024 Alexey Appolonov <alexey@altlinux.org> 0.33.0-alt1
+- New function "GetCurrentDateTime", which generates a string containing the
+  current date and time;
+- Each message of a "TTick" object is printed over the previous message;
+- Default tick period of a "TTick" object is changed to 1 sec.
+
 * Wed Apr 03 2024 Alexey Appolonov <alexey@altlinux.org> 0.32.0-alt1
 - New func "FileIsInThere" that is a fast ver of the "FileIsSomewhereInThere"
   func without formatting, the set of parameters of the "FileIsSomewhereInThere"

@@ -4,7 +4,7 @@
 %define thisdocdir %{_defaultdocdir}/%{name}
 
 Name: python3-module-%{basic_name}
-Version: 0.1.0
+Version: 0.2.0
 Release: alt1
 
 Summary: GUI for the glorious control++ app
@@ -22,7 +22,7 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-kivy
 Requires: python3
 Requires: python3-module-kivy
-Requires: control++ >= 0.23
+Requires: control++ >= 0.24
 
 %description
 Graphical interface for control++ that uses kivy framework.
@@ -58,5 +58,11 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Tue Jun 18 2024 Alexey Appolonov <alexey@altlinux.org> 0.2.0-alt1
+- Fix of a bug that manifested when there were active macro and micro modes
+  at the same time;
+- Date and time of activation of the modes are displayed in the mode selection
+  table.
+
 * Sun May 12 2024 Alexey Appolonov <alexey@altlinux.org> 0.1.0-alt1
 - Initial release.

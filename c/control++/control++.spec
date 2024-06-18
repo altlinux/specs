@@ -1,4 +1,4 @@
-%define libcontrolppver 0.32
+%define libcontrolppver 0.33
 %define confdir %{_sysconfdir}/%{name}
 %define statedir %{_localstatedir}/%{name}
 %define ulim_statedir %{statedir}/ulimits
@@ -6,7 +6,7 @@
 %define testsdir %{statedir}/tests
 
 Name: control++
-Version: 0.23.0
+Version: 0.24.0
 Release: alt1
 
 Summary: System configuration tool
@@ -16,7 +16,7 @@ Url: https://www.altlinux.org/Control++
 
 Packager: Alexey Appolonov <alexey@altlinux.org>
 
-# http://git.altlinux.org/people/alexey/packages/?p=controlplusplus.git
+# http://git.altlinux.org/people/alexey/packages/controlplusplus.git
 Source: %{name}-%{version}.tar
 
 BuildRequires: gcc-c++
@@ -117,6 +117,13 @@ cp -r tests/* %{buildroot}%{testsdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Tue Jun 18 2024 Alexey Appolonov <alexey@altlinux.org> 0.24.0-alt1
+- Validation of mode names (mode names should contain only letters of the
+  English alphabet, numbers and underscores);
+- Several situations that led to errors are now being handled correctly;
+- The "control++ --list" command is supplemented with a display of a date and
+  time of activation of the modes.
+
 * Sun Apr 28 2024 Alexey Appolonov <alexey@altlinux.org> 0.23.0-alt1
 - Sub-modes of every macro mode are displayed using the "control++ --list"
   command, the "control++ --conf" command is deprecated;
