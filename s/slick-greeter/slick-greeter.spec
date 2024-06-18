@@ -1,12 +1,15 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var/lib
 
 Name: slick-greeter
-Version: 2.0.3
+Version: 2.0.4
 Release: alt1
 Summary: A slick-looking LightDM greeter
 Group: Graphical desktop/Other
-License: GPLv3+
+License: GPL-3.0-or-later
 Url: https://github.com/linuxmint/slick-greeter
 
 # Source-url: https://github.com/linuxmint/slick-greeter/archive/refs/tags/%version.tar.gz
@@ -25,6 +28,7 @@ Provides: lightdm-greeter
 Provides: lightdm-slick-greeter
 
 BuildPreReq: rpm-build-python3
+BuildRequires: meson
 BuildRequires: intltool gnome-common
 BuildRequires: glib2-devel
 BuildRequires: pkgconfig(gtk+-3.0)
@@ -44,13 +48,11 @@ A cross-distro LightDM greeter based on unity-greeter.
 %patch0 -p1
 
 %build
-NOCONFIGURE=1 ./autogen.sh
-%configure
-
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 install -Dpm 0644 debian/90-slick-greeter.conf \
   %buildroot%_datadir/lightdm/lightdm.conf.d/90-slick-greeter.conf
@@ -88,6 +90,10 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %_man8dir/slick-greeter.8.*
 
 %changelog
+* Tue Jun 18 2024 Anton Midyukov <antohami@altlinux.org> 2.0.4-alt1
+- 2.0.4
+- switch to meson build system
+
 * Fri Jan 05 2024 Anton Midyukov <antohami@altlinux.org> 2.0.3-alt1
 - 2.0.3
 
