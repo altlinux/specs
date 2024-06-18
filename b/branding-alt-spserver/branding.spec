@@ -19,7 +19,7 @@
 
 Name: branding-%flavour
 Version: 10.2
-Release: alt2
+Release: alt3
 Epoch: 1
 Url: https://altsp.su
 
@@ -286,6 +286,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Jun 18 2024 Anton Midyukov <antohami@altlinux.org> 1:10.2-alt3
+- indexhtml/index-en.html: update links
+
 * Thu Apr 04 2024 Anton Midyukov <antohami@altlinux.org> 1:10.2-alt2
 - bump version to 10.2
 - convert License fields to SPDX format
