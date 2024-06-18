@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 Summary: Subprocess-tee
 License: MIT
@@ -53,5 +53,8 @@ output while still printing it in real-time, just the way tee does.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jun 18 2024 Stanislav Levin <slev@altlinux.org> 0.4.2-alt1
+- 0.4.1 -> 0.4.2.
+
 * Wed Aug 16 2023 Stanislav Levin <slev@altlinux.org> 0.4.1-alt1
 - Initial build for Sisyphus.
