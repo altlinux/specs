@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.5.1
+Version: 5.6.0
 Release: alt1
 Summary: Objects and routines pertaining to date and time (tempora)
 License: MIT
@@ -19,8 +19,7 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%add_pyproject_deps_check_filter 'backports-unittest-mock$'
-%pyproject_builddeps_metadata_extra testing
+%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
@@ -48,6 +47,9 @@ Objects and routines pertaining to date and time (tempora).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jun 19 2024 Stanislav Levin <slev@altlinux.org> 5.6.0-alt1
+- 5.5.1 -> 5.6.0.
+
 * Tue Feb 20 2024 Stanislav Levin <slev@altlinux.org> 5.5.1-alt1
 - 5.5.0 -> 5.5.1.
 
