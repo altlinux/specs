@@ -9,7 +9,7 @@
 %define glut_release alt3
 
 Name: lib%_name
-Version: 3.4.0
+Version: 3.6.0
 Release: alt1
 
 Summary: A freely licensed alternative to the GLUT library
@@ -53,7 +53,7 @@ joystick functions.
 %package devel
 Summary: Freeglut developmental libraries and header files
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 # due to freeglut_std.h
 Requires: libGL-devel libGLU-devel
 Obsoletes: libGLUT-devel <= %glut_version-%glut_release
@@ -121,6 +121,9 @@ ln -s lib%_name.so %buildroot%_libdir/libglut.so
 %_libdir/cmake/FreeGLUT/
 
 %changelog
+* Wed Jun 12 2024 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Sat Oct 08 2022 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
 - 3.4.0
 - built with Ninja
