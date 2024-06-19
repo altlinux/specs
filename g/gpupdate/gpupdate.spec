@@ -33,7 +33,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.10.2
+Version: 0.10.3
 Release: alt1
 
 Summary: GPT applier
@@ -121,6 +121,9 @@ install -Dm0644 dist/%name-remote-policy %buildroot%_sysconfdir/pam.d/%name-remo
 install -Dm0644 dist/%name.ini %buildroot%_sysconfdir/%name/%name.ini
 install -Dm0644 doc/gpoa.1 %buildroot/%_man1dir/gpoa.1
 install -Dm0644 doc/gpupdate.1 %buildroot/%_man1dir/gpupdate.1
+install -Dm0644 completions/gpoa %buildroot/%_datadir/bash-completion/completions/gpoa
+install -Dm0644 completions/gpupdate %buildroot/%_datadir/bash-completion/completions/gpupdate
+install -Dm0644 completions/gpupdate-setup %buildroot/%_datadir/bash-completion/completions/gpupdate-setup
 
 for i in gpupdate-localusers \
 	 gpupdate-group-users \
@@ -167,9 +170,12 @@ fi
 %_unitdir/%name.timer
 %_man1dir/gpoa.1.*
 %_man1dir/gpupdate.1.*
-/usr/lib/systemd/user/%name-user.service
-/usr/lib/systemd/user/%name-user.timer
-/usr/lib/systemd/user/%name-scripts-run-user.service
+%_datadir/bash-completion/completions/gpoa
+%_datadir/bash-completion/completions/gpupdate
+%_datadir/bash-completion/completions/gpupdate-setup
+%_user_unitdir/%name-user.service
+%_user_unitdir/%name-user.timer
+%_user_unitdir/%name-scripts-run-user.service
 %dir %_sysconfdir/%name
 %_sysconfdir/control.d/facilities/*
 %config(noreplace) %_sysconfdir/%name/environment
@@ -185,6 +191,14 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Wed Jun 19 2024 Valery Sinelnikov <greh@altlinux.org> 0.10.3-alt1
+- Added autocompletion for gpoa, gpupdate, gpupdate-setup
+- Added correct work with json data in keys for the Firefox browser
+- Polkit_appliers changed to non-experimental
+- Fixed bug of not clearing kde applier settings (closes: 50336)
+- Fixed registry key reading (closes: 50553)
+- Added waiting for data generation for scripts (closes: 50667)
+
 * Fri Jun 07 2024 Valery Sinelnikov <greh@altlinux.org> 0.10.2-alt1
 - Added some fixes to dconf_registry and scripts
 - Fixed windows registry key reading for loopback
