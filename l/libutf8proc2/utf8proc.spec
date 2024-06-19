@@ -1,35 +1,28 @@
-Name: utf8proc
-Version: 2.9.0
-Release: alt1
+Name: libutf8proc2
+Version: 2.8.0
+Release: alt2
 
 Summary: Library for processing UTF-8 encoded Unicode strings
 License: BSD
-Group: System/Libraries
-Url: https://julialang.org/utf8proc/
+Group: System/Legacy libraries
 
-Source: %name-%version.tar
+Url: http://julialang.org/utf8proc/
+Source: https://github.com/JuliaLang/utf8proc/archive/v%version.tar.gz#/%name-%version.tar.gz
 
-%package -n libutf8proc3
+%package -n utf8proc
 Summary: Library for processing UTF-8 encoded Unicode strings
-Group: System/Libraries
-
-%package -n libutf8proc-devel
-Summary: Header files, libraries and development docs for utf8proc
-Group: Development/C
+Group: System/Legacy libraries
 
 %define desc\
 utf8proc is a library for processing UTF-8 encoded Unicode strings.\
 Some features are Unicode normalization, stripping of default ignorable\
-characters, case folding and detection of grapheme cluster boundaries.
+characters, case folding and detection of grapheme cluster boundaries.\
+The currently supported Unicode version is 14.
 
 %description %desc
 
-%description -n libutf8proc3 %desc
-This package contains the utf8proc shared library only.
-
-%description -n libutf8proc-devel %desc
-Contains header files for developing applications that use the utf8proc
-library.
+%description -n utf8proc %desc
+This package only contains the shared library.
 
 %prep
 %setup
@@ -42,19 +35,10 @@ CFLAGS='%optflags' \
 %makeinstall_std prefix=%prefix includedir=%_includedir libdir=%_libdir
 rm %buildroot%_libdir/libutf8proc.a
 
-%files -n libutf8proc3
+%files -n utf8proc
 %_libdir/*.so.*
 
-%files -n libutf8proc-devel
-%doc LICENSE* NEWS* README*
-%_includedir/*.h
-%_libdir/*.so
-%_pkgconfigdir/*.pc
-
 %changelog
-* Wed Jun 19 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.9.0-alt1
-- 2.9.0 released
-
 * Wed Jun 19 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.8.0-alt2
 - rebuilt as legacy shared library
 
