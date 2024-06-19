@@ -14,7 +14,7 @@
 
 Name: libxfce4ui
 Version: 4.19.5
-Release: alt1
+Release: alt2
 
 Summary: Various GTK widgets for Xfce
 Summary (ru_RU.UTF-8): Набор виджетов GTK для Xfce
@@ -209,6 +209,9 @@ make check
 %_desktopdir/xfce4-about.desktop
 
 %changelog
+* Wed Jun 19 2024 Mikhail Efremov <sem@altlinux.org> 4.19.5-alt2
+- Fixed screensaver lock.
+
 * Tue May 28 2024 Mikhail Efremov <sem@altlinux.org> 4.19.5-alt1
 - Dropped html documentation.
 - Updated to 4.19.5.
