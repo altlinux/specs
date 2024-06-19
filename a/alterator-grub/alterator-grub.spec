@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.25
-Release: alt2
+Version: 0.26
+Release: alt1
 
 Summary: alterator module to setup grub bootloader
 License: GPL
@@ -55,6 +55,9 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Wed Jun 19 2024 Anton Midyukov <antohami@altlinux.org> 0.26-alt1
+- backend3/grub: get variable from /etc/locale.conf, is available
+
 * Sun Jan 07 2024 Egor Ignatov <egori@altlinux.org> 0.25-alt2
 - grub-md-list: use lsblk to find drive by partition (closes: #48726)
 
