@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: graphs
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Plot and manipulate data with Graphs
@@ -17,10 +17,11 @@ License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://github.com/Sjoerd1993/Graphs
 
+Vcs: https://github.com/Sjoerd1993/Graphs.git
+
 %if_disabled snapshot
 Source: %url/archive/v%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/Sjoerd1993/Graphs.git
 Source: %name-%version.tar
 %endif
 
@@ -33,6 +34,7 @@ BuildRequires: meson vala-tools blueprint-compiler /usr/bin/g-ir-compiler
 BuildRequires: yelp-tools
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver gir(Adw) = 1
 BuildRequires: pkgconfig(gee-0.8)
+BuildRequires: python3(PIL) python3(matplotlib)
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 # TODO: python tests
 #BuildRequires: python3(pytest) typelib(Adw) = 1}
@@ -81,6 +83,9 @@ sed -i "s/'pytest'/'py.test3'/" tests/meson.build
 %_typelibdir/%_name-%api_ver.typelib
 
 %changelog
+* Wed Jun 19 2024 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
+- 1.8.1
+
 * Tue Apr 23 2024 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - 1.8.0
 
