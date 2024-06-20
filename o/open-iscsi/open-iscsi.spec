@@ -4,7 +4,7 @@
 %define bname iscsi
 
 Name: open-%bname
-Version: 2.1.9
+Version: 2.1.10
 License: GPL-2.0-or-later
 Release: alt1
 Summary: Utils to operate with %Name
@@ -135,6 +135,9 @@ fi
 %_man3dir/*
 
 %changelog
+* Thu Jun 20 2024 Alexey Shabalin <shaba@altlinux.org> 2.1.10-alt1
+- 2.1.10
+
 * Fri Jul 14 2023 Anton Farygin <rider@altlinux.ru> 2.1.9-alt1
 - 2.1.9
 - fix build for p10
