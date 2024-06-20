@@ -1,6 +1,6 @@
 
 Name: qmergeinifiles
-Version: 2.0.2
+Version: 3.0.0
 Release: alt1
 
 
@@ -10,27 +10,34 @@ License: GPL
 
 Source: %name-%version.tar
 
-BuildRequires: qt5-base-devel
+
+BuildRequires:make gcc-c++
+
 
 %description
 Utility to merge INI-format files
 
 
 %prep
+
 %setup -q
-%qmake_qt5
 
 %build
-%make_build
+%add_optflags %optflags_shared
+%make_build CXXFLAGS="-pedantic %optflags"
+
 
 %install
-%installqt5
+%makeinstall_std
 
 
 %files
 %_bindir/*
 
 %changelog
+* Thu Sep 14 2023 Daniil-Viktor Ratkin <krf10@altlinux.ru> 3.0.0-alt1
+- remove Qt dependencies
+
 * Fri Jul 05 2019 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt1
 - fix to show usage info when debug output disabled
 
@@ -60,4 +67,3 @@ Utility to merge INI-format files
 
 * Fri Nov 09 2007 Sergey V Turchin <zerg at altlinux dot org> 0.0.1-alt1
 - initial specfile
-
