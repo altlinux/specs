@@ -1,5 +1,5 @@
 Name: algol68g
-Version: 3.5.2
+Version: 3.5.4
 Release: alt1
 Summary: Algol 68 interpreter
 License: GPLv3
@@ -47,6 +47,9 @@ install -pm644 ChangeLog %buildroot%_docdir/
 %_docdir/*
 
 %changelog
+* Thu Jun 20 2024 Andrey Bergman <vkni@altlinux.org> 3.5.4-alt1
+- Version update
+
 * Wed Jun 05 2024 Andrey Bergman <vkni@altlinux.org> 3.5.2-alt1
 - Version update
 
