@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: dewduct
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: DewDuct is a Youtube player for Linux on desktop and mobile
@@ -60,6 +60,9 @@ appstreamcli make-desktop-file data/%rdn_name.metainfo.xml %buildroot%_datadir/a
 %doc README*
 
 %changelog
+* Thu Jun 20 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.3-alt1
+- updated to v0.2.3-3-g0d0e4cc
+
 * Sat Jun 01 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt1
 - first build for Sisyphus (v0.2.2-3-g46e00d3)
 
