@@ -10,7 +10,7 @@
 
 Name: kde5-connect
 Version: 23.08.5
-Release: alt2
+Release: alt3
 %K5init
 
 Group: Communications
@@ -26,6 +26,7 @@ Requires: kf5-kirigami kf5-kirigami-addons
 Requires: kde5-kpeoplevcard
 
 Source: %rname-%version.tar
+Patch: alt-plasmoid-placement.patch
 
 # Automatically added by buildreq on Fri Feb 05 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ gtk-update-icon-cache libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbusmenu-qt52 libgpg-error libjson-c libqca-qt5 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libwayland-client libxcbutil-keysyms libxkbfile-devel pkg-config python-base python-modules python3 python3-base qt5-base-devel ruby ruby-stdlibs xorg-inputproto-devel xorg-kbproto-devel xorg-xextproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -44,7 +45,7 @@ BuildRequires: kf5-kservice-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel kf
 BuildRequires: kf5-kdoctools-devel kf5-kirigami-devel kf5-kpeople-devel kf5-qqc2-desktop-style-devel
 BuildRequires: kf5-kpackage-devel
 BuildRequires: kf5-modemmanager-qt-devel ModemManager-devel
-BuildRequires: kde5-plasma-wayland-protocols
+BuildRequires: kde5-plasma-wayland-protocols kf5-plasma-framework-devel
 
 %description
 KDE Connect adds communication between KDE and your smartphone.
@@ -99,6 +100,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch -p1
 
 %build
 %K5build \
@@ -143,7 +145,7 @@ done
 %_K5notif/kdeconnect.notifyrc
 %_K5icon/hicolor/*/apps/*kdeconnect*.*
 %_K5srv/*kdeconnect*.*
-%_K5data/plasma/plasmoids/org.kde.kdeconnect/
+%_kf5_data/plasma/plasmoids/org.kde.kdeconnect/
 %_K5data/kdeconnect/
 %_datadir/metainfo/*kdeconnect*.xml
 %_datadir/zsh/site-functions/_kdeconnect
@@ -167,6 +169,9 @@ done
 #%_K5lib/libkdeconnectsmshelper.so.*
 
 %changelog
+* Thu Jun 20 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 23.08.5-alt3
+- change plasmoid install script (closes: 48276)
+
 * Fri Mar 15 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt2
 - require kde5-kpeoplevcard
 
