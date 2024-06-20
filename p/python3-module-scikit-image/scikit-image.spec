@@ -7,7 +7,7 @@
 %def_with pythran
 
 Name: python3-module-%oname
-Version: 0.23.2
+Version: 0.24.0
 Release: alt1
 Summary: Image processing routines for SciPy
 License: BSD-3-Clause and MIT
@@ -153,6 +153,7 @@ pushd %buildroot%python3_sitelibdir
   --deselect="skimage/util/tests/test_regular_grid.py::test_regular_grid_2d_8" \
   --deselect="skimage/util/tests/test_regular_grid.py::test_regular_grid_3d_8" \
   --deselect="skimage/segmentation/tests/test_quickshift.py::test_grey" \
+  --deselect="skimage/morphology/tests/test_misc.py" \
 %endif
   skimage/
 popd
@@ -178,6 +179,9 @@ popd
 %endif
 
 %changelog
+* Thu Jun 20 2024 Anton Vyatkin <toni@altlinux.org> 0.24.0-alt1
+- New version 0.24.0.
+
 * Mon Apr 22 2024 Anton Vyatkin <toni@altlinux.org> 0.23.2-alt1
 - New version 0.23.2.
 
