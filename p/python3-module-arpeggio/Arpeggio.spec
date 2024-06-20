@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 2.0.0
-Release: alt2
+Version: 2.0.2
+Release: alt1
 
 Summary: Parser interpreter based on PEG grammars written in Python
 License: MIT
@@ -66,6 +66,9 @@ mkdocs build
 %python3_sitelibdir_noarch/%mod_name/tests/
 
 %changelog
+* Thu Jun 20 2024 Fr. Br. George <george@altlinux.org> 2.0.2-alt1
+- Autobuild version bump to 2.0.2
+
 * Thu Nov 10 2022 Stanislav Levin <slev@altlinux.org> 2.0.0-alt2
 - Fixed FTBFS (flit_core 3.7.1).
 
