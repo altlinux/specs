@@ -1,40 +1,42 @@
 %define _unpackaged_files_terminate_build 1
 
-%define oname argh
+%define pypi_name argh
+%define mod_name %pypi_name
 %def_with check
 
-Name: python3-module-%oname
-Version: 0.26.2
-Release: alt3
-Summary: An unobtrusive argparse wrapper with natural syntax
+Name: python3-module-%pypi_name
+Version: 0.31.2
+Release: alt1
+Summary: Plain Python functions as CLI commands without boilerplate
 License: LGPLv3
 Group: Development/Python3
 Url: https://pypi.org/project/argh/
-
-# https://github.com/neithere/argh.git
-Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
-
+Vcs: https://github.com/neithere/argh
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(mock)
-BuildRequires: python3(tox)
+%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
-An argparse wrapper that doesn't make you say "argh" each time you deal
-with it.
+Building a command-line interface? Found yourself uttering "argh!" while
+struggling with the API of argparse? Don't like the complexity but need the
+power?
 
-http://argh.rtfd.org
+Argh builds on the power of argparse (which comes with Python) and makes it
+really easy to use. It eliminates the complex API and lets you "dispatch"
+ordinary Python functions as CLI commands.
 
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -43,14 +45,17 @@ http://argh.rtfd.org
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -ra tests
 
 %files
-%doc AUTHORS CHANGES *.rst
-%python3_sitelibdir/*
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jun 20 2024 Stanislav Levin <slev@altlinux.org> 0.31.2-alt1
+- 0.26.2 -> 0.31.2.
+
 * Sun Jan 28 2024 Grigory Ustinov <grenka@altlinux.org> 0.26.2-alt3
 - Moved on modern pyproject macros.
 
