@@ -7,7 +7,7 @@
 %def_disable doc
 
 Name: gstreamer-editing-services
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: GStreamer Editing Services (GES)
@@ -135,6 +135,9 @@ library.
 %endif
 
 %changelog
+* Thu Jun 20 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.5-alt1
+- 1.24.5
+
 * Wed May 29 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.4-alt1
 - 1.24.4
 

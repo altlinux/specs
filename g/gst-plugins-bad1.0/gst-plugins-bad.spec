@@ -41,7 +41,7 @@
 %def_disable doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -80,7 +80,7 @@ BuildRequires: libvpx-devel liborc-devel orc libofa-devel libmusicbrainz-devel l
 %{?_enable_zbar:BuildRequires: libzbar-devel}
 %{?_enable_zxing:BuildRequires: pkgconfig(zxing)}
 BuildRequires: libEGL-devel libwebp-devel libopenjpeg2.0-devel libbluez-devel
-BuildRequires: libsoup-devel libspandsp-devel libfreeaptx-devel
+BuildRequires: libsoup-devel libfreeaptx-devel
 BuildRequires: libdbus-devel libxml2-devel libgnutls-devel libvdpau-devel
 BuildRequires: libsbc-devel libusb-devel libgudev-devel libopus-devel
 BuildRequires: libcurl-devel libssh2-devel
@@ -107,12 +107,14 @@ BuildRequires: liborc-test-devel gstreamer1.0-utils
 %{?_enable_fdkaac:BuildRequires: pkgconfig(fdk-aac)}
 %{?_enable_v4l2codecs:BuildRequires: glibc-kernheaders pkgconfig(gudev-1.0)}
 # webrtc-audio-processing for webrtcdsp
-BuildRequires: libwebrtc-devel >= 0.3
+BuildRequires: libwebrtc-devel >= 0.3 pkgconfig(webrtc-audio-processing-1) >= 1.0
 # since 1.13.x
 BuildRequires: libnice-devel libva-devel liblcms2-devel
 %{?_enable_liblilv:BuildRequires: liblilv-devel}
 %{?_enable_doc:BuildRequires: hotdoc gstreamer%api_ver-utils}
 %{?_enable_check: BuildRequires: /proc %_bindir/gst-tester-%api_ver}
+#BuildRequires: pkgconfig(svtav1enc) 1.8 too old
+#BuildRequires: pkgconfig(spandsp)
 
 %description
 GStreamer Bad Plug-ins is a set of plug-ins that aren't up to par
@@ -227,6 +229,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Thu Jun 20 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.5-alt1
+- 1.24.5
+
 * Wed May 29 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.4-alt1
 - 1.24.4
 
