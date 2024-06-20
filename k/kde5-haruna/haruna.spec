@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 0.12.3
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Video
@@ -16,6 +16,7 @@ License: GPL-3.0-or-later
 Requires: %name-youtube-player
 
 Source: %rname-%version.tar
+Patch: alt-mpv-fix.patch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: cmake extra-cmake-modules
@@ -74,6 +75,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch -p1
 
 %build
 %K5build \
@@ -104,6 +106,9 @@ KF5 library
 #%_K5lib/libharuna.so.*
 
 %changelog
+* Mon Jun 17 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 0.12.3-alt2
+- set vo to libmpv (closes: 50517)
+
 * Mon Feb 05 2024 Sergey V Turchin <zerg@altlinux.org> 0.12.3-alt1
 - new version
 
