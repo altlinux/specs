@@ -1,5 +1,5 @@
 Name: rpm-macros-branding
-Version: 1.0.12
+Version: 1.0.13
 Release: alt1
 Summary: RPM helper macros to build branding packages
 License: %gpl2plus
@@ -25,6 +25,7 @@ alt-server-v \
 alt-sisyphus \
 alt-spserver \
 alt-spworkstation \
+alt-spcontainer \
 alt-starterkit \
 alt-workstation \
 alt-tonk \
@@ -77,6 +78,9 @@ install -m 0644 branding.rpm.macros %buildroot%_rpmmacrosdir/branding
 %_rpmmacrosdir/*
 
 %changelog
+* Tue Jun 18 2024 Anton Midyukov <antohami@altlinux.org> 1.0.13-alt1
+- Added alt-spcontainer
+
 * Thu Apr 11 2024 Anton Midyukov <antohami@altlinux.org> 1.0.12-alt1
 - Added alt-mobile, alt-mobile-sisyphus
 

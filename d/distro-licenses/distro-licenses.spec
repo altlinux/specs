@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: distro-licenses
-Version: 1.3.3
-Release: alt2
+Version: 1.3.4
+Release: alt1
 License: CC0-1.0
 Summary: Texts of various distribution licenses
 Group: System/Base
@@ -27,6 +27,9 @@ Texts of various distribution licenses
 %_bindir/*
 
 %changelog
+* Tue Jun 18 2024 Anton Midyukov <antohami@altlinux.org> 1.3.4-alt1
+- Added license for ALT SP containers images (from @blackdc)
+
 * Tue Feb 20 2024 Anton Midyukov <antohami@altlinux.org> 1.3.3-alt2
 - replace http with https in the link www.basealt.ru
 
