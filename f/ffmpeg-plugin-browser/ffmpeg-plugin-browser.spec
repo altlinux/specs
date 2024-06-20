@@ -166,8 +166,8 @@
 %endif
 
 Name:		ffmpeg-plugin-browser
-Version:	120
-Release:	alt3
+Version:	122
+Release:	alt1
 
 Summary:	FFmpeg built specifically for codec support in special browser
 License:	GPLv3
@@ -612,13 +612,6 @@ echo 'include $(SRC_PATH)/ffbuild/libffmpeg.mak' >> Makefile
 	--mandir=%_mandir \
 	--docdir=%_docdir/%name-%version \
 	--disable-rpath \
-	--disable-all \
-	--disable-autodetect \
-	--disable-error-resilience \
-	--disable-everything \
-	--disable-faan \
-	--disable-iconv \
-	--disable-network \
 %ifarch armh aarch64
 	--enable-v4l2_m2m \
 %endif
@@ -719,6 +712,9 @@ tests/checkasm/checkasm
 %_libdir/ffmpeg-plugin-browser/libffmpeg.so
 
 %changelog
+* Thu Jun 20 2024 Sergey V Turchin <zerg@altlinux.org> 122-alt1
+- new version
+
 * Fri Mar 29 2024 Sergey V Turchin <zerg@altlinux.org> 120-alt3
 - simplify build options
 
