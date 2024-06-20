@@ -4,7 +4,7 @@
 
 Summary: Library for asynchronous I/O readiness notification
 Name: libivykis
-Version: 0.42.4
+Version: 0.43.1
 Release: alt1
 
 License: LGPLv2+
@@ -26,6 +26,7 @@ uses poll(2)able file descriptors as its event sources.
 Summary: Library for asynchronous I/O readiness notification
 Group: System/Libraries
 Provides: %name = %EVR
+Obsoletes: %name < 0.42.4
 
 %description -n %{name}%{soname}
 ivykis is a library for asynchronous I/O readiness notification.
@@ -85,6 +86,11 @@ make DESTDIR=%buildroot install
 %endif
 
 %changelog
+* Thu Jun 20 2024 L.A. Kostis <lakostis@altlinux.ru> 0.43.1-alt1
+- 0.43.1.
+- Added missing obsoletes to fix conflict with previous
+  version (closes #46174).
+
 * Sun Mar 27 2022 L.A. Kostis <lakostis@altlinux.ru> 0.42.4-alt1
 - 0.42.4.
 - .spec: fix libname according shared libs policy.
