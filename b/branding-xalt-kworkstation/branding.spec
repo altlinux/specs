@@ -8,7 +8,7 @@
 %endif
 
 %ifarch %ix86 x86_64
-%def_enable gfxboot
+%def_disable gfxboot
 %else
 %def_disable gfxboot
 %endif
@@ -29,7 +29,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt0.3
+Release: alt0.4
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -38,12 +38,14 @@ Release: alt0.3
 %define design_graphics_abi_bugfix 1
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-sans
+%if_enabled gfxboot
 BuildRequires: design-bootloader-source >= 5.0-alt2
-BuildRequires: cpio %{?_enable_gfxboot:gfxboot >= 4}
+BuildRequires: cpio gfxboot /usr/bin/fribidi
+%endif
 
 BuildRequires: libalternatives-devel
 BuildRequires: qt5-base-devel
-BuildRequires: ImageMagick fontconfig bc libGConf-devel /usr/bin/fribidi
+BuildRequires: ImageMagick fontconfig bc libGConf-devel
 
 %define Theme_ru Рабочая станция К
 %define Brand_ru Альт
@@ -230,10 +232,12 @@ ALT index.html welcome page.
 %define x86 grub
 %endif
 
+%if_enabled gfxboot
 mkdir design-bootloader-source-copy
 cp -ar /usr/src/design-bootloader-source ./design-bootloader-source-copy/
 sed -i 's|/usr/share/fonts/ttf/droid/|/usr/share/fonts/ttf/google-droid/|' design-bootloader-source-copy/design-bootloader-source/fonts/Makefile
 sed -i 's|/usr/src/design-bootloader-source|design-bootloader-source-copy/design-bootloader-source|' components.mk
+%endif
 
 %build
 autoconf
@@ -482,6 +486,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Jun 20 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.4
+- disable gfxboot support
+
 * Mon Jun 03 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.3
 - update codename
 
