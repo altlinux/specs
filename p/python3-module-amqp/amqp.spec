@@ -4,31 +4,24 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.1.1
-Epoch: 1
+Version: 5.2.0
 Release: alt1
-Group: Development/Python3
-License: BSD
+Epoch: 1
 Summary: Low-level AMQP client for Python
-URL: https://pypi.org/project/amqp/
-VCS: http://github.com/celery/py-amqp.git
-
-Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%if_with check
-# deps
-BuildRequires: python3(vine)
-
-BuildRequires: python3(pytest)
-%endif
-
+License: BSD
+Group: Development/Python3
+Url: https://pypi.org/project/amqp/
+Vcs: http://github.com/celery/py-amqp.git
 BuildArch: noarch
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 This is a fork of amqplib_ which was originally written by Barry Pederson.
@@ -37,6 +30,11 @@ alternative when librabbitmq is not available.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements/test.txt
+%endif
 
 %build
 %pyproject_build
@@ -45,9 +43,7 @@ alternative when librabbitmq is not available.
 %pyproject_install
 
 %check
-# override upstream's config (it's too much to patch)
-%tox_create_default_config
-%tox_check_pyproject -- -vra t/unit
+%pyproject_run_pytest -vra t/unit
 
 %files
 %doc AUTHORS Changelog LICENSE README.rst
@@ -55,6 +51,9 @@ alternative when librabbitmq is not available.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jun 20 2024 Stanislav Levin <slev@altlinux.org> 1:5.2.0-alt1
+- 5.1.1 -> 5.2.0.
+
 * Thu Oct 20 2022 Stanislav Levin <slev@altlinux.org> 1:5.1.1-alt1
 - 2.5.2 -> 5.1.1.
 
