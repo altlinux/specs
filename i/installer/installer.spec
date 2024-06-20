@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.15.8
+Version: 1.15.9
 Release: alt1
 
 Summary: Installer common parts
@@ -105,6 +105,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Wed Jun 19 2024 Ajrat Makhmutov <rauty@altlinux.org> 1.15.9-alt1
+- specify new help for the steps pkg and pkg-install
+
 * Mon Jun 10 2024 Anton Midyukov <antohami@altlinux.org> 1.15.8-alt1
 - 50-instkernel.sh: look for dependencies for the swap partition when
   make-initrd (Closes: 44828)
