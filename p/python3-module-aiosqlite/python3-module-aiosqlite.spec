@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.19.0
-Release: alt2
+Version: 0.20.0
+Release: alt1
 
 Summary: asyncio bridge to the standard sqlite3 module
 License: MIT
@@ -59,6 +59,9 @@ rm -r %buildroot%python3_sitelibdir/%mod_name/tests
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jun 20 2024 Stanislav Levin <slev@altlinux.org> 0.20.0-alt1
+- 0.19.0 -> 0.20.0.
+
 * Mon May 15 2023 Stanislav Levin <slev@altlinux.org> 0.19.0-alt2
 - Rebuilt with flit-core 3.9.0.
 
