@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.200
+Version: 4.0.4.201
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -61,6 +61,7 @@ Requires: psmisc
 Requires: rpm-build-perl >= 0.76
 Requires: rpm-macros-python
 Requires: rpm-macros-python3
+Requires: rpm-macros-systemd >= 6
 Requires: rpmspec
 Requires: sed
 Requires: service
@@ -401,6 +402,9 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Thu Jun 20 2024 Alexey Shabalin <shaba@altlinux.org> 4.0.4.201-alt1
+- Moved all systemd macros to rpm-macros-systemd package.
+
 * Tue Jun 04 2024 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.200-alt1
 - Bring embedded PATH lists in line with current merged-usr ALT practice.
   (Closes: 50527)

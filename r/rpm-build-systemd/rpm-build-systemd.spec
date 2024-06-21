@@ -1,8 +1,8 @@
 %define oname systemd
 
 Name: rpm-build-%oname
-Version: 5
-Release: alt4
+Version: 6
+Release: alt1
 
 Summary: RPM helper macros to build packages with systemd support
 License: LGPL-2.1-or-later
@@ -35,6 +35,9 @@ install -D -m644 %SOURCE1 -p %buildroot%_rpmmacrosdir/%oname
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Jun 20 2024 Alexey Shabalin <shaba@altlinux.org> 6-alt1
+- add all macros with systemd path.
+
 * Thu May 25 2023 Alexey Gladkov <legion@altlinux.ru> 5-alt4
 - Hide systemd-specific utilities to avoid adding a dependency on systemd.
 

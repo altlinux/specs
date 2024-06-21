@@ -2,27 +2,6 @@
 %define _unpackaged_files_terminate_build 1
 %define _localstatedir %_var
 
-# usr merged path
-%define _binfmtdir %_prefix/lib/binfmt.d
-%define _env_dir %_prefix/lib/environment.d
-%define _journal_catalogdir %_prefix/lib/systemd/catalog
-%define _modprobedir %_prefix/lib/modprobe.d
-%define _modules_loaddir %_prefix/lib/modules-load.d
-%define _presetdir %_prefix/lib/systemd/system-preset
-%define _user_presetdir %_prefix/lib/systemd/user-preset
-%define _sysctldir %_prefix/lib/sysctl.d
-%define _sysusersdir %_prefix/lib/sysusers.d
-%define _systemd_dir %_prefix/lib/systemd
-%define _tmpfilesdir %_prefix/lib/tmpfiles.d
-%define _unitdir %_prefix/lib/systemd/system
-%define _user_unitdir %_prefix/lib/systemd/user
-%define _udev_hwdbdir %_prefix/lib/udev/hwdb.d
-%define _udev_rulesdir %_prefix/lib/udev/rules.d
-%define _gen_dir %_prefix/lib/systemd/system-generators
-%define _user_gen_dir %_prefix/lib/systemd/user-generators
-%define _env_gen_dir %_prefix/lib/systemd/system-environment-generators
-%define _user_env_gen_dir %_prefix/lib/systemd/user-environment-generators
-
 %add_findreq_skiplist %_x11sysconfdir/xinit.d/*
 %add_findreq_skiplist %_prefix/lib/kernel/install.d/*
 %add_findreq_skiplist %_unitdir/local.service
@@ -122,7 +101,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.6
-Release: alt2
+Release: alt3
 Summary: System and Session Manager
 Url: https://systemd.io/
 Group: System/Configuration/Boot and Init
@@ -1168,29 +1147,6 @@ echo ".so man8/systemd-udevd.8" > %buildroot%_man8dir/udevd.8
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1378974
 install -D -m644 -t %buildroot%_unitdir/systemd-udev-trigger.service.d/ %SOURCE10
-
-# p11 compatibility: Bring exported dir paths in line with rpm macros and with
-# packages as they currently are in the repository.
-# In the future, remove this when all packages install their files in the
-# corresponding directories under %_prefix; this has to be coordinated.
-sed -i 's,^\(udev_dir\)=.*,\1=/lib/udev,' %buildroot%_datadir/pkgconfig/udev.pc
-sed -i 's,^\(root_prefix\)=.*,\1=,' %buildroot%_datadir/pkgconfig/systemd.pc
-sed -i 's,^\(prefix\)=.*,\1=%_prefix,' %buildroot%_datadir/pkgconfig/systemd.pc
-for d in systemd_util_dir \
-         systemd_system_preset_dir \
-         systemd_system_unit_dir \
-         systemd_system_generator_dir \
-         systemd_sleep_dir \
-         systemd_shutdown_dir \
-         tmpfiles_dir \
-         sysusers_dir \
-         sysctl_dir \
-         binfmt_dir \
-         modules_load_dir \
-         ; \
-do
-    sed -i "s,^\($d\)=\${prefix},\1=\${rootprefix}," %buildroot%_datadir/pkgconfig/systemd.pc
-done
 
 %check
 export LD_LIBRARY_PATH=$(pwd)/%{__builddir}/src/shared:$(pwd)/%{__builddir}
@@ -2519,6 +2475,10 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Mon May 27 2024 Alexey Shabalin <shaba@altlinux.org> 1:255.6-alt3
+- Revert "systemd.pc: Fix compatibility with current package specs".
+- Build with systemd macros from rpm-build.
+
 * Sat May 25 2024 Arseny Maslennikov <arseny@altlinux.org> 1:255.6-alt2
 - Fix compatibility with packages which install files outside %%_prefix, IOW,
   in the legacy unmerged-usr locations. (thanks to sin@)
