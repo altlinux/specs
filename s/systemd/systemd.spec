@@ -23,13 +23,14 @@
 %endif
 %def_enable logind
 %def_enable vconsole
+%def_enable vmspawn
 %def_enable initrd
 %def_enable quotacheck
 %def_enable randomseed
 %def_enable coredump
 %def_enable pstore
 %def_enable gcrypt
-%def_disable qrencode
+%def_enable qrencode
 %def_enable microhttpd
 %def_enable gnutls
 %def_enable openssl
@@ -100,8 +101,8 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.6
-Release: alt3
+Version: %ver_major.7
+Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
 Group: System/Configuration/Boot and Init
@@ -270,6 +271,10 @@ Requires: %name-tmpfiles-common = %EVR
 Requires: %name-sysctl-common = %EVR
 Requires: %name-modules-common = %EVR
 
+Obsoletes: systemd-units < 0:43-alt1
+Provides: systemd-units = %EVR
+Provides: syslogd-daemon
+
 # services
 Requires: pam_%name = %EVR
 Requires: dbus >= %dbus_ver
@@ -282,9 +287,14 @@ Requires: coreutils
 Requires: /sbin/sulogin
 Requires: sysvinit-utils
 
-Obsoletes: systemd-units < 0:43-alt1
-Provides: systemd-units = %EVR
-Provides: syslogd-daemon
+# Obsoletes: SysVinit
+Provides: %name-sysvinit = %EVR
+Obsoletes: %name-sysvinit < 1:255.7-alt1
+Provides: SysVinit = 2.88-alt0.1
+#Obsoletes:      upstart
+Conflicts: upstart
+Conflicts: SysVinit
+Provides: /sbin/init /sbin/reboot /sbin/halt /sbin/poweroff /sbin/shutdown /sbin/telinit /sbin/runlevel
 
 # SBAT generation number for ALT (refer to SBAT.md)
 %define sbat_distro altlinux
@@ -444,22 +454,6 @@ pam_systemd_home ensures that home directories managed by systemd-homed.service
 are automatically activated (mounted) on user login,
 and are deactivated (unmounted) when the last session of the user ends.
 
-%package sysvinit
-Group: System/Configuration/Boot and Init
-Summary: systemd System V init tools
-Conflicts: filesystem < 3
-Requires: %name = %EVR
-# Obsoletes: SysVinit
-Provides: SysVinit = 2.88-alt0.1
-#Obsoletes:      upstart
-Conflicts: upstart
-Conflicts: SysVinit
-BuildArch: noarch
-Provides: /sbin/init /sbin/reboot /sbin/halt /sbin/poweroff /sbin/shutdown /sbin/telinit /sbin/runlevel
-
-%description sysvinit
-Drop-in replacement for the System V init tools of systemd.
-
 %package networkd
 Group: System/Base
 Summary: System daemon that manages network configurations
@@ -506,8 +500,8 @@ Provides: /lib/systemd/systemd-machined
 %description container
 Systemd tools to spawn and manage containers and virtual machines.
 
-This package contains systemd-nspawn, machinectl, systemd-machined,
-and systemd-importd.
+This package contains systemd-nspawn, systemd-vmspawn, machinectl,
+systemd-machined, and systemd-importd.
 
 %package portable
 Summary: Tools for Portable Services
@@ -780,15 +774,15 @@ Conflicts: startup < 0.9.9.14
         -Dnobody-group=nobody \
         -Dbump-proc-sys-fs-file-max=false \
         -Dbump-proc-sys-fs-nr-open=false \
-        %{?_enable_elfutils:-Delfutils=true} \
-        %{?_enable_passwdqc:-Dpasswdqc=true} \
-        %{?_enable_xz:-Dxz=true} \
-        %{?_enable_zlib:-Dzlib=true} \
-        %{?_enable_bzip2:-Dbzip2=true} \
-        %{?_enable_lz4:-Dlz4=true} \
-        %{?_enable_zstd:-Dzstd=true} \
-        %{?_enable_libcryptsetup:-Dlibcryptsetup=true} \
-        %{?_enable_tpm2:-Dtpm2=true} \
+        %{?_enable_elfutils:-Delfutils=enabled} \
+        %{?_enable_passwdqc:-Dpasswdqc=enabled} \
+        %{?_enable_xz:-Dxz=enabled} \
+        %{?_enable_zlib:-Dzlib=enabled} \
+        %{?_enable_bzip2:-Dbzip2=enabled} \
+        %{?_enable_lz4:-Dlz4=enabled} \
+        %{?_enable_zstd:-Dzstd=enabled} \
+        %{?_enable_libcryptsetup:-Dlibcryptsetup=enabled} \
+        %{?_enable_tpm2:-Dtpm2=enabled} \
         %{?_enable_logind:-Dlogind=true} \
         %{?_enable_vconsole:-Dvconsole=true} \
         %{?_enable_initrd:-Dinitrd=true} \
@@ -798,26 +792,27 @@ Conflicts: startup < 0.9.9.14
         %{?_enable_coredump:-Dcoredump=true} \
         %{?_enable_pstore:-Dpstore=true} \
         %{?_enable_smack:-Dsmack=true} \
-        %{?_enable_gcrypt:-Dgcrypt=true} \
-        %{?_enable_qrencode:-Dqrencode=true} \
-        %{?_enable_microhttpd:-Dmicrohttpd=true} \
-        %{?_enable_gnutls:-Dgnutls=true} \
-        %{?_enable_openssl:-Dopenssl=true } \
-        %{?_enable_p11kit:-Dp11kit=true } \
-        %{?_enable_libfido2:-Dlibfido2=true } \
-        %{?_enable_libcurl:-Dlibcurl=true} \
+        %{?_enable_gcrypt:-Dgcrypt=enabled} \
+        %{?_enable_qrencode:-Dqrencode=enabled} \
+        %{?_enable_microhttpd:-Dmicrohttpd=enabled} \
+        %{?_enable_gnutls:-Dgnutls=enabled} \
+        %{?_enable_openssl:-Dopenssl=enabled} \
+        %{?_enable_p11kit:-Dp11kit=enabled} \
+        %{?_enable_libfido2:-Dlibfido2=enabled} \
+        %{?_enable_libcurl:-Dlibcurl=enabled} \
         %{?_enable_libidn:-Dlibidn=true} \
-        %{?_enable_libidn2:-Dlibidn2=true} \
-        %{?_enable_libiptc:-Dlibiptc=true} \
-        %{?_enable_polkit:-Dpolkit=true} \
+        %{?_enable_libidn2:-Dlibidn2=enabled} \
+        %{?_enable_libiptc:-Dlibiptc=enabled} \
+        %{?_enable_polkit:-Dpolkit=enabled} \
         %{?_enable_efi:-Defi=true} \
+        %{?_enable_vmspawn:-Dvmspawn=enabled} \
         -Dsbat-distro=%sbat_distro \
         -Dsbat-distro-generation=%sbat_distro_generation \
         -Dsbat-distro-summary=%sbat_distro_summary \
         -Dsbat-distro-pkgname=%sbat_distro_pkgname \
         -Dsbat-distro-version=%sbat_distro_version \
         -Dsbat-distro-url=%sbat_distro_url \
-        %{?_enable_homed:-Dhomed=true} \
+        %{?_enable_homed:-Dhomed=enabled} \
         %{?_enable_networkd:-Dnetworkd=true} \
         %{?_enable_resolve:-Dresolve=true} \
         -Ddns-servers="" \
@@ -825,12 +820,12 @@ Conflicts: startup < 0.9.9.14
         -Dntp-servers="" \
         %{?_enable_sysusers:-Dsysusers=true} \
         %{?_enable_ldconfig:-Dldconfig=true} \
-        -Dbootloader=%{?_enable_bootloader:true}%{!?_enable_bootloader:false} \
-        -Dukify=%{?_enable_bootloader:true}%{!?_enable_bootloader:false} \
+        -Dbootloader=%{?_enable_bootloader:enabled}%{!?_enable_bootloader:disabled} \
+        -Dukify=%{?_enable_bootloader:enabled}%{!?_enable_bootloader:disabled} \
         -Dfirstboot=%{?_enable_firstboot:true}%{!?_enable_firstboot:false} \
-        %{?_enable_seccomp:-Dseccomp=true} \
+        %{?_enable_seccomp:-Dseccomp=enabled} \
         %{?_enable_ima:-Dima=true} \
-        %{?_enable_selinux:-Dselinux=true} \
+        %{?_enable_selinux:-Dselinux=enabled} \
         %{?_enable_apparmor:-Dapparmor=true} \
         %{?_enable_utmp:-Dutmp=true} \
         %{?_disable_kill_user_processes:-Ddefault-kill-user-processes=false} \
@@ -838,7 +833,7 @@ Conflicts: startup < 0.9.9.14
         -Ddefault-timeout-sec=45 \
         -Ddefault-user-timeout-sec=45 \
         -Doomd=true \
-        -Dsysupdate=false \
+        -Dsysupdate=disabled \
         -Dstatus-unit-format-default=combined \
         -Dfallback-hostname=localhost \
         -Ddefault-dnssec=no \
@@ -852,7 +847,7 @@ Conflicts: startup < 0.9.9.14
 %endif
         -Db_pie=true \
         -Db_ndebug=false \
-        -Dman=true \
+        -Dman=enabled \
         -Dcreate-log-dirs=false \
         -Durlify=false \
         -Dtests=unsafe \
@@ -1545,6 +1540,22 @@ if [ -s $tmp ]; then
 fi
 
 %files -f %name.lang
+%_sbindir/init
+%_sbindir/reboot
+%_sbindir/halt
+%_sbindir/poweroff
+%_sbindir/shutdown
+%_sbindir/telinit
+%_sbindir/runlevel
+%_man1dir/init*
+%_man8dir/halt*
+%_man8dir/reboot*
+%_man8dir/shutdown*
+%_man8dir/poweroff*
+%_man8dir/telinit*
+%_man8dir/runlevel*
+%_initdir/README
+
 %dir %_sysconfdir/systemd/system
 %dir %_sysconfdir/systemd/system.conf.d
 %dir %_sysconfdir/systemd/user
@@ -1658,6 +1669,11 @@ fi
 %if_enabled firstboot
 %_bindir/systemd-firstboot
 %_man8dir/systemd-firstboot.*
+%endif
+
+%if_enabled qrencode 
+%_systemd_dir/systemd-bsod
+%_man8dir/systemd-bsod.*
 %endif
 
 %ghost %config(noreplace) %_sysconfdir/machine-info
@@ -2111,23 +2127,6 @@ fi
 %_man8dir/systemd-homed.*
 %endif
 
-%files sysvinit
-%_sbindir/init
-%_sbindir/reboot
-%_sbindir/halt
-%_sbindir/poweroff
-%_sbindir/shutdown
-%_sbindir/telinit
-%_sbindir/runlevel
-%_man1dir/init*
-%_man8dir/halt*
-%_man8dir/reboot*
-%_man8dir/shutdown*
-%_man8dir/poweroff*
-%_man8dir/telinit*
-%_man8dir/runlevel*
-%_initdir/README
-
 %files tmpfiles-common
 %_tmpfilesdir/legacy.conf
 %_tmpfilesdir/x11.conf
@@ -2254,7 +2253,11 @@ fi
 %_mandir/*/*import*
 %exclude %_man3dir/*machine*
 %exclude %_man8dir/*mymachines.*
-%exclude %_man8dir/systemd-machine-id-*
+%exclude %_man8dir/*machine-id*
+%if_enabled vmspawn
+%_bindir/systemd-vmspawn
+%_mandir/*/*vmspawn*
+%endif
 
 %files portable
 %_tmpfilesdir/portables.conf
@@ -2475,6 +2478,13 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Fri Jun 21 2024 Alexey Shabalin <shaba@altlinux.org> 1:255.7-alt1
+- 255.7
+- Merge systemd-sysvinit to main systemd package.
+- Return "Provide necessary environment variables to generators" patch.
+- Build with qrencode support (and bsod service).
+- Build with systemd-vmspawn.
+
 * Mon May 27 2024 Alexey Shabalin <shaba@altlinux.org> 1:255.6-alt3
 - Revert "systemd.pc: Fix compatibility with current package specs".
 - Build with systemd macros from rpm-build.
