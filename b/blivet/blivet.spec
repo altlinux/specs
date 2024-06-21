@@ -6,7 +6,7 @@ Name: blivet
 Group: System/Configuration/Other
 Url: https://storageapis.wordpress.com/projects/blivet
 Version: 3.6.0
-Release: alt1
+Release: alt2
 License: GPLv2+
 
 Source0: http://github.com/storaged-project/blivet/archive/%name-%version.tar.gz
@@ -67,7 +67,7 @@ configuration.
 
 %prep
 %setup
-sed -e "s:/usr/lib/systemd/system:/lib/systemd/system:g" -i setup.py
+sed -e "s:/usr/lib/systemd/system:%_unitdir:g" -i setup.py
 
 %build
 make PYTHON=%__python3
@@ -88,6 +88,9 @@ make PYTHON=%__python3 DESTDIR=%buildroot install
 %python3_sitelibdir/*
 
 %changelog
+* Fri Jun 21 2024 Alexey Shabalin <shaba@altlinux.org> 3.6.0-alt2
+- fix %%_unitdir in %%setup section
+
 * Thu Sep 29 2022 Alexey Shabalin <shaba@altlinux.org> 3.6.0-alt1
 - 3.6.0
 
