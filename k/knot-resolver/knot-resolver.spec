@@ -4,7 +4,7 @@
 %def_disable dnstap
 
 Name: knot-resolver
-Version: 6.0.5
+Version: 6.0.7
 Release: alt1
 Summary: Caching full DNS Resolver
 Group: System/Servers
@@ -145,11 +145,11 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Knot Resolver" -g %nam
 %doc COPYING AUTHORS NEWS etc/config/config.*
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/root.hints
-%_sysconfdir/%name/icann-ca.pem
+%config(noreplace) %_sysconfdir/%name/icann-ca.pem
 %attr(750,%name,%name) %dir %_sharedstatedir/%name
 %attr(640,%name,%name) %_sharedstatedir/%name/root.keys
 %attr(750,%name,%name) %dir %_cachedir/%name
-/lib/sysusers.d/knot-resolver.conf
+%_sysusersdir/knot-resolver.conf
 %_tmpfilesdir/%name.conf
 %_sbindir/kresd
 %_sbindir/kres-cache-gc
@@ -176,7 +176,7 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Knot Resolver" -g %nam
 
 %files manager
 %python3_sitelibdir/knot_resolver_manager*
-%_sysconfdir/knot-resolver/config.yaml
+%config(noreplace) %_sysconfdir/knot-resolver/config.yaml
 %_unitdir/knot-resolver.service
 %_unitdir/multi-user.target.wants/knot-resolver.service
 %_bindir/kresctl
@@ -186,6 +186,10 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Knot Resolver" -g %nam
 %_datadir/fish/completions/kresctl.fish
 
 %changelog
+* Fri Jun 21 2024 Alexey Shabalin <shaba@altlinux.org> 6.0.7-alt1
+- 6.0.7 (Fixes: CVE-2023-50387, CVE-2023-50868)
+- Revert "ALT: fix unit and tmpfiles path"
+
 * Sat Feb 10 2024 Alexey Shabalin <shaba@altlinux.org> 6.0.5-alt1
 - 6.0.5
 
