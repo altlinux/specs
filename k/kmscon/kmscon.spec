@@ -2,7 +2,7 @@
 
 Name: kmscon
 Version: 9.0.0
-Release: alt1
+Release: alt2
 Summary: KMS/DRM based System Console
 Group: Terminals
 
@@ -35,8 +35,6 @@ console. See kmscon(1) man-page for usage information.
 %patch1 -p1
 
 %build
-# In the development branch upstream fixes this differently.
-sed -i '/^systemddir = .*$/'c"systemddir = '/lib/systemd'" meson.build
 # Patch out tests we have to skip.
 sed -i /"'"output"'"/c"# 'output' needs /dev/dri/card*" tests/meson.build
 sed -i /"'"vt"'"/c"# 'vt' hangs in hasher" tests/meson.build
@@ -61,6 +59,9 @@ sed -i /"'"vt"'"/c"# 'vt' hangs in hasher" tests/meson.build
 %_man1dir/%name.1*
 
 %changelog
+* Fri Jun 21 2024 Alexey Shabalin <shaba@altlinux.org> 9.0.0-alt2
+- backport commit from upstream "Use correct systemd system unit directory".
+
 * Fri Mar 10 2023 Arseny Maslennikov <arseny@altlinux.org> 9.0.0-alt1
 - 8.0.40.g01dd0a2 -> 9.0.0.
 
