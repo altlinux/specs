@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: sslscan
-Version: 2.1.3
+Version: 2.1.4
 Release: alt1
 Summary: sslscan tests SSL/TLS enabled services to discover supported cipher suites
 License: GPL-3.0-or-later
@@ -29,7 +29,7 @@ BuildRequires: libssl-devel
 %makeinstall_std
 
 %check
-%buildroot%_bindir/sslscan --version
+%buildroot%_bindir/sslscan --version | grep -Po "\s\Q%version-%release\E$"
 openssl req -x509 -newkey rsa -keyout server.pem -out server.pem -days 1 -nodes -subj /CN=qwerty
 openssl s_server &>/dev/null </dev/zero &
 trap "kill $!" EXIT
@@ -40,11 +40,14 @@ grep -q accepted a.xml
 grep -q qwerty   a.xml
 
 %files
-%doc LICENSE README.md
+%doc LICENSE README.md Changelog
 %_bindir/sslscan
 %_man1dir/sslscan.1.xz
 
 %changelog
+* Mon Jun 17 2024 Vitaly Chikunov <vt@altlinux.org> 2.1.4-alt1
+- Update to 2.1.4 (2024-06-16).
+
 * Tue Jan 23 2024 Vitaly Chikunov <vt@altlinux.org> 2.1.3-alt1
 - Update to 2.1.3 (2024-01-21).
 
