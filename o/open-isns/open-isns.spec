@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _localstatedir %_var
 
 Name: open-isns
 Version: 0.102
-Release: alt1
+Release: alt2
 Summary: The iSNS daemon and utility programs
 
 Group: System/Servers
@@ -12,7 +13,9 @@ Source: %name-%version.tar
 Source2: isnsd.init
 Patch: %name-%version.patch
 
-BuildRequires: libssl-devel
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson >= 0.54.0
+BuildRequires: libssl-devel libopenslp-devel
 
 %description
 The iSNS package contains the daemon and tools to setup a iSNS server,
@@ -43,15 +46,14 @@ sed -i -e 's|libdir=/usr/lib64|libdir=%_libdir|' libisns.pc
 %endif
 
 %build
-%autoreconf
-%configure --enable-shared --disable-static --with-rundir=/run
-%make_build
+%meson \
+    -Dsystemddir=%_systemd_dir \
+    -Drundir=/run
+
+%meson_build
 
 %install
-%make_install install DESTDIR=%buildroot
-%make_install install_hdrs DESTDIR=%buildroot
-%make_install install_lib DESTDIR=%buildroot
-
+%meson_install
 install -p -m 755 -D %SOURCE2 %buildroot%_initdir/isnsd
 
 %post
@@ -67,7 +69,7 @@ install -p -m 755 -D %SOURCE2 %buildroot%_initdir/isnsd
 %_man8dir/*
 %_unitdir/*
 %_initdir/*
-%dir %_var/lib/isns
+%dir %_sharedstatedir/isns
 %dir %_sysconfdir/isns
 %config(noreplace) %_sysconfdir/isns/*
 
@@ -81,6 +83,9 @@ install -p -m 755 -D %SOURCE2 %buildroot%_initdir/isnsd
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jun 21 2024 Alexey Shabalin <shaba@altlinux.org> 0.102-alt2
+- build with libopenslp
+
 * Thu May 02 2024 Alexey Shabalin <shaba@altlinux.org> 0.102-alt1
 - 0.102
 
