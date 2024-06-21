@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _udevdir %(pkg-config --variable=udevdir udev)
 
 %define ver_major 2.12
@@ -14,8 +14,8 @@
 %endif
 
 Name: libwacom
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.2
+Release: alt1
 
 Summary: A Wacom tablets library
 Group: System/Libraries
@@ -126,6 +126,9 @@ mkdir -p %buildroot%_sysconfdir/%name
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Jun 21 2024 Yuri N. Sedunov <aris@altlinux.org> 2.12.2-alt1
+- 2.12.2
+
 * Thu Jun 13 2024 Yuri N. Sedunov <aris@altlinux.org> 2.12.1-alt1.1
 - updated to 2.12.1-1-ga1ca4ed (Fix a memory leak (#720))
 
