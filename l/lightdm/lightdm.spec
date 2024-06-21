@@ -9,7 +9,7 @@
 
 Name: lightdm
 Version: 1.32.0
-Release: alt4
+Release: alt6
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -174,7 +174,7 @@ export CXXFLAGS="%optflags -std=gnu++11"
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%make DESTDIR=%buildroot install unitdir=%_unitdir
 
 # We don't ship AppAmor
 rm -rf %buildroot%_sysconfdir/apparmor.d/
@@ -219,8 +219,7 @@ fi
 
 
 %check
-%make check
-
+%make check || ( cat tests/test-suite.log && exit 1 )
 
 %files -f %name.lang
 %doc NEWS
@@ -288,6 +287,15 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Fri Jun 21 2024 Paul Wolneykien <manowar@altlinux.org> 1.32.0-alt6
+- Output test-suite.log on test fail.
+- Fix build with new systemd (pass %_unitdir to make install).
+
+* Fri Jun 21 2024 Paul Wolneykien <manowar@altlinux.org> 1.32.0-alt5
+- Start X11 with no background, thx Anton Midyukov (closes: 47907).
+- Integrate properly with Plymouth services, thx Anton Midyukov
+  (closes: 47204).
+
 * Thu May 18 2023 Anton Midyukov <antohami@altlinux.org> 1.32.0-alt4
 - users.conf: set minimum-uid=$UID_MIN as in /etc/login.defs when first time
   install lightdm package
