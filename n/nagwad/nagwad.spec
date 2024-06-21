@@ -2,7 +2,7 @@
 %define icinga_user icinga
 
 Name: 	  nagwad
-Version:  0.11.0
+Version:  0.11.1
 Release:  alt1
 
 Summary:  System journal event scanner and handler
@@ -246,6 +246,9 @@ usermod -a -G %name %icinga_user
 %_bindir/nsca-shell
 
 %changelog
+* Fri Jun 21 2024 Paul Wolneykien <manowar@altlinux.org> 0.11.1-alt1
+- Fixed "d-nagwad-status" UUID.
+
 * Mon Jun 17 2024 Paul Wolneykien <manowar@altlinux.org> 0.11.0-alt1
 - Added icinga-agent package (also without "check_nagwad" command in main conf).
 - Fix: Use 4-space indentation for code blocks in the docs.
