@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.1.0
+Version: 7.2.0
 Release: alt1
 Summary: Library to access the metadata for a Python package
 License: Apache-2.0
@@ -28,7 +28,7 @@ BuildRequires(pre): rpm-build-pyproject
 %if_with check
 # pytest-perf is not packaged and perf tests are skipped anyway
 %add_pyproject_deps_check_filter pytest-perf
-%pyproject_builddeps_metadata_extra testing
+%pyproject_builddeps_metadata_extra test
 
 # internal CPython's test package
 BuildRequires: python3(test)
@@ -65,6 +65,9 @@ CPython.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jun 21 2024 Stanislav Levin <slev@altlinux.org> 7.2.0-alt1
+- 7.1.0 -> 7.2.0.
+
 * Thu Mar 21 2024 Stanislav Levin <slev@altlinux.org> 7.1.0-alt1
 - 7.0.2 -> 7.1.0.
 
