@@ -1,6 +1,6 @@
 Name: qtractor
-Version: 0.9.90
-Release: alt2
+Version: 1.0.0
+Release: alt1
 
 Summary: Audio/MIDI multi-track sequencer
 License: GPLv2
@@ -74,6 +74,9 @@ desktop-file-edit \
 %_man1dir/qtractor.1*
 
 %changelog
+* Fri Jun 21 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.0-alt1
+- 1.0.0 released
+
 * Sun Jun 09 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.9.90-alt2
 - fix e2k build
 
