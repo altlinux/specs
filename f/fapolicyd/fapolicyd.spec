@@ -3,7 +3,7 @@
 Name: fapolicyd
 Summary: Application Whitelisting Daemon
 Version: 1.3.3
-Release: alt1
+Release: alt2
 License: GPL-3.0-or-later
 Group: System/Base
 Url: http://people.redhat.com/sgrubb/fapolicyd
@@ -186,6 +186,10 @@ fi
 %ghost %attr(660,%name,%name) %verify(not md5 size mtime) %_localstatedir/lib/%name/lock.mdb
 
 %changelog
+* Fri Jun 21 2024 Alexey Shabalin <shaba@altlinux.org> 1.3.3-alt2
+- Return error code 1 if can't read pid file (ALT#50543).
+- Revert "fix default systemd unit dir".
+
 * Fri May 03 2024 Alexey Shabalin <shaba@altlinux.org> 1.3.3-alt1
 - New version 1.3.3.
 
