@@ -7,7 +7,7 @@
 %define ver_major 1.26
 
 Name: python3-module-%oname
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Pycairo is a set of Python bindings for the cairo vector graphics library
@@ -15,10 +15,11 @@ Group: Development/Python3
 License: LGPL-2.1 and MPL-1.1
 Url: https://github.com/pygobject/pycairo
 
+Vcs: https://github.com/pygobject/pycairo.git
+
 %if_disabled snapshot
 Source: %url/releases/download/v%version/%oname-%version.tar.gz
 %else
-Vcs: https://github.com/pygobject/pycairo.git
 Source: %oname-%version.tar
 %def_with bootstrap
 %endif
@@ -149,6 +150,9 @@ rm -fR %python3_sitelibdir/%oname/pickle
 %endif
 
 %changelog
+* Fri Jun 21 2024 Yuri N. Sedunov <aris@altlinux.org> 1.26.1-alt1
+- 1.26.1
+
 * Mon Feb 12 2024 Yuri N. Sedunov <aris@altlinux.org> 1.26.0-alt1
 - 1.26.0
 
