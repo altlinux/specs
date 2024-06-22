@@ -2,7 +2,7 @@
 
 Name: xone
 Version: 0.3
-Release: alt2
+Release: alt3
 
 Summary: Driver for Xbox One and Xbox Series X|S accessories
 
@@ -74,6 +74,9 @@ cp -rv . %buildroot%src_dir
 %src_dir/
 
 %changelog
+* Sat Jun 22 2024 L.A. Kostis <lakostis@altlinux.ru> 0.3-alt3
+- transport: kernel 6.9+ fixes.
+
 * Thu Sep 21 2023 Mikhail Tergoev <fidel@altlinux.org> 0.3-alt2
 - move to git
 - update xone.sh
