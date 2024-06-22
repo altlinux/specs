@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 1.28.1
+Version: 1.29.0
 Release: alt1
 
 Summary: Microsoft Authentication Library (MSAL) for Python
@@ -47,6 +47,9 @@ py.test-3 tests/
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Jun 22 2024 Yuri N. Sedunov <aris@altlinux.org> 1.29.0-alt1
+- 1.29.0
+
 * Tue Jun 11 2024 Yuri N. Sedunov <aris@altlinux.org> 1.28.1-alt1
 - 1.28.1
 

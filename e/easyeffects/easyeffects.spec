@@ -1,10 +1,10 @@
-%def_disable snapshot
+%def_enable snapshot
 %define __isa_bits %(s="%_lib"; s=${s#lib}; echo "${s:-32}")
 
 %define xdg_name com.github.wwmm.easyeffects
 
 Name: easyeffects
-Version: 7.1.6
+Version: 7.1.7
 Release: alt1
 
 Summary: Audio effects for Pipewire applications
@@ -12,10 +12,11 @@ License: GPL-3.0
 Group: Sound
 Url: https://github.com/wwmm/%name
 
+Vcs: https://github.com/wwmm/easyeffects.git
+
 %if_disabled snapshot
 Source: %url/archive/v%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/wwmm/easyeffects.git
 Source: %name-%version.tar
 %endif
 
@@ -90,6 +91,9 @@ sed -i 's/tbb/tbb32/' src/meson.build
 %doc README* CHANGELOG.*
 
 %changelog
+* Sat Jun 22 2024 Yuri N. Sedunov <aris@altlinux.org> 7.1.7-alt1
+- updated to v7.1.7-6-gc1b678a11
+
 * Sat Mar 30 2024 Yuri N. Sedunov <aris@altlinux.org> 7.1.6-alt1
 - 7.1.6
 
