@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.46.0
+Version: 2.47.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -388,6 +388,9 @@ fi
 %endif
 
 %changelog
+* Sat Jun 22 2024 Alexey Gladkov <legion@altlinux.ru> 2.47.0-alt1
+- Do not ignore an errors when copying files to initramfs (ALT#50483).
+
 * Thu May 23 2024 Alexey Gladkov <legion@altlinux.ru> 2.46.0-alt1
 - Runtime:
   + Fix output in quiet=1 mode.
