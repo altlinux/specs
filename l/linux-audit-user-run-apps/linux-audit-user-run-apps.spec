@@ -8,7 +8,7 @@ Summary(ru_RU.UTF-8): Сбор статистики, какие графичес
 License: GPL-3.0
 Group: Graphical desktop/Other
 Version: 0
-Release: alt0.git%{commit_short}.1
+Release: alt0.git%{commit_short}.2
 Url: https://github.com/mikhailnov/linux-audit-user-run-apps
 Source0: %name-%version.tar
 BuildArch: noarch
@@ -32,7 +32,7 @@ started and closed by user (LAURA)
 %setup -q
 
 %install
-%makeinstall_std
+%makeinstall_std SYSTEMDUNITDIR=%_unitdir
 
 %files
 %doc LICENSE README.md
@@ -43,6 +43,9 @@ started and closed by user (LAURA)
 %_sysconfdir/xdg/autostart/laura.desktop
 
 %changelog
+* Sat Jun 22 2024 Mikhail Novosyolov <mikhailnov@altlinux.org> 0-alt0.git73318b.2
+- Fix building after usr merge
+
 * Tue Dec 27 2022 Mikhail Novosyolov <mikhailnov@altlinux.org> 0-alt0.git73318b.1
 - Initial build for Sisyphus
 
