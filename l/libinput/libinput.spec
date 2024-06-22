@@ -1,7 +1,5 @@
 %def_disable snapshot
 
-%define _udevdir %(pkg-config --variable=udevdir udev)
-
 %define _libexecdir %_prefix/libexec
 %def_enable libwacom
 %def_enable debug_gui
@@ -11,7 +9,7 @@
 
 Name: libinput
 Version: 1.26.0
-Release: alt1
+Release: alt1.1
 
 Summary: Input devices library
 Group: System/Libraries
@@ -122,9 +120,9 @@ the functionality of the installed libinput library.
 %files
 %dir %_sysconfdir/%name
 %_libdir/%name.so.*
-/lib/udev/%name-device-group
-/lib/udev/%name-fuzz-extract
-/lib/udev/%name-fuzz-to-zero
+%_udevdir/%name-device-group
+%_udevdir/%name-fuzz-extract
+%_udevdir/%name-fuzz-to-zero
 %_datadir/%name/
 %_udevrulesdir/80-%name-device-groups.rules
 %_udevrulesdir/90-%name-fuzz-override.rules
@@ -193,6 +191,9 @@ the functionality of the installed libinput library.
 %endif
 
 %changelog
+* Sat Jun 22 2024 Yuri N. Sedunov <aris@altlinux.org> 1.26.0-alt1.1
+- rebuilt with new systemd macros
+
 * Thu Jun 06 2024 Yuri N. Sedunov <aris@altlinux.org> 1.26.0-alt1
 - 1.26.0
 

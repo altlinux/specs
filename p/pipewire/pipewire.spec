@@ -47,17 +47,18 @@
 
 Name: pipewire
 Version: %ver_major.7
-Release: alt1
+Release: alt1.1
 
 Summary: Media Sharing Server
 Group: System/Servers
 License: MIT
 Url: https://pipewire.org/
 
+Vcs: https://github.com/PipeWire/pipewire.git
+
 %if_disabled snapshot
 Source: https://github.com/PipeWire/pipewire/archive/%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/PipeWire/pipewire.git
 Source: %name-%version.tar
 %endif
 #https://gitlab.freedesktop.org/pipewire/media-session.git
@@ -225,7 +226,10 @@ export LIB=%_lib
 	%{?_disable_selinux:-Dselinux=disabled} \
 	%{?_enable_systemd_system_service:-Dsystemd-system-service=enabled} \
 	%{?_disable_examples:-Dexamples=disabled} \
-	-Dsession-managers='media-session'
+	-Dsession-managers='media-session' \
+	-Dudevrulesdir='%_udevrulesdir' \
+	-Dsystemd-system-unit-dir='%_unitdir' \
+	-Dsystemd-user-unit-dir='%_userunitdir'
 %nil
 %meson_build
 
@@ -421,6 +425,9 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 
 
 %changelog
+* Sat Jun 22 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.7-alt1.1
+- rebuilt with new systemd macros
+
 * Fri May 24 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.7-alt1
 - 1.0.7
 

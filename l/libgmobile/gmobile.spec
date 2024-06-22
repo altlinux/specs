@@ -19,7 +19,7 @@
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Classes and utilities for mobile devices
 Group: System/Libraries
@@ -105,7 +105,7 @@ the functionality of the installed %_name library.
 
 %prep
 %setup -n %_name-%version
-sed -i "s|\(udevdir = \)prefix / 'lib' / 'udev'|\1'/lib/udev'|" meson.build
+sed -i "s|\(udevdir = \)prefix / 'lib' / 'udev'|\1'%_udevdir'|" meson.build
 
 %build
 %meson \
@@ -168,6 +168,9 @@ rm %buildroot%_libdir/%name.a
 
 
 %changelog
+* Sat Jun 22 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1.1
+- rebuilt with new systemd macros
+
 * Mon May 13 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - 0.2.0
 

@@ -11,15 +11,16 @@
 
 Name: cpupower-gui
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: A graphical program that is used to change the scaling frequency limits of the cpu, similar to cpupower.
 Group: Graphical desktop/GNOME
 License: GPL-3.0-or-later
 Url: https://github.com/vagnum08/cpupower-gui
 
-%if_enabled snapshot
 Vcs: https://github.com/vagnum08/cpupower-gui.git
+
+%if_enabled snapshot
 Source: %name-%version.tar
 %else
 Source: %url/archive/v%version/%name-%version.tar.gz
@@ -48,7 +49,7 @@ to `cpupower`.
 
 %build
 %meson \
-    -Dsystemddir=/lib/systemd \
+    -Dsystemddir=%_systemddir \
     -Duse_libexec=true
 %nil
 %meson_build
@@ -97,6 +98,9 @@ fi
 %doc README*
 
 %changelog
+* Sat Jun 22 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1.1
+- rebuilt with new systemd macros
+
 * Wed Feb 28 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - first build for Sisyphus (v1.0.0-24-gb44a198) (ALT #49455)
 

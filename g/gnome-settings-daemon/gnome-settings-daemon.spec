@@ -14,7 +14,7 @@
 
 Name: gnome-settings-daemon
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: A program that manages general GNOME settings
 License: GPL-2.0
@@ -112,7 +112,7 @@ The %name-tests package provides programms for testing GSD plugins.
 %meson \
 	%{?_disable_smartcard:-Dsmartcard=false} \
 	%{?_enable_wayland:-Dwayland=true} \
-	-Dudev_dir='/lib/udev'
+	-Dudev_dir='%_udevdir'
 %nil
 %meson_build
 
@@ -187,6 +187,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Sat Jun 22 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1.1
+- rebuilt with new systemd macros
+
 * Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 

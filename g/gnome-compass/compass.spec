@@ -7,7 +7,7 @@
 
 Name: gnome-%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: A simple GTK3 compass app for Mobile Linux.
 Group: Graphical desktop/GNOME
@@ -50,6 +50,8 @@ Known issues:
 %prep
 %setup -n %_name-%version
 
+sed -i 's@\/lib\/udev\/rules.d@%_udevrulesdir@' data/meson.build
+
 %build
 %meson
 %meson_build
@@ -69,6 +71,9 @@ Known issues:
 %doc README*
 
 %changelog
+* Sat Jun 22 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1.1
+- rebuilt with new systemd macros
+
 * Wed Oct 11 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - first build for Sisyphus
 

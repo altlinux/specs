@@ -1,6 +1,6 @@
 Name: ddcui
 Version: 0.5.4
-Release: alt1
+Release: alt1.1
 
 Summary: Graphical utility to query and update monitor settings
 Group: System/Configuration/Hardware
@@ -36,8 +36,6 @@ BuildRequires: pkgconfig(Qt5Help)
 
 %install
 %cmake_install
-mkdir -p  %buildroot%_modulesloaddir
-mv %buildroot%_prefix/lib/modules-load.d/%name.conf %buildroot%_modulesloaddir/
 
 %files
 %_bindir/%name
@@ -49,6 +47,9 @@ mv %buildroot%_prefix/lib/modules-load.d/%name.conf %buildroot%_modulesloaddir/
 %doc AUTHORS NEWS.md README.md CHANGELOG.md
 
 %changelog
+* Sat Jun 22 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.4-alt1.1
+- rebuilt with new systemd macros
+
 * Wed Feb 14 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.4-alt1
 - 0.5.4
 
