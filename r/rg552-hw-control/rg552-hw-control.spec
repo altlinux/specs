@@ -1,12 +1,11 @@
 Name: rg552-hw-control
 Version: 0.1
-Release: alt3
+Release: alt4
 
 Summary: Set of tools for hardware control on Anbernic RG552
 
 License: GPLv2
-Group: Games/Arcade
-Url: https://github.com/thrimbor/Hurrican/archive/%version.tar.gz
+Group: System/Configuration/Boot and Init
 ExclusiveArch: aarch64
 BuildRequires(pre): rpm-macros-systemd
 
@@ -32,6 +31,13 @@ done
 mkdir -p %buildroot%_presetdir
 install -m 0644 20-rg552-hardware.preset %buildroot%_presetdir/
 
+
+# Enable service automatically if wifi and fan found - work in progress
+# cat>%buildroot%_udevrulesdir/90-rg552-hw.rules<<EOF
+# SUBSYSTEM=="usb", ACTION=="add", ENV{SYSTEMD_WANTS}="rg552-fancontrol.service", TAG+="systemd"
+# SUBSYSTEM=="usb", ACTION=="add", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="f179", ENV{SYSTEMD_WANTS}="rg552-wifi.service", TAG+="systemd"
+# EOF
+
 %post
 
 %post_service rg552-fancontrol.service
@@ -45,9 +51,13 @@ install -m 0644 20-rg552-hardware.preset %buildroot%_presetdir/
 %files
 %_bindir/*
 %_unitdir/*.service
+# %%_udevrulesdir/*.rules
 %_presetdir/20-rg552-hardware.preset
 
 %changelog
+* Sat Jun 22 2024 Artyom Bystrov <arbars@altlinux.org> 0.1-alt4
+- Minor spec clean
+
 * Sat Jun 15 2024 Artyom Bystrov <arbars@altlinux.org> 0.1-alt3
 - Add preset file
 
