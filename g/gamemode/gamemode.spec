@@ -3,7 +3,7 @@
 
 Name: gamemode
 Version: 1.8.1
-Release: alt1
+Release: alt2
 
 Summary: Optimise Linux system performance on demand 
 License: BSD
@@ -72,7 +72,7 @@ Development files for GameMode
 
 %build
 %add_optflags -Wno-error=implicit-function-declaration
-%meson
+%meson -Dwith-systemd-group-dir=%_sysusersdir
 %meson_build
 
 %install
@@ -119,6 +119,9 @@ Development files for GameMode
 %_libdir/lib%{name}auto.so
 
 %changelog
+* Sat Jun 22 2024 Nazarov Denis <nenderus@altlinux.org> 1.8.1-alt2
+- Fix FTBFS
+
 * Tue Dec 12 2023 Nazarov Denis <nenderus@altlinux.org> 1.8.1-alt1
 - New version 1.8.1.
 
