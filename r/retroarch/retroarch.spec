@@ -1,6 +1,6 @@
 Name:           retroarch
-Version:        1.18.0
-Release:        alt1.1
+Version:        1.19.0
+Release:        alt1
 Summary:        Emulator frontend
 License:        GPL-3.0-only
 Group:          Emulators
@@ -8,8 +8,9 @@ URL:            http://www.retroarch.com
 Source:         RetroArch-%{version}.tar.gz
 Source1:        retroarch-mobile.cfg
 Source2:        retroarch-mobile.desktop
+Source3:        retroarch-mobile.sh
 
-Patch0:         retroarch-1.17.0-config.patch
+Patch0:         retroarch-1.18.0-config.patch
 
 BuildRequires:  libhid-devel
 BuildRequires:  fdupes
@@ -136,6 +137,8 @@ DESTDIR="%{buildroot}" make INSTALL="/bin/install -p" install
 
 install -Dpm0644 %SOURCE2 %buildroot%_desktopdir/%name-mobile.desktop
 install -Dm0644 %SOURCE1 %buildroot%_sysconfdir/%name-mobile.cfg
+install -Dm0755 %SOURCE3 %buildroot%_bindir/%name-mobile
+
 
 fdupes -rdN %{buildroot}
 
@@ -143,7 +146,7 @@ fdupes -rdN %{buildroot}
 %config(noreplace) %{_sysconfdir}/%{name}.cfg
 %{_bindir}/%{name}
 %{_bindir}/%{name}-cg2glsl
-%{_datadir}/applications/%{name}.desktop
+%{_datadir}/applications/org.libretro.RetroArch.desktop
 %{_datadir}/metainfo/com.libretro.*.xml
 %{_datadir}/pixmaps/%{name}.svg
 %{_mandir}/man?/%{name}.?*
@@ -151,12 +154,21 @@ fdupes -rdN %{buildroot}
 %{_datadir}/doc/%{name}
 
 %files mobile
+%_bindir/%name-mobile
 %_desktopdir/%name-mobile.desktop
 %config %{_sysconfdir}/%{name}-mobile.cfg
 
 
 %changelog
-* Sun Mar 24 2024 2024 Artyom Bystrov <arbars@altlinux.org> 1.18.0-alt1.1
+* Sat Jun 22 2024 Artyom Bystrov <arbars@altlinux.org> 1.19.0-alt1
+- Update to new version
+- Making possible to rewrite config file on mobile devices (smartphones, portable game consoles, etc.)
+- Minor spec cleanup
+
+* Wed May  1 2024 Artyom Bystrov <arbars@altlinux.org> 1.18.0-alt1.2
+- getting back libretro core path to default
+
+* Sun Mar 24 2024 Artyom Bystrov <arbars@altlinux.org> 1.18.0-alt1.1
 - update to new version
 - added cfg file for mobile devices
 
