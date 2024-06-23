@@ -2,7 +2,7 @@
 
 Name: lact
 Version: 0.5.4
-Release: alt1
+Release: alt2
 
 Summary: Linux AMDGPU Control Application
 License: MIT
@@ -54,9 +54,6 @@ cargo build --release --offline
 DESTDIR=%buildroot PREFIX=%prefix make install
 %__chmod 644 %buildroot%_desktopdir/io.github.%name-linux.desktop
 %__chmod 644 %buildroot%_pixmapsdir/io.github.%name-linux.png
-%__mkdir_p %buildroot%_unitdir
-%__mv %buildroot%prefix%_unitdir/%{name}d.service %buildroot%_unitdir
-%__chmod 644 %buildroot%_unitdir/%{name}d.service
 
 %files
 %doc API.md LICENSE README.md
@@ -67,6 +64,9 @@ DESTDIR=%buildroot PREFIX=%prefix make install
 %_unitdir/%{name}d.service
 
 %changelog
+* Sun Jun 23 2024 Nazarov Denis <nenderus@altlinux.org> 0.5.4-alt2
+- Fix FTBFS
+
 * Wed Apr 24 2024 Nazarov Denis <nenderus@altlinux.org> 0.5.4-alt1
 - New version 0.5.4.
 
