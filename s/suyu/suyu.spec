@@ -2,7 +2,7 @@
 %define llvm_version 17.0
 
 # git describe v%version --long
-%define git_descr v0.0.2-master-13-gc7d2f08de8
+%define git_descr v0.0.4-0-g433bcabb72
 
 %define sirit_commit ab75463999f4f3291976b079d42d52ee91eebf3f
 %define mbedtls_commit 8c88150ca139e06aa2aae8349df8292a88148ea1
@@ -10,7 +10,7 @@
 %define tzdb_to_nx_date 221202
 
 Name: suyu
-Version: 0.0.1
+Version: 0.0.4
 Release: alt1
 Epoch: 1
 
@@ -37,6 +37,7 @@ Source3: simpleini-%simpleini_version.tar
 Source4: https://github.com/lat9nq/tzdb_to_nx/releases/download/%tzdb_to_nx_date/%tzdb_to_nx_date.zip
 
 Patch0: %name-cpp-jwt-version-alt.patch
+Patch1: %name-cmake-externals-alt.patch
 
 BuildRequires: /proc
 BuildRequires: boost-asio-devel
@@ -88,6 +89,7 @@ BuildRequires: zlib-devel
 %setup -n %name-v%version -b 1 -b 2 -b 3
 
 %patch0 -p1
+%patch1 -p1
 
 %__mv -Tf ../sirit-%sirit_commit externals/sirit
 %__mv -Tf ../mbedtls-%mbedtls_commit externals/mbedtls
@@ -122,7 +124,7 @@ unzip %SOURCE4 -d %_target_platform/externals/nx_tzdb/nx_tzdb
 	-DSUYU_CHECK_SUBMODULES:BOOL=FALSE \
 	-DSUYU_ENABLE_LTO:BOOL=TRUE \
 	-DSIRIT_USE_SYSTEM_SPIRV_HEADERS:BOOL=TRUE \
-	-DLLVM_DIR:PATH=%_libexecdir/llvm-%llvm_version/%_lib/cmake/llvm \
+	-DLLVM_DIR:PATH=$(llvm-config --cmakedir) \
 	-GNinja \
 	-Wno-dev
 %cmake_build
@@ -138,12 +140,15 @@ unzip %SOURCE4 -d %_target_platform/externals/nx_tzdb/nx_tzdb
 %_bindir/%name
 %_bindir/%name-cmd
 %_bindir/%name-room
-%_desktopdir/org.%{name}_emu.%name.desktop
-%_datadir/metainfo/org.%{name}_emu.%name.metainfo.xml
-%_datadir/mime/packages/org.%{name}_emu.%name.xml
-%_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
+%_desktopdir/dev.%{name}_emu.%name.desktop
+%_datadir/metainfo/dev.%{name}_emu.%name.metainfo.xml
+%_datadir/mime/packages/dev.%{name}_emu.%name.xml
+%_iconsdir/hicolor/scalable/apps/dev.%{name}_emu.%name.svg
 
 %changelog
+* Mon Jun 24 2024 Nazarov Denis <nenderus@altlinux.org> 1:0.0.4-alt1
+- Version 0.0.4 (ALT #50715)
+
 * Mon Mar 25 2024 Nazarov Denis <nenderus@altlinux.org> 1:0.0.1-alt1
 - Version 0.0.1
   + upstream reset the versioning scheme
