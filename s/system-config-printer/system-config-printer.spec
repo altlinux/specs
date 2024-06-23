@@ -1,6 +1,6 @@
 Name:    system-config-printer
 Version: 1.5.18
-Release: alt2.1
+Release: alt3
 
 Summary: A printer administration tool
 Group:   System/Configuration/Printing
@@ -88,8 +88,8 @@ sed -i 's/mod.*ins.*_aft.*//' newprinter.py
 %make_build
 
 %install
-%makeinstall_std udevrulesdir=/lib/udev/rules.d \
-                 udevhelperdir=/lib/udev
+%makeinstall_std udevrulesdir=%_udevrulesdir \
+                 udevhelperdir=%_udevdir
 install -Dm0644 tmpfiles.conf %buildroot%_tmpfilesdir/system-config-printer.conf
 mv %buildroot%_datadir/{metainfo,appdata}
 
@@ -108,8 +108,8 @@ exit 0
 
 %files udev
 %_tmpfilesdir/*
-/lib/udev/rules.d/*.rules
-/lib/udev/udev-*-printer
+%_udevrulesdir/*.rules
+%_udevdir/udev-*-printer
 
 %files -f system-config-printer.lang
 %doc README.md COPYING
@@ -126,6 +126,9 @@ exit 0
 %python3_sitelibdir_noarch/cupshelpers-*.dist-info
 
 %changelog
+* Sun Jun 23 2024 Anton Midyukov <antohami@altlinux.org> 1.5.18-alt3
+- NMU: use rpm-macros for udev directories (fix FTBFS)
+
 * Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 1.5.18-alt2.1
 - NMU: added missing build dependency on setuptools.
 
