@@ -3,7 +3,7 @@
 
 Name: libmtp
 Version: 1.1.21
-Release: alt1
+Release: alt2
 Packager: Dmitriy Khanzhin <jinn@altlinux.org>
 
 Summary: a library for accessing Media Transfer Protocol devices
@@ -14,7 +14,7 @@ Url: http://libmtp.sourceforge.net/
 
 Source: %name-%version.tar
 
-BuildRequires: libusb-devel libgcrypt-devel
+BuildRequires: libusb-devel libgcrypt-devel rpm-macros-systemd
 
 %package -n %name%sover
 Summary: a library for accessing Media Transfer Protocol devices
@@ -63,7 +63,7 @@ touch config.rpath
 %autoreconf
 %configure \
 	%{subst_enable static} \
-	--with-udev=/lib/udev \
+	--with-udev=%_udevdir \
 	--with-udev-group=audio \
 	--with-udev-mode=0660
 
@@ -72,23 +72,13 @@ touch config.rpath
 %install
 %makeinstall_std
 
-# Replace links with relative links
-rm -f %buildroot%_bindir/mtp-{delfile,getfile,newfolder,sendfile,sendtr}
-pushd %buildroot%_bindir
-ln -sf mtp-connect mtp-delfile
-ln -sf mtp-connect mtp-getfile
-ln -sf mtp-connect mtp-newfolder
-ln -sf mtp-connect mtp-sendfile
-ln -sf mtp-connect mtp-sendtr
-popd
-
 rm -rf %buildroot%_docdir/%name-%version/html
 
 %files -n %name%sover
 %_libdir/*.so.*
 %_udevhwdbdir/*
 %_udevrulesdir/*
-/lib/udev/mtp-probe
+%_udevdir/mtp-probe
 %doc AUTHORS README TODO
 
 %files -n %name-devel
@@ -105,6 +95,9 @@ rm -rf %buildroot%_docdir/%name-%version/html
 %_bindir/*
 
 %changelog
+* Sun Jun 23 2024 Dmitriy Khanzhin <jinn@altlinux.org> 1.1.21-alt2
+- rebuilt with new systemd macros
+
 * Wed Apr 26 2023 Dmitriy Khanzhin <jinn@altlinux.org> 1.1.21-alt1
 - 1.1.21
 
