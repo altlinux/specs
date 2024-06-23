@@ -3,14 +3,15 @@
 
 Name:    eg25-manager
 Version: 0.4.6
-Release: alt3
+Release: alt4
 
 Summary: Manager daemon for the Quectel EG25 mobile broadband modem
-License: GPL-3.0+
+License: GPL-3.0-or-later
 Group:   Other
 Url:     https://gitlab.com/mobian1/eg25-manager
 
 Source: %name-%version.tar
+Patch0: %name-dirs.patch
 Patch1: %name-libgpiod.patch
 
 BuildRequires(pre): meson
@@ -41,7 +42,11 @@ It implements the following features:
 %autopatch -p1
 
 %build
-%meson
+%meson \
+	-Dudevrulesdir=%_udevrulesdir \
+	-Dsystemddir=%_systemd_dir \
+	-Dsystemdsystemdir=%_unitdir
+
 %meson_build
 
 %install
@@ -66,6 +71,12 @@ EOF
 %_datadir/%name
 
 %changelog
+* Sun Jun 23 2024 Anton Midyukov <antohami@altlinux.org> 0.4.6-alt4
+- NMU:
+  + revert eg25-manager-dirs.patch and fix it for compatible with Sisyphus and
+    p11
+  + spec: convert License field to modern SPDX format
+
 * Sat Jun 22 2024 Andrew Savchenko <bircoph@altlinux.org> 0.4.6-alt3
 - Port to libgpiod-2
 
