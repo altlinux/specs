@@ -1,7 +1,7 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 6.2.1
+Version: 6.2.2
 Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
@@ -186,7 +186,7 @@ desktop-file-validate %buildroot%_desktopdir/cinnamon-wayland.desktop
 %exclude %_datadir/xsessions/*.desktop
 %exclude %_datadir/wayland-sessions/*.desktop
 %exclude %_datadir/cinnamon-session/sessions/*.session
-#_datadir/xdg-desktop-portal/x-cinnamon-portals.conf
+%_datadir/xdg-desktop-portal/x-cinnamon-portals.conf
 %_datadir/cinnamon/
 %_datadir/dbus-1/services/org.Cinnamon.HotplugSniffer.service
 %_datadir/dbus-1/services/org.Cinnamon.Melange.service
@@ -207,6 +207,9 @@ desktop-file-validate %buildroot%_desktopdir/cinnamon-wayland.desktop
 %endif
 
 %changelog
+* Sun Jun 23 2024 Anton Midyukov <antohami@altlinux.org> 6.2.2-alt1
+- 6.2.2
+
 * Fri Jun 21 2024 Anton Midyukov <antohami@altlinux.org> 6.2.1-alt1
 - 6.2.1
 
