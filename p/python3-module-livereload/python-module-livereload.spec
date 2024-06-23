@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.6.3
+Version: 2.7.0
 Release: alt1
 
 Summary: Python LiveReload is an awesome tool for web developers
@@ -18,6 +18,8 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-tornado
@@ -37,23 +39,25 @@ for web developers who know Python.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
 # https://github.com/lepture/python-livereload/issues/200
-py.test-3 -k 'not test_watch_multiple_dirs'
+%pyproject_run_pytest -v -k 'not test_watch_multiple_dirs'
 
 %files
-%doc README.rst CHANGES.rst LICENSE
+%doc README.* CHANGES.rst
 %_bindir/%pypi_name
 %python3_sitelibdir/%pypi_name
-%python3_sitelibdir/%pypi_name-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Sun Jun 23 2024 Anton Vyatkin <toni@altlinux.org> 2.7.0-alt1
+- New version 2.7.0.
+
 * Fri Apr 07 2023 Anton Vyatkin <toni@altlinux.org> 2.6.3-alt1
 - New version 2.6.3
 
