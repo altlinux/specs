@@ -2,7 +2,7 @@
 
 Name: grub-btrfs
 Version: 4.13
-Release: alt2
+Release: alt3
 
 Summary: Include btrfs snapshots at boot options. (Grub menu)
 License: GPLv3
@@ -29,7 +29,6 @@ Supports manual snapshots, snapper, timeshift ...
 %install
 %makeinstall_std
 
-mv %buildroot/usr/lib/ %buildroot/lib/
 rm -v %buildroot/%_datadir/licenses/%name/LICENSE
 
 %files
@@ -44,6 +43,9 @@ rm -v %buildroot/%_datadir/licenses/%name/LICENSE
 %_man8dir/%{name}d.8.xz
 
 %changelog
+* Sun Jun 23 2024 Anton Kurachenko <srebrov@altlinux.org> 4.13-alt3
+- Fix FTBFS.
+
 * Sun Jul 09 2023 Anton Kurachenko <srebrov@altlinux.org> 4.13-alt2
 - Renaming a patch file according to naming conventions.
 - Cosmetic changes in the spec file.
