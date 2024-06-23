@@ -1,5 +1,5 @@
 Name: eget
-Version: 7.10
+Version: 7.11
 Release: alt1
 
 Summary: wget like downloader wrapper with wildcard support
@@ -34,6 +34,12 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Sun Jun 23 2024 Vitaly Lipatov <lav@altlinux.ru> 7.11-alt1
+- eget: fix header quoting issue
+- eget: don't add duplicate URL with the same CID
+- eget: get latest CID entry from IPFS_DB
+- eget: add EGET_IPFS_FORCE_LOAD enables downloading ever if the target is exists in IPFS DB
+
 * Thu Apr 18 2024 Vitaly Lipatov <lav@altlinux.ru> 7.10-alt1
 - added parameters needed to replace wget with eget in winetricks (eterbug #16749)
 - eget: improve message about unaccessible ipfs
