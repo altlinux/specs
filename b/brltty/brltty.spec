@@ -26,7 +26,7 @@
 
 Name: brltty
 Version: %pkg_version
-Release: alt2
+Release: alt3
 
 Summary: Braille display driver for Linux/Unix
 Group: System/Servers
@@ -288,7 +288,7 @@ popd
 # udev rules
 #install -pD -m644 Autostart/Udev/ %buildroot%_udevrulesdir/95-%name.rules
 pushd Autostart/Udev
-%makeinstall_std UDEV_PARENT_LOCATION=/lib
+%makeinstall_std UDEV_RULES_LOCATION=%_udevrulesdir
 popd
 
 # systemd unit
@@ -303,7 +303,7 @@ chmod +x %buildroot%_bindir/%name-config.sh
 %files -f %name.lang
 %config(noreplace) %_sysconfdir/brltty.conf
 %_sysconfdir/brltty/
-/lib/sysusers.d/%name.conf
+%_sysusersdir/%name.conf
 %_udevrulesdir/90-%name-hid.rules
 %_udevrulesdir/90-%name-uinput.rules
 %_udevrulesdir/90-%name-usb-customized.rules
@@ -406,6 +406,9 @@ chmod +x %buildroot%_bindir/%name-config.sh
 %endif
 
 %changelog
+* Sun Jun 23 2024 Anton Midyukov <antohami@altlinux.org> 6.6-alt3
+- Set udev rules location (fix ftbfs)
+
 * Thu Apr 11 2024 Anton Midyukov <antohami@altlinux.org> 6.6-alt2
 - Enable LTO
 - Fix the Cython 3 crash (add patch from Fedora) (Closes: 49977)
