@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 0.17.6
-Release: alt1.1
+Version: 0.18.0
+Release: alt1
 
 Summary: Improved build system generator for CPython C/C++/Fortran/Cython extensions
 Group: Development/Python3
@@ -15,13 +15,13 @@ Url: http://pypi.python.org/pypi/%modname
 
 Vcs: https://github.com/scikit-build/scikit-build.git
 Source: https://pypi.io/packages/source/s/%pypi_name/%pypi_name-%version.tar.gz
-Patch: scikit_build-0.17.6-up-no-distutils-cmake.patch
 
 BuildArch: noarch
 
 Requires: cmake make ninja-build gcc-c++
 # skbuild/_compat/tomllib.py
-%if "%__python3_version" <= "3.11"
+#%if "%__python3_version" <= "3.11"
+%if "%(rpmvercmp %_python3_version 3.11)" < "0"
 Requires: python3(tomli)
 %else
 Requires: python3(tomllib)
@@ -34,7 +34,11 @@ Requires: python3(setuptools._distutils)
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-wheel
 BuildRequires: python3(hatchling) python3(hatch-fancy-pypi-readme) python3(hatch-vcs)
-%{?_enable_check:BuildRequires: python3-module-pytest}
+%{?_enable_check:BuildRequires: python3-module-pytest
+BuildRequires: python3(setuptools) python3(setuptools_scm)
+BuildRequires: python3(cython)
+BuildRequires: python3(requests) python3(pip)
+BuildRequires: cmake make ninja-build gcc-c++ gcc-fortran git}
 
 %description
 %summary
@@ -47,7 +51,6 @@ setuptools Python module and CMake.
 
 %prep
 %setup -n %pypi_name-%version
-%patch -p1
 
 %build
 %pyproject_build
@@ -66,6 +69,9 @@ py.test3
 
 
 %changelog
+* Sun Jun 23 2024 Yuri N. Sedunov <aris@altlinux.org> 0.18.0-alt1
+- 0.18.0
+
 * Fri Oct 20 2023 Yuri N. Sedunov <aris@altlinux.org> 0.17.6-alt1.1
 - prepared for python w/o distutils
 
