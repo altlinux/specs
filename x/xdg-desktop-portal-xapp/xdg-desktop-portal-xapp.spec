@@ -2,7 +2,7 @@
 %define ver_major 1.0
 
 Name: xdg-desktop-portal-xapp
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: Xapp Desktop Portal
@@ -49,6 +49,9 @@ and various pieces of Cinnamon/MATE/Xfce4 infrastructure.
 
 
 %changelog
+* Sun Jun 23 2024 Anton Midyukov <antohami@altlinux.org> 1.0.7-alt1
+- new version (1.0.7) with rpmgs script
+
 * Fri Jun 14 2024 Anton Midyukov <antohami@altlinux.org> 1.0.6-alt1
 - new version (1.0.6) with rpmgs script
 
