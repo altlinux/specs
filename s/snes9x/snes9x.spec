@@ -1,12 +1,13 @@
 %define glslang_commit 6d41bb9c557c5a0eec61ffba1f775dc5f717a8f7
 %define spirv_cross_commit 4e2fdb25671c742a9fbe93a6034eb1542244c7e
+%define vulkan_headers_version 1.3.242
 %define optflags_lto %nil
 
 %set_gcc_version 12
 
 Name: snes9x
 Version: 1.62.3
-Release: alt1.1
+Release: alt1.2
 
 Summary: Super Nintendo Entertainment System emulator
 License: Distributable
@@ -23,6 +24,8 @@ Source0: %name-%version.tar
 Source1: glslang-%glslang_commit.tar
 # https://github.com/KhronosGroup/SPIRV-Cross/archive/%spirv_cross_commit/SPIRV-Cross-%spirv_cross_commit.tar.gz
 Source2: SPIRV-Cross-%spirv_cross_commit.tar
+#https://github.com/KhronosGroup/Vulkan-Headers/archive/v%vulkan_headers_version/Vulkan-Headers-%vulkan_headers_version.tar.gz
+Source3: Vulkan-Headers-%vulkan_headers_version.tar
 
 BuildRequires(pre): at-spi2-atk-devel
 BuildRequires(pre): bzlib-devel
@@ -60,7 +63,6 @@ BuildRequires: libgtkmm3-devel
 BuildRequires: libminizip-devel
 BuildRequires: libportaudio2-devel
 BuildRequires: libpulseaudio-devel
-BuildRequires: libvulkan-devel
 BuildRequires: libwayland-egl-devel
 
 %description
@@ -92,10 +94,11 @@ real gems that were only ever released in Japan.
 This package contains a graphical user interface using GTK+.
 
 %prep
-%setup -b 1 -b 2
+%setup -b 1 -b 2 -b 3
 
 %__mv -Tf ../glslang-%glslang_commit external/glslang
 %__mv -Tf ../SPIRV-Cross-%spirv_cross_commit external/SPIRV-Cross
+%__mv -Tf ../Vulkan-Headers-%vulkan_headers_version external/vulkan-headers
 
 %build
 # Build CLI version
@@ -139,6 +142,9 @@ popd
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sun Jun 23 2024 Nazarov Denis <nenderus@altlinux.org> 1.62.3-alt1.2
+- Fix FTBFS
+
 * Sun Jul 02 2023 Nazarov Denis <nenderus@altlinux.org> 1.62.3-alt1.1
 - Fix FTBFS
 
