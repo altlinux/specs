@@ -3,12 +3,11 @@
 %set_verify_elf_method strict
 
 %def_disable cluster
-%define _sbindir /sbin
 %define nowarn -Wno-implicit-fallthrough -Wno-format-truncation -Wno-format-overflow
 
 Name: mdadm
-Version: 4.2
-Release: alt5
+Version: 4.3
+Release: alt1
 
 Summary: A tool for managing Soft RAID under Linux
 License: GPLv2+
@@ -59,11 +58,11 @@ BuildArch: noarch
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
 
-%make_build mdadm mdmon CXFLAGS='%optflags %nowarn' SYSCONFDIR='%_sysconfdir'
+%make_build mdadm mdmon raid6check CXFLAGS='%optflags %nowarn' SYSCONFDIR='%_sysconfdir'
 bzip2 -9fk ChangeLog
 
 %install
-%makeinstall_std install-systemd MANDIR=%_mandir BINDIR=%_sbindir SYSTEMD_DIR=%_unitdir
+%makeinstall_std install-systemd MANDIR=%_mandir BINDIR=%_sbindir SYSTEMD_DIR=%_unitdir UDEVDIR=%_udevdir
 install -pD -m755 alt/mdadm.init %buildroot%_initdir/mdadm
 install -pD -m755 misc/syslog-events %buildroot%_sbindir/mdadm-syslog-events
 install -pD -m600 alt/mdadm.conf %buildroot%_sysconfdir/mdadm.conf.sample
@@ -74,6 +73,10 @@ ln -r -s %buildroot%_unitdir/mdmonitor.service %buildroot%_unitdir/mdadm.service
 install -pD -m755 alt/checkarray %buildroot%_datadir/mdadm/checkarray
 install -pD -m644 alt/mdadm.sysconfig %buildroot%_sysconfdir/sysconfig/mdadm
 install -pD -m644 alt/mdadm.crond %buildroot%_sysconfdir/cron.d/mdadm
+
+# raid6check
+install -pD -m755 raid6check %buildroot/%_sbindir/raid6check
+install -pD -m644 raid6check.8 %buildroot/%_man8dir/raid6check.8
 
 # Cleanup (need adapt for mdadm_env.sh)
 rm -f %buildroot%_unitdir/{mdmonitor-oneshot,mdcheck_continue,mdcheck_start}.{service,timer}
@@ -88,17 +91,19 @@ rm -f %buildroot%_unitdir/{mdmonitor-oneshot,mdcheck_continue,mdcheck_start}.{se
 %_sbindir/mdadm-syslog-events
 %_sbindir/mdmon
 %_man8dir/mdmon.*
+%_sbindir/raid6check
+%_man8dir/raid6check.*
 %config %_sysconfdir/mdadm.conf.sample
 %config(noreplace) %_sysconfdir/sysconfig/mdadm
 %_sysconfdir/cron.d/mdadm
 %_initdir/mdadm
 %_datadir/mdadm/
-/lib/udev/rules.d/01-md-raid-creating.rules
-/lib/udev/rules.d/63-md-raid-arrays.rules
-/lib/udev/rules.d/64-md-raid-assembly.rules
-/lib/udev/rules.d/69-md-clustered-confirm-device.rules
+%_udevrulesdir/01-md-raid-creating.rules
+%_udevrulesdir/63-md-raid-arrays.rules
+%_udevrulesdir/64-md-raid-assembly.rules
+%_udevrulesdir/69-md-clustered-confirm-device.rules
 %_unitdir/*
-/lib/systemd/system-shutdown/mdadm.shutdown
+%_systemddir/system-shutdown/mdadm.shutdown
 
 %files tool
 %_sbindir/mdadm
@@ -108,9 +113,12 @@ rm -f %buildroot%_unitdir/{mdmonitor-oneshot,mdcheck_continue,mdcheck_start}.{se
 %ghost %config(noreplace,missingok) %_sysconfdir/mdadm.conf
 
 %files doc
-%doc TODO ChangeLog.* mdadm.conf-example ANNOUNCE-%version alt/README*
+%doc TODO ChangeLog.* mdadm.conf-example alt/README*
 
 %changelog
+* Mon Jun 24 2024 Alexey Shabalin <shaba@altlinux.org> 4.3-alt1
+- 4.3
+
 * Thu Dec 21 2023 Slava Aseev <ptrnine@altlinux.org> 4.2-alt5
 - enable RAID for SATA under VMD (closes: #48634)
   (picked from mdadm's master)
