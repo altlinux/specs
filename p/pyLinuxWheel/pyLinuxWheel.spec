@@ -2,7 +2,7 @@
 
 Name: pyLinuxWheel
 Version: 0.6.1
-Release: alt6
+Release: alt7
 
 Summary: A simple utility to configure logitech steering wheels for Linux
 
@@ -53,8 +53,8 @@ cp -rv data %buildroot%_datadir/pyLinuxWheel/
 cp -rv locale %buildroot%_datadir/
 mkdir -p %buildroot%_datadir/metainfo
 cp -rv metainfo/io.itch.pyLinuxWheel.appdata.xml %buildroot%_datadir/metainfo/io.itch.pyLinuxWheel.appdata.xml
-mkdir -p  %buildroot/lib/udev/rules.d/
-cp -rv data/rules/99-logitech-wheel-perms.rules %buildroot/lib/udev/rules.d/
+mkdir -p  %buildroot%_udev_util_dir/rules.d/
+cp -rv data/rules/99-logitech-wheel-perms.rules %buildroot%_udev_util_dir/rules.d/
 %find_lang %name
 
 %files -f %name.lang
@@ -63,7 +63,7 @@ cp -rv data/rules/99-logitech-wheel-perms.rules %buildroot/lib/udev/rules.d/
 %_desktopdir/pyLinuxWheel.desktop
 %_pixmapsdir/pyLinuxWheel.png
 %_datadir/pyLinuxWheel/
-%_udevrulesdir/99-logitech-wheel-perms.rules
+%_udev_util_dir/rules.d/99-logitech-wheel-perms.rules
 %_datadir/metainfo/io.itch.pyLinuxWheel.appdata.xml
 
 %check
@@ -71,6 +71,9 @@ cp -rv data/rules/99-logitech-wheel-perms.rules %buildroot/lib/udev/rules.d/
 %_bindir/appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/io.itch.pyLinuxWheel.appdata.xml
 
 %changelog
+* Mon Jun 24 2024 Mikhail Tergoev <fidel@altlinux.org> 0.6.1-alt7
+- fixed FTBFS
+
 * Mon Apr 01 2024 Mikhail Tergoev <fidel@altlinux.org> 0.6.1-alt6
 - minor fixes Russian translation
 
