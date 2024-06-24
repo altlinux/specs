@@ -38,7 +38,7 @@ Group:          Monitoring
 
 Name:           icinga2
 Version:        2.14.0
-Release:        alt7
+Release:        alt9
 URL:            https://www.icinga.com/
 
 Source0:        https://github.com/Icinga/%name/archive/v%version/%name-%version.tar
@@ -54,6 +54,9 @@ Requires:       %name-common = %version-%release
 Requires:       vim-%name = %version-%release
 Requires:       nano-%name = %version-%release
 Requires:       nagios-plugins nagios-plugins-local nagios-plugins-network
+
+Obsoletes:      %name-bin
+Provides:       %name-bin
 
 BuildRequires:  libyajl-devel
 BuildRequires:  libedit-devel
@@ -175,7 +178,7 @@ CMAKE_OPTS="$CMAKE_OPTS -DICINGA2_UNITY_BUILD=OFF"
 
 CMAKE_OPTS="$CMAKE_OPTS -DUSE_SYSTEMD=ON"
 
-%cmake $CMAKE_OPTS
+%cmake $CMAKE_OPTS -Dunitdir=%_unitdir
 %cmake_build
 
 %install
@@ -358,6 +361,12 @@ fi
 %_datadir/nano/%name.nanorc
 
 %changelog
+* Mon Jun 24 2024 Paul Wolneykien <manowar@altlinux.org> 2.14.0-alt9
+- Fixed build with %%_unitdir.
+
+* Mon Jun 24 2024 Paul Wolneykien <manowar@altlinux.org> 2.14.0-alt8
+- Fixed update from 2.14.0-alt5 release.
+
 * Mon Jun 10 2024 Paul Wolneykien <manowar@altlinux.org> 2.14.0-alt7
 - Additionally, pre-define "global-commands" zone with node setup
   CLI command.
