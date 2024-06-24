@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Group: System/Libraries
@@ -17,6 +17,7 @@ Source10: add-ru.po
 Patch1: alt-def-trash.patch
 Patch2: alt-kio-help-fallback-kde4.patch
 Patch3: alt-copy-first.patch
+Patch4: alt-skip-mime.patch
 Patch10: alt-streebog-support.patch
 
 # Automatically added by buildreq on Tue Feb 17 2015 (-bi)
@@ -100,6 +101,7 @@ KF5 library
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %if_enabled streebog
 %patch10 -p2 -b .streebog
@@ -181,6 +183,9 @@ mkdir -p %buildroot/%_K5data/kio/servicemenus/
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Mon Jun 24 2024 Oleg Solovyov <mcpain@altlinux.org> 5.116.0-alt2
+- Skip MIME guessing on network-mounted file systems
+
 * Thu May 23 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt1
 - new version
 
