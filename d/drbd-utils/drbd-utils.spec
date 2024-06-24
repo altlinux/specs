@@ -8,7 +8,7 @@
 
 Name: drbd-utils
 Version: 9.28.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: DRBD user-land tools and scripts
 License: GPLv2+
@@ -106,6 +106,9 @@ sed -i "s|WITH_DRBDMON[[:space:]]*=[[:space:]]*no|WITH_DRBDMON = yes|" \
 # Bug in compiler option:
 sed -i "s|--pedantic-errors|-pedantic-errors|" user/drbdmon/Makefile
 
+# Merged /lib and /usr/lib:
+sed -i 's|)/lib/drbd/|)/usr/lib/drbd/|g' scripts/Makefile.in user/v84/Makefile.in
+
 %make_build
 
 %install
@@ -116,7 +119,7 @@ rm -f  %buildroot/etc/init.d/drbd	# NB: _not_ %%_initdir here
 pushd scripts
 install -pDm644 -t %buildroot%_unitdir *.service
 install -pDm644 -t %buildroot%_unitdir *.target
-install -pDm755 -t %buildroot/lib/drbd/scripts drbd drbd-service-shim.sh drbd-wait-promotable.sh ocf.ra.wrapper.sh
+install -pDm755 -t %buildroot/usr/lib/drbd/scripts drbd drbd-service-shim.sh drbd-wait-promotable.sh ocf.ra.wrapper.sh
 install -pDm755 drbd %buildroot%_initdir/drbd
 popd
 
@@ -152,18 +155,17 @@ make test
 %_sbindir/drbdadm
 %_sbindir/drbdmeta
 %_sbindir/drbdmon
-%dir /lib/drbd
-/lib/drbd/drbdadm-*
-/lib/drbd/drbdsetup-*
-%dir /lib/drbd/scripts
-/lib/drbd/scripts/drbd
-/lib/drbd/scripts/drbd-service-shim.sh
-/lib/drbd/scripts/drbd-wait-promotable.sh
-/lib/drbd/scripts/ocf.ra.wrapper.sh
-/lib/udev/rules.d/65-drbd.rules
+%dir /usr/lib/drbd
+/usr/lib/drbd/drbdadm-*
+/usr/lib/drbd/drbdsetup-*
+%dir /usr/lib/drbd/scripts
+/usr/lib/drbd/scripts/drbd
+/usr/lib/drbd/scripts/drbd-service-shim.sh
+/usr/lib/drbd/scripts/drbd-wait-promotable.sh
+/usr/lib/drbd/scripts/ocf.ra.wrapper.sh
+/usr/lib/udev/rules.d/65-drbd.rules
 %exclude /usr/lib/drbd/crm-*fence-peer.sh
 %exclude /usr/lib/drbd/stonith_admin-fence-peer.sh
-%dir /usr/lib/drbd
 /usr/lib/drbd/*.sh
 /usr/lib/drbd/rhcs_fence
 %dir %_var/lib/drbd
@@ -190,6 +192,9 @@ make test
 %_datadir/cluster/drbd.metadata
 
 %changelog
+* Mon Jun 24 2024 Andrew A. Vasilyev <andy@altlinux.org> 9.28.0-alt1.2
+- FTBFS: fix udev.d path, change /lib to /usr/lib
+
 * Sat Jun 08 2024 Michael Shigorin <mike@altlinux.org> 9.28.0-alt1.1
 - fix build on Elbrus through respecting CXXFLAGS (proposed upstream)
 
