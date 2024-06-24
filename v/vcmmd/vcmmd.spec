@@ -2,7 +2,7 @@
 
 Name:    vcmmd
 Version: 8.0.71
-Release: alt1
+Release: alt1.1
 
 Summary: Virtuozzo containers memory management daemon
 License: GPL-2.0-or-later
@@ -40,7 +40,8 @@ Virtuozzo containers memory management daemon
 %install
 # Local setup.py fails to parse "--root=path" option, only "--root path" variant:
 %__python3 setup.py install --skip-build --root %buildroot --install-scripts %_sbindir
-mv %buildroot/usr/lib %buildroot/usr/lib64
+mkdir -p %buildroot/usr/lib64
+mv %buildroot/usr/lib/python3 %buildroot/usr/lib64
 mkdir %buildroot%_sysconfdir/vz/vcmmd.d/
 
 %if_with check
@@ -63,6 +64,9 @@ popd
 %config %_tmpfilesdir/vcmmd-tmpfiles.conf
 
 %changelog
+* Mon Jun 24 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.0.71-alt1.1
+- FTBFS: systemd and tmpfiles path
+
 * Thu Dec 08 2022 Andrew A. Vasilyev <andy@altlinux.org> 8.0.71-alt1
 - 8.0.71
 - change license
