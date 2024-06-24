@@ -3,7 +3,7 @@
 
 Name: openscad
 Version: 2021.01
-Release: alt4.2
+Release: alt5
 
 Summary: The Programmers Solid 3D CAD Modeller
 
@@ -12,7 +12,7 @@ Summary: The Programmers Solid 3D CAD Modeller
 # Examples are CC0
 License: GPLv2 with exceptions and CC0
 Group: Engineering
-Url: http://openscad.org/
+Url: https://openscad.org/
 
 # Source0-url: https://github.com/%name/%name/releases/download/%name-%version/%name-%version.src.tar.gz
 Source0: %name-%version.tar
@@ -28,6 +28,8 @@ Patch3: CVE-2022-0496.patch
 # https://github.com/openscad/openscad/commit/84addf3c1efbd51d8ff424b7da276400bbfa1a4b
 Patch4: CVE-2022-0497.patch
 Patch5: openscad-2021.01-alt-fix-for-boost-1.85.0.patch
+# fix build with cgal >= 5.4
+Patch6: openscad-2021.01-cgal-build-fix.patch
 
 # needed cgal-devel on armh
 ExcludeArch: armh
@@ -176,6 +178,9 @@ popd
 %_datadir/%name/libraries/MCAD
 
 %changelog
+* Sun Jun 23 2024 Anton Midyukov <antohami@altlinux.org> 2021.01-alt5
+- Fix build with CGAL >= 5.4
+
 * Fri May 17 2024 Ivan A. Melnikov <iv@altlinux.org> 2021.01-alt4.2
 - NMU: Fix building with boost 1.85.0.
 
