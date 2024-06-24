@@ -1,8 +1,8 @@
 %def_without doc
 
 Name: keepass
-Version: 2.54
-Release: alt2
+Version: 2.57
+Release: alt1
 
 Summary: Password manager
 
@@ -140,6 +140,9 @@ popd
 %endif
 
 %changelog
+* Wed Jun 19 2024 Oleg Solovyov <mcpain@altlinux.org> 2.57-alt1
+- new version: 2.57
+
 * Thu Aug 31 2023 Oleg Solovyov <mcpain@altlinux.org> 2.54-alt2
 - added Russian translation
 
