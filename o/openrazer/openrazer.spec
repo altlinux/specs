@@ -4,7 +4,7 @@
 
 Name: openrazer
 Version: 3.8.0
-Release: alt1
+Release: alt2
 
 Summary: Open source driver and user-space daemon for managing Razer devices
 License: GPL-2.0
@@ -70,12 +70,6 @@ make DESTDIR=%buildroot setup_dkms udev_install daemon_install python_library_in
 cp -v ./pylib/%name/_fake_driver/*.cfg %buildroot%python3_sitelibdir/%name/_fake_driver/
 install -D -m 0755 ./scripts/create_fake_device.py %buildroot%python3_sitelibdir/%name/scripts/create_fake_device.py
 
-mkdir -p %buildroot/lib/udev/
-for f in %buildroot%_libexecdir/udev/*
-do
-mv -v "$f" %buildroot/lib/udev/
-done
-
 %check
 # functional test
 export OR_SKIP_CHECK_PLUGDEV_FOR_TESTS=1
@@ -109,7 +103,7 @@ fi
 
 %files -n %name-kernel-modules-dkms
 %_udevrulesdir/99-razer.rules
-/lib/udev/razer_mount
+%_udevdir/razer_mount
 %_usrsrc/%dkms_name-%dkms_version/
 
 %files -n %name-daemon
@@ -127,6 +121,9 @@ fi
 %python3_sitelibdir/%name-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Jun 24 2024 Anton Kurachenko <srebrov@altlinux.org> 3.8.0-alt2
+- Fix FTBFS.
+
 * Wed Apr 17 2024 Anton Kurachenko <srebrov@altlinux.org> 3.8.0-alt1
 - New version 3.8.0.
 
