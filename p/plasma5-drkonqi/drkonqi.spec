@@ -1,12 +1,12 @@
 %define rname drkonqi
-%define _unit_nedodir /lib/systemd
+%define _unit_nedodir %{expand: %(dirname %_unitdir)}
 %ifndef _unitdir_user
 %define _unitdir_user %prefix/lib/systemd/user
 %endif
 
 Name: plasma5-%rname
 Version: 5.27.11
-Release: alt2
+Release: alt3
 Epoch: 1
 %K5init
 
@@ -22,7 +22,7 @@ Patch2: plasma5-drkonqi-5.27.11-alt-enable-debuginfod-support.patch
 # Automatically added by buildreq on Tue Mar 13 2018 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3
 #BuildRequires: extra-cmake-modules kf5-kcrash-devel kf5-ki18n-devel kf5-kidletime-devel kf5-kio-devel kf5-knotifications-devel kf5-kwallet-devel kf5-kxmlrpcclient-devel libssl-devel python3-dev qt5-x11extras-devel ruby ruby-stdlibs
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-macros-systemd
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-x11extras-devel qt5-declarative-devel
 BuildRequires: libssl-devel libsystemd-devel
 BuildRequires: kf5-kcrash-devel kf5-ki18n-devel kf5-kidletime-devel kf5-kio-devel kf5-knotifications-devel
@@ -84,6 +84,9 @@ Requires: %name-common = %version-%release
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Mon Jun 24 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.11-alt3
+- fix detect new unit directory
+
 * Tue May 07 2024 Ajrat Makhmutov <rauty@altlinux.org> 1:5.27.11-alt2
 - Enable ALT debuginfod server support for character resolution in KCrash.
   The install debug symbols button has slightly improved its behavior
