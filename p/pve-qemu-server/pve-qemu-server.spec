@@ -4,7 +4,7 @@
 Name: pve-qemu-server
 Summary: PVE Qemu Server Tools
 Version: 8.1.1
-Release: alt2
+Release: alt2.1
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -31,6 +31,7 @@ This package contains the Qemu Server tools used by Proxmox VE.
 
 %prep
 %setup
+sed -i 's!SERVICEDIR=/lib/systemd/system!SERVICEDIR=/usr/lib/systemd/system!' qmeventd/Makefile
 
 %build
 %make_build qmeventd -C qmeventd
@@ -69,6 +70,9 @@ ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-virtio.jpg
 %perl_vendor_privlib/PVE/*.pm
 
 %changelog
+* Mon Jun 24 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.1.1-alt2.1
+- FTBFS: fix systemd path
+
 * Fri Apr 12 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.1.1-alt2
 - fix merge error with is_native_arch() (ALT #50005)
 

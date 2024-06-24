@@ -3,7 +3,7 @@
 Name: pve-network
 Summary: PVE SDN package
 Version: 0.9.6
-Release: alt1
+Release: alt1.1
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -55,6 +55,7 @@ This package contains the experimental SDN library used by Proxmox VE.
 
 %prep
 %setup -q -n %name-%version
+sed -i 's!)/lib/systemd/system!)/usr/lib/systemd/system!' src/services/Makefile
 
 %install
 %make -C src DESTDIR=%buildroot install
@@ -68,6 +69,9 @@ make -C src test
 %_unitdir/dnsmasq@.service.d/00-dnsmasq-after-networking.conf
 
 %changelog
+* Mon Jun 24 2024 Andrew A. Vasilyev <andy@altlinux.org> 0.9.6-alt1.1
+- FTBFS: fix systemd path
+
 * Fri Mar 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 0.9.6-alt1
 - 0.9.6
 
