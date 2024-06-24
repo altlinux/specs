@@ -3,7 +3,7 @@
 
 Name: vhostmd
 Version: 1.1
-Release: alt1
+Release: alt2
 Summary: Virtualization Host Metrics Daemon
 License: GPLv2+
 Group: System/Servers
@@ -55,10 +55,10 @@ Header and libraries necessary for metrics gathering development
 	--with-init-script=systemd \
 	--enable-shared \
 	--disable-static
-%make_build
+%make_build SYSTEMD_UNIT_DIR=%_unitdir
 
 %install
-%makeinstall_std
+%makeinstall_std SYSTEMD_UNIT_DIR=%_unitdir
 
 # Remove docdir - we'll make a proper one ourselves.
 rm -r %buildroot%_docdir/vhostmd
@@ -107,6 +107,9 @@ useradd -u 112 -r -g %name -d %_localstatedir/vhostmd -s /sbin/nologin \
 %_includedir/*
 
 %changelog
+* Mon Jun 24 2024 Alexey Shabalin <shaba@altlinux.org> 1.1-alt2
+- use rpm macros for install systemd unit.
+
 * Mon Aug 09 2021 Alexey Shabalin <shaba@altlinux.org> 1.1-alt1
 - Initial build.
 
