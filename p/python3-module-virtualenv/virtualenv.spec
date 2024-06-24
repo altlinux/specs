@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 20.26.2
+Version: 20.26.3
 Release: alt1
 Summary: Virtual Python Environment builder
 License: MIT
@@ -16,11 +16,10 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 # system seed wheels
 Requires: python3-module-system-seed-wheels-wheels
-# relax deps for windows support,
-# note: don't remove them since some external packages may rely on these modules
-%add_findreq_skiplist %python3_sitelibdir/virtualenv/discovery/windows/*
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -81,6 +80,9 @@ export PIP_FIND_LINKS=%system_wheels_path
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 24 2024 Stanislav Levin <slev@altlinux.org> 20.26.3-alt1
+- 20.26.2 -> 20.26.3.
+
 * Tue May 14 2024 Stanislav Levin <slev@altlinux.org> 20.26.2-alt1
 - 20.26.1 -> 20.26.2.
 
