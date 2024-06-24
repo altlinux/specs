@@ -6,7 +6,7 @@
 
 Name: certmonger
 Version: 0.79.20
-Release: alt1
+Release: alt2
 Summary: Certificate status monitor and PKI enrollment client
 License: GPL-3.0-or-later
 Group: System/Base
@@ -65,8 +65,6 @@ system enrolled with a certificate authority (CA) and keeping it enrolled.
 %makeinstall_std
 
 mkdir -p %buildroot%_sharedstatedir/%name/{cas,requests}
-mkdir -p %buildroot%_tmpfilesdir
-mv %buildroot/usr%_tmpfilesdir/%name.conf %buildroot%_tmpfilesdir/%name.conf
 %find_lang %name
 
 %check
@@ -156,6 +154,9 @@ getcert refresh-ca -a >/dev/null 2>&1 || help
 %_man8dir/certmonger.8.*
 
 %changelog
+* Mon Jun 24 2024 Stanislav Levin <slev@altlinux.org> 0.79.20-alt2
+- Fixes FTBFS (latest rpm-macros-systemd).
+
 * Tue Jun 11 2024 Stanislav Levin <slev@altlinux.org> 0.79.20-alt1
 - 0.79.19 -> 0.79.20.
 
