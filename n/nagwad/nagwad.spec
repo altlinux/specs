@@ -3,7 +3,7 @@
 
 Name: 	  nagwad
 Version:  0.11.2
-Release:  alt2
+Release:  alt3
 
 Summary:  System journal event scanner and handler
 License:  GPLv3
@@ -57,20 +57,22 @@ BuildArch: noarch
 These are Nagios configuration templates for monitoring a nagwad-node.
 
 %package icinga
-Summary: Icinga-2 configuration for a nagwad node (agent)
+Summary: Icinga-2 configuration for a standalone nagwad node
 Group:   Monitoring
 BuildArch: noarch
-Requires: %name-service = %version-%release
-Requires: icinga2
+Requires: %name-service
+Requires: icinga2-common
 
 %description icinga
-These are Icinga-2 configuration templates for monitoring a nagwad-node.
+These are Icinga-2 configuration templates for monitoring using
+nagwad on a standalone Icinga 2 node.
 
 %package icinga-master
 Summary: Icinga-2 master node configuration to monitor nagwad nodes
 Group:   Monitoring
 BuildArch: noarch
-Requires: icinga2
+Requires: %name-service
+Requires: icinga2-common
 
 %description icinga-master
 These are Icinga-2 configuration templates for a master node to
@@ -80,7 +82,8 @@ be automatically distributed to Icinga 2 agents.
 Summary: Icinga-2 agent/satellite node configuration to monitor nagwad nodes
 Group:   Monitoring
 BuildArch: noarch
-Requires: icinga2
+Requires: %name-service
+Requires: icinga2-common
 
 %description icinga-agent
 These are Icinga-2 configuration templates for a agent/satellite node.
@@ -194,6 +197,12 @@ fi
 %post icinga
 usermod -a -G %name %icinga_user
 
+%post icinga-master
+usermod -a -G %name %icinga_user
+
+%post icinga-agent
+usermod -a -G %name %icinga_user
+
 %files service
 %doc README.md README.html signal.md signal.html
 %_sbindir/nagwad
@@ -246,6 +255,11 @@ usermod -a -G %name %icinga_user
 %_bindir/nsca-shell
 
 %changelog
+* Mon Jun 24 2024 Paul Wolneykien <manowar@altlinux.org> 0.11.2-alt3
+- Fix: Require "icinga2-common" and "nagwad-service" to install
+  Icinga 2 templates: add "icinga" user to group "nagwad".
+- Fixed nagwad-icinga2 package description.
+
 * Mon Jun 24 2024 Paul Wolneykien <manowar@altlinux.org> 0.11.2-alt2
 - Fixed build with %%_unitdir.
 
