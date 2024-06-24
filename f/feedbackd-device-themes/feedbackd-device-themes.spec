@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name feedbackd
-%define ver_major 0.1
+%define ver_major 0.4
 
 %def_enable check
 
@@ -17,7 +17,8 @@ BuildArch: noarch
 
 Vcs: https://source.puri.sm/Librem5/feedbackd-device-themes.git
 %if_disabled snapshot
-Source: https://storage.puri.sm/releases/%name/%name-%version.tar.xz
+#Source: https://storage.puri.sm/releases/%name/%name-%version.tar.xz
+Source: https://source.puri.sm/Librem5/%name/-/archive/v%version/%name-v%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
@@ -32,7 +33,7 @@ haptic, visual and audio feedback. This package contains the device
 specific feedback theme files.
 
 %prep
-%setup
+%setup -n %name-v%version
 
 %build
 %meson
@@ -50,5 +51,8 @@ specific feedback theme files.
 %doc README.* NEWS
 
 %changelog
+* Mon Jun 24 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Sun May 19 2024 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt1
 - first build for Sisyphus

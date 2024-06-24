@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define libname libfeedback
-%define ver_major 0.3
+%define ver_major 0.4
 %define namespace Lfb
 %define api_ver 0.0
 
@@ -29,10 +29,11 @@ Source: %name-%version.tar
 %endif
 
 Requires: %libname = %EVR
+#Requires: feedbackd-device-themes
 
 %define glib_ver 2.66
 %define gudev_ver 232
-%define gmobile_ver 0.1.0
+%define gmobile_ver 0.2.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson
@@ -42,6 +43,7 @@ BuildRequires: pkgconfig(gudev-1.0) >= %gudev_ver
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(systemd)
 BuildRequires: pkgconfig(gmobile) >= %gmobile_ver
+BuildRequires: pkgconfig(umockdev-1.0)
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
@@ -143,6 +145,9 @@ install -D -m644 debian/%name.udev %buildroot%_udevrulesdir/90-%name.rules
 %endif
 
 %changelog
+* Mon Jun 24 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Tue May 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
 - 0.3.0
 - build against shared gmobile-0.1.0 library
