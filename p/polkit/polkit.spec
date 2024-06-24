@@ -2,7 +2,7 @@
 
 Name: polkit
 Version: 124
-Release: alt2
+Release: alt3
 
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
@@ -38,8 +38,13 @@ Libraries for interacting with PolicyKit
 Summary: Development libraries and headers for PolicyKit
 Group: Development/C
 Requires: lib%name = %version-%release
+Requires: lib%name-gir = %version-%release
 Provides: lib%{name}1-devel = %version-%release
 Obsoletes: lib%{name}1-devel < %version
+Provides: lib%{name}1-gir-devel = %version-%release
+Obsoletes: lib%{name}1-gir-devel < %version
+Provides: lib%{name}-gir-devel = %version-%release
+Obsoletes: lib%{name}-gir-devel < %version
 
 %description -n lib%name-devel
 Headers, libraries and API docs for PolicyKit
@@ -53,17 +58,6 @@ Obsoletes: lib%{name}1-gir < %version
 
 %description -n lib%name-gir
 GObject introspection data for the Polkit-1.0 library
-
-%package -n lib%name-gir-devel
-Summary: GObject introspection devel data for the Polkit-1.0 library
-Group: System/Libraries
-BuildArch: noarch
-Requires: lib%name-gir = %version-%release lib%name-devel = %version-%release
-Provides: lib%{name}1-gir-devel = %version-%release
-Obsoletes: lib%{name}1-gir-devel < %version
-
-%description -n lib%name-gir-devel
-GObject introspection devel data for the Polkit-1.0 library
 
 %package default-rules
 Summary: Default rules for polkit
@@ -83,6 +77,7 @@ touch ChangeLog
 %build
 %meson \
 	-D authfw=pam \
+	-D os_type=redhat \
 	-D examples=false \
 	-D gtk_doc=true \
 	-D introspection=true \
@@ -117,7 +112,7 @@ touch ChangeLog
 %_datadir/%name-1/policyconfig-1.dtd
 %_datadir/%name-1/actions/org.freedesktop.policykit.policy
 %_datadir/dbus-1/system-services/org.freedesktop.PolicyKit1.service
-%systemd_unitdir/polkit.service
+%_unitdir/polkit.service
 %_man1dir/*.1*
 %_man8dir/*.8*
 
@@ -137,11 +132,15 @@ touch ChangeLog
 %_datadir/gettext/its/%name.its
 %_datadir/gettext/its/%name.loc
 %_datadir/gtk-doc/html/%name-1/
-
-%files -n lib%name-gir-devel
 %_girdir/*.gir
 
 %changelog
+* Mon Jun 24 2024 Alexey Shabalin <shaba@altlinux.org> 124-alt3
+- backport fixes from upstream main branch
+- add requires dbus.service to polkit.service (ALT#50664)
+- merge gir-devel to devel package
+- add os_type=redhat for define system-auth as pam config
+
 * Tue May 28 2024 Michael Shigorin <mike@altlinux.org> 124-alt2
 - E2K: drop a kludge for old lcc (see 0.115-alt2)
 - minor spec cleanup
