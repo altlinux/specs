@@ -2,7 +2,7 @@
 
 Name: drbd-reactor
 Version: 1.4.1
-Release: alt1.1
+Release: alt1.2
 Summary: React to DRBD events via plugins.
 
 Group: System/Servers
@@ -26,6 +26,8 @@ Plugins can for example monitor resources or promote DRBD resources.
 
 %prep
 %setup
+sed -i 's!)/lib/systemd/!)/usr/lib/systemd/!g' Makefile
+
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
 [source.crates-io]
@@ -86,6 +88,9 @@ install -D -m644 example/ctl.completion.bash %buildroot%_datadir/bash-completion
 %_man5dir/drbd-reactor.prometheus.5*
 
 %changelog
+* Mon Jun 24 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1-alt1.2
+- FTBFS: fix systemd path
+
 * Wed May 08 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.4.1-alt1.1
 - NMU: build for LoongArch
 
