@@ -2,8 +2,8 @@
 %define icinga_user icinga
 
 Name: 	  nagwad
-Version:  0.11.1
-Release:  alt1
+Version:  0.11.2
+Release:  alt2
 
 Summary:  System journal event scanner and handler
 License:  GPLv3
@@ -149,7 +149,7 @@ a log of operations with a particular host or service.
 %make_build
 
 %install
-%makeinstall_std
+%makeinstall_std unitdir=%_unitdir
 mkdir -p %buildroot/var/log/nagwad
 # Touch the file for %%ghost below.
 touch %buildroot%_sysconfdir/audit/rules.d/50-nagwad-arch.rules
@@ -246,6 +246,15 @@ usermod -a -G %name %icinga_user
 %_bindir/nsca-shell
 
 %changelog
+* Mon Jun 24 2024 Paul Wolneykien <manowar@altlinux.org> 0.11.2-alt2
+- Fixed build with %%_unitdir.
+
+* Mon Jun 24 2024 Paul Wolneykien <manowar@altlinux.org> 0.11.2-alt1
+- Fix: Skip journal messages from nagwad itself.
+- Fixed "10-push-icinga": Don't use a system USERNAME by accident.
+- Fixed "10-eperm" post-filter: Don't expect and require a skip pattern
+  file.
+
 * Fri Jun 21 2024 Paul Wolneykien <manowar@altlinux.org> 0.11.1-alt1
 - Fixed "d-nagwad-status" UUID.
 
