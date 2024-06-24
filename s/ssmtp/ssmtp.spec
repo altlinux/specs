@@ -1,7 +1,7 @@
 Name: ssmtp
 Summary: ssmtp - extremely simple MTA to get mail off the system to a mail hub
 Version: 2.64
-Release: alt3.1
+Release: alt4
 License: GPL
 Group: System/Servers
 BuildRequires: libssl-devel
@@ -20,6 +20,7 @@ Summary: ssmtp - common files
 Group: System/Servers
 Conflicts: exim-common
 Requires: sendmail-common %_sbindir/mailq %_sbindir/newaliases
+Requires: ssmtp-tools = %version-%release
 
 %description common
 extremely simple MTA to get mail off the system to a mail hub
@@ -30,6 +31,12 @@ simply forwarded to the configured mailhost. Extremely easy configuration.
 WARNING: the above is all it does; it does not receive mail, expand aliases
 or manage a queue. That belongs on a mail hub with a system administrator.
 
+%package tools
+Summary: ssmtp - ssmtp and ssmtp-ssl executables
+Group: System/Servers
+
+%description tools
+ssmtp-tools contains ssmtp and ssmtp-ssl executables.
 
 %package docs
 Summary: ssmtp documentation
@@ -106,20 +113,27 @@ ln -sf %_sbindir/%name-ssl	%_sbindir/sendmail
 
 %files
 %_sbindir/sendmail
+
+%files tools
 %_sbindir/%name
+%_sbindir/%name-ssl
+%_man8dir/*
+%config(noreplace) %_sysconfdir/%name/%name.conf
 
 %files common
-%config(noreplace) %_sysconfdir/%name
-%_man8dir/*
+%config(noreplace) %_sysconfdir/%name/revaliases
 
 %files docs
 %doc README TLS CHANGELOG_OLD INSTALL COPYING debian/changelog
 
 %files ssl
 %ghost %_sbindir/sendmail
-%_sbindir/%name-ssl
 
 %changelog
+* Mon Jun 24 2024 Aleksey Cheusov <cheusov@altlinux.org> 2.64-alt4
+- Separate sbin/ssmtp and sbin/ssmtp-ssl into an individual package
+  for using them as a standalone mail sender.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.64-alt3.1
 - NMU: Rebuild with new openssl 1.1.0.
 
