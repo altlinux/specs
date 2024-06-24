@@ -5,7 +5,7 @@
 %endif
 
 Name: kf6-%rname
-Version: 6.2.0
+Version: 6.3.0
 Release: alt1
 %K6init altplace
 
@@ -109,10 +109,8 @@ Sip files for python3-module-%rname
 %doc LICENSES/* README.md
 %_datadir/qlogging-categories6/*.*categories
 %_xdgmimedir/packages/kde6.xml
-%_K6data/licenses/
 
 %files devel
-#%_K6bin/desktoptojson
 %_K6inc/KCoreAddons/
 %_K6link/lib*.so
 %_K6lib/cmake/KF6CoreAddons
@@ -136,6 +134,9 @@ Sip files for python3-module-%rname
 
 
 %changelog
+* Tue Jun 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
+- new version
+
 * Mon May 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.0-alt1
 - new version
 

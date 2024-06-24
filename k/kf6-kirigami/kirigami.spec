@@ -4,9 +4,12 @@
 %define libkirigami libkirigami%sover
 %define libkirigamidelegates libkirigamidelegates%sover
 %define libkirigamiplatform libkirigamiplatform%sover
+%define libkirigamidialogs libkirigamidialogs%sover
+%define libkirigamilayouts libkirigamilayouts%sover
+%define libkirigamiprimitives libkirigamiprimitives%sover
 
 Name: kf6-kirigami
-Version: 6.2.0
+Version: 6.3.0
 Release: alt1
 %K6init altplace
 
@@ -78,6 +81,27 @@ Requires: %name-common
 %description -n %libkirigamiplatform
 KF6 library
 
+%package -n %libkirigamidialogs
+Group: System/Libraries
+Summary: KF6 library
+Requires: %name-common
+%description -n %libkirigamidialogs
+KF6 library
+
+%package -n %libkirigamilayouts
+Group: System/Libraries
+Summary: KF6 library
+Requires: %name-common
+%description -n %libkirigamilayouts
+KF6 library
+
+%package -n %libkirigamiprimitives
+Group: System/Libraries
+Summary: KF6 library
+Requires: %name-common
+%description -n %libkirigamiprimitives
+KF6 library
+
 %prep
 %setup -n %rname-%version
 %ifarch %e2k
@@ -115,8 +139,20 @@ sed -i "s/_MSC_VER/__e2k__/" src/imagecolors.cpp
 %files -n %libkirigamiplatform
 %_K6lib/libKirigamiPlatform.so.%sover
 %_K6lib/libKirigamiPlatform.so.*
+%files -n %libkirigamidialogs
+%_K6lib/libKirigamiDialogs.so.%sover
+%_K6lib/libKirigamiDialogs.so.*
+%files -n %libkirigamilayouts
+%_K6lib/libKirigamiLayouts.so.%sover
+%_K6lib/libKirigamiLayouts.so.*
+%files -n %libkirigamiprimitives
+%_K6lib/libKirigamiPrimitives.so.%sover
+%_K6lib/libKirigamiPrimitives.so.*
 
 %changelog
+* Tue Jun 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
+- new version
+
 * Mon May 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.0-alt1
 - new version
 

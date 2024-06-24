@@ -1,7 +1,7 @@
 %define rname kiconthemes
 
 Name: kf6-%rname
-Version: 6.2.0
+Version: 6.3.0
 Release: alt1
 %K6init altplace
 
@@ -16,9 +16,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-svg-devel qt6-tools-devel qt6-declarative-devel
 BuildRequires: kf6-ki18n-devel kf6-karchive-devel kf6-kconfigwidgets-devel kf6-kwidgetsaddons-devel
 BuildRequires: kf6-kcolorscheme-devel
-%if_disabled bootstrap
-BuildRequires: kf6-kbreezicons-devel
-%endif
+BuildRequires: kf6-breeze-icons-devel
 
 %description
 This library contains classes to improve the handling of icons
@@ -81,7 +79,7 @@ KF6 library
 
 %files -n libkf6iconthemes
 %_K6lib/libKF6IconThemes.so.*
-%_K6plug/iconengines/KIconEnginePlugin.so
+%_K6plug/kiconthemes6/iconengines/KIconEnginePlugin.so
 %_K6qml/org/kde/iconthemes/
 
 %files -n libkf6iconwidgets
@@ -89,6 +87,9 @@ KF6 library
 
 
 %changelog
+* Tue Jun 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
+- new version
+
 * Mon May 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.0-alt1
 - new version
 

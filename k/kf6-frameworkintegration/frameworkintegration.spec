@@ -3,7 +3,7 @@
 %def_enable packagekit
 
 Name: kf6-%rname
-Version: 6.2.0
+Version: 6.3.0
 Release: alt1
 %K6init altplace
 
@@ -58,16 +58,18 @@ KF6 library
 %setup -n %rname-%version
 #%patch1 -p1
 
-if [ -d %_libdir/cmake/AppStreamQt6 ] ; then
-    find ./ -type f -name CMakeLists.txt | \
-    while read f; do
-	sed -i 's|AppStreamQt|AppStreamQt6|' $f
+if [ -d %_libdir/cmake/AppStreamQt6 -a ! -d %_libdir/cmake/AppStreamQt ] ; then
+    mkdir -p cmake/AppStreamQt/
+    for f in %_libdir/cmake/AppStreamQt6/*.cmake ; do
+	ln -s $f cmake/AppStreamQt/`basename "$f" | sed 's|6||'`
     done
     ln -s %_includedir/AppStreamQt6 src/kpackage-install-handlers/appstream/AppStreamQt
 fi
 
 %build
-%K6build
+%K6build \
+    -DAppStreamQt_DIR:PATH=$PWD/cmake/AppStreamQt \
+    #
 
 %install
 %K6install
@@ -97,6 +99,9 @@ mkdir -p %buildroot/%_K6exec/kpackagehandlers/
 
 
 %changelog
+* Tue Jun 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
+- new version
+
 * Mon May 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.0-alt1
 - new version
 

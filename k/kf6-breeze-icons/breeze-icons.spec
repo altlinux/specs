@@ -1,7 +1,7 @@
 %define rname breeze-icons
 
 Name: kf6-%rname
-Version: 6.2.0
+Version: 6.3.0
 Release: alt1
 %K6init no_altplace
 
@@ -20,11 +20,20 @@ BuildRequires: icon-naming-utils xml-utils python3-module-lxml
 %description
 %summary
 
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: kde-common
+%description common
+%name common package
+
 %package -n icon-theme-breeze
 Summary: Breeze icons theme
 Group: Graphics
 BuildArch: noarch
 Provides: kde4-icon-theme = %version-%release
+Provides: kde-icon-theme = %version-%release
 %description -n icon-theme-breeze
 %summary
 
@@ -34,6 +43,13 @@ Summary: Development files for %name
 %description devel
 The %name-devel package files for developing applications that use %name.
 
+
+%package -n libkf6breezeicons
+Group: System/Libraries
+Summary: KF6 library
+Requires: %name-common
+%description -n libkf6breezeicons
+KF6 library
 
 %prep
 %setup -n %rname-%version
@@ -115,15 +131,27 @@ do
     done
 done
 
+%find_lang %name --all-name
+%K6find_qtlang %name --all-name
+
+%files common -f %name.lang
+%doc COPYING* README.md
+
 %files -n icon-theme-breeze
-%doc COPYING*
 %_iconsdir/breeze*/
 
 %files devel
 %_libdir/cmake/KF6BreezeIcons/
+%_K6link/lib*.so
+%_K6inc/BreezeIcons/
 
+%files -n libkf6breezeicons
+%_K6lib/libKF6BreezeIcons.so.*
 
 %changelog
+* Tue Jun 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
+- new version
+
 * Mon May 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.0-alt1
 - new version
 
