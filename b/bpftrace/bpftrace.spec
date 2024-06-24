@@ -18,7 +18,7 @@
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name: bpftrace
-Version: 0.20.4
+Version: 0.21.0
 Release: alt1
 Summary: High-level tracing language for Linux eBPF
 Group: Development/Debuggers
@@ -32,18 +32,12 @@ URL: https://github.com/iovisor/bpftrace
 # PR: http://www.brendangregg.com/blog/2018-10-08/dtrace-for-linux-2018.html
 
 Source: %name-%version.tar
-# Submodules are maintained with gear-submodule-update.
-Source1: bcc-0.tar
-Source2: blazesym-0.tar
-Source3: bpftool-0.tar
-Source4: libbpf-0.tar
-Source5: libbpf-1.tar
-Source6: libbpf-2.tar
 ExclusiveArch:	x86_64 aarch64 loongarch64
 
 %define llvm_ver 17
 %define llvm_pkgver %llvm_ver.0
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires: asciidoctor
 BuildRequires: binutils-devel
 BuildRequires: cereal-devel
 BuildRequires: clang%llvm_pkgver-devel
@@ -62,9 +56,14 @@ BuildRequires: lld%llvm_pkgver
 BuildRequires: llvm%llvm_pkgver-devel
 BuildRequires: /proc
 BuildRequires: python3-module-setuptools
+BuildRequires: systemtap-sdt-devel
+BuildRequires: xxd
+
 # Assuming 'kernel' dependency will bring un-def kernel
 %{?!_without_check:%{?!_disable_check:
+BuildRequires: dwarves
 BuildRequires: kernel-headers-modules-un-def
+BuildRequires: libgtest-devel
 BuildRequires: rpm-build-vm
 }}
 
@@ -80,13 +79,6 @@ was created by Alastair Robertson.
 
 %prep
 %setup
-tar xf %SOURCE1 -C .
-tar xf %SOURCE2 -C bcc/libbpf-tools
-tar xf %SOURCE3 -C bcc/libbpf-tools
-tar xf %SOURCE4 -C bcc/libbpf-tools/bpftool
-tar xf %SOURCE5 -C bcc/src/cc
-tar xf %SOURCE6 -C .
-sed -i 's/\bpython\b/python3/' tests/runtime/call
 sed -i 's/@.*@/True/' tests/runtime/engine/cmake_vars.py
 
 %build
@@ -100,7 +92,9 @@ export Clang_DIR=/usr/share/cmake/Modules/clang
 # -DBUILD_TESTING:BOOL=ON will require googletest and try to clone it from github
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+%if_disabled check
 	-DBUILD_TESTING:BOOL=OFF \
+%endif
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
 	-DLLVM_DIR=$(llvm-config-%llvm_ver --cmakedir) \
 	-DLLVM_REQUESTED_VERSION=%llvm_ver \
@@ -117,6 +111,7 @@ find %buildroot%_datadir/%name/tools -name '*.bt' | xargs chmod a+x
 # Fix man pages.
 pushd %buildroot%_man8dir
  rename '' bpftrace- *.gz
+ rename bpftrace-bpftrace bpftrace bpftrace-bpftrace*.gz
 popd
 
 # Need to keep BEGIN_trigger and END_trigger
@@ -128,30 +123,20 @@ popd
 vm-run %_cmake__builddir/src/bpftrace --info # should be fast enough even w/o kvm
 vm-run --kvm=cond %_cmake__builddir/src/bpftrace -l 'kprobe:*_sleep_*'
 if kvm-ok; then
-	## Great run-time tests
-
-	# Some fail due to no BUILD_TESTING
-	.gear/delete-blocks syscalls:	tests/runtime/*
-	.gear/delete-blocks testprogs	tests/runtime/*
-	.gear/delete-blocks uprobe	tests/runtime/*
-	.gear/delete-blocks usdt	tests/runtime/usdt
-	.gear/delete-blocks vfs_read	tests/runtime/*     # TIMEOUT
-	.gear/delete-blocks hardware	tests/runtime/probe # TIMEOUT
-	.gear/delete-blocks k.*_order	tests/runtime/probe # TIMEOUT
-	.gear/delete-blocks watchpoint:	tests/runtime/watchpoint
-	.gear/delete-blocks string_args	tests/runtime/other
-	.gear/delete-blocks interval_order tests/runtime/probe
-	.gear/delete-blocks tracepoint_order tests/runtime/probe
-	.gear/delete-blocks uint64_t	tests/runtime/signed_ints
-	.gear/delete-blocks tracepoint:random:random_read tests/runtime/variable
-	.gear/delete-blocks tracepoint:sched:sched_wakeup tests/runtime/regression
-	.gear/delete-blocks histogram-finegrain tests/runtime/json-output
+	PATH=$PWD/.gear:$PATH
+	cd %_cmake__builddir
+	delete-blocks casted	tests/runtime/intcast
+	delete-blocks kfunc	tests/runtime/call
+	delete-blocks kprobe_offset_fail_size	tests/runtime/probe
+	delete-blocks testprogs	tests/runtime/*
+	delete-blocks tracetest_testprobe_semaphore	tests/runtime/usdt
+	delete-blocks uaddr	tests/runtime/call
+	delete-blocks watchpoint	tests/runtime/watchpoint
 %ifarch aarch64
-	# TIMEOUT on aarch64
-	.gear/delete-blocks python	tests/runtime/json-output
-%endif
-	export BPFTRACE_RUNTIME_TEST_EXECUTABLE=$PWD/%_cmake__builddir/src/bpftrace
+	delete-blocks kfunc	tests/runtime/regression
+	delete-blocks task	tests/runtime/basic
 	sed -i 's/xattr.h/user.h/' tests/runtime/basic
+%endif
 	vm-run --kvm=cond --sbin tests/runtime-tests.sh
 fi
 
@@ -164,6 +149,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Mon Jun 24 2024 Vitaly Chikunov <vt@altlinux.org> 0.21.0-alt1
+- Update to v0.21.0 (2024-06-21).
+
 * Sun May 26 2024 Vitaly Chikunov <vt@altlinux.org> 0.20.4-alt1
 - Update to v0.20.4 (2024-05-21).
 
