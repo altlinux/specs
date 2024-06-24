@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -47,7 +47,9 @@ KF5 library
 %setup -n %rname-%version
 
 %build
-%K5build
+%K5build \
+    -DUDEV_RULES_INSTALL_DIR=%_udevrulesdir \
+    #
 
 %install
 %K5install
@@ -71,6 +73,9 @@ KF5 library
 %_K5qml/org/kde/bluezqt/
 
 %changelog
+* Mon Jun 24 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt2
+- fix detect udev rules directory
+
 * Thu May 23 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt1
 - new version
 
