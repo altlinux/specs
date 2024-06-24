@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 24.0
+Version: 24.1
 Release: alt1
 
 Summary: The PyPA recommended tool for installing Python packages
@@ -17,9 +17,10 @@ VCS: https://github.com/pypa/pip.git
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-# drop false positive dependency on distutils
-%filter_from_requires /python3(distutils\(\..*\)\?)/d
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
+%add_findprov_skiplist %python3_sitelibdir/pip/_vendor/*
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
@@ -38,12 +39,6 @@ BuildRequires: /usr/bin/git
 Obsoletes: python3-module-pip-pickles
 %description
 %summary
-
-%add_findprov_skiplist %python3_sitelibdir/pip/_vendor/*
-%filter_from_requires /python3\(\.[[:digit:]]\)\?(pip\._vendor\(\..*\)\?)/d
-
-# don't allow vendored distributions have deps other than stdlib
-%add_findreq_skiplist %python3_sitelibdir/pip/_vendor/*
 
 %package wheel
 Summary: %summary
@@ -112,9 +107,8 @@ export NO_LATEST_WHEELS=YES
 %_bindir/pip
 
 %files
-%doc *.rst
+%doc README.*
 %_bindir/pip3
-%_bindir/pip%__python3_version
 %python3_sitelibdir/pip/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
@@ -122,6 +116,9 @@ export NO_LATEST_WHEELS=YES
 %system_wheels_path/%{pep427_name %pypi_name}-%version-*.whl
 
 %changelog
+* Fri Jun 21 2024 Stanislav Levin <slev@altlinux.org> 24.1-alt1
+- 24.0 -> 24.1.
+
 * Fri Feb 09 2024 Stanislav Levin <slev@altlinux.org> 24.0-alt1
 - 23.3.2 -> 24.0.
 
