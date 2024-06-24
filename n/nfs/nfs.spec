@@ -1,6 +1,6 @@
 Name: nfs
 Version: 2.6.4
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: The Linux NFS clients, utilities and server
@@ -100,7 +100,7 @@ This package provides the Linux NFS stats utilities.
     --enable-ipv6 \
     --with-statduser=rpcuser \
     --with-statdpath=%_localstatedir/nfs/statd \
-    --with-systemd=%systemd_unitdir \
+    --with-systemd=%_unitdir \
     --with-pluginpath=%_libdir/libnfsidmap \
     --disable-nfsdcld \
     --disable-static \
@@ -316,6 +316,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Mon Jun 24 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1:2.6.4-alt2
+- rebuilt for merged-usr
+
 * Mon Nov 20 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.6.4-alt1
 - 2.6.4 released
 
