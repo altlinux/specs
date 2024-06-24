@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %def_enable libdmmp
 
-%define syslibdir /%_lib
+%define syslibdir %_libdir
 %define libmpathdir %syslibdir/multipath
+%define bindir %_sbindir
 
 Name: multipath-tools
-Version: 0.9.8
+Version: 0.9.9
 Release: alt1
 
 Summary: Tools to manage multipath devices with device-mapper
@@ -21,6 +22,8 @@ Source5: multipath.conf
 Patch1: %name-%version.patch
 
 Provides: device-mapper-multipath = %EVR
+Provides: /sbin/multipath /sbin/multipathd /sbin/mpathpersist /sbin/multipathc
+Conflicts: filesystem < 3
 
 Requires: libmultipath = %EVR
 Requires: kpartx = %EVR
@@ -65,6 +68,7 @@ Summary: Partition device manager for device-mapper devices
 Group: System/Configuration/Hardware
 License: GPL-2.0-only
 Conflicts: multipath-tools <= 0.4.9-alt3
+Provides: /sbin/kpartx
 
 %description -n kpartx
 kpartx manages partition creation and removal for device-mapper devices.
@@ -101,8 +105,8 @@ unset RPM_OPT_FLAGS
     prefix=%_prefix \
     systemd_prefix="" \
     etc_prefix="" \
-    bindir=/sbin \
-    libudevdir=/lib/udev \
+    bindir=%bindir \
+    libudevdir=%_udevdir \
     syslibdir=%syslibdir \
     libdir=%libmpathdir \
     plugindir=%libmpathdir \
@@ -110,19 +114,20 @@ unset RPM_OPT_FLAGS
     configdir=%_sysconfdir/multipath/conf.d \
     configfile=%_sysconfdir/multipath.conf \
     statedir=%_sysconfdir/multipath \
+    runtimedir=/run \
     LIB=%_lib \
     %{?_disable_libdmmp: ENABLE_LIBDMMP=0} \
     EXTRAVERSION=%release
 
 %install
-mkdir -p %buildroot{/sbin,%_libdir,%_man8dir,%_initdir,%_unitdir,%_udevrulesdir,%_modulesloaddir,%_sysconfdir/multipath}
+mkdir -p %buildroot{%bindir,%_libdir,%_man8dir,%_initdir,%_unitdir,%_udevrulesdir,%_modulesloaddir,%_sysconfdir/multipath}
 %makeinstall_std \
     prefix=%_prefix \
     systemd_prefix="" \
     DESTDIR=%buildroot \
     %{?_disable_libdmmp: ENABLE_LIBDMMP=0} \
     LIB=%_lib \
-    bindir=/sbin \
+    bindir=%bindir \
     syslibdir=%syslibdir \
     libdir=%libmpathdir \
     plugindir=%libmpathdir \
@@ -131,9 +136,10 @@ mkdir -p %buildroot{/sbin,%_libdir,%_man8dir,%_initdir,%_unitdir,%_udevrulesdir,
     rcdir=%_initrddir \
     udevrulesdir=%_udevrulesdir \
     unitdir=%_unitdir \
-    libudevdir=/lib/udev \
+    libudevdir=%_udevdir \
     tmpfilesdir=%_tmpfilesdir \
     modulesloaddir=%_modulesloaddir \
+    runtimedir=/run \
     EXTRAVERSION=%release
 
 install -pm755 %SOURCE3 %buildroot%_initdir/multipathd
@@ -147,11 +153,11 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 
 %files
 %doc README.md
-/sbin/multipath
-/sbin/multipathd
-#/sbin/mpathconf
-/sbin/mpathpersist
-/sbin/multipathc
+%bindir/multipath
+%bindir/multipathd
+#%%bindir/mpathconf
+%bindir/mpathpersist
+%bindir/multipathc
 %_udevrulesdir/*
 %exclude %_udevrulesdir/*kpartx.rules
 %_modulesloaddir/*
@@ -165,20 +171,20 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %exclude %_man8dir/kpartx.8.*
 
 %files -n libmultipath
-/%_lib/libmultipath.so.*
-/%_lib/libmpathcmd.so.*
-/%_lib/libmpathpersist.so.*
-/%_lib/libmpathvalid.so.*
-/%_lib/libmpathutil.so.*
+%syslibdir/libmultipath.so.*
+%syslibdir/libmpathcmd.so.*
+%syslibdir/libmpathpersist.so.*
+%syslibdir/libmpathvalid.so.*
+%syslibdir/libmpathutil.so.*
 %dir %libmpathdir
 %libmpathdir/*
 
 %files -n libmultipath-devel
-/%_lib/libmultipath.so
-/%_lib/libmpathpersist.so
-/%_lib/libmpathcmd.so
-/%_lib/libmpathvalid.so
-/%_lib/libmpathutil.so
+%syslibdir/libmultipath.so
+%syslibdir/libmpathpersist.so
+%syslibdir/libmpathcmd.so
+%syslibdir/libmpathvalid.so
+%syslibdir/libmpathutil.so
 %_includedir/mpath_cmd.h
 %_includedir/mpath_persist.h
 %_includedir/mpath_valid.h
@@ -186,8 +192,8 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 
 %files -n kpartx
 %_udevrulesdir/*kpartx.rules
-/sbin/kpartx
-/lib/udev/kpartx_id
+%bindir/kpartx
+%_udevdir/kpartx_id
 %_man8dir/kpartx.8.*
 
 %files -n libdmmp
@@ -202,6 +208,9 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %_pkgconfigdir/libdmmp.pc
 
 %changelog
+* Mon Jun 24 2024 Alexey Shabalin <shaba@altlinux.org> 0.9.9-alt1
+- 0.9.9
+
 * Thu Mar 07 2024 Alexey Shabalin <shaba@altlinux.org> 0.9.8-alt1
 - 0.9.8
 
