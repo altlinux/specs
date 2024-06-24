@@ -4,7 +4,7 @@
 
 Name: accountsservice
 Version: 23.13.9
-Release: alt2
+Release: alt3
 Summary: D-Bus interfaces for querying and manipulating user account information
 
 Group: System/Base
@@ -15,7 +15,7 @@ Vcs: https://gitlab.freedesktop.org/accountsservice/accountsservice.git
 Source: %name-%version.tar
 Patch1: %name-%version.patch
 
-BuildRequires: meson >= 0.50.0
+BuildRequires: meson >= 0.63.0
 BuildRequires: gtk-doc
 BuildRequires: pkgconfig(gio-2.0) >= 2.63.5
 BuildRequires: pkgconfig(gio-unix-2.0)
@@ -126,6 +126,10 @@ mkdir -p %buildroot%_datadir/%name/interfaces
 %_girdir/*.gir
 
 %changelog
+* Mon Jun 24 2024 Alexey Shabalin <shaba@altlinux.org> 23.13.9-alt3
+- Sync with upstream main branch.
+- Add reuires dbus.service to accounts-daemon.service (ALT#50663).
+
 * Wed Feb 21 2024 Alexey Shabalin <shaba@altlinux.org> 23.13.9-alt2
 - Sync with upstream main branch
 - Fixed show users list (ALT#48825).
