@@ -5,7 +5,7 @@
 %add_findreq_skiplist %_datadir/freecell-solver/presets/*.sh
 
 Name: freecell-solver
-Version: 6.8.0
+Version: 6.10.0
 Release: alt1
 
 Group: Games/Cards
@@ -108,6 +108,9 @@ Freecell Solver from within your programs.
 %_libdir/lib*.so
 
 %changelog
+* Mon Jun 24 2024 Sergey V Turchin <zerg@altlinux.org> 6.10.0-alt1
+- new version
+
 * Fri Jan 20 2023 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt1
 - new version
 
