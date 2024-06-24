@@ -10,7 +10,7 @@
 
 Name: gitg
 Version: %ver_major
-Release: alt1
+Release: alt2
 
 Summary: git repository viewer for GTK+/GNOME
 Group: Development/Other
@@ -168,6 +168,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_girdir/GitgExt-%api_ver.gir
 
 %changelog
+* Mon Jun 24 2024 Yuri N. Sedunov <aris@altlinux.org> 44-alt2
+- updated to v44-76-g7121d995
+
 * Tue Sep 05 2023 Yuri N. Sedunov <aris@altlinux.org> 44-alt1
 - updated to v44-1-gaba8b667
 
