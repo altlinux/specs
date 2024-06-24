@@ -3,7 +3,7 @@
 
 Name: autofs
 Version: 5.1.9
-Release: alt1
+Release: alt2
 
 Summary: A tool for automatically mounting and unmounting filesystems
 License: GPLv2
@@ -64,10 +64,10 @@ This package adds SSSD support to the %name package
 
 %build
 %autoreconf
-export ac_cv_path_MODPROBE=/sbin/modprobe
-export ac_cv_path_MOUNT=/bin/mount
-export ac_cv_path_UMOUNT=/bin/umount
-export ac_cv_path_MOUNT_NFS=/sbin/mount.nfs
+export ac_cv_path_MODPROBE=%_sbindir/modprobe
+export ac_cv_path_MOUNT=%_bindir/mount
+export ac_cv_path_UMOUNT=%_bindir/umount
+export ac_cv_path_MOUNT_NFS=%_sbindir/mount.nfs
 %configure --with-systemd --disable-mount-locking \
 	--enable-ignore-busy --enable-sloppy-mount \
 	--with-libtirpc
@@ -77,7 +77,7 @@ export ac_cv_path_MOUNT_NFS=/sbin/mount.nfs
 %make_install install INSTALLROOT=%buildroot
 (cd altlinux && find . -type f |cpio -pumd %buildroot)
 install -pm0644 samples/autofs_ldap_auth.conf %buildroot%_sysconfdir/
-
+install -pm0644 -D autofs.service %buildroot%_unitdir/autofs.service
 chmod 0644 samples/auto.*
 %define docdir %_defaultdocdir/%name-%version
 mkdir -p %buildroot%docdir
@@ -111,7 +111,7 @@ chmod 0600 %_sysconfdir/autofs_ldap_auth.conf ||:
 %docdir/samples/auto.net
 %docdir/samples/auto.smb
 
-%systemd_unitdir/autofs.service
+%_unitdir/autofs.service
 
 %config(noreplace) %_initdir/autofs
 %config(noreplace) %_sysconfdir/auto.master
@@ -143,6 +143,9 @@ chmod 0600 %_sysconfdir/autofs_ldap_auth.conf ||:
 %_libdir/%name/lookup_sss.so
 
 %changelog
+* Mon Jun 24 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 5.1.9-alt2
+- rebuilt for merged-usr
+
 * Tue Nov 07 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.1.9-alt1
 - 5.1.9 released
 
