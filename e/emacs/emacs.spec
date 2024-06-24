@@ -1,5 +1,5 @@
 Name: emacs
-Version: 29.3
+Version: 29.4
 Release: alt1
 
 Summary: GNU Emacs text editor
@@ -370,6 +370,9 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %_infodir/elisp*
 
 %changelog
+* Mon Jun 24 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 29.4-alt1
+- 29.4 released
+
 * Mon Mar 25 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 29.3-alt1
 - 29.3 released
 
