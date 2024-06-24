@@ -6,7 +6,7 @@
 
 Name: spice-vdagent
 Version: 0.22.1
-Release: alt1.1
+Release: alt2
 Epoch: 1
 Summary: Agent for Spice guests
 Group: Networking/Remote access
@@ -58,7 +58,7 @@ Features:
 %make_build
 
 %install
-%makeinstall_std
+%makeinstall_std tmpfilesdir=%_tmpfilesdir udevrulesdir=%_udevrulesdir systemdunitdir=%_unitdir userunitdir=%_user_unitdir
 install -m 0755 %SOURCE2 %buildroot%_initdir/spice-vdagentd
 
 # fix autostart in KDE Plasma
@@ -82,8 +82,8 @@ desktop-file-install --mode=0644 --dir %buildroot/%_sysconfdir/xdg/autostart \
 
 %files
 %doc COPYING CHANGELOG.md README.md
-/lib/udev/rules.d/*.rules
-/lib/tmpfiles.d/spice-vdagentd.conf
+%_udevrulesdir/*.rules
+%_tmpfilesdir/spice-vdagentd.conf
 %_initddir/spice-vdagentd
 %_unitdir/*
 %_userunitdir/*
@@ -95,6 +95,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_sysconfdir/xdg/autostart \
 %_man1dir/*
 
 %changelog
+* Mon Jun 24 2024 Alexey Shabalin <shaba@altlinux.org> 1:0.22.1-alt2
+- fix use systemd rpm macros in spec
+
 * Mon Sep 11 2023 Sergey V Turchin <zerg@altlinux.org> 1:0.22.1-alt1.1
 - NMU: fix systemd user session startup loop (closes: 47329)
 
