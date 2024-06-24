@@ -1,5 +1,5 @@
 Name: alt-csp-cryptopro
-Version: 0.2.11
+Version: 0.3.0
 Release: alt1
 
 Group: File tools
@@ -41,6 +41,9 @@ install -m 0644 %_cmake__builddir/*.qm %buildroot/%_qt5_translationdir/
 %_datadir/file-manager/actions/alt-csp-cryptopro.desktop
 
 %changelog
+* Thu Jun 20 2024 Oleg Solovyov <mcpain@altlinux.org> 0.3.0-alt1
+- enable signing group of files
+
 * Thu Nov 16 2023 Oleg Solovyov <mcpain@altlinux.org> 0.2.11-alt1
 - add .p7s extension
 
