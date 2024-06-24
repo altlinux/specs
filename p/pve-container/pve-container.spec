@@ -4,7 +4,7 @@
 Name: pve-container
 Summary: Proxmox VE Container management tool
 Version: 5.0.9
-Release: alt1
+Release: alt1.1
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -28,11 +28,11 @@ Tool to manage Linux Containers on Proxmox VE.
 
 %prep
 %setup
+sed -i 's!}/lib/systemd/!}/usr/lib/systemd/!' src/Makefile
 
 %install
 %makeinstall_std -C src
-mkdir -p %buildroot%_sysctldir
-mv %buildroot/usr/lib/sysctl.d/10-pve-ct-inotify-limits.conf %buildroot%_sysctldir/10-pve-ct-inotify-limits.conf
+
 %post
 %_sbindir/usermod --add-subgids 100000-165535 root ||:
 %_sbindir/usermod --add-subuids 100000-165535 root ||:
@@ -55,6 +55,9 @@ mv %buildroot/usr/lib/sysctl.d/10-pve-ct-inotify-limits.conf %buildroot%_sysctld
 %_man5dir/*
 
 %changelog
+* Mon Jun 24 2024 Andrew A. Vasilyev <andy@altlinux.org> 5.0.9-alt1.1
+- FTBFS: fix sysctl.d and systemd path
+
 * Fri Mar 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 5.0.9-alt1
 - 5.0.9
 
