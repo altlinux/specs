@@ -2,7 +2,7 @@
 %define _libexecdir /usr/libexec
 
 Name: virtiofsd
-Version: 1.10.1
+Version: 1.11.0
 Release: alt1
 Summary: Virtio-fs vhost-user device daemon (Rust version)
 Group: Emulators
@@ -61,6 +61,9 @@ install -D -p -m 0644 50-virtiofsd.json %buildroot%_datadir/qemu/vhost-user/50-v
 %_datadir/qemu/vhost-user/50-virtiofsd.json
 
 %changelog
+* Mon Jun 24 2024 Alexey Shabalin <shaba@altlinux.org> 1.11.0-alt1
+- New version 1.11.0.
+
 * Tue Apr 16 2024 Alexey Shabalin <shaba@altlinux.org> 1.10.1-alt1
 - 1.10.1
 - Allow install with pve-qemu (drop R: qemu-common) (ALT#50017).
