@@ -1,17 +1,18 @@
 %define oname whitenoise
 
 # needs tox >=4.2
-%def_without check
+%def_with check
 
 Name: python3-module-%oname
-Version: 6.6.0
-Release: alt1.1
+Version: 6.7.0
+Release: alt1
 
 Summary: Radically simplified static file serving for Python web apps
 
 License: MIT
 Group: Development/Python3
-Url: https://github.com/evansd/whitenoise
+URL: https://pypi.org/project/whitenoise
+VCS: https://github.com/evansd/whitenoise
 
 BuildArch: noarch
 
@@ -25,6 +26,7 @@ BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinx_rtd_theme
 
 %if_with check
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-coverage
 BuildRequires: python3-module-django
 BuildRequires: python3-module-brotlipy
@@ -61,16 +63,21 @@ export PYTHONPATH=$PWD
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest
 
 %files
 %doc LICENSE *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %files docs
 %doc docs/*
 
 %changelog
+* Tue Jun 25 2024 Grigory Ustinov <grenka@altlinux.org> 6.7.0-alt1
+- Automatically updated to 6.7.0.
+- Built with check.
+
 * Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 6.6.0-alt1.1
 - NMU: added missing build dependency on setuptools.
 
