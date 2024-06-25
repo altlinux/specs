@@ -1,20 +1,27 @@
 %define  modulename webcolors
 
+%def_with check
+
 Name:    python3-module-%modulename
-Version: 1.13
+Version: 24.6.0
 Release: alt1
 
 Summary: Library for working with HTML/CSS color formats in Python
 
 License: BSD-3-Clause
 Group:   Development/Python3
-URL:     https://github.com/ubernostrum/webcolors
+URL:     https://pypi.org/project/webcolors
+VCS:     https://github.com/ubernostrum/webcolors
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 BuildArch: noarch
 
@@ -32,12 +39,19 @@ Source:  %name-%version.tar
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest
+
 %files
+%doc *.rst
 %python3_sitelibdir/%modulename
 %python3_sitelibdir/%modulename-%version.dist-info
-%doc *.rst
 
 %changelog
+* Tue Jun 25 2024 Grigory Ustinov <grenka@altlinux.org> 24.6.0-alt1
+- Automatically updated to 24.6.0.
+- Built with check.
+
 * Mon Mar 27 2023 Grigory Ustinov <grenka@altlinux.org> 1.13-alt1
 - Automatically updated to 1.13.
 
