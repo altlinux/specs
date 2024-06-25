@@ -8,7 +8,7 @@
 
 %global v_major 18
 %global v_majmin %v_major.1
-%global v_full %v_majmin.6
+%global v_full %v_majmin.8
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -69,7 +69,7 @@ AutoProv: nopython
 # LTO causes LLVM to break badly on %%ix86 see
 # https://github.com/llvm/llvm-project/issues/57740
 # will enable it conditionally per platform
-%global optflags_lto %nil
+#%%global optflags_lto %nil
 
 %define hwasan_symbolize_arches x86_64 aarch64
 %ifarch riscv64 loongarch64
@@ -85,9 +85,11 @@ AutoProv: nopython
 %ifarch x86_64 ppc64le aarch64
 %def_with clang
 %def_with mold
+%define optflags_lto -flto=thin -ffat-lto-objects
 %else
 %def_without clang
 %def_without mold
+%define optflags_lto %nil
 %endif
 
 %if_with lldb
@@ -839,7 +841,6 @@ fi
 	-DCMAKE_RANLIB:PATH=%_bindir/llvm-ranlib \
 	-DCMAKE_AR:PATH=%_bindir/llvm-ar \
 	-DCMAKE_NM:PATH=%_bindir/llvm-nm \
-	-DLLVM_ENABLE_LTO=Thin \
 	%if_with mold
 	-DLLVM_USE_LINKER=mold \
 	%else
@@ -1478,6 +1479,10 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Tue Jun 25 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.8-alt0.1
+- Update to 18.1.8.
+- Pass -ffat-lto-objects for lto=thin.
+
 * Thu May 23 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.6-alt0.1
 - Update to 18.1.6.
 
