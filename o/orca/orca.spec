@@ -1,14 +1,15 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 46
 %define beta %nil
 
+%def_enable braille
 # experimental spiel (https://github.com/eeejay/spiel) support disabled by default
 %def_disable spiel
 
 Name: orca
-Version: %ver_major.1
-Release: alt3%beta
+Version: %ver_major.2
+Release: alt1%beta
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
 Summary(ru_RU.UTF-8): Программа экранного доступа для людей с ограничениями по зрению
@@ -61,7 +62,8 @@ Jaws For Windows компании Freedom Scientific.
 
 %prep
 %setup -n %name-%version%beta
-sed -i 's/\(enableBraille[[:space:]]*= \)True/\1False/' src/orca/settings.py
+# disable Braille support by default
+%{?_disable_braille:sed -i 's/\(enableBraille[[:space:]]*= \)True/\1False/' src/orca/settings.py}
 
 %build
 %meson \
@@ -87,6 +89,10 @@ sed -i 's/\(enableBraille[[:space:]]*= \)True/\1False/' src/orca/settings.py
 %_sysconfdir/xdg/autostart/%name-autostart.desktop
 
 %changelog
+* Tue Jun 25 2024 Yuri N. Sedunov <aris@altlinux.org> 46.2-alt1
+- 46.2
+- enabled Braille (brltty) support by default again
+
 * Thu Jun 06 2024 Artem Semenov <savoptik@altlinux.org> 46.1-alt3
 - Changed espeak to espeak-ng
 
