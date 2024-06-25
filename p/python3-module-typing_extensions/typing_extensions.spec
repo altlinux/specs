@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%modname
-Version: 4.12.1
+Version: 4.12.2
 Release: alt1
 
 Summary: Python Typing Extensions
@@ -62,6 +62,9 @@ must be compatible with multiple Python versions or requires experimental types.
 %python3_sitelibdir/%modname-%version.dist-info
 
 %changelog
+* Tue Jun 25 2024 Grigory Ustinov <grenka@altlinux.org> 4.12.2-alt1
+- Automatically updated to 4.12.2.
+
 * Sun Jun 02 2024 Grigory Ustinov <grenka@altlinux.org> 4.12.1-alt1
 - Automatically updated to 4.12.1.
 
