@@ -9,8 +9,8 @@
 %define flavour %brand-%theme
 
 Name: branding-%flavour
-Version: 2024.04
-Release: alt4
+Version: 2024.06
+Release: alt1
 
 Url: https://www.altlinux.org/ALT_Mobile
 
@@ -224,6 +224,9 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/gtk-3.0/gtk.css
 
 %changelog
+* Tue Jun 25 2024 Anton Midyukov <antohami@altlinux.org> 2024.06-alt1
+- images: images: update background, lockscreen (Thanks Semen Fomchenkov)
+
 * Fri Jun 14 2024 Anton Midyukov <antohami@altlinux.org> 2024.04-alt4
 - indexhtml: add postcript for run indexhtml-update
 
