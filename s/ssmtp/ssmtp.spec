@@ -1,8 +1,8 @@
 Name: ssmtp
 Summary: ssmtp - extremely simple MTA to get mail off the system to a mail hub
 Version: 2.64
-Release: alt4
-License: GPL
+Release: alt5
+License: GPL-2.0+
 Group: System/Servers
 BuildRequires: libssl-devel
 Packager: Denis Smirnov <mithraen@altlinux.ru>
@@ -130,6 +130,9 @@ ln -sf %_sbindir/%name-ssl	%_sbindir/sendmail
 %ghost %_sbindir/sendmail
 
 %changelog
+* Tue Jun 25 2024 Aleksey Cheusov <cheusov@altlinux.org> 2.64-alt5
+- Set correct License
+
 * Mon Jun 24 2024 Aleksey Cheusov <cheusov@altlinux.org> 2.64-alt4
 - Separate sbin/ssmtp and sbin/ssmtp-ssl into an individual package
   for using them as a standalone mail sender.
