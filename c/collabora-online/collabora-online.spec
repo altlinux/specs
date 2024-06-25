@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define service_name coolwsd
-%define service_user _cool
+%define service_user cool
 %define default_loroot %_libdir/LibreOffice
 
 %ifarch ppc64le
@@ -9,7 +9,7 @@
 %endif
 
 Name: collabora-online
-Version: 23.05.4.2
+Version: 23.05.10.1
 Release: alt1
 Summary: Collabora Online WebSocket Daemon
 License: MPL-2.0
@@ -24,14 +24,14 @@ Source3: %name.conf.apache2
 Source4: README.alt
 
 Patch1: collabora-online-23.05.4-alt-systemd-service.patch
-Patch2: collabora-online-23.05.4-alt-exclude_unused_states.patch
-Patch3: collabora-online-23.05.4-alt-fix-cached-path.patch
+Patch2: collabora-online-23.05.10-alt-exclude_unused_states.patch
+Patch3: collabora-online-23.05.10-alt-fix-cached-path.patch
 
 ExcludeArch: %ix86 %arm
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
-BuildRequires: libtool automake npm libcap-utils fontconfig
+BuildRequires: libtool automake npm libcap-utils fontconfig rsync
 BuildRequires: libpoco-devel libpng-devel libcap-devel cppunit-devel
 BuildRequires: pam-devel libpcre-devel
 BuildRequires: python3 python3-module-polib python3-module-lxml
@@ -81,7 +81,11 @@ Apache 2.x web-server default configuration for %name.
 %endif
 
 %autoreconf
+# Excluding unsupported functionality with loongarch64
 %configure \
+%ifarch loongarch64
+	 --disable-seccomp \
+%endif
 	--enable-silent-rules \
 	--with-lo-path=%default_loroot \
 	--disable-setcap \
@@ -115,7 +119,7 @@ mv %buildroot%_sysconfdir/apache2/conf-available  %buildroot%_sysconfdir/httpd2/
 
 install -pD -m0644 etc/*.pem %buildroot%_sysconfdir/%service_name/
 
-ln -s dist %buildroot%_datadir/%service_name/browser/$(echo %version | cut -d . -f 1-3)
+ln -s dist %buildroot%_datadir/%service_name/browser/%version
 
 cp etc/apache2/%service_name.conf %service_name.apache2.conf
 cp etc/nginx/%service_name.conf %service_name.nginx.conf
@@ -125,8 +129,12 @@ mv %buildroot%_defaultdocdir/%service_name ./%{name}-doc
 cp  %SOURCE4 README.alt
 
 %pre
-getent group %service_user >/dev/null || groupadd -r %service_user
-getent passwd %service_user >/dev/null || useradd -g %service_user -r %service_user -d %_localstatedir/%service_user -s /bin/bash
+getent group %service_user >/dev/null \
+    && echo "Warning: coolwsd uses 'cool' group as a service gruop, but it already exists." \
+    || groupadd -r %service_user
+getent passwd %service_user >/dev/null \
+    && echo "Warning: coolwsd uses 'cool' user as a service user, but it already exists." \
+    || useradd -g %service_user -r %service_user -d %_localstatedir/%service_user -s /bin/bash
 
 %post
 rm -rf %_cachedir/%name/*
@@ -139,6 +147,12 @@ coolconfig generate-proof-key >/dev/null 2>&1
 %post_service %service_name
 
 cat %_defaultdocdir/%name-%version/README.alt
+
+%ifarch loongarch64
+cat << EOF
+    WARNING: Collabora Online does not yet support seccomp filtering on loongarch64, so this installation is not as secured as it would be on other platforms.
+EOF
+%endif
 
 %preun
 %preun_service %service_name
@@ -185,7 +199,15 @@ a2dissite %name
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/sites-available/%name.conf
 
 %changelog
-* Wed Oct 13 2023 Aleksei Kalinin <kaa@altlinux.org> 23.05.4.2-alt1
+* Tue Jun 25 2024 Aleksei Kalinin <kaa@altlinux.org> 23.05.10.1-alt1
+- Updated to new version.
+- Added loongarch64 build support.
+- Returned the native name for service user.
+- Spec fix related new collabora version.
+- Updated fix for cached path dropping out.
+- Replaced excludes patch for libreofficekit compatibility.
+
+* Fri Oct 13 2023 Aleksei Kalinin <kaa@altlinux.org> 23.05.4.2-alt1
 - Fixed some cached path dropping out.
 - Exclude unused states in libreofficekit-devel-7.6.2.1.
 - Added alt-specific system configuration files.
