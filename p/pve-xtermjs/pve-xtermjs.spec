@@ -4,7 +4,7 @@
 Name: pve-xtermjs
 Summary: HTML/JS Shell client
 Version: 5.3.0.3
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: Networking/WWW
 Url: https://git.proxmox.com/
@@ -12,16 +12,26 @@ Url: https://git.proxmox.com/
 Vcs: git://git.proxmox.com/git/pve-xtermjs.git
 Source: %name-%version.tar
 
+#Support loongarch64 fix
+Patch3500: pve-xtermjs-5.3.0.3-alt-loongarch64_nix_vendor_fix.patch
+
 ExclusiveArch: x86_64 aarch64 loongarch64
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust pkgconfig(openssl) libuuid-devel
 BuildRequires: /proc
+BuildRequires: cargo-vendor-checksum
 
 %description
 This is an xterm.js client for PVE Host, Container and Qemu Serial Terminal
 
 %prep
 %setup
+%patch3500 -p1
+
+# Checksum update for patched files
+cargo-vendor-checksum \
+    --vendor %_builddir/%name-%version/termproxy/vendor -f \
+	nix/src/sys/ioctl/linux.rs
 
 %build
 #export BUILD_MODE=release
@@ -53,6 +63,9 @@ cp xterm.js/src/* %buildroot%_datadir/%name/
 %_datadir/%name
 
 %changelog
+* Sat Jun 22 2024 Aleksei Kalinin <kaa@altlinux.org> 5.3.0.3-alt2
+- NMU: Patched vendor nix for loongarch64 support
+
 * Thu Feb 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 5.3.0.3-alt1
 - 5.3.0-3
 
