@@ -1,6 +1,6 @@
 Name:           retroarch
 Version:        1.19.0
-Release:        alt1
+Release:        alt1.1
 Summary:        Emulator frontend
 License:        GPL-3.0-only
 Group:          Emulators
@@ -160,6 +160,10 @@ fdupes -rdN %{buildroot}
 
 
 %changelog
+* Tue Jun 25 2024 Artyom Bystrov <arbars@altlinux.org> 1.19.0-alt1.1
+- Fix retroarch-mobile.sh
+- Update retroarch-mobile.cfg
+
 * Sat Jun 22 2024 Artyom Bystrov <arbars@altlinux.org> 1.19.0-alt1
 - Update to new version
 - Making possible to rewrite config file on mobile devices (smartphones, portable game consoles, etc.)
