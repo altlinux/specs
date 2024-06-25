@@ -1,5 +1,5 @@
-%define git 03f50e3
-%define snapdate 20231115
+%define git 013ac3b
+%define snapdate 20240531
 
 # ORIGINAL DESCRIPTION FROM FEDORA PACKAGE
 # We choose not to package the "stb_include" library (stb_include.h) because,
@@ -20,7 +20,7 @@
 
 Name: stb
 Version: 2.38
-Release: alt3.g%git.%snapdate
+Release: alt5.g%git.%snapdate
 
 Summary: single-file libraries for C/C++
 License: MIT or ALT-Public-Domain
@@ -72,15 +72,6 @@ Patch4: %url/pull/1236.patch
 # Fix Null pointer dereference in stbi__convert_format
 # https://github.com/nothings/stb/pull/1547
 Patch5: %url/pull/1454.patch
-
-# Fixed asan error on tiny input images
-# https://github.com/nothings/stb/pull/1561
-#
-# Fixes:
-#
-# stb_image_resize2.h: Address Sanitizer error
-# https://github.com/nothings/stb/issues/1526
-Patch6: %url/pull/1561.patch
 
 # Fix integer overflow
 # https://github.com/nothings/stb/pull/1530
@@ -194,9 +185,9 @@ Patch17: alt-stb-loongarch64-and-riscv64-support.patch
 %global stb_easy_font_version 1.1
 %global stb_herringbone_wang_tile_version 0.7
 %global stb_hexwave_version 0.5
-%global stb_image_version 2.28
+%global stb_image_version 2.30
 %global stb_image_resize_version 0.97
-%global stb_image_resize2_version 2.02
+%global stb_image_resize2_version 2.07
 %global stb_image_write_version 1.16
 %global stb_include_version 0.2
 %global stb_leakcheck_version 0.6
@@ -362,6 +353,14 @@ EOF
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Tue Jun 25 2024 L.A. Kostis <lakostis@altlinux.ru> 2.38-alt5.g013ac3b.20240531
+- Rebased to 013ac3beddff3dbffafd5177e7972067cd2b5083:
+  stb_resize2 updated to 2.07.
+  stb_image updated to 2.30.
+
+* Fri Feb 23 2024 L.A. Kostis <lakostis@altlinux.ru> 2.38-alt4.gae721c5.20240212
+- Rebased to ae721c50eaf761660b4f90cc590453cdb0c2acd0.
+
 * Tue Nov 21 2023 Ivan A. Melnikov <iv@altlinux.org> 2.38-alt3.g03f50e3.20231115
 - NMU: loongarch64 and riscv64 support
 
