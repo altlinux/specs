@@ -13,7 +13,7 @@
 %define __if_ver_not_eq() %if "%(rpmvercmp '%1' '%2')" != "0"
 
 Name: kf6-rpm-build
-Version: 6.0.0
+Version: 6.0.1
 Release: alt1
 
 Group: Development/KDE and QT
@@ -55,5 +55,8 @@ install -D -m 0755 %SOURCE2 %buildroot/%_bindir/rpm-build-kf6-find-qtlang
 %_bindir/rpm-build-kf6-*
 
 %changelog
+* Tue Jun 25 2024 Sergey V Turchin <zerg@altlinux.org> 6.0.1-alt1
+- export LC_ALL=C.UTF-8 when build
+
 * Mon Apr 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.0.0-alt1
 - initial build
