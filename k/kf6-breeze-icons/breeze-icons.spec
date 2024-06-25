@@ -2,7 +2,7 @@
 
 Name: kf6-%rname
 Version: 6.3.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: Graphical desktop/KDE
@@ -63,7 +63,9 @@ for n in 'yandex-browser.*' ; do
 done
 
 %build
-%K6build
+%K6build \
+    -DBINARY_ICONS_RESOURCE:BOOL=ON \
+    #
 
 %install
 %K6install
@@ -149,6 +151,9 @@ done
 %_K6lib/libKF6BreezeIcons.so.*
 
 %changelog
+* Tue Jun 25 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt2
+- package binary icons resource file
+
 * Tue Jun 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
 - new version
 
