@@ -1,7 +1,7 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 1.4
+%define ver_major 1.5
 %define rdn_name net.nokyan.Resources
 
 %def_enable check
@@ -53,7 +53,7 @@ terminating running graphical applications as well as processes.
 %setup -n %name-%version %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 # hardcode dmidecode path
@@ -85,6 +85,9 @@ sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/utils/memory.rs
 
 
 %changelog
+* Tue Jun 25 2024 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
+- updated to v1.5.0-8-g1108d43
+
 * Mon Apr 15 2024 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - 1.4.0
 
