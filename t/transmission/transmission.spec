@@ -8,7 +8,7 @@
 
 Name: transmission
 Version: 4.0.6
-Release: alt1
+Release: alt2
 
 Group: Networking/File transfer
 Summary: Llightweight BitTorrent client
@@ -239,6 +239,9 @@ fi
 %attr(1770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Tue Jun 25 2024 Mikhail Tergoev <fidel@altlinux.org> 4.0.6-alt2
+- use service in logrotate (ALT bug: 49869)
+
 * Thu Jun 06 2024 Mikhail Tergoev <fidel@altlinux.org> 4.0.6-alt1
 - updated to upstream version 4.0.6 (ALT bug: 50544)
 
