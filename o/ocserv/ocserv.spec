@@ -1,6 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 %define _localstatedir /var
 %define _libexecdir %_prefix/libexec
+%define _runstatedir /run
 %def_with maxmind
 %def_enable man
 %def_disable check
@@ -8,7 +9,7 @@
 
 Name: ocserv
 Version: 1.3.0
-Release: alt1
+Release: alt2
 
 Summary: OpenConnect SSL VPN server
 License: GPLv2+
@@ -85,7 +86,6 @@ sed -i 's/run-as-group = nogroup/run-as-group = nobody/g' tests/data/*.config
     --enable-systemd \
     --without-libwrap \
     --without-root-tests \
-    --runstatedir=/run \
     %{subst_with maxmind} \
     %{?_enable_oidc_auth:--enable-oidc-auth}
 %make_build
@@ -94,16 +94,16 @@ sed -i 's/run-as-group = nogroup/run-as-group = nobody/g' tests/data/*.config
 %makeinstall_std
 
 mkdir -p %buildroot%_sysconfdir/pam.d
-mkdir -p %buildroot%_sysconfdir/ocserv
-install -p -m 644 ocserv-pamd.conf %buildroot%_sysconfdir/pam.d/ocserv
-install -p -m 644 ocserv.conf %buildroot%_sysconfdir/ocserv
-mkdir -p %buildroot%_localstatedir/lib/ocserv
-install -p -m 644 doc/profile.xml %buildroot%_localstatedir/lib/ocserv
+mkdir -p %buildroot%_sysconfdir/%name
+install -p -m 644 ocserv-pamd.conf %buildroot%_sysconfdir/pam.d/%name
+install -p -m 644 ocserv.conf %buildroot%_sysconfdir/%name
+mkdir -p %buildroot%_sharedstatedir/%name
+install -p -m 644 doc/profile.xml %buildroot%_sharedstatedir/%name
 mkdir -p %buildroot%_unitdir
 install -p -m 644 doc/systemd/standalone/%name.service %buildroot%_unitdir
 install -p -m 755 doc/scripts/ocserv-script %buildroot%_bindir
-mkdir -p %buildroot%_initrddir
-install -D -m 0755 ocserv.init %buildroot%_initrddir/%name
+mkdir -p %buildroot%_initdir
+install -D -m 0755 ocserv.init %buildroot%_initdir/%name
 
 %check
 export PATH=/sbin:/usr/sbin:$PATH
@@ -140,6 +140,9 @@ useradd -r -g %name -G %name  -c 'Ocserv VPN Daemon' \
 %_initdir/%name
 
 %changelog
+* Tue Jun 25 2024 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt2
+- fix macros in spec.
+
 * Fri May 31 2024 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt1
 - New version 1.3.0.
 
