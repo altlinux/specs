@@ -3,7 +3,7 @@
 
 Name: wlgreet
 Version: 0.5.0
-Release: alt1
+Release: alt2
 Summary: Wayland greeter for greetd
 License: GPL-3.0
 Group: Graphical desktop/Other
@@ -12,9 +12,13 @@ VCS: https://git.sr.ht/~kennylevinsen/wlgreet
 Source: %name-%version.tar
 Source1: %name-%version-vendor.tar
 
+#Support loongarch64 fix
+Patch3500: wlgreet-0.5.0-alt-loongarch64_nix_vendor_fix.patch
+
 BuildRequires: /proc
 BuildRequires: rust
 BuildRequires: rust-cargo
+BuildRequires: cargo-vendor-checksum
 
 %description
 Raw wayland greeter for greetd, to be run under sway or similar.
@@ -24,6 +28,14 @@ due to it lacking wlr-layer-shell-unstable support.
 
 %prep
 %setup -a1
+%patch3500 -p1
+
+# Checksum update for patched files
+cargo-vendor-checksum \
+    --vendor %_builddir/%name-%version/vendor -f \
+	nix/src/sys/ioctl/linux.rs \
+	nix-0.22.3/src/sys/ioctl/linux.rs \
+	nix-0.24.3/src/sys/ioctl/linux.rs
 
 mkdir -p .cargo
 cat > .cargo/config <<EOF
@@ -59,6 +71,9 @@ cargo test --release
 %_bindir/*
 
 %changelog
+* Sat Jun 22 2024 Aleksei Kalinin <kaa@altlinux.org> 0.5.0-alt2
+- NMU: Patched vendor nix for loongarch64 support
+
 * Fri May 03 2024 Anton Farygin <rider@altlinux.ru> 0.5.0-alt1
 - 0.3 -> 0.5.0
 
