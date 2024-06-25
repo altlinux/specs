@@ -1,6 +1,6 @@
 Name: bcache-tools
 Version: 1.1
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Tools for Linux kernel block layer cache
@@ -41,10 +41,10 @@ Display useful bcache statistics
 
 %files
 %doc README COPYING
+%_udevdir/bcache-export-cached
+%_udevdir/bcache-register
+%_udevdir/probe-bcache
 %_udevrulesdir/*.rules
-/lib/udev/bcache-export-cached
-/lib/udev/bcache-register
-/lib/udev/probe-bcache
 
 %_sbindir/bcache
 %_sbindir/bcache-super-show
@@ -59,6 +59,9 @@ Display useful bcache statistics
 %_man8dir/bcache-status.8.*
 
 %changelog
+* Tue Jun 25 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1:1.1-alt3
+- rebuilt for merged-usr
+
 * Wed Nov 15 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.1-alt2
 - bcache-tools-1.1-37-ga5e3753
 
