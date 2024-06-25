@@ -10,7 +10,7 @@
 %endif
 
 Name: ollama
-Version: 0.1.44
+Version: 0.1.46
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -81,9 +81,6 @@ install -Dpm644 .gear/%name.service -t %buildroot%_unitdir
 mkdir -p %buildroot%_localstatedir/%name
 
 %check
-# Running gpu test destroys %%buildroot https://github.com/ollama/ollama/issues/5129
-TMPDIR=$TMPDIR/tmp
-mkdir $TMPDIR
 go test ./...
 %buildroot%_bindir/ollama --version |& grep -Pw 'version is \Q%version\E$'
 
@@ -105,5 +102,8 @@ go test ./...
 %attr(-,ollama,ollama) %dir %_localstatedir/%name
 
 %changelog
+* Tue Jun 25 2024 Vitaly Chikunov <vt@altlinux.org> 0.1.46-alt1
+- Update to v0.1.46 (2024-06-24).
+
 * Thu Jun 20 2024 Vitaly Chikunov <vt@altlinux.org> 0.1.44-alt1
 - First import v0.1.44 (2024-06-13).
