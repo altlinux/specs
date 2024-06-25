@@ -101,7 +101,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
@@ -2478,6 +2478,9 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Tue Jun 25 2024 Alexey Shabalin <shaba@altlinux.org> 1:255.8-alt1
+- 255.8
+
 * Fri Jun 21 2024 Alexey Shabalin <shaba@altlinux.org> 1:255.7-alt1
 - 255.7
 - Merge systemd-sysvinit to main systemd package.
