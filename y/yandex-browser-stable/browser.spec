@@ -8,7 +8,7 @@
 Summary: Yandex Browser
 License: ALT-YANDEX-BROWSER
 Name: yandex-browser-stable
-Version: 24.1.3.845
+Version: 24.4.3.1111
 Release: alt1
 Group: Networking/WWW
 Vendor: YANDEX LLC
@@ -41,7 +41,12 @@ Requires(preun): %{_sbindir}/update-alternatives
 %Description
 The web browser from Yandex
 
-Yandex Browser is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier.
+Yandex Browser is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier. Based on Chromium 122.0.6261.
+
+%Description -l ru_RU.UTF-8
+Веб-браузер от Яндекса
+
+Яндекс Браузер - безопасный, простой в настройке и управлении браузер на базе Chromium 122.0.6261.
 
 #------------------------------------------------------------------------------
 #   Prep rule - Prepare sources before build
@@ -207,6 +212,11 @@ exit 0
 # =============== END preun ===============
 
 %changelog
+
+* Tue Jun 18 2024 yabro <yabro@altlinux.org> 24.4.3.1111-alt1
+- Browser updated to 24.4.3.1111
+ + High CVE-2024-4671: Use after free in Visuals
+ + High CVE-2024-4947: Type Confusion in V8
 
 * Tue Mar 19 2024 yabro <yabro@altlinux.org> 24.1.3.845-alt1
 - Browser updated to 24.1.3.845
