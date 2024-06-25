@@ -1,5 +1,5 @@
 Name: shelxle
-Version: 1.0.1652
+Version: 1.0.1654
 Release: alt1
 
 Summary: A Qt GUI for SHELX
@@ -8,8 +8,6 @@ Group: Sciences/Chemistry
 
 Url: http://www.shelxle.org/
 Source: %name-%version.tar.bz2
-
-#ExcludeArch: armh
 
 BuildRequires: gcc-c++ libgomp-devel qt6-base-devel libGLU-devel
 
@@ -43,6 +41,9 @@ cp kissfft/COPYING COPYING_kissfft
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Tue Jun 25 2024 Denis G. Samsonenko <ogion@altlinux.org> 1.0.1654-alt1
+- new version
+
 * Fri Jun 21 2024 Denis G. Samsonenko <ogion@altlinux.org> 1.0.1652-alt1
 - new version
 
