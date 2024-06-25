@@ -1,11 +1,11 @@
 %define rdn_name net.sourceforge.liferea
 
 Name: liferea
-Version: 1.15.6
+Version: 1.15.7
 Release: alt1
 
 Summary: A RSS News Reader for GNOME
-License: GPLv2
+License: GPL-2.0-or-later
 Group: Networking/News
 Url: https://lzone.de/liferea
 
@@ -26,7 +26,7 @@ BuildRequires(pre): gobject-introspection-devel rpm-build-gir >= 0.7.3-alt3
 BuildRequires(pre): rpm-build-python3 python3-devel
 BuildRequires: python3-module-pygobject3-devel
 BuildRequires: xvfb-run gcc-c++ intltool
-BuildRequires: pkgconfig(gtk+-3.0) >= 3.22.0
+BuildRequires: pkgconfig(gtk+-3.0) >= 3.24.0
 BuildRequires: pkgconfig(glib-2.0) >= 2.50.0 pkgconfig(gio-2.0) >= 2.50.0 pkgconfig(gmodule-2.0) >= 2.0.0 pkgconfig(gthread-2.0)
 BuildRequires: pkgconfig(fribidi)
 BuildRequires: pkgconfig(pango) >= 1.4.0
@@ -52,14 +52,6 @@ Requires: %name = %EVR
 
 %description plugins-gnome-keyring
 Allow Liferea to use GNOME keyring as password store
-
-%package plugins-media-player
-Summary: Play music and videos directly from Liferea
-Group: Networking/News
-Requires: %name = %EVR
-
-%description plugins-media-player
-Play music and videos directly from Liferea
 
 %prep
 %setup
@@ -115,11 +107,10 @@ xvfb-run %make_build
 %_libdir/%name/plugins/gnome-keyring.*
 %_libdir/%name/plugins/__pycache__/gnome-keyring.*
 
-%files plugins-media-player
-%_libdir/%name/plugins/media-player.*
-%_libdir/%name/plugins/__pycache__/media-player.*
-
 %changelog
+* Sat Jun 22 2024 Yuri N. Sedunov <aris@altlinux.org> 1.15.7-alt1
+- updated to v1.15.7-3-dea9940bc7
+
 * Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 1.15.6-alt1
 - updated to v1.15.6-3-g9c2d2499f
 
