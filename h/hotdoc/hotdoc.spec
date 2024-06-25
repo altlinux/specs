@@ -1,5 +1,5 @@
 %def_enable snapshot
-%define ver_major 0.16
+%define ver_major 0.17
 
 %def_disable bootstrap_theme
 %def_enable check
@@ -22,6 +22,8 @@ Source1: %name-%version-bootstrap_theme.tar
 
 # provided by hotdoc/parsers/c_comment_scanner/c_comment_scanner.cpython-3*.so
 %py3_provides hotdoc.parsers.c_comment_scanner.c_comment_scanner
+# for old python
+%filter_from_requires /backports.entry_points_selectable/d
 
 Requires: clang-devel llvm-devel
 Requires: bison flex
@@ -29,7 +31,7 @@ Requires: python3-module-appdirs >= 1.4.4
 Requires: python3-module-contextlib2 >= 0.6.0
 Requires: python3-module-charset-normalizer >= 2.1.1
 Requires: python3-module-faust-cchardet >= 2.1.18
-Requires: python3-module-wheezy.template >= 3.0.3
+Requires: python3-module-wheezy.template >= 3.1.0
 Requires: python3-module-contextlib2 >= 0.5.5
 Requires: python3-module-dateutil >= 2.8.2
 Requires: python3-module-dbus-deviation >= 0.6.1
@@ -91,6 +93,9 @@ mv %name-%version-bootstrap_theme.tar %_sourcedir/
 %doc README.md
 
 %changelog
+* Tue Jun 25 2024 Yuri N. Sedunov <aris@altlinux.org> 0.17-alt1
+- 0.17
+
 * Fri Nov 10 2023 Yuri N. Sedunov <aris@altlinux.org> 0.16-alt1
 - 0.16
 
