@@ -6,10 +6,11 @@
 %def_with verto
 %def_with lmdb
 %def_enable check
+%define _runstatedir /run
 
 Name: krb5
 Version: 1.21.2
-Release: alt2
+Release: alt3
 
 %if_without bootstrap
 %if_with doc
@@ -210,7 +211,7 @@ cat > '60kerberos.ldif' << EOF
 # This is a variation on kerberos.ldif which 389 Directory Server will like.
 dn: cn=schema
 EOF
-egrep -iv '(^$|^dn:|^changetype:|^add:)' $inldif | \
+grep -E -iv '(^$|^dn:|^changetype:|^add:)' $inldif | \
 sed -r 's,^		,                ,g' | \
 sed -r 's,^	,        ,g' >> 60kerberos.ldif
 touch -r $inldif 60kerberos.ldif
@@ -222,7 +223,7 @@ sed -r -i 's, error=(pointer-arith|uninitialized),,g' \
 
 %build
 # Go ahead and supply tcl info, because configure doesn't know how to find it.
-# . %_libdir/tclConfig.sh
+# . %%_libdir/tclConfig.sh
 
 DEFINES="-D_FILE_OFFSET_BITS=64" ; export DEFINES
 %add_optflags -I/usr/include/et
@@ -230,7 +231,7 @@ DEFINES="-D_FILE_OFFSET_BITS=64" ; export DEFINES
 
 # Set this so that configure will have a value even if the current version of
 # autoconf doesn't set one.
-runstatedir=%_runtimedir; export runstatedir
+runstatedir=%_runstatedir; export runstatedir
 
 pushd src
 autoreconf --verbose --force
@@ -255,14 +256,14 @@ autoreconf --verbose --force
 	#
 
 # dejagnu tests disabled
-# 	--with-tcl=%_libdir \
+# 	--with-tcl=%%_libdir \
 %make_build
 popd
 
 # Sanity check the KDC_RUN_DIR.
 configured_kdcrundir=`grep KDC_RUN_DIR src/include/osconf.h | awk '{print $NF}'`
 configured_kdcrundir=`eval echo $configured_kdcrundir`
-if test "$configured_kdcrundir" != %_runtimedir/krb5kdc ; then
+if test "$configured_kdcrundir" != %_runstatedir/krb5kdc ; then
     exit 1
 fi
 
@@ -303,14 +304,7 @@ tar xf %SOURCE2 -C %buildroot
 mkdir -p %buildroot%_sysconfdir/krb5.conf.d
 
 # Fix preporcessor loop
-# sed -i 's,<krb5/krb5.h>,<krb5/krb5/krb5.h>,' %buildroot%_includedir/krb5/krb5.h
-
-# Relocate *some* shared libraries
-mkdir -p %buildroot/%_lib
-for lib in libgssapi_krb5 libk5crypto libkrb5 libkrb5support; do
-  mv %buildroot%_libdir/${lib}.so.* %buildroot/%_lib
-  ln -snf ../../%_lib/`readlink %buildroot%_libdir/${lib}.so` %buildroot%_libdir/${lib}.so
-done
+# sed -i 's,<krb5/krb5.h>,<krb5/krb5/krb5.h>,' %%buildroot%%_includedir/krb5/krb5.h
 
 # Fix binaries clashes
 mv -f %buildroot%_bindir/uuclient %buildroot%_bindir/%name-uuclient
@@ -356,7 +350,7 @@ touch %buildroot%_sysconfdir/krb5.keytab
 %endif
 
 %pre -n lib%name
-/usr/sbin/groupadd -r -f _keytab
+groupadd -r -f _keytab
 
 %pre ksu
 %pre_control ksu
@@ -381,8 +375,10 @@ fi
 %dir %_localstatedir/kerberos/krb5
 %dir %_localstatedir/kerberos/krb5/user
 
-/%_lib/lib*.so.*
-
+%_libdir/libgssapi_krb5.so.*
+%_libdir/libk5crypto.so.*
+%_libdir/libkrb5.so.*
+%_libdir/libkrb5support.so.*
 %_libdir/libgssrpc.so.*
 %_libdir/libkadm5clnt_mit.so.*
 %_libdir/libkadm5srv_mit.so.*
@@ -432,7 +428,7 @@ fi
 
 %if_without verto
 %files -n libverto
-%_prefix/lib*/libverto.so.*
+%_libdir/libverto.so.*
 %endif
 
 %if_without bootstrap
@@ -448,9 +444,10 @@ fi
 %_initdir/krb5kdc
 %_initdir/kprop
 
-%systemd_unitdir/kadmin.service
-%systemd_unitdir/kprop.service
-%systemd_unitdir/krb5kdc.service
+%_unitdir/kadmin.service
+%_unitdir/kprop.service
+%_unitdir/krb5kdc.service
+%_tmpfilesdir/krb5-krb5kdc.conf
 
 %_sbindir/kadmin.local
 %_sbindir/kadmind
@@ -517,6 +514,13 @@ fi
 # {{{ changelog
 
 %changelog
+* Tue Jun 25 2024 Alexey Shabalin <shaba@altlinux.org> 1.21.2-alt3
+- move systemd units to /usr/lib
+- add krb5-krb5kdc.conf tmpfile
+- migrate /var/run to /run
+- add PIDFILE to sysvinit scripts
+- no relocate *some* shared libraries
+
 * Wed Jan 24 2024 Ivan A. Melnikov <iv@altlinux.org> 1.21.2-alt2
 - Update SELinux patch from fedora (fixes FTBFS
   with recent libselinux)
@@ -723,7 +727,7 @@ fi
 - CVE-2012-1015
 
 * Thu Jul 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.2-alt1.1
-- Added necessary headers into lib%name-devel (ALT #27467)
+- Added necessary headers into lib%%name-devel (ALT #27467)
 
 * Wed Jul 04 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.10.2-alt1
 - 1.10.2
@@ -884,13 +888,13 @@ fi
 - Removed unneeded %%set_*_version calls.
 
 * Tue Feb 24 2004 Alexander Bokovoy <ab@altlinux.ru> 1.3.1-alt4
-- Force -I%_includedir/et in krb5-config
+- Force -I%%_includedir/et in krb5-config
 
 * Fri Feb 13 2004 Alexander Bokovoy <ab@altlinux.ru> 1.3.1-alt3
 - Fixed:
     + #3494, #3655, #3136, and #2770
 - Changed:
-    + Libraries moved from %_libdir/krb5 to /lib
+    + Libraries moved from %%_libdir/krb5 to /lib
 - Added:
     + Compile krb5 against system libcom_err from libe2fs
 - Removed:
@@ -917,10 +921,10 @@ fi
 - 1.2.7
 - Fixed:
     + krb5-config to reflect our layout
-    + localstatedir to %_localstatedir/kerberos
-    + description of lib%name-devel
+    + localstatedir to %%_localstatedir/kerberos
+    + description of lib%%name-devel
 - Splitted:
-    + statically compiled libraries to lib%name-devel-static
+    + statically compiled libraries to lib%%name-devel-static
 
 * Mon Jan 27 2003 Alexander Bokovoy <ab@altlinux.ru> 1.2.5.1-alt2
 - Merge AW changes with Sisyphus
@@ -952,7 +956,7 @@ fi
 
 * Sat Mar 02 2002 Alexander Bokovoy <ab@altlinux.ru> 1.2.2-alt6
 - Fixed:
-    + %_includedir/krb5 ownership
+    + %%_includedir/krb5 ownership
 
 * Thu Jan 03 2002 Alexander Bokovoy <ab@altlinux.ru> 1.2.2-alt5
 - Fixed:
@@ -961,11 +965,11 @@ fi
 * Tue Dec 18 2001 Alexander Bokovoy <ab@altlinux.ru> 1.2.2-alt4
 - Fixed:
     + paths in xinet.d services
-    + /var/kerberos moved to %_localstatedir/kerberos (FHS)
+    + /var/kerberos moved to %%_localstatedir/kerberos (FHS)
 
 * Mon Dec 17 2001 Alexander Bokovoy <ab@altlinux.ru> 1.2.2-alt3
 - Fixed:
-    + postin/un scripts for lib%name
+    + postin/un scripts for lib%%name
 
 * Sat Dec 15 2001 Alexander Bokovoy <ab@altlinux.ru> 1.2.2-alt2
 - Fixed:
@@ -974,13 +978,13 @@ fi
 * Tue Dec 11 2001 Alexander Bokovoy <ab@altlinux.ru> 1.2.2-alt1
 - Initial build for ALT Linux based on Applianceware version
 - Fixed:
-    + all libs moved to %_libdir/krb5/, includes to %_includedir/krb5
+    + all libs moved to %%_libdir/krb5/, includes to %%_includedir/krb5
     + postinstall/postuninstall scripts for libs
     + dependencies for several sub-packages to eliminate file deps.
     + krb5-send-pr to not expose direct Requires: to nis/yp utils
 - Packages renamed:
-    + %name-libs -> lib%name
-    + %name-devel -> lib%name-devel
+    + %%name-libs -> lib%%name
+    + %%name-devel -> lib%%name-devel
 
 * Fri Aug  3 2001 Nalin Dahyabhai <nalin@redhat.com>
 - bump release number and rebuild
@@ -1037,7 +1041,7 @@ fi
 
 * Thu Feb  8 2001 Nalin Dahyabhai <nalin@redhat.com>
 - build alpha with -O0 for now
-- own %_var/kerberos
+- own %%_var/kerberos
 
 * Tue Feb  6 2001 Nalin Dahyabhai <nalin@redhat.com>
 - own the directories which are created for each package (#26342)
@@ -1074,7 +1078,7 @@ fi
 - make krb5-libs obsolete the old krb5-configs package (#18351)
 - don't quit from the kpropd init script if there's no principal database so
   that you can propagate the first time without running kpropd manually
-- don't complain if /etc/ld.so.conf doesn't exist in the -libs %post
+- don't complain if /etc/ld.so.conf doesn't exist in the -libs %%post
 
 * Tue Sep 12 2000 Nalin Dahyabhai <nalin@redhat.com>
 - fix credential forwarding problem in klogind (goof in KRB5CCNAME handling)
@@ -1152,7 +1156,7 @@ fi
 - apply second set of buffer overflow fixes from Tom Yu
 - fix from Dirk Husung for a bug in buffer cleanups in the test suite
 - work around possibly broken rev binary in running test suite
-- move default realm configs from /var/kerberos to %_var/kerberos
+- move default realm configs from /var/kerberos to %%_var/kerberos
 
 * Tue Jun  6 2000 Nalin Dahyabhai <nalin@redhat.com>
 - make ksu and v4rcp owned by root
@@ -1198,7 +1202,7 @@ fi
 
 * Mon Apr 10 2000 Nalin Dahyabhai <nalin@redhat.com>
 - add LDCOMBINE=-lc to configure invocation to use libc versioning (bug #10653)
-- change Requires: for/in subpackages to include %version
+- change Requires: for/in subpackages to include %%version
 
 * Wed Apr 05 2000 Nalin Dahyabhai <nalin@redhat.com>
 - add man pages for kerberos(1), kvno(1), .k5login(5)
