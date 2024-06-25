@@ -6,7 +6,7 @@
 %endif
 
 Name: pc-test
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 
 Summary: PC Test Suite
@@ -138,6 +138,16 @@ sed -i -E "s|$a|$b|g" /etc/sudoers
 %doc img html CHANGELOG.md LICENSE README.md
 
 %changelog
+* Wed Jun 26 2024 Leonid Krivoshein <klark@altlinux.org> 2.1.2-alt1
+- Added:
+  + ability to reset subtest results
+  + possibility to retest a previously completed test
+  + collect PulseAudio and PipeWire configuration
+- Fixed:
+  + now all pc-test results are also saved
+  + pack input data into gzip archives safer
+  + show and save pc-test version earlier
+
 * Sun Jun 16 2024 Leonid Krivoshein <klark@altlinux.org> 2.1.1-alt1
 - Added:
   + CPU Performance Scaling modes test according to section 10.1
