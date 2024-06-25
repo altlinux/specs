@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.2
+Version: 0.5.0
 Release: alt1
 Summary: Creating, editing and reading folder tree diagrams
 License: MIT
@@ -21,6 +21,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 %pyproject_builddeps_metadata
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -39,7 +40,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_install
 
 %check
-%pyproject_run -- python tests/tests.py
+%pyproject_run_pytest -ra tests
 
 %files
 %doc README.*
@@ -48,5 +49,8 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jun 25 2024 Stanislav Levin <slev@altlinux.org> 0.5.0-alt1
+- 0.4.2 -> 0.5.0.
+
 * Wed Jul 19 2023 Stanislav Levin <slev@altlinux.org> 0.4.2-alt1
 - Initial build for Sisyphus.
