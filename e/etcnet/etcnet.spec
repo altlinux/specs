@@ -1,6 +1,6 @@
 Name:		etcnet
 Version:	0.9.30
-Release:	alt1
+Release:	alt2
 
 Summary:	/etc/net network configuration system
 License:	GPL-2
@@ -73,7 +73,7 @@ This package contains default options for a Linux server.
 
 %install
 # Common part first, distribution-specific files later.
-make -f contrib/Makefile prefix=%{buildroot} install
+make -f contrib/Makefile prefix=%{buildroot} unitdir=%{buildroot}%{_unitdir} install
 install -m 644 contrib/50-ALTLinux-desktop %buildroot/etc/net/options.d
 install -m 644 contrib/50-ALTLinux-server  %buildroot/etc/net/options.d
 
@@ -146,6 +146,9 @@ fi
 %files full
 
 %changelog
+* Tue Jun 25 2024 Alexey Shabalin <shaba@altlinux.org> 0.9.30-alt2
+- Fix install systemd unit.
+
 * Wed Apr 03 2024 Mikhail Efremov <sem@altlinux.org> 0.9.30-alt1
 - build: Temporary use absolute symlinks for scripts (closes: #49808).
 - build: Don't hardcode relative symlinks.
