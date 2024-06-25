@@ -1,6 +1,6 @@
 Name: rars
 Version: 1.6
-Release: alt3
+Release: alt4
 
 Summary: RISC-V Assembler and Runtime Simulator
 
@@ -76,6 +76,9 @@ done
 %_iconsdir/*/*/apps/*
 
 %changelog
+* Tue Jun 25 2024 Fr. Br. George <george@altlinux.ru> 1.6-alt4
+- Fix CSR32 bugfix (quick and dirty)
+
 * Sat Apr 13 2024 Fr. Br. George <george@altlinux.org> 1.6-alt3
 - Apply CSR32 bugfix patch
 
