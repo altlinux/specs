@@ -3,7 +3,7 @@
 %def_enable test
 
 Name: bolt
-Version: 0.9.7
+Version: 0.9.8
 Release: alt1
 Summary: Thunderbolt device manager
 Group: System/Libraries
@@ -57,6 +57,9 @@ mentioned tasks.
 
 %install
 %meson_install
+# dunno why install_emptydir doesn't work here
+# see 0cc850befe51e6d7a8058b94f68b46a7773b709e
+mkdir -p %buildroot%_localstatedir/boltd
 
 %files
 %doc COPYING README.md
@@ -74,6 +77,9 @@ mentioned tasks.
 %ghost %dir %_localstatedir/boltd
 
 %changelog
+* Mon Jun 03 2024 L.A. Kostis <lakostis@altlinux.ru> 0.9.8-alt1
+- 0.9.8.
+
 * Tue Mar 12 2024 L.A. Kostis <lakostis@altlinux.ru> 0.9.7-alt1
 - 0.9.7.
 
