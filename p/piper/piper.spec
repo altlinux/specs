@@ -2,7 +2,7 @@
 
 Name: piper
 Version: 0.7
-Release: alt2.g%{git}
+Release: alt3.g%{git}
 Summary: GTK+ application to configure gaming mice using ratbagd
 Group: System/Configuration/Hardware
 License: GPLv2
@@ -12,11 +12,12 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson
 BuildRequires: python3-module-pygobject3-devel python3-dev python3-module-flake8
-BuildRequires: python3-module-pycairo python3-module-lxml python3-module-evdev ratbagd >= 0.17 appstream
+BuildRequires: python3-module-pycairo python3-module-lxml python3-module-evdev ratbagd >= 0.17-alt2 appstream
 
 BuildArch: noarch
 
-Requires: ratbagd >= 0.17
+# due API change
+Requires: ratbagd >= 0.17-alt2
 
 %description
 Piper is a GTK+ application to configure gaming mice, using libratbag via
@@ -48,6 +49,9 @@ get to see a pretty mouse trap).
 %_man1dir/*
 
 %changelog
+* Tue Jun 25 2024 L.A. Kostis <lakostis@altlinux.ru> 0.7-alt3.gefa2712
+- Bump ratbag requires due API change.
+
 * Tue Jun 25 2024 L.A. Kostis <lakostis@altlinux.ru> 0.7-alt2.gefa2712
 - 0.7-123-gefa2712.
 
