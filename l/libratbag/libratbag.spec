@@ -1,10 +1,10 @@
-%define git %nil
+%define git 1c96620
 %def_enable tests
 %def_enable systemd
 
 Name: libratbag
 Version: 0.17
-Release: alt1
+Release: alt2.g%{git}
 Summary: Programmable input device library
 Group: System/Libraries
 License: MIT
@@ -106,7 +106,7 @@ Libratbag mice configuration data.
 
 %files -n ratbagd
 %doc COPYING README* TODO
-%_bindir/ratbagd
+%_sbindir/ratbagd
 %_datadir/dbus-1/system.d/*.conf
 %_datadir/dbus-1/system-services/*.service
 %if_enabled systemd
@@ -125,6 +125,9 @@ Libratbag mice configuration data.
 %_datadir/libratbag
 
 %changelog
+* Tue Jun 25 2024 L.A. Kostis <lakostis@altlinux.ru> 0.17-alt2.g1c96620
+- v0.17-334-g1c96620.
+
 * Fri Dec 30 2022 L.A. Kostis <lakostis@altlinux.ru> 0.17-alt1
 - 0.17.
 
