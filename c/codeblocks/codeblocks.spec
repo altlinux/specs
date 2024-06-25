@@ -1,6 +1,6 @@
 Name: codeblocks
 Version: 20.03
-Release: alt10
+Release: alt11
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
 Summary(ru_RU.UTF-8): Code::Blocks это кросс-платформенная свободная среда разработки для C++ с открытым исходным кодом
@@ -40,6 +40,8 @@ Patch15: 46720043319758cb0e798eb23520063583c40eaa.patch
 # Fix Assert failure when exit program first time
 Patch16: f700ec868532f4fd6784702ba086d900189864e8.patch
 Patch17: codeblocks-smartindent-notparallel.patch
+# Support LoongArch architecture
+Patch18: codeblocks-20.03-alt-loongarch64.patch
 
 Requires: automake >= 1.7 libwxGTK3.2 gcc gcc-c++ gdb xterm gamin mythes-en
 
@@ -109,6 +111,7 @@ cp %SOURCE4 .
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
+%patch18 -p1
 
 # https://sourceforge.net/p/codeblocks/tickets/936/
 sed -ri '/^\s+#pragma implementation/ s,cbkeybinder,cbKeyConfigPanel,' src/plugins/contrib/keybinder/cbkeyConfigPanel.cpp
@@ -332,6 +335,9 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_libdir/pkgconfig/wxsmith-contrib.pc
 
 %changelog
+* Tue Jun 20 2024 Aleksei Kalinin <kaa@altlinux.org> 20.03-alt11
+- NMU: Added support for LoongArch (by asheplyakov@).
+
 * Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 20.03-alt10
 - Fixed FTBFS.
 
