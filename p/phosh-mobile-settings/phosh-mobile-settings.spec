@@ -1,15 +1,17 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 0.39
-%define gmobile_ver v0.0.6
+%define ver_major 0.40
+%define beta .rc1
+%define gmobile_ver 0.2.0
 %define rdn_name mobi.phosh.MobileSettings
 
+%def_disable embed_gmobile
 # Linux dmabuf support unavailable
 %def_disable check
 
 Name: phosh-mobile-settings
 Version: %ver_major.0
-Release: alt1
+Release: alt0.9%beta
 
 Summary: Mobile Settings App for phosh and related components
 Group: Graphical desktop/GNOME
@@ -19,12 +21,11 @@ Url: https://gitlab.gnome.org/World/Phosh/phosh-mobile-settings
 Vcs: https://gitlab.gnome.org/World/Phosh/phosh-mobile-settings
 
 %if_disabled snapshot
-Source: https://gitlab.gnome.org/World/Phosh/phosh-mobile-settings/-/archive/v%version/%name-v%version.tar.gz
+Source: https://gitlab.gnome.org/World/Phosh/phosh-mobile-settings/-/archive/v%version/%name-v%version%beta.tar.gz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
-
-Source1: gmobile-%gmobile_ver.tar
+%{?_enable_embed_gmobile:Source1: gmobile-%gmobile_ver.tar}
 
 %define phoc_ver %ver_major
 
@@ -42,6 +43,13 @@ BuildRequires: pkgconfig(wayland-protocols) >= 1.12
 BuildRequires: pkgconfig(gsound)
 BuildRequires: libsensors3-devel
 BuildRequires: pkgconfig(phosh-plugins)
+#BuildRequires: pkgconfig(phosh-settings-schemas)
+%if_enabled embed_gmobile
+BuildRequires: pkgconfig(json-glib-1.0)
+BuildRequires: gobject-introspection-devel}
+%else
+BuildRequires: pkgconfig(gmobile) >= %gmobile_ver
+%endif
 %{?_enable_check:BuildRequires: xvfb-run phoc >= %phoc_ver phosh /usr/bin/Xwayland}
 
 # for gmobile
@@ -51,8 +59,8 @@ BuildRequires: pkgconfig(json-glib-1.0)
 Mobile Settings App for phosh and related components.
 
 %prep
-%setup -n %name-%{?_disable_snapshot:v}%version -a1
-mv gmobile-%gmobile_ver subprojects/gmobile
+%setup -n %name-%{?_disable_snapshot:v}%version%beta %{?_enable_embed_gmobile:-a1
+mv gmobile-%gmobile_ver subprojects/gmobile}
 
 %build
 %meson
@@ -60,8 +68,8 @@ mv gmobile-%gmobile_ver subprojects/gmobile
 
 %install
 %meson_install
-rm %buildroot%_libdir/libgmobile.*
-rm %buildroot%_pkgconfigdir/gmobile.pc
+%{?_enable_embed_gmobile:rm %buildroot%_libdir/libgmobile.*
+rm %buildroot%_pkgconfigdir/gmobile.pc}
 
 %find_lang %name
 
@@ -81,6 +89,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Wed Jun 26 2024 Yuri N. Sedunov <aris@altlinux.org> 0.40.0-alt0.9.rc1
+- 0.40.0.rc1
+
 * Wed May 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.39.0-alt1
 - 0.39.0
 

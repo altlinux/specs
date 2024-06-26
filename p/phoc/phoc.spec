@@ -1,17 +1,17 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.39
+%define ver_major 0.40
 %define api_ver 0
-%define beta %nil
+%define beta .rc1
 %define rdn_name sm.puri.Phoc
 %define xdg_name mobi.phosh.Phoc
 
 %define dev_uid 500
-%define wlroots_ver 0.17.2
+# 0.17.3-3-ge722e0a1
+%define wlroots_ver 0.17.3
 %define gmobile_ver 0.1.0
 
 # since 0.30 system 0.16 may be used but patched version required
-# but 0.39.0 required patched 0.17.2 version
 %def_enable embed_wlroots
 %{?_enable_embed_wlroots:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 %def_disable embed_gmobile
@@ -21,7 +21,7 @@
 
 Name: phoc
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt0.9%beta
 
 Summary: Display compositor designed for mobile devices
 License: GPL-3.0-or-later
@@ -133,6 +133,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Wed Jun 26 2024 Yuri N. Sedunov <aris@altlinux.org> 0.40.0-alt0.9.rc1
+- 0.40.0.rc1
+
 * Tue May 14 2024 Yuri N. Sedunov <aris@altlinux.org> 0.39.0-alt1
 - updated to v0.39.0-2-g5666185
 - build against shared gmobile-0.2.0 library

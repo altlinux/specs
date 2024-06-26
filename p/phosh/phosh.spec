@@ -1,12 +1,14 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.39
-%define beta %nil
+%define ver_major 0.40
+%define beta .rc1
 %define namespace Phosh
 %define api_ver 0
 %define rdn_name sm.puri.Phosh
 %define dev_uid 1000
 
+# shared libs disabled by default
+%def_enable shared_libs
 # introspection is disabled by default
 %def_enable introspection
 %def_enable gtk_doc
@@ -17,7 +19,7 @@
 
 Name: phosh
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt0.9%beta
 
 Summary: A pure Wayland shell for mobile devices
 License: GPL-3.0-or-later
@@ -43,7 +45,7 @@ Requires: %name-data = %EVR
 # to avoid circular dependency
 %filter_from_requires /\/usr\/bin\/%name-session/d
 %filter_from_requires /\/usr\/libexec\/%name/d
-Requires: phoc >= 0.36
+Requires: phoc >= %ver_major
 Requires: gnome-shell-data
 Requires: mutter-gnome
 Requires: gnome-session
@@ -96,7 +98,8 @@ BuildRequires: pkgconfig(libsoup-3.0)
 BuildRequires: gir(Gcr) = 3 gir(Handy) = 1 gir(NM) = 1.0 gir(GnomeDesktop) = 3.0}
 %{?_enable_gtk_doc:BuildRequires: gi-docgen}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
-%{?_enable_check:BuildRequires: xvfb-run dbus at-spi2-core}
+%{?_enable_check:BuildRequires: xvfb-run dbus at-spi2-core
+BuildRequires: python3(black) python3(ruff) python3(flake8) python3(dbusmock)}
 
 %description
 Phosh is a simple shell for Wayland compositors speaking the layer-surface
@@ -126,6 +129,21 @@ Requires: %name = %EVR
 %description devel
 This package provides files needed to develop Phosh plugins.
 
+%package -n lib%name
+Summary: Phosh shared library
+Group: System/Libraries
+
+%description -n lib%name
+This package contains shared Phosh library to generate bindings.
+
+%package -n lib%name-devel
+Summary: Development files for Phosh shared library
+Group: Development/C
+Requires: lib%name = %EVR
+
+%description -n lib%name-devel
+This package contains development files for Phosh shared library.
+
 %prep
 %setup -n %name-%version%beta
 %patch1 -p2
@@ -137,7 +155,7 @@ sed -i 's|\(capsh\)|/sbin/\1|' data/%name.service
 
 %build
 %meson \
-    -Dsystemd=true \
+    %{subst_enable_meson_bool shared_libs bindings-lib} \
     %{subst_enable_meson_bool introspection introspection} \
     %{subst_enable_meson_bool gtk_doc gtk_doc} \
     %{subst_enable_meson_bool man man} \
@@ -153,6 +171,8 @@ install -Dpm 0644 data/phosh.service %buildroot%_unitdir/phosh.service
 
 install -d %buildroot%_datadir/applications
 desktop-file-install --dir %buildroot%_datadir/applications %SOURCE2
+
+%{?_enable_shared_libs:rm -f %buildroot%_libdir/lib%name.a}
 
 %find_lang %name
 
@@ -184,7 +204,11 @@ xvfb-run %__meson_test
 %_libdir/%name/plugins/lib%name-plugin-simple-custom-quick-setting.so
 %_libdir/%name/plugins/simple-custom-quick-setting.plugin
 %_libdir/%name/plugins/lib%name-plugin-night-light-quick-setting.so
-%_libdir/%name/plugins//night-light-quick-setting.plugin
+%_libdir/%name/plugins/night-light-quick-setting.plugin
+%_libdir/%name/plugins/dark-mode-quick-setting.plugin
+%_libdir/%name/plugins/lib%name-plugin-dark-mode-quick-setting.so
+%_libdir/%name/plugins/lib%name-plugin-mobile-data-quick-setting.so
+%_libdir/%name/plugins/mobile-data-quick-setting.plugin
 #%{?_enable_introspection:%_typelibdir/%namespace-%api_ver.typelib}
 %doc NEWS README.md
 
@@ -195,7 +219,8 @@ xvfb-run %__meson_test
 %_datadir/glib-2.0/schemas/sm.puri.phosh.enums.xml
 %_datadir/glib-2.0/schemas/sm.puri.phosh.plugins.launcher-box.gschema.xml
 %_datadir/glib-2.0/schemas/sm.puri.phosh.plugins.ticket-box.gschema.xml
-%_datadir/glib-2.0/schemas/00_%rdn_name.gschema.override
+#%_datadir/glib-2.0/schemas/00_%rdn_name.gschema.override
+%_datadir/glib-2.0/schemas/00_mobi.Phosh.gschema.override
 %_datadir/dbus-1/services/%rdn_name.CalendarServer.service
 %_datadir/gnome-session/sessions/%name.session
 %_datadir/wayland-sessions/%name.desktop
@@ -213,10 +238,24 @@ xvfb-run %__meson_test
 %files devel
 %_includedir/%name/
 %_pkgconfigdir/%name-plugins.pc
+%_pkgconfigdir/%name-settings.pc
 #%{?_enable_introspection:%_girdir/%namespace-%api_ver.gir}
 %{?_enable_gtk_doc:%doc %_datadir/doc/%name-%api_ver}
 
+%{?_enable_shared_libs:
+%files -n lib%name
+%_libdir/lib%name.so.*
+
+%files -n lib%name-devel
+%_includedir/lib%name-%api_ver
+%_libdir/lib%name.so
+%_pkgconfigdir/lib%name-%api_ver.pc
+}
+
 %changelog
+* Wed Jun 26 2024 Yuri N. Sedunov <aris@altlinux.org> 0.40.0-alt0.9.rc1
+- 0.40.0.rc1
+
 * Wed May 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.39.0-alt1
 - 0.39.0
 
