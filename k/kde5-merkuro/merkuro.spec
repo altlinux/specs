@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt4
+Release: alt5
 %K5init
 
 Group: Graphical desktop/KDE
@@ -12,6 +12,7 @@ License: GPL-3.0-or-later
 
 ExcludeArch: %not_qt5_qtwebengine_arches
 
+Requires: qml(QtLocation)
 Requires: kde5-akonadi
 Requires: kde5-akonadi-calendar
 Requires: kde5-kmail-account-wizard
@@ -72,6 +73,9 @@ Conflicts: kde5-pim-common < 16.12
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Jun 26 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt5
+- fix requires (closes: 50747)
+
 * Mon May 27 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt4
 - clean requires
 
