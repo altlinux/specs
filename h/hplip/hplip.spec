@@ -26,10 +26,11 @@
 %else
 %define pysuffix %nil
 %endif
+%def_with new_systemd
 
 Name:    hplip
-Version: 3.23.12
-Release: alt4
+Version: 3.24.4
+Release: alt1
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -462,7 +463,9 @@ find . -name *.ppd.gz -exec gunzip '{}' ';'
 # # Fix desktop file.
 %patch4 -p2 -b .desktop
 %patch5 -p1
+%if_without new_systemd
 %patch6 -p1
+%endif
 %if_with python3
 #patch8 -p2
 %else
@@ -840,8 +843,10 @@ echo hpaio > %{buildroot}%{_sysconfdir}/sane.d/dll.d/hpaio
 mkdir -p %{buildroot}%{_datadir}/hplip/prnt/plugins
 
 # traditional place for udev rules
+%if_without new_systemd
 mkdir -p %{buildroot}/lib
 mv %{buildroot}/usr/lib/udev %{buildroot}/lib/
+%endif
 
 # remove hp-uiscan.desktop
 rm -f %buildroot%_desktopdir/hp-uiscan.desktop
@@ -1127,6 +1132,16 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Wed Jun 19 2024 Andrey Cherepanov <cas@altlinux.org> 1:3.24.4-alt1
+- New version.
+- Added support for the following new printers:
+  + HP OfficeJet 8120 All-in-One series
+  + HP OfficeJet Pro 8120 All-in-One series
+  + HP OfficeJet 8130 All-in-One series
+  + HP OfficeJet Pro 8130 All-in-One series
+  + HP OfficeJet Pro 9720 Series
+  + HP OfficeJet Pro 9730 Series
+
 * Mon Mar 11 2024 Andrey Cherepanov <cas@altlinux.org> 1:3.23.12-alt4
 - FTBFS: fixed build.
 
