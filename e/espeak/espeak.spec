@@ -8,7 +8,7 @@
 
 Name: espeak
 Version: 1.48.04
-Release: alt3
+Release: alt3.1
 
 Summary: %name is a software speech synthesizer for English and other languages
 Summary(ru_RU.UTF-8): Программный синтезатор речи для английского и других языков
@@ -203,11 +203,15 @@ ln -s en-gb %_datadir/%name-data/voices/en ||:
 %files -n lib%name
 %_libdir/libespeak.so.*
 
-%files -n lib%name-devel
-%_includedir/espeak
-%_libdir/libespeak.so
+# use espeak-ng-devel
+#%files -n lib%name-devel
+#%_includedir/espeak
+#%_libdir/libespeak.so
 
 %changelog
+* Wed Jun 26 2024 Sergey V Turchin <zerg@altlinux.org> 1.48.04-alt3.1
+- NMU: don't package devel subpackage to push espeak-ng-devel
+
 * Mon Nov 29 2021 Igor Vlasenko <viy@altlinux.org> 1.48.04-alt3
 - upgrade fix thanks to andy@ (closes: #41463)
 
