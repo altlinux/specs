@@ -5,7 +5,7 @@
 %define rname libkscreen
 Name: plasma5-%rname
 Version: 5.27.11
-Release: alt2
+Release: alt3
 %K5init
 
 Group: System/Libraries
@@ -95,6 +95,10 @@ export PATH=%_qt5_bindir:$PATH
 
 %files utils
 %_K5bin/*
+%_kf5_exec/kscreen_backend_launcher
+%_K5plug/kf5/kscreen/
+%_K5dbus_srv/org.kde.kscreen.service
+%_unitdir_user/*.service
 %_datadir/zsh/site-functions/_*
 
 %files devel
@@ -107,15 +111,14 @@ export PATH=%_qt5_bindir:$PATH
 
 %files -n libkf5screen
 %_K5lib/libKF5Screen.so.*
-%_kf5_exec/kscreen_backend_launcher
-%_K5plug/kf5/kscreen/
-%_K5dbus_srv/org.kde.kscreen.service
-%_unitdir_user/*.service
 
 %files -n libkf5screendpms
 %_K5lib/libKF5ScreenDpms.so.*
 
 %changelog
+* Wed Jun 26 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt3
+- move service to utils subpackage
+
 * Tue Jun 25 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt2
 - small relax requires
 
