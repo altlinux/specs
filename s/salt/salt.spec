@@ -2,7 +2,7 @@
 
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 3007.0
+Version: 3007.1
 Release: alt1
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
@@ -38,7 +38,7 @@ BuildRequires: python3-module-urllib3 >= 2.0.6
 BuildRequires: python3-module-pycryptodome >= 3.19.1
 BuildRequires: python3-module-pycryptodomex >= 3.19.1
 BuildRequires: python3-module-GitPython >= 3.1.41
-BuildRequires: python3-module-jinja2 >= 3.1.3
+BuildRequires: python3-module-jinja2 >= 3.1.4
 
 %add_python3_req_skip win32api win32event win32service win32serviceutil winerror pythoncom distutils ntsecuritycon win32con win32process win32security vsanmgmtObjects requests.packages.urllib3.util.ssl_
 
@@ -265,6 +265,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Wed Jun 26 2024 Nikolay Burykin <bne@altlinux.org> 3007.1-alt1
+- New version.
+
 * Sat Mar 09 2024 Andrey Cherepanov <cas@altlinux.org> 3007.0-alt1
 - New version.
 
