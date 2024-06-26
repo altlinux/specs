@@ -1,5 +1,5 @@
 Name:    python3-module-google-api-core
-Version: 2.19.0
+Version: 2.19.1
 Release: alt1
 
 Summary: Core Library for Google Client Libraries
@@ -26,7 +26,7 @@ documentation at https://googleapis.dev/python/google-api-core/latest.
 
 %prep
 %setup -n python-api-core-%version
-%patch -p1 -R
+%patch0 -p1
 
 %build
 %python3_build
@@ -40,6 +40,9 @@ documentation at https://googleapis.dev/python/google-api-core/latest.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue Jun 25 2024 Andrey Cherepanov <cas@altlinux.org> 2.19.1-alt1
+- New version.
+
 * Wed May 01 2024 Andrey Cherepanov <cas@altlinux.org> 2.19.0-alt1
 - New version.
 
