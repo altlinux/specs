@@ -8,7 +8,7 @@
 %def_enable server
 
 Name:    qgis
-Version: 3.36.3
+Version: 3.38.0
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
@@ -36,7 +36,7 @@ Patch2000: qgis-e2k.patch
 
 Conflicts: qgis
 
-ExcludeArch: armh
+ExcludeArch: armh ppc64le
 
 # TODO: Pyspatialite is included if you use the bundled libspatialite.
 # Some plug-ins need it.
@@ -378,6 +378,9 @@ rm -rf %buildroot%_datadir/%name/FindQGIS.cmake \
 %endif
 
 %changelog
+* Mon Jun 24 2024 Andrey Cherepanov <cas@altlinux.org> 3.38.0-alt1
+- New version.
+
 * Sat May 18 2024 Andrey Cherepanov <cas@altlinux.org> 3.36.3-alt1
 - New version.
 
