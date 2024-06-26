@@ -3,22 +3,10 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict,lint=relaxed
 
-%ifarch loongarch64
-# XXX: only lld supports thin LTO. However
-# - as of LLVM 16 lld does not support LoongArch targets at all
-# - as of LLVM 17 lld does not support LoongArch relocations properly
-#   and is unable to link with libraries produced by GNU ld (i.e. glibc)
-%def_without lld
-%define optflags_lto %nil
-%else
-%def_with lld
-%define optflags_lto -flto=thin
-%endif
-
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name: bpftrace
-Version: 0.21.0
+Version: 0.21.1
 Release: alt1
 Summary: High-level tracing language for Linux eBPF
 Group: Development/Debuggers
@@ -50,9 +38,6 @@ BuildRequires: libelf-devel
 BuildRequires: libpcap-devel
 BuildRequires: libstdc++-devel
 BuildRequires: libstdc++-devel-static
-%if_with lld
-BuildRequires: lld%llvm_pkgver
-%endif
 BuildRequires: llvm%llvm_pkgver-devel
 BuildRequires: /proc
 BuildRequires: python3-module-setuptools
@@ -79,15 +64,11 @@ was created by Alastair Robertson.
 
 %prep
 %setup
-sed -i 's/@.*@/True/' tests/runtime/engine/cmake_vars.py
 
 %build
 %remove_optflags -frecord-gcc-switches
 export CC=clang-%llvm_ver
 export CXX=clang++-%llvm_ver
-%if_with lld
-export LDFLAGS="-fuse-ld=lld $LDFLAGS"
-%endif
 export Clang_DIR=/usr/share/cmake/Modules/clang
 # -DBUILD_TESTING:BOOL=ON will require googletest and try to clone it from github
 %cmake \
@@ -149,6 +130,10 @@ fi
 %_man8dir/*
 
 %changelog
+* Wed Jun 26 2024 Vitaly Chikunov <vt@altlinux.org> 0.21.1-alt1
+- Update to v0.21.1 (2024-06-24).
+- spec: Do not use lld, do not change LTO mode.
+
 * Mon Jun 24 2024 Vitaly Chikunov <vt@altlinux.org> 0.21.0-alt1
 - Update to v0.21.0 (2024-06-21).
 
