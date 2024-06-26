@@ -1,7 +1,7 @@
 %define pypi_name python-docs-theme
 
 Name:    python3-module-%pypi_name
-Version: 2024.4
+Version: 2024.6
 Release: alt1
 
 Summary: The Sphinx theme for the CPython docs and related projects
@@ -38,6 +38,9 @@ Source: %name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jun 26 2024 Grigory Ustinov <grenka@altlinux.org> 2024.6-alt1
+- Automatically updated to 2024.6.
+
 * Wed Apr 10 2024 Grigory Ustinov <grenka@altlinux.org> 2024.4-alt1
 - Automatically updated to 2024.4.
 
