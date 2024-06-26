@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 127.0.1
+Version: 127.0.2
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -421,6 +421,10 @@ fi
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Jun 26 2024 Ajrat Makhmutov <rauty@altlinux.org> 127.0.2-alt1
+- New version (127.0.2).
+- Fix desktop file: change window name to "firefox" in XORG (closes: 49071).
+
 * Fri Jun 21 2024 Ajrat Makhmutov <rauty@altlinux.org> 127.0.1-alt1
 - New version (127.0.1).
 
