@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.2.0.15
+Version: 0.2.0.16
 Release: alt1
 
 Summary: LBFGS and OWL-QN optimization algorithms
@@ -56,6 +56,9 @@ py.test-3 -v
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jun 26 2024 Grigory Ustinov <grenka@altlinux.org> 0.2.0.16-alt1
+- Automatically updated to 0.2.0.16.
+
 * Mon Dec 18 2023 Grigory Ustinov <grenka@altlinux.org> 0.2.0.15-alt1
 - Automatically updated to 0.2.0.15.
 
