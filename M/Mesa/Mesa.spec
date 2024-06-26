@@ -97,7 +97,7 @@
 
 Name: Mesa
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -617,6 +617,13 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Tue Jun 25 2024 Ivan A. Melnikov <iv@altlinux.org> 4:24.1.2-alt2
+- Imporve CPU feature detection for llvmpipe on loongarch64
+  + enables lsx/lasx when these extensions are supported;
+  + fixes llvmpipe and lavapipe on Loongson 3A6000 CPUs.
+- Fix radeonsi syncobj support detection (upstream issue
+  11352; altbug 49318#c27).
+
 * Sun Jun 23 2024 Valery Inozemtsev <shrek@altlinux.ru> 4:24.1.2-alt1
 - 24.1.2
 
