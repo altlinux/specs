@@ -15,10 +15,11 @@
 %def_enable yielding
 %def_enable argon2
 %def_disable static
-%define contrib_slapo_name addpartial allop allowed authzid autogroup cloak datamorph denyop lastbind noopsrch passwd/sha2 passwd/pbkdf2 trace usn variant vc
+%define contrib_slapo_name addpartial allop allowed authzid autogroup cloak datamorph denyop lastbind noopsrch passwd/sha2 passwd/pbkdf2 smbk5pwd trace usn variant vc
+
 Name: openldap
-Version: 2.6.7
-Release: alt2
+Version: 2.6.8
+Release: alt1
 
 Obsoletes: openldap2.4 < %version-%release
 
@@ -82,6 +83,7 @@ Patch18: %name-2.6.3-rh-switch-to-lt_dlopenadvise-to-get-RTLD_GLOBAL-set.patch
 Patch19: %name-2.6.3-rh-add-export-symbols-LDAP_CONNECTIONLESS.patch
 
 Patch20: %name-2.6.1-system-mdb.patch
+Patch21: %name-2.6.8-alt-smbk5pwd.patch
 
 ### REQUIRE Section
 
@@ -280,6 +282,7 @@ Various overlays found in contrib/:
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
+%patch21 -p1
 rm -r libraries/liblmdb
 
 # Add some more schema for the sake of migration scripts and others
@@ -325,7 +328,6 @@ export PKG_CONFIG=pkg-config
 	--enable-modules \
 	--enable-backends=mod \
 	--enable-mdb=yes \
-	--disable-ndb \
 	--disable-wt \
 	--enable-balancer=mod \
 	%{subst_enable argon2} \
@@ -374,6 +376,10 @@ export PKG_CONFIG=pkg-config
 %if_enabled debug
 	--enable-debug \
 %endif
+	--without-fetch \
+	--with-threads \
+	--with-pic \
+	--with-gnu-ld
 
 %__subst 's/^AC_CFLAGS.*/& %optflags_shared/' libraries/librewrite/Makefile
 
@@ -418,7 +424,7 @@ done
 mkdir -p -m750 %buildroot%ldap_dir
 mkdir -p -m750 %buildroot%ldap_dir/bases
 mkdir -p -m770 %buildroot%ldap_dir/dblogs
-#__mkdir_p -m750 %buildroot%ldap_dir/replica
+#mkdir -p -m750 %buildroot%ldap_dir/replica
 mkdir -p -m755 %buildroot%ldap_dir/dev
 mkdir -p -m750 %buildroot%ldap_dir%_sysconfdir/ssl
 mkdir -p -m750 %buildroot%ldap_dir%_sysconfdir/schema
@@ -441,7 +447,7 @@ mkdir -p -m750 %buildroot%_sysconfdir/chroot.d
 install -pD -m750 %SOURCE15 %buildroot%_sysconfdir/chroot.d/ldap.all
 install -pD -m750 %SOURCE16 %buildroot%_sysconfdir/chroot.d/ldap.conf
 install -pD -m750 %SOURCE17 %buildroot%_sysconfdir/chroot.d/ldap.lib
-install -pD -m644 %SOURCE14 %buildroot%systemd_unitdir/slapd.service
+install -pD -m644 %SOURCE14 %buildroot%_unitdir/slapd.service
 
 # Install OLC (cn=config) directory backup/restore scripts
 install -pD -m750 %SOURCE40 %buildroot%_sbindir/slapd-olc-backup
@@ -530,17 +536,6 @@ install -p -m644 doc/guide/admin/guide.txt \
 %__subst -p 's/^\(dependency_libs=\).*/\1'\'\'/ \
 	%buildroot%_libexecdir/%name/*.la
 
-#======
-# Relocate some shared libraries from %_libdir/ to /%_lib/.
-mkdir -p %buildroot/%_lib
-for n in ldap lber; do
-	for f in %buildroot%_libdir/lib$n.so; do
-		t=`objdump -p "$f" |awk '/SONAME/ {print $2}'`
-		[ -n "$t" ]
-		ln -s -nf ../../%_lib/"$t" "$f"
-	done
-    mv %buildroot%_libdir/lib$n.so.* %buildroot/%_lib/
-done
 
 %check
 # rm failed tests
@@ -569,7 +564,7 @@ rm -f /var/lib/ldap/%_lib/*.so*
 %preun_service slapd
 
 %files -n libldap%{so_ver}
-/%_lib/*.so.*
+%_libdir/*.so.*
 
 %files -n libldap-devel
 %_libdir/*.so
@@ -605,7 +600,7 @@ rm -f /var/lib/ldap/%_lib/*.so*
 %attr(-,root,ldap)%config(noreplace) %_sysconfdir/%name/slapd.conf
 
 %_initdir/slapd
-%systemd_unitdir/slapd.service
+%_unitdir/slapd.service
 %config(noreplace) %_sysconfdir/sysconfig/ldap
 
 %if_enabled slapi
@@ -635,6 +630,7 @@ rm -f /var/lib/ldap/%_lib/*.so*
 %_libexecdir/%name/home*
 %_libexecdir/%name/lloadd*
 %_libexecdir/%name/memberof*
+%_libexecdir/%name/nestgroup*
 %_libexecdir/%name/otp*
 %_libexecdir/%name/pcache*
 %_libexecdir/%name/ppolicy*
@@ -720,6 +716,10 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Wed Jun 26 2024 Alexey Shabalin <shaba@altlinux.org> 2.6.8-alt1
+- 2.6.8
+- No relocate some shared libraries from %%_libdir/ to /%%_lib/
+
 * Wed May 08 2024 Alexey Shabalin <shaba@altlinux.org> 2.6.7-alt2
 - Fixed FTBFS (fixed search systemdsystemunitdir by define pkg-config)
 
