@@ -5,7 +5,7 @@
 
 Name: audit
 Version: 4.0.1
-Release: alt1
+Release: alt2
 
 Summary: User space tools for Linux kernel 2.6+ auditing
 License: GPL-2.0-or-later and LGPL-2.1-or-later
@@ -18,6 +18,11 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 Requires: libaudit1 = %EVR
+
+# Make audit installable on systems without systemd
+# (upstream dropped support for SysVinit since 4.0)
+%filter_from_requires /^\/bin\/systemctl$/d
+%add_findreq_skiplist %_initdir/auditd
 
 %if_without bootstrap
 BuildRequires(pre): rpm-build-python3
@@ -139,6 +144,8 @@ install -d %buildroot%_libdir/audit
 install -pD -m644 rules/10-base-config.rules \
         %buildroot%_sysconfdir/audit/rules.d/10-base-config.rules
 
+install -Dpm755 audit.init %buildroot/%_initdir/auditd
+
 %check
 export PYTHON=python3
 export PYTHON3=python3
@@ -175,6 +182,8 @@ fi
 %if_with ldap
 %attr(750,root,root) %_sbindir/audispd-zos-remote
 %endif
+
+%_initdir/auditd
 
 %attr(700,root,root) %_logdir/audit
 %_unitdir/auditd.service
@@ -228,6 +237,10 @@ fi
 %endif
 
 %changelog
+* Wed Jun 26 2024 Egor Ignatov <egori@altlinux.org> 4.0.1-alt2
+- filter /bin/systemctl dependency (closes: 50744)
+- bring back our downstream audit.init script
+
 * Thu Jun 06 2024 Egor Ignatov <egori@altlinux.org> 4.0.1-alt1
 - new version 4.0.1
 
