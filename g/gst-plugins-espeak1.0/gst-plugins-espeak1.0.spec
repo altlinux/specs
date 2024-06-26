@@ -1,34 +1,43 @@
-Group: System/Libraries
-%define oldname gstreamer-plugins-espeak
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:           gst-plugins-espeak1.0
-Version:        0.5.0
-Release:        alt1_5
-Summary:        A simple gstreamer plugin to use espeak
-License:        LGPLv2+
-URL:            http://wiki.sugarlabs.org/go/Activity_Team/gst-plugins-espeak
-Source0:        http://download.sugarlabs.org/sources/honey/gst-plugins-espeak/gst-plugins-espeak-%{version}.tar.gz
+%define _unpackaged_files_terminate_build 1
 
-Patch0:		fix-export-regex.patch
+Name:    gst-plugins-espeak1.0
+Version: 0.6.0
+Release: alt1
+
+Summary: GStreamer espeak plugin
+License: LGPLv2+
+Group:   System/Libraries
+Url:     http://wiki.sugarlabs.org/go/Activity_Team/gst-plugins-espeak
+Requires: lib%name = %EVR
+
+Source: %name-%version.tar
 
 BuildRequires:  gcc
-BuildRequires:  libespeak-devel
+BuildRequires:  libespeak-ng-devel
 BuildRequires:  glib2-devel libgio libgio-devel
 BuildRequires:  gst-plugins1.0-devel gst-plugins1.0-gir-devel
 BuildRequires:  gstreamer1.0-devel libgstreamer1.0-gir-devel
-Source44: import.info
+
+%description
+%summary
 
 %description
 A simple gstreamer plugin to use espeak as a sound source.
 It was developed to simplify the espeak usage in the Sugar Speak activity.
 The plugin uses given text to produce audio output. 
 
+%package -n lib%name
+Group:   System/Libraries
+Summary: Lib files for %name
+
+%description -n lib%name
+Lib files for %name
+
 %prep
-%setup -q -n gst-plugins-espeak-%{version}
-%patch0 -p1
+%setup -q -n %name-%version
 
 %build
+./autogen.sh
 # make sure to build the plugin for release
 sed -i 's/NANO=1/NANO=0/g' configure
 %configure
@@ -36,7 +45,7 @@ sed -i 's/NANO=1/NANO=0/g' configure
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std PREFIX=%prefix
 
 # Register as an AppStream component to be visible in the software center
 #
@@ -53,10 +62,10 @@ cat > $RPM_BUILD_ROOT%{_datadir}/appdata/gstreamer-espeak.appdata.xml <<EOF
   <id>gstreamer-espeak</id>
   <metadata_license>CC0-1.0</metadata_license>
   <name>eSpeak GStreamer Multimedia Codec</name>
-  <summary>Multimedia playback for eSpeak</summary>
+  <summary>Multimedia playback for eSpeak-ng</summary>
   <description>
     <p>
-      eSpeak is a compact open source text-to-speech synthesizer for English
+      eSpeak-ng is a compact open source text-to-speech synthesizer for English
       and other languages.
       This codec includes different voices, whose characteristics can be altered.
     </p>
@@ -76,16 +85,18 @@ cat > $RPM_BUILD_ROOT%{_datadir}/appdata/gstreamer-espeak.appdata.xml <<EOF
 EOF
 
 # remove libtool archives
-find %{buildroot} -name '*.la' -delete
+find %buildroot -name '*.la' -delete
 
-%files
-%doc --no-dereference COPYING
-%doc AUTHORS README NEWS
-%{_datadir}/appdata/*.appdata.xml
-%{_libdir}/gstreamer-1.0/libgstespeak.so
-
+%files -n lib%name
+%doc AUTHORS COPYING NEWS
+%_datadir/appdata/*.appdata.xml
+%_libdir/gstreamer-1.0/libgstespeak.so
 
 %changelog
+* Mon Jun 10 2024 Artem Semenov <savoptik@altlinux.org> 0.6.0-alt1
+- update to 0.6.0
+- Change espeak to espeak-ng
+
 * Sun Oct 28 2018 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1_5
 - fixed build
 

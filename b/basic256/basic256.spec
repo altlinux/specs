@@ -1,6 +1,6 @@
 Name: basic256
 Version: 2.0.0.11
-Release: alt2
+Release: alt2.1
 Summary: Simple BASIC IDE that allows young children to learn to programming
 License: GPL-2.0+
 Group: Development/Other
@@ -17,7 +17,7 @@ BuildRequires: qt5-base-devel
 BuildRequires: qt5-multimedia-devel
 BuildRequires: qt5-serialport-devel
 BuildRequires: qt5-tools
-BuildRequires: libespeak-devel
+BuildRequires: libespeak-ng-devel
 BuildRequires: libSDL-devel
 BuildRequires: libSDL_mixer-devel
 BuildRequires: libsqlite3-devel
@@ -57,6 +57,9 @@ install -Dpm0644 resources/icons/basic256.png %buildroot%_iconsdir/hicolor/64x64
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Tue Jun 11 2024 Artem Semenov <savoptik@altlinux.org> 2.0.0.11-alt2.1
+- Changed espeak to espeak-ng
+
 * Thu Jun 24 2021 Andrey Cherepanov <cas@altlinux.org> 2.0.0.11-alt2
 - Complete Russian translations (thanks Olesya Gerasimenko).
 

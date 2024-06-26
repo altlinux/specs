@@ -5,7 +5,7 @@
 
 Name: espeak-ng
 Version: 1.51.1
-Release: alt3
+Release: alt4
 
 Summary: eSpeak NG Text-to-Speech
 
@@ -83,12 +83,14 @@ rm -rf src/include/compat/endian.h src/compat/getopt.c android/
 
 %install
 %makeinstall_std PREFIX=%prefix
-rm -vf %buildroot%_libdir/libespeak-ng-test.so*
-rm -vf %buildroot%_libdir/*.{a,la}
+rm -v %buildroot%_libdir/*.{a,la}
 
 # Move Vim files
 mv %buildroot%_datadir/vim/addons %buildroot%_datadir/vim/vimfiles
 rm -vr %buildroot%_datadir/vim/registry
+
+ln -s libespeak-ng.so %buildroot%_libdir/libespeak.so
+ln -s espeak-ng.pc %buildroot%_pkgconfigdir/espeak.pc
 
 %files
 %doc COPYING COPYING.* README.md CHANGELOG.md
@@ -102,11 +104,13 @@ rm -vr %buildroot%_datadir/vim/registry
 
 %files -n %libname
 %_libdir/libespeak-ng.so.%sover
-%_libdir/libespeak-ng.so.*
+%_libdir/libespeak-ng.so.%sover.*
 
 %files devel
 %_pkgconfigdir/espeak-ng.pc
+%_pkgconfigdir/espeak.pc
 %_libdir/libespeak-ng.so
+%_libdir/libespeak.so
 %_includedir/espeak-ng
 %_includedir/espeak
 
@@ -116,6 +120,9 @@ rm -vr %buildroot%_datadir/vim/registry
 %_datadir/vim/vimfiles/syntax/espeakrules.vim
 
 %changelog
+* Tue Jun 11 2024 Artem Semenov <savoptik@altlinux.org> 1.51.1-alt4
+- Fixed symlink espeak to espeak-ng
+
 * Mon May 27 2024 Artem Semenov <savoptik@altlinux.org> 1.51.1-alt3
 - The libespeak and libespeak-devel package has been replaced
 
@@ -125,4 +132,3 @@ rm -vr %buildroot%_datadir/vim/registry
 * Tue Mar 19 2024 Artem Semenov <savoptik@altlinux.org> 1.51.1-alt1
 - Initial build for ALT Sisyphus (ALT bug: 49726)
   + (fixes: CVE-2023-49990 CVE-2023-49991 CVE-2023-49992 CVE-2023-49993 CVE-2023-49994)
-  
