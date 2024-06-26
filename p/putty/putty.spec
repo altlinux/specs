@@ -1,6 +1,6 @@
 Name: putty
 Version: 0.81
-Release: alt1
+Release: alt2
 
 Summary: Free SSH, Telnet and Rlogin client
 License: MIT
@@ -29,12 +29,6 @@ other interesting things not provided by ssh in an xterm.
 %setup -T -D -a1 -n %name-%version
 %ifarch %e2k
 sed -i 's/mmintrin\.h/no_&/' crypto/CMakeLists.txt
-%endif
-
-%ifnarch %e2k
-# that gtk update is not there yet
-sed -i 's/G_APPLICATION_FLAGS_NONE/G_APPLICATION_DEFAULT_FLAGS/' \
-	unix/main-gtk-application.c
 %endif
 
 %build
@@ -87,6 +81,9 @@ install -pDm644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %_liconsdir/*.png
 
 %changelog
+* Sat Jun 22 2024 Kirill Izmestev <felixz@altlinux.org> 0.81-alt2
+- Fixed build for p10 error: 'G_APPLICATION_DEFAULT_FLAGS' undeclared.
+
 * Fri Apr 19 2024 Ilya Mashkin <oddity@altlinux.ru> 0.81-alt1
 - 0.81
 - Fixed a critical vulnerability in the use of 521-bit ECDSA keys (ecdsa-sha2-nistp521) (fixes: CVE-2024-31497)
