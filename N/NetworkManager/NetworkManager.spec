@@ -50,7 +50,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.48.0
+Version: 1.48.2
 Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -680,6 +680,9 @@ fi
 %endif
 
 %changelog
+* Wed Jun 26 2024 Mikhail Efremov <sem@altlinux.org> 1.48.2-alt1
+- Updated to 1.48.2.
+
 * Tue Jun 04 2024 Mikhail Efremov <sem@altlinux.org> 1.48.0-alt1
 - Updated to 1.48.0.
 

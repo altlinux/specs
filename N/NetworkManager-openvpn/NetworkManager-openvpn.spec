@@ -1,4 +1,4 @@
-%define nm_version 1.46.0
+%define nm_version 1.46.2
 %define git_hash %nil
 #define git_hash .ge1c5978
 
@@ -9,11 +9,11 @@
 %ifarch %e2k
 %define more_warnings no
 %else
-%define more_warnings yes
+%define more_warnings error
 %endif
 
 Name: NetworkManager-openvpn
-Version: 1.11.0
+Version: 1.12.0
 Release: alt1%git_hash
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -117,6 +117,10 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Wed Jun 26 2024 Mikhail Efremov <sem@altlinux.org> 1.12.0-alt1
+- Treat warnings as errors again.
+- Updated to 1.12.0.
+
 * Thu May 16 2024 Mikhail Efremov <sem@altlinux.org> 1.11.0-alt1
 - Don't treat warnings as errors.
 - Updated to 1.11.0.
