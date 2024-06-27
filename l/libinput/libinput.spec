@@ -8,8 +8,8 @@
 %def_enable install_tests
 
 Name: libinput
-Version: 1.26.0
-Release: alt1.1
+Version: 1.26.1
+Release: alt1
 
 Summary: Input devices library
 Group: System/Libraries
@@ -137,6 +137,7 @@ the functionality of the installed libinput library.
 %_bindir/%name
 %dir %_libexecdir/%name
 %_libexecdir/%name/%name-analyze
+%_libexecdir/%name/%name-analyze-buttons
 %_libexecdir/%name/%name-analyze-per-slot-delta
 %_libexecdir/%name/%name-analyze-recording
 %_libexecdir/%name/%name-analyze-touch-down-state
@@ -156,6 +157,7 @@ the functionality of the installed libinput library.
 %_libexecdir/%name/%name-test
 %_man1dir/%name.1.*
 %_man1dir/%name-analyze.1*
+%_man1dir/%name-analyze-buttons.1*
 %_man1dir/%name-analyze-per-slot-delta.1*
 %_man1dir/%name-analyze-recording.1*
 %_man1dir/%name-analyze-touch-down-state.1*
@@ -191,6 +193,9 @@ the functionality of the installed libinput library.
 %endif
 
 %changelog
+* Thu Jun 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1.26.1-alt1
+- 1.26.1
+
 * Sat Jun 22 2024 Yuri N. Sedunov <aris@altlinux.org> 1.26.0-alt1.1
 - rebuilt with new systemd macros
 
