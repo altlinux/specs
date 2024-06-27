@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.1.0
+Version: 5.1.1
 Release: alt1
 Summary: Collection of utilities for publishing packages on PyPI
 License: Apache-2.0
@@ -58,6 +58,9 @@ export TERM=xterm
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jun 27 2024 Stanislav Levin <slev@altlinux.org> 5.1.1-alt1
+- 5.1.0 -> 5.1.1.
+
 * Fri May 17 2024 Stanislav Levin <slev@altlinux.org> 5.1.0-alt1
 - 5.0.0 -> 5.1.0.
 
