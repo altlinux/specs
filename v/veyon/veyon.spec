@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.8.3
-Release: alt2
+Release: alt3
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -119,6 +119,7 @@ sed -i "s/QOverload<int>::of(&QComboBox::/(void(QComboBox::*)(int))(\&QComboBox:
 %ifarch %e2k
 	-DWITH_LTO=OFF \
 %endif
+	-DSYSTEMD_SERVICE_INSTALL_DIR:PATH=%_unitdir \
 	%nil
 %cmake_build
 
@@ -139,6 +140,9 @@ sed -i "s/QOverload<int>::of(&QComboBox::/(void(QComboBox::*)(int))(\&QComboBox:
 %_datadir/%name
 
 %changelog
+* Thu Jun 27 2024 Ajrat Makhmutov <rauty@altlinux.org> 4.8.3-alt3
+- fix FTBFS: specify the new path to the systemd services
+
 * Mon Mar 18 2024 Ajrat Makhmutov <rauty@altlinux.org> 4.8.3-alt2
 - use libprocps instead libproc2 for branches less than p11
 

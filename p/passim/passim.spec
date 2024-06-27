@@ -4,7 +4,7 @@
 
 Name: passim
 Version: 0.1.8
-Release: alt1
+Release: alt2
 
 Summary: Local caching server
 License: LGPL-2.1-only
@@ -76,7 +76,7 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.freedeskt
 %_datadir/metainfo/org.freedesktop.Passim.metainfo.xml
 %_datadir/passim
 %_man1dir/passim.1*
-/lib/sysusers.d/passim.conf
+%_sysusersdir/passim.conf
 %config(noreplace) %_sysconfdir/passim.conf
 
 %files -n lib%name%abiversion
@@ -90,6 +90,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.freedeskt
 %_pkgconfigdir/passim.pc
 
 %changelog
+* Wed Jun 26 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.1.8-alt2
+- Fix FTBFS: use new _sysusersdir macro.
+
 * Thu May 02 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.1.8-alt1
 - New version.
 
