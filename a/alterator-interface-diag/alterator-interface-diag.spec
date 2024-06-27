@@ -1,12 +1,12 @@
 Name: alterator-interface-diag
-Version: 0.1.2
-Release: alt2
+Version: 0.1.3
+Release: alt1
 
-Summary: XML files for ru.basealt.alterator.diag interface.
+Summary: XML files for ru.basealt.alterator.diag interface
 License: GPLv2+
 Group: Other
 Obsoletes: alterator-interface-diag1
-URL: https://gitlab.basealt.space/alt/altrerator-interface-diag1
+URL: https://gitlab.basealt.space/alt/altrerator-interface-diag
 
 BuildArch: noarch
 
@@ -27,6 +27,9 @@ install -p -m 644 -D ru.basealt.alterator.diag1.policy %buildroot%_datadir/polki
 %_datadir/polkit-1/actions/ru.basealt.alterator.diag1.policy
 
 %changelog
+* Wed Jun 26 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.3-alt1
+- add interface spec
+
 * Thu Mar 14 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.2-alt2
 - aligned with specification
 
