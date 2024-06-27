@@ -1,5 +1,5 @@
 Name: waybar
-Version: 0.9.24
+Version: 0.10.3
 Release: alt1
 License: MIT
 Summary: Highly customizable Wayland bar for Sway and Wlroots based compositors
@@ -59,6 +59,8 @@ BuildRequires: pkgconfig(wireplumber-0.4)
 # catch2 module
 BuildRequires: pkgconfig(catch2)
 
+BuildRequires: libgtk-layer-shell-devel
+
 %define _libexecdir %_prefix/libexec
 %define helperdir %_libexecdir/%name
 
@@ -67,12 +69,11 @@ BuildRequires: pkgconfig(catch2)
 
 %prep
 %setup
-%autopatch -p1
+#%%autopatch -p1
 
 %build
 %meson \
 	-Drfkill=enabled \
-	-Dgtk-layer-shell=disabled \
 	-Dsystemd=disabled
 %meson_build
 
@@ -85,11 +86,14 @@ BuildRequires: pkgconfig(catch2)
 %files
 %_bindir/%name
 %dir %_xdgconfigdir/%name
-%config(noreplace) %_xdgconfigdir/%name/config
+%config(noreplace) %_xdgconfigdir/%name/config.jsonc
 %config(noreplace) %_xdgconfigdir/%name/style.css
 %_man5dir/*
 
 %changelog
+* Thu Jun 27 2024 Artyom Bystrov <arbars@altlinux.org> 0.10.3-alt1
+- New version (0.10.3)
+
 * Wed Dec 20 2023 Alexey Gladkov <legion@altlinux.ru> 0.9.24-alt1
 - New version (0.9.24).
 
