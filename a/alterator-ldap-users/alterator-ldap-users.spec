@@ -2,10 +2,10 @@
 
 Name: alterator-ldap-users
 Version: 0.8.6
-Release: alt2
+Release: alt3
 
 Summary: Alterator module for ldap users administration
-License: GPL
+License: GPLv2+
 Group: System/Configuration/Other
 
 Url: http://altlinux.org/alterator
@@ -13,11 +13,11 @@ Source: %name-%version.tar
 Packager: Dmitriy Kruglikov <dkr@altlinux.org>
 
 Requires: alterator >= 5.0
-Requires: ldap-user-tools >= 0.2
 Requires: alterator-openldap-functions >= 0.2-alt2
 Requires: alterator-auth >= 0.20-alt1
 Requires: alterator-sh-functions >= 0.11-alt2
 Requires: alterator-l10n >= 2.7-alt2
+Requires: ldap-user-tools >= 0.2
 Requires: passwdqc-utils >= 1.2.2-alt1
 
 # Has to be optional: depens on Samba-DC.
@@ -25,15 +25,17 @@ Requires: passwdqc-utils >= 1.2.2-alt1
 
 Requires: alterator-fbi >= 5.49.3
 
-BuildRequires: guile-devel rpm-build >= 4.0.4-alt103
-BuildRequires: alterator >= 5.0 alterator-fbi >= 5.33-alt1
+BuildRequires: guile-devel
+BuildRequires: rpm-build >= 4.0.4-alt103
+BuildRequires: alterator >= 5.0
+BuildRequires: alterator-fbi >= 5.33-alt1
 
 %description
 Alterator module for local and LDAP user administration
 
 %package -n alterator-usersource-functions
 Summary: Common functions for user and group account data source management
-License: GPL
+License: GPLv2+
 Group: Development/Other
 
 %description -n alterator-usersource-functions
@@ -61,6 +63,11 @@ Common functions for user and group account data source management.
 %_bindir/alterator-*-functions
 
 %changelog
+* Thu Jun 27 2024 Michael Shigorin <mike@altlinux.org> 0.8.6-alt3
+- NMU:
+  + clarify License:
+  + minor spec cleanup
+
 * Tue Apr 19 2022 Paul Wolneykien <manowar@altlinux.org> 0.8.6-alt2
 - Switch to the branch's default version of Guile (guile-devel).
 

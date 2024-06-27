@@ -2,21 +2,22 @@
 
 Name: alterator-ldap-groups
 Version: 0.6.7
-Release: alt1
+Release: alt2
 
+Url: http://altlinux.org/alterator
 Source: %name-%version.tar
-
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Summary: Alterator module for LDAP groups administration
-License: GPL
+License: GPLv2
 Group: System/Configuration/Other
 
-Requires: alterator >= 5.0 ldap-user-tools >= 0.2
+Requires: alterator >= 5.0
 Requires: alterator-auth >= 0.9-alt3
 Requires: alterator-sh-functions >= 0.11-alt2
-Requires: shadow-groups >= 4.0.4.1-alt9
 Requires: alterator-l10n >= 2.7-alt6
+Requires: ldap-user-tools >= 0.2
+Requires: shadow-groups >= 4.0.4.1-alt9
 
 Conflicts: alterator-fbi < 5.18-alt1
 Conflicts: netcmdplus < 0.1.1
@@ -24,19 +25,15 @@ Conflicts: netcmdplus < 0.1.1
 Obsoletes: alterator-ldap-groups-school-server < %version
 Provides:  alterator-ldap-groups-school-server = %version-%release
 
-%ifarch %e2k
-BuildRequires: guile20-devel libguile20-devel
-%else
 BuildRequires: guile22-devel
-%endif
-
-BuildRequires: alterator >= 5.0 alterator-fbi >= 5.33-alt1
+BuildRequires: alterator >= 5.0
+BuildRequires: alterator-fbi >= 5.33-alt1
 
 %description
 Alterator module for LDAP groups administration
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build
@@ -55,6 +52,13 @@ Alterator module for LDAP groups administration
 %_hooksdir/91-ldap-groups
 
 %changelog
+* Thu Jun 27 2024 Michael Shigorin <mike@altlinux.org> 0.6.7-alt2
+- NMU:
+  + use guile22 on e2k too
+  + clarify License:
+  + add Url:
+  + minor spec cleanup
+
 * Tue Aug 21 2018 Paul Wolneykien <manowar@altlinux.org> 0.6.7-alt1
 - Use strict data types for the "group", "member_in" and "member_out"
   parameters.
