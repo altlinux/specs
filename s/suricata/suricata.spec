@@ -1,7 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %def_enable ebpf_build
 %def_enable unwind
-%def_disable prelude
 
 %ifarch x86_64
 %def_enable hyperscan
@@ -10,14 +9,15 @@
 %endif
 
 Name: suricata
-Version: 6.0.19
+Version: 7.0.5
 Release: alt1
 
 Summary: Intrusion Detection System
 
-License: GPLv2
+License: GPL-2.0-only
 Group: Security/Networking
-Url: https://suricata-ids.org/
+Url: https://suricata.io
+Vcs: https://github.com/OISF/suricata.git
 
 Source: %name-%version.tar
 Source1: suricata.service
@@ -28,18 +28,17 @@ Source5: suricata.init
 
 BuildRequires: /proc
 BuildRequires: gcc gcc-c++
-BuildRequires: rust >= 1.41.1 rust-cargo cbindgen
+BuildRequires: rust >= 1.63.0 rust-cargo cbindgen >= 0.10.0
 BuildRequires: python3-dev
-BuildRequires: libpcap-devel libpcre-devel libyaml-devel
-BuildRequires: libjansson-devel libnss-devel libcap-ng-devel libgnutls-devel
+BuildRequires: libpcap-devel libpcre2-devel libyaml-devel
+BuildRequires: libjansson-devel libcap-ng-devel libgnutls-devel
 BuildRequires: libnet-devel libmagic-devel liblua-devel
 BuildRequires: zlib-devel liblzma-devel liblz4-devel
-%{?_enable_ebpf_build:BuildRequires: libelf-devel libbpf-devel clang llvm}
+%{?_enable_ebpf_build:BuildRequires: libelf-devel libbpf-devel clang llvm /usr/bin/llc}
 BuildRequires: libnfnetlink-devel libnetfilter_queue-devel libnetfilter_log-devel
-BuildRequires: libhtp-devel >= 0.5.42
+BuildRequires: libhtp-devel >= 0.5.48
 BuildRequires: libmaxminddb-devel
-BuildRequires: libhiredis-devel
-%{?_enable_prelude:BuildRequires: libprelude-devel}
+BuildRequires: libhiredis-devel libevent-devel
 %{?_enable_hyperscan:BuildRequires: libhyperscan-devel}
 %{?_enable_unwind:BuildRequires: libunwind-devel}
 
@@ -59,25 +58,22 @@ Matching, and GeoIP identification.
 
 %build
 %autoreconf
-%configure --enable-gccprotect \
-           --enable-pie \
-           --disable-gccmarch-native \
-           --disable-coccinelle \
-           --enable-nfqueue \
-	   --enable-nflog \
-           --enable-af-packet \
-           --enable-jansson \
-           --enable-geoip \
-           --enable-lua \
-           --enable-hiredis \
-	   --enable-http2-decompression \
-	   %{subst_enable prelude} \
-	   %{subst_enable unwind} \
-	   %{?_enable_ebpf_build:--enable-ebpf --enable-ebpf-build} \
-           --enable-non-bundled-htp \
-           --with-libpcre-includes=%_includedir/pcre \
-           --with-libprelude-prefix=%prefix \
-           --localstatedir=%_var
+%configure \
+    --enable-gccprotect \
+    --enable-pie \
+    --disable-gccmarch-native \
+    --disable-coccinelle \
+    --enable-nfqueue \
+    --enable-nflog \
+    --enable-af-packet \
+    --enable-jansson \
+    --enable-geoip \
+    --enable-lua \
+    --enable-hiredis \
+    %{subst_enable unwind} \
+    %{?_enable_ebpf_build:--enable-ebpf --enable-ebpf-build} \
+    --enable-non-bundled-htp \
+    --localstatedir=%_var
 
 %make_build
 
@@ -87,7 +83,7 @@ Matching, and GeoIP identification.
 # Setup etc directory
 mkdir -p %buildroot%_sysconfdir/%name/rules
 install -m 600 rules/*.rules %buildroot%_sysconfdir/%name/rules
-install -m 600 *.config %buildroot%_sysconfdir/%name
+install -m 600 etc/*.config %buildroot%_sysconfdir/%name
 install -m 600 threshold.config %buildroot%_sysconfdir/%name
 install -m 600 suricata.yaml %buildroot%_sysconfdir/%name
 mkdir -p %buildroot%_unitdir
@@ -148,6 +144,10 @@ useradd -r -g _suricata -c 'Suricata User' \
 %_datadir/%name
 
 %changelog
+* Thu Jun 27 2024 Alexey Shabalin <shaba@altlinux.org> 7.0.5-alt1
+- 7.0.5 (Fixes: CVE-2024-32664, CVE-2024-32663, CVE-2024-32867
+         CVE-2024-28870, CVE-2024-28871, CVE-2022-24713)
+
 * Fri May 24 2024 Alexander Danilov <admsasha@altlinux.org> 6.0.19-alt1
 - 6.0.19 (Fixes: CVE-2023-35852, CVE-2023-35852)
 
