@@ -2,8 +2,8 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: lazygit
-Version: 0.41.0
-Release: alt2
+Version: 0.42.0
+Release: alt1
 
 Summary: Simple terminal UI for git commands
 License: MIT
@@ -67,6 +67,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Thu Jun 27 2024 Ilya Demyanov <turbid@altlinux.org> 0.42.0-alt1
+- new version
+
 * Wed Apr 03 2024 Ilya Demyanov <turbid@altlinux.org> 0.41.0-alt2
 - define %%import_path macros
 
