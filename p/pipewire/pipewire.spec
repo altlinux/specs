@@ -6,7 +6,7 @@
 %endif
 
 %define _libexecdir %prefix/libexec
-%define ver_major 1.0
+%define ver_major 1.2
 %define ms_ver 0.4.2
 %define api_ver 0.3
 %define spa_api_ver 0.2
@@ -36,6 +36,7 @@
 %def_enable selinux
 # disabled by default
 %def_disable vulkan
+%def_enable snap
 %ifarch %e2k
 %def_disable examples
 %else
@@ -46,8 +47,8 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.7
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -112,7 +113,8 @@ BuildRequires: pkgconfig(gstreamer-allocators-%gst_api_ver)
 %{?_enable_lv2:BuildRequires: liblilv-devel}
 %{?_enable_libcanberra:BuildRequires: libcanberra-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
-%{?_enable_docs:BuildRequires: doxygen graphviz fonts-otf-adobe-source-sans-pro fonts-ttf-google-droid-sans}
+%{?_enable_snap:BuildRequires: pkgconfig(snapd-glib-2)}
+%{?_enable_docs:BuildRequires: doxygen graphviz /usr/bin/dot fonts-otf-adobe-source-sans-pro fonts-ttf-google-droid-sans}
 %{?_enable_man:BuildRequires: doxygen}
 %{?_enable_check:BuildRequires: /proc gcc-c++ libcap-devel}
 
@@ -224,6 +226,7 @@ export LIB=%_lib
 	%{?_enable_mm:-Dbluez5-backend-native-mm=enabled} \
 	%{?_disable_systemd:-Dsystemd=disabled} \
 	%{?_disable_selinux:-Dselinux=disabled} \
+	%{?_disable_snap:-Dsnap=disabled} \
 	%{?_enable_systemd_system_service:-Dsystemd-system-service=enabled} \
 	%{?_disable_examples:-Dexamples=disabled} \
 	-Dsession-managers='media-session' \
@@ -364,6 +367,7 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_bindir/pw-cat
 %_bindir/pw-cli
 %_bindir/pw-config
+%_bindir/pw-container
 %_bindir/pw-dot
 %_bindir/pw-dsdplay
 %_bindir/pw-dump
@@ -390,6 +394,7 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_man1dir/pw-cat.1.*
 %_man1dir/pw-cli.1*
 %_man1dir/pw-config.1*
+%_man1dir/pw-container.1*
 %_man1dir/pw-dot.1.*
 %_man1dir/pw-dump.1.*
 %_man1dir/pw-link.1.*
@@ -425,6 +430,9 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 
 
 %changelog
+* Thu Jun 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Sat Jun 22 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.7-alt1.1
 - rebuilt with new systemd macros
 
