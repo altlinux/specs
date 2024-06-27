@@ -1,13 +1,13 @@
 Name: alterator-net-pptp
 Version: 0.10.5
-Release: alt1
+Release: alt2
 
 Url: http://www.altlinux.org/Alterator
 Source: %name-%version.tar
 Packager: Mikhail Efremov <sem@altlinux.org>
 
 Summary: Alterator module to configure PPTP connections
-License: GPL
+License: GPLv2+
 Group: System/Configuration/Other
 
 Requires: alterator >= 5.0-alt5
@@ -18,16 +18,12 @@ Requires: pptp-client
 Conflicts: alterator-fbi < 5.10-alt1
 Conflicts: alterator-lookout < 1.6-alt8
 
-BuildPreReq: alterator >= 5.0
+BuildRequires(pre): alterator >= 5.0
 
-
-%ifarch %e2k
-BuildRequires: guile20-devel libguile20-devel
-%else
 BuildRequires: guile22-devel
-%endif
 BuildRequires: rpm-build >= 4.0.4-alt103
-BuildRequires: alterator >= 5.0 alterator-fbi >= 5.33-alt1
+BuildRequires: alterator >= 5.0
+BuildRequires: alterator-fbi >= 5.33-alt1
 
 %description
 Alterator module to configure PPTP connections
@@ -53,6 +49,12 @@ Alterator module to configure PPTP connections
 # - cleanup PPTP-over-PPP hasty fix
 
 %changelog
+* Thu Jun 27 2024 Michael Shigorin <mike@altlinux.org> 0.10.5-alt2
+- NMU:
+  + use guile22 on e2k too
+  + clarify License:
+  + minor spec cleanup
+
 * Thu Jul 11 2019 Andrey Cherepanov <cas@altlinux.org> 0.10.5-alt1
 - Use hostname-or-ip field type to support IP address (ALT #37010).
 

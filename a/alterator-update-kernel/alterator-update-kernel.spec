@@ -2,30 +2,28 @@
 
 Name: alterator-update-kernel
 Version: 1.4
-Release: alt4
+Release: alt5
 
-Source:%name-%version.tar
+Url: http://altlinux.org/alterator
+Source: %name-%version.tar
 
 Summary: alterator module for update kernel
-License: GPL
+License: GPLv2+
 Group: System/Configuration/Other
 
 Requires: alterator-l10n >= 2.9.94-alt1
-BuildPreReq: alterator >= 4.10-alt1 alterator-lookout
+BuildRequires(pre): alterator >= 4.10-alt1
+BuildRequires(pre): alterator-lookout
 
-%ifarch %e2k
-BuildRequires: guile20-devel libguile20-devel
-%else
 BuildRequires: guile22-devel
-%endif
 
 %description
 An alterator module with graphical and web interface that implements
-the functionality of the update-kernel utility for updating / installing
+the functionality of the update-kernel utility for installing, updating
 and removing kernels, installing and removing kernel modules.
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build
@@ -55,6 +53,13 @@ export GUILE_LOAD_PATH=/usr/share/alterator/lookout
 %_datadir/dbus-1/interfaces/*.xml
 
 %changelog
+* Thu Jun 27 2024 Michael Shigorin <mike@altlinux.org> 1.4-alt5
+- NMU:
+  + use guile22 on e2k too
+  + clarify License:
+  + add Url:
+  + minor spec cleanup
+
 * Fri Aug 27 2021 Ivan Savin <svn17@altlinux.org> 1.4-alt4
 - Add the creation of tmpfs for make-initrd (env TMPDIR) when installing
   the kernel. (Closes: 40650)
