@@ -2,7 +2,7 @@
 %define icinga_user icinga
 
 Name: 	  nagwad
-Version:  0.11.2
+Version:  0.11.3
 Release:  alt3
 
 Summary:  System journal event scanner and handler
@@ -50,6 +50,7 @@ Conflicts: %name-server
 Conflicts: nagios < 3.0.6-alt9
 
 Obsoletes: %name-templates
+Provides: nagwad-nagios-templates = %version
 
 BuildArch: noarch
 
@@ -62,6 +63,7 @@ Group:   Monitoring
 BuildArch: noarch
 Requires: %name-service
 Requires: icinga2-common
+Provides: nagwad-icinga-templates = %version
 
 %description icinga
 These are Icinga-2 configuration templates for monitoring using
@@ -73,6 +75,7 @@ Group:   Monitoring
 BuildArch: noarch
 Requires: %name-service
 Requires: icinga2-common
+Provides: nagwad-icinga-templates = %version
 
 %description icinga-master
 These are Icinga-2 configuration templates for a master node to
@@ -84,6 +87,7 @@ Group:   Monitoring
 BuildArch: noarch
 Requires: %name-service
 Requires: icinga2-common
+Provides: nagwad-icinga-templates = %version
 
 %description icinga-agent
 These are Icinga-2 configuration templates for a agent/satellite node.
@@ -255,6 +259,15 @@ usermod -a -G %name %icinga_user
 %_bindir/nsca-shell
 
 %changelog
+* Thu Jun 27 2024 Paul Wolneykien <manowar@altlinux.org> 0.11.3-alt3
+- PATH-based invocation of journalctl (/bin or /usr/bin).
+- Add --test mode (reading messages from standard input).
+- Make Nagios template packages provide "nagwad-nagios-templates"
+  virtual package.
+- Make Icinga template packages provide "nagwad-icinga-templates"
+  virtual package.
+- Prefix nagwad checks with "nagwad_" in Nagios/NRPE templates.
+
 * Mon Jun 24 2024 Paul Wolneykien <manowar@altlinux.org> 0.11.2-alt3
 - Fix: Require "icinga2-common" and "nagwad-service" to install
   Icinga 2 templates: add "icinga" user to group "nagwad".
