@@ -9,8 +9,8 @@
 %define _runstatedir /run
 
 Name: krb5
-Version: 1.21.2
-Release: alt3
+Version: 1.21.3
+Release: alt1
 
 %if_without bootstrap
 %if_with doc
@@ -514,6 +514,9 @@ fi
 # {{{ changelog
 
 %changelog
+* Thu Jun 27 2024 Ivan A. Melnikov <iv@altlinux.org> 1.21.3-alt1
+- 1.21.3 (Fixes: CVE-2024-37370, CVE-2024-37371)
+
 * Tue Jun 25 2024 Alexey Shabalin <shaba@altlinux.org> 1.21.2-alt3
 - move systemd units to /usr/lib
 - add krb5-krb5kdc.conf tmpfile
