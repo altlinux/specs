@@ -13,7 +13,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %sover.2
+Version: %sover.3
 Release: alt1
 
 Summary: JPEG XL image format reference implementation
@@ -144,6 +144,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Thu Jun 27 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.3-alt1
+- 0.10.3
+
 * Fri Mar 08 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.2-alt1
 - 0.10.2
 
