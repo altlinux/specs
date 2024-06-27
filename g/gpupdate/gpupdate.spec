@@ -33,7 +33,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.10.3
+Version: 0.10.4
 Release: alt1
 
 Summary: GPT applier
@@ -191,6 +191,12 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Thu Jun 27 2024 Valery Sinelnikov <greh@altlinux.org> 0.10.4-alt1
+- Fixed the definition of the module activation check (closes: 50755)
+- Fixed sorting of scripts (closes: 50756)
+- Fixed reading key values from dconf
+- Changed the method for getting the list of packages for pkcon_runner
+
 * Wed Jun 19 2024 Valery Sinelnikov <greh@altlinux.org> 0.10.3-alt1
 - Added autocompletion for gpoa, gpupdate, gpupdate-setup
 - Added correct work with json data in keys for the Firefox browser
