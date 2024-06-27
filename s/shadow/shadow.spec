@@ -1,6 +1,6 @@
 Name: shadow
-Version: 4.15.1
-Release: alt2
+Version: 4.16.0
+Release: alt1
 Epoch: 1
 
 Summary: Utilities for managing shadow password files and user/group accounts
@@ -40,6 +40,8 @@ Patch: %name-%version-%release.patch
 %def_with pam
 %def_enable man
 %endif
+
+%define lsubid_sovers 5
 
 # libbsd support for readpassphrase().
 # Using in-source implementation instead.
@@ -161,18 +163,18 @@ in user namespaces:
 * newuidmap: set the uid mapping of a user namespace;
 * newgidmap: set the gid mapping of a user namespace.
 
-%package -n libsubid
+%package -n libsubid%lsubid_sovers
 Summary: Subordinate id handling library
 Group: System/Libraries
 
-%description -n libsubid
+%description -n libsubid%lsubid_sovers
 The library provides an interface for querying, granding and ungranting
 subordinate user and group ids.
 
 %package -n libsubid-devel
 Summary: Development files for the subordinate id handling library
 Group: Development/C
-Requires: libsubid = %EVR
+Requires: libsubid%lsubid_sovers = %EVR
 
 %description -n libsubid-devel
 The library provides an interface for querying, granding and ungranting
@@ -447,8 +449,9 @@ rm -f %save_login_defs_file
 %_man5dir/subgid.*
 %endif
 
-%files -n libsubid
-%_libdir/libsubid.so.*
+%files -n libsubid%lsubid_sovers
+%_libdir/libsubid.so.%lsubid_sovers
+%_libdir/libsubid.so.%lsubid_sovers.*
 
 %files -n libsubid-devel
 %_libdir/libsubid.so
@@ -483,6 +486,10 @@ rm -f %save_login_defs_file
 %endif
 
 %changelog
+* Thu Jun 20 2024 Mikhail Efremov <sem@altlinux.org> 1:4.16.0-alt1
+- libsubid: Added so version to subpackage name.
+- Updated to 4.16.0.
+
 * Tue Jun 11 2024 Mikhail Efremov <sem@altlinux.org> 1:4.15.1-alt2
 - audit_help: Supressed unused-result warning.
 
