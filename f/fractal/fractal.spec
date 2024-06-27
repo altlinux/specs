@@ -1,11 +1,11 @@
 Name: fractal
-Version: 5.beta2
-Release: alt2
+Version: 7
+Release: alt1
 Summary: Matrix messaging app for GNOME written in Rust
 License: GPL3
 Group: Networking/Instant messaging
 Url: https://gitlab.gnome.org/GNOME/fractal/
-Source: %name-%version.tar
+Source: https://gitlab.gnome.org/World/fractal/-/archive/7/fractal-7.tar
 Source1: vendor.tar
 Patch1: nix-loongarch64.patch
 ExcludeArch: i586 armh
@@ -28,31 +28,31 @@ software projects.
 %prep
 %setup
 tar xf %SOURCE1
-%patch1 -p1
+#%%patch1 -p1
 
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/dalek-cryptography/curve25519-dalek/?rev=e44d4b5903106dde0e5b28a2580061de7dfe8a9f"]
-git = "https://github.com/dalek-cryptography/curve25519-dalek/"
-rev = "e44d4b5903106dde0e5b28a2580061de7dfe8a9f"
+[source."git+https://github.com/matrix-org/matrix-authentication-service?rev=099eabd1371d2840a2f025a6372d6428039eb511"]
+git = "https://github.com/matrix-org/matrix-authentication-service"
+rev = "099eabd1371d2840a2f025a6372d6428039eb511"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/matrix-org/matrix-rust-sdk.git?rev=4643bae28445e058080896a280083b32fd403146"]
+[source."git+https://github.com/matrix-org/matrix-rust-sdk.git?rev=88c4dec35f05ae295e0f2bf0362d6f5d72606d92"]
 git = "https://github.com/matrix-org/matrix-rust-sdk.git"
-rev = "4643bae28445e058080896a280083b32fd403146"
+rev = "88c4dec35f05ae295e0f2bf0362d6f5d72606d92"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/matrix-org/vodozemac/?rev=e3b658526f6f1dd0a9065c1c96346b796712c425"]
-git = "https://github.com/matrix-org/vodozemac/"
-rev = "e3b658526f6f1dd0a9065c1c96346b796712c425"
+[source."git+https://github.com/matrix-org/vodozemac?rev=0c75746fc8a5eda4a0e490d345d1798b4c6cbd67"]
+git = "https://github.com/matrix-org/vodozemac"
+rev = "0c75746fc8a5eda4a0e490d345d1798b4c6cbd67"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/ruma/ruma.git?rev=f1772ae5bc1d849655498f51b0fec7b0ef10e339"]
+[source."git+https://github.com/ruma/ruma.git?rev=4c00bd010dbdca6005bd599b52e90a0b7015d056"]
 git = "https://github.com/ruma/ruma.git"
-rev = "f1772ae5bc1d849655498f51b0fec7b0ef10e339"
+rev = "4c00bd010dbdca6005bd599b52e90a0b7015d056"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
@@ -78,11 +78,15 @@ EOF
 %_bindir/*
 %_desktopdir/*.desktop
 %_datadir/%name
+%_datadir/dbus-1/services/*.service
 %_datadir/glib-2.0/schemas/*.xml
 %_iconsdir/hicolor/*/apps/*
 %_datadir/metainfo/*.xml
 
 %changelog
+* Sat May 25 2024 Ildar Mulyukov <ildar@altlinux.ru> 7-alt1
+- new version
+
 * Thu Nov 16 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 5.beta2-alt2
 - NMU: fixed FTBFS on LoongArch
 
