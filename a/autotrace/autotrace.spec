@@ -1,11 +1,12 @@
 %define soname 3
 %def_with pstoedit
 %def_disable static
+%def_disable magick
 %define pstoedit_ver 3.32
 
 Name: autotrace
 Version: 0.31.10
-Release: alt1
+Release: alt2
 
 Summary: Bitmap to vector graphics converter
 Summary(ru_RU.UTF-8): Программа трассировки растровых изображений.
@@ -74,10 +75,13 @@ linked software using lib%name.
 
 %build
 autoreconf -fisv
-%configure %{subst_enable static} \
+%configure \
+	%{subst_enable static} \
+	%{subst_enable magick} \
 %if_without pstoedit
 	--without-pstoedit
 %endif
+	%nil
 
 %make_build
 
@@ -106,6 +110,9 @@ autoreconf -fisv
 %endif
 
 %changelog
+* Fri Jun 28 2024 Anton Farygin <rider@altlinux.ru> 0.31.10-alt2
+- fix pkcconfig file
+
 * Fri Jun 28 2024 Anton Farygin <rider@altlinux.ru> 0.31.10-alt1
 - returned to ALT with the new upstream
 
