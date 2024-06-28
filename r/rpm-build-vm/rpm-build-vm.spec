@@ -9,7 +9,7 @@
 %endif
 
 Name: rpm-build-vm
-Version: 1.66
+Version: 1.67
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -225,6 +225,9 @@ vm-run --stub-exit=7 && exit 1 || test $? -eq 7
 %endif
 
 %changelog
+* Fri Jun 28 2024 Vitaly Chikunov <vt@altlinux.org> 1.67-alt1
+- aarch64: Restore UEFI boot support.
+
 * Tue May 14 2024 Vitaly Chikunov <vt@altlinux.org> 1.66-alt1
 - Fix --secureboot boot hanging.
 
