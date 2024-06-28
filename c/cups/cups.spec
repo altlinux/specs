@@ -1,5 +1,5 @@
 Name: cups
-Version: 2.4.9
+Version: 2.4.10
 Release: alt1
 
 Summary: Common Unix Printing System - server package
@@ -8,7 +8,7 @@ Group: System/Servers
 
 Url: https://openprinting.github.io/cups/
 VCS: https://github.com/OpenPrinting/cups/
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 
 # READMEs
 Source10: README.alt
@@ -400,6 +400,9 @@ fi
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 
 %changelog
+* Wed Jun 26 2024 Anton Farygin <rider@altlinux.ru> 2.4.10-alt1
+- 2.4.10
+
 * Wed Jun 12 2024 Anton Farygin <rider@altlinux.ru> 2.4.9-alt1
 - 2.4.9 (Fixes: CVE-2024-35235)
 
