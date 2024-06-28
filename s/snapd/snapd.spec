@@ -29,8 +29,8 @@
 #%%define _libexecdir %%_prefix/libexec
 
 Name: snapd
-Version: 2.61.3
-Release: alt1.1
+Version: 2.63
+Release: alt1
 Summary: A transactional software package manager
 License: GPLv3
 Group: System/Configuration/Other
@@ -110,9 +110,6 @@ sed -e 's:_ "github.com/snapcore/squashfuse"::g' -i systemd/systemd.go
 # We don't need the snapcore fork for bolt - it is just a fix on ppc
 #sed -e "s:github.com/snapcore/bolt:github.com/boltdb/bolt:g" -i advisor/*.go errtracker/*.go
 
-sed -e "s:/usr/lib/environment.d/:/lib/environment.d/:g" -i data/systemd-env/Makefile
-sed -e 's:${prefix}/lib/systemd/system-environment-generators:/lib/systemd/system-environment-generators:g' -i cmd/configure.ac
-
 # Build snapd
 mkdir -p src/github.com/snapcore
 ln -s ../../../ src/github.com/snapcore/snapd
@@ -181,7 +178,7 @@ popd
 pushd ./data
 make BINDIR="%_bindir" LIBEXECDIR="%_libexecdir" DATADIR="%_datadir" \
      SYSTEMDSYSTEMUNITDIR="%_unitdir" SYSTEMDUSERUNITDIR="%_userunitdir" \
-     TMPFILESDIR="%_tmpfilesdir" \
+     TMPFILESDIR="%_tmpfilesdir" ENVD="%_environmentdir" \
      SNAP_MOUNT_DIR="%_sharedstatedir/snapd/snap" \
      SNAPD_ENVIRONMENT_FILE="%_sysconfdir/sysconfig/snapd"
 popd
@@ -463,6 +460,9 @@ fi
 %endif
 
 %changelog
+* Tue Jun 25 2024 Alexey Shabalin <shaba@altlinux.org> 2.63-alt1
+- 2.63
+
 * Wed Apr 10 2024 Ivan A. Melnikov <iv@altlinux.org> 2.61.3-alt1.1
 - NMU:
   + restore loongarch64 fix FTBFS;
