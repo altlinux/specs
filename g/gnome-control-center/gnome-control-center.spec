@@ -16,7 +16,7 @@
 %def_enable check
 
 Name: gnome-control-center
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -118,7 +118,7 @@ BuildRequires: tecla-devel
 BuildRequires: libgudev-devel >= %gudev_ver libgsound-devel
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: libepoxy-devel
-%{?_enable_check:BuildRequires: xvfb-run python3(dbusmock)}
+%{?_enable_check:BuildRequires: python3(dbusmock)}
 
 %description
 GNOME (the GNU Network Object Model Environment) is an attractive and
@@ -170,7 +170,7 @@ sed -e '/Simferopol/d' %SOURCE1 > %buildroot%_datadir/%name/zone.tab
 %find_lang --with-gnome --output=%name.lang %name-%api_ver %name-%api_ver-timezones %_name
 
 %check
-xvfb-run %__meson_test
+%__meson_test
 
 %files
 %_bindir/%name
@@ -210,6 +210,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Fri Jun 28 2024 Yuri N. Sedunov <aris@altlinux.org> 46.3-alt1
+- 46.3
+
 * Mon May 27 2024 Yuri N. Sedunov <aris@altlinux.org> 46.2-alt1
 - 46.2
 

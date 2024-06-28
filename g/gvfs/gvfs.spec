@@ -35,7 +35,7 @@
 %def_disable check
 
 Name: gvfs
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -243,7 +243,7 @@ seamlessly adds gvfs support to all applications using the gio API. It also
 supports exposing the gvfs mounts to non-gio applications using fuse.
 
 This package contains the gvfs server, libgvfscommon library, gio
-modules and backends for gvfs: archive, burn, computer, dav, ftp,
+modules and backends for gvfs: archive, computer, dav, ftp,
 gphoto2, http, localtest, network, sftp and trash.
 
 %description devel
@@ -586,6 +586,9 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %changelog
+* Fri Jun 28 2024 Yuri N. Sedunov <aris@altlinux.org> 1.54.2-alt1
+- 1.54.2
+
 * Fri May 24 2024 Yuri N. Sedunov <aris@altlinux.org> 1.54.1-alt1
 - 1.54.1
 

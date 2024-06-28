@@ -4,13 +4,14 @@
 %define xdg_name org.gnome.Sudoku
 %define __name gnome-%_name
 %define ver_major 46
+%define beta %nil
 %define _libexecdir %_prefix/libexec
 
 %def_enable check
 
 Name: gnome-games-%_name
-Version: %ver_major.2
-Release: alt1
+Version: %ver_major.3
+Release: alt1%beta
 
 Summary: GNOME Sudoku game
 Group: Games/Boards
@@ -65,6 +66,9 @@ in popularity.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Fri Jun 28 2024 Yuri N. Sedunov <aris@altlinux.org> 46.3-alt1
+- 46.3
+
 * Mon Jun 10 2024 Yuri N. Sedunov <aris@altlinux.org> 46.2-alt1
 - 46.2
 
