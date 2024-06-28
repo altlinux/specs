@@ -1,6 +1,6 @@
 %define mversion	7
 %define dversion	%mversion.1.1
-%define drelease	31
+%define drelease	34
 %define qlev		Q16HDRI
 %define mgkdir		ImageMagick
 %define soname		10
@@ -270,6 +270,9 @@ mv %buildroot%_docdir/%name-%mversion %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Fri Jun 28 2024 Anton Farygin <rider@altlinux.ru> 7.1.1.34-alt1
+- 7.1.1.31 -> 7.1.1.34
+
 * Thu May 02 2024 Anton Farygin <rider@altlinux.ru> 7.1.1.31-alt1
 - 7.1.1.27 -> 7.1.1.31
 - built with enabled pango support (closes: #50167)
