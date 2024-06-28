@@ -5,7 +5,7 @@
 %define pypi_name python-ulid
 
 Name: python3-module-%pypi_name
-Version: 2.5.0
+Version: 2.7.0
 Release: alt1
 
 Summary: ULID implementation for Python
@@ -66,6 +66,12 @@ It is:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jun 28 2024 Alexandr Shashkin <dutyrok@altlinux.org> 2.7.0-alt1
+- 2.6.0 -> 2.7.0.
+
+* Thu May 30 2024 Alexandr Shashkin <dutyrok@altlinux.org> 2.6.0-alt1
+- 2.5.0 -> 2.6.0.
+
 * Thu May 02 2024 Alexandr Shashkin <dutyrok@altlinux.org> 2.5.0-alt1
 - Initial build for ALT Sisyphus.
 

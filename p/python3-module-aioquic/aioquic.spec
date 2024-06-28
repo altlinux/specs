@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: QUIC and HTTP/3 implementation in Python
@@ -51,6 +51,9 @@ regularly tested for interoperability against other QUIC implementations.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jun 28 2024 Alexandr Shashkin <dutyrok@altlinux.org> 1.1.0-alt1
+- 1.0.0 -> 1.1.0.
+
 * Wed Apr 03 2024 Alexandr Shashkin <dutyrok@altlinux.org> 1.0.0-alt1
 - 0.9.25 -> 1.0.0.
 
