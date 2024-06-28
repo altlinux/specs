@@ -6,7 +6,7 @@
 
 Name: plasma5-%rname
 Version: 5.27.11
-Release: alt1
+Release: alt2
 %K5init
 
 Group: System/Libraries
@@ -53,14 +53,14 @@ developing applications that use %name.
 %package -n %libkdecorations
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n %libkdecorations
 KF5 library
 
 %package -n %libkdecorationsprivate
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n %libkdecorationsprivate
 KF5 library
 
@@ -93,6 +93,9 @@ KF5 library
 %_K5lib/libkdecorations2private.so.*
 
 %changelog
+* Fri Jun 28 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt2
+- small relax requires
+
 * Thu Mar 07 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt1
 - new version
 
