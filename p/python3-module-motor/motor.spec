@@ -4,7 +4,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 3.4.0
+Version: 3.5.0
 Release: alt1
 
 Summary: Non-blocking MongoDB driver for Tornado
@@ -18,8 +18,8 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-intro
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-requirements-txt
 BuildRequires: python3-module-tornado
 BuildRequires: python3-module-pymongo python3-module-gridfs
 BuildRequires: python3(aiohttp)
@@ -52,6 +52,9 @@ applications.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Jun 28 2024 Grigory Ustinov <grenka@altlinux.org> 3.5.0-alt1
+- Automatically updated to 3.5.0.
+
 * Mon Apr 01 2024 Grigory Ustinov <grenka@altlinux.org> 3.4.0-alt1
 - Automatically updated to 3.4.0.
 
