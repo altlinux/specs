@@ -1,5 +1,5 @@
 Name: simple-xinit
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: launches an X server
@@ -44,5 +44,5 @@ mv %buildroot%_bindir/{portier,simple}-xinit
 exit 0
 
 %changelog
-* Fri Jun 28 2024 Arseny Maslennikov <arseny@altlinux.org> 0.1-alt1
+* Fri Jun 28 2024 Arseny Maslennikov <arseny@altlinux.org> 0.2-alt1
 - Initial build for ALT Sisyphus.
