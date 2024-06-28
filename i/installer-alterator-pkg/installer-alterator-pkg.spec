@@ -1,5 +1,5 @@
 Name: installer-alterator-pkg
-Version: 3.1.6
+Version: 3.1.7
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -57,6 +57,10 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Jun 27 2024 Ajrat Makhmutov <rauty@altlinux.org> 3.1.7-alt1
+- pkg-install: return the ability to specify a package groups using a variable
+- fix the calculation of the packages size when returning from the next step
+
 * Mon May 27 2024 Ajrat Makhmutov <rauty@altlinux.org> 3.1.6-alt1
 - fix the selection of applications for the single stage pkg after vm
 
