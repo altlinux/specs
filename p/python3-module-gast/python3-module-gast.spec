@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-gast
-Version: 0.5.5
+Version: 0.6.0
 Release: alt1
 Summary: Python AST that abstracts the underlying Python version
 License: BSD
@@ -51,6 +51,9 @@ as produced by ast.parse from the standard ast module.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jun 28 2024 Stanislav Levin <slev@altlinux.org> 0.6.0-alt1
+- 0.5.5 -> 0.6.0.
+
 * Wed Jun 26 2024 Stanislav Levin <slev@altlinux.org> 0.5.5-alt1
 - 0.5.3 -> 0.5.5.
 
