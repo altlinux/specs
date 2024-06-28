@@ -20,8 +20,8 @@
 %def_with gtkmm3
 
 %global majorversion    12.4
-%global minorversion    0
-%global toolsbuild      23259341
+%global minorversion    5
+%global toolsbuild      23787635
 %global toolsversion    %majorversion.%minorversion
 %global toolsdaemon     vmtoolsd
 %global vgauthdaemon    vgauthd
@@ -74,6 +74,8 @@ BuildRequires: libgdk-pixbuf-xlib-devel
 %{?_enable_resolutionkms:BuildRequires: libdrm-devel libudev-devel}
 
 #BuildRequires:          kernel-headers-modules-std-def
+
+Requires: udev-rules-hotplug-cpu
 
 %description
 The %name project is an open source implementation of VMware Tools. It
@@ -324,6 +326,9 @@ fi
 
 
 %changelog
+* Fri Jun 28 2024 Andrew A. Vasilyev <andy@altlinux.org> 12.4.5-alt1
+- 12.4.5
+
 * Sun Mar 24 2024 Andrew A. Vasilyev <andy@altlinux.org> 12.4.0-alt1
 - 12.4.0
 
