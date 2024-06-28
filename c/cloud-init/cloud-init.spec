@@ -1,7 +1,8 @@
 %def_enable check
+%define _libexecdir /usr/libexec
 
 Name:    cloud-init
-Version: 24.1.1
+Version: 24.1.7
 Release: alt1
 
 Summary: Cloud instance init scripts
@@ -31,7 +32,7 @@ Source41: 90_datasource-list.cfg
 Patch1: %name-%version-%release.patch
 Patch2: use_python3_in_uncloud-init.patch
 
-%add_findreq_skiplist /lib/systemd/system-generators/cloud-init-generator
+%add_findreq_skiplist %_systemdgeneratordir/cloud-init-generator
 
 BuildArch: noarch
 
@@ -41,7 +42,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev python3-module-distribute
 BuildRequires: python3-module-yaml python3-module-oauthlib
-BuildRequires: systemd-devel
+BuildRequires: libsystemd-devel libudev-devel
 BuildRequires: python3-module-httpretty python3-module-serial iproute2
 BuildRequires: util-linux net-tools python3-module-jinja2
 BuildRequires: python3-module-contextlib2 python3-module-prettytable
@@ -143,8 +144,6 @@ install -pD -m644 %SOURCE33 %buildroot%_sysconfdir/cloud/cloud.cfg.d/
 # Install other configs
 install -pD -m644 %SOURCE41 %buildroot%_sysconfdir/cloud/cloud.cfg.d/
 
-mkdir -p %buildroot%_libexecdir
-mv %buildroot/usr/libexec/%name %buildroot%_libexecdir/
 mkdir -p %buildroot%_sharedstatedir/cloud
 
 # Remove non-ALTLinux templates
@@ -194,11 +193,11 @@ make unittest
 %config(noreplace) %_sysconfdir/cloud/templates/*
 %config %_sysconfdir/systemd/system/sshd-keygen@.service.d/disable-sshd-keygen-if-cloud-init-active.conf
 %_datadir/bash-completion/completions/%name
-/lib/udev/rules.d/66-azure-ephemeral.rules
+%_udevrulesdir/66-azure-ephemeral.rules
 %_initdir/*
 %_unitdir/*
 %_tmpfilesdir/*
-/lib/systemd/system-generators/cloud-init-generator
+%_systemdgeneratordir/cloud-init-generator
 %python3_sitelibdir/*
 %_libexecdir/%name
 %_bindir/cloud-init*
@@ -207,6 +206,11 @@ make unittest
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Tue Jun 25 2024 Alexey Shabalin <shaba@altlinux.org> 24.1.7-alt1
+- 24.1.7
+- define _libexecdir as /usr/libexec
+- fix use systemd macros in spec
+
 * Wed Mar 13 2024 Mikhail Gordeev <obirvalger@altlinux.org> 24.1.1-alt1
 - 24.1.1
 
