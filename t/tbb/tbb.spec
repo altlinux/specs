@@ -2,12 +2,11 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-# https://github.com/pypa/setuptools/issues/3143
-%def_without python
+%def_with python
 
 Name: tbb
-Version: 2021.10.0
-Release: alt1.1
+Version: 2021.13.0
+Release: alt1
 Summary: Threading Building Blocks
 License: Apache-2.0
 Group: Development/Tools
@@ -40,6 +39,9 @@ BuildRequires: python3-devel
 %endif
 BuildRequires: gcc-c++
 BuildRequires: libgomp-devel
+%if_with python
+BuildRequires: python3-dev python3-module-setuptools python3-module-wheel
+%endif
 BuildRequires: swig
 BuildRequires: cmake ctest
 # needed for some tests
@@ -138,21 +140,26 @@ export RPM_LD_FLAGS="${RPM_LD_FLAGS:-} -latomic"
 	-DCMAKE_CXX_STANDARD=14 \
 	-DTBB_EXAMPLES:BOOL=ON \
 	-DTBB_STRICT:BOOL=OFF \
-%if_with python
-	-DTBB4PY_BUILD:BOOL=ON \
-%else
 	-DTBB4PY_BUILD:BOOL=OFF \
-%endif
 	%nil
 
 %cmake_build
 
 %install
 %cmakeinstall_std
+%if_with python
+pushd python
+export TBBROOT=%buildroot%_prefix
+subst "s|tbb_root, 'lib'|tbb_root, '%_lib'|g" setup.py
+subst "s|'irml'||" setup.py
+%pyproject_build
+%pyproject_install
+popd
+%endif
 
 rm -f %buildroot%_defaultdocdir/TBB/README.md
 
-%ifnarch ppc64le aarch64 %arm
+%ifnarch ppc64le aarch64
 %check
 %cmake_build -t test
 %endif
@@ -174,12 +181,20 @@ rm -f %buildroot%_defaultdocdir/TBB/README.md
 
 %if_with python
 %files -n python3-module-%name
-%python3_sitelibdir/TBB*
+%python3_sitelibdir/TBB.py
+%python3_sitelibdir/TBB*.dist-info
 %python3_sitelibdir/tbb
 %python3_sitelibdir/__pycache__/*
 %endif
 
 %changelog
+* Thu Jun 27 2024 L.A. Kostis <lakostis@altlinux.ru> 2021.13.0-alt1
+- Updated to upstream version 2021.13.0.
+- Restore build of python3 module.
+
+* Fri May 17 2024 L.A. Kostis <lakostis@altlinux.ru> 2021.12.0-alt1
+- Updated to upstream version 2021.12.0.
+
 * Wed Jan 03 2024 Grigory Ustinov <grenka@altlinux.org> 2021.10.0-alt1.1
 - Build without python.
 
