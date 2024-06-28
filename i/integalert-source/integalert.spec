@@ -11,7 +11,7 @@
 
 
 Name:     %pname-source
-Version:  0.4.10
+Version:  0.4.11
 Release:  alt1
 
 Summary:  Osec-based integrity checking script and settings
@@ -87,7 +87,7 @@ Lock down PVE cluster VMs on integalert_vm.service failure.
 %make_build
 
 %install
-%makeinstall_std sbindir=/sbin sysconfdir=%_sysconfdir datadir=%_datadir unitdir=%_unitdir presetdir=%_presetdir WITH_PVE=%{with pve} logrotatedir=%_logrotatedir
+%makeinstall_std sbindir=/sbin sysconfdir=%_sysconfdir datadir=%_datadir unitdir=%_unitdir presetdir=%_presetdir WITH_PVE=%{with pve} logrotatedir=%_logrotatedir mandir=%_mandir man8dir=%_man8dir
 
 %post -n %pname
 # On package update (don't check the $1 value due to package
@@ -150,6 +150,7 @@ fi
 %_sysconfdir/osec/integalert*/sender
 %dir %_sysconfdir/osec/integalert*/trigger.d
 %config(noreplace) %_logrotatedir/integalert*.conf
+%_man8dir/*.8.*
 
 %files -n %pname-vm-check
 %_unitdir/integalert_vm.service
@@ -162,6 +163,12 @@ fi
 %endif
 
 %changelog
+* Fri Jun 28 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.11-alt1
+- Added integalert(8) manual page.
+- Search for additional profiles by /etc/osec/integalert_*/dirs.conf.
+- Add --help and --version.
+- Added copyleft information.
+
 * Mon Jun 03 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.10-alt1
 - Add new sender.conf to define logging properties.
 - Generate and install logrotate configuration (100 weekly).
