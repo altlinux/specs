@@ -274,9 +274,9 @@
 # New Version-String scheme-style defines
 %global featurever 17
 %global interimver 0
-%global updatever 10
+%global updatever 11
 %global patchver 0
-%global buildver 7
+%global buildver 9
 
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
@@ -493,7 +493,7 @@ Patch2:    rh1648644-java_access_bridge_privileged_security.patch
 Patch3:    rh649512-remove_uses_of_far_in_jpeg_libjpeg_turbo_1_4_compat_for_jdk10_and_up.patch
 Patch4:    openjdk17-alt-fix-build-for-i586.patch
 # LoongArch support
-Patch3500: jdk17u-17.0.9-loongarch.patch
+Patch3500: jdk17u-17.0.11-loongarch.patch
 # Alas LoongArch patch somewhat breaks PPC, hence the fixup
 Patch3510: jdk17u-17.0.9-ppc-fixup.patch
 
@@ -2013,6 +2013,14 @@ fi
 %endif
 
 %changelog
+* Sat Jun 29 2024 Andrey Cherepanov <cas@altlinux.org> 0:17.0.11.0.9-alt1
+- New version.
+- Security fixes:
+  - CVE-2024-21012
+  - CVE-2024-21011
+  - CVE-2024-21068
+  - CVE-2024-21094
+
 * Mon Feb 05 2024 Andrey Cherepanov <cas@altlinux.org> 0:17.0.10.0.7-alt1
 - New version.
 - Security fixes:
