@@ -1,5 +1,5 @@
 Name: puddletag
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 
 Summary: Feature rich, easy to use tag editor
@@ -58,6 +58,9 @@ Supported formats: ID3v1, ID3v2 (mp3), MP4 (mp4, m4a, etc.), VorbisComments
 %_man1dir/%name.*
 
 %changelog
+* Sat Jun 29 2024 Anton Kurachenko <srebrov@altlinux.org> 2.4.0-alt1
+- New version 2.4.0.
+
 * Tue Mar 05 2024 Anton Kurachenko <srebrov@altlinux.org> 2.3.0-alt1
 - New version 2.3.0.
 
