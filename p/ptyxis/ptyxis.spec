@@ -2,7 +2,7 @@
 %define version_vte_api 2.91
 
 Name: ptyxis
-Version: 46.2
+Version: 46.3
 Release: alt1
 
 Summary: Ptyxis is a terminal for GNOME with first-class support for containers
@@ -10,6 +10,9 @@ License: GPL-3.0
 Group: Terminals
 
 Url: https://gitlab.gnome.org/chergert/ptyxis
+
+Requires: libvte-ptyxis = %EVR
+
 # Source-url: https://gitlab.gnome.org/chergert/ptyxis/-/archive/%version/%version.tar.gz
 Source: %name-%version.tar
 
@@ -58,6 +61,13 @@ BuildRequires: vala-tools libvala-devel
 %description
 %summary
 
+%package -n libvte-ptyxis
+Summary: Patched for ptyxis terminal emulator widget library for use with GTK+3
+Group: System/Libraries
+
+%description -n libvte-ptyxis
+%summary
+
 %prep
 %setup -a1
 
@@ -78,17 +88,18 @@ popd
 %install
 %meson_install
 %find_lang --with-gnome  %name
+%find_lang vte-ptyxis-%version_vte_api --output=vte-ptyxis.lang
 
 # Drop unused vte files
 rm -vr %buildroot%_includedir
 rm -vr %buildroot%_libexecdir/vte-urlencode-cwd
-rm -vr %buildroot/etc/profile.d/vte.csh
+rm -vr %buildroot/etc/profile.d
 rm -vr %buildroot%_libexecdir/systemd/
 rm -vr %buildroot%_pkgconfigdir
 rm -vr %buildroot%_datadir/vala
 rm -vr %buildroot%_libdir/girepository-1.0
 rm -vr %buildroot%_datadir/gir-1.0
-rm -vr %buildroot%_datadir/locale/*/LC_MESSAGES/vte*
+rm -vr %buildroot%_libdir/libvte-ptyxis-%version_vte_api-gtk4.so
 
 %files -f %name.lang
 %doc COPYING
@@ -102,12 +113,14 @@ rm -vr %buildroot%_datadir/locale/*/LC_MESSAGES/vte*
 %_iconsdir/hicolor/symbolic/apps/org.gnome.Ptyxis*.svg
 %_datadir/metainfo/org.gnome.Ptyxis.metainfo.xml
 
-# Bundle files from patched vte to package
-%_sysconfdir/profile.d/vte-ptyxis.sh
+%files -n libvte-ptyxis -f vte-ptyxis.lang
 %_libdir/libvte-ptyxis-%version_vte_api-gtk4.so.*
-%_libdir/libvte-ptyxis-%version_vte_api-gtk4.so
 
 %changelog
+* Thu Jun 20 2024 Boris Yumankulov <boria138@altlinux.org> 46.3-alt1
+- new version 46.3
+- add libvte-ptyxis subpackage
+
 * Sun Jun 09 2024 Boris Yumankulov <boria138@altlinux.org> 46.2-alt1
 - initial build for ALT Sisyphus
 
