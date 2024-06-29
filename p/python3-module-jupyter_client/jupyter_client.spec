@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 8.6.1
-Release: alt2
+Version: 8.6.2
+Release: alt1
 Summary: Jupyter protocol implementation and client libraries
 License: BSD-3-Clause
 Group: Development/Python3
@@ -25,9 +25,10 @@ BuildRequires: python3-module-ipython
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-jupyter
 BuildRequires: python3-module-pytest-timeout
+BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-pytest-rerunfailures
 BuildRequires: openssh-clients
 BuildRequires: iproute2
-BuildRequires: python3-module-flaky
 BuildRequires: python3-module-pexpect
 %endif
 
@@ -56,8 +57,8 @@ sed -i '/--color=yes/d' pyproject.toml
 
 %check
 sed -i '/localinterfaces._load_ips_ifconfig/d' tests/test_localinterfaces.py
-%pyproject_run_pytest -v -k 'not test_input_request' \
-		      --force-flaky --max-runs=3 --no-success-flaky-report
+%pyproject_run_pytest -v -p asyncio -p rerunfailures --reruns=3 -p timeout \
+	-k "not test_input_request"
 
 %files
 %doc *.md
@@ -67,6 +68,9 @@ sed -i '/localinterfaces._load_ips_ifconfig/d' tests/test_localinterfaces.py
 
 
 %changelog
+* Fri Jun 07 2024 Anton Vyatkin <toni@altlinux.org> 8.6.2-alt1
+- New version 8.6.2.
+
 * Tue May 21 2024 Anton Zhukharev <ancieg@altlinux.org> 8.6.1-alt2
 - Mapped PyPI name to distro's one.
 
