@@ -1,12 +1,12 @@
 %def_enable snapshot
 %define _name g4music
-%define ver_major 3.6
+%define ver_major 3.7
 %define rdn_name com.github.neithern.%_name
 
 %def_disable check
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: Play your music elegantly
@@ -66,6 +66,9 @@ large music collection.
 
 
 %changelog
+* Sat Jun 29 2024 Yuri N. Sedunov <aris@altlinux.org> 3.7.1-alt1
+- 3.7.1
+
 * Mon Jun 03 2024 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 
