@@ -4,8 +4,8 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: resticprofile
-Version: 0.26.0
-Release: alt1.1
+Version: 0.27.0
+Release: alt1
 Summary: Configuration profiles manager and scheduler for restic backup
 License: GPL-3.0-only
 Group: Archiving/Backup
@@ -14,6 +14,7 @@ Vcs: https://github.com/creativeprojects/resticprofile
 Requires: restic
 
 Source: %name-%version.tar
+Source1: hugo-theme-relearn-0.tar
 Patch: %name-%version.patch
 BuildRequires: golang
 
@@ -22,6 +23,7 @@ BuildRequires: golang
 
 %prep
 %setup
+tar xf %SOURCE1 -C docs/themes
 %autopatch -p1
 
 %build
@@ -30,7 +32,7 @@ BuildRequires: golang
 export CGO_ENABLED=0
 %endif
 export GOFLAGS="-buildmode=pie"
-commit=$(awk '$2="v%version" {print$1}' .gear/tags/list)
+commit=$(awk '$2=="v%version" {print$1}' .gear/tags/list)
 ldflags="-X main.version=%version-%release
 	 -X main.commit=${commit:-unknown}
 	 -X main.date=$(date -I)
@@ -64,6 +66,9 @@ go test ./... || true
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Fri Jun 28 2024 Vitaly Chikunov <vt@altlinux.org> 0.27.0-alt1
+- Update to v0.27.0 (2024-06-25).
+
 * Wed Feb 28 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.26.0-alt1.1
 - NMU: fixed FTBFS on LoongArch (-buildmode=pie requires CGO here).
 
