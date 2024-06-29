@@ -27,7 +27,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.8.0-openjdk
-%define version 1.8.0.402.b05
+%define version 1.8.0.412.b08
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -295,7 +295,7 @@ BuildRequires: /proc rpm-build-java
 # note, following three variables are sedded from update_sources if used correctly. Hardcode them rather there.
 %global shenandoah_project openjdk
 %global shenandoah_repo shenandoah-jdk8u
-%global shenandoah_revision shenandoah-jdk8u402-b05
+%global shenandoah_revision shenandoah-jdk8u412-b08
 # Define old aarch64/jdk8u tree variables for compatibility
 %global project         %{shenandoah_project}
 %global repo            %{shenandoah_repo}
@@ -380,7 +380,7 @@ BuildRequires: /proc rpm-build-java
 %global __jar_repack 0
 
 Name:    java-%{javaver}-%{origin}
-Version: %{javaver}.%{updatever}.b06
+Version: %{javaver}.%{updatever}.b08
 Release: alt1_%{?eaprefix}%{rpmrelease}%{?extraver}%{?dist}
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
@@ -417,7 +417,7 @@ URL:      http://openjdk.java.net/
 # FILE_NAME_ROOT=%%{shenandoah_project}-%%{shenandoah_repo}-${VERSION}
 # REPO_ROOT=<path to checked-out repository> generate_source_tarball.sh
 # where the source is obtained from http://hg.openjdk.java.net/%%{project}/%%{repo}
-Source0: gnu-andrew-%{shenandoah_revision}-ea.tar.xz
+Source0: gnu-andrew-%{shenandoah_revision}.tar.xz
 
 # Custom README for -src subpackage
 Source2: README.md
@@ -2133,6 +2133,14 @@ fi
 %endif
 
 %changelog
+* Fri Jun 28 2024 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.412.b08-alt1_1jpp8
+- New version.
+- Security fixes:
+  - CVE-2024-21011
+  - CVE-2024-21085
+  - CVE-2024-21068
+  - CVE-2024-21094
+
 * Tue Feb 06 2024 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.402.b06-alt1_1jpp8
 - New version.
 - Security fixes:
