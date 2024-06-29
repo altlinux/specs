@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 #based on fedora spec
 Name: pybind11
-Version: 2.11.1
-Release: alt3
+Version: 2.13.1
+Release: alt1
 
 Summary: Seamless operability between C++11 and Python
 License: BSD-3-Clause
@@ -102,6 +102,9 @@ export SKIP_E2K=1
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Thu Jun 27 2024 Anton Vyatkin <toni@altlinux.org> 2.13.1-alt1
+- New version 2.13.1.
+
 * Sun Oct 29 2023 Anton Vyatkin <toni@altlinux.org> 2.11.1-alt3
 - NMU: fixed replacement of distutils.
 
