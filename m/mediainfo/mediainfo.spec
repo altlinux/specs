@@ -1,4 +1,4 @@
-%define ver_major 24.05
+%define ver_major 24.06
 
 %def_disable kde4
 
@@ -154,6 +154,9 @@ rm -f %buildroot%_datadir/kde4/services/ServiceMenus/mediainfo-gui.desktop
 %_K5srv/ServiceMenus/%name-gui.desktop
 
 %changelog
+* Sat Jun 29 2024 Yuri N. Sedunov <aris@altlinux.org> 24.06-alt1
+- 24.06
+
 * Fri May 31 2024 Yuri N. Sedunov <aris@altlinux.org> 24.05-alt1
 - 24.05
 
