@@ -14,7 +14,7 @@
 
 Name: bluez
 Version: 5.76
-Release: alt1.1
+Release: alt1.2
 
 Summary: Bluetooth utilities
 License: GPL-2.0-or-later
@@ -147,8 +147,8 @@ fi
 %_unitdir/*.service
 %{?_enable_obex:%_prefix/lib/systemd/user/obex.service}
 %{?_enable_obex:%_prefix/lib/systemd/user/dbus-org.bluez.obex.service}
-/lib/udev/rules.d/*-hid2hci.rules
-/lib/udev/hid2hci
+%_udevrulesdir/*-hid2hci.rules
+%_prefix/lib/udev/hid2hci
 %_bindir/bluemoon
 %_bindir/bluetoothctl
 %_bindir/btattach
@@ -203,6 +203,9 @@ fi
 %_datadir/zsh/site-functions/_bluetoothctl
 
 %changelog
+* Thu Jun 27 2024 L.A. Kostis <lakostis@altlinux.ru> 5.76-alt1.2
+- Fix FTBFS: don't use harcoded udev paths.
+
 * Thu May 30 2024 L.A. Kostis <lakostis@altlinux.ru> 5.76-alt1.1
 - use systemdunitdir from macros.
 
