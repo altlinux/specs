@@ -1,6 +1,6 @@
 Name: nbfc-linux
 Version: 0.2.7
-Release: alt1
+Release: alt2
 
 Summary: NoteBook FanControl
 License: GPL-3.0
@@ -24,7 +24,6 @@ NoteBook FanControl ported to Linux
 %setup
 
 %build
-%__subst 's|@prefix@/lib/systemd/system|/lib/systemd/system|' Makefile.in
 %autoreconf
 %configure
 %make_build BUILD=debug
@@ -53,6 +52,9 @@ NoteBook FanControl ported to Linux
 %_datadir/nbfc/configs/*
 
 %changelog
+* Sat Jun 22 2024 Boris Yumankulov <boria138@altlinux.org> 0.2.7-alt2
+- rebuild for fix service path
+
 * Sun Jun 16 2024 Boris Yumankulov <boria138@altlinux.org> 0.2.7-alt1
 - new version 0.2.7
 
