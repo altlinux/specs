@@ -5,7 +5,7 @@
 
 Name: lowdown
 Version: 1.1.0
-Release: alt1
+Release: alt1.1
 Summary: A simple markdown translator
 License: ISC
 Group: Development/Documentation
@@ -22,6 +22,21 @@ ms and man formats, LaTeX, gemini, OpenDocument, and terminal output.
 
 lowdown is a fork of hoedown, although the parser and front-ends have
 changed significantly.
+
+%package -n lib%name
+Summary: Library for %name
+Group: System/Libraries
+
+%description -n lib%name
+%summary.
+
+%package -n lib%name-devel
+Summary: Development files for %name
+Requires: lib%name = %EVR
+Group: Development/C
+
+%description -n lib%name-devel
+%summary.
 
 %prep
 %setup
@@ -40,7 +55,7 @@ CFLAGS="%optflags" \
 %make_build
 
 %install
-%makeinstall_std install
+%makeinstall_std install_lib_common install_shared
 
 %check
 %make_build regress
@@ -53,7 +68,19 @@ CFLAGS="%optflags" \
 %_man1dir/%{name}*
 %_man5dir/%{name}*
 
+%files -n lib%name-devel
+%_includedir/lowdown.h
+%_pkgconfigdir/lowdown.pc
+%_libdir/liblowdown.so
+%_man3dir/%{name}*
+
+%files -n lib%name
+%_libdir/liblowdown.so.*
+
 %changelog
+* Wed Jun 19 2024 Boris Yumankulov <boria138@altlinux.org> 1.1.0-alt1.1
+- NMU: add devel subpackage (ALT bug: 50681)
+
 * Wed Nov 08 2023 Vitaly Chikunov <vt@altlinux.org> 1.1.0-alt1
 - Update to VERSION_1_1_0 (2023-11-07).
 
