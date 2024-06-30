@@ -1,4 +1,7 @@
 
+%define _unitdir /usr/lib/systemd/system
+%define _tmpfilesdir /usr/lib/tmpfiles.d
+
 %def_without bootstrap
 %def_with doc
 %def_with ldap
@@ -10,7 +13,7 @@
 
 Name: krb5
 Version: 1.21.3
-Release: alt1
+Release: alt2
 
 %if_without bootstrap
 %if_with doc
@@ -514,6 +517,10 @@ fi
 # {{{ changelog
 
 %changelog
+* Sun Jun 30 2024 Ivan A. Melnikov <iv@altlinux.org> 1.21.3-alt2
+- Force modern values of %%_unitdir and %%_tmpfilesdir
+  (fixes build in p11).
+
 * Thu Jun 27 2024 Ivan A. Melnikov <iv@altlinux.org> 1.21.3-alt1
 - 1.21.3 (Fixes: CVE-2024-37370, CVE-2024-37371)
 
