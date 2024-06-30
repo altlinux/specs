@@ -3,7 +3,7 @@
 %define oname tifffile
 
 Name: python3-module-%oname
-Version: 2024.5.22
+Version: 2024.6.18
 Release: alt1
 Summary: Read and write TIFF(r) files
 License: BSD-3-Clause
@@ -88,6 +88,9 @@ pytest-3 -v tests -k 'not test_write_5GB_bigtiff and not test_write_imagej_raw' 
 %python3_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
+* Sun Jun 30 2024 Grigory Ustinov <grenka@altlinux.org> 2024.6.18-alt1
+- Automatically updated to 2024.6.18.
+
 * Thu May 23 2024 Grigory Ustinov <grenka@altlinux.org> 2024.5.22-alt1
 - Automatically updated to 2024.5.22.
 
