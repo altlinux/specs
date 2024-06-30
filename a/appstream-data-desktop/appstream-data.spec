@@ -2,7 +2,7 @@
 
 Name:      appstream-data-desktop
 Summary:   ALT Linux AppStream metadata
-Version:   20240614
+Version:   20240629
 Release:   alt1
 Group:     System/Configuration/Packaging
 BuildArch: noarch
@@ -35,6 +35,10 @@ cp -r xmls/* %buildroot%_datadir/swcatalog/xml/
 %_datadir/swcatalog/icons/altlinux
 
 %changelog
+* Sat Jun 29 2024 Kirill Izmestev <felixz@altlinux.org> 20240629-alt1
+- Added i586 architecture for generating ProtonPlus package.
+- Updated database.
+
 * Fri Jun 14 2024 Kirill Izmestev <felixz@altlinux.org> 20240614-alt1
 - Updated database.
 
