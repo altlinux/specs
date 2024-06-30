@@ -1,6 +1,6 @@
 Name:    task-edu
 Version: 1.6.1
-Release: alt1
+Release: alt2
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
 Summary: Educational software (base set)
@@ -427,7 +427,9 @@ Requires: ansible
 Requires: semaphore
 %endif
 Requires: virt-viewer
+%ifnarch ppc64le
 Requires: OpenBoard
+%endif
 Requires: touchegg
 %description teacher
 %{summary}.
@@ -557,6 +559,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Sun Jun 30 2024 Anton Midyukov <antohami@altlinux.org> 1.6.1-alt2
+- NMU: task-edu-teacher: do not require OpenBoard on ppc64le
+
 * Tue May 07 2024 Andrey Cherepanov <cas@altlinux.org> 1.6.1-alt1
 - Merge task-edu-highschool and task-edu-gradeschool.
 

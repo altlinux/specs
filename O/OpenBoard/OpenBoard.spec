@@ -2,14 +2,15 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: OpenBoard
-Version: 1.6.4
-Release: alt4
+Version: 1.7.1
+Release: alt1
 Summary: Interactive whiteboard for schools and universities
 Summary(ru_RU.UTF-8): Интерактивная доска для школ и университетов
 License: GPL-3.0+
 Group: Education
 Url: https://github.com/OpenBoard-org/OpenBoard
-Packager: Anton Midyukov <antohami@altlinux.org>
+
+ExcludeArch: ppc64le
 
 Source: %name-%version.tar
 
@@ -19,36 +20,39 @@ Source1: %name.svg
 Source2: GeoInfo.wgt.tar.gz
 
 # https://github.com/OpenBoard-org/OpenBoard/pull/648
-Patch1: 0001-OpenBoard-1.6.3-update-russian-translations.patch
-
+Patch1: 0001-OpenBoard-1.7.0-update-russian-translations.patch
 Patch2: 0002-dark-background-color-set-ability-feature.patch
-
 # https://github.com/OpenBoard-org/OpenBoard/pull/635
 Patch3: 0003-new-icon-images.patch
-
 # https://github.com/OpenBoard-org/OpenBoard/pull/714
 Patch4: 0004-toolbar_elements_changed.patch
-
-# https://notes.sagredo.eu/files/hacks//openboard//run-in-a-window.patch
-Patch5: 0005-run-in-a-window.patch
-
 # https://github.com/OpenBoard-org/OpenBoard/pull/714
 Patch6: 0006-polygon_line_styles.patch
-
 # https://github.com/OpenBoard-org/OpenBoard/pull/712
 Patch8: 0008-background-grid-size-save.patch
-
 # https://github.com/OpenBoard-org/OpenBoard/pull/714
 Patch9: 0009-vector_tool.patch
-
-# https://github.com/OpenBoard-org/OpenBoard/pull/714
-Patch10: 0010-ru_tr_lineStyles_vectors.patch
-
 Patch11: 0011-fix-videoSize-saving.patch
-
-# Upstream commit
-Patch12: 0001-fix-make-UBFFmpegVideoEncoder-compatible-with-ffmpeg.patch
-Patch13: 0002-fix-avoid-taking-address-of-initializer-list.patch
+Patch13: 0013-Changes-for-dark-mode.patch
+Patch14: 0014-widgets-names-ru_translate.patch
+# https://github.com/OpenBoard-org/OpenBoard/pull/809
+Patch16: 0016-UBCompassTool-upgrade.patch
+# Patch changes:
+# - Added help buttons to the toolbar
+Patch18: 0018-Add-help-buttons.patch
+Patch19: 0019-add-ru-translate-for-startupHints.patch
+Patch20: 0020-showMaximized-when-open.patch
+Patch21: 0021-set-web-search-engine-to-yandex.patch
+Patch22: 0022-fix-documents-view.patch
+Patch23: 0023-improvement-tool-change.patch
+Patch24: 0024-fix-problem-with-multiscreen.patch
+Patch25: 0025-multi-touch.patch
+Patch26: 0026-remove-swipe-pages.patch
+# Build with C++20 for Poppler v24.04 and newer
+# https://github.com/OpenBoard-org/OpenBoard/issues/958
+Patch100: build-with-c++20.patch
+#https://github.com/OpenBoard-org/OpenBoard/pull/962
+Patch101: fix-Add-compatibility-with-C++20.patch
 
 BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: desktop-file-utils
@@ -71,8 +75,7 @@ BuildRequires: pkgconfig(Qt5PrintSupport)
 BuildRequires: pkgconfig(Qt5Script)
 BuildRequires: pkgconfig(Qt5Svg)
 BuildRequires: pkgconfig(Qt5UiTools)
-BuildRequires: pkgconfig(Qt5WebKit)
-BuildRequires: pkgconfig(Qt5WebKitWidgets)
+BuildRequires: pkgconfig(Qt5WebEngineWidgets)
 BuildRequires: pkgconfig(Qt5Xml)
 BuildRequires: pkgconfig(Qt5XmlPatterns)
 BuildRequires: pkgconfig(libpulse-mainloop-glib)
@@ -95,7 +98,6 @@ Interactive whiteboard for schools and universities.
 
 %prep
 %setup -a2
-# update russian translations
 %autopatch -p1
 
 # remove unwanted and nonfree libraries
@@ -103,7 +105,7 @@ sed -i -e 's|-lfdk-aac ||' src/podcast/podcast.pri
 sed -i -e 's|-lx264 ||' src/podcast/podcast.pri
 
 # drop quazip LIBS INCLUDEPATH
-sed -i -e '/LIBS += -lquazip5/d' \
+sed -i  -e '/LIBS += -lquazip5/d' \
 	-e '/INCLUDEPATH += "\/usr\/include\/quazip5"/d' \
 	OpenBoard.pro
 
@@ -205,6 +207,10 @@ cp -R resources/customizations %buildroot%_libdir/%name/
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sat Jun 29 2024 Anton Midyukov <antohami@altlinux.org> 1.7.1-alt1
+- New version 1.7.1.
+- ExcludeArch: ppc64le
+
 * Sat Sep 09 2023 Anton Midyukov <antohami@altlinux.org> 1.6.4-alt4
 - add upstream patches for fix build with ffmpeg-6.0
 
