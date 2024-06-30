@@ -1,7 +1,7 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %prefix/libexec
 %define ver_major 0.40
-%define beta .rc1
+%define beta %nil
 %define namespace Phosh
 %define api_ver 0
 %define rdn_name sm.puri.Phosh
@@ -19,7 +19,7 @@
 
 Name: phosh
 Version: %ver_major.0
-Release: alt0.9%beta
+Release: alt1%beta
 
 Summary: A pure Wayland shell for mobile devices
 License: GPL-3.0-or-later
@@ -253,6 +253,9 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Sun Jun 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.40.0-alt1
+- 0.40.0
+
 * Wed Jun 26 2024 Yuri N. Sedunov <aris@altlinux.org> 0.40.0-alt0.9.rc1
 - 0.40.0.rc1
 
