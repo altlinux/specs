@@ -6,6 +6,7 @@
 %define beta %nil
 %define api_ver 14
 %define gst_api_ver 1.0
+%define gvc_ver 5f9768a
 
 %def_enable extensions_tool
 %def_enable extensions_app
@@ -15,7 +16,7 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.2
+Version: %ver_major.3.1
 Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
@@ -28,6 +29,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %else
 Source: %name-%version%beta.tar
 %endif
+%{?_enable_snapshot:Source1: libgnome-volume-control-%gvc_ver.tar}
+
 Patch3: %name-3.8.4-alt-invalid_user_shell.patch
 
 Obsoletes: gnome-shell-extension-per-window-input-source
@@ -129,7 +132,7 @@ Requires: typelib(WebKit) = %webkit_api_ver
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires(pre): rpm-build-python3 rpm-build-xdg rpm-build-systemd
 BuildRequires: meson gcc-c++ xsltproc asciidoc-a2x sassc
-BuildRequires: %_bindir/appstream-util desktop-file-utils
+BuildRequires: /usr/bin/appstream-util /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: bash-completion
 BuildRequires: python3-devel
 BuildRequires: libX11-devel libXfixes-devel
@@ -201,7 +204,10 @@ GNOME Shell.
 %set_typelibdir %_libdir/%name
 
 %prep
-%setup -n %name-%version%beta
+%setup -n %name-%version%beta %{?_enable_snapshot:-a1
+mkdir subprojects/gvc
+cp -a libgnome-volume-control-%gvc_ver/* subprojects/gvc/}
+
 %patch3 -b .shells
 # set full path to gsettings
 sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.service
@@ -298,6 +304,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %endif
 
 %changelog
+* Sun Jun 30 2024 Yuri N. Sedunov <aris@altlinux.org> 46.3.1-alt1
+- 46.3.1
+
 * Sun May 26 2024 Yuri N. Sedunov <aris@altlinux.org> 46.2-alt1
 - 46.2
 
