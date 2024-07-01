@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.4
+Version: 2.4.1
 Release: alt1
 Summary: Exposes the Intel SSE4.2 CRC32C instruction
 License: LGPLv2.1
@@ -47,6 +47,9 @@ instruction set of Intel CPUs.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 01 2024 Stanislav Levin <slev@altlinux.org> 2.4.1-alt1
+- 2.4 -> 2.4.1.
+
 * Wed Feb 28 2024 Stanislav Levin <slev@altlinux.org> 2.4-alt1
 - 2.3 -> 2.4.
 
