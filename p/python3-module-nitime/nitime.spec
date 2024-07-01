@@ -1,9 +1,13 @@
 %define oname nitime
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.10.2
+Version: 0.11
 Release: alt1
+
 Summary: Nitime: timeseries analysis for neuroscience data
+
 License: BSD-3-Clause
 Group: Development/Python3
 URL: https://pypi.org/project/nitime
@@ -18,6 +22,13 @@ BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-scipy
+BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-matplotlib
+%endif
 
 %description
 Nitime is library of tools and algorithms for the analysis of
@@ -54,6 +65,10 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %install
 %pyproject_install
 
+%check
+# https://github.com/nipy/nitime/issues/214
+%pyproject_run_pytest -k'not test_timeseries'
+
 %files
 %doc LICENSE README.txt THANKS
 %python3_sitelibdir/%oname
@@ -66,6 +81,10 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Fri Jun 28 2024 Grigory Ustinov <grenka@altlinux.org> 0.11-alt1
+- Automatically updated to 0.11.
+- Built with check.
+
 * Sun May 19 2024 Grigory Ustinov <grenka@altlinux.org> 0.10.2-alt1
 - Automatically updated to 0.10.2.
 
