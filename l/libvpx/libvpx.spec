@@ -1,4 +1,4 @@
-%define soname 8
+%define soname 9
 %ifarch %ix86
 %define platform x86-linux-gcc
 %else
@@ -21,18 +21,16 @@
 %endif
 %endif
 
-Name: libvpx%soname
-Version: 1.13.1
-Release: alt3
+Name: libvpx
+Version: 1.14.1
+Release: alt1
 Summary: VP8 video codec
 Group: Video
 License: BSD
-Url: http://www.webmproject.org/
+Url: https://www.webmproject.org/
 
-Source0: %name-%version.tar
+Source0: libvpx-%version.tar
 Patch: %name-%version-%release.patch
-Obsoletes: libvpx6 >= 1.13
-Conflicts: libvpx6 >= 1.13
 
 BuildRequires: doxygen gcc-c++
 %ifarch %ix86 x86_64
@@ -42,7 +40,34 @@ BuildRequires: yasm
 %description
 VP8 is an open video codec, originally developed by On2 and released
 as open source by Google Inc. It is the successor of the VP3 codec,
-on which the Theora codec was based
+on which the Theora codec was based.
+
+%package -n libvpx%soname
+Summary: VP8 video codec
+Group: Video
+
+%description -n libvpx%soname
+VP8 is an open video codec, originally developed by On2 and released
+as open source by Google Inc. It is the successor of the VP3 codec,
+on which the Theora codec was based.
+
+
+%package -n libvpx-devel
+Summary: VP8 Libraries and Header Files
+Group: Development/C
+Requires: libvpx%soname = %EVR
+
+%description -n libvpx-devel
+%name-devel contains the libraries and header files needed to
+develop programs which make use of %name
+
+%package -n libvpx-utils
+Summary: VP8 utilities and tools
+Group: Video
+
+%description -n libvpx-utils
+A selection of utilities and tools for VP8, including a sample encoder
+and decoder.
 
 %prep
 %setup
@@ -76,14 +101,23 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %install
 %makeinstall_std
 
-%files
+%files -n libvpx%soname
 %doc AUTHORS LICENSE PATENTS CHANGELOG
 %_libdir/*.so.%soname
 %_libdir/*.so.%soname.*
 
+%files -n libvpx-devel
+%_includedir/vpx
+%_libdir/*.so
+%_pkgconfigdir/*.pc
+
+%files -n libvpx-utils
+%_bindir/*
+
 %changelog
-* Fri Jun 28 2024 Anton Farygin <rider@altlinux.ru> 1.13.1-alt3
-- built as compat library without a devel package
+* Fri Jun 28 2024 Anton Farygin <rider@altlinux.ru> 1.14.1-alt1
+- 1.14.1
+- source packages was renamed to libvpx
 
 * Mon Jan 01 2024 Anton Farygin <rider@altlinux.ru> 1.13.1-alt2
 - renamed to libvpx6 (closes: #45795)
