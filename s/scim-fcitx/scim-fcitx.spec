@@ -5,7 +5,7 @@ Summary: FCITX Input Method Engine for SCIM
 
 Group: System/Libraries
 License: GPLv2+
-Url: http://www.scim-im.org/projects/imengines/
+Url: https://github.com/scim-im/scim-fcitx
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source0: http://dl.sourceforge.net/scim/%name.%version.tar.bz2
 
