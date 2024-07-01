@@ -1,6 +1,6 @@
 Name:           retroarch
-Version:        1.19.0
-Release:        alt1.1
+Version:        1.19.1
+Release:        alt2
 Summary:        Emulator frontend
 License:        GPL-3.0-only
 Group:          Emulators
@@ -11,6 +11,10 @@ Source2:        retroarch-mobile.desktop
 Source3:        retroarch-mobile.sh
 
 Patch0:         retroarch-1.18.0-config.patch
+
+Patch2000: 0001-Fix-E2K-build.patch
+Patch2001: 0002-Add-E2K-init.patch
+
 
 BuildRequires:  libhid-devel
 BuildRequires:  fdupes
@@ -65,7 +69,7 @@ BuildRequires:  libwayland-egl-devel
 BuildRequires:  wayland-protocols
 BuildRequires:  libwayland-cursor-devel
 
-Requires: retroarch-assets libretro-core-info libretro-overlays
+Requires: retroarch-assets libretro-core-info libretro-overlays retroarch-assets
 
 ExcludeArch: ppc64le
 %description
@@ -84,7 +88,12 @@ Config file and desktop file for mobile devices like Pinephone Pro
 %prep
 %setup -q -n RetroArch-%{version}
 
-%autopatch -p1
+%patch0 -p1
+
+%ifarch %e2k
+%patch2000 -p1
+%patch2001 -p1
+%endif
 
 # Change /usr/bin/env python to /usr/bin/python
 sed -i s~%{_bindir}/env\ python~%{_bindir}/python~g tools/cg2glsl.py
@@ -123,6 +132,7 @@ export CXXFLAGS="$CFLAGS"
     --enable-qt \
     --enable-dbus \
     --enable-wayland \
+    --enable-debug \
 %ifarch x86
     --enable-sse \
 %endif
@@ -160,6 +170,14 @@ fdupes -rdN %{buildroot}
 
 
 %changelog
+* Mon Jul  1 2024 Artyom Bystrov <arbars@altlinux.org> 1.19.1-alt2
+- Fix config for Retroarch
+- Add retroarch-assets on Requires (ALTBUG#50786)
+
+* Thu Jun 27 2024 Artyom Bystrov <arbars@altlinux.org> 1.19.1-alt1
+- Update to new version
+- Added initial E2K support (thnks to ilyakurdyukov@)
+
 * Tue Jun 25 2024 Artyom Bystrov <arbars@altlinux.org> 1.19.0-alt1.1
 - Fix retroarch-mobile.sh
 - Update retroarch-mobile.cfg
