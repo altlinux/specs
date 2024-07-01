@@ -1,4 +1,4 @@
-%define crda_lib /lib/crda
+%define crda_lib %_libexecdir/crda
 %define sbindir /sbin
 %define _db wireless-regdb
 %define _db_date 2023.09.01
@@ -6,7 +6,7 @@
 Summary: Regulatory compliance agent for 802.11 wireless networking
 Name: crda
 Version: 4.15
-Release: alt4.%_db_date
+Release: alt5.%_db_date
 License: copyleft-next-0.3.0
 Group: Networking/Other
 
@@ -90,10 +90,10 @@ cd %name-%version
 
 %install
 cd crda-%version
-%makeinstall_std MANDIR=%_mandir SBINDIR=%sbindir/ LIBDIR=/%_lib
+%makeinstall_std MANDIR=%_mandir SBINDIR=%sbindir/ LIBDIR=%_libdir UDEV_RULE_DIR=%_udevrulesdir
 
 cd ../%_db
-%makeinstall_std PREFIX='' MANDIR=%_mandir
+%makeinstall_std PREFIX='' CRDA_PATH=%crda_lib MANDIR=%_mandir
 install -D -pm 0755 %SOURCE2 %buildroot/sbin
 install -D -pm 0644 %SOURCE3 %buildroot%_man1dir/setregdomain.1
 install -d %buildroot%_sysconfdir/%_db/pubkeys
@@ -105,9 +105,9 @@ ln -s regulatory.bin.5 %buildroot%_man5dir/regulatory.db.5
 %files
 %doc %name-%version/LICENSE %name-%version/README
 
-/%_lib/libreg.so
-# location of database is hardcoded to /lib/%%name
-%crda_lib
+%_libdir/libreg.so
+%dir %crda_lib
+%crda_lib/*
 # distribution custom keys
 %_sysconfdir/%_db
 %sbindir/%name
@@ -128,6 +128,10 @@ ln -s regulatory.bin.5 %buildroot%_man5dir/regulatory.db.5
 %_includedir/reglib
 
 %changelog
+* Sat Jun 29 2024 L.A. Kostis <lakostis@altlinux.ru> 4.15-alt5.2023.09.01
+- Fix udev rules dir.
+- Usrmerge fixes.
+
 * Thu Nov 09 2023 L.A. Kostis <lakostis@altlinux.ru> 4.15-alt4.2023.09.01
 - regdb: updated to 20230901.
 
