@@ -1,6 +1,6 @@
 Name: rg552-hw-control
 Version: 0.1
-Release: alt4
+Release: alt5
 
 Summary: Set of tools for hardware control on Anbernic RG552
 
@@ -32,19 +32,11 @@ mkdir -p %buildroot%_presetdir
 install -m 0644 20-rg552-hardware.preset %buildroot%_presetdir/
 
 
-# Enable service automatically if wifi and fan found - work in progress
-# cat>%buildroot%_udevrulesdir/90-rg552-hw.rules<<EOF
-# SUBSYSTEM=="usb", ACTION=="add", ENV{SYSTEMD_WANTS}="rg552-fancontrol.service", TAG+="systemd"
-# SUBSYSTEM=="usb", ACTION=="add", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="f179", ENV{SYSTEMD_WANTS}="rg552-wifi.service", TAG+="systemd"
-# EOF
-
 %post
-
 %post_service rg552-fancontrol.service
 %post_service rg552-wifi.service
 
 %preun
-
 %preun_service rg552-fancontrol
 %preun_service rg552-wifi
 
@@ -55,6 +47,11 @@ install -m 0644 20-rg552-hardware.preset %buildroot%_presetdir/
 %_presetdir/20-rg552-hardware.preset
 
 %changelog
+* Mon Jul 01 2024 Anton Midyukov <antohami@altlinux.org> 0.1-alt5
+- NMU: rg552-fancontrol, rg552-wifi: do nothing if the device model is not
+  Anbernic RG552
+- NMU: spec: cleanup commented out lines for udev rules
+
 * Sat Jun 22 2024 Artyom Bystrov <arbars@altlinux.org> 0.1-alt4
 - Minor spec clean
 
