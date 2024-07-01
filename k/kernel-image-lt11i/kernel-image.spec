@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-lt11i
-Release: alt2
+Release: alt3
 epoch:1
 %define kernel_need_version	6.1
 # Used when kernel-source-x.y does not currently exist in repository.
@@ -424,6 +424,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Jul 01 2024 Anton Midyukov <antohami@altlinux.org> 1:6.1.55-alt3
+- MIG-LT11i_defconfig: CONFIG_RFKILL=m, CONFIG_RFKILL_GPIO=m
+
 * Fri Apr 26 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.1.55-alt2
 - LT11i-iMX8MP-Kernel-6.1.55
 
