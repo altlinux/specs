@@ -3,7 +3,7 @@
 %define ngtcp2_crypto_gnutls 8
 
 Name: ngtcp2
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 Summary: An implementation of the RFC9000 QUIC protocol
 
@@ -81,6 +81,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_libdir/*.so
 
 %changelog
+* Mon Jul 01 2024 Anton Farygin <rider@altlinux.ru> 1.6.0-alt1
+- 1.5.0 -> 1.6.0
+
 * Sun May 19 2024 Anton Farygin <rider@altlinux.ru> 1.5.0-alt1
 - 1.4.0 -> 1.5.0
 
