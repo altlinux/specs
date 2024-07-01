@@ -10,7 +10,7 @@
 
 Name: python3-module-%pypi_name
 Version: 6.1.0
-Release: alt1
+Release: alt2
 
 Summary: An easy whitelist-based HTML-sanitizing tool
 
@@ -46,6 +46,8 @@ This is deprecated package, use python3-module-nh3 instead.
 
 %install
 %pyproject_install
+# bypass unnecessary dependencies
+rm -v %buildroot%python3_sitelibdir/%mod_name/_vendor/vendor_install.sh
 
 %files
 %doc README.rst
@@ -53,6 +55,9 @@ This is deprecated package, use python3-module-nh3 instead.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jun 28 2024 Vitaly Lipatov <lav@altlinux.ru> 6.1.0-alt2
+- bypass unnecessary dependencies
+
 * Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 6.1.0-alt1
 - new version 6.1.0 (with rpmrb script)
 - return Source-url
