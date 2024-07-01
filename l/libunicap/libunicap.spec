@@ -1,7 +1,7 @@
 Summary: Library to access different kinds of (video) capture devices
 Name: libunicap
 Version: 0.9.12
-Release: alt2
+Release: alt3
 License: GPLv2+
 Group: Development/C
 Url: http://www.unicap-imaging.org/
@@ -62,9 +62,6 @@ sed -i -e 's/\(SYSFS\|ATTRS\)/ATTRS/g' data/50-euvccam.rules
 %install
 %makeinstall_std
 
-mkdir -p %buildroot%_udevrulesdir
-mv %buildroot{/usr/lib/udev/rules.d,%_udevrulesdir}/50-euvccam.rules
-
 # Don't install any static .a and libtool .la files
 rm -f %buildroot%_libdir/{,unicap2/cpi/}*.{a,la}
 
@@ -83,6 +80,9 @@ rm -f %buildroot%_libdir/{,unicap2/cpi/}*.{a,la}
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Jul 01 2024 Oleg Solovyov <mcpain@altlinux.org> 0.9.12-alt3
+- fix build
+
 * Mon Feb 08 2021 Oleg Solovyov <mcpain@altlinux.org> 0.9.12-alt2
 - fix build
 
