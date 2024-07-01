@@ -5,16 +5,10 @@
 %set_verify_elf_method strict
 %add_optflags -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
 
-# gcc is broken for these architectures.
-# See: https://github.com/rui314/mold/issues/358
-%ifarch %ix86 %arm
-%def_without check
-%else
 %def_with check
-%endif
 
 Name: mold
-Version: 2.31.0
+Version: 2.32.1
 Release: alt1
 
 Summary: A Modern Linker
@@ -57,15 +51,15 @@ rm -rfv third-party/{zlib,zstd,mimalloc,tbb,xxhash,blake3}
 
 %build
 %cmake \
-        -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-	-DMOLD_LTO=ON \
-	-DMOLD_USE_MIMALLOC=ON \
-	-DMOLD_USE_SYSTEM_MIMALLOC=ON \
-	-DMOLD_USE_SYSTEM_TBB=ON \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DMOLD_LTO=ON \
+    -DMOLD_USE_MIMALLOC=ON \
+    -DMOLD_USE_SYSTEM_MIMALLOC=ON \
+    -DMOLD_USE_SYSTEM_TBB=ON \
 %if_with check
-	-DBUILD_TESTING=ON \
+    -DBUILD_TESTING=ON \
 %endif
-	%nil
+    %nil
 %cmake_build
 
 %install
@@ -85,6 +79,9 @@ rm %buildroot%_defaultdocdir/%name/LICENSE*
 %_man1dir/*mold.1.*
 
 %changelog
+* Mon Jul 01 2024 Anton Zhukharev <ancieg@altlinux.org> 2.32.1-alt1
+- Updated to 2.32.1.
+
 * Tue May 14 2024 Anton Zhukharev <ancieg@altlinux.org> 2.31.0-alt1
 - Updated to 2.31.0.
 
