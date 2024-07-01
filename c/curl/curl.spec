@@ -31,8 +31,8 @@
 %endif
 
 Name: curl
-Version: 8.7.1
-Release: alt2
+Version: 8.8.0
+Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -200,7 +200,6 @@ popd
 %_aclocaldir/libcurl.m4
 %_includedir/*
 %_man3dir/*
-%_man1dir/curl-config.1*
 %doc docs/{THANKS,TODO,examples,BUGS.md,TheArtOfHttpScripting.md}
 
 %if_enabled static
@@ -209,6 +208,9 @@ popd
 %endif
 
 %changelog
+* Mon Jul 01 2024 Anton Farygin <rider@altlinux.ru> 8.8.0-alt1
+- 8.7.1 -> 8.0.0 (Closes: #49883)
+
 * Wed Apr 24 2024 Andrey Cherepanov <cas@altlinux.org> 8.7.1-alt2
 - NMU: build with --enable-versioned-symbols
 
