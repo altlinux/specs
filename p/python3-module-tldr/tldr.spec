@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.2.0
-Release: alt2
+Version: 3.3.0
+Release: alt1
 
 Summary: Python command-line client for tldr pages
 License: MIT
@@ -76,6 +76,9 @@ install -Dpm644 %mod_name.zsh %buildroot%_datadir/zsh/site-functions/_%mod_name
 # TODO: package http://github.com/tldr-pages/tldr itself
 
 %changelog
+* Mon Jul 01 2024 Stanislav Levin <slev@altlinux.org> 3.3.0-alt1
+- 3.2.0 -> 3.3.0.
+
 * Fri May 26 2023 Michael Shigorin <mike@altlinux.org> 3.2.0-alt2
 - fix build --without check
 - minor spec cleanup
