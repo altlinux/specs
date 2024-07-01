@@ -9,7 +9,7 @@
 %endif
 
 Name: ispc
-Version: 1.23.0
+Version: 1.24.0
 Release: alt1
 Summary: Intel Implicit SPMD Program Compiler
 License: BSD-3-Clause
@@ -18,11 +18,6 @@ Group: Development/C
 %define docdir %_docdir/%name-%version
 
 Source: %name-%version.tar
-
-# https://github.com/ispc/ispc/pull/2788
-Patch0: %name-llvm-18-support.patch
-# https://github.com/ispc/ispc/pull/2828/commits/35117d72db54ce99b7fe2a1ce67467c81c9e10a6
-Patch1: %name-fix-llvm-17-warning.patch
 
 # Story: https://pharr.org/matt/blog/2018/04/30/ispc-all.html
 Vcs: https://github.com/ispc/ispc.git
@@ -46,7 +41,6 @@ BuildRequires: tbb-devel
 BuildRequires: lld
 %endif
 
-# armh: clang-11: error: unsupported option '--with-fpu=hardfp'
 # i586: Even though it builds it's not working until this fixed:
 #       https://github.com/ispc/ispc/issues/2105
 ExclusiveArch: x86_64 aarch64
@@ -85,12 +79,11 @@ This package will try to build all %name examples.
 
 %prep
 %setup
-%autopatch -p1
 sed -i 's/clangFrontend.*clangLex/clang-cpp/' CMakeLists.txt
 
 %build
 %if_with lld
-%define optflags_lto -flto=thin
+%define optflags_lto -flto=thin -ffat-lto-objects
 %endif
 
 # -DISPC_INCLUDE_TESTS=OFF = we don't have FileCheck
@@ -169,13 +162,16 @@ ispc --support-matrix
   ./run_tests.py --jobs=$(nproc) --non-interactive --arch=x86
 %endif
 %ifarch aarch64
-  ./run_tests.py --jobs=$(nproc) --non-interactive --arch=aarch64 --target=neon-i32x8
-%endif
-%ifarch armh
-  ./run_tests.py --jobs=$(nproc) --non-interactive --arch=arm --target=neon-i32x8
+  ./run_tests.py --jobs=$(nproc) --non-interactive --arch=aarch64 --target=neon-i32x4
 %endif
 
 %changelog
+* Mon Jul 01 2024 L.A. Kostis <lakostis@altlinux.ru> 1.24.0-alt1
+- 1.24.0.
+- Remove merged patches.
+- lld: compile with -ffat-lto-objects.
+- aarch64: sync tests targets with travis.
+
 * Wed Apr 17 2024 L.A. Kostis <lakostis@altlinux.ru> 1.23.0-alt1
 - 1.23.0.
 - Added patches from upstream:
