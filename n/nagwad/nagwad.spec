@@ -2,7 +2,7 @@
 %define icinga_user icinga
 
 Name: 	  nagwad
-Version:  0.11.3
+Version:  0.11.4
 Release:  alt3
 
 Summary:  System journal event scanner and handler
@@ -259,6 +259,10 @@ usermod -a -G %name %icinga_user
 %_bindir/nsca-shell
 
 %changelog
+* Mon Jul 01 2024 Paul Wolneykien <manowar@altlinux.org> 0.11.4-alt3
+- Fixed URL autodetection in 10-push-icinga.
+- Fix: Make "nagwad-host" append to host groups.
+
 * Thu Jun 27 2024 Paul Wolneykien <manowar@altlinux.org> 0.11.3-alt3
 - PATH-based invocation of journalctl (/bin or /usr/bin).
 - Add --test mode (reading messages from standard input).
