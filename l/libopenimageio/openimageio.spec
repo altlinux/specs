@@ -10,7 +10,7 @@
 %define soname 2.5
 
 Name:           lib%oname
-Version:        2.5.11.0
+Version:        2.5.12.0
 Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
@@ -122,12 +122,9 @@ with any formats for which plugins are available).
 Summary:        Documentation for %oname
 Group:          Development/Other
 Requires:       lib%oname%soname = %EVR
-%ifnarch armh
 Requires:       python3-module-%oname = %EVR
 Requires:       %oname-utils = %EVR
 Requires:       %oname-iv = %EVR
-%endif
-Requires:       libopencv-devel
 
 %description devel
 Development files for package %name
@@ -173,14 +170,8 @@ rm -fr src/include/OpenImageIO/detail/pugixml/
 	-DPLUGIN_SEARCH_PATH=%_libdir/OpenImageIO-%soname \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DOIIO_USING_IMATH=3 \
-%ifarch armh
-	-DBUILD_OIIOUTIL_ONLY:BOOL=TRUE \
-	-DUSE_SIMD=0 \
-	-DBUILD_DOCS:BOOL=FALSE \
-%else
 	-DBUILD_DOCS:BOOL=TRUE \
 	-DCMAKE_CXX_STANDARD=17 \
-%endif
 	%nil
 
 %cmake_build
@@ -188,11 +179,9 @@ rm -fr src/include/OpenImageIO/detail/pugixml/
 %install
 %cmake_install
 
-%ifnarch armh
 # Move man pages to the right directory
 mkdir -p %buildroot%_man1dir
 cp -a %_cmake__builddir/src/doc/*.1 %buildroot%_man1dir
-%endif
 
 mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 
@@ -202,7 +191,6 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/libOpenImageIO_Util.so.%{soname}
 %_libdir/libOpenImageIO_Util.so.%{soname}.*
 %_libdir/OpenImageIO-%soname
-%ifnarch armh
 %_libdir/libOpenImageIO.so.%{soname}
 %_libdir/libOpenImageIO.so.%{soname}.*
 
@@ -218,18 +206,19 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %files -n %oname-iv
 %_bindir/iv
 %_man1dir/iv.1*
-%endif
 
 %files devel
-%ifnarch armh
 %_libdir/libOpenImageIO.so
-%endif
 %_libdir/libOpenImageIO_Util.so
 %_includedir/*
 %_libdir/pkgconfig/OpenImageIO.pc
 %_libdir/cmake/*
 
 %changelog
+* Mon Jul 01 2024 L.A. Kostis <lakostis@altlinux.ru> 2.5.12.0-alt1
+- Updated to upstream version 2.5.12.0.
+- .spec: remove armh kludges.
+
 * Fri May 10 2024 L.A. Kostis <lakostis@altlinux.ru> 2.5.11.0-alt1
 - Updated to upstream version 2.5.11.0.
 
