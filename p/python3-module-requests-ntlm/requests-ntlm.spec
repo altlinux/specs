@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: NTLM authentication support for Requests
@@ -55,5 +55,8 @@ sed -i -e 's/requests.packages.\(urllib3.response\)/\1/' requests_ntlm/requests_
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jul 01 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
+- Automatically updated to 1.3.0.
+
 * Thu Jul 27 2023 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt1
 - Initial build for Sisyphus.
