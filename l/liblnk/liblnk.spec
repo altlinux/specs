@@ -13,38 +13,23 @@
 # published by the Open Source Initiative.
 
 Name: liblnk
-Version: 20140323
-Release: alt3
+Version: 20240120
+Release: alt1
 
 Summary: Library and tools to access the Windows Shortcut File (LNK) format
 License: LGPLv3+ and GFDL-1.3+
 Group: File tools
 
-Url: http://code.google.com/p/liblnk/
-#DL-URL: https://googledrive.com/host/0B3fBvzttpiiSQmluVC1YeDVvZWM/liblnk-alpha-20131015.tar.gz
-Source0: %name-alpha-%version.tar.gz
+Url: https://github.com/libyal/liblnk.git
+#DL-URL: https://github.com/libyal/%name/releases/download/%version/%name-alpha-%version.tar.gz
+Source: %name-alpha-%version.tar.gz
 Source1: Windows_Shortcut_File_(LNK)_format.pdf
-Source2: liblnk.watch
+Source2: %name.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
-BuildRequires: pkg-config
-BuildRequires: python-dev
-BuildRequires: pkgconfig(libbfio) >= 20130721
-BuildRequires: pkgconfig(libcdata) >= 20130904
-BuildRequires: pkgconfig(libcfile) >= 20130609
-BuildRequires: pkgconfig(libclocale) >= 20130609
-BuildRequires: pkgconfig(libcnotify) >= 20130609
-BuildRequires: pkgconfig(libcpath) >= 20130609
-BuildRequires: pkgconfig(libcsplit) >= 20130609
-BuildRequires: pkgconfig(libfdatetime) >= 20130317
-BuildRequires: pkgconfig(libfguid) >= 20130904
-BuildRequires: pkgconfig(libuna) >= 20120425
-# the below failed to compile with factory version as of Nov 1, 2013
-#BuildRequires:  pkgconfig(libcerror) >= 20120425
-# the below are not released as standalone packages by upstream
-#BuildRequires:  pkgconfig(libfwsi) >= 20120426
-#BuildRequires:  pkgconfig(libcsystem) >= 20120425
-#BuildRequires:  pkgconfig(libcstring) >= 20120425
+BuildRequires: python3-dev
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %description
 liblnk is a library to access Windows Shortcut File (LNK) files.
@@ -69,12 +54,12 @@ liblnk is a library to access Windows Shortcut File (LNK) files.
 This subpackage contains libraries and header files for developing
 applications that want to make use of %name.
 
-%package -n python-module-%name
+%package -n python3-module-%name
 Summary: Python bindings for liblnk, a Windows Shortcut Link parser
 License: LGPLv3+
 Group: Development/Python
 
-%description -n python-module-%name
+%description -n python3-module-%name
 Python binding for liblnk, which can read Windows Shortcut Link files.
 
 %prep
@@ -82,14 +67,18 @@ Python binding for liblnk, which can read Windows Shortcut Link files.
 cp -a "%SOURCE1" .
 
 %build
+%autoreconf
+
 %configure \
 	--disable-static \
 	--enable-wide-character-type \
-	--enable-python
+	--enable-python \
+	--with-pythondir=%python3_sitelibdir
 %make_build
 
 %install
 %makeinstall_std
+%pyproject_build
 
 %files
 %doc AUTHORS ChangeLog
@@ -106,11 +95,18 @@ cp -a "%SOURCE1" .
 %_pkgconfigdir/*.pc
 %_man3dir/*
 
-%files -n python-module-%name
+%files -n python3-module-%name
 %doc AUTHORS README
-%python_sitelibdir/pylnk.so
+%python3_sitelibdir/pylnk.so
 
 %changelog
+* Tue Feb 13 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240120-alt1
+- new version 20240120
+- build and pack pylnk as module
+
+* Tue Feb 13 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 20140323-alt4
+- watch file and url update
+
 * Sat May 02 2020 Michael Shigorin <mike@altlinux.org> 20140323-alt3
 - minor spec cleanup (thx ldv@)
 
