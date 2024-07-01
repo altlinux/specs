@@ -1,11 +1,10 @@
-%define _unpackaged_files_terminate_build 1
 %define oname requests-cache
 
 # some problems with pymongo
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Persistent cache for requests library
@@ -52,9 +51,13 @@ Requests-cache is a transparent persistent cache for requests
 
 %files
 %doc *.md LICENSE
-%python3_sitelibdir/*
+%python3_sitelibdir/requests_cache
+%python3_sitelibdir/requests_cache-%version.dist-info
 
 %changelog
+* Mon Jul 01 2024 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt1
+- Automatically updated to 1.2.1.
+
 * Thu Apr 04 2024 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt1
 - Automatically updated to 1.2.0.
 
