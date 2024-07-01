@@ -1,6 +1,6 @@
 Name: openssh
 Version: 9.6p1
-Release: alt1
+Release: alt2
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
 License: SSH-OpenSSH and ALT-Public-Domain and BSD-3-Clause and Beerware
@@ -352,6 +352,10 @@ sed -i '1 i\# Added automatically by openssh update script:\nPubkeyAcceptedKeyTy
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Mon Jul 01 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.6p1-alt2
+- Applied upstream security fix for regreSSHion vulnerability
+  (fixes CVE-2024-6387).
+
 * Wed Jan 24 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.6p1-alt1
 - Updated to V_9_6_P1.
 
