@@ -2,7 +2,7 @@
 %define  fname maxminddb
 
 Name:    python3-module-%oname
-Version: 2.6.1
+Version: 2.6.2
 Release: alt1
 
 Summary: Python MaxMind DB reader extension
@@ -21,7 +21,7 @@ BuildRequires: python3-module-wheel
 BuildRequires: libmaxminddb-devel
 BuildRequires: python3-module-sphinx
 
-Source:  %oname-%version.tar
+Source:  %name-%version.tar
 
 %description
 This is a Python module for reading MaxMind DB files.  The module includes both
@@ -43,7 +43,7 @@ Group: Development/Python3
 This package contains pickles for %oname.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
 export MAXMINDDB_USE_SYSTEM_LIBMAXMINDDB=1
@@ -76,6 +76,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%fname/
 %python3_sitelibdir/%fname/pickle
 
 %changelog
+* Mon Jul 01 2024 Grigory Ustinov <grenka@altlinux.org> 2.6.2-alt1
+- Automatically updated to 2.6.2.
+
 * Mon Apr 15 2024 Grigory Ustinov <grenka@altlinux.org> 2.6.1-alt1
 - Automatically updated to 2.6.1.
 
