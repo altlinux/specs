@@ -11,7 +11,7 @@
 
 Name: python3-module-%{_name}3
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 
 Summary: Python3 bindings for GObject
 Group: Development/Python3
@@ -30,6 +30,9 @@ Patch: pygobject-3.38.0-alt-meson-0.55_build.patch
 %add_typelib_req_skiplist typelib(Foo)
 %filter_from_requires /Gst.*/d
 %filter_from_requires /typelib(WebKit)/d
+# gi/_gtktemplate.py -> overrides/Gtk.py
+%filter_from_requires /typelib(Gtk)/d
+%filter_from_requires /typelib(GdkX11)/d
 
 %define meson_ver 0.56
 %define glib_ver 2.64.0
@@ -125,6 +128,10 @@ xvfb-run %__meson_test -t 2
 %endif
 
 %changelog
+* Mon Jul 01 2024 Yuri N. Sedunov <aris@altlinux.org> 3.48.2-alt1.1
+- removed typelib(Gtk/GdkX11) dependency to reduce dependencies
+  of pure pygobject packages (par exemple, firewalld + python3-module-firewall)
+
 * Sat Apr 06 2024 Yuri N. Sedunov <aris@altlinux.org> 3.48.2-alt1
 - 3.48.2
 
