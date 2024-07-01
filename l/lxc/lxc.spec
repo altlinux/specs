@@ -42,7 +42,7 @@
 %add_findreq_skiplist %_libexecdir/lxc/lxc-net
 
 Name: lxc
-Version: 5.0.3
+Version: 6.0.0
 Release: alt1
 
 Summary: Linux Containers
@@ -70,6 +70,7 @@ BuildRequires: libcap-devel
 BuildRequires: libpam-devel
 BuildRequires: libseccomp-devel libselinux-devel libssl-devel
 BuildRequires: pkgconfig(systemd)
+BuildRequires: dbus-python-devel
 %{?_enable_static_init:BuildRequires: libcap-devel-static}
 
 %description
@@ -322,6 +323,9 @@ groupadd -r -f vmusers ||:
 %_man8dir/pam_cgfs.8*
 
 %changelog
+* Fri May 03 2024 Nadezhda Fedorova <fedor@altlinux.org> 6.0.0-alt1
+- Updated to 6.0.0.
+
 * Wed Jan 31 2024 Alexey Shabalin <shaba@altlinux.org> 5.0.3-alt1
 - 5.0.3.
 - Backport from upstream "Add loongarch64 support".

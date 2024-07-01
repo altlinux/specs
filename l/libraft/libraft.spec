@@ -1,22 +1,27 @@
 %define _unpackaged_files_terminate_build 1
 %def_with zfs
+%def_with lz4
+%def_enable uv
+%def_disable backtrace
 
 Name: libraft
-Version: 0.17.1
+Version: 0.22.1
 Release: alt1
 
 Summary: Fully asynchronous C implementation of the Raft consensus protocol.
-License: Apache-2.0
+License: LGPL-3.0-only WITH LGPL-3.0-linking-exception
 Group: Development/C
 
-Url: https://github.com/canonical/raft
+Url: https://github.com/cowsql/%name
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
-BuildRequires: pkgconfig(libuv) >= 1.18.0
-BuildRequires: pkgconfig(liblz4) >= 1.7.1
+%{?_enable_uv:BuildRequires: pkgconfig(libuv) >= 1.18.0}
+%{?_with_lz4:BuildRequires: pkgconfig(liblz4) >= 1.7.1}
+%{?_enable_backtrace:BuildRequires: libbacktrace-devel}
 BuildRequires: btrfs-progs xfsprogs
 %{?_with_zfs:BuildRequires: zfs-utils}
+%{?_enable_uv:BuildRequires: libuv-devel >= 1.18.0}
 
 %description
 Fully asynchronous C implementation of the Raft consensus protocol.
@@ -43,7 +48,11 @@ RPC messages) and disk persistence (store log entries and snapshots).
 
 %build
 %autoreconf
-%configure --disable-static --disable-fixture
+%configure \
+ 	%{subst_with lz4} \
+	%{subst_enable uv} \
+        %{subst_enable backtrace} \
+	--disable-static --disable-fixture
 %make_build
 
 %install
@@ -60,6 +69,10 @@ RPC messages) and disk persistence (store log entries and snapshots).
 %_pkgconfigdir/raft.pc
 
 %changelog
+* Mon May 06 2024 Nadezhda Fedorova <fedor@altlinux.org> 0.22.1-alt1
+- change upstream
+- new version v0.22.1
+
 * Thu Aug 03 2023 Alexey Shabalin <shaba@altlinux.org> 0.17.1-alt1
 - new version 0.17.1
 

@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libdqlite
-Version: 1.15.1
+Version: 1.16.4
 Release: alt1
 Summary: Library for distributed SQLite database
 License: Apache-2.0
@@ -11,9 +11,9 @@ URL: https://github.com/CanonicalLtd/dqlite
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
-BuildRequires: libuv-devel
-BuildRequires: libraft-devel >= 0.17.1
+BuildRequires: libuv-devel >= 1.8.0
 BuildRequires: libsqlite3-devel
+BuildRequires: liblz4-devel >= 1.7.1
 
 %description
 This package provides the `dqlite` C library (libdqlite), which can be used
@@ -36,7 +36,7 @@ of peers, using the Raft algorithm.
 
 %build
 %autoreconf
-%configure --enable-replication --disable-static
+%configure --enable-build-raft --enable-replication --disable-static
 
 %make_build all
 
@@ -53,6 +53,9 @@ of peers, using the Raft algorithm.
 %_pkgconfigdir/dqlite.pc
 
 %changelog
+* Tue May 07 2024 Nadezhda Fedorova <fedor@altlinux.org> 1.16.4-alt1
+- new version 1.16.4
+
 * Thu Aug 03 2023 Alexey Shabalin <shaba@altlinux.org> 1.15.1-alt1
 - new version 1.15.1
 

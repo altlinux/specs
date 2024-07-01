@@ -1,12 +1,12 @@
-%global import_path github.com/lxc/lxd
+%global import_path github.com/canonical/lxd
 %global _unpackaged_files_terminate_build 1
 
 %define lxdgroup lxd
 %define lxduser lxd
 
 Name:		lxd
-Version:	5.16
-Release:	alt2
+Version:	5.21.1
+Release:	alt1
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
 Group:		Development/Other
@@ -140,7 +140,7 @@ if [ $1 = 1 ]; then
     if ! grep -qs '^root:' /etc/subuid \
        && ! grep -qs '^root:' /etc/subgid \
        && ! grep -qs '^lxd:' /etc/subuid \
-       && ! grep -qs '^lxd:' /etc/subuid
+       && ! grep -qs '^lxd:' /etc/subgid
     then
         %_sbindir/usermod --add-subgids 100000-165535 root ||:
         %_sbindir/usermod --add-subgids 100000-165535 lxd ||:
@@ -174,6 +174,10 @@ fi
 %_man1dir/*
 
 %changelog
+* Tue May 07 2024 Nadezhda Fedorova <fedor@altlinux.org> 5.21.1-alt1
+- new version 5.21.1
+- change upstream
+
 * Mon Aug 21 2023 Alexey Shabalin <shaba@altlinux.org> 5.16-alt2
 - Drop devel package.
 
