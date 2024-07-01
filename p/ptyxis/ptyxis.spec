@@ -2,7 +2,7 @@
 %define version_vte_api 2.91
 
 Name: ptyxis
-Version: 46.3
+Version: 46.4
 Release: alt1
 
 Summary: Ptyxis is a terminal for GNOME with first-class support for containers
@@ -22,7 +22,6 @@ Source1: vte-%name.tar
 ExcludeArch: i586
 
 Patch: vte-0.76.3-alt-bundle-patched-vte.patch
-Patch1: vte-0.76.3-alt-drop-unused-dependency.patch
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-systemd
 
@@ -48,7 +47,6 @@ BuildRequires: pkgconfig(ncurses)
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(gtk4) >= %gtk4_ver
 BuildRequires: libpango-devel >= %pango_ver
-BuildRequires: gobject-introspection-devel >= %gir_ver
 BuildRequires: pkgconfig(gnutls) >= %tls_ver
 BuildRequires: pkgconfig(fribidi)
 BuildRequires: pkgconfig(libpcre2-8) >= %pcre_ver
@@ -62,7 +60,7 @@ BuildRequires: vala-tools libvala-devel
 %summary
 
 %package -n libvte-ptyxis
-Summary: Patched for ptyxis terminal emulator widget library for use with GTK+3
+Summary: Patched for ptyxis terminal emulator widget library for use with GTK 4.0
 Group: System/Libraries
 
 %description -n libvte-ptyxis
@@ -78,27 +76,24 @@ pushd subprojects/vte
 %patch -p1
 patch -p1 -i ../../build-aux/0001-add-notification-and-shell-precmd-preexec.patch
 patch -p1 -i ../../build-aux/0001-a11y-implement-GtkAccessibleText.patch
-%patch1 -p1
 popd
 
 %build
-%meson
+%meson -Dvte:gtk3=false -Dvte:gtk4=true -Dvte:glade=false -Dvte:gir=false -Dvte:vapi=false
 %meson_build
 
 %install
 %meson_install
 %find_lang --with-gnome  %name
 %find_lang vte-ptyxis-%version_vte_api --output=vte-ptyxis.lang
+# fix permissions
+chmod 755 %buildroot%_sysconfdir/profile.d/vte-ptyxis.sh
 
 # Drop unused vte files
 rm -vr %buildroot%_includedir
 rm -vr %buildroot%_libexecdir/vte-urlencode-cwd
-rm -vr %buildroot/etc/profile.d
-rm -vr %buildroot%_libexecdir/systemd/
+rm -vr %buildroot%_sysconfdir/profile.d/vte.csh
 rm -vr %buildroot%_pkgconfigdir
-rm -vr %buildroot%_datadir/vala
-rm -vr %buildroot%_libdir/girepository-1.0
-rm -vr %buildroot%_datadir/gir-1.0
 rm -vr %buildroot%_libdir/libvte-ptyxis-%version_vte_api-gtk4.so
 
 %files -f %name.lang
@@ -113,10 +108,16 @@ rm -vr %buildroot%_libdir/libvte-ptyxis-%version_vte_api-gtk4.so
 %_iconsdir/hicolor/symbolic/apps/org.gnome.Ptyxis*.svg
 %_datadir/metainfo/org.gnome.Ptyxis.metainfo.xml
 
+# For "Restore Session" work
+%_sysconfdir/profile.d/vte-ptyxis.sh
+
 %files -n libvte-ptyxis -f vte-ptyxis.lang
 %_libdir/libvte-ptyxis-%version_vte_api-gtk4.so.*
 
 %changelog
+* Sun Jun 30 2024 Boris Yumankulov <boria138@altlinux.org> 46.4-alt1
+- new version 46.4
+
 * Thu Jun 20 2024 Boris Yumankulov <boria138@altlinux.org> 46.3-alt1
 - new version 46.3
 - add libvte-ptyxis subpackage
