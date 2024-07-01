@@ -1,7 +1,7 @@
 %define oname openssh
 Name: openssh-gostcrypto
 Version: 9.6p1
-Release: alt1.gost
+Release: alt2.gost
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
 License: SSH-OpenSSH and ALT-Public-Domain and BSD-3-Clause and Beerware
@@ -336,6 +336,13 @@ fi
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Mon Jul 01 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.6p1-alt2.gost
+- Updated -gostcrypto version.
+
+* Mon Jul 01 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.6p1-alt2
+- Applied upstream security fix for regreSSHion vulnerability
+  (fixes CVE-2024-6387).
+
 * Mon Apr 29 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 9.6p1-alt1.gost
 - Updated gostcrypto patchset for openssh 9.6p1.
 
