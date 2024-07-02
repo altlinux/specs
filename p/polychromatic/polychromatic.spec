@@ -2,7 +2,7 @@
 
 Name: polychromatic
 Version: 0.9.1
-Release: alt1
+Release: alt2
 
 Summary: RGB lighting interface utilites
 License: GPL-3.0
@@ -26,6 +26,7 @@ BuildRequires: python3-module-openrazer
 BuildRequires: python3-module-colorama
 BuildRequires: python3-module-colour
 BuildRequires: python3-module-requests
+BuildRequires: dbus-tools-gui
 %endif
 
 %description
@@ -63,6 +64,9 @@ eval $(dbus-launch --sh-syntax)
 %_man1dir/%name-*
 
 %changelog
+* Tue Jul 2 2024 Anton Kurachenko <srebrov@altlinux.org> 0.9.1-alt2
+- Added dbus-tools-gui in buildreq (fix FTBFS).
+
 * Wed May 15 2024 Anton Kurachenko <srebrov@altlinux.org> 0.9.1-alt1
 - New version 0.9.1.
 
