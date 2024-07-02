@@ -10,7 +10,7 @@
 
 Name:    libvirt-dbus
 Version: 1.4.1
-Release: alt1
+Release: alt2
 Summary: libvirt D-Bus API binding
 License: LGPL-2.1-or-later
 Group:   System/Libraries
@@ -82,6 +82,9 @@ exit 0
 %_mandir/man8/libvirt-dbus.8*
 
 %changelog
+* Tue Jul 02 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 1.4.1-alt2
+- Bump release number to correct upgrade from Autoimports to Sisyphus
+
 * Mon Jul 01 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 1.4.1-alt1
 - prepare port to Sisyphus
 
