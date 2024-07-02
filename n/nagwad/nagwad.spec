@@ -2,8 +2,8 @@
 %define icinga_user icinga
 
 Name: 	  nagwad
-Version:  0.11.4
-Release:  alt3
+Version:  0.11.5
+Release:  alt1
 
 Summary:  System journal event scanner and handler
 License:  GPLv3
@@ -259,6 +259,9 @@ usermod -a -G %name %icinga_user
 %_bindir/nsca-shell
 
 %changelog
+* Tue Jul 02 2024 Paul Wolneykien <manowar@altlinux.org> 0.11.5-alt1
+- Fixed parsing of endpoint port in 10-push-icinga.
+
 * Mon Jul 01 2024 Paul Wolneykien <manowar@altlinux.org> 0.11.4-alt3
 - Fixed URL autodetection in 10-push-icinga.
 - Fix: Make "nagwad-host" append to host groups.
