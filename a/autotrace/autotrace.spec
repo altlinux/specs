@@ -6,7 +6,7 @@
 
 Name: autotrace
 Version: 0.31.10
-Release: alt2
+Release: alt3
 
 Summary: Bitmap to vector graphics converter
 Summary(ru_RU.UTF-8): Программа трассировки растровых изображений.
@@ -44,6 +44,8 @@ Export Postscript, svg, xfig, swf, pstoedit, emf, dxf, cgm, mif, p2e and sk
 %package -n lib%name%soname
 Summary: Shared library for %name
 Group: System/Libraries
+Obsoletes: libautotrace < 0.31.10
+Conflicts: libautotrace < 0.31.10
 
 %description -n lib%name%soname
 Shared library needed to run %name.
@@ -110,6 +112,9 @@ autoreconf -fisv
 %endif
 
 %changelog
+* Tue Jul 02 2024 Anton Farygin <rider@altlinux.ru> 0.31.10-alt3
+- added Conflicts and Obsoltes with libautotrace 0.31.1 and earlier
+
 * Fri Jun 28 2024 Anton Farygin <rider@altlinux.ru> 0.31.10-alt2
 - fix pkcconfig file
 
