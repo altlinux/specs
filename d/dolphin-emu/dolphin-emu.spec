@@ -1,14 +1,12 @@
-# git describe upstream/dolphin-emu | sed 's/-g[0-9a-f]*\(+*\)$/\1/'
-%define git_version 5.0-21088
-# git show-ref --heads --hash upstream/dolphin-emu
-%define git_commit 9240f579eab18a2f67eef23846a6b508393d0e6c
+%define git_commit b92e354389bb7c0bd114a8631b8af110d3cb3a14
 
 %define enet_commit 2a85cd64459f6ba038d233a634d9440490dbba12
 %define implot_commit cc5e1daa5c7f2335a9460ae79c829011dc5cef2d
-%define rcheevos_commit d9e990e6d13527532b7e2bb23164a1f3b7f33bb5
+%define rcheevos_version 11.4.0
+%define tinygltf_commit c5641f2c22d117da7971504591a8f6a41ece488b
 
 Name: dolphin-emu
-Version: 5.0.21088
+Version: 2407
 Release: alt1
 
 Summary: The Gamecube / Wii Emulator
@@ -20,14 +18,16 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: x86_64 aarch64
 
-# https://github.com/%name/dolphin/archive/%git_commit/dolphin-%git_commit.tar.gz
-Source0: dolphin-%git_commit.tar
+# https://github.com/%name/dolphin/archive/%version/dolphin-%version.tar.gz
+Source0: dolphin-%version.tar
 # https://github.com/lsalzman/enet/archive/%enet_commit/enet-%enet_commit.tar.gz
 Source1: enet-%enet_commit.tar
 # https://github.com/epezent/implot/archive/%implot_commit/implot-%implot_commit.tar.gz
 Source2: implot-%implot_commit.tar
-# https://github.com/RetroAchievements/rcheevos/archive/%rcheevos_commit/rcheevos-%rcheevos_commit.tar.gz
-Source3: rcheevos-%rcheevos_commit.tar
+# https://github.com/RetroAchievements/rcheevos/archive/v%rcheevos_version/rcheevos-%rcheevos_version.tar.gz
+Source3: rcheevos-%rcheevos_version.tar
+# https://github.com/syoyo/tinygltf/archive/%tinygltf_commit/tinygltf-%tinygltf_commit.tar.gz
+Source4: tinygltf-%tinygltf_commit.tar
 
 Patch0: dolphin-gbacore-alt.patch
 
@@ -85,11 +85,12 @@ Dolphin-emu is a emulator for Gamecube, Wii, Triforce that lets
 you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 
 %prep
-%setup -n dolphin-%git_commit -b 1 -b 2 -b 3
+%setup -n dolphin-%version -b 1 -b 2 -b 3 -b 4
 
 %__mv -Tf ../enet-%enet_commit Externals/enet/enet
 %__mv -Tf ../implot-%implot_commit Externals/implot/implot
-%__mv -Tf ../rcheevos-%rcheevos_commit Externals/rcheevos/rcheevos
+%__mv -Tf ../rcheevos-%rcheevos_version Externals/rcheevos/rcheevos
+%__mv -Tf ../tinygltf-%tinygltf_commit Externals/tinygltf/tinygltf
 
 %patch0 -p1
 
@@ -98,9 +99,9 @@ export LDFLAGS="-Wl,--copy-dt-needed-entries"
 
 #Generate Version Strings
 echo "#define SCM_REV_STR \"%git_commit\"
-#define SCM_DESC_STR \"%git_version\"
-#define SCM_BRANCH_STR \"master\"
-#define SCM_IS_MASTER 1
+#define SCM_DESC_STR \"%version\"
+#define SCM_BRANCH_STR \"heads/refs/tags/%version\"
+#define SCM_COMMITS_AHEAD_MASTER 0
 #define SCM_DISTRIBUTOR_STR \"ALT Linux Team\"
 #define SCM_UPDATE_TRACK_STR \"\"" > Source/Core/Common/scmrev.h.in
 
@@ -125,6 +126,9 @@ echo "#define SCM_REV_STR \"%git_commit\"
 %config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Tue Jul 02 2024 Nazarov Denis <nenderus@altlinux.org> 2407-alt1
+- Version 2407
+
 * Wed Feb 14 2024 Nazarov Denis <nenderus@altlinux.org> 5.0.21088-alt1
 - Version 5.0-21088
 
