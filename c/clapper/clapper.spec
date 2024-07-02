@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: clapper
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Clapper is a GNOME media player
@@ -131,6 +131,9 @@ ln -s gstreamer-1.0/libgst%name.so %buildroot%_libdir/libgst%name.so
 %_vapidir/%name-gtk-%api_ver.*
 
 %changelog
+* Tue Jul 02 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
+- 0.6.1
+
 * Tue Apr 23 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - 0.6.0
 

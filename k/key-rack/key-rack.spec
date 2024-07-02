@@ -1,7 +1,7 @@
 %def_enable snapshot
 
 %define _name KeyRack
-%define ver_major 0.3
+%define ver_major 0.4
 %define rdn_name app.drey.%_name
 
 %def_disable bootstrap
@@ -15,10 +15,11 @@ License: GPL-3.0
 Group: Security/Networking
 Url: https://gitlab.gnome.org/sophie-h/key-rack
 
+Vcs: https://gitlab.gnome.org/sophie-h/key-rack.git
+
 %if_disabled snapshot
 Source: %url/-/archive/%version/%name-%version.tar.gz
 %else
-Vcs: https://gitlab.gnome.org/sophie-h/key-rack.git
 Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
@@ -41,7 +42,7 @@ by apps. It supports Flatpak secrets as well as system wide secrets.
 %setup -n %{?_enable_snapshot:%name}%{?_disable_snapshot:%_name}-%version %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
@@ -63,6 +64,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Tue Jul 02 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- updated to 0.4.0-2-g0fbde30
+
 * Sun Jan 14 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
 - first build for Sisyphus (0.2.0-30-g696fdf7)
 
