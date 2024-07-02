@@ -6,7 +6,7 @@
 %define bash_completionsdir %_datadir/bash-completion/completions
 
 Name: shepherd
-Version: 0.10.4
+Version: 0.10.5
 Release: alt1
 
 Summary: The GNU Shepherd
@@ -72,6 +72,9 @@ programming model.
 %bash_completionsdir/herd
 
 %changelog
+* Tue Jul 02 2024 Anton Zhukharev <ancieg@altlinux.org> 0.10.5-alt1
+- Updated to 0.10.5.
+
 * Mon Apr 01 2024 Anton Zhukharev <ancieg@altlinux.org> 0.10.4-alt1
 - Updated to 0.10.4.
 
