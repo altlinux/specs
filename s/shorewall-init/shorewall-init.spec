@@ -4,7 +4,7 @@
 
 Name: shorewall-init
 Version: 5.2.8
-Release: alt1
+Release: alt2
 Summary: Shorewall-init adds functionality to Shoreline Firewall (Shorewall).
 License: GPLv2
 Group: Security/Networking
@@ -27,6 +27,7 @@ ifup/ifdown and NetworkManager.
 
 %prep
 %setup -n %name-%version
+sed -i "s|SERVICEDIR=/lib/systemd/system|SERVICEDIR=%_unitdir|g" shorewallrc.alt
 
 %build
 %install
@@ -58,6 +59,9 @@ DESTDIR=%buildroot ./install.sh
 %_libexecdir/%name/*
 
 %changelog
+* Tue Jul 02 2024 Alexey Shabalin <shaba@altlinux.org> 5.2.8-alt2
+- Fix systemd unit path.
+
 * Fri Jan 28 2022 Alexey Shabalin <shaba@altlinux.org> 5.2.8-alt1
 - 5.2.8
 

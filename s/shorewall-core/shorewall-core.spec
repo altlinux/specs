@@ -4,7 +4,7 @@
 Summary: Shoreline Firewall is an iptables-based firewall for Linux systems
 Name: shorewall-core
 Version: 5.2.8
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: Security/Networking
 Source: %name-%version.tar.bz2
@@ -22,6 +22,7 @@ a multi-function gateway/ router/server or on a standalone GNU/Linux system.
 
 %prep
 %setup -n %name-%version
+sed -i "s|SERVICEDIR=/lib/systemd/system|SERVICEDIR=%_unitdir|g" shorewallrc.alt
 
 %build
 %install
@@ -43,6 +44,9 @@ DESTDIR=%buildroot ./install.sh
 %_man8dir/*
 
 %changelog
+* Tue Jul 02 2024 Alexey Shabalin <shaba@altlinux.org> 5.2.8-alt2
+- Fix systemd unit path.
+
 * Fri Jan 28 2022 Alexey Shabalin <shaba@altlinux.org> 5.2.8-alt1
 - 5.2.8
 
