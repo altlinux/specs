@@ -1,5 +1,5 @@
 Name: inxi
-Version: 3.3.34
+Version: 3.3.35
 Release: alt1
 
 Summary: A full featured system information script
@@ -66,6 +66,9 @@ perl -c inxi
 %_man1dir/%name.1*
 
 %changelog
+* Tue Jul 02 2024 Leontiy Volodin <lvol@altlinux.org> 3.3.35-alt1
+- New version 3.3.35.
+
 * Mon Apr 15 2024 Leontiy Volodin <lvol@altlinux.org> 3.3.34-alt1
 - New version 3.3.34.
 
