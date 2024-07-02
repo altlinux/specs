@@ -1,20 +1,18 @@
-%def_disable snapshot
-%set_verify_elf_method unresolved=relaxed
-
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define xdg_name org.gnome.FontManager
-%define xdg_name1 org.gnome.FontViewer
+%define rdn_name com.github.FontManager.FontManager
+%define rdn_name1 com.github.FontManager.FontViewer
 
 %def_with nautilus
 %define nautilus_extdir %_libdir/nautilus/extensions-4
 
 Name: font-manager
-Version: 0.8.9
+Version: 0.9.0
 Release: alt1
 
 Summary: A font management application for the GNOME desktop
-License: GPL-3.0
+License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 Url: http://fontmanager.github.io/
 
@@ -29,16 +27,17 @@ Requires: file-roller
 
 %define vala_ver 0.42
 %define pango_ver 1.4
-%define gtk_ver 3.22
+%define adw_ver 1.5
 
 BuildRequires(pre): meson rpm-build-gir
 BuildRequires: vala-tools >= %vala_ver
 BuildRequires: libpango-devel >= %pango_ver
-BuildRequires: libgtk+3-devel >= %gtk_ver libjson-glib-devel
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
+BuildRequires: libjson-glib-devel
 BuildRequires: libsqlite3-devel libxml2-devel
 BuildRequires: yelp-tools desktop-file-utils /usr/bin/appstream-util
-BuildRequires: gobject-introspection-devel libjson-glib-gir-devel libgtk+3-gir-devel
-BuildRequires: pkgconfig(webkit2gtk-4.1)
+BuildRequires: gobject-introspection-devel libjson-glib-gir-devel gir(Adw) = 1
+BuildRequires: pkgconfig(webkitgtk-6.0)
 %if_with nautilus
 BuildRequires: libnautilus-devel
 %endif
@@ -74,22 +73,25 @@ Enlightenment, and even KDE.
 %dir %_libexecdir/%name
 %_libexecdir/%name/font-viewer
 %_libdir/%name/
-%_desktopdir/%xdg_name.desktop
-%_desktopdir/%xdg_name1.desktop
-%_datadir/dbus-1/services/%xdg_name.service
-%_datadir/dbus-1/services/%xdg_name1.service
-%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/glib-2.0/schemas/%xdg_name1.gschema.xml
-%_iconsdir/hicolor/*/apps/*.png
-%_datadir/gnome-shell/search-providers/%xdg_name.SearchProvider.ini
+%_desktopdir/%rdn_name.desktop
+%_desktopdir/%rdn_name1.desktop
+%_datadir/dbus-1/services/%rdn_name.service
+%_datadir/dbus-1/services/%rdn_name1.service
+%_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_datadir/glib-2.0/schemas/%rdn_name1.gschema.xml
+%_iconsdir/hicolor/*/apps/*.svg
+%_datadir/gnome-shell/search-providers/%rdn_name.SearchProvider.ini
 %_man1dir/%name.1.*
-%_datadir/metainfo/%xdg_name.appdata.xml
-%_datadir/metainfo/%xdg_name1.appdata.xml
+%_datadir/metainfo/%rdn_name.metainfo.xml
+%_datadir/metainfo/%rdn_name1.metainfo.xml
 %{?_with_nautilus:%nautilus_extdir/*.so}
 %doc README* CHANGELOG
 
 
 %changelog
+* Tue Jul 02 2024 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
+- 0.9.0-1-g77df195c (ported to GTK4/Libadwaita)
+
 * Thu May 23 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.9-alt1
 - 0.8.9
 
