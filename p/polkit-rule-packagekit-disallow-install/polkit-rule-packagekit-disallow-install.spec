@@ -1,12 +1,13 @@
 Name: polkit-rule-packagekit-disallow-install
 Version: 0.1
-Release: alt1
+Release: alt2
 Summary: Rule for polkit disallow install packages without entering password
-License: GPLv3+
+License: GPL-3.0-or-later
 Group: Other
 Url: https://altlinux.org/Polkit
 BuildArch: noarch
 Requires: polkit
+Conflicts: polkit-rule-packagekit-allow-remove
 
 %description
 %summary.
@@ -27,5 +28,8 @@ EOF
 %_datadir/polkit-1/rules.d/40-packagekit-disallow-install.rules
 
 %changelog
+* Tue Jul 02 2024 Anton Midyukov <antohami@altlinux.org> 0.1-alt2
+- Conflicts: polkit-rule-packagekit-allow-remove
+
 * Tue Nov 14 2023 Anton Midyukov <antohami@altlinux.org> 0.1-alt1
 - Initial build
