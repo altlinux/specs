@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.29.4
-Release: alt2
+Version: 6.29.5
+Release: alt1
 
 Summary: IPython Kernel for Jupyter
 License: BSD-3-Clause
@@ -87,6 +87,9 @@ cp -r tests/ %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Tue Jul 02 2024 Anton Vyatkin <toni@altlinux.org> 6.29.5-alt1
+- New version 6.29.5.
+
 * Mon Apr 29 2024 Anton Vyatkin <toni@altlinux.org> 6.29.4-alt2
 - Fixed FTBFS.
 
