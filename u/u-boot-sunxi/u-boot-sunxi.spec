@@ -1,11 +1,11 @@
 Name: u-boot-sunxi
-Version: 2024.04
+Version: 2024.07
 Release: alt1
 
 Summary: Das U-Boot
 License: GPLv2+
 Group: System/Kernel and hardware
-Url: http://linux-sunxi.org/U-Boot
+Url: https://docs.u-boot.org/en/latest/
 
 ExclusiveArch: aarch64
 
@@ -51,10 +51,13 @@ cd out
 find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 
 %files
-%doc README README.sunxi board/sunxi/README.sunxi64
+%doc README doc/board/allwinner
 %_datadir/u-boot/*
 
 %changelog
+* Tue Jul 02 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.07-alt1
+- 2024.07 released
+
 * Thu Apr 04 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.04-alt1
 - 2024.04 released
 
