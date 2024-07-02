@@ -4,7 +4,7 @@
 
 Name: deepin-daemon
 Version: 6.0.36
-Release: alt1
+Release: alt2
 Epoch: 2
 
 Summary: Daemon handling the DDE session settings
@@ -78,6 +78,7 @@ sed -i 's|/etc/sddm.conf|/etc/X11/sddm/sddm.conf|' \
     accounts1/users/display_manager.{go,org}
 sed -i 's|/etc/systemd/system/display-manager.service|%_unitdir/display-manager.service|' \
     accounts1/users/display_manager.go
+sed -i 's|${DESTDIR}/etc/default/grub.d|${DESTDIR}%_sysconfdir/grub.d|g' Makefile
 
 # /bin
 sed -i 's|/usr/bin/env python3|%__python3|' \
@@ -98,6 +99,8 @@ sed -i 's|/usr/bin/X11/xauth|/usr/bin/xauth|' \
 # /lib
 sed -i 's|/usr/lib/fprintd/fprintd|%_libexecdir/fprintd|' \
     bin/dde-authority/fprint_transaction.go
+sed -i 's|/lib/systemd/system|%_unitdir|g' Makefile
+sed -i 's|/lib/udev/rules.d|%_udev_rulesdir|g' Makefile
 
 # /usr/share
 # '/usr/share/wallpapers/deepin/desktop.bmp' appearance/background/custom_wallpapers.go
@@ -118,10 +121,10 @@ sed -i 's|/usr/lib/fprintd/fprintd|%_libexecdir/fprintd|' \
 export BUILDDIR="$PWD/.build"
 export GOPATH="$PWD/vendor:%go_path"
 export GOFLAGS="-mod=vendor"
-export LIBS+="-L/%_lib -lpam -lsystemd"
+export LIBS+="-L%_libdir -lpam -lsystemd"
 #make -C network/nm_generator gen-nm-code
 
-%makeinstall_std PAM_MODULE_DIR=/%_lib/security
+%makeinstall_std PAM_MODULE_DIR=%_libdir/security
 
 # no more needed with pipewire
 rm -rf %buildroot%_datadir/%repo/audio/echoCancelEnable.sh
@@ -134,10 +137,16 @@ mv -f %buildroot/lib/systemd/user/org.dde.session.Daemon1.service \
 
 %files -f %repo.lang
 %doc README.md LICENSE CHANGELOG.md
-%_sysconfdir/default/grub.d/10_deepin.cfg
-%_sysconfdir/deepin/grub2_edit_auth.conf
-%_sysconfdir/pam.d/deepin-auth-keyboard
+%config(noreplace) %_sysconfdir/grub.d/10_deepin.cfg
+%dir %_sysconfdir/deepin/
+%config(noreplace) %_sysconfdir/deepin/grub2_edit_auth.conf
+%config %_sysconfdir/pam.d/deepin-auth-keyboard
+%config %_sysconfdir/acpi/actions/deepin_lid.sh
+%config %_sysconfdir/acpi/events/deepin_lid
+%config %_sysconfdir/NetworkManager/conf.d/deepin.dde.daemon.conf
 %_libexecdir/%name/
+%dir %_prefix/libexec/dde-daemon/
+%dir %_prefix/libexec/dde-daemon/keybinding/
 %_prefix/libexec/dde-daemon/keybinding/shortcut-dde-grand-search.sh
 %_datadir/dbus-1/services/*.service
 %_datadir/dbus-1/system-services/*.service
@@ -153,20 +162,23 @@ mv -f %buildroot/lib/systemd/user/org.dde.session.Daemon1.service \
 /var/lib/polkit-1/localauthority/10-vendor.d/org.deepin.dde.accounts.pkla
 /var/lib/polkit-1/localauthority/10-vendor.d/org.deepin.dde.fprintd.pkla
 /var/lib/polkit-1/localauthority/10-vendor.d/org.deepin.dde.grub2.pkla
-%_sysconfdir/acpi/actions/deepin_lid.sh
-%_sysconfdir/acpi/events/deepin_lid
-%_sysconfdir/NetworkManager/conf.d/deepin.dde.daemon.conf
-/lib/udev/rules.d/80-deepin-fprintd.rules
+%_udev_rulesdir/80-deepin-fprintd.rules
 %_unitdir/deepin-accounts1-daemon.service
 %_userunitdir/org.dde.session.Daemon1.service
 %dir %_userunitdir/dde-session-initialized.target.wants/
 %_userunitdir/dde-session-initialized.target.wants/org.dde.session.Daemon1.service
 # %%_unitdir/dbus-com.deepin.dde.lockservice.service
 %_datadir/locale/es_419/LC_MESSAGES/dde-daemon.mo
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.dde.daemon/
 %_datadir/dsg/configs/org.deepin.dde.daemon/*.json
 
 %changelog
+* Tue Jul 02 2024 Leontiy Volodin <lvol@altlinux.org> 2:6.0.36-alt2
+- Fixed build with systemd 255 and applied usrmerge.
+- Packaged post-install unowned files.
+
 * Mon Apr 01 2024 Leontiy Volodin <lvol@altlinux.org> 2:6.0.36-alt1
 - New version 6.0.36.
 
