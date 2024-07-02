@@ -17,7 +17,7 @@
 
 Name: plasma5-%rname
 Version: 5.27.11
-Release: alt2
+Release: alt3
 %K5init
 
 Group: Graphical desktop/KDE
@@ -28,7 +28,7 @@ License: GPL-2.0-or-later
 Provides: kf5-kwin = %EVR
 Obsoletes: kf5-kwin < %EVR
 
-Requires: hwdatabase
+Requires: hwdata
 Requires: /usr/bin/Xwayland kf5-kirigami plasma5-kscreenlocker
 Requires: qml(QtMultimedia) qml(QtQuick.VirtualKeyboard) qt5-quickcontrols qt5-quickcontrols2
 Requires: qml(org.kde.kquickcontrols) qml(org.kde.plasma.components) qml(org.kde.plasma.core)
@@ -39,7 +39,7 @@ Source: %rname-%version.tar
 Patch1: alt-def-window-buttons.patch
 Patch2: alt-def-nocompositing.patch
 Patch3: alt-def-qcompositing.patch
-Patch4: alt-hwdatabase.patch
+#
 Patch5: alt-def-xkb.patch
 Patch6: alt-def-layout-switch.patch
 
@@ -56,6 +56,7 @@ BuildRequires: libxkbcommon-devel libxkbcommon-x11-devel libgbm-devel libdrm-dev
 BuildRequires: fontconfig-devel libfreetype-devel liblcms2-devel
 BuildRequires: libepoxy-devel libinput-devel libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel
 BuildRequires: pipewire-libs-devel
+BuildRequires: hwdata-devel
 BuildRequires: qt5-wayland-devel kde5-plasma-wayland-protocols wayland-protocols
 BuildRequires: qt5-multimedia-devel qt5-script-devel qt5-tools-devel-static qt5-x11extras-devel qt5-sensors-devel
 BuildRequires: kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel
@@ -132,7 +133,7 @@ KF5 library
 %patch1 -p1
 #%patch2 -p1 -b .nocompositing
 #%patch3 -p1 -b .qcompositing
-%patch4 -p1 -b .hwinfo
+#
 #%patch5 -p1 -b .xkb
 %patch6 -p1
 
@@ -208,8 +209,11 @@ done
 
 
 %changelog
+* Tue Jul 02 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt3
+- use hwdata instead of hwdatabase
+
 * Sun Jun 02 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt2
-- harder dependency om wayland (closes: 50516)
+- harder dependency on wayland (closes: 50516)
 
 * Thu Mar 07 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt1
 - new version
