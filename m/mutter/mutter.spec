@@ -16,12 +16,11 @@
 %def_enable installed_tests
 %def_enable egl_device
 %def_enable wayland_eglstream
-# disabled by default
-%def_disable libdisplay_info
+%def_enable libdisplay_info
 
 Name: mutter
 Version: %ver_major.3
-Release: alt1%beta
+Release: alt1.1%beta
 Epoch: 1
 
 Summary: Clutter based compositing Window Manager
@@ -192,11 +191,11 @@ echo 'DRIVERS=="baikal-vdu", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-m
 %build
 %meson \
 	-Dintrospection=true \
-	%{?_enable_remote_desktop:-Dremote_desktop=true} \
-	%{?_enable_egl_device:-Degl_device=true} \
-	%{?_enable_wayland_eglstream:-Dwayland_eglstream=true} \
-	%{?_enable_libdisplay_info:-Dlibdisplay-info=true} \
-	%{?_disable_installed_tests:-Dinstalled_tests=false}
+	%{subst_enable_meson_bool remote_desktop remote_desktop} \
+	%{subst_enable_meson_bool egl_device egl_device} \
+	%{subst_enable_meson_bool wayland_eglstream wayland_eglstream} \
+	%{subst_enable_meson_feature libdisplay_info libdisplay_info} \
+	%{subst_enable_meson_bool installed_tests installed_tests}
 %nil
 %meson_build
 
@@ -274,6 +273,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Tue Jul 02 2024 Yuri N. Sedunov <aris@altlinux.org> 1:46.3-alt1.1
+- enabled libdisplay-info support
+
 * Sun Jun 30 2024 Yuri N. Sedunov <aris@altlinux.org> 1:46.3-alt1
 - 46.3
 
