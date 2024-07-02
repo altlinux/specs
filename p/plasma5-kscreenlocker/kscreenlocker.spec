@@ -7,7 +7,7 @@
 
 Name: plasma5-%rname
 Version: 5.27.11
-Release: alt1
+Release: alt2
 Epoch: 2
 %K5init
 
@@ -70,7 +70,7 @@ developing applications that use %name.
 %package -n %libkscreenlocker
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkscreenlocker
 KF5 library
 
@@ -133,6 +133,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screenlocker
 %_K5lib/libKScreenLocker.so.%sover
 
 %changelog
+* Tue Jul 02 2024 Sergey V Turchin <zerg@altlinux.org> 2:5.27.11-alt2
+- relax requires
+
 * Thu Mar 07 2024 Sergey V Turchin <zerg@altlinux.org> 2:5.27.11-alt1
 - new version
 
