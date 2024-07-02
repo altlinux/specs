@@ -1,5 +1,5 @@
 %define _name Keypunch
-%define ver_major 1.0
+%define ver_major 2.0
 %define rdn_name dev.bragefuglseth.%_name
 
 %def_enable check
@@ -53,5 +53,8 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README.*
 
 %changelog
+* Tue Jul 02 2024 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt1
+- updated to v2.0-7-geb167e7
+
 * Sat Jun 08 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt1
 - first build for Sisyphus (v1.0-15-g959968c)
