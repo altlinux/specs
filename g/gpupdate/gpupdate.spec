@@ -33,7 +33,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.10.4
+Version: 0.10.5
 Release: alt1
 
 Summary: GPT applier
@@ -191,6 +191,11 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Fri Jun 28 2024 Valery Sinelnikov <greh@altlinux.org> 0.10.5-alt1
+- Correction of missing entries with a upper case
+- Fixed string processing in date (closes: 50782)
+- Fixed getting correct data for the user for pkcon_runner
+
 * Thu Jun 27 2024 Valery Sinelnikov <greh@altlinux.org> 0.10.4-alt1
 - Fixed the definition of the module activation check (closes: 50755)
 - Fixed sorting of scripts (closes: 50756)
