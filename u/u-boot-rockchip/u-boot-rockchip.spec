@@ -1,10 +1,11 @@
 Name: u-boot-rockchip
-Version: 2024.04
-Release: alt1.1
+Version: 2024.07
+Release: alt1
 
 Summary: Das U-Boot
 License: GPLv2+
 Group: System/Kernel and hardware
+Url: https://docs.u-boot.org/en/latest/
 
 ExclusiveArch: aarch64
 
@@ -24,12 +25,11 @@ This package supports various Rockchip based boards.
 
 %prep
 %setup
-egrep -lr 'CONFIG_ROCKCHIP_(PX30|RK3328|RK3399)' configs |xargs sed -i \
-	-e '/^CONFIG_BAUDRATE/ s,1500000,115200,'
 
 %build
 export PYTHON=python3
 export DTC=%_bindir/dtc
+export RKBIN=%_datadir/rkbin/bin/rk35
 
 buildit()
 {
@@ -40,21 +40,22 @@ buildit()
   rm -rf ${O}
 }
 
-for soc in PX30 RK3328 RK3399; do
+export ROCKCHIP_TPL=$RKBIN/rk3588_ddr_lp4_2112MHz_lp5_2736MHz_v1.11.bin
+soc=RK3588
 boards=$(fgrep -lr CONFIG_ROCKCHIP_${soc} configs |sed 's,^configs/\(.\+\)_defconfig,\1,')
 for board in $boards; do buildit ${soc,,[A-Z]}; done
-done
-
-export RKBIN=%_datadir/rkbin/bin/rk35
 
 export ROCKCHIP_TPL=$RKBIN/rk3568_ddr_1560MHz_v1.16.bin
-for soc in RK3568; do
+soc=RK3568
 boards=$(fgrep -lr CONFIG_ROCKCHIP_${soc} configs |sed 's,^configs/\(.\+\)_defconfig,\1,')
 for board in $boards; do buildit ${soc,,[A-Z]}; done
-done
 
-export ROCKCHIP_TPL=$RKBIN/rk3588_ddr_lp4_2112MHz_lp5_2736MHz_v1.11.bin
-for soc in RK3588; do
+unset ROCKCHIP_TPL
+
+sed -i 's,serial2:1500000n8,serial2:115200n8,' dts/upstream/src/arm64/rockchip/*
+egrep -lr 'CONFIG_ROCKCHIP' configs |xargs sed -i '/^CONFIG_BAUDRATE/d'
+
+for soc in PX30 RK3328 RK3399; do
 boards=$(fgrep -lr CONFIG_ROCKCHIP_${soc} configs |sed 's,^configs/\(.\+\)_defconfig,\1,')
 for board in $boards; do buildit ${soc,,[A-Z]}; done
 done
@@ -69,6 +70,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Jul 02 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.07-alt1
+- 2024.07 released
+
 * Tue Jun 04 2024 Anton Midyukov <antohami@altlinux.org> 2024.04-alt1.1
 - add anbernic-rg552-rk3399_defconfig
 
