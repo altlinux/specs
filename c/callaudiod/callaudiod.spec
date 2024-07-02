@@ -3,7 +3,7 @@
 %define libname libcallaudio
 
 Name: callaudiod
-Version: 0.1.9
+Version: 0.1.10
 Release: alt1
 
 Summary: Daemon for dealing with audio routing during phone calls
@@ -75,6 +75,9 @@ applications that use %libname.
 %_pkgconfigdir/%libname-%api_ver.pc
 
 %changelog
+* Tue Jul 02 2024 Yuri N. Sedunov <aris@altlinux.org> 0.1.10-alt1
+- 0.1.10
+
 * Tue May 16 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.9-alt1
 - 0.1.9
 
