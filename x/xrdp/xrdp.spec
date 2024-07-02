@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 Name: 	 xrdp
 Version: 0.10.0
-Release: alt2
+Release: alt3
 
 Summary: An open source remote desktop protocol (RDP) server
 
@@ -169,7 +169,7 @@ done
 	   --enable-vsock \
 	   --enable-rdpsndaudin \
 	   --enable-fdkaac \
-	   --with-systemdsystemunitdir=%systemd_unitdir
+	   --with-systemdsystemunitdir=%_unitdir
 pushd xorgxrdp
 PKG_CONFIG_PATH=../pkgconfig ./configure --enable-glamor
 popd
@@ -199,18 +199,18 @@ rm -rf %buildroot%_sysconfdir/init.d
 install -Dp -m 644 %SOURCE7 %buildroot%_sysconfdir/pam.d/xrdp-sesman
 
 # install xrdp systemd units
-install -Dp -m 644 instfiles/xrdp.service %buildroot/lib/systemd/system/xrdp.service
-install -Dp -m 644 instfiles/xrdp-sesman.service %buildroot/lib/systemd/system/xrdp-sesman.service
+install -Dp -m 644 instfiles/xrdp.service %buildroot%_unitdir/xrdp.service
+install -Dp -m 644 instfiles/xrdp-sesman.service %buildroot%_unitdir/xrdp-sesman.service
 
 # install xrdp sysconfig /etc/sysconfig/xrdp
 install -Dp -m 644 %SOURCE1 %buildroot%_sysconfdir/sysconfig/xrdp
 
 # install logrotate /etc/logrotate.d/xrdp
-install -Dp -m 644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/xrdp
+install -Dp -m 644 %SOURCE2 %buildroot%_logrotatedir/%name
 
 # install log file /var/log/xrdp-sesman.log
-mkdir -p %buildroot%_localstatedir/log/
-touch %buildroot%_localstatedir/log/xrdp-sesman.log
+mkdir -p %buildroot%_logdir
+touch %buildroot%_logdir/xrdp-sesman.log
 
 # rsakeys.ini
 touch %buildroot%_sysconfdir/xrdp/rsakeys.ini
@@ -230,8 +230,8 @@ find %buildroot -name *.a -delete -o -name *.la -delete
 rm -rf %buildroot{/usr/local,%_includedir,%_pkgconfigdir}
 
 %pre
-/usr/sbin/groupadd -r -f tsusers 2>/dev/null ||:
-/usr/sbin/groupadd -r -f tsadmins 2>/dev/null ||:
+groupadd -r -f tsusers 2>/dev/null ||:
+groupadd -r -f tsadmins 2>/dev/null ||:
 
 %post
 # Generate keys if they are missing
@@ -258,7 +258,7 @@ fi
 
 %files
 %config(noreplace) %_sysconfdir/pam.d/xrdp-sesman
-%dir %_sysconfdir/xrdp/
+%dir %_sysconfdir/xrdp
 %_sysconfdir/xrdp/km*.ini
 %_sysconfdir/xrdp/*.sh
 %dir %_sysconfdir/xrdp/pulse
@@ -267,8 +267,8 @@ fi
 %_sysconfdir/xrdp/openssl.conf
 %_initdir/%name
 %config(noreplace) %_sysconfdir/sysconfig/xrdp
-/lib/systemd/system/*.service
-%ghost %_localstatedir/log/xrdp-sesman.log
+%_unitdir/*.service
+%ghost %_logdir/xrdp-sesman.log
 %ghost %config(noreplace) %attr(0400,root,root) %verify(not size md5 mtime) %_sysconfdir/xrdp/rsakeys.ini
 %ghost %config(noreplace) %attr(0400,root,root) %verify(not size md5 mtime) %_sysconfdir/xrdp/*.pem
 %config(noreplace) %_sysconfdir/xrdp/sesman.ini
@@ -278,7 +278,7 @@ fi
 %_sbindir/xrdp*
 %_libdir/%name
 %_logrotatedir/%name
-%dir %_datadir/xrdp/
+%dir %_datadir/xrdp
 %_datadir/xrdp/*
 %_datadir/polkit-1/rules.d/xrdp.rules
 %_man1dir/*
@@ -292,6 +292,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Tue Jul 02 2024 Alexey Shabalin <shaba@altlinux.org> 0.10.0-alt3
+- Fix rpm macros in %%install and %%files.
+
 * Mon May 13 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.10.0-alt2
 - E2K: build fix
 
