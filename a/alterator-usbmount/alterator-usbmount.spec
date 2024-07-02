@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-usbmount
-Version: 0.1
-Release: alt2
+Version: 0.1.1
+Release: alt1
 Summary: Alterator module to control mountpoints of USB block devices
 Group: System/Configuration/Other
 License: %gpl2plus
@@ -30,7 +30,7 @@ The usbmount-daemon contains a systemd service to apply mount policies
 %setup
 
 %build
-%cmake -DCMAKE_BUILD_TYPE:STRING=Release -DUSBMOUNT=1 -G Ninja
+%cmake -DCMAKE_BUILD_TYPE:STRING=Release -DUSBMOUNT=1 -G Ninja -DUNITDIR=%_unitdir
 %cmake_build
 
 %install
@@ -57,6 +57,9 @@ The usbmount-daemon contains a systemd service to apply mount policies
 %dir %_logdir/alt-usb-automount/
 
 %changelog
+* Tue Jul 02 2024 Oleg Proskurin <proskur@altlinux.org> 0.1.1-alt1
+- Bugfixing (Closes: #50666, #50604, #50665 )
+
 * Thu Jun 06 2024 Oleg Proskurin <proskur@altlinux.org> 0.1-alt2
 - Add Help File
 
