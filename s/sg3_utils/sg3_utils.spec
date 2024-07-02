@@ -4,7 +4,7 @@
 
 Name: sg3_utils
 Version: 1.48
-Release: alt1
+Release: alt2
 
 Summary: Utilities for devices that use SCSI command sets
 License: GPL-2.0-or-later and BSD-2-Clause
@@ -12,8 +12,9 @@ Group: System/Kernel and hardware
 Url: https://sg.danny.cz/sg/sg3_utils.html
 # https://sg.danny.cz/sg/p/%name-%version.tar.xz
 Source: %name-%version.tar
-Patch: sg3_utils-alt-rescan-scsi-bus.patch
 Requires: libsgutils = %EVR
+
+%add_findreq_skiplist %_bindir/rescan-scsi-bus.sh
 
 %description
 Collection of Linux utilities for devices that use the SCSI command set.
@@ -56,7 +57,6 @@ Udev rules which are associated with the utilities in the %name package.
 
 %prep
 %setup
-%autopatch -p1
 sed -i s/libsgutils2/libsgutils/g */Makefile.*
 sed -i s/2:0:0/1:0:0/ lib/Makefile.*
 
@@ -94,6 +94,10 @@ install -m 755 scripts/fc_wwpn_id %buildroot%_udevrulesdir/../
 %_udevrulesdir/../fc_wwpn_id
 
 %changelog
+* Fri Jun 21 2024 Alexey Shabalin <shaba@altlinux.org> 1.48-alt2
+- Drop sg3_utils-alt-rescan-scsi-bus.patch.
+- Disable autoreq for rescan-scsi-bus.sh.
+
 * Mon May 06 2024 Alexey Shabalin <shaba@altlinux.org> 1.48-alt1
 - 1.47 -> 1.48.
 
