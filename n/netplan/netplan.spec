@@ -1,6 +1,6 @@
 Name:    netplan
 Version: 0.106
-Release: alt1
+Release: alt2
 
 Summary: Backend-agnostic network configuration in YAML
 License: GPL-3.0
@@ -39,7 +39,7 @@ mkdir -p %buildroot%_sysconfdir/%name
 
 %files
 %_sbindir/%name
-/lib/systemd/system-generators/%name
+%_gen_dir/%name
 /lib/%name
 %_libdir/libnetplan.so.0.0
 %_datadir/bash-completion/completions/%name
@@ -52,6 +52,9 @@ mkdir -p %buildroot%_sysconfdir/%name
 %_man8dir/%{name}*
 
 %changelog
+* Tue Jul 02 2024 Mikhail Gordeev <obirvalger@altlinux.org> 0.106-alt2
+- Fix rebuild using %%_gen_dir
+
 * Mon Apr 24 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.106-alt1
 - New version 0.106.
 
