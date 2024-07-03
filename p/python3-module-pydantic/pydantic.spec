@@ -4,7 +4,7 @@
 %define pypi_name pydantic
 
 Name: python3-module-%pypi_name
-Version: 2.7.3
+Version: 2.8.0
 Release: alt1
 
 Summary: Data parsing and validation using Python type hints
@@ -78,6 +78,9 @@ with pydantic.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jul 03 2024 Alexandr Shashkin <dutyrok@altlinux.org> 2.8.0-alt1
+- 2.7.3 -> 2.8.0.
+
 * Thu Jun 06 2024 Alexandr Shashkin <dutyrok@altlinux.org> 2.7.3-alt1
 - 2.7.2 -> 2.7.3.
 
