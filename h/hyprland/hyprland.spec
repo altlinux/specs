@@ -2,7 +2,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: hyprland
-Version: 0.41.0
+Version: 0.41.2
 Release: alt1
 
 Summary: Hyprland is a dynamic tiling Wayland compositor that doesn't sacrifice on its looks
@@ -25,6 +25,7 @@ BuildRequires: jq
 BuildRequires: pkgconfig(hyprcursor)
 BuildRequires: pkgconfig(hyprlang)
 BuildRequires: pkgconfig(hyprwayland-scanner)
+BuildRequires: pkgconfig(hyprutils)
 
 BuildRequires: gcc-c++ >= 11
 BuildRequires: glslang-devel
@@ -120,6 +121,9 @@ rm -rf %buildroot%_datadir/pkgconfig/wlroots.pc
 %_datadir/hyprland-protocols/
 
 %changelog
+* Thu Jul 04 2024 Roman Alifanov <ximper@altlinux.org> 0.41.2-alt1
+- new version 0.41.2 (with rpmrb script)
+
 * Wed Jun 12 2024 Roman Alifanov <ximper@altlinux.org> 0.41.0-alt1
 - new version 0.41.0 (with rpmrb script) (ALT bug 50618)
 

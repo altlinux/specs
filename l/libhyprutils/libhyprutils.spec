@@ -1,7 +1,7 @@
 %define soversion 0
 
 Name: libhyprutils
-Version: 0.1.2
+Version: 0.1.5
 Release: alt1
 License: BSD-3-Clause
 
@@ -18,6 +18,7 @@ Source0: %name-%version.tar
 BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: gcc-c++ cmake
+BuildRequires: pkgconfig(pixman-1)
 
 %description
 Hyprland utilities library used across the ecosystem.
@@ -61,5 +62,8 @@ This package provides development files for %name library.
 %_pkgconfigdir/hyprutils.pc
 
 %changelog
+* Thu Jul 04 2024 Roman Alifanov <ximper@altlinux.org> 0.1.5-alt1
+- NMU: new version 0.1.5 (with rpmrb script)
+
 * Thu Jun 13 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.1.2-alt1
 - Initial build
