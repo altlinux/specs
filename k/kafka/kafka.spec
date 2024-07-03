@@ -1,5 +1,5 @@
 Name:    kafka
-Version: 3.7.0
+Version: 3.7.1
 Release: alt1
 
 Summary: Apache Kafka is a distributed event store and stream-processing platform
@@ -90,5 +90,8 @@ getent passwd kafka >/dev/null || /usr/sbin/useradd -r \
 %attr(0750,kafka,kafka) %dir %_sharedstatedir/%name
 
 %changelog
+* Tue Jul 02 2024 Andrey Cherepanov <cas@altlinux.org> 3.7.1-alt1
+- New version.
+
 * Fri May 24 2024 Andrey Cherepanov <cas@altlinux.org> 3.7.0-alt1
 - Initial build for Sisyphus.
