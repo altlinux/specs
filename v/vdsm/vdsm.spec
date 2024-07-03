@@ -24,7 +24,7 @@
 
 Name: vdsm
 Version: 4.50.6
-Release: alt1.1
+Release: alt2
 Summary: Virtual Desktop Server Manager
 
 Group: System/Configuration/Other
@@ -851,6 +851,9 @@ fi
 %endif
 
 %changelog
+* Tue Jul 02 2024 Alexey Shabalin <shaba@altlinux.org> 4.50.6-alt2
+- Revert changes systemd and udev path.
+
 * Tue Feb 27 2024 Vitaly Lipatov <lav@altlinux.ru> 4.50.6-alt1.1
 - NMU: disable glusterfs requires in noarch packages
 
