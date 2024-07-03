@@ -7,7 +7,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.3
+Version: %ver_major.5
 Release: alt1
 
 Summary: Pipewire Volume Control
@@ -87,6 +87,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Wed Jul 03 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.5-alt1
+- 0.4.5
+
 * Sat Jun 29 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt1
 - first build for Sisyphus (0.4.3-8-gdb53d3) (ALT #50761)
 
