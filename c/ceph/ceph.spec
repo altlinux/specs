@@ -1,4 +1,4 @@
-%define git_version 531c0d11a1c5d39fbfe6aa8a521f023abf3bf3e2
+%define git_version 67fc72a4b85d01f31a20f6c054daa8ce7414d25b
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
@@ -57,7 +57,7 @@
 %endif
 
 Name: ceph
-Version: 18.2.2
+Version: 18.2.3
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -183,7 +183,7 @@ BuildRequires: thrift-devel >= 0.13.0
 %endif
 
 %if_with python3
-BuildRequires: python3-module-Cython python3-module-OpenSSL python3-devel python3-module-setuptools
+BuildRequires: python3-module-Cython python3-module-OpenSSL python3-devel python3-module-setuptools python3-module-packaging
 %{?_with_system_boost:BuildRequires: boost-python3-devel}
 BuildRequires: python3-module-prettytable python3-module-routes python3-module-bcrypt python3-module-yaml
 BuildRequires: python3-module-html5lib python3-module-pyasn1
@@ -793,6 +793,14 @@ Group: Monitoring
 Requires: ceph-base = %EVR
 %description exporter
 Daemon for exposing perf counters as Prometheus metrics
+
+%package node-proxy
+Summary:        hw monitoring agent for Ceph
+BuildArch:      noarch
+Group: Monitoring
+%description node-proxy
+This package provides a Ceph hardware monitoring agent.
+
 
 %prep
 %setup
@@ -1809,6 +1817,12 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 
 %files exporter
 %_bindir/ceph-exporter
+%_unitdir/ceph-exporter.service
+
+%files node-proxy
+%_sbindir/ceph-node-proxy
+%python3_sitelibdir_noarch/ceph_node_proxy
+%python3_sitelibdir_noarch/ceph_node_proxy-*
 
 %files devel
 
@@ -1855,6 +1869,9 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Wed Jul 03 2024 Alexey Shabalin <shaba@altlinux.org> 18.2.3-alt1
+- 18.2.3
+
 * Fri May 17 2024 Alexey Shabalin <shaba@altlinux.org> 18.2.2-alt1
 - 18.2.2
 
