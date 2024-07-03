@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.10
-Release: alt4
+Version: 0.0.12
+Release: alt1
 
 Summary: Pytest plugin for testing examples in docstrings and markdown files
 License: MIT
@@ -71,6 +71,9 @@ cat requirements/{pyproject,testing}.txt > requirements.txt
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 03 2024 Anton Zhukharev <ancieg@altlinux.org> 0.0.12-alt1
+- Updated to 0.0.12.
+
 * Mon Jul 01 2024 Anton Zhukharev <ancieg@altlinux.org> 0.0.10-alt4
 - Fixed FTBFS (ruff 0.5.0).
 
