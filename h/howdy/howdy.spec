@@ -2,7 +2,7 @@
 
 Name: howdy
 Version: 3.0.0
-Release: alt11.beta1.gitc5b1766
+Release: alt12.beta1.gitc5b1766
 Summary: Windows Hello style authentication
 
 License: MIT
@@ -44,7 +44,7 @@ Patch20: pr862-7-handle-the-case-if-there-are-no-cameras-via-except.patch
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-pam0
 
-BuildRequires: gcc-c++ rpm-build-python3 meson rpm-build-ninja cmake gettext-tools
+BuildRequires: gcc-c++ rpm-build-python3 python3-devel meson rpm-build-ninja cmake gettext-tools
 BuildRequires: libinih-devel libevdev-devel libpam0-devel
 
 Requires: %name-pam = %EVR
@@ -141,6 +141,9 @@ cp -a *.dat %buildroot%_datadir/dlib-data/
 %_datadir/howdy-gtk/
 
 %changelog
+* Wed Jul 03 2024 Leontiy Volodin <lvol@altlinux.org> 3.0.0-alt12.beta1.gitc5b1766
+- NMU: Fix build
+
 * Tue Dec 05 2023 Anton Golubev <golubevan@altlinux.org> 3.0.0-alt11.beta1.gitc5b1766
 - howdy-gtk: Add default args to exit functions (ALT #48543)
 - Don't pkexec if already root
