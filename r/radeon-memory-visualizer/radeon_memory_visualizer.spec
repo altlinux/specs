@@ -1,8 +1,8 @@
 %define optflags_lto %nil
 
 Name: radeon-memory-visualizer
-Version: 1.8
-Release: alt0.2
+Version: 1.10
+Release: alt0.1
 License: MIT
 Summary: Software tool to analyze video memory usage on AMD Radeon GPUs
 Url: https://github.com/GPUOpen-Tools/radeon_memory_visualizer
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): cmake
-BuildRequires: gcc-c++ qt5-svg-devel python3-module-sphinx-sphinx-build-symlink
+BuildRequires: gcc-c++ qt6-svg-devel python3-module-sphinx-sphinx-build-symlink
 BuildRequires: python3-module-sphinx_rtd_theme linuxdeployqt chrpath
 
 Requires: %name-data = %EVR
@@ -66,6 +66,10 @@ install -m644 LICENSE.txt %buildroot%_datadir/rmv/
 %_datadir/rmv/*
 
 %changelog
+* Wed Jul 03 2024 L.A. Kostis <lakostis@altlinux.ru> 1.10-alt0.1
+- 1.10.
+- qt5->qt6.
+
 * Thu Feb 01 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.8-alt0.2
 - NMU: build for LoongArch.
 
