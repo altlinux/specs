@@ -17,7 +17,7 @@
 
 Name: gnome-shell
 Version: %ver_major.3.1
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -201,6 +201,15 @@ BuildArch: noarch
 This package contains documentation needed to develop extensions for
 GNOME Shell.
 
+%package -n gnome-extensions-app
+Summary: GNOME Shell extensions manager
+Group: Graphical desktop/GNOME
+Requires: %name = %EVR
+
+%description -n gnome-extensions-app
+GNOME Extensions handles updating extensions, configuring extension
+preferences and removing or disabling unwanted extensions.
+
 %set_typelibdir %_libdir/%name
 
 %prep
@@ -237,7 +246,6 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %_bindir/%name
 %_bindir/%name-extension-prefs
 %_bindir/%name-test-tool
-%{?_enable_extensions_app:%_bindir/gnome-extensions-app}
 %{?_enable_extensions_tool:%_bindir/gnome-extensions
 %_bindir/gnome-shell-extension-tool}
 %_libexecdir/%name-calendar-server
@@ -259,13 +267,6 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %{?_enable_extensions_tool:%_datadir/bash-completion/completions/gnome-extensions}
 %_desktopdir/%xdg_name.desktop
 %_desktopdir/%xdg_name.Extensions.desktop
-
-%{?_enable_extensions_app:%_desktopdir/org.gnome.Extensions.desktop
-%config %_datadir/glib-2.0/schemas/org.gnome.Extensions.gschema.xml
-%_datadir/metainfo/org.gnome.Extensions.metainfo.xml
-%_datadir/dbus-1/services/org.gnome.Extensions.service
-}
-
 %_desktopdir/%xdg_name.PortalHelper.desktop
 %_datadir/%name/
 %_datadir/dbus-1/services/%xdg_name.CalendarServer.service
@@ -293,8 +294,7 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %_userunitdir/%{xdg_name}@x11.service
 
 %_man1dir/*
-%_iconsdir/hicolor/*/*/*.svg
-
+%_iconsdir/hicolor/*/*/%xdg_name.Extensions*.svg
 %doc README* NEWS
 
 %if_enabled gtk_doc
@@ -303,7 +303,20 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %_datadir/gtk-doc/html/st/
 %endif
 
+%{?_enable_extensions_app:
+%files -n gnome-extensions-app
+%_bindir/gnome-extensions-app
+%_desktopdir/org.gnome.Extensions.desktop
+%config %_datadir/glib-2.0/schemas/org.gnome.Extensions.gschema.xml
+%_datadir/metainfo/org.gnome.Extensions.metainfo.xml
+%_datadir/dbus-1/services/org.gnome.Extensions.service
+%_iconsdir/hicolor/*/*/org.gnome.Extensions*.svg
+}
+
 %changelog
+* Wed Jul 03 2024 Yuri N. Sedunov <aris@altlinux.org> 46.3.1-alt1.1
+- split gnome-extensions-app into a separate subpackage (ALT #49630)
+
 * Sun Jun 30 2024 Yuri N. Sedunov <aris@altlinux.org> 46.3.1-alt1
 - 46.3.1
 
