@@ -2,17 +2,17 @@
 
 Name: supertuxkart
 Version: 1.4
-Release: alt2
+Release: alt3
 
 Summary: SuperTuxKart is a kart racing game
 
 License: GPL-2.0-or-later and GPL-3.0-or-later and CC-BY-SA-3.0
 Group: Games/Arcade
-Url: http://supertuxkart.sourceforge.net
+Url: https://supertuxkart.sourceforge.net
+Vcs: git://github.com/supertuxkart/stk-code.git
 
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-# https://github.com/supertuxkart/stk-code
 Source: %name-%version-src.tar.gz
 Patch0: 0001-Add-missing-includes-to-fix-the-build-with-gcc-13.patch
 Patch1: 0001-gcc13-fixes.patch
@@ -24,7 +24,7 @@ BuildRequires(pre): libGLES
 # optimized out: bash4 bashrc cmake-modules elfutils glibc-kernheaders-generic glibc-kernheaders-x86 libGLU-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXrender-devel libcrypt-devel libglvnd-devel libharfbuzz-devel libogg-devel libsasl2-3 libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl pkg-config python-modules python2-base python3 python3-base rpm-build-gir sh4 tzdata wayland-devel xorg-proto-devel xorg-xf86miscproto-devel zlib-devel
 BuildRequires: bzlib-devel cmake gcc-c++ libGLEW-devel libXi-devel libXrandr-devel libXt-devel libXxf86misc-devel libXxf86vm-devel libcurl-devel libfreetype-devel libfribidi-devel libjpeg-devel libopenal-devel libpng-devel libsqlite3-devel libssl-devel libvorbis-devel libwayland-cursor-devel libwayland-egl-devel libxkbcommon-devel libxkbfile-devel poppler rpm-build-python3 libSDL2-devel libmcpp-devel
 # use system libraries instead build-in
-BuildRequires: libwiiuse-devel libraqm-devel
+BuildRequires: libwiiuse-devel libraqm-devel libangelscript-devel
 
 Requires: %name-data >= %version
 
@@ -60,7 +60,7 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/python3|' \
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DUSE_SYSTEM_ANGELSCRIPT=OFF \
+    -DUSE_SYSTEM_ANGELSCRIPT=ON \
     -DBUILD_RECORDER=OFF \
     -DCHECK_ASSETS=OFF \
     -DPROJECT_VERSION=%version \
@@ -81,6 +81,7 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 # built in separate libwiiuse-devel
 rm -f %buildroot%_libdir/libwiiuse.a
 rm -f %buildroot%_includedir/wiiuse.h
+rm -f %buildroot%_datadir/%name/data/optimize_data.sh
 
 %files
 #doc README.md CHANGELOG.md NETWORKING.md
@@ -100,6 +101,10 @@ rm -f %buildroot%_includedir/wiiuse.h
 %_iconsdir/hicolor/1024x1024/apps/*
 
 %changelog
+* Tue Jul 02 2024 Leontiy Volodin <lvol@altlinux.org> 1.4-alt3
+- Excluded non-executable optimize_data.sh script (ALT #50286).
+- Built with system angelscript instead built-in.
+
 * Thu Jun 22 2023 Leontiy Volodin <lvol@altlinux.org> 1.4-alt2
 - Fixed build on gcc13.
 
