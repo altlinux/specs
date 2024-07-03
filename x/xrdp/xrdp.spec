@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 Name: 	 xrdp
 Version: 0.10.0
-Release: alt3
+Release: alt4
 
 Summary: An open source remote desktop protocol (RDP) server
 
@@ -83,6 +83,7 @@ Obsoletes: librfxcodec-devel < %EVR
 %filter_from_requires \,^/usr/etc/X11/xdm/Xsession,d
 %filter_from_requires \,^/etc/X11/xdm/Xsession,d
 %filter_from_requires \,^/etc/X11/xinit/xinitrc,d
+%filter_from_requires \,^/etc/sysconfig/i18n,d
 
 %description
 xrdp offers a graphical login to a remote client using
@@ -292,6 +293,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Wed Jul 03 2024 Andrey Cherepanov <cas@altlinux.org> 0.10.0-alt4
+- Remove autoreq on /etc/sysconfig/i18n.
+
 * Tue Jul 02 2024 Alexey Shabalin <shaba@altlinux.org> 0.10.0-alt3
 - Fix rpm macros in %%install and %%files.
 
