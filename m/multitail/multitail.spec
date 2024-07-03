@@ -1,9 +1,9 @@
 Summary: multitail lets you view one or multiple files like the original tail program.
 Summary(ru_RU.KOI8-R): multitail позволяет просматривать один или несколько файлов
 Name: multitail
-Version: 7.1.2
+Version: 7.1.3
 Release: alt1
-License: Apache-2.0
+License: MIT
 Group: Monitoring
 Source: %name-%version.tar.gz
 Patch1:		https://sources.debian.org/data/main/m/multitail/6.5.0-5/debian/patches/fix-format-strings.diff
@@ -56,8 +56,8 @@ mkdir -p %{buildroot}%{_sysconfdir}
 
 install -D -m 644 $RPM_BUILD_DIR/%name-%version/%name.conf $RPM_BUILD_ROOT/%_sysconfdir/%name.conf.new
 bzip2 -9 $RPM_BUILD_ROOT/%_man1dir/multitail.1
-rm -f $RPM_BUILD_ROOT/%_datadir/doc/%name-VERSION=7.1.2/*
-rmdir $RPM_BUILD_ROOT/%_datadir/doc/%name-VERSION=7.1.2/
+#rm -f $RPM_BUILD_ROOT/%_datadir/doc/%name-VERSION=7.1.3/*
+#rmdir $RPM_BUILD_ROOT/%_datadir/doc/%name-VERSION=7.1.3/
 
 %files
 %_bindir/%name
@@ -66,6 +66,10 @@ rmdir $RPM_BUILD_ROOT/%_datadir/doc/%name-VERSION=7.1.2/
 %doc INSTALL README.md LICENSE manual.html %name.conf
 
 %changelog
+* Thu Jul 04 2024 Ilya Mashkin <oddity@altlinux.ru> 7.1.3-alt1
+- 7.1.3
+- Change License to MIT
+
 * Fri Nov 24 2023 Ilya Mashkin <oddity@altlinux.ru> 7.1.2-alt1
 - 7.1.2
 
