@@ -1,12 +1,12 @@
 # no tests in tarball
 %def_enable snapshot
-%define beta .post1
+%define beta %nil
 %define pypi_name pykeepass
 
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 4.0.7
+Version: 4.1.0
 Release: alt1%beta
 
 Summary: Python library to interact with KeePass databases
@@ -55,6 +55,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 
 
 %changelog
+* Wed Jul 03 2024 Yuri N. Sedunov <aris@altlinux.org> 4.1.0-alt1
+- 4.1.0
+
 * Sat May 04 2024 Yuri N. Sedunov <aris@altlinux.org> 4.0.7-alt1.post1
 - 4.0.7.post1 (4.0.7-11-g66bc409)
 

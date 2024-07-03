@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 3.9.3
+Version: 3.9.4
 Release: alt1
 
 Summary: Fast string Python 3 matching library for Python and C++
@@ -18,7 +18,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-wheel
 BuildRequires: python3-module-setuptools python3(skbuild)
 %{?_enable_check:BuildRequires: /proc python3(pytest) python3(mypy) python3(pylint)
-BuildRequires: python3(hypothesis)}
+BuildRequires: python3(hypothesis) python3(pandas.testing)}
 #BuildRequires: python3(pandas)
 
 %add_python3_req_skip PyInstaller
@@ -48,6 +48,9 @@ py.test3
 
 
 %changelog
+* Wed Jul 03 2024 Yuri N. Sedunov <aris@altlinux.org> 3.9.4-alt1
+- 3.9.4
+
 * Wed Jun 19 2024 Yuri N. Sedunov <aris@altlinux.org> 3.9.3-alt1
 - 3.9.3
 
