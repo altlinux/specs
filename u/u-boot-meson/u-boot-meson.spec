@@ -1,10 +1,11 @@
 Name: u-boot-meson
-Version: 2024.04
+Version: 2024.07
 Release: alt1
 
 Summary: Das U-Boot
 License: GPLv2+
 Group: System/Kernel and hardware
+Url: https://docs.u-boot.org/en/latest/
 
 ExclusiveArch: aarch64
 
@@ -36,10 +37,13 @@ cd out
 find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 
 %files
-%doc README doc/board/amlogic/*
+%doc README doc/board/amlogic
 %_datadir/u-boot/*
 
 %changelog
+* Wed Jul 03 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.07-alt1
+- 2024.07 released
+
 * Thu Apr 04 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.04-alt1
 - 2024.04 released
 
