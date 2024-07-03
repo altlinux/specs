@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 10.0.15
+Version: 10.0.16
 Release: alt1
 
 Summary: IT and asset management software
@@ -167,6 +167,14 @@ fi
 %files php8.2
 
 %changelog
+* Wed Jul 03 2024 Pavel Zilke <zidex@altlinux.org> 10.0.16-alt1
+- New version 10.0.16
+- This release fixes a security issue that has been recently discovered. Update is recommended!
+- Security fixes:
+ + CVE-2024-37148 : Account takeover via SQL Injection in AJAX scripts
+ + CVE-2024-37149 : Remote code execution through the plugin loader
+ + CVE-2024-37147 : Authenticated file upload to restricted tickets
+
 * Fri Apr 26 2024 Pavel Zilke <zidex@altlinux.org> 10.0.15-alt1
 - New version 10.0.15
 - This release fixes a security issue that has been recently discovered. Update is recommended!
