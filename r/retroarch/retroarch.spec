@@ -1,6 +1,6 @@
 Name:           retroarch
 Version:        1.19.1
-Release:        alt2
+Release:        alt2.1
 Summary:        Emulator frontend
 License:        GPL-3.0-only
 Group:          Emulators
@@ -170,6 +170,9 @@ fdupes -rdN %{buildroot}
 
 
 %changelog
+* Wed Jul  3 2024 Artyom Bystrov <arbars@altlinux.org> 1.19.1-alt2.1
+- Fix path to assets and cores (ALTBUG#50786)
+
 * Mon Jul  1 2024 Artyom Bystrov <arbars@altlinux.org> 1.19.1-alt2
 - Fix config for Retroarch
 - Add retroarch-assets on Requires (ALTBUG#50786)
