@@ -24,7 +24,7 @@
 %def_with scudo
 
 Name: ayugram-desktop
-Version: 5.1.2
+Version: 5.2.2
 Release: alt1
 
 Summary: Desktop Telegram client with good customization and Ghost mode
@@ -65,6 +65,9 @@ BuildRequires(pre): rpm-macros-ninja-build
 
 # use no more than system_memory/3000 build procs (see https://bugzilla.altlinux.org/show_bug.cgi?id=35112)
 %_tune_parallel_build_by_procsize 3000
+
+# error: cpio archive too big - 4133M
+%define optflags_debug -g0
 
 # minimalize memory using
 %ifarch %ix86 armh
@@ -397,6 +400,10 @@ ln -s %name %buildroot%_bindir/%oname
 %doc README.md
 
 %changelog
+* Wed Jul 03 2024 Vitaly Lipatov <lav@altlinux.ru> 5.2.2-alt1
+- new version 5.2.2 (with rpmrb script)
+- disable debuginfo (error: cpio archive too big - 4133M)
+
 * Wed Jun 05 2024 Vitaly Lipatov <lav@altlinux.ru> 5.1.2-alt1
 - new version 5.1.2 (with rpmrb script)
 - disabled build on aarch64 (cpio archive too big - 4103M)
