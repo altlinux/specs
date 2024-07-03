@@ -3,7 +3,7 @@
 
 Name: gopls
 Version: 0.16.1
-Release: alt1
+Release: alt2
 
 Summary: The Go language server
 License: BSD-3-Clause
@@ -40,6 +40,7 @@ export GOPATH="$BUILDDIR:%go_path"
 %golang_prepare
 
 cd .build/src/%import_path
+export LDFLAGS="-X main.version=%version"
 %golang_build .
 
 %install
@@ -51,6 +52,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Wed Jul 03 2024 Anton Zhukharev <ancieg@altlinux.org> 0.16.1-alt2
+- Fixed gopls version detection.
+
 * Wed Jul 03 2024 Anton Zhukharev <ancieg@altlinux.org> 0.16.1-alt1
 - Updated to 0.16.1.
 
