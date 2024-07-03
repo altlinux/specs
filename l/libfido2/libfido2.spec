@@ -5,7 +5,7 @@
 %def_with check
 
 Name: libfido2
-Version: 1.14.0
+Version: 1.15.0
 Release: alt1
 
 Summary: Library functionality to communicate with a FIDO device over USB
@@ -80,10 +80,13 @@ sed -i 's,-Werror,& -Wno-error=conversion,' CMakeLists.txt
 %files devel
 %_includedir/*
 %_libdir/%name.so
-%_libdir/pkgconfig/%name.pc
+%_pkgconfigdir/%name.pc
 %_man3dir/*
 
 %changelog
+* Wed Jul 03 2024 Anton Zhukharev <ancieg@altlinux.org> 1.15.0-alt1
+- Updated to 1.15.0.
+
 * Fri Dec 29 2023 Anton Zhukharev <ancieg@altlinux.org> 1.14.0-alt1
 - Updated to 1.14.0.
 - Renamed SRPM to libfido2 to match the project name.
