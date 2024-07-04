@@ -1,6 +1,6 @@
 Name:    kafka
 Version: 3.7.1
-Release: alt1
+Release: alt1.1
 
 Summary: Apache Kafka is a distributed event store and stream-processing platform
 License: Apache-2.0
@@ -9,7 +9,7 @@ Url:     https://github.com/apache/kafka
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 
 Source: %name-%version.tar
 Source1: gradle-8.7-rc-4-bin.zip
@@ -90,6 +90,9 @@ getent passwd kafka >/dev/null || /usr/sbin/useradd -r \
 %attr(0750,kafka,kafka) %dir %_sharedstatedir/%name
 
 %changelog
+* Thu Jul 04 2024 Ivan A. Melnikov <iv@altlinux.org> 3.7.1-alt1.1
+- NMU: Buid on loongarch64.
+
 * Tue Jul 02 2024 Andrey Cherepanov <cas@altlinux.org> 3.7.1-alt1
 - New version.
 
