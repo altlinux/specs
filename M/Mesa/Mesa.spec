@@ -18,7 +18,7 @@
 %define armsoc_arches %arm aarch64
 %define svga_arches %ix86 x86_64
 
-%define gallium_opencl_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k
+%define gallium_opencl_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k loongarch64
 
 #VDPAU state tracker requires at least one of the following gallium drivers: r300, r600, radeonsi, nouveau
 %define vdpau_arches %radeon_arches %nouveau_arches %virgl_arches
@@ -93,11 +93,11 @@
 %vulkan_drivers_add swrast
 
 %define ver_major 24.1
-%define ver_minor 2
+%define ver_minor 3
 
 Name: Mesa
 Version: %ver_major.%ver_minor
-Release: alt2
+Release: alt1
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -617,6 +617,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Jul 04 2024 Valery Inozemtsev <shrek@altlinux.ru> 4:24.1.3-alt1
+- 24.1.3
+
 * Tue Jun 25 2024 Ivan A. Melnikov <iv@altlinux.org> 4:24.1.2-alt2
 - Imporve CPU feature detection for llvmpipe on loongarch64
   + enables lsx/lasx when these extensions are supported;
