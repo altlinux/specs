@@ -19,8 +19,8 @@
 %def_enable libdisplay_info
 
 Name: mutter
-Version: %ver_major.3
-Release: alt1.1%beta
+Version: %ver_major.3.1
+Release: alt1%beta
 Epoch: 1
 
 Summary: Clutter based compositing Window Manager
@@ -273,6 +273,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Thu Jul 04 2024 Yuri N. Sedunov <aris@altlinux.org> 1:46.3.1-alt1
+- 46.3.1
+
 * Tue Jul 02 2024 Yuri N. Sedunov <aris@altlinux.org> 1:46.3-alt1.1
 - enabled libdisplay-info support
 
