@@ -11,7 +11,7 @@
 
 
 Name:     %pname-source
-Version:  0.4.11
+Version:  0.4.12
 Release:  alt1
 
 Summary:  Osec-based integrity checking script and settings
@@ -150,6 +150,7 @@ fi
 %_sysconfdir/osec/integalert*/sender
 %dir %_sysconfdir/osec/integalert*/trigger.d
 %config(noreplace) %_logrotatedir/integalert*.conf
+%config(noreplace) %_sysconfdir/sysconfig/integalert
 %_man8dir/*.8.*
 
 %files -n %pname-vm-check
@@ -163,6 +164,12 @@ fi
 %endif
 
 %changelog
+* Thu Jul 04 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.12-alt1
+- Support virtual directory mode (files.list).
+- Install and package the default /etc/sysconfig/integalert.
+- Fixed quotation in the default configuration files.
+- FIX: Use separated databases for different profiles!
+
 * Fri Jun 28 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.11-alt1
 - Added integalert(8) manual page.
 - Search for additional profiles by /etc/osec/integalert_*/dirs.conf.
