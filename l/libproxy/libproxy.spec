@@ -5,10 +5,10 @@
 %def_with kde
 %def_with env
 %def_with sysconfig
-%def_without duktape
+%def_with duktape
 
 Name: libproxy
-Version: 0.5.6
+Version: 0.5.7
 Release: alt1
 Summary: A library that provides automatic proxy configuration management
 
@@ -19,8 +19,8 @@ Vcs: https://github.com/libproxy/libproxy.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-macros-meson 
-BuildRequires: meson >= 0.59.0 rpm-build-vala vala-tools rpm-build-gir
+BuildRequires(pre): rpm-macros-meson rpm-build-vala rpm-build-gir
+BuildRequires: meson >= 0.59.0 vala-tools
 BuildRequires: pkgconfig(glib-2.0) >= 2.71.3 pkgconfig(gio-2.0) >= 2.71.3 pkgconfig(gobject-2.0)
 BuildRequires: pkgconfig(gobject-introspection-1.0) /usr/bin/g-ir-scanner gir(Gio) = 2.0
 BuildRequires: gi-docgen
@@ -138,6 +138,9 @@ Development docs package for %name libraries.
 %_defaultdocdir/libproxy-1.0
 
 %changelog
+* Thu Jul 04 2024 Alexey Shabalin <shaba@altlinux.org> 0.5.7-alt1
+- New version 0.5.7.
+
 * Sun May 19 2024 Alexey Shabalin <shaba@altlinux.org> 0.5.6-alt1
 - New version 0.5.6.
 
