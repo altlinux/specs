@@ -5,7 +5,7 @@
 
 Name: deepin-application-manager
 Version: 1.2.4.0.1.g6096
-Release: alt1
+Release: alt2
 
 Summary: App manager for Deepin
 
@@ -83,6 +83,9 @@ rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 %_datadir/dsg/configs/org.deepin.dde.application-manager/org.deepin.dde.am.json
 
 %changelog
+* Thu Jul 04 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.4.0.1.g6096-alt2
+- Applied usrmerge.
+
 * Mon Apr 22 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.4.0.1.g6096-alt1
 - New version 1.2.4-1-g6096.
 
