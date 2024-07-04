@@ -1,7 +1,7 @@
 %def_enable check
 
 Name: git-cola
-Version: 4.7.1
+Version: 4.8.0
 Release: alt1
 
 Summary: A highly caffeinated git gui
@@ -9,7 +9,7 @@ License: GPL-2.0-or-later
 Group: Development/Tools
 
 Url: https://git-cola.github.io
-# https://github.com/git-cola/git-cola.git
+Vcs: git://github.com/git-cola/git-cola.git
 Source: %name-%version.tar
 Patch: git-cola-4.5.0-alt-tox-v3.patch
 
@@ -29,7 +29,7 @@ and caffeine-inspired features.
 
 %prep
 %setup
-%if "%(get_version python3-module-tox)" < "4"
+%if "%(rpmquery --qf '%%{VERSION}' python3-module-tox)" < "4"
 %patch -p1
 %endif
 %prepare_sphinx3 share/doc/%name
@@ -65,6 +65,9 @@ chmod +x %buildroot%python3_sitelibdir/cola/bin/ssh-askpass-darwin
 %python3_sitelibdir/*
 
 %changelog
+* Thu Jul 04 2024 Leontiy Volodin <lvol@altlinux.org> 4.8.0-alt1
+- New version 4.8.0.
+
 * Mon May 13 2024 Leontiy Volodin <lvol@altlinux.org> 4.7.1-alt1
 - New version 4.7.1.
 
