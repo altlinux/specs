@@ -1,9 +1,10 @@
 %def_without clang
 %def_disable qt4
 %def_enable qt5
+%def_with kf6
 
 Name: Kvantum
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 
 Summary: SVG-based theme engine for Qt6, KDE and LXQt
@@ -33,6 +34,10 @@ BuildRequires: libqt4-devel
 BuildPreReq: rpm-macros-qt5
 BuildRequires: qt5-svg-devel qt5-x11extras-devel kf5-kwindowsystem-devel
 Requires: %name-qt5
+%endif
+
+%if_with kf6
+BuildRequires: kf6-kwindowsystem-devel
 %endif
 
 Requires: %name-data %name-qt6
@@ -125,7 +130,9 @@ cmake --build "build5" -j%__nprocs
 %cmake -B build6 \
  -GNinja \
  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+%if_without kf6
  -DWITHOUT_KF=ON \
+%endif
 #
 cmake --build "build6" -j%__nprocs
 
@@ -180,6 +187,10 @@ desktop-file-validate %buildroot%_desktopdir/kvantummanager.desktop
 %_qt6_plugindir/styles/libkvantum.so
 
 %changelog
+* Thu Jul 04 2024 Leontiy Volodin <lvol@altlinux.org> 1.1.2-alt1
+- New version 1.1.2.
+- Built with kf6 support.
+
 * Mon May 13 2024 Leontiy Volodin <lvol@altlinux.org> 1.1.1-alt1
 - New version 1.1.1.
 - Disabled qt4 module (task 272104).
