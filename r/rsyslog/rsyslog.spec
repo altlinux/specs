@@ -27,7 +27,7 @@
 %def_enable libcap_ng
 
 Name: rsyslog
-Version: 8.2404.0
+Version: 8.2406.0
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -685,6 +685,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/fmhttp.so
 
 %changelog
+* Thu Jul 04 2024 Alexey Shabalin <shaba@altlinux.org> 8.2406.0-alt1
+- New version 8.2406.0.
+
 * Fri Apr 19 2024 Alexey Shabalin <shaba@altlinux.org> 8.2404.0-alt1
 - New version 8.2404.0.
 - Move modules from /lib to /usr/lib.
