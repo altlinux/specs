@@ -8,7 +8,7 @@ language.
 %def_without docs
 
 Name: python3-module-%oname
-Version: 1.5.9
+Version: 1.5.10
 Release: alt1
 
 Summary: Python FTP server library
@@ -16,7 +16,8 @@ Summary(ru_RU.UTF-8): Модуль Python FTP-сервера
 
 Group: Development/Python3
 License: MIT and BSD
-Url: https://github.com/giampaolo/pyftpdlib
+URL: https://pypi.org/project/pyftpdlib
+VCS: https://github.com/giampaolo/pyftpdlib
 
 Source: %name-%version.tar
 
@@ -125,6 +126,9 @@ cp -fR docs/_build/man/* %buildroot%_man1dir
 %endif
 
 %changelog
+* Thu Jul 04 2024 Grigory Ustinov <grenka@altlinux.org> 1.5.10-alt1
+- Automatically updated to 1.5.10.
+
 * Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 1.5.9-alt1
 - Automatically updated to 1.5.9.
 - Build without docs.
