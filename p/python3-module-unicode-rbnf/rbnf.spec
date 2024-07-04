@@ -1,5 +1,5 @@
 Name: python3-module-unicode-rbnf
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: Pure-python RBNF
@@ -32,6 +32,9 @@ A pure Python implementation of ICU's rule-based number format engine
 %python3_sitelibdir/unicode_rbnf-%version.dist-info
 
 %changelog
+* Thu Jul 04 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.1.0-alt1
+- 1.1.0 released
+
 * Fri Jan 19 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.0-alt1
 - 1.0.0 released
 
