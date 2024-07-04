@@ -1,5 +1,5 @@
 Name: python3-module-habluetooth
-Version: 2.8.1
+Version: 3.1.3
 Release: alt1
 
 Summary: High availability Bluetooth
@@ -41,6 +41,9 @@ BuildRequires: python3(async_interrupt)
 %python3_sitelibdir/habluetooth-%version.dist-info
 
 %changelog
+* Thu Jul 04 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.1.3-alt1
+- 3.1.3 released
+
 * Mon May 06 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.8.1-alt1
 - 2.8.1 released
 
