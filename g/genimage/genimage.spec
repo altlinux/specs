@@ -9,7 +9,7 @@
 %endif
 
 Name: genimage
-Version: 17
+Version: 18
 Release: alt1
 
 Summary: Tool to generate multiple filesystem and flash images
@@ -63,6 +63,9 @@ config file or from commandline switches.
 %_bindir/%name
 
 %changelog
+* Thu Jul 04 2024 Anton Midyukov <antohami@altlinux.org> 18-alt1
+- new version
+
 * Sat Jan 20 2024 Anton Midyukov <antohami@altlinux.org> 17-alt1
 - new version
 - enable qemu and uboot support on looongarch64, riscv64
