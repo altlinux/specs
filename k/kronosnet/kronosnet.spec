@@ -13,7 +13,7 @@
 
 Name: kronosnet
 Summary: Multipoint-to-Multipoint VPN daemon
-Version: 1.28
+Version: 1.29
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: Networking/Other
@@ -313,6 +313,9 @@ rm -rf %buildroot/usr/share/doc/kronosnet
 %files -n libknet1-plugins-all
 
 %changelog
+* Thu Jul 04 2024 Alexey Shabalin <shaba@altlinux.org> 1.29-alt1
+- 1.29
+
 * Thu Oct 19 2023 Alexey Shabalin <shaba@altlinux.org> 1.28-alt1
 - 1.28
 
