@@ -36,7 +36,7 @@
 
 Name: cockpit
 Version: 311.1
-Release: alt1
+Release: alt2
 
 Summary: Web Console for Linux servers
 License: LGPLv2+
@@ -353,7 +353,7 @@ tar -xf %SOURCE11 -C 'vendor/ferny' --strip-components 1
 tar -xf %SOURCE12 -C 'vendor/systemd_ctypes' --strip-components 1
 
 echo 'm4_define(VERSION_NUMBER, [%version])' > version.m4
-echo "__version__ = %version" > src/cockpit/_version.py
+echo "__version__ = '%version'" > src/cockpit/_version.py
 
 [ -e package-lock.json ] || touch package-lock.json
 
@@ -603,6 +603,9 @@ systemd-tmpfiles --create cockpit-tempfiles.conf >/dev/null 2>&1 ||:
 %endif # build optional extension packages
 
 %changelog
+* Thu Jul 04 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 311.1-alt2
+- fix cockpit-bridge (closes: 50759)
+
 * Sat Mar 02 2024 Andrey Limachko <liannnix@altlinux.org> 311.1-alt1
 - 280.1 -> 311.1
 
