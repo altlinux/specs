@@ -32,6 +32,7 @@
 %def_without 9P_rdma
 %def_without jemalloc
 %def_without lttng
+%def_without saunafs
 %def_with utils
 %def_with gui_utils
 %def_with system_ntirpc
@@ -42,7 +43,7 @@
 %def_without legacy_python_install
 
 Name: nfs-ganesha
-Version: 5.7
+Version: 5.9
 Release: alt1
 Summary: NFS-Ganesha is a NFS Server running in user space
 Group: System/Servers
@@ -60,6 +61,7 @@ BuildRequires(pre): rpm-macros-cmake rpm-macros-systemd
 BuildRequires: cmake gcc-c++ ninja-build
 BuildRequires: bison
 BuildRequires: flex
+BuildRequires: libunwind-devel
 BuildRequires: libkrb5-devel
 BuildRequires: libdbus-devel
 BuildRequires: libcap-devel
@@ -84,6 +86,7 @@ BuildRequires: /usr/bin/sphinx-build-3
 %{?_with_xfs:BuildRequires: libxfs-devel}
 %{?_with_lttng:BuildRequires: lttng-ust-devel >= 2.3}
 %{?_with_kvsfs:BuildRequires: libkvsns-devel >= 1.2.0}
+%{?_with_saunafs:BuildRequires: libsaunafs-devel}
 %if_with utils
 BuildRequires: python3-module-setuptools
 %{?_without_legacy_python_install:BuildRequires: python3-module-wheel python3-module-build python3-module-installer}
@@ -288,6 +291,7 @@ pushd src
     -DUSE_FSAL_GPFS=%{on_off_switch gpfs} \
     -DUSE_FSAL_KVSFS=%{on_off_switch kvsfs} \
     -DUSE_FSAL_GLUSTER=%{on_off_switch gluster} \
+    -DUSE_FSAL_SAUNAFS=%{on_off_switch saunafs} \
     -DUSE_SYSTEM_NTIRPC=%{on_off_switch system_ntirpc} \
     -DUSE_LTTNG=%{on_off_switch lttng} \
     -DUSE_ADMIN_TOOLS=%{on_off_switch utils} \
@@ -563,6 +567,9 @@ useradd -M -r -d %_runtimedir/ganesha -s /sbin/nologin -c "NFS-Ganesha Daemon" -
 %endif
 
 %changelog
+* Thu Jul 04 2024 Alexey Shabalin <shaba@altlinux.org> 5.9-alt1
+- New version 5.9.
+
 * Mon Feb 19 2024 Alexey Shabalin <shaba@altlinux.org> 5.7-alt1
 - New version 5.7.
 
