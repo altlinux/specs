@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:       pgbouncer
-Version:    1.16.1
+Version:    1.23.0
 Release:    alt1
 Summary:    Lightweight connection pooler for PostgreSQL
 License:    ISC
@@ -9,6 +9,7 @@ Group:      Databases
 Url:        https://github.com/pgbouncer/pgbouncer
 Source:     %name-%version.tar
 Source100:  libusual.tar
+Source101:  uthash.tar
 Source1:    pgbouncer.init
 Source2:    pgbouncer.ini
 Source3:    users.txt
@@ -21,7 +22,7 @@ Source8:    pgbouncer.sysconfig
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libssl-devel
 BuildRequires: pkgconfig(libevent)
-BuildRequires: pkgconfig(libcares) >= 1.6.0
+BuildRequires: pkgconfig(libcares) >= 1.9.0
 BuildRequires: libpam-devel
 BuildRequires: libsystemd-devel
 BuildRequires: pandoc
@@ -51,7 +52,7 @@ for PL/Proxy.
 %prep
 %setup -q
 tar -xf %SOURCE100 -C lib
-sed -i -e 's|/usr/bin/env python|%__python3|g' etc/mkauth.py
+tar -xf %SOURCE101 -C uthash
 
 %build
 export PYTHON=%__python3
@@ -109,6 +110,9 @@ useradd  -r -g %name -s /sbin/nologin -c "PgBouncer Server" -M -d /run/%name %na
 %attr(1770,root,%name) %dir %_logdir/%name
 
 %changelog
+* Thu Jul 04 2024 Alexey Shabalin <shaba@altlinux.org> 1.23.0-alt1
+- 1.23.0.
+
 * Thu Feb 10 2022 Alexey Shabalin <shaba@altlinux.org> 1.16.1-alt1
 - 1.16.1 (Fixes: CVE-2021-3935).
 
