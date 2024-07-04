@@ -1,6 +1,6 @@
 Name: u-boot-qemu
 Version: 2024.07
-Release: alt1
+Release: alt2
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -65,13 +65,20 @@ export DTC=%_bindir/dtc
 %make_build %{qemu}_defconfig all
 
 %install
+%ifarch %ix86 x86_64
+install -pm0644 -D u-boot.rom %buildroot%_datadir/u-boot/%qemu/u-boot.rom
+%else
 install -pm0644 -D u-boot.bin %buildroot%_datadir/u-boot/%qemu/u-boot.bin
+%endif
 
 %files
 %doc README
 %_datadir/u-boot/*
 
 %changelog
+* Thu Jul 04 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.07-alt2
+- package ROM images on x86 (closes: 50813)
+
 * Tue Jul 02 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.07-alt1
 - 2024.07 released
 
