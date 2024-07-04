@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: lib%_name
-Version: 24.05.1
+Version: 24.05.2
 Release: alt1
 
 Summary: KDE Partition Manager core library
@@ -77,12 +77,15 @@ using %_name.
 %_datadir/polkit-1/actions/%xdg_name.externalcommand.policy
 
 %files devel
-%_includedir/%_name/
+%_K6inc/%_name/
 %_K6lib/cmake/KPMcore/
 %_K6link/*.so
 
 
 %changelog
+* Thu Jul 04 2024 Yuri N. Sedunov <aris@altlinux.org> 24.05.2-alt1
+- 24.05.2
+
 * Sat Jun 15 2024 Yuri N. Sedunov <aris@altlinux.org> 24.05.1-alt1
 - 24.05.1
 
