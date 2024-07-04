@@ -13,7 +13,7 @@
 %filter_from_requires /^\/usr\/share\/pkgconfig/d
 
 Name: dracut
-Version: 101
+Version: 102
 Release: alt1
 
 Summary: Initramfs generator using udev
@@ -305,6 +305,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 #%dracutlibdir/modules.d/01fips
 %dracutlibdir/modules.d/01systemd-ac-power
 %dracutlibdir/modules.d/01systemd-ask-password
+%dracutlibdir/modules.d/01systemd-bsod
 %dracutlibdir/modules.d/01systemd-coredump
 %dracutlibdir/modules.d/01systemd-creds
 %dracutlibdir/modules.d/01systemd-hostnamed
@@ -355,11 +356,14 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/90mdraid
 %dracutlibdir/modules.d/90multipath
 %dracutlibdir/modules.d/90nvdimm
+%dracutlibdir/modules.d/90numlock
 %dracutlibdir/modules.d/90overlayfs
 %ifarch ppc ppc64
 %dracutlibdir/modules.d/90ppcmac
 %endif
+%dracutlibdir/modules.d/90pcmcia
 %dracutlibdir/modules.d/90qemu
+%dracutlibdir/modules.d/90systemd-cryptsetup
 %dracutlibdir/modules.d/91crypt-gpg
 %dracutlibdir/modules.d/91crypt-loop
 %dracutlibdir/modules.d/91fido2
@@ -489,6 +493,9 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 #%dracutlibdir/modules.d/98integrity
 
 %changelog
+* Thu Jul 04 2024 Alexey Shabalin <shaba@altlinux.org> 102-alt1
+- 102
+
 * Thu May 23 2024 Alexey Shabalin <shaba@altlinux.org> 101-alt1
 - 101
 - Switch to new upstream https://github.com/dracut-ng/dracut-ng.git
