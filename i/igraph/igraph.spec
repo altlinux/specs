@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: igraph
-Version: 0.10.12
+Version: 0.10.13
 Release: alt1
 
 Summary: Library for creating and manipulating graphs
@@ -132,6 +132,9 @@ find . -name '.arch-ids' | xargs rm -rf
 %_man3dir/igraph.3*
 
 %changelog
+* Thu Jul 04 2024 Leontiy Volodin <lvol@altlinux.org> 0.10.13-alt1
+- New version 0.10.13.
+
 * Mon May 13 2024 Leontiy Volodin <lvol@altlinux.org> 0.10.12-alt1
 - New version 0.10.12.
 
