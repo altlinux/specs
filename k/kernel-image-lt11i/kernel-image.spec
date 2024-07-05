@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-lt11i
-Release: alt5
+Release: alt6
 epoch:1
 %define kernel_need_version	6.1
 # Used when kernel-source-x.y does not currently exist in repository.
@@ -424,6 +424,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Jul 05 2024 Anton Midyukov <antohami@altlinux.org> 1:6.1.55-alt6
+- imx8mp-evk-dual-imx258-gc5035-himax.dts: uncomment pins
+
 * Wed Jul 03 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.1.55-alt5
 - MIG-LT11i_defconfig: CONFIG_IMX_SDMA=y
 
