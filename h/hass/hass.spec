@@ -1,5 +1,5 @@
 Name: hass
-Version: 2024.5.2
+Version: 2024.7.0
 Release: alt1
 
 Summary: Home automation platform
@@ -40,6 +40,7 @@ Summary: Home automation platform
 Group: System/Servers
 Requires: python3-module-pip >= 21.0
 Requires: python3-module-hass-frontend >= 20231030.1
+Requires: python3-module-aiohttp-fast-zlib >= 0.1.1
 
 %package -n python3-module-hass
 Summary: Home automation platform
@@ -89,7 +90,7 @@ sed -re 's,^,%exclude ,' < rest.files > core.files
 %set_python3_req_method strict
 %add_python3_req_skip av
 %add_python3_req_skip custom_components
-%add_python3_req_skip deque
+%add_python3_req_skip homeassistant.components.cloud
 
 %files core -f core.files
 %_sysconfdir/sysconfig/hass
@@ -104,6 +105,9 @@ sed -re 's,^,%exclude ,' < rest.files > core.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Thu Jul 04 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.7.0-alt1
+- 2024.7.0 released
+
 * Wed May 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.5.2-alt1
 - 2024.5.2 released
 
