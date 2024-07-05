@@ -4,7 +4,7 @@
 %def_with python_ext
 
 Name: vapoursynth
-Version: 68
+Version: 69
 Release: alt1
 
 Summary: Video processing framework with simplicity in mind
@@ -12,6 +12,7 @@ Summary: Video processing framework with simplicity in mind
 License: WTFPL and LGPL-2.1+ and OFL-1.1 and GPL-2.0+ and ISC and MIT
 Group: Video
 Url: http://www.vapoursynth.com
+Vcs: git://github.com/vapoursynth/vapoursynth.git
 
 Source: https://github.com/%name/%name/archive/R%version/%name-R%version.tar.gz
 Patch: %name-version-info.patch
@@ -80,7 +81,6 @@ This package contains the vspipe tool for interfacing with VapourSynth.
 sed -i 's|#!/usr/bin/env python|#!%__python3|' setup.py
 
 %build
-%add_optflags -L/%_lib -lpthread
 %autoreconf
 %configure \
     --disable-static \
@@ -138,6 +138,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_bindir/vspipe
 
 %changelog
+* Fri Jul 05 2024 Leontiy Volodin <lvol@altlinux.org> 69-alt1
+- New version 69.
+
 * Mon May 13 2024 Leontiy Volodin <lvol@altlinux.org> 68-alt1
 - New version 68.
 
