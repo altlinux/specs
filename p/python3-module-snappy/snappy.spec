@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 Summary: Python library for the snappy compression library from Google
@@ -57,6 +57,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/python_%oname-%version.dist-info
 
 %changelog
+* Fri Jul 05 2024 Grigory Ustinov <grenka@altlinux.org> 0.7.2-alt1
+- Automatically updated to 0.7.2.
+
 * Fri May 17 2024 Grigory Ustinov <grenka@altlinux.org> 0.7.1-alt1
 - Automatically updated to 0.7.1.
 
