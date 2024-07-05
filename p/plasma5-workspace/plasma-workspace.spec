@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.27.11
-Release: alt8
+Release: alt9
 Epoch: 1
 %K5init
 
@@ -191,7 +191,7 @@ developing applications that use %name.
 %package -n %name-qml
 Group: Graphical desktop/KDE
 Summary: Base qml-components for plasma workspace
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 Requires: qml(QtGraphicalEffects)
 Requires: qml(org.kde.plasma.core) qml(org.kde.kquickcontrols) qml(org.kde.kirigami) qml(org.kde.kwin)
 %description -n %name-qml
@@ -201,8 +201,8 @@ Base qml-components for plasma workspace
 Group: Graphical desktop/KDE
 Summary: SDDM breeze theme
 Requires: libkf5plasmaquick
-Requires: %name-common = %EVR
-Requires: %name-qml = %EVR
+Requires: %name-common >= %EVR
+Requires: %name-qml >= %EVR
 Buildarch: noarch
 %description -n sddm-theme-breeze
 SDDM breeze theme
@@ -211,7 +211,7 @@ SDDM breeze theme
 Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: %name-common
+Requires: %name-common >= %EVR
 Provides: polkit-kde-kfontinst
 %description -n polkit-kde-plasma-workspace
 Common polkit files for %name
@@ -219,7 +219,7 @@ Common polkit files for %name
 %package -n %libkworkspace5
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common
+Requires: %name-common >= %EVR
 Provides: libkworkspace5 = %version-%release
 Obsoletes: libkworkspace5 < %version-%release
 %description -n %libkworkspace5
@@ -228,7 +228,7 @@ Obsoletes: libkworkspace5 < %version-%release
 %package -n %libplasma_geolocation_interface
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common
+Requires: %name-common >= %EVR
 Provides: libplasma_geolocation_interface = %version-%release
 Obsoletes: libplasma_geolocation_interface < %version-%release
 %description -n %libplasma_geolocation_interface
@@ -237,7 +237,7 @@ Obsoletes: libplasma_geolocation_interface < %version-%release
 %package -n %libtaskmanager
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common
+Requires: %name-common >= %EVR
 Provides: libtaskmanager = %version-%release
 Obsoletes: libtaskmanager < %version-%release
 %description -n %libtaskmanager
@@ -246,7 +246,7 @@ Obsoletes: libtaskmanager < %version-%release
 %package -n %libweather_ion
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common
+Requires: %name-common >= %EVR
 Provides: libweather_ion = %version-%release
 Obsoletes: libweather_ion < %version-%release
 %description -n %libweather_ion
@@ -255,35 +255,35 @@ Obsoletes: libweather_ion < %version-%release
 %package -n %libcolorcorrect
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libcolorcorrect
 %name library
 
 %package -n %libnotificationmanager
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libnotificationmanager
 %name library
 
 %package -n %libkfontinst
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkfontinst
 %name library
 
 %package -n %libkfontinstui
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkfontinstui
 %name library
 
 %package -n %libkrdb
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkrdb
 %name library
 
@@ -579,6 +579,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_unitdir_user/plasma-core.target.d/xd
 
 
 %changelog
+* Fri Jul 05 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.11-alt9
+- relax requires
+
 * Fri Jun 14 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 1:5.27.11-alt8
 - kcm/users: decode uri in file path (closes: 50522)
 
