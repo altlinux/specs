@@ -1,5 +1,5 @@
 Name: python3-module-openhomedevice
-Version: 2.2
+Version: 2.3
 Release: alt1
 
 Summary: Library to provide an API to an existing openhome device
@@ -32,6 +32,9 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/openhomedevice-%version.dist-info
 
 %changelog
+* Fri Jul 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.3-alt1
+- 2.3 released
+
 * Mon Jul 10 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2-alt1
 - 2.2 released
 
