@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.4.0
+Version: 5.5.1
 Release: alt1
 
 Summary: Tool for managing your YubiKey configuration
@@ -66,6 +66,9 @@ install -pD -m0644 man/ykman.1 %buildroot%_man1dir/ykman.1
 %_man1dir/%mod_name.1.*
 
 %changelog
+* Fri Jul 05 2024 Anton Zhukharev <ancieg@altlinux.org> 5.5.1-alt1
+- Updated to 5.5.1.
+
 * Thu Mar 28 2024 Anton Zhukharev <ancieg@altlinux.org> 5.4.0-alt1
 - Updated to 5.4.0.
 
