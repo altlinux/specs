@@ -17,11 +17,12 @@
 
 Name: %prog_name%cri_o_major.%cri_o_minor
 Version: %cri_o_major.%cri_o_minor.%cri_o_patch
-Release: alt2
+Release: alt3
 Summary: Kubernetes Container Runtime Interface for OCI-based containers
 Group: Development/Other
 License: Apache-2.0
-URL: https://%provider_prefix
+URL: https://cri-o.io
+VCS: https://github.com/cri-o/cri-o
 ExclusiveArch: %go_arches
 
 Source: %name-%version.tar
@@ -67,7 +68,7 @@ sed -i 's/\/local//' docs/crio.conf.5.md
 sed -i 's/install.config: crio.conf/install.config:/' Makefile
 sed -i 's/install.bin: binaries/install.bin:/' Makefile
 sed -i 's/\.gopathok//' Makefile
-sed -i 's|$(PREFIX)/lib/systemd/system|$(DESTDIR)/lib/systemd/system|g' Makefile
+sed -i 's|$(PREFIX)/lib/systemd/system|$(DESTDIR)%_unitdir|g' Makefile
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -134,6 +135,9 @@ install -p -m 644 contrib/cni/99-loopback.conf %buildroot%_sysconfdir/cni/net.d/
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Thu Jul 04 2024 Alexander Stepchenko <geochip@altlinux.org> 1.24.6-alt3
+- Use macros for systemd instead of absolute paths.
+
 * Tue Oct 31 2023 Alexey Shabalin <shaba@altlinux.org> 1.24.6-alt2
 - Update BR golang.
 
