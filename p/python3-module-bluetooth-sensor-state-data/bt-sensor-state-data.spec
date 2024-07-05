@@ -1,5 +1,5 @@
 Name: python3-module-bluetooth-sensor-state-data
-Version: 1.6.2
+Version: 1.7.1
 Release: alt1
 
 Summary: Models for storing and converting Bluetooth Sensor State Data
@@ -30,6 +30,9 @@ BuildRequires: python3(poetry-core)
 %python3_sitelibdir/bluetooth_sensor_state_data-%version.dist-info
 
 %changelog
+* Fri Jul 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.7.1-alt1
+- 1.7.1 released
+
 * Mon Jul 10 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.2-alt1
 - 1.6.2 released
 
