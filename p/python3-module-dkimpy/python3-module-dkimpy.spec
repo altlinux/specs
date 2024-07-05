@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.7
+Version: 1.1.8
 Release: alt1
 Summary: Python 3 module for DKIM and ARC signing and verification
 License: BSD-2-Clause
@@ -58,6 +58,9 @@ verification.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jul 05 2024 Stanislav Levin <slev@altlinux.org> 1.1.8-alt1
+- 1.1.7 -> 1.1.8.
+
 * Mon Jun 24 2024 Stanislav Levin <slev@altlinux.org> 1.1.7-alt1
 - 1.1.6 -> 1.1.7.
 
