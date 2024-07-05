@@ -1,14 +1,14 @@
 %define major 1.3
-%define snapshot 20171209
+%define snapshot 20240619
 %def_disable static
 
 Name: dialog
 Version: %major.%snapshot
-Release: alt2
+Release: alt1
 
 Summary: A utility for creating TTY dialog boxes
 
-License: LGPLv2
+License: LGPLv2.1
 Group: Development/Other
 Url: http://invisible-island.net/dialog/
 
@@ -17,9 +17,6 @@ Url: http://invisible-island.net/dialog/
 Source: %name-%version.tar
 
 BuildRequires: ncurses-devel gcc gettext findutils libtool
-
-Patch1: dialog-incdir.patch
-Patch2: dialog-multilib.patch
 
 Provides: cdialog
 Obsoletes: cdialog
@@ -64,8 +61,6 @@ Static dialog library.
 
 %prep
 %setup
-%patch1 -p1 -b .incdir
-%patch2 -p1 -b .multilib
 
 %build
 %configure \
@@ -107,6 +102,9 @@ rm -v %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Wed Jul 03 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.3.20240619-alt1
+- new verion
+
 * Fri Sep 03 2021 Vitaly Lipatov <lav@altlinux.ru> 1.3.20171209-alt2
 - disable build devel-static subpackage
 

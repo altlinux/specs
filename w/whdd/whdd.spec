@@ -1,9 +1,9 @@
 Name: whdd
-Version: 3.0
-Release: alt3
+Version: 3.1
+Release: alt1
 
 Summary: Diagnostic and recovery tool for block devices
-License: GNU GPL
+License: GPL-3
 Group: System/Kernel and hardware
 Url: https://github.com/whdd/whdd
 
@@ -48,9 +48,13 @@ WHDD может работать с жёстким диском на низко�
 %find_lang %name
 
 %files  -f %name.lang
+%doc README LICENSE COPYING doc/README.developer
 %attr(4711, root, root) %_bindir/%name
 
 %changelog
+* Fri Jul 05 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.1-alt1
+- new version whdd 3.1
+
 * Fri Sep 24 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.0-alt3
 - e2k: removed nested function
 
