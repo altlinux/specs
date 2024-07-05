@@ -1,5 +1,5 @@
 %define kernel_base_version	6.9
-%define kernel_sublevel        .4
+%define kernel_sublevel        .8
 
 Name: kernel-image-mp
 Version: %kernel_base_version%kernel_sublevel
@@ -256,6 +256,9 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %modules_dir/build
 
 %changelog
+* Fri Jul 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 6.9.8-alt1
+- 6.9.8
+
 * Thu Jun 13 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 6.9.4-alt1
 - 6.9.4
 
