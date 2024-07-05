@@ -1,8 +1,8 @@
 %define oname tornado
 
 Name: python3-module-%oname
-Version: 6.4.0
-Release: alt1.1
+Version: 6.4.1
+Release: alt1
 
 Summary: Scalable, non-blocking web server and tools
 
@@ -14,8 +14,6 @@ VCS: https://github.com/tornadoweb/tornado
 Source: %name-%version.tar
 Patch: Do-not-turn-DeprecationWarning-into-Exception.patch
 Patch1: tornado-increase-timeout-for-simplehttpclienttest.patch
-# https://github.com/tornadoweb/tornado/pull/3374
-Patch2: tornado-testing-allow-to-instantiate-an-empty-AsyncTestCase.patch
 
 BuildRequires(pre): rpm-build-python3
 Requires: ca-certificates python3-module-certifi
@@ -35,7 +33,6 @@ ideal for real-time web services.
 %setup
 %patch -p1
 %patch1 -p1
-%patch2 -p1
 # remove shebang from files
 sed -i.orig -e '/^#!\//, 1d' *py tornado/*.py tornado/*/*.py
 
@@ -45,7 +42,6 @@ sed -i.orig -e '/^#!\//, 1d' *py tornado/*.py tornado/*/*.py
 %install
 %python3_install
 pushd %buildroot%python3_sitelibdir/%oname
-rm -rf ca-certificates.crt
 ln -sf /usr/share/ca-certificates/ca-bundle.crt ca-certificates.crt
 
 # do not install tests
@@ -58,9 +54,12 @@ export ASYNC_TEST_TIMEOUT=120
 %files
 %doc LICENSE *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-6.4-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-6.4.1-py%_python3_version.egg-info
 
 %changelog
+* Fri Jul 05 2024 Grigory Ustinov <grenka@altlinux.org> 6.4.1-alt1
+- Automatically updated to 6.4.1.
+
 * Fri May 17 2024 Stanislav Levin <slev@altlinux.org> 6.4.0-alt1.1
 - NMU: fixed compatibility with Pytest 8.2.0.
 
