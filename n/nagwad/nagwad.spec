@@ -2,7 +2,7 @@
 %define icinga_user icinga
 
 Name: 	  nagwad
-Version:  0.11.5
+Version:  0.11.6
 Release:  alt1
 
 Summary:  System journal event scanner and handler
@@ -259,6 +259,10 @@ usermod -a -G %name %icinga_user
 %_bindir/nsca-shell
 
 %changelog
+* Fri Jul 05 2024 Paul Wolneykien <manowar@altlinux.org> 0.11.6-alt1
+- Fixed "cleanup-old" description in the docs (closes: 50808).
+- Fix: Skip the current log dir when cleanup old data.
+
 * Tue Jul 02 2024 Paul Wolneykien <manowar@altlinux.org> 0.11.5-alt1
 - Fixed parsing of endpoint port in 10-push-icinga.
 
