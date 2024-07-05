@@ -11,7 +11,7 @@
 
 Name: fence-agents
 Summary: Fence Agents
-Version: 4.14.0
+Version: 4.15.0
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Base
@@ -995,8 +995,8 @@ install -m 0644 systemd/fence-agents.conf %buildroot%_tmpfilesdir/%name.conf
 %_man8dir/fence_emerson.8*
 
 %files eps
-%_sbindir/fence_eps
-%_man8dir/fence_eps.8*
+%_sbindir/fence_eps*
+%_man8dir/fence_eps*.8*
 
 %files gce
 %_sbindir/fence_gce
@@ -1251,6 +1251,9 @@ install -m 0644 systemd/fence-agents.conf %buildroot%_tmpfilesdir/%name.conf
 %endif
 
 %changelog
+* Fri Jul 05 2024 Andrew A. Vasilyev <andy@altlinux.org> 4.15.0-alt1
+- 4.15.0
+
 * Sun Apr 28 2024 Andrew A. Vasilyev <andy@altlinux.org> 4.14.0-alt1
 - 4.14.0
 
