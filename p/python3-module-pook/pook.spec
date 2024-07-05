@@ -4,7 +4,7 @@
 %def_without check
 
 Name:    python3-module-%oname
-Version: 1.4.3
+Version: 2.0.0
 Release: alt1
 
 Summary: HTTP traffic mocking and testing made easy in Python
@@ -46,9 +46,6 @@ Source:  %name-%version.tar
 %install
 %pyproject_install
 
-# don't install tests in such directory please
-rm -rf %buildroot%python3_sitelibdir/tests
-
 %check
 %pyproject_run_pytest -k 'not test_engines' --ignore="tests/unit/interceptors" --ignore="tests/integration"
 
@@ -58,6 +55,9 @@ rm -rf %buildroot%python3_sitelibdir/tests
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Jul 05 2024 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
+- Automatically updated to 2.0.0.
+
 * Tue Apr 02 2024 Grigory Ustinov <grenka@altlinux.org> 1.4.3-alt1
 - Automatically updated to 1.4.3.
 
