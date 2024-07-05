@@ -4,8 +4,8 @@
 %def_enable tk
 
 Name: newt52
-Version: 0.52.21
-Release: alt3
+Version: 0.52.24
+Release: alt1
 
 Summary: A development library for text mode user interfaces
 
@@ -136,6 +136,9 @@ rm -v %buildroot%_libdir/*.*a
 %endif
 
 %changelog
+* Thu Jul 04 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.52.24-alt1
+- 0.52.24
+
 * Mon Sep 06 2021 Vitaly Lipatov <lav@altlinux.ru> 0.52.21-alt3
 - restore control for devel-static, cleanup spec
 
