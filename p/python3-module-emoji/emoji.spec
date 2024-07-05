@@ -1,5 +1,5 @@
 Name: python3-module-emoji
-Version: 2.11.1
+Version: 2.12.1
 Release: alt1
 
 Summary: Emoji for Python
@@ -14,6 +14,7 @@ BuildRequires: rpm-build-pyproject
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildRequires: python3(pytest)
+BuildRequires: python3(typing_extensions)
 
 %description
 %summary
@@ -35,6 +36,9 @@ BuildRequires: python3(pytest)
 %python3_sitelibdir/emoji-%version.dist-info
 
 %changelog
+* Fri Jul 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.12.1-alt1
+- 2.12.1 released
+
 * Tue May 07 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.11.1-alt1
 - 2.11.1 released
 
