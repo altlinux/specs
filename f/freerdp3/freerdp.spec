@@ -5,13 +5,13 @@
 %def_with gss
 # Conflicts with openssl
 %def_without mbedtls
-%def_without SDL
+%def_with SDL
 %def_without uwac
 %define sover 3
 %define oname freerdp
 
 Name: freerdp%sover
-Version: 3.5.1
+Version: 3.6.2
 Release: alt1
 
 Group: Networking/Remote access
@@ -344,6 +344,10 @@ rm -f %buildroot%_bindir/sfreerdp*
 # Remove icons
 rm -rf %buildroot%_datadir/FreeRDP/images/test_*.*
 
+%if_with SDL
+rm -f %buildroot%_bindir/sdl-freerdp %buildroot%_man1dir/sdl-freerdp.1*
+%endif
+
 %files
 
 %files -n xfreerdp%sover
@@ -420,6 +424,9 @@ rm -rf %buildroot%_datadir/FreeRDP/images/test_*.*
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Sat Jul 06 2024 Andrey Cherepanov <cas@altlinux.org> 3.6.2-alt1
+- New version.
+
 * Wed Apr 24 2024 Andrey Cherepanov <cas@altlinux.org> 3.5.1-alt1
 - New version.
 
