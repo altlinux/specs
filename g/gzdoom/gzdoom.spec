@@ -1,8 +1,8 @@
 %define optflags_lto %nil
 
 Name: gzdoom
-Version: 4.11.1
-Release: alt2
+Version: 4.12.2
+Release: alt1
 
 Summary: Enhanced Doom engine
 Summary(ru_RU.UTF-8): Продвинутый порт движка Doom
@@ -109,6 +109,9 @@ done
 %_gamesdatadir/doom/soundfonts/*
 
 %changelog
+* Sun Jul  7 2024 Artyom Bystrov <arbars@altlinux.org> 4.12.2-alt1
+- Update to new version
+
 * Wed Jan 03 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.11.1-alt2
 - NMU: build for LoongArch
 
