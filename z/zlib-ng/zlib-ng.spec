@@ -3,7 +3,7 @@
 
 Name: zlib-ng
 Version: 2.2.1
-Release: alt1
+Release: alt1.1
 
 Summary: Zlib replacement with optimizations
 Summary(ru_RU.UTF-8): Замена Zlib с оптимизацией
@@ -105,6 +105,9 @@ developing application that use %name.
 %_libdir/libz-ng.a
 
 %changelog
+* Sat Jul 06 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.2.1-alt1.1
+- e2k patch update
+
 * Tue Jul 02 2024 Nazarov Denis <nenderus@altlinux.org> 2.2.1-alt1
 - New version 2.2.1.
 
