@@ -1,6 +1,6 @@
 Name: openhantek
 Version: 3.3.3
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: OpenHantek is a DSO software for Hantek (Voltcraft/Darkwire/Protek/Acetech) USB digital signal oscilloscopes
@@ -41,7 +41,6 @@ export VERSION=%version
 
 %install
 %makeinstall_std
-mv %buildroot/usr/lib %buildroot/lib
 ln -s OpenHantek %buildroot%_bindir/%name
 
 %files
@@ -54,6 +53,9 @@ ln -s OpenHantek %buildroot%_bindir/%name
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Sun Jul 07 2024 Vitaly Lipatov <lav@altlinux.ru> 1:3.3.3-alt2
+- fix packing
+
 * Sun Oct 01 2023 Vitaly Lipatov <lav@altlinux.ru> 1:3.3.3-alt1
 - new version 3.3.3 (with rpmrb script)
 
