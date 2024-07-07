@@ -23,11 +23,12 @@
 %define defphp php7
 %endif
 
+%define minphp 7.3
 
 # Note: /usr/bin/compose still use php command
 
 Name: composer
-Version: 2.7.2
+Version: 2.7.7
 Release: alt1
 
 Summary: Composer helps you declare, manage and install dependencies of PHP projects, ensuring you have the right stack everywhere
@@ -52,10 +53,10 @@ Patch1: composer-compiler.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-features >= 0.8
-BuildRequires: %defphp >= 7.2.5
+BuildRequires: %defphp >= %minphp
 
 Requires: %_bindir/%defphp
-Requires: %defphp >= 7.2.5
+Requires: %defphp >= %minphp
 Requires: %defphp-openssl
 
 %description
@@ -90,6 +91,10 @@ install -m 0644 -D %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Sun Jul 07 2024 Vitaly Lipatov <lav@altlinux.ru> 2.7.7-alt1
+- new version 2.7.7 (with rpmrb script)
+- CVE-2024-35241, CVE-2024-35242
+
 * Sat Apr 06 2024 Vitaly Lipatov <lav@altlinux.ru> 2.7.2-alt1
 - new version 2.7.2 (with rpmrb script)
 
