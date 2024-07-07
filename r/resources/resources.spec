@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define ver_major 1.5
@@ -8,7 +8,7 @@
 %def_disable bootstrap
 
 Name: resources
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: System monitor
@@ -85,6 +85,9 @@ sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/utils/memory.rs
 
 
 %changelog
+* Sun Jul 07 2024 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt1
+- 1.5.1
+
 * Tue Jun 25 2024 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
 - updated to v1.5.0-8-g1108d43
 
