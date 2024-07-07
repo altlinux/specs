@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: 	 tellico
-Version: 3.5.4
+Version: 3.5.5
 Release: alt1
 
 Summary: A collection manager for KDE
@@ -101,11 +101,13 @@ find %buildroot -type f -print0 |
 %_K5cfg/*.kcfg
 %_K5xdgconf/%{name}*
 %_K5xdgmime/%name.xml
-%_K5xmlgui/%name
 %_datadir/metainfo/org.kde.tellico.appdata.xml
 %_datadir/knsrcfiles/tellico-*.knsrc
 
 %changelog
+* Sun Jul 07 2024 Andrey Cherepanov <cas@altlinux.org> 3.5.5-alt1
+- New version.
+
 * Fri Mar 29 2024 Andrey Cherepanov <cas@altlinux.org> 3.5.4-alt1
 - New version.
 
