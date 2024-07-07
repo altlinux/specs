@@ -1,3 +1,8 @@
+%if_feature php83 8.3.0
+%def_with php83
+%define defphp php8.3
+%endif
+
 %if_feature php80 8.0.0
 %def_with php80
 %define defphp php8.0
@@ -6,6 +11,11 @@
 %if_feature php81 8.1.0
 %def_with php81
 %define defphp php8.1
+%endif
+
+%if_feature php82 8.2.0
+%def_with php82
+%define defphp php8.2
 %endif
 
 %if_feature php7 7.4.3
@@ -18,7 +28,7 @@
 %define rel %nil
 
 Name: roundcube
-Version: 1.6.5
+Version: 1.6.7
 Release: alt1
 
 Summary: Browser-based multilingual IMAP client with an application-like user interface
@@ -160,6 +170,13 @@ service httpd2 condreload
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Sun Jul 07 2024 Vitaly Lipatov <lav@altlinux.ru> 1.6.7-alt1
+- new version 1.6.7 (with rpmrb script)
+- fixes vulnerabilities:
+ + Fix cross-site scripting (XSS) vulnerability in handling SVG animate attributes
+ + Fix cross-site scripting (XSS) vulnerability in handling list columns from user preferences.
+- use php8.2 by default if php7.4 is missed
+
 * Sun Nov 05 2023 Vitaly Lipatov <lav@altlinux.ru> 1.6.5-alt1
 - new version 1.6.5 (with rpmrb script)
 - fixes vulnerabilities:
