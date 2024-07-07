@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define major 20.13
+%define major 20.15
 
 %define nodejs_soversion 115
 %define nodejs_abi %nodejs_soversion
@@ -16,13 +16,13 @@
 
 
 # check deps/npm/package.json for it
-%define npm_version 10.5.2
+%define npm_version 10.7.0
 # separate build npm
 %def_with npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
 # check deps/corepack/package.json
-%define corepackver 0.25.2
+%define corepackver 0.28.1
 %def_without corepack
 
 # check deps/zlib/zlib.h
@@ -80,7 +80,7 @@
 %def_with nodejs_abi
 
 Name: node
-Version: %major.1
+Version: %major.0
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -512,6 +512,10 @@ rm -rv %buildroot/usr/share/doc/node/lldb_commands.py
 %endif
 
 %changelog
+* Sun Jul 07 2024 Vitaly Lipatov <lav@altlinux.ru> 20.15.0-alt1
+- 2024-06-20, Version 20.15.0 'Iron' (LTS), @marco-ippolito
+- npm updated to 10.7.0
+
 * Fri May 17 2024 Vitaly Lipatov <lav@altlinux.ru> 20.13.1-alt1
 - 2024-05-09, Version 20.13.1 'Iron' (LTS), @marco-ippolito
 - npm updated to 10.5.2
