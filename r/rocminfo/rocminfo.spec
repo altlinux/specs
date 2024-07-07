@@ -1,13 +1,12 @@
 Name: rocminfo
-Version: 6.0.0
-Release: alt0.3
+Version: 6.1.2
+Release: alt0.1
 License: NCSA
 Summary: ROCm Application for Reporting System Info
 Url: https://github.com/RadeonOpenCompute/rocminfo
 Group: System/Configuration/Hardware
 
 Source: %name-%version.tar
-Patch: 0001-Escape-backslash-in-regular-expression-strings.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++ hsa-rocr-devel python3-devel
@@ -21,7 +20,6 @@ ROCm Application for Reporting System Info.
 
 %prep
 %setup
-%patch -p1
 # https://github.com/RadeonOpenCompute/rocminfo/issues/60
 %ifarch aarch64
 subst '/.*{ROCMINFO_CXX_FLAGS} -m64)/d' CMakeLists.txt
@@ -39,6 +37,9 @@ subst '/.*{ROCMINFO_CXX_FLAGS} -m64)/d' CMakeLists.txt
 %_bindir/*
 
 %changelog
+* Sat Jul 06 2024 L.A. Kostis <lakostis@altlinux.ru> 6.1.2-alt0.1
+- rocm-6.1.2.
+
 * Tue Mar 19 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.3
 - added python3.12 compatibility patch.
 

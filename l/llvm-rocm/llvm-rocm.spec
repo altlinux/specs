@@ -7,11 +7,12 @@
 %global proj rocm
 # rocm llvm uses llvm17 as codebase
 %global v_major 17
-%global v_majmin %{v_major}.0
-
 %global llvm_name llvm-%proj
 %global clang_name clang-%proj
 %global lld_name lld-%proj
+%global dl_name %proj-device-libs
+%global comgr_soname 2
+%global comgr_dir amd/comgr
 
 %global llvm_default_name llvm%_llvm_version
 %global clang_default_name clang%_llvm_version
@@ -35,24 +36,22 @@ AutoProv: nopython
 # Decrease debuginfo verbosity to reduce memory consumption during final library linking
 %define optflags_debug -g1
 
-# LTO-related flags are set by CMake.
-# LTO causes LLVM to break badly on %%ix86 see
-# https://github.com/llvm/llvm-project/issues/57740
-# will enable it conditionally per platform
-%global optflags_lto %nil
+%global optflags_lto -flto=thin -ffat-lto-objects
 
 %def_disable tests
 %def_with clang
 
-Name: %llvm_name
-Version: 6.0.2
-Release: alt0.6
-Summary: The LLVM Compiler Infrastructure with ROCm additions
+%define tarversion %version
+%define mversion %version
 
+Name: %llvm_name
+Version: 6.1.2
+Release: alt0.1
+Summary: The LLVM Compiler Infrastructure with ROCm addition
 Group: Development/C
 License: Apache-2.0 with LLVM-exception
-Url: https://github.com/RadeonOpenCompute/llvm-project.git
-# Source-URL: https://github.com/RadeonOpenCompute/llvm-project/archive/refs/tags/rocm-%version.tar.gz
+Url: https://github.com/ROCm/llvm-project.git
+# Source-URL: https://github.com/ROCm/llvm-project/archive/refs/tags/rocm-%tarversion.tar.gz
 Source: llvm-project-%{version}.tar
 Patch1: clang-alt-triple.patch
 Patch2: 0001-alt-llvm-config-Ignore-wrappers-when-looking-for-current.patch
@@ -70,6 +69,24 @@ Patch13: clang-16-alt-rocm-device-libs-path.patch
 Patch14: clang-alt-nvvm-libdevice.patch
 # https://projects.blender.org/blender/blender/issues/112084
 Patch15: 30a3adf50e2d49dfc97c1b614d9b93638eba672d.patch
+# https://github.com/llvm/llvm-project/pull/68273
+Patch16: compiler-rt-68273.patch
+Patch17: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.patch
+
+# device-libs patches
+Patch30: device-libs-cmake-alt-install-prefix.patch
+Patch31: device-libs-cmake-amdgcn-bitcode.patch
+
+# comgr patches
+Patch40: clang-alt-lld-rocm.patch
+Patch41: comgr-rocm-alt-device-libs-path.patch
+Patch42: rocm-comgr-llvm-static.patch
+
+# hipcc patches
+Patch50: hipcc-alt-hardcore-llvm-rocm.patch
+Patch51: hipcc-alt-hipInfo-path.patch
+Patch52: hipcc-alt-paths.patch
+Patch53: hipcc-alt-remove-stdc++fs.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -82,13 +99,14 @@ BuildPreReq: /proc
 # Obtain %%__python3 at prep stage.
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-llvm-common
+BuildRequires(pre): rocm-cmake >= %version
 
 BuildRequires(pre): cmake >= 3.4.3
 BuildRequires: rpm-build >= 4.0.4-alt112 libncursesw-devel
 BuildRequires: libstdc++-devel libffi-devel perl-Pod-Parser perl-devel
-BuildRequires: zip zlib-devel binutils-devel ninja-build hsa-rocr-devel
+BuildRequires: zip zlib-devel binutils-devel ninja-build
 %if_with clang
-BuildRequires: clang%{v_majmin} llvm%{v_majmin}-devel lld%{v_majmin} rocm-device-libs
+BuildRequires: %clang_default_name %llvm_default_name-devel %lld_default_name
 %else
 BuildRequires: gcc-c++
 %endif
@@ -298,6 +316,47 @@ AutoProv: nopython
 %description -n %lld_name-devel
 This package contains header files for the LLD linker.
 
+%package -n %dl_name
+Summary: AMD specific device-side language runtime libraries
+Group: System/Libraries
+
+%description -n %dl_name
+Set of AMD specific device-side language runtime libraries, specifically: the
+Open Compute library controls, the Open Compute Math library, the Open Compute
+Kernel library, the OpenCL built-in library, the HIP built-in library, and the
+Heterogeneous Compute built-in library.
+
+%package -n libamd_comgr%{comgr_soname}
+Summary: AMD Code Object Manager (Comgr) library
+Group: System/Libraries
+Provides: libamd_comgr = %EVR
+Requires: clang-rocm-libs-support = %EVR, lld-rocm = %EVR
+
+%description -n libamd_comgr%{comgr_soname}
+The Comgr library provides APIs for compiling and inspecting AMDGPU code
+objects.
+
+%package -n rocm-comgr-devel
+Summary: AMD Code Object Manager (Comgr) headers
+Group: Development/C++
+
+%description -n rocm-comgr-devel
+AMD Code Object Manager (Comgr) develpment library and headers
+
+%package -n hipcc
+Summary: HIP compiler driver (hipcc)
+Group: Development/Other
+# as hip scripts are noarch
+# perl scripts rely on runtime envs
+AutoReq: yes, noperl
+Requires: clang-rocm = %EVR clang-rocm-tools = %EVR clang-rocm-libs-support = %EVR llvm-rocm = %EVR lld-rocm = %EVR glibc-devel gcc
+Requires: rocm-device-libs = %EVR rocminfo >= %version
+
+%description -n hipcc
+hipcc is a compiler driver utility that will call clang or nvcc, depending on
+target, and pass the appropriate include and library options for the target
+compiler and HIP infrastructure.
+
 %prep
 %setup -n llvm-project-%{version}
 %patch1 -p1 -b .alt-triple
@@ -308,14 +367,34 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
-%patch9 -p1 -b .clang-DWARF4
-%patch10 -p1
+#%%patch8 -p1
+#%%patch9 -p1 -b .clang-DWARF4
+#%%patch10 -p1
 %patch11 -p1
 #%%patch12 -p1 -b .llvm-cmake-build-with-install-rpath
 %patch13 -p1 -b .clang-rocm-device-path
 %patch14 -p1
 %patch15 -p1 -R -b .fix-blender-crash
+%patch16 -p1
+%patch17 -p2
+
+pushd amd/device-libs
+%patch30 -p1
+%patch31 -p1
+popd
+
+# comgr patches
+#%%patch40 -p2
+pushd amd/comgr
+%patch41 -p4
+popd
+%patch42 -p2
+
+# hipcc
+%patch50 -p2
+%patch51 -p2
+%patch52 -p2
+%patch53 -p2
 
 # LLVM 12 and onward deprecate Python 2:
 # https://releases.llvm.org/12.0.0/docs/ReleaseNotes.html
@@ -332,9 +411,6 @@ fi
 # 64 workers?
 %ifarch ppc64le
 export NPROCS=48
-%endif
-%if_with clang
-export export ALTWRAP_LLVM_VERSION=%{v_majmin}
 %endif
 %define builddir %_cmake__builddir
 %define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
@@ -377,9 +453,9 @@ export export ALTWRAP_LLVM_VERSION=%{v_majmin}
 	-DCMAKE_RANLIB:PATH=%_bindir/llvm-ranlib \
 	-DCMAKE_AR:PATH=%_bindir/llvm-ar \
 	-DCMAKE_NM:PATH=%_bindir/llvm-nm \
-	-DLLVM_ENABLE_LTO=Thin \
-	-DLLVM_ENABLE_LLD:BOOL=ON \
+	-DLLVM_USE_LINKER=lld \
 	%else
+	-DLLVM_USE_LINKER=gold \
 	-DLLVM_ENABLE_LTO=Off \
 	-DCMAKE_AR:PATH=%_bindir/gcc-ar \
 	-DCMAKE_NM:PATH=%_bindir/gcc-nm \
@@ -392,10 +468,70 @@ export export ALTWRAP_LLVM_VERSION=%{v_majmin}
 sed -i 's|man\ tools/lld/docs/docs-lld-html|man|' %builddir/build.ninja
 ninja -vvv -j $NPROCS -C %builddir
 
+## lld from rocm doesn't know ffat-lto-objects option
+export CFLAGS="`echo " %{optflags} " | sed 's/ -ffat-lto-objects / /g;'`"
+export CXXFLAGS="$CFLAGS"
+
+# device-libs
+pushd amd/device-libs
+%cmake \
+    -DCMAKE_C_COMPILER=clang \
+    -DCMAKE_CXX_COMPILER=clang++ \
+    -DCMAKE_C_FLAGS="$CFLAGS" \
+    -DCMAKE_CXX_FLAGS="$CFLAGS" \
+    -DCMAKE_EXE_LINKER_FLAGS='-fuse-ld=lld' \
+    -DCMAKE_PREFIX_PATH="${PWD}/../../%_cmake__builddir" \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo
+%cmake_build
+popd
+
+# comgr
+pushd %{comgr_dir}
+%cmake \
+    -DCMAKE_C_COMPILER=clang \
+    -DCMAKE_CXX_COMPILER=clang++ \
+    -DBUILD_TESTING=OFF \
+    -DCMAKE_C_FLAGS="$CFLAGS" \
+    -DCMAKE_CXX_FLAGS="$CFLAGS" \
+    -DCMAKE_PREFIX_PATH="${PWD}/../../%_cmake__builddir;${PWD}/../device-libs/%_cmake__builddir" \
+    -DCMAKE_CXX_LINKER_FLAGS='-fuse-ld=lld' \
+    -DCMAKE_SHARED_LINKER_FLAGS='-fuse-ld=lld' \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo
+%cmake_build
+popd
+
+pushd amd/hipcc
+%cmake \
+    -DCMAKE_C_COMPILER=clang \
+    -DCMAKE_CXX_COMPILER=clang++ \
+    -DCMAKE_C_FLAGS="$CFLAGS" \
+    -DCMAKE_CXX_FLAGS="$CFLAGS" \
+    -DCMAKE_EXE_LINKER_FLAGS='-fuse-ld=lld' \
+    -DCMAKE_PREFIX_PATH="${PWD}/../../%_cmake__builddir" \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo
+%cmake_build
+popd
+
 %install
 sed -i 's|man\ tools/lld/docs/docs-lld-html|man|' %builddir/build.ninja
 sed -i '/^[[:space:]]*include.*tools\/lld\/docs\/cmake_install.cmake.*/d' %builddir/tools/lld/cmake_install.cmake
 DESTDIR=%buildroot ninja -C %builddir install
+
+# device-libs
+pushd amd/device-libs
+sed -i 's|\"\/usr\/lib\/llvm-rocm\"|"%_prefix"|' %builddir/cmake_install.cmake
+%cmake_install
+popd
+
+# comgr
+pushd %{comgr_dir}
+%cmake_install
+popd
+
+# hipcc
+pushd amd/hipcc
+%cmake_install
+popd
 
 if [ %_libsuff == 64 ]; then
 mkdir -p %buildroot%llvm_prefix/lib ||:
@@ -474,6 +610,7 @@ bin	llvm-cxxdump
 bin	llvm-cxxfilt
 bin	llvm-cxxmap
 bin	llvm-debuginfod-find
+bin	llvm-debuginfod
 bin	llvm-diff
 bin	llvm-dis
 bin	llvm-dlltool
@@ -585,6 +722,12 @@ sed -i '
 # cleanup
 rm -rf %buildroot{%llvm_libexecdir,%llvm_datadir,%llvm_prefix/lib}
 
+# documentation leftovers
+rm -rf %buildroot%_docdir/{ROCm-Device-Libs,amd_comgr-asan,amd_comgr,hipcc}
+
+# hipcc compat path
+rm -rf %buildroot%_prefix/hip
+
 %check
 %if_enabled tests
 LD_LIBRARY_PATH=%buildroot%llvm_libdir:$LD_LIBRARY_PATH
@@ -664,7 +807,36 @@ ninja -C %builddir check-all || :
 %llvm_libdir/cmake/lld
 %llvm_libdir/liblld*.a
 
+%files -n %dl_name
+%doc amd/device-libs/LICENSE.TXT amd/device-libs/README.md
+%dir %_datadir/amdgcn
+%_datadir/amdgcn/bitcode
+%_datadir/cmake/AMDDeviceLibs
+
+%files -n libamd_comgr%{comgr_soname}
+%doc %{comgr_dir}/README.md %{comgr_dir}/LICENSE.txt %{comgr_dir}/NOTICES.txt
+%_libdir/libamd_comgr.so.%{comgr_soname}*
+
+%files -n rocm-comgr-devel
+%_includedir/*
+%_libdir/libamd_comgr.so
+%_libdir/cmake/amd_comgr
+
+%files -n hipcc
+%doc amd/hipcc/README.md amd/hipcc/LICENSE.txt
+%_bindir/hipcc*
+%_bindir/hipvars.pm
+%_bindir/hipconfig*
+
 %changelog
+* Wed Jul 03 2024 L.A. Kostis <lakostis@altlinux.ru> 6.1.2-alt0.1
+- 6.1.2.
+- bundle device-libs, comgr and hipcc (they are now part of llvm-project).
+- llvm: compile with llvm18.
+- llvm: pass -ffat-lto-objects for build.
+- llvm: sync patches with ALTLinux llvm.
+- optimize BR.
+
 * Wed Apr 24 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0.2-alt0.6
 - Fix FTBFS: use llvm-17/clang-17.
 - lld: add /proc to requires.

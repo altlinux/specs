@@ -8,8 +8,8 @@
 %def_with HIP
 
 Name: clr
-Version: 6.0.2
-Release: alt0.3
+Version: 6.1.2
+Release: alt0.1
 License: MIT
 Summary: Radeon Open Compute Common Language Runtime
 Url: https://github.com/ROCm-Developer-Tools/clr
@@ -18,32 +18,17 @@ Group: System/Libraries
 Source0: %name-%version.tar
 # https://github.com/ROCm-Developer-Tools/HIP.git
 Source1: hip.tar
-# https://github.com/ROCm-Developer-Tools/HIPCC.git
-Source2: hipcc.tar
 # sane defaults for HIP
-Source4: hip.sh
+Source2: hip.sh
 
-Patch0: hipcc-alt-paths.patch
-Patch1: rocclr-gcc-13-fixes.patch
-Patch2: opencl-gcc-13-fixes.patch
-Patch3: hipcc-alt-hardcore-llvm-rocm.patch
-Patch4: hipcc-alt-hipInfo-path.patch
-# https://github.com/ROCm/clr/issues/18
-# https://bugs.gentoo.org/915969
-Patch5: hip-5.7.0-set-correct-alignement.patch
-Patch6: hipcc-alt-remove-isystem.patch
-Patch7: hipamd-pch-fix-arch.patch
+Patch0: rocclr-gcc-13-fixes.patch
+Patch1: opencl-gcc-13-fixes.patch
+Patch2: hipamd-pch-fix-arch.patch
 # patches from developer branch
-#Patch101: 0001-SWDEV-431315-mark-stack-as-non-executable-in-hiprtc-.patch
-Patch102: 0001-SWDEV-431399-use-x86-intrinsics-only-x86-platforms.patch
-#Patch103: 0001-SWDEV-435296-Fix-sporatic-segment-fault.patch
-#Patch104: 0001-SWDEV-437817-Fix-hipMemCpy2D-case-that-erroneously-f.patch
-#Patch105: 0001-SWDEV-311271-Release-freed-memory-from-MemPools.patch
-#Patch106: 0001-SWDEV-438299-Fixed-out-of-bounds-memory-access-in-Ex.patch
 
 BuildRequires(pre): cmake /proc ninja-build
-BuildRequires: llvm-rocm-devel = %version clang-rocm-devel = %version clang-rocm-tools = %version rocm-device-libs >= 6.0.0
-BuildRequires: zlib-devel libstdc++-devel rocm-cmake >= 6.0.0 rocm-comgr-devel = %version hsa-rocr-devel >= 6.0.0
+BuildRequires: llvm-rocm-devel = %version clang-rocm-devel = %version clang-rocm-tools = %version rocm-device-libs >= %version
+BuildRequires: zlib-devel libstdc++-devel rocm-cmake >= %version rocm-comgr-devel = %version hsa-rocr-devel >= %version
 BuildRequires: libX11-devel libnuma-devel libGL-devel tbb-devel
 %if_with mold
 BuildRequires: mold
@@ -51,6 +36,7 @@ BuildRequires: mold
 BuildRequires: lld-rocm
 %endif
 %if_with HIP
+BuildRequires: hipcc = %version
 BuildRequires: python3-module-CppHeaderParser
 %endif
 
@@ -65,6 +51,7 @@ on Windows as well as on Linux without much effort.
 Summary: ROCm OpenCL Compatible Runtime
 Group: System/Libraries
 Requires: opencl-filesystem
+Provides: rocm-ocl-icd = %EVR
 
 %description -n rocm-opencl-runtime
 ROCm OpenCL Compatible Runtime:
@@ -79,7 +66,7 @@ Group: Development/Other
 # perl scripts rely on runtime envs
 AutoReq: yes, noperl
 Requires: clang-rocm = %version clang-rocm-tools = %version clang-rocm-libs-support = %version llvm-rocm = %version lld-rocm = %version glibc-devel gcc
-Requires: rocm-device-libs >= 6.0.0 rocminfo >= 6.0.0 hip-runtime-amd = %EVR
+Requires: rocm-device-libs >= 6.0.0 rocminfo >= 6.0.0 hip-runtime-amd = %EVR hipcc = %version
 
 %description -n hip-devel
 HIP: Heterogenous-computing Interface for Portability development libraries and
@@ -96,7 +83,7 @@ portable applications for AMD and NVIDIA GPUs from single source code.
 This package provides the HIP implementation specifically for AMD platform.
 
 %prep
-%setup -n %name-%version -a1 -a2
+%setup -n %name-%version -a1
 %autopatch -p1
 
 %build
@@ -114,10 +101,11 @@ export HIP_DEVICE_LIB_PATH=%_datadir/amdgcn/bitcode
 %if_with HIP
     -DHIP_OFFICIAL_BUILD=ON \
     -DCLR_BUILD_HIP=ON \
-    -DHIPCC_BIN_DIR=%_builddir/%name-%version/hipcc/bin \
+    -DHIPCC_BIN_DIR=%_bindir \
     -DHIP_COMMON_DIR=%_builddir/%name-%version/hip \
     -DCMAKE_MODULE_PATH=%_libdir/cmake \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
+    -DCMAKE_STRIP:STRING="" \
     -DHIP_PLATFORM=amd \
 %endif
     %nil
@@ -136,10 +124,20 @@ mv %buildroot%_libdir/cmake/hip/FindHIP.cmake %buildroot%_datadir/cmake/hip/
 mv %buildroot%_libdir/cmake/hip/FindHIP %buildroot%_datadir/cmake/hip
 
 mkdir -p %buildroot%_sysconfdir/profile.d
-install -p -m 755 %SOURCE4 %buildroot%_sysconfdir/profile.d/
+install -p -m 755 %SOURCE2 %buildroot%_sysconfdir/profile.d/
+# cleanup windows stuff
+rm -f %buildroot%_bindir/*.bat
+# hipcc already have it
+rm -f %buildroot%_bindir/hipcc*
+rm -f %buildroot%_bindir/hipconfig*
+rm -f %buildroot%_bindir/hipvars.pm
 %endif
 
+# hmm
+mv LICENCE LICENSE
+
 %files -n rocm-opencl-runtime
+%doc README.md LICENSE CHANGELOG.md
 %_bindir/rocm-clinfo
 %_libdir/libamdocl%{bits}.so
 %_libdir/libcltrace.so
@@ -157,7 +155,7 @@ install -p -m 755 %SOURCE4 %buildroot%_sysconfdir/profile.d/
 %_datadir/hip
 
 %files -n hip-runtime-amd
-%doc hipamd/README.md hipamd/LICENSE.txt
+%doc hipamd/LICENSE.txt
 %_libdir/.hipInfo
 %_libdir/cmake/hip
 %_libdir/cmake/hip-lang
@@ -168,6 +166,9 @@ install -p -m 755 %SOURCE4 %buildroot%_sysconfdir/profile.d/
 %endif
 
 %changelog
+* Sat Jul 06 2024 L.A. Kostis <lakostis@altlinux.ru> 6.1.2-alt0.1
+- rocm-6.1.2.
+
 * Tue Mar 19 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0.2-alt0.3
 - Fix build on ppc64le and aarch64:
   + aarch64: apply CUDA workaround for recent glibc.

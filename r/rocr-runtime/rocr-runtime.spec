@@ -7,8 +7,8 @@
 %define optflags_lto %nil
 
 Name: rocr-runtime
-Version: 6.0.0
-Release: alt0.4
+Version: 6.1.2
+Release: alt0.1
 License: MIT
 Summary: HSA Runtime API and runtime for ROCm
 Url: https://github.com/RadeonOpenCompute/ROCR-Runtime
@@ -19,6 +19,7 @@ Patch0: rocr-image-bitcode-path.patch
 # https://bugs.gentoo.org/716948
 Patch1: rocr-runtime-4.3.0_no-aqlprofiler.patch
 Patch2: rocr-alt-extra-arches-support.patch
+Patch3: rocr-alt-mm-pause.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++ libelf-devel libdrm-devel hsakmt-rocm-devel >= %version rocm-device-libs >= %version xxd
@@ -53,6 +54,7 @@ HSA Runtime API and runtime for ROCm development headers and library.
 %patch0 -p1
 %patch1 -p0
 %patch2 -p1
+%patch3 -p1
 
 %build
 %if_with llvm_rocm
@@ -82,6 +84,9 @@ pushd src
 %_libdir/cmake/hsa-runtime64
 
 %changelog
+* Sat Jul 06 2024 L.A. Kostis <lakostis@altlinux.ru> 6.1.2-alt0.1
+- rocm-6.1.2.
+
 * Fri Mar 22 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt0.4
 - Rebuild with llvm-rocm.
 
