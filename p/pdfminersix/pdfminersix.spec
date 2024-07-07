@@ -1,7 +1,7 @@
 %def_without check
 
 Name:    pdfminersix
-Version: 20231228
+Version: 20240706
 Release: alt1
 
 Summary: Community maintained fork of pdfminer - we fathom PDF
@@ -46,6 +46,9 @@ subst 's/__VERSION__/%version/' pdfminer/__init__.py
 %python3_sitelibdir/*.dist-info
 
 %changelog
+* Sun Jul 07 2024 Andrey Cherepanov <cas@altlinux.org> 20240706-alt1
+- New version.
+
 * Fri Dec 29 2023 Andrey Cherepanov <cas@altlinux.org> 20231228-alt1
 - New version.
 
