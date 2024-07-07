@@ -2,8 +2,8 @@
 
 Summary:	An interface for emulator and game ports
 Name:		libretro
-Version:	20240406
-Release:	alt2
+Version:	20240628
+Release:	alt1
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
 Group:		Emulators
@@ -549,7 +549,69 @@ Provides: libretro-core
 
 %description tyrquake
  tyrquake core for libretro
- 
+
+%ifarch aarch64 x86_64 %ix86
+%package 81
+Summary: 81 core for libretro
+Group: Emulators
+Provides: libretro-core
+
+%description 81
+ 81 core for libretro
+
+%package 3dengine
+Summary: 3dengine core for libretro
+Group: Emulators
+Provides: libretro-core
+
+%description 3dengine
+ 3dengine core for libretro
+
+%package fuse
+Summary: fuse core for libretro
+Group: Emulators
+Provides: libretro-core
+
+%description fuse
+ fuse core for libretro
+
+%endif
+
+%ifarch x86_64 %ix86
+%package -n libretro-desmume
+Summary: desmume core for libretro
+Group: Emulators
+Provides: libretro-core
+
+%description -n libretro-desmume
+ desmume core for libretro
+
+%package desmume2015
+Summary: desmume2015 core for libretro
+Group: Emulators
+Provides: libretro-core
+
+%description desmume2015
+ desmume2015 core for libretro
+
+%package mame2010
+Summary: mame2010 core for libretro
+Group: Emulators
+Provides: libretro-core
+
+%description mame2010
+ mame2010 core for libretro
+
+%package yabause
+Summary: yabause core for libretro
+Group: Emulators
+Provides: libretro-core
+
+%description yabause
+ yabause core for libretro
+
+%endif
+
 %prep
 %setup -q
 %ifarch %e2k
@@ -800,7 +862,42 @@ rm -f %{buildroot}%{_libexecdir}/%{name}/*.info
 %dir %{_libexecdir}/%{name}
 %{_libexecdir}/%{name}/tyrquake_libretro.so
 
+%ifarch %ix86 x86_64 aarch64
+%files 3dengine
+%dir %{_libexecdir}/%{name}
+%{_libexecdir}/%{name}/3dengine_libretro.so
+
+%files 81
+%dir %{_libexecdir}/%{name}
+%{_libexecdir}/%{name}/81_libretro.so
+
+%files fuse
+%dir %{_libexecdir}/%{name}
+%{_libexecdir}/%{name}/fuse_libretro.so
+%endif
+
+%ifarch %ix86 x86_64
+%files desmume2015
+%dir %{_libexecdir}/%{name}
+%{_libexecdir}/%{name}/desmume2015_libretro.so
+
+%files -n libretro-desmume
+%dir %{_libexecdir}/%{name}
+%{_libexecdir}/%{name}/desmume_libretro.so
+
+%files mame2010
+%dir %{_libexecdir}/%{name}
+%{_libexecdir}/%{name}/mame2010_libretro.so
+
+%files yabause
+%dir %{_libexecdir}/%{name}
+%{_libexecdir}/%{name}/yabause_libretro.so
+%endif
+
 %changelog
+* Sun Jul  7 2024 Artyom Bystrov <arbars@altlinux.org> 20240628-alt1
+- update to new version
+
 * Thu May 16 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 20240406-alt2
 - Fixed build for Elbrus
 
