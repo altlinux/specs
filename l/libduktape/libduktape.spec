@@ -2,7 +2,7 @@
 
 Name: libduktape
 Version: 2.7.0
-Release: alt2.1
+Release: alt3
 %define sover 207
 %define libduktape libduktape%sover
 %define libduktaped libduktaped%sover
@@ -71,8 +71,7 @@ This package contains a commandline duk interpreter.
 %build
 %add_optflags %optflags_shared
 %make CFLAGS="%optflags" -f Makefile.sharedlibrary
-%make CFLAGS="%optflags" -f Makefile.sharedlibrary duk
-#make CFLAGS="%optflags" -f Makefile.cmdline
+%make CFLAGS="%optflags" -f Makefile.cmdline duk
 
 %install
 %makeinstall_std \
@@ -102,6 +101,9 @@ install -m 755 duk %buildroot%_bindir/duk
 %_bindir/duk
 
 %changelog
+* Sun Jul 07 2024 Vitaly Lipatov <lav@altlinux.ru> 2.7.0-alt3
+- build cmdline duk with useful extra modules (ALT bug #50835)
+
 * Fri Feb 09 2024 Sergey V Turchin <zerg@altlinux.org> 2.7.0-alt2.1
 - apply shared libs policy
 - fix compile flags
