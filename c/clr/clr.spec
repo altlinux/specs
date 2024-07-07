@@ -9,7 +9,7 @@
 
 Name: clr
 Version: 6.1.2
-Release: alt0.1
+Release: alt0.2
 License: MIT
 Summary: Radeon Open Compute Common Language Runtime
 Url: https://github.com/ROCm-Developer-Tools/clr
@@ -66,7 +66,7 @@ Group: Development/Other
 # perl scripts rely on runtime envs
 AutoReq: yes, noperl
 Requires: clang-rocm = %version clang-rocm-tools = %version clang-rocm-libs-support = %version llvm-rocm = %version lld-rocm = %version glibc-devel gcc
-Requires: rocm-device-libs >= 6.0.0 rocminfo >= 6.0.0 hip-runtime-amd = %EVR hipcc = %version
+Requires: rocm-device-libs >= %version rocminfo >= %version hip-runtime-amd = %EVR hipcc = %version
 
 %description -n hip-devel
 HIP: Heterogenous-computing Interface for Portability development libraries and
@@ -166,6 +166,9 @@ mv LICENCE LICENSE
 %endif
 
 %changelog
+* Sun Jul 07 2024 L.A. Kostis <lakostis@altlinux.ru> 6.1.2-alt0.2
+- fix hip-devel requires.
+
 * Sat Jul 06 2024 L.A. Kostis <lakostis@altlinux.ru> 6.1.2-alt0.1
 - rocm-6.1.2.
 
