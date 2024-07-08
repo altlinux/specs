@@ -2,7 +2,7 @@
 
 Name: piper
 Version: 0.7
-Release: alt3.g%{git}
+Release: alt4.g%{git}
 Summary: GTK+ application to configure gaming mice using ratbagd
 Group: System/Configuration/Hardware
 License: GPLv2
@@ -11,7 +11,7 @@ Source0: https://github.com/libratbag/%name/archive/v%version/%name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson
-BuildRequires: python3-module-pygobject3-devel python3-dev python3-module-flake8
+BuildRequires: python3-module-pygobject3-devel python3-dev python3-module-flake8 gtk-update-icon-cache
 BuildRequires: python3-module-pycairo python3-module-lxml python3-module-evdev ratbagd >= 0.17-alt2 appstream
 
 BuildArch: noarch
@@ -49,6 +49,9 @@ get to see a pretty mouse trap).
 %_man1dir/*
 
 %changelog
+* Mon Jul 08 2024 L.A. Kostis <lakostis@altlinux.ru> 0.7-alt4.gefa2712
+- Fix FTBFS: added gtk-update-icon-cache BR.
+
 * Tue Jun 25 2024 L.A. Kostis <lakostis@altlinux.ru> 0.7-alt3.gefa2712
 - Bump ratbag requires due API change.
 
