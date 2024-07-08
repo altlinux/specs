@@ -290,9 +290,9 @@
 # New Version-String scheme-style defines
 %global featurever 21
 %global interimver 0
-%global updatever 2
+%global updatever 3
 %global patchver 0
-%global buildver 13
+%global buildver 9
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
 # and this it is better to change it here, on single place
@@ -352,7 +352,7 @@
 
 Name:    java-21-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt2
+Release: alt1
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -507,9 +507,6 @@ Source18: TestTranslations.java
 # OpenJDK patches in need of upstreaming
 #
 #############################################
-# JDK-8009550, RH910107: Depend on pcsc-lite-libs instead of pcsc-lite-devel as this is only in optional repo
-# PR: https://github.com/openjdk/jdk/pull/15409
-Patch6: jdk8009550-rh910107-fail_to_load_pcsc_library.patch
 
 # LoongArch support
 Patch3500: jdk21u+35-loongarch64.patch
@@ -869,7 +866,7 @@ mkdir -p %{bootjdk}
 # Patch the JDK
 pushd %{top_level_dir_name}
 # Patches in need of upstreaming
-%patch6 -p1
+
 %patch3500 -p1
 popd # openjdk
 
@@ -1990,6 +1987,13 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 %endif
 
 %changelog
+* Sun Jul 07 2024 Andrey Cherepanov <cas@altlinux.org> 0:21.0.3.0.9-alt1
+- New version.
+- Security fixes:
+  - CVE-2024-21012
+  - CVE-2024-21011
+  - CVE-2024-21068
+
 * Wed Feb 07 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0:21.0.2.0.13-alt2
 - NMU: worked around FTBFS on LoongArch: disabled LTO until the problem
   is solved properly, see https://github.com/loongson/jdk21u/issues/15
