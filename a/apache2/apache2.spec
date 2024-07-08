@@ -12,7 +12,7 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.59
+Version: 2.4.61
 Release: alt1
 Epoch: 1
 
@@ -1541,6 +1541,11 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Mon Jul 08 2024 Anton Farygin <rider@altlinux.ru> 1:2.4.61-alt1
+- 2.4.59 -> 2.4.61 (Fixes: CVE-2024-39884, CVE-2024-36387, CVE-2024-38472,
+  CVE-2024-38473, CVE-2024-38474, CVE-2024-38475, CVE-2024-38476,
+  CVE-2024-38477, CVE-2024-39573)
+
 * Fri Apr 05 2024 Anton Farygin <rider@altlinux.ru> 1:2.4.59-alt1
 - 2.4.58 -> 2.4.59 (Fixes: CVE-2023-38709, CVE-2024-24795, CVE-2024-27316)
 
