@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.5
-Release: alt2
+Version: 0.4.6
+Release: alt1
 
 Summary: A comprehensive and scalable set of string tokenizers and similarity measures in Python
 License: BSD-3-Clause
@@ -57,6 +57,9 @@ The package is free, open-source, and BSD-licensed.
 %exclude %python3_sitelibdir/%mod_name/tests
 
 %changelog
+* Mon Jul 08 2024 Anton Zhukharev <ancieg@altlinux.org> 0.4.6-alt1
+- Updated to 0.4.6.
+
 * Fri Feb 16 2024 Anton Zhukharev <ancieg@altlinux.org> 0.4.5-alt2
 - Fixed building without check.
 
