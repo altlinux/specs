@@ -9,7 +9,7 @@
 
 Name: python3-module-%pypi_name
 Epoch: 1
-Version: 70.0.0
+Version: 70.2.0
 Release: alt1
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -19,24 +19,18 @@ VCS: https://github.com/pypa/setuptools
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
 Requires: python3-module-pkg_resources = %EVR
 # setuptools has commands for doing binary builds; for them to work always:
 Requires: python3-dev
 Provides: python3-module-distribute = %EVR
 
-# skip requires of self
-%filter_from_requires /python3\(\.[[:digit:]]\)\?(pkg_resources\.extern\..*)/d
-%filter_from_requires /python3\(\.[[:digit:]]\)\?(setuptools\.extern\..*)/d
-# switch to 'local' copy of distutils
-%filter_from_requires /python3(distutils\(\..*\)\?)/d
-# don't allow vendored distributions have deps other than stdlib
-%add_findreq_skiplist %python3_sitelibdir/setuptools/_vendor/*
-# ms windows compilers (some packages want to import these modules)
-%add_findreq_skiplist %python3_sitelibdir/setuptools/_distutils/*msvc*compiler*.py*
 # hide bundled packages
 %add_findprov_skiplist %python3_sitelibdir/setuptools/_vendor/*
 %add_findprov_skiplist %python3_sitelibdir/setuptools/_distutils/*msvc*compiler*.py*
+%add_findprov_skiplist %python3_sitelibdir/pkg_resources/_vendor/*
 
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -46,8 +40,7 @@ BuildRequires: /dev/shm
 # For the tests of the setuptools commands to do binary builds:
 BuildPreReq: python3-dev
 %add_pyproject_deps_check_filter pytest-perf
-%add_pyproject_deps_check_filter pytest-ruff
-%pyproject_builddeps_metadata_extra testing
+%pyproject_builddeps_metadata_extra test
 %endif
 
 # namespace package for system seed wheels which will be used within venv
@@ -57,14 +50,11 @@ BuildRequires: python3(system_seed_wheels)
 %package -n python3-module-pkg_resources
 Summary: Package Discovery and Resource Access for Python3 libraries
 Group: Development/Python3
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
 # Not separated yet:
 Conflicts: python3-module-%pypi_name < 39.2.0-alt3
-
-# hide bundled packages
-%add_findprov_skiplist %python3_sitelibdir/pkg_resources/_vendor/*
-
-# don't allow vendored distributions have deps other than stdlib
-%add_findreq_skiplist %python3_sitelibdir/pkg_resources/_vendor/*
 
 %description
 Setuptools is a collection of enhancements to the Python3 distutils
@@ -110,24 +100,6 @@ find -type f -name '*.exe' -delete
 
 # do not generate version like release.postdate, we need release one
 sed -i '/^tag_build =.*/d;/^tag_date = 1/d' setup.cfg
-
-# Make sure distutils looks at the right pyconfig.h file
-# See https://bugzilla.redhat.com/show_bug.cgi?id=201434
-# Similar for sysconfig: sysconfig.get_config_h_filename tries to locate
-# pyconfig.h so it can be parsed, and needs to do this at runtime in site.py
-# when python starts up (see https://bugzilla.redhat.com/show_bug.cgi?id=653058)
-#
-# Split this out so it goes directly to the pyconfig-32.h/pyconfig-64.h
-# variants:
-%ifarch x86_64 %ix86
-%ifarch x86_64
-%define _pyconfig_h pyconfig-64.h
-%else
-%define _pyconfig_h pyconfig-32.h
-%endif
-
-sed -i "s@'pyconfig.h'@'%_pyconfig_h'@" setuptools/_distutils/sysconfig.py
-%endif
 
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
@@ -175,6 +147,9 @@ cp -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
 %system_wheels_path/setuptools-%version-*.whl
 
 %changelog
+* Wed Jul 03 2024 Stanislav Levin <slev@altlinux.org> 1:70.2.0-alt1
+- 70.0.0 -> 70.2.0.
+
 * Fri May 24 2024 Stanislav Levin <slev@altlinux.org> 1:70.0.0-alt1
 - 69.5.1 -> 70.0.0.
 

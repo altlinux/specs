@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.1.0
-Release: alt1
+Release: alt2
 Summary: Wrappers to call pyproject.toml-based build backend hooks
 License: MIT
 Group: Development/Python3
@@ -55,6 +55,9 @@ generates distribution files from Python projects.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jul 08 2024 Stanislav Levin <slev@altlinux.org> 1.1.0-alt2
+- Fixed FTBFS (setuptools 70.1.0).
+
 * Thu May 02 2024 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
 - 1.0.0 -> 1.1.0.
 
