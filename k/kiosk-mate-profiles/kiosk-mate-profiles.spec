@@ -1,6 +1,6 @@
 Name:    kiosk-mate-profiles
 Version: 0.8
-Release: alt3
+Release: alt3.1
 
 Summary: profiles for mate desktop for kiosk mode
 License: MIT
@@ -30,6 +30,9 @@ install -Dm 0644 profiles/*  %buildroot/%_sysconfdir/alterator/kiosk/profiles
 %_sysconfdir/alterator/kiosk/profiles/*
 
 %changelog
+* Mon Jul 08 2024 Anton Midyukov <antohami@altlinux.org> 0.8-alt3.1
+- update README after rename profiles
+
 * Mon Jul 08 2024 Anton Midyukov <antohami@altlinux.org> 0.8-alt3
 - rename profiles for fix conflict with kiosk-profile
 
