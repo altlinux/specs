@@ -4,7 +4,7 @@
 
 Name: victoriametrics
 Version: 1.101.0
-Release: alt2
+Release: alt3
 Summary: The best long-term remote storage for Prometheus
 
 Group: Development/Other
@@ -211,6 +211,9 @@ install -m644 %SOURCE13 %buildroot%_sysconfdir/%name/vmauth/config.yml
 %_unitdir/vmauth.service
 
 %changelog
+* Mon Jul 08 2024 Alexey Shabalin <shaba@altlinux.org> 1.101.0-alt3
+- Ddd bundle vmui (ALT#50771).
+
 * Tue May 28 2024 Alexey Shabalin <shaba@altlinux.org> 1.101.0-alt2
 - Fixed use Environment in systemd unit (ALT#50398).
 

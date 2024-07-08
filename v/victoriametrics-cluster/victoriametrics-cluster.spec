@@ -4,7 +4,7 @@
 
 Name: victoriametrics-cluster
 Version: 1.101.0
-Release: alt2
+Release: alt3
 Summary: The best long-term remote storage for Prometheus
 
 Group: Development/Other
@@ -104,11 +104,11 @@ mkdir -p %buildroot%_sharedstatedir/victoria-metrics/cluster-data
 mkdir -p %buildroot%_sysconfdir/sysconfig
 mkdir -p %buildroot%_unitdir
 install -m644 %SOURCE2 %buildroot%_unitdir/vminsert.service
-install -m644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name-vminsert
+install -m644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/vminsert
 install -m644 %SOURCE4 %buildroot%_unitdir/vmselect.service
-install -m644 %SOURCE5 %buildroot%_sysconfdir/sysconfig/%name-vmselect
+install -m644 %SOURCE5 %buildroot%_sysconfdir/sysconfig/vmselect
 install -m644 %SOURCE6 %buildroot%_unitdir/vmstorage.service
-install -m644 %SOURCE7 %buildroot%_sysconfdir/sysconfig/%name-vmstorage
+install -m644 %SOURCE7 %buildroot%_sysconfdir/sysconfig/vmstorage
 
 %post vminsert
 %post_service vminsert
@@ -127,21 +127,24 @@ install -m644 %SOURCE7 %buildroot%_sysconfdir/sysconfig/%name-vmstorage
 
 %files vminsert
 %_bindir/vminsert
-%config(noreplace) %_sysconfdir/sysconfig/%name-vminsert
+%config(noreplace) %_sysconfdir/sysconfig/vminsert
 %_unitdir/vminsert.service
 
 %files vmselect
 %_bindir/vmselect
-%config(noreplace) %_sysconfdir/sysconfig/%name-vmselect
+%config(noreplace) %_sysconfdir/sysconfig/vmselect
 %_unitdir/vmselect.service
 
 %files vmstorage
 %_bindir/vmstorage
-%config(noreplace) %_sysconfdir/sysconfig/%name-vmstorage
+%config(noreplace) %_sysconfdir/sysconfig/vmstorage
 %_unitdir/vmstorage.service
 %dir %attr(0755, _victoriametrics, _victoriametrics) %_sharedstatedir/victoria-metrics/cluster-data
 
 %changelog
+* Mon Jul 08 2024 Alexey Shabalin <shaba@altlinux.org> 1.101.0-alt3
+- Fixed systemd units (ALT#50772, ALT#50773).
+
 * Tue May 28 2024 Alexey Shabalin <shaba@altlinux.org> 1.101.0-alt2
 - Fixed use Environment in systemd unit (ALT#50398).
 
