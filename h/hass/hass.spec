@@ -1,5 +1,5 @@
 Name: hass
-Version: 2024.7.0
+Version: 2024.7.1
 Release: alt1
 
 Summary: Home automation platform
@@ -39,7 +39,7 @@ BuildRequires: python3(zlib_ng)
 Summary: Home automation platform
 Group: System/Servers
 Requires: python3-module-pip >= 21.0
-Requires: python3-module-hass-frontend >= 20231030.1
+Requires: python3-module-hass-frontend >= 20240705.0
 Requires: python3-module-aiohttp-fast-zlib >= 0.1.1
 
 %package -n python3-module-hass
@@ -105,6 +105,9 @@ sed -re 's,^,%exclude ,' < rest.files > core.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Mon Jul 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.7.1-alt1
+- 2024.7.1 released
+
 * Thu Jul 04 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.7.0-alt1
 - 2024.7.0 released
 
