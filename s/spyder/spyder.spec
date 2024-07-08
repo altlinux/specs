@@ -5,7 +5,7 @@
 %def_without check
 
 Name: spyder
-Version: 5.5.4
+Version: 5.5.5
 Release: alt1
 
 Summary: The Scientific Python Development Environment
@@ -102,6 +102,9 @@ Url: https://pypi.org/project/spyder/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 08 2024 Anton Zhukharev <ancieg@altlinux.org> 5.5.5-alt1
+- Updated to 5.5.5.
+
 * Tue May 21 2024 Anton Zhukharev <ancieg@altlinux.org> 5.5.4-alt1
 - Updated to 5.5.4.
 
