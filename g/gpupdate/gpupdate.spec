@@ -33,7 +33,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.10.5
+Version: 0.10.6
 Release: alt1
 
 Summary: GPT applier
@@ -191,6 +191,9 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Mon Jul 08 2024 Valery Sinelnikov <greh@altlinux.org> 0.10.6-alt1
+- Fixed firefox_applier errors
+
 * Fri Jun 28 2024 Valery Sinelnikov <greh@altlinux.org> 0.10.5-alt1
 - Correction of missing entries with a upper case
 - Fixed string processing in date (closes: 50782)
