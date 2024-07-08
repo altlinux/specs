@@ -14,7 +14,7 @@
 %endif
 
 Name: chatty
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: SMS, MMS and XMPP messaging application for GNOME
@@ -95,6 +95,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Mon Jul 08 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.4-alt1
+- 0.8.4
+
 * Sun May 05 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1
 - 0.8.3
 
