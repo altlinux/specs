@@ -1,7 +1,9 @@
 %define oname pygame
 
+%def_with check
+
 Name: python3-module-pygame
-Version: 2.5.2
+Version: 2.6.0
 Release: alt1
 
 Summary: A Python module for interfacing with the SDL multimedia library
@@ -25,6 +27,12 @@ BuildRequires: libjpeg-devel libpng-devel libportmidi-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-Cython
 BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
+
+%if_with check
+BuildRequires: libvorbis
+BuildRequires: fonts-ttf-xorg
+BuildRequires: fonts-ttf-dejavu
+%endif
 
 Requires: libSDL >= 1.2.7
 
@@ -69,7 +77,6 @@ Install %name-devel if you need the c/c++ include files.
 %package doc
 Summary: Pygame documentation and example programs (Python3 version)
 Group: Development/Python3
-#Requires: %name = %EVR
 BuildArch: noarch
 
 %description doc
@@ -79,13 +86,25 @@ Pygame documentation and example programs (Python3 version)
 %setup
 %patch -p1
 
+sed -i '811a\ \ \ \ @unittest.skip("https://github.com/pygame/pygame/issues/4274")' test/mixer_test.py
+
 %build
-%python3_build_debug
+%ifarch %ix86
+export CFLAGS="-msse3"
+%endif
+%python3_build
 python3 setup.py docs
 
 %install
 %python3_install
 sed -i '/^pkg_dir =/s@pkg_dir = .*@pkg_dir = "%_defaultdocdir/python3-module-pygame-doc-%version"@' %buildroot%python3_sitelibdir/%oname/docs/__main__.py
+
+%check
+export SDL_VIDEODRIVER=dummy
+export SDL_AUDIODRIVER=disk
+export LANG=en_US.UTF-8
+export PYTHONPATH=%buildroot%python3_sitelibdir
+python3 -m pygame.tests -v --exclude opengl --time_out 300
 
 %files
 %python3_sitelibdir/*
@@ -98,6 +117,10 @@ sed -i '/^pkg_dir =/s@pkg_dir = .*@pkg_dir = "%_defaultdocdir/python3-module-pyg
 
 
 %changelog
+* Fri Jul 05 2024 Grigory Ustinov <grenka@altlinux.org> 2.6.0-alt1
+- Automatically updated to 2.6.0.
+- Built with check (Closes: #50821, #50833, #50834, #50836, #50838, #50839).
+
 * Wed Dec 20 2023 Grigory Ustinov <grenka@altlinux.org> 2.5.2-alt1
 - Automatically updated to 2.5.2.
 
