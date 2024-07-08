@@ -1,6 +1,6 @@
 
 Name: libblkio
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 Summary: Block device I/O library
 Group: System/Libraries
@@ -10,7 +10,7 @@ Patch: %name-%version.patch
 License: (Apache-2.0 OR MIT) AND (Apache-2.0 OR BSD-3-Clause) AND MIT AND BSD-3-Clause AND Unicode-DFS-2016
 
 BuildRequires(pre): rpm-macros-rust rpm-macros-meson
-BuildRequires: rpm-build-rust rust >= 1.56
+BuildRequires: rpm-build-rust rust >= 1.63
 BuildRequires: meson
 BuildRequires: /usr/bin/rst2man
 
@@ -59,6 +59,9 @@ sed -e 's/--locked//' -i src/cargo-build.sh
 %_man3dir/blkio.3*
 
 %changelog
+* Thu Jul 04 2024 Alexey Shabalin <shaba@altlinux.org> 1.5.0-alt1
+- New version 1.5.0.
+
 * Tue May 07 2024 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt1
 - New version 1.4.0.
 
