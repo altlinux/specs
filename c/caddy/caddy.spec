@@ -5,7 +5,7 @@
 %define caddy_group _caddy
 
 Name: caddy
-Version: 2.7.6
+Version: 2.8.4
 Release: alt1
 Summary: Web server with automatic HTTPS
 License: Apache-2.0
@@ -21,16 +21,12 @@ Source1: https://raw.githubusercontent.com/caddyserver/dist/master/config/Caddyf
 Source2: https://raw.githubusercontent.com/caddyserver/dist/master/init/caddy.service
 Source3: https://raw.githubusercontent.com/caddyserver/dist/master/init/caddy-api.service
 Source4: https://raw.githubusercontent.com/caddyserver/dist/master/welcome/index.html
-Source5: https://raw.githubusercontent.com/caddyserver/dist/master/scripts/completions/bash-completion
-Source6: https://raw.githubusercontent.com/caddyserver/dist/master/scripts/completions/_caddy
 
 ExclusiveArch: %go_arches
-BuildRequires(pre): rpm-build-golang rpm-macros-webserver-common
-BuildRequires(pre): rpm-macros-systemd >= 5
+BuildRequires(pre): rpm-macros-golang rpm-macros-webserver-common rpm-macros-systemd >= 5
+BuildRequires: rpm-build-golang golang >= 1.21.0
 
-Requires: webserver-common
 Provides: webserver
-Conflicts: apache2-html
 
 %description
 Caddy is the web server with automatic HTTPS.
@@ -57,31 +53,49 @@ export CGO_ENABLED=0
 %install
 export BUILDDIR="$PWD/.gopath"
 export GOPATH="%go_path"
+export IGNORE_SOURCES=1
 
 %golang_install
-# cleanup
-rm -rf -- %buildroot%_datadir
 
 # command
 #install -D -p -m 0755 caddy %buildroot%_bindir/caddy
 
+# man pages
+mkdir -p %buildroot%_man8dir
+%buildroot%_bindir/%name manpage --directory %buildroot%_man8dir
+
 # config
-install -D -p -m 0640 %SOURCE1 %buildroot%_sysconfdir/caddy/Caddyfile
-install -d -m 0750 %buildroot%_sysconfdir/caddy/Caddyfile.d
+install -D -p -m 0640 %SOURCE1 %buildroot%_sysconfdir/%name/Caddyfile
+install -d -m 0750 %buildroot%_sysconfdir/%name/Caddyfile.d
 
 # systemd units
 install -D -p -m 0644 %SOURCE2 %buildroot%_unitdir/caddy.service
 install -D -p -m 0644 %SOURCE3 %buildroot%_unitdir/caddy-api.service
 
 # data directory
-install -d -m 0750 %buildroot%_sharedstatedir/caddy
+#install -d -m 0750 %buildroot%_sharedstatedir/%name
 
 # welcome page
-install -D -p -m 0644 %SOURCE4 %buildroot%webserver_htdocsdir/index.html
+install -D -p -m 0644 %SOURCE4 %buildroot%webserver_datadir/%name/index.html
 
 # shell completion
-install -D -p -m 0644 %SOURCE5 %buildroot%_datadir/bash-completion/completions/caddy
-install -D -p -m 0644 %SOURCE6 %buildroot%_datadir/zsh/site-functions/_caddy
+mkdir -p %buildroot%_datadir/zsh/site-functions
+mkdir -p %buildroot%_datadir/bash-completion/completions
+mkdir -p %buildroot%_datadir/fish/vendor_completions.d
+%buildroot%_bindir/%name completion zsh > %buildroot%_datadir/zsh/site-functions/_%name
+%buildroot%_bindir/%name completion bash > %buildroot%_datadir/bash-completion/completions/%name
+%buildroot%_bindir/%name completion fish > %buildroot%_datadir/fish/vendor_completions.d/%name.fish
+
+%check
+# ensure that the version was embedded correctly
+[[ "$(%buildroot%_bindir/%name version)" == "v%{version}" ]] || exit 1
+ 
+# run the upstream tests
+export BUILDDIR="$PWD/.gopath"
+export IMPORT_PATH="%import_path"
+export GOPATH="$BUILDDIR:%go_path"
+cd $BUILDDIR/src/%import_path
+%gotest ./...
 
 %pre
 groupadd -r -f %caddy_group 2>/dev/null ||:
@@ -96,18 +110,22 @@ useradd -r -N -g %caddy_group -G %webserver_group -c 'Caddy web server' \
 
 %files
 %doc AUTHORS LICENSE README.md
-%_bindir/caddy
-%_unitdir/caddy.service
-%_unitdir/caddy-api.service
-%attr(0750,root,%caddy_group) %dir %_sysconfdir/caddy
-%attr(0750,root,%caddy_group) %dir %_sysconfdir/caddy/Caddyfile.d
-%attr(0644,root,%caddy_group) %config(noreplace) %_sysconfdir/caddy/Caddyfile
-%attr(1770,root,%caddy_group) %dir %_sharedstatedir/caddy
-%webserver_htdocsdir/index.html
-%_datadir/bash-completion/completions/caddy
-%_datadir/zsh/site-functions/_caddy
+%_bindir/%name
+%_man8dir/caddy*.8*
+%_unitdir/*.service
+%attr(0750,root,%caddy_group) %dir %_sysconfdir/%name
+%attr(0750,root,%caddy_group) %dir %_sysconfdir/%name/Caddyfile.d
+%attr(0644,root,%caddy_group) %config(noreplace) %_sysconfdir/%name/Caddyfile
+#%attr(1770,root,%caddy_group) %dir %_sharedstatedir/%name
+%config(noreplace) %webserver_datadir/%name/index.html
+%_datadir/bash-completion/completions/%name
+%_datadir/zsh/site-functions/_%name
+%_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Fri Jul 05 2024 Alexey Shabalin <shaba@altlinux.org> 2.8.4-alt1
+- New version 2.8.4.
+
 * Mon Dec 11 2023 Alexey Shabalin <shaba@altlinux.org> 2.7.6-alt1
 - New version 2.7.6.
 
