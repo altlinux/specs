@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: trivy
-Version: 0.52.2
+Version: 0.53.0
 Release: alt1
 Summary: A Fast Vulnerability Scanner for Containers
 
@@ -100,6 +100,9 @@ rm -rf -- %buildroot%go_root
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Mon Jul 08 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.53.0-alt1
+- 0.52.2 -> 0.53.0
+
 * Mon Jun 24 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.52.2-alt1
 - 0.52.1 -> 0.52.2
 
