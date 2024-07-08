@@ -5,11 +5,11 @@
 
 Name: python3-module-%pypi_name
 Version: 1.11.1
-Release: alt2
+Release: alt3
 
-Summary: A wrapper that does winetricks things for Proton enabled games, requires Winetricks
+Summary: Python package for %pypi_name
 License: GPL-3.0
-Group: File tools
+Group: Development/Python3
 Url: https://pypi.org/project/protontricks/
 Vcs: https://github.com/Matoking/protontricks
 
@@ -21,7 +21,6 @@ Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 Requires: winetricks
-Provides: %pypi_name = %EVR
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
@@ -30,6 +29,14 @@ BuildRequires(pre): rpm-build-pyproject
 %endif
 
 %description
+%summary.
+
+%package -n %pypi_name
+Summary: A wrapper that does winetricks things for Proton enabled games
+Group: File tools
+Requires: winetricks
+
+%description -n %pypi_name
 %summary.
 
 %prep
@@ -48,17 +55,26 @@ BuildRequires(pre): rpm-build-pyproject
 %install
 %pyproject_install
 
+# do not ship desktop file installer
+rm %buildroot%_bindir/protontricks-desktop-install
+
 %check
 %pyproject_run_pytest -vra
 
 %files
-%doc README.md CHANGELOG.md TROUBLESHOOTING.md
-%_bindir/%{pypi_name}*
-%_desktopdir/%{pypi_name}*
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
+%files -n %pypi_name
+%doc README.md CHANGELOG.md TROUBLESHOOTING.md
+%_bindir/%{pypi_name}*
+%_desktopdir/%{pypi_name}*
+
 %changelog
+* Mon Jul 08 2024 Anton Zhukharev <ancieg@altlinux.org> 1.11.1-alt3
+- Separated protontricks package (closes 50567).
+- Stopped shipping desktop files installer.
+
 * Thu Jun 06 2024 Anton Zhukharev <ancieg@altlinux.org> 1.11.1-alt2
 - Added winetricks requirement (closes 50554).
 
