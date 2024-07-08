@@ -4,7 +4,7 @@
 
 Name: openuds-actor
 Version: 3.6.0
-Release: alt3
+Release: alt4
 Summary: Actor for Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause
 Group: Networking/Remote access
@@ -59,6 +59,7 @@ install -p -D -m 600 %SOURCE4 %buildroot%_sysconfdir/%oname/%oname.cfg
 %_bindir/UDSActorTool
 %_sbindir/UDSActorConfig
 %_sbindir/UDSActorConfig-pkexec
+%_sbindir/UDSActorRegister
 %_datadir/UDSActor
 %exclude %_datadir/UDSActor/%oname/windows
 %_desktopdir/UDS_Actor_Configuration.desktop
@@ -66,6 +67,9 @@ install -p -D -m 600 %SOURCE4 %buildroot%_sysconfdir/%oname/%oname.cfg
 %_datadir/polkit-1/actions/org.openuds.pkexec.UDSActorConfig.policy
 
 %changelog
+* Mon Jul 01 2024 Alexander Burmatov <thatman@altlinux.org> 3.6.0-alt4
+- Adding a script to register an actor on a server without a GUI (using the CLI).
+
 * Fri Jun 30 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.0-alt3
 - Revert 4.0 changes.
 
