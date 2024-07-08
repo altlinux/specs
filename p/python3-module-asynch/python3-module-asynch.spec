@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 
 Summary: An asyncio ClickHouse Python Driver with native (TCP) interface support
@@ -70,6 +70,9 @@ rm %buildroot%python3_sitelibdir/{CHANGELOG.md,README.md,LICENSE}
 %files -n %name+compression
 
 %changelog
+* Mon Jul 08 2024 Anton Zhukharev <ancieg@altlinux.org> 0.2.4-alt1
+- Updated to 0.2.4.
+
 * Thu Mar 07 2024 Anton Zhukharev <ancieg@altlinux.org> 0.2.3-alt1
 - Built for ALT Sisyphus.
 
