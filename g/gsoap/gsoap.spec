@@ -6,8 +6,8 @@
 
 Summary: Generator Tools for Coding SOAP/XML Web Services in C and C++
 Name: gsoap
-Version: 2.8.102
-Release: alt2
+Version: 2.8.135
+Release: alt1
 License: GPLv2+
 Group: Development/Tools
 URL: http://gsoap2.sourceforge.net
@@ -53,35 +53,49 @@ find . -name "*~" -exec rm {} \;
 # we want all txt files to have unix end-of-line encoding
 dos2unix README.txt LICENSE.txt NOTES.txt
 
+# XML files non-executable
+find gsoap/samples/autotest/databinding/examples -name '*.xml' \
+    -exec chmod a-x {} ';'
+
+# Documentation fonts non-executable
+chmod a-x gsoap/doc/fonts/*
+
+# We want all txt files to have unix end-of-line encoding
+dos2unix -k README.txt LICENSE.txt NOTES.txt GPLv2_license.txt \
+    gsoap/plugin/sessions.c gsoap/plugin/sessions.h
+
+# Remove stuff with gsoap license only - not GPL
+rm -rf gsoap/extras gsoap/mod_gsoap gsoap/Symbian
+sed 's!$(top_srcdir)/gsoap/extras/\*!!' -i gsoap/Makefile.am
+rm -rf gsoap/doc/apache gsoap/doc/wininet gsoap/doc/isapi
+
+# Remove pre-compiled binaries
+rm -rf gsoap/bin
+rm gsoap/samples/rest/person
+rm gsoap/samples/wcf/Basic/TransportSecurity/calculator
+rm gsoap/VisualStudio2005/wsdl2h/wsdl2h/soapcpp2.exe
+
+# Remove pre-generated files
+rm gsoap/samples/webserver/opt{C.c,H.h,Stub.h}
+rm gsoap/VisualStudio2005/wsdl2h/wsdl2h/wsdl{C.cpp,H.h,Stub.h}
+
+# Remove .DS_Store files
+find . -name .DS_Store -exec rm {} ';'
+
+
+
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
+%autoreconf
 
-# patches change autoconf and automake files, so we must reconfigure
-autoreconf --install --force
-
-%configure --prefix=/usr
-
-# dependencies are not declared properly
-#make %{?_smp_mflags}
+%configure --prefix=/usr \
+	--enable-ipv6
 make
-
-# during the build a number of files that we should not distribute are
-# created in soapcpp2/samples/ (a doc directory), we must remove them
-#find soapcpp2/samples/ -name ".deps" -prune -exec rm -rf {} \;
-
-# we do not want to bother distributing samples for Windows or OS X
-#rm -rf soapcpp2/samples/magic_VC
-#rm -rf soapcpp2/samples/quote_VC
-#rm -rf soapcpp2/samples/quote_MAC_ProjBuild
-
-# samples do not need to be executable by default
-#chmod a-x soapcpp2/samples/ssl/root.sh
-#chmod a-x soapcpp2/samples/ssl/cacerts.pem
-
 
 %install
 make install DESTDIR=%buildroot
+rm -f %buildroot%_datadir/gsoap/plugin/*.o
 
 
 %check
@@ -178,15 +192,6 @@ make check
 %_datadir/gsoap/custom/struct_tm.h
 %_datadir/gsoap/custom/struct_tm_date.c
 %_datadir/gsoap/custom/struct_tm_date.h
-%dir %_datadir/gsoap/extras
-%_datadir/gsoap/extras/README.txt
-%_datadir/gsoap/extras/ckdb.c
-%_datadir/gsoap/extras/ckdb.h
-%_datadir/gsoap/extras/ckdbtest.c
-%_datadir/gsoap/extras/ckdbtest.h
-%_datadir/gsoap/extras/fault.cpp
-%_datadir/gsoap/extras/logging.cpp
-%_datadir/gsoap/extras/soapdefs.h
 %dir %_datadir/gsoap/plugin
 %_datadir/gsoap/plugin/README.txt
 %_datadir/gsoap/plugin/cacerts.c
@@ -326,6 +331,9 @@ make check
 %_datadir/gsoap/plugin/curlapi.h
 
 %changelog
+* Mon Jul 08 2024 Anton Farygin <rider@altlinux.ru> 2.8.135-alt1
+- 2.8.102 -> 2.8.135
+
 * Tue Sep 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.8.102-alt2
 - Fixed build with LTO.
 
