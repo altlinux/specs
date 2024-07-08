@@ -4,7 +4,7 @@
 %def_enable tarball
 
 Name:    gitea
-Version: 1.22.0
+Version: 1.22.1
 Release: alt1
 
 Summary: Git with a cup of tea, painless self-hosted git service
@@ -66,8 +66,11 @@ ln -s %_bindir/esbuild node_modules/esbuild/bin/esbuild
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
+export LDFLAGS="-X code.gitea.io/gitea/modules/setting.CustomConf=%_sysconfdir/%name/app.ini \
+                -X code.gitea.io/gitea/modules/setting.CustomPath=%_localstatedir/%name/custom \
+                -X code.gitea.io/gitea/modules/setting.AppWorkPath=%_localstatedir/%name"
 
-TAGS="bindata sqlite sqlite_unlock_notify pam" GITEA_VERSION=%version %make all
+TAGS="bindata timetzdata sqlite sqlite_unlock_notify pam" GITEA_VERSION=%version %make all
 
 %install
 mkdir -p %buildroot%_localstatedir/%name
@@ -78,16 +81,17 @@ mkdir -p %buildroot%_sysconfdir/systemd/system/gitea.service.d
 install -Dm 0644 %SOURCE3 %buildroot%_sysconfdir/systemd/system/gitea.service.d/port.conf
 install -Dm 0660 custom/conf/app.example.ini %buildroot%_sysconfdir/%name/app.ini
 
-# install docs
-mkdir -p %buildroot%_man1dir
-./gitea docs --man > %buildroot%_man1dir/gitea.1
 mkdir -p %buildroot%_docdir/%name
 install -Dm 0644 custom/conf/app.example.ini %buildroot%_docdir/%name/default-app.ini
 install -Dm 0644 %SOURCE4 %buildroot%_docdir/%name/
 
+# install docs
+mkdir -p %buildroot%_man1dir
+%buildroot%_bindir/%name docs --man > %buildroot%_man1dir/%name.1
+
 # install completions
-install -D -p -m 0644 contrib/autocompletion/bash_autocomplete %buildroot%_datadir/bash-completion/completions/gitea
-install -D -p -m 0644 contrib/autocompletion/zsh_autocomplete %buildroot%_datadir/zsh/site-functions/_gitea
+install -D -p -m 0644 contrib/autocompletion/bash_autocomplete %buildroot%_datadir/bash-completion/completions/%name
+install -D -p -m 0644 contrib/autocompletion/zsh_autocomplete %buildroot%_datadir/zsh/site-functions/_%name
 
 %pre
 groupadd -r -f %name 2>/dev/null ||:
@@ -117,6 +121,9 @@ useradd -r -g %name -c 'Gitea daemon' \
 
 
 %changelog
+* Mon Jul 08 2024 Alexey Shabalin <shaba@altlinux.org> 1.22.1-alt1
+- 1.22.1
+
 * Tue May 28 2024 Alexey Shabalin <shaba@altlinux.org> 1.22.0-alt1
 - 1.22.0
 
