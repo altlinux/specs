@@ -5,7 +5,7 @@
 %define _product org.lite_xl.lite_xl
 
 Name: lite-xl
-Version: 2.1.4
+Version: 2.1.5
 Release: alt1
 
 Summary: A lightweight text editor written in Lua
@@ -55,6 +55,9 @@ improve the quality of font rendering, and reduce CPU usage.
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Mon Jul 08 2024 Anton Zhukharev <ancieg@altlinux.org> 2.1.5-alt1
+- Updated to 2.1.5.
+
 * Thu May 16 2024 Anton Zhukharev <ancieg@altlinux.org> 2.1.4-alt1
 - Updated to 2.1.4.
 
