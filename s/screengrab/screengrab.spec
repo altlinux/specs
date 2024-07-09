@@ -4,7 +4,7 @@
 #set_verify_elf_method relaxed
 
 Name: screengrab
-Version: 2.7.0
+Version: 2.8.0
 Release: alt1
 
 Summary: ScreenGrab is a tool for geting screenshots
@@ -18,21 +18,20 @@ Patch0: screengrab-link.patch
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: /proc
 BuildRequires: cmake
-BuildRequires: pkgconfig(Qt5Core)
-BuildRequires: pkgconfig(Qt5Gui)
-BuildRequires: pkgconfig(Qt5Help)
-BuildRequires: pkgconfig(Qt5Network)
-BuildRequires: pkgconfig(Qt5Widgets)
-BuildRequires: pkgconfig(Qt5X11Extras)
-BuildRequires: pkgconfig(Qt5Xdg)
-BuildRequires: kf5-kwindowsystem-devel
-BuildRequires: libqtxdg-devel
+BuildRequires: pkgconfig(Qt6Core)
+BuildRequires: pkgconfig(Qt6Gui)
+BuildRequires: pkgconfig(Qt6Help)
+BuildRequires: pkgconfig(Qt6Network)
+BuildRequires: pkgconfig(Qt6Widgets)
+BuildRequires: pkgconfig(Qt6Xdg)
+BuildRequires: kf6-kwindowsystem-devel
+BuildRequires: libqt6xdg-devel
 # To generate screengrab.desktop
 BuildRequires: perl-YAML-LibYAML-API
 
 %description
 ScreenGrab -- program getting screenshots working in Linux and Windows.
-The program uses Qt5 and is independent from any desktop environment.
+The program uses Qt6 and is independent from any desktop environment.
 Main features:
     * grab screenshot of desktop
     * working on Window and Linux operating systems
@@ -70,6 +69,9 @@ sed -i 's|${CMAKE_INSTALL_FULL_DOCDIR}|${CMAKE_INSTALL_FULL_DOCDIR}-%version|g' 
 %_datadir/metainfo/screengrab.metainfo.xml
 
 %changelog
+* Thu Jun 13 2024 Anton Midyukov <antohami@altlinux.org> 2.8.0-alt1
+- New version 2.8.0.
+
 * Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 2.7.0-alt1
 - New version 2.7.0.
 

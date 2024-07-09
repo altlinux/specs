@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qterminal
-Version: 1.4.0
+Version: 2.0.0
 Release: alt1
 
 Summary: Qt-based multitab terminal emulator
@@ -13,9 +13,9 @@ Url: http://github.com/qterminal/qterminal
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: gcc-c++ cmake lxqt-build-tools
-BuildRequires: qt5-base-devel qt5-tools-devel qt5-x11extras-devel
-BuildRequires: libqtermwidget-devel >= %version
+BuildRequires: gcc-c++ cmake lxqt2-build-tools
+BuildRequires: qt6-base-devel qt6-tools-devel
+BuildRequires: libqtermwidget6-devel >= %version
 
 %description
 Qt-based multitab terminal emulator based on QTermWidget.
@@ -41,8 +41,8 @@ at http://qterminal.sourceforge.net/
 %add_optflags -std=c++11
 %endif
 %cmake \
-    -DUSE_QT5=true \
-    -DQTERMWIDGET_PATH_SHARE=%_datadir/qtermwidget5
+    -DUSE_QT6=true \
+    -DQTERMWIDGET_PATH_SHARE=%_datadir/qtermwidget6
 %cmake_build
 
 %install
@@ -57,6 +57,9 @@ at http://qterminal.sourceforge.net/
 %_datadir/%name
 
 %changelog
+* Wed Jun 12 2024 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
+- New version 2.0.0
+
 * Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
 - New version 1.4.0.
 

@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-runner
-Version: 1.4.0
+Version: 2.0.0
 Release: alt1
 
 Summary: Tool used to launch programs quickly by typing their names
@@ -12,12 +12,18 @@ Group: Graphical desktop/Other
 Url: https://github.com/lxqt/lxqt-runner
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ cmake rpm-macros-cmake
-BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel qt5-script-devel
-BuildRequires: kf5-kwindowsystem-devel
-BuildRequires: rpm-build-xdg libqtxdg-devel libmenu-cache-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-c++ cmake
+BuildRequires: liblxqt-devel >= 2.0.0
+BuildRequires: qt6-base-devel qt6-tools-devel
+BuildRequires: kf6-kwindowsystem-devel
+BuildRequires: plasma6-layer-shell-qt-devel
+BuildRequires: rpm-build-xdg
+BuildRequires: libqt6xdg-devel
+BuildRequires: libmenu-cache-devel
 BuildRequires: lxqt-globalkeys-devel
-BuildRequires: libpcre-devel libmuparser-devel
+BuildRequires: libpcre-devel
+BuildRequires: libmuparser-devel
 
 Provides: razorqt-runner = %version
 Obsoletes: razorqt-runner < 0.7.0
@@ -29,6 +35,7 @@ Obsoletes: razorqt-runner < 0.7.0
 %setup
 
 %build
+%add_optflags -I%_includedir/KF6/ -L%_libdir/kf6/devel/
 %cmake
 %cmake_build
 
@@ -43,6 +50,9 @@ Obsoletes: razorqt-runner < 0.7.0
 %_xdgconfigdir/*/*
 
 %changelog
+* Mon Jul 08 2024 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
+- New version 2.0.0
+
 * Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
 - New version 1.4.0.
 

@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-globalkeys
-Version: 1.4.0
+Version: 2.0.0
 Release: alt1
 
 Summary: Service used to register global keyboard shortcuts
@@ -13,11 +13,13 @@ Url: https://github.com/lxqt/lxqt-globalkeys
 Source: %name-%version.tar
 Patch: lxqt-globalkeys-conf-alt.patch
 
-BuildRequires: gcc-c++ cmake rpm-macros-cmake
-BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel
-BuildRequires: rpm-build-xdg libqtxdg-devel
-BuildRequires: libqt5-widgets
-BuildRequires: kf5-kwindowsystem-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-c++ cmake
+BuildRequires: liblxqt-devel >= 2.0.0
+BuildRequires: qt6-base-devel qt6-tools-devel
+BuildRequires: rpm-build-xdg libqt6xdg-devel
+BuildRequires: libqt6-widgets
+BuildRequires: kf6-kwindowsystem-devel
 
 Provides: razorqt-globalkeyshortcuts = %version
 Obsoletes: razorqt-globalkeyshortcuts < 0.7.0
@@ -62,6 +64,9 @@ This package provides the development files for %name.
 %_datadir/cmake/*/
 
 %changelog
+* Wed Jun 12 2024 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
+- New version 2.0.0
+
 * Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
 - New version 1.4.0.
 

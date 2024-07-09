@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-policykit
-Version: 1.4.0
+Version: 2.0.0
 Release: alt1
 
 Summary: Policykit authentication agent
@@ -14,10 +14,13 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
-BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel
-BuildRequires: rpm-build-xdg libqtxdg-devel
-BuildRequires: libpolkit-devel libpolkitqt5-qt5-devel
-BuildRequires: kf5-kwindowsystem-devel
+BuildRequires: liblxqt-devel >= 2.0.0
+BuildRequires: qt6-base-devel qt6-tools-devel
+BuildRequires: rpm-build-xdg
+BuildRequires: libqt6xdg-devel
+BuildRequires: libpolkit-devel
+BuildRequires: libpolkitqt6-qt6-devel
+BuildRequires: kf6-kwindowsystem-devel
 
 Provides: razorqt-polkit-agent = %version
 Obsoletes: razorqt-polkit-agent < 0.7.0
@@ -45,6 +48,9 @@ Conflicts: lxqt-common <= 0.11.0
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Wed Jun 12 2024 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
+- New version 2.0.0
+
 * Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
 - New version 1.4.0.
 

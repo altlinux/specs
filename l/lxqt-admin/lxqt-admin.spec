@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     lxqt-admin
-Version:  1.4.0
+Version:  2.0.0
 Release:  alt1
 
 Summary:  LXQt system administration tool
@@ -15,15 +15,15 @@ Patch:    0001-Add-russian-translation-of-polkit-messages.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-tools-devel
-BuildRequires: lxqt-build-tools
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools-devel
+BuildRequires: lxqt2-build-tools
 BuildRequires: liblxqt-devel
-BuildRequires: kf5-kwindowsystem-devel
-BuildRequires: libpolkitqt5-qt5-devel
+BuildRequires: kf6-kwindowsystem-devel
+BuildRequires: libpolkitqt6-qt6-devel
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
@@ -44,6 +44,9 @@ BuildRequires: libpolkitqt5-qt5-devel
 %doc AUTHORS CHANGELOG *.md
 
 %changelog
+* Thu Jun 13 2024 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
+- New version 2.0.0.
+
 * Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
 - New version 1.4.0.
 

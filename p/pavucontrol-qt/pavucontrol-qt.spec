@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     pavucontrol-qt
-Version:  1.4.0
+Version:  2.0.0
 Release:  alt1
 
 Summary:  A Pulseaudio mixer in Qt (port of pavucontrol)
@@ -14,9 +14,9 @@ Source:   %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-tools-devel
-BuildRequires: lxqt-build-tools
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools-devel
+BuildRequires: lxqt2-build-tools
 BuildRequires: glib2-devel libpcre-devel
 BuildRequires: libpulseaudio-devel
 
@@ -40,6 +40,9 @@ BuildRequires: libpulseaudio-devel
 %doc AUTHORS CHANGELOG LICENSE *.md
 
 %changelog
+* Thu Jun 13 2024 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
+- New version 2.0.0
+
 * Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
 - New version 1.4.0.
 

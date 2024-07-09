@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-session
-Version: 1.4.0
-Release: alt2
+Version: 2.0.0
+Release: alt1
 
 Summary: Session manager
 License: LGPL-2.1
@@ -16,17 +16,20 @@ Patch: fix_XDG_CONFIG_DIRS.patch
 Patch1: alt-settings.patch
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
-BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel
-BuildRequires: qtxdg-tools-devel
-BuildRequires: kf5-kwindowsystem-devel
-BuildRequires: rpm-build-xdg libqtxdg-devel xdg-utils xdg-user-dirs
+BuildRequires: lxqt2-build-tools
+BuildRequires: liblxqt-devel >= 2.0.0
+BuildRequires: qt6-base-devel qt6-tools-devel
+BuildRequires: qtxdg-tools-devel >= 4.0.0
+BuildRequires: kf6-kwindowsystem-devel
+BuildRequires: libqt6xdg-devel
+BuildRequires: rpm-build-xdg xdg-utils xdg-user-dirs
+BuildRequires: plasma6-layer-shell-qt-devel
 BuildRequires: libudev-devel
 BuildRequires: libproc2-devel
 
 Requires: lxqt-themes
 Requires: xdg-utils
-# separate devel package from qtxdg-tools 3.12.0-alt2
-Requires: qtxdg-tools >= 3.12.0-alt2
+Requires: qtxdg-tools >= 4.0.0
 
 Provides: razorqt-session = %version
 Obsoletes: razorqt-session < 0.7.0
@@ -44,6 +47,7 @@ Conflicts: lxqt-common <= 0.11.0
 sed -i 's,Exec=,Exec=%_bindir/,' xsession/lxqt.desktop.in
 
 %build
+%add_optflags -I%_includedir/KF6/ -L%_libdir/kf6/devel/
 %cmake -DPULL_TRANSLATIONS=OFF \
        -DUPDATE_TRANSLATIONS=OFF \
        -DBUNDLE_XDG_UTILS=No
@@ -64,6 +68,9 @@ install -pDm644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/08lxqt
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Mon Jul 08 2024 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
+- New version 2.0.0
+
 * Tue Apr 16 2024 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt2
 - Requires: qtxdg-tools >= 3.12.0-alt2
 

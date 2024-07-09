@@ -2,20 +2,22 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-about
-Version: 1.4.0
+Version: 2.0.0
 Release: alt1
 
 Summary: About dialog of LXDE-Qt
 License: LGPL-2.1-or-later
 Group: Graphical desktop/Other
 
-Url: https://lxqt.org
+Url: https://github.com/lxqt/lxqt-about
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
-BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel libqtxdg-devel
-BuildRequires: kf5-kwindowsystem-devel
+BuildRequires: liblxqt-devel >= 2.0.0
+BuildRequires: qt6-base-devel qt6-tools-devel
+BuildRequires: libqt6xdg-devel
+BuildRequires: kf6-kwindowsystem-devel
 
 %description
 %summary.
@@ -38,6 +40,9 @@ BuildRequires: kf5-kwindowsystem-devel
 %doc AUTHORS CHANGELOG README.md
 
 %changelog
+* Wed Jun 12 2024 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
+- New version 2.0.0.
+
 * Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
 - New version 1.4.0.
 

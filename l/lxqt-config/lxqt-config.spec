@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-config
-Version: 1.4.0
+Version: 2.0.0
 Release: alt1
 
 Summary: LXDE-Qt system configurations (control center)
@@ -14,15 +14,19 @@ Source: %name-%version.tar
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: libXau-devel libXcursor-devel libXdmcp-devel libXfixes-devel
-BuildRequires: liblxqt-devel libqtxdg-devel qt5-base-devel qt5-tools-devel
-BuildRequires: kf5-kwindowsystem-devel kf5-libkscreen-devel qt5-svg-devel
+BuildRequires: liblxqt-devel >= 2.0.0
+BuildRequires: libqt6xdg-devel qt6-base-devel qt6-tools-devel
+BuildRequires: plasma6-libkscreen-devel
+BuildRequires: kf6-kwindowsystem-devel
+BuildRequires: qt6-svg-devel
 BuildRequires: rpm-build-xdg
 BuildRequires: zlib-devel
 BuildRequires: pkgconfig(xorg-libinput)
 BuildRequires: libudev-devel
-BuildRequires: lxqt-menu-data-devel
+BuildRequires: lxqt-menu-data-devel >= 2.0.0
+BuildRequires: libXi-devel
 
-Requires: lxqt-menu-data >= 1.4.0
+Requires: lxqt-menu-data >= 2.0.0
 
 Provides: razorqt-config = %version
 Obsoletes: razorqt-config < 0.7.0
@@ -55,6 +59,9 @@ Obsoletes: lxqt-config-randr < 0.8.0
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Wed Jun 12 2024 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
+- New version 2.0.0
+
 * Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
 - New version 1.4.0.
 

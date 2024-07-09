@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-panel
-Version: 1.4.0
+Version: 2.0.1
 Release: alt1
 
 Summary: Desktop panel
@@ -16,14 +16,14 @@ Patch: alt-settings.patch
 BuildRequires(pre): rpm-build-xdg
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: liblxqt-devel
-BuildRequires: libqtxdg-devel
-BuildRequires: lxqt-menu-data-devel >= 1.4.0
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-tools-devel
-BuildRequires: kf5-solid-devel
-BuildRequires: kf5-kwindowsystem-devel
-#kf5-kguiaddons-devel
-BuildRequires: libdbusmenu-qt5-devel
+BuildRequires: libqt6xdg-devel
+BuildRequires: lxqt-menu-data-devel >= 2.0.0
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools-devel
+BuildRequires: kf6-solid-devel
+BuildRequires: kf6-kwindowsystem-devel
+BuildRequires: plasma6-layer-shell-qt-devel
+BuildRequires: libdbusmenu-lxqt-devel
 BuildRequires: lxqt-globalkeys-devel
 BuildRequires: libalsa-devel
 BuildRequires: libXdmcp-devel
@@ -38,11 +38,12 @@ BuildRequires: libsensors3-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libxkbcommon-x11-devel
 BuildRequires: libgio-devel
+BuildRequires: libXtst-devel
 
 # see bug 34612
 BuildRequires: pkgconfig(libpulse)
 
-BuildRequires: libsysstat-devel >= 0.3.0
+BuildRequires: libsysstat-qt6-devel
 
 Provides: razorqt-panel = %version
 Obsoletes: razorqt-panel < 0.7.0
@@ -51,10 +52,10 @@ Conflicts: lxqt-common <= 0.11.0
 
 Requires: menu-cache
 Requires: udisks2 gvfs
-Requires: lxqt-menu-data >= 1.4.0
+Requires: lxqt-menu-data >= 2.0.0
 
 %description
-%summary
+%summary.
 
 %package devel
 Summary: Development headers for %name
@@ -70,6 +71,7 @@ This package provides the development files for %name.
 %patch -p1
 
 %build
+%add_optflags -I%_includedir/KF6/ -L%_libdir/kf6/devel/
 %cmake -DVOLUME_USE_PULSEAUDIO=ON
 %cmake_build
 
@@ -88,6 +90,9 @@ This package provides the development files for %name.
 %_includedir/*/*.h
 
 %changelog
+* Mon Jul 08 2024 2024 Anton Midyukov <antohami@altlinux.org> 2.0.1-alt1
+- New version 2.0.1
+
 * Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
 - New version 1.4.0.
 

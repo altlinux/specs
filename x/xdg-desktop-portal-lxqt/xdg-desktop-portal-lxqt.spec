@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     xdg-desktop-portal-lxqt
-Version:  0.5.0
+Version:  1.0.2
 Release:  alt1
 
 Summary:  A backend implementation for xdg-desktop-portal
@@ -15,11 +15,11 @@ Source:   %name-%version.tar
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-x11extras-devel
+BuildRequires: qt6-base-devel
 BuildRequires: libfm-qt-devel
-BuildRequires: kf5-kwindowsystem-devel
+BuildRequires: kf6-kwindowsystem-devel
 BuildRequires: libgio-devel
+BuildRequires: libfm-qt6-devel
 
 %description
 %summary
@@ -42,6 +42,9 @@ BuildRequires: libgio-devel
 %_datadir/xdg-desktop-portal/portals/lxqt.portal
 
 %changelog
+* Wed Jun 12 2024 Anton Midyukov <antohami@altlinux.org> 1.0.2-alt1
+- New version 1.0.2
+
 * Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 0.5.0-alt1
 - New version 0.5.0.
 

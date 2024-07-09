@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-notificationd
-Version: 1.4.0
+Version: 2.0.1
 Release: alt1
 
 Summary: Notification service
@@ -14,9 +14,13 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
-BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel
-BuildRequires: kf5-kwindowsystem-devel
-BuildRequires: rpm-build-xdg libqtxdg-devel
+BuildRequires: liblxqt-devel >= 2.0.0
+BuildRequires: qt6-base-devel qt6-tools-devel
+BuildRequires: kf6-kwindowsystem-devel
+BuildRequires: plasma6-layer-shell-qt-devel
+BuildRequires: rpm-build-xdg
+BuildRequires: libqt6xdg-devel
+BuildRequires: plasma6-layer-shell-qt-devel
 
 Provides: razorqt-notificationd = %version
 Obsoletes: razorqt-notificationd < 0.7.0
@@ -24,12 +28,13 @@ Obsoletes: razorqt-notificationd < 0.7.0
 Conflicts: lxqt-common <= 0.11.0
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
 
 %build
+%add_optflags -I%_includedir/KF6/ -L%_libdir/kf6/devel/
 %cmake
 %cmake_build
 
@@ -44,6 +49,9 @@ Conflicts: lxqt-common <= 0.11.0
 %_datadir/lxqt/translations/*
 
 %changelog
+* Mon Jul 08 2024 Anton Midyukov <antohami@altlinux.org> 2.0.1-alt1
+- New version 2.0.1
+
 * Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
 - New version 1.4.0.
 

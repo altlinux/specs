@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    qps
-Version: 2.8.0
+Version: 2.9.0
 Release: alt1
 Summary: Visual process status monitor
 License: GPL-2.0-or-later
@@ -13,11 +13,10 @@ Source1: %name.desktop
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
-BuildRequires: qt5-tools-devel
-BuildRequires: qt5-x11extras-devel
-BuildRequires: lxqt-build-tools >= 0.6.0
-BuildRequires: liblxqt-devel >= 0.15.0
-BuildRequires: kf5-kwindowsystem-devel
+BuildRequires: qt6-tools-devel
+BuildRequires: lxqt2-build-tools
+BuildRequires: liblxqt-devel >= 2.0.0
+BuildRequires: kf6-kwindowsystem-devel
 BuildRequires: /usr/bin/convert
 
 %description
@@ -37,6 +36,7 @@ Qps can
     * show the process table in tree form, showing the parent-child relationship
     * execute user-defined commands on selected processes
     * display MOSIX-specific fields and migrate processes to other nodes in a cluster
+
 %prep
 %setup
 
@@ -45,7 +45,7 @@ Qps can
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 install -pD -m 644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
 # Icons
@@ -66,6 +66,9 @@ convert -resize 16x16 icon/%name.png %buildroot%_miconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Thu Jun 13 2024 Anton Midyukov <antohami@altlinux.org> 2.9.0-alt1
+- New version 2.9.0
+
 * Sun Nov 05 2023 Anton Midyukov <antohami@altlinux.org> 2.8.0-alt1
 - New version 2.8.0.
 

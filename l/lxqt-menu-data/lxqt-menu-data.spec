@@ -1,5 +1,5 @@
 Name: lxqt-menu-data
-Version: 1.4.1
+Version: 2.0.0
 Release: alt1
 
 Summary: Freedesktop.org application menu definition files
@@ -14,8 +14,8 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: rpm-build-xdg
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: qt5-tools-devel
-BuildRequires: lxqt-build-tools >= 0.12.0
+BuildRequires: qt6-tools-devel
+BuildRequires: lxqt2-build-tools
 
 BuildArch: noarch
 
@@ -53,6 +53,9 @@ Development files for %name.
 %_datadir/cmake/%name
 
 %changelog
+* Wed Jun 12 2024 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
+- new version 2.0.0
+
 * Fri Nov 10 2023 Anton Midyukov <antohami@altlinux.org> 1.4.1-alt1
 - new version 1.4.1
 
