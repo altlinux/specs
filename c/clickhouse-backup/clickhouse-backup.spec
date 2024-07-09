@@ -3,10 +3,10 @@
 # $ go generate
 # $ GO111MODULE=on go mod vendor -v
 # $ git add -f vendor
-# $ git commit -n --no-post-rewrite -m "add go vendor modules"
+# $ git commit -n --no-post-rewrite -m "update go vendor modules"
 
 Name: clickhouse-backup
-Version: 2.5.15
+Version: 2.5.20
 Release: alt1
 Summary: Tool for easy ClickHouse backup and restore with cloud storages support
 Group: Databases
@@ -48,6 +48,9 @@ go build -ldflags " \
 %attr(0640,root,root) %config(noreplace) %_sysconfdir/%name/config.yml
 
 %changelog
+* Tue Jul 09 2024 Anton Farygin <rider@altlinux.ru> 2.5.20-alt1
+- 2.5.15 -> 2.5.20
+
 * Tue Jun 25 2024 Anton Farygin <rider@altlinux.ru> 2.5.15-alt1
 - 2.5.6 -> 2.5.15
 
