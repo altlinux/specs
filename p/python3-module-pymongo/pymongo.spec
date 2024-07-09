@@ -2,7 +2,7 @@
 %def_without check
 
 Name:           python3-module-pymongo
-Version:        4.7.3
+Version:        4.8.0
 Release:        alt1
 
 Summary:        Python driver for MongoDB
@@ -16,7 +16,8 @@ Source:         %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-requirements-txt
 
 Requires:       python3-module-bson = %EVR
 
@@ -69,6 +70,9 @@ contains the python3 version of this module.
 %python3_sitelibdir/bson
 
 %changelog
+* Tue Jul 09 2024 Grigory Ustinov <grenka@altlinux.org> 4.8.0-alt1
+- Automatically updated to 4.8.0.
+
 * Wed Jun 05 2024 Grigory Ustinov <grenka@altlinux.org> 4.7.3-alt1
 - Automatically updated to 4.7.3.
 
