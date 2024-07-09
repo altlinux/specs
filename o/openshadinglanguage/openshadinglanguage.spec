@@ -1,35 +1,29 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 %define soname 1.13
 
+# https://github.com/AcademySoftwareFoundation/OpenShadingLanguage/issues/1810
 %define optflags_lto %nil
 
+# the required range is 9.0...18.9
 %ifarch %e2k
 %define llvm_ver 13.0
 %else
-%define llvm_ver 17.0
-%endif
-
-%ifnarch x86_64 ppc64le
-%def_without lld
-%set_verify_elf_method strict
-%else
-%def_with lld
-# eu-list complains about lld
-%set_verify_elf_method relaxed
+%define llvm_ver 18.1
 %endif
 
 Name: openshadinglanguage
-Version: 1.13.7.0
-Release: alt0.2.1
+Version: 1.13.10.0
+Release: alt0.1
 Summary: Advanced shading language for production GI renderers
 Group: Development/Other
 License: BSD-3-Clause
 URL: https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
 
 # 64 bit only
-ExcludeArch: %ix86 %arm
+ExcludeArch: %ix86
 
 # https://github.com/AcademySoftwareFoundation/OpenShadingLanguage.git
 Source: %name-%version.tar
@@ -48,11 +42,12 @@ BuildRequires: python3 pybind11-devel libnumpy-py3-devel
 BuildRequires: qt5-base-devel
 BuildRequires: zlib-devel
 BuildRequires: partio-devel
-%if_with lld
-BuildRequires: lld%{llvm_ver}
-%endif
 
 %define oiio_major_minor_ver %(rpm -q --queryformat='%%{VERSION}' libopenimageio-devel | cut -d . -f 1-2)
+
+%ifarch x86_64
+%add_verify_elf_skiplist %_libdir/lib_*_oslexec.so
+%endif
 
 %description
 Open Shading Language (OSL) is a small but rich language
@@ -151,9 +146,6 @@ export GCC_VERSION=12
 	-DOSL_BUILD_MATERIALX:BOOL=ON \
 	-DOSL_SHADER_INSTALL_DIR:PATH=%_datadir/%name/shaders/ \
 	-DSTOP_ON_WARNING:BOOL=OFF \
-%if_with lld # https://reviews.llvm.org/D135402
-	-DCMAKE_SHARED_LINKER_FLAGS='-fuse-ld=lld -Wl,--build-id=sha1 -Wl,--undefined-version' \
-%endif
 %ifarch x86_64
 	-DUSE_SIMD="avx,f16c" \
 	-DUSE_BATCHED="b8_AVX" \
@@ -207,6 +199,15 @@ rm -f %buildroot%_prefix/cmake/llvm_macros.cmake
 %python3_sitelibdir/*.so
 
 %changelog
+* Mon Jul 08 2024 L.A. Kostis <lakostis@altlinux.ru> 1.13.10.0-alt0.1
+- 1.13.10.0.
+- compile with llvm18.
+- remove lld hacks.
+- x86_64: exclude batched lib from verify-elf checks.
+
+* Thu Apr 18 2024 L.A. Kostis <lakostis@altlinux.ru> 1.13.8.0-alt0.1
+- 1.13.8.0.
+
 * Sun Mar 31 2024 Michael Shigorin <mike@altlinux.org> 1.13.7.0-alt0.2.1
 - E2K: llvm13.0 so far.
 

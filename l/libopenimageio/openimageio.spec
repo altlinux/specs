@@ -11,7 +11,7 @@
 
 Name:           lib%oname
 Version:        2.5.12.0
-Release:        alt1
+Release:        alt1.1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -125,6 +125,7 @@ Requires:       lib%oname%soname = %EVR
 Requires:       python3-module-%oname = %EVR
 Requires:       %oname-utils = %EVR
 Requires:       %oname-iv = %EVR
+Requires:       libopencv-devel
 
 %description devel
 Development files for package %name
@@ -215,6 +216,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Mon Jul 08 2024 L.A. Kostis <lakostis@altlinux.ru> 2.5.12.0-alt1.1
+- devel: added libopencv dependency.
+
 * Mon Jul 01 2024 L.A. Kostis <lakostis@altlinux.ru> 2.5.12.0-alt1
 - Updated to upstream version 2.5.12.0.
 - .spec: remove armh kludges.
