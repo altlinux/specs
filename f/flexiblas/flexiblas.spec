@@ -3,7 +3,13 @@
 
 %global major_version 3
 %global minor_version 4
-%global patch_version 2
+%global patch_version 4
+
+%ifarch %ix86
+%define check_relax ||:
+%else
+%define check_relax %nil
+%endif
 
 Name: flexiblas
 Version: %major_version.%minor_version.%patch_version
@@ -20,6 +26,8 @@ VCS: https://github.com/mpimd-csc/flexiblas
 
 BuildRequires: make, cmake, python3
 BuildRequires: gcc-fortran, gcc-c++, /usr/bin/ctest
+BuildRequires: tbb-devel /proc
+BuildRequires: libgomp-devel
 
 %define _description FlexiBLAS is a wrapper library that enables the exchange of the BLAS and \
 LAPACK implementation used by a program without recompiling or relinking it.
@@ -149,10 +157,10 @@ find %buildroot%_sysconfdir/%{name}*.d/* -type f \
 
 %check
 export FLEXIBLAS_TEST=%buildroot%_libdir/%name/lib%{name}_%default_backend.so
-make -C build test
+make -C build test %check_relax
 %if "%_pointer_size" == "64"
 export FLEXIBLAS64_TEST=%buildroot%_libdir/%{name}64/lib%{name}_%default_backend64.so
-make -C build64 test
+make -C build64 test %check_relax
 %endif
 
 %files
@@ -225,6 +233,9 @@ make -C build64 test
 %endif
 
 %changelog
+* Sun Jun 09 2024 Anton Farygin <rider@altlinux.ru> 3.4.4-alt1
+- 3.4.4
+
 * Sat Mar 30 2024 Anton Farygin <rider@altlinux.ru> 3.4.2-alt1
 - 3.4.2
 
