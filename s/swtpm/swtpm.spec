@@ -7,11 +7,11 @@
 %def_disable check
 
 Name: swtpm
-Version: 0.8.2
+Version: 0.9.0
 Release: alt1
 
 Summary: TPM Emulator
-License: BSD
+License: BSD-3-Clause
 Group: System/Configuration/Other
 Url: https://github.com/stefanberger/swtpm
 Source: %name-%version.tar
@@ -20,12 +20,13 @@ Patch: %name-%version-%release.patch
 %{?_with_selinux:BuildRequires: selinux-policy-devel}
 %{?_with_openssl:BuildRequires: libssl-devel pkgconfig(libcrypto)}
 BuildRequires: pkgconfig(libtasn1)
-BuildRequires: pkgconfig(libtpms) >= 0.6.0
+BuildRequires: pkgconfig(libtpms) >= 0.6
 BuildRequires: trousers >= 0.3.9
 %{?_with_cuse:BuildRequires: pkgconfig(fuse)}
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(glib-2.0) pkgconfig(gthread-2.0)
-%{?_with_gnutls:BuildRequires: pkgconfig(gnutls) /usr/bin/certtool}
+BuildRequires: pkgconfig(gmp)
+%{?_with_gnutls:BuildRequires: pkgconfig(gnutls) >= 3.4.0 /usr/bin/certtool}
 BuildRequires: /usr/bin/ss
 BuildRequires: expect socat gawk coreutils
 BuildRequires: socat
@@ -36,7 +37,7 @@ BuildRequires: /usr/bin/pod2man
 %{!?_disable_check:BuildRequires: /proc /dev/pts}
 
 Requires: lib%name = %EVR
-Requires: libtpms >= 0.6.0
+Requires: libtpms >= 0.6
 
 %description
 TPM emulator built on libtpms providing TPM functionality for QEMU VMs
@@ -44,14 +45,12 @@ TPM emulator built on libtpms providing TPM functionality for QEMU VMs
 %package -n lib%name
 Summary: Private libraries for swtpm TPM emulators
 Group: System/Libraries
-License: BSD
 
 %description -n lib%name
 A private library with callback functions for libtpms based swtpm TPM emulator
 
 %package -n lib%name-devel
 Summary: Include files for the TPM emulator's CUSE interface for usage by clients
-License: BSD
 Group: Development/C
 Requires: lib%name = %EVR
 
@@ -61,7 +60,6 @@ Include files for the TPM emulator's CUSE interface.
 %package tools
 Summary: Tools for the TPM emulator
 Group: System/Configuration/Other
-License: BSD
 Requires: %name = %EVR
 Requires: trousers >= 0.3.9 gnutls-utils
 # For tss user and group
@@ -73,13 +71,21 @@ Tools for the TPM emulator from the swtpm package
 %package tools-pkcs11
 Summary: Tools for creating a local CA based on a pkcs11 device
 Group: System/Configuration/Other
-License: BSD
 Requires: %name-tools = %EVR
 Requires: tpm2-pkcs11 tpm2-pkcs11-tools tpm2-tools tpm2-abrmd
 Requires: expect
 
 %description tools-pkcs11
 Tools for creating a local CA based on a pkcs11 device
+
+%package selinux
+Summary: SELinux security policy for swtpm
+Group: System/Configuration/Other
+Requires(post): %name = %EVR
+BuildArch: noarch
+
+%description selinux
+SELinux security policy for swtpm.
 
 %prep
 %setup
@@ -104,15 +110,16 @@ rm -f $RPM_BUILD_ROOT%_libdir/%name/*.{a,la}
 %make check
 
 %if_with selinux
-%post
+%post selinux
 for pp in /usr/share/selinux/packages/swtpm.pp \
+          /usr/share/selinux/packages/swtpm_libvirt.pp
           /usr/share/selinux/packages/swtpm_svirt.pp; do
   %selinux_modules_install -s %selinuxtype ${pp}
 done
 
-%postun
+%postun selinux
 if [ $1 -eq  0 ]; then
-  for p in swtpm swtpm_svirt; do
+  for p in swtpm swtpm_libvirt swtpm_svirt; do
     %selinux_modules_uninstall -s %selinuxtype $p
   done
 fi
@@ -122,8 +129,11 @@ fi
 %doc README LICENSE
 %_bindir/swtpm
 %_man8dir/swtpm.8*
+
 %if_with selinux
+%files selinux
 %_datadir/selinux/packages/swtpm.pp
+%_datadir/selinux/packages/swtpm_libvirt.pp
 %_datadir/selinux/packages/swtpm_svirt.pp
 %endif
 
@@ -157,6 +167,9 @@ fi
 %_datadir/swtpm/swtpm-create-tpmca
 
 %changelog
+* Tue Jul 09 2024 Alexey Shabalin <shaba@altlinux.org> 0.9.0-alt1
+- New version 0.9.0.
+
 * Fri May 03 2024 Alexey Shabalin <shaba@altlinux.org> 0.8.2-alt1
 - New version 0.8.2.
 
