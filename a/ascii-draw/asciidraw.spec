@@ -1,12 +1,12 @@
 %define _name ascii-draw
-%define ver_major 0.3
+%define ver_major 0.4
 %define rdn_name io.github.nokse22.asciidraw
 
-# online screenshots in metainfo
+# online screenshots
 %def_disable check
 
 Name: %_name
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: A character drawing utility for the GNOME Desktop
@@ -34,9 +34,6 @@ There are many stiles to choose from and multiple tools available to use.
 %prep
 %setup
 
-# with appstream-util "Validate appstream file" failed
-sed -i "s/\('appstream\)-util'/\1cli'/" data/meson.build
-
 %build
 %meson
 %meson_build
@@ -58,6 +55,9 @@ sed -i "s/\('appstream\)-util'/\1cli'/" data/meson.build
 %doc README.*
 
 %changelog
+* Tue Jul 09 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Thu May 16 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt1
 - 0.3.4
 
