@@ -4,8 +4,8 @@ BuildRequires: gcc-c++
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           goatattack
-Version:        0.4.5
-Release:        alt2
+Version:        0.5.0
+Release:        alt1
 Summary:        Fast-paced multiplayer pixel art shooter game
 Group:          Games/Arcade
 License:        GPLv3+ and CC BY-SA 4.0
@@ -90,6 +90,9 @@ install -m755 %{_builddir}/build-dedicated/src/Server/man/%{name}-server.6 \
 
 
 %changelog
+* Wed Jul 10 2024 Ilya Mashkin <oddity@altlinux.ru> 0.5.0-alt1
+- 0.5.0
+
 * Mon Apr 25 2022 Ilya Mashkin <oddity@altlinux.ru> 0.4.5-alt2
 - Rebuild for Sisyphus
 
