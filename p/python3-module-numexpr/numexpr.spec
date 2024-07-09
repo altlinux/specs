@@ -4,15 +4,16 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.8.3
-Release: alt2
+Version: 2.10.1
+Release: alt1
 Epoch: 1
 
 Summary: Fast numerical array expression evaluator for Python and NumPy
 
 Group: Development/Python3
 License: MIT
-Url: https://github.com/pydata/numexpr
+URL: https://pypi.org/project/numexpr
+VCS: https://github.com/pydata/numexpr
 
 Source: %name-%version.tar
 Source1: site.cfg
@@ -83,6 +84,9 @@ tox.py3 --sitepackages -vvr -s false
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Jul 09 2024 Grigory Ustinov <grenka@altlinux.org> 1:2.10.1-alt1
+- Automatically updated to 2.10.1.
+
 * Mon Dec 18 2023 Grigory Ustinov <grenka@altlinux.org> 1:2.8.3-alt2
 - Moved on pyproject macros.
 
