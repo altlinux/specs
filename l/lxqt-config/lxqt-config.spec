@@ -3,7 +3,7 @@
 
 Name: lxqt-config
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: LXDE-Qt system configurations (control center)
 License: LGPL-2.1-or-later
@@ -27,6 +27,7 @@ BuildRequires: lxqt-menu-data-devel >= 2.0.0
 BuildRequires: libXi-devel
 
 Requires: lxqt-menu-data >= 2.0.0
+Requires: plasma6-libkscreen-utils
 
 Provides: razorqt-config = %version
 Obsoletes: razorqt-config < 0.7.0
@@ -59,6 +60,9 @@ Obsoletes: lxqt-config-randr < 0.8.0
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Tue Jul 09 2024 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt2
+- Add dependency on plasma6-libkscreen-utils
+
 * Wed Jun 12 2024 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
 - New version 2.0.0
 
