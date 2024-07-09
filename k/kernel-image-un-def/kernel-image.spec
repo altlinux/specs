@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1
 %define kernel_base_version	6.6
-%define kernel_sublevel	.36
+%define kernel_sublevel	.38
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -589,6 +589,14 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Tue Jul 09 2024 Kernel Bot <kernelbot@altlinux.org> 1:6.6.38-alt1
+- v6.6.38 (2024-07-09).
+- config: CONFIG_RTW89_8851BE=m.
+
+* Fri Jul 05 2024 Kernel Bot <kernelbot@altlinux.org> 1:6.6.37-alt1
+- v6.6.37 (2024-07-05).
+- config: Turn off CONFIG_LEGACY_TIOCSTI.
+
 * Thu Jun 27 2024 Kernel Bot <kernelbot@altlinux.org> 1:6.6.36-alt1
 - v6.6.36 (2024-06-27).
 
