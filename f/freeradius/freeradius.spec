@@ -2,14 +2,14 @@
 
 Summary: High-performance and highly configurable free RADIUS server
 Name: freeradius
-Version: 3.2.3
+Version: 3.2.5
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Servers
 Url: http://www.freeradius.org/
 
 # Cloned from git://git.freeradius.org/freeradius-server.git
-Source0: %name-%version.tar
+Source: %name-%version.tar
 Source100: freeradius-radiusd-init
 Source102: freeradius-logrotate
 Source103: freeradius-pam-conf
@@ -31,7 +31,8 @@ BuildRequires: libreadline-devel
 BuildRequires: libunixODBC-devel
 BuildRequires: mailx
 BuildRequires: net-snmp-utils
-BuildRequires: perl-DBI perl-devel perl-DBM perl-Net-IP
+BuildRequires: perl-DBI perl-devel perl-DBM perl-Net-IP 
+BuildRequires: perl-Convert-Base32 perl-Crypt-URandom
 BuildRequires: postgresql-devel
 BuildRequires: python3-devel
 BuildRequires: slocate
@@ -252,21 +253,15 @@ make reconfig
 %install
 make install R=%buildroot
 
-# modify default configuration
-RADDB=%buildroot%_sysconfdir/raddb
-sed -i 's/^#user =.*$/user = radiusd/'   $RADDB/radiusd.conf
-sed -i 's/^#group =.*$/group = radiusd/' $RADDB/radiusd.conf
 # logs
 mkdir -p %buildroot%_logdir/radius/radacct
 touch %buildroot%_logdir/radius/{radutmp,radius.log}
 
-mkdir -p %buildroot%_runtimedir/radiusd
-mkdir -p %buildroot%_sysconfdir/{logrotate.d,pam.d,rc.d/init.d}
-mkdir -p %buildroot%_tmpfilesdir
-mkdir -p %buildroot%_unitdir
+mkdir -p %buildroot%_sysconfdir/pam.d
+mkdir -p %buildroot{%_logrotatedir,%_tmpfilesdir,%_unitdir,%_initdir}
 mkdir -p %buildroot%_localstatedir/radiusd
 install -m 755 %SOURCE100 %buildroot%_initdir/radiusd
-install -m 644 %SOURCE102 %buildroot%_sysconfdir/logrotate.d/radiusd
+install -m 644 %SOURCE102 %buildroot%_logrotatedir/radiusd
 install -m 644 %SOURCE103 %buildroot%_sysconfdir/pam.d/radiusd
 install -m 644 %SOURCE104 %buildroot%_tmpfilesdir/radiusd.conf
 install -m 644 %SOURCE105 %buildroot%_unitdir/radiusd.service
@@ -319,8 +314,8 @@ chrpath -d %buildroot%_libdir/freeradius/rlm_sql_postgresql.so
 chrpath -d %buildroot%_libdir/freeradius/rlm_sql_unixodbc.so
 
 %pre common
-/usr/sbin/groupadd -r -f radiusd
-/usr/sbin/useradd -r -n -g radiusd -d /dev/null -s /dev/null -c RADIUS radiusd >/dev/null 2>&1 ||:
+groupadd -r -f radiusd
+useradd -r -n -g radiusd -d /dev/null -s /dev/null -c RADIUS radiusd >/dev/null 2>&1 ||:
 
 %post
 %post_service radiusd
@@ -336,8 +331,8 @@ fi
 %files
 %doc %_docdir/freeradius-%version/
 %config(noreplace) %_sysconfdir/pam.d/radiusd
-%config(noreplace) %_sysconfdir/logrotate.d/radiusd
-%config(noreplace) %_initdir/radiusd
+%config(noreplace) %_logrotatedir/radiusd
+%_initdir/radiusd
 %_unitdir/radiusd.service
 %_tmpfilesdir/radiusd.conf
 %dir %attr(775,root,radiusd) %_localstatedir/radiusd
@@ -363,6 +358,8 @@ fi
 %_sysconfdir/raddb/certs/Makefile
 %_sysconfdir/raddb/certs/README.md
 %_sysconfdir/raddb/certs/xpextensions
+%dir %attr(770,root,radiusd) %_sysconfdir/raddb/certs/realms
+%_sysconfdir/raddb/certs/realms/README.md
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/*.cnf
 %attr(750,root,radiusd) %_sysconfdir/raddb/certs/bootstrap
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/sites-available
@@ -414,6 +411,7 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/dhcp_sql
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/dhcp_sqlippool
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/digest
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/dpsk
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/dynamic_clients
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/eap
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/echo
@@ -509,8 +507,6 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-enabled/utf8
 
 
-%dir %attr(770,root,radiusd) %_runtimedir/radiusd/
-
 %defattr(-,root,root)
 # binaries
 %_sbindir/checkrad
@@ -542,6 +538,7 @@ fi
 %_libdir/freeradius/rlm_detail.so
 %_libdir/freeradius/rlm_dhcp.so
 %_libdir/freeradius/rlm_digest.so
+%_libdir/freeradius/rlm_dpsk.so
 %_libdir/freeradius/rlm_dynamic_clients.so
 %_libdir/freeradius/rlm_eap.so
 %_libdir/freeradius/rlm_eap_fast.so
@@ -551,6 +548,7 @@ fi
 %_libdir/freeradius/rlm_eap_peap.so
 %_libdir/freeradius/rlm_eap_pwd.so
 %_libdir/freeradius/rlm_eap_sim.so
+%_libdir/freeradius/rlm_eap_teap.so
 %_libdir/freeradius/rlm_eap_tls.so
 %_libdir/freeradius/rlm_eap_ttls.so
 %_libdir/freeradius/rlm_exec.so
@@ -708,6 +706,12 @@ fi
 #%_libdir/freeradius/rlm_sql_unixodbc-%version.so
 
 %changelog
+* Tue Jul 09 2024 Alexey Shabalin <shaba@altlinux.org> 3.2.5-alt1
+- 3.2.5
+- Not set default user and group in radiusd.conf,
+  systemd unit and sysv script should run service as radiusd user.
+  (Fixes: ALT#45272).
+
 * Fri Jan 26 2024 Alexey Shabalin <shaba@altlinux.org> 3.2.3-alt1
 - 3.2.3
 
