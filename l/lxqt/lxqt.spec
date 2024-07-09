@@ -1,5 +1,5 @@
 Name: lxqt
-Version: 1.4
+Version: 2.0
 Release: alt1
 Summary: Meta package for install LxQt
 Group: Graphical desktop/Other
@@ -50,7 +50,7 @@ Obsoletes: qterminal-l10n < 0.14
 Obsoletes: qtermwidget-l10n < 0.14
 
 %description mini
-%summary
+%summary.
 
 %package regular
 Summary: Meta package for install regular-lxqt
@@ -83,12 +83,15 @@ Requires: lxqt-sudo
 Requires: xdg-desktop-portal-lxqt
 
 %description regular
-%summary
+%summary.
 
 %files mini
 %files regular
 
 %changelog
+* Tue Jul 09 2024 Anton Midyukov <antohami@altlinux.org> 2.0-alt1
+- new version 2.0
+
 * Mon Nov 06 2023 Anton Midyukov <antohami@altlinux.org> 1.4-alt1
 - new version 1.4
 
