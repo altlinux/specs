@@ -1,5 +1,5 @@
 Name: installer-alterator-pkg
-Version: 3.1.7
+Version: 3.1.8
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -57,6 +57,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Jul 09 2024 Anton Midyukov <antohami@altlinux.org> 3.1.8-alt1
+- ui/pkg/groups: execute pkg-groups-init if there are groups
+
 * Thu Jun 27 2024 Ajrat Makhmutov <rauty@altlinux.org> 3.1.7-alt1
 - pkg-install: return the ability to specify a package groups using a variable
 - fix the calculation of the packages size when returning from the next step
