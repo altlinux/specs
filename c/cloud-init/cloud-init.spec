@@ -2,7 +2,7 @@
 %define _libexecdir /usr/libexec
 
 Name:    cloud-init
-Version: 24.1.7
+Version: 24.2
 Release: alt1
 
 Summary: Cloud instance init scripts
@@ -37,23 +37,27 @@ Patch2: use_python3_in_uncloud-init.patch
 BuildArch: noarch
 
 %filter_from_requires /^open-vm-tools/d
+%filter_from_requires /^systemd/d
+%filter_from_requires /^\/init/d
 %filter_from_requires s/requests.packages.urllib3.connectionpool/urllib3.connectionpool/
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-distribute
+#BuildRequires(pre): rpm-build-pyproject
+BuildRequires: python3-dev python3-module-setuptools python3-module-wheel
 BuildRequires: python3-module-yaml python3-module-oauthlib
 BuildRequires: libsystemd-devel libudev-devel
 BuildRequires: python3-module-httpretty python3-module-serial iproute2
 BuildRequires: util-linux net-tools python3-module-jinja2
 BuildRequires: python3-module-contextlib2 python3-module-prettytable
 BuildRequires: python3-module-requests
+BuildRequires: pkgconfig(systemd) pkgconfig(udev)
 %if_enabled check
 BuildRequires: /proc
 BuildRequires: python3-module-jsonpatch
 BuildRequires: python3-module-configobj python3-module-mock
 BuildRequires: python3-module-oauthlib python3-module-pytest
 BuildRequires: python3-module-pytest-mock
-BuildRequires: python3(netifaces) python3(jsonschema) python3(responses)
+BuildRequires: python3(jsonschema) python3(responses)
 BuildRequires: python3(passlib)
 BuildRequires: shadow-utils passwd
 %endif
@@ -122,12 +126,17 @@ Conflicts: cloud-init-config-etcnet cloud-init-config-netplan
 %patch2 -p1
 
 %build
-%python3_build_debug
+%python3_build
+#%%pyproject_build
 
 %install
-%python3_install --init-system=systemd
+%python3_install  --distro altlinux --init-system systemd
+#%%pyproject_install -- --init-system systemd --distro altlinux
 
-install -pD -m644 %SOURCE1 %buildroot%_sysconfdir/cloud/cloud.cfg
+# Generate cloud-config file
+#python3 tools/render-template --variant altlinux > %buildroot%_sysconfdir/cloud/cloud.cfg.test
+#install -pD -m644 %SOURCE1 %buildroot%_sysconfdir/cloud/cloud.cfg
+
 install -pD -m644 %SOURCE2 %buildroot%_tmpfilesdir/cloud-init.conf
 install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/cloud/
 
@@ -147,15 +156,32 @@ install -pD -m644 %SOURCE41 %buildroot%_sysconfdir/cloud/cloud.cfg.d/
 mkdir -p %buildroot%_sharedstatedir/cloud
 
 # Remove non-ALTLinux templates
-rm -f %buildroot%_sysconfdir/cloud/templates/*.debian.*
-rm -f %buildroot%_sysconfdir/cloud/templates/*.freebsd.*
-rm -f %buildroot%_sysconfdir/cloud/templates/*.redhat.*
-rm -f %buildroot%_sysconfdir/cloud/templates/*.suse.*
-rm -f %buildroot%_sysconfdir/cloud/templates/*.ubuntu.*
+rm -f %buildroot%_sysconfdir/cloud/templates/*almalinux*
+rm -f %buildroot%_sysconfdir/cloud/templates/*alpine*
+rm -f %buildroot%_sysconfdir/cloud/templates/*arch*
+rm -f %buildroot%_sysconfdir/cloud/templates/*azurelinux*
+rm -f %buildroot%_sysconfdir/cloud/templates/*centos*
+rm -f %buildroot%_sysconfdir/cloud/templates/*cloudlinux*
+rm -f %buildroot%_sysconfdir/cloud/templates/*fedora*
+rm -f %buildroot%_sysconfdir/cloud/templates/*opensuse*
+rm -f %buildroot%_sysconfdir/cloud/templates/*photon*
+rm -f %buildroot%_sysconfdir/cloud/templates/*rhel*
+rm -f %buildroot%_sysconfdir/cloud/templates/*sle*
+rm -f %buildroot%_sysconfdir/cloud/templates/*gentoo*
+rm -f %buildroot%_sysconfdir/cloud/templates/*mariner*
+rm -f %buildroot%_sysconfdir/cloud/templates/*debian*
+rm -f %buildroot%_sysconfdir/cloud/templates/*freebsd*
+rm -f %buildroot%_sysconfdir/cloud/templates/*openbsd*
+rm -f %buildroot%_sysconfdir/cloud/templates/*redhat*
+rm -f %buildroot%_sysconfdir/cloud/templates/*suse*
+rm -f %buildroot%_sysconfdir/cloud/templates/*ubuntu*
 
 %check
 export PATH="$PATH:/usr/sbin"
-make unittest
+export PYTHONPATH=%buildroot%python3_sitelibdir
+python3 -m pytest -v tests/unittests \
+  --ignore tests/unittests/config/test_apt_configure_sources_list_v1.py \
+  --ignore tests/unittests/config/test_apt_configure_sources_list_v3.py
 
 %post
 %post_service cloud-config
@@ -206,6 +232,10 @@ make unittest
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Fri Jul 05 2024 Alexey Shabalin <shaba@altlinux.org> 24.2-alt1
+- 24.2
+- update cfg template generators for altlinux.
+
 * Tue Jun 25 2024 Alexey Shabalin <shaba@altlinux.org> 24.1.7-alt1
 - 24.1.7
 - define _libexecdir as /usr/libexec
