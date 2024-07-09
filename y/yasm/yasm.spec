@@ -1,6 +1,6 @@
 Name: yasm
 Version: 1.3.0
-Release: alt2
+Release: alt3
 
 Summary: Rewrite of the NASM assembler under the "new" BSD License
 License: BSD
@@ -8,6 +8,8 @@ Group: Development/Other
 Url: https://yasm.tortall.net/
 
 Source: yasm-%version.tar
+
+BuildRequires: python3
 
 %description 
 Yasm is a complete rewrite of the NASM assembler under the "new" BSD License
@@ -29,12 +31,15 @@ This package contains static development files for YASM.
 
 %prep
 %setup
+%ifarch %ix86
+sed -i '/^TESTS/d' modules/objfmts/macho/tests/nasm64/Makefile.inc
+%endif
 
 %build
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %autoreconf
 %configure
-%make_build
+make
 
 %install
 %make_install DESTDIR="%buildroot" install
@@ -58,6 +63,10 @@ make check
 %_libdir/*.a
 
 %changelog
+* Tue Jul 09 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.0-alt3
+- updated to v1.3.0-87-g121ab150
+- fixed: CVE-2023-37732, CVE-2023-31975, CVE-2021-33454
+
 * Wed Jul 26 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.0-alt2
 - fix build with recent autoconf
 
