@@ -13,11 +13,11 @@
 %define prog_name            cri-o
 %define cri_o_major          1
 %define cri_o_minor          27
-%define cri_o_patch          6
+%define cri_o_patch          8
 
 Name: %prog_name%cri_o_major.%cri_o_minor
 Version: %cri_o_major.%cri_o_minor.%cri_o_patch
-Release: alt2
+Release: alt1
 Summary: Kubernetes Container Runtime Interface for OCI-based containers
 Group: Development/Other
 License: Apache-2.0
@@ -138,6 +138,9 @@ install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/ne
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Fri Jul 05 2024 Alexander Stepchenko <geochip@altlinux.org> 1.27.8-alt1
+- 1.27.6 -> 1.27.8
+
 * Thu Jul 04 2024 Alexander Stepchenko <geochip@altlinux.org> 1.27.6-alt2
 - Use macros for systemd instead of absolute paths.
 
