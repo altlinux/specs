@@ -1,6 +1,6 @@
 Name: v4l2onvif
 Version: 0.0.20221106
-Release: alt1
+Release: alt2
 
 Summary: V4L2-based ONVIF implementation
 License: GPLv3
@@ -48,6 +48,9 @@ make install DESTDIR=%buildroot%_bindir
 %_bindir/onvif-server
 
 %changelog
+* Wed Jul 10 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.0.20221106-alt2
+- fix ftbfs after gsoap update
+
 * Fri Nov 25 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20221106-alt1
 - updated to git.897ca50
 
