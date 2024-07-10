@@ -3,7 +3,7 @@
 
 Name: obconf-qt
 Version: 0.16.4
-Release: alt1
+Release: alt2
 
 Summary: Openbox configuration tool
 License: GPL-2.0-or-later
@@ -15,7 +15,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
-BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel
+BuildRequires: liblxqt-devel qt6-base-devel qt6-tools-devel
 BuildRequires: pkgconfig(expat)
 BuildRequires: libopenbox-devel
 
@@ -41,6 +41,9 @@ BuildRequires: libopenbox-devel
 %doc AUTHORS CHANGELOG README.md
 
 %changelog
+* Wed Jul 10 2024 Anton Midyukov <antohami@altlinux.org> 0.16.4-alt2
+- qt6 port
+
 * Sun Jan 21 2024 Anton Midyukov <antohami@altlinux.org> 0.16.4-alt1
 - 0.16.4
 
