@@ -50,7 +50,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.48.2
+Version: 1.48.4
 Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -71,6 +71,7 @@ Source12: ifcfg-rh-plugin.conf
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-systemd >= 6-alt1
 
 # For tests
 %{?!_without_check:%{?!_disable_check:BuildPreReq: dbus dhcpcd dhcp-client}}
@@ -363,7 +364,7 @@ GObject introspection devel data for the NetworkManager (libnm).
 	-Dsuspend_resume=upower \
 	-Dconfig_logging_backend_default=syslog \
 %endif
-	-Dudev_dir=/lib/udev \
+	-Dudev_dir=%_udevdir \
 	-Dpolkit=true \
 	-Dpolkit_agent_helper_1=/usr/libexec/polkit-1/polkit-agent-helper-1 \
 	-Dmodify_system=false \
@@ -570,7 +571,7 @@ fi
 %ghost %config(noreplace) %_var/log/NetworkManager
 %ghost %config(noreplace) %_var/lib/NetworkManager/NetworkManager.state
 %ghost %config(noreplace) %_var/lib/NetworkManager/timestamps
-/lib/udev/rules.d/*
+%_udev_rulesdir/*
 %_datadir/polkit-1/actions/*.policy
 %_datadir/bash-completion/completions/*
 %config(noreplace) %_sysconfdir/sysconfig/%name
@@ -680,6 +681,10 @@ fi
 %endif
 
 %changelog
+* Wed Jul 10 2024 Mikhail Efremov <sem@altlinux.org> 1.48.4-alt1
+- Used _udev* macros.
+- Updated to 1.48.4.
+
 * Wed Jun 26 2024 Mikhail Efremov <sem@altlinux.org> 1.48.2-alt1
 - Updated to 1.48.2.
 
