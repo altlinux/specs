@@ -1,6 +1,7 @@
 %def_disable snapshot
 
 %define _name gom
+%define namespace Gom
 %define ver_major 0.5
 %define api_ver 1.0
 %def_enable introspection
@@ -8,8 +9,8 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.2
+Release: alt1
 
 Summary: A GObject to SQLite object mapper
 Group: System/Libraries
@@ -78,8 +79,10 @@ This package contains development documentation for the Gom library.
 %setup -n %_name-%version
 
 %build
-%meson %{?_enable_gtk_doc:-Denable-gtk-doc=true} \
-	%{?_enable_introspection:-Denable-introspection=true}
+%meson \
+    %{subst_enable_meson_bool introspection enable-introspection} \
+    %{subst_enable_meson_bool gtk_doc enable-gtk-doc}
+%nil
 %meson_build
 
 %install
@@ -90,7 +93,7 @@ This package contains development documentation for the Gom library.
 
 %files
 %_libdir/%name-%api_ver.so.*
-%doc NEWS README
+%doc NEWS README*
 
 %files devel
 %_includedir/%_name-%api_ver/
@@ -99,12 +102,12 @@ This package contains development documentation for the Gom library.
 
 %if_enabled introspection
 %files gir
-%_typelibdir/Gom-%api_ver.typelib
-%python3_sitelibdir/gi/overrides/Gom.py
+%_typelibdir/%namespace-%api_ver.typelib
+%python3_sitelibdir/gi/overrides/%namespace.py
 %python3_sitelibdir/gi/overrides/__pycache__/*
 
 %files gir-devel
-%_girdir/Gom-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 %if_enabled gtk_doc
@@ -113,6 +116,9 @@ This package contains development documentation for the Gom library.
 %endif
 
 %changelog
+* Wed Jul 10 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.2-alt1
+- 0.5.2
+
 * Fri Apr 12 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.1-alt1.1
 - fixed BR with disabled %%check
 
