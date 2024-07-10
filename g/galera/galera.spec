@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: galera
-Version: 26.4.17
+Version: 26.4.19
 Release: alt1
 Summary: Synchronous multi-master wsrep provider (replication engine)
 Group: System/Servers
@@ -112,6 +112,9 @@ useradd -r -g _garbd -c "Galera Arbitrator Daemon" -d %_localstatedir/garbd -s /
 %doc %_docdir/galera/README-MySQL
 
 %changelog
+* Wed Jul 10 2024 Alexey Shabalin <shaba@altlinux.org> 26.4.19-alt1
+- 26.4.19
+
 * Sun Mar 03 2024 Alexey Shabalin <shaba@altlinux.org> 26.4.17-alt1
 - 26.4.17
 
