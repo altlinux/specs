@@ -1,9 +1,9 @@
 Name: netsurf
-Version: 3.10
+Version: 3.11
 Release: alt1
 
 Summary: Lightweight Web Browser With Good HTML 4 And CSS Support
-License: GNU General Public License v2 (GPL v2)
+License: GPL-2.0
 Group: Networking/WWW
 
 Url: http://www.netsurf-browser.org
@@ -104,6 +104,9 @@ export RPM_FIXUP_METHOD="binconfig pkgconfig libtool"
 # - update/submit translation
 
 %changelog
+* Wed Jul 10 2024 Andrey Cherepanov <cas@altlinux.org> 3.11-alt1
+- New version.
+
 * Wed May 27 2020 Michael Shigorin <mike@altlinux.org> 3.10-alt1
 - 3.10 (gtk2 target)
   + dropped patches (merged upstream)
