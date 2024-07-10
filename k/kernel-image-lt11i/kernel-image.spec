@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-lt11i
-Release: alt6
+Release: alt7
 epoch:1
 %define kernel_need_version	6.1
 # Used when kernel-source-x.y does not currently exist in repository.
@@ -424,6 +424,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Jul 08 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.1.55-alt7
+- MIG-LT11i_defconfig: CONFIG_MWIFIEX=m, CONFIG_IW416_WLAN is not set
+
 * Fri Jul 05 2024 Anton Midyukov <antohami@altlinux.org> 1:6.1.55-alt6
 - imx8mp-evk-dual-imx258-gc5035-himax.dts: uncomment pins
 
