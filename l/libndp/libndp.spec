@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libndp
-Version: 1.8
+Version: 1.9
 Release: alt1
 
 Summary: Library for Neighbor Discovery Protocol
@@ -61,6 +61,9 @@ developing applications that use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Jul 10 2024 Mikhail Efremov <sem@altlinux.org> 1.9-alt1
+- Updated to 1.9.
+
 * Mon May 24 2021 Mikhail Efremov <sem@altlinux.org> 1.8-alt1
 - Added Vcs tag.
 - Don't use rpm-build-licenses.
