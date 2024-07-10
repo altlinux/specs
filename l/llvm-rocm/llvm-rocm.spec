@@ -46,7 +46,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: 6.1.2
-Release: alt0.1
+Release: alt0.2
 Summary: The LLVM Compiler Infrastructure with ROCm addition
 Group: Development/C
 License: Apache-2.0 with LLVM-exception
@@ -87,6 +87,7 @@ Patch50: hipcc-alt-hardcore-llvm-rocm.patch
 Patch51: hipcc-alt-hipInfo-path.patch
 Patch52: hipcc-alt-paths.patch
 Patch53: hipcc-alt-remove-stdc++fs.patch
+Patch54: hipcc-alt-remove-isystem.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -395,6 +396,7 @@ popd
 %patch51 -p2
 %patch52 -p2
 %patch53 -p2
+%patch54 -p2
 
 # LLVM 12 and onward deprecate Python 2:
 # https://releases.llvm.org/12.0.0/docs/ReleaseNotes.html
@@ -829,6 +831,10 @@ ninja -C %builddir check-all || :
 %_bindir/hipconfig*
 
 %changelog
+* Wed Jul 10 2024 L.A. Kostis <lakostis@altlinux.ru> 6.1.2-alt0.2
+- hipcc: re-added hipcc-alt-remove-isystem.patch (without this patch hipcc
+  can't find math.h headers).
+
 * Wed Jul 03 2024 L.A. Kostis <lakostis@altlinux.ru> 6.1.2-alt0.1
 - 6.1.2.
 - bundle device-libs, comgr and hipcc (they are now part of llvm-project).
