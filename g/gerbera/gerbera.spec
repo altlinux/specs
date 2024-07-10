@@ -7,7 +7,7 @@
 %endif
 
 Name: gerbera
-Version: 2.0.0
+Version: 2.2.0
 Release: alt1
 
 Summary: UPnP Media Server
@@ -82,14 +82,13 @@ Data files for the Gerbera media server.
     -DWITH_FFMPEGTHUMBNAILER=YES \
     -DWITH_INOTIFY=YES \
     -DWITH_SYSTEMD=YES \
-    -DWITH_MYSQL=YES \
     -DUPNP_HAS_REUSEADDR=YES
 
-%ninja_build -C "%_cmake__builddir"
+%cmake_build
 
 %install
 mkdir -p %buildroot{%_sysconfdir,%_localstatedir,%_logdir}/%name
-%ninja_install -C "%_cmake__builddir"
+%cmake_install
 
 %buildroot%_bindir/%name --create-config --home %_localstatedir/%name > %buildroot%_sysconfdir/%name/config.xml
 
@@ -99,6 +98,7 @@ cat > %buildroot%_logrotatedir/%name << 'EOF'
       monthly
       missingok
       create 0644 gerbera gerbera
+      su gerbera gerbera
       notifempty
       compress
 }
@@ -134,11 +134,13 @@ useradd -r -n -g %name -d %_localstatedir/%name -s /dev/null \
 %ghost %attr(775,%name,%name) %_localstatedir/%name/%name.db
 %ghost %attr(775,%name,%name) %_localstatedir/%name/%name.html
 
-
 %files data
 %_datadir/%name
 
 %changelog
+* Wed Jul 10 2024 Alexey Shabalin <shaba@altlinux.org> 2.2.0-alt1
+- New version 2.2.0.
+
 * Fri Jan 26 2024 Alexey Shabalin <shaba@altlinux.org> 2.0.0-alt1
 - New version 2.0.0.
 
