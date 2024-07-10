@@ -10,8 +10,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: p11-kit
-Version: 0.25.3
-Release: alt2
+Version: 0.25.5
+Release: alt1
 Epoch: 1
 
 Summary: Utilities for PKCS#11 modules
@@ -230,6 +230,9 @@ rm -r -- "$TEST_DIR"
 
 %files checkinstall
 %changelog
+* Wed Jul 10 2024 Mikhail Efremov <sem@altlinux.org> 1:0.25.5-alt1
+- 0.25.5.
+
 * Fri Dec 15 2023 Mikhail Efremov <sem@altlinux.org> 1:0.25.3-alt2
 - Patches from upstream:
   + Add the flags required for libtasn1 to libp11-asn1.la;
