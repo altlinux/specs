@@ -3,8 +3,8 @@
 %define rhelp_version 0.3.0
 
 Name:           dd_rescue
-Version:        1.99.10
-Release:        alt1.1
+Version:        1.99.13
+Release:        alt1
 Summary:        Fault tolerant "dd" utility for rescuing data from bad media
 Group:          File tools
 License:        GPL+
@@ -64,6 +64,9 @@ install -D -m 755 dd_rhelp-%{rhelp_version}/dd_rhelp %{buildroot}%{_bindir}/dd_r
 %_man1dir/ddr_lzo.1*
 
 %changelog
+* Wed Jul 10 2024 Anton Farygin <rider@altlinux.ru> 1.99.13-alt1
+- 1.99.10 -> 1.99.13
+
 * Sat Jan 08 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.99.10-alt1.1
 - Fixed build for Elbrus.
 
