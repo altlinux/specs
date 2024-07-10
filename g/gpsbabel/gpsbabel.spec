@@ -1,33 +1,33 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
-%ifarch %qt5_qtwebengine_arches
-%def_enable qtwebengine
+%ifarch %qt6_qtwebengine_arches
+%def_enable gui
 %else
-%def_disable qtwebengine
+%def_disable gui
 %endif
 
 Name: gpsbabel
-Version: 1.7.0
-Release: alt2.1
+Version: 1.9.0
+Release: alt1
 Summary: A tool to convert between various formats used by GPS devices
-License: GPL
+License: GPLv2
 Group: Sciences/Geosciences
-Url: http://www.gpsbabel.org
+Url: https://www.gpsbabel.org
 
-# https://github.com/gpsbabel/gpsbabel.git
+VCS: https://github.com/gpsbabel/gpsbabel.git
 Source: %name-%version.tar
+Source2: gpsbabel.png
 
 Patch1: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-macros-qt5-webengine
+BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires: libexpat-devel libusb-devel zlib-devel libminizip-devel gcc-c++
 BuildRequires: libshape-devel
-BuildRequires: qt5-base-devel qt5-tools
-%if_enabled qtwebengine
-BuildRequires: qt5-webengine-devel
-%else
-BuildRequires: qt5-webkit-devel
+BuildRequires: cmake
+BuildRequires: qt6-base-devel qt6-tools-devel qt6-serialport-devel qt6-5compat-devel
+%if_enabled gui
+BuildRequires: qt6-webengine-devel
 %endif
 
 %description
@@ -47,12 +47,14 @@ It does not convert, transfer, send, or manipulate maps. We process
 data that may (or may not be) placed on a map, such as waypoints,
 tracks, and routes.
 
+%if_enabled gui
 %package gui
 Group: Sciences/Geosciences
 Summary: A tool to convert between various formats used by GPS devices
 
 %description gui
 This package contains gui for gpsbabel.
+%endif
 
 %prep
 %setup
@@ -60,48 +62,30 @@ This package contains gui for gpsbabel.
 
 rm -rf zlib shapelib
 
-# use system headers and libraries
-sed -i \
-	-e 's:zlib/zlib.h::g' \
-	-e 's:zlib/zconf.h::g' \
-	-e 's:shapelib/shapefil.h::g' \
-	-e 's:$(SHAPE):-lshp:g' \
-	Makefile.in
-
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
-
-%autoreconf
-%configure \
-	--with-zlib=system \
+%cmake -DGPSBABEL_WITH_LIBUSB=pkgconfig \
+	-DGPSBABEL_WITH_SHAPELIB=pkgconfig \
+	-DGPSBABEL_WITH_ZLIB=pkgconfig \
+	%{?!enabled_gui:-DGPSBABEL_MAPPREVIEW=OFF} \
 	%nil
-
-%make_build
-
-pushd gui
-%qmake_qt5 app.pro
-lrelease-qt5 *.ts
-%make_build
-popd
+%cmake_build
 
 %install
-%makeinstall_std
-%makeinstall_std -C gui
+%cmake_install
+install -m 0755 -d %buildroot%_bindir/
+install -m 0755 -p %_cmake__builddir/gpsbabel %buildroot%_bindir/
 
-install -m 0755 -d %buildroot%_bindir
-install -m 0755 -p gui/objects/gpsbabelfe %buildroot%_bindir/
-
-install -m 0755 -d %buildroot%_qt5_translationdir
-install -m 0644 -p gui/gpsbabel*_*.qm %buildroot%_qt5_translationdir/
-
+%if_enabled gui
+install -m 0755 -p %_cmake__builddir/gui/GPSBabelFE/gpsbabelfe %buildroot%_bindir/
 install -m 0755 -d %buildroot%_datadir/gpsbabel
-install -m 0644 -p gui/gmapbase.html %buildroot%_datadir/gpsbabel/
-
-install -m 0755 -d %buildroot%_desktopdir
-install -m 0644 -p gui/gpsbabel.desktop %buildroot%_desktopdir/
-
-install -m 0755 -d %buildroot%_iconsdir/hicolor/256x256/apps
-install -m 0644 -p gui/images/appicon.png %buildroot%_iconsdir/hicolor/256x256/apps/gpsbabel.png
+install -m 0644 -p gui/gmapbase.html %buildroot%_datadir/gpsbabel
+desktop-file-install \
+        --dir %buildroot/%_datadir/applications \
+        gui/gpsbabel.desktop
+install -m 0755 -d            %buildroot%_datadir/icons/hicolor/256x256/apps/
+install -m 0644 -p %SOURCE2 %buildroot%_datadir/icons/hicolor/256x256/apps/
+%endif
 
 %find_lang %name --with-qt --all-name
 
@@ -109,14 +93,19 @@ install -m 0644 -p gui/images/appicon.png %buildroot%_iconsdir/hicolor/256x256/a
 %doc AUTHORS README* intdoc
 %_bindir/%name
 
-%files gui -f %{name}.lang
-%doc gui/AUTHORS gui/README*
+%if_enabled gui
+%files gui -f %name.lang
+%doc gui/README*
 %_bindir/gpsbabelfe
 %_datadir/gpsbabel
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*
+%endif
 
 %changelog
+* Wed Jul 10 2024 Anton Farygin <rider@altlinux.ru> 1.9.0-alt1
+- 1.7.0 -> 1.9.0 (Closes: #42138)
+
 * Mon Nov 27 2023 Ivan A. Melnikov <iv@altlinux.org> 1.7.0-alt2.1
 - NMU: Use rpm-macros-qt5-webengine (fixes build on loongarch64)
 
