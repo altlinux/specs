@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: R-Tree spatial index for Python GIS
@@ -75,6 +75,9 @@ rm setup.py
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Wed Jul 10 2024 Anton Zhukharev <ancieg@altlinux.org> 1.3.0-alt1
+- Updated to 1.3.0.
+
 * Tue May 21 2024 Anton Zhukharev <ancieg@altlinux.org> 1.2.0-alt1
 - Updated to 1.2.0.
 - Built from upstream VCS.
