@@ -1,7 +1,7 @@
 %define php_version 8.2
 
 Name:    jobe
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Summary: jobe is a server that runs small programming jobs in a variety of programming languages
@@ -103,7 +103,6 @@ a2ensite %name
 %attr(0770,jobe,%webserver_group) %dir %_logdir/%name
 %attr(2750,root,%webserver_group) %dir %webappdir
 %webappdir/*
-%config(noreplace) %webappdir/config/config.php
 
 %files -n %name-apache2
 %config(noreplace) %apache2_sites_available/*.conf
@@ -111,6 +110,9 @@ a2ensite %name
 %files -n %name-mysql
 
 %changelog
+* Sun Jun 30 2024 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1
+- New version.
+
 * Sat Feb 24 2024 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
 - New version.
 
