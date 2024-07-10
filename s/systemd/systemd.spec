@@ -3,7 +3,7 @@
 %define _localstatedir %_var
 
 %add_findreq_skiplist %_x11sysconfdir/xinit.d/*
-%add_findreq_skiplist %_prefix/lib/kernel/install.d/*
+%add_findreq_skiplist %_kernel_installdir/*
 %add_findreq_skiplist %_unitdir/local.service
 %add_findreq_skiplist %_unitdir/rc-local.service
 %add_findreq_skiplist %_unitdir/quotaon.service
@@ -83,7 +83,6 @@
 %def_enable kexec
 %endif
 
-# TODO: move libbpf to /lib
 # from meson.build: bpf_arches = ['x86_64']
 %ifarch x86_64
 %def_disable bpf_framework
@@ -101,7 +100,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.8
+Version: %ver_major.9
 Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
@@ -234,6 +233,7 @@ BuildRequires: pkgconfig(fdisk) >= 2.32
 Requires: dbus >= %dbus_ver
 Conflicts: filesystem < 3
 Requires: filesystem >= 2.3.10-alt1
+Requires: %name-filesystem = %EVR
 Requires: agetty
 Requires: acl
 Requires: util-linux >= 2.27.1
@@ -313,6 +313,15 @@ Linux cgroups, supports snapshotting and restoring of the system
 state, maintains mount and automount points and implements an
 elaborate transactional dependency-based service control logic. It can
 work as a drop-in replacement for sysvinit.
+
+%package filesystem
+Group: System/Base
+Summary: The basic directory layout for systemd
+BuildArch: noarch
+Requires: filesystem
+
+%description filesystem
+%summary.
 
 %package -n libsystemd
 Group: System/Libraries
@@ -1003,6 +1012,7 @@ mkdir -p %buildroot%_systemd_dir/system-sleep
 mkdir -p %buildroot%_user_env_gen_dir
 mkdir -p %buildroot%_env_gen_dir
 
+
 # fix pam.d/systemd-user for ALTLinux
 install -m644 %SOURCE14 %buildroot%_sysconfdir/pam.d/systemd-user
 
@@ -1018,6 +1028,8 @@ install -m 0644 %SOURCE36 %buildroot%_presetdir/
 install -m 0644 %SOURCE36 %buildroot%_user_presetdir/
 install -m 0644 %SOURCE37 %buildroot%_presetdir/
 install -m 0644 %SOURCE38 %buildroot%_presetdir/
+
+mkdir -p %buildroot%_systemd_dir/logind.conf.d
 
 # systemd-oomd default configuration
 install -D -m 0644 -t %buildroot%_systemd_dir/oomd.conf.d/ %SOURCE44
@@ -1539,6 +1551,38 @@ if [ -s $tmp ]; then
         rm -f $tmp
 fi
 
+%files filesystem
+%dir %_sysconfdir/systemd
+%dir %_sysconfdir/systemd/system
+%dir %_sysconfdir/systemd/system.conf.d
+%dir %_sysconfdir/systemd/user
+%dir %_sysconfdir/systemd/user.conf.d
+%dir %_sysconfdir/systemd/ntp-units.d
+%dir %_systemd_dir
+%dir %_systemd_dir/system.conf.d
+%dir %_systemd_dir/user.conf.d
+%dir %_systemd_dir/logind.conf.d
+%dir %_systemd_dir/ntp-units.d
+%dir %_systemd_dir/system-shutdown
+%dir %_systemd_dir/system-sleep
+%dir %_systemd_dir/catalog
+%dir %_env_dir
+%dir %_unitdir
+%dir %_user_unitdir
+%dir %_user_presetdir
+%dir %_user_gen_dir
+%dir %_user_env_gen_dir
+%dir %_gen_dir
+%dir %_env_gen_dir
+%dir %_presetdir
+%dir %_datadir/systemd
+%dir %_sharedstatedir/%name
+%dir %_sharedstatedir/%name/catalog
+%dir %_sysconfdir/kernel
+%dir %_sysconfdir/kernel/install.d
+%dir %_prefix/lib/kernel
+%dir %_kernel_installdir
+
 %files -f %name.lang
 %_sbindir/init
 %_sbindir/reboot
@@ -1556,11 +1600,6 @@ fi
 %_man8dir/runlevel*
 %_initdir/README
 
-%dir %_sysconfdir/systemd/system
-%dir %_sysconfdir/systemd/system.conf.d
-%dir %_sysconfdir/systemd/user
-%dir %_sysconfdir/systemd/user.conf.d
-%dir %_systemd_dir/user.conf.d
 %_systemd_dir/user.conf.d/env-path.conf
 
 %_sysconfdir/profile.d/systemd.sh
@@ -1582,12 +1621,11 @@ fi
 %_rpmlibdir/systemd.filetrigger
 %_rpmlibdir/systemd-user.filetrigger
 
+%if "%_libdir" == "/usr/lib64"
 %dir %_libdir/%name
+%endif
 %_libdir/%name/libsystemd-core-%ver_major.so
 %_libdir/%name/libsystemd-shared-%ver_major.so
-
-%dir %_systemd_dir
-%dir %_systemd_dir/system.conf.d
 
 %_modprobedir/README
 %_sysctldir/README
@@ -1723,8 +1761,6 @@ fi
 %_systemd_dir/systemd-localed
 %_bindir/timedatectl
 %_systemd_dir/systemd-timedated
-%dir %_systemd_dir/ntp-units.d
-%dir %_sysconfdir/systemd/ntp-units.d
 %_bindir/oomctl
 %_systemd_dir/systemd-oomd
 %config(noreplace) %_sysconfdir/systemd/oomd.conf
@@ -1737,7 +1773,6 @@ fi
 %_bindir/systemd-ac-power
 %_systemd_dir/systemd-cgroups-agent
 %if_enabled libcryptsetup
-%dir %_libdir/cryptsetup
 %_bindir/systemd-cryptsetup
 %_systemd_dir/systemd-cryptsetup
 %_systemd_dir/systemd-integritysetup
@@ -1802,17 +1837,17 @@ fi
 %endif
 %endif
 
-%dir %_env_dir
 %_env_dir/99-environment.conf
 %_mandir/man[58]/*environment*
 #%%dir %%_systemd_dir/system.conf.d
 #%%_systemd_dir/system.conf.d/env-path.conf
 
-%_unitdir
-%_user_unitdir
-%_user_presetdir
-%_user_gen_dir
-%_user_env_gen_dir
+%_unitdir/*
+%_gen_dir/*
+%_user_unitdir/*
+%_user_presetdir/*
+%_user_gen_dir/*
+%_user_env_gen_dir/*
 
 %exclude %_unitdir/system.slice.d/10-oomd-per-slice-defaults.conf
 %exclude %_user_unitdir/slice.d/10-oomd-per-slice-defaults.conf
@@ -1965,8 +2000,6 @@ fi
 %exclude %_datadir/factory
 %exclude %_tmpfilesdir/etc.conf
 
-%_gen_dir
-%_env_gen_dir
 %if_enabled efi
 %exclude %_gen_dir/systemd-bless-boot-generator
 %if_enabled bootloader
@@ -1977,10 +2010,6 @@ fi
 %exclude %_systemd_dir/tests
 %endif
 
-%dir %_systemd_dir/system-shutdown
-%dir %_systemd_dir/system-sleep
-
-%dir %_presetdir
 %_presetdir/85-display-manager.preset
 %_presetdir/90-default.preset
 %_presetdir/90-systemd.preset
@@ -1992,8 +2021,6 @@ fi
 %_udev_rulesdir/90-vconsole.rules
 %_udev_rulesdir/99-systemd.rules
 
-%dir %_sysconfdir/systemd
-%dir %_datadir/systemd
 %_datadir/systemd/kbd-model-map
 %_datadir/systemd/language-fallback-map
 
@@ -2036,9 +2063,7 @@ fi
 %ghost %attr(0700,root,root) %dir %_cachedir/private
 %ghost %attr(0700,root,root) %dir %_sharedstatedir/private
 %_logdir/README.logs
-%dir %_sharedstatedir/%name
-%dir %_sharedstatedir/%name/catalog
-%_systemd_dir/catalog
+%_systemd_dir/catalog/*
 
 %ghost %dir %_sharedstatedir/private/systemd
 %_rpmlibdir/journal-catalog.filetrigger
@@ -2055,13 +2080,9 @@ fi
 # may be need adapt for ALTLinux?
 %_bindir/kernel-install
 %_man8dir/kernel-install.*
-%dir %_sysconfdir/kernel
-%dir %_sysconfdir/kernel/install.d
-%dir %_prefix/lib/kernel
-%dir %_prefix/lib/kernel/install.d
-%_prefix/lib/kernel/install.d/*
+%_kernel_installdir/*
 %_prefix/lib/kernel/install.conf
-%exclude %_prefix/lib/kernel/install.d/50-depmod.install
+%exclude %_kernel_installdir/50-depmod.install
 
 %files -n libsystemd
 %_libdir/libsystemd.so.*
@@ -2381,7 +2402,6 @@ fi
 %if_enabled sysusers
 %_unitdir/systemd-sysusers.service
 %_unitdir/sysinit.target.wants/systemd-sysusers.service
-%dir %_sysusersdir
 %_sysusersdir/basic.conf
 %_tmpfilesdir/etc.conf
 %endif
@@ -2453,7 +2473,8 @@ fi
 %dir %_systemd_dir/network
 %_systemd_dir/network/*.link
 %_tmpfilesdir/static-nodes-permissions.conf
-%_prefix/lib/udev
+%dir %_udevdir
+%_udevdir/*
 %_bindir/udevadm
 %_sbindir/udevadm
 %_sbindir/udevd
@@ -2478,6 +2499,10 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Tue Jul 09 2024 Alexey Shabalin <shaba@altlinux.org> 1:255.9-alt1
+- 255.9.
+- Add systemd-filesystem package.
+
 * Tue Jun 25 2024 Alexey Shabalin <shaba@altlinux.org> 1:255.8-alt1
 - 255.8
 
