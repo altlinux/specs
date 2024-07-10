@@ -51,7 +51,7 @@
 
 Name: NetworkManager
 Version: 1.48.4
-Release: alt1%git_hash
+Release: alt2%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -71,7 +71,7 @@ Source12: ifcfg-rh-plugin.conf
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson
-BuildRequires(pre): rpm-macros-systemd >= 6-alt1
+BuildRequires(pre): rpm-macros-systemd >= 6
 
 # For tests
 %{?!_without_check:%{?!_disable_check:BuildPreReq: dbus dhcpcd dhcp-client}}
@@ -681,6 +681,9 @@ fi
 %endif
 
 %changelog
+* Thu Jul 11 2024 Mikhail Efremov <sem@altlinux.org> 1.48.4-alt2
+- BR: Fixed rpm-macros-systemd requirement.
+
 * Wed Jul 10 2024 Mikhail Efremov <sem@altlinux.org> 1.48.4-alt1
 - Used _udev* macros.
 - Updated to 1.48.4.
