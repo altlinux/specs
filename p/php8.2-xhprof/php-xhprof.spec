@@ -1,17 +1,14 @@
 %define		php_extension	xhprof
 Name:	 	php%_php_suffix-%php_extension
-Version:	2.3.9
+Version:	2.3.10
 Epoch:		1
-Release:	alt3.%_php_release_version
+Release:	alt1.%_php_release_version
 
 Summary:	PHP hierarchical profiler
 
 License:	%asl
 Group:		System/Servers
 URL:		https://pecl.php.net/package/xhprof
-
-Packager:	Nikolay A. Fetisov <naf@altlinux.org>
-
 Source0:	%php_extension-%version.tar
 Source1:	php-%php_extension.ini
 Source2:	php-%php_extension-params.sh
@@ -85,6 +82,9 @@ sed -e 's|DIRECTORY|%webserver_webappsdir/xhprof_html|g' -i %php_extension.conf
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} 1:%version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Wed Jul 10 2024 Anton Farygin <rider@altlinux.ru> 1:2.3.10-alt1
+- 8.3.9 -> 8.3.10
 
 * Tue Feb 14 2023 Anton Farygin <rider@altlinux.ru> 1:2.3.9-alt1
 - update to 2.3.9
