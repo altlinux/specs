@@ -2,13 +2,13 @@
 
 Summary: Gearman provides a generic application framework to farm out work to other machines.
 Name: gearmand
-Version: 1.1.19.1
+Version: 1.1.21
 Release: alt1
 License: BSD
 Group: Development/C
-URL: http://gearman.org
+URL: https://gearman.org/
 
-# https://github.com/gearman/gearmand.git
+VCS: https://github.com/gearman/gearmand.git
 Source: %name-%version.tar
 
 BuildRequires: perl gcc-c++ boost-devel boost-program_options-devel libevent-devel libuuid-devel gperf
@@ -72,6 +72,9 @@ popd
 %_man3dir/*
 
 %changelog
+* Wed Jul 10 2024 Anton Farygin <rider@altlinux.ru> 1.1.21-alt1
+- 1.1.19.1 -> 1.1.21
+
 * Mon Aug 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.19.1-alt1
 - Updated to upstream version 1.1.19.1.
 
