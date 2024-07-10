@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 127.0.2
+Version: 128.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -12,7 +12,6 @@ Source0: firefox-source.tar
 
 ### Start Patches
 Patch001: 0001-FEDORA-build-arm-libopus.patch
-Patch002: 0002-FEDORA-build-arm.patch
 Patch003: 0003-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
 Patch004: 0004-bmo-847568-Support-system-harfbuzz.patch
 Patch005: 0005-bmo-847568-Support-system-graphite2.patch
@@ -421,6 +420,26 @@ fi
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Jul 09 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.0-alt1
+- New version (128.0).
+- Security fixes:
+  + CVE-2024-6605: Firefox Android missed activation delay to prevent tapjacking
+  + CVE-2024-6606: Out-of-bounds read in clipboard component
+  + CVE-2024-6607: Leaving pointerlock by pressing the escape key could be prevented
+  + CVE-2024-6608: Cursor could be moved out of the viewport using pointerlock.
+  + CVE-2024-6609: Memory corruption in NSS
+  + CVE-2024-6610: Form validation popups could block exiting full-screen mode
+  + CVE-2024-6600: Memory corruption in WebGL API
+  + CVE-2024-6601: Race condition in permission assignment
+  + CVE-2024-6602: Memory corruption in NSS
+  + CVE-2024-6603: Memory corruption in thread creation
+  + CVE-2024-6611: Incorrect handling of SameSite cookies
+  + CVE-2024-6612: CSP violation leakage when using devtools
+  + CVE-2024-6613: Incorrect listing of stack frames
+  + CVE-2024-6614: Incorrect listing of stack frames
+  + CVE-2024-6604: Memory safety bugs fixed in Firefox 128, Firefox ESR 115.13, and Thunderbird 115.13
+  + CVE-2024-6615: Memory safety bugs fixed in Firefox 128
+
 * Wed Jun 26 2024 Ajrat Makhmutov <rauty@altlinux.org> 127.0.2-alt1
 - New version (127.0.2).
 - Fix desktop file: change window name to "firefox" in XORG (closes: 49071).
