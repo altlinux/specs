@@ -1,6 +1,6 @@
 Name: netatalk
-Version: 3.1.18
-Release: alt1
+Version: 3.2.2
+Release: alt2
 
 Summary: Open Source Apple Filing Protocol(AFP) File Server
 
@@ -8,7 +8,7 @@ License: GPLv2+
 Group: Networking/Other
 Url: http://netatalk.sourceforge.net
 
-Source0: http://download.sourceforge.net/netatalk/netatalk-%version.tar.bz2
+Source0: http://download.sourceforge.net/netatalk/netatalk-%version.tar.xz
 Source1: netatalk.pam-system-auth
 Patch0: netatalk-3.0.1-basedir.patch
 Patch1: netatalk-3.1.12-alt-mysql8-transition.patch
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: cracklib-devel flex libacl-devel libattr-devel libavahi-devel
 BuildRequires: libdb4-devel libdbus-glib-devel libevent-devel libgcrypt-devel
 BuildRequires: libkrb5-devel libldap-devel libmysqlclient-devel libpam-devel
-BuildRequires: libssl-devel libtdb-devel perl-bignum perl-IO-Socket-INET6
+BuildRequires: libssl-devel libtdb-devel perl-bignum perl-IO-Socket-INET6 rpm-build-perl perl-Net-DBus
 Requires: cracklib-words cracklib
 
 %description
@@ -43,7 +43,7 @@ developing applications that use %name.
 # use system libevent instead
 rm -frv libevent/
 
-%patch0 -p1
+#patch0 -p1
 %patch1 -p0
 #patch2 -p1
 #patch3 -p0
@@ -59,7 +59,7 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ \( -name '*.py' -o -name 'afpstats' \))
 
 # Don't call systemctl daemon-reload during the build
-sed -i 's\-systemctl daemon-reload\\g' distrib/initscripts/Makefile.in
+sed -i 's\-systemctl daemon-reload\\g' distrib/initscripts/Makefile.am
 
 
 %build
@@ -103,8 +103,11 @@ make -C doc/manual html-local
 mkdir -p %buildroot/var/lock/netatalk
 
 # Use specific pam conf.
+mkdir -p %buildroot%_sysconfdir/pam.d
 install -pm644 %SOURCE1 %buildroot%_sysconfdir/pam.d/netatalk
 
+mkdir -p %buildroot%_sysconfdir/dbus-1/system.d/
+cp %buildroot/usr/etc/dbus-1/system.d/netatalk-dbus.conf %buildroot%_sysconfdir/dbus-1/system.d/
 find %buildroot -name '*.la' -delete -print
 
 touch %buildroot%_sysconfdir/netatalk/afppasswd
@@ -113,7 +116,7 @@ touch %buildroot%_sysconfdir/netatalk/afppasswd
 sh test/afpd/test.sh
 
 %files
-%doc AUTHORS CONTRIBUTORS NEWS COPYING COPYRIGHT doc/manual/*.html
+%doc CONTRIBUTORS NEWS COPYING COPYRIGHT
 %config(noreplace) %_sysconfdir/dbus-1/system.d/netatalk-dbus.conf
 %dir %_sysconfdir/netatalk
 %config(noreplace) %_sysconfdir/netatalk/afp.conf
@@ -121,6 +124,8 @@ sh test/afpd/test.sh
 %config(noreplace) %_sysconfdir/netatalk/extmap.conf
 %config(noreplace) %_sysconfdir/pam.d/netatalk
 %config(noreplace) %_sysconfdir/netatalk/afppasswd
+/usr/etc/dbus-1/system.d/netatalk-dbus.conf
+/usr/etc/pam.d/netatalk
 %_bindir/*
 %exclude %_bindir/netatalk-config
 %_libdir/netatalk/
@@ -142,6 +147,15 @@ sh test/afpd/test.sh
 %_mandir/man*/netatalk-config.1*
 
 %changelog
+* Wed Jul 10 2024 Ilya Mashkin <oddity@altlinux.ru> 3.2.2-alt2
+- Name of archive fixed
+
+* Wed Jul 10 2024 Ilya Mashkin <oddity@altlinux.ru> 3.2.2-alt1
+- 3.2.2 (fixed CVE-2024-38439, CVE-2024-38440, CVE-2024-38441)
+
+* Fri Jun 07 2024 Ilya Mashkin <oddity@altlinux.ru> 3.2.0-alt1
+- 3.2.0
+
 * Sat Oct 07 2023 Ilya Mashkin <oddity@altlinux.ru> 3.1.18-alt1
 - 3.1.18 (fixed CVE-2022-22995)
 
