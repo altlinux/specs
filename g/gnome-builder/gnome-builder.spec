@@ -22,13 +22,15 @@
 %def_without gvls
 
 Name: gnome-builder
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: Builder - Develop software for GNOME
-License: LGPLv2+
+License: GPL-3.0-or-later
 Group: Development/GNOME and GTK+
-Url: https://wiki.gnome.org/Apps/Builder
+Url: https://apps.gnome.org/Builder
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-builder.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -135,8 +137,7 @@ This package provides files for Gnome Builder to work with Clang/LLVW.
 
 %prep
 %setup -n %name-%version%beta
-sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
-#cp %SOURCE1 po/ru.po
+%python3_fix_shebang src/plugins/*/*.py
 
 %build
 %meson \
@@ -203,6 +204,9 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %{?_with_help:%_datadir/doc/%name/}
 
 %changelog
+* Thu Jul 11 2024 Yuri N. Sedunov <aris@altlinux.org> 46.3-alt1
+- 46.3
+
 * Fri May 10 2024 Yuri N. Sedunov <aris@altlinux.org> 46.2-alt1
 - 46.2
 
