@@ -1,14 +1,14 @@
 Name: yuki-iptv
-Version: 0.0.9
+Version: 0.0.12
 Release: alt1
 
 Summary: IPTV player with EPG support (Astroncia IPTV fork)
 
 License: GPLv3
 Group: Video
-Url: https://github.com/yuki-iptv/yuki-iptv
+Url: https://codeberg.org/liya/yuki-iptv
 
-# Source-url: https://github.com/yuki-iptv/yuki-iptv/archive/refs/tags/%version.tar.gz
+# Source-url: https://codeberg.org/liya/yuki-iptv/archive/%version.tar.gz
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -17,7 +17,7 @@ BuildRequires: rpm-build-python3
 
 Requires: libmpv2 ffmpeg
 
-Requires: python3-module-PyQt5
+Requires: python3-module-PyQt5 python3-module-Pillow
 
 # recommends
 Requires: yt-dlp
@@ -26,6 +26,7 @@ Requires: yt-dlp
 
 # by some uknown reason there are no packages provide that
 %add_python3_req_skip gi.repository.GLib
+%add_python3_req_skip gi.repository.Gio
 
 %description
 IPTV player with EPG support (Astroncia IPTV fork).
@@ -56,6 +57,9 @@ cp -r usr/ %buildroot/
 %_datadir/metainfo/*
 
 %changelog
+* Thu Jul 11 2024 Vitaly Lipatov <lav@altlinux.ru> 0.0.12-alt1
+- new version 0.0.12 (ALT bug 50864)
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 0.0.9-alt1
 - new version 0.0.9 (with rpmrb script)
 
