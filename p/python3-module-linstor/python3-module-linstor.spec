@@ -2,7 +2,7 @@
 
 Name: python3-module-%modulename
 Summary: Linstor Python API
-Version: 1.22.0
+Version: 1.23.0
 Release: alt1
 Group: Development/Python3
 License: GPLv3
@@ -36,6 +36,9 @@ make -C linstor-common python
 %python3_sitelibdir/*
 
 %changelog
+* Thu Jul 11 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.23.0-alt1
+- 1.23.0
+
 * Thu Apr 04 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.22.0-alt1
 - 1.22.0
 
