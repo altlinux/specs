@@ -5,7 +5,7 @@
 %define rname xdg-desktop-portal-kde
 Name: plasma5-%rname
 Version: 5.27.11
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -66,6 +66,9 @@ install -m 0755 %SOURCE1 %buildroot/%_K5xdgconf/plasma-workspace/env/%{name}.sh
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt2
+- set GTK_USE_PORTAL=1
+
 * Thu Mar 07 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt1
 - new version
 
