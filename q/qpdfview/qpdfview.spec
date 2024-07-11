@@ -1,6 +1,6 @@
 Name: qpdfview
 Version: 0.5
-Release: alt2
+Release: alt3
 Summary: Tabbed PDF viewer using the poppler library
 License: GPL-2.0-or-later
 Group: Office
@@ -13,19 +13,20 @@ Patch1: qpdfview-desktop.patch
 # /usr/include/poppler/qt5/poppler-form.h:888:6: error: ‘optional’ in namespace ‘std’ does not name a template type
 Patch2: qpdfview-stdc++17.patch
 
-BuildRequires: qt5-tools
-BuildRequires: pkgconfig(poppler-qt5)
-BuildRequires: pkgconfig(Qt5DBus)
-BuildRequires: pkgconfig(Qt5Gui)
-BuildRequires: pkgconfig(Qt5Svg)
-BuildRequires: pkgconfig(Qt5Widgets)
+BuildRequires: qt6-tools
+BuildRequires: pkgconfig(poppler-qt6)
+BuildRequires: pkgconfig(Qt6DBus)
+BuildRequires: pkgconfig(Qt6Gui)
+BuildRequires: pkgconfig(Qt6Svg)
+BuildRequires: pkgconfig(Qt6Widgets)
 BuildRequires: pkgconfig(ddjvuapi)
 BuildRequires: pkgconfig(libspectre)
 BuildRequires: pkgconfig(zlib)
 BuildRequires: cups-devel
 BuildRequires: desktop-file-utils
 
-Requires: qt5-sql-sqlite
+Requires: qt6-sql-sqlite
+Requires: qt6-svg
 
 %description
 qpdfview is a tabbed PDF viewer using the poppler library.
@@ -35,8 +36,8 @@ qpdfview is a tabbed PDF viewer using the poppler library.
 %autopatch -p2
 
 %build
-lrelease-qt5 qpdfview.pro
-%qmake_qt5 qpdfview.pro
+lrelease-qt6 qpdfview.pro
+%qmake_qt6 qpdfview.pro
 %make_build
 
 %install
@@ -67,6 +68,9 @@ ln -s %_iconsdir/hicolor/scalable/apps/%name.svg \
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Thu Jul 11 2024 Anton Midyukov <antohami@altlinux.org> 0.5-alt3
+- rebuild with qt6
+
 * Sun Jan 21 2024 Anton Midyukov <antohami@altlinux.org> 0.5-alt2
 - fix build with poppler 23.08.0
 
