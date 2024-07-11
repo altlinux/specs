@@ -4,7 +4,7 @@
 
 Name: zed
 Version: 0.143.6
-Release: alt1
+Release: alt2
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
 License: GPL-3.0 and AGPL-3.0 and Apache-2.0
@@ -60,6 +60,7 @@ rustflags = ["-C", "link-arg=-fuse-ld=mold"]
 EOF
 
 %build
+export RELEASE_VERSION="%version"
 %rust_build --package zed --package cli
 
 %install
@@ -85,6 +86,9 @@ envsubst < crates/zed/resources/zed.desktop.in > %buildroot%_desktopdir/zed.desk
 %_iconsdir/hicolor/*/apps/zed.png
 
 %changelog
+* Thu Jul 11 2024 Anton Zhukharev <ancieg@altlinux.org> 0.143.6-alt2
+- Fixed version displaying.
+
 * Thu Jul 11 2024 Anton Zhukharev <ancieg@altlinux.org> 0.143.6-alt1
 - Built for ALT Sisyphus.
 
