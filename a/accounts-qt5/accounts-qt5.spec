@@ -7,7 +7,7 @@
 
 Name: accounts-qt5
 Version: 1.17
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Accounts framework Qt 5 bindings
@@ -91,6 +91,9 @@ rm -rf %buildroot/%_docdir/accounts-qt/
 %endif
 
 %changelog
+* Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 1.17-alt2
+- revert sources to 1.16
+
 * Fri May 03 2024 Sergey V Turchin <zerg@altlinux.org> 1.17-alt1
 - new version
 
