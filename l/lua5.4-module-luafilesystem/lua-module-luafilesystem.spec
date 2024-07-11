@@ -1,11 +1,16 @@
+%define _unpackaged_files_terminate_build 1
+%def_with check
+%define luarocks_revision 1
+
 Name: lua5.4-module-luafilesystem
 Version: 1.8.0
-Release: alt1
+Release: alt2_lr%luarocks_revision
 
 Summary: File System Library for the Lua Programming Language
-License: MIT/X11
+License: MIT
 Group: Development/Other
-Url: https://keplerproject.github.io/luafilesystem/
+Url: https://lunarmodules.github.io/luafilesystem
+Vcs: https://github.com/lunarmodules/luafilesystem
 
 %if "%current_lua_version" >= "5.3"
 Obsoletes: lua-module-luafilesystem < %version
@@ -19,33 +24,43 @@ Provides: lua5-luafilesystem = %version
 Source: luafilesystem-%version.tar
 
 BuildRequires: lua5.4 liblua5.4-devel
+BuildRequires: lua5.4-luarocks
 
 %description
-      LuaFileSystem is a Lua library developed to complement the set of
-      functions related to file systems offered by the standard Lua
-      distribution. LuaFileSystem offers a portable way to access the
-      underlying directory structure and file attributes.
+LuaFileSystem is a Lua library developed to complement the set of
+functions related to file systems offered by the standard Lua
+distribution. LuaFileSystem offers a portable way to access the
+underlying directory structure and file attributes.
 
 %prep
 %setup -n luafilesystem-%version
+sed -i 's/scm-1/%version-%luarocks_revision/' luafilesystem-scm-1.rockspec
+mv luafilesystem-scm-1.rockspec luafilesystem-%version-%luarocks_revision.rockspec
 
 %build
-%make_build LUA_LIBDIR=%lua_modulesdir CFLAGS="%optflags"
+luarocks-5.4 make --verbose --local --pack-binary-rock --deps-mode all CFLAGS="%optflags"
 
 %install
-%makeinstall_std LUA_LIBDIR=%lua_modulesdir
+luarocks-5.4 install *.rock --verbose --local --tree %buildroot%prefix --deps-mode none
+rm -v %buildroot%luarocks_dbdir/manifest
 
 %check
 %lua_path_add_buildroot
-for t in tests/* ; do
-	lua%current_lua_version $t
-done
+%lua tests/test.lua
 
 %files
-%doc README* doc/*
-%lua_modulesdir/*
+%doc README* LICENSE doc/*
+%luarocks_dbdir/luafilesystem/
+%lua_modulesdir/lfs.so
 
 %changelog
+* Tue Jul 09 2024 Ajrat Makhmutov <rauty@altlinux.org> 1.8.0-alt2_lr1
+- Change the build system from make to luarocks.
+- Add the vcs tag.
+- Update the url tag.
+- Correct the license tag.
+- Package the license with the copyright indication.
+
 * Sun Jul 03 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.0-alt1
 - Updated to 1.8.0.
 - Built from tarball.
