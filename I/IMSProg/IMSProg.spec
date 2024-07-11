@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: IMSProg
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 
 Summary: I2C, SPI and MicroWire EEPROM/Flash chip programmer for CH341a devices
@@ -76,14 +76,9 @@ pushd IMSProg_programmer
 %cmake_install
 popd
 
-# remove updater for %_sysconfdir/imsprog/IMSProg.Dat
-rm %buildroot%_bindir/IMSProg_database_update
-rm %buildroot%_desktopdir/IMSProg_database_update.desktop
-rm %buildroot%_pixmapsdir/IMSProg_database_update.png
-
 # remove extra appdata
-rm %buildroot%_datadir/metainfo/imsprog.database.update.appdata.xml
-rm %buildroot%_datadir/metainfo/imsprog.editor.appdata.xml
+rm %buildroot%_datadir/metainfo/io.github.bigbigmdm.imsprog_database_update.metainfo.xml
+rm %buildroot%_datadir/metainfo/io.github.bigbigmdm.imsprog_editor.metainfo.xml
 
 # rename README
 cp IMSProg_editor/README.md IMSProg_editor.md
@@ -94,19 +89,23 @@ cp IMSProg_programmer/README.md IMSProg_programmer.md
 %_docdir/imsprog/
 %_bindir/IMSProg
 %_bindir/IMSProg_editor
-#%%_bindir/IMSProg_database_update
+%_bindir/IMSProg_database_update
 %_datadir/imsprog
 %_desktopdir/IMSProg.desktop
 %_desktopdir/IMSProg_editor.desktop
-#%%_desktopdir/IMSProg_database_update.desktop
-%_datadir/metainfo/imsprog.appdata.xml
+%_desktopdir/IMSProg_database_update.desktop
+%_datadir/metainfo/io.github.bigbigmdm.imsprog.metainfo.xml
 %_udevrulesdir/71-CH341.rules
 %_pixmapsdir/chipEdit64.png
 %_pixmapsdir/IMSProg64.png
-#%%_pixmapsdir/IMSProg_database_update.png
+%_pixmapsdir/IMSProg_database_update.png
 %_man1dir/*.1.*
 
 %changelog
+* Thu Jul 11 2024 Anton Midyukov <antohami@altlinux.org> 1.4.2-alt1
+- new version
+- include IMSProg_database_update
+
 * Mon May 27 2024 Anton Midyukov <antohami@altlinux.org> 1.4.1-alt1
 - new version
 
