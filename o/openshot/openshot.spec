@@ -9,7 +9,7 @@
 %define ver_major 3.2
 %define xdg_name org.openshot.OpenShot
 Name: openshot
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Non Linear Video Editor using Python and MLT
@@ -68,7 +68,8 @@ Xbox, and many more common formats.
 %files
 %_bindir/*
 %python3_sitelibdir/%{name}_qt/
-%python3_sitelibdir/*.egg-info/
+#%python3_sitelibdir/%{pyproject_distinfo %_name}
+%python3_sitelibdir/*.egg-info
 %_pixmapsdir/*
 %_desktopdir/*
 %_iconsdir/hicolor/*/*/%{name}-qt*
@@ -77,6 +78,9 @@ Xbox, and many more common formats.
 %doc AUTHORS* README*
 
 %changelog
+* Fri Jul 12 2024 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
+- 3.2.1
+
 * Tue Jun 25 2024 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
 - 3.2.0
 
