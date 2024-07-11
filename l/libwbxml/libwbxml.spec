@@ -1,8 +1,8 @@
 %def_with tests
 
 Name:           libwbxml
-Version:        0.11.9
-Release:        alt2
+Version:        0.11.10
+Release:        alt1
 Summary:        Library and tools to parse, encode and handle WBXML documents
 Group:          System/Libraries
 License:        LGPLv2+
@@ -41,7 +41,8 @@ developing applications that use %name.
 %patch0 -p1
 
 %build
-%cmake -DENABLE_INSTALL_DOC:BOOL=OFF
+%cmake -DENABLE_INSTALL_DOC:BOOL=OFF \
+       -DCMAKE_INSTALL_LIBDIR=%_libdir
 %cmake_build
 
 %install
@@ -55,7 +56,7 @@ ctest
 %endif
 
 %files
-%doc BUGS ChangeLog README References THANKS TODO COPYING GNU-LGPL
+%doc BUGS ChangeLog README References THANKS TODO
 %_bindir/*
 %_libdir/libwbxml2.so.*
 
@@ -63,9 +64,12 @@ ctest
 %_includedir/*
 %_libdir/libwbxml2.so
 %_pkgconfigdir/libwbxml2.pc
-%_datadir/cmake/Modules/FindLibWbxml2.cmake
+%_libdir/cmake/libwbxml2/*.cmake
 
 %changelog
+* Wed Jun 19 2024 Andrey Cherepanov <cas@altlinux.org> 0.11.10-alt1
+- New version.
+
 * Sun Jun 09 2024 Andrey Cherepanov <cas@altlinux.org> 0.11.9-alt2
 - Packaged includes to /usr/include without subdirectory.
 
