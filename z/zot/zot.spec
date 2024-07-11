@@ -3,8 +3,8 @@
 %global import_path github.com/project-zot/zot
 
 Name: zot
-Version: 2.0.4
-Release: alt2
+Version: 2.1.0
+Release: alt1
 
 Summary: A production-ready vendor-neutral OCI-native container image registry (purely based on OCI Distribution Specification)
 License: Apache-2.0
@@ -13,9 +13,10 @@ Url: https://zotregistry.dev
 Vcs: https://github.com/project-zot/zot
 
 Source: %name-%version.tar
-Source1: zui.tar
-Source2: zot.service
-Source3: config.json
+Source1: vendor.tar
+Source2: zui.tar
+Source3: zot.service
+Source4: config.json
 
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang rpm-build-nodejs
@@ -29,7 +30,7 @@ images stored in OCI image format,
 distribution specification on-the-wire, that's it!
 
 %prep
-%setup -a 1
+%setup -a 1 -a 2
 # don't need modcheck, it calls go mod tidy
 sed -i 's/^binary: modcheck build-metadata$/binary: build-metadata/' Makefile
 sed -i 's/^cli: modcheck build-metadata$/cli: build-metadata/' Makefile
@@ -75,8 +76,8 @@ install -Dm 755 ./bin/zot-linux-%go_hostarch %buildroot%_bindir/%name
 install -Dm 755 ./bin/zli-linux-%go_hostarch %buildroot%_bindir/zli
 install -Dm 755 ./bin/zb-linux-%go_hostarch %buildroot%_bindir/zb
 
-install -Dm 644 %SOURCE2 %buildroot%_unitdir/%name.service
-install -Dm 644 %SOURCE3 %buildroot%_sysconfdir/%name/config.json
+install -Dm 644 %SOURCE3 %buildroot%_unitdir/%name.service
+install -Dm 644 %SOURCE4 %buildroot%_sysconfdir/%name/config.json
 
 install -Dm 644 zot.bash %buildroot%_datadir/bash-completion/completions/%name
 install -Dm 644 zot.zsh %buildroot%_datadir/zsh/site-functions/_%name
@@ -116,6 +117,9 @@ useradd -r -g _%name -M -d %_localstatedir/%name -s /dev/null -c "Zot registry u
 %_datadir/fish/vendor_completions.d/zli.fish
 
 %changelog
+* Thu Jul 11 2024 Alexander Stepchenko <geochip@altlinux.org> 2.1.0-alt1
+- 2.0.4 -> 2.1.0
+
 * Fri May 31 2024 Alexander Stepchenko <geochip@altlinux.org> 2.0.4-alt2
 - Fix output with --version.
 - Make completion files non-executable.
