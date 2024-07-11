@@ -4,7 +4,7 @@
 
 Name: mopidy
 Version: 3.4.2
-Release: alt1
+Release: alt2
 
 Summary: Mopidy is an extensible music server written in Python
 License: Apache-2.0
@@ -23,6 +23,9 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
 %if_with check
+BuildRequires: libgstreamer1.0-gir
+BuildRequires: typelib(GstPbutils)
+BuildRequires: typelib(Gtk)
 BuildRequires: python3-module-pygobject3
 BuildRequires: python3-modules-sqlite3
 BuildRequires: python3-module-requests
@@ -105,5 +108,11 @@ rm -rf tests/test_help.py
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Thu Jul 04 2024 Anastasia Osmolovskaya <lola@altlinux.org> 3.4.2-alt2
+- Added build requires (FTBFS fixed):
+	- libgstreamer1.0-gir
+	- typelib(GstPbutils)
+	- typelib(Gtk)
+
 * Wed Feb 07 2024 Anastasia Osmolovskaya <lola@altlinux.org> 3.4.2-alt1
 - Initial build for ALT.
