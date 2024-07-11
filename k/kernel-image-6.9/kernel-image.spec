@@ -1,7 +1,7 @@
 Name: kernel-image-6.9
 Release: alt1
 %define kernel_base_version	6.9
-%define kernel_sublevel	.8
+%define kernel_sublevel	.9
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -588,6 +588,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Jul 11 2024 Kernel Bot <kernelbot@altlinux.org> 6.9.9-alt1
+- v6.9.9 (2024-07-11).
+- config: CONFIG_RTW89_8851BE=m.
+
 * Fri Jul 05 2024 Kernel Bot <kernelbot@altlinux.org> 6.9.8-alt1
 - v6.9.8 (2024-07-05).
 - config: Turn off CONFIG_LEGACY_TIOCSTI.
