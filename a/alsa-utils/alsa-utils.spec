@@ -1,8 +1,8 @@
 %def_with systemd
 
 Name: alsa-utils
-Version: 1.2.10
-Release: alt2
+Version: 1.2.12
+Release: alt3
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) utils
@@ -15,6 +15,7 @@ Patch: %name-%version-%release.patch
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Requires: dialog
+Requires: tree
 Obsoletes: alsa2-utils < 0.9.4
 Provides: alsa2-utils = %version
 Conflicts: alsa-utils < 1.0.9a-alt1
@@ -58,6 +59,7 @@ touch config.rpath
 %autoreconf
 %configure \
 	--with-curses=ncursesw \
+	--with-udev-rules-dir=%_udevrulesdir \
 	%{?_with_systemd:--with-systemdsystemunitdir=%_unitdir} \
 	--disable-alsaconf
 %make_build
@@ -102,6 +104,15 @@ touch config.rpath
 %_man1dir/amixer.1*
 
 %changelog
+* Thu Jul 11 2024 Michael Shigorin <mike@altlinux.org> 1:1.2.12-alt3
+- R: tree (thx ajratma@basealt)
+
+* Wed Jul 03 2024 Michael Shigorin <mike@altlinux.org> 1:1.2.12-alt2
+- fix usrmerge fallout (thx paladinrobby@)
+
+* Thu Jun 27 2024 Michael Shigorin <mike@altlinux.org> 1:1.2.12-alt1
+- 1.2.12
+
 * Tue Jan  2 2024 Artyom Bystrov <arbars@altlinux.org> 1:1.2.10-alt2
 - Getting back support Pinephone Pro patches
 

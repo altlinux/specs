@@ -1,6 +1,6 @@
 Name: alsa-ucm-conf
-Version: 1.2.10
-Release: alt2
+Version: 1.2.12
+Release: alt1
 
 Summary: Advanced Linux Sound Architecture (ALSA) Use Case Manager data
 License: BSD-3-Clause
@@ -56,6 +56,9 @@ cp -at %buildroot%alsadata -- ucm*
 %doc LICENSE
 
 %changelog
+* Thu Jun 27 2024 Michael Shigorin <mike@altlinux.org> 1.2.12-alt1
+- 1.2.12
+
 * Tue Jan  2 2024 Artyom Bystrov <arbars@altlinux.org> 1.2.10-alt2
 - Getting back Pinephone support patches
 

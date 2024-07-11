@@ -1,5 +1,5 @@
 Name: tinycompress
-Version: 1.2.8
+Version: 1.2.11
 Release: alt1
 
 Summary: Userspace Interface to Kernel ALSA Compressed Audio APIs
@@ -61,6 +61,9 @@ ln -s %_includedir/sound include/
 %_pkgconfigdir/tinycompress.pc
 
 %changelog
+* Thu Jun 27 2024 Michael Shigorin <mike@altlinux.org> 1.2.11-alt1
+- 1.2.11
+
 * Sun Nov 20 2022 Michael Shigorin <mike@altlinux.org> 1.2.8-alt1
 - 1.2.8
 - NB: added tinycompress.pc
