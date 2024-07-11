@@ -1,5 +1,5 @@
 Name: python3-module-awesomeversion
-Version: 24.2.0
+Version: 24.6.0
 Release: alt1
 
 Summary: Python version manipulations
@@ -8,16 +8,22 @@ Group: Development/Python
 Url: https://pypi.org/project/awesomeversion/
 
 Source0: %name-%version-%release.tar
+Source1: pyproject_deps.json
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3
-BuildRequires: python3(poetry-core)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_poetry dev
 
 %build
 %pyproject_build
@@ -25,11 +31,17 @@ BuildRequires: python3(poetry-core)
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest tests
+
 %files
 %python3_sitelibdir/awesomeversion
 %python3_sitelibdir/awesomeversion-%version.dist-info
 
 %changelog
+* Thu Jul 11 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 24.6.0-alt1
+- 24.6.0 released
+
 * Tue Mar 12 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 24.2.0-alt1
 - 24.2.0 released
 
