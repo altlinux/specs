@@ -4,12 +4,9 @@
 
 %def_with check
 
-# bootstrap note: it doesn't work for now
-# see https://github.com/pypa/setuptools/issues/2986
-
 Name: python3-module-%pypi_name
 Epoch: 1
-Version: 70.2.0
+Version: 70.3.0
 Release: alt1
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -147,6 +144,9 @@ cp -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
 %system_wheels_path/setuptools-%version-*.whl
 
 %changelog
+* Wed Jul 10 2024 Stanislav Levin <slev@altlinux.org> 1:70.3.0-alt1
+- 70.2.0 -> 70.3.0.
+
 * Wed Jul 03 2024 Stanislav Levin <slev@altlinux.org> 1:70.2.0-alt1
 - 70.0.0 -> 70.2.0.
 
