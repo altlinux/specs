@@ -2,7 +2,7 @@
 
 Name: plasma5-welcome
 Version: 5.27.11
-Release: alt3
+Release: alt4
 %K5init
 
 Group: Graphical desktop/KDE
@@ -81,6 +81,9 @@ mkdir -p %buildroot/%_datadir/plasma-welcome-extra-pages{,-pre}
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt4
+- fix knavalbattle icon path
+
 * Wed Jun 26 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt3
 - fix knavalbattle icon path
 
