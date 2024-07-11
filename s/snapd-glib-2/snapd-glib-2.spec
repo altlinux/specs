@@ -14,7 +14,7 @@
 
 Name: snapd-glib-%api_ver
 Version: 1.65
-Release: alt1
+Release: alt1.1
 
 Group: System/Libraries
 Summary: Library providing a GLib interface to snapd (API 2)
@@ -23,6 +23,8 @@ Url: https://github.com/snapcore/snapd-glib
 
 Vcs: https://github.com/snapcore/snapd-glib.git
 Source: https://github.com/snapcore/%_name/releases/download/%version/%_name-%version.tar.xz
+# 3b46e014bd
+Patch10: snapd-glib-1.65-up-Notice_header.patch
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir %{?_enable_vala:rpm-build-vala} %{?_enable_qt:rpm-macros-qt6}
 BuildRequires: meson gcc-c++
@@ -108,6 +110,7 @@ for snapd-qt to verify the functionality of snapd-qt.
 
 %prep
 %setup -n %_name-%version
+%patch10 -p1
 
 %build
 %meson \
@@ -162,6 +165,9 @@ for snapd-qt to verify the functionality of snapd-qt.
 %endif
 
 %changelog
+* Thu Jul 11 2024 Yuri N. Sedunov <aris@altlinux.org> 1.65-alt1.1
+- applied upstream fix "snapd-qt/meson.build: Install Notice header" (ALT #50876)
+
 * Wed Apr 10 2024 Yuri N. Sedunov <aris@altlinux.org> 1.65-alt1
 - 1.65 (ported to qt6)
 
