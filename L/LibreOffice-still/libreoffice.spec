@@ -26,10 +26,11 @@
 %def_disable qt5
 %endif
 %def_disable mergelibs
+%def_disable gtk4
 
 Name: LibreOffice-still
-%define hversion 7.6
-%define urelease 7.2
+%define hversion 24.2
+%define urelease 4.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -100,9 +101,10 @@ Patch700: alt-700-external-project-concurrency.patch
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
-%add_findreq_skiplist %lodir/sdk/examples/python/toolpanel/toolpanel.py 
 %add_findreq_skiplist %lodir/sdk/examples/python/DocumentHandling/*.py 
 %add_findprov_skiplist %lodir/sdk/examples/python/DocumentHandling/*.py 
+%add_findreq_skiplist %lodir/sdk/examples/python/toolpanel/toolpanel.py
+%add_findreq_skiplist %lodir/sdk/examples/DevelopersGuide/FirstSteps/*/python/*.py
 %add_findreq_skiplist %lodir/sdk/classes
 %add_findreq_skiplist %lodir/sdk/docs
 %add_findreq_skiplist %lodir/sdk/idl
@@ -117,7 +119,11 @@ BuildRequires: python2.7(distutils) libunixODBC-devel libX11-devel libXext-devel
 %if_with openssl
 BuildRequires: libssl-devel
 %endif
+%if_enabled gtk4
 BuildRequires: libgtk4-devel
+%else
+BuildRequires: libgtk+3-devel
+%endif
 BuildRequires: xsltproc
 
 # 4.4
@@ -192,6 +198,8 @@ BuildRequires: libabseil-cpp-devel
 BuildRequires: libwebp-devel libtiff-devel
 # 7.6
 BuildRequires: frozen-devel
+# 24.2
+BuildRequires: libargon2-devel
 
 %if_without python
 BuildRequires: python3-dev
@@ -435,7 +443,7 @@ test -r %conffile && . %conffile ||:
 /# STAR_PROFILE_LOCKING_DISABLED/,/#.*JITC_PROCESSOR_TYPE_EXPORT/d' desktop/scripts/soffice.sh
 
 # Put Python3 shebang
-subst '1i#!/usr/bin/python3' odk/examples/python/toolpanel/toolpanel.py
+subst '1i#!/usr/bin/python3' `find odk/examples/ -name \*.py`
 
 # Guess Kyrgyz localization as complete
 subst '/ks /a ky \\' solenv/inc/langlist.mk
@@ -449,6 +457,10 @@ export CXXFLAGS="$CFLAGS"
 %else
 export CFLAGS="-fPIC"
 export CXXFLAGS="$CFLAGS"
+%endif
+
+%if_disabled gtk4
+%add_optflags -I%_includedir/gtk-3.0
 %endif
 
 # XXX no "thin" LTO option in GCC!
@@ -524,10 +536,15 @@ export ac_cv_prog_LO_CLANG_CC=""
         --with-help \
   \
         %{subst_enable qt5} \
+%if_enabled gtk4
         --enable-gtk4 \
+%else
+        --enable-gtk3 \
+%endif
 %if_enabled kde5
         --enable-gtk3-kde5 \
 %endif
+        --without-system-zxcvbn \
 %if_with parallelism
         --with-parallelism="$PARALLEL" \
 %else   
@@ -712,7 +729,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 
 %files gtk3 -f files.gtk3
 
+%if_enabled gtk4
 %files gtk4 -f files.gtk4
+%endif
 
 %if_enabled qt5
 %files qt5 -f files.qt5
@@ -753,6 +772,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Jul 10 2024 Andrey Cherepanov <cas@altlinux.org> 24.2.4.2-alt1
+- New version.
+
 * Sun May 12 2024 Andrey Cherepanov <cas@altlinux.org> 7.6.7.2-alt1
 - New version.
 
