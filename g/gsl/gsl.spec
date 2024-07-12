@@ -1,35 +1,36 @@
 %define _unpackaged_files_terminate_build 1
+%define libgslver 28
+%define libgslcblasver 0
 
 Name: gsl
-Version: 2.7
+Version: 2.8
 Release: alt1
 Summary: The GNU Scientific Library for numerical analysis
-License: GPL
+License: GPLv3
 Group: Development/Other
-URL: http://www.gnu.org/software/gsl/gsl.html
-
-# git://git.savannah.gnu.org/gsl.git
+URL: https://www.gnu.org/software/gsl/gsl.html
+VCS: https://git.savannah.gnu.org/git/gsl.git
 Source: %name-%version.tar
-
-Patch1: %name-%version-alt-build.patch
-
-Requires: lib%name = %EVR
+Patch0: gsl-2.7-alt-build.patch
 Conflicts: lib%name-devel < %EVR
-
-# Automatically added by buildreq on Wed Jun 06 2007
 BuildRequires: ghostscript-module-X ghostscript-utils
 # explicitly added texinfo for info files
 BuildRequires: texinfo
 BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink python3-module-sphinx_rtd_theme
 
-%package -n lib%name
-Summary: Shared librairies for Scientific Library
+%package -n libgslcblas%libgslcblasver
+Summary: BLAS Shared librairy for GNU Scientific Library
+Group: System/Libraries
+
+%package -n libgsl%libgslver
+Summary: Shared librairy for GNU Scientific Library (GSL)
 Group: System/Libraries
 
 %package -n lib%name-devel
-Summary: Development environment for Scientific Library
+Summary: Development environment for GNU Scientific Library (GSL)
 Group: Development/C
-Requires: lib%name = %EVR
+Requires: libgsl%libgslver = %EVR
+Requires: libgslcblas%libgslcblasver = %EVR
 
 %package -n lib%name-doc
 Summary: book for Scientific Library
@@ -59,23 +60,37 @@ handle many of the problems encountered in scientific computing.
 Install the %name package if you need utilities for high-level scientific
 numerical analysis.
 
-%description -n lib%name
-The lib%name package is part of the GNU Scientific Library (GSL). The GSL is a
-collection of routines for numerical analysis, written in C.  The GSL is
-in alpha development.  It now includes a random number suite, an FFT
-package, simulated annealing and root finding.  In the future, it will
-include numerical and Monte Carlo integration and special functions.
+%description -n libgslcblas%libgslcblasver
+The libgslcblas package is part of the GNU Scientific Library (GSL).
+The GNU Scientific Library (GSL) is a collection of routines for numerical
+computing. The routines have been written from scratch in C, and present a
+modern Applications Programming Interface (API) for C programmers,
+allowing wrappers to be written for very high level languages.
+
 Linking against the GSL allows programs to access functions which can
 handle many of the problems encountered in scientific computing.
 
 This package contains shared library required for run GSL-based software.
 
-%description -n lib%name-devel
-The lib%name-devel package is part of the GNU Scientific Library (GSL). The GSL is a
-collection of routines for numerical analysis, written in C.  The GSL is
-in alpha development.  It now includes a random number suite, an FFT
-package, simulated annealing and root finding.  In the future, it will
-include numerical and Monte Carlo integration and special functions.
+%description -n libgsl%libgslver
+The libgsl package is part of the GNU Scientific Library (GSL).
+The GNU Scientific Library (GSL) is a collection of routines for numerical
+computing. The routines have been written from scratch in C, and present a
+modern Applications Programming Interface (API) for C programmers,
+allowing wrappers to be written for very high level languages.
+
+Linking against the GSL allows programs to access functions which can
+handle many of the problems encountered in scientific computing.
+
+This package contains shared library required for run GSL-based software.
+
+%description -n libgsl-devel
+The libgsl-devel package is part of the GNU Scientific Library (GSL).
+The GNU Scientific Library (GSL) is a collection of routines for numerical
+computing. The routines have been written from scratch in C, and present a
+modern Applications Programming Interface (API) for C programmers,
+allowing wrappers to be written for very high level languages.
+
 Linking against the GSL allows programs to access functions which can
 handle many of the problems encountered in scientific computing.
 
@@ -92,16 +107,12 @@ Sources of examples for using with GSL
 
 %prep
 %setup
-%patch1 -p1
+%patch0 -p1
 
 %build
 %autoreconf
 %configure
 %make_build
-
-pushd doc
-%make html
-popd
 
 %install
 %makeinstall
@@ -114,11 +125,17 @@ rm -f %buildroot%_libdir/*.a
 %_man1dir/*
 %exclude %_man1dir/%name-config.1*
 
-%files -n lib%name
+%files -n libgsl%libgslver
 %doc AUTHORS
-%_libdir/*.so.*
+%_libdir/libgsl.so.%libgslver
+%_libdir/libgsl.so.%libgslver.*
+
+%files -n libgslcblas%libgslcblasver
+%_libdir/libgslcblas.so.%libgslcblasver
+%_libdir/libgslcblas.so.%libgslcblasver.*
 
 %files -n lib%name-devel
+%doc ChangeLog NEWS README THANKS TODO DONE VOLUNTEERS NOTES
 %_bindir/%name-config
 %_libdir/*.so
 %_pkgconfigdir/*
@@ -127,9 +144,6 @@ rm -f %buildroot%_libdir/*.a
 %_man1dir/%name-config.1*
 %_man3dir/*
 
-%files -n lib%name-doc
-%doc ChangeLog NEWS README THANKS TODO DONE VOLUNTEERS NOTES doc/_build/html
-
 %files -n lib%name-info
 %_infodir/*.info*
 
@@ -137,6 +151,9 @@ rm -f %buildroot%_libdir/*.a
 %doc doc/examples
 
 %changelog
+* Wed May 29 2024 Anton Farygin <rider@altlinux.ru> 2.8-alt1
+- 2.7 -> 2.8
+
 * Thu Jul 29 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.7-alt1
 - Updated to upstream version 2.7.
 
