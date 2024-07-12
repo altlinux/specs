@@ -3,7 +3,7 @@
 %global gcc_version 13
 
 Name:    osquery
-Version: 5.12.2
+Version: 5.13.0
 Release: alt1
 
 Summary: SQL powered operating system instrumentation, monitoring, and analytics
@@ -155,5 +155,8 @@ mkdir -p %buildroot%_logdir/osquery
 %dir %_logdir/osquery
 
 %changelog
+* Fri Jul 12 2024 Andrey Cherepanov <cas@altlinux.org> 5.13.0-alt1
+- New version.
+
 * Sat Jun 01 2024 Andrey Cherepanov <cas@altlinux.org> 5.12.2-alt1
 - Initial build for Sisyphus (ALT #39251).
