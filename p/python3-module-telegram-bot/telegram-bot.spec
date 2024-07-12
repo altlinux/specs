@@ -1,5 +1,5 @@
 Name: python3-module-telegram-bot
-Version: 21.0.1
+Version: 21.3
 Release: alt1
 
 Summary: Python interface for the Telegram Bot API
@@ -48,6 +48,9 @@ BuildRequires: python3(tornado)
 %python3_sitelibdir/python_telegram_bot-%version.dist-info
 
 %changelog
+* Fri Jul 12 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 21.3-alt1
+- 21.3 released
+
 * Wed Mar 27 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 21.0.1-alt1
 - 21.0.1 released
 
