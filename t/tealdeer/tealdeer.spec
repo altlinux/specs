@@ -2,7 +2,7 @@
 
 Name: tealdeer
 Version: 1.6.1
-Release: alt1
+Release: alt2
 
 Summary: A very fast implementation of tldr in Rust.
 License: MIT and Apache-2.0
@@ -14,7 +14,7 @@ Source0: %name-%version.tar
 ExcludeArch: ppc64le
 BuildRequires: rust-cargo
 BuildRequires: /proc
-Conflicts: python3-module-tldr
+Conflicts: python3-module-tldr tlrc
 
 %global bin_name tldr
 
@@ -63,6 +63,9 @@ cargo test -- --skip test_autoupdate_cache \
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Fri Jul 12 2024 Alexander Stepchenko <geochip@altlinux.org> 1.6.1-alt2
+- NMU: Add tlrc to the Conflicts.
+
 * Tue Jul 17 2023 Michael Chernigin <chernigin@altlinux.org> 1.6.1-alt1
 - Update to 7c371a68 from upstream, branch main
 - Initial build for ALT Linux

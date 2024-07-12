@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.3.0
-Release: alt1
+Release: alt2
 
 Summary: Python command-line client for tldr pages
 License: MIT
@@ -22,6 +22,7 @@ Patch: %name-%version-alt.patch
 %pyproject_runtimedeps_metadata
 # previous name
 Provides: tldr = %EVR
+Conflicts: tealdeer tlrc
 Obsoletes: tldr <= 3.1.0-alt1
 
 BuildRequires(pre): rpm-macros-sphinx3
@@ -76,6 +77,9 @@ install -Dpm644 %mod_name.zsh %buildroot%_datadir/zsh/site-functions/_%mod_name
 # TODO: package http://github.com/tldr-pages/tldr itself
 
 %changelog
+* Fri Jul 12 2024 Alexander Stepchenko <geochip@altlinux.org> 3.3.0-alt2
+- Add tealdeer and tlrc to the Conflicts.
+
 * Mon Jul 01 2024 Stanislav Levin <slev@altlinux.org> 3.3.0-alt1
 - 3.2.0 -> 3.3.0.
 
