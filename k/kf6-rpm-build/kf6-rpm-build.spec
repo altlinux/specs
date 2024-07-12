@@ -14,7 +14,7 @@
 
 Name: kf6-rpm-build
 Version: 6.0.4
-Release: alt1
+Release: alt2
 
 Group: Development/KDE and QT
 Summary: Development utils for KDE
@@ -55,6 +55,9 @@ install -D -m 0755 %SOURCE2 %buildroot/%_bindir/rpm-build-kf6-find-qtlang
 %_bindir/rpm-build-kf6-*
 
 %changelog
+* Fri Jul 12 2024 Sergey V Turchin <zerg@altlinux.org> 6.0.4-alt2
+- fix undefine KDE_INSTALL_INCLUDEDIR
+
 * Fri Jul 12 2024 Sergey V Turchin <zerg@altlinux.org> 6.0.4-alt1
 - allow to define _K6buildsubdir
 
