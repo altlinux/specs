@@ -1,5 +1,5 @@
 Name: python3-module-zlib-ng
-Version: 0.4.0
+Version: 0.4.3
 Release: alt1
 
 Summary: Python bindings for the zlib-ng library
@@ -38,5 +38,8 @@ export PYTHON_ZLIB_NG_LINK_DYNAMIC=true
 %python3_sitelibdir/zlib_ng-%version.dist-info
 
 %changelog
+* Fri Jul 12 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.4.3-alt1
+- 0.4.3 released
+
 * Wed Jan 17 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.0-alt1
 - 0.4.0 released
