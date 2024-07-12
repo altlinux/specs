@@ -4,7 +4,7 @@
 %define soname 7
 
 Name: snapper
-Version: 0.11.0
+Version: 0.11.1
 Group: System/Base
 Release: alt1
 Summary: Tool for filesystem snapshot management
@@ -98,7 +98,6 @@ A PAM module for calling snapper during user login and logout.
 %setup
 # use libexecdir
 find -type f -exec sed -i -e "s|/usr/lib/snapper|%_libexecdir/%name|g" {} ';'
-sed -i -e "s|/usr/lib/|/lib/|g"  data/Makefile.am
 
 %build
 autoreconf -vfi
@@ -181,6 +180,9 @@ make check
 %_mandir/man8/pam_snapper.8*
 
 %changelog
+* Fri Jul 12 2024 Anton Farygin <rider@altlinux.ru> 0.11.1-alt1
+- 0.11.1
+
 * Sat Apr 27 2024 Anton Farygin <rider@altlinux.ru> 0.11.0-alt1
 - 0.11.0
 
