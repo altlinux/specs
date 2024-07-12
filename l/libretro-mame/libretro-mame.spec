@@ -1,6 +1,6 @@
 Name: libretro-mame
-Version: 0.263
-Release: alt2
+Version: 0.267
+Release: alt1
 
 Summary: MAME libretro core (Arcade only)
 License: GPL2
@@ -52,6 +52,9 @@ install -Dp -m0644 ./mamearcade_libretro.so %buildroot%_libexecdir/libretro
 %_libexecdir/libretro/mamearcade_libretro.so
 
 %changelog
+* Fri Jul 12 2024 Artyom Bystrov <arbars@altlinux.org> 0.267-alt1
+- Update version
+
 * Fri May 17 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.263-alt2
 - Fixed build for Elbrus
 
