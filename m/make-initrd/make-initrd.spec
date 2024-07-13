@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.47.0
+Version: 2.48.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -21,13 +21,14 @@ BuildRequires: udev
 BuildRequires: flex
 BuildRequires: bison
 BuildRequires: scdoc
-BuildRequires: libkmod-devel
-BuildRequires: zlib-devel
-BuildRequires: bzlib-devel
-BuildRequires: liblzma-devel
-BuildRequires: libzstd-devel
-BuildRequires: libelf-devel
-BuildRequires: libtirpc-devel
+BuildRequires: pkgconfig(libkmod)
+BuildRequires: pkgconfig(zlib)
+BuildRequires: pkgconfig(bzip2)
+BuildRequires: pkgconfig(liblzma)
+BuildRequires: pkgconfig(libzstd)
+BuildRequires: pkgconfig(libelf)
+BuildRequires: pkgconfig(json-c)
+BuildRequires: pkgconfig(libtirpc)
 
 Provides: make-initrd(crc32c) = 1
 
@@ -388,6 +389,11 @@ fi
 %endif
 
 %changelog
+* Sat Jul 13 2024 Alexey Gladkov <legion@altlinux.ru> 2.48.0-alt1
+- Utilities:
+  + initrd-put: Add support of elf dlopen metadata. The systemd-256 has
+    switched to dynamic use of dependencies.
+
 * Sat Jun 22 2024 Alexey Gladkov <legion@altlinux.ru> 2.47.0-alt1
 - Do not ignore an errors when copying files to initramfs (ALT#50483).
 
