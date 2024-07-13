@@ -1,6 +1,6 @@
 Name:    pencil2d
-Version: 0.6.6
-Release: alt2
+Version: 0.7.0
+Release: alt1
 
 Summary: Pencil2D is an easy, intuitive tool to make 2D hand-drawn animations. Pencil2D is open source and cross-platform.
 License: GPL-2.0
@@ -8,8 +8,7 @@ Group:   Other
 Url:     https://github.com/pencil2d/pencil
 
 Source: %name-%version.tar
-Patch0: %name-alt-glibc-2.34.patch
-Patch1: %name-alt-fix-russian-translation.patch
+Patch0: %name-alt-fix-russian-translation.patch
 
 BuildRequires(pre): qt5-base-devel
 BuildRequires: gcc-c++
@@ -48,6 +47,9 @@ lrelease-qt5 %name.pro
 %_datadir/zsh/site-functions/_pencil2d
 
 %changelog
+* Sat Jul 13 2024 Andrey Cherepanov <cas@altlinux.org> 0.7.0-alt1
+- New version.
+
 * Tue Dec 21 2021 Andrey Cherepanov <cas@altlinux.org> 0.6.6-alt2
 - Add ffmpeg to requirements.
 - Fix Russian translation.
