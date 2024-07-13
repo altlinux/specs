@@ -8,8 +8,8 @@ AutoProv: no
 %define i586_req_l2 libVkLayer_MESA_device_select.so libgamemodeauto.so.0 libnsl.so.1
 
 Name: portproton-installer
-Version: 1.6.1
-Release: alt3
+Version: 1.6.2
+Release: alt1
 
 Summary: Installer for PortProton
 
@@ -61,6 +61,9 @@ install -Dm644 %xdg_name.metainfo.xml %buildroot%_datadir/metainfo/%xdg_name.met
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Sat Jul 13 2024 Mikhail Tergoev <fidel@altlinux.org> 1.6.2-alt1
+- updated to 1.6.2
+
 * Mon Jun 24 2024 Mikhail Tergoev <fidel@altlinux.org> 1.6.1-alt3
 - renamed package to arepo portproton-installer (thanks glebfm@ and egori@)
 - fixed automatic installation of 32 bit dependencies (ALT bug: 49278)
