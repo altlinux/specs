@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.1.0
+Version: 2.1.2
 Release: alt1
 
 Summary: Yaml Settings Configuration Module
@@ -17,14 +17,14 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pip
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pyaml
-BuildRequires: python3-module-pytest-cov
 BuildRequires: python3-module-mock
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-mock
-BuildRequires: python3-module-flake8
+BuildRequires: python3-module-six
 %endif
 
 %py3_provides %oname
@@ -41,21 +41,24 @@ sed -i '/"nose",/d' setup.py
 sed -i '/"pytest-runner",/d' setup.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%tox_check
+%pyproject_run_pytest -v
 
 %files
-%doc *.rst LICENSE
+%doc README.*
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 
 %changelog
+* Sat Jul 13 2024 Anton Vyatkin <toni@altlinux.org> 2.1.2-alt1
+- New version 2.1.2.
+
 * Mon Mar 27 2023 Anton Vyatkin <toni@altlinux.org> 2.1.0-alt1
 - New version 2.1.0.
 
