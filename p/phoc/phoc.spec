@@ -20,7 +20,7 @@
 %def_disable check
 
 Name: phoc
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Display compositor designed for mobile devices
@@ -133,6 +133,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Sat Jul 13 2024 Yuri N. Sedunov <aris@altlinux.org> 0.40.1-alt1
+- 0.40.1
+
 * Sun Jun 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.40.0-alt1
 - 0.40.0
 
