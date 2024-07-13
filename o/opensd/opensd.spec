@@ -1,6 +1,6 @@
 Name: opensd
 Version: 0.48.0
-Release: alt1
+Release: alt1.1
 
 Summary: An open-source Linux userspace driver for Valve's Steam Deck hardware
 License: GPLv3
@@ -44,5 +44,8 @@ running any closed-source, proprietary or anti-privacy software like Steam.
 %_man1dir/*
 
 %changelog
+* Sat Jul 13 2024 Artyom Bystrov <arbars@altlinux.org> 0.48.0-alt1.1
+- fix path to udev rule
+
 * Sat Jul 01 2023 Artyom Bystrov <arbars@altlinux.org> 0.48.0-alt1
 - Initial commit in Sisyphus
