@@ -13,7 +13,7 @@
 
 Name: shadps4
 Version: 0.1.0
-Release: alt1
+Release: alt2
 
 Summary: Sony PlayStation 4 emulator
 License: GPL-2.0
@@ -53,20 +53,16 @@ Source12: ext-cryptopp-%cryptopp_commit.tar
 
 BuildRequires: boost-devel
 BuildRequires: cmake
-BuildRequires: gcc-c++
 BuildRequires: glslang-devel
 BuildRequires: libXext-devel
 BuildRequires: libalsa-devel
 BuildRequires: libfmt-devel
-BuildRequires: libglvnd-devel
 BuildRequires: libspirv-tools-devel
-BuildRequires: libssl-devel
 BuildRequires: libvulkan-memory-allocator-devel
 BuildRequires: libxbyak-devel
-BuildRequires: libxkbcommon-devel
 BuildRequires: libxxhash-devel
 BuildRequires: libzydis-devel
-BuildRequires: python3
+BuildRequires: qt6-base-devel
 BuildRequires: spirv-headers
 BuildRequires: zlib-ng-devel
 
@@ -116,7 +112,7 @@ This package contains a graphical user interface using Qt6.
 
 # Build Qt version
 %define _cmake__builddir %_target_platform-qt
-%cmake -DSIRIT_USE_SYSTEM_SPIRV_HEADERS:BOOL=TRUE
+%cmake -DENABLE_QT_GUI:BOOL=TRUE -DSIRIT_USE_SYSTEM_SPIRV_HEADERS:BOOL=TRUE
 %cmake_build
 
 %install
@@ -131,5 +127,8 @@ This package contains a graphical user interface using Qt6.
 %_bindir/%name-qt
 
 %changelog
+* Sat Jul 13 2024 Nazarov Denis <nenderus@altlinux.org> 0.1.0-alt2
+- Improve Qt build
+
 * Sat Jul 13 2024 Nazarov Denis <nenderus@altlinux.org> 0.1.0-alt1
 - Initial build for ALT Linux
