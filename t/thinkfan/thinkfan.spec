@@ -4,23 +4,20 @@
 
 Name: thinkfan
 Version: 1.3.1
-Release: alt1
+Release: alt2
 Summary: simple and lightweight fan control program
 Group: System/Configuration/Hardware
 License: GPL-3.0+
-Url: http://sourceforge.net/projects/thinkfan/
-
-# https://github.com/vmatare/thinkfan.git
+Url: https://sourceforge.net/projects/thinkfan/
+VCS: https://github.com/vmatare/thinkfan.git
 Source: %name-%version.tar
-
 Source100: %name.watch
 
-Patch1: thinkfan-install.patch
-Patch2: thinkfan-alt-paths.patch
+Patch1: %name-%version-%release.patch
 
 BuildRequires: cmake gcc-c++ libatasmart-devel
 BuildRequires: libyaml-cpp-devel
-BuildRequires: libsystemd-devel
+BuildRequires: libsystemd-devel >= 255.6
 
 %description
 Thinkfan is a simple, lightweight fan control program. Originally designed
@@ -31,7 +28,6 @@ CPU power as possible.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -44,6 +40,7 @@ CPU power as possible.
 
 %install
 %cmakeinstall_std
+rm -rf %buildroot%_docdir/%name
 
 %files
 %doc COPYING
@@ -56,6 +53,9 @@ CPU power as possible.
 %_man5dir/*.5*
 
 %changelog
+* Sun Jul 14 2024 Anton Farygin <rider@altlinux.ru> 1.3.1-alt2
+- fixed build in environment with merged /usr
+
 * Thu Feb 10 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.1-alt1
 - Updated to upstream version 1.3.1.
 
