@@ -1,6 +1,6 @@
 Name: xl2tpd
 Version: 1.3.18
-Release: alt2
+Release: alt3
 
 Summary: Layer 2 Tunnelling Protocol Daemon (RFC 2661)
 License: GPLv2
@@ -73,7 +73,7 @@ fi
 %files
 %doc BUGS CHANGES CREDITS README* TODO
 %config %_initdir/%name
-/lib/tmpfiles.d/%name.conf
+%_tmpfilesdir/%name.conf
 %_unitdir/%name.service
 %_sbindir/%name
 %_sbindir/%name-control
@@ -83,6 +83,9 @@ fi
 %config(noreplace) %attr(0640,root,root) %_sysconfdir/%name/l2tp-secrets
 
 %changelog
+* Sun Jul 14 2024 Anton Farygin <rider@altlinux.ru> 1.3.18-alt3
+- fixed build in environment with merged /usr
+
 * Tue Feb 20 2024 Anton Farygin <rider@altlinux.ru> 1.3.18-alt2
 - rewrote xl2tpd.service using a simple type
 - added tmpfiles configuration (closes: #48709)
