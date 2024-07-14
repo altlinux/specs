@@ -1,5 +1,5 @@
 Name:           socket_wrapper
-Version:        1.4.2
+Version:        1.4.3
 Release:        alt1
 Group:          Development/Other
 License:        BSD
@@ -96,6 +96,13 @@ popd
 %_libdir/cmake/%name/%{name}_noop-config*.cmake
 
 %changelog
+* Sun Jul 14 2024 Evgeny Sinelnikov <sin@altlinux.org> 1.4.3-alt1
+- Updates to new version 1.4.3 (released 2024-06-12)
+- Fixes from upstream:
+  + Fixed socket_wrapper running with jemalloc compiled binaries
+  + Fixed thread sanitizer on modern Linux Kernels
+  + Fixed swrap_fake_uid_wrapper test
+
 * Fri Oct 20 2023 Evgeny Sinelnikov <sin@altlinux.org> 1.4.2-alt1
 - Fixed LFS issues on 32bit platforms
 - Fixed issue with fnctl() on 32bit
