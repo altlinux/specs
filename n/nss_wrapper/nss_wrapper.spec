@@ -1,13 +1,13 @@
 Name:           nss_wrapper
-Version:        1.1.15
-Release:        alt2
+Version:        1.1.16
+Release:        alt1
 License:        BSD
 Group:          Development/Other
 Summary:        A wrapper for the user, group and hosts NSS API
 Url:            https://cwrap.org/
 
 # git://git.samba.org/nss_wrapper.git
-Source0:        %{name}-%{version}.tar
+Source0:        %name-%version.tar
 Patch0:         %name-%version-alt.patch
 
 BuildRequires:  cmake ctest
@@ -66,6 +66,13 @@ development/testing.
 %_mandir/man1/nss_wrapper.1*
 
 %changelog
+* Sun Jul 14 2024 Evgeny Sinelnikov <sin@altlinux.org> 1.1.16-alt1
+- Updated to new version 1.1.16 (released 2024-07-05)
+- Fixes from upstream:
+  + Fixed copy&paste error in the destructor
+  + Fixed thread sanitizer on modern Linux Kernels
+  + Fixed building with newer cmocka versions
+
 * Fri Mar 24 2023 Evgeny Sinelnikov <sin@altlinux.org> 1.1.15-alt2
 - Fix cmocka >= 1.1.6 find_package()
 
