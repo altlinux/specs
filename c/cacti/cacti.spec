@@ -1,6 +1,6 @@
-%define phpversion php8.1
+%define phpversion php8.2
 Name: cacti
-Version: 1.2.26
+Version: 1.2.27
 Release: alt1
 
 %define cactidir %_datadir/%name
@@ -13,7 +13,7 @@ Summary(ru_RU.UTF8): Полнофункциональная оболочка д�
 License: GPLv2+
 Group: Monitoring
 
-URL: http://www.cacti.net/
+URL: https://www.cacti.net/
 VCS: https://github.com/Cacti/cacti
 Source: %name-%version.tar
 Source2: %name-readme.alt
@@ -164,6 +164,10 @@ fi
 %cactidir/install
 
 %changelog
+* Sun Jul 14 2024 Anton Farygin <rider@altlinux.ru> 1.2.27-alt1
+- 1.2.27
+- switch default to php8.2
+
 * Sun Dec 31 2023 Anton Farygin <rider@altlinux.ru> 1.2.26-alt1
 - 1.2.26
 - switch default to php8.0
