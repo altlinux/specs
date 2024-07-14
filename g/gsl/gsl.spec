@@ -4,7 +4,7 @@
 
 Name: gsl
 Version: 2.8
-Release: alt1
+Release: alt2
 Summary: The GNU Scientific Library for numerical analysis
 License: GPLv3
 Group: Development/Other
@@ -21,10 +21,12 @@ BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink 
 %package -n libgslcblas%libgslcblasver
 Summary: BLAS Shared librairy for GNU Scientific Library
 Group: System/Libraries
+Conflicts: libgsl < 2.8-alt1
 
 %package -n libgsl%libgslver
 Summary: Shared librairy for GNU Scientific Library (GSL)
 Group: System/Libraries
+Obsoletes: libgsl
 
 %package -n lib%name-devel
 Summary: Development environment for GNU Scientific Library (GSL)
@@ -151,6 +153,9 @@ rm -f %buildroot%_libdir/*.a
 %doc doc/examples
 
 %changelog
+* Sun Jul 14 2024 Anton Farygin <rider@altlinux.ru> 2.8-alt2
+- Added copflict with libgs < 2.8 (Fixes: #50901)
+
 * Wed May 29 2024 Anton Farygin <rider@altlinux.ru> 2.8-alt1
 - 2.7 -> 2.8
 
