@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: newsflash
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: NewsFlash is a RSS reader
@@ -34,7 +34,6 @@ Requires: xdg-utils
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo
 BuildRequires: blueprint-compiler
-BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver gir(Adw)
 BuildRequires: pkgconfig(webkitgtk-6.0) >= %webkit_ver
@@ -77,6 +76,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sun Jul 14 2024 Yuri N. Sedunov <aris@altlinux.org> 3.3.2-alt1
+- 3.3.2
+
 * Thu Jun 06 2024 Yuri N. Sedunov <aris@altlinux.org> 3.3.0-alt1
 - 3.3.0
 

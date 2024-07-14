@@ -3,7 +3,7 @@
 %def_disable python2
 
 Name: cracklib
-Version: 2.9.11
+Version: 2.10.0
 Release: alt1
 
 Summary: A password-checking library.
@@ -182,6 +182,9 @@ _EOF_
 
 
 %changelog
+* Sun Jul 14 2024 Yuri N. Sedunov <aris@altlinux.org> 2.10.0-alt1
+- 2.10.0
+
 * Mon Apr 03 2023 Yuri N. Sedunov <aris@altlinux.org> 2.9.11-alt1
 - 2.9.11
 
@@ -285,7 +288,7 @@ _EOF_
 - s/V'erification/Verification in french translation - I know it's a
   spelling mistake, but rpm 3.0 doesn't like accents in Summary: lines. :/
 
-* Thu Apr 10 1999 Alexandre Dussart <adussart@mandrakesoft.com>
+* Sat Apr 10 1999 Alexandre Dussart <adussart@mandrakesoft.com>
 - French Translation
 
 * Fri Apr  9 1999 Bernhard Rosenkränzer <bero@linux-mandrake.com>
