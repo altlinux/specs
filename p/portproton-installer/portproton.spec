@@ -8,7 +8,7 @@ AutoProv: no
 %define i586_req_l2 libVkLayer_MESA_device_select.so libgamemodeauto.so.0 libnsl.so.1
 
 Name: portproton-installer
-Version: 1.6.2
+Version: 1.7.0
 Release: alt1
 
 Summary: Installer for PortProton
@@ -61,6 +61,9 @@ install -Dm644 %xdg_name.metainfo.xml %buildroot%_datadir/metainfo/%xdg_name.met
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Sun Jul 14 2024 Mikhail Tergoev <fidel@altlinux.org> 1.7.0-alt1
+- updated to 1.7.0
+
 * Sat Jul 13 2024 Mikhail Tergoev <fidel@altlinux.org> 1.6.2-alt1
 - updated to 1.6.2
 
