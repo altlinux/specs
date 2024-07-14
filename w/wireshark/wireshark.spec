@@ -9,8 +9,8 @@
 %define _pluginsdir %_libdir/%name/plugins/4.2
 
 Name: wireshark
-Version: 4.2.5
-Release: alt2
+Version: 4.2.6
+Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
 Group: Monitoring
@@ -226,6 +226,9 @@ _EOF_
 %_libdir/cmake/%name
 
 %changelog
+* Sun Jul 14 2024 Anton Farygin <rider@altlinux.ru> 4.2.6-alt1
+- 4.2.6
+
 * Sat Jun 08 2024 Anton Farygin <rider@altlinux.ru> 4.2.5-alt2
 - applied fix 52084eab from the upstream git (Closes: #50418)
 
