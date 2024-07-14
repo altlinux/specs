@@ -1,6 +1,6 @@
 Name:           jitsi-meet
 Version:        9258
-Release:        alt1
+Release:        alt2
 
 Summary:        Jitsi Meet - WebRTC JavaScript video conferences
 #Group:          Networking/Instant messaging
@@ -19,7 +19,6 @@ Source0:        %name-%version.tar
 BuildRequires(pre): rpm-build-intro >= 1.9.18
 BuildRequires:  npm node-devel
 
-BuildRequires: node-sass >= 4.13.1
 # uses obsoleted webpack-cli 3.1.2
 #BuildRequires: node-webpack-cli
 # >= 4.27.1
@@ -105,13 +104,6 @@ Group: System/Servers
 
 %prep
 %setup
-# Makefile uses it
-#ln -sv %_bindir/webpack ./node_modules/.bin/webpack
-ln -sv %_bindir/node-sass ./node_modules/.bin/node-sass
-# sass does not search .css files when importing
-#mv -v css/_audio-preview.css css/_audio-preview.scss
-#mv -v css/_meter.css css/_meter.scss
-#mv -v css/_video-preview.css css/_video-preview.scss
 
 %build
 # install needed here only for run postinstall
@@ -195,6 +187,9 @@ mv doc/debian doc_debian
 %endif
 
 %changelog
+* Sun Jul 14 2024 Andrey Cherepanov <cas@altlinux.org> 9258-alt2
+- FTBFS: removed node-sass brom build requires.
+
 * Thu Feb 29 2024 Andrey Cherepanov <cas@altlinux.org> 9258-alt1
 - New version (ALT #45326, ALT #45578).
 - Exclude armh and i586 architectures.
