@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: uid_wrapper
-Version: 1.3.0
-Release: alt3
+Version: 1.3.1
+Release: alt1
 
 Summary: A wrapper for privilege separation
 License: GPLv3+
@@ -12,7 +12,6 @@ Url: http://cwrap.org
 # Source-git: git://git.samba.org/uid_wrapper.git
 Source: %name-%version.tar
 Patch0: skip_test_syscall_swrap_for_arm.patch
-Patch1: uid_wrapper-cmocka-1.1.6.patch
 
 BuildRequires: cmake
 BuildRequires: ctest
@@ -35,7 +34,6 @@ development/testing.
 %prep
 %setup
 %patch0 -p2
-%patch1 -p1
 
 %build
 %cmake \
@@ -62,6 +60,14 @@ popd
 %_man1dir/uid_wrapper.1*
 
 %changelog
+* Sun Jul 14 2024 Evgeny Sinelnikov <sin@altlinux.org> 1.3.1-alt1
+- Updated to new version 1.3.1 (released 2024-06-12)
+- Fixes from upstream:
+  + Added support to find libc via LIBC_SO define
+  + Fixed uid_wrapper running with jemalloc compiled binaries
+  + Fixed socket_wrapper interaction test
+  + Fixed thread sanitizer on modern Linux Kernels
+
 * Fri Mar 24 2023 Evgeny Sinelnikov <sin@altlinux.org> 1.3.0-alt3
 - Fix cmocka >= 1.1.6 find_package()
 
