@@ -2,7 +2,7 @@
 
 Name: xpdf
 Version: 4.05
-Release: alt1
+Release: alt2
 
 Summary: The PDF viewer and tools
 License: GPLv2 or GPLv3
@@ -64,7 +64,7 @@ needed by the other xpdf packages.
 %package viewer
 Summary: The PDF viewer and tools --- the PDF viewer
 Group: Office
-Requires: %name-common = %EVR qt5-svg
+Requires: %name-common = %EVR qt6-svg
 Obsoletes: xpdf-reader
 
 %description viewer
@@ -223,6 +223,9 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sun Jul 14 2024 Andrew Savchenko <bircoph@altlinux.org> 4.05-alt2
+- Fix svg icons rendering (Closes: 50287)
+
 * Sat May 04 2024 Andrew Savchenko <bircoph@altlinux.org> 4.05-alt1
 - Update xpdf to version 4.05
 - Migrate to Qt6
