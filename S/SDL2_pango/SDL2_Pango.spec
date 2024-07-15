@@ -1,6 +1,6 @@
 Name:    SDL2_pango
 Version: 2.1.5
-Release: alt2
+Release: alt3
 
 Summary: SDL2 port of SDL_Pango
 
@@ -22,6 +22,7 @@ internationalized and tagged text in SDL2 using TrueType fonts.
 %package -n lib%name
 Summary: SDL2 port of SDL_Pango
 Group: System/Libraries
+Obsoletes: libSDL2_Pango
 
 %description -n lib%name
 SDL2_Pango is a library for graphically rendering
@@ -31,6 +32,7 @@ internationalized and tagged text in SDL2 using TrueType fonts.
 Summary: Development files for SDL2_pango
 Group: Development/C
 Requires: lib%name = %EVR
+Obsoletes: libSDL2_Pango-devel
 
 %description -n lib%name-devel
 Development files for SDL2_pango.
@@ -56,6 +58,9 @@ Development files for SDL2_pango.
 %_libdir/*.so
 
 %changelog
+* Mon Jul 15 2024 Grigory Ustinov <grenka@altlinux.org> 2.1.5-alt3
+- Added obsoletes tags for previous build attempt (Closes: #50909).
+
 * Thu Apr 04 2024 Grigory Ustinov <grenka@altlinux.org> 2.1.5-alt2
 - Renamed package to be similar with others.
 
