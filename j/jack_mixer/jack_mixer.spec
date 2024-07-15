@@ -1,5 +1,5 @@
 Name: jack_mixer
-Version: 18
+Version: 19
 Release: alt1
 Summary: Jack Audio Mixer
 License: GPL-2.0
@@ -20,7 +20,7 @@ BuildRequires: python3-module-pyxdg
 BuildRequires: python3-module-Cython
 BuildRequires: libjack-devel
 BuildRequires: python3-module-docutils
-BuildRequires: python3-module-appdirs
+BuildRequires: python3-module-platformdirs
 BuildRequires: libgtk+3
 
 %description
@@ -45,8 +45,15 @@ multiple JACK audio streams.
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*
 %_man1dir/*
+%_sysconfdir/xdg/raysession/client_templates/35_jackmixer/client_templates.xml
+%_datadir/locale/de/LC_MESSAGES/jack_mixer.mo
+%_datadir/locale/fr/LC_MESSAGES/jack_mixer.mo
+%_datadir/locale/es/LC_MESSAGES/jack_mixer.mo
 
 %changelog
+* Mon Jul 15 2024 Anton Vyatkin <toni@altlinux.org> 19-alt1
+- New version 19.
+
 * Tue Dec 19 2023 Anton Vyatkin <toni@altlinux.org> 18-alt1
 - New version 18
 
