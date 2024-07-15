@@ -4,7 +4,7 @@
 %def_without check
 
 Name: skopeo
-Version: 1.15.1
+Version: 1.15.2
 Release: alt1
 
 Summary: skopeo is a command line utility that performs various operations on container images and image repositories
@@ -82,6 +82,9 @@ make check
 %_man1dir/%{name}*
 
 %changelog
+* Mon Jul 15 2024 Mikhail Gordeev <obirvalger@altlinux.org> 1.15.2-alt1
+- new version 1.15.2
+
 * Mon May 20 2024 Mikhail Gordeev <obirvalger@altlinux.org> 1.15.1-alt1
 - new version 1.15.1
 
