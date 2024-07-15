@@ -5,7 +5,7 @@
 %def_without examples
 
 Name: assimp
-Version: 5.4.1
+Version: 5.4.2
 Release: alt1
 Summary: Library to import various 3D model formats into applications
 Group: Graphics
@@ -137,6 +137,9 @@ rm -rf contrib/zlib
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Jul 15 2024 L.A. Kostis <lakostis@altlinux.ru> 5.4.2-alt1
+- 5.4.2.
+
 * Fri May 24 2024 L.A. Kostis <lakostis@altlinux.ru> 5.4.1-alt1
 - 5.4.1.
 
