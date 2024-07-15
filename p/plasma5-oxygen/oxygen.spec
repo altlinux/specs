@@ -2,7 +2,7 @@
 
 Name: plasma5-%rname
 Version: 5.27.11
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init
 
@@ -53,14 +53,14 @@ developing applications that use %name.
 %package -n liboxygenstyle5
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n liboxygenstyle5
 KF5 library
 
 %package -n liboxygenstyleconfig5
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n liboxygenstyleconfig5
 KF5 library
 
@@ -102,6 +102,9 @@ KF5 library
 %_K5lib/liboxygenstyleconfig5.so.*
 
 %changelog
+* Mon Jul 15 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.11-alt2
+- relax requires
+
 * Thu Mar 07 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.11-alt1
 - new version
 
