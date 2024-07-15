@@ -1,13 +1,12 @@
 Name: xsimd
-Version: 11.1.0
-Release: alt1.1
+Version: 13.0.0
+Release: alt1
 Summary: C++ wrappers for SIMD intrinsics
 Group: Development/C++
 License: BSD
 Url: https://xsimd.readthedocs.io/
 VCS: https://github.com/xtensor-stack/xsimd
 Source0: %name-%version.tar
-Patch1: %name-%version-%release.patch
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -41,7 +40,6 @@ Provides: %name-static = %version-%release
 
 %prep
 %setup
-%patch1 -p1
 %ifarch %e2k
 sed -i '/#elif defined(__x86_64__)/i #elif defined(__e2k__)\nsse2=sse3=ssse3=sse4_1=1;best=sse4_1::version();' \
 	include/xsimd/config/xsimd_cpuid.hpp
@@ -76,6 +74,9 @@ sed -i 's/<T, A>::batch.*(register_type reg/& __attribute__((unused))/' \
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Mon Jul 15 2024 Anton Farygin <rider@altlinux.ru> 13.0.0-alt1
+- 11.1.0 -> 13.0.0
+
 * Thu Nov 02 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 11.1.0-alt1.1
 - fixed build for Elbrus
 
