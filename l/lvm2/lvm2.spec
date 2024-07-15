@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%define lvm2version 2.03.24
-%define dmversion 1.02.198
+%define lvm2version 2.03.25
+%define dmversion 1.02.199
 
 %define _runtimedir /run
 %define _lockdir /run/lock
@@ -392,6 +392,7 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %_initdir/lvm2-lvmpolld
 %_unitdir/lvm2-lvmpolld*
 %endif
+%_unitdir/lvm-devices-import*
 %if_enabled lvmlockd
 %exclude %_sbindir/lvmlockd
 %exclude %_sbindir/lvmlockctl
@@ -484,6 +485,9 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %endif
 
 %changelog
+* Mon Jul 15 2024 Alexey Shabalin <shaba@altlinux.org> 2.03.25-alt1
+- 2.03.25
+
 * Mon May 27 2024 Alexey Shabalin <shaba@altlinux.org> 2.03.24-alt1
 - 2.03.24
 - move utils and libs to /usr
