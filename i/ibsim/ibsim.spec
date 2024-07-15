@@ -4,7 +4,7 @@
 
 Name: ibsim
 Summary: InfiniBand fabric simulator for management
-Version: 0.11
+Version: 0.12
 Release: alt1
 License: GPLv2 or BSD
 Group: Monitoring
@@ -45,6 +45,9 @@ OFA OpenSM, diagnostic and management tools.
 %_bindir/*
 
 %changelog
+* Mon Jul 15 2024 Anton Farygin <rider@altlinux.ru> 0.12-alt1
+- 0.11 -> 0.12
+
 * Mon Feb 28 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 0.11-alt1
 - Updated to version 0.11.
 
