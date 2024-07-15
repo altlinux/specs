@@ -4,7 +4,7 @@
 
 Name: zed
 Version: 0.143.6
-Release: alt3
+Release: alt4
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
 License: GPL-3.0 and AGPL-3.0 and Apache-2.0
@@ -77,7 +77,7 @@ export APP_ARGS="%%U"
 export APP_NAME="Zed"
 mkdir -p %buildroot%_desktopdir
 envsubst < crates/zed/resources/zed.desktop.in > %buildroot%_desktopdir/zed.desktop
-sed "/Name=/aStartupWMClass=dev.zed.Zed" %buildroot%_desktopdir/zed.desktop
+sed -i "/Name=/aStartupWMClass=dev.zed.Zed" %buildroot%_desktopdir/zed.desktop
 
 %files
 # some licenses files have copyrights
@@ -88,6 +88,9 @@ sed "/Name=/aStartupWMClass=dev.zed.Zed" %buildroot%_desktopdir/zed.desktop
 %_iconsdir/hicolor/*/apps/zed.png
 
 %changelog
+* Mon Jul 15 2024 Anton Zhukharev <ancieg@altlinux.org> 0.143.6-alt4
+- Really fixed icons displaying (closes 50897).
+
 * Mon Jul 15 2024 Anton Zhukharev <ancieg@altlinux.org> 0.143.6-alt3
 - Fixed icons displaying (closes 50897).
 
