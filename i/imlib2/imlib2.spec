@@ -1,5 +1,5 @@
 Name: imlib2
-Version: 1.12.2
+Version: 1.12.3
 Release: alt1
 
 Summary: Image loading, saving, rendering, and manipulation library
@@ -115,6 +115,9 @@ make check
 %endif
 
 %changelog
+* Mon Jul 15 2024 Leontiy Volodin <lvol@altlinux.org> 1.12.3-alt1
+- New version 1.12.3.
+
 * Tue Feb 06 2024 Leontiy Volodin <lvol@altlinux.org> 1.12.2-alt1
 - New version 1.12.2.
 
