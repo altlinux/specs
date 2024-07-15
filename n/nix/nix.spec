@@ -1,5 +1,5 @@
 Name: nix
-Version: 2.23.1
+Version: 2.23.3
 Release: alt1
 
 Summary: Nix software deployment system
@@ -115,6 +115,9 @@ patchelf --remove-rpath %buildroot%_bindir/nix %buildroot%_libdir/*.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jul 11 2024 Boris Yumankulov <boria138@altlinux.org> 2.23.3-alt1
+- new version 2.23.3
+
 * Mon Jul 01 2024 Boris Yumankulov <boria138@altlinux.org> 2.23.1-alt1
 - initial build for ALT Sisyphus
 
