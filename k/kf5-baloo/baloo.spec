@@ -1,12 +1,14 @@
 %define rname baloo
 
-%ifndef _unitdir_user
-%define _unitdir_user %prefix/lib/systemd/user
+%ifndef _userunitdir
+%define _userunitdir %prefix/lib/systemd/user
 %endif
+
+%add_findreq_skiplist %_userunitdir/*.service
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -59,21 +61,21 @@ developing applications that use %name.
 Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n polkit-kde-baloo
 Common polkit files for %name
 
 %package -n libkf5baloo
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n libkf5baloo
 KF5 library
 
 %package -n libkf5balooengine
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n libkf5balooengine
 KF5 library
 
@@ -106,7 +108,7 @@ done
 %_K5qml/org/kde/baloo/
 %_K5start/baloo*.desktop
 #%_K5srv/*.protocol
-%_unitdir_user/*.service
+%_userunitdir/*.service
 
 #%files -n polkit-kde-baloo
 #%_datadir/polkit-1/actions/*baloo*filewatch*.policy
@@ -126,6 +128,9 @@ done
 %_K5lib/libKF5BalooEngine.so.*
 
 %changelog
+* Mon Jul 15 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt2
+- fix requries
+
 * Thu May 23 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt1
 - new version
 
