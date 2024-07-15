@@ -15,8 +15,8 @@
 %define _cmake__builddir BUILD
 
 Name: lib%oname
-Version: 3.5.0
-Release: alt2
+Version: 3.9.1
+Release: alt1
 Summary: AV1 Codec Library
 Group: System/Libraries
 License: BSD-2-Clause
@@ -153,6 +153,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$(pwd)/%_cmake__builddir/third_party/g
 %endif
 
 %changelog
+* Mon Jul 15 2024 Anton Farygin <rider@altlinux.ru> 3.9.1-alt1
+- 3.5.0 -> 3.9.1
+
 * Tue May 30 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.5.0-alt2
 - NMU: fixed FTBFS on LoongArch. While at it made it possible to skip
   the documentation.
