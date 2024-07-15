@@ -19,19 +19,16 @@ Summary: The Mozilla Firefox project is a redesign of Mozilla's browser (ESR ver
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (версия ESR)
 
 Name: firefox-esr
-Version: 115.11.0
+Version: 128.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
 URL: http://www.mozilla.org/projects/firefox/
 
-Packager: Andrey Cherepanov <cas@altlinux.ru>
-
 Source0: firefox-source.tar
 
 Source1: rpm-build.tar
 Source2: searchplugins.tar
-Source3: cbindgen-vendor.tar
 Source4: firefox-mozconfig
 Source5: distribution.ini
 Source6: firefox.desktop
@@ -42,32 +39,18 @@ Source10: firefox-l10n.txt
 Source11: l10n.tar
 Source12: firefox-privacy-prefs.js
 Source13: policies.json
-# Solution for ftbfs with python3.12 based on idea from
-# https://bugzilla.mozilla.org/show_bug.cgi?id=1857492
-# but with exception, that we dont want to update urllib3
-# just update bundled inside it six.py to 1.16
-# https://raw.githubusercontent.com/benjaminp/six/1.16.0/six.py
-Source14: six.py
 
 ### Start Patches
 Patch001: 0001-FEDORA-build-arm-libopus.patch
-Patch002: 0002-FEDORA-build-arm.patch
-Patch004: 0004-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
-Patch006: 0006-use-floats-for-audio-on-arm-too.patch
-Patch007: 0007-bmo-847568-Support-system-harfbuzz.patch
-Patch008: 0008-bmo-847568-Support-system-graphite2.patch
-Patch009: 0009-bmo-1559213-Support-system-av1.patch
-Patch010: 0010-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
-Patch011: 0011-ALT-fix-double_t-redefinition.patch
-Patch012: 0012-build-Disable-Werror.patch
-Patch016: 0016-xptcall-loongarch64.patch
-Patch017: 0017-build-config-loongarch64.patch
-Patch018: 0018-rust-loongarch64.patch
-Patch019: 0019-libwebrtc-loongarch64.patch
-Patch021: 0021-rust-authenticator.patch
-Patch022: 0022-rust-update-checksums.patch
-Patch023: 0023-dont-remove-yandex-mailru.patch
-Patch050: 0050-ALT-Show-restore-CSD-button-as-maximized.patch
+Patch002: 0002-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
+Patch003: 0003-bmo-847568-Support-system-harfbuzz.patch
+Patch004: 0004-bmo-847568-Support-system-graphite2.patch
+Patch005: 0005-bmo-1559213-Support-system-av1.patch
+Patch006: 0006-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
+Patch007: 0007-ALT-fix-double_t-redefinition.patch
+Patch008: 0008-build-Disable-Werror.patch
+Patch009: 0009-Add-dbus-cflags.patch
+Patch010: 0010-FEDORA-enable-vaapi.patch
 ### End Patches
 
 %ifndef build_parallel_jobs
@@ -101,6 +84,7 @@ BuildRequires: libstdc++-devel
 BuildRequires: rpm-macros-alternatives
 BuildRequires: rust >= %rust_version
 BuildRequires: rust-cargo >= %cargo_version
+BuildRequires: cbindgen
 BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
 BuildRequires: libXcursor-devel
 BuildRequires: libXi-devel
@@ -189,6 +173,7 @@ BuildRequires: python3(hamcrest)
 BuildRequires: python3(pip)
 BuildRequires: python3(setuptools)
 BuildRequires: python3(sqlite3)
+BuildRequires: python3(frozenlist)
 # A copy of the imp module that was removed in python3.12
 # It shouldn't be used, should use `importlib.metadata` instead
 BuildRequires: python3(imp)
@@ -259,14 +244,7 @@ Most likely you don't need to use this package.
 
 %prep
 %setup -q -n firefox-%version -c
-
-### Begin to apply patches
 %autopatch -p1
-### Finish apply patches
-
-# Update bundled six.py for 1.16
-cp -fv %SOURCE14 mozilla/third_party/python/six/six.py
-cp -fv %SOURCE14 mozilla/third_party/python/urllib3/urllib3/packages/six.py
 
 cd mozilla
 
@@ -321,6 +299,7 @@ rm -rf -- third_party/python/setuptools/setuptools*
 rm -rf -- third_party/python/setuptools/pkg_resources
 rm -rf -- third_party/python/pip/pip*
 rm -rf -- third_party/python/click/click*
+rm -rf -- third_party/python/frozenlist/frozenlist*
 
 %build
 %add_findprov_lib_path %firefox_prefix
@@ -337,29 +316,8 @@ export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=0"
 export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=2"
 %endif
 
-# compile cbindgen
-CBINDGEN_HOME="$PWD/cbindgen"
-CBINDGEN_BINDIR="$CBINDGEN_HOME/bin"
-
 # Do not use desktop notify during build process
 export MOZ_NOSPAM=1
-
-if [ ! -x "$CBINDGEN_BINDIR/cbindgen" ]; then
-	mkdir -p -- "$CBINDGEN_HOME"
-
-	tar --strip-components=1 -C "$CBINDGEN_HOME" --overwrite -xf %SOURCE3
-
-	cat > "$CBINDGEN_HOME/config" <<-EOF
-		[source.crates-io]
-		replace-with = "vendored-sources"
-
-		[source.vendored-sources]
-		directory = "$CBINDGEN_HOME"
-	EOF
-
-	env CARGO_HOME="$CBINDGEN_HOME" \
-		cargo install cbindgen
-fi
 
 # compile firefox
 cd mozilla
@@ -547,6 +505,23 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Mon Jul 15 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2024-5702: Use-after-free in networking
+  + CVE-2024-5688: Use-after-free in JavaScript object transplant
+  + CVE-2024-5690: External protocol handlers leaked by timing attack
+  + CVE-2024-5691: Sandboxed iframes were able to bypass sandbox restrictions to open a new window
+  + CVE-2024-5692: Bypass of file name restrictions during saving
+  + CVE-2024-5693: Cross-Origin Image leak via Offscreen Canvas
+  + CVE-2024-5696: Memory Corruption in Text Fragments
+  + CVE-2024-5700: Memory safety bugs fixed in Firefox 127, Firefox ESR 115.12, and Thunderbird 115.12
+  + CVE-2024-6600: Memory corruption in WebGL API
+  + CVE-2024-6601: Race condition in permission assignment
+  + CVE-2024-6602: Memory corruption in NSS
+  + CVE-2024-6603: Memory corruption in thread creation
+  + CVE-2024-6604: Memory safety bugs fixed in Firefox 128, Firefox ESR 115.13, and Thunderbird 115.13
+
 * Sun May 19 2024 Pavel Vasenkov <pav@altlinux.org> 115.11.0-alt1
 - New ESR version.
 - Security fixes
