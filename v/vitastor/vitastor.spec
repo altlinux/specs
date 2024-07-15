@@ -3,8 +3,8 @@
 %set_verify_elf_method strict
 
 Name: vitastor
-Version: 1.6.0
-Release: alt1.1
+Version: 1.7.0
+Release: alt1
 Summary: Vitastor, a fast software-defined clustered block storage
 Group: System/Base
 
@@ -167,7 +167,7 @@ sed -i 's|fdiagnostics-color=always|fdiagnostics-color=auto|' src/CMakeLists.txt
 %cmake \
         -DWITH_QEMU=OFF \
         -DWITH_FIO=OFF \
-	-GNinja
+        -GNinja
 %cmake_build
 
 %install
@@ -176,10 +176,10 @@ sed -i 's|fdiagnostics-color=always|fdiagnostics-color=auto|' src/CMakeLists.txt
 mkdir -p %buildroot{%_sysconfdir,%_libexecdir,%_localstatedir}/%name
 cp -r mon %buildroot%_libexecdir/%name
 mkdir -p %buildroot{%_unitdir,%_udevrulesdir}
-install -m 0644 mon/vitastor.target %buildroot%_unitdir
-install -m 0644 mon/vitastor-mon.service %buildroot%_unitdir
-install -m 0644 mon/vitastor-osd@.service %buildroot%_unitdir
-install -m 0644 mon/90-vitastor.rules %buildroot%_udevrulesdir
+install -m 0644 mon/scripts/vitastor.target %buildroot%_unitdir
+install -m 0644 mon/scripts/vitastor-mon.service %buildroot%_unitdir
+install -m 0644 mon/scripts/vitastor-osd@.service %buildroot%_unitdir
+install -m 0644 mon/scripts/90-vitastor.rules %buildroot%_udevrulesdir
 
 # Install PVE plugin
 %ifarch x86_64 aarch64
@@ -187,11 +187,11 @@ install -D -m 0644 patches/VitastorPlugin.pm %buildroot%perl_vendor_privlib/PVE/
 %endif
 
 # Cleanup
-rm -f %buildroot%_libexecdir/%name/mon/90-vitastor.rules
-rm -f %buildroot%_libexecdir/%name/mon/make-etcd
-rm -f %buildroot%_libexecdir/%name/mon/vitastor-mon.service
-rm -f %buildroot%_libexecdir/%name/mon/vitastor-osd@.service
-rm -f %buildroot%_libexecdir/%name/mon/vitastor.target
+rm -f %buildroot%_libexecdir/%name/mon/scripts/90-vitastor.rules
+rm -f %buildroot%_libexecdir/%name/mon/scripts/make-etcd
+rm -f %buildroot%_libexecdir/%name/mon/scripts/vitastor-mon.service
+rm -f %buildroot%_libexecdir/%name/mon/scripts/vitastor-osd@.service
+rm -f %buildroot%_libexecdir/%name/mon/scripts/vitastor.target
 
 %pre common
 groupadd -r -f %name 2>/dev/null ||:
@@ -277,6 +277,9 @@ fi
 %endif
 
 %changelog
+* Mon Jul 15 2024 Alexey Shabalin <shaba@altlinux.org> 1.7.0-alt1
+- 1.7.0
+
 * Wed Apr 24 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.6.0-alt1.1
 - fixed build for Elbrus
 
