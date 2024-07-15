@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     mpc-qt
-Version:  23.12
+Version:  24.06
 Release:  alt1
 
 Summary:  A clone of Media Player Classic reimplemented in Qt.
@@ -43,6 +43,9 @@ rm -r %buildroot%_defaultdocdir/%name
 %doc DOCS/ipc.md
 
 %changelog
+* Mon Jul 15 2024 Anton Midyukov <antohami@altlinux.org> 24.06-alt1
+- New version 24.06
+
 * Mon Jan 01 2024 Anton Midyukov <antohami@altlinux.org> 23.12-alt1
 - New version 23.12
 - build with qt6
