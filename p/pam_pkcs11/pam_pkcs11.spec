@@ -4,7 +4,7 @@
 
 Name: pam_pkcs11
 Version: 0.6.12.1
-Release: alt1
+Release: alt2
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -104,7 +104,7 @@ cd doc
 ./generate-api.sh
 
 %install
-%makeinstall_std docdir=%_datadir/doc/%name-%version
+%makeinstall_std docdir=%_datadir/doc/%name-%version unitdir=%_unitdir
 
 mkdir -p %buildroot%_sysconfdir/security/%name/{cacerts,crls}
 
@@ -181,6 +181,9 @@ rm %buildroot/%_lib/*/*.la
 /%_lib/%name/ll_isbc.so
 
 %changelog
+* Mon Jul 15 2024 Paul Wolneykien <manowar@altlinux.org> 0.6.12.1-alt2
+- Fixed build: Pass unitdir to make.
+
 * Thu Apr 07 2022 Paul Wolneykien <manowar@altlinux.org> 0.6.12.1-alt1
 - Updated version: upstream commit 4efa29f with fixed LGTM.com errors
   and spelling in configuration files and docs.
