@@ -13,8 +13,8 @@
 %endif
 
 Name: python3-module-%pyname
-Version: 0.15.0
-Release: alt2
+Version: 0.16.1
+Release: alt1
 Summary: Ahead of Time Python compiler for numeric kernels
 License: BSD and MIT
 Provides: %pyname
@@ -24,6 +24,7 @@ BuildArch: noarch
 
 Url: https://github.com/serge-sans-paille/pythran
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -40,7 +41,7 @@ BuildRequires: python3-module-ply
 BuildRequires: boost-devel
 BuildRequires: libflexiblas-devel
 BuildRequires: libnumpy-py3-devel
-BuildRequires: xsimd-devel
+BuildRequires: xsimd-devel >= 13.0.0
 BuildRequires: gcc-c++
 BuildRequires: unzip
 BuildRequires: ipython3
@@ -70,6 +71,7 @@ instruction units.
 
 %prep
 %setup
+%patch0 -p1
 
 # drop distutils
 sed -i 's/distutils.errors/setuptools.errors/' pythran/run.py
@@ -99,8 +101,7 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 %pyproject_install
 
 %check
-# https://github.com/serge-sans-paille/pythran/issues/1981
-%pyproject_run_pytest -n auto -k 'not test_setup_build and not test_setup_build2'
+%pyproject_run_pytest -n auto
 
 %files
 %doc LICENSE
@@ -115,6 +116,9 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 %endif
 
 %changelog
+* Sun Jul 14 2024 Anton Farygin <rider@altlinux.ru> 0.16.1-alt1
+- 0.15.0 -> 0.16.1
+
 * Tue Feb 06 2024 Anton Vyatkin <toni@altlinux.org> 0.15.0-alt2
 - Fixed FTBFS.
 
