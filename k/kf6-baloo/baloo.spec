@@ -1,12 +1,14 @@
 %define rname baloo
 
-%ifndef _unitdir_user
-%define _unitdir_user %prefix/lib/systemd/user
+%ifndef _userunitdir
+%define _userunitdir %prefix/lib/systemd/user
 %endif
+
+%add_findreq_skiplist %_userunitdir/*.service
 
 Name: kf6-%rname
 Version: 6.3.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: Graphical desktop/KDE
@@ -97,7 +99,7 @@ KF6 library
 %_K6plug/kf6/kio/*.so
 %_K6qml/org/kde/baloo/
 %_K6start/*baloo*.desktop
-%_unitdir_user/*.service
+%_userunitdir/*.service
 
 #%files -n polkit-kde-baloo
 #%_datadir/polkit-1/actions/*baloo*filewatch*.policy
@@ -116,6 +118,9 @@ KF6 library
 
 
 %changelog
+* Mon Jul 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt2
+- fix requires
+
 * Tue Jun 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
 - new version
 
