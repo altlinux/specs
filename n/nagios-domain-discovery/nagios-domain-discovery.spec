@@ -1,6 +1,6 @@
 Name:     nagios-domain-discovery
 Version:  0.1.1
-Release:  alt1
+Release:  alt2
 
 Summary:  Domain records to Nagios host list synchronization tool
 License:  GPL-3.0-or-later
@@ -28,7 +28,7 @@ domain records.
 %make_build
 
 %install
-%makeinstall_std
+%makeinstall_std unitdir=%_unitdir
 
 %files
 %dir %_sysconfdir/nagios/domain-discovery
@@ -40,6 +40,9 @@ domain records.
 %_unitdir/%name.*
 
 %changelog
+* Mon Jul 15 2024 Paul Wolneykien <manowar@altlinux.org> 0.1.1-alt2
+- Fixed build: Pass unitdir to make.
+
 * Fri Feb 28 2020 Paul Wolneykien <manowar@altlinux.org> 0.1.1-alt1
 - Fix: Do not replace the configs.
 - Fixed system unit files.
