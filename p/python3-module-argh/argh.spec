@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.31.2
+Version: 0.31.3
 Release: alt1
 Summary: Plain Python functions as CLI commands without boilerplate
 License: LGPLv3
@@ -53,6 +53,9 @@ ordinary Python functions as CLI commands.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 15 2024 Stanislav Levin <slev@altlinux.org> 0.31.3-alt1
+- 0.31.2 -> 0.31.3.
+
 * Thu Jun 20 2024 Stanislav Levin <slev@altlinux.org> 0.31.2-alt1
 - 0.26.2 -> 0.31.2.
 
