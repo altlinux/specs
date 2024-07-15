@@ -1,7 +1,7 @@
 %define git %nil
 
 Name: dhewm3
-Version: 1.5.2
+Version: 1.5.3
 Release: alt1
 Summary: DOOM 3 source port
 Summary(ru_RU.UTF-8): Порт движка оригинального Doom 3
@@ -11,6 +11,8 @@ Url: https://github.com/dhewm/dhewm3
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source: %name-%version.tar
+
+ExcludeArch: %ix86
 
 BuildRequires(pre): rpm-macros-cmake ImageMagick-tools
 
@@ -87,7 +89,7 @@ mkdir -p %buildroot%_iconsdir/hicolor/scalable/apps
 install -m 0644 dist/linux/share/icons/hicolor/scalable/apps/*.svg %buildroot%_iconsdir/hicolor/scalable/apps/
 
 %files
-%doc README.md COPYING.txt
+%doc COPYING.txt
 %_gamesbindir/%name
 %_gamesdatadir/%name
 %_libdir/%name
@@ -96,6 +98,9 @@ install -m 0644 dist/linux/share/icons/hicolor/scalable/apps/*.svg %buildroot%_i
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Tue Jul 16 2024 Artyom Bystrov <arbars@altlinux.org> 1.5.3-alt1
+ - Update to new version
+
 * Tue Aug 16 2022 L.A. Kostis <lakostis@altlinux.ru> 1.5.2-alt1
 - 1.5.2.
 
