@@ -1,5 +1,5 @@
 Name: kernel-image-6.10
-Release: alt0.rc7
+Release: alt1
 %define kernel_src_version	6.9
 %define kernel_base_version	6.10
 %define kernel_sublevel	.0
@@ -118,6 +118,7 @@ BuildRequires: zlib-devel
 BuildRequires: u-boot-tools
 %endif
 Provides: kernel-modules-ipset-%flavour = %version-%release
+Provides: kernel-modules-kvdo-%flavour = %version-%release
 %if_enabled docs
 BuildRequires: python3-module-sphinx /usr/bin/sphinx-build perl-Pod-Usage python3-module-sphinx_rtd_theme
 BuildRequires: fontconfig
@@ -591,6 +592,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Jul 15 2024 Vitaly Chikunov <vt@altlinux.org> 6.10.0-alt1
+- Update to v6.10 (2024-07-14).
+
 * Mon Jul 08 2024 Vitaly Chikunov <vt@altlinux.org> 6.10.0-alt0.rc7
 - Update to v6.10-rc7 (2024-07-07).
 
