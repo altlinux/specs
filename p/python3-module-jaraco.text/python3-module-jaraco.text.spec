@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.12.1
+Version: 3.14.0
 Release: alt1
 Summary: Module for text manipulation
 License: MIT
@@ -51,6 +51,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/jaraco.text-%version.dist-info/
 
 %changelog
+* Mon Jul 15 2024 Stanislav Levin <slev@altlinux.org> 3.14.0-alt1
+- 3.12.1 -> 3.14.0.
+
 * Tue Jun 18 2024 Stanislav Levin <slev@altlinux.org> 3.12.1-alt1
 - 3.12.0 -> 3.12.1.
 
