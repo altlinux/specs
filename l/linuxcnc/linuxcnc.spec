@@ -3,8 +3,8 @@
 
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
-Version: 2.9.2
-Release: alt4.20240203
+Version: 2.9.3
+Release: alt2
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программное обеспечение для управления станками c ЧПУ
@@ -60,6 +60,10 @@ Requires: python3-module-PyQt5-devel
 # for gmoccapy
 Requires: libgtksourceview3-gir
 Requires: libX11-devel
+
+# for qtplasma
+%py3_requires PyQt5.QtWebEngineWidgets
+%py3_requires cv2
 
 Requires: tclx tcl-blt
 %py3_requires Xlib
@@ -240,6 +244,13 @@ rm %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Mon Jul 15 2024 Anton Midyukov <antohami@altlinux.org> 2.9.3-alt2
+- qtvcp: Fix module 'locale' has no attribute 'format'
+- fix dependencies for qtplasmac
+
+* Mon Jul 15 2024 Anton Midyukov <antohami@altlinux.org> 2.9.3-alt1
+- New version 2.9.3
+
 * Sat Apr 27 2024 Anton Midyukov <antohami@altlinux.org> 2.9.2-alt4.20240203
 - Add missing dependency on libGLU (fix empty screen in Axis)
 
