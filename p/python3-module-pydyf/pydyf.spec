@@ -2,7 +2,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 
 Summary: A low-level PDF creator
@@ -49,6 +49,9 @@ BuildArch: noarch
 %python3_sitelibdir/*.dist-info
 
 %changelog
+* Mon Jul 15 2024 Grigory Ustinov <grenka@altlinux.org> 0.11.0-alt1
+- Automatically updated to 0.11.0.
+
 * Tue Apr 30 2024 Grigory Ustinov <grenka@altlinux.org> 0.10.0-alt1
 - Automatically updated to 0.10.0.
 
