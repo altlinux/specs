@@ -20,7 +20,7 @@
 
 Name: plasma5-%rname
 Version: 5.27.11
-Release: alt2
+Release: alt3
 Epoch: 1
 %K5init
 
@@ -81,7 +81,7 @@ developing applications that use %name.
 Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n polkit-kde-ksysguard
 Common polkit files for %name
 
@@ -103,7 +103,7 @@ Requires: %name-common >= %EVR
 Group: System/Libraries
 Summary: %name library
 Requires: %name-common >= %EVR
-Requires: polkit-kde-ksysguard
+Requires: polkit-kde-ksysguard >= %EVR
 %description -n %libprocesscore
 %name library
 
@@ -226,6 +226,9 @@ Requires: %name-common >= %EVR
 %_K5lib/libKSysGuardSystemStats.so.*
 
 %changelog
+* Tue Jul 16 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.11-alt3
+- fix requires
+
 * Thu Apr 04 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.11-alt2
 - build with qtwebengine when alailable
 
