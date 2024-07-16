@@ -17,7 +17,7 @@
 
 Name: plasma5-%rname
 Version: 5.27.11
-Release: alt3
+Release: alt4
 %K5init
 
 Group: Graphical desktop/KDE
@@ -95,7 +95,7 @@ developing applications that use %name.
 %package -n %libkwin
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common
+Requires: %name-common >= %EVR
 Requires: libwayland-client = %{get_version libwayland-client-devel}
 %description -n %libkwin
 KF5 library
@@ -103,7 +103,7 @@ KF5 library
 %package -n %libkcmkwincommon
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkcmkwincommon
 KF5 library
 
@@ -209,6 +209,9 @@ done
 
 
 %changelog
+* Tue Jul 16 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt4
+- update requires
+
 * Tue Jul 02 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt3
 - use hwdata instead of hwdatabase
 
