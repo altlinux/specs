@@ -4,7 +4,7 @@
 
 Name: zed
 Version: 0.143.6
-Release: alt4
+Release: alt5
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
 License: GPL-3.0 and AGPL-3.0 and Apache-2.0
@@ -23,6 +23,7 @@ BuildRequires(pre): rpm-build-rust
 BuildRequires: /proc
 BuildRequires: rust
 BuildRequires: rust-cargo
+BuildRequires: cargo-about
 BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: mold
@@ -62,6 +63,12 @@ EOF
 %build
 export RELEASE_VERSION="%version"
 export ZED_UPDATE_EXPLANATION="Please update zed using apt-get."
+
+# Upstream says that licenses should be generated before
+# building the binaries. See the following for more info:
+# https://github.com/zed-industries/zed/issues/14302
+./script/generate-licenses
+
 %rust_build --package zed --package cli
 
 %install
@@ -81,13 +88,16 @@ sed -i "/Name=/aStartupWMClass=dev.zed.Zed" %buildroot%_desktopdir/zed.desktop
 
 %files
 # some licenses files have copyrights
-%doc LICENSE-AGPL LICENSE-APACHE README.md
+%doc LICENSE-AGPL LICENSE-APACHE README.md assets/licenses.md
 %_libexecdir/zed-editor
 %_bindir/zed
 %_desktopdir/zed.desktop
 %_iconsdir/hicolor/*/apps/zed.png
 
 %changelog
+* Tue Jul 16 2024 Anton Zhukharev <ancieg@altlinux.org> 0.143.6-alt5
+- Fixed opening licenses from the menu (closes 50900).
+
 * Mon Jul 15 2024 Anton Zhukharev <ancieg@altlinux.org> 0.143.6-alt4
 - Really fixed icons displaying (closes 50897).
 
