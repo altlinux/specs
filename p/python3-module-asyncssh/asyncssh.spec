@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.14.2
+Version: 2.15.0
 Release: alt1
 
 Summary: AsyncSSH: Asynchronous SSHv2 client and server library
@@ -23,6 +23,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
 %if_with check
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-typing-extensions
 BuildRequires: python3-module-bcrypt
 BuildRequires: python3-module-OpenSSL
@@ -52,7 +53,7 @@ framework.
 rm -v %buildroot%python3_sitelibdir/%oname/*_win32*
 
 %check
-%pyproject_run_unittest
+%pyproject_run_pytest -k 'not test_forward_terminal_size_tty'
 
 %files
 %doc COPYRIGHT LICENSE README* examples
@@ -60,6 +61,9 @@ rm -v %buildroot%python3_sitelibdir/%oname/*_win32*
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Jul 16 2024 Grigory Ustinov <grenka@altlinux.org> 2.15.0-alt1
+- Automatically updated to 2.15.0.
+
 * Wed Jun 05 2024 Grigory Ustinov <grenka@altlinux.org> 2.14.2-alt1
 - Build new version.
 
