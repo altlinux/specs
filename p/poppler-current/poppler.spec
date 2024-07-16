@@ -47,7 +47,7 @@
 %endif
 Name: %pkgname
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %if_disabled compat
 %define poppler_devel lib%rname-devel
@@ -76,7 +76,7 @@ Release: alt1
 
 Group: Publishing
 Summary: PDF rendering library
-License: (GPL-2.0-only OR GPL-3.0-only) AND GPL-2.0-or-later AND LGPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
+License: GPL-2.0-only OR GPL-3.0-only
 Url: http://poppler.freedesktop.org/
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -450,6 +450,9 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
+* Tue Jul 16 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.0-alt2
+- update license tag
+
 * Tue May 14 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.0-alt1
 - new version
 
