@@ -1,10 +1,10 @@
 
 Summary: Python bindings for the libvirt library
 Name: python3-module-libvirt
-Version: 9.8.0
+Version: 10.5.0
 Release: alt1
 Url: https://libvirt.org
-#git://libvirt.org/libvirt-python.git
+Vcs: https://gitlab.com/libvirt/libvirt-python.git
 Source: %name-%version.tar
 License: LGPL-2.1-or-later
 Group: Development/Python3
@@ -29,20 +29,23 @@ of recent versions of Linux (and other OSes).
 %setup -q
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export PYTHONPATH=%buildroot/%python3_sitelibdir/
-pytest3 -v
+%pyproject_run_pytest
 
 %files
 %python3_sitelibdir/*
 %doc README COPYING examples
 
 %changelog
+* Wed Jul 17 2024 Alexey Shabalin <shaba@altlinux.org> 10.5.0-alt1
+- New version 10.5.0.
+
 * Wed Oct 18 2023 Alexey Shabalin <shaba@altlinux.org> 9.8.0-alt1
 - New version 9.8.0.
 
