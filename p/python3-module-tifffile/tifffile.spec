@@ -1,11 +1,13 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname tifffile
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 2024.6.18
+Version: 2024.7.2
 Release: alt1
+
 Summary: Read and write TIFF(r) files
+
 License: BSD-3-Clause
 Group: Development/Python3
 URL: https://pypi.org/project/tifffile
@@ -17,7 +19,12 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
-BuildRequires: pytest3 python3-module-numpy-testing python3-module-lxml python3(fsspec)
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-lxml
+BuildRequires: python3-module-fsspec
+%endif
 
 %description
 Tifffile is a Python library to
@@ -61,7 +68,7 @@ export PYTHONDONTWRITEBYTECODE=1
 export PYTEST_ADDOPTS='-p no:cacheprovider'
 export PYTHONPATH=%buildroot%python3_sitelibdir
 # test_write_5GB_bigtiff and test_write_imagej_raw are too long and can crash builder
-pytest-3 -v tests -k 'not test_write_5GB_bigtiff and not test_write_imagej_raw' \
+py.test-3 -v tests -k 'not test_write_5GB_bigtiff and not test_write_imagej_raw' \
 	--deselect=tests/test_tifffile.py::test_issue_infinite_loop \
 	--deselect=tests/test_tifffile.py::test_issue_jpeg_ia \
 	--deselect=tests/test_tifffile.py::test_func_pformat_xml \
@@ -88,6 +95,9 @@ pytest-3 -v tests -k 'not test_write_5GB_bigtiff and not test_write_imagej_raw' 
 %python3_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
+* Tue Jul 16 2024 Grigory Ustinov <grenka@altlinux.org> 2024.7.2-alt1
+- Automatically updated to 2024.7.2.
+
 * Sun Jun 30 2024 Grigory Ustinov <grenka@altlinux.org> 2024.6.18-alt1
 - Automatically updated to 2024.6.18.
 
