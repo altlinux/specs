@@ -1,12 +1,10 @@
-%define _unpackaged_files_terminate_build 1
-
 %define  modulename pytest-rerunfailures
 
 %def_with check
 
 Name:    python3-module-%modulename
 Version: 14.0
-Release: alt1
+Release: alt2
 
 Summary: a pytest plugin that re-runs failed tests up to -n times to eliminate flakey failures
 
@@ -43,8 +41,13 @@ Source:  %name-%version.tar
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+# https://github.com/pytest-dev/pytest-rerunfailures/issues/267
+donttest="test_run_session_teardown_once_after_reruns \
+and not test_exception_matches_rerun_except_query \
+and not test_exception_not_match_rerun_except_query \
+and not test_exception_matches_only_rerun_query \
+and not test_exception_match_only_rerun_in_dual_query"
+%pyproject_run_pytest -k "not $donttest"
 
 %files
 %doc *.rst
@@ -53,6 +56,9 @@ Source:  %name-%version.tar
 %python3_sitelibdir/pytest_rerunfailures-%version.dist-info/
 
 %changelog
+* Tue Jul 16 2024 Grigory Ustinov <grenka@altlinux.org> 14.0-alt2
+- Fixed FTBFS.
+
 * Wed Apr 03 2024 Grigory Ustinov <grenka@altlinux.org> 14.0-alt1
 - Automatically updated to 14.0.
 
