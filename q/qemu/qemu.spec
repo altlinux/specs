@@ -150,7 +150,7 @@
 # }}}
 
 Name: qemu
-Version: 8.2.4
+Version: 8.2.5
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -1364,6 +1364,9 @@ popd
 %exclude %docdir/LICENSE
 
 %changelog
+* Fri Jul 12 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.5-alt1
+- 8.2.5
+
 * Fri May 31 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.4-alt1
 - 8.2.4
 - Add udev-rules-hotplug-cpu requires to qemu-guest-agent.
