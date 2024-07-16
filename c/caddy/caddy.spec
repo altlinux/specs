@@ -6,7 +6,7 @@
 
 Name: caddy
 Version: 2.8.4
-Release: alt1
+Release: alt2
 Summary: Web server with automatic HTTPS
 License: Apache-2.0
 Url: https://caddyserver.com
@@ -73,7 +73,7 @@ install -D -p -m 0644 %SOURCE2 %buildroot%_unitdir/caddy.service
 install -D -p -m 0644 %SOURCE3 %buildroot%_unitdir/caddy-api.service
 
 # data directory
-#install -d -m 0750 %buildroot%_sharedstatedir/%name
+install -d -m 0750 %buildroot%_sharedstatedir/%name
 
 # welcome page
 install -D -p -m 0644 %SOURCE4 %buildroot%webserver_datadir/%name/index.html
@@ -116,13 +116,16 @@ useradd -r -N -g %caddy_group -G %webserver_group -c 'Caddy web server' \
 %attr(0750,root,%caddy_group) %dir %_sysconfdir/%name
 %attr(0750,root,%caddy_group) %dir %_sysconfdir/%name/Caddyfile.d
 %attr(0644,root,%caddy_group) %config(noreplace) %_sysconfdir/%name/Caddyfile
-#%attr(1770,root,%caddy_group) %dir %_sharedstatedir/%name
+%attr(1770,root,%caddy_group) %dir %_sharedstatedir/%name
 %config(noreplace) %webserver_datadir/%name/index.html
 %_datadir/bash-completion/completions/%name
 %_datadir/zsh/site-functions/_%name
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Tue Jul 16 2024 Alexey Shabalin <shaba@altlinux.org> 2.8.4-alt2
+- fix add user
+
 * Fri Jul 05 2024 Alexey Shabalin <shaba@altlinux.org> 2.8.4-alt1
 - New version 2.8.4.
 
