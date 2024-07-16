@@ -5,7 +5,7 @@
 
 Name: traefik
 Version: 2.11.6
-Release: alt1
+Release: alt2
 Summary: The Cloud Native Edge Router
 
 License: MIT
@@ -146,6 +146,9 @@ install -d -m 755 %buildroot%_sharedstatedir/%name
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Tue Jul 16 2024 Alexey Shabalin <shaba@altlinux.org> 2.11.6-alt2
+- fix webui dashboard
+
 * Thu Jul 04 2024 Alexey Shabalin <shaba@altlinux.org> 2.11.6-alt1
 - 2.11.6
 
