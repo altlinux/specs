@@ -1,13 +1,9 @@
 %define oname pydot
 
-# 3 tests failing
-# FAIL: test_graph_with_shapefiles (__main__.TestGraphAPI.test_graph_with_shapefiles)
-# FAIL: test_graphviz_regression_tests (__main__.TestGraphAPI.test_graphviz_regression_tests)
-# FAIL: test_my_regression_tests (__main__.TestGraphAPI.test_my_regression_tests)
 %def_without check
 
 Name: python3-module-%oname
-Version: 2.0.0
+Version: 3.0.0
 Release: alt1
 
 Summary: Python interface to Graphiz's Dot
@@ -26,6 +22,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
 %if_with check
+BuildRequires: python3-module-parameterized
 BuildRequires: python3-module-pyparsing
 BuildRequires: python3-module-chardet
 BuildRequires: graphviz
@@ -53,7 +50,7 @@ by the Graphviz tools dot, neato, twopi.
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
-python3 test/pydot_unittest.py
+python3 test/test_pydot.py
 
 %files
 %doc ChangeLog
@@ -61,6 +58,9 @@ python3 test/pydot_unittest.py
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Jul 16 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
+- Automatically updated to 3.0.0.
+
 * Sun Jun 02 2024 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
 - Automatically updated to 2.0.0.
 
