@@ -3,10 +3,11 @@
 %def_with check
 
 Name: python3-module-dukpy
-Version: 0.3.1
+Version: 0.4.0
 Release: alt1
 
 Summary: Simple JavaScript interpreter for Python
+
 License: MIT License
 Group: Development/Python3
 URL: https://pypi.org/project/dukpy
@@ -14,7 +15,6 @@ VCS: https://github.com/amol-/dukpy
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://pypi.io/packages/source/d/%modulename/%modulename-%version.tar.gz
 Source: %name-%version.tar
 Patch: Use-system-duktape.patch
 
@@ -27,6 +27,7 @@ BuildRequires: libduktape-devel
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-webassets
+BuildRequires: python3-module-mutf8
 %endif
 
 %description
@@ -59,10 +60,14 @@ rm -rv dukpy
 %pyproject_run_pytest -k 'not TestPackageInstaller'
 
 %files
+%_bindir/%modulename
 %python3_sitelibdir/%modulename
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Tue Jul 16 2024 Grigory Ustinov <grenka@altlinux.org> 0.4.0-alt1
+- Automatically updated to 0.4.0.
+
 * Fri May 24 2024 Grigory Ustinov <grenka@altlinux.org> 0.3.1-alt1
 - Build new version.
 
