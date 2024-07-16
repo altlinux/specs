@@ -4,8 +4,8 @@
 %def_with prebuild_webui
 
 Name: traefik
-Version: 2.11.6
-Release: alt2
+Version: 3.1.0
+Release: alt1
 Summary: The Cloud Native Edge Router
 
 License: MIT
@@ -88,7 +88,7 @@ cd .gopath/src/%import_path
 export VERSION=%version
 export COMMIT=%release
 export BRANCH=altlinux
-export CODENAME=mimolette
+export CODENAME=comte
 export DATE=$(date -u '+%%Y-%%m-%%d')
 export GOFLAGS="-mod=vendor"
 
@@ -146,6 +146,9 @@ install -d -m 755 %buildroot%_sharedstatedir/%name
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Tue Jul 16 2024 Alexey Shabalin <shaba@altlinux.org> 3.1.0-alt1
+- 3.1.0
+
 * Tue Jul 16 2024 Alexey Shabalin <shaba@altlinux.org> 2.11.6-alt2
 - fix webui dashboard
 
