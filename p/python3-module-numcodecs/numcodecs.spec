@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.12.1
+Version: 0.13.0
 Release: alt1
 Summary: Buffer compression and transformation codecs for use
 License: MIT
@@ -21,6 +21,7 @@ BuildRequires(pre): rpm-build-pyproject
 BuildRequires: libblosc-devel
 BuildRequires: libzstd-devel
 BuildRequires: liblz4-devel
+BuildRequires: libnumpy-py3-devel
 %if_with check
 %pyproject_builddeps_metadata_extra test
 %pyproject_builddeps_metadata_extra msgpack
@@ -68,6 +69,9 @@ This package contains tests for %pypi_name.
 %python3_sitelibdir/%mod_name/tests/
 
 %changelog
+* Mon Jul 15 2024 Stanislav Levin <slev@altlinux.org> 0.13.0-alt1
+- 0.12.1 -> 0.13.0.
+
 * Wed Mar 06 2024 Stanislav Levin <slev@altlinux.org> 0.12.1-alt1
 - 0.11.0 -> 0.12.1.
 
