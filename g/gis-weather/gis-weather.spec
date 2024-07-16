@@ -1,6 +1,6 @@
 Name:		gis-weather
 Version:	0.8.4.17
-Release:	alt1
+Release:	alt2
 License:	GPLv3
 Summary:	Customizable weather widget
 
@@ -17,11 +17,14 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-gir
 
-# Automatically added by buildreq on Wed Jul 08 2015 (-bi)
-# optimized out: python-base
-BuildRequires: dos2unix python3 rpm-build-gir
+BuildRequires: dos2unix libappindicator-gtk3
 
-Requires: python3-module-pygobject3 python3-module-pycairo
+# BEGIN SourceDeps(oneline):
+BuildRequires: python3(cairo) python3(changelog) python3(distro) python3(gi) python3(gi.repository) python3-base
+# END SourceDeps(oneline)
+
+
+Requires: python3-module-pygobject3 python3-module-pycairo libgtk+3-gir
 
 %add_python3_path %_datadir/%name
 # This is not realy needed here (when there are no subpackages), because
@@ -31,7 +34,7 @@ Requires: python3-module-pygobject3 python3-module-pycairo
 # More precise deps:
 %python3_req_hier
 # libaptindicator is not package in ALT Linux
-# #%add_typelib_req_skiplist typelib(AppIndicator3)
+%add_typelib_req_skiplist typelib(AppIndicator3)
 
 %description
 Customizable weather widget.
@@ -70,6 +73,9 @@ grep -rl '^#!' %buildroot%_datadir/%name/ | xargs chmod 0755
 %_datadir/%name
 
 %changelog
+* Tue Jul 16 2024 Hihin Ruslan <ruslandh@altlinux.ru> 0.8.4.17-alt2
+- Add requires libgtk+3-gir
+
 * Tue Oct 03 2023 Hihin Ruslan <ruslandh@altlinux.ru> 0.8.4.17-alt1
 - Update from github (ALT #47590)
 
