@@ -2,7 +2,7 @@
 %define oname sqlparse
 
 Name: python3-module-%oname
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 Summary: Non-validating SQL parser
 License: BSD
@@ -80,6 +80,9 @@ install -p -m644 docs/*.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Tue Jul 16 2024 Grigory Ustinov <grenka@altlinux.org> 0.5.1-alt1
+- Automatically updated to 0.5.1.
+
 * Tue Apr 16 2024 Grigory Ustinov <grenka@altlinux.org> 0.5.0-alt1
 - Automatically updated to 0.5.0.
 
