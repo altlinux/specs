@@ -1,32 +1,29 @@
 %define _unpackaged_files_terminate_build 1
-%define mname lesscpy
+%define pypi_name lesscpy
+%define mod_name %pypi_name
 
 %def_with check
 
-Name: python3-module-%mname
-Version: 0.15.0
-Release: alt2
-
+Name: python3-module-%pypi_name
+Version: 0.15.1
+Release: alt1
 Summary: Python LESS Compiler
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/lesscpy/lesscpy.git
 Url: https://pypi.org/project/lesscpy
-
-Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-
-%if_with check
-# install_requires=
-BuildRequires: python3(ply)
-BuildRequires: python3(six)
-
-BuildRequires: python3(pytest)
-%endif
-
+Vcs: https://github.com/lesscpy/lesscpy
 BuildArch: noarch
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+# upstream still uses deprecated nose
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 A compiler written in Python for the LESS language. For those of us not willing
@@ -38,25 +35,30 @@ utilize this to build in proper syntax checking and perhaps YUI compressing.
 
 %prep
 %setup
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 mv %buildroot/%_bindir/{lesscpy,py3-lesscpy}
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3
+%pyproject_run_pytest -ra
 
 %files
 %doc LICENSE README.rst
 %_bindir/py3-lesscpy
-%python3_sitelibdir/%mname/
-%python3_sitelibdir/%mname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jul 12 2024 Stanislav Levin <slev@altlinux.org> 0.15.1-alt1
+- 0.15.0 -> 0.15.1.
+
 * Thu Apr 06 2023 Anton Vyatkin <toni@altlinux.org> 0.15.0-alt2
 - Fix BuildRequires
 
