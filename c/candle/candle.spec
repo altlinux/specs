@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: candle
-Release: alt1
+Release: alt2
 Version: 1.2
 
 Summary: %name application with G-Code visualizer written in Qt
@@ -11,8 +11,11 @@ Url: https://github.com/Denvi/Candle
 VCS: https://github.com/Denvi/Candle/archive/refs/tags/v1.2b.tar.gz
 
 Source: %name-%version.tar
+Source1: %name.desktop
 # Fixes build errors
 Patch0: alt-build-fixes.patch
+Patch1: alt-fix-translation.patch
+Patch2: alt-capitalize-title.patch
 
 ExcludeArch: armh
 
@@ -41,13 +44,27 @@ Supported functions:
 %make_build
 
 %install
-mkdir -p %buildroot%_bindir
+mkdir -p %buildroot{%_bindir,%_pixmapsdir,%_desktopdir}
 install -m755 %name %buildroot%_bindir
+install -Dpm 0644 src/images/%{name}_256.png %buildroot%_iconsdir/hicolor/256x256/apps/%name.png
+install -Dpm 0644 %SOURCE1 %buildroot%_desktopdir/
+
+mkdir -p %buildroot%_datadir/%name/translations
+install -m644 src/translations/*.qm %buildroot%_datadir/%name/translations
 
 %files
 %doc readme.md
 %_bindir/%name
+%_datadir/%name/translations/*.qm
+%_desktopdir/%name.desktop
+%_iconsdir/hicolor/256x256/apps/%name.png
 
 %changelog
+* Tue Jul 16 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 1.2-alt2
+- fix display of available translation (closes: 50420)
+- set the name of the app window to a capital letter
+- add an app to the start menu
+- update the patch that fixes the app build
+
 * Mon Apr 01 2024 Dmitrii A. Fomchenkov <sirius@altlinux.org> 1.2-alt1
 - first build for sisyphus (closes: 46743)
