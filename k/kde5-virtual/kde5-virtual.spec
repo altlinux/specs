@@ -6,7 +6,7 @@
 
 Name: kde5-virtual
 Version: 5.28.3
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: Virtual packages for KDE 5
@@ -109,7 +109,7 @@ Requires: kf5-filesystem
 
 %package -n kde5-volume-control-2-alsa
 Group: Graphical desktop/KDE
-Summary: KMix volume control
+Summary: Plasma KMix volume control
 Provides: kde5-volume-control = %EVR
 Provides: kde5-volume-control-kmix = %EVR
 Requires: kf5-filesystem
@@ -122,7 +122,7 @@ Obsoletes: kde5-volume-control-2-kmix < %EVR
 
 %package -n kde5-volume-control-7-pipewire
 Group: Graphical desktop/KDE
-Summary: Plasma PulseAudio volume control
+Summary: Plasma PipeWire volume control
 Provides: kde5-volume-control = %EVR
 Provides: kde5-volume-control-pipewire = %EVR
 Requires: kf5-filesystem
@@ -315,6 +315,9 @@ Requires: sddm sddm-theme-breeze plasma5-sddm-kcm dm-tool
 %files -n kde5-display-manager-7-lightdm
 
 %changelog
+* Wed Jul 17 2024 Sergey V Turchin <zerg@altlinux.org> 5.28.3-alt2
+- fix description
+
 * Tue Feb 20 2024 Sergey V Turchin <zerg@altlinux.org> 5.28.3-alt1
 - increase kde5-volume-control-pipewire priority over pulseaudio
 
