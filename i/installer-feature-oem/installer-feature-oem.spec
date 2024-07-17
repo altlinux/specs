@@ -1,6 +1,6 @@
 Name: installer-feature-oem
 Version: 0.2
-Release: alt1
+Release: alt2
 
 Summary: OEM mode support for installer
 License: GPLv2+
@@ -33,6 +33,9 @@ Requires: installer-common-stage2
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Wed Jul 17 2024 Dmitry Terekhin <jqt4@altlinux.org> 0.2-alt2
+- Add alterator-net-eth to the installed system
+
 * Sun Sep 24 2023 Anton Midyukov <antohami@altlinux.org> 0.2-alt1
 - create large initrd for OEM
 - add parameters: OEM_NET, OEM_ROOT, OEM_USER in cmdline kernel
