@@ -2,7 +2,7 @@
 
 Name: kf6-%rname
 Version: 6.3.0
-Release: alt1
+Release: alt2
 %K6init altplace
 
 Group: System/Libraries
@@ -62,9 +62,6 @@ KF6 library
 %doc LICENSES/* README.md
 %_datadir/qlogging-categories6/*.*categories
 
-%files
-%_K6qml/org/kde/kwindowsystem/
-
 %files devel
 %_K6inc/KWindowSystem/
 %_K6link/lib*.so
@@ -74,9 +71,13 @@ KF6 library
 %files -n libkf6windowsystem
 %_K6lib/libKF6WindowSystem.so.*
 %_K6plug/kf6/kwindowsystem/
+%_K6qml/org/kde/kwindowsystem/
 
 
 %changelog
+* Wed Jul 17 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt2
+- package qml with library
+
 * Tue Jun 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
 - new version
 
