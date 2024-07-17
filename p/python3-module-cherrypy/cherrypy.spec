@@ -1,11 +1,9 @@
-%define _unpackaged_files_terminate_build 1
 %define modulename cherrypy
 
-# https://github.com/cherrypy/cherrypy/issues/1973
-%def_without check
+%def_with check
 
 Name: python3-module-%modulename
-Version: 18.9.0
+Version: 18.10.0
 Release: alt1
 
 Summary: CherryPy is a pythonic, object-oriented web development framework
@@ -28,6 +26,9 @@ BuildRequires: python3-module-portend
 BuildRequires: python3-module-zc.lockfile
 BuildRequires: python3-module-jaraco.collections
 BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-cheroot-tests
+BuildRequires: python3-module-path
+BuildRequires: python3-module-pytest-services
 %endif
 
 # win32 depends on pywin32
@@ -64,6 +65,10 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %exclude %python3_sitelibdir/%modulename/test
 
 %changelog
+* Tue Jul 16 2024 Grigory Ustinov <grenka@altlinux.org> 18.10.0-alt1
+- Automatically updated to 18.10.0.
+- Built with check.
+
 * Wed Dec 13 2023 Grigory Ustinov <grenka@altlinux.org> 18.9.0-alt1
 - Automatically updated to 18.9.0.
 

@@ -1,20 +1,20 @@
 %define modulename cheroot
 
-# there is no ipv6 support on our build system and cheroot tests do not support this configuration
-# ERROR: Could not find a version that satisfies the requirement pytest-cov==2.10.1
-%def_disable check
-%def_without tests
+%def_enable check
+# Nessesary for cherrypy
+%def_with tests
 
 Name:    python3-module-%modulename
 Version: 10.0.1
-Release: alt1
+Release: alt2
 
 Summary: Cheroot is the high-performance, pure-Python HTTP server used by CherryPy
-License: BSD
+License: BSD-3-Clause
 Group:   Development/Python
-URL:     https://github.com/cherrypy/cheroot
+URL:     https://pypi.org/project/cheroot
+VCS:     https://github.com/cherrypy/cheroot
 
-Source: %name-%version.tar 
+Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-python3
@@ -38,6 +38,8 @@ BuildRequires: python3-module-jaraco.context
 BuildRequires: python3-module-portend
 BuildRequires: python3-module-requests_toolbelt
 BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-ignore-flaky
+BuildRequires: python3-module-pytest-forked
 %endif
 BuildArch: noarch
 
@@ -58,26 +60,23 @@ This package contains tests for Cheroot
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 %if_without tests
 rm -rf %python3_sitelibdir/%{modulename}/test
 rm -f %python3_sitelibdir/%{modulename}/testing.py
 %endif
 
 %check
-rm -f pyproject.toml
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -v
+# test_tls_client_auth fails on i586 and ppc64le
+%pyproject_run_pytest -k 'not test_tls_client_auth'
 
 %files
 %_bindir/cheroot
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%modulename-%version.dist-info
 %python3_sitelibdir/%{modulename}*
 %exclude %python3_sitelibdir/%{modulename}/test
 %exclude %python3_sitelibdir/%{modulename}/testing.py
@@ -89,6 +88,10 @@ tox.py3 --sitepackages -v
 %endif
 
 %changelog
+* Tue Jul 16 2024 Grigory Ustinov <grenka@altlinux.org> 10.0.1-alt2
+- Built with tests.
+- Built with check.
+
 * Thu Apr 25 2024 Andrey Cherepanov <cas@altlinux.org> 10.0.1-alt1
 - New version.
 
