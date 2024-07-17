@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 12.7.0
+Version: 13.0.0
 Release: alt1
 Summary: Install packages and run Python with them
 License: MIT
@@ -53,6 +53,9 @@ interpreter run.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 17 2024 Stanislav Levin <slev@altlinux.org> 13.0.0-alt1
+- 12.7.0 -> 13.0.0.
+
 * Tue Jul 16 2024 Stanislav Levin <slev@altlinux.org> 12.7.0-alt1
 - 12.6.1 -> 12.7.0.
 
