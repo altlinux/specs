@@ -1,18 +1,21 @@
+%define mod_conflicts %(echo "%_supported_php_suffix"|sed 's/\\<%{_php_suffix}\\>//;s/ \\+/ /g;s/^[[:space:]]*//;s/[[:space:]]*$//;s/\\([[:graph:]]*\\)/php\\1-xhprof/g')
 %define		php_extension	xhprof
 Name:	 	php%_php_suffix-%php_extension
 Version:	2.3.10
 Epoch:		1
-Release:	alt1.%_php_release_version
+Release:	alt2.%_php_release_version
 
 Summary:	PHP hierarchical profiler
 
 License:	%asl
 Group:		System/Servers
 URL:		https://pecl.php.net/package/xhprof
+VCS: 		https://github.com/longxinH/xhprof.git
 Source0:	%php_extension-%version.tar
 Source1:	php-%php_extension.ini
 Source2:	php-%php_extension-params.sh
 Source3:	%php_extension.conf
+Conflicts: %mod_conflicts
 
 BuildRequires(pre): rpm-build-php8.2-version rpm-build-licenses rpm-macros-webserver-common
 BuildRequires: php-devel = %php_version
@@ -82,6 +85,9 @@ sed -e 's|DIRECTORY|%webserver_webappsdir/xhprof_html|g' -i %php_extension.conf
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} 1:%version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Wed Jul 17 2024 Anton Farygin <rider@altlinux.ru> 1:2.3.10-alt2
+- added conflicts between php*-xprof modules (closes: #50919)
 
 * Wed Jul 10 2024 Anton Farygin <rider@altlinux.ru> 1:2.3.10-alt1
 - 8.3.9 -> 8.3.10
