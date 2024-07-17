@@ -1,6 +1,6 @@
 Name: vsftpd
 Version: 3.0.3
-Release: alt2
+Release: alt3
 
 Summary: File Transfer Protocol (FTP) server
 License: GPLv2
@@ -16,14 +16,16 @@ Source4: vsftpd.banner_fail
 # The dia source to vsftpd.eps is available through the download link
 # from http://www.openwall.com/presentations/Owl/
 Source5: vsftpd.eps
-Source6: vsftpd.socket
+Source6: vsftpd.service
 Source7: vsftpd@.service
+Source8: vsftpd.target
 
 Patch: vsftpd-%version-%release.patch
 
 Requires: /var/empty
 Provides: ftpserver
 
+BuildRequires(pre): rpm-macros-systemd
 # Automatically added by buildreq on Mon Dec 17 2001
 BuildRequires: libcap-devel libpam-devel pam_userpass-devel
 
@@ -64,9 +66,11 @@ install -pD -m600 %_sourcedir/vsftpd.banner_fail \
 	%buildroot%_sysconfdir/vsftpd/banner_fail
 
 install -pD -m644 %_sourcedir/vsftpd@.service \
-	%buildroot%systemd_unitdir/vsftpd@.service
-install -pD -m644 %_sourcedir/vsftpd.socket \
-	%buildroot%systemd_unitdir/vsftpd.socket
+	%buildroot%_unitdir/vsftpd@.service
+install -pD -m644 %_sourcedir/vsftpd.service \
+	%buildroot%_unitdir/vsftpd.service
+install -pD -m644 %_sourcedir/vsftpd.target \
+	%buildroot%_unitdir/vsftpd.target
 
 install -pD -m644 vsftpd.conf.5 %buildroot%_man5dir/vsftpd.conf.5
 install -pD -m644 vsftpd.8 %buildroot%_man8dir/vsftpd.8
@@ -78,6 +82,11 @@ umask 077
 /usr/sbin/useradd -r -g vsftpd -d /var/ftp -s /dev/null -n vsftpd >/dev/null 2>&1 ||:
 /usr/sbin/useradd -r -g novsftpd -d /dev/null -s /dev/null -n novsftpd >/dev/null 2>&1 ||:
 touch %_logdir/vsftpd.log
+
+%post_systemd_postponed vsftpd.service vsftpd.target
+
+%preun
+%preun_systemd vsftpd.service vsftpd.target
 
 %files
 %_sbindir/vsftpd
@@ -91,9 +100,10 @@ touch %_logdir/vsftpd.log
 %config(noreplace) %_sysconfdir/vsftpd/conf
 %config(noreplace) %_sysconfdir/xinetd.d/vsftpd
 %config(noreplace) %_sysconfdir/pam.d/vsftpd
-%config(noreplace) %_sysconfdir/logrotate.d/vsftpd
-%systemd_unitdir/vsftpd@.service
-%systemd_unitdir/vsftpd.socket
+%config(noreplace) %_logrotatedir/vsftpd
+%_unitdir/vsftpd@.service
+%_unitdir/vsftpd.service
+%_unitdir/vsftpd.target
 %ghost %_logdir/vsftpd.log
 %_mandir/man?/*
 %doc AUDIT BENCHMARKS BUGS Changelog.bz2 EXAMPLE FAQ LICENSE
@@ -101,6 +111,12 @@ touch %_logdir/vsftpd.log
 %doc vsftpd.eps.bz2
 
 %changelog
+* Sat Jun 22 2024 Alexey Shabalin <shaba@altlinux.org> 3.0.3-alt3
+- Deleted systemd socket activation units.
+- Added systemd vsftpd.service unit.
+- Added systemd units (service and target) for multiple instances support.
+- Added restart systemd services to %%post and %%preun.
+
 * Sat Dec 19 2020 Dmitry V. Levin <ldv@altlinux.org> 3.0.3-alt2
 - Updated seccomp filter (closes: #27752, #35901).
 - Fixed build with gcc-10.
