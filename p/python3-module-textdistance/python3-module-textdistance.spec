@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.6.2
+Version: 4.6.3
 Release: alt1
 
 Summary: Compute distance between sequences
@@ -63,6 +63,9 @@ Features:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 17 2024 Anton Zhukharev <ancieg@altlinux.org> 4.6.3-alt1
+- Updated to 4.6.3.
+
 * Thu May 16 2024 Anton Zhukharev <ancieg@altlinux.org> 4.6.2-alt1
 - Updated to 4.6.2.
 
