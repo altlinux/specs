@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt1
+Release: alt2
 %K5init
 
 Group: System/Libraries
@@ -102,6 +102,10 @@ if [ "%_K5dbus_srv" == "%_datadir/dbus-1/services" ] ; then
     cat > %buildroot/%_sysconfdir/alternatives/packages.d/%name <<__EOF__
 %_K5dbus_srv/org.freedesktop.secrets.service %_datadir/dbus-1/services/org.kde.kwalletd5.service %version
 __EOF__
+    mv %buildroot/%_K5bin/kwallet-query %buildroot/%_K5bin/kwallet-query-5
+    cat >> %buildroot/%_sysconfdir/alternatives/packages.d/%name <<__EOF__
+%_bindir/kwallet-query %_K5bin/kwallet-query-5 %version
+__EOF__
 fi
 
 %files common -f %name.lang
@@ -112,7 +116,7 @@ fi
 %config /%_sysconfdir/alternatives/packages.d/%name
 %_bindir/kwalletd5
 %_K5bin/kwalletd5
-%_K5bin/kwallet-query
+%_K5bin/kwallet-query-*
 %_K5xdgapp/*.desktop
 %_K5notif/*.notifyrc
 %_K5srv/*.desktop
@@ -133,6 +137,9 @@ fi
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Wed Jul 17 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt2
+- using alternatives for kwallet-query
+
 * Thu May 23 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt1
 - new version
 
