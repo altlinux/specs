@@ -17,15 +17,9 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 10.2
-Release: alt3
+Version: 11.0
+Release: alt1
 Url: https://basealt.ru
-
-%ifarch %ix86 x86_64
-BuildRequires: gfxboot >= 4
-BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-google-droid-sans
-BuildRequires: design-bootloader-source >= 5.0-alt2 fribidi
-%endif
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -255,35 +249,16 @@ install mate-settings/lightdm-gtk-greeter.conf %buildroot/%_datadir/install3/lig
 
 %post bootloader
 [ "$1" -eq 1 ] || exit 0
-%ifarch %ix86 x86_64
-ln -snf %theme/message /boot/splash/message
-. /etc/sysconfig/i18n
-lang=$(echo $LANG | cut -d. -f 1)
-cd boot/splash/%theme/
-echo $lang > lang
-[ "$lang" = "C" ] || echo lang | cpio -o --append -F message
-%endif
 . shell-config
 shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.txt
 #shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_NORMAL %grub_normal
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 
-%ifarch %ix86 x86_64
-%preun bootloader
-[ "$1" -eq 0 ] || exit 0
-[ "`readlink /boot/splash/message`" != "%theme/message" ] ||
-    rm -f /boot/splash/message
-%endif
-
 %post indexhtml
 %_sbindir/indexhtml-update
 
 %files bootloader
-%ifarch %ix86 x86_64
-%_datadir/gfxboot/%theme
-/boot/splash/%theme
-%endif
 /boot/grub/themes/%theme
 
 #bootsplash
@@ -344,6 +319,10 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed Jul 17 2024 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt1
+- Add STATUS string to wallpaper
+- Remove bootsplash and gfxboot
+
 * Thu Feb 29 2024 Dmitry Terekhin <jqt4@altlinux.org> 10.2-alt3
 - Fix different sizes of GUI elements (rm#125458 rm#125847)
 
