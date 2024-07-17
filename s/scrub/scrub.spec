@@ -1,6 +1,11 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: scrub
 Version: 2.6.1
-Release: alt1
+Release: alt2
 Summary: Disk scrubbing program
 License: GPL-2.0-or-later
 Url: https://github.com/chaos/scrub/
@@ -42,6 +47,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_man1dir/scrub.1*
 
 %changelog
+* Wed Jul 17 2024 Alexey Shabalin <shaba@altlinux.org> 2.6.1-alt2
+- Bump release, fix update from autoimports.
+
 * Mon Jul 15 2024 Alexey Shabalin <shaba@altlinux.org> 2.6.1-alt1
-- initial package
+- Initial package.
 
