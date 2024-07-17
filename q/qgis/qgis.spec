@@ -7,9 +7,15 @@
 %def_enable devel
 %def_enable server
 
+%ifarch %qt5_qtwebengine_arches
+%def_enable qt5_qtwebengine
+%else
+%def_disable qt5_qtwebengine
+%endif
+
 Name:    qgis
 Version: 3.38.0
-Release: alt1
+Release: alt2
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPL-3.0+ with exceptions
@@ -46,6 +52,7 @@ ExcludeArch: armh ppc64le
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
 BuildRequires: flex bison
@@ -83,6 +90,9 @@ BuildRequires: qt5-svg-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: qt5-tools-devel-static
 BuildRequires: qt5-webkit-devel
+%if_enabled qt5_qtwebengine
+BuildRequires: qt5-webengine-devel
+%endif
 BuildRequires: libqtkeychain-qt5-devel
 BuildRequires: qt5-xmlpatterns-devel
 BuildRequires: qt5-serialport-devel
@@ -219,6 +229,11 @@ export LD_LIBRARY_PATH=`pwd`/output/%_lib
     -DWITH_GRASS=TRUE \
     -DGRASS_PREFIX8=%_libdir/grass \
 %endif
+%if_enabled qt5_qtwebengine
+    -DWITH_QTWEBENGINE:BOOL=ON \
+%else
+    -DWITH_QTWEBENGINE:BOOL=OFF \
+%endif
     -DBINDINGS_GLOBAL_INSTALL:BOOL=TRUE \
     -DWITH_CUSTOM_WIDGETS:BOOL=TRUE \
     -DGDAL_INCLUDE_DIR:PATH=%_includedir/gdal \
@@ -306,6 +321,12 @@ rm -rf %buildroot%_datadir/%name/FindQGIS.cmake \
        %buildroot%_libexecdir/%name
 %endif
 
+%if_disabled qt5_qtwebengine
+rm -rvf %buildroot%python3_sitelibdir/%name/PyQt/QtWebEngine*
+sed -i '/QtWebEngine/d' %buildroot%_datadir/%name/python/qsci_apis/PyQt5.api
+%endif
+
+
 %files -f %name.lang
 %doc BUGS COPYING Exception_to_GPL_for_Qt.txt PROVENANCE *.md ChangeLog.gz
 # QGIS shows these files in the GUI
@@ -378,6 +399,11 @@ rm -rf %buildroot%_datadir/%name/FindQGIS.cmake \
 %endif
 
 %changelog
+* Wed Jul 17 2024 Ivan A. Melnikov <iv@altlinux.org> 3.38.0-alt2
+- enable building with QtWebEngine on architectures where
+  it's available;
+- fix FTBFS on architectures where QtWebEngine is not available.
+
 * Mon Jun 24 2024 Andrey Cherepanov <cas@altlinux.org> 3.38.0-alt1
 - New version.
 
