@@ -8,7 +8,7 @@
 
 Name: kf6-%rname
 Version: 6.3.0
-Release: alt2
+Release: alt3
 %K6init no_altplace
 
 Group: Graphical desktop/KDE
@@ -16,7 +16,7 @@ Summary: KDE Frameworks 6 framework for searching and managing metadata
 Url: http://www.kde.org
 License: GPL-2.0-or-later AND LGPL-2.1-or-later AND LGPL-3.0-only
 
-#Requires: polkit-kde-baloo
+Conflicts: kf5-baloo
 
 Source: %rname-%version.tar
 Patch1: alt-disable-indexing.patch
@@ -53,25 +53,17 @@ Requires: kf6-kfilemetadata-devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package -n polkit-kde-baloo
-Summary: %name common package
-Group: System/Configuration/Other
-BuildArch: noarch
-Requires: %name-common = %version-%release
-%description -n polkit-kde-baloo
-Common polkit files for %name
-
 %package -n libkf6baloo
 Group: System/Libraries
 Summary: KF6 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n libkf6baloo
 KF6 library
 
 %package -n libkf6balooengine
 Group: System/Libraries
 Summary: KF6 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n libkf6balooengine
 KF6 library
 
@@ -101,9 +93,6 @@ KF6 library
 %_K6start/*baloo*.desktop
 %_userunitdir/*.service
 
-#%files -n polkit-kde-baloo
-#%_datadir/polkit-1/actions/*baloo*filewatch*.policy
-
 %files devel
 %_K6inc/Baloo/
 %_K6link/lib*.so
@@ -118,6 +107,9 @@ KF6 library
 
 
 %changelog
+* Wed Jul 17 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt3
+- conflicts with kf5-baloo
+
 * Mon Jul 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt2
 - fix requires
 
