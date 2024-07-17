@@ -9,7 +9,7 @@ AutoProv: no
 
 Name: portproton-installer
 Version: 1.7.0
-Release: alt1
+Release: alt2
 
 Summary: Installer for PortProton
 
@@ -20,7 +20,7 @@ Url: https://github.com/Castro-Fidel/PortProton_ALT
 Source: %name-%version.tar
 
 Requires: bubblewrap cabextract zstd gawk tar xz pciutils coreutils file
-Requires: curl wmctrl xdg-utils desktop-file-utils yad
+Requires: curl wmctrl xdg-utils desktop-file-utils yad jq
 Requires: libvulkan1 vulkan-tools libd3d libGL gamemode fontconfig xrdb
 Requires: libcurl libgio libnm libnsl1 libnss glibc-nss glibc-pthread
 Requires: /usr/bin/convert /usr/bin/exiftool /usr/bin/icoextract
@@ -61,6 +61,9 @@ install -Dm644 %xdg_name.metainfo.xml %buildroot%_datadir/metainfo/%xdg_name.met
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Wed Jul 17 2024 Mikhail Tergoev <fidel@altlinux.org> 1.7.0-alt2
+- added requires jq for SteamGridDB
+
 * Sun Jul 14 2024 Mikhail Tergoev <fidel@altlinux.org> 1.7.0-alt1
 - updated to 1.7.0
 
