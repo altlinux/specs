@@ -7,7 +7,7 @@
 %def_without check
 
 Name: deepin-api
-Version: 6.0.9
+Version: 6.0.11
 Release: alt1
 
 Summary: Golang bingding for dde-daemon
@@ -61,11 +61,12 @@ export GOPATH="%go_path"
 # HOME directory for user deepin-sound-player
 mkdir -p %buildroot%_sharedstatedir/deepin-sound-player/.cache/dconf/
 touch %buildroot%_sharedstatedir/deepin-sound-player/.cache/dconf/user
-install -Dm644 archlinux/deepin-api.sysusers %buildroot/lib/sysusers.d/deepin-api.conf
+install -Dm644 archlinux/deepin-api.sysusers %buildroot%_sysusersdir/deepin-api.conf
 
 %files
 %doc README.md LICENSE
 %_bindir/*
+%dir %_libexecdir/deepin-api/
 %_libexecdir/deepin-api/*
 %_iconsdir/hicolor/??x??/actions/*
 %_iconsdir/hicolor/???x???/actions/*
@@ -73,9 +74,11 @@ install -Dm644 archlinux/deepin-api.sysusers %buildroot/lib/sysusers.d/deepin-ap
 %_datadir/dbus-1/*
 %_datadir/polkit-1/*
 %_unitdir/*.service
-%_var/lib/polkit-1/*
+%_sharedstatedir/polkit-1/*
+%dir %_datadir/dde-api/
+%dir %_datadir/dde-api/data/
 %_datadir/dde-api/data/*
-/lib/sysusers.d/deepin-api.conf
+%_sysusersdir/deepin-api.conf
 %dir %_sharedstatedir/deepin-sound-player/
 %dir %_sharedstatedir/deepin-sound-player/.cache/
 %dir %_sharedstatedir/deepin-sound-player/.cache/dconf/
@@ -85,6 +88,9 @@ install -Dm644 archlinux/deepin-api.sysusers %buildroot/lib/sysusers.d/deepin-ap
 %go_path/src/%goipath
 
 %changelog
+* Wed Jul 17 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.11-alt1
+- New version 6.0.11.
+
 * Thu Feb 01 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.9-alt1
 - New version 6.0.9.
 
