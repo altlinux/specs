@@ -65,8 +65,8 @@
 
 
 Name: virtualbox
-Version: 7.0.18
-Release: alt2
+Version: 7.0.20
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -915,6 +915,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Tue Jul 16 2024 Aleksei Kalinin <kaa@altlinux.org> 7.0.20-alt1
+- Update to newest version 7.0.20
+
 * Thu May 09 2024 Aleksei Kalinin <kaa@altlinux.org> 7.0.18-alt2
 - Fixed missing documentation (closes: #44367)
 - Fixed PreReq rpmbuild warning
