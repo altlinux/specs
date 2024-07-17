@@ -1,15 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-browser
-Version: 0.1.3
-Release: alt1
+Version: 0.1.4
+Release: alt3
 
-Summary: Revised alterator
+Summary: Browser of Alterator modules operating via D-Bus
 License: GPLv2+
 Group: System/Configuration/Other
 URL: https://gitlab.basealt.space/alt/alterator-browser
 
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-alterator
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: qt5-base-devel
@@ -17,17 +18,21 @@ BuildRequires: qt5-tools-devel
 BuildRequires: qt5-base-common
 BuildRequires: boost-devel-headers
 
-Requires: alterator
-Requires: alterator-manager
-Requires: alterator-module-executor
-Requires: alterator-module-legacy
-Requires: alterator-module-categories
+# TODO(chernigin): validate interface on build
+BuildRequires: alterator-interface-application
+
+BuildRequires: ImageMagick-tools
+
 Requires: alterator-interface-application
+
+Requires: alterator-standalone
+Requires: alterator-backend-legacy
+Requires: alterator-backend-categories
 
 Source0: %name-%version.tar
 
 %description
-Alterator operating via D-Bus.
+Browser of Alterator modules operating via D-Bus.
 
 %prep
 %setup
@@ -39,12 +44,42 @@ Alterator operating via D-Bus.
 %install
 %cmakeinstall_std
 
+install -D -m644 setup/alterator-browser.desktop \
+    %buildroot%_desktopdir/alterator-browser.desktop
+
+for size in 48 64 128 256 512; do
+    mkdir -p %buildroot%_datadir/icons/hicolor/''${size}x''${size}/apps/
+    convert setup/logo.png -resize ''${size}x''${size} \
+        %buildroot%_datadir/icons/hicolor/''${size}x''${size}/apps/alterator-browser.png
+done
+
+
 %files
+%_datadir/alterator/categories/*
 %_bindir/alterator-browser
 %doc *.md
 %_bindir/%name
 
+%_desktopdir/alterator-browser.desktop
+
+%_datadir/icons/hicolor/48x48/apps/alterator-browser.png
+%_datadir/icons/hicolor/64x64/apps/alterator-browser.png
+%_datadir/icons/hicolor/128x128/apps/alterator-browser.png
+%_datadir/icons/hicolor/256x256/apps/alterator-browser.png
+%_datadir/icons/hicolor/512x512/apps/alterator-browser.png
+
 %changelog
+* Wed Jul 17 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.4-alt3
+- add desktop file
+
+* Wed Jun 26 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.4-alt2
+- changed dependecies to up to date packages
+
+* Mon Jun 03 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.4-alt1
+- added alterator-module-components support
+- added adt and components categories
+- changed adt and component category icons and introduced xdg icons
+
 * Tue Apr 02 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.3-alt1
 - fix builder to comply with spec
 - integrated with AMP
