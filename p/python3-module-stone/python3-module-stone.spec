@@ -5,7 +5,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 3.3.6
+Version: 3.3.7
 Release: alt1
 
 Summary: The Official API Spec Language for Dropbox API V2
@@ -17,7 +17,6 @@ VCS:     https://github.com/dropbox/stone
 BuildArch: noarch
 
 Source:  %name-%version.tar
-Patch:   stone-3.3.2-alt-drop-distutils.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -33,12 +32,9 @@ BuildRequires: python3-module-six
 
 %prep
 %setup
-%patch -p1
 
 # Don't use pytest-runner
 sed -i '/pytest-runner/d' setup.py
-# Python 3.11 compat https://github.com/dropbox/stone/issues/288
-sed -i 's/getargspec/getfullargspec/' stone/frontend/ir_generator.py
 
 %build
 %pyproject_build
@@ -56,6 +52,9 @@ sed -i 's/getargspec/getfullargspec/' stone/frontend/ir_generator.py
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Wed Jul 17 2024 Anton Vyatkin <toni@altlinux.org> 3.3.7-alt1
+- New version 3.3.7.
+
 * Wed May 15 2024 Anton Vyatkin <toni@altlinux.org> 3.3.6-alt1
 - New version 3.3.6.
 
