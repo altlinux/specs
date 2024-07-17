@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -43,7 +43,7 @@ developing applications that use %name.
 %find_lang %name --all-name
 %K5find_qtlang %name --append --all-name
 
-%files -f %name.lang
+%files
 %_K5qml/QtQuick/Controls.2/org.kde.desktop/
 %_K5qml/org/kde/qqc2desktopstyle/
 %_K5plug/kf5/kirigami/*.so
@@ -52,6 +52,9 @@ developing applications that use %name.
 %_libdir/cmake/KF5QQC2*Style/
 
 %changelog
+* Wed Jul 17 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt2
+- don't package translations
+
 * Thu May 23 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt1
 - new version
 
