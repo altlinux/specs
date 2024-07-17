@@ -2,7 +2,7 @@
 
 Name: kf6-%rname
 Version: 6.3.0
-Release: alt1
+Release: alt2
 %K6init
 
 Group: System/Libraries
@@ -97,6 +97,10 @@ if [ "%_K6dbus_srv" == "%_datadir/dbus-1/services" ] ; then
     cat > %buildroot/%_sysconfdir/alternatives/packages.d/%name <<__EOF__
 %_K6dbus_srv/org.freedesktop.secrets.service %_datadir/dbus-1/services/org.kde.kwalletd6.service %version
 __EOF__
+    mv %buildroot/%_K6bin/kwallet-query %buildroot/%_K6bin/kwallet-query-6
+    cat >> %buildroot/%_sysconfdir/alternatives/packages.d/%name <<__EOF__
+%_bindir/kwallet-query %_K6bin/kwallet-query-6 %version
+__EOF__
 fi
 
 %files common -f %name.lang
@@ -107,7 +111,7 @@ fi
 %config /%_sysconfdir/alternatives/packages.d/%name
 %_bindir/kwalletd6
 %_K6bin/kwalletd6
-%_K6bin/kwallet-query
+%_K6bin/kwallet-query-*
 %_K6xdgapp/*.desktop
 %_K6notif/*.notifyrc
 #%_K6srv/*.desktop
@@ -129,6 +133,9 @@ fi
 
 
 %changelog
+* Wed Jul 17 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt2
+- using alternatives for kwallet-query
+
 * Tue Jun 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
 - new version
 
