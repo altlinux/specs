@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        126.0.6478.126
+Version:        126.0.6478.182
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -522,6 +522,18 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Jul 17 2024 Andrey Cherepanov <cas@altlinux.org> 126.0.6478.182-alt1
+- New version (126.0.6478.182).
+- Security fixes:
+  + CVE-2024-6772: Inappropriate implementation in V8.
+  + CVE-2024-6773: Type Confusion in V8.
+  + CVE-2024-6774: Use after free in Screen Capture.
+  + CVE-2024-6775: Use after free in Media Stream.
+  + CVE-2024-6776: Use after free in Audio.
+  + CVE-2024-6777: Use after free in Navigation.
+  + CVE-2024-6778: Race in DevTools.
+  + CVE-2024-6779: Out of bounds memory access in V8.
+
 * Thu Jun 27 2024 Andrey Cherepanov <cas@altlinux.org> 126.0.6478.126-alt1
 - New version (126.0.6478.126).
 - Security fixes:
