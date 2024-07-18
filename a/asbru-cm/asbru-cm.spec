@@ -2,7 +2,7 @@
 
 Name:    asbru-cm
 Version: 6.4.0
-Release: alt1
+Release: alt2
 
 Summary: Asbru Connection Manager is a user interface that helps organizing remote terminal sessions and automating repetitive tasks.
 License: GPL-3.0
@@ -34,6 +34,10 @@ BuildRequires: perl(YAML.pm)
 BuildRequires: typelib(Gtk) = 3.0
 BuildRequires: typelib(Vte) = 2.91
 BuildRequires: typelib(Wnck) = 3.0
+
+Requires: typelib(Gtk) = 3.0
+Requires: typelib(Vte) = 2.91
+Requires: typelib(Wnck) = 3.0
 
 %add_perl_lib_path %_datadir/%name/lib
 %add_perl_lib_path %_datadir/%name/lib/ex
@@ -97,5 +101,8 @@ ln -s ../share/%name/%name %buildroot%_bindir/%name
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Thu Jul 18 2024 Andrey Cherepanov <cas@altlinux.org> 6.4.0-alt2
+- Requires gir packages (ALT #50930).
+
 * Thu Jul 04 2024 Andrey Cherepanov <cas@altlinux.org> 6.4.0-alt1
 - Initial build for Sisyphus.
