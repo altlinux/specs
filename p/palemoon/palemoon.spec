@@ -4,7 +4,7 @@ Summary: The New Moon browser, an unofficial branding of the Pale Moon project b
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 33.1.0
+Version: 33.2.1
 
 Release: alt1
 
@@ -508,6 +508,10 @@ install -D -m 644 %SOURCE10 %_builddir/%sname-%version
 %exclude %_includedir/*
 
 %changelog
+* Tue Jul 16 2024 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.2.1-alt1
+- New Version
+(CVE-2024-6611, CVE-2024-6612, CVE-2024-5699, CVE-2024-5702 DiD, CVE-2024-5690, CVE-2024-5698 DiD, CVE-2024-5688 DiD, CVE-2024-5692, CVE-2024-4772 DiD, CVE-2024-4771, CVE-2024-4769,  CVE-2024-4770)
+
 * Sun May 05 2024 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.1.0-alt1
 - New Version
 (CVE-2024-3863, CVE-2024-3302, CVE-2024-3857 DiD, CVE-2024-3859 and CVE-2024-3861)

@@ -4,8 +4,8 @@
 %define pname pm_locale_switch
 
 Name:    palemoon-locale_switcher
-Version: 3.1.0
-Release: alt3
+Version: 3.2.0
+Release: alt1
 
 Summary: The Palemoon locale switcher
 
@@ -65,6 +65,9 @@ fi
 %palemoon_datadir/defaults/pref/local_switcher_pref.js
 
 %changelog
+* Thu Jul 18 2024 Hihin Ruslan <ruslandh@altlinux.ru> 3.2.0-alt1
+- Version 3.2.0-alt1
+
 * Thu Dec 21 2023 Hihin Ruslan <ruslandh@altlinux.ru> 3.1.0-alt3
 - Add palemoon-locale_switcher-bootstrap-3.1.0.patch
 
