@@ -2,7 +2,7 @@
 
 Name: plasma5-%rname
 Version: 5.27.11
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init
 
@@ -19,6 +19,7 @@ Requires: sddm
 
 Source: %rname-%version.tar
 Patch1: alt-uid-min-max.patch
+Patch2: alt-set-correct-window-size.patch
 
 # Automatically added by buildreq on Tue Mar 31 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils kf5-attica-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-designer libqt5-gui libqt5-network libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms libxkbfile-devel pkg-config python-base qt5-base-devel ruby ruby-stdlibs xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -66,6 +67,7 @@ KF5 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+%patch2 -p1
 
 %build
 %K5build \
@@ -91,6 +93,9 @@ KF5 library
 %_datadir/polkit-1/actions/*
 
 %changelog
+* Wed Jul 17 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 1:5.27.11-alt2
+- set the correct popup window size (closes: 41793, 41464)
+
 * Thu Mar 07 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.11-alt1
 - new version
 
