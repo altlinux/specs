@@ -1,7 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_disable check
-%{!?_systemdgeneratordir: %global _systemdgeneratordir /lib/systemd/system-generators}
 %define _libexecdir %_usr/libexec
 %def_with tests
 %def_with ed25519
@@ -16,8 +15,8 @@
 %endif
 
 Name: ostree
-Version: 2024.3
-Release: alt3
+Version: 2024.6
+Release: alt1
 
 Summary: Linux-based operating system develop/build/deploy tool
 License: LGPLv2+
@@ -28,7 +27,6 @@ Vcs: https://github.com/ostreedev/ostree.git
 Source: %name-%version.tar
 Source1: libglnx.tar
 Source2: bsdiff.tar
-Source3: composefs.tar
 
 Patch1: %name-%version.patch
 
@@ -42,6 +40,7 @@ BuildRequires: pkgconfig(gio-unix-2.0) >= 2.66.0
 BuildRequires: pkgconfig(zlib)
 BuildRequires: pkgconfig(libcurl) >= 7.29.0
 BuildRequires: pkgconfig(libcrypto) >= 1.0.1
+BuildRequires: pkgconfig(composefs)
 # The tests still require soup
 BuildRequires: pkgconfig(libsoup-3.0)
 BuildRequires: pkgconfig(libsoup-2.4)
@@ -113,13 +112,12 @@ BuildArch: noarch
 This package contains development documentation for lib%name.
 
 %prep
-%setup -a1 -a2 -a3
+%setup -a1 -a2
 %patch1 -p1
 %ifarch %e2k
 # patch against paranoid -Werror
 sed -i "/-Werror=/d" configure.ac
 %endif
-%__subst 's|$(prefix)\(/lib/tmpfiles.d\)|\1|g' Makefile-boot.am
 
 %build
 NOCONFIGURE=1 sh -x ./autogen.sh
@@ -127,6 +125,7 @@ NOCONFIGURE=1 sh -x ./autogen.sh
 %configure --disable-silent-rules \
            --with-selinux \
            --with-curl \
+	   --with-composefs \
            %{subst_with soup3} \
            %{subst_with soup} \
            %{?_with_ed25519:--with-ed25519-libsodium} \
@@ -165,7 +164,7 @@ NOCONFIGURE=1 sh -x ./autogen.sh
 %_datadir/bash-completion/completions/%name
 #%_sysconfdir/dracut.conf.d/*
 %prefix/lib/dracut/modules.d/*
-%_systemdgeneratordir/ostree-system-generator
+%_gen_dir/ostree-system-generator
 %_unitdir/ostree-*
 %_tmpfilesdir/*.conf
 %_prefix/lib/%name
@@ -193,6 +192,10 @@ NOCONFIGURE=1 sh -x ./autogen.sh
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Tue Jul 16 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 2024.6-alt1
+- 2024.6
+- enable composefs
+
 * Tue Mar 12 2024 Alexey Shabalin <shaba@altlinux.org> 2024.3-alt3
 - Build with soup3 for sisyphus, with soup2 for p10
 

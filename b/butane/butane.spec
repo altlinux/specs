@@ -2,7 +2,7 @@
 %global import_path github.com/coreos/butane
 
 Name: butane
-Version: 0.13.1
+Version: 0.21.0
 Release: alt1
 
 Summary: Butane translates human readable Butane YAML Configs into machine readable Ignition JSON Configs
@@ -30,6 +30,10 @@ export GOPATH="$BUILDDIR:%go_path"
 export GO111MODULE=on
 export GOFLAGS=-mod=vendor
 export CGO_ENABLED=0
+%ifarch %ix86
+# patch for x86 architectures
+export CGO_ENABLED=1
+%endif
 export version=v%version
 export LDFLAGS="-X %import_path/internal/version.Raw=$version"
 
@@ -47,12 +51,15 @@ install -p -D -m 0755 ./bin/butane %buildroot%_bindir/butane
 popd
 ln -s butane %buildroot%_bindir/fcct
 
-
 %files
-%doc README.md NEWS docs
+%doc README.md docs
 %_bindir/*
 
 %changelog
+* Tue Jul 16 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.21.0-alt1
+- 0.21.0
+- build with CGO_ENABLED=1 for x86 architectures
+
 * Thu Nov 25 2021 Andrey Sokolov <keremet@altlinux.org> 0.13.1-alt1
 - 0.13.1
 
