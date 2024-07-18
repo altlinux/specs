@@ -5,8 +5,8 @@
 %endif
 
 Name: kde5-virtual
-Version: 5.28.3
-Release: alt2
+Version: 5.28.4
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: Virtual packages for KDE 5
@@ -267,6 +267,16 @@ Obsoletes: kde5-display-manager-4-lightdm < %EVR
 %description -n kde5-display-manager-7-lightdm
 %summary
 
+%package -n kde5-display-manager-6-lightdmgtk
+Group: Graphical desktop/KDE
+Summary:  LightDM Display Manager collective package
+Provides: kde5-display-manager = %EVR
+Provides: kde5-display-manager-lightdmgtk = %EVR
+Requires: kf5-filesystem
+Requires: lightdm-gtk-greeter lightdm-gtk-greeter-settings dm-tool
+%description -n kde5-display-manager-6-lightdmgtk
+%summary
+
 %package -n kde5-display-manager-5-sddm
 Group: Graphical desktop/KDE
 Summary: SDDM Display Manager collective package
@@ -312,9 +322,13 @@ Requires: sddm sddm-theme-breeze plasma5-sddm-kcm dm-tool
 
 %files -n kde5-display-manager-0-dummy
 %files -n kde5-display-manager-5-sddm
+%files -n kde5-display-manager-6-lightdmgtk
 %files -n kde5-display-manager-7-lightdm
 
 %changelog
+* Thu Jul 18 2024 Sergey V Turchin <zerg@altlinux.org> 5.28.4-alt1
+- add kde5-display-manager-lightdmgtk
+
 * Wed Jul 17 2024 Sergey V Turchin <zerg@altlinux.org> 5.28.3-alt2
 - fix description
 
