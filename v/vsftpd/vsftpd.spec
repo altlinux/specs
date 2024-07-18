@@ -1,6 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: vsftpd
-Version: 3.0.3
-Release: alt3
+Version: 3.0.5
+Release: alt1
 
 Summary: File Transfer Protocol (FTP) server
 License: GPLv2
@@ -43,8 +47,9 @@ bzip2 -9k Changelog
 bzip2 -9 vsftpd.eps
 
 %build
+%def_enable Werror
 %make_build \
-	CFLAGS='%optflags -fPIE -Wall -W -Wshadow -Werror' \
+	CFLAGS='%optflags_default %optflags_shared %optflags_strict -fPIE -W -Wshadow -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE=1' \
 	LIBS='-lcap -lpam -lpam_userpass' LINK=
 
 %install
@@ -77,10 +82,10 @@ install -pD -m644 vsftpd.8 %buildroot%_man8dir/vsftpd.8
 
 %post
 umask 077
-/usr/sbin/groupadd -r -f vsftpd
-/usr/sbin/groupadd -r -f novsftpd
-/usr/sbin/useradd -r -g vsftpd -d /var/ftp -s /dev/null -n vsftpd >/dev/null 2>&1 ||:
-/usr/sbin/useradd -r -g novsftpd -d /dev/null -s /dev/null -n novsftpd >/dev/null 2>&1 ||:
+groupadd -r -f vsftpd
+groupadd -r -f novsftpd
+useradd -r -g vsftpd -d /var/ftp -s /dev/null -n vsftpd >/dev/null 2>&1 ||:
+useradd -r -g novsftpd -d /dev/null -s /dev/null -n novsftpd >/dev/null 2>&1 ||:
 touch %_logdir/vsftpd.log
 
 %post_systemd_postponed vsftpd.service vsftpd.target
@@ -111,6 +116,15 @@ touch %_logdir/vsftpd.log
 %doc vsftpd.eps.bz2
 
 %changelog
+* Wed Jul 17 2024 Alexey Shabalin <shaba@altlinux.org> 3.0.5-alt1
+- 3.0.5.
+- Update CFLAGS.
+- Copy commits from fedora:
+  + Fix SEGFAULT when running in a container as PID 1.
+  + Close stdin/out/err before listening for incoming connections.
+  + Use unsigned int for uid and gid representation.
+  + Redefine VSFTP_COMMAND_FD to 1.
+
 * Sat Jun 22 2024 Alexey Shabalin <shaba@altlinux.org> 3.0.3-alt3
 - Deleted systemd socket activation units.
 - Added systemd vsftpd.service unit.
