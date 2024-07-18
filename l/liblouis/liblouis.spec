@@ -4,7 +4,7 @@
 
 Name: liblouis
 Version: 3.28.0
-Release: alt1
+Release: alt2
 Summary: Braille translation and back-translation library
 
 # LGPL-2.1-or-later: the project as a whole
@@ -68,7 +68,7 @@ License: LGPL-2.1-or-later
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package tables
+%package data
 Summary: Data tables
 Group: Accessibility
 # LGPL-2.1-or-later: most of the tables
@@ -82,8 +82,10 @@ Group: Accessibility
 # - tables/sr-g1.ctb
 License: LGPL-2.1-or-later AND LGPL-3.0-or-later
 BuildArch: noarch
+Provides: %name-tables = %EVR
+Obsoletes: %name-tables < %EVR
 
-%description tables
+%description data
 Data tables for liblouis, containing attributes and dot patterns.
 
 %package utils
@@ -173,7 +175,7 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make check
 %_libdir/%name.so
 %_pkgconfigdir/%name.pc
 
-%files tables
+%files data
 %_datadir/%name/
 
 %files utils
@@ -189,5 +191,8 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make check
 %doc doc/%name.{html,txt,pdf}
 
 %changelog
+* Wed Jul 17 2024 Artem Semenov <savoptik@altlinux.org> 3.28.0-alt2
+- Renamed to data for the tables package
+
 * Thu May 16 2024 Artem Semenov <savoptik@altlinux.org> 3.28.0-alt1
 - Initial build for Sisyphus (ALT bug: 50363)
