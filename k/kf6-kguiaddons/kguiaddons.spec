@@ -7,7 +7,7 @@
 
 Name: kf6-%rname
 Version: 6.3.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Libraries
@@ -15,7 +15,8 @@ Summary: KDE Frameworks 6 utilities for graphical user interfaces
 Url: http://www.kde.org
 License: GPL-2.0-or-later and LGPL-2.0-or-later
 
-Requires: %name-common
+Requires: %name-common >= %EVR
+Conflicts: kf5-kguiaddons
 
 Source: %rname-%version.tar
 Patch1: fix-modifierless-grabs.patch
@@ -58,7 +59,7 @@ developing applications that use %name.
 %package -n libkf6guiaddons
 Group: System/Libraries
 Summary: KF6 library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n libkf6guiaddons
 KF6 library
 
@@ -67,7 +68,7 @@ KF6 library
 Summary: Python bindings for KGuiAddons
 License: GPLv2+ / LGPLv2+
 Group: Development/Python
-Requires: %name-common
+Requires: %name-common >= %EVR
 Requires: python-module-pykf6
 Requires: python-module-sip = %sipver2
 %description -n python-module-%rname
@@ -84,7 +85,7 @@ Sip files for python-module-%rname
 Summary: Python3 bindings for KGuiAddons
 License: GPLv2+ / LGPLv2+
 Group: Development/Python3
-Requires: %name-common
+Requires: %name-common >= %EVR
 Requires: python3-module-pykf6
 Requires: python3-module-sip = %sipver3
 %description -n python3-module-%rname
@@ -142,6 +143,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 
 %changelog
+* Thu Jul 18 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt2
+- add conflict with kf5-kguiaddons
+
 * Tue Jun 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
 - new version
 
