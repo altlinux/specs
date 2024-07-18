@@ -4,20 +4,20 @@
 
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
+%define sover 5
+
 Summary: Capstone disassembly/disassembler framework
 Name: capstone
-Version: 4.0.2
-Release: alt4.1
+Version: 5.0.1
+Release: alt1
 License: BSD-3-Clause
 Group: Development/Tools
 Url: http://capstone-engine.org/
 Vcs: https://github.com/capstone-engine/capstone
 
-Source: %name-%version-%release.tar
-Patch1: Allow-to-override-PYTHON-23-in-Makefiles.patch
-Patch2: remove-distutils-for-python-3.12.patch
+Source: %name-%version.tar
 
-Requires: lib%name = %EVR
+Requires: lib%name%sover = %EVR
 
 BuildRequires(pre): rpm-macros-java
 BuildRequires(pre): rpm-macros-python3
@@ -31,18 +31,18 @@ BuildRequires: rpm-build-python3
 Capstone is a disassembly framework with the target of becoming the ultimate
 disasm engine for binary analysis and reversing in the security community.
 
-%package -n lib%name
+%package -n lib%name%sover
 Summary: Capstone shared library
 Group: System/Libraries
 Obsoletes: capstone < %EVR
-%description -n lib%name
+%description -n lib%name%sover
 An ultimate disassembly framework for binary analysis and reversing.
 
 %package -n libcapstone-devel
 Summary: Development files for %name
 Provides: capstone-devel = %EVR
 Obsoletes: capstone-devel < %EVR
-Requires: lib%name = %EVR
+Requires: lib%name%sover = %EVR
 Group: Development/C
 %description -n libcapstone-devel
 An ultimate disassembly framework for binary analysis and reversing.
@@ -50,7 +50,7 @@ This package contains libraries and headers for developing.
 
 %package -n python3-module-%name
 Summary: Python3 bindings for %name
-Requires: lib%name = %EVR
+Requires: lib%name%sover = %EVR
 Group: Development/Python3
 %description -n python3-module-%name
 An ultimate disassembly framework for binary analysis and reversing.
@@ -70,7 +70,6 @@ This package contains java bindings for %name.
 %autopatch -p1
 
 %build
-unset MAKEFLAGS
 export PYTHON2="%__python"
 export PYTHON3="%__python3"
 # ln is required to build cstool dynamically
@@ -115,14 +114,14 @@ cstool -v
 cstool -d x64 90
 
 %files
-%doc cstool/README LICENSE.TXT
+%doc cstool/README LICENSE.TXT docs
 %_bindir/cstool
 
-%files -n lib%name
-%_libdir/*.so.*
+%files -n lib%name%sover
+%_libdir/*.so.%sover
 
 %files -n libcapstone-devel
-%doc LICENSE*.TXT README ChangeLog
+%doc LICENSE.TXT ChangeLog CREDITS.TXT README.md RELEASE_NOTES
 %_includedir/capstone
 %_libdir/pkgconfig/%name.pc
 %_libdir/*.so
@@ -135,6 +134,9 @@ cstool -d x64 90
 %_javadir/*.jar
 
 %changelog
+* Wed Jul 17 2024 Vitaly Chikunov <vt@altlinux.org> 5.0.1-alt1
+- Update to 5.0.1 (2023-08-23).
+
 * Fri Oct 27 2023 Grigory Ustinov <grenka@altlinux.org> 4.0.2-alt4.1
 - NMU: dropped dependency on distutils.
 
