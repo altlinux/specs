@@ -1,11 +1,11 @@
 %def_disable snapshot
-%define ver_major 6.1
+%define ver_major 6.2
 %define _name terminal
 %define xdg_name org.pantheon.%_name
 %define rdn_name io.elementary.%_name
 
 Name: pantheon-terminal
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Pantheon Terminal
@@ -72,8 +72,8 @@ This package provides Vala language bindings for the %name.
 %_desktopdir/open-%name-here.desktop
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_datadir/metainfo/%rdn_name.appdata.xml
-
-%exclude %_datadir/fish/vendor_conf.d/pantheon_terminal_process_completion_notifications.fish
+%_man1dir/%rdn_name.1*
+%_datadir/fish/vendor_conf.d/pantheon_terminal_process_completion_notifications.fish
 
 %if 0
 %files vala
@@ -81,6 +81,9 @@ This package provides Vala language bindings for the %name.
 %endif
 
 %changelog
+* Fri Jul 19 2024 Yuri N. Sedunov <aris@altlinux.org> 6.2.0-alt1
+- 6.2.0
+
 * Thu Apr 06 2023 Yuri N. Sedunov <aris@altlinux.org> 6.1.2-alt1
 - 6.1.2
 
