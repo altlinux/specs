@@ -2,12 +2,12 @@
 
 %define _name emoji-copy
 %define old_name emoji-selector
-%define git_ver 1.1.1
+%define git_ver 2.2.0
 # from metadata.json
 #%%define ego_ver 21
 # from e.g.o
 %define EGO 6242/%_name
-%define ego_ver 22
+%define ego_ver 23
 %define beta %nil
 %define uuid emoji-copy@felipeftn
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -54,7 +54,7 @@ most emojis. Clicking on an emoji copies it to your clipboard.
 %prep
 %setup -n %_name-%git_ver%beta
 %patch1
-%patch2
+#%%patch2
 %if_enabled bootstrap
 %__python3 build/parser.py
 cp %uuid/data/emojis.db %SOURCE1
@@ -84,6 +84,9 @@ popd
 %doc README.md
 
 %changelog
+* Thu Jul 18 2024 Yuri N. Sedunov <aris@altlinux.org> 23-alt1
+- 23 (v2.2.0)
+
 * Fri Mar 29 2024 Yuri N. Sedunov <aris@altlinux.org> 22-alt1
 - 22 (v1.1.1-30-g1325cc2 from gnome-46 branch)
 
