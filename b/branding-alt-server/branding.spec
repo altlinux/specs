@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt1
+Release: alt2
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -27,6 +27,10 @@ BuildRequires: qt5-base-devel
 
 BuildRequires: ImageMagick fontconfig bc
 BuildRequires: distro-licenses >= 1.3.1
+
+%if "%status" != "%nil" || "%status_en" != "%nil"
+BuildRequires: fonts-ttf-dejavu
+%endif
 
 Source: branding.tar
 
@@ -319,6 +323,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Jul 18 2024 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt2
+- Add font for STATUS string
+
 * Wed Jul 17 2024 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt1
 - Add STATUS string to wallpaper
 - Remove bootsplash and gfxboot
