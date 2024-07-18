@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt2
+Release: alt3
 %K5init no_altplace
 
 Group: System/Libraries
@@ -183,6 +183,9 @@ mkdir -p %buildroot/%_K5data/kio/servicemenus/
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Tue Jul 16 2024 Oleg Solovyov <mcpain@altlinux.org> 5.116.0-alt3
+- fix files interpreted as dirs (Closes: #50910)
+
 * Mon Jun 24 2024 Oleg Solovyov <mcpain@altlinux.org> 5.116.0-alt2
 - Skip MIME guessing on network-mounted file systems
 
