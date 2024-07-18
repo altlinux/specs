@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define kernel_base_version 6.9
+%define kernel_base_version 6.10
 %define kernel_source kernel-source-%kernel_base_version
 
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
@@ -43,6 +43,7 @@ BuildRequires: libaudit-devel
 BuildRequires: libbpf-devel
 BuildRequires: libcap-devel
 BuildRequires: libcap-ng-devel
+BuildRequires: libcapstone-devel
 BuildRequires: libdebuginfod-devel
 BuildRequires: libdw-devel
 BuildRequires: libfuse-devel
@@ -509,7 +510,7 @@ mv cpupower.lang ../../
 mkdir -p %buildroot%_sbindir
 install -p -m 0755 hv/hv_kvp_daemon %buildroot%_sbindir/hypervkvpd
 install -p -m 0755 hv/hv_vss_daemon %buildroot%_sbindir/hypervvssd
-install -p -m 0755 hv/hv_fcopy_daemon %buildroot%_sbindir/hypervfcopyd
+install -p -m 0755 hv/hv_fcopy_uio_daemon %buildroot%_sbindir/hypervfcopyd
 
 mkdir -p %buildroot%kvp_scripts_path
 mkdir -p %buildroot%kvp_config_loc
@@ -803,6 +804,9 @@ fi
 %_man1dir/kvm_stat.1*
 
 %changelog
+* Thu Jul 18 2024 Vitaly Chikunov <vt@altlinux.org> 6.10-alt1
+- Update to v6.10 (2024-07-14).
+
 * Mon May 13 2024 Vitaly Chikunov <vt@altlinux.org> 6.9-alt1
 - Update to v6.9 (2024-05-12).
 
