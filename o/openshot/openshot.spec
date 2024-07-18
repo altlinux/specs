@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%ifarch %e2k ppc64le
+%ifnarch %qt5_qtwebengine_arches
 %def_disable qtwebengine
 %else
 %def_enable qtwebengine
@@ -10,7 +10,7 @@
 %define xdg_name org.openshot.OpenShot
 Name: openshot
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Non Linear Video Editor using Python and MLT
 Group: Video
@@ -47,7 +47,7 @@ Requires: python3(PyQt5.QtWebEngine)
 %add_python3_req_skip PyQt5.QtWebEngineCore PyQt5.QtWebEngineWidgets
 %endif
 
-BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires(pre): rpm-build-python3 rpm-build-gir rpm-macros-qt5-webengine
 BuildRequires: python3-devel python3-module-setuptools python3-module-PyQt5
 
 %description
@@ -78,6 +78,10 @@ Xbox, and many more common formats.
 %doc AUTHORS* README*
 
 %changelog
+* Thu Jul 18 2024 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1.1
+- iv@: use rpm-macros-qt5-webengine to detect qt5-webengine
+  availability (fixes FTBFS on riscv64 and loongarch64)
+
 * Fri Jul 12 2024 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
 - 3.2.1
 
