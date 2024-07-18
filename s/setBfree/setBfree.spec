@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: setBfree
-Version: 0.8.12
+Version: 0.8.13
 Release: alt1
 Summary: A DSP Tonewheel Organ emulator
 
@@ -108,6 +108,9 @@ install -Dm644 doc/*.1 %buildroot%_man1dir
 %_libdir/lv2/*
 
 %changelog
+* Thu Jul 18 2024 Ivan A. Melnikov <iv@altlinux.org> 0.8.13-alt1
+- 0.8.13
+
 * Wed Jun 07 2023 Ivan A. Melnikov <iv@altlinux.org> 0.8.12-alt1
 - 0.8.12
 
