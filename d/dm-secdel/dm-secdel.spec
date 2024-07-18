@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: dm-secdel
-Version: 1.0.9
-Release: alt3
+Version: 1.0.10
+Release: alt1
 
 Summary: dm-linear with secure deletion on discard
 License: GPL-2.0-only
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-kernel
 %{?!_without_check:%{?!_disable_check:
-BuildRequires: banner
+BuildRequires: figlet
 BuildRequires: kernel-headers-modules-std-def
 BuildRequires: kernel-headers-modules-un-def
 BuildRequires: rpm-build-vm
@@ -37,23 +37,13 @@ Linear device-mapper target with secure deletion on discard (source).
 %setup
 
 %install
-make install-bin DESTDIR=%buildroot
+make install-bin DESTDIR=%buildroot UNITDIR=%_unitdir
 install -pDm0644 %_sourcedir/%name-%version.tar %kernel_srcdir/kernel-source-%name-%version.tar
 mkdir %buildroot/etc
 echo '# <target name> <source device> <options>' > %buildroot/etc/secdeltab
 
 %check
-# Do a dummy build of the module.
-banner std-def
-make KDIR=$(echo /lib/modules/*-std-def-*/build) VERSION=%version clean all
-# Cannot run tests, because "forbidden dependencies: kernel-image-std-def"
-
-# Build and run functional tests
-banner un-def
-make KDIR=$(echo /lib/modules/*-un-def-*/build) VERSION=%version clean all
-[ "$HOSTTYPE" = armh ] || \
-timeout 60 \
-vm-run --kvm=cond --sbin --udevd --kernel=un-def ./tests.sh
+./check.sh
 
 %files -n kernel-source-%name
 %kernel_src/kernel-source-%name-%version.tar
@@ -72,6 +62,10 @@ systemctl -q enable secdeltab
 %preun_service secdeltab
 
 %changelog
+* Tue Jul 16 2024 Vitaly Chikunov <vt@altlinux.org> 1.0.10-alt1
+- Fix FTBFS after usrmerge.
+- Compatibility with kernel v6.10.
+
 * Mon Apr 17 2023 Vitaly Chikunov <vt@altlinux.org> 1.0.9-alt3
 - Fix build for v6.2 (bio_set_op_attrs).
 - spec: Do not run tests on armh.
