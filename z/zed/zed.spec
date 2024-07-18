@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: zed
-Version: 0.143.7
+Version: 0.144.3
 Release: alt1
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
@@ -95,6 +95,9 @@ sed -i "/Name=/aStartupWMClass=dev.zed.Zed" %buildroot%_desktopdir/zed.desktop
 %_iconsdir/hicolor/*/apps/zed.png
 
 %changelog
+* Thu Jul 18 2024 Anton Zhukharev <ancieg@altlinux.org> 0.144.3-alt1
+- Updated to 0.144.3.
+
 * Wed Jul 17 2024 Anton Zhukharev <ancieg@altlinux.org> 0.143.7-alt1
 - Updated to 0.143.7.
 
