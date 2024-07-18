@@ -2,8 +2,8 @@
 
 Name: bash-completion
 Epoch: 1
-Version: 2.11
-Release: alt3.git.157.g59d2322e
+Version: 2.14.0
+Release: alt1
 
 Summary: bash-completion offers programmable completion for bash
 License: GPL2
@@ -15,7 +15,7 @@ Packager: Ildar Mulyukov <ildar@altlinux.ru>
 Source: %name-%version.tar
 # https://github.com/scop/bash-completion.git
 Source1: rpm-cache.filetrigger
-Patch1: %name-alt-iptables.patch
+#Patch1: %name-alt-iptables.patch
 Patch9: %name-alt-specific.patch
 Source44: %name.watch
 
@@ -29,6 +29,7 @@ BuildArch: noarch
 %add_findreq_skiplist %_datadir/%name/completions/*
 %add_findreq_skiplist %_datadir/%name/helpers/*
 %add_findreq_skiplist %_datadir/pkgconfig/bash-completion.pc
+%add_findreq_skiplist %_datadir/cmake/bash-completion/*
 
 %description
 bash-completion is a collection of shell functions that take advantage
@@ -36,7 +37,7 @@ of the programmable completion feature of bash 2.04 and later.
 
 %prep
 %setup
-%patch1 -p1
+#%%patch1 -p1
 %patch9 -p1
 
 %build
@@ -56,14 +57,18 @@ install -p -m755 %SOURCE1 %buildroot%_rpmlibdir/
 make -C test check ||:
 
 %files
-%doc AUTHORS CHANGES README.md doc/*.txt
+%doc AUTHORS CHANGELOG.md README.md doc/*.md
 %_sysconfdir/bash_completion.d
 %_sysconfdir/bashrc.d/bash_completion.sh
 %_rpmlibdir/*
 %_datadir/%name
 %_datadir/pkgconfig/bash-completion.pc
+%_datadir/cmake/bash-completion
 
 %changelog
+* Thu Jul 18 2024 Alexey Shabalin <shaba@altlinux.org> 1:2.14.0-alt1
+- 2.14.0
+
 * Mon Feb 06 2023 Alexey Shabalin <shaba@altlinux.org> 1:2.11-alt3.git.157.g59d2322e
 - added use of bash-completion scripts extensions (liannnix@)
 - disable show error for root sh (ALT #36760)
