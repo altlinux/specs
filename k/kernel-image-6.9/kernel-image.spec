@@ -1,7 +1,7 @@
 Name: kernel-image-6.9
 Release: alt1
 %define kernel_base_version	6.9
-%define kernel_sublevel	.9
+%define kernel_sublevel	.10
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -118,6 +118,7 @@ BuildRequires: zlib-devel
 BuildRequires: u-boot-tools
 %endif
 Provides: kernel-modules-ipset-%flavour = %version-%release
+Provides: kernel-modules-kvdo-%flavour = %version-%release
 %if_enabled docs
 BuildRequires: python3-module-sphinx /usr/bin/sphinx-build perl-Pod-Usage python3-module-sphinx_rtd_theme
 BuildRequires: fontconfig
@@ -588,6 +589,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Jul 18 2024 Kernel Bot <kernelbot@altlinux.org> 6.9.10-alt1
+- v6.9.10 (2024-07-18).
+- config: CONFIG_DM_VDO=m.
+
 * Thu Jul 11 2024 Kernel Bot <kernelbot@altlinux.org> 6.9.9-alt1
 - v6.9.9 (2024-07-11).
 - config: CONFIG_RTW89_8851BE=m.
