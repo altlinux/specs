@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: distro-licenses
-Version: 1.3.4
+Version: 1.3.5
 Release: alt1
 License: CC0-1.0
 Summary: Texts of various distribution licenses
@@ -27,6 +27,9 @@ Texts of various distribution licenses
 %_bindir/*
 
 %changelog
+* Fri Jul 19 2024 Anton Midyukov <antohami@altlinux.org> 1.3.5-alt1
+- ALT_Product_License, ALT_Server_License: correct clause 1.1.2
+
 * Tue Jun 18 2024 Anton Midyukov <antohami@altlinux.org> 1.3.4-alt1
 - Added license for ALT SP containers images (from @blackdc)
 
