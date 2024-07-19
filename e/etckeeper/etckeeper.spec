@@ -2,7 +2,7 @@
 
 Name: etckeeper
 Version: 1.18.21
-Release: alt2
+Release: alt3
 Summary: Etckeeper help to keep your /etc directory in VCS repository
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -36,7 +36,7 @@ sed -i '/etckeeper-bzr/d' Makefile
 sed -i '/cruft/d' Makefile
 
 %install
-make install DESTDIR=%buildroot PYTHON=%__python3
+make install DESTDIR=%buildroot PYTHON=%__python3 systemddir=%_unitdir
 install -Dp .gear/cron.daily %buildroot%_sysconfdir/cron.daily/%name
 
 %check
@@ -63,6 +63,9 @@ pl="/var/cache/etckeeper/packagelist.pre-install"
 %_unitdir/%{name}.*
 
 %changelog
+* Thu Jul 11 2024 Vitaly Chikunov <vt@altlinux.org> 1.18.21-alt3
+- Fix FTBFS after usrmerge related systemd update.
+
 * Thu Mar 21 2024 Vitaly Chikunov <vt@altlinux.org> 1.18.21-alt2
 - pre-install.d/10packagelist: Fix hook run under non-root users.
 
