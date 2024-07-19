@@ -4,13 +4,13 @@
 %define majver 8.0
 
 Name: kicad
-Version: %majver.3
+Version: %majver.4
 Release: alt1
 Epoch: 1
 
 Summary: An open source software for the creation of electronic schematic diagrams
 Summary(ru_RU.UTF-8): Программа с открытым исходным кодом для проектирования электронных схем
-License: AGPL-3-or-later
+License: AGPL-3.0-or-later
 Group: Engineering
 
 Url: https://gitlab.com/kicad/code/kicad.git
@@ -191,6 +191,12 @@ done
 %dir %_datadir/kicad/template
 
 %changelog
+* Thu Jul 18 2024 Anton Midyukov <antohami@altlinux.org> 1:8.0.4-alt1
+- new version 8.0.4
+
+* Tue Jun 04 2024 Anton Midyukov <antohami@altlinux.org> 1:8.0.3-alt1.1
+- spec: Correct License field
+
 * Tue Jun 04 2024 Anton Midyukov <antohami@altlinux.org> 1:8.0.3-alt1
 - new version 8.0.3
 
