@@ -13,7 +13,7 @@
 
 Name: plasma5-%rname
 Version: 5.27.11
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -78,21 +78,21 @@ developing applications that use %name.
 %package -n %libpowerdevilconfigcommonprivate
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n %libpowerdevilconfigcommonprivate
 KF5 library
 
 %package -n %libpowerdevilui
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n %libpowerdevilui
 KF5 library
 
 %package -n %libpowerdevilcore
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n %libpowerdevilcore
 KF5 library
 
@@ -162,6 +162,9 @@ done
 %_K5lib/libpowerdevilcore.so.%powerdevilcore_sover
 
 %changelog
+* Fri Jul 19 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt2
+- relax requires
+
 * Thu Mar 07 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt1
 - new version
 
