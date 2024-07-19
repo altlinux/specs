@@ -4,7 +4,7 @@
 
 Name: systemd-bootchart
 Version: 235
-Release: alt1
+Release: alt2
 Summary: Boot performance graphing tool
 
 Group: System/Configuration/Boot and Init
@@ -32,7 +32,7 @@ sed -Ei 's,/usr(/lib/systemd),\1,g' man/*.xml
 
 %build
 %autoreconf
-%configure --with-rootprefix=/ --with-rootlibdir=/lib
+%configure
 %make_build
 
 %install
@@ -48,13 +48,16 @@ sed -Ei 's,/usr(/lib/systemd),\1,g' man/*.xml
 %define _customdocdir %_docdir/%name
 %doc LICENSE.GPL2 LICENSE.LGPL2.1 README
 %config(noreplace) %_sysconfdir/systemd/bootchart.conf
-%systemd_unitdir/%name.service
-/lib/systemd/systemd-bootchart
+%_unitdir/%name.service
+%_systemd_dir/systemd-bootchart
 %_man1dir/systemd-bootchart.1*
 %_man5dir/bootchart.conf.5*
 %_man5dir/bootchart.conf.d.5*
 
 %changelog
+* Sat Jul 13 2024 Vitaly Chikunov <vt@altlinux.org> 235-alt2
+- spec: Fix FTBFS after usrmerge.
+
 * Fri Nov 03 2023 Vitaly Chikunov <vt@altlinux.org> 235-alt1
 - Update to v235 (2023-11-01).
 
