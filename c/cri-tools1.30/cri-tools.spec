@@ -5,7 +5,7 @@
 %define prog_name            cri-tools
 %define cri_tools_major      1
 %define cri_tools_minor      30
-%define cri_tools_patch      0
+%define cri_tools_patch      1
 
 Name: %prog_name%cri_tools_major.%cri_tools_minor
 Version: %cri_tools_major.%cri_tools_minor.%cri_tools_patch
@@ -47,7 +47,7 @@ for doc in docs/*.md; do
 done
 pushd .build/src/%import_path
 %golang_build cmd/crictl
-go test -buildmode=pie -o $BUILDDIR/bin/critest -c "$PWD"/cmd/critest
+go test -ldflags "$LDFLAGS" -buildmode=pie -o $BUILDDIR/bin/critest -c "$PWD"/cmd/critest
 popd
 
 for shell in bash zsh fish; do
@@ -76,6 +76,9 @@ install -Dpm 644 crictl-fish-completion -T %buildroot%_datadir/fish/vendor_compl
 %doc docs
 
 %changelog
+* Fri Jul 19 2024 Alexander Stepchenko <geochip@altlinux.org> 1.30.1-alt1
+- 1.30.0 -> 1.30.1
+
 * Thu May 23 2024 Alexander Stepchenko <geochip@altlinux.org> 1.30.0-alt1
 - 1.29.0 -> 1.30.0
 
