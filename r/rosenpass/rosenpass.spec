@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: rosenpass
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 Summary: Post-quantum secure VPN with WireGuard
 License: MIT or Apache-2.0
@@ -89,6 +89,9 @@ kill %%1 %%2
 %_man1dir/rp.1*
 
 %changelog
+* Sat Jul 06 2024 Vitaly Chikunov <vt@altlinux.org> 0.2.2-alt1
+- Security update to v0.2.2 (2024-06-05).
+
 * Sun Nov 26 2023 Vitaly Chikunov <vt@altlinux.org> 0.2.1-alt1
 - Update to v0.2.1 (2023-11-18) (ALT#48591).
 
