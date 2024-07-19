@@ -1,6 +1,6 @@
 Name: rars
 Version: 1.6
-Release: alt5
+Release: alt6
 
 Summary: RISC-V Assembler and Runtime Simulator
 
@@ -16,7 +16,7 @@ Patch0003: .gear/0003-MessagesPane-Force-black-text-color-on-yellow-select.patch
 Patch0101: .gear/0101-Made-commandline-memory-accessible-to-observers.patch
 Patch0102: .gear/0102-Provide-a-headless-timer-tool.patch
 Patch0103: .gear/0103-Provide-command-line-parameter-for-HeadlessTimer.patch
-Patch0201: .gear/0201-Fix-64bit-CSR-loading-into-32bit-register.patch
+Patch0201: .gear/0201-Fix-32-bit-CSRs-reading-directly.patch
 Patch: %name-%version.patch
 
 BuildRequires: java-devel-default ImageMagick-tools
@@ -53,7 +53,7 @@ Categories=Development;IDE;Emulator;
 Icon=%name
 @@@
 
-for i in 16 32 48 64 128; do convert src/images/RISC-V.png $i.png; done
+for i in 16 32 48 64 128; do magick src/images/RISC-V.png $i.png; done
 
 %build
 export LC_ALL=ru_RU.UTF-8
@@ -68,6 +68,9 @@ for i in 16 32 48 64 128; do
     install -D $i.png %buildroot/%_iconsdir/hicolor/${i}x${i}/apps/%name.png
 done
 
+%check
+sh test.sh | grep  -qFv 'X'
+
 %files
 %doc *.md src/*.txt src/help/*
 %_javadir/*
@@ -76,6 +79,10 @@ done
 %_iconsdir/*/*/apps/*
 
 %changelog
+* Fri Jul 19 2024 Fr. Br. George <george@altlinux.org> 1.6-alt6
+- Use another method to truncate CSR32
+- Invoke tests
+
 * Wed Jun 26 2024 Fr. Br. George <george@altlinux.org> 1.6-alt5
 - Fix CSR32 bugfix accurately
 
