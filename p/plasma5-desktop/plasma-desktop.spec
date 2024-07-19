@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.27.11
-Release: alt2
+Release: alt3
 %K5init
 
 Group: Graphical desktop/KDE
@@ -105,7 +105,7 @@ Requires: %name
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common
+Requires: %name-common >= %EVR
 Provides: kf5-plasma-desktop-devel = %EVR
 Obsoletes: kf5-plasma-desktop-devel < %EVR
 %description devel
@@ -116,7 +116,7 @@ developing applications that use %name.
 Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: %name-common
+Requires: %name-common >= %EVR
 Requires: polkit-kde-plasma-workspace
 Provides: polkit-kde-kcmclock
 %description -n polkit-kde-plasma-desktop
@@ -258,6 +258,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Fri Jul 19 2024 Sergey V Turchin <zerg@altlinux.org> 5.27.11-alt3
+- relax requires
+
 * Tue Mar 12 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 5.27.11-alt2
 - change the width of the widget activities (closes: 49369)
 
