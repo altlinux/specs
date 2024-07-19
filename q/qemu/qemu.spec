@@ -3,13 +3,6 @@
 
 # {{{ macros define
 %define _unpackaged_files_terminate_build 1
-# Disable LTO
-# qos-test fails when built with LTO and gcc-12
-# https://gitlab.com/qemu-project/qemu/-/issues/1186
-%def_disable lto
-%if_disabled lto
-%global optflags_lto %nil
-%endif
 
 %def_disable edk2_cross
 
@@ -150,7 +143,7 @@
 # }}}
 
 Name: qemu
-Version: 8.2.5
+Version: 9.0.2
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -183,6 +176,7 @@ Requires: %name-user = %EVR
 
 # for tests
 BuildRequires: /dev/kvm
+BuildRequires: /proc /dev/pts
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: meson >= 0.63.0
@@ -209,7 +203,7 @@ BuildRequires: libatomic-devel-static
 %{?_enable_pipewire:BuildRequires: pkgconfig(libpipewire-0.3) >= 0.3.60}
 %{?_enable_jack:BuildRequires: libjack-devel jack-audio-connection-kit}
 %{?_enable_sndio:BuildRequires: libsndio-devel}
-%{?_enable_capstone:BuildRequires: libcapstone-devel}
+%{?_enable_capstone:BuildRequires: pkgconfig(capstone) >= 3.0.5}
 %{?_enable_vnc_sasl:BuildRequires: libsasl2-devel}
 %{?_enable_vnc_jpeg:BuildRequires: libjpeg-devel}
 %{?_enable_png:BuildRequires: libpng-devel >= 1.6.34}
@@ -217,7 +211,7 @@ BuildRequires: libatomic-devel-static
 %{?_enable_vde:BuildRequires: libvde-devel}
 %{?_enable_aio:BuildRequires: libaio-devel}
 %{?_enable_io_uring:BuildRequires: liburing-devel >= 0.3}
-%{?_enable_bpf:BuildRequires: libbpf-devel}
+%{?_enable_bpf:BuildRequires: libbpf-devel >= 1.1.0}
 %{?_enable_spice:BuildRequires: libspice-server-devel >= 0.14.0 spice-protocol >= 0.14.0}
 BuildRequires: libuuid-devel
 %{?_enable_smartcard:BuildRequires: libcacard-devel >= 2.5.1}
@@ -716,7 +710,7 @@ This package provides the system emulator for %%{1}. \
 %%endif \
 \
 %%if "%%{1}" == "hppa" \
-%%_datadir/%%name/hppa-firmware.img \
+%%_datadir/%%name/hppa-firmware*.img \
 %%endif \
 \
 %%if "%%{1}" == "microblaze" \
@@ -1235,12 +1229,18 @@ echo "%_binfmtdir/qemu-i486-static.conf" >> user-static-binfmt-x86.list
 exit 0
 %endif
 
+%if_enabled user_static
+pushd build-static
+%make_build V=1 check
+popd
+%endif
+
 pushd build-dynamic
 %make_build V=1 check
 popd
 
 %pre common
-%_sbindir/groupadd -r -f %_group
+groupadd -r -f %_group
 %files
 
 %files aux
@@ -1364,6 +1364,12 @@ popd
 %exclude %docdir/LICENSE
 
 %changelog
+* Tue Jul 16 2024 Alexey Shabalin <shaba@altlinux.org> 9.0.2-alt1
+- 9.0.2 (Fixes: CVE-2024-4467).
+
+* Fri Jul 12 2024 Alexey Shabalin <shaba@altlinux.org> 9.0.1-alt1
+- 9.0.1
+
 * Fri Jul 12 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.5-alt1
 - 8.2.5
 
