@@ -7,7 +7,7 @@
 %define _name cinnamon
 
 Name: %{_name}-session
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 License: GPL-2.0-or-later
@@ -140,6 +140,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %_datadir/wayland-sessions/%{_name}-wayland.desktop
 
 %changelog
+* Sat Jul 20 2024 Anton Midyukov <antohami@altlinux.org> 6.2.1-alt1
+- 6.2.1
+
 * Fri Jun 14 2024 Anton Midyukov <antohami@altlinux.org> 6.2.0-alt1
 - 6.2.0
 - spec: convert License to SPDX format
