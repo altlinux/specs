@@ -121,7 +121,7 @@
 
 Name:    samba
 Version: 4.20.2
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2225,6 +2225,14 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Fri Jul 19 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.20.2-alt2
+- New option 'idmap reverse cache update' to control reverse name to sid cache
+  behaviour that Winbind's idmap interface additionally saved to namemap cache,
+  when found unknown sid during sid to name query. This option solves the
+  compatibility problem of foreign SIDs getting stuck in trust relationships
+  from the SIDHistory attribute.
+  By default, this option is disabled (so, compatibility behaviour is enabled).
+
 * Thu Jul 18 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.20.2-alt1
 - Update to stable release of Samba 4.20
 - Replace winbind_krb5_locator.so and async_dns_krb5_locator.so
