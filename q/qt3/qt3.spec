@@ -25,7 +25,7 @@
 %define qsa_major 1
 %define qsa_minor 1
 %define qsa_bugfix 5
-%define rlz alt16.1
+%define rlz alt16.2
 Name: %rname%major
 Version: %major.%minor.%bugfix
 Release: %rlz
@@ -150,7 +150,7 @@ BuildRequires: libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel lib
 BuildRequires: xorg-proto-devel
 #
 BuildRequires: freetype2-devel libGLU-devel
-BuildRequires: libcups-devel libssl libcups-devel
+BuildRequires: libcups-devel libcups-devel
 BuildRequires: libbeecrypt liblcms gcc-c++ libstdc++-devel
 BuildRequires: libmng-devel libjpeg-devel libpng-devel zlib-devel
 BuildRequires: postgresql-devel libpq-devel libMySQL-devel
@@ -1317,6 +1317,9 @@ install -m 644 %SOURCE103 %buildroot%_iconsdir/hicolor/48x48/apps/%rname.png
 %_rpmmacrosdir/*
 
 %changelog
+* Sat Jul 20 2024 Ivan A. Melnikov <iv@altlinux.org> 3.3.8d-alt16.2
+- Drop BR: libssl to fix FTBFS
+
 * Sat Jan 29 2022 Alexei Takaseev <taf@altlinux.org> 3.3.8d-alt16.1
 - Add -I%_includedir/pgsql/server/ to configure
 
