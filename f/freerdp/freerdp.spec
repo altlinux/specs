@@ -8,7 +8,7 @@
 
 Name: freerdp
 Version: 2.11.7
-Release: alt2
+Release: alt3
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -21,8 +21,11 @@ Source1: freerdp-server.service
 Source2: freerdp-login.sh
 Source3: freerdp-logout.sh
 Source4: freerdp.sysconfig
+Source5: freerdp-server.pam
+
 Patch0: %name-alt-pam-check.patch
 Patch1: %name-alt-connection-scripts.patch
+Patch2: %name-alt-use-pam-module-freerdp-server.patch
 Patch2000: %name-e2k.patch
 
 Requires: xfreerdp = %EVR
@@ -212,6 +215,7 @@ the RDP protocol.
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 %ifarch %e2k
 %patch2000 -p1
 sed -i '/set(CMAKE_INSTALL_RPATH /d' CMakeLists.txt
@@ -331,6 +335,9 @@ install -Dpm0755 %SOURCE3 %buildroot%_sysconfdir/freerdp/freerdp-logout.sh
 # Install default configuration for freerdp-server.service
 install -Dpm0644 %SOURCE4 %buildroot%_sysconfdir/sysconfig/freerdp-server
 
+# Install PAM module
+install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
+
 %files
 
 %files -n xfreerdp
@@ -354,6 +361,7 @@ install -Dpm0644 %SOURCE4 %buildroot%_sysconfdir/sysconfig/freerdp-server
 %config(noreplace) %attr(0755, root, root) %_sysconfdir/freerdp/freerdp-login.sh
 %config(noreplace) %attr(0755, root, root) %_sysconfdir/freerdp/freerdp-logout.sh
 %config(noreplace) %_sysconfdir/sysconfig/freerdp-server
+%config(noreplace) %_sysconfdir/pam.d/freerdp-server
 %attr(2711, root, chkpwd) %_bindir/freerdp-shadow-cli
 %_man1dir/freerdp-shadow-cli.*
 
@@ -399,6 +407,9 @@ install -Dpm0644 %SOURCE4 %buildroot%_sysconfdir/sysconfig/freerdp-server
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Fri Jul 19 2024 Andrey Cherepanov <cas@altlinux.org> 2.11.7-alt3
+- freerdp-shadow-cli: use preferred PAM module freerdp-server.
+
 * Tue May 21 2024 Andrey Cherepanov <cas@altlinux.org> 2.11.7-alt2
 - Fix connect to Windows 10 (ALT #50394).
 
