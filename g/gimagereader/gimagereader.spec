@@ -2,7 +2,7 @@
 
 Name: gimagereader
 Version: 3.4.2
-Release: alt1
+Release: alt2
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -20,12 +20,13 @@ Source2: manual-ru.html.in
 
 Patch1: gimagereader-fix-rescan-altbug-48017.patch
 Patch2: gimagereader-fix-gtk-rescan-altbug-48017.patch
-
+Patch3: e72d657a408dc6b77c48c086feede31e08700b4c.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 
 BuildRequires: cmake intltool gcc-c++
-BuildRequires: libgomp-devel libjson-glib-devel libsane-devel libxml++3-devel libleptonica-devel libpcre-devel libexpat-devel libdrm-devel libpodofo-devel libdjvu-devel libzip-devel libuuid-devel tesseract-devel
+BuildRequires: libgomp-devel libjson-glib-devel libxml++3-devel libpcre-devel libexpat-devel libzip-devel libuuid-devel
+BuildRequires: libleptonica-devel libpodofo-devel libdjvu-devel tesseract-devel libsane-devel libdrm-devel 
 
 BuildRequires: python3 python3-module-pygobject3 libgtk+3-gir gobject-introspection-devel
 
@@ -130,6 +131,7 @@ Common files for %name.
 %setup
 #patch1 -p1
 #patch2 -p1
+%patch3 -p1
 
 # remove with new version
 # https://redmine.basealt.space/issues/2497
@@ -212,6 +214,9 @@ ln -s %name-gtk %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sat Jul 20 2024 Vitaly Lipatov <lav@altlinux.ru> 3.4.2-alt2
+- add patch to fix build with enchant 2.7
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 3.4.2-alt1
 - new version 3.4.2 (with rpmrb script)
 
