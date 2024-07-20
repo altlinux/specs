@@ -26,11 +26,14 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.1.alpha
+Release: alt0.2.alpha
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
 BuildRequires: qt5-base-devel
+
+# for licenses
+BuildRequires: distro-licenses >= 1.3-alt1
 
 BuildRequires: ImageMagick fontconfig bc libGConf-devel fribidi
 
@@ -302,6 +305,10 @@ Some system settings for %distro_name.
 
 %prep
 %setup -n branding
+
+cp -a /usr/share/distro-licenses/ALT_Product_License/license.ru.html.in notes/license.ru.html.in
+cp -a /usr/share/distro-licenses/ALT_Product_License/license.all.html.in notes/license.all.html.in
+
 %ifarch %e2k %ix86
 # 2021: no chromium port available
 grep -rl chromium xfce-settings/etcskel/.config/xfce4/panel |
@@ -444,6 +451,9 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Sat Jul 20 2024 Andrey Cherepanov <cas@altlinux.org> 11.0-alt0.2.alpha
+- Used licenses from distro-licenses.
+
 * Fri Apr 19 2024 Andrey Cherepanov <cas@altlinux.org> 11.0-alt0.1.alpha
 - Alpha version of 11.0.
 - xfce-settings: use clock applet instead of datetime.
