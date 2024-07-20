@@ -2,8 +2,8 @@
 %define ver_major 0.4
 %def_enable gtk_doc
 
-%ifarch %ix86 armh
-%def_enable check
+%ifarch ppc64le
+%def_disable check
 %else
 %def_enable check
 %endif
@@ -13,7 +13,7 @@
 %endif
 
 Name: orc
-Version: %ver_major.38
+Version: %ver_major.39
 Release: alt1
 
 Summary: The Oil Runtime Compiler
@@ -149,6 +149,9 @@ rm -f %buildroot/%_libdir/lib%name-test-%ver_major.a
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Sat Jul 20 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.39-alt1
+- 0.4.39 (fixed CVE-2024-40897)
+
 * Wed Feb 28 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.38-alt1
 - 0.4.38
 
