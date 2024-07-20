@@ -3,7 +3,7 @@
 %define soname 3
 
 Name: wxsvg
-Version: 1.5.24
+Version: 1.5.25
 Release: alt1
 Epoch: 1
 
@@ -15,7 +15,6 @@ Url: http://wxsvg.sourceforge.net
 # Source-url: https://sourceforge.net/projects/wxsvg/files/wxsvg/%version/wxsvg-%version.tar.bz2/download
 Source: %name-%version.tar
 Patch: %name-1.5.14-alt.patch
-Patch1: %name-%version-gcc13.patch
 
 BuildRequires: gcc-c++ libart_lgpl-devel libpango-devel
 BuildRequires: libwxGTK3.2-devel libavformat-devel libswscale-devel
@@ -81,6 +80,9 @@ Development shared library for wxSVG
 %_pkgconfigdir/*
 
 %changelog
+* Sat Jul 20 2024 Anton Farygin <rider@altlinux.ru> 1:1.5.25-alt1
+- 1.5.24 -> 1.5.25
+
 * Fri Jun 23 2023 Anton Midyukov <antohami@altlinux.org> 1:1.5.24-alt1
 - new version (1.5.24) with rpmgs script
 - add patch for fix build with gcc13
