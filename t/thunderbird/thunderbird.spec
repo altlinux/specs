@@ -1,5 +1,4 @@
 %define r_name thunderbird
-%def_with bundled_cbindgen
 %def_with mach_build
 %ifndef build_parallel_jobs
 %define build_parallel_jobs 32
@@ -17,7 +16,7 @@
 %endif
 
 Name: 	 thunderbird
-Version: 115.9.0
+Version: 128.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -25,16 +24,12 @@ License: MPL-2.0
 Group: 	 Networking/Mail
 URL: 	 https://www.thunderbird.net
 
-Packager: Andrey Cherepanov <cas@altlinux.org>
-
 Source0: %name-%version.tar
 Source2: rpm.macros
 Source3: thunderbird.desktop
 Source4: thunderbird-mozconfig
 Source5: thunderbird-default-prefs.js
 Source6: l10n.tar
-# Get $HOME/.cargo after run cargo install cbindgen (without bin/cbindgen)
-Source7: cbindgen-vendor.tar
 Source8: thunderbird-wayland.desktop
 # Solution for ftbfs with python3.12 based on idea from
 # https://bugzilla.mozilla.org/show_bug.cgi?id=1857492
@@ -43,15 +38,14 @@ Source8: thunderbird-wayland.desktop
 # https://raw.githubusercontent.com/benjaminp/six/1.16.0/six.py
 Source9: six.py
 
-Patch01: thunderbird-alt-fix-redefinition-double_t.patch
-Patch02: thunderbird-115-disable-browser-option.patch
-Patch03: thunderbird-115-fix-types-defination.patch
-Patch04: 0050-ALT-Show-restore-CSD-button-as-maximized.patch
-Patch3500: 0001-thunderbird-115-add-loongarch-support.patch
-Patch3501: 0002_xpcom_add_loongarch64_support.patch 
-Patch3502: 0003_botan_loongarch64_buildfix.patch
-Patch3503: 0004_rust_loongarch64.patch
-Patch3504: 0005_rust_checksums_upd.patch
+### Start Patches
+Patch001: 0001-thunderbird-115-add-loongarch-support.patch
+Patch002: 0002-Fix-the-botan-build-for-loongarch64.patch
+Patch003: 0003-Use-maximize-icon-for-CSD-restore-button-missing-in-.patch
+Patch004: 0004-Disable-browser-option.patch
+Patch005: 0005-Fix-types-defination.patch
+Patch006: 0006-Fix-wrong-redefinition-of-double_t-on-i586.patch
+### End Patches
 
 ExcludeArch: armh
 
@@ -79,6 +73,7 @@ BuildRequires: libstdc++-devel
 BuildRequires: rpm-macros-alternatives
 BuildRequires: rust >= %rust_version
 BuildRequires: rust-cargo >= %cargo_version
+BuildRequires: cbindgen
 BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
 BuildRequires: libXcursor-devel
 BuildRequires: libXi-devel
@@ -252,15 +247,7 @@ thunderbird packages by some Alt Linux Team Policy compatible way.
 %prep
 %setup -q
 tar -xf %SOURCE6
-%patch01 -p2
-%patch02 -p2
-%patch03 -p2
-%patch04 -p2
-%patch3500 -p1
-%patch3501 -p1
-%patch3502 -p1
-%patch3503 -p1
-%patch3504 -p1
+%autopatch -p2
 
 # Update bundled six.py for 1.16
 cp -fv %SOURCE9 third_party/python/six/six.py
@@ -274,6 +261,10 @@ ac_add_options --prefix="%_prefix"
 ac_add_options --libdir="%_libdir"
 %ifnarch armh %{ix86} ppc64le loongarch64
 ac_add_options --enable-linker=lld
+%endif
+%ifarch %{arm} %{ix86}
+# See linker flags in the build section.
+ac_add_options --enable-linker=bfd
 %endif
 %ifnarch x86_64
 ac_add_options --disable-webrtc
@@ -307,29 +298,6 @@ rm -rf -- third_party/python/pip/pip*
 %add_optflags %optflags_shared
 %add_optflags -lwayland-client
 %add_findprov_lib_path %tbird_prefix
-
-%if_with bundled_cbindgen
-# compile cbindgen
-CBINDGEN_HOME="$PWD/cbindgen"
-CBINDGEN_BINDIR="$CBINDGEN_HOME/bin"
-
-if [ ! -x "$CBINDGEN_BINDIR/cbindgen" ]; then
- mkdir -p -- "$CBINDGEN_HOME"
-
- tar --strip-components=1 -C "$CBINDGEN_HOME" --overwrite -xf %SOURCE7
-
- cat > "$CBINDGEN_HOME/config" <<-EOF
-         [source.crates-io]
-         replace-with = "vendored-sources"
-
-         [source.vendored-sources]
-         directory = "$CBINDGEN_HOME"
-EOF
-
- env CARGO_HOME="$CBINDGEN_HOME" \
-         cargo install cbindgen
-fi
-%endif
 
 # Add fake RPATH
 rpath="/$(printf %%s '%tbird_prefix' |tr '[:print:]' '_')"
@@ -389,7 +357,6 @@ export LIBIDL_CONFIG='/usr/bin/libIDL-config-2'
 export srcdir="$PWD"
 export SHELL=/bin/sh
 export MOZILLA_OBJDIR="$PWD"
-export PATH="$CBINDGEN_BINDIR:$PATH"
 
 # Do not use desktop notify during build process
 export MOZ_NOSPAM=1
@@ -584,6 +551,48 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Fri Jul 19 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.0-alt1
+- New version.
+- Security fixes:
+  + CVE-2024-3852: GetBoundName in the JIT returned the wrong object
+  + CVE-2024-3854: Out-of-bounds-read after mis-optimized switch statement
+  + CVE-2024-3857: Incorrect JITting of arguments led to use-after-free during garbage collection
+  + CVE-2024-2609: Permission prompt input delay could expire when not in focus
+  + CVE-2024-3859: Integer-overflow led to out-of-bounds-read in the OpenType sanitizer
+  + CVE-2024-3861: Potential use-after-free due to AlignedBuffer self-move
+  + CVE-2024-3863: Download Protections were bypassed by .xrm-ms files on Windows
+  + CVE-2024-3302: Denial of Service using HTTP/2 CONTINUATION frames
+  + CVE-2024-3864: Memory safety bug fixed in Firefox 125, Firefox ESR 115.10, and Thunderbird 115.10
+  + CVE-2024-4367: Arbitrary JavaScript execution in PDF.js
+  + CVE-2024-4767: IndexedDB files retained in private browsing mode
+  + CVE-2024-4768: Potential permissions request bypass via clickjacking
+  + CVE-2024-4769: Cross-origin responses could be distinguished between script and non-script content-types
+  + CVE-2024-4770: Use-after-free could occur when printing to PDF
+  + CVE-2024-4777: Memory safety bugs fixed in Firefox 126, Firefox ESR 115.11, and Thunderbird 115.11
+  + CVE-2024-5702: Use-after-free in networking
+  + CVE-2024-5688: Use-after-free in JavaScript object transplant
+  + CVE-2024-5690: External protocol handlers leaked by timing attack
+  + CVE-2024-5691: Sandboxed iframes were able to bypass sandbox restrictions to open a new window
+  + CVE-2024-5692: Bypass of file name restrictions during saving
+  + CVE-2024-5693: Cross-Origin Image leak via Offscreen Canvas
+  + CVE-2024-5696: Memory Corruption in Text Fragments
+  + CVE-2024-5700: Memory safety bugs fixed in Firefox 127, Firefox ESR 115.12, and Thunderbird 115.12
+  + CVE-2024-6606: Out-of-bounds read in clipboard component
+  + CVE-2024-6607: Leaving pointerlock by pressing the escape key could be prevented
+  + CVE-2024-6608: Cursor could be moved out of the viewport using pointerlock.
+  + CVE-2024-6609: Memory corruption in NSS
+  + CVE-2024-6610: Form validation popups could block exiting full-screen mode
+  + CVE-2024-6600: Memory corruption in WebGL API
+  + CVE-2024-6601: Race condition in permission assignment
+  + CVE-2024-6602: Memory corruption in NSS
+  + CVE-2024-6603: Memory corruption in thread creation
+  + CVE-2024-6611: Incorrect handling of SameSite cookies
+  + CVE-2024-6612: CSP violation leakage when using devtools
+  + CVE-2024-6613: Incorrect listing of stack frames
+  + CVE-2024-6614: Incorrect listing of stack frames
+  + CVE-2024-6604: Memory safety bugs fixed in Firefox 128, Firefox ESR 115.13, Thunderbird 128, and Thunderbird 115.13
+  + CVE-2024-6615: Memory safety bugs fixed in Firefox 128 and Thunderbird 128
+
 * Wed Apr 03 2024 Pavel Vasenkov <pav@altlinux.org> 115.9.0-alt1
 - New version.
 - Security fixes:
