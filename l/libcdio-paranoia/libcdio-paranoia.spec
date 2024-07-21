@@ -1,18 +1,18 @@
-%define _version 10.2+2.0.1
+%define _version 10.2+2.0.2
 
 Name: libcdio-paranoia
 Version: %(echo %_version |sed -e 's|\+|.|g')
 Release: alt1
 
 Summary: CD paranoia library from libcdio
+License: GPL-3.0-or-later and LGPL-2.1-or-later
 Group: System/Libraries
-License: GPLv3+
-Url: http://www.gnu.org/software/libcdio/
+Url: https://www.gnu.org/software/libcdio/
 
-#VCS: https://github.com/rocky/libcdio-paranoia.git
-Source: http://ftp.gnu.org/gnu/libcdio/libcdio-paranoia-%_version.tar.bz2
+Vcs: https://github.com/rocky/libcdio-paranoia.git
+Source: https://ftp.gnu.org/gnu/libcdio/libcdio-paranoia-%_version.tar.bz2
 
-BuildRequires: libcdio-devel >= 0.93 help2man
+BuildRequires: libcdio-devel >= 2.0.0 help2man
 
 %description
 This CDDA reader distribution ('libcdio-cdparanoia') reads audio from the
@@ -21,8 +21,9 @@ data to a file or pipe as .wav, .aifc or as raw 16 bit linear PCM.
 
 %package devel
 Summary: Development files for %name
+License: LGPL-2.1-or-later
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains development files and libraries for %name.
@@ -45,9 +46,9 @@ for f in  %buildroot%_includedir/cdio/paranoia/*.h; do
 ln -s paranoia/`basename $f` %buildroot%_includedir/cdio/`basename $f`
 done
 
-rm -rf %buildroot%_mandir/jp
+%find_lang --with-man cd-paranoia
 
-%files
+%files -f cd-paranoia.lang
 %_bindir/*
 %_libdir/*.so.*
 %_man1dir/*
@@ -59,6 +60,9 @@ rm -rf %buildroot%_mandir/jp
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Jul 21 2024 Yuri N. Sedunov <aris@altlinux.org> 10.2.2.0.2-alt1
+- 10.2+2.0.2
+
 * Thu Dec 05 2019 Yuri N. Sedunov <aris@altlinux.org> 10.2.2.0.1-alt1
 - 10.2+2.0.1
 
