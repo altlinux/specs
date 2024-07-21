@@ -9,7 +9,7 @@
 %endif
 
 Name: rpm-build-vm
-Version: 1.67
+Version: 1.68
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -225,6 +225,11 @@ vm-run --stub-exit=7 && exit 1 || test $? -eq 7
 %endif
 
 %changelog
+* Sun Jul 21 2024 Vitaly Chikunov <vt@altlinux.org> 1.68-alt1
+- Support incorrectly usrmerged %%buildroot layout.
+- Experimental virtiofs support.
+- Add net and disk support in microvm mode.
+
 * Fri Jun 28 2024 Vitaly Chikunov <vt@altlinux.org> 1.67-alt1
 - aarch64: Restore UEFI boot support.
 
