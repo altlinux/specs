@@ -1,12 +1,12 @@
 %def_enable snapshot
 %define _name g4music
-%define ver_major 3.7
+%define ver_major 3.8
 %define rdn_name com.github.neithern.%_name
 
 %def_disable check
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major
 Release: alt1
 
 Summary: Play your music elegantly
@@ -31,15 +31,16 @@ Requires: gst-plugins-bad1.0 >= %gst_ver
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools
 BuildRequires: /usr/bin/appstream-util desktop-file-utils
+BuildRequires: /usr/bin/appstreamcli
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(gstreamer-1.0)
 BuildRequires: pkgconfig(gstreamer-tag-1.0)
 
 %description
-G4Music is a fast fluent lightweight music player written in GTK4, with
-a beautiful and adaptive user interface, focuses on high performance for
-large music collection.
+Gapless (AKA: G4Music) is a fast fluent lightweight music player written
+in GTK4, with a beautiful and adaptive user interface, focuses on high
+performance for large music collection.
 
 %prep
 %setup -n %_name-%version
@@ -52,6 +53,8 @@ large music collection.
 %meson_install
 %find_lang %_name
 
+appstreamcli metainfo-to-news --format text data/app.appdata.xml.in NEWS
+
 %check
 %__meson_test
 
@@ -62,10 +65,13 @@ large music collection.
 %_datadir/dbus-1/services/%rdn_name.service
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.appdata.xml
-%doc README*
+%doc README* NEWS
 
 
 %changelog
+* Sun Jul 21 2024 Yuri N. Sedunov <aris@altlinux.org> 3.8-alt1
+- updated to v3.8-2-gb1b9282 (renamed to Gapless)
+
 * Sun Jun 30 2024 Yuri N. Sedunov <aris@altlinux.org> 3.7.2-alt1
 - 3.7.2
 
