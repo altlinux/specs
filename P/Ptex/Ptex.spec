@@ -1,5 +1,5 @@
-%define git ea6890e
-%define soname 2
+%define git 4aa2c35
+%define soname 2.4
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
@@ -8,8 +8,8 @@
 %def_enable test
 
 Name: Ptex
-Version: 2.4.2
-Release: alt0.1.g%{git}
+Version: 2.4.3
+Release: alt1
 Summary: Per-Face Texture Mapping for Production Rendering
 
 Group: System/Libraries
@@ -40,6 +40,8 @@ lib%{name} information utility
 Summary: %{name} library
 Group: System/Libraries
 Provides: lib%{name} = %EVR
+Conflicts: libPtex2 < %EVR
+Obsoletes: libPtex2 < %EVR
 
 %description -n lib%{name}%{soname}
 Ptex is a texture mapping system developed by
@@ -57,7 +59,7 @@ Documentation for Ptex
 %package -n lib%{name}-devel
 Summary: Ptex headers and libraries
 Group: Development/C++
-Requires: lib%{name} = %EVR
+Requires: lib%{name}%{soname} = %EVR
 
 %description -n lib%{name}-devel
 Development headers and static libraries for %{name}
@@ -91,7 +93,7 @@ make test
 
 %files -n lib%{name}%{soname}
 %doc LICENSE README.md
-%_libdir/lib%{name}.so.*
+%_libdir/lib%{name}.so.%soname
 
 %files docs
 %_defaultdocdir/%name
@@ -103,5 +105,9 @@ make test
 %_pkgconfigdir/ptex.pc
 
 %changelog
+* Sun Jul 21 2024 Anton Farygin <rider@altlinux.ru> 2.4.3-alt1
+- update to 2.4.3
+- libPtex2 was renamed according shared libs policy
+
 * Wed Nov 15 2023 L.A. Kostis <lakostis@altlinux.ru> 2.4.2-alt0.1.gea6890e
 - Initial build for ALTLinux.
