@@ -10,8 +10,8 @@
 %define soname 2.5
 
 Name:           lib%oname
-Version:        2.5.12.0
-Release:        alt1.1
+Version:        2.5.13.1
+Release:        alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
 
@@ -216,6 +216,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Sun Jul 21 2024 Anton Farygin <rider@altlinux.ru> 2.5.13.1-alt1
+- 2.5.12.0 -> 2.5.13.1 (Fixes: CVE-2024-40630)
+
 * Mon Jul 08 2024 L.A. Kostis <lakostis@altlinux.ru> 2.5.12.0-alt1.1
 - devel: added libopencv dependency.
 
