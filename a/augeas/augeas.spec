@@ -1,5 +1,5 @@
 Name: augeas
-Version: 1.13.0
+Version: 1.14.1
 Release: alt1
 Summary: A library for changing configuration files
 
@@ -11,6 +11,8 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: readline-devel libselinux-devel gnulib flex perl-podlators ruby-stdlibs libxml2-devel
+# for tests
+BuildRequires: /proc
 Requires: vim-common
 
 %description
@@ -57,6 +59,7 @@ The libraries for %name.
 %files
 %_bindir/*
 %_mandir/man1/*
+%_datadir/bash-completion/completions/*
 %_datadir/vim/vimfiles/syntax/augeas.vim
 %_datadir/vim/vimfiles/ftdetect/augeas.vim
 
@@ -72,6 +75,9 @@ The libraries for %name.
 %_libdir/pkgconfig/augeas.pc
 
 %changelog
+* Tue Jul 16 2024 Anton Farygin <rider@altlinux.ru> 1.14.1-alt1
+- 1.14.1
+
 * Wed Jan 05 2022 Anton Farygin <rider@altlinux.ru> 1.13.0-alt1
 - 1.13.0
 
