@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 Summary: Sphinx extension for automatic generation of an example gallery
 License: BSD-3-Clause
@@ -69,6 +69,9 @@ A Sphinx extension that builds an HTML version of any Python script and puts it 
 %exclude %python3_sitelibdir/sphinx_gallery/tests
 
 %changelog
+* Sun Jul 21 2024 Anton Vyatkin <toni@altlinux.org> 0.17.0-alt1
+- New version 0.17.0.
+
 * Mon Apr 29 2024 Anton Vyatkin <toni@altlinux.org> 0.16.0-alt1
 - New version 0.16.0.
 
