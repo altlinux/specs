@@ -2,13 +2,13 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name cartridges
-%define ver_major 2.8
+%define ver_major 2.9
 %define rdn_name page.kramo.Cartridges
 
 %def_enable check
 
 Name: %_name
-Version: %ver_major.5
+Version: %ver_major.3
 Release: alt1
 
 Summary: Cartridges
@@ -31,6 +31,9 @@ BuildArch: noarch
 Requires: typelib(Adw) = 1
 Requires: libadwaita-gir >= %adw_ver
 Requires: dconf
+
+# macOS specific
+%add_python3_req_skip AppKit Foundation
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson blueprint-compiler >= %bp_ver typelib(Adw)
@@ -71,6 +74,9 @@ SteamGridDB.
 
 
 %changelog
+* Sun Jul 21 2024 Yuri N. Sedunov <aris@altlinux.org> 2.9.3-alt1
+- 2.9.3
+
 * Sun May 26 2024 Yuri N. Sedunov <aris@altlinux.org> 2.8.5-alt1
 - 2.8.5
 
