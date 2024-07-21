@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     bottles
-Version:  51.9
-Release:  alt3
+Version:  51.13
+Release:  alt1
 Epoch:    1
 
 Summary:  Easily manage wine prefixes in a new way. Run Windows software and games on Linux
@@ -64,6 +64,9 @@ echo %_datadir/locale/zh_Hant/LC_MESSAGES/bottles.mo >> %name.lang
 %_datadir/metainfo/*.metainfo.xml
 
 %changelog
+* Sun Jul 21 2024 Andrey Cherepanov <cas@altlinux.org> 1:51.13-alt1
+- New version.
+
 * Fri Dec 29 2023 Roman Alifanov <ximper@altlinux.org> 1:51.9-alt3
 - NMU: Added needed Requires (ALT #44234).
 
