@@ -1,8 +1,8 @@
 %define osg_version %(pkg-config --modversion openscenegraph)
 
 Name: osgearth
-Version: 3.5
-Release: alt2
+Version: 3.6
+Release: alt1
 
 Summary: Dynamic map generation toolkit for OpenSceneGraph
 License: LGPL-3.0 with exceptions
@@ -12,6 +12,7 @@ Url: http://osgearth.org
 Source: %name-%version.tar
 Source1: submodules.tar
 Patch1: osgearth-alt-fix-pathes.patch
+Patch2: osgearth-disable-osgdb_zip.so.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -116,7 +117,7 @@ This package contains sample data files for osgEarth.
 %prep
 %setup
 tar xf %SOURCE1
-%patch1 -p1
+%autopatch -p1
 %ifarch %e2k
 # error: undefined reference to symbol '_ZTIN9osgViewer14GraphicsWindowE'
 sed -i 's/OSGUTIL_LIBRARY/& OSGVIEWER_LIBRARY/' \
@@ -155,7 +156,7 @@ cp -a data tests %buildroot%_datadir/osgEarth
 %files -n lib%name-devel
 %_includedir/osg*
 %_libdir/libosg*.so
-%_datadir/cmake/osgEarthConfig*.cmake
+%_libdir/cmake/osgearth
 
 %files examples
 %_bindir/*
@@ -164,6 +165,9 @@ cp -a data tests %buildroot%_datadir/osgEarth
 %_datadir/osgEarth
 
 %changelog
+* Sun Jul 21 2024 Andrey Cherepanov <cas@altlinux.org> 3.6-alt1
+- New version.
+
 * Mon Mar 04 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.5-alt2
 - Fixed build for Elbrus.
 
