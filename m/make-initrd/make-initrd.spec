@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.48.0
+Version: 2.48.1
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -389,6 +389,10 @@ fi
 %endif
 
 %changelog
+* Sun Jul 21 2024 Alexey Gladkov <legion@altlinux.ru> 2.48.1-alt1
+- Utilities:
+  + initrd-put: Fix hang if soname is not found.
+
 * Sat Jul 13 2024 Alexey Gladkov <legion@altlinux.ru> 2.48.0-alt1
 - Utilities:
   + initrd-put: Add support of elf dlopen metadata. The systemd-256 has
