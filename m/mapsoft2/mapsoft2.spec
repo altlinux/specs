@@ -1,5 +1,5 @@
 Name:         mapsoft2
-Version:      2.5
+Version:      2.6
 Release:      alt1
 
 Summary:      mapsoft2 - programs for working with maps and geodata
@@ -67,6 +67,32 @@ export SKIP_IMG_DIFFS=1
 %_datadir/xfig/Libraries/*
 
 %changelog
+* Mon Jul 22 2024 Vladislav Zavjalov <slazav@altlinux.org> 2.6-alt1
+image:
+ - Add support for reading tiled TIFF images
+ - An important fix for tiled image data handling (much faster rendering)
+ - Fix slazav/mapsoft2#67 error (important for new libtiff)
+ - A few fixes and interface changes
+image_cnt - new module:
+ - Finding contours on the image, smart contour filtering
+srtm:
+ - Rewrite data handling and interpolation (one more time)
+ - Fix data handling for much faster operation
+ - Using image_cnt module
+ - Using overlay data (see https://github.com/slazav/alos_overlay)
+vector maps:
+ - remove set_dpi command in types.cfg; set fig font size for each object separately
+ - improve default label positions: move to the nearest object point; label_def_mshift option
+vmap_data:
+ - types.cfg: adjust fig font size, add label_def_mshift for some objects
+ - render.cfg: tune fonts for summits and passes
+ - always use UTF8 encoding in fig files
+ - vmaps_wp_update: use single wpasses.cnv
+ms2geofig program:
+ - apply --cnt_minpts option only to closed contours
+ - new contour finding; add cnt_vtol, scnt_vtol options; remove smooth option
+ - --add_comm option (adding additional comments to new fig objects)
+
 * Fri May 31 2024 Vladislav Zavjalov <slazav@altlinux.org> 2.5-alt1
 A few bug fixes:
 - err: fix problems with NaN values and with multiple evaluations in assert scripts
