@@ -1,20 +1,15 @@
+%define soversion 0
 Name: inotify-tools
-Version: 3.20.1
+Version: 4.23.9.0
 Release: alt1
 
 Summary: Command line utilities for inotify
 Group: System/Kernel and hardware
-License: GPL
+License: GPLv2-only
 Url: https://github.com/rvoicilas/inotify-tools/wiki/
-
+VCS: https://github.com/rvoicilas/inotify-tools
 Source: %name-%version.tar
-
-Packager: Igor Zubkov <icesik@altlinux.org>
-
-Requires: libinotifytools = %version-%release
-
-# Automatically added by buildreq on Sun Apr 15 2012
-BuildRequires: doxygen
+BuildRequires: doxygen gcc-c++
 
 %description
 inotify-tools is a set of command-line programs for Linux providing
@@ -53,7 +48,9 @@ that use the libinotifytools library.
 %configure \
 	--disable-static
 %make_build
-make check || exit 1
+
+%check
+make check
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -61,12 +58,13 @@ make check || exit 1
 rm -rf %buildroot%_datadir/doc/
 
 %files
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS
 %_bindir/*
 %_man1dir/*
 
 %files -n libinotifytools
-%_libdir/libinotifytools.so.*
+%_libdir/libinotifytools.so.%soversion.*
+%_libdir/libinotifytools.so.%soversion
 
 %files devel
 %doc libinotifytools/src/doc/html/*
@@ -75,6 +73,9 @@ rm -rf %buildroot%_datadir/doc/
 %_includedir/inotifytools/*.h
 
 %changelog
+* Mon Jul 22 2024 Anton Farygin <rider@altlinux.ru> 4.23.9.0-alt1
+- 3.20.1 -> 4.23.9.0
+
 * Thu Nov 15 2018 Pavel Skrylev <majioa@altlinux.org> 3.20.1-alt1
 - Bump to 3.20.1.
 
