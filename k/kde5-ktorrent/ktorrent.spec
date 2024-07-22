@@ -12,7 +12,7 @@
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt1
+Release: alt2
 %K5init
 
 Group:     Networking/File transfer
@@ -49,7 +49,8 @@ BuildRequires: kf5-kdoctools-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5
 BuildRequires: kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
 BuildRequires: kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-kplotting-devel kf5-kross-devel
 BuildRequires: kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel
-BuildRequires: kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-plasma-workspace-devel kf5-solid-devel kf5-sonnet-devel
+BuildRequires: kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
+# tmp BuildRequires: plasma5-workspace-devel
 
 %description
 ktorrent - KDE BitTorrent client. It comes with many useful plugins.
@@ -105,6 +106,9 @@ done
 
 
 %changelog
+* Mon Jul 22 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt2
+- temporaty build without plasma workspace
+
 * Fri Feb 16 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
