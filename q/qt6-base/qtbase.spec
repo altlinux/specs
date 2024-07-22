@@ -32,7 +32,7 @@
 Name: qt6-base
 %define major  6
 Version: 6.6.2
-Release: alt3
+Release: alt4
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -64,6 +64,8 @@ Patch1002: alt-ca-certificates-path.patch
 Patch1003: alt-decrease-iconloader-fallback-depth.patch
 Patch1004: alt-kernel-requires.patch
 Patch1005: e2k-qt-6.patch
+#
+Patch2000: 9003-qt6-base-6.6.2-qmenu_fix_shortcuts.patch
 
 # macros
 %define _qt6 %gname
@@ -387,6 +389,8 @@ OpenGL widgets library for the Qt%major toolkit
 %ifarch %e2k
 %patch1005 -p1
 %endif
+#
+%patch2000 -p1
 
 # install optflags
 %add_optflags %optflags_shared
@@ -826,6 +830,9 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Mon Jul 22 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt4
+- add patch for keyboard shortcuts from Corwin
+
 * Mon Feb 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt3
 - fix iconloader fallback (closes: 49503)
 
