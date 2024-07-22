@@ -1,7 +1,7 @@
 %add_findreq_skiplist %_libdir/imhex/plugins/*
 
 Name: imhex
-Version: 1.34.0
+Version: 1.35.4
 Release: alt1
 
 Summary: A hex editor for reverse engineers and programmers
@@ -15,7 +15,9 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 
-BuildRequires: cli11-devel libcapstone-devel libcurl-devel libfmt-devel libglfw3-devel libmagic-devel libmbedtls-devel libnativefiledialog-extended-devel libyara-devel nlohmann-json-devel libfreetype-devel
+BuildRequires: cli11-devel libcapstone-devel libcurl-devel libfmt-devel libglfw3-devel libmagic-devel
+BuildRequires: libmbedtls-devel libnativefiledialog-extended-devel libyara-devel nlohmann-json-devel
+BuildRequires: libfreetype-devel libXrandr-devel
 BuildRequires: cmake gcc-c++
 BuildRequires: ctest
 
@@ -89,6 +91,9 @@ rm -fv %buildroot%_bindir/imhex-updater
 %_datadir/metainfo/*
 
 %changelog
+* Mon Jul 22 2024 Mikhail Tergoev <fidel@altlinux.org> 1.35.4-alt1
+- updated to upstream 1.35.4
+
 * Thu Jun 06 2024 Mikhail Tergoev <fidel@altlinux.org> 1.34.0-alt1
 - updated to upstream 1.34.0
 
