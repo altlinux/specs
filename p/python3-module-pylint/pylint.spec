@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.2.5
+Version: 3.2.6
 Release: alt1
 Summary: Python code static checker
 License: GPLv2+
@@ -73,6 +73,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 22 2024 Stanislav Levin <slev@altlinux.org> 3.2.6-alt1
+- 3.2.5 -> 3.2.6.
+
 * Mon Jul 01 2024 Stanislav Levin <slev@altlinux.org> 3.2.5-alt1
 - 3.2.4 -> 3.2.5.
 
