@@ -1,6 +1,6 @@
 Name: hostapd
 Version: 2.10
-Release: alt2
+Release: alt3
 
 Summary: User space daemon for extended IEEE 802.11 management
 License: BSD
@@ -13,7 +13,7 @@ Source2: hostapd.sysconfig
 Source3: hostapd.service
 Source4: hostapd.init
 
-BuildRequires: libssl-devel libnl3-devel
+BuildRequires: libssl-devel libnl-devel
 
 Obsoletes: hostap-tools
 
@@ -69,6 +69,9 @@ install -pm0644 -D %name/%{name}_cli.1 %buildroot%_man1dir/%{name}_cli.1
 %_man8dir/*
 
 %changelog
+* Mon Jul 22 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.10-alt3
+- stop using obsolete libnl3-devel name in BR
+
 * Sun Jan 30 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.10-alt2
 - keep using select() in event loop
 
