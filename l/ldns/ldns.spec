@@ -7,18 +7,17 @@
 %def_with dane_ta_usage
 
 Name: ldns
-Version: 1.8.3
+Version: 1.8.4
 Release: alt1
-License: BSD
-Url: http://www.nlnetlabs.nl/%name/
-Group: System/Libraries
+
 Summary: Lowlevel DNS(SEC) library with API
 
-# https://github.com/NLnetLabs/ldns.git
-Source: %name-%version.tar
+License: BSD
+Group: System/Libraries
+URL: https://www.nlnetlabs.nl/projects/ldns
+VCS: https://github.com/NLnetLabs/ldns
 
-Patch1: ldns-alt-python3-compat.patch
-Patch2: ldns-swig-32bit.patch
+Source: %name-%version.tar
 
 BuildRequires: gcc-c++ libssl-devel doxygen perl libpcap-devel
 %if_with python3
@@ -80,8 +79,6 @@ Python extensions for ldns
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p2
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -164,6 +161,9 @@ install -pD -m644 libdns.vim %buildroot%_sysconfdir/vim/libldns
 %endif
 
 %changelog
+* Mon Jul 22 2024 Grigory Ustinov <grenka@altlinux.org> 1.8.4-alt1
+- Automatically updated to 1.8.4.
+
 * Wed Jun 05 2024 Grigory Ustinov <grenka@altlinux.org> 1.8.3-alt1
 - Automatically updated to 1.8.3.
 
