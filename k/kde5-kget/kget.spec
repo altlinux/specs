@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt1
+Release: alt2
 %K5init no_appdata
 
 Group: Networking/File transfer
@@ -24,7 +24,7 @@ Patch1: alt-dbus-service.patch
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: boost-devel-headers libgpgme-devel libassuan-devel libmms-devel libqca-qt5-devel libsqlite3-devel
-BuildRequires: plasma5-workspace-devel
+# tmp BuildRequires: plasma5-workspace-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
 BuildRequires: kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel
@@ -104,6 +104,9 @@ sed -i '/^find_package(KF5Torrent/d' CMakeLists.txt
 %_K5lib/libkgetcore.so.%sover
 
 %changelog
+* Mon Jul 22 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt2
+- temporaty build without plasma workspace
+
 * Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
