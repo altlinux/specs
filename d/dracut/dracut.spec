@@ -13,7 +13,7 @@
 %filter_from_requires /^\/usr\/share\/pkgconfig/d
 
 Name: dracut
-Version: 102
+Version: 103
 Release: alt1
 
 Summary: Initramfs generator using udev
@@ -198,16 +198,15 @@ echo "DRACUT_VERSION=%version" > dracut-version.sh
 
 %build
 %configure \
-	--systemdsystemunitdir=%_unitdir \
-	--bashcompletiondir=%bash_completion_dir \
-	--libdir=%prefix/lib \
-	%{subst_enable documentation}
+    --systemdsystemunitdir=%_unitdir \
+    --bashcompletiondir=%bash_completion_dir \
+    --libdir=%prefix/lib
 
 %make_build
 
 %install
 %makeinstall_std \
-     libdir=%prefix/lib
+    libdir=%prefix/lib
 
 echo "DRACUT_VERSION=%version-%release" > %buildroot%dracutlibdir/dracut-version.sh
 
@@ -372,6 +371,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/91tpm2-tss
 %dracutlibdir/modules.d/95debug
 %dracutlibdir/modules.d/95fstab-sys
+%dracutlibdir/modules.d/95hwdb
 %dracutlibdir/modules.d/95lunmask
 %dracutlibdir/modules.d/95nvmf
 %dracutlibdir/modules.d/95resume
@@ -425,7 +425,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %_unitdir/initrd.target.wants/dracut-pre-pivot.service
 %_unitdir/initrd.target.wants/dracut-pre-trigger.service
 %_unitdir/initrd.target.wants/dracut-pre-udev.service
-%prefix/lib/kernel/install.d/50-dracut.install
+%_kernel_installdir/50-dracut.install
 
 %files network
 %dracutlibdir/modules.d/01systemd-networkd
@@ -493,6 +493,9 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 #%dracutlibdir/modules.d/98integrity
 
 %changelog
+* Sat Jul 20 2024 Alexey Shabalin <shaba@altlinux.org> 103-alt1
+- 103
+
 * Thu Jul 04 2024 Alexey Shabalin <shaba@altlinux.org> 102-alt1
 - 102
 
