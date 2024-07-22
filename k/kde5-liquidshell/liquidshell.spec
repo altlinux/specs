@@ -6,16 +6,16 @@
 %define libliquidshell liquidshell%liquidshell_sover
 
 Name: kde5-liquidshell
-Version: 1.8.1
-Release: alt2
+Version: 1.9.0
+Release: alt1
 %K5init no_altplace appdata
 
 Group: Graphical desktop/KDE
 Summary: KDE 5 plasma dekstop shell alternative
 Url: https://cgit.kde.org/liquidshell.git/
-License: GPLv3
+License: GPL-3.0
 
-Requires: plasma5-workspace
+#Requires: plasma5-workspace
 Requires: polkit-kde-plasma-desktop
 
 Source: %rname-%version.tar
@@ -139,6 +139,9 @@ sed -i 's|^Type=.*|Type=XSession|' %buildroot/%_datadir/xsessions/liquidshell-se
 %_datadir/metainfo/*liquidshell*
 
 %changelog
+* Mon Jul 22 2024 Sergey V Turchin <zerg@altlinux.org> 1.9.0-alt1
+- new version
+
 * Tue Oct 25 2022 Sergey V Turchin <zerg@altlinux.org> 1.8.1-alt2
 - install to standart place
 - add Icon to xsession desktop-file
