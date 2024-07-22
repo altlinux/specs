@@ -1,5 +1,5 @@
 Name: installer-feature-lightdm-kde
-Version: 0.2
+Version: 0.2.1
 Release: alt1
 
 Summary: Setup LightDM after install
@@ -28,6 +28,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Mon Jul 22 2024 Sergey V Turchin <zerg@altlinux.org> 0.2.1-alt1
+- fix state file permissions
+
 * Tue Jul 09 2024 Sergey V Turchin <zerg@altlinux.org> 0.2-alt1
 - set x11 for nvidia
 
