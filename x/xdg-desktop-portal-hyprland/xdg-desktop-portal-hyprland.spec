@@ -1,11 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 %define ver_major 1.3
 
 %def_enable check
 
 Name: xdg-desktop-portal-hyprland
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: xdg-desktop-portal backend for Hyprland
@@ -67,6 +67,9 @@ XDG Desktop Portal implementation for Hyprland.
 
 
 %changelog
+* Mon Jul 22 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.3-alt1
+- 1.3.3
+
 * Fri Jul 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt1
 - updated to v1.3.2-2-gc5b3093
 
