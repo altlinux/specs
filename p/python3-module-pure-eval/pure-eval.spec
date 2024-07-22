@@ -1,12 +1,9 @@
-%define _stripped_files_terminate_build 1
-%set_verify_elf_method strict
-
 %define oname pure_eval
 
 %def_with check
 
 Name: python3-module-pure-eval
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 Summary: Safely evaluate AST nodes without side effects
 License: MIT
@@ -16,7 +13,6 @@ VCS: https://github.com/alexmojaki/pure_eval
 
 BuildArch: noarch
 
-# https://github.com/alexmojaki/pure_eval.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -52,6 +48,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Jul 22 2024 Grigory Ustinov <grenka@altlinux.org> 0.2.3-alt1
+- Automatically updated to 0.2.3.
+
 * Sun May 19 2024 Grigory Ustinov <grenka@altlinux.org> 0.2.2-alt1
 - Automatically updated to 0.2.2.
 
