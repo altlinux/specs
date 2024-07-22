@@ -17,7 +17,7 @@
 
 Name: 	 thunderbird
 Version: 128.0
-Release: alt1
+Release: alt2
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -25,12 +25,12 @@ Group: 	 Networking/Mail
 URL: 	 https://www.thunderbird.net
 
 Source0: %name-%version.tar
+Source1: thunderbird.c
 Source2: rpm.macros
 Source3: thunderbird.desktop
 Source4: thunderbird-mozconfig
 Source5: thunderbird-default-prefs.js
 Source6: l10n.tar
-Source8: thunderbird-wayland.desktop
 # Solution for ftbfs with python3.12 based on idea from
 # https://bugzilla.mozilla.org/show_bug.cgi?id=1857492
 # but with exception, that we dont want to update urllib3
@@ -201,6 +201,8 @@ Provides:  %name-ru = %EVR
 Obsoletes: %name-ru < %EVR
 Provides: %name-enigmail = %EVR
 Obsoletes: %name-enigmail < %EVR
+Provides: thunderbird-wayland = %EVR
+Obsoletes: thunderbird-wayland < %EVR
 
 # Protection against fraudulent DigiNotar certificates
 Requires: libnss >= 3.13.1-alt1
@@ -221,16 +223,6 @@ emailing safer, faster and easier than ever before and can also scale to meet
 the most sophisticated organizational needs.
 
 The package contains Lightning - an integrated calendar for Thunderbird.
-
-%package wayland
-Summary: Thunderbird Wayland launcher
-Group: Networking/Mail
-#BuildArch: noarch
-Requires: %name
-
-%description wayland
-The thunderbird-wayland package contains launcher and desktop file
-to run Thunderbird natively on Wayland.
 
 %package -n rpm-build-%name
 Summary:  RPM helper macros to rebuild thunderbird packages
@@ -296,7 +288,6 @@ rm -rf -- third_party/python/pip/pip*
 %build
 %define optflags_lto %nil
 %add_optflags %optflags_shared
-%add_optflags -lwayland-client
 %add_findprov_lib_path %tbird_prefix
 
 # Add fake RPATH
@@ -404,6 +395,15 @@ for LANG in *; do
 done
 popd
 
+# This is necessary to configure the environment variables.
+# It is written in C so that the process in the ps has the right name.
+$CC $CFLAGS \
+	-Wall -Wextra \
+	-DMOZ_PLUGIN_PATH=\"%browser_plugins_path\" \
+	-DMOZ_PROGRAM=\"%tbird_prefix/thunderbird-bin\" \
+	-DMOZ_DIST_BIN=\"%tbird_prefix\"\
+	%SOURCE1 -o thunderbird
+
 %install
 export SHELL=/bin/sh
 mkdir -p \
@@ -465,10 +465,8 @@ rm -rf -- \
 	%buildroot/%tbird_prefix/README.txt \
 	#
 
-# desktop files
+install -m755 thunderbird %buildroot/%_bindir/thunderbird
 install -Dpm644 %SOURCE3 %buildroot/%_desktopdir/thunderbird.desktop
-install -Dpm644 %SOURCE8 %buildroot/%_desktopdir/thunderbird-wayland.desktop
-
 # install altlinux-specific configuration
 install -Dpm644 %SOURCE5 %buildroot/%tbird_prefix/defaults/pref/all-altlinux.js
 
@@ -480,16 +478,6 @@ for s in 16 22 24 32 48 64 128 256; do
 done
 install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
         %buildroot%_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
-
-# main startup script
-cat>%buildroot/%_bindir/thunderbird<<-EOF
-	#!/bin/sh -e
-	export MOZ_APP_LAUNCHER="\${MOZ_APP_LAUNCHER:-\$0}"
-	export MOZ_PLUGIN_PATH="%browser_plugins_path\${MOZ_PLUGIN_PATH:+:\$MOZ_PLUGIN_PATH}"
-	export NSS_SSL_ENABLE_RENEGOTIATION=1
-	%tbird_prefix/thunderbird-bin \${1:+"\$@"}
-EOF
-chmod 755 %buildroot/%_bindir/thunderbird
 
 # rpm-build-thunderbird files
 mkdir -p %buildroot%_rpmmacrosdir
@@ -517,24 +505,9 @@ cat %SOURCE2 | \
 	done
 )
 
-# Wrapper for wayland
-cat > %buildroot%_bindir/thunderbird-wayland <<'EOF'
-#!/bin/sh
-export GDK_BACKEND=wayland
-export MOZ_ENABLE_WAYLAND=1
-export MOZ_GTK_TITLEBAR_DECORATION=client
-export XDG_SESSION_TYPE=wayland
-
-unset DISPLAY
-
-exec %_bindir/thunderbird "$@"
-EOF
-chmod +x %buildroot%_bindir/thunderbird-wayland
-
 %files
 %doc AUTHORS
 %_bindir/*
-%exclude %_bindir/thunderbird-wayland
 %tbird_prefix
 %mozilla_arch_extdir/%tbird_cid
 %mozilla_noarch_extdir/%tbird_cid
@@ -543,14 +516,14 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_iconsdir/hicolor/*/apps/thunderbird.png
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
-%files wayland
-%_bindir/thunderbird-wayland
-%_datadir/applications/thunderbird-wayland.desktop
-
 %files -n rpm-build-%name
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Mon Jul 22 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.0-alt2
+- Merge thunderbird-wayland to thunderbird.
+- Enforce window name to associate icon and title with window.
+
 * Fri Jul 19 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.0-alt1
 - New version.
 - Security fixes:
