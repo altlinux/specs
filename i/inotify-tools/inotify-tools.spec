@@ -1,11 +1,11 @@
 %define soversion 0
 Name: inotify-tools
 Version: 4.23.9.0
-Release: alt1
+Release: alt2
 
 Summary: Command line utilities for inotify
 Group: System/Kernel and hardware
-License: GPLv2-only
+License: GPL-2.0-only
 Url: https://github.com/rvoicilas/inotify-tools/wiki/
 VCS: https://github.com/rvoicilas/inotify-tools
 Source: %name-%version.tar
@@ -73,6 +73,9 @@ rm -rf %buildroot%_datadir/doc/
 %_includedir/inotifytools/*.h
 
 %changelog
+* Mon Jul 22 2024 Anton Farygin <rider@altlinux.ru> 4.23.9.0-alt2
+- fix license according SPDX
+
 * Mon Jul 22 2024 Anton Farygin <rider@altlinux.ru> 4.23.9.0-alt1
 - 3.20.1 -> 4.23.9.0
 
