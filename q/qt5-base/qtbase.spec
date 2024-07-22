@@ -37,7 +37,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.15.13
-Release: alt2
+Release: alt3
 %if "%version" == "%{get_version qt5-tools-common}"
 %def_disable bootstrap
 %else
@@ -84,6 +84,8 @@ Patch1013: alt-QTBUG-88599.patch
 Patch1014: alt-loongarch64-support.patch
 # Source: https://github.com/OpenMandrivaAssociation/qt5-qtbase/blob/master/qtbase-5.15.9-work-around-pyside2-brokenness.patch
 Patch1015: qt5-base-5.15.11-alt-qtbase-5.15.9-work-around-pyside2-brokenness.patch
+#
+Patch2000: 9103-qtbase-5.15.13-qmenu_fix_shortcuts.patch
 
 # macros
 %define _qt5 %gname
@@ -426,6 +428,8 @@ done
 %patch1013 -p1
 %patch1014 -p1
 %patch1015 -p1
+#
+%patch2000 -p1
 
 bin/syncqt.pl -version %version
 
@@ -870,6 +874,9 @@ make check -k ||:
 
 
 %changelog
+* Mon Jul 22 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.13-alt3
+- add patch for keyboard shortcuts from Corwin
+
 * Wed Apr 24 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.13-alt2
 - build with -no-feature-relocatable
 
