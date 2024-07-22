@@ -144,7 +144,7 @@
 
 Name: qemu
 Version: 9.0.2
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -1364,6 +1364,9 @@ groupadd -r -f %_group
 %exclude %docdir/LICENSE
 
 %changelog
+* Sat Jul 20 2024 Alexey Shabalin <shaba@altlinux.org> 9.0.2-alt2
+- qemu-guest-agent.rules: fix warning reported by udevadm verify (ALT#49574).
+
 * Tue Jul 16 2024 Alexey Shabalin <shaba@altlinux.org> 9.0.2-alt1
 - 9.0.2 (Fixes: CVE-2024-4467).
 
