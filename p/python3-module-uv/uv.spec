@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.2.26
+Version: 0.2.27
 Release: alt1
 Summary: An extremely fast Python package installer and resolver
 License: MIT
@@ -55,6 +55,9 @@ cat < vendor_cargoconf.toml >> .cargo/config.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jul 22 2024 Stanislav Levin <slev@altlinux.org> 0.2.27-alt1
+- 0.2.26 -> 0.2.27.
+
 * Thu Jul 18 2024 Stanislav Levin <slev@altlinux.org> 0.2.26-alt1
 - 0.2.25 -> 0.2.26.
 
