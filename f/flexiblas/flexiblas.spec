@@ -13,7 +13,7 @@
 
 Name: flexiblas
 Version: %major_version.%minor_version.%patch_version
-Release: alt1
+Release: alt2
 Summary: A BLAS/LAPACK wrapper library with runtime exchangeable backends
 Group: Sciences/Mathematics
 # LGPL-3.0-or-later
@@ -110,6 +110,10 @@ This package contains a plugin that enables profiling support.
 %setup
 
 %build
+%ifarch %e2k
+# -fopenmp must also be set when linking
+sed -i '/cmake_minimum_required/a add_link_options(-fopenmp)' CMakeLists.txt
+%endif
 %cmake -B build \
     -DCMAKE_INSTALL_PREFIX=%prefix \
     -DINTEGER8=OFF \
@@ -233,6 +237,9 @@ make -C build64 test %check_relax
 %endif
 
 %changelog
+* Tue Jul 23 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.4.4-alt2
+- fix e2k build
+
 * Sun Jun 09 2024 Anton Farygin <rider@altlinux.ru> 3.4.4-alt1
 - 3.4.4
 
