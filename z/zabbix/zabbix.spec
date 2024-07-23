@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		49955f1fb5c
+%define svnrev		0543fbe4af6
 
 %def_with pgsql
 %def_enable java
@@ -17,7 +17,7 @@
 %endif
 
 Name: zabbix
-Version: 7.0.0
+Version: 7.0.1
 Release: alt1
 Epoch: 1
 
@@ -850,6 +850,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue Jul 23 2024 Alexei Takaseev <taf@altlinux.org> 1:7.0.1-alt1
+- 7.0.1
+
 * Tue Jun 04 2024 Alexei Takaseev <taf@altlinux.org> 1:7.0.0-alt1
 - 7.0.0
 - Change license to AGPL-3.0-only
