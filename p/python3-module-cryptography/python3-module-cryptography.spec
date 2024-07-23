@@ -6,7 +6,7 @@
 %def_disable test
 
 Name: python3-module-%oname
-Version: 42.0.5
+Version: 43.0.0
 Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers
@@ -34,6 +34,7 @@ BuildRequires: /proc
 BuildRequires: rust rust-cargo python3-module-setuptools_rust
 BuildRequires: python3-module-toml python3-module-semantic_version
 BuildRequires: python3-module-asn1crypto >= 0.21.0
+BuildRequires: python3-module-maturin
 %if_enabled test
 BuildRequires: python3-module-cryptography-vectors
 BuildRequires: python3-module-pretend python3-module-iso8601 python3-module-pytz
@@ -89,6 +90,9 @@ py.test3
 %python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Tue Jul 23 2024 Vladimir Didenko <cow@altlinux.ru> 43.0.0-alt1
+- new version
+
 * Tue Feb 27 2024 Vladimir Didenko <cow@altlinux.ru> 42.0.5-alt1
 - new version
 
