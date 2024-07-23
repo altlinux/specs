@@ -1,5 +1,5 @@
 Name: nsd
-Version: 4.9.1
+Version: 4.10.0
 Release: alt1
 
 Summary: Name Server Daemon
@@ -16,6 +16,10 @@ Source5: %name.init
 Source6: %name.tmpfiles
 Source7: %name.service.forking
 
+# git submodules
+Source101: simdzone.tar
+
+
 Patch0: 0001-Enable-control-by-default.patch
 
 BuildRequires: flex bison libevent-devel libssl-devel
@@ -26,6 +30,7 @@ and open source name server.
 
 %prep
 %setup
+tar -xf %SOURCE101 -C simdzone
 
 %patch0 -p1
 
@@ -89,6 +94,9 @@ fi
 %doc doc contrib %name.conf.sample
 
 %changelog
+* Tue Jul 23 2024 Alexei Takaseev <taf@altlinux.org> 4.10.0-alt1
+- 4.10.0
+
 * Fri Apr 05 2024 Alexei Takaseev <taf@altlinux.org> 4.9.1-alt1
 - 4.9.1
 
