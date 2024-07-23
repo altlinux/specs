@@ -16,8 +16,8 @@
 %endif
 
 Name: 	 thunderbird
-Version: 128.0
-Release: alt2
+Version: 128.0.1
+Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -520,6 +520,9 @@ cat %SOURCE2 | \
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Tue Jul 23 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.0.1-alt1
+- New version.
+
 * Mon Jul 22 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.0-alt2
 - Merge thunderbird-wayland to thunderbird.
 - Enforce window name to associate icon and title with window.
