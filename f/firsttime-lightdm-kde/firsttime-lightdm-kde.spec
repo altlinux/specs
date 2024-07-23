@@ -1,5 +1,5 @@
 Name: firsttime-lightdm-kde
-Version: 0.2
+Version: 0.2.1
 Release: alt1
 
 Group: System/Configuration/Other
@@ -27,6 +27,9 @@ install -pm755 *.sh %buildroot/%_sysconfdir/firsttime.d/
 %_sysconfdir/firsttime.d/*
 
 %changelog
+* Tue Jul 23 2024 Sergey V Turchin <zerg@altlinux.org> 0.2.1-alt1
+- fix actions
+
 * Mon Jul 22 2024 Sergey V Turchin <zerg@altlinux.org> 0.2-alt1
 - fix state file permissions
 
