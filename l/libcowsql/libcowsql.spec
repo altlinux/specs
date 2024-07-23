@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%define soname 1
+%define soname 0
 
 Name: libcowsql
 Version: 1.15.6
-Release: alt1
+Release: alt2
 Summary: Library for distributed SQLite database
 
 License: LGPLv3
@@ -28,7 +28,6 @@ with no dependency on external databases.
 %package -n %name%soname
 Summary: Library for distributed SQLite databases
 Group: Development/Databases
-Provides: %name = %EVR
 
 %description -n %name%soname
 This package is a C library that implements an embeddable
@@ -42,7 +41,7 @@ with no dependency on external databases.
 Summary: Library for distributed SQLite database (development files)
 Group: Development/Databases
 Conflicts: libdqlite-devel
-Requires: %name = %version-%release
+Requires: %name%soname = %EVR
 
 %description devel
 This package is a C library that implements an embeddable
@@ -66,7 +65,8 @@ with no dependency on external databases.
 
 %files -n %name%soname
 %doc AUTHORS README.md LICENSE
-%_libdir/*.so.*
+%_libdir/*.so.%soname.*
+%_libdir/*.so.%soname
 
 %files devel
 %_includedir/*.h
@@ -74,5 +74,8 @@ with no dependency on external databases.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jul 10 2024 Nadezhda Fedorova <fedor@altlinux.org> 1.15.6-alt2
+- Fix libpackaging without provides. 
+
 * Mon May 06 2024 Nadezhda Fedorova <fedor@altlinux.org> 1.15.6-alt1
 - Initial version.

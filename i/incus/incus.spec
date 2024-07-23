@@ -3,7 +3,7 @@
 %define incususer incusadm
 
 Name:		incus
-Version:	6.1.0
+Version:	6.3.0
 Release:	alt1
 Summary:	Incus is a system container and virtual machine manager
 
@@ -13,7 +13,6 @@ URL:		https://github.com/lxc/incus
 
 Source0:	%name-%version.tar
 Patch:          %name-%version.patch
-Patch1:		incus-6.1.0-i586.patch
 Source11:      %name.socket
 Source12:      %name.service
 Source13:      %name-startup.service
@@ -108,7 +107,6 @@ injection capability when creating a virtual machine.
 %prep
 %setup
 %patch -p1
-%patch1 -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -181,10 +179,8 @@ useradd  -r -g %name-admin -c "Incus daemon" \
 
 %post
 usermod --add-subgids 100000-165535 root ||:
-usermod --add-subgids 100000-165535 nobody ||:
 usermod --add-subgids 100000-165535 %incususer ||:
 usermod --add-subuids 100000-165535 root ||:
-usermod --add-subuids 100000-165535 nobody ||:
 usermod --add-subuids 100000-165535 %incususer ||:
 
 %post_service %name
@@ -231,5 +227,9 @@ usermod --add-subuids 100000-165535 %incususer ||:
 %_man1dir/%name-agent.*
 
 %changelog
+* Mon Jul 15 2024 Nadezhda Fedorova <fedor@altlinux.org> 6.3.0-alt1
+- Updated to 6.3.0.
+- Deleted subgid/subuid settings for nobody, it's unusable in alt.
+
 * Fri May 17 2024 Nadezhda Fedorova <fedor@altlinux.org> 6.1.0-alt1
 - Initial version.
