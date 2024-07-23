@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: xdg-utils
-Version: 1.1.3
-Release: alt12
+Version: 1.2.1
+Release: alt1
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 
@@ -21,21 +21,18 @@ Patch5: xdg-open-generic-mimeapps.patch
 Patch6: xdg-su-use-gnomesu-for-xfce-if-available.patch
 Patch7: xdg-open-fix-ifs-use.patch
 Patch8: xdg-open-kde5.patch
-Patch9: xdg-su-kde5.patch
+Patch9: xdg-su-kde.patch
 Patch10: xdg-common-detect-de-generic.patch
-Patch11: xdg-open-added_open_lxqt.patch
+#
 Patch12: xdg-open-fix-open-url-in-lxde.patch
 Patch13: xdg-desktop-menu-dummy.patch
 Patch14: xdg-email-detect-thunderbird-kde5.patch
 Patch15: xdg-email-detect-thunderbird-mate.patch
 Patch16: xdg-su-xvt.patch
-Patch17: xdg-open-replace-egrep-to-grep-E.patch
-Patch18: xdg-su-added-dde-support.patch
-Patch19: xdg-terminal-added-kde5-support.patch
+#
 Patch20: xdg-terminal-added-dde-support.patch
 Patch21: xdg-terminal-fix-generic.patch
-Patch22: Fix-a-bug-when-xdg-terminal-needs-gsettings-to-get-t.patch
-Patch23: Fixes-x-argument-which-is-the-default-for-gnome-mate.patch
+#
 Patch24: xdg-screensaver.in-add-xfce4-screensaver-support.patch
 
 BuildArch: noarch
@@ -83,25 +80,22 @@ popd
 %patch0 -p2
 #patch1 -p1
 %patch2 -p2
-%patch5 -p1
+#%patch5 -p1
 %patch6 -p2
 #patch7 -p2
 #patch8 -p1
-%patch9 -p1
+%patch9 -p1 -b .kde
 %patch10 -p2
-%patch11 -p2
+#
 %patch12 -p2
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
-%patch17 -p2
-%patch18 -p2
-%patch19 -p2
+#
 %patch20 -p2
 %patch21 -p2
-%patch22 -p1
-%patch23 -p1
+#
 %patch24 -p1
 
 %build
@@ -125,9 +119,12 @@ popd
 %_bindir/xdg-su
 %_bindir/xdg-terminal
 %_man1dir/*
-%doc ChangeLog README LICENSE RELEASE_NOTES TODO
+%doc ChangeLog README* LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Tue Jul 23 2024 Sergey V Turchin <zerg@altlinux.org> 1.2.1-alt1
+- new version (closes: 49410)
+
 * Fri Jul 08 2022 Anton Midyukov <antohami@altlinux.org> 1.1.3-alt12
 - xdg-screensaver: add xfce4-screensaver support
 
