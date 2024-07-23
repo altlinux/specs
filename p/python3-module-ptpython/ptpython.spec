@@ -1,9 +1,7 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname ptpython
 
 Name: python3-module-%oname
-Version: 3.0.27
+Version: 3.0.29
 Release: alt1
 Summary: Python REPL build on top of prompt_toolkit
 License: BSD-3-Clause
@@ -16,8 +14,10 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-prompt_toolkit python3-module-setuptools python3-module-wheel
-BuildRequires: python3(pygments)
+BuildRequires: python3-module-prompt_toolkit
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-pygments
 
 Provides: %oname = %version.%release
 Provides: %{oname}3 = %version.%release
@@ -61,6 +61,9 @@ Provides: %oname-ipython = %version.%release
 %python3_sitelibdir/%oname/*ipython*
 
 %changelog
+* Tue Jul 23 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.29-alt1
+- Automatically updated to 3.0.29.
+
 * Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.27-alt1
 - Automatically updated to 3.0.27.
 
