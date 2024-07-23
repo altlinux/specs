@@ -1,11 +1,9 @@
-%define _unpackaged_files_terminate_build 1
 %define pypi_name trio
-%define modulename %pypi_name
 
 %def_with check
 
-Name: python3-module-%modulename
-Version: 0.25.1
+Name: python3-module-%pypi_name
+Version: 0.26.0
 Release: alt1
 Summary: Trio - Pythonic async I/O for humans and snake people
 License: MIT or Apache-2.0
@@ -46,7 +44,7 @@ its main purpose is to help you write programs that do multiple things at the
 same time with parallelized I/O.
 
 %package tests
-Summary: Tests for %modulename
+Summary: Tests for %pypi_name
 Group: Development/Python3
 Requires: %name = %EVR
 
@@ -56,7 +54,7 @@ licensed, async/await-native I/O library for Python. Like all async libraries,
 its main purpose is to help you write programs that do multiple things at the
 same time with parallelized I/O.
 
-This package contains tests for %modulename.
+This package contains tests for %pypi_name.
 
 %prep
 %setup
@@ -77,18 +75,21 @@ This package contains tests for %modulename.
 
 %files
 %doc README.*
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%exclude %python3_sitelibdir/%modulename/_tests
-%exclude %python3_sitelibdir/%modulename/testing
-%exclude %python3_sitelibdir/%modulename/_core/_tests
+%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%exclude %python3_sitelibdir/%pypi_name/_tests
+%exclude %python3_sitelibdir/%pypi_name/testing
+%exclude %python3_sitelibdir/%pypi_name/_core/_tests
 
 %files tests
-%python3_sitelibdir/%modulename/_tests
-%python3_sitelibdir/%modulename/testing
-%python3_sitelibdir/%modulename/_core/_tests
+%python3_sitelibdir/%pypi_name/_tests
+%python3_sitelibdir/%pypi_name/testing
+%python3_sitelibdir/%pypi_name/_core/_tests
 
 %changelog
+* Tue Jul 23 2024 Grigory Ustinov <grenka@altlinux.org> 0.26.0-alt1
+- Automatically updated to 0.26.0.
+
 * Thu May 16 2024 Grigory Ustinov <grenka@altlinux.org> 0.25.1-alt1
 - Automatically updated to 0.25.1.
 
