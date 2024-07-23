@@ -1,6 +1,6 @@
 Name: arm-none-eabi-gcc
 Version: 13.2.1
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 License: GPLv3+
@@ -85,11 +85,26 @@ mkdir obj-%target; cd obj-%target
             --with-system-zlib \
             --with-sysroot=%_libexecdir/%target
 
-%make_build
+%make_build \
+CFLAGS_FOR_TARGET='-Os -ffunction-sections -fdata-sections' \
+CXXFLAGS_FOR_TARGET='-Os -fno-exceptions'
+mv %target %target-nano
+%make_build \
+CFLAGS_FOR_TARGET='-Os -ffunction-sections -fdata-sections' \
+CXXFLAGS_FOR_TARGET='-Os'
 
 %install
 %makeinstall_std -C obj-%target
-
+find obj-%target/%target-nano -type f -name libstdc++.a | while read f; do
+	o=$(echo $f |sed -r 's,^[^/]+/[^/]+(.+)libstdc\+\+-v3/src/\.libs/,\1,; s,\.a$,_nano.a,')
+	install -pm0644 -D $f %buildroot%_libexecdir/%target/lib/$o
+	%_libexecdir/%target/bin/ranlib %buildroot%_libexecdir/%target/lib/$o
+done
+find obj-%target/%target-nano -type f -name libsupc++.a | while read f; do
+	o=$(echo $f |sed -r 's,^[^/]+/[^/]+(.+)libstdc\+\+-v3/libsupc\+\+/\.libs/,\1,; s,\.a$,_nano.a,')
+	install -pm0644 -D $f %buildroot%_libexecdir/%target/lib/$o
+	%_libexecdir/%target/bin/ranlib %buildroot%_libexecdir/%target/lib/$o
+done
 # we don't want these as we are a cross version
 rm -r %buildroot%_infodir
 rm -r %buildroot%_man7dir
@@ -119,6 +134,9 @@ find  %buildroot%_libexecdir/ -type f -name \*.la -delete
 %_libexecdir/gcc/%target/*/cc1plus
 
 %changelog
+* Mon Jul 22 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 13.2.1-alt2
+- packaged nano flavour of libstdc++ (closes: 50949)
+
 * Tue Dec 19 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 13.2.1-alt1
 - 13.2.1
 
