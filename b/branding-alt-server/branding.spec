@@ -7,6 +7,8 @@
 %define status_en %nil
 %define flavour %brand-%theme
 
+%def_enable flickfree
+
 %define design_graphics_abi_epoch 0
 %define design_graphics_abi_major 12
 %define design_graphics_abi_minor 0
@@ -18,7 +20,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt2
+Release: alt3
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -78,6 +80,12 @@ License:  Distributable
 Group:    System/Configuration/Boot and Init
 BuildArch: noarch
 Provides: plymouth-theme-%theme = %EVR
+%if_enabled flickfree
+%define plymouth_theme bgrt-alt
+Requires: plymouth-theme-bgrt-alt
+%else
+%define plymouth_theme %theme
+%endif
 Requires: plymouth-plugin-script
 Requires(pre):   plymouth
 
@@ -254,10 +262,13 @@ install mate-settings/lightdm-gtk-greeter.conf %buildroot/%_datadir/install3/lig
 %post bootloader
 [ "$1" -eq 1 ] || exit 0
 . shell-config
-shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.txt
-#shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_NORMAL %grub_normal
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
+%if_enabled flickfree
+shell_config_del /etc/sysconfig/grub2 GRUB_THEME
+%else
+shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.txt
+%endif
 
 %post indexhtml
 %_sbindir/indexhtml-update
@@ -268,10 +279,7 @@ shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 #bootsplash
 %post bootsplash
 [ "$1" -eq 1 ] || exit 0
-subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
-[ -f /etc/sysconfig/grub2 ] && \
-      subst "s|GRUB_WALLPAPER=.*|GRUB_WALLPAPER=/usr/share/plymouth/themes/%theme/grub.jpg|" \
-             /etc/sysconfig/grub2 ||:
+sed -i "s/Theme=.*/Theme=%plymouth_theme/" /etc/plymouth/plymouthd.conf ||:
 
 #notes
 %post notes
@@ -323,6 +331,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Jul 23 2024 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt3
+- Use bgrt-alt theme for plymouth (Closes: 41591)
+
 * Thu Jul 18 2024 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt2
 - Add font for STATUS string
 
