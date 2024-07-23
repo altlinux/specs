@@ -1,6 +1,6 @@
 Name: v4l-utils
-Version: 1.26.1
-Release: alt2
+Version: 1.28.0
+Release: alt1
 
 Summary: Collection of video4linux support libraries and utilities
 License: GPLv2+
@@ -8,9 +8,10 @@ Group: Video
 Url: http://linuxtv.org
 
 Source: %name-%version-%release.tar
+
 BuildRequires: gcc-c++ meson
-BuildRequires: libalsa-devel libGLU-devel libjpeg-devel
-BuildRequires: libsystemd-devel libudev-devel qt5-base-devel
+BuildRequires: libalsa-devel libGLU-devel libjpeg-devel libjson-c-devel
+BuildRequires: libsystemd-devel libudev-devel qt6-base-devel qt6-5compat-devel
 
 %package -n ir-keytable
 Summary: IR keytable management tool
@@ -85,8 +86,6 @@ also serve as a generic video/TV viewer application.
 %install
 %meson_install
 
-%define _udevdir %(pkg-config --variable=udevdir udev)
-
 %files
 %doc ChangeLog COPYING README.*
 
@@ -94,9 +93,7 @@ also serve as a generic video/TV viewer application.
 %_bindir/*
 %exclude %_bindir/ir-keytable
 %exclude %_bindir/qv4l2
-%ifnarch armh
 %exclude %_bindir/qvidcap
-%endif
 %_man1dir/cec-compliance.1*
 %_man1dir/cec-ctl.1.*
 %_man1dir/cec-follower.1*
@@ -136,15 +133,16 @@ also serve as a generic video/TV viewer application.
 %_iconsdir/hicolor/*/*/qv4l2.*
 %_man1dir/qv4l2.1*
 
-%ifnarch armh
 %files -n qvidcap
 %_bindir/qvidcap
 %_desktopdir/qvidcap.desktop
 %_iconsdir/hicolor/*/*/qvidcap.*
 %_man1dir/qvidcap.1*
-%endif
 
 %changelog
+* Tue Jul 23 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.28.0-alt1
+- 1.28.0 released
+
 * Fri May 24 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.26.1-alt2
 - rebuilt with usrmerged paths
 
