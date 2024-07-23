@@ -8,7 +8,7 @@
 Summary: Yandex Browser
 License: ALT-YANDEX-BROWSER
 Name: yandex-browser-stable
-Version: 24.4.3.1111
+Version: 24.6.1.865
 Release: alt1
 Group: Networking/WWW
 Vendor: YANDEX LLC
@@ -41,12 +41,12 @@ Requires(preun): %{_sbindir}/update-alternatives
 %Description
 The web browser from Yandex
 
-Yandex Browser is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier. Based on Chromium 122.0.6261.
+Yandex Browser is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier. Based on Chromium 124.0.6367.
 
 %Description -l ru_RU.UTF-8
 Веб-браузер от Яндекса
 
-Яндекс Браузер - безопасный, простой в настройке и управлении браузер на базе Chromium 122.0.6261.
+Яндекс Браузер - безопасный, простой в настройке и управлении браузер на базе Chromium 124.0.6367.
 
 #------------------------------------------------------------------------------
 #   Prep rule - Prepare sources before build
@@ -98,6 +98,14 @@ for size in 16 24 32 48 64 128 256; do
     "%buildroot/%_iconsdir/hicolor/${size}x${size}/apps/yandex-browser.png"
 done
 
+mkdir -p %buildroot/%{_datadir}/kio_desktop/DesktopLinks
+
+cp -a \
+    "%{_builddir}/%{name}-%{version}/%{_datadir}/applications/yandex-browser.desktop" \
+    "%buildroot/%{_datadir}/kio_desktop/DesktopLinks/yandex-browser.desktop"
+
+chmod a+x  "%buildroot/%{_datadir}/kio_desktop/DesktopLinks/yandex-browser.desktop"
+
 # Set alternative to xbrowser
 mkdir -p -- %buildroot%_altdir
 cat >%buildroot%_altdir/%name <<EOF
@@ -118,8 +126,9 @@ EOF
 #   Files listing.
 #------------------------------------------------------------------------------
 %files
-%defattr(-,root,root)
 #%doc README
+%defattr(-,root,root)
+%{_datadir}/kio_desktop/DesktopLinks/yandex-browser.desktop
 
 # We cheat and just let RPM figure it out for us; everything we install
 # should go under this prefix anyways.
@@ -212,6 +221,16 @@ exit 0
 # =============== END preun ===============
 
 %changelog
+
+* Fri Jul 19 2024 yabro <yabro@altlinux.org> 24.6.1.865-alt1
+- Fixed Desktop shortcut (closes: 50127)
+- Browser updated to 24.6.1.865
+ + High CVE-2024-4331: Use after free in Picture In Picture
+ + High CVE-2024-4368: Use after free in Dawn
+ + High CVE-2024-5274: Type Confusion in V8
+ + Critical CVE-2024-4058: Type confusion in ANGLE
+ + High CVE-2024-4060: Use after free in Dawn
+ + High CVE-2024-4059: Out of bounds read in V8
 
 * Tue Jun 18 2024 yabro <yabro@altlinux.org> 24.4.3.1111-alt1
 - Browser updated to 24.4.3.1111
@@ -539,7 +558,7 @@ exit 0
   + Low CVE-2022-3661: Insufficient data validation in Extensions.
 
 * Mon Jan 23 2023 Andrey Cherepanov <cas@altlinux.org> 22.11.0.2485-alt1.1
-- NMU: supported proxy settings from environment variables (ALT #44983) 
+- NMU: supported proxy settings from environment variables (ALT #44983)
 - NMU: FTBFS fix: required libwayland-client
 
 * Wed Nov 23 2022 Vasiliy Tsukanov <palar@altlinux.org> 22.11.0.2485-alt1
