@@ -4,14 +4,14 @@
 %define api_ver 2
 
 %def_enable aspell
-%def_disable hspell
+%def_enable hspell
 %def_enable voikko
 %def_disable relocatable
-%def_disable check
+%def_enable check
 
 Name: %_name%api_ver
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: An Enchanting Spell Checking Program
@@ -26,6 +26,7 @@ Source: https://github.com/AbiWord/%_name/releases/download/v%version/%_name-%ve
 %else
 Source: %_name-%version.tar
 %endif
+Patch1: enchant-2.8.0-alt-add-myspell-dicts-dir-to-hunspell.patch
 
 Requires:  lib%name = %EVR
 
@@ -58,6 +59,7 @@ using libenchant.
 
 %prep
 %setup -n %_name-%version
+%patch1 -p2
 # relax autoconf version
 sed -i 's|\(AC_PREREQ(\[2.\)71|\169|' configure.ac
 
@@ -98,6 +100,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Tue Jul 23 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.8.1-alt2
+- iv@: restore hunspell support
+- enabled %%check
+
 * Fri Jun 14 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.8.1-alt1
 - 2.8.1
 

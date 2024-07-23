@@ -4,16 +4,17 @@
 %def_enable check
 
 %define _name gspell
+%define namespace Gspell
 %define ver_major 1.12
 %define api_ver 1
 
 Name: lib%_name
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 
-Summary: A spell-checking library for GTK+ applications
+Summary: A spell-checking library for GTK+3 applications
 Group: System/Libraries
-License: LGPLv2.1+
+License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/gspell
 
 %if_disabled snapshot
@@ -25,11 +26,16 @@ Source: %_name-%version.tar
 %define gtk_ver 3.20.0
 %define enchant_ver 2.2.12
 
-BuildRequires(pre): rpm-build-gir rpm-build-vala
+BuildRequires(pre): rpm-build-gir rpm-build-vala %{?_enable_check:rpm-macros-valgrind}
 BuildRequires: autoconf-archive
 BuildRequires: libgtk+3-devel >= %gtk_ver libenchant2-devel >= %enchant_ver libicu-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel vala-tools gtk-doc
-%{?_enable_check:BuildRequires: xvfb-run hunspell-en valgrind}
+%if_enabled check
+BuildRequires: xvfb-run hunspell-en
+%ifarch %valgrind_arches
+BuildRequires: valgrind
+%endif
+%endif
 
 %description
 gspell library provides a flexible API to add spell checking to a GTK+
@@ -38,7 +44,7 @@ applications.
 %package devel
 Summary: Development files for %name
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: libenchant2-devel >= %enchant_ver
 
 %description devel
@@ -48,7 +54,7 @@ applications.
 %package gir
 Summary: GObject introspection data for the Gspell
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the Gspell library.
@@ -57,8 +63,8 @@ GObject introspection data for the Gspell library.
 Summary: GObject introspection devel data for the Gspell
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the Gspell library.
@@ -75,12 +81,11 @@ This package contains development documentation for Gspell library.
 %package tests
 Summary: Tests for Gspell library
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 This package provides tests programs that can be used to verify
 the functionality of the installed Gspell library.
-
 
 %prep
 %setup -n %_name-%version
@@ -110,10 +115,10 @@ xvfb-run %make -k check VERBOSE=1
 %_vapidir/%_name-%api_ver.*
 
 %files gir
-%_typelibdir/Gspell-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Gspell-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 
 %files devel-doc
 %_datadir/gtk-doc/html/%_name-*/
@@ -126,6 +131,9 @@ xvfb-run %make -k check VERBOSE=1
 
 
 %changelog
+* Tue Jul 23 2024 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt1.1
+- iv@: use rpm-macros-valgrind to detect valgrind presence
+
 * Sat Jul 29 2023 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt1
 - 1.12.2
 
