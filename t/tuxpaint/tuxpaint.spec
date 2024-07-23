@@ -1,13 +1,13 @@
 Name: tuxpaint
-Version: 0.9.32
-Release: alt2
+Version: 0.9.33
+Release: alt1
 
 Summary: A drawing program for young children
 Summary(ru_RU.UTF8): Простая детская программа для рисования
 
 License: GPL-2.0
 Group: Graphics
-Url: http://www.tuxpaint.org/
+URL: https://www.tuxpaint.org
 
 Source: %name-%version.tar.gz
 Source1: %name.desktop
@@ -103,7 +103,7 @@ rm -fv %buildroot%_datadir/doc/%name-%version/*/tp_magic_example.so
 %_bindir/tuxpaint*
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/%name.conf
-%_sysconfdir/bash_completion.d/tuxpaint-completion.bash
+%_sysconfdir/bash_completion.d/010_tuxpaint-completion.bash
 %_libdir/%name
 
 # docs files
@@ -124,6 +124,9 @@ rm -fv %buildroot%_datadir/doc/%name-%version/*/tp_magic_example.so
 %_man1dir/tp-magic-config*
 
 %changelog
+* Tue Jul 23 2024 Grigory Ustinov <grenka@altlinux.org> 0.9.33-alt1
+- Build new version.
+
 * Thu Apr 04 2024 Grigory Ustinov <grenka@altlinux.org> 0.9.32-alt2
 - Fixed build dependency on libSDL2_pango.
 
