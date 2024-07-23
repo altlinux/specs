@@ -1,28 +1,3 @@
-Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
-Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
-
-Name: firefox
-Version: 128.0
-Release: alt1
-License: MPL-2.0
-Group: Networking/WWW
-URL: https://www.mozilla.org/firefox/
-
-Source0: firefox-source.tar
-
-### Start Patches
-Patch001: 0001-FEDORA-build-arm-libopus.patch
-Patch003: 0003-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
-Patch004: 0004-bmo-847568-Support-system-harfbuzz.patch
-Patch005: 0005-bmo-847568-Support-system-graphite2.patch
-Patch006: 0006-bmo-1559213-Support-system-av1.patch
-Patch007: 0007-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
-Patch008: 0008-ALT-fix-double_t-redefinition.patch
-Patch009: 0009-build-Disable-Werror.patch
-Patch010: 0010-Add-dbus-cflags.patch
-Patch011: 0011-FEDORA-enable-vaapi.patch
-### End Patches
-
 %define _unpackaged_files_terminate_build 1
 %set_verify_elf_method relaxed
 
@@ -37,12 +12,49 @@ Patch011: 0011-FEDORA-enable-vaapi.patch
 %define cargo_version 1.65.0
 %define llvm_version  17.0
 
+Name: firefox
+Version: 128.0.2
+Release: alt1
+
+Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
+Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
+License: MPL-2.0
+Group: Networking/WWW
+URL: https://www.mozilla.org/firefox/
 ExcludeArch: %{ix86} ppc64le
+
+Source0: firefox-source.tar
+### Start Patches
+Patch001: 0001-FEDORA-build-arm-libopus.patch
+Patch002: 0002-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
+Patch003: 0003-bmo-847568-Support-system-harfbuzz.patch
+Patch004: 0004-bmo-847568-Support-system-graphite2.patch
+Patch005: 0005-bmo-1559213-Support-system-av1.patch
+Patch006: 0006-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
+Patch007: 0007-ALT-fix-double_t-redefinition.patch
+Patch008: 0008-build-Disable-Werror.patch
+Patch009: 0009-Add-dbus-cflags.patch
+Patch010: 0010-FEDORA-enable-vaapi.patch
+### End Patches
+
+Provides: webclient
+Provides: firefox-ru = %EVR
+Provides: firefox-uk = %EVR
+Provides: firefox-kk = %EVR
+Provides: firefox-wayland = %EVR
+Requires: mozilla-common
+# ALT#30732
+Requires: gst-plugins-ugly%gst_version
+Requires: libnspr >= %nspr_version
+Requires: libnss >= %nss_version
+Obsoletes: firefox-ru <= 70.0.1
+Obsoletes: firefox-uk <= 70.0.1
+Obsoletes: firefox-kk <= 70.0.1
+Obsoletes: firefox-wayland <= 104.0.2
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-firefox
 BuildRequires(pre): browser-plugins-npapi-devel
-
 BuildRequires: clang%llvm_version
 BuildRequires: clang%llvm_version-devel
 BuildRequires: llvm%llvm_version-devel
@@ -52,6 +64,7 @@ BuildRequires: glibc-kernheaders-generic
 BuildRequires: rpm-macros-alternatives
 BuildRequires: rust >= %rust_version
 BuildRequires: rust-cargo >= %cargo_version
+BuildRequires: cbindgen
 BuildRequires: node
 BuildRequires: nasm yasm
 BuildRequires: zip unzip
@@ -103,10 +116,8 @@ BuildRequires: pkgconfig(xscrnsaver)
 BuildRequires: pkgconfig(xt)
 BuildRequires: pkgconfig(xtst)
 BuildRequires: pkgconfig(zlib)
-
 # Python requires
 BuildRequires: /dev/shm
-
 BuildRequires: python3-base
 BuildRequires: python3(click)
 BuildRequires: python3(curses)
@@ -114,28 +125,8 @@ BuildRequires: python3(hamcrest)
 BuildRequires: python3(pip)
 BuildRequires: python3(setuptools)
 BuildRequires: python3(sqlite3)
-
 # Rust requires
 BuildRequires: /proc
-
-Provides: webclient
-Requires: mozilla-common
-
-Obsoletes: firefox-ru <= 70.0.1
-Obsoletes: firefox-uk <= 70.0.1
-Obsoletes: firefox-kk <= 70.0.1
-Obsoletes: firefox-wayland <= 104.0.2
-
-Provides: firefox-ru = %EVR
-Provides: firefox-uk = %EVR
-Provides: firefox-kk = %EVR
-Provides: firefox-wayland = %EVR
-
-# ALT#30732
-Requires: gst-plugins-ugly%gst_version
-
-Requires: libnspr >= %nspr_version
-Requires: libnss >= %nss_version
 
 %description
 Mozilla Firefox is an open-source web browser, designed
@@ -145,13 +136,13 @@ for standards compliance, performance and portability.
 Mozilla Firefox - это веб-браузер с открытым исходным кодом, разработанный
 с учетом соответствия стандартам, производительности и переносимости.
 
-%package -n firefox-config-privacy
+%package config-privacy
 Summary:	Firefox configuration with the paranoid privacy settings
 Group:		System/Configuration/Networking
 
 Requires: %name
 
-%description -n firefox-config-privacy
+%description config-privacy
 Settings disable:
 * obsolete ssl protocols;
 * safebrowsing, trackingprotection and other requests to third-party services;
@@ -212,7 +203,6 @@ rm -rf -- obj-x86_64-pc-linux-gnu
 rm -rf -- third_party/python/setuptools/setuptools*
 rm -rf -- third_party/python/click/click*
 
-
 %build
 %add_findprov_lib_path %firefox_prefix
 
@@ -257,24 +247,6 @@ export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=0"
 export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=2"
 %endif
 
-CBINDGEN_HOME="$PWD/.rpm/cbindgen-vendor"
-CBINDGEN_BINDIR="$CBINDGEN_HOME/bin"
-
-if [ ! -x "$CBINDGEN_BINDIR/cbindgen" ]; then
-	cat > "$CBINDGEN_HOME/config" <<-EOF
-	[source.crates-io]
-	replace-with = "vendored-sources"
-
-	[source.vendored-sources]
-	directory = "$CBINDGEN_HOME"
-	EOF
-
-	env CARGO_HOME="$CBINDGEN_HOME" \
-		cargo install cbindgen
-
-	export PATH="$CBINDGEN_BINDIR:$PATH"
-fi
-
 #export WASM_SANDBOXED_LIBRARIES=graphite,ogg
 #export WASM_CC="$CC --target=wasm32-wasi"
 #export WASM_CXX="$CXX --target=wasm32-wasi"
@@ -297,7 +269,6 @@ $CC $CFLAGS \
 	-DMOZ_PROGRAM=\"%firefox_prefix/firefox\" \
 	-DMOZ_DIST_BIN=\"%firefox_prefix\"\
 	.rpm/firefox.c -o firefox
-
 
 %install
 export SHELL=/bin/sh
@@ -371,7 +342,6 @@ rm -rf -- \
 	%buildroot/%_libdir/%name-devel \
 #
 
-
 # Add real RPATH
 (set +x
 	rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
@@ -416,10 +386,16 @@ fi
 %_iconsdir/hicolor/48x48/apps/firefox.png
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
-%files -n firefox-config-privacy
+%files config-privacy
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Jul 23 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.0.2-alt1
+- New version (128.0.2).
+
+* Tue Jul 16 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.0-alt2
+- test with cbindgen from sisyphus
+
 * Tue Jul 09 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.0-alt1
 - New version (128.0).
 - Security fixes:
