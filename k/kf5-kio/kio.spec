@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt3
+Release: alt4
 %K5init no_altplace
 
 Group: System/Libraries
@@ -19,6 +19,7 @@ Patch2: alt-kio-help-fallback-kde4.patch
 Patch3: alt-copy-first.patch
 Patch4: alt-skip-mime.patch
 Patch10: alt-streebog-support.patch
+Patch11: alt-ksamba-aclValidation.patch
 
 # Automatically added by buildreq on Tue Feb 17 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel libcloog-isl4 libcom_err-devel libgpg-error libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms libxml2-devel pkg-config python-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -102,6 +103,7 @@ KF5 library
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch11 -p1
 
 %if_enabled streebog
 %patch10 -p2 -b .streebog
@@ -183,6 +185,9 @@ mkdir -p %buildroot/%_K5data/kio/servicemenus/
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Mon Jul 22 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 5.116.0-alt4
+- fix ksamba acl validation (closes: 49398)
+
 * Tue Jul 16 2024 Oleg Solovyov <mcpain@altlinux.org> 5.116.0-alt3
 - fix files interpreted as dirs (Closes: #50910)
 
