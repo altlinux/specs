@@ -4,13 +4,14 @@
 %set_verify_elf_method strict
 
 Name: llama.cpp
-Version: 3072
-Release: alt1.20240603
+Version: 3441
+Release: alt1
 Epoch: 1
 Summary: LLM inference in C/C++
 License: MIT
 Group: Sciences/Computer science
 Url: https://github.com/ggerganov/llama.cpp
+Requires: libllama = %EVR
 
 ExclusiveArch: aarch64 x86_64
 Source: %name-%version.tar
@@ -70,28 +71,48 @@ NOTE 2:
 
 Overall this is all raw and EXPERIMENTAL, no warranty, no support.
 
+%package -n libllama
+Summary: Shared libraries for llama.cpp
+Group: System/Libraries
+
+%description -n libllama
+%summary.
+
+%package -n libllama-devel
+Summary: Development files for llama.cpp
+Group: Development/C
+Requires: libllama = %EVR
+
+%description -n libllama-devel
+%summary.
+
 %prep
 %setup
-sed -i '/BLA_SIZEOF_INTEGER/s/8/ANY/' CMakeLists.txt
-cat <<-EOF >> scripts/build-info.cmake
-	set(BUILD_NUMBER $(tr -d '[:alpha:]' <<< '%version'))
+cat <<-EOF >> cmake/build-info.cmake
+	set(BUILD_NUMBER %version)
 	set(BUILD_COMMIT "%release")
 EOF
+sed -i '/lib\/pkgconfig/s/lib/${CMAKE_INSTALL_LIBDIR}/' CMakeLists.txt
+sed -i '/POSITION_INDEPENDENT_CODE/s/PROPERTIES/& SOVERSION 0.0.%version/' ggml/src/CMakeLists.txt src/CMakeLists.txt
+sed -i 's/@PROJECT_VERSION@/0.0.%version/' cmake/llama.pc.in
 
 %build
+# Unless -DCMAKE_SKIP_BUILD_RPATH=yes CMake fails to strip build time RPATH
+# from (installed) binaries.
 %cmake \
-	-DLLAMA_BLAS=ON \
-	-DLLAMA_BLAS_VENDOR=OpenBLAS \
+	-DCMAKE_SKIP_BUILD_RPATH=yes \
+	-DGGML_BLAS=ON \
+	-DGGML_BLAS_VENDOR=OpenBLAS \
 	-DLLAMA_CURL=ON \
+	-DLLAMA_BUILD_TESTS=OFF \
 	%nil
-grep ^LLAMA %_cmake__builddir/CMakeCache.txt | sort | tee build-options.txt
+grep -E 'LLAMA|GGML' %_cmake__builddir/CMakeCache.txt | sort | tee build-options.txt
 %cmake_build
 find -name '*.py' | xargs sed -i '1s|#!/usr/bin/env python3|#!%__python3|'
 
 %install
-# Format converters.
-install -Dp convert-*.py -t %buildroot%_bindir
-ln -s convert-hf-to-gguf.py %buildroot%_bindir/llama-convert
+%cmake_install
+
 # Python requirements files.
 install -Dpm644 requirements.txt -t %buildroot%_datadir/%name
 cp -a requirements -t %buildroot%_datadir/%name
@@ -101,57 +122,46 @@ cp -rp grammars -t %buildroot%_datadir/%name
 # Not all examples.
 install -Dp examples/*.sh -t %buildroot%_datadir/%name/examples
 install -Dp examples/*.py -t %buildroot%_datadir/%name/examples
-# Install and rename binaries to have llama- prefix.
-cd %_cmake__builddir/bin
-find -maxdepth 1 -type f -executable -not -name 'test-*' -not -name 'llama-*' -printf '%%f\0' |
-	xargs -0ti -n1 install -p {} %buildroot%_bindir/llama-{}
-find -maxdepth 1 -type f -executable -name 'llama-*' -printf '%%f\0' |
-	xargs -0ti -n1 install -p {} -t %buildroot%_bindir
 
-mkdir -p %buildroot%_unitdir
-cat <<'EOF' >%buildroot%_unitdir/llama.service
-[Unit]
-Description=Llama.cpp server, CPU only (no GPU support in this build).
-After=syslog.target network.target local-fs.target remote-fs.target nss-lookup.target
-
-[Service]
-Type=simple
-DynamicUser=true
-EnvironmentFile=%_sysconfdir/sysconfig/llama
-ExecStart=%_bindir/llama-server $LLAMA_ARGS
-ExecReload=/bin/kill -HUP $MAINPID
-Restart=never
-
-[Install]
-WantedBy=default.target
-EOF
-
-mkdir -p %buildroot%_sysconfdir/sysconfig
-cat <<EOF  > %buildroot%_sysconfdir/sysconfig/llama
-# Change to accessible path with a model.
-LLAMA_ARGS="-m %_datadir/%name/ggml-model-f32.bin"
-EOF
+# llava belongs to examples which we don't install.
+rm %buildroot%_libdir/libllava_shared.so
 
 %check
-%_cmake__builddir/bin/main --version |& grep -Fx 'version: %version (%release)'
+export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/src:$PWD/%_cmake__builddir/ggml/src
+%_cmake__builddir/bin/llama-cli --version |& grep -Fx 'version: %version (%release)'
 # test-eval-callback wants network.
 %ctest -j1 -E test-eval-callback
 PATH=%buildroot%_bindir:$PATH
-llama-main -m %_datadir/tinyllamas/stories260K.gguf -p "Hello" -s 42 -n 500
-llama-main -m %_datadir/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -n 33 |
+llama-cli -m %_datadir/tinyllamas/stories260K.gguf -p "Hello" -s 42 -n 500
+llama-cli -m %_datadir/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -n 33 |
 	grep 'Once upon a time, there was a boy named Tom. Tom had a big box of colors.'
 
 %files
 %define _customdocdir %_docdir/%name
 %doc LICENSE README.md docs build-options.txt
 %_bindir/llama-*
-%_bindir/convert-*.py
-%_unitdir/llama.service
-%_sysconfdir/sysconfig/llama
-
+%_bindir/convert*.py
 %_datadir/%name
 
+%files -n libllama
+%_libdir/libggml.so.0.0.%version
+%_libdir/libllama.so.0.0.%version
+
+%files -n libllama-devel
+%_includedir/ggml*.h
+%_includedir/llama.h
+%_cmakedir/llama
+%_pkgconfigdir/llama.pc
+%_libdir/libggml.so
+%_libdir/libllama.so
+
 %changelog
+* Tue Jul 23 2024 Vitaly Chikunov <vt@altlinux.org> 1:3441-alt1
+- Update to b3441 (2024-07-23).
+- spec: Package libllama and libllama-devel (ALT#50962).
+- spec: Use upstream install procedure; as a consequence, some binary names are
+  changed.
+
 * Mon Jun 03 2024 Vitaly Chikunov <vt@altlinux.org> 1:3072-alt1.20240603
 - Update to b3072 (2024-06-03).
 - The version scheme now matches the upstream build number more closely,
