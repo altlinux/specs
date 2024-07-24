@@ -12,7 +12,7 @@
 %ifarch %ix86 armh
 %define module_version	390.157
 %endif
-%define module_release	alt1
+%define module_release	alt2
 %define flavour		un-def
 %define karch x86_64 aarch64 %ix86
 
@@ -70,7 +70,6 @@
 %define legacy6 %nil
 %endif
 %ifarch aarch64
-%define legacy7 %nil
 %define legacy6 %nil
 %define legacy5 %nil
 %define legacy4 %nil
@@ -296,7 +295,10 @@ fi
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
 
-* Thu Jun 06 2024 Sergey V Turchin <zerg at altlinux dot org> NNN.XX-alt1
+* Wed Jul 24 2024 Sergey V Turchin <zerg at altlinux dot org> 550.90.07-alt2
+- build 470 for aarch64
+
+* Thu Jun 06 2024 Sergey V Turchin <zerg at altlinux dot org> 550.90.07-alt1
 - new releases (550.90.07, 470.256.02)
 
 * Sat Apr 27 2024 Sergey V Turchin <zerg at altlinux dot org> 550.78-alt1
