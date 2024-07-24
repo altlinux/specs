@@ -35,11 +35,11 @@
 
 %define bname opencv
 %define Name OpenCV
-%define sover 4.9
-%define sover2 409
+%define sover 4.10
+%define sover2 410
 Name: lib%bname
 Epoch: 1
-Version: 4.9.0
+Version: 4.10.0
 Release: alt1
 Summary: Open Source Computer Vision Library
 License: BSD-3-Clause AND Apache-2.0 AND ISC
@@ -376,6 +376,9 @@ EOF
 %_datadir/%Name/quality
 
 %changelog
+* Mon Jul 22 2024 Anton Farygin <rider@altlinux.ru> 1:4.10.0-alt1
+- 4.9.0 -> 4.10.0
+
 * Sun Apr 28 2024 Anton Farygin <rider@altlinux.ru> 1:4.9.0-alt1
 - 4.8.1 -> 4.9.0
 - fixed License tag
