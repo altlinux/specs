@@ -1,7 +1,7 @@
 
 Name: maliit-framework
 Version: 2.3.0
-Release: alt2
+Release: alt3
 %define sover 2
 %define libmaliit libmaliit%sover
 %define libmaliit_glib libmaliit-glib%sover
@@ -15,6 +15,11 @@ License: LGPL-2.1-only
 
 Source0: %name-%version.tar
 Source1: maliit.conf
+
+Patch1: 0001_move-the-operator==-definition-to-global-namespace.patch
+Patch2: 0002_prevent-qlist-returned-by-subject-pluginDescriptions-from-being-deleted.patch
+Patch3: 0003_fix-stack-smashing.patch
+Patch4: 0004_connection-Move-dbus-socket-to-well-known-path-in-XD.patch
 
 # Automatically added by buildreq on Fri Jun 04 2021 (-bi)
 # optimized out: cmake-modules debugedit elfutils fontconfig gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libatk-devel libcairo-devel libcairo-gobject-devel libctf-nobfd0 libgdk-pixbuf-devel libgio-devel libglvnd-devel libgpg-error libharfbuzz-devel libpango-devel libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-qmlmodels libqt5-quick libqt5-waylandclient libsasl2-3 libssl-devel libstdc++-devel libudev-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-server-devel libxcb-devel libxkbcommon-devel pkg-config python-modules python2-base python3 python3-base python3-module-paste qt5-base-common qt5-base-devel qt5-declarative-devel rpm-build-python3 sh4 wayland-devel xz
@@ -125,6 +130,10 @@ Requires: %name = %version-%release
 
 %prep
 %setup -n %name-%version
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 # avoid depending on python 2
 #sed -i '1s=^#!/usr/bin/env python=#!/usr/bin/python3=' examples/apps/gtk3-python/maliit-exampleapp-gtk3-python.py
@@ -222,6 +231,9 @@ rm -rf %buildroot/%_docdir/maliit-framework-doc
 #%_libdir/gtk-3.0/3.0.0/immodules/libim-maliit.so*
 
 %changelog
+* Wed Jul 24 2024 Sergey V Turchin <zerg@altlinux.org> 2.3.0-alt3
+- add upstream fixes
+
 * Tue May 28 2024 Sergey V Turchin <zerg@altlinux.org> 2.3.0-alt2
 - update package url
 
