@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qucs-s
-Version: 24.2.1
+Version: 24.3.0
 Release: alt1
 
 Summary: Circuit simulator
@@ -23,8 +23,7 @@ BuildRequires: qt6-base-devel
 BuildRequires: qt6-tools-devel
 BuildRequires: qt6-svg-devel
 BuildRequires: rpm-build-python3
-Requires: %name-data = %EVR
-#Requires: qucs
+Requires: qucsator_rf
 Requires: ngspice
 # https://bugzilla.altlinux.org/47318
 Requires: qt6-svg
@@ -68,6 +67,9 @@ done > %name.lang
 %_man1dir/*
 
 %changelog
+* Wed Jul 24 2024 Anton Midyukov <antohami@altlinux.org> 24.3.0-alt1
+- New version 24.3.0
+
 * Sun Mar 31 2024 Anton Midyukov <antohami@altlinux.org> 24.2.1-alt1
 - New version 24.2.1
 
