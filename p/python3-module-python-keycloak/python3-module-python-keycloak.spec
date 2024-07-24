@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 4.2.0
-Release: alt1
+Release: alt2
 
 Summary: Python package providing access to the Keycloak API.
 License: MIT
@@ -35,14 +35,18 @@ sed -Ei '/^version = /s|= "[0-9.]+"$|= "%version"|' pyproject.toml
 %install
 %pyproject_install
 
+rm %buildroot/%python3_sitelibdir/*.md
+rm %buildroot/%python3_sitelibdir/LICENSE
+
 %files
 %doc README.md
-%doc %python3_sitelibdir/*.md
-%doc %python3_sitelibdir/LICENSE
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 24 2024 Dmitry Lyalyaev <fruktime@altlinux.org> 4.2.0-alt2
+- Fixed packaging files (closes: #50975)
+
 * Mon Jun 24 2024 Dmitry Lyalyaev <fruktime@altlinux.org> 4.2.0-alt1
 - Initial build for ALT Linux
 
