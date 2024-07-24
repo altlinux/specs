@@ -1,8 +1,8 @@
 Name: kernel-image-6.10
 Release: alt1
-%define kernel_src_version	6.9
+%define kernel_src_version	6.10
 %define kernel_base_version	6.10
-%define kernel_sublevel	.0
+%define kernel_sublevel	.1
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 Version: %kversion
@@ -592,6 +592,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Jul 24 2024 Kernel Bot <kernelbot@altlinux.org> 6.10.1-alt1
+- v6.10.1 (2024-07-24).
+- config-aarch64: CONFIG_NR_CPUS=512.
+- config: Enable CONFIG_MHI_WWAN_CTRL (ALT#50941).
+
 * Mon Jul 15 2024 Vitaly Chikunov <vt@altlinux.org> 6.10.0-alt1
 - Update to v6.10 (2024-07-14).
 
