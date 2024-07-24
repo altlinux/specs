@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.14.0
-Release: alt1
+Release: alt2
 
 Summary: JOSE protocol implementation in Python using cryptography
 
@@ -12,6 +12,8 @@ Url: https://github.com/certbot/josepy
 
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
+# https://github.com/certbot/josepy/pull/171
+Patch: josepy-Fix-incorrect-include-declarations-with-Poetry.patch
 
 BuildArch: noarch
 
@@ -29,6 +31,7 @@ JOSE protocol implementation in Python using cryptography.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -36,8 +39,6 @@ JOSE protocol implementation in Python using cryptography.
 %install
 %pyproject_install
 
-rm -rf %buildroot%python3_sitelibdir/*/*test*
-rm -rf %buildroot%python3_sitelibdir/*/*/*test*
 rm -rf %buildroot%_bindir/
 
 %check
@@ -47,9 +48,13 @@ rm -rf %buildroot%_bindir/
 
 %files
 %doc README*
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Wed Jul 24 2024 Stanislav Levin <slev@altlinux.org> 1.14.0-alt2
+- fixed incorrect include declarations with Poetry.
+
 * Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 1.14.0-alt1
 - new version 1.14.0
 - switch to pyproject_build
