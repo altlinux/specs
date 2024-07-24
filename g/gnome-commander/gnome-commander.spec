@@ -1,17 +1,16 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 1.16
+%define ver_major 1.18
 %def_with exiv2
 %def_with taglib
 %def_with poppler
 %def_with libgsf
 %def_with samba
-%def_with unique
 
 %def_enable check
 
 Name: gnome-commander
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 %define xdg_name org.gnome.%name
@@ -28,7 +27,7 @@ Vcs: https://gitlab.gnome.org/GNOME/gnome-commander.git
 Source: %name-%version.tar
 %endif
 
-%define gtk_ver 2.24
+%define gtk_ver 3.24
 
 Requires: dconf xdg-utils
 Requires: %_bindir/gio gvfs-backends
@@ -36,20 +35,21 @@ Requires: file-roller
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson flex gcc-c++
-BuildRequires: yelp-tools desktop-file-utils /usr/bin/appstream-util
-BuildRequires: libgtk+2-devel >= %gtk_ver libgnome-keyring-devel
+BuildRequires: yelp-tools desktop-file-utils /usr/bin/appstreamcli
+BuildRequires: libgtk+3-devel >= %gtk_ver libgnome-keyring-devel
 %{?_with_exiv2:BuildRequires: libexiv2-devel}
 %{?_with_taglib:BuildRequires: libtag-devel}
 %{?_with_poppler:BuildRequires: libpoppler-glib-devel}
 %{?_with_libgsf:BuildRequires: libgsf-devel}
 %{?_with_samba:BuildRequires: libsmbclient-devel}
-%{?_with_unique:BuildRequires: libunique-devel}
-%{?_enable_check:BuildRequires: libgtest-devel}
+%{?_enable_check:BuildRequires: xvfb-run libgtest-devel}
 
 %description
-Gnome Commander is a file manager that just like the classical Norton
-Commander (TM) lets you do everything with the keyboard. It can perform
-all standard file operations and some extra features like FTP support.
+GNOME Commander is a two-pane graphical file manager for the GNOME
+desktop environment. It features separate tabs for each pane,
+setting up custom device buttons, bookmark manager, fully integrated
+commandline, file quick search, an internal image viewer, a powerful
+batch renaming tool, and FTP and Samba access.
 
 %prep
 %setup
@@ -69,12 +69,13 @@ rm -f %buildroot%_libdir/libgcmd.a
 %find_lang --with-gnome %name
 
 %check
-%__meson_test
+xvfb-run %__meson_test
 
 %files -f %name.lang
 %_bindir/*
 %_libdir/%name/
-%_datadir/applications/%xdg_name.desktop
+%_datadir/%name/
+%_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/%xdg_name.enums.xml
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/apps/*.svg
@@ -88,6 +89,9 @@ rm -f %buildroot%_libdir/libgcmd.a
 
 
 %changelog
+* Thu Jul 25 2024 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
+- updated to 1.18.0-6-g00e234a1
+
 * Fri May 17 2024 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
 - 1.16.2
 
