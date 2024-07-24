@@ -3,7 +3,7 @@
 
 Name: qt6-virtualkeyboard
 Version: 6.6.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt6 - QtQuick virtual keyboard component
@@ -88,7 +88,7 @@ rm -rf src/virtualkeyboard/3rdparty/hunspell
     -DFEATURE_tcime:BOOL=OFF \
     -DFEATURE_cangjie:BOOL=OFF \
     -DFEATURE_zhuyin:BOOL=OFF \
-    $(for d in src/virtualkeyboard/content/layouts/*_* ; do LNG=`basename $d`; echo -n " -DFEATURE_vkb_lang_${LNG}:BOOL=OFF"; done) \
+    $(for d in src/layouts/*_* ; do LNG=`basename $d`; echo -n " -DFEATURE_vkb_lang_${LNG}:BOOL=OFF"; done) \
     -DFEATURE_vkb_lang_en_US:BOOL=ON \
     -DFEATURE_vkb_lang_ru_RU:BOOL=ON \
     #
@@ -138,6 +138,9 @@ rm -rf src/virtualkeyboard/3rdparty/hunspell
 %_qt6_libdir/libQt?HunspellInputMethod.so.*
 
 %changelog
+* Wed Jul 24 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt2
+- fix layouts list
+
 * Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
 - new version
 
