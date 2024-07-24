@@ -1,45 +1,30 @@
-%define rname firefox
+%define _unpackaged_files_terminate_build 1
 %set_verify_elf_method relaxed
 
-%define firefox_cid     \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
-%define firefox_prefix  %_libdir/firefox
+%ifndef build_parallel_jobs
+%global build_parallel_jobs %__nprocs
+%endif
 
 %define gst_version   1.0
 %define nspr_version  4.35
-%define nss_version   3.86
+%define nss_version   3.98
 %define rust_version  1.65.0
 %define cargo_version 1.65.0
-%ifarch loongarch64
-%define llvm_version 16.0
-%else
-%define llvm_version  15.0
-%endif
-
-Summary: The Mozilla Firefox project is a redesign of Mozilla's browser (ESR version)
-Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (версия ESR)
+%define llvm_version  17.0
 
 Name: firefox-esr
 Version: 128.0
-Release: alt1
+Release: alt2
+
+Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
+Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 License: MPL-2.0
 Group: Networking/WWW
-URL: http://www.mozilla.org/projects/firefox/
+URL: https://www.mozilla.org/firefox/
+# Hang up on build browser/components/about
+ExcludeArch: ppc64le
 
 Source0: firefox-source.tar
-
-Source1: rpm-build.tar
-Source2: searchplugins.tar
-Source4: firefox-mozconfig
-Source5: distribution.ini
-Source6: firefox.desktop
-Source7: firefox-wayland.desktop
-Source8: firefox.c
-Source9: firefox-prefs.js
-Source10: firefox-l10n.txt
-Source11: l10n.tar
-Source12: firefox-privacy-prefs.js
-Source13: policies.json
-
 ### Start Patches
 Patch001: 0001-FEDORA-build-arm-libopus.patch
 Patch002: 0002-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
@@ -53,73 +38,45 @@ Patch009: 0009-Add-dbus-cflags.patch
 Patch010: 0010-FEDORA-enable-vaapi.patch
 ### End Patches
 
-%ifndef build_parallel_jobs
-%global build_parallel_jobs %__nprocs
-%endif
-
-# Hang up on build browser/components/about
-ExcludeArch: ppc64le
+Provides: webclient
+Provides: firefox-esr-ru = %EVR
+Provides: firefox-esr-uk = %EVR
+Provides: firefox-esr-kk = %EVR
+Provides: firefox-esr-uz = %EVR
+Provides: firefox-esr-wayland = %EVR
+Requires: mozilla-common
+# ALT#30732
+Requires: gst-plugins-ugly%gst_version
+Requires: libnspr >= %nspr_version
+Requires: libnss >= %nss_version
+Conflicts: firefox
+Obsoletes: firefox-esr-ru < %EVR
+Obsoletes: firefox-esr-uk < %EVR
+Obsoletes: firefox-esr-kk < %EVR
+Obsoletes: firefox-esr-uz < %EVR
+Obsoletes: firefox-esr-wayland < %EVR
 
 BuildRequires(pre): mozilla-common-devel
-BuildRequires(pre): rpm-build-mozilla.org
+BuildRequires(pre): rpm-build-firefox
 BuildRequires(pre): browser-plugins-npapi-devel
-
 BuildRequires: clang%llvm_version
 BuildRequires: clang%llvm_version-devel
 BuildRequires: llvm%llvm_version-devel
-%ifarch loongarch64
-BuildRequires: binutils
-%else
 BuildRequires: lld%llvm_version-devel
-%endif
-%ifarch armh %{ix86}
-%filter_from_requires /libc.so.6(GLIBC_PRIVATE)/d
-BuildRequires: gcc
-BuildRequires: gcc-c++
-%endif
-BuildRequires: glibc-kernheaders-generic
-BuildRequires: libshell
-BuildRequires: libwireless-devel
 BuildRequires: libstdc++-devel
+BuildRequires: glibc-kernheaders-generic
 BuildRequires: rpm-macros-alternatives
 BuildRequires: rust >= %rust_version
 BuildRequires: rust-cargo >= %cargo_version
 BuildRequires: cbindgen
-BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
-BuildRequires: libXcursor-devel
-BuildRequires: libXi-devel
-BuildRequires: libXcomposite-devel
-BuildRequires: libXdamage-devel
-BuildRequires: libcurl-devel libgtk+2-devel libgtk+3-devel libhunspell-devel libjpeg-devel
-BuildRequires: xorg-cf-files chrpath alternatives yasm
-BuildRequires: zip unzip
-BuildRequires: bzlib-devel zlib-devel
-BuildRequires: libcairo-devel libpixman-devel
-BuildRequires: libGL-devel
-BuildRequires: libwireless-devel
-BuildRequires: libalsa-devel
-BuildRequires: libnotify-devel
-BuildRequires: libevent-devel
-BuildRequires: libproxy-devel
-BuildRequires: libshell
-BuildRequires: libvpx-devel
-BuildRequires: libgio-devel
-BuildRequires: libfreetype-devel fontconfig-devel
-BuildRequires: libstartup-notification-devel
-BuildRequires: libffi-devel
-BuildRequires: gstreamer%gst_version-devel gst-plugins%gst_version-devel
-BuildRequires: libopus-devel
-BuildRequires: libpulseaudio-devel
-#BuildRequires: libicu-devel
-BuildRequires: libdbus-devel libdbus-glib-devel
 BuildRequires: node
 BuildRequires: nasm yasm
-BuildRequires: libxkbcommon-devel
-BuildRequires: libdrm-devel
-# 91.0
-BuildRequires: libaom-devel
-BuildRequires: libdav1d-devel
-
+BuildRequires: zip unzip
+BuildRequires: libshell
+BuildRequires: libwireless-devel
+BuildRequires: libnss-devel-static
+BuildRequires: xorg-cf-files chrpath alternatives
+BuildRequires: gstreamer%gst_version-devel gst-plugins%gst_version-devel
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(aom)
 BuildRequires: pkgconfig(bzip2)
@@ -132,7 +89,6 @@ BuildRequires: pkgconfig(fontconfig)
 BuildRequires: pkgconfig(freetype2)
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(graphite2)
-BuildRequires: pkgconfig(gtk+-2.0)
 BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: pkgconfig(harfbuzz)
 BuildRequires: pkgconfig(hunspell)
@@ -146,6 +102,8 @@ BuildRequires: pkgconfig(libnotify)
 BuildRequires: pkgconfig(libproxy-1.0)
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(libstartup-notification-1.0)
+BuildRequires: pkgconfig(nspr) >= %nspr_version
+BuildRequires: pkgconfig(nss) >= %nss_version
 BuildRequires: pkgconfig(opus)
 BuildRequires: pkgconfig(pixman-1)
 BuildRequires: pkgconfig(vpx)
@@ -162,10 +120,8 @@ BuildRequires: pkgconfig(xscrnsaver)
 BuildRequires: pkgconfig(xt)
 BuildRequires: pkgconfig(xtst)
 BuildRequires: pkgconfig(zlib)
-
 # Python requires
 BuildRequires: /dev/shm
-
 BuildRequires: python3-base
 BuildRequires: python3(click)
 BuildRequires: python3(curses)
@@ -173,62 +129,23 @@ BuildRequires: python3(hamcrest)
 BuildRequires: python3(pip)
 BuildRequires: python3(setuptools)
 BuildRequires: python3(sqlite3)
-BuildRequires: python3(frozenlist)
-# A copy of the imp module that was removed in python3.12
-# It shouldn't be used, should use `importlib.metadata` instead
-BuildRequires: python3(imp)
-
 # Rust requires
 BuildRequires: /proc
 
-# Mozilla requires
-BuildRequires: pkgconfig(nspr) >= %nspr_version
-BuildRequires: pkgconfig(nss) >= %nss_version
-BuildRequires: libnss-devel-static
-
-BuildRequires: autoconf_2.13
-%set_autoconf_version 2.13
-
-Provides: webclient
-Requires: mozilla-common
-
-# ALT#30732
-Requires: gst-plugins-ugly%gst_version
-
-Requires: libnspr >= %nspr_version
-Requires: libnss >= %nss_version
-
-Conflicts:  firefox
-
-# Localization languages
-%define langlist kk ru uk uz
-%{expand:%(for lang in %{langlist}; do echo -e "Provides: firefox-esr-$lang = %%EVR\nObsoletes: firefox-esr-$lang < %%EVR"; done)}
-
 %description
-The Mozilla Firefox project is a redesign of Mozilla's browser component,
-written using the XUL user interface language and designed to be
-cross-platform.
+Mozilla Firefox is an open-source web browser, designed
+for standards compliance, performance and portability.
 
 %description -l ru_RU.UTF-8
-Интернет-браузер Mozilla Firefox - кроссплатформенная модификация браузера
-Mozilla, созданная с использованием языка XUL для описания интерфейса
-пользователя.
-
-%package wayland
-Summary:    Firefox Wayland launcher.
-Group:      Networking/WWW
-Requires: %name >= %version-%release
-Conflicts:  firefox-wayland
-
-%description wayland
-The firefox-wayland package contains launcher and desktop file
-to run Firefox natively on Wayland.
+Mozilla Firefox - это веб-браузер с открытым исходным кодом, разработанный
+с учетом соответствия стандартам, производительности и переносимости.
 
 %package config-privacy
-Summary:    Firefox configuration with the paranoid privacy settings
-Group:	    System/Configuration/Networking
-Requires: %name = %version-%release
-Conflicts:  firefox-config-privacy
+Summary:	Firefox configuration with the paranoid privacy settings
+Group:		System/Configuration/Networking
+
+Requires: %name
+Conflicts: firefox-config-privacy
 
 %description config-privacy
 Settings disable:
@@ -246,21 +163,14 @@ Most likely you don't need to use this package.
 %setup -q -n firefox-%version -c
 %autopatch -p1
 
-cd mozilla
+mv -- .rpm/l10n .
+cp -f .rpm/firefox-mozconfig .mozconfig
 
-tar -xf %SOURCE1
-tar -xf %SOURCE2
-tar -xf %SOURCE11
-
-cp -f %SOURCE4 .mozconfig
-
-cat >> .mozconfig <<'EOF'
+tee -a .mozconfig <<'EOF'
 ac_add_options --prefix="%_prefix"
 ac_add_options --libdir="%_libdir"
-%ifnarch loongarch64
 ac_add_options --enable-linker=lld
-%endif
-%ifnarch armh loongarch64
+%ifnarch armh
 ac_add_options --enable-lto=thin
 %endif
 %ifarch armh
@@ -291,80 +201,70 @@ find third_party \
 # https://bugzilla.mozilla.org/show_bug.cgi?id=1805809
 %ifarch armh
 find toolkit/components/uniffi-js -type f |
-        xargs sed -ri.poff 's,_4d51_,_1c79_,g'
+	xargs sed -ri.poff 's,_4d51_,_1c79_,g'
 %endif
 
 rm -rf -- obj-x86_64-pc-linux-gnu
 rm -rf -- third_party/python/setuptools/setuptools*
-rm -rf -- third_party/python/setuptools/pkg_resources
-rm -rf -- third_party/python/pip/pip*
 rm -rf -- third_party/python/click/click*
-rm -rf -- third_party/python/frozenlist/frozenlist*
 
 %build
 %add_findprov_lib_path %firefox_prefix
 
-# If MOZ_DEBUG_FLAGS is empty, firefox's build will default it to "-g" which
-# overrides the -g0 from line above and breaks building on s390
-# (OOM when linking, rhbz#1238225)
-export ALTWRAP_LLVM_VERSION="%llvm_version"
-
-export RUST_BACKTRACE=1
-%ifarch armh %{ix86}
-export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=0"
-%else
-export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=2"
-%endif
-
-# Do not use desktop notify during build process
-export MOZ_NOSPAM=1
-
-# compile firefox
-cd mozilla
-
-%add_optflags %optflags_shared
-
 export MOZ_BUILD_APP=browser
+export MOZ_CHROME_MULTILOCALE="$(tr '\n' ' ' < .rpm/firefox-l10n.txt)"
 
-MOZ_OPT_FLAGS="-pipe -O2 -g0"
+MOZ_OPT_FLAGS=()
 
+MOZ_OPT_FLAGS+=( -pipe -O2 )
 %ifarch armh
-MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -march=armv7-a -mthumb"
+MOZ_OPT_FLAGS+=( -march=armv7-a -mthumb )
 %endif
 
 # PIE, full relro
-MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -DPIC -fPIC -Wl,-z,relro -Wl,-z,now"
+MOZ_OPT_FLAGS+=( -DPIC -fPIC -Wl,-z,relro -Wl,-z,now )
 
 # Add fake RPATH
-MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -Wl,-rpath,/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
+rpath="/$(printf %%s '%firefox_prefix' |tr '[:print:]' '_')"
+MOZ_OPT_FLAGS+=( "-Wl,-rpath,$rpath" )
 
-# If MOZ_DEBUG_FLAGS is empty, firefox's build will default it to "-g" which
-# overrides the -g0 from line above and breaks building on s390
-# (OOM when linking, rhbz#1238225)
-export MOZ_DEBUG_FLAGS=" "
+MOZ_OPT_FLAGS+=( -Wno-unused-command-line-argument )
 
-export CFLAGS="$MOZ_OPT_FLAGS"
-export CXXFLAGS="$MOZ_OPT_FLAGS"
+export CFLAGS="${MOZ_OPT_FLAGS[*]}"
+export CXXFLAGS="${MOZ_OPT_FLAGS[*]}"
 
-export MOZ_PARALLEL_BUILD=8
+export MOZ_PARALLEL_BUILD=%build_parallel_jobs
 export CC="clang"
 export CXX="clang++"
 export AR="llvm-ar"
 export NM="llvm-nm"
 export RANLIB="llvm-ranlib"
 export LLVM_PROFDATA="llvm-profdata"
+export ALTWRAP_LLVM_VERSION="%llvm_version"
+export RUST_BACKTRACE=1
 export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
+export SHELL=/bin/sh
+
+# It is necessary to disable the generation of debugging
+# information in order to avoid the "LLVM ERROR: out of memory".
+%ifarch %ix86
+export MOZ_DEBUG_FLAGS="-g0"
+%endif
+%ifarch armh %ix86
+export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=0"
+%else
+export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=2"
+%endif
+
 export srcdir="$PWD"
-export MOZ_MAKE_FLAGS="-j10 --no-print-directory"
 export MOZBUILD_STATE_PATH="$srcdir/mozbuild"
-export PATH="$CBINDGEN_BINDIR:$PATH"
 export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=system
 
 python3 ./mach build
 
 while read -r loc; do
 	python3 ./mach build chrome-$loc
-done < %SOURCE10
+done < .rpm/firefox-l10n.txt
 
 make -C objdir/browser/installer multilocale.txt
 
@@ -373,14 +273,11 @@ $CC $CFLAGS \
 	-DMOZ_PLUGIN_PATH=\"%browser_plugins_path\" \
 	-DMOZ_PROGRAM=\"%firefox_prefix/firefox\" \
 	-DMOZ_DIST_BIN=\"%firefox_prefix\"\
-	%SOURCE8 -o firefox
-
+	.rpm/firefox.c -o firefox
 
 %install
-cd mozilla
-
 export SHELL=/bin/sh
-export MOZ_CHROME_MULTILOCALE="$(tr '\n' ' ' < %SOURCE10)"
+export MOZ_CHROME_MULTILOCALE="$(tr '\n' ' ' < .rpm/firefox-l10n.txt)"
 
 mkdir -p \
 	%buildroot/%mozilla_arch_extdir/%firefox_cid \
@@ -395,11 +292,12 @@ make -C objdir \
 	install
 
 # install altlinux-specific configuration
-install -D -m 644 %SOURCE9  %buildroot%firefox_prefix/browser/defaults/preferences/all-altlinux.js
-install -D -m 644 %SOURCE12 %buildroot%_sysconfdir/firefox/defaults/pref/all-privacy.js
+install -D -m 644 .rpm/firefox-prefs.js %buildroot/%firefox_prefix/browser/defaults/preferences/all-altlinux.js
+install -D -m 644 .rpm/firefox-privacy-prefs.js %buildroot/%_sysconfdir/firefox/defaults/pref/all-privacy.js
 
-# Install default policies
-install -D -m 644 %SOURCE13 %buildroot%_sysconfdir/firefox/policies/policies.json
+sed -i \
+	-e 's#@VERSION@#%{version}#g' \
+	%buildroot/%_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 cat > %buildroot/%firefox_prefix/browser/defaults/preferences/firefox-l10n.js <<EOF
 pref("intl.locale.matchOS", true);
@@ -421,44 +319,32 @@ if [ ! -e "%buildroot/%firefox_prefix/plugins" ]; then
 fi
 
 install -m755 firefox %buildroot/%_bindir/firefox
+ln -s firefox %buildroot/%_bindir/firefox-wayland
 
-cd %buildroot
+install -D -m 644 .rpm/distribution.ini \
+	%buildroot/%firefox_prefix/distribution/distribution.ini
 
-# Wrapper for wayland
-cat > ./%_bindir/firefox-wayland <<'EOF'
-#!/bin/sh
-export GDK_BACKEND=wayland
-export MOZ_ENABLE_WAYLAND=1
-export MOZ_GTK_TITLEBAR_DECORATION=client
-export XDG_SESSION_TYPE=wayland
+install -D -m 644 .rpm/firefox.desktop \
+	%buildroot/%_datadir/applications/firefox.desktop
 
-unset DISPLAY
-
-exec %_bindir/firefox "$@"
-EOF
-
-chmod +x ./%_bindir/firefox-wayland
-
-# Add distribution.ini
-mkdir -p -- ./%firefox_prefix/distribution
-cp -- %SOURCE5 ./%firefox_prefix/distribution/distribution.ini
-
-# install menu file
-install -D -m 644 %SOURCE6 ./%_datadir/applications/firefox.desktop
-install -D -m 644 %SOURCE7 ./%_datadir/applications/firefox-wayland.desktop
+install -D -m 644 .rpm/firefox-search-provider.ini \
+	%buildroot/%_datadir/gnome-shell/search-providers/firefox-search-provider.ini
 
 # Add alternatives
-mkdir -p ./%_altdir
-printf '%_bindir/xbrowser\t%_bindir/firefox\t80\n' >./%_altdir/firefox-esr
+mkdir -p %buildroot/%_altdir
+cat >%buildroot/%_altdir/firefox <<EOF
+%_bindir/xbrowser	%_bindir/firefox	80
+%_bindir/x-www-browser	%_bindir/firefox	80
+EOF
 
 rm -f -- \
-	./%firefox_prefix/removed-files
+	%buildroot/%firefox_prefix/removed-files
 
 # Remove devel files
 rm -rf -- \
-	./%_includedir/%rname \
-	./%_datadir/idl/%rname \
-	./%_libdir/%rname-devel \
+	%buildroot/%_includedir/%name \
+	%buildroot/%_datadir/idl/%name \
+	%buildroot/%_libdir/%name-devel \
 #
 
 # Add real RPATH
@@ -482,14 +368,14 @@ rm -rf -- \
 %dir %_sysconfdir/firefox
 %dir %_sysconfdir/firefox/defaults
 %dir %_sysconfdir/firefox/defaults/pref
-%dir %_sysconfdir/firefox/policies
-%config(noreplace) %_sysconfdir/firefox/policies/policies.json
-%_altdir/firefox-esr
+%_altdir/firefox
 %_bindir/firefox
+%_bindir/firefox-wayland
 %firefox_prefix
 %mozilla_arch_extdir/%firefox_cid
 %mozilla_noarch_extdir/%firefox_cid
 %_datadir/applications/firefox.desktop
+%_datadir/gnome-shell/search-providers/firefox-search-provider.ini
 %_iconsdir/hicolor/16x16/apps/firefox.png
 %_iconsdir/hicolor/22x22/apps/firefox.png
 %_iconsdir/hicolor/24x24/apps/firefox.png
@@ -497,14 +383,18 @@ rm -rf -- \
 %_iconsdir/hicolor/48x48/apps/firefox.png
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
-%files wayland
-%_bindir/firefox-wayland
-%_datadir/applications/firefox-wayland.desktop
-
 %files config-privacy
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Jul 24 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.0-alt2
+- Apply all the changes from regular firefox, the main ones:
+  + Enable VAAPI.
+  + Merge firefox-esr-wayland to firefox-esr.
+  + Enforce window name to associate icon and title with window.
+  + Update the url tag.
+  + Update the description.
+
 * Mon Jul 15 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.0-alt1
 - New ESR version.
 - Security fixes:
