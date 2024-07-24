@@ -5,7 +5,7 @@
 
 Name: lua5.4-module-luacheck
 Version: 1.2.0
-Release: alt1_lr%luarocks_revision
+Release: alt2_lr%luarocks_revision
 
 Summary: A tool for linting and static analysis of Lua code
 License: MIT
@@ -53,10 +53,9 @@ luarocks-5.4 make --verbose --local --deps-mode all --pack-binary-rock \
 
 %install
 luarocks-5.4 install --verbose --local --deps-mode none \
-	--tree %buildroot%prefix *.rock
+	--no-manifest --tree %buildroot%prefix *.rock
 
-# see https://github.com/luarocks/luarocks/wiki/Manifest-file-format
-rm -v %buildroot%luarocks_dbdir/manifest
+sed -i 's@%buildroot@@g' %buildroot%_bindir/luacheck
 
 %files
 %doc README* LICENSE
@@ -65,5 +64,8 @@ rm -v %buildroot%luarocks_dbdir/manifest
 %lua_modulesdir_noarch/luacheck/
 
 %changelog
+* Wed Jul 24 2024 Ajrat Makhmutov <rauty@altlinux.org> 1.2.0-alt2_lr1
+- Fix the paths in the executable file.
+
 * Fri Jul 05 2024 Ajrat Makhmutov <rauty@altlinux.org> 1.2.0-alt1_lr1
 - First build for ALT.
