@@ -4,7 +4,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: cni
-Version: 1.2.0
+Version: 1.2.3
 Release: alt1
 Summary: Container Network Interface - networking for Linux containers
 Group: Development/Other
@@ -66,6 +66,9 @@ rm -f %buildroot%_bindir/{noop,sleep}
 %_bindir/*
 
 %changelog
+* Wed Jul 24 2024 Alexey Shabalin <shaba@altlinux.org> 1.2.3-alt1
+- 1.2.3
+
 * Fri May 31 2024 Alexey Shabalin <shaba@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
