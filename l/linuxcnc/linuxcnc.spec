@@ -4,7 +4,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.9.3
-Release: alt2
+Release: alt2.1
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программное обеспечение для управления станками c ЧПУ
@@ -17,7 +17,7 @@ ExclusiveArch: aarch64 alpha %arm ia64 %ix86 x86_64 %e2k loongarch64
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-tcl rpm-build-python3
+BuildRequires(pre): rpm-build-tcl rpm-build-python3 rpm-macros-qt5-webengine
 BuildRequires: rpm-build-gir
 BuildRequires: python3-devel
 BuildRequires: gcc-c++ pkgconfig(glib-2.0)
@@ -62,7 +62,9 @@ Requires: libgtksourceview3-gir
 Requires: libX11-devel
 
 # for qtplasma
+%ifarch %qt5_qtwebengine_arches
 %py3_requires PyQt5.QtWebEngineWidgets
+%endif
 %py3_requires cv2
 
 Requires: tclx tcl-blt
@@ -244,6 +246,10 @@ rm %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Wed Jul 24 2024 Ivan A. Melnikov <iv@altlinux.org> 2.9.3-alt2.1
+- depend on QtWebEngineWidgets only if its available
+  (fixes FTBFS on loongarch64).
+
 * Mon Jul 15 2024 Anton Midyukov <antohami@altlinux.org> 2.9.3-alt2
 - qtvcp: Fix module 'locale' has no attribute 'format'
 - fix dependencies for qtplasmac
