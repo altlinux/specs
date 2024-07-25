@@ -1,6 +1,6 @@
 Name: hostapd
-Version: 2.10
-Release: alt3
+Version: 2.11
+Release: alt1
 
 Summary: User space daemon for extended IEEE 802.11 management
 License: BSD
@@ -69,6 +69,9 @@ install -pm0644 -D %name/%{name}_cli.1 %buildroot%_man1dir/%{name}_cli.1
 %_man8dir/*
 
 %changelog
+* Tue Jul 23 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.11-alt1
+- 2.11 released
+
 * Mon Jul 22 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.10-alt3
 - stop using obsolete libnl3-devel name in BR
 
