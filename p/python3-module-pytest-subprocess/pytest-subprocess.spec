@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.1
+Version: 1.5.2
 Release: alt1
 Summary: A plugin to fake subprocess for pytest
 License: MIT
@@ -51,6 +51,9 @@ subprocess.check_call() and subprocess.check_output() methods also functional.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jul 25 2024 Stanislav Levin <slev@altlinux.org> 1.5.2-alt1
+- 1.5.1 -> 1.5.2.
+
 * Wed Jul 24 2024 Stanislav Levin <slev@altlinux.org> 1.5.1-alt1
 - 1.5.0 -> 1.5.1.
 
