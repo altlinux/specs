@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name rpmfile
+%define mod_name %pypi_name
 
 # tests require share_network=1
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 2.0.0
-Release: alt2
+Version: 2.1.0
+Release: alt1
 
 Summary: Read rmp archive files
 License: MIT
@@ -53,10 +54,13 @@ This module is modeled after the tarfile module.
 %files
 %doc LICENSE README.md
 %_bindir/%pypi_name
-%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jul 25 2024 Anton Zhukharev <ancieg@altlinux.org> 2.1.0-alt1
+- Updated to 2.1.0.
+
 * Thu Apr 04 2024 Anton Zhukharev <ancieg@altlinux.org> 2.0.0-alt2
 - Set conflict with qa-robot package (due to /usr/bin/rpmfile path).
 
