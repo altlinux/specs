@@ -1,6 +1,6 @@
 Name: wpa_supplicant
-Version: 2.10
-Release: alt2
+Version: 2.11
+Release: alt1
 
 Summary: wpa_supplicant is an implementation of the WPA Supplicant component
 License: BSD
@@ -9,14 +9,12 @@ Url: http://hostap.epitest.fi/
 
 Source0: %name-%version-%release.tar
 Source1: src-%version-%release.tar
-Source2: icons.tar
 
 Requires: dbus
 
-BuildRequires: gcc-c++
-BuildRequires: libdbus-devel libnl-devel >= 3.2.21
-BuildRequires: libxml2-devel qt5-base-devel qt5-tools
-BuildRequires: docbook-utils libncurses-devel libpcsclite-devel libreadline-devel libssl-devel
+BuildRequires: libdbus-devel libnl-devel >= 3.2.21 libxml2-devel
+BuildRequires: docbook-utils libncurses-devel libpcsclite-devel
+BuildRequires: libreadline-devel libssl-devel
 
 %description
 wpa_supplicant is an implementation of the WPA Supplicant component,
@@ -30,25 +28,9 @@ background and acts as the backend component controlling the wireless
 connection. wpa_supplicant supports separate frontend programs and an
 example text-based frontend, wpa_cli, is included with wpa_supplicant.
 
-%package -n wpa_gui
-Summary: wpa_supplicant GUI
-Group: Security/Networking
-Requires: wpa_supplicant = %version-%release
-
-%description -n wpa_gui
-wpa_supplicant is an implementation of the WPA Supplicant component,
-i.e., the part that runs in the client stations. It implements WPA key
-negotiation with a WPA Authenticator and EAP authentication with
-Authentication Server. In addition, it controls the roaming and IEEE
-802.11 authentication/association of the wlan driver.
-
-This package provides GUI to wpa_supplicant
-
 %prep
 %setup -c -a1
 cp %name/defconfig %name/.config
-# use prebuilt icons from now
-tar xf %SOURCE2 -C wpa_supplicant/wpa_gui-qt4
 
 %build
 make -C %name
@@ -58,7 +40,6 @@ make -C %name/doc/docbook man
 install -pm0644 -D %name/%name.conf %buildroot%_sysconfdir/wpa_supplicant.conf
 install -pm0755 -D %name/wpa_supplicant %buildroot%_sbindir/wpa_supplicant
 install -pm0755 %name/wpa_cli %buildroot%_sbindir
-install -pm0755 -D %name/wpa_gui-qt4/wpa_gui %buildroot%_bindir/wpa_gui
 
 mkdir -p %buildroot%systemd_unitdir
 mkdir -p %buildroot%_sysconfdir/%name
@@ -73,10 +54,6 @@ install -pm0644 -D %name/dbus/*.service %buildroot%_datadir/dbus-1/system-servic
 install -pm0644 -D %name/doc/docbook/%name.conf.5 %buildroot%_man5dir/%name.conf.5
 install -pm0644 -D %name/doc/docbook/%name.8 %buildroot%_man8dir/%name.8
 install -pm0644 %name/doc/docbook/wpa_{cli,passphrase,background,priv}.8 %buildroot%_man8dir
-
-mkdir -p %buildroot%_iconsdir
-install -pm0644 -D %name/wpa_gui-qt4/wpa_gui.desktop %buildroot%_desktopdir/wpa_gui.desktop
-tar c -C %name/wpa_gui-qt4/icons hicolor |tar x -C %buildroot%_iconsdir
 
 %files
 %doc %name/README %name/README-HS20 %name/README-P2P %name/README-WPS
@@ -104,12 +81,10 @@ tar c -C %name/wpa_gui-qt4/icons hicolor |tar x -C %buildroot%_iconsdir
 %_man8dir/wpa_supplicant.*
 %_man8dir/wpa_passphrase.*
 
-%files -n wpa_gui
-%_bindir/wpa_gui
-%_desktopdir/wpa_gui.desktop
-%_iconsdir/hicolor/*/*/*.png
-
 %changelog
+* Tue Jul 23 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.11-alt1
+- 2.11 released
+
 * Sun Jan 30 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.10-alt2
 - keep using select() in event loop (closes: 41831)
 
