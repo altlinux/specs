@@ -1,5 +1,5 @@
 Name: v4l-utils
-Version: 1.28.0
+Version: 1.28.1
 Release: alt1
 
 Summary: Collection of video4linux support libraries and utilities
@@ -140,6 +140,9 @@ also serve as a generic video/TV viewer application.
 %_man1dir/qvidcap.1*
 
 %changelog
+* Thu Jul 25 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.28.1-alt1
+- 1.28.1 released
+
 * Tue Jul 23 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.28.0-alt1
 - 1.28.0 released
 
