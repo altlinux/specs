@@ -31,7 +31,7 @@
 %endif
 
 Name: curl
-Version: 8.8.0
+Version: 8.9.0
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -200,6 +200,7 @@ popd
 %_aclocaldir/libcurl.m4
 %_includedir/*
 %_man3dir/*
+%_man1dir/curl-config.*
 %doc docs/{THANKS,TODO,examples,BUGS.md,TheArtOfHttpScripting.md}
 
 %if_enabled static
@@ -208,6 +209,9 @@ popd
 %endif
 
 %changelog
+* Wed Jul 24 2024 Anton Farygin <rider@altlinux.ru> 8.9.0-alt1
+- 8.8.0 -> 8.9.0 (Fixes: CVE-2024-6874, CVE-2024-6197)
+
 * Mon Jul 01 2024 Anton Farygin <rider@altlinux.ru> 8.8.0-alt1
 - 8.7.1 -> 8.0.0 (Closes: #49883)
 
