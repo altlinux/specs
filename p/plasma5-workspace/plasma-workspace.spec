@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.27.11
-Release: alt10
+Release: alt11
 Epoch: 1
 %K5init
 
@@ -77,6 +77,9 @@ Source43: xdg-user-dirs.conf
 Source50: dbus-restart-kde5.sh
 Source51: nvidia_prime_available.cpp
 
+Patch1: 0001-Check_actual_battery_for_charge_state-workaround.patch
+Patch2: 0002-Fix_writing_ICEAuthority_file.patch
+#
 Patch100: alt-startkde.patch
 Patch101: alt-menu-add-tooltip.patch
 Patch102: alt-def-wallpaper-image.patch
@@ -292,6 +295,9 @@ Requires: %name-common >= %EVR
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
+%patch2 -p1
+#
 %patch100 -p1 -b .startkde
 %patch101 -p1
 %patch102 -p1
@@ -583,6 +589,10 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_unitdir_user/plasma-core.target.d/xd
 
 
 %changelog
+* Thu Jul 25 2024 Sergey V Turchin <zerg@altlinux.org> 1:5.27.11-alt11
+- fix check battery charge state
+- fix ICE authentication (closes: 50958)
+
 * Tue Jul 23 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 1:5.27.11-alt10
 - fix display of icons in subcategories (closes: 42058)
 - fix installation of widget from file (closes: 48242)
