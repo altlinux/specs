@@ -1,6 +1,6 @@
 Name: libtirpc
 Version: 1.3.5
-Release: alt1
+Release: alt2
 
 Summary: transport-independent RPC library
 License: BSD
@@ -56,6 +56,9 @@ done
 %_man3dir/*
 
 %changelog
+* Thu Jul 25 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.5-alt2
+- keep GSS API consistent with previous release
+
 * Wed Jul 24 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.5-alt1
 - 1.3.5 released
 
