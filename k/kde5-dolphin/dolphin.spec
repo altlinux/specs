@@ -5,13 +5,15 @@
 %endif
 %define service_name plasma-dolphin
 
+%def_disable baloo
+
 %define sover 5
 %define libdolphinprivate libdolphinprivate%sover
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt1
+Release: alt2
 %K5init
 
 Group: File tools
@@ -35,8 +37,11 @@ BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-phonon-devel qt5-x11extras-devel
 BuildRequires: libxapian-devel desktop-file-utils
 BuildRequires: packagekit-qt-devel
-BuildRequires: kf5-kfilemetadata-devel kf5-baloo-devel kde5-baloo-widgets-devel
-BuildRequires: kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel
+BuildRequires: kf5-kfilemetadata-devel
+%if_enabled baloo
+BuildRequires: kf5-baloo-devel kde5-baloo-widgets-devel
+%endif
+BuildRequires: kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel
 BuildRequires: kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
 BuildRequires: kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdesignerplugin-devel
 BuildRequires: kf5-kdoctools kf5-kdoctools-devel kf5-kemoticons-devel kf5-kguiaddons-devel
@@ -143,6 +148,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Thu Jul 25 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt2
+- temporary build without baloo
+
 * Fri Feb 16 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
