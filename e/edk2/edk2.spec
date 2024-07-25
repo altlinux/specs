@@ -1,13 +1,12 @@
 %global optflags_lto %nil
 %define tool_chain_tag GCC5
-%define openssl_ver 1.1.1s
 %def_disable skip_enroll
 
 %define DBXDATE 20230509
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2
-Version: 20231115
+Version: 20240524
 Release: alt1
 Summary: EFI Development Kit II
 
@@ -52,7 +51,7 @@ BuildRequires: libuuid-devel
 BuildRequires: qemu-img
 BuildRequires: xorriso dosfstools mtools
 BuildRequires: /proc /dev/pts
-BuildRequires: python3-module-virt-firmware
+BuildRequires: python3-module-virt-firmware >= 24.7-alt1
 # openssl configure
 BuildRequires: /usr/bin/pod2man bc zlib-devel perl-PathTools perl-IPC-Cmd perl-JSON
 
@@ -134,6 +133,7 @@ mkdir -p MdePkg/Library/MipiSysTLib/mipisyst/library/include
 mkdir -p CryptoPkg/Library/MbedTlsLib/mbedtls/include
 mkdir -p CryptoPkg/Library/MbedTlsLib/mbedtls/include/mbedtls
 mkdir -p CryptoPkg/Library/MbedTlsLib/mbedtls/library
+mkdir -p SecurityPkg/DeviceSecurity/SpdmLib/libspdm/include
 
 cp -a -- \
     %SOURCE90 %SOURCE91 \
@@ -157,13 +157,14 @@ CC_FLAGS="-t %tool_chain_tag"
 CC_FLAGS="${CC_FLAGS} -b DEBUG --hash"
 CC_FLAGS="${CC_FLAGS} --cmd-len=65536"
 CC_FLAGS="${CC_FLAGS} -D NETWORK_IP6_ENABLE=TRUE"
-CC_FLAGS="${CC_FLAGS} -D NETWORK_HTTP_BOOT_ENABLE=TRUE"
+CC_FLAGS="${CC_FLAGS} -D NETWORK_HTTP_BOOT_ENABLE=TRUE -D NETWORK_ALLOW_HTTP_CONNECTIONS=TRUE"
 CC_FLAGS="${CC_FLAGS} -D TPM2_ENABLE=TRUE -D TPM2_CONFIG_ENABLE=TRUE"
-CC_FLAGS="${CC_FLAGS} -D TPM1_ENABLE=TRUE"
+CC_FLAGS="${CC_FLAGS} -D TPM1_ENABLE=FALSE"
+CC_FLAGS="${CC_FLAGS} -D CAVIUM_ERRATUM_27456=TRUE"
 
 # ovmf features
-OVMF_2M_FLAGS="${CC_FLAGS} -D FD_SIZE_2MB=TRUE"
-OVMF_4M_FLAGS="${CC_FLAGS} -D FD_SIZE_4MB=TRUE -D NETWORK_TLS_ENABLE=TRUE -D NETWORK_ISCSI_ENABLE=TRUE -D NETWORK_ALLOW_HTTP_CONNECTIONS=TRUE"
+OVMF_2M_FLAGS="${CC_FLAGS} -D FD_SIZE_2MB=TRUE -D NETWORK_TLS_ENABLE=FALSE -D NETWORK_ISCSI_ENABLE=FALSE"
+OVMF_4M_FLAGS="${CC_FLAGS} -D FD_SIZE_4MB=TRUE -D NETWORK_TLS_ENABLE=TRUE -D NETWORK_ISCSI_ENABLE=TRUE"
 
 # secure boot features
 OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D SECURE_BOOT_ENABLE=TRUE"
@@ -248,40 +249,26 @@ cp -p Build/OvmfX64/*/X64/EnrollDefaultKeys.efi OVMF/
 build_iso OVMF
 cp -p DBXUpdate-%DBXDATE.x64.bin OVMF/
 
-ENROLL_ALT_CERT="/usr/lib/python3/site-packages/virt/firmware/certs/alt.pem"
-ENROLL_MS_CERT="/usr/lib/python3/site-packages/virt/firmware/certs/MicrosoftCorporationKEKCA2011.pem"
 %if_disabled skip_enroll
 virt-fw-vars --input   OVMF/OVMF_VARS.fd \
              --output  OVMF/OVMF_VARS.secboot.fd \
              --set-dbx DBXUpdate-%DBXDATE.x64.bin \
-             --secure-boot --enroll-cert "${ENROLL_ALT_CERT}"
-
-virt-fw-vars --input   OVMF/OVMF_VARS.fd \
-             --output  OVMF/OVMF_VARS.ms.fd \
-             --set-dbx DBXUpdate-%DBXDATE.x64.bin \
-             --secure-boot --enroll-cert "${ENROLL_MS_CERT}"
+             --secure-boot --enroll-altlinux --distro-keys altlinux
 
 virt-fw-vars --input   OVMF/OVMF_VARS_4M.fd \
              --output  OVMF/OVMF_VARS_4M.secboot.fd \
              --set-dbx DBXUpdate-%DBXDATE.x64.bin \
-             --secure-boot --enroll-cert "${ENROLL_ALT_CERT}"
-
-virt-fw-vars --input   OVMF/OVMF_VARS_4M.fd \
-             --output  OVMF/OVMF_VARS_4M.ms.fd \
-             --set-dbx DBXUpdate-%DBXDATE.x64.bin \
-             --secure-boot --enroll-cert "${ENROLL_MS_CERT}"
+             --secure-boot --enroll-altlinux --distro-keys altlinux
 
 virt-fw-vars --input   OVMF/OVMF.inteltdx.fd \
              --output  OVMF/OVMF.inteltdx.secboot.fd \
              --set-dbx DBXUpdate-%DBXDATE.x64.bin \
-             --secure-boot --enroll-cert "${ENROLL_ALT_CERT}"
+             --secure-boot --enroll-altlinux --distro-keys altlinux
 %else
 # This isn't going to actually give secureboot, but makes json files happy
 # if we need to test disabling ovmf-vars-generator
 cp -p OVMF/OVMF_VARS.fd OVMF/OVMF_VARS.secboot.fd
-cp -p OVMF/OVMF_VARS.fd OVMF/OVMF_VARS.ms.fd
 cp -p OVMF/OVMF_VARS_4M.fd OVMF/OVMF_VARS_4M.secboot.fd
-cp -p OVMF/OVMF_VARS_4M.fd OVMF/OVMF_VARS_4M.ms.fd
 cp -p OVMF/OVMF.inteltdx.fd OVMF/OVMF.inteltdx.secboot.fd
 %endif
 
@@ -312,16 +299,11 @@ cp -p Build/OvmfIa32/*/IA32/EnrollDefaultKeys.efi ovmf-ia32/EnrollDefaultKeys.ef
 virt-fw-vars --input ovmf-ia32/OVMF_VARS.fd \
              --output ovmf-ia32/OVMF_VARS.secboot.fd \
              --set-dbx DBXUpdate-%DBXDATE.ia32.bin  \
-             --secure-boot --enroll-cert "${ENROLL_ALT_CERT}"
-virt-fw-vars --input ovmf-ia32/OVMF_VARS.fd \
-             --output ovmf-ia32/OVMF_VARS.ms.fd \
-             --set-dbx DBXUpdate-%DBXDATE.ia32.bin \
-             --secure-boot --enroll-cert "${ENROLL_MS_CERT}"
+             --secure-boot --enroll-altlinux --distro-keys altlinux
 %else
 # This isn't going to actually give secureboot, but makes json files happy
 # if we need to test disabling ovmf-vars-generator
 cp -p ovmf-ia32/OVMF_VARS.fd ovmf-ia32/OVMF_VARS.secboot.fd
-cp -p ovmf-ia32/OVMF_VARS.fd ovmf-ia32/OVMF_VARS.ms.fd
 %endif
 
 build_iso ovmf-ia32
@@ -372,6 +354,24 @@ virt-fw-vars --input OVMF/OVMF_VARS.secboot.fd \
 %_prefix/lib64/efi/shell.efi
 
 %changelog
+* Wed Jul 24 2024 Alexey Shabalin <shaba@altlinux.org> 20240524-alt1
+- edk2-stable202405
+- drop OVMF_VARS.ms.fd with MS CA only
+- Fixes:
+  + CVE-2022-36763
+  + CVE-2022-36764
+  + CVE-2022-36765
+  + CVE-2023-45229
+  + CVE-2023-45230
+  + CVE-2023-45231
+  + CVE-2023-45232
+  + CVE-2023-45233
+  + CVE-2023-45234
+  + CVE-2023-45235
+  + CVE-2023-45236
+  + CVE-2023-45237
+  + CVE-2024-25742
+
 * Thu Jan 25 2024 Alexey Shabalin <shaba@altlinux.org> 20231115-alt1
 - edk2-stable202311
 

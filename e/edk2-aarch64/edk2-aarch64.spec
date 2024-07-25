@@ -4,8 +4,8 @@
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-aarch64
-Version: 20231115
-Release: alt2
+Version: 20240524
+Release: alt1
 Summary: AARCH64 Virtual Machine Firmware
 
 License: BSD-2-Clause-Patent
@@ -94,6 +94,7 @@ mkdir -p MdePkg/Library/MipiSysTLib/mipisyst/library/include
 mkdir -p CryptoPkg/Library/MbedTlsLib/mbedtls/include
 mkdir -p CryptoPkg/Library/MbedTlsLib/mbedtls/include/mbedtls
 mkdir -p CryptoPkg/Library/MbedTlsLib/mbedtls/library
+mkdir -p SecurityPkg/DeviceSecurity/SpdmLib/libspdm/include
 
 %build
 export PYTHON_COMMAND=%__python3
@@ -121,14 +122,13 @@ CC_FLAGS="${CC_FLAGS} -D NETWORK_TLS_ENABLE=TRUE"
 CC_FLAGS="${CC_FLAGS} -D NETWORK_HTTP_BOOT_ENABLE=TRUE"
 CC_FLAGS="${CC_FLAGS} -D NETWORK_ISCSI_ENABLE=TRUE"
 CC_FLAGS="${CC_FLAGS} -D NETWORK_ALLOW_HTTP_CONNECTIONS=TRUE"
-CC_FLAGS="${CC_FLAGS} -D TPM2_ENABLE=TRUE"
-CC_FLAGS="${CC_FLAGS} -D TPM1_ENABLE=TRUE"
+CC_FLAGS="${CC_FLAGS} -D TPM1_ENABLE=FALSE"
 CC_FLAGS="${CC_FLAGS} -D CAVIUM_ERRATUM_27456=TRUE"
 
 VERBOSE_FLAGS="-D DEBUG_PRINT_ERROR_LEVEL=0x8040004F"
 SILENT_FLAGS="-D DEBUG_PRINT_ERROR_LEVEL=0x80000000"
-TPM_FLAGS="-D TPM1_ENABLE=TRUE -D TPM2_ENABLE=TRUE"
-NO_TPM_FLAGS="-D TPM1_ENABLE=FALSE -D TPM2_ENABLE=FALSE"
+TPM_FLAGS="-D TPM2_ENABLE=TRUE"
+NO_TPM_FLAGS="-D TPM2_ENABLE=FALSE"
 
 # grub.efi uses EfiLoaderData for code
 NX_BROKEN_SHIM_GRUB_DATA="--pcd PcdDxeNxMemoryProtectionPolicy=0xC000000000007FD1"
@@ -201,6 +201,23 @@ done
 %_datadir/qemu/firmware/*edk2-aarch64*.json
 
 %changelog
+* Thu Jul 25 2024 Alexey Shabalin <shaba@altlinux.org> 20240524-alt1
+- edk2-stable202405
+- Fixes:
+  + CVE-2022-36763
+  + CVE-2022-36764
+  + CVE-2022-36765
+  + CVE-2023-45229
+  + CVE-2023-45230
+  + CVE-2023-45231
+  + CVE-2023-45232
+  + CVE-2023-45233
+  + CVE-2023-45234
+  + CVE-2023-45235
+  + CVE-2023-45236
+  + CVE-2023-45237
+  + CVE-2024-25742
+
 * Tue Mar 05 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 20231115-alt2
 - Make it possible to cross-compile the thing. Useful for ports
   (in particular loongarch64). Also the package can be built

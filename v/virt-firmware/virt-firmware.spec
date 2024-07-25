@@ -1,6 +1,6 @@
 
 Name: virt-firmware
-Version: 24.4
+Version: 24.7
 Release: alt1
 Summary: Tools for virtual machine firmware volumes
 Group: Emulators
@@ -48,6 +48,7 @@ Summary: %summary - manage UKI kernels.
 Provides: ukidirect = %EVR
 Requires: python3-module-virt-firmware
 Conflicts: systemd < 254
+%add_findreq_skiplist %_kernel_installdir/99-uki-uefi-setup.install
 
 %description -n uki-direct
 kernel-install plugin and systemd unit to manage automatic
@@ -74,7 +75,7 @@ cp -ar tests %buildroot%_datadir/%name
 install -m 755 -d %buildroot%_unitdir
 install -m 755 -d %buildroot%prefix/lib/kernel/install.d
 install -m 644 systemd/kernel-bootcfg-boot-successful.service %buildroot%_unitdir
-install -m 755 systemd/99-uki-uefi-setup.install %buildroot%prefix/lib/kernel/install.d
+install -m 755 systemd/99-uki-uefi-setup.install %buildroot%_kernel_installdir
 
 %post -n uki-direct
 %post_systemd kernel-bootcfg-boot-successful.service
@@ -93,9 +94,15 @@ install -m 755 systemd/99-uki-uefi-setup.install %buildroot%prefix/lib/kernel/in
 
 %files -n uki-direct
 %_unitdir/kernel-bootcfg-boot-successful.service
-%prefix/lib/kernel/install.d/99-uki-uefi-setup.install
+%_kernel_installdir/99-uki-uefi-setup.install
 
 %changelog
+* Wed Jul 24 2024 Alexey Shabalin <shaba@altlinux.org> 24.7-alt1
+- New version 24.7.
+- Update ALT Linux Secure Boot CA 2024 cert.
+- Add ALT Linux Secure Boot PK/KEK cert.
+- Add --enroll-altlinux option.
+
 * Fri May 03 2024 Alexey Shabalin <shaba@altlinux.org> 24.4-alt1
 - New version 24.4.
 

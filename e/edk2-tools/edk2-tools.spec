@@ -1,9 +1,8 @@
 %define TOOL_CHAIN_TAG GCC5
-%define openssl_ver 3.0.9
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-tools
-Version: 20231115
+Version: 20240524
 Release: alt1
 Summary: EFI Development Kit II Tools
 
@@ -98,23 +97,6 @@ CC_FLAGS="-t %TOOL_CHAIN_TAG"
 CC_FLAGS="${CC_FLAGS} -b RELEASE"
 #CC_FLAGS="${CC_FLAGS} -b DEBUG --hash"
 CC_FLAGS="${CC_FLAGS} --cmd-len=65536"
-CC_FLAGS="${CC_FLAGS} -D NETWORK_IP6_ENABLE"
-CC_FLAGS="${CC_FLAGS} -D NETWORK_TLS_ENABLE"
-CC_FLAGS="${CC_FLAGS} -D NETWORK_HTTP_BOOT_ENABLE"
-CC_FLAGS="${CC_FLAGS} -D TPM_ENABLE"
-
-# ovmf features
-OVMF_FLAGS="${CC_FLAGS}"
-OVMF_FLAGS="${OVMF_FLAGS} -D FD_SIZE_2MB"
-
-# ovmf + secure boot features
-OVMF_SB_FLAGS="${OVMF_FLAGS}"
-OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D SECURE_BOOT_ENABLE"
-OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D SMM_REQUIRE"
-OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D EXCLUDE_SHELL_FROM_FD"
-
-# arm firmware features
-#ARM_FLAGS="-t %%TOOL_CHAIN_TAG -b DEBUG --cmd-len=65536"
 ARM_FLAGS="${CC_FLAGS}"
 
 unset MAKEFLAGS
@@ -195,6 +177,9 @@ popd
 %doc BaseTools/UserManuals/*.rtf
 
 %changelog
+* Thu Jul 25 2024 Alexey Shabalin <shaba@altlinux.org> 20240524-alt1
+- edk2-stable202405
+
 * Thu Jan 25 2024 Alexey Shabalin <shaba@altlinux.org> 20231115-alt1
 - edk2-stable202311
 
