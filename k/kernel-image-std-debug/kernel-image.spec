@@ -2,7 +2,7 @@ Name: kernel-image-std-debug
 Release: alt1
 epoch:2
 %define kernel_base_version	6.1
-%define kernel_sublevel	.100
+%define kernel_sublevel	.101
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -604,6 +604,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Jul 25 2024 Kernel Bot <kernelbot@altlinux.org> 2:6.1.101-alt1
+- v6.1.101 (2024-07-25).
+- config: Enable CONFIG_MHI_WWAN_CTRL (ALT#50941).
+
 * Thu Jul 18 2024 Kernel Bot <kernelbot@altlinux.org> 2:6.1.100-alt1
 - v6.1.100 (2024-07-18).
 
