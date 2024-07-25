@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 4.6
+%define ver_major 4.8
 %define beta %nil
 %define rdn_name org.darktable.darktable
 
@@ -18,7 +18,7 @@
 
 Name: darktable
 Version: %ver_major.1
-Release: alt2
+Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
 License: GPL-3.0
@@ -26,6 +26,7 @@ Group: Graphics
 Url: http://%name.org/
 
 Vcs: https://github.com/darktable-org/darktable.git
+
 Source: https://github.com/darktable-org/darktable/releases/download/release-%version/%name-%version.tar.xz
 # required for llvm-7.0
 Patch: darktable-3.0.0-is_supported_platform.patch
@@ -52,6 +53,7 @@ AutoReq: nolua
 %define libheif_ver 1.12.0
 %define openexr_ver 3.0
 %define lua_ver_major 5.4
+%define lua_ver 5.4.6
 
 Requires: iso-codes >= %iso_codes_ver
 Requires: icon-theme-adwaita
@@ -71,7 +73,8 @@ BuildRequires: openexr-devel >= %openexr_ver
 BuildRequires: libxkbcommon-x11-devel lsb-release
 BuildRequires: libjson-glib-devel libsoup-devel libpixman-devel libexpat-devel
 BuildRequires: libcolord-gtk-devel libudev-devel
-BuildRequires: libGraphicsMagick-c++-devel libopenjpeg2.0-devel
+BuildRequires: libGraphicsMagick-c++-devel
+BuildRequires: libopenjpeg2.0-devel openjpeg-tools2.0
 BuildRequires: libharfbuzz-devel libwebp-devel libxshmfence-devel
 # since 2.0
 BuildRequires: libpugixml-devel >= %pugixml_ver libcups-devel
@@ -80,7 +83,7 @@ BuildRequires: /usr/bin/jsonschema
 BuildRequires: iso-codes-devel >= %iso_codes_ver
 BuildRequires: libgmic-devel libjasper-devel
 %{?_enable_system_lua:BuildRequires(pre): rpm-build-lua
-BuildRequires: liblua%lua_ver_major-devel
+BuildRequires: liblua%lua_ver_major-devel >= %lua_ver
 Provides: lua%lua_ver_major(darktable)}
 %{?_enable_system_libraw:BuildRequires: libraw-devel >= %libraw_ver}
 %{?_enable_libavif:BuildRequires: libavif-devel >= %libavif_ver}
@@ -97,7 +100,7 @@ light table. It also enables you to develop raw images and enhance them.
 %prep
 %setup -n %name-%version
 %patch1 -p1
-%patch3500 -p1
+#%%patch3500 -p1
 
 %build
 %ifarch aarch64
@@ -157,6 +160,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %doc README* RELEASE_NOTES*
 
 %changelog
+* Thu Jul 25 2024 Yuri N. Sedunov <aris@altlinux.org> 4.8.1-alt1
+- 4.8.1
+
 * Sun Feb 18 2024 Yuri N. Sedunov <aris@altlinux.org> 4.6.1-alt2
 - fixed FTBFS on LoongArch (asheplyakov@)
   asheplyakov@: build for aarch64 again (disable stack-protector-strong to avoid ICE)
