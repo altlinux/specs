@@ -8,7 +8,7 @@
 
 Name: espeak
 Version: 1.48.04
-Release: alt3.1
+Release: alt3.2
 
 Summary: %name is a software speech synthesizer for English and other languages
 Summary(ru_RU.UTF-8): Программный синтезатор речи для английского и других языков
@@ -77,7 +77,7 @@ License: %gpl3plus
 Summary: This is a shared library which contains the espeak's text to speech engine
 Summary(ru_RU.UTF-8): Динамически подключаемая библиотека с реализацией системы синтеза речи espeak
 Group: Sound
-Requires: %name-data = %version-%release
+#Requires: %name-data = %version-%release
 %description -n lib%name
 This package contains the shared library with text-to-speech
 engine. This library is used in 'speak' TTS tool.
@@ -191,14 +191,14 @@ ln -s en-gb %_datadir/%name-data/voices/en ||:
 %tts_unregister espeak
 %tts_unregister espeak-ru
 
-%files
-%doc ChangeLog.txt License.txt ReadMe html
-%_bindir/espeak
-%_man1dir/espeak.1*
-%_ttsdir/*
+#%files
+#doc ChangeLog.txt License.txt ReadMe html
+#%_bindir/espeak
+#%_man1dir/espeak.1*
+#%_ttsdir/*
 
-%files data
-%_datadir/espeak-data
+#%files data
+#%_datadir/espeak-data
 
 %files -n lib%name
 %_libdir/libespeak.so.*
@@ -209,6 +209,9 @@ ln -s en-gb %_datadir/%name-data/voices/en ||:
 #%_libdir/libespeak.so
 
 %changelog
+* Thu Jul 25 2024 Sergey V Turchin <zerg@altlinux.org> 1.48.04-alt3.2
+- NMU: don't espeak subpackage to push espeak-ng
+
 * Wed Jun 26 2024 Sergey V Turchin <zerg@altlinux.org> 1.48.04-alt3.1
 - NMU: don't package devel subpackage to push espeak-ng-devel
 
