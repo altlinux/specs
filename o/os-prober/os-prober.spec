@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %filter_from_requires s,python-module-zope\.app\.appsetup,,
 
 Name: os-prober
-Version: 1.77
-Release: alt5
+Version: 1.82
+Release: alt1
 
 Summary: Operating systems detector
 License: GPLv2+
 Group: System/Configuration/Boot and Init
 Url: https://salsa.debian.org/installer-team/os-prober
-#Git: https://salsa.debian.org/installer-team/os-prober.git
+VCS: https://salsa.debian.org/installer-team/os-prober.git
 
 Source0: %name-%version.tar
 
@@ -26,7 +27,7 @@ them, and work out how to boot other linux installs.
 %prep
 %setup
 %patch -p1
-%patch1 -p1 
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -35,39 +36,42 @@ them, and work out how to boot other linux installs.
 %make_build
 
 %install
-mkdir -p %buildroot/%_bindir/
-cp -a os-prober %buildroot/%_bindir/
-cp -a linux-boot-prober %buildroot/%_bindir/
-mkdir -p %buildroot/usr/lib/
-mkdir -p %buildroot/usr/lib/%name
-cp -a newns %buildroot/usr/lib/%name
+install -Dm755 os-prober -t %buildroot/%_bindir
+install -Dm755 linux-boot-prober -t %buildroot/%_bindir
+install -Dm755 newns -t %buildroot%_libexecdir/os-prober
+install -Dm644 common.sh -t %buildroot%_datadir/os-prober
 
-mkdir -p %buildroot/usr/lib/os-probes/init
-cp -a os-probes/init/common/* %buildroot/usr/lib/os-probes/init
-mkdir -p %buildroot/usr/lib/os-probes/mounted
-cp -a os-probes/mounted/x86/* %buildroot/usr/lib/os-probes/mounted/
-cp -a os-probes/mounted/common/* %buildroot/usr/lib/os-probes/mounted/
-cp -a os-probes/common/* %buildroot/usr/lib/os-probes/
+mkdir -p %buildroot%_libexecdir/os-probes/init
+cp -a os-probes/init/common/* %buildroot%_libexecdir/os-probes/init/
 
-mkdir -p %buildroot/usr/lib/linux-boot-probes/mounted
-cp -a linux-boot-probes/common/* %buildroot/usr/lib/linux-boot-probes
-cp -a linux-boot-probes/mounted/x86/* %buildroot/usr/lib/linux-boot-probes/mounted/
-cp -a linux-boot-probes/mounted/common/* %buildroot/usr/lib/linux-boot-probes/mounted/
+mkdir -p %buildroot%_libexecdir/os-probes/mounted
+cp -a os-probes/mounted/x86/* %buildroot%_libexecdir/os-probes/mounted/
+cp -a os-probes/mounted/common/* %buildroot%_libexecdir/os-probes/mounted/
+cp -a os-probes/common/* %buildroot%_libexecdir/os-probes/
 
-mkdir -p %buildroot%_datadir/%name
-cp -a common.sh %buildroot%_datadir/%name/
-mkdir -p %buildroot%_localstatedir/%name
+mkdir -p %buildroot%_libexecdir/linux-boot-probes/mounted
+cp -a linux-boot-probes/common/* %buildroot%_libexecdir/linux-boot-probes
+cp -a linux-boot-probes/mounted/x86/* \
+   %buildroot%_libexecdir/linux-boot-probes/mounted/
+cp -a linux-boot-probes/mounted/common/* \
+   %buildroot%_libexecdir/linux-boot-probes/mounted/
+
+mkdir -p %buildroot%_localstatedir/os-prober
 
 %files
 %doc README
-%_bindir/*
-/usr/lib/linux-boot-probes
-/usr/lib/os-probes
-/usr/lib/%name
-%_datadir/%name/
-%_localstatedir/%name
+%_bindir/os-prober
+%_bindir/linux-boot-prober
+%_libexecdir/linux-boot-probes
+%_libexecdir/os-probes
+%_libexecdir/os-prober
+%_datadir/os-prober
+%_localstatedir/os-prober
 
 %changelog
+* Thu Jul 25 2024 Egor Ignatov <egori@altlinux.org> 1.82-alt1
+- 1.82
+
 * Fri Apr 19 2024 Anton Midyukov <antohami@altlinux.org> 1.77-alt5
 - Find partitions involved in a RAID via /dev/mapper (evms)
 
