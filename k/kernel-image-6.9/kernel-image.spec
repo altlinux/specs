@@ -1,7 +1,7 @@
 Name: kernel-image-6.9
 Release: alt1
 %define kernel_base_version	6.9
-%define kernel_sublevel	.10
+%define kernel_sublevel	.11
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -589,6 +589,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Jul 25 2024 Kernel Bot <kernelbot@altlinux.org> 6.9.11-alt1
+- v6.9.11 (2024-07-25).
+- config-aarch64: CONFIG_NR_CPUS=512.
+- config: Enable CONFIG_MHI_WWAN_CTRL (ALT#50941).
+
 * Thu Jul 18 2024 Kernel Bot <kernelbot@altlinux.org> 6.9.10-alt1
 - v6.9.10 (2024-07-18).
 - config: CONFIG_DM_VDO=m.
