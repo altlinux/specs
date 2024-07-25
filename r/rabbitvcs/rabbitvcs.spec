@@ -3,7 +3,7 @@
 
 Name:    rabbitvcs
 Version: 0.19.0.21.git6f2da1b
-Release: alt1
+Release: alt2
 
 Summary: Graphical user interface to version control systems
 License: GPLv2+
@@ -19,9 +19,13 @@ Patch1: .gear/rabbitvcs-0.19-alt-fix-unittest.patch
 # Python v3.12 requires raw strings in regexp to avoid SyntaxWarning
 Patch2: .gear/rabbitvcs-0.19-alt-regexp-raw-strings-py312.patch
 
+# We are not pack extension for Thunar and skip deps
+# cause repository already contains native thunar-vcs-plugin
+%add_typelib_req_skiplist typelib(Thunarx)
+
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: python3-module-pygobject3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
@@ -31,6 +35,7 @@ BuildRequires: python3-module-dbus
 BuildRequires: python3-module-configobj
 BuildRequires: python3-module-pysvn
 BuildRequires: python3-module-pytest
+BuildRequires: libgtk4-gir-devel
 %endif
 
 %description
@@ -169,6 +174,9 @@ py.test-3 %name/tests/test_rabbitvcs.py::RabbitVCSTest
 %_datadir/nemo-python/extensions/*.py
 
 %changelog
+* Wed Jul 24 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.19.0.21.git6f2da1b-alt2
+- Rebuild with fixed test
+
 * Thu May 02 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.19.0.21.git6f2da1b-alt1
 - Build new version from git ref 6f2da1b for Sisyphus:
   + Fixed remove staged files from working tree (Closes: #50050)
