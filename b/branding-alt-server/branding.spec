@@ -20,7 +20,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt3
+Release: alt4
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -251,6 +251,8 @@ find %buildroot -name \*.in -delete
 
 mkdir -p %buildroot/%_datadir/install3
 install mate-settings/lightdm-gtk-greeter.conf %buildroot/%_datadir/install3/lightdm-gtk-greeter.conf
+mkdir -p %buildroot/%_datadir/mate-menu
+install mate-settings/applications.list-themed %buildroot/%_datadir/mate-menu/applications.list-themed
 
 #bootloader
 %ifarch %ix86 x86_64
@@ -315,6 +317,7 @@ fi
 
 %files mate-settings
 %_datadir/install3/lightdm-gtk-greeter.conf
+%_datadir/mate-menu/applications.list-themed
 
 %files slideshow
 /etc/alterator/slideshow.conf
@@ -331,6 +334,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Jul 25 2024 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt4
+- Add Chromium to the "Favorites" menu item
+
 * Tue Jul 23 2024 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt3
 - Use bgrt-alt theme for plymouth (Closes: 41591)
 
