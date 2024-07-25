@@ -2,7 +2,7 @@
 
 Name: kf6-%rname
 Version: 6.3.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Libraries
@@ -48,21 +48,21 @@ developing applications that use %name.
 %package -n libkf6newstuff
 Group: System/Libraries
 Summary: KF6 library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n libkf6newstuff
 KF6 library
 
 %package -n libkf6newstuffcore
 Group: System/Libraries
 Summary: KF6 library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n libkf6newstuffcore
 KF6 library
 
 %package -n libkf6newstuffwidgets
 Group: System/Libraries
 Summary: KF6 library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n libkf6newstuffwidgets
 KF6 library
 
@@ -87,7 +87,6 @@ KF6 library
 %files
 %_K6bin/knewstuff*
 %_K6xdgapp/*knewstuff*.desktop
-%_K6qml/org/kde/newstuff/
 
 %files devel
 %_K6plug/designer/*newstuff*.so
@@ -100,9 +99,13 @@ KF6 library
 
 %files -n libkf6newstuffwidgets
 %_K6lib/libKF6NewStuffWidgets.so.*
+%_K6qml/org/kde/newstuff/
 
 
 %changelog
+* Thu Jul 25 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt2
+- move qml into library packge
+
 * Tue Jun 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
 - new version
 
