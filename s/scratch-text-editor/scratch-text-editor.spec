@@ -1,8 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name code
 %define rdn_name io.elementary.%_name
-%define ver_major 7.2
+%define ver_major 7.3
 
 Name: scratch-text-editor
 Version: %ver_major.0
@@ -126,6 +126,9 @@ This package provides Vala language bindings for the scratch text editor.
 %_vapidir/%{_name}core.vapi
 
 %changelog
+* Thu Jul 25 2024 Yuri N. Sedunov <aris@altlinux.org> 7.3.0-alt1
+- 7.3.0
+
 * Sun Jan 21 2024 Yuri N. Sedunov <aris@altlinux.org> 7.2.0-alt1
 - updated to 7.2.0-6-g1626d85b2
 
