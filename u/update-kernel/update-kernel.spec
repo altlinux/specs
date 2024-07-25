@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: update-kernel
-Version: 1.16
+Version: 1.17
 Release: alt1
 Summary: Update kernel and modules
 License: GPL-2.0-or-later
@@ -59,6 +59,13 @@ make check
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Wed Jul 24 2024 Vitaly Chikunov <vt@altlinux.org> 1.17-alt1
+- Speed up 'update-kernel --list' run under user.
+- Support 'latest' virtual flavour to install highest available version of
+  standard kernels.
+- Upgrade to a new flavor if the current one is no longer available in the
+  repository.
+
 * Tue Feb 13 2024 Vitaly Chikunov <vt@altlinux.org> 1.16-alt1
 - Apply --dry-run/--download-only logic to debuginfo-kernel-install.
 
