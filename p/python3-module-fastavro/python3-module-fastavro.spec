@@ -1,19 +1,33 @@
 %define  modulename fastavro
 
+%def_with check
+
 Name:    python3-module-%modulename
-Version: 1.9.4
+Version: 1.9.5
 Release: alt1
 
 Summary: Fast Avro for Python
 
 License: MIT
 Group:   Development/Python3
-URL:     https://github.com/fastavro/fastavro
+URL:     https://pypi.org/project/fastavro
+VCS:     https://github.com/fastavro/fastavro
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-Cython
+
+%if_with check
+BuildRequires: python3-module-zlib-ng
+BuildRequires: python3-module-numpy
+BuildRequires: python3-module-pandas
+BuildRequires: python3-module-pandas-tests
+BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-zstandard
+BuildRequires: python3-module-lz4
+BuildRequires: python3-module-cramjam
+%endif
 
 Source:  %name-%version.tar
 
@@ -30,19 +44,41 @@ find fastavro/ -name "*.c" -print -delete
 
 %build
 export FASTAVRO_USE_CYTHON=1
-%python3_build
+%pyproject_build
 
 %install
 export FASTAVRO_USE_CYTHON=1
-%python3_install
+%pyproject_install
+
+%check
+# Avoid importing the “un-built” package. The tests really assume we have built
+# the extensions in-place, and occasionally use relative paths to the package
+# source directory. We would prefer to test the extensions as installed (and
+# avoid an extra build step), so we use a symbolic link to make the tests
+# appear alongside the built package.
+mkdir -p _empty
+cd _empty
+cp -rp ../tests/ .
+ln -s '%buildroot%python3_sitelibdir/fastavro' .
+
+# Upstream dont care about 32bit systems
+# https://github.com/fastavro/fastavro/issues/526
+donttest=""
+%ifarch %ix86
+donttest="and not test_problematic_timestamp_millis_naive_time"
+%endif
+py.test-3 -vra -k "not test_regular_vs_ordered_dict_record_typeerror $donttest"
 
 %files
-%doc *.md
+%doc LICENSE *.md
 %_bindir/fastavro
 %python3_sitelibdir/%modulename
-%python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Fri Jul 26 2024 Grigory Ustinov <grenka@altlinux.org> 1.9.5-alt1
+- Automatically updated to 1.9.5.
+
 * Mon Feb 26 2024 Grigory Ustinov <grenka@altlinux.org> 1.9.4-alt1
 - Automatically updated to 1.9.4.
 

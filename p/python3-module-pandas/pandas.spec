@@ -1,14 +1,12 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname pandas
 
-%def_with bootstrap
+%def_without bootstrap
 %def_disable check
 %def_without docs
 
 Name: python3-module-%oname
-Version: 2.1.4
-Release: alt1.1
+Version: 2.2.2
+Release: alt1
 Summary: Python Data Analysis Library
 License: BSD-3-Clause
 Group: Development/Python3
@@ -31,6 +29,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 %if_enabled check
 BuildRequires: xvfb-run
+BuildRequires: python3(pytest)
 BuildRequires: python3(openpyxl)
 BuildRequires: python3-module-numpy-testing python3(tables.tests)
 %endif
@@ -115,7 +114,10 @@ popd
 %endif
 
 %check
-xvfb-run python3 setup.py test
+mkdir -p _empty
+cd _empty
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3 -vra '%buildroot%python3_sitelibdir/pandas'
 
 %files
 %doc *.md
@@ -148,6 +150,9 @@ xvfb-run python3 setup.py test
 %endif
 
 %changelog
+* Fri Jun 28 2024 Grigory Ustinov <grenka@altlinux.org> 2.2.2-alt1
+- Automatically updated to 2.2.2.
+
 * Fri Dec 22 2023 Ivan A. Melnikov <iv@altlinux.org> 2.1.4-alt1.1
 - NMU: numba is an optional dependency, so let's skip it
   (fixes FTBFS on loongarch64 and riscv64).

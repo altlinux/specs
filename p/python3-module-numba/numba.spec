@@ -1,11 +1,20 @@
 %define  oname numba
 
-# check runs more then half of a day
+# check runs 3 hours on x86_64
+# FAIL: test_nonsense_gdb_binary (numba.tests.test_cli.TestGDBCLIInfoBrokenGdbs.test_nonsense_gdb_binary)
+# FAIL: tests_numba_types (numba.tests.test_moved_modules.TestMovedModule.tests_numba_types)
+# FAIL: test_record_arg_transform (numba.tests.test_record_dtype.TestRecordDtype.test_record_arg_transform)
+# FAIL: test_record_arg_transform (numba.tests.test_record_dtype.TestRecordDtypeWithDispatcher.test_record_arg_transform)
+# FAIL: test_record_arg_transform (numba.tests.test_record_dtype.TestRecordDtypeWithStructArrays.test_record_arg_transform)
+# FAIL: test_record_arg_transform (numba.tests.test_record_dtype.TestRecordDtypeWithStructArraysAndDispatcher.test_record_arg_transform)
+# FAIL: test_has_no_error (numba.tests.test_sysinfo.TestSysInfo.test_has_no_error)
+# Ran 10356 tests in 11587.148s
+# FAILED (failures=7, skipped=643, expected failures=20)
 %def_without check
 
 Name:    python3-module-%oname
-Version: 0.59.0
-Release: alt0.rc1
+Version: 0.59.1
+Release: alt1
 
 Summary: A Just-In-Time Compiler for Numerical Functions in Python
 
@@ -19,6 +28,11 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ libgomp-devel libnumpy-py3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-llvmlite
+BuildRequires: python3-module-numpy-testing
+%endif
 
 Source:  %name-%version.tar
 
@@ -72,6 +86,9 @@ popd
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Jul 19 2024 Grigory Ustinov <grenka@altlinux.org> 0.59.1-alt1
+- Build new version.
+
 * Fri Dec 22 2023 Grigory Ustinov <grenka@altlinux.org> 0.59.0-alt0.rc1
 - Build new version.
 
