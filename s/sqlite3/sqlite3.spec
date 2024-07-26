@@ -1,11 +1,12 @@
 %def_disable static
 
 Name: sqlite3
-Version: 3.44.2
+Version: 3.46.0
 Release: alt1
 Summary: An Embeddable SQL Database Engine
 License: ALT-Public-Domain
 Group: Development/Databases
+Packager: Denis Medvedev <nbr@altlinux.org>
 URL: http://www.sqlite.org/
 
 Source0: sqlite-%version.tar
@@ -127,8 +128,8 @@ autoreconf -i
 %configure \
 	%{subst_enable static} \
 	--disable-amalgamation \
-	--enable-fst3 \
-	--enable-fst4 \
+	--enable-fts3 \
+	--enable-fts4 \
 	--enable-fts5 \
 	--enable-load-extension \
 	--enable-readline \
@@ -139,7 +140,7 @@ autoreconf -i
 make all sqlite3_analyzer sqldiff
 
 %check
-sed -Ei 's@-DSQLITE_ENABLE_FTS[34](\s|$)@@g' Makefile
+sed -Ei 's@-DSQLITE_ENABLE_FTS[345](\s|$)@@g' Makefile
 export LD_LIBRARY_PATH=%buildroot%_libdir
 %make test
 
@@ -154,8 +155,9 @@ install -pD -m755 sqldiff %buildroot%_bindir/sqldiff
 install -pD -m755 lemon %buildroot%_bindir/lemon
 install -pD -m644 lempar.c %buildroot%_datadir/lemon/lempar.c
 
-# for perl-DBD-SQLite
+# for perl-DBD-SQLite, full text search engines
 install -p -m644 ext/fts3/fts3.h ext/fts3/fts3_*.h %buildroot%_includedir/
+install -p -m644 ext/fts5/fts5.h  %buildroot%_includedir/
 
 %define pkgdocdir %_docdir/%name
 mkdir -p %buildroot%pkgdocdir
@@ -176,6 +178,7 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_includedir/sqlite3ext.h
 %_includedir/fts3.h
 %_includedir/fts3_*.h
+%_includedir/fts5.h
 %_libdir/lib%name.so
 %_pkgconfigdir/%name.pc
 
@@ -198,6 +201,9 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %_datadir/lemon
 
 %changelog
+* Sun Jul 07 2024 Denis Medvedev <nbr@altlinux.org> 3.46.0-alt1
+- 3.46.0 (closes #47924)
+
 * Thu Nov 30 2023 Denis Medvedev <nbr@altlinux.org> 3.44.2-alt1
 - 3.44.2
 
