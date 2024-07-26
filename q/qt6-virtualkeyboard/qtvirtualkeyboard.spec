@@ -3,7 +3,7 @@
 
 Name: qt6-virtualkeyboard
 Version: 6.6.2
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt6 - QtQuick virtual keyboard component
@@ -81,7 +81,7 @@ rm -rf src/virtualkeyboard/3rdparty/hunspell
 %Q6build \
     -DFEATURE_vkb_desktop:BOOL=ON \
     -DFEATURE_vkb_xcb:BOOL=ON \
-    -DFEATURE_vkb_arrow_keynavigation:BOOL=ON \
+    -DFEATURE_vkb_arrow_keynavigation:BOOL=OFF \
     -DFEATURE_vkb_default_style:BOOL=ON \
     -DFEATURE_pinyin:BOOL=OFF \
     -DFEATURE_openwnn:BOOL=OFF \
@@ -138,6 +138,9 @@ rm -rf src/virtualkeyboard/3rdparty/hunspell
 %_qt6_libdir/libQt?HunspellInputMethod.so.*
 
 %changelog
+* Fri Jul 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt3
+- disable arrow key navigation (kdebug#478875)
+
 * Wed Jul 24 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt2
 - fix layouts list
 
