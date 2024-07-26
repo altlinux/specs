@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 2.2.2
-Release: alt1
+Release: alt1.1
 Summary: Python Data Analysis Library
 License: BSD-3-Clause
 Group: Development/Python3
@@ -46,6 +46,10 @@ BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
 %add_python3_req_skip feather
 %add_python3_req_skip numba
 %add_python3_req_skip numba.extending
+%add_python3_req_skip numba.core
+%add_python3_req_skip numba.core.datamodel
+%add_python3_req_skip numba.core.extending
+%add_python3_req_skip numba.core.imputils
 %add_python3_req_skip pyarrow
 %py3_requires pytz dateutil numpy sqlalchemy numexpr
 %py3_requires scipy bs4 xlrd openpyxl xlsxwriter xlwt
@@ -150,6 +154,10 @@ py.test-3 -vra '%buildroot%python3_sitelibdir/pandas'
 %endif
 
 %changelog
+* Fri Jul 26 2024 Ivan A. Melnikov <iv@altlinux.org> 2.2.2-alt1.1
+- NMU: skip more numba submodules (fixes FTBFS on loongarch64
+  and riscv64).
+
 * Fri Jun 28 2024 Grigory Ustinov <grenka@altlinux.org> 2.2.2-alt1
 - Automatically updated to 2.2.2.
 
