@@ -1,6 +1,6 @@
 Name:    glpi-agent
 Version: 1.10
-Release: alt1
+Release: alt2
 
 Summary: GLPI Agent
 License: GPL-2.0
@@ -48,6 +48,8 @@ BuildRequires: perl-XML-TreePP
 BuildRequires: perl-XML-XPath
 BuildRequires: perl-HTTP-Cookies
 BuildRequires: perl-XML-LibXML
+
+Requires: perl-XML-LibXML
 
 %description
 The GLPI Agent is a generic management agent. It can perform a certain number
@@ -138,6 +140,9 @@ find %buildroot -name .packlist -delete
 %dir %_localstatedir/%name
 
 %changelog
+* Fri Jul 26 2024 Andrey Cherepanov <cas@altlinux.org> 1.10-alt2
+- Required perl-XML-LibXML (ALT #50882).
+
 * Wed Jul 10 2024 Andrey Cherepanov <cas@altlinux.org> 1.10-alt1
 - New version.
 
