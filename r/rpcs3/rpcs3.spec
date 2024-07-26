@@ -16,7 +16,7 @@
 
 Name: rpcs3
 Version: 0.0.32
-Release: alt2
+Release: alt2.1
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -124,6 +124,7 @@ echo "// This is a generated file.
 
 %build
 %add_optflags -L%_libdir/pipewire-0.3/jack
+%add_optflags -I%_builddir/%name-%version/3rdparty/glslang/glslang
 
 %cmake \
 	-DCMAKE_C_COMPILER:STRING=clang \
@@ -163,6 +164,9 @@ echo "// This is a generated file.
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Fri Jul 26 2024 Nazarov Denis <nenderus@altlinux.org> 0.0.32-alt2.1
+- Fix FTBFS
+
 * Sat May 04 2024 Nazarov Denis <nenderus@altlinux.org> 0.0.32-alt2
 - Build with current LLVM
 - Update build requires
