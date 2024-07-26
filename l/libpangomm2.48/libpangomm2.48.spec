@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define rname pangomm
-%define ver_major 2.52
+%define ver_major 2.54
 %define api_ver 2.48
 
 %def_disable docs
@@ -22,7 +22,7 @@ Source: %rname-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%rname/%ver_major/%rname-%version.tar.xz
 %endif
 
-%define pango_ver 1.52.0
+%define pango_ver 1.54.0
 %define glibmm_api_ver 2.68
 %define glibmm_ver 2.68.0
 %define cairomm_api_ver 1.16
@@ -92,6 +92,9 @@ BuildArch: noarch
 %endif
 
 %changelog
+* Fri Jul 26 2024 Yuri N. Sedunov <aris@altlinux.org> 2.54.0-alt1
+- 2.54.0
+
 * Fri Mar 15 2024 Yuri N. Sedunov <aris@altlinux.org> 2.52.0-alt1
 - 2.52.0
 
