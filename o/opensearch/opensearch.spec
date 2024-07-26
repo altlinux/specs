@@ -1,5 +1,7 @@
+%def_without bootstrap
+
 Name:    opensearch
-Version: 2.14.0
+Version: 2.15.0
 Release: alt1
 
 Summary: Open source distributed and RESTful search engine
@@ -36,9 +38,13 @@ Requires: java >= 17
 unzip %SOURCE1
 test -d ~/.gradle && rm -rf ~/.gradle
 test -d ~/.m2 && rm -rf ~/.m2
+%if_without bootstrap
 tar xf %SOURCE2 -C ~
 tar xf %SOURCE3 -C ~
 subst 's|\.*/gradlew|gradle --offline --no-daemon|g' scripts/build.sh
+%else
+subst 's|\.*/gradlew|gradle --no-daemon|g' scripts/build.sh
+%endif
 
 %build
 export PATH=$PATH:$PWD/gradle-8.7-rc-4/bin
@@ -81,5 +87,8 @@ getent passwd opensearch >/dev/null || /usr/sbin/useradd -r \
 %config(noreplace) %_tmpfilesdir/%name.conf
 
 %changelog
+* Fri Jul 26 2024 Andrey Cherepanov <cas@altlinux.org> 2.15.0-alt1
+- New version.
+
 * Wed Jun 19 2024 Andrey Cherepanov <cas@altlinux.org> 2.14.0-alt1
 - Initial build for Sisyphus.
