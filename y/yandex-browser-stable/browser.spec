@@ -8,7 +8,7 @@
 Summary: Yandex Browser
 License: ALT-YANDEX-BROWSER
 Name: yandex-browser-stable
-Version: 24.6.1.865
+Version: 24.6.1.893
 Release: alt1
 Group: Networking/WWW
 Vendor: YANDEX LLC
@@ -221,6 +221,10 @@ exit 0
 # =============== END preun ===============
 
 %changelog
+
+* Thu Jul 25 2024 yabro <yabro@altlinux.org> 24.6.1.893-alt1
+- Fixed virtual keyboard Maliit bug (closes: 50301)
+- Deleted directory "/usr/lib64/yandex/browser/update_codecs" (closes: 49811)
 
 * Fri Jul 19 2024 yabro <yabro@altlinux.org> 24.6.1.865-alt1
 - Fixed Desktop shortcut (closes: 50127)
