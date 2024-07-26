@@ -18,8 +18,8 @@
 #    vmxnet3: 0x15ad 0x07b0
 
 %define qemuroms 10222000 10ec8029 8086100e 10ec8139 1af41000 80861209 808610d3 15ad07b0
-%define date 20240110
-%define hash 0abb3e85
+%define date 20240725
+%define hash d2d194bc
 
 Name: ipxe
 Version: %date
@@ -234,6 +234,9 @@ pxe_link 15ad07b0 vmxnet3
 %_datadir/%name.efi/efi-*.rom
 
 %changelog
+* Fri Jul 26 2024 Alexey Shabalin <shaba@altlinux.org> 1:20240725-alt1.gitd2d194bc
+- Update to latest upstream snapshot.
+
 * Wed Jan 10 2024 Alexey Shabalin <shaba@altlinux.org> 1:20240110-alt1.git0abb3e85
 - Update to latest upstream snapshot.
 
