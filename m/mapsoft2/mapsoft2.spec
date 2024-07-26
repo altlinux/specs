@@ -1,5 +1,5 @@
 Name:         mapsoft2
-Version:      2.6
+Version:      2.7
 Release:      alt1
 
 Summary:      mapsoft2 - programs for working with maps and geodata
@@ -67,6 +67,20 @@ export SKIP_IMG_DIFFS=1
 %_datadir/xfig/Libraries/*
 
 %changelog
+* Fri Jul 26 2024 Vladislav Zavjalov <slazav@altlinux.org> 2.7-alt1
+- image_cnt, srtm, ms2geofig: add tracing of rivers and mountain
+  ridges (my old code from mapsoft1 with some improvements);
+  move code for finding summits to image_cnt; fix SRTM::get_img() method
+  and use it for contour and summit tracing to avoid data smoothing;
+  cleanup code and tests in image_cnt.
+- geom/poly_tools.h: add join_cross function (join crossing parts of a MultiLine);
+  use it in vmap2 when saving fig and gpx; use it in ms2geofig when tracing steep slopes.
+- image: add ImageR::get_double_range method
+- srtm: fix error in deg->m conversion
+- downloader: fix test for libcurl>=8.9.0 (fix altlinux.build)
+- cairo: remove deprecated functions
+- fix a few memory-handling problems (thanks to valgrind)
+
 * Mon Jul 22 2024 Vladislav Zavjalov <slazav@altlinux.org> 2.6-alt1
 image:
  - Add support for reading tiled TIFF images
