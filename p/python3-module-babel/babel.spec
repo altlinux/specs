@@ -1,12 +1,12 @@
-%define oname Babel
+%define oname babel
 %def_without import_cldr
 
 %def_with doc
 %def_with check
 
 Name: python3-module-babel
-Version: 2.14.0
-Release: alt1.1
+Version: 2.15.0
+Release: alt1
 Epoch: 1
 
 Summary: a collection of tools for internationalizing Python applications
@@ -15,7 +15,7 @@ Group: Development/Python3
 
 Url: http://babel.pocoo.org/
 
-Source: Babel-%version.tar.gz
+Source: babel-%version.tar.gz
 # LC_ALL=ru_RU.UTF-8 python3 -m pytest tests |& sed -En '/^FAILED tests/s/.*::([^[ ]*).*/\1/p' | sort -u | tr '\n' ' ' > Babel-failed_tests
 
 BuildArch: noarch
@@ -86,6 +86,9 @@ LC_ALL=ru_RU.UTF-8 python3 -m pytest tests # -k "not `sed -E 's/ (.)/ and not \1
 %python3_sitelibdir/*
 
 %changelog
+* Sat Jul 27 2024 Fr. Br. George <george@altlinux.org> 1:2.15.0-alt1
+- Autobuild version bump to 2.15.0
+
 * Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 1:2.14.0-alt1.1
 - NMU: added missing build dependency on setuptools.
 
