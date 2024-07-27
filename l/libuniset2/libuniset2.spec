@@ -27,7 +27,7 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.35.3
+Version: 2.36.1
 Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
@@ -675,6 +675,9 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Sat Jul 27 2024 Pavel Vainerman <pv@altlinux.ru> 2.36.1-alt1
+- (smemory): HTTP API supported "set" function
+
 * Thu Jul 18 2024 Pavel Vainerman <pv@altlinux.ru> 2.35.3-alt1
 - (clickhouse): suported <messages>
 
