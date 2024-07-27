@@ -2,7 +2,7 @@
 
 Name:    opensearch
 Version: 2.15.0
-Release: alt1
+Release: alt2
 
 Summary: Open source distributed and RESTful search engine
 License: Apache-2.0
@@ -59,6 +59,14 @@ rm -rf %buildroot%_datadir/opensearch/jdk
 rm -rf %buildroot%_sysconfdir/init.d
 touch %buildroot%_sysconfdir/%name/opensearch.keystore
 
+# Adapt for old repositories
+if [ "%_sysctldir" = "/lib/sysctl.d" ]; then
+    mkdir -p %buildroot{%_sysctldir,%_unitdir,%_tmpfilesdir}
+	mv %buildroot{%prefix,}%_sysctldir/%name.conf
+	mv %buildroot{%prefix,}%_unitdir/%name.service
+	mv %buildroot{%prefix,}%_tmpfilesdir/%name.conf
+fi
+
 %pre
 getent group opensearch >/dev/null || /usr/sbin/groupadd -r opensearch
 getent passwd opensearch >/dev/null || /usr/sbin/useradd -r \
@@ -87,6 +95,9 @@ getent passwd opensearch >/dev/null || /usr/sbin/useradd -r \
 %config(noreplace) %_tmpfilesdir/%name.conf
 
 %changelog
+* Sat Jul 27 2024 Andrey Cherepanov <cas@altlinux.org> 2.15.0-alt2
+- Adapted to old repositories.
+
 * Fri Jul 26 2024 Andrey Cherepanov <cas@altlinux.org> 2.15.0-alt1
 - New version.
 
