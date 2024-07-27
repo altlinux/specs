@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libfilezilla
-Version: 0.47.0
+Version: 0.48.1
 Release: alt1
 Summary: Small and modern C++ library
 License: GPLv2+
@@ -81,6 +81,12 @@ LC_ALL=en_US.UTF-8 make check
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Jul 27 2024 Anton Midyukov <antohami@altlinux.org> 0.48.1-alt1
+- new version (0.48.1)
+
+* Wed Jul 10 2024 Anton Midyukov <antohami@altlinux.org> 0.48.0-alt1
+- new version (0.48.0) with rpmgs script
+
 * Sat Apr 27 2024 Anton Midyukov <antohami@altlinux.org> 0.47.0-alt1
 - new version (0.47.0) with rpmgs script
 
