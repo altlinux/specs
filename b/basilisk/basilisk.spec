@@ -1,10 +1,10 @@
 Summary: The Basilisk web browser
 Summary(ru_RU.UTF-8): Интернет-браузер Baselisk - неофициальная сборка браузера palemoon
 
-%define vendor_version v2024.02.03
+%define vendor_version v2024.05.11
 
 Name: basilisk
-Version:  52.9.0_1_%vendor_version
+Version:  52.9.0_2_%vendor_version
 
 Release: alt1
 
@@ -344,6 +344,9 @@ install -D -m 644 %_builddir/basilisk-%version/README.md %buildroot/%_docdir/%na
 %exclude %_includedir/*
 
 %changelog
+* Tue Jul 23 2024 Hihin Ruslan <ruslandh@altlinux.ru> 52.9.0_2_v2024.05.11-alt1
+- Update to vendor_version v2024.05.11
+
 * Sun Feb 04 2024 Hihin Ruslan <ruslandh@altlinux.ru> 52.9.0_1_v2024.02.03-alt1
 - Update to vendor_version v2024.02.03
 
