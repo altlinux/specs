@@ -2,8 +2,10 @@
 %def_disable python
 %def_disable python2
 
+%def_enable check
+
 Name: cracklib
-Version: 2.10.0
+Version: 2.10.1
 Release: alt1
 
 Summary: A password-checking library.
@@ -15,7 +17,6 @@ Source: https://github.com/%name/%name/releases/download/v%version/%name-%versio
 
 Requires: %name-utils = %EVR
 
-BuildRequires: libX11-devel libICE-devel
 BuildRequires: zlib-devel
 %{?_enable_python:BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel}
@@ -152,6 +153,9 @@ _EOF_
 
 %find_lang %name
 
+%check
+%make -k check VERBOSE=1
+
 %files -f %name.lang
 %_libdir/*.so.*
 %_datadir/%name/
@@ -182,6 +186,9 @@ _EOF_
 
 
 %changelog
+* Sat Jul 27 2024 Yuri N. Sedunov <aris@altlinux.org> 2.10.1-alt1
+- 2.10.1
+
 * Sun Jul 14 2024 Yuri N. Sedunov <aris@altlinux.org> 2.10.0-alt1
 - 2.10.0
 

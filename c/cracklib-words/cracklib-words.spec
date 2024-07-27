@@ -1,7 +1,7 @@
 %define _name cracklib
 
 Name: %_name-words
-Version: 2.10.0
+Version: 2.10.1
 Release: alt1
 Epoch: 1
 
@@ -24,7 +24,7 @@ forget to install this package.
 %install
 mkdir -p %buildroot%_datadir/%_name
 # abcdefghabcdefghabcdefghabcdefgh... very long sequence found in skullsecurity.org/myspace.txt
-gzip -cd %SOURCE0 | dos2unix| \
+xzcat %SOURCE0 | dos2unix| \
 sed -e '/^abcdefghabcdefghabcdefghabcdefgh/d
 /^$/d
 /^#\!comment/d
@@ -35,6 +35,9 @@ sort | uniq >%buildroot%_datadir/%_name/%name
 %_datadir/%_name/%name
 
 %changelog
+* Sun Jul 28 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.10.1-alt1
+- 2.10.1
+
 * Sun Jul 14 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.10.0-alt1
 - 2.10.0
 
