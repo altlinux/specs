@@ -4,14 +4,18 @@
 
 Name: python3-module-%pypi_name
 Version: 0.5.12
-Release: alt1
+Release: alt1.1
 
 Summary: Library of astronomical algorithms in Python
 Group: Development/Python3
 License: GPL-3.0 and LGPL-3.0
 Url: https://pypi.python.org/pypi/%_name
 
+Vcs: https://github.com/architest/pymeeus
+
 Source: https://pypi.io/packages/source/P/%_name/%_name-%version.tar.gz
+#https://github.com/architest/pymeeus/pull/25/commits/f064abfda6b3cb48cb42a6827cd250413056f227
+Patch1: PyMeeus-0.5.12-up-pytest-0.7.2.patch
 
 BuildArch: noarch
 
@@ -27,6 +31,7 @@ Willmann-Bell Inc. (1998)" by Jean Meeus.
 
 %prep
 %setup -n %_name-%version
+%patch1 -p1
 
 %build
 %pyproject_build
@@ -44,6 +49,9 @@ py.test3 tests
 %doc *.rst *.md
 
 %changelog
+* Sat Jul 27 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.12-alt1.1
+- fixed pytest >= 7.2 compatibility
+
 * Sun Dec 11 2022 Yuri N. Sedunov <aris@altlinux.org> 0.5.12-alt1
 - 0.5.12
 - ported to %%pyproject* macros
