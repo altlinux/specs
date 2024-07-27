@@ -1,26 +1,26 @@
 %def_disable snapshot
-%define _libexecdir %_prefix/libexec
 
 %define _name dosage
 %define __name Dosage
 %define ver_major 1.6
 %define rdn_name io.github.diegopvlk.Dosage
 
-%def_disable check
+%def_enable check
 
 Name: gnome-%_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: GNOME Dosage
 License: GPL-3.0-or-later
 Group: Sciences/Medicine
-Url: https://github.com/diegopvlk/Dosage.git
+Url: https://github.com/diegopvlk/Dosage
+
+Vcs: https://github.com/diegopvlk/Dosage.git
 
 %if_disabled snapshot
 Source: https://github.com/diegopvlk/Dosage/archive/v%version/%_name-%version.tar.gz
 %else
-Vcs: https://github.com/diegopvlk/Dosage.git
 Source: %_name-%version.tar
 %endif
 
@@ -51,6 +51,7 @@ Features:
 
 %prep
 %setup -n %__name-%version
+sed -i "s|no-net --explain|no-net', '--explain|" data/meson.build
 
 %build
 %meson
@@ -73,6 +74,9 @@ Features:
 %doc README*
 
 %changelog
+* Sat Jul 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.4-alt1
+- 1.6.4
+
 * Fri Jul 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.3-alt1
 - 1.6.3
 
