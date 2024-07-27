@@ -1,5 +1,5 @@
 Name: fonts-ttf-inter
-Version: 3.12
+Version: 4.0
 Release: alt1
 Summary: TTF font family carefully crafted & designed for computer screens
 License: OFL-1.1
@@ -40,11 +40,11 @@ This is OTF version of the familly (preferred).
 
 %build
 %install
-cd 'Inter (Hinted, for Windows)' && %ttf_fonts_install inter
-ln -s 'Inter (Hinted, for Windows)'/inter.files ../inter.files
-cd ..
-cd 'Inter' && %otf_fonts_install inter
-ln -s 'Inter'/inter.files ../inter-otf.files
+cd 'extras/ttf' && %ttf_fonts_install inter
+ln -s 'extras/ttf'/inter.files ../../inter.files
+cd ../..
+cd 'extras/otf' && %otf_fonts_install inter
+ln -s 'extras/otf'/inter.files ../../inter-otf.files
 
 %files -f inter.files
 %doc *.txt
@@ -53,6 +53,9 @@ ln -s 'Inter'/inter.files ../inter-otf.files
 %doc *.txt
 
 %changelog
+* Sat Jul 27 2024 Fr. Br. George <george@altlinux.org> 4.0-alt1
+- Autobuild version bump to 4.0 (Closes: #50867)
+
 * Thu Apr 02 2020 Fr. Br. George <george@altlinux.ru> 3.12-alt1
 - Autobuild version bump to 3.12
 - Introduce OTF version
