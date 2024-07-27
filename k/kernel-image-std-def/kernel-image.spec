@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:2
 %define kernel_base_version	6.1
-%define kernel_sublevel	.101
+%define kernel_sublevel	.102
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -604,6 +604,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Jul 27 2024 Kernel Bot <kernelbot@altlinux.org> 2:6.1.102-alt1
+- v6.1.102 (2024-07-27).
+
 * Thu Jul 25 2024 Kernel Bot <kernelbot@altlinux.org> 2:6.1.101-alt1
 - v6.1.101 (2024-07-25).
 - config: Enable CONFIG_MHI_WWAN_CTRL (ALT#50941).
