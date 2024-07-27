@@ -2,7 +2,7 @@ Name: kernel-image-6.10
 Release: alt1
 %define kernel_src_version	6.10
 %define kernel_base_version	6.10
-%define kernel_sublevel	.1
+%define kernel_sublevel	.2
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 Version: %kversion
@@ -592,6 +592,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Jul 27 2024 Kernel Bot <kernelbot@altlinux.org> 6.10.2-alt1
+- v6.10.2 (2024-07-27).
+
 * Wed Jul 24 2024 Kernel Bot <kernelbot@altlinux.org> 6.10.1-alt1
 - v6.10.1 (2024-07-24).
 - config-aarch64: CONFIG_NR_CPUS=512.
