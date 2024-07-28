@@ -3,20 +3,23 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.8.5
+Version: 2.9.0
 Release: alt1
 
 Summary: Easy thumbnails for Django
 
 Group: Development/Python3
 License: BSD-3-Clause
-Url: https://pypi.python.org/pypi/easy-thumbnails
+URL: https://pypi.org/project/easy-thumbnails
+VCS: https://github.com/SmileyChris/easy-thumbnails
 
 Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-django
@@ -34,10 +37,10 @@ application for Django 1.8+
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 # this runs 119 tests, which pyunittest or pytest won't make
@@ -46,10 +49,14 @@ export PYTHONPATH=$PWD
 %__python3 -m django test -v 2
 
 %files
+%doc LICENSE *.rst
 %python3_sitelibdir/easy_thumbnails
-%python3_sitelibdir/easy_thumbnails-%version-py%_python3_version.egg-info
+%python3_sitelibdir/easy_thumbnails-2.9.dist-info
 
 %changelog
+* Sun Jul 28 2024 Grigory Ustinov <grenka@altlinux.org> 2.9.0-alt1
+- Automatically updated to 2.9.0.
+
 * Mon Jan 09 2023 Grigory Ustinov <grenka@altlinux.org> 2.8.5-alt1
 - Automatically updated to 2.8.5.
 
