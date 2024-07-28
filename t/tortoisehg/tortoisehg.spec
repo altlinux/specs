@@ -1,8 +1,8 @@
 %def_without nautilus
 
 Name: tortoisehg
-Version: 6.5.1
-Release: alt2
+Version: 6.6.3
+Release: alt1
 
 Summary: Mercurial GUI command line tool thg
 
@@ -20,6 +20,8 @@ Requires: python3-module-PyQt5 python3-module-qscintilla2-qt5 python3-module-Pyg
 Requires: python3-module-pygobject3
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: mercurial
 BuildRequires: gettext python3-module-sphinx python3-module-PyQt5
 BuildRequires: desktop-file-utils libappstream-glib
@@ -58,12 +60,12 @@ nofork       = True
 EOT
 
 %build
-%python3_build
+%pyproject_build
 
 %make SPHINXBUILD="sphinx-build-3" -C doc html
 
 %install
-%python3_install
+%pyproject_install
 rm %buildroot%python3_sitelibdir/hgext3rd/__init__.*
 
 mkdir -p %buildroot%_sysconfdir/mercurial/hgrc.d
@@ -85,7 +87,7 @@ rm -rf %buildroot%_datadir/nautilus-python/extensions/nautilus-thg.py*
 %_bindir/thg
 %python3_sitelibdir/hgext3rd
 %python3_sitelibdir/tortoisehg
-%python3_sitelibdir/tortoisehg-*.egg-info
+%python3_sitelibdir/tortoisehg-%version.dist-info
 %_datadir/pixmaps/tortoisehg
 %_datadir/pixmaps/thg_logo.svg
 %_datadir/applications/thg.desktop
@@ -96,6 +98,9 @@ rm -rf %buildroot%_datadir/nautilus-python/extensions/nautilus-thg.py*
 %endif
 
 %changelog
+* Sun Jul 28 2024 Grigory Ustinov <grenka@altlinux.org> 6.6.3-alt1
+- Build new version.
+
 * Sat Mar 02 2024 Vitaly Lipatov <lav@altlinux.ru> 6.5.1-alt2
 - fix requires for work with gi
 

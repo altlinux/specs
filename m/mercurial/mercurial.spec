@@ -2,7 +2,7 @@
 %def_without check
 
 Name: mercurial
-Version: 6.5.2
+Version: 6.6.3
 Release: alt1
 
 Summary: Mercurial source code management system
@@ -16,6 +16,8 @@ Source: %name-%version.tar
 Packager: Yury Yurevich <anarresti@altlinux.org>
 
 BuildPreReq: rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: asciidoc xmlto python3-module-docutils
 BuildRequires: python3-modules-sqlite3 libzstd-devel
 
@@ -91,13 +93,13 @@ This extensions are included in package:
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %make PYTHON=%__python3 -C doc clean
 %make PYTHON=%__python3 -C doc all
 
 %install
-%python3_install
+%pyproject_install
 install -D doc/hg.1 %buildroot%_man1dir/hg.1
 install -D doc/hgrc.5 %buildroot%_man5dir/hgrc.5
 install -D doc/hgignore.5 %buildroot%_man5dir/hgignore.5
@@ -118,7 +120,7 @@ mkdir -p %buildroot%_sysconfdir/%name/hgrc.d
 %_bindir/hg-ssh
 %python3_sitelibdir/mercurial
 %python3_sitelibdir/hgdemandimport
-%python3_sitelibdir/%name-*py%_python3_version.egg-info
+%python3_sitelibdir/%name-%version.dist-info
 %_man1dir/hg.*
 %_man5dir/hgrc.*
 %_man5dir/hgignore.*
@@ -141,6 +143,9 @@ mkdir -p %buildroot%_sysconfdir/%name/hgrc.d
 %python3_sitelibdir/hgext3rd
 
 %changelog
+* Sun Jul 28 2024 Grigory Ustinov <grenka@altlinux.org> 6.6.3-alt1
+- 6.6.3.
+
 * Sun Nov 05 2023 Grigory Ustinov <grenka@altlinux.org> 6.5.2-alt1
 - 6.5.2.
 
