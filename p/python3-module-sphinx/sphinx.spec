@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define oname sphinx
 
-%def_disable docs
-%def_disable check
+%def_enable docs
+%def_enable check
 
 %define sphinx3_dir %python3_sitelibdir_noarch/%oname
 
@@ -24,11 +24,12 @@ python3(alabaster) \\\
 python3(imagesize) \\\
 python3(requests) \\\
 python3(packaging) \\\
+python3(defusedxml) \\\
 %nil
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 7.2.6
+Version: 7.4.7
 Release: alt1
 
 Summary: Tool for producing documentation for Python projects
@@ -46,10 +47,13 @@ Source2: macro3
 Source3: refcounting.py
 
 Patch1: %oname-alt-tests-offline.patch
+Patch2: python-sphinx-objects.patch
 
 Requires: %(echo "%dependencies")
 Provides: python3-module-objects.inv
 Obsoletes: python3-module-objects.inv
+Provides: python3-module-sphinx-sphinx-build-symlink
+Obsoletes: python3-module-sphinx-sphinx-build-symlink
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-sphinx-objects.inv
@@ -63,6 +67,8 @@ BuildRequires: python3(wheel)
 # synced to .[docs]
 BuildRequires: %(echo "%dependencies")
 BuildRequires: python3(sphinxcontrib.websupport)
+BuildRequires: graphviz
+BuildRequires: fonts-ttf-dejavu
 %endif
 
 %if_enabled check
@@ -71,9 +77,10 @@ BuildRequires: %(echo "%dependencies")
 BuildRequires: python3(pytest)
 BuildRequires: python3(html5lib)
 BuildRequires: python3(cython)
+BuildRequires: python3(filelock)
 %endif
 
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/sphinx/tests/roots/
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/sphinx/tests/
 
 %description
 Sphinx is a tool that makes it easy to create intelligent and beautiful
@@ -155,10 +162,6 @@ This packages contains RPM macros for build with Sphinx.
 %setup -n sphinx-%version
 %autopatch -p1
 
-# ship the stable releases
-## sed -i '/^tag_build =.*/d;/^tag_date =.*/d' setup.cfg
-## sed -i 's/docutils>=0.14,<0.18/docutils>=0.14,<0.19/' setup.py
-
 install -pm644 %SOURCE1 .
 
 ln -s %_datadir/python-sphinx/objects.inv doc/
@@ -173,9 +176,9 @@ install -pm644 %SOURCE2 .
 %if_enabled docs
 # docs
 export PYTHONPATH=`pwd`
-%make_build -C doc html
-%make_build -C doc man
-%make_build -C doc pickle
+TERM="" make -C doc html
+TERM="" make -C doc man
+TERM="" make -C doc pickle
 %endif
 
 %install
@@ -195,7 +198,7 @@ ln -frs %buildroot%_datadir/python-sphinx/objects.inv \
 
 pushd %buildroot%_bindir
 for i in $(ls); do
-    mv $i py3_$i
+    ln -s $i py3_$i
     ln -s py3_$i $i-3
     ln -s py3_$i $i-%__python3_version
 done
@@ -206,7 +209,7 @@ popd
 install -d %buildroot%_docdir/%name
 install -d %buildroot%_man1dir
 cp -R doc/_build/html %buildroot%_docdir/%name/
-install -p -m644 AUTHORS CHANGES* EXAMPLES LICENSE README.rst \
+install -p -m644 [A-Z]*.rst \
 	%buildroot%_docdir/%name
 %endif
 
@@ -236,6 +239,10 @@ EOF
 %_bindir/*
 %sphinx3_dir/
 %exclude %sphinx3_dir/tests
+%exclude %sphinx3_dir/tests/test_builders
+%exclude %sphinx3_dir/tests/test_extensions
+%exclude %sphinx3_dir/tests/test_util
+%exclude %sphinx3_dir/tests/utils.py
 %exclude %sphinx3_dir/testing
 %if_enabled docs
 %exclude %sphinx3_dir/pickle
@@ -262,6 +269,12 @@ EOF
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Sat Jul 27 2024 Fr. Br. George <george@altlinux.org> 1:7.4.7-alt1
+- Autobuild version bump to 7.4.7
+
+* Sun May 26 2024 Fr. Br. George <george@altlinux.org> 1:7.2.6-alt2
+- Provide original sphinx-build script (Closes: #34535)
+
 * Thu Jan 11 2024 Fr. Br. George <george@altlinux.org> 1:7.2.6-alt1
 - Autobuild version bump to 7.2.6
 
