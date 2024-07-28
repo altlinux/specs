@@ -1,12 +1,12 @@
 %define _name textpieces
-%define ver_major 4.0
+%define ver_major 4.1
 %define rdn_name io.gitlab.liferooter.TextPieces
 
 %def_enable check
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.7
+Version: %ver_major.0
 Release: alt1
 
 Summary: Developer's scratchpad
@@ -69,6 +69,9 @@ sed -i 's|nonet|no-net|' data/meson.build
 %doc README.*
 
 %changelog
+* Sun Jul 28 2024 Yuri N. Sedunov <aris@altlinux.org> 4.1.0-alt1
+- 4.1.0
+
 * Thu Jun 06 2024 Yuri N. Sedunov <aris@altlinux.org> 4.0.7-alt1
 - updated to v4.0.7-1-ge3170e0
 
