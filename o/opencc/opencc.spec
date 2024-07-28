@@ -1,6 +1,6 @@
 Name:       opencc
-Version:    1.1.7
-Release:    alt1.1
+Version:    1.1.8
+Release:    alt1
 Summary:    Libraries for Simplified-Traditional Chinese Conversion
 
 License:    Apache-2.0
@@ -86,6 +86,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Sun Jul 28 2024 Andrey Cherepanov <cas@altlinux.org> 1.1.8-alt1
+- New version.
+
 * Fri Oct 27 2023 Ivan A. Melnikov <iv@altlinux.org> 1.1.7-alt1.1
 - NMU: Drop python2 from BR (thx asheplyakov@).
 
