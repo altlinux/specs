@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 8.0.1
+Version: 8.5.0
 Release: alt1
 
 Summary: Retrying library
@@ -19,6 +19,8 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -36,18 +38,22 @@ It originates from a fork of Retrying
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-py.test3
+%pyproject_run_pytest
 
 %files
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sun Jul 28 2024 Grigory Ustinov <grenka@altlinux.org> 8.5.0-alt1
+- Build new version.
+
 * Mon Apr 25 2022 Grigory Ustinov <grenka@altlinux.org> 8.0.1-alt1
 - Build new version.
 - Build with check.
