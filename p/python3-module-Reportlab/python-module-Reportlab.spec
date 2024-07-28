@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.2.0
+Version: 4.2.2
 Release: alt1
 
 Summary: The Reportlab Toolkit
@@ -68,7 +68,11 @@ python3 setup.py tests
 
 %files docs
 %doc docs/build/html docs/userguide demos
+
 %changelog
+* Sun Jul 28 2024 Grigory Ustinov <grenka@altlinux.org> 4.2.2-alt1
+- Build new version.
+
 * Wed May 29 2024 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
 - Build new version.
 - Build with check.
