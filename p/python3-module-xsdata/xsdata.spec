@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 24.6.1
+Version: 24.7
 Release: alt1
 
 Summary: Naive XML & JSON Bindings for python
@@ -59,6 +59,9 @@ Source: %name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Jul 28 2024 Grigory Ustinov <grenka@altlinux.org> 24.7-alt1
+- Automatically updated to 24.7.
+
 * Sun Jun 30 2024 Grigory Ustinov <grenka@altlinux.org> 24.6.1-alt1
 - Automatically updated to 24.6.1.
 
