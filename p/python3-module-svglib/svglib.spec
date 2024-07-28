@@ -3,11 +3,11 @@
 
 %define  srcname svglib
 
-#def_disable check
+%def_with check
 
 Name:    python3-module-%srcname
 Version: 1.5.1
-Release: alt1
+Release: alt1.1
 
 Summary: Read SVG files and convert them to other formats
 License: LGPL-3.0-or-later
@@ -19,12 +19,12 @@ BuildRequires: python3-dev
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 
-%if_disabled check
-%else
+%if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-Reportlab
 BuildRequires: python3-module-cssselect2
 BuildRequires: python3-module-lxml
+BuildRequires: python3-module-chardet
 %endif
 
 BuildArch: noarch
@@ -82,6 +82,9 @@ This part %name.
 %_man1dir/*.1.*
 
 %changelog
+* Sun Jul 28 2024 Grigory Ustinov <grenka@altlinux.org> 1.5.1-alt1.1
+- NMU: Fixed FTBFS.
+
 * Mon May 29 2023 Anton Midyukov <antohami@altlinux.org> 1.5.1-alt1
 - new version (1.5.1) with rpmgs script
 
