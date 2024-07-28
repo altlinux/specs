@@ -1,12 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%define llvm_ver 17.0
+%define llvm_ver 18.1
 %define soname 2
-%ifarch x86_64 ppc64le
-%def_with lld
-%else
-%def_without lld
-%endif
 %ifarch x86_64
 %def_with cuda
 # libcuda doesn't have debuginfo
@@ -24,18 +19,17 @@
 %def_without vulkan
 %def_disable remote
 %endif
-%if_with lld
-%set_verify_elf_method skip
-%endif
 # RDMA used only by remote for HPC-like performance
 %def_without rdma
+# risc-v/loongarch64 might not supported
+%def_with openmp
 
 # pocl detects LTO automatically
 %define optflags_lto %nil
 
 Name: pocl
-Version: 5.0
-Release: alt0.2
+Version: 6.0
+Release: alt0.1
 
 # The entire code is under MIT
 # include/utlist.h which is under BSD-1-Clause (unbundled)
@@ -50,8 +44,7 @@ Patch0: 0001-vulkan-remove-unsupported-clspv-args.patch
 Patch1: pocl-5.0-alt-unhide-rdma.patch
 Patch2: pocl-5.0-remote-fix-uthash.patch
 # https://github.com/pocl/pocl/pull/1300
-Patch3: pocl-5.0-remote-fix-with-enable_loadable_drivers.patch
-Patch4: pocl-5.0-export-for-remote.patch
+#Patch3: pocl-5.0-remote-fix-with-enable_loadable_drivers.patch
 # debian patches for GENERIC cpu target
 Patch100: deb-generic-cpu.patch
 Patch101: deb-blhc.patch
@@ -72,9 +65,6 @@ BuildRequires: zlib-devel
 BuildRequires: ninja-build
 BuildRequires: libstdc++-devel
 BuildRequires: python3-module-sphinx
-%if_with lld
-BuildRequires: lld%{llvm_ver} /proc
-%endif
 %if_with vulkan
 BuildRequires: clspv glslang glslc libvulkan-devel
 %endif
@@ -83,6 +73,9 @@ BuildRequires: nvidia-cuda-devel
 %endif
 %if_with rdma
 BuildRequires: rdma-core-devel
+%endif
+%if_with openmp
+BuildRequires: libomp%{llvm_ver}-devel
 %endif
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1082364
@@ -213,13 +206,8 @@ Group: Graphics
 %prep
 %setup -q
 %autopatch -p1
-
-# remote uses custom LL_COMPUTE_LENGTH from
-# bundled utlist
-%if_disabled remote
-# Unbundle uthash
-find . -depth -name utlist* -print -delete
-%endif
+# Unbundle uthash/utlist
+find . -depth -type f -regex '\.\/include\/\(uthash\|utlist\)\.h' -print -delete
 
 %build
 export ALTWRAP_LLVM_VERSION=%{llvm_ver}
@@ -235,12 +223,7 @@ export VULKAN_SDK=%_libdir
     -DENABLE_ICD:BOOL=ON \
     -DENABLE_TESTS:BOOL=ON \
     -DPOCL_INSTALL_ICD_VENDORDIR=%_sysconfdir/OpenCL/vendors \
-    -DCMAKE_EXE_LINKER_FLAGS="%optflags %{?_with_lld:-fuse-ld=lld -Wl,--build-id=sha1}" \
-    -DCMAKE_SHARED_LINKER_FLAGS="$LDFLAGS %{?_with_lld:-fuse-ld=lld -Wl,--build-id=sha1}" \
     -DEXTRA_KERNEL_CXX_FLAGS="%optflags" \
-%ifarch x86_64
-    -DCMAKE_C_FLAGS="-Wno-error=int-conversion" \
-%endif
 %ifarch riscv64
     -DLLC_HOST_CPU="generic-rv64" \
 %endif
@@ -270,6 +253,9 @@ export VULKAN_SDK=%_libdir
 %endif
 %if_with rdma
     -DENABLE_RDMA=1 \
+%endif
+%if_with openmp
+    -DENABLE_HOST_CPU_DEVICES_OPENMP:BOOL=ON \
 %endif
     -DPOCL_ICD_ABSOLUTE_PATH:BOOL=OFF \
     -DENABLE_POCL_BUILDING:BOOL=ON
@@ -316,7 +302,7 @@ sphinx-build-3 -N -b html doc/sphinx/source build-doc/html
 
 %files kernels-nvidia
 %_datadir/%name/cuda
-%_datadir/%name/kernel-nvptx64.bc
+%_datadir/%name/kernel-nvptx64-*.bc
 %endif
 
 %files devel
@@ -341,6 +327,12 @@ sphinx-build-3 -N -b html doc/sphinx/source build-doc/html
 %endif
 
 %changelog
+* Sun Jul 28 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0-alt0.1
+- 6.0.
+- Update patches.
+- Remove lld dependency.
+- cpu: enable OpenMP support.
+
 * Thu Jan 04 2024 L.A. Kostis <lakostis@altlinux.ru> 5.0-alt0.2
 - Enable remote client/server.
 - Split CL devices to separate packages.
