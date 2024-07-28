@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 10.8.1
-Release: alt1.gitf1e2fad
+Version: 10.9
+Release: alt1
 
 Summary: Extensions for Python Markdown
 License: MIT and BSD
@@ -55,6 +55,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Jul 28 2024 Anton Zhukharev <ancieg@altlinux.org> 10.9-alt1
+- Updated to 10.9.
+
 * Thu May 16 2024 Anton Zhukharev <ancieg@altlinux.org> 10.8.1-alt1.gitf1e2fad
 - Updated to 10.8.1 (f1e2fad).
 
