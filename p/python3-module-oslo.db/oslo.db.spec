@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 15.1.0
+Version: 16.0.0
 Release: alt1
 
 Summary: OpenStack Oslo Database library
@@ -123,6 +123,9 @@ install -pDm 644 man/oslodb.1 %buildroot%_man1dir/oslodb.1
 %endif
 
 %changelog
+* Fri Jul 26 2024 Grigory Ustinov <grenka@altlinux.org> 16.0.0-alt1
+- Automatically updated to 16.0.0.
+
 * Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 15.1.0-alt1
 - Automatically updated to 15.1.0.
 

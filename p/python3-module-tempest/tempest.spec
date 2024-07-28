@@ -1,10 +1,10 @@
 %define oname tempest
-%def_without check
+%def_with check
 %def_with docs
 
 Name: python3-module-%oname
-Version: 32.0.0
-Release: alt1.2
+Version: 39.0.0
+Release: alt1
 
 Summary: OpenStack Integration Testing
 
@@ -47,12 +47,14 @@ BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-cryptography >= 2.1
 BuildRequires: python3-module-pycodestyle >= 2.0.0
-BuildRequires: python3-module-flake8-import-order
+BuildRequires: python3-module-defusedxml >= 0.7.1
+BuildRequires: python3-module-fasteners >= 0.16.0
 %endif
 
 %if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-defusedxml >= 0.7.1
 BuildRequires: python3-module-sphinxcontrib-rsvgconverter
 %endif
 
@@ -114,6 +116,8 @@ mv %buildroot/usr/etc/%oname/*.sample %buildroot%_sysconfdir/%oname
 mv %buildroot/usr/etc/%oname/allow-list.yaml %buildroot%_sysconfdir/%oname
 
 %check
+export PATH="$PATH:%buildroot%_bindir"
+export PYTHONPATH="%buildroot%python3_sitelibdir"
 %__python3 -m stestr --test-path ./tempest/tests run
 
 %files
@@ -139,6 +143,10 @@ mv %buildroot/usr/etc/%oname/allow-list.yaml %buildroot%_sysconfdir/%oname
 %endif
 
 %changelog
+* Fri Jul 26 2024 Grigory Ustinov <grenka@altlinux.org> 39.0.0-alt1
+- Automatically updated to 39.0.0.
+- Built with check.
+
 * Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 32.0.0-alt1.2
 - Dropped build dependency on python3-module-reno.
 

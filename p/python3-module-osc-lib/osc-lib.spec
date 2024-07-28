@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.0.1
+Version: 3.1.0
 Release: alt1
 
 Summary: OpenStackClient Library
@@ -26,7 +26,6 @@ BuildRequires: python3-module-keystoneauth1 >= 3.14.0
 BuildRequires: python3-module-openstacksdk >= 0.15.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.utils >= 3.33.0
-BuildRequires: python3-module-simplejson >= 3.5.1
 
 %if_with check
 BuildRequires: python3-module-coverage >= 4.0
@@ -112,6 +111,9 @@ install -pDm 644 man/openstackclientclibase.1 %buildroot%_man1dir/openstackclien
 %endif
 
 %changelog
+* Fri Jul 26 2024 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
+- Automatically updated to 3.1.0.
+
 * Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
 - Automatically updated to 3.0.1.
 

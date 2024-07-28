@@ -1,20 +1,28 @@
 %global pypi_name netaddr
 %def_enable check
+%def_without docs
 
-Name:		python3-module-%{pypi_name}
-Version:	0.8.0
-Release:	alt1
-Summary:	A pure Python network address representation and manipulation library
+Name:  python3-module-%{pypi_name}
+Version: 1.3.0
+Release: alt1
+Summary: A pure Python network address representation and manipulation library
 
-Group:		Development/Python3
-License:	BSD
-URL:		http://github.com/drkjam/netaddr
-# Source0-url: https://github.com/drkjam/netaddr/archive/netaddr-%version.tar.gz
-Source0:	%name-%version.tar
+Group:  Development/Python3
+License: BSD-3-Clause
+URL:  https://pypi.org/project/netaddr
+VCS:  https://github.com/drkjam/netaddr
+Source0: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-sphinx
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+%if_with docs
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinx-issues
+%endif
+
 %{?_enable_check:BuildRequires: python3-module-pytest python3-module-pytest-cov}
 
 %description
@@ -37,53 +45,38 @@ Included are routines for :-
 - accessing OUI and IAB organisational information published by IEEE
 - accessing IP address and block information published by IANA
 
-For details on the latest updates and changes, see :-
-
-    http://github.com/drkjam/netaddr/blob/rel-0.7.x/CHANGELOG
-
-API documentation for the latest release is available here :-
-
-    http://packages.python.org/netaddr/
-
-
 %prep
 %setup
-
-# Make rpmlint happy, get rid of DOS line endings
-%{__sed} -i 's/\r//' netaddr/*.py
-%{__sed} -i 's/\r//' netaddr/ip/*.py
-%{__sed} -i 's/\r//' netaddr/eui/*.idx
-
 # Make rpmlint happy, rip out python shebang lines from most python
 # modules
 find netaddr -name "*.py" | \
   xargs sed -i -e '1 {/^#!\//d}'
 
-# Make rpmlint happy, fix permissions on documentation files
-chmod 0644 AUTHORS CHANGELOG COPYRIGHT INSTALL LICENSE REFERENCES THANKS
-
 %build
-%python3_build
+%pyproject_build
 
-
-#docs
+%if_with docs
 pushd docs
 PYTHONPATH='../' sphinx-build-3 -b html -d build/doctrees source html
 popd
+%endif
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-py.test3
+%pyproject_run_pytest
 
 %files
-%doc AUTHORS CHANGELOG COPYRIGHT LICENSE REFERENCES THANKS
-%doc README.rst docs/html
-%python3_sitelibdir/*
+%doc *.rst
 %_bindir/netaddr
+%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Fri Jul 26 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
+- Build new version.
+
 * Fri Mar 24 2023 Alexey Shabalin <shaba@altlinux.org> 0.8.0-alt1
 - 0.8.0
 

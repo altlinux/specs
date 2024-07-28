@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 9.4.0
+Version: 9.5.0
 Release: alt1
 
 Summary: OpenStack Oslo Configuration API
@@ -129,6 +129,9 @@ install -pDm 644 man/osloconfig.1 %buildroot%_man1dir/osloconfig.1
 %endif
 
 %changelog
+* Fri Jul 26 2024 Grigory Ustinov <grenka@altlinux.org> 9.5.0-alt1
+- Automatically updated to 9.5.0.
+
 * Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 9.4.0-alt1
 - Automatically updated to 9.4.0.
 

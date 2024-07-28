@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.1.0
+Version: 3.3.0
 Release: alt1
 
 Summary: An SDK for building applications to work with OpenStack
@@ -116,6 +116,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 # Install missing files to proper location
 cp openstack/config/*.json %buildroot%python3_sitelibdir/openstack/config
 
+# Needs openstack/_hacking/checks.py which is not packaging
+rm -v %buildroot%python3_sitelibdir/openstack/tests/unit/test_hacking.py
+
 %check
 export OS_LOG_CAPTURE=true
 export OS_TEST_TIMEOUT=30
@@ -141,6 +144,9 @@ export OS_TEST_TIMEOUT=30
 %endif
 
 %changelog
+* Fri Jul 26 2024 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1
+- Automatically updated to 3.3.0.
+
 * Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
 - Automatically updated to 3.1.0.
 

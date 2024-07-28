@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.5.0
-Release: alt5
+Version: 5.0.0
+Release: alt1
 
 Summary: OpenStack Oslo test framework
 
@@ -15,8 +15,6 @@ Url: https://pypi.org/project/oslotest
 Source: %oname-%version.tar
 Source1: %oname.watch
 
-Patch: oslotest-replace-find_module-function.patch
-
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -24,15 +22,14 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-fixtures >= 3.0.0
-BuildRequires: python3-module-six >= 1.10.0
 
 %if_with check
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-mock >= 2.0.0
-BuildRequires: python3-module-hacking >= 2.0.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-hacking >= 6.1.0
 BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
@@ -65,8 +62,6 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
-
-%patch -p1
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -122,6 +117,9 @@ popd
 %endif
 
 %changelog
+* Fri Jul 26 2024 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
+- Automatically updated to 5.0.0.
+
 * Fri Jan 26 2024 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt5
 - Fixed FTBFS.
 

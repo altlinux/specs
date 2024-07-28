@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 11.3.0
+Version: 11.3.1
 Release: alt1
 
 Summary: CLI and Client Library for OpenStack Networking
@@ -129,6 +129,9 @@ rm -rf %buildroot%python3_sitelibdir/%oname/tests/functional/hooks
 %endif
 
 %changelog
+* Fri Jul 26 2024 Grigory Ustinov <grenka@altlinux.org> 11.3.1-alt1
+- Automatically updated to 11.3.1.
+
 * Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 11.3.0-alt1
 - Automatically updated to 11.3.0.
 

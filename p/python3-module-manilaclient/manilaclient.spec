@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.9.0
+Version: 4.9.1
 Release: alt1
 
 Summary: Client library for OpenStack Manila API.
@@ -20,10 +20,10 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-pbr >= 3.0.0
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.log >= 3.36.0
-BuildRequires: python3-module-oslo.serialization >= 2.18.0
+BuildRequires: python3-module-oslo.serialization >= 2.20.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-prettytable >= 0.7.1
 BuildRequires: python3-module-requests >= 2.14.2
@@ -32,7 +32,7 @@ BuildRequires: python3-module-keystoneclient >= 3.8.0
 BuildRequires: python3-module-debtcollector >= 1.2.0
 
 %if_with check
-BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-coverage >= 4.4.1
 BuildRequires: python3-module-ddt >= 1.0.1
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-stestr >= 2.0.0
@@ -123,6 +123,9 @@ install -pDm 644 tools/manila.bash_completion \
 %endif
 
 %changelog
+* Fri Jul 26 2024 Grigory Ustinov <grenka@altlinux.org> 4.9.1-alt1
+- Automatically updated to 4.9.1.
+
 * Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 4.9.0-alt1
 - Automatically updated to 4.9.0.
 

@@ -3,7 +3,7 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 5.8.0
+Version: 5.9.0
 Release: alt1
 Epoch: 1
 
@@ -49,10 +49,11 @@ BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-testscenarios >= 0.4
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-pydot >= 1.2.4
+BuildRequires: python3-module-pifpaf >= 0.10.0
+BuildRequires: python3-module-etcd3gw >= 2.0.0
 BuildRequires: python3-module-pymysql
 BuildRequires: python3-module-psycopg2 >= 2.8.0
 BuildRequires: python3-module-pydotplus >= 2.0.2
-BuildRequires: python3-module-pifpaf >= 0.10.0
 BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
@@ -130,6 +131,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Fri Jul 26 2024 Grigory Ustinov <grenka@altlinux.org> 1:5.9.0-alt1
+- Automatically updated to 5.9.0.
+
 * Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 1:5.8.0-alt1
 - Automatically updated to 5.8.0.
 

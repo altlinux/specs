@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.7.0
+Version: 3.8.0
 Release: alt1
 
 Summary: Cache storage for OpenStack projects
@@ -22,7 +22,7 @@ Provides: python3-module-oslo-cache = %EVR
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-BuildRequires: python3-module-dogpile.cache >= 1.1.5
+BuildRequires: python3-module-dogpile.cache >= 1.3.1
 BuildRequires: python3-module-oslo.config >= 8.1.0
 BuildRequires: python3-module-oslo.i18n >= 5.0.0
 BuildRequires: python3-module-oslo.log >= 4.2.1
@@ -118,6 +118,9 @@ install -pDm 644 man/oslocache.1 %buildroot%_man1dir/oslocache.1
 %endif
 
 %changelog
+* Fri Jul 26 2024 Grigory Ustinov <grenka@altlinux.org> 3.8.0-alt1
+- Automatically updated to 3.8.0.
+
 * Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 3.7.0-alt1
 - Automatically updated to 3.7.0.
 

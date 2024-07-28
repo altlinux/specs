@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.4.3
-Release: alt2.2
+Version: 4.1.0
+Release: alt1
 
 Summary: OpenStack Profiler Library
 
@@ -41,8 +41,10 @@ BuildRequires: python3-module-docutils >= 0.14
 BuildRequires: python3-module-bandit >= 1.6.0
 BuildRequires: python3-module-pymongo >= 3.0.2
 BuildRequires: python3-module-elasticsearch >= 2.0.0
-BuildRequires: python3-module-pre-commit >= 2.6.0
 BuildRequires: python3-module-redis-py
+BuildRequires: python3-module-opentelemetry-sdk >= 1.16.0
+BuildRequires: python3-module-opentelemetry-exporter-otlp-proto-http
+BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
 %if_with docs
@@ -103,7 +105,13 @@ rm -rf html/.{doctrees,buildinfo}
 install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
+# We dont package jaeger_client, using opentelemetry instead as it suggested
+# https://github.com/jaegertracing/jaeger-client-python
+rm -v %buildroot%python3_sitelibdir/%oname/tests/unit/drivers/test_jaeger.py
+
 %check
+# causes import error, --exclude-regex in the next line isn't enough
+rm osprofiler/tests/unit/drivers/test_jaeger.py
 # jaeger-client is deprecated
 %__python3 -m stestr run --exclude-regex '(^osprofiler.tests.unit.drivers.test_jaeger.JaegerTestCase.*$)'
 
@@ -124,6 +132,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Fri Jul 26 2024 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1
+- Automatically updated to 4.1.0.
+
 * Mon Oct 16 2023 Grigory Ustinov <grenka@altlinux.org> 3.4.3-alt2.2
 - Dropped build dependency on python3-module-reno.
 
