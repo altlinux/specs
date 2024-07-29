@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 128.0.2
+Version: 128.0.3
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -21,7 +21,8 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 License: MPL-2.0
 Group: Networking/WWW
 URL: https://www.mozilla.org/firefox/
-ExcludeArch: %{ix86} ppc64le
+# Hang up on build browser/components/about
+ExcludeArch: ppc64le
 
 Source0: firefox-source.tar
 ### Start Patches
@@ -236,20 +237,20 @@ export NM="llvm-nm"
 export RANLIB="llvm-ranlib"
 export LLVM_PROFDATA="llvm-profdata"
 export ALTWRAP_LLVM_VERSION="%llvm_version"
-
+export RUST_BACKTRACE=1
 export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 export SHELL=/bin/sh
 
-export RUST_BACKTRACE=1
-%ifarch armh
+# It is necessary to disable the generation of debugging
+# information in order to avoid the "LLVM ERROR: out of memory".
+%ifarch %ix86
+export MOZ_DEBUG_FLAGS="-g0"
+%endif
+%ifarch armh %ix86
 export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=0"
 %else
 export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=2"
 %endif
-
-#export WASM_SANDBOXED_LIBRARIES=graphite,ogg
-#export WASM_CC="$CC --target=wasm32-wasi"
-#export WASM_CXX="$CXX --target=wasm32-wasi"
 
 export srcdir="$PWD"
 export MOZBUILD_STATE_PATH="$srcdir/mozbuild"
@@ -359,14 +360,6 @@ rm -rf -- \
 	done
 )
 
-%triggerin -- firefox < 112.0-alt1
-if [ -d "%_sysconfdir/firefox/pref" ]; then
-	for f in "%_sysconfdir/firefox/pref"/*.js "%_sysconfdir/firefox/pref"/*.js.*; do
-		[ ! -e "$f" ] ||
-			cp -af -- "$f" "%_sysconfdir/firefox/defaults/pref/"
-	done
-fi
-
 %files
 %dir %_sysconfdir/firefox
 %dir %_sysconfdir/firefox/defaults
@@ -390,11 +383,16 @@ fi
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Fri Jul 26 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.0.3-alt1
+- New version (128.0.3).
+- Correct the changelog for 128.0-alt2.
+- Add support for the i586 architecture.
+
 * Tue Jul 23 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.0.2-alt1
 - New version (128.0.2).
 
 * Tue Jul 16 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.0-alt2
-- test with cbindgen from sisyphus
+- Use the cbindgen from sisyphus for build.
 
 * Tue Jul 09 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.0-alt1
 - New version (128.0).
