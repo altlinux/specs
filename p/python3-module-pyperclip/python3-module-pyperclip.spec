@@ -1,19 +1,30 @@
 %define  modulename pyperclip
 
+# https://github.com/asweigart/pyperclip/issues/263
+%def_without check
+
 Name:    python3-module-%modulename
-Version: 1.8.2
+Version: 1.9.0
 Release: alt1
 
-Summary: Python module for cross-platform clipboard functions.
+Summary: Python module for cross-platform clipboard functions
 
 License: BSD-3-Clause
 Group:   Development/Python3
-URL:     https://github.com/asweigart/pyperclip
+URL:     https://pypi.org/project/pyperclip
+# Upstream dont make github tags =(
+# VCS:     https://github.com/asweigart/pyperclip
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-sphinx
+
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 BuildArch: noarch
 
@@ -36,24 +47,31 @@ Documentation for %modulename.
 sed -i 's/\r$//' README.md docs/*
 
 %build
-%python3_build
+%pyproject_build
 # generate html docs
 PYTHONPATH=${PWD} sphinx-build-3 docs html
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir
+xvfb-run py.test-3
 
 %files
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%modulename
+%python3_sitelibdir/%modulename-%version.dist-info
 %doc *.md
 
 %files doc
 %doc html
 
 %changelog
+* Mon Jul 29 2024 Grigory Ustinov <grenka@altlinux.org> 1.9.0-alt1
+- Build new version.
+
 * Wed Mar 17 2021 Grigory Ustinov <grenka@altlinux.org> 1.8.2-alt1
 - Build new version.
 
