@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.5.1
+Version: 0.6.0
 Release: alt1
 Summary: Pytest fixtures for working with home directories
 License: MIT
@@ -20,7 +20,7 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra testing
+%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
@@ -48,5 +48,8 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jul 29 2024 Stanislav Levin <slev@altlinux.org> 0.6.0-alt1
+- 0.5.1 -> 0.6.0.
+
 * Wed Feb 14 2024 Stanislav Levin <slev@altlinux.org> 0.5.1-alt1
 - Initial build for Sisyphus.

@@ -3,8 +3,19 @@
 
 %def_with check
 
+%define add_python_extra() \
+%{expand:%%package -n %%name+%1 \
+Summary: %%summary \
+Group: Development/Python3 \
+Requires: %%name \
+%{expand:%%pyproject_runtimedeps_metadata -- --extra %1} \
+%%description -n %%name+%1' \
+Extra "%1" for %%pypi_name. \
+%%files -n %%name+%1 \
+}
+
 Name: python3-module-%pypi_name
-Version: 3.14.0
+Version: 4.0.0
 Release: alt1
 Summary: Module for text manipulation
 License: MIT
@@ -15,7 +26,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-%release.patch
-
+# manually manage extra dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 # mapping from PyPI name
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
@@ -25,10 +37,13 @@ BuildRequires(pre): rpm-build-pyproject
 
 %if_with check
 %pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_metadata_extra inflect
 %endif
 
 %description
 %summary
+
+%add_python_extra inflect
 
 %prep
 %setup
@@ -51,6 +66,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/jaraco.text-%version.dist-info/
 
 %changelog
+* Mon Jul 29 2024 Stanislav Levin <slev@altlinux.org> 4.0.0-alt1
+- 3.14.0 -> 4.0.0.
+
 * Mon Jul 15 2024 Stanislav Levin <slev@altlinux.org> 3.14.0-alt1
 - 3.12.1 -> 3.14.0.
 
