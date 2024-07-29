@@ -1,18 +1,18 @@
-%define _unpackaged_files_terminate_build 1
 %define oname relatorio
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.10.0
-Release: alt2
+Version: 0.10.2
+Release: alt1
 
 Summary: A templating library able to output odt and pdf files
 License: GPL-3
 Group: Development/Python3
-Url: https://pypi.org/project/relatorio/
+# Upstream uses mercurial repository
+URL: https://pypi.org/project/relatorio
 
-Source0: https://files.pythonhosted.org/packages/98/50/a72676bad791bec1f5399667d982f50d64215ca86e16ecce479b28b4b5b1/%oname-%version.tar.gz
+Source: %oname-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -56,12 +56,15 @@ rm -r %buildroot%python3_sitelibdir/%oname/tests/
 %tox_check_pyproject
 
 %files
-%doc CHANGELOG README
+%doc LICENSE CHANGELOG README.rst
 %_bindir/relatorio-render
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Mon Jul 29 2024 Grigory Ustinov <grenka@altlinux.org> 0.10.2-alt1
+- Build new version.
+
 * Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 0.10.0-alt2
 - Moved on modern pyproject macros.
 
