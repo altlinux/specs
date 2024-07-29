@@ -3,7 +3,7 @@
 %def_with check
 
 Name:           python3-module-%oname
-Version:        1.2.7
+Version:        2.0.0
 Release:        alt1
 Summary:        Sphinx API for Web Apps
 License:        BSD-2-Clause
@@ -40,11 +40,14 @@ documentation into your Web application.
 %tox_check_pyproject
 
 %files
-%doc LICENSE README.rst
+%doc *.rst
 %python3_sitelibdir/sphinxcontrib/websupport
 %python3_sitelibdir/sphinxcontrib_websupport-%{version}.dist-info
 
 %changelog
+* Mon Jul 29 2024 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
+- Automatically updated to 2.0.0.
+
 * Sat May 18 2024 Grigory Ustinov <grenka@altlinux.org> 1.2.7-alt1
 - Automatically updated to 1.2.7.
 - Built with check.
