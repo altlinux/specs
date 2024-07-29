@@ -1,6 +1,6 @@
 Name: alt-csp-cryptopro
 Version: 0.3.0
-Release: alt2
+Release: alt3
 
 Group: File tools
 Summary: CryptoPRO GUI tool
@@ -41,6 +41,9 @@ install -m 0644 %_cmake__builddir/*.qm %buildroot/%_qt5_translationdir/
 %_datadir/file-manager/actions/alt-csp-cryptopro.desktop
 
 %changelog
+* Mon Jul 29 2024 Oleg Solovyov <mcpain@altlinux.org> 0.3.0-alt3
+- fix regression (Closes: #50997)
+
 * Fri Jul 19 2024 Oleg Solovyov <mcpain@altlinux.org> 0.3.0-alt2
 - disable unsupported bulk operations
 - enable checking signature for multiple files
