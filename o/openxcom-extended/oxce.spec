@@ -1,7 +1,7 @@
 %define alias oxce
 Name: openxcom-extended
 Epoch: 1
-Version: 7.11.6
+Version: 7.13.0
 Release: alt1
 
 Summary: OpenXcom Extended is an open-source clone of the original X-COM
@@ -73,6 +73,9 @@ mv %buildroot%_man6dir/{openxcom.6,%{name}.6}
 %_desktopdir/%name.desktop
 
 %changelog
+* Mon Jul 29 2024 Igor Vlasenko <viy@altlinux.org> 1:7.13.0-alt1
+- new version
+
 * Tue Feb 13 2024 Igor Vlasenko <viy@altlinux.org> 1:7.11.6-alt1
 - new version
 
