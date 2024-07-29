@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: %_name
-Version: %ver_major
+Version: %ver_major.1
 Release: alt1
 
 Summary: Play your music elegantly
@@ -69,6 +69,9 @@ appstreamcli metainfo-to-news --format text data/app.appdata.xml.in NEWS
 
 
 %changelog
+* Mon Jul 29 2024 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
+- 3.8.1
+
 * Sun Jul 21 2024 Yuri N. Sedunov <aris@altlinux.org> 3.8-alt1
 - updated to v3.8-2-gb1b9282 (renamed to Gapless)
 
