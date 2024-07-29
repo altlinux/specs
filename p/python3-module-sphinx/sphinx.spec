@@ -30,7 +30,7 @@ python3(defusedxml) \\\
 Name: python3-module-%oname
 Epoch: 1
 Version: 7.4.7
-Release: alt1
+Release: alt2
 
 Summary: Tool for producing documentation for Python projects
 License: BSD
@@ -52,8 +52,8 @@ Patch2: python-sphinx-objects.patch
 Requires: %(echo "%dependencies")
 Provides: python3-module-objects.inv
 Obsoletes: python3-module-objects.inv
-Provides: python3-module-sphinx-sphinx-build-symlink
-Obsoletes: python3-module-sphinx-sphinx-build-symlink
+Provides: python3-module-sphinx-sphinx-build-symlink = %EVR
+Obsoletes: python3-module-sphinx-sphinx-build-symlink < %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-sphinx-objects.inv
@@ -269,6 +269,9 @@ EOF
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Mon Jul 29 2024 Fr. Br. George <george@altlinux.org> 1:7.4.7-alt2
+- Correct sphinx-build script obsoletion
+
 * Sat Jul 27 2024 Fr. Br. George <george@altlinux.org> 1:7.4.7-alt1
 - Autobuild version bump to 7.4.7
 
