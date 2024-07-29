@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 16.14.0
+Version: 17.0.0
 Release: alt1
 Summary: A module wrapper for os.path
 License: MIT
@@ -22,7 +22,7 @@ Obsoletes: python3-module-path.py < %EVR
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra testing
+%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
@@ -51,6 +51,9 @@ common operations on files to be invoked on those path objects directly.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 29 2024 Stanislav Levin <slev@altlinux.org> 17.0.0-alt1
+- 16.14.0 -> 17.0.0.
+
 * Tue Apr 09 2024 Stanislav Levin <slev@altlinux.org> 16.14.0-alt1
 - 16.13.0 -> 16.14.0.
 
