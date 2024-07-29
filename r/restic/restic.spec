@@ -4,7 +4,7 @@
 
 %global import_path github.com/restic/restic
 Name:     restic
-Version: 0.16.4
+Version: 0.16.5
 Release: alt1
 Summary:  Fast, secure, efficient backup program
 License:  BSD-2-Clause
@@ -82,6 +82,9 @@ diff -qr %name-%version x
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Fri Jul 05 2024 Vitaly Chikunov <vt@altlinux.org> 0.16.5-alt1
+- Update to v0.16.5 (2024-07-01).
+
 * Tue Feb 06 2024 Vitaly Chikunov <vt@altlinux.org> 0.16.4-alt1
 - Update to v0.16.4 (2024-02-04).
 - Fixes (non-default) 'max' compression level bug in 0.16.3. You can use
