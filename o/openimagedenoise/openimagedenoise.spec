@@ -16,8 +16,8 @@
 %define soname 2
 
 Name: openimagedenoise
-Version: 2.2.2
-Release: alt3
+Version: 2.3.0
+Release: alt1
 Summary: Intel Open Image Denoise library
 Group: Development/Other
 License: Apache-2.0
@@ -30,8 +30,7 @@ Source: %oname-%version.tar
 
 Source2: %name.watch
 
-Patch0: oidn-rocm-6.0.0.patch
-Patch1: oidn-alt-aarch64-cuda-glibc-fix.patch
+Patch: oidn-alt-aarch64-cuda-glibc-fix.patch
 
 BuildRequires: cmake
 BuildRequires: python3
@@ -95,11 +94,9 @@ Intel Open Image Denoise library with CUDA support
 
 %prep
 %setup -n %oname-%version
-%patch0 -p2
-
 %ifarch aarch64
 # see https://github.com/OE4T/meta-tegra/pull/1445
-%patch1 -p2
+%patch -p2
 mkdir -p /tmp/bits
 cat >/tmp/bits/math-vector.h <<EOF
 #include <bits/libm-simd-decl-stubs.h>
@@ -175,6 +172,9 @@ chrpath -d %buildroot%_libdir/libOpenImageDenoise_device_cuda.so.%{version}
 %_libdir/cmake/*
 
 %changelog
+* Mon Jul 29 2024 L.A. Kostis <lakostis@altlinux.ru> 2.3.0-alt1
+- Updated to upstream version 2.3.0.
+
 * Thu Apr 04 2024 L.A. Kostis <lakostis@altlinux.ru> 2.2.2-alt3
 - Enable HIP back.
 - aarch64: added build workaround.
