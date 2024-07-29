@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pyupgrade
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.16.0
+Version: 3.17.0
 Release: alt1
 
-Summary: A tool (and pre-commit hook) to automatically upgrade syntax for newer versions of the language
+Summary: A tool to automatically upgrade syntax for newer versions of the language
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/pyupgrade/
@@ -46,15 +47,18 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_install
 
 %check
-%pyproject_run_pytest
+%pyproject_run_pytest -vra
 
 %files
 %doc LICENSE README.md
 %_bindir/%pypi_name
-%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 29 2024 Anton Zhukharev <ancieg@altlinux.org> 3.17.0-alt1
+- Updated to 3.17.0.
+
 * Wed Jul 03 2024 Anton Zhukharev <ancieg@altlinux.org> 3.16.0-alt1
 - Updated to 3.16.0.
 
