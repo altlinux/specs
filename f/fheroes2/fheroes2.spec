@@ -3,7 +3,7 @@
 %def_without cmake
 Name: fheroes2
 Epoch: 2
-Version: 1.0.13
+Version: 1.1.1
 #define rev 20210604
 #Release: alt1.%rev
 Release: alt1
@@ -20,7 +20,7 @@ Source2: %name.sh
 Source3: %name.png
 Source4: fheroes2-data.spec
 Source5: README.ALT
-Patch0: fheroes2-1.0.10-random-skills.patch
+Patch0: fheroes2-1.1.1-random-skills.patch
 
 # Automatically added by buildreq on Wed Oct 03 2012
 # optimized out: libSDL-devel libstdc++-devel zlib-devel
@@ -54,9 +54,7 @@ export LANG=en_US.UTF-8
 # see docs/README_cmake.md
 %cmake \
     -DFHEROES2_DATA="%_gamesdatadir/%name/" \
-%if_with sdl2
-    -DUSE_SDL_VERSION=SDL2 \
-%else
+%if_without sdl2
     -DUSE_SDL_VERSION=SDL \
 %endif
     -DENABLE_IMAGE=ON
@@ -115,6 +113,9 @@ install -pD -m 644 %SOURCE4 %SOURCE5 %buildroot%_docdir/%name/
 %_gamesdatadir/%name
 
 %changelog
+* Mon Jul 29 2024 Igor Vlasenko <viy@altlinux.org> 2:1.1.1-alt1
+- new version
+
 * Wed Mar 27 2024 Igor Vlasenko <viy@altlinux.org> 2:1.0.13-alt1
 - new version
 
