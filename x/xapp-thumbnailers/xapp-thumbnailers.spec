@@ -1,5 +1,5 @@
 Name: xapp-thumbnailers
-Version: 1.2.4
+Version: 1.2.5
 Release: alt1
 
 Summary: Thumbnailers for GTK Desktop Environments
@@ -68,6 +68,14 @@ Requires: %name = %EVR
 %description -n xapp-gimp-thumbnailer
 %summary
 
+%package -n xapp-jxl-thumbnailer
+Summary: JPEG XL thumbnailer
+Group: Graphics
+Requires: %name = %EVR
+
+%description -n xapp-jxl-thumbnailer
+Produces thumbnails for JPEG XL files.
+
 %prep
 %setup
 
@@ -83,38 +91,43 @@ chmod 755 %buildroot/usr/bin/xapp-vorbiscomment-thumbnailer
 
 %files
 %python3_sitelibdir/XappThumbnailers/
+%dir %_datadir/thumbnailers/
 
 %files -n xapp-appimage-thumbnailer
 %_bindir/xapp-appimage-thumbnailer
-%dir %_datadir/thumbnailers/
 %_datadir/thumbnailers/xapp-appimage-thumbnailer.thumbnailer
 
 %files -n xapp-epub-thumbnailer
 %_bindir/xapp-epub-thumbnailer
-%dir %_datadir/thumbnailers/
 %_datadir/thumbnailers/xapp-epub-thumbnailer.thumbnailer
 
 %files -n xapp-mp3-thumbnailer
 %_bindir/xapp-mp3-thumbnailer
-%dir %_datadir/thumbnailers/
 %_datadir/thumbnailers/xapp-mp3-thumbnailer.thumbnailer
 
 %files -n xapp-raw-thumbnailer
 %_bindir/xapp-raw-thumbnailer
-%dir %_datadir/thumbnailers/
 %_datadir/thumbnailers/xapp-raw-thumbnailer.thumbnailer
 
 %files -n xapp-vorbiscomment-thumbnailer
 %_bindir/xapp-vorbiscomment-thumbnailer
-%dir %_datadir/thumbnailers/
 %_datadir/thumbnailers/xapp-vorbiscomment-thumbnailer.thumbnailer
 
 %files -n xapp-gimp-thumbnailer
 %_bindir/xapp-gimp-thumbnailer
-%dir %_datadir/thumbnailers/
 %_datadir/thumbnailers/xapp-gimp-thumbnailer.thumbnailer
 
+%files -n xapp-jxl-thumbnailer
+%_bindir/xapp-jxl-thumbnailer
+%_datadir/thumbnailers/xapp-jxl-thumbnailer.thumbnailer
+
+
 %changelog
+* Mon Jul 29 2024 Ivan Mazhukin <vanomj@altlinux.org> 1.2.5-alt1
+- new version (1.2.5) with rpmgs script
+- added subpackage for JPEG XL files thumbnailers
+- moved thumbnailers dir to main package
+
 * Wed Jun 12 2024 Ivan Mazhukin <vanomj@altlinux.org> 1.2.4-alt1
 - new version (1.2.4) with rpmgs script
 - added subpackage for gimp thumbnailers
