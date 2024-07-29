@@ -1,6 +1,6 @@
 Name: rust
 Epoch: 1
-Version: 1.79.0
+Version: 1.80.0
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -228,9 +228,6 @@ rm -rf vendor/jemalloc-sys/jemalloc
 rm -rf vendor/libz-sys/src/zlib
 rm -rf vendor/lzma-sys/xz-*
 rm -rf vendor/openssl-src/openssl
-
-# CI tooling won't be used
-rm -rf src/ci
 
 # Remove hidden files from source
 find src/ -type f -name '.appveyor.yml' -delete
@@ -465,6 +462,9 @@ rm -rf %rustdir
 %rustlibdir/src
 
 %changelog
+* Mon Jul 29 2024 Ajrat Makhmutov <rauty@altlinux.org> 1:1.80.0-alt1
+- New version (1.80.0).
+
 * Fri Jun 14 2024 Ajrat Makhmutov <rauty@altlinux.org> 1:1.79.0-alt1
 - New version (1.79.0).
 
