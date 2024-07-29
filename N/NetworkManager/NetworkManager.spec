@@ -50,8 +50,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.48.4
-Release: alt2%git_hash
+Version: 1.48.6
+Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -681,6 +681,9 @@ fi
 %endif
 
 %changelog
+* Mon Jul 29 2024 Mikhail Efremov <sem@altlinux.org> 1.48.6-alt1
+- Updated to 1.48.6.
+
 * Thu Jul 11 2024 Mikhail Efremov <sem@altlinux.org> 1.48.4-alt2
 - BR: Fixed rpm-macros-systemd requirement.
 
