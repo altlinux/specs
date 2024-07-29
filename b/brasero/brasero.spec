@@ -19,7 +19,7 @@
 
 Name: brasero
 Version: %ver_major.3
-Release: alt3
+Release: alt4
 
 Summary: CD/DVD burning tool for GNOME.
 Group: Archiving/Cd burning
@@ -243,6 +243,9 @@ GObject introspection devel data for the Brasero
 %{?_enable_nautilus:%exclude %_libdir/nautilus/extensions-%nau_api_ver/libnautilus-%name-extension.la}
 
 %changelog
+* Mon Jul 29 2024 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt4
+- updated to 3.12.3-36-g5cdefa8c
+
 * Tue Jun 20 2023 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt3
 - 3.12.3-23-gcf5b28ab (updated translations)
 - explicitly required tracker3 (ALT #46470)
