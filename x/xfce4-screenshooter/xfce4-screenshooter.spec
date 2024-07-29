@@ -2,7 +2,7 @@
 %define git_date %nil
 
 Name: xfce4-screenshooter
-Version: 1.10.6
+Version: 1.11.0
 Release: alt1%git_date
 
 Summary: Screenshot Xfce4 panel plugin
@@ -22,7 +22,6 @@ BuildRequires: libX11-devel libXi-devel libXext-devel libXfixes-devel libXtst-de
 BuildRequires: wayland-devel libwayland-client-devel wlr-protocols
 BuildRequires: libxml2-devel
 BuildRequires: libpango-devel >= 1.44.0
-BuildRequires: libsoup3.0-devel
 
 BuildRequires: help2man
 
@@ -78,6 +77,9 @@ A plugin for the Xfce panel is also available.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Jul 29 2024 Mikhail Efremov <sem@altlinux.org> 1.11.0-alt1
+- Updated to 1.11.0.
+
 * Thu May 30 2024 Mikhail Efremov <sem@altlinux.org> 1.10.6-alt1
 - Updated to 1.10.6.
 
