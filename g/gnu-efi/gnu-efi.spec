@@ -1,19 +1,23 @@
+%define _unpackaged_files_terminate_build 1
+%define efidir altlinux
+
 Name: gnu-efi
-Version: 3.0.12
-Release: alt1
+Version: 3.0.18
+Release: alt2
 Epoch: 1
+
 Summary: Building EFI applications using the GNU toolchain
-# Intel and HP's BSD-like license, except setjmp code coming from GRUB
-License: GPL v2+ (setjmp code), BSD-like (all the rest)
+License: BSD-2-Clause AND BSD-2-Clause-Patent AND BSD-3-Clause AND BSD-4-Clause AND GPL-2.0-or-later AND GPL-2.0-only
 Group: Development/Other
 
 Url: http://gnu-efi.sourceforge.net/
-# git https://git.code.sf.net/p/gnu-efi/code
+VCS: https://git.code.sf.net/p/gnu-efi/code
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 ExclusiveArch: %ix86 x86_64 armh aarch64
 Conflicts: gnu-efi-3.0r gnu-efi-3.0u gnu-efi-3.0.5
-%define efidir altlinux
+
+BuildRequires: gcc-c++
 
 %description
 GNU-EFI development environment allows to create EFI applications
@@ -26,18 +30,9 @@ for IA-64 and x86 platforms using the GNU toolchain.
 %build
 %make
 %make apps
-%ifarch x86_64
-setarch linux32 -B make ARCH=ia32 PREFIX=%prefix LIBDIR=%prefix/lib
-setarch linux32 -B make ARCH=ia32 PREFIX=%prefix LIBDIR=%prefix/lib apps
-%endif
-
 
 %install
 %make install INSTALLROOT=%buildroot PREFIX=%prefix LIBDIR=%_libdir
-%ifarch x86_64
-setarch linux32 -B make PREFIX=%prefix LIBDIR=%_prefix/lib INSTALLROOT=%buildroot ARCH=ia32 install
-%endif
-
 
 %files
 %doc ChangeLog README.* apps
@@ -45,12 +40,17 @@ setarch linux32 -B make PREFIX=%prefix LIBDIR=%_prefix/lib INSTALLROOT=%buildroo
 %_libdir/libgnuefi.a
 %_libdir/crt0-efi-*.o
 %_libdir/elf_*_efi.lds
-%ifarch x86_64
-%_prefix/lib/*
-%endif
+%_libdir/gnuefi
 %_includedir/efi
+%_pkgconfigdir/gnu-efi.pc
 
 %changelog
+* Wed Jul 24 2024 Egor Ignatov <egori@altlinux.org> 1:3.0.18-alt2
+- disable 32-bit gni-efi toolchain on x86_64
+
+* Wed May 15 2024 Egor Ignatov <egori@altlinux.org> 1:3.0.18-alt1
+- 3.0.18
+
 * Fri Oct 23 2020 Nikolai Kostrigin <nickel@altlinux.org> 1:3.0.12-alt1
 - 3.0.12
   + rediff armh patch

@@ -24,7 +24,7 @@
 %define fwupd_pluginsdir %_libdir/fwupd-%version
 
 Name: fwupd
-Version: 1.9.20
+Version: 1.9.21
 Release: alt1
 
 Summary: Firmware update daemon
@@ -60,7 +60,7 @@ BuildRequires: libgpgme-devel
 BuildRequires: libgudev-devel
 BuildRequires: libgusb-gir-devel
 BuildRequires: libjcat-devel >= 0.1.10
-BuildRequires: libpango-devel
+BuildRequires: libpango-gir-devel
 BuildRequires: libpolkit-devel
 %if_enabled flashrom
 BUildRequires: libflashrom-devel
@@ -261,13 +261,13 @@ vm-run --sbin --udevd --kvm=cond --overlay=tmpfs:/usr/src \
 %_unitdir/fwupd-refresh.timer
 %_unitdir/fwupd-refresh.service
 %_unitdir/system-update.target.wants/
-/lib/systemd/system-shutdown/fwupd.shutdown
+%_systemddir/system-shutdown/fwupd.shutdown
 %dir %_localstatedir/fwupd
 %dir %_datadir/fwupd/quirks.d
 %_datadir/fwupd/quirks.d/builtin.quirk.gz
 %_libdir/libfwupd*.so.*
 %_libdir/girepository-1.0/Fwupd-2.0.typelib
-/lib/udev/rules.d/*.rules
+%_udevrulesdir/*.rules
 %dir %fwupd_pluginsdir
 %fwupd_pluginsdir/libfwupd*.so
 %if_enabled flashrom
@@ -280,7 +280,7 @@ vm-run --sbin --udevd --kvm=cond --overlay=tmpfs:/usr/src \
 %config(noreplace)%_sysconfdir/grub.d/35_fwupd
 %_datadir/fwupd/uefi-capsule-ux.tar.xz
 %endif
-/lib/sysusers.d/fwupd.conf
+%_sysusersdir/fwupd.conf
 
 %ghost %_localstatedir/fwupd/gnupg
 
@@ -321,6 +321,9 @@ vm-run --sbin --udevd --kvm=cond --overlay=tmpfs:/usr/src \
 %endif
 
 %changelog
+* Fri Jun 14 2024 Egor Ignatov <egori@altlinux.org> 1.9.21-alt1
+- 1.9.21
+
 * Mon May 20 2024 Egor Ignatov <egori@altlinux.org> 1.9.20-alt1
 - 1.9.20
 

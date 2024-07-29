@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fwupd-efi
-Version: 1.5
-Release: alt2
+Version: 1.6
+Release: alt1
 License: LGPLv2+
 
 Group: System/Configuration/Hardware
@@ -58,6 +58,9 @@ This package enables EFI signature verification.
 %files checkinstall
 
 %changelog
+* Mon Jul 22 2024 Egor Ignatov <egori@altlinux.org> 1.6-alt1
+- 1.6
+
 * Wed May 15 2024 Egor Ignatov <egori@altlinux.org> 1.5-alt2
 - bumped release to pesign with the new key
 
