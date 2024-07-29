@@ -1,7 +1,7 @@
 %define oname pre-commit
 
 Name:    python3-module-%oname
-Version: 3.7.1
+Version: 3.8.0
 Release: alt1
 
 Summary: A framework for managing and maintaining multi-language pre-commit hooks
@@ -14,6 +14,8 @@ VCS:     https://github.com/pre-commit/pre-commit
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 BuildArch: noarch
 
@@ -26,10 +28,10 @@ Source:  %name-%version.tar
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 # tests need lots of network, git and other stuff
@@ -38,9 +40,12 @@ Source:  %name-%version.tar
 %doc LICENSE *.md
 %_bindir/%oname
 %python3_sitelibdir/pre_commit
-%python3_sitelibdir/pre_commit-%version-py%_python3_version.egg-info
+%python3_sitelibdir/pre_commit-%version.dist-info
 
 %changelog
+* Mon Jul 29 2024 Grigory Ustinov <grenka@altlinux.org> 3.8.0-alt1
+- Automatically updated to 3.8.0.
+
 * Sun May 12 2024 Grigory Ustinov <grenka@altlinux.org> 3.7.1-alt1
 - Automatically updated to 3.7.1.
 
