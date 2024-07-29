@@ -1,8 +1,8 @@
-%define shortver 83
-%define libver 8.3
+%define shortver 84
+%define libver 8.4
 
 Name:    grass
-Version: 8.3.2
+Version: 8.4.0
 Release: alt1
 
 %def_with mysql
@@ -84,6 +84,9 @@ BuildRequires: libnetcdf-devel
 BuildRequires: opencl-headers
 BuildRequires: libgomp-devel
 BuildRequires: liblz4-devel
+%if_with opendwg
+BuildRequires: opendwg-devel
+%endif
 %ifarch %e2k
 # has a preprocessor with -dD support
 BuildRequires: clang llvm llvm-devel
@@ -105,19 +108,18 @@ with raster, topological vector, image processing, and graphics
 production functionality that operates on various platforms
 through a graphical user interface and shell in X-Window.
 
-%package -n lib%name
+%package -n lib%name%shortver
 Summary: GRASS (Geographic Resources Analysis Support System) runtime libraries
 Group: Sciences/Geosciences
 Provides: %name-docs = %version-%release
 Obsoletes: %name-docs < %version-%release
 
-%description -n lib%name
+%description -n lib%name%shortver
 GRASS (Geographic Resources Analysis Support System) runtime libraries.
 
 %package -n lib%name-devel
 Summary: Development files for GRASS
 Group: Development/C
-Requires: lib%name = %version-%release
 Provides: %name-devel = %version
 Obsoletes: %name-devel
 
@@ -130,7 +132,7 @@ This package contains development headers for GRASS.
 # Remove bundled lz4
 rm lib/gis/lz4{.h,.c}
 %patch0 -p2
-%patch1 -p2
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %ifarch %e2k
@@ -156,7 +158,7 @@ export LDCONFIG=-llz4
 	--with-bzlib \
 	--with-cairo \
 	--with-cxx \
-        %{subst_with opendwg} \
+	%{subst_with opendwg} \
 	--with-fftw \
 	--with-freetype-includes=%{_includedir}/freetype2 \
 	--with-freetype=yes \
@@ -165,13 +167,13 @@ export LDCONFIG=-llz4
 	--with-glw \
 	--with-gomp \
 	--with-lapack \
-        %{subst_with liblas} \
+	%{subst_with liblas} \
 	--with-motif \
 	%{subst_with mysql} \
 	--with-mysql-includes=%{_includedir}/mysql \
 	--with-nls \
 	--with-odbc \
-        %{subst_with opencl} \
+	%{subst_with opencl} \
 	--with-opengl \
 	--with-openmp \
 	%{subst_with pdal} \
@@ -179,13 +181,13 @@ export LDCONFIG=-llz4
 	--with-postgres-includes=/usr/include/pgsql \
 	--with-proj \
 	--with-proj-share=%{_datadir}/proj \
-        --with-pthread \
+	--with-pthread \
 	--with-python \
 	--with-readline \
 	%{subst_with sqlite} \
 	--with-wxwidgets=wx-config \
 	--with-x \
-        --with-zstd
+	--with-zstd
 
 %make
 
@@ -310,7 +312,7 @@ rm -f %_libdir/%grassdir/locks
 %_iconsdir/hicolor/*/apps/%name.png
 %_man1dir/*.1grass*
 
-%files -n lib%name
+%files -n lib%name%shortver
 %_libdir/lib%{name}_*.%libver.so
 
 %files -n lib%name-devel
@@ -320,6 +322,10 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Sun Jul 28 2024 Andrey Cherepanov <cas@altlinux.org> 8.4.0-alt1
+- New version.
+- Used Shared Libs Policy.
+
 * Fri Mar 08 2024 Andrey Cherepanov <cas@altlinux.org> 8.3.2-alt1
 - New version.
 
