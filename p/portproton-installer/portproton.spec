@@ -9,7 +9,7 @@ AutoProv: no
 
 Name: portproton-installer
 Version: 1.7.0
-Release: alt2
+Release: alt3
 
 Summary: Installer for PortProton
 
@@ -61,6 +61,9 @@ install -Dm644 %xdg_name.metainfo.xml %buildroot%_datadir/metainfo/%xdg_name.met
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Mon Jul 29 2024 Mikhail Tergoev <fidel@altlinux.org> 1.7.0-alt3
+- remove portproton package as deprecated
+
 * Wed Jul 17 2024 Mikhail Tergoev <fidel@altlinux.org> 1.7.0-alt2
 - added requires jq for SteamGridDB
 
