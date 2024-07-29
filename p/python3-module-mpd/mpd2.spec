@@ -1,16 +1,26 @@
+%def_with check
+
 Name: python3-module-mpd
-Version: 3.0.5
+Version: 3.1.1
 Release: alt1
 
 Summary: A client interface for the Music Player Daemon
 
 Group: Development/Python3
 License: LGPLv3+
-Url: https://github.com/Mic92/python-mpd2
+URL: https://pypi.org/project/python-mpd2
+VCS: https://github.com/Mic92/python-mpd2
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-twisted
+%endif
 
 BuildArch: noarch
 
@@ -21,16 +31,23 @@ Python library providing a client interface for MPD.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%tox_check_pyproject
 
 %files
-%doc README.rst
-%python3_sitelibdir_noarch/*
+%doc LICENSE.txt README.rst
+%python3_sitelibdir/mpd
+%python3_sitelibdir/python_mpd2-%version.dist-info
 
 %changelog
+* Sun Jul 28 2024 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt1
+- Automatically updated to 3.1.1.
+
 * Tue Mar 08 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.5-alt1
 - Build new version.
 
