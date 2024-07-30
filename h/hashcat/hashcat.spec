@@ -3,7 +3,7 @@
 
 Name: hashcat
 Version: 6.2.6
-Release: alt1
+Release: alt2
 
 Summary: Advanced password recovery utility
 Group: System/Base
@@ -27,6 +27,7 @@ BuildRequires: libminizip-ng-compat-devel
 # we dont want to make dependencies based on extra tools
 %add_findprov_skiplist %_datadir/%name/tools/*
 %add_findreq_skiplist %_datadir/%name/tools/*
+%add_findreq_skiplist %_datadir/%name/extra/*
 
 %description
 Hashcat is the world's fastest and most advanced password recovery utility,
@@ -108,6 +109,9 @@ rm -r %buildroot%_datadir/hashcat/docs
 %doc docs/*
 
 %changelog
+* Tue Jul 30 2024 Alexander Kuznetsov <kuznetsovam@altlinux.org> 6.2.6-alt2
+- Drop extra dependencies.
+
 * Tue Jul 16 2024 Alexander Kuznetsov <kuznetsovam@altlinux.org> 6.2.6-alt1
 - New spec.
 - Update to 6.2.6.
