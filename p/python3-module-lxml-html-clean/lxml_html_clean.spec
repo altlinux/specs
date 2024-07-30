@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.1.1
+Version: 0.2.0
 Release: alt1
 
 Summary: Separate project for HTML cleaning functionalities copied from lxml.html.clean.
@@ -52,6 +52,9 @@ Therefore we decided to extract the problematic part to a separate project.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jul 30 2024 Grigory Ustinov <grenka@altlinux.org> 0.2.0-alt1
+- Automatically updated to 0.2.0.
+
 * Fri Apr 05 2024 Grigory Ustinov <grenka@altlinux.org> 0.1.1-alt1
 - Automatically updated to 0.1.1.
 
