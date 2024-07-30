@@ -1,69 +1,117 @@
-#
-# spec file for package hashcat
-#
-# Copyright (c) 2015 SUSE LINUX GmbH, Nuernberg, Germany.
-#
-# All modifications and additions to the file contributed by third parties
-# remain the property of their copyright owners, unless otherwise agreed
-# upon. The license for this file, and modifications and additions to the
-# file, is the same license as for the pristine package itself (unless the
-# license for the pristine package is not an Open Source License, in which
-# case the license is the MIT License). An "Open Source License" is a
-# license that conforms to the Open Source Definition (Version 1.9)
-# published by the Open Source Initiative.
+%define _unpackaged_files_terminate_build 1
+%define soversion 6
 
 Name: hashcat
-Version: 2.00
+Version: 6.2.6
 Release: alt1
 
-Summary: CPU-based password recovery utility
-License: MIT
+Summary: Advanced password recovery utility
 Group: System/Base
-
+License: MIT
 Url: https://hashcat.net
-Source: https://github.com/hashcat/hashcat/archive/%version.tar.gz
-Patch1: 0001-fixes-issue-10-compiler-warning-for-possible-memory-.patch
-#Git-Clone:	git://github.com/hashcat/hashcat
-Packager: Michael Shigorin <mike@altlinux.org>
+VCS: https://github.com/hashcat/hashcat
 
-BuildRequires: libgmp-devel
-ExclusiveArch: %ix86 x86_64
+Source: %name-%version.tar
+
+BuildRequires: gcc-c++
+BuildRequires: ocl-icd
+BuildRequires: zlib-devel
+BuildRequires: opencl-headers
+BuildRequires: libxxhash-devel
+BuildRequires: libminizip-ng-compat-devel
+
+# we disable unrar, so suppress headers depending on it
+%add_findreq_skiplist %_includedir/%name/emu_inc*
+# we dont have fully packaged lzma-sdk, so suppress headers depending on it
+%add_findreq_skiplist %_includedir/%name/types.h %_includedir/%name/ext_lzma.h
+# we dont want to make dependencies based on extra tools
+%add_findprov_skiplist %_datadir/%name/tools/*
+%add_findreq_skiplist %_datadir/%name/tools/*
 
 %description
-Hashcat is an advanced CPU-based password recovery utility,
-supporting seven unique modes of testing for over 100 optimized
-hashing algorithms.
+Hashcat is the world's fastest and most advanced password recovery utility,
+supporting five unique modes of attack for over
+300 highly-optimized hashing algorithms.
+Hashcat currently supports CPUs, GPUs, and other hardware accelerators on
+Linux, Windows, and macOS, and has facilities to help
+enable distributed password cracking.
+
+%package -n lib%name%soversion
+Summary: Advanced password recovery utility - library
+Group: System/Libraries
+
+%description -n lib%name%soversion
+Hashcat is the world's fastest and most advanced password recovery utility,
+supporting five unique modes of attack for over
+300 highly-optimized hashing algorithms.
+Hashcat currently supports CPUs, GPUs, and other hardware accelerators on
+Linux, Windows, and macOS, and has facilities to help
+enable distributed password cracking.
+
+%package -n lib%name-devel
+Summary: Advanced password recovery utility - development files
+Group: Development/C
+
+%description -n lib%name-devel
+%summary.
+
+%package docs
+Summary: Advanced password recovery utility - documentation
+Group: Development/Documentation
+BuildArch: noarch
+
+%description docs
+%summary.
+
+# use system deps and usrmerged folders
+%global mflags PREFIX=%prefix SHARED=1 SHARED_FOLDER=%_libdir/%name ENABLE_UNRAR=0
+%global mflags %mflags LIBRARY_FOLDER=%_libdir DOCUMENT_FOLDER=%_datadir/%name
+%global mflags %mflags USE_SYSTEM_XXHASH=1 USE_SYSTEM_OPENCL=1 USE_SYSTEM_ZLIB=1
 
 %prep
 %setup
-%patch -P 1 -p1
+
+# change flags to keep debuginfo
+sed -i 's|+= -s|+= -g|' src/Makefile
+sed -i 's|+= -O2|+= -O2 -g|' src/Makefile
+
+# we use system deps, so remove bundled ones
+rm -rf deps/{OpenCL-Headers,unrar,xxHash,zlib}
 
 %build
-%make_build \
-	CFLAGS="%optflags -Iinclude" \
-	LIBGMP_POSIX32="%prefix" \
-	LIBGMP_POSIX64="%prefix" \
-%ifarch x86_64
-	posix64
-%else
-	posix32
-%endif
+%make_build %mflags
 
 %install
-%ifarch x86_64
-install -pDm755 hashcat-cli64.bin "%buildroot%_bindir/%name"
-%endif
-%ifarch %ix86
-install -pDm755 hashcat-cli32.bin "%buildroot%_bindir/%name"
-%endif
+%makeinstall_std %mflags
+
+# create shared lib links
+ln -s libhashcat.so.%version %buildroot%_libdir/libhashcat.so.%soversion
+ln -s libhashcat.so.%soversion %buildroot%_libdir/libhashcat.so
+
+# remove installed docs
+rm -r %buildroot%_datadir/hashcat/docs
 
 %files
-%doc README.md docs/license.txt
-%_bindir/%name
+%_bindir/hashcat
+%_libdir/hashcat
+%_datadir/hashcat
+
+%files -n lib%name%soversion
+%_libdir/libhashcat.so.%soversion
+%_libdir/libhashcat.so.%version
+
+%files -n lib%name-devel
+%_libdir/libhashcat.so
+%_includedir/*
+
+%files docs
+%doc docs/*
 
 %changelog
+* Tue Jul 16 2024 Alexander Kuznetsov <kuznetsovam@altlinux.org> 6.2.6-alt1
+- New spec.
+- Update to 6.2.6.
+- Split lib, devel and docs packages.
+
 * Mon Dec 07 2015 Michael Shigorin <mike@altlinux.org> 2.00-alt1
 - initial build for ALT Linux Sisyphus (based on openSUSE package)
-
-* Sun Dec  6 2015 jengelh@inai.de
-- Initial package for build.opensuse.org (version 2.00)
