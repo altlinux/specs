@@ -1,5 +1,5 @@
 Name: cosmic-comp
-Version: 0.0.1012.895e
+Version: 0.0.1176.g9185
 Release: alt1
 
 Summary: Wayland compositor for the COSMIC DE
@@ -15,7 +15,7 @@ ExcludeArch: armh i586 ppc64le
 
 BuildPreReq: rpm-build-rust
 BuildRequires: /proc gcc-c++ cmake
-BuildRequires: libudev-devel libEGL-mesa libGL-devel libgbm-devel libinput-devel libxcb-devel libxkbcommon-devel libsystemd-devel libseat1-devel fontconfig-devel
+BuildRequires: libudev-devel libEGL-mesa libGL-devel libgbm-devel libinput-devel libxcb-devel libxkbcommon-devel libsystemd-devel libseat1-devel fontconfig-devel libpixman-devel
 
 %description
 %summary.
@@ -45,6 +45,11 @@ git = "https://github.com/Smithay/smithay-egui.git"
 rev = "cdc652e0"
 replace-with = "vendored-sources"
 
+[source."git+https://github.com/cmeissl/smithay?branch=feature/tracy_gpu_profiling"]
+git = "https://github.com/cmeissl/smithay"
+branch = "feature/tracy_gpu_profiling"
+replace-with = "vendored-sources"
+
 [source."git+https://github.com/gfx-rs/wgpu?rev=20fda69"]
 git = "https://github.com/gfx-rs/wgpu"
 rev = "20fda69"
@@ -57,6 +62,10 @@ replace-with = "vendored-sources"
 [source."git+https://github.com/pop-os/cosmic-protocols?branch=main"]
 git = "https://github.com/pop-os/cosmic-protocols"
 branch = "main"
+replace-with = "vendored-sources"
+
+[source."git+https://github.com/pop-os/cosmic-settings-daemon"]
+git = "https://github.com/pop-os/cosmic-settings-daemon"
 replace-with = "vendored-sources"
 
 [source."git+https://github.com/pop-os/cosmic-text.git"]
@@ -72,9 +81,9 @@ replace-with = "vendored-sources"
 git = "https://github.com/pop-os/libcosmic/"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/pop-os/smithay-clipboard?tag=pop-mime-types"]
+[source."git+https://github.com/pop-os/smithay-clipboard?tag=pop-dnd-5"]
 git = "https://github.com/pop-os/smithay-clipboard"
-tag = "pop-mime-types"
+tag = "pop-dnd-5"
 replace-with = "vendored-sources"
 
 [source."git+https://github.com/pop-os/softbuffer?tag=cosmic-4.0"]
@@ -82,14 +91,9 @@ git = "https://github.com/pop-os/softbuffer"
 tag = "cosmic-4.0"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/pop-os/window_clipboard.git?tag=pop-mime-types"]
+[source."git+https://github.com/pop-os/window_clipboard.git?tag=pop-dnd-8"]
 git = "https://github.com/pop-os/window_clipboard.git"
-tag = "pop-mime-types"
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/smithay//smithay?rev=ba0121a"]
-git = "https://github.com/smithay//smithay"
-rev = "ba0121a"
+tag = "pop-dnd-8"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
@@ -113,23 +117,24 @@ EOF
 %make_build
 
 %install
-%makeinstall_std
-
-install -Dm0644 "data/cosmic.desktop" "%buildroot%_datadir/wayland-sessions/cosmic.desktop"
-install -Dm0644 "data/cosmic-session.target" "%buildroot%_prefix/lib/systemd/user/cosmic-session.target"
-install -Dm0644 "data/cosmic-session-pre.target" "%buildroot%_prefix/lib/systemd/user/cosmic-session-pre.target"
-install -Dm0644 "data/cosmic-comp.service" "%buildroot%_prefix/lib/systemd/user/cosmic-comp.service"
-install -Dm0755 "data/cosmic-service" "%buildroot%_bindir/cosmic-service"
+%make_install install install-bare-session DESTDIR=%buildroot
 
 %files
 %doc LICENSE
 %_bindir/*
 %_datadir/wayland-sessions/cosmic.desktop
+%dir %_datadir/cosmic/
+%dir %_datadir/cosmic/com.system76.CosmicSettings.Shortcuts/
+%dir %_datadir/cosmic/com.system76.CosmicSettings.Shortcuts/v1/
+%_datadir/cosmic/com.system76.CosmicSettings.Shortcuts/v1/defaults
 %_prefix/lib/systemd/user/cosmic-session.target
 %_prefix/lib/systemd/user/cosmic-session-pre.target
 %_prefix/lib/systemd/user/cosmic-comp.service
 
 %changelog
+* Tue Jul 30 2024 Leontiy Volodin <lvol@altlinux.org> 0.0.1176.g9185-alt1
+- New version 0-1176-g9185ab35.
+
 * Fri Apr 12 2024 Leontiy Volodin <lvol@altlinux.org> 0.0.1012.895e-alt1
 - New version 0-1012-g895ea6aec.
 
