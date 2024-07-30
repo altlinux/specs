@@ -2,32 +2,32 @@
 
 %def_enable doc
 %def_enable introspection
-%def_enable systemd
+%def_disable systemd
 
 # These come from meson.build.
-%define apiversion 0.5
+%define apiversion 0.4
 %define soversion 0
 
 # This is used as the pkgconfig ID and as the library name
 # to pass after `cc -l`.
-%define libname %name-%apiversion
+%define libname wireplumber-%apiversion
 
-Name: wireplumber
-Version: 0.5.5
-Release: alt1
+Name: wireplumber-0.4
+Version: 0.4.17
+Release: alt2
 
-Summary: a modular session/policy manager for PipeWire
+Summary: a modular session/policy manager for PipeWire (0.4 compat library)
 
 License: MIT
 Group: Sound
 URL: https://pipewire.pages.freedesktop.org/wireplumber/
 
-BuildRequires(pre): meson >= 0.59
-BuildRequires: pkgconfig(gobject-2.0) >= 2.68
-BuildRequires: pkgconfig(gmodule-2.0) >= 2.68
-BuildRequires: pkgconfig(gio-2.0) >= 2.68
-BuildRequires: pkgconfig(gio-unix-2.0) >= 2.68
-BuildRequires: pkgconfig(libpipewire-0.3) >= 1.0.2
+BuildRequires(pre): meson >= 0.56
+BuildRequires: pkgconfig(gobject-2.0) >= 2.62
+BuildRequires: pkgconfig(gmodule-2.0) >= 2.62
+BuildRequires: pkgconfig(gio-2.0) >= 2.62
+BuildRequires: pkgconfig(gio-unix-2.0) >= 2.62
+BuildRequires: pkgconfig(libpipewire-0.3) >= 0.3.68
 BuildRequires: liblua5.3-devel
 %if_enabled introspection
 BuildRequires(pre): gobject-introspection-devel
@@ -46,10 +46,7 @@ BuildRequires: doxygen >= 1.8.0
 BuildRequires: pkgconfig(systemd)
 %endif
 
-AutoReq: nolua
-
 Source: %name-%version.tar
-Patch0001: 0001-scripts-device-Migrate-stored-route-props-over-from-.patch
 
 %package doc
 Summary: docs for the client library for WirePlumber
@@ -58,6 +55,8 @@ Group: Documentation
 %package -n lib%libname
 Summary: the client library for WirePlumber
 Group: System/Libraries
+Conflicts: libwireplumber < 0.4.17-alt2
+Obsoletes: libwireplumber < 0.4.17-alt2
 
 %package -n lib%libname-devel
 Summary: development files of the client library for WirePlumber
@@ -129,7 +128,10 @@ This package contains GObject introspection development data for lib%libname.
 
 %prep
 %setup
-%patch0001 -p1
+# Make the relevant subdir() statements no-ops.
+if [ -f src/meson.build ]; then : > src/meson.build; fi
+if [ -f po/meson.build ]; then : > po/meson.build; fi
+if [ -f tests/wplua/meson.build ]; then : > tests/wplua/meson.build; fi
 
 %build
 %meson \
@@ -153,13 +155,16 @@ This package contains GObject introspection development data for lib%libname.
 # %%doc does not work for multiple subpackages as of 2021 Oct 18.
 # We implement its functionality by hand as closely as possible.
 %define docdir() %_defaultdocdir/%1-%version
+%if 0
 mkdir -p %buildroot%{docdir %name}/
 cp -v NEWS.rst README.rst %buildroot%{docdir %name}/
+%endif
 mkdir -p %buildroot%{docdir %name-doc}/
-mv -v %buildroot%_datadir/doc/%name %buildroot%{docdir %name-doc}
+mv -v %buildroot%_datadir/doc/wireplumber %buildroot%{docdir %name-doc}
 
 %find_lang %name
 
+%if 0
 %files -f %name.lang
 %define docdir() %_defaultdocdir/%1-%version
 %{docdir %name}
@@ -171,6 +176,7 @@ mv -v %buildroot%_datadir/doc/%name %buildroot%{docdir %name-doc}
 %if_enabled systemd
 %_user_unitdir/wireplumber.service
 %_user_unitdir/wireplumber@.service
+%endif
 %endif
 
 %files doc
@@ -198,10 +204,9 @@ mv -v %buildroot%_datadir/doc/%name %buildroot%{docdir %name-doc}
 %endif
 
 %changelog
-* Mon Jul 22 2024 Arseny Maslennikov <arseny@altlinux.org> 0.5.5-alt1
-- 0.4.17 -> 0.5.5.
-- Added a script to migrate route prop state from 0.4, if pre-0.5 props
-  are present.
+* Tue Jul 30 2024 Arseny Maslennikov <arseny@altlinux.org> 0.4.17-alt2
+- Built library and modules only for compatibility with some other packages in
+  the presence of 0.5.
 
 * Mon Dec 04 2023 Arseny Maslennikov <arseny@altlinux.org> 0.4.17-alt1
 - 0.4.15 -> 0.4.17.
