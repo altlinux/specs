@@ -4,11 +4,11 @@
 %set_verify_elf_method strict
 
 Name: ima-evm-utils
-Version: 1.5
+Version: 1.6
 Release: alt1
 
 Summary: IMA/EVM support utilities
-License: GPL-2.0-only
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
 
 Url: http://linux-ima.sourceforge.net/
@@ -49,6 +49,7 @@ ima-evm-utils is used to prepare the file system for these extended attributes.
 
 %package -n libimaevm
 Summary: IMA/EVM libraries
+License: LGPL-2.0-or-later
 Group: System/Libraries
 
 %description -n libimaevm
@@ -63,6 +64,7 @@ ima-evm-utils is used to prepare the file system for these extended attributes.
 
 %package -n libimaevm-devel
 Summary: Development files for applications which use libimaevm
+License: LGPL-2.0-or-later
 Group: Development/C
 
 %description -n libimaevm-devel
@@ -94,7 +96,7 @@ unset TMPDIR
 vm-run --kvm=cond --sbin --ext4=verity make check VERBOSE=1
 
 %files
-%doc NEWS README AUTHORS COPYING examples/*.sh
+%doc NEWS README AUTHORS LICENSES.txt examples/*.sh doc/sf/sf-wiki.md
 %_bindir/*
 %_man1dir/*
 
@@ -106,6 +108,9 @@ vm-run --kvm=cond --sbin --ext4=verity make check VERBOSE=1
 %_libdir/libimaevm.so
 
 %changelog
+* Wed Jul 03 2024 Vitaly Chikunov <vt@altlinux.org> 1.6-alt1
+- Update to v1.6 (2024-07-03).
+
 * Sat Mar 11 2023 Vitaly Chikunov <vt@altlinux.org> 1.5-alt1
 - Update to v1.5 (2023-03-06).
 
