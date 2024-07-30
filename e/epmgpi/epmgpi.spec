@@ -1,5 +1,5 @@
 Name: epmgpi
-Version: 1.4
+Version: 1.5
 Release: alt1
 
 Summary: Etersoft EPM GUI Package Installer
@@ -23,14 +23,19 @@ EPM GUI Package Installer was created to install packages
 
 %install
 %makeinstall_std
+%find_lang %name
 
-%files
+%files -f %name.lang
 %doc LICENSE
 %_bindir/epmgpi
 %_desktopdir/epmgpi.desktop
 %_pixmapsdir/%name.svg
 
 %changelog
+* Tue Jul 30 2024 Roman Alifanov <ximper@altlinux.org> 1.5-alt1
+- added warning about the launch of extraneous files
+- added multilingual support
+
 * Tue Apr 16 2024 Roman Alifanov <ximper@altlinux.org> 1.4-alt1
 - log is visible after package installation error (ALT bug 50026)
 - small fix for use in the terminal
