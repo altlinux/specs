@@ -7,7 +7,7 @@
 %define with_devel 0
 
 Name: cbmc
-Version: 6.0.1
+Version: 6.1.1
 Release: alt1
 Summary: C Bounded Model Checker
 License: BSD-4-Clause
@@ -16,6 +16,7 @@ Url: https://www.cprover.org/cbmc/
 Vcs: https://github.com/diffblue/cbmc
 
 Source: %name-%version.tar
+Source1: java-models-library-0.tar
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: flex
@@ -61,6 +62,7 @@ libraries.
 
 %prep
 %setup
+tar xf %SOURCE1 -C jbmc/lib
 
 %build
 # Fedora suggests to disable LTO.
@@ -115,6 +117,9 @@ rm -rf %buildroot%_includedir/cprover
 %endif
 
 %changelog
+* Tue Jul 30 2024 Vitaly Chikunov <vt@altlinux.org> 6.1.1-alt1
+- Update to cbmc-6.1.1 (2024-07-29).
+
 * Thu Jul 18 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 6.0.1-alt1
 - Update to upstream 6.0.1 (thx vt@).
 
