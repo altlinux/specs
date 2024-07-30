@@ -11,7 +11,7 @@
 
 Name:		fscryptctl
 Version: 1.2.0
-Release: alt1
+Release: alt2
 Summary:	A small C tool for Linux filesystem encryption
 
 Group:		System/Kernel and hardware
@@ -21,8 +21,6 @@ Source:     %name-%version.tar
 
 %{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-createimage python3-module-pytest e2fsprogs}}
 %{?!_disable_man:BuildRequires: pandoc}
-
-Requires:   kernel >= 5.4
 
 %description
 fscryptctl is a low-level tool written in C that handles raw keys and
@@ -76,6 +74,13 @@ vm-run --kvm=cond --sbin --user make test-all
 %doc *.md
 
 %changelog
+* Sat Jul 27 2024 Vitaly Chikunov <vt@altlinux.org> 1.2.0-alt2
+- spec: Remove R:kernel. The kernel package does not need to be installed for
+  this tool to work. Perhaps, if the tool is running, the kernel is already
+  there. Also, the installed kernel is not necessarily the booted kernel.
+  The Requires tag is not a commentary on which kernel is best for the tool.
+  Therefore, a Requires tag was misused.
+
 * Sun Mar 24 2024 Vitaly Chikunov <vt@altlinux.org> 1.2.0-alt1
 - Update to v1.2.0 (2024-03-20).
 
