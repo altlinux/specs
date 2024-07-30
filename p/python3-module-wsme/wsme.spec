@@ -1,9 +1,10 @@
 %define pypi_name WSME
 %define lpypi_name wsme
-%def_with bootstrap
+%def_with check
+%def_without bootstrap
 
 Name:           python3-module-%lpypi_name
-Version:        0.11.0
+Version:        0.12.1
 Release:        alt1
 Summary:        Web Services Made Easy
 Group:          Development/Python3
@@ -15,7 +16,23 @@ Patch:         %lpypi_name-namespace-disable.patch
 BuildArch:      noarch
 
 BuildRequires: rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr
+
+%if_with check
+BuildRequires: python3-module-webob
+BuildRequires: python3-module-simplegeneric
+BuildRequires: python3-module-pytz
+BuildRequires: python3-module-netaddr
+BuildRequires: python3-module-importlib-metadata
+BuildRequires: python3-module-flask
+BuildRequires: python3-module-webtest
+BuildRequires: python3-module-pecan-tests
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-flask-restful
+BuildRequires: python3-module-transaction
+%endif
 
 #see wsmeext/soap/simplegeneric.py
 Requires: python3-module-simplegeneric
@@ -42,19 +59,27 @@ manipulate the request and the response objects.
 %patch
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # Delete tests
-rm -fr %buildroot%python3_sitelibdir/tests
-rm -fr %buildroot%python3_sitelibdir/*/tests
+rm -rv %buildroot%python3_sitelibdir/*/tests
+
+%check
+%tox_check_pyproject
 
 %files
-%python3_sitelibdir/*
+%python3_sitelibdir/wsme
+%python3_sitelibdir/wsmeext
+%python3_sitelibdir/WSME-%version.dist-info
 
 %changelog
+* Tue Jul 30 2024 Grigory Ustinov <grenka@altlinux.org> 0.12.1-alt1
+- Build new version.
+- Build with check.
+
 * Tue Sep 14 2021 Grigory Ustinov <grenka@altlinux.org> 0.11.0-alt1
 - Build new version.
 
