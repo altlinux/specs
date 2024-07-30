@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name:    drgn
-Version: 0.0.26
+Version: 0.0.27
 Release: alt1
 Summary: Programmable debugger
 License: LGPL-2.1-or-later
@@ -35,6 +35,7 @@ BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-wheel
 BuildRequires: zlib-devel
 %{?!_without_check:%{?!_disable_check:
+BuildRequires: libcheck-devel
 BuildRequires: /proc
 }}
 # Note: Bundled with own version of elfutils.
@@ -118,6 +119,9 @@ EOF
 %files -n kernel-ci-drgn-debuginfo
 
 %changelog
+* Fri Jul 05 2024 Vitaly Chikunov <vt@altlinux.org> 0.0.27-alt1
+- Update to v0.0.27 (2024-07-01).
+
 * Wed Mar 13 2024 Vitaly Chikunov <vt@altlinux.org> 0.0.26-alt1
 - Update to v0.0.26 (2024-03-11).
 
