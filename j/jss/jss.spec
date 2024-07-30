@@ -11,7 +11,7 @@
 
 Name: jss
 Version: 5.4.2
-Release: alt2
+Release: alt3
 
 Summary: Java Security Services (JSS)
 License: MPL-1.1 or GPLv2+ or LGPLv2+
@@ -128,6 +128,9 @@ CTEST_OUTPUT_ON_FAILURE=1 %cmake_build --target test
 %_jnidir/jss.jar
 
 %changelog
+* Tue Jul 30 2024 Stanislav Levin <slev@altlinux.org> 5.4.2-alt3
+- Fixed FTBFS (NSS 3.101).
+
 * Thu Feb 29 2024 Stanislav Levin <slev@altlinux.org> 5.4.2-alt2
 - Fixed FTBFS (NSS 3.97).
 
