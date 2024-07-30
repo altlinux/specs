@@ -19,7 +19,7 @@
 %endif
 
 Name:		bcc
-Version: 0.30.0
+Version: 0.31.0
 Release: alt1
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
@@ -209,7 +209,7 @@ export CXX=clang++
 %cmake_build
 
 # LIBBPF_OBJ expects libbpf.a, but...
-%make_build -C libbpf-tools BPFTOOL=/usr/sbin/bpftool V=1
+%make_build -C libbpf-tools CFLAGS="%optflags" BPFTOOL=/usr/sbin/bpftool V=1
 
 %install
 %cmake_install
@@ -307,6 +307,9 @@ rm -f /tmp/vm.* /tmp/initramfs-*.img
 %files checkinstall
 
 %changelog
+* Tue Jul 30 2024 Vitaly Chikunov <vt@altlinux.org> 0.31.0-alt1
+- Update to v0.31.0 (2024-07-27).
+
 * Sun Apr 21 2024 Vitaly Chikunov <vt@altlinux.org> 0.30.0-alt1
 - Update to v0.30.0 (2024-03-24).
 
