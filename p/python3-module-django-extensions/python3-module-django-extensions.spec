@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.2.3
-Release: alt1
+Release: alt2
 
 Summary: Extensions for Django
 License: MIT
@@ -16,6 +16,7 @@ BuildArch: noarch
 
 Source: %pypi_name-%version.tar
 Patch: remove-distutils-version.patch
+Patch1: django-5.0-compat.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -44,7 +45,7 @@ for the Django Framework.
 
 %prep
 %setup -n %pypi_name-%version
-%patch -p1
+%autopatch -p1
 
 # mail_debug depends on asyncore and smtpd, which have been removed from Python 3.12
 # https://github.com/django-extensions/django-extensions/issues/1831
@@ -79,5 +80,8 @@ and not test_pipchecker_when_requirements_file_does_not_exist"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jul 31 2024 Anton Vyatkin <toni@altlinux.org> 3.2.3-alt2
+- Fixed FTBFS.
+
 * Sun Jul 21 2024 Anton Vyatkin <toni@altlinux.org> 3.2.3-alt1
 - Initial build for Sisyphus.
