@@ -9,7 +9,7 @@
 
 Name: gnome-games-%_name
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: Derivative game from Klotski
 Group: Games/Boards
@@ -63,6 +63,9 @@ from a game called "Klotski".
 
 
 %changelog
+* Wed Jul 31 2024 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt3
+- 3.38.2-38-gc3b6f74 (updated translations)
+
 * Fri Mar 24 2023 Yuri N. Sedunov <aris@altlinux.org> 3.38.2-alt2
 - 3.38.2-32-gc4b6491 (updated translations)
 - removed rudimentary suid bit
