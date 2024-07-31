@@ -3,7 +3,7 @@
 %def_without check
 
 Name: helix
-Version: 23.10
+Version: 24.07
 Release: alt1
 
 Summary: A post-modern modal text editor written in Rust
@@ -12,10 +12,11 @@ Group: Editors
 Url: https://helix-editor.com/
 VCS: https://github.com/helix-editor/helix.git
 
-Source: https://github.com/%name-editor/%name/archive/refs/tags/%version.tar.gz
-Source1: vendor-%version.tar
+Requires: gcc-c++
 
-Patch0: fix-invalid-rev.patch
+# Source-url: https://github.com/%name-editor/%name/archive/refs/tags/%version.tar.gz
+Source: %name-%version.tar 
+Source1: vendor-%version.tar
 
 BuildRequires: rust-cargo
 
@@ -25,7 +26,6 @@ has treesitter support for syntax highlighting and improved navigation.
 
 %prep
 %setup -a1
-%patch0 -p1
 mkdir -p .cargo
 cat > .cargo/config <<EOF
 [source.crates-io]
@@ -77,5 +77,9 @@ EOF
 %_pixmapsdir/%name.png
 
 %changelog
+* Wed Jul 31 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 24.07-alt1
+- add to the requires gcc-c++ (closes: 50968)
+- new version
+
 * Tue Dec 27 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 23.10-alt1
 - Initial build for ALT Linux
