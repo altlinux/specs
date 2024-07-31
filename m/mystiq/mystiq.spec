@@ -1,5 +1,5 @@
 Name: mystiq
-Version: 23.05.15
+Version: 24.06.15
 Release: alt1
 
 Summary: Audio/Video converter
@@ -54,6 +54,9 @@ make INSTALL_ROOT=%buildroot install
 %_man1dir/*
 
 %changelog
+* Wed Jul 31 2024 Andrew A. Vasilyev <andy@altlinux.org> 24.06.15-alt1
+- 24.06.15
+
 * Wed Mar 13 2024 Andrew A. Vasilyev <andy@altlinux.org> 23.05.15-alt1
 - 23.05.15 (ALT #49494)
 
