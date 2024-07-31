@@ -1,11 +1,12 @@
 %define _libexecdir %_prefix/libexec
 
+%def_enable qcam
 %def_enable test
 %def_disable check
 
 Name: libcamera
-Version: 0.3.0
-Release: alt2
+Version: 0.3.1
+Release: alt1.1
 Epoch: 1
 
 Summary: A complex camera support library for Linux
@@ -18,15 +19,12 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: gcc-c++ meson >= 0.56
-BuildRequires: openssl boost-devel qt5-tools-devel
+BuildRequires: openssl boost-devel
 BuildRequires: pkgconfig(gnutls)
 BuildRequires: pkgconfig(gstreamer-1.0)
 BuildRequires: pkgconfig(gstreamer-video-1.0)
 BuildRequires: pkgconfig(gstreamer-allocators-1.0)
 BuildRequires: pkgconfig(libevent_pthreads)
-BuildRequires: pkgconfig(Qt5Core)
-BuildRequires: pkgconfig(Qt5Gui)
-BuildRequires: pkgconfig(Qt5Widgets)
 BuildRequires: pkgconfig(udev)
 BuildRequires: pkgconfig(yaml-0.1)
 BuildRequires: pkgconfig(libexif)
@@ -37,6 +35,14 @@ BuildRequires: pkgconfig(sdl2)
 BuildRequires: python3(jinja2)
 BuildRequires: python3(yaml)
 BuildRequires: python3(ply)
+%if_enabled qcam
+BuildRequires: qt6-tools-devel
+BuildRequires: pkgconfig(Qt6Core)
+BuildRequires: pkgconfig(Qt6Gui)
+BuildRequires: pkgconfig(Qt6OpenGL)
+BuildRequires: pkgconfig(Qt6OpenGLWidgets)
+BuildRequires: pkgconfig(Qt6Widgets)
+%endif
 %{?_enable_test:BuildRequires: pkgconfig(gtest)}
 
 %package -n gst-plugins-%{name}1.0
@@ -124,6 +130,9 @@ mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 %_libexecdir/%name/raspberrypi_ipa_proxy
 %_libexecdir/%name/rkisp1_ipa_proxy
 %endif
+%ifnarch ppc64le
+%_libexecdir/%name/soft_ipa_proxy
+%endif
 %_libdir/%name
 %_libdir/%name-base.so.*
 %_libdir/%name.so.*
@@ -134,8 +143,10 @@ mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 %files -n gst-plugins-%{name}1.0
 %_libdir/gstreamer-1.0/*
 
+%if_enabled qcam
 %files -n qcam
 %_bindir/qcam
+%endif
 
 %files devel
 %_includedir/%name
@@ -145,6 +156,12 @@ mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Jul 31 2024 Yuri N. Sedunov <aris@altlinux.org> 1:0.3.1-alt1.1
+- no soft_ipa_proxy for ppc64le
+
+* Wed Jul 31 2024 Yuri N. Sedunov <aris@altlinux.org> 1:0.3.1-alt1
+- updated to v0.3.1-4-g98b01768
+
 * Thu May 23 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:0.3.0-alt2
 - fix e2k build
 
