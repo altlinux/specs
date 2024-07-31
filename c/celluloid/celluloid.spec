@@ -2,7 +2,7 @@
 
 Name: celluloid
 Version: 0.27
-Release: alt1
+Release: alt2
 
 Summary: Celluloid (formerly GNOME MPV) is a simple GTK+ frontend for mpv.
 License: GPLv3
@@ -23,6 +23,8 @@ BuildRequires: libgtk4-devel
 BuildRequires: libmpv-devel
 BuildRequires: libepoxy-devel
 BuildRequires: libadwaita-devel
+
+Requires: yt-dlp
 
 %description
 Celluloid (formerly GNOME MPV) is a simple GTK+ frontend for mpv. Celluloid
@@ -52,6 +54,9 @@ to mpv's powerful playback capabilities.
 %_man1dir/*.1.*
 
 %changelog
+* Wed Jul 31 2024 Vladimir Didenko <cow@altlinux.org> 0.27-alt2
+- add yt-dlp to requires for online video downloading (closes: #51012)
+
 * Thu Jun 27 2024 Vladimir Didenko <cow@altlinux.org> 0.27-alt1
 - new version
 
