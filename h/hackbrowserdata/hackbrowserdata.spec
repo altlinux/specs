@@ -1,5 +1,5 @@
 Name: hackbrowserdata
-Version: 0.4.5
+Version: 0.4.6
 Release: alt1
 
 Summary: Command-line tool for decrypting and exporting browser data
@@ -15,6 +15,7 @@ BuildRequires(pre): rpm-macros-golang
 ExclusiveArch: %go_arches
 
 BuildRequires: golang >= 1.19
+Provides: HackBrowserData
 
 %description
 HackBrowserData is a command-line tool for decrypting and exporting browser data
@@ -39,5 +40,8 @@ install -m755 cmd/hack-browser-data/hack-browser-data  %buildroot/%_bindir/hack-
 %_bindir/hack-browser-data
 
 %changelog
+* Wed Jul 31 2024 Andrew A. Vasilyev <andy@altlinux.org> 0.4.6-alt1
+- v0.4.6
+
 * Mon Feb 19 2024 Andrew A. Vasilyev <andy@altlinux.org> 0.4.5-alt1
 - Initial build for ALT.
