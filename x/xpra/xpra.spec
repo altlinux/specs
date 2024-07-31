@@ -2,13 +2,16 @@
 
 Name: xpra
 Version: 4.4.4
-Release: alt4
+Release: alt4.1
 
 Summary: X Persistent Remote Applications
 License: GPLv2
 Group: Networking/Remote access
 
 Url: http://xpra.org/
+
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
 Source: https://xpra.org/src/xpra-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -139,11 +142,20 @@ export PKG_CONFIG_PATH=%_libdir/ffmpeg-static/%_lib/pkgconfig/
 
 %install
 %python3_install %py_flags
-mkdir -p %buildroot/%_tmpfilesdir/
-mv -f %buildroot/usr/lib/tmpfiles.d/xpra.conf %buildroot/%_tmpfilesdir/
-mkdir -p %buildroot%_udevrulesdir/
-mv -f %buildroot/usr/lib/udev/rules.d/71-xpra-virtual-pointer.rules %buildroot%_udevrulesdir/
-#install -m644 -D service/xpra.service %buildroot%_unitdir/%name.service
+
+move_if_not_there () {
+  local source="$1" destdir="$2"
+
+  [ -f "$destdir/$(basename "$source")" ] && return 0 ||:
+  mkdir -p "$destdir"
+  mv -v "$source" "$destdir/"
+}
+
+move_if_not_there %buildroot/usr/lib/tmpfiles.d/xpra.conf %buildroot%_tmpfilesdir/
+move_if_not_there %buildroot/usr/lib/udev/rules.d/71-xpra-virtual-pointer.rules %buildroot%_udevrulesdir/
+move_if_not_there %buildroot/lib/systemd/system/xpra.service %buildroot%_unitdir
+move_if_not_there %buildroot/lib/systemd/system/xpra.socket %buildroot%_unitdir
+
 mkdir -p %buildroot%_sysconfdir/%name/ssl/{certs,private}
 
 # TODO
@@ -194,6 +206,10 @@ ln -fs %_sysconfdir/%name/ssl/private/xpra.pem %_sysconfdir/%name/ssl-cert.pem
 %attr(0700, root, root) %dir %_sysconfdir/%name/ssl/private
 
 %changelog
+* Mon Jul 29 2024 Ivan A. Melnikov <iv@altlinux.org> 4.4.4-alt4.1
+- NMU: adapt %%install section to work with current
+  %%_tmpfilesdir and %%_udevrulesdir values (fixes FTBFS).
+
 * Mon Jun 12 2023 Vitaly Lipatov <lav@altlinux.ru> 4.4.4-alt4
 - add BR:libqrencode4-devel (fix build)
 
