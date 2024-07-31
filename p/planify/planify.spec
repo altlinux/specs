@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: Planify
@@ -32,7 +32,7 @@ Requires: lib%_name = %EVR
 Requires: dconf
 
 BuildRequires(pre): rpm-macros-meson rpm-build-vala
-BuildRequires: meson vala-tools
+BuildRequires: meson vala-tools %{?_disable_snapshot:git}
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(granite-7)
@@ -71,7 +71,7 @@ This package contains files necessary to develop Planify plugins.
 %setup -n %_name-%version
 
 %build
-%meson
+%meson %{?_disable_snapshot:-Dprofile=default}
 %meson_build
 
 %install
@@ -103,6 +103,9 @@ This package contains files necessary to develop Planify plugins.
 %_vapidir/%_name.*
 
 %changelog
+* Wed Jul 31 2024 Yuri N. Sedunov <aris@altlinux.org> 4.10.2-alt1
+- 4.10.2
+
 * Tue Jul 30 2024 Yuri N. Sedunov <aris@altlinux.org> 4.10.0-alt1
 - 4.10.0
 
