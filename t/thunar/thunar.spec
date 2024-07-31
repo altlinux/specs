@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: thunar
-Version: 4.19.2
+Version: 4.19.3
 Release: alt1
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
@@ -19,14 +19,15 @@ Vcs: https://gitlab.xfce.org/xfce/thunar.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-xfce4 >= 0.1.0
+BuildRequires(pre): rpm-build-xfce4 >= 0.2.0
 
 BuildRequires: xfce4-dev-tools
 BuildRequires: libxfce4panel-gtk3-devel >= 4.12.0 libxfconf-devel >= 4.12.0 libexo-gtk3-devel >= 4.19.0
 BuildRequires: libxfce4util >= 4.17.2 libxfce4ui-gtk3-devel >= 4.17.6
-BuildRequires: intltool libSM-devel libexif-devel libpcre2-devel
+BuildRequires: libSM-devel libexif-devel libpcre2-devel
 BuildRequires: libpango-devel
 BuildRequires: libnotify-devel libgudev-devel
+BuildRequires: libpolkit-devel
 BuildRequires: desktop-file-utils
 # NOTE: gtk-doc is required by build system even if docs are disabled.
 BuildRequires: gtk-doc
@@ -83,6 +84,7 @@ This package contains development documentation for lib%name.
 %prep
 %setup
 %patch -p1
+%xfce4_cleanup_version
 
 %build
 %xfce4reconf
@@ -124,7 +126,7 @@ make check
 %_datadir/metainfo/org.xfce.thunar.appdata.xml
 %_datadir/Thunar
 %_datadir/xfce4/panel/plugins/*.desktop
-%_usr/lib/systemd/user/thunar.service
+%_user_unitdir/thunar.service
 %_libdir/xfce4/panel/plugins/*.so
 %exclude %_libdir/xfce4/panel/plugins/*.la
 %dir %_libdir/thunarx-*/
@@ -149,6 +151,12 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Wed Jul 31 2024 Mikhail Efremov <sem@altlinux.org> 4.19.3-alt1
+- Patch from upstream:
+  + I18n: Update po/LINGUAS list.
+- Used _user_unitdir macro.
+- Updated to 4.19.3.
+
 * Thu May 30 2024 Mikhail Efremov <sem@altlinux.org> 4.19.2-alt1
 - Disabled tests.
 - Use upstream Russian translation.
