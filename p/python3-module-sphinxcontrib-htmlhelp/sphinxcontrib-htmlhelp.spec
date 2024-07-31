@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.6
+Version: 2.1.0
 Release: alt1
 Summary: A sphinx extension which renders HTML help files
 License: BSD
@@ -52,6 +52,9 @@ BuildRequires: python3-module-sphinx-tests
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jul 29 2024 Stanislav Levin <slev@altlinux.org> 2.1.0-alt1
+- 2.0.6 -> 2.1.0.
+
 * Mon Jul 22 2024 Stanislav Levin <slev@altlinux.org> 2.0.6-alt1
 - 2.0.5 -> 2.0.6.
 
