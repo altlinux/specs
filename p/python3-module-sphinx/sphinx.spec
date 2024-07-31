@@ -30,7 +30,7 @@ python3(defusedxml) \\\
 Name: python3-module-%oname
 Epoch: 1
 Version: 7.4.7
-Release: alt2
+Release: alt3
 
 Summary: Tool for producing documentation for Python projects
 License: BSD
@@ -49,11 +49,10 @@ Source3: refcounting.py
 Patch1: %oname-alt-tests-offline.patch
 Patch2: python-sphinx-objects.patch
 
+Requires: python3-module-sphinx-sphinx-build-symlink
 Requires: %(echo "%dependencies")
 Provides: python3-module-objects.inv
 Obsoletes: python3-module-objects.inv
-Provides: python3-module-sphinx-sphinx-build-symlink = %EVR
-Obsoletes: python3-module-sphinx-sphinx-build-symlink < %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-sphinx-objects.inv
@@ -143,6 +142,13 @@ multiple reStructuredText sources)
 This packages contains pickles for Sphinx.
 %endif
 
+%package sphinx-build-symlink
+Summary: Legacy sphinx3 to sphinx symlinks
+Group: Development/Python3
+
+%description sphinx-build-symlink
+%summary
+
 %package -n rpm-macros-sphinx3
 Summary: RPM macros for build with Sphinx (Python 3)
 Group: Development/Python3
@@ -198,7 +204,8 @@ ln -frs %buildroot%_datadir/python-sphinx/objects.inv \
 
 pushd %buildroot%_bindir
 for i in $(ls); do
-    ln -s $i py3_$i
+    mv $i py3_$i
+    ln -s py3_$i $i
     ln -s py3_$i $i-3
     ln -s py3_$i $i-%__python3_version
 done
@@ -235,8 +242,12 @@ EOF
 %check
 %pyproject_run_pytest --ignore tests/test_build_linkcheck.py
 
-%files
+%files sphinx-build-symlink
 %_bindir/*
+%exclude %_bindir/*3*
+
+%files
+%_bindir/*3*
 %sphinx3_dir/
 %exclude %sphinx3_dir/tests
 %exclude %sphinx3_dir/tests/test_builders
@@ -269,6 +280,9 @@ EOF
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Wed Jul 31 2024 Fr. Br. George <george@altlinux.org> 1:7.4.7-alt3
+- obsoletion does not work, provide a real package
+
 * Mon Jul 29 2024 Fr. Br. George <george@altlinux.org> 1:7.4.7-alt2
 - Correct sphinx-build script obsoletion
 
