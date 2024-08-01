@@ -1,5 +1,5 @@
 Version: 3.2.4
-Release: alt2
+Release: alt4
 
 %def_enable doc
 
@@ -12,10 +12,13 @@ License: LGPL-2.1
 Group: Development/Python3
 Url: http://christophe.delord.free.fr/tpg/index.html
 Buildarch: noarch
+Patch: TPG-python321esc.patch
+Patch1: TPG-beautify.patch
+PAtch2: TPG-double_exception.patch
 
-# Automatically added by buildreq on Wed Feb 02 2022
-# optimized out: fontconfig libgpg-error libx265-199 python-modules python2-base python3 python3-base python3-dev python3-module-pkg_resources sh4 tex-common texlive texlive-collection-basic texlive-dist
-BuildRequires: python3-module-setuptools
+# Automatically added by buildreq on Wed Jan 31 2024
+# optimized out: bash5 libgpg-error libx265-199 python3 python3-base python3-dev python3-module-pkg_resources python3-module-py3dephell python3-module-setuptools sh5 tex-common texlive texlive-collection-basic texlive-dist
+BuildRequires: python3-module-pyproject-installer python3-module-wheel python3-module-setuptools
 
 %if_enabled doc
 BuildRequires: tex4ht texlive-collection-latexrecommended tex(a4wide.sty)
@@ -24,7 +27,7 @@ BuildRequires: tex4ht texlive-collection-latexrecommended tex(a4wide.sty)
 %description
 Toy Parser Generator is a lexical and syntactic parser generator for Python.
 This generator was born from a simple statement: YACC is to complex to use in
-simple cases (calculators, configuration files, small programming languages, ...).
+simple cases (calculators, configuration files, small programming languages).
 
 %description -l ru_RU.UTF-8
 Toy Parser Generator -- это лексический и синтаксический анализатор,
@@ -34,9 +37,12 @@ Toy Parser Generator -- это лексический и синтаксичес�
 
 %prep
 %setup -n TPG-%version
+%patch -p2
+%patch1 -p3
+%patch2 -p2
 
 %build
-%python3_build
+%pyproject_build
 
 %if_enabled doc
 	cd doc
@@ -46,7 +52,7 @@ Toy Parser Generator -- это лексический и синтаксичес�
 %endif
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %if_enabled doc
@@ -57,6 +63,12 @@ Toy Parser Generator -- это лексический и синтаксичес�
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jul 31 2024 Fr. Br. George <george@altlinux.org> 3.2.4-alt4
+- Fix double exception messaging issue
+
+* Wed Jan 31 2024 Fr. Br. George <george@altlinux.ru> 3.2.4-alt3
+- Switch to pyproject_build
+
 * Tue Jan 30 2024 Fr. Br. George <george@altlinux.ru> 3.2.4-alt2
 - Python 3.12 SyntaxWarning for non-raw escapes
 
