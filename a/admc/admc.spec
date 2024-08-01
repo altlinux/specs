@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admc
-Version: 0.16.3
+Version: 0.16.4
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -110,6 +110,12 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Mon Jul 30 2024 Semyon Knyazev <samael@altlinux.org> 0.16.4-alt1
+- Samba 4.20 compatibility update. Fixed related errors with security
+  descriptor manipulations. (closes: 50776)
+- Fixed user creation incapability after Samba dependencies
+  update. (closes: 50096)
+
 * Tue May 15 2024 Semyon Knyazev <samael@altlinux.org> 0.16.3-alt1
 - Fix crashes after OU/user creation attempts by users with
   corresponding delegated rights.
