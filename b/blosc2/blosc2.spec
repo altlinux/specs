@@ -5,7 +5,7 @@
 %endif
 
 Name:    blosc2
-Version: 2.15.0
+Version: 2.15.1
 Release: alt1
 
 Summary: A fast, compressed, persistent binary data store library for C
@@ -98,6 +98,9 @@ rm -rf internal-complibs
 %_libdir/cmake/Blosc2
 
 %changelog
+* Wed Jul 31 2024 Anton Vyatkin <toni@altlinux.org> 2.15.1-alt1
+- New version 2.15.1.
+
 * Tue Jun 25 2024 Anton Vyatkin <toni@altlinux.org> 2.15.0-alt1
 - New version 2.15.0.
 
