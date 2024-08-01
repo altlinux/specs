@@ -2,7 +2,7 @@
 
 Name: rpm-build-%oname
 Version: 6
-Release: alt1
+Release: alt2
 
 Summary: RPM helper macros to build packages with systemd support
 License: LGPL-2.1-or-later
@@ -35,6 +35,9 @@ install -D -m644 %SOURCE1 -p %buildroot%_rpmmacrosdir/%oname
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Aug 01 2024 Alexey Shabalin <shaba@altlinux.org> 6-alt2
+- fixed %%systemd_post_with_restart.
+
 * Thu Jun 20 2024 Alexey Shabalin <shaba@altlinux.org> 6-alt1
 - add all macros with systemd path.
 
