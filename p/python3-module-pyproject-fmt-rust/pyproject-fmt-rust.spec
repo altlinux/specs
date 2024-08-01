@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.5
+Version: 1.1.6
 Release: alt1
 Summary: Format pyproject.toml files
 License: MIT
@@ -49,5 +49,8 @@ cat < vendor_cargoconf.toml >> .cargo/config.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Aug 01 2024 Stanislav Levin <slev@altlinux.org> 1.1.6-alt1
+- 1.1.5 -> 1.1.6.
+
 * Wed Jul 03 2024 Stanislav Levin <slev@altlinux.org> 1.1.5-alt1
 - Initial build for Sisyphus.
