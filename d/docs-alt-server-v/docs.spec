@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.2
-Release: alt2
+Release: alt3
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Thu Aug 01 2024 Elena Mishina <lepata@altlinux.org> 10.2-alt3
+- update documentation PVE
+- fix some typos
+
 * Thu May 02 2024 Elena Mishina <lepata@altlinux.org> 10.2-alt2
 - fix some typos (ALT 50208, 50199, 50157, 50155, 50154)
 - small improvements (ALT 50153, 50152, 50215, 50156)
@@ -59,7 +63,7 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 
 * Fri Aug 25 2023 Elena Mishina <lepata@altlinux.org> 10.1-alt7
 - update documentation PVE
-- fix some typos 
+- fix some typos
 
 * Fri Jul 14 2023 Artem Zolochevskiy <azol@altlinux.org> 10.1-alt6
 - fix typo (Closes 45284)
