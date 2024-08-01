@@ -6,7 +6,7 @@
 
 Name: libcamera
 Version: 0.3.1
-Release: alt1.1
+Release: alt1.2
 Epoch: 1
 
 Summary: A complex camera support library for Linux
@@ -84,18 +84,7 @@ sed -i "s|get(camera_name)|get((gchar*)camera_name)|" src/gstreamer/gstlibcamera
 sed -i "s|\"caps\", caps|\"caps\", (GstCaps*)caps|" src/gstreamer/gstlibcameraprovider.cpp
 %endif
 
-%ifarch armh
 %define platdefs auto
-%endif
-%ifarch aarch64
-%define platdefs auto
-%endif
-%ifarch %ix86 x86_64
-%define platdefs auto
-%endif
-%ifnarch armh aarch64 %ix86 x86_64
-%define platdefs uvcvideo
-%endif
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -130,9 +119,7 @@ mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 %_libexecdir/%name/raspberrypi_ipa_proxy
 %_libexecdir/%name/rkisp1_ipa_proxy
 %endif
-%ifnarch ppc64le
 %_libexecdir/%name/soft_ipa_proxy
-%endif
 %_libdir/%name
 %_libdir/%name-base.so.*
 %_libdir/%name.so.*
@@ -156,6 +143,11 @@ mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Aug 01 2024 Ivan A. Melnikov <iv@altlinux.org> 1:0.3.1-alt1.2
+- use platdefs=auto on all architectures
+  + enables simple (soft) pipeline on most architectures
+  + fixes FTBFS on loongarch64 and riscv64
+
 * Wed Jul 31 2024 Yuri N. Sedunov <aris@altlinux.org> 1:0.3.1-alt1.1
 - no soft_ipa_proxy for ppc64le
 
