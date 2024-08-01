@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 1.18
 %def_with exiv2
@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: gnome-commander
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 %define xdg_name org.gnome.%name
@@ -89,6 +89,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Thu Aug 01 2024 Yuri N. Sedunov <aris@altlinux.org> 1.18.1-alt1
+- 1.18.1
+
 * Thu Jul 25 2024 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
 - updated to 1.18.0-6-g00e234a1
 
