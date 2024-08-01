@@ -13,14 +13,14 @@
 
 Name: libvxl
 Version: 3.5.0
-Release: alt1.1
+Release: alt2
 
 Group: System/Libraries
 Summary: C++ Libraries for Computer Vision Research and Implementation
 License: BSD
 Url: https://vxl.github.io/
 
-# https://github.com/vxl/vxl.git
+VCS: https://github.com/vxl/vxl.git
 Source: %name-%version.tar
 Patch1: %name-%version-alt.patch
 
@@ -52,6 +52,7 @@ This package contains shared libraries for VXL.
 %package devel
 Summary: Headers for VXL
 Group: Development/C++
+Conflicts: libvpl-devel
 
 %description devel 
 This package contains development files for VXL.
@@ -126,6 +127,9 @@ sed -i 's/-fno-gcse/-Wall/' v3p/netlib/CMakeLists.txt
 %endif
 
 %changelog
+* Thu Aug 01 2024 Anton Farygin <rider@altlinux.ru> 3.5.0-alt2
+- libvxl-devel: Added conflicts with libvpl-devel (Closes: #50978)
+
 * Tue Feb 27 2024 Michael Shigorin <mike@altlinux.org> 3.5.0-alt1.1
 - E2K: avoid lcc-unsupported option (ilyakurdyukov@)
 
