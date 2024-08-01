@@ -4,7 +4,7 @@
 
 %global import_path github.com/restic/restic
 Name:     restic
-Version: 0.16.5
+Version: 0.17.0
 Release: alt1
 Summary:  Fast, secure, efficient backup program
 License:  BSD-2-Clause
@@ -14,6 +14,9 @@ Url:      https://restic.net/
 
 Source:   %name-%version.tar
 BuildRequires: golang
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: python3
+}}
 
 %description
 restic is a backup program that is fast, efficient and secure.
@@ -54,8 +57,13 @@ restic version
 ## Upstream tests.
 # No user xattrs support on tmpfs on Linux before 6.6
 # https://github.com/restic/restic/issues/4646
-printf '6.6\n%s\n' $(uname -r) | sort -CV ||
-sed -i '/rtest.Assert/s/n2.ExtendedAttributes/test.ExtendedAttributes/' internal/restic/node_test.go
+printf '6.6\n%s\n' $(uname -r) | sort -CV || {
+	sed -i '/rtest.Assert/s/n2.ExtendedAttributes/test.ExtendedAttributes/' internal/restic/node_test.go
+	sed -i '/rtest.Assert/s/nodeActual.sameExtendedAttributes(node)/true/' internal/restic/node_xattr_all_test.go
+}
+# Some tests have hardcoded 'python' name https://github.com/restic/restic/issues/4968
+mkdir /usr/src/bin
+ln -s %__python3 -T /usr/src/bin/python
 # Cannot test with fusermount in Hasher.
 RESTIC_TEST_FUSE=0 \
 go test ./...
@@ -82,6 +90,9 @@ diff -qr %name-%version x
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Thu Aug 01 2024 Vitaly Chikunov <vt@altlinux.org> 0.17.0-alt1
+- Update to v0.17.0 (2024-07-26).
+
 * Fri Jul 05 2024 Vitaly Chikunov <vt@altlinux.org> 0.16.5-alt1
 - Update to v0.16.5 (2024-07-01).
 
