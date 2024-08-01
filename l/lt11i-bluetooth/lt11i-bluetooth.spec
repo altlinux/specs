@@ -1,5 +1,5 @@
 Name: lt11i-bluetooth
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: Enabling Bluetooth on LT11i tablet
@@ -8,57 +8,35 @@ License: GPLv2
 Group: System/Configuration/Boot and Init
 ExclusiveArch: aarch64
 
+Source: %name-%version.tar
+
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
 %description
 %summary
 
+%prep
+%setup
+
 %install
 
-mkdir -p %buildroot{%_bindir,%_unitdir,%_presetdir}
+mkdir -p %buildroot{%_bindir,%_desktopdir}
 
-cat <<EOF > %buildroot%_bindir/lt11i-bluetooth
-#!/bin/sh
-  killall hciattach;
-  hciattach /dev/ttymxc2 any 115200;
-  sleep 10;
-  hcitool -i hci1 cmd 0x3f 0x0009 0xc0 0xc6 0x2d 0x00;
-  sleep 10;
-  killall hciattach;
-  hciattach /dev/ttymxc2 any 3000000 flow;
-  sleep 10;
-  hciconfig hci1 up;
-  exit 0
-EOF
-
-cat > %buildroot%_unitdir/lt11i-bluetooth.service <<EOF
-[Unit]
-Description=Starting Bluetooth on LT11i tablet
-After=boot-complete.target
-[Service]
-Type=oneshot
-OOMScoreAdjust=-100
-Restart=on-failure
-ExecStart=/usr/bin/lt11i-bluetooth
-[Install]
-WantedBy=multi-user.target
-EOF
-
-cat > %buildroot%_presetdir/20-lt11i-bluetooth.preset <<EOF
-enable lt11i-bluetooth.service
-EOF
-
-%post
-%post_service lt11i-bluetooth.service
-
-%preun
-%preun_service lt11i-bluetooth
+install -Dm0755 %name %buildroot%_bindir/%name
+install -Dm0644 mobi.mig.lt11i-bluetooth.desktop %buildroot%_desktopdir/
 
 %files
 %_bindir/%name
-%_unitdir/%name.service
-%_presetdir/20-%name.preset
+%_desktopdir/mobi.mig.lt11i-bluetooth.desktop
 
 %changelog
+* Thu Aug  1 2024 Artyom Bystrov <arbars@altlinux.org> 0.2-alt1
+- Add desktop file
+- Remove systemd service and preset
+
+* Mon Jul 28 2024 Artyom Bystrov <arbars@altlinux.org> 0.1-alt1.1
+- add exec flag for script
+- making script service and preset as own files
+
 * Sat Jun 22 2024 Artyom Bystrov <arbars@altlinux.org> 0.1-alt1
 - Initial commit for Sisyphus
