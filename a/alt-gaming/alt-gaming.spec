@@ -2,9 +2,10 @@
 
 %define limitsdir %_sysconfdir/security/limits.d
 %define sysctldir %_sysconfdir/sysctl.d
+%define schemasdir %_datadir/glib-2.0/schemas
 
 Name: alt-gaming
-Version: 0.0.3
+Version: 0.0.4
 Release: alt1
 
 Summary: Easy system setup to optimize for games.
@@ -22,6 +23,7 @@ Requires: %name-esync
 Requires: %name-mm-count
 Requires: %name-clearcpuid514
 Requires: %name-tcp-mtu-probing
+Requires: %name-alive-timeout
 
 %description
 %summary
@@ -59,6 +61,14 @@ Summary: Use net.ipv4.tcp_mtu_probing = 1 by default.
 Use net.ipv4.tcp_mtu_probing = 1 by default.
 Fixed connection to some game servers and launchers. (For example: UBISOFT)
 
+%package alive-timeout
+Group: System/Configuration/Other
+Summary: Override check-alive-timeout=15 seconds for GNOME
+%description alive-timeout
+Override check-alive-timeout=uint32 15000 (only for GNOME)
+Increases application keepalive timeout to 15 seconds.
+Fixes problems with some games.
+
 %prep
 %setup
 
@@ -69,6 +79,7 @@ pushd settings
 install -D -m 644 95-esync.conf %buildroot%limitsdir/95-esync.conf
 install -D -m 644 95-vm.max_map_count.conf %buildroot%sysctldir/95-vm.max_map_count.conf
 install -D -m 644 95-tcp_mtu_probing.conf %buildroot%sysctldir/95-tcp_mtu_probing.conf
+install -D -m 644 95-gnome-gschema.override %buildroot%schemasdir/95-gnome-gschema.override
 popd
 
 install -D -m 755 scripts/alt-gaming-check %buildroot%_bindir/alt-gaming-check
@@ -104,8 +115,15 @@ fi
 %files check
 %_bindir/alt-gaming-check
 
+%files alive-timeout
+%schemasdir/95-gnome-gschema.override
+
 %changelog
-* Sat Jul 29 2024 Mikhail Tergoev <fidel@altlinux.org> 0.0.3-alt1
+* Thu Aug 01 2024 Mikhail Tergoev <fidel@altlinux.org> 0.0.4-alt1
+- added alt-gaming-alive-timeout (thanx @boria138)
+- updated alt-gaming-check
+
+* Mon Jul 29 2024 Mikhail Tergoev <fidel@altlinux.org> 0.0.3-alt1
 - fixed CMDLINE for clearcpuid514
 - added tcp-mtu-probing (thanx @boria138)
 - added error check to alt-gaming-check
