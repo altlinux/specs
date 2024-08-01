@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.2
+Version: 2.1.3
 Release: alt1
 
 Summary: SSE plugin for Starlette
@@ -55,6 +55,9 @@ Server Sent Events for Starlette and FastAPI.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Aug 01 2024 Anton Zhukharev <ancieg@altlinux.org> 2.1.3-alt1
+- Updated to 2.1.3.
+
 * Thu Jul 25 2024 Anton Zhukharev <ancieg@altlinux.org> 2.1.2-alt1
 - Updated to 2.1.2.
 
