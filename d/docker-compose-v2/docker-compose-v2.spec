@@ -11,7 +11,7 @@
 
 Name:		docker-compose-v2
 Version:	2.29.1
-Release:	alt1
+Release:	alt2
 Summary:	Multi-container orchestration for Docker
 
 Group:		Development/Tools
@@ -24,7 +24,7 @@ Source0: %name-%version.tar
 
 ExclusiveArch: %go_arches
 
-Requires: docker-cli >= 20.10.11-alt2
+Requires: /usr/bin/docker
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -56,6 +56,9 @@ install -Dpm0755 %binname %buildroot%{_libexecdir}/docker/cli-plugins
 %{_libexecdir}/docker/cli-plugins/%binname
 
 %changelog
+* Fri Aug 2 2024 Vladimir Didenko <cow@altlinux.org> 2.29.1-alt2
+- require /usr/bin/docker instead of docker-cli (closes: #51024)
+
 * Wed Jul 24 2024 Vladimir Didenko <cow@altlinux.org> 2.29.1-alt1
 - New version
 
