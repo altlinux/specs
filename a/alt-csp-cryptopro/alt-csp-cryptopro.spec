@@ -1,6 +1,6 @@
 Name: alt-csp-cryptopro
 Version: 0.3.0
-Release: alt3
+Release: alt4
 
 Group: File tools
 Summary: CryptoPRO GUI tool
@@ -41,6 +41,9 @@ install -m 0644 %_cmake__builddir/*.qm %buildroot/%_qt5_translationdir/
 %_datadir/file-manager/actions/alt-csp-cryptopro.desktop
 
 %changelog
+* Fri Aug 02 2024 Oleg Solovyov <mcpain@altlinux.org> 0.3.0-alt4
+- fix controls (Closes: #50922)
+
 * Mon Jul 29 2024 Oleg Solovyov <mcpain@altlinux.org> 0.3.0-alt3
 - fix regression (Closes: #50997)
 
