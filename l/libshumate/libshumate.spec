@@ -4,8 +4,10 @@
 %define beta %nil
 %define api_ver_major 1
 %define api_ver 1.0
-%define xdg_name org.gnome.Shumate
+%define namespace Shumate
+%define xdg_name org.gnome.%namespace
 
+%def_enable vector_renderer
 %def_enable introspection
 %def_enable vala
 %def_enable gtk_doc
@@ -13,7 +15,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: Library with GTK4 widget to display maps
@@ -103,7 +105,8 @@ demonstrates %name.
 %build
 %meson \
     %{?_enable_gtk_doc:-Dgtk_doc=true} \
-    %{?_enable_demos:-Ddemos=true}
+    %{subst_enable_meson_bool vector_renderer vector_renderer} \
+    %{subst_enable_meson_bool demos demos}
 %nil
 %meson_build
 
@@ -127,10 +130,10 @@ xvfb-run -s -noreset %__meson_test -v
 
 %if_enabled introspection
 %files gir
-%_typelibdir/Shumate-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Shumate-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 %if_enabled gtk_doc
@@ -144,6 +147,9 @@ xvfb-run -s -noreset %__meson_test -v
 %endif
 
 %changelog
+* Fri Aug 02 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1
+- 1.2.3
+
 * Sat May 25 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
 - 1.2.2
 
