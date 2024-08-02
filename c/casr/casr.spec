@@ -2,7 +2,7 @@
 %def_with check
 
 Name: casr
-Version: 2.11.0
+Version: 2.12.0
 Release: alt1
 
 Summary: Collect crash (or UndefinedBehaviorSanitizer error) reports, triage, and estimate severity.
@@ -60,6 +60,7 @@ install -D -m755 target/release/casr-libfuzzer -t %buildroot%_bindir/
 install -D -m755 target/release/casr-san -t %buildroot%_bindir/
 install -D -m755 target/release/casr-cli -t %buildroot%_bindir/
 install -D -m755 target/release/casr-core -t %buildroot%_bindir/
+install -D -m755 target/release/casr-csharp -t %buildroot%_bindir/
 install -D -m755 target/release/casr-gdb -t %buildroot%_bindir/
 install -D -m755 target/release/casr-js -t %buildroot%_bindir/
 install -D -m755 target/release/casr-python -t %buildroot%_bindir/
@@ -67,8 +68,8 @@ install -D -m755 target/release/casr-ubsan -t %buildroot%_bindir/
 
 %check
 # tweak hard-coded parts of tests
-sed -i 's,"ret ","ret",' casr/tests/tests.rs
-sed -i 's,"java-17-openjdk-amd64","java",' casr/tests/tests.rs
+sed -i 's|java-17-openjdk-amd64|java|' casr/tests/tests.rs
+sed -i 's|ret |ret|' casr/tests/tests.rs
 
 # Disable tests that require jsfuzz & jazzer.js
 export SKIP_TESTS="$SKIP_TESTS --skip test_casr_js_jazzer \
@@ -93,7 +94,7 @@ export SKIP_TESTS="$SKIP_TESTS --skip test_casr_js_native"
 export SKIP_TESTS="$SKIP_TESTS --skip test_casr_san_rust_panic"
 
 # Disable tests that require libclang_rt
-export SKIP_TESTS="$SKIP_TESTS --skip test_casr_java"
+export SKIP_TESTS="$SKIP_TESTS --skip test_casr_java_native_lib"
 
 # Disable unstable tests
 export SKIP_TESTS="$SKIP_TESTS --skip test_js_stacktrace \
@@ -103,6 +104,12 @@ export SKIP_TESTS="$SKIP_TESTS --skip test_js_stacktrace \
 
 # Disalble tests due to errors of running gdb on 32-bit files in hasher
 export SKIP_TESTS="$SKIP_TESTS --skip gdb32"
+
+# Disable tests that require internet connection
+export SKIP_TESTS="$SKIP_TESTS --skip test_casr_csharp"
+
+# Disable context-dependent test, we run it separatly later
+export SKIP_TESTS="$SKIP_TESTS --skip test_csharp_stacktrace"
 
 %ifarch ppc64le
 export SKIP_TESTS="$SKIP_TESTS --skip test_abort \
@@ -118,10 +125,16 @@ export SKIP_TESTS="$SKIP_TESTS --skip test_abort \
 
 %rust_test -- $SKIP_TESTS
 
+# Run context-dependent test separatly
+%rust_test -- test_csharp_stacktrace
+
 %files
 %doc docs/*
 %_bindir/*
 
 %changelog
+* Wed Jul 31 2024 Alexander Kuznetsov <kuznetsovam@altlinux.org> 2.12.0-alt1
+- Update to version 2.12.0.
+
 * Mon Apr 08 2024 Alexander Kuznetsov <kuznetsovam@altlinux.org> 2.11.0-alt1
 - Initial build.
