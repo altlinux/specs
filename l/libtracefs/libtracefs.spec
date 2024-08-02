@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: libtracefs
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 Summary: Library to access kernel tracefs
 License: LGPL-2.1-only
@@ -88,6 +88,9 @@ utest/trace-utest
 %_defaultdocdir/%name-doc
 
 %changelog
+* Fri Aug 02 2024 Vitaly Chikunov <vt@altlinux.org> 1.8.1-alt1
+- Update to libtracefs-1.8.1 (2024-07-24).
+
 * Sat Jan 13 2024 Vitaly Chikunov <vt@altlinux.org> 1.8.0-alt1
 - Update to libtracefs-1.8.0 (2024-01-09).
 

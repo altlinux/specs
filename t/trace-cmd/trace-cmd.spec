@@ -8,7 +8,7 @@
 %def_without python
 
 Name:     trace-cmd
-Version: 3.2
+Version: 3.3
 Release: alt1
 
 Summary:  A front-end for Ftrace Linux kernel internal tracer
@@ -122,14 +122,14 @@ rm %buildroot%_datadir/doc/%name/*.html
 
 # Internal unit tests
 export LD_LIBRARY_PATH=%buildroot%_libdir
-vm-run --cpu=2 --append=schedstats=enable '
-  set -xe
+PATH=%buildroot%_bindir:$PATH
+vm-run --cpu=2 --append=schedstats=enable --heredoc <<EOF
 %ifnarch armh
   utest/trace-utest
 %endif
-  PATH=%buildroot%_bindir:$PATH
   trace-cmd record -p function -l exit'*' true
-  trace-cmd report'
+  trace-cmd report
+EOF
 
 %files
 %doc COPYING README
@@ -156,6 +156,9 @@ vm-run --cpu=2 --append=schedstats=enable '
 %endif
 
 %changelog
+* Fri Aug 02 2024 Vitaly Chikunov <vt@altlinux.org> 3.3-alt1
+- Update to trace-cmd-v3.3 (2024-07-26).
+
 * Mon Jun 26 2023 Vitaly Chikunov <vt@altlinux.org> 3.2-alt1
 - Update to trace-cmd-v3.2 (2023-06-07).
 
