@@ -35,7 +35,7 @@ Name: %oname
 Name: %oname%soversion
 %endif
 Version: 3.21.12
-Release: alt4
+Release: alt5
 Summary: Protocol Buffers - Google's data interchange format
 License: BSD-3-Clause
 %if_disabled legacy
@@ -270,6 +270,10 @@ Protocol Buffers are Google's data interchange format.
 %prep
 %setup -n %oname-%version
 %patch -p1
+%ifarch %e2k
+sed -i '$a #ifdef __EDG__\n#undef PROTOBUF_CONSTINIT\n#define PROTOBUF_CONSTINIT\n#endif' \
+	src/google/protobuf/port_def.inc
+%endif
 
 %if_with java
 %pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin java/util/pom.xml java/pom.xml
@@ -445,6 +449,9 @@ popd
 
 
 %changelog
+* Fri Aug 02 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.21.12-alt5
+- e2k: remove constinit to avoid compiler errors
+
 * Mon Nov 27 2023 Ivan A. Melnikov <iv@altlinux.org> 3.21.12-alt4
 - spec: added --without=ruby knob for bootstrap purposes (asheplyakov@);
 - build w/o java tests on riscv64 and mipsel.
