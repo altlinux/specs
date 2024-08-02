@@ -1,16 +1,15 @@
-%define _unpackaged_files_terminate_build 1
 %define oname RestrictedPython
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 7.1
+Version: 7.2
 Release: alt1
 Summary: Provides a restricted execution environment for Python, e.g. for running untrusted code
 License: ZPL-2.1
 Group: Development/Python3
-Url: https://pypi.org/project/RestrictedPython/
-#Git: https://github.com/zopefoundation/RestrictedPython.git
+URL: https://pypi.org/project/RestrictedPython
+VCS: https://github.com/zopefoundation/RestrictedPython
 
 Source: %name-%version.tar
 BuildArch: noarch
@@ -54,6 +53,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Fri Aug 02 2024 Grigory Ustinov <grenka@altlinux.org> 7.2-alt1
+- Automatically updated to 7.2.
+
 * Mon Jun 03 2024 Grigory Ustinov <grenka@altlinux.org> 7.1-alt1
 - Automatically updated to 7.1.
 
