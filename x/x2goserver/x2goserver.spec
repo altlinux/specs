@@ -3,7 +3,7 @@
 
 Name:    x2goserver
 Version: 4.1.0.3
-Release: alt3
+Release: alt4
 Summary: X2Go Server
 
 Group:   System/Servers
@@ -242,7 +242,7 @@ of a system-wide manageable desktop sharing setup.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
+#patch4 -p1
 %patch5 -p1
 
 # Set path
@@ -331,6 +331,7 @@ exit 0
 %exclude %_bindir/x2gofm
 %exclude %_bindir/x2goprint
 %exclude %_bindir/x2goagent
+%exclude %_bindir/x2go*-desktopsharing
 %dir %_libdir/x2go
 %_libdir/x2go/extensions
 %_libdir/x2go/x2gochangestatus
@@ -373,6 +374,7 @@ exit 0
 %_man8dir/x2go*.8*
 %exclude %_man8dir/x2gofm.8*
 %exclude %_man8dir/x2goprint.8*
+%exclude %_man8dir/x2go*-desktopsharing.8*
 
 %files -n perl-X2Go-Log
 %perl_vendorlib/X2Go/Log.pm
@@ -413,7 +415,7 @@ exit 0
 #%%config(noreplace) %%_sysconfdir/x2go/rgb
 %_bindir/x2goagent
 %_libdir/nx/bin/x2goagent
-#%%_datadir/x2go/versions/VERSION.x2goserver-x2goagent
+%_datadir/x2go/versions/VERSION.x2goserver-x2goagent
 #%%_datadir/x2go/rgb
 %_pixmapsdir/x2goagent.xpm
 %_datadir/x2go/x2gofeature.d/x2goserver-x2goagent.features
@@ -440,11 +442,14 @@ exit 0
 %_bindir/x2go*-desktopsharing
 %_datadir/x2go/versions/VERSION.x2goserver-desktopsharing
 %_datadir/x2go/x2gofeature.d/x2goserver-desktopsharing.features
-%_mandir/man8/x2go*-desktopsharing.8*
+%_man8dir/x2go*-desktopsharing.8*
 %dir %_sysconfdir/x2go/desktopsharing
 %config(noreplace) %_sysconfdir/x2go/desktopsharing/settings
 
 %changelog
+* Mon Jul 29 2024 Oleg Solovyov <mcpain@altlinux.org> 4.1.0.3-alt4
+- fix build and package
+
 * Tue Jan 12 2021 Oleg Solovyov <mcpain@altlinux.org> 4.1.0.3-alt3
 - Fix x2goversion (Closes: 39535)
 
