@@ -1,11 +1,11 @@
 %global _unpackaged_files_terminate_build 1
 Name: 	 xrdp
-Version: 0.10.0
-Release: alt4
+Version: 0.10.1
+Release: alt1
 
 Summary: An open source remote desktop protocol (RDP) server
 
-License: GPLv2+ with exceptions
+License: GPLv2+ with exceptions and Apache-2.0
 Group: 	 System/Servers
 Url: 	 http://xrdp.sourceforge.net/
 
@@ -293,6 +293,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Thu Aug 01 2024 Andrey Cherepanov <cas@altlinux.org> 0.10.1-alt1
+- New version.
+
 * Wed Jul 03 2024 Andrey Cherepanov <cas@altlinux.org> 0.10.0-alt4
 - Remove autoreq on /etc/sysconfig/i18n.
 
