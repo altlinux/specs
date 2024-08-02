@@ -12,11 +12,11 @@
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1%beta
 
 Summary: Eye Of Gnome
-License: GPL-2.0
+License: GPL-2.0-or-later
 Group: Graphics
 Url: https://wiki.gnome.org/Apps/EyeOfGnome
 
@@ -179,6 +179,9 @@ ln -sf %name/lib%name.so \
 
 
 %changelog
+* Fri Aug 02 2024 Yuri N. Sedunov <aris@altlinux.org> 45.4-alt1
+- 45.4
+
 * Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 45.3-alt1
 - 45.3
 
