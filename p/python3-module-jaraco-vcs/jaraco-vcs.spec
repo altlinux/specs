@@ -7,7 +7,7 @@
 %def_with check
 
 Name: python3-module-%pypi_nname
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 Summary: Facilities for working with VCS repositories
 License: MIT
@@ -51,6 +51,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Fri Aug 02 2024 Stanislav Levin <slev@altlinux.org> 2.3.1-alt1
+- 2.3.0 -> 2.3.1.
+
 * Mon Jul 29 2024 Stanislav Levin <slev@altlinux.org> 2.3.0-alt1
 - 2.2.0 -> 2.3.0.
 
