@@ -2,7 +2,7 @@
 
 Name:      appstream-data-desktop
 Summary:   ALT Linux AppStream metadata
-Version:   20240705
+Version:   20240802
 Release:   alt1
 Group:     System/Configuration/Packaging
 BuildArch: noarch
@@ -35,6 +35,10 @@ cp -r xmls/* %buildroot%_datadir/swcatalog/xml/
 %_datadir/swcatalog/icons/altlinux
 
 %changelog
+* Fri Aug 02 2024 Kirill Izmestev <felixz@altlinux.org> 20240802-alt1
+- Updated database.
+- Add gnome-shell-data in skiplist (duplicated gnome-extensions-app).
+
 * Sat Jun 29 2024 Kirill Izmestev <felixz@altlinux.org> 20240705-alt1
 - Updated database.
 
