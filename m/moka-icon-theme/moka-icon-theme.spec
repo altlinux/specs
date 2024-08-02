@@ -1,6 +1,6 @@
 Name: moka-icon-theme
 Version: 5.3.6
-Release: alt1
+Release: alt2
 Summary: Moka icon theme
 Group: Graphical desktop/GNOME
 License: CC-BY-SA-4.0, GPL-3.0+
@@ -8,6 +8,7 @@ Url: https://github.com/snwh/moka-icon-theme
 Source: %name-%version.tar
 Patch0: %name-%version-alt-add-xreader-icons.patch
 BuildArch: noarch
+Requires: gnome-icon-theme hicolor-icon-theme
 
 %description
 Moka is a stylized Linux desktop icon set, designed to be clear, simple and
@@ -29,6 +30,9 @@ consistent.
 %_datadir/icons/Moka
 
 %changelog
+* Fri Aug 02 2024 Mikhail Gordeev <obirvalger@altlinux.org> 5.3.6-alt2
+- Add theme requires (Closes: 50979)
+
 * Fri Nov 24 2017 Mikhail Gordeev <obirvalger@altlinux.org> 5.3.6-alt1
 - New version 5.3.6 and change build scheme to tag
 
