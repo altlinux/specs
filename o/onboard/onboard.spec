@@ -1,9 +1,11 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: onboard
 Version: 1.4.1
-Release: alt6
+Release: alt7.git8de1177
 
 Summary: Simple on-screen Keyboard
-License: GPL-3.0+
+License: GPL-3.0+ and BSD
 Group: Graphical desktop/GNOME
 URL: https://launchpad.net/onboard/
 
@@ -70,30 +72,37 @@ cp -a build/mo/* %buildroot%_datadir/locale
 # remove themed icons
 rm -rf %buildroot%_iconsdir/ubuntu-mono-*
 
+rm -rf %buildroot%_defaultdocdir/%name
+
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS COPYING* NEWS README HACKING
+%doc AUTHORS README.md HACKING *.example
 %_bindir/%name
 %_bindir/%name-settings
 %_datadir/%name/
 %_datadir/glib-2.0/schemas/*.gschema.xml
-#_xdgconfigdir/autostart/%name-autostart.desktop
+%_sysconfdir/xdg/autostart/%name-autostart.desktop
 %_desktopdir/%name.desktop
 %_desktopdir/%name-settings.desktop
 %_man1dir/%{name}*.1*
-%_iconsdir/HighContrast/scalable/apps/onboard.svg
+%_iconsdir/HighContrast/symbolic/apps/onboard.svg
+%_iconsdir/hicolor/scalable/apps/onboard-symbolic.svg
 %_iconsdir/hicolor/scalable/apps/onboard.svg
 %_iconsdir/hicolor/*x*/apps/onboard.png
 %_datadir/sounds/freedesktop/stereo/onboard-key-feedback.oga
 %_datadir/dbus-1/services/*
 %python3_sitelibdir/Onboard/
 %python3_sitelibdir/%{name}*.egg-info
+%_datadir/help/C/%name
 
 %files gnome
 %_datadir/gnome-shell/extensions/Onboard_Indicator@onboard.org
 
 %changelog
+* Fri Aug 02 2024 Andrey Cherepanov <cas@altlinux.org> 1.4.1-alt7.git8de1177
+- New snapshot from https://github.com/dr-ni/onboard (ALT #49818).
+
 * Fri Mar 15 2024 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt6
 - NMU: fix BuildRequires(pre)
 
