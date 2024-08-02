@@ -15,7 +15,11 @@
 # remote client/server
 # http://portablecl.org/docs/html/remote.html
 %def_enable remote
+%def_with vsock
+%def_with traffic_monitor
 %else
+%def_without vsock
+%def_without traffic_monitor
 %def_without vulkan
 %def_disable remote
 %endif
@@ -29,7 +33,7 @@
 
 Name: pocl
 Version: 6.0
-Release: alt0.1
+Release: alt0.2
 
 # The entire code is under MIT
 # include/utlist.h which is under BSD-1-Clause (unbundled)
@@ -43,8 +47,6 @@ Patch0: 0001-vulkan-remove-unsupported-clspv-args.patch
 # remote rely on some hidden rdma funcs
 Patch1: pocl-5.0-alt-unhide-rdma.patch
 Patch2: pocl-5.0-remote-fix-uthash.patch
-# https://github.com/pocl/pocl/pull/1300
-#Patch3: pocl-5.0-remote-fix-with-enable_loadable_drivers.patch
 # debian patches for GENERIC cpu target
 Patch100: deb-generic-cpu.patch
 Patch101: deb-blhc.patch
@@ -250,6 +252,12 @@ export VULKAN_SDK=%_libdir
     -DENABLE_REMOTE_CLIENT=1 \
     -DENABLE_REMOTE_SERVER=1 \
     -DVISIBILITY_HIDDEN:BOOL=OFF \
+%if_with vsock
+    -DENABLE_VSOCK:BOOL=ON \
+%endif #vsock
+%if_with traffic_monitor
+    -DENABLE_TRAFFIC_MONITOR:BOOL=ON \
+%endif #traffic_monitor
 %endif
 %if_with rdma
     -DENABLE_RDMA=1 \
@@ -327,6 +335,10 @@ sphinx-build-3 -N -b html doc/sphinx/source build-doc/html
 %endif
 
 %changelog
+* Sun Jul 28 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0-alt0.2
+- remote: enable vsock.
+- remote: enable traffic monitor.
+
 * Sun Jul 28 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0-alt0.1
 - 6.0.
 - Update patches.
