@@ -16,7 +16,7 @@
 %def_with x509_alt_username
 
 Name: openvpn
-Version: 2.6.10
+Version: 2.6.12
 Release: alt1
 
 Summary: a full-featured SSL VPN solution
@@ -343,6 +343,14 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %endif
 
 %changelog
+* Thu Aug 01 2024 Nikolay A. Fetisov <naf@altlinux.org> 2.6.12-alt1
+- New version
+- Fixes:
+  + CVE-2024-5594: filter control channel messages with nonprintable chars
+  + CVE-2024-28882: only call schedule_exit() once (on a given peer)
+  + CVE-2024-4877: Windows: harden interactive service pipe
+  + Fix bug preventing Http-proxy credentials caching
+
 * Wed Mar 27 2024 Nikolay A. Fetisov <naf@altlinux.org> 2.6.10-alt1
 - New version
 - Fixes (all CVE are Windows-specific):
