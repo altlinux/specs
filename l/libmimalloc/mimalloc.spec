@@ -9,7 +9,7 @@ BuildRequires(pre): rpm-macros-cmake
 %define _localstatedir %{_var}
 
 Name:           libmimalloc
-Version:        2.1.6
+Version:        2.1.7
 Release:        alt1
 Summary:        A general purpose allocator with excellent performance
 
@@ -84,6 +84,9 @@ cd %_cmake__builddir; ctest -V; cd -
 
 
 %changelog
+* Fri Aug 02 2024 Arseny Maslennikov <arseny@altlinux.org> 2.1.7-alt1
+- 2.1.6 -> 2.1.7.
+
 * Fri May 17 2024 Arseny Maslennikov <arseny@altlinux.org> 2.1.6-alt1
 - 2.1.2 -> 2.1.6.
 
