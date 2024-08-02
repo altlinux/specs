@@ -1,8 +1,8 @@
 %define _metadir %_datadir/metainfo
 
 Name: glaxnimate
-Version: 0.5.3
-Release: alt3
+Version: 0.5.4
+Release: alt1
 Summary: A simple vector graphics animation program
 Group: Graphics
 Packager: Artyom Bystrov <arbars@altlinux.org>
@@ -57,6 +57,10 @@ A simple vector graphics animation program.
 %doc *.md
 
 %changelog
+* Fri Aug  2 2024 Artyom Bystrov <arbars@altlinux.org> 0.5.4-alt1
+- Update to new version
+- Added russian translation
+
 * Thu Aug 24 2023 Artyom Bystrov <arbars@altlinux.org> 0.5.3-alt3
 - Back to default version of libstdc++-devel
 - Update patch for Qt6 support
