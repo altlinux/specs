@@ -1,5 +1,5 @@
 Name: bcunit
-Version: 5.2.62
+Version: 5.3.69
 Release: alt1
 Summary: CUnit is a Unit testing framework for C.
 Group: System/Libraries
@@ -30,11 +30,12 @@ Libraries and headers CUnit is a Unit testing framework for C.
 %patch0 -p1
 
 %build
-%cmake -DENABLE_STATIC=FALSE
+%cmake -DBUILD_SHARED_LIBS=TRUE
 %cmake_build
 
 %install
 %cmakeinstall_std
+rm -f %buildroot%_libdir/*.a
 
 %files
 %doc AUTHORS ChangeLog COPYING NEWS README.md
@@ -45,9 +46,11 @@ Libraries and headers CUnit is a Unit testing framework for C.
 %_libdir/libbcunit.so
 %_libdir/pkgconfig/bcunit.pc
 %_datadir/BCUnit
-%_datadir/BCunit
 
 %changelog
+* Fri Aug 02 2024 Andrey Cherepanov <cas@altlinux.org> 5.3.69-alt1
+- 5.3.69
+
 * Thu Oct 26 2023 Alexei Takaseev <taf@altlinux.org> 5.2.62-alt1
 - 5.2.62
 

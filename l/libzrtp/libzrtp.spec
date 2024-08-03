@@ -1,14 +1,17 @@
 Name: libzrtp
-Version: 1.0.6
-Release: alt2
+Version: 5.3.71
+Release: alt1
 
 Group: System/Libraries
 Summary: BZRTP is an opensource implementation of ZRTP keys exchange protocol.
-Url: http://www.linphone.org/releases/sources/bzrtp
-License: GPLv2
+Url: https://gitlab.linphone.org/BC/public/bzrtp
+License: GPL-2.0
 
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
+BuildRequires(pre): cmake
+BuildRequires(pre): rpm-build-ninja
+BuildRequires: gcc-c++
 BuildRequires: libbctoolbox-devel libsqlite3-devel libxml2-devel
 
 %description
@@ -34,25 +37,25 @@ develop programs using the oRTP library.
 %patch0 -p1
 
 %build
-./autogen.sh
-%configure \
-    --disable-static \
-    --enable-shared
-%make_build
+%cmake -GNinja -Wno-dev -DBUILD_SHARED_LIBS=TRUE
+%ninja_build -C "%_cmake__builddir"
 
 %install
-%makeinstall
+%ninja_install -C "%_cmake__builddir"
 
 %files
-%doc AUTHORS COPYING ChangeLog NEWS README.md
+%doc *.md
 %_libdir/*.so.*
 
 %files devel
 %_libdir/*.so
-%_libdir/pkgconfig/*.pc
 %_includedir/*
+%_datadir/BZRTP
 
 %changelog
+* Fri Aug 02 2024 Andrey Cherepanov <cas@altlinux.org> 5.3.71-alt1
+- new version.
+
 * Thu Nov 22 2018 Alexei Takaseev <taf@altlinux.org> 1.0.6-alt2
 - Fix build with gcc8
 

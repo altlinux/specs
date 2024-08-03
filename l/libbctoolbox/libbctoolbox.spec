@@ -1,5 +1,5 @@
 Name: libbctoolbox
-Version: 5.2.109
+Version: 5.3.74
 Release: alt1
 Summary: Utilities library used by Belledonne Communications softwares
 Group: System/Libraries
@@ -31,7 +31,7 @@ Libraries and headers required to develop software with belle-sip, mediastreamer
 %patch0 -p1
 
 %build
-%cmake -DENABLE_STATIC=FALSE
+%cmake -DBUILD_SHARED_LIBS=TRUE
 %cmake_build
 
 %install
@@ -42,14 +42,18 @@ Libraries and headers required to develop software with belle-sip, mediastreamer
 %_libdir/*.so.*
 
 %files devel
+%_bindir/bctoolbox-tester
 %_includedir/bctoolbox
 %_libdir/libbctoolbox-tester.so
 %_libdir/libbctoolbox.so
 %_libdir/pkgconfig/bctoolbox-tester.pc
 %_libdir/pkgconfig/bctoolbox.pc
-%_datadir/bctoolbox
+%_datadir/BCToolbox
 
 %changelog
+* Fri Aug 02 2024 Andrey Cherepanov <cas@altlinux.org> 5.3.74-alt1
+- 5.3.74
+
 * Thu Oct 26 2023 Alexei Takaseev <taf@altlinux.org> 5.2.109-alt1
 - 5.2.109 (ALT #48191)
 - Use Cmake for build
