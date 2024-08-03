@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lact
-Version: 0.5.4
-Release: alt2
+Version: 0.5.5
+Release: alt1
 
 Summary: Linux AMDGPU Control Application
 License: MIT
@@ -64,6 +64,9 @@ DESTDIR=%buildroot PREFIX=%prefix make install
 %_unitdir/%{name}d.service
 
 %changelog
+* Sat Aug 03 2024 Nazarov Denis <nenderus@altlinux.org> 0.5.5-alt1
+- New version 0.5.5.
+
 * Sun Jun 23 2024 Nazarov Denis <nenderus@altlinux.org> 0.5.4-alt2
 - Fix FTBFS
 
