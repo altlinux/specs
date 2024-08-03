@@ -1,6 +1,7 @@
 %def_disable snapshot
 %define ver_major 1.5
 %define beta %nil
+%define namespace Adw
 %define api_ver 1
 %define xdg_name org.gnome.Adwaita%api_ver
 
@@ -11,7 +12,7 @@
 %def_disable check
 
 Name: libadwaita
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 Epoch: 1
 
@@ -124,10 +125,10 @@ xvfb-run -s -noreset %__meson_test
 
 %if_enabled introspection
 %files gir
-%_typelibdir/Adw-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Adw-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 %if_enabled gtk_doc
@@ -144,6 +145,9 @@ xvfb-run -s -noreset %__meson_test
 %endif
 
 %changelog
+* Sat Aug 03 2024 Yuri N. Sedunov <aris@altlinux.org> 1:1.5.3-alt1
+- 1.5.3
+
 * Fri Jun 28 2024 Yuri N. Sedunov <aris@altlinux.org> 1:1.5.2-alt1
 - 1.5.2
 

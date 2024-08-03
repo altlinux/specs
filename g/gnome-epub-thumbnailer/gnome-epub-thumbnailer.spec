@@ -1,4 +1,4 @@
-%define ver_major 1.7
+%define ver_major 1.8
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-epub-thumbnailer
@@ -40,6 +40,9 @@ This package provides a thumbnailer for EPub and MOBI books files.
 %doc README NEWS
 
 %changelog
+* Sat Aug 03 2024 Yuri N. Sedunov <aris@altlinux.org> 1.8-alt1
+- 1.8
+
 * Thu Sep 29 2022 Yuri N. Sedunov <aris@altlinux.org> 1.7-alt1
 - 1.7 (ported to Meson build system)
 
