@@ -1,7 +1,7 @@
-%define soversion 0
+%define soversion 1
 
 Name: libhyprutils
-Version: 0.1.5
+Version: 0.2.1
 Release: alt1
 License: BSD-3-Clause
 
@@ -13,7 +13,7 @@ Group: System/Libraries
 Url: https://github.com/hyprwm/hyprutils
 Vcs: https://github.com/hyprwm/hyprutils.git
 
-Source0: %name-%version.tar
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 
@@ -54,7 +54,7 @@ This package provides development files for %name library.
 %files -n %name%soversion
 %doc README.md
 %_libdir/%name.so.%soversion
-%_libdir/%name.so.%soversion.*
+%_libdir/%name.so.%version
 
 %files -n %name-devel
 %_includedir/hyprutils/
@@ -62,6 +62,9 @@ This package provides development files for %name library.
 %_pkgconfigdir/hyprutils.pc
 
 %changelog
+* Sat Aug 03 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.2.1-alt1
+- new version 0.2.1 (with rpmrb script) (ALT bug 50960)
+
 * Thu Jul 04 2024 Roman Alifanov <ximper@altlinux.org> 0.1.5-alt1
 - NMU: new version 0.1.5 (with rpmrb script)
 
