@@ -4,7 +4,7 @@
 %define commit 015e09825d4f9a2dfdbc20fc2711e2dcee2af68a
 
 Name: gamescope-session-steam
-Version: 0.0.1.git015e09
+Version: 0.0.2.git015e09
 Release: alt1
 
 Summary: Steam Big Picture session based on gamescope
@@ -16,8 +16,11 @@ Url: https://github.com/ChimeraOS/gamescope-session-steam
 # Source-url: https://github.com/ChimeraOS/%name/archive/%commit.tar.gz?/%name-%commit.tar.gz
 Source: %name-%version.tar
 
+# drop unneded steamos functions
 Patch1: drop-steamos-functions.patch
+# fixed shebang
 Patch2: shebang.patch
+# took away extra permissions
 Patch3: update-policy.patch
 
 ExclusiveArch: x86_64
@@ -26,6 +29,7 @@ BuildRequires(pre): rpm-build-python3
 
 %add_findreq_skiplist %_datadir/%gss_p/sessions.d/steam
 Requires: gamescope-session-plus
+Requires: mangoapp
 
 %description
 %summary
@@ -34,14 +38,21 @@ Requires: gamescope-session-plus
 %setup
 %autopatch -p1
 
+# removing unneeded legacy file
 rm -rv usr/share/wayland-sessions/gamescope-session.desktop
+
+# removing the use of root for steamdeck mod
+rm -v usr/bin/steamos-polkit-helpers/*
+mv -v usr/bin/jupiter-biosupdate usr/bin/steamos-polkit-helpers/
+mv -v usr/bin/steamos-select-branch usr/bin/steamos-polkit-helpers/
+mv -v usr/bin/steamos-update usr/bin/steamos-polkit-helpers/
 
 %build
 %install
 mkdir -p %buildroot{%_bindir,%_datadir}
 cp -rv usr/bin/* %buildroot%_bindir/
 cp -rv usr/share/* %buildroot%_datadir/
-mv %buildroot%_bindir/steamos-polkit-helpers %buildroot%_datadir/%gss_p/
+mv -v %buildroot%_bindir/steamos-polkit-helpers %buildroot%_datadir/%gss_p/
 
 %postun
 if [[ -d %_bindir/steamos-polkit-helpers ]]
@@ -50,12 +61,9 @@ fi
 
 %files
 %doc LICENSE
-%_bindir/steamos-cp-polkit-bin
-%_bindir/jupiter-biosupdate
+%_bindir/steamos-cp-fake-polkit-bin
 %_bindir/steam-http-loader
-%_bindir/steamos-select-branch
 %_bindir/steamos-session-select
-%_bindir/steamos-update
 %dir %_datadir/%gss_p/sessions.d
 %_datadir/%gss_p/sessions.d/steam
 %_datadir/%gss_p/steamos-polkit-helpers
@@ -65,6 +73,10 @@ fi
 %_datadir/wayland-sessions/%name.desktop
 
 %changelog
+* Sat Aug 03 2024 Mikhail Tergoev <fidel@altlinux.org> 0.0.2.git015e09-alt1
+- took away extra permissions from steamdeck mode
+- added requires: mangoapp
+
 * Fri Aug 02 2024 Mikhail Tergoev <fidel@altlinux.org> 0.0.1.git015e09-alt1
 - initial build for ALT Sisyphus
 
