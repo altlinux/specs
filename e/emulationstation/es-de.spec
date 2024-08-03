@@ -5,7 +5,7 @@
 Summary: A cross-platform graphical front-end for emulators
 Name: emulationstation
 Version: 3.0.3
-Release: alt1.gitf9d5b2b1
+Release: alt2.gitf9d5b2b1
 License: MIT
 Group: Emulators
 Url: https://gitlab.com/es-de/emulationstation-de
@@ -88,10 +88,12 @@ rm -rf %{buildroot}%{_includedir}
 %dir %{_sysconfdir}/%{name}
 %dir %{_sysconfdir}/%{name}/gamelists/
 %dir %{_sysconfdir}/%{name}/themes/
+%dir %{_sysconfdir}/%{name}/themes/linear-es-de/
 %dir %{_sysconfdir}/%{name}/themes/modern-es-de/
 %dir %{_sysconfdir}/%{name}/themes/slate-es-de/
 %dir %{_sysconfdir}/%{name}/themes/simple/
 %config(noreplace) %{_sysconfdir}/%{name}/themes/simple/*
+%config(noreplace) %{_sysconfdir}/%{name}/themes/linear-es-de/*
 %config(noreplace) %{_sysconfdir}/%{name}/themes/modern-es-de/*
 %config(noreplace) %{_sysconfdir}/%{name}/themes/slate-es-de/*
 %config(noreplace) %{_sysconfdir}/%{name}/es_systems.cfg
@@ -106,6 +108,10 @@ rm -rf %{buildroot}%{_includedir}
 %{_datadir}/pixmaps/org.es_de.frontend.svg
 
 %changelog
+
+* Fri Aug  2 2024 Artyom Bystrov <arbars@altlinux.org> 3.0.3-alt2.gitf9d5b2b1
+- restore linear theme
+
 * Fri Aug  2 2024 Artyom Bystrov <arbars@altlinux.org> 3.0.3-alt1.gitf9d5b2b1
 - update version
 
