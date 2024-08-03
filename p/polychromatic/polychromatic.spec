@@ -1,8 +1,8 @@
 %def_with check
 
 Name: polychromatic
-Version: 0.9.1
-Release: alt2
+Version: 0.9.2
+Release: alt1
 
 Summary: RGB lighting interface utilites
 License: GPL-3.0
@@ -64,6 +64,9 @@ eval $(dbus-launch --sh-syntax)
 %_man1dir/%name-*
 
 %changelog
+* Sat Aug 03 2024 Anton Kurachenko <srebrov@altlinux.org> 0.9.2-alt1
+- New version 0.9.2.
+
 * Tue Jul 2 2024 Anton Kurachenko <srebrov@altlinux.org> 0.9.1-alt2
 - Added dbus-tools-gui in buildreq (fix FTBFS).
 
