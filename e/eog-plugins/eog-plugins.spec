@@ -7,7 +7,7 @@
 %def_enable postasa
 
 Name: %_name-plugins
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: EOG plugins
@@ -102,6 +102,9 @@ This package provides Eog plugin for upload pictures to Picasa web albums.
 %endif
 
 %changelog
+* Sat Aug 03 2024 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1
+- 44.1
+
 * Sun Mar 19 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
 - 44.0
 
