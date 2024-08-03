@@ -1,5 +1,5 @@
 Name: yazi
-Version: 0.2.5
+Version: 0.3.0
 Release: alt1
 
 Summary: Blazing fast terminal file manager written in Rust, based on async I/O
@@ -13,7 +13,6 @@ Source1: vendor.tar
 
 BuildRequires: rust-cargo
 BuildRequires: /proc
-Requires: fonts-ttf-3270NerdFont
 
 %description
 Yazi (means "duck") is a terminal file manager written in Rust, based on
@@ -49,6 +48,11 @@ The official zsh completion script for %name.
 mkdir -p .cargo
 cat >> .cargo/config.toml <<EOF
 [source.crates-io]
+replace-with = "vendored-sources"
+
+[source."git+https://github.com/notify-rs/notify.git?rev=96dec74316a93bed6eec9db177b233e6e017275e"]
+git = "https://github.com/notify-rs/notify.git"
+rev = "96dec74316a93bed6eec9db177b233e6e017275e"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
@@ -92,5 +96,8 @@ install -Dm 644 yazi-boot/completions/_yazi %buildroot%_datadir/zsh/site-functio
 %_datadir/zsh
 
 %changelog
+* Sat Aug 03 2024 Anton Kurachenko <srebrov@altlinux.org> 0.3.0-alt1
+- New version 0.3.0.
+
 * Sat Jun 29 2024 Anton Kurachenko <srebrov@altlinux.org> 0.2.5-alt1
 - Initial build for Sisyphus.
