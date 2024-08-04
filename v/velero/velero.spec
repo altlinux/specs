@@ -1,8 +1,8 @@
 %global import_path github.com/vmware-tanzu/velero
 
 Name:     velero
-Version:  1.13.2
-Release:  alt2
+Version:  1.14.0
+Release:  alt1
 
 Summary:  Backup and migrate Kubernetes applications and their persistent volumes
 License:  Apache-2.0
@@ -49,6 +49,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Sun Aug 04 2024 Nikolay Burykin <bne@altlinux.org> 1.14.0-alt1
+- 1.14.0
+
 * Fri May 03 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.13.2-alt2
 - NMU: fixed FTBFS on LoongArch
 
