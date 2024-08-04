@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: cracklib
-Version: 2.10.1
+Version: 2.10.2
 Release: alt1
 
 Summary: A password-checking library.
@@ -186,6 +186,9 @@ _EOF_
 
 
 %changelog
+* Sun Aug 04 2024 Yuri N. Sedunov <aris@altlinux.org> 2.10.2-alt1
+- 2.10.2
+
 * Sat Jul 27 2024 Yuri N. Sedunov <aris@altlinux.org> 2.10.1-alt1
 - 2.10.1
 
