@@ -18,7 +18,7 @@
 %def_enable check
 
 Name: fluidsynth
-Version: 2.3.5
+Version: 2.3.6
 Release: alt1
 
 Summary: Software real-time synthesizer
@@ -217,6 +217,9 @@ MIDI-синтезатора. FluidSynth также может воспроизв
 %endif
 
 %changelog
+* Sat Aug 03 2024 Yuri N. Sedunov <aris@altlinux.org> 2.3.6-alt1
+- 2.3.6
+
 * Thu Mar 28 2024 Yuri N. Sedunov <aris@altlinux.org> 2.3.5-alt1
 - 2.3.5
 
