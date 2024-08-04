@@ -6,13 +6,14 @@
 %global optflags_lto %nil
 
 Name: adns
-Version: 1.6.0
-Release: alt2
+Version: 1.6.1
+Release: alt1
 
 Summary: GNU adns, an asynchronous DNS resolver
 License: GPLv2+
 Group: Networking/Other
-URL: http://www.gnu.org/software/adns/
+URL: https://www.gnu.org/software/adns/
+VCS: git://git.chiark.greenend.org.uk/~ianmdlvl/adns.git
 
 Source: adns-%version.tar
 Patch0: %name-%version-alt.patch
@@ -92,6 +93,9 @@ make check
 %_libdir/lib%name.a
 
 %changelog
+* Sun Aug 04 2024 Anton Farygin <rider@altlinux.ru> 1.6.1-alt1
+- 1.6.0 -> 1.6.1
+
 * Wed Sep 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6.0-alt2
 - Disabled LTO.
 
