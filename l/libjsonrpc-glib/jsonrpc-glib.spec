@@ -5,15 +5,16 @@
 # probably meson bug
 %define libname libjsonrpc-glib
 %define ver_major 3.44
+%define namespace Jsonrpc
 %define api_ver 1.0
 
 %def_enable introspection
 %def_enable gtk_doc
 %def_enable vala
-%def_disable check
+%def_enable check
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A JSON-RPC library for GLib
@@ -105,10 +106,10 @@ This package contains development documentation for %name
 
 %if_enabled introspection
 %files gir
-%_typelibdir/Jsonrpc-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Jsonrpc-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 %if_enabled gtk_doc
@@ -117,6 +118,10 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Sun Aug 04 2024 Yuri N. Sedunov <aris@altlinux.org> 3.44.1-alt1
+- 3.44.1
+- enabled %%check
+
 * Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 3.44.0-alt1
 - 3.44.0
 
