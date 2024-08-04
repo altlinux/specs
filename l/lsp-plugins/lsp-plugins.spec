@@ -1,8 +1,14 @@
 %def_disable check
 %define xdg_name in.lsp_plug.lsp_plugins
 
+%def_enable ui
+
+%ifnarch %ix86 armh
+%def_enable vst3
+%endif
+
 Name: lsp-plugins
-Version: 1.2.16
+Version: 1.2.17
 Release: alt1
 
 Summary: Linux Studio Plugins
@@ -11,10 +17,10 @@ License: LGPL-3.0
 Url: https://lsp-plug.in/
 
 Vcs: https://github.com/sadko4u/lsp-plugins
-Source: https://github.com/sadko4u/%name/releases/download/%version/%name-src-%version.tar.gz
+Source: https://github.com/sadko4u/%name/releases/download/%version/%name-src-%version.7z
 
 BuildRequires(pre): rpm-build-xdg
-BuildRequires: gcc-c++
+BuildRequires: /usr/bin/7z gcc-c++
 BuildRequires: lv2-devel libjack-devel ladspa_sdk
 BuildRequires: libsndfile-devel libcairo-devel
 BuildRequires: libGL-devel libXrandr-devel
@@ -48,7 +54,7 @@ Group: Sound
 LSP (Linux Studio Plugins) LV2 plugins.
 
 %package -n vst-%name
-Summary: LSP (Linux Studio Plugins) LinuxVST plugins
+Summary: LSP (Linux Studio Plugins) VST%{?_enable_vst3:/3} plugins
 Group: Sound
 
 %description -n vst-%name
@@ -71,7 +77,9 @@ Requires: lv2-%name = %EVR
 This package provides headers for LSP-developers.
 
 %prep
-%setup -n %name
+%setup -Tc -n %name-src-%version
+7z x -o%_builddir %SOURCE0
+
 %ifarch %e2k
 sed -i "s|VSTCALLBACK __cdecl|VSTCALLBACK|" \
 	modules/lsp-3rd-party/include/steinberg/vst2.h
@@ -82,7 +90,7 @@ export PLATFORM=Linux BUILD_SYSTEM=Linux
 export VERSION=%version
 %make PREFIX=%_prefix \
     LIBDIR=%_libdir \
-    FEATURES="jack ladspa lv2 vst2 doc xdg" \
+    FEATURES="jack ladspa lv2 vst2 %{?_enable_vst3:vst3} %{?_enable_ui:ui} doc xdg" \
     CXXFLAGS_EXT="%optflags_default %(getconf LFS_CFLAGS)" \
     CFLAGS_EXT="%optflags_default %(getconf LFS_CFLAGS)" \
     config
@@ -97,7 +105,7 @@ rm -f %buildroot%_libdir/*.a
 
 %files -n jack-%name
 %_bindir/*
-%_libdir/liblsp-r3d-glx-lib*.so
+%{?_enable_ui:%_libdir/liblsp-r3d-glx-lib*.so}
 %dir %_libdir/%name
 %_libdir/%name/lib%name-jack-%version.so
 %_desktopdir/%{xdg_name}_*.desktop
@@ -106,7 +114,7 @@ rm -f %buildroot%_libdir/*.a
 %_iconsdir/hicolor/*/apps/%name.*
 %doc CHANGELOG* README*
 
-%exclude %_pkgconfigdir/lsp-r3d-glx-lib.pc
+%{?_enable_ui:%exclude %_pkgconfigdir/lsp-r3d-glx-lib.pc}
 
 %files -n ladspa-%name
 %_libdir/ladspa/*
@@ -118,12 +126,17 @@ rm -f %buildroot%_libdir/*.a
 
 %files -n vst-%name
 %_libdir/vst/*
+%{?_enable_vst3:%_libdir/vst3/*}
 %doc CHANGELOG* README*
 
 %files doc
 %_defaultdocdir/%name/
 
 %changelog
+* Sun Aug 04 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.17-alt1
+- 1.2.17
+- packaged VST3 plugins for 64-bit arches
+
 * Wed May 22 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.16-alt1
 - 1.2.16
 
