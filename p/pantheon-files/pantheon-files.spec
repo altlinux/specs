@@ -1,15 +1,15 @@
-%def_enable snapshot
+%def_disable snapshot
 %def_enable check
 
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 6.5
+%define ver_major 7.0
 %define _name files
 %define xdg_name org.pantheon.%_name
 %define rdn_name io.elementary.%_name
 
 Name: pantheon-files
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: The file manager of the Pantheon desktop
@@ -50,6 +50,8 @@ BuildRequires: libcanberra-devel libcanberra-vala
 BuildRequires: libcloudproviders-devel
 BuildRequires: libgit2-glib-devel
 BuildRequires: pkgconfig(libhandy-1)
+BuildRequires: pkgconfig(libportal)
+BuildRequires: pkgconfig(libportal-gtk3)
 %{?_enable_check:BuildRequires: elementary-icon-theme}
 
 %description
@@ -96,8 +98,6 @@ This package provides Vala language bindings for the pantheon-files.
 %_datadir/dbus-1/services/%rdn_name.Filemanager1.service
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_datadir/polkit-1/actions/%rdn_name.policy
-%dir %_pixmapsdir/%rdn_name
-%_pixmapsdir/%rdn_name/*.png
 %_datadir/metainfo/%rdn_name.metainfo.xml
 
 %_libexecdir/%rdn_name.xdg-desktop-portal
@@ -116,6 +116,9 @@ This package provides Vala language bindings for the pantheon-files.
 %endif
 
 %changelog
+* Sun Aug 04 2024 Yuri N. Sedunov <aris@altlinux.org> 7.0.0-alt1
+- 7.0.0
+
 * Mon Dec 18 2023 Yuri N. Sedunov <aris@altlinux.org> 6.5.3-alt1
 - updated to 6.5.3-7-g56202aa10
 
