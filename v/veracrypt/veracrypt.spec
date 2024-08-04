@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: veracrypt
-Version: 1.25.9
+Version: 1.26.7
 Release: alt1
 
 Summary: Disk encryption software
@@ -15,6 +17,7 @@ ExcludeArch: %ix86
 
 BuildRequires: pkgconfig(fuse)
 BuildRequires: /usr/bin/convert
+BuildRequires: libpcsclite-devel
 #BuildRequires: makeself
 BuildRequires: libwxGTK3.0-devel
 BuildRequires: gcc-c++
@@ -28,12 +31,12 @@ Free disk encryption software based on TrueCrypt.
 %setup
 
 %build
-%make_build -C src
+%make_build NOSTRIP=1 DEBUGGER=1 -C src
 
 pushd src/Resources/Icons
-convert VeraCrypt-16x16.xpm VeraCrypt-16x16.png
-convert VeraCrypt-48x48.xpm VeraCrypt-48x48.png
-convert VeraCrypt-128x128.xpm VeraCrypt-128x128.png
+magick VeraCrypt-16x16.xpm VeraCrypt-16x16.png
+magick VeraCrypt-48x48.xpm VeraCrypt-48x48.png
+magick VeraCrypt-128x128.xpm VeraCrypt-128x128.png
 popd
 
 %install
@@ -59,6 +62,8 @@ rm -rv %buildroot%_bindir/%name-uninstall.sh
 
 
 %changelog
+* Sun Aug 04 2024 Egor Ignatov <egori@altlinux.org> 1.26.7-alt1
+- 1.26.7
+
 * Thu Nov 02 2023 Vitaly Lipatov <lav@altlinux.ru> 1.25.9-alt1
 - initial build for ALT Sisyphus (thanks, ROSA!)
-
