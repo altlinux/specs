@@ -18,7 +18,7 @@
 %define api_ver 1.0
 
 Name: gnome-online-accounts
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Provide online accounts information
@@ -35,6 +35,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Requires: lib%name = %EVR
 # realmd requires /sbin/telinit provided by sysvinit or systemd-sysvinit packages
 %{?_enable_kerberos:Requires: realmd systemd-sysvinit}
+Requires: dconf gnome-keyring
 
 %define glib_ver 2.68
 %define gtk4_ver 4.10
@@ -179,6 +180,9 @@ sed -i s'|gtk+-3.0|libadwaita-1|' src/goabackend/meson.build
 %endif
 
 %changelog
+* Sun Aug 04 2024 Yuri N. Sedunov <aris@altlinux.org> 3.50.4-alt1
+- 3.50.4
+
 * Sun Jun 30 2024 Yuri N. Sedunov <aris@altlinux.org> 3.50.3-alt1
 - 3.50.3
 

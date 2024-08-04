@@ -2,7 +2,7 @@
 %define beta %nil
 
 Name: gnome-user-docs
-Version: %ver_major.1
+Version: %ver_major.4
 Release: alt1
 
 Summary: General GNOME User Documentation
@@ -44,6 +44,9 @@ directly associated with any particular GNOME application or package.
 %doc README* NEWS
 
 %changelog
+* Sun Aug 04 2024 Yuri N. Sedunov <aris@altlinux.org> 46.4-alt1
+- 46.4
+
 * Sun Apr 21 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
 - 46.1
 
