@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: adwaita-qt
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 Summary: Adwaita theme for Qt-based applications
 License: LGPL-2.0-or-later
@@ -127,6 +127,9 @@ rm %buildroot%_libdir/pkgconfig/adwaita-qt6.pc
 
 %files
 %changelog
+* Sun Aug 04 2024 Anton Midyukov <antohami@altlinux.org> 1.4.2-alt1
+- New version 1.4.2 (Closes: 51048)
+
 * Mon Jun 20 2022 Anton Midyukov <antohami@altlinux.org> 1.4.1-alt1
 - new version 1.4.1
 - initial build adwaita-qt6
