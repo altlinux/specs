@@ -14,7 +14,7 @@
 %def_without doc
 
 Name: xapian-bindings
-Version: 1.4.25
+Version: 1.4.26
 Release: alt1
 
 Summary: Xapian search engine bindings
@@ -154,6 +154,9 @@ rm -rf %buildroot%_defaultdocdir/%name/
 %endif
 
 %changelog
+* Sat Aug 03 2024 Vitaly Chikunov <vt@altlinux.org> 1.4.26-alt1
+- Update to 1.4.26 (2024-07-18).
+
 * Wed Mar 13 2024 Vitaly Chikunov <vt@altlinux.org> 1.4.25-alt1
 - Update to 1.4.25 (2024-03-08).
 

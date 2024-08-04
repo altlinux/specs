@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: xapian-omega
-Version: 1.4.25
+Version: 1.4.26
 Release: alt1
 
 Summary: A CGI search frontend and indexers built on Xapian
@@ -84,20 +84,23 @@ rm -rf %buildroot%_docdir/%name/
 %_man1dir/scriptindex.1*
 
 %changelog
+* Sat Aug 03 2024 Vitaly Chikunov <vt@altlinux.org> 1.4.26-alt1
+- NMU: Update to 1.4.26 (2024-07-18) to match xapian-core.
+
 * Wed Mar 13 2024 Vitaly Chikunov <vt@altlinux.org> 1.4.25-alt1
-- Update to 1.4.25 (2024-03-08).
+- NMU: Update to 1.4.25 (2024-03-08) to match xapian-core.
 
 * Sat Dec 02 2023 Vitaly Chikunov <vt@altlinux.org> 1.4.24-alt1
-- Update to 1.4.24 (2023-11-06).
+- NMU: Update to 1.4.24 (2023-11-06) to match xapian-core.
 
 * Tue Jul 11 2023 Vitaly Chikunov <vt@altlinux.org> 1.4.23-alt1
-- Update to 1.4.23 (2023-07-07).
+- NMU: Update to 1.4.23 (2023-07-07) to match xapian-core.
 
 * Sun Feb 05 2023 Vitaly Chikunov <vt@altlinux.org> 1.4.22-alt1
-- Update to 1.4.22 (2023-02-02).
+- NMU: Update to 1.4.22 (2023-02-02) to match xapian-core.
 
 * Sun Oct 23 2022 Vitaly Chikunov <vt@altlinux.org> 1.4.21-alt1
-- Update to 1.4.21 (2022-09-22).
+- NMU: Update to 1.4.21 (2022-09-22) to match xapian-core.
 
 * Thu Jun 13 2019 Michael Shigorin <mike@altlinux.org> 1.4.5-alt2
 - E2K: avoid lcc-unsupported options
