@@ -3,14 +3,14 @@
 %set_verify_elf_method strict
 
 Name: cmark
-Version: 0.30.2
+Version: 0.31.0
+%define soversion %version
 Release: alt1
 Summary: CommonMark parsing and rendering
-License: BSD and MIT
+License: BSD-2-Clause AND MIT
 Group: Text tools
 URL: https://github.com/commonmark/cmark
 
-# https://github.com/commonmark/cmark.git
 Source: %name-%version.tar
 
 Source2: %name.watch
@@ -31,16 +31,16 @@ documents.
 %package devel
 Summary: Development files for cmark
 Group: Development/C++
-Requires: lib%name = %EVR
+Requires: libcmark%soversion = %EVR
 
 %description devel
 This package provides the development files for cmark.
 
-%package -n lib%name
+%package -n libcmark%soversion
 Summary: CommonMark parsing and rendering library
 Group: System/Libraries
 
-%description -n lib%name
+%description -n libcmark%soversion
 This package provides the cmark library.
 
 %prep
@@ -67,19 +67,23 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_bindir/*
 %_man1dir/*
 
-%files -n lib%name
+%files -n libcmark%soversion
 %doc COPYING
-%_libdir/*.so.*
+%_libdir/libcmark.so.%soversion
 
 %files devel
 %doc COPYING README.md
 %_includedir/*
-%_libdir/*.so
+%_libdir/libcmark.so
 %_libdir/cmake/*
 %_pkgconfigdir/libcmark.pc
 %_man3dir/*
 
 %changelog
+* Mon Jul 29 2024 Andrey Kovalev <ded@altlinux.org> 0.31.0-alt1
+- Updated to upstream version 0.31.0.
+- Build according to shared libs policy.
+
 * Mon Jan 17 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 0.30.2-alt1
 - Updated to upstream version 0.30.2.
 
