@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-tqdm
-Version: 4.66.4
+Version: 4.66.5
 Release: alt1
 
 Summary: A fast, extensible progress bar for Python and CLI
@@ -59,6 +59,9 @@ just wrap any iterable with tqdm(iterable), and you're done!
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Mon Aug 05 2024 Anton Vyatkin <toni@altlinux.org> 4.66.5-alt1
+- new version 4.66.5
+
 * Fri May 03 2024 Anton Vyatkin <toni@altlinux.org> 4.66.4-alt1
 - new version 4.66.4
 
