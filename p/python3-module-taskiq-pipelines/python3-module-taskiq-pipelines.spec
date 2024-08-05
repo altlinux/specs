@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: Task pipelining for taskiq
@@ -18,16 +18,12 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-
-%py3_provides %pypi_name
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
-%add_pyproject_deps_check_filter wemake-python-styleguide
-%add_pyproject_deps_check_filter yesqa
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -41,12 +37,15 @@ complete. taskiq-pipeline solves this for you.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-
 %if_with check
 %pyproject_deps_resync_check_poetry dev
 %endif
+
+# Upstream sets version via CI/CD and we need to set it itself.
+sed -i '/^version =/s/".*"/"%version"/' pyproject.toml
 
 %build
 %pyproject_build
@@ -55,14 +54,17 @@ complete. taskiq-pipeline solves this for you.
 %pyproject_install
 
 %check
-%pyproject_run_pytest
+%pyproject_run_pytest -vra
 
 %files
-%doc README.md
+%doc LICENSE README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 05 2024 Anton Zhukharev <ancieg@altlinux.org> 0.1.2-alt1
+- Updated to 0.1.2.
+
 * Mon Sep 04 2023 Anton Zhukharev <ancieg@altlinux.org> 0.1.1-alt1
 - Updated to 0.1.1.
 
