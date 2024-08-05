@@ -2,7 +2,7 @@
 %define soname 3
 
 Name: dovi_tool
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 
 Summary: Utilites for working with Dolby Vision
@@ -51,6 +51,11 @@ replace-with = "vendored-sources"
 
 [source.vendored-sources]
 directory = "vendor"
+
+[profile.release]
+strip = "none"
+lto= "thin"
+debug = "full"
 EOF
 popd
 done
@@ -87,6 +92,12 @@ cargo test --bins --release
 %_libdir/libdovi.so
 
 %changelog
+* Mon Aug 05 2024 L.A. Kostis <lakostis@altlinux.ru> 2.1.2-alt1
+- 2.1.2.
+
+* Tue Jun 11 2024 L.A. Kostis <lakostis@altlinux.ru> 2.1.1-alt2
+- build with debuginfo.
+
 * Mon Jun 03 2024 L.A. Kostis <lakostis@altlinux.ru> 2.1.1-alt1
 - 2.1.1.
 
