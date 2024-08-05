@@ -3,7 +3,7 @@
 %define soname 3
 
 Name: biosig
-Version: 2.6.0
+Version: 2.6.1
 Release: alt1
 
 Summary: Reading and writing routines for different biosignal data formats
@@ -14,15 +14,16 @@ Url: https://biosig.sourceforge.net/
 Source: %name-%version.tar
 
 Patch1: %name-alt-build-2.5.2.patch
-Patch2: biosig-2.6.0-upstream-numpy.distutils.patch
+Patch2: biosig-2.6.1-alt-python-install.patch
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 rpm-build-pyproject
 BuildRequires: python3-devel libnumpy-py3-devel
-BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools python3-module-build
 BuildRequires: gcc-c++
 BuildRequires: libalsa-devel
 BuildRequires: libb64-devel
 BuildRequires: libsuitesparse-devel
+BuildRequires: autoconf_2.71
 %if_with dcmtk
 BuildRequires: libdcmtk-devel
 %endif
@@ -130,6 +131,8 @@ rm -f biosig4c++/doc/sigviewer.1
 # same
 rm -f biosig4c++/doc/mexSLOAD.1
 
+rm -f biosig4c++/python/{demo2,example}.py
+
 %build
 %autoreconf
 %configure
@@ -155,9 +158,12 @@ rm -f biosig4c++/doc/mexSLOAD.1
 
 %files -n python3-module-%name
 %python3_sitelibdir/%{name}*.so
-%python3_sitelibdir/Biosig-%version-py%{_python3_version}.egg-info
+%python3_sitelibdir/*-info/METADATA
 
 %changelog
+* Mon Aug 05 2024 Anton Farygin <rider@altlinux.ru> 2.6.1-alt1
+- 2.6.0 -> 2.6.1
+
 * Wed Apr 03 2024 Anton Farygin <rider@altlinux.ru> 2.6.0-alt1
 - 2.5.2 -> 2.6.0
 - added upstream fix against numpy.distutils deprecation
