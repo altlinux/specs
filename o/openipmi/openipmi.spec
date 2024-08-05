@@ -3,10 +3,10 @@
 Name: openipmi
 Summary: %name - Library interface to IPMI
 Version: 2.0.36
-Release: alt1
-License: LGPLv2.1
-# VCS: https://git.code.sf.net/p/openipmi/code
-Url: http://openipmi.sourceforge.net
+Release: alt2
+License: LGPL-2.1-or-later and GPL-2.0-or-later or BSD-3-Clause
+VCS: https://git.code.sf.net/p/openipmi/code
+Url: https://openipmi.sourceforge.io/
 Group: System/Configuration/Hardware
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
@@ -53,7 +53,9 @@ A Python interface for OpenIPMI.
 %package gui
 Summary: GUI (in python) for OpenIPMI
 Group: System/Configuration/Hardware
-Requires: python3-module-%name = %version-%release
+Requires: python3-module-%name = %EVR
+Requires: python3-modules-tkinter
+
 
 %description gui
 A GUI interface for OpenIPMI.  Written in python an requiring wxWidgets.
@@ -168,6 +170,11 @@ rm -f %buildroot%_libdir/libOpenIPMIglib12.*
 
 
 %changelog
+* Mon Aug 05 2024 Anton Farygin <rider@altlinux.ru> 2.0.36-alt2
+- gui: added python3-modules-tkinter dependency (closes: #35022)
+- SPEC: added VCS and fixed URL tags
+- SPEC: fixed License according SPDX
+
 * Sat Aug 03 2024 Anton Farygin <rider@altlinux.ru> 2.0.36-alt1
 - 2.0.35 -> 2.0.36
 
