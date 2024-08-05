@@ -1,5 +1,7 @@
+%set_autoconf_version 2.71
+
 Name: nsd
-Version: 4.10.0
+Version: 4.10.1
 Release: alt1
 
 Summary: Name Server Daemon
@@ -15,11 +17,8 @@ Source4: 0.0.10.zone
 Source5: %name.init
 Source6: %name.tmpfiles
 Source7: %name.service.forking
-
 # git submodules
 Source101: simdzone.tar
-
-
 Patch0: 0001-Enable-control-by-default.patch
 
 BuildRequires: flex bison libevent-devel libssl-devel
@@ -94,6 +93,9 @@ fi
 %doc doc contrib %name.conf.sample
 
 %changelog
+* Mon Aug 05 2024 Alexei Takaseev <taf@altlinux.org> 4.10.1-alt1
+- 4.10.1
+
 * Tue Jul 23 2024 Alexei Takaseev <taf@altlinux.org> 4.10.0-alt1
 - 4.10.0
 
