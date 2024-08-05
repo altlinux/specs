@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: valuta
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Currency converter for GNOME
@@ -78,6 +78,9 @@ currencies.
 %doc README*
 
 %changelog
+* Mon Aug 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt1
+- updated to v1.3.2-7-g61bf77b
+
 * Sun Jul 14 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt1
 - first build for Sisyphus (v1.3.1-6-gd9b8de3)
 
