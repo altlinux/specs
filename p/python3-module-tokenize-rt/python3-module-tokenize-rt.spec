@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name tokenize-rt
+%define mod_name tokenize_rt
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.2.0
+Version: 6.0.0
 Release: alt1
 
-Summary: A wrapper around the stdlib `tokenize` which roundtrips 
+Summary: A wrapper around the stdlib `tokenize` which roundtrips
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/tokenize-rt/
@@ -17,13 +18,11 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-
-%py3_provides %pypi_name
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -40,9 +39,9 @@ the python tokenization.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-
 %if_with check
 %pyproject_deps_resync_check_pipreqfile requirements-dev.txt
 %endif
@@ -59,10 +58,14 @@ the python tokenization.
 %files
 %doc LICENSE README.md
 %_bindir/%pypi_name
-%python3_sitelibdir/*
+%python3_sitelibdir/%mod_name.py
+%python3_sitelibdir/__pycache__/%mod_name.*.pyc
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 05 2024 Anton Zhukharev <ancieg@altlinux.org> 6.0.0-alt1
+- Updated to 6.0.0.
+
 * Tue Aug 01 2023 Anton Zhukharev <ancieg@altlinux.org> 5.2.0-alt1
 - Updated to 5.2.0.
 
