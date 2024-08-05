@@ -16,8 +16,8 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.3.1
-Release: alt1.1%beta
+Version: %ver_major.4
+Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -65,7 +65,7 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 %define gweather_api_ver 4.0
 %define webkit_api_ver 6.0
 
-Requires: %name-data = %version-%release
+Requires: %name-data = %EVR
 # to avoid circular dependency
 %filter_from_requires /\/usr\/bin\/%name/d
 Requires: mutter-gnome >= %mutter_ver libmutter-gir >= %mutter_ver
@@ -221,8 +221,6 @@ cp -a libgnome-volume-control-%gvc_ver/* subprojects/gvc/}
 # set full path to gsettings
 sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.service
 
-# fix rpath
-#subst 's|\(install_rpath: pkg\)datadir|\1libdir|' subprojects/gvc/meson.build
 # browser plugin dir
 %{?_enable_browser_plugin:subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build}
 %build
@@ -314,6 +312,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 }
 
 %changelog
+* Mon Aug 05 2024 Yuri N. Sedunov <aris@altlinux.org> 46.4-alt1
+- 46.4
+
 * Wed Jul 03 2024 Yuri N. Sedunov <aris@altlinux.org> 46.3.1-alt1.1
 - split gnome-extensions-app into a separate subpackage (ALT #49630)
 
