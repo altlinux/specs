@@ -13,8 +13,8 @@
 %global optflags_lto %nil
 
 Name: bluez
-Version: 5.76
-Release: alt1.2
+Version: 5.77
+Release: alt1
 
 Summary: Bluetooth utilities
 License: GPL-2.0-or-later
@@ -30,6 +30,7 @@ Conflicts: udev-extras < 169
 
 BuildRequires: glib2-devel libudev-devel libdbus-devel libreadline-devel
 BuildRequires: systemd-devel gtk-doc python3-module-docutils
+BuildRequires: libcups-devel
 %{?_enable_midi:BuildRequires: libalsa-devel}
 %{?_enable_obex:BuildRequires: libical-devel libicu-devel}
 %{?_enable_btpclient:BuildRequires: libell-devel >= 0.39}
@@ -148,7 +149,7 @@ fi
 %{?_enable_obex:%_prefix/lib/systemd/user/obex.service}
 %{?_enable_obex:%_prefix/lib/systemd/user/dbus-org.bluez.obex.service}
 %_udevrulesdir/*-hid2hci.rules
-%_prefix/lib/udev/hid2hci
+%_udevdir/hid2hci
 %_bindir/bluemoon
 %_bindir/bluetoothctl
 %_bindir/btattach
@@ -171,6 +172,7 @@ fi
 %_bindir/hcitool
 %_bindir/rfcomm
 %_bindir/sdptool
+%_man7dir/rfcomm.7*
 %endif
 
 %_libdir/bluetooth/
@@ -190,6 +192,7 @@ fi
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 %_man5dir/*.5*
+%_man7dir/l2cap.7*
 
 %files cups
 %_prefix/lib/cups/backend/bluetooth
@@ -203,6 +206,13 @@ fi
 %_datadir/zsh/site-functions/_bluetoothctl
 
 %changelog
+* Wed Jul 31 2024 L.A. Kostis <lakostis@altlinux.ru> 5.77-alt1
+- 5.77.
+- Update cups BR, added missing manpages.
+
+* Wed Jul 31 2024 L.A. Kostis <lakostis@altlinux.ru> 5.76-alt1.3
+- Use udevdir macros (closes #50904).
+
 * Thu Jun 27 2024 L.A. Kostis <lakostis@altlinux.ru> 5.76-alt1.2
 - Fix FTBFS: don't use harcoded udev paths.
 
