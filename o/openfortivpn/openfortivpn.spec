@@ -1,7 +1,7 @@
 %define git %nil
 
 Name: openfortivpn
-Version: 1.20.5
+Version: 1.22.1
 Release: alt1
 
 Summary: Client for PPP+SSL VPN tunnel services
@@ -10,6 +10,8 @@ Group: System/Configuration/Networking
 
 Url: https://github.com/adrienverge/openfortivpn
 Source: https://github.com/adrienverge/openfortivpn/archive/v%version.tar.gz#/%name-%version.tar
+# https://bugzilla.altlinux.org/50987
+Patch: openfortivpn-alt-fix-shell-error.patch
 
 BuildRequires: libssl-devel libsystemd-devel
 Requires: ppp opensc
@@ -22,6 +24,7 @@ It is compatible with Fortinet VPNs.
 
 %prep
 %setup
+%patch -p2
 
 %build
 %autoreconf
@@ -40,6 +43,10 @@ It is compatible with Fortinet VPNs.
 %doc CHANGELOG.md README.md LICENSE
 
 %changelog
+* Mon Jul 29 2024 L.A. Kostis <lakostis@altlinux.ru> 1.22.1-alt1
+- 1.22.1.
+- escape shell symbols in route cmd (closes #50987).
+
 * Tue Nov 28 2023 L.A. Kostis <lakostis@altlinux.ru> 1.20.5-alt1
 - 1.20.5.
 
