@@ -2,9 +2,6 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-# LTO causes errors on armh, disable it
-%global optflags_lto %nil
-
 %def_disable debug
 %def_disable profiling
 
@@ -15,7 +12,7 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 85.0
+Version: 86.0
 Release: alt1
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
@@ -164,6 +161,12 @@ rake V=1 tests:run_unit
 %endif
 
 %changelog
+* Mon Aug 05 2024 L.A. Kostis <lakostis@altlinux.ru> 86.0-alt1
+- 86.0.
+
+* Tue Jun 25 2024 L.A. Kostis <lakostis@altlinux.ru> 85.0-alt1.1
+- Enable LTO back (as armh doesn't exists anymore).
+
 * Tue Jun 25 2024 L.A. Kostis <lakostis@altlinux.ru> 85.0-alt1
 - 85.0.
 
