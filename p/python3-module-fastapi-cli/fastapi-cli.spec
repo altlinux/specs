@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.4
+Version: 0.0.5
 Release: alt1
 
 Summary: Run and manage FastAPI apps from the command line with FastAPI CLI
@@ -25,10 +25,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
-# Package python3-module-fastapi assumes fastapi-slim provides
-%add_pyproject_deps_check_filter fastapi-slim$
 %pyproject_builddeps_metadata
-%pyproject_builddeps_metadata -- --extra standard
 %pyproject_builddeps_check
 %endif
 
@@ -64,6 +61,9 @@ your FastAPI app, manage your FastAPI project, and more.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Aug 05 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.5-alt1
+- Updated to 0.0.5.
+
 * Thu May 30 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.4-alt1
 - 0.0.3 -> 0.0.4.
 
