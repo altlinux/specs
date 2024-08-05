@@ -1,8 +1,8 @@
 %def_without build_docs
 
 Name:    synfigstudio
-Version: 1.5.1
-Release: alt3.1
+Version: 1.5.2
+Release: alt1
 
 Summary: Synfig studio - animation program
 License: GPLv2+
@@ -12,9 +12,6 @@ Url:     http://www.synfig.org
 #Source: https://github.com/synfig/synfig.git
 Source:  %name-%version.tar
 Patch:   synfigstudio-alt-fix-build.patch
-
-# https://github.com/synfig/synfig/pull/2734
-Patch2:  0001-fix-mod_libavcodec-fixed-build-with-FFMPEG-5.0.patch
 
 # FIXME: crippled zlib-devel (#40274)
 ExcludeArch: armh
@@ -115,7 +112,6 @@ Header files for Synfig studio.
 %prep
 %setup
 %patch -p1
-%patch2 -p1
 mkdir local-pkg-config
 %ifarch %e2k
 # -lgcov not there yet...
@@ -224,6 +220,9 @@ echo /usr/share/locale/zh-Hant/LC_MESSAGES/synfigstudio.mo >> %name.lang
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Aug 04 2024 Andrey Cherepanov <cas@altlinux.org> 1.5.2-alt1
+- New version.
+
 * Fri Apr 19 2024 Ivan A. Melnikov <iv@altlinux.org> 1.5.1-alt3.1
 - NMU: build with C++14 (fixes build with boost 1.85.0).
 
