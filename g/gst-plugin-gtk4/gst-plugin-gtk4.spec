@@ -1,11 +1,11 @@
 %def_disable snapshot
-%define ver_major 0.12
+%define ver_major 0.13
 
 %def_disable bootstrap
 %def_disable check
 
 Name: gst-plugin-gtk4
-Version: %ver_major.7
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer GTK4 Sink element and Paintable widget
@@ -36,7 +36,7 @@ that's capable of rendering the sink's frames.
 %setup -n %name-%version %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 [ ! -d .cargo ] && mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
@@ -56,6 +56,9 @@ cargo cinstall %opts --destdir=%buildroot
 %doc README*
 
 %changelog
+* Mon Aug 05 2024 Yuri N. Sedunov <aris@altlinux.org> 0.13.0-alt1
+- 0.13.0
+
 * Wed Jun 26 2024 Yuri N. Sedunov <aris@altlinux.org> 0.12.7-alt1
 - 0.12.7
 
