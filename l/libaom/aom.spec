@@ -16,7 +16,7 @@
 
 Name: lib%oname
 Version: 3.9.1
-Release: alt1
+Release: alt2
 Summary: AV1 Codec Library
 Group: System/Libraries
 License: BSD-2-Clause
@@ -153,6 +153,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$(pwd)/%_cmake__builddir/third_party/g
 %endif
 
 %changelog
+* Mon Aug 05 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.9.1-alt2
+- e2k: simd patch update
+
 * Mon Jul 15 2024 Anton Farygin <rider@altlinux.ru> 3.9.1-alt1
 - 3.5.0 -> 3.9.1
 
