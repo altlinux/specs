@@ -1,6 +1,6 @@
 Name:    kiosk-mate-profiles
 Version: 0.8
-Release: alt3.1
+Release: alt3.2
 
 Summary: profiles for mate desktop for kiosk mode
 License: MIT
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-Requires: alterator-kiosk >= 1.12
+Requires: alterator-kiosk
 
 %description
 A set of profiles for mate desktop for kiosk locking of desktop.
@@ -30,6 +30,9 @@ install -Dm 0644 profiles/*  %buildroot/%_sysconfdir/alterator/kiosk/profiles
 %_sysconfdir/alterator/kiosk/profiles/*
 
 %changelog
+* Mon Aug 05 2024 Anton Midyukov <antohami@altlinux.org> 0.8-alt3.2
+- do not dependency on a specific version of a alterator-kiosk
+
 * Mon Jul 08 2024 Anton Midyukov <antohami@altlinux.org> 0.8-alt3.1
 - update README after rename profiles
 
