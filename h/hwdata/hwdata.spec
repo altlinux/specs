@@ -1,5 +1,5 @@
 Name: hwdata
-Version: 0.374
+Version: 0.384
 Release: alt1
 
 Summary: Hardware identification and configuration data
@@ -51,6 +51,9 @@ rm -v %buildroot/etc/modprobe.d/dist-blacklist.conf
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Tue Aug 06 2024 Roman Alifanov <ximper@altlinux.org> 0.384-alt1
+- new version 0.384 (with rpmrb script) (ALT bug 50806)
+
 * Mon Sep 11 2023 Roman Alifanov <ximper@altlinux.org> 0.374-alt1
 - new version 0.374 (with rpmrb script)
 
