@@ -18,7 +18,7 @@
 
 Name: zabbix
 Version: 7.0.2
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A network monitor
@@ -167,6 +167,7 @@ BuildArch: noarch
 Summary: zabbix web frontend, edition for php8.1
 Group: Monitoring
 Requires: php8.1-gd php8.1-libs php8.1-mbstring php8.1-mysqli php8.1-openssl php8.1-pgsql php8.1-sockets
+Requires: php8.1-xmlreader php8.1-curl php8.1-ldap
 Requires: zabbix-phpfrontend-engine = %EVR
 BuildArch: noarch
 
@@ -174,6 +175,7 @@ BuildArch: noarch
 Summary: zabbix web frontend, edition for php8.2
 Group: Monitoring
 Requires: php8.2-gd php8.2-libs php8.2-mbstring php8.2-mysqli php8.2-openssl php8.2-pgsql php8.2-sockets
+Requires: php8.2-xmlreader php8.2-curl php8.2-ldap
 Requires: zabbix-phpfrontend-engine = %EVR
 BuildArch: noarch
 
@@ -181,6 +183,7 @@ BuildArch: noarch
 Summary: zabbix web frontend, edition for php8.3
 Group: Monitoring
 Requires: php8.3-gd php8.3-libs php8.3-mbstring php8.3-mysqli php8.3-openssl php8.3-pgsql php8.3-sockets
+Requires: php8.3-xmlreader php8.3-curl php8.3-ldap
 Requires: zabbix-phpfrontend-engine = %EVR
 BuildArch: noarch
 
@@ -850,6 +853,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Mon Aug 05 2024 Alexei Takaseev <taf@altlinux.org> 1:7.0.2-alt2
+- Add requires php8.X-xmlreader, php8.X-curl, php8.X-ldap (ALT #50854)
+
 * Thu Aug 01 2024 Alexei Takaseev <taf@altlinux.org> 1:7.0.2-alt1
 - 7.0.2
 
