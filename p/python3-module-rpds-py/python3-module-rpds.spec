@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name-py
-Version: 0.19.1
+Version: 0.20.0
 Release: alt1
 
 Summary: Python bindings to the Rust rpds crate for persistent data structures
@@ -66,6 +66,9 @@ tar xf %SOURCE1
 %python3_sitelibdir/rpds_py-%version.dist-info
 
 %changelog
+* Wed Aug 07 2024 Anton Vyatkin <toni@altlinux.org> 0.20.0-alt1
+- New version 0.20.0.
+
 * Fri Jul 26 2024 Anton Vyatkin <toni@altlinux.org> 0.19.1-alt1
 - New version 0.19.1.
 
