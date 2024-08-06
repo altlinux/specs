@@ -1,5 +1,5 @@
 Name: labwc
-Version: 0.7.2
+Version: 0.7.4
 Release: alt1
 
 Summary: A Wayland window-stacking compositor
@@ -53,6 +53,9 @@ BuildRequires: pkgconfig(libdrm)
 %_iconsdir/hicolor/scalable/apps/%{name}*.svg
 
 %changelog
+* Tue Aug 06 2024 Roman Alifanov <ximper@altlinux.org> 0.7.4-alt1
+- new version 0.7.4 (with rpmrb script)
+
 * Sat May 25 2024 Roman Alifanov <ximper@altlinux.org> 0.7.2-alt1
 - new version 0.7.2 (with rpmrb script)
 
