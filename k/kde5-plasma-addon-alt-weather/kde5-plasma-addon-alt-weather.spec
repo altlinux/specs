@@ -3,7 +3,7 @@
 
 Name: kde5-plasma-addon-alt-weather
 Version: 1.0.25
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 Plasma weather addon
@@ -47,6 +47,9 @@ The weather forecast addon for KDE Workspace 5 Plasma
 %_datadir/metainfo/*
 
 %changelog
+* Tue Jul 30 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 1.0.25-alt2
+- Update version (closes: #49309)
+
 * Tue Jul 16 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 1.0.25-alt1
 - slightly refactor and fix segfault after widget deletion (closes: #49632)
 
