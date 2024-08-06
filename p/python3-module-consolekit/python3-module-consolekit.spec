@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.7.0
+Version: 1.7.1
 Release: alt1
 
 Summary: Additional utilities for click
@@ -57,6 +57,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Aug 06 2024 Anton Zhukharev <ancieg@altlinux.org> 1.7.1-alt1
+- Updated to 1.7.1.
+
 * Mon Apr 01 2024 Anton Zhukharev <ancieg@altlinux.org> 1.7.0-alt1
 - Updated to 1.7.0.
 
