@@ -3,10 +3,10 @@
 Name: kernel-image-pine
 Release: alt1
 epoch:1
-%define kernel_need_version	6.6
+%define kernel_need_version	6.10
 # Used when kernel-source-x.y does not currently exist in repository.
-%define kernel_base_version	6.6
-%define kernel_sublevel .32
+%define kernel_base_version	6.10
+%define kernel_sublevel .3
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -14,7 +14,7 @@ Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
 # 0.0.X -- preX
 # 0.X.0 -- rcX
 # 1.0.0 -- release
-%define kernel_extra_version_numeric 1.0.0
+%define kernel_extra_version_numeric 0
 
 %define krelease	%release
 
@@ -424,6 +424,12 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Aug 05 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.10.3-alt1
+- 6.10.3
+
+* Wed Jul 24 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.10.0-alt1
+- 6.10
+
 * Thu May 30 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.6.32-alt1
 - 6.6.32
 
@@ -486,66 +492,3 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 
 * Tue Dec 12 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.6.6-alt1
 - orange-pi-6.6-20231211-1327
-
-* Mon Dec 11 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.6.5-alt1
-- orange-pi-6.6-20231208-1005
-
-* Tue Dec 05 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.6.4-alt1
-- 6.6.4
-
-* Thu Nov 30 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.6.3-alt1
-- orange-pi-6.6-20231128-2239
-
-* Mon Nov 27 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.6.2-alt1
-- 6.6.2
-
-* Fri Nov 17 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.6.1-alt2
-- backlight adjustment step has been reduced
-- proximity sensor is detected correctly
-
-* Thu Nov 09 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.6.1-alt1
-- 6.6.1
-
-* Tue Nov 07 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.6.0-alt1
-- 6.6.0
-
-* Thu Oct 19 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.4.16-alt2
-- enabled modem power control driver
-
-* Fri Sep 22 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.4.16-alt1
-- 6.4.16
-
-* Mon Aug 14 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.4.10-alt1
-- 6.4.10
-
-* Wed Aug 09 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.4.9-alt1
-- 6.4.9
-
-* Tue Aug 08 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.4.8-alt1
-- 6.4.8
-
-* Mon Jul 31 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.4.7-alt1
-- 6.4.7
-
-* Tue Jul 04 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.2.14-alt6
-- ANDROID_BINDER_DEVICES: enabled anbox
-- revert mm: export zap_page_range_single
-
-* Mon Jul 03 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.2.14-alt5
-- kernel-headers-modules: add scripts/modules-check.sh
-
-* Mon Jul 03 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.2.14-alt4
-- kernel-headers-modules: add scripts/pahole-flags.sh scripts/check-local-export
-
-* Sun Jun 18 2023 Anton Midyukov <antohami@altlinux.org> 1:6.2.14-alt3
-- Replace devicetree to /boot
-
-* Tue Jun 06 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.2.14-alt2
-- mm: export zap_page_range_single
-
-* Thu Jun 01 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.2.14-alt1
-- 6.2.14
-
-* Tue May 16 2023 Valery Inozemtsev <shrek@altlinux.ru> 1:6.2.12-alt1
-- PinePhone Pro
-
