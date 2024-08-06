@@ -3,7 +3,7 @@
 %endif
 
 Name: mongo6.0
-Version: 6.0.15
+Version: 6.0.16
 Release: alt1
 Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
@@ -98,7 +98,7 @@ MongoDB instance.
 %define opt_wt --wiredtiger=on
 %endif
 %define build_opts \\\
-       -j 4 \\\
+       -j 8 \\\
        --use-system-tcmalloc \\\
        --use-system-pcre \\\
        --use-system-snappy \\\
@@ -198,6 +198,10 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Tue Aug 06 2024 Alexei Takaseev <taf@altlinux.org> 6.0.16-alt1
+- 6.0.16
+- Fixes: CVE-2024-6375
+
 * Wed May 22 2024 Alexei Takaseev <taf@altlinux.org> 6.0.15-alt1
 - 6.0.15
 
