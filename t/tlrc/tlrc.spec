@@ -3,7 +3,7 @@
 %def_with check
 
 Name: tlrc
-Version: 1.9.2
+Version: 1.9.3
 Release: alt1
 
 Summary: A tldr client written in Rust
@@ -59,5 +59,8 @@ install -Dpm 644 tldr.1 %buildroot%_man1dir/
 %_man1dir/tldr.*
 
 %changelog
+* Tue Aug 06 2024 Alexander Stepchenko <geochip@altlinux.org> 1.9.3-alt1
+- 1.9.2 -> 1.9.3
+
 * Fri Jul 12 2024 Alexander Stepchenko <geochip@altlinux.org> 1.9.2-alt1
 - Initial build for ALT.
