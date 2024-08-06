@@ -4,8 +4,8 @@
 %def_with tests
 
 Name:    python3-module-%pypi_name
-Version: 1.24.0
-Release: alt2
+Version: 1.26.0
+Release: alt1
 
 Summary: OpenTelemetry Python API and SDK
 
@@ -13,8 +13,6 @@ License: Apache-2.0
 Group:   Development/Python3
 URL:     https://pypi.org/project/opentelemetry-sdk
 VCS:     https://github.com/open-telemetry/opentelemetry-python
-
-Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
@@ -183,7 +181,6 @@ done
 %files -n python3-module-%pypi_name-api
 %doc %pypi_name-api/{LICENSE,README.rst}
 %python3_sitelibdir/%pypi_name/_logs/
-%python3_sitelibdir/%pypi_name/__pycache__/
 %python3_sitelibdir/%pypi_name/attributes/
 %python3_sitelibdir/%pypi_name/baggage/
 %python3_sitelibdir/%pypi_name/context/
@@ -192,9 +189,8 @@ done
 %python3_sitelibdir/%pypi_name/propagators/
 %python3_sitelibdir/%pypi_name/trace/
 %python3_sitelibdir/%pypi_name/util/
-%python3_sitelibdir/%pypi_name/environment_variables.py
-%python3_sitelibdir/%pypi_name/py.typed
-%python3_sitelibdir/%pypi_name/version.py
+%python3_sitelibdir/%pypi_name/environment_variables/
+%python3_sitelibdir/%pypi_name/version/
 %python3_sitelibdir/%{pypi_name}_api-%version.dist-info
 
 %files -n python3-module-%pypi_name-proto
@@ -238,6 +234,9 @@ done
 %doc *.md LICENSE docs/examples
 
 %changelog
+* Thu Aug 01 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.26.0-alt1
+- New version
+
 * Wed Jul 24 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.24.0-alt2
 - Additional subpackages exporter-otlp-{common,grpc,http}
 
