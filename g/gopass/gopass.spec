@@ -4,7 +4,7 @@
 %def_with check
 
 Name: gopass
-Version: 1.15.13
+Version: 1.15.14
 Release: alt1
 
 Summary: The slightly more awesome standard unix password manager for teams
@@ -74,6 +74,9 @@ cd .build/src/%import_path
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Tue Aug 06 2024 Alexander Stepchenko <geochip@altlinux.org> 1.15.14-alt1
+- 1.15.13 -> 1.15.14
+
 * Wed May 29 2024 Alexander Stepchenko <geochip@altlinux.org> 1.15.13-alt1
 - 1.15.11 -> 1.15.13
 
