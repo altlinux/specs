@@ -3,7 +3,7 @@
 %define thisdocdir %{_defaultdocdir}/%{name}
 
 Name: python3-module-%{pyname}
-Version: 0.19.0
+Version: 0.20.0
 Release: alt1
 
 Summary: Generic function library initially developed for cve-manager
@@ -45,6 +45,10 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Mon Aug 05 2024 Alexey Appolonov <alexey@altlinux.org> 0.20.0-alt1
+- New ability of the "Printer" class to perform some of the most basic HTML
+  formatting.
+
 * Thu Jul 04 2024 Alexey Appolonov <alexey@altlinux.org> 0.19.0-alt1
 - New ability of the "Printer" class to display the time spent on each
   operation.
