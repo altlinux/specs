@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: update-kernel
-Version: 1.17
+Version: 1.18
 Release: alt1
 Summary: Update kernel and modules
 License: GPL-2.0-or-later
@@ -59,6 +59,10 @@ make check
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Fri Aug 02 2024 Vitaly Chikunov <vt@altlinux.org> 1.18-alt1
+- update-kernel: Emit error on unrecognized argument(s).
+- update-kernel: Show usage on invalid option instead of full help.
+
 * Wed Jul 24 2024 Vitaly Chikunov <vt@altlinux.org> 1.17-alt1
 - Speed up 'update-kernel --list' run under user.
 - Support 'latest' virtual flavour to install highest available version of
