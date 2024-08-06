@@ -120,8 +120,8 @@
 %endif
 
 Name:    samba
-Version: 4.20.2
-Release: alt2
+Version: 4.20.3
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -935,7 +935,7 @@ cp -a ../%rname-%version ../%rname-%version-separate-heimdal-server
 %define configure_common() \
 	%configure \\\
 	--enable-fhs \\\
-	--vendor-name=%release \\\
+	--vendor-suffix=%release \\\
 	--with-piddir=%_samba_piddir \\\
 	--with-sockets-dir=%_samba_sockets_dir \\\
 	--with-lockdir=%_localstatedir/lib/samba \\\
@@ -2225,6 +2225,18 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Fri Aug 02 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.20.3-alt1
+- Update to stable release of Samba 4.20
+- Major fixes from upstream (Samba#15683, Samba#15655, Samba#15685, Samba#15603,
+                             Samba#15621)
+  + Running samba-bgqd as a standalone systemd service does not work.
+  + When claims enabled with heimdal kerberos, unable to log on to a
+    Windows computer when user account need to change their own password.
+  + Samba does not parse SDDL found in defaultSecurityDescriptor in
+    AD_DS_Classes_Windows_Server_v1903.ldf
+  + Heimdal ignores _gsskrb5_decapsulate errors in init_sec_context/repl_mutual.
+  + s4:ldap_server: does not support tls channel bindings for sasl binds.
+
 * Fri Jul 19 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.20.2-alt2
 - New option 'idmap reverse cache update' to control reverse name to sid cache
   behaviour that Winbind's idmap interface additionally saved to namemap cache,
