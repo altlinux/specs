@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.1
+%define ver_major 0.2
 %define rdn_name org.gnome.App-list
 
 %def_enable check
@@ -51,5 +51,8 @@ by the Software (https://gitlab.gnome.org/GNOME/gnome-software) app.
 %doc README* NEWS
 
 %changelog
+* Tue Aug 06 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2-alt1
+- 0.2
+
 * Mon Aug 05 2024 Yuri N. Sedunov <aris@altlinux.org> 0.1-alt1
 - first build for Sisyphus.
