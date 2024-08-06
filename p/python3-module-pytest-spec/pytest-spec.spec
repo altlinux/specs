@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.2.0
+Version: 4.0.0
 Release: alt1
 
 Summary: pytest plugin to display test execution output like a SPECIFICATION
@@ -50,8 +50,6 @@ Available features:
 %pyproject_install
 
 %check
-# remove extra pytest dependencies
-sed -i '/addopts/d' setup.cfg
 %pyproject_run_pytest
 
 %files
@@ -60,6 +58,9 @@ sed -i '/addopts/d' setup.cfg
 %python3_sitelibdir/pytest_spec-%version.dist-info
 
 %changelog
+* Tue Aug 06 2024 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
+- Automatically updated to 4.0.0.
+
 * Sun Jun 02 2024 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
 - Build new version.
 - Build with check.
