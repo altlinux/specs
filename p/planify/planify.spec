@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Planify
@@ -103,6 +103,9 @@ This package contains files necessary to develop Planify plugins.
 %_vapidir/%_name.*
 
 %changelog
+* Tue Aug 06 2024 Yuri N. Sedunov <aris@altlinux.org> 4.10.6-alt1
+- 4.10.6
+
 * Sat Aug 03 2024 Yuri N. Sedunov <aris@altlinux.org> 4.10.5-alt1
 - 4.10.5
 
