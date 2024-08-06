@@ -52,7 +52,7 @@
 Name: freeipa
 # don't forget to update .gear/rules
 Version: 4.11.2
-Release: alt1
+Release: alt2
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -134,7 +134,7 @@ BuildRequires: python3(polib)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest-multihost)
 BuildRequires: python3-module-sssdconfig >= %sssd_version
-BuildRequires: python3(netifaces)
+BuildRequires: python3(ifaddr)
 BuildRequires: python3(jwcrypto)
 BuildRequires: python3(augeas)
 BuildRequires: python3(sqlite3)
@@ -1100,6 +1100,15 @@ fi
 %python3_sitelibdir/ipaplatform-%version-py%_python3_version.egg-info/
 
 %changelog
+* Sat Aug 03 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.11.2-alt2
+- Fixed compatibility with Cryptography 43 (closes: #51063).
+- Backported upstream patches for known issue:
+  + https://pagure.io/freeipa/issue/9641
+- Backported replacment python module netifaces with ifaddr:
+  + https://pagure.io/freeipa/issue/9555
+- Fix compatibility with modern versions of netaddr:
+  + https://pagure.io/freeipa/issue/9645
+
 * Mon Jun 10 2024 Stanislav Levin <slev@altlinux.org> 4.11.2-alt1
 - 4.11.1 -> 4.11.2 (fixes: CVE-2024-3183, CVE-2024-2698).
 
