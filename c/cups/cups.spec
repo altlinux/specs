@@ -1,6 +1,6 @@
 Name: cups
 Version: 2.4.10
-Release: alt1
+Release: alt2
 
 Summary: Common Unix Printing System - server package
 License: Apache-2.0
@@ -23,6 +23,9 @@ Source95: %name.unused
 Source96: repatch_spec.sh
 Source97: alt_ru.po
 Source98: pofix.py
+
+# Patch from the git tree (cherry-pick upstream)
+Patch0: %name-%version-%release.patch
 
 ## FC patches
 Patch1: FC-system-auth.patch
@@ -139,6 +142,8 @@ services using the main CUPS library "libcups".
 
 %prep
 %setup -n %name-%version
+
+%patch0 -p1
 
 ## FC apply patches
 %patch1 -p1 -b .system-auth
@@ -400,6 +405,11 @@ fi
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 
 %changelog
+* Mon Aug 05 2024 Anton Farygin <rider@altlinux.ru> 2.4.10-alt2
+- Merged with the upstream 2.4.x branch
+- Applyed upstream fix against memory corruption
+  in the cgiSetVariable (Closes: #50742, #50732, #50754)
+
 * Wed Jun 26 2024 Anton Farygin <rider@altlinux.ru> 2.4.10-alt1
 - 2.4.10
 
