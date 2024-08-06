@@ -3,7 +3,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 0.12.0
+Version: 0.12.1
 Release: alt1
 
 Summary: Asynchronous interface for peewee ORM powered by asyncio
@@ -36,6 +36,7 @@ asyncio for peewee ORM.
 
 %prep
 %setup
+sed -i 's/0.12.0/%version/' pyproject.toml
 
 %build
 %pyproject_build
@@ -55,6 +56,9 @@ asyncio for peewee ORM.
 %python3_sitelibdir/__pycache__
 
 %changelog
+* Tue Aug 06 2024 Grigory Ustinov <grenka@altlinux.org> 0.12.1-alt1
+- Automatically updated to 0.12.1.
+
 * Sun Jul 28 2024 Grigory Ustinov <grenka@altlinux.org> 0.12.0-alt1
 - Automatically updated to 0.12.0.
 
