@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpui
-Version: 0.2.45
+Version: 0.2.46
 Release: alt1
 
 Summary: Group policy editor
@@ -112,6 +112,12 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Tue Aug 6 2024 Vladimir Rubanov <august@altlinux.org> 0.2.46-alt1
+- 0.2.46-alt1
+- Fixes:
+  + Fix saving of square brakets in pol file (Closes: 50706).
+  + Fix checkbox based policies (Closes: 48970, 47742).
+
 * Fri Jun 6 2024 Vladimir Rubanov <august@altlinux.org> 0.2.45-alt1
 - 0.2.45-alt1
 - Fixes:
