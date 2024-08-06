@@ -1,6 +1,6 @@
 Name: cosmic-comp
 Version: 0.0.1176.g9185
-Release: alt1
+Release: alt2
 
 Summary: Wayland compositor for the COSMIC DE
 
@@ -10,6 +10,8 @@ Url: https://github.com/pop-os/cosmic-comp
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Source1: vendor.tar
+
+Patch: cosmic-comp-0.0.1176.g9185-linux-char-loongarch.patch
 
 ExcludeArch: armh i586 ppc64le
 
@@ -113,6 +115,12 @@ rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
 strip = false
 EOF
 
+# allow patching vendored rust code
+sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+	./vendor/linux-raw-sys/.cargo-checksum.json
+
+%patch -p1
+
 %build
 %make_build
 
@@ -132,6 +140,10 @@ EOF
 %_prefix/lib/systemd/user/cosmic-comp.service
 
 %changelog
+* Tue Aug 06 2024 Ivan A. Melnikov <iv@altlinux.org> 0.0.1176.g9185-alt2
+- NMU: Fix loongarch E0412 c_char issue (fixes FTBFS on loongarch64)
+  (by k0tran@).
+
 * Tue Jul 30 2024 Leontiy Volodin <lvol@altlinux.org> 0.0.1176.g9185-alt1
 - New version 0-1176-g9185ab35.
 
