@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 128.0.3
+Version: 129.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -383,6 +383,24 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Aug 07 2024 Ajrat Makhmutov <rauty@altlinux.org> 129.0-alt1
+- New version (129.0).
+- Security fixes:
+  + CVE-2024-7518: Fullscreen notification dialog can be obscured by document content
+  + CVE-2024-7519: Out of bounds memory access in graphics shared memory handling
+  + CVE-2024-7520: Type confusion in WebAssembly
+  + CVE-2024-7521: Incomplete WebAssembly exception handing
+  + CVE-2024-7522: Out of bounds read in editor component
+  + CVE-2024-7523: Document content could partially obscure security prompts
+  + CVE-2024-7524: CSP strict-dynamic bypass using web-compatibility shims
+  + CVE-2024-7525: Missing permission check when creating a StreamFilter
+  + CVE-2024-7526: Uninitialized memory used by WebGL
+  + CVE-2024-7527: Use-after-free in JavaScript garbage collection
+  + CVE-2024-7528: Use-after-free in IndexedDB
+  + CVE-2024-7529: Document content could partially obscure security prompts
+  + CVE-2024-7530: Use-after-free in JavaScript code coverage collection
+  + CVE-2024-7531: PK11_Encrypt using CKM_CHACHA20 can reveal plaintext on Intel Sandy Bridge machines
+
 * Fri Jul 26 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.0.3-alt1
 - New version (128.0.3).
 - Correct the changelog for 128.0-alt2.
