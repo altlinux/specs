@@ -3,7 +3,7 @@
 %define binname dust
 
 Name: du-dust
-Version: 1.0.0
+Version: 1.1.1
 Release: alt1
 
 Summary: A more intuitive version of du in rust
@@ -71,6 +71,9 @@ install -pD -m644 completions/%binname.fish \
 %_datadir/fish/vendor_completions.d/%binname.fish
 
 %changelog
+* Wed Aug 07 2024 Alexandr Shashkin <dutyrok@altlinux.org> 1.1.1-alt1
+- Updated to 1.1.1.
+
 * Fri Mar 29 2024 Alexandr Shashkin <dutyrok@altlinux.org> 1.0.0-alt1
 - 0.8.6 -> 1.0.0.
 
