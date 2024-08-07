@@ -1,6 +1,6 @@
 %define soname 1
 Name: flashrom
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: Universal flash programming utility
@@ -14,8 +14,12 @@ Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 BuildRequires: libftdi1-devel libpci-devel zlib-devel libusb-devel
-BuildRequires: libjaylink-devel libcmocka-devel
-BuildRequires: gcc meson
+BuildRequires: libjaylink-devel libcmocka-devel libpci-devel
+BuildRequires: gcc meson python3-module-sphinx-sphinx-build-symlink
+
+# https://github.com/flashrom/flashrom/issues/186
+# https://bugzilla.redhat.com/show_bug.cgi?id=1693831
+%global optflags_lto %nil
 
 %description
 flashrom is a tool for identifying, reading, writing,
@@ -71,6 +75,24 @@ Requires: lib%name%soname = %EVR
 %description -n lib%name-devel
 Files for development with %{name}.
 
+%package doc
+Summary: %name html documentation
+Group: Documentation
+BuildArch: noarch
+
+%description doc
+%name html documentation
+
+%package -n bash-completion-%name
+Summary: Bash completion for %name
+Group: Shells
+BuildArch: noarch
+Requires: bash-completion
+Requires: %name = %version-%release
+
+%description -n bash-completion-%name
+Bash completion for %name.
+
 %prep
 %setup
 %patch0 -p1
@@ -80,6 +102,12 @@ echo "VERSION = %version" >versioninfo.inc
 echo "MAN_DATE = `date '+%%Y-%%m-%%d'`">>versioninfo.inc
 sed -e 's/MODE="[0-9]*", GROUP="plugdev"/TAG+="uaccess"/g' util/flashrom_udev.rules -i
 %meson \
+  -Dman-pages=enabled \
+%ifarch ppc64le
+  -Dtests=disabled \
+%else
+  -Dtests=enabled \
+%endif
 %ifarch %{ix86} x86_64
   -Dprogrammer=[\'auto\',\'jlink_spi\']
 %endif
@@ -90,8 +118,11 @@ sed -e 's/MODE="[0-9]*", GROUP="plugdev"/TAG+="uaccess"/g' util/flashrom_udev.ru
 install -D -p -m 0644 util/flashrom_udev.rules %buildroot/%_udevrulesdir/60_flashrom.rules
 rm -f %buildroot%_libdir/libflashrom.a
 
+%check
+%__meson_test
+
 %files
-%doc README
+%doc README.rst COPYING
 %_udevrulesdir/60_flashrom.rules
 %_sbindir/*
 %_man8dir/*
@@ -104,7 +135,20 @@ rm -f %buildroot%_libdir/libflashrom.a
 %_includedir/libflashrom.h
 %_pkgconfigdir/flashrom.pc
 
+%files doc
+%_docdir/%name
+
+%files -n bash-completion-%name
+%_datadir/bash-completion/completions/*
+
 %changelog
+* Wed Aug 07 2024 L.A. Kostis <lakostis@altlinux.ru> 1.4.0-alt1
+- 1.4.0.
+- BR: added libpci-devel.
+- BR: added sphinx to build man-pages.
+- Added -doc and bash completion packages.
+- Enabled tests (and disable LTO as they don't work together).
+
 * Fri Mar 17 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3.0-alt1
 - 1.3.0.
 
