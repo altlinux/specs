@@ -1,7 +1,7 @@
 %def_disable check
 
 Name:    munge
-Version: 0.5.15
+Version: 0.5.16
 Release: alt1
 
 Summary: MUNGE authentication service
@@ -131,5 +131,8 @@ fi
 %_libdir/lib%name.so.*
 
 %changelog
+* Tue Jul 23 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.5.16-alt1
+- new version 0.5.16
+
 * Tue Mar 26 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.5.15-alt1
 - Initial build for Sisyphus (Closes: #37332)
