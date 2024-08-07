@@ -1,6 +1,6 @@
 Name: clisp
 Version: 2.49.92
-Release: alt2
+Release: alt2.1
 Epoch: 1
 
 Summary: Common Lisp (ANSI CL) implementation
@@ -42,6 +42,7 @@ GNU CLISP runs Maxima, ACL2 and many other Common Lisp packages.
 
 %prep
 %setup
+cp -f /usr/share/autoconf/build-aux/config.{guess,sub} src/build-aux/
 
 %build
 sh configure --prefix=%prefix --libdir=%_libdir \
@@ -74,6 +75,10 @@ make check
 %_man1dir/*
 
 %changelog
+* Tue Aug 06 2024 Ivan A. Melnikov <iv@altlinux.org> 1:2.49.92-alt2.1
+- Update config.guess and config.sub from current autoconf
+  (fixes FTBFS on loongarch64).
+
 * Thu Jul 25 2019 Ivan A. Melnikov <iv@altlinux.org> 1:2.49.92-alt2
 - Apply debian patch to fix tests on mipsel.
 

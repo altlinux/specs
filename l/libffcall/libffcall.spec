@@ -1,6 +1,6 @@
 Name: libffcall
 Version: 2.4
-Release: alt2
+Release: alt3
 
 Summary: Foreign Function Call Libraries
 License: GPLv2
@@ -9,6 +9,7 @@ Group: System/Libraries
 Url: https://www.gnu.org/software/libffcall/
 Source: %name-%version.tar
 Patch: libffcall-2.4-e2k.patch
+Patch1: libffcall-2.4-loongarch64.patch
 
 %define desc This is a library which can be used to build foreign function\
 call interfaces in embedded interpreters.
@@ -29,6 +30,9 @@ This package contains development headers for FFCall libraries
 %setup
 %ifarch %e2k
 %patch -p1
+%endif
+%ifarch loongarch64
+%patch1 -p1
 %endif
 
 %build
@@ -56,6 +60,10 @@ rm -v %buildroot%_libdir/*.a
 %_mandir/man?/*
 
 %changelog
+* Tue Aug 06 2024 Ivan A. Melnikov <iv@altlinux.org> 2.4-alt3
+- Add loongarch64 support via patch from Bruno Haible
+  with minor fixes from iv@.
+
 * Thu Apr 27 2023 Michael Shigorin <mike@altlinux.org> 2.4-alt2
 - E2K: added arch support patch by ilyakurdyukov@
 

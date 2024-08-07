@@ -36,7 +36,7 @@
 Name: maxima
 Version: 5.47.0
 %define maxima_version 5.47.0
-Release: alt4
+Release: alt4.1
 
 Summary: Maxima Computer Algebra System
 License: GPLv2
@@ -71,8 +71,6 @@ Source11: http://maxima.sourceforge.net/docs/maximabook/maximabook-19-Sept-2004.
 BuildRequires(pre): rpm-macros-sbcl
 BuildRequires: python3-devel rpm-build-python3
 
-ExclusiveArch: %sbcl_arches %e2k ppc64le armh
-# ppc64le armh
 %description
 Maxima is a full symbolic computation program.  It is full featured
 doing symbolic manipulation of polynomials, matrices, rational
@@ -601,6 +599,9 @@ rm -f %buildroot%_datadir/maxima/%maxima_version/share/test_encodings/escape-dou
 %endif
 
 %changelog
+* Tue Aug 06 2024 Ivan A. Melnikov <iv@altlinux.org> 5.47.0-alt4.1
+- NMU: drop ExclusiveArch (fixes FTBFS on loongarch64).
+
 * Mon Dec 04 2023 Ilya Mashkin <oddity@altlinux.ru> 5.47.0-alt4
 - Skip ppc64le, armh
 
