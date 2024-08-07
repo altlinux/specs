@@ -1,7 +1,7 @@
 Summary: Automatically logout users by idle timeouts
 Name: timeoutd
 Version: 1.5.2
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Base
 Packager: Paul Wolneykien <manowar@altlinux.org>
@@ -25,7 +25,7 @@ timeoutd is also able to restrict users running X.
 %make_build CFLAGS="$RPM_OPT_FLAGS -DWITH_SYSTEMD"
 
 %install
-%makeinstall_std
+%makeinstall_std unitdir=%_unitdir
 mkdir -p %buildroot%_sysconfdir/%name/messages
 
 %files
@@ -40,6 +40,9 @@ mkdir -p %buildroot%_sysconfdir/%name/messages
 %_unitdir/%name.*
 
 %changelog
+* Wed Aug 07 2024 Paul Wolneykien <manowar@altlinux.org> 1.5.2-alt2
+- Fixed build: Pass unitdir to make.
+
 * Thu Dec 22 2022 Paul Wolneykien <manowar@altlinux.org> 1.5.2-alt1
 - Do not intercept SIGSEGV.
 - Quit on SIGINT and SIGQUIT in foreground mode.
