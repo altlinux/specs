@@ -1,6 +1,6 @@
 Name: wakefix
 Version: 1.0.4
-Release: alt1
+Release: alt2
 
 Summary: An ACPI wakeup event table control tool and service
 License: GPLv3
@@ -35,7 +35,7 @@ on boot and resume.
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%make_install install DESTDIR=%buildroot unitdir=%_unitdir
 
 %files
 %_sbindir/%name
@@ -52,6 +52,9 @@ on boot and resume.
 %config(noreplace) %_sysconfdir/sysconfig/fanfix.conf
 
 %changelog
+* Wed Aug 07 2024 Paul Wolneykien <manowar@altlinux.org> 1.0.4-alt2
+- Fixed build: Pass unitdir to make.
+
 * Sat Feb 20 2021 Paul Wolneykien <manowar@altlinux.org> 1.0.4-alt1
 - Fix: Always show the fan speed.
 - Added fanfix(8) manual page.
