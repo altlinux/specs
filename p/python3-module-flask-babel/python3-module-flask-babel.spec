@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 4.1.0
-Release: alt1
+Release: alt2
 
 Summary: i18n and l10n support for Flask based on Babel and pytz
 License: BSD-3-Clause
@@ -52,6 +52,10 @@ This is based on the Python babel and pytz modules.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Aug 07 2024 Ivan A. Melnikov <iv@altlinux.org> 4.1.0-alt2
+- Fix patch changing list-translations() ordering in tests
+  (fixes FTBFS on loongarch64) (by k0tran@).
+
 * Wed Jul 31 2024 Anton Vyatkin <toni@altlinux.org> 4.1.0-alt1
 - New version 4.1.0.
 
