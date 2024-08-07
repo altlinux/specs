@@ -1,5 +1,5 @@
 Name: nautilus-open-any-terminal
-Version: 0.5.1
+Version: 0.6.0
 Release: alt1
 
 Summary: Extension for nautilus, which adds an context-entry for opening other terminal emulators
@@ -10,6 +10,8 @@ Url: https://github.com/Stunkymonkey/nautilus-open-any-terminal
 BuildArch: noarch
 
 Source: %name-%version.tar
+
+%filter_from_requires /Caja/d
 
 %add_python3_path %_datadir/nautilus-python/extensions
 Requires: nautilus-python typelib(Gtk) = 4.0
@@ -47,13 +49,20 @@ And others...
 %doc README.md
 %python3_sitelibdir/nautilus_open_any_terminal/
 %exclude %python3_sitelibdir/nautilus_open_any_terminal/locale
-%python3_sitelibdir/%{pyproject_distinfo nautilus_open_any_terminal}/
+
+# FIXME
+%python3_sitelibdir/nautilus_open_any_terminal-0.0.0.dist-info/
 
 %_datadir/glib-2.0/schemas/com.github.stunkymonkey.%name.gschema.xml
 %_datadir/nautilus-python/extensions/nautilus_open_any_terminal.py
 %_datadir/nautilus-python/extensions/__pycache__/*
 
+%exclude %_datadir/caja-python/extensions/nautilus_open_any_terminal.py
+
 %changelog
+* Tue Aug 06 2024 Roman Alifanov <ximper@altlinux.org> 0.6.0-alt1
+- new version 0.6.0 (with rpmrb script)
+
 * Sat Mar 23 2024 Roman Alifanov <ximper@altlinux.org> 0.5.1-alt1
 - new version 0.5.1 (with rpmrb script)
 
