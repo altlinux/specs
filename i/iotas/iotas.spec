@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: iotas
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Simple note taking with Nextcloud Notes
@@ -27,7 +27,7 @@ Source: %name-%version.tar
 Requires: typelib(Adw) = 1
 Requires: typelib(GtkSource) = 5
 Requires: typelib(WebKit) = 6.0
-Requires: gnome-keyring
+Requires: dconf gnome-keyring
 
 BuildArch: noarch
 
@@ -77,6 +77,9 @@ on sync with Nextcloud Notes.
 %doc README*
 
 %changelog
+* Wed Aug 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
+- 0.8.1
+
 * Thu Jun 06 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
 - 0.8.0
 
