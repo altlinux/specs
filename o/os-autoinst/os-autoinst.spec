@@ -2,7 +2,7 @@
 
 Name: os-autoinst
 Version: 4.6
-Release: alt17.git58dd214a
+Release: alt17.git84368e78
 Summary: OS-level test automation
 License: GPLv2+
 Group: Development/Tools
@@ -144,6 +144,10 @@ export OPENQA_TEST_TIMEOUT_SCALE_CI=10
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Tue Aug 06 2024 Alexandr Antonov <aas@altlinux.org> 4.6-alt17.git84368e78
+- update to current version
+- Commit hash: 84368e78
+
 * Tue May 28 2024 Alexandr Antonov <aas@altlinux.org> 4.6-alt17.git58dd214a
 - update to current version
 - Commit hash: 58dd214a

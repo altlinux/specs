@@ -26,7 +26,7 @@
 
 Name: openqa
 Version: 4.6
-Release: alt16.git1c98e2217
+Release: alt16.git653e0d8a3
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -204,8 +204,8 @@ tar xf %SOURCE2
 %patch0 -p1
 %patch1 -p1
 #sed -i -e 's|../fonts/|https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/fonts/|g' assets/cache/cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css
-sed -i -e 's|/usr/lib/systemd/|/lib/systemd/|'  systemd/systemd-openqa-generator
-sed -i -e 's|/usr/lib/systemd/|/lib/systemd/|' -e 's|/usr/lib/tmpfiles.d|/lib/tmpfiles.d|'  Makefile
+#sed -i -e 's|/usr/lib/systemd/|/lib/systemd/|'  systemd/systemd-openqa-generator
+#sed -i -e 's|/usr/lib/systemd/|/lib/systemd/|' -e 's|/usr/lib/tmpfiles.d|/lib/tmpfiles.d|'  Makefile
 sed -i -e 's|https://|cache/|' -e 's|http://|cache/|' assets/assetpack.def
 sed -i -e 's,apache2\.service,httpd2\.service,g' systemd/*.service
 sed -i -e 's,"$(DESTDIR)"/etc/apache2/vhosts.d,"$(DESTDIR)"%_sysconfdir/httpd2/conf/sites-available,g' Makefile
@@ -214,7 +214,7 @@ sed -i -e 's,/etc/apache2/ssl.crt,%_sysconfdir/pki/tls/certs,g' etc/apache2/vhos
 sed -i -e 's,/etc/apache2/ssl.key,%_sysconfdir/pki/tls/private,g' etc/apache2/vhosts.d/*
 sed -i -e 's,<IfDefine SSL>,<IfDefine ssl_module>,g' container/webui/openqa-ssl.conf
 sed -i -e 's,<IfDefine SSL>,<IfDefine ssl_module>,g' etc/apache2/vhosts.d/openqa-ssl.conf.template
-sed -i -e 's,/usr/bin/systemd-tmpfiles --create /etc/tmpfiles.d/openqa.conf,/sbin/systemd-tmpfiles --create /lib/tmpfiles.d/openqa.conf,g' systemd/systemd-openqa-generator
+sed -i -e 's,/usr/bin/systemd-tmpfiles --create /etc/tmpfiles.d/openqa.conf,/sbin/systemd-tmpfiles --create /usr/lib/tmpfiles.d/openqa.conf,g' systemd/systemd-openqa-generator
 #nginx
 sed -i -e 's,"$(DESTDIR)"/etc/nginx/vhosts.d,"$(DESTDIR)"%_sysconfdir/nginx/sites-available.d,g' Makefile
 sed -i -e 's,vhosts.d/,sites-available.d/,g' etc/nginx/vhosts.d/openqa.conf.template
@@ -436,7 +436,7 @@ fi
 %config(noreplace) %_sysconfdir/openqa/workers.ini
 %config(noreplace) %attr(0400,_openqa-worker,root) %_sysconfdir/openqa/client.conf
 %dir %_unitdir
-/lib/systemd/system-generators/systemd-openqa-generator
+/usr/lib/systemd/system-generators/systemd-openqa-generator
 %_unitdir/openqa-worker.target
 %_unitdir/openqa-worker.slice
 %_unitdir/openqa-worker@.service
@@ -511,6 +511,10 @@ fi
 %files single-instance-nginx
 
 %changelog
+* Tue Aug 06 2024 Alexandr Antonov <aas@altlinux.org> 4.6-alt16.git653e0d8a3
+- update to current version
+- Commit hash: 653e0d8a3
+
 * Tue May 28 2024 Alexandr Antonov <aas@altlinux.org> 4.6-alt16.git1c98e2217
 - update to current version
 - Commit hash: 1c98e2217
