@@ -1,6 +1,6 @@
 Name:     state-change-notify
 Version:  0.1.0
-Release:  alt3
+Release:  alt4
 
 Summary:  System state transition notifications helper
 License:  GPL-3.0-or-later
@@ -57,7 +57,7 @@ notifications about system state transitions by E-Mail.
 %make_build
 
 %install
-%makeinstall_std
+%makeinstall_std unitdir=%_unitdir
 
 %files
 %dir %_sysconfdir/%name
@@ -76,6 +76,9 @@ notifications about system state transitions by E-Mail.
 %_man5dir/%name-mail.5*
 
 %changelog
+* Wed Aug 07 2024 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt4
+- Fixed build: Pass unitdir to make.
+
 * Mon Nov 25 2019 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt3
 - Fix/improve: Flush the Postfix mail queue after notification.
 
