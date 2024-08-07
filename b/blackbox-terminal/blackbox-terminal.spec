@@ -3,7 +3,7 @@
 
 Name: blackbox-terminal
 Version: 0.14.0
-Release: alt8.gitd693b92
+Release: alt9.git53be998
 
 Summary: A beautiful GTK 4 terminal
 License: GPL-3.0
@@ -74,6 +74,9 @@ EOF
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Wed Aug 7 2024 Vladimir Didenko <cow@altlinux.org> 0.14.0-alt9.git53be998
+- New version
+
 * Tue Mar 5 2024 Vladimir Didenko <cow@altlinux.org> 0.14.0-alt8.gitd693b92
 - Fix undefined reference build issue
 
