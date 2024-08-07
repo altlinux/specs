@@ -2,7 +2,7 @@
 
 Name: hping3
 Version: 0.0.%snap
-Release: alt7
+Release: alt8
 
 Summary: TCP/IP stack auditing and much more
 License: GPLv2
@@ -11,7 +11,7 @@ Group: Security/Networking
 Url: http://www.hping.org
 Source: %url/hping3-%snap.tar.gz
 Patch1: hping3-20051105-cflags.patch
-Patch2: hping3-bytesex.patch
+Patch2: hping3-20051105-bytesex.patch
 Patch3: hping3-20051105-pcap.patch
 Patch4: hping3-20051105-willalwaysoverflow.patch
 Patch5: hping3-20051105-fix-build-with-gcc10.patch
@@ -54,6 +54,9 @@ install -pD -m644 docs/hping3.8 %buildroot%_man8dir/hping3.8
 %doc docs/A* docs/HPING2-HOWTO.txt docs/[M-Z]* docs/hping2rc.example
 
 %changelog
+* Wed Aug 07 2024 Ivan A. Melnikov <iv@altlinux.org> 0.0.20051105-alt8
+- Set endian ordering for loongarch and riscv (by k0tran@)
+
 * Mon Apr 19 2021 Egor Ignatov <egori@altlinux.org> 0.0.20051105-alt7
 - Fix build with gcc 10 (-fno-common)
 - Fix arm build
