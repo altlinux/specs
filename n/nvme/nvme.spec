@@ -1,8 +1,8 @@
-%define libnvme_ver 1.9
+%define libnvme_ver 1.10
 
 Name: nvme
-Version: 2.9.1
-Release: alt1.1
+Version: 2.10.2
+Release: alt1
 Summary: NVM-Express user space tooling for Linux
 License: GPL-2.0+
 Group: System/Configuration/Hardware
@@ -76,6 +76,9 @@ if [ $1 = 1 ]; then # 1 : This package is being installed for the first time
 fi
 
 %changelog
+* Wed Aug 07 2024 L.A. Kostis <lakostis@altlinux.ru> 2.10.2-alt1
+- 2.10.2.
+
 * Thu May 30 2024 L.A. Kostis <lakostis@altlinux.ru> 2.9.1-alt1.1
 - use systemddir macros.
 

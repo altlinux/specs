@@ -1,7 +1,7 @@
 %define soname 1
 
 Name: libnvme
-Version: 1.9
+Version: 1.10
 Release: alt1
 Summary: Linux-native nvme device management library
 Group: System/Libraries
@@ -76,6 +76,9 @@ rm -f %buildroot%_libdir/*.a
 %python3_sitelibdir/libnvme/
 
 %changelog
+* Wed Aug 07 2024 L.A. Kostis <lakostis@altlinux.ru> 1.10-alt1
+- 1.10.
+
 * Tue May 14 2024 L.A. Kostis <lakostis@altlinux.ru> 1.9-alt1
 - 1.9.
 
