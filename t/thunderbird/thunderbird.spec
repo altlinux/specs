@@ -16,7 +16,7 @@
 %endif
 
 Name: 	 thunderbird
-Version: 128.0.1
+Version: 128.1.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -520,6 +520,20 @@ cat %SOURCE2 | \
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Wed Aug 07 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.1.0-alt1
+- New version.
+- Security fixes:
+  + CVE-2024-7518: Fullscreen notification dialog can be obscured by document content
+  + CVE-2024-7519: Out of bounds memory access in graphics shared memory handling
+  + CVE-2024-7520: Type confusion in WebAssembly
+  + CVE-2024-7521: Incomplete WebAssembly exception handing
+  + CVE-2024-7522: Out of bounds read in editor component
+  + CVE-2024-7525: Missing permission check when creating a StreamFilter
+  + CVE-2024-7526: Uninitialized memory used by WebGL
+  + CVE-2024-7527: Use-after-free in JavaScript garbage collection
+  + CVE-2024-7528: Use-after-free in IndexedDB
+  + CVE-2024-7529: Document content could partially obscure security prompts
+
 * Tue Jul 23 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.0.1-alt1
 - New version.
 
