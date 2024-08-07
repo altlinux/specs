@@ -101,7 +101,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.10
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://systemd.io/
 Group: System/Configuration/Boot and Init
@@ -887,6 +887,9 @@ rm -vf %buildroot%_man1dir/systemd-measure*
 rm -vf %buildroot%_man8dir/systemd-pcrfs*
 rm -vf %buildroot%_man8dir/systemd-pcrphase*
 rm -vf %buildroot%_man8dir/systemd-pcrmachine*
+rm -vf %buildroot%_man8dir/systemd-pcrextend*
+rm -vf %buildroot%_man8dir/systemd-pcrlock*
+rm -vf %buildroot%_man8dir/systemd-tpm2-setup*
 %endif
 
 %find_lang %name
@@ -1709,7 +1712,7 @@ fi
 %_man8dir/systemd-firstboot.*
 %endif
 
-%if_enabled qrencode 
+%if_enabled qrencode
 %_systemd_dir/systemd-bsod
 %_man8dir/systemd-bsod.*
 %endif
@@ -1819,6 +1822,7 @@ fi
 %_systemd_dir/systemd-xdg-autostart-condition
 
 %_bindir/bootctl
+%_man1dir/bootctl.*
 %_man5dir/systemd.pcrlock*
 %if_enabled tpm2
 %_systemd_dir/systemd-measure
@@ -1827,7 +1831,6 @@ fi
 %if_enabled bootloader
 %_systemd_dir/systemd-pcrextend
 %_systemd_dir/systemd-tpm2-setup
-%_man1dir/bootctl.*
 %_man1dir/systemd-measure*
 %_man8dir/systemd-pcrlock*
 %_man8dir/systemd-pcrfs*
@@ -2499,6 +2502,12 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Tue Aug 06 2024 Ivan A. Melnikov <iv@altlinux.org> 1:255.10-alt2
+- Fix systemd-binfmt filetrigger (ALT#51035).
+- Fix build w/o tmp2 (fixes FTBFS on loongarch64 and riscv64).
+- Make sure bootctl man page is present when there is
+  the binary (backported upstream fix).
+
 * Fri Jul 26 2024 Alexey Shabalin <shaba@altlinux.org> 1:255.10-alt1
 - 255.10
 
