@@ -1,5 +1,5 @@
 Name: cplay-ng
-Version: 5.3.0
+Version: 5.3.1
 Release: alt1
 
 Summary: A simple curses audio player
@@ -33,12 +33,15 @@ filelist and playlist control.
 %pyproject_install
 
 %files
-%doc AUTHORS ChangeLog README.rst LICENSE
+%doc AUTHORS ChangeLog README.* LICENSE
 %_bindir/*
 %python3_sitelibdir/*
 
 
 %changelog
+* Wed Aug 07 2024 Anton Vyatkin <toni@altlinux.org> 5.3.1-alt1
+- New version 5.3.1.
+
 * Wed May 22 2024 Anton Vyatkin <toni@altlinux.org> 5.3.0-alt1
 - New version 5.3.0.
 
