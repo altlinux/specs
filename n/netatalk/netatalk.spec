@@ -1,8 +1,8 @@
 Name: netatalk
-Version: 3.2.3
+Version: 3.2.5
 Release: alt1
 
-Summary: Open Source Apple Filing Protocol(AFP) File Server
+Summary: Open Source Apple Filing Protocol (AFP) File Server
 
 License: GPLv2+
 Group: Networking/Other
@@ -147,6 +147,9 @@ sh test/afpd/test.sh
 %_mandir/man*/netatalk-config.1*
 
 %changelog
+* Wed Aug 07 2024 Ilya Mashkin <oddity@altlinux.ru> 3.2.5-alt1
+- 3.2.5
+
 * Mon Jul 15 2024 Ilya Mashkin <oddity@altlinux.ru> 3.2.3-alt1
 - 3.2.3
 
