@@ -1,10 +1,11 @@
 %def_with dcmtk
 %define _unpackaged_files_terminate_build 1
 %define soname 3
+%set_autoconf_version 2.71
 
 Name: biosig
 Version: 2.6.1
-Release: alt1
+Release: alt2
 
 Summary: Reading and writing routines for different biosignal data formats
 License: GPL-3.0+
@@ -18,7 +19,7 @@ Patch2: biosig-2.6.1-alt-python-install.patch
 
 BuildRequires(pre): rpm-build-python3 rpm-build-pyproject
 BuildRequires: python3-devel libnumpy-py3-devel
-BuildRequires: python3-module-setuptools python3-module-build
+BuildRequires: python3-module-setuptools python3-module-build python3-module-wheel
 BuildRequires: gcc-c++
 BuildRequires: libalsa-devel
 BuildRequires: libb64-devel
@@ -161,6 +162,10 @@ rm -f biosig4c++/python/{demo2,example}.py
 %python3_sitelibdir/*-info/METADATA
 
 %changelog
+* Wed Aug 07 2024 Anton Farygin <rider@altlinux.ru> 2.6.1-alt2
+- set the version of autoconf to 2.71 to simplify the build
+  into the old branches
+
 * Mon Aug 05 2024 Anton Farygin <rider@altlinux.ru> 2.6.1-alt1
 - 2.6.0 -> 2.6.1
 
