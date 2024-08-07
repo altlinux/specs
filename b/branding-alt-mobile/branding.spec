@@ -10,7 +10,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.1
+Release: alt0.1.alpha1
 
 Url: https://www.altlinux.org/ALT_Mobile
 
@@ -31,8 +31,8 @@ License: GPL-3.0-or-later
 %define branding_data_dir %_datadir/branding-data-current
 %define altbranch %_priority_distbranch
 
-%define status %nil
-%define status_en %nil
+%define status "-альфа1"
+%define status_en "-alpha1"
 
 %description
 Distro-specific packages with design and texts
@@ -149,13 +149,13 @@ THEME=%theme NAME='%Theme' BRAND_FNAME='%Brand' BRAND_FNAME_RU='%Brand_ru' BRAND
 #release
 install -pD -m644 /dev/null %buildroot%_sysconfdir/buildreqs/packages/ignore.d/%name-release
 {
-	[ -n "%Brand" ] && echo -n " %Brand"
+	[ -n "%Brand" ] && echo -n "%Brand"
 	[ -n "%Theme" ] && echo -n " %Theme"
 	[ -n "%version" ] && echo -n " %version"
 	[ -n "%status_en" ] && {
 		[ "%status_en" = "unstable" ] \
 		&& echo -n " (unstable)" \
-		|| echo -n " %status_en"
+		|| echo -n "%status_en"
 	}
 	[ -n "%codename" ] && echo -n " (%codename)"
 	echo
@@ -170,6 +170,8 @@ install -pD -m644 systemd/os-release %buildroot/%prefix/lib/os-release
 # graphics
 mkdir -p %buildroot/%_datadir/design/%theme/icons
 install -pD -m644 images/system-logo.png %buildroot/%_datadir/design/%theme/icons
+mkdir -p %buildroot/%_iconsdir/hicolor/scalable/apps
+install -pD -m644 images/alt-mobile.svg %buildroot/%_iconsdir/hicolor/scalable/apps
 
 mkdir -p %buildroot/%_datadir/design/backgrounds/
 install -m644 images/background-*.png images/lockscreen-*.png \
@@ -215,6 +217,7 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %files graphics
 %config /etc/alternatives/packages.d/%name-graphics
 %_datadir/design
+%_iconsdir/hicolor/scalable/apps/alt-mobile.svg
 
 %files indexhtml
 %ghost %_defaultdocdir/indexhtml/index.html
@@ -226,5 +229,10 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/gtk-3.0/gtk.css
 
 %changelog
+* Wed Aug 07 2024 Anton Midyukov <antohami@altlinux.org> 11.0-alt0.1.alpha1
+- set status alpha1
+- add logo
+- fix space in /etc/altlinux-release
+
 * Mon Aug 05 2024 Anton Midyukov <antohami@altlinux.org> 11.0-alt0.1
 - initial fork from branding ALT Mobile Sisyphus
