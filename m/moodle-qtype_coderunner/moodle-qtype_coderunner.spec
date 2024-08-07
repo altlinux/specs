@@ -1,6 +1,6 @@
 Name:    moodle-qtype_coderunner
-Version: 5.2.2
-Release: alt2
+Version: 5.3.0
+Release: alt1
 
 Summary: A moodle quiz question type that runs student-submitted program code in a sandbox to check if it satisfies a given set of tests
 License: GPL-3.0+
@@ -60,6 +60,9 @@ cp -a * %buildroot%moodle_questiondir/type/coderunner
 %moodle_questiondir/type/coderunner
 
 %changelog
+* Wed Aug 07 2024 Andrey Cherepanov <cas@altlinux.org> 5.3.0-alt1
+- New version.
+
 * Wed Jan 24 2024 Dmitry Terekhin <jqt4@altlinux.org> 5.2.2-alt2
 - Disable AutoReq for Python3.
 
