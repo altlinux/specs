@@ -13,8 +13,8 @@
 %define llvm_version  17.0
 
 Name: firefox-esr
-Version: 128.0
-Release: alt2
+Version: 128.1.0
+Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
@@ -387,6 +387,22 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Aug 06 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.1.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2024-7518: Fullscreen notification dialog can be obscured by document content
+  + CVE-2024-7519: Out of bounds memory access in graphics shared memory handling
+  + CVE-2024-7520: Type confusion in WebAssembly
+  + CVE-2024-7521: Incomplete WebAssembly exception handing
+  + CVE-2024-7522: Out of bounds read in editor component
+  + CVE-2024-7524: CSP strict-dynamic bypass using web-compatibility shims
+  + CVE-2024-7525: Missing permission check when creating a StreamFilter
+  + CVE-2024-7526: Uninitialized memory used by WebGL
+  + CVE-2024-7527: Use-after-free in JavaScript garbage collection
+  + CVE-2024-7528: Use-after-free in IndexedDB
+  + CVE-2024-7529: Document content could partially obscure security prompts
+  + CVE-2024-7531: PK11_Encrypt using CKM_CHACHA20 can reveal plaintext on Intel Sandy Bridge machines
+
 * Wed Jul 24 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.0-alt2
 - Apply all the changes from regular firefox, the main ones:
   + Enable VAAPI.
