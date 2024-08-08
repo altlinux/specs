@@ -2,7 +2,7 @@
 
 Name: sniffnet
 Version: 1.3.1
-Release: alt1
+Release: alt2
 
 Summary: Application to comfortably monitor your network traffic
 License: Apache-2.0 or MIT
@@ -12,6 +12,8 @@ Vcs: https://github.com/GyulyVGC/sniffnet
 
 Source0: %name-%version.tar
 Source1: vendor.tar
+
+Patch: sniffnet-1.3.1-linux-char-loongarch.patch
 
 Requires(post,preun): libcap-utils
 
@@ -58,6 +60,12 @@ codegen-units = 16
 %endif
 EOF
 
+# allow patching vendored rust code
+sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+    ./vendor/linux-raw-sys/.cargo-checksum.json
+
+%patch -p1
+
 %build
 cargo build %_smp_mflags --offline --release
 
@@ -84,6 +92,9 @@ setcap '' %_bindir/%name
 %doc README.md LICENSE*
 
 %changelog
+* Thu Aug 08 2024 Ivan A. Melnikov <iv@altlinux.org> 1.3.1-alt2
+- Add patch that fixes linux-raw-sys C_char for loongarch64 (by k0tran@).
+
 * Wed Aug 07 2024 Alexandr Shashkin <dutyrok@altlinux.org> 1.3.1-alt1
 - Updated to 1.3.1.
 
