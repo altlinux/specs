@@ -19,9 +19,12 @@
 %add_python3_compile_exclude %_libdir/grub
 %add_python3_req_skip %_libdir/grub/*/gdb_helper.py
 
+# NB: not a fashion but the critical need to fit into 62 sectors
+%define _optlevel s
+
 Name: grub
 Version: 2.12
-Release: alt1
+Release: alt2
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -491,6 +494,9 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Thu Aug 08 2024 Egor Ignatov <egori@altlinux.org> 2.12-alt2
+- revert _optlevel back to 's' (closes: #51107)
+
 * Tue Jul 23 2024 Egor Ignatov <egori@altlinux.org> 2.12-alt1
 - 2.12
 - grub-efi-autoupdate: update only ALT Linux GRUB efi images (closes: #41959)
