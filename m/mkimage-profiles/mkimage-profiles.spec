@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.6.5
+Version: 1.6.6
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -134,6 +134,16 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Thu Aug 08 2024 Anton Midyukov <antohami@altlinux.org> 1.6.6-alt1
+- grub, syslinux: remove parameter 'ip=dhcp' from rescue_remote.cfg
+- power: drop legacy power management use/power/apm
+- docs: readlink before copy license file
+- plymouth: do not add loglevel=3 to BOOTARGS
+- deflogin: add workaround for fix add user, when fwupd is installed
+- live, image.in: use function for get lists from groups (for live)
+- alt-server: add commits for 11.0ALPHA2
+- alt-workstation: fix build
+
 * Mon May 27 2024 Anton Midyukov <antohami@altlinux.org> 1.6.5-alt1
 - live: do not cleanup docs
 - init: add systemd-sysvinit or sysvinit to altinst
