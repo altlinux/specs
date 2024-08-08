@@ -1,5 +1,5 @@
 Name: installer-feature-setup-plymouth
-Version: 0.5.10
+Version: 0.5.11
 Release: alt1
 
 Summary: Set up plymouth
@@ -26,6 +26,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Thu Aug 08 2024 Anton Midyukov <antohami@altlinux.org> 0.5.11-alt1
+- Revert "90-setup-plymouth2.sh: add 'loglevel=3' after 'quiet'"
+
 * Thu Jun 01 2023 Anton Midyukov <antohami@altlinux.org> 0.5.10-alt1
 - 90-setup-plymouth2.sh: remove duplicate 'quiet', put it before splash
 - 90-setup-plymouth2.sh: add 'loglevel=3' after 'quiet'
