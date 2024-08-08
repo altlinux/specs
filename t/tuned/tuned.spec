@@ -6,7 +6,7 @@
 %define tuneddir %_tuneddir/profiles
 
 Name: tuned
-Version: 2.23.0
+Version: 2.24.0
 Release: alt1
 Summary: A dynamic adaptive system tuning daemon
 License: GPL-2.0-or-later
@@ -43,6 +43,7 @@ BuildRequires: rpm-build-vm
 #py3_use perf
 %py3_use dbus
 %py3_use pygobject3
+%py3_use pygobject3-pygtkcompat
 
 %description
 The tuned package contains a daemon that tunes system settings dynamically.
@@ -214,7 +215,7 @@ rm doc/README.{utils,scomes}
 grep -lr -e /boot/grub2 -e grub2- | xargs sed -i s/grub2/grub/g
 sed -i '/^GRUB2_DEFAULT_ENV_FILE =/s/default\/grub/sysconfig\/grub2/' tuned/consts.py
 
-# Ezport tuned_params variable for submenu(s).
+# Export tuned_params variable for submenu(s).
 echo 'echo "export tuned_params"' >> 00_tuned
 
 # For recommend.
@@ -262,9 +263,6 @@ rm %buildroot%_sysconfdir/tuned/cpu-partitioning-powersave-variables.conf
 rm %buildroot%_man7dir/tuned-profiles-cpu-partitioning.7*
 rm -rf %buildroot%tuneddir/cpu-partitioning
 rm -rf %buildroot%tuneddir/cpu-partitioning-powersave
-
-# Some scripts source it from the old location.
-ln -s profiles/functions %buildroot%_tuneddir
 
 %check
 vm-run --kvm=cond make test
@@ -334,20 +332,21 @@ fi
 %_sbindir/tuned-adm
 %exclude %_sysconfdir/tuned/realtime*variables.conf
 %dir %_sysconfdir/tuned/
+%dir %_sysconfdir/tuned/profiles
+%dir %_sysconfdir/tuned/recommend.d
 %dir %_libexecdir/%name/
 %dir %_tuneddir/
 %_tuneddir/functions
+%_tuneddir/recommend.d
 %dir %tuneddir/
 %tuneddir/balanced/
 %tuneddir/desktop/
-%tuneddir/functions/
 %tuneddir/hpc-compute/
 %tuneddir/latency-performance/
 %tuneddir/balanced-battery/
 %tuneddir/network-latency/
 %tuneddir/network-throughput/
 %tuneddir/powersave/
-%tuneddir/recommend.d/
 %tuneddir/intel-sst/
 %tuneddir/throughput-performance/
 %tuneddir/virtual-guest/
@@ -483,6 +482,10 @@ fi
 %_man7dir//tuned-profiles-openshift.7*
 
 %changelog
+* Thu Aug 08 2024 Vitaly Chikunov <vt@altlinux.org> 2.24.0-alt1
+- Update to v2.24.0 (2024-08-07).
+- Fix tuned-gui run in absence of user profiles dir (ALT#46426).
+
 * Sun Jun 09 2024 Vitaly Chikunov <vt@altlinux.org> 2.23.0-alt1
 - Update to v2.23.0 (2024-06-06).
 
