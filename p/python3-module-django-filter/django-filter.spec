@@ -1,101 +1,57 @@
 %define _unpackaged_files_terminate_build 1
 %define oname django-filter
 
-# https://github.com/carltongibson/django-filter/issues/1050
-%def_disable check
-%def_enable docs
+%def_with check
 
 Name: python3-module-%oname
-Version: 2.3.0
+Version: 24.3
 Release: alt1
 
 Summary: A generic system for filtering Django QuerySets based on user selections
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/django-filter/
-# https://github.com/alex/django-filter.git
+Url: https://pypi.org/project/django-filter
+Vcs: https://github.com/carltongibson/django-filter
+
 BuildArch: noarch
 
-Source0: https://pypi.python.org/packages/f0/c4/b83b7a599201f84e8cbdbe325458d7d0281298e8b4e13edafebc936fa226/%{oname}-%{version}.tar.gz
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-flit-core
+%if_with check
 BuildRequires: python3-module-pytest
-
-%if_enabled docs
-BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme
+BuildRequires: python3-module-django
+BuildRequires: python3-module-pytz
+BuildRequires: python3-module-djangorestframework
+BuildRequires: python3-module-django-dbbackend-sqlite3
 %endif
-
-%py3_provides django_filters
-
 
 %description
-Django-filter is a reusable Django application for allowing users to
-filter querysets dynamically.
-
-%if_enabled docs
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-Django-filter is a reusable Django application for allowing users to
-filter querysets dynamically.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-Django-filter is a reusable Django application for allowing users to
-filter querysets dynamically.
-
-This package contains documentation for %oname.
-%endif
+Django-filter is a reusable Django application allowing users to declaratively
+add dynamic QuerySet filtering from URL parameters.
 
 %prep
-%setup -q -n %{oname}-%{version}
-
-%if_enabled docs
-sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
-%endif
-
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
+%setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
-
-%if_enabled docs
-%make -C docs pickle
-%make -C docs html
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/django_filters
-%endif
+%pyproject_install
 
 %check
-python3 setup.py test
-python3 runtests.py
+%pyproject_run -- %__python3 runtests.py -v 2
 
 %files
-%doc AUTHORS *.rst
+%doc README.*
 %python3_sitelibdir/django_filters
-%python3_sitelibdir/*.egg-info
-%if_enabled docs
-%exclude %python3_sitelibdir/django_filters/pickle
-
-%files pickles
-%python3_sitelibdir/django_filters/pickle
-
-%files docs
-%doc docs/_build/html/*
-%endif
+%python3_sitelibdir/django_filter-%version.dist-info
 
 %changelog
+* Thu Aug 08 2024 Anton Vyatkin <toni@altlinux.org> 24.3-alt1
+- New version 24.3.
+
 * Wed Sep 09 2020 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt1
 - Build new version.
 - Build with docs.
