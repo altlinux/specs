@@ -3,7 +3,7 @@
 
 Name: qucs-s
 Version: 24.3.0
-Release: alt1
+Release: alt2
 
 Summary: Circuit simulator
 License: GPL-2.0-or-later
@@ -67,6 +67,9 @@ done > %name.lang
 %_man1dir/*
 
 %changelog
+* Thu Aug 08 2024 Anton Midyukov <antohami@altlinux.org> 24.3.0-alt2
+- Update russian translation (thanks Olesya Gerasimenko)
+
 * Wed Jul 24 2024 Anton Midyukov <antohami@altlinux.org> 24.3.0-alt1
 - New version 24.3.0
 
