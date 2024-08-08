@@ -1,5 +1,6 @@
-%def_disable snapshot
+%def_enable snapshot
 
+%define beta .rc1
 %define gmobile_ver v0.1.0
 %define rdn_name mobi.phosh.PhoshTour
 
@@ -7,8 +8,8 @@
 %def_enable check
 
 Name: phosh-tour
-Version: 0.39.0
-Release: alt1
+Version: 0.41.0
+Release: alt0.9%beta
 
 Summary: Phosh Tour
 License: GPL-3.0-or-later
@@ -18,9 +19,9 @@ Url: https://gitlab.gnome.org/World/Phosh/phosh-tour
 Vcs: https://gitlab.gnome.org/World/Phosh/phosh-tour
 
 %if_disabled snapshot
-Source: https://gitlab.gnome.org/World/Phosh/phosh-tour/-/archive/v%version/%name-v%version.tar.gz
+Source: https://gitlab.gnome.org/World/Phosh/phosh-tour/-/archive/v%version/%name-v%version%beta.tar.gz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
 %{?_enable_embed_gmobile:Source1: gmobile-%gmobile_ver.tar}
 
@@ -41,7 +42,7 @@ BuildRequires: pkgconfig(gmobile)
 Simple introduction to phosh.
 
 %prep
-%setup -n %name-%{?_disable_snapshot:v}%version %{?_enable_embed_gmobile:-a1
+%setup -n %name-%{?_disable_snapshot:v}%version%beta %{?_enable_embed_gmobile:-a1
 mv gmobile-%gmobile_ver subprojects/gmobile}
 
 %build
@@ -71,6 +72,9 @@ rm %buildroot%_pkgconfigdir/gmobile.pc
 
 
 %changelog
+* Thu Aug 08 2024 Yuri N. Sedunov <aris@altlinux.org> 0.41.0-alt0.9.rc1
+- 0.41.0.rc1
+
 * Wed May 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.39.0-alt1
 - 0.39.0
 

@@ -1,11 +1,15 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.40
-%define beta %nil
+%define ver_major 0.41
+%define beta .rc1
 %define namespace Phosh
 %define api_ver 0
 %define rdn_name sm.puri.Phosh
 %define dev_uid 1000
+
+# since 0.41 gvc & libcallui subprojects use wrap-files
+%define gvc_ver 5f9768a
+%define callui_ver 0.1.3
 
 # shared libs disabled by default
 %def_enable shared_libs
@@ -19,7 +23,7 @@
 
 Name: phosh
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt0.9%beta
 
 Summary: A pure Wayland shell for mobile devices
 License: GPL-3.0-or-later
@@ -34,6 +38,12 @@ Source: %name-%version%beta.tar
 %endif
 Source1: %name.pam
 Source2: sm.puri.OSK0.desktop
+
+%{?_enable_snapshot:
+# https://gitlab.gnome.org/GNOME/libgnome-volume-control.git
+Source10: gvc-%gvc_ver.tar
+# https://gitlab.gnome.org/World/Phosh/libcall-ui/
+Source11: libcall-ui-%callui_ver.tar}
 
 Patch1: %name-0.28.0-alt-tcb-check.patch
 # https://bugzilla.altlinux.org/46930
@@ -55,18 +65,21 @@ Requires: fonts-ttf-google-lato
 Requires: /sbin/capsh
 # since 0.39, specific X-GNOME directories
 Requires: gnome-menus-x-gnome
+# since 0.40.0
+Requires: sound-theme-phosh
 
 # squeekboard provides osk-wayland
 Requires: /usr/bin/osk-wayland
 
 %define gmobile_ver 0.1.0
+%define feedback_ver 0.4.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd %{?_enable_introspection:rpm-build-gir}
 BuildRequires: meson
 BuildRequires: desktop-file-utils
 BuildRequires: pam-devel
 BuildRequires: libcallaudio-devel
-BuildRequires: libfeedback-devel
+BuildRequires: libfeedback-devel >= %feedback_ver
 BuildRequires: pkgconfig(gmobile) >= %gmobile_ver
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(gcr-3) >= 3.7.5
@@ -94,8 +107,10 @@ BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(libecal-2.0)
 BuildRequires: pkgconfig(evince-document-3.0)
 BuildRequires: pkgconfig(libsoup-3.0)
+BuildRequires: pkgconfig(gnome-bluetooth-3.0)
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel
-BuildRequires: gir(Gcr) = 3 gir(Handy) = 1 gir(NM) = 1.0 gir(GnomeDesktop) = 3.0}
+BuildRequires: gir(Gcr) = 3 gir(Handy) = 1 gir(NM) = 1.0
+BuildRequires: gir(GnomeDesktop) = 3.0} gir(GnomeBluetooth) = 3.0
 %{?_enable_gtk_doc:BuildRequires: gi-docgen}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_check:BuildRequires: xvfb-run dbus at-spi2-core
@@ -145,7 +160,10 @@ Requires: lib%name = %EVR
 This package contains development files for Phosh shared library.
 
 %prep
-%setup -n %name-%version%beta
+%setup -n %name-%version%beta %{?_enable_snapshot:-a10 -a11
+mv gvc-%gvc_ver subprojects/gvc
+mv libcall-ui-%callui_ver subprojects/libcall-ui
+}
 %patch1 -p2
 %patch2 -p1 -b .alt
 %patch3 -p1 -b .alt-dm
@@ -154,6 +172,10 @@ sed -i 's|\(User=\)1000|\1%dev_uid|' data/%name.service
 sed -i 's|\(capsh\)|/sbin/\1|' data/%name.service
 
 %build
+# src/media-player.c:203:14
+%ifarch %ix86 armh
+%add_optflags -Wno-error=format
+%endif
 %meson \
     %{subst_enable_meson_bool shared_libs bindings-lib} \
     %{subst_enable_meson_bool introspection introspection} \
@@ -209,6 +231,8 @@ xvfb-run %__meson_test
 %_libdir/%name/plugins/lib%name-plugin-dark-mode-quick-setting.so
 %_libdir/%name/plugins/lib%name-plugin-mobile-data-quick-setting.so
 %_libdir/%name/plugins/mobile-data-quick-setting.plugin
+%_libdir/%name/plugins/lib%name-plugin-wifi-hotspot-quick-setting.so
+%_libdir/%name/plugins/wifi-hotspot-quick-setting.plugin
 #%{?_enable_introspection:%_typelibdir/%namespace-%api_ver.typelib}
 %doc NEWS README.md
 
@@ -253,6 +277,9 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Thu Aug 08 2024 Yuri N. Sedunov <aris@altlinux.org> 0.41.0-alt0.9.rc1
+- v0.41.0_rc1-4-g8aa9c66c
+
 * Sun Jun 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.40.0-alt1
 - 0.40.0
 

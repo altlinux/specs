@@ -1,3 +1,6 @@
+%def_enable snapshot
+
+%define beta .rc1
 %define rdn_name sm.puri.Phosh.OskStub
 
 # enabled by default
@@ -6,8 +9,8 @@
 %def_enable check
 
 Name: phosh-osk-stub
-Version: 0.38.0
-Release: alt1
+Version: 0.41.0
+Release: alt0.9%beta
 
 Summary: Phosh OSK Stub
 Group: Graphical desktop/GNOME
@@ -15,7 +18,12 @@ License: GPL-3.0-or-later
 Url: https://gitlab.gnome.org/guidog/phosh-osk-stub
 
 Vcs: https://gitlab.gnome.org/guidog/phosh-osk-stub.git
-Source: https://gitlab.gnome.org/guidog/phosh-osk-stub/-/archive/v%version/%name-v%version.tar.gz
+
+%if_disabled snapshot
+Source: https://gitlab.gnome.org/guidog/phosh-osk-stub/-/archive/v%version/%name-v%version%beta.tar.gz
+%else
+Source: %name-%version%beta.tar
+%endif
 
 Provides: osk-wayland
 
@@ -54,7 +62,7 @@ The purpose of phosh-osk-stub:
   desired (hence provide API documentation)
 
 %prep
-%setup -n %name-v%version
+%setup -n %name-%version%beta
 
 %build
 %meson \
@@ -89,6 +97,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Thu Aug 08 2024 Yuri N. Sedunov <aris@altlinux.org> 0.41.0-alt0.9.rc1
+- 0.41.0.rc1
+
 * Sat Apr 06 2024 Yuri N. Sedunov <aris@altlinux.org> 0.38.0-alt1
 - 0.38.0
 

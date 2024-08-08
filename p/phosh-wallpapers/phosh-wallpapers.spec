@@ -1,12 +1,13 @@
 %def_enable snapshot
 %define _name phosh
-%define ver_major 0.40
+%define ver_major 0.41
+%define beta .rc1
 
 %def_enable check
 
 Name: %_name-wallpapers
 Version: %ver_major.0
-Release: alt1
+Release: alt0.9%beta
 
 Summary: Phosh wallpapers and other artwork
 License: CC-BY-SA-4.0 and CC0-1.0 and GPL-3.0-or-later
@@ -16,10 +17,11 @@ Url: https://gitlab.gnome.org/guidog/phosh-wallpapers
 BuildArch: noarch
 
 Vcs: https://gitlab.gnome.org/guidog/phosh-wallpapers.git
+
 %if_disabled snapshot
-Source: https://gitlab.gnome.org/guidog/%name/-/archive/v%version/%name-v%version.tar.gz
+Source: https://gitlab.gnome.org/guidog/%name/-/archive/v%version/%name-v%version%beta.tar.gz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
 
 Provides: %_name-backgrounds = %EVR
@@ -45,7 +47,7 @@ Group: Graphical desktop/GNOME
 This package provides sound theme for Phosh.
 
 %prep
-%setup -n %name-%version
+%setup -n %name-%version%beta
 
 %build
 %meson
@@ -73,5 +75,8 @@ This package provides sound theme for Phosh.
 %doc README.* NEWS
 
 %changelog
+* Thu Aug 08 2024 Yuri N. Sedunov <aris@altlinux.org> 0.41.0-alt0.9.rc1
+- 0.41.0.rc1
+
 * Tue Jul 02 2024 Yuri N. Sedunov <aris@altlinux.org> 0.40.0-alt1
 - first build for Sisyphus
