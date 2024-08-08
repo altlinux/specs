@@ -1,10 +1,15 @@
 %define pypi_name sanic
 
+%ifarch ppc64le aarch64
+# The tests take too long
 %def_without check
+%else
+%def_with check
+%endif
 
 Name:    python3-module-%pypi_name
 Version: 24.6.0
-Release: alt1
+Release: alt2
 
 Summary: Accelerate your web app development | Build fast, run fast
 License: MIT
@@ -49,7 +54,7 @@ webserver.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -k "not test_websocket_route_with_subprotocols"
+%pyproject_run_pytest -k "not test_websocket_route_with_subprotocols and not test_keep_alive_client_timeout"
 
 %files
 %doc *.rst
@@ -58,5 +63,8 @@ webserver.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Aug 08 2024 Alexander Burmatov <thatman@altlinux.org> 24.6.0-alt2
+- Enable tests.
+
 * Fri Jul 19 2024 Alexander Burmatov <thatman@altlinux.org> 24.6.0-alt1
 - Initial build for Sisyphus.
