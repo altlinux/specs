@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: cmark
-Version: 0.31.0
+Version: 0.31.1
 %define soversion %version
 Release: alt1
 Summary: CommonMark parsing and rendering
@@ -31,6 +31,7 @@ documents.
 %package devel
 Summary: Development files for cmark
 Group: Development/C++
+Provides: libcmark-devel = %EVR
 Requires: libcmark%soversion = %EVR
 
 %description devel
@@ -80,6 +81,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Thu Aug 08 2024 Andrey Kovalev <ded@altlinux.org> 0.31.1-alt1
+- Updated to upstream version 0.31.1.
+
 * Mon Jul 29 2024 Andrey Kovalev <ded@altlinux.org> 0.31.0-alt1
 - Updated to upstream version 0.31.0.
 - Build according to shared libs policy.
