@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define efi_arches %ix86 x86_64 aarch64 riscv64
 
 # SBAT generation number for ALT
@@ -10,9 +11,17 @@
 
 %global gnulib_version 9f48fb992a3d7e96610c4ce8be969cff2d61a01b
 
+# No need for post-processing GRUB modules and their helpers
+%add_findreq_skiplist %_libdir/grub/*/*
+%add_verify_elf_skiplist %_libdir/grub/*/*
+%add_debuginfo_skiplist %_libdir/grub/*/*
+%add_python3_path %_libdir/grub
+%add_python3_compile_exclude %_libdir/grub
+%add_python3_req_skip %_libdir/grub/*/gdb_helper.py
+
 Name: grub
-Version: 2.06
-Release: alt19
+Version: 2.12
+Release: alt1
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -30,8 +39,6 @@ Source2: gnulib-%version.tar
 Source3: 39_memtest
 Source4: grub.filetrigger
 
-Source5: fonts.tar
-
 Source6: grub-autoupdate
 
 Source8: update-grub
@@ -47,36 +54,32 @@ Source14: grub-efi.filetrigger
 
 Source15: sbat.csv.in
 
+Source16: grub-dumpsbat.c
+
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-macros-uefi
-BuildRequires: flex fonts-bitmap-misc fonts-ttf-dejavu libfreetype-devel python-modules ruby autogen
-BuildRequires: liblzma-devel help2man zlib-devel
-BuildRequires: libdevmapper-devel
+BuildRequires(pre): rpm-build-python3
+
+BuildRequires: flex
+BuildRequires: ruby
+BuildRequires: autogen
 BuildRequires: texinfo
-BuildRequires: libfuse-devel
+BuildRequires: help2man
 BuildRequires: squashfs-tools
 
-# fonts: choose one
+BuildRequires: zlib-devel
+BuildRequires: libfuse-devel
+BuildRequires: liblzma-devel
+BuildRequires: libfreetype-devel
+BuildRequires: libdevmapper-devel
 
-## dejavu
-#BuildRequires: fonts-ttf-dejavu
-#define font /usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf
-
-## terminus
-#BuildRequires: fonts-bitmap-terminus
-#define font /usr/share/fonts/bitmap/terminus/ter-x16n.pcf.gz
-
-## univga
+BuildRequires: fonts-bitmap-misc
 BuildRequires: fonts-bitmap-univga
+# Default font
 %define font /usr/share/fonts/bitmap/univga/u_vga16_9.pcf.gz
 
-## see also fonts-bitmap-ucs-miscfixed; efont-unicode doesn't fit
-
 Requires: gettext
-
-# NB: not a fashion but the critical need to fit into 62 sectors
-%define _optlevel s
 
 %ifarch %ix86
 %global grubefiarch i386-efi
@@ -232,18 +235,11 @@ build_efi_image() {
 		gfxmenu gfxterm gfxterm_background lvm lsefi efifwsetup cat \
 		gzio iso9660 loadenv loopback mdraid09 mdraid1x png jpeg \
 		extcmd keystatus procfs cryptodisk gcry_rijndael gcry_sha1 \
-		gcry_sha256 luks gcry_sha512 gcry_serpent gcry_twofish \
+		gcry_sha256 luks luks2 gcry_sha512 gcry_serpent gcry_twofish \
 		crypto pbkdf2 password_pbkdf2 echo regexp tftp \
 		f2fs exfat ntfs ntfscomp memdisk \
 		"$@"
 }
-
-# create memdisk with fonts
-workdir="$(mktemp -d)"
-mkdir -p "$workdir"
-tar -xf %SOURCE5 -C "$workdir"
-mksquashfs "$workdir" memdisk.squashfs -comp xz
-rm -rf "$workdir"
 
 %ifarch %ix86 x86_64
 build_grub build-pc \
@@ -261,6 +257,14 @@ build_grub build-ieee1275 \
 build_grub build-efi \
 	--with-platform=efi \
 #
+
+# create memdisk with fonts
+workdir="$(mktemp -d)"
+mkdir -p "$workdir/fonts"
+./build-efi/grub-mkfont -o "$workdir/fonts/unicode.pf2" %font
+mksquashfs "$workdir" memdisk.squashfs -comp xz
+rm -rf "$workdir"
+
 build_efi_image build-efi/grub-mkimage build-efi %grubefiarch %linux_module_name
 
 #add forced ia32 version build to be bundled with x86_64 EFI
@@ -273,6 +277,9 @@ build_grub build-efi-ia32 \
 build_efi_image build-efi/grub-mkimage build-efi-ia32 i386-efi linux
 %endif
 %endif
+
+# build grub-dumpsbat utility used in grub-efi-autoupdate
+gcc %optflags -D_FILE_OFFSET_BITS=64 %SOURCE16 -o grub-dumpsbat
 
 %install
 %ifarch %ix86 x86_64
@@ -304,8 +311,11 @@ install -pD -m644 %SOURCE9 %buildroot%_man8dir/update-grub.8
 install -pD -m644 %SOURCE13 %buildroot%_man8dir/grub-entries.8
 
 # TODO: drop the obsolete one (unifont.pf2)
-%buildroot%_bindir/grub-mkfont -o %buildroot/boot/grub/unifont.pf2 %_datadir/fonts/bitmap/misc/8x13.pcf.gz
+%buildroot%_bindir/grub-mkfont -o %buildroot/boot/grub/unifont.pf2 \
+                               %_datadir/fonts/bitmap/misc/8x13.pcf.gz
 %buildroot%_bindir/grub-mkfont -o %buildroot/boot/grub/fonts/unicode.pf2 %font
+install -pDm644 %buildroot/boot/grub/fonts/unicode.pf2 \
+        %buildroot%_datadir/grub/unicode.pf2
 
 mkdir -p %buildroot/boot/grub/themes
 
@@ -313,13 +323,19 @@ install -pDm755 %SOURCE3 %buildroot%_sysconfdir/grub.d/
 sed -i 's,^libdir=,libdir=%_libdir,g' %buildroot%_sysconfdir/grub.d/39_memtest
 sed -i 's,@LOCALEDIR@,%_datadir/locale,g' %buildroot%_sysconfdir/grub.d/*
 
-install -pDm755 %SOURCE4  %buildroot%_rpmlibdir/grub.filetrigger
-install -pDm755 %SOURCE6  %buildroot%_sbindir/grub-autoupdate
+install -pDm755 %SOURCE4 %buildroot%_rpmlibdir/grub.filetrigger
+%ifarch %ix86 x86_64 ppc64le
+install -pDm755 %SOURCE6 %buildroot%_sbindir/grub-autoupdate
+%endif
+
 %ifarch %efi_arches
 install -pDm755 %SOURCE10 %buildroot%_sbindir/grub-efi-autoupdate
 install -pDm755 %SOURCE14 %buildroot%_rpmlibdir/grub-efi.filetrigger
 %endif
 install -pDm755 %SOURCE12 %buildroot%_sbindir/grub-entries
+
+# install grub-dumpsbat utility used in grub-efi-autoupdate
+install -pDm755 grub-dumpsbat %buildroot%_bindir/grub-dumpsbat
 
 # Ghost config file
 install -d %buildroot/boot/grub
@@ -329,6 +345,20 @@ ln -s ../boot/grub/grub.cfg %buildroot%_sysconfdir/grub.cfg
 # Docs/habits compat symlink
 mkdir -p %buildroot%_sysconfdir/default
 ln -s ../sysconfig/grub2 %buildroot%_sysconfdir/default/grub
+
+# Ghost file generated by grub-install
+touch %buildroot/boot/grub/grubenv
+
+# These tools are only for efi and x86_64
+%ifnarch x86_64
+rm -vf %buildroot%_bindir/grub-render-label
+rm -vf %buildroot%_sbindir/grub-bios-setup
+rm -vf %buildroot%_sbindir/grub-macbless
+
+rm -vf %buildroot%_man1dir/grub-render-label*
+rm -vf %buildroot%_man8dir/grub-bios-setup*
+rm -vf %buildroot%_man8dir/grub-macbless*
+%endif
 
 %ifarch %efi_arches
 install -pDm644 build-efi/grub.efi %buildroot%_efi_bindir/grub%{efi_suff}.efi
@@ -349,6 +379,7 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 %_sysconfdir/grub.d/05_altlinux_theme
 %_sysconfdir/grub.d/10_linux
 %_sysconfdir/grub.d/20_linux_xen
+%_sysconfdir/grub.d/25_bli
 %_sysconfdir/grub.d/30_os-prober
 %_sysconfdir/grub.d/30_uefi-firmware
 %_sysconfdir/grub.d/39_memtest
@@ -357,12 +388,13 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 %_sysconfdir/grub.d/README
 %config(noreplace) %_sysconfdir/sysconfig/grub2
 %ghost %config(noreplace) /boot/grub/grub.cfg
+%ghost %attr(644,root,root) /boot/grub/grubenv
 %_sysconfdir/grub.cfg
 %_sysconfdir/default/grub
 %_sysconfdir/bash_completion.d/grub
-%_rpmlibdir/%name.filetrigger
+%_rpmlibdir/grub.filetrigger
 # these tools are only for efi and x86_64
-%ifarch x86_64 ppc64le
+%ifarch x86_64
 %_bindir/grub-render-label
 %_sbindir/grub-bios-setup
 %_sbindir/grub-macbless
@@ -393,13 +425,10 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 %_bindir/grub-mount
 %_bindir/grub-script-check
 %_bindir/grub-syslinux2cfg
+%_bindir/grub-dumpsbat
 %_datadir/grub/grub-mkconfig_lib
+%_datadir/grub/unicode.pf2
 %_man1dir/*
-%ifarch x86_64
-%exclude %_man1dir/grub-render-label*
-%exclude %_man8dir/grub-bios-setup*
-%exclude %_man8dir/grub-macbless*
-%endif
 %_man8dir/*
 %_infodir/grub.info.*
 %_infodir/grub-dev.info.*
@@ -425,7 +454,7 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 %endif
 %_sbindir/grub-efi-autoupdate
 %_libdir/grub/%grubefiarch
-%_rpmlibdir/%name-efi.filetrigger
+%_rpmlibdir/grub-efi.filetrigger
 
 %files efi-checkinstall
 %endif
@@ -458,10 +487,20 @@ grep -q '^GRUB_BOOTLOADER_ID=' %_sysconfdir/sysconfig/grub2 ||
 grub-efi-autoupdate || {
 	echo "** WARNING: grub-efi-autoupdate failed, NEXT BOOT WILL LIKELY FAIL NOW"
 	echo "** WARNING: please run grub-efi-autoupdate by hand, record the output offline,"
-	echo "** WARNING: make sure you have e.g. rEFInd bootable media handy."
+	echo "** WARNING: make sure you have recovery bootable media handy."
 } >&2
 
 %changelog
+* Tue Jul 23 2024 Egor Ignatov <egori@altlinux.org> 2.12-alt1
+- 2.12
+- grub-efi-autoupdate: update only ALT Linux GRUB efi images (closes: #41959)
+- grub-install: validate grub root volume in efi boot (fixes: CVE-2023-4001)
+- grub-install: install efi grub.cfg for removable (closes: #39745)
+- grub-mkconfig: add --class altlinux for menuentries (closes: #39609)
+- support xfsprogs >= 6.5.0 (closes: #49891)
+- add sysconfig option GRUB_TOP_LEVEL set to /boot/vmlinuz (closes: #48681)
+- package unicode.pf2 to the datadir also (closes: #39616)
+
 * Wed May 15 2024 Egor Ignatov <egori@altlinux.org> 2.06-alt19
 - bumped release to pesign with the new key
 
