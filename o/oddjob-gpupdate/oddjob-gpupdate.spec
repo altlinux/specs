@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: oddjob-gpupdate
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 Summary: An oddjob helper which applies group policy objects
 
@@ -65,6 +65,9 @@ rm %buildroot%_libdir/security/pam_oddjob_gpupdate.la
 %config(noreplace) %_sysconfdir/oddjobd.conf.d/oddjobd-gpupdate.conf
 
 %changelog
+* Thu Aug 08 2024 Evgeny Sinelnikov <sin@altlinux.org> 0.2.3-alt1
+- Added additional methods on the bus for forced downloading of gpt (thx greh@)
+
 * Mon Dec 18 2023 Evgeny Sinelnikov <sin@altlinux.org> 0.2.2-alt1
 - Add debug and dbus_timeout options to pam_oddjob_gpupdate (thx liannnix@)
 
