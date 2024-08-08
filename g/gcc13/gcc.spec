@@ -4,7 +4,7 @@
 
 Name: gcc%gcc_branch
 Version: 13.2.1
-Release: alt3
+Release: alt4
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -110,7 +110,7 @@ Url: https://gcc.gnu.org/
 # and changes interpackage dependencies to non-strict (>=);
 # this gcc is expected to be installable at stage 2.
 # NB: compat and precompat are mutually exclusive.
-%def_disable precompat
+%def_enable precompat
 %def_disable compat
 
 # For some architectures we do not want multilib support.
@@ -2146,6 +2146,9 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Wed Aug 07 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 13.2.1-alt4
+- Rebuilt in precompat mode to prepare for gcc13 build.
+
 * Mon Jan 29 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 13.2.1-alt3
 - Updated to merged branches from https://gcc.gnu.org/git/gcc.git:
   + vendors/redhat/heads/gcc-13-branch
