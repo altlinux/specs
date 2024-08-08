@@ -1,6 +1,6 @@
 Name: shadow
 Version: 4.16.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Utilities for managing shadow password files and user/group accounts
@@ -221,9 +221,9 @@ This virtual package unifies all shadow suite subpackages.
 %add_optflags -DEXTRA_CHECK_HOME_DIR
 %configure \
 	--disable-static \
+	--enable-lastlog \
 	%{?_with_pam:--with-tcb} \
 	%{?_with_pam:--with-libpam} \
-	--without-libcrack \
 	%{subst_with selinux} \
 	%{subst_with audit} \
 	%{subst_with btrfs} \
@@ -486,6 +486,10 @@ rm -f %save_login_defs_file
 %endif
 
 %changelog
+* Thu Aug 08 2024 Mikhail Efremov <sem@altlinux.org> 1:4.16.0-alt2
+- Fixed build with lastlog enabled.
+- log: Returned lastlog (closes: #51106).
+
 * Thu Jun 20 2024 Mikhail Efremov <sem@altlinux.org> 1:4.16.0-alt1
 - libsubid: Added so version to subpackage name.
 - Updated to 4.16.0.
