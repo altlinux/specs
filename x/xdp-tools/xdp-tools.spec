@@ -1,5 +1,5 @@
 Name: xdp-tools
-Version: 1.4.2
+Version: 1.4.3
 Release: alt1
 Summary: Utilities and example programs for use with XDP
 License: GPL-2.0 and LGPL-2.1 and BSD-2-Clause
@@ -11,7 +11,7 @@ Source0: xdp-tools-%version.tar
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define llvm_version 17.0
+%define llvm_version 18.1
 
 %add_debuginfo_skiplist  %_libdir/bpf/*.o
 %add_verify_elf_skiplist %_libdir/bpf/*.o
@@ -114,6 +114,10 @@ rm -f -- %buildroot%_libdir/*.a
 %_libdir/pkgconfig/libxdp.pc
 
 %changelog
+* Thu Aug 08 2024 L.A. Kostis <lakostis@altlinux.ru> 1.4.3-alt1
+- 1.4.3.
+- Bump llvm to 18.1.
+
 * Thu Apr 25 2024 L.A. Kostis <lakostis@altlinux.ru> 1.4.2-alt1
 - 1.4.2.
 - Fix FTBFS: bump llvm version to 17.
