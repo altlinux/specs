@@ -1,6 +1,6 @@
 %define mversion	7
 %define dversion	%mversion.1.1
-%define drelease	34
+%define drelease	36
 %define qlev		Q16HDRI
 %define mgkdir		ImageMagick
 %define soname		10
@@ -35,7 +35,7 @@ Source5: %name.watch
 Requires: ghostscript-classic fonts-type1-urw lib%name%mversion.%soname = %EVR
 
 BuildPreReq: libpng-devel
-
+BuildRequires: libzip-devel
 
 BuildRequires: bzlib-devel curl gcc-c++ glibc-devel-static graphviz groff-base imake libXext-devel libXt-devel libjasper-devel libjbig-devel liblcms-devel liblqr-devel libtiff-devel libwmf-devel libxml2-devel perl-devel xdg-utils xorg-cf-files
 
@@ -177,6 +177,9 @@ sed -i 's,-lomp,-fopenmp,g' configure* # -lomp was wrong in the first place
 	--with-gcc-arch=no \
 	--with-perl \
 	--with-xml \
+	--with-fftw \
+	--with-flif \
+	--with-zip \
 	%{subst_enable openmp} \
 	--with-perl-options="PREFIX=%_prefix INSTALLDIRS=vendor" \
 	%{subst_enable static}
@@ -270,6 +273,12 @@ mv %buildroot%_docdir/%name-%mversion %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Thu Aug 08 2024 Anton Farygin <rider@altlinux.ru> 7.1.1.36-alt1
+- 7.1.1.34 -> 7.1.1.36
+- enabled fftw support (closes: #51098)
+- enabled libzip support
+- enabled fluf support
+
 * Fri Jun 28 2024 Anton Farygin <rider@altlinux.ru> 7.1.1.34-alt1
 - 7.1.1.31 -> 7.1.1.34
 
