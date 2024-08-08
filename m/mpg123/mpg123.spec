@@ -13,7 +13,7 @@
 %def_enable check
 
 Name: mpg123
-Version: 1.32.6
+Version: 1.32.7
 Release: alt1
 Epoch: 1
 
@@ -76,7 +76,7 @@ install -p -m644 %SOURCE1 .
 
 %build
 %autoreconf
-# since 1.32.6 this is a causes of ABI break for 32-bit
+# since 1.32.6 this is a cause of ABI break for 32-bit
 #%%add_optflags %optflags_shared %(getconf LFS_CFLAGS)
 %configure \
 	%{subst_enable portable} \
@@ -125,6 +125,9 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 
 
 %changelog
+* Thu Aug 08 2024 Yuri N. Sedunov <aris@altlinux.org> 1:1.32.7-alt1
+- 1.32.7
+
 * Fri Apr 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1:1.32.6-alt1
 - 1.32.6
 
