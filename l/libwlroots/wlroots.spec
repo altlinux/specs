@@ -1,7 +1,7 @@
 %define soversion 12
 
 Name: libwlroots
-Version: 0.17.3
+Version: 0.17.4
 Release: alt1
 
 Summary: Modular Wayland compositor library
@@ -65,12 +65,13 @@ Group: System/Libraries
 %description -n libwlroots%soversion
 %summary.
 
-%package -n libwlroots-devel
+%package -n libwlroots%soversion-devel
 Summary: Development files for libwlroots
 Group: Development/C
 Requires: libwlroots%soversion = %EVR
+Provides: libwlroots-devel
 
-%description -n libwlroots-devel
+%description -n libwlroots%soversion-devel
 This package provides development files for libwlroots library.
 
 %prep
@@ -104,12 +105,16 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/libwlroots.so.*
 %doc README.md LICENSE
 
-%files -n libwlroots-devel
+%files -n libwlroots%soversion-devel
 %_includedir/wlr
 %_libdir/libwlroots.so
 %_pkgconfigdir/wlroots.pc
 
 %changelog
+* Thu Aug 08 2024 Roman Alifanov <ximper@altlinux.org> 0.17.4-alt1
+- new version 0.17.4 (with rpmrb script)
+- package devel with soversion
+
 * Sat May 25 2024 Roman Alifanov <ximper@altlinux.org> 0.17.3-alt1
 - new version 0.17.3 (with rpmrb script)
 
