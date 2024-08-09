@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 1.2
+%define ver_major 1.3
 %define api_ver 1.0
 
 %def_disable documentation
@@ -16,7 +16,7 @@
 %endif
 
 Name: libei
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library for Emulated Input
@@ -24,10 +24,11 @@ Group: System/Libraries
 License: MIT
 Url: http://www.freedesktop.org/wiki/Software/libinput/
 
+Vcs: https://gitlab.freedesktop.org/libinput/libei.git
+
 %if_disabled snapshot
 Source: https://gitlab.freedesktop.org/libinput/%name/-/archive/%version/%name-%version.tar.bz2
 %else
-Vcs: https://gitlab.freedesktop.org/libinput/libei.git
 Source: %name-%version.tar
 %endif
 # https://github.com/nemequ/munit.git
@@ -129,6 +130,9 @@ rm -f %buildroot%_libdir/libmunit.so
 %_bindir/ei-debug-events
 
 %changelog
+* Thu Aug 08 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Mon Feb 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
 - 1.2.1
 
