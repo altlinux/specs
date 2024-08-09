@@ -4,12 +4,13 @@ AutoProv: no
 %define oname portproton
 %define xdg_name ru.linux_gaming.PortProton
 
-%define i586_req_l1 libvulkan.so.1 libGL.so.1 libgio-2.0.so.0 libnm.so.0 libnss3.so libunwind.so.8
+%define i586_req_l1 libGL.so.1 libgio-2.0.so.0 libnm.so.0 libnss3.so libunwind.so.8
 %define i586_req_l2 libVkLayer_MESA_device_select.so libgamemodeauto.so.0 libnsl.so.1
+%define i586_req_l3 libvulkan.so.1 libvulkan_intel.so libvulkan_radeon.so
 
 Name: portproton-installer
-Version: 1.7.0
-Release: alt3
+Version: 1.7.1
+Release: alt1
 
 Summary: Installer for PortProton
 
@@ -20,10 +21,11 @@ Url: https://github.com/Castro-Fidel/PortProton_ALT
 Source: %name-%version.tar
 
 Requires: bubblewrap cabextract zstd gawk tar xz pciutils coreutils file
-Requires: curl wmctrl xdg-utils desktop-file-utils yad jq
+Requires: curl xdg-utils desktop-file-utils yad jq
 Requires: libvulkan1 vulkan-tools libd3d libGL gamemode fontconfig xrdb
 Requires: libcurl libgio libnm libnsl1 libnss glibc-nss glibc-pthread
-Requires: /usr/bin/convert /usr/bin/exiftool /usr/bin/icoextract
+Requires: xorg-dri-intel xorg-dri-radeon
+Requires: /usr/bin/exiftool /usr/bin/icoextract
 
 ExclusiveArch: i586
 
@@ -39,13 +41,10 @@ Installer PortProton for Windows games.
 %build
 %install
 mkdir -p %buildroot%_libdir/%oname
-for lib in %i586_req_l1 %i586_req_l2 ; do
+for lib in %i586_req_l1 %i586_req_l2 %i586_req_l3 ; do
     ln -s /usr/lib/$lib %buildroot%_libdir/%oname/
 done
 ln -s /usr/lib/vdpau/libvdpau_gallium.so.1.0.0 %buildroot%_libdir/%oname/
-# ln -s /usr/lib/d3d/d3dadapter9.so.1.0.0 %buildroot%_libdir/%oname/
-# ln -s /lib/libpthread.so.0 %buildroot%_libdir/%oname/
-# ln -s /lib/libnss_dns.so.2 %buildroot%_libdir/%oname/
 
 install -Dm755 %oname %buildroot%_bindir/%oname
 install -Dm644 %xdg_name.desktop %buildroot%_desktopdir/%xdg_name.desktop
@@ -61,6 +60,11 @@ install -Dm644 %xdg_name.metainfo.xml %buildroot%_datadir/metainfo/%xdg_name.met
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Fri Aug 09 2024 Mikhail Tergoev <fidel@altlinux.org> 1.7.1-alt1
+- added .bat file association (thanks @Boria138)
+- dropped requires: wmctrl, /usr/bin/convert
+- added requires: xorg-dri-intel xorg-dri-radeon
+
 * Mon Jul 29 2024 Mikhail Tergoev <fidel@altlinux.org> 1.7.0-alt3
 - remove portproton package as deprecated
 
