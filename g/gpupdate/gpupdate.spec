@@ -8,6 +8,8 @@
 %add_python3_req_skip gpt.gpt
 %add_python3_req_skip gpt.printers
 %add_python3_req_skip gpt.shortcuts
+%add_python3_req_skip gpt.gpo_dconf_mapping
+%add_python3_req_skip gpt.dynamic_attributes
 %add_python3_req_skip messages
 %add_python3_req_skip storage
 %add_python3_req_skip storage.fs_file_cache
@@ -33,7 +35,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.10.6
+Version: 0.11.0
 Release: alt1
 
 Summary: GPT applier
@@ -49,12 +51,13 @@ BuildRequires: gettext-tools
 Requires: python3-module-rpm
 Requires: python3-module-dbus
 Requires: python3-module-configobj
-Requires: oddjob-%name >= 0.2.0
+Requires: oddjob-%name >= 0.2.3
 Requires: libnss-role >= 0.5.0
 Requires: local-policy >= 0.4.9
 Requires: pam-config >= 1.9.0
 Requires: autofs
 Requires: dconf-profile
+Requires: libgvdb-gir
 # This is needed by shortcuts_applier
 Requires: desktop-file-utils
 # This is needed for smb file cache support
@@ -191,6 +194,15 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Fri Aug 09 2024 Valery Sinelnikov <greh@altlinux.org> 0.11.0-alt1
+- Added saving preferences in dconf
+- Added versioning support for gpt
+- Added the ability to force gpt download
+- Added completions for --force
+- Added new exceptions for Chromium 126
+- Added information to the man pages
+- Fixed handling of incorrect valuename
+
 * Mon Jul 08 2024 Valery Sinelnikov <greh@altlinux.org> 0.10.6-alt1
 - Fixed firefox_applier errors
 
