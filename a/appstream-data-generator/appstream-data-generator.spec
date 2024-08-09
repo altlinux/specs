@@ -3,7 +3,7 @@
 # Use current date as version
 
 Name:    appstream-data-generator
-Version: 20240127
+Version: 20240809
 Release: alt1
 Summary: Collection of tools for generation of appstream-data
 Group:   System/Configuration/Packaging
@@ -38,6 +38,9 @@ Collection of tools for generation of appstream-data
 %_bindir/*
 
 %changelog
+* Fri Aug 09 2024 Kirill Izmestev <felixz@altlinux.org> 20240809-alt1
+- Added exception for overwriting <pkgname> to existing appdata.xml.
+
 * Sat Jan 27 2024 Kirill Izmestev <felixz@altlinux.org> 20240127-alt1
 - After updating Python 3.12.0 need to add the letter r before \
 the redexp https://github.com/python/cpython/issues/98401.
