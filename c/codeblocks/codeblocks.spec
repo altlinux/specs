@@ -1,6 +1,6 @@
 Name: codeblocks
 Version: 20.03
-Release: alt11
+Release: alt12
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
 Summary(ru_RU.UTF-8): Code::Blocks это кросс-платформенная свободная среда разработки для C++ с открытым исходным кодом
@@ -112,6 +112,11 @@ cp %SOURCE4 .
 %patch16 -p1
 %patch17 -p1
 %patch18 -p1
+
+%ifarch %e2k
+sed -i 's/#elif defined(__x86_64__)/& || defined(__e2k__)/' \
+  src/include/mozilla_chardet/nsprpub/pr/include/prcpucfg_linux.h
+%endif
 
 # https://sourceforge.net/p/codeblocks/tickets/936/
 sed -ri '/^\s+#pragma implementation/ s,cbkeybinder,cbKeyConfigPanel,' src/plugins/contrib/keybinder/cbkeyConfigPanel.cpp
@@ -335,6 +340,9 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_libdir/pkgconfig/wxsmith-contrib.pc
 
 %changelog
+* Fri Aug 09 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 20.03-alt12
+- Fixed build for Elbrus.
+
 * Tue Jun 20 2024 Aleksei Kalinin <kaa@altlinux.org> 20.03-alt11
 - NMU: Added support for LoongArch (by asheplyakov@).
 
