@@ -1,8 +1,12 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname escape_utils
 
 Name:          gem-escape-utils
-Version:       1.3.0
-Release:       alt1
+Version:       1.3.0.6
+Release:       alt0.1
 Summary:       Faster string escaping routines for your ruby apps
 License:       MIT
 Group:         Development/Ruby
@@ -12,13 +16,26 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+%if_enabled check
+BuildRequires: gem(rake-compiler) >= 0
+BuildRequires: gem(minitest) >= 0
+BuildRequires: gem(actionview) >= 0
+BuildRequires: gem(benchmark-ips) >= 0
+BuildRequires: gem(rack) >= 0
+BuildRequires: gem(haml) >= 0
+BuildRequires: gem(fast_xs) >= 0
+BuildRequires: gem(actionpack) >= 0
+BuildRequires: gem(url_escape) >= 0
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_alias_names escape_utils,escape-utils
 Obsoletes:     ruby-escape_utils < %EVR
 Provides:      ruby-escape_utils = %EVR
-Provides:      gem(escape_utils) = 1.3.0
+Provides:      gem(escape_utils) = 1.3.0.6
 
+%ruby_use_gem_version escape_utils:1.3.0.6
 
 %description
 Being as though we're all html escaping everything these days, why not make it
@@ -34,15 +51,16 @@ balls in no time
 It supports HTML, URL, URI and Javascript escaping/unescaping.
 
 
+%if_enabled    doc
 %package       -n gem-escape-utils-doc
-Version:       1.3.0
-Release:       alt1
+Version:       1.3.0.6
+Release:       alt0.1
 Summary:       Faster string escaping routines for your ruby apps documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета escape_utils
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(escape_utils) = 1.3.0
+Requires:      gem(escape_utils) = 1.3.0.6
 
 %description   -n gem-escape-utils-doc
 Faster string escaping routines for your ruby apps documentation files.
@@ -61,17 +79,28 @@ It supports HTML, URL, URI and Javascript escaping/unescaping.
 
 %description   -n gem-escape-utils-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета escape_utils.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-escape-utils-devel
-Version:       1.3.0
-Release:       alt1
+Version:       1.3.0.6
+Release:       alt0.1
 Summary:       Faster string escaping routines for your ruby apps development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета escape_utils
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(escape_utils) = 1.3.0
+Requires:      gem(escape_utils) = 1.3.0.6
+Requires:      gem(rake-compiler) >= 0
+Requires:      gem(minitest) >= 0
+Requires:      gem(actionview) >= 0
+Requires:      gem(benchmark-ips) >= 0
+Requires:      gem(rack) >= 0
+Requires:      gem(haml) >= 0
+Requires:      gem(fast_xs) >= 0
+Requires:      gem(actionpack) >= 0
+Requires:      gem(url_escape) >= 0
 
 %description   -n gem-escape-utils-devel
 Faster string escaping routines for your ruby apps development package.
@@ -90,6 +119,7 @@ It supports HTML, URL, URI and Javascript escaping/unescaping.
 
 %description   -n gem-escape-utils-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета escape_utils.
+%endif
 
 
 %prep
@@ -110,16 +140,23 @@ It supports HTML, URL, URI and Javascript escaping/unescaping.
 %ruby_gemlibdir
 %ruby_gemextdir
 
+%if_enabled    doc
 %files         -n gem-escape-utils-doc
 %doc README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-escape-utils-devel
 %doc README.md
 %ruby_includedir/*
+%endif
 
 
 %changelog
+* Thu May 02 2024 Pavel Skrylev <majioa@altlinux.org> 1.3.0.6-alt0.1
+- ^ 1.3.0 -> 1.3.0p6
+
 * Wed Sep 21 2022 Pavel Skrylev <majioa@altlinux.org> 1.3.0-alt1
 - ^ 1.2.1 -> 1.3.0
 

@@ -2,7 +2,7 @@
 
 Name:          gem-smart-proxy
 Version:       3.5.1
-Release:       alt3.2
+Release:       alt3.3
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet
 License:       GPL-3.0
 Group:         Development/Ruby
@@ -39,7 +39,7 @@ BuildRequires: gem(mocha) >= 1.10 gem(mocha) < 2
 BuildRequires: gem(ci_reporter) >= 1.6.3 gem(ci_reporter) < 3
 BuildRequires: gem(test-unit) >= 0
 BuildRequires: gem(benchmark-ips) >= 0
-BuildRequires: gem(ruby-prof) < 1.4
+BuildRequires: gem(ruby-prof) >= 0
 BuildRequires: gem(rubocop) >= 0.89.0 gem(rubocop) < 2
 BuildRequires: gem(rubocop-performance) >= 1.5.2 gem(rubocop-performance) < 2
 BuildRequires: gem(rack-test) >= 0
@@ -61,7 +61,7 @@ BuildRequires: gem(webrick) >= 1.0 gem(webrick) < 2
 %ruby_use_gem_dependency rubocop-performance >= 1.11.3,rubocop-performance < 2
 %ruby_use_gem_dependency rsec >= 1.0.0,rsec < 2
 %ruby_use_gem_dependency ci_reporter >= 2.0.0,ci_reporter < 3
-%ruby_use_gem_dependency psych >= 4.0.4,psych < 5
+%ruby_use_gem_dependency psych >= 4.0.4,psych < 6
 %ruby_use_gem_dependency sinatra >= 4.0,sinatra < 5
 %ruby_alias_names smart_proxy,smart-proxy
 Requires:      /usr/sbin/railsctl
@@ -99,7 +99,7 @@ booting
 
 %package       -n smart-proxy
 Version:       3.5.1
-Release:       alt3.2
+Release:       alt3.3
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета smart_proxy
 Group:         Development/Ruby
@@ -131,7 +131,7 @@ Requires:      gem(ed25519) >= 0
 Requires:      gem(bcrypt_pbkdf) >= 0
 Requires:      gem(rackup) >= 0
 Conflicts:     smart-proxy-compat
-Conflicts:     gem(psych) >= 5
+Conflicts:     gem(psych) >= 6
 
 %description   -n smart-proxy
 RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet executable(s).
@@ -162,7 +162,7 @@ booting
 
 %package       -n gem-smart-proxy-doc
 Version:       3.5.1
-Release:       alt3.2
+Release:       alt3.3
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета smart_proxy
 Group:         Development/Documentation
@@ -200,7 +200,7 @@ booting
 
 %package       -n gem-smart-proxy-devel
 Version:       3.5.1
-Release:       alt3.2
+Release:       alt3.3
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета smart_proxy
 Group:         Development/Ruby
@@ -225,7 +225,7 @@ Requires:      gem(mocha) >= 1.10 gem(mocha) < 2
 Requires:      gem(ci_reporter) >= 1.6.3 gem(ci_reporter) < 3
 Requires:      gem(test-unit) >= 0
 Requires:      gem(benchmark-ips) >= 0
-Requires:      gem(ruby-prof) < 1.4
+Requires:      gem(ruby-prof) >= 0
 Requires:      gem(rubocop) >= 0.89.0 gem(rubocop) < 2
 Requires:      gem(rubocop-performance) >= 1.5.2 gem(rubocop-performance) < 2
 Requires:      gem(rack-test) >= 0
@@ -325,6 +325,9 @@ rm -rf %_localstatedir/smart-proxy/Gemfile.lock
 
 
 %changelog
+* Wed Jul 31 2024 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt3.3
+- ! dep to ruby-prof and psych
+
 * Fri Apr 19 2024 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt3.2
 - + added dep to rackup
 - ! relaxed dep to sinatra gem

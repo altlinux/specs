@@ -2,7 +2,7 @@
 
 Name:          rvm
 Version:       1.29.12.125
-Release:       alt0.3
+Release:       alt0.4
 Summary:       Ruby enVironment Manager (RVM)
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -112,6 +112,7 @@ ls -d tmp wrappers environments src archives rubies gems user |while read i; do 
 mkdir -p %buildroot%{_var}/log/%name
 ls -d log |while read i; do rm -rf $i; ln -s %{_var}/$i/%name $i; done
 popd
+ln -rvs %buildroot%_logdir/%name %buildroot%_localstatedir/%name/log
 ls %buildroot%_libexecdir/%name/bin/*| while read f; do fn="$(basename "$f")"; ln -s %_libexecdir/%name/bin/"$fn" %buildroot%_bindir/"$fn"; done
 cp -rp %buildroot%_libexecdir/%name/config/* %buildroot%_sysconfdir/%name/
 cat > %buildroot%_sysconfdir/bashrc.d/%name.sh << PROFILE
@@ -119,13 +120,16 @@ cat > %buildroot%_sysconfdir/bashrc.d/%name.sh << PROFILE
 PROFILE
 
 %pre           devel
+getent group rvm >/dev/null || %_sbindir/groupadd -r rvm
+usermod -a -G rvm root
+
 ln -sf /proc/self/fd /dev/fd >/dev/null 2>&1 || exit 0
 
 %files
 %doc README* CHANGELOG* CONTRIBUTING* FORMATTING* HACKING* VERSION
 
 %files         devel
-%attr(755,root,root) %config(noreplace) %_sysconfdir/bashrc.d/%name.sh
+%attr(755,root,rvm) %config(noreplace) %_sysconfdir/bashrc.d/%name.sh
 %config(noreplace) %_sysconfdir/%name
 %_bindir/*
 %_libexecdir/%name
@@ -141,6 +145,10 @@ ln -sf /proc/self/fd /dev/fd >/dev/null 2>&1 || exit 0
 %dir %attr(775,root,rvm) %_logdir/%name
 
 %changelog
+* Tue Aug 06 2024 Pavel Skrylev <majioa@altlinux.org> 1.29.12.125-alt0.4
+- ! log link to %%_logdir from %%_localstatedir
+- * rollback group rvm to use the rvm ruby installations
+
 * Fri May 17 2024 Pavel Skrylev <majioa@altlinux.org> 1.29.12.125-alt0.3
 - ! fixed dep to true binary for devel in per section (closes #50385)
 

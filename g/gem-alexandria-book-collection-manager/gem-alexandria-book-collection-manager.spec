@@ -3,7 +3,7 @@
 
 Name:          gem-alexandria-book-collection-manager
 Version:       0.7.10
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Alexandria is a GNOME application to help you manage your book collection
 License:       GPL-2.0+
 Group:         Development/Ruby
@@ -54,7 +54,7 @@ BuildConflicts: gem(htmlentities) >= 5
 BuildConflicts: gem(image_size) >= 4
 BuildConflicts: gem(marc) >= 1.3
 BuildConflicts: gem(nokogiri) >= 2
-BuildConflicts: gem(psych) >= 4.1
+BuildConflicts: gem(psych) >= 6
 BuildConflicts: gem(zoom) >= 0.6
 %endif
 
@@ -67,6 +67,7 @@ BuildConflicts: gem(zoom) >= 0.6
 %ruby_use_gem_dependency yard >= 0.9.34,yard < 1
 %ruby_use_gem_dependency gstreamer >= 4.1,gstreamer < 5
 %ruby_use_gem_dependency gtk3 >= 4.1,gtk3 < 5
+%ruby_use_gem_dependency psych >= 4.0,psych < 6
 Requires:      gem(gettext) >= 3.1
 Requires:      gem(gstreamer) >= 4.0.2
 Requires:      gem(gtk3) >= 4.0.2
@@ -84,7 +85,7 @@ Conflicts:     gem(htmlentities) >= 5
 Conflicts:     gem(image_size) >= 4
 Conflicts:     gem(marc) >= 1.3
 Conflicts:     gem(nokogiri) >= 2
-Conflicts:     gem(psych) >= 4.1
+Conflicts:     gem(psych) >= 6
 Conflicts:     gem(zoom) >= 0.6
 Provides:      gem(alexandria-book-collection-manager) = 0.7.10
 
@@ -101,7 +102,7 @@ Alexandria:
 
 %package       -n alexandria
 Version:       0.7.10
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Alexandria is a GNOME application to help you manage your book collection executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета alexandria-book-collection-manager
 Group:         Books/Other
@@ -122,7 +123,7 @@ executable(s).
 
 %package       -n gem-alexandria-book-collection-manager-doc
 Version:       0.7.10
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Alexandria is a GNOME application to help you manage your book collection documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета alexandria-book-collection-manager
 Group:         Development/Documentation
@@ -166,6 +167,9 @@ documentation files.
 
 
 %changelog
+* Wed Jul 31 2024 Pavel Skrylev <majioa@altlinux.org> 0.7.10-alt1.3
+- ! upper dep limit to psych to 6.0
+
 * Tue May 14 2024 Pavel Skrylev <majioa@altlinux.org> 0.7.10-alt1.2
 - ! rollback bindir to %%_bindir
 

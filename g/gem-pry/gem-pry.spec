@@ -1,7 +1,10 @@
+%def_enable    check
+%def_disable   doc
+%def_enable    devel
 %define        gemname pry
 
 Name:          gem-pry
-Version:       0.14.1.1
+Version:       0.14.2
 Release:       alt1
 Summary:       An IRB alternative and runtime developer console
 License:       MIT
@@ -13,19 +16,28 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-%if_with check
-BuildRequires: gem(coderay) >= 1.1 gem(coderay) < 2
-BuildRequires: gem(method_source) >= 1.0 gem(method_source) < 2
+%if_enabled check
+BuildRequires: gem(coderay) >= 1.1
+BuildRequires: gem(method_source) >= 1.0
+BuildConflicts: gem(coderay) >= 2
+BuildConflicts: gem(method_source) >= 2
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_version pry:0.14.1.1
-Requires:      gem(coderay) >= 1.1 gem(coderay) < 2
-Requires:      gem(method_source) >= 1.0 gem(method_source) < 2
+%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+Requires:      gem(rake) >= 0
+Requires:      gem(yard) >= 0
+Requires:      gem(rspec) >= 0
+Requires:      gem(rubocop) >= 0.66.0
+Requires:      gem(coderay) >= 1.1
+Requires:      gem(method_source) >= 1.0
+Conflicts:     gem(rubocop) >= 2
+Conflicts:     gem(coderay) >= 2
+Conflicts:     gem(method_source) >= 2
 Obsoletes:     ruby-pry < %EVR
 Provides:      ruby-pry = %EVR
-Provides:      gem(pry) = 0.14.1.1
+Provides:      gem(pry) = 0.14.2
 
 
 %description
@@ -34,14 +46,14 @@ from scratch to provide a number of advanced features.
 
 
 %package       -n pry
-Version:       0.14.1.1
+Version:       0.14.2
 Release:       alt1
 Summary:       An IRB alternative and runtime developer console executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета pry
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(pry) = 0.14.1.1
+Requires:      gem(pry) = 0.14.2
 
 %description   -n pry
 An IRB alternative and runtime developer console executable(s).
@@ -53,15 +65,38 @@ from scratch to provide a number of advanced features.
 Исполнямка для самоцвета pry.
 
 
+%if_enabled    doc
+%package       -n gem-pry-doc
+Version:       0.14.2
+Release:       alt1
+Summary:       An IRB alternative and runtime developer console documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета pry
+Group:         Development/Documentation
+BuildArch:     noarch
+
+Requires:      gem(pry) = 0.14.2
+
+%description   -n gem-pry-doc
+An IRB alternative and runtime developer console documentation files.
+
+Pry is a powerful alternative to the standard IRB shell for Ruby. It is written
+from scratch to provide a number of advanced features.
+
+%description   -n gem-pry-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета pry.
+%endif
+
+
+%if_enabled    devel
 %package       -n gem-pry-devel
-Version:       0.14.1.1
+Version:       0.14.2
 Release:       alt1
 Summary:       An IRB alternative and runtime developer console development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета pry
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(pry) = 0.14.1.1
+Requires:      gem(pry) = 0.14.2
 
 %description   -n gem-pry-devel
 An IRB alternative and runtime developer console development package.
@@ -71,10 +106,12 @@ from scratch to provide a number of advanced features.
 
 %description   -n gem-pry-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета pry.
+%endif
 
 
 %prep
 %setup
+%autopatch
 
 %build
 %ruby_build
@@ -86,19 +123,30 @@ from scratch to provide a number of advanced features.
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md LICENSE README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
 %files         -n pry
-%doc README.md
+%doc CHANGELOG.md LICENSE README.md
 %_bindir/pry
 
+%if_enabled    doc
+%files         -n gem-pry-doc
+%doc CHANGELOG.md LICENSE README.md
+%ruby_gemdocdir
+%endif
+
+%if_enabled    devel
 %files         -n gem-pry-devel
-%doc README.md
+%doc CHANGELOG.md LICENSE README.md
+%endif
 
 
 %changelog
+* Tue Aug 06 2024 Pavel Skrylev <majioa@altlinux.org> 0.14.2-alt1
+- ^ 0.14.1.1 -> 0.14.2
+
 * Sat Oct 08 2022 Pavel Skrylev <majioa@altlinux.org> 0.14.1.1-alt1
 - ^ 0.14.1 -> 0.14.1.1
 

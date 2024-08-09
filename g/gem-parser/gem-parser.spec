@@ -5,7 +5,8 @@
 %define        gemname parser
 
 Name:          gem-parser
-Version:       3.3.0.5
+Epoch:         1
+Version:       3.3.4.0
 Release:       alt1
 Summary:       A Ruby parser
 License:       MIT
@@ -18,7 +19,6 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ragel6 >= 6.0
-BuildRequires: racc
 BuildRequires: gem(cliver) >= 0.3.2
 BuildConflicts: ragel6 >= 7.0
 BuildConflicts: gem(cliver) >= 0.4
@@ -31,7 +31,7 @@ BuildRequires: gem(minitest) >= 5.10
 BuildRequires: gem(simplecov) >= 0.15.1
 BuildRequires: gem(gauntlet) >= 0
 BuildRequires: gem(ast) >= 1.1
-BuildRequires: gem(racc) >= 1.7.3
+BuildRequires: gem(racc) = 1.8.0
 BuildConflicts: gem(bundler) >= 3
 BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(minitest) >= 6
@@ -41,16 +41,14 @@ BuildConflicts: gem(ast) >= 3.0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency racc >= 1.7.3,racc < 2
 %ruby_use_gem_dependency rake >= 13.1.0,rake < 14
 %ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
 Requires:      gem(ast) >= 1.1
-Requires:      gem(racc) >= 1.7.3
+Requires:      gem(racc) = 1.8.0
 Conflicts:     gem(ast) >= 3.0
-Provides:      gem(parser) = 3.3.0.5
+Provides:      gem(parser) = 3.3.4.0
 
 %ruby_on_build_rake_tasks generate_release
-%ruby_bindir_to %ruby_bindir
 
 %description
 Parser is a production-ready Ruby parser written in pure Ruby. It recognizes as
@@ -61,14 +59,14 @@ You can also use unparser to produce equivalent source code from Parser's ASTs.
 
 
 %package       -n ruby-parse
-Version:       3.3.0.5
+Version:       3.3.4.0
 Release:       alt1
 Summary:       A Ruby parser executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета parser
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(parser) = 3.3.0.5
+Requires:      gem(parser) = 3.3.4.0
 
 %description   -n ruby-parse
 A Ruby parser executable(s).
@@ -78,20 +76,21 @@ much or more code than Ripper, Melbourne, JRubyParser or ruby_parser, and is
 vastly more convenient to use.
 
 You can also use unparser to produce equivalent source code from Parser's ASTs.
+
 %description   -n ruby-parse -l ru_RU.UTF-8
 Исполнямка для самоцвета parser.
 
 
 %if_enabled    doc
 %package       -n gem-parser-doc
-Version:       3.3.0.5
+Version:       3.3.4.0
 Release:       alt1
 Summary:       A Ruby parser documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета parser
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(parser) = 3.3.0.5
+Requires:      gem(parser) = 3.3.4.0
 
 %description   -n gem-parser-doc
 A Ruby parser documentation files.
@@ -101,6 +100,7 @@ much or more code than Ripper, Melbourne, JRubyParser or ruby_parser, and is
 vastly more convenient to use.
 
 You can also use unparser to produce equivalent source code from Parser's ASTs.
+
 %description   -n gem-parser-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета parser.
 %endif
@@ -108,14 +108,14 @@ You can also use unparser to produce equivalent source code from Parser's ASTs.
 
 %if_enabled    devel
 %package       -n gem-parser-devel
-Version:       3.3.0.5
+Version:       3.3.4.0
 Release:       alt1
 Summary:       A Ruby parser development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета parser
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(parser) = 3.3.0.5
+Requires:      gem(parser) = 3.3.4.0
 Requires:      gem(bundler) >= 1.15
 Requires:      gem(rake) >= 13.0.1
 Requires:      gem(cliver) >= 0.3.2
@@ -141,6 +141,7 @@ much or more code than Ripper, Melbourne, JRubyParser or ruby_parser, and is
 vastly more convenient to use.
 
 You can also use unparser to produce equivalent source code from Parser's ASTs.
+
 %description   -n gem-parser-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета parser.
 %endif
@@ -163,8 +164,8 @@ You can also use unparser to produce equivalent source code from Parser's ASTs.
 %ruby_gemlibdir
 
 %files         -n ruby-parse
-%ruby_bindir/ruby-parse
-%ruby_bindir/ruby-rewrite
+%_bindir/ruby-parse
+%_bindir/ruby-rewrite
 
 %if_enabled    doc
 %files         -n gem-parser-doc
@@ -177,6 +178,9 @@ You can also use unparser to produce equivalent source code from Parser's ASTs.
 
 
 %changelog
+* Fri Aug 02 2024 Pavel Skrylev <majioa@altlinux.org> 1:3.3.4.0-alt1
+- ^ 3.3.0.5 -> 3.3.4.0 with epoch change due to gem-ruby-parser's binary
+
 * Mon Mar 25 2024 Pavel Skrylev <majioa@altlinux.org> 3.3.0.5-alt1
 - ^ 3.2.2.4 -> 3.3.0.5
 

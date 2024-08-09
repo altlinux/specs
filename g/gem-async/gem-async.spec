@@ -1,37 +1,38 @@
+%define        _unpackaged_files_terminate_build 1
+%def_disable   check
+%def_enable    doc
+%def_enable    devel
 %define        gemname async
 
 Name:          gem-async
-Version:       2.1.0
+Version:       2.14.2
 Release:       alt1
 Summary:       A concurrency framework for Ruby
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/socketry/async
 Vcs:           https://github.com/socketry/async.git
-Packager:      Pavel Skrylev <majioa@altlinux.org>
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-%if_with check
-BuildRequires: gem(console) >= 1.10 gem(console) < 2
-BuildRequires: gem(io-event) >= 1.0.0 gem(io-event) < 1.1
-BuildRequires: gem(timers) >= 4.1 gem(timers) < 5
-BuildRequires: gem(async-rspec) >= 1.1 gem(async-rspec) < 2
-BuildRequires: gem(bake-test) >= 0
-BuildRequires: gem(bake-test-external) >= 0
-BuildRequires: gem(benchmark-ips) >= 0
-BuildRequires: gem(bundler) >= 0
-BuildRequires: gem(covered) >= 0.10 gem(covered) < 1
-BuildRequires: gem(rspec) >= 3.6 gem(rspec) < 4
+%if_enabled check
+BuildRequires: gem(console) >= 1.25.2
+BuildRequires: gem(fiber-annotation) >= 0
+BuildRequires: gem(io-event) >= 1.6.5
+BuildConflicts: gem(console) >= 2
+BuildConflicts: gem(io-event) >= 2
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Requires:      gem(console) >= 1.10 gem(console) < 2
-Requires:      gem(io-event) >= 1.0.0 gem(io-event) < 1.1
-Requires:      gem(timers) >= 4.1 gem(timers) < 5
-Provides:      gem(async) = 2.1.0
+Requires:      gem(console) >= 1.25.2
+Requires:      gem(fiber-annotation) >= 0
+Requires:      gem(io-event) >= 1.6.5
+Conflicts:     gem(console) >= 2
+Conflicts:     gem(io-event) >= 2
+Provides:      gem(async) = 2.14.2
 
 
 %description
@@ -45,15 +46,16 @@ timers. Features:
 * Growing eco-system of event-driven components.
 
 
+%if_enabled    doc
 %package       -n gem-async-doc
-Version:       2.1.0
+Version:       2.14.2
 Release:       alt1
 Summary:       A concurrency framework for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета async
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(async) = 2.1.0
+Requires:      gem(async) = 2.14.2
 
 %description   -n gem-async-doc
 A concurrency framework for Ruby documentation files.
@@ -69,24 +71,19 @@ timers. Features:
 
 %description   -n gem-async-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета async.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-async-devel
-Version:       2.1.0
+Version:       2.14.2
 Release:       alt1
 Summary:       A concurrency framework for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета async
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(async) = 2.1.0
-Requires:      gem(async-rspec) >= 1.1 gem(async-rspec) < 2
-Requires:      gem(bake-test) >= 0
-Requires:      gem(bake-test-external) >= 0
-Requires:      gem(benchmark-ips) >= 0
-Requires:      gem(bundler) >= 0
-Requires:      gem(covered) >= 0.10 gem(covered) < 1
-Requires:      gem(rspec) >= 3.6 gem(rspec) < 4
+Requires:      gem(async) = 2.14.2
 
 %description   -n gem-async-devel
 A concurrency framework for Ruby development package.
@@ -102,6 +99,7 @@ timers. Features:
 
 %description   -n gem-async-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета async.
+%endif
 
 
 %prep
@@ -121,15 +119,22 @@ timers. Features:
 %ruby_gemspec
 %ruby_gemlibdir
 
+%if_enabled    doc
 %files         -n gem-async-doc
 %doc readme.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-async-devel
 %doc readme.md
+%endif
 
 
 %changelog
+* Wed Jul 24 2024 Pavel Skrylev <majioa@altlinux.org> 2.14.2-alt1
+- ^ 2.1.0 -> 2.14.2
+
 * Wed Oct 12 2022 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt1
 - ^ 1.30.1 -> 2.1.0
 

@@ -1,6 +1,6 @@
 Name:          google-api-ruby-client
 Version:       20221017
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -28,7 +28,7 @@ BuildRequires: gem(coveralls) >= 0.8 gem(coveralls) < 1
 BuildRequires: gem(rubocop) >= 0.49.0 gem(rubocop) < 2
 BuildRequires: gem(launchy) >= 2.4 gem(launchy) < 3
 BuildRequires: gem(dotenv) >= 2.0 gem(dotenv) < 3
-BuildRequires: gem(fakefs) >= 1.0 gem(fakefs) < 2
+BuildRequires: gem(fakefs) >= 1.0
 BuildRequires: gem(google-id-token) >= 1.3 gem(google-id-token) < 2
 BuildRequires: gem(os) >= 0.9 gem(os) < 2
 BuildRequires: gem(rmail) >= 1.1 gem(rmail) < 2
@@ -61,6 +61,7 @@ BuildRequires: gem(thor) >= 0.20 gem(thor) < 2.a
 %ruby_use_gem_dependency pry-doc >= 1.1.0,pry-doc < 2
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
 %ruby_use_gem_dependency redis >= 5.0,redis < 6
+%ruby_use_gem_dependency fakefs >= 2.0,fakefs < 3
 %ruby_ignore_names web,cli,/beta[5-9],/beta[0-3],/alpha,/apis-[aefhj-lnoqrt-z],/apis-g[a-df-z],/apis-d[a-hj-mo-z],/apis-c[a-kmnp-z],/genomics,/dia,/dig,/display,/apis-cloud[a-ps-z],/classroom,/apis-cloudr.*v[23],/apis-co[a-lops-z],google-api-ruby-client
 Provides:      ruby-google-api-ruby-client
 
@@ -89,7 +90,7 @@ information.
 
 %package       -n gem-google-apis-baremetalsolution-v1
 Version:       0.13.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Bare Metal Solution API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -110,7 +111,7 @@ use.
 
 %package       -n gem-google-apis-baremetalsolution-v1-doc
 Version:       0.13.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Bare Metal Solution API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-baremetalsolution_v1
 Group:         Development/Documentation
@@ -136,7 +137,7 @@ use.
 
 %package       -n gem-google-apis-baremetalsolution-v1-devel
 Version:       0.13.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Bare Metal Solution API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-baremetalsolution_v1
 Group:         Development/Ruby
@@ -168,7 +169,7 @@ use.
 
 %package       -n gem-google-apis-baremetalsolution-v2
 Version:       0.24.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Bare Metal Solution API V2
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -189,7 +190,7 @@ use.
 
 %package       -n gem-google-apis-baremetalsolution-v2-doc
 Version:       0.24.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Bare Metal Solution API V2 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-baremetalsolution_v2
 Group:         Development/Documentation
@@ -215,7 +216,7 @@ use.
 
 %package       -n gem-google-apis-baremetalsolution-v2-devel
 Version:       0.24.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Bare Metal Solution API V2 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-baremetalsolution_v2
 Group:         Development/Ruby
@@ -247,7 +248,7 @@ use.
 
 %package       -n gem-google-apis-beyondcorp-v1
 Version:       0.7.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for BeyondCorp API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -267,7 +268,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-beyondcorp-v1-doc
 Version:       0.7.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for BeyondCorp API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-beyondcorp_v1
 Group:         Development/Documentation
@@ -292,7 +293,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-beyondcorp-v1-devel
 Version:       0.7.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for BeyondCorp API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-beyondcorp_v1
 Group:         Development/Ruby
@@ -323,7 +324,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-bigquery-v2
 Version:       0.42.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -337,7 +338,7 @@ REST client for Google APIs.
 
 %package       -n gem-google-apis-bigquery-v2-doc
 Version:       0.42.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-bigquery_v2
 Group:         Development/Documentation
@@ -354,7 +355,7 @@ REST client for Google APIs documentation files.
 
 %package       -n gem-google-apis-bigquery-v2-devel
 Version:       0.42.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-bigquery_v2
 Group:         Development/Ruby
@@ -377,7 +378,7 @@ REST client for Google APIs development package.
 
 %package       -n gem-google-apis-bigquerydatatransfer-v1
 Version:       0.28.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for BigQuery Data Transfer API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -398,7 +399,7 @@ to use.
 
 %package       -n gem-google-apis-bigquerydatatransfer-v1-doc
 Version:       0.28.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for BigQuery Data Transfer API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-bigquerydatatransfer_v1
 Group:         Development/Documentation
@@ -424,7 +425,7 @@ to use.
 
 %package       -n gem-google-apis-bigquerydatatransfer-v1-devel
 Version:       0.28.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for BigQuery Data Transfer API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-bigquerydatatransfer_v1
 Group:         Development/Ruby
@@ -456,7 +457,7 @@ to use.
 
 %package       -n gem-google-apis-bigqueryreservation-v1
 Version:       0.21.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for BigQuery Reservation API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -477,7 +478,7 @@ use.
 
 %package       -n gem-google-apis-bigqueryreservation-v1-doc
 Version:       0.21.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for BigQuery Reservation API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-bigqueryreservation_v1
 Group:         Development/Documentation
@@ -503,7 +504,7 @@ use.
 
 %package       -n gem-google-apis-bigqueryreservation-v1-devel
 Version:       0.21.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for BigQuery Reservation API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-bigqueryreservation_v1
 Group:         Development/Ruby
@@ -535,7 +536,7 @@ use.
 
 %package       -n gem-google-apis-bigtableadmin-v1
 Version:       0.11.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Bigtable Admin API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -556,7 +557,7 @@ use.
 
 %package       -n gem-google-apis-bigtableadmin-v1-doc
 Version:       0.11.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Bigtable Admin API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-bigtableadmin_v1
 Group:         Development/Documentation
@@ -582,7 +583,7 @@ use.
 
 %package       -n gem-google-apis-bigtableadmin-v1-devel
 Version:       0.11.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Bigtable Admin API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-bigtableadmin_v1
 Group:         Development/Ruby
@@ -614,7 +615,7 @@ use.
 
 %package       -n gem-google-apis-bigtableadmin-v2
 Version:       0.29.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Bigtable Admin API V2
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -635,7 +636,7 @@ use.
 
 %package       -n gem-google-apis-bigtableadmin-v2-doc
 Version:       0.29.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Bigtable Admin API V2 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-bigtableadmin_v2
 Group:         Development/Documentation
@@ -661,7 +662,7 @@ use.
 
 %package       -n gem-google-apis-bigtableadmin-v2-devel
 Version:       0.29.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Bigtable Admin API V2 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-bigtableadmin_v2
 Group:         Development/Ruby
@@ -693,7 +694,7 @@ use.
 
 %package       -n gem-google-apis-billingbudgets-v1
 Version:       0.21.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Billing Budget API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -714,7 +715,7 @@ use.
 
 %package       -n gem-google-apis-billingbudgets-v1-doc
 Version:       0.21.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Billing Budget API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-billingbudgets_v1
 Group:         Development/Documentation
@@ -740,7 +741,7 @@ use.
 
 %package       -n gem-google-apis-billingbudgets-v1-devel
 Version:       0.21.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Billing Budget API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-billingbudgets_v1
 Group:         Development/Ruby
@@ -772,7 +773,7 @@ use.
 
 %package       -n gem-google-apis-binaryauthorization-v1
 Version:       0.23.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Binary Authorization API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -793,7 +794,7 @@ use.
 
 %package       -n gem-google-apis-binaryauthorization-v1-doc
 Version:       0.23.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Binary Authorization API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-binaryauthorization_v1
 Group:         Development/Documentation
@@ -819,7 +820,7 @@ use.
 
 %package       -n gem-google-apis-binaryauthorization-v1-devel
 Version:       0.23.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Binary Authorization API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-binaryauthorization_v1
 Group:         Development/Ruby
@@ -851,7 +852,7 @@ use.
 
 %package       -n gem-google-apis-blogger-v2
 Version:       0.12.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Blogger API V2
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -871,7 +872,7 @@ separate modern client that is easier to use.
 
 %package       -n gem-google-apis-blogger-v2-doc
 Version:       0.12.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Blogger API V2 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-blogger_v2
 Group:         Development/Documentation
@@ -896,7 +897,7 @@ separate modern client that is easier to use.
 
 %package       -n gem-google-apis-blogger-v2-devel
 Version:       0.12.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Blogger API V2 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-blogger_v2
 Group:         Development/Ruby
@@ -927,7 +928,7 @@ separate modern client that is easier to use.
 
 %package       -n gem-google-apis-blogger-v3
 Version:       0.12.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Blogger API V3
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -947,7 +948,7 @@ separate modern client that is easier to use.
 
 %package       -n gem-google-apis-blogger-v3-doc
 Version:       0.12.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Blogger API V3 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-blogger_v3
 Group:         Development/Documentation
@@ -972,7 +973,7 @@ separate modern client that is easier to use.
 
 %package       -n gem-google-apis-blogger-v3-devel
 Version:       0.12.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Blogger API V3 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-blogger_v3
 Group:         Development/Ruby
@@ -1003,7 +1004,7 @@ separate modern client that is easier to use.
 
 %package       -n gem-google-apis-books-v1
 Version:       0.12.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Books API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1023,7 +1024,7 @@ separate modern client that is easier to use.
 
 %package       -n gem-google-apis-books-v1-doc
 Version:       0.12.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Books API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-books_v1
 Group:         Development/Documentation
@@ -1048,7 +1049,7 @@ separate modern client that is easier to use.
 
 %package       -n gem-google-apis-books-v1-devel
 Version:       0.12.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Books API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-books_v1
 Group:         Development/Ruby
@@ -1079,7 +1080,7 @@ separate modern client that is easier to use.
 
 %package       -n gem-google-apis-businessprofileperformance-v1
 Version:       0.4.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Business Profile Performance API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1100,7 +1101,7 @@ easier to use.
 
 %package       -n gem-google-apis-businessprofileperformance-v1-doc
 Version:       0.4.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Business Profile Performance API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-businessprofileperformance_v1
 Group:         Development/Documentation
@@ -1127,7 +1128,7 @@ easier to use.
 
 %package       -n gem-google-apis-businessprofileperformance-v1-devel
 Version:       0.4.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Business Profile Performance API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-businessprofileperformance_v1
 Group:         Development/Ruby
@@ -1160,7 +1161,7 @@ easier to use.
 
 %package       -n gem-google-apis-cloudresourcemanager-v1
 Version:       0.30.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1174,7 +1175,7 @@ REST client for Google APIs.
 
 %package       -n gem-google-apis-cloudresourcemanager-v1-doc
 Version:       0.30.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-cloudresourcemanager_v1
 Group:         Development/Documentation
@@ -1191,7 +1192,7 @@ REST client for Google APIs documentation files.
 
 %package       -n gem-google-apis-cloudresourcemanager-v1-devel
 Version:       0.30.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-cloudresourcemanager_v1
 Group:         Development/Ruby
@@ -1214,7 +1215,7 @@ REST client for Google APIs development package.
 
 %package       -n gem-google-apis-composer-v1
 Version:       0.29.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Composer API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1234,7 +1235,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-composer-v1-doc
 Version:       0.29.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Composer API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-composer_v1
 Group:         Development/Documentation
@@ -1259,7 +1260,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-composer-v1-devel
 Version:       0.29.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Composer API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-composer_v1
 Group:         Development/Ruby
@@ -1290,7 +1291,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-compute-beta
 Version:       0.51.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Compute Engine API Beta
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1310,7 +1311,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-compute-beta-doc
 Version:       0.51.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Compute Engine API Beta documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-compute_beta
 Group:         Development/Documentation
@@ -1335,7 +1336,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-compute-beta-devel
 Version:       0.51.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Compute Engine API Beta development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-compute_beta
 Group:         Development/Ruby
@@ -1366,7 +1367,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-compute-v1
 Version:       0.53.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Compute Engine API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1386,7 +1387,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-compute-v1-doc
 Version:       0.53.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Compute Engine API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-compute_v1
 Group:         Development/Documentation
@@ -1411,7 +1412,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-compute-v1-devel
 Version:       0.53.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Compute Engine API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-compute_v1
 Group:         Development/Ruby
@@ -1442,7 +1443,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-connectors-v1
 Version:       0.19.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Connectors API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1462,7 +1463,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-connectors-v1-doc
 Version:       0.19.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Connectors API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-connectors_v1
 Group:         Development/Documentation
@@ -1487,7 +1488,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-connectors-v1-devel
 Version:       0.19.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Connectors API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-connectors_v1
 Group:         Development/Ruby
@@ -1518,7 +1519,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-connectors-v2
 Version:       0.2.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Connectors API V2
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1538,7 +1539,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-connectors-v2-doc
 Version:       0.2.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Connectors API V2 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-connectors_v2
 Group:         Development/Documentation
@@ -1563,7 +1564,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-connectors-v2-devel
 Version:       0.2.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Connectors API V2 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-connectors_v2
 Group:         Development/Ruby
@@ -1594,7 +1595,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-contactcenterinsights-v1
 Version:       0.15.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Contact Center AI Insights API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1615,7 +1616,7 @@ easier to use.
 
 %package       -n gem-google-apis-contactcenterinsights-v1-doc
 Version:       0.15.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Contact Center AI Insights API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-contactcenterinsights_v1
 Group:         Development/Documentation
@@ -1642,7 +1643,7 @@ easier to use.
 
 %package       -n gem-google-apis-contactcenterinsights-v1-devel
 Version:       0.15.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Contact Center AI Insights API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-contactcenterinsights_v1
 Group:         Development/Ruby
@@ -1675,7 +1676,7 @@ easier to use.
 
 %package       -n gem-google-apis-container-v1
 Version:       0.37.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Kubernetes Engine API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1695,7 +1696,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-container-v1-doc
 Version:       0.37.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Kubernetes Engine API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-container_v1
 Group:         Development/Documentation
@@ -1720,7 +1721,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-container-v1-devel
 Version:       0.37.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Kubernetes Engine API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-container_v1
 Group:         Development/Ruby
@@ -1751,7 +1752,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-containeranalysis-v1
 Version:       0.22.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Container Analysis API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1772,7 +1773,7 @@ use.
 
 %package       -n gem-google-apis-containeranalysis-v1-doc
 Version:       0.22.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Container Analysis API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-containeranalysis_v1
 Group:         Development/Documentation
@@ -1798,7 +1799,7 @@ use.
 
 %package       -n gem-google-apis-containeranalysis-v1-devel
 Version:       0.22.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Container Analysis API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-containeranalysis_v1
 Group:         Development/Ruby
@@ -1830,7 +1831,7 @@ use.
 
 %package       -n gem-google-apis-content-v2
 Version:       0.17.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Content API for Shopping V2
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1851,7 +1852,7 @@ use.
 
 %package       -n gem-google-apis-content-v2-doc
 Version:       0.17.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Content API for Shopping V2 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-content_v2
 Group:         Development/Documentation
@@ -1877,7 +1878,7 @@ use.
 
 %package       -n gem-google-apis-content-v2-devel
 Version:       0.17.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Content API for Shopping V2 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-content_v2
 Group:         Development/Ruby
@@ -1909,7 +1910,7 @@ use.
 
 %package       -n gem-google-apis-content-v2-1
 Version:       0.31.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Content API for Shopping V2_1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1930,7 +1931,7 @@ use.
 
 %package       -n gem-google-apis-content-v2-1-doc
 Version:       0.31.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Content API for Shopping V2_1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-content_v2_1
 Group:         Development/Documentation
@@ -1956,7 +1957,7 @@ use.
 
 %package       -n gem-google-apis-content-v2-1-devel
 Version:       0.31.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Content API for Shopping V2_1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-content_v2_1
 Group:         Development/Ruby
@@ -1988,7 +1989,7 @@ use.
 
 %package       -n gem-google-apis-contentwarehouse-v1
 Version:       0.1.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for contentwarehouse API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2008,7 +2009,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-contentwarehouse-v1-doc
 Version:       0.1.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for contentwarehouse API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-contentwarehouse_v1
 Group:         Development/Documentation
@@ -2033,7 +2034,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-contentwarehouse-v1-devel
 Version:       0.1.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for contentwarehouse API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-contentwarehouse_v1
 Group:         Development/Ruby
@@ -2064,7 +2065,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-discovery-v1
 Version:       0.12.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2078,7 +2079,7 @@ REST client for Google APIs.
 
 %package       -n gem-google-apis-discovery-v1-doc
 Version:       0.12.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-discovery_v1
 Group:         Development/Documentation
@@ -2095,7 +2096,7 @@ REST client for Google APIs documentation files.
 
 %package       -n gem-google-apis-discovery-v1-devel
 Version:       0.12.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-discovery_v1
 Group:         Development/Ruby
@@ -2118,7 +2119,7 @@ REST client for Google APIs development package.
 
 %package       -n gem-google-apis-dns-v1
 Version:       0.28.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2132,7 +2133,7 @@ REST client for Google APIs.
 
 %package       -n gem-google-apis-dns-v1-doc
 Version:       0.28.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-dns_v1
 Group:         Development/Documentation
@@ -2149,7 +2150,7 @@ REST client for Google APIs documentation files.
 
 %package       -n gem-google-apis-dns-v1-devel
 Version:       0.28.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-dns_v1
 Group:         Development/Ruby
@@ -2172,7 +2173,7 @@ REST client for Google APIs development package.
 
 %package       -n gem-google-apis-dns-v2
 Version:       0.1.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud DNS API V2
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2192,7 +2193,7 @@ a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-dns-v2-doc
 Version:       0.1.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud DNS API V2 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-dns_v2
 Group:         Development/Documentation
@@ -2217,7 +2218,7 @@ a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-dns-v2-devel
 Version:       0.1.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud DNS API V2 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-dns_v2
 Group:         Development/Ruby
@@ -2248,7 +2249,7 @@ a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-iam-v1
 Version:       0.35.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Identity and Access Management (IAM) API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2269,7 +2270,7 @@ client that is easier to use.
 
 %package       -n gem-google-apis-iam-v1-doc
 Version:       0.35.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Identity and Access Management (IAM) API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-iam_v1
 Group:         Development/Documentation
@@ -2296,7 +2297,7 @@ client that is easier to use.
 
 %package       -n gem-google-apis-iam-v1-devel
 Version:       0.35.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Identity and Access Management (IAM) API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-iam_v1
 Group:         Development/Ruby
@@ -2329,7 +2330,7 @@ client that is easier to use.
 
 %package       -n gem-google-apis-iam-v2beta
 Version:       0.7.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Identity and Access Management (IAM) API V2beta
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2350,7 +2351,7 @@ modern client that is easier to use.
 
 %package       -n gem-google-apis-iam-v2beta-doc
 Version:       0.7.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Identity and Access Management (IAM) API V2beta documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-iam_v2beta
 Group:         Development/Documentation
@@ -2377,7 +2378,7 @@ modern client that is easier to use.
 
 %package       -n gem-google-apis-iam-v2beta-devel
 Version:       0.7.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Identity and Access Management (IAM) API V2beta development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-iam_v2beta
 Group:         Development/Ruby
@@ -2410,7 +2411,7 @@ modern client that is easier to use.
 
 %package       -n gem-google-apis-iamcredentials-v1
 Version:       0.15.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2424,7 +2425,7 @@ REST client for Google APIs.
 
 %package       -n gem-google-apis-iamcredentials-v1-doc
 Version:       0.15.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-iamcredentials_v1
 Group:         Development/Documentation
@@ -2441,7 +2442,7 @@ REST client for Google APIs documentation files.
 
 %package       -n gem-google-apis-iamcredentials-v1-devel
 Version:       0.15.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-iamcredentials_v1
 Group:         Development/Ruby
@@ -2464,7 +2465,7 @@ REST client for Google APIs development package.
 
 %package       -n gem-google-apis-iap-v1
 Version:       0.27.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Identity-Aware Proxy API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2485,7 +2486,7 @@ easier to use.
 
 %package       -n gem-google-apis-iap-v1-doc
 Version:       0.27.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Identity-Aware Proxy API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-iap_v1
 Group:         Development/Documentation
@@ -2512,7 +2513,7 @@ easier to use.
 
 %package       -n gem-google-apis-iap-v1-devel
 Version:       0.27.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Identity-Aware Proxy API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-iap_v1
 Group:         Development/Ruby
@@ -2545,7 +2546,7 @@ easier to use.
 
 %package       -n gem-google-apis-ideahub-v1beta
 Version:       0.9.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Idea Hub API V1beta
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2565,7 +2566,7 @@ a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-ideahub-v1beta-doc
 Version:       0.9.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Idea Hub API V1beta documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-ideahub_v1beta
 Group:         Development/Documentation
@@ -2590,7 +2591,7 @@ a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-ideahub-v1beta-devel
 Version:       0.9.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Idea Hub API V1beta development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-ideahub_v1beta
 Group:         Development/Ruby
@@ -2621,7 +2622,7 @@ a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-identitytoolkit-v2
 Version:       0.3.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Identity Toolkit API V2
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2641,7 +2642,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-identitytoolkit-v2-doc
 Version:       0.3.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Identity Toolkit API V2 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-identitytoolkit_v2
 Group:         Development/Documentation
@@ -2666,7 +2667,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-identitytoolkit-v2-devel
 Version:       0.3.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Identity Toolkit API V2 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-identitytoolkit_v2
 Group:         Development/Ruby
@@ -2697,7 +2698,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-identitytoolkit-v3
 Version:       0.12.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Google Identity Toolkit API V3
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2718,7 +2719,7 @@ to use.
 
 %package       -n gem-google-apis-identitytoolkit-v3-doc
 Version:       0.12.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Google Identity Toolkit API V3 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-identitytoolkit_v3
 Group:         Development/Documentation
@@ -2744,7 +2745,7 @@ to use.
 
 %package       -n gem-google-apis-identitytoolkit-v3-devel
 Version:       0.12.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Google Identity Toolkit API V3 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-identitytoolkit_v3
 Group:         Development/Ruby
@@ -2776,7 +2777,7 @@ to use.
 
 %package       -n gem-google-apis-ids-v1
 Version:       0.8.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud IDS API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2796,7 +2797,7 @@ a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-ids-v1-doc
 Version:       0.8.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud IDS API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-ids_v1
 Group:         Development/Documentation
@@ -2821,7 +2822,7 @@ a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-ids-v1-devel
 Version:       0.8.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud IDS API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-ids_v1
 Group:         Development/Ruby
@@ -2852,7 +2853,7 @@ a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-indexing-v3
 Version:       0.11.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Indexing API V3
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2872,7 +2873,7 @@ separate modern client that is easier to use.
 
 %package       -n gem-google-apis-indexing-v3-doc
 Version:       0.11.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Indexing API V3 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-indexing_v3
 Group:         Development/Documentation
@@ -2897,7 +2898,7 @@ separate modern client that is easier to use.
 
 %package       -n gem-google-apis-indexing-v3-devel
 Version:       0.11.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Indexing API V3 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-indexing_v3
 Group:         Development/Ruby
@@ -2928,7 +2929,7 @@ separate modern client that is easier to use.
 
 %package       -n gem-google-apis-managedidentities-v1
 Version:       0.25.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Managed Service for Microsoft Active Directory API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -2949,7 +2950,7 @@ may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-managedidentities-v1-doc
 Version:       0.25.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Managed Service for Microsoft Active Directory API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-managedidentities_v1
 Group:         Development/Documentation
@@ -2976,7 +2977,7 @@ may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-managedidentities-v1-devel
 Version:       0.25.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Managed Service for Microsoft Active Directory API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-managedidentities_v1
 Group:         Development/Ruby
@@ -3009,7 +3010,7 @@ may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-manufacturers-v1
 Version:       0.16.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Manufacturer Center API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -3030,7 +3031,7 @@ use.
 
 %package       -n gem-google-apis-manufacturers-v1-doc
 Version:       0.16.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Manufacturer Center API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-manufacturers_v1
 Group:         Development/Documentation
@@ -3056,7 +3057,7 @@ use.
 
 %package       -n gem-google-apis-manufacturers-v1-devel
 Version:       0.16.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Manufacturer Center API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-manufacturers_v1
 Group:         Development/Ruby
@@ -3088,7 +3089,7 @@ use.
 
 %package       -n gem-google-apis-memcache-v1
 Version:       0.25.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Memorystore for Memcached API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -3109,7 +3110,7 @@ client that is easier to use.
 
 %package       -n gem-google-apis-memcache-v1-doc
 Version:       0.25.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Memorystore for Memcached API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-memcache_v1
 Group:         Development/Documentation
@@ -3136,7 +3137,7 @@ client that is easier to use.
 
 %package       -n gem-google-apis-memcache-v1-devel
 Version:       0.25.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Memorystore for Memcached API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-memcache_v1
 Group:         Development/Ruby
@@ -3169,7 +3170,7 @@ client that is easier to use.
 
 %package       -n gem-google-apis-metastore-v1beta
 Version:       0.37.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Dataproc Metastore API V1beta
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -3190,7 +3191,7 @@ use.
 
 %package       -n gem-google-apis-metastore-v1beta-doc
 Version:       0.37.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Dataproc Metastore API V1beta documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-metastore_v1beta
 Group:         Development/Documentation
@@ -3216,7 +3217,7 @@ use.
 
 %package       -n gem-google-apis-metastore-v1beta-devel
 Version:       0.37.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Dataproc Metastore API V1beta development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-metastore_v1beta
 Group:         Development/Ruby
@@ -3248,7 +3249,7 @@ use.
 
 %package       -n gem-google-apis-ml-v1
 Version:       0.28.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for AI Platform Training & Prediction API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -3269,7 +3270,7 @@ modern client that is easier to use.
 
 %package       -n gem-google-apis-ml-v1-doc
 Version:       0.28.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for AI Platform Training & Prediction API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-ml_v1
 Group:         Development/Documentation
@@ -3296,7 +3297,7 @@ modern client that is easier to use.
 
 %package       -n gem-google-apis-ml-v1-devel
 Version:       0.28.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for AI Platform Training & Prediction API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-ml_v1
 Group:         Development/Ruby
@@ -3329,7 +3330,7 @@ modern client that is easier to use.
 
 %package       -n gem-google-apis-monitoring-v1
 Version:       0.29.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Monitoring API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -3349,7 +3350,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-monitoring-v1-doc
 Version:       0.29.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Monitoring API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-monitoring_v1
 Group:         Development/Documentation
@@ -3374,7 +3375,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-monitoring-v1-devel
 Version:       0.29.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Monitoring API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-monitoring_v1
 Group:         Development/Ruby
@@ -3405,7 +3406,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-monitoring-v3
 Version:       0.36.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Monitoring API V3
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -3425,7 +3426,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-monitoring-v3-doc
 Version:       0.36.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Monitoring API V3 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-monitoring_v3
 Group:         Development/Documentation
@@ -3450,7 +3451,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-monitoring-v3-devel
 Version:       0.36.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Monitoring API V3 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-monitoring_v3
 Group:         Development/Ruby
@@ -3481,7 +3482,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-mybusinessaccountmanagement-v1
 Version:       0.18.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for My Business Account Management API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -3502,7 +3503,7 @@ that is easier to use.
 
 %package       -n gem-google-apis-mybusinessaccountmanagement-v1-doc
 Version:       0.18.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for My Business Account Management API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-mybusinessaccountmanagement_v1
 Group:         Development/Documentation
@@ -3529,7 +3530,7 @@ that is easier to use.
 
 %package       -n gem-google-apis-mybusinessaccountmanagement-v1-devel
 Version:       0.18.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for My Business Account Management API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-mybusinessaccountmanagement_v1
 Group:         Development/Ruby
@@ -3562,7 +3563,7 @@ that is easier to use.
 
 %package       -n gem-google-apis-mybusinessbusinesscalls-v1
 Version:       0.6.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for My Business Business Calls API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -3583,7 +3584,7 @@ easier to use.
 
 %package       -n gem-google-apis-mybusinessbusinesscalls-v1-doc
 Version:       0.6.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for My Business Business Calls API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-mybusinessbusinesscalls_v1
 Group:         Development/Documentation
@@ -3610,7 +3611,7 @@ easier to use.
 
 %package       -n gem-google-apis-mybusinessbusinesscalls-v1-devel
 Version:       0.6.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for My Business Business Calls API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-mybusinessbusinesscalls_v1
 Group:         Development/Ruby
@@ -3643,7 +3644,7 @@ easier to use.
 
 %package       -n gem-google-apis-mybusinessbusinessinformation-v1
 Version:       0.13.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for My Business Business Information API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -3664,7 +3665,7 @@ modern client that is easier to use.
 
 %package       -n gem-google-apis-mybusinessbusinessinformation-v1-doc
 Version:       0.13.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for My Business Business Information API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-mybusinessbusinessinformation_v1
 Group:         Development/Documentation
@@ -3691,7 +3692,7 @@ modern client that is easier to use.
 
 %package       -n gem-google-apis-mybusinessbusinessinformation-v1-devel
 Version:       0.13.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for My Business Business Information API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-mybusinessbusinessinformation_v1
 Group:         Development/Ruby
@@ -3724,7 +3725,7 @@ modern client that is easier to use.
 
 %package       -n gem-google-apis-mybusinesslodging-v1
 Version:       0.12.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for My Business Lodging API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -3745,7 +3746,7 @@ use.
 
 %package       -n gem-google-apis-mybusinesslodging-v1-doc
 Version:       0.12.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for My Business Lodging API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-mybusinesslodging_v1
 Group:         Development/Documentation
@@ -3771,7 +3772,7 @@ use.
 
 %package       -n gem-google-apis-mybusinesslodging-v1-devel
 Version:       0.12.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for My Business Lodging API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-mybusinesslodging_v1
 Group:         Development/Ruby
@@ -3803,7 +3804,7 @@ use.
 
 %package       -n gem-google-apis-mybusinessnotifications-v1
 Version:       0.8.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for My Business Notifications API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -3824,7 +3825,7 @@ easier to use.
 
 %package       -n gem-google-apis-mybusinessnotifications-v1-doc
 Version:       0.8.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for My Business Notifications API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-mybusinessnotifications_v1
 Group:         Development/Documentation
@@ -3851,7 +3852,7 @@ easier to use.
 
 %package       -n gem-google-apis-mybusinessnotifications-v1-devel
 Version:       0.8.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for My Business Notifications API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-mybusinessnotifications_v1
 Group:         Development/Ruby
@@ -3884,7 +3885,7 @@ easier to use.
 
 %package       -n gem-google-apis-mybusinessplaceactions-v1
 Version:       0.13.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for My Business Place Actions API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -3905,7 +3906,7 @@ easier to use.
 
 %package       -n gem-google-apis-mybusinessplaceactions-v1-doc
 Version:       0.13.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for My Business Place Actions API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-mybusinessplaceactions_v1
 Group:         Development/Documentation
@@ -3932,7 +3933,7 @@ easier to use.
 
 %package       -n gem-google-apis-mybusinessplaceactions-v1-devel
 Version:       0.13.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for My Business Place Actions API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-mybusinessplaceactions_v1
 Group:         Development/Ruby
@@ -3965,7 +3966,7 @@ easier to use.
 
 %package       -n gem-google-apis-mybusinessqanda-v1
 Version:       0.7.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for My Business Q&A API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -3985,7 +3986,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-mybusinessqanda-v1-doc
 Version:       0.7.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for My Business Q&A API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-mybusinessqanda_v1
 Group:         Development/Documentation
@@ -4010,7 +4011,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-mybusinessqanda-v1-devel
 Version:       0.7.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for My Business Q&A API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-mybusinessqanda_v1
 Group:         Development/Ruby
@@ -4041,7 +4042,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-mybusinessverifications-v1
 Version:       0.10.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for My Business Verifications API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -4062,7 +4063,7 @@ easier to use.
 
 %package       -n gem-google-apis-mybusinessverifications-v1-doc
 Version:       0.10.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for My Business Verifications API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-mybusinessverifications_v1
 Group:         Development/Documentation
@@ -4089,7 +4090,7 @@ easier to use.
 
 %package       -n gem-google-apis-mybusinessverifications-v1-devel
 Version:       0.10.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for My Business Verifications API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-mybusinessverifications_v1
 Group:         Development/Ruby
@@ -4122,7 +4123,7 @@ easier to use.
 
 %package       -n gem-google-apis-pagespeedonline-v5
 Version:       0.13.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for PageSpeed Insights API V5
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -4143,7 +4144,7 @@ use.
 
 %package       -n gem-google-apis-pagespeedonline-v5-doc
 Version:       0.13.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for PageSpeed Insights API V5 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-pagespeedonline_v5
 Group:         Development/Documentation
@@ -4169,7 +4170,7 @@ use.
 
 %package       -n gem-google-apis-pagespeedonline-v5-devel
 Version:       0.13.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for PageSpeed Insights API V5 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-pagespeedonline_v5
 Group:         Development/Ruby
@@ -4201,7 +4202,7 @@ use.
 
 %package       -n gem-google-apis-paymentsresellersubscription-v1
 Version:       0.22.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Payments Reseller Subscription API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -4222,7 +4223,7 @@ client that is easier to use.
 
 %package       -n gem-google-apis-paymentsresellersubscription-v1-doc
 Version:       0.22.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Payments Reseller Subscription API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-paymentsresellersubscription_v1
 Group:         Development/Documentation
@@ -4249,7 +4250,7 @@ client that is easier to use.
 
 %package       -n gem-google-apis-paymentsresellersubscription-v1-devel
 Version:       0.22.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Payments Reseller Subscription API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-paymentsresellersubscription_v1
 Group:         Development/Ruby
@@ -4282,7 +4283,7 @@ client that is easier to use.
 
 %package       -n gem-google-apis-people-v1
 Version:       0.33.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for People API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -4302,7 +4303,7 @@ separate modern client that is easier to use.
 
 %package       -n gem-google-apis-people-v1-doc
 Version:       0.33.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for People API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-people_v1
 Group:         Development/Documentation
@@ -4327,7 +4328,7 @@ separate modern client that is easier to use.
 
 %package       -n gem-google-apis-people-v1-devel
 Version:       0.33.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for People API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-people_v1
 Group:         Development/Ruby
@@ -4358,7 +4359,7 @@ separate modern client that is easier to use.
 
 %package       -n gem-google-apis-playablelocations-v3
 Version:       0.6.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Playable Locations API V3
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -4379,7 +4380,7 @@ use.
 
 %package       -n gem-google-apis-playablelocations-v3-doc
 Version:       0.6.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Playable Locations API V3 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-playablelocations_v3
 Group:         Development/Documentation
@@ -4405,7 +4406,7 @@ use.
 
 %package       -n gem-google-apis-playablelocations-v3-devel
 Version:       0.6.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Playable Locations API V3 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-playablelocations_v3
 Group:         Development/Ruby
@@ -4437,7 +4438,7 @@ use.
 
 %package       -n gem-google-apis-playcustomapp-v1
 Version:       0.11.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Google Play Custom App Publishing API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -4458,7 +4459,7 @@ client that is easier to use.
 
 %package       -n gem-google-apis-playcustomapp-v1-doc
 Version:       0.11.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Google Play Custom App Publishing API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-playcustomapp_v1
 Group:         Development/Documentation
@@ -4485,7 +4486,7 @@ client that is easier to use.
 
 %package       -n gem-google-apis-playcustomapp-v1-devel
 Version:       0.11.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Google Play Custom App Publishing API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-playcustomapp_v1
 Group:         Development/Ruby
@@ -4518,7 +4519,7 @@ client that is easier to use.
 
 %package       -n gem-google-apis-playintegrity-v1
 Version:       0.10.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Google Play Integrity API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -4539,7 +4540,7 @@ to use.
 
 %package       -n gem-google-apis-playintegrity-v1-doc
 Version:       0.10.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Google Play Integrity API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-playintegrity_v1
 Group:         Development/Documentation
@@ -4565,7 +4566,7 @@ to use.
 
 %package       -n gem-google-apis-playintegrity-v1-devel
 Version:       0.10.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Google Play Integrity API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-playintegrity_v1
 Group:         Development/Ruby
@@ -4597,7 +4598,7 @@ to use.
 
 %package       -n gem-google-apis-policyanalyzer-v1
 Version:       0.9.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Policy Analyzer API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -4617,7 +4618,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-policyanalyzer-v1-doc
 Version:       0.9.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Policy Analyzer API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-policyanalyzer_v1
 Group:         Development/Documentation
@@ -4642,7 +4643,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-policyanalyzer-v1-devel
 Version:       0.9.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Policy Analyzer API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-policyanalyzer_v1
 Group:         Development/Ruby
@@ -4673,7 +4674,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-policysimulator-v1
 Version:       0.20.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Policy Simulator API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -4693,7 +4694,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-policysimulator-v1-doc
 Version:       0.20.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Policy Simulator API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-policysimulator_v1
 Group:         Development/Documentation
@@ -4718,7 +4719,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-policysimulator-v1-devel
 Version:       0.20.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Policy Simulator API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-policysimulator_v1
 Group:         Development/Ruby
@@ -4749,7 +4750,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-policytroubleshooter-v1
 Version:       0.20.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Policy Troubleshooter API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -4770,7 +4771,7 @@ to use.
 
 %package       -n gem-google-apis-policytroubleshooter-v1-doc
 Version:       0.20.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Policy Troubleshooter API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-policytroubleshooter_v1
 Group:         Development/Documentation
@@ -4796,7 +4797,7 @@ to use.
 
 %package       -n gem-google-apis-policytroubleshooter-v1-devel
 Version:       0.20.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Policy Troubleshooter API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-policytroubleshooter_v1
 Group:         Development/Ruby
@@ -4828,7 +4829,7 @@ to use.
 
 %package       -n gem-google-apis-policytroubleshooter-v1beta
 Version:       0.20.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Policy Troubleshooter API V1beta
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -4849,7 +4850,7 @@ to use.
 
 %package       -n gem-google-apis-policytroubleshooter-v1beta-doc
 Version:       0.20.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Policy Troubleshooter API V1beta documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-policytroubleshooter_v1beta
 Group:         Development/Documentation
@@ -4876,7 +4877,7 @@ to use.
 
 %package       -n gem-google-apis-policytroubleshooter-v1beta-devel
 Version:       0.20.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Policy Troubleshooter API V1beta development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-policytroubleshooter_v1beta
 Group:         Development/Ruby
@@ -4909,7 +4910,7 @@ to use.
 
 %package       -n gem-google-apis-poly-v1
 Version:       0.11.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Poly API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -4929,7 +4930,7 @@ separate modern client that is easier to use.
 
 %package       -n gem-google-apis-poly-v1-doc
 Version:       0.11.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Poly API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-poly_v1
 Group:         Development/Documentation
@@ -4954,7 +4955,7 @@ separate modern client that is easier to use.
 
 %package       -n gem-google-apis-poly-v1-devel
 Version:       0.11.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Poly API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-poly_v1
 Group:         Development/Ruby
@@ -4985,7 +4986,7 @@ separate modern client that is easier to use.
 
 %package       -n gem-google-apis-privateca-v1
 Version:       0.25.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Certificate Authority API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -5006,7 +5007,7 @@ to use.
 
 %package       -n gem-google-apis-privateca-v1-doc
 Version:       0.25.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Certificate Authority API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-privateca_v1
 Group:         Development/Documentation
@@ -5032,7 +5033,7 @@ to use.
 
 %package       -n gem-google-apis-privateca-v1-devel
 Version:       0.25.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Certificate Authority API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-privateca_v1
 Group:         Development/Ruby
@@ -5064,7 +5065,7 @@ to use.
 
 %package       -n gem-google-apis-pubsub-v1
 Version:       0.29.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Pub/Sub API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -5084,7 +5085,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-pubsub-v1-doc
 Version:       0.29.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Pub/Sub API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-pubsub_v1
 Group:         Development/Documentation
@@ -5109,7 +5110,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-pubsub-v1-devel
 Version:       0.29.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Pub/Sub API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-pubsub_v1
 Group:         Development/Ruby
@@ -5140,7 +5141,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-pubsublite-v1
 Version:       0.19.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Pub/Sub Lite API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -5160,7 +5161,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-pubsublite-v1-doc
 Version:       0.19.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Pub/Sub Lite API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-pubsublite_v1
 Group:         Development/Documentation
@@ -5185,7 +5186,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-pubsublite-v1-devel
 Version:       0.19.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Pub/Sub Lite API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-pubsublite_v1
 Group:         Development/Ruby
@@ -5216,7 +5217,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-safebrowsing-v4
 Version:       0.14.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Safe Browsing API V4
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -5236,7 +5237,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-safebrowsing-v4-doc
 Version:       0.14.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Safe Browsing API V4 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-safebrowsing_v4
 Group:         Development/Documentation
@@ -5261,7 +5262,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-safebrowsing-v4-devel
 Version:       0.14.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Safe Browsing API V4 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-safebrowsing_v4
 Group:         Development/Ruby
@@ -5292,7 +5293,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-script-v1
 Version:       0.17.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Apps Script API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -5312,7 +5313,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-script-v1-doc
 Version:       0.17.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Apps Script API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-script_v1
 Group:         Development/Documentation
@@ -5337,7 +5338,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-script-v1-devel
 Version:       0.17.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Apps Script API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-script_v1
 Group:         Development/Ruby
@@ -5368,7 +5369,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-searchconsole-v1
 Version:       0.13.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Google Search Console API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -5389,7 +5390,7 @@ to use.
 
 %package       -n gem-google-apis-searchconsole-v1-doc
 Version:       0.13.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Google Search Console API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-searchconsole_v1
 Group:         Development/Documentation
@@ -5415,7 +5416,7 @@ to use.
 
 %package       -n gem-google-apis-searchconsole-v1-devel
 Version:       0.13.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Google Search Console API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-searchconsole_v1
 Group:         Development/Ruby
@@ -5447,7 +5448,7 @@ to use.
 
 %package       -n gem-google-apis-secretmanager-v1
 Version:       0.30.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Secret Manager API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -5467,7 +5468,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-secretmanager-v1-doc
 Version:       0.30.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Secret Manager API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-secretmanager_v1
 Group:         Development/Documentation
@@ -5492,7 +5493,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-secretmanager-v1-devel
 Version:       0.30.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Secret Manager API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-secretmanager_v1
 Group:         Development/Ruby
@@ -5523,7 +5524,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-securitycenter-v1
 Version:       0.44.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Security Command Center API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -5544,7 +5545,7 @@ to use.
 
 %package       -n gem-google-apis-securitycenter-v1-doc
 Version:       0.44.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Security Command Center API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-securitycenter_v1
 Group:         Development/Documentation
@@ -5570,7 +5571,7 @@ to use.
 
 %package       -n gem-google-apis-securitycenter-v1-devel
 Version:       0.44.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Security Command Center API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-securitycenter_v1
 Group:         Development/Ruby
@@ -5602,7 +5603,7 @@ to use.
 
 %package       -n gem-google-apis-serviceconsumermanagement-v1
 Version:       0.27.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Service Consumer Management API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -5623,7 +5624,7 @@ easier to use.
 
 %package       -n gem-google-apis-serviceconsumermanagement-v1-doc
 Version:       0.27.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Service Consumer Management API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-serviceconsumermanagement_v1
 Group:         Development/Documentation
@@ -5650,7 +5651,7 @@ easier to use.
 
 %package       -n gem-google-apis-serviceconsumermanagement-v1-devel
 Version:       0.27.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Service Consumer Management API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-serviceconsumermanagement_v1
 Group:         Development/Ruby
@@ -5683,7 +5684,7 @@ easier to use.
 
 %package       -n gem-google-apis-servicecontrol-v1
 Version:       0.25.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Service Control API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -5703,7 +5704,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-servicecontrol-v1-doc
 Version:       0.25.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Service Control API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-servicecontrol_v1
 Group:         Development/Documentation
@@ -5728,7 +5729,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-servicecontrol-v1-devel
 Version:       0.25.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Service Control API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-servicecontrol_v1
 Group:         Development/Ruby
@@ -5759,7 +5760,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-servicecontrol-v2
 Version:       0.24.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Service Control API V2
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -5779,7 +5780,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-servicecontrol-v2-doc
 Version:       0.24.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Service Control API V2 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-servicecontrol_v2
 Group:         Development/Documentation
@@ -5804,7 +5805,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-servicecontrol-v2-devel
 Version:       0.24.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Service Control API V2 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-servicecontrol_v2
 Group:         Development/Ruby
@@ -5835,7 +5836,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-servicedirectory-v1
 Version:       0.24.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Service Directory API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -5855,7 +5856,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-servicedirectory-v1-doc
 Version:       0.24.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Service Directory API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-servicedirectory_v1
 Group:         Development/Documentation
@@ -5880,7 +5881,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-servicedirectory-v1-devel
 Version:       0.24.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Service Directory API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-servicedirectory_v1
 Group:         Development/Ruby
@@ -5911,7 +5912,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-servicemanagement-v1
 Version:       0.35.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Service Management API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -5932,7 +5933,7 @@ use.
 
 %package       -n gem-google-apis-servicemanagement-v1-doc
 Version:       0.35.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Service Management API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-servicemanagement_v1
 Group:         Development/Documentation
@@ -5958,7 +5959,7 @@ use.
 
 %package       -n gem-google-apis-servicemanagement-v1-devel
 Version:       0.35.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Service Management API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-servicemanagement_v1
 Group:         Development/Ruby
@@ -5990,7 +5991,7 @@ use.
 
 %package       -n gem-google-apis-servicenetworking-v1
 Version:       0.33.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Service Networking API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6011,7 +6012,7 @@ use.
 
 %package       -n gem-google-apis-servicenetworking-v1-doc
 Version:       0.33.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Service Networking API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-servicenetworking_v1
 Group:         Development/Documentation
@@ -6037,7 +6038,7 @@ use.
 
 %package       -n gem-google-apis-servicenetworking-v1-devel
 Version:       0.33.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Service Networking API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-servicenetworking_v1
 Group:         Development/Ruby
@@ -6069,7 +6070,7 @@ use.
 
 %package       -n gem-google-apis-servicenetworking-v1beta
 Version:       0.29.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Service Networking API V1beta
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6090,7 +6091,7 @@ use.
 
 %package       -n gem-google-apis-servicenetworking-v1beta-doc
 Version:       0.29.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Service Networking API V1beta documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-servicenetworking_v1beta
 Group:         Development/Documentation
@@ -6116,7 +6117,7 @@ use.
 
 %package       -n gem-google-apis-servicenetworking-v1beta-devel
 Version:       0.29.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Service Networking API V1beta development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-servicenetworking_v1beta
 Group:         Development/Ruby
@@ -6148,7 +6149,7 @@ use.
 
 %package       -n gem-google-apis-serviceusage-v1
 Version:       0.26.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Service Usage API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6168,7 +6169,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-serviceusage-v1-doc
 Version:       0.26.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Service Usage API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-serviceusage_v1
 Group:         Development/Documentation
@@ -6193,7 +6194,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-serviceusage-v1-devel
 Version:       0.26.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Service Usage API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-serviceusage_v1
 Group:         Development/Ruby
@@ -6224,7 +6225,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-sheets-v4
 Version:       0.19.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Google Sheets API V4
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6244,7 +6245,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-sheets-v4-doc
 Version:       0.19.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Google Sheets API V4 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-sheets_v4
 Group:         Development/Documentation
@@ -6269,7 +6270,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-sheets-v4-devel
 Version:       0.19.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Google Sheets API V4 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-sheets_v4
 Group:         Development/Ruby
@@ -6300,7 +6301,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-site-verification-v1
 Version:       0.11.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Google Site Verification API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6321,7 +6322,7 @@ to use.
 
 %package       -n gem-google-apis-site-verification-v1-doc
 Version:       0.11.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Google Site Verification API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-site_verification_v1
 Group:         Development/Documentation
@@ -6348,7 +6349,7 @@ to use.
 
 %package       -n gem-google-apis-site-verification-v1-devel
 Version:       0.11.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Google Site Verification API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-site_verification_v1
 Group:         Development/Ruby
@@ -6381,7 +6382,7 @@ to use.
 
 %package       -n gem-google-apis-slides-v1
 Version:       0.20.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Google Slides API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6401,7 +6402,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-slides-v1-doc
 Version:       0.20.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Google Slides API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-slides_v1
 Group:         Development/Documentation
@@ -6426,7 +6427,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-slides-v1-devel
 Version:       0.20.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Google Slides API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-slides_v1
 Group:         Development/Ruby
@@ -6457,7 +6458,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-smartdevicemanagement-v1
 Version:       0.15.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Smart Device Management API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6478,7 +6479,7 @@ to use.
 
 %package       -n gem-google-apis-smartdevicemanagement-v1-doc
 Version:       0.15.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Smart Device Management API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-smartdevicemanagement_v1
 Group:         Development/Documentation
@@ -6504,7 +6505,7 @@ to use.
 
 %package       -n gem-google-apis-smartdevicemanagement-v1-devel
 Version:       0.15.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Smart Device Management API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-smartdevicemanagement_v1
 Group:         Development/Ruby
@@ -6536,7 +6537,7 @@ to use.
 
 %package       -n gem-google-apis-sourcerepo-v1
 Version:       0.18.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Source Repositories API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6557,7 +6558,7 @@ easier to use.
 
 %package       -n gem-google-apis-sourcerepo-v1-doc
 Version:       0.18.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Source Repositories API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-sourcerepo_v1
 Group:         Development/Documentation
@@ -6584,7 +6585,7 @@ easier to use.
 
 %package       -n gem-google-apis-sourcerepo-v1-devel
 Version:       0.18.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Source Repositories API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-sourcerepo_v1
 Group:         Development/Ruby
@@ -6617,7 +6618,7 @@ easier to use.
 
 %package       -n gem-google-apis-spanner-v1
 Version:       0.37.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Spanner API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6637,7 +6638,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-spanner-v1-doc
 Version:       0.37.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Spanner API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-spanner_v1
 Group:         Development/Documentation
@@ -6662,7 +6663,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-spanner-v1-devel
 Version:       0.37.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Spanner API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-spanner_v1
 Group:         Development/Ruby
@@ -6693,7 +6694,7 @@ provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-speech-v1
 Version:       0.26.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Speech-to-Text API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6714,7 +6715,7 @@ use.
 
 %package       -n gem-google-apis-speech-v1-doc
 Version:       0.26.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Speech-to-Text API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-speech_v1
 Group:         Development/Documentation
@@ -6740,7 +6741,7 @@ use.
 
 %package       -n gem-google-apis-speech-v1-devel
 Version:       0.26.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud Speech-to-Text API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-speech_v1
 Group:         Development/Ruby
@@ -6772,7 +6773,7 @@ use.
 
 %package       -n gem-google-apis-sqladmin-v1
 Version:       0.27.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud SQL Admin API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6792,7 +6793,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-sqladmin-v1-doc
 Version:       0.27.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud SQL Admin API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-sqladmin_v1
 Group:         Development/Documentation
@@ -6817,7 +6818,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-sqladmin-v1-devel
 Version:       0.27.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud SQL Admin API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-sqladmin_v1
 Group:         Development/Ruby
@@ -6848,7 +6849,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-sqladmin-v1beta4
 Version:       0.38.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud SQL Admin API V1beta4
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6868,7 +6869,7 @@ that some services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-sqladmin-v1beta4-doc
 Version:       0.38.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud SQL Admin API V1beta4 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-sqladmin_v1beta4
 Group:         Development/Documentation
@@ -6893,7 +6894,7 @@ that some services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-sqladmin-v1beta4-devel
 Version:       0.38.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Cloud SQL Admin API V1beta4 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-sqladmin_v1beta4
 Group:         Development/Ruby
@@ -6924,7 +6925,7 @@ that some services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-storage-v1
 Version:       0.19.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6938,7 +6939,7 @@ REST client for Google APIs.
 
 %package       -n gem-google-apis-storage-v1-doc
 Version:       0.19.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-storage_v1
 Group:         Development/Documentation
@@ -6955,7 +6956,7 @@ REST client for Google APIs documentation files.
 
 %package       -n gem-google-apis-storage-v1-devel
 Version:       0.19.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-storage_v1
 Group:         Development/Ruby
@@ -6978,7 +6979,7 @@ REST client for Google APIs development package.
 
 %package       -n gem-google-apis-storagetransfer-v1
 Version:       0.34.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Storage Transfer API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -6998,7 +6999,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-storagetransfer-v1-doc
 Version:       0.34.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Storage Transfer API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-storagetransfer_v1
 Group:         Development/Documentation
@@ -7023,7 +7024,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-storagetransfer-v1-devel
 Version:       0.34.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Storage Transfer API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-storagetransfer_v1
 Group:         Development/Ruby
@@ -7054,7 +7055,7 @@ services may provide a separate modern client that is easier to use.
 
 %package       -n gem-google-apis-streetviewpublish-v1
 Version:       0.23.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Street View Publish API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -7075,7 +7076,7 @@ use.
 
 %package       -n gem-google-apis-streetviewpublish-v1-doc
 Version:       0.23.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Street View Publish API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-streetviewpublish_v1
 Group:         Development/Documentation
@@ -7101,7 +7102,7 @@ use.
 
 %package       -n gem-google-apis-streetviewpublish-v1-devel
 Version:       0.23.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Street View Publish API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-streetviewpublish_v1
 Group:         Development/Ruby
@@ -7133,7 +7134,7 @@ use.
 
 %package       -n gem-google-apis-sts-v1
 Version:       0.24.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Security Token Service API V1
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -7154,7 +7155,7 @@ to use.
 
 %package       -n gem-google-apis-sts-v1-doc
 Version:       0.24.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Security Token Service API V1 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-sts_v1
 Group:         Development/Documentation
@@ -7180,7 +7181,7 @@ to use.
 
 %package       -n gem-google-apis-sts-v1-devel
 Version:       0.24.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Security Token Service API V1 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-sts_v1
 Group:         Development/Ruby
@@ -7212,7 +7213,7 @@ to use.
 
 %package       -n gem-google-apis-sts-v1beta
 Version:       0.20.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Security Token Service API V1beta
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -7233,7 +7234,7 @@ to use.
 
 %package       -n gem-google-apis-sts-v1beta-doc
 Version:       0.20.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Security Token Service API V1beta documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-sts_v1beta
 Group:         Development/Documentation
@@ -7260,7 +7261,7 @@ to use.
 
 %package       -n gem-google-apis-sts-v1beta-devel
 Version:       0.20.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Simple REST client for Security Token Service API V1beta development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-sts_v1beta
 Group:         Development/Ruby
@@ -7293,7 +7294,7 @@ to use.
 
 %package       -n gem-google-api-client
 Version:       0.53.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -7310,7 +7311,7 @@ REST client for Google APIs.
 
 %package       -n gem-google-api-client-doc
 Version:       0.53.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-api-client
 Group:         Development/Documentation
@@ -7327,7 +7328,7 @@ REST client for Google APIs documentation files.
 
 %package       -n gem-google-api-client-devel
 Version:       0.53.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-api-client
 Group:         Development/Ruby
@@ -7344,7 +7345,7 @@ Requires:      gem(coveralls) >= 0.8 gem(coveralls) < 1
 Requires:      gem(rubocop) >= 0.49.0 gem(rubocop) < 2
 Requires:      gem(launchy) >= 2.4 gem(launchy) < 3
 Requires:      gem(dotenv) >= 2.0 gem(dotenv) < 3
-Requires:      gem(fakefs) >= 1.0 gem(fakefs) < 2
+Requires:      gem(fakefs) >= 1.0
 Requires:      gem(google-id-token) >= 1.3 gem(google-id-token) < 2
 Requires:      gem(os) >= 0.9 gem(os) < 2
 Requires:      gem(rmail) >= 1.1 gem(rmail) < 2
@@ -7368,7 +7369,7 @@ REST client for Google APIs development package.
 
 %package       -n gem-google-apis-core
 Version:       0.9.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -7389,7 +7390,7 @@ REST client for Google APIs.
 
 %package       -n gem-google-apis-core-doc
 Version:       0.9.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-core
 Group:         Development/Documentation
@@ -7406,7 +7407,7 @@ REST client for Google APIs documentation files.
 
 %package       -n gem-google-apis-core-devel
 Version:       0.9.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-core
 Group:         Development/Ruby
@@ -7421,7 +7422,7 @@ Requires:      gem(webmock) >= 3.0 gem(webmock) < 4
 Requires:      gem(rubocop) >= 0.49.0 gem(rubocop) < 2
 Requires:      gem(launchy) >= 2.4 gem(launchy) < 3
 Requires:      gem(dotenv) >= 2.0 gem(dotenv) < 3
-Requires:      gem(fakefs) >= 1.0 gem(fakefs) < 2
+Requires:      gem(fakefs) >= 1.0
 Requires:      gem(google-id-token) >= 1.3 gem(google-id-token) < 2
 Requires:      gem(os) >= 0.9 gem(os) < 2
 Requires:      gem(rmail) >= 1.1 gem(rmail) < 2
@@ -7444,7 +7445,7 @@ REST client for Google APIs development package.
 
 %package       -n gem-google-apis-generator
 Version:       0.10.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -7462,7 +7463,7 @@ REST client for Google APIs.
 
 %package       -n generate-api
 Version:       0.10.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета google-apis-generator
 Group:         Other
@@ -7479,7 +7480,7 @@ REST client for Google APIs executable(s).
 
 %package       -n gem-google-apis-generator-doc
 Version:       0.10.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета google-apis-generator
 Group:         Development/Documentation
@@ -7496,7 +7497,7 @@ REST client for Google APIs documentation files.
 
 %package       -n gem-google-apis-generator-devel
 Version:       0.10.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       REST client for Google APIs development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета google-apis-generator
 Group:         Development/Ruby
@@ -7511,7 +7512,7 @@ Requires:      gem(webmock) >= 3.0 gem(webmock) < 4
 Requires:      gem(rubocop) >= 0.49.0 gem(rubocop) < 2
 Requires:      gem(launchy) >= 2.4 gem(launchy) < 3
 Requires:      gem(dotenv) >= 2.0 gem(dotenv) < 3
-Requires:      gem(fakefs) >= 1.0 gem(fakefs) < 2
+Requires:      gem(fakefs) >= 1.0
 Requires:      gem(google-id-token) >= 1.3 gem(google-id-token) < 2
 Requires:      gem(os) >= 0.9 gem(os) < 2
 Requires:      gem(rmail) >= 1.1 gem(rmail) < 2
@@ -8424,6 +8425,9 @@ REST client for Google APIs development package.
 
 
 %changelog
+* Sat Aug 03 2024 Pavel Skrylev <majioa@altlinux.org> 20221017-alt1.2
+- ! fixed dep to fakefs
+
 * Sat Feb 04 2023 Pavel Skrylev <majioa@altlinux.org> 20221017-alt1.1
 - ! fixed dep to redis
 

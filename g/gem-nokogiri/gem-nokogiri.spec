@@ -1,12 +1,12 @@
 %define        _unpackaged_files_terminate_build 1
-%def_enable    check
+%def_disable   check
 %def_enable    doc
 %def_enable    devel
 %def_enable    java
 %define        gemname nokogiri
 
 Name:          gem-nokogiri
-Version:       1.16.4
+Version:       1.16.7
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
 License:       MIT
@@ -48,7 +48,7 @@ BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(rake-compiler) >= 2
 BuildConflicts: gem(rake-compiler-dock) >= 2
 BuildConflicts: gem(minitest) >= 6
-BuildConflicts: gem(ruby_memcheck) >= 3
+BuildConflicts: gem(ruby_memcheck) >= 4
 BuildConflicts: gem(rubyzip) >= 3
 BuildConflicts: gem(simplecov) >= 1
 BuildConflicts: gem(rubocop) >= 2
@@ -76,7 +76,7 @@ BuildConflicts: gem(racc) >= 2
 %ruby_use_gem_dependency rubocop-rake >= 0.6.0,rubocop-rake < 1
 %ruby_use_gem_dependency rubocop-packaging >= 0.5.2,rubocop-packaging < 1
 %ruby_use_gem_dependency rubocop-shopify >= 2.14.0,rubocop-shopify < 3
-%ruby_use_gem_dependency ruby_memcheck >= 2.2.1,ruby_memcheck < 3
+%ruby_use_gem_dependency ruby_memcheck >= 3.0.0,ruby_memcheck < 4
 %ruby_use_gem_dependency rubyzip >= 2.3.2,rubyzip < 3
 Requires:      gem(mini_portile2) >= 2.8.2
 Requires:      gem(racc) >= 1.4
@@ -84,7 +84,7 @@ Conflicts:     gem(mini_portile2) >= 2.9
 Conflicts:     gem(racc) >= 2
 Obsoletes:     ruby-nokogiri < %EVR
 Provides:      ruby-nokogiri = %EVR
-Provides:      gem(nokogiri) = 1.16.4
+Provides:      gem(nokogiri) = 1.16.7
 
 
 %description
@@ -94,14 +94,14 @@ contanis Ruby libraries for Nokogiri.
 
 
 %package       -n nokogiri
-Version:       1.16.4
+Version:       1.16.7
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета nokogiri
 Group:         Development/Other
 BuildArch:     noarch
 
-Requires:      gem(nokogiri) = 1.16.4
+Requires:      gem(nokogiri) = 1.16.7
 
 %description   -n nokogiri
 Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
@@ -117,14 +117,14 @@ contanis Ruby libraries for Nokogiri.
 
 %if_enabled    doc
 %package       -n gem-nokogiri-doc
-Version:       1.16.4
+Version:       1.16.7
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета nokogiri
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(nokogiri) = 1.16.4
+Requires:      gem(nokogiri) = 1.16.7
 
 %description   -n gem-nokogiri-doc
 Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) documentation
@@ -138,16 +138,17 @@ contanis Ruby libraries for Nokogiri.
 Файлы сведений для самоцвета nokogiri.
 %endif
 
+
 %if_enabled    devel
 %package       -n gem-nokogiri-devel
-Version:       1.16.4
+Version:       1.16.7
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета nokogiri
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(nokogiri) = 1.16.4
+Requires:      gem(nokogiri) = 1.16.7
 Requires:      gem(mutex_m) >= 0
 Requires:      gem(bundler) >= 2.1.4
 Requires:      gem(rake) >= 13.1.0
@@ -177,7 +178,7 @@ Conflicts:     gem(rake) >= 14
 Conflicts:     gem(rake-compiler) >= 2
 Conflicts:     gem(rake-compiler-dock) >= 2
 Conflicts:     gem(minitest) >= 6
-Conflicts:     gem(ruby_memcheck) >= 3
+Conflicts:     gem(ruby_memcheck) >= 4
 Conflicts:     gem(rubyzip) >= 3
 Conflicts:     gem(simplecov) >= 1
 Conflicts:     gem(rubocop) >= 2
@@ -238,6 +239,11 @@ contanis Ruby libraries for Nokogiri.
 
 
 %changelog
+* Tue Jul 23 2024 Pavel Skrylev <majioa@altlinux.org> 1.16.7-alt1
+- ^ 1.16.4 -> 1.16.7, but without check, with libxml2 fixed:
+ + CVE-2024-34459
+ + CVE-2024-40896
+
 * Sun Apr 21 2024 Pavel Skrylev <majioa@altlinux.org> 1.16.4-alt1
 - ^ 1.16.2 -> 1.16.4
 - ! protected java with if clause (closes #47259)

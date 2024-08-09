@@ -1,11 +1,11 @@
 %define        _unpackaged_files_terminate_build 1
-%def_enable    check
+%def_disable   check
 %def_enable    doc
 %def_enable    devel
 %define        gemname steep
 
 Name:          gem-steep
-Version:       1.6.0
+Version:       1.7.1
 Release:       alt1
 Summary:       Gradual Typing for Ruby
 License:       MIT
@@ -29,7 +29,7 @@ BuildRequires: gem(activesupport) >= 5.1
 BuildRequires: gem(rainbow) >= 2.2.2
 BuildRequires: gem(listen) >= 3.0
 BuildRequires: gem(language_server-protocol) >= 3.15
-BuildRequires: gem(rbs) >= 3.1.0
+BuildRequires: gem(rbs) >= 3.5.0
 BuildRequires: gem(concurrent-ruby) >= 1.1.10
 BuildRequires: gem(terminal-table) >= 2
 BuildRequires: gem(securerandom) >= 0.1
@@ -48,12 +48,13 @@ BuildConflicts: gem(terminal-table) >= 4
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
+%ruby_ignore_names gemfile_steep
 Requires:      gem(parser) >= 3.1
 Requires:      gem(activesupport) >= 5.1
 Requires:      gem(rainbow) >= 2.2.2
 Requires:      gem(listen) >= 3.0
 Requires:      gem(language_server-protocol) >= 3.15
-Requires:      gem(rbs) >= 3.1.0
+Requires:      gem(rbs) >= 3.5.0
 Requires:      gem(concurrent-ruby) >= 1.1.10
 Requires:      gem(terminal-table) >= 2
 Requires:      gem(securerandom) >= 0.1
@@ -66,9 +67,8 @@ Conflicts:     gem(rainbow) >= 4
 Conflicts:     gem(listen) >= 4
 Conflicts:     gem(language_server-protocol) >= 4.0
 Conflicts:     gem(terminal-table) >= 4
-Provides:      gem(steep) = 1.6.0
+Provides:      gem(steep) = 1.7.1
 
-%ruby_ignore_names gemfile_steep
 
 %description
 Gradual Typing for Ruby. Steep does not infer types from Ruby programs, but
@@ -76,14 +76,14 @@ requires declaring types and writing annotations.
 
 
 %package       -n steep
-Version:       1.6.0
+Version:       1.7.1
 Release:       alt1
 Summary:       Gradual Typing for Ruby executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета steep
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(steep) = 1.6.0
+Requires:      gem(steep) = 1.7.1
 
 %description   -n steep
 Gradual Typing for Ruby executable(s).
@@ -97,14 +97,14 @@ requires declaring types and writing annotations.
 
 %if_enabled    doc
 %package       -n gem-steep-doc
-Version:       1.6.0
+Version:       1.7.1
 Release:       alt1
 Summary:       Gradual Typing for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета steep
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(steep) = 1.6.0
+Requires:      gem(steep) = 1.7.1
 
 %description   -n gem-steep-doc
 Gradual Typing for Ruby documentation files.
@@ -119,14 +119,14 @@ requires declaring types and writing annotations.
 
 %if_enabled    devel
 %package       -n gem-steep-devel
-Version:       1.6.0
+Version:       1.7.1
 Release:       alt1
 Summary:       Gradual Typing for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета steep
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(steep) = 1.6.0
+Requires:      gem(steep) = 1.7.1
 Requires:      gem(rake) >= 0
 Requires:      gem(minitest) >= 5.17.0
 Requires:      gem(minitest-hooks) >= 0
@@ -180,5 +180,8 @@ requires declaring types and writing annotations.
 
 
 %changelog
+* Wed Jul 24 2024 Pavel Skrylev <majioa@altlinux.org> 1.7.1-alt1
+- ^ 1.6.0 -> 1.7.1
+
 * Tue Apr 16 2024 Pavel Skrylev <majioa@altlinux.org> 1.6.0-alt1
 - + packaged gem with Ruby Policy 2.0

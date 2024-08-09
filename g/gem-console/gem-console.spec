@@ -1,7 +1,11 @@
+%define        _unpackaged_files_terminate_build 1
+%def_disable   check
+%def_enable    doc
+%def_enable    devel
 %define        gemname console
 
 Name:          gem-console
-Version:       1.16.2
+Version:       1.27.0
 Release:       alt1
 Summary:       Beautiful logging for Ruby
 License:       MIT
@@ -13,20 +17,20 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-%if_with check
-BuildRequires: gem(fiber-local) >= 0
-BuildRequires: gem(bake) >= 0
-BuildRequires: gem(bake-test) >= 0
-BuildRequires: gem(bake-test-external) >= 0
-BuildRequires: gem(bundler) >= 0
-BuildRequires: gem(covered) >= 0.18.1 gem(covered) < 0.19
-BuildRequires: gem(sus) >= 0.14 gem(sus) < 1
+%if_enabled check
+BuildRequires: gem(fiber-annotation) >= 0
+BuildRequires: gem(fiber-local) >= 1.1
+BuildRequires: gem(json) >= 0
+BuildConflicts: gem(fiber-local) >= 2
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Requires:      gem(fiber-local) >= 0
-Provides:      gem(console) = 1.16.2
+Requires:      gem(fiber-annotation) >= 0
+Requires:      gem(fiber-local) >= 1.1
+Requires:      gem(json) >= 0
+Conflicts:     gem(fiber-local) >= 2
+Provides:      gem(console) = 1.27.0
 
 
 %description
@@ -39,15 +43,16 @@ buffered log output. Features:
 * Beautiful logging to the terminal or structured logging using JSON
 
 
+%if_enabled    doc
 %package       -n gem-console-doc
-Version:       1.16.2
+Version:       1.27.0
 Release:       alt1
 Summary:       Beautiful logging for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета console
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(console) = 1.16.2
+Requires:      gem(console) = 1.27.0
 
 %description   -n gem-console-doc
 Beautiful logging for Ruby documentation files.
@@ -62,23 +67,19 @@ buffered log output. Features:
 
 %description   -n gem-console-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета console.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-console-devel
-Version:       1.16.2
+Version:       1.27.0
 Release:       alt1
 Summary:       Beautiful logging for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета console
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(console) = 1.16.2
-Requires:      gem(bake) >= 0
-Requires:      gem(bake-test) >= 0
-Requires:      gem(bake-test-external) >= 0
-Requires:      gem(bundler) >= 0
-Requires:      gem(covered) >= 0.18.1 gem(covered) < 0.19
-Requires:      gem(sus) >= 0.14 gem(sus) < 1
+Requires:      gem(console) = 1.27.0
 
 %description   -n gem-console-devel
 Beautiful logging for Ruby development package.
@@ -93,6 +94,7 @@ buffered log output. Features:
 
 %description   -n gem-console-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета console.
+%endif
 
 
 %prep
@@ -112,15 +114,22 @@ buffered log output. Features:
 %ruby_gemspec
 %ruby_gemlibdir
 
+%if_enabled    doc
 %files         -n gem-console-doc
 %doc readme.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-console-devel
 %doc readme.md
+%endif
 
 
 %changelog
+* Wed Jul 24 2024 Pavel Skrylev <majioa@altlinux.org> 1.27.0-alt1
+- ^ 1.16.2 -> 1.27.0
+
 * Wed Oct 12 2022 Pavel Skrylev <majioa@altlinux.org> 1.16.2-alt1
 - ^ 1.13.1 -> 1.16.2
 

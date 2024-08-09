@@ -1,7 +1,11 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname rmagick
 
 Name:          gem-rmagick
-Version:       4.3.0
+Version:       6.0.1
 Release:       alt1
 Summary:       ImageMagick for Ruby
 License:       MIT
@@ -13,25 +17,33 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libImageMagick-devel >= 6.6.9.6-alt1
-%if_with check
+%if_enabled check
 BuildRequires: gem(pry) >= 0.13.1
-BuildRequires: gem(rake-compiler) >= 1.0
-BuildRequires: gem(rspec) >= 3.8
-BuildRequires: gem(rspec_junit_formatter) >= 0.4.1
-BuildRequires: gem(rubocop) >= 0.81.0
-BuildRequires: gem(rubocop-rspec) >= 1.38.1
-BuildRequires: gem(rubocop-performance) >= 1.5.2
-BuildRequires: gem(simplecov) >= 0.16.1
-BuildRequires: gem(yard) >= 0.9.24
+BuildRequires: gem(rake-compiler) >= 1.1.2
+BuildRequires: gem(rspec) >= 3.10.0
+BuildRequires: gem(rspec_junit_formatter) >= 0.5.1
+BuildRequires: gem(simplecov) >= 0.17
+BuildRequires: gem(yard) >= 0.9.34
+BuildRequires: gem(rubocop) >= 1.15.0
+BuildRequires: gem(rubocop-performance) >= 1.11.3
+BuildRequires: gem(rubocop-rspec) >= 2.4.0
+BuildRequires: gem(rbs) >= 3.4
+BuildRequires: gem(steep) >= 1.6
+BuildRequires: gem(observer) >= 0.1
+BuildRequires: gem(pkg-config) >= 1.4
 BuildConflicts: gem(pry) >= 1
 BuildConflicts: gem(rake-compiler) >= 2
 BuildConflicts: gem(rspec) >= 4
 BuildConflicts: gem(rspec_junit_formatter) >= 1
-BuildConflicts: gem(rubocop) >= 2
-BuildConflicts: gem(rubocop-rspec) >= 3
-BuildConflicts: gem(rubocop-performance) >= 2
 BuildConflicts: gem(simplecov) >= 1
-BuildConflicts: gem(yard) >= 0.10
+BuildConflicts: gem(yard) >= 1
+BuildConflicts: gem(rubocop) >= 2
+BuildConflicts: gem(rubocop-performance) >= 2
+BuildConflicts: gem(rubocop-rspec) >= 3
+BuildConflicts: gem(rbs) >= 4
+BuildConflicts: gem(steep) >= 2
+BuildConflicts: gem(observer) >= 1
+BuildConflicts: gem(pkg-config) >= 2
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
@@ -39,12 +51,19 @@ BuildConflicts: gem(yard) >= 0.10
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
 %ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
 %ruby_use_gem_dependency pry >= 0.13.1,pry < 1
+%ruby_use_gem_dependency rspec >= 3.10.0,rspec < 4
 %ruby_use_gem_dependency rubocop-rspec >= 2.4.0,rubocop-rspec < 3
 %ruby_use_gem_dependency rubocop-performance >= 1.11.3,rubocop-performance < 2
+%ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
 %ruby_use_gem_dependency rspec_junit_formatter >= 0.5.1,rspec_junit_formatter < 1
+%ruby_use_gem_dependency yard >= 0.9.34,yard < 1
+Requires:      gem(observer) >= 0.1
+Requires:      gem(pkg-config) >= 1.4
+Conflicts:     gem(observer) >= 1
+Conflicts:     gem(pkg-config) >= 2
 Obsoletes:     ruby-rmagick < %EVR
 Provides:      ruby-rmagick = %EVR
-Provides:      gem(rmagick) = 4.3.0
+Provides:      gem(rmagick) = 6.0.1
 
 
 %description
@@ -52,15 +71,16 @@ RMagick is an interface between the Ruby programming language and the
 ImageMagick image processing library.
 
 
+%if_enabled    doc
 %package       -n gem-rmagick-doc
-Version:       4.3.0
+Version:       6.0.1
 Release:       alt1
 Summary:       ImageMagick for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rmagick
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rmagick) = 4.3.0
+Requires:      gem(rmagick) = 6.0.1
 
 %description   -n gem-rmagick-doc
 ImageMagick for Ruby documentation files.
@@ -70,36 +90,42 @@ ImageMagick image processing library.
 
 %description   -n gem-rmagick-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета rmagick.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-rmagick-devel
-Version:       4.3.0
+Version:       6.0.1
 Release:       alt1
 Summary:       ImageMagick for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rmagick
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rmagick) = 4.3.0
+Requires:      gem(rmagick) = 6.0.1
 Requires:      gem(pry) >= 0.13.1
-Requires:      gem(rake-compiler) >= 1.0
-Requires:      gem(rspec) >= 3.8
-Requires:      gem(rspec_junit_formatter) >= 0.4.1
-Requires:      gem(rubocop) >= 0.81.0
-Requires:      gem(rubocop-rspec) >= 1.38.1
-Requires:      gem(rubocop-performance) >= 1.5.2
-Requires:      gem(simplecov) >= 0.16.1
-Requires:      gem(yard) >= 0.9.24
+Requires:      gem(rake-compiler) >= 1.1.2
+Requires:      gem(rspec) >= 3.10.0
+Requires:      gem(rspec_junit_formatter) >= 0.5.1
+Requires:      gem(simplecov) >= 0.17
+Requires:      gem(yard) >= 0.9.34
+Requires:      gem(rubocop) >= 1.15.0
+Requires:      gem(rubocop-performance) >= 1.11.3
+Requires:      gem(rubocop-rspec) >= 2.4.0
+Requires:      gem(rbs) >= 3.4
+Requires:      gem(steep) >= 1.6
 Requires:      libImageMagick-devel >= 6.6.9.6-alt1
 Conflicts:     gem(pry) >= 1
 Conflicts:     gem(rake-compiler) >= 2
 Conflicts:     gem(rspec) >= 4
 Conflicts:     gem(rspec_junit_formatter) >= 1
-Conflicts:     gem(rubocop) >= 2
-Conflicts:     gem(rubocop-rspec) >= 3
-Conflicts:     gem(rubocop-performance) >= 2
 Conflicts:     gem(simplecov) >= 1
-Conflicts:     gem(yard) >= 0.10
+Conflicts:     gem(yard) >= 1
+Conflicts:     gem(rubocop) >= 2
+Conflicts:     gem(rubocop-performance) >= 2
+Conflicts:     gem(rubocop-rspec) >= 3
+Conflicts:     gem(rbs) >= 4
+Conflicts:     gem(steep) >= 2
 
 %description   -n gem-rmagick-devel
 ImageMagick for Ruby development package.
@@ -109,6 +135,7 @@ ImageMagick image processing library.
 
 %description   -n gem-rmagick-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета rmagick.
+%endif
 
 
 %prep
@@ -129,16 +156,23 @@ ImageMagick image processing library.
 %ruby_gemlibdir
 %ruby_gemextdir
 
+%if_enabled    doc
 %files         -n gem-rmagick-doc
 %doc README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-rmagick-devel
 %doc README.md
 %ruby_includedir/*
+%endif
 
 
 %changelog
+* Fri Jul 26 2024 Pavel Skrylev <majioa@altlinux.org> 6.0.1-alt1
+- ^ 4.3.0 -> 6.0.1
+
 * Fri Jan 27 2023 Pavel Skrylev <majioa@altlinux.org> 4.3.0-alt1
 - ^ 4.2.4 -> 4.3.0
 

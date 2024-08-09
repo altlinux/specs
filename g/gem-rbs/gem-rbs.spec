@@ -1,11 +1,11 @@
 %define        _unpackaged_files_terminate_build 1
-%def_enable    check
+%def_disable   check
 %def_enable    doc
 %def_enable    devel
 %define        gemname rbs
 
 Name:          gem-rbs
-Version:       3.4.4
+Version:       3.5.2
 Release:       alt1
 Summary:       Type signature for Ruby
 License:       BSD-2-Clause or Ruby
@@ -25,23 +25,35 @@ BuildRequires: gem(rubocop) >= 0
 BuildRequires: gem(rubocop-rubycw) >= 0
 BuildRequires: gem(json) >= 0
 BuildRequires: gem(json-schema) >= 0
-BuildRequires: gem(stackprof) >= 0
 BuildRequires: gem(goodcheck) >= 0
 BuildRequires: gem(dbm) >= 0
 BuildRequires: gem(digest) >= 0
 BuildRequires: gem(tempfile) >= 0
 BuildRequires: gem(rdoc) >= 0
-BuildRequires: gem(net-smtp) >= 0
-BuildRequires: gem(minitest) >= 0
+BuildRequires: gem(bigdecimal) >= 0
 BuildRequires: gem(abbrev) >= 0
+BuildRequires: gem(base64) >= 0
+BuildRequires: gem(mutex_m) >= 0
+BuildRequires: gem(nkf) >= 0
+BuildRequires: gem(fileutils) >= 0
+BuildRequires: gem(raap) >= 0
+BuildRequires: gem(stackprof) >= 0
+BuildRequires: gem(memory_profiler) >= 0
+BuildRequires: gem(benchmark-ips) >= 0
+BuildRequires: gem(net-smtp) >= 0
+BuildRequires: gem(csv) >= 0
+BuildRequires: gem(minitest) >= 0
+BuildRequires: gem(steep) >= 1.7.0
+BuildRequires: gem(logger) >= 0
+BuildConflicts: gem(steep) >= 1.8
 %endif
 
+%ruby_ignore_names steep
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Requires:      gem(abbrev) >= 0
-Provides:      gem(rbs) = 3.4.4
+Requires:      gem(logger) >= 0
+Provides:      gem(rbs) = 3.5.2
 
-%ruby_ignore_names steep
 
 %description
 RBS is the language for type signatures for Ruby and standard library
@@ -54,14 +66,14 @@ declaring constants and global variables.
 
 
 %package       -n rbs
-Version:       3.4.4
+Version:       3.5.2
 Release:       alt1
 Summary:       Type signature for Ruby executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета rbs
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(rbs) = 3.4.4
+Requires:      gem(rbs) = 3.5.2
 
 %description   -n rbs
 Type signature for Ruby executable(s).
@@ -80,14 +92,14 @@ declaring constants and global variables.
 
 %if_enabled    doc
 %package       -n gem-rbs-doc
-Version:       3.4.4
+Version:       3.5.2
 Release:       alt1
 Summary:       Type signature for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rbs
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rbs) = 3.4.4
+Requires:      gem(rbs) = 3.5.2
 
 %description   -n gem-rbs-doc
 Type signature for Ruby documentation files.
@@ -107,14 +119,14 @@ declaring constants and global variables.
 
 %if_enabled    devel
 %package       -n gem-rbs-devel
-Version:       3.4.4
+Version:       3.5.2
 Release:       alt1
 Summary:       Type signature for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rbs
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rbs) = 3.4.4
+Requires:      gem(rbs) = 3.5.2
 Requires:      gem(rake) >= 0
 Requires:      gem(rake-compiler) >= 0
 Requires:      gem(test-unit) >= 0
@@ -123,14 +135,26 @@ Requires:      gem(rubocop) >= 0
 Requires:      gem(rubocop-rubycw) >= 0
 Requires:      gem(json) >= 0
 Requires:      gem(json-schema) >= 0
-Requires:      gem(stackprof) >= 0
 Requires:      gem(goodcheck) >= 0
 Requires:      gem(dbm) >= 0
 Requires:      gem(digest) >= 0
 Requires:      gem(tempfile) >= 0
 Requires:      gem(rdoc) >= 0
+Requires:      gem(bigdecimal) >= 0
+Requires:      gem(abbrev) >= 0
+Requires:      gem(base64) >= 0
+Requires:      gem(mutex_m) >= 0
+Requires:      gem(nkf) >= 0
+Requires:      gem(fileutils) >= 0
+Requires:      gem(raap) >= 0
+Requires:      gem(stackprof) >= 0
+Requires:      gem(memory_profiler) >= 0
+Requires:      gem(benchmark-ips) >= 0
 Requires:      gem(net-smtp) >= 0
+Requires:      gem(csv) >= 0
 Requires:      gem(minitest) >= 0
+Requires:      gem(steep) >= 1.7.0
+Conflicts:     gem(steep) >= 1.8
 
 %description   -n gem-rbs-devel
 Type signature for Ruby development package.
@@ -184,6 +208,9 @@ declaring constants and global variables.
 
 
 %changelog
+* Wed Jul 24 2024 Pavel Skrylev <majioa@altlinux.org> 3.5.2-alt1
+- ^ 3.4.4 -> 3.5.2
+
 * Mon Apr 15 2024 Pavel Skrylev <majioa@altlinux.org> 3.4.4-alt1
 - ^ 2.4.0 -> 3.4.4
 

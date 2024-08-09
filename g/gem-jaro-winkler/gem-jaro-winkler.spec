@@ -1,7 +1,11 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname jaro_winkler
 
 Name:          gem-jaro-winkler
-Version:       1.5.4.1
+Version:       1.5.6
 Release:       alt1
 Summary:       Ruby & C implementation of Jaro-Winkler distance algorithm which supports UTF-8 string
 Summary(ru_RU.UTF-8): Воплощение алгоритма расстояний Яро-Винклера на Си и Рубине, который поддерживает строки UTF-8
@@ -13,19 +17,21 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(bundler) >= 1.7 gem(bundler) < 3
-BuildRequires: gem(rake) >= 12.0 gem(rake) < 14
+%if_enabled check
+BuildRequires: gem(rake) >= 13.0
 BuildRequires: gem(rake-compiler) >= 0
 BuildRequires: gem(minitest) >= 0
+BuildRequires: gem(fuzzy-string-match) >= 0
+BuildRequires: gem(hotwater) >= 0
+BuildRequires: gem(amatch) >= 0
+BuildConflicts: gem(rake) >= 14
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency bundler >= 2.1.4,bundler < 3
-%ruby_use_gem_dependency rake >= 13.0.1,rake < 14
 %ruby_alias_names jaro_winkler,jaro-winkler
-Provides:      gem(jaro_winkler) = 1.5.4.1
+Provides:      gem(jaro_winkler) = 1.5.6
 
-%ruby_use_gem_version jaro_winkler:1.5.4.1
 
 %description
 jaro_winkler is an implementation of Jaro-Winkler distance algorithm which is
@@ -34,15 +40,16 @@ than MRI/KRI like JRuby or Rubinius. Both of C and Ruby implementation support
 any kind of string encoding, such as UTF-8, EUC-JP, Big5, etc.
 
 
+%if_enabled    doc
 %package       -n gem-jaro-winkler-doc
-Version:       1.5.4.1
+Version:       1.5.6
 Release:       alt1
 Summary:       Ruby & C implementation of Jaro-Winkler distance algorithm which supports UTF-8 string documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета jaro_winkler
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(jaro_winkler) = 1.5.4.1
+Requires:      gem(jaro_winkler) = 1.5.6
 
 %description   -n gem-jaro-winkler-doc
 Ruby & C implementation of Jaro-Winkler distance algorithm which supports UTF-8
@@ -55,21 +62,26 @@ any kind of string encoding, such as UTF-8, EUC-JP, Big5, etc.
 
 %description   -n gem-jaro-winkler-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета jaro_winkler.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-jaro-winkler-devel
-Version:       1.5.4.1
+Version:       1.5.6
 Release:       alt1
 Summary:       Ruby & C implementation of Jaro-Winkler distance algorithm which supports UTF-8 string development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета jaro_winkler
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(jaro_winkler) = 1.5.4.1
-Requires:      gem(bundler) >= 1.7 gem(bundler) < 3
-Requires:      gem(rake) >= 12.0 gem(rake) < 14
+Requires:      gem(jaro_winkler) = 1.5.6
+Requires:      gem(rake) >= 13.0
 Requires:      gem(rake-compiler) >= 0
 Requires:      gem(minitest) >= 0
+Requires:      gem(fuzzy-string-match) >= 0
+Requires:      gem(hotwater) >= 0
+Requires:      gem(amatch) >= 0
+Conflicts:     gem(rake) >= 14
 
 %description   -n gem-jaro-winkler-devel
 Ruby & C implementation of Jaro-Winkler distance algorithm which supports UTF-8
@@ -82,6 +94,7 @@ any kind of string encoding, such as UTF-8, EUC-JP, Big5, etc.
 
 %description   -n gem-jaro-winkler-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета jaro_winkler.
+%endif
 
 
 %prep
@@ -101,14 +114,21 @@ any kind of string encoding, such as UTF-8, EUC-JP, Big5, etc.
 %ruby_gemlibdir
 %ruby_gemextdir
 
+%if_enabled    doc
 %files         -n gem-jaro-winkler-doc
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-jaro-winkler-devel
 %ruby_includedir/*
+%endif
 
 
 %changelog
+* Thu Jul 25 2024 Pavel Skrylev <majioa@altlinux.org> 1.5.6-alt1
+- ^ 1.5.4.1 -> 1.5.6
+
 * Sun May 08 2022 Pavel Skrylev <majioa@altlinux.org> 1.5.4.1-alt1
 - ^ 1.5.4 -> 1.5.4.1
 

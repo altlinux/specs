@@ -1,12 +1,13 @@
 %define        _unpackaged_files_terminate_build 1
-%define        ruby_version 3.1.0
+%define        ruby_version 3.3.0
 %define        lname lib%name
-%define        _version 3.1.4
+%define        ruby_arch %(echo %_target | sed 's/^ppc/powerpc/')%([ -z "%_gnueabi" ] || echo "-eabi")
+%define        _version 3.3.4
 %define        __ruby env GEM_HOME=%_libexecdir/%name/gemie RUBYLIB=./:./lib ./miniruby -rerb -rrbconfig
 
 Name:          ruby
 Version:       %_version
-Release:       alt4.4
+Release:       alt1
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -15,39 +16,41 @@ Vcs:           https://github.com/ruby/ruby.git
 
 Source0:       %name-%_version.tar
 Source1:       %name.sh.erb
-Source2:       ruby-stdlibs.alternatives.erb
-Source3:       ruby.macros.erb
-Source4:       ruby.env
-Source5:       static.tar
-Source2000:    %name-e2k.patch
+Source2:       ruby.macros.erb
+Source3:       ruby.env
+Source4:       ruby.alternatives.erb
+Source5:       ruby-stdlibs.alternatives.erb
 Patch1:        use_system_dirs.patch
 Patch2:        single_instantiating.patch
 Patch3:        alt_support_multiple_gem_trees.patch
-Patch4:        realpath.patch
 Patch5:        alt_block_install_gems.patch
 Patch6:        ac.patch
 Patch7:        rearrange_loadpath.patch
+%ifarch %e2k
+Patch2000:     %name-e2k.patch
+%endif
 BuildRequires(pre): rpm-macros-valgrind
+#NOTE enabled or a while
+BuildRequires: ruby
 BuildRequires: rvm-devel
 BuildRequires: autoconf >= 2.71
-%if_with check
-BuildRequires: gem(bundler) >= 0
-BuildRequires: gem(rake-compiler) >= 0
-BuildRequires: gem(benchmark_driver) >= 0
-BuildRequires: gem(test-unit) >= 3.3.5
-BuildRequires: gem(rake) >= 12.3.3
-%endif
-%if_without check
-BuildConflicts: ruby
-%endif
 # at least while bootstrapping on %%e2k
 BuildRequires: /proc
+%if_with check
+BuildRequires: gem(rake) >= 0
+BuildRequires: gem(benchmark_driver) >= 0
+BuildRequires: gem(test-unit) >= 3.3.5
+BuildRequires: gem(ipaddr) >= 0
+%endif
+%if_without check
+#NOTE disabled or a while
+#BuildConflicts: ruby
+%endif
 
-# Ruby built using LTO cannot rebuild itself because of segfaults
-%define        optflags_lto %nil
 Requires(pre): alternatives >= 0:0.2.0-alt0.12
-Requires:      %lname = %_version-%release
+Requires:      %name-stdlibs = %EVR
 Requires:      /bin/install
+Provides:      /usr/bin/ruby
 %define obsolete() \
 Provides:      %1 = %_version-%release \
 Obsoletes:     %1
@@ -57,6 +60,8 @@ echo "Provides: %name-module-$m = %_version-%release"; \
 echo "Obsoletes: %name-module-$m"; \
 done)
 
+# Ruby built using LTO cannot rebuild itself because of segfaults
+%define        optflags_lto %nil
 
 %description
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -102,11 +107,10 @@ BuildArch:     noarch
 Requires:      %name = %_version-%release
 Requires:      rvm-devel
 Requires:      libruby-devel = %_version-%release
-Requires:      gem(bundler) >= 0
 Requires:      gem(rake) >= 0
-Requires:      gem(rake-compiler) >= 0
 Requires:      gem(benchmark_driver) >= 0
 Requires:      gem(test-unit) >= 3.3.5
+Requires:      gem(bundler) >= 0
 
 %description   -n %name-devel
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -127,76 +131,74 @@ Provides:      rubygems = 3.3.26
 Provides:      rdoc = 6.4.0
 Provides:      bundle = 2.3.26
 Provides:      %name-libs = %_version-%release
-Provides:      gem(ipaddr) = 1.2.4
-Provides:      gem(fcntl) = 1.0.1
-Provides:      gem(stringio) = 3.0.1
-Provides:      gem(strscan) = 3.0.1
-Provides:      gem(bundler) = 2.3.26
-Provides:      gem(english) = 0.7.1
-Provides:      gem(abbrev) = 0.1.0
-Provides:      gem(base64) = 0.1.1
-Provides:      gem(erb) = 2.2.3
-Provides:      gem(fileutils) = 1.6.0
-Provides:      gem(find) = 0.1.1
-Provides:      gem(mutex_m) = 0.1.1
-Provides:      gem(open-uri) = 0.2.0
-Provides:      gem(pp) = 0.3.0
-Provides:      gem(prettyprint) = 0.1.1
-Provides:      gem(readline) = 0.0.3
-Provides:      gem(resolv-replace) = 0.1.0
-Provides:      gem(resolv) = 0.2.1
+Provides:      gem(fcntl) = 1.1.0
+Provides:      gem(io-nonblock) = 0.3.0
+Provides:      gem(stringio) = 3.1.1
+Provides:      gem(english) = 0.8.0
+Provides:      gem(abbrev) = 0.1.2
+Provides:      gem(base64) = 0.2.0
+Provides:      gem(benchmark) = 0.3.0
+Provides:      gem(delegate) = 0.3.1
+Provides:      gem(erb) = 4.0.3
+Provides:      gem(fileutils) = 1.7.2
+Provides:      gem(find) = 0.2.0
+Provides:      gem(getoptlong) = 0.2.1
+Provides:      gem(mutex_m) = 0.2.0
+Provides:      gem(observer) = 0.1.2
+Provides:      gem(open-uri) = 0.4.1
+Provides:      gem(pp) = 0.5.0
+Provides:      gem(prettyprint) = 0.2.0
+Provides:      gem(pstore) = 0.1.3
+Provides:      gem(readline) = 0.0.4
+Provides:      gem(resolv-replace) = 0.1.1
+Provides:      gem(resolv) = 0.3.0
 Provides:      gem(ruby2_keywords) = 0.0.5
-Provides:      gem(securerandom) = 0.2.0
-Provides:      gem(shellwords) = 0.1.0
-Provides:      gem(tempfile) = 0.1.2
-Provides:      gem(time) = 0.2.2
-Provides:      gem(tmpdir) = 0.1.2
-Provides:      gem(tsort) = 0.1.0
-Provides:      gem(un) = 0.2.0
-Provides:      gem(etc) = 1.3.0
-Provides:      gem(nkf) = 0.1.1
-Provides:      gem(cgi) = 0.3.6
-Provides:      gem(csv) = 3.2.5
-Provides:      gem(drb) = 2.1.0
-Provides:      gem(irb) = 1.4.1
-Provides:      gem(net-protocol) = 0.1.2
-Provides:      gem(set) = 1.0.2
-Provides:      gem(uri) = 0.12.1
-Provides:      gem(date) = 3.2.2
-Provides:      gem(json) = 2.6.1
-Provides:      gem(zlib) = 2.1.1
-Provides:      gem(racc) = 1.6.0
-Provides:      gem(rdoc) = 6.4.0
-Provides:      gem(yaml) = 0.2.0
-Provides:      gem(psych) = 4.0.4
-Provides:      gem(open3) = 0.1.1
-Provides:      gem(rinda) = 0.1.1
-Provides:      gem(digest) = 3.1.0
-Provides:      gem(fiddle) = 1.1.0
-Provides:      gem(syslog) = 0.1.0
-Provides:      gem(logger) = 1.5.0
-Provides:      gem(pstore) = 0.1.1
-Provides:      gem(reline) = 0.3.1
+Provides:      gem(securerandom) = 0.3.1
+Provides:      gem(shellwords) = 0.2.0
+Provides:      gem(singleton) = 0.2.0
+Provides:      gem(tempfile) = 0.2.1
+Provides:      gem(time) = 0.3.0
+Provides:      gem(tmpdir) = 0.2.0
+Provides:      gem(tsort) = 0.2.0
+Provides:      gem(un) = 0.3.0
+Provides:      gem(weakref) = 0.1.3
+Provides:      gem(etc) = 1.4.3
+Provides:      gem(nkf) = 0.1.3
+Provides:      gem(cgi) = 0.4.1
+Provides:      gem(csv) = 3.2.8
+Provides:      gem(drb) = 2.2.0
+Provides:      gem(irb) = 1.13.1
+Provides:      gem(net-protocol) = 0.2.2
+Provides:      gem(set) = 1.1.0
+Provides:      gem(uri) = 0.13.0
+Provides:      gem(date) = 3.3.4
+Provides:      gem(json) = 2.7.1
+Provides:      gem(zlib) = 3.1.1
+Provides:      gem(rdoc) = 6.6.3.1
+Provides:      gem(yaml) = 0.3.0
+Provides:      gem(psych) = 5.1.2
+Provides:      gem(open3) = 0.2.1
+Provides:      gem(prism) = 0.19.0
+Provides:      gem(rinda) = 0.2.0
+Provides:      gem(digest) = 3.1.1
+Provides:      gem(fiddle) = 1.1.2
+Provides:      gem(syslog) = 0.1.2
+Provides:      gem(logger) = 1.6.0
+Provides:      gem(reline) = 0.5.7
 Provides:      gem(io-wait) = 0.2.1
-Provides:      gem(openssl) = 3.0.1
-Provides:      gem(ostruct) = 0.5.2
-Provides:      gem(timeout) = 0.2.0
-Provides:      gem(weakref) = 0.1.1
-Provides:      gem(pathname) = 0.2.0
-Provides:      gem(readline-ext) = 0.1.4
-Provides:      gem(win32ole) = 1.8.8
+Provides:      gem(openssl) = 3.0.9
+Provides:      gem(bundler) = 2.5.11
+Provides:      gem(pathname) = 0.3.0
+Provides:      gem(win32ole) = 1.8.10
 Provides:      gem(delegate) = 0.2.0
-Provides:      gem(net-http) = 0.3.0
-Provides:      gem(observer) = 0.1.1
-Provides:      gem(optparse) = 0.2.0
-Provides:      gem(singleton) = 0.1.1
-Provides:      gem(bigdecimal) = 3.1.1
-Provides:      gem(io-console) = 0.5.11
-Provides:      gem(getoptlong) = 0.1.1
-Provides:      gem(io-nonblock) = 0.1.0
-Provides:      gem(forwardable) = 1.3.2
-Provides:      gem(did_you_mean) = 1.6.1
-Provides:      gem(error_highlight) = 0.3.0
+Provides:      gem(net-http) = 0.4.1
+Provides:      gem(optparse) = 0.4.0
+Provides:      gem(bigdecimal) = 3.1.5
+Provides:      gem(io-console) = 0.7.1
+Provides:      gem(forwardable) = 1.3.3
+Provides:      gem(did_you_mean) = 1.6.3
+Provides:      gem(syntax_suggest) = 2.0.0
+Provides:      gem(error_highlight) = 0.6.0
 
 %description   -n %name-stdlibs
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -246,17 +248,11 @@ rpm macros for Ruby packages.
 
 
 %prep
-%setup -a5
+%setup
 %autopatch -p1
-%ifarch %e2k
-patch -p1 -i %SOURCE2000
-%endif
-cp -r static/* ./
 
 %install
-%define ruby_arch %(echo %_target | sed 's/^ppc/powerpc/')%([ -z "%_gnueabi" ] || echo "-eabi")
-
-INSTALL=/bin/install rvm reinstall . \
+DESTDIR=%buildroot INSTALL=/bin/install rvm reinstall . \
    --gems-path=/tmp/ \
    --rubies-path=/tmp \
    --log-path=/tmp/ \
@@ -284,8 +280,7 @@ INSTALL=/bin/install rvm reinstall . \
    --localstatedir=%_localstatedir \
    --runstatedir=%_runtimedir \
    --docdir=%_defaultdocdir/%name \
-   --with-baseruby=no \
-   --with-destdir=%buildroot \
+   --with-baseruby=/usr/bin/ruby \
    --with-cachedir=%_cachedir/%name \
    --with-ridir=%_datadir/ri/ \
    --with-exec-prefix=%_libexecdir/%name/bin \
@@ -309,7 +304,7 @@ INSTALL=/bin/install rvm reinstall . \
    --with-vendorlibdir=%_libexecdir/%name/vendor_ruby \
    --with-vendorarchdir=%_libexecdir/%name/vendor_ruby \
    --with-rdoc=ri,html \
-   -C --prefix=%_prefix
+   -C --prefix=%_prefix \
 
 mkdir -p \
    %buildroot%_libexecdir \
@@ -321,13 +316,16 @@ mkdir -p \
    %buildroot%_docdir/%name
 
 cp COPYING LEGAL NEWS* README.md README.EXT *.ja %buildroot%_docdir/%name/
-ln -s %name-3.1.pc %buildroot%_pkgconfigdir/%name.pc
-ln -rvs %buildroot%_libexecdir/%name/bin/ruby %buildroot%{_bindir}/ruby
+ln -s %name-3.3.pc %buildroot%_pkgconfigdir/%name.pc
 # install ruby macros
-install -D -p -m 0644 %SOURCE4 %buildroot%_rpmmacrosdir/ruby.env
+install -D -p -m 0644 %SOURCE3 %buildroot%_rpmmacrosdir/ruby.env
 %__ruby -e 'File.open("%buildroot%_sysconfdir/bashrc.d/%name.sh", "w") { |f| f.puts ERB.new(IO.read("%SOURCE1")).result }'
-%__ruby -e 'File.open("%buildroot%_altdir/%name-stdlibs", "w") { |f| f.puts ERB.new(IO.read("%SOURCE2")).result }'
-%__ruby -e 'File.open("%buildroot%_rpmmacrosdir/ruby", "w") { |f| f.puts ERB.new(IO.read("%SOURCE3")).result }'
+%__ruby -e 'File.open("%buildroot%_rpmmacrosdir/ruby", "w") { |f| f.puts ERB.new(IO.read("%SOURCE2")).result }'
+%__ruby -e 'File.open("%buildroot%_altdir/%name", "w") { |f| f.puts ERB.new(IO.read("%SOURCE4")).result }'
+%__ruby -e 'File.open("%buildroot%_altdir/%name-stdlibs", "w") { |f| f.puts ERB.new(IO.read("%SOURCE5")).result }'
+
+# cleanup gems folder for default ones
+rm -rf %buildroot%_libexecdir/%name/gemie/gems/*
 
 %check
 %make test
@@ -340,10 +338,10 @@ usermod -a -G ruby root
 echo "NOTE: to make the environment variable changes come into effect, please relogin the terminal session" 1>&2
 
 %files
-%_bindir/%name
+%_altdir/%name
 %_man1dir/%name.*
 %dir %_datadir/ri
-%attr(0755,root,root) %_sysconfdir/bashrc.d/%name.sh
+%attr(0755,root,ruby) %_sysconfdir/bashrc.d/%name.sh
 %dir %attr(775,root,ruby) %_cachedir/%name/
 %dir %attr(775,root,ruby) %_cachedir/%name/gemie
 
@@ -385,6 +383,10 @@ echo "NOTE: to make the environment variable changes come into effect, please re
 %_rpmmacrosdir/ruby.env
 
 %changelog
+* Mon Jul 08 2024 Pavel Skrylev <majioa@altlinux.org> 3.3.4-alt1
+- ^ 3.1.4 -> 3.3.4
+- - disabled bootstraping ruby for a while
+
 * Sun Apr 21 2024 Pavel Skrylev <majioa@altlinux.org> 3.1.4-alt4.4
 - * symlinks to internal ruby binaries use alternatives engine;
 - - droppen unnecessary executable packages like irb, erb, gem;

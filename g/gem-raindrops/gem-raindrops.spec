@@ -3,13 +3,13 @@
 
 Name:          gem-raindrops
 Version:       0.20.1
-Release:       alt1
+Release:       alt1.1
 Summary:       real-time stats for preforking Rack servers
 License:       LGPL-2.1+
 Group:         Development/Ruby
 Url:           http://raindrops.bogomips.org/
 Vcs:           git://bogomips.org/raindrops.git
-Packager:      Pavel Skrylev <majioa@altlinux.org>
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
@@ -21,11 +21,12 @@ BuildRequires: gem(rack) >= 1.2
 BuildConflicts: gem(aggregate) >= 1
 BuildConflicts: gem(test-unit) >= 4
 BuildConflicts: gem(posix_mq) >= 3
-BuildConflicts: gem(rack) >= 3
+BuildConflicts: gem(rack) >= 4
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency rack >= 3.0.10,rack < 4
 Obsoletes:     ruby-raindrops < %EVR
 Provides:      ruby-raindrops = %EVR
 Provides:      gem(raindrops) = 0.20.1
@@ -43,7 +44,7 @@ processes under SMP.
 
 %package       -n gem-raindrops-doc
 Version:       0.20.1
-Release:       alt1
+Release:       alt1.1
 Summary:       real-time stats for preforking Rack servers documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета raindrops
 Group:         Development/Documentation
@@ -68,7 +69,7 @@ processes under SMP.
 
 %package       -n gem-raindrops-devel
 Version:       0.20.1
-Release:       alt1
+Release:       alt1.1
 Summary:       real-time stats for preforking Rack servers development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета raindrops
 Group:         Development/Ruby
@@ -82,7 +83,7 @@ Requires:      gem(rack) >= 1.2
 Conflicts:     gem(aggregate) >= 1
 Conflicts:     gem(test-unit) >= 4
 Conflicts:     gem(posix_mq) >= 3
-Conflicts:     gem(rack) >= 3
+Conflicts:     gem(rack) >= 4
 
 %description   -n gem-raindrops-devel
 real-time stats for preforking Rack servers development package.
@@ -127,6 +128,9 @@ processes under SMP.
 
 
 %changelog
+* Wed Aug 07 2024 Pavel Skrylev <majioa@altlinux.org> 0.20.1-alt1.1
+- ! dep to rack gem
+
 * Wed Dec 06 2023 Pavel Skrylev <majioa@altlinux.org> 0.20.1-alt1
 - ^ 0.20.0 -> 0.20.1
 

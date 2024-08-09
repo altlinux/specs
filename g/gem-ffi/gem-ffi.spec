@@ -1,9 +1,12 @@
 %define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname ffi
 
 Name:          gem-ffi
-Version:       1.16.3.25
-Release:       alt0.1
+Version:       1.17.0
+Release:       alt1
 Summary:       Ruby foreign function interface
 License:       BSD-3-Clause
 Group:         Development/Ruby
@@ -14,29 +17,31 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libffi-devel
-%if_with check
+%if_enabled check
 BuildRequires: gem(bigdecimal) >= 0
 BuildRequires: gem(bundler) >= 1.16
 BuildRequires: gem(rake) >= 13.0
 BuildRequires: gem(rake-compiler) >= 1.1
-BuildRequires: gem(rake-compiler-dock) >= 1.0
+BuildRequires: gem(rake-compiler-dock) >= 1.2.1
 BuildRequires: gem(rspec) >= 2.15
 BuildRequires: gem(kramdown) >= 0
 BuildRequires: gem(yard) >= 0.9
+BuildRequires: gem(rbs) >= 3.0
 BuildConflicts: gem(bundler) >= 3
 BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(rake-compiler) >= 2
-BuildConflicts: gem(rake-compiler-dock) >= 2
 BuildConflicts: gem(yard) >= 1
+BuildConflicts: gem(rbs) >= 4
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency rspec >= 3.10.0,rspec < 4
+%ruby_use_gem_dependency rake-compiler-dock >= 1.2.1,rake-compiler-dock < 2
 Obsoletes:     ruby-ffi < %EVR
 Provides:      ruby-ffi = %EVR
-Provides:      gem(ffi) = 1.16.3.25
+Provides:      gem(ffi) = 1.17.0
 
-%ruby_use_gem_version ffi:1.16.3.25
 
 %description
 Ruby-FFI is a gem for programmatically loading dynamically-linked native
@@ -46,15 +51,16 @@ JRuby, Rubinius and TruffleRuby. Discover why you should write your next
 extension using Ruby-FFI.
 
 
+%if_enabled    doc
 %package       -n gem-ffi-doc
-Version:       1.16.3.25
-Release:       alt0.1
+Version:       1.17.0
+Release:       alt1
 Summary:       Ruby foreign function interface documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ffi
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(ffi) = 1.16.3.25
+Requires:      gem(ffi) = 1.17.0
 
 %description   -n gem-ffi-doc
 Ruby foreign function interface documentation files.
@@ -67,30 +73,33 @@ extension using Ruby-FFI.
 
 %description   -n gem-ffi-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета ffi.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-ffi-devel
-Version:       1.16.3.25
-Release:       alt0.1
+Version:       1.17.0
+Release:       alt1
 Summary:       Ruby foreign function interface development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ffi
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(ffi) = 1.16.3.25
+Requires:      gem(ffi) = 1.17.0
 Requires:      gem(bigdecimal) >= 0
 Requires:      gem(bundler) >= 1.16
 Requires:      gem(rake) >= 13.0
 Requires:      gem(rake-compiler) >= 1.1
-Requires:      gem(rake-compiler-dock) >= 1.0
+Requires:      gem(rake-compiler-dock) >= 1.2.1
 Requires:      gem(rspec) >= 2.15
 Requires:      gem(kramdown) >= 0
 Requires:      gem(yard) >= 0.9
+Requires:      gem(rbs) >= 3.0
 Conflicts:     gem(bundler) >= 3
 Conflicts:     gem(rake) >= 14
 Conflicts:     gem(rake-compiler) >= 2
-Conflicts:     gem(rake-compiler-dock) >= 2
 Conflicts:     gem(yard) >= 1
+Conflicts:     gem(rbs) >= 4
 
 %description   -n gem-ffi-devel
 Ruby foreign function interface development package.
@@ -103,6 +112,7 @@ extension using Ruby-FFI.
 
 %description   -n gem-ffi-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета ffi.
+%endif
 
 
 %prep
@@ -123,16 +133,23 @@ extension using Ruby-FFI.
 %ruby_gemlibdir
 %ruby_gemextdir
 
+%if_enabled    doc
 %files         -n gem-ffi-doc
 %doc README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-ffi-devel
 %doc README.md
 %ruby_includedir/*
+%endif
 
 
 %changelog
+* Wed Jul 24 2024 Pavel Skrylev <majioa@altlinux.org> 1.17.0-alt1
+- ^ 1.16.3p25 -> 1.17.0
+
 * Sun Feb 04 2024 Pavel Skrylev <majioa@altlinux.org> 1.16.3.25-alt0.1
 - ^ 1.16.3 -> 1.16.3p25
 - ! FTBFS for lost ffi.h

@@ -2,7 +2,7 @@
 
 Name:          gem-test-unit-rr
 Version:       1.0.5.1
-Release:       alt1
+Release:       alt2
 Summary:       test-unit-rr is a RR adapter for test-unit
 License:       LGPLv2+
 Group:         Development/Ruby
@@ -12,6 +12,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Patch:         patch.patch
 BuildRequires(pre): rpm-build-ruby
 %if_with check
 BuildRequires: gem(bundler) >= 0
@@ -37,7 +38,7 @@ You don't need RR setup codes with test-unit-rr. You just require
 
 %package       -n gem-test-unit-rr-doc
 Version:       1.0.5.1
-Release:       alt1
+Release:       alt2
 Summary:       test-unit-rr is a RR adapter for test-unit documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета test-unit-rr
 Group:         Development/Documentation
@@ -57,7 +58,7 @@ You don't need RR setup codes with test-unit-rr. You just require
 
 %package       -n gem-test-unit-rr-devel
 Version:       1.0.5.1
-Release:       alt1
+Release:       alt2
 Summary:       test-unit-rr is a RR adapter for test-unit development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета test-unit-rr
 Group:         Development/Ruby
@@ -81,6 +82,7 @@ You don't need RR setup codes with test-unit-rr. You just require
 
 %prep
 %setup
+%autopatch
 
 %build
 %ruby_build
@@ -105,6 +107,9 @@ You don't need RR setup codes with test-unit-rr. You just require
 
 
 %changelog
+* Tue Jul 30 2024 Pavel Skrylev <majioa@altlinux.org> 1.0.5.1-alt2
+- ! document compilation for new ruby/setup pair
+
 * Fri Jan 27 2023 Pavel Skrylev <majioa@altlinux.org> 1.0.5.1-alt1
 - ^ 1.0.5 -> 1.0.5.1
 

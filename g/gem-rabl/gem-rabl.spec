@@ -1,7 +1,11 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname rabl
 
 Name:          gem-rabl
-Version:       0.16.0
+Version:       0.16.1
 Release:       alt1
 Summary:       General ruby templating with json, bson, xml, plist and msgpack support
 License:       MIT
@@ -12,28 +16,39 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Patch:         0.14.3.patch
 BuildRequires(pre): rpm-build-ruby
-%if_with check
-BuildRequires: gem(activesupport) >= 2.3.14
-BuildRequires: gem(riot) >= 0.12.3 gem(riot) < 0.13
+%if_enabled check
 BuildRequires: gem(rr) >= 0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(tilt) >= 0
 BuildRequires: gem(oj) >= 0
-BuildRequires: gem(msgpack) >= 1.0.0 gem(msgpack) < 2
-BuildRequires: gem(bson) >= 1.7.0 gem(bson) < 5
+BuildRequires: gem(msgpack) >= 1.0.0
+BuildRequires: gem(bson) >= 1.7.0
 BuildRequires: gem(plist) >= 0
+BuildRequires: gem(i18n) >= 0.6
+BuildRequires: gem(json) >= 0
+BuildRequires: gem(builder) >= 0
+BuildRequires: gem(rack-test) >= 0
+BuildRequires: gem(activerecord) >= 4.0
+BuildRequires: gem(sqlite3) >= 0
+BuildRequires: gem(sinatra) >= 1.2.0
+BuildRequires: gem(hashie) >= 0
+BuildRequires: gem(riot) >= 0.12.3
+BuildRequires: gem(activesupport) >= 2.3.14
+BuildConflicts: gem(msgpack) >= 2
+BuildConflicts: gem(bson) >= 6
+BuildConflicts: gem(riot) >= 1
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency msgpack >= 1.4.5,msgpack < 2
-%ruby_use_gem_dependency bson >= 4.14,bson < 5
+%ruby_use_gem_dependency bson >= 5.0.1,bson < 6
+%ruby_use_gem_dependency msgpack >= 1.7.2,msgpack < 2
+%ruby_use_gem_dependency riot >= 0.12.3,riot < 1
 Requires:      gem(activesupport) >= 2.3.14
 Obsoletes:     ruby-rabl < %EVR
 Provides:      ruby-rabl = %EVR
-Provides:      gem(rabl) = 0.16.0
+Provides:      gem(rabl) = 0.16.1
 
 
 %description
@@ -63,15 +78,16 @@ misconceptions about RABL, please check out our guide to understanding RABL,
 which can help clear up any confusion about this project.
 
 
+%if_enabled    doc
 %package       -n gem-rabl-doc
-Version:       0.16.0
+Version:       0.16.1
 Release:       alt1
 Summary:       General ruby templating with json, bson, xml, plist and msgpack support documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rabl
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rabl) = 0.16.0
+Requires:      gem(rabl) = 0.16.1
 
 %description   -n gem-rabl-doc
 General ruby templating with json, bson, xml, plist and msgpack support
@@ -104,25 +120,38 @@ which can help clear up any confusion about this project.
 
 %description   -n gem-rabl-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета rabl.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-rabl-devel
-Version:       0.16.0
+Version:       0.16.1
 Release:       alt1
 Summary:       General ruby templating with json, bson, xml, plist and msgpack support development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rabl
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rabl) = 0.16.0
-Requires:      gem(riot) >= 0.12.3 gem(riot) < 0.13
+Requires:      gem(rabl) = 0.16.1
 Requires:      gem(rr) >= 0
 Requires:      gem(rake) >= 0
 Requires:      gem(tilt) >= 0
 Requires:      gem(oj) >= 0
-Requires:      gem(msgpack) >= 1.0.0 gem(msgpack) < 2
-Requires:      gem(bson) >= 1.7.0 gem(bson) < 5
+Requires:      gem(msgpack) >= 1.0.0
+Requires:      gem(bson) >= 1.7.0
 Requires:      gem(plist) >= 0
+Requires:      gem(i18n) >= 0.6
+Requires:      gem(json) >= 0
+Requires:      gem(builder) >= 0
+Requires:      gem(rack-test) >= 0
+Requires:      gem(activerecord) >= 4.0
+Requires:      gem(sqlite3) >= 0
+Requires:      gem(sinatra) >= 1.2.0
+Requires:      gem(hashie) >= 0
+Requires:      gem(riot) >= 0.12.3
+Conflicts:     gem(msgpack) >= 2
+Conflicts:     gem(bson) >= 6
+Conflicts:     gem(riot) >= 1
 
 %description   -n gem-rabl-devel
 General ruby templating with json, bson, xml, plist and msgpack support
@@ -155,6 +184,7 @@ which can help clear up any confusion about this project.
 
 %description   -n gem-rabl-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета rabl.
+%endif
 
 
 %prep
@@ -174,15 +204,22 @@ which can help clear up any confusion about this project.
 %ruby_gemspec
 %ruby_gemlibdir
 
+%if_enabled    doc
 %files         -n gem-rabl-doc
 %doc README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-rabl-devel
 %doc README.md
+%endif
 
 
 %changelog
+* Wed Jul 31 2024 Pavel Skrylev <majioa@altlinux.org> 0.16.1-alt1
+- ^ 0.16.0 -> 0.16.1
+
 * Sat Oct 08 2022 Pavel Skrylev <majioa@altlinux.org> 0.16.0-alt1
 - ^ 0.15.0 -> 0.16.0
 
