@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: wired-notify
-Version: 0.10.4
-Release: alt2
+Version: 0.10.6
+Release: alt1
 
-Summary: Lightweight notification daemon with highly customizable layout blocks, written in Rust.
+Summary: Lightweight notification daemon with highly customizable layout blocks
 License: MIT
 Group: Graphical desktop/Other
 
@@ -23,7 +23,8 @@ BuildRequires: pango-devel
 BuildRequires: cargo-vendor-checksum diffstat
 
 %description
-Wired is light and fully customizable notification daemon that provides you with powerful and extensible layout tools.
+Wired is light and fully customizable notification daemon that
+provides you with powerful and extensible layout tools.
 
 %prep
 %setup
@@ -46,14 +47,17 @@ cargo build --release %{?_smp_mflags} --all-targets --offline
 
 %install
 install -D -m755 target/release/wired -t %buildroot%_bindir/
-install -D -m644 wired.service -t %buildroot/usr/lib/systemd/user/
+install -D -m644 wired.service -t %buildroot%_user_unitdir
 
 %files
 %doc README.md LICENSE readme_stuff
 %_bindir/wired
-/usr/lib/systemd/user/wired.service
+%_user_unitdir/wired.service
 
 %changelog
+* Fri Aug 09 2024 Egor Ignatov <egori@altlinux.org> 0.10.6-alt1
+- new version 0.10.6
+
 * Tue Jan 30 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.10.4-alt2
 - NMU: fixed FTBFS on LoongArch (trivial patch for cty and nix crates)
 
