@@ -23,13 +23,13 @@
 
 Name: vulkan-amdgpu
 Version: 2024.Q2.3
-Release: alt1
+Release: alt1.1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
 Summary: AMD Open Source Driver For Vulkan
 Group: System/X11
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 %ix86
 
 Requires: vulkan-filesystem
 
@@ -118,6 +118,9 @@ sed -e 's|@API_VERSION@|%_vk_api_version|g' %SOURCE8 > %buildroot%_vkldir/$(base
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Fri Aug 09 2024 L.A. Kostis <lakostis@altlinux.ru> 2024.Q2.3-alt1.1
+- Enable %%ix86 build again.
+
 * Thu Jun 27 2024 L.A. Kostis <lakostis@altlinux.ru> 2024.Q2.3-alt1
 - 2024-06-26 update:
   + icd: bump vulkan version
