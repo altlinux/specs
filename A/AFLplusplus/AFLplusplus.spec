@@ -6,7 +6,7 @@
 %endif
 
 Name: AFLplusplus
-Version: 4.20c
+Version: 4.21c
 Release: alt1
 
 Summary: American Fuzzy Lop plus plus (AFL++)
@@ -138,6 +138,9 @@ install -m755 utils/plot_ui/afl-plot-ui -t %buildroot%_bindir
 %_bindir/afl-plot-ui
 
 %changelog
+* Fri Aug 02 2024 Andrey Kovalev <ded@altlinux.org> 4.21c-alt1
+- 4.21c
+
 * Mon Apr 15 2024 Egor Ignatov <egori@altlinux.org> 4.20c-alt1
 - 4.20c
 
