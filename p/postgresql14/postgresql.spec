@@ -19,8 +19,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     14
-%define postgresql_minor     12
-%define postgresql_altrel    3
+%define postgresql_minor     13
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -969,6 +969,9 @@ fi
 %endif
 
 %changelog
+* Fri Aug 09 2024 Alexei Takaseev <taf@altlinux.org> 14.13-alt1
+- 14.13 (Fixes CVE-2024-7348)
+
 * Fri May 24 2024 Alexei Takaseev <taf@altlinux.org> 14.12-alt3
 - Fix copy to %%_libdir/%%PGSQL/backup
 
