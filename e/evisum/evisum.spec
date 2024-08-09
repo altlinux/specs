@@ -2,13 +2,15 @@
 %define _libexecdir %_prefix/libexec
 
 Name: evisum
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 
 Summary: The Enlightenment system and process monitor
 Group: Graphical desktop/Enlightenment
 License: ISC
 Url: https://enlightenment.org
+
+Vcs: https://git.enlightenment.org/enlightenment/evisum.git
 
 %if_disabled snapshot
 Source: https://download.enlightenment.org/rel/apps/%name/%name-%version.tar.xz
@@ -23,7 +25,7 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson libelementary-devel >= %efl_ver
 
 %description
-System and process monitor for Enlightenment
+System and process monitor for Enlightenment.
 
 %prep
 %setup
@@ -46,6 +48,9 @@ System and process monitor for Enlightenment
 %doc AUTHORS NEWS README
 
 %changelog
+* Fri Aug 09 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
+- 0.6.1
+
 * Mon Dec 27 2021 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - 0.6.0
 
