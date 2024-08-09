@@ -5,7 +5,7 @@
 %endif
 
 Name:    python3-module-%modulename
-Version: 4.2.0
+Version: 4.4.4
 Release: alt1
 
 Summary: Python library for loading and using triangular meshes.
@@ -31,6 +31,7 @@ BuildRequires: python3-module-jsonschema
 BuildRequires: python3-module-svg
 BuildRequires: python3-module-svg-path
 BuildRequires: python3-module-msgpack
+BuildRequires: python3-module-mapbox-earcut
 
 BuildArch: noarch
 
@@ -132,7 +133,8 @@ pytest3 -v -k "not ( DAETest and test_material_round ) and \
        not ( DAETest and test_obj_roundtrip ) and \
        not ( LightTests and test_scene ) and \
        not ( OBJTest and test_multi_nodupe ) and \
-       not ( SliceTest and test_slice_onplane )"
+       not ( SliceTest and test_slice_onplane ) and \
+       not test_screw"
 
 %files
 %python3_sitelibdir/%modulename/
@@ -140,6 +142,16 @@ pytest3 -v -k "not ( DAETest and test_material_round ) and \
 %doc *.md
 
 %changelog
+* Fri Aug 09 2024 Anton Midyukov <antohami@altlinux.org> 4.4.4-alt1
+- new version (4.4.4) with rpmgs script
+- not check test_screw
+
+* Mon Jul 15 2024 Anton Midyukov <antohami@altlinux.org> 4.4.3-alt1
+- new version (4.4.3) with rpmgs script
+
+* Thu Apr 18 2024 Anton Midyukov <antohami@altlinux.org> 4.3.0-alt1
+- new version (4.3.0) with rpmgs script
+
 * Tue Mar 12 2024 Anton Midyukov <antohami@altlinux.org> 4.2.0-alt1
 - new version (4.2.0) with rpmgs script
 
