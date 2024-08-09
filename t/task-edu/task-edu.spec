@@ -1,6 +1,6 @@
 Name:    task-edu
 Version: 1.6.1
-Release: alt2
+Release: alt3
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
 Summary: Educational software (base set)
@@ -382,7 +382,7 @@ Requires: kf5-plasma-workspace
 Requires: kde5-network-manager-nm
 Requires: libqimageblitz5
 Requires: kde5-krfb
-%ifnarch ppc64le
+%ifnarch loongarch64 ppc64le
 Requires: kde5-parley
 %endif
 Requires: kde5-kanagram
@@ -427,7 +427,7 @@ Requires: ansible
 Requires: semaphore
 %endif
 Requires: virt-viewer
-%ifnarch ppc64le
+%ifnarch loongarch64 ppc64le
 Requires: OpenBoard
 %endif
 Requires: touchegg
@@ -559,6 +559,10 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Fri Aug 09 2024 Ivan A. Melnikov <iv@altlinux.org> 1.6.1-alt3
+- NMU: drop OpenBoard and kde5-parley on loongarch64,
+  as they require qt5-webengine.
+
 * Sun Jun 30 2024 Anton Midyukov <antohami@altlinux.org> 1.6.1-alt2
 - NMU: task-edu-teacher: do not require OpenBoard on ppc64le
 
