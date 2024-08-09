@@ -5,7 +5,7 @@
 %def_with bzr
 
 Name: breezy
-Version: 3.3.7
+Version: 3.3.8
 Release: alt1
 
 Summary: Breezy is a fork of the Bazaar version control system
@@ -18,7 +18,6 @@ Packager: Anatoly Kitaykin <cetus@altlinux.ru>
 Source0: %name-%version.tar
 Source1: %name-cargo.tar
 
-Patch0: %name-%version-alt.patch
 Patch1: drop-distutils.patch
 
 BuildRequires(pre): rpm-build-python3
@@ -33,6 +32,7 @@ BuildRequires: python3-module-tzlocal
 BuilDrequires: python3-module-yaml
 BuildRequires: rust rust-cargo
 BuildRequires: python3(setuptools-gettext)
+BuildRequires: python3(semantic_version)
 
 %if_with check
 
@@ -98,7 +98,6 @@ This package contains 'bzr' alias for breezy 'brz' command.
 
 %prep
 %setup -a1
-%patch0 -p1
 %patch1 -p1
 
 %build
@@ -173,6 +172,10 @@ install -m0644 man1/brz.1 %buildroot%_man1dir/
 %endif
 
 %changelog
+* Fri Aug 09 2024 L.A. Kostis <lakostis@altlinux.ru> 3.3.8-alt1
+- 3.3.8.
+- BR: added python3(semantic_version).
+
 * Wed May 08 2024 L.A. Kostis <lakostis@altlinux.ru> 3.3.7-alt1
 - NMU:
   + 3.3.7.
