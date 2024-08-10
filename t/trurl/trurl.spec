@@ -2,7 +2,7 @@
 
 Name:    trurl
 Version: 0.14
-Release: alt1
+Release: alt2
 
 Summary: trurl is a command line tool for URL parsing and manipulation
 License: curl
@@ -25,6 +25,10 @@ BuildRequires: python3
 %prep
 %setup
 
+%ifarch %e2k
+sed -i 's/-Werror/-Wno-error/g' Makefile
+%endif
+
 %build
 %make_build PREFIX=%_prefix
 
@@ -40,5 +44,8 @@ BuildRequires: python3
 %_man1dir/%name.1.*
 
 %changelog
+* Sat Aug 10 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.14-alt2
+- Fixed build for Elbrus
+
 * Mon Aug 05 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.14-alt1
 - Initial build for Sisyphus
