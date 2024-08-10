@@ -1,8 +1,8 @@
-%define soversion 0.18
+%define soversion 12
 
-Name: libwlroots
-Version: 0.18.0
-Release: alt1
+Name: libwlroots%soversion
+Version: 0.17.4
+Release: alt2
 
 Summary: Modular Wayland compositor library
 License: MIT
@@ -58,13 +58,6 @@ BuildRequires: pkgconfig(xwayland)
 %description
 %summary.
 
-%package -n libwlroots%soversion
-Summary: Modular Wayland compositor library
-Group: System/Libraries
-
-%description -n libwlroots%soversion
-%summary.
-
 %package -n libwlroots%soversion-devel
 Summary: Development files for libwlroots
 Group: Development/C
@@ -76,6 +69,11 @@ This package provides development files for libwlroots library.
 
 %prep
 %setup
+
+if ! grep -qs '^soversion[[:space:]]*=[[:space:]]*%soversion[[:space:]]*$' meson.build; then
+	echo >&2 "Outdated %%soversion value in spec"
+	exit 1
+fi
 
 %build
 %meson \
@@ -96,17 +94,18 @@ This package provides development files for libwlroots library.
 export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
 
-%files -n libwlroots%soversion
-%_libdir/libwlroots-%soversion.so
+%files
+%_libdir/libwlroots.so.*
 %doc README.md LICENSE
 
 %files -n libwlroots%soversion-devel
-%_includedir/wlroots-%soversion/
-%_pkgconfigdir/wlroots-%soversion.pc
+%_includedir/wlr
+%_libdir/libwlroots.so
+%_pkgconfigdir/wlroots.pc
 
 %changelog
-* Fri Aug 09 2024 Roman Alifanov <ximper@altlinux.org> 0.18.0-alt1
-- new version 0.18.0 (with rpmrb script)
+* Fri Aug 09 2024 Roman Alifanov <ximper@altlinux.org> 0.17.4-alt2
+- separating this version from main repository
 
 * Thu Aug 08 2024 Roman Alifanov <ximper@altlinux.org> 0.17.4-alt1
 - new version 0.17.4 (with rpmrb script)
