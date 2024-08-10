@@ -7,7 +7,7 @@
 %def_enable ocaml
 
 Name: libnbd
-Version: 1.19.11
+Version: 1.21.3
 Release: alt1
 Summary: NBD client library in userspace
 License: LGPL-2.1-or-later
@@ -20,6 +20,7 @@ BuildRequires: gcc-c++
 BuildRequires: hardlink
 BuildRequires: libfuse3-devel
 BuildRequires: libgnutls-devel
+BuildRequires: libublksrv-devel
 BuildRequires: liburing-devel
 BuildRequires: libxml2-devel
 BuildRequires: perl-podlators
@@ -136,6 +137,9 @@ rm %buildroot%_datadir/bash-completion/completions/nbdsh
 %endif
 
 %changelog
+* Sat Aug 10 2024 Vitaly Chikunov <vt@altlinux.org> 1.21.3-alt1
+- Update to v1.21.3 (2024-07-28).
+
 * Fri May 03 2024 Vitaly Chikunov <vt@altlinux.org> 1.19.11-alt1
 - Update to v1.19.11 (2024-03-25).
 

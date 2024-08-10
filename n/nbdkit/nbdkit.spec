@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,unresolved=relaxed
 
 Name: nbdkit
-Version: 1.39.5
+Version: 1.40.1
 Release: alt1
 Summary: NBD server with stable plugin ABI and permissive license
 License: BSD-3-Clause
@@ -16,11 +16,12 @@ Source: %name-%version.tar
 # c++ is only required for stats filter.
 # zlib-ng overrides zlib except for gzip filter.
 BuildRequires: %_bindir/pod2man
-BuildRequires: e2fsprogs
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(bash-completion)
 BuildRequires: pkgconfig(blkio)
+BuildRequires: pkgconfig(bzip2)
 BuildRequires: pkgconfig(com_err)
+BuildRequires: pkgconfig(ext2fs)
 BuildRequires: pkgconfig(ext2fs)
 BuildRequires: pkgconfig(gnutls)
 BuildRequires: pkgconfig(libcurl)
@@ -143,6 +144,9 @@ nbdkit -U - memory 1G --run 'nbdinfo "$uri"'
 %files checkinstall
 
 %changelog
+* Sat Aug 10 2024 Vitaly Chikunov <vt@altlinux.org> 1.40.1-alt1
+- Update to v1.40.1 (2024-07-29).
+
 * Sun May 12 2024 Vitaly Chikunov <vt@altlinux.org> 1.39.5-alt1
 - Update to v1.39.5 (2024-05-07).
 
