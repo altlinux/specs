@@ -7,7 +7,7 @@
 
 Name: tuned
 Version: 2.24.0
-Release: alt1
+Release: alt2
 Summary: A dynamic adaptive system tuning daemon
 License: GPL-2.0-or-later
 Group: System/Configuration/Hardware
@@ -42,8 +42,6 @@ BuildRequires: rpm-build-vm
 #py3_use linux-procfs
 #py3_use perf
 %py3_use dbus
-%py3_use pygobject3
-%py3_use pygobject3-pygtkcompat
 
 %description
 The tuned package contains a daemon that tunes system settings dynamically.
@@ -57,6 +55,8 @@ Summary: GTK GUI for tuned
 Group: System/Configuration/Other
 Requires: %name = %EVR
 Requires: powertop polkit
+%py3_use pygobject3
+%py3_use pygobject3-pygtkcompat
 
 %description gtk
 GTK GUI that can control tuned and provides simple profile editor.
@@ -202,6 +202,14 @@ Requires: %name = %EVR
 %description profiles-openshift
 Additional tuned profile(s) optimized for OpenShift.
 
+%package checkinstall
+Group: Development/Other
+Summary: CI for %name
+Requires(post): %name = %EVR
+
+%description checkinstall
+%summary.
+
 %prep
 %setup
 # For systemd-boot kernel-install hook.
@@ -266,6 +274,24 @@ rm -rf %buildroot%tuneddir/cpu-partitioning-powersave
 
 %check
 vm-run --kvm=cond make test
+
+%post checkinstall
+[ -d /.host -a -d /.in -a -d /.out ] || {
+	echo >&2 'checkinstall is not allowed outside hasher environment'
+	exit 1
+}
+set -ex -o pipefail
+{ echo 'enable_unix_socket = 1'
+  echo 'enable_dbus = 0'; } >> /etc/tuned/tuned-main.conf
+tuned --daemon
+tuned-adm list
+tuned-adm active | grep throughput-performance
+tuned-adm recommend | grep balanced
+tuned-adm profile_mode | grep manual
+kill $(cat /run/tuned/tuned.pid)
+# Should not have GTK.
+! type gtk-query-settings || exit 3
+! type gtk4-query-settings || exit 4
 
 %post
 %post_service %name
@@ -481,7 +507,12 @@ fi
 %tuneddir/openshift-node
 %_man7dir//tuned-profiles-openshift.7*
 
+%files checkinstall
+
 %changelog
+* Sat Aug 10 2024 Vitaly Chikunov <vt@altlinux.org> 2.24.0-alt2
+- Fix misplaced dependencies on GTK libraries (ALT#51116).
+
 * Thu Aug 08 2024 Vitaly Chikunov <vt@altlinux.org> 2.24.0-alt1
 - Update to v2.24.0 (2024-08-07).
 - Fix tuned-gui run in absence of user profiles dir (ALT#46426).
