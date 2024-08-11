@@ -2,8 +2,8 @@
 %define config_dir gitlab-runner.d
 
 Name:    gitlab-runner
-Version: 16.9.1
-Release: alt1.1
+Version: 16.11.3 
+Release: alt1
 
 Summary: GitLab Runner is the open source project that is used to run your CI/CD jobs and send the results back to GitLab
 License: MIT
@@ -71,6 +71,9 @@ fi
 %attr(0770,root,gitlab-runner) %dir %_localstatedir/gitlab-runner
 
 %changelog
+* Sun Aug 11 2024 Nikolay Burykin <bne@altlinux.org> 16.11.3-alt1
+- New version 16.11.3
+
 * Sun Mar 24 2024 Ivan A. Melnikov <iv@altlinux.org> 16.9.1-alt1.1
 - NMU: fix FTBFS on loongarch64
 
