@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.3.4
+Version: 0.3.5
 Release: alt1
 
 Summary: Simple image creator
@@ -88,6 +88,9 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Sun Aug 11 2024 Alexey Gladkov <legion@altlinux.ru> 0.3.5-alt1
+- mki-pack-date: fix exclude subdir.
+
 * Thu May 02 2024 Alexey Gladkov <legion@altlinux.ru> 0.3.4-alt1
 - mki-pack-*: add option '-joliet-long' for mkisofs
 - mki-pack-*: replace UUID_ISO_SHRT with UUID_ISO
