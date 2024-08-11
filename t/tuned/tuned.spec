@@ -7,7 +7,7 @@
 
 Name: tuned
 Version: 2.24.0
-Release: alt2
+Release: alt3
 Summary: A dynamic adaptive system tuning daemon
 License: GPL-2.0-or-later
 Group: System/Configuration/Hardware
@@ -222,6 +222,7 @@ rm doc/README.{utils,scomes}
 # Fix grub paths.
 grep -lr -e /boot/grub2 -e grub2- | xargs sed -i s/grub2/grub/g
 sed -i '/^GRUB2_DEFAULT_ENV_FILE =/s/default\/grub/sysconfig\/grub2/' tuned/consts.py
+sed -i '/^GRUB2_CFG_FILES =/s/grub2/grub/' tuned/consts.py
 
 # Export tuned_params variable for submenu(s).
 echo 'echo "export tuned_params"' >> 00_tuned
@@ -510,6 +511,9 @@ fi
 %files checkinstall
 
 %changelog
+* Sun Aug 11 2024 Vitaly Chikunov <vt@altlinux.org> 2.24.0-alt3
+- Fix grub.cfg patching (ALT#51117).
+
 * Sat Aug 10 2024 Vitaly Chikunov <vt@altlinux.org> 2.24.0-alt2
 - Fix misplaced dependencies on GTK libraries (ALT#51116).
 
