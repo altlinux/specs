@@ -1,8 +1,8 @@
-%define version_vte 0.76.3
+%define version_vte 0.76.4
 %define version_vte_api 2.91
 
 Name: ptyxis
-Version: 46.5
+Version: 46.6
 Release: alt1
 
 Summary: Ptyxis is a terminal for GNOME with first-class support for containers
@@ -117,6 +117,9 @@ rm -vr %buildroot%_libdir/libvte-ptyxis-%version_vte_api-gtk4.so
 %_libdir/libvte-ptyxis-%version_vte_api-gtk4.so.*
 
 %changelog
+* Sun Aug 11 2024 Boris Yumankulov <boria138@altlinux.org> 46.6-alt1
+- new version 46.6
+
 * Thu Jul 11 2024 Boris Yumankulov <boria138@altlinux.org> 46.5-alt1
 - new version 46.5
 
