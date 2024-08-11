@@ -2,7 +2,7 @@ Name: kernel-image-std-debug
 Release: alt1
 epoch:2
 %define kernel_base_version	6.1
-%define kernel_sublevel	.103
+%define kernel_sublevel	.104
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -358,12 +358,6 @@ mv %buildroot%modules_dir/kernel/drivers/media/radio/tea575x.ko %buildroot%modul
 
 %ifarch aarch64 %arm
 make dtbs_install INSTALL_DTBS_PATH=%buildroot/boot/devicetree/$KernelVer
-%ifarch aarch64
-pushd %buildroot/boot/devicetree/$KernelVer/
-find . -mindepth 2 -type f | \
-       while read f; do ln -srv "$f" "$(basename $f)"; done
-popd
-%endif
 %endif
 
 mkdir -p %buildroot%kbuild_dir/arch/%arch_dir
@@ -604,6 +598,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Aug 11 2024 Kernel Bot <kernelbot@altlinux.org> 2:6.1.104-alt1
+- v6.1.104 (2024-08-11).
+- spec: Remove devicetree symlinking for old u-boot.
+
 * Sat Aug 03 2024 Kernel Bot <kernelbot@altlinux.org> 2:6.1.103-alt1
 - v6.1.103 (2024-08-03).
 - config: Enable CONFIG_BLK_SED_OPAL=y.
