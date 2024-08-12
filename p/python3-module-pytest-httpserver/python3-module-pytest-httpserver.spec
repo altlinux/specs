@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-pytest-httpserver
-Version: 1.0.12
+Version: 1.1.0
 Release: alt1
 
 Summary: HTTP server for pytest
@@ -50,6 +50,9 @@ py.test3
 %doc CHANGES* README* LICENSE
 
 %changelog
+* Mon Aug 12 2024 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Mon Jul 22 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.12-alt1
 - 1.0.12
 
