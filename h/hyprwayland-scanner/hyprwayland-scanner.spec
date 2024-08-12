@@ -1,5 +1,5 @@
 Name: hyprwayland-scanner
-Version: 0.3.10
+Version: 0.4.0
 Release: alt1
 
 Summary: Hyprland implementation of wayland-scanner
@@ -36,5 +36,8 @@ A Hyprland implementation of wayland-scanner, in and for C++.
 %_libdir/cmake/%name/
 
 %changelog
+* Mon Aug 12 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.4.0-alt1
+- new version 0.4.0 (with rpmrb script)
+
 * Wed Jun 12 2024 Roman Alifanov <ximper@altlinux.org> 0.3.10-alt1
 - initial build for sisyphus (thx fiersik@)
