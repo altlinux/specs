@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt2
+Release: alt3
 %K5init
 
 Group: System/Libraries
@@ -116,7 +116,7 @@ fi
 %config /%_sysconfdir/alternatives/packages.d/%name
 %_bindir/kwalletd5
 %_K5bin/kwalletd5
-%_K5bin/kwallet-query-*
+%_K5bin/kwallet-query*
 %_K5xdgapp/*.desktop
 %_K5notif/*.notifyrc
 %_K5srv/*.desktop
@@ -137,6 +137,9 @@ fi
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Mon Aug 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt3
+- fix package
+
 * Wed Jul 17 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt2
 - using alternatives for kwallet-query
 
