@@ -1,5 +1,5 @@
 Name: fpaste
-Version: 0.4.5.1
+Version: 0.5.0.0
 Release: alt1
 Summary: A simple tool for pasting info onto the Fedora community paste server
 License: GPL-3.0+
@@ -34,6 +34,9 @@ make install BINDIR=%buildroot%_bindir MANDIR=%buildroot%_mandir
 %_man1dir/%name.1*
 
 %changelog
+* Mon Aug 12 2024 Andrey Cherepanov <cas@altlinux.org> 0.5.0.0-alt1
+- New version.
+
 * Sun Mar 10 2024 Andrey Cherepanov <cas@altlinux.org> 0.4.5.1-alt1
 - New version.
 
