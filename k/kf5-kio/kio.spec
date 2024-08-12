@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt4
+Release: alt5
 %K5init no_altplace
 
 Group: System/Libraries
@@ -185,11 +185,20 @@ mkdir -p %buildroot/%_K5data/kio/servicemenus/
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Mon Aug 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt5
+- merge with p10
+
 * Mon Jul 22 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 5.116.0-alt4
 - fix ksamba acl validation (closes: 49398)
 
 * Tue Jul 16 2024 Oleg Solovyov <mcpain@altlinux.org> 5.116.0-alt3
 - fix files interpreted as dirs (Closes: #50910)
+
+* Wed Jul 03 2024 Oleg Solovyov <mcpain@altlinux.org> 5.115.0-alt3
+- fix files interpreted as dirs
+
+* Mon Jun 24 2024 Oleg Solovyov <mcpain@altlinux.org> 5.115.0-alt2
+- Skip MIME guessing on network-mounted file systems
 
 * Mon Jun 24 2024 Oleg Solovyov <mcpain@altlinux.org> 5.116.0-alt2
 - Skip MIME guessing on network-mounted file systems
