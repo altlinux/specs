@@ -2,8 +2,8 @@
 
 Name: gr-osmosdr
 Url: https://osmocom.org/projects/gr-osmosdr/wiki/GrOsmoSDR
-Version: 0.2.5
-Release: alt2
+Version: 0.2.6
+Release: alt1
 License: GPL-3.0-or-later
 Group: Engineering
 Summary: Common software API for various radio hardware
@@ -49,7 +49,7 @@ independent of the underlying radio hardware.
 %package devel
 Summary: Development files for gr-osmosdr
 Group: Engineering
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Development files for gr-osmosdr.
@@ -124,6 +124,9 @@ EOF
 %endif
 
 %changelog
+* Mon Aug 12 2024 Anton Midyukov <antohami@altlinux.org> 0.2.6-alt1
+- New version 0.2.6.
+
 * Mon Jan 29 2024 Anton Midyukov <antohami@altlinux.org> 0.2.5-alt2
 - add ppc64le to ExcludeArch
 

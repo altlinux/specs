@@ -7,7 +7,7 @@
 %define _libexec %prefix/libexec
 
 Name: gnuradio
-Version: 3.10.9.2
+Version: 3.10.11.0
 Release: alt1
 Summary: Software defined radio framework
 License: GPL-2.0-or-later
@@ -20,6 +20,8 @@ Patch0: fix-gnuradio-qtgui.pc.patch
 # uhd not available for i586, armh
 # also segfault when build on ppc64le
 ExcludeArch: %ix86 %arm ppc64le
+
+Requires: typelib(Gtk) = 3.0
 
 %add_python3_path %_datadir/%name
 %add_findreq_skiplist %_datadir/%name/examples/*.grc
@@ -48,6 +50,7 @@ BuildRequires: pkgconfig(jack)
 BuildRequires: pkgconfig(portaudio-2.0)
 BuildRequires: pkgconfig(thrift)
 BuildRequires: pkgconfig(uhd)
+BuildRequires: pkgconfig(libiio)
 BuildRequires: libSDL-devel
 BuildRequires: libvolk-devel
 BuildRequires: python3-devel
@@ -61,6 +64,8 @@ BuildRequires: python3-module-PyQt5
 BuildRequires: python3-module-click-plugins
 BuildRequires: python3-module-pyqtgraph
 BuildRequires: python3-module-scipy-devel
+BuildRequires: python3-module-pygccxml
+BuildRequires: python3-module-jsonschema
 BuildRequires: pybind11-devel
 BuildRequires: libsndfile-devel
 BuildRequires: libunwind-devel
@@ -68,6 +73,8 @@ BuildRequires: mpir-devel
 BuildRequires: libgmp-devel
 BuildRequires: libnumpy-py3-devel
 BuildRequires: doxygen
+BuildRequires: graphviz
+BuildRequires: mathjax
 #BuildRequires: texlive
 BuildRequires: libspdlog-devel
 BuildRequires: SoapySDR-devel
@@ -193,6 +200,9 @@ done
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Aug 12 2024 Anton Midyukov <antohami@altlinux.org> 3.10.11.0-alt1
+- New version 3.10.11.0.
+
 * Mon Jan 29 2024 Anton Midyukov <antohami@altlinux.org> 3.10.9.2-alt1
 - New version 3.10.9.2.
 - add ppc64le to ExcludeArch

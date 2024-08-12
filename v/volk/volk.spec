@@ -1,9 +1,11 @@
+%define majver 3.1
+
 Name: volk
-Version: 3.0.0
-Release: alt2
+Version: %majver.2
+Release: alt1
 
 Summary: Vector-Optimized Library of Kernels
-License: LGPLv3+
+License: LGPL-3.0-or-later
 Group: Development/C++
 
 Url: http://libvolk.org/
@@ -15,7 +17,7 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
 BuildRequires: liborc-devel orc
 BuildRequires: boost-filesystem-devel
-BuildRequires: git-core
+#BuildRequires: git-core
 
 # python subpackage
 BuildRequires(pre): rpm-build-python3
@@ -26,7 +28,7 @@ BuildRequires: python3-module-mako
 %define descr \
 VOLK:\
 - is the Vector-Optimized Library of Kernels;\
-- is a free library, currently offered under the GPLv3 license;\
+- is a free library, currently offered under the LGPL-3.0 license;\
 - provides an abstraction of optimized math routines targetting\
   several SIMD processors.
 
@@ -45,7 +47,7 @@ This package contains the shared library for %name.
 %package -n lib%name-devel
 Summary: Vector-Optimized Library of Kernels
 Group: Development/C++
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 %descr
@@ -55,7 +57,7 @@ This package contains the headers to build software against %name.
 %package -n python3-module-%name
 Summary: The Python 3 bindings for VOLK
 Group: Development/Python3
-Requires: lib%name = %version
+Requires: lib%name = %EVR
 
 %description -n python3-module-%name
 %descr
@@ -71,6 +73,8 @@ sed -i "/incompatible-pointer-types/d" CMakeLists.txt
 %endif
 
 %build
+# workaround, the code is not yet compatible with the strict-aliasing
+%add_optflags -fno-strict-aliasing
 %cmake \
 	-DGR_PYTHON_DIR=%python3_sitelibdir \
 	-DPYTHON_EXECUTABLE=%__python3
@@ -78,7 +82,7 @@ sed -i "/incompatible-pointer-types/d" CMakeLists.txt
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 # Not needed
 rm -f %buildroot%_bindir/list_cpu_features
@@ -90,7 +94,8 @@ rm -fr %buildroot%_libdir/cmake/CpuFeatures
 %doc COPYING README.md
 
 %files -n lib%name
-%_libdir/lib%name.so.*
+%_libdir/lib%name.so.%majver
+%_libdir/lib%name.so.%version
 
 %files -n lib%name-devel
 %_includedir/*
@@ -102,6 +107,12 @@ rm -fr %buildroot%_libdir/cmake/CpuFeatures
 %python3_sitelibdir/*
 
 %changelog
+* Sun Aug 11 2024 Anton Midyukov <antohami@altlinux.org> 3.1.2-alt1
+- new version 3.1.2
+
+* Fri Jul 21 2023 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt3
+- %%add_optflags -fno-strict-aliasing
+
 * Mon Apr 10 2023 Michael Shigorin <mike@altlinux.org> 3.0.0-alt2
 - E2K: fix build (ilyakurdyukov@)
 - spec cleanup

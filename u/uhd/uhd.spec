@@ -22,8 +22,8 @@
 
 Name: uhd
 Url: https://github.com/EttusResearch/uhd
-Version: 4.6.0.0
-Release: alt2
+Version: 4.7.0.0
+Release: alt1
 License: GPL-3.0-or-later
 Group: Engineering
 Summary: Universal Hardware Driver for Ettus Research products
@@ -32,7 +32,7 @@ Source: %name-%version.tar
 Source1: %name-limits.conf
 # Download command firmware:
 # uhd_images_downloader --types "(fpga|fw)_default" -i images
-# Source-url2: https://github.com/EttusResearch/uhd/releases/download/v%version/uhd-images_%version.tar.xz
+# Source2-url: https://github.com/EttusResearch/uhd/releases/download/v%version/uhd-images_%version.tar.xz
 Source2: images.tar
 
 # Tests fail on i586, armh
@@ -40,12 +40,6 @@ ExcludeArch: %ix86 %arm
 
 Patch: uhd-4.3.0.0-python3-fix.patch
 Patch1: disable-uhd_image_downloader_test.patch
-Patch2: uhd-4.4.0.0-gcc13.patch
-Patch3: uhd-4.6.0.0-dpdk-fix-build-with-new-DPDK-23.11.patch
-Patch4: uhd-4.6.0.0-host-fix-compiling-with-gcc-13.2.patch
-Patch5: uhd-4.6.0.0-host-lib-uhd-dpdk-fix-issue-compiling-with-gcc-13.2.patch
-Patch6: uhd-4.6.0.0-lib-Replace-deprecated-boost-filesystem-usage.patch
-Patch7: uhd-4.6.0-fix-compilation-with-boost-1.85.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 BuildRequires: ctest cmake
@@ -134,8 +128,6 @@ Python 3 module for usrp (part %name)
 
 %prep
 %setup
-sed -i 's|/usr/bin/env python|%__python3|' host/python/setup.py.in
-
 %autopatch -p1
 
 # fix python shebangs
@@ -256,6 +248,9 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %python3_sitelibdir/usrp_mpm/
 
 %changelog
+* Sun Aug 11 2024 Anton Midyukov <antohami@altlinux.org> 4.7.0.0-alt1
+- New version 4.7.0.0.
+
 * Sat May 04 2024 Anton Midyukov <antohami@altlinux.org> 4.6.0.0-alt2
 - fix compilation with boost 1.85
 - convert License to SPDX
