@@ -1,9 +1,9 @@
-%define ver 1.3.8
-%define git a3489a6c8
+%define ver 1.3.9
+%define git %nil
 
 Name: proftpd
 Version: %ver
-Release: alt0.2.g%{git}
+Release: alt0.1.rc2
 
 %define _libexecdir %{expand:%_libdir}
 # TODO
@@ -66,6 +66,7 @@ Source3: %name.init
 Source4: %name.pamd
 Source5: %name-control
 Source6: %name.conf
+Source7: %name.service
 
 Patch1: %name-man.patch
 Patch2: %name-1.3.3rc1-alt-pkgconfig-prefix.patch
@@ -483,6 +484,10 @@ mkdir -p -m0750 %buildroot/run/proftpd
 install -m 0644 Make.rules %buildroot%_includedir/%name/
 install -m 0755 libtool %buildroot%_includedir/%name/
 
+# systemd unit install
+mkdir -p %buildroot%_unitdir
+install -m 0644 %SOURCE7 %buildroot%_unitdir/
+
 %find_lang %name
 
 %if_enabled tests
@@ -529,6 +534,7 @@ fi
 %config(noreplace) %_initdir/%name
 %config(noreplace) %_sysconfdir/xinetd.d/%name
 %config(noreplace) %_sysconfdir/logrotate.d/%name
+%_unitdir/%name.service
 %_tmpfilesdir/%name.conf
 %_sbindir/*
 %_bindir/ftp*
@@ -718,6 +724,13 @@ fi
 %_controldir/%name
 
 %changelog
+* Mon Aug 12 2024 L.A. Kostis <lakostis@altlinux.ru> 1.3.9-alt0.1.rc2
+- 1.3.9rc2 with mitigation for "Terrapin" SSH attack (CVE-2023-48795).
+
+* Wed Sep 27 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3.8-alt0.3.ga3489a6c8
+- added LSB header to sysv init file.
+- added systemd unit.
+
 * Thu Sep 21 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3.8-alt0.2.ga3489a6c8
 - enable mod_ident and make trigger with warning if unsupported
   configuration detected (closes #47656).
