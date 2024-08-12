@@ -1,5 +1,5 @@
 Name: kernel-image-6.11
-Release: alt0.rc2
+Release: alt0.rc3
 %define kernel_src_version	6.10
 %define kernel_base_version	6.11
 %define kernel_sublevel	.0
@@ -365,12 +365,6 @@ mv %buildroot%modules_dir/kernel/drivers/media/radio/tea575x.ko %buildroot%modul
 
 %ifarch aarch64 %arm
 make dtbs_install INSTALL_DTBS_PATH=%buildroot/boot/devicetree/$KernelVer
-%ifarch aarch64
-pushd %buildroot/boot/devicetree/$KernelVer/
-find . -mindepth 2 -type f | \
-       while read f; do ln -srv "$f" "$(basename $f)"; done
-popd
-%endif
 %endif
 
 mkdir -p %buildroot%kbuild_dir/arch/%arch_dir
@@ -592,6 +586,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Aug 12 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.0-alt0.rc3
+- Update to v6.11-rc3 (2024-08-11).
+- spec: Remove devicetree symlinking for old u-boot.
+
 * Mon Aug 05 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.0-alt0.rc2
 - Update to v6.11-rc2 (2024-08-04).
 
