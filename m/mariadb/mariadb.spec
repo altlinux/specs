@@ -50,7 +50,7 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.11.8
+Version: 10.11.9
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -123,7 +123,7 @@ Patch33: mariadb-covscan-signexpr.patch
 Patch101: rocksdb-6.8.0-alt-add-libatomic-if-needed.patch
 Patch102: mariadb-10.5.11-alt-link-with-latomic-if-needed.patch
 Patch103: rocksdb-alt-upstream-gcc13.patch
-Patch104: mariadb-10.11.5-disable-download-fmt.patch
+Patch104: mariadb-10.11.9-disable-download-fmt.patch
 
 Patch2000: mariadb-e2k.patch
 
@@ -1058,6 +1058,10 @@ fi
 %endif
 
 %changelog
+* Mon Aug 12 2024 Alexei Takaseev <taf@altlinux.org> 10.11.9-alt1
+- 10.11.9
+- Update disable download libfmt
+
 * Thu May 16 2024 Alexei Takaseev <taf@altlinux.org> 10.11.8-alt1
 - 10.11.8 (Fixes: CVE-2024-21096)
 - Drop no needed patch 1063738-revert-c432c9ef.patch
