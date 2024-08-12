@@ -5,7 +5,7 @@
 
 Name: qt6-quick3d
 Version: 6.6.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt6 - 3D content in Qt Quick
@@ -152,6 +152,12 @@ Requires: libqt6-core = %_qt6_version
 %prep
 %setup -n %qt_module-everywhere-src-%version
 
+%ifarch %e2k
+# error: constant is inaccessible
+sed -i 's/enum Dirty :/public: &/' \
+  src/quick3d/qquick3dcustommaterial_p.h
+%endif
+
 %build
 %Q6build \
     #
@@ -204,7 +210,7 @@ Requires: libqt6-core = %_qt6_version
 
 %files devel
 %_qt6_headerdir/Qt*/
-%ifnarch ppc64le %ix86
+%ifnarch ppc64le %ix86 %e2k
 %_qt6_libdatadir/libQt*.a
 %_qt6_libdir/libQt*.a
 %endif
@@ -225,5 +231,8 @@ Requires: libqt6-core = %_qt6_version
 %_qt6_examplesdir/*
 
 %changelog
+* Mon Aug 12 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 6.6.2-alt2
+- e2k build fix
+
 * Tue Jul 09 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
 - initial build
