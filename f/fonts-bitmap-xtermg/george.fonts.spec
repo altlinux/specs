@@ -1,14 +1,15 @@
 %define cname xtermg
 
 Name: fonts-bitmap-%cname
-Version: 3.3
-Release: alt3
+Version: 5.337
+Release: alt1
 Summary: XTermG fonts - a fixed width English/Cyrillic fonts with some additional characters
 License: MIT
 Group: System/Fonts/X11 bitmap
 BuildArch: noarch
 
 Source0: %name-%version.tar.gz
+Source1: NamesList.txt
 
 BuildPreReq: rpm-build-fonts
 
@@ -24,6 +25,7 @@ Sizes: 12x20 12x20 8x14 8x16 8x16 8x8
 
 %prep
 %setup -n george.fonts
+cp %SOURCE1 .
 
 %build
 %make pcf
@@ -35,6 +37,15 @@ Sizes: 12x20 12x20 8x14 8x16 8x16 8x8
 %doc TODO
 
 %changelog
+* Mon Aug 12 2024 Fr. Br. George <george@altlinux.org> 5.337-alt1
+- Provide box drawings autogenerator and generate them
+- Hence +65 glyphs added and some changed
+
+* Tue Jul 30 2024 Fr. Br. George <george@altlinux.org> 4.272-alt3
+- Many characters added
+- Fix incorrect glyph DWIDTH field
+- Rename glyphs according to Unicode NamesList
+
 * Tue Jun 20 2023 Fr. Br. George <george@altlinux.ru> 3.3-alt3
 - MULTIPLICATION_SIGN added
 
