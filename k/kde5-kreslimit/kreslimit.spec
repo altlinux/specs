@@ -1,24 +1,23 @@
 %define rname kreslimit
 Name: kde5-kreslimit
 Version: 1.2.2
-Release: alt1
+Release: alt2
 
 %K5init altplace
 
 Group: Graphical desktop/KDE
 Summary: Application resource limit configurator
-License: GPLv2+
+License: GPL-2.0-or-later
 
-Requires: plasma5-desktop
+Provides: kreslimit = %EVR
+Obsoletes: kreslimit < %EVR
+
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: boost-devel extra-cmake-modules gcc-c++
 BuildRequires: kf5-ki18n-devel kf5-kcmutils-devel kf5-kio-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kservice-devel
-
-Provides: kreslimit = %EVR
-Obsoletes: kreslimit <= %EVR
 
 %description
 Resource limit for launched applications
@@ -44,6 +43,9 @@ Resource limit for launched applications
 
 
 %changelog
+* Mon Aug 12 2024 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt2
+- fix requires
+
 * Thu Feb 18 2021 Ivan Razzhivin <underwit@altlinux.org> 1.2.2-alt1
 - remove mention from help center
 - remove help button
