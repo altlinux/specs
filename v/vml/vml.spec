@@ -1,6 +1,6 @@
 Name:     vml
-Version:  0.1.9
-Release:  alt2
+Version:  0.1.10
+Release:  alt1
 
 Summary:  Tool for easily and transparently work with qemu virtual machines
 License:  MIT
@@ -59,6 +59,16 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %doc doc *.md
 
 %changelog
+* Fri Aug 09 2024 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.10-alt1
+- Return proper error code when ssh command fails
+- Use log to print messages
+- Add snapshot option to start and run commands
+- Add image add command
+- Add external subcommands
+- Add some command and config aliases
+- Update alt, ubuntu, fedora, opensuse, rocky and debian images
+- Remove outdated images
+
 * Wed Oct 04 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.9-alt2
 - Reduce transitive requires
 - Set ExclusiveArch
