@@ -12,10 +12,12 @@ BuildRequires: /usr/bin/Xvfb /usr/bin/desktop-file-install /usr/bin/doxygen /usr
 
 %global _xinputconf %{_sysconfdir}/X11/xinit/xinput.d/fcitx5.conf
 %global __provides_exclude_from ^%{_libdir}/%{name}/.*\\.so$
+# bug#51127
+%add_findreq_skiplist %{_bindir}/%{name}-configtool
 
 Name:           fcitx5
 Version:        5.1.2
-Release:        alt1_1
+Release:        alt1_1.1
 Summary:        Next generation of fcitx
 License:        LGPLv2+
 URL:            https://github.com/fcitx/fcitx5
@@ -198,6 +200,9 @@ EOF
 %config %{_sysconfdir}/profile.d/fcitx5.sh
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 5.1.2-alt1_1.1
+- NMU: clean requires (closes: 51127)
+
 * Fri Nov 03 2023 Igor Vlasenko <viy@altlinux.org> 5.1.2-alt1_1
 - new version
 - fixed profile (closes: #46880)
