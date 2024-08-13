@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: System/Libraries
@@ -88,7 +88,14 @@ popd
 %_K5plug/kf5/kfilemetadata/
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt3
+- merge with p10
+
 * Tue May 28 2024 Ajrat Makhmutov <rauty@altlinux.org> 5.116.0-alt2
+- add RTF format support
+- add non-UTF content search support
+
+* Mon May 27 2024 Ajrat Makhmutov <rauty@altlinux.org> 5.115.0-alt2
 - add RTF format support
 - add non-UTF content search support
 
