@@ -1,6 +1,6 @@
 Name: seatd
-Version: 0.7.0
-Release: alt2
+Version: 0.8.0
+Release: alt1
 Summary: Minimal seat management daemon and universal library
 License: MIT
 Url: https://github.com/kennylevinsen/seatd
@@ -88,6 +88,9 @@ install -m644 -pD contrib/systemd/seatd.service %buildroot%_unitdir/%name.servic
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Aug 13 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.8.0-alt1
+- new version 0.8.0
+
 * Sun Jun 11 2023 Alexey Gladkov <legion@altlinux.ru> 0.7.0-alt2
 - Use same group in sysv and systemd service.
 
