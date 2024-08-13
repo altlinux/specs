@@ -1,7 +1,7 @@
 %def_with docs
 
 Name:    netbox
-Version: 3.7.8
+Version: 4.0.8
 Release: alt1
 
 Summary: The premier source of truth powering network automation
@@ -27,6 +27,7 @@ BuildRequires: python3-module-mkdocstrings-python
 %endif
 Requires: python3-module-django
 Requires: python3-module-django-rq
+Requires: python3-module-django-htmx
 Requires: python3-module-django-mptt
 Requires: python3-module-django-redis
 Requires: python3-module-django-filter
@@ -41,8 +42,8 @@ Requires: python3-module-django-cors-headers
 Requires: python3-module-django-debug-toolbar
 Requires: python3-module-django-timezone-field
 Requires: python3-module-django-graphiql-debug-toolbar
+Requires: python3-module-nh3
 Requires: python3-module-Pillow
-Requires: python3-module-bleach
 Requires: python3-module-tablib
 Requires: python3-module-tzdata
 Requires: python3-module-netaddr
@@ -53,6 +54,8 @@ Requires: python3-module-feedparser
 Requires: python3-module-sentry-sdk
 Requires: python3-module-drf-spectacular
 Requires: python3-module-drf-spectacular-sidecar
+Requires: python3-module-strawberry-graphql
+Requires: python3-module-strawberry-django
 
 BuildArch: noarch
 
@@ -196,6 +199,12 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Mon Aug 12 2024 Alexander Burmatov <thatman@altlinux.org> 4.0.8-alt1
+- New 4.0.8 version.
+
+* Tue Jul 16 2024 Alexander Burmatov <thatman@altlinux.org> 4.0.7-alt1
+- New 4.0.7 version.
+
 * Mon May 20 2024 Alexander Burmatov <thatman@altlinux.org> 3.7.8-alt1
 - New 3.7.8 version.
 

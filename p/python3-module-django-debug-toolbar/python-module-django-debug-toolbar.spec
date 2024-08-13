@@ -1,11 +1,11 @@
 %define oname django-debug-toolbar
 
 Name: python3-module-%oname
-Version: 3.2.2
+Version: 4.4.6
 Release: alt1
 
 Summary: A configurable set of panels that display various debug information about the current request/response.
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
 Url: https://github.com/jazzband/django-debug-toolbar
 BuildArch: noarch
@@ -13,7 +13,9 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools python3-module-wheel
 BuildRequires: python3-module-django
+BuildRequires: python3-module-hatchling
 #BuildRequires: python3-module-sphinx
 
 %description
@@ -45,22 +47,26 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
 %build
-%python3_build
+%pyproject_build
 
 #export PYTHONPATH=$PWD
 #%%make -C docs man
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%doc README.rst LICENSE 
+%doc README.rst LICENSE
 %python3_sitelibdir/*
 
 #%%files docs
 #%%doc docs/_build/* example
 
 %changelog
+* Mon Aug 12 2024 Alexander Burmatov <thatman@altlinux.org> 4.4.6-alt1
+- new version 4.4.6.
+- using the new pyproject macros
+
 * Wed Aug 18 2021 Alexey Shabalin <shaba@altlinux.org> 3.2.2-alt1
 - new version 3.2.2
 - disable build docs

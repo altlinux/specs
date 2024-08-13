@@ -5,7 +5,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 1.26.0
-Release: alt1
+Release: alt2
 
 Summary: OpenTelemetry Python API and SDK
 
@@ -44,6 +44,7 @@ Group: Development/Python3
 # PyPI name(dash, underscore)
 %py3_provides %pypi_name
 %py3_provides %pypi_name.util
+%py3_provides %pypi_name.propagators
 
 %description -n python3-module-%pypi_name-api
 OpenTelemetry Python API for the OpenTelemetry Project.
@@ -234,6 +235,9 @@ done
 %doc *.md LICENSE docs/examples
 
 %changelog
+* Thu Aug 08 2024 Alexander Burmatov <thatman@altlinux.org> 1.26.0-alt2
+- Fix provides.
+
 * Thu Aug 01 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.26.0-alt1
 - New version
 

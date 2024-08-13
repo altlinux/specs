@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 4.1.0
+Version: 5.0.0
 Release: alt1
 
 Summary: Network Automation and Programmability Abstraction Layer with Multivendor support
@@ -68,5 +68,8 @@ rm -fr test/junos/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Aug 13 2024 Alexander Burmatov <thatman@altlinux.org> 5.0.0-alt1
+- New 5.0.0 version.
+
 * Mon Nov 13 2023 Alexander Burmatov <thatman@altlinux.org> 4.1.0-alt1
 - Initial build for Sisyphus.
