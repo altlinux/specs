@@ -5,7 +5,7 @@
 
 Name: shotcut
 Version: 24.08.03
-Release: alt1
+Release: alt2
 Summary: A free, open source, cross-platform video editor
 Summary(ru_RU.UTF-8): Свободный кросс-платформенный видеоредактор
 License: GPL-3.0+
@@ -112,6 +112,11 @@ These are all currently implemented features:
 %prep
 %setup
 
+%ifarch %e2k
+sed -i '/ createIndex([^,()]*, [^,()]*, (int)0);$/s/(int)0/(quintptr)0/' \
+  src/models/{actions,alignclips,markers,resource}model.cpp
+%endif
+
 # Postmortem debugging tools for MinGW.
 rm -rf drmingw
 
@@ -142,6 +147,9 @@ done
 %_man1dir/*
 
 %changelog
+* Tue Aug 13 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 24.08.03-alt2
+- Fixed build for Elbrus.
+
 * Sat Aug 03 2024 Andrey Cherepanov <cas@altlinux.org> 24.08.03-alt1
 - New version.
 
