@@ -1,5 +1,5 @@
 Name: mpvpaper
-Version: 1.6
+Version: 1.7
 Release: alt1
 License: GPL-3.0
 
@@ -45,5 +45,8 @@ install -Dm644 %name.man %buildroot%_man1dir/%name.1
 %_man1dir/*.1.*
 
 %changelog
+* Tue Aug 13 2024 Kirill Unitsaev <fiersik@altlinux.org> 1.7-alt1
+- new version 1.7 (with rpmrb script)
+
 * Mon Jul 22 2024 Kirill Unitsaev <fiersik@altlinux.org> 1.6-alt1
 - Initial build
