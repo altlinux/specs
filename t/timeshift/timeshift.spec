@@ -10,7 +10,7 @@
 %endif
 
 Name: timeshift
-Version: 24.06.2
+Version: 24.06.3
 Summary: System restore tool for Linux
 Release: alt1
 License: GPLv3
@@ -76,6 +76,9 @@ install -m755 -pD %SOURCE1 %buildroot%_sysconfdir/firsttime.d/zz-firsttime-snaps
 %doc README.md
 
 %changelog
+* Tue Aug 13 2024 Alexander Makeenkov <amakeenk@altlinux.org> 24.06.3-alt1
+- Updated to version 24.06.3.
+
 * Sat Jul 06 2024 Alexander Makeenkov <amakeenk@altlinux.org> 24.06.2-alt1
 - Updated to version 24.06.2.
 
