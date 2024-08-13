@@ -5,7 +5,7 @@
 %define schemasdir %_datadir/glib-2.0/schemas
 
 Name: alt-gaming
-Version: 0.0.4
+Version: 0.0.5
 Release: alt1
 
 Summary: Easy system setup to optimize for games.
@@ -119,6 +119,9 @@ fi
 %schemasdir/95-gnome-gschema.override
 
 %changelog
+* Tue Aug 13 2024 Mikhail Tergoev <fidel@altlinux.org> 0.0.5-alt1
+- fixed alt-gaming-check: alive-timeout for GNOME
+
 * Thu Aug 01 2024 Mikhail Tergoev <fidel@altlinux.org> 0.0.4-alt1
 - added alt-gaming-alive-timeout (thanx @boria138)
 - updated alt-gaming-check
