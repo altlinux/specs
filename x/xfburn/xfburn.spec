@@ -1,5 +1,5 @@
 Name: xfburn
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 Summary: CD-R/CD-RW disc writing application
@@ -50,6 +50,9 @@ Xfburn is a simple CD burning tool based on libburn/libisofs.
 %_man1dir/*
 
 %changelog
+* Tue Aug 13 2024 Mikhail Efremov <sem@altlinux.org> 0.7.2-alt1
+- Updated to 0.7.2.
+
 * Mon Jul 15 2024 Mikhail Efremov <sem@altlinux.org> 0.7.1-alt1
 - Updated to 0.7.1.
 
