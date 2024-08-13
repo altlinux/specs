@@ -1,10 +1,14 @@
 %define pypi_name litestar
 
+%ifarch i586
 %def_without check
+%else
+%def_with check
+%endif
 
 Name:    python3-module-%pypi_name
 Version: 2.9.1
-Release: alt1
+Release: alt2
 
 Summary: Production-ready, Light, Flexible and Extensible ASGI API framework | Effortlessly Build Performant APIs
 License: MIT
@@ -59,6 +63,10 @@ BuildRequires: python3-module-aiosqlite
 BuildRequires: python3-module-uvicorn
 %endif
 
+%add_python3_req_skip starlite
+%add_python3_req_skip starlite.exceptions
+%add_python3_req_skip starlite.status_codes
+
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
@@ -98,5 +106,8 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Aug 09 2024 Alexander Burmatov <thatman@altlinux.org> 2.9.1-alt2
+- Enable tests.
+
 * Wed Jul 17 2024 Alexander Burmatov <thatman@altlinux.org> 2.9.1-alt1
 - Initial build for Sisyphus.
