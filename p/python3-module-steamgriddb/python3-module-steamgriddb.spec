@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 1.0.5
-Release: alt1
+Release: alt2
 
 Summary: A Python API wrapper for SteamGridDB.com
 
@@ -17,6 +17,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 BuildArch: noarch
 
@@ -37,6 +38,9 @@ BuildArch: noarch
 %python3_sitelibdir/%{pyproject_distinfo python_steamgriddb}
 
 %changelog
+* Tue Aug 13 2024 Mikhail Tergoev <fidel@altlinux.org> 1.0.5-alt2
+- fixed build for p11
+
 * Tue Aug 06 2024 Mikhail Tergoev <fidel@altlinux.org> 1.0.5-alt1
 - initial build for ALT Sisyphus
 
