@@ -16,11 +16,11 @@
 %def_enable libnl
 
 Name: keepalived
-Version: 2.2.8
+Version: 2.3.1
 Release: alt1
 
 Summary: HA monitor built upon LVS, VRRP and services poller
-License: GPLv2
+License: GPL-2.0-or-later
 Group: Networking/Other
 
 Url: http://www.keepalived.org
@@ -33,7 +33,7 @@ BuildRequires: pkgconfig(libkmod)
 %{?_enable_libiptc:BuildRequires: pkgconfig(libiptc)}
 %{?_enable_libipset:BuildRequires: pkgconfig(libipset)}
 %{?_enable_nftables:BuildRequires: pkgconfig(libnftnl) pkgconfig(libmnl)}
-%{?_enable_libnl:BuildRequires: pkgconfig(libnl-genl-3.0) pkgconfig(libnl-route-3.0)}
+%{?_enable_libnl:BuildRequires: pkgconfig(libnl-genl-3.0) pkgconfig(libnl-route-3.0) pkgconfig(libnl-3.0)}
 %{?_enable_snmp:BuildRequires: libnet-snmp-devel}
 %{?_enable_regex:BuildRequires: pkgconfig(libpcre2-8)}
 BuildRequires: libmagic-devel
@@ -63,7 +63,6 @@ sed -i 's,"O0",0,' lib/utils.c
 %configure \
 	--with-kernel-dir=/usr/include/linux-default \
 	--enable-strict-config-checks \
-	--enable-dynamic-linking \
 	%{subst_enable lvs} \
 	%{subst_enable vrrp} \
 	%{subst_enable bfd} \
@@ -73,10 +72,8 @@ sed -i 's,"O0",0,' lib/utils.c
 	%{subst_enable regex} \
 	%{subst_enable json} \
 	%{subst_enable routes} \
-	%{?_enable_libiptc:--enable-libiptc-dynamic} \
 	%{subst_enable libipset} \
 	%{subst_enable nftables} \
-	%{?_enable_libnl:--enable-libnl-dynamic} \
 	--with-init=systemd \
 	--with-systemdsystemunitdir=%_unitdir
 
@@ -122,6 +119,9 @@ done
 %doc doc/samples
 
 %changelog
+* Fri Jul 26 2024 Alexey Shabalin <shaba@altlinux.org> 2.3.1-alt1
+- 2.3.1
+
 * Wed May 31 2023 Alexey Shabalin <shaba@altlinux.org> 2.2.8-alt1
 - 2.2.8
 
