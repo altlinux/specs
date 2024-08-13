@@ -4,7 +4,7 @@
 %filter_from_requires /^python3(gajim.gui/d
 
 Name: gajim
-Version: 1.9.2
+Version: 1.9.3
 Release: alt1
 
 Summary: a Jabber client written in PyGTK
@@ -25,7 +25,7 @@ Requires: python3 >= 3.10
 %filter_from_requires /^typelib(AppIndicator3)/d
 
 Requires: libgtk+3-gir libgtksourceview4-gir
-Requires: python3-module-nbxmpp >= 5.0.2
+Requires: python3-module-nbxmpp >= 5.0.3
 Requires: typelib(AyatanaAppIndicator3)
 # gajim >= 1.8 has imcoropated OMEMO support
 Obsoletes: gajim-plugin-omemo <= 2.9.0-alt1 python3-module-gajim-omemo <= 2.9.0-alt1
@@ -47,7 +47,7 @@ Requires: librpmconstant0
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: libgtk+3-devel python3-devel python3-module-setuptools libsoup-gir-devel libgtksourceview4-gir-devel pyproject-build rpm-macros-python3 python3-module-build
-BuildRequires: python3-module-nbxmpp >= 5.0.2
+BuildRequires: python3-module-nbxmpp >= 5.0.3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildArch: noarch
@@ -123,6 +123,9 @@ end
 
 
 %changelog
+* Tue Aug 13 2024 Ilya Mashkin <oddity@altlinux.ru> 1.9.3-alt1
+- 1.9.3
+
 * Sat Jul 20 2024 Ilya Mashkin <oddity@altlinux.ru> 1.9.2-alt1
 - 1.9.2
 
