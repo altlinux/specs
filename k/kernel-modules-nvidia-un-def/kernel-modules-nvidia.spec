@@ -7,12 +7,12 @@
 %define modesetmodule_name	nvidia-modeset
 %define uvmmodule_name		nvidia-uvm
 %define drmmodule_name		nvidia-drm
-%define package_version	550.90.07
+%define package_version	550.107.02
 %define module_version	%package_version
 %ifarch %ix86 armh
 %define module_version	390.157
 %endif
-%define module_release	alt2
+%define module_release	alt1
 %define flavour		un-def
 %define karch x86_64 aarch64 %ix86
 
@@ -294,6 +294,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Aug 13 2024 Sergey V Turchin <zerg at altlinux dot org> 550.107.02-alt1
+- new release (550.107.02)
 
 * Wed Jul 24 2024 Sergey V Turchin <zerg at altlinux dot org> 550.90.07-alt2
 - build 470 for aarch64

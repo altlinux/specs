@@ -4,7 +4,7 @@
 %define libxnvctrl libxnvctrl%sover
 
 Name: nvidia-settings
-Version: 550.90.07
+Version: 550.107.02
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -150,6 +150,9 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 #%_libdir/lib*.a
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 550.107.02-alt1
+- new version
+
 * Thu Jun 06 2024 Sergey V Turchin <zerg@altlinux.org> 550.90.07-alt1
 - new version
 
