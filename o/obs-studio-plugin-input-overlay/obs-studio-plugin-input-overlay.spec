@@ -4,13 +4,14 @@
 Name: obs-studio-plugin-input-overlay
 Summary: Show keyboard, gamepad and mouse input on stream (plugin for OBS studio)
 Version: 5.0.5
-Release: alt1
+Release: alt2
 License: GPL-2.0
 Group: Video
 Url: https://github.com/univrsal/input-overlay
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch0: %name-%version-%release.patch
+Patch1: obs-studio-plugin-input-overlay-5.0.5-alt-add-sdl-disable-lsx-flag.patch
 
 ExcludeArch: ppc64le
 
@@ -33,7 +34,8 @@ Requires: obs-studio-base
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 rmdir deps/libuiohook
 mv libuiohook deps/ 
 
@@ -53,6 +55,9 @@ mv %buildroot/usr/obs-plugins/*/input-overlay.so %buildroot%_libdir/obs-plugins
 %_libdir/obs-plugins/input-overlay.so
 
 %changelog
+* Wed Aug 14 2024 Ivan A. Melnikov <iv@altlinux.org> 5.0.5-alt2
+- Fix fbtbfs on loongarch64 (thx k0tran@).
+
 * Mon Mar 18 2024 Anton Midyukov <antohami@altlinux.org> 5.0.5-alt1
 - new version 5.0.5
 
