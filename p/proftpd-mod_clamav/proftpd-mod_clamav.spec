@@ -1,6 +1,6 @@
 Name:     proftpd-mod_clamav
 Version:  0.14
-Release:  alt2.f277f033
+Release:  alt3.f277f033
 
 Summary:  Mod_Clamav for ProFTPd
 License:  GPL-2.0
@@ -12,6 +12,7 @@ Source:   %name-%version.tar
 BuildRequires: proftpd-devel
 
 Provides: mod_clamav = %EVR
+Obsoletes: mod_clamav < %EVR
 
 Requires: proftpd
 
@@ -33,6 +34,9 @@ install -m 644 .libs/mod_clamav.so %buildroot%_libdir/proftpd
 %_libdir/proftpd/mod_clamav.so
 
 %changelog
+* Wed Aug 14 2024 Anton Midyukov <antohami@altlinux.org> 0.14-alt3.f277f033
+- Obsoletes: mod_clamav < %%EVR
+
 * Wed Aug 14 2024 Anton Midyukov <antohami@altlinux.org> 0.14-alt2.f277f033
 - new snapshot
 - rename package to proftpd-mod_clamav
