@@ -10,7 +10,7 @@
 %endif
 
 Name: zathura
-Version: 0.5.6
+Version: 0.5.8
 Release: alt1
 
 Summary: A lightweight document viewer
@@ -32,12 +32,12 @@ BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
 # To create icons
 BuildRequires: librsvg-utils
 #For tests
-%{?!_without_check:%{?!_disable_check:BuildRequires: libcheck-devel xvfb-run libappstream-glib desktop-file-utils}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: xvfb-run libappstream-glib desktop-file-utils}}
 
-Conflicts: zatura-pdf-poppler < 0.3.2-alt1
-Conflicts: zatura-djvu < 0.2.9-alt3
-Conflicts: zatura-ps < 0.2.7-alt3
-Conflicts: zatura-cb < 0.1.10-alt3
+Conflicts: zatura-pdf-poppler < 0.3.3-alt1
+Conflicts: zatura-djvu < 0.2.10-alt1
+Conflicts: zatura-ps < 0.2.8-alt1
+Conflicts: zatura-cb < 0.1.11-alt1
 
 %description
 zathura is a highly customizable and functional document viewer based on
@@ -77,7 +77,7 @@ mkdir -p %buildroot%_libdir/zathura
 
 %files -f %name.lang
 %doc LICENSE AUTHORS README.md
-%_bindir/%name
+%_bindir/%{name}*
 %dir %_libdir/%name
 %_desktopdir/*
 %_iconsdir/hicolor/*/*/*
@@ -94,6 +94,9 @@ mkdir -p %buildroot%_libdir/zathura
 %_datadir/dbus-1/interfaces/org.pwmt.*
 
 %changelog
+* Wed Aug 14 2024 Mikhail Efremov <sem@altlinux.org> 0.5.8-alt1
+- Updated to 0.5.8.
+
 * Mon May 13 2024 Mikhail Efremov <sem@altlinux.org> 0.5.6-alt1
 - Updated Vcs tag.
 - Updated to 0.5.6.

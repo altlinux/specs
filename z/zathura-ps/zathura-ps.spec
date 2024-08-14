@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zathura-ps
-Version: 0.2.7
-Release: alt3
+Version: 0.2.8
+Release: alt1
 
 Summary: PostScript support for zathura
 License: Zlib
 Group: Office
 
 URL: https://pwmt.org/projects/%name/
-Vcs: https://git.pwmt.org/pwmt/zathura-ps.git
+Vcs: https://github.com/pwmt/zathura-ps.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -17,6 +17,8 @@ BuildRequires(pre): meson
 
 BuildRequires: libgirara-devel zathura-devel
 BuildRequires: intltool libcairo-devel libspectre-devel
+# For tests
+%{?!_without_check:%{?!_disable_check:BuildRequires: desktop-file-utils libappstream-glib}}
 
 Requires: zathura
 
@@ -36,6 +38,9 @@ the libspectre library.
 %meson_install
 %find_lang %name
 
+%check
+%meson_test
+
 %files -f %name.lang
 %doc AUTHORS LICENSE
 %_libdir/zathura/*.so
@@ -43,6 +48,11 @@ the libspectre library.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Aug 14 2024 Mikhail Efremov <sem@altlinux.org> 0.2.8-alt1
+- Updated Vcs tag.
+- Enabled tests.
+- Updated to 0.2.8.
+
 * Wed Dec 13 2023 Mikhail Efremov <sem@altlinux.org> 0.2.7-alt3
 - Rebuild with zatura-0.5.4.
 
