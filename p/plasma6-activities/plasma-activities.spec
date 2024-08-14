@@ -1,27 +1,29 @@
-%define rname layer-shell-qt
 
 %define sover 6
-%define liblayershellqtinterface liblayershellqtinterface%sover
+%define libplasmaactivities libplasmaactivities%sover
 
-Name: plasma6-%rname
+%define rname plasma-activities
+Name: plasma6-activities
 Version: 6.1.2
 Release: alt1
 %K6init
 
-Group: Graphical desktop/KDE
-Summary: KDE Plasma 6 Wayland shell component
+Group: System/Libraries
+Summary: KDE Activity core
 Url: http://www.kde.org
-License: GPL-2.0-or-later
+License: LGPL-2.0-or-later
 
 Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: qt6-base-devel
 BuildRequires: extra-cmake-modules
-BuildRequires: qt6-base-devel qt6-svg-devel qt6-wayland-devel wayland-protocols
+BuildRequires: qt6-base-devel qt6-declarative-devel
+BuildRequires: libxkbcommon-devel
+BuildRequires: boost-devel
+BuildRequires: kf6-kconfig-devel kf6-kcoreaddons-devel
 
 %description
-This component is meant for applications to be able to easily use clients based on wlr-layer-shell.
+Core components for the KDE Activity concept.
 
 %package common
 Summary: %name common package
@@ -34,18 +36,16 @@ Requires: kde-common
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Conflicts: plasma5-layer-shell-qt-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package -n %liblayershellqtinterface
+%package -n %libplasmaactivities
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common
-%description -n %liblayershellqtinterface
+Requires: %name-common >= %EVR
+%description -n %libplasmaactivities
 %name library
-
 
 %prep
 %setup -n %rname-%version
@@ -57,31 +57,32 @@ Requires: %name-common
 
 %install
 %K6install
+%K6install_move data locale
 %find_lang %name --all-name
+%K6find_qtlang %name --append --all-name
 
 %files common -f %name.lang
 %doc LICENSES/*
+%_datadir/qlogging-categories6/*.*categories
 
 %files
-%_K6plug/wayland-shell-integration/liblayer-shell.so
-%_K6qml/org/kde/layershell/
+%_K6bin/*
+%_K6qml/org/kde/activities/
 
 %files devel
-%_K6inc/LayerShellQt/
+%_K6inc/PlasmaActivities/
 %_K6link/lib*.so
-%_K6lib/cmake/LayerShellQt/
+%_K6lib/cmake/PlasmaActivities/
+%_pkgconfigdir/PlasmaActivities.pc
 
-%files -n %liblayershellqtinterface
-%_K6lib/libLayerShellQtInterface.so.%sover
-%_K6lib/libLayerShellQtInterface.so.*
+%files -n %libplasmaactivities
+%_K6lib/libPlasmaActivities.so.%sover
+%_K6lib/libPlasmaActivities.so.*
+
 
 %changelog
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 
 * Wed Jun 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.1-alt1
-- new version
-
-* Tue Jun 25 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.0-alt1
 - initial build
-

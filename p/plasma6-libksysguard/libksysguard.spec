@@ -22,7 +22,7 @@
 %define libksysguardsystemstats libksysguardsystemstats%sover2
 
 Name: plasma6-%rname
-Version: 6.1.1
+Version: 6.1.2
 Release: alt1
 #Epoch: 1
 %K6init
@@ -33,6 +33,8 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 Requires(post): /sbin/setcap
+Provides: plasma5-libksysguard = 1:%version-%release
+Obsoletes: plasma5-libksysguard < 1:%version-%release
 
 Source: %rname-%version.tar
 Patch: alt-killbtn.patch
@@ -59,13 +61,8 @@ Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kde-common
-%_K6if_ver_gteq %ubt_id M120
-Conflicts: plasma5-libksysguard-common
-#Provides: plasma5-libksysguard-common = %EVR
-#Obsoletes: plasma5-libksysguard-common < %EVR
-%else
-Conflicts: plasma5-libksysguard-common
-%endif
+Provides: plasma5-libksysguard-common = 1:%version-%release
+Obsoletes: plasma5-libksysguard-common < 1:%version-%release
 %description common
 %name common package
 
@@ -75,16 +72,6 @@ Summary: Development files for %name
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
-
-%package polkit
-Summary: %name common package
-Group: System/Configuration/Other
-BuildArch: noarch
-Requires: kde-common
-Provides: polkit-kde-ksysguard = 1:%version-%release
-Obsoletes: polkit-kde-ksysguard < 1:%version-%release
-%description polkit
-Common polkit files for %name
 
 %package -n %libksgrd
 Group: System/Libraries
@@ -104,7 +91,7 @@ Requires: %name-common >= %EVR
 Group: System/Libraries
 Summary: %name library
 Requires: %name-common >= %EVR
-Requires: %name-polkit
+Requires: polkit-kde-ksysguard >= %EVR
 %description -n %libprocesscore
 %name library
 
@@ -151,6 +138,17 @@ Requires: %name-common >= %EVR
 %description -n %libksysguardsystemstats
 %name library
 
+%package -n polkit-kde-ksysguard
+Summary: %name common package
+Group: System/Configuration/Other
+Epoch: 1
+BuildArch: noarch
+Requires: kde-common
+Provides: %name-polkit = %EVR
+Obsoletes: %name-polkit < %EVR
+%description -n polkit-kde-ksysguard
+Common polkit files for %name
+
 %prep
 %setup -n %rname-%version
 #%patch -p2
@@ -193,7 +191,7 @@ Requires: %name-common >= %EVR
 %_K6lib/cmake/K*SysGuard/
 %_K6dbus_iface/*.xml
 
-%files polkit
+%files -n polkit-kde-ksysguard
 %_datadir/polkit-1/actions/org.kde.ksysguard.processlisthelper.policy
 
 %files -n %libprocesscore
@@ -229,6 +227,9 @@ Requires: %name-common >= %EVR
 
 
 %changelog
+* Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
+- new version
+
 * Wed Jun 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.1-alt1
 - new version
 

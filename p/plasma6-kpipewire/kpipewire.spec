@@ -10,7 +10,7 @@
 
 %define rname kpipewire
 Name: plasma6-%rname
-Version: 6.1.1
+Version: 6.1.2
 Release: alt1
 %K6init
 
@@ -46,6 +46,7 @@ Requires: kde-common
 Group: Development/KDE and QT
 Summary: Development files for %name
 Requires: pipewire-libs-devel
+Conflicts: plasma5-kpipewire-devel < %EVR
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -112,6 +113,9 @@ Requires: %name-common
 
 
 %changelog
+* Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
+- new version
+
 * Wed Jun 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.1-alt1
 - new version
 

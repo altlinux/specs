@@ -7,7 +7,7 @@
 
 %define rname libkscreen
 Name: plasma6-%rname
-Version: 6.1.1
+Version: 6.1.2
 Release: alt1
 %K6init
 
@@ -33,13 +33,8 @@ of connected displays and ways to change the configuration.
 Group: Graphical desktop/KDE
 Summary: %name utils
 Requires: %name-common >= %EVR
-%_K6if_ver_gteq %ubt_id M120
-Conflicts: plasma5-libkscreen-utils
-#Provides: plasma5-libkscreen-utils = %EVR
-#Obsoletes: plasma5-libkscreen-utils < %EVR
-%else
-Conflicts: plasma5-libkscreen-utils
-%endif
+Provides: plasma5-libkscreen-utils = %EVR
+Obsoletes: plasma5-libkscreen-utils < %EVR
 %description utils
 %name utils.
 
@@ -79,7 +74,9 @@ Requires: %name-common >= %EVR
 
 %build
 export PATH=%_qt6_bindir:$PATH
-%K6build
+%K6build \
+    -DKDE_INSTALL_INCLUDEDIR=%_includedir \
+    #
 
 %install
 %K6install
@@ -114,6 +111,9 @@ export PATH=%_qt6_bindir:$PATH
 
 
 %changelog
+* Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
+- new version
+
 * Wed Jun 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.1-alt1
 - new version
 

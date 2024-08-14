@@ -1,10 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%set_verify_elf_method strict
 
 Name: lightdm-kde-greeter
 Version: 0.4.23
-Release: alt1
+Release: alt2
 Group: Graphical desktop/Other
 Summary: LightDM KDE5 Greeter
 License: GPL-3.0+
@@ -12,30 +11,33 @@ Url: https://invent.kde.org/plasma/lightdm-kde-greeter.git
 
 Source: %name-%version.tar
 
-%K5init
+Patch: port-to-kde6.patch
 
-BuildRequires(pre): rpm-build-kf5
-BuildRequires(pre): rpm-build-qml
+%K6init
+
+BuildRequires(pre): rpm-build-kf6
+BuildRequires(pre): rpm-build-qml6
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: lightdm-devel
-BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-declarative-devel qt5-tools-devel qt5-tools-devel-static
-BuildRequires: qt5-quickcontrols2-devel
+BuildRequires: libgtk+2-devel
+BuildRequires: libXrandr-devel
+BuildRequires: qt6-base-devel qt6-declarative-devel qt6-tools-devel qt6-tools-devel qt6-5compat-devel
 BuildRequires: extra-cmake-modules
-BuildRequires: kf5-kdeclarative-devel kf5-kiconthemes-devel kf5-plasma-framework-devel kf5-kconfig-devel kf5-ki18n-devel kf5-kauth-devel kf5-kconfigwidgets-devel
-BuildRequires: kf5-kcmutils-devel
+BuildRequires: kf6-kdeclarative-devel kf6-kiconthemes-devel plasma6-lib-devel kf6-kconfig-devel kf6-ki18n-devel kf6-kauth-devel kf6-kconfigwidgets-devel
+BuildRequires: kf6-kcmutils-devel
 # deps of used stuff
-BuildRequires: kf5-kcoreaddons-devel kf5-kpackage-devel kf5-kservice-devel
-BuildRequires: kf5-networkmanager-qt-devel
+BuildRequires: kf6-kcoreaddons-devel kf6-kpackage-devel kf6-kservice-devel
+BuildRequires: kf6-networkmanager-qt-devel
 
 Requires: lightdm
-Requires: plasma5-workspace-qml
+Requires: plasma-workspace-qml
 Requires: polkit
 
 Provides: lightdm-greeter
 
-%qml_req_skipall 0
+%qml_req_skipall 1
 
 # libqt5-qml should provide qml(QtQml)
 %qml_add_req_skip QtQml
@@ -52,27 +54,30 @@ Provides: lightdm-greeter
 # plasma5-workspace-qml should provide
 %qml_add_req_skip org.kde.plasma.wallpapers.image
 
+%qml_add_req_skip org.kde.plasma.workspace.components
+
 # this package itself should provide
 %qml_add_req_skip ConnectionEnum
 
 %description
 This package provides a KDE-based LightDM greeter engine.
 
-This is a fork of KDE4-based LightDM greeter engine for KDE5.
+This is a fork of KDE4-based LightDM greeter engine for KDE6.
 
 %prep
 %setup
+%patch -p1
 
 %build
-%K5build \
-%_K5if_ver_gteq %ubt_id M110
+%K6build \
+%_K6if_ver_gteq %ubt_id M110
         -DGREETER_WAYLAND_SESSIONS_FIRST=ON \
 %endif
         -DGREETER_IMAGES_DIR=%_var/lib/ldm/%name/images
 
 %install
-%K5install
-%K5install_move data kcm_lightdm kpackage
+%K6install
+%K6install_move data kcm_lightdm kpackage
 
 %find_lang --with-kde %name
 %find_lang --with-kde --append --output=%name.lang kcm_lightdm
@@ -89,19 +94,22 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %_sbindir/lightdm-kde-greeter
 %_datadir/xgreeters/lightdm-kde-greeter.desktop
 %_datadir/dbus-1/system.d/org.kde.kcontrol.kcmlightdm.conf
-%_K5libexecdir/kauth/kcmlightdmhelper
-%_K5libexecdir/lightdm-kde-greeter-rootimage
-%_K5libexecdir/lightdm-kde-greeter-wifikeeper
-%_K5dbus_sys_srv/org.kde.kcontrol.kcmlightdm.service
+%_K6libexecdir/kf6/kauth/kcmlightdmhelper
+%_K6libexecdir/lightdm-kde-greeter-rootimage
+%_K6libexecdir/lightdm-kde-greeter-wifikeeper
+%_K6dbus_sys_srv/org.kde.kcontrol.kcmlightdm.service
 %_libexecdir/systemd/user/lightdm-kde-greeter-wifikeeper.service
 %_datadir/lightdm-kde-greeter/
-%_K5xdgapp/kcm_lightdm.desktop
-%_K5plug/plasma/kcms/systemsettings/kcm_lightdm.so
-%_K5data/kpackage/kcms/kcm_lightdm/
+%_K6xdgapp/kcm_lightdm.desktop
+%_K6plug/plasma/kcms/systemsettings/kcm_lightdm.so
+%_K6data/kpackage/kcms/kcm_lightdm/
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmlightdm.policy
 
 
 %changelog
+* Fri Jul 26 2024 Anton Golubev <golubevan@altlinux.org> 0.4.23-alt2
+- port to kde6
+
 * Wed May 29 2024 Anton Golubev <golubevan@altlinux.org> 0.4.23-alt1
 - consider permissions and device availability in the NetworkManager
   widget

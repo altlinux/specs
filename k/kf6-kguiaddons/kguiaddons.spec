@@ -7,7 +7,7 @@
 
 Name: kf6-%rname
 Version: 6.3.0
-Release: alt2
+Release: alt3
 %K6init no_altplace
 
 Group: System/Libraries
@@ -16,7 +16,8 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later and LGPL-2.0-or-later
 
 Requires: %name-common >= %EVR
-Conflicts: kf5-kguiaddons
+Provides: kf5-kguiaddons = %EVR
+Obsoletes: kf5-kguiaddons < %EVR
 
 Source: %rname-%version.tar
 Patch1: fix-modifierless-grabs.patch
@@ -143,6 +144,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 
 %changelog
+* Tue Jul 23 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt3
+- obsolete kf5-kguiaddons
+
 * Thu Jul 18 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt2
 - add conflict with kf5-kguiaddons
 

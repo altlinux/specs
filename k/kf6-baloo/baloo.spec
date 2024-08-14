@@ -8,7 +8,7 @@
 
 Name: kf6-%rname
 Version: 6.3.0
-Release: alt3
+Release: alt4
 %K6init no_altplace
 
 Group: Graphical desktop/KDE
@@ -16,7 +16,8 @@ Summary: KDE Frameworks 6 framework for searching and managing metadata
 Url: http://www.kde.org
 License: GPL-2.0-or-later AND LGPL-2.1-or-later AND LGPL-3.0-only
 
-Conflicts: kf5-baloo
+Provides: kf5-baloo = %EVR
+Obsoletes: kf5-baloo < %EVR
 
 Source: %rname-%version.tar
 Patch1: alt-disable-indexing.patch
@@ -107,6 +108,9 @@ KF6 library
 
 
 %changelog
+* Tue Jul 23 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt4
+- obsolete kf5-baloo
+
 * Wed Jul 17 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt3
 - conflicts with kf5-baloo
 
