@@ -2,7 +2,7 @@
 
 %define _name libxml++
 %define git_name libxmlplusplus
-%define ver_major 5.2
+%define ver_major 5.4
 %define api_ver 5.0
 
 %def_disable doc
@@ -87,6 +87,9 @@ This package contains the development documentation for libxml++ library.
 %endif
 
 %changelog
+* Wed Aug 14 2024 Yuri N. Sedunov <aris@altlinux.org> 5.4.0-alt1
+- 5.4.0
+
 * Fri Apr 12 2024 Yuri N. Sedunov <aris@altlinux.org> 5.2.0-alt1
 - first build for sisyphus
 
