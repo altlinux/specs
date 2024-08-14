@@ -1,19 +1,20 @@
 %define _unpackaged_files_terminate_build 1
-%global modname webob
+
+%define pypi_name WebOb
 
 %def_with check
 
 Name: python3-module-webob
-Version: 1.8.7
-Release: alt2
+Version: 1.8.8
+Release: alt1
 
 Summary: WSGI request and response object
 License: MIT
 Group: System/Libraries
-
 Url: https://pypi.org/project/WebOb
-Source0: WebOb-%version.tar
-Patch: webob-1.8.7-s-isAlive-is_alive.patch
+Vcs: https://github.com/Pylons/webob
+
+Source0: %name-%version.tar
 
 BuildArch: noarch
 
@@ -31,8 +32,7 @@ HTTP, including header parsing and accessors for other standard parts of the
 environment.
 
 %prep
-%setup -n WebOb-%version
-%autopatch -p1
+%setup
 
 %build
 %pyproject_build
@@ -46,9 +46,12 @@ environment.
 %files
 %doc README.rst
 %python3_sitelibdir_noarch/webob/
-%python3_sitelibdir_noarch/WebOb-%version.dist-info
+%python3_sitelibdir_noarch/%pypi_name-%version.dist-info
 
 %changelog
+* Wed Aug 14 2024 Anton Vyatkin <toni@altlinux.org> 1.8.8-alt1
+- New version 1.8.8.
+
 * Fri Jan 26 2024 Anton Vyatkin <toni@altlinux.org> 1.8.7-alt2
 - Fixed FTBFS.
 
