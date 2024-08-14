@@ -3,7 +3,7 @@
 
 Name: amnezia-vpn
 Version: 4.6.0.3
-Release: alt1
+Release: alt2
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
@@ -37,6 +37,9 @@ Amnezia is an open-source VPN client, with a key feature that enables you to dep
 Summary: The best client for self-hosted VPN
 Group: System/Servers
 Requires: %name-service = %EVR
+Requires: qt6-5compat
+Requires: qt6-declarative
+Requires: qt6-svg
 
 %description client
 Amnezia is an open-source VPN client, with a key feature that enables you to deploy your own VPN server on your server.
@@ -84,6 +87,7 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %__install -Dp -m0755 %_cmake__builddir/service/server/AmneziaVPN-service %buildroot%_bindir/
 
 %files client
+%doc README.md
 %_bindir/AmneziaVPN
 %_desktopdir/AmneziaVPN.desktop
 %_pixmapsdir/AmneziaVPN.png
@@ -93,5 +97,8 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Wed Aug 14 2024 Nazarov Denis <nenderus@altlinux.org> 4.6.0.3-alt2
+- Added needed requires
+
 * Tue Aug 13 2024 Nazarov Denis <nenderus@altlinux.org> 4.6.0.3-alt1
 - Initial build for ALT Linux
