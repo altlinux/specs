@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.48.1
+Version: 2.49.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -313,6 +313,7 @@ fi
 %exclude %_datadir/%name/features/devmapper
 %exclude %_datadir/%name/features/lvm
 %exclude %_datadir/%name/features/luks
+%exclude %_datadir/%name/features/luks-unl0kr
 %exclude %_datadir/%name/features/nfsroot
 %exclude %_datadir/%name/features/multipath
 %exclude %_datadir/%name/features/plymouth
@@ -337,6 +338,7 @@ fi
 
 %files luks
 %_datadir/%name/features/luks
+%_datadir/%name/features/luks-unl0kr
 
 %files nfs
 %_datadir/%name/features/nfsroot
@@ -389,6 +391,26 @@ fi
 %endif
 
 %changelog
+* Wed Aug 14 2024 Alexey Gladkov <legion@altlinux.ru> 2.49.0-alt1
+- Feature luks-unl0kr:
+  + Feature adds the ability to use unl0kr. unl0kr is framebuffer-based
+    disk unlocker for the initramfs based on LVGL.
+- Feature luks:
+  + Move the password request functionality to a separate feature
+    (dialog). This allows to hide implementation details and simplify
+    the code.
+- Feature network:
+  + Add support of infiniband network mac addresses.
+  + Add tests for cmdline parser.
+- Guess subsystem:
+  + Add guessing touchscreen modules.
+  + Fix a false positive guess in the luks, lvm, multipath features (ALT#51073).
+- Utilities:
+  + depinfo: Add support of weak dependencies. A new dependency type has
+    been added since kernel v6.11-rc3.
+- Misc:
+  + bug-report: Choose better compression method.
+
 * Sun Jul 21 2024 Alexey Gladkov <legion@altlinux.ru> 2.48.1-alt1
 - Utilities:
   + initrd-put: Fix hang if soname is not found.
