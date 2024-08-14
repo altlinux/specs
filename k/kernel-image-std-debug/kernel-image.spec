@@ -2,7 +2,7 @@ Name: kernel-image-std-debug
 Release: alt1
 epoch:2
 %define kernel_base_version	6.1
-%define kernel_sublevel	.104
+%define kernel_sublevel	.105
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -598,6 +598,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Aug 14 2024 Kernel Bot <kernelbot@altlinux.org> 2:6.1.105-alt1
+- v6.1.105 (2024-08-14).
+
 * Sun Aug 11 2024 Kernel Bot <kernelbot@altlinux.org> 2:6.1.104-alt1
 - v6.1.104 (2024-08-11).
 - spec: Remove devicetree symlinking for old u-boot.
