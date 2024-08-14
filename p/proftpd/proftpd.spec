@@ -1,9 +1,11 @@
 %define ver 1.3.9
+%def_with mod_proxy
+%define mod_proxy_ver 0.9.4
 %define git %nil
 
 Name: proftpd
 Version: %ver
-Release: alt0.1.rc2
+Release: alt0.2.rc2
 
 %define _libexecdir %{expand:%_libdir}
 # TODO
@@ -67,6 +69,8 @@ Source4: %name.pamd
 Source5: %name-control
 Source6: %name.conf
 Source7: %name.service
+# https://github.com/Castaglia/proftpd-mod_proxy
+Source8: mod_proxy-%mod_proxy_ver.tar
 
 Patch1: %name-man.patch
 Patch2: %name-1.3.3rc1-alt-pkgconfig-prefix.patch
@@ -106,6 +110,7 @@ BuildRequires: libsodium-devel
 %{?_with_mod_sql_sqlite:BuildRequires: libsqlite3-devel}
 %{?_with_mod_facl:BuildRequires: libacl-devel}
 %{?_enable_tests:BuildRequires: libcheck-devel perl-devel perl-Test-Unit perl-Net-FTPSSL perl-Sys-HostAddr}
+%{?_with_mod_proxy:BuildRequires: libssl-devel libsqlite3-devel zlib-devel libsodium-devel}
 
 %description
 ProFTPd is an enhanced FTP server with a focus toward simplicity, security,
@@ -119,164 +124,171 @@ This package will setup ProFTPd for both inetd and standalone operations.
 %package -n %name-mod_ctrls_admin
 Summary: Module implementing admin control handlers
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package -n %name-mod_ifsession
 Summary: Module supporting conditional per-user/group/class configuration contexts
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package -n %name-mod_ldap
 Summary: LDAP password lookup module for ProFTPD
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package -n %name-mod_quotatab
 Summary: Module for managing FTP byte/file quotas via centralized tables
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package -n %name-mod_quotatab_file
 Summary: Sub-module for managing quota data via file-based tables
 Group: System/Servers
-Requires: %name-mod_quotatab = %version-%release
+Requires: %name-mod_quotatab = %EVR
 
 %package -n %name-mod_quotatab_ldap
 Summary: Sub-module for obtaining quota information from an LDAP directory
 Group: System/Servers
-Requires: %name-mod_quotatab = %version-%release
+Requires: %name-mod_quotatab = %EVR
 
 %package -n %name-mod_quotatab_sql
 Summary: Sub-module for managing quota data via SQL-based tables
 Group: System/Servers
-Requires: %name-mod_quotatab = %version-%release
+Requires: %name-mod_quotatab = %EVR
 
 %package -n %name-mod_radius
 Summary: Module for RADIUS authentication and accounting
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package -n %name-mod_ratio
 Summary: Support upload/download ratios
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package -n %name-mod_rewrite
 Summary: Module for rewriting FTP commands
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package -n %name-mod_site_misc
 Summary: Module implementing miscellaneous SITE commands
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package -n %name-mod_sql
 Summary: SQL frontend
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package -n %name-mod_sql_passwd
 Summary: Enables support for some of OpenSSL password formats
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package -n %name-mod_sql_mysql
 Summary: Support for connecting to MySQL databases
 Group: System/Servers
-Requires: %name-mod_sql = %version-%release
+Requires: %name-mod_sql = %EVR
 
 %package -n %name-mod_sql_postgres
 Summary: Support for connecting to Postgres databases
 Group: System/Servers
-Requires: %name-mod_sql = %version-%release
+Requires: %name-mod_sql = %EVR
 
 %package -n %name-mod_tls
 Summary: An RFC2228 SSL/TLS module for ProFTPD
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 
 %package -n %name-mod_facl
 Summary: POSIX ACL checking code (aka POSIX.1e hell)
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package -n %name-mod_ban
 Summary: A ProFTPD module implementing ban lists using the Controls API
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package -n %name-mod_dynmasq
 Summary: A ProFTPD module for DynDNS configurations
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package -n %name-mod_load
 Summary: System load handling module for ProFTPD
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package -n %name-mod_sftp
 Summary: A ProFTPD module implementing sftp server
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package -n %name-mod_sftp_pam
 Summary: PAM authorization for mod_sftp ProFTPD sub-module
 Group: System/Servers
-Requires: %name-mod_sftp = %version-%release
+Requires: %name-mod_sftp = %EVR
 
 %package -n %name-mod_sftp_sql
 Summary: SQL authorization for mod_sftp ProFTPD sub-module
 Group: System/Servers
-Requires: %name-mod_sftp = %version-%release
+Requires: %name-mod_sftp = %EVR
 
 %package -n %name-mod_sql_sqlite
 Summary: Support for using SQLite databases
 Group: System/Servers
-Requires: %name-mod_sql = %version-%release
+Requires: %name-mod_sql = %EVR
 
 %package -n %name-mod_tls_shmcache
 Summary: Implements shared SSL session cache
 Group: System/Servers
-Requires: %name-mod_tls = %version-%release
+Requires: %name-mod_tls = %EVR
 
 %package -n %name-mod_tls_memcache
 Summary: Implements shared SSL/TLS session cache in memcache
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package -n %name-mod_exec
 Summary: Executes external scripts
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package -n %name-mod_shaper
 Summary: Implements rate throttling
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package -n %name-mod_unique_id
 Summary: Generates unique ids
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package -n %name-mod_ident
 Summary: RFC1413 Identification Support
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
+
+%if_with mod_proxy
+%package -n %name-mod_proxy
+Summary: FTPD proxy Support
+Group: System/Servers
+Requires: %name = %EVR, %name-mod_tls = %EVR
+%endif
 
 %package -n %name-control
 Summary: ProFTPD control facility
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Buildarch: noarch
 
 %package -n %name-devel
 Summary: ProFTPD development header files
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n %name-mod_ctrls_admin
 This module implements administrative control actions for the ftpdctl program.
@@ -377,6 +389,10 @@ Module for generating a unique ID for each FTP session.
 Module which handles the IdentLookups configuration directive and IDENTD
 protocol lookups
 
+%description -n %name-mod_proxy
+The mod_proxy module for ProFTPD proxies FTP/FTPS connections, supporting both
+forward and reverse proxy configurations.
+
 %description -n %name-devel
 ProFTPD development header files
 
@@ -386,7 +402,7 @@ This package contains control rules for proftpd - Professional FTP Daemon
 See control(8) for details.
 
 %prep
-%setup -q -n %name-%ver
+%setup -q -n %name-%ver -a8
 %patch1 -p2
 %patch2 -p1
 %patch4 -p1
@@ -431,6 +447,16 @@ subst 's,^#include\ <\(pcre.*\),#include <pcre/\1,' src/regexp.c
 subst 's|^\(/var/tmp/proftpd-buildroot\)=.*$|\1=no|' libtool
 
 %make
+%if_with mod_proxy
+mv mod_proxy-%mod_proxy_ver modules/mod_proxy
+pushd modules/mod_proxy
+%__autoconf
+%configure \
+        %{?_enable_tests:--enable-tests} \
+        --libexecdir=%_libexecdir/proftpd
+%make
+popd
+%endif
 
 %install
 myname=`id -un`
@@ -489,6 +515,22 @@ mkdir -p %buildroot%_unitdir
 install -m 0644 %SOURCE7 %buildroot%_unitdir/
 
 %find_lang %name
+
+%if_with mod_proxy
+pushd modules/mod_proxy
+myname=`id -un`
+mygroup=`id -gn`
+mkdir -p %buildroot%_libexecdir/proftpd
+%make_install install DESTDIR=%buildroot LIBEXECDIR=%_libexecdir/proftpd INSTALL_USER=$myname INSTALL_GROUP=$mygroup
+# to make LTO checks happy
+rm -f %buildroot%_libexecdir/proftpd/mod_proxy.a
+
+%if_enabled tests
+%check
+%make check
+%endif
+popd
+%endif
 
 %if_enabled tests
 %check
@@ -715,6 +757,12 @@ fi
 %_libexecdir/%name/mod_ident.*
 %endif
 
+%if_with mod_proxy
+%files -n %name-mod_proxy
+%doc modules/mod_proxy/mod_proxy.html modules/mod_proxy/doc
+%_libexecdir/%name/mod_proxy.*
+%endif
+
 %files -n %name-devel
 %_bindir/prxs
 %_includedir/%name
@@ -724,6 +772,9 @@ fi
 %_controldir/%name
 
 %changelog
+* Mon Aug 12 2024 L.A. Kostis <lakostis@altlinux.ru> 1.3.9-alt0.2.rc2
+- Added mod_proxy.
+
 * Mon Aug 12 2024 L.A. Kostis <lakostis@altlinux.ru> 1.3.9-alt0.1.rc2
 - 1.3.9rc2 with mitigation for "Terrapin" SSH attack (CVE-2023-48795).
 
