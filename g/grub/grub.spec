@@ -24,7 +24,7 @@
 
 Name: grub
 Version: 2.12
-Release: alt2
+Release: alt3
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -394,7 +394,7 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 %ghost %attr(644,root,root) /boot/grub/grubenv
 %_sysconfdir/grub.cfg
 %_sysconfdir/default/grub
-%_sysconfdir/bash_completion.d/grub
+%_datadir/bash-completion/completions/*
 %_rpmlibdir/grub.filetrigger
 # these tools are only for efi and x86_64
 %ifarch x86_64
@@ -494,6 +494,11 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Tue Aug 13 2024 Egor Ignatov <egori@altlinux.org> 2.12-alt3
+- fix boot from encrypted partition in Legacy install
+- fix error in bash-completion script
+- use default value if GRUB_TOP_LEVEL is not set (closes: #48681)
+
 * Thu Aug 08 2024 Egor Ignatov <egori@altlinux.org> 2.12-alt2
 - revert _optlevel back to 's' (closes: #51107)
 
