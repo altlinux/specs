@@ -1,8 +1,8 @@
 %def_without bootstrap
 
 Name:    opensearch
-Version: 2.15.0
-Release: alt2
+Version: 2.16.0
+Release: alt1
 
 Summary: Open source distributed and RESTful search engine
 License: Apache-2.0
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 Source1: gradle-8.7-rc-4-bin.zip
 Source2: gradle-cache.tar
 Source3: m2.tar
-Patch0: opensearch-disable-plugin-com.gradle.enterprise.patch
+Patch0: opensearch-disable-gradle-plugin.patch
 Patch1: opensearch-disable-network.patch
 Patch2: opensearch-system-java.patch
 
@@ -70,7 +70,7 @@ fi
 %pre
 getent group opensearch >/dev/null || /usr/sbin/groupadd -r opensearch
 getent passwd opensearch >/dev/null || /usr/sbin/useradd -r \
-  -g opensearch -d %{_prefix}/%{name} -s /bin/bash -c "Opensearch" opensearch
+  -g opensearch -d %_sharedstatedir/%name -s /bin/bash -c "Opensearch" opensearch
 
 %preun
 %preun_service %name.service
@@ -95,6 +95,10 @@ getent passwd opensearch >/dev/null || /usr/sbin/useradd -r \
 %config(noreplace) %_tmpfilesdir/%name.conf
 
 %changelog
+* Mon Aug 12 2024 Andrey Cherepanov <cas@altlinux.org> 2.16.0-alt1
+- New version.
+- Set home directory of opensearch user to /var/lib/opensearch.
+
 * Sat Jul 27 2024 Andrey Cherepanov <cas@altlinux.org> 2.15.0-alt2
 - Adapted to old repositories.
 
