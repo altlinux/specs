@@ -6,7 +6,7 @@
 Name: kdump-tools
 Summary: Scripts and configuration files to use kdump
 Version: 1.8
-Release: alt5
+Release: alt6
 Group: System/Kernel and hardware
 License: GPL-2.0-or-later
 Vcs: https://salsa.debian.org/debian/kdump-tools.git
@@ -52,7 +52,7 @@ Requires: systemd-sysvinit
 %make_build
 
 %install
-%makeinstall_std UDEVRULESDIR=%_udev_rulesdir UNITDIR=%_unitdir
+%makeinstall_std UDEVRULESDIR=%_udevrulesdir UNITDIR=%_unitdir
 %define _customdocdir %_docdir/%name
 %ifnarch %testable_arches
 # Avoid 'Installed (but unpackaged) file(s) found'.
@@ -89,6 +89,9 @@ grep -vw alt1 <<<'%release'
 # NB: We don't install /var/lib/kdump
 
 %changelog
+* Wed Aug 14 2024 Vitaly Chikunov <vt@altlinux.org> 1.8-alt6
+- Some compatibility with older branches (shellcheck, udevrulesdir).
+
 * Sun Jun 23 2024 Vitaly Chikunov <vt@altlinux.org> 1.8-alt5
 - Fix FTBFS after usrmerge related changes to systemd.
 - Add kdumpctl(1) man page.
