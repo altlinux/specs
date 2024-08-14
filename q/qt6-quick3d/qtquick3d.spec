@@ -5,7 +5,7 @@
 
 Name: qt6-quick3d
 Version: 6.6.2
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt6 - 3D content in Qt Quick
@@ -210,9 +210,11 @@ sed -i 's/enum Dirty :/public: &/' \
 
 %files devel
 %_qt6_headerdir/Qt*/
-%ifnarch ppc64le %ix86 %e2k
-%_qt6_libdatadir/libQt*.a
-%_qt6_libdir/libQt*.a
+%ifarch x86_64 aarch64
+# embree is build on x86_64 and aarch64 only
+# https://git.altlinux.org/gears/q/qt6-quick3d.git?a=blob;f=qtquick3d/src/3rdparty/CMakeLists.txt;h=cbb855f5deb64364c0c0cdbb804118fe3cb8717e#l6
+%_qt6_libdatadir/libQt*Embree.a
+%_qt6_libdir/libQt*Embree.a
 %endif
 %_qt6_libdatadir/libQt*.so
 %_qt6_libdatadir/libQt*.prl
@@ -231,6 +233,10 @@ sed -i 's/enum Dirty :/public: &/' \
 %_qt6_examplesdir/*
 
 %changelog
+* Mon Aug 12 2024 Ivan A. Melnikov <iv@altlinux.org> 6.6.2-alt3
+- adjust embree static libraries packaging
+  (fixes FTBFS on loongarch64 and riscv64).
+
 * Mon Aug 12 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 6.6.2-alt2
 - e2k build fix
 
