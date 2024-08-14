@@ -8,7 +8,7 @@
 
 Name: sassc
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 
 Summary: Wrapper around libsass to compile CSS stylesheet
 Group: Text tools
@@ -28,9 +28,10 @@ Source1: https://github.com/sass/sass-spec/archive/libsass-%testspec_version/sas
 Vcs: https://github.com/sass/sass-spec.git
 Source1: sass-spec-%testspec_version.tar
 %endif
+Patch1: sassc-3.6.2-alt-file_exists.patch
 
 BuildRequires: gcc-c++ libsass-devel >= %version
-%{?_enable_check:BuildRequires: ruby-minitest gem-hrx}
+%{?_enable_check:BuildRequires: ruby-minitest gem-hrx gem-file_exists}
 
 %description
 SassC is a wrapper around libsass used to generate a useful command-line
@@ -40,6 +41,8 @@ application that can be installed and packaged for several operating systems.
 %setup -a 1
 mv sass-spec-%{?_disable_spec_snapshot:libsass-}%testspec_version sass-spec
 echo %version > VERSION
+
+%patch1 -b .file_exists
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -58,6 +61,9 @@ ruby sass-spec/sass-spec.rb --impl libsass -c ./%name
 %doc LICENSE Readme.md
 
 %changelog
+* Wed Aug 14 2024 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1.1
+- fixed %%check for Ruby >= 3.2
+
 * Mon Jun 07 2021 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 - updated sassc-spec to 3.6.3-255-ge6a5b525
