@@ -3,7 +3,7 @@
 
 Name: lightdm-kde-greeter
 Version: 0.4.23
-Release: alt2
+Release: alt3
 Group: Graphical desktop/Other
 Summary: LightDM KDE5 Greeter
 License: GPL-3.0+
@@ -11,7 +11,9 @@ Url: https://invent.kde.org/plasma/lightdm-kde-greeter.git
 
 Source: %name-%version.tar
 
-Patch: port-to-kde6.patch
+Patch1: port-build-files-to-kde6.patch
+Patch2: embed-liblightdm.patch
+Patch3: port-to-kde6.patch
 
 %K6init
 
@@ -23,7 +25,7 @@ BuildRequires: gcc-c++
 BuildRequires: lightdm-devel
 BuildRequires: libgtk+2-devel
 BuildRequires: libXrandr-devel
-BuildRequires: qt6-base-devel qt6-declarative-devel qt6-tools-devel qt6-tools-devel qt6-5compat-devel
+BuildRequires: qt6-base-devel qt6-declarative-devel qt6-tools-devel qt6-tools-devel qt6-5compat-devel qt6-shadertools-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: kf6-kdeclarative-devel kf6-kiconthemes-devel plasma6-lib-devel kf6-kconfig-devel kf6-ki18n-devel kf6-kauth-devel kf6-kconfigwidgets-devel
 BuildRequires: kf6-kcmutils-devel
@@ -39,26 +41,6 @@ Provides: lightdm-greeter
 
 %qml_req_skipall 1
 
-# libqt5-qml should provide qml(QtQml)
-%qml_add_req_skip QtQml
-
-# libqt5-quick should provide
-%qml_add_req_skip QtQuick
-
-# qt5-graphicaleffects should provide
-%qml_add_req_skip QtGraphicalEffects
-
-# libkf5quickaddons should provide
-%qml_add_req_skip org.kde.kquickcontrolsaddons
-
-# plasma5-workspace-qml should provide
-%qml_add_req_skip org.kde.plasma.wallpapers.image
-
-%qml_add_req_skip org.kde.plasma.workspace.components
-
-# this package itself should provide
-%qml_add_req_skip ConnectionEnum
-
 %description
 This package provides a KDE-based LightDM greeter engine.
 
@@ -66,7 +48,9 @@ This is a fork of KDE4-based LightDM greeter engine for KDE6.
 
 %prep
 %setup
-%patch -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %K6build \
@@ -107,6 +91,10 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Tue Aug 13 2024 Anton Golubev <golubevan@altlinux.org> 0.4.23-alt3
+- fix the main problems of the greeter after porting
+- move embedding liblightdm into a separate patch
+
 * Fri Jul 26 2024 Anton Golubev <golubevan@altlinux.org> 0.4.23-alt2
 - port to kde6
 
