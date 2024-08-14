@@ -1,7 +1,7 @@
 %define testsdir %{_localstatedir}/%{name}/tests
 
 Name: libtree
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 
 Summary: C++ lib that helps to work with tree-like data structures
@@ -102,6 +102,11 @@ cd -
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Wed Aug 07 2024 Alexey Appolonov <alexey@altlinux.org> 0.11.0-alt1
+- A chain of nodes (a vector of node names) denotes the root of the document
+  being analyzed (number of nodes in the chain can be greater than or equal to
+  one).
+
 * Sat Feb 03 2024 Alexey Appolonov <alexey@altlinux.org> 0.10.0-alt1
 - Branches of XML docs can be marked as "anchor" branches -- an "anchor" branch
   is a branch that holds an empty value, but can act as a master branch.
