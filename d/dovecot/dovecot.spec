@@ -5,8 +5,8 @@
 %def_disable debug
 
 Name: dovecot
-Version: 2.3.21
-Release: alt3
+Version: 2.3.21.1
+Release: alt1
 
 Summary: Dovecot secure IMAP/POP3 server
 License: MIT
@@ -221,6 +221,15 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Thu Aug 15 2024 Andrey Cherepanov <cas@altlinux.org> 2.3.21.1-alt1
+- Updated to 2.3.21.1.
+- Security fixes:
+  + CVE-2024-23184: A large number of address headers in email resulted
+    in excessive CPU usage.
+  + CVE-2024-23185: Abnormally large email headers are now truncated or
+    discarded, with a limit of 10MB on a single header and 50MB for all
+    the headers of all the parts of an email.
+
 * Wed Jun 05 2024 Andrey Cherepanov <cas@altlinux.org> 2.3.21-alt3
 - Remove autoreq on systemctl (ALT #50542).
 
