@@ -4,12 +4,12 @@
 %define _localstatedir %_var
 %def_enable introspection
 %def_enable systemd
-%def_disable qt
 %def_enable qt5
+%def_enable qt6
 
 Name: lightdm
 Version: 1.32.0
-Release: alt6
+Release: alt7
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -43,6 +43,7 @@ Patch23: %name-1.32.0-session-sort.patch
 Patch24: %name-1.32.0-testfix.patch
 Patch25: %name-1.32.0-testfix_alt.patch
 Patch26: %name-1.32.0-addrfix.patch
+Patch27: %name-1.32.0-qt6-library.patch
 
 Requires: dm-tool
 Requires: lightdm-greeter
@@ -59,8 +60,8 @@ BuildRequires: libvala-devel vala-tools
 BuildRequires: libaudit-devel
 BuildRequires: pkgconfig(glib-2.0) pkgconfig(gio-2.0) >= 2.26 pkgconfig(gio-unix-2.0) pkgconfig(gobject-2.0) pkgconfig(libxklavier) pkgconfig(x11)
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
-%{?_enable_qt:BuildRequires: pkgconfig(QtCore) pkgconfig(QtDBus) pkgconfig(QtGui) /usr/bin/moc-qt4}
 %{?_enable_qt5:BuildRequires: pkgconfig(Qt5Core) pkgconfig(Qt5DBus) pkgconfig(Qt5Gui) /usr/bin/moc-qt5}
+%{?_enable_qt6:BuildRequires: pkgconfig(Qt6Core) pkgconfig(Qt6DBus) pkgconfig(Qt6Gui)}
 
 # For make check:
 BuildRequires: dbus python3 python3-module-pygobject3
@@ -81,15 +82,6 @@ License: LGPLv2+
 A library for LightDM greeters based on GObject which interfaces with LightDM
 and provides common greeter functionality.
 
-%package -n liblightdm-qt
-Group: System/Libraries
-Summary: LightDM Qt Greeter Library
-License: LGPLv2+
-
-%description -n liblightdm-qt
-A library for LightDM greeters based on Qt which interfaces with LightDM and
-provides common greeter functionality.
-
 %package -n liblightdm-qt5
 Group: System/Libraries
 Summary: LightDM Qt5 Greeter Library
@@ -97,6 +89,15 @@ License: LGPLv2+
 
 %description -n liblightdm-qt5
 A library for LightDM greeters based on Qt5 which interfaces with LightDM and
+provides common greeter functionality.
+
+%package -n liblightdm-qt6
+Group: System/Libraries
+Summary: LightDM Qt6 Greeter Library
+License: LGPLv2+
+
+%description -n liblightdm-qt6
+A library for LightDM greeters based on Qt6 which interfaces with LightDM and
 provides common greeter functionality.
 
 %package devel
@@ -165,8 +166,8 @@ export CXXFLAGS="%optflags -std=gnu++11"
 	--disable-static \
 	--enable-tests \
 	--enable-gtk-doc \
-	%{?_enable_qt:--enable-liblightdm-qt} \
-	%{?_enable_qt5:--enable-liblightdm-qt5} \
+	--enable-liblightdm-qt5%{?_disable_qt5:=no} \
+	--enable-liblightdm-qt6%{?_disable_qt6:=no} \
 	--libexecdir=%_libexecdir \
 	--with-greeter-user=_ldm \
 	--with-greeter-session=%name-default-greeter
@@ -262,14 +263,14 @@ fi
 %_girdir/*.gir
 %endif
 
-%if_enabled qt
-%files -n liblightdm-qt
-%_libdir/liblightdm-qt-?.so.*
-%endif
-
 %if_enabled qt5
 %files -n liblightdm-qt5
 %_libdir/liblightdm-qt5-?.so.*
+%endif
+
+%if_enabled qt6
+%files -n liblightdm-qt6
+%_libdir/liblightdm-qt6-?.so.*
 %endif
 
 %files devel
@@ -287,6 +288,10 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Fri Aug 09 2024 Anton Golubev <golubevan@altlinux.org> 1.32.0-alt7
+- add client library version for Qt6
+- drop the option for Qt4
+
 * Fri Jun 21 2024 Paul Wolneykien <manowar@altlinux.org> 1.32.0-alt6
 - Output test-suite.log on test fail.
 - Fix build with new systemd (pass %_unitdir to make install).
