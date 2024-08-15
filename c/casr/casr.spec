@@ -2,7 +2,7 @@
 %def_with check
 
 Name: casr
-Version: 2.12.0
+Version: 2.12.1
 Release: alt1
 
 Summary: Collect crash (or UndefinedBehaviorSanitizer error) reports, triage, and estimate severity.
@@ -108,7 +108,7 @@ export SKIP_TESTS="$SKIP_TESTS --skip gdb32"
 # Disable tests that require internet connection
 export SKIP_TESTS="$SKIP_TESTS --skip test_casr_csharp"
 
-# Disable context-dependent test, we run it separatly later
+# Disable context-dependent test, we run it separately later
 export SKIP_TESTS="$SKIP_TESTS --skip test_csharp_stacktrace"
 
 %ifarch ppc64le
@@ -125,7 +125,7 @@ export SKIP_TESTS="$SKIP_TESTS --skip test_abort \
 
 %rust_test -- $SKIP_TESTS
 
-# Run context-dependent test separatly
+# Run context-dependent test separately
 %rust_test -- test_csharp_stacktrace
 
 %files
@@ -133,6 +133,9 @@ export SKIP_TESTS="$SKIP_TESTS --skip test_abort \
 %_bindir/*
 
 %changelog
+* Thu Aug 15 2024 Alexander Kuznetsov <kuznetsovam@altlinux.org> 2.12.1-alt1
+- Update to version 2.12.1.
+
 * Wed Jul 31 2024 Alexander Kuznetsov <kuznetsovam@altlinux.org> 2.12.0-alt1
 - Update to version 2.12.0.
 
