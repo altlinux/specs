@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1
 %define kernel_base_version	6.6
-%define kernel_sublevel	.44
+%define kernel_sublevel	.46
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -365,12 +365,6 @@ mv %buildroot%modules_dir/kernel/drivers/media/radio/tea575x.ko %buildroot%modul
 
 %ifarch aarch64 %arm
 make dtbs_install INSTALL_DTBS_PATH=%buildroot/boot/devicetree/$KernelVer
-%ifarch aarch64
-pushd %buildroot/boot/devicetree/$KernelVer/
-find . -mindepth 2 -type f | \
-       while read f; do ln -srv "$f" "$(basename $f)"; done
-popd
-%endif
 %endif
 
 mkdir -p %buildroot%kbuild_dir/arch/%arch_dir
@@ -589,6 +583,13 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Aug 14 2024 Kernel Bot <kernelbot@altlinux.org> 1:6.6.46-alt1
+- v6.6.46 (2024-08-14).
+
+* Sun Aug 11 2024 Kernel Bot <kernelbot@altlinux.org> 1:6.6.45-alt1
+- v6.6.45 (2024-08-11).
+- spec: Remove devicetree symlinking for old u-boot.
+
 * Sat Aug 03 2024 Kernel Bot <kernelbot@altlinux.org> 1:6.6.44-alt1
 - v6.6.44 (2024-08-03).
 - config: Enable CONFIG_BLK_SED_OPAL=y.
