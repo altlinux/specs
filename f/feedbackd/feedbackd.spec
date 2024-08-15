@@ -13,7 +13,7 @@
 %def_enable check
 
 Name: feedbackd
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Feedback library for GNOME
@@ -40,6 +40,7 @@ BuildRequires: meson
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(gsound)
 BuildRequires: pkgconfig(gudev-1.0) >= %gudev_ver
+BuildRequires: pkgconfig(udev)
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(systemd)
 BuildRequires: pkgconfig(gmobile) >= %gmobile_ver
@@ -94,7 +95,7 @@ GObject introspection devel data for %libname
 %prep
 %setup -n %name-%{?_disable_snapshot:v}%version
 # ALT #47557
-sed -i 's|-G %name|-G users|' debian/feedbackd.udev
+sed -i 's|-G %name|-G users|' data/90-feedbackd.rules
 
 %build
 %meson \
@@ -107,7 +108,6 @@ sed -i 's|-G %name|-G users|' debian/feedbackd.udev
 
 %install
 %meson_install
-install -D -m644 debian/%name.udev %buildroot%_udevrulesdir/90-%name.rules
 
 %check
 %__meson_test
@@ -145,6 +145,9 @@ install -D -m644 debian/%name.udev %buildroot%_udevrulesdir/90-%name.rules
 %endif
 
 %changelog
+* Thu Aug 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
+- 0.4.1
+
 * Mon Jun 24 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - 0.4.0
 

@@ -1,13 +1,13 @@
 %def_enable snapshot
 %define _name phosh
 %define ver_major 0.41
-%define beta .rc1
+%define beta %nil
 
 %def_enable check
 
 Name: %_name-wallpapers
 Version: %ver_major.0
-Release: alt0.9%beta
+Release: alt1%beta
 
 Summary: Phosh wallpapers and other artwork
 License: CC-BY-SA-4.0 and CC0-1.0 and GPL-3.0-or-later
@@ -75,6 +75,9 @@ This package provides sound theme for Phosh.
 %doc README.* NEWS
 
 %changelog
+* Thu Aug 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.41.0-alt1
+- 0.41.0
+
 * Thu Aug 08 2024 Yuri N. Sedunov <aris@altlinux.org> 0.41.0-alt0.9.rc1
 - 0.41.0.rc1
 

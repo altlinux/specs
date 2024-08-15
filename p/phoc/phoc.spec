@@ -2,7 +2,7 @@
 %define _libexecsir %_prefix/libexec
 %define ver_major 0.41
 %define api_ver 0
-%define beta .rc1
+%define beta %nil
 %define rdn_name sm.puri.Phoc
 %define xdg_name mobi.phosh.Phoc
 
@@ -20,7 +20,7 @@
 
 Name: phoc
 Version: %ver_major.0
-Release: alt0.9%beta
+Release: alt1%beta
 
 Summary: Display compositor designed for mobile devices
 License: GPL-3.0-or-later
@@ -132,6 +132,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Thu Aug 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.41.0-alt1
+- 0.41.0
+
 * Thu Aug 08 2024 Yuri N. Sedunov <aris@altlinux.org> 0.41.0-alt0.9.rc1
 - 0.41.0.rc1
 
