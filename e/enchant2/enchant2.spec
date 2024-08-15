@@ -10,8 +10,8 @@
 %def_enable check
 
 Name: %_name%api_ver
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 Epoch: 1
 
 Summary: An Enchanting Spell Checking Program
@@ -100,6 +100,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Thu Aug 15 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.8.2-alt1
+- 2.8.2
+
 * Tue Jul 23 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.8.1-alt2
 - iv@: restore hunspell support
 - enabled %%check
