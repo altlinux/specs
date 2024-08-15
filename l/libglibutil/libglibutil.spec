@@ -2,7 +2,7 @@
 
 Name: libglibutil
 
-Version: 1.0.75
+Version: 1.0.79
 Release: alt0.1
 Summary: Library of glib utilities
 License: BSD
@@ -53,6 +53,9 @@ make -C test test
 %_includedir/gutil/*.h
 
 %changelog
+* Thu Aug 15 2024 L.A. Kostis <lakostis@altlinux.ru> 1.0.79-alt0.1
+- 1.0.75->1.0.79.
+
 * Mon Dec 18 2023 L.A. Kostis <lakostis@altlinux.ru> 1.0.75-alt0.1
 - 1.0.74->1.0.75.
 
