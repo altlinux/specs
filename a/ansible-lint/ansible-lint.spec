@@ -1,5 +1,5 @@
 Name: ansible-lint
-Version: 24.6.1
+Version: 24.7.0
 Release: alt1
 
 Summary: Best practices checker for Ansible
@@ -20,7 +20,7 @@ BuildRequires: python3-module-setuptools_scm >= 7.0.5
 BuildRequires: python3-module-rich >= 12.0.0
 BuildRequires: python3-module-ruamel-yaml >= 0.18.5
 BuildRequires: python3-module-yamllint >= 1.30.0
-BuildRequires: ansible-core >= 2.12.0 python3-module-ansible-compat >= 4.1.11
+BuildRequires: ansible-core >= 2.17.1 python3-module-ansible-compat >= 24.5.0
 
 # for tests
 #BuildRequires: python3-module-yaml >= 5.4.1
@@ -28,7 +28,7 @@ BuildRequires: ansible-core >= 2.12.0 python3-module-ansible-compat >= 4.1.11
 #BuildRequires: python3-module-pylint python3-module-mypy python3-module-black
 #BuildRequires: python3-module-wcmatch
 
-Requires: ansible-core >= 2.13.0
+Requires: ansible-core >= 2.17.1
 Requires: ansible-compat >= 24.5.0
 Requires: python3-module-yamllint
 
@@ -55,6 +55,9 @@ echo "ref-names: tag: v%version" > .git_archival.txt
 %python3_sitelibdir/*
 
 %changelog
+* Thu Jul 18 2024 Alexey Shabalin <shaba@altlinux.org> 24.7.0-alt1
+- New version 24.7.0.
+
 * Fri Jul 05 2024 Alexey Shabalin <shaba@altlinux.org> 24.6.1-alt1
 - New version 24.6.1.
 
