@@ -1,13 +1,12 @@
 Name: xmp
-Version: 4.1.0
-Release: alt2
+Version: 4.2.0
+Release: alt1
 
 Summary: Extended Module Player for MOD/S3M/XM/IT/etc
 License: GPL-2.0+
 Group: Sound
 
-Url: https://xmp.sourceforge.net/
-Packager: Artem Kurashov <saahriktu@altlinux.org>
+Url: https://github.com/libxmp/xmp-cli
 Source: %name-%version.tar
 
 BuildRequires: pkgconfig
@@ -26,6 +25,7 @@ Tracker (IT) files.
 %setup
 
 %build
+./autogen.sh
 %configure
 %make_build
 
@@ -40,8 +40,12 @@ Tracker (IT) files.
 %_man1dir/xmp.1*
 
 %changelog
+* Thu Dec 28 2023 Artem Kurashov <saahriktu@altlinux.org> 4.2.0-alt1
+- New version (4.2.0).
+- .spec cleanup.
+
 * Tue May 23 2023 Artem Kurashov <saahriktu@altlinux.org> 4.1.0-alt2
-- Fix Autoimports/Sisyphus versions conflict
+- Fix Autoimports/Sisyphus versions conflict.
 
 * Fri May 05 2023 Artem Kurashov <saahriktu@altlinux.org> 4.1.0-alt1
-- Initial package
+- Initial package.
