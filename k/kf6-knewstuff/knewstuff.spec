@@ -1,8 +1,8 @@
 %define rname knewstuff
 
 Name: kf6-%rname
-Version: 6.3.0
-Release: alt2
+Version: 6.4.0
+Release: alt1
 %K6init no_altplace
 
 Group: System/Libraries
@@ -103,6 +103,9 @@ KF6 library
 
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.4.0-alt1
+- new version
+
 * Thu Jul 25 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt2
 - move qml into library packge
 

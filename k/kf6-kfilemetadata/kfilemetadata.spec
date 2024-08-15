@@ -3,7 +3,7 @@
 %def_enable exiv2
 
 Name: kf6-%rname
-Version: 6.3.0
+Version: 6.4.0
 Release: alt1
 %K6init altplace
 
@@ -79,6 +79,9 @@ KF6 library
 
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.4.0-alt1
+- new version
+
 * Tue Jun 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
 - new version
 

@@ -1,9 +1,9 @@
 %define rname ktexteditor
 
 Name: kf6-%rname
-Version: 6.3.0
+Version: 6.4.0
 Release: alt1
-%K6init altplace
+%K6init no_altplace
 
 Group: System/Libraries
 Summary: KDE Frameworks 6 full text editor component
@@ -81,6 +81,8 @@ mkdir -p %buildroot/%_datadir/katepart6/syntax/
 %_K6data/kdevappwizard/templates/*ktexteditor*
 
 %files -n libkf6texteditor
+%_bindir/*6
+%_K6bin/*ktexteditor*
 %_K6exec/kauth/*ktexteditor*
 %_K6dbus_sys_srv/*ktexteditor*.service
 %_datadir/polkit-1/actions/*ktexteditor*.policy
@@ -92,6 +94,9 @@ mkdir -p %buildroot/%_datadir/katepart6/syntax/
 
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.4.0-alt1
+- new version
+
 * Tue Jun 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
 - new version
 

@@ -3,7 +3,7 @@
 %define kdesu_user_dir %_localstatedir/%kdesu_user
 
 Name: kf6-%rname
-Version: 6.3.0
+Version: 6.4.0
 Release: alt1
 %K6init altplace
 
@@ -90,6 +90,9 @@ mkdir -p %buildroot/%kdesu_user_dir
 
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.4.0-alt1
+- new version
+
 * Tue Jun 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
 - new version
 

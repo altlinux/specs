@@ -1,8 +1,8 @@
 %define rname kwallet
 
 Name: kf6-%rname
-Version: 6.3.0
-Release: alt2
+Version: 6.4.0
+Release: alt1
 %K6init
 
 Group: System/Libraries
@@ -11,6 +11,9 @@ Url: http://www.kde.org
 License: LGPL-2.0-or-later
 
 Requires(post,preun): alternatives >= 0.2
+
+Provides: kf5-kwallet = %version-%release
+Obsoletes: kf5-kwallet < %version-%release
 
 Source: %rname-%version.tar
 Source1: kwalletd6.po
@@ -111,10 +114,11 @@ fi
 %config /%_sysconfdir/alternatives/packages.d/%name
 %_bindir/kwalletd6
 %_K6bin/kwalletd6
-%_K6bin/kwallet-query-*
+%_K6bin/kwallet-query*
 %_K6xdgapp/*.desktop
 %_K6notif/*.notifyrc
 #%_K6srv/*.desktop
+%_datadir/dbus-1/services/org.kde.kwalletd5.service
 %_datadir/dbus-1/services/org.kde.kwalletd6.service
 %_datadir/kf6/dbus-1/services/org.freedesktop.secrets.service
 %_datadir/xdg-desktop-portal/portals/kwallet.portal
@@ -133,6 +137,9 @@ fi
 
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.4.0-alt1
+- new version
+
 * Wed Jul 17 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt2
 - using alternatives for kwallet-query
 

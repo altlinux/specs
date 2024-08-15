@@ -1,11 +1,11 @@
 %define rname kded
-%ifndef _unitdir_user
-%define _unitdir_user %prefix/lib/systemd/user
+%ifndef _userunitdir
+%define _userunitdir %prefix/lib/systemd/user
 %endif
 %define service_name plasma-kded6
 
 Name: kf6-%rname
-Version: 6.3.0
+Version: 6.4.0
 Release: alt1
 %K6init
 
@@ -74,7 +74,7 @@ KF6 library
 %_K6bin/kded6
 %_K6xdgapp/*.desktop
 %_datadir/dbus-1/services/*.service
-%_unitdir_user/%service_name.service
+%_userunitdir/%service_name.service
 
 %files devel
 %_K6lib/cmake/KF6KDED/
@@ -82,6 +82,9 @@ KF6 library
 
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.4.0-alt1
+- new version
+
 * Tue Jun 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
 - new version
 

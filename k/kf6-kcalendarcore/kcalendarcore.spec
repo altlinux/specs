@@ -1,7 +1,7 @@
 %define rname kcalendarcore
 
 Name: kf6-%rname
-Version: 6.3.0
+Version: 6.4.0
 Release: alt1
 %K6init altplace
 
@@ -13,7 +13,7 @@ License: LGPL-2.0-or-later
 Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: extra-cmake-modules gcc-c++ qt6-base-devel
+BuildRequires: extra-cmake-modules qt6-declarative-devel
 BuildRequires: libical-devel libuuid-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel
 BuildRequires: kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel
@@ -75,9 +75,12 @@ KF6 library
 
 %files -n libkf6calendarcore
 %_K6lib/libKF6CalendarCore.so.*
-
+%_K6qml/org/kde/calendarcore/
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.4.0-alt1
+- new version
+
 * Tue Jun 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
 - new version
 

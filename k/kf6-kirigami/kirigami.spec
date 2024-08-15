@@ -7,9 +7,10 @@
 %define libkirigamidialogs libkirigamidialogs%sover
 %define libkirigamilayouts libkirigamilayouts%sover
 %define libkirigamiprimitives libkirigamiprimitives%sover
+%define libkirigamiprivate libkirigamiprivate%sover
 
 Name: kf6-kirigami
-Version: 6.3.0
+Version: 6.4.0
 Release: alt1
 %K6init altplace
 
@@ -102,6 +103,13 @@ Requires: %name-common
 %description -n %libkirigamiprimitives
 KF6 library
 
+%package -n %libkirigamiprivate
+Group: System/Libraries
+Summary: KF6 library
+Requires: %name-common
+%description -n %libkirigamiprivate
+KF6 library
+
 %prep
 %setup -n %rname-%version
 %ifarch %e2k
@@ -148,8 +156,14 @@ sed -i "s/_MSC_VER/__e2k__/" src/imagecolors.cpp
 %files -n %libkirigamiprimitives
 %_K6lib/libKirigamiPrimitives.so.%sover
 %_K6lib/libKirigamiPrimitives.so.*
+%files -n %libkirigamiprivate
+%_K6lib/libKirigamiPrivate.so.%sover
+%_K6lib/libKirigamiPrivate.so.*
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.4.0-alt1
+- new version
+
 * Tue Jun 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
 - new version
 

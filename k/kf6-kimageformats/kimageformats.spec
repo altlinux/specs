@@ -2,7 +2,7 @@
 %def_enable heif
 
 Name: kf6-%rname
-Version: 6.3.0
+Version: 6.4.0
 Release: alt1
 %K6init altplace
 
@@ -25,6 +25,8 @@ BuildRequires: libheif-devel
 %ifnarch %arm
 BuildRequires: libjxl-devel
 %endif
+# JXR disabled by default
+#BuildRequires: libjxr-devel
 BuildRequires: kf6-karchive-devel
 
 %description
@@ -64,6 +66,9 @@ Requires: kde-common
 #%_K6srv/qimageioplugins/
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.4.0-alt1
+- new version
+
 * Tue Jun 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
 - new version
 

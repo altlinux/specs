@@ -1,11 +1,11 @@
 %define rname kglobalaccel
-%ifndef _unitdir_user
-%define _unitdir_user %prefix/lib/systemd/user
+%ifndef _userunitdir
+%define _userunitdir %prefix/lib/systemd/user
 %endif
 %define service_name plasma-kglobalaccel
 
 Name: kf6-%rname
-Version: 6.3.0
+Version: 6.4.0
 Release: alt1
 %K6init
 
@@ -84,7 +84,7 @@ mkdir -p %buildroot/%_K6data/kglobalaccel/
 #%_K6srv/kglobalaccel6.desktop
 #%_K6dbus_srv/org.kde.kglobalaccel.service
 #%_K6plug/org.kde.kglobalaccel6*/
-#%_unitdir_user/%service_name.service
+#%_userunitdir/%service_name.service
 
 %files devel
 %_K6inc/KGlobalAccel/
@@ -99,6 +99,9 @@ mkdir -p %buildroot/%_K6data/kglobalaccel/
 
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.4.0-alt1
+- new version
+
 * Tue Jun 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
 - new version
 
