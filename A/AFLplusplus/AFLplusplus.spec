@@ -7,7 +7,7 @@
 
 Name: AFLplusplus
 Version: 4.21c
-Release: alt1
+Release: alt2
 
 Summary: American Fuzzy Lop plus plus (AFL++)
 License: Apache-2.0
@@ -86,7 +86,7 @@ export CPPFLAGS=-DNDEBUG
 # Compile with AFL_PERSISTENT_RECORD support
 export CFLAGS="$CFLAGS -DAFL_PERSISTENT_RECORD"
 
-%make_build PREFIX=%prefix NO_NYX=1 -j $(nproc) source-only
+%make_build PREFIX=%prefix NO_NYX=1 PERFORMANCE=1 -j $(nproc) source-only
 
 # Build custom mutators
 for mutator in atnwalk autotokens libfuzzer radamsa symcc symqemu; do
@@ -138,6 +138,9 @@ install -m755 utils/plot_ui/afl-plot-ui -t %buildroot%_bindir
 %_bindir/afl-plot-ui
 
 %changelog
+* Wed Aug 14 2024 Alexander Kuznetsov <kuznetsovam@altlinux.org> 4.21c-alt2
+- Build with arch-dependent performance options.
+
 * Fri Aug 02 2024 Andrey Kovalev <ded@altlinux.org> 4.21c-alt1
 - 4.21c
 
