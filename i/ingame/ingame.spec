@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ingame
-Version: 0.4.3
+Version: 0.4.4
 Release: alt1
 
 Summary: A modern GUI for PortProton project.
@@ -11,8 +11,7 @@ Group: Games/Other
 Url: https://github.com/Castro-Fidel/ingame
 
 Source: %name-%version.tar
-Source1: %name.sh
-Source2: %name.desktop
+Source1: %name.desktop
 
 BuildRequires(pre): rpm-build-python3
 
@@ -46,8 +45,8 @@ Group: Games/Other
 %build
 %install
 # base files
-install -Dm755 %SOURCE1 %buildroot%_bindir/ingame
-install -Dm644 %SOURCE2 %buildroot%_desktopdir/%name.desktop
+install -Dm755 ingame.sh %buildroot%_bindir/ingame
+install -Dm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 install -Dm644 qml/icons/%name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 mkdir -p %buildroot%_datadir/%name
 cp -rv qml %buildroot%_datadir/%name/
@@ -69,6 +68,9 @@ cp -rv %name %buildroot%python3_sitelibdir/
 %python3_sitelibdir/%name
 
 %changelog
+* Thu Aug 15 2024 Mikhail Tergoev <fidel@altlinux.org> 0.4.4-alt1
+- updated version to 0.4.4
+
 * Mon Aug 12 2024 Mikhail Tergoev <fidel@altlinux.org> 0.4.3-alt1
 - initial build for ALT Sisyphus
 
