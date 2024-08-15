@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: flatpak
-Version: 1.14.8
+Version: 1.14.10
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -32,7 +32,7 @@ Patch1: flatpak-1.12.2-alt-flatpak.sh.patch
 
 %define glib_ver 2.60
 %define ostree_ver 2020.8
-%define bwrap_ver 0.4.1
+%define bwrap_ver 0.10.0
 %define libarchive_ver 2.8.0
 %define zstd_ver 0.8.1
 %define malcontent_ver 0.4.0
@@ -220,6 +220,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Thu Aug 15 2024 Yuri N. Sedunov <aris@altlinux.org> 1.14.10-alt1
+- 1.14.10 (fixed CVE-2024-42472, GHSA-7hgv-f2j8-xw87)
+
 * Wed May 01 2024 Yuri N. Sedunov <aris@altlinux.org> 1.14.8-alt1
 - 1.14.8
 

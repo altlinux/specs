@@ -6,30 +6,29 @@
 %endif
 
 Name: bubblewrap
-Version: 0.8.0
+Version: 0.10.0
 Release: alt1
 
 Summary: Unprivileged sandboxing tool
-
+License: LGPL-2.0-or-later
 Group: System/Base
-License: LGPLv2+
 Url: https://github.com/projectatomic/bubblewrap
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/projectatomic/bubblewrap/releases/download/v%version/bubblewrap-%version.tar.xz
 Vcs: https://github.com/projectatomic/bubblewrap.git
 Source: %name-%version.tar
 #Source: https://github.com/projectatomic/%name/releases/download/v%version/%name-%version.tar.xz
 
-Patch1: bubblewrap-fix-run-path.patch
+Patch1: bubblewrap-0.9.0-alt-fix-run-path.patch
 
 %if %priv_mode == "none"
 Requires(pre): libcap-utils
 %endif
 
+%define meson_ver 1.3.0
+
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson gcc-c++ binutils-devel libelf-devel
+BuildRequires: meson >= %meson_ver gcc-c++ binutils-devel libelf-devel
 BuildRequires: db2latex-xsl docbook-style-xsl libcap-devel xsltproc
 BuildRequires: python3 bash-completion
 %{?_enable_selinux:BuildRequires: libselinux-devel}
@@ -43,7 +42,7 @@ because it is trivial to turn such access into to a fully privileged root shell 
 
 %prep
 %setup
-%patch1 -p1
+%patch1 -p1 -b .run-path
 
 %build
 %meson \
@@ -79,6 +78,9 @@ setcap -q "cap_sys_admin,cap_net_admin,cap_sys_chroot,cap_setuid,cap_setgid=ep" 
 %_datadir/zsh/site-functions/_bwrap
 
 %changelog
+* Thu Aug 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
+- 0.10.0
+
 * Tue Feb 28 2023 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
 - 0.8.0
 
