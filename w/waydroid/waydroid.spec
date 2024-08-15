@@ -2,7 +2,7 @@
 %define appname id.waydro.Container
 
 Name: waydroid
-Version: 1.4.2
+Version: 1.4.3
 Release: alt1
 
 Summary: Container-based approach to boot a full Android system on a regular GNU/Linux system
@@ -13,6 +13,8 @@ Url: https://waydro.id/
 
 # https://github.com/waydroid/waydroid/archive/refs/tags/<version>.tar.gz
 Source: %name-%version.tar
+# https://bugzilla.altlinux.org/51147
+Patch: %name-alt-disable-apparmor.patch
 
 BuildRequires: rpm-build-python3 python3-module-gbinder-python rpm-build-xdg
 
@@ -36,6 +38,7 @@ hardware.
 
 %prep
 %setup
+%patch -p1
 
 %build
 
@@ -60,6 +63,10 @@ mkdir -p %buildroot%_sysconfdir && touch %buildroot%_sysconfdir/gbinder.conf
 %_datadir/desktop-directories/%name.directory
 
 %changelog
+* Thu Aug 15 2024 L.A. Kostis <lakostis@altlinux.ru> 1.4.3-alt1
+- 1.4.3.
+- disable apparmor (closes #51147).
+
 * Sat Nov 04 2023 L.A. Kostis <lakostis@altlinux.ru> 1.4.2-alt1
 - 1.4.2.
 - added menu directories.
