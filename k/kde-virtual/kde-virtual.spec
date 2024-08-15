@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-virtual
-Version: 6.0.1
+Version: 6.0.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -50,6 +50,7 @@ Group: Graphical desktop/KDE
 Summary: NetworkManager network manager
 Provides: kde5-network-manager-4-nm = %EVR
 Obsoletes: kde5-network-manager-4-nm < %EVR
+Provides: kde5-network-manager-nm = %EVR
 #
 Provides: kde-network-manager = %EVR
 Provides: kde-network-manager-nm = %EVR
@@ -376,6 +377,9 @@ Requires: lightdm-kde-greeter dm-tool
 %files -n kde-display-manager-7-lightdm
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.0.2-alt1
+- fix provides
+
 * Fri Jul 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.0.1-alt1
 - clear requires
 
