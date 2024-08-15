@@ -1,8 +1,7 @@
-#TODO: system wlroots
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: hyprland
-Version: 0.41.2
+Version: 0.42.0
 Release: alt1
 
 Summary: Hyprland is a dynamic tiling Wayland compositor that doesn't sacrifice on its looks
@@ -26,6 +25,7 @@ BuildRequires: pkgconfig(hyprcursor)
 BuildRequires: pkgconfig(hyprlang)
 BuildRequires: pkgconfig(hyprwayland-scanner)
 BuildRequires: pkgconfig(hyprutils)
+BuildRequires: pkgconfig(aquamarine)
 
 BuildRequires: gcc-c++ >= 11
 BuildRequires: glslang-devel
@@ -57,6 +57,7 @@ BuildRequires: pkgconfig(xcb-icccm)
 BuildRequires: pkgconfig(xcb-errors)
 BuildRequires: pkgconfig(xcb-renderutil)
 BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: pkgconfig(xcursor)
 BuildRequires: pkgconfig(xwayland)
 BuildRequires: libdisplay-info-devel
 BuildRequires: libtomlplusplus-devel
@@ -90,8 +91,6 @@ subst '/^version_h = run_command/d' meson.build
 %install
 %meson_install
 rm -rf %buildroot%_includedir/%name
-rm -rf %buildroot%_libdir/libwlroots.a
-rm -rf %buildroot%_datadir/pkgconfig/wlroots.pc
 
 %files
 %doc README.md LICENSE
@@ -102,7 +101,7 @@ rm -rf %buildroot%_datadir/pkgconfig/wlroots.pc
 %_man1dir/Hyprland.1*
 %_man1dir/hyprctl.1*
 
-%_datadir/hyprland
+%_datadir/hypr/
 %_datadir/wayland-sessions/%name.desktop
 %_datadir/xdg-desktop-portal/%name-portals.conf
 
@@ -121,6 +120,9 @@ rm -rf %buildroot%_datadir/pkgconfig/wlroots.pc
 %_datadir/hyprland-protocols/
 
 %changelog
+* Wed Aug 14 2024 Roman Alifanov <ximper@altlinux.org> 0.42.0-alt1
+- new version 0.42.0 (with rpmrb script)
+
 * Thu Jul 04 2024 Roman Alifanov <ximper@altlinux.org> 0.41.2-alt1
 - new version 0.41.2 (with rpmrb script)
 
