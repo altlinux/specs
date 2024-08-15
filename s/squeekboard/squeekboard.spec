@@ -2,7 +2,7 @@
 %def_disable bootstrap
 
 Name: squeekboard
-Version: 1.39.0
+Version: 1.41.0
 Release: alt1
 
 Summary: A Wayland on-screen keyboard
@@ -37,8 +37,8 @@ BuildRequires: cargo-vendor-checksum diffstat
 %setup
 %if_enabled bootstrap
 mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
-tar cf %SOURCE1 vendor .cargo/config
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
+tar cf %SOURCE1 vendor .cargo/config.toml
 %else
 tar xf %SOURCE1
 %patch3500 -p1
@@ -68,6 +68,9 @@ EOF
 %_desktopdir/*.desktop
 
 %changelog
+* Thu Aug 15 2024 Yuri N. Sedunov <aris@altlinux.org> 1.41.0-alt1
+- 1.41.0
+
 * Mon May 06 2024 Yuri N. Sedunov <aris@altlinux.org> 1.39.0-alt1
 - 1.39.0
 
