@@ -1,10 +1,9 @@
-#TODO: system wlroots
 %global optflags_lto %optflags_lto -ffat-lto-objects
 %define upstream hyprland
 
 Name: hyprland-legacyrenderer
-Version: 0.41.2
-Release: alt2
+Version: 0.42.0
+Release: alt1
 
 Summary: Hyprland is a dynamic tiling Wayland compositor (legacy renderer)
 License: BSD-3-Clause and MIT
@@ -13,6 +12,7 @@ Group: Graphical desktop/Other
 Url: https://github.com/hyprwm/Hyprland
 
 ExcludeArch: i586 armh
+Conflicts: hyprland
 Patch0: hyprland-0.40.0-native-udis86.patch
 
 # Source-url: https://github.com/hyprwm/Hyprland/releases/download/v%version/source-v%version.tar.gz
@@ -27,6 +27,7 @@ BuildRequires: pkgconfig(hyprcursor)
 BuildRequires: pkgconfig(hyprlang)
 BuildRequires: pkgconfig(hyprwayland-scanner)
 BuildRequires: pkgconfig(hyprutils)
+BuildRequires: pkgconfig(aquamarine)
 
 BuildRequires: gcc-c++ >= 11
 BuildRequires: glslang-devel
@@ -58,6 +59,7 @@ BuildRequires: pkgconfig(xcb-icccm)
 BuildRequires: pkgconfig(xcb-errors)
 BuildRequires: pkgconfig(xcb-renderutil)
 BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: pkgconfig(xcursor)
 BuildRequires: pkgconfig(xwayland)
 BuildRequires: libdisplay-info-devel
 BuildRequires: libtomlplusplus-devel
@@ -87,8 +89,6 @@ subst '/^version_h = run_command/d' meson.build
 %install
 %meson_install
 rm -rf %buildroot%_includedir/%upstream
-rm -rf %buildroot%_libdir/libwlroots.a
-rm -rf %buildroot%_datadir/pkgconfig/wlroots.pc
 
 rm -rf %buildroot%_datadir/hyprland-protocols
 rm -rf %buildroot%_datadir/pkgconfig/hyprland-protocols.pc
@@ -103,7 +103,7 @@ rm -rf %buildroot%_datadir/pkgconfig/hyprland.pc
 %_man1dir/Hyprland.1*
 %_man1dir/hyprctl.1*
 
-%_datadir/hyprland
+%_datadir/hypr/
 %_datadir/wayland-sessions/%upstream.desktop
 %_datadir/xdg-desktop-portal/%upstream-portals.conf
 
@@ -117,6 +117,10 @@ rm -rf %buildroot%_datadir/pkgconfig/hyprland.pc
 %_datadir/zsh/site-functions/_hyprpm
 
 %changelog
+* Thu Aug 15 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.42.0-alt1
+- new version 0.42.0 (with rpmrb script)
+- added missing conflict on hyprland
+
 * Sat Jul 20 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.41.2-alt2
 - Initial build of hyprland with legacy renderer
 
