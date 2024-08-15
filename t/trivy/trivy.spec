@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: trivy
-Version: 0.53.0
+Version: 0.54.1
 Release: alt1
 Summary: A Fast Vulnerability Scanner for Containers
 
@@ -66,7 +66,7 @@ export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export GOFLAGS="-mod=vendor"
-export LDFLAGS="-X github.com/aquasecurity/trivy/pkg/version.ver=%version"
+export LDFLAGS="-X github.com/aquasecurity/trivy/pkg/version/app.ver=%version"
 export CGO_ENABLED=0
 
 %golang_prepare
@@ -100,6 +100,10 @@ rm -rf -- %buildroot%go_root
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Thu Aug 15 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.54.1-alt1
+- 0.53.0 -> 0.54.1
+- Fixed `trivy --version` output (closes: 47604)
+
 * Mon Jul 08 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.53.0-alt1
 - 0.52.2 -> 0.53.0
 
