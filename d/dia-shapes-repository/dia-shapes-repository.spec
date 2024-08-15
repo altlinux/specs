@@ -1,7 +1,7 @@
 Name: dia-shapes-repository
 # No version here. Usiny YEAR.SERIAL
 Version: 2021.11
-Release: alt1
+Release: alt2
 Buildarch: noarch
 Group: Office
 Requires: dia
@@ -33,6 +33,8 @@ Packager: Fr. Br. George <george@altlinux.ru>
 
 %prep
 %setup
+# XXX TYPO
+sed -i 's/horzontal/horizontal/' shapes/gradient/white_gray_horizontal.shape
 
 %build
 cp %SOURCE1 .
@@ -49,8 +51,10 @@ cp -a sheets/* %buildroot%_datadir/dia/sheets/
 %_datadir/dia/sheets/*
 
 
-
 %changelog
+* Thu Aug 15 2024 Fr. Br. George <george@altlinux.org> 2021.11-alt2
+- Fix shape typo
+
 * Wed Nov 03 2021 Fr. Br. George <george@altlinux.ru> 2021.11-alt1
 - Fix getter script
 + 5 more shapes
