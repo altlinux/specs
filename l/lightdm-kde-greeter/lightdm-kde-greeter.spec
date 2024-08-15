@@ -3,9 +3,9 @@
 
 Name: lightdm-kde-greeter
 Version: 0.4.23
-Release: alt3
+Release: alt4
 Group: Graphical desktop/Other
-Summary: LightDM KDE5 Greeter
+Summary: LightDM KDE6 Greeter
 License: GPL-3.0+
 Url: https://invent.kde.org/plasma/lightdm-kde-greeter.git
 
@@ -91,6 +91,10 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Thu Aug 15 2024 Anton Golubev <golubevan@altlinux.org> 0.4.23-alt4
+- remove the link to the debug file
+- fix PAM messages
+
 * Tue Aug 13 2024 Anton Golubev <golubevan@altlinux.org> 0.4.23-alt3
 - fix the main problems of the greeter after porting
 - move embedding liblightdm into a separate patch
