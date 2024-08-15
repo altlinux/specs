@@ -3,7 +3,7 @@
 
 Name: amnezia-vpn
 Version: 4.6.0.3
-Release: alt2
+Release: alt3
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
@@ -20,6 +20,7 @@ Source1: SortFilterProxyModel-%sort_filter_proxy_model_commit.tar
 Source2: qtkeychain-%qtkeychain_commit.tar
 
 Patch0: %name-use-system-libs-instead-3rd-prebuilt.patch
+Patch1: %name-openvpn-exec-path.patch
 
 BuildRequires: cmake
 BuildRequires: libsecret-devel
@@ -37,9 +38,11 @@ Amnezia is an open-source VPN client, with a key feature that enables you to dep
 Summary: The best client for self-hosted VPN
 Group: System/Servers
 Requires: %name-service = %EVR
+Requires: openvpn
 Requires: qt6-5compat
 Requires: qt6-declarative
 Requires: qt6-svg
+Requires: shadowsocks-libev
 
 %description client
 Amnezia is an open-source VPN client, with a key feature that enables you to deploy your own VPN server on your server.
@@ -56,6 +59,7 @@ This package contains systemd service files.
 %prep
 %setup -n amnezia-client-%version -b 1 -b 2
 %patch0 -p1
+%patch1 -p1
 
 %__mv -Tf ../SortFilterProxyModel-%sort_filter_proxy_model_commit client/3rd/SortFilterProxyModel
 %__mv -Tf ../qtkeychain-%qtkeychain_commit client/3rd/qtkeychain
@@ -86,6 +90,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 
 %__install -Dp -m0755 %_cmake__builddir/service/server/AmneziaVPN-service %buildroot%_bindir/
 
+%preun service
+%preun_systemd AmneziaVPN
+
 %files client
 %doc README.md
 %_bindir/AmneziaVPN
@@ -97,6 +104,11 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Thu Aug 15 2024 Nazarov Denis <nenderus@altlinux.org> 4.6.0.3-alt3
+- Add patch for correct exec OpenVPN path and require
+- Add requires for Shadowsocks client
+- Stop service before uninstall
+
 * Wed Aug 14 2024 Nazarov Denis <nenderus@altlinux.org> 4.6.0.3-alt2
 - Added needed requires
 
