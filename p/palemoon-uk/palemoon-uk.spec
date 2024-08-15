@@ -4,13 +4,13 @@
 %define cid_dict       uk@dictionaries.addons.mozilla.org
 %define cid_dict_dir   %palemoon_noarch_extensionsdir/%cid_dict
 
-%define min_version	33.2.0
-%define max_version	33.6.*
+%define min_version	33.3.0
+%define max_version	34.0.*
 
 
 Name: palemoon-uk
 
-Version: 33.2.0
+Version: 33.3.0
 Release: alt1
 
 Summary: Ukrainian (UA) Language Pack for Pale Moon
@@ -28,7 +28,7 @@ Source2: uk_UA_%version.tar
 
 
 Requires: hunspell-uk
-Requires: palemoon >= 33.0.0
+Requires: palemoon >= 33.3.0
 
 
 BuildRequires(pre):	rpm-build-palemoon
@@ -75,6 +75,9 @@ ln -s %_datadir/myspell/uk_UA.dic %buildroot/%cid_dict_dir/dictionaries/uk-UA.di
 
 
 %changelog
+* Thu Aug 15 2024 Hihin Ruslan <ruslandh@altlinux.ru> 33.3.0-alt1
+- Version 33.3.0
+
 * Thu Jul 18 2024 Hihin Ruslan <ruslandh@altlinux.ru> 33.2.0-alt1
 - Version 33.2.0
 
