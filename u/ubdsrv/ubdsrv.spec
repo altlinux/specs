@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: ubdsrv
-Version: 1.1
+Version: 1.2
 Release: alt1
 Summary: ublk: userspace block device driver
 License: GPL-2.0-only and LGPL-2.1-only and MIT
@@ -75,5 +75,8 @@ EOF
 %_pkgconfigdir/ublksrv.pc
 
 %changelog
+* Tue Aug 13 2024 Vitaly Chikunov <vt@altlinux.org> 1.2-alt1
+- Update to v1.2 (2024-07-29).
+
 * Fri Oct 27 2023 Vitaly Chikunov <vt@altlinux.org> 1.1-alt1
 - First import v1.1 (2023-10-28).
