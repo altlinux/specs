@@ -9,7 +9,7 @@
 %define flavour %brand-%theme
 
 Name: branding-%flavour
-Version: 2024.06
+Version: 2024.08
 Release: alt1
 
 Url: https://www.altlinux.org/ALT_Mobile
@@ -146,7 +146,7 @@ THEME=%theme NAME='%Theme' BRAND_FNAME='%Brand' BRAND_FNAME_RU='%Brand_ru' BRAND
 #release
 install -pD -m644 /dev/null %buildroot%_sysconfdir/buildreqs/packages/ignore.d/%name-release
 {
-	[ -n "%Brand" ] && echo -n " %Brand"
+	[ -n "%Brand" ] && echo -n "%Brand"
 	[ -n "%Theme" ] && echo -n " %Theme"
 	[ -n "%version" ] && echo -n " %version"
 	[ -n "%status_en" ] && {
@@ -224,6 +224,10 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/gtk-3.0/gtk.css
 
 %changelog
+* Fri Aug 16 2024 Anton Midyukov <antohami@altlinux.org> 2024.08-alt1
+- Bump version
+- Fix space in /etc/altlinux-release
+
 * Tue Jun 25 2024 Anton Midyukov <antohami@altlinux.org> 2024.06-alt1
 - images: images: update background, lockscreen (Thanks Semen Fomchenkov)
 
