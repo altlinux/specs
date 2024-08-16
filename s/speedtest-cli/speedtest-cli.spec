@@ -1,7 +1,7 @@
 %define git 22210ca
 %define name speedtest-cli
 %define version 2.1.4
-%define release alt0.2.g%{git}
+%define release alt0.3.g%{git}
 
 Name: %name
 Version: %version
@@ -51,6 +51,9 @@ EOF
 %_desktopdir/%name.desktop
 
 %changelog
+* Fri Jul 12 2024 L.A. Kostis <lakostis@altlinux.ru> 2.1.4-alt0.3.g22210ca
+- Update deprecated method in datetime call (upstream PR #803).
+
 * Sat Oct 07 2023 L.A. Kostis <lakostis@altlinux.ru> 2.1.4-alt0.2.g22210ca
 - set secure connection by default (upstream PR #800)
 
