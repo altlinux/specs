@@ -3,7 +3,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.0.8
+Version: 1.0.9
 Release: alt1
 
 Summary: Pure Python Implementation of MySQL replication protocol build on top of PyMYSQL
@@ -45,6 +45,9 @@ and raw SQL queries.
 %exclude %python3_sitelibdir/pymysqlreplication/tests
 
 %changelog
+* Fri Aug 16 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.9-alt1
+- Automatically updated to 1.0.9.
+
 * Wed Apr 03 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.8-alt1
 - Automatically updated to 1.0.8.
 
