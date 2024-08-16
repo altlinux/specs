@@ -93,7 +93,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %def_with docs
 
 Name: python3
-Version: %{pybasever}.2
+Version: %{pybasever}.5
 Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
@@ -325,6 +325,7 @@ python 3 code that uses more than just unittest and/or test_support.py.
 %package doc
 Summary: Documentation for the Python 3 programming language
 Group: Documentation
+BuildArch: noarch
 
 %description doc
 Documentation for the Python 3 programming language, interpreter,
@@ -1058,6 +1059,9 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Fri Aug 16 2024 Grigory Ustinov <grenka@altlinux.org> 3.12.5-alt1
+- Updated to upstream version 3.12.5.
+
 * Mon Feb 12 2024 Grigory Ustinov <grenka@altlinux.org> 3.12.2-alt1
 - Updated to upstream version 3.12.2.
 - Fixed rot13 codec (Closes: #49401).
