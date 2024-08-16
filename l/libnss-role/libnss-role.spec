@@ -9,7 +9,7 @@
 
 Name: libnss-role
 Version: 0.5.6
-Release: alt2
+Release: alt3
 
 Summary: NSS API library and admin tools for roles and privilegies
 
@@ -79,12 +79,22 @@ mkdir -p %buildroot%_sysconfdir/role.d
 install -pD -m755 %name.control %buildroot%_controldir/%name
 
 %post
-control libnss-role enabled
-update_chrooted all
+if [ $1 -eq 1 ]; then
+	control libnss-role enabled
+	update_chrooted all
+fi
 
 %preun
-control libnss-role disabled
-update_chrooted all
+if [ $1 -eq 0 ]; then
+	control libnss-role disabled
+	update_chrooted all
+fi
+
+%triggerun -- libnss-role < 0.5.6-alt3
+%pre_control libnss-role
+
+%triggerpostun -- libnss-role < 0.5.6-alt3
+%post_control libnss-role
 
 %files
 %config(noreplace) %verify(not md5 size mtime) %_sysconfdir/role
@@ -103,6 +113,9 @@ update_chrooted all
 %_includedir/role/
 
 %changelog
+* Fri Aug 16 2024 Evgeny Sinelnikov <sin@altlinux.org> 0.5.6-alt3
+- Fix disabling libnss-role by control during upgrade (closes #50704).
+
 * Tue Feb 06 2024 Vitaly Lipatov <lav@altlinux.ru> 0.5.6-alt2
 - Add support for --disable=test
 
