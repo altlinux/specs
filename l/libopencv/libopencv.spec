@@ -40,7 +40,7 @@
 Name: lib%bname
 Epoch: 1
 Version: 4.10.0
-Release: alt1
+Release: alt2
 Summary: Open Source Computer Vision Library
 License: BSD-3-Clause AND Apache-2.0 AND ISC
 Group: System/Libraries
@@ -69,6 +69,12 @@ BuildRequires: python3-module-sphinx-devel python3-module-Pygments python3-modul
 BuildRequires: texlive-latex-base
 BuildRequires: libprotobuf-devel protobuf-compiler libwebp-devel
 BuildRequires: libgflags-devel
+BuildRequires: libflexiblas-devel
+BuildRequires: libpcre2-devel
+BuildRequires: libbrotli-devel
+BuildRequires: libffi-devel
+BuildRequires: libmount-devel
+
 %ifarch %{ix86} x86_64 armh
 BuildRequires: libglog-devel
 %endif
@@ -252,7 +258,7 @@ This package contains %Name examples.
 rm -fR 3rdparty/{ffmpeg,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib,protobuf,libwebp}
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags -D_FILE_OFFSET_BITS=64 -DGLOG_USE_GLOG_EXPORT
 
 %cmake \
 	-DBUILD_PACKAGE:BOOL=ON \
@@ -326,7 +332,7 @@ for mod in found_mods:
     print(mod)
 EOF
 
-%ifarch %arm %ix86 x86_64
+%ifarch x86_64
     sort %SOURCE2 > expected_mods.list
     diff -y expected_mods.list actual_mods.list ||
 	{ echo 'Update expected list of modules' ; exit 1 ; }
@@ -376,6 +382,10 @@ EOF
 %_datadir/%Name/quality
 
 %changelog
+* Fri Aug 16 2024 Anton Farygin <rider@altlinux.ru> 1:4.10.0-alt2
+- fixed build against glog 0.7.0
+- add missing BuildRequires
+
 * Mon Jul 22 2024 Anton Farygin <rider@altlinux.ru> 1:4.10.0-alt1
 - 4.9.0 -> 4.10.0
 
