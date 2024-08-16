@@ -1,19 +1,20 @@
 %define discord_rpc_commit 4ec218155d73bcb8022f8f7ca72305d801f84beb
 %define cryptopp_cmake_commit 2c384c28265a93358a2455e610e76393358794df
-%define sdl3_commit b72c22340e9a3c680011e245c28492bf60f5be66
-%define vulkan_headers_version 1.3.289
-%define vma_commit feb11e172715011ef2a7b3b6c7c8737337b34181
+%define sdl3_commit 4cc3410dce50cefce98d3cf3cf1bc8eca83b862a
+%define vulkan_headers_version 1.3.292
+%define vma_commit 871913da6a4b132b567d7b65c509600363c0041e
 %define robin_map_commit 1115dad3ffa0994e3f43b693d9b9cc99944c64c1
 %define xbyak_version 7.07
-%define magic_enum_commit dd6a39d0ba1852cf06907e0f0573a2a10d23c2ad
-%define toml11_commit b389bbc4ebf90fa2fe7651de3046fb19f661ba3c
-%define sirit_commit 505cc66a2be70b268c1700fef4d5327a5fe46494
-%define tracy_commit c6d779d78508514102fbe1b8eb28bda10d95bb2a
+%define magic_enum_commit dae6bbf16c363e9ead4e628a47fdb02956a634f3
+%define toml11_commit fcb1d3d7e5885edfadbbe9572991dc4b3248af58
+%define sirit_commit 8db09231c448b913ae905d5237ce2eca46e3fe87
+%define tracy_commit b8061982cad0210b649541016c88ff5faa90733c
 %define cryptopp_commit 60f81a77e0c9a0e7ffc1ca1bc438ddfa2e43b78e
+%define zydis_commit 16c6a369c193981e9cf314126589eaa8763f92c3
 
 Name: shadps4
-Version: 0.1.0
-Release: alt2
+Version: 0.2.0
+Release: alt1
 
 Summary: Sony PlayStation 4 emulator
 License: GPL-2.0
@@ -24,8 +25,8 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: x86_64
 
-# https://github.com/%name-emu/shadPS4/archive/%version/shadPS4-%version.tar.gz
-Source0: shadPS4-%version.tar
+# https://github.com/%name-emu/shadPS4/archive/%version/shadPS4-v.%version.tar.gz
+Source0: shadPS4-v.%version.tar
 # https://github.com/shadps4-emu/ext-discord-rpc/archive/%discord_rpc_commit/ext-discord-rpc-%discord_rpc_commit.tar.gz
 Source1: ext-discord-rpc-%discord_rpc_commit.tar
 # https://github.com/shadps4-emu/ext-cryptopp-cmake/archive/%cryptopp_cmake_commit/ext-cryptopp-cmake-%cryptopp_cmake_commit.tar.gz
@@ -50,8 +51,10 @@ Source10: sirit-%sirit_commit.tar
 Source11: tracy-%tracy_commit.tar
 # https://github.com/shadps4-emu/ext-cryptopp/archive/%cryptopp_commit/ext-cryptopp-%cryptopp_commit.tar.gz
 Source12: ext-cryptopp-%cryptopp_commit.tar
+# https://github.com/zyantific/zydis/archive/%zydis_commit/zydis-%zydis_commit.tar.gz
+Source13: zydis-%zydis_commit.tar
 
-BuildRequires: boost-devel
+BuildRequires: boost-asio-devel
 BuildRequires: cmake
 BuildRequires: glslang-devel
 BuildRequires: libXext-devel
@@ -61,7 +64,7 @@ BuildRequires: libspirv-tools-devel
 BuildRequires: libvulkan-memory-allocator-devel
 BuildRequires: libxbyak-devel
 BuildRequires: libxxhash-devel
-BuildRequires: libzydis-devel
+BuildRequires: libzycore-devel
 BuildRequires: qt6-base-devel
 BuildRequires: spirv-headers
 BuildRequires: zlib-ng-devel
@@ -88,7 +91,7 @@ shadPS4 is an early PS4 emulator for Windows and Linux written in C++
 This package contains a graphical user interface using Qt6.
 
 %prep
-%setup -n shadPS4-%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12
+%setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13
 %__mv -Tf ../ext-discord-rpc-%discord_rpc_commit externals/discord-rpc
 %__mv -Tf ../ext-cryptopp-cmake-%cryptopp_cmake_commit externals/cryptopp-cmake
 %__mv -Tf ../ext-SDL-%sdl3_commit externals/sdl3
@@ -101,18 +104,19 @@ This package contains a graphical user interface using Qt6.
 %__mv -Tf ../sirit-%sirit_commit externals/sirit
 %__mv -Tf ../tracy-%tracy_commit externals/tracy
 %__mv -Tf ../ext-cryptopp-%cryptopp_commit externals/cryptopp
+%__mv -Tf ../zydis-%zydis_commit externals/zydis
 
 %build
 %add_optflags -Wno-error=return-type
 
 # Build CLI version
 %define _cmake__builddir %_target_platform
-%cmake -DSIRIT_USE_SYSTEM_SPIRV_HEADERS:BOOL=TRUE
+%cmake -DSIRIT_USE_SYSTEM_SPIRV_HEADERS:BOOL=TRUE -Wno-dev
 %cmake_build
 
 # Build Qt version
 %define _cmake__builddir %_target_platform-qt
-%cmake -DENABLE_QT_GUI:BOOL=TRUE -DSIRIT_USE_SYSTEM_SPIRV_HEADERS:BOOL=TRUE
+%cmake -DENABLE_QT_GUI:BOOL=TRUE -DSIRIT_USE_SYSTEM_SPIRV_HEADERS:BOOL=TRUE -Wno-dev
 %cmake_build
 
 %install
@@ -127,6 +131,9 @@ This package contains a graphical user interface using Qt6.
 %_bindir/%name-qt
 
 %changelog
+* Fri Aug 16 2024 Nazarov Denis <nenderus@altlinux.org> 0.2.0-alt1
+- Version 0.2.0
+
 * Sat Jul 13 2024 Nazarov Denis <nenderus@altlinux.org> 0.1.0-alt2
 - Improve Qt build
 
