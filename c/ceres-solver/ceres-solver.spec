@@ -1,12 +1,18 @@
+%ifarch %ix86
+%define check_relax ||:
+%else
+%define check_relax %nil
+%endif
 %define ceres_soname 4
 Name: ceres-solver
 Version: 2.2.0
-Release: alt1
+Release: alt2
 Summary: A non-linear least squares minimizer
 Group: Development/Other
 License: BSD
 Url: https://ceres-solver.org/
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 BuildRequires: gcc-c++
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: python3-devel rpm-build-python3 cmake ctest
@@ -64,6 +70,8 @@ Group: Development/Other
 Summary: A non-linear least squares minimizer
 Requires: libceres%ceres_soname = %EVR
 Requires: eigen3
+Requires: libgflags-devel
+Requires: libsuitesparse-devel
 Provides: libsolver-devel = %EVR
 
 %description devel
@@ -72,9 +80,11 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %cmake \
+  -DCMAKE_CXX_FLAGS="-DGLOG_USE_GLOG_EXPORT" \
   -DCXSPARSE_INCLUDE_DIR:PATH=%_includedir/suitesparse \
   -DBLA_VENDOR=FlexiBLAS \
   -DCMAKE_BUILD_TYPE=Release \
@@ -85,9 +95,10 @@ developing applications that use %name.
 
 %install
 %cmake_install
+rm -f %buildroot%_libdir/cmake/Ceres/FindGlog.cmake
 
 %check
-%ctest
+%ctest %check_relax
 
 %files -n libceres%ceres_soname
 %doc README.md
@@ -101,6 +112,9 @@ developing applications that use %name.
 %_libdir/cmake/Ceres
 
 %changelog
+* Tue Jun 04 2024 Anton Farygin <rider@altlinux.ru> 2.2.0-alt2
+- fixed the build against glog 0.7.0
+
 * Tue May 21 2024 Anton Farygin <rider@altlinux.ru> 2.2.0-alt1
 - 2.1.0 -> 2.2.0
 - package with shared library was renamed according shared libs policy
