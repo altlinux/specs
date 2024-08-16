@@ -1,7 +1,7 @@
 %define rname sddm-kcm
 
 Name: %rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 #Epoch: 1
 %K6init
@@ -20,6 +20,7 @@ Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
+BuildRequires: libvulkan-devel
 BuildRequires: qt6-declarative-devel qt6-tools-devel
 BuildRequires: libxcbutil-image-devel
 BuildRequires: kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
@@ -60,6 +61,9 @@ SDDM configuration module.
 
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname kde-gtk-config
 
 Name: %rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 #Epoch: 1
 %K6init
@@ -23,6 +23,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-svg-devel
 BuildRequires: sassc
 BuildRequires: libgtk+2-devel libgtk+3-devel libXcursor-devel
+BuildRequires: libvulkan-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcmutils-devel kf6-kcodecs-devel kf6-kcompletion-devel
 BuildRequires: kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-kglobalaccel-devel
 BuildRequires: kf6-kguiaddons-devel kf6-ki18n-devel kf6-kiconthemes-devel kf6-kio-devel kf6-kitemviews-devel kf6-kjobwidgets-devel
@@ -67,6 +68,9 @@ ADD_OPTFLAGS=`pkg-config --cflags harfbuzz`
 
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

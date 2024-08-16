@@ -4,7 +4,7 @@
 %define liblayershellqtinterface liblayershellqtinterface%sover
 
 Name: plasma6-%rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 %K6init
 
@@ -16,6 +16,7 @@ License: GPL-2.0-or-later
 Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
+BuildRequires: libvulkan-devel
 BuildRequires: qt6-base-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: qt6-base-devel qt6-svg-devel qt6-wayland-devel wayland-protocols
@@ -76,6 +77,9 @@ Requires: %name-common
 %_K6lib/libLayerShellQtInterface.so.*
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

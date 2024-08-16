@@ -7,7 +7,7 @@
 
 %define rname libkscreen
 Name: plasma6-%rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 %K6init
 
@@ -20,6 +20,7 @@ Source: %rname-%version.tar
 Patch1: alt-pnp-ids-path.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-build-ubt
+BuildRequires: libvulkan-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: qt6-tools-devel
 BuildRequires: qt6-wayland-devel plasma-wayland-protocols
@@ -111,6 +112,9 @@ export PATH=%_qt6_bindir:$PATH
 
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

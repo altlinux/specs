@@ -8,7 +8,7 @@
 %define libkglobalacceld libkglobalacceld%sover
 
 Name: plasma6-%rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 %K6init
 
@@ -25,6 +25,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
 BuildRequires: libxcb-devel libxcbutil-keysyms-devel
+BuildRequires: libvulkan-devel
 BuildRequires: kf6-kconfig-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel
 BuildRequires: kf6-kwindowsystem-devel kf6-kglobalaccel-devel kf6-kservice-devel kf6-kio-devel kf6-kjobwidgets-devel
 
@@ -87,6 +88,9 @@ Requires: %name-common >= %EVR
 %_K6lib/cmake/KGlobalAccelD/
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

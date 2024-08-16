@@ -20,7 +20,7 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma-%rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 %K6init no_altplace
 
@@ -54,6 +54,7 @@ Patch12: alt-send-interactive.patch
 Patch13: alt-ghns-auth.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
+BuildRequires: libvulkan-devel
 BuildRequires: libssl-devel qt6-declarative-devel
 BuildRequires: qcoro6-devel
 BuildRequires: desktop-file-utils
@@ -329,6 +330,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

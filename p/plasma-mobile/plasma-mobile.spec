@@ -10,8 +10,8 @@
 %endif
 
 Name: %rname
-Version: 6.1.2
-Release: alt2
+Version: 6.1.4
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -35,6 +35,7 @@ Patch2: alt-def-shell.patch
 Patch3: alt-no-dialer.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-build-ubt
+BuildRequires: libvulkan-devel
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-wayland-devel qt6-svg-devel qt6-sensors-devel
 BuildRequires: qcoro6-devel libudev-devel
 BuildRequires: kf6-modemmanager-qt-devel ModemManager-devel kf6-networkmanager-qt-devel kf6-kcmutils-devel
@@ -142,6 +143,9 @@ sed -i 's|\(.*add_subdirectory.*dialer.*\)|#\1|' CMakeLists.txt
 #/usr/share/dbus-1/interfaces/org.kde.plasmashell.Mobile.xml
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt2
 - split virtualkeyboard settings into separate package
 

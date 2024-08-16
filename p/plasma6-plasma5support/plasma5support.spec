@@ -4,7 +4,7 @@
 %define libplasma5support libplasma5support%sover
 
 Name: plasma6-%rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 %K6init
 
@@ -16,6 +16,7 @@ License: LGPL-2.0-or-later
 Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
+BuildRequires: libvulkan-devel
 BuildRequires: extra-cmake-modules qt6-declarative-devel
 BuildRequires: kf6-kconfig-devel kf6-kcoreaddons-devel kf6-kguiaddons-devel kf6-ki18n-devel
 BuildRequires: kf6-knotifications-devel kf6-solid-devel
@@ -82,6 +83,9 @@ KF6 library
 
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

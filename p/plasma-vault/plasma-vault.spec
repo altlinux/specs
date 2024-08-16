@@ -1,7 +1,7 @@
 %define rname plasma-vault
 
 Name: plasma-vault
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 #Epoch: 1
 %K6init
@@ -22,6 +22,7 @@ Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: qt6-declarative-devel
+BuildRequires: libvulkan-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: kf6-kdbusaddons-devel kf6-ki18n-devel kf6-kiconthemes-devel kf6-kio-devel
 BuildRequires: kf6-kpackage-devel kf6-kitemmodels-devel kf6-kservice-devel kf6-kwidgetsaddons-devel
@@ -50,6 +51,9 @@ BuildRequires: plasma6-lib-devel plasma6-activities-devel plasma6-libksysguard-d
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

@@ -5,7 +5,7 @@
 
 %define rname libplasma
 Name: plasma6-lib
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 %K6init
 
@@ -23,6 +23,7 @@ Source: %rname-%version.tar
 #BuildRequires: appstream clang-tools extra-cmake-modules glslang kde5-plasma-wayland-protocols kf6-kcmutils-devel kf6-ki18n-devel kf6-kiconthemes-devel kf6-kio-devel kf6-kirigami-devel kf6-knotifications-devel kf6-kpackage-devel kf6-ksvg-devel libGLU-devel libXScrnSaver-devel libXaw-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXres-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libwayland-egl-devel libxcb-render-util-devel libxcbutil-cursor-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel libxkbcommon-x11-devel libxkbfile-devel plasma6-activities-devel python-modules-compiler qt6-wayland-devel rpm-build-kf6 tbb-devel
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
+BuildRequires: libvulkan-devel
 BuildRequires: qt6-base-devel qt6-declarative-devel
 BuildRequires: qt6-wayland-devel libwayland-egl-devel plasma-wayland-protocols
 BuildRequires: kf6-kcmutils-devel kf6-ki18n-devel kf6-kiconthemes-devel kf6-kio-devel kf6-kirigami-devel
@@ -103,6 +104,9 @@ Requires: %name-common
 
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

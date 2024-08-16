@@ -3,7 +3,7 @@
 %def_disable accounts
 
 Name: %rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 %K6init
 
@@ -68,6 +68,7 @@ BuildRequires: libxcbutil-devel libxcbutil-image-devel libxcbutil-keysyms-devel
 BuildRequires: xorg-drv-synaptics-devel xorg-sdk xorg-drv-evdev-devel xkeyboard-config-devel xorg-drv-libinput-devel
 BuildRequires: iceauth mkfontdir xset /usr/bin/intltool-merge
 BuildRequires: wayland-devel qt6-wayland-devel wayland-protocols plasma-wayland-protocols
+BuildRequires: libvulkan-devel
 BuildRequires: accounts-qt6-devel
 %if_enabled accounts
 BuildRequires: signon-devel kaccounts-integration-devel
@@ -244,6 +245,9 @@ done
 
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

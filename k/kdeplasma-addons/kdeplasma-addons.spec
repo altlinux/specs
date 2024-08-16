@@ -14,7 +14,7 @@
 %define libplasmapotdprovidercore libplasmapotdprovidercore%plasmapotdprovidercore_sover
 
 Name: %rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 #Epoch: 1
 %K6init
@@ -47,6 +47,7 @@ BuildRequires: extra-cmake-modules gcc-c++ qt6-declarative-devel  qt6-declarativ
 BuildRequires: qt6-webengine-devel
 %endif
 BuildRequires: libxcbutil-image-devel libxcb-devel
+BuildRequires: libvulkan-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcmutils-devel kf6-kcodecs-devel kf6-kcompletion-devel
 BuildRequires: kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel
 BuildRequires: kf6-kdoctools kf6-kdoctools-devel
@@ -173,6 +174,9 @@ touch touch-%_arch
 
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

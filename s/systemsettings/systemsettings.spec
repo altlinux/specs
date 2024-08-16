@@ -4,7 +4,7 @@
 %define libsystemsettingsview libsystemsettingsview%systemsettingsview_sover
 
 Name: %rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 %K6init
 
@@ -23,7 +23,7 @@ Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel
-BuildRequires: plasma-workspace-devel
+BuildRequires: libvulkan-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcmutils-devel kf6-kcodecs-devel kf6-kcompletion-devel
 BuildRequires: kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kdbusaddons-devel
 BuildRequires: kf6-kdoctools kf6-kdoctools-devel kf6-krunner-devel
@@ -33,6 +33,7 @@ BuildRequires: kf6-ktextwidgets-devel kf6-kwallet-devel kf6-kwidgetsaddons-devel
 BuildRequires: kf6-solid-devel kf6-sonnet-devel kf6-kirigami-devel
 BuildRequires: kf6-kdeclarative-devel kf6-kpackage-devel kf6-kcrash-devel kf6-kitemmodels-devel
 BuildRequires: plasma6-activities-devel plasma6-activities-stats-devel
+BuildRequires: plasma-workspace-devel
 %description
 KDE System Settings
 
@@ -68,6 +69,9 @@ ln -s systemsettings %buildroot/%_K6bin/systemsettings5
 
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

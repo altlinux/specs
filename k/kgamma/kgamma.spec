@@ -1,7 +1,7 @@
 %define rname kgamma
 
 Name: kgamma
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 %K6init
 
@@ -19,6 +19,7 @@ Patch2: alt-xf86gammacfg-args-clear.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
+BuildRequires: libvulkan-devel
 BuildRequires: libXxf86vm-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel
 BuildRequires: kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel
@@ -54,6 +55,9 @@ BuildRequires: kf6-kcmutils-devel
 
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

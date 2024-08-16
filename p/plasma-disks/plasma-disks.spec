@@ -1,7 +1,7 @@
 %define rname plasma-disks
 
 Name: %rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 %K6init
 
@@ -19,6 +19,7 @@ Source: %rname-%version.tar
 Patch1: alt-utilbuttons.patch
 
 BuildRequires(pre): rpm-build-kf6
+BuildRequires: libvulkan-devel
 BuildRequires: qt6-base-devel
 BuildRequires: extra-cmake-modules kf6-kdbusaddons-devel kf6-kdeclarative-devel kf6-kded kf6-ki18n-devel kf6-kio-devel
 BuildRequires: kf6-knotifications-devel kf6-kpackage-devel kf6-kcmutils-devel
@@ -50,6 +51,9 @@ Monitors S.M.A.R.T. capable devices for imminent failure.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

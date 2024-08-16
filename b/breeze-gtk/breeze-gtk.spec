@@ -1,7 +1,7 @@
 %define rname breeze-gtk
 
 Name: %rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 %K6init no_altplace
 
@@ -22,6 +22,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-base-devel
 BuildRequires: gtk-engines-pixmap libgtk+3-devel pkg-config
 BuildRequires: /usr/bin/sassc python3-module-pycairo
+BuildRequires: libvulkan-devel
 BuildRequires: plasma6-breeze plasma6-breeze-devel
 
 %description
@@ -60,6 +61,9 @@ Provides: gtk4-theme-breeze = %version-%release
 
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

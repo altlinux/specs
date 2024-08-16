@@ -6,7 +6,7 @@
 %define libkscreenlocker libkscreenlocker%sover
 
 Name: %rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 #Epoch: 2
 %K6init
@@ -30,6 +30,7 @@ Patch3: alt-pam-service.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: glibc-devel
+BuildRequires: libvulkan-devel
 BuildRequires: extra-cmake-modules gcc-c++ qt6-base-devel qt6-declarative-devel
 BuildRequires: libpam-devel libwayland-client-devel libwayland-server-devel
 BuildRequires: libXi-devel libxcb-devel libxcbutil-keysyms-devel
@@ -136,6 +137,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kde6-screenlocker
 
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

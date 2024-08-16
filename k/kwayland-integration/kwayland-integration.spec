@@ -1,7 +1,7 @@
 %define rname kwayland-integration
 
 Name: %rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 %K5init
 
@@ -18,6 +18,7 @@ Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-base-devel-static qt5-wayland-devel
+BuildRequires: libvulkan-devel
 BuildRequires: pkgconfig(wayland-protocols) plasma-wayland-protocols
 BuildRequires: kf5-kidletime-devel kf5-kwindowsystem-devel kf5-kguiaddons-devel
 BuildRequires: kf5-kwayland-devel
@@ -44,6 +45,9 @@ Provides integration plugins for various KDE frameworks for the wayland windowin
 
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

@@ -7,7 +7,7 @@
 %add_python3_req_skip gdb gdb.FrameDecorator
 
 Name: %rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 #Epoch: 1
 %K6init
@@ -30,6 +30,7 @@ Patch1: alt-enable-debuginfod-support.patch
 BuildRequires(pre): rpm-build-kf6 rpm-macros-systemd
 BuildRequires: rpm-build-python3
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel
+BuildRequires: libvulkan-devel
 BuildRequires: libssl-devel libsystemd-devel
 BuildRequires: pkgconfig(polkit-qt6-1)
 BuildRequires: kf6-kcrash-devel kf6-ki18n-devel kf6-kidletime-devel kf6-kio-devel kf6-knotifications-devel
@@ -84,6 +85,9 @@ Compatibility package.
 %_K6dbus/system.d/*drkonqi*.conf
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

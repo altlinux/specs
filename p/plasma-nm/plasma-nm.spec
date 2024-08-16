@@ -8,7 +8,7 @@
 %endif
 
 Name: %rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 #Epoch: 1
 %K6init
@@ -43,6 +43,7 @@ BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-tools-devel
 %if_enabled qtwebengine
 BuildRequires: qt6-webengine-devel qt6-webchannel-devel
 %endif
+BuildRequires: libvulkan-devel
 BuildRequires: mobile-broadband-provider-info libqca-qt6-devel qcoro6-devel
 BuildRequires: ModemManager-devel libopenconnect-devel
 BuildRequires: libnm-devel
@@ -275,6 +276,9 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

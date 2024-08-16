@@ -7,7 +7,7 @@
 %define liboxygenstyleconfig5 liboxygenstyleconfig5_%sover
 
 Name: plasma6-%rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 #Epoch: 1
 %K6init
@@ -23,6 +23,7 @@ Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
+BuildRequires: libvulkan-devel
 BuildRequires: kf6-frameworkintegration-devel kf6-kauth-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel
 BuildRequires: kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-kguiaddons-devel kf6-ki18n-devel
 BuildRequires: kf6-kiconthemes-devel kf6-kitemviews-devel kf6-kservice-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel
@@ -95,7 +96,7 @@ Artwork, styles and assets for the Oxygen visual style for the Plasma Desktop.
     -DBUILD_QT5:BOOL=OFF \
     #
 %K5build \
-    -DKDE_INSTALL_DATADIR=%_K6data \
+    -DKDE_INSTALL_DATADIR=%_K5data \
     -DICON_INSTALL_DIR=%_iconsdir \
     -DBUILD_QT6:BOOL=OFF \
     -DBUILD_QT5:BOOL=ON \
@@ -144,6 +145,9 @@ Artwork, styles and assets for the Oxygen visual style for the Plasma Desktop.
 
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

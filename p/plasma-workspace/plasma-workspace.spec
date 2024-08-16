@@ -31,7 +31,7 @@
 %def_enable appstream
 
 Name: %rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 Epoch: 1
 %K6init
@@ -143,6 +143,7 @@ BuildRequires: libxapian-devel libnm-devel libsysfs-devel fontconfig-devel libca
 BuildRequires: libxcbutil-image-devel libxcbutil-devel
 BuildRequires: libICE-devel libSM-devel libXcursor-devel libXfixes-devel libXft-devel libXrender-devel libXtst-devel
 BuildRequires: iceauth xmessage xprop xrdb xset xsetroot
+BuildRequires: libvulkan-devel
 BuildRequires: kf6-baloo-devel kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcmutils-devel
 BuildRequires: kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel
 BuildRequires: kf6-kcrash-devel kf6-kdbusaddons-devel kf6-kdeclarative-devel
@@ -574,6 +575,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 1:6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 1:6.1.2-alt1
 - new version
 

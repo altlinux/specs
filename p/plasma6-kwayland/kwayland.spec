@@ -8,7 +8,7 @@
 %define libkwaylandclient libkwaylandclient%sover
 
 Name: plasma6-%rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 %K6init
 
@@ -22,6 +22,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-wayland-devel
 BuildRequires: libwayland-client-devel libwayland-server-devel wayland-protocols plasma-wayland-protocols
+BuildRequires: libvulkan-devel
 
 %description
 KWayland is a Qt-style API to interact with the wayland-client API.
@@ -75,6 +76,9 @@ Requires: %name-common >= %EVR
 %_pkgconfigdir/*ayland*.pc
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

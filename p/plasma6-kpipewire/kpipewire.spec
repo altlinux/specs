@@ -10,7 +10,7 @@
 
 %define rname kpipewire
 Name: plasma6-%rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 %K6init
 
@@ -27,6 +27,7 @@ BuildRequires: qt6-wayland-devel rpm-build-qml
 BuildRequires: extra-cmake-modules
 BuildRequires: libavformat-devel libswscale-devel libavfilter-devel
 BuildRequires: libdrm-devel libepoxy-devel libgbm-devel
+BuildRequires: libvulkan-devel
 BuildRequires: pipewire-libs-devel
 BuildRequires: kf6-kcoreaddons-devel kf6-ki18n-devel
 BuildRequires: plasma-wayland-protocols
@@ -113,6 +114,9 @@ Requires: %name-common
 
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

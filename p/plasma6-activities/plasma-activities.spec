@@ -4,7 +4,7 @@
 
 %define rname plasma-activities
 Name: plasma6-activities
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 %K6init
 
@@ -18,6 +18,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
 BuildRequires: qt6-base-devel qt6-declarative-devel
+BuildRequires: libvulkan-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: boost-devel
 BuildRequires: kf6-kconfig-devel kf6-kcoreaddons-devel
@@ -81,6 +82,9 @@ Requires: %name-common >= %EVR
 
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

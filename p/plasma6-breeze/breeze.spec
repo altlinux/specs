@@ -4,7 +4,7 @@
 %define libbreezecommon libbreezecommon%breezecommon_sover
 
 Name: plasma6-%rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 #Epoch: 1
 %K6init
@@ -21,6 +21,7 @@ Conflicts: plasma5-breeze < 1:6
 Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
+BuildRequires: libvulkan-devel
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel
 BuildRequires: kf6-frameworkintegration-devel kf6-kauth-devel kf6-kcodecs-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
 BuildRequires: kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-kguiaddons-devel kf6-ki18n-devel
@@ -73,7 +74,7 @@ KDE 5 visual style.
     -DBUILD_QT5:BOOL=OFF \
     #
 %K5build \
-    -DKDE_INSTALL_DATADIR=%_K6data \
+    -DKDE_INSTALL_DATADIR=%_K5data \
     -DICON_INSTALL_DIR=%_iconsdir \
     -DBUILD_QT6:BOOL=OFF \
     -DBUILD_QT5:BOOL=ON \
@@ -111,6 +112,9 @@ KDE 5 visual style.
 %_libdir/cmake/Breeze/
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

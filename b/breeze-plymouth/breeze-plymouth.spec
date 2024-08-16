@@ -1,7 +1,7 @@
 %define rname breeze-plymouth
 
 Name: %rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 %K6init no_altplace
 
@@ -89,6 +89,9 @@ cat %SOURCE11 >breeze/images/os.logo.png
 
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

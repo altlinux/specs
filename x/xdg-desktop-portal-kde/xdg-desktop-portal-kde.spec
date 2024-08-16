@@ -4,7 +4,7 @@
 
 %define rname xdg-desktop-portal-kde
 Name: %rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 %K6init
 
@@ -24,6 +24,7 @@ Source: %rname-%version.tar
 Source1: env.sh
 
 BuildRequires(pre): rpm-build-kf6
+BuildRequires: libvulkan-devel
 BuildRequires: qt6-wayland-devel qt6-base-devel
 BuildRequires: libcups-devel glib2-devel libepoxy-devel libgbm-devel libssl-devel pipewire-libs-devel
 BuildRequires: extra-cmake-modules kf6-kdeclarative-devel kf6-ki18n-devel kf6-kio-devel kf6-kirigami-devel
@@ -67,6 +68,9 @@ install -m 0755 %SOURCE1 %buildroot/%_K6xdgconf/plasma-workspace/env/%{name}.sh
 
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

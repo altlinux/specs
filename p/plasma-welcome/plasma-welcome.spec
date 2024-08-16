@@ -1,7 +1,7 @@
 %define rname plasma-welcome
 
 Name: %rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 %K6init
 
@@ -23,6 +23,7 @@ Patch4: alt-discover-apps.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
+BuildRequires: libvulkan-devel
 BuildRequires: qt6-declarative-devel qt6-svg-devel qt6-wayland-devel
 BuildRequires: kf6-kdeclarative-devel kf6-ki18n-devel kf6-kirigami-devel
 BuildRequires: kf6-knewstuff-devel kf6-knotifications-devel kf6-kpackage-devel kf6-kcmutils-devel kf6-ksvg-devel
@@ -57,6 +58,9 @@ mkdir -p %buildroot/%_datadir/plasma-welcome-extra-pages{,-pre}
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

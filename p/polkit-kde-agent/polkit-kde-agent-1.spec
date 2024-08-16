@@ -5,7 +5,7 @@
 %define rname polkit-kde-agent-1
 
 Name: polkit-kde-agent
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 #Epoch: 1
 %K6init
@@ -24,6 +24,7 @@ Patch1: alt-stay-on-top.patch
 Patch2: alt-show-only-one-user-too.patch
 
 BuildRequires(pre): rpm-build-kf6 extra-cmake-modules
+BuildRequires: libvulkan-devel
 BuildRequires: qt6-declarative-devel
 BuildRequires: pkgconfig(polkit-qt6-1)
 BuildRequires: kf6-kauth-devel kf6-kcodecs-devel kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel
@@ -54,6 +55,9 @@ Provides Policy Kit Authentication Agent that nicely fits to KDE.
 %_userunitdir/*.service
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

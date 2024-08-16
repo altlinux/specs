@@ -1,7 +1,7 @@
 %define rname plasma-integration
 
 Name: plasma6-integration
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 #Epoch: 1
 %K6init
@@ -20,6 +20,7 @@ Patch2: alt-singleclick.patch
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-wayland-devel
 BuildRequires: libxcb-devel libXres-devel libXcursor-devel
+BuildRequires: libvulkan-devel
 BuildRequires: kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel
 BuildRequires: kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-ki18n-devel kf6-kiconthemes-devel kf6-kio-devel
 BuildRequires: kf6-kitemviews-devel kf6-kjobwidgets-devel kf6-knotifications-devel kf6-kservice-devel
@@ -100,6 +101,9 @@ Obsoletes: plasma5-integration-common < 1:%version-%release
 %_K5plug/platformthemes/KDEPlasmaPlatformTheme5.so
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

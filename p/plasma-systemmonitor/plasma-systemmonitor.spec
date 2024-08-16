@@ -5,7 +5,7 @@
 %define libplasmasystemmonitortable libplasmasystemmonitortable%sover
 
 Name: %rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 %K6init
 
@@ -24,6 +24,7 @@ Patch2: alt-soname.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: qt6-base-devel qt6-declarative-devel qt6-svg-devel qt6-wayland-devel
+BuildRequires: libvulkan-devel
 BuildRequires: kf6-kirigami-addons-devel
 BuildRequires: plasma6-libksysguard-devel
 BuildRequires: extra-cmake-modules
@@ -84,7 +85,7 @@ Requires: %name-common >= %EVR
 %files common -f %name.lang
 %doc LICENSES/*
 
-%files -f %name.lang
+%files
 %_K6bin/plasma-systemmonitor
 %_K6qml/org/kde/ksysguard/*
 %_K6data/ksysguard/
@@ -104,6 +105,9 @@ Requires: %name-common >= %EVR
 %_K6lib/libPlasmaSystemMonitorTable.so.*
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

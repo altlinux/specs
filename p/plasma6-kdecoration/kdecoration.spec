@@ -5,7 +5,7 @@
 %define libkdecorationsprivate libkdecorations2private%sover_private
 
 Name: plasma6-%rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 %K6init
 
@@ -17,6 +17,7 @@ License: GPL-2.0-or-later
 Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
+BuildRequires: libvulkan-devel
 BuildRequires: extra-cmake-modules qt6-base-devel
 BuildRequires: kf6-ki18n-devel kf6-kcoreaddons-devel
 
@@ -87,6 +88,9 @@ KF6 library
 
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

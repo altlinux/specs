@@ -1,7 +1,7 @@
 %define rname flatpak-kcm
 
 Name: %rname
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 %K6init
 
@@ -18,6 +18,7 @@ Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
+BuildRequires: libvulkan-devel
 BuildRequires: qt6-svg-devel qt6-declarative-devel
 BuildRequires: libflatpak-devel
 BuildRequires: kf6-kitemmodels-devel kf6-kcmutils-devel kf6-kdeclarative-devel kf6-ki18n-devel kf6-kpackage-devel
@@ -43,6 +44,9 @@ The KCM allows changing what permissions have been granted to installed Flatpak 
 %_K6xdgapp/*flatpak*.desktop
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 

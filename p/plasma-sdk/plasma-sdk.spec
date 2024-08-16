@@ -2,7 +2,7 @@
 %filter_from_requires /inkscape/d
 
 Name: plasma-sdk
-Version: 6.1.2
+Version: 6.1.4
 Release: alt1
 %K6init
 
@@ -20,6 +20,7 @@ Patch1: alt-fix-lnf-double-create.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-svg-devel qt6-5compat-devel
+BuildRequires: libvulkan-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel
 BuildRequires: kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kdeclarative-devel kf6-ki18n-devel kf6-kiconthemes-devel kf6-kio-devel
 BuildRequires: kf6-kitemviews-devel kf6-kjobwidgets-devel kf6-knewstuff-devel kf6-kpackage-devel kf6-kparts-devel kf6-kservice-devel
@@ -59,6 +60,9 @@ Applications useful for Plasma Development.
 
 
 %changelog
+* Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
+- new version
+
 * Thu Jul 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.2-alt1
 - new version
 
