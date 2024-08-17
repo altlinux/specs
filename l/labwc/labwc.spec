@@ -1,5 +1,5 @@
 Name: labwc
-Version: 0.7.4
+Version: 0.8.0
 Release: alt1
 
 Summary: A Wayland window-stacking compositor
@@ -7,7 +7,7 @@ License: GPL-2.0
 Group: Graphical desktop/Other
 Url: https://github.com/labwc/labwc
 
-VCS: https://github.com/labwc/labwc.git
+# Source-url: https://github.com/labwc/labwc/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
@@ -22,7 +22,7 @@ BuildRequires: pkgconfig(scdoc)
 BuildRequires: pkgconfig(wayland-protocols)
 BuildRequires: pkgconfig(wayland-server) >= 0.19.0
 BuildRequires: pkgconfig(wayland-client)
-BuildRequires: pkgconfig(wlroots) >= 0.17.0
+BuildRequires: pkgconfig(wlroots-0.18)
 BuildRequires: pkgconfig(xcb)
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(xcb-icccm)
@@ -53,6 +53,10 @@ BuildRequires: pkgconfig(libdrm)
 %_iconsdir/hicolor/scalable/apps/%{name}*.svg
 
 %changelog
+* Sat Aug 17 2024 Roman Alifanov <ximper@altlinux.org> 0.8.0-alt1
+- new version 0.8.0 (with rpmrb script)
+- move to tarball
+
 * Tue Aug 06 2024 Roman Alifanov <ximper@altlinux.org> 0.7.4-alt1
 - new version 0.7.4 (with rpmrb script)
 
