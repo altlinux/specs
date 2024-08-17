@@ -1,6 +1,6 @@
 Name: xfdesktop
-Version: 4.19.2
-Release: alt3.gdbdf20d6
+Version: 4.19.3
+Release: alt1
 
 Summary: Desktop manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Менеджер рабочего стола Xfce
@@ -34,7 +34,6 @@ Requires: exo-utils
 %prep
 %setup
 %patch -p1
-%xfce4_cleanup_version
 
 %build
 %xfce4reconf
@@ -64,6 +63,9 @@ Requires: exo-utils
 %_datadir/backgrounds/xfce
 
 %changelog
+* Sat Aug 17 2024 Mikhail Efremov <sem@altlinux.org> 4.19.3-alt1
+- Updated to 4.19.3.
+
 * Tue Jun 18 2024 Mikhail Efremov <sem@altlinux.org> 4.19.2-alt3.gdbdf20d6
 - Workaround for a crash (closes: #50643).
 
