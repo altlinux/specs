@@ -3,7 +3,7 @@
 
 Name: amnezia-vpn
 Version: 4.6.0.3
-Release: alt3
+Release: alt4
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
@@ -21,6 +21,7 @@ Source2: qtkeychain-%qtkeychain_commit.tar
 
 Patch0: %name-use-system-libs-instead-3rd-prebuilt.patch
 Patch1: %name-openvpn-exec-path.patch
+Patch2: %name-update-resolv-conf-path.patch
 
 BuildRequires: cmake
 BuildRequires: libsecret-devel
@@ -60,6 +61,7 @@ This package contains systemd service files.
 %setup -n amnezia-client-%version -b 1 -b 2
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %__mv -Tf ../SortFilterProxyModel-%sort_filter_proxy_model_commit client/3rd/SortFilterProxyModel
 %__mv -Tf ../qtkeychain-%qtkeychain_commit client/3rd/qtkeychain
@@ -70,7 +72,7 @@ This package contains systemd service files.
 %cmake_build
 
 %install
-%__mkdir_p %buildroot{%_bindir,%_desktopdir,%_pixmapsdir,%_unitdir}
+%__mkdir_p %buildroot{%_bindir,%_desktopdir,%_libexecdir/%name,%_pixmapsdir,%_unitdir}
 
 %__install -Dp -m0755 %_cmake__builddir/client/AmneziaVPN %buildroot%_bindir/
 %__install -Dp -m0644 deploy/data/linux/AmneziaVPN.png %buildroot%_pixmapsdir/
@@ -89,6 +91,7 @@ sed \
 sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 
 %__install -Dp -m0755 %_cmake__builddir/service/server/AmneziaVPN-service %buildroot%_bindir/
+%__install -Dp -m0755 deploy/data/linux/client/bin/update-resolv-conf.sh %buildroot%_libexecdir/%name/
 
 %preun service
 %preun_systemd AmneziaVPN
@@ -97,6 +100,7 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %doc README.md
 %_bindir/AmneziaVPN
 %_desktopdir/AmneziaVPN.desktop
+%_libexecdir/%name
 %_pixmapsdir/AmneziaVPN.png
 
 %files service
@@ -104,6 +108,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Sat Aug 17 2024 Nazarov Denis <nenderus@altlinux.org> 4.6.0.3-alt4
+- Add patch for correct update resolv conf
+
 * Thu Aug 15 2024 Nazarov Denis <nenderus@altlinux.org> 4.6.0.3-alt3
 - Add patch for correct exec OpenVPN path and require
 - Add requires for Shadowsocks client
