@@ -1,12 +1,12 @@
 Name: outwiker
-Version: 3.2.0
+Version: 3.3.0
 Release: alt1
 
 Summary: OutWiker is designed to store notes in a tree
 
-License: GPL3
+License: GPL-3.0
 Group: Text tools
-Url: http://jenyay.net/Soft/Outwiker
+Url: https://github.com/Jenyay/outwiker
 
 # Source-url: https://github.com/Jenyay/outwiker/archive/refs/tags/%version-stable.tar.gz
 Source: %name-%version.tar
@@ -16,6 +16,8 @@ BuildRequires: rpm-build-python3
 BuildArch: noarch
 
 %add_python3_path %_datadir/%name/
+
+AutoProv: nopython3
 
 # See https://bugzilla.altlinux.org/40796
 Requires: python3-module-cyhunspell
@@ -55,6 +57,10 @@ find %buildroot%_datadir/%name -name '*.py' | xargs sed -i \
 %_pixmapsdir/*
 
 %changelog
+* Sat Aug 17 2024 Anton Midyukov <antohami@altlinux.org> 3.3.0-alt1
+- new version (3.3.0) with rpmgs script
+- do not provides python3 modules
+
 * Thu Aug 10 2023 Anton Midyukov <antohami@altlinux.org> 3.2.0-alt1
 - New version 3.2.0
 
