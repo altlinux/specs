@@ -1,5 +1,5 @@
 Name: liboneapi-level-zero1
-Version: 1.17.19
+Version: 1.17.28
 Release: alt1
 
 Summary: OneAPI Level Zero Specification Headers and Loader
@@ -63,6 +63,9 @@ developing applications that use %name.
 %_pkgconfigdir/level-zero.pc
 
 %changelog
+* Sat Aug 17 2024 Boris Yumankulov <boria138@altlinux.org> 1.17.28-alt1
+- new version 1.17.28
+
 * Wed Jul 31 2024 Boris Yumankulov <boria138@altlinux.org> 1.17.19-alt1
 - initial build for ALT Sisyphus
 
