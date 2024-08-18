@@ -1,7 +1,7 @@
 %define oname numpy-stl
 
 Name: python3-module-%oname
-Version: 3.1.1
+Version: 3.1.2
 Release: alt1
 
 Summary: Library to make reading, writing and modifying both binary and ascii STL files easy
@@ -39,8 +39,6 @@ fastest STL editing libraries for Python available.
 %prep
 %setup
 
-sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
-
 %build
 %pyproject_build
 
@@ -60,6 +58,9 @@ sed -i '/--flake8/d' pytest.ini
 %python3_sitelibdir/*.dist-info
 
 %changelog
+* Sun Aug 18 2024 Grigory Ustinov <grenka@altlinux.org> 3.1.2-alt1
+- Automatically updated to 3.1.2.
+
 * Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt1
 - Automatically updated to 3.1.1.
 
