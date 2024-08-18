@@ -1,5 +1,5 @@
 Name: kernel-image-6.11
-Release: alt0.rc3
+Release: alt0.rc4
 %define kernel_src_version	6.10
 %define kernel_base_version	6.11
 %define kernel_sublevel	.0
@@ -83,6 +83,7 @@ ExclusiveOS: Linux
 
 %if "%sub_flavour" == "def"
 Provides: kernel = %kversion
+Provides: kernel-new = %version-%release
 Provides: kernel-modules-eeepc-%flavour = %version-%release
 Provides: kernel-modules-drbd83-%flavour = %version-%release
 Provides: kernel-modules-igb-%flavour = %version-%release
@@ -586,6 +587,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Aug 18 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.0-alt0.rc4
+- Update to v6.11-rc4 (2024-08-18).
+- config: Enable CONFIG_EDAC_DEBUG=y.
+- spec: Add kernel-new provides for testing newest kernels.
+
 * Mon Aug 12 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.0-alt0.rc3
 - Update to v6.11-rc3 (2024-08-11).
 - spec: Remove devicetree symlinking for old u-boot.
