@@ -3,7 +3,7 @@
 
 Name: amnezia-vpn
 Version: 4.6.0.3
-Release: alt4
+Release: alt5
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
@@ -22,6 +22,7 @@ Source2: qtkeychain-%qtkeychain_commit.tar
 Patch0: %name-use-system-libs-instead-3rd-prebuilt.patch
 Patch1: %name-openvpn-exec-path.patch
 Patch2: %name-update-resolv-conf-path.patch
+Patch3: %name-wireguard-exec-path.patch
 
 BuildRequires: cmake
 BuildRequires: libsecret-devel
@@ -39,6 +40,7 @@ Amnezia is an open-source VPN client, with a key feature that enables you to dep
 Summary: The best client for self-hosted VPN
 Group: System/Servers
 Requires: %name-service = %EVR
+Requires: amneziawg-go
 Requires: openvpn
 Requires: qt6-5compat
 Requires: qt6-declarative
@@ -62,6 +64,7 @@ This package contains systemd service files.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %__mv -Tf ../SortFilterProxyModel-%sort_filter_proxy_model_commit client/3rd/SortFilterProxyModel
 %__mv -Tf ../qtkeychain-%qtkeychain_commit client/3rd/qtkeychain
@@ -108,6 +111,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Sun Aug 18 2024 Nazarov Denis <nenderus@altlinux.org> 4.6.0.3-alt5
+- Add patch for correct exec AmneziaWG path and require
+
 * Sat Aug 17 2024 Nazarov Denis <nenderus@altlinux.org> 4.6.0.3-alt4
 - Add patch for correct update resolv conf
 
