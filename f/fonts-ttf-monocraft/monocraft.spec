@@ -2,7 +2,7 @@
 %define fname monocraft
 
 Name: fonts-ttf-%fname
-Version: 3.0
+Version: 4.0
 Release: alt1
 
 Summary: Monocraft font
@@ -35,5 +35,8 @@ cd dist
 %doc LICENSE README.md
 
 %changelog
+* Sun Aug 18 2024 Ajrat Makhmutov <rauty@altlinux.org> 4.0-alt1
+- New version.
+
 * Thu Feb 29 2024 Ajrat Makhmutov <rauty@altlinux.org> 3.0-alt1
 - First build for ALT.
