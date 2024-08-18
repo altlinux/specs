@@ -1,5 +1,5 @@
 Name: nix
-Version: 2.23.3
+Version: 2.24.2
 Release: alt1
 
 Summary: Nix software deployment system
@@ -42,6 +42,7 @@ BuildRequires: patchelf
 BuildRequires: nlohmann-json-devel
 BuildRequires: libgit2-devel
 BuildRequires: libgc-devel
+BuildRequires: libtoml11-devel
 
 ExclusiveArch: x86_64
 
@@ -115,6 +116,9 @@ patchelf --remove-rpath %buildroot%_bindir/nix %buildroot%_libdir/*.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Aug 18 2024 Boris Yumankulov <boria138@altlinux.org> 2.24.2-alt1
+- new version 2.24.2
+
 * Thu Jul 11 2024 Boris Yumankulov <boria138@altlinux.org> 2.23.3-alt1
 - new version 2.23.3
 
