@@ -3,8 +3,8 @@
 %set_verify_elf_method strict
 
 Name:     ledmon
-Version:  0.97
-Release:  alt2
+Version:  1.0.0
+Release:  alt1
 
 Summary:  Enclosure LED Utilities
 License:  GPL-2.0-only or LGPL-2.1-or-later
@@ -17,6 +17,7 @@ BuildRequires: libpci-devel
 BuildRequires: libsgutils-devel
 BuildRequires: libudev-devel
 BuildRequires: /usr/bin/pod2man
+BuildRequires: autoconf-archive
 
 %description
 The ledmon and ledctl are user space applications designed to control
@@ -53,6 +54,9 @@ rm %buildroot%_docdir/%name/README.md
 %_man8dir/ledmon.8*
 
 %changelog
+* Sun Aug 18 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Wed Feb 14 2024 Vitaly Chikunov <vt@altlinux.org> 0.97-alt2
 - spec: Packaging improvements.
 - Enable systemd service.
