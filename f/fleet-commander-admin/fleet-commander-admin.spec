@@ -9,7 +9,7 @@
 
 Name: fleet-commander-admin
 Version: 0.15.1
-Release: alt13
+Release: alt14
 
 Summary: Fleet Commander
 License: LGPLv2+ or MIT or BSD
@@ -49,6 +49,7 @@ BuildRequires: python3(pylint)
 %endif
 
 BuildRequires: /usr/bin/dbus-launch
+BuildRequires: /usr/bin/dconf
 %endif
 
 # don't generate Python2 auto requires
@@ -86,6 +87,7 @@ Group: System/Base
 %add_python3_path %_datadir/fleet-commander-logger/python/
 %add_python3_compile_exclude %_datadir/fleet-commander-logger/python/
 Requires: libnm-gir
+Requires: /usr/bin/dconf
 
 %description -n fleet-commander-logger
 Logs changes for Fleet Commander virtual sessions.
@@ -170,6 +172,9 @@ export TESTS_LOGGER_TIMEOUT=10000
 %_datadir/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/{c73e87a7-b5a1-4b6f-b10b-0bd70241a64d}.xpi
 
 %changelog
+* Mon Aug 19 2024 Stanislav Levin <slev@altlinux.org> 0.15.1-alt14
+- Fixed FTBFS (missing requirement on dconf).
+
 * Mon Feb 19 2024 Stanislav Levin <slev@altlinux.org> 0.15.1-alt13
 - Fixed FTBFS (disabled Pylint).
 
