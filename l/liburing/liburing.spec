@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: liburing
-Version: 2.6
+Version: 2.7
 Release: alt1
 Summary: The io_uring library
 License: (GPL-2.0-only AND LGPL-2.1-or-later) OR MIT
@@ -67,9 +67,14 @@ strace -v test/probe.t
 # Almost all tests fail on ppc64le, so there is no point to even try.
 %ifnarch %e2k
 TEST_EXCLUDE="
+%ifarch aarch64
+	accept-non-empty.t
+%endif
 %ifarch ppc64le
 	buf-ring-nommap.t
+	no-mmap-inval.t
 	recv-multishot.t
+	reg-fd-only.t
 	send-zerocopy.t
 %endif
 %ifarch %ix86
@@ -98,6 +103,9 @@ TEST_EXCLUDE="
 %_man7dir/io_uring.7*
 
 %changelog
+* Sat Aug 17 2024 Vitaly Chikunov <vt@altlinux.org> 2.7-alt1
+- Update to liburing-2.7 (2024-08-16).
+
 * Wed May 01 2024 Vitaly Chikunov <vt@altlinux.org> 2.6-alt1
 - Update to liburing-2.6 (2024-04-30).
 
