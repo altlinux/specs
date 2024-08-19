@@ -2,7 +2,7 @@
 %def_without check
 
 Name:    python3-module-%modulename
-Version: 3.4.3
+Version: 3.4.4
 Release: alt1
 
 Summary: Prometheus Proxmox VE Exporter
@@ -67,6 +67,9 @@ useradd -r -g prometheus -c 'Prometheus PVE exporter user' \
 %python3_sitelibdir/*
 
 %changelog
+* Mon Aug 19 2024 Andrew A. Vasilyev <andy@altlinux.org> 3.4.4-alt1
+- 3.4.4
+
 * Fri Jul 05 2024 Andrew A. Vasilyev <andy@altlinux.org> 3.4.3-alt1
 - 3.4.3
 
