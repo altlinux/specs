@@ -10,7 +10,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.1.alpha1
+Release: alt0.2.alpha1
 
 Url: https://www.altlinux.org/ALT_Mobile
 
@@ -229,6 +229,9 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/gtk-3.0/gtk.css
 
 %changelog
+* Mon Aug 19 2024 Anton Midyukov <antohami@altlinux.org> 11.0-alt0.2.alpha1
+- indexhtml: add link to "License agreement"
+
 * Wed Aug 07 2024 Anton Midyukov <antohami@altlinux.org> 11.0-alt0.1.alpha1
 - set status alpha1
 - add logo
