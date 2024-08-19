@@ -2,13 +2,13 @@
 %define oname mozprocess
 
 Name: python3-module-%oname
-Version: 1.3.1
+Version: 1.4.0
 Release: alt1
 
 Summary: Mozilla-authored process handling
 License: MPL-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/mozprocess/
+Url: https://pypi.org/project/mozprocess
 
 Source0: %name-%version.tar
 
@@ -37,6 +37,9 @@ Mozilla-authored process handling.
 
 
 %changelog
+* Tue Aug 20 2024 Anton Vyatkin <toni@altlinux.org> 1.4.0-alt1
+- new version 1.4.0
+
 * Fri Jul 14 2023 Anton Vyatkin <toni@altlinux.org> 1.3.1-alt1
 - new version 1.3.1
 
