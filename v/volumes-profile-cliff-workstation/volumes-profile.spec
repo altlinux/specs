@@ -1,5 +1,5 @@
 Name: volumes-profile-cliff-workstation
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Volumes description for SP Workstation
@@ -27,6 +27,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Mon Aug 19 2024 Anton Midyukov <antohami@altlinux.org> 0.3-alt1
+- Set '/' = 50 GiB
+
 * Wed Aug 24 2022 Anton Midyukov <antohami@altlinux.org> 0.2-alt1
 - 10-vm-profile.sh: add nvme, mmcblk support
 - No swap partition by default (security reasons)
