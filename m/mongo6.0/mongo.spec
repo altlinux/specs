@@ -3,7 +3,7 @@
 %endif
 
 Name: mongo6.0
-Version: 6.0.16
+Version: 6.0.17
 Release: alt1
 Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
@@ -198,6 +198,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Mon Aug 19 2024 Alexei Takaseev <taf@altlinux.org> 6.0.17-alt1
+- 6.0.17
+
 * Tue Aug 06 2024 Alexei Takaseev <taf@altlinux.org> 6.0.16-alt1
 - 6.0.16
 - Fixes: CVE-2024-6375
