@@ -6,7 +6,7 @@
 %def_with monitor
 
 Name: thermald
-Version: 2.5.7
+Version: 2.5.8
 Release: alt1
 
 Summary: Thermal daemon for IA
@@ -26,7 +26,6 @@ ExclusiveArch: x86_64
 BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(libxml-2.0)
-BuildRequires: libdbus-glib-devel
 BuildRequires: systemd-devel
 BuildRequires: gtk-doc
 BuildRequires: liblzma-devel
@@ -34,6 +33,8 @@ BuildRequires: libupower-devel
 BuildRequires: libevdev-devel
 BuildRequires: autoconf-archive
 Requires: dbus
+
+%filter_from_requires s;/usr/lib/lsb/init-functions;/lib/lsb/init-functions;
 
 %description
 Thermal issues are important to handle proactively to reduce performance impact.
@@ -68,6 +69,7 @@ embedded devices.
 
 %prep
 %setup
+%autopatch -p1
 
 sed -i 's/LIBS += -lQCustomPlot/LIBS += -lqcustomplot-qt5/' \
   tools/thermal_monitor/ThermalMonitor.pro
@@ -181,6 +183,9 @@ exit 0
 %endif
 
 %changelog
+* Mon Aug 19 2024 Anton Midyukov <antohami@altlinux.org> 2.5.8-alt1
+- new version 2.5.8
+
 * Sun Mar 31 2024 Anton Midyukov <antohami@altlinux.org> 2.5.7-alt1
 - new version 2.5.7
 
