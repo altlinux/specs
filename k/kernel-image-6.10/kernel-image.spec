@@ -2,7 +2,7 @@ Name: kernel-image-6.10
 Release: alt1
 %define kernel_src_version	6.10
 %define kernel_base_version	6.10
-%define kernel_sublevel	.5
+%define kernel_sublevel	.6
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 Version: %kversion
@@ -83,6 +83,7 @@ ExclusiveOS: Linux
 
 %if "%sub_flavour" == "def"
 Provides: kernel = %kversion
+Provides: kernel-latest = %version-%release
 Provides: kernel-modules-eeepc-%flavour = %version-%release
 Provides: kernel-modules-drbd83-%flavour = %version-%release
 Provides: kernel-modules-igb-%flavour = %version-%release
@@ -586,6 +587,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Aug 19 2024 Kernel Bot <kernelbot@altlinux.org> 6.10.6-alt1
+- v6.10.6 (2024-08-19).
+- spec: Add kernel-latest provides for testing latest stable kernels.
+- config: CONFIG_SQUASHFS=y.
+
 * Wed Aug 14 2024 Kernel Bot <kernelbot@altlinux.org> 6.10.5-alt1
 - v6.10.5 (2024-08-14).
 
