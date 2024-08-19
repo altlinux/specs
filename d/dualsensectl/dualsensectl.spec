@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: dualsensectl
-Version: 0.5
+Version: 0.6
 Release: alt1
 
 Summary: Linux tool for controlling PS5 DualSense controllers
@@ -39,6 +39,9 @@ install -Dm 644 %SOURCE2 %buildroot%_udevrulesdir/70-%name.rules
 %_udevrulesdir/70-%name.rules
 
 %changelog
+* Mon Aug 19 2024 Mikhail Tergoev <fidel@altlinux.org> 0.6-alt1
+- 0.6
+
 * Mon Apr 01 2024 Mikhail Tergoev <fidel@altlinux.org> 0.5-alt1
 - 0.5
 
