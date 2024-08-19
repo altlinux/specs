@@ -57,7 +57,7 @@
 %endif
 
 Name: ceph
-Version: 18.2.3
+Version: 18.2.4
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -1869,6 +1869,9 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Mon Aug 19 2024 Alexey Shabalin <shaba@altlinux.org> 18.2.4-alt1
+- 18.2.4
+
 * Wed Jul 03 2024 Alexey Shabalin <shaba@altlinux.org> 18.2.3-alt1
 - 18.2.3
 
