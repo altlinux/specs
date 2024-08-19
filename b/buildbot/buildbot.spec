@@ -1,5 +1,5 @@
 Name: buildbot
-Version: 3.11.4
+Version: 4.0.2
 Release: alt1
 Summary: Python-based continuous integration testing framework
 
@@ -172,6 +172,8 @@ sed -i '/buildbot_windows_service/d' master/setup.py
 rm -v master/buildbot/scripts/windows_service.py
 sed -i '/buildbot_worker_windows_service/d' worker/setup.py
 rm -v worker/buildbot_worker/scripts/windows_service.py
+ln -sf ../../../smokes-react/templates/mydashboard.html \
+    master/docs/manual/mydashboard.html
 
 %build
 for name in master worker; do
@@ -295,6 +297,9 @@ buildbot-worker start worker
 %files checkinstall
 
 %changelog
+* Fri Aug 16 2024 Mikhail Gordeev <obirvalger@altlinux.org> 4.0.2-alt1
+- new version 4.0.2
+
 * Mon Jun 24 2024 Mikhail Gordeev <obirvalger@altlinux.org> 3.11.4-alt1
 - new version 3.11.4
 
