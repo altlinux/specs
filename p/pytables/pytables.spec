@@ -23,7 +23,7 @@ relational or object oriented databases.
 %def_without docs
 
 Name: py%oname
-Version: 3.9.2
+Version: 3.10.1
 Release: alt1
 Epoch: 1
 
@@ -63,6 +63,7 @@ BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-cpuinfo
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+BuildRequires: python3-module-typing_extensions
 
 %description
 %descr
@@ -155,6 +156,9 @@ cd build/lib.* && env PYTHONPATH=. python3 tables/tests/test_all.py
 %python3_sitelibdir/%oname/nodes/tests/
 
 %changelog
+* Mon Aug 19 2024 Anton Vyatkin <toni@altlinux.org> 1:3.10.1-alt1
+- New version 3.10.1.
+
 * Wed Dec 20 2023 Anton Vyatkin <toni@altlinux.org> 1:3.9.2-alt1
 - New version 3.9.2.
 
