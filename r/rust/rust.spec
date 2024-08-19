@@ -1,40 +1,36 @@
-Name: rust
-Epoch: 1
-Version: 1.80.0
-Release: alt1
-Summary: The Rust Programming Language
-
-%define r_ver 1.76.0
-
-Group: Development/Other
-License: Apache-2.0 and MIT
-URL: http://www.rust-lang.org/
-
-# https://static.rust-lang.org/dist/rustc-%version-src.tar.gz
-Source: %name-%version.tar
-
-Patch0001: 0001-ALT-Disable-lint-tests.patch
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 %def_without bootstrap
 %def_without bundled_llvm
 %def_without debuginfo
 %global llvm_version 17.0
+%define r_ver 1.76.0
 
-%define _unpackaged_files_terminate_build 1
-%define _stripped_files_terminate_build 1
+Name: rust
+Version: 1.80.1
+Release: alt1
+Epoch: 1
 
+Summary: The Rust Programming Language
+License: Apache-2.0 and MIT
+Group: Development/Other
+URL: http://www.rust-lang.org/
+VCS: https://github.com/rust-lang/rust
+
+# https://static.rust-lang.org/dist/rustc-%version-src.tar.gz
+Source: %name-%version.tar
+Patch0001: 0001-ALT-Disable-lint-tests.patch
+
+Requires: /proc
+Requires: gcc
 # This component was removed as of Rust 1.69.0.
 # https://github.com/rust-lang/rust/pull/101841
 Obsoletes: %name-analysis < 1.69.0
 
-Requires: /proc
-Requires: gcc
-
-BuildRequires: /proc
-
 # for gdb python binding
 BuildRequires(pre): rpm-build-python3
-
+BuildRequires: /proc
 BuildRequires: libstdc++-devel
 BuildRequires: libstdc++-devel-static
 BuildRequires: curl
@@ -122,14 +118,14 @@ segfaults, and guarantees thread safety.
 
 %package gdb
 Group: Development/Other
-Summary: run rust compiler under gdb
+Summary: Run rust compiler under gdb
 Requires: %name = %EVR
 Requires: gdb
 AutoReq: nopython,nopython3
 AutoProv: nopython,nopython3
 
 %description gdb
-%summary
+%summary.
 
 %package doc
 Summary: Documentation for Rust
@@ -412,7 +408,6 @@ fi
 rm -rf %rustdir
 %endif
 
-
 %files
 %doc %_docdir/rustc-%version
 %_bindir/rustc
@@ -462,6 +457,9 @@ rm -rf %rustdir
 %rustlibdir/src
 
 %changelog
+* Sun Aug 18 2024 Ajrat Makhmutov <rauty@altlinux.org> 1:1.80.1-alt1
+- New version (1.80.1).
+
 * Mon Jul 29 2024 Ajrat Makhmutov <rauty@altlinux.org> 1:1.80.0-alt1
 - New version (1.80.0).
 
