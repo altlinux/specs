@@ -6,7 +6,7 @@
 Name: kdump-tools
 Summary: Scripts and configuration files to use kdump
 Version: 1.8
-Release: alt6
+Release: alt7
 Group: System/Kernel and hardware
 License: GPL-2.0-or-later
 Vcs: https://salsa.debian.org/debian/kdump-tools.git
@@ -22,7 +22,10 @@ Requires: procps
 Source: %name-%version.tar
 BuildRequires: pandoc
 %{?!_without_check:%{?!_disable_check:
+%ifarch %ix86 x86_64
+# There is no shellcheck on other arches in p9.
 BuildRequires: shellcheck
+%endif
 }}
 
 %description
@@ -62,7 +65,9 @@ rm %buildroot%_libexecdir/kdump-tools/kdump-checkinstall.sh
 %check
 # Shall not appear accidentally.
 ! grep -r '/etc/default' --exclude='.*' %buildroot || exit 2
+%ifarch %ix86 x86_64
 make shellcheck
+%endif
 # NB: Releases should monotonically increment. While we can't verify they never
 # decrement, we can ensure they don't unintentionally reset to alt1.
 grep -vw alt1 <<<'%release'
@@ -89,6 +94,9 @@ grep -vw alt1 <<<'%release'
 # NB: We don't install /var/lib/kdump
 
 %changelog
+* Mon Aug 19 2024 Vitaly Chikunov <vt@altlinux.org> 1.8-alt7
+- Fix build with old shellcheck (for p9).
+
 * Wed Aug 14 2024 Vitaly Chikunov <vt@altlinux.org> 1.8-alt6
 - Some compatibility with older branches (shellcheck, udevrulesdir).
 
