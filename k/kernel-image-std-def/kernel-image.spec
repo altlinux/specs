@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:2
 %define kernel_base_version	6.1
-%define kernel_sublevel	.105
+%define kernel_sublevel	.106
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -598,6 +598,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Aug 19 2024 Kernel Bot <kernelbot@altlinux.org> 2:6.1.106-alt1
+- v6.1.106 (2024-08-19).
+- net: drop bad gso csum_start and offset in virtio_net_hdr.
+
 * Wed Aug 14 2024 Kernel Bot <kernelbot@altlinux.org> 2:6.1.105-alt1
 - v6.1.105 (2024-08-14).
 
