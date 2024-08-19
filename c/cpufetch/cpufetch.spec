@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cpufetch
-Version: 1.05
+Version: 1.06
 Release: alt1
 
 Summary: Simple yet fancy CPU architecture fetching tool
@@ -36,5 +36,8 @@ cpufetch — это инструмент командной строки, нап
 %doc README.md LICENSE
 
 %changelog
+* Mon Aug 19 2024 Anastasia Osmolovskaya <lola@altlinux.org> 1.06-alt1
+- Updated to version 1.06.
+
 * Wed May 08 2024 Anastasia Osmolovskaya <lola@altlinux.org> 1.05-alt1
 - Initial build for ALT.
