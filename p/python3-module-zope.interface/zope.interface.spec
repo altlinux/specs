@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.4
+Version: 7.0.1
 Release: alt1
 
 Summary: Zope interfaces package
@@ -77,6 +77,9 @@ This package contains tests for %pypi_name.
 %python3_sitelibdir/%ns_name/%mod_name/common/tests/
 
 %changelog
+* Mon Aug 19 2024 Stanislav Levin <slev@altlinux.org> 7.0.1-alt1
+- 6.4 -> 7.0.1.
+
 * Thu May 16 2024 Stanislav Levin <slev@altlinux.org> 6.4-alt1
 - 6.3 -> 6.4.
 

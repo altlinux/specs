@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.2
+Version: 5.3
 Release: alt1
 Summary: Generic Transparent Proxies
 License: ZPL-2.1
@@ -74,6 +74,9 @@ This package contains development files for %pypi_name.
 %python3_sitelibdir/%ns_name/%mod_name/*.c
 
 %changelog
+* Mon Aug 19 2024 Stanislav Levin <slev@altlinux.org> 5.3-alt1
+- 5.2 -> 5.3.
+
 * Fri Mar 15 2024 Stanislav Levin <slev@altlinux.org> 5.2-alt1
 - 5.0.0 -> 5.2.
 
