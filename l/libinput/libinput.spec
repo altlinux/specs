@@ -8,7 +8,7 @@
 %def_enable install_tests
 
 Name: libinput
-Version: 1.26.1
+Version: 1.26.2
 Release: alt1
 
 Summary: Input devices library
@@ -103,11 +103,11 @@ the functionality of the installed libinput library.
 %setup
 
 %build
-%meson %{?_enable_libwacom:-Dlibwacom=true} \
-       %{?_disable_debug_gui:-Ddebug-gui=false} \
-       %{?_disable_documentation:-Ddocumentation=false} \
-       %{?_disable_tests:-Dtests=false} \
-       %{?_enable_install_tests:-Dinstall-tests=true} \
+%meson %{subst_enable_meson_bool libwacom libwacom} \
+       %{subst_enable_meson_bool debug_gui debug-gui} \
+       %{subst_enable_meson_bool documentation documentation} \
+       %{subst_enable_meson_bool tests tests} \
+       %{subst_enable_meson_bool install_tests install-tests} \
        -Dudev-dir=%_udevdir
 %meson_build
 
@@ -193,6 +193,9 @@ the functionality of the installed libinput library.
 %endif
 
 %changelog
+* Mon Aug 19 2024 Yuri N. Sedunov <aris@altlinux.org> 1.26.2-alt1
+- 1.26.2
+
 * Thu Jun 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1.26.1-alt1
 - 1.26.1
 
