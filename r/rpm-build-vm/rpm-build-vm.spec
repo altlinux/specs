@@ -9,7 +9,7 @@
 %endif
 
 Name: rpm-build-vm
-Version: 1.69
+Version: 1.70
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -36,9 +36,14 @@ BuildRequires: /dev/kvm
 BuildRequires: shellcheck
 %endif
 
+%if "%_priority_distbranch" == "sisyphus"
+# Sisyphus have even newer kernels than un-def.
+Requires(pre): kernel-latest
+%else
 # Try to load un-def kernel this way to avoid "forbidden dependencies"
 # from sisyphus_check.
-Requires(pre): kernel >= 5.7
+Requires(pre): kernel
+%endif
 %endif
 
 Requires(pre): %name-run = %EVR
@@ -225,6 +230,9 @@ vm-run --stub-exit=7 && exit 1 || test $? -eq 7
 %endif
 
 %changelog
+* Mon Aug 19 2024 Vitaly Chikunov <vt@altlinux.org> 1.70-alt1
+- In Sisyphus bring latest kernel instead of un-def.
+
 * Wed Aug 14 2024 Vitaly Chikunov <vt@altlinux.org> 1.69-alt1
 - Compatibility with older mkswap(8) without '-q' option.
 - spec: checkinstall: Compatibility with kernels below v5.16 (hvc test).
