@@ -1,6 +1,6 @@
 Name: steam
-Version: 1.0.0.79
-Release: alt2
+Version: 1.0.0.81
+Release: alt1
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -76,6 +76,9 @@ savegame and screenshot functionality, and many social features.
 %config %_datadir/polkit-1/rules.d/%name-nm.rules
 
 %changelog 
+* Mon Aug 19 2024 Nazarov Denis <nenderus@altlinux.org> 1.0.0.81-alt1
+- Version 1.0.0.81
+
 * Sat Aug 03 2024 Nazarov Denis <nenderus@altlinux.org> 1.0.0.79-alt2
 - Update prevent prompts Network Manager without admin permissions only for steam %name (ALT #46456), thx fidel@
 
