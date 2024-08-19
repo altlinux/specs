@@ -113,7 +113,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 %endif
 
 Name: wine
-Version: %major.9
+Version: %major.10
 Release: alt1
 Epoch: 1
 
@@ -886,6 +886,10 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Mon Aug 19 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.10-alt1
+- update patches to staging wine-9.0
+  + partially revert 46c8a637525d0f1cf67830295fb460c819b800b6. (eterbug #17552)
+
 * Fri Mar 01 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.9-alt1
 - update patches to staging wine-9.0
   + compstui: Add more string resources. (eterbug #17016)
