@@ -11,7 +11,7 @@
 
 Name: %rname
 Version: 6.1.4
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -54,8 +54,8 @@ UI components for Plasma Phone.
 Group: Graphical desktop/KDE
 Summary: On-Screen Keyboard configuration
 Requires: %name-core
-Provides: kde5-plasma-settings-virtualkeyboard = %EVR
-Obsoletes: kde5-plasma-settings-virtualkeyboard  < %EVR
+Provides: kde5-plasma-settings-virtualkeyboard = 24
+Obsoletes: kde5-plasma-settings-virtualkeyboard  < 24
 %description -n plasma-settings-virtualkeyboard
 On-Screen Keyboard configuration.
 
@@ -73,8 +73,8 @@ Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kde-common
-Provides: kde5-plasma-settings-common = %EVR
-Obsoletes: kde5-plasma-settings-common  < %EVR
+Provides: kde5-plasma-settings-common = 24
+Obsoletes: kde5-plasma-settings-common  < 24
 %description common
 %name common package
 
@@ -143,6 +143,9 @@ sed -i 's|\(.*add_subdirectory.*dialer.*\)|#\1|' CMakeLists.txt
 #/usr/share/dbus-1/interfaces/org.kde.plasmashell.Mobile.xml
 
 %changelog
+* Mon Aug 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt2
+- fix conflicts (closes: 51179)
+
 * Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
 - new version
 
