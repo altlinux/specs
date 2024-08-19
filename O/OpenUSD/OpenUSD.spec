@@ -3,8 +3,9 @@
 %set_verify_elf_method strict
 
 %define soname 0
+%define qt_ver 6
 # FIXME!
-%define lversion 24.5
+%define lversion 24.8
 
 %def_enable alembic
 %def_enable draco
@@ -20,8 +21,8 @@
 %def_enable hdf5
 
 Name: OpenUSD
-Version: 24.05
-Release: alt0.1
+Version: 24.08
+Release: alt0.2
 Summary: Universal Scene Description library
 Group: Development/Other
 License: Apache-2.0
@@ -38,15 +39,13 @@ Source1: org.openusd.usdview.desktop
 # stbi_set_unpremultiply_on_load_thread.
 Source2: stb_image.patch
 
-# https://github.com/PixarAnimationStudios/OpenUSD/pull/2694
-Patch0: oneapi-tbb-2021.patch
-Patch1: openusd-alt-tbb-disable-debug-relwithdebinfo.patch
+Patch0: openusd-alt-tbb-disable-debug-relwithdebinfo.patch
 # Port to Embree 4.x
-# https://github.com/PixarAnimationStudios/USD/pull/2266
-Patch2: embree4.patch
+# https://github.com/PixarAnimationStudios/OpenUSD/pull/2313
+Patch1: embree4.patch
 # SONAME patch from Fedora/RH
-Patch3: 0001-Downstream-only-add-an-SONAME-version.patch
-Patch4: remove-distutils.patch
+Patch2: 0001-Downstream-only-add-an-SONAME-version.patch
+Patch3: remove-distutils.patch
 
 BuildRequires(pre): cmake rpm-build-python3 ninja-build
 BuildRequires: gcc-c++
@@ -54,7 +53,7 @@ BuildRequires: gcc-c++
 BuildRequires: boost-devel boost-python3-devel
 BuildRequires: tbb-devel
 BuildRequires: pkgconfig(blosc) pkgconfig(dri) opensubdiv-devel
-BuildRequires: imath-devel >= 3.0 openexr-devel pkgconfig(Qt5)
+BuildRequires: imath-devel >= 3.0 openexr-devel pkgconfig(Qt%{qt_ver})
 BuildRequires: python3-module-OpenGL python3-module-jinja2 python3-dev
 BuildRequires: dos2unix help2man libstb-devel
 %{?_enable_alembic:BuildRequires: alembic-devel}
@@ -183,10 +182,10 @@ sed -i 's|"${CMAKE_INSTALL_PREFIX}"|%_libdir/cmake/pxr|g' pxr/CMakeLists.txt
 find . -type f -exec gawk '/embree3/ { print FILENAME }' '{}' '+' |
   xargs -r sed -r -i 's/(embree)3/\14/'
 
-# Fix uic-qt5 use
+# Fix uic-qt6 use
 cat > uic-wrapper <<'EOF'
 #!/bin/sh
-exec uic-qt5 -g python "$@"
+exec %_libdir/qt%{qt_ver}/libexec/uic -g python "$@"
 EOF
 chmod +x uic-wrapper
 
@@ -389,6 +388,14 @@ desktop-file-validate %buildroot%_desktopdir/org.openusd.usdview.desktop
 %python3_sitelibdir/pxr
 
 %changelog
+* Sun Aug 18 2024 L.A. Kostis <lakostis@altlinux.ru> 24.08-alt0.2
+- Use PySlide6 for usdview (closes #51184, tnx to grenka@).
+
+* Mon Aug 05 2024 L.A. Kostis <lakostis@altlinux.ru> 24.08-alt0.1
+- 24.08.
+- cleanup merged patches.
+- embree4: update patch (upstream PR #2313).
+
 * Tue May 14 2024 L.A. Kostis <lakostis@altlinux.ru> 24.05-alt0.1
 - 24.05.
 - cleanup merged patches.
