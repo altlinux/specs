@@ -3,7 +3,7 @@
 
 Name: amnezia-vpn
 Version: 4.6.0.3
-Release: alt5
+Release: alt6
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
@@ -41,6 +41,7 @@ Summary: The best client for self-hosted VPN
 Group: System/Servers
 Requires: %name-service = %EVR
 Requires: amneziawg-go
+Requires: cloak-client
 Requires: openvpn
 Requires: qt6-5compat
 Requires: qt6-declarative
@@ -111,6 +112,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Mon Aug 19 2024 Nazarov Denis <nenderus@altlinux.org> 4.6.0.3-alt6
+- Add requires for Cloak client
+
 * Sun Aug 18 2024 Nazarov Denis <nenderus@altlinux.org> 4.6.0.3-alt5
 - Add patch for correct exec AmneziaWG path and require
 
