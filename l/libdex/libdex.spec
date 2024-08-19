@@ -2,6 +2,7 @@
 %define ver_major 0.6
 %define beta %nil
 %define api_ver 1
+%define namespace Dex
 
 %def_disable liburing
 %def_enable introspection
@@ -13,7 +14,7 @@
 
 Name: libdex
 Version: %ver_major.1
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Dex provides Future-based programming for GLib-based applications
 Group: System/Libraries
@@ -99,9 +100,9 @@ This package contains Dex example programs.
 
 %build
 %meson \
-    %{?_disable_liburing:-Dliburing=disabled} \
-    %{?_enable_docs:-Ddocs=true} \
-    %{?_disable_examples:-Dexamples=false}
+    %{subst_enable_meson_feature liburing liburing} \
+    %{subst_enable_meson_bool docs docs} \
+    %{subst_enable_meson_bool examples examples}
 %nil
 %meson_build
 
@@ -124,10 +125,10 @@ This package contains Dex example programs.
 
 %if_enabled introspection
 %files gir
-%_typelibdir/Dex-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Dex-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 %if_enabled docs
@@ -141,6 +142,9 @@ This package contains Dex example programs.
 %endif
 
 %changelog
+* Mon Aug 19 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1.1
+- updated E2K patch by ilyakurdyukov@
+
 * Fri May 31 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
 - 0.6.1
 
