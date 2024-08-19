@@ -1,13 +1,14 @@
-%def_disable snapshot
+%def_enable snapshot
 %define xdg_name org.gnome.clocks
 %define ver_major 46
 %define beta %nil
 
+%def_enable waked
 %def_enable check
 
 Name: gnome-clocks
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: Clock application designed for GNOME 3
 Group: Graphical desktop/GNOME
@@ -19,6 +20,8 @@ Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version%beta.
 %else
 Source: %name-%version%beta.tar
 %endif
+# https://bugzilla.altlinux.org/51204
+Patch10: %name-46.0-alt-waked.patch
 
 %define glib_ver 2.72
 %define gweather_ver 3.99
@@ -28,6 +31,7 @@ Source: %name-%version%beta.tar
 %define adwaita_ver 1.4
 
 Requires: geoclue2
+%{?_enable_waked:Requires: waked}
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools glib2-devel >= %glib_ver
@@ -45,9 +49,12 @@ Clock application designed for GNOME 3
 
 %prep
 %setup -n %name-%version%beta
+%patch10 -p1 -b .waked
 
 %build
-%meson
+%meson \
+    %{subst_enable_meson_bool waked waked}
+%nil
 %meson_build
 
 %install
@@ -68,6 +75,10 @@ Clock application designed for GNOME 3
 %doc README* NEWS*
 
 %changelog
+* Mon Aug 19 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt2
+- 46.0-11-g302f429 (updated translations)
+- enabled waked support (ALT #51204)
+
 * Fri Mar 15 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 
