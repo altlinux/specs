@@ -20,7 +20,7 @@
 
 Name: stb
 Version: 2.38
-Release: alt5.g%git.%snapdate
+Release: alt6.g%git.%snapdate
 
 Summary: single-file libraries for C/C++
 License: MIT or ALT-Public-Domain
@@ -236,6 +236,10 @@ Noteworthy:
 %setup
 %autopatch -p1
 
+# Creating whitelists of 64-bit architectures in 2024
+# should be considered a serious crime against portability.
+sed -i 's/defined(__ppc64__)/__LP64__/' stb_sprintf.h
+
 # Append to OS build flags rather than overriding them
 #
 # Instead of hard-coding C++ standard and calling the C compiler, defer to the
@@ -353,6 +357,9 @@ EOF
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Tue Aug 20 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.38-alt6.g013ac3b.20240531
+- fix stbsp__uintptr for all GNU compilers
+
 * Tue Jun 25 2024 L.A. Kostis <lakostis@altlinux.ru> 2.38-alt5.g013ac3b.20240531
 - Rebased to 013ac3beddff3dbffafd5177e7972067cd2b5083:
   stb_resize2 updated to 2.07.
