@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: oversteer
-Version: 0.8.0
+Version: 0.8.3
 Release: alt1
 
 Summary: Steering wheel manager
@@ -11,13 +11,12 @@ Group: System/Configuration/Hardware
 Url: https://github.com/berarma/oversteer
 
 Source: %name-%version.tar
-Patch1: %name-0.8.0-alt-fix-rules-file.patch
 Patch2: %name-0.8.0-alt-fix-ru-locale.patch
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-meson
 BuildRequires: meson pkgconfig(udev) /usr/bin/appstream-util
 BuildRequires: python3-module-evdev python3-module-pyudev python3-module-pygobject3
-BuildRequires: python3-module-pyxdg python3-module-matplotlib python3-module-scipy
+BuildRequires: python3-module-pyxdg python3-module-matplotlib-gtk3 python3-module-scipy
 
 Requires: python3-module-matplotlib-gtk3 python3-module-pyudev python3-module-scipy
 Requires: python3-module-%name = %EVR
@@ -39,7 +38,6 @@ Group: System/Configuration/Hardware
 
 %prep
 %setup
-%patch1 -p1
 %patch2 -p1
 
 %build
@@ -52,9 +50,9 @@ Group: System/Configuration/Hardware
 
 %files -f %name.lang
 %_bindir/%name
-%_datadir/metainfo/org.berarma.Oversteer.appdata.xml
-%_desktopdir/org.berarma.Oversteer.desktop
-%_iconsdir/hicolor/scalable/apps/org.berarma.Oversteer.svg
+%_datadir/metainfo/io.github.berarma.Oversteer.appdata.xml
+%_desktopdir/io.github.berarma.Oversteer.desktop
+%_iconsdir/hicolor/scalable/apps/io.github.berarma.Oversteer.svg
 %_udevrulesdir/*
 
 %files -n python3-module-%name
@@ -62,5 +60,8 @@ Group: System/Configuration/Hardware
 %python3_sitelibdir/%name
 
 %changelog
+* Tue Aug 20 2024 Mikhail Tergoev <fidel@altlinux.org> 0.8.3-alt1
+- 0.8.3
+
 * Tue Dec 12 2023 Mikhail Tergoev <fidel@altlinux.org> 0.8.0-alt1
 - Initial build for ALT Sisyphus.
