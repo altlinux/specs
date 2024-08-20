@@ -1,7 +1,7 @@
 %define soversion 2
 
 Name: libaquamarine
-Version: 0.3.1
+Version: 0.3.3
 Release: alt1
 License: BSD-3-Clause
 
@@ -79,5 +79,8 @@ This package provides development files for %name library.
 %_pkgconfigdir/aquamarine.pc
 
 %changelog
+* Tue Aug 20 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.3.3-alt1
+- new version 0.3.3 (with rpmrb script)
+
 * Tue Aug 13 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.3.1-alt1
 - Initial build
