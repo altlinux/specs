@@ -2,7 +2,7 @@
 
 Name: pyLinuxWheel
 Version: 0.6.1
-Release: alt7
+Release: alt8
 
 Summary: A simple utility to configure logitech steering wheels for Linux
 
@@ -15,6 +15,7 @@ Source: %name-%version.tar
 Patch1: pyLinuxWheel-0.6.1-alt-added_ru_locale.patch
 Patch2: pyLinuxWheel-0.6.1-alt-fix-desktop-file.patch
 Patch3: pyLinuxWheel-0.6.1-alt-fix-rules-file.patch
+Patch4: pyLinuxWheel-0.6.1-alt-fix-rules-find.patch
 
 BuildRequires(pre): rpm-build-python3
 # For desktop file & AppData
@@ -30,9 +31,7 @@ BuildArch: noarch
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%autopatch -p1
 
 %build
 pushd locale/ru/LC_MESSAGES/
@@ -71,6 +70,9 @@ cp -rv data/rules/99-logitech-wheel-perms.rules %buildroot%_udev_util_dir/rules.
 %_bindir/appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/io.itch.pyLinuxWheel.appdata.xml
 
 %changelog
+* Tue Aug 20 2024 Mikhail Tergoev <fidel@altlinux.org> 0.6.1-alt8
+- fixed rules file search (thanx @boria138) (ALT bug: 51194)
+
 * Mon Jun 24 2024 Mikhail Tergoev <fidel@altlinux.org> 0.6.1-alt7
 - fixed FTBFS
 
