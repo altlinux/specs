@@ -7,7 +7,7 @@
 
 Name: %rname
 Version: 6.1.4
-Release: alt1
+Release: alt2
 #Epoch: 2
 %K6init
 
@@ -137,6 +137,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kde6-screenlocker
 
 
 %changelog
+* Tue Aug 20 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt2
+- fix find pkcs11 pam-file
+
 * Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
 - new version
 
