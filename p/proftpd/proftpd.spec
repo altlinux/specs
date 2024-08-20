@@ -5,7 +5,7 @@
 
 Name: proftpd
 Version: %ver
-Release: alt0.2.rc2
+Release: alt0.3.rc2
 
 %define _libexecdir %{expand:%_libdir}
 # TODO
@@ -429,13 +429,13 @@ subst 's,^#include\ <\(pcre.*\),#include <pcre/\1,' src/regexp.c
         %{?_enable_tests:--enable-tests=nonetwork} \
         --libexecdir=%_libexecdir/%name \
         --with-pkgconfig=%_pkgconfigdir \
-        --localstatedir=/var/lib/proftpd \
+        --localstatedir=%_runstatedir/%name \
         --enable-auth-pam \
         --enable-ctrls \
         --enable-largefile \
         --disable-rpath \
         --enable-autoshadow --enable-sendfile --enable-dso \
-        --with-lastlog=/var/log/lastlog \
+        --with-lastlog=%_logdir/lastlog \
         --enable-openssl \
         --enable-nls \
         --enable-facl \
@@ -453,7 +453,7 @@ pushd modules/mod_proxy
 %__autoconf
 %configure \
         %{?_enable_tests:--enable-tests} \
-        --libexecdir=%_libexecdir/proftpd
+        --libexecdir=%_libexecdir/%name
 %make
 popd
 %endif
@@ -513,6 +513,7 @@ install -m 0755 libtool %buildroot%_includedir/%name/
 # systemd unit install
 mkdir -p %buildroot%_unitdir
 install -m 0644 %SOURCE7 %buildroot%_unitdir/
+mkdir -p %buildroot%_libexecdir/proftpd
 
 %find_lang %name
 
@@ -520,7 +521,6 @@ install -m 0644 %SOURCE7 %buildroot%_unitdir/
 pushd modules/mod_proxy
 myname=`id -un`
 mygroup=`id -gn`
-mkdir -p %buildroot%_libexecdir/proftpd
 %make_install install DESTDIR=%buildroot LIBEXECDIR=%_libexecdir/proftpd INSTALL_USER=$myname INSTALL_GROUP=$mygroup
 # to make LTO checks happy
 rm -f %buildroot%_libexecdir/proftpd/mod_proxy.a
@@ -591,8 +591,8 @@ fi
 %_man8dir/ftpshut.*
 %_man8dir/ftpdctl.*
 %_man8dir/ftpscrub.*
-%dir /var/lib/%name
-%dir /var/log/%name
+%dir %_runstatedir/%name
+%dir %_logdir/%name
 %dir %_libexecdir/%name
 
 %ifdef _shared_mod_ctrls_admin
@@ -772,6 +772,9 @@ fi
 %_controldir/%name
 
 %changelog
+* Tue Aug 20 2024 L.A. Kostis <lakostis@altlinux.ru> 1.3.9-alt0.3.rc2
+- Fix runstatedir (closes #51209).
+
 * Mon Aug 12 2024 L.A. Kostis <lakostis@altlinux.ru> 1.3.9-alt0.2.rc2
 - Added mod_proxy.
 
