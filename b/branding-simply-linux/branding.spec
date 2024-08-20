@@ -1,7 +1,7 @@
 %define theme slinux
 %define Name Simply Linux
-%define codename Captain Finn
-%define status %nil
+%define codename Giuseppe
+%define status alpha
 
 %define brand simply
 
@@ -69,16 +69,10 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-simply-linux
-Version: 10.2
-Release: alt1.2
+Version: 10.900
+Release: alt1
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
-%ifarch %ix86 x86_64
-BuildRequires: cpio
-BuildRequires: design-bootloader-source >= 5.0-alt2 fribidi
-BuildRequires: gfxboot >= 4
-%endif
-
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
 BuildRequires: qt5-base-devel
@@ -130,11 +124,10 @@ License: Distributable
 Group:  System/Configuration/Boot and Init
 BuildArch: noarch
 Provides: plymouth-theme-%theme
-Requires: plymouth-plugin-script
 Requires: plymouth
-
-# ALT bug #39593
-Conflicts: system-logo
+Requires: plymouth-theme-bgrt-alt
+Requires: plymouth-plugin-label
+Requires: fonts-ttf-dejavu
 
 %branding_add_conflicts simply-linux bootsplash
 
@@ -418,13 +411,6 @@ cp menu/altlinux-wine.directory %buildroot/usr/share/desktop-directories/
 mkdir -p %buildroot/%_datadir/backgrounds/xfce/
 touch %buildroot/%_datadir/backgrounds/xfce/default_SL10
 
-%ifarch %ix86 x86_64
-#bootloader
-%pre bootloader
-[ -s /usr/share/gfxboot/%theme ] && rm -fr  /usr/share/gfxboot/%theme ||:
-[ -s /boot/splash/%theme ] && rm -fr  /boot/splash/%theme ||:
-%endif
-
 %post bootloader
 [ "$1" -eq 1 ] || exit 0
 %ifarch %ix86 x86_64
@@ -440,20 +426,16 @@ shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_NORMAL %grub_normal
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 
-%ifarch %ix86 x86_64
-%preun bootloader
-[ "$1" -eq 0 ] || exit 0
-[ "`readlink /boot/splash/message`" != "%theme/message" ] ||
-    rm -f /boot/splash/message
-%endif
-
 %post indexhtml
 %_sbindir/indexhtml-update
 
 #bootsplash
 %post bootsplash
-[ "$1" -eq 1 ] || exit 0
-subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
+if [ "$1" -eq 1 ]; then
+	subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
+else
+	subst "s/Theme=slinux/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
+fi
 
 #graphics
 %post graphics
@@ -481,16 +463,9 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %ghost %_datadir/design/slinux/backgrounds/xdm.png
 
 %files bootloader
-%ifarch %ix86 x86_64
-%_datadir/gfxboot/%theme
-/boot/splash/%theme
-%endif
 /boot/grub/themes/%theme
 
 %files bootsplash
-%_datadir/plymouth/themes/%theme/*
-%_pixmapsdir/system-logo.png
-%exclude %_datadir/plymouth/themes/%theme/*.in
 
 %files release
 %_sysconfdir/*-release
@@ -540,6 +515,17 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_datadir/install3/*
 
 %changelog
+* Tue Aug 20 2024 Mikhail Efremov <sem@altlinux.org> 10.900-alt1
+- menu: Drop org.gnome.Shotwell.desktop.
+- menu: Update desktop files.
+- release: Set codename to Giuseppe.
+- bootsplash: Update plymouth theme if needed.
+- build: Replace convert with magick.
+- bootsplash: Use bgrt-alt plymouth theme.
+- xfce-settings: Increase panel size.
+- all: Set status to alpha.
+- bootloader: Drop gfxboot support.
+
 * Thu Dec 28 2023 Michael Shigorin <mike@altlinux.org> 10.2-alt1.2
 - E2K: replace slide 10
 
