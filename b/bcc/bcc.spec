@@ -20,7 +20,7 @@
 
 Name:		bcc
 Version: 0.31.0
-Release: alt1
+Release: alt2
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -251,7 +251,7 @@ banner test
 if [ -w /dev/kvm ]; then
 	LD_LIBRARY_PATH=%buildroot%_libdir \
 	PYTHONPATH=%buildroot%python3_sitelibdir \
-	vm-run %buildroot%_datadir/bcc/tools/cpudist 1 1
+	vm-run --sbin %buildroot%_datadir/bcc/tools/cpudist 1 1
 fi
 
 %post -n libbpf-tools
@@ -307,6 +307,9 @@ rm -f /tmp/vm.* /tmp/initramfs-*.img
 %files checkinstall
 
 %changelog
+* Tue Aug 20 2024 Vitaly Chikunov <vt@altlinux.org> 0.31.0-alt2
+- spec: check: Fix FTBFS (modprobe).
+
 * Tue Jul 30 2024 Vitaly Chikunov <vt@altlinux.org> 0.31.0-alt1
 - Update to v0.31.0 (2024-07-27).
 
