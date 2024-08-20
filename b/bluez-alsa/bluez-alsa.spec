@@ -12,9 +12,10 @@
 %def_disable test
 %def_enable cli
 %def_enable midi
+%def_enable opus
 
 Name: bluez-alsa
-Version: 4.2.0
+Version: 4.3.0
 Release: alt1
 Epoch: 5
 Summary: BlueZ ALSA backend for Linux
@@ -27,7 +28,6 @@ Packager: L.A. Kostis <lakostis@altlinux.ru>
 Source: %name-%version.tar
 
 Patch0: %name-%version-%release.patch
-Patch1: %name-fix-include-freeaptx.patch
 
 Provides: alsa-plugins-bluealsa = %EVR, bluealsa = %EVR
 
@@ -46,6 +46,7 @@ BuildRequires: bash-completion
 %{?_enable_test:BuildRequires: libcheck-devel}
 %{?_enable_l3plus:BuildRequires: libl3plus-devel}
 %{?_enable_cli:BuildRequires: libreadline-devel}
+%{?_enable_opus:BuildRequires: libopus-devel}
 # for hcitop
 BuildRequires: libbsd-devel libncurses-devel
 
@@ -95,6 +96,7 @@ by pressing a key. To quit the program press the 'q' key, or use Ctrl-C.
 	%{subst_enable cli} \
 	%{subst_enable midi} \
 	%{?_enable_aptx:--with-libfreeaptx --enable-aptx --enable-aptx-hd} \
+	%{subst_enable opus} \
 	--with-alsaconfdir=%_datadir/alsa/alsa.conf.d \
 	--with-systemdsystemunitdir=%_unitdir \
 	--with-bash-completion \
@@ -146,6 +148,10 @@ install -m0700 -d %buildroot%_localstatedir/%b_user
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Tue Aug 20 2024 L.A. Kostis <lakostis@altlinux.ru> 5:4.3.0-alt1
+- 4.3.0.
+- enable Opus codec support.
+
 * Fri May 24 2024 L.A. Kostis <lakostis@altlinux.ru> 5:4.2.0-alt1
 - 4.2.0.
 - remove freeaptx patch (upstream fixed it).
