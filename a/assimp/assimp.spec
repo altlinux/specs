@@ -6,7 +6,7 @@
 
 Name: assimp
 Version: 5.4.2
-Release: alt1
+Release: alt2
 Summary: Library to import various 3D model formats into applications
 Group: Graphics
 # Assimp is BSD
@@ -82,6 +82,11 @@ You need to install it if you want to develop programs using assimp.
 %setup
 %patch0 -p2
 
+%ifarch %e2k
+# solve the problem radically, as -Werror is everywhere around
+find -name CMakeLists.txt -exec sed -i 's/-Werror/-Wno-error/g' {} \;
+%endif
+
 # Get rid of bundled libs so we can't accidentally build against them
 rm -rf contrib/android-cmake
 #rm -rf contrib/clipper
@@ -97,11 +102,6 @@ rm -rf contrib/utf8cpp
 rm -rf contrib/zlib
 
 %build
-# mike@
-%ifarch %e2k
-# as of lcc 1.25.20
-%add_optflags -Wno-error=maybe-uninitialized
-%endif
 %cmake \
 %if_with docs
   -DASSIMP_BUILD_DOCS:BOOL=ON \
@@ -137,6 +137,9 @@ rm -rf contrib/zlib
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Aug 20 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 5.4.2-alt2
+- e2k build fix
+
 * Mon Jul 15 2024 L.A. Kostis <lakostis@altlinux.ru> 5.4.2-alt1
 - 5.4.2.
 
