@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpui
-Version: 0.2.47
+Version: 0.2.48
 Release: alt1
 
 Summary: Group policy editor
@@ -112,6 +112,14 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Tue Aug 20 2024 Vladimir Rubanov <august@altlinux.org> 0.2.48-alt1
+- 0.2.48-alt1
+- Fixes:
+  + Fix order of pol instructions in internal storage.
+  + Fix list based policies (Closes: 50123).
+  + Fix comment values (Closes: 47576).
+  + Fix script settings description (Closes: 49099).
+
 * Tue Aug 6 2024 Vladimir Rubanov <august@altlinux.org> 0.2.47-alt1
 - 0.2.47-alt1
 - Fixes:
