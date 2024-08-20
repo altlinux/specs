@@ -1,12 +1,13 @@
 Name: installer-distro-simply-linux
-Version: 10.6.0
-Release: alt1
+Version: 11.0.0
+Release: alt2
 
 Summary: Installer common files
 Summary(ru_RU.UTF-8): Общие пакеты для установки дистрибутива "Simply linux"
 License: GPLv2+
 Group: System/Configuration/Other
 Source: %name-%version.tar
+BuildArch: noarch
 
 BuildRequires: alterator rpm-devel
 
@@ -21,7 +22,6 @@ Installer common files
 Summary: Installer stage2
 Summary(ru_RU.UTF-8): Пакеты необходимые на втором этапе установки Simply linux
 Group: System/Configuration/Other
-BuildArch: noarch
 Requires: %name = %version-%release
 Requires: installer-stage2
 #fonts
@@ -34,7 +34,7 @@ Requires: alterator-license
 Requires: alterator-datetime >= 4.0
 Requires: chrony
 Requires: alterator-vm
-Requires: installer-alterator-pkg
+Requires: installer-alterator-pkg >= 3.1.5-alt1
 Requires: alterator-luks
 Requires: x-cursor-theme-jimmac
 #features
@@ -93,11 +93,16 @@ Installer stage3
 %install
 %makeinstall
 
+# Don't expand groups lists
+mkdir -p %buildroot%_sysconfdir/alterator
+echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
+
 %find_lang alterator-simply-linux
 
 %files -f alterator-simply-linux.lang
 
 %files stage2
+%_sysconfdir/alterator/pkg-groups.conf
 %_datadir/install2/installer-steps
 %_datadir/install2/*.d/*
 %_datadir/install2/alterator-menu
@@ -105,6 +110,14 @@ Installer stage3
 %files stage3
 
 %changelog
+* Tue Aug 20 2024 Mikhail Efremov <sem@altlinux.org> 11.0.0-alt2
+- all: Make the whole package noarch.
+
+* Wed Aug 07 2024 Mikhail Efremov <sem@altlinux.org> 11.0.0-alt1
+- stage2: Split installer step pkg -> pkg-groups/pkg-install.
+- stage2: Add pkg-groups.conf.
+- Show alterator-logs in the acc.
+
 * Fri Sep 15 2023 Mikhail Efremov <sem@altlinux.org> 10.6.0-alt1
 - stage2: Drop custom luks step.
 
