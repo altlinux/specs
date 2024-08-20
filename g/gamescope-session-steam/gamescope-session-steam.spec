@@ -5,7 +5,7 @@
 
 Name: gamescope-session-steam
 Version: 0.0.3.git015e09
-Release: alt1
+Release: alt1.1
 
 Summary: Steam Big Picture session based on gamescope
 
@@ -22,18 +22,31 @@ Patch1: drop-steamos-functions.patch
 Patch2: shebang.patch
 # took away extra permissions
 Patch3: update-policy.patch
+# added desktop and session return patch
+Patch4: desktop-return.patch
 
 ExclusiveArch: x86_64
 
 BuildRequires(pre): rpm-build-python3
 
 %add_findreq_skiplist %_datadir/%gss_p/sessions.d/steam
+%add_findreq_skiplist %_bindir/steamos-desktop-return
+%add_findreq_skiplist %_bindir/steamos-session-select
 Requires: gamescope-session-plus
 Requires: mangoapp
 Requires: xwininfo
 Requires: xrandr
 
 %description
+%summary
+
+%package return
+Summary: Adds a desktop file to return to and from a Gamescope session
+Group: Other
+Requires: %name = %EVR
+Requires: yad
+
+%description return
 %summary
 
 %prep
@@ -55,9 +68,11 @@ popd
 %build
 %install
 # base files
-mkdir -p %buildroot{%_bindir,%_datadir}
+mkdir -p %buildroot{%_bindir,%_datadir,%_sysconfdir,%_libexecdir}
 cp -rv usr/bin/* %buildroot%_bindir/
+cp -rv usr/libexec/* %buildroot%_libexecdir/
 cp -rv usr/share/* %buildroot%_datadir/
+cp -rv etc/* %buildroot%_sysconfdir/
 mv -v %buildroot%_bindir/steamos-polkit-helpers %buildroot%_datadir/%gss_p/
 
 %postun
@@ -78,7 +93,18 @@ fi
 %_datadir/polkit-1/actions/org.chimeraos.update.policy
 %_datadir/wayland-sessions/%name.desktop
 
+%files return
+%_bindir/steamos-desktop-return
+%_libexecdir/os-session-select
+%_desktopdir/steam_return.desktop
+%_iconsdir/hicolor/scalable/actions/steamdeck-gaming-return.svg
+%_sysconfdir/lightdm/lightdm.conf.d/10-gamescope-session.conf
+%_sysconfdir/sddm.conf.d/10-gamescope-session.conf
+
 %changelog
+* Sat Aug 17 2024 Boris Yumankulov <boria138@altlinux.org> 0.0.3.git015e09-alt1.1
+- NMU: added desktop and session return patch (ALT bug: 51054)
+
 * Mon Aug 05 2024 Mikhail Tergoev <fidel@altlinux.org> 0.0.3.git015e09-alt1
 - added requires: xwininfo
 - fixed warning: jupiter-dock-updater not found
