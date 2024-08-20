@@ -6,7 +6,7 @@
 Name: adolc
 Summary: A Package for Automatic Differentiation of Algorithms Written in C/C++
 Version: 2.7.2
-Release: alt0.1
+Release: alt0.2
 Group: Sciences/Mathematics
 License: EPL-1.0 or GPL-2.0+
 Url: https://github.com/coin-or/ADOL-C
@@ -26,6 +26,8 @@ Source10: http://ftp.mcs.anl.gov/pub/ADOLC/PAPERS/sf_col_ver.ps.gz
 Source11: http://ftp.mcs.anl.gov/pub/ADOLC/PAPERS/tensors.ps.gz
 Source12: http://ftp.mcs.anl.gov/pub/ADOLC/PAPERS/tr_col_ver.ps.gz
 Source13: README
+
+Patch: adolc-2.7.2-alt-loongarch64-boost.patch
 
 Requires: lib%name = %EVR
 Requires: %name-examples = %EVR
@@ -112,6 +114,7 @@ This package contains examples for ADOL-C.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -174,6 +177,9 @@ chrpath -d %buildroot%_libdir/*.so
 %_libdir/%name-examples
 
 %changelog
+* Tue Aug 20 2024 Ivan A. Melnikov <iv@altlinux.org> 2.7.2-alt0.2
+- NMU: Fix FTBFS on loongarch64 (by k0tran@).
+
 * Wed Aug 14 2024 L.A. Kostis <lakostis@altlinux.ru> 2.7.2-alt0.1
 - Version 2.7.2.
 - Enabled OpenMP support via GOMP.
