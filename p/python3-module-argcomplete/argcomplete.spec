@@ -1,9 +1,9 @@
 %define oname argcomplete
 
-%def_without check
+%def_with check
 
 Name: python3-module-argcomplete
-Version: 2.0.0
+Version: 3.5.0
 Release: alt1
 
 Summary: Bash tab completion for argparse
@@ -12,24 +12,22 @@ License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/argcomplete/
 
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
+Patch: argcomplete-3.5.0-skip-test.patch
 
 BuildArch: noarch
 
-Obsoletes: python-module-argcomplete
-Provides: python-module-argcomplete
-
-BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pexpect
-BuildRequires: python3-module-tox
+BuildRequires: python3-module-pip
+BuildRequires: zsh
 BuildRequires: /dev/pts
-BuildRequires: tcsh
 %endif
 
 %description
@@ -43,33 +41,38 @@ It makes two assumptions:
 
 %prep
 %setup
+%patch -p1
 
 %build
-%python3_build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%pyproject_build
 
 %install
-%python3_install
-%python3_prune
+%pyproject_install
 
-%if_with check
 %check
-export LC_ALL=C.UTF-8
-export TOX_TESTENV_PASSENV='LC_ALL'
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python},py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -o -v
-%endif
+# https://github.com/kislyuk/argcomplete/issues/255
+sed -i -e "1s|#!.*python.*|#!%__python3|" test/prog test/*.py argcomplete/scripts/*
+sed -i -e "s|python |python3 |" test/test.py
+export PYTHONPATH=%buildroot%python3_sitelibdir
+export PATH=$PATH:%buildroot%_bindir
+%pyproject_run -- python3 ./test/test.py -v
 
 %files
-%doc *.rst
+%doc README.*
 %_bindir/activate-global-python-argcomplete
 %_bindir/python-argcomplete-check-easy-install-script
-%_bindir/python-argcomplete-tcsh
 %_bindir/register-python-argcomplete
 %python3_sitelibdir/argcomplete/
-%python3_sitelibdir/argcomplete-*.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Tue Aug 20 2024 Anton Vyatkin <toni@altlinux.org> 3.5.0-alt1
+- New version 3.5.0.
+- Migrate to pyproject macroses.
+- Using gear remotes.
+- Build with check.
+
 * Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
 - new version 2.0.0 (with rpmrb script)
 
