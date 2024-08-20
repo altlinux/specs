@@ -1,9 +1,10 @@
 %define sort_filter_proxy_model_commit f2881493e42bd7b7d5b7abe804dad084dd610b71
 %define qtkeychain_commit 74776e2a3e2d98d19943e0968901c5b5e04cc1bd
+%define qsimplecrypto_commit c99b33f0e08b7206116ddff85c22d3b97ce1e79d
 
 Name: amnezia-vpn
-Version: 4.6.0.3
-Release: alt6
+Version: 4.7.0.0
+Release: alt1
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
@@ -18,6 +19,8 @@ Source0: amnezia-client-%version.tar
 Source1: SortFilterProxyModel-%sort_filter_proxy_model_commit.tar
 # https://github.com/frankosterfeld/qtkeychain/archive/%qtkeychain_commit/qtkeychain-%qtkeychain_commit.tar.gz
 Source2: qtkeychain-%qtkeychain_commit.tar
+# https://github.com/amnezia-vpn/QSimpleCrypto/archive/%qsimplecrypto_commit/QSimpleCrypto-%qsimplecrypto_commit.tar.gz
+Source3: QSimpleCrypto-%qsimplecrypto_commit.tar
 
 Patch0: %name-use-system-libs-instead-3rd-prebuilt.patch
 Patch1: %name-openvpn-exec-path.patch
@@ -61,7 +64,7 @@ Amnezia is an open-source VPN client, with a key feature that enables you to dep
 This package contains systemd service files.
 
 %prep
-%setup -n amnezia-client-%version -b 1 -b 2
+%setup -n amnezia-client-%version -b 1 -b 2 -b 3
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -69,6 +72,7 @@ This package contains systemd service files.
 
 %__mv -Tf ../SortFilterProxyModel-%sort_filter_proxy_model_commit client/3rd/SortFilterProxyModel
 %__mv -Tf ../qtkeychain-%qtkeychain_commit client/3rd/qtkeychain
+%__mv -Tf ../QSimpleCrypto-%qsimplecrypto_commit client/3rd/QSimpleCrypto
 
 %build
 %add_optflags -Wno-error=return-type
@@ -112,6 +116,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Tue Aug 20 2024 Nazarov Denis <nenderus@altlinux.org> 4.7.0.0-alt1
+- Version 4.7.0.0
+
 * Mon Aug 19 2024 Nazarov Denis <nenderus@altlinux.org> 4.6.0.3-alt6
 - Add requires for Cloak client
 
