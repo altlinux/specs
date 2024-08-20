@@ -5,7 +5,7 @@
 
 Name: mediastreamer2
 Version: 5.3.74
-Release: alt1
+Release: alt2
 
 Summary: Mediastreamer2 is a powerful and lightweight streaming engine for voice/video telephony applications
 License: AGPL-3.0
@@ -15,7 +15,10 @@ Url: https://gitlab.linphone.org/BC/public/mediastreamer2
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
+
+%if "%(rpmquery --qf '%%{VERSION}' libavcodec-devel)" >= "5"
 Patch: mediastreamer2-5.3.74-opensuse-fix-build-ffmpeg5.patch
+%endif
 Patch1: mediastreamer2-5.3.74-opensuse-fix-pkgconfig.patch
 Patch2: mediastreamer2-5.3.74-mageia-cmake-config-location.patch
 Patch3: mediastreamer2-5.3.74-mageia-soname.patch
@@ -135,5 +138,8 @@ export CMAKE_PREFIX_PATH=%_datadir/Bcg729/cmake:$CMAKE_PREFIX_PATH
 %_libdir/cmake/Mediastreamer2/*.cmake
 
 %changelog
+* Tue Aug 20 2024 Leontiy Volodin <lvol@altlinux.org> 5.3.74-alt2
+- Easy backporting to older branches.
+
 * Mon Aug 19 2024 Leontiy Volodin <lvol@altlinux.org> 5.3.74-alt1
 - Initial build for Sisyphus (thanks mageia and opensuse for the patches).
