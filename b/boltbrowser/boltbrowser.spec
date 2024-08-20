@@ -3,12 +3,13 @@
 
 Name: boltbrowser
 Version: 2.2
-Release: alt1
+Release: alt1.1
 Summary: A CLI Browser for BoltDB Files
 
 Group: Databases
 License: GPL-3.0-only
 Url: https://%import_path
+Packager: Ivan Pepelyaev <fl0pp5@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -18,11 +19,14 @@ BuildRequires(pre): rpm-build-golang
 
 BuildRequires: /proc
 
+Patch1: boltbrowser-alt-add-loongarc64-support-for-vendored-github.com-boltd.patch
+
 %description
 %summary.
 
 %prep
 %setup
+%patch1 -p 1
 
 %build
 export BUILDDIR="$PWD/.gopath"
@@ -45,5 +49,8 @@ rm -rf -- %buildroot%go_root
 %_bindir/%name
 
 %changelog
+* Tue Aug 20 2024 Ivan A. Melnikov <iv@altlinux.org> 2.2-alt1.1
+- NMU: fix FTBFS on loongarch64.
+
 * Tue Aug 20 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 2.2-alt1
 - Initial build for ALT.
