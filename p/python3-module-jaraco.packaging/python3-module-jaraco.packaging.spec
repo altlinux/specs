@@ -1,7 +1,7 @@
 %define  modulename jaraco.packaging
 
 Name:    python3-module-%modulename
-Version: 10.2.2
+Version: 10.2.3
 Release: alt1
 
 Summary: Tools to supplement packaging Python releases
@@ -44,6 +44,9 @@ rm -rf %buildroot/%_bindir/
 %python3_sitelibdir/%modulename-%version.dist-info/
 
 %changelog
+* Wed Aug 21 2024 Andrey Cherepanov <cas@altlinux.org> 10.2.3-alt1
+- New version.
+
 * Sat Jun 22 2024 Andrey Cherepanov <cas@altlinux.org> 10.2.2-alt1
 - New version.
 
