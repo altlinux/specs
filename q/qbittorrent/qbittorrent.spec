@@ -2,7 +2,7 @@
 %define rel alt1
 
 Name: qbittorrent
-Version: 4.6.5
+Version: 4.6.6
 Epoch: 1
 Release: %rel
 
@@ -31,7 +31,7 @@ BuildRequires: rpm-build-python3 rpm-macros-python3
 %endif
 BuildRequires: %ltr
 
-Requires: python3-module-ctypesgen
+Requires: python3-module-ctypesgen qt6-svg
 Requires: GeoIP-Lite-Country
 
 %description
@@ -132,6 +132,10 @@ desktop-file-install \
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Aug 22 2024 Ilya Mashkin <oddity@altlinux.ru> 1:4.6.6-alt1
+- 4.6.6
+- Add Requires qt6-svg (Closes: #50537)
+
 * Mon May 27 2024 Ilya Mashkin <oddity@altlinux.ru> 1:4.6.5-alt1
 - 4.6.5
 
