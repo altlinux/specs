@@ -120,7 +120,7 @@
 %endif
 
 Name:    samba
-Version: 4.20.3
+Version: 4.20.4
 Release: alt1
 
 Group:   System/Servers
@@ -1723,6 +1723,7 @@ control role-sambashare enabled
 %_samba_mod_libdir/libcli-ldap-common-private-samba.so
 %_samba_mod_libdir/libcli-ldap-private-samba.so
 %_samba_mod_libdir/libcli-nbt-private-samba.so
+%_samba_mod_libdir/libcli-smb-common-private-samba.so
 %_samba_mod_libdir/libcliauth-private-samba.so
 %_samba_mod_libdir/libclidns-private-samba.so
 %_samba_mod_libdir/libcluster-private-samba.so
@@ -1741,14 +1742,17 @@ control role-sambashare enabled
 %_samba_mod_libdir/libflag-mapping-private-samba.so
 %_samba_mod_libdir/libgenrand-private-samba.so
 %_samba_mod_libdir/libgensec-private-samba.so
+%_samba_mod_libdir/libgse-private-samba.so
 %_samba_mod_libdir/libinterfaces-private-samba.so
 %_samba_mod_libdir/libiov-buf-private-samba.so
 %_samba_mod_libdir/libkrb5samba-private-samba.so
 %_samba_mod_libdir/libldbsamba-private-samba.so
 %_samba_mod_libdir/liblibcli-lsa3-private-samba.so
+%_samba_mod_libdir/liblibsmb-private-samba.so
 %_samba_mod_libdir/libmessages-dgm-private-samba.so
 %_samba_mod_libdir/libmessages-util-private-samba.so
 %_samba_mod_libdir/libmsghdr-private-samba.so
+%_samba_mod_libdir/libmsrpc3-private-samba.so
 %_samba_mod_libdir/libndr-samba-private-samba.so
 %_samba_mod_libdir/libndr-samba4-private-samba.so
 %_samba_mod_libdir/libnetif-private-samba.so
@@ -1801,18 +1805,14 @@ control role-sambashare enabled
 %_samba_mod_libdir/libMESSAGING-private-samba.so
 %_samba_mod_libdir/libads-private-samba.so
 %_samba_mod_libdir/libauth-private-samba.so
-%_samba_mod_libdir/libcli-smb-common-private-samba.so
 %_samba_mod_libdir/libcli-spoolss-private-samba.so
 %_samba_mod_libdir/libdcerpc-pkt-auth-private-samba.so
 %_samba_mod_libdir/libdcerpc-samba4-private-samba.so
 %_samba_mod_libdir/libgpext-private-samba.so
 %_samba_mod_libdir/libgpo-private-samba.so
-%_samba_mod_libdir/libgse-private-samba.so
 %_samba_mod_libdir/libhttp-private-samba.so
 %_samba_mod_libdir/liblibcli-netlogon3-private-samba.so
-%_samba_mod_libdir/liblibsmb-private-samba.so
 %_samba_mod_libdir/libmscat-private-samba.so
-%_samba_mod_libdir/libmsrpc3-private-samba.so
 %_samba_mod_libdir/libnet-keytab-private-samba.so
 
 %_samba_mod_libdir/libprinter-driver-private-samba.so
@@ -2225,6 +2225,21 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Wed Aug 21 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.20.4-alt1
+- Update to stable release of Samba 4.20 (Samba#15673):
+  + Due --version-* options are still not ergonomic, and they reject tilde
+    characters, so, revert the commit changed the script for generating the ABI
+    symbol version broken the ABI by changing all dots to underscores.
+    This reverts the commit partially to preserve the dots in the version part.
+- Replace some common private libraries to common-libs (for libsmclient):
+  + libreplace-private-samba.so
+  + libcli-smb-common-private-samba.so
+  + libgse-private-samba.so
+  + liblibsmb-private-samba.so
+
+* Fri Aug 16 2024 Andrey Limachko <liannnix@altlinux.org> 4.20.3-alt2
+- Fix duplication of pdc srv record after role transfer (thx Evgenii Sozonov).
+
 * Fri Aug 02 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.20.3-alt1
 - Update to stable release of Samba 4.20
 - Major fixes from upstream (Samba#15683, Samba#15655, Samba#15685, Samba#15603,
