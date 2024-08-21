@@ -21,7 +21,7 @@
 
 Name: strongswan
 Version: 5.9.14
-Release: alt3
+Release: alt4
 
 Summary: strongSwan IPsec implementation
 License: GPLv2+
@@ -171,6 +171,7 @@ PT-TLS to support TNC over TLS.
 	--enable-ldap \
 	--enable-led \
 	--enable-lookip \
+	--enable-md4 \
 	--enable-newhope \
 	--enable-ntru \
 	--enable-openssl \
@@ -345,6 +346,9 @@ fi
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Wed Aug 21 2024 Alexey Shabalin <shaba@altlinux.org> 5.9.14-alt4
+- enable build md4 for eap-mschapv2
+
 * Wed Aug 21 2024 Alexey Shabalin <shaba@altlinux.org> 5.9.14-alt3
 - disable bypass-lan plugin in config
 - disable kernel-libipsec plugin (ALT #50684) in config
