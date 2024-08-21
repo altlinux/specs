@@ -5,7 +5,7 @@
 
 Name:     earlyoom
 Version:  1.6.2
-Release:  alt1
+Release:  alt1.1
 
 Summary:  Early OOM Daemon for Linux
 License:  MIT
@@ -20,7 +20,9 @@ Source1:  %name.init
 Patch: fix-config-path.patch
 
 BuildRequires: /proc
+%ifnarch %e2k
 BuildRequires: pandoc
+%endif
 %if_with check
 BuildRequires: golang
 %endif
@@ -72,10 +74,15 @@ install -pm755 %SOURCE1 %buildroot%_initdir/%name
 %_bindir/%name
 %_unitdir/%name.service
 %_initdir/%name
+%ifnarch %e2k
 %_man1dir/%name.*
+%endif
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Tue Aug 20 2024 Michael Shigorin <mike@altlinux.org> 1.6.2-alt1.1
+- E2K: skip docs (no pandoc available so far)
+
 * Mon Nov 16 2020 Anton Midyukov <antohami@altlinux.org> 1.6.2-alt1
 - new version 1.6.2
 
