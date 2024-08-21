@@ -17,7 +17,7 @@
 %define get_dep_ge() %(rpm -q --qf '%%{NAME} >= %%{EVR}' %1 2>/dev/null || echo '%1 >= unknown')
 
 Name: 389-ds-base
-Version: 2.4.5
+Version: 2.4.6
 Release: alt1
 
 Summary: 389 Directory Server (base)
@@ -428,6 +428,10 @@ fi
 %endif
 
 %changelog
+* Mon Aug 19 2024 Stanislav Levin <slev@altlinux.org> 2.4.6-alt1
+- 2.4.5 -> 2.4.6
+  + (fixes: CVE-2024-2199, CVE-2024-3657, CVE-2024-5953, CVE-2024-6237)
+
 * Tue Jan 16 2024 Stanislav Levin <slev@altlinux.org> 2.4.5-alt1
 - 2.4.4 -> 2.4.5.
 
