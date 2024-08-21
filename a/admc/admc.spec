@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admc
-Version: 0.16.4
+Version: 0.17.0
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -110,6 +110,14 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Wed Aug 21 2024 Semyon Knyazev <samael@altlinux.org> 0.17.0-alt1
+- Add password settings object's creation/deletion/edition. Password
+  Settings Container contains these objects and located in the System
+  container (objects tree).
+- Fix empty parentheses display in the domain info widget for undefined domain
+  controller's version.
+- Add the ability to view which groups a group is a member of.
+
 * Mon Jul 30 2024 Semyon Knyazev <samael@altlinux.org> 0.16.4-alt1
 - Samba 4.20 compatibility update. Fixed related errors with security
   descriptor manipulations. (closes: 50776)
