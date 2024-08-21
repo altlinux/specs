@@ -3,20 +3,18 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.0.2
-Release: alt1.1
+Version: 1.0.4
+Release: alt1
 
 Summary: Python client for Arista eAPI
 License: BSD-3-Clause
 Group:   Development/Python3
-URL:     https://github.com/arista-eosplus/pyeapi
+URL:     https://pypi.org/project/pyeapi
+VCS:     https://github.com/arista-eosplus/pyeapi
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-# A copy of the imp module that was removed in Python 3.12.
-# It shouldn't be used, should use `importlib.metadata` instead.
-BuildRequires: python3-module-zombie-imp
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -25,7 +23,7 @@ BuildRequires: python3-module-netaddr
 
 BuildArch: noarch
 
-Source: %pypi_name-%version.tar
+Source: %name-%version.tar
 
 %description
 The Python library for Arista's eAPI command API implementation provides a
@@ -35,7 +33,7 @@ can be used to communicate with EOS either locally (on-box) or remotely
 more nodes and connection properties.
 
 %prep
-%setup -n %pypi_name-%version
+%setup
 
 %build
 %pyproject_build
@@ -52,6 +50,10 @@ more nodes and connection properties.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Aug 21 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.4-alt1
+- Automatically updated to 1.0.4.
+- Removed zombie-imp from BuildRequires.
+
 * Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt1.1
 - NMU: Added zombie-imp to BuildRequires.
 
