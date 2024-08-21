@@ -21,7 +21,7 @@
 
 Name: strongswan
 Version: 5.9.14
-Release: alt2
+Release: alt3
 
 Summary: strongSwan IPsec implementation
 License: GPLv2+
@@ -32,6 +32,12 @@ Url: http://www.strongswan.org
 Source0: %name-%version%beta.tar.gz
 Source1: %name.init
 Source100: strongswan.watch
+Patch10: strongswan-5.6.0-uintptr_t.patch
+# https://github.com/strongswan/strongswan/issues/1198
+Patch11: strongswan-5.9.7-error-no-format.patch
+Patch12: strongswan-disable-bypass-lan.patch
+Patch13: strongswan-dont-load-kernel-libipsec-plugin-by-default.patch
+
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Mon Jul 02 2012
@@ -108,6 +114,10 @@ PT-TLS to support TNC over TLS.
 
 %prep
 %setup -n %name-%version%beta
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
 
 %build
 %autoreconf
@@ -120,26 +130,47 @@ PT-TLS to support TNC over TLS.
 	--with-ipseclibdir=%_libdir/%name \
 	--with-piddir=/run \
 	--with-nm-ca-dir=%_sysconfdir/%name/ipsec.d/cacerts/ \
-	--enable-bypass-lan \
 	--enable-acert \
 	--enable-addrblock \
+	--enable-af-alg \
 	--enable-agent \
+	--enable-bypass-lan \
 	--enable-ccm \
+	--enable-certexpire \
+	--enable-chapoly \
+	--enable-connmark \
 	--enable-cmd \
 	--enable-ctr \
 	--enable-curl \
-	--enable-chapoly \
 	--enable-dhcp \
 	--enable-duplicheck \
-	%{subst_enable gcrypt} \
+	--enable-eap-aka \
+	--enable-eap-aka-3gpp \
+	--enable-eap-aka-3gpp2 \
+	--enable-eap-dynamic \
+	--enable-eap-gtc \
+	--enable-eap-identity \
+	--enable-eap-md5 \
+	--enable-eap-mschapv2 \
+	--enable-eap-peap \
+	--enable-eap-radius \
+	--enable-eap-sim \
+	--enable-eap-sim-file \
+	%{?_enable_eap_sim_pcsc: --enable-eap-sim-pcsc} \
+	--enable-eap-tls \
+	--enable-eap-tnc \
+	--enable-eap-ttls \
+	--enable-ext-auth \
+	--enable-error-notify \
 	--enable-farp \
+	--enable-forecast \
 	--enable-gcm \
+	%{subst_enable gcrypt} \
 	--enable-ha \
 	--enable-ipseckey \
 	--enable-ldap \
 	--enable-led \
-	--enable-medcli \
-	--enable-mediation \
+	--enable-lookip \
 	--enable-newhope \
 	--enable-ntru \
 	--enable-openssl \
@@ -151,6 +182,7 @@ PT-TLS to support TNC over TLS.
 	--enable-swanctl \
 	--enable-unity \
 	%{subst_enable tpm} \
+	--enable-tss-tss2 \
 	%{subst_enable uci} \
 	%{subst_enable nm} \
 	--enable-systemd \
@@ -158,23 +190,6 @@ PT-TLS to support TNC over TLS.
 	--with-capabilities=%capabilities \
 	%{?_enable_unit_tests: --enable-unit-tests} \
 	%{?_enable_load_tests: --enable-load-tests} \
-	--enable-eap-dynamic \
-	--enable-eap-radius \
-	--enable-eap-identity \
-	--enable-eap-mschapv2 \
-	--enable-eap-peap \
-	--enable-eap-tls \
-	--enable-eap-ttls \
-	--enable-eap-tnc \
-	--enable-eap-sim \
-	--enable-eap-sim-file \
-	%{?_enable_eap_sim_pcsc: --enable-eap-sim-pcsc} \
-	--enable-eap-md5 \
-	--enable-eap-gtc \
-	--enable-eap-aka \
-	--enable-eap-aka-3gpp \
-	--enable-eap-aka-3gpp2 \
-	--enable-ext-auth \
 	--enable-xauth-eap \
 	--enable-xauth-pam \
 	--enable-xauth-noauth \
@@ -203,18 +218,15 @@ PT-TLS to support TNC over TLS.
 	%{?_enable_integrity_test: --enable-integrity-test} \
 	%ifarch x86_64 %{ix86}
 	--enable-aesni \
+	--enable-rdrand \
 	%endif
 	--enable-kernel-libipsec \
+	--disable-fast \
 	CPPFLAGS="-DSTARTER_ALLOW_NON_ROOT" \
 	%nil
 
 #
 
-# disable certain plugins in the daemon configuration by default
-for p in bypass-lan; do
-    echo -e "\ncharon.plugins.${p}.load := no" >> conf/plugins/${p}.opt
-done
- 
 # ensure manual page is regenerated with local configuration
 rm -f src/ipsec/_ipsec.8
 
@@ -333,6 +345,13 @@ fi
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Wed Aug 21 2024 Alexey Shabalin <shaba@altlinux.org> 5.9.14-alt3
+- disable bypass-lan plugin in config
+- disable kernel-libipsec plugin (ALT #50684) in config
+- enable build af-alg (AF_ALG crypto interface to Linux Crypto API)
+- enable build rdrand (Intel RDRAND random generator plugin) for x86
+- enable build connmark, forecast, lookip plugins
+
 * Tue Jun 18 2024 Alexey Shabalin <shaba@altlinux.org> 5.9.14-alt2
 - fixed %%post and %%preun scripts
 
