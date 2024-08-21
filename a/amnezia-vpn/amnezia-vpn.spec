@@ -4,7 +4,7 @@
 
 Name: amnezia-vpn
 Version: 4.7.0.0
-Release: alt1
+Release: alt2
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
@@ -26,6 +26,7 @@ Patch0: %name-use-system-libs-instead-3rd-prebuilt.patch
 Patch1: %name-openvpn-exec-path.patch
 Patch2: %name-update-resolv-conf-path.patch
 Patch3: %name-wireguard-exec-path.patch
+Patch4: %name-tun2socks-exec-path.patch
 
 BuildRequires: cmake
 BuildRequires: libsecret-devel
@@ -50,6 +51,8 @@ Requires: qt6-5compat
 Requires: qt6-declarative
 Requires: qt6-svg
 Requires: shadowsocks-libev
+Requires: tun2socks
+Requires: xray-core
 
 %description client
 Amnezia is an open-source VPN client, with a key feature that enables you to deploy your own VPN server on your server.
@@ -69,6 +72,7 @@ This package contains systemd service files.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %__mv -Tf ../SortFilterProxyModel-%sort_filter_proxy_model_commit client/3rd/SortFilterProxyModel
 %__mv -Tf ../qtkeychain-%qtkeychain_commit client/3rd/qtkeychain
@@ -80,16 +84,18 @@ This package contains systemd service files.
 %cmake_build
 
 %install
-%__mkdir_p %buildroot{%_bindir,%_desktopdir,%_libexecdir/%name,%_pixmapsdir,%_unitdir}
+%__mkdir_p %buildroot{%_bindir,%_desktopdir,%_iconsdir/hicolor/512x512/apps,%_libexecdir/%name,%_unitdir}
 
 %__install -Dp -m0755 %_cmake__builddir/client/AmneziaVPN %buildroot%_bindir/
-%__install -Dp -m0644 deploy/data/linux/AmneziaVPN.png %buildroot%_pixmapsdir/
+%__install -Dp -m0644 deploy/data/linux/AmneziaVPN.png %buildroot%_iconsdir/hicolor/512x512/apps/
 
 sed \
-    -e 's|@CMAKE_PROJECT_VERSION@|%version|' \
     -e 's|/usr/share/pixmaps/||' \
     -e 's|.png||' \
+    -e 's|Security;|Security;System;|' \
     deploy/installer/config/AmneziaVPN.desktop.in > %buildroot%_desktopdir/AmneziaVPN.desktop
+
+sed -i '/Version=/d' %buildroot%_desktopdir/AmneziaVPN.desktop
 
 sed \
     -e 's|/opt/AmneziaVPN/service/||' \
@@ -101,6 +107,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %__install -Dp -m0755 %_cmake__builddir/service/server/AmneziaVPN-service %buildroot%_bindir/
 %__install -Dp -m0755 deploy/data/linux/client/bin/update-resolv-conf.sh %buildroot%_libexecdir/%name/
 
+%post service
+%post_service AmneziaVPN
+
 %preun service
 %preun_systemd AmneziaVPN
 
@@ -108,14 +117,20 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %doc README.md
 %_bindir/AmneziaVPN
 %_desktopdir/AmneziaVPN.desktop
+%_iconsdir/hicolor/512x512/apps/AmneziaVPN.png
 %_libexecdir/%name
-%_pixmapsdir/AmneziaVPN.png
 
 %files service
 %_bindir/AmneziaVPN-service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Wed Aug 21 2024 Nazarov Denis <nenderus@altlinux.org> 4.7.0.0-alt2
+- Add patch for correct exec tun2socks path and require tun2socks and xray-core
+- Move icon from pixmaps dir to icons dir
+- Fix desktop file
+- Restart service after update
+
 * Tue Aug 20 2024 Nazarov Denis <nenderus@altlinux.org> 4.7.0.0-alt1
 - Version 4.7.0.0
 
