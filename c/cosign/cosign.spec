@@ -1,12 +1,12 @@
 %global import_path github.com/sigstore/cosign/v2
 %global _unpackaged_files_terminate_build 1
 
-%define revision deed3631520ddeb6cc7d81ace205a97342c8daab
+%define revision b5e7dc123a272080f4af4554054797296271e902
 
 %def_with check
 
 Name:    cosign
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 
 Summary: Container Signing, Verification and Storage in an OCI registry
@@ -73,6 +73,9 @@ rm -rf -- "%buildroot%go_root"
 %_bindir/%name
 
 %changelog
+* Tue Aug 20 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 2.4.0-alt1
+- 2.3.0 -> 2.4.0
+
 * Tue Jul 23 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 2.3.0-alt1
 - 2.2.4 -> 2.3.0
 
