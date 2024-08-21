@@ -1,6 +1,6 @@
 # Project uses submodule scheme and not allows to use system libtap=(
 Name:    libmaxminddb
-Version: 1.9.1
+Version: 1.10.0
 Release: alt1
 
 Summary: C library for the MaxMind DB file format
@@ -45,7 +45,7 @@ sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 %makeinstall_std
 
 %check
-LD_PRELOAD=%{buildroot}%{_libdir}/libmaxminddb.so make check
+LD_PRELOAD=%buildroot%_libdir/libmaxminddb.so make check
 
 %files
 %_libdir/libmaxminddb.so.*
@@ -61,6 +61,9 @@ LD_PRELOAD=%{buildroot}%{_libdir}/libmaxminddb.so make check
 %_man3dir/*
 
 %changelog
+* Wed Aug 21 2024 Grigory Ustinov <grenka@altlinux.org> 1.10.0-alt1
+- Build new version.
+
 * Fri May 17 2024 Grigory Ustinov <grenka@altlinux.org> 1.9.1-alt1
 - Build new version.
 
