@@ -19,13 +19,12 @@
 %add_verify_elf_skiplist %_libexecdir/installed-tests/glib/*
 
 %def_enable selinux
-%def_disable fam
 %ifarch %e2k
 %def_disable installed_tests
 %else
 %def_enable installed_tests
 %endif
-%def_disable doc
+%def_enable doc
 %def_enable man
 %def_enable libmount
 %def_disable systemtap
@@ -44,7 +43,7 @@
 
 Name: glib2
 Version: %ver_major.4
-Release: alt1
+Release: alt1.1
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -108,7 +107,6 @@ BuildRequires: python3(packaging)
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
 %{?_enable_libmount:BuildRequires: libmount-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
-%{?_enable_fam:BuildRequires: libgamin-devel}
 %{?_enable_systemtap:BuildRequires: libsystemtap-sdt-devel}
 %{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
 %{?_enable_doc:BuildRequires: gi-docgen}
@@ -175,7 +173,7 @@ Group: Development/Documentation
 Provides: %name-devel-doc = %version
 Obsoletes: %name-devel-doc < %version
 Conflicts: %name < %version, %name > %version
-BuildArch: noarch
+#BuildArch: noarch
 
 %description doc
 GLib is the low-level core library that forms the basis for projects
@@ -269,17 +267,15 @@ install -p -m644 %_sourcedir/gio-compat-2.57.lds gio/compat.lds
 %meson \
     %{?_enable_static:--default-library=both} \
     -Dgio_module_dir='%gio_module_dir' \
-    %{?_disable_introspection:-Dintrospection=disabled} \
-    %{?_disable_selinux:-Dselinux=false} \
-    %{?_disable_xattr:-Dxattr=false} \
-    %{?_disable_libmount:-Dlibmount=false} \
-    %{?_enable_doc:-Ddocumentation=true} \
-    %{?_enable_man:-Dman-pages=enabled} \
-    %{?_disable_man:-Dman-pages=disabled} \
-    %{?_enable_fam:-Dfam=true} \
-    %{?_enable_systemtap:-Dsystemtap=true} \
-    %{?_enable_sysprof:-Dsysprof=enabled} \
-    %{?_enable_installed_tests:-Dinstalled_tests=true}
+    %{subst_enable_meson_feature introspection introspection} \
+    %{subst_enable_meson_feature selinux selinux} \
+    %{subst_enable_meson_bool xattr xattr} \
+    %{subst_enable_meson_feature libmount libmount} \
+    %{subst_enable_meson_bool doc documentation} \
+    %{subst_enable_meson_feature man man-pages} \
+    %{subst_enable_meson_bool systemtap systemtap} \
+    %{subst_enable_meson_feature sysprof sysprof} \
+    %{subst_enable_meson_bool installed_tests installed_tests}
 %nil
 %meson_build
 
@@ -503,6 +499,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Wed Aug 21 2024 Yuri N. Sedunov <aris@altlinux.org> 2.80.4-alt1.1
+- enabled documentation build
+
 * Mon Jul 08 2024 Yuri N. Sedunov <aris@altlinux.org> 2.80.4-alt1
 - 2.80.4
 
