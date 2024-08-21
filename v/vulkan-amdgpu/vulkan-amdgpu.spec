@@ -6,7 +6,7 @@
 # As ubuntu
 %define gcc_ver 9
 
-%define _vk_api_version 1.3.287
+%define _vk_api_version 1.3.292
 
 %def_with clang
 %def_with wayland
@@ -22,8 +22,8 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2024.Q2.3
-Release: alt1.1
+Version: 2024.Q3.1
+Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
 Summary: AMD Open Source Driver For Vulkan
@@ -91,7 +91,7 @@ export GCC_VERSION=%{gcc_ver} \
 %if_with shader_cache
 	-DLLPC_ENABLE_SHADER_CACHE=1 \
 %endif
-	-DCMAKE_BUILD_TYPE=Release \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 %if_with clang
 	-DLLVM_USE_LINKER=mold \
 	-DCMAKE_CXX_LINK_FLAGS="-fuse-ld=mold -Wl,--thinlto-jobs=all" \
@@ -118,6 +118,17 @@ sed -e 's|@API_VERSION@|%_vk_api_version|g' %SOURCE8 > %buildroot%_vkldir/$(base
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Wed Aug 21 2024 L.A. Kostis <lakostis@altlinux.ru> 2024.Q3.1-alt1
+- .spec: try to keep debugging symbols.
+- 2024-08-13 update:
+  + icd: bump vulkan version
+  + llvm-dialects: Updated to 6ff7d39046e2
+  + llvm-project: Updated to eb619c26c273
+  + gpurt: Updated to c5b10793bd96
+  + llpc: Updated to 5278a3ff4f18
+  + pal: Updated to d3bfe509cd33
+  + xgl: Updated to 8bf20dd1ca8b
+
 * Fri Aug 09 2024 L.A. Kostis <lakostis@altlinux.ru> 2024.Q2.3-alt1.1
 - Enable %%ix86 build again.
 
