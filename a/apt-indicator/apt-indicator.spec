@@ -1,6 +1,6 @@
 Name: apt-indicator
-Version: 0.3.20
-Release: alt2
+Version: 0.4.0
+Release: alt1
 
 Summary: Applet for indication that newer packages are available
 License: GPL
@@ -16,7 +16,7 @@ Requires: qt5-svg
 Requires: /usr/bin/xdg-su /usr/sbin/synaptic
 
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: gcc-c++ libstdc++-devel qt5-base-devel qt5-tools
+BuildRequires: libstdc++-devel qt6-base-devel qt6-tools
 BuildRequires: docbook-dtds docbook-style-xsl help2man libapt-devel
 BuildRequires: xml-common xsltproc
 #BuildRequires: libdb4.4-devel
@@ -31,13 +31,13 @@ made notifications for users that newer packages are available.
 %ifarch %e2k
 %remove_optflags -Wno-error
 %endif
-%qmake_qt5 "CONFIG += release debug_info"
+%qmake_qt6 "CONFIG += release debug_info"
 
 %build
 %make
 %make -C doc
-lrelease-qt5 checker/checker.pro
-lrelease-qt5 agent/agent.pro
+lrelease-qt6 checker/checker.pro
+lrelease-qt6 agent/agent.pro
 help2man --output=apt-indicator.1 --no-info apt-indicator ||:
 
 %install
@@ -77,6 +77,9 @@ mkdir -p %buildroot/%_datadir/%name/pixmaps
 %_iconsdir/hicolor/*/apps/apt-indicator.*
 
 %changelog
+* Thu Aug 22 2024 Sergey V Turchin <zerg at altlinux dot org> 0.4.0-alt1
+- port to Qt6
+
 * Wed Jun 16 2021 Ivan Zakharyaschev <imz@altlinux.org> 0.3.20-alt2
 - Adapted to changed API in apt-0.5.15lorg2-alt72
   (pkgCacheFile class in RAII style).
