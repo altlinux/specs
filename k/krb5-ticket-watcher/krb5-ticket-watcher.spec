@@ -1,8 +1,8 @@
 
 Name: krb5-ticket-watcher
 Version: 1.0.3
-Release: alt23
-%K5init no_altplace
+Release: alt24
+%K6init no_altplace
 
 Group: System/X11
 Summary: A Tray Applet for Watching, Renewing, and Reinitializing Kerberos Tickets
@@ -16,7 +16,7 @@ Patch1: 0001-made-default-realm-the-first-one-in-list.patch
 Patch2: krb5-ticket-watcher-1.0-alt-date-fix.patch
 Patch3: krb5-ticket-watcher-1.0.3-alt-fix-includes.patch
 Patch4: krb5-ticket-watcher-1.0.3-alt-fix-desktop-category.patch
-Patch5: alt-qt5-1.patch
+#
 Patch6: alt-tray-icon.patch
 Patch7: alt-wait-for-tray.patch
 Patch8: alt-force-kinit.patch
@@ -27,10 +27,10 @@ Patch12: alt-crash-1.patch
 Patch13: alt-ignore-localhost-ip-as-def-realm.patch
 Patch14: alt-no-message-on-automatic-reniew.patch
 
-BuildRequires(pre): rpm-build-xdg rpm-build-kf5
+BuildRequires(pre): rpm-build-xdg rpm-build-kf6
 BuildRequires: desktop-file-utils
 BuildRequires: libkrb5-devel libkeyutils-devel
-BuildRequires: cmake gcc-c++ libcom_err-devel qt5-base-devel qt5-tools
+BuildRequires: cmake libcom_err-devel qt6-base-devel qt6-5compat-devel qt6-tools
 
 %description
 A tray applet for watching, renewing, and reinitializing Kerberos
@@ -42,7 +42,7 @@ tickets.
 %patch2 -p1
 %patch3 -p2
 %patch4 -p2
-%patch5 -p1
+#
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
@@ -55,14 +55,14 @@ tickets.
 cat %SOURCE10 > po/ru.po
 
 %build
-%add_optflags -DDEBUG -I%_includedir/krb5
+%add_optflags -pedantic -DDEBUG -I%_includedir/krb5
 %ifarch %e2k
 %add_optflags -std=c++11
 %endif
-%K5build
+%K6build
 
 %install
-%K5install
+%K6install
 desktop-file-install --dir %buildroot%_desktopdir \
 	%buildroot%_desktopdir/krb5-ticket-watcher.desktop
 desktop-file-install --dir %buildroot/%_xdgconfigdir/autostart \
@@ -77,6 +77,9 @@ desktop-file-install --dir %buildroot/%_xdgconfigdir/autostart \
 %doc COPYING Changes News TODO
 
 %changelog
+* Tue Aug 20 2024 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt24
+- port to Qt6
+
 * Fri Dec 29 2023 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt23
 - don't show message on automatoc ticket renewal (closes: 48892)
 
