@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name SpoofDPI
 %define binary_name spoof-dpi
@@ -8,7 +8,7 @@
 %def_disable bootstrap
 
 Name: %binary_name
-Version: %ver_major.8
+Version: %ver_major.10
 Release: alt1
 
 Summary: A simple and fast software designed to bypass Deep Packet Inspection
@@ -59,6 +59,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Thu Aug 22 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.10-alt1
+- updated to v0.10.10-2-gd97d4e4
+
 * Fri Aug 16 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.8-alt1
 - 0.10.8
 
