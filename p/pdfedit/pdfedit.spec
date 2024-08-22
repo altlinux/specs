@@ -1,9 +1,9 @@
 Name: pdfedit
 Version: 0.4.5
-Release: alt5
+Release: alt6
 
 Summary: Editor for manipulating PDF documents
-License: GPL
+License: GPLv2
 Group: File tools
 
 Url: http://pdfedit.cz
@@ -97,6 +97,9 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %doc doc/user/OEBPS/*
 
 %changelog
+* Thu Aug 22 2024 Michael Shigorin <mike@altlinux.org> 0.4.5-alt6
+- clarified License:
+
 * Thu Aug 22 2024 Michael Shigorin <mike@altlinux.org> 0.4.5-alt5
 - fixed build with ilyakurdyukov@'s patch instead
 
