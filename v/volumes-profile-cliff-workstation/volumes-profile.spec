@@ -1,9 +1,9 @@
 Name: volumes-profile-cliff-workstation
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: Volumes description for SP Workstation
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
 
 Url: http://www.altlinux.org/Installer/beans
@@ -14,7 +14,7 @@ BuildArch: noarch
 %define hookdir %_datadir/install2/initinstall.d
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
@@ -27,6 +27,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Wed Aug 21 2024 Anton Midyukov <antohami@altlinux.org> 0.4-alt1
+- Always create a partition larger than 10GB
+
 * Mon Aug 19 2024 Anton Midyukov <antohami@altlinux.org> 0.3-alt1
 - Set '/' = 50 GiB
 
