@@ -1,13 +1,14 @@
 %define rname kscreenlocker
 
 %def_disable seccomp
+%def_enable kcheckpass
 
 %define sover 6
 %define libkscreenlocker libkscreenlocker%sover
 
 Name: %rname
 Version: 6.1.4
-Release: alt2
+Release: alt3
 #Epoch: 2
 %K6init
 
@@ -22,10 +23,14 @@ Provides: plasma5-kscreenlocker = 2:%version-%release
 Obsoletes: plasma5-kscreenlocker < 2:%version-%release
 
 Source: %rname-%version.tar
+%if_enabled kcheckpass
 Source2: kcheckpass.tar
+%endif
 Source10: pam-kde6-screenlocker
 Patch1: alt-def-screenlocker.patch
+%if_enabled kcheckpass
 Patch2: alt-pam-support.patch
+%endif
 Patch3: alt-pam-service.patch
 
 BuildRequires(pre): rpm-build-kf6
@@ -80,12 +85,16 @@ KF6 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-#%patch2 -p1
+%if_enabled kcheckpass
+%patch2 -p1
+%endif
 %patch3 -p1
 
-#tar xf %SOURCE2 kcheckpass/
-#mv kcheckpass/authenticator.* greeter/
-#mv kcheckpass/config-unix.h.cmake ./
+%if_enabled kcheckpass
+tar xf %SOURCE2 kcheckpass/
+mv kcheckpass/authenticator.* greeter/
+mv kcheckpass/config-unix.h.cmake ./
+%endif
 
 mkdir bin_fake
 ln -s /bin/true bin_fake/loginctl
@@ -116,8 +125,12 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kde6-screenlocker
 
 %files
 %config(noreplace) %_sysconfdir/pam.d/kde6-screenlocker
-#%attr(2711,root,chkpwd) %_K6libexecdir/kcheckpass
+%if_enabled kcheckpass
+%attr(2711,root,chkpwd) %_K6libexecdir/kcheckpass
+%_K6libexecdir/kscreenlocker_greet
+%else
 %attr(2711,root,chkpwd) %_K6libexecdir/kscreenlocker_greet
+%endif
 %_K6plug/plasma/kcms/systemsettings/*screenlocker*.so
 %_K6data/ksmserver/screenlocker/
 %_K6notif/*.notifyrc
@@ -137,6 +150,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kde6-screenlocker
 
 
 %changelog
+* Wed Aug 21 2024 Oleg Solovyov <mcpain@altlinux.org> 6.1.4-alt3
+- port kcheckpass to KF6
+
 * Tue Aug 20 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt2
 - fix find pkcs11 pam-file
 
