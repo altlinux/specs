@@ -4,7 +4,7 @@
 
 Name: amnezia-vpn
 Version: 4.7.0.0
-Release: alt2
+Release: alt3
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
@@ -92,7 +92,7 @@ This package contains systemd service files.
 sed \
     -e 's|/usr/share/pixmaps/||' \
     -e 's|.png||' \
-    -e 's|Security;|Security;System;|' \
+    -e 's|Security;||' \
     deploy/installer/config/AmneziaVPN.desktop.in > %buildroot%_desktopdir/AmneziaVPN.desktop
 
 sed -i '/Version=/d' %buildroot%_desktopdir/AmneziaVPN.desktop
@@ -125,6 +125,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Thu Aug 22 2024 Nazarov Denis <nenderus@altlinux.org> 4.7.0.0-alt3
+- Fix desktop file
+
 * Wed Aug 21 2024 Nazarov Denis <nenderus@altlinux.org> 4.7.0.0-alt2
 - Add patch for correct exec tun2socks path and require tun2socks and xray-core
 - Move icon from pixmaps dir to icons dir
