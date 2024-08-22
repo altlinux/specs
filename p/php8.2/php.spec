@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  2
-%define _php_release_version 21
+%define _php_release_version 22
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -63,6 +63,7 @@ Provides: php = %EVR
 
 BuildRequires: chrpath libmm-devel libxml2-devel ssmtp termutils zlib-devel re2c bison alternatives libsqlite3-devel
 BuildRequires: libargon2-devel
+BuildRequires: libssl-devel
 
 # for tests
 BuildRequires: /proc
@@ -91,13 +92,25 @@ PHP packages by some Alt Linux Team Policy compatible way.
 Group: System/Servers
 Summary: Native PHP driver for MySQL
 Requires: php%_php_suffix = %rpm_build_version-%php_release
+Requires: php%_php_suffix-openssl = %rpm_build_version-%php_release
 
 %description mysqlnd
 Native PHP driver for MySQL
 
+%package openssl
+Group: System/Servers
+Summary: OpenSSL module for php
+Requires: php%_php_suffix = %rpm_build_version-%php_release
+
+%description openssl
+This module uses the functions of OpenSSL for generation and verification
+of signatures and for sealing (encrypting) and opening (decrypting) data.
+OpenSSL offers many features that this module currently doesn't support.
+Some of these may be added in the future.
+
 %package devel
 Group: Development/C
-Summary: Development package for PHP7
+Summary: Development package for PHP
 # php-cli is needed for tests (package php%_php_suffix)
 Requires: php%_php_suffix = %EVR 
 Requires: php%_php_suffix-libs = %EVR
@@ -105,6 +118,8 @@ Requires: rpm-build-php >= 8.1-alt1
 Requires: rpm-build-php%_php_suffix-version = %EVR
 # for phpize
 Requires: libtool, autoconf, automake
+
+Requires: libssl-devel
 
 Provides: php-devel = %EVR
 Provides: php-engine-devel = %EVR
@@ -256,7 +271,7 @@ touch configure.ac
 	--with-iconv \
 	--enable-mysqlnd=shared \
 	--without-mysql \
-	--without-openssl \
+	--with-openssl=shared \
 	--with-mm=%_usr \
 	--without-sqlite \
 	--with-regex=php \
@@ -342,8 +357,12 @@ install -m644 -D ext/mysqlnd/mysqlnd_enum_n_def.h %buildroot%_includedir/php/%_p
 install -m644 -D ext/mysqlnd/mysqlnd_structs.h %buildroot%_includedir/php/%_php_version/ext/mysqlnd/mysqlnd_structs.h
 
 mkdir -p %buildroot/%php_extconf/mysqlnd
-echo "file_ini=01_mysqlnd.ini" >%buildroot/%php_extconf/mysqlnd/params
+echo "file_ini=02_mysqlnd.ini" >%buildroot/%php_extconf/mysqlnd/params
 echo "extension=mysqlnd.so" >%buildroot/%php_extconf/mysqlnd/config
+
+mkdir -p %buildroot/%php_extconf/openssl
+echo "file_ini=01_openssl.ini" >%buildroot/%php_extconf/openssl/params
+echo "extension=openssl.so" >%buildroot/%php_extconf/openssl/config
 
 # rpm macros 
 mkdir -p %buildroot/%_sysconfdir/rpm/macros.d
@@ -444,6 +463,8 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %php_datadir
 %exclude %php_extdir/mysqlnd*
 %exclude %php_extconf/mysqlnd
+%exclude %php_extdir/openssl*
+%exclude %php_extconf/openssl
 %_libdir/libphp-%_php_version.so*
 %exclude %php_libdir/build
 %exclude %php_servicedir/cli
@@ -451,6 +472,10 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %files mysqlnd
 %php_extdir/mysqlnd*.so
 %php_extconf/mysqlnd/*
+
+%files openssl
+%php_extdir/openssl*.so
+%php_extconf/openssl/*
 
 %files devel
 %_bindir/php-config%_php_suffix
@@ -465,6 +490,10 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Thu Aug 22 2024 Anton Farygin <rider@altlinux.ru> 8.2.22-alt1
+- 8.2.21 -> 8.2.22
+- built mysqlnd with openssl (closes: #51216)
+
 * Wed Jul 10 2024 Anton Farygin <rider@altlinux.ru> 8.2.21-alt1
 - 8.2.20 -> 8.2.21
 
