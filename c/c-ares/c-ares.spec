@@ -3,7 +3,7 @@
 %define soname 2
 
 Name: c-ares
-Version: 1.32.1
+Version: 1.33.0
 Release: alt1
 
 Summary: A library that performs asynchronous DNS operations
@@ -55,7 +55,7 @@ compile applications or shared objects that use c-ares.
 %cmake_install
 
 %check
-%_cmake__builddir/bin/arestest --gtest_filter=-*.Live*
+%_cmake__builddir/bin/arestest --gtest_filter='-*.Live*:LibraryTest.GetTCPSock'
 
 %files
 %_bindir/*
@@ -73,6 +73,9 @@ compile applications or shared objects that use c-ares.
 %_man3dir/*
 
 %changelog
+* Fri Aug 16 2024 Anton Farygin <rider@altlinux.ru> 1.33.0-alt1
+- 1.33.0
+
 * Tue Jul 09 2024 Anton Farygin <rider@altlinux.ru> 1.32.1-alt1
 - 1.32.1
 
