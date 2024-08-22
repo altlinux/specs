@@ -1,7 +1,7 @@
 %define modulename indicator_sound_switcher
 
 Name:    indicator-sound-switcher
-Version: 2.3.9
+Version: 2.3.10.1
 Release: alt1
 
 Summary: Sound input/output selector indicator for Linux
@@ -43,6 +43,9 @@ Source:  %name-%version.tar
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Thu Aug 22 2024 Anton Midyukov <antohami@altlinux.org> 2.3.10.1-alt1
+- New version 2.3.10.1.
+
 * Mon Feb 13 2023 Anton Midyukov <antohami@altlinux.org> 2.3.9-alt1
 - new version 2.3.9
 - require typelib(AyatanaAppIndicator3) instead typelib(AppIndicator3)
