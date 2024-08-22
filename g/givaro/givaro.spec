@@ -2,6 +2,7 @@
 %define soname 9
 
 %def_disable static
+%def_without doc
 
 %if_enabled static
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
@@ -9,7 +10,7 @@
 
 Name: givaro
 Version: 4.2.0
-Release: alt4.gitfc6cac7
+Release: alt5.gitfc6cac7
 Summary: C++ library for arithmetic and algebraic computations
 
 License: CECILL-B
@@ -18,11 +19,12 @@ Url: https://github.com/linbox-team/givaro
 
 Source: https://github.com/linbox-team/%name/releases/download/v%version/%name-%version.tar.gz
 
-BuildRequires: doxygen
+%if_with doc
+BuildRequires: doxygen texlive-dist
+%endif
 BuildRequires: gcc-c++
 BuildRequires: ghostscript-utils ghostscript
 BuildRequires: libgmp-devel libgmpxx-devel
-BuildRequires: texlive-dist
 
 %description
 Givaro is a C++ library for arithmetic and algebraic computations.
@@ -77,8 +79,12 @@ The static libraries for using %name for development.
   --disable-static \
 %endif
   --enable-shared \
+%if_with doc
   --enable-doc \
   --with-docdir="%_docdir/%name-devel" \
+%else
+  --disable-doc \
+%endif
   --disable-simd \
 #
 chmod a+x givaro-config
@@ -104,7 +110,9 @@ make check
 %_libdir/lib%name.so.%{soname}*
 
 %files -n lib%name-devel
+%if_with doc
 %_docdir/%name-devel/
+%endif
 %_bindir/%name-config
 %dir %_datadir/%name/
 %_datadir/%name/%name-makefile
@@ -121,6 +129,9 @@ make check
 %endif
 
 %changelog
+* Thu Aug 22 2024 Leontiy Volodin <lvol@altlinux.org> 4.2.0-alt5.gitfc6cac7
+- Built without docs because segmentation fault.
+
 * Mon Aug 12 2024 Leontiy Volodin <lvol@altlinux.org> 4.2.0-alt4.gitfc6cac7
 - Update to commit fc6cac7820539c900dde332326c71461ba7b910b
   (v4.2.0.0.84.gfc6c).
