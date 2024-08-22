@@ -4,7 +4,7 @@
 %define default_fw nftables
 
 Name: netavark
-Version: 1.11.0
+Version: 1.12.2
 Release: alt1
 License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT
 Summary: OCI network stack
@@ -16,9 +16,15 @@ Patch: %name-%version.patch
 Patch1: vendored-nix-loongarch64-support.patch
 ExcludeArch: %arm %ix86
 
-Requires: aardvark-dns >= %version
+# Minimum X.Y dep for aardvark-dns
+%define major_minor %((v=%version; echo ${v%.*}))
+Requires: aardvark-dns >= %major_minor
 Provides: container-network-stack = 2
-
+%if "%default_fw" == "nftables"
+Requires: nftables
+%else
+Requires: iptables
+%endif
 BuildRequires(pre): rpm-macros-rust rpm-macros-systemd
 BuildRequires: rpm-build-rust rpm-build-systemd
 BuildRequires: go-md2man
@@ -101,6 +107,9 @@ popd
 %_unitdir/*
 
 %changelog
+* Thu Aug 22 2024 Alexey Shabalin <shaba@altlinux.org> 1.12.2-alt1
+- New version 1.12.2.
+
 * Fri May 31 2024 Alexey Shabalin <shaba@altlinux.org> 1.11.0-alt1
 - New version 1.11.0.
 - Switch default firewall to nftables.
