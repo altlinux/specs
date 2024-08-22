@@ -52,7 +52,7 @@
 Name: freeipa
 # don't forget to update .gear/rules
 Version: 4.11.2
-Release: alt2
+Release: alt3
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -1100,6 +1100,10 @@ fi
 %python3_sitelibdir/ipaplatform-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Aug 22 2024 Stanislav Levin <slev@altlinux.org> 4.11.2-alt3
+- Suppressed cryptography's warnings about TripleDES:
+  + https://pagure.io/freeipa/issue/9641
+
 * Sat Aug 03 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.11.2-alt2
 - Fixed compatibility with Cryptography 43 (closes: #51063).
 - Backported upstream patches for known issue:
