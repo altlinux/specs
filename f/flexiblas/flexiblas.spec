@@ -13,7 +13,7 @@
 
 Name: flexiblas
 Version: %major_version.%minor_version.%patch_version
-Release: alt2
+Release: alt3
 Summary: A BLAS/LAPACK wrapper library with runtime exchangeable backends
 Group: Sciences/Mathematics
 # LGPL-3.0-or-later
@@ -38,6 +38,8 @@ LAPACK implementation used by a program without recompiling or relinking it.
 %package -n lib%name.%major_version
 Summary: FlexiBLAS wrapper library
 Group: Sciences/Mathematics
+# this dependence is specifically without version to ensure normal update according SharedLibsPolicy
+Requires: flexiblas-netlib
 
 %description -n lib%name.%major_version
 %_description
@@ -237,6 +239,10 @@ make -C build64 test %check_relax
 %endif
 
 %changelog
+* Thu Aug 22 2024 Anton Farygin <rider@altlinux.ru> 3.4.4-alt3
+- added a fallback BLAS (netlib) dependence to a package
+  with the library (closes: #51189)
+
 * Tue Jul 23 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.4.4-alt2
 - fix e2k build
 
