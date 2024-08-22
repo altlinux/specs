@@ -7,8 +7,8 @@
 %define libfontconfig libfontconfig%sover
 
 Name: fontconfig
-Version: 2.14.2
-Release: alt8
+Version: 2.15.0
+Release: alt1
 
 Summary: Font configuration and customization utilities and library
 Group: System/Configuration/Other
@@ -18,6 +18,8 @@ Url: http://fontconfig.org/
 Source: %name-%version.tar
 Source1: fontconfig-firsttime
 Source2: fontconfig.filetrigger
+Source10: conf-alt.d.tar
+Source11: fc-conf.tar
 # FC
 Patch1: fontconfig-sleep-less.patch
 Patch2: fontconfig-drop-lang-from-pkgkit-format.patch
@@ -53,7 +55,7 @@ This package includes the fontconfig header files and developer
 documentation required for development of fontconfig-based software.
 
 %prep
-%setup
+%setup -a10 -a11
 %patch1 -p1
 %patch2 -p1
 %patch11 -p1
@@ -83,7 +85,7 @@ ld --shared save_i586_fontconfig_package.o -o save_i586_fontconfig_package.so
 
 %install
 %make DESTDIR=%buildroot PDF_FILES= install
-install -pm644 AUTHORS README %buildroot%docdir/
+install -pm644 AUTHORS README.md %buildroot%docdir/
 
 > %buildroot%_sysconfdir/fonts/local.conf
 install -Dp -m755 %SOURCE1 %buildroot%_sysconfdir/firsttime.d/%name
@@ -188,6 +190,9 @@ fi
 %_datadir/gettext/its/fontconfig.*
 
 %changelog
+* Thu Aug 22 2024 Sergey V Turchin <zerg@altlinux.org> 2.15.0-alt1
+- new version
+
 * Fri Sep 01 2023 Sergey V Turchin <zerg@altlinux.org> 2.14.2-alt8
 - enable scaling bitmap fonts by default (closes: 43880)
 
