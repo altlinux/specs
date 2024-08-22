@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: libxml2
-Version: 2.12.8
+Version: 2.12.9
 Release: alt1
 Epoch: 1
 
@@ -235,6 +236,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/gtk-doc/html/libxml2
 
 %changelog
+* Thu Aug 22 2024 Alexey Shabalin <shaba@altlinux.org> 1:2.12.9-alt1
+- 2.12.9 (Fixes: CVE-2024-40896).
+
 * Tue Jul 09 2024 Alexey Shabalin <shaba@altlinux.org> 1:2.12.8-alt1
 - 2.12.8.
 
