@@ -50,7 +50,7 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.11.9
+Version: 11.4.3
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -266,6 +266,7 @@ or products (such as Excel), or data retrieved from the environment
 Summary: The RocksDB storage engine for MariaDB
 Group: Databases
 Requires: %name-server = %EVR
+Conflicts: rocksdb-tools
 
 %description rocksdb-engine
 The RocksDB storage engine is used for high performance servers on SSD drives.
@@ -542,7 +543,7 @@ export LDFLAGS
 
 %install
 mkdir -p %buildroot{%_bindir,%_sbindir,%_includedir,%_mandir,%_infodir,%_datadir/sql-bench,%_logdir/mysql}
-mkdir -p %buildroot%ROOT/{etc,/%_lib,%_libdir,%prefix/%plugindir/auth_pam_tool_dir,%_libdir/galera,dev,log,tmp,run/systemd,/var/{nis,yp/binding},db/mysql,usr/share/mysql/charsets}
+mkdir -p %buildroot%ROOT/{etc,/%_lib,%_libdir,%prefix/%plugindir/auth_pam_tool_dir,%_libdir/galera,dev,log,tmp,run/systemd,/var/{nis,yp/binding},db/mysql,usr/share/mariadb/charsets}
 touch %buildroot%ROOT{%_sysconfdir/{hosts,services,{host,nsswitch,resolv}.conf},/dev/urandom,/var/nis/NIS_COLD_START,/run/systemd/notify,%prefix/%plugindir/auth_pam_tool_dir/auth_pam_tool}
 
 # don't fiddle with the initscript!
@@ -637,13 +638,13 @@ mkdir -p %buildroot%_pkgconfigdir
 %endif
 
 # Populate chroot with data to some extent.
-install -pD -m644 %buildroot%_datadir/mysql/charsets/* \
-         %buildroot%ROOT%_datadir/mysql/charsets
+install -pD -m644 %buildroot%_datadir/mariadb/charsets/* \
+         %buildroot%ROOT%_datadir/mariadb/charsets
 
 (
-    cd %buildroot%_datadir/mysql
+    cd %buildroot%_datadir/mariadb
     for i in */errmsg.sys; do
-    install -pD -m644 $i  %buildroot%ROOT%_datadir/mysql/$i
+    install -pD -m644 $i  %buildroot%ROOT%_datadir/mariadb/$i
     done
 )
 
@@ -661,7 +662,7 @@ rm -f %buildroot%_datadir/mysql/mysql{-*.spec,-log-rotate,.server}
 rm -f %buildroot%_datadir/mysql/{mariadb.logrotate,mini-benchmark}
 
 
-rm -rf %buildroot%_datadir/mysql-test
+rm -rf %buildroot%_datadir/mariadb-test
 rm -f %buildroot%prefix/%plugindir/*.la
 #rmdir %%buildroot%%prefix/%%plugindir/debug
 
@@ -690,17 +691,17 @@ rm -f %buildroot%prefix/%plugindir/daemon_example.ini
 rm -f %buildroot%_bindir/mysql_embedded
 rm -f %buildroot%_bindir/mariadb-embedded
 rm -rf %buildroot%_datadir/info
-rm -f %buildroot%_datadir/mysql/binary-configure
-rm -f %buildroot%_datadir/mysql/my-huge.cnf
-rm -f %buildroot%_datadir/mysql/my-innodb-heavy-4G.cnf
-rm -f %buildroot%_datadir/mysql/my-large.cnf
-rm -f %buildroot%_datadir/mysql/my-medium.cnf
-rm -f %buildroot%_datadir/mysql/my-small.cnf
-rm -f %buildroot%_datadir/mysql/wsrep.cnf
-rm -f %buildroot%_datadir/mysql/mysqld_multi.server
-rm -f %buildroot%_datadir/mysql/mysql-log-rotate
-rm -f %buildroot%_datadir/mysql/mysql.server
-rm -f %buildroot%_datadir/mysql/magic
+rm -f %buildroot%_datadir/mariadb/binary-configure
+rm -f %buildroot%_datadir/mariadb/my-huge.cnf
+rm -f %buildroot%_datadir/mariadb/my-innodb-heavy-4G.cnf
+rm -f %buildroot%_datadir/mariadb/my-large.cnf
+rm -f %buildroot%_datadir/mariadb/my-medium.cnf
+rm -f %buildroot%_datadir/mariadb/my-small.cnf
+rm -f %buildroot%_datadir/mariadb/wsrep.cnf
+rm -f %buildroot%_datadir/mariadb/mysqld_multi.server
+rm -f %buildroot%_datadir/mariadb/mysql-log-rotate
+rm -f %buildroot%_datadir/mariadb/mysql.server
+rm -f %buildroot%_datadir/mariadb/magic
 
 # cleanup
 rm -f %buildroot/etc/my.cnf.d/enable_encryption.preset
@@ -788,7 +789,7 @@ fi
 %_bindir/mariadb-install-db
 %_bindir/mariadb-conv
 %if_with mroonga
-%_datadir/mysql/mroonga
+%_datadir/mariadb/mroonga
 %endif
 
 %_sbindir/*
@@ -841,7 +842,7 @@ fi
 %dir %ROOT/var/yp/binding
 %dir %ROOT/usr
 %dir %ROOT%_datadir
-%ROOT%_datadir/mysql
+%ROOT%_datadir/mariadb
 %attr(3770,root,mysql) %dir %ROOT/db
 %attr(750,mysql,mysql) %dir %ROOT/db/*
 %attr(3770,root,mysql) %dir %ROOT/log
@@ -860,7 +861,7 @@ fi
 %_unitdir/mariadbcheck@.service
 %config(noreplace) %_sysconfdir/xinetd.d/mariadbcheck
 %config(noreplace) %_sysconfdir/my.cnf.d/galera.cnf
-%_datadir/mysql/wsrep_notify
+%_datadir/mariadb/wsrep_notify
 %endif
 
 %if_with cracklib
@@ -878,6 +879,7 @@ fi
 %_bindir/sst_dump
 %prefix/%plugindir/ha_rocksdb.so
 %_man1dir/mysql_ldb.1*
+%_man1dir/mariadb-ldb.1*
 %endif
 
 %if_with gssapi
@@ -918,11 +920,11 @@ fi
 %endif
 
 %files common
-%_datadir/mysql
+%_datadir/mariadb
 %if_with mroonga
-%exclude %_datadir/mysql/mroonga
+%exclude %_datadir/mariadb/mroonga
 %endif
-%exclude %_datadir/mysql/wsrep_notify
+%exclude %_datadir/mariadb/wsrep_notify
 
 %files server-control
 %config %_controldir/*
@@ -985,10 +987,15 @@ fi
 %exclude %_man1dir/mariadb_config.1*
 %exclude %_man1dir/mysql_client_test_embedded.1*
 %exclude %_man1dir/mariadb-client-test-embedded.1*
+%exclude %_man1dir/mariadb-client-test.1*
+%exclude %_man1dir/mariadb-client-test-embedded.1*
 %exclude %_man1dir/mysqltest_embedded.1*
 %exclude %_man1dir/mariadb-test-embedded.1*
+%exclude %_man1dir/mariadb-test.1*
+%if_with rocksdb
 %exclude %_man1dir/mysql_ldb.1*
 %exclude %_man1dir/mariadb-ldb.1*
+%endif
 %{?_with_rocksdb:%exclude %_man1dir/mysql_ldb.1*}
 %{?_with_rocksdb:%exclude %_man1dir/mariadb-ldb.1*}
 %{?_with_s3:%exclude %_man1dir/aria_s3_copy.1*}
@@ -1052,12 +1059,20 @@ fi
 %_bindir/mysqltest_embedded
 %_bindir/mariadb-test-embedded
 %_man1dir/mysql_client_test_embedded.1*
+%_man1dir/mariadb-client-test-embedded.1*
+%_man1dir/mariadb-client-test.1*
 %_man1dir/mysqltest_embedded.1*
+%_man1dir/mariadb-test-embedded.1*
+%_man1dir/mariadb-test.1*
 %endif
 %endif
 %endif
 
 %changelog
+* Wed Aug 14 2024 Alexei Takaseev <taf@altlinux.org> 11.4.3-alt1
+- 11.4.3
+- Add conflick to rocksdb-tools
+
 * Mon Aug 12 2024 Alexei Takaseev <taf@altlinux.org> 10.11.9-alt1
 - 10.11.9
 - Update disable download libfmt
