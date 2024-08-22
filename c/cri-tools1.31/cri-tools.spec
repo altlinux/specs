@@ -5,7 +5,7 @@
 %define prog_name            cri-tools
 %define cri_tools_major      1
 %define cri_tools_minor      31
-%define cri_tools_patch      0
+%define cri_tools_patch      1
 
 Name: %prog_name%cri_tools_major.%cri_tools_minor
 Version: %cri_tools_major.%cri_tools_minor.%cri_tools_patch
@@ -77,6 +77,9 @@ install -Dpm 644 crictl-fish-completion -T %buildroot%_datadir/fish/vendor_compl
 %doc docs
 
 %changelog
+* Thu Aug 15 2024 Alexander Stepchenko <geochip@altlinux.org> 1.31.1-alt1
+- 1.31.0 -> 1.31.1
+
 * Fri Aug 09 2024 Alexander Stepchenko <geochip@altlinux.org> 1.31.0-alt1
 - 1.30.1 -> 1.31.0
 
