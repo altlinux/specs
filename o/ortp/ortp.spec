@@ -1,6 +1,6 @@
 Name:    ortp
-Version: 5.3.74
-Release: alt2
+Version: 5.3.77
+Release: alt1
 
 Summary: oRTP is a C library implementing the RTP protocol (rfc3550)
 License: AGPL-3.0
@@ -59,6 +59,9 @@ rm -rf %buildroot%_defaultdocdir/ortp-5.3.0
 %_datadir/ortp-tester
 
 %changelog
+* Thu Aug 22 2024 Andrey Cherepanov <cas@altlinux.org> 5.3.77-alt1
+- New version.
+
 * Mon Aug 19 2024 Leontiy Volodin <lvol@altlinux.org> 5.3.74-alt2
 - Fixed cmake config location.
 - Fixed pkgconfig.
