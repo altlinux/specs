@@ -6,7 +6,7 @@
 %def_enable installed_tests
 
 Name: xdg-dbus-proxy
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: D-Bus connections proxy
@@ -64,6 +64,9 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Thu Aug 22 2024 Yuri N. Sedunov <aris@altlinux.org> 0.1.6-alt1
+- 0.1.6
+
 * Tue Aug 08 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.5-alt1
 - 0.1.5
 - new -tests subpackage
