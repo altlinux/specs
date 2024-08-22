@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-lt11i
-Release: alt7
+Release: alt10
 epoch:1
 %define kernel_need_version	6.1
 # Used when kernel-source-x.y does not currently exist in repository.
@@ -223,6 +223,9 @@ echo "Kernel built $KernelVer"
 %make_build htmldocs
 %endif
 
+cd drivers/media/vvcam/v4l2/
+make KERNEL_SRC=$(pwd)/../../../../ ARCH=arm64 -f Makefile-OutSourceTree
+
 %install
 export ARCH=%base_arch
 KernelVer=%kversion-%flavour-%krelease
@@ -235,8 +238,10 @@ install -Dp -m644 .config %buildroot/boot/config-$KernelVer
 
 make modules_install INSTALL_MOD_PATH=%buildroot
 
+find ./drivers/media/vvcam -name \*.ko | while read k; do install -pD -m0644 $k %buildroot%modules_dir/kernel/$k ; done
+
 make dtbs_install INSTALL_DTBS_PATH=%buildroot/boot/devicetree/$KernelVer
-mv %buildroot/boot/devicetree/$KernelVer/freescale/*.dtb %buildroot/boot/devicetree/$KernelVer/
+cp %buildroot/boot/devicetree/$KernelVer/MIG/MIG-LT11i.dtb %buildroot/boot/devicetree/$KernelVer/imx8mp-ddr4-evk.dtb
 mkdir -p %buildroot/lib/devicetree
 ln -s /boot/devicetree/$KernelVer %buildroot/lib/devicetree/$KernelVer
 
@@ -424,6 +429,15 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Aug 22 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.1.55-alt10
+- MIG-LT11i_defconfig: CONFIG_ANDROID_BINDER_IPC=y
+
+* Thu Aug 15 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.1.55-alt9
+- MIG-LT11i_defconfig: CONFIG_IW416_WLAN=m, CONFIG_MWIFIEX=m, CONFIG_DM_SNAPSHOT=m
+
+* Wed Jul 31 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.1.55-alt8
+- MIG-LT11i_defconfig: CONFIG_ISP_VVCAM=m, CONFIG_IW416_WLAN=y, CONFIG_MWIFIEX is not set
+
 * Mon Jul 08 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.1.55-alt7
 - MIG-LT11i_defconfig: CONFIG_MWIFIEX=m, CONFIG_IW416_WLAN is not set
 
