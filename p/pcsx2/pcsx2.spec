@@ -1,22 +1,13 @@
 %define optflags_lto -flto=thin
 
-%define version_hi 1
-%define version_mid 7
-%define version_lo 5684
+%define version_hi 2
+%define version_mid 0
+%define version_lo 2
 
 # git log v%version_hi.%version_mid.%version_lo -1 --format=%cd --date=local
-%define git_date Sat Apr 6 10:43:13 2024
+%define git_date Sat Jul 13 06:19:16 2024
 # git rev-parse v%version_hi.%version_mid.%version_lo
-%define git_hash 49c199e7e8e9a0edfd37b6cb7c6acb253beeef1e
-
-%define gtest_version 1.12.1
-%define vulkan_headers_version 1.3.272
-%define glslang_version 11.7.1
-%define fmt_commit 5cfd28d476c6859617878f951931b8ce7d36b9df
-%define rapidyaml_version 0.4.1
-%define c4core_commit d35c7c9bf370134595699d791e6ff8db018ddc8d
-%define cmake_commit 371982300ff5a076d7c3199057ebed77bbe3472f
-%define debugbreak_commit 5dcbe41d2bd4712c8014aa7e843723ad7b40fd74
+%define git_hash 2f46e5a8406e4832ba60c5ab1ba2fd16a074ab1f
 
 Name: pcsx2
 Version: %version_hi.%version_mid.%version_lo
@@ -31,46 +22,12 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: x86_64
 
-BuildRequires(pre): at-spi2-atk-devel
-BuildRequires(pre): bzlib-devel
-BuildRequires(pre): expat-devel
-BuildRequires(pre): libat-spi2-core-devel
-BuildRequires(pre): libblkid-devel
-BuildRequires(pre): libbrotli-devel
-BuildRequires(pre): libdatrie-devel
-BuildRequires(pre): libdbus-devel
-BuildRequires(pre): libepoxy-devel
-BuildRequires(pre): libffi-devel
-BuildRequires(pre): libfribidi-devel
-BuildRequires(pre): libjpeg-devel
-BuildRequires(pre): libmount-devel
-BuildRequires(pre): libpcre2-devel
-BuildRequires(pre): libpixman-devel
-BuildRequires(pre): libselinux-devel
-BuildRequires(pre): libthai-devel
-BuildRequires(pre): libtiff-devel
-BuildRequires(pre): libuuid-devel
-BuildRequires(pre): wayland-protocols
-
 # https://github.com/PCSX2/%name/archive/v%version/%name-%version.tar.gz
-Source0: %name-%version.tar
-# https://github.com/google/googletest/archive/release-%gtest_version/googletest-release-%gtest_version.tar.gz
-Source1: googletest-release-%gtest_version.tar
-# https://github.com/KhronosGroup/Vulkan-Headers/archive/v%vulkan_headers_version/Vulkan-Headers-%vulkan_headers_version.tar.gz
-Source2: Vulkan-Headers-%vulkan_headers_version.tar
-# https://github.com/KhronosGroup/glslang/archive/%glslang_version/glslang-%glslang_version.tar.gz
-Source3: glslang-%glslang_version.tar
-# https://github.com/fmtlib/fmt/archive/%fmt_commit/fmt-%fmt_commit.tar.gz
-Source4: fmt-%fmt_commit.tar
-# https://github.com/biojppm/rapidyaml/archive/v%rapidyaml_version/rapidyaml-%rapidyaml_version.tar.gz
-Source5: rapidyaml-%rapidyaml_version.tar
-# https://github.com/biojppm/c4core/archive/%c4core_commit/c4core-%c4core_commit.tar.gz
-Source6: c4core-%c4core_commit.tar
-# https://github.com/biojppm/cmake/archive/%cmake_commit/cmake-%cmake_commit.tar.gz
-Source7: cmake-%cmake_commit.tar
-# https://github.com/biojppm/debugbreak/archive/%debugbreak_commit/debugbreak-%debugbreak_commit.tar.gz
-Source8: debugbreak-%debugbreak_commit.tar
+Source: %name-%version.tar
 
+Patch0: %name-shaderc.patch
+
+BuildRequires: bzlib-devel
 BuildRequires: clang
 BuildRequires: ctest
 BuildRequires: extra-cmake-modules
@@ -91,13 +48,19 @@ BuildRequires: libavformat-devel
 BuildRequires: libbacktrace-devel
 BuildRequires: libcurl-devel
 BuildRequires: libdbus-devel
-BuildRequires: libfast_float-devel
+BuildRequires: libexpat-devel
+BuildRequires: libffi-devel
+BuildRequires: libidn2-devel
+BuildRequires: libjpeg-devel
 BuildRequires: liblz4-devel
 BuildRequires: liblzma-devel
 BuildRequires: libpcap-devel
+BuildRequires: libpcre2-devel
 BuildRequires: libpulseaudio-devel
+BuildRequires: libshaderc-devel
 BuildRequires: libswresample-devel
 BuildRequires: libswscale-devel
+BuildRequires: libtiff-devel
 BuildRequires: libudev-devel
 BuildRequires: libwayland-egl-devel
 BuildRequires: libwebp-devel
@@ -112,16 +75,8 @@ PCSX2 is an emulator for the playstation 2 video game console. It is written mos
 There is still lot of on going work to improve compatibility & speed.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8
-
-%__mv -Tf ../googletest-release-%gtest_version 3rdparty/gtest
-%__mv -Tf ../Vulkan-Headers-%vulkan_headers_version 3rdparty/vulkan-headers
-%__mv -Tf ../glslang-%glslang_version 3rdparty/glslang/glslang
-%__mv -Tf ../fmt-%fmt_commit 3rdparty/fmt/fmt
-%__mv -Tf ../rapidyaml-%rapidyaml_version 3rdparty/rapidyaml/rapidyaml
-%__mv -Tf ../c4core-%c4core_commit 3rdparty/rapidyaml/rapidyaml/ext/c4core
-%__mv -Tf ../cmake-%cmake_commit 3rdparty/rapidyaml/rapidyaml/ext/c4core/cmake
-%__mv -Tf ../debugbreak-%debugbreak_commit 3rdparty/rapidyaml/rapidyaml/ext/c4core/src/c4/ext/debugbreak
+%setup
+%patch0 -p1
 
 %build
 %cmake \
@@ -135,7 +90,6 @@ There is still lot of on going work to improve compatibility & speed.
 	-DCMAKE_DISABLE_PRECOMPILE_HEADERS:BOOL=TRUE \
 	-DCMAKE_BUILD_PO:BOOL=TRUE \
 	-DDISABLE_ADVANCE_SIMD:BOOL=TRUE \
-	-DDISABLE_BUILD_DATE:BOOL=TRUE \
 	-DLTO_PCSX2_CORE:BOOL=TRUE \
 	-GNinja \
 	-Wno-dev
@@ -170,6 +124,9 @@ echo "#define GIT_TAG \"v$(echo %version)\"
 %_iconsdir/hicolor/256x256/apps/PCSX2.png
 
 %changelog
+* Thu Aug 22 2024 Nazarov Denis <nenderus@altlinux.org> 2.0.2-alt1
+- Version 2.0.2 (ALT #50635)
+
 * Tue May 21 2024 Nazarov Denis <nenderus@altlinux.org> 1.7.5684-alt1
 - Version 1.7.5684
 
