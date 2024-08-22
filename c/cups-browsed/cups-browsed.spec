@@ -1,7 +1,7 @@
 %define _cups_serverbin %_libexecdir/cups
 
 Name: cups-browsed
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 Summary: Daemon for local auto-installation of remote printers
 License: Apache-2.0 WITH LLVM-exception
@@ -60,6 +60,9 @@ rm -rf %buildroot%_docdir/%name
 %_unitdir/cups-browsed.service
 
 %changelog
+* Thu Aug 22 2024 Anton Farygin <rider@altlinux.ru> 2.0.1-alt1
+- 2.0.0 -> 2.0.1
+
 * Fri Sep 29 2023 Anton Farygin <rider@altlinux.ru> 2.0.0-alt1
 - 2.0.0
 

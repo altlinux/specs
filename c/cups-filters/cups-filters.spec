@@ -2,7 +2,7 @@
 %global _localstatedir %_var
 
 Name: cups-filters
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Summary: OpenPrinting CUPS filters and backends
@@ -26,7 +26,6 @@ Requires: /usr/bin/gs
 
 BuildRequires: libgtk+3-devel
 BuildRequires: libppd-devel
-BuildRequires: libavahi-devel
 Provides: cups-backend-serial = %EVR
 Obsoletes: cups-backend-serial < %EVR
 
@@ -87,6 +86,9 @@ mkdir -p %buildroot/%_datadir/cups/data/
 %_datadir/man/man*/*
 
 %changelog
+* Thu Aug 22 2024 Anton Farygin <rider@altlinux.ru> 2.0.1-alt1
+- 2.0.0 -> 2.0.1
+
 * Fri Sep 29 2023 Anton Farygin <rider@altlinux.ru> 2.0.0-alt1
 - 2.0.0
 - default-testpage was moved to libcupsfilters package
