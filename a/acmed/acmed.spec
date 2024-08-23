@@ -3,7 +3,7 @@
 Name: acmed
 Summary: An ACME (RFC 8555) client daemon
 Version: 0.23.0
-Release: alt1
+Release: alt2
 License: MIT AND Apache-2.0
 Group: Networking/WWW
 Url: https://github.com/breard-r/acmed
@@ -80,6 +80,9 @@ useradd -r -N -g %name -c 'ACME client daemon' -s /sbin/nologin \
 %attr(0700,%name,%name) %dir %_sharedstatedir/%name/accounts
 
 %changelog
+* Fri Aug 23 2024 Alexey Shabalin <shaba@altlinux.org> 0.23.0-alt2
+- fix rebuild, update rust modules.
+
 * Fri May 31 2024 Alexey Shabalin <shaba@altlinux.org> 0.23.0-alt1
 - 0.23.0.
 
