@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rrd
-Version: 1.8.0
-Release: alt3
+Version: 1.9.0
+Release: alt1
 %define native rrdtool
 %define abiversion 8
 %define rrdcached_user root
@@ -368,6 +368,9 @@ rm -rf %buildroot/usr/share/tcl
 #   (the tcl one looks broken too as of 1.5.4-alt2.1)
 
 %changelog
+* Fri Aug 23 2024 Alexey Shabalin <shaba@altlinux.org> 1.9.0-alt1
+- 1.9.0
+
 * Tue Apr 09 2024 Alexey Shabalin <shaba@altlinux.org> 1.8.0-alt3
 - removed rrdcached.socket
 
