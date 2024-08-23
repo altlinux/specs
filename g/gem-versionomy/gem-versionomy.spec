@@ -5,7 +5,7 @@
 
 Name:          gem-versionomy
 Version:       0.5.0
-Release:       alt1
+Release:       alt2
 Summary:       Versionomy is a generalized version number library
 License:       BSD-3-Clause
 Group:         Development/Ruby
@@ -15,6 +15,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Patch:         rakefile.patch
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
 BuildRequires: gem(blockenspiel) >= 0.5.0
@@ -40,7 +41,7 @@ versioning schemes in use.
 %if_enabled    doc
 %package       -n gem-versionomy-doc
 Version:       0.5.0
-Release:       alt1
+Release:       alt2
 Summary:       Versionomy is a generalized version number library documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета versionomy
 Group:         Development/Documentation
@@ -64,7 +65,7 @@ versioning schemes in use.
 %if_enabled    devel
 %package       -n gem-versionomy-devel
 Version:       0.5.0
-Release:       alt1
+Release:       alt2
 Summary:       Versionomy is a generalized version number library development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета versionomy
 Group:         Development/Ruby
@@ -90,6 +91,7 @@ versioning schemes in use.
 
 %prep
 %setup
+%autopatch
 
 %build
 %ruby_build
@@ -118,5 +120,8 @@ versioning schemes in use.
 
 
 %changelog
+* Mon Aug 19 2024 Pavel Skrylev <majioa@altlinux.org> 0.5.0-alt2
+- ! fixed rakefile loading to proper version detection
+
 * Wed May 08 2024 Pavel Skrylev <majioa@altlinux.org> 0.5.0-alt1
 - + packaged gem with Ruby Policy 2.0

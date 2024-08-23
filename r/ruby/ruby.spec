@@ -7,7 +7,7 @@
 
 Name:          ruby
 Version:       %_version
-Release:       alt1
+Release:       alt2
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -383,6 +383,9 @@ echo "NOTE: to make the environment variable changes come into effect, please re
 %_rpmmacrosdir/ruby.env
 
 %changelog
+* Tue Aug 20 2024 Pavel Skrylev <majioa@altlinux.org> 3.3.4-alt2
+- ! fixed %%ruby_gemdocdir for arched gem package
+
 * Mon Jul 08 2024 Pavel Skrylev <majioa@altlinux.org> 3.3.4-alt1
 - ^ 3.1.4 -> 3.3.4
 - - disabled bootstraping ruby for a while

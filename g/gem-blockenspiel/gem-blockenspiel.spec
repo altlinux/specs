@@ -5,7 +5,7 @@
 
 Name:          gem-blockenspiel
 Version:       0.5.0
-Release:       alt1
+Release:       alt2
 Summary:       Blockenspiel is a helper library designed to make it easy to implement DSL blocks
 License:       BSD-3-Clause
 Group:         Development/Ruby
@@ -15,6 +15,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Patch:         rakefile.patch
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
 BuildRequires: gem(minitest) >= 5.8
@@ -37,7 +38,7 @@ multithreading.
 %if_enabled    doc
 %package       -n gem-blockenspiel-doc
 Version:       0.5.0
-Release:       alt1
+Release:       alt2
 Summary:       Blockenspiel is a helper library designed to make it easy to implement DSL blocks documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета blockenspiel
 Group:         Development/Documentation
@@ -62,7 +63,7 @@ multithreading.
 %if_enabled    devel
 %package       -n gem-blockenspiel-devel
 Version:       0.5.0
-Release:       alt1
+Release:       alt2
 Summary:       Blockenspiel is a helper library designed to make it easy to implement DSL blocks development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета blockenspiel
 Group:         Development/Ruby
@@ -89,6 +90,7 @@ multithreading.
 
 %prep
 %setup
+%autopatch
 
 %build
 %ruby_build
@@ -117,5 +119,8 @@ multithreading.
 
 
 %changelog
+* Mon Aug 19 2024 Pavel Skrylev <majioa@altlinux.org> 0.5.0-alt2
+- ! fixed loading rakefile to proper detect version
+
 * Wed May 08 2024 Pavel Skrylev <majioa@altlinux.org> 0.5.0-alt1
 - + packaged gem with Ruby Policy 2.0

@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.6
-Release:       alt12
+Release:       alt13
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -91,10 +91,14 @@ export PATH=$PATH:$(pwd)/bin
 %ruby_bindir/setup-rb
 
 %files         doc
-%ruby_gemdocdir
+#%ruby_gemdocdir
 
 
 %changelog
+* Mon Aug 19 2024 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt13
+- ! fix documents compilation file by a file
+- ! ruby platform detection and filter
+
 * Wed Jul 24 2024 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt12
 - ! some updates
 
