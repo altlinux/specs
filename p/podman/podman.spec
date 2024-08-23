@@ -5,7 +5,7 @@
 %define _systemdgeneratordir %_prefix/lib/systemd/system-generators
 
 Name:     podman
-Version:  5.1.2
+Version:  5.2.2
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -18,7 +18,7 @@ Source:   %name-%version.tar
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang rpm-macros-systemd
-BuildRequires: rpm-build-golang golang >= 1.20
+BuildRequires: rpm-build-golang golang >= 1.21
 BuildRequires: go-md2man man-db
 BuildRequires: libseccomp-devel glib2-devel libgpgme-devel libgpg-error-devel libbtrfs-devel
 BuildRequires: libgio-devel libostree-devel libselinux-devel libdevmapper-devel
@@ -30,7 +30,6 @@ Conflicts: filesystem < 3
 Requires: catatonit
 Requires: conmon >= 2.1.7
 Requires: containers-common-extra
-Requires: gvisor-tap-vsock
 %ifnarch %e2k %arm %ix86
 Requires: netavark >= 1.6.0 aardvark-dns
 %endif
@@ -41,11 +40,11 @@ Requires: shadow-submap
 %description
 %summary.
 
-%package docker
-Summary:  Emulate Docker CLI using podman
-Group:    System/Configuration/Other
+%package   docker
+Summary:   Emulate Docker CLI using podman
+Group:     System/Configuration/Other
 BuildArch: noarch
-Requires: %name = %EVR
+Requires:  %name = %EVR
 Conflicts: docker-ce
 Conflicts: docker-ee
 Conflicts: docker-engine
@@ -55,9 +54,9 @@ Conflicts: moby-engine
 %description docker
 %summary.
 
-%package remote
+%package  remote
 Group:    System/Configuration/Other
-Summary: (Experimental) Remote client for managing %name containers
+Summary:  (Experimental) Remote client for managing %name containers
 Requires: %name = %EVR
 
 %description remote
@@ -66,6 +65,17 @@ Remote client for managing %name containers.
 %name-remote uses the libpod REST API to connect to a %name client to
 manage pods, containers and container images. %name-remote supports ssh
 connections as well.
+
+%package  machine
+Summary:  Metapackage for setting up %name machine
+Group:    System/Configuration/Other
+Requires: %name = %EVR
+Requires: gvisor-tap-vsock
+Requires: qemu-kvm
+Requires: virtiofsd
+
+%description machine
+This subpackage installs the dependencies for %name machine.
 
 %prep
 %setup
@@ -126,6 +136,11 @@ echo br_netfilter >> %buildroot%_modulesloaddir/podman-iptables.conf
 rm -f %buildroot%_man5dir/dockerignore*
 rm -f %buildroot%_man5dir/dockerfile*
 
+%ifnarch %e2k %arm %ix86 %mips32
+# symlink virtiofsd in %%name libexecdir for machine subpackage
+ln -s ../virtiofsd %buildroot%_libexecdir/%name
+%endif
+
 %files
 %_bindir/%name
 %_bindir/%{name}sh
@@ -143,7 +158,10 @@ rm -f %buildroot%_man5dir/dockerfile*
 %exclude %_man1dir/docker*
 %doc *.md
 %_tmpfilesdir/%name.conf
-%_libexecdir/%name
+%dir %_libexecdir/%name
+%_libexecdir/%name/quadlet
+%_libexecdir/%name/rootlessport
+
 %files remote
 %_bindir/%name-remote
 %_man1dir/%name-remote*
@@ -157,10 +175,19 @@ rm -f %buildroot%_man5dir/dockerfile*
 %_bindir/docker
 %_man1dir/docker*
 %exclude %_man1dir/docker-remote*
+%_sysconfdir/profile.d/%name-docker.*
 %_tmpfilesdir/%name-docker.conf
-%_datadir/user-tmpfiles.d/%name-docker.conf
+%_user_tmpfilesdir/%name-docker.conf
+
+%ifnarch %e2k %arm %ix86 %mips32
+%files machine
+%_libexecdir/%name/virtiofsd
+%endif
 
 %changelog
+* Thu Aug 22 2024 Alexey Shabalin <shaba@altlinux.org> 5.2.2-alt1
+- New version 5.2.2.
+
 * Wed Jul 24 2024 Alexey Shabalin <shaba@altlinux.org> 5.1.2-alt1
 - New version 5.1.2.
 
