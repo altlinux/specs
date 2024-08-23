@@ -30,7 +30,7 @@
 
 Name: LibreOffice-still
 %define hversion 24.2
-%define urelease 4.2
+%define urelease 5.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -772,6 +772,13 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Aug 23 2024 Andrey Cherepanov <cas@altlinux.org> 24.2.5.2-alt1
+- New version.
+- Security fixes:
+  + CVE-2024-6472 Ability to trust not validated macro signatures removed in high security mode
+  + CVE-2024-5261 TLS certificate are not properly verified when utilizing LibreOfficeKit
+  + CVE-2024-3044 Graphic on-click binding allows unchecked script execution.
+
 * Wed Jul 10 2024 Andrey Cherepanov <cas@altlinux.org> 24.2.4.2-alt1
 - New version.
 
