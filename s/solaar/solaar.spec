@@ -1,9 +1,9 @@
 Name:    solaar
 Version: 1.1.13
-Release: alt1
+Release: alt2
 
 Summary: Device manager for Logitech Unifying Receiver
-License: GPL-2.0
+License: GPL-2.0-or-later
 Group:   System/Configuration/Hardware
 URL:     https://pwr-solaar.github.io/Solaar/
 
@@ -11,19 +11,23 @@ BuildArch: noarch
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
+Vcs: https://github.com/pwr-Solaar/Solaar.git
+Source: %name-%version.tar
+Patch2: 0002-Install-alternative-udev-rules-for-wayland-compatibi.patch
+Patch3: 0003-Install-autostart-desktop-file.patch
+Patch4: remove-udev-check.patch
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-gir
 BuildRequires:  python3-module-pyudev
-
-Requires: unifying-receiver-udev
 
 %add_python3_req_skip gi.repository.GObject gi.repository.Gdk
 
 # require typelib(AyatanaAppIndicator3) instead typelib(AppIndicator3)
 %add_typelib_req_skiplist typelib(AppIndicator3)
 
-Source0: https://github.com/pwr/Solaar/archive/%{version}.tar.gz
-Patch1: solaar-paths.patch
+%py3_requires evdev
+Requires: udev-rules-logitech-unify
 
 %description
 Solaar is a device manager for Logitech's Unifying Receiver
@@ -43,9 +47,24 @@ Requires: %name = %EVR
 This package provides documentation for Solaar, a device manager for
 Logitech's Unifying Receiver peripherals.
 
+%package -n udev-rules-logitech-unify
+Summary:  Udev rules for Logitech receivers
+Group:    System/Configuration/Hardware
+Provides: %name-udev = %EVR
+
+%description -n udev-rules-logitech-unify
+This package contains udev rules which grant users permission to access various
+connected Logitech wireless receivers.  This includes Unifying receivers,
+various types of Nano receivers and some other types which can be used by
+Solaar.
+
 %prep
-%setup -n Solaar-%version
-%patch1 -p1
+%setup
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+
+sed -i 's|lib/udev/rules.d|%_udev_rulesdir|g' setup.py
 
 %build
 tools/po-compile.sh
@@ -58,7 +77,6 @@ tools/po-compile.sh
 %files -f %name.lang
 %doc COPYRIGHT share/README
 %config(noreplace) %_sysconfdir/xdg/autostart/solaar.desktop
-%config %attr (644,root,root) %_udevrulesdir/*.rules
 %_bindir/solaar
 %python3_sitelibdir/*
 %_desktopdir/solaar.desktop
@@ -69,7 +87,18 @@ tools/po-compile.sh
 %files doc
 %doc docs
 
+%files -n udev-rules-logitech-unify
+%_udevrulesdir/*.rules
+
 %changelog
+* Thu Aug 22 2024 Alexey Shabalin <shaba@altlinux.org> 1.1.13-alt2
+- Install alternative udev rules for wayland compatibility.
+- Use rpm macros for install udev rules.
+- Remove the check for the udev rules file in lib/solaar/gtk.py.
+- Delete requires on unifying-receiver-udev.
+- Add requires evdev python module (ALT #50881).
+- Split udev rules to udev-rules-logitech-unify package.
+
 * Sun May 12 2024 Andrey Cherepanov <cas@altlinux.org> 1.1.13-alt1
 - New version.
 
