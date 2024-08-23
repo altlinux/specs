@@ -1,7 +1,7 @@
 
 Name: krb5-ticket-watcher
 Version: 1.0.3
-Release: alt24
+Release: alt25
 %K6init no_altplace
 
 Group: System/X11
@@ -30,7 +30,7 @@ Patch14: alt-no-message-on-automatic-reniew.patch
 BuildRequires(pre): rpm-build-xdg rpm-build-kf6
 BuildRequires: desktop-file-utils
 BuildRequires: libkrb5-devel libkeyutils-devel
-BuildRequires: cmake libcom_err-devel qt6-base-devel qt6-5compat-devel qt6-tools
+BuildRequires: cmake libcom_err-devel qt6-base-devel qt6-tools
 
 %description
 A tray applet for watching, renewing, and reinitializing Kerberos
@@ -77,6 +77,9 @@ desktop-file-install --dir %buildroot/%_xdgconfigdir/autostart \
 %doc COPYING Changes News TODO
 
 %changelog
+* Fri Aug 23 2024 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt25
+- more port to Qt6
+
 * Tue Aug 20 2024 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt24
 - port to Qt6
 
