@@ -14,7 +14,7 @@
 
 Name: shadps4
 Version: 0.2.0
-Release: alt1
+Release: alt2
 
 Summary: Sony PlayStation 4 emulator
 License: GPL-2.0
@@ -69,26 +69,11 @@ BuildRequires: qt6-base-devel
 BuildRequires: spirv-headers
 BuildRequires: zlib-ng-devel
 
+Provides: %name-qt = %EVR
+Obsoletes: %name-qt <= 0.2.0-alt1
+
 %description
 shadPS4 is an early PS4 emulator for Windows and Linux written in C++
-
-%package cli
-Summary: Sony PlayStation 4 emulator - CLI version
-Group: Emulators
-
-%description cli
-shadPS4 is an early PS4 emulator for Windows and Linux written in C++
-
-This package contains a command line interface.
-
-%package qt
-Summary: Sony PlayStation 4 emulator - Qt version
-Group: Emulators
-
-%description qt
-shadPS4 is an early PS4 emulator for Windows and Linux written in C++
-
-This package contains a graphical user interface using Qt6.
 
 %prep
 %setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13
@@ -109,28 +94,30 @@ This package contains a graphical user interface using Qt6.
 %build
 %add_optflags -Wno-error=return-type
 
-# Build CLI version
-%define _cmake__builddir %_target_platform
-%cmake -DSIRIT_USE_SYSTEM_SPIRV_HEADERS:BOOL=TRUE -Wno-dev
-%cmake_build
-
-# Build Qt version
-%define _cmake__builddir %_target_platform-qt
-%cmake -DENABLE_QT_GUI:BOOL=TRUE -DSIRIT_USE_SYSTEM_SPIRV_HEADERS:BOOL=TRUE -Wno-dev
+%cmake \
+	-DENABLE_QT_GUI:BOOL=TRUE \
+	-DSIRIT_USE_SYSTEM_SPIRV_HEADERS:BOOL=TRUE \
+	-Wno-dev
 %cmake_build
 
 %install
-%__mkdir_p %buildroot%_bindir
+%__mkdir_p %buildroot{%_bindir,%_desktopdir,%_iconsdir/hicolor/512x512/apps}
+
 %__install -Dp -m0755 %_target_platform/%name %buildroot%_bindir/
-%__install -Dp -m0755 %_target_platform-qt/%name %buildroot%_bindir/%name-qt
+%__install -Dp -m0644 .github/%name.desktop %buildroot%_desktopdir/
+%__install -Dp -m0644 .github/%name.png %buildroot%_iconsdir/hicolor/512x512/apps/
 
-%files cli
+%files
+%doc README.md
 %_bindir/%name
-
-%files qt
-%_bindir/%name-qt
+%_desktopdir/%name.desktop
+%_iconsdir/hicolor/512x512/apps/%name.png
 
 %changelog
+* Fri Aug 23 2024 Nazarov Denis <nenderus@altlinux.org> 0.2.0-alt2
+- Build only Qt version
+- Pack desktop and icon files
+
 * Fri Aug 16 2024 Nazarov Denis <nenderus@altlinux.org> 0.2.0-alt1
 - Version 0.2.0
 
