@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 22.10.0
+Version: 24.8.1
 Release: alt1
 Summary: Self-service finite-state machines for the programmer on the go
 License: MIT
@@ -59,7 +59,7 @@ Extra 'visualize' for %pypi_name.
 rm -r %buildroot%python3_sitelibdir/automat/_test/
 
 %check
-%pyproject_run_pytest -ra -Wignore automat/_test
+%pyproject_run_pytest -ra -Wignore src/automat/_test
 
 %files
 %python3_sitelibdir/%mod_name/
@@ -73,6 +73,9 @@ rm -r %buildroot%python3_sitelibdir/automat/_test/
 %python3_sitelibdir/%mod_name/__pycache__/_visualize.*
 
 %changelog
+* Thu Aug 22 2024 Stanislav Levin <slev@altlinux.org> 24.8.1-alt1
+- 22.10.0 -> 24.8.1.
+
 * Tue Jun 13 2023 Stanislav Levin <slev@altlinux.org> 22.10.0-alt1
 - 20.2.0 -> 22.10.0
 
