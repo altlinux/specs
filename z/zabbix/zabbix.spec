@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		d1b0c3308ce
+%define svnrev		d93ce022627
 
 %def_with pgsql
 %def_enable java
@@ -17,8 +17,8 @@
 %endif
 
 Name: zabbix
-Version: 7.0.2
-Release: alt2
+Version: 7.0.3
+Release: alt1
 Epoch: 1
 
 Summary: A network monitor
@@ -79,12 +79,12 @@ BuildArch: noarch
 %package server-common
 Summary: %name network monitor (server common stuff)
 Group: Monitoring
-Requires: %name-common >= 1:2.0.4-alt1
+Requires: %name-common = %EVR
 
 %package server-mysql
 Summary: %name network monitor (server, compiled with MySQL support)
 Group: Monitoring
-Requires: %name-server-common >= 1:2.0.4-alt1
+Requires: %name-server-common = %EVR
 Requires: %name-common-database-mysql = %EVR
 Requires: %_sbindir/fping
 
@@ -92,7 +92,7 @@ Requires: %_sbindir/fping
 %package server-pgsql
 Summary: %name network monitor (server, compiled with PostgreSQL support)
 Group: Monitoring
-Requires: %name-server-common >= 1:2.0.4-alt1
+Requires: %name-server-common = %EVR
 Requires: %name-common-database-pgsql = %EVR
 Requires: %_sbindir/fping
 %endif
@@ -100,14 +100,14 @@ Requires: %_sbindir/fping
 %package agent
 Summary: %name agent
 Group: Monitoring
-Requires: %name-common >= 1:2.0.4-alt1
+Requires: %name-common = %EVR
 Requires: %name-agent-sudo
 
 %if_enabled agent2
 %package agent2
 Summary: %name agent2
 Group: Monitoring
-Requires: %name-common >= 1:2.0.4-alt1
+Requires: %name-common = %EVR
 Requires: %name-agent-sudo
 %endif
 
@@ -115,14 +115,14 @@ Requires: %name-agent-sudo
 %package web-service
 Summary: %name web service
 Group: Monitoring
-Requires: %name-common >= 1:2.0.4-alt1
+Requires: %name-common = %EVR
 %endif
 
 %package agent-sudo
 Summary: sudo entry for %name agent
 Group: Monitoring
 BuildArch: noarch
-Requires: %name-common >= 1:2.0.4-alt1
+Requires: %name-common = %EVR
 
 %package proxy
 Summary: %name proxy with Sqlite3 support
@@ -143,7 +143,7 @@ Conflicts: %name-proxy
 %package proxy-common
 Summary: %name proxy common files
 Group: Monitoring
-Requires: %name-common >= 1:2.0.4-alt1
+Requires: %name-common = %EVR
 Requires: %_sbindir/fping
 BuildArch: noarch
 
@@ -151,7 +151,7 @@ BuildArch: noarch
 %package java-gateway
 Summary: %name java gateway
 Group: Monitoring
-Requires: %name-common >= 1:2.0.4-alt1
+Requires: %name-common = %EVR
 Requires: jre-openjdk >= 1.7.0
 %filter_from_requires /^\/etc\/sysconfig\/network/d
 %filter_from_requires /^\/etc\/sysconfig\/zabbix-java-gateway/d
@@ -853,6 +853,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Fri Aug 23 2024 Alexei Takaseev <taf@altlinux.org> 1:7.0.3-alt1
+- 7.0.3
+
 * Mon Aug 05 2024 Alexei Takaseev <taf@altlinux.org> 1:7.0.2-alt2
 - Add requires php8.X-xmlreader, php8.X-curl, php8.X-ldap (ALT #50854)
 
