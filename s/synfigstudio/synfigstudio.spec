@@ -1,7 +1,7 @@
 %def_without build_docs
 
 Name:    synfigstudio
-Version: 1.5.2
+Version: 1.5.3
 Release: alt1
 
 Summary: Synfig studio - animation program
@@ -11,7 +11,6 @@ Group:   Office
 Url:     http://www.synfig.org
 #Source: https://github.com/synfig/synfig.git
 Source:  %name-%version.tar
-Patch:   synfigstudio-alt-fix-build.patch
 
 # FIXME: crippled zlib-devel (#40274)
 ExcludeArch: armh
@@ -111,7 +110,6 @@ Header files for Synfig studio.
 
 %prep
 %setup
-%patch -p1
 mkdir local-pkg-config
 %ifarch %e2k
 # -lgcov not there yet...
@@ -192,8 +190,6 @@ subst '1i#!%__python3' `find %buildroot -name \*.py`
 cat synfig.lang >> %name.lang
 echo /usr/share/locale/uz@Latn/LC_MESSAGES/synfig.mo >> %name.lang
 echo /usr/share/locale/uz@Latn/LC_MESSAGES/synfigstudio.mo >> %name.lang
-echo /usr/share/locale/zh-Hant/LC_MESSAGES/synfig.mo >> %name.lang
-echo /usr/share/locale/zh-Hant/LC_MESSAGES/synfigstudio.mo >> %name.lang
 
 %files -f %name.lang
 %doc synfig-studio/AUTHORS synfig-studio/NEWS synfig-studio/README synfig-studio/TODO
@@ -220,6 +216,9 @@ echo /usr/share/locale/zh-Hant/LC_MESSAGES/synfigstudio.mo >> %name.lang
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Aug 23 2024 Andrey Cherepanov <cas@altlinux.org> 1.5.3-alt1
+- New version.
+
 * Sun Aug 04 2024 Andrey Cherepanov <cas@altlinux.org> 1.5.2-alt1
 - New version.
 
