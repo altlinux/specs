@@ -1,10 +1,11 @@
 Name: fd
-Version: 10.1.0
+Version: 10.2.0
 Release: alt1
 Summary: A simple, fast and user-friendly alternative to 'find'
 License: MIT and Apache-2.0
 Group: File tools
 Url: https://github.com/sharkdp/fd
+
 Source: %name-%version.tar
 Source1: vendor.tar
 
@@ -59,6 +60,9 @@ install -Dm 0644 contrib/completion/_%name %buildroot%_datadir/zsh/site-function
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Sat Aug 24 2024 Alexander Makeenkov <amakeenk@altlinux.org> 10.2.0-alt1
+- Updated to version 10.2.1.
+
 * Fri Jun 07 2024 Alexander Makeenkov <amakeenk@altlinux.org> 10.1.0-alt1
 - Updated to version 10.1.0.
 
