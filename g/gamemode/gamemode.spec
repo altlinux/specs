@@ -2,8 +2,8 @@
 %define _sysusersdir /lib/sysusers.d
 
 Name: gamemode
-Version: 1.8.1
-Release: alt2
+Version: 1.8.2
+Release: alt1
 
 Summary: Optimise Linux system performance on demand 
 License: BSD
@@ -119,6 +119,9 @@ Development files for GameMode
 %_libdir/lib%{name}auto.so
 
 %changelog
+* Sat Aug 24 2024 Nazarov Denis <nenderus@altlinux.org> 1.8.2-alt1
+- New version 1.8.2.
+
 * Sat Jun 22 2024 Nazarov Denis <nenderus@altlinux.org> 1.8.1-alt2
 - Fix FTBFS
 
