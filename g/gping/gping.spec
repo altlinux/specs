@@ -1,12 +1,13 @@
 %def_with check
 
 Name: gping
-Version: 1.16.1
+Version: 1.17.3
 Release: alt1
 Summary: Ping, but with a graph
 License: MIT
 Group: Networking/Other
 Url: https://github.com/orf/gping
+
 Source: %name-%version.tar
 Source1: vendor.tar
 
@@ -44,6 +45,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Sat Aug 24 2024 Alexander Makeenkov <amakeenk@altlinux.org> 1.17.3-alt1
+- Updated to version 1.17.3.
+
 * Mon May 13 2024 Anastasia Osmolovskaya <lola@altlinux.org> 1.16.1-alt1
 - Updated to version 1.16.1
 
