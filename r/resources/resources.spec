@@ -1,20 +1,20 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 1.5
+%define ver_major 1.6
 %define rdn_name net.nokyan.Resources
 
 %def_enable check
 %def_disable bootstrap
 
 Name: resources
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: System monitor
 License: GPL-3.0-or-later
 Group: Monitoring
-Url: https://github.com/nokyan/resources
+Url: https://apps.gnome.org/Resources
 
 %if_disabled snapshot
 Source: %url/archive/v%version/%name-%version.tar.gz
@@ -73,6 +73,7 @@ sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/utils/memory.rs
 %files -f %name.lang
 %_bindir/%name
 %dir %_libexecdir/%name
+%_libexecdir/%name/%name-adjust
 %_libexecdir/%name/%name-kill
 %_libexecdir/%name/%name-processes
 %_desktopdir/%{rdn_name}*.desktop
@@ -85,6 +86,9 @@ sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/utils/memory.rs
 
 
 %changelog
+* Sat Aug 24 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- updated to v1.6.0-13-g3d7286a
+
 * Sun Jul 07 2024 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt1
 - 1.5.1
 
