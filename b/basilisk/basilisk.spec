@@ -1,12 +1,15 @@
+%define git_commit 06849db
+
 Summary: The Basilisk web browser
 Summary(ru_RU.UTF-8): Интернет-браузер Baselisk - неофициальная сборка браузера palemoon
 
-%define vendor_version v2024.05.11
+%define vendor_version 2024.08.16
 
 Name: basilisk
-Version:  52.9.0_2_%vendor_version
+Version:  %vendor_version
+Epoch:  1
 
-Release: alt1
+Release: alt1_%git_commit.1
 
 License: MPL-2.0 GPL-3.0 and LGPL-2.1+
 Group: Networking/WWW
@@ -25,7 +28,9 @@ Source6: %name.desktop
 Source7: firefox.c
 
 Patch1:  mozilla-%name-52.9.0-bug-1153109-enable-stdcxx-compat.patch
+Patch2:  basilisk-snake-2024.08.16.patch
 Patch22: basilisk_rpath-52.9.0.patch
+
 
 Provides: palemoon
 Provides: webclient
@@ -133,6 +138,7 @@ echo 'ac_add_options --enable-optimize="-O3 -w -flto=auto"' >> .mozconfig
 %endif
 
 %patch1 -p1
+%patch2 -p1
 %patch22 -p1
 
 tar -xf %SOURCE1
@@ -344,6 +350,9 @@ install -D -m 644 %_builddir/basilisk-%version/README.md %buildroot/%_docdir/%na
 %exclude %_includedir/*
 
 %changelog
+* Sat Aug 24 2024 Hihin Ruslan <ruslandh@altlinux.ru> 1:2024.08.16-alt1_06849db.1
+- Update to  git commit 06849db
+
 * Tue Jul 23 2024 Hihin Ruslan <ruslandh@altlinux.ru> 52.9.0_2_v2024.05.11-alt1
 - Update to vendor_version v2024.05.11
 
@@ -355,3 +364,4 @@ install -D -m 644 %_builddir/basilisk-%version/README.md %buildroot/%_docdir/%na
 
 * Thu Nov 23 2023 Hihin Ruslan <ruslandh@altlinux.ru> 52.9.0-alt1
 - Init Build
+
