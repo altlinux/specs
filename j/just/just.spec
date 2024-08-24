@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: just
-Version: 1.32.0
+Version: 1.34.0
 Release: alt1
 Summary: Just a command runner
 License: CC0-1.0
@@ -13,9 +13,7 @@ Url: https://just.systems/
 Vcs: https://github.com/casey/just
 
 Source: %name-%version.tar
-BuildRequires: /proc
 BuildRequires: rust-cargo
-BuildRequires: cargo-vendor-checksum diffstat
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: python3
 }}
@@ -27,7 +25,7 @@ just is a handy way to save and run project-specific commands.
 %setup
 
 mkdir -p .cargo
-cat >> .cargo/config <<EOF
+cat >> .cargo/config.toml <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
@@ -83,6 +81,9 @@ just version | grep -Fx '%name %version'
 %_datadir/fish/vendor_completions.d/just.fish
 
 %changelog
+* Sat Aug 24 2024 Vitaly Chikunov <vt@altlinux.org> 1.34.0-alt1
+- Update to 1.34.0 (2024-08-02).
+
 * Tue Jul 30 2024 Vitaly Chikunov <vt@altlinux.org> 1.32.0-alt1
 - Update to 1.32.0 (2024-07-18).
 
