@@ -2,17 +2,17 @@
 
 %define _name Glide
 %define ver_major 0.6
-%define rdn_name net.baseart.%_name
+%define rdn_name net.base_art.%_name
 
 %def_enable check
 
 %def_disable bootstrap
 
 Name: glide
-Version: %ver_major.3
+Version: %ver_major.5
 Release: alt1
 
-Summary: Play movies and audio files
+Summary: Media player based on GStreamer and GTK
 License: GPL-3.0-or-later
 Group: Video
 Url: https://github.com/philn/glide
@@ -32,6 +32,7 @@ Source1: %name-%version-cargo.tar
 Requires: gst-plugins-base1.0 >= %gst_ver
 Requires: gst-libav
 Requires: gst-plugin-gtk4
+#Requires: gstreamer-vaapi
 Requires: dconf
 
 BuildRequires(pre): rpm-macros-meson
@@ -74,6 +75,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README* TODO
 
 %changelog
+* Sun Aug 25 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.5-alt1
+- 0.6.5
+
 * Tue Jul 16 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.3-alt1
 - first build for Sisyphus (0.6.3-19-g5cb2545)
 
