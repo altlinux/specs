@@ -8,7 +8,7 @@
 %def_disable bootstrap
 
 Name: %binary_name
-Version: %ver_major.10
+Version: %ver_major.11
 Release: alt1
 
 Summary: A simple and fast software designed to bypass Deep Packet Inspection
@@ -23,7 +23,7 @@ Source: %url/archive/v%version/%_name-%version.tar.gz
 %else
 Source: %_name-%version.tar
 %endif
-Source1: %_name-%version-vendor.tar
+%{?_disable_bootstrap:Source1: %_name-%version-vendor.tar}
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -59,6 +59,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Sun Aug 25 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.11-alt1
+- 0.10.11
+
 * Thu Aug 22 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.10-alt1
 - updated to v0.10.10-2-gd97d4e4
 
