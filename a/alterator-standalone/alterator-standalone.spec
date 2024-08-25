@@ -1,5 +1,9 @@
+%define _unpackaged_files_terminate_build 1
+%define alt_name acc
+%define legacy_name acc-legacy
+
 Name: alterator-standalone
-Version: 7.4.2
+Version: 7.4.3
 Release: alt1
 
 Summary: System Management center
@@ -41,8 +45,11 @@ Contains engine for system management
 %install
 %makeinstall
 
+#rename acc -> acc-legacy
+mv %buildroot/%_sbindir/%alt_name %buildroot/%_sbindir/%legacy_name
+
 #install consolehelper
-for obj in acc alterator-standalone;
+for obj in %legacy_name alterator-standalone;
 do
 install -d %buildroot/%_bindir
 ln -s %_libexecdir/consolehelper/helper %buildroot%_bindir/$obj
@@ -66,10 +73,27 @@ FALLBACK=true
 EOF
 done
 
+#install symlink helper for consolhelper
+install -d %buildroot/%_libexecdir/%name
+cat>%buildroot/%_libexecdir/%name/%legacy_name<<EOF
+#!/bin/sh -e
+exec %_bindir/%legacy_name
+EOF
+chmod a+x %buildroot/%_libexecdir/%name/%legacy_name
+
+#install acc as alternative for acc-legacy
+install -d %buildroot/%_altdir
+cat>%buildroot/%_altdir/%name<<EOF
+%_bindir/%alt_name	%_libexecdir/%name/%legacy_name 20
+EOF
+touch %buildroot/%_bindir/%alt_name
+
 install -Dpm644 acc.desktop %buildroot/%_desktopdir/acc.desktop
 
 %files
+%config %_altdir/%name
 %_sbindir/*
+%_libexecdir/%name/*
 # The UI modules aren't currently compiled
 #%_alterator_libdir/ui/*
 %_alterator_datadir/ui/*
@@ -77,9 +101,13 @@ install -Dpm644 acc.desktop %buildroot/%_desktopdir/acc.desktop
 %_man8dir/*
 %config(noreplace) %_sysconfdir/pam.d/*
 %config(noreplace) %_sysconfdir/security/console.apps/*
+%ghost %_bindir/%alt_name
 %_bindir/*
 
 %changelog
+* Sat Aug 24 2024 Evgeny Sinelnikov <sin@altlinux.org> 7.4.3-alt1
+- rename acc as acc-legacy for execution via alternatives
+
 * Tue Sep 12 2023 Sergey V Turchin <zerg@altlinux.org> 7.4.2-alt1
 - update KDE search keywords in desktop-file (closes: 47532)
 
