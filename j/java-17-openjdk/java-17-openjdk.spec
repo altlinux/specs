@@ -274,9 +274,9 @@
 # New Version-String scheme-style defines
 %global featurever 17
 %global interimver 0
-%global updatever 11
+%global updatever 12
 %global patchver 0
-%global buildver 9
+%global buildver 7
 
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
@@ -2013,6 +2013,15 @@ fi
 %endif
 
 %changelog
+* Sat Aug 24 2024 Andrey Cherepanov <cas@altlinux.org> 0:17.0.12.0.7-alt1
+- New version.
+- Security fixes:
+  - CVE-2024-21147
+  - CVE-2024-21145
+  - CVE-2024-21140
+  - CVE-2024-21131
+  - CVE-2024-21138
+
 * Sat Jun 29 2024 Andrey Cherepanov <cas@altlinux.org> 0:17.0.11.0.9-alt1
 - New version.
 - Security fixes:
