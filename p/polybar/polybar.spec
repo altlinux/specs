@@ -1,5 +1,5 @@
 Name: polybar
-Version: 3.7.1
+Version: 3.7.2
 Release: alt1
 
 Summary: A fast and easy-to-use status bar
@@ -70,6 +70,9 @@ rm -rf %buildroot/%_docdir/%name/.buildinfo
 %_datadir/zsh/site-functions/_%{name}_msg
 
 %changelog
+* Sun Aug 25 2024 Roman Alifanov <ximper@altlinux.org> 3.7.2-alt1
+- new version 3.7.2 (with rpmrb script)
+
 * Fri Dec 29 2023 Roman Alifanov <ximper@altlinux.org> 3.7.1-alt1
 - new version 3.7.1 (with rpmrb script)
 - fake %check removed
