@@ -1,9 +1,9 @@
 %def_enable snapshot
 
-%define ver_major 0.12
+%define ver_major 0.14
 %define beta %nil
 %define pypi_name blueprintcompiler
-%def_disable docs
+%def_enable docs
 %def_enable check
 
 Name: blueprint-compiler
@@ -12,7 +12,7 @@ Release: alt1%beta
 
 Summary: A markup language for GTK user interface files
 Group: Development/GNOME and GTK+
-License: GPL-3.0
+License: GPL-3.0-or-later
 Url: https://gitlab.gnome.org/jwestman/blueprint-compiler
 
 %if_disabled snapshot
@@ -31,6 +31,7 @@ BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson
 %{?_enable_check:BuildRequires: xvfb-run /bin/dbus-launch python3-module-pygobject3
 BuildRequires: fontconfig at-spi2-core typelib(Adw) = 1}
+%{?_enable_docs:BuildRequires: /usr/bin/sphinx-build-3 python3(sphinx_basic_ng) python3(furo)}
 
 %description
 %summary
@@ -41,13 +42,21 @@ See also https://jwestman.pages.gitlab.gnome.org/blueprint-compiler/
 
 %build
 %meson \
-    %{?_enable_docs:-Ddocs=true}
+    %{subst_enable_meson_bool docs docs}
 %nil
 %meson_build
+%if_enabled docs
+pushd docs
+meson compile docs -C ../%__builddir
+popd
+%endif
 
 %install
 %meson_install
 %find_lang %name
+%if_enabled docs
+cp -a %__builddir/docs/en html
+%endif
 
 %check
 xvfb-run %__meson_test -t 2
@@ -56,9 +65,13 @@ xvfb-run %__meson_test -t 2
 %_bindir/%name
 %python3_sitelibdir_noarch/%pypi_name/
 %_datadir/pkgconfig/%name.pc
-%doc NEWS* README*
+%doc NEWS* README* %{?_enable_docs:html/}
 
 %changelog
+* Sun Aug 25 2024 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1
+- 0.14.0
+- packaged html documentation
+
 * Fri Mar 22 2024 Yuri N. Sedunov <aris@altlinux.org> 0.12.0-alt1
 - 0.12.0
 
