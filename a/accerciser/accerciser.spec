@@ -1,16 +1,17 @@
 %def_disable snapshot
 
-%define ver_major 3.42
-%define xdg_name org.gnome.accerciser
+%define ver_major 3.44
+%define xdg_name org.gtk.accerciser
+%define uuid %name@%name.gnome.org
 
 Name: accerciser
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Interactive Python accessibility explorer
 Group: Accessibility
 License: BSD-3-Clause
-Url: https://wiki.gnome.org/Apps/Accerciser
+Url: https://wiki.gnome.org/action/show/Apps/Accerciser
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
@@ -28,23 +29,19 @@ Requires: at-spi2-core
 %add_python3_req_skip gi.repository.GLib
 %add_python3_req_skip gi.repository.Gio
 
-BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: rpm-build-gnome libappstream-glib-devel
-BuildRequires: yelp-tools libgtk+3-devel python3-module-pygobject3-devel
-BuildRequires: desktop-file-utils libat-spi2-core-devel
+BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
+BuildRequires: meson yelp-tools
+BuildRequires: libgtk+3-devel python3-module-pygobject3-devel
+BuildRequires: libat-spi2-core-devel
 BuildRequires: python3-module-ipython
-%{?_enable_snapshot:BuildRequires: libappstream-glib-devel}
+BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 
 %description
-An interactive Python accessibility explorer for the GNOME desktop.
-
-It uses AT-SPI2 to inspect and control widgets, allowing you to check
-if an application is providing correct information to assistive
-technologies and automated test frameworks. Accerciser has a simple
-plugin framework which you can use to create custom views of
-accessibility information.
-
-Accerciser uses libwnck designed to work in X11 only.
+Accerciser is an interactive Python accessibility explorer for the GNOME
+desktop. It uses AT-SPI2 to inspect and control widgets, allowing you to check
+if an application is providing correct information to assistive technologies
+and automated test frameworks. Accerciser has a simple plugin framework which
+you can use to create custom views of accessibility information.
 
 %package -n python3-module-%name
 Summary: Python module for accerciser
@@ -58,23 +55,32 @@ An interactive Python accessibility explorer.
 
 This package contains Python module for accerciser.
 
+%package -n gnome-shell-extension-%name
+Summary: GNOME Shell extension for Accerciser
+Group: Graphical desktop/GNOME
+Requires: gnome-shell >= 46
+Requires: %name = %EVR
+
+%description -n gnome-shell-extension-%name
+GNOME Shell extension for the Accerciser accessibility explorer.
+
 %prep
 %setup
-%{?_enable_snapshot:ln -s README.md README}
 
 %build
-#NOCONFIGURE=1 ./autogen.sh
-%autoreconf
-%configure PYTHON=%__python3
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 desktop-file-install --dir %buildroot%_desktopdir \
-	--add-category=X-Development-Accessibility \
+    --add-category=X-Development-Accessibility \
         %buildroot%_desktopdir/%name.desktop
 
 %find_lang --with-gnome %name
+
+%check
+%__meson_test
 
 %files -f %name.lang
 %_bindir/*
@@ -85,13 +91,20 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/icons/hicolor/*/*/%name.png
 %_datadir/icons/hicolor/scalable/apps/accerciser.svg
 %_datadir/icons/hicolor/symbolic/apps/accerciser-symbolic.svg
-%_datadir/metainfo/accerciser.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc AUTHORS README* COPYING NEWS
 
 %files -n python3-module-%name
 %python3_sitelibdir/%name/
 
+%files -n gnome-shell-extension-%name
+%_datadir/gnome-shell/extensions/%uuid/
+
 %changelog
+* Sun Aug 25 2024 Yuri N. Sedunov <aris@altlinux.org> 3.44.1-alt1
+- 3.44.1 (ported to Meson build system)
+- new shell-extension subpackage
+
 * Sun Oct 08 2023 Yuri N. Sedunov <aris@altlinux.org> 3.42.0-alt1
 - 3.42.0
 
