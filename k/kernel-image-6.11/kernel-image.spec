@@ -1,10 +1,11 @@
 Name: kernel-image-6.11
-Release: alt0.rc4
+Release: alt0.rc5
 %define kernel_src_version	6.10
 %define kernel_base_version	6.11
 %define kernel_sublevel	.0
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
+%define kernel_latest	new
 Version: %kversion
 
 %define krelease	%release
@@ -83,7 +84,7 @@ ExclusiveOS: Linux
 
 %if "%sub_flavour" == "def"
 Provides: kernel = %kversion
-Provides: kernel-new = %version-%release
+Provides: kernel-%kernel_latest = %version-%release
 Provides: kernel-modules-eeepc-%flavour = %version-%release
 Provides: kernel-modules-drbd83-%flavour = %version-%release
 Provides: kernel-modules-igb-%flavour = %version-%release
@@ -218,6 +219,9 @@ Requires: kernel-headers-common
 Provides: kernel-headers = %version
 %endif
 AutoReqProv: nocpp
+%if "%sub_flavour" == "def"
+Provides: kernel-headers-%kernel_latest = %version-%release
+%endif
 
 %description -n kernel-headers-%flavour
 This package makes Linux kernel headers corresponding to the Linux
@@ -239,6 +243,9 @@ Summary: Headers and other files needed for building kernel modules
 Group: Development/Kernel 
 Requires: gcc%kgcc_version
 AutoReqProv: nocpp
+%if "%sub_flavour" == "def"
+Provides: kernel-headers-modules-%kernel_latest = %version-%release
+%endif
 
 %description -n kernel-headers-modules-%flavour
 This package contains header files, Makefiles and other parts of the
@@ -587,6 +594,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Aug 25 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.0-alt0.rc5
+- Update to v6.11-rc5 (2024-08-25).
+- config: CONFIG_SERIAL_SC16IS7XX_SPI=m.
+- arm64: Add dts for SoM NMS-SM-RK3568.
+
 * Sun Aug 18 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.0-alt0.rc4
 - Update to v6.11-rc4 (2024-08-18).
 - config: Enable CONFIG_EDAC_DEBUG=y.
