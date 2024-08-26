@@ -1,24 +1,25 @@
 %def_disable snapshot
 %define _unpackaged_files_terminate_build 1
-%define pypi_name Markdown
-%define modname markdown
-%define ver_major 3.6
+%define pypi_name markdown
+%define modname Markdown
+%define ver_major 3.7
 
 %def_enable check
 
-Name: python3-module-%modname
+Name: python3-module-%pypi_name
 Version: %ver_major
 Release: alt1
 
 Summary: Python implementation of Markdown text-to-HTML convertor.
 Group: Development/Python3
 License: BSD-3-Clause
-Url: http://pypi.python.org/pypi/Markdown/
+Url: https://pypi.python.org/pypi/Markdown/
+
+Vcs: https://github.com/waylan/Python-Markdown.git
 
 %if_disabled snapshot
-Source: https://pypi.io/packages/source/M/%pypi_name/%pypi_name-%version.tar.gz
+Source: https://pypi.io/packages/source/m/%pypi_name/%pypi_name-%version.tar.gz
 %else
-Vcs: git://github.com/waylan/Python-Markdown.git
 Source: Markdown-%version.tar
 %endif
 
@@ -63,21 +64,24 @@ This package contains documentation for Markdown.
 
 %install
 %pyproject_install
-mv %buildroot%_bindir/%{modname}_py \
-	%buildroot%_bindir/%{modname}_py3
+mv %buildroot%_bindir/%{pypi_name}_py \
+	%buildroot%_bindir/%{pypi_name}_py3
 
 %check
 %tox_check
 export PYTHONPATH=%buildroot%python3_sitelibdir
-%buildroot%_bindir/%{modname}_py3 README.md >README.html
+%buildroot%_bindir/%{pypi_name}_py3 README.md >README.html
 
 %files
-%_bindir/%{modname}_py3
-%python3_sitelibdir/%modname/
-%python3_sitelibdir/%pypi_name-%version.dist-info
+%_bindir/%{pypi_name}_py3
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%modname-%version.dist-info
 %doc README* docs/changelog.md
 
 %changelog
+* Mon Aug 26 2024 Yuri N. Sedunov <aris@altlinux.org> 3.7-alt1
+- 3.7
+
 * Fri Mar 15 2024 Yuri N. Sedunov <aris@altlinux.org> 3.6-alt1
 - 3.6
 
