@@ -2,21 +2,27 @@
 
 %define oname paginate
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.5.6
-Release: alt4
+Version: 0.5.7
+Release: alt1
 
 Summary: Divides large result sets into pages for easier browsing
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/paginate/
+Url: https://pypi.org/project/paginate
 
-# https://github.com/Pylons/paginate.git
 Source: %oname-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %py3_provides %oname
 
@@ -30,17 +36,26 @@ users only a selection of information at a time.
 %setup -n %oname-%version
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_pytest -v
 
 %files
 %doc README.md CHANGELOG.txt
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 
 %changelog
+* Mon Aug 26 2024 Anton Vyatkin <toni@altlinux.org> 0.5.7-alt1
+- New version 0.5.7.
+- Migrate to pyproject macroses.
+- Build with check.
+
 * Fri Mar 24 2023 Anton Vyatkin <toni@altlinux.org> 0.5.6-alt4
 - Fix BuildRequires.
 
