@@ -8,7 +8,7 @@
 %define xdg_name com.rawtherapee.RawTherapee
 
 Name: rawtherapee
-Version: 5.10%{?_enable_snapshot:.%git_distance}
+Version: 5.11%{?_enable_snapshot:.%git_distance}
 Release: alt1
 
 Summary: THe Experimental RAw Photo Editor
@@ -21,28 +21,29 @@ Vcs: https://github.com/Beep6581/RawTherapee
 Source: rawtherapee-%version.tar
 %else
 # use full archive not git-archive to avoid dancing around version
-Source: https://rawtherapee.com/shared/source/%name-%version.tar.xz
-#Source: https://github.com/Beep6581/RawTherapee/releases/download/%version/%name-%version.tar.xz
+#Source: https://rawtherapee.com/shared/source/%name-%version.tar.xz
+Source: https://github.com/Beep6581/RawTherapee/releases/download/%version/%name-%version.tar.xz
 %endif
 
-%define gtk_ver 3.22.24
+%define gtk_ver 3.24.3
 %define tiff_ver 4.0.4
-%define rsvg_ver 2.40
+%define rsvg_ver 2.52
 
 Requires: %name-data = %version-%release
 Requires: libgtk+3 >= %gtk_ver
 
 BuildRequires(pre): rpm-macros-cmake >= 2.8.8
-BuildRequires: cmake >= 2.8.8
+BuildRequires: cmake >= 2.8.8 gcc-c++ libgomp-devel
 %{?_enable_snapshot:BuildRequires: git}
-BuildRequires: libgtk+3-devel >= %gtk_ver librsvg-devel >= %rsvg_ver
+BuildRequires: libgtkmm3-devel >= %gtk_ver librsvg-devel >= %rsvg_ver
 BuildRequires: libtiff-devel >= %tiff_ver
-BuildRequires: bzlib-devel gcc-c++ libgomp-devel libgtkmm3-devel libiptcdata-devel
+BuildRequires: bzlib-devel libiptcdata-devel
 BuildRequires: libjpeg-devel liblcms2-devel libpng-devel libfftw3-devel
 BuildRequires: libexpat-devel libpixman-devel libcanberra-gtk3-devel
-BuildRequires: libXdmcp-devel libXdamage-devel libXxf86vm-devel
 BuildRequires: libexiv2-devel libharfbuzz-devel
 BuildRequires: liblensfun-devel
+# since 5.11
+BuildRequires: libraw-devel libjxl-devel
 
 %description
 Raw Therapee is a free RAW converter and digital photo processing software.
@@ -88,6 +89,9 @@ rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Aug 26 2024 Yuri N. Sedunov <aris@altlinux.org> 5.11-alt1
+- 5.11
+
 * Sat Feb 17 2024 Yuri N. Sedunov <aris@altlinux.org> 5.10-alt1
 - 5.10
 
