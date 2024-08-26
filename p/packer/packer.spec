@@ -1,6 +1,6 @@
 %global import_path github.com/hashicorp/packer
 Name:     packer
-Version:  1.11.1
+Version:  1.11.2
 Release:  alt1
 
 Summary:  Packer is a tool for creating identical machine images for multiple platforms from a single source configuration
@@ -56,6 +56,9 @@ install -Dm 644 contrib/zsh-completion/_%name %buildroot%_datadir/zsh/site-funct
 %doc *.md
 
 %changelog
+* Sat Aug 24 2024 Mikhail Gordeev <obirvalger@altlinux.org> 1.11.2-alt1
+- new version 1.11.2
+
 * Wed Jul 17 2024 Mikhail Gordeev <obirvalger@altlinux.org> 1.11.1-alt1
 - new version 1.11.1
 
