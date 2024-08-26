@@ -1,6 +1,6 @@
 Name: zennode
 Version: 1.2.1
-Release: alt1
+Release: alt1.1
 Summary: ZenNode is a node/blockmap/reject builder
 Group: Development/Tools
 License: GPL2
@@ -10,6 +10,8 @@ Source: %name-%version.tar
 
 BuildRequires: gcc gcc-c++
 BuildRequires: make
+
+Conflicts: ImageMagick-tools
 
 %description
 ZenNode is a node/blockmap/reject builder written
@@ -40,6 +42,9 @@ install -Dm0755 ZenNode/* %buildroot%_bindir
 %_bindir/ZenNode
 
 %changelog
+* Thu Aug 22 2024 Artyom Bystrov <arbars@altlinux.org> 1.2.1-alt1.1
+- Add conflict with ImageMagick-tools (ALTBUG#51233)
+
 * Sat Jan 09 2021 Artyom Bystrov <arbars@altlinux.org> 1.2.1-alt1
 - initial build for ALT Sisyphus
  
