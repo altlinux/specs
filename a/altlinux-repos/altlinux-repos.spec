@@ -1,6 +1,6 @@
 Name: altlinux-repos
 Version: 11.0
-Release: alt1
+Release: alt2
 
 Summary: A set of ALT repos desktop files
 License: GPL
@@ -27,6 +27,9 @@ cp -a mirrors repositories %buildroot%_sysconfdir/apt/
 %_sysconfdir/apt/repositories
 
 %changelog
+* Mon Aug 26 2024 Andrey Cherepanov <cas@altlinux.org> 11.0-alt2
+- Added c10 branch.
+
 * Thu May 23 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 11.0-alt1
 - Added p11 branch.
 
