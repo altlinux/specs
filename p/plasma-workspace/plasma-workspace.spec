@@ -32,7 +32,7 @@
 
 Name: %rname
 Version: 6.1.4
-Release: alt1
+Release: alt2
 Epoch: 1
 %K6init
 
@@ -311,7 +311,7 @@ Requires: %name-common >= %EVR
 %patch118 -p1
 %patch119 -p2
 %patch120 -p1
-#%patch121 -p2
+%patch121 -p2
 #
 %patch123 -p1
 #
@@ -482,6 +482,7 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 %_K6plug/kf6/packagestructure/*.so
 %_K6plug/kf6/kfileitemaction/*.so
 %_K6plug/plasma5support/
+%_K6plug/kcm_freememorynotifier.so
 %_K6qml/org/kde/taskmanager/
 %_K6qml/org/kde/colorcorrect/
 %_K6qml/org/kde/notificationmanager/
@@ -575,6 +576,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Fri Aug 23 2024 Oleg Solovyov <mcpain@altlinux.org> 1:6.1.4-alt2
+- port freememorynotifier to Qt6
+
 * Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 1:6.1.4-alt1
 - new version
 
