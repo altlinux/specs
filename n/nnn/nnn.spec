@@ -5,14 +5,12 @@
 %def_enable qsort
 
 Name: nnn
-Version: 4.9
+Version: 5.0
 Release: alt1
 
 Summary: A full-featured terminal file manager
 License: BSD-2-Clause and BSD-3-Clause
 Group: File tools
-
-Packager: Andrew A. Vasilyev <andy@altlinux.org>
 
 Url: https://github.com/jarun/nnn
 Vcs: https://github.com/jarun/nnn.git
@@ -49,6 +47,9 @@ install -D -m644 misc/auto-completion/bash/nnn-completion.bash \
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Mon Aug 26 2024 Andrew A. Vasilyev <andy@altlinux.org> 5.0-alt1
+- 4.9 -> 5.0
+
 * Mon Aug 28 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.9-alt1
 - 4.8 -> 4.9
 
