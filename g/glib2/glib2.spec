@@ -42,8 +42,8 @@
 %endif
 
 Name: glib2
-Version: %ver_major.4
-Release: alt1.1
+Version: %ver_major.5
+Release: alt1
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -499,6 +499,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Mon Aug 26 2024 Yuri N. Sedunov <aris@altlinux.org> 2.80.5-alt1
+- 2.80.5
+
 * Wed Aug 21 2024 Yuri N. Sedunov <aris@altlinux.org> 2.80.4-alt1.1
 - enabled documentation build
 
