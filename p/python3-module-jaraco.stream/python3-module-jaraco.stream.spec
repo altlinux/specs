@@ -7,7 +7,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.0.3
+Version: 3.0.4
 Release: alt1
 
 Summary: routines for dealing with data streams
@@ -28,7 +28,8 @@ Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra testing
+%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_metadata_extra enabler
 %endif
 
 %description
@@ -56,5 +57,8 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Mon Aug 26 2024 Anton Vyatkin <toni@altlinux.org> 3.0.4-alt1
+- New version 3.0.4.
+
 * Wed Jul 24 2024 Anton Vyatkin <toni@altlinux.org> 3.0.3-alt1
 - Initial build for Sisyphus
