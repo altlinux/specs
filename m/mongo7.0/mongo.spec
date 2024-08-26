@@ -3,7 +3,7 @@
 %endif
 
 Name: mongo7.0
-Version: 7.0.11
+Version: 7.0.14
 Release: alt1
 Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
@@ -11,6 +11,7 @@ Group: Development/Databases
 Url: https://www.mongodb.org
 Source: %name-%version.tar
 Patch0: mongo7.0-7.0.2-debuginfo.patch
+Patch1: mongo7.0-7.0.14_fix_return_type.patch
 
 # From https://docs.mongodb.com/manual/installation
 # Changed in version 3.4: MongoDB no longer supports 32-bit x86 platforms.
@@ -18,7 +19,7 @@ ExclusiveArch: x86_64 aarch64 ppc64le %e2k
 
 BuildRequires(pre): rpm-macros-valgrind
 
-BuildRequires: /proc gcc12-c++ gcc12 python3-module-pymongo python3-module-pkg_resources
+BuildRequires: /proc gcc-c++ gcc python3-module-pymongo python3-module-pkg_resources
 BuildRequires: libssl-devel libreadline-devel
 BuildRequires: libpcap-devel libsnappy-devel
 BuildRequires: systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel
@@ -87,6 +88,7 @@ MongoDB instance.
 %setup
 
 %patch0 -p1
+%patch1 -p1
 
 %build
 %ifarch aarch64
@@ -101,7 +103,7 @@ MongoDB instance.
 %define opt_wt --wiredtiger=on
 %endif
 %define build_opts \\\
-       -j 4 \\\
+       -j 8 \\\
        --use-system-tcmalloc \\\
        --use-system-snappy \\\
        %{?_enable_valgrind:--use-system-valgrind} \\\
@@ -117,7 +119,7 @@ MongoDB instance.
        --linker=gold \\\
        CCFLAGS="%{?optflags} %{?ccflags_arch_opts} `pkg-config --cflags libpcrecpp`"
 
-python3 src/third_party/scons-3.1.2/scons.py CC=gcc-12 CXX=g++-12 %build_opts
+python3 src/third_party/scons-3.1.2/scons.py %build_opts
 
 %install
 # cow@: It seems that mongo 4.2 + scons 3.1.1 doesn't provide a clean way to
@@ -201,6 +203,10 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Mon Aug 26 2024 Alexei Takaseev <taf@altlinux.org> 7.0.14-alt1
+- 7.0.14
+- Fixes: CVE-2024-7553
+
 * Wed May 22 2024 Alexei Takaseev <taf@altlinux.org> 7.0.11-alt1
 - 7.0.11
 
