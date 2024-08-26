@@ -1,29 +1,24 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
-# END SourceDeps(oneline)
+%define soversion 1
+Name: librime
+Version: 1.11.2
+Release: alt1
+License: GPL-3.0-only
+Summary: Rime Input Method Engine Library
 Group: Development/C
-%add_optflags %optflags_shared
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:           librime
-Version:        1.9.0
-Release:        alt1_1
-Summary:        Rime Input Method Engine Library
+Url: https://rime.im/
+VCS: https://github.com/rime/librime/
+Source0: %name-%version.tar
 
-License:        GPL-3.0-only
-URL:            https://rime.im/
-Source0:        https://github.com/rime/librime/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
-
-BuildRequires:  gcc-c++
-BuildRequires:  ctest cmake, opencc-devel
-BuildRequires:  boost-complete >= 1.46
-BuildRequires:  zlib-devel
-BuildRequires:  libglog-devel, libgtest-devel
-BuildRequires:  libyaml-cpp-devel
-BuildRequires:  libgflags-devel
-BuildRequires:  libmarisa-devel
-BuildRequires:  libleveldb-devel
-Source44: import.info
+BuildRequires: gcc-c++
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: ctest cmake, opencc-devel
+BuildRequires: boost-complete >= 1.46
+BuildRequires: zlib-devel
+BuildRequires: libglog-devel, libgtest-devel
+BuildRequires: libyaml-cpp-devel
+BuildRequires: libgflags-devel
+BuildRequires: libmarisa-devel
+BuildRequires: libleveldb-devel
 
 %description
 Rime Input Method Engine Library
@@ -34,11 +29,11 @@ including those for Chinese dialects.
 A selected dictionary in Traditional Chinese,
 powered by opencc for Simplified Chinese output.
 
-%package -n librime1
-Summary:        Shared library for the %name library
-Group:          System/Libraries
+%package -n librime%soversion
+Summary: Shared library for the %name library
+Group: System/Libraries
 
-%description -n librime1
+%description -n librime%soversion
 Rime Input Method Engine Library
 
 Support for shape-based and phonetic-based input methods,
@@ -49,64 +44,55 @@ powered by opencc for Simplified Chinese output.
 
 This package contains the shared library.
 
-%package        devel
+%package devel
 Group: Development/C
-Summary:        Development files for %{name}
-Requires:       librime1 = %EVR
+Summary: Development files for %name
+Requires: librime%soversion = %EVR
 
-%description    devel
-The %{name}-devel package contains libraries and header files for
-developing applications that use %{name}.
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
 
-
-%package        tools
+%package tools
 Group: Development/C
-Summary:        Tools for %{name}
-Requires:       librime1 = %EVR
+Summary: Tools for %name
+Requires: librime1 = %EVR
 
-%description    tools
-The %{name}-tools package contains tools for %{name}.
-
+%description tools
+The %name-tools package contains tools for %name.
 
 %prep
-%setup -q
-
+%setup
 
 %build
-%{fedora_v2_cmake} -DCMAKE_BUILD_TYPE=Release
-%fedora_v2_cmake_build
-
+%cmake -DCMAKE_BUILD_TYPE=Release
+%cmake_build
 
 %install
-%fedora_v2_cmake_install
+%cmake_install
 
-
-
-
-
-%files -n librime1
+%files -n librime%soversion
 %doc README.md LICENSE
-%_libdir/librime.so.1
-%_libdir/librime.so.1.*
-
+%_libdir/librime.so.%soversion
+%_libdir/librime.so.%soversion.*
 
 %files devel
-#doc %_docdir/%name
-%{_includedir}/*
-%{_libdir}/*.so
-%{_libdir}/pkgconfig/rime.pc
-%dir %{_datadir}/cmake/rime
-%{_datadir}/cmake/rime/RimeConfig.cmake
-
+%_includedir/*
+%_libdir/*.so
+%_libdir/pkgconfig/rime.pc
+%dir %_datadir/cmake/rime
+%_datadir/cmake/rime/RimeConfig.cmake
 
 %files tools
-%{_bindir}/rime_deployer
-%{_bindir}/rime_dict_manager
-%{_bindir}/rime_patch
-%{_bindir}/rime_table_decompiler
-
+%_bindir/rime_deployer
+%_bindir/rime_dict_manager
+%_bindir/rime_patch
+%_bindir/rime_table_decompiler
 
 %changelog
+* Mon Aug 26 2024 Anton Farygin <rider@altlinux.ru> 1.11.2-alt1
+- 1.11.2
+
 * Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 1.9.0-alt1_1
 - update to new release by fcimport
 
