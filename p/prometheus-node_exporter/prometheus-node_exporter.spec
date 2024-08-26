@@ -5,8 +5,8 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: prometheus-%oname
-Version: 1.7.0
-Release: alt2
+Version: 1.8.2
+Release: alt1
 Summary: Prometheus exporter for hardware and OS metrics exposed by *NIX kernels.
 
 Group: Development/Other
@@ -89,6 +89,9 @@ sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\nprometheus-node-exporter \\- The Pr
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Mon Aug 26 2024 Alexey Shabalin <shaba@altlinux.org> 1.8.2-alt1
+- 1.8.2
+
 * Mon Apr 01 2024 Alexey Shabalin <shaba@altlinux.org> 1.7.0-alt2
 - Fix perm of /var/lib/prometheus/node-exporter for textfile
 

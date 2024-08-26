@@ -3,7 +3,7 @@
 %def_enable prebuilded_frontend
 
 Name: prometheus
-Version: 2.51.1
+Version: 2.54.0
 Release: alt1
 Summary: Prometheus monitoring system and time series database
 
@@ -148,6 +148,9 @@ sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\npromtool \\- Tooling for the Promet
 %dir %attr(775, root, %name) %_localstatedir/%name
 
 %changelog
+* Mon Aug 26 2024 Alexey Shabalin <shaba@altlinux.org> 2.54.0-alt1
+- 2.54.0
+
 * Mon Apr 01 2024 Alexey Shabalin <shaba@altlinux.org> 2.51.1-alt1
 - 2.51.1
 - add more hardening options to systemd serrvice

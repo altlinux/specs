@@ -5,7 +5,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: prometheus-%oname
-Version: 0.24.0
+Version: 0.25.0
 Release: alt1
 Summary: Prometheus blackbox prober exporter
 
@@ -75,6 +75,9 @@ install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
 %config(noreplace) %_sysconfdir/prometheus/blackbox.yml
 
 %changelog
+* Mon Aug 26 2024 Alexey Shabalin <shaba@altlinux.org> 0.25.0-alt1
+- 0.25.0
+
 * Thu Jul 27 2023 Alexey Shabalin <shaba@altlinux.org> 0.24.0-alt1
 - 0.24.0
 
