@@ -1,25 +1,21 @@
 Name: apt-indicator
 Version: 0.4.0
-Release: alt1
+Release: alt2
 
 Summary: Applet for indication that newer packages are available
 License: GPL
 Group: System/Configuration/Packaging
 Url: http://apt-indicator.sourceforge.net/
-Packager: Sergey V Turchin <zerg@altlinux.org>
+
+Requires: qt6-svg
+Requires: /usr/bin/xdg-su /usr/sbin/synaptic
 
 Source: %name-%version.tar
-
-Provides: egg = %version-%release, alt-update = %version-%release
-Obsoletes: egg < %version-%release, alt-update < %version-%release
-Requires: qt5-svg
-Requires: /usr/bin/xdg-su /usr/sbin/synaptic
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: libstdc++-devel qt6-base-devel qt6-tools
 BuildRequires: docbook-dtds docbook-style-xsl help2man libapt-devel
 BuildRequires: xml-common xsltproc
-#BuildRequires: libdb4.4-devel
 
 %description
 This package contains simple applet both for Gnome and KDE which
@@ -77,6 +73,9 @@ mkdir -p %buildroot/%_datadir/%name/pixmaps
 %_iconsdir/hicolor/*/apps/apt-indicator.*
 
 %changelog
+* Mon Aug 26 2024 Sergey V Turchin <zerg at altlinux dot org> 0.4.0-alt2
+- fix requires
+
 * Thu Aug 22 2024 Sergey V Turchin <zerg at altlinux dot org> 0.4.0-alt1
 - port to Qt6
 
