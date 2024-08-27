@@ -1,5 +1,5 @@
 Name: openmsx-catapult
-Version: 18.0
+Version: 19.1
 Release: alt1
 Summary: GUI for openMSX
 License: GPL-2.0-only
@@ -45,6 +45,9 @@ sed -e "s|%%INSTALL_BASE%%|%_libexecdir/openMSX-Catapult|" desktop/openMSX-Catap
 %_desktopdir/openMSX-Catapult.desktop
 
 %changelog
+* Mon Aug 26 2024 Artyom Bystrov <arbars@altlinux.org> 19.1-alt1
+- update to new version
+
 * Tue May 02 2023 Artyom Bystrov <arbars@altlinux.org> 18.0-alt1
 - initial build for ALT Sisyphus
 
