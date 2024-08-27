@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.6.6
+Version: 1.6.7
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -134,6 +134,17 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Tue Aug 27 2024 Anton Midyukov <antohami@altlinux.org> 1.6.7-alt1
+- base+rescue: add livecd-rescue-utility
+- base+rescue: add lflashrom (Closes: 50846)
+- firmware: add mellanox, mrvl, qcom to disk of server
+- luks: add use/luks/touchscreen, add alterator-luks to
+  distro targets only
+- fixes for kde6 support; rename kde5 -> kde in targets
+- kernel: add all drivers hid to initrd
+- grub: drop BOOTVGA parameter from kernel cmdline
+- init: do not add apt-conf-ignore-systemd when use/init/sysv
+
 * Thu Aug 08 2024 Anton Midyukov <antohami@altlinux.org> 1.6.6-alt1
 - grub, syslinux: remove parameter 'ip=dhcp' from rescue_remote.cfg
 - power: drop legacy power management use/power/apm
