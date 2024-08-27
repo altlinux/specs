@@ -1,5 +1,5 @@
 Name: installer-distro-alt-workstation
-Version: 10.4.0
+Version: 11.0.0
 Release: alt1
 
 Summary: Installer configuration (ALT Workstation)
@@ -78,6 +78,9 @@ echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
 %files stage3
 
 %changelog
+* Tue Aug 27 2024 Mikhail Efremov <sem@altlinux.org> 11.0.0-alt1
+- stage2: Split installer step pkg -> pkg-groups/pkg-install.
+
 * Wed Dec 27 2023 Mikhail Efremov <sem@altlinux.org> 10.4.0-alt1
 - Added pkg-groups.conf.
 
