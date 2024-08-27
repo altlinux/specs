@@ -2,7 +2,7 @@
 %def_with check
 
 Name: kitty
-Version: 0.35.2
+Version: 0.36.1
 Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
@@ -17,6 +17,7 @@ Requires: %name-shell-integration = %EVR
 
 Source: %name-%version.tar
 Source1: %name-%version-vendor.tar
+Source2: SymbolsNerdFontMono-Regular.ttf
 Patch0: %name-%version-alt.patch
 
 # 0.27.0: unmet /usr/pkg/bin/tic
@@ -136,6 +137,8 @@ images (kitten icat), manipulating the clipboard (kitten clipboard), etc.
 %setup -a 1
 %patch0 -p1
 
+install -Dm644 %SOURCE2 -t ./fonts
+
 # Changing shebangs to python3
 find -type f -name "*.py" -exec sed -e 's|/usr/bin/env python3|%__python3|g'  \
                                     -e 's|/usr/bin/env python|%__python3|g'   \
@@ -209,6 +212,12 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %_bindir/kitten
 
 %changelog
+* Tue Aug 27 2024 Egor Ignatov <egori@altlinux.org> 0.36.1-alt1
+- new version 0.36.1
+
+* Thu Aug 22 2024 Egor Ignatov <egori@altlinux.org> 0.36.0-alt1
+- new version 0.36.0
+
 * Mon Jun 24 2024 Egor Ignatov <egori@altlinux.org> 0.35.2-alt1
 - new version 0.35.2
 
