@@ -1,6 +1,6 @@
 Name:    RMG
-Version: 0.5.7
-Release: alt2
+Version: 0.6.5
+Release: alt1
 Summary: Rosalie's Mupen GUI 
 Group: Emulators
 
@@ -53,6 +53,9 @@ chmod +x %{buildroot}/usr/lib64/RMG/*/*/*.so
 /usr/share/metainfo/com.github.Rosalie241.RMG.appdata.xml
 
 %changelog
+* Tue Aug 27 2024 Artyom Bystrov <arbars@altlinux.org> 0.6.5-alt1
+- update to new version
+
 * Wed Jul 24 2024 Artyom Bystrov <arbars@altlinux.org> 0.5.7-alt2
 - FIx build (add libvulkan-devel to BR)
 
