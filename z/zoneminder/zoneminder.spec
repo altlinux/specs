@@ -6,23 +6,25 @@
 ExcludeArch: armh
 
 Name: zoneminder
-Version: 1.36.33
-Release: alt2
+Version: 1.36.34
+Release: alt1
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
 # VCS: https://github.com/ZoneMinder/ZoneMinder.git
 Url: http://www.zoneminder.com
 Source: %name-%version-alt.tar
-Source1: Crud-%version.tar
-Source2: CakePHP-Enum-Behavior-%version.tar
-Source3: RtspServer-%version.tar
 Source4: zoneminder.conf
 Source5: README.alt
 Source6: README-nginx-ru.alt
 Source7: nginx-zoneminder.conf.sample
 Source8: zm-fcgi.inc.in
 Source9: php-fpm-zoneminder.conf.in
+
+Source100: %name-%version-dep-RtspServer.tar
+Source101: %name-%version-web-api-app-Plugin-CakePHP-Enum-Behavior.tar
+Source102: %name-%version-web-api-app-Plugin-Crud.tar
+
 
 Conflicts: zm <= 1.22.3
 BuildRequires(pre): rpm-macros-webserver-common
@@ -65,10 +67,8 @@ BuildArch: noarch
 Zoneminder configuration file and requires for nginx
 
 %prep
-%setup -n %name-%version-alt
-tar xvf %SOURCE1 --strip 1 -C web/api/app/Plugin/Crud
-tar xvf %SOURCE2 --strip 1 -C web/api/app/Plugin/CakePHP-Enum-Behavior
-tar xvf %SOURCE3 --strip 1 -C dep/RtspServer
+%setup -n %name-%version-alt -a100 -a101 -a102
+
 cp %SOURCE5 README.alt
 cp %SOURCE6 README-nginx-ru.alt
 
@@ -173,6 +173,9 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Thu Aug 22 2024 Anton Farygin <rider@altlinux.ru> 1.36.34-alt1
+- 1.36.33 -> 1.36.34 (fixes: CVE-2024-43360)
+
 * Wed Sep 06 2023 Anton Farygin <rider@altlinux.ru> 1.36.33-alt2
 - removed unnecessary BuildRequires libavresample
 
