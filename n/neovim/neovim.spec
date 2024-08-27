@@ -1,6 +1,6 @@
 Name: neovim
 Version: 0.10.1
-Release: alt1
+Release: alt2
 
 Summary: heavily refactored vim fork
 
@@ -28,6 +28,8 @@ BuildRequires: lua5.1-module-lpeg lua5.1-mpack
 BuildRequires: libluv-devel
 BuildRequires: unibilium-devel
 BuildRequires: libtree-sitter-devel
+
+Requires: tree-sitter-lua
 
 ExcludeArch: armh
 
@@ -62,6 +64,7 @@ This package contains runtime files.
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DNVIM_VERSION_RELEASE=%release \
+	-D USE_BUNDLED=OFF \
 	#
 %cmake_build
 
@@ -73,6 +76,9 @@ install -pm0644 runtime/nvim.desktop -Dt %buildroot%_desktopdir
 install -pm0644 runtime/nvim.png -Dt %buildroot%_pixmapsdir
 
 install -pm0644 %SOURCE2 %buildroot%_datadir/nvim
+
+# include system tree-sitter grammars
+ln -s %_libdir/tree-sitter %buildroot%_datadir/nvim/runtime/parser
 
 # dependency is handled manually since the lua5.1-module-lpeg doesn't provide "Provides: lpeg.so"
 %filter_from_requires /lpeg.so/d
@@ -96,6 +102,10 @@ install -pm0644 %SOURCE2 %buildroot%_datadir/nvim
 %_datadir/nvim/sysinit.vim
 
 %changelog
+* Mon Aug 26 2024 Vladimir Didenko <cow@altlinux.org> 0.10.1-alt2
+- Include system TS parsers
+- Require lua TS parser (closes: #51257)
+
 * Thu Jul 25 2024 Vladimir Didenko <cow@altlinux.org> 0.10.1-alt1
 - New version
 
