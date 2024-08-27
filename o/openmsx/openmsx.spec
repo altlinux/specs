@@ -1,6 +1,6 @@
 Name: openmsx
-Version: 18
-Release: alt1.1
+Version: 19.1
+Release: alt1
 Summary: An emulator of the MSX home computer system	
 Group: Emulators
 License: GPL2
@@ -60,12 +60,15 @@ mkdir -p %buildroot%prefix
 %makeinstall_std PREFIX=%_prefix
 
 %files
-%doc doc/* README
+%doc doc/* README 
 %dir %_datadir/%name
 %_bindir/%name
 %_datadir/%name
 
 %changelog
+* Mon Aug 26 2024 Artyom Bystrov <arbars@altlinux.org> 19.1-alt1
+- update to new version
+
 * Sat Jun 24 2023 Artyom Bystrov <arbars@altlinux.org> 18-alt1.1
 - Fix build with GCC13
 
