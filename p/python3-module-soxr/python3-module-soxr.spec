@@ -6,7 +6,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: Python-SoXR is a Python wrapper of libsoxr
@@ -18,8 +18,10 @@ Vcs: https://github.com/dofuuz/python-soxr.git
 Source: https://pypi.io/packages/source/s/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools_scm python3-module-wheel
-BuildRequires: libsoxr-devel libnumpy-py3-devel python3-module-numpy python3-module-Cython
+BuildRequires: cmake gcc-c++
+BuildRequires: python3(setuptools_scm) python3(wheel)
+BuildRequires: python3(scikit_build_core) python3(nanobind)
+BuildRequires: libsoxr-devel libnumpy-py3-devel python3-module-numpy
 %{?_enable_check:BuildRequires: /proc python3-module-pytest}
 
 %description
@@ -29,8 +31,14 @@ This package provides Python 3 wrappers for the SoX Resampler library.
 %setup -n %pypi_name-%version
 rm -rf libsoxr
 
+cat <<_EOF_ >> pyproject.toml
+[tool.scikit-build.cmake.define]
+USE_SYSTEM_LIBSOXR={env="USE_SYSTEM_LIBSOXR", default="OFF"}
+_EOF_
+
 %build
-%pyproject_build --backend-config-settings='{"--build-option": ["--use-system-libsoxr"]}'
+export USE_SYSTEM_LIBSOXR=ON
+%pyproject_build
 
 %install
 %pyproject_install
@@ -45,6 +53,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %doc README*
 
 %changelog
+* Mon Aug 26 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Thu Jul 25 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - 0.4.0
 
