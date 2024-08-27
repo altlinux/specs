@@ -1,7 +1,7 @@
 %define _metainfodir %_datadir/metainfo
 %set_verify_elf_method rpath=relaxed
 Name: 86box
-Version: 4.1
+Version: 4.2
 Release: alt1
 Summary: 86Box is a low level x86 emulator that runs older operating systems and software designed for IBM PC systems
 Group: Emulators
@@ -75,6 +75,9 @@ appstream-util validate-relax --nonet %buildroot%_metainfodir/net.86box.86Box.me
 %_iconsdir/hicolor/*/apps/net.86box.86Box.png
 
 %changelog
+* Mon Aug 26 2024 Artyom Bystrov <arbars@altlinux.org> 4.2-alt1
+- update to new version
+
 * Wed Feb 28 2024 Artyom Bystrov <arbars@altlinux.org> 4.1-alt1
 - update to new version
 
