@@ -35,7 +35,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.11.0
+Version: 0.11.1
 Release: alt1
 
 Summary: GPT applier
@@ -194,6 +194,9 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Tue Aug 27 2024 Valery Sinelnikov <greh@altlinux.org> 0.11.1-alt1
+- Fixed setting links in shortcuts (closes: 51275)
+
 * Fri Aug 09 2024 Valery Sinelnikov <greh@altlinux.org> 0.11.0-alt1
 - Added saving preferences in dconf
 - Added versioning support for gpt
