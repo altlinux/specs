@@ -1,6 +1,6 @@
 Name:     bleachbit
-Version:  4.6.0
-Release:  alt1.1
+Version:  4.6.1
+Release:  alt1
 
 Summary:  Remove unnecessary files, free space, and maintain privacy
 License:  GPL-3.0+
@@ -70,6 +70,9 @@ rm -f %buildroot%_datadir/%name/Windows.py*
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Tue Aug 27 2024 Andrey Cherepanov <cas@altlinux.org> 4.6.1-alt1
+- New version.
+
 * Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 4.6.0-alt1.1
 - NMU: added missing build dependency on setuptools.
 
