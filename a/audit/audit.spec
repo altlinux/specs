@@ -4,8 +4,8 @@
 %def_with ldap
 
 Name: audit
-Version: 4.0.1
-Release: alt2
+Version: 4.0.2
+Release: alt1
 
 Summary: User space tools for Linux kernel 2.6+ auditing
 License: GPL-2.0-or-later and LGPL-2.1-or-later
@@ -237,6 +237,9 @@ fi
 %endif
 
 %changelog
+* Fri Aug 09 2024 Egor Ignatov <egori@altlinux.org> 4.0.2-alt1
+- new version 4.0.2
+
 * Wed Jun 26 2024 Egor Ignatov <egori@altlinux.org> 4.0.1-alt2
 - filter /bin/systemctl dependency (closes: 50744)
 - bring back our downstream audit.init script
