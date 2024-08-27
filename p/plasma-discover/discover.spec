@@ -21,7 +21,7 @@
 
 Name: plasma-%rname
 Version: 6.1.4
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -330,6 +330,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 
 
 %changelog
+* Tue Aug 27 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt2
+- hide reviews preview
+
 * Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
 - new version
 
