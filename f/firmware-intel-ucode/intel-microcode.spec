@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20240531
+%define orig_timestamp 20240813
 %define orig_rev %nil
 
 Name: firmware-intel-ucode
-Version: 26
+Version: 27
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -50,6 +50,57 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Tue Aug 27 2024 L.A. Kostis <lakostis@altlinux.ru> 2:27-alt1.20240813
+- Synced with debian/3.20240813.2 (original changelog below):
+    + New upstream microcode datafile 20240813:
+      - Mitigations for INTEL-SA-01083 (CVE-2024-24853)
+        Incorrect behavior order in transition between executive monitor and SMI
+        transfer monitor (STM) in some Intel Processors may allow a privileged
+        user to potentially enable escalation of privilege via local access.
+      - Mitigations for INTEL-SA-01118 (CVE-2024-25939)
+        Mirrored regions with different values in 3rd Generation Intel Xeon
+        Scalable Processors may allow a privileged user to potentially enable
+        denial of service via local access.
+      - Mitigations for INTEL-SA-01100 (CVE-2024-24980)
+        Protection mechanism failure in some 3rd, 4th, and 5th Generation Intel
+        Xeon Processors may allow a privileged user to potentially enable
+        escalation of privilege via local access.
+      - Mitigations for INTEL-SA-01038 (CVE-2023-42667)
+        Improper isolation in the Intel Core Ultra Processor stream cache
+        mechanism may allow an authenticated user to potentially enable
+        escalation of privilege via local access.
+      - Mitigations for INTEL-SA-01046 (CVE-2023-49141)
+        Improper isolation in some Intel(R) Processors stream cache mechanism may
+        allow an authenticated user to potentially enable escalation of
+        privilege via local access.
+      - Fix for unspecified functional issues on several processor models
+    + Updated microcodes:
+      sig 0x00050657, pf_mask 0xbf, 2024-03-01, rev 0x5003707, size 39936
+      sig 0x0005065b, pf_mask 0xbf, 2024-04-01, rev 0x7002904, size 30720
+      sig 0x000606a6, pf_mask 0x87, 2024-04-01, rev 0xd0003e7, size 308224
+      sig 0x000606c1, pf_mask 0x10, 2024-04-03, rev 0x10002b0, size 300032
+      sig 0x000706e5, pf_mask 0x80, 2024-02-15, rev 0x00c6, size 114688
+      sig 0x000806c1, pf_mask 0x80, 2024-02-15, rev 0x00b8, size 112640
+      sig 0x000806c2, pf_mask 0xc2, 2024-02-15, rev 0x0038, size 99328
+      sig 0x000806d1, pf_mask 0xc2, 2024-02-15, rev 0x0052, size 104448
+      sig 0x000806e9, pf_mask 0xc0, 2024-02-01, rev 0x00f6, size 106496
+      sig 0x000806e9, pf_mask 0x10, 2024-02-01, rev 0x00f6, size 106496
+      sig 0x000806ea, pf_mask 0xc0, 2024-02-01, rev 0x00f6, size 105472
+      sig 0x000806eb, pf_mask 0xd0, 2024-02-01, rev 0x00f6, size 106496
+      sig 0x000806ec, pf_mask 0x94, 2024-02-05, rev 0x00fc, size 106496
+      sig 0x00090661, pf_mask 0x01, 2024-04-05, rev 0x001a, size 20480
+      sig 0x000906ea, pf_mask 0x22, 2024-02-01, rev 0x00f8, size 105472
+      sig 0x000906eb, pf_mask 0x02, 2024-02-01, rev 0x00f6, size 106496
+      sig 0x000906ec, pf_mask 0x22, 2024-02-01, rev 0x00f8, size 106496
+      sig 0x000906ed, pf_mask 0x22, 2024-02-05, rev 0x0100, size 106496
+      sig 0x000a0652, pf_mask 0x20, 2024-02-01, rev 0x00fc, size 97280
+      sig 0x000a0653, pf_mask 0x22, 2024-02-01, rev 0x00fc, size 98304
+      sig 0x000a0655, pf_mask 0x22, 2024-02-01, rev 0x00fc, size 97280
+      sig 0x000a0660, pf_mask 0x80, 2024-02-01, rev 0x00fe, size 97280
+      sig 0x000a0661, pf_mask 0x80, 2024-02-01, rev 0x00fc, size 97280
+      sig 0x000a0671, pf_mask 0x02, 2024-03-07, rev 0x0062, size 108544
+      sig 0x000a06a4, pf_mask 0xe6, 2024-04-15, rev 0x001e, size 137216
+
 * Sat Jun 01 2024 L.A. Kostis <lakostis@altlinux.ru> 2:26-alt1.20240531
 - Synced with debian/3.2024531.1 (original changelog below):
   + New upstream microcode datafile 20240531
