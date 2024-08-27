@@ -5,12 +5,13 @@
 %endif
 
 Name: starship
-Version: 1.17.1
-Release: alt2
+Version: 1.20.1
+Release: alt1
 Summary: The minimal, blazing-fast, and infinitely customizable prompt for any shell
 License: ISC
 Group: Shells
 Url: https://github.com/starship/starship
+
 Source: %name-%version.tar
 Source1: vendor.tar
 Patch: starship-1.17.1-libz-ng-sys-loongarch64.patch
@@ -31,7 +32,7 @@ BuildRequires: git
 %setup -a 1
 %patch -p1
 mkdir -p .cargo
-cat >> .cargo/config <<EOF
+cat >> .cargo/config.toml <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
@@ -61,6 +62,9 @@ cargo test -- --skip expiration_date_set
 %_bindir/%name
 
 %changelog
+* Tue Aug 27 2024 Alexander Makeenkov <amakeenk@altlinux.org> 1.20.1-alt1
+- Updated to version 1.20.1.
+
 * Sun Jan 07 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.17.1-alt2
 - NMU: fixed FTBFS on LoongArch
 
