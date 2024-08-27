@@ -1,5 +1,5 @@
 Name: volumes-profile-alt-workstation
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: Volumes description for ALT Workstation
@@ -28,6 +28,10 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Aug 27 2024 Mikhail Efremov <sem@altlinux.org> 1.1-alt1
+- Fix btrfs profile display.
+- Fix typo in a comment.
+
 * Thu Aug 15 2024 Mikhail Efremov <sem@altlinux.org> 1.0-alt1
 - Don't create separate /home partition if disk size <= 900Gb.
 - Fix typo in comments.
