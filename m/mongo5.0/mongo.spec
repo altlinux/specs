@@ -3,7 +3,7 @@
 %endif
 
 Name: mongo5.0
-Version: 5.0.28
+Version: 5.0.29
 Release: alt1
 Summary: mongo client shell and tools
 License: SSPL-1.0
@@ -103,7 +103,7 @@ sed -i 's/\r//' README
 %define opt_wt --wiredtiger=on
 %endif
 %define build_opts \\\
-       -j 4 \\\
+       -j 8 \\\
        --use-system-tcmalloc \\\
        --use-system-pcre \\\
        --use-system-snappy \\\
@@ -211,6 +211,10 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Tue Aug 27 2024 Alexei Takaseev <taf@altlinux.org> 5.0.29-alt1
+- 5.0.29
+- Fixes: CVE-2024-7553
+
 * Mon Aug 05 2024 Alexei Takaseev <taf@altlinux.org> 5.0.28-alt1
 - 5.0.28
 - Fixes: CVE-2024-6375
