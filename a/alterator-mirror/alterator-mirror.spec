@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-mirror
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 
 Source: %name-%version.tar
@@ -67,6 +67,9 @@ install -Dpm640 allowed %buildroot%_sysconfdir/alterator/mirror/allowed
 %config(noreplace) %_sysconfdir/alterator/mirror/allowed
 
 %changelog
+* Tue Aug 27 2024 Andrey Cherepanov <cas@altlinux.org> 0.5.1-alt1
+- Added allowed repository cert10.
+
 * Fri Jan 12 2024 Anton Midyukov <antohami@altlinux.org> 0.5.0-alt1
 - repositories: add field X-Has-Arches
 - spec: clean Packager
