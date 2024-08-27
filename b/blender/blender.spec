@@ -52,7 +52,7 @@
 
 Name: blender
 Version: 4.1.1
-Release: alt2
+Release: alt3
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -343,7 +343,7 @@ subst '/^#!.*python$/s|python$|python3|' $(grep -Rl '#!.*python$' *)
 popd
 
 # needed due to non-standard location of pcre.h header
-%add_optflags "-I%_includedir/pcre"
+%add_optflags -I%_includedir/pcre -DGLOG_USE_GLOG_EXPORT
 
 %cmake -G Ninja \
 %if_with hip
@@ -457,6 +457,9 @@ popd
 %endif
 
 %changelog
+* Tue Aug 27 2024 Anton Farygin <rider@altlinux.ru> 4.1.1-alt3
+- added -DGLOG_USE_GLOG_EXPORT  to fix build with glog 0.7.0
+
 * Tue May 14 2024 L.A. Kostis <lakostis@altlinux.ru> 4.1.1-alt2
 - usd/hydra: Apply fix to compile with recent USD (upstream PR #121636).
 
