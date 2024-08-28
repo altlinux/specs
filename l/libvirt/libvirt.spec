@@ -171,7 +171,7 @@
 %endif
 
 Name: libvirt
-Version: 10.5.0
+Version: 10.6.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: GPL-2.0-or-later AND LGPL-2.1-only AND LGPL-2.1-or-later AND OFL-1.1
@@ -572,7 +572,7 @@ Requires: %name-daemon-driver-network = %EVR
 Requires: %name-daemon-driver-storage-fs = %EVR
 Requires: %name-daemon-log = %EVR
 Requires: %_bindir/qemu-img
-Requires: qemu-kvm-core
+Requires: qemu-kvm-core >= 5.2.0
 # For image compression
 Requires: gzip
 Requires: bzip2
@@ -1544,6 +1544,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Wed Aug 28 2024 Alexey Shabalin <shaba@altlinux.org> 10.6.0-alt1
+- 10.6.0
+
 * Thu Jul 11 2024 Alexey Shabalin <shaba@altlinux.org> 10.5.0-alt1
 - 10.5.0
 - Add ssh-proxy, daemon-common, daemon-lock, daemon-log packages
