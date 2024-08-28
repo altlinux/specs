@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpui
-Version: 0.2.48
+Version: 0.2.49
 Release: alt1
 
 Summary: Group policy editor
@@ -112,6 +112,11 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Wed Aug 28 2024 Vladimir Rubanov <august@altlinux.org> 0.2.49-alt1
+- 0.2.49-alt1
+- Fixes:
+  + Add support for smb located comments.
+
 * Tue Aug 20 2024 Vladimir Rubanov <august@altlinux.org> 0.2.48-alt1
 - 0.2.48-alt1
 - Fixes:
