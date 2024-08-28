@@ -8,7 +8,7 @@
 
 Name: showtime
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: Movie player for GNOME
 License: GPL-3.0-or-later
@@ -30,6 +30,7 @@ BuildArch: noarch
 %define adw_ver 1.5
 
 Requires: typelib(Adw) = 1
+Requires: gst-plugin-gtk4 >= 0.13
 Requires: gstreamer%gst_api_ver >= %gst_ver
 Requires: gst-plugins-base%gst_api_ver
 Requires: gst-plugins-good%gst_api_ver
@@ -59,12 +60,12 @@ straightforward viewing experience.
 
 %install
 %meson_install
-%find_lang %rdn_name
+%find_lang %name
 
 %check
 %__meson_test
 
-%files -f %rdn_name.lang
+%files -f %name.lang
 %attr(0755,root,root) %_bindir/%name
 %python3_sitelibdir_noarch/%name/
 %_datadir/%name/
@@ -75,6 +76,10 @@ straightforward viewing experience.
 %doc README*
 
 %changelog
+* Wed Aug 28 2024 Yuri N. Sedunov <aris@altlinux.org> 46.3-alt2
+- updated to 46.3-6-gd8d8f82 (fixed i18n)
+- added gst-plugin-gtk4 to runtime dependencies (ALT #51303)
+
 * Sat Jul 13 2024 Yuri N. Sedunov <aris@altlinux.org> 46.3-alt1
 - first build for Sisyphus
 
