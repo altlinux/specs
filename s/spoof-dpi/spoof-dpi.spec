@@ -1,14 +1,16 @@
 %def_enable snapshot
 
 %define _name SpoofDPI
-%define binary_name spoof-dpi
-%define ver_major 0.10
+# binary renamed in 0.11.0
+%define binary_name spoofdpi
+%define old_binary_name spoof-dpi
+%define ver_major 0.11
 %define import_path github.com/xvzc/%_name
 
 %def_disable bootstrap
 
-Name: %binary_name
-Version: %ver_major.11
+Name: %old_binary_name
+Version: %ver_major.0
 Release: alt1
 
 Summary: A simple and fast software designed to bypass Deep Packet Inspection
@@ -59,6 +61,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Wed Aug 28 2024 Yuri N. Sedunov <aris@altlinux.org> 0.11.0-alt1
+- 0.11.0
+
 * Sun Aug 25 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.11-alt1
 - 0.10.11
 
