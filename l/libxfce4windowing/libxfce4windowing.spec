@@ -2,7 +2,7 @@
 %def_disable docs
 
 Name: libxfce4windowing
-Version: 4.19.3
+Version: 4.19.4
 Release: alt1
 
 Summary: Xfce-related windowing concept abstraction library for X11 and Wayland
@@ -18,8 +18,8 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libgtk+3-devel libgdk-pixbuf-devel
-BuildRequires: libX11-devel libwnck3-devel
-BuildRequires: wayland-devel libwayland-client-devel wlr-protocols
+BuildRequires: libX11-devel libwnck3-devel libdisplay-info-devel libXrandr-devel
+BuildRequires: wayland-devel libwayland-client-devel wlr-protocols wayland-protocols
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 # NOTE: gtk-doc is required by build system even if docs are disabled.
 BuildRequires: gtk-doc
@@ -73,6 +73,8 @@ GObject introspection devel data for %name.
 %configure \
 	--disable-static \
 	--enable-maintainer-mode \
+	--enable-x11 \
+	--enable-wayland \
 	%{subst_enable introspection} \
 %if_enabled docs
 	--enable-gtk-doc \
@@ -108,5 +110,9 @@ GObject introspection devel data for %name.
 %endif
 
 %changelog
+* Tue Aug 27 2024 Mikhail Efremov <sem@altlinux.org> 4.19.4-alt1
+- Explicitly enabled both Wayland and X11 support.
+- Updated to 4.19.4.
+
 * Tue May 28 2024 Mikhail Efremov <sem@altlinux.org> 4.19.3-alt1
 - Initial build.
