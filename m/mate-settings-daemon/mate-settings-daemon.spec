@@ -2,7 +2,7 @@
 
 Name: mate-settings-daemon
 Version: 1.28.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: MATE Desktop settings daemon
 License: GPLv2+
@@ -49,7 +49,7 @@ under it.
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%make DESTDIR=%buildroot udevrulesdir=%_udevrulesdir install
 
 find %buildroot%_libdir -name \*.la -delete
 
@@ -81,6 +81,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Aug 28 2024 Anton Midyukov <antohami@altlinux.org> 1:1.28.0-alt2
+- NMU: fix FTBFS
+
 * Tue Feb 27 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.0-alt1
 - 1.28.0
 
