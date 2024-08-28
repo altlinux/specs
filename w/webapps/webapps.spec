@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1
 
 Summary: Install websites as apps
@@ -66,5 +66,8 @@ than the one installed open in a new browser window.
 %doc README.*
 
 %changelog
+* Wed Aug 28 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.4-alt1
+- updated to 0.5.4-10-gef1f870
+
 * Thu Jul 11 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.2-alt1
 - first build for Sisyphus
