@@ -1,7 +1,7 @@
 %define unicodedir %_datadir/unicode
 %define emojidir %unicodedir/emoji
-%define unicode_ver 15.1.0
-%define emoji_ver 15.1
+%define unicode_ver 16.0.0
+%define emoji_ver 16.0
 
 Name: unicode-emoji
 Version: %emoji_ver
@@ -43,6 +43,9 @@ cp -a %_sourcedir/{copyright.html,ReadMe.txt} .
 %doc copyright.html ReadMe.txt
 
 %changelog
+* Wed Aug 28 2024 Yuri N. Sedunov <aris@altlinux.org> 16.0-alt1
+- 16.0
+
 * Fri Sep 15 2023 Yuri N. Sedunov <aris@altlinux.org> 15.1-alt1
 - 15.1
 
