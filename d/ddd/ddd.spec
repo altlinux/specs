@@ -1,5 +1,5 @@
 Name: ddd
-Version: 3.4.0
+Version: 3.4.1
 Release: alt1
 
 Summary: Graphical debugger front-end for GDB, DBX, Ladebug, JDB, Perl, Python
@@ -124,13 +124,13 @@ mkdir -p $RPM_BUILD_ROOT%_libdir
 
 rm -fv $RPM_BUILD_ROOT%_datadir/%name-%version/[A-Z]*
 mkdir -p $RPM_BUILD_ROOT%_sysconfdir/X11/app-defaults
-mv $RPM_BUILD_ROOT%_datadir/%name-%version/%name/Ddd $RPM_BUILD_ROOT%_sysconfdir/X11/app-defaults
-rmdir $RPM_BUILD_ROOT%_datadir/%name-%version/%name
+#mv $RPM_BUILD_ROOT%_datadir/%name-%version/%name/ddd $RPM_BUILD_ROOT%_sysconfdir/X11/app-defaults
+#rmdir $RPM_BUILD_ROOT%_datadir/%name-%version/%name
 
 %define docdir %_docdir/%name-%version
 rm -rf $RPM_BUILD_ROOT%docdir
 mkdir -p $RPM_BUILD_ROOT%docdir
-cp -a AUTHORS NEWS TIPS doc/*.ps.* doc/html \
+cp -a  doc/*.ps.* doc/html \
 	$RPM_BUILD_ROOT%docdir/
 
 # The manpage installed contains a reference to a logo .eps file in the
@@ -139,14 +139,14 @@ cp -a AUTHORS NEWS TIPS doc/*.ps.* doc/html \
 sed -i -e '/^\.PSPIC/d' %buildroot/%_man1dir/ddd.1
 
 %files
-%config %_sysconfdir/X11/app-defaults/*
+#config %_sysconfdir/X11/app-defaults/*
 %_bindir/*
 %_datadir/%name-%version
 %_mandir/man?/*
 %_infodir/*.info*
 %_desktopdir/%name.desktop
 %dir %docdir
-%docdir/[A-Z]*
+#docdir/*
 
 %files doc-ps
 %dir %docdir
@@ -157,6 +157,9 @@ sed -i -e '/^\.PSPIC/d' %buildroot/%_man1dir/ddd.1
 %docdir/html
 
 %changelog
+* Wed Aug 28 2024 Ilya Mashkin <oddity@altlinux.ru> 3.4.1-alt1
+- 3.4.1
+
 * Sun Aug 06 2023 Ilya Mashkin <oddity@altlinux.ru> 3.4.0-alt1
 - 3.4.0
 - Update License tag to GPLv2+
