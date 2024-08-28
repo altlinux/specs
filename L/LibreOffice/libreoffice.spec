@@ -21,8 +21,8 @@
 %def_disable mergelibs
 
 Name: LibreOffice
-%define hversion 24.2
-%define urelease 5.1
+%define hversion 24.8
+%define urelease 0.3
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -78,11 +78,11 @@ Patch500: alt-010-mips-fix-linking-with-libatomic.patch
 # content of patch shared to Weblate-LibreOffice by @NeuroFreak
 Patch600: LibreOffice-7.4.2.3-update-russian-translation.patch
 
+# Useless since 24.8.0.1
 # Stolen from %name-still
-Patch700: alt-013-icu74.patch
-
+#Patch700: alt-013-icu74.patch
 # c++ missing headers
-Patch900: alt-014-missing_headers.patch
+#Patch900: alt-014-missing_headers.patch
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
@@ -127,6 +127,8 @@ BuildRequires: libargon2-devel
 
 %if_with java
 BuildRequires: java-devel >= 9.0.0 junit ant bsh pentaho-reporting-flow-engine 
+# 24.8
+BuildRequires: rhino
 %endif
 
 %if_enabled qt5
@@ -325,9 +327,9 @@ Provides additional %{langname} translations and resources for %name. \
 # Patch with russian translation update
 #patch600 -p1
 
-%patch700 -p1
+#patch700 -p1
 
-%patch900 -p1
+#patch900 -p1
 
 # TODO move officebean to SDK or separate package
 # Hack in -Wl,-rpath=/usr/lib/jvm/jre-11-openjdk/lib
@@ -433,6 +435,7 @@ export ac_cv_prog_LO_CLANG_CC=""
         --with-external-thes-dir=%_datadir/mythes \
         --with-lang="%with_lang" \
         --with-external-tar=`pwd`/ext_sources \
+        --with-rhino-jar=%_datadir/java/rhino.jar \
         \
         --enable-ext-nlpsolver \
         --enable-ext-numbertext \
@@ -641,6 +644,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Aug 23 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 24.8.0.3-alt1
+- Update to 24.8.0.3.
+
 * Fri Jul 05 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 24.2.5.1-alt1
 - Update to 24.2.5.1.
 
