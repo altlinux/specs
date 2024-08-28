@@ -1,9 +1,9 @@
 Name: picat
-Version: 3.6.8
+Version: 3.7.0
 Release: alt1
 
 Summary: Picat logical programming language
-License: MPL2.0
+License: MPL-2.0
 Group: Development/Other
 Url: http://picat-lang.org/
 
@@ -74,6 +74,9 @@ install -pm644 README %buildroot%docdir/
 %libdir/preloaded/*.pi
 
 %changelog
+* Wed Aug 28 2024 Andrey Bergman <vkni@altlinux.org> 3.7.0-alt1
+- Version update.
+
 * Sat Aug 24 2024 Andrey Bergman <vkni@altlinux.org> 3.6.8-alt1
 - Initial release for Sisyphus.
 
