@@ -4,8 +4,8 @@
 %define irrlichtmt_version 1.9.0mt13
 
 Name: minetest
-Version: 5.8.0
-Release: alt2
+Version: 5.9.0
+Release: alt3
 Summary: Multiplayer infinite-world block sandbox with survival mode
 License: LGPL-2.0+ and CC-BY-SA-3.0
 Group: Games/Other
@@ -27,9 +27,11 @@ Source5: %{name}.README
 #Source6: %{name}_game-5.7.0.tar.gz
 Source7: http://www.gnu.org/licenses/lgpl-2.1.txt
 # Now using its own Minetest-specific fork of irrlicht.
-Source8:	https://github.com/minetest/irrlicht/archive/%{irrlichtmt_version}/irrlicht-%{irrlichtmt_version}.tar.gz
+#Source8:	https://github.com/minetest/irrlicht/archive/%{irrlichtmt_version}/irrlicht-%{irrlichtmt_version}.tar.gz
 
-Patch0:   %{name}-gcc11.patch
+Patch0:   includes.patch
+Patch1:   metainfo.patch
+
 #ExcludeArch: aarch64
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -37,7 +39,7 @@ BuildRequires: gcc-c++
 #BuildRequires: libirrlicht-devel
 BuildRequires: bzip2-devel jthread-devel libsqlite3-devel
 BuildRequires: libpng-devel libjpeg-devel libXxf86vm-devel libGL-devel libX11-devel libXcm-devel libXi-devel libXv-devel libXext-devel libGLU-devel
-BuildRequires: libopenal-devel libvorbis-devel libzstd-devel doxygen  libgraphviz-devel libgmp-devel
+BuildRequires: libopenal-devel libvorbis-devel libzstd-devel doxygen  libgraphviz-devel libgmp-devel libpq-devel
 #libdotconf-devel graphviz
 BuildRequires: libfreetype-devel
 BuildRequires: systemd
@@ -52,7 +54,7 @@ BuildRequires: libluajit-e2k-devel
 %endif
 
 BuildRequires: libncurses-devel
-BuildRequires: libleveldb-devel
+BuildRequires: libleveldb-devel libhiredis-devel
 BuildRequires: spatialindex-devel jsoncpp-devel libpcre-devel
 
 Requires: %name-server = %version-%release
@@ -86,19 +88,24 @@ System.
 %setup -q
 # -a 1 -a 2
 %patch0 -p1
+%patch1 -p1
 
 #pushd games
-#tar xf %SOURCE6
+#tar xf %%SOURCE6
 #mv %{name}_game-%version %{name}_game
 #popd
 
 cp %SOURCE7 doc/
 
-tar xf %SOURCE8
-mv irrlicht-%{irrlichtmt_version} lib/irrlichtmt
+#tar xf %%SOURCE8
+#mv irrlicht-%{irrlichtmt_version} lib/irrlichtmt
 
 # purge bundled jsoncpp and lua, and gmp
 rm -rf lib/jsoncpp lib/lua lib/gmp
+
+find . -name .gitignore -print -delete
+find . -name .travis.yml -print -delete
+find . -name .luacheckrc -print -delete
 
 %build
 %ifarch aarch64
@@ -109,12 +116,28 @@ rm -rf lib/jsoncpp lib/lua lib/gmp
 %if_with l10n
     -DENABLE_GETTEXT=TRUE \
 %endif
+    -DENABLE_CURL=TRUE           \
+    -DENABLE_LEVELDB=TRUE        \
+    -DENABLE_LUAJIT=TRUE         \
+    -DENABLE_GETTEXT=TRUE        \
+    -DENABLE_SOUND=TRUE          \
+    -DENABLE_SYSTEM_JSONCPP=TRUE \
+    -DENABLE_SYSTEM_GMP=TRUE     \
+    -DENABLE_FREETYPE=TRUE       \
+    -DENABLE_REDIS=TRUE          \
+    -DENABLE_POSTGRESQL=TRUE     \
+    -DPostgreSQL_TYPE_INCLUDE_DIR=%{_includedir}/pgsql \
+    -DBUILD_SERVER=TRUE          \
+    -DJSON_INCLUDE_DIR=/usr/include/json \
     -DJTHREAD_INCLUDE_DIR=%_builddir/%name/src/jthread
     #-DJTHREAD_INCLUDE_DIR=%_builddir/%gitname-%name/src/jthread
 %ninja_build
 
 %install
 %ninja_install
+
+mkdir -p %{buildroot}%{_datadir}/minetest/irr/media
+cp -r irr/media/Shaders %{buildroot}%{_datadir}/minetest/irr/media
 
 # Systemd unit file
 mkdir -p %buildroot%_unitdir
@@ -179,11 +202,11 @@ fi
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/128x128/apps/%name.png
 %_man6dir/minetest.*
-%_datadir/metainfo/*.appdata.xml
+%_datadir/metainfo/*.metainfo.xml
 
 %files server
 %doc README.md doc/lgpl-2.1.txt doc/world_format.md doc/protocol.txt README
-#_bindir/%{name}server
+%_bindir/%{name}server
 %_unitdir/%{name}.service
 %config(noreplace) %{_sysconfdir}/%{name}.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}-server
@@ -192,6 +215,15 @@ fi
 %_man6dir/minetestserver.6*
 
 %changelog
+* Wed Aug 28 2024 Ilya Mashkin <oddity@altlinux.ru> 5.9.0-alt3
+- Copy irr/Shaders
+
+* Thu Aug 22 2024 Ilya Mashkin <oddity@altlinux.ru> 5.9.0-alt2
+- Add more BR
+
+* Tue Aug 13 2024 Ilya Mashkin <oddity@altlinux.ru> 5.9.0-alt1
+- 5.9.0
+
 * Tue Dec 05 2023 Ilya Mashkin <oddity@altlinux.ru> 5.8.0-alt2
 - Do not package minetest_game
 
