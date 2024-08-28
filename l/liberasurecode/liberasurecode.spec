@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: liberasurecode
-Version: 1.6.3
+Version: 1.6.4
 Release: alt1
 Summary: Erasure Code API library written in C with pluggable backends
 Group: System/Libraries
@@ -61,6 +61,9 @@ developing applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Aug 28 2024 Alexey Shabalin <shaba@altlinux.org> 1.6.4-alt1
+- Build new version.
+
 * Thu Nov 03 2022 Alexey Shabalin <shaba@altlinux.org> 1.6.3-alt1
 - Build new version.
 
