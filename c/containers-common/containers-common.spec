@@ -4,22 +4,24 @@
 # pick the oldest version on c/image, c/common, c/storage vendored in
 # Buildah/Podman/Skopeo.
 
-%global image_branch  main
-%global common_branch v%{version}
-%global storage_branch main
+%global image_branch v5.32.2
+%global storage_branch v1.55.0
 %global shortnames_branch main
-
 
 %global github_containers https://raw.githubusercontent.com/containers
 
 Epoch: 2
 Name: containers-common
-Version: 0.58.1
+Version: 0.60.2
 Release: alt1
 License: Apache-2.0
 Group: System/Configuration/Other
+Url: https://github.com/containers/common
 BuildArch: noarch
 Summary: Common configuration and documentation for containers
+
+%global common_branch v%{version}
+
 Source1: %github_containers/common/%common_branch/docs/containers.conf.5.md
 Source2: %github_containers/common/%common_branch/pkg/config/containers.conf
 Source3: %github_containers/common/%common_branch/pkg/seccomp/seccomp.json
@@ -166,6 +168,9 @@ install -d -p -m 755 %buildroot%_datadir/alt/secrets
 %files extra
 
 %changelog
+* Wed Aug 28 2024 Alexey Shabalin <shaba@altlinux.org> 2:0.60.2-alt1
+- Update sources
+
 * Mon Apr 15 2024 Alexey Shabalin <shaba@altlinux.org> 2:0.58.1-alt1
 - Update sources
 - Add support for additionalstore /usr/lib/containers/storage
