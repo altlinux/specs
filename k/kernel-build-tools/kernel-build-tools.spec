@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kernel-build-tools
-Version: 0.121
+Version: 0.122
 Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
@@ -96,6 +96,9 @@ kernel packaging conventions.
 %_rpmlibdir/kernel.req*
 
 %changelog
+* Tue Aug 20 2024 Vitaly Chikunov <vt@altlinux.org> 0.122-alt1
+- kernel-macros: Add %%kernel_latest macro with 'latest' pseudo-flavour.
+
 * Sat May 04 2024 Vitaly Chikunov <vt@altlinux.org> 0.121-alt1
 - Added fake P:kernel-headers-modules-rt.
 
