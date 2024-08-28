@@ -1,15 +1,13 @@
 %define zabbix_group    zabbix
 
 Name:   zabbix-agent2-plugin-postgresql
-Version: 6.4.9
-Release: alt2
+Version: 7.0.3
+Release: alt1
 
 Summary: Provides native Zabbix solution for monitoring PostgreSQL
 License: AGPL-3.0-only
 Group:   Monitoring
 URL:     https://git.zabbix.com/projects/AP/repos/postgresql/browse
-
-Packager: Danilkin Danila <danild@altlinux.org>
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang /proc
@@ -18,7 +16,7 @@ ExclusiveArch: %go_arches
 Requires: zabbix-agent2
 
 Source: %name-%version.tar
-Patch0: zabbix-agent2-plugin-postgresql-6.4.9-config-placement.patch
+Patch0: zabbix-agent2-plugin-postgresql-6.0.32-alt-config.patch
 
 %description
 Provides native Zabbix solution for monitoring PostgreSQL (object-relational database system).
@@ -29,7 +27,7 @@ official PostgreSQL template. You can extend it or create your template for your
 
 %prep
 %setup
-%patch0
+%patch0 -p1
 
 %build
 %make
@@ -46,6 +44,9 @@ mv postgresql.conf %{buildroot}%{_sysconfdir}/zabbix/zabbix_agent2.conf.d/plugin
 %config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/zabbix/zabbix_agent2.conf.d/plugins.d/postgresql.conf
 
 %changelog
+* Wed Aug 28 2024 Alexei Takaseev <taf@altlinux.org> 7.0.3-alt1
+- 7.0.3
+
 * Thu Jul 11 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 6.4.9-alt2
 - Default configuration update (ALT #50849 #50850)
 
