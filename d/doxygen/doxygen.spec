@@ -1,5 +1,5 @@
 Name: doxygen
-Version: 1.11.0
+Version: 1.12.0
 Release: alt1
 Epoch: 1
 
@@ -15,28 +15,23 @@ Source500: %name.unused
 ## Ubuntu patches
 Patch101: Ubuntu-manpages.patch
 Patch102: Ubuntu-dot-config.patch
-Patch103: Ubuntu-no-timestamps.patch
 Patch104: Ubuntu-avoid-compass.patch
-Patch105: Ubuntu-fix-pdflatex-invocation.patch
-Patch106: Ubuntu-faketime_pdflatex.patch
 Patch107: Ubuntu-libatomic.patch
 Patch108: Ubuntu-reproducible_manpages.patch
 Patch109: Ubuntu-sass_fix.patch
-Patch110: Ubuntu-gcc12.patch
-Patch111: Ubuntu-0001-Fix-typo-in-generated-Makefile-for-LaTex.patch
-Patch112: Ubuntu-filesystem_glibc.patch
 
 ## ALT patches
 
-BuildRequires(pre): rpm-macros-qt5-webengine
-
-# Automatically added by buildreq on Wed Mar 22 2023
-# optimized out: cmake-modules fontconfig fonts-type1-urw gcc-c++ ghostscript-classic git-core glibc-kernheaders-generic glibc-kernheaders-x86 libglvnd-devel libgpg-error libqt5-core libqt5-gui libqt5-widgets libqt5-xml libsasl2-3 libssl-devel libstdc++-devel perl perl-parent python-modules python2-base python3 python3-base qt5-base-devel sh4 tex-common texlive texlive-collection-basic texlive-dist
-BuildRequires: cmake flex ghostscript-common graphviz qt5-svg-devel qt5-virtualkeyboard-devel qt5-wayland-devel texlive-collection-basic texlive-dist
-
-%ifarch %qt5_qtwebengine_arches
-BuildRequires: qt5-webengine-devel qt5-webglplugin-devel
-%endif
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: flex bison
+BuildRequires: /usr/bin/epstopdf
+BuildRequires: git-core
+BuildRequires: graphviz
+BuildRequires: perl
+BuildRequires: texlive-collection-basic texlive-dist
+BuildRequires: qt5-base-devel
+BuildRequires: sassc node-uglify-js
 
 # graphviz uses pango as the default backend. pango needs some font and
 # a properly configured fontconfig to produce something sane.
@@ -83,24 +78,19 @@ find * -name "*._*" -delete
 ## Ubuntu apply patches
 %patch101 -p1
 %patch102 -p1
-##patch103 -p1
 %patch104 -p1
-#%%patch105 -p1
-#patch106 -p1
 %patch107 -p1
 %patch108 -p1
 %patch109 -p1
-#patch110 -p1
-##patch111 -p1
-##patch112 -p1
 
 ## ALT apply patches
 
 %build
-%define _cmake__builddir BUILD
-export QTDIR=%_libdir/qt4
-export PATH="$QTDIR/bin:$PATH"
+%make_build -C deps/jquery \
+	UGLIFYJS=uglifyjs \
+	install
 
+%define _cmake__builddir BUILD
 %cmake -G "Unix Makefiles" \
 	-Dbuild_doc=ON -Dbuild_wizard=ON -Dbuild_xmlparser=ON \
 	-Dbuild_search=OFF \
@@ -132,6 +122,10 @@ cd BUILD && make tests
 %exclude %_defaultdocdir/%name-%version/README.md
 
 %changelog
+* Wed Aug 28 2024 Ivan A. Melnikov <iv@altlinux.org> 1:1.12.0-alt1
+- 1.12.0
+- BuildRequires and patches cleanup
+
 * Wed May 22 2024 Ivan A. Melnikov <iv@altlinux.org> 1:1.11.0-alt1
 - 1.11.0.
 
