@@ -1,5 +1,5 @@
 Name: vulkan-headers
-Version: 1.3.283
+Version: 1.3.290
 Release: alt1
 Summary: Khronos group Vulkan API SDK headers
 
@@ -8,6 +8,8 @@ License: Apache-2.0
 Url: https://github.com/KhronosGroup/Vulkan-Headers
 
 Source: %name-%version.tar
+
+Patch: %name-alt-fix-shebang.patch
 
 BuildRequires(pre): cmake rpm-build-python3
 BuildRequires: gcc-c++
@@ -25,12 +27,16 @@ Requires: vulkan-filesystem
 
 # filter out self-provided requires
 %add_python3_req_skip spec_tools.util
+%add_python3_req_skip spec_tools.conventions
+%add_python3_req_skip reg
+%add_python3_req_skip apiconventions
 
 %description -n vulkan-registry
 Vulkan SDK API registry files.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake
@@ -49,6 +55,11 @@ Vulkan SDK API registry files.
 %_datadir/vulkan/registry
 
 %changelog
+* Wed Aug 28 2024 L.A. Kostis <lakostis@altlinux.ru> 1.3.290-alt1
+- 1.3.290.
+- fix shebang requires parsing.
+- filter out own provides from python3 req.
+
 * Thu May 30 2024 L.A. Kostis <lakostis@altlinux.ru> 1.3.283-alt1
 - 1.3.283.
 
