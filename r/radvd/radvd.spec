@@ -6,15 +6,15 @@
 
 Name: radvd
 Version: 2.19
-Release: alt1
+Release: alt2.gf2de476
 
 Summary: A Router Advertisement daemon
 # The code includes the advertising clause, so it's GPL-incompatible
 License: ALT-RADVD
 Group: System/Servers
 
-Url: http://www.litech.org/radvd/
-Vcs: git://github.com/reubenhwk/radvd.git
+Url: https://www.litech.org/radvd/
+Vcs: https://github.com/reubenhwk/radvd.git
 Source0: %name-%version.tar
 Source1: %name.init
 Source2: %name.sysconfig
@@ -91,6 +91,11 @@ install -m 644 %SOURCE4 %buildroot%_sysconfdir/radvd.conf
 %_sbindir/radvdump
 
 %changelog
+* Wed Aug 28 2024 Mikhail Efremov <sem@altlinux.org> 2.19-alt2.gf2de476
+- Updated Url tag.
+- Updated Vcs tag.
+- Upstream git snapshot (2.20_rc1 with fixes).
+
 * Wed Oct 14 2020 Mikhail Efremov <sem@altlinux.org> 2.19-alt1
 - Changed location of pidfile to /run.
 - Changed location of tmpfiles to /run to avoid warnings.
