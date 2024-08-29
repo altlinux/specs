@@ -1,6 +1,6 @@
 Name: pve-acme
 Summary: PVE ACME integration perl library
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 License: GPLv3
 Group: Development/Perl
@@ -39,6 +39,9 @@ chmod a+x %buildroot%_datadir/proxmox-acme/dnsapi/*.sh
 %_datadir/proxmox-acme
 
 %changelog
+* Thu Aug 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.5.1-alt1
+- 1.5.1
+
 * Fri Mar 01 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.5.0-alt1
 - 1.5.0
 
