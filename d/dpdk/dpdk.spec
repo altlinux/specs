@@ -9,7 +9,7 @@
 %def_enable afxdp
 
 Name: dpdk
-Version: 23.11.0
+Version: 23.11.1
 Release: alt1
 Url: http://dpdk.org
 License: BSD-3-Clause AND GPL-2.0-only AND LGPL-2.1-only
@@ -155,6 +155,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Thu Aug 29 2024 Alexey Shabalin <shaba@altlinux.org> 23.11.1-alt1
+- Update to LTS release 23.11.1.
+
 * Wed Apr 10 2024 Alexey Shabalin <shaba@altlinux.org> 23.11.0-alt1
 - Update to LTS release 23.11.0.
 

@@ -12,7 +12,7 @@
 %endif
 
 Name: openvswitch
-Version: 3.3.0
+Version: 3.3.2
 Release: alt1
 
 Summary: An open source, production quality, multilayer virtual switch
@@ -58,7 +58,7 @@ BuildRequires: libunwind-devel
 BuildRequires: libunbound-devel
 BuildRequires: glibc-kernheaders
 BuildRequires: python3-devel python3-module-setuptools python3-module-OpenSSL python3-module-sphinx python3-module-netaddr python3-module-pyparsing
-%{?_with_dpdk:BuildRequires: dpdk-devel >= 23.11.0 libpcap-devel libnuma-devel rdma-core-devel libmnl-devel}
+%{?_with_dpdk:BuildRequires: dpdk-devel >= 23.11.1 libpcap-devel libnuma-devel rdma-core-devel libmnl-devel}
 %{?_enable_afxdp:BuildRequires: libbpf-devel >= 0.7 libxdp-devel libelf-devel libnuma-devel}
 
 %description
@@ -380,6 +380,9 @@ fi
 %python3_sitelibdir/ovs-*.egg-info
 
 %changelog
+* Thu Aug 29 2024 Alexey Shabalin <shaba@altlinux.org> 3.3.2-alt1
+- 3.3.2
+
 * Wed Apr 10 2024 Alexey Shabalin <shaba@altlinux.org> 3.3.0-alt1
 - 3.3.0
 
