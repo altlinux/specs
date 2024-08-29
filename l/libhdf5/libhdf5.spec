@@ -3,10 +3,11 @@
 %define oname hdf5
 %define sover 310
 %define soverhl 310
+%set_autoconf_version 2.71
 
 Name: lib%oname
 Version: 1.14.3
-Release: alt2
+Release: alt3
 
 Summary: Hierarchical Data Format 5 library
 License: BSD
@@ -160,6 +161,10 @@ EOF
 %_datadir/hdf5_examples
 
 %changelog
+* Thu Aug 29 2024 Alexander Danilov <admsasha@altlinux.org> 1.14.3-alt3
+- Set the version of autoconf to 2.71 to simplify the build
+  into the old branches.
+  
 * Wed Feb 28 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.14.3-alt2
 - Fixed build for Elbrus
 
