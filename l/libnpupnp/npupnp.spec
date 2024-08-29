@@ -1,5 +1,5 @@
 Name: libnpupnp
-Version: 6.1.2
+Version: 6.2.0
 Release: alt1
 
 Summary: UPnP library derived from the pupnp
@@ -47,6 +47,9 @@ applications using libnpupnp.
 %_pkgconfigdir/*
 
 %changelog
+* Thu Aug 29 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 6.2.0-alt1
+- 6.2.0 released
+
 * Thu May 02 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 6.1.2-alt1
 - 6.1.2 released
 
