@@ -3,7 +3,7 @@
 Name: pve-storage
 Summary: PVE storage management library
 Version: 8.1.5
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -59,6 +59,9 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Wed Jul 10 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.1.5-alt2
+- fix udev rules path
+
 * Tue Apr 16 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.1.5-alt1
 - 8.1.5
 

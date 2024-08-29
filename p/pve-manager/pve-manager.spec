@@ -8,7 +8,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 License: AGPL-3.0+ and GPLv3 and MIT and OFL-1.1
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -59,7 +59,7 @@ tar xf %SOURCE10
 grep '/var/run' * -rl | while read f; do
     sed -i 's|/var/run|/run|' $f
 done
-sed -i 's|/usr/lib/systemd|/lib/systemd|' configs/Makefile
+sed -i 's|}/lib/systemd/|}%_systemddir/|' defines.mk
 
 %build
 %make PACKAGE="pve-manager" VERSION="%ver_major-%ver_minor" PVERELEASE="%ver_major" REPOID="%release"
@@ -141,6 +141,9 @@ rm -f  %buildroot%_man1dir/pve7to8.1*
 %_jsdir/sencha-touch
 
 %changelog
+* Wed Jul 10 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.1.10-alt2
+- fix systemd path
+
 * Fri Mar 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.1.10-alt1
 - 8.1.10
 
