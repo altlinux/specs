@@ -1,6 +1,6 @@
 Name: alterator-module-executor
-Version: 0.1.11
-Release: alt2
+Version: 0.1.12
+Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
 License: GPL-2
@@ -34,6 +34,12 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Thu Aug 29 2024 Ivan Savin <svn17@altlinux.org> 0.1.12-alt1
+- Fix node name check in searching through the table of known methods.
+- Add missing static for interface_vtable.
+- Add missing const for parameters of add_method_to_table.
+- Add missing g_strdups during filling out of the table of known methods.
+
 * Fri Mar 15 2024 Ivan Savin <svn17@altlinux.org> 0.1.11-alt2
 - Change BuildRequires from alterator-manager-devel >= 0.1.10 to
   alterator-manager-devel >= 0.1.18.
