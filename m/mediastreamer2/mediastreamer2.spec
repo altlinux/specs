@@ -5,7 +5,7 @@
 
 Name: mediastreamer2
 Version: 5.3.74
-Release: alt2
+Release: alt3
 
 Summary: Mediastreamer2 is a powerful and lightweight streaming engine for voice/video telephony applications
 License: AGPL-3.0
@@ -15,6 +15,9 @@ Url: https://gitlab.linphone.org/BC/public/mediastreamer2
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
+
+Provides: libmediastreamer = %version-%release
+Obsoletes: libmediastreamer < %version-%release
 
 %if "%(rpmquery --qf '%%{VERSION}' libavcodec-devel)" >= "5"
 Patch: mediastreamer2-5.3.74-opensuse-fix-build-ffmpeg5.patch
@@ -77,6 +80,8 @@ Group: System/Libraries
 %package -n lib%name-devel
 Summary: Development files for %name
 Group: Development/C++
+Provides: libmediastreamer-devel = %version-%release
+Obsoletes: libmediastreamer-devel < %version-%release
 
 %description -n lib%name-devel
 %summary
@@ -138,6 +143,9 @@ export CMAKE_PREFIX_PATH=%_datadir/Bcg729/cmake:$CMAKE_PREFIX_PATH
 %_libdir/cmake/Mediastreamer2/*.cmake
 
 %changelog
+* Thu Aug 29 2024 Leontiy Volodin <lvol@altlinux.org> 5.3.74-alt3
+- Obsoleted libmediastreamer.
+
 * Tue Aug 20 2024 Leontiy Volodin <lvol@altlinux.org> 5.3.74-alt2
 - Easy backporting to older branches.
 
