@@ -5,41 +5,40 @@
 # LTO causes errors, disable it
 %global optflags_lto %nil
 
-%define major 4.0.0.2496
+%define major 4.0.5
 %define minor 0
 %define pkgname Firebird
 %define pkgversion %major-%minor
 %define fbroot %_libdir/%name
 
 Name: firebird
-Version: %major.%minor
-Release: alt5
+Version: %major
+Release: alt1
 Summary: Firebird SQL Database, fork of InterBase
 Group: Databases
 License: IPL
 Url: https://www.firebirdsql.org/
 
-# https://github.com/FirebirdSQL/firebird.git
+VCS: https://github.com/FirebirdSQL/firebird.git
 Source: %name-%version.tar
 Source1: %name.init
 Source2: %name.tmpfiles.conf.in
 Source3: %name-logrotate
 
 # from OpenSuse
-Patch101: %name-%version-fedora-add-pkgconfig-files.patch
+Patch101: %name-4.0.0.2496.0-fedora-add-pkgconfig-files.patch
 
 # from Debian to be sent upstream
-Patch203: %name-%version-fedora-no-copy-from-icu.patch
-Patch205: %name-%version-fedora-cloop-honour-build-flags.patch
+Patch203: %name-4.0.5-debian-no-copy-from-icu.patch
+Patch205: %name-4.0.5-debian-cloop-honour-build-flags.patch
 
 # from upstream
-Patch301: %name-%version-fedora-c++17.patch
-Patch302: %name-%version-fedora-noexcept.patch
+Patch301: %name-4.0.0.2496.0-fedora-c++17.patch
+Patch302: %name-4.0.0.2496.0-fedora-noexcept.patch
 
 # ALT patches
-Patch1001: %name-%version-alt-dont-link-libstdcxx-statically.patch
-Patch1002: %name-%version-alt-use-system-libre2.patch
-Patch1003: %name-%version-alt-disable-examples.patch
+Patch1001: %name-4.0.0.2496.0-alt-dont-link-libstdcxx-statically.patch
+Patch1003: %name-4.0.0.2496.0-alt-disable-examples.patch
 
 # Elbrus
 Patch2000: %name-e2k.patch
@@ -150,7 +149,6 @@ Examples for Firebird SQL server.
 %patch301 -p1
 %patch302 -p1
 %patch1001 -p1
-%patch1002 -p1
 %patch1003 -p1
 %ifarch %e2k
 %patch2000 -p1
@@ -195,6 +193,7 @@ rm -rf ./extern/{editline,libtomcrypt,libtommath,re2,zlib} || { echo "rm -rf fai
 	--disable-static \
 	--prefix=%fbroot \
 	--with-system-editline \
+	--with-system-re2 \
 	--with-fbbin=%_bindir \
 	--with-fbsbin=%_sbindir \
 	--with-fbconf=%_sysconfdir/%name \
@@ -296,12 +295,10 @@ fi
 %preun server
 %preun_service %name
 
-%pre server
-# Create the firebird group if it doesn't exist
+%pre
 %_sbindir/groupadd -f -r %name 2>/dev/null ||:
 %_sbindir/useradd -d %_localstatedir/%name -g %name -s /dev/null -r %name 2>/dev/null ||:
 
-%pre
 # Add gds_db to %_sysconfdir/services if needed
 FileName=%_sysconfdir/services
 newLine="gds_db          3050/tcp  # Firebird SQL Database Remote Protocol"
@@ -343,6 +340,15 @@ fi
 %config(noreplace) %_sysconfdir/%name/firebird.conf
 %config(noreplace) %_sysconfdir/%name/plugins.conf
 %config(noreplace) %_sysconfdir/%name/replication.conf
+%dir %attr(2775,root,%name) %_localstatedir/%name
+%dir %attr(2775,root,%name) %_localstatedir/%name/secdb
+%dir %attr(2775,root,%name) %_localstatedir/%name/system
+%dir %attr(2775,root,%name) %_localstatedir/%name/backup
+%attr(0660,firebird,firebird) %config(noreplace) %_localstatedir/%name/secdb/security4.fdb
+%attr(0664,firebird,firebird) %_localstatedir/%name/system/help.fdb
+%attr(0664,firebird,firebird) %_localstatedir/%name/system/firebird.msg
+%dir %_localstatedir/%name/tzdata
+%_localstatedir/%name/tzdata/*.res
 %dir %_datadir/%name
 %dir %_datadir/%name/upgrade
 %_datadir/%name/upgrade/*
@@ -372,16 +378,7 @@ fi
 %files server
 %config(noreplace) %_sysconfdir/logrotate.d/%name
 %attr(0644,root,root) %_tmpfilesdir/%name.conf
-%dir %attr(2775,root,%name) %_localstatedir/%name
-%dir %attr(2775,root,%name) %_localstatedir/%name/secdb
-%dir %attr(2775,root,%name) %_localstatedir/%name/system
-%dir %attr(2775,root,%name) %_localstatedir/%name/backup
 %dir %fbroot/intl
-%attr(0660,firebird,firebird) %config(noreplace) %_localstatedir/%name/secdb/security4.fdb
-%attr(0664,firebird,firebird) %_localstatedir/%name/system/help.fdb
-%attr(0664,firebird,firebird) %_localstatedir/%name/system/firebird.msg
-%dir %_localstatedir/%name/tzdata
-%_localstatedir/%name/tzdata/*.res
 %config(noreplace) %_sysconfdir/%name/fbintl.conf
 %_sysconfdir/%name/libfbintl.so
 %attr(0755,root,root) %_initdir/%name
@@ -411,6 +408,11 @@ fi
 %_datadir/%name/examples
 
 %changelog
+* Thu Aug 29 2024 Anton Farygin <rider@altlinux.ru> 4.0.5-alt1
+- 4.0.0.2496.0 -> 4.0.5
+- moved /var/lib/firebird from firefebird-server
+  to the firebird package (closes: #47619)
+
 * Sun Dec 03 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.0.0.2496.0-alt5
 - NMU: LoongArch support (compile tested only).
 
