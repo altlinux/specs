@@ -6,7 +6,7 @@
 
 Name:    vault
 Version: 1.13.12
-Release: alt4
+Release: alt5
 
 Summary: A tool for secrets management, encryption as a service, and privileged access management
 License: MPL-2.0
@@ -16,6 +16,7 @@ Url:     https://github.com/hashicorp/vault
 Source: %name-%version.tar
 Patch1: bbolt-loong64.patch
 Patch2: gopsutil-loong64.patch
+Patch3: vault-1.13.12-alt-fix-CVE-2024-2048.patch
 Source1: %name.hcl.example
 Source2: %name.service
 Source3: %name.init
@@ -38,6 +39,7 @@ BuildRequires: /proc
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %if_without prebuild_webui
 ln -sf %nodejs_sitelib/node-sass ui/node_modules
@@ -105,6 +107,9 @@ setcap -q cap_ipc_lock+ep %_bindir/%name 2>/dev/null ||:
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Thu Aug 29 2024 Nikolay Burykin <bne@altlinux.org> 1.13.12-alt5
+- Fixes: CVE-2024-2048 (Closes: #51295)
+
 * Fri Jun 14 2024 Nikolay Burykin <bne@altlinux.org> 1.13.12-alt4
 - Fix duplicate entries in previous changelog note
 
