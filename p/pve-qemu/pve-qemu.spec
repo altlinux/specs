@@ -8,7 +8,7 @@
 
 Name: pve-%rname
 Version: 8.1.5
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -44,9 +44,9 @@ BuildRequires: liblzo2-devel libncurses-devel libnettle-devel libnuma-devel libp
 BuildRequires: libsasl2-devel libseccomp-devel libspice-server-devel libusbredir-devel libxfs-devel libepoxy-devel libgbm-devel
 BuildRequires: makeinfo perl-Pod-Usage pkgconfig(glusterfs-api) pkgconfig(virglrenderer) liburing-devel libuuid-devel
 BuildRequires: libslirp-devel >= 4.7.0
-BuildRequires: libsystemd-devel libtasn1-devel libpmem-devel libzstd-devel zlib-devel spice-protocol
+BuildRequires: libsystemd-devel libudev-devel libtasn1-devel libpmem-devel libzstd-devel zlib-devel spice-protocol
 BuildRequires: ipxe-roms-qemu seavgabios seabios edk2-ovmf edk2-aarch64 qboot
-#BuildRequires: librdmacm-devel libibverbs-devel libibumad-devel
+BuildRequires: rdma-core-devel
 BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme ninja-build meson
 BuildRequires: python3-module-setuptools
 BuildRequires: libproxmox-backup-qemu-devel >= 1.3.0
@@ -159,6 +159,7 @@ export CFLAGS="%optflags"
         --enable-linux-aio \
         --enable-linux-io-uring \
         --enable-numa \
+        --enable-rdma \
         --enable-opengl \
         --enable-rbd \
         --enable-vitastor \
@@ -305,6 +306,10 @@ ln -sf ../AAVMF/AAVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/AAVMF_VARS.f
 %_man8dir/qemu-nbd.8*
 
 %changelog
+* Thu Aug 29 2024 Alexey Shabalin <shaba@altlinux.org> 1:8.1.5-alt2
+- 8.1.5-6
+- Build with rdma support
+
 * Sun Mar 03 2024 Andrew A. Vasilyev <andy@altlinux.org> 1:8.1.5-alt1
 - 8.1.5-3
 
