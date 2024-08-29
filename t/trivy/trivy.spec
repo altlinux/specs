@@ -3,7 +3,7 @@
 
 Name: trivy
 Version: 0.54.1
-Release: alt1
+Release: alt2
 Summary: A Fast Vulnerability Scanner for Containers
 
 Group: Monitoring
@@ -56,7 +56,7 @@ Requires: trivy-db
 %build
 # replace default node-collector image source
 find . -type f -exec \
-	sed -i "s/ghcr.io\/aquasecurity\/node-collector:0.0.9/registry.altlinux.org\/k8s-%_priority_distbranch\/trivy-node-collector:0.0.9/g" {} +
+	sed -i "s/ghcr.io\/aquasecurity\/node-collector/registry.altlinux.org\/k8s-%_priority_distbranch\/trivy-node-collector/g" {} +
 
 # replace default trivy-db image source
 find . -type f -exec \
@@ -100,6 +100,9 @@ rm -rf -- %buildroot%go_root
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Thu Aug 29 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.54.1-alt2
+- Fixed hardcoded node-collector version
+
 * Thu Aug 15 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.54.1-alt1
 - 0.53.0 -> 0.54.1
 - Fixed `trivy --version` output (closes: 47604)

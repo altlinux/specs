@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: k8s-trivy-node-collector
-Version: 0.0.9
+Version: 0.3.1
 Release: alt1
 Epoch: 1
 Summary: k8s-Node-collector is an open source collector who collect Node information (fs and process data) and output in a table/json format
@@ -51,8 +51,9 @@ rm -rf -- %buildroot%go_root
 %_bindir/%name
 
 %changelog
+* Thu Aug 29 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 1:0.3.1-alt1
+- 0.0.9 -> 0.3.1
+- Fixes: CVE-2024-24790
+
 * Mon Mar 04 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 1:0.0.9-alt1
 - Initial build for ALT 
-
-
-
