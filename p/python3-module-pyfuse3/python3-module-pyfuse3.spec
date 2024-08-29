@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 3.3.0
+Version: 3.4.0
 Release: alt1
 
 Summary: Python 3 bindings for libfuse 3 with async I/O support
@@ -42,13 +42,16 @@ py.test3 -v -rs test/
 
 %files
 %python3_sitelibdir/%{pypi_name}_asyncio.py
-%python3_sitelibdir/%{pypi_name}*.so
-%python3_sitelibdir/_%{pypi_name}.py
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%python3_sitelibdir/_%pypi_name.py
+%python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/__pycache__/*
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 %doc README* Changes.*
 
 %changelog
+* Thu Aug 29 2024 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
+- 3.4.0
+
 * Tue May 21 2024 Yuri N. Sedunov <aris@altlinux.org> 3.3.0-alt1
 - first build for Sisyphus
 
