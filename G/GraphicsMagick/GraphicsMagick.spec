@@ -1,5 +1,5 @@
 Name: GraphicsMagick
-Version: 1.3.43
+Version: 1.3.45
 Release: alt1
 
 Summary: Image manipulation and translation utility
@@ -110,6 +110,8 @@ sed -ri \
 
 %build
 %add_optflags -DGRAPHICSMAGICK_DOCS_PATH=\\\"%_docdir/%name-%version/www/index.html\\\"
+export ac_cv_path_LPRDelegate=/usr/bin/lpr
+export ac_cv_path_BrowseDelegate=/usr/bin/xdg-open
 %configure \
            --enable-shared \
            --disable-static \
@@ -185,6 +187,9 @@ make check
 %_man1dir/GraphicsMagick++-config.*
 
 %changelog
+* Thu Aug 29 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.45-alt1
+- 1.3.45 released
+
 * Mon Mar 25 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.43-alt1
 - 1.3.43 released
 
