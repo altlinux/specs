@@ -1,7 +1,15 @@
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
+%ifver_gteq %ubt_id M120
+%define qtver 6
+%else
+%define qtver 5
+%endif
 
 Name: krb5-ticket-watcher
 Version: 1.0.3
-Release: alt25
+Release: alt26
 %K6init no_altplace
 
 Group: System/X11
@@ -27,10 +35,10 @@ Patch12: alt-crash-1.patch
 Patch13: alt-ignore-localhost-ip-as-def-realm.patch
 Patch14: alt-no-message-on-automatic-reniew.patch
 
-BuildRequires(pre): rpm-build-xdg rpm-build-kf6
+BuildRequires(pre): rpm-build-xdg rpm-build-kf6 rpm-build-ubt rpm-macros-ifver
 BuildRequires: desktop-file-utils
 BuildRequires: libkrb5-devel libkeyutils-devel
-BuildRequires: cmake libcom_err-devel qt6-base-devel qt6-tools
+BuildRequires: cmake libcom_err-devel qt%{qtver}-base-devel qt%{qtver}-tools
 
 %description
 A tray applet for watching, renewing, and reinitializing Kerberos
@@ -59,7 +67,9 @@ cat %SOURCE10 > po/ru.po
 %ifarch %e2k
 %add_optflags -std=c++11
 %endif
-%K6build
+%K6build \
+    -DQT_MAJOR_VERSION=%qtver \
+    #
 
 %install
 %K6install
@@ -77,6 +87,9 @@ desktop-file-install --dir %buildroot/%_xdgconfigdir/autostart \
 %doc COPYING Changes News TODO
 
 %changelog
+* Thu Aug 29 2024 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt26
+- allow to build with Qt5 or Qt6
+
 * Fri Aug 23 2024 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt25
 - more port to Qt6
 
