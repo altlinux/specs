@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.112.0
+Version: 0.112.2
 Release: alt1
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
@@ -79,7 +79,7 @@ cat requirements-docs-tests.txt requirements-tests.txt > alt-requirements-tests.
 # test_async_sql_databases/test_tutorial001.py::test_create_read:
 # Due to too new sqlalchemy databases' sqlite backend is broken.
 # Temporary skip this test.
-%pyproject_run_pytest -Wignore \
+%pyproject_run_pytest -q -Wignore \
     --deselect='tests/test_tutorial/test_async_sql_databases/test_tutorial001.py::test_create_read' \
     tests
 
@@ -90,6 +90,9 @@ cat requirements-docs-tests.txt requirements-tests.txt > alt-requirements-tests.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Aug 29 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.112.2-alt1
+- Updated to 0.112.2.
+
 * Mon Aug 05 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.112.0-alt1
 - Updated to 0.112.0.
 

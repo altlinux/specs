@@ -1,13 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name dirty-equals
 %define mod_name dirty_equals
-%define postrel post0
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.7.1
-Release: alt1.%postrel
+Version: 0.8.0
+Release: alt1
 
 Summary: Doing dirty (but extremely useful) things with equals
 License: MIT
@@ -62,9 +61,12 @@ touch pytest.ini
 %files
 %doc README.md LICENSE
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%{pep427_name %pypi_name}-%version.%postrel.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Aug 29 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.8.0-alt1
+- Updated to 0.8.0.
+
 * Thu Nov 23 2023 Alexandr Shashkin <dutyrok@altlinux.org> 0.7.1-alt1.post0
 - 0.7.0 -> 0.7.1-post0
 
