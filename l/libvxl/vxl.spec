@@ -2,10 +2,6 @@
 
 # documentation build sometimes generates non-identical files
 %def_without docs
-
-# TODO: remove later this fix for documentation
-#%%define _cmake__builddir BUILD
-
 %define openjpeg2_sover 2
 %define ver_maj 3
 %define sover 3.5
@@ -13,7 +9,7 @@
 
 Name: libvxl
 Version: 3.5.0
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: C++ Libraries for Computer Vision Research and Implementation
@@ -53,6 +49,7 @@ This package contains shared libraries for VXL.
 Summary: Headers for VXL
 Group: Development/C++
 Conflicts: libvpl-devel
+Conflicts: librply-devel
 
 %description devel 
 This package contains development files for VXL.
@@ -127,6 +124,9 @@ sed -i 's/-fno-gcse/-Wall/' v3p/netlib/CMakeLists.txt
 %endif
 
 %changelog
+* Thu Aug 29 2024 Anton Farygin <rider@altlinux.ru> 3.5.0-alt3
+- libvxl-devel: Added conflicts with librply-devel (Closes: #51177)
+
 * Thu Aug 01 2024 Anton Farygin <rider@altlinux.ru> 3.5.0-alt2
 - libvxl-devel: Added conflicts with libvpl-devel (Closes: #50978)
 
