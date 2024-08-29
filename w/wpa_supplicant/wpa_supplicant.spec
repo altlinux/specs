@@ -1,6 +1,6 @@
 Name: wpa_supplicant
 Version: 2.11
-Release: alt2
+Release: alt3
 
 Summary: wpa_supplicant is an implementation of the WPA Supplicant component
 License: BSD
@@ -82,6 +82,9 @@ install -pm0644 %name/doc/docbook/wpa_{cli,passphrase,background,priv}.8 %buildr
 %_man8dir/wpa_passphrase.*
 
 %changelog
+* Tue Aug 13 2024 Andrew Savchenko <bircoph@altlinux.org> 2.11-alt3
+- Fix authentication broken on brcmfmac.
+
 * Mon Jul 29 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.11-alt2
 - applied workaround found necessary for b43 hw (closes: 50986)
 
