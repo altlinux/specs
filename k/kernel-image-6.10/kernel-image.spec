@@ -2,9 +2,10 @@ Name: kernel-image-6.10
 Release: alt1
 %define kernel_src_version	6.10
 %define kernel_base_version	6.10
-%define kernel_sublevel	.6
+%define kernel_sublevel	.7
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
+%define kernel_latest	latest
 Version: %kversion
 
 %define krelease	%release
@@ -83,7 +84,7 @@ ExclusiveOS: Linux
 
 %if "%sub_flavour" == "def"
 Provides: kernel = %kversion
-Provides: kernel-latest = %version-%release
+Provides: kernel-%kernel_latest = %version-%release
 Provides: kernel-modules-eeepc-%flavour = %version-%release
 Provides: kernel-modules-drbd83-%flavour = %version-%release
 Provides: kernel-modules-igb-%flavour = %version-%release
@@ -218,6 +219,9 @@ Requires: kernel-headers-common
 Provides: kernel-headers = %version
 %endif
 AutoReqProv: nocpp
+%if "%sub_flavour" == "def"
+Provides: kernel-headers-%kernel_latest = %version-%release
+%endif
 
 %description -n kernel-headers-%flavour
 This package makes Linux kernel headers corresponding to the Linux
@@ -239,6 +243,9 @@ Summary: Headers and other files needed for building kernel modules
 Group: Development/Kernel 
 Requires: gcc%kgcc_version
 AutoReqProv: nocpp
+%if "%sub_flavour" == "def"
+Provides: kernel-headers-modules-%kernel_latest = %version-%release
+%endif
 
 %description -n kernel-headers-modules-%flavour
 This package contains header files, Makefiles and other parts of the
@@ -587,6 +594,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Aug 29 2024 Kernel Bot <kernelbot@altlinux.org> 6.10.7-alt1
+- v6.10.7 (2024-08-29).
+- config: CONFIG_SERIAL_SC16IS7XX_SPI=m.
+
 * Mon Aug 19 2024 Kernel Bot <kernelbot@altlinux.org> 6.10.6-alt1
 - v6.10.6 (2024-08-19).
 - spec: Add kernel-latest provides for testing latest stable kernels.
