@@ -3,7 +3,7 @@
 Summary:	An interface for emulator and game ports
 Name:		libretro-handhelds
 Version:	20240628
-Release:	alt1
+Release:	alt2
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
 Group:		Emulators
@@ -54,7 +54,7 @@ libretro API and that's it - we take care of the rest.
     done\
 )}
 
-%ifnarch %e2k
+%ifnarch %e2k loongarch64
 %define handhelds desmume desmume2015 swanstation
 %{expand:%(\
     for handheld in %{handhelds}; do \
@@ -104,5 +104,8 @@ done
 install -m 0644 ./dist/unix/*.so %{buildroot}%{_libexecdir}/libretro/
 
 %changelog
+* Fri Aug 30 2024 Ivan A. Melnikov <iv@altlinux.org> 20240628-alt2
+- Fix handheld cores for loongarch64 support (by k0tran@)
+
 * Tue Aug 13 2024 Artyom Bystrov <arbars@altlinux.org> 20240628-alt1
 Initial commit for Sisyphus after split of libretro into number of packages
