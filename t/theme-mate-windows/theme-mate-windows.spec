@@ -1,5 +1,5 @@
 Name:     theme-mate-windows
-Version:  2.6
+Version:  2.7
 Release:  alt1
 
 Summary:  Mate theme for Windows-like layout
@@ -44,6 +44,9 @@ install -pDm644 windows.layout \
 %_datadir/mate-panel/layouts/windows.layout
 
 %changelog
+* Fri Aug 30 2024 Andrey Cherepanov <cas@altlinux.org> 2.7-alt1
+- Do not force file manager background color (ALT #43513).
+
 * Fri Sep 22 2023 Andrey Cherepanov <cas@altlinux.org> 2.6-alt1
 - Remove deprecated toggle-shaded keybinding.
 
