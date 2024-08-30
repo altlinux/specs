@@ -4,7 +4,7 @@
 
 Name: %rname
 Version: 6.1.4
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -50,6 +50,7 @@ Patch19: alt-def-screenreader.patch
 Patch20: alt-knetattach-test-unlock-ui.patch
 # Fix bug #42348
 Patch21: alt-re-set-xkb-mappings.patch
+Patch22: alt-kscreenlocker.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: rpm-build-python3
@@ -160,6 +161,7 @@ SDDM breeze theme
 %patch19 -p1
 %patch20 -p1
 %patch21 -p1
+%patch22 -p1
 
 msgcat --use-first po/ru/kcm_touchpad.po %SOURCE11 > po/ru/kcm_touchpad.po.tmp
 cat po/ru/kcm_touchpad.po.tmp >po/ru/kcm_touchpad.po
@@ -245,6 +247,9 @@ done
 
 
 %changelog
+* Fri Aug 30 2024 Oleg Solovyov <mcpain@altlinux.org> 6.1.4-alt2
+- fix kscreenlocker theme
+
 * Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
 - new version
 

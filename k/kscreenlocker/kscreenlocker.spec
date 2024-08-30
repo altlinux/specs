@@ -8,7 +8,7 @@
 
 Name: %rname
 Version: 6.1.4
-Release: alt3
+Release: alt4
 #Epoch: 2
 %K6init
 
@@ -150,6 +150,12 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kde6-screenlocker
 
 
 %changelog
+* Fri Aug 30 2024 Oleg Solovyov <mcpain@altlinux.org> 6.1.4-alt4
+- kcheckpass fixes:
+  + fix handling abort requests
+  + cancel non-interactive authenticators after interactive prompts
+  + abort PAM conversations completely
+
 * Wed Aug 21 2024 Oleg Solovyov <mcpain@altlinux.org> 6.1.4-alt3
 - port kcheckpass to KF6
 
