@@ -4,14 +4,14 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 Summary: Helper to test WSGI applications
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/WebTest/
+Vcs: https://github.com/Pylons/webtest.git
 
-# git://github.com/Pylons/webtest.git
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 BuildArch: noarch
@@ -27,6 +27,7 @@ BuildRequires: python3(pytest)
 BuildRequires: python3(waitress)
 BuildRequires: python3(webob)
 BuildRequires: python3(wsgiproxy)
+BuildRequires: python3(pyquery)
 %endif
 
 %description
@@ -42,10 +43,6 @@ This is based on ``paste.fixture.TestApp``.
 %setup
 %autopatch -p1
 
-sed -e 's/assertEquals/assertEqual/' \
-    -e 's/assertRaisesRegexp/assertRaisesRegex/' \
-    -i tests/*.py
-
 %build
 %pyproject_build
 
@@ -60,6 +57,9 @@ sed -e 's/assertEquals/assertEqual/' \
 %python3_sitelibdir/WebTest-%version.dist-info
 
 %changelog
+* Fri Aug 30 2024 Anton Vyatkin <toni@altlinux.org> 3.0.1-alt1
+- New version 3.0.1.
+
 * Fri Jan 26 2024 Anton Vyatkin <toni@altlinux.org> 3.0.0-alt1
 - New version 3.0.0.
 

@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.0
-Release: alt3
+Version: 2.0.1
+Release: alt1
 
 Summary: A jQuery-like library for python
 License: BSD-3-Clause
@@ -42,11 +42,8 @@ manipulation.
 %pyproject_install
 
 %check
-# test_selector_html uses XML namespaces, which are broken with libxml2 2.10.4+
-# python3.12 https://github.com/gawel/pyquery/issues/249
 %pyproject_run_pytest -v \
---deselect=pyquery/pyquery.py::pyquery.pyquery.PyQuery.serialize_dict \
--k 'not test_get and not test_selector_html'
+	--deselect=tests/test_pyquery.py::TestWebScrappingEncoding::test_get
 
 %files
 %doc *.rst *.txt
@@ -54,6 +51,9 @@ manipulation.
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Fri Aug 30 2024 Anton Vyatkin <toni@altlinux.org> 2.0.1-alt1
+- New version 2.0.1.
+
 * Tue Jan 23 2024 Anton Vyatkin <toni@altlinux.org> 2.0.0-alt3
 - Fix FTBFS.
 
