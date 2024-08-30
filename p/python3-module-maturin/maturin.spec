@@ -1,5 +1,5 @@
 Name: python3-module-maturin
-Version: 1.7.0
+Version: 1.7.1
 Release: alt1
 
 Summary: Rust within Python
@@ -14,6 +14,7 @@ Source2: pyproject_deps.json
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: rust-cargo /proc
 BuildRequires: pkgconfig(bzip2)
+BuildRequires: python3(semantic_version)
 %pyproject_builddeps_build
 
 Requires: rust-cargo /proc
@@ -48,6 +49,9 @@ chmod +x %buildroot%_bindir/maturin
 %python3_sitelibdir/maturin-%version.dist-info
 
 %changelog
+* Fri Aug 30 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.7.1-alt1
+- 1.7.1 released
+
 * Mon Jul 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.7.0-alt1
 - 1.7.0 released
 
