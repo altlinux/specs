@@ -9,7 +9,7 @@
 %filter_from_provides /^pkgconfig(mbedx509)/d
 
 Name: %pkgname-compat
-Version: 2.28.8
+Version: 2.28.9
 Release: alt1
 
 Summary: Transport Layer Security protocol suite
@@ -146,6 +146,9 @@ sed -i 's/-Werror/-Wno-error/' CMakeLists.txt
 %endif
 
 %changelog
+* Fri Aug 30 2024 Nazarov Denis <nenderus@altlinux.org> 2.28.9-alt1
+- Version 2.28.9
+
 * Fri Mar 29 2024 Nazarov Denis <nenderus@altlinux.org> 2.28.8-alt1
 - Version 2.28.8
 
