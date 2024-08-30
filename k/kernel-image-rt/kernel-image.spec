@@ -1,7 +1,7 @@
 Name: kernel-image-rt
 %define kernel_base_version	6.1
-%define kernel_sublevel	.105
-%define kernel_rt_release	rt38
+%define kernel_sublevel	.107
+%define kernel_rt_release	rt39
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -361,12 +361,6 @@ mv %buildroot%modules_dir/kernel/drivers/media/radio/tea575x.ko %buildroot%modul
 
 %ifarch aarch64 %arm
 make dtbs_install INSTALL_DTBS_PATH=%buildroot/boot/devicetree/$KernelVer
-%ifarch aarch64
-pushd %buildroot/boot/devicetree/$KernelVer/
-find . -mindepth 2 -type f | \
-       while read f; do ln -srv "$f" "$(basename $f)"; done
-popd
-%endif
 %endif
 
 mkdir -p %buildroot%kbuild_dir/arch/%arch_dir
@@ -607,6 +601,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Aug 30 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.107-alt1.rt39
+- v6.1.107-rt39 (2024-08-29).
+- spec: Remove devicetree symlinking for old u-boot.
+- config: CONFIG_SERIAL_SC16IS7XX_SPI=y.
+
 * Sat Aug 17 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.105-alt1.rt38
 - v6.1.105-rt38 (2024-08-16).
 - config: Enable CONFIG_BLK_SED_OPAL=y.
