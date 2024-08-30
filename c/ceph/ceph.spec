@@ -1,4 +1,4 @@
-%define git_version 67fc72a4b85d01f31a20f6c054daa8ce7414d25b
+%define git_version e7ad5345525c7aa95470c26863873b581076945d
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
@@ -58,7 +58,7 @@
 
 Name: ceph
 Version: 18.2.4
-Release: alt1
+Release: alt2
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -1869,6 +1869,9 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Fri Aug 30 2024 Alexey Shabalin <shaba@altlinux.org> 18.2.4-alt2
+- backport patches for don't use pkg_resources
+
 * Mon Aug 19 2024 Alexey Shabalin <shaba@altlinux.org> 18.2.4-alt1
 - 18.2.4
 
