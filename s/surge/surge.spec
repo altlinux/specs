@@ -1,5 +1,5 @@
 Name: surge
-Version: 1.3.2
+Version: 1.3.4
 Release: alt1
 
 Summary: Hybrid synthesizer
@@ -100,6 +100,9 @@ cp -prv scripts/installer_linux/assets/icons %buildroot%_datadir
 %_libdir/vst3/*
 
 %changelog
+* Fri Aug 30 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.4-alt1
+- 1.3.4 released
+
 * Thu May 16 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.2-alt1
 - 1.3.2 released
 
