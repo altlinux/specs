@@ -3,8 +3,8 @@
 
 Name: pve-container
 Summary: Proxmox VE Container management tool
-Version: 5.0.9
-Release: alt1.1
+Version: 5.1.12
+Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -39,6 +39,7 @@ sed -i 's!}/lib/systemd/!}/usr/lib/systemd/!' src/Makefile
 
 %files
 %doc debian/copyright
+%_sysconfdir/apparmor.d/pve-container-mounthotplug
 %_sysctldir/10-pve-ct-inotify-limits.conf
 %_datadir/bash-completion/completions/*
 %_datadir/zsh/vendor-completions/*
@@ -55,6 +56,9 @@ sed -i 's!}/lib/systemd/!}/usr/lib/systemd/!' src/Makefile
 %_man5dir/*
 
 %changelog
+* Thu Aug 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 5.1.12-alt1
+- 5.1.12
+
 * Mon Jun 24 2024 Andrew A. Vasilyev <andy@altlinux.org> 5.0.9-alt1.1
 - FTBFS: fix sysctl.d and systemd path
 

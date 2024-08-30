@@ -3,12 +3,12 @@
 %add_findreq_skiplist %perl_vendor_privlib/PVE/Status/InfluxDB.pm
 %add_findreq_skiplist %perl_vendor_privlib/PVE/Jobs.pm
 
-%define ver_major 8.1
-%define ver_minor 10
+%define ver_major 8.2
+%define ver_minor 4
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
-Release: alt2
+Release: alt1
 License: AGPL-3.0+ and GPLv3 and MIT and OFL-1.1
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -21,11 +21,11 @@ BuildRequires(pre): rpm-macros-javascript
 
 Requires: cstream lzop zstd wget schedutils gdisk hdparm rsync pciutils
 Requires: perl-LWP-Protocol-https
-Requires: pve-common >= 7.2.6 pve-guest-common >= 4.2.1
-Requires: pve-storage >= 8.1.3 pve-cluster >= 7.2.3
+Requires: pve-common >= 8.2.0 pve-guest-common >= 5.1.0
+Requires: pve-storage >= 8.1.5 pve-cluster >= 7.2.3
 Requires: pve-vncterm pve-novnc >= 1.2.2 pve-spiceterm pve-xtermjs >= 4.7.1 pve-acme
-Requires: pve-container >= 4.0.9 pve-firewall pve-ha-manager pve-qemu-server >= 7.2.8 pve-i18n >= 1.0.3 pve-docs
-Requires: proxmox-widget-toolkit >= 4.1.5 proxmox-mini-journalreader >= 1.3.1
+Requires: pve-container >= 5.1.11 pve-firewall pve-ha-manager pve-qemu-server >= 8.1.2 pve-i18n >= 1.0.3 pve-docs
+Requires: proxmox-widget-toolkit >= 4.2.0 proxmox-mini-journalreader >= 1.3.1
 Requires: fonts-font-awesome javascript-extjs javascript-qrcodejs
 Requires: libproxmox-rs-perl >= 0.2.0 libpve-rs-perl >= 0.7.1
 Requires: perl-Net-SSLeay perl-Term-ReadLine-Gnu
@@ -40,11 +40,11 @@ Source9: basealt_logo-128.png
 Source10: sencha-touch.tgz
 
 BuildRequires: pve-doc-generator >= 7.2.3 xmlto perl-Pod-Parser
-BuildRequires: pve-storage >= 8.1.3 pve-cluster >= 7.2.3
-BuildRequires: pve-common >= 7.2.6 pve-guest-common >= 4.2.1
-BuildRequires: libpve-cluster-perl >= 6.1.6 libpve-cluster-api-perl >= 7.0.5 pve-container pve-qemu-server >= 7.2.8
+BuildRequires: pve-storage >= 8.1.5 pve-cluster >= 7.2.3
+BuildRequires: pve-common >= 8.2.0 pve-guest-common >= 5.1.0
+BuildRequires: libpve-cluster-perl >= 6.1.6 libpve-cluster-api-perl >= 7.0.5 pve-container >= 5.1.11 pve-qemu-server >= 8.1.2
 BuildRequires: pve-acme pve-http-server >= 2.0.12 pve-access-control >= 8.1.3
-BuildRequires: proxmox-widget-toolkit >= 4.1.5
+BuildRequires: proxmox-widget-toolkit >= 4.2.0
 BuildRequires: perl(AptPkg/Cache.pm) perl(File/ReadBackwards.pm) perl(Template.pm) perl(Net/DNS/Resolver.pm)
 BuildRequires: unzip gnupg
 
@@ -141,6 +141,9 @@ rm -f  %buildroot%_man1dir/pve7to8.1*
 %_jsdir/sencha-touch
 
 %changelog
+* Thu Aug 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.2.4-alt1
+- 8.2.4
+
 * Wed Jul 10 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.1.10-alt2
 - fix systemd path
 

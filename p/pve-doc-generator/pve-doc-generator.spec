@@ -3,7 +3,7 @@
 
 Name: pve-doc-generator
 Summary: Proxmox VE Documentation helpers
-Version: 8.1.5
+Version: 8.2.3
 Release: alt1
 License: AGPL-3.0+ and GFDL-1.3+
 Group: Documentation
@@ -37,7 +37,7 @@ sed -i 's|{python}|python3|' asciidoc/*.conf
 %make DOCRELEASE=%version asciidoc-pve
 
 %install
-#%make_install DESTDIR=%buildroot gen-install
+#%%make_install DESTDIR=%%buildroot gen-install
 mkdir -p %buildroot%_datadir/pve-doc-generator/asciidoc
 cp *.adoc *.pl *.mk *.xml %buildroot%_datadir/pve-doc-generator/
 cp asciidoc/*pve*.conf %buildroot%_datadir/pve-doc-generator/asciidoc/
@@ -49,6 +49,9 @@ install -pD -m755 asciidoc-pve %buildroot%_bindir/asciidoc-pve
 %_datadir/pve-doc-generator
 
 %changelog
+* Thu Aug 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.2.3-alt1
+- 8.2.3
+
 * Fri Mar 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.1.5-alt1
 - 8.1.5
 

@@ -2,8 +2,8 @@
 
 Name: pve-firewall
 Summary: Proxmox VE Firewall
-Version: 5.0.3
-Release: alt1.1
+Version: 5.0.7
+Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -74,6 +74,9 @@ __EOF__
 %_man8dir/*
 
 %changelog
+* Thu Aug 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 5.0.7-alt1
+- 5.0.7
+
 * Mon Jun 24 2024 Andrew A. Vasilyev <andy@altlinux.org> 5.0.3-alt1.1
 - FTBFS: fix sysctl.d path
 

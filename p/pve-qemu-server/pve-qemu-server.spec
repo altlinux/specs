@@ -3,8 +3,8 @@
 
 Name: pve-qemu-server
 Summary: PVE Qemu Server Tools
-Version: 8.1.1
-Release: alt2.1
+Version: 8.2.4
+Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -70,6 +70,9 @@ ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-virtio.jpg
 %perl_vendor_privlib/PVE/*.pm
 
 %changelog
+* Thu Aug 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.2.4-alt1
+- 8.2.4
+
 * Mon Jun 24 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.1.1-alt2.1
 - FTBFS: fix systemd path
 

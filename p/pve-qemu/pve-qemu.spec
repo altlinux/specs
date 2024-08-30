@@ -7,8 +7,8 @@
 %global firmwaredirs "%_datadir/qemu:%_datadir/seabios:%_datadir/seavgabios:%_datadir/ipxe:%_datadir/ipxe.efi"
 
 Name: pve-%rname
-Version: 8.1.5
-Release: alt2
+Version: 9.0.2
+Release: alt1
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -26,7 +26,7 @@ Source5: qemu-kvm.sh
 Source12: bridge.conf
 Source13: vitastor.c
 
-Patch: pve-qemu-8.1-vitastor.patch
+Patch: pve-qemu-9.0-vitastor.patch
 %set_verify_elf_method fhs=relaxed
 %add_verify_elf_skiplist %_datadir/%rname/*
 %add_findreq_skiplist %_datadir/%rname/*
@@ -306,6 +306,9 @@ ln -sf ../AAVMF/AAVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/AAVMF_VARS.f
 %_man8dir/qemu-nbd.8*
 
 %changelog
+* Thu Aug 29 2024 Alexey Shabalin <shaba@altlinux.org> 1:9.0.2-alt1
+- 9.0.2-2
+
 * Thu Aug 29 2024 Alexey Shabalin <shaba@altlinux.org> 1:8.1.5-alt2
 - 8.1.5-6
 - Build with rdma support

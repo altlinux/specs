@@ -4,7 +4,7 @@
 %define rname lxc
 
 Name: pve-%rname
-Version: 5.0.2
+Version: 6.0.0
 Release: alt1
 Summary: Linux containers userspace tools
 Group: System/Configuration/Other
@@ -25,11 +25,12 @@ Requires: iproute2 iptables iptables-ipv6
 Conflicts: %rname %rname-libs liblxc1 %rname-core %rname-net %rname-runtime
 Provides: %rname-pve = %EVR
 
-BuildRequires(pre): meson >= 0.61
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson >= 0.61
 BuildRequires: docbook2X
-BuildRequires: libcap-devel libseccomp-devel libselinux-devel libssl-devel
+BuildRequires: pkgconfig(libcap) pkgconfig(libseccomp) pkgconfig(libselinux) pkgconfig(openssl)
 BuildRequires: bash-completion
-BuildRequires: pkgconfig(systemd)
+BuildRequires: pkgconfig(dbus-1)
 
 %description
 Containers provides resource management through control groups and
@@ -57,6 +58,8 @@ done
 %meson \
     -Ddistrosysconfdir='/etc/sysconfig' \
     -Dinit-script=systemd \
+    -Dsystemd-unitdir=%_unitdir \
+    -Dcapabilities=true \
     -Dapparmor=false \
     -Dselinux=true \
     -Dseccomp=true \
@@ -102,6 +105,9 @@ usermod --add-subgids 100000-165535 --add-subuids 100000-165535 root ||:
 %_man7dir/*.7*
 
 %changelog
+* Thu Aug 29 2024 Alexey Shabalin <shaba@altlinux.org> 6.0.0-alt1
+- 6.0.0-1
+
 * Wed Mar 22 2023 Alexey Shabalin <shaba@altlinux.org> 5.0.2-alt1
 - 5.0.2-2
 

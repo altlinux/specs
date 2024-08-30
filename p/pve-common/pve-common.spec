@@ -2,7 +2,7 @@
 
 Name: pve-common
 Summary: PVE base library
-Version: 8.1.2
+Version: 8.2.2
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
@@ -77,6 +77,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Thu Aug 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.2.2-alt1
+- 8.2.2
+
 * Thu May 30 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.1.2-alt1
 - 8.1.2
 - fix for pvecm updatecerts to work with IPv6 link-local addrs (ALT #41408)
