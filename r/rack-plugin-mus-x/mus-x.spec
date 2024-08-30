@@ -1,5 +1,5 @@
 Name: rack-plugin-mus-x
-Version: 2.0.1
+Version: 2.1.0
 Release: alt1
 
 Summary: MUS-X Rack plugin
@@ -32,5 +32,8 @@ make install RACK_DIR=%_datadir/rack/sdk \
 %_libdir/rack/*
 
 %changelog
+* Fri Aug 30 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.1.0-alt1
+- 2.1.0 released
+
 * Thu Feb 22 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.1-alt1
 - initial
