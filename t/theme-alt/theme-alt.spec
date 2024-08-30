@@ -2,7 +2,7 @@
 
 Name: theme-alt
 Version: 1.0
-Release: alt0.beta3
+Release: alt0.beta4
 Summary: ALT theme
 
 License: GPL-3.0
@@ -40,5 +40,8 @@ cp -a color-schemes %buildroot%_datadir/kf5
 %_datadir/kf5/plasma/desktoptheme/ALT
 
 %changelog
+* Fri Aug 30 2024 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.beta4
+- Added splash theme.
+
 * Tue Aug 20 2024 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.beta3
 - Initial build in Sisyphus.
