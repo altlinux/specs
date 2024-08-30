@@ -3,7 +3,7 @@
 
 Name:          openmvg
 Version:       2.1
-Release:       alt4
+Release:       alt5
 Summary:       open Multiple View Geometry
 License:       MPL-2.0
 Group:         System/Libraries
@@ -31,6 +31,7 @@ BuildRequires: libcoinor-osi-clp-devel
 BuildRequires: libcoinor-lemon-devel
 BuildRequires: libeasyexif-devel
 #BuildRequires: libfast-devel
+BuildRequires: libglog-devel
 BuildRequires: ceres-solver-devel
 # NOTE not defined in CMakeLists
 BuildRequires: cereal-devel
@@ -112,6 +113,7 @@ Requires:      libcoinor-clp-devel
 Requires:      libcoinor-osi-clp-devel
 Requires:      libcoinor-lemon-devel
 Requires:      libeasyexif-devel
+Requires:      libglog-devel
 Requires:      ceres-solver-devel
 Requires:      cereal-devel
 Requires:      qt5-base-devel
@@ -184,7 +186,9 @@ rm -f %buildroot%_libexecdir/pkgconfig/flann.pc
 rm -rf %buildroot%_libdir/openMVG/webgl
 rm -f %buildroot%_libdir/openMVG/sensor_width_camera_database.txt
 rm -rf %buildroot%_includedir/openMVG_dependencies/
+%ifarch loongarch64
 rm -f %buildroot%_libdir/libopenMVG_ceres.a
+%endif
 
 %files
 %doc *.md AUTHORS LICENSE
@@ -204,6 +208,12 @@ rm -f %buildroot%_libdir/libopenMVG_ceres.a
 
 
 %changelog
+* Wed Aug 28 2024 Pavel Skrylev <majioa@altlinux.org> 2.1-alt5
+- + added explicit requires for glog package
+- ! for newer version of glog 1.7.1 this is required expicit exprt
+    declaration must be provided
+- ! closed specific loongarch code
+
 * Sat May 25 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.1-alt4
 - fix e2k build again
 
