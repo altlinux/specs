@@ -1,5 +1,9 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: tripso
-Version: 1.2
+Version: 1.2.1
 Release: alt1
 
 Summary: Translation of IPv4 Security Options (IPSO) Labels
@@ -10,9 +14,21 @@ Requires: iptables
 Url: https://github.com/vt-alt/tripso
 Source0: %name-%version.tar
 
-BuildPreReq: rpm-build-kernel
+BuildRequires(pre): rpm-build-kernel
 BuildRequires: libiptables-devel
-%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm >= 1.22 kernel-headers-un-def iptables iproute2 net-tools tcpdump tcpreplay kernel-headers-modules-un-def}}
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: figlet
+BuildRequires: iproute2
+BuildRequires: iptables
+BuildRequires: kernel
+BuildRequires: kernel-headers-modules-%kernel_latest
+BuildRequires: kernel-headers-modules-std-def
+BuildRequires: kernel-headers-modules-un-def
+BuildRequires: net-tools
+BuildRequires: rpm-build-vm
+BuildRequires: tcpdump
+BuildRequires: tcpreplay
+}}
 
 %description
 Translate between CISPO and GOST R 58256-2018 security labels (userspace part).
@@ -25,7 +41,7 @@ BuildArch: noarch
 Translate between CISPO and GOST R 58256-2018 security labels (source).
 
 %prep
-%setup -q
+%setup
 
 %build
 make libxt_TRIPSO.so VERSION=%version CFLAGS="%optflags"
@@ -35,16 +51,7 @@ make install-lib DESTDIR=%buildroot
 install -pDm0644 %_sourcedir/%name-%version.tar %kernel_srcdir/kernel-source-%name-%version.tar
 
 %check
-# do dummy build of the module
-make KDIR=$(echo /lib/modules/*/build) VERSION=%version xt_TRIPSO.ko
-timeout 60 \
-vm-run --kvm=cond --sbin '
-	set -e
-	modprobe -a iptable_filter iptable_raw iptable_security ip_tables
-	mount -t tmpfs run /var/run
-	export XTABLES_LIBDIR=$PWD:/%_lib/iptables
-	./tripso_tests.sh retest
-'
+VERSION=%version ./check.sh
 
 %files -n kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar
@@ -54,6 +61,10 @@ vm-run --kvm=cond --sbin '
 /%_lib/iptables/*.so
 
 %changelog
+* Fri Aug 30 2024 Vitaly Chikunov <vt@altlinux.org> 1.2.1-alt1
+- Improve spec and %%check to use latest kernel.
+- Fix compilation warnings.
+
 * Tue Oct 19 2021 Vitaly Chikunov <vt@altlinux.org> 1.2-alt1
 - Fix unintended dropping of packets.
 - spec: Improve testing.
