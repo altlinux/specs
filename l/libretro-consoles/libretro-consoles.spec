@@ -3,7 +3,7 @@
 Summary:	An interface for emulator and game ports
 Name:		libretro-consoles
 Version:	20240628
-Release:	alt1
+Release:	alt2
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
 Group:		Emulators
@@ -61,7 +61,7 @@ This is set of cores of game consoles emulators.
     done\
 )}
 
-%ifnarch aarch64
+%ifnarch aarch64 loongarch64
 %define consoles kronos parallel_n64 yabasanshiro yabause
 %{expand:%(\
     for console in %{consoles}; do \
@@ -89,7 +89,7 @@ This is set of cores of game consoles emulators.
 )}
 %endif
 
-%ifnarch %e2k
+%ifnarch %e2k loongarch64
 %define consoles mupen64plus_next pcsx_rearmed
 %{expand:%(\
     for console in %{consoles}; do \
@@ -117,13 +117,13 @@ for core in a5200 cap32 chimerasnes ep128emu_core fceumm fixnes freechaf freeint
 ./libretro-build.sh $core
 done
 
-%ifnarch aarch64
+%ifnarch aarch64 loongarch64
 for core in kronos parallel_n64 yabasanshiro yabause; do
 ./libretro-build.sh $core
 done
 %endif
 
-%ifnarch %e2k
+%ifnarch %e2k loongarch64
 for core in mupen64plus_next; do
 ./libretro-build.sh $core
 done
@@ -143,5 +143,8 @@ mkdir -p %{buildroot}%{_libexecdir}/libretro
 install -m 0644 ./dist/unix/*.so %{buildroot}%{_libexecdir}/libretro/
 
 %changelog
+* Fri Aug 30 2024 Ivan A. Melnikov <iv@altlinux.org> 20240628-alt2
+- Fix cores for loongarch64 (by k0tran@).
+
 * Thu Aug 15 2024 Artyom Bystrov <arbars@altlinux.org> 20240628-alt1
 - Initial commit for Sisyphus after split of libretro into number of packages
