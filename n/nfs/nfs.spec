@@ -1,6 +1,6 @@
 Name: nfs
-Version: 2.6.4
-Release: alt2
+Version: 2.7.1
+Release: alt1
 Epoch: 1
 
 Summary: The Linux NFS clients, utilities and server
@@ -10,7 +10,7 @@ Url: http://nfs.sourceforge.net/
 
 Source0: %name-%version-%release.tar
 
-BuildRequires: libblkid-devel libevent-devel libuuid-devel
+BuildRequires: libblkid-devel libevent-devel libuuid-devel libxml2-devel
 BuildRequires: libdevmapper-devel libkrb5-devel libsqlite3-devel
 BuildRequires: libcap-devel libtirpc-devel libkeyutils-devel libmount-devel
 BuildRequires: rpcgen rpcsvc-proto-devel
@@ -28,6 +28,7 @@ Requires: libnfsidmap = %EVR
 %package clients
 Summary: The Linux NFS client
 Group: Networking/Other
+Provides: /sbin/rpc.statd
 
 PreReq: shadow-utils
 PreReq: %name-utils = %epoch:%version-%release
@@ -104,6 +105,7 @@ This package provides the Linux NFS stats utilities.
     --with-pluginpath=%_libdir/libnfsidmap \
     --disable-nfsdcld \
     --disable-static \
+    --disable-sbin-override \
     #
 sed -i 's/#define[[:blank:]]\+START_STATD.\+$/#undef START_STATD/' support/include/config.h
 %make_build
@@ -123,12 +125,6 @@ ln -s nfs-server.service %buildroot%systemd_unitdir/nfs.service
 ln -s rpc-gssd.service %buildroot%systemd_unitdir/gssd.service
 ln -s rpc-statd.service %buildroot%systemd_unitdir/nfslock.service
 ln -s rpc-svcgssd.service %buildroot%systemd_unitdir/svcgssd.service
-
-mkdir -p %buildroot/sbin
-mv  %buildroot%_sbindir/rpc.{statd,gssd} \
-    %buildroot%_sbindir/blkmapd \
-    %buildroot%_sbindir/nfsidmap \
-    %buildroot%_sbindir/sm-notify %buildroot/sbin/
 
 mkdir -p %buildroot%_localstatedir/nfs/{rpc_pipefs,v4recovery}
 
@@ -206,9 +202,10 @@ touch /var/lock/subsys/rpc.svcgssd
 %systemd_unitdir/nfsv4-server.service
 %systemd_unitdir/nfsv4-exportd.service
 
-/sbin/nfsdcltrack
+%_sbindir/nfsdcltrack
 %_sbindir/exportfs
 %_sbindir/fsidd
+%_sbindir/nfsref
 %_sbindir/nfsstat
 %_sbindir/rpc.idmapd
 %_sbindir/rpc.mountd
@@ -221,6 +218,7 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/exportfs.*
 %_man8dir/idmapd.*
 %_man8dir/rpc.idmapd.*
+%_man8dir/nfsref.*
 %_man8dir/nfsstat.*
 %_man8dir/nfsdcltrack.*
 %_man8dir/mountd.*
@@ -268,11 +266,11 @@ touch /var/lock/subsys/rpc.svcgssd
 %systemd_unitdir-generators/rpc-pipefs-generator
 %systemd_unitdir-generators/nfs-server-generator
 
-/sbin/rpc.gssd
-/sbin/rpc.statd
-/sbin/sm-notify
-/sbin/blkmapd
-/sbin/nfsidmap
+%_sbindir/rpc.gssd
+%_sbindir/rpc.statd
+%_sbindir/sm-notify
+%_sbindir/blkmapd
+%_sbindir/nfsidmap
 %_sbindir/nfsconf
 %_sbindir/rpcctl
 
@@ -293,9 +291,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %files utils
 %config %_sysconfdir/control.d/facilities/nfsmount
 %_udevrulesdir/*.rules
-%attr(700,root,root) /sbin/mount.nfs
-/sbin/mount.nfs4
-/sbin/umount.*
+%attr(700,root,root) %_sbindir/mount.nfs
+%_sbindir/mount.nfs4
+%_sbindir/umount.*
 %_bindir/showmount
 %_sbindir/rpcdebug
 %_prefix/libexec/nfsrahead
@@ -316,6 +314,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Fri Aug 30 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1:2.7.1-alt1
+- 2.7.1 released
+
 * Mon Jun 24 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1:2.6.4-alt2
 - rebuilt for merged-usr
 
