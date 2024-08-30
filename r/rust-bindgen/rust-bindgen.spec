@@ -1,5 +1,5 @@
 Name: rust-bindgen
-Version: 0.69.4
+Version: 0.70.1
 Release: alt1
 
 Summary: Automatically generates Rust FFI bindings to C (and some C++) libraries
@@ -27,13 +27,19 @@ tar xf %SOURCE1
 
 %build
 mkdir -p .cargo
-cat > .cargo/config.toml <<EOF
+cat >> .cargo/config <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
 directory = "vendor"
+
+[profile.release]
+strip = "none"
+lto= "thin"
+debug = "full"
 EOF
+
 %rust_build
 
 %install
@@ -45,6 +51,10 @@ install -Dm0755 target/release/bindgen %buildroot%_bindir/
 %_bindir/bindgen
 
 %changelog
+* Fri Aug 30 2024 L.A. Kostis <lakostis@altlinux.ru> 0.70.1-alt1
+- 0.70.1.
+- enable debuginfo.
+
 * Fri Feb 23 2024 L.A. Kostis <lakostis@altlinux.ru> 0.69.4-alt1
 - 0.69.4.
 
