@@ -10,7 +10,7 @@
 %def_disable bootstrap
 
 Name: %old_binary_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A simple and fast software designed to bypass Deep Packet Inspection
@@ -61,6 +61,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Fri Aug 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.11.1-alt1
+- updated to v0.11.1-11-g7d6bc4c
+
 * Wed Aug 28 2024 Yuri N. Sedunov <aris@altlinux.org> 0.11.0-alt1
 - 0.11.0
 
