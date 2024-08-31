@@ -3,7 +3,7 @@
 Summary: Firmware and topology files for Sound Open Firmware project
 Name: firmware-alsa-sof
 Version: %version_major
-Release: alt1
+Release: alt2
 # See later in the spec for a breakdown of licensing
 License: BSD
 Group: Sound
@@ -41,7 +41,7 @@ alsatplg -c /usr/share/alsa/topology/hda-dsp/skl_hda_dsp_generic-tplg.conf \
 
 %install
 mkdir -p  %buildroot%_firmwarepath/intel/
-for d in sof sof-ipc4 sof-ipc4-tplg sof-tplg; do \
+for d in sof sof-ipc4 sof-ace-tplg sof-ipc4-tplg sof-tplg; do \
   cp -a "${d}" %buildroot%_firmwarepath/intel/; \
 done
 install %SOURCE2 %buildroot%_firmwarepath/intel/sof-tplg/
@@ -77,10 +77,14 @@ end
 %_firmwarepath/skl_hda_dsp_generic-tplg.bin
 %dir %_firmwarepath/intel
 %_firmwarepath/intel/sof-tplg
+%_firmwarepath/intel/sof-ace-tplg
 
 %files debug -f alsa-sof-firmware.debug-files
 
 %changelog
+* Sat Aug 31 2024 Anton Farygin <rider@altlinux.ru> 2024.06-alt2
+- added lost symlink for sof-ace-tplg (Closes: #51357)
+
 * Sun Jul 21 2024 Anton Farygin <rider@altlinux.ru> 2024.06-alt1
 - 2024.03 -> 2024.06
 
