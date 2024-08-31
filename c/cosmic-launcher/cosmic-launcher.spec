@@ -8,7 +8,7 @@
 
 Name: cosmic-launcher
 Version: %ver_major.0
-Release: alt0.1%beta
+Release: alt0.2%beta
 
 Summary: COSMIC Launcher
 License: MPL-2.0
@@ -23,12 +23,16 @@ Source: %url/archive/v%version/%name-%version.tar.gz
 Source: %name-%version%beta.tar
 %endif
 Source1: %name-%version%beta-cargo.tar
+Patch10: cosmic-term-1.0.0-alt-linux-raw-sys-char-loongarch64.patch
+
+# no pop-launcher for ppc64le
+ExcludeArch: ppc64le armh
+
+Requires: pop-launcher
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: just
 BuildRequires: pkgconfig(xkbcommon)
-
-#ExcludeArch: %ix86 armh
 
 %description
 %summary
@@ -39,6 +43,10 @@ BuildRequires: pkgconfig(xkbcommon)
 [ ! -d .cargo ] && mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
+
+%patch10 -p1
+sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+    vendor/linux-raw-sys/.cargo-checksum.json
 
 %build
 %rust_build
@@ -57,6 +65,10 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Sat Aug 31 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.2.alpha.1
+- required pop-launcher
+- fixed build for loongarch64
+
 * Sun Aug 18 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.1.alpha.1
 - first build for Sisyphus
 
