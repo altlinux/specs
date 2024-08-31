@@ -8,7 +8,7 @@
 
 Name: poedit
 Version: 3.5
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform translation files editor
 Summary(ru_RU.UTF-8): Кроссплатформенный редактор файлов переводов
@@ -53,8 +53,12 @@ wxLocale библиотеки wxWindows.
 
 %prep
 %setup
+%ifarch %e2k loongarch64
+sed -i 's,aarch64,&|e2k|loongarch64,' admin/ax_boost_base.m4
+%endif
 
 %build
+%autoreconf
 %configure \
 	%{subst_with cpprest} \
 	%{subst_with cld2}
@@ -77,6 +81,9 @@ rm -f %buildroot/%_iconsdir/hicolor/icon-theme.cache
 %_datadir/metainfo/%rdn_name.appdata.xml
 
 %changelog
+* Sat Aug 31 2024 Ivan A. Melnikov <iv@altlinux.org> 3.5-alt2
+- Fix FTBFS on %%e2k and loongarch64
+
 * Fri Aug 30 2024 Yuri N. Sedunov <aris@altlinux.org> 3.5-alt1
 - 3.5
 
