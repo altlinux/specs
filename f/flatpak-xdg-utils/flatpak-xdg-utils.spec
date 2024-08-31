@@ -1,8 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 %def_enable installed_tests
 
 Name: flatpak-xdg-utils
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: Command-line tools for use inside Flatpak sandboxes
@@ -77,6 +77,9 @@ mv %buildroot%_bindir/xdg-open %buildroot%_bindir/flatpak-xdg-open
 %endif
 
 %changelog
+* Sat Aug 31 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.6-alt1
+- 1.0.6
+
 * Tue Jun 04 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.5-alt1
 - first build for Sisyphus (1.0.5-9-gb24e62e)
 
