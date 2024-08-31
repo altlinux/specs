@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 
 Summary: Project documentation with Markdown
@@ -73,6 +73,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Aug 31 2024 Anton Vyatkin <toni@altlinux.org> 1.6.1-alt1
+- New version 1.6.1.
+
 * Mon Apr 22 2024 Anton Vyatkin <toni@altlinux.org> 1.6.0-alt1
 - New version 1.6.0.
 
