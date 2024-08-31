@@ -4,11 +4,11 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.9.3
-Release: alt2.1
+Release: alt3.20240830
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программное обеспечение для управления станками c ЧПУ
-License: GPLv2+ and LGPLv2
+License: GPL-2.0-or-later and LGPL-2.0-or-later
 Group: Engineering
 Url: https://github.com/LinuxCNC/linuxcnc
 
@@ -58,7 +58,7 @@ Requires: libGLU
 Requires: python3-module-PyQt5-devel
 
 # for gmoccapy
-Requires: libgtksourceview3-gir
+Requires: libgtksourceview4-gir
 Requires: libX11-devel
 
 # for qtplasma
@@ -139,7 +139,7 @@ Spanish documementation for %name
 
 %prep
 %setup
-%autopatch -p1
+%patch -p1
 
 sed -i 's|lib/tcltk/linuxcnc|%_lib/tcl/linuxcnc|' lib/python/rs274/options.py
 sed -i 's|INCLUDES := .|INCLUDES := . /usr/include/tirpc|' src/Makefile
@@ -230,7 +230,7 @@ rm %buildroot%_libdir/*.a
 %_datadir/glade
 %_datadir/gmoccapy
 %_datadir/gscreen
-%_datadir/gtksourceview-2.0/*
+%_datadir/gtksourceview-4/*
 %_datadir/qtvcp
 %_liconsdir/*
 %_niconsdir/*
@@ -246,6 +246,9 @@ rm %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Sat Aug 31 2024 Anton Midyukov <antohami@altlinux.org> 2.9.3-alt3.20240830
+- new snapshot
+
 * Wed Jul 24 2024 Ivan A. Melnikov <iv@altlinux.org> 2.9.3-alt2.1
 - depend on QtWebEngineWidgets only if its available
   (fixes FTBFS on loongarch64).
