@@ -7,7 +7,7 @@ ExcludeArch: armh
 
 Name: zoneminder
 Version: 1.36.34
-Release: alt1
+Release: alt2
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
@@ -173,6 +173,10 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Thu Aug 29 2024 Anton Farygin <rider@altlinux.ru> 1.36.34-alt2
+- removed 3gp format from output video generation
+  due to limitations in supported sizes list (closes: #46708)
+
 * Thu Aug 22 2024 Anton Farygin <rider@altlinux.ru> 1.36.34-alt1
 - 1.36.33 -> 1.36.34 (fixes: CVE-2024-43360)
 
