@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: ima-evm-utils
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 
 Summary: IMA/EVM support utilities
@@ -108,6 +108,9 @@ vm-run --kvm=cond --sbin --ext4=verity make check VERBOSE=1
 %_libdir/libimaevm.so
 
 %changelog
+* Sun Sep 01 2024 Vitaly Chikunov <vt@altlinux.org> 1.6.2-alt1
+- Update to v1.6.2 (2024-08-30).
+
 * Thu Aug 29 2024 Vitaly Chikunov <vt@altlinux.org> 1.6.1-alt1
 - Update to v1.6.1 (2024-08-28).
 
