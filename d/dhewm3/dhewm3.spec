@@ -1,7 +1,7 @@
 %define git %nil
 
 Name: dhewm3
-Version: 1.5.3
+Version: 1.5.4
 Release: alt1
 Summary: DOOM 3 source port
 Summary(ru_RU.UTF-8): Порт движка оригинального Doom 3
@@ -98,6 +98,9 @@ install -m 0644 dist/linux/share/icons/hicolor/scalable/apps/*.svg %buildroot%_i
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Mon Sep  2 2024 Artyom Bystrov <arbars@altlinux.org> 1.5.4-alt1
+ - Update to new version
+
 * Tue Jul 16 2024 Artyom Bystrov <arbars@altlinux.org> 1.5.3-alt1
  - Update to new version
 
