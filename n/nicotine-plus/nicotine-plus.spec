@@ -2,7 +2,7 @@
 %define oname nicotine+
 
 Name: nicotine-plus
-Version: 3.1.1
+Version: 3.3.4
 Release: alt1
 
 Summary: The client program for the SoulSeek filesharing system
@@ -89,16 +89,18 @@ Nicotine поддерживает оптимизатор кода psyco, вы м
 
 %files -f nicotine.lang
 %_bindir/nicotine
-%doc %_docdir/nicotine/
+#doc %_docdir/nicotine/
 %python3_sitelibdir/pynicotine/
 %python3_sitelibdir/nicotine*egg-info
 %_desktopdir/*
-%_iconsdir/hicolor/scalable/apps/*.svg
-%_iconsdir/hicolor/symbolic/apps/*.svg
+%_iconsdir/hicolor/*/apps/*.svg
 %_man1dir/*
 %_datadir/metainfo/
 
 %changelog
+* Sun Sep 01 2024 Vitaly Lipatov <lav@altlinux.ru> 3.3.4-alt1
+- new version 3.3.4 (with rpmrb script)
+
 * Sat Aug 21 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.1-alt1
 - new version 3.1.1 (with rpmrb script)
 
