@@ -8,9 +8,9 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt23
+Release: alt24
 
-Summary: %child modules set for %name
+Summary: %child modules set for %parent
 License: GPL-3.0
 Group: System/Base
 BuildArch: noarch
@@ -208,6 +208,9 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Sun Sep 01 2024 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt24
+- added asciidoc sources of the reference guide
+
 * Thu Mar 07 2024 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt23
 - cifs and nfs: change order to apply defaults
 
