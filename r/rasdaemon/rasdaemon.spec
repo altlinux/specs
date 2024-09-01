@@ -1,99 +1,123 @@
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
+%define _localstatedir %_var
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
-Name:			rasdaemon
-Version:		0.7.0
-Release:		alt1
-Summary:		Utility to receive RAS error tracings
-Group:			System/Kernel and hardware
-License:		GPL-2.0-only
-URL:			http://git.infradead.org/users/mchehab/rasdaemon.git
-Source0:		%{name}-%{version}.tar.gz
+Name: rasdaemon
+Version: 0.8.1
+Release: alt1
+Summary: Utility to receive RAS error tracings
+Group: System/Kernel and hardware
+License: GPL-2.0-only
+Url: https://github.com/mchehab/rasdaemon
+Source0: %name-%version.tar.gz
 
-Source1:		rasdaemon.init
+Source1: rasdaemon.init
 
-BuildRequires:		gettext-tools libasprintf-devel
+BuildRequires: libsqlite3-devel
+BuildRequires: libtraceevent-devel
+BuildRequires: rpm-build-perl
 
-BuildRequires: rpm-build-perl libsqlite3-devel
 Requires: perl-DBD-SQLite
-
-BuildRequires:		libudev-devel libsystemd-devel
-#BuildRequires:		systemd systemd-analyze systemd-homed
-#BuildRequires:		systemd-networkd systemd-portable systemd-sysvinit
-
-%ifarch %{ix86} x86_64
-Requires:		dmidecode
+%ifarch %ix86 x86_64
+Requires: dmidecode
 %endif
 
 %description
-%{name} is a RAS (Reliability, Availability and Serviceability) logging tool.
+%name is a RAS (Reliability, Availability and Serviceability) logging tool.
 It currently records memory errors, using the EDAC tracing events.
-EDAC is drivers in the Linux kernel that handle detection of ECC errors
+EDAC consists of drivers in the Linux kernel that handle detection of ECC errors
 from memory controllers for most chipsets on i386 and x86_64 architectures.
-EDAC drivers for other architectures like arm also exists.
+EDAC drivers for other architectures like ARM also exist.
 This userspace component consists of an init script which makes sure
 EDAC drivers and DIMM labels are loaded at system startup, as well as
-an utility for reporting current error counts from the EDAC sysfs files.
+a utility for reporting current error counts from the EDAC sysfs files.
 
 %prep
-%setup -q
-autoreconf -vfi
+%setup
 
 %build
-sed -i 's|cat <<EOF|cat <<EOF > compile_time_options_summary.txt|' configure
+%add_optflags %(getconf LFS_CFLAGS)
+
+%autoreconf
+sed -i 's|cat <<EOF|tee <<EOF compile_time_options_summary.txt|' configure
 
 %configure \
-  --enable-sqlite3 \
-  --enable-aer \
-  --enable-mce \
-  --enable-extlog \
-  --enable-devlink \
-  --enable-diskerror \
-  --enable-memory-failure \
-  --enable-abrt-report \
-%ifarch %{arm} aarch64
-  --enable-non-standard \
-  --enable-arm \
-  --enable-hisi-ns-decode \
-%endif
-  --with-sysconfdefdir=%{_sysconfdir}/sysconfig
-
-cat compile_time_options_summary.txt
+	--enable-all \
+	--with-sysconfdefdir=%_sysconfdir/sysconfig
 
 %make_build
 
 %install
-make install DESTDIR=%{buildroot}
+make install DESTDIR=%buildroot
 
 install -D -p -m 0644 misc/rasdaemon.service	%buildroot%_unitdir/%name.service
-sed -i "s|/etc/sysconfig/rasdaemon|/etc/sysconfig/rasdaemon.env|" %buildroot%_unitdir/%name.service
-install -D -p -m 0644 misc/rasdaemon.env	%buildroot%_sysconfdir/sysconfig/%name.env
-
 install -D -p -m 0644 misc/ras-mc-ctl.service	%buildroot%_unitdir/ras-mc-ctl.service
-
+install -D -p -m 0644 misc/rasdaemon.env	%buildroot%_sysconfdir/sysconfig/%name
 install -D -p -m 0755 %SOURCE1			%buildroot%_initdir/%name
 
-rm INSTALL %{buildroot}/usr/include/*.h
+rm %buildroot/usr/include/*.h
+
+mkdir -p %buildroot%_localstatedir/lib/rasdaemon
+touch %buildroot%_localstatedir/lib/rasdaemon/ras-mc_event.db
+
+mkdir -p %buildroot%_libexecdir
+cp -a contrib -T %buildroot%_libexecdir/%name
+
+%check
+./rasdaemon --version | grep -Fx '%name %version'
+# Check it's not empty.
+grep -q summary compile_time_options_summary.txt
+# It's possible to test the tool using Linux fault injection capabilities.
+# mce-inject - tested manually using debugfs method; the 12 years old mce-inject tool
+#   does not work in ALT, because we don't have /dev/mcelog (deprecated interface).
+# edac-fake-inject - is not tested as it requires hardware.
+
+%triggerpostun -- %name < 0.8.1
+f=%_sysconfdir/sysconfig/rasdaemon
+# If config file is changed RPM will save it, otherwise it will delete it.
+if [ -f "$f.env.rpmsave" ]; then
+	mv "$f" "$f.rpmnew"
+	mv -v "$f.env.rpmsave" "$f"
+fi
 
 %post
 %post_service rasdaemon
+%post_systemd ras-mc-ctl
 
 %preun
 %preun_service rasdaemon
+%preun_systemd ras-mc-ctl
+
+# Make compile_time_options_summary.txt accessible at fixed location.
+%define _customdocdir %_docdir/%name
 
 %files
-%doc AUTHORS ChangeLog COPYING README TODO compile_time_options_summary.txt
+%doc AUTHORS ChangeLog COPYING README.md TODO compile_time_options_summary.txt
 %_sbindir/rasdaemon
 %_sbindir/ras-mc-ctl
-%_mandir/*/*
-%_unitdir/*.service
-%_initdir/%name
-%dir %_sysconfdir/ras
-%dir %_sysconfdir/ras/dimm_labels.d
-%config(noreplace) %_sysconfdir/sysconfig/%name.env
+%_libexecdir/rasdaemon
+%_localstatedir/lib/rasdaemon
+%ghost %_localstatedir/lib/rasdaemon/ras-mc_event.db
+%_sysconfdir/ras
+%config(noreplace) %_sysconfdir/sysconfig/rasdaemon
+%_initdir/rasdaemon
+%_unitdir/ras*.service
+%_man1dir/rasdaemon.1*
+%_man8dir/ras-mc-ctl.8*
 
 %changelog
+* Sun Aug 11 2024 Vitaly Chikunov <vt@altlinux.org> 0.8.1-alt1
+- Update to 0.8.1 (2024-07-16).
+- spec: Packaging changed from srpms to gears+tarball with watchfile.
+- spec: Changed Url to the main upstream repository.
+- Config renamed from /etc/sysconfig/rasdaemon.env to /etc/sysconfig/rasdaemon
+  (to match upstream and other distros).
+- spec: Remove unneeded BuildRequires.
+- spec: Add service hook calls for ras-mc-ctl systemd unit.
+- spec: Package contrib scripts for testing purposes.
+
 * Fri Feb 03 2023 Sergey Y. Afonin <asy@altlinux.org> 0.7.0-alt1
 - new version
 
