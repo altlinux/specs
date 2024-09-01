@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Automatic archives creating and extracting library
@@ -136,6 +136,9 @@ GObject introspection devel data for the %_name library
 
 
 %changelog
+* Sun Sep 01 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.5-alt1
+- 0.4.5
+
 * Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.4-alt1
 - 0.4.4
 
