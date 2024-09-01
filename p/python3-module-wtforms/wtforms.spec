@@ -1,42 +1,44 @@
 %define oname wtforms
 
 %def_with check
+%def_without docs
 
 Name: python3-module-%oname
 Version: 3.1.2
-Release: alt1
+Release: alt2
 
-Summary: A flexible forms validation and rendering library for python web development
+Summary: Form validation and rendering for Python web development
 
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/WTForms/
+Url: https://pypi.org/project/WTForms
+Vcs: https://github.com/wtforms/wtforms.git
 
 BuildArch: noarch
 
-# https://github.com/wtforms/wtforms.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-hatchling
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-babel
 
+%if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-pallets-sphinx-themes
 BuildRequires: python3-module-sphinx-issues
 BuildRequires: python3-module-sphinxcontrib-log-cabinet
-BuildRequires: python3-module-hatchling
+%endif
 
 %if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-markupsafe
 BuildRequires: python3-module-email-validator
 %endif
 
 %description
 WTForms is a flexible forms validation and rendering library for python
 web development.
-
-To get started using WTForms, we recommend reading the crash course on
-the website: http://wtforms.simplecodes.com/.
 
 %package pickles
 Summary: Pickles for %oname
@@ -61,7 +63,9 @@ This package contains documentation for %oname.
 %prep
 %setup
 
+%if_with doc
 sed -i 's|sphinx-build|&-3|' docs/Makefile
+%endif
 
 %build
 %pyproject_build
@@ -69,16 +73,20 @@ sed -i 's|sphinx-build|&-3|' docs/Makefile
 %install
 %pyproject_install
 
+%if_with docs
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs pickle html
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
+%endif
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest
 
 %files
 %doc README.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
+%if_with docs
 %exclude %python3_sitelibdir/*/pickle
 
 %files pickles
@@ -86,8 +94,13 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %files docs
 %doc docs/_build/html/*
+%endif
 
 %changelog
+* Sun Sep 01 2024 Anton Vyatkin <toni@altlinux.org> 3.1.2-alt2
+- Fixed FTBFS.
+- Build without docs.
+
 * Sun Jan 07 2024 Andrey Cherepanov <cas@altlinux.org> 3.1.2-alt1
 - New version.
 
