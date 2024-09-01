@@ -1,6 +1,6 @@
 Name: libuldaq
 Version: 1.2.1
-Release: alt1
+Release: alt2
 
 Summary: MCC Universal Library for Linux
 License: MIT
@@ -37,6 +37,7 @@ BuildArch: noarch
 %setup
 sed -i -e "s@udevadm@false@" Makefile.am
 sed -i -e "s@ldconfig@true@" Makefile.am
+sed -i -e "s@/lib/udev/rules.d@%_udevrulesdir@" Makefile.am
 
 %build
 %autoreconf
@@ -66,6 +67,9 @@ sed -i -e "s@ldconfig@true@" Makefile.am
 #%doc %_defaultdocdir/botan-%version
 
 %changelog
+* Sun Sep 01 2024 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt2
+- use _udevrulesdir to install udev rules
+
 * Sun Apr 03 2022 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
 - new version 1.2.1 (with rpmrb script)
 
