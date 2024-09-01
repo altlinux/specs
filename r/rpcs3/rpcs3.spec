@@ -1,7 +1,7 @@
 %define optflags_lto %nil
 
-%define git_ver 16395
-%define git_commit c16e176fbebc81aeef02a10faa75592a311f28fd
+%define git_ver 16885
+%define git_commit e56164f1e321fe2873c246a268af8ce1dc9281bd
 
 %define glslang_version 13.1.1
 %define asmjit_commit 416f7356967c1f66784dc1580fe157f9406d8bff
@@ -13,10 +13,12 @@
 %define soundtouch_commit 394e1f58b23dc80599214d2e9b6a5e0dfd0bbe07
 %define miniupnp_version miniupnpd_2_3_6
 %define rtmidi_version 6.0.0
+%define zstd_commit 97291fc5020a8994019ab76cf0cda83a9824374c
+%define openal_version 1.23.1
 
 Name: rpcs3
-Version: 0.0.32
-Release: alt2.1
+Version: 0.0.33
+Release: alt1
 
 Summary: PS3 emulator/debugger
 License: GPLv2
@@ -49,8 +51,10 @@ Source8: soundtouch-%soundtouch_commit.tar
 Source9: miniupnp-%miniupnp_version.tar
 # https://github.com/thestk/rtmidi/archive/refs/tags/%rtmidi_version/rtmidi-%rtmidi_version.tar.gz
 Source10: rtmidi-%rtmidi_version.tar
-
-BuildPreReq: liblzma-devel
+# https://github.com/facebook/zstd/archive/%zstd_commit/zstd-%zstd_commit.tar.gz
+Source11: zstd-%zstd_commit.tar
+# https://github.com/kcat/openal-soft/archive/%openal_version/openal-soft-%openal_version.tar.gz
+Source12: openal-soft-%openal_version.tar
 
 BuildRequires: /proc
 BuildRequires: clang
@@ -72,11 +76,13 @@ BuildRequires: libflatbuffers-devel
 BuildRequires: libopenal-devel
 BuildRequires: libpng-devel
 BuildRequires: libpugixml-devel
+BuildRequires: libstb-devel
 BuildRequires: libswresample-devel
 BuildRequires: libswscale-devel
 BuildRequires: libtinfo-devel
 BuildRequires: libudev-devel
 BuildRequires: libusb-devel
+BuildRequires: libvulkan-devel
 BuildRequires: libwayland-cursor-devel
 BuildRequires: libwayland-egl-devel
 BuildRequires: libwayland-server-devel
@@ -95,7 +101,7 @@ BuildRequires: qt6-svg-devel
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12
 
 %__mv -Tf ../glslang-%glslang_version 3rdparty/glslang/glslang
 %__mv -Tf ../asmjit-%asmjit_commit 3rdparty/asmjit/asmjit
@@ -107,6 +113,8 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 %__mv -Tf ../soundtouch-%soundtouch_commit 3rdparty/SoundTouch/soundtouch
 %__mv -Tf ../miniupnp-%miniupnp_version 3rdparty/miniupnp/miniupnp
 %__mv -Tf ../rtmidi-%rtmidi_version 3rdparty/rtmidi/rtmidi
+%__mv -Tf ../zstd-%zstd_commit 3rdparty/zstd/zstd
+%__mv -Tf ../openal-soft-%openal_version 3rdparty/OpenAL/openal-soft
 
 #Generate Version Strings
 GIT_VERSION=$(echo %git_ver)
@@ -123,8 +131,7 @@ echo "// This is a generated file.
 " > %name/git-version.h
 
 %build
-%add_optflags -L%_libdir/pipewire-0.3/jack
-%add_optflags -I%_builddir/%name-%version/3rdparty/glslang/glslang
+%add_optflags -I%_includedir/stb
 
 %cmake \
 	-DCMAKE_C_COMPILER:STRING=clang \
@@ -164,6 +171,9 @@ echo "// This is a generated file.
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Sun Sep 01 2024 Nazarov Denis <nenderus@altlinux.org> 0.0.33-alt1
+- Version 0.0.33
+
 * Fri Jul 26 2024 Nazarov Denis <nenderus@altlinux.org> 0.0.32-alt2.1
 - Fix FTBFS
 
