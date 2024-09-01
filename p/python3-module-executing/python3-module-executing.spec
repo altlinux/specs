@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-executing
-Version: 2.0.1
-Release: alt2
+Version: 2.1.0
+Release: alt1
 Summary: Get the currently executing AST node of a frame, and other information
 License: MIT
 Group: Development/Python3
@@ -15,7 +15,6 @@ Vcs: https://github.com/alexmojaki/executing
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
-Patch: .gear/executing-2.0.1-python3.12.5-fix.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -30,7 +29,6 @@ what a frame is currently doing, particularly the AST node being executed.
 
 %prep
 %setup
-%patch -p1
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
@@ -50,6 +48,9 @@ what a frame is currently doing, particularly the AST node being executed.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Sep 01 2024 Anton Vyatkin <toni@altlinux.org> 2.1.0-alt1
+- New version 2.1.0.
+
 * Thu Aug 29 2024 Anton Vyatkin <toni@altlinux.org> 2.0.1-alt2
 - Fixed FTBFS.
 
