@@ -1,17 +1,23 @@
 %define api_ver 1
 
+%def_enable man
+
 Name: liblqr
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
 Summary: LiquidRescale library
 Group: System/Libraries
-License: GPLv3
-Url: http://liquidrescale.wikidot.com/
+License: LGPL-3.0
+Url: https://liblqr.wikidot.com/
 
-Source: http://liblqr.wikidot.com/local--files/en:download-page/%name-%api_ver-%version.tar.bz2
+Vcs: https://github.com/carlobaldassi/liblqr.git
+
+Source: https://github.com/carlobaldassi/liblqr/archive/v%version/%name-%version.tar.gz
+#Source: http://liblqr.wikidot.com/local--files/en:download-page/%name-%api_ver-%version.tar.bz2
 
 BuildRequires: gcc-c++ glib2-devel
+%{?_enable_man:BuildRequires: xsltproc docbook-dtds docbook-style-xsl}
 
 %description
 The LiquidRescale (lqr) library provides a C/C++ API for
@@ -19,20 +25,23 @@ performing non-uniform resizing of images by the seam-carving
 technique.
 
 %package devel
-Summary: LiquidRescale library  development kit
+Summary: LiquidRescale library development kit
 Group: System/Libraries
-License: GPLv3
-Requires: %name = %version-%release
+License: LGPL-3.0
+Requires: %name = %EVR
 
 %description devel
 The libqr-devel package contains the header files
-needed to develop applications with liblqr
+needed to develop applications with liblqr.
 
 %prep
-%setup -n %name-%api_ver-%version
+%setup -n %name-%version
 
 %build
-%configure
+%autoreconf
+%configure \
+    %{?_enable_man:--enable-install-man}
+%nil
 %make_build
 
 %install
@@ -40,15 +49,18 @@ needed to develop applications with liblqr
 
 %files
 %_libdir/%name-%api_ver.so.*
-%doc README ChangeLog
+%doc README ChangeLog NEWS
 
 %files devel
 %_libdir/%name-%api_ver.so
 %_includedir/lqr-%api_ver/
-%_libdir/pkgconfig/lqr-%api_ver.pc
-%doc docs/liblqr_manual.docbook
+%_pkgconfigdir/lqr-%api_ver.pc
+%{?_enable_man:%_man3dir/*}
 
 %changelog
+* Sun Sep 01 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt1
+- 0.4.3
+
 * Tue Oct 29 2013 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
 - 0.4.2
 

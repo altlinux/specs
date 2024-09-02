@@ -1,7 +1,8 @@
 %def_disable snapshot
 %define _udevdir %(pkg-config --variable=udevdir udev)
 
-%define ver_major 2.12
+%define ver_major 2.13
+%define api_ver 1.0
 %define sover 9
 %def_disable docs
 
@@ -14,7 +15,7 @@
 %endif
 
 Name: libwacom
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A Wacom tablets library
@@ -84,8 +85,8 @@ developing applications that use %name.
 %build
 %meson \
     -Dudev-dir='%_udevdir' \
-    %{?_disable_docs:-Ddocumentation=disabled} \
-    %{?_disable_tests:-Dtests=disabled} \
+    %{subst_enable_meson_feature docs documentation} \
+    %{subst_enable_meson_feature tests tests} \
     %{?optflags_lto:-Db_lto=true}
 %nil
 %meson_build
@@ -105,15 +106,16 @@ mkdir -p %buildroot%_sysconfdir/%name
 %_bindir/%name-update-db
 %_bindir/%name-show-stylus
 %_libdir/*.so.%{sover}*
-%_udevrulesdir/65-libwacom.rules
-%_man1dir/libwacom-list-local-devices.1*
-%_man1dir/libwacom-list-devices.1*
+%_udevrulesdir/65-%name.rules
+%_man1dir/%name-list-local-devices.1*
+%_man1dir/%name-list-devices.1*
+%_man1dir/%name-show-stylus.1*
 %doc NEWS README* COPYING
 
 %files devel
-%_includedir/*
+%_includedir/%name-%api_ver/
 %_libdir/*.so
-%_pkgconfigdir/*
+%_pkgconfigdir/%name.pc
 
 %files data
 %dir %_datadir/%name
@@ -126,6 +128,9 @@ mkdir -p %buildroot%_sysconfdir/%name
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Sep 02 2024 Yuri N. Sedunov <aris@altlinux.org> 2.13.0-alt1
+- 2.13.0
+
 * Fri Jun 21 2024 Yuri N. Sedunov <aris@altlinux.org> 2.12.2-alt1
 - 2.12.2
 
