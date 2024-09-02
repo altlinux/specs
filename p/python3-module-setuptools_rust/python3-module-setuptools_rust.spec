@@ -3,7 +3,7 @@
 
 Name: python3-module-%modname
 Version: 1.10.1
-Release: alt1
+Release: alt2
 
 Summary: Setuptools helpers for rust Python extensions.
 
@@ -17,6 +17,8 @@ Source: %name-%version.tar
 BuildArch: noarch
 # mapping from PyPI name
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+# delayed import
+Requires: python3-module-semantic-version
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
@@ -39,6 +41,9 @@ were written in C.
 %python3_sitelibdir/%{pyproject_distinfo %modname}
 
 %changelog
+* Mon Sep 02 2024 Stanislav Levin <slev@altlinux.org> 1.10.1-alt2
+- Added missing runtime dependency (semantic-version).
+
 * Tue Aug 6 2024 Vladimir Didenko <cow@altlinux.org> 1.10.1-alt1
 - new version
 
