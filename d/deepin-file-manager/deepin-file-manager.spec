@@ -5,7 +5,7 @@
 
 Name: deepin-file-manager
 Version: 6.0.44
-Release: alt1
+Release: alt2
 
 Summary: Deepin File Manager
 
@@ -16,14 +16,13 @@ Url: https://github.com/linuxdeepin/dde-file-manager
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-Patch: %name-%version-%release.patch
 
 Provides: %repo = %EVR
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
 # Automatically added by buildreq on Thu Oct 26 2023
 # optimized out: alt-os-release bash5 bashrc boost-asio-devel boost-devel-headers boost-filesystem-devel cmake cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gsettings-qt-devel icu-utils libX11-devel libdeepin-pdfium1 libdfm-burn1 libdfm-io1 libdfm-mount1 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libdtkwidget-devel libffmpegthumbnailer-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt libicu-devel libisoburn-devel libp11-kit libpolkit-qt5-agent libpolkit-qt5-core libpolkit-qt5-gui libpoppler0-cpp libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libsecret-devel libssl-devel libstartup-notification libstdc++-devel libudisks2-devel libxcb-devel pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-common qt5-base-devel qt5-x11extras-devel sh5 xorg-proto-devel zlib-devel
-BuildRequires: deepin-dock-devel deepin-qt-dbus-factory-devel dtk6-common-devel dtkcore kf5-kcodecs-devel libcryptsetup-devel libdeepin-pdfium-devel libdfm-burn-devel libdfm-io-devel libdfm-mount-devel libdmr-devel libdocparser-devel liblucene++-devel libmount-devel libpcre-devel libpolkit-devel libpolkitqt5-qt5-devel libpoppler-cpp-devel libtag-devel qt5-multimedia-devel qt5-svg-devel qt5-tools
+BuildRequires: cmake deepin-dock-devel deepin-qt-dbus-factory-devel dtk6-common-devel dtkcore kf5-kcodecs-devel libcryptsetup-devel libdeepin-pdfium-devel libdfm-burn-devel libdfm-io-devel libdfm-mount-devel libdmr-devel libdocparser-devel liblucene++-devel libmount-devel libpcre-devel libpolkit-devel libpolkitqt5-qt5-devel libpoppler-cpp-devel libtag-devel qt5-multimedia-devel qt5-svg-devel qt5-tools qt5-x11extras-devel gsettings-qt-devel libffmpegthumbnailer-devel
 BuildRequires: deepin-gettext-tools deepin-desktop-base
 
 %if_with clang
@@ -102,7 +101,12 @@ Deepin desktop environment - desktop module.
 
 %prep
 %setup -n %repo-%version
-%patch -p1
+sed -i 's|lib/dde-dock/plugins/system-trays|${LIB_DESTINATION}/dde-dock/plugins/system-trays|' \
+  src/external/dde-dock-plugins/disk-mount/CMakeLists.txt
+sed -i 's|include <pcre.h>|include <pcre/pcre.h>|' \
+  src/plugins/filemanager/dfmplugin-search/3rdparty/fsearch/database_search.c
+sed -i 's|/usr/bin/python|%__python3|' \
+  tests/report-daily-check.py
 
 %build
 %define optflags_lto %nil
@@ -242,6 +246,9 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Mon Sep 02 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.44-alt2
+- NMU: fixed FTBFS.
+
 * Wed Apr 03 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.44-alt1
 - New version 6.0.44.
 
