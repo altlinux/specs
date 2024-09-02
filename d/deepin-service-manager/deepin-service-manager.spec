@@ -4,7 +4,7 @@
 
 Name: deepin-service-manager
 Version: 1.0.3
-Release: alt1.gitd16282e
+Release: alt2.gitd16282e
 
 Summary: Manage DBus service on Deepin
 
@@ -68,9 +68,6 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
-# Fix services location.
-mkdir -p %buildroot%_unitdir/
-mv -vf %buildroot%_prefix/lib/systemd/system/* %buildroot%_unitdir/
 # Fix library naming.
 #mv -f %%buildroot%%_libdir/libdeepin-qdbus-service.so %%buildroot%%_libdir/libdeepin-qdbus-service.so.%%sover
 #ln -s %%_libdir/libdeepin-qdbus-service.so.%%sover %%buildroot%%_libdir/libdeepin-qdbus-service.so
@@ -116,5 +113,8 @@ mv -vf %buildroot%_prefix/lib/systemd/system/* %buildroot%_unitdir/
 %_pkgconfigdir/deepin-qdbus-service.pc
 
 %changelog
+* Mon Sep 02 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.3-alt2.gitd16282e
+- Applied usrmerge.
+
 * Tue Nov 28 2023 Leontiy Volodin <lvol@altlinux.org> 1.0.3-alt1.gitd16282e
 - Initial build for ALT Sisyphus.
