@@ -6,7 +6,7 @@
 
 Name:          gem-ffi
 Version:       1.17.0
-Release:       alt1
+Release:       alt2
 Summary:       Ruby foreign function interface
 License:       BSD-3-Clause
 Group:         Development/Ruby
@@ -15,6 +15,7 @@ Vcs:           https://github.com/ffi/ffi.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
+Source1:       e2k-types.conf
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libffi-devel
 %if_enabled check
@@ -123,6 +124,8 @@ extension using Ruby-FFI.
 
 %install
 %ruby_install
+install -pDm644 %SOURCE1 \
+	%buildroot%ruby_gemlibdir/lib/ffi/platform/e2k-linux/types.conf
 
 %check
 %ruby_test
@@ -147,6 +150,9 @@ extension using Ruby-FFI.
 
 
 %changelog
+* Mon Sep 02 2024 Michael Shigorin <mike@altlinux.org> 1.17.0-alt2
+- added types.conf for e2k from MCST PDK 8.1rc2 (distributable)
+
 * Wed Jul 24 2024 Pavel Skrylev <majioa@altlinux.org> 1.17.0-alt1
 - ^ 1.16.3p25 -> 1.17.0
 
