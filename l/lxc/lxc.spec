@@ -1,30 +1,3 @@
-#
-# lxc: linux Container library
-#
-# (C) Copyright IBM Corp. 2007, 2008
-# (C) ALT Linux Team 2009-2024
-#
-# Authors:
-# Daniel Lezcano <dlezcano at fr.ibm.com>
-# Denis Pynkin <dans at altlinux.org>
-# Vladimir D. Seleznev <vseleznv at altlinux.org>
-#
-# This library is free software; you can redistribute it and/or
-# modify it under the terms of the GNU Lesser General Public
-# License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.
-#
-# This library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# Lesser General Public License for more details.
-#
-# You should have received a copy of the GNU Lesser General Public
-# License along with this library; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
-#
-# Spec file adapted for ALT Linux.
-
 %define _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
@@ -43,10 +16,8 @@
 
 Name: lxc
 Version: 6.0.0
-Release: alt1
-
+Release: alt2
 Summary: Linux Containers
-
 License: LGPL-2.1-or-later
 Group: System/Configuration/Other
 Url: https://linuxcontainers.org/
@@ -66,11 +37,9 @@ Requires: lxc-core lxc-net lxc-templates
 BuildRequires(pre): rpm-macros-pam rpm-macros-meson
 BuildRequires: meson >= 0.61
 BuildRequires: docbook2X
-BuildRequires: libcap-devel
 BuildRequires: libpam-devel
-BuildRequires: libseccomp-devel libselinux-devel libssl-devel
-BuildRequires: pkgconfig(systemd)
-BuildRequires: dbus-python-devel
+BuildRequires: pkgconfig(libcap) pkgconfig(libseccomp) pkgconfig(libselinux) pkgconfig(openssl)
+BuildRequires: pkgconfig(dbus-1)
 %{?_enable_static_init:BuildRequires: libcap-devel-static}
 
 %description
@@ -113,7 +82,6 @@ Summary: Runtime files for LXC
 Group: System/Configuration/Other
 Provides: lxc-libs = %EVR
 Obsoletes: lxc-libs < %EVR
-Requires(pre): /usr/sbin/groupadd
 
 %package -n liblxc-devel
 Summary: Development files for LXC
@@ -193,6 +161,7 @@ echo -e "#undef ARRAY_SIZE\n#define ARRAY_SIZE(x) (sizeof(x)/sizeof(*(x)))" >> s
 %meson \
     -Ddistrosysconfdir='/etc/sysconfig' \
     -Dinit-script=systemd,sysvinit \
+    -Dsystemd-unitdir=%_unitdir \
     -Dcapabilities=true \
     -Dapparmor=false \
     -Dselinux=true \
@@ -220,22 +189,22 @@ find %buildroot -name '*.a' -delete
 %post core
 usermod --add-subgids 100000-165535 --add-subuids 100000-165535 root ||:
 if [ $1 -eq 1 ]; then
-	/sbin/chkconfig --add lxc ||:
+	chkconfig --add lxc ||:
 fi
 
 %preun core
 if [ $1 -eq 0 ]; then
-	/sbin/chkconfig --del lxc ||:
+	chkconfig --del lxc ||:
 fi
 
 %post net
 if [ $1 -eq 1 ]; then
-	/sbin/chkconfig --add lxc-net ||:
+	chkconfig --add lxc-net ||:
 fi
 
 %preun net
 if [ $1 -eq 0 ]; then
-	/sbin/chkconfig --del lxc-net ||:
+	chkconfig --del lxc-net ||:
 fi
 
 %pre runtime
@@ -323,6 +292,11 @@ groupadd -r -f vmusers ||:
 %_man8dir/pam_cgfs.8*
 
 %changelog
+* Mon Sep 02 2024 Alexey Shabalin <shaba@altlinux.org> 6.0.0-alt2
+- restore patch "confile: convert AppArmor and SELinux confile
+  parsing from errors to warnings".
+- drop lxc-apparmor-load from systemd unit.
+
 * Fri May 03 2024 Nadezhda Fedorova <fedor@altlinux.org> 6.0.0-alt1
 - Updated to 6.0.0.
 
