@@ -7,7 +7,7 @@
 
 Name: deepin-control-center
 Version: 6.0.47
-Release: alt2
+Release: alt3
 
 Summary: New control center for Linux Deepin
 
@@ -29,7 +29,7 @@ BuildRequires: gcc-c++
 %endif
 # Automatically added by buildreq on Mon Oct 23 2023
 # optimized out: bash5 bashrc cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libcrypt-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libpolkit-qt5-agent libpolkit-qt5-core libpolkit-qt5-gui libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-help libqt5-multimedia libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel perl perl-Config-Tiny perl-Encode perl-XML-LibXML perl-parent pkg-config python3 python3-base qt5-base-common qt5-base-devel qt5-tools sh5
-BuildRequires: cmake deepin-gettext-tools doxygen libdeepin-pw-check-devel dtk6-common-devel libdtkwidget-devel libpolkitqt5-qt5-devel qt5-multimedia-devel qt5-svg-devel qt5-wayland-devel libgtest-devel gsettings-qt-devel
+BuildRequires: cmake deepin-gettext-tools doxygen libdeepin-pw-check-devel dtk6-common-devel libdtkwidget-devel qt5-tools libpolkitqt5-qt5-devel qt5-multimedia-devel qt5-svg-devel qt5-wayland-devel libgtest-devel gsettings-qt-devel
 
 %description
 New control center for Linux Deepin.
@@ -125,6 +125,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/libdcc-widgets.so
 
 %changelog
+* Mon Sep 02 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.47-alt3
+- NMU: fixed FTBFS.
+
 * Mon Apr 01 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.47-alt2
 - Fixed the path to the qt5 qch file.
 
