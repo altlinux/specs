@@ -10,7 +10,7 @@
 %endif
 
 Name: nfdump
-Version: 1.7.3
+Version: 1.7.4
 Release: alt1
 Summary: collect and process netflow data
 Group: Monitoring
@@ -184,6 +184,9 @@ rm -f  %buildroot%_sysconfdir/nfdump.conf.dist
 %endif
 
 %changelog
+* Fri Aug 30 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.7.4-alt1
+- 1.7.4
+
 * Thu Oct 12 2023 Sergey Y. Afonin <asy@altlinux.org> 1.7.3-alt1
 - 1.7.3
 - built with libzstd-devel
