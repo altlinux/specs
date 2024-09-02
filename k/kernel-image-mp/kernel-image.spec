@@ -1,5 +1,5 @@
-%define kernel_base_version	6.9
-%define kernel_sublevel        .12
+%define kernel_base_version	6.10
+%define kernel_sublevel        .4
 
 Name: kernel-image-mp
 Version: %kernel_base_version%kernel_sublevel
@@ -25,7 +25,7 @@ Url: http://www.kernel.org/
 
 Patch0: %name-%version-%release.patch
 
-ExclusiveArch: armh aarch64 %{?_enable_extra:%ix86 x86_64}
+ExclusiveArch: aarch64 %{?_enable_extra:armh %ix86 x86_64}
 
 ExclusiveOS: Linux
 
@@ -131,10 +131,6 @@ install -Dp -m644 .config %buildroot/boot/config-$KernelVer
 make modules_install INSTALL_MOD_PATH=%buildroot
 %ifarch armh aarch64
 make dtbs_install INSTALL_DTBS_PATH=%buildroot/lib/devicetree/$KernelVer
-%ifarch aarch64
-find %buildroot/lib/devicetree/$KernelVer -mindepth 1 -type d |\
-	while read d; do mv $d/* $d/../ && rmdir $d && ln -srv $d/../ $d; done
-%endif
 %endif
 
 mkdir -p %buildroot%kbuild_dir/arch/%base_arch
@@ -256,6 +252,12 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %modules_dir/build
 
 %changelog
+* Mon Sep 02 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 6.10.4-alt1
+- 6.10.4
+
+* Mon Sep 02 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 6.10.0-alt1
+- 6.10
+
 * Mon Jul 29 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 6.9.12-alt1
 - 6.9.12
 
