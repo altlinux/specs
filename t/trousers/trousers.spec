@@ -1,6 +1,6 @@
 Name: trousers
 Version: 0.3.15
-Release: alt2
+Release: alt3
 
 Summary: Implementation of the TCG's Software Stack
 License: BSD-3-Clause
@@ -52,10 +52,19 @@ applications.
 %install
 %makeinstall_std
 rm -v %buildroot%_libdir/*.a
+install -pm0644 -D trousers.service %buildroot%_unitdir/trousers.service
+install -pm0644 -D trousers.rules %buildroot%_udevrulesdir/60-trousers.rules
+
+%pre
+# common user for both trousers and tpm2-tss
+%_sbindir/groupadd -r -f tss &>/dev/null ||:
+%_sbindir/useradd -r -g tss -d /var/empty -s /dev/null -c 'TCG Core Services' -n tss &>/dev/null ||:
 
 %files
 %doc AUTHORS LICENSE NEWS README* ChangeLog
-%config(noreplace) %_sysconfdir/tcsd.conf
+%config(noreplace) %attr(0640,root,tss) %_sysconfdir/tcsd.conf
+%_unitdir/trousers.service
+%_udevrulesdir/60-trousers.rules
 %_sbindir/tcsd
 %_man5dir/tcsd.conf.5*
 %_man8dir/tcsd.8*
@@ -71,6 +80,9 @@ rm -v %buildroot%_libdir/*.a
 %_man3dir/Tspi_*.3*
 
 %changelog
+* Mon Sep 02 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.3.15-alt3
+- fixed trousers conffile permissions (closes: 51271)
+
 * Mon Aug 30 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.3.15-alt2
 - unpackaged static library dropped
 
