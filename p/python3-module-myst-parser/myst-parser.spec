@@ -6,8 +6,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.0
-Release: alt2.1
+Version: 4.0.0
+Release: alt1
 Summary: An extended commonmark compliant parser, with bridges to docutils/sphinx
 License: MIT
 Group: Development/Python3
@@ -16,11 +16,8 @@ Vcs: https://github.com/executablebooks/MyST-Parser
 
 BuildArch: noarch
 
-Source: %pypi_name-%version.tar
+Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
-
-# Fix tests broken by recent sphinx releases, up to sphinx v7.2.6
-Patch: 4f670fc04c438b57a9d4014be74e9a62cc0deba4.patch
 
 BuildRequires(pre): rpm-build-pyproject
 
@@ -67,8 +64,7 @@ as well as a Sphinx extension that allows you to write MyST Markdown in Sphinx.
 See the MyST Parser documentation for more information.
 
 %prep
-%setup -n %pypi_name-%version
-%patch -p1
+%setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -79,9 +75,7 @@ See the MyST Parser documentation for more information.
 %pyproject_install
 
 %check
-%tox_check_pyproject
-## TODO: fix excluded tests
-%pyproject_run_pytest -ra tests --ignore tests/test_sphinx
+%pyproject_run_pytest -ra
 
 %files
 %doc README.md
@@ -92,6 +86,9 @@ See the MyST Parser documentation for more information.
 %_bindir/myst-*
 
 %changelog
+* Mon Sep 02 2024 Stanislav Levin <slev@altlinux.org> 4.0.0-alt1
+- 2.0.0 -> 4.0.0.
+
 * Wed Apr 24 2024 Stanislav Levin <slev@altlinux.org> 2.0.0-alt2.1
 - NMU: fixed FTBFS (rpm-build-pyproject 0.0.5).
 
