@@ -18,7 +18,7 @@
 
 Name: zabbix
 Version: 7.0.3
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A network monitor
@@ -152,7 +152,11 @@ BuildArch: noarch
 Summary: %name java gateway
 Group: Monitoring
 Requires: %name-common = %EVR
-Requires: jre-openjdk >= 1.7.0
+%ifarch ppc64le %ix86
+Requires: jre-openjdk >= 17
+%else
+Requires: jre-openjdk >= 21
+%endif
 %filter_from_requires /^\/etc\/sysconfig\/network/d
 %filter_from_requires /^\/etc\/sysconfig\/zabbix-java-gateway/d
 %endif
@@ -853,6 +857,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Mon Sep 02 2024 Alexei Takaseev <taf@altlinux.org> 1:7.0.3-alt2
+- Fix start java-gateway (ALT#51339)
+
 * Fri Aug 23 2024 Alexei Takaseev <taf@altlinux.org> 1:7.0.3-alt1
 - 7.0.3
 
