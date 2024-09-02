@@ -1,5 +1,5 @@
 Name: kernel-image-6.11
-Release: alt0.rc5
+Release: alt0.rc6
 %define kernel_src_version	6.10
 %define kernel_base_version	6.11
 %define kernel_sublevel	.0
@@ -594,6 +594,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Sep 02 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.0-alt0.rc6
+- Update to v6.11-rc6 (2024-09-01).
+
 * Sun Aug 25 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.0-alt0.rc5
 - Update to v6.11-rc5 (2024-08-25).
 - config: CONFIG_SERIAL_SC16IS7XX_SPI=m.
