@@ -11,7 +11,7 @@
 %endif
 
 Name: scsitarget-utils
-Version: 1.0.91
+Version: 1.0.92
 Release: alt1
 
 Summary: The SCSI target daemon and utility programs
@@ -166,6 +166,9 @@ mkdir -p %buildroot%_libdir/tgt/backing-store
 %endif
 
 %changelog
+* Mon Sep 02 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.0.92-alt1
+- 1.0.92
+
 * Wed Mar 06 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.0.91-alt1
 - 1.0.91
 - drop tgt-signalfd-via-glibc broken patch:
