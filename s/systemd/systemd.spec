@@ -100,8 +100,8 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.10
-Release: alt2
+Version: %ver_major.11
+Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
 Group: System/Configuration/Boot and Init
@@ -2502,6 +2502,9 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Mon Sep 02 2024 Alexey Shabalin <shaba@altlinux.org> 1:255.11-alt1
+- 255.11
+
 * Tue Aug 06 2024 Ivan A. Melnikov <iv@altlinux.org> 1:255.10-alt2
 - Fix systemd-binfmt filetrigger (ALT#51035).
 - Fix build w/o tmp2 (fixes FTBFS on loongarch64 and riscv64).
