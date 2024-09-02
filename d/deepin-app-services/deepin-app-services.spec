@@ -5,7 +5,7 @@
 
 Name: deepin-app-services
 Version: 1.0.25
-Release: alt1
+Release: alt2
 
 Summary: Service collection of DDE applications
 
@@ -89,8 +89,8 @@ chmod +x %buildroot%_datadir/bash-completion/completions/dde-dconfig
 %_datadir/dde-dconfig-editor/translations/dde-dconfig-editor_zh_CN.qm
 # ---
 %_unitdir/dde-dconfig-daemon.service
-/lib/sysusers.d/dde-dconfig-daemon.conf
-/lib/tmpfiles.d/dde-dconfig-daemon-tmpfiles.conf
+%_prefix/lib/sysusers.d/dde-dconfig-daemon.conf
+%_prefix/lib/tmpfiles.d/dde-dconfig-daemon-tmpfiles.conf
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/dconfig-example/
@@ -112,6 +112,9 @@ chmod +x %buildroot%_datadir/bash-completion/completions/dde-dconfig
 %endif
 
 %changelog
+* Mon Sep 02 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.25-alt2
+- Applied usrmerge.
+
 * Tue Jan 30 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.25-alt1
 - New version 1.0.25.
 
