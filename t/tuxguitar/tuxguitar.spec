@@ -1,6 +1,6 @@
 Name: tuxguitar
 Version: 1.6.4
-Release: alt1
+Release: alt2
 
 Summary: A multitrack guitar tablature editor and player
 License: LGPL-2.0+
@@ -66,7 +66,7 @@ cp -r desktop/build-scripts/tuxguitar-linux-swt/target/tuxguitar-9.99-SNAPSHOT-l
 
 # desktop files
 install -dm 755 %buildroot/%_datadir/applications
-sed 's/\/opt\/tuxguitar\/share\/skins\/Oxygen\/icon.png/\/usr\/share\/icons\/hicolor\/96x96\/apps\/tuxguitar.png/g' %buildroot/%_datadir/%name-%version/share/applications/tuxguitar.desktop > %buildroot/%_datadir/applications/tuxguitar.desktop
+sed 's/Icon=tuxguitar/Icon=\/usr\/share\/icons\/hicolor\/96x96\/apps\/tuxguitar.png/g' %buildroot/%_datadir/%name-%version/share/applications/tuxguitar.desktop > %buildroot/%_datadir/applications/tuxguitar.desktop
 
 # icon
 install -dm 755 %buildroot/%_iconsdir/hicolor/96x96/apps/
@@ -84,6 +84,16 @@ desktop-file-install --dir %buildroot/%_datadir/applications --delete-original %
 install -dm 755 %buildroot/%_datadir/mime/packages
 install -pm 644 desktop/build-scripts/tuxguitar-linux-swt/target/tuxguitar-9.99-SNAPSHOT-linux-swt/share/mime/packages/tuxguitar.xml %buildroot/%_datadir/mime/packages/
 
+%pretrans -p <lua>
+path = "%{_iconsdir}/hicolor/96x96/apps/tuxguitar.png"
+st = posix.stat(path)
+if st and st.type == "directory" then
+  if posix.stat(path .. "/icon.png") then
+    os.remove(path .. "/icon.png")
+  end
+  os.remove(path)
+end
+
 %files
 %doc AUTHORS LICENSE README.md
 %_libdir/tuxguitar-%version
@@ -94,6 +104,10 @@ install -pm 644 desktop/build-scripts/tuxguitar-linux-swt/target/tuxguitar-9.99-
 %_bindir/tuxguitar
 
 %changelog
+* Mon Sep 02 2024 Andrey Kovalev <ded@altlinux.org> 1.6.4-alt2
+- fix update (closes: #51172)
+- fix icon display
+
 * Thu Aug 29 2024 Andrey Kovalev <ded@altlinux.org> 1.6.4-alt1
 - update to 1.6.4 (closes: #51096)
 
