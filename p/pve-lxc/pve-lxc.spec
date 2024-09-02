@@ -5,7 +5,7 @@
 
 Name: pve-%rname
 Version: 6.0.0
-Release: alt1
+Release: alt2
 Summary: Linux containers userspace tools
 Group: System/Configuration/Other
 License: LGPL-2.1+
@@ -105,6 +105,10 @@ usermod --add-subgids 100000-165535 --add-subuids 100000-165535 root ||:
 %_man7dir/*.7*
 
 %changelog
+* Mon Sep 02 2024 Alexey Shabalin <shaba@altlinux.org> 6.0.0-alt2
+- restore patch "confile: convert AppArmor and SELinux confile
+  parsing from errors to warnings"
+
 * Thu Aug 29 2024 Alexey Shabalin <shaba@altlinux.org> 6.0.0-alt1
 - 6.0.0-1
 
