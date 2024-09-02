@@ -5,7 +5,7 @@
 
 Name: autorestic
 Version: 1.8.3
-Release: alt1
+Release: alt2
 Summary: Config driven, easy backup CLI for restic
 License: Apache-2.0
 Group: Archiving/Backup
@@ -47,7 +47,11 @@ install -Dpm644 completion.fish -T %buildroot%_datadir/fish/vendor_completions.d
 %check
 %buildroot%_bindir/autorestic --version | grep -Fx 'autorestic version %version'
 %buildroot%_bindir/autorestic --help
-go test -count=1 -cover %{?_is_lp64:-race} -v ./...
+go test -count=1 -cover \
+%ifnarch loongarch64 riscv64
+%{?_is_lp64:-race} \
+%endif
+-v ./...
 
 %files
 %doc CHANGELOG.md DEVELOPMENT.md LICENSE README.md docs/pages
@@ -57,6 +61,10 @@ go test -count=1 -cover %{?_is_lp64:-race} -v ./...
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Mon Sep 02 2024 Ivan A. Melnikov <iv@altlinux.org> 1.8.3-alt2
+- Disable -race flag for loongarch64 and riscv64
+  to fix FTBFS on these architectures (thx k0tran@).
+
 * Thu Aug 29 2024 Vitaly Chikunov <vt@altlinux.org> 1.8.3-alt1
 - Update to v1.8.3 (2024-08-28).
 
