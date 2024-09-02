@@ -6,7 +6,7 @@
 
 Name:    RHVoice
 Version: 1.14.0
-Release: alt1
+Release: alt2
 
 Summary: a free and open source speech synthesizer for Russian and other languages
 License: GPL-2.0
@@ -33,6 +33,9 @@ BuildRequires: boost-devel
 Summary: Lib files for %name
 Group: System/Libraries
 Provides: RHVoice = %EVR
+Obsoletes: RHVoice < %EVR
+Provides: libRHVoice = %EVR
+Obsoletes: libRHVoice < %EVR
 
 %description -n lib%name%sover
 %summary
@@ -70,7 +73,6 @@ Group: System/Libraries
 Summary: Development files for %name
 Group: Development/C++
 Requires: %name = %EVR
-Provides: RHVoice-devel = %EVR
 
 %description -n lib%name-devel
 Development files for %name
@@ -117,6 +119,7 @@ Requires: %name = %EVR
 %summary
 
 %files Russian
+%dir %_datadir/%name/languages/Russian
 %_datadir/%name/languages/Russian/*
 
 %package English
@@ -129,6 +132,7 @@ Requires: %name = %EVR
 %summary
 
 %files English
+%dir %_datadir/%name/languages/English
 %_datadir/%name/languages/English/*
 
 %package Albanian
@@ -141,6 +145,7 @@ Requires: %name = %EVR
 %summary
 
 %files Albanian
+%dir %_datadir/%name/languages/Albanian
 %_datadir/%name/languages/Albanian/*
 
 %package Brazilian
@@ -154,6 +159,7 @@ Provides: %name-Portuguese = %EVR
 %summary
 
 %files Brazilian
+%dir %_datadir/%name/languages/Brazilian-Portuguese
 %_datadir/%name/languages/Brazilian-Portuguese/*
 
 %package Czech
@@ -167,6 +173,7 @@ Requires: %name = %EVR
 %summary
 
 %files Czech
+%dir %_datadir/%name/languages/Czech
 %_datadir/%name/languages/Czech/*
 
 %package Esperanto
@@ -179,6 +186,7 @@ Requires: %name = %EVR
 %summary
 
 %files Esperanto
+%dir %_datadir/%name/languages/Esperanto
 %_datadir/%name/languages/Esperanto/*
 
 %package Georgian
@@ -191,6 +199,7 @@ Requires: %name = %EVR
 %summary
 
 %files Georgian
+%dir %_datadir/%name/languages/Georgian
 %_datadir/%name/languages/Georgian/*
 
 %package Kyrgyz
@@ -203,6 +212,7 @@ Requires: %name = %EVR
 %summary
 
 %files Kyrgyz
+%dir %_datadir/%name/languages/Kyrgyz
 %_datadir/%name/languages/Kyrgyz/*
 
 %package Macedonian
@@ -216,6 +226,7 @@ Requires: %name = %EVR
 %summary
 
 %files Macedonian
+%dir %_datadir/%name/languages/Macedonian
 %_datadir/%name/languages/Macedonian/*
 
 %package Polish
@@ -229,6 +240,7 @@ Requires: %name = %EVR
 %summary
 
 %files Polish
+%dir %_datadir/%name/languages/Polish
 %_datadir/%name/languages/Polish/*
 
 %package Slovak
@@ -242,6 +254,7 @@ Requires: %name = %EVR
 %summary
 
 %files Slovak
+%dir %_datadir/%name/languages/Slovak
 %_datadir/%name/languages/Slovak/*
 
 %package Tatar
@@ -254,6 +267,7 @@ Requires: %name = %EVR
 %summary
 
 %files Tatar
+%dir %_datadir/%name/languages/Tatar
 %_datadir/%name/languages/Tatar/*
 
 %package Ukrainian
@@ -266,6 +280,7 @@ Requires: %name = %EVR
 %summary
 
 %files Ukrainian
+%dir %_datadir/%name/languages/Ukrainian
 %_datadir/%name/languages/Ukrainian/*
 
 %package Uzbek
@@ -279,6 +294,7 @@ Requires: %name = %EVR
 %summary
 
 %files Uzbek
+%dir %_datadir/%name/languages/Uzbek
 %_datadir/%name/languages/Uzbek/*
 
 # voices
@@ -294,6 +310,7 @@ Requires: %name-Russian = %EVR
 %summary
 
 %files Russian-aleksandr
+%dir %_datadir/%name/voices/aleksandr
 %_datadir/%name/voices/aleksandr/*
 
 %package Russian-aleksandr-hq
@@ -307,6 +324,7 @@ Requires: %name-Russian = %EVR
 %summary
 
 %files Russian-aleksandr-hq
+%dir %_datadir/%name/voices/aleksandr-hq
 %_datadir/%name/voices/aleksandr-hq/*
 
 %package Russian-anna
@@ -319,6 +337,7 @@ Requires: %name-Russian = %EVR
 %summary
 
 %files Russian-anna
+%dir %_datadir/%name/voices/anna
 %_datadir/%name/voices/anna/*
 
 %package Russian-arina
@@ -332,6 +351,7 @@ Requires: %name-Russian = %EVR
 %summary
 
 %files Russian-arina
+%dir %_datadir/%name/voices/arina
 %_datadir/%name/voices/arina/*
 
 %package Russian-artemiy
@@ -345,6 +365,7 @@ Requires: %name-Russian = %EVR
 %summary
 
 %files Russian-artemiy
+%dir %_datadir/%name/voices/artemiy
 %_datadir/%name/voices/artemiy/*
 
 %package Russian-elena
@@ -358,6 +379,7 @@ Requires: %name-Russian = %EVR
 %summary
 
 %files Russian-elena
+%dir %_datadir/%name/voices/elena
 %_datadir/%name/voices/elena/*
 
 %package Russian-evgeniy
@@ -371,6 +393,7 @@ Requires: %name-Russian = %EVR
 %summary
 
 %files Russian-evgeniy
+%dir %_datadir/%name/voices/evgeniy-rus
 %_datadir/%name/voices/evgeniy-rus/*
 
 %package Russian-irina
@@ -383,6 +406,7 @@ Requires: %name-Russian = %EVR
 %summary
 
 %files Russian-irina
+%dir %_datadir/%name/voices/irina
 %_datadir/%name/voices/irina/*
 
 %package Russian-mikhail
@@ -396,6 +420,7 @@ Requires: %name-Russian = %EVR
 %summary
 
 %files Russian-mikhail
+%dir %_datadir/%name/voices/mikhail
 %_datadir/%name/voices/mikhail/*
 
 %package Russian-pavel
@@ -409,6 +434,7 @@ Requires: %name-Russian = %EVR
 %summary
 
 %files Russian-pavel
+%dir %_datadir/%name/voices/pavel
 %_datadir/%name/voices/pavel/*
 
 %package Russian-tatiana
@@ -422,6 +448,7 @@ Requires: %name-Russian = %EVR
 %summary
 
 %files Russian-tatiana
+%dir %_datadir/%name/voices/tatiana
 %_datadir/%name/voices/tatiana/*
 
 %package Russian-timofey
@@ -435,6 +462,7 @@ Requires: %name-Russian = %EVR
 %summary
 
 %files Russian-timofey
+%dir %_datadir/%name/voices/timofey
 %_datadir/%name/voices/timofey/*
 
 %package Russian-umka
@@ -448,6 +476,7 @@ Requires: %name-Russian = %EVR
 %summary
 
 %files Russian-umka
+%dir %_datadir/%name/voices/umka
 %_datadir/%name/voices/umka/*
 
 %package Russian-victoria
@@ -461,6 +490,7 @@ Requires: %name-Russian = %EVR
 %summary
 
 %files Russian-victoria
+%dir %_datadir/%name/voices/victoria
 %_datadir/%name/voices/victoria/*
 
 %package Russian-vitaliy
@@ -474,6 +504,7 @@ Requires: %name-Russian = %EVR
 %summary
 
 %files Russian-vitaliy
+%dir %_datadir/%name/voices/vitaliy
 %_datadir/%name/voices/vitaliy/*
 
 %package Russian-vitaliy-ng
@@ -487,6 +518,7 @@ Requires: %name-Russian = %EVR
 %summary
 
 %files Russian-vitaliy-ng
+%dir %_datadir/%name/voices/vitaliy-ng
 %_datadir/%name/voices/vitaliy-ng/*
 
 %package Russian-vsevolod
@@ -500,6 +532,7 @@ Requires: %name-Russian = %EVR
 %summary
 
 %files Russian-vsevolod
+%dir %_datadir/%name/voices/vsevolod
 %_datadir/%name/voices/vsevolod/*
 
 %package Russian-yuriy
@@ -513,6 +546,7 @@ Requires: %name-Russian = %EVR
 %summary
 
 %files Russian-yuriy
+%dir %_datadir/%name/voices/yuriy
 %_datadir/%name/voices/yuriy/*
 
 # English
@@ -527,6 +561,7 @@ Requires: %name-English = %EVR
 %summary
 
 %files English-alan
+%dir %_datadir/%name/voices/alan
 %_datadir/%name/voices/alan/*
 
 %package English-bdl
@@ -539,6 +574,7 @@ Requires: %name-English = %EVR
 %summary
 
 %files English-bdl
+%dir %_datadir/%name/voices/bdl
 %_datadir/%name/voices/bdl/*
 
 %package English-clb
@@ -551,6 +587,7 @@ Requires: %name-English = %EVR
 %summary
 
 %files English-clb
+%dir %_datadir/%name/voices/clb
 %_datadir/%name/voices/clb/*
 
 %package English-evgeniy
@@ -564,6 +601,7 @@ Requires: %name-English = %EVR
 %summary
 
 %files English-evgeniy
+%dir %_datadir/%name/voices/evgeniy-eng
 %_datadir/%name/voices/evgeniy-eng/*
 
 %package English-lyubov
@@ -577,6 +615,7 @@ Requires: %name-English = %EVR
 %summary
 
 %files English-lyubov
+%dir %_datadir/%name/voices/lyubov
 %_datadir/%name/voices/lyubov/*
 
 %package English-slt
@@ -590,6 +629,7 @@ Requires: %name-English = %EVR
 %summary
 
 %files English-slt
+%dir %_datadir/%name/voices/slt
 %_datadir/%name/voices/slt/*
 
 # Albanian
@@ -605,6 +645,7 @@ Requires: %name-Albanian = %EVR
 %summary
 
 %files Albanian-hana
+%dir %_datadir/%name/voices/hana
 %_datadir/%name/voices/hana/*
 
 # Brazilian-Portuguese
@@ -621,6 +662,7 @@ Provides: %name-Portuguese-Leticia-F123 = %EVR
 %summary
 
 %files Brazilian-Leticia-F123
+%dir %_datadir/%name/voices/Leticia-F123
 %_datadir/%name/voices/Leticia-F123/*
 
 # Czech
@@ -636,6 +678,7 @@ Requires: %name-Czech = %EVR
 %summary
 
 %files Czech-zdenek
+%dir %_datadir/%name/voices/zdenek
 %_datadir/%name/voices/zdenek/*
 
 # Esperanto
@@ -651,6 +694,7 @@ Requires: %name-Esperanto = %EVR
 %summary
 
 %files Esperanto-spomenka
+%dir %_datadir/%name/voices/spomenka
 %_datadir/%name/voices/spomenka/*
 
 # Georgian
@@ -666,6 +710,7 @@ Requires: %name-Georgian = %EVR
 %summary
 
 %files Georgian-natia
+%dir %_datadir/%name/voices/natia
 %_datadir/%name/voices/natia/*
 
 # Kyrgyz
@@ -680,6 +725,7 @@ Requires: %name-Kyrgyz = %EVR
 %summary
 
 %files Kyrgyz-azamat
+%dir %_datadir/%name/voices/azamat
 %_datadir/%name/voices/azamat/*
 
 %package Kyrgyz-nazgul
@@ -692,6 +738,7 @@ Requires: %name-Kyrgyz = %EVR
 %summary
 
 %files Kyrgyz-nazgul
+%dir %_datadir/%name/voices/nazgul
 %_datadir/%name/voices/nazgul/*
 
 # Macedonian
@@ -707,6 +754,7 @@ Requires: %name-Macedonian = %EVR
 %summary
 
 %files Macedonian-kiko
+%dir %_datadir/%name/voices/kiko
 %_datadir/%name/voices/kiko/*
 
 %package Macedonian-suze
@@ -719,6 +767,7 @@ Requires: %name-Macedonian = %EVR
 %summary
 
 %files Macedonian-suze
+%dir %_datadir/%name/voices/suze
 %_datadir/%name/voices/suze/*
 
 # Polish
@@ -734,6 +783,7 @@ Requires: %name-Polish = %EVR
 %summary
 
 %files Polish-alicja
+%dir %_datadir/%name/voices/alicja
 %_datadir/%name/voices/alicja/*
 
 %package Polish-cezary
@@ -747,6 +797,7 @@ Requires: %name-Polish = %EVR
 %summary
 
 %files Polish-cezary
+%dir %_datadir/%name/voices/cezary
 %_datadir/%name/voices/cezary/*
 
 %package Polish-magda
@@ -760,6 +811,7 @@ Requires: %name-Polish = %EVR
 %summary
 
 %files Polish-magda
+%dir %_datadir/%name/voices/magda
 %_datadir/%name/voices/magda/*
 
 %package Polish-michal
@@ -773,6 +825,7 @@ Requires: %name-Polish = %EVR
 %summary
 
 %files Polish-michal
+%dir %_datadir/%name/voices/michal
 %_datadir/%name/voices/michal/*
 
 %package Polish-natan
@@ -786,6 +839,7 @@ Requires: %name-Polish = %EVR
 %summary
 
 %files Polish-natan
+%dir %_datadir/%name/voices/natan
 %_datadir/%name/voices/natan/*
 
 # Slovak
@@ -801,6 +855,7 @@ Requires: %name-Slovak = %EVR
 %summary
 
 %files Slovak-ondro
+%dir %_datadir/%name/voices/ondro
 %_datadir/%name/voices/ondro/*
 
 # Tatar
@@ -816,6 +871,7 @@ Requires: %name-Tatar = %EVR
 %summary
 
 %files Tatar-talgat
+%dir %_datadir/%name/voices/talgat
 %_datadir/%name/voices/talgat/*
 
 # Ukrainian
@@ -831,6 +887,7 @@ Requires: %name-Ukrainian = %EVR
 %summary
 
 %files Ukrainian-anatol
+%dir %_datadir/%name/voices/anatol
 %_datadir/%name/voices/anatol/*
 
 %package Ukrainian-marianna
@@ -844,6 +901,7 @@ Requires: %name-Ukrainian = %EVR
 %summary
 
 %files Ukrainian-marianna
+%dir %_datadir/%name/voices/marianna
 %_datadir/%name/voices/marianna/*
 
 %package Ukrainian-natalia
@@ -857,6 +915,7 @@ Requires: %name-Ukrainian = %EVR
 %summary
 
 %files Ukrainian-natalia
+%dir %_datadir/%name/voices/natalia
 %_datadir/%name/voices/natalia/*
 
 %package Ukrainian-volodymyr
@@ -870,6 +929,7 @@ Requires: %name-Ukrainian = %EVR
 %summary
 
 %files Ukrainian-volodymyr
+%dir %_datadir/%name/voices/volodymyr
 %_datadir/%name/voices/volodymyr/*
 
 # Uzbek
@@ -885,6 +945,7 @@ Requires: %name-Uzbek = %EVR
 %summary
 
 %files Uzbek-sevinch
+%dir %_datadir/%name/voices/sevinch
 %_datadir/%name/voices/sevinch/*
 
 %prep
@@ -898,6 +959,9 @@ scons install DESTDIR=%buildroot \
 prefix=%prefix sysconfdir=%_sysconfdir bindir=%_bindir libdir=%_libdir includedir=%_includedir datadir=%_datadir
 
 %changelog
+* Sat Aug 31 2024 Artem Semenov <savoptik@altlinux.org> 1.14.0-alt2
+- - Obsoleted old RHVoice packages
+
 * Tue Jul 16 2024 Artem Semenov <savoptik@altlinux.org> 1.14.0-alt1
 - New version 1.14.0 (ALT bug: 50789)
 - Languages and voices are placed in separate sub-packages
