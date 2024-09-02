@@ -58,7 +58,7 @@
 
 Name: ceph
 Version: 18.2.4
-Release: alt2
+Release: alt3
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -1869,6 +1869,9 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Mon Sep 02 2024 Alexey Shabalin <shaba@altlinux.org> 18.2.4-alt3
+- Revert "ceph-volume: fix regression"
+
 * Fri Aug 30 2024 Alexey Shabalin <shaba@altlinux.org> 18.2.4-alt2
 - backport patches for don't use pkg_resources
 
