@@ -4,7 +4,7 @@
 %global optflags_lto %nil
 
 %def_without lapack
-%ifnarch %e2k
+%ifnarch %e2k riscv64
 %def_enable dynamic_arch
 %endif
 
@@ -26,8 +26,8 @@
 
 
 Name: openblas
-Version: 0.3.27
-Release: alt2
+Version: 0.3.28
+Release: alt1
 
 Summary: Optimized BLAS library based on GotoBLAS2 1.13 
 License: BSD
@@ -135,7 +135,6 @@ F_COMPILER="GFORTRAN" C_COMPILER="GCC" \
     %nil
 
 %check
-FC="gfortran" \
 %make_build tests \
 	MAKE_NB_JOBS=${NPROCS:-%__nprocs} \
 	%{?oblas_target:TARGET=%oblas_target} \
@@ -158,6 +157,10 @@ FC="gfortran" \
 %exclude %_libdir/*.a
 
 %changelog
+* Mon Sep 02 2024 Ivan A. Melnikov <iv@altlinux.org> 0.3.28-alt1
+- 0.3.28;
+- disable dynamic_arch on riscv64.
+
 * Mon Sep 02 2024 Ivan A. Melnikov <iv@altlinux.org> 0.3.27-alt2
 - Set FC to to gfortran for %%check (fixes FTBFS on riscv64) (by k0tran@);
 - Enable dynamic_arch on loongarch64.
