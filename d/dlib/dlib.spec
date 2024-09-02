@@ -2,7 +2,7 @@
 %define soname 19
 
 Name: dlib
-Version: 19.24.4
+Version: 19.24.6
 Release: alt1
 Summary: C++ toolkit containing machine learning algorithms and tools
 License: BSL-1.0
@@ -92,6 +92,9 @@ sed -i -e '/USE_SSE4_INSTRUCTIONS/s| ON | OFF |; /USE_AVX_INSTRUCTIONS/s| ON | O
 %endif
 
 %changelog
+* Mon Sep 02 2024 Leontiy Volodin <lvol@altlinux.org> 19.24.6-alt1
+- New version 19.24.6.
+
 * Thu Apr 04 2024 Leontiy Volodin <lvol@altlinux.org> 19.24.4-alt1
 - New version 19.24.4.
 
