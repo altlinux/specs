@@ -3,7 +3,7 @@
 
 Name: settingsd
 Version: 1.0
-Release: alt1
+Release: alt2
 
 Summary: Settingsd - extensible service to control the operating system via D-Bus
 
@@ -87,6 +87,7 @@ Requires: %name = %EVR
 
 %prep
 %setup
+%__subst 's|/lib/systemd/system|%_unitdir|g' setup.py
 
 # due missed gudev
 rm -fv configs/settingsd/disks_smart.conf
@@ -99,7 +100,6 @@ rm -fv plugins/functions/fmod_disks_smart.py
 %python3_install
 # FIXME: Hack to drop out buildroot
 %__subst 's|%buildroot||g' %buildroot%python3_sitelibdir/%name/const.py
-
 
 %files
 %_bindir/settingsd-server.py
@@ -160,6 +160,9 @@ rm -fv plugins/functions/fmod_disks_smart.py
 %endif
 
 %changelog
+* Sun Sep 01 2024 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt2
+- fix unitdir path
+
 * Mon Jun 03 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
 - build version 1.0
 
