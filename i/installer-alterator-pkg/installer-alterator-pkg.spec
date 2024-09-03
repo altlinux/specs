@@ -1,6 +1,6 @@
 Name: installer-alterator-pkg
 Version: 3.1.8
-Release: alt1
+Release: alt2
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
 %add_findreq_skiplist %_datadir/install2/initinstall.d/*
@@ -57,6 +57,10 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Sep 03 2024 Dmitry Terekhin <jqt4@altlinux.org> 3.1.8-alt2
+- notification about transferring the selection of profiles and groups
+  to the installed system
+
 * Tue Jul 09 2024 Anton Midyukov <antohami@altlinux.org> 3.1.8-alt1
 - ui/pkg/groups: execute pkg-groups-init if there are groups
 
