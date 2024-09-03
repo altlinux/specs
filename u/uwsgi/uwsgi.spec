@@ -16,7 +16,7 @@
 
 Name: uwsgi
 Version: 2.0.23
-Release: alt2
+Release: alt3
 
 Summary: fast (pure C), self-healing, developer-friendly WSGI server
 License: GPLv2
@@ -29,9 +29,7 @@ Source1: %name.init
 Source2: %name.logrotate
 Source3: %name.sysconfig
 Patch1: %name-2.0.15-alt-no-rpath.patch
-%ifarch %e2k
 Patch2000: %name-e2k.patch
-%endif
 
 BuildRequires(pre): rpm-build-ruby
 BuildRequires(pre): rpm-build-python3
@@ -77,13 +75,11 @@ Erlang message exchanger are already available.
 
 
 %package       -n gem-uwsgi
-Version:       2.0.23
-Release:       alt2
 Summary:       The uWSGI server for Ruby/Rack
 Group:         Development/Ruby
 
 Requires:      gem(rack) >= 0
-Provides:      gem(uwsgi) = 2.0.23
+Provides:      gem(uwsgi) = %version
 
 %description   -n gem-uwsgi
 The uWSGI server for Ruby/Rack library.
@@ -104,14 +100,12 @@ Erlang message exchanger are already available.
 
 %if_enabled    doc
 %package       -n gem-uwsgi-doc
-Version:       2.0.23
-Release:       alt2
 Summary:       The uWSGI server for Ruby/Rack documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета uwsgi
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(uwsgi) = 2.0.23
+Requires:      gem(uwsgi) = %version
 
 %description   -n gem-uwsgi-doc
 The uWSGI server for Ruby/Rack documentation files.
@@ -133,14 +127,12 @@ Erlang message exchanger are already available.
 
 %if_enabled    devel
 %package       -n gem-uwsgi-devel
-Version:       2.0.23
-Release:       alt2
 Summary:       The uWSGI server for Ruby/Rack development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета uwsgi
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(uwsgi) = 2.0.23
+Requires:      gem(uwsgi) = %version
 
 %description   -n gem-uwsgi-devel
 The uWSGI server for Ruby/Rack development package.
@@ -226,6 +218,11 @@ install -pDm0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/%name
 
 
 %changelog
+* Tue Sep 03 2024 Michael Shigorin <mike@altlinux.org> 2.0.23-alt3
+- fix unpleasant but inobvious mistakes:
+  + archdep Patch:
+  + duplicated Version:/Release:
+
 * Wed Aug 14 2024 Pavel Skrylev <majioa@altlinux.org> 2.0.23-alt2
 - + added python3 and ruby subpackages
 
