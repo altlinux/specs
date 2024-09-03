@@ -4,8 +4,8 @@
 %def_with tests
 
 Name:    python3-module-%pypi_name
-Version: 1.26.0
-Release: alt2
+Version: 1.27.0
+Release: alt1
 
 Summary: OpenTelemetry Python API and SDK
 
@@ -181,6 +181,7 @@ done
 
 %files -n python3-module-%pypi_name-api
 %doc %pypi_name-api/{LICENSE,README.rst}
+%python3_sitelibdir/%pypi_name/_events/
 %python3_sitelibdir/%pypi_name/_logs/
 %python3_sitelibdir/%pypi_name/attributes/
 %python3_sitelibdir/%pypi_name/baggage/
@@ -192,6 +193,7 @@ done
 %python3_sitelibdir/%pypi_name/util/
 %python3_sitelibdir/%pypi_name/environment_variables/
 %python3_sitelibdir/%pypi_name/version/
+%python3_sitelibdir/%pypi_name/py.typed
 %python3_sitelibdir/%{pypi_name}_api-%version.dist-info
 
 %files -n python3-module-%pypi_name-proto
@@ -235,6 +237,9 @@ done
 %doc *.md LICENSE docs/examples
 
 %changelog
+* Mon Sep 02 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.27.0-alt1
+- New version
+
 * Thu Aug 08 2024 Alexander Burmatov <thatman@altlinux.org> 1.26.0-alt2
 - Fix provides.
 
