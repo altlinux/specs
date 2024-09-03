@@ -2,7 +2,7 @@
 
 Name: foomuuri
 Version: 0.24
-Release: alt2
+Release: alt3
 Summary: Multizone bidirectional nftables firewall
 Group: Security/Networking
 License: GPL-2.0-or-later
@@ -58,7 +58,7 @@ sed -i \
 sed -i \
     -e 's|/usr/lib/sysctl.d|%_sysctldir|g' \
     -e 's|/usr/lib/tmpfiles.d|%_tmpfilesdir|g' \
-    test/Makefile
+    Makefile
 
 %build
 %install
@@ -92,6 +92,9 @@ SYSTEMD_SYSTEM_LOCATION=%_unitdir %makeinstall_std
 %_datadir/%name/dbus-firewalld.conf
 
 %changelog
+* Tue Sep 03 2024 Alexey Shabalin <shaba@altlinux.org> 0.24-alt3
+- Fixed %%_sysctldir and %%_tmpfilesdir in Makefile, really.
+
 * Tue Jul 02 2024 Alexey Shabalin <shaba@altlinux.org> 0.24-alt2
 - Fixed %%_sysctldir and %%_tmpfilesdir in Makefile.
 
