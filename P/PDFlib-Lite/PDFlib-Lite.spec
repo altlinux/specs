@@ -4,7 +4,7 @@
 
 Name: PDFlib-Lite
 Version: 7.0.5
-Release: alt1.p3.2
+Release: alt1.p3.3
 
 Summary: A library for on-the-fly PDF generation
 License: Freely distributable, free for personal/research use and OSS development
@@ -13,15 +13,15 @@ Group: Development/Documentation
 Url: http://www.pdflib.com
 Source0: http://www.pdflib.com/binaries/PDFlib/%shortver/PDFlib-Lite-%version%patchlevel.tar.gz
 Source1: http://www.pdflib.com/fileadmin/pdflib/pdf/license/PDFlib-Lite-license.pdf
-Patch: PDFlib-image.patch
+Patch0: PDFlib-image.patch
 Patch1: PDFlib-configure.patch
-Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Wed Jun 03 2009
 BuildRequires: perl-devel python-devel tcl-devel gcc-c++
 BuildRequires: autoconf >= 2.5
 
 %if 0
+# unlikely a TODO though
 BuildRequires: python-devel
 BuildRequires: perl-base, perl-devel
 BuildRequires: tcl, tcl-devel
@@ -184,41 +184,41 @@ install -m0755 --directory      %buildroot%_datadir/tcl/tcl8.4/pdflib
 install -m0755 --directory      %buildroot$RPM_DOC_DIR/PDFLib-Lite-%version
 install -m0755 --directory      %buildroot%_libdir/perl5/i386-linux/auto/pdflib_pl
 
-/bin/install -c -m 644 libs/pdflib/pdflib.h %buildroot%_includedir
+install -c -m 644 libs/pdflib/pdflib.h %buildroot%_includedir
 cd libs/pdflib/
-../../libtool --silent /bin/install -c -m 644 libpdf.la  %buildroot%_libdir/
+../../libtool --silent install -c -m 644 libpdf.la  %buildroot%_libdir/
 cd ../..
 
 cp -af doc/*  %buildroot$RPM_DOC_DIR/PDFLib-Lite-%version
 
-/bin/install -c -m 644 pdflib-config %buildroot%_bindir/
-/bin/install -c -m 644 bind/pdflib/python/.libs/*  %buildroot%_libdir/%pythondir/lib-dynload/
-/bin/install -c -m 644 bind/pdflib/tcl/.libs/*  %buildroot%_libdir/tcl/tcl8.4/pdflib/
-/bin/install -c -m 644 bind/pdflib/perl/.libs/*  %buildroot%_libdir/perl5/i386-linux/auto/pdflib_pl
-/bin/install -c -m 644 bind/pdflib/perl/pdflib_pl.pm  %buildroot%_libdir/perl5/i386-linux
-#/bin/install -c -m 644 progs/pdflib/{pdfimage,pdfimpose,text2pdf}  %buildroot%_bindir/
-/bin/install -c -m 644 progs/pdflib/{pdfimage,text2pdf}  %buildroot%_bindir/
+install -c -m 644 pdflib-config %buildroot%_bindir/
+install -c -m 644 bind/pdflib/python/.libs/*  %buildroot%_libdir/%pythondir/lib-dynload/
+install -c -m 644 bind/pdflib/tcl/.libs/*  %buildroot%_libdir/tcl/tcl8.4/pdflib/
+install -c -m 644 bind/pdflib/perl/.libs/*  %buildroot%_libdir/perl5/i386-linux/auto/pdflib_pl
+install -c -m 644 bind/pdflib/perl/pdflib_pl.pm  %buildroot%_libdir/perl5/i386-linux
+#install -c -m 644 progs/pdflib/{pdfimage,pdfimpose,text2pdf}  %buildroot%_bindir/
+install -c -m 644 progs/pdflib/{pdfimage,text2pdf}  %buildroot%_bindir/
 
 %define samples businesscard,chartab,hello,image,invoice,pdfclock
 
 install -m0755 --directory %buildroot$RPM_DOC_DIR/PDFLib-Lite-%version/sample/data
-/bin/install -c -m 644 bind/pdflib/data/* \
+install -c -m 644 bind/pdflib/data/* \
 	%buildroot$RPM_DOC_DIR/PDFLib-Lite-%version/sample/data
 
 install -m0755 --directory %buildroot$RPM_DOC_DIR/PDFLib-Lite-%version/sample/tcl
-/bin/install -c -m 644 bind/pdflib/tcl/{{%samples}.tcl,readme.txt} \
+install -c -m 644 bind/pdflib/tcl/{{%samples}.tcl,readme.txt} \
 	%buildroot$RPM_DOC_DIR/PDFLib-Lite-%version/sample/tcl
 
 install -m0755 --directory %buildroot$RPM_DOC_DIR/PDFLib-Lite-%version/sample/perl
-/bin/install -c -m 644 bind/pdflib/perl/{{%samples}.pl,readme.txt} \
+install -c -m 644 bind/pdflib/perl/{{%samples}.pl,readme.txt} \
 	%buildroot$RPM_DOC_DIR/PDFLib-Lite-%version/sample/perl
 
 install -m0755 --directory %buildroot$RPM_DOC_DIR/PDFLib-Lite-%version/sample/python
-/bin/install -c -m 644 bind/pdflib/python/{{%samples}.py,readme.txt} \
+install -c -m 644 bind/pdflib/python/{{%samples}.py,readme.txt} \
 	%buildroot$RPM_DOC_DIR/PDFLib-Lite-%version/sample/python
 
 install -m0755 --directory %buildroot$RPM_DOC_DIR/PDFLib-Lite-%version/sample/php
-/bin/install -c -m 644  bind/pdflib/php/{{%samples}.php,readme.txt} \
+install -c -m 644  bind/pdflib/php/{{%samples}.php,readme.txt} \
 	%buildroot$RPM_DOC_DIR/PDFLib-Lite-%version/sample/php
 %endif
 
@@ -264,6 +264,9 @@ install -m0755 --directory %buildroot$RPM_DOC_DIR/PDFLib-Lite-%version/sample/ph
 # - consider http://cvs.pld-linux.org/cgi-bin/cvsweb/packages/pdflib/pdflib.spec
 
 %changelog
+* Tue Sep 03 2024 Michael Shigorin <mike@altlinux.org> 7.0.5-alt1.p3.3
+- minor spec cleanup (to update signature actually)
+
 * Fri Oct 08 2021 Grigory Ustinov <grenka@altlinux.org> 7.0.5-alt1.p3.2
 - Fixed FTBFS.
 
