@@ -1,13 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: adt
-Version: 0.1.3
-Release: alt3
+Version: 0.1.4
+Release: alt1
 
 Summary: ALT Diagnostic tool
 License: GPLv2+
 Group: Other
-Url: https://github.com/AlexSP0/alt-diagnostic-tool
+Url: https://gitlab.basealt.space/alt/adt
+
+Provides: alterator-application-diagnostic-tool
 
 BuildRequires: cmake
 BuildRequires: rpm-macros-cmake
@@ -42,8 +44,11 @@ ADT (Alt Diagnostic Tool) is a utility for diagnosing software problems using th
 %cmakeinstall_std
 mkdir -p %buildroot%_datadir/alterator/applications
 install -v -p -m 644 -D setup/adt.application %buildroot%_datadir/alterator/applications
+install -p -D man/en/%name.man %buildroot%_mandir/man1/%name.1
+install -p -D man/ru/%name.man %buildroot%_mandir/ru/man1/%name.1
+%find_lang --with-man %name
 
-%files
+%files -f %name.lang
 %doc README.md
 %doc INSTALL.md
 
@@ -52,8 +57,15 @@ install -v -p -m 644 -D setup/adt.application %buildroot%_datadir/alterator/appl
 %_datadir/alterator/applications/adt.application
 %_iconsdir/hicolor/scalable/apps/adt.svg
 %_datadir/alterator/backends/adt.backend
+%_man1dir/%name.1*
 
 %changelog
+* Tue Sep 03 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.4-alt1
+- session bus test support
+- new UI design
+- add manual
+- fix run list of tests and display name
+
 * Tue Apr 02 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.3-alt3
 - add main icon
 - fix exec field in .desktop file
