@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.6.7
+Version: 1.6.8
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -134,6 +134,15 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Sep 02 2024 Anton Midyukov <antohami@altlinux.org> 1.6.8-alt1
+- lib/{distro,ve,vm}.mk: add branding notes with licenses
+- x11: fix condition for kde on p11
+- x11: exclude nvidia-xconfig
+- live: add mokutil, pesign for rescue mode on x86_64
+- education: add latests commits from cas@, fix build on p11
+- kworkstation: add latests commits from zerg@, fix build on p11
+- alt-server: add latests commits from jqt4@
+
 * Tue Aug 27 2024 Anton Midyukov <antohami@altlinux.org> 1.6.7-alt1
 - base+rescue: add livecd-rescue-utility
 - base+rescue: add lflashrom (Closes: 50846)
