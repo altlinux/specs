@@ -1,5 +1,5 @@
 Name:		lxcfs
-Version:	6.0.0
+Version:	6.0.1
 Release:	alt1
 Summary:	FUSE filesystem for LXC
 
@@ -64,6 +64,9 @@ find %buildroot -name '*.la' -delete
 %dir %_localstatedir/%name
 
 %changelog
+* Tue Sep 03 2024 Alexey Shabalin <shaba@altlinux.org> 6.0.1-alt1
+- New version 6.0.1.
+
 * Fri May 03 2024 Nadezhda Fedorova <fedor@altlinux.org> 6.0.0-alt1
 - Updated to 6.0.0.
 
