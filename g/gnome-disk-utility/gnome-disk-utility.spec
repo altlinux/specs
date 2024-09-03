@@ -7,12 +7,12 @@
 %def_enable check
 
 Name: gnome-disk-utility
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Disk management application
-License: LGPLv2+
-Group: System/Libraries
+License: GPL-2.0-or-later
+Group: System/Configuration/Hardware
 Url: https://apps.gnome.org/DiskUtility
 
 Requires: udisks2 cryptsetup
@@ -57,8 +57,8 @@ RAID, SMART monitoring, etc
 
 %build
 %meson \
-	%{?_disable_gsd_plugin:-Dgsd_plugin=false} \
-	%{?_disable_libsystemd:-Dlibsystemd=false}
+    %{subst_enable_meson_bool gsd_plugin gsd_plugin} \
+    -Dlogind='libsystemd'
 %meson_build
 
 %install
@@ -88,6 +88,9 @@ RAID, SMART monitoring, etc
 
 
 %changelog
+* Tue Sep 03 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
+- 46.1
+
 * Mon Mar 11 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 
