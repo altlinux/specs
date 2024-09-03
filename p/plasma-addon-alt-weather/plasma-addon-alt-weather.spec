@@ -3,7 +3,7 @@
 
 Name: plasma-addon-alt-weather
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 6 Plasma weather addon
@@ -52,6 +52,9 @@ The weather forecast addon for KDE Workspace 6 Plasma
 %_datadir/metainfo/*
 
 %changelog
+* Thu Aug 15 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 2.0.0-alt2
+- fix text shadows in tray
+
 * Tue Aug 13 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 2.0.0-alt1
 - full port to KF6
 
