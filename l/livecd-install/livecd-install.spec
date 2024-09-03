@@ -1,6 +1,6 @@
 Name: livecd-install
-Version: 0.9.19
-Release: alt2
+Version: 0.9.20
+Release: alt1
 
 Summary: Permanently install Live system
 License: GPLv2
@@ -62,6 +62,10 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Tue Sep 03 2024 Mikhail Efremov <sem@altlinux.org> 0.9.20-alt1
+- 30-setup-network.sh: Get rid of ifdump dependence.
+- zdg-user-dirs-install.sh: Don't hardcode livecd user UID.
+
 * Thu Jun 30 2022 Anton Midyukov <antohami@altlinux.org> 0.9.19-alt2
 - NMU: replace fgrep with grep -F
 - NMU: clear Packager
