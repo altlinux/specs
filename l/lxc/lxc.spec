@@ -15,8 +15,8 @@
 %add_findreq_skiplist %_libexecdir/lxc/lxc-net
 
 Name: lxc
-Version: 6.0.0
-Release: alt2
+Version: 6.0.1
+Release: alt1
 Summary: Linux Containers
 License: LGPL-2.1-or-later
 Group: System/Configuration/Other
@@ -292,6 +292,9 @@ groupadd -r -f vmusers ||:
 %_man8dir/pam_cgfs.8*
 
 %changelog
+* Tue Sep 03 2024 Alexey Shabalin <shaba@altlinux.org> 6.0.1-alt1
+- 6.0.1.
+
 * Mon Sep 02 2024 Alexey Shabalin <shaba@altlinux.org> 6.0.0-alt2
 - restore patch "confile: convert AppArmor and SELinux confile
   parsing from errors to warnings".
