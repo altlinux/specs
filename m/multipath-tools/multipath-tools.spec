@@ -6,7 +6,7 @@
 %define bindir %_sbindir
 
 Name: multipath-tools
-Version: 0.9.9
+Version: 0.10.0
 Release: alt1
 
 Summary: Tools to manage multipath devices with device-mapper
@@ -103,7 +103,8 @@ sed -i "s|-Werror -Wall|-Wall|" Makefile.inc
 unset RPM_OPT_FLAGS
 %make_build \
     prefix=%_prefix \
-    systemd_prefix="" \
+    systemd_prefix=/usr \
+    sys_execprefix=/usr \
     etc_prefix="" \
     bindir=%bindir \
     libudevdir=%_udevdir \
@@ -123,7 +124,8 @@ unset RPM_OPT_FLAGS
 mkdir -p %buildroot{%bindir,%_libdir,%_man8dir,%_initdir,%_unitdir,%_udevrulesdir,%_modulesloaddir,%_sysconfdir/multipath}
 %makeinstall_std \
     prefix=%_prefix \
-    systemd_prefix="" \
+    systemd_prefix=/usr \
+    sys_execprefix=/usr \
     DESTDIR=%buildroot \
     %{?_disable_libdmmp: ENABLE_LIBDMMP=0} \
     LIB=%_lib \
@@ -208,6 +210,9 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %_pkgconfigdir/libdmmp.pc
 
 %changelog
+* Tue Sep 03 2024 Alexey Shabalin <shaba@altlinux.org> 0.10.0-alt1
+- 0.10.0
+
 * Mon Jun 24 2024 Alexey Shabalin <shaba@altlinux.org> 0.9.9-alt1
 - 0.9.9
 
