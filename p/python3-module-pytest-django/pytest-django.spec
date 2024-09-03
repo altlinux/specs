@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.8.0
+Version: 4.9.0
 Release: alt1
 Summary: A Django plugin for py.test
 License: BSD
@@ -56,6 +56,9 @@ export PYTHONPATH=$(pwd)
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 03 2024 Stanislav Levin <slev@altlinux.org> 4.9.0-alt1
+- 4.8.0 -> 4.9.0.
+
 * Fri Mar 29 2024 Stanislav Levin <slev@altlinux.org> 4.8.0-alt1
 - 4.5.2 -> 4.8.0.
 
