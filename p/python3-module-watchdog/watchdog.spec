@@ -3,8 +3,19 @@
 
 %def_with check
 
+%define add_python_extra() \
+%{expand:%%package -n %%name+%1 \
+Summary: %%summary \
+Group: Development/Python3 \
+Requires: %%name \
+%{expand:%%pyproject_runtimedeps_metadata -- --extra %1} \
+%%description -n %%name+%1' \
+Extra "%1" for %%pypi_name. \
+%%files -n %%name+%1 \
+}
+
 Name: python3-module-%pypi_name
-Version: 4.0.1
+Version: 5.0.1
 Release: alt1
 
 Summary: Filesystem events monitoring
@@ -17,6 +28,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -26,9 +39,9 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_check
 %endif
 
-%add_python3_req_skip AppKit FSEvents _watchdog_fsevents
-
 Conflicts: python-module-watchdog
+
+%add_python_extra watchmedo
 
 %description
 Python API and shell utilities to monitor file system events.
@@ -50,7 +63,7 @@ Python API and shell utilities to monitor file system events.
 
 %check
 export NO_SUDO=YES
-%pyproject_run_pytest -ra
+%pyproject_run_pytest -ra -o=addopts=-Wignore
 
 %files
 %doc AUTHORS *.rst
@@ -59,6 +72,9 @@ export NO_SUDO=YES
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 03 2024 Stanislav Levin <slev@altlinux.org> 5.0.1-alt1
+- 4.0.1 -> 5.0.1.
+
 * Fri May 24 2024 Stanislav Levin <slev@altlinux.org> 4.0.1-alt1
 - 4.0.0 -> 4.0.1.
 
