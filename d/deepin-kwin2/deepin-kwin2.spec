@@ -4,7 +4,7 @@
 
 Name: deepin-kwin2
 Version: 5.25.18
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Summary: New KWin configuration for Deepin Desktop Environment
@@ -23,7 +23,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ninja rpm-build-python3 rpm-macros-q
 # qt5-base-devel-static for libQt5XkbCommonSupport.a
 # Automatically added by buildreq on Thu Oct 26 2023
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl fontconfig-devel gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gst-libav gst-plugins-bad1.0 gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-ugly1.0 gstreamer1.0 gtk4-update-icon-cache hwdata kf5-attica-devel kf5-kauth-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-common kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdoctools kf5-kglobalaccel-devel kf5-ki18n-devel kf5-kjobwidgets-common kf5-kservice-devel kf5-kwidgetsaddons-common kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-plasma-framework-common kf5-plasma-framework-devel kf5-sonnet-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcap-utils libdbusmenu-qt52 libdouble-conversion3 libepoxy-devel libfreetype-devel libglvnd-devel libgpg-error libgst-plugins1.0 libp11-kit libqaccessibilityclient-qt5 libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-printsupport libqt5-qml libqt5-qmlmodels libqt5-qmlworkerscript libqt5-quick libqt5-quickwidgets libqt5-sql libqt5-svg libqt5-test libqt5-texttospeech libqt5-waylandclient libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstdc++-devel libudev-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl libwayland-server libxcb-devel libxcb-render-util libxcbutil-cursor libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxcbutil-keysyms-devel libxkbcommon-devel libxkbfile-devel pipewire-libs pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-common qt5-base-devel qt5-declarative-devel qt5-svg-devel qt5-tools sh5 shared-mime-info wayland-devel xml-common xml-utils xorg-proto-devel xorg-xf86miscproto-devel zlib-devel
-BuildRequires: dwayland-devel extra-cmake-modules kf5-kactivities-devel kf5-kcmutils-devel kf5-kdeclarative-devel kf5-kdoctools-devel kf5-kiconthemes-devel kf5-kidletime-devel kf5-kirigami-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-kpackage-devel kf5-krunner-devel kf5-ktextwidgets-devel libcap-devel libdrm-devel libgbm-devel libinput-devel liblcms2-devel libqaccessibilityclient-qt5-devel libqtxdg libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel libxcbutil-cursor-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-image-devel pipewire-libs-devel plasma5-breeze-devel plasma5-kdecoration-devel plasma5-kscreenlocker-devel qt5-base-devel-static qt5-tools-devel qt5-x11extras-devel xorg-xwayland-devel
+BuildRequires: dwayland-devel extra-cmake-modules kf5-kactivities-devel kf5-kcmutils-devel kf5-kdeclarative-devel kf5-kdoctools-devel kf5-kiconthemes-devel kf5-kidletime-devel kf5-kirigami-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-kpackage-devel kf5-krunner-devel kf5-ktextwidgets-devel libcap-devel libdrm-devel libgbm-devel libinput-devel liblcms2-devel libqaccessibilityclient-qt5-devel libqtxdg libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel libxcbutil-cursor-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-image-devel pipewire-libs-devel plasma5-kdecoration-devel plasma5-kscreenlocker-devel qt5-base-devel-static qt5-tools-devel qt5-x11extras-devel xorg-xwayland-devel
 BuildRequires: qt5-quickcontrols xorg-xwayland
 %if_with clang
 BuildRequires: clang-devel
@@ -214,6 +214,9 @@ ln -sf %_libdir/libdeepin-kwin.so.5 %buildroot%_libdir/libdeepin-kwin.so
 %files doc -f dcontrol.lang
 
 %changelog
+* Tue Sep 03 2024 Leontiy Volodin <lvol@altlinux.org> 5.25.18-alt2
+- NMU: fixed FTBFS.
+
 * Mon Mar 25 2024 Leontiy Volodin <lvol@altlinux.org> 5.25.18-alt1
 - New version 5.25.18.
 - Set require to current qt5 version.
