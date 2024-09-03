@@ -7,11 +7,11 @@
 Name: obs-studio
 Summary: Free and open source software for video recording and live streaming
 Summary(ru_RU.UTF-8): Свободная программа для записи и трансляции видеопотока
-Version: 30.1.2
-Release: alt2
+Version: 30.2.3
+Release: alt1
 License: GPL-2.0-or-later
 Group: Video
-Url: https://github.com/jp9000/obs-studio.git
+Url: https://github.com/jp9000/obs-studio
 Source: %name-%version.tar
 Patch1: obs-studio-27.2.4-alt-cert-bundle.patch
 
@@ -59,6 +59,9 @@ BuildRequires: libmbedtls-compat-devel
 BuildRequires: libuuid-devel
 BuildRequires: libfdk-aac-devel
 BuildRequires: libdatachannel-devel
+BuildRequires: libuthash-devel
+BuildRequires: nv-codec-headers
+BuildRequires: nlohmann-json-devel
 %ifarch %luajit_arches
 BuildRequires: pkgconfig(luajit)
 %endif
@@ -179,6 +182,9 @@ touch plugins/obs-qsv11/CMakeLists.txt
 %_libdir/pkgconfig/libobs.pc
 
 %changelog
+* Tue Sep 03 2024 Anton Midyukov <antohami@altlinux.org> 30.2.3-alt1
+- New version 30.2.3.
+
 * Wed Aug 28 2024 Anton Midyukov <antohami@altlinux.org> 30.1.2-alt2
 - rebuild with libmbedtls-compat-devel (Closes: 51229)
 
