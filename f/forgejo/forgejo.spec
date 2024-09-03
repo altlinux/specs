@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: forgejo
-Version: 8.0.1
+Version: 8.0.2
 Release: alt1
 
 Summary: Self-hosted lightweight software forge
@@ -111,6 +111,9 @@ useradd -r -g %name -c 'Forgejo daemon' \
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Sep 03 2024 Alexey Shabalin <shaba@altlinux.org> 8.0.2-alt1
+- 8.0.2.
+
 * Wed Aug 28 2024 Alexey Shabalin <shaba@altlinux.org> 8.0.1-alt1
 - 8.0.1.
 
