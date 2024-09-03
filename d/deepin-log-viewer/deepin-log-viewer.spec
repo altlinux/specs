@@ -5,7 +5,7 @@
 
 Name: deepin-log-viewer
 Version: 6.1.11
-Release: alt1
+Release: alt2
 
 Summary: System log viewer for Deepin
 
@@ -130,6 +130,9 @@ rm -rf %buildroot%_pkgconfigdir/liblogviewerplugin.pc
 %endif
 
 %changelog
+* Tue Sep 03 2024 Leontiy Volodin <lvol@altlinux.org> 6.1.11-alt2
+- Applied usrmerge.
+
 * Mon Jan 22 2024 Leontiy Volodin <lvol@altlinux.org> 6.1.11-alt1
 - New version 6.1.11.
 
