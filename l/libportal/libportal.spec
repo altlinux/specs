@@ -1,9 +1,10 @@
 %def_disable snapshot
 
-%define ver_major 0.7
+%define ver_major 0.8
 %define api_ver_major 1
 %define api_ver %api_ver_major.0
 %define soname 0
+%define namespace Xdp
 %define xdg_name org.gnome.Portal
 
 %def_enable introspection
@@ -13,8 +14,8 @@
 %def_enable check
 
 Name: libportal
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 Epoch: 1
 
 Summary: Flatpak portal library
@@ -30,16 +31,18 @@ Source: %name-%version.tar
 
 %define glib_ver 2.58
 
-BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-macros-meson %{?_enable_introspection:rpm-build-gir} %{?_enable_vala:rpm-build-vala}
 BuildRequires: meson libgio-devel >= %glib_ver
 BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools
-%{?_enable_introspection:BuildRequires(pre): rpm-build-gir
-BuildRequires: gobject-introspection-devel gir(Gtk) = 3.0 gir(Gtk) = 4.0}
-%{?_enable_vala:BuildRequires(pre): rpm-build-vala
-BuildRequires: vala-tools}
+BuildRequires: pkgconfig(Qt6Core) pkgconfig(Qt6Gui) pkgconfig(Qt6Widgets)
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel gir(Gtk) = 3.0 gir(Gtk) = 4.0}
+%{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_docs:BuildRequires: gi-docgen}
 %{?_enable_test:BuildRequires: libgtk+3-devel libgjs-devel pkgconfig(gstreamer-audio-1.0)}
-%{?_enable_check:BuildRequires: xvfb-run}
+%{?_enable_check:BuildRequires: xvfb-run
+BuildRequires: pkgconfig(Qt5Test) pkgconfig(Qt6Test)
+#BuildRequires: python3(pytest) python3(dbus) python3(dbusmock)
+}
 
 %description
 %name provides GIO-style async APIs for most Flatpak portals.
@@ -68,6 +71,14 @@ Requires: %name = %EVR
 %description qt5
 %name-qt5 provides Portal API wrapper library for QT5.
 
+%package qt6
+Summary: Portal API wrappers (QT6)
+Group: System/Libraries
+Requires: %name = %EVR
+
+%description qt6
+%name-qt6 provides Portal API wrapper library for QT6.
+
 %package devel
 Summary: Development files and libraries for %name
 Group: Development/C
@@ -76,6 +87,7 @@ Requires: %name = %EVR
 %description devel
 %name provides GIO-style async APIs for most Flatpak portals.
 This package provides files for development with %name.
+
 
 %package gtk3-devel
 Summary: Development files and libraries for %name-gtk3
@@ -103,6 +115,15 @@ Requires: %name-devel = %EVR
 
 %description qt5-devel
 This package provides files for development with %name-qt5.
+
+%package qt6-devel
+Summary: Development files and libraries for %name-qt6
+Group: Development/C++
+Requires: %name-qt6 = %EVR
+Requires: %name-devel = %EVR
+
+%description qt6-devel
+This package provides files for development with %name-qt6.
 
 %package gir
 Summary: GObject introspection data for %name
@@ -185,17 +206,19 @@ of the installed %name.
 
 %prep
 %setup
+sed -i 's|pytest-3|py.test3|' tests/meson.build
+
 %ifarch %e2k
 # workaround for EDG frontend
 sed -E -i 's/g_autofree ([ a-z]*) \*/g_autofree_edg(\1) /' \
-    libportal/portal-qt5.cpp
+    libportal/portal-qt{5,6}.cpp
 %endif
 
 %build
 %meson \
-    %{?_disable_introspection:-Dintrospection=false} \
-    %{?_disable_vala:-Dvapi=false} \
-    %{?_enable_test:-Dportal-tests=true}
+    %{subst_enable_meson_bool introspection introspection} \
+    %{subst_enable_meson_bool vala vapi} \
+    %{subst_enable_meson_bool test portal-tests}
 %nil
 %meson_build
 
@@ -218,6 +241,9 @@ xvfb-run %__meson_test
 
 %files qt5
 %_libdir/%name-qt5.so.*
+
+%files qt6
+%_libdir/%name-qt6.so.*
 
 %files devel
 %_includedir/%name
@@ -245,24 +271,30 @@ xvfb-run %__meson_test
 %_libdir/%name-qt5.so
 %_pkgconfigdir/%name-qt5.pc
 
+%files qt6-devel
+%_includedir/%name-qt6
+%_libdir/%name-qt6.so
+%_pkgconfigdir/%name-qt6.pc
+
+
 %if_enabled introspection
 %files gir
-%_typelibdir/Xdp-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Xdp-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 
 %files gtk3-gir
-%_typelibdir/XdpGtk3-%api_ver.typelib
+%_typelibdir/%{namespace}Gtk3-%api_ver.typelib
 
 %files gtk3-gir-devel
-%_girdir/XdpGtk3-%api_ver.gir
+%_girdir/%{namespace}Gtk3-%api_ver.gir
 
 %files gtk4-gir
-%_typelibdir/XdpGtk4-%api_ver.typelib
+%_typelibdir/%{namespace}Gtk4-%api_ver.typelib
 
 %files gtk4-gir-devel
-%_girdir/XdpGtk4-%api_ver.gir
+%_girdir/%{namespace}Gtk4-%api_ver.gir
 %endif
 
 %if_enabled docs
@@ -273,7 +305,8 @@ xvfb-run %__meson_test
 %if_enabled test
 %files tests
 %_bindir/portal-test-gtk3
-%_bindir/portal-test-qt
+%_bindir/portal-test-qt5
+%_bindir/portal-test-qt6
 %_bindir/%{xdg_name}Test.Gtk4
 %_desktopdir/%{xdg_name}Test.Gtk3.desktop
 %_desktopdir/%{xdg_name}Test.Gtk4.desktop
@@ -285,6 +318,10 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Tue Sep 03 2024 Yuri N. Sedunov <aris@altlinux.org> 1:0.8.0-alt1
+- 0.8.0
+- new -qt6{,-devel} subpackages
+
 * Thu Mar 28 2024 Yuri N. Sedunov <aris@altlinux.org> 1:0.7.1-alt1.1
 - fixed build for %%e2k (ilyakurdyukov@)
 
