@@ -14,7 +14,7 @@
 
 Name: kf6-rpm-build
 Version: 6.0.4
-Release: alt2
+Release: alt3
 
 Group: Development/KDE and QT
 Summary: Development utils for KDE
@@ -34,7 +34,7 @@ Set of KF6 RPM macros.
 %package -n rpm-build-kf6
 Summary: Set of RPM macros for packaging KF6-based applications
 Group: Development/Other
-Requires: rpm-build-xdg rpm-macros-qt6 rpm-build-qml /usr/bin/rpmvercmp
+Requires: rpm-build-xdg rpm-macros-qt6 rpm-build-qml6 /usr/bin/rpmvercmp
 %description -n rpm-build-kf6
 Set of RPM macros for packaging KF6-based applications for ALT Linux.
 Install this package if you want to create RPM packages that use KF6.
@@ -55,6 +55,9 @@ install -D -m 0755 %SOURCE2 %buildroot/%_bindir/rpm-build-kf6-find-qtlang
 %_bindir/rpm-build-kf6-*
 
 %changelog
+* Tue Sep 03 2024 Sergey V Turchin <zerg@altlinux.org> 6.0.4-alt3
+- fix requires
+
 * Fri Jul 12 2024 Sergey V Turchin <zerg@altlinux.org> 6.0.4-alt2
 - fix undefine KDE_INSTALL_INCLUDEDIR
 
