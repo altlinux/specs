@@ -29,7 +29,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt0.5
+Release: alt0.6
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -76,7 +76,9 @@ Group: System/Configuration/Boot and Init
 Summary: Graphical boot logo for grub2, lilo and syslinux
 License: GPL
 Requires(pre): coreutils
+%if_enabled gfxboot
 Requires(pre): /etc/sysconfig/i18n
+%endif
 Provides: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
 Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
 %description bootloader
@@ -486,6 +488,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Sep 03 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.6
+- fix requires to /etc/sysconfig/i18n
+
 * Mon Jul 22 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.5
 - fix license 1.1.2
 
