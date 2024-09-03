@@ -1,6 +1,6 @@
 Name: fftw3
-Version: 3.3.8
-Release: alt3
+Version: 3.3.10
+Release: alt1
 
 Summary: Library for computing Fast Fourier Transforms
 License: GPLv2+
@@ -293,6 +293,9 @@ fi
 %docdir/*.pdf
 
 %changelog
+* Wed Aug 28 2024 Egor Ignatov <egori@altlinux.org> 3.3.10-alt1
+- 3.3.8 -> 3.3.10.
+
 * Wed Nov 15 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.3.8-alt3
 - Added a patch to generate and package the FFTW3LibraryDepends.cmake files for
   builds with cmake (fixes: ALT#48427).
