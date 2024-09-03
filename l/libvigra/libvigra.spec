@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name vigra
 %def_disable static
 %def_with hdf5
@@ -9,18 +9,22 @@
 %endif
 
 Name: lib%_name
-Version: 1.11.2
-Release: alt2
+Version: 1.12.1
+Release: alt1
 
 Summary: Generic Programming for Computer Vision
 License: MIT
 Group: System/Libraries
 Url: http://ukoethe.github.io/%_name
 
+Vcs: https://github.com/ukoethe/vigra.git
+
+%define git_ver %(echo %version|tr . -)
+
 %if_disabled snapshot
-Source: https://github.com/ukoethe/%_name/releases/download/Version-1-11-1/%_name-%version-src.tar.gz
+Source: https://github.com/ukoethe/%_name/archive/Version-%git_ver/%_name-%version-src.tar.gz
 %else
-Vcs: https://github.com/ukoethe/%name/
+
 Source: %_name-%version.tar
 %endif
 
@@ -74,7 +78,7 @@ This package provides Python3 bindings for VIGRA library.
 %endif
 
 %prep
-%setup -n %_name-%version
+%setup -n %_name-%{?_enable_snapshot:%version}%{?_disable_snapshot:Version-%git_ver}
 # fix shebang
 sed -i 's|\(#!\/usr\/bin\/\)env \(python\)|\1\23|' config/vigra-config.in
 
@@ -113,6 +117,9 @@ sed -i 's|\(#!\/usr\/bin\/\)env \(python\)|\1\23|' config/vigra-config.in
 
 
 %changelog
+* Tue Sep 03 2024 Yuri N. Sedunov <aris@altlinux.org> 1.12.1-alt1
+- 1.12.1
+
 * Mon May 06 2024 Yuri N. Sedunov <aris@altlinux.org> 1.11.2-alt2
 - updated to 1-11-2-23-gd4250a02
 - removed obsolete E2K stuff
