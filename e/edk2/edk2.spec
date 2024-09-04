@@ -6,8 +6,8 @@
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2
-Version: 20240524
-Release: alt2
+Version: 20240811
+Release: alt1
 Summary: EFI Development Kit II
 
 License: BSD-2-Clause-Patent
@@ -358,6 +358,9 @@ virt-fw-vars --input OVMF/OVMF_VARS.secboot.fd \
 %_prefix/lib64/efi/shell.efi
 
 %changelog
+* Wed Sep 04 2024 Alexey Shabalin <shaba@altlinux.org> 20240811-alt1
+- edk2-stable202408
+
 * Wed Sep 04 2024 Alexey Shabalin <shaba@altlinux.org> 20240524-alt2
 - Add OVMF_VARS.ms.fd as hardlink to OVMF_VARS.secboot.fd for compat with debian
 
@@ -381,6 +384,7 @@ virt-fw-vars --input OVMF/OVMF_VARS.secboot.fd \
 
 * Thu Jan 25 2024 Alexey Shabalin <shaba@altlinux.org> 20231115-alt1
 - edk2-stable202311
+- build with openssl-3.0.15
 
 * Wed Nov 30 2022 Alexey Shabalin <shaba@altlinux.org> 20221117-alt1
 - edk2-stable202211 (Fixes: CVE-2021-38578)
