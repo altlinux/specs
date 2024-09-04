@@ -1,5 +1,5 @@
 Name: installer-feature-simply-livecd
-Version: 10.4.0
+Version: 10.5.0
 Release: alt1
 
 Summary: LiveCD install hooks for Simply Linux.
@@ -69,6 +69,9 @@ cp -ar alterator-menu/ %buildroot%_datadir/livecd-install
 %_datadir/livecd-install/
 
 %changelog
+* Wed Sep 04 2024 Mikhail Efremov <sem@altlinux.org> 10.5.0-alt1
+- Show alterator-logs in the acc.
+
 * Fri Jun 16 2023 Mikhail Efremov <sem@altlinux.org> 10.4.0-alt1
 - Drop installer-feature-sudo-enable-by-default-stage3.
 
