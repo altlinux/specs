@@ -4,8 +4,8 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: kopia
-Version: 0.15.0
-Release: alt2
+Version: 0.17.0
+Release: alt1
 Summary: Backup tool with fast, incremental backups, client-side end-to-end encryption, compression and data deduplication (CLI)
 License: Apache-2.0
 Group: Archiving/Backup
@@ -88,6 +88,9 @@ diff -qr $OLDPWD x
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Wed Sep 04 2024 Vitaly Chikunov <vt@altlinux.org> 0.17.0-alt1
+- Update to v0.17.0 (2024-04-15).
+
 * Sun Mar 10 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.15.0-alt2
 - NMU: fixed FTBFS on LoongArch.
 
