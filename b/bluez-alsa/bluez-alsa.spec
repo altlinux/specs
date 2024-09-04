@@ -15,7 +15,7 @@
 %def_enable opus
 
 Name: bluez-alsa
-Version: 4.3.0
+Version: 4.3.1
 Release: alt1
 Epoch: 5
 Summary: BlueZ ALSA backend for Linux
@@ -148,6 +148,9 @@ install -m0700 -d %buildroot%_localstatedir/%b_user
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Wed Sep 04 2024 L.A. Kostis <lakostis@altlinux.ru> 5:4.3.1-alt1
+- 4.3.1.
+
 * Tue Aug 20 2024 L.A. Kostis <lakostis@altlinux.ru> 5:4.3.0-alt1
 - 4.3.0.
 - enable Opus codec support.
