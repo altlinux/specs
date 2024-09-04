@@ -1,12 +1,12 @@
 Name: xfsdump
-Version: 3.1.12
+Version: 3.2.0
 Release: alt1
 
 Summary: Administrative utilities for the XFS filesystem
 License: GPLv2
 Group: System/Kernel and hardware
 
-Url: http://oss.sgi.com/projects/xfs/
+Url: https://git.kernel.org/pub/scm/fs/xfs/xfsdump-dev.git
 
 # https://git.kernel.org/pub/scm/fs/xfs/xfsdump-dev.git/
 Source: %name-%version.tar
@@ -56,14 +56,18 @@ rm -rf %buildroot%_datadir/doc/%name
 %_mandir/*/*
 
 %changelog
+* Wed Sep 04 2024 L.A. Kostis <lakostis@altlinux.ru> 3.2.0-alt1
+- 3.2.0.
+- Update Url again.
+
 * Thu Jan 26 2023 L.A. Kostis <lakostis@altlinux.ru> 3.1.12-alt1
-- 3.1.12
+- 3.1.12.
 
 * Sun Nov 13 2022 L.A. Kostis <lakostis@altlinux.ru> 3.1.11-alt1
 - NMU update:
-  + 3.1.9 -> 3.1.11 (fixed FTBFS).
-  + update Url
-  + update License
+  + 3.1.9 -> 3.1.11 (fixed FTBFS);
+  + update Url;
+  + update License.
 
 * Sun Apr 05 2020 Pavel Vasenkov <pav@altlinux.org> 3.1.9-alt1
 - 3.1.9
