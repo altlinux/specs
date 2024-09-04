@@ -1,5 +1,5 @@
 Name: libavif
-Version: 1.0.4
+Version: 1.1.1
 Release: alt1
 
 Summary: Implementation of the AV1 Image File Format
@@ -9,7 +9,7 @@ Url: https://github.com/AOMediaCodec/libavif
 
 Source: %name-%version-%release.tar
 
-BuildRequires: cmake
+BuildRequires: cmake gcc-c++
 BuildRequires: pkgconfig(libyuv)
 BuildRequires: pkgconfig(dav1d)
 BuildRequires: pkgconfig(rav1e)
@@ -48,6 +48,9 @@ this package contains development part of libavif
 %_pkgconfigdir/*
 
 %changelog
+* Wed Sep 04 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.1.1-alt1
+- 1.1.1 released
+
 * Fri Feb 09 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.4-alt1
 - 1.0.4 released
 
