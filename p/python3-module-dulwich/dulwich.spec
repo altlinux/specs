@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.22.1
-Release: alt1
+Release: alt2
 
 Summary: Python Git Library
 License: Apache-2.0 or GPL-2.0-or-later
@@ -22,6 +22,7 @@ BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
 %{?_enable_check:BuildRequires: python3(tox)
 BuildRequires: python3(urllib3)
 BuildRequires: python3(fastimport)}
+BuildRequires: python3(semantic_version)
 BuildRequires: python3-module-setuptools-rust rust rust-cargo
 #gpg.errors.GPGMEError: GPGME: Invalid crypto engine
 #BuildRequires: python3(gpg) /usr/bin/gpg
@@ -93,6 +94,9 @@ popd
 %python3_sitelibdir/*/contrib
 
 %changelog
+* Wed Sep 04 2024 L.A. Kostis <lakostis@altlinux.ru> 0.22.1-alt2
+- Fix FTBFS: add semantic_version to BR.
+
 * Thu May 09 2024 L.A. Kostis <lakostis@altlinux.ru> 0.22.1-alt1
 - NMU:
   + 0.22.1.
