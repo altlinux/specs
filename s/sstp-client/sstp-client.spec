@@ -1,11 +1,11 @@
 %define ppp_version %(pkg-config --modversion pppd 2>/dev/null || (%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
 
 Name: sstp-client
-Version: 1.0.19
+Version: 1.0.20
 Release: alt1
 Summary: Secure Socket Tunneling Protocol (SSTP) Client
 Group: System/Servers
-License: GPLv2+
+License: GPL-2.0-or-later
 
 Url: http://sstp-client.sourceforge.net/
 Vcs: https://gitlab.com/sstp-project/sstp-client.git
@@ -89,6 +89,9 @@ install -Dpm 644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Sep 04 2024 Alexey Shabalin <shaba@altlinux.org> 1.0.20-alt1
+- New version 1.0.20.
+
 * Mon Aug 07 2023 Alexey Shabalin <shaba@altlinux.org> 1.0.19-alt1
 - 1.0.19
 
