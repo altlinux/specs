@@ -1,5 +1,5 @@
 Name: yazi
-Version: 0.3.0
+Version: 0.3.3
 Release: alt1
 
 Summary: Blazing fast terminal file manager written in Rust, based on async I/O
@@ -50,11 +50,6 @@ cat >> .cargo/config.toml <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/notify-rs/notify.git?rev=96dec74316a93bed6eec9db177b233e6e017275e"]
-git = "https://github.com/notify-rs/notify.git"
-rev = "96dec74316a93bed6eec9db177b233e6e017275e"
-replace-with = "vendored-sources"
-
 [source.vendored-sources]
 directory = "vendor"
 
@@ -96,6 +91,9 @@ install -Dm 644 yazi-boot/completions/_yazi %buildroot%_datadir/zsh/site-functio
 %_datadir/zsh
 
 %changelog
+* Wed Sep 04 2024 Anton Kurachenko <srebrov@altlinux.org> 0.3.3-alt1
+- New version 0.3.3.
+
 * Sat Aug 03 2024 Anton Kurachenko <srebrov@altlinux.org> 0.3.0-alt1
 - New version 0.3.0.
 
