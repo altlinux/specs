@@ -7,7 +7,7 @@
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
-%global commit      58aa9203c123022138b22cf96540c284876a7910
+%global commit      2c9f5602f0ba3d9da1c2596322dfc4e156844890
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %set_verify_elf_method unresolved=no
@@ -15,7 +15,7 @@
 %brp_strip_none %_bindir/*
 
 Name:           runc
-Version:        1.1.13
+Version:        1.1.14
 Release:        alt1
 Summary:        CLI for running Open Containers
 Group:          Development/Other
@@ -73,6 +73,9 @@ install -p -m 0644 contrib/completions/bash/%name %buildroot%_datadir/bash-compl
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Wed Sep 4 2024 Vladimir Didenko <cow@altlinux.ru> 1.1.14-alt1
+- New version (Fixes: CVE-2024-45310).
+
 * Fri Jun 14 2024 Vladimir Didenko <cow@altlinux.ru> 1.1.13-alt1
 - New version
 
