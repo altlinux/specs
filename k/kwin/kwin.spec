@@ -17,7 +17,7 @@
 
 Name: %rname
 Version: 6.1.4
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -39,6 +39,7 @@ Source: %rname-%version.tar
 #
 Patch1: alt-def-window-buttons.patch
 Patch2: alt-def-layout-switch.patch
+Patch3: alt-def-tiling-layout.patch
 
 BuildRequires(pre): rpm-build-kf6 libwayland-client-devel
 BuildRequires: rpm-build-python3
@@ -128,6 +129,7 @@ KF6 library
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 for f in src/kcms/compositing/kwincompositing.json ; do
     sed -i '/X-DocPath/d' $f
@@ -193,6 +195,9 @@ done
 %_K6lib/libkcmkwincommon.so.*
 
 %changelog
+* Wed Sep 04 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt2
+- change default tiling layout
+
 * Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
 - new version
 
