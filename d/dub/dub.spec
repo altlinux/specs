@@ -4,12 +4,13 @@
 ExclusiveArch: %ix86 x86_64
 
 Name: dub
-Version: 1.24.1
+Version: 1.38.1
 Release: alt1
 Summary: Package and build management system for D
 Group: Development/Other
 License: MIT
 Url: https://dlang.org/
+VCS: https://github.com/dlang/dub.git
 
 # https://github.com/dlang/dub.git
 Source: %name-%version.tar
@@ -55,6 +56,9 @@ install -Dm755 bin/dub %buildroot%_bindir/dub
 %_bindir/dub
 
 %changelog
+* Tue Sep 03 2024 Andrey Kovalev <ded@altlinux.org> 1.38.1-alt1
+- Updated to upstream version 1.38.1.
+
 * Wed Mar 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.24.1-alt1
 - Updated to upstream version 1.24.1.
 

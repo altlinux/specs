@@ -10,27 +10,23 @@ ExclusiveArch: %ix86 x86_64
 %endif
 
 Name: dmd
-Version: 2.098.1
+Version: 2.109.1
 Release: alt1
 Summary: The D Programming Language
 Group: Development/Other
 License: BSL-1.0
 Url: https://dlang.org/
+VCS: https://github.com/dlang/dmd.git
 
 # https://github.com/dlang/dmd.git
 Source: %name-%version.tar
-# https://github.com/dlang/druntime.git
-Source2: druntime-%version.tar
 # https://github.com/dlang/phobos.git
-Source3: phobos-%version.tar
+Source2: phobos-%version.tar
 # https://github.com/dlang/tools.git
-Source4: tools-%version.tar
+Source3: tools-%version.tar
 
-Patch1: druntime-2.082.0-alt-build.patch
-Patch2: druntime-2.082.0-alt-files-list.patch
-Patch3: dmd-2.097.0-alt-build.patch
-Patch4: phobos-2.082.0-alt-build.patch
-Patch5: tools-2.095.1-alt-build.patch
+Patch1: druntime-2.109.1-alt-build.patch
+Patch2: dmd-2.109.1-alt-build.patch
 
 BuildRequires: gcc-c++ curl-devel
 BuildRequires: zlib-devel
@@ -106,32 +102,14 @@ Requires: libphobos2-devel = %EVR
 Phobos is the standard runtime library that comes with the D language compiler.
 
 %prep
-%setup -b2 -b3 -b4 -n %name
+%setup -b2 -b3 -n %name
 
-pushd ../druntime
 %patch1 -p2
 %patch2 -p2
-popd
-
-%patch3 -p2
-
-pushd ../phobos
-%patch4 -p2
-popd
-
-pushd ../tools
-%patch5 -p2
-popd
 
 %build
 pushd src
 %make_build -f posix.mak MODEL=%MODEL PIC=1 BUILD=release ENABLE_RELEASE=1
-popd
-
-pushd ../druntime
-#sed -i 's|-m$(MODEL) -O|-m$(MODEL) -fPIC -O|g' posix.mak
-%make_build -f posix.mak MODEL=%MODEL DRUNTIME_BASE=druntime PIC=1 BUILD=release ENABLE_RELEASE=1
-#gcc lib/libdruntime.o obj/64/errno_c.o obj/64/complex.o -shared -o lib/libdruntime.so -m64 -lpthread -lm -lrt
 popd
 
 pushd ../phobos
@@ -160,11 +138,11 @@ echo '[Environment]' >> %buildroot%_sysconfdir/dmd.conf
 echo 'DFLAGS=-I%_includedir/d -L-lrt -L--export-dynamic -fPIC' >> %buildroot%_sysconfdir/dmd.conf
 
 #druntime
-cp -r ../druntime/import/* %buildroot%_includedir/d/
-cp ../druntime/out/libdruntime.a %buildroot%_libdir/
-rm -f ../druntime/out/libdruntime.so*.a
-rm -f ../druntime/out/libdruntime.so*.o
-cp ../druntime/out/libdruntime.so* %buildroot%_libdir/
+cp -r druntime/import/* %buildroot%_includedir/d/
+cp druntime/out/libdruntime.a %buildroot%_libdir/
+rm -f druntime/out/libdruntime.so*.a
+rm -f druntime/out/libdruntime.so*.o
+cp druntime/out/libdruntime.so* %buildroot%_libdir/
 
 #phobos
 cp ../phobos/out/libphobos2.a %buildroot%_libdir/
@@ -175,14 +153,14 @@ cp -r ../phobos/std %buildroot%_includedir/d/
 cp ../phobos/etc/c/*.d %buildroot%_includedir/d/etc/c/
 
 pushd ../tools
-%make -f posix.mak MODEL=%MODEL ROOT=out PIC=1 DFLAGS='-I../druntime/import -I../phobos -L-L../phobos/out' BUILD=release ENABLE_RELEASE=1 install INSTALL_DIR=%buildroot%_prefix
+%make -f posix.mak MODEL=%MODEL ROOT=out PIC=1 DFLAGS='-Idruntime/import -I../phobos -L-L../phobos/out' BUILD=release ENABLE_RELEASE=1 install INSTALL_DIR=%buildroot%_prefix
 popd
 
 # catdoc conflicts with file from package 'catdoc'; rename it
 mv %buildroot%_bindir/catdoc %buildroot%_bindir/dmd-catdoc
 
-cp -r docs/man/man1/* %buildroot%_man1dir/
-cp -r docs/man/man5/* %buildroot%_man5dir/
+cp -r compiler/docs/man/man1/* %buildroot%_man1dir/
+cp -r compiler/docs/man/man5/* %buildroot%_man5dir/
 
 cp -r ../tools/man/man1/* %buildroot%_man1dir/
 
@@ -199,6 +177,8 @@ cp -r ../tools/man/man1/* %buildroot%_man1dir/
 %files -n libdruntime-devel
 %_includedir/d/core
 %_includedir/d/*.d
+%_includedir/d/__importc_builtins.di
+%_includedir/d/importc.h
 
 %files -n libdruntime-devel-static
 %_libdir/libdruntime.a
@@ -215,6 +195,9 @@ cp -r ../tools/man/man1/* %buildroot%_man1dir/
 %_libdir/libphobos2.a
 
 %changelog
+* Tue Sep 03 2024 Andrey Kovalev <ded@altlinux.org> 2.109.1-alt1
+- Updated to upstream version 2.109.1.
+
 * Wed Jan 12 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 2.098.1-alt1
 - Updated to upstream version 2.098.1.
 
