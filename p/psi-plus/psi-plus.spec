@@ -2,7 +2,7 @@
 
 Name: psi-plus
 Version: 1.5.1653
-Release: alt1
+Release: alt2
 
 Summary: Psi+ Jabber client
 Summary(ru_RU.UTF-8): Jabber-клиент Psi+
@@ -564,6 +564,10 @@ Each element can contain a regular expression to check for matches with JID, fro
 
 %prep
 %setup -n %name-snapshots-%version -a1
+%ifarch %e2k
+# error: pointless comparison of unsigned integer with zero
+sed -i 's/-Werror/-Wno-error/g' usrsctp/CMakeLists.txt
+%endif
 mv usrsctp/ iris/3rdparty/
 #%patch1 -p2
 %patch2 -p1
@@ -729,6 +733,9 @@ rm %buildroot%_libdir/%name/plugins/lib{battleshipgame,openpgp,skins,noughtsandc
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Wed Sep 04 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.5.1653-alt2
+- e2k build fix
+
 * Tue Nov 28 2023 Oleg Solovyov <mcpain@altlinux.org> 1.5.1653-alt1
 - Version 1.5.1653
 
