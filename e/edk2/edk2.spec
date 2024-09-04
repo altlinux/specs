@@ -7,7 +7,7 @@
 # More subpackages to come once licensing issues are fixed
 Name: edk2
 Version: 20240524
-Release: alt1
+Release: alt2
 Summary: EFI Development Kit II
 
 License: BSD-2-Clause-Patent
@@ -324,9 +324,13 @@ cp -p Build/Shell/*/X64/ShellPkg/Application/Shell/Shell/OUTPUT/Shell.efi \
 #install OVMF
 mkdir -p %buildroot%_datadir/edk2
 cp -a OVMF %buildroot%_datadir/
+ln %buildroot%_datadir/OVMF/OVMF_VARS.secboot.fd %buildroot%_datadir/OVMF/OVMF_VARS.ms.fd
+ln %buildroot%_datadir/OVMF/OVMF_VARS_4M.secboot.fd %buildroot%_datadir/OVMF/OVMF_VARS_4M.ms.fd
+
 ln -r -s %buildroot%_datadir/OVMF %buildroot%_datadir/edk2/ovmf
 
 cp -a ovmf-ia32 %buildroot%_datadir/edk2/
+ln %buildroot%_datadir/edk2/ovmf-ia32/OVMF_VARS.secboot.fd %buildroot%_datadir/edk2/ovmf-ia32/OVMF_VARS.ms.fd
 
 for f in %_sourcedir/*edk2-ovmf*.json; do
     install -pm 644 $f %buildroot%_datadir/qemu/firmware
@@ -354,6 +358,9 @@ virt-fw-vars --input OVMF/OVMF_VARS.secboot.fd \
 %_prefix/lib64/efi/shell.efi
 
 %changelog
+* Wed Sep 04 2024 Alexey Shabalin <shaba@altlinux.org> 20240524-alt2
+- Add OVMF_VARS.ms.fd as hardlink to OVMF_VARS.secboot.fd for compat with debian
+
 * Wed Jul 24 2024 Alexey Shabalin <shaba@altlinux.org> 20240524-alt1
 - edk2-stable202405
 - drop OVMF_VARS.ms.fd with MS CA only
