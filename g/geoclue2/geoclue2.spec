@@ -14,23 +14,24 @@
 %def_enable check
 
 Name: %{_name}2
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The Geoinformation Service
 Group: System/Libraries
-License: LGPLv2
+License: GPL-2.0-or-later and LGPL-2.1-or-later
 Url: https://geoclue.freedesktop.org/
+
+Vcs: https://gitlab.freedesktop.org/geoclue/geoclue.git
 
 %if_disabled snapshot
 Source: https://gitlab.freedesktop.org/%_name/%_name/-/archive/%version/%_name-%version.tar.gz
 %else
-Vcs: https://gitlab.freedesktop.org/geoclue/geoclue.git
 Source: %_name-%version.tar
 %endif
 
-%define glib_ver 2.68
-%define mm_ver 1.10
+%define glib_ver 2.74
+%define mm_ver 1.12
 %define soup3_ver 3.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg
@@ -123,13 +124,13 @@ rm -f demo/*.desktop.in
 
 %build
 %meson \
-	-Ddbus-srv-user=%_name \
-	%{?_disable_nmea:-Dnmea-source=false} \
-	%{?_disable_3g:-D3g-source=false} \
-	%{?_disable_gtk_doc:-Dgtk-doc=false} \
-	%{?_disable_introspection:-Dintrospection=false} \
-	-Ddemo-agent=true
-
+    -Ddbus-srv-user=%_name \
+    %{subst_enable_meson_bool nmea nmea-source} \
+    %{subst_enable_meson_bool 3g 3g-source} \
+    %{subst_enable_meson_bool gtk_doc gtk-doc} \
+    %{subst_enable_meson_bool introspection introspection} \
+    -Ddemo-agent=true
+%nil
 %meson_build
 
 %install
@@ -141,7 +142,7 @@ echo 'd %_localstatedir/%_name 0755 %_name %_name' | \
 install -D -m644 /dev/stdin %buildroot%_tmpfilesdir/%_name.conf
 
 %check
-%meson_test
+%__meson_test
 
 %pre
 %_sbindir/groupadd -r -f %_name
@@ -202,6 +203,9 @@ install -D -m644 /dev/stdin %buildroot%_tmpfilesdir/%_name.conf
 %_xdgconfigdir/autostart/%_name-demo-agent.desktop
 
 %changelog
+* Wed Sep 04 2024 Yuri N. Sedunov <aris@altlinux.org> 2.7.2-alt1
+- 2.7.2
+
 * Tue Sep 12 2023 Yuri N. Sedunov <aris@altlinux.org> 2.7.1-alt1
 - 2.7.1
 
