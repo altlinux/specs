@@ -1,6 +1,8 @@
+%define git a4eb1d2
+
 Name: xorg-drv-amdgpu
 Version: 23.0.0
-Release: alt2
+Release: alt3.g%{git}
 Summary: AMD GPU video driver for the Xorg X server
 License: MIT
 Group: System/X11
@@ -41,6 +43,9 @@ BuildRequires: libGL-devel libgbm-devel libudev-devel xorg-proto-devel
 %_man4dir/*
 
 %changelog
+* Wed Sep 04 2024 L.A. Kostis <lakostis@altlinux.ru> 23.0.0-alt3.ga4eb1d2
+- Updated to ga4eb1d2 to pickup latest changes.
+
 * Fri Aug 25 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 23.0.0-alt2
 - spec: build the thing on LoongArch and riscv (works fine here)
 
