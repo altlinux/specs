@@ -1,5 +1,5 @@
-%define ver_major 13.0
-%define api_ver_major 13
+%define ver_major 14.0
+%define api_ver_major 14
 %define api_ver %api_ver_major
 %define clientsdir %_libdir/%name/clients
 %define soname 1
@@ -28,9 +28,6 @@
 
 # VNC remote screensharing
 %def_enable backend_vnc
-
-# Weston backend: fbdev (deprecated)
-%def_disable deprecated_backend_fbdev
 
 # Default backend when no parent display server detected
 # 'auto', 'drm', 'wayland', 'x11', 'fbdev', 'headless'
@@ -78,12 +75,6 @@
 # Compositor color management: lcms
 %def_enable color_management_lcms
 
-# Compositor color management: static (deprecated)
-%def_disable deprected_color_management_static
-
-# Compositor color management: colord (deprecated since 11.0.0)
-%def_disable deprecated_color_management_colord
-
 # JPEG loading support
 %def_enable image_jpeg
 
@@ -120,7 +111,7 @@
 %def_disable check
 
 Name: weston
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Reference compositor for Wayland
@@ -168,14 +159,13 @@ BuildRequires: libdbus-devel
 BuildRequires: libpam0-devel
 %{?_enable_image_jpeg:BuildRequires: libjpeg-devel}
 %{?_enable_image_webp:BuildRequires: libwebp-devel}
-%{?_enable_deprecated_color_management_colord:BuildRequires: libcolord-devel}
 %{?_enable_color_management_lcms:BuildRequires: liblcms2-devel}
 %{?_enable_xwayland:
 BuildRequires: xorg-xwayland-devel
 BuildRequires: pkgconfig(xcb) pkgconfig(xcb-composite)
 BuildRequires: pkgconfig(xcb-shape) pkgconfig(xcb-xfixes) pkgconfig(xcb-cursor)
 BuildRequires: pkgconfig(xcursor) pkgconfig(cairo-xcb)}
-%{?_enable_backend_rdp:BuildRequires: libfreerdp-devel}
+%{?_enable_backend_rdp:BuildRequires: libfreerdp3-devel}
 %{?_enable_backend_x11:BuildRequires: pkgconfig(xcb) pkgconfig(xcb-xkb)}
 %{?_enable_pipewire:BuildRequires: pkgconfig(libpipewire-%pw_api_ver) >= %pw_ver}
 %{?_enable_remoting:
@@ -183,7 +173,7 @@ BuildRequires: pkgconfig(gstreamer-%gst_api_ver) pkgconfig(gstreamer-allocators-
 BuildRequires: pkgconfig(gstreamer-app-%gst_api_ver) pkgconfig(gstreamer-video-%gst_api_ver)}
 %{?_enable_test_junit_xml:BuildRequires: libxml2-devel}
 %{?_enable_check:BuildRequires: xkeyboard-config /%_bindir/Xwayland}
-%{?_enable_backend_vnc:BuildRequires: libaml-devel libneatvnc-devel >= 0.7}
+%{?_enable_backend_vnc:BuildRequires: libaml-devel libneatvnc-devel >= 0.8}
 
 %description
 Weston is the reference wayland compositor that can run on KMS, under X11
@@ -229,19 +219,17 @@ Header files for doing development with the weston.
 
 %build
 %meson \
-	%{?_enable_deprecated_weston_launch:-Ddeprecated-weston-launch=true \
-	-Dweston-launch-group=xgrp} \
-	--libexecdir=%clientsdir \
-	%{?_disable_backend_x11:-Dbackend-x11=false} \
-	%{?_disable_backend_rdp:-Dbackend-rdp=false} \
-	%{?_disable_backend_vnc:-Dbackend-vnc=false} \
-	%{?_disable_xwayland:-Dxwayland=false} \
-	%{?_disable_remoting:-Dremoting=false} \
-	%{?_disable_shell_ivi:-Dshell-ivi=false} \
-	%{?_disable_pipewire:-Dpipewire=false} \
-	%{?_disable_test_junit_xml:-Dtest-junit-xml=false} \
-	%{?_enable_deprecated_backend_fbdev:-Ddeprecated-backend-fbdev=true} \
-	%{?_enable_deprecated_color_management_static:-Ddeprecated-color-management-static=true}
+    %{?_enable_deprecated_weston_launch:-Ddeprecated-weston-launch=true \
+    -Dweston-launch-group=xgrp} \
+    --libexecdir=%clientsdir \
+    %{subst_enable_meson_bool backend_x11 backend-x11} \
+    %{subst_enable_meson_bool backend_rdp backend-rdp} \
+    %{subst_enable_meson_bool backend_vnc backend-vnc} \
+    %{subst_enable_meson_bool xwayland xwayland} \
+    %{subst_enable_meson_bool remoting remoting} \
+    %{subst_enable_meson_bool shell_ivi shell-ivi} \
+    %{subst_enable_meson_bool pipewire pipewire} \
+    %{subst_enable_meson_bool test_junit_xml test-junit-xml}
 %nil
 %meson_build -v
 
@@ -249,8 +237,8 @@ Header files for doing development with the weston.
 %meson_install
 mkdir -p -- %buildroot/%_xdgconfigdir/%name
 sed \
-	-e 's,@clientsdir@,%clientsdir,g' \
-	.gear/%name.ini > %buildroot/%_xdgconfigdir/%name/%name.ini
+    -e 's,@clientsdir@,%clientsdir,g' \
+    .gear/%name.ini > %buildroot/%_xdgconfigdir/%name/%name.ini
 
 ln -sf %name/libexec_%{name}.so.%exec_soname \
 %buildroot%_libdir/libexec_%{name}.so.%exec_soname
@@ -324,6 +312,9 @@ ln -sf %name/libexec_%{name}.so.%exec_soname \
 %_datadir/pkgconfig/lib%name-%api_ver-protocols.pc
 
 %changelog
+* Wed Sep 04 2024 Yuri N. Sedunov <aris@altlinux.org> 14.0.0-alt1
+- 14.0.0
+
 * Wed Jun 05 2024 Yuri N. Sedunov <aris@altlinux.org> 13.0.3-alt1
 - 13.0.3
 
