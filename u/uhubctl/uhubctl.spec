@@ -1,8 +1,8 @@
-%define git cd99f0d
+%define git %nil
 
 Name: uhubctl
-Version: 2.5.0
-Release: alt0.2.g%{git}
+Version: 2.6.0
+Release: alt0.1
 Summary: Utility to control USB power per-port on smart USB hubs
 Group: System/Configuration/Hardware
 License: GPLv2
@@ -43,6 +43,9 @@ install -m644 udev/rules.d/*.rules %buildroot%_udevrulesdir/
 %_sbindir/%name
 
 %changelog
+* Wed Sep 04 2024 L.A. Kostis <lakostis@altlinux.ru> 2.6.0-alt0.1
+- 2.6.0.
+
 * Fri May 17 2024 L.A. Kostis <lakostis@altlinux.ru> 2.5.0-alt0.2.gcd99f0d
 - Updated to v2.5.0-36-gcd99f0d.
 
