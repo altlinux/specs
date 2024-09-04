@@ -3,7 +3,7 @@
 
 Name: lightdm-kde-greeter
 Version: 0.4.23
-Release: alt4
+Release: alt5
 Group: Graphical desktop/Other
 Summary: LightDM KDE6 Greeter
 License: GPL-3.0+
@@ -38,8 +38,6 @@ Requires: plasma-workspace-qml
 Requires: polkit
 
 Provides: lightdm-greeter
-
-%qml_req_skipall 1
 
 %description
 This package provides a KDE-based LightDM greeter engine.
@@ -91,6 +89,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Wed Sep 04 2024 Anton Golubev <golubevan@altlinux.org> 0.4.23-alt5
+- fix FTBFS due to qml_req_skipall macro
+
 * Thu Aug 15 2024 Anton Golubev <golubevan@altlinux.org> 0.4.23-alt4
 - remove the link to the debug file
 - fix PAM messages
