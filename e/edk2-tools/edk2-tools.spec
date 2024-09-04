@@ -2,7 +2,7 @@
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-tools
-Version: 20240524
+Version: 20240811
 Release: alt1
 Summary: EFI Development Kit II Tools
 
@@ -177,6 +177,9 @@ popd
 %doc BaseTools/UserManuals/*.rtf
 
 %changelog
+* Wed Sep 04 2024 Alexey Shabalin <shaba@altlinux.org> 20240811-alt1
+- edk2-stable202408
+
 * Thu Jul 25 2024 Alexey Shabalin <shaba@altlinux.org> 20240524-alt1
 - edk2-stable202405
 
