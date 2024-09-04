@@ -18,7 +18,7 @@
 
 Name: zabbix
 Version: 7.0.3
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: A network monitor
@@ -857,6 +857,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Wed Sep 04 2024 Alexei Takaseev <taf@altlinux.org> 1:7.0.3-alt3
+- Add 2GIS tile provider and set by default
+
 * Mon Sep 02 2024 Alexei Takaseev <taf@altlinux.org> 1:7.0.3-alt2
 - Fix start java-gateway (ALT#51339)
 
