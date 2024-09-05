@@ -4,40 +4,34 @@
 
 Name: sympy
 Epoch: 1
-Version: 1.9
+Version: 1.13.1
 Release: alt1
 Summary: A Python library for symbolic mathematics
 License: BSD-3-Clause
 Group: Sciences/Mathematics
 Url: https://sympy.org/
+VCS: https://github.com/sympy/sympy.git
 
 BuildArch: noarch
 
-# https://github.com/sympy/sympy.git
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
 
 Patch1: %name-%version-alt-build.patch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-py
-BuildRequires: python3-module-mpmath
+BuildRequires(pre): rpm-build-pyproject
 BuildRequires: dvipng ImageMagick-tools graphviz librsvg-utils
-%if_with doc
-BuildRequires(pre): python3-module-sphinx-devel
-BuildRequires: python3-module-sphinx-sphinx-build-symlink
-BuildRequires: python3-module-docutils
-BuildRequires: python3-module-Pygments
-BuildRequires: python3-module-sphinx-math-dollar
-BuildRequires: python3(matplotlib) python3(matplotlib.sphinxext)
-BuildRequires: python3-module-sphinx-pickles
-%endif
-BuildRequires: /usr/bin/pytest-3
 
 Requires: python3-module-%name = %EVR
 
 %add_python3_req_skip py.__.test.item py.__.test.terminal.terminal
+
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%endif
 
 %description
 SymPy is a Python library for symbolic mathematics. It aims to become a
@@ -93,6 +87,9 @@ This package contains development documentation for SymPy.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
 %patch1 -p1
 
 for i in $(find ./ -name tests); do
@@ -106,7 +103,7 @@ sed -i 's|@PYVER@|%_python3_version|g' doc/Makefile
 
 %build
 export LC_ALL=en_US.UTF-8
-%python3_build
+%pyproject_build
 
 %if_with doc
 pushd doc
@@ -122,7 +119,7 @@ cp -fR doc/_build/doctrees ./
 %endif
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with doc
 cp -fR pickle %buildroot%python3_sitelibdir/%name/
@@ -171,6 +168,10 @@ python3 bin/doctest -v ||:
 %endif
 
 %changelog
+* Thu Sep 05 2024 Andrey Kovalev <ded@altlinux.org> 1:1.13.1-alt1
+- Updated to upstream version 1.13.1.
+- Changed the package build scheme.
+
 * Fri Feb 25 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.9-alt1
 - Updated to upstream version 1.9.
 
