@@ -1,5 +1,5 @@
 Name: python3-module-async-interrupt
-Version: 1.1.2
+Version: 1.2.0
 Release: alt1
 
 Summary: Interrupt context manager for asyncio. 
@@ -38,6 +38,9 @@ BuildRequires: python3(pytest-cov)
 %python3_sitelibdir/async_interrupt-%version.dist-info
 
 %changelog
+* Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.0-alt1
+- 1.2.0 released
+
 * Thu Jul 04 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.1.2-alt1
 - 1.1.2 released
 
