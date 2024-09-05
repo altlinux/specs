@@ -1,5 +1,5 @@
 Name: python3-module-aiocoap
-Version: 0.4.7
+Version: 0.4.11
 Release: alt1
 
 Summary: The Python CoAP library
@@ -28,6 +28,7 @@ BuildRequires: python3(wheel)
 
 # optional
 %add_python3_req_skip js
+%add_python3_req_skip lakers
 %add_python3_req_skip pyodide.ffi.wrappers
 
 %files
@@ -36,6 +37,9 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/aiocoap-%version.dist-info
 
 %changelog
+* Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.4.11-alt1
+- 0.4.11 released
+
 * Thu May 11 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.7-alt1
 - 0.4.7 released
 
