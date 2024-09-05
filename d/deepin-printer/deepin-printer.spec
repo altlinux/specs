@@ -3,7 +3,7 @@
 %define repo dde-printer
 
 Name: deepin-printer
-Version: 0.9.20
+Version: 0.9.21
 Release: alt1
 Summary: Printing utility for DDE
 License: GPL-3.0+
@@ -13,16 +13,15 @@ Url: https://github.com/linuxdeepin/dde-printer
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-Patch: deepin-printer-0.9.20-upstream-fix-attribute-modification.patch
 
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
 %else
 BuildRequires: gcc-c++
 %endif
-BuildRequires: qt5-base-devel
+BuildRequires: dqt5-base-devel
 BuildRequires: libcups-devel
-BuildRequires: qt5-tools
+BuildRequires: dqt5-tools
 BuildRequires: dtk5-widget-devel
 BuildRequires: libsmbclient-devel
 BuildRequires: libusb-devel
@@ -34,22 +33,22 @@ Graphical interface to configure the printing system for DDE.
 
 %prep
 %setup -n %repo-%version
-%patch -p1
 
 %build
-export PATH=%_qt5_bindir:$PATH
+export PATH=%_dqt5_bindir:$PATH
 %if_enabled clang
 export CC=clang
 export CXX=clang++
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-%qmake_qt5 \
+%qmake_dqt5 \
 %if_enabled clang
-    QMAKE_STRIP= -spec linux-clang \
+  QMAKE_STRIP= -spec linux-clang \
 %endif
-	DEFINES+="VERSION=%version" \
-	CONFIG+=nostrip \
-	#
+  DEFINES+="VERSION=%version" \
+  CONFIG+=nostrip \
+  QMAKE_RPATHDIR=%_dqt5_libdir \
+#
 %make_build
 
 %install
@@ -74,6 +73,10 @@ chmod +x %buildroot%_sysconfdir/xdg/autostart/%repo-watch.desktop
 %_datadir/deepin-manual/manual-assets/application/%repo/print-manager/
 
 %changelog
+* Wed May 29 2024 Leontiy Volodin <lvol@altlinux.org> 0.9.21-alt1
+- New version 0.9.21.
+- Built via separate qt5 instead system (ALT #48138).
+
 * Tue Mar 05 2024 Leontiy Volodin <lvol@altlinux.org> 0.9.20-alt1
 - New version 0.9.20.
 - Used default compiler versions for easy backporting.

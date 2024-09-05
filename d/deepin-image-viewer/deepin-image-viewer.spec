@@ -2,8 +2,8 @@
 %def_enable cmake
 
 Name: deepin-image-viewer
-Version: 5.9.9
-Release: alt3
+Version: 5.9.18
+Release: alt1
 
 Summary: Image viewer for Deepin
 
@@ -26,16 +26,16 @@ BuildRequires(pre): gcc-c++
 %if_enabled cmake
 BuildRequires(pre): cmake rpm-build-ninja
 %endif
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-tools-devel
+BuildRequires: dqt5-base-devel
+BuildRequires: dqt5-tools-devel
 BuildRequires: libraw-devel
-BuildRequires: qt5-tools
+BuildRequires: dqt5-tools
 BuildRequires: libexif-devel
 BuildRequires: libdtkwidget-devel
 BuildRequires: libimageviewer-devel
 BuildRequires: libgio-qt-devel
-BuildRequires: qt5-svg-devel
-BuildRequires: qt5-x11extras-devel
+BuildRequires: dqt5-svg-devel
+BuildRequires: dqt5-x11extras-devel
 BuildRequires: libfreeimage-devel
 
 %description
@@ -51,9 +51,13 @@ Development libraries for %name.
 %prep
 %setup
 %patch -p1
+sed -i 's|qt5/plugins/imageformats|../../dqt5/plugins/imageformats|' \
+  qimage-plugins/libraw/CMakeLists.txt
 
 %build
-export PATH=%_qt5_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
+export PATH=%_dqt5_bindir:$PATH
 %if_enabled cmake
 %if_enabled clang
 export CC="clang"
@@ -63,24 +67,26 @@ export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
 %cmake \
-	-GNinja \
-	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
-	-DAPP_VERSION=%version \
-	-DVERSION=%version \
-	-DCMAKE_INSTALL_LIBDIR=%_libdir \
-	%nil
+  -GNinja \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DVERSION=%version \
+  -DCMAKE_INSTALL_LIBDIR=%_libdir \
+  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
+  -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
+#
 cmake --build "%_cmake__builddir" -j1
 %else
-%qmake_qt5 \
+%qmake_dqt5 \
 %if_enabled clang
-    QMAKE_STRIP= -spec linux-clang \
+  QMAKE_STRIP= -spec linux-clang \
 %endif
-    CONFIG+=nostrip \
-    PREFIX=%prefix \
-    DAPP_VERSION=%version \
-    DVERSION=%version \
-    LIB_INSTALL_DIR=%_libdir \
-    %nil
+  CONFIG+=nostrip \
+  PREFIX=%prefix \
+  DAPP_VERSION=%version \
+  DVERSION=%version \
+  LIB_INSTALL_DIR=%_libdir \
+  QMAKE_RPATHDIR=%_dqt5_libdir \
+#
 %make
 %endif
 
@@ -103,13 +109,17 @@ cmake --build "%_cmake__builddir" -j1
 %dir %_datadir/deepin-manual/manual-assets/application/%name/
 %_datadir/deepin-manual/manual-assets/application/%name/image-viewer/
 %_iconsdir/hicolor/scalable/apps/%name.svg
-%_qt5_plugindir/imageformats/libxraw.so.*
+%_dqt5_plugindir/imageformats/libxraw.so.*
 %_datadir/dbus-1/services/com.deepin.ImageViewer.service
 
 %files devel
-%_qt5_plugindir/imageformats/libxraw.so
+%_dqt5_plugindir/imageformats/libxraw.so
 
 %changelog
+* Wed May 29 2024 Leontiy Volodin <lvol@altlinux.org> 5.9.18-alt1
+- New version 5.9.18.
+- Built via separate qt5 instead system (ALT #48138).
+
 * Tue Jan 09 2024 Leontiy Volodin <lvol@altlinux.org> 5.9.9-alt3
 - Fixed build with APIv23.
 

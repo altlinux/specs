@@ -4,8 +4,8 @@
 %def_without library
 
 Name: deepin-log-viewer
-Version: 6.1.11
-Release: alt2
+Version: 6.1.17
+Release: alt1
 
 Summary: System log viewer for Deepin
 
@@ -19,7 +19,9 @@ Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-log-viewer
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: %name-%version-%release.patch
+Patch1: deepin-log-viewer-6.1.17-opensuse-use-system-xlsxwriter.patch
+Patch2: deepin-log-viewer-6.1.17-alt-use-system-minizip.patch
+Patch3: deepin-log-viewer-6.1.17-alt-fix-pkgconfig.patch
 
 BuildRequires(pre): rpm-build-ninja
 %if_enabled clang
@@ -28,8 +30,8 @@ BuildRequires(pre): clang-devel lld-devel
 BuildRequires(pre): gcc-c++
 %endif
 # Automatically added by buildreq on Wed Jan 10 2024
-# optimized out: bash5 bashrc boost-devel cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libicu-devel libp11-kit libpolkit-qt5-agent libpolkit-qt5-core libpolkit-qt5-gui libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxerces-c perl perl-Config-Tiny perl-Encode perl-XML-LibXML perl-parent pkg-config python3 python3-base python3-dev qt5-base-devel qt5-tools sh5 zlib-devel
-BuildRequires: boost-devel-headers cmake deepin-gettext-tools gsettings-qt-devel libdtkwidget-devel libminizip-devel libpolkitqt5-qt5-devel libsystemd-devel libxerces-c-devel libxlsxwriter-devel python3-module-setuptools qt5-svg-devel qt5-tools-devel rapidjson-devel libgio-qt-devel
+# optimized out: bash5 bashrc boost-devel cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libicu-devel libp11-kit libpolkit-qt5-agent libpolkit-qt5-core libpolkit-qt5-gui libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-svg libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxerces-c perl perl-Config-Tiny perl-Encode perl-XML-LibXML perl-parent pkg-config python3 python3-base python3-dev dqt5-base-devel dqt5-tools sh5 zlib-devel
+BuildRequires: boost-devel-headers cmake deepin-gettext-tools gsettings-qt-devel libdtkwidget-devel libminizip-devel libpolkitqt5-qt5-devel libsystemd-devel libxerces-c-devel libxlsxwriter-devel python3-module-setuptools dqt5-svg-devel dqt5-tools-devel rapidjson-devel libgio-qt-devel
 
 %description
 %summary.
@@ -52,7 +54,7 @@ This package provides development files for logviewerplugin.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
 %if_enabled clang
@@ -60,10 +62,15 @@ export CC="clang"
 export CXX="clang++"
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-export PATH=%_qt5_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
+export CPLUS_INCLUDE_PATH=%_includedir/qt5:$CPLUS_INCLUDE_PATH
+export PATH=%_dqt5_bindir:$PATH
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
+    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
     -DCMAKE_SAFETYTEST_ARG="CMAKE_SAFETYTEST_ARG_OFF" \
     -DAPP_VERSION=%version \
     -DVERSION=%version \
@@ -85,9 +92,8 @@ rm -rf %buildroot%_pkgconfigdir/liblogviewerplugin.pc
 %files -f %name.lang
 %doc README.md LICENSE.txt
 %_bindir/*
-%_unitdir/timers.target.wants/coredump-reporter.timer
-%_unitdir/coredump-reporter.service
-%_unitdir/coredump-reporter.timer
+%_userunitdir/coredump-reporter.service
+%_userunitdir/coredump-reporter.timer
 %_unitdir/deepin-log-viewer-daemon.service
 %dir %_datadir/%name/
 %dir %_datadir/%name/translations/
@@ -130,6 +136,10 @@ rm -rf %buildroot%_pkgconfigdir/liblogviewerplugin.pc
 %endif
 
 %changelog
+* Tue Sep 03 2024 Leontiy Volodin <lvol@altlinux.org> 6.1.17-alt1
+- New version 6.1.17.
+- Built via separate qt5 instead system (ALT #48138).
+
 * Tue Sep 03 2024 Leontiy Volodin <lvol@altlinux.org> 6.1.11-alt2
 - Applied usrmerge.
 

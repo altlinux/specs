@@ -3,7 +3,7 @@
 %define repo dde-session-ui
 
 Name: deepin-session-ui
-Version: 6.0.16
+Version: 6.0.18
 Release: alt1
 
 Summary: Deepin desktop-environment - Session UI module
@@ -16,10 +16,10 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 
-BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
 # Automatically added by buildreq on Wed Oct 25 2023
-# optimized out: bash5 bashrc cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXext-devel libcrypt-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgmock-devel libgpg-error libgsettings-qt libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel libxcbutil-icccm pkg-config python3 python3-base qt5-base-devel sh5 xorg-proto-devel
-BuildRequires: cmake dtk6-common-devel dtkcore gsettings-qt-devel libdeepin-pw-check-devel libdtkwidget-devel libgio-devel libgtest-devel libsystemd-devel libxcbutil-icccm-devel qt5-svg-devel qt5-tools qt5-x11extras-devel
+# optimized out: bash5 bashrc cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXext-devel libcrypt-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgmock-devel libgpg-error libgsettings-qt libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-sql libdqt5-svg libdqt5-test libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel libxcbutil-icccm pkg-config python3 python3-base dqt5-base-devel sh5 xorg-proto-devel
+BuildRequires: cmake dtk6-common-devel dtkcore gsettings-qt-devel libdeepin-pw-check-devel libdtkwidget-devel libgio-devel libgtest-devel libsystemd-devel libxcbutil-icccm-devel dqt5-svg-devel dqt5-tools dqt5-x11extras-devel
 BuildRequires: deepin-dock-devel
 %if_with clang
 BuildRequires: clang-devel
@@ -44,7 +44,10 @@ This project include those sub-project:
 sed -i 's|lib/dde-dock/|%_lib/dde-dock/|' CMakeLists.txt
 
 %build
-export PATH=%_qt5_bindir:$PATH
+export PATH=%_dqt5_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
+export CPLUS_INCLUDE_PATH=%_includedir/qt5:$CPLUS_INCLUDE_PATH
 %if_with clang
 export CC="clang"
 export CXX="clang++"
@@ -55,7 +58,8 @@ export READELF="llvm-readelf"
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DARCHITECTURE=%_arch \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
 %ifarch aarch64 armh ppc64le
     -DSHUTDOWN_NO_QUIT=YES \
     -DLOCK_NO_QUIT=YES \
@@ -99,6 +103,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/%repo/translations/dde-session-ui_ky@Arab.qm
 
 %changelog
+* Thu May 23 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.18-alt1
+- New version 6.0.18.
+- Built via separate qt5 instead system (ALT #48138).
+
 * Wed Mar 27 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.16-alt1
 - New version 6.0.16.
 

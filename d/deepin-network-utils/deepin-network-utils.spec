@@ -1,11 +1,10 @@
 %def_disable clang
 
 %define repo dde-network-utils
-%define llvm_ver 15
 
 Name: deepin-network-utils
 Version: 5.4.13
-Release: alt2
+Release: alt3
 Summary: Deepin desktop-environment - network utils
 License: GPL-3.0-or-later
 Group: Graphical desktop/Other
@@ -16,19 +15,12 @@ Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: deepin-network-utils-5.4.13-alt-fix-gtest-1.13.patch
 
 %if_enabled clang
-#BuildRequires(pre): rpm-macros-llvm-common
-BuildRequires: clang%llvm_ver.0-devel
-BuildRequires: lld%llvm_ver.0-devel
-BuildRequires: llvm%llvm_ver.0-devel
+BuildRequires: clang-devel lld-devel
 %else
 BuildRequires: gcc-c++
 %endif
-BuildRequires: deepin-qt-dbus-factory-devel
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-linguist
-BuildRequires: gsettings-qt-devel
+BuildRequires: deepin-qt-dbus-factory-devel dqt5-base-devel dqt5-linguist gsettings-qt-devel libgtest-devel
 # BuildRequires: libgio-qt-devel
-BuildRequires: libgtest-devel
 
 %description
 Deepin desktop-environment - network utils.
@@ -57,18 +49,19 @@ sed -i '/target.path/s|\$\$PREFIX/lib|%_libdir|' \
     dde-network-utils/dde-network-utils.pro
 
 %build
-export PATH=%_qt5_bindir:$PATH
+export PATH=%_dqt5_bindir:$PATH
 %if_enabled clang
-export CC=clang-%llvm_ver
-export CXX=clang++-%llvm_ver
-export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
+export CC=clang
+export CXX=clang++
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-%qmake_qt5 \
+%qmake_dqt5 \
 %if_enabled clang
     QMAKE_STRIP= -spec linux-clang \
 %endif
     CONFIG+=nostrip \
-    PREFIX=%prefix
+    PREFIX=%prefix \
+    QMAKE_RPATHDIR=%_dqt5_libdir
 %make_build
 
 %install
@@ -85,6 +78,9 @@ export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
 %_libdir/lib%{repo}.so
 
 %changelog
+* Fri May 24 2024 Leontiy Volodin <lvol@altlinux.org> 5.4.13-alt3
+- Built via separate qt5 instead system (ALT #48138).
+
 * Thu Jan 26 2023 Leontiy Volodin <lvol@altlinux.org> 5.4.13-alt2
 - Fix build with googletest 1.13.0.
 - Renamed devel subpackage to libddenetworkutils-devel.

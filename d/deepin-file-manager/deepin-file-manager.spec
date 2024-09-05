@@ -4,8 +4,8 @@
 %def_without clang
 
 Name: deepin-file-manager
-Version: 6.0.44
-Release: alt2
+Version: 6.0.50
+Release: alt1
 
 Summary: Deepin File Manager
 
@@ -16,13 +16,14 @@ Url: https://github.com/linuxdeepin/dde-file-manager
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
+Patch0: deepin-file-manager-6.0.50-alt-fix-paths.patch
 
 Provides: %repo = %EVR
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
 # Automatically added by buildreq on Thu Oct 26 2023
-# optimized out: alt-os-release bash5 bashrc boost-asio-devel boost-devel-headers boost-filesystem-devel cmake cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gsettings-qt-devel icu-utils libX11-devel libdeepin-pdfium1 libdfm-burn1 libdfm-io1 libdfm-mount1 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libdtkwidget-devel libffmpegthumbnailer-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt libicu-devel libisoburn-devel libp11-kit libpolkit-qt5-agent libpolkit-qt5-core libpolkit-qt5-gui libpoppler0-cpp libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libsecret-devel libssl-devel libstartup-notification libstdc++-devel libudisks2-devel libxcb-devel pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-common qt5-base-devel qt5-x11extras-devel sh5 xorg-proto-devel zlib-devel
-BuildRequires: cmake deepin-dock-devel deepin-qt-dbus-factory-devel dtk6-common-devel dtkcore kf5-kcodecs-devel libcryptsetup-devel libdeepin-pdfium-devel libdfm-burn-devel libdfm-io-devel libdfm-mount-devel libdmr-devel libdocparser-devel liblucene++-devel libmount-devel libpcre-devel libpolkit-devel libpolkitqt5-qt5-devel libpoppler-cpp-devel libtag-devel qt5-multimedia-devel qt5-svg-devel qt5-tools qt5-x11extras-devel gsettings-qt-devel libffmpegthumbnailer-devel
+# optimized out: alt-os-release bash5 bashrc boost-asio-devel boost-devel-headers boost-filesystem-devel cmake cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gsettings-qt-devel icu-utils libX11-devel libdeepin-pdfium1 libdfm-burn1 libdfm-io1 libdfm-mount1 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libdtkwidget-devel libffmpegthumbnailer-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt libicu-devel libisoburn-devel libp11-kit libpolkit-dqt5-agent libpolkit-qt5-core libpolkit-qt5-gui libpoppler0-cpp libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-multimedia libdqt5-network libdqt5-printsupport libdqt5-sql libdqt5-svg libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libsecret-devel libssl-devel libstartup-notification libstdc++-devel libudisks2-devel libxcb-devel pkg-config python3 python3-base python3-dev python3-module-setuptools dqt5-base-common dqt5-base-devel dqt5-x11extras-devel sh5 xorg-proto-devel zlib-devel
+BuildRequires: cmake deepin-dock-devel deepin-qt-dbus-factory-devel dtk6-common-devel dtkcore kf5-kcodecs-devel libcryptsetup-devel libdeepin-pdfium-devel libdfm-burn-devel libdfm-io-devel libdfm-mount-devel libdmr-devel libdocparser-devel liblucene++-devel libmount-devel libpcre-devel libpolkit-devel libpolkitqt5-qt5-devel libpoppler-cpp-devel libtag-devel dqt5-multimedia-devel dqt5-svg-devel dqt5-tools dqt5-x11extras-devel gsettings-qt-devel libffmpegthumbnailer-devel
 BuildRequires: deepin-gettext-tools deepin-desktop-base
 
 %if_with clang
@@ -31,7 +32,7 @@ BuildRequires: clang-devel lld-devel libstdc++-devel
 BuildRequires: gcc-c++
 %endif
 
-Requires: libqt5-gui = %_qt5_version libqt5-widgets = %_qt5_version
+Requires: libdqt5-gui = %_dqt5_version libdqt5-widgets = %_dqt5_version
 
 %description
 File manager front end of Deepin OS.
@@ -101,12 +102,7 @@ Deepin desktop environment - desktop module.
 
 %prep
 %setup -n %repo-%version
-sed -i 's|lib/dde-dock/plugins/system-trays|${LIB_DESTINATION}/dde-dock/plugins/system-trays|' \
-  src/external/dde-dock-plugins/disk-mount/CMakeLists.txt
-sed -i 's|include <pcre.h>|include <pcre/pcre.h>|' \
-  src/plugins/filemanager/dfmplugin-search/3rdparty/fsearch/database_search.c
-sed -i 's|/usr/bin/python|%__python3|' \
-  tests/report-daily-check.py
+%autopatch -p1
 
 %build
 %define optflags_lto %nil
@@ -118,10 +114,15 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 export CC=gcc
 export CXX=g++
 %endif
-export PATH=%_qt5_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
+export CPLUS_INCLUDE_PATH=%_includedir/qt5:$CPLUS_INCLUDE_PATH
+export PATH=%_dqt5_bindir:$PATH
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
+    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
     -DSYSTEMD_USER_UNIT_DIR=%_userunitdir \
@@ -147,6 +148,7 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_bindir/dde-select-dialog-x11
 %_bindir/dde-select-dialog-wayland
 %_bindir/dde-file-dialog
+%_bindir/dfm-open.sh
 %_datadir/%repo/
 %_desktopdir/%repo.desktop
 %_sysconfdir/X11/Xsession.d/99dfm-dlnfs-automount
@@ -162,9 +164,9 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_datadir/dbus-1/system-services/com.deepin.filemanager.daemon.service
 %_sysconfdir/dbus-1/system.d/com.deepin.filemanager.daemon.conf
 %_unitdir/dde-filemanager-daemon.service
-%_userunitdir/dde-filemanager-server.service
+%_userunitdir/dde-file-manager.service
 %dir %_userunitdir/dde-session-initialized.target.wants/
-%_userunitdir/dde-session-initialized.target.wants/dde-filemanager-server.service
+%_userunitdir/dde-session-initialized.target.wants/dde-file-manager.service
 %_datadir/dbus-1/services/com.deepin.filemanager.filedialog_x11.service
 %_datadir/dbus-1/services/com.deepin.filemanager.filedialog_wayland.service
 %_datadir/dbus-1/services/org.deepin.filemanager.server.service
@@ -246,6 +248,10 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Mon Sep 02 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.50-alt1
+- New version 6.0.50.
+- Built via separate qt5 instead system (ALT #48138).
+
 * Mon Sep 02 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.44-alt2
 - NMU: fixed FTBFS.
 

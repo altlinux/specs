@@ -3,8 +3,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: xdg-desktop-portal-dde
-Version: 1.0.5
-Release: alt1.git1c65849
+Version: 1.0.5.0.9.g8633f76
+Release: alt1
 
 Summary: A backend implement for xdg-desktop-portal on Deepin
 
@@ -17,7 +17,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: dwayland-devel extra-cmake-modules kf5-kdeclarative-devel kf5-ki18n-devel kf5-knotifications-devel kf5-kpackage-devel libwayland-cursor-devel libwayland-egl-devel qt5-wayland-devel
+BuildRequires: dwayland-devel extra-cmake-modules libwayland-cursor-devel libwayland-egl-devel qt6-wayland-devel
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -38,7 +38,7 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-export PATH=%_qt5_bindir:$PATH
+export PATH=%_qt6_bindir:$PATH
 %cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -59,5 +59,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/xdg-desktop-portal/dde-portals.conf
 
 %changelog
+* Wed May 29 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.5.0.9.g8633f76-alt1
+- New version 1.0.5-9-g8633f76.
+- Switched to qt6 by upstream.
+
 * Fri Dec 08 2023 Leontiy Volodin <lvol@altlinux.org> 1.0.5-alt1.git1c65849
 - Initial build for ALT Sisyphus.

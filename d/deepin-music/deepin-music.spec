@@ -5,7 +5,7 @@
 
 Name: deepin-music
 Version: 7.0.5
-Release: alt1
+Release: alt2
 
 Summary: Awesome music player with brilliant and tweakful UI Deepin-UI based
 
@@ -18,8 +18,8 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja
 # Automatically added by buildreq on Sat Oct 28 2023
-# optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libavcodec-devel libavutil-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libicu-devel libmpris-qt5 libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-printsupport libqt5-qml libqt5-qmlmodels libqt5-quick libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libudisks2-qt5 pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-devel qt5-declarative-devel qt5-tools sh5 zlib-devel
-BuildRequires: cmake kf5-kcodecs-devel libSDL2-devel libavformat-devel libdtkdeclarative-devel libdtkwidget-devel libtag-devel libvlc-devel mpris-qt5-devel qt5-multimedia-devel qt5-svg-devel qt5-tools-devel udisks2-qt5-devel
+# optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libavcodec-devel libavutil-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libicu-devel libmpris-qt5 libp11-kit libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-multimedia libdqt5-network libdqt5-printsupport libdqt5-qml libdqt5-qmlmodels libdqt5-quick libdqt5-sql libdqt5-svg libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libudisks2-qt5 pkg-config python3 python3-base python3-dev python3-module-setuptools dqt5-base-devel dqt5-declarative-devel dqt5-tools sh5 zlib-devel
+BuildRequires: cmake kf5-kcodecs-devel libSDL2-devel libavformat-devel libdtkdeclarative-devel libdtkwidget-devel libtag-devel libvlc-devel mpris-qt5-devel dqt5-multimedia-devel dqt5-svg-devel dqt5-tools-devel dqt5-declarative-devel udisks2-qt5-devel
 
 %if_with clang
 BuildRequires: clang-devel
@@ -64,12 +64,16 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %else
 %define optflags_lto %nil
 %endif
-
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
+export PATH=%_dqt5_bindir:$PATH
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DLIB_INSTALL_DIR=%_libdir \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
+    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
     -DVERSION=%version
 cmake --build %_cmake__builddir -j%__nprocs
 
@@ -104,6 +108,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/lib%repo.so
 
 %changelog
+* Wed May 29 2024 Leontiy Volodin <lvol@altlinux.org> 7.0.5-alt2
+- Built via separate qt5 instead system (ALT #48138).
+
 * Thu Apr 18 2024 Leontiy Volodin <lvol@altlinux.org> 7.0.5-alt1
 - New version 7.0.5.
 

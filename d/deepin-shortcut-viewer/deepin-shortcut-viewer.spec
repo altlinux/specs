@@ -1,6 +1,6 @@
 Name: deepin-shortcut-viewer
 Version: 5.0.9
-Release: alt1
+Release: alt2
 Summary: Deepin Shortcut Viewer
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -9,7 +9,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
 
-BuildRequires: qt5-base-devel dtk5-widget-devel
+BuildRequires: dqt5-base-devel dtk5-widget-devel
 
 %description
 The program displays a shortcut key window when a JSON data is passed.
@@ -18,9 +18,10 @@ The program displays a shortcut key window when a JSON data is passed.
 %setup
 
 %build
-%qmake_qt5 \
-    CONFIG+=nostrip \
-    PREFIX=%prefix
+%qmake_dqt5 \
+  CONFIG+=nostrip \
+  PREFIX=%prefix \
+  QMAKE_RPATHDIR=%_dqt5_libdir
 %make_build
 
 %install
@@ -32,6 +33,9 @@ The program displays a shortcut key window when a JSON data is passed.
 %_bindir/%name
 
 %changelog
+* Mon May 27 2024 Leontiy Volodin <lvol@altlinux.org> 5.0.9-alt2
+- Built via separate qt5 instead system (ALT #48138).
+
 * Tue Apr 09 2024 Leontiy Volodin <lvol@altlinux.org> 5.0.9-alt1
 - New version 5.0.9.
 

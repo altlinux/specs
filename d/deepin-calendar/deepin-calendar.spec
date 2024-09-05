@@ -1,7 +1,7 @@
 %define repo dde-calendar
 
 Name: deepin-calendar
-Version: 5.13.0
+Version: 5.13.1
 Release: alt1
 
 Summary: Calendar for Deepin Desktop Environment
@@ -13,26 +13,31 @@ Url: https://github.com/linuxdeepin/dde-calendar
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: %name-%version-%release.patch
+Patch1: deepin-calendar-5.12.1-alt-fix-GNUInstallDirs.patch
 
 Requires: icon-theme-hicolor
 
 BuildRequires(pre): rpm-build-ninja
 # Automatically added by buildreq on Mon Oct 23 2023
-# optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdb4-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel pkg-config python3 python3-base qt5-base-devel qt5-tools sh5
-BuildRequires: cmake libdtkwidget-devel libical-devel qt5-svg-devel qt5-tools-devel
+# optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdb4-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-sql libdqt5-svg libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel pkg-config python3 python3-base dqt5-base-devel dqt5-tools sh5
+BuildRequires: cmake libdtkwidget-devel libical-devel dqt5-svg-devel dqt5-tools-devel
 
 %description
 Calendar for Deepin Desktop Environment.
 
 %prep
 %setup -n %repo-%version
-%patch -p1
+%autopatch -p1
 
 %build
-export PATH=%_qt5_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
+export PATH=%_dqt5_bindir:$PATH
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
+    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DSERVICE_INSTALL_DIR=%_libexecdir/deepin-daemon \
     -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
@@ -72,6 +77,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_userunitdir/com.dde.calendarserver.calendar.timer
 
 %changelog
+* Thu May 30 2024 Leontiy Volodin <lvol@altlinux.org> 5.13.1-alt1
+- New version 5.13.1.
+- Built via separate qt5 instead system (ALT #48138).
+
 * Wed Apr 10 2024 Leontiy Volodin <lvol@altlinux.org> 5.13.0-alt1
 - New version 5.13.0.
 

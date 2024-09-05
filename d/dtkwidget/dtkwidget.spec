@@ -2,7 +2,7 @@
 %def_enable docs
 
 Name: dtkwidget
-Version: 5.6.26
+Version: 5.6.28
 Release: alt1
 Summary: Deepin tool kit widget modules
 License: LGPL-3.0-or-later
@@ -11,19 +11,23 @@ Url: https://github.com/linuxdeepin/dtkwidget
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: dtkwidget-5.6.28-alt-pkgconfig-find-requires.patch
 
 # for webp (dci) icons
-Requires: qt5-imageformats
+Requires: dqt5-imageformats
+
+# find libraries
+%add_findprov_lib_path %_dqt5_libdir
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
-BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
 # Automatically added by buildreq on Thu Oct 19 2023
-# optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXext-devel libXfixes-devel libXi-devel libdouble-conversion3 libdtkcore-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-help libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel pkg-config python3 python3-base qt5-base-common qt5-base-devel qt5-tools sh5 xorg-proto-devel
-BuildRequires: cmake doxygen dtk6-common-devel gsettings-qt-devel libcups-devel libdtkgui-devel libstartup-notification-devel libxcbutil-devel qt5-svg-devel qt5-tools-devel qt5-x11extras-devel
+# optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXext-devel libXfixes-devel libXi-devel libdouble-conversion3 libdtkcore-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-help libdqt5-network libdqt5-printsupport libdqt5-sql libdqt5-svg libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel pkg-config python3 python3-base dqt5-base-common dqt5-base-devel dqt5-tools sh5 xorg-proto-devel
+BuildRequires: cmake doxygen dtk6-common-devel gsettings-qt-devel libcups-devel libdtkgui-devel libstartup-notification-devel libxcbutil-devel dqt5-svg-devel dqt5-tools-devel dqt5-x11extras-devel
 
 %description
 DtkWidget is Deepin graphical user interface for deepin desktop development.
@@ -33,10 +37,10 @@ Summary: Libraries for %name
 Group: System/Libraries
 Provides: libdtk5-widget = %EVR
 Obsoletes: libdtk5-widget < %EVR
-Requires: libqt5-core = %_qt5_version
-Requires: libqt5-gui = %_qt5_version
-Requires: libqt5-printsupport = %_qt5_version
-Requires: libqt5-widgets = %_qt5_version
+Requires: libdqt5-core = %_dqt5_version
+Requires: libdqt5-gui = %_dqt5_version
+Requires: libdqt5-printsupport = %_dqt5_version
+Requires: libdqt5-widgets = %_dqt5_version
 
 %description -n lib%{name}5
 DtkWidget is Deepin graphical user interface for deepin desktop development.
@@ -75,6 +79,7 @@ This package provides %name documantation.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %if_enabled clang
@@ -84,21 +89,23 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-export PATH=%_qt5_bindir:$PATH
+export PATH=%_dqt5_bindir:$PATH
 %cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=None \
-  -DMKSPECS_INSTALL_DIR=%_qt5_archdatadir/mkspecs/modules/ \
+  -DCMAKE_PREFIX_PATH=%_dqt5_libdir/cmake \
+  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
+  -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
+  -DMKSPECS_INSTALL_DIR=%_dqt5_archdatadir/mkspecs/modules/ \
 %if_enabled docs
   -DBUILD_DOCS=ON \
-  -DQCH_INSTALL_DESTINATION=%_qt5_docdir \
+  -DQCH_INSTALL_DESTINATION=%_dqt5_docdir \
 %else
   -DBUILD_DOCS=OFF \
 %endif
   -DCMAKE_INSTALL_PREFIX=%_prefix \
   -DCMAKE_INSTALL_LIBDIR=%_lib \
   -DDTK_VERSION=%version \
-  -DVERSION=%version \
   -DBUILD_PLUGINS=OFF \
 #
 cmake --build %_cmake__builddir -j%__nprocs
@@ -120,7 +127,7 @@ cmake --build %_cmake__builddir -j%__nprocs
 %files -n lib%name-devel
 %dir %_includedir/dtk5/
 %_includedir/dtk5/DWidget/
-%_qt5_archdatadir/mkspecs/modules/*.pri
+%_dqt5_archdatadir/mkspecs/modules/*.pri
 %_libdir/cmake/DtkWidget/
 %_pkgconfigdir/%name.pc
 %_libdir/lib%name.so
@@ -130,9 +137,13 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/dtk5/DWidget/examples/
 
 %files doc
-%_qt5_docdir/dtkwidget.qch
+%_dqt5_docdir/dtkwidget.qch
 
 %changelog
+* Wed May 08 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.28-alt1
+- New version 5.6.28.
+- Built via separate qt5 instead system (ALT #48138).
+
 * Fri Mar 29 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.26-alt1
 - New version 5.6.26.
 

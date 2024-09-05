@@ -5,7 +5,7 @@
 
 Name: deepin-app-services
 Version: 1.0.25
-Release: alt2
+Release: alt3
 
 Summary: Service collection of DDE applications
 
@@ -16,20 +16,18 @@ Url: https://github.com/linuxdeepin/dde-app-services
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
 %if_with clang
 BuildRequires: clang-devel
 %else
 BuildRequires: gcc-c++
 %endif
 # Automatically added by buildreq on Fri Oct 20 2023
-# optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-help libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel python3 python3-base qt5-base-common qt5-base-devel qt5-tools sh5
+# optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-help libdqt5-network libdqt5-printsupport libdqt5-sql libdqt5-svg libdqt5-test libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel python3 python3-base dqt5-base-common dqt5-base-devel dqt5-tools sh5
 BuildRequires: cmake libdtkwidget-devel libgtest-devel
 %if_with docs
-BuildRequires: doxygen qt5-base-doc qt5-tools-devel
+BuildRequires: doxygen dqt5-base-doc dqt5-tools-devel
 %endif
-
-Requires: libqt5-core = %_qt5_version
 
 %description
 %summary.
@@ -49,7 +47,8 @@ This package provides %name documantation.
 %patch -p1
 
 %build
-export PATH=%_qt5_bindir:$PATH
+export PATH=%_dqt5_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
 %if_enabled clang
 export CC="clang"
 export CXX="clang++"
@@ -58,10 +57,12 @@ export AR="llvm-ar"
 %cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=NO \
+  -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
   -DDVERSION=%version \
 %if_with docs
   -DBUILD_DOCS=ON \
-  -DQCH_INSTALL_DESTINATION=%_qt5_docdir \
+  -DQCH_INSTALL_DESTINATION=%_dqt5_docdir \
 %else
   -DBUILD_DOCS=OFF \
 %endif
@@ -108,10 +109,13 @@ chmod +x %buildroot%_datadir/bash-completion/completions/dde-dconfig
 
 %if_with docs
 %files doc
-%_qt5_docdir/dde-dconfig-doc.qch
+%_dqt5_docdir/dde-dconfig-doc.qch
 %endif
 
 %changelog
+* Mon Sep 02 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.25-alt3
+- Built via separate qt5 instead system (ALT #48138).
+
 * Mon Sep 02 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.25-alt2
 - Applied usrmerge.
 

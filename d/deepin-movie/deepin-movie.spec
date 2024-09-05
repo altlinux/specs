@@ -1,11 +1,11 @@
 %ifarch loongarch64
 %def_without clang
 %else
-%def_with clang
+%def_without clang
 %endif
 
 Name: deepin-movie
-Version: 6.0.6
+Version: 6.0.7
 Release: alt1
 
 Summary: Deepin movie is Deepin Desktop Environment Movie Player
@@ -17,6 +17,7 @@ Url: https://github.com/linuxdeepin/deepin-movie-reborn
 Source: %url/archive/%version/%name-reborn-%version.tar
 Patch0: %name-5.10.15-alt-cxx-flags.patch
 Patch1: %name-5.10.15-alt-underlinked-libraries.patch
+Patch2: %name-6.0.7-alt-pkgconfig-find-requires.patch
 
 Requires: libdmr libdvdnav libgsettings-qt
 # direct dependency because dmr controls mpv via libmpv calls
@@ -24,8 +25,8 @@ Requires: libmpv2
 
 BuildRequires(pre): rpm-build-ninja
 # Automatically added by buildreq on Sat Oct 28 2023
-# optimized out: alt-os-release clang17.0 clang17.0-support cmake cmake-modules glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gstreamer1.0-devel libX11-devel libXtst-devel libavcodec-devel libavformat-devel libavutil-devel libclang-cpp17 libdbusextended-qt5 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libdvdread-devel libglvnd-devel libgpg-error libgsettings-qt libmpris-qt5 libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libva-devel libxcb-devel lld17.0 llvm-common llvm17.0-libs pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-devel qt5-tools sh5 xorg-proto-devel
-BuildRequires: dbusextended-qt5-devel gsettings-qt-devel gst-plugins1.0-devel libdtkwidget-devel libdvdnav-devel libffmpegthumbnailer-devel libmpv-devel libxcbutil-devel mpris-qt5-devel qt5-multimedia-devel qt5-svg-devel qt5-tools-devel qt5-x11extras-devel
+# optimized out: alt-os-release clang17.0 clang17.0-support cmake cmake-modules glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gstreamer1.0-devel libX11-devel libXtst-devel libavcodec-devel libavformat-devel libavutil-devel libclang-cpp17 libdbusextended-qt5 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libdvdread-devel libglvnd-devel libgpg-error libgsettings-qt libmpris-qt5 libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-multimedia libdqt5-network libdqt5-printsupport libdqt5-sql libdqt5-svg libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libva-devel libxcb-devel lld17.0 llvm-common llvm17.0-libs pkg-config python3 python3-base python3-dev python3-module-setuptools dqt5-base-devel dqt5-tools sh5 xorg-proto-devel
+BuildRequires: dbusextended-qt5-devel gsettings-qt-devel gst-plugins1.0-devel libdtkwidget-devel libdvdnav-devel libffmpegthumbnailer-devel libmpv-devel libxcbutil-devel mpris-qt5-devel dqt5-multimedia-devel dqt5-svg-devel dqt5-tools-devel dqt5-x11extras-devel
 
 %if_with clang
 BuildRequires: clang-devel lld-devel
@@ -58,6 +59,7 @@ This package provides development files for libdmr.
 %patch0 -p1
 %endif
 %patch1 -p1
+%patch2 -p1
 
 %build
 %if_with clang
@@ -69,9 +71,14 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 export CC=gcc
 export CXX=g++
 %endif
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
+export CPLUS_INCLUDE_PATH=%_includedir/qt5:$CPLUS_INCLUDE_PATH
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
+    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DAPP_VERSION=%version \
@@ -106,6 +113,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_pkgconfigdir/libdmr.pc
 
 %changelog
+* Thu May 16 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.7-alt1
+- New version 6.0.7.
+- Built via separate qt5 instead system (ALT #48138).
+
 * Wed Mar 06 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.6-alt1
 - New version 6.0.6.
 

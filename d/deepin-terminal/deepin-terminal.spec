@@ -3,7 +3,7 @@
 
 Name: deepin-terminal
 Version: 6.0.12
-Release: alt1
+Release: alt2
 
 Summary: Default terminal emulation application for Deepin
 
@@ -18,14 +18,14 @@ Requires: deepin-shortcut-viewer expect xdg-utils
 Requires: icon-theme-hicolor
 Requires: %name-data
 Requires: terminalwidget5-data
-Requires: libqt5-widgets = %_qt5_version
+Requires: libdqt5-widgets = %_dqt5_version
 #Recommends:     deepin-manual
 #Recommends:     zssh
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5 patchelf
 # Automatically added by buildreq on Mon Oct 23 2023
-# optimized out: cmake-modules fontconfig-devel gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libfreetype-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel libxcbutil-icccm pkg-config python3 python3-base qt5-base-devel qt5-tools sh5
-BuildRequires: cmake libdtkwidget-devel libsecret-devel libxcbutil-icccm-devel lxqt-build-tools qt5-tools-devel qt5-x11extras-devel
+# optimized out: cmake-modules fontconfig-devel gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libfreetype-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-svg libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel libxcbutil-icccm pkg-config python3 python3-base dqt5-base-devel dqt5-tools sh5
+BuildRequires: cmake libdtkwidget-devel libsecret-devel libxcbutil-icccm-devel lxqt-build-tools dqt5-tools-devel dqt5-x11extras-devel
 
 %description
 %summary.
@@ -69,15 +69,26 @@ Development package for QTermWidget. Contains headers and dev-libs.
 %patch -p1
 
 %build
-export PATH=%_qt5_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
+export PATH=%_dqt5_bindir:$PATH
 %cmake \
     -GNinja \
     -DDTKCORE_TOOL_DIR=%_libexecdir/dtk5/DCore/bin \
     -DCMAKE_BUILD_TYPE=Release \
+    -DTERM_RPATH=OFF \
+    -DCMAKE_SKIP_RPATH=NO \
+    -DCMAKE_SKIP_INSTALL_RPATH=NO \
+    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DVERSION=%version
 cmake --build "%_cmake__builddir" -j%__nprocs
+# remove broken build rpath from elfs
+patchelf %_host_alias/%name --shrink-rpath --allowed-rpath-prefixes %_dqt5_libdir
+# find requires for pc file
+sed -i -e '/Libs/s|terminalwidget5|terminalwidget5 -L%_dqt5_libdir -lQt5Widgets|; s|Requires:.*|Requires:|;' \
+  %_host_alias/3rdparty/terminalwidget/terminalwidget5.pc
 
 %install
 %cmake_install
@@ -119,6 +130,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_includedir/terminalwidget5/
 
 %changelog
+* Wed May 22 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.12-alt2
+- Built via separate qt5 instead system (ALT #48138).
+
 * Wed Mar 27 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.12-alt1
 - New version 6.0.12.
 - Cleanup spec.

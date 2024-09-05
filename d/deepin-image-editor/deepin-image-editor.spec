@@ -9,7 +9,7 @@
 
 Name: deepin-image-editor
 Version: 1.0.41
-Release: alt1
+Release: alt2
 
 Summary: Image editor libraries for Deepin
 
@@ -21,14 +21,18 @@ Source: %url/archive/%version/%repo-%version.tar.gz
 # Applied the patch by archlinux:
 # https://gitlab.archlinux.org/archlinux/packaging/packages/deepin-image-editor/-/raw/main/remove-broken-flags.patch
 Patch: %name-%version-%release.patch
+Patch1: deepin-image-editor-1.0.40-archlinux-remove-broken-flags.patch
+Patch2: deepin-image-editor-1.0.40-alt-fix-broken-pkgconfig.patch
+Patch3: deepin-image-editor-1.0.40-alt-fix-GNUInstallDirs.patch
+Patch4: deepin-image-editor-1.0.41-alt-fix-dqt5-pkgconfig.patch
 
 %if_with clang
 ExcludeArch: armh
 %endif
 
 # Automatically added by buildreq on Sat Oct 28 2023
-# optimized out: cmake cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libsasl2-3 libssl-devel libstdc++-devel libzen-devel pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-devel qt5-tools sh5 tbb-devel zlib-devel
-BuildRequires: glib2-devel libdtkwidget-devel libffmpegthumbnailer-devel libfreeimage-devel libmediainfo-devel libtiff-devel qt5-svg-devel qt5-tools-devel libdfm-io-devel
+# optimized out: cmake cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-svg libdqt5-widgets libsasl2-3 libssl-devel libstdc++-devel libzen-devel pkg-config python3 python3-base python3-dev python3-module-setuptools dqt5-base-devel dqt5-tools sh5 tbb-devel zlib-devel
+BuildRequires: glib2-devel libdtkwidget-devel libffmpegthumbnailer-devel libfreeimage-devel libmediainfo-devel libtiff-devel dqt5-svg-devel dqt5-tools-devel libdfm-io-devel
 
 %if_with clang
 BuildRequires: clang-devel
@@ -93,10 +97,12 @@ Development libraries for deepin-album.
 
 %prep
 %setup -n %repo-%version
-%patch -p1
+%autopatch -p1
 
 %build
-export PATH=%_qt5_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
+export PATH=%_dqt5_bindir:$PATH
 %if_with cmake
 %if_with clang
 %define optflags_lto -flto=thin
@@ -109,14 +115,14 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DAPP_VERSION=%version \
-    -DVERSION=%version \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
+    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
     -DLIB_INSTALL_DIR=%_libdir \
     -DCMAKE_INSTALL_LIBDIR=%_lib \
-    %nil
+#
 cmake --build "%_cmake__builddir"
 %else
-%qmake_qt5 \
+%qmake_dqt5 \
 %if_with clang
     QMAKE_STRIP= -spec linux-clang \
 %endif
@@ -125,7 +131,8 @@ cmake --build "%_cmake__builddir"
     DAPP_VERSION=%version \
     DVERSION=%version \
     LIB_INSTALL_DIR=%_libdir \
-    %nil
+    QMAKE_RPATHDIR=%_dqt5_libdir \
+#
 %make
 %endif
 
@@ -164,6 +171,9 @@ cmake --build "%_cmake__builddir"
 %_pkgconfigdir/lib%repoivr.pc
 
 %changelog
+* Wed May 29 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.41-alt2
+- Built via separate qt5 instead system (ALT #48138).
+
 * Tue Jan 30 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.41-alt1
 - New version 1.0.41.
 

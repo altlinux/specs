@@ -2,7 +2,7 @@
 
 Name: deepin-calculator
 Version: 6.0.0
-Release: alt1
+Release: alt2
 Summary: An easy to use calculator for ordinary users
 License: GPL-2.0+ and GPL-3.0+
 
@@ -21,7 +21,7 @@ BuildRequires(pre): clang-devel
 BuildRequires(pre): gcc-c++
 %endif
 BuildRequires(pre): rpm-build-ninja desktop-file-utils
-BuildRequires: cmake qt5-linguist qt5-base-devel qt5-svg-devel dtk5-widget-devel deepin-qt-dbus-factory-devel dtk5-common libgtest-devel libgmock-devel
+BuildRequires: cmake dqt5-linguist dqt5-base-devel dqt5-svg-devel dtk5-widget-devel deepin-qt-dbus-factory-devel dtk5-common libgtest-devel libgmock-devel
 Requires: icon-theme-hicolor
 
 %description
@@ -38,10 +38,14 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-export PATH=%_qt5_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
+export PATH=%_dqt5_bindir:$PATH
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
+    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DAPP_VERSION=%version \
     -DVERSION=%version \
@@ -64,6 +68,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-manual/manual-assets/application/%name/calculator/*/*
 
 %changelog
+* Wed May 29 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.0-alt2
+- Built via separate qt5 instead system (ALT #48138).
+
 * Tue Jan 10 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.0-alt1
 - New version (6.0.0).
 

@@ -1,54 +1,72 @@
+%define drawboard_ver 0
+
 %def_disable clang
 
 Name: deepin-draw
-Version: 5.10.6
-Release: alt1.1
+Version: 7.0.1
+Release: alt1
+
 Summary: A lightweight drawing tool for Linux Deepin
-License: GPL-3.0+
+
+License: GPL-3.0+ and (BSD-3-Clause and Apache-2.0)
+# deepin-draw-plugins/: BSD-3-Clause and Apache-2.0
+# src/qtsingleapplication/: BSD-3-Clause
 Group: Graphics
 Url: https://github.com/linuxdeepin/deepin-draw
+
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
 
 %if_enabled clang
-BuildRequires: clang12.0-tools
+BuildRequires: clang-devel lld-devel
 %else
 BuildRequires: gcc-c++
 %endif
-BuildRequires(pre): rpm-build-ninja desktop-file-utils
-BuildRequires: cmake libfreeimage-devel dtk5-widget-devel libexif-devel libxcbutil-devel qt5-base-devel qt5-svg-devel qt5-linguist qt5-multimedia-devel qt5-x11extras-devel qt5-tools-devel
-# Requires: deepin-session-shell deepin-qt5integration
+BuildRequires(pre): rpm-build-ninja util-linux rpm-macros-dqt5
+BuildRequires: cmake libfreeimage-devel libdtkwidget-devel libexif-devel libxcbutil-devel dqt5-base-devel dqt5-svg-devel dqt5-linguist dqt5-multimedia-devel dqt5-x11extras-devel dqt5-tools-devel
+# Requires: deepin-session-shell deepin-dqt5integration
+Requires: icon-theme-deepin
 
 %description
 A lightweight drawing tool for Linux Deepin.
+
+%package -n libdrawboard%drawboard_ver
+Summary: Library for %name
+Group: System/Libraries
+
+%description -n libdrawboard%drawboard_ver
+The package provides library for %name.
+
+%package -n libdrawboard-devel
+Summary: Development files for libdrawboard%drawboard_ver
+Group: Development/C++
+
+%description -n libdrawboard-devel
+The package provides development files for libdrawboard%drawboard_ver library.
 
 %prep
 %setup
 
 %build
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
+export PATH=%_dqt5_bindir:$PATH
 %if_enabled clang
-export CC="clang"
-export CXX="clang++"
-export AR="llvm-ar"
-export NM="llvm-nm"
-export READELF="llvm-readelf"
+export CC=clang
+export CXX=clang++
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
+%else
+export CC=gcc
+export CXX=g++
 %endif
 %cmake \
   -GNinja \
-  -DCMAKE_BUILD_TYPE=Release \
-  -DAPP_VERSION=%version \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
+  -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
   -DVERSION=%version \
   -DLIB_INSTALL_DIR=%_libdir \
-%if_enabled clang
-  -DLLVM_PARALLEL_LINK_JOBS=1 \
-  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
-  -DBUILD_SHARED_LIBS:BOOL=OFF \
-  -DLLVM_TARGETS_TO_BUILD="all" \
-  -DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD='AVR' \
-  -DLLVM_ENABLE_LIBCXX:BOOL=OFF \
-  -DLLVM_ENABLE_ZLIB:BOOL=ON \
-%endif
   #
 cmake --build "%_cmake__builddir" -j%__nprocs
 
@@ -56,19 +74,17 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %cmake_install
 %find_lang %name
 
-%check
-desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
+%ifnarch armh i586
+mkdir -p %buildroot%_libdir
+mv -f %buildroot/usr/lib/libdrawboard* %buildroot%_libdir
+%endif
 
 %files -f %name.lang
-%doc README.md
-%doc LICENSE
+%doc README.md LICENSE.txt
 %_bindir/%name
 %_datadir/%name/
 %_desktopdir/%name.desktop
-%_iconsdir/hicolor/scalable/apps/%name.svg
-%_iconsdir/deepin/apps/scalable/%name.svg
 %_datadir/mime/packages/%name.xml
-%_datadir/application/x-ddf.xml
 %_datadir/dbus-1/services/com.deepin.Draw.service
 %dir %_datadir/deepin-manual/
 %dir %_datadir/deepin-manual/manual-assets/
@@ -76,7 +92,21 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %dir %_datadir/deepin-manual/manual-assets/application/%name/
 %_datadir/deepin-manual/manual-assets/application/%name/draw/
 
+%files -n libdrawboard%drawboard_ver
+%_libdir/libdrawboard.so.%{drawboard_ver}*
+
+%files -n libdrawboard-devel
+%_libdir/libdrawboard.so
+%dir %_includedir/drawBoard/
+%_includedir/drawBoard/*.h
+
 %changelog
+* Wed May 29 2024 Leontiy Volodin <lvol@altlinux.org> 7.0.1-alt1
+- New version 7.0.1.
+- Cleanup spec.
+- Packed new subpackages.
+- Built via separate qt5 instead system (ALT #48138).
+
 * Fri Oct 20 2023 Ivan A. Melnikov <iv@altlinux.org> 5.10.6-alt1.1
 - NMU: remove (pre) from conditional BR's, they don't
   work like that and are not needed (fixes build on loongarch64).

@@ -5,7 +5,7 @@
 
 Name: deepin-qt-dbus-factory
 Version: 6.0.0
-Release: alt2
+Release: alt3
 
 Summary: A repository stores auto-generated Qt5 dbus code
 
@@ -17,15 +17,16 @@ Url: https://github.com/linuxdeepin/dde-qt-dbus-factory
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 
-BuildRequires(pre): rpm-macros-qt5
+BuildRequires(pre): rpm-macros-dqt5
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
 %else
 BuildRequires: gcc-c++
 %endif
-BuildRequires: python3 libglvnd-devel qt5-base-devel
+BuildRequires: python3 libglvnd-devel dqt5-base-devel dtkcore
 
-Requires: libqt5-core = %_qt5_version
+# find libraries
+%add_findprov_lib_path %_dqt5_libdir
 
 %description
 A repository stores auto-generated Qt5 dbus code.
@@ -55,11 +56,13 @@ export CC=clang
 export CXX=clang++
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-%qmake_qt5 \
+export PATH=%_dqt5_bindir:$PATH
+%qmake_dqt5 \
 %if_enabled clang
     QMAKE_STRIP= -spec linux-clang \
 %endif
     CONFIG+=nostrip \
+    QMAKE_RPATHDIR=%_dqt5_libdir \
     LIB_INSTALL_DIR=%_libdir
 %make_build
 
@@ -78,6 +81,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/lib%soname.so
 
 %changelog
+* Thu May 09 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.0-alt3
+- Built via separate qt5 instead system (ALT #48138).
+
 * Thu Feb 08 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.0-alt2
 - Requires: libqt5-core = %%_qt5_version.
 - Cleanup spec.

@@ -1,7 +1,7 @@
 %def_without clang
 
 Name: util-dfm
-Version: 1.2.23
+Version: 1.2.24
 Release: alt1
 
 Summary: A Toolkits of libdfm-io, libdfm-mount and libdfm-burn
@@ -11,11 +11,12 @@ Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/util-dfm
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: util-dfm-1.2.24-alt-pkgconfig-dqt5.patch
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
 # Automatically added by buildreq on Tue Oct 24 2023
-# optimized out: cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libgio-devel libglvnd-devel libgpg-error libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-widgets libsasl2-3 libssl-devel libstdc++-devel libzen-devel pkg-config python3 python3-base sh5 zlib-devel
-BuildRequires: cmake libisoburn-devel libmediainfo-devel libmount-devel libsecret-devel libudisks2-devel qt5-base-devel
+# optimized out: cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libgio-devel libglvnd-devel libgpg-error libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-widgets libsasl2-3 libssl-devel libstdc++-devel libzen-devel pkg-config python3 python3-base sh5 zlib-devel
+BuildRequires: cmake libisoburn-devel libmediainfo-devel libmount-devel libsecret-devel libudisks2-devel dqt5-base-devel
 %if_enabled clang
 BuildRequires: clang-devel
 BuildRequires: lld-devel
@@ -79,9 +80,11 @@ This package provides development files for libdfm-burn.
 
 %prep
 %setup
+%patch -p1
 
 %build
-export PATH=%_qt5_bindir:$PATH
+export PATH=%_dqt5_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
 %if_with clang
 %define optflags_lto -flto=thin
 export CC=clang
@@ -91,6 +94,8 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=NO \
+  -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
 #
 cmake --build "%_cmake__builddir" -j%__nprocs
 
@@ -134,6 +139,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/cmake/dfm-burn/dfm-burnConfig.cmake
 
 %changelog
+* Thu May 16 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.24-alt1
+- New version 1.2.24.
+- Built via separate qt5 instead system (ALT #48138).
+
 * Fri Mar 29 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.23-alt1
 - New version 1.2.23.
 

@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-compressor
-Version: 6.0.1
+Version: 6.0.3
 Release: alt1
 Epoch: 1
 
@@ -27,19 +27,21 @@ BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
-BuildRequires(pre): desktop-file-utils rpm-build-kf5 rpm-build-ninja
+BuildRequires(pre): desktop-file-utils rpm-build-kf5 rpm-build-ninja rpm-macros-dqt5
 # Automatically added by buildreq on Sat Dec 30 2023
-# optimized out: bash5 bashrc cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-devel qt5-tools sh5 zlib-devel
-BuildRequires: cmake kf5-karchive-devel kf5-kcodecs-devel libarchive-devel libdtkwidget-devel libgio-devel libminizip-devel libmount-devel libzip-devel qt5-svg-devel qt5-tools-devel
+# optimized out: bash5 bashrc cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-svg libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel pkg-config python3 python3-base python3-dev python3-module-setuptools dqt5-base-devel dqt5-tools sh5 zlib-devel
+BuildRequires: cmake kf5-karchive-devel kf5-kcodecs-devel libarchive-devel libdtkwidget-devel libgio-devel libminizip-devel libmount-devel libzip-devel dqt5-svg-devel dqt5-tools-devel
 
 %description
 %summary.
 
 %prep
 %setup
-%patch -p1
+#autopatch -p1
 sed -i 's|/usr/lib|%_libdir|' \
     src/source/common/pluginmanager.cpp
+sed -i 's|include <zip.h>|include <libzip/zip.h>|' \
+    3rdparty/libzipplugin/libzipplugin.h
 
 %build
 %if_enabled clang
@@ -49,11 +51,16 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-export PATH=%_qt5_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
+export PATH=%_dqt5_bindir:$PATH
 %K5cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DVERSION=%version \
+    -DCMAKE_SKIP_RPATH:BOOL=OFF \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DLIB_INSTALL_DIR=%_libdir \
     -DCOMPRESSOR_PLUGIN_PATH=%_libdir/%name/plugins \
@@ -89,6 +96,10 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_datadir/deepin-manual/manual-assets/application/%name/archive-manager/
 
 %changelog
+* Thu May 30 2024 Leontiy Volodin <lvol@altlinux.org> 1:6.0.3-alt1
+- New version 6.0.3.
+- Built via separate qt5 instead system (ALT #48138).
+
 * Fri Apr 05 2024 Leontiy Volodin <lvol@altlinux.org> 1:6.0.1-alt1
 - New version 6.0.1.
 

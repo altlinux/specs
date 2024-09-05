@@ -3,7 +3,7 @@
 %def_without clang
 
 Name: deepin-dock
-Version: 6.0.36
+Version: 6.0.37
 Release: alt1
 Epoch: 1
 
@@ -15,8 +15,9 @@ Url: https://github.com/linuxdeepin/dde-dock
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: %name-%version-%release.patch
+Patch1: deepin-dock-6.0.37-upstream-link-Xcursor-for-shutdown-plugin.patch
 
-BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -24,8 +25,8 @@ BuildRequires: gcc-c++
 %endif
 # Qt5::XkbCommonSupport references the file /usr/lib64/libQt5XkbCommonSupport.a
 # Automatically added by buildreq on Mon Oct 23 2023
-# optimized out: alt-os-release bash5 bashrc cmake cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXcursor-devel libXext-devel libXi-devel libXtst-devel libdbusmenu-qt52 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-waylandclient libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl libwayland-server-devel libxcb-devel libxcbutil-icccm libxcbutil-image libxkbcommon-devel pkg-config python3 python3-base qt5-base-common qt5-base-devel sh5 wayland-devel xorg-proto-devel
-BuildRequires: dtk6-common-devel dwayland-devel extra-cmake-modules gsettings-qt-devel libXres-devel libdbusmenu-qt5-devel libdtkwidget-devel libgio-devel libwayland-cursor-devel libwayland-egl-devel libxcbutil-icccm-devel libxcbutil-image-devel qt5-base-devel-static qt5-svg-devel qt5-tools qt5-wayland-devel qt5-x11extras-devel
+# optimized out: alt-os-release bash5 bashrc cmake cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXcursor-devel libXext-devel libXi-devel libXtst-devel libdbusmenu-qt52 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-svg libdqt5-waylandclient libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl libwayland-server-devel libxcb-devel libxcbutil-icccm libxcbutil-image libxkbcommon-devel pkg-config python3 python3-base dqt5-base-common dqt5-base-devel sh5 wayland-devel xorg-proto-devel
+BuildRequires: dtk6-common-devel dwayland-devel extra-cmake-modules gsettings-qt-devel libXres-devel libdbusmenu-qt5-devel libdtkwidget-devel libgio-devel libwayland-cursor-devel libwayland-egl-devel libxcbutil-icccm-devel libxcbutil-image-devel dqt5-base-devel-static dqt5-svg-devel dqt5-tools dqt5-wayland-devel dqt5-x11extras-devel libxkbcommon-devel
 
 # Requires: libdbusmenu-qt52 libddenetworkutils libdframeworkdbus2 libxcb libxcbutil-icccm libxcbutil-image
 
@@ -42,13 +43,15 @@ Header files and libraries for %name.
 %prep
 %setup -n %repo-%version
 %patch -p1
+%patch1 -p1
 sed -i 's|/usr/lib|%_libdir|' \
     plugins/pluginmanager/pluginmanager.cpp \
     frame/controller/quicksettingcontroller.cpp \
     tests/controller/ut_dockplugincontroller.cpp
 
 %build
-export PATH=%_qt5_bindir:$PATH
+export PATH=%_dqt5_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
 %if_enabled clang
 export CC="clang"
 export CXX="clang++"
@@ -58,6 +61,8 @@ export AR="llvm-ar"
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=NO \
+    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
     -DARCHITECTURE=%_arch \
     -DCMAKE_INSTALL_LIBDIR=%_lib \
     -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
@@ -98,6 +103,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/cmake/DdeDock/DdeDockConfig.cmake
 
 %changelog
+* Thu May 16 2024 Leontiy Volodin <lvol@altlinux.org> 1:6.0.37-alt1
+- New version 6.0.37.
+- Built via separate qt5 instead system (ALT #48138).
+
 * Thu Mar 21 2024 Leontiy Volodin <lvol@altlinux.org> 1:6.0.36-alt1
 - New version 6.0.36.
 

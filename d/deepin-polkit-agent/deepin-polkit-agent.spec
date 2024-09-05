@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-polkit-agent
-Version: 5.5.22
+Version: 6.0.7
 Release: alt1
 Summary: Deepin Polkit Agent
 License: GPL-3.0+
@@ -19,7 +19,7 @@ BuildRequires(pre): clang-devel
 BuildRequires(pre): gcc-c++
 %endif
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: cmake dtk5-core-devel dtk5-widget-devel dtk5-common deepin-qt-dbus-factory-devel libpolkitqt5-qt5-devel qt5-tools-devel
+BuildRequires: cmake dtkcore libdtkwidget-devel dtk6-common-devel deepin-qt-dbus-factory-devel libpolkitqt5-qt5-devel dqt5-tools-devel
 
 %description
 DDE Polkit Agent is the polkit agent used in Deepin Desktop Environment.
@@ -36,7 +36,8 @@ Header files and libraries for %name.
 %setup -n %repo-%version
 
 %build
-export PATH=%_qt5_bindir:$PATH
+export PATH=%_dqt5_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
 %if_enabled clang
 export CC="clang"
 export CXX="clang++"
@@ -45,9 +46,11 @@ export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
 %cmake \
-	-GNinja \
-	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
-	%nil
+  -GNinja \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+  -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
+%nil
 cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
@@ -66,6 +69,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_includedir/dpa/agent-extension.h
 
 %changelog
+* Thu May 23 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.7-alt1
+- New version 6.0.7.
+- Built via separate qt5 instead system (ALT #48138).
+
 * Mon Feb 27 2023 Leontiy Volodin <lvol@altlinux.org> 5.5.22-alt1
 - New version (5.5.22).
 

@@ -4,7 +4,7 @@
 %def_without docs
 
 Name: dtkcore
-Version: 5.6.26
+Version: 5.6.28
 Release: alt1
 
 Summary: Deepin tool kit core modules
@@ -21,18 +21,18 @@ Obsoletes: libdtk5-core < %EVR
 Provides: dtk5-core = %EVR
 Obsoletes: dtk5-core < %EVR
 
-BuildRequires(pre): rpm-build-ninja deepin-desktop-base rpm-macros-qt5
-BuildRequires: cmake rpm-build-python3 dtk6-common-devel gsettings-qt-devel libsystemd-devel qt5-base-devel libuchardet-devel libspdlog-devel
+BuildRequires(pre): rpm-build-ninja deepin-desktop-base rpm-macros-dqt5
+BuildRequires: cmake rpm-build-python3 dtk6-common-devel gsettings-qt-devel libsystemd-devel dqt5-base-devel libuchardet-devel libspdlog-devel libicu-devel
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
 %else
 BuildRequires: gcc-c++
 %endif
 %if_with docs
-BuildRequires: qt5-base-doc
+BuildRequires: dqt5-base-doc
 %endif
 
-Requires: libqt5-dbus = %_qt5_version
+Requires: libdqt5-dbus = %_dqt5_version
 
 %description
 Deepin tool kit core modules.
@@ -40,7 +40,7 @@ Deepin tool kit core modules.
 %package -n lib%{name}5
 Summary: Libraries for %name
 Group: System/Libraries
-Requires: libqt5-core = %_qt5_version
+Requires: libdqt5-core = %_dqt5_version
 
 %description -n lib%{name}5
 Deepin tool kit core modules.
@@ -76,10 +76,13 @@ This package provides %name documantation.
 %if_enabled clang
 export CC=clang CXX=clang++ LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-export PATH=%_qt5_bindir:$PATH
+export PATH=%_dqt5_bindir:$PATH
 %cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_PREFIX_PATH=%_dqt5_libdir/cmake \
+  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
+  -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
   -DCMAKE_INSTALL_LIBDIR=%_lib \
   -DDTK_VERSION=%version \
   -DLIBRARY_INSTALL_DIR=%_lib \
@@ -88,7 +91,8 @@ export PATH=%_qt5_bindir:$PATH
 %if_without docs
   -DBUILD_DOCS=OFF \
 %endif
-  -DMKSPECS_INSTALL_DIR=%_qt5_archdatadir/mkspecs/modules/ \
+  -DMKSPECS_INSTALL_DIR=%_dqt5_archdatadir/mkspecs/modules/ \
+  -DFEATURES_INSTALL_DIR=%_dqt5_archdatadir/mkspecs/features/ \
   #
 cmake --build %_cmake__builddir -j%__nprocs
 
@@ -109,8 +113,8 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/lib%name.so
 %dir %_includedir/dtk5/
 %_includedir/dtk5/DCore/
-%_qt5_archdatadir/mkspecs/modules/qt_lib_dtkcore.pri
-%_qt5_archdatadir/mkspecs/features/dtk_install_dconfig.prf
+%_dqt5_archdatadir/mkspecs/modules/qt_lib_dtkcore.pri
+%_dqt5_archdatadir/mkspecs/features/dtk_install_dconfig.prf
 %_libdir/cmake/DtkCore/
 %_libdir/cmake/DtkCMake/
 %_libdir/cmake/DtkTools/
@@ -119,10 +123,14 @@ cmake --build %_cmake__builddir -j%__nprocs
 
 %if_with docs
 %files doc
-%_qt5_datadir/doc/dtkcore.qch
+%_dqt5_datadir/doc/dtkcore.qch
 %endif
 
 %changelog
+* Mon May 06 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.28-alt1
+- New version 5.6.28.
+- Built via separate qt5 instead system (ALT #48138).
+
 * Fri Mar 29 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.26-alt1
 - New version 5.6.26.
 

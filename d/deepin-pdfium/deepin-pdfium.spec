@@ -4,7 +4,7 @@
 
 Name: deepin-pdfium
 Version: 1.0.2
-Release: alt1
+Release: alt2
 
 Summary: Development library for pdf on Deepin
 
@@ -14,7 +14,7 @@ Url: https://github.com/linuxdeepin/deepin-pdfium
 
 Source: %url/archive/%version/%name-%version.tar.gz
 
-BuildRequires: qt5-base-devel libchardet-devel liblcms2-devel libfreetype-devel libopenjpeg2.0-devel libjpeg-devel
+BuildRequires: dqt5-base-devel libchardet-devel liblcms2-devel libfreetype-devel libopenjpeg2.0-devel libjpeg-devel
 %if_with clang
 BuildRequires: clang-devel
 BuildRequires: lld-devel
@@ -22,6 +22,9 @@ BuildRequires: llvm-devel
 %else
 BuildRequires: gcc-c++
 %endif
+
+# find libraries
+%add_findprov_lib_path %_dqt5_libdir
 
 %description
 %summary.
@@ -44,7 +47,7 @@ This package provides development files for %name.
 %setup
 
 %build
-export PATH=%_qt5_bindir:$PATH
+export PATH=%_dqt5_bindir:$PATH
 %if_with clang
 %define optflags_lto -flto=thin
 export CC=clang
@@ -52,8 +55,9 @@ export CXX=clang++
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
 
-%qmake_qt5 \
+%qmake_dqt5 \
   CONFIG+=nostrip \
+  QMAKE_RPATHDIR=%_dqt5_libdir \
   VERSION=%version \
   LIB_INSTALL_DIR=%_libdir \
   unix:LIBS+="-L%_libdir -ljpeg -licuuc" \
@@ -78,6 +82,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu May 16 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.2-alt2
+- Built via separate qt5 instead system (ALT #48138).
+
 * Tue Oct 24 2023 Leontiy Volodin <lvol@altlinux.org> 1.0.2-alt1
 - Initial build for ALT Sisyphus.
 - Needed for deepin-file-manager 6.0.13.

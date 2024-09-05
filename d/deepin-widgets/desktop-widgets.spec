@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-widgets
-Version: 6.0.20
+Version: 6.0.22
 Release: alt1
 
 Summary: Desktop widgets service/implementation for DDE
@@ -14,11 +14,12 @@ Url: https://github.com/linuxdeepin/dde-widgets
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: %name-%version-%release.patch
+Patch1: deepin-widgets-6.0.22-upstream-link-libdde-calendarwidget-plugin.patch
 
 Provides: %repo = %EVR
 
-BuildRequires(pre): rpm-build-ninja
-BuildRequires: cmake dtkcore libdtkwidget-devel qt5-svg-devel qt5-x11extras-devel libgtest-devel
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
+BuildRequires: cmake dtkcore libdtkwidget-devel dqt5-svg-devel dqt5-x11extras-devel libgtest-devel
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
 %else
@@ -37,10 +38,12 @@ The package provides development files for %repo.
 
 %prep
 %setup -n %repo-%version
-%patch -p1
+%autopatch -p1
 
 %build
-export PATH=%_qt5_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
+export PATH=%_dqt5_bindir:$PATH
 %if_enabled clang
 %define optflags_lto -flto=thin
 export CC=clang
@@ -51,6 +54,8 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
+  -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
 #
 cmake --build %_cmake__builddir -j%__nprocs
 
@@ -80,6 +85,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/cmake/DdeWidgets/DdeWidgetsConfig.cmake
 
 %changelog
+* Fri May 31 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.22-alt1
+- New version 6.0.22.
+- Built via separate qt5 instead system (ALT #48138).
+
 * Wed Mar 20 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.20-alt1
 - New version 6.0.20.
 

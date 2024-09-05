@@ -5,7 +5,7 @@
 %define _cmake__builddir BUILD
 
 Name: deepin-network-core
-Version: 2.0.22
+Version: 2.0.26
 Release: alt1
 Summary: Deepin desktop-environment - network core files
 License: LGPL-3.0-or-later
@@ -14,16 +14,17 @@ Url: https://github.com/linuxdeepin/dde-network-core
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: %name-%version-%release.patch
+Patch1: deepin-network-core-2.0.20-alt-GNUInstallDirs.patch
 
-BuildPreReq: rpm-build-ninja rpm-build-kf5
+BuildPreReq: rpm-build-ninja rpm-build-kf5 rpm-macros-dqt5
 %if_with clang
 BuildPreReq: clang-devel
 %else
 BuildPreReq: gcc-c++
 %endif
 # Automatically added by buildreq on Wed Oct 25 2023
-# optimized out: cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdcc-interface6 libdcc-widgets6 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt libnm-devel libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel pkg-config python3 python3-base qt5-base-devel qt5-tools sh5
-BuildRequires: cmake deepin-control-center-devel deepin-dock-devel deepin-session-shell-devel gsettings-qt-devel kf5-networkmanager-qt-devel libdtkwidget-devel libgtest-devel qt5-svg-devel qt5-tools-devel
+# optimized out: cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdcc-interface6 libdcc-widgets6 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt libnm-devel libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-svg libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel pkg-config python3 python3-base dqt5-base-devel dqt5-tools sh5
+BuildRequires: cmake deepin-control-center-devel deepin-dock-devel deepin-session-shell-devel gsettings-qt-devel kf5-networkmanager-qt-devel libdtkwidget-devel libgtest-devel dqt5-svg-devel dqt5-tools-devel
 
 %description
 Deepin desktop-environment - network core files.
@@ -46,7 +47,7 @@ This package provides development files for %name.
 
 %prep
 %setup -n %repo-%version
-%patch -p1
+%autopatch -p1
 
 %build
 %if_with clang
@@ -56,12 +57,16 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-export PATH=%_qt5_bindir:$PATH
+export PATH=%_dqt5_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
 export CPLUS_INCLUDE_PATH=%_includedir/glib-2.0:%_libdir/glib-2.0/include:%_includedir/libnm:$CPLUS_INCLUDE_PATH
 # %%K5cmake fails build on ppc64le
 %cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
+  -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
   -DCMAKE_EXE_LINKER_FLAGS:STRING='-L%_K5lib -L%_K5link' \
   -DCMAKE_MODULE_LINKER_FLAGS:STRING='-L%_K5lib -L%_K5link' \
   -DCMAKE_SHARED_LINKER_FLAGS:STRING='-L%_K5lib -L%_K5link' \
@@ -110,6 +115,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/libdde-network-core.so
 
 %changelog
+* Mon May 27 2024 Leontiy Volodin <lvol@altlinux.org> 2.0.26-alt1
+- New version 2.0.26.
+- Built via separate qt5 instead system (ALT #48138).
+
 * Thu Mar 21 2024 Leontiy Volodin <lvol@altlinux.org> 2.0.22-alt1
 - New version 2.0.22.
 

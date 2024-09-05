@@ -6,8 +6,8 @@
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 6.0.47
-Release: alt3
+Version: 6.0.54
+Release: alt1
 
 Summary: New control center for Linux Deepin
 
@@ -17,6 +17,7 @@ Url: https://github.com/linuxdeepin/dde-control-center
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: %name-%version-%release.patch
+Patch1: deepin-control-center-6.0.47-alt-qch.patch
 
 # Requires: deepin-account-faces deepin-api deepin-daemon deepin-qt5integration deepin-network-utils GeoIP-GeoLite-data GeoIP-GeoLite-data-extra gtk-murrine-engine proxychains-ng redshift startdde
 # Requires: libdeepin-pw-check
@@ -28,8 +29,8 @@ BuildRequires: clang-devel
 BuildRequires: gcc-c++
 %endif
 # Automatically added by buildreq on Mon Oct 23 2023
-# optimized out: bash5 bashrc cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libcrypt-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libpolkit-qt5-agent libpolkit-qt5-core libpolkit-qt5-gui libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-help libqt5-multimedia libqt5-network libqt5-printsupport libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel perl perl-Config-Tiny perl-Encode perl-XML-LibXML perl-parent pkg-config python3 python3-base qt5-base-common qt5-base-devel qt5-tools sh5
-BuildRequires: cmake deepin-gettext-tools doxygen libdeepin-pw-check-devel dtk6-common-devel libdtkwidget-devel qt5-tools libpolkitqt5-qt5-devel qt5-multimedia-devel qt5-svg-devel qt5-wayland-devel libgtest-devel gsettings-qt-devel
+# optimized out: bash5 bashrc cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libcrypt-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libpolkit-qt5-agent libpolkit-qt5-core libpolkit-qt5-gui libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-help libdqt5-multimedia libdqt5-network libdqt5-printsupport libdqt5-sql libdqt5-svg libdqt5-test libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel perl perl-Config-Tiny perl-Encode perl-XML-LibXML perl-parent pkg-config python3 python3-base dqt5-base-common dqt5-base-devel dqt5-tools sh5
+BuildRequires: cmake deepin-gettext-tools doxygen libdeepin-pw-check-devel dtk6-common-devel libdtkwidget-devel libpolkitqt5-qt5-devel dqt5-tools dqt5-multimedia-devel dqt5-svg-devel dqt5-wayland-devel libgtest-devel gsettings-qt-devel libsystemd-devel
 
 %description
 New control center for Linux Deepin.
@@ -57,11 +58,13 @@ Group: Development/Other
 
 %prep
 %setup -n %repo-%version
-%patch -p1
+%autopatch -p1
 
 %build
-export PATH=%_qt5_bindir:$PATH
-export CPLUS_INCLUDE_PATH=%_qt5_headerdir/QtXkbCommonSupport/%{_qt5_version}:$CPLUS_INCLUDE_PATH
+export PATH=%_dqt5_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
+export CPLUS_INCLUDE_PATH=%_dqt5_headerdir/QtXkbCommonSupport/%{_dqt5_version}:%_includedir/qt5:$CPLUS_INCLUDE_PATH
 export SYSTYPE=Desktop
 %if_enabled clang
 export CC="clang"
@@ -74,6 +77,8 @@ export READELF="llvm-readelf"
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
+    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
     -DCVERSION=%version \
     -DDISABLE_AUTHENTICATION=ON \
     -DDISABLE_UPDATE=ON \
@@ -88,7 +93,7 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %files -f %repo.lang
 %doc LICENSE README.md
 %_bindir/%repo
-%_desktopdir/%repo.desktop
+%_desktopdir/org.deepin.dde.control-center.desktop
 %_datadir/metainfo/org.deepin.dde.controlcenter.metainfo.xml
 %_datadir/dbus-1/services/org.deepin.dde.ControlCenter1.service
 %dir %_libdir/%repo/
@@ -103,13 +108,14 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %dir %_datadir/dsg/configs/org.deepin.dde.control-center/
 %_datadir/dsg/configs/org.deepin.dde.control-center/org.deepin.dde.control-center*.json
 %_datadir/dsg/configs/org.deepin.region-format.json
-%_datadir/doc/qt5/dde-control-center.qch
+%_datadir/doc/dqt5/dde-control-center.qch
 %dir %_datadir/%repo/
 %_datadir/%repo/developdocument.html
-# package translations outside %%find_lang
+%_userunitdir/org.deepin.dde.control-center.service
+# package outside find_lang
 %dir %_datadir/%repo/translations/
-%_datadir/%repo/translations/*_es_419.qm
-%_datadir/%repo/translations/*_ky@Arab.qm
+%_datadir/%repo/translations/*es_419.qm
+%_datadir/%repo/translations/*ky@Arab.qm
 
 %files -n libdcc-interface%sover
 %_libdir/libdcc-interface.so.%{sover}*
@@ -125,6 +131,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/libdcc-widgets.so
 
 %changelog
+* Mon Sep 02 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.54-alt1
+- New version 6.0.54.
+- Built via separate qt5 instead system (ALT #48138).
+
 * Mon Sep 02 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.47-alt3
 - NMU: fixed FTBFS.
 

@@ -3,7 +3,7 @@
 
 Name: dwayland
 Version: 5.25.0
-Release: alt1
+Release: alt2
 
 Summary: Qt-style API to interact with the DDE wayland-client and wayland-server
 
@@ -13,19 +13,18 @@ Url: https://github.com/linuxdeepin/dwayland
 
 Source: %url/archive/%version/%name-%version.tar.gz
 
-BuildRequires(pre): rpm-build-kf5 rpm-build-ninja
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
 %if_enabled clang
 BuildRequires: clang-devel
 %else
 BuildRequires: gcc-c++
 %endif
 BuildRequires: cmake extra-cmake-modules
-BuildRequires: qt5-base-devel qt5-wayland-devel
-BuildRequires: kf5-kwayland-devel
+BuildRequires: dqt5-base-devel dqt5-wayland-devel
 BuildRequires: deepin-wayland-protocols-devel deepin-wayland-protocols
 BuildRequires: wayland-protocols
 %if_enabled docs
-BuildRequires: doxygen qt5-tools-devel qt5-doc
+BuildRequires: doxygen dqt5-tools-devel dqt5-doc
 %endif
 
 %description
@@ -86,21 +85,25 @@ export CXX="clang++"
 export AR="llvm-ar"
 %endif
 
-%K5cmake \
+%cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DCMAKE_PREFIX_PATH=%_qt5_prefix \
+    -DCMAKE_PREFIX_PATH=%_dqt5_libdir/cmake \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
+    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
+    -DECM_MKSPECS_INSTALL_DIR=%_dqt5_archdatadir/mkspecs/modules \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
+    -DKDE_INSTALL_QTQCHDIR=%_datadir/doc/dqt5 \
     %if_enabled docs
     -DBUILD_QCH=ON \
     %endif
 %nil
-cmake --build BUILD -j%__nprocs
+cmake --build %_cmake__builddir -j%__nprocs
 
 %install
-DESTDIR=%buildroot cmake --install BUILD
+%cmake_install
 sed -i 's|includes =  .*|includes = %_includedir/DWayland/Client|' \
-    %buildroot%_libdir/qt5/mkspecs/modules/qt_DWaylandClient.pri
+    %buildroot%_dqt5_archdatadir/mkspecs/modules/qt_DWaylandClient.pri
 
 %files common
 %doc README.md
@@ -114,18 +117,21 @@ sed -i 's|includes =  .*|includes = %_includedir/DWayland/Client|' \
 
 %if_enabled docs
 %files docs
-%_datadir/doc/qt5/DWayland.*
+%_datadir/doc/dqt5/DWayland.*
 %endif
 
 %files devel
 %_includedir/dwayland_version.h
 %_includedir/DWayland/
 %_libdir/cmake/DWayland/
-%_libdir/qt5/mkspecs/modules/qt_DWaylandClient.pri
+%_dqt5_archdatadir/mkspecs/modules/qt_DWaylandClient.pri
 %_libdir/libDWaylandClient.so
 %_libdir/libDWaylandServer.so
 
 %changelog
+* Fri May 10 2024 Leontiy Volodin <lvol@altlinux.org> 5.25.0-alt2
+- Built via separate qt5 instead system (ALT #48138).
+
 * Tue Jan 16 2024 Leontiy Volodin <lvol@altlinux.org> 5.25.0-alt1
 - New version 5.25.0.
 

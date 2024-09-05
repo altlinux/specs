@@ -3,7 +3,7 @@
 %def_without clang
 
 Name: deepin-qt5platform-plugins
-Version: 5.6.26
+Version: 5.6.28
 Release: alt1
 
 Summary: Qt platform integration plugins for Deepin Desktop Environment
@@ -14,13 +14,17 @@ Url: https://github.com/linuxdeepin/qt5platform-plugins
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch: %name-%version-%release.patch
+Patch1: deepin-qt5plutform-plugins-5.6.28-alt-plugin-path.patch
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
-# qt5-base-devel-static for libQt5EdidSupport.a
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
+# dqt5-base-devel-static for libQt5EdidSupport.a
 # Automatically added by buildreq on Sat Oct 28 2023
-# optimized out: cmake cmake-modules fontconfig-devel gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXfixes-devel libXi-devel libcairo-devel libdouble-conversion3 libfreetype-devel libglvnd-devel libgmock-devel libgpg-error libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-test libqt5-waylandclient libqt5-widgets libqt5-x11extras libqt5-xcbqpa libsasl2-3 libssl-devel libstdc++-devel libwayland-client-devel libwayland-server-devel libxcb-devel libxcb-render-util libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxcbutil-keysyms-devel libxkbcommon-devel libxkbcommon-x11 pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-devel sh5 wayland-devel xorg-proto-devel zlib-devel
-BuildRequires: dwayland-devel extra-cmake-modules libdbus-devel libgtest-devel libmtdev-devel libwayland-cursor-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxkbcommon-x11-devel qt5-base-devel-static qt5-wayland-devel qt5-x11extras-devel
+# optimized out: cmake cmake-modules fontconfig-devel gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXfixes-devel libXi-devel libcairo-devel libdouble-conversion3 libfreetype-devel libglvnd-devel libgmock-devel libgpg-error libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-test libdqt5-waylandclient libdqt5-widgets libdqt5-x11extras libdqt5-xcbqpa libsasl2-3 libssl-devel libstdc++-devel libwayland-client-devel libwayland-server-devel libxcb-devel libxcb-render-util libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxcbutil-keysyms-devel libxkbcommon-devel libxkbcommon-x11 pkg-config python3 python3-base python3-dev python3-module-setuptools dqt5-base-devel sh5 wayland-devel xorg-proto-devel zlib-devel
+BuildRequires: dwayland-devel extra-cmake-modules libdbus-devel libgtest-devel libmtdev-devel libwayland-cursor-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxkbcommon-x11-devel dqt5-wayland-devel dqt5-x11extras-devel dqt5-base-devel-static
 BuildRequires: kf5-kwayland-devel
+
+# find libraries
+%add_findprov_lib_path %_dqt5_libdir
 
 %if_with clang
 BuildRequires: clang-devel lld-devel
@@ -28,7 +32,7 @@ BuildRequires: clang-devel lld-devel
 BuildRequires: gcc-c++
 %endif
 
-Requires: libqt5-core = %_qt5_version libqt5-gui = %_qt5_version libqt5-waylandclient = %_qt5_version libqt5-xcbqpa = %_qt5_version
+Requires: libdqt5-core = %_dqt5_version libdqt5-gui = %_dqt5_version libdqt5-waylandclient = %_dqt5_version libdqt5-xcbqpa = %_dqt5_version
 
 %description
 %repo is the
@@ -37,24 +41,27 @@ Requires: libqt5-core = %_qt5_version libqt5-gui = %_qt5_version libqt5-waylandc
 %prep
 %setup -n %repo-%version
 %patch -p1
+%patch1 -p1
 rm -r xcb/libqt5xcbqpa-dev xcb/libqt6xcbqpa-dev wayland/qtwayland-dev
 
 %build
-export PATH=%_qt5_bindir:$PATH
-
 %if_with clang
 %define optflags_lto -flto=thin
 export CC=clang
 export CXX=clang++
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake/Qt5:%_dqt5_libdir:$CMAKE_PREFIX_PATH
+export PATH=%_dqt5_bindir:$PATH
 %cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
+  -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
   -DCMAKE_INSTALL_LIBDIR=%_lib \
   -DCMAKE_INSTALL_PREFIX=%_prefix \
-  -DQT_XCB_PRIVATE_HEADERS=%_qt5_headerdir/QtXcb
+  -DQT_XCB_PRIVATE_HEADERS=%_dqt5_headerdir/QtXcb \
+  -DPLUGIN_INSTALL_DIR=%_dqt5_plugindir \
 #
 cmake --build %_cmake__builddir -j%__nprocs
 
@@ -64,11 +71,15 @@ cmake --build %_cmake__builddir -j%__nprocs
 %files
 %doc CHANGELOG.md README.md
 %doc LICENSE
-%_qt5_plugindir/platforms/libdxcb.so
-%_qt5_plugindir/platforms/libdwayland.so
-%_qt5_plugindir/wayland-shell-integration/libkwayland-shell.so
+%_dqt5_plugindir/platforms/libdxcb.so
+%_dqt5_plugindir/platforms/libdwayland.so
+%_dqt5_plugindir/wayland-shell-integration/libkwayland-shell.so
 
 %changelog
+* Thu May 09 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.28-alt1
+- New version 5.6.28.
+- Built via separate qt5 instead system (ALT #48138).
+
 * Fri Mar 29 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.26-alt1
 - New version 5.6.26.
 

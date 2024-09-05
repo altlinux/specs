@@ -3,7 +3,7 @@
 %def_without clang
 
 Name: deepin-qt5integration
-Version: 5.6.26
+Version: 5.6.28
 Release: alt1
 
 Summary: Qt platform theme integration plugins for DDE
@@ -14,14 +14,14 @@ Url: https://github.com/linuxdeepin/qt5integration
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-qt5
-# qt5-base-devel-static for libQt5ThemeSupport.a
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
+# dqt5-base-devel-static for libQt5ThemeSupport.a
 # Automatically added by buildreq on Sat Oct 28 2023
-# optimized out: cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-devel qt5-svg-devel sh5 xorg-proto-devel
-BuildRequires: cmake dtk6-common-devel libdtkwidget-devel libgtest-devel libmtdev-devel libqtxdg-devel qt5-base-devel-static qt5-x11extras-devel
+# optimized out: cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-svg libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel pkg-config python3 python3-base python3-dev python3-module-setuptools dqt5-base-devel dqt5-svg-devel sh5 xorg-proto-devel
+BuildRequires: cmake dtk6-common-devel libdtkwidget-devel libgtest-devel libmtdev-devel libqtxdg-devel dqt5-base-devel-static dqt5-x11extras-devel
 
 # Requires: deepin-qt5platform-plugins
-Requires: libqt5-core = %_qt5_version libqt5-gui = %_qt5_version libqt5-widgets = %_qt5_version
+Requires: libdqt5-core = %_dqt5_version libdqt5-gui = %_dqt5_version libdqt5-widgets = %_dqt5_version
 
 %if_with clang
 BuildRequires: clang-devel lld-devel
@@ -36,11 +36,15 @@ Multiple Qt plugins to provide better Qt5 integration for DDE is included.
 %setup -n %repo-%version
 
 %build
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake/Qt5X11Extras:%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
 %cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
+  -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
   -DCMAKE_INSTALL_LIBDIR=%_lib \
   -DCMAKE_INSTALL_PREFIX=%_prefix \
+  -DPLUGIN_INSTALL_BASE_DIR=%_dqt5_plugindir \
 #
 cmake --build %_cmake__builddir -j%__nprocs
 
@@ -50,14 +54,18 @@ cmake --build %_cmake__builddir -j%__nprocs
 %files
 %doc README.md
 %doc LICENSE
-%_qt5_plugindir/iconengines/libdicon.so
-%_qt5_plugindir/iconengines/libdsvgicon.so
-%_qt5_plugindir/imageformats/libdci.so
-%_qt5_plugindir/imageformats/libdsvg.so
-%_qt5_plugindir/platformthemes/libqdeepin.so
-%_qt5_plugindir/styles/libchameleon.so
+%_dqt5_plugindir/iconengines/libdicon.so
+%_dqt5_plugindir/iconengines/libdsvgicon.so
+%_dqt5_plugindir/imageformats/libdci.so
+%_dqt5_plugindir/imageformats/libdsvg.so
+%_dqt5_plugindir/platformthemes/libqdeepin.so
+%_dqt5_plugindir/styles/libchameleon.so
 
 %changelog
+* Wed May 15 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.28-alt1
+- New version 5.6.28.
+- Built via separate qt5 instead system (ALT #48138).
+
 * Fri Mar 29 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.26-alt1
 - New version 5.6.26.
 

@@ -1,5 +1,5 @@
 Name: deepin-desktop-schemas
-Version: 6.0.5
+Version: 6.0.6
 Release: alt1
 
 Summary: GSettings deepin desktop-wide schemas
@@ -17,7 +17,7 @@ BuildArch: noarch
 Requires: gnome-backgrounds icon-theme-deepin gtk-theme-deepin dconf gsettings-desktop-schemas
 # Requires: deepin-sound-theme
 
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-build-golang /proc
 BuildRequires: python3 glib2 libgio
 
 %description
@@ -67,6 +67,9 @@ dconf update
 %_datadir/%name/
 
 %changelog
+* Mon May 27 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.6-alt1
+- New version 6.0.6.
+
 * Tue Feb 06 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.5-alt1
 - New version 6.0.5.
 

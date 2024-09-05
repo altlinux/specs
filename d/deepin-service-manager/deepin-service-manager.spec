@@ -3,8 +3,8 @@
 %define sover 0
 
 Name: deepin-service-manager
-Version: 1.0.3
-Release: alt2.gitd16282e
+Version: 1.0.3.0.36.ge15b893
+Release: alt1
 
 Summary: Manage DBus service on Deepin
 
@@ -17,7 +17,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: cmake qt5-base-devel qt5-tools-devel libsystemd-devel
+BuildRequires: cmake dqt5-base-devel dqt5-tools-devel libsystemd-devel
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -43,8 +43,6 @@ This package provides development files for deepin-qdbus-service.
 
 %prep
 %setup
-sed -i 's|${CMAKE_INSTALL_PREFIX}/lib/systemd/system/|%_unitdir/|' \
-  misc/CMakeLists.txt
 # Fix pkg-config.
 sed -i 's|Version: @PROJECT_VERSION@|Version: %version|' \
   misc/deepin-qdbus-service.pc.in
@@ -57,10 +55,13 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-export PATH=%_qt5_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export PATH=%_dqt5_bindir:$PATH
 %cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+  -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
   -DCMAKE_PROJECT_HOMEPAGE_URL=%url \
   -DPROJECT_VERSION=%version \
 #
@@ -113,6 +114,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_pkgconfigdir/deepin-qdbus-service.pc
 
 %changelog
+* Mon Sep 02 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.3.0.36.ge15b893-alt1
+- New version 1.0.3-36-ge15b893.
+- Built via separate qt5 instead system (ALT #48138).
+
 * Mon Sep 02 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.3-alt2.gitd16282e
 - Applied usrmerge.
 

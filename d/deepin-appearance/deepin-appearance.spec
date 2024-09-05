@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-appearance
-Version: 1.1.26
+Version: 1.1.28
 Release: alt1
 
 Summary: Set the theme and appearance of DDE
@@ -16,8 +16,8 @@ Provides: %repo = %EVR
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 
-BuildRequires: cmake qt5-tools-devel dtk6-common-devel dtkcore libdtkgui-devel kf5-kconfig-devel kf5-kwindowsystem-devel kf5-kglobalaccel-devel gsettings-qt-devel libgio-devel libXcursor-devel libXfixes-devel libgtk+3-devel libxcbutil-cursor-devel libsystemd-devel
-BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
+BuildRequires: cmake dqt5-tools-devel dtk6-common-devel dtkcore libdtkgui-devel kf5-kconfig-devel kf5-kwindowsystem-devel kf5-kglobalaccel-devel gsettings-qt-devel libgio-devel libXcursor-devel libXfixes-devel libgtk+3-devel libxcbutil-cursor-devel libsystemd-devel
 %if_enabled clang
 BuildRequires(pre): clang-devel
 %else
@@ -36,11 +36,15 @@ export CC="clang"
 export CXX="clang++"
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-export PATH=%_qt5_bindir:$PATH
+export PATH=%_dqt5_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
 %cmake \
-    -GNinja \
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    %nil
+  -GNinja \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
+  -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
+#
 cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
@@ -66,6 +70,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/dsg/configs/org.deepin.dde.appearance/org.deepin.dde.appearance.json
 
 %changelog
+* Mon May 27 2024 Leontiy Volodin <lvol@altlinux.org> 1.1.28-alt1
+- New version 1.1.28.
+- Built via separate qt5 instead system (ALT #48138).
+
 * Tue Mar 26 2024 Leontiy Volodin <lvol@altlinux.org> 1.1.26-alt1
 - New version 1.1.26.
 
