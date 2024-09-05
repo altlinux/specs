@@ -1,5 +1,5 @@
 Name: python3-module-apscheduler
-Version: 3.10.1
+Version: 3.10.4
 Release: alt1
 
 Summary: In-process task scheduler with Cron-like capabilities
@@ -49,6 +49,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/APScheduler-%version.dist-info
 
 %changelog
+* Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.10.4-alt1
+- 3.10.4 released
+
 * Fri Jul 07 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.10.1-alt1
 - 3.10.1 released
 
