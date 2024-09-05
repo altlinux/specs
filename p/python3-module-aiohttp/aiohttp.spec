@@ -1,5 +1,5 @@
 Name: python3-module-aiohttp
-Version: 3.9.5
+Version: 3.10.5
 Release: alt1
 
 Summary: http client/server for asyncio
@@ -22,6 +22,7 @@ BuildRequires: python3(pytest-mock)
 BuildRequires: python3(attr)
 BuildRequires: python3(yarl)
 BuildRequires: python3(aiosignal)
+BuildRequires: python3(aiohappyeyeballs)
 BuildRequires: python3(gunicorn)
 BuildRequires: python3(re_assert)
 BuildRequires: python3(freezegun)
@@ -78,6 +79,9 @@ make cythonize
 %python3_sitelibdir/aiohttp/*/*test*
 
 %changelog
+* Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.10.5-alt1
+- 3.10.5 released
+
 * Thu May 02 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.9.5-alt1
 - 3.9.5 released
 
