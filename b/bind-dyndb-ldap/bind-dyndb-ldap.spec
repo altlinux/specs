@@ -5,7 +5,7 @@
 
 Name: bind-dyndb-ldap
 Version: 11.10
-Release: alt7
+Release: alt8
 
 Summary: LDAP back-end plug-in for BIND
 License: %gpl2plus
@@ -106,6 +106,9 @@ sed -i.bak --follow-symlinks -e "$SEDSCRIPT" /etc/named.conf
 %exclude %_libdir/bind/*.la
 
 %changelog
+* Wed Sep 04 2024 Stanislav Levin <slev@altlinux.org> 11.10-alt8
+- Fixed support of bind 9.16.
+
 * Wed Jul 24 2024 Stanislav Levin <slev@altlinux.org> 11.10-alt7
 - Fixed build with bind 9.18.28.
 
