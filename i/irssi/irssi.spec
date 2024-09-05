@@ -1,18 +1,18 @@
 Name: irssi
-Version: 1.2.2
+Version: 1.4.5
 Release: alt1
 
 Summary: Modular text mode IRC client with Perl scripting
 License: GPLv2+
 Group: Networking/IRC
 Url: https://irssi.org/
-# https://github.com/irssi/irssi.git
+VCS: https://github.com/irssi/irssi.git
 # git://git.altlinux.org/gears/i/irssi.git
 Source: %name-%version.tar
 Source1: %name.desktop
 Patch1: irssi-1.2.0-alt-link-libs.patch
 Patch2: irssi-1.2.0-alt-strict-subs-syntax.patch
-Patch3: irssi-1.2.0-alt-lfs.patch
+Patch3: irssi-1.4.5-alt-lfs.patch
 
 BuildRequires: elinks glib2-devel libssl-devel libtinfo-devel perl-devel
 # OTR
@@ -58,9 +58,7 @@ sed -i 's/^autoreconf.*/%autoreconf || exit/' autogen.sh
 
 # workaround the absence of irssi.git
 sed -i 's/^git log /: &/' autogen.sh
-# git log -1 --pretty=format:%%ai %version > date-%version
-echo '2019-08-29 02:25:21 +0200' > date-1.2.2
-sed -i 's/^DATE=.*/DATE="$(cat date-%version)"/' utils/irssi-version.sh
+utils/irssi-version.sh .
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -129,12 +127,16 @@ export RPM_FILES_TO_LD_PRELOAD_libperl_core='%irssi_modules_dir/libfe_perl.so %p
 
 %files devel
 %_includedir/irssi/
+%_pkgconfigdir/irssi-1.pc 
 
 %files otr
 %_libdir/%name/modules/libotr_core.so
 
 
 %changelog
+* Thu Sep 05 2024 Andrey Kovalev <ded@altlinux.org> 1.4.5-alt1
+- Updated to upstream version 1.4.5.
+
 * Tue Dec 08 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.2-alt1
 - Updated to upstream version 1.2.2 (Fixes: CVE-2019-13045, CVE-2019-15717).
 
