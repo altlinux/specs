@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 6.0.1
-Release: alt1.1
+Version: 6.0.2
+Release: alt1
 
 Summary: PyYAML, a YAML parser and emitter for Python
 License: MIT
@@ -16,7 +16,6 @@ Vcs: https://github.com/yaml/pyyaml
 
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
-Patch: fix-build-with-cython3.patch
 
 # mapping from PyPI name
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
@@ -41,7 +40,6 @@ support, and relatively sensible error messages.
 
 %prep
 %setup
-%patch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -53,7 +51,7 @@ support, and relatively sensible error messages.
 %pyproject_install
 
 %check
-%pyproject_run -- python3 tests/lib/test_all.py
+%pyproject_run -- python3 tests/legacy_tests/test_all.py
 
 %files
 %doc CHANGES README*
@@ -62,6 +60,9 @@ support, and relatively sensible error messages.
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 6.0.2-alt1
+- 6.0.2 released
+
 * Thu Dec 28 2023 Grigory Ustinov <grenka@altlinux.org> 6.0.1-alt1.1
 - NMU: Fix building with cython>3.
 
