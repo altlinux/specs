@@ -1,5 +1,5 @@
 Name: python3-module-yarl
-Version: 1.9.4
+Version: 1.9.11
 Release: alt1
 
 Summary: Yet another URL library
@@ -35,13 +35,16 @@ python3 -mcython -3 -o yarl/_quoting_c.c yarl/_quoting_c.pyx
 
 %check
 export YARL_NO_EXTENSIONS=1
-%pyproject_run_pytest tests
+%pyproject_run_pytest --no-cov tests
 
 %files
 %python3_sitelibdir/yarl
 %python3_sitelibdir/yarl-%version.dist-info
 
 %changelog
+* Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.11-alt1
+- 1.9.11 released
+
 * Fri Jan 19 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.9.4-alt1
 - 1.9.4 released
 
