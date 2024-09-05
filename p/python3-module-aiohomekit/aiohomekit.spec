@@ -1,5 +1,5 @@
 Name: python3-module-aiohomekit
-Version: 3.1.5
+Version: 3.2.3
 Release: alt1
 
 Summary: This library implements the HomeKit protocol
@@ -32,6 +32,9 @@ Requires: python3(chacha20poly1305)
 %python3_sitelibdir/aiohomekit-%version.dist-info
 
 %changelog
+* Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.2.3-alt1
+- 3.2.3 released
+
 * Thu Mar 14 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.1.5-alt1
 - 3.1.5 released
 
