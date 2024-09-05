@@ -1,10 +1,9 @@
 %global optflags_lto %nil
 %define tool_chain_tag GCC5
-%define openssl_ver 3.0.9
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-aarch64
-Version: 20240524
+Version: 20240811
 Release: alt1
 Summary: AARCH64 Virtual Machine Firmware
 
@@ -18,7 +17,9 @@ Source: %name-%version.tar
 Source2: openssl.tar
 #Vcs-Git: https://github.com/ucb-bar/berkeley-softfloat-3.git
 Source3: berkeley-softfloat-3.tar
-Source4: Logo.bmp
+#Vcs-Git: https://github.com/devicetree-org/pylibfdt.git
+Source4: libfdt.tar
+Source9: Logo.bmp
 
 # json description files
 Source10: 50-edk2-aarch64-qcow2.json
@@ -58,11 +59,11 @@ AARCH64 UEFI Firmware
 %setup -q
 %patch1 -p1
 
-cp -f %SOURCE4 MdeModulePkg/Logo/
+cp -f %SOURCE9 MdeModulePkg/Logo/
 
 # cleanup
 find . -name '*.efi' -print0 | xargs -0 rm -f
-rm -rf BaseTools/Bin \
+rm -rf \
         UefiCpuPkg/ResetVector/Vtf0/Bin/*.raw \
         EdkCompatibilityPkg/Other \
         AppPkg \
@@ -73,7 +74,7 @@ rm -rf BaseTools/Bin \
         BaseTools/Source/Python/UPT/Dll/sqlite3.dll \
         Vlv2TbltDevicePkg/GenBiosId \
         Vlv2TbltDevicePkg/*.exe \
-        ArmPkg/Library/GccLto/liblto-*.a
+        BaseTools/Bin/GccLto/liblto-*.a
 
 # Ensure old shell and binary packages are not used
 rm -rf EdkShellBinPkg
@@ -88,6 +89,10 @@ tar -xf %SOURCE2 --strip-components 1 --directory CryptoPkg/Library/OpensslLib/o
 # add berkeley-softfloat-3
 mkdir -p ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3
 tar -xf %SOURCE3 --strip-components 1 --directory ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3
+
+# add libfdt
+mkdir -p MdePkg/Library/BaseFdtLib/libfdt
+tar -xf %SOURCE4 --strip-components 1 --directory MdePkg/Library/BaseFdtLib/libfdt
 
 # include paths pointing to unused submodules
 mkdir -p MdePkg/Library/MipiSysTLib/mipisyst/library/include
@@ -153,10 +158,10 @@ unset MAKEFLAGS
 
 # build aarch64 firmware
 mkdir -p AAVMF
-%{gcc_triplet}gcc -c -fpic ArmPkg/Library/GccLto/liblto-aarch64.s -o ArmPkg/Library/GccLto/liblto-aarch64.a
+%{gcc_triplet}gcc -c -fpic BaseTools/Bin/GccLto/liblto-aarch64.s -o BaseTools/Bin/GccLto/liblto-aarch64.a
 
 # Build with a verbose debug mask first, and stash the binary.
-build ${ARM_FLAGS} ${VERBOSE_FLAGS} ${TPM_FLAGS} ${PCD_FLAGS} -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc
+build ${ARM_FLAGS} ${VERBOSE_FLAGS} ${TPM_FLAGS} ${PCD_FLAGS} -n 1 -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc
 cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_EFI.fd AAVMF/QEMU_EFI.verbose.fd
 cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_EFI.fd AAVMF/QEMU_EFI-pflash.raw
 cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_VARS.fd AAVMF/QEMU_VARS.fd
@@ -165,13 +170,13 @@ truncate --size 64m AAVMF/QEMU_EFI-pflash.raw
 truncate --size 64m AAVMF/vars-template-pflash.raw
 
 # Build with a silent (errors only) debug mask.
-build ${ARM_FLAGS} ${SILENT_FLAGS} ${TPM_FLAGS} ${PCD_FLAGS} -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc
+build ${ARM_FLAGS} ${SILENT_FLAGS} ${TPM_FLAGS} ${PCD_FLAGS} -n 1 -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc
 cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_EFI.fd AAVMF/QEMU_EFI.silent.fd
 cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_EFI.fd AAVMF/QEMU_EFI-silent-pflash.raw
 truncate --size 64m AAVMF/QEMU_EFI-silent-pflash.raw
 
 # Build with a silent (errors only) debug mask and without TPM
-build ${ARM_FLAGS} ${SILENT_FLAGS} ${NO_TPM_FLAGS} ${PCD_FLAGS} -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc
+build ${ARM_FLAGS} ${SILENT_FLAGS} ${NO_TPM_FLAGS} ${PCD_FLAGS} -n 1 -a AARCH64 -p ArmVirtPkg/ArmVirtQemu.dsc
 cp -a Build/ArmVirtQemu-AARCH64/*/FV/QEMU_EFI.fd AAVMF/QEMU_EFI.kernel.fd
 
 for raw in AAVMF/*.raw; do
@@ -201,6 +206,9 @@ done
 %_datadir/qemu/firmware/*edk2-aarch64*.json
 
 %changelog
+* Wed Sep 04 2024 Alexey Shabalin <shaba@altlinux.org> 20240811-alt1
+- edk2-stable202408
+
 * Thu Jul 25 2024 Alexey Shabalin <shaba@altlinux.org> 20240524-alt1
 - edk2-stable202405
 - Fixes:
