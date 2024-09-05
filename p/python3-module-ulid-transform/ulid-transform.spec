@@ -1,5 +1,5 @@
 Name: python3-module-ulid-transform
-Version: 0.8.1
+Version: 1.0.2
 Release: alt1
 
 Summary: Fast ULID transformations
@@ -37,6 +37,9 @@ BuildRequires: python3(pytest-cov)
 %python3_sitelibdir/ulid_transform-%version.dist-info
 
 %changelog
+* Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.2-alt1
+- 1.0.2 released
+
 * Wed Sep 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8.1-alt1
 - 0.8.1 released
 
