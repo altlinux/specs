@@ -1,5 +1,5 @@
 Name: python3-module-asyncstdlib
-Version: 3.12.0
+Version: 3.12.5
 Release: alt1
 
 Summary: Async-compatible stdlib reimplementation
@@ -13,6 +13,7 @@ BuildArch: noarch
 BuildRequires: rpm-build-python3
 BuildRequires: python3(poetry-core)
 BuildRequires: python3(flit_core)
+BuildRequires: python3(pytest)
 
 %description
 %summary
@@ -26,11 +27,17 @@ BuildRequires: python3(flit_core)
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest unittests
+
 %files
 %python3_sitelibdir/asyncstdlib
 %python3_sitelibdir/asyncstdlib-%version.dist-info
 
 %changelog
+* Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.12.5-alt1
+- 3.12.5 released
+
 * Wed Jan 24 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.12.0-alt1
 - 3.12.0 released
 
