@@ -1,5 +1,5 @@
 Name: python3-module-aiohttp-zlib-ng
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: Enable zlib_ng on aiohttp
@@ -39,5 +39,8 @@ BuildRequires: python3(zlib_ng)
 %python3_sitelibdir/aiohttp_zlib_ng-%version.dist-info
 
 %changelog
+* Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.3.2-alt1
+- 0.3.2 released
+
 * Wed Jan 17 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.3.1-alt1
 - 0.3.1 released
