@@ -1,5 +1,5 @@
 Name: python3-module-async-upnp-client
-Version: 0.39.0
+Version: 0.40.0
 Release: alt1
 
 Summary: UPnP Client library for Python/asyncio
@@ -33,6 +33,9 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/async_upnp_client-%version.dist-info
 
 %changelog
+* Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.40.0-alt1
+- 0.40.0 released
+
 * Thu Jul 04 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.39.0-alt1
 - 0.39.0 released
 
