@@ -1,8 +1,8 @@
 Name: kernel-image-std-def
-Release: alt2
+Release: alt1
 epoch:2
 %define kernel_base_version	6.1
-%define kernel_sublevel	.107
+%define kernel_sublevel	.108
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -598,6 +598,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Sep 04 2024 Kernel Bot <kernelbot@altlinux.org> 2:6.1.108-alt1
+- v6.1.108 (2024-09-04).
+
 * Thu Aug 29 2024 Vitaly Chikunov <vt@altlinux.org> 2:6.1.107-alt2
 - ppc64le: Fix build of fbdev/offb.
 
