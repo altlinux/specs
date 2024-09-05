@@ -352,7 +352,7 @@
 
 Name:    java-21-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt1
+Release: alt2
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -1987,6 +1987,10 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 %endif
 
 %changelog
+* Thu Sep 05 2024 Ivan A. Melnikov <iv@altlinux.org> 0:21.0.4.0.7-alt2
+- Update loongarch64 patch: specify pd_default_address and
+  DEFAULT_CACHE_LINE_SIZE (by k0tran@)
+
 * Sat Aug 24 2024 Andrey Cherepanov <cas@altlinux.org> 0:21.0.4.0.7-alt1
 - New version.
 - Security fixes:
