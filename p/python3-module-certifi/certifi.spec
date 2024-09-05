@@ -1,18 +1,18 @@
-%define _unpackaged_files_terminate_build 1
-%define oname certifi
-
-Name: python3-module-%oname
-Version: 2023.5.7
+Name: python3-module-certifi
+Version: 2024.8.30
 Release: alt1
+
 Summary: Python package for providing Mozilla's CA Bundle
 License: MPL-2.0
-Group: Development/Python3
+Group: Development/Python
 Url: https://pypi.python.org/pypi/certifi/
 
-Source0: https://files.pythonhosted.org/packages/93/71/752f7a4dd4c20d6b12341ed1732368546bc0ca9866139fe812f6009d9ac7/certifi-2023.5.7.tar.gz
-BuildArch: noarch
+Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
+BuildArch: noarch
+BuildRequires: rpm-build-pyproject
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %description
 This installable Python package contains a CA Bundle that you can
@@ -23,19 +23,23 @@ This is the same CA Bundle which ships with the Requests codebase, and
 is derived from Mozilla Firefox's canonical set.
 
 %prep
-%setup -n %{oname}-%{version}
+%setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc LICENSE *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/certifi
+%python3_sitelibdir/certifi-%version.dist-info
 
 %changelog
+* Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.8.30-alt1
+- 2024.8.30 released
+
 * Thu Jun 08 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.5.7-alt1
 - 2023.5.7 released
 
