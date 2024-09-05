@@ -1,16 +1,19 @@
 Name: python3-module-voluptuous
-Version: 0.13.1
+Version: 0.15.2
 Release: alt1
 
 Summary: Voluptuous is a Python data validation library
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python
 Url:  http://github.com/alecthomas/voluptuous
 
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires: rpm-build-pyproject
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(pytest)
 
 %description
 Voluptuous, *despite* the name, is a Python data validation library. It
@@ -27,16 +30,23 @@ It has three goals:
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_pytest voluptuous/tests
 
 %files
 %doc COPYING README.md
-%python3_sitelibdir/*
+%python3_sitelibdir/voluptuous
+%python3_sitelibdir/voluptuous-%version.dist-info
 
 %changelog
+* Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.15.2-alt1
+- 0.15.2 released
+
 * Tue May 17 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.13.1-alt1
 - 0.13.1 released
 
