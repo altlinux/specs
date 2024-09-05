@@ -11,7 +11,7 @@
 
 
 Name:     %pname-source
-Version:  0.4.13
+Version:  0.4.14
 Release:  alt1
 
 Summary:  Osec-based integrity checking script and settings
@@ -87,7 +87,7 @@ Lock down PVE cluster VMs on integalert_vm.service failure.
 %make_build
 
 %install
-%makeinstall_std sbindir=/sbin sysconfdir=%_sysconfdir datadir=%_datadir unitdir=%_unitdir presetdir=%_presetdir WITH_PVE=%{with pve} logrotatedir=%_logrotatedir mandir=%_mandir man8dir=%_man8dir
+%makeinstall_std sbindir=%_sbindir sysconfdir=%_sysconfdir datadir=%_datadir unitdir=%_unitdir presetdir=%_presetdir WITH_PVE=%{with pve} logrotatedir=%_logrotatedir mandir=%_mandir man8dir=%_man8dir
 
 # For ghost:
 mkdir -p %buildroot%_sysconfdir/sysconfig
@@ -148,7 +148,7 @@ fi
 %_unitdir/integalert.service
 %_unitdir/integ-check-failed.target
 %_presetdir/*
-/sbin/integalert
+%_sbindir/integalert
 %dir %_sysconfdir/osec/integalert*
 %config(noreplace) %_sysconfdir/osec/integalert*/*.conf
 %_sysconfdir/osec/integalert*/sender
@@ -168,6 +168,11 @@ fi
 %endif
 
 %changelog
+* Thu Sep 05 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.14-alt1
+- Place integalert into /usr/sbin/.
+- Install integalert with 0755 (world executable).
+- Source /etc/sysconfig/integalert in pipe.conf and sender.conf files.
+
 * Thu Sep 05 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.13-alt1
 - Make /etc/sysconfig/integalert optional (do not install the
   default version).
