@@ -1,5 +1,5 @@
 Name: python3-module-aiohttp-fast-url-dispatcher
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary: A faster URL dispatcher for aiohttp
@@ -37,5 +37,8 @@ BuildRequires: python3(pytest-asyncio)
 %python3_sitelibdir/aiohttp_fast_url_dispatcher-%version.dist-info
 
 %changelog
+* Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.3.1-alt1
+- 0.3.1 released
+
 * Wed Jan 17 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.3.0-alt1
 - 0.3.0 released
