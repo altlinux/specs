@@ -29,7 +29,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt0.6
+Release: alt0.7
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -488,6 +488,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Sep 05 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.7
+- scale installer background image
+
 * Tue Sep 03 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.6
 - fix requires to /etc/sysconfig/i18n
 
