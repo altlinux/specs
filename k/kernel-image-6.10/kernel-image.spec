@@ -2,7 +2,7 @@ Name: kernel-image-6.10
 Release: alt1
 %define kernel_src_version	6.10
 %define kernel_base_version	6.10
-%define kernel_sublevel	.7
+%define kernel_sublevel	.8
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -594,6 +594,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Sep 04 2024 Kernel Bot <kernelbot@altlinux.org> 6.10.8-alt1
+- v6.10.8 (2024-09-04).
+- config: Enable DRM_ACCEL drivers.
+- config: Enable some Intel audio-related settings.
+
 * Thu Aug 29 2024 Kernel Bot <kernelbot@altlinux.org> 6.10.7-alt1
 - v6.10.7 (2024-08-29).
 - config: CONFIG_SERIAL_SC16IS7XX_SPI=m.
