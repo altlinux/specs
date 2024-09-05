@@ -1,5 +1,5 @@
 Name:           retroarch-assets
-Version:        git20220113
+Version:        git20240808
 Release:        alt1
 Summary:        RetroArch Assets
 License:        CC-BY-4.0
@@ -30,5 +30,9 @@ Assets needed for RetroArch - e.g. menu drivers, etc. Also contains the official
 %{_datadir}/libretro/assets
 
 %changelog
+* Thu Sep  5 2024 Artyom Bystrov <arbars@altlinux.org> git20240808-alt1
+- Update assets
+- Remove scripts (false-positive Inkscape dep)
+
 * Mon Mar 18 2024 Artyom Bystrov <arbars@altlinux.org> git20220113-alt1
 - Initial commit for Sisyphus
