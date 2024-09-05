@@ -11,7 +11,7 @@
 
 
 Name:     %pname-source
-Version:  0.4.12
+Version:  0.4.13
 Release:  alt1
 
 Summary:  Osec-based integrity checking script and settings
@@ -89,6 +89,10 @@ Lock down PVE cluster VMs on integalert_vm.service failure.
 %install
 %makeinstall_std sbindir=/sbin sysconfdir=%_sysconfdir datadir=%_datadir unitdir=%_unitdir presetdir=%_presetdir WITH_PVE=%{with pve} logrotatedir=%_logrotatedir mandir=%_mandir man8dir=%_man8dir
 
+# For ghost:
+mkdir -p %buildroot%_sysconfdir/sysconfig
+touch %buildroot%_sysconfdir/sysconfig/integalert
+
 %post -n %pname
 # On package update (don't check the $1 value due to package
 # rename):
@@ -150,7 +154,7 @@ fi
 %_sysconfdir/osec/integalert*/sender
 %dir %_sysconfdir/osec/integalert*/trigger.d
 %config(noreplace) %_logrotatedir/integalert*.conf
-%config(noreplace) %_sysconfdir/sysconfig/integalert
+%ghost %_sysconfdir/sysconfig/integalert
 %_man8dir/*.8.*
 
 %files -n %pname-vm-check
@@ -164,6 +168,10 @@ fi
 %endif
 
 %changelog
+* Thu Sep 05 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.13-alt1
+- Make /etc/sysconfig/integalert optional (do not install the
+  default version).
+
 * Thu Jul 04 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.12-alt1
 - Support virtual directory mode (files.list).
 - Install and package the default /etc/sysconfig/integalert.

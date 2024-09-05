@@ -2,7 +2,7 @@
 %define icinga_user icinga
 
 Name: 	  nagwad
-Version:  0.11.6
+Version:  0.11.7
 Release:  alt1
 
 Summary:  System journal event scanner and handler
@@ -161,6 +161,10 @@ mkdir -p %buildroot/var/log/nagwad
 # Touch the file for %%ghost below.
 touch %buildroot%_sysconfdir/audit/rules.d/50-nagwad-arch.rules
 
+# For ghost:
+mkdir -p %buildroot%_sysconfdir/sysconfig
+touch %buildroot%_sysconfdir/sysconfig/nagwad
+
 %pre service
 getent group %name >/dev/null || %_sbindir/groupadd -r %name
 
@@ -215,6 +219,7 @@ usermod -a -G %name %icinga_user
 %_libexecdir/nagios/plugins/*
 %dir %_sysconfdir/nagwad
 %config(noreplace) %_sysconfdir/nagwad/nagwad.conf
+%ghost %_sysconfdir/sysconfig/nagwad
 %config(noreplace) %_sysconfdir/nagwad/*.regexp
 %config(noreplace) %_sysconfdir/nagwad/*.sed
 %dir %_sysconfdir/nagwad/filter-event.d
@@ -259,6 +264,10 @@ usermod -a -G %name %icinga_user
 %_bindir/nsca-shell
 
 %changelog
+* Thu Sep 05 2024 Paul Wolneykien <manowar@altlinux.org> 0.11.7-alt1
+- Make /etc/sysconfig/nagwad override values set in
+  /etc/nagwad/nagwad.conf.
+
 * Fri Jul 05 2024 Paul Wolneykien <manowar@altlinux.org> 0.11.6-alt1
 - Fixed "cleanup-old" description in the docs (closes: 50808).
 - Fix: Skip the current log dir when cleanup old data.

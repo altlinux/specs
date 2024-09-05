@@ -2,7 +2,7 @@
 %def_without old_make_initrd
 
 Name: ima-evm-integrity-check
-Version: 0.7.5
+Version: 0.7.6
 Release: alt1
 
 Summary: IMA/EVM integrity check
@@ -69,14 +69,18 @@ Integrity check feature for make-initrd
 
 %add_findreq_skiplist %_datadir/make-initrd/features/integrity/data/etc/rc.d/init.d/integrity
 
+# For ghost:
+mkdir -p %buildroot%_sysconfdir/sysconfig
+touch %buildroot%_sysconfdir/sysconfig/integrity
+
 %files
 %doc README
 %_sbindir/*
 %_controldir/*
 %_unitdir/*
 %_presetdir/*
-%config(noreplace) %_sysconfdir/sysconfig/integrity
-%_sysconfdir/integrity/config
+%ghost %_sysconfdir/sysconfig/integrity
+%config(noreplace) %_sysconfdir/integrity/config
 %_man7dir/*.7.*
 %_man8dir/*.8.*
 
@@ -99,6 +103,10 @@ Integrity check feature for make-initrd
 %endif
 
 %changelog
+* Thu Sep 05 2024 Paul Wolneykien <manowar@altlinux.org> 0.7.6-alt1
+- Make the contents of /etc/sysconfig/integrity override values
+  set in /etc/integrity/config.
+
 * Thu May 30 2024 Paul Wolneykien <manowar@altlinux.org> 0.7.5-alt1
 - Use 0x80000002 as the default EVM mode.
 - Automatically enable --with-evm for integrity-sign --verify if EVM
