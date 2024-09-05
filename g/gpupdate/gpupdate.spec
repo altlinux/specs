@@ -35,7 +35,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.11.1
+Version: 0.11.2
 Release: alt1
 
 Summary: GPT applier
@@ -194,6 +194,12 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Wed Sep 04 2024 Valery Sinelnikov <greh@altlinux.org> 0.11.2-alt1
+- Fixed data type handling in kde_applier
+- Removing legacy unused code
+- Added saving policy data without polfile
+- Added escaping of special characters in data (closes: 51201)
+
 * Tue Aug 27 2024 Valery Sinelnikov <greh@altlinux.org> 0.11.1-alt1
 - Fixed setting links in shortcuts (closes: 51275)
 
