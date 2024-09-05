@@ -11,7 +11,7 @@ ExclusiveArch: %ix86 x86_64
 
 Name: dmd
 Version: 2.109.1
-Release: alt1
+Release: alt2
 Summary: The D Programming Language
 Group: Development/Other
 License: BSL-1.0
@@ -38,6 +38,7 @@ Provides: libdruntime = %EVR
 Conflicts: ldc
 Requires: /proc
 
+Requires: dmd-tools = %EVR
 Requires: libdruntime-devel = %EVR
 Requires: libdruntime-devel-static = %EVR
 Requires: libphobos2 = %EVR
@@ -52,17 +53,16 @@ by that language, it is not a variant of C++. D has redesigned some C++ features
 and has been influenced by concepts used in other programming languages, such as
 Java, Python, Ruby, C#, and Eiffel.
 
-%package -n dmd-devel-common
-Summary: Common development files for D language compiler.
+%package -n dmd-tools
+Summary: D tools.
 Group: Development/Other
 
-%description -n dmd-devel-common
-Common development files for D language compiler.
+%description -n dmd-tools
+D tools.
 
 %package -n libdruntime-devel
 Summary: D runtime development files.
 Group: Development/Other
-Requires: dmd-devel-common = %EVR
 
 %description -n libdruntime-devel
 D runtime development files.
@@ -86,7 +86,6 @@ Phobos is the standard runtime library that comes with the D language compiler.
 %package -n libphobos2-devel
 Summary: Phobos is the standard runtime library that comes with the D language compiler.
 Group: Development/Other
-Requires: dmd-devel-common = %EVR
 Requires: libphobos2 = %EVR
 Provides: libphobos-devel = %EVR
 
@@ -126,7 +125,7 @@ pushd ../tools
 popd
 
 %install
-mkdir -p %buildroot{%_bindir,%_sysconfdir,%_libdir,%_includedir/d/etc/c,%_man1dir,%_man5dir}
+mkdir -p %buildroot{%_bindir,%_sysconfdir,%_libdir,%_includedir/dmd/druntime,%_includedir/dmd/phobos/etc/c,%_man1dir,%_man5dir}
 
 cp generated/linux/release/%MODEL/dmd %buildroot%_bindir/
 
@@ -135,10 +134,10 @@ echo '; Names enclosed by %%%% are searched for in the existing environment' >> 
 echo '; and inserted. The special name %%@P%% is replaced with the path' >> %buildroot%_sysconfdir/dmd.conf
 echo '; to this file.' >> %buildroot%_sysconfdir/dmd.conf
 echo '[Environment]' >> %buildroot%_sysconfdir/dmd.conf
-echo 'DFLAGS=-I%_includedir/d -L-lrt -L--export-dynamic -fPIC' >> %buildroot%_sysconfdir/dmd.conf
+echo 'DFLAGS=-I%_includedir/dmd/phobos -I%_includedir/dmd/druntime/import -L-lrt -L--export-dynamic -fPIC' >> %buildroot%_sysconfdir/dmd.conf
 
 #druntime
-cp -r druntime/import/* %buildroot%_includedir/d/
+cp -r druntime/import %buildroot%_includedir/dmd/druntime/
 cp druntime/out/libdruntime.a %buildroot%_libdir/
 rm -f druntime/out/libdruntime.so*.a
 rm -f druntime/out/libdruntime.so*.o
@@ -148,9 +147,9 @@ cp druntime/out/libdruntime.so* %buildroot%_libdir/
 cp ../phobos/out/libphobos2.a %buildroot%_libdir/
 rm -f ../phobos/out/libphobos2.so*.o
 cp -a ../phobos/out/libphobos2.so* %buildroot%_libdir/
-cp -r ../phobos/std %buildroot%_includedir/d/
+cp -r ../phobos/std %buildroot%_includedir/dmd/phobos
 
-cp ../phobos/etc/c/*.d %buildroot%_includedir/d/etc/c/
+cp ../phobos/etc/c/*.d %buildroot%_includedir/dmd/phobos/etc/c/
 
 pushd ../tools
 %make -f posix.mak MODEL=%MODEL ROOT=out PIC=1 DFLAGS='-Idruntime/import -I../phobos -L-L../phobos/out' BUILD=release ENABLE_RELEASE=1 install INSTALL_DIR=%buildroot%_prefix
@@ -165,20 +164,31 @@ cp -r compiler/docs/man/man5/* %buildroot%_man5dir/
 cp -r ../tools/man/man1/* %buildroot%_man1dir/
 
 %files
-%_bindir/*
+%_bindir/dmd
 %_sysconfdir/*
 %_man1dir/*
 %_man5dir/*
 %_libdir/libdruntime.so
 
-%files -n dmd-devel-common
-%dir %_includedir/d
+%files -n dmd-tools
+%_bindir/changed
+%_bindir/checkwhitespace
+%_bindir/contributors
+%_bindir/detab
+%_bindir/dget
+%_bindir/dmd-catdoc
+%_bindir/tolf
+%_bindir/updatecopyright
+%_bindir/dustmite
+%_bindir/ddemangle
+%_bindir/rdmd
 
 %files -n libdruntime-devel
-%_includedir/d/core
-%_includedir/d/*.d
-%_includedir/d/__importc_builtins.di
-%_includedir/d/importc.h
+%_includedir/dmd/druntime/import/core
+%_includedir/dmd/druntime/import/etc/*/*.d
+%_includedir/dmd/druntime/import/*.d
+%_includedir/dmd/druntime/import/__importc_builtins.di
+%_includedir/dmd/druntime/import/importc.h
 
 %files -n libdruntime-devel-static
 %_libdir/libdruntime.a
@@ -188,13 +198,17 @@ cp -r ../tools/man/man1/* %buildroot%_man1dir/
 
 %files -n libphobos2-devel
 %_libdir/libphobos2.so
-%_includedir/d/std
-%_includedir/d/etc
+%_includedir/dmd/phobos/std
+%_includedir/dmd/phobos/etc
 
 %files -n libphobos2-devel-static
 %_libdir/libphobos2.a
 
 %changelog
+* Wed Sep 04 2024 Andrey Kovalev <ded@altlinux.org> 2.109.1-alt2
+- Split /usr/include/d into /usr/include/dmd/druntime/ and /usr/include/phobos.
+  Separated dmd-tools from dmd (closes: #40214).
+
 * Tue Sep 03 2024 Andrey Kovalev <ded@altlinux.org> 2.109.1-alt1
 - Updated to upstream version 2.109.1.
 
