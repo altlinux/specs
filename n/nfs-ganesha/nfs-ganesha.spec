@@ -33,6 +33,7 @@
 %def_without jemalloc
 %def_without lttng
 %def_without saunafs
+%def_without lizardfs
 %def_with utils
 %def_with gui_utils
 %def_with system_ntirpc
@@ -43,7 +44,7 @@
 %def_without legacy_python_install
 
 Name: nfs-ganesha
-Version: 5.9
+Version: 6.0
 Release: alt1
 Summary: NFS-Ganesha is a NFS Server running in user space
 Group: System/Servers
@@ -51,6 +52,8 @@ License: LGPL-3.0-or-later
 Url: https://github.com/nfs-ganesha/nfs-ganesha/wiki
 Vcs: https://github.com/nfs-ganesha/nfs-ganesha.git
 Source: %name-%version.tar
+Source1: libntirpc-0.tar
+Source2: prometheus-cpp-lite-0.tar
 Patch: %name-%version.patch
 
 Requires: dbus
@@ -87,6 +90,7 @@ BuildRequires: /usr/bin/sphinx-build-3
 %{?_with_lttng:BuildRequires: lttng-ust-devel >= 2.3}
 %{?_with_kvsfs:BuildRequires: libkvsns-devel >= 1.2.0}
 %{?_with_saunafs:BuildRequires: libsaunafs-devel}
+%{?_with_lizardfs:BuildRequires: liblizardfs-client-devel}
 %if_with utils
 BuildRequires: python3-module-setuptools
 %{?_without_legacy_python_install:BuildRequires: python3-module-wheel python3-module-build python3-module-installer}
@@ -268,8 +272,21 @@ Requires: %name = %EVR
 This package contains a FSAL shared object to
 be used with NFS-Ganesha to support Gluster
 
+# LizardFS
+%package lizardfs
+Summary: The NFS-GANESHA's LizardFS FSAL
+Group: System/Servers
+Requires: %name = %EVR
+Conflicts: lizardfs-nfs-ganesha
+
+%description lizardfs
+This package contains a FSAL shared object to be used with NFS-Ganesha
+to support LizardFS.
+
 %prep
 %setup
+tar xf %SOURCE1 -C src
+tar xf %SOURCE2 -C src/monitoring
 %patch -p1
 
 %build
@@ -292,6 +309,7 @@ pushd src
     -DUSE_FSAL_KVSFS=%{on_off_switch kvsfs} \
     -DUSE_FSAL_GLUSTER=%{on_off_switch gluster} \
     -DUSE_FSAL_SAUNAFS=%{on_off_switch saunafs} \
+    -DUSE_FSAL_LIZARDFS=%{on_off_switch lizardfs} \
     -DUSE_SYSTEM_NTIRPC=%{on_off_switch system_ntirpc} \
     -DUSE_LTTNG=%{on_off_switch lttng} \
     -DUSE_ADMIN_TOOLS=%{on_off_switch utils} \
@@ -402,6 +420,7 @@ useradd -M -r -d %_runtimedir/ganesha -s /sbin/nologin -c "NFS-Ganesha Daemon" -
 %doc src/LICENSE.txt
 %_bindir/ganesha.nfsd
 %_libdir/libganesha_nfsd.so*
+%dir %_libdir/ganesha
 %config %_sysconfdir/dbus-1/system.d/org.ganesha.nfsd.conf
 %config(noreplace) %_sysconfdir/sysconfig/ganesha
 %config(noreplace) %_logrotatedir/ganesha
@@ -534,6 +553,11 @@ useradd -M -r -d %_runtimedir/ganesha -s /sbin/nologin -c "NFS-Ganesha Daemon" -
 %_libdir/ganesha/libganesha_trace*
 %endif
 
+%if_with lizardfs
+%files lizardfs
+%_libdir/ganesha/libfsallizardfs*
+%endif
+
 %if_with utils
 %files utils
 %_bindir/ganesha-top
@@ -548,7 +572,7 @@ useradd -M -r -d %_runtimedir/ganesha -s /sbin/nologin -c "NFS-Ganesha Daemon" -
 
 %if_with gui_utils
 %files utils-gui
-%python3_sitelibdir_noarch/Ganesha/*
+%python3_sitelibdir_noarch/Ganesha
 %python3_sitelibdir_noarch/ganeshactl-*-info
 %_bindir/ganesha-admin
 %_bindir/manage_clients
@@ -567,6 +591,9 @@ useradd -M -r -d %_runtimedir/ganesha -s /sbin/nologin -c "NFS-Ganesha Daemon" -
 %endif
 
 %changelog
+* Wed Sep 04 2024 Vitaly Chikunov <vt@altlinux.org> 6.0-alt1
+- Update to V6.0 (2024-08-23).
+
 * Thu Jul 04 2024 Alexey Shabalin <shaba@altlinux.org> 5.9-alt1
 - New version 5.9.
 
