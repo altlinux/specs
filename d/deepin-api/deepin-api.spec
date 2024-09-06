@@ -7,7 +7,7 @@
 %def_without check
 
 Name: deepin-api
-Version: 6.0.11
+Version: 6.0.12
 Release: alt1
 
 Summary: Golang bingding for dde-daemon
@@ -88,6 +88,9 @@ install -Dm644 archlinux/deepin-api.sysusers %buildroot%_sysusersdir/deepin-api.
 %go_path/src/%goipath
 
 %changelog
+* Fri Sep 06 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.12-alt1
+- New version 6.0.12.
+
 * Wed Jul 17 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.11-alt1
 - New version 6.0.11.
 
