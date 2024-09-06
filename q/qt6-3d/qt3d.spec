@@ -2,8 +2,8 @@
 %global qt_module qt3d
 
 Name: qt6-3d
-Version: 6.6.2
-Release: alt1.1
+Version: 6.7.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - Qt3D QML bindings and C++ APIs
@@ -13,12 +13,10 @@ License: LGPL-3.0-only OR (GPL-2.0-only OR GPL-3.0-or-later)
 Requires: qt6-imageformats
 
 Source: %qt_module-everywhere-src-%version.tar
-Patch1: alt-gcc13.patch
 
 BuildRequires(pre): rpm-macros-qt6 qt6-tools
 BuildRequires: cmake qt6-base-devel qt6-declarative-devel qt6-shadertools-devel qt6-multimedia-devel
-BuildRequires: zlib-devel
-BuildRequires: pkgconfig(assimp)
+BuildRequires: zlib-devel libminizip-devel libpoly2tri-devel pkgconfig(assimp)
 BuildRequires: libxkbcommon-devel
 
 %description
@@ -124,6 +122,8 @@ Summary: Qt6 library
 Group: System/Libraries
 Requires: %name-common
 Requires: libqt6-core = %_qt6_version
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
 %description -n libqt6-3dquickextras
 %summary
 
@@ -153,7 +153,6 @@ Requires: libqt6-core = %_qt6_version
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
-%patch1 -p1
 
 cat >>src/plugins/renderers/rhi/CMakeLists.txt <<__EOF__
 find_package(Qt6 COMPONENTS ShaderTools)
@@ -165,6 +164,8 @@ __EOF__
 %endif
 %Q6build \
     -DFEATURE_qt3d_rhi_renderer:BOOL=ON \
+    -DQT_FEATURE_qt3d_assimp:BOOL=ON \
+    -DQT_FEATURE_qt3d_system_assimp:BOOL=ON \
     #
 %if %qdoc_found
 %make -C BUILD docs
@@ -179,19 +180,11 @@ __EOF__
 
 %files common
 %doc LICENSES/*
-%dir %_qt6_plugindir/sceneparsers
 %dir %_qt6_plugindir/geometryloaders/
+%dir %_qt6_plugindir/sceneparsers
 %dir %_qt6_plugindir/renderplugins/
-
-%files
-#%_bindir/qgltf-qt6
-#%_qt6_bindir/qgltf
-%_qt6_qmldir/Qt3D/
-%_qt6_qmldir/QtQuick/Scene?D/
-%_qt6_plugindir/sceneparsers/*.so
-%_qt6_plugindir/geometryloaders/*.so
-%_qt6_plugindir/renderplugins/*.so
-%_qt6_plugindir/renderers/*.so
+%dir %_qt6_plugindir/renderers/
+%dir %_qt6_qmldir/Qt3D/
 
 %files -n libqt6-3dcore
 %_qt6_libdir/libQt?3DCore.so.*
@@ -199,24 +192,36 @@ __EOF__
 %_qt6_libdir/libQt?3DInput.so.*
 %files -n libqt6-3dlogic
 %_qt6_libdir/libQt?3DLogic.so.*
+%_qt6_qmldir/Qt3D/Logic/
 %files -n libqt6-3dquick
 %_qt6_libdir/libQt?3DQuick.so.*
+%_qt6_qmldir/Qt3D/Core/
 %files -n libqt6-3dquickinput
 %_qt6_libdir/libQt?3DQuickInput.so.*
+%_qt6_qmldir/Qt3D/Input/
 %files -n libqt6-3dquickrender
 %_qt6_libdir/libQt?3DQuickRender.so.*
+%_qt6_qmldir/Qt3D/Render/
 %files -n libqt6-3drender
 %_qt6_libdir/libQt?3DRender.so.*
+%_qt6_plugindir/geometryloaders/*.so
+%_qt6_plugindir/renderers/*.so
 %files -n libqt6-3dextras
 %_qt6_libdir/libQt?3DExtras.so.*
+%_qt6_plugindir/sceneparsers/*.so
 %files -n libqt6-3dquickextras
 %_qt6_libdir/libQt?3DQuickExtras.so.*
+%_qt6_qmldir/Qt3D/Extras/
 %files -n libqt6-3danimation
 %_qt6_libdir/libQt?3DAnimation.so.*
 %files -n libqt6-3dquickanimation
 %_qt6_libdir/libQt?3DQuickAnimation.so.*
+%_qt6_qmldir/Qt3D/Animation/
+%_qt6_qmldir/QtQuick/Scene3D/
 %files -n libqt6-3dquickscene2d
 %_qt6_libdir/libQt?3DQuickScene2D.so.*
+%_qt6_plugindir/renderplugins/*.so
+%_qt6_qmldir/QtQuick/Scene2D/
 
 %files devel
 %_qt6_headerdir/Qt*/
@@ -237,6 +242,10 @@ __EOF__
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+- build with sstem assimp (closes: 51214)
+
 * Fri Feb 23 2024 Michael Shigorin <mike@altlinux.org> 6.6.2-alt1.1
 - E2K: disable SSE due to core header missing
 

@@ -3,7 +3,7 @@
 %global qt_module qtsensors
 
 Name: qt6-sensors
-Version: 6.6.2
+Version: 6.7.2
 Release: alt1
 
 Group: System/Libraries
@@ -14,7 +14,7 @@ License: LGPL-3.0-only OR (GPL-2.0-only OR GPL-3.0-or-later)
 Source: %qt_module-everywhere-src-%version.tar
 
 BuildRequires(pre): rpm-macros-qt6
-BuildRequires: cmake glibc-devel qt6-declarative-devel
+BuildRequires: cmake glibc-devel qt6-declarative-devel qt6-svg-devel
 BuildRequires(pre): qt6-tools
 
 %description
@@ -66,6 +66,8 @@ Summary: Qt6 library
 Group: System/Libraries
 Requires: %name-common = %EVR
 Requires: libqt6-core = %_qt6_version
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
 %description -n libqt6-sensorsquick
 %summary
 
@@ -87,15 +89,13 @@ Requires: libqt6-core = %_qt6_version
 %files common
 %doc LICENSES/*
 
-%files
-%_qt6_plugindir/sensors/
-%_qt6_archdatadir/qml/QtSensors/
-
 %files -n libqt6-sensors
 %_qt6_libdir/libQt?Sensors.so.*
+%_qt6_plugindir/sensors/
 
 %files -n libqt6-sensorsquick
 %_qt6_libdir/libQt?SensorsQuick.so.*
+%_qt6_archdatadir/qml/QtSensors/
 
 %files devel
 %_qt6_headerdir/Qt*/
@@ -113,9 +113,12 @@ Requires: libqt6-core = %_qt6_version
 %if %qdoc_found
 %_qt6_docdir/*
 %endif
-#%_qt6_examplesdir/*
+%_qt6_examplesdir/*
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
 * Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
 - new version
 

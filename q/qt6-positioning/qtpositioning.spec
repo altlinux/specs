@@ -3,8 +3,8 @@
 %global qt_module qtpositioning
 
 Name: qt6-positioning
-Version: 6.6.2
-Release: alt1.1
+Version: 6.7.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - QtPositioning component
@@ -121,6 +121,9 @@ Requires: libqt6-core = %_qt6_version
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
 * Fri Feb 23 2024 Michael Shigorin <mike@altlinux.org> 6.6.2-alt1.1
 - spec: drop obsolete e2kv3-only hack for old lcc
 

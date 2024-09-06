@@ -2,8 +2,8 @@
 %global qt_module qtvirtualkeyboard
 
 Name: qt6-virtualkeyboard
-Version: 6.6.2
-Release: alt3
+Version: 6.7.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - QtQuick virtual keyboard component
@@ -72,6 +72,14 @@ Requires: libqt6-core = %_qt6_version
 %description -n libqt6-hunspellinputmethod
 %summary
 
+%package -n libqt6-virtualkeyboardsettings
+Summary: Qt6 library
+Group: System/Libraries
+Requires: %name-common = %EVR
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-virtualkeyboardsettings
+%summary
+
 %prep
 %setup -n %qt_module-everywhere-src-%version
 rm -rf src/virtualkeyboard/3rdparty/hunspell
@@ -88,6 +96,8 @@ rm -rf src/virtualkeyboard/3rdparty/hunspell
     -DFEATURE_tcime:BOOL=OFF \
     -DFEATURE_cangjie:BOOL=OFF \
     -DFEATURE_zhuyin:BOOL=OFF \
+    -DFEATURE_thai:BOOL=OFF \
+    -DFEATURE_hangul:BOOL=OFF \
     $(for d in src/layouts/*_* ; do LNG=`basename $d`; echo -n " -DFEATURE_vkb_lang_${LNG}:BOOL=OFF"; done) \
     -DFEATURE_vkb_lang_en_US:BOOL=ON \
     -DFEATURE_vkb_lang_ru_RU:BOOL=ON \
@@ -116,7 +126,7 @@ rm -rf src/virtualkeyboard/3rdparty/hunspell
 %_qt6_libdir/libQt*.prl
 %_libdir/cmake/Qt?/Find*.cmake
 %_libdir/cmake/Qt?Gui/*VirtualKeyboard*
-%_libdir/cmake/Qt?VirtualKeyboard/
+%_libdir/cmake/Qt?VirtualKeyboard*/
 %_libdir/cmake/Qt*InputMethod*/
 %_libdir/cmake/Qt?BuildInternals/StandaloneTests/*VirtualKeyboard*.cmake
 %_libdir/cmake/Qt?Qml/QmlPlugins/Qt?qtvkb*plugin*.cmake
@@ -136,8 +146,13 @@ rm -rf src/virtualkeyboard/3rdparty/hunspell
 %_qt6_libdir/libQt?VirtualKeyboard.so.*
 %files -n libqt6-hunspellinputmethod
 %_qt6_libdir/libQt?HunspellInputMethod.so.*
+%files -n libqt6-virtualkeyboardsettings
+%_qt6_libdir/libQt?VirtualKeyboardSettings.so.*
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
 * Fri Jul 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt3
 - disable arrow key navigation (kdebug#478875)
 

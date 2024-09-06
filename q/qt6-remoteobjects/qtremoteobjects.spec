@@ -4,7 +4,7 @@
 Name:    qt6-remoteobjects
 Summary: Qt6 - Qt Remote Objects
 Group: System/Libraries
-Version: 6.6.2
+Version: 6.7.2
 Release: alt1
 
 # See LGPL_EXCEPTIONS.txt, LICENSE.GPL3, respectively, for exception details
@@ -57,6 +57,8 @@ Group: System/Libraries
 Summary: Qt6 - library
 Requires: %name-common
 Requires: libqt6-core = %_qt6_version
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
 %description -n libqt6-remoteobjectsqml
 %summary
 
@@ -78,16 +80,14 @@ Requires: libqt6-core = %_qt6_version
 
 
 %files common
-
-%files
 %doc LICENSES/*
-%_qt6_libexecdir/repc
-%_qt6_qmldir/QtRemoteObjects/
 
 %files -n libqt6-remoteobjects
+%_qt6_libexecdir/repc
 %_qt6_libdir/libQt6RemoteObjects.so.*
 %files -n libqt6-remoteobjectsqml
 %_qt6_libdir/libQt6RemoteObjectsQml.so.*
+%_qt6_qmldir/QtRemoteObjects/
 
 %files devel
 %_qt6_headerdir/QtRemoteObjects*/
@@ -113,6 +113,9 @@ Requires: libqt6-core = %_qt6_version
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
 * Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
 - new version
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 Name: calibre
 Version: 7.5.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
@@ -57,13 +57,13 @@ BuildRequires: qt6-base-devel
 # Project MESSAGE: This is not a bug, but a result of using Qt internals. You have been warned!
 #BuildRequires: qt6-qtbase-private-devel
 
-BuildRequires: qt6-svg-devel qt6-svg
-BuildRequires: qt6-charts-devel qt6-charts
+BuildRequires: qt6-svg-devel
+BuildRequires: qt6-charts-devel
 BuildRequires: qt6-webengine-devel
 BuildRequires: qt6-imageformats
 # WebView support: Quick QuickWidgets WaylandCompositor
 BuildRequires: qt6-declarative-devel
-BuildRequires: qt6-wayland-devel qt6-wayland
+BuildRequires: qt6-wayland-devel
 # needs for smiles and emojicons
 Requires: qt6-imageformats
 
@@ -345,6 +345,9 @@ rm -v %buildroot%_libdir/calibre/calibre/translations/msgfmt.py
 %_datadir/mime/packages/calibre-mimetypes.xml
 
 %changelog
+* Wed Aug 28 2024 Sergey V Turchin <zerg@altlinux.org> 7.5.1-alt1.2
+- NMU: clean build requires
+
 * Mon Mar 04 2024 Ivan A. Melnikov <iv@altlinux.org> 7.5.1-alt1.1
 - NMU: fix build on loongarch64
 

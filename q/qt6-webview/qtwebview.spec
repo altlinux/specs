@@ -2,7 +2,7 @@
 %global qt_module qtwebview
 
 Name: qt6-webview
-Version: 6.6.2
+Version: 6.7.2
 Release: alt1
 
 Group: System/Libraries
@@ -59,6 +59,8 @@ Group: System/Libraries
 Summary: Qt5 - library
 Requires: %name-common
 Requires: libqt6-core = %_qt6_version
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
 %description -n libqt6-webviewquick
 %summary
 
@@ -80,14 +82,12 @@ Requires: libqt6-core = %_qt6_version
 
 %files common
 
-%files
-%_qt6_plugindir/webview/
-%_qt6_qmldir/QtWebView/
-
 %files -n libqt6-webview
 %_qt6_libdir/libQt?WebView.so.*
 %files -n libqt6-webviewquick
 %_qt6_libdir/libQt?WebViewQuick.so.*
+%_qt6_plugindir/webview/
+%_qt6_qmldir/QtWebView/
 
 %files devel
 %_qt6_libdir/libQt*.so
@@ -108,5 +108,8 @@ Requires: libqt6-core = %_qt6_version
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
 * Wed Jul 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
 - initial build

@@ -6,17 +6,14 @@
 %def_enable pulse
 
 Name: qt6-multimedia
-Version: 6.6.2
-Release: alt1.1
+Version: 6.7.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - Multimedia support
 Url: http://qt.io/
 License:  GPL-3.0-only or LGPL-3.0-only
 
-Provides: qml6(QtMultimedia)
-# gstreamer plugins may be required for proper audio and video playback
-Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-plugins-ugly1.0 gst-libav
 
 Source: %qt_module-everywhere-src-%version.tar
 
@@ -93,6 +90,11 @@ Summary: Qt6 library
 Group: System/Libraries
 Requires: %name-common
 Requires: libqt6-core = %_qt6_version
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
+Provides: qml6(QtMultimedia)
+# gstreamer plugins may be required for proper audio and video playback
+Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-plugins-ugly1.0 gst-libav
 %description -n libqt6-multimediaquick
 %summary
 
@@ -115,6 +117,13 @@ Requires: libqt6-core = %_qt6_version
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
+
+# disable some examples
+for e in multimedia/video/qmlvideo multimedia/screencapture ; do
+    exam=`basename $e`
+    subdir=`dirname $e`
+    sed -i "/qt_internal_add_example.*${exam}/d" examples/$subdir/CMakeLists.txt
+done
 
 %build
 %ifarch %e2k
@@ -139,18 +148,12 @@ done
 %files common
 %doc LICENSES/*
 
-%files
-%doc *LICENSE*
-%_qt6_archdatadir/qml/QtMultimedia/
-#%_qt6_plugindir/audio/
-#%_qt6_plugindir/mediaservice/
-#%_qt6_plugindir/playlistformats/
-%_qt6_plugindir/multimedia/
-
 %files -n libqt6-multimedia
 %_qt6_libdir/libQt?Multimedia.so.*
+%_qt6_plugindir/multimedia/
 %files -n libqt6-multimediaquick
 %_qt6_libdir/libQt?MultimediaQuick.so.*
+%_qt6_archdatadir/qml/QtMultimedia/
 %files -n libqt6-multimediawidgets
 %_qt6_libdir/libQt?MultimediaWidgets.so.*
 %files -n libqt6-spatialaudio
@@ -159,6 +162,7 @@ done
 %files devel
 %_qt6_headerdir/QtMultimedia*/
 %_qt6_headerdir/QtSpatialAudio/
+%_qt6_headerdir/QtQGstreamerMediaPlugin/
 %_qt6_libdir/lib*.so
 %_qt6_libdir/lib*.a
 %_qt6_libdatadir/lib*.so
@@ -180,6 +184,9 @@ done
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
 * Fri Feb 23 2024 Michael Shigorin <mike@altlinux.org> 6.6.2-alt1.1
 - E2K: disable SSE due to x86 asm (ilyakurdyukov@)
 

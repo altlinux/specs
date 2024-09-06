@@ -25,7 +25,7 @@
 
 Name: ayugram-desktop
 Version: 5.2.2
-Release: alt1
+Release: alt1.1
 
 Summary: Desktop Telegram client with good customization and Ghost mode
 
@@ -87,13 +87,13 @@ BuildRequires: extra-cmake-modules
 
 BuildRequires(pre): rpm-macros-qt6
 BuildRequires: qt6-base-devel >= %tg_qt6_version
-BuildRequires: qt6-svg-devel qt6-svg
-BuildRequires: qt6-charts-devel qt6-charts
+BuildRequires: qt6-svg-devel
+BuildRequires: qt6-charts-devel
 BuildRequires: qt6-5compat-devel
 BuildRequires: qt6-imageformats
 # WebView support: Quick QuickWidgets WaylandCompositor
 BuildRequires: qt6-declarative-devel
-%{?_with_wayland:BuildRequires: qt6-wayland-devel qt6-wayland}
+%{?_with_wayland:BuildRequires: qt6-wayland-devel}
 # needs for smiles and emojicons
 Requires: qt6-imageformats
 
@@ -400,6 +400,9 @@ ln -s %name %buildroot%_bindir/%oname
 %doc README.md
 
 %changelog
+* Fri Aug 30 2024 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt1.1
+- NMU: fix build requires
+
 * Wed Jul 03 2024 Vitaly Lipatov <lav@altlinux.ru> 5.2.2-alt1
 - new version 5.2.2 (with rpmrb script)
 - disable debuginfo (error: cpio archive too big - 4133M)

@@ -24,8 +24,8 @@
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 12.0.0
-Release: alt2
+Version: 14.0.1
+Release: alt1.1
 
 Summary: Cross-platform IDE for Qt
 License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause and BSL-1.0 and ALT-Public-Domain
@@ -61,9 +61,9 @@ BuildRequires: qt6-serialport-devel
 BuildRequires: qt6-webengine-devel >= %qt_version
 %endif
 BuildRequires: qt6-svg-devel >= %qt_version
-BuildRequires: qt6-5compat qt6-5compat-devel >= %qt_version
+BuildRequires: qt6-5compat-devel >= %qt_version
 BuildRequires: qt6-shadertools-devel >= %qt_version
-BuildRequires: qt6-quicktimeline qt6-quicktimeline-devel >= %qt_version
+BuildRequires: qt6-quicktimeline-devel >= %qt_version
 BuildRequires: kf5-syntax-highlighting-devel
 %if_with ClangCodeModel
 BuildRequires: clang
@@ -167,9 +167,9 @@ sed -i 's/acceptor = acceptor/acceptor/' src/plugins/projectexplorer/projectexpl
 # error: no instance of constructor matches the argument list
 sed -i '/~Payload()/i Payload() {}' src/plugins/perfprofiler/perfprofilerflamegraphmodel.cpp
 %endif
-# Use Python3 for Python scripts
-subst 's@#!.*python[23]\?@#!%__python3@' `find . -name \*.py` \
-	src/libs/qt-breakpad/qtbreakpadsymbols
+# fix build qch_docs
+sed -i '/LicenseFile/d' src/libs/qlitehtml/src/3rdparty/qt_attribution.json
+
 
 %build
 export QTDIR=%_qt6_prefix
@@ -224,6 +224,12 @@ subst '/<releases>/i \ <pkgname>qt-creator</pkgname>' %buildroot%_datadir/metain
 %_datadir/qtcreator/*
 
 %changelog
+* Wed Aug 28 2024 Sergey V Turchin <zerg@altlinux.org> 14.0.1-alt1.1
+- new version
+
+* Wed Aug 28 2024 Sergey V Turchin <zerg@altlinux.org> 12.0.0-alt2.1
+- NMU: clean build requires
+
 * Tue May 07 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 12.0.0-alt2
 - Fixed build for Elbrus.
 

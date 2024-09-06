@@ -25,7 +25,7 @@
 %endif
 
 Name: qt6-webengine
-Version: 6.6.2
+Version: 6.7.2
 Release: alt3
 
 Group: System/Libraries
@@ -43,8 +43,7 @@ Patch200: remove_catapult_3rdparty.patch
 Patch201: remove_catapult_core.patch
 Patch202: compressing_files.patch
 # LoongArch
-Patch3500: qt6-webengine-6.6.2-loongarch64.patch
-Patch3501: loongarch-don-t-break-other-arches.patch
+Patch3500: qt6-webengine-6.7.1-loongarch64.patch
 
 BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires(pre): rpm-macros-qt6 qt6-tools
@@ -56,7 +55,7 @@ BuildRequires: libavcodec-devel libavutil-devel libavformat-devel libswresample-
 %endif
 BuildRequires: libvpx-devel
 BuildRequires: /proc
-BuildRequires: flex libicu-devel libEGL-devel libdrm-devel
+BuildRequires: flex libicu-devel libEGL-devel libdrm-devel libgbm-devel libepoxy-devel
 BuildRequires: libgio-devel libkrb5-devel
 BuildRequires: git-core gperf libalsa-devel libcap-devel libdbus-devel libevent-devel libexpat-devel libminizip-devel libnss-devel
 BuildRequires: libharfbuzz-devel fontconfig-devel
@@ -64,7 +63,7 @@ BuildRequires: libXcomposite-devel libXcursor-devel libXrandr-devel libXi-devel 
 BuildRequires: libXdamage-devel
 BuildRequires: libcups-devel
 BuildRequires: gyp libudev-devel libxml2-devel jsoncpp-devel liblcms2-devel
-BuildRequires: libopus-devel libpulseaudio-devel
+BuildRequires: libopus-devel libpulseaudio-devel pipewire-libs-devel
 BuildRequires: libpci-devel libprotobuf-devel protobuf-compiler libre2-devel libsnappy-devel libsrtp2-devel
 BuildRequires: libpng-devel libjpeg-devel libtiff-devel libwebp-devel
 BuildRequires: libxslt-devel libva-devel libvdpau-devel
@@ -175,6 +174,8 @@ Summary: Qt6 library
 Group: System/Libraries
 Requires: %name-common
 Requires: libqt6-core = %_qt6_version
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
 %description -n libqt6-webenginequick
 %summary
 
@@ -189,12 +190,11 @@ Requires: libqt6-core = %_qt6_version
 #
 %patch1 -p1
 #
-%patch200 -p1
-%patch201 -p1
+#%patch200 -p1
+#%patch201 -p1
 %patch202 -p1
 %ifarch loongarch64
 %patch3500 -p2
-%patch3501 -p2
 %endif
 #
 #ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
@@ -307,13 +307,10 @@ export LDFLAGS+="-Wl,--no-keep-memory -Wl,--hash-size=31 -Wl,--reduce-memory-ove
     -DFEATURE_webengine_embedded_build:BOOL=OFF \
     -DFEATURE_webengine_extensions:BOOL=ON \
     -DFEATURE_webengine_webrtc:BOOL=ON \
-    -DFEATURE_webengine_webrtc_pipewire:BOOL=OFF \
+    -DFEATURE_webengine_webrtc_pipewire:BOOL=ON \
     -DFEATURE_webengine_spellchecker:BOOL=OFF \
     -DFEATURE_webengine_native_spellchecker:BOOL=OFF \
     #
-#    -DFEATURE_webengine_spellchecker:BOOL=ON \
-#    -DFEATURE_webengine_native_spellchecker:BOOL=OFF \
-#make -Onone
 %Q6make
 %if %qdoc_found
 cmake --build BUILD --target docs ||:
@@ -363,14 +360,14 @@ done
 %dir %_qt6_datadir/resources/
 %_qt6_datadir/resources/*
 
-%files
-%_qt6_qmldir/QtWebEngine/
 %files -n libqt6-webenginequick
 %_qt6_libdir/libQt?WebEngineQuick.so.*
+%_qt6_qmldir/QtWebEngine/
 %files -n libqt6-webenginequickdelegatesqml
 %_qt6_libdir/libQt?WebEngineQuickDelegatesQml.so.*
 %files -n libqt6-webenginecore
 %_qt6_libdir/libQt?WebEngineCore.so.*
+%_qt6_libexecdir/webenginedriver
 %_qt6_libexecdir/QtWebEngineProcess
 %files -n libqt6-webenginewidgets
 %_qt6_libdir/libQt?WebEngineWidgets.so.*
@@ -409,6 +406,19 @@ done
 %_pkgconfigdir/Qt?*.pc
 
 %changelog
+* Tue Aug 27 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt3
+- build to repo
+
+* Mon Aug 26 2024 Ivan A. Melnikov <iv@altlinux.org> 6.7.2-alt2
+- Update loongarch64 patches
+  + import updated cumulative patch from
+     https://github.com/AOSC-Dev/chromium-loongarch64
+  + drop loongarch-don-t-break-other-arches.patch, not needed
+    after 6.6.2-alt3
+
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
 * Wed Apr 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt3
 - apply LoongArch patches only for loongarch64 build
 

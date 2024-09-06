@@ -2,7 +2,7 @@
 %global qt_module qtscxml
 
 Name: qt6-scxml
-Version: 6.6.2
+Version: 6.7.2
 Release: alt1
 
 Group: System/Libraries
@@ -63,6 +63,8 @@ Summary: Qt6 library
 Group: System/Libraries
 Requires: %name-common = %EVR
 Requires: libqt6-core = %_qt6_version
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
 %description -n libqt6-scxmlqml
 %summary
 
@@ -101,20 +103,18 @@ Requires: libqt6-core = %_qt6_version
 %files common
 %doc LICENSES/*
 
-%files
-%_qt6_libexecdir/qscxmlc
-%_qt6_plugindir/scxmldatamodel/
-%_qt6_qmldir/QtQml/StateMachine/
-%_qt6_qmldir/QtScxml/
-
 %files -n libqt6-scxml
+%_qt6_libexecdir/qscxmlc
 %_qt6_libdir/libQt?Scxml.so.*
+%_qt6_plugindir/scxmldatamodel/
 %files -n libqt6-scxmlqml
 %_qt6_libdir/libQt6ScxmlQml.so.*
+%_qt6_qmldir/QtScxml/
 %files -n libqt6-statemachine
 %_qt6_libdir/libQt6StateMachine.so.*
 %files -n libqt6-statemachineqml
 %_qt6_libdir/libQt6StateMachineQml.so.*
+%_qt6_qmldir/QtQml/StateMachine/
 
 %files devel
 %_qt6_headerdir/Qt*/
@@ -136,6 +136,9 @@ Requires: libqt6-core = %_qt6_version
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
 * Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
 - new version
 

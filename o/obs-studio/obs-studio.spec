@@ -8,7 +8,7 @@ Name: obs-studio
 Summary: Free and open source software for video recording and live streaming
 Summary(ru_RU.UTF-8): Свободная программа для записи и трансляции видеопотока
 Version: 30.2.3
-Release: alt1
+Release: alt1.1
 License: GPL-2.0-or-later
 Group: Video
 Url: https://github.com/jp9000/obs-studio
@@ -30,7 +30,7 @@ BuildRequires: libalsa-devel
 BuildRequires: libjack-devel
 BuildRequires: libpulseaudio-devel 
 BuildRequires: qt6-base-devel
-BuildRequires: qt6-svg-devel qt6-svg
+BuildRequires: qt6-svg-devel
 BuildRequires: pkgconfig(MagickCore)
 BuildRequires: texlive-latex-base
 BuildRequires: zlib-devel
@@ -182,6 +182,9 @@ touch plugins/obs-qsv11/CMakeLists.txt
 %_libdir/pkgconfig/libobs.pc
 
 %changelog
+* Wed Sep 04 2024 Sergey V Turchin <zerg@altlinux.org> 30.2.3-alt1.1
+- NMU: fix build requires
+
 * Tue Sep 03 2024 Anton Midyukov <antohami@altlinux.org> 30.2.3-alt1
 - New version 30.2.3.
 

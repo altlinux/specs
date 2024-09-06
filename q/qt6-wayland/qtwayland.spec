@@ -2,13 +2,19 @@
 %global qt_module qtwayland
 
 Name: qt6-wayland
-Version: 6.6.2
-Release: alt2
+Version: 6.7.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - Wayland platform support and QtCompositor module
 Url: http://qt.io/
 License:  GPL-3.0-or-later AND (LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-or-later)
+
+Requires: libqt6-waylandcompositor
+Requires: libqt6-waylandclient
+Requires: libqt6-waylandeglclienthwintegration
+Requires: libqt6-waylandeglcompositorhwintegration
+Requires: libqt6-wlshellintegration
 
 Source: %qt_module-everywhere-src-%version.tar
 
@@ -138,28 +144,40 @@ done
 %doc LICENSES/*
 
 %files
-%_qt6_plugindir/platforms/*
-%_qt6_plugindir/wayland-decoration-client/
-%_qt6_plugindir/wayland-graphics-integration-server/
-%_qt6_plugindir/wayland-graphics-integration-client/
-%_qt6_plugindir/wayland-shell-integration/
-%dir %_qt6_qmldir/QtWayland/
-%_qt6_qmldir/QtWayland/Compositor/
-%dir %_qt6_qmldir/QtWayland/Client/
-%_qt6_qmldir/QtWayland/Client/TextureSharing/
 
-#%files -n libqt6-compositor
-#%_qt6_libdir/libQt?Compositor.so.*
 %files -n libqt6-waylandcompositor
 %_qt6_libdir/libQt?WaylandCompositor.so.*
+%_qt6_qmldir/QtWayland/Compositor/
+%dir %_qt6_plugindir/wayland-graphics-integration-server/
+%_qt6_plugindir/wayland-graphics-integration-server/libqt-wayland-compositor-dmabuf-server-buffer.so
+%_qt6_plugindir/wayland-graphics-integration-server/libqt-wayland-compositor-drm-egl-server-buffer.so
+%_qt6_plugindir/wayland-graphics-integration-server/libqt-wayland-compositor-linux-dmabuf-unstable-v1.so
+%_qt6_plugindir/wayland-graphics-integration-server/libqt-wayland-compositor-shm-emulation-server.so
+%_qt6_plugindir/wayland-graphics-integration-server/libqt-wayland-compositor-vulkan-server.so
+%_qt6_plugindir/wayland-graphics-integration-server/libqt-wayland-compositor-wayland-eglstream-controller.so
 %files -n libqt6-waylandclient
+%dir %_qt6_qmldir/QtWayland/
 %_qt6_libdir/libQt?WaylandClient.so.*
+%dir %_qt6_plugindir/platforms/
+%_qt6_plugindir/platforms/libqwayland-generic.so
+%_qt6_plugindir/wayland-decoration-client/
+%_qt6_plugindir/wayland-shell-integration/libfullscreen-shell-v1.so
+%_qt6_plugindir/wayland-shell-integration/libivi-shell.so
+%_qt6_plugindir/wayland-shell-integration/libqt-shell.so
+%_qt6_plugindir/wayland-shell-integration/libxdg-shell.so
+%_qt6_qmldir/QtWayland/Client/
+%dir %_qt6_plugindir/wayland-graphics-integration-client/
+%_qt6_plugindir/wayland-graphics-integration-client/lib*server*.so
 %files -n libqt6-waylandeglclienthwintegration
 %_qt6_libdir/libQt?WaylandEglClientHwIntegration.so.*
+%_qt6_plugindir/platforms/libqwayland-egl.so
+%_qt6_plugindir/wayland-graphics-integration-client/lib*plugin*.so
 %files -n libqt6-waylandeglcompositorhwintegration
 %_qt6_libdir/libQt?WaylandEglCompositorHwIntegration.so.*
+%_qt6_plugindir/wayland-graphics-integration-server/libqt-wayland-compositor-wayland-egl.so
 %files -n libqt6-wlshellintegration
 %_qt6_libdir/libQt?WlShellIntegration.so.*
+%_qt6_plugindir/wayland-shell-integration/libwl-shell-plugin.so
 
 %files devel
 %doc LICENSES/*
@@ -182,6 +200,9 @@ done
 %endif
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
 * Tue Apr 16 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt2
 - update requires
 

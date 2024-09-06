@@ -3,7 +3,7 @@
 %global qt_module qt5compat
 
 Name: qt6-5compat
-Version: 6.6.2
+Version: 6.7.2
 Release: alt1
 
 Group: System/Libraries
@@ -57,6 +57,8 @@ Summary: Qt6 library
 Group: System/Libraries
 Requires: %name-common = %EVR
 Requires: libqt6-core = %_qt6_version
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
 %description -n libqt6-core5compat
 %summary
 
@@ -83,11 +85,9 @@ done
 %files common
 %doc LICENSES/*
 
-%files
-%_qt6_archdatadir/qml/Qt5Compat/
-
 %files -n libqt6-core5compat
 %_qt6_libdir/libQt?Core5Compat.so.*
+%_qt6_archdatadir/qml/Qt5Compat/
 
 %files devel
 %_qt6_headerdir/QtCore5Compat/
@@ -108,6 +108,9 @@ done
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
 * Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
 - new version
 

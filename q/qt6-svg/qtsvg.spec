@@ -2,7 +2,7 @@
 %global qt_module qtsvg
 
 Name: qt6-svg
-Version: 6.6.2
+Version: 6.7.2
 Release: alt1
 
 Group: System/Libraries
@@ -58,6 +58,8 @@ Summary: Qt6 library
 Group: System/Libraries
 Requires: %name-common
 Requires: libqt6-core = %_qt6_version
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
 %description -n libqt6-svg
 %summary
 
@@ -90,14 +92,13 @@ for f in %buildroot/%_libdir/cmake/Qt?*/Qt*Targets.cmake ; do
 done
 
 %files common
-%files
 %doc LICENSES/*
-%_qt6_plugindir/iconengines/libqsvgicon.so
-%_qt6_plugindir/imageformats/libqsvg.so
 
 %files -n libqt6-svg
 %doc *LICENSE*
 %_qt6_libdir/libQt?Svg.so.*
+%_qt6_plugindir/iconengines/libqsvgicon.so
+%_qt6_plugindir/imageformats/libqsvg.so
 %files -n libqt6-svgwidgets
 %_qt6_libdir/libQt?SvgWidgets.so.*
 
@@ -124,6 +125,9 @@ done
 #%_qt6_examplesdir/*
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
 * Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
 - new version
 

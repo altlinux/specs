@@ -3,7 +3,7 @@
 %define optflags_lto %nil
 
 Name: qt6-declarative
-Version: 6.6.2
+Version: 6.7.2
 Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
@@ -15,6 +15,31 @@ Group: System/Libraries
 Summary: Qt6 - QtDeclarative component
 Url: http://qt.io/
 License:  LGPL-2.1 with Qt-LGPL-exception-1.1 or LGPL-3.0-only
+
+Requires: libqt6-qml
+Requires: libqt6-quick
+Requires: libqt6-quickparticles
+Requires: libqt6-quickshapes
+Requires: libqt6-qmlmodels
+Requires: libqt6-qmlworkerscript
+Requires: libqt6-labsanimation
+Requires: libqt6-labsfolderlistmodel
+Requires: libqt6-labssettings
+Requires: libqt6-labssharedimage
+Requires: libqt6-labswavefrontmesh
+Requires: libqt6-qmlcore
+Requires: libqt6-qmllocalstorage
+Requires: libqt6-qmlxmllistmodel
+Requires: libqt6-quickcontrols2
+Requires: libqt6-quickdialogs2
+Requires: libqt6-quicklayouts
+Requires: libqt6-quicktemplates2
+Requires: libqt6-quickeffects
+Requires: libqt6-qmlnetwork
+Requires: libqt6-quickcontrols2basic
+Requires: libqt6-quickcontrols2fusion
+Requires: libqt6-quickcontrols2imagine
+Requires: libqt6-quickcontrols2material
 
 Source: %qt_module-everywhere-src-%version.tar
 Source10: rpm-build-qml.tar
@@ -86,8 +111,6 @@ Group: System/Libraries
 Summary: Qt6 - library
 Requires: %name-common
 Requires: libqt6-core = %_qt6_version
-Obsoletes: libqt6-v8 < %version-%release
-Provides: qt6-qtdeclarative = %version-%release
 %description -n libqt6-qml
 %summary
 
@@ -293,11 +316,103 @@ Requires: libqt6-core = %_qt6_version
 %description -n libqt6-quickeffects
 %summary
 
+%package -n libqt6-qmlnetwork
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-qmlnetwork
+%summary
+
+%package -n libqt6-quickcontrols2basic
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-quickcontrols2basic
+%summary
+
+%package -n libqt6-quickcontrols2basicstyleimpl
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-quickcontrols2basicstyleimpl
+%summary
+
+%package -n libqt6-quickcontrols2fusion
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-quickcontrols2fusion
+%summary
+
+%package -n libqt6-quickcontrols2fusionstyleimpl
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-quickcontrols2fusionstyleimpl
+%summary
+
+%package -n libqt6-quickcontrols2imagine
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-quickcontrols2imagine
+%summary
+
+%package -n libqt6-quickcontrols2imaginestyleimpl
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-quickcontrols2imaginestyleimpl
+%summary
+
+%package -n libqt6-quickcontrols2material
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-quickcontrols2material
+%summary
+
+%package -n libqt6-quickcontrols2materialstyleimpl
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-quickcontrols2materialstyleimpl
+%summary
+
+%package -n libqt6-quickcontrols2universal
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-quickcontrols2universal
+%summary
+
+%package -n libqt6-quickcontrols2universalstyleimpl
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-quickcontrols2universalstyleimpl
+%summary
+
 %prep
 %include %SOURCE2
 %setup -n %qt_module-everywhere-src-%version -a10
-# disable deps to qtquick
-sed -i '/dynamicscene/d' examples/qml/CMakeLists.txt
+# disable some examples
+for e in qml/dynamicscene quick/imageprovider quick/imageresponseprovider quickcontrols/attachedstyleproperties ; do
+    exam=`basename $e`
+    subdir=`dirname $e`
+    sed -i "/qt_internal_add_example.*${exam}/d" examples/$subdir/CMakeLists.txt
+done
 
 mv rpm-build-qml src/
 mkdir bin_add
@@ -353,8 +468,6 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 
 
 %files
-%_qt6_qmldir/*
-
 %files common
 %doc LICENSES/*
 %doc dist/changes*
@@ -372,56 +485,120 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 
 %files -n libqt6-qml
 %_qt6_libdir/libQt?Qml.so.*
+%_qt6_qmldir/QmlTime/
+%_qt6_qmldir/QtQuick/Window/
+%_qt6_qmldir/QtQml/Base/
+%_qt6_qmldir/QtQml/libqmlmetaplugin.so
+%_qt6_qmldir/QtQml/qmldir
+%_qt6_qmldir/builtins.qmltypes
+%_qt6_qmldir/jsroot.qmltypes
 %files -n libqt6-quick
 %_qt6_libdir/libQt?Quick.so.*
+%_qt6_qmldir/QtQuick/libqtquick2plugin.so
+%_qt6_qmldir/QtQuick/plugins.qmltypes
+%_qt6_qmldir/QtQuick/qmldir
 %files -n libqt6-quickparticles
 %_qt6_libdir/libQt?QuickParticles.so.*
+%_qt6_qmldir/QtQuick/Particles/
 %files -n libqt6-quicktest
 %_qt6_libdir/libQt?QuickTest.so.*
+%_qt6_qmldir/Qt/test/
+%_qt6_qmldir/QtTest/
 %files -n libqt6-quickwidgets
 %_qt6_libdir/libQt?QuickWidgets.so.*
 %files -n libqt6-quickshapes
 %_qt6_libdir/libQt?QuickShapes.so.*
+%_qt6_qmldir/QtQuick/Shapes/
 %files -n libqt6-qmlcompiler
 %_qt6_libdir/libQt6QmlCompiler.so.*
 %files -n libqt6-qmlmodels
 %_qt6_libdir/libQt?QmlModels.so.*
+%_qt6_qmldir/Qt/labs/qmlmodels/
+%_qt6_qmldir/QtQml/Models/
 %files -n libqt6-qmlworkerscript
 %_qt6_libdir/libQt?QmlWorkerScript.so.*
+%_qt6_qmldir/QtQml/WorkerScript/
 %files -n libqt6-labsanimation
 %_qt6_libdir/libQt?LabsAnimation.so.*
+%_qt6_qmldir/Qt/labs/animation/
 %files -n libqt6-labsfolderlistmodel
 %_qt6_libdir/libQt?LabsFolderListModel.so.*
+%_qt6_qmldir/Qt/labs/folderlistmodel/
 %files -n libqt6-labsqmlmodels
 %_qt6_libdir/libQt?LabsQmlModels.so.*
 %files -n libqt6-labssettings
 %_qt6_libdir/libQt?LabsSettings.so.*
+%_qt6_qmldir/Qt/labs/settings/
 %files -n libqt6-labssharedimage
 %_qt6_libdir/libQt?LabsSharedImage.so.*
+%_qt6_qmldir/Qt/labs/sharedimage/
 %files -n libqt6-labswavefrontmesh
 %_qt6_libdir/libQt?LabsWavefrontMesh.so.*
+%_qt6_qmldir/Qt/labs/wavefrontmesh/
 %files -n libqt6-qmlcore
 %_qt6_libdir/libQt?QmlCore.so.*
+%_qt6_qmldir/QtCore/
 %files -n libqt6-qmllocalstorage
 %_qt6_libdir/libQt?QmlLocalStorage.so.*
+%_qt6_qmldir/QtQuick/LocalStorage/
 %files -n libqt6-qmlxmllistmodel
 %_qt6_libdir/libQt?QmlXmlListModel.so.*
+%_qt6_qmldir/QtQml/XmlListModel/
 %files -n libqt6-quickcontrols2
 %_qt6_libdir/libQt?QuickControls2.so.*
+%dir %_qt6_qmldir/QtQuick/Controls/
+%_qt6_qmldir/QtQuick/Controls/impl/
+%_qt6_qmldir/QtQuick/Controls/libqtquickcontrols2plugin.so
+%_qt6_qmldir/QtQuick/Controls/plugins.qmltypes
+%_qt6_qmldir/QtQuick/Controls/qmldir
+%_qt6_qmldir/QtQuick/NativeStyle/
 %files -n libqt6-quickcontrols2impl
 %_qt6_libdir/libQt?QuickControls2Impl.so.*
 %files -n libqt6-quickdialogs2
 %_qt6_libdir/libQt?QuickDialogs2.so.*
+%_qt6_qmldir/QtQuick/Dialogs/
 %files -n libqt6-quickdialogs2quickimpl
 %_qt6_libdir/libQt?QuickDialogs2QuickImpl.so.*
 %files -n libqt6-quickdialogs2utils
 %_qt6_libdir/libQt?QuickDialogs2Utils.so.*
 %files -n libqt6-quicklayouts
 %_qt6_libdir/libQt?QuickLayouts.so.*
+%_qt6_qmldir/QtQuick/Layouts/
 %files -n libqt6-quicktemplates2
 %_qt6_libdir/libQt?QuickTemplates2.so.*
+%_qt6_qmldir/QtQuick/Templates/
+%_qt6_qmldir/Qt/labs/platform/
 %files -n libqt6-quickeffects
 %_qt6_libdir/libQt?QuickEffects.so.*
+%_qt6_qmldir/QtQuick/Effects/
+%files -n libqt6-qmlnetwork
+%_qt6_libdir/libQt6QmlNetwork.so.*
+%_qt6_qmldir/QtNetwork/
+%files -n libqt6-quickcontrols2basic
+%_qt6_libdir/libQt6QuickControls2Basic.so.*
+%_qt6_qmldir/QtQuick/Controls/Basic/
+%files -n libqt6-quickcontrols2basicstyleimpl
+%_qt6_libdir/libQt6QuickControls2BasicStyleImpl.so.*
+%files -n libqt6-quickcontrols2fusion
+%_qt6_libdir/libQt6QuickControls2Fusion.so.*
+%_qt6_qmldir/QtQuick/Controls/Fusion/
+%files -n libqt6-quickcontrols2fusionstyleimpl
+%_qt6_libdir/libQt6QuickControls2FusionStyleImpl.so.*
+%files -n libqt6-quickcontrols2imagine
+%_qt6_libdir/libQt6QuickControls2Imagine.so.*
+%_qt6_qmldir/QtQuick/Controls/Imagine/
+%files -n libqt6-quickcontrols2imaginestyleimpl
+%_qt6_libdir/libQt6QuickControls2ImagineStyleImpl.so.*
+%files -n libqt6-quickcontrols2material
+%_qt6_libdir/libQt6QuickControls2Material.so.*
+%_qt6_qmldir/QtQuick/Controls/Material/
+%files -n libqt6-quickcontrols2materialstyleimpl
+%_qt6_libdir/libQt6QuickControls2MaterialStyleImpl.so.*
+%files -n libqt6-quickcontrols2universal
+%_qt6_libdir/libQt6QuickControls2Universal.so.*
+%_qt6_qmldir/QtQuick/Controls/Universal/
+%files -n libqt6-quickcontrols2universalstyleimpl
+%_qt6_libdir/libQt6QuickControls2UniversalStyleImpl.so.*
 
 %files devel
 %_bindir/qml*
@@ -442,6 +619,8 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_qt6_archdatadir/metatypes/qt*.json
 %_qt6_archdatadir/modules/*.json
 %_pkgconfigdir/Qt?*.pc
+%_qt6_qmldir/QtQuick/Controls/designer/
+%_qt6_qmldir/QtQuick/tooling/
 
 %files devel-static
 
@@ -457,6 +636,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_bindir/rpmbqml6-qmlinfo
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
 * Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
 - new version
 

@@ -6,7 +6,7 @@
 %add_findreq_skiplist %_qt6_examplesdir/*
 
 Name: qt6-webchannel
-Version: 6.6.2
+Version: 6.7.2
 Release: alt1
 
 Group: System/Libraries
@@ -72,6 +72,8 @@ Summary: Qt6 library
 Group: System/Libraries
 Requires: %name-common
 Requires: libqt6-core = %_qt6_version
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
 %description -n libqt6-webchannelquick
 %summary
 
@@ -103,13 +105,11 @@ done
 %files common
 %doc LICENSES/*
 
-%files
-%_qt6_qmldir/QtWebChannel/
-
 %files -n libqt6-webchannel
 %_qt6_libdir/libQt?WebChannel.so.*
 %files -n libqt6-webchannelquick
 %_qt6_libdir/libQt?WebChannelQuick.so.*
+%_qt6_qmldir/QtWebChannel/
 
 %files devel
 %_qt6_headerdir/Qt*/
@@ -132,6 +132,9 @@ done
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
 * Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
 - new version
 

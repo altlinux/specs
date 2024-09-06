@@ -2,7 +2,7 @@
 %global qt_module qtnetworkauth
 
 Name: qt6-networkauth
-Version: 6.6.2
+Version: 6.7.2
 Release: alt1
 
 Group: System/Libraries
@@ -47,6 +47,8 @@ Group: System/Libraries
 Summary: Qt6 - library
 Requires: %name-common = %EVR
 Requires: libqt6-core = %_qt6_version
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
 %description -n libqt6-networkauth
 %summary
 
@@ -71,8 +73,6 @@ Requires: libqt6-core = %_qt6_version
 
 %files -n libqt6-networkauth
 %_qt6_libdir/libQt?NetworkAuth.so.*
-#%_qt6_plugindir/networkauth/
-#%_qt6_qmldir/QtNetworkAuth/
 
 %files devel
 %_qt6_libdir/libQt*.so
@@ -93,6 +93,9 @@ Requires: libqt6-core = %_qt6_version
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
 * Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
 - new version
 

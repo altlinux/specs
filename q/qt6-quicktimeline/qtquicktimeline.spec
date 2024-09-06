@@ -2,7 +2,7 @@
 %global qt_module qtquicktimeline
 
 Name: qt6-quicktimeline
-Version: 6.6.2
+Version: 6.7.2
 Release: alt1
 
 Group: System/Libraries
@@ -50,9 +50,18 @@ Group: System/Libraries
 Summary: Qt6 - library
 Requires: %name-common
 Requires: libqt6-core = %_qt6_version
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
 %description -n libqt6-quicktimeline
 %summary
 
+%package -n libqt6-quicktimelineblendtrees
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-quicktimelineblendtrees
+%summary
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
@@ -77,11 +86,12 @@ done
 %files common
 %doc LICENSES/*
 
-%files
-%_qt6_qmldir/QtQuick/Timeline/
-
 %files -n libqt6-quicktimeline
 %_qt6_libdir/libQt6QuickTimeline.so.*
+%_qt6_qmldir/QtQuick/Timeline/
+
+%files -n libqt6-quicktimelineblendtrees
+%_qt6_libdir/libQt6QuickTimelineBlendTrees.so.*
 
 %files devel
 %_qt6_headerdir/Qt*/
@@ -103,6 +113,9 @@ done
 #%_qt6_examplesdir/*
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
 * Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
 - new version
 

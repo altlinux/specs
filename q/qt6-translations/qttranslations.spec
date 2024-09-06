@@ -2,7 +2,7 @@
 %global qt_module qttranslations
 
 Name: qt6-translations
-Version: 6.6.2
+Version: 6.7.2
 Release: alt1
 
 Group: System/Libraries
@@ -42,6 +42,9 @@ done
 %_qt6_translationdir/catalogs.json
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
 * Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
 - new version
 

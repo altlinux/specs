@@ -31,8 +31,8 @@
 %define gname  qt6
 Name: qt6-base
 %define major  6
-Version: 6.6.2
-Release: alt4
+Version: 6.7.2
+Release: alt2
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -51,12 +51,14 @@ Source2: rpm-macros-addon
 # FC
 Patch1: qtbase-version-check.patch
 Patch2: qtbase-CMake-Install-objects-files-into-ARCHDATADIR.patch
-Patch3: qtbase-tell-the-truth-about-private-API.patch
-Patch4: qtbase-use-qgnomeplatform-as-default-platform-theme-on-gnome.patch
+Patch3: qtbase-use-only-major-minor-for-private-api-tag.patch
+Patch4: qtbase-revert-consider-versioned-targets-when-checking-existens-in-qt-internal-walk-libs.patch
+Patch5: qtbase-qgtk3theme-add-support-for-xdp-to-get-color-scheme.patch
+Patch6: CVE-2024-39936.patch
+
 # Debian
 Patch100: remove_rpath_from_examples.patch
-Patch101: be_verbose_on_plugin_inclusion.patch
-Patch102: enable_skip_plugins.patch
+Patch101: enable_skip_plugins.patch
 # ALT
 Patch1000: alt-timezone.patch
 Patch1001: alt-zonetab.patch
@@ -65,7 +67,7 @@ Patch1003: alt-decrease-iconloader-fallback-depth.patch
 Patch1004: alt-kernel-requires.patch
 Patch1005: e2k-qt-6.patch
 #
-Patch2000: 9003-qt6-base-6.6.2-qmenu_fix_shortcuts.patch
+Patch2000: 9003-qt6-base-6.7.2-qmenu_fix_shortcuts.patch
 
 # macros
 %define _qt6 %gname
@@ -376,10 +378,11 @@ OpenGL widgets library for the Qt%major toolkit
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
+%patch6 -p1
 #
 %patch100 -p1
 %patch101 -p1
-%patch102 -p1
 #
 %patch1000 -p1
 %patch1001 -p1
@@ -705,10 +708,9 @@ done
 %_qt6_libexecdir/qlalr
 %_qt6_libexecdir/qvkgen
 %_qt6_libexecdir/tracegen
-%_qt6_libexecdir/android_emulator_launcher.sh
 %_qt6_libexecdir/cmake_automoc_parser
 %_qt6_libexecdir/ensure_pro_file.cmake
-%_qt6_libexecdir/qt-internal-configure-tests
+%_qt6_libexecdir/qt-internal-configure-*
 %_qt6_libexecdir/qt-cmake-private*
 %_qt6_libexecdir/qt-cmake-standalone-test
 %_qt6_libexecdir/qt-testrunner.py
@@ -830,6 +832,12 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Tue Sep 03 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt2
+- restore qmenu_fix_shortcuts.patch (thanks Corwin)
+
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
 * Mon Jul 22 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt4
 - add patch for keyboard shortcuts from Corwin
 

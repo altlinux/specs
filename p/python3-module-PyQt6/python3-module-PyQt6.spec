@@ -11,8 +11,8 @@
 #define qtver %(rpm -q --qf '%%{VERSION}' libqt6-core | sed -e 's|\\.|_|g')
 
 Name: python3-module-%oname
-Version: 6.6.1
-Release: alt2
+Version: 6.7.1
+Release: alt1
 
 Summary: Python 3 bindings for Qt 6
 License: GPLv3
@@ -21,6 +21,8 @@ Group: Development/Python3
 Url: https://www.riverbankcomputing.co.uk/software/pyqt
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
+Patch1: alt-decrease-abi-req.patch
+Patch2: alt-touint128.patch
 
 BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3 >= 0.1.9.2-alt1
@@ -31,6 +33,7 @@ BuildRequires: python3-module-sip6 >= 6.4
 BuildRequires: python3-module-sip6 < 7
 BuildRequires: python3-module-PyQt-builder >= 1.9
 BuildRequires: python3-module-PyQt-builder < 2
+#BuildRequires: python3-module-PyQt6-sip
 
 %if_with dbus
 BuildRequires: python3-module-dbus
@@ -39,7 +42,7 @@ BuildRequires: python3-module-dbus-devel
 %endif
 
 BuildRequires: qt6-connectivity-devel qt6-multimedia-devel qt6-sensors-devel
-BuildRequires: qt6-serialport-devel
+BuildRequires: qt6-serialport-devel qt6-speech-devel
 BuildRequires: qt6-svg-devel qt6-tools-devel qt6-websockets-devel
 BuildRequires: qt6-declarative-devel qt6-webchannel-devel
 
@@ -91,6 +94,8 @@ This package contains PyQt6 docs.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
 
 %build
 sip-build \
@@ -101,6 +106,7 @@ sip-build \
     --api-dir=%_qt6_datadir/qsci/api/python \
     --verbose \
     --dbus=%_includedir/dbus-1.0/ \
+    --qmake-setting 'QMAKE_CXXFLAGS_RELEASE=%{optflags} -DQT_NO_INT128' \
     --pep484-pyi
 
 %make_build -C build
@@ -116,7 +122,7 @@ sip-build \
 #doc examples
 
 %files
-%doc NEWS README
+%doc NEWS README*
 %python3_sitelibdir/PyQt6/
 %python3_sitelibdir/PyQt6-%version.dist-info/
 %exclude %python3_sitelibdir/PyQt6/bindings/
@@ -140,6 +146,9 @@ sip-build \
 #python3_sitelibdir/PyQt6/__pycache__/pyrcc*
 
 %changelog
+* Fri Aug 23 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.1-alt1
+- new version (6.7.1)
+
 * Sat Mar 02 2024 Vitaly Lipatov <lav@altlinux.ru> 6.6.1-alt2
 - add BR: qt6-webchannel-devel
 

@@ -3,7 +3,7 @@
 %global qt_module qtserialbus
 
 Name: qt6-serialbus
-Version: 6.6.2
+Version: 6.7.2
 Release: alt1
 
 Group: System/Libraries
@@ -54,6 +54,8 @@ This package contains documentation for Qt6 %qt_module
 Summary: Qt6 library
 Group: System/Libraries
 Requires: %name-common
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
 %description -n libqt6-serialbus
 %summary
 
@@ -72,16 +74,14 @@ Requires: %name-common
 %make -C BUILD DESTDIR=%buildroot install_docs ||:
 %endif
 
-%files
-%_bindir/canbusutil*
-%_qt6_bindir/canbusutil*
-%_qt6_plugindir/canbus/
-
 %files common
 %doc LICENSES/*
 
 %files -n libqt6-serialbus
 %_qt6_libdir/libQt?SerialBus.so.*
+%_bindir/canbusutil*
+%_qt6_bindir/canbusutil*
+%_qt6_plugindir/canbus/
 
 %files devel
 %_qt6_headerdir/Qt*/
@@ -102,6 +102,9 @@ Requires: %name-common
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
 * Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %def_without docs
 
 Name: dtk6core
-Version: 6.0.16
+Version: 6.0.18
 Release: alt1
 
 Summary: Deepin tool kit core modules
@@ -22,7 +22,7 @@ Provides: dtk6-core = %EVR
 Obsoletes: dtk6-core < %EVR
 
 BuildRequires(pre): rpm-build-ninja deepin-desktop-base rpm-macros-qt6
-BuildRequires: cmake qt6-base-devel libsystemd-devel dtk6-common-devel libuchardet-devel libspdlog-devel
+BuildRequires: cmake qt6-base-devel libsystemd-devel dtk6-common-devel libuchardet-devel libspdlog-devel libdtk6log-devel
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
 %else
@@ -121,6 +121,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %endif
 
 %changelog
+* Fri Aug 30 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.18-alt1
+- New version 6.0.18.
+
 * Fri May 17 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.16-alt1
 - New version 6.0.16.
 

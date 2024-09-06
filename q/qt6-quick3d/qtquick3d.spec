@@ -4,8 +4,8 @@
 %define optflags_lto -ffat-lto-objects
 
 Name: qt6-quick3d
-Version: 6.6.2
-Release: alt3
+Version: 6.7.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - 3D content in Qt Quick
@@ -233,6 +233,9 @@ sed -i 's/enum Dirty :/public: &/' \
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
 * Mon Aug 12 2024 Ivan A. Melnikov <iv@altlinux.org> 6.6.2-alt3
 - adjust embree static libraries packaging
   (fixes FTBFS on loongarch64 and riscv64).

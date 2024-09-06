@@ -2,7 +2,7 @@
 %global qt_module qtdoc
 
 Name: qt6-doc
-Version: 6.6.2
+Version: 6.7.2
 Release: alt1
 
 Group: Development/KDE and QT
@@ -88,6 +88,9 @@ sed -i '/qt_internal_add_example(documentviewer)/d' examples/demos/CMakeLists.tx
 %_qt6_archdatadir/mkspecs/*doc*
 
 %changelog
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
+- new version
+
 * Mon Feb 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.2-alt1
 - new version
 
