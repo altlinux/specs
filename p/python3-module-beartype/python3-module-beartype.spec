@@ -6,12 +6,12 @@
 
 Name: python3-module-%oname
 Version: 0.18.5
-Release: alt1
+Release: alt2
 
 Summary: Unbearably fast near-real-time hybrid runtime-static type-checking in pure Python.
 License: MIT
 Group: Development/Python3
-Url: https://github.com/Parquery/icontract.git
+Url: https://github.com/beartype/beartype
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -50,5 +50,8 @@ unsubstantiated jargon we just made up, and thrilling puns.
 %python3_sitelibdir/*
 
 %changelog
+* Fri Sep 06 2024 Dmitry Lyalyaev <fruktime@altlinux.org> 0.18.5-alt2
+- fix URL address in spec file
+
 * Wed Jun 19 2024 Dmitry Lyalyaev <fruktime@altlinux.org> 0.18.5-alt1
 - Initial build for ALT Linux
