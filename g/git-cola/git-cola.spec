@@ -1,7 +1,7 @@
 %def_enable check
 
 Name: git-cola
-Version: 4.8.1
+Version: 4.8.2
 Release: alt1
 
 Summary: A highly caffeinated git gui
@@ -65,6 +65,9 @@ chmod +x %buildroot%python3_sitelibdir/cola/bin/ssh-askpass-darwin
 %python3_sitelibdir/*
 
 %changelog
+* Fri Sep 06 2024 Leontiy Volodin <lvol@altlinux.org> 4.8.2-alt1
+- New version 4.8.2.
+
 * Mon Jul 29 2024 Leontiy Volodin <lvol@altlinux.org> 4.8.1-alt1
 - New version 4.8.1.
 
