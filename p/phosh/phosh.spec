@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %prefix/libexec
 %define ver_major 0.41
 %define beta %nil
@@ -22,7 +22,7 @@
 %def_disable check
 
 Name: phosh
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: A pure Wayland shell for mobile devices
@@ -38,12 +38,10 @@ Source: %name-%version%beta.tar
 %endif
 Source1: %name.pam
 Source2: sm.puri.OSK0.desktop
-
-%{?_enable_snapshot:
 # https://gitlab.gnome.org/GNOME/libgnome-volume-control.git
 Source10: gvc-%gvc_ver.tar
 # https://gitlab.gnome.org/World/Phosh/libcall-ui/
-Source11: libcall-ui-%callui_ver.tar}
+Source11: libcall-ui-%callui_ver.tar
 
 Patch1: %name-0.28.0-alt-tcb-check.patch
 # https://bugzilla.altlinux.org/46930
@@ -277,6 +275,9 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Fri Sep 06 2024 Yuri N. Sedunov <aris@altlinux.org> 0.41.1-alt1
+- 0.41.1
+
 * Thu Aug 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.41.0-alt1
 - 0.41.0
 
