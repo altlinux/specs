@@ -35,7 +35,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.11.2
+Version: 0.11.3
 Release: alt1
 
 Summary: GPT applier
@@ -194,6 +194,9 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Fri Sep 06 2024 Valery Sinelnikov <greh@altlinux.org> 0.11.3-alt1
+- Optimized string cleaning using str.translate()
+
 * Wed Sep 04 2024 Valery Sinelnikov <greh@altlinux.org> 0.11.2-alt1
 - Fixed data type handling in kde_applier
 - Removing legacy unused code
