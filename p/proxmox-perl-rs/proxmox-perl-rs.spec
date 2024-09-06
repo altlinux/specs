@@ -3,7 +3,7 @@
 
 Name: proxmox-perl-rs
 Version: 0.3.3
-Release: alt2
+Release: alt3
 Summary: PVE and PMG common parts which have been ported to Rust
 License: AGPL-3.0+
 Group: Development/Other
@@ -11,6 +11,7 @@ URL: https://www.proxmox.com
 Vcs: git://git.proxmox.com/git/proxmox-perl-rs.git
 Source: %name-%version.tar
 Patch: %name-%version.patch
+Patch1: 0001-ALT-set-correct-context-not-None.patch
 Source1: genpackage.pl
 
 ExclusiveArch: x86_64 aarch64
@@ -18,6 +19,7 @@ ExclusiveArch: x86_64 aarch64
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust clang-devel perl-devel
 BuildRequires: libssl-devel libacl-devel libuuid-devel
+BuildRequires: cargo-vendor-checksum
 BuildRequires: /proc
 %set_perl_req_method relaxed
 
@@ -37,7 +39,7 @@ Provides: proxmox-rs-perl = %EVR
 
 %package -n libpve-rs-perl
 Summary: PVE parts which have been ported to Rust
-Version: 0.8.8
+Version: 0.8.9
 Group: Development/Other
 Provides: pve-perl-rs = %EVR
 Provides: pve-rs-perl = %EVR
@@ -58,6 +60,17 @@ Provides: pmg-rs-perl = %EVR
 %prep
 %setup
 %patch -p1
+%patch1 -p1
+pushd pve-rs
+sed -i 's/PL_use_safe_putenv = on ? TRUE : FALSE;//' vendor/perlmod/src/glue.c
+cargo-vendor-checksum --vendor vendor -f perlmod/src/glue.c
+%ifarch aarch64
+sed -i 's/mut i8/mut u8/' vendor/proxmox-sys/src/fs/dir.rs
+# Checksum update for patched files
+cargo-vendor-checksum --vendor vendor -f proxmox-sys/src/fs/dir.rs
+%endif
+cargo-vendor-checksum --vendor vendor -f proxmox-notify/src/context/mod.rs
+popd
 
 %build
 export BUILD_MODE=release
@@ -107,6 +120,11 @@ LD_LIBRARY_PATH='$LD_LIBRARY_PATH:../target/release' make check
 
 
 %changelog
+* Fri Sep 06 2024 Alexander Burmatov <thatman@altlinux.org> 0.3.3-alt3
+- some notifications fixes (thx andy@)
+- Update:
+  + libpve-rs-perl 0.8.9
+
 * Wed Apr 03 2024 Andrew A. Vasilyev <andy@altlinux.org> 0.3.3-alt2
 - update cargo vendor
 
