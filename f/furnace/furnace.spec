@@ -1,5 +1,5 @@
 Name: furnace
-Version: 0.6.2
+Version: 0.6.7
 Release: alt1
 Epoch: 1
 Summary: Chiptune tracker supporting many console soundchips
@@ -18,6 +18,7 @@ BuildRequires: libsndfile-devel
 BuildRequires: zlib-devel
 BuildRequires: pkgconfig(sdl2)
 BuildRequires: ImageMagick-tools
+BuildRequires: libportaudio2-devel
 
 %description
 Furnace is a chiptune tracker compatible with DefleMask. Features:
@@ -64,7 +65,7 @@ These are the documentation files for the furnace chiptune synth.
 %setup
 
 %build
-%cmake -DSYSTEM_FMT=ON -DSYSTEM_LIBSNDFILE=ON -DSYSTEM_ZLIB=ON -DSYSTEM_SDL2=ON
+%cmake -DSYSTEM_FMT=ON -DSYSTEM_LIBSNDFILE=ON -DSYSTEM_ZLIB=ON -DSYSTEM_SDL2=ON -DSYSTEM_PORTAUDIO=ON
 %cmake_build
 
 %install
@@ -80,19 +81,26 @@ done
 mkdir %buildroot%_datadir/metainfo/
 install -D -m 0644 ./res/furnace.appdata.xml.in %buildroot%_datadir/metainfo/furnace.appdata.xml
 
-%files
-%doc README.md CONTRIBUTING.md
+%find_lang %name
+
+%files -f %name.lang
+%doc README.md CONTRIBUTING.md 
 %doc LICENSE
 %_bindir/%name
 %_datadir/%name
 %_iconsdir/hicolor/*/apps/*
 %_datadir/metainfo/*
+%_datadir/mime/packages/%name.xml
+%_datadir/licenses/furnace/LICENSE
 %_desktopdir/%name.desktop
 
 %files doc
 %_docdir/%name
 
 %changelog
+* Fri Sep  6 2024 Artyom Bystrov <arbars@altlinux.org> 1:0.6.7-alt1
+- New version
+
 * Tue Apr  9 2024 Artyom Bystrov <arbars@altlinux.org> 1:0.6.2-alt1
 - New version
 
