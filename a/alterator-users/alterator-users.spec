@@ -1,5 +1,5 @@
 Name: alterator-users
-Version: 10.22
+Version: 10.23
 Release: alt1
 
 Summary: alterator module for system users administration
@@ -52,6 +52,9 @@ install -m 0755 alterator_users_helper %buildroot%_bindir
 %_bindir/alterator_users_helper
 
 %changelog
+* Fri Sep 06 2024 Andrey Cherepanov <cas@altlinux.org> 10.23-alt1
+- Rename Comment field to Real name (ALT #47388)
+
 * Wed Sep 13 2023 Dmitrii Fomchenkov <sirius@altlinux.org> 10.22-alt1
 - Add reading the avatar from the AccountsService (ALT #47231)
 - Update the avatar display window in full resolution

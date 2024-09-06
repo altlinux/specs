@@ -1,6 +1,6 @@
 Name: alterator-l10n
-Version: 2.9.144
-Release: alt2
+Version: 2.9.145
+Release: alt1
 
 Summary: translations for all alterator modules
 License: GPL
@@ -122,6 +122,9 @@ make check
 %lang(uz) %_datadir/locale/uz/LC_MESSAGES/*.mo
 
 %changelog
+* Fri Sep 06 2024 Andrey Cherepanov <cas@altlinux.org> 2.9.145-alt1
+- alterator-users: rename Comment field to Real name
+
 * Tue Sep 03 2024 Dmitry Terekhin <jqt4@altlinux.org> 2.9.144-alt2
 - installer-alterator-pkg: notification about transferring
   the selection of profiles and groups to the installed system
