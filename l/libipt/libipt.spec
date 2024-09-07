@@ -1,93 +1,84 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-mageia-compat
-BuildRequires: /usr/bin/pandoc ctest
-# END SourceDeps(oneline)
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%global major 2
-%define libname libipt%{major}
-%define devname libipt-devel
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%global sover 2
 
 Name: libipt
-Version: 2.0.5
-Release: alt1_1
-SummarY: Intel Processor Trace Decoder Library
-Group:	 Development/Tools
-License: BSD
-URL: https://github.com/intel/libipt
-Source0: https://github.com/intel/libipt/archive/v%{version}.tar.gz
-Patch0: libipt-gcc11.patch
-# c++ is required only for -DPTUNIT test "ptunit-cpp".
-# pandoc is for -DMAN.
-BuildRequires: gcc-c++ cmake
-ExclusiveArch: %{ix86} x86_64
-Source44: import.info
+Version: 2.1.1
+Release: alt1
+Summary: Intel Processor Trace Decoder Library
+Group: System/Kernel and hardware
+License: BSD-3-Clause
+Url: https://github.com/intel/libipt
+ExclusiveArch: %ix86 x86_64
+
+Source0: %name-%version.tar
+
+BuildRequires(pre): rpm-build-cmake
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: /usr/bin/pandoc
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: ctest
+}}
 
 %description
 The Intel Processor Trace (Intel PT) Decoder Library is Intel's reference
-implementation for decoding Intel PT.  It can be used as a standalone library
-or it can be partially or fully integrated into your tool.
+implementation for decoding Intel PT. It can be used as a standalone
+library or it can be partially or fully integrated into your tool.
 
-
-%package -n %devname
+%package -n libipt-devel
 Group: Development/Tools
 Summary: Header files and libraries for Intel Processor Trace Decoder Library
-Requires: %{libname} = %{version}-%{release}
-ExclusiveArch: %{ix86} x86_64
-Provides: ipt-devel, libipt-devel
+Requires: libipt%sover = %EVR
 
-%description -n %devname
-The %{name}-devel package contains the header files and libraries needed to
-develop programs that use the Intel Processor Trace (Intel PT) Decoder Library.
+%description -n libipt-devel
+The %name-devel package contains the header files and libraries needed
+to develop programs that use the Intel Processor Trace (Intel PT)
+Decoder Library.
 
-%package -n %libname
+%package -n libipt%sover
 Summary: Intel Processor Trace Decoder Library
-Group:	Development/C
-Requires: %{libname} = %{version}-%{release}
-ExclusiveArch: %{ix86} x86_64
-# temp cauldron fix:
-Obsoletes: libipt0
-Provides: libipt0
+Group: System/Libraries
 
-%description -n %libname
+%description -n libipt%sover
 The Intel Processor Trace (Intel PT) Decoder Library is Intel's reference
-implementation for decoding Intel PT.  It can be used as a standalone library
-or it can be partially or fully integrated into your tool.
+implementation for decoding Intel PT. It can be used as a standalone
+library or it can be partially or fully integrated into your tool.
 
 %prep
-%setup -q -n libipt-%{version}
-%patch0 -p1
+%setup
 
 %build
-%{mageia_cmake} \
+%add_optflags %(getconf LFS_CFLAGS)
+%cmake \
        -DPTUNIT:BOOL=ON \
-       -DMAN:BOOL=OFF \
-       -DDEVBUILD:BOOL=ON
-%mageia_cmake_build
+       -DMAN:BOOL=ON
+%cmake_build
 
 %install
-%mageia_cmake_install
-
-%global develdocs howto_libipt.md
-(cd doc;cp -p %{develdocs} ..)
+%cmake_install
 
 %check
-%{mageia_ctest}
+%ctest
 
-%files -n %libname
-%doc README
-%doc --no-dereference LICENSE
-%{_libdir}/%{name}.so.%{major}
-%{_libdir}/%{name}.so.%{major}.*
+%files -n libipt%sover
+%doc LICENSE
+%_libdir/libipt.so.%sover
+%_libdir/libipt.so.%sover.*
 
-%files -n %devname
-%doc %{develdocs}
-%{_includedir}/*
-%{_libdir}/%{name}.so
-
-
+%files -n libipt-devel
+%doc README doc/*.md
+%_includedir/intel-pt.h
+%_libdir/libipt.so
+%_man3dir/pt*.3*
 
 %changelog
+* Sat Sep 07 2024 Vitaly Chikunov <vt@altlinux.org> 2.1.1-alt1
+- Build changed from mgaimport to git.
+- Update to v2.1.1 (2024-02-28).
+
 * Sat Feb 05 2022 Igor Vlasenko <viy@altlinux.org> 2.0.5-alt1_1
 - update by mgaimport
 
