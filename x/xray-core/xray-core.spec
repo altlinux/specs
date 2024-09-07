@@ -1,5 +1,5 @@
 Name: xray-core
-Version: 1.8.24
+Version: 24.9.7
 Release: alt1
 
 Summary: Project X
@@ -45,6 +45,9 @@ Project X originates from XTLS protocol, providing a set of network tools such a
 %_unitdir/xray@.service
 
 %changelog
+* Sat Sep 07 2024 Nazarov Denis <nenderus@altlinux.org> 24.9.7-alt1
+- New version 24.9.7.
+
 * Fri Aug 30 2024 Nazarov Denis <nenderus@altlinux.org> 1.8.24-alt1
 - New version 1.8.24.
 
