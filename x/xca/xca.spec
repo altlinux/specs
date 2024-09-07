@@ -1,7 +1,7 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: xca
-Version: 2.6.0
+Version: 2.7.0
 Release: alt1
 
 Summary: A GUI for handling X509 certificates, RSA keys, PKCS#10 Requests
@@ -18,6 +18,7 @@ BuildRequires: cmake gcc-c++
 BuildRequires: qt6-base-devel qt6-tools-devel
 BuildRequires: qt6-sql-interbase qt6-sql-mysql qt6-sql-odbc qt6-sql-postgresql
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
+BuildRequires: ctest
 
 %description
 Graphical certification authority is an interface for managing RSA
@@ -37,6 +38,11 @@ presented.
 %cmake
 %cmake_build
 
+%check
+%cmake_build -t tests
+LANG="C.UTF-8" TZ="GMT" \
+    %ctest -L console
+
 %install
 %cmake_install
 
@@ -54,6 +60,10 @@ presented.
 %_bindir/*
 
 %changelog
+* Sat Sep 07 2024 Pavel Nakonechnyi <zorg@altlinux.ru> 2.7.0-alt1
+- update to 2.7.0 release
+- enabling tests for packaging stage
+
 * Wed Feb 28 2024 Pavel Nakonechnyi <zorg@altlinux.ru> 2.6.0-alt1
 - update to 2.6.0 release
 
