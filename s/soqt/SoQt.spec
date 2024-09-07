@@ -1,5 +1,5 @@
 Name: soqt
-Version: 1.6.2
+Version: 1.6.3
 Release: alt1
 Summary: Qt GUI component toolkit library for Coin
 License: BSD-3-Clause
@@ -117,6 +117,9 @@ subst 's|INTERFACE_INCLUDE_DIRECTORIES.*|INTERFACE_INCLUDE_DIRECTORIES "%_includ
 %doc %_defaultdocdir/SoQt
 
 %changelog
+* Fri Sep 06 2024 Andrey Cherepanov <cas@altlinux.org> 1.6.3-alt1
+- New version.
+
 * Thu Apr 04 2024 Andrey Cherepanov <cas@altlinux.org> 1.6.2-alt1
 - NMU: built with Qt 6.x.
 
