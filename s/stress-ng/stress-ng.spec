@@ -8,7 +8,7 @@
 %def_with gpu
 
 Name: stress-ng
-Version: 0.18.03
+Version: 0.18.04
 Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
@@ -47,19 +47,19 @@ ways. It was designed to exercise various physical subsystems
 of a computer as well as the various operating system kernel
 interfaces. Stress-ng features:
 
-  * 320+ stress tests
+  * 340+ stress tests
   * 80+ CPU specific stress tests that exercise floating point, integer,
     bit manipulation and control flow
   * 20+ virtual memory stress tests
   * 40+ file system stress tests
   * 30+ memory/CPU cache stress tests
-  * portable: builds on Linux (Debian, Devuan, RHEL, Fedora, Centos, Slackware
-    OpenSUSE, Ubuntu, etc..), Solaris, FreeBSD, NetBSD, OpenBSD, DragonFlyBSD,
-    Minix, Android, MacOS X, Serenity OS, GNU/Hurd, Haiku, Windows Subsystem
-    for Linux and SunOs/Dilos/Solaris.
-    with gcc, clang, icc, tcc and pcc.
-  * tested on alpha, armel, armhf, arm64, hppa, i386, m68k, mips32, mips64,
-    power32, ppc64el, risc-v, sh4, s390x, sparc64, x86-64
+  * portable: builds on Linux (Debian, Devuan, RHEL, Fedora, Centos,
+    Slackware OpenSUSE, Ubuntu, etc..), Solaris, FreeBSD, NetBSD, OpenBSD,
+    DragonFlyBSD, Minix, Android, MacOS X, Serenity OS, GNU/Hurd, Haiku,
+    Windows Subsystem for Linux, Cygwin and SunOs/Dilos/Solaris. with gcc,
+    musl-gcc, clang, icc, icx, tcc and pcc.
+  * tested on alpha, armel, armhf, arm64, hppa, i386, loong64, m68k,
+    mips32, mips64, power32, ppc64el, risc-v, sh4, s390x, sparc64, x86-64
 
 stress-ng was originally intended to make a machine work hard and trip
 hardware issues such as thermal overruns as well as operating system
@@ -115,6 +115,9 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Sat Sep 07 2024 Vitaly Chikunov <vt@altlinux.org> 0.18.04-alt1
+- Update to V0.18.04 (2024-09-06).
+
 * Mon Sep 02 2024 Vitaly Chikunov <vt@altlinux.org> 0.18.03-alt1
 - Update to V0.18.03 (2024-09-01).
 
