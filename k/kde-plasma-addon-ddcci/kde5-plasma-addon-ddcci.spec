@@ -3,19 +3,18 @@
 %define py_module_name ddcci_plasmoid_backend
 %def_with check
 
-Name: kde5-plasma-addon-ddcci
+Name: kde-plasma-addon-ddcci
 Version: 0.1.10
-Release: alt2
+Release: alt3
 Summary: KDE Plasma widget to adjust the brightness of multiple external monitors
 License: MIT
 Group: Graphical desktop/KDE
 Url: https://github.com/davidhi7/ddcci-plasmoid
 Source: %name-%version.tar
-Patch1: alt-fix-version.patch
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf6
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-poetry
 
@@ -25,6 +24,9 @@ BuildRequires: python3-module-pytest
 
 Requires: ddcutil
 Requires: python3-module-%py_module_name = %EVR
+
+Provides: kde5-plasma-addon-ddcci = %EVR
+Obsoletes: kde5-plasma-addon-ddcci < %EVR
 
 %description
 This widget allows you to adjust the brightness of external monitors.
@@ -46,21 +48,20 @@ This package contains python3 backend for %name.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 cd backend && %pyproject_build
 
 %install
-mkdir -p %buildroot%_kf5_data/plasma/plasmoids/%widget_id
-cp -pr plasmoid/* %buildroot%_kf5_data/plasma/plasmoids/%widget_id
+mkdir -p %buildroot%_datadir/plasma/plasmoids/%widget_id
+cp -pr plasmoid/* %buildroot%_datadir/plasma/plasmoids/%widget_id
 cd backend && %pyproject_install
 
 %check
 cd backend && %pyproject_run_pytest
 
 %files
-%_kf5_data/plasma/plasmoids/%widget_id
+%_datadir/plasma/plasmoids/%widget_id
 
 %files -n python3-module-%py_module_name
 %_bindir/%py_module_name
@@ -68,6 +69,9 @@ cd backend && %pyproject_run_pytest
 %python3_sitelibdir/%{pyproject_distinfo %py_module_name}
 
 %changelog
+* Sun Sep 08 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.1.10-alt3
+- Build for KF6.
+
 * Thu Apr 04 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.1.10-alt2
 - Added requires to ddcutil (closes: #49894).
 
