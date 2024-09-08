@@ -9,7 +9,7 @@
 %endif
 
 Name: rpm-build-vm
-Version: 1.71
+Version: 1.72
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -231,6 +231,9 @@ vm-run --stub-exit=7 && exit 1 || test $? -eq 7
 %endif
 
 %changelog
+* Sun Sep 08 2024 Vitaly Chikunov <vt@altlinux.org> 1.72-alt1
+- Add --klog to maximize printk level just before running the command.
+
 * Tue Sep 03 2024 Vitaly Chikunov <vt@altlinux.org> 1.71-alt1
 - Simplistic bash completion for modprobe, modinfo, and rmmod.
 - Change the logic for obtaining the latest kernel; rely on the
