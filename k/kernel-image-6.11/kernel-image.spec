@@ -1,5 +1,5 @@
 Name: kernel-image-6.11
-Release: alt0.rc6
+Release: alt0.rc7
 %define kernel_src_version	6.10
 %define kernel_base_version	6.11
 %define kernel_sublevel	.0
@@ -17,13 +17,6 @@ Version: %kversion
 # Build options
 # You can change compiler version by editing this line:
 %define kgcc_version	%__gcc_version_base
-
-# Enable/disable docs formatting
-%if "%sub_flavour" == "def" && %kgcc_version > 5
-%def_enable docs
-%else
-%def_disable docs
-%endif
 
 %ifarch %ix86 x86_64
 %def_enable domU
@@ -121,10 +114,6 @@ BuildRequires: u-boot-tools
 %endif
 Provides: kernel-modules-ipset-%flavour = %version-%release
 Provides: kernel-modules-kvdo-%flavour = %version-%release
-%if_enabled docs
-BuildRequires: python3-module-sphinx /usr/bin/sphinx-build perl-Pod-Usage python3-module-sphinx_rtd_theme
-BuildRequires: fontconfig
-%endif
 %if_enabled ccache
 BuildRequires: ccache
 %endif
@@ -494,10 +483,8 @@ popd
 truncate -s0 %buildroot%modules_dir/modules.*.bin
 
 # install documentation
-%if_enabled docs
 install -d %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
-%endif
 
 # On some architectures (at least ppc64le) kernel image is ELF and
 # eu-findtextrel will fail if it is not a DSO or PIE.
@@ -513,12 +500,11 @@ banner check
 # First boot-test no matter have KVM or not.
 timeout 300 vm-run --loglevel=debug uname -a
 # Longer LTP tests only if there is KVM (which is present on all main arches).
-if ! timeout 999 vm-run --kvm=cond \
-        "/sbin/sysctl kernel.printk=8;
-         runltp -f kernel-alt-vm -S skiplist-alt-vm -o out"; then
-        cat /usr/lib/ltp/output/LTP_RUN_ON-out.failed >&2
-        sed '/TINFO/i\\' /usr/lib/ltp/output/out | awk '/TFAIL/' RS= >&2
-        exit 1
+if ! timeout 999 vm-run --kvm=cond --klog --append=altha=1 \
+	runltp -f kernel-alt-vm -S skiplist-alt-vm -o out; then
+	cat /usr/lib/ltp/output/LTP_RUN_ON-out.failed >&2
+	sed '/TINFO/i\\' /usr/lib/ltp/output/out | awk '/TFAIL/' RS= >&2
+	exit 1
 fi
 
 %post checkinstall
@@ -570,10 +556,8 @@ check-pesign-helper
 %dir %modules_dir/
 %modules_dir/build
 
-%if_enabled docs
 %files -n kernel-doc-%base_flavour
 %doc %_docdir/kernel-doc-%base_flavour-%version
-%endif
 
 %files -n kernel-modules-drm-%flavour
 %modules_dir/kernel/drivers/gpu/
@@ -594,6 +578,12 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Sep 08 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.0-alt0.rc7
+- Update to v6.11-rc7 (2024-09-08).
+- altha: Remove sentinel elements from sysctl tables.
+- config: Enable DRM_ACCEL drivers.
+- config: Enable some Intel audio-related settings.
+
 * Mon Sep 02 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.0-alt0.rc6
 - Update to v6.11-rc6 (2024-09-01).
 
