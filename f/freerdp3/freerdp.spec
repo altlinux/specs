@@ -11,7 +11,7 @@
 %define oname freerdp
 
 Name: freerdp%sover
-Version: 3.7.0
+Version: 3.8.0
 Release: alt1
 
 Group: Networking/Remote access
@@ -424,6 +424,9 @@ rm -f %buildroot%_bindir/sdl-freerdp %buildroot%_man1dir/sdl-freerdp.1*
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Sun Sep 08 2024 Andrey Cherepanov <cas@altlinux.org> 3.8.0-alt1
+- New version.
+
 * Fri Aug 09 2024 Andrey Cherepanov <cas@altlinux.org> 3.7.0-alt1
 - New version.
 
