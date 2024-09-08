@@ -1,5 +1,5 @@
 Name: fast_float
-Version: 6.1.5
+Version: 6.1.6
 Release: alt1
 
 Summary: Fast & exact implementation of C++ from_chars for float/double
@@ -57,6 +57,9 @@ fi
 %_datadir/cmake/FastFloat
 
 %changelog
+* Sun Sep 08 2024 Nazarov Denis <nenderus@altlinux.org> 6.1.6-alt1
+- New version 6.1.6.
+
 * Wed Sep 04 2024 Nazarov Denis <nenderus@altlinux.org> 6.1.5-alt1
 - New version 6.1.5.
 
