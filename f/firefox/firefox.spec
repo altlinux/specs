@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 129.0.2
+Version: 130.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -383,6 +383,19 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Sat Sep 07 2024 Ajrat Makhmutov <rauty@altlinux.org> 130.0-alt1
+- New version (130.0).
+- Security fixes:
+  + CVE-2024-8385: WASM type confusion involving ArrayTypes
+  + CVE-2024-8381: Type confusion when looking up a property name in a "with" block
+  + CVE-2024-8388: Fullscreen notice on Android could be hidden under various panels and OS prompts
+  + CVE-2024-8382: Internal event interfaces were exposed to web content when browser EventHandler listener callbacks ran
+  + CVE-2024-8383: Firefox did not ask before openings news: links in an external application
+  + CVE-2024-8384: Garbage collection could mis-color cross-compartment objects in OOM conditions
+  + CVE-2024-8386: SelectElements could be shown over another site if popups are allowed
+  + CVE-2024-8387: Memory safety bugs fixed in Firefox 130, Firefox ESR 128.2, and Thunderbird 128.2
+  + CVE-2024-8389: Memory safety bugs fixed in Firefox 130
+
 * Tue Aug 20 2024 Ajrat Makhmutov <rauty@altlinux.org> 129.0.2-alt1
 - New version (129.0.2).
 

@@ -8,7 +8,7 @@
 %define r_ver 1.76.0
 
 Name: rust
-Version: 1.80.1
+Version: 1.81.0
 Release: alt1
 Epoch: 1
 
@@ -457,6 +457,9 @@ rm -rf %rustdir
 %rustlibdir/src
 
 %changelog
+* Sat Sep 07 2024 Ajrat Makhmutov <rauty@altlinux.org> 1:1.81.0-alt1
+- New version (1.81.0).
+
 * Sun Aug 18 2024 Ajrat Makhmutov <rauty@altlinux.org> 1:1.80.1-alt1
 - New version (1.80.1).
 

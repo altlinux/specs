@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox-esr
-Version: 128.1.0
+Version: 128.2.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -387,6 +387,17 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Sat Sep 07 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.2.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2024-8385: WASM type confusion involving ArrayTypes
+  + CVE-2024-8381: Type confusion when looking up a property name in a "with" block
+  + CVE-2024-8382: Internal event interfaces were exposed to web content when browser EventHandler listener callbacks ran
+  + CVE-2024-8383: Firefox did not ask before openings news: links in an external application
+  + CVE-2024-8384: Garbage collection could mis-color cross-compartment objects in OOM conditions
+  + CVE-2024-8386: SelectElements could be shown over another site if popups are allowed
+  + CVE-2024-8387: Memory safety bugs fixed in Firefox 130, Firefox ESR 128.2, and Thunderbird 128.2
+
 * Tue Aug 06 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.1.0-alt1
 - New ESR version.
 - Security fixes:
