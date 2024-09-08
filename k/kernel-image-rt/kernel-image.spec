@@ -1,7 +1,7 @@
 Name: kernel-image-rt
 %define kernel_base_version	6.1
-%define kernel_sublevel	.107
-%define kernel_rt_release	rt39
+%define kernel_sublevel	.108
+%define kernel_rt_release	rt40
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -601,6 +601,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Sep 08 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.108-alt1.rt40
+- v6.1.108-rt40 (2024-09-07).
+
 * Fri Aug 30 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.107-alt1.rt39
 - v6.1.107-rt39 (2024-08-29).
 - spec: Remove devicetree symlinking for old u-boot.
