@@ -2,7 +2,7 @@
 
 Name: volk
 Version: %majver.2
-Release: alt1
+Release: alt2
 
 Summary: Vector-Optimized Library of Kernels
 License: LGPL-3.0-or-later
@@ -67,7 +67,7 @@ This package contains Python 3 module for VOLK.
 %prep
 %setup -a 1
 %ifarch %e2k
-sed -i "/incompatible-pointer-types/d" CMakeLists.txt
+sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
 %patch2000 -p1
 %add_optflags -mno-sse4.2
 %endif
@@ -107,6 +107,9 @@ rm -fr %buildroot%_libdir/cmake/CpuFeatures
 %python3_sitelibdir/*
 
 %changelog
+* Sun Sep 08 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.1.2-alt2
+- e2k build fix
+
 * Sun Aug 11 2024 Anton Midyukov <antohami@altlinux.org> 3.1.2-alt1
 - new version 3.1.2
 
