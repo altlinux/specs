@@ -2,7 +2,7 @@
 
 Name: kf6-%rname
 Version: 6.4.0
-Release: alt1
+Release: alt2
 %K6init altplace
 
 Group: System/Libraries
@@ -11,6 +11,8 @@ Url: http://www.kde.org
 License: LGPL-2.0-or-later
 
 Source: %rname-%version.tar
+# fix black icons during kf5->kf6
+Patch1: accent-fallback.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-svg-devel qt6-tools-devel qt6-declarative-devel
@@ -55,6 +57,7 @@ KF6 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K6build
@@ -87,6 +90,9 @@ KF6 library
 
 
 %changelog
+* Mon Sep 09 2024 Oleg Solovyov <mcpain@altlinux.org> 6.4.0-alt2
+- fix black icons
+
 * Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.4.0-alt1
 - new version
 

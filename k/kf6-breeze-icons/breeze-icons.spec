@@ -2,7 +2,7 @@
 
 Name: kf6-%rname
 Version: 6.4.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: Graphical desktop/KDE
@@ -63,6 +63,7 @@ for n in 'yandex-browser.*' ; do
 done
 
 %build
+find . -type f -name '*.svg' | xargs sed -i 's/ColorScheme-Accent/ColorScheme-Highlight/'
 %K6build \
     -DBINARY_ICONS_RESOURCE:BOOL=ON \
     #
@@ -151,6 +152,9 @@ done
 %_K6lib/libKF6BreezeIcons.so.*
 
 %changelog
+* Mon Sep 09 2024 Oleg Solovyov <mcpain@altlinux.org> 6.4.0-alt2
+- revert commit 931fc452 fot Qt5 compatibility
+
 * Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.4.0-alt1
 - new version
 
