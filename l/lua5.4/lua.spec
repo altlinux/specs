@@ -3,10 +3,10 @@
 %define oname lua
 %global major_version 5.4
 %global current_lua_version %major_version
-%global test_version 5.4.6
+%global test_version 5.4.7
 
 Name: lua%major_version
-Version: %major_version.6
+Version: %major_version.7
 Release: alt1
 
 Summary: Powerful light-weight programming language
@@ -220,6 +220,9 @@ echo lua-devel-static >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/li
 %config %_sysconfdir/buildreqs/packages/substitute.d/lib%name-devel-static
 
 %changelog
+* Sun Sep 08 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 5.4.7-alt1
+- 5.4.7.
+
 * Sat Mar 16 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 5.4.6-alt1
 - 5.4.6.
 
