@@ -4,7 +4,7 @@
 
 Name: wget
 Version: 1.24.5
-Release: alt1
+Release: alt2
 
 Summary: A free utility for non-interactive download of files from the Web
 License: GPL-3.0-or-later
@@ -56,19 +56,21 @@ find doc -type f -print0 |
 if [ ! -e .tarball-version ]; then
 	# Update from Git.
 	echo "%version-%release"> .tarball-version
-	./bootstrap --gnulib-srcdir=/usr/share/gnulib --no-git --skip-po --no-bootstrap-sync
+	./bootstrap \
+		--gnulib-srcdir=/usr/share/gnulib \
+		--no-bootstrap-sync \
+		--no-git \
+		--skip-po
 fi
 %ifarch %e2k
 # lcc-1.23.12: work around the lack of some builtins
 %add_optflags -D__ICC -D__STRICT_ANSI__
 %endif
-%configure --with-ssl=openssl --with-cares --disable-ntlm
-# TODO: consider some of these:
-#	--enable-fsanitize-ubsan
-#	--enable-fsanitize-asan
-#	--enable-fsanitize-msan
-# https://bugzilla.altlinux.org/show_bug.cgi?id=14239
-(cd po; make update-po)
+%configure \
+	--disable-nls \
+	--disable-ntlm \
+	--with-cares \
+	--with-ssl=openssl
 %make_build V=1
 
 %install
@@ -94,6 +96,9 @@ fi
 %_infodir/wget.info*
 
 %changelog
+* Mon Sep 09 2024 Vitaly Chikunov <vt@altlinux.org> 1.24.5-alt2
+- Update to v1.24.5-22-g8775506f6 (fixes: CVE-2024-38428).
+
 * Wed Mar 13 2024 Vitaly Chikunov <vt@altlinux.org> 1.24.5-alt1
 - Update to v1.24.5 (2024-03-10).
 
