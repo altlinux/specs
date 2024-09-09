@@ -1,5 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%define soversion 11
 %set_verify_elf_method strict
 
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
@@ -7,12 +8,13 @@
 %def_enable static
 
 Name: libconfig
-Version: 1.5
-Release: alt3
+Version: 1.7.3
+Release: alt1
 Summary: C/C++ Configuration File Library
 License: LGPLv2.1+
 Group: System/Libraries
-Url: http://www.hyperrealm.com/main.php?s=libconfig
+Url: https://hyperrealm.github.io/libconfig
+VCS: https://github.com/hyperrealm/libconfig.git
 
 Source: %name-%version.tar
 
@@ -35,49 +37,56 @@ The library includes bindings for both the C and C++ languages. It works
 on POSIX-compliant UNIX systems (GNU/Linux, Mac OS X, Solaris, FreeBSD)
 and Windows (2000, XP and later).
 
-%package devel
+%package -n libconfig%soversion
+Summary: C Configuration File Library
+Group: System/Libraries
+
+%description -n libconfig%soversion
+libconfig is the C binding for libconfig library.
+
+%package -n libconfig-devel
 Summary: Header files for %name
 Group: Development/Other
-Requires: %name = %EVR
+Requires: libconfig%soversion = %EVR
 
-%description devel
+%description -n libconfig-devel
 Header files for %name library.
 
-%package c++
+%package -n libconfig-c++%soversion
 Summary: C++ Configuration File Library
 Group: System/Libraries
 # doesn't require base, common code included in library
 
-%description c++
+%description -n libconfig-c++%soversion
 libconfig++ is the C++ binding for libconfig library.
 
-%package c++-devel
+%package -n libconfig-c++-devel
 Summary: Header files for libconfig++ library
 Group: Development/Other
-Requires: %name-c++ = %EVR
+Requires: libconfig-c++%soversion = %EVR
 Requires: %name-devel = %EVR
 Requires: libstdc++-devel
 
-%description c++-devel
+%description -n libconfig-c++-devel
 Header files for libconfig++ library.
 
 %if_enabled static
-%package devel-static
+%package -n libconfig-devel-static
 Summary: Static library files for %name
 Group: Development/Other
 Requires: %name-devel = %EVR
 Requires: glibc-devel-static
 
-%description devel-static
+%description -n libconfig-devel-static
 Static library files for %name.
 
-%package c++-devel-static
+%package -n libconfig-c++-devel-static
 Summary: Static library files for libconfig++
 Group: Development/Other
 Requires: %name-c++-devel = %EVR
 Requires: libstdc++-devel-static
 
-%description c++-devel-static
+%description -n libconfig-c++-devel-static
 Static library files for libconfig++.
 %endif
 
@@ -100,35 +109,41 @@ sed -i '/examples.*Makefile/d' configure.ac
 %install
 %makeinstall_std
 
-%files
+%files -n libconfig%soversion
 %doc AUTHORS ChangeLog README NEWS TODO
-%_libdir/libconfig.so.*
-#_bindir/libconfig_tests
+%_libdir/libconfig.so.%soversion
+%_libdir/libconfig.so.%soversion.*
 
-%files devel
+%files -n libconfig-devel
 %doc examples/
 %_libdir/libconfig.so
 %_includedir/libconfig.h
 %_pkgconfigdir/libconfig.pc
 %_infodir/libconfig.info*
+%_libdir/cmake/libconfig++/libconfig++Config.cmake
+%_libdir/cmake/libconfig/libconfigConfig.cmake
 
-%files c++
+%files -n libconfig-c++%soversion
 %_libdir/libconfig++.so.*
 
-%files c++-devel
+%files -n libconfig-c++-devel
 %_libdir/libconfig++.so
 %_includedir/libconfig.h++
 %_pkgconfigdir/libconfig++.pc
 
 %if_enabled static
-%files devel-static
+%files -n libconfig-devel-static
 %_libdir/libconfig.a
 
-%files c++-devel-static
+%files -n libconfig-c++-devel-static
 %_libdir/libconfig++.a
 %endif
 
 %changelog
+* Thu Sep 05 2024 Andrey Kovalev <ded@altlinux.org> 1.7.3-alt1
+- Updated to upstream version 1.7.3.
+- Built according to shared libs policy.
+
 * Fri Oct 08 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.5-alt3
 - Fixed build with LTO.
 
