@@ -2,8 +2,8 @@
 %def_without check
 
 Name: proxmox-perl-rs
-Version: 0.3.3
-Release: alt3
+Version: 0.3.4
+Release: alt1
 Summary: PVE and PMG common parts which have been ported to Rust
 License: AGPL-3.0+
 Group: Development/Other
@@ -29,7 +29,7 @@ libpve-rs-perl and libpmg-rs-perl, loading whichever is available.
 
 %package -n libproxmox-rs-perl
 Summary: PVE/PMG common parts which have been ported to Rust
-Version: 0.3.3
+Version: 0.3.4
 Group: Development/Other
 Provides: proxmox-perl-rs = %EVR
 Provides: proxmox-rs-perl = %EVR
@@ -39,7 +39,7 @@ Provides: proxmox-rs-perl = %EVR
 
 %package -n libpve-rs-perl
 Summary: PVE parts which have been ported to Rust
-Version: 0.8.9
+Version: 0.8.10
 Group: Development/Other
 Provides: pve-perl-rs = %EVR
 Provides: pve-rs-perl = %EVR
@@ -49,7 +49,7 @@ Provides: pve-rs-perl = %EVR
 
 %package -n libpmg-rs-perl
 Summary: Components of Proxmox Mail Gateway which have been ported to Rust
-Version: 0.7.5
+Version: 0.7.6
 Group: Development/Other
 Provides: pmg-perl-rs = %EVR
 Provides: pmg-rs-perl = %EVR
@@ -120,6 +120,11 @@ LD_LIBRARY_PATH='$LD_LIBRARY_PATH:../target/release' make check
 
 
 %changelog
+* Mon Sep 09 2024 Alexander Burmatov <thatman@altlinux.org> 0.3.4-alt1
+- Update:
+  + libproxmox-rs-perl 0.3.4
+  + libpve-rs-perl 0.8.10
+
 * Fri Sep 06 2024 Alexander Burmatov <thatman@altlinux.org> 0.3.3-alt3
 - some notifications fixes (thx andy@)
 - Update:
