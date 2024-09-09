@@ -1,7 +1,7 @@
 %def_with cmake
 
 Name: angelscript
-Version: 2.36.1
+Version: 2.37.0
 Release: alt1
 
 Summary: Flexible cross-platform scripting library
@@ -94,6 +94,9 @@ cd %name/projects/meson/
 %endif
 
 %changelog
+* Mon Sep 09 2024 Leontiy Volodin <lvol@altlinux.org> 2.37.0-alt1
+- New version 2.37.0.
+
 * Tue Jul 02 2024 Leontiy Volodin <lvol@altlinux.org> 2.36.1-alt1
 - Initial build for ALT Sisyphus (for supertuxkart).
 
