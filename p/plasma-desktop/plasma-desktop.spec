@@ -4,7 +4,7 @@
 
 Name: %rname
 Version: 6.1.4
-Release: alt2
+Release: alt4
 %K6init
 
 Group: Graphical desktop/KDE
@@ -51,6 +51,7 @@ Patch20: alt-knetattach-test-unlock-ui.patch
 # Fix bug #42348
 Patch21: alt-re-set-xkb-mappings.patch
 Patch22: alt-kscreenlocker.patch
+Patch23: alt-screenlocker-prompt-in-placeholder.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: rpm-build-python3
@@ -162,6 +163,7 @@ SDDM breeze theme
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
+%patch23 -p1
 
 msgcat --use-first po/ru/kcm_touchpad.po %SOURCE11 > po/ru/kcm_touchpad.po.tmp
 cat po/ru/kcm_touchpad.po.tmp >po/ru/kcm_touchpad.po
@@ -247,6 +249,16 @@ done
 
 
 %changelog
+* Thu Sep 05 2024 Oleg Solovyov <mcpain@altlinux.org> 6.1.4-alt4
+- screenlocker fixes:
+  + do not activate multiple mouse areas
+  + switch areas by following mouse pointer
+  + make cursor visible on inactive mouse areas
+  + restart fade timer on switching displays
+
+* Mon Sep 02 2024 Oleg Solovyov <mcpain@altlinux.org> 6.1.4-alt3
+- show PAM prompt in screenlocker theme (Closes: #50970)
+
 * Fri Aug 30 2024 Oleg Solovyov <mcpain@altlinux.org> 6.1.4-alt2
 - fix kscreenlocker theme
 

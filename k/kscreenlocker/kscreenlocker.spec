@@ -8,7 +8,7 @@
 
 Name: %rname
 Version: 6.1.4
-Release: alt4
+Release: alt5
 #Epoch: 2
 %K6init
 
@@ -32,6 +32,7 @@ Patch1: alt-def-screenlocker.patch
 Patch2: alt-pam-support.patch
 %endif
 Patch3: alt-pam-service.patch
+Patch4: alt-dont-respond.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: glibc-devel
@@ -89,6 +90,7 @@ KF6 library
 %patch2 -p1
 %endif
 %patch3 -p1
+%patch4 -p1
 
 %if_enabled kcheckpass
 tar xf %SOURCE2 kcheckpass/
@@ -150,6 +152,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kde6-screenlocker
 
 
 %changelog
+* Thu Sep 05 2024 Oleg Solovyov <mcpain@altlinux.org> 6.1.4-alt5
+- do not respond if authenticators are in Idle state
+
 * Fri Aug 30 2024 Oleg Solovyov <mcpain@altlinux.org> 6.1.4-alt4
 - kcheckpass fixes:
   + fix handling abort requests
