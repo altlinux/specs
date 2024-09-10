@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-draw
-Version: 7.0.1
+Version: 7.0.2
 Release: alt1
 
 Summary: A lightweight drawing tool for Linux Deepin
@@ -101,6 +101,9 @@ mv -f %buildroot/usr/lib/libdrawboard* %buildroot%_libdir
 %_includedir/drawBoard/*.h
 
 %changelog
+* Tue Sep 10 2024 Leontiy Volodin <lvol@altlinux.org> 7.0.2-alt1
+- New version 7.0.2.
+
 * Wed May 29 2024 Leontiy Volodin <lvol@altlinux.org> 7.0.1-alt1
 - New version 7.0.1.
 - Cleanup spec.
