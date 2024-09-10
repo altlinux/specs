@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: lazygit
-Version: 0.43.1
+Version: 0.44.0
 Release: alt1
 
 Summary: Simple terminal UI for git commands
@@ -67,6 +67,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Tue Sep 10 2024 Ilya Demyanov <turbid@altlinux.org> 0.44.0-alt1
+- new version
+
 * Tue Jul 16 2024 Ilya Demyanov <turbid@altlinux.org> 0.43.1-alt1
 - new version
 
