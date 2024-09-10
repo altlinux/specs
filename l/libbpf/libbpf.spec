@@ -3,8 +3,13 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
+%ifarch ppc64le
+# ppc64le does not have libFuzzer working.
+%def_disable check
+%endif
+
 Name: libbpf
-Version: 1.4.5
+Version: 1.4.6
 Release: alt1
 Summary: Stand-alone build of libbpf from the Linux kernel
 Group: System/Libraries
@@ -15,6 +20,12 @@ Source: %name-%version.tar
 
 BuildRequires: libelf-devel
 BuildRequires: zlib-devel
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: clang
+BuildRequires: libstdc++-devel
+BuildRequires: /proc
+}}
+
 
 %description
 Library to access Linux kernel BPF API.
@@ -36,11 +47,17 @@ Library and header files to build with libbpf.
 %add_optflags -fanalyzer -Werror
 %endif
 cd src
-%make_build CFLAGS="%optflags -fPIC" V=1 STATIC_LIBS=
+%make_build CFLAGS="%optflags -fPIC" V=1 STATIC_LIBS= CC=gcc
 
 %install
 cd src
 %makeinstall_std LIBSUBDIR=%_lib STATIC_LIBS=
+
+%check
+# libbpf does not provide easy accessible or built-in unit tests.
+# Smoke testing with libFuzzer.
+clang -Isrc fuzz/bpf-object-fuzzer.c -fsanitize=fuzzer,address,undefined -Lsrc -lbpf
+LD_LIBRARY_PATH=$PWD/src ./a.out -verbosity=99 -max_total_time=11
 
 %files
 %_libdir/libbpf.so.*
@@ -52,6 +69,9 @@ cd src
 %_pkgconfigdir/libbpf.pc
 
 %changelog
+* Tue Sep 10 2024 Vitaly Chikunov <vt@altlinux.org> 1.4.6-alt1
+- Update to v1.4.6 (2024-09-03).
+
 * Fri Jul 12 2024 Vitaly Chikunov <vt@altlinux.org> 1.4.5-alt1
 - Update to v1.4.5 (2024-07-11).
 
