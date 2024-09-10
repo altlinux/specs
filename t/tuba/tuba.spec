@@ -2,7 +2,7 @@
 %global alt_name fedi
 
 Name: tuba
-Version: 0.8.3
+Version: 0.8.4
 Release: alt1
 License: GPL-3.0-only
 Group: Networking/Other
@@ -83,6 +83,9 @@ populares do Fediverse, como Mastodon, GoToSocial, Akkoma &amp; mais!
 %exclude %_datadir/locale/zh_Hans/LC_MESSAGES/dev.geopjr.Tuba.mo
 
 %changelog
+* Tue Sep 10 2024 Anton Palgunov <toxblh@altlinux.org> 0.8.4-alt1
+- new version 0.8.4 (with rpmrb script)
+
 * Sun Sep 01 2024 Anton Palgunov <toxblh@altlinux.org> 0.8.3-alt1
 - new version 0.8.3 (with rpmrb script)
 
