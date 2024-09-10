@@ -5,19 +5,19 @@
 %def_with uv
 
 %define add_python_extra() \
-%{expand:%%package -n %%name+%{1} \
+%{expand:%%package -n %%name+%1 \
 Summary: %%summary \
 Group: Development/Python3 \
 Requires: %%name \
-%{expand:%%pyproject_runtimedeps_metadata -- --extra %{1}} \
-%%description -n %%name+%{1}' \
-Extra "%{1}" for %%pypi_name. \
-%%files -n %%name+%{1} \
+%{expand:%%pyproject_runtimedeps_metadata -- --extra %1} \
+%%description -n %%name+%1' \
+Extra "%1" for %%pypi_name. \
+%%files -n %%name+%1 \
 }
 
 Name: python3-module-%pypi_name
-Version: 1.2.1
-Release: alt3
+Version: 1.2.2
+Release: alt1
 
 Summary: Simple, correct PEP 517 build frontend
 License: MIT
@@ -84,6 +84,9 @@ Requires: python3-module-%pypi_name
 %_bindir/pyproject-build
 
 %changelog
+* Tue Sep 10 2024 Stanislav Levin <slev@altlinux.org> 1.2.2-alt1
+- 1.2.1 -> 1.2.2.
+
 * Sun May 19 2024 Michael Shigorin <mike@altlinux.org> 1.2.1-alt3
 - Made uv subpackage conditional (on by default)
   since python3-module-uv is lacking on e2k right now.
