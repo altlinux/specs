@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.4.0
+Version: 6.4.5
 Release: alt1
 Summary: Read resources from Python packages
 License: Apache-2.0
@@ -20,7 +20,7 @@ Provides: python3-module-importlib_resources = %EVR
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra testing
+%pyproject_builddeps_metadata_extra test
 # internal Python tests
 BuildRequires: python3-test
 %endif
@@ -59,6 +59,9 @@ rm -r %buildroot%python3_sitelibdir/importlib_resources/tests/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Sep 10 2024 Stanislav Levin <slev@altlinux.org> 6.4.5-alt1
+- 6.4.0 -> 6.4.5.
+
 * Fri Mar 22 2024 Stanislav Levin <slev@altlinux.org> 6.4.0-alt1
 - 6.3.2 -> 6.4.0.
 
