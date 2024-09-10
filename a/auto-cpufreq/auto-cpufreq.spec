@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: auto-cpufreq
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 
 Summary: Automatic CPU speed & power optimizer
@@ -65,6 +65,9 @@ install -D -m 0755 images/icon.png %buildroot%_datadir/pixmaps/%name.png
 %python3_sitelibdir/%{pyproject_distinfo auto_cpufreq}
 
 %changelog
+* Sun Sep 08 2024 Anton Kurachenko <srebrov@altlinux.org> 2.4.0-alt1
+- New version 2.4.0.
+
 * Sat May 11 2024 Anton Kurachenko <srebrov@altlinux.org> 2.3.0-alt1
 - New version 2.3.0.
 
