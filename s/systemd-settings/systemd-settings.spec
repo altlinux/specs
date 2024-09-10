@@ -1,5 +1,5 @@
 Name: systemd-settings
-Version: 6
+Version: 7
 Release: alt1
 Summary: Settings for systemd
 Url: https://packages.altlinux.org/en/Sisyphus/srpms/%name
@@ -60,6 +60,15 @@ Group: System/Configuration/Boot and Init
 %description disable-resolve-llmnr
 %summary
 
+%package ignore-handle-lid-switch
+Summary: Set global HandleLidSwitch=ignore
+Group: System/Configuration/Boot and Init
+Requires: /lib/systemd/systemd-logind
+Conflicts: %name-ignore-handle-lid-switch
+
+%description ignore-handle-lid-switch
+%summary
+
 %prep
 %setup
 
@@ -82,6 +91,9 @@ install -p -m644 disable-resolve-llmnr.conf \
 install -p -m644 disable-user-systemd-for-selinux.conf \
     %buildroot/lib/systemd/system/user@.service.d/disable-user-systemd-for-selinux.conf
 
+install -p -m644 ignore-handle-lid-switch.conf \
+    %buildroot/lib/systemd/logind.conf.d/ignore-handle-lid-switch.conf
+
 %files disable-kill-user-processes
 /lib/systemd/logind.conf.d/disable-kill-user-processes.conf
 
@@ -100,7 +112,13 @@ install -p -m644 disable-user-systemd-for-selinux.conf \
 %files enable-log-to-tty12
 /lib/systemd/journald.conf.d/enable-log-to-tty12.conf
 
+%files ignore-handle-lid-switch
+/lib/systemd/logind.conf.d/ignore-handle-lid-switch.conf
+
 %changelog
+* Mon Sep 09 2024 Vasiliy Kovalev <kovalev@altlinux.org> 7-alt1
+- Added ignore-handle-lid-switch package
+
 * Fri Nov 26 2021 Alexey Shabalin <shaba@altlinux.org> 6-alt1
 - Drop disable-dumpcore package.
 
