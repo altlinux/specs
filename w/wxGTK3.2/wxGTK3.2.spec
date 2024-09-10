@@ -7,7 +7,7 @@
 %define wxbranch 3.2
 
 Name: wxGTK3.2
-Version: 3.2.5
+Version: 3.2.6
 Release: alt1
 
 Summary: The GTK+ port of the wxWidgets library
@@ -323,6 +323,9 @@ ln -s %_bindir/wx-config %buildroot%_bindir/wx-config-%wxbranch
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Mon Sep 09 2024 Anton Midyukov <antohami@altlinux.org> 3.2.6-alt1
+- new stable release 3.2.6
+
 * Tue May 14 2024 Anton Midyukov <antohami@altlinux.org> 3.2.5-alt1
 - new stable release 3.2.5
 
