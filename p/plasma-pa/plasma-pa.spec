@@ -6,7 +6,7 @@
 
 Name: %rname
 Version: 6.1.4
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -14,8 +14,8 @@ Summary: Audio Volume Plasma Applet
 Url: http://www.kde.org
 License: GPL-2.0-or-later
 
-Provides: plasma5-plasma-pa = %EVR
-Obsoletes: plasma5-plasma-pa < %EVR
+Provides: plasma5-pa = %EVR
+Obsoletes: plasma5-pa < %EVR
 
 Requires: libkf6itemmodels kf6-kirigami kf6-kirigami-addons
 
@@ -41,8 +41,8 @@ Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kde-common
-Provides: plasma5-plasma-pa-common = %EVR
-Obsoletes: plasma5-plasma-pa-common < %EVR
+Provides: plasma5-pa-common = %EVR
+Obsoletes: plasma5-pa-common < %EVR
 %description common
 %name common package
 
@@ -99,6 +99,9 @@ Compatibility package.
 %_K6lib/libplasma-volume.so.*
 
 %changelog
+* Tue Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt2
+- fix provides (closes: 51150)
+
 * Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
 - new version
 
