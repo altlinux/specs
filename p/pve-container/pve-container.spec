@@ -3,7 +3,7 @@
 
 Name: pve-container
 Summary: Proxmox VE Container management tool
-Version: 5.1.12
+Version: 5.2.0
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
@@ -56,6 +56,9 @@ sed -i 's!}/lib/systemd/!}/usr/lib/systemd/!' src/Makefile
 %_man5dir/*
 
 %changelog
+* Tue Sep 10 2024 Andrew A. Vasilyev <andy@altlinux.org> 5.2.0-alt1
+- 5.2.0
+
 * Thu Aug 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 5.1.12-alt1
 - 5.1.12
 
