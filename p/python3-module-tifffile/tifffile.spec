@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2024.8.10
+Version: 2024.8.30
 Release: alt1
 
 Summary: Read and write TIFF(r) files
@@ -95,6 +95,9 @@ py.test-3 -v tests -k 'not test_write_5GB_bigtiff and not test_write_imagej_raw'
 %python3_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
+* Tue Sep 10 2024 Grigory Ustinov <grenka@altlinux.org> 2024.8.30-alt1
+- Automatically updated to 2024.8.30.
+
 * Wed Aug 14 2024 Grigory Ustinov <grenka@altlinux.org> 2024.8.10-alt1
 - Automatically updated to 2024.8.10.
 
