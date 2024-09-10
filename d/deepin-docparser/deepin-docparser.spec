@@ -2,7 +2,7 @@
 %define soname 1
 
 Name: deepin-docparser
-Version: 1.0.3
+Version: 1.0.11
 Release: alt1
 
 Summary: Document parser library by deepin
@@ -14,7 +14,8 @@ Url: https://github.com/linuxdeepin/docparser
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 
-BuildRequires: gcc-c++ qt5-base-devel libpoppler-cpp-devel
+BuildRequires(pre): rpm-macros-dqt5
+BuildRequires: gcc-c++ dqt5-base-devel libpoppler-cpp-devel libzip-devel libpugixml-devel libxml2-devel libuuid-devel libtinyxml2-devel
 
 %description
 The file content analysis library is provided for the full-text search function
@@ -52,7 +53,7 @@ Header files and libraries for %name.
 %setup -n %repo-%version
 
 %build
-%qmake_qt5 \
+%qmake_dqt5 \
     CONFIG+=nostrip \
     VERSION=%version \
     LIB_INSTALL_DIR=%_libdir \
@@ -63,7 +64,7 @@ Header files and libraries for %name.
 %makeinstall INSTALL_ROOT=%buildroot
 
 %files -n lib%repo%soname
-%doc LICENSE README.md
+%doc LICENSE* README*
 %_libdir/lib%repo.so.%{soname}*
 
 %files -n lib%repo-devel
@@ -73,6 +74,10 @@ Header files and libraries for %name.
 %_pkgconfigdir/%repo.pc
 
 %changelog
+* Tue Sep 10 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.11-alt1
+- New version 1.0.11.
+- Built via separate qt5 instead system (ALT #48138).
+
 * Tue Jun 21 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.3-alt1
 - New version.
 - Upstream:
