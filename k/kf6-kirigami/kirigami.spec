@@ -10,7 +10,7 @@
 %define libkirigamiprivate libkirigamiprivate%sover
 
 Name: kf6-kirigami
-Version: 6.4.0
+Version: 6.5.0
 Release: alt1
 %K6init altplace
 
@@ -161,6 +161,9 @@ sed -i "s/_MSC_VER/__e2k__/" src/imagecolors.cpp
 %_K6lib/libKirigamiPrivate.so.*
 
 %changelog
+* Wed Sep 04 2024 Sergey V Turchin <zerg@altlinux.org> 6.5.0-alt1
+- new version
+
 * Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.4.0-alt1
 - new version
 

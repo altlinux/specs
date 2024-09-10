@@ -1,8 +1,8 @@
 %define rname breeze-icons
 
 Name: kf6-%rname
-Version: 6.4.0
-Release: alt2
+Version: 6.5.0
+Release: alt1
 %K6init no_altplace
 
 Group: Graphical desktop/KDE
@@ -15,7 +15,9 @@ Patch1: alt-icons-defaults.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules gcc-c++ qt6-base-devel
+BuildRequires: libvulkan-devel
 BuildRequires: icon-naming-utils xml-utils python3-module-lxml
+BuildRequires: hardlink
 
 %description
 %summary
@@ -43,7 +45,6 @@ Summary: Development files for %name
 %description devel
 The %name-devel package files for developing applications that use %name.
 
-
 %package -n libkf6breezeicons
 Group: System/Libraries
 Summary: KF6 library
@@ -62,8 +63,10 @@ for n in 'yandex-browser.*' ; do
     find ./ -type f -name $n | while read f; do rm -f $f;  done
 done
 
-%build
+# kiconthemes5 compatibility
 find . -type f -name '*.svg' | xargs sed -i 's/ColorScheme-Accent/ColorScheme-Highlight/'
+
+%build
 %K6build \
     -DBINARY_ICONS_RESOURCE:BOOL=ON \
     #
@@ -134,6 +137,9 @@ do
     done
 done
 
+# optimize disk space
+hardlink -c -v %buildroot/%_iconsdir/
+
 %find_lang %name --all-name
 %K6find_qtlang %name --all-name
 
@@ -152,6 +158,9 @@ done
 %_K6lib/libKF6BreezeIcons.so.*
 
 %changelog
+* Wed Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.5.0-alt1
+- new version
+
 * Mon Sep 09 2024 Oleg Solovyov <mcpain@altlinux.org> 6.4.0-alt2
 - revert commit 931fc452 fot Qt5 compatibility
 

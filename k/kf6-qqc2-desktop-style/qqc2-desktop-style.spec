@@ -1,7 +1,7 @@
 %define rname qqc2-desktop-style
 
 Name: kf6-%rname
-Version: 6.4.0
+Version: 6.5.0
 Release: alt1
 %K6init altplace
 
@@ -14,6 +14,7 @@ Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel qt6-tools-devel
+BuildRequires: libvulkan-devel
 BuildRequires: kf6-kauth-devel kf6-kcoreaddons-devel kf6-kconfigwidgets-devel kf6-kiconthemes-devel kf6-kirigami-devel
 BuildRequires: kf6-kcolorscheme-devel
 
@@ -47,6 +48,9 @@ developing applications that use %name.
 
 
 %changelog
+* Wed Sep 04 2024 Sergey V Turchin <zerg@altlinux.org> 6.5.0-alt1
+- new version
+
 * Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.4.0-alt1
 - new version
 
