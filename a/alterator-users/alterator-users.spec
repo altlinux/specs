@@ -1,5 +1,5 @@
 Name: alterator-users
-Version: 10.23
+Version: 10.24
 Release: alt1
 
 Summary: alterator module for system users administration
@@ -52,6 +52,9 @@ install -m 0755 alterator_users_helper %buildroot%_bindir
 %_bindir/alterator_users_helper
 
 %changelog
+* Mon Sep 09 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 10.24-alt1
+- Change only real name in GECOS when modifying Real name field
+
 * Fri Sep 06 2024 Andrey Cherepanov <cas@altlinux.org> 10.23-alt1
 - Rename Comment field to Real name (ALT #47388)
 
