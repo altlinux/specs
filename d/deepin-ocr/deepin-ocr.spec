@@ -1,32 +1,27 @@
-%define llvm_ver 15
-
 %def_disable clang
 
 Name: deepin-ocr
 Version: 1.0.7
-Release: alt1
+Release: alt2
 
 Summary: Base character recognition ability on DDE
 
 License: GPL-3.0+
 Group: Graphics
-Url: https://github.com/linuxdeepin/%name
+Url: https://github.com/linuxdeepin/deepin-ocr
 
 Source: %url/archive/%version/%name-%version.tar.gz
 
 %if_enabled clang
-#BuildRequires(pre): rpm-macros-llvm-common
-BuildRequires: clang%llvm_ver.0-devel
-BuildRequires: lld%llvm_ver.0-devel
-BuildRequires: llvm%llvm_ver.0-devel
+BuildRequires: clang-devel lld-devel
 %else
 BuildRequires: gcc-c++ libgomp-devel
 %endif
-BuildRequires: cmake qt5-base-devel qt5-tools-devel
+BuildRequires: cmake dqt5-base-devel dqt5-tools-devel
 BuildRequires: python3-devel python3-module-opencv
 BuildRequires: libopenblas-devel liblapack-devel
 BuildRequires: libva-devel libvtk-devel libopencv-devel libdc1394-devel
-BuildRequires: dtk5-core-devel dtk5-widget-devel
+BuildRequires: libdtkcore-devel libdtkwidget-devel
 Requires: %name-models
 
 %description
@@ -54,12 +49,16 @@ sed -i 's|-mcpu=power8|-mcpu=power9 -mvsx|' \
 %build
 %if_enabled clang
 %define optflags_lto -flto=thin
-export CC=clang-%llvm_ver
-export CXX=clang++-%llvm_ver
-export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
+export CC=clang
+export CXX=clang++
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export PATH=%_dqt5_bindir:$PATH
 %cmake \
     -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
+    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
     -DVERSION=%version \
     -DLIB_INSTALL_DIR=%_libdir \
     -DDEFINES+="VERSION=%version" \
@@ -84,5 +83,8 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/%name/model/
 
 %changelog
+* Tue Sep 10 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.7-alt2
+- Built via separate qt5 instead system (ALT #48138).
+
 * Fri Feb 03 2023 Leontiy Volodin <lvol@altlinux.org> 1.0.7-alt1
 - Initial build for ALT Sisyphus.
