@@ -5,7 +5,7 @@
 Summary: A cross-platform graphical front-end for emulators
 Name: emulationstation
 Version: 3.0.3
-Release: alt2.gitf9d5b2b1
+Release: alt3.gitf9d5b2b1
 License: MIT
 Group: Emulators
 Url: https://gitlab.com/es-de/emulationstation-de
@@ -28,10 +28,10 @@ BuildRequires:  libfreeimageplus-devel libfreeimage-devel
 BuildRequires:  libfreetype-devel
 BuildRequires:  gcc-c++ cmake
 BuildRequires:  libSDL2-devel
-BuildRequires:  libboost_date_time1.84.0
-BuildRequires:  libboost_filesystem1.84.0
-BuildRequires:  libboost_locale1.84.0
-BuildRequires:  libboost_system1.84.0
+BuildRequires:  libboost_date_time1.85.0
+BuildRequires:  libboost_filesystem1.85.0
+BuildRequires:  libboost_locale1.85.0
+BuildRequires:  libboost_system1.85.0
 BuildRequires:  libcurl-devel libvlc-devel libavcodec-devel libavfilter-devel libavformat-devel libgit2-devel libpoppler-devel libswresample-devel libswscale-devel libpostproc-devel libpoppler-gir-devel libpoppler-cpp-devel
 BuildRequires:  libpugixml-devel
 BuildRequires:  libcec-devel libudev-devel
@@ -57,7 +57,7 @@ This is fork of original ES from Batocera project.
 
 %build
 %cmake
-%make -C ./%_cmake__builddir
+%cmake_build
 
 %install
 %makeinstall_std -C ./%_cmake__builddir
@@ -108,6 +108,8 @@ rm -rf %{buildroot}%{_includedir}
 %{_datadir}/pixmaps/org.es_de.frontend.svg
 
 %changelog
+* Wed Sep 11 2024 Artyom Bystrov <arbars@altlinux.org> 3.0.3-alt3.gitf9d5b2b1
+- update boost version
 
 * Fri Aug  2 2024 Artyom Bystrov <arbars@altlinux.org> 3.0.3-alt2.gitf9d5b2b1
 - restore linear theme
