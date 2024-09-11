@@ -8,7 +8,7 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -128,6 +128,9 @@ done
 %_K5lib/libKF5BalooEngine.so.*
 
 %changelog
+* Wed Sep 11 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt3
+- fix autostart baloo_file service (closes: 51452)
+
 * Mon Jul 15 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt2
 - fix requries
 
