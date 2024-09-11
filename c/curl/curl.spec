@@ -31,7 +31,7 @@
 %endif
 
 Name: curl
-Version: 8.9.1
+Version: 8.10.0
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -152,7 +152,7 @@ applications that utilize lib%name.
 
 %build
 export PATH=/sbin:/usr/sbin:$PATH
-./maketgz %version only
+./scripts/maketgz %version only
 %autoreconf
 %configure \
 	%{subst_enable static} \
@@ -191,7 +191,7 @@ popd
 %files -n lib%name
 %_libdir/*.so.*
 
-%doc CHANGES README* docs/{FAQ,FEATURES.md}
+%doc CHANGES.md README* docs/{FAQ,FEATURES.md}
 
 %files -n lib%name-devel
 %_libdir/*.so
@@ -209,6 +209,9 @@ popd
 %endif
 
 %changelog
+* Wed Sep 11 2024 Anton Farygin <rider@altlinux.ru> 8.10.0-alt1
+- 8.9.1 -> 8.10.0 (Fixes: CVE-2024-8096)
+
 * Wed Jul 31 2024 Anton Farygin <rider@altlinux.ru> 8.9.1-alt1
 - 8.9.0 -> 8.9.1 (Fixes: CVE-2024-7264)
 
