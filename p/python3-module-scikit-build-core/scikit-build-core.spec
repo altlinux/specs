@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.10.5
+Version: 0.10.6
 Release: alt1
 
 Summary: A next generation Python CMake adaptor and Python API for plugins
@@ -70,6 +70,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Sep 11 2024 Grigory Ustinov <grenka@altlinux.org> 0.10.6-alt1
+- Automatically updated to 0.10.6.
+
 * Fri Aug 23 2024 Grigory Ustinov <grenka@altlinux.org> 0.10.5-alt1
 - Automatically updated to 0.10.5.
 
