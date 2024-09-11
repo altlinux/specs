@@ -1,6 +1,6 @@
 Name: deepin-clone
 Version: 5.0.15.0.4.bc86
-Release: alt1
+Release: alt2
 
 Summary: Disk and partition backup/restore tool
 
@@ -16,7 +16,7 @@ ExcludeArch: armh
 Requires: icon-theme-hicolor partclone
 
 BuildRequires(pre): desktop-file-utils cmake rpm-build-ninja
-BuildRequires: gcc-c++ deepin-gettext-tools dtkcore libdtkwidget-devel dtk6-common-devel qt5-linguist libpolkitqt5-qt5-devel qt5-base-devel
+BuildRequires: gcc-c++ deepin-gettext-tools dtkcore libdtkwidget-devel dtk6-common-devel dqt5-linguist libpolkitqt5-qt5-devel dqt5-base-devel
 
 %description
 %summary.
@@ -27,10 +27,13 @@ BuildRequires: gcc-c++ deepin-gettext-tools dtkcore libdtkwidget-devel dtk6-comm
 sed -i 's|Version=0.1|Version=%version|' app/%name.desktop
 
 %build
-export PATH=%_qt5_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export PATH=%_dqt5_bindir:$PATH
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
+    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DDISABLE_DFM_PLUGIN=YES \
@@ -62,6 +65,9 @@ chmod +x %buildroot%_sbindir/deepin-clone-ionice
 %_datadir/polkit-1/actions/com.deepin.pkexec.%name.policy
 
 %changelog
+* Wed Sep 11 2024 Leontiy Volodin <lvol@altlinux.org> 5.0.15.0.4.bc86-alt2
+- Built via separate qt5 instead system (ALT #48138).
+
 * Sat Dec 30 2023 Leontiy Volodin <lvol@altlinux.org> 5.0.15.0.4.bc86-alt1
 - New version 5.0.15-4-gbc86458.
 
