@@ -1,7 +1,7 @@
 %define rname plasma-vault
 
 Name: plasma-vault
-Version: 6.1.4
+Version: 6.1.5
 Release: alt1
 #Epoch: 1
 %K6init
@@ -51,6 +51,9 @@ BuildRequires: plasma6-lib-devel plasma6-activities-devel plasma6-libksysguard-d
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
+- new version
+
 * Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
 - new version
 

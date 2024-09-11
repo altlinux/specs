@@ -1,7 +1,7 @@
 %define rname kde-gtk-config
 
 Name: %rname
-Version: 6.1.4
+Version: 6.1.5
 Release: alt1
 #Epoch: 1
 %K6init
@@ -68,6 +68,9 @@ ADD_OPTFLAGS=`pkg-config --cflags harfbuzz`
 
 
 %changelog
+* Tue Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
+- new version
+
 * Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
 - new version
 

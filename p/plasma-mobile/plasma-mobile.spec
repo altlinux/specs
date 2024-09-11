@@ -10,8 +10,8 @@
 %endif
 
 Name: %rname
-Version: 6.1.4
-Release: alt2
+Version: 6.1.5
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -143,6 +143,9 @@ sed -i 's|\(.*add_subdirectory.*dialer.*\)|#\1|' CMakeLists.txt
 #/usr/share/dbus-1/interfaces/org.kde.plasmashell.Mobile.xml
 
 %changelog
+* Tue Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
+- new version
+
 * Mon Aug 19 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt2
 - fix conflicts (closes: 51179)
 

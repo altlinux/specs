@@ -5,7 +5,7 @@
 %add_findreq_skiplist %_K6exec/kdeeject
 
 Name: %rname
-Version: 6.1.4
+Version: 6.1.5
 Release: alt1
 %K6init
 
@@ -61,6 +61,9 @@ KDE common command line tools.
 
 
 %changelog
+* Tue Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
+- new version
+
 * Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
 - new version
 

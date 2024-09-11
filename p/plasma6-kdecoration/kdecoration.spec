@@ -5,7 +5,7 @@
 %define libkdecorationsprivate libkdecorations2private%sover_private
 
 Name: plasma6-%rname
-Version: 6.1.4
+Version: 6.1.5
 Release: alt1
 %K6init
 
@@ -88,6 +88,9 @@ KF6 library
 
 
 %changelog
+* Tue Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
+- new version
+
 * Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt1
 - new version
 

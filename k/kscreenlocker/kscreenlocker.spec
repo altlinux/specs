@@ -7,8 +7,8 @@
 %define libkscreenlocker libkscreenlocker%sover
 
 Name: %rname
-Version: 6.1.4
-Release: alt7
+Version: 6.1.5
+Release: alt1
 #Epoch: 2
 %K6init
 
@@ -154,6 +154,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kde6-screenlocker
 
 
 %changelog
+* Tue Sep 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
+- new version
+
 * Wed Sep 11 2024 Oleg Solovyov <mcpain@altlinux.org> 6.1.4-alt7
 - revert: use system-auth-local instead of system-auth
 - disable non-interactive authenticators

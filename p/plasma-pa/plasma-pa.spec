@@ -5,8 +5,8 @@
 
 
 Name: %rname
-Version: 6.1.4
-Release: alt2
+Version: 6.1.5
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -99,6 +99,9 @@ Compatibility package.
 %_K6lib/libplasma-volume.so.*
 
 %changelog
+* Tue Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
+- new version
+
 * Tue Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.4-alt2
 - fix provides (closes: 51150)
 

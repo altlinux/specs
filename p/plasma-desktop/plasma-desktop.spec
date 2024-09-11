@@ -3,8 +3,8 @@
 %def_disable accounts
 
 Name: %rname
-Version: 6.1.4
-Release: alt4
+Version: 6.1.5
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -249,6 +249,9 @@ done
 
 
 %changelog
+* Tue Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
+- new version
+
 * Thu Sep 05 2024 Oleg Solovyov <mcpain@altlinux.org> 6.1.4-alt4
 - screenlocker fixes:
   + do not activate multiple mouse areas
