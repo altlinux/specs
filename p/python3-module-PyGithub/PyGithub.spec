@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 
 Summary: Typed interactions with the GitHub API v3
@@ -63,6 +63,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Sep 11 2024 Grigory Ustinov <grenka@altlinux.org> 2.4.0-alt1
+- Automatically updated to 2.4.0.
+
 * Mon Mar 25 2024 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt1
 - Automatically updated to 2.3.0.
 
