@@ -1,10 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 
+%ifnarch ppc64le
+%def_with check
+%else
+%def_without check
+%endif
+
 %def_without doc
 
 Name: sympy
 Epoch: 1
-Version: 1.13.1
+Version: 1.13.2
 Release: alt1
 Summary: A Python library for symbolic mathematics
 License: BSD-3-Clause
@@ -18,11 +24,15 @@ Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 %pyproject_runtimedeps_metadata
 
-Patch1: %name-%version-alt-build.patch
+Patch1: %name-1.13.1-alt-build.patch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: dvipng ImageMagick-tools graphviz librsvg-utils
+
+%if_with check
+BuildRequires: python3-module-pytest python3-module-mpmath python3-module-numpy-testing python3-module-hypothesis
+%endif
 
 Requires: python3-module-%name = %EVR
 
@@ -134,12 +144,11 @@ rm -rfv %buildroot%python3_sitelibdir/%name/utilities/{*test.py,_compilation/}
 rm -rfv %buildroot%python3_sitelibdir/%name/parsing/autolev/test-examples/
 
 %check
-# very long test case
-#pytest-3 -vv \
-#	--deselect=sympy/integrals/tests/test_failing_integrals.py::test_issue_15227 \
-#	--deselect=sympy/matrices/tests/test_matrices.py::test_pinv_rank_deficient_when_diagonalization_fails \
-#	--deselect=sympy/solvers/ode/tests/test_systems.py::test_linear_new_order1_type2_de_lorentz_slow_check \
-#	%nil
+py.test-3 -vv \
+	--deselect=sympy/integrals/tests/test_failing_integrals.py::test_issue_15227 \
+	--deselect=sympy/matrices/tests/test_matrices.py::test_pinv_rank_deficient_when_diagonalization_fails \
+	--deselect=sympy/solvers/ode/tests/test_systems.py::test_linear_new_order1_type2_de_lorentz_slow_check \
+	%nil
 
 %if_with doc
 python3 bin/doctest -v ||:
@@ -168,6 +177,10 @@ python3 bin/doctest -v ||:
 %endif
 
 %changelog
+* Mon Sep 09 2024 Andrey Kovalev <ded@altlinux.org> 1:1.13.2-alt1
+- Updated to upstream version 1.13.2.
+- Returned the test check.
+
 * Thu Sep 05 2024 Andrey Kovalev <ded@altlinux.org> 1:1.13.1-alt1
 - Updated to upstream version 1.13.1.
 - Changed the package build scheme.
