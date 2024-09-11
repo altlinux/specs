@@ -1,6 +1,6 @@
 Name: deepin-picker
 Version: 6.0.1
-Release: alt1
+Release: alt2
 
 Summary: Color picker tool for deepin
 
@@ -13,7 +13,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 
 BuildRequires(pre): desktop-file-utils
-BuildRequires: qt5-linguist dtk5-widget-devel libX11-devel libxcb-devel libxcbutil-devel libXext-devel libXtst-devel qt5-base-devel qt5-svg-devel qt5-x11extras-devel
+BuildRequires: dqt5-linguist libdtkwidget-devel libX11-devel libxcb-devel libxcbutil-devel libXext-devel libXtst-devel dqt5-base-devel dqt5-svg-devel dqt5-x11extras-devel
 
 Requires: icon-theme-hicolor
 
@@ -24,10 +24,12 @@ Simplest color picker.
 %setup
 
 %build
-export PATH=%_qt5_bindir:$PATH
-%qmake_qt5 \
-    CONFIG+=nostrip \
-    PREFIX=%_prefix
+export PATH=%_dqt5_bindir:$PATH
+%qmake_dqt5 \
+  CONFIG+=nostrip \
+  PREFIX=%_prefix \
+  QMAKE_RPATHDIR=%_dqt5_libdir \
+#
 %make_build
 
 %install
@@ -42,12 +44,15 @@ export PATH=%_qt5_bindir:$PATH
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/dbus-1/services/com.deepin.Picker.service
 # package translations outside find_lang
-%dir %_datadir/%name/
-%dir %_datadir/%name/translations/
-%_datadir/%name/translations/deepin-picker.qm
-%_datadir/%name/translations/deepin-picker_es_419.qm
+#%%dir %%_datadir/%%name/
+#%%dir %%_datadir/%%name/translations/
+#%%_datadir/%%name/translations/deepin-picker.qm
+#%%_datadir/%%name/translations/deepin-picker_es_419.qm
 
 %changelog
+* Wed Sep 11 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.1-alt2
+- Built via separate qt5 instead system (ALT #48138).
+
 * Thu Apr 04 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.1-alt1
 - New version.
 
