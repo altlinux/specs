@@ -8,7 +8,7 @@
 
 Name: %rname
 Version: 6.1.4
-Release: alt6
+Release: alt7
 #Epoch: 2
 %K6init
 
@@ -33,6 +33,7 @@ Patch2: alt-pam-support.patch
 %endif
 Patch3: alt-pam-service.patch
 Patch4: alt-dont-respond.patch
+Patch5: alt-disable-noninteractive.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: glibc-devel
@@ -91,6 +92,7 @@ KF6 library
 %endif
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %if_enabled kcheckpass
 tar xf %SOURCE2 kcheckpass/
@@ -152,6 +154,10 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kde6-screenlocker
 
 
 %changelog
+* Wed Sep 11 2024 Oleg Solovyov <mcpain@altlinux.org> 6.1.4-alt7
+- revert: use system-auth-local instead of system-auth
+- disable non-interactive authenticators
+
 * Wed Sep 11 2024 Oleg Solovyov <mcpain@altlinux.org> 6.1.4-alt6
 - use system-auth-local instead of system-auth
 
