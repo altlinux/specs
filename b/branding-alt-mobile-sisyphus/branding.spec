@@ -10,7 +10,7 @@
 
 Name: branding-%flavour
 Version: 2024.08
-Release: alt1
+Release: alt2
 
 Url: https://www.altlinux.org/ALT_Mobile
 
@@ -45,7 +45,6 @@ Distro-specific packages with design and texts
 
 %define provide_list altlinux fedora redhat system
 %define obsolete_list altlinux-release fedora-release redhat-release
-%define conflicts_list altlinux-release-sisyphus altlinux-release-4.0 altlinux-release-junior altlinux-release-master altlinux-release-server altlinux-release-terminal altlinux-release-small_business
 
 # alterantives weights
 %define artworks_weight 4
@@ -57,6 +56,7 @@ BuildArch: noarch
 Requires: alt-os-release
 Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme branding-alt-%theme-release
 Obsoletes: %obsolete_list
+Conflicts: altlinux-release-%altbranch
 %branding_add_conflicts %flavour release
 
 %description release
@@ -224,6 +224,9 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/gtk-3.0/gtk.css
 
 %changelog
+* Wed Sep 11 2024 Anton Midyukov <antohami@altlinux.org> 2024.08-alt2
+- release: add missing conflicts with altlinux-release-%%altbranch
+
 * Fri Aug 16 2024 Anton Midyukov <antohami@altlinux.org> 2024.08-alt1
 - Bump version
 - Fix space in /etc/altlinux-release
