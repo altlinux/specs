@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkcommon
-Version: 5.6.28
+Version: 5.6.34
 Release: alt1
 
 Summary: Deepin desktop schemas
@@ -78,6 +78,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/cmake/DtkBuildHelper/DtkBuildHelperConfigVersion.cmake
 
 %changelog
+* Wed Sep 11 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.34-alt1
+- New version 5.6.34.
+
 * Mon May 06 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.28-alt1
 - New version 5.6.28.
 
