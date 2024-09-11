@@ -5,7 +5,7 @@
 
 Name:     ignition
 Version:  2.19.0
-Release:  alt1
+Release:  alt2
 
 Summary:  First boot installer and configuration tool
 License:  Apache-2.0
@@ -65,7 +65,7 @@ export VERSION=%version
 %golang_prepare
 
 pushd .build/src/%import_path
-#%golang_build .
+#%%golang_build .
 %make_build
 popd
 
@@ -77,7 +77,7 @@ export GOPATH="$BUILDDIR:%go_path"
 export VERSION=%version
 
 pushd .build/src/%import_path
-#%golang_install
+#%%golang_install
 %makeinstall_std
 popd
 
@@ -92,6 +92,9 @@ popd
 %_bindir/%name-validate
 
 %changelog
+* Wed Sep 11 2024 Alexey Shabalin <shaba@altlinux.org> 2.19.0-alt2
+- Fixed build with golang-1.23.
+
 * Wed Jun 26 2024 Alexey Shabalin <shaba@altlinux.org> 2.19.0-alt1
 - New version 2.19.0.
 
