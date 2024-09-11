@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  3
-%define _php_release_version 10
+%define _php_release_version 11
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -487,6 +487,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Wed Sep 11 2024 Anton Farygin <rider@altlinux.ru> 8.3.11-alt1
+- 8.3.10 -> 8.3.11
+
 * Thu Aug 22 2024 Anton Farygin <rider@altlinux.ru> 8.3.10-alt1
 - 8.3.9 -> 8.3.10
 - built mysqlnd with openssl (closes: #51216)

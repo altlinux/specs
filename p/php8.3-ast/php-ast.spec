@@ -1,8 +1,8 @@
 %define php_extension ast
 
 Name: php%_php_suffix-%php_extension
-Version: 1.1.1
-Release: alt2.%php_version
+Version: 1.1.2
+Release: alt1.%php_version
 
 Summary: Extension exposing PHP 7 abstract syntax tree
 License: BSD-3-Clause 
@@ -44,6 +44,9 @@ NO_INTERACTION=1 make test
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %version-%release
+
+* Fri Aug 30 2024 Anton Farygin <rider@altlinux.ru> 1.1.2-alt1
+- 1.1.1 -> 1.1.2
 
 * Wed Feb 14 2024 Anton Farygin <rider@altlinux.ru> 1.1.1-alt2
 - packaged ini file (closed: #48422)
