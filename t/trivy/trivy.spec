@@ -2,8 +2,8 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: trivy
-Version: 0.54.1
-Release: alt2
+Version: 0.55.0
+Release: alt1
 Summary: A Fast Vulnerability Scanner for Containers
 
 Group: Monitoring
@@ -100,6 +100,9 @@ rm -rf -- %buildroot%go_root
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Tue Sep 10 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.55.0-alt1
+- 0.54.1 -> 0.55.0
+
 * Thu Aug 29 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.54.1-alt2
 - Fixed hardcoded node-collector version
 
