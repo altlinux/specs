@@ -3,12 +3,12 @@
 
 Name: xorg-drv-intel
 Version: 2.99.917
-Release: alt1.20210115.1
+Release: alt1.20230318
 Epoch: 8
 Summary: Intel integrated graphics chipsets
-License: MIT/X11
+License: MIT
 Group: System/X11
-Url: http://xorg.freedesktop.org
+Url: https://gitlab.freedesktop.org/xorg/driver/xf86-video-intel
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Requires: XORG_ABI_VIDEODRV = %get_xorg_abi_videodrv
@@ -25,14 +25,20 @@ BuildRequires: xorg-util-macros libXfixes-devel libudev-devel libXScrnSaver-deve
 BuildRequires: libXxf86vm-devel libXfont2-devel
 
 %description
-intel  is  an  Xorg  driver  for  Intel  integrated  graphics
-chipsets.  The driver supports depths 8, 15, 16  and  24.   All  visual
-types are supported in depth 8.  For the i810/i815 other depths support
-the TrueColor and DirectColor visuals.  For the 830M  and  later,  only
-the  TrueColor  visual  is  supported  for  depths greater than 8.  The
-driver supports hardware accelerated 3D via the Direct Rendering Infra-
-structure  (DRI),  but only in depth 16 for the i810/i815 and depths 16
-and 24 for the 830M and later
+The xf86-video-intel module is an open-source 2D graphics driver for
+the X Window System as implemented by X.org. It supports a variety of
+Intel graphics chipsets including:
+
+* i810/i810e/i810-dc100,i815,
+* i830M,845G,852GM,855GM,865G,
+* 915G/GM,945G/GM/GME,946GZ
+* G/GM/GME/Q965,
+* G/Q33,G/Q35,G41,G/Q43,G/GM/Q45
+* PineView-M (Atom N400 series)
+* PineView-D (Atom D400/D500 series)
+* Intel(R) HD Graphics,
+* Intel(R) Iris(TM) Graphics,
+* Intel(R) Iris(TM) Pro Graphics.
 
 %prep
 %setup -q
@@ -65,6 +71,12 @@ and 24 for the 830M and later
 %endif
 
 %changelog
+* Wed Sep 11 2024 L.A. Kostis <lakostis@altlinux.ru> 8:2.99.917-alt1.20230318
+- git snapshot master.ce811e78.
+- Update Url.
+- Update License (it's MIT actually).
+- Update description (actualize the supported hw list).
+
 * Wed Jul 13 2022 L.A. Kostis <lakostis@altlinux.ru> 8:2.99.917-alt1.20210115.1
 - Fix FTBFS (remove intel-gen4asm).
 
