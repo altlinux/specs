@@ -1,5 +1,5 @@
 Name: netatalk
-Version: 3.2.7
+Version: 3.2.8
 Release: alt1
 
 Summary: Open Source Apple Filing Protocol (AFP) File Server
@@ -147,6 +147,11 @@ sh test/afpd/test.sh
 %_mandir/man*/netatalk-config.1*
 
 %changelog
+* Wed Sep 11 2024 Ilya Mashkin <oddity@altlinux.ru> 3.2.8-alt1
+- 3.2.8
+- Bump bundled WolfSSL library to stable version 5.7.2:
+- (Fixed CVE-2024-1544, CVE-2024-5288, CVE-2024-5991, CVE-2024-5814)
+
 * Thu Aug 22 2024 Ilya Mashkin <oddity@altlinux.ru> 3.2.7-alt1
 - 3.2.7
 
