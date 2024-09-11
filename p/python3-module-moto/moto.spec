@@ -8,7 +8,7 @@
 %def_without full_testsuite
 
 Name: python3-module-%pypi_name
-Version: 5.0.11
+Version: 5.0.14
 Release: alt1
 
 Summary: A library that allows your python tests to easily mock out the boto library
@@ -30,6 +30,8 @@ BuildRequires(pre): rpm-build-pyproject
 %add_pyproject_deps_check_filter py-partiql-parser
 %add_pyproject_deps_check_filter joserfc
 %add_pyproject_deps_check_filter antlr4-python3-runtime
+# not packaged
+%add_pyproject_deps_check_filter pycognito
 %pyproject_builddeps_metadata_extra all
 %pyproject_builddeps_metadata_extra server
 %pyproject_builddeps_check
@@ -61,7 +63,8 @@ export TESTS=tests
 %else
 export TESTS=tests/test_core
 %endif
-%pyproject_run_pytest $TESTS -m 'not network' -ra -Wignore
+%pyproject_run_pytest $TESTS -m 'not network' -ra -Wignore \
+    --ignore tests/test_cognitoidp/test_cognitoidp.py \
 
 %files
 %doc README.*
@@ -71,6 +74,9 @@ export TESTS=tests/test_core
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 10 2024 Stanislav Levin <slev@altlinux.org> 5.0.14-alt1
+- 5.0.11 -> 5.0.14.
+
 * Mon Jul 08 2024 Stanislav Levin <slev@altlinux.org> 5.0.11-alt1
 - 5.0.10 -> 5.0.11.
 
