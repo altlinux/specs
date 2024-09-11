@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt1
+Release: alt2
 %K5init
 
 Summary: %rname is an open-source implementation of the popular Go game
@@ -10,7 +10,7 @@ License: GPLv2
 Group: Games/Boards
 Url: https://www.kde.org/applications/games/kigo
 Source0: %rname-%version.tar
-Requires: gnugo
+Requires: gnugo-core
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules
 BuildRequires: qt5-declarative-devel qt5-svg-devel
@@ -50,6 +50,9 @@ glass or plastic) on the vacant intersections of a grid of 19x19 lines (9x9 or
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Sep 11 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt2
+- update requires (bug#51288)
+
 * Tue Feb 20 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
