@@ -3,12 +3,12 @@
 %def_enable vala
 %def_enable docs
 
-%define ver_major 15.1
+%define ver_major 16.0
 %define api_ver 2.90
-%define unicode_ver 15.1.0
+%define unicode_ver 16.0.0
 
 Name: gucharmap
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: gucharmap is a featureful Unicode character map
@@ -94,9 +94,9 @@ character map library.
 
 %build
 %meson \
-    %{?_disable_introspection:-Dgir=false} \
-    %{?_disable_vala:-Dvapi=false} \
-    %{?_disable_docs:-Ddocs=false} \
+    %{subst_enable_meson_bool introspection gir} \
+    %{subst_enable_meson_bool vala vapi} \
+    %{subst_enable_meson_bool docs docs} \
     -Ducd_path=%_datadir/unicode/ucd
 %meson_build
 
@@ -134,6 +134,9 @@ character map library.
 %endif
 
 %changelog
+* Wed Sep 11 2024 Yuri N. Sedunov <aris@altlinux.org> 16.0.0-alt1
+- 16.0.0
+
 * Sun May 26 2024 Yuri N. Sedunov <aris@altlinux.org> 15.1.5-alt1
 - 15.1.5
 
