@@ -21,7 +21,7 @@
 
 Name: plasma-%rname
 Version: 6.1.5
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -38,6 +38,7 @@ Requires: %name-packagekit
 Source: %rname-%version.tar
 Source1: env-flatpak.sh
 Source2: env-snap.sh
+Source10: ru-override-plasma-discover.po
 # ALT
 Patch1: alt-offline-updates.patch
 Patch2: alt-pk-refresh-timer.patch
@@ -228,6 +229,11 @@ do
 __EOF__
 done
 
+msgcat --use-first %SOURCE10 po/ru/plasma-discover.po > po/ru/plasma-discover.po.tmp
+cat po/ru/plasma-discover.po.tmp >po/ru/plasma-discover.po
+rm -f po/ru/plasma-discover.po.tmp
+
+
 %build
 %K6build \
     -DAppStreamQt_DIR:PATH=$PWD/cmake/AppStreamQt \
@@ -326,10 +332,10 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.%sover
 %_K6lib/libDiscoverNotifiers.so.*
 
-
-
-
 %changelog
+* Wed Sep 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt2
+- fix russian translation
+
 * Tue Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
 - new version
 
