@@ -3,7 +3,7 @@
 %define srcname poetry_dynamic_versioning
 
 Name: python3-module-%pypi_name
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 
 Summary: Plugin for Poetry to enable dynamic versioning based on VCS tags
@@ -46,6 +46,9 @@ control systems are supported, including Git and Mercurial.
 %python3_sitelibdir/%{pyproject_distinfo %srcname}
 
 %changelog
+* Wed Sep 11 2024 Anton Kurachenko <srebrov@altlinux.org> 1.4.1-alt1
+- New version 1.4.1.
+
 * Sat Jun 29 2024 Anton Kurachenko <srebrov@altlinux.org> 1.4.0-alt1
 - New version 1.4.0.
 
