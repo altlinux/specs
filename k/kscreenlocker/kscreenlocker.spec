@@ -8,7 +8,7 @@
 
 Name: %rname
 Version: 6.1.4
-Release: alt5
+Release: alt6
 #Epoch: 2
 %K6init
 
@@ -152,6 +152,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kde6-screenlocker
 
 
 %changelog
+* Wed Sep 11 2024 Oleg Solovyov <mcpain@altlinux.org> 6.1.4-alt6
+- use system-auth-local instead of system-auth
+
 * Thu Sep 05 2024 Oleg Solovyov <mcpain@altlinux.org> 6.1.4-alt5
 - do not respond if authenticators are in Idle state
 
