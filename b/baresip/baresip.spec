@@ -1,5 +1,5 @@
 Name: baresip
-Version: 3.14.0
+Version: 3.15.0
 Release: alt1
 
 Summary: Baresip is a portable and modular SIP User-Agent with audio and video support
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ libssl-devel zlib-devel
-BuildRequires: libre-devel >= 3.13.0
+BuildRequires: libre-devel >= 3.15.0
 
 %description
 baresip is a bare-bones SIP user agent. It supports SIP, SDP, RTP/RTCP,
@@ -314,7 +314,7 @@ This module provides the X11 video output driver.
 %files
 %doc CHANGELOG.md LICENSE README.md docs/examples/*
 %_bindir/%name
-%_libdir/lib%name.so.16*
+%_libdir/lib%name.so.17*
 %dir %_libdir/%name/
 %dir %_libdir/%name/modules/
 %_libdir/%name/modules/account.so
@@ -438,6 +438,9 @@ This module provides the X11 video output driver.
 %_libdir/%name/modules/x11.so
 
 %changelog
+* Tue Sep 10 2024 Ilya Demyanov <turbid@altlinux.org> 3.15.0-alt1
+- new version 3.15.0
+
 * Tue Jul 30 2024 Ilya Demyanov <turbid@altlinux.org> 3.14.0-alt1
 - new version 3.14.0
 
