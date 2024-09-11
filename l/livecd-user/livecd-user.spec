@@ -1,9 +1,9 @@
 Name: livecd-user
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: Create LiveCD user
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
 
 Url: https://www.altlinux.org/LiveCD
@@ -37,6 +37,9 @@ fi
 %_unitdir/%name.service
 
 %changelog
+* Wed Sep 11 2024 Anton Midyukov <antohami@altlinux.org> 0.3.2-alt1
+- Add parameter LIVECD_SESSION (disable by default)
+
 * Fri Jan 26 2024 Anton Midyukov <antohami@altlinux.org> 0.3.1-alt1
 - livecd-user.init: fix LIVECD_NO_ISSUE support
 
