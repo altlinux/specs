@@ -1,6 +1,6 @@
 Name:     ovirt-guest-agent
 Version:  1.0.16
-Release:  alt3
+Release:  alt4
 
 Summary:  The oVirt Guest Agent
 License:  Apache-2.0
@@ -175,6 +175,9 @@ fi
 %_pam_modules_dir/pam_ovirt_cred.so
 
 %changelog
+* Thu Sep 12 2024 Andrey Cherepanov <cas@altlinux.org> 1.0.16-alt4
+- FTBFS: fixed path to %_udevrulesdir.
+
 * Mon Mar 27 2023 Andrey Cherepanov <cas@altlinux.org> 1.0.16-alt3
 - Moved udev rules to %%_udevrulesdir.
 
