@@ -2,7 +2,7 @@
 
 Name: dtklog
 Version: 0.0.1
-Release: alt1
+Release: alt2
 
 Summary: Deepin tool kit log modules
 
@@ -63,6 +63,7 @@ export PATH=%_dqt5_bindir:$PATH
   -DCMAKE_INSTALL_LIBDIR=%_lib \
   -DLIBRARY_INSTALL_DIR=%_lib \
   -DBUILD_WITH_SYSTEMD=ON \
+  -DMKSPECS_INSTALL_DIR=%_dqt5_archdatadir/mkspecs/modules/ \
   #
 cmake --build %_cmake__builddir -j%__nprocs
 
@@ -81,8 +82,11 @@ cmake --build %_cmake__builddir -j%__nprocs
 %dir %_libdir/cmake/DtkLog/
 %_libdir/cmake/DtkLog/*.cmake
 %_pkgconfigdir/%name.pc
-%_libdir/qt5/mkspecs/modules/qt_lib_dtklog.pri
+%_dqt5_archdatadir/mkspecs/modules/qt_lib_dtklog.pri
 
 %changelog
+* Thu Sep 12 2024 Leontiy Volodin <lvol@altlinux.org> 0.0.1-alt2
+- Moved mkspecs module to dqt5's default place.
+
 * Wed Sep 11 2024 Leontiy Volodin <lvol@altlinux.org> 0.0.1-alt1
 - Initial build for ALT Sisyphus.
