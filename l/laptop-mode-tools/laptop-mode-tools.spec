@@ -1,6 +1,6 @@
 Name: 	  laptop-mode-tools
 Version:  1.74
-Release:  alt3
+Release:  alt4
 
 Summary:  Tools for power savings based on battery/AC status
 License:  GPL-2.0+
@@ -17,7 +17,8 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
-%filter_from_requires \,^/lib/udev/hotplug\.functions,d
+%filter_from_requires \,/lib/udev/hotplug\.functions,d
+%filter_from_requires \,/lib/lsb/init-functions,d
 %add_python3_path %_datadir/%name
 
 %description
@@ -35,7 +36,7 @@ various other power savings.
 %patch2 -p1
 
 %build
-DESTDIR=%buildroot INIT_D=%buildroot%_initdir MAN_D=%_mandir INSTALL=install TMPFILES_D=%_tmpfilesdir ./install.sh
+DESTDIR=%buildroot INIT_D=%buildroot%_initdir SYSTEMD_UNIT_D=%_unitdir MAN_D=%_mandir INSTALL=install TMPFILES_D=%_tmpfilesdir ./install.sh
 
 %preun
 %preun_service laptop-mode
@@ -66,6 +67,9 @@ DESTDIR=%buildroot INIT_D=%buildroot%_initdir MAN_D=%_mandir INSTALL=install TMP
 %_pixmapsdir/%name.svg
 
 %changelog
+* Thu Sep 12 2024 Andrey Cherepanov <cas@altlinux.org> 1.74-alt4
+- FTBFS: fix path to %_unitdir.
+
 * Mon Nov 29 2021 Andrey Cherepanov <cas@altlinux.org> 1.74-alt3
 - No requirements of systemd (ALT #41459).
 
