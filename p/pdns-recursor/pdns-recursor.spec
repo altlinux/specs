@@ -2,7 +2,7 @@
 
 Name: pdns-recursor
 Version: 4.9.2
-Release: alt1
+Release: alt2
 Summary: Modern, advanced and high performance recursing/non authoritative name server
 License: GPL-2.0
 Group: System/Servers
@@ -78,10 +78,6 @@ sed -i \
     -e 's/# security-poll-suffix=secpoll\.powerdns\.com\./security-poll-suffix=/' \
     %buildroot%_sysconfdir/%name/recursor.conf
 
-# move systemd files
-mkdir -p %buildroot/lib/systemd
-mv %buildroot/usr/lib/systemd/* %buildroot%_unitdir
-
 %pre
 getent group pdns-recursor > /dev/null || groupadd -r pdns-recursor
 getent passwd pdns-recursor > /dev/null || \
@@ -110,6 +106,9 @@ exit 0
 %dir %attr(0755,pdns-recursor,pdns-recursor) %_sharedstatedir/%name/udr
 
 %changelog
+* Thu Sep 12 2024 Andrey Cherepanov <cas@altlinux.org> 4.9.2-alt2
+- FTBFS: fixed systemd services placement.
+
 * Thu Nov 09 2023 Andrey Cherepanov <cas@altlinux.org> 4.9.2-alt1
 - New version.
 
