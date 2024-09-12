@@ -4,12 +4,12 @@
 #%%def_disable check
 
 Name: chirp
-Version: 20230906
-Release: alt2
+Version: 20240910
+Release: alt1
 Summary: A tool for programming two-way radio equipment
 
 Group: Communications
-License: GPLv3+
+License: GPL-3.0-or-later
 Url: https://github.com/kk7ds/chirp
 
 Source: %name-%version.tar
@@ -98,6 +98,9 @@ find chirp/locale -type d -mindepth 1 -maxdepth 1 -exec cp -r {} %buildroot/%_da
 %_iconsdir/hicolor/scalable/apps/chirp.svg
 
 %changelog
+* Tue Sep 10 2024 Anton Midyukov <antohami@altlinux.org> 20240910-alt1
+- new snapshot
+
 * Sun Sep 10 2023 Anton Midyukov <antohami@altlinux.org> 20230906-alt2
 - Revert "do not require importlib-resources"
 - require python3(importlib_resources)'
