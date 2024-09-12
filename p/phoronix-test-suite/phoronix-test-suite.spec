@@ -4,7 +4,7 @@
 
 Name: phoronix-test-suite
 Version: 10.8.4
-Release: alt1
+Release: alt2
 
 Summary: An Automated, Open-Source Testing Framework
 Summary(ru_RU.UTF8): Автоматизированная среда тестирования с открытым исходным кодом
@@ -55,6 +55,7 @@ sed -i 's/python/python3/' ob-cache/test-profiles/pts/cython-bench-1.0.0/install
 find . -name "*windows*" -exec rm {} \;
 find . -name "*macosx**" -exec rm {} \;
 find . -name "*.sh" -exec chmod +x {} \;
+sed -i 's|/usr/lib/systemd/system|%_unitdir|g' install-sh
 
 %build
 
@@ -63,8 +64,6 @@ DESTDIR=%buildroot ./install-sh %_prefix
 desktop-file-validate %buildroot/%_desktopdir/%name.desktop
 desktop-file-validate %buildroot/%_desktopdir/%name-launcher.desktop
 appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/*.appdata.xml
-install -vdm755 %buildroot/%_unitdir
-mv %buildroot/%_prefix/%_unitdir/* %buildroot/%_unitdir
 # drop packaging scripts
 rm -rv %buildroot%_datadir/phoronix-test-suite/deploy/
 # remove non for package script (due unneeded requires)
@@ -86,6 +85,9 @@ rm -rv %buildroot%_datadir/phoronix-test-suite/pts-core/static/sample-pts-client
 %_unitdir/phoronix-result-server.service
 
 %changelog
+* Fri Sep 13 2024 Alexey Shabalin <shaba@altlinux.org> 10.8.4-alt2
+- fix install systemd unit.
+
 * Sat Aug 05 2023 Vitaly Lipatov <lav@altlinux.ru> 10.8.4-alt1
 - New version 10.8.4.
 
