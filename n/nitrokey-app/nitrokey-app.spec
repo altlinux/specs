@@ -2,7 +2,7 @@
 
 Name: nitrokey-app
 Version: 0.6.3
-Release: alt2.1
+Release: alt3
 License: %gpl3only
 Summary: Nitrokey's Application
 Url: https://www.nitrokey.com/
@@ -42,8 +42,6 @@ diff -u data/40-nitrokey.rules{_,} ||:
 %cmake_install
 
 mkdir -p %buildroot%_udevrulesdir
-mv %buildroot/usr/lib/udev/rules.d/40-nitrokey.rules \
-	%buildroot%_udevrulesdir/
 
 mkdir -p %buildroot%_xdgconfigdir/autostart
 cat > %buildroot%_xdgconfigdir/autostart/nitrokey-app.desktop <<@@@
@@ -77,6 +75,9 @@ groupadd -r _cryptodev ||:
 %doc OTP_full_specification.txt README.md
 
 %changelog
+* Thu Sep 12 2024 Andrew Savchenko <bircoph@altlinux.org> 0.6.3-alt3
+- Fix ftbfs after usrmerge.
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 0.6.3-alt2.1
 - NMU: spec: adapted to new cmake macros.
 
