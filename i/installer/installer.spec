@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.15.9
+Version: 1.15.10
 Release: alt1
 
 Summary: Installer common parts
@@ -105,6 +105,16 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Thu Sep 12 2024 Anton Midyukov <antohami@altlinux.org> 1.15.10-alt1
+- preinstall.d/00-cp-diskinfo.sh: fix exit from script, if .disk/info do not
+  exist
+- install2, alterator-install2: add support /etc/locale.conf
+- install2-action-functions: do not use /etc/sysconfig/init
+- install2: set variable LANG instead LC_ALL in language configs
+- install2: do not setup unicode console on tty's
+- alterator-vnc: FD_GEOM=1024x768 (instead 800x600)
+- preinstall.d/00-cp-diskinfo.sh: copy .disk/commit
+
 * Wed Jun 19 2024 Ajrat Makhmutov <rauty@altlinux.org> 1.15.9-alt1
 - specify new help for the steps pkg and pkg-install
 
