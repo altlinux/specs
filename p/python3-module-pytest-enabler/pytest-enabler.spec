@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.1.1
+Version: 3.3.0
 Release: alt1
 Summary: Pytest plugin for configuration of another plugins
 License: MIT
@@ -20,7 +20,7 @@ Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra testing
+%pyproject_builddeps_metadata_extra test
 # really required in test_coverage_explicit
 BuildRequires: python3-module-pytest-cov
 %endif
@@ -51,6 +51,9 @@ the settings if the plugin is not present.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Sep 12 2024 Stanislav Levin <slev@altlinux.org> 3.3.0-alt1
+- 3.1.1 -> 3.3.0.
+
 * Fri Mar 22 2024 Stanislav Levin <slev@altlinux.org> 3.1.1-alt1
 - 3.0.0 -> 3.1.1.
 
