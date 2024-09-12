@@ -28,7 +28,8 @@
 # XA state tracker requires at least one of the following gallium drivers: nouveau, freedreno, i915, svga
 %define xa_arches %nouveau_arches %armsoc_arches %svga_arches
 
-%gallium_drivers_add swrast
+%gallium_drivers_add softpipe
+%gallium_drivers_add llvmpipe
 %ifarch %radeon_arches
 %dri_drivers_add r100
 %dri_drivers_add r200
@@ -54,7 +55,6 @@
 %gallium_drivers_add vc4
 %gallium_drivers_add etnaviv
 %gallium_drivers_add freedreno
-%gallium_drivers_add kmsro
 %gallium_drivers_add panfrost
 %gallium_drivers_add lima
 %gallium_drivers_add tegra
@@ -92,8 +92,8 @@
 %endif
 %vulkan_drivers_add swrast
 
-%define ver_major 24.1
-%define ver_minor 7
+%define ver_major 24.2
+%define ver_minor 2
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -116,7 +116,7 @@ BuildRequires: libdrm-devel libexpat-devel libselinux-devel libxcb-devel libSM-d
 BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel libvdpau-devel xorg-proto-devel libxshmfence-devel
 BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwayland-client-devel libwayland-server-devel
 BuildRequires: libwayland-egl-devel python3-module-mako wayland-protocols libsensors-devel libzstd-devel
-BuildRequires: libglvnd-devel rpm-build-python3 glslang python3-module-docutils python3-module-ply
+BuildRequires: libglvnd-devel rpm-build-python3 glslang python3-module-docutils python3-module-ply python3-module-yaml
 BuildRequires: llvm-devel clang-devel
 %ifarch %gallium_opencl_arches
 BuildRequires: libclc-devel libLLVMSPIRVLib-devel libspirv-tools-devel
@@ -450,6 +450,7 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %doc %ver_major.*.html
 %_libdir/libGLX_mesa.so.*
 %_libdir/libglapi.so.*
+%_libdir/libgallium-%version.so
 
 %files -n libGL-devel
 %_includedir/GL/internal
@@ -516,7 +517,7 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %dir %_datadir/drirc.d
 %_datadir/drirc.d/00-mesa-defaults.conf
 %_libdir/X11/modules/dri/*swrast*_dri.so
-%_libdir/X11/modules/dri/libgallium_dri.so
+%_libdir/X11/modules/dri/libdril_dri.so
 %_libdir/X11/modules/dri/zink_dri.so
 %ifarch %gallium_opencl_arches
 %dir %_libdir/gallium-pipe
@@ -617,6 +618,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Mon Sep 09 2024 Valery Inozemtsev <shrek@altlinux.ru> 4:24.2.2-alt1
+- 24.2.2
+
 * Mon Sep 09 2024 Valery Inozemtsev <shrek@altlinux.ru> 4:24.1.7-alt1
 - 24.1.7
 
