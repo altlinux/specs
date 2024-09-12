@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    epsonscan2
-Version: 6.7.43.0
+Version: 6.7.66.0
 Release: alt1
 
 Summary: Simple Image Acquisition for Epson scanners and MFP
 License: GPL-3.0+
 Group:   Publishing
-Url:     http://support.epson.net/linux/src/scanner/epsonscan2
+Url:     https://support.epson.net/linux/en/epsonscan2.php
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -39,6 +39,7 @@ driver to interface with software built around the SANE standard.
 %prep
 %setup -n %name-%version-1
 %patch1 -p2
+subst 's|${EPSON_INSTALL_ROOT}/lib/udev|%_udevdir|' CMakeLists.txt
 
 %build
 %cmake -GNinja \
@@ -61,6 +62,12 @@ rm -rf %buildroot%_defaultdocdir/epsonscan2-1.0.0.0-1
 %_udevrulesdir/60-epsonscan2.rules
 
 %changelog
+* Thu Sep 12 2024 Andrey Cherepanov <cas@altlinux.org> 6.7.66.0-alt1
+- New version.
+
+* Wed Jun 19 2024 Andrey Cherepanov <cas@altlinux.org> 6.7.65.0-alt1
+- New version (ALT #49660).
+
 * Fri Mar 17 2023 Andrey Cherepanov <cas@altlinux.org> 6.7.43.0-alt1
 - New version.
 
