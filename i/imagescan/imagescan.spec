@@ -2,7 +2,7 @@
 
 Name:     imagescan
 Version:  3.65.0
-Release:  alt6
+Release:  alt7
 
 Summary:  EPSON Image Scan v3 front-end for scanners and all-in-ones
 License:  GPL-3.0+
@@ -83,7 +83,7 @@ sed -ie "s|v = \\(utsushi::value (.*)\\);|v = sane::value (\\1);|" sane/handle.c
     --without-boost-unit-test-framework \
     --enable-sane-config \
     --enable-udev-config \
-    --with-udev-confdir=/lib/udev \
+    --with-udev-confdir=%_udevdir \
     --with-boost-libdir=%_libdir \
     --without-included-ltdl \
     --with-gtkmm \
@@ -140,6 +140,9 @@ chmod +x %buildroot%_bindir/imagescan
 %_datadir/utsushi/drivers
 
 %changelog
+* Thu Sep 12 2024 Andrey Cherepanov <cas@altlinux.org> 3.65.0-alt7
+- FTBFS: used %_udevdir location.
+
 * Fri Oct 13 2023 Andrey Cherepanov <cas@altlinux.org> 3.65.0-alt6
 - FTBFS: fixed build with ImageMagick 7.x.
 
