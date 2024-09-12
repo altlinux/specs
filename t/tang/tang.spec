@@ -1,13 +1,12 @@
 Name:    tang
-Version: 14
+Version: 15
 Release: alt1
 Summary: Tang binding daemon
 
 License: GPLv3
 Group:   System/Libraries
 URL:     https://github.com/latchset/tang
-Source:  tang-%version.tar.gz
-Patch1:  alt-fix-paths.patch
+Source:  %name-%version.tar
 
 BuildRequires: openssl-devel
 BuildRequires: libjose-devel
@@ -23,7 +22,6 @@ Tang binding daemon
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %meson
@@ -31,14 +29,19 @@ Tang binding daemon
 
 %install
 %meson_install
+rm -rf %buildroot%_datadir
 
 %files
-%doc COPYING
+%doc COPYING README.md
 %_bindir/tang-show-keys
 %_libexecdir/tangd*
 %_unitdir/tangd*
 
 %changelog
+* Thu Sep 12 2024 Alexey Shabalin <shaba@altlinux.org> 15-alt1
+- update version
+- delete patch with change systemd unit path
+
 * Fri Nov 24 2023 Oleg Solovyov <mcpain@altlinux.org> 14-alt1
 - update version (Fixes: CVE-2023-1672)
 
