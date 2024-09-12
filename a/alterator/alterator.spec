@@ -1,5 +1,5 @@
 Name: alterator
-Version: 5.4.4
+Version: 5.4.5
 Release: alt1
 
 Summary: ALT Linux configurator engine
@@ -181,6 +181,9 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Sat Sep 07 2024 Ajrat Makhmutov <rauty@altlinux.org> 5.4.5-alt1
+- Add a new built-in "debug" step.
+
 * Wed May 15 2024 Paul Wolneykien <manowar@altlinux.org> 5.4.4-alt1
 - Allow a hostname to start with a digit (RFC 1123).
 
