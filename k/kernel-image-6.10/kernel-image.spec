@@ -2,7 +2,7 @@ Name: kernel-image-6.10
 Release: alt1
 %define kernel_src_version	6.10
 %define kernel_base_version	6.10
-%define kernel_sublevel	.9
+%define kernel_sublevel	.10
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -594,6 +594,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Sep 12 2024 Kernel Bot <kernelbot@altlinux.org> 6.10.10-alt1
+- v6.10.10 (2024-09-12).
+
 * Sun Sep 08 2024 Kernel Bot <kernelbot@altlinux.org> 6.10.9-alt1
 - v6.10.9 (2024-09-08).
 
