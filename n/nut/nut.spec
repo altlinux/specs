@@ -1,16 +1,15 @@
 # -*- rpm-spec -*-
 %define _unpackaged_files_terminate_build 1
 
-%def_without python2
-
 Name: nut
-Version: 2.8.0
-Release: alt2
+Version: 2.8.2
+Release: alt1
 
 Summary: Network UPS Tools
 License:  GPLv2+ and GPLv3+
 Group: System/Servers
 Url: http://networkupstools.org
+VCS: https://github.com/networkupstools/nut
 
 %define srcname nut-%version
 # https://github.com/networkupstools/nut
@@ -23,24 +22,21 @@ Source4: upsd.sysconfig
 Source104: libs.sh
 
 Patch6: nut-2.6.0-alt-upsstats.patch
-Patch21: nut-2.6.0-upsd-listen.patch
-Patch24: nut-2.6.5-bcmxcp.patch
-Patch25: nut-2.8.0-alt-chroot.patch
-Patch26: nut-2.8.0-alt-upsdrvctl-list.patch
-Patch27: nut-2.8.0-alt-drivers.patch
+Patch21: nut-2.8.2-upsd-listen.patch
+Patch24: nut-2.8.2-bcmxcp.patch
+Patch25: nut-2.8.2-alt-chroot.patch
+Patch26: nut-2.8.2-alt-upsdrvctl-list.patch
+Patch27: nut-2.8.2-alt-drivers.patch
 Patch28: nut-2.8.0-alt-usb.patch
 Patch29: nut-2.8.0-snmp-noAES.patch
 Patch30: nut-2.8.0-usb_submit_urb.patch
-Patch31: nut-2.8.0-alt-systemd.patch
+Patch31: nut-2.8.2-alt-systemd.patch
 Patch32: nut-2.8.0-alt-gdlib.patch
-Patch33: nut-2.8.0-alt-dont-autoreconf.patch
 Patch34: nut-2.8.0-alt-fix-strip.patch
 Patch35: nut-2.8.0-alt-upssched-cmd.patch
 
 # Fedora patches
-Patch110: nut-2.8.0-dlfix.patch
-Patch111: nut-2.8.0-rmpidf.patch
-Patch112: nut-2.8.0-unreachable.patch
+Patch111: nut-2.8.2-rmpidf.patch
 
 %def_with ssl
 %def_with cgi
@@ -60,13 +56,10 @@ Patch112: nut-2.8.0-unreachable.patch
 %define ROOT %_localstatedir/%name
 %define fdi_hal %_datadir/hal/fdi/information/20thirdparty
 
-PreReq: shadow-utils
-PreReq: libupsclient = %EVR
+Requires(pre,postun): shadow-utils
+Requires(pre,postun): libupsclient = %EVR
 
 BuildRequires(pre): rpm-build-python3
-%if_with python2
-BuildRequires(pre): rpm-build-python
-%endif
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig libtool-common
 BuildRequires: libltdl-devel
@@ -97,7 +90,7 @@ BuildRequires: libfreeipmi-devel
 %define libusb libusb-compat-devel
 %endif
 
-%add_findreq_skiplist /lib/systemd/system-shutdown/nutshutdown
+%add_findreq_skiplist /usr/lib/systemd/system-shutdown/nutshutdown
 %add_findreq_skiplist /usr/lib/nut-driver-enumerator.sh
 
 BuildRequires: %libusb
@@ -258,39 +251,6 @@ live status tracking on web pages, and more.
 
 This package includes header files and C programming manuals for nut.
 
-%if_with python2
-%package client
-Summary: The UPS information GUI client
-Group: System/Servers
-BuildArch: noarch
-Requires: python-module-%name = %EVR
-%py_requires gtk.glade
-%py_requires pynotify
-
-%description client
-These programs are part of a developing project to monitor the assortment
-of UPSes that are found out there in the field.  Many models have serial
-serial ports of some kind that allow some form of state checking.  This
-capability has been harnessed where possible to allow for safe shutdowns,
-live status tracking on web pages, and more.
-
-This package contains the UPS information GUI client.
-
-%package -n python-module-%name
-Summary: Python bindings for NUT
-Group: Development/Python
-Requires: %name = %EVR
-
-%description -n python-module-%name
-These programs are part of a developing project to monitor the assortment
-of UPSes that are found out there in the field.  Many models have serial
-serial ports of some kind that allow some form of state checking.  This
-capability has been harnessed where possible to allow for safe shutdowns,
-live status tracking on web pages, and more.
-
-This package contains python bindings for NUT.
-%endif
-
 %package -n python3-module-%name
 Summary: Python bindings for NUT
 Group: Development/Python3
@@ -320,7 +280,6 @@ sed -i "s|sys.argv\[0\]|'%_datadir/nut/nut-monitor/nut-monitor'|" scripts/python
 %define snmp_opts --with-snmp
 export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS"
 ./autogen.sh
-%autoreconf
 %configure \
 	--disable-static \
 	--sysconfdir=%confdir --datadir=%confdir \
@@ -332,13 +291,14 @@ export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS"
 	--with-drvpath=%drvdir \
 	--with-statepath=%_localstatedir/upsd \
 	%{subst_with usb} \
-	--with-udev-dir=/lib/udev \
+    --with-udev-dir=%_udevdir \
 	%{subst_with snmp} %snmp_opts \
 	--with-pkgconfig-dir=%_pkgconfigdir \
 	--with-dev \
 	--with-user=%runas \
 	--with-group=%runas \
 	--enable-strip=no \
+	--without-python2 \
 	%nil
 
 sh %SOURCE104 >>include/config.h
@@ -392,10 +352,10 @@ ln -s %ROOT/dev/log %buildroot%_sysconfdir/syslog.d/%name
 
 # Rename udev rules file
 %if_with usb
-mv %buildroot/lib/udev/rules.d/62-nut-usbups.rules %buildroot/lib/udev/rules.d/98-nut-usbups.rules
+mv %buildroot%_udev_rulesdir/62-nut-usbups.rules %buildroot%_udev_rulesdir/98-nut-usbups.rules
 %endif
 %if_with freeipmi
-mv %buildroot/lib/udev/rules.d/52-nut-ipmipsu.rules %buildroot/lib/udev/rules.d/98-nut-ipmipsu.rules
+mv %buildroot%_udev_rulesdir/52-nut-ipmipsu.rules %buildroot%_udev_rulesdir/98-nut-ipmipsu.rules
 %endif
 
 %if_with systemd
@@ -407,26 +367,6 @@ ln -s nut-server.service %buildroot%_unitdir/upsd.service
 
 # install PyNUT
 install -p -D -m 644 scripts/python/module/PyNUT.py %buildroot%python3_sitelibdir/PyNUT.py
-
-# install nut-monitor
-%if_with python2
-install -p -D -m 644 scripts/python/module/PyNUT.py %buildroot%python_sitelibdir/PyNUT.py
-
-mkdir -p %buildroot%_datadir/nut/nut-monitor/pixmaps
-mkdir -p %buildroot%_datadir/nut/nut-monitor/ui
-mkdir -p %buildroot%_iconsdir/hicolor/64x64
-mkdir -p %buildroot%_iconsdir/hicolor/256x256
-
-install -p -m 755 scripts/python/app/NUT-Monitor %buildroot%_datadir/nut/nut-monitor/nut-monitor
-install -p -m 644 scripts/python/app/ui/gui-1.3.glade %buildroot%_datadir/nut/nut-monitor/ui/gui-1.3.glade
-install -p -m 644 scripts/python/app/pixmaps/* %buildroot%_datadir/nut/nut-monitor/pixmaps/
-install -p -D scripts/python/app/icons/scalable/nut-monitor.svg %buildroot%_pixmapsdir/nut-monitor.svg
-install -p -D scripts/python/app/icons/48x48/nut-monitor.png %buildroot%_liconsdir/nut-monitor.png
-install -p -D scripts/python/app/icons/64x64/nut-monitor.png %buildroot%_iconsdir/hicolor/64x64/nut-monitor.png
-install -p -D scripts/python/app/icons/256x256/nut-monitor.png %buildroot%_iconsdir/hicolor/256x256/nut-monitor.png
-install -p -D -m 644 scripts/python/app/nut-monitor.desktop %buildroot%_desktopdir/nut-monitor.desktop
-ln -sr %buildroot%_datadir/nut/nut-monitor/nut-monitor %buildroot%_bindir/nut-monitor
-%endif
 
 # remove unpackaged files
 rm -f %buildroot%_libdir/*.a
@@ -472,19 +412,18 @@ fi
 
 
 %files
-%doc COPYING MAINTAINERS NEWS README UPGRADING docs/*.txt conf/upsmon.conf.sample conf/upssched.conf.sample conf/nut.conf.sample
+%doc COPYING MAINTAINERS NEWS docs/*.txt conf/upsmon.conf.sample conf/upssched.conf.sample conf/nut.conf.sample
 %dir %confdir
 %dir %attr(710,root,%runas) %confdir/certs
 %config(noreplace) %attr(640,root,%runas) %confdir/upsmon.conf
 %config(noreplace) %attr(640,root,%runas) %confdir/upssched.conf
-%exclude %confdir/solaris-init
 %_initdir/upsmon
-/lib/tmpfiles.d/nut-common.tmpfiles
+%_tmpfilesdir/nut-common-tmpfiles.conf
 
 %if_with systemd
 %_unitdir/nut-monitor.service
 %_unitdir/upsmon.service
-/lib/systemd/system-shutdown/nutshutdown
+/usr/lib/systemd/system-shutdown/nutshutdown
 %endif
 
 %_bindir/upsc
@@ -492,6 +431,7 @@ fi
 %_bindir/upslog
 %_bindir/upsrw
 %_bindir/upssched-cmd
+%_bindir/nutconf
 %_sbindir/upsmon
 %_sbindir/upssched
 
@@ -521,9 +461,13 @@ fi
 %_unitdir/nut-driver-enumerator.path
 %_unitdir/nut-driver-enumerator.service
 %_unitdir/nut-driver.target
+%_unitdir/nut-driver-enumerator-daemon-activator.path
+%_unitdir/nut-driver-enumerator-daemon-activator.service
+%_unitdir/nut-driver-enumerator-daemon.service
 %_unitdir/nut.target
 %_sbindir/upsdrvsvcctl
 %_libexecdir/nut-driver-enumerator.sh
+%_libexecdir/sockdebug
 %endif
 %dir %confdir
 
@@ -558,7 +502,7 @@ fi
 
 %config %confdir/driver.list
 %if_with usb
-%attr(644,root,root) /lib/udev/rules.d/98-nut-usbups.rules
+%attr(644,root,root) %_udev_rulesdir/98-nut-usbups.rules
 %endif
 
 %drvdir
@@ -599,13 +543,13 @@ fi
 %if_with freeipmi
 %files driver-ipmi
 %drvdir/nut-ipmipsu
-%attr(644,root,root) /lib/udev/rules.d/98-nut-ipmipsu.rules
+%attr(644,root,root) %_udev_rulesdir/98-nut-ipmipsu.rules
 %_man8dir/nut-ipmipsu.*
 %endif # with_freeipmi
 
 %if_with cgi
 %files cgi
-%doc conf/hosts.conf.sample conf/upsset.conf.sample  conf/upsstats.html.sample conf/upsstats-single.html.sample data/html/README
+%doc conf/hosts.conf.sample conf/upsset.conf.sample  conf/upsstats.html.sample conf/upsstats-single.html.sample
 %dir %confdir
 %config(noreplace) %confdir/hosts.conf
 %config(noreplace) %confdir/upsset.conf
@@ -641,25 +585,16 @@ fi
 %_pkgconfigdir/*.pc
 %_man3dir/*
 
-%if_with python2
-%files client
-%_bindir/nut-monitor
-%_pixmapsdir/nut-monitor.svg
-%_liconsdir/nut-monitor.png
-%_iconsdir/hicolor/64x64/nut-monitor.png
-%_iconsdir/hicolor/256x256/nut-monitor.png
-%_desktopdir/nut-monitor.desktop
-%_datadir/nut
-
-%files -n python-module-%name
-%python_sitelibdir/PyNUT.py*
-%endif
-
 %files -n python3-module-%name
 %python3_sitelibdir/PyNUT.py
 %python3_sitelibdir/__pycache__/PyNUT.*
+%python3_sitelibdir/test_nutclient.py
 
 %changelog
+* Wed Sep 11 2024 Andrey Kovalev <ded@altlinux.org> 2.8.2-alt1
+- Update to upstream version 2.8.2.
+- Built without python2.
+
 * Thu Apr 06 2023 Elizaveta Morozova <morozovaes@altlinux.org> 2.8.0-alt2
 - Fix patch alt-systemd: incorrect full path
 
@@ -764,7 +699,7 @@ fi
 
 * Fri Sep 12 2008 Mikhail Pluzhnikov <amike@altlinux.ru> 2.2.2-alt1
 - New version 2.2.2
-  + Updated alt-chroot, alt-drivers, alt-makefile(rewritten from scratch), alt-megatec-shutdown, 
+  + Updated alt-chroot, alt-drivers, alt-makefile(rewritten from scratch), alt-megatec-shutdown,
     alt-upsdrvctl-list, alt-upsstats patches for 2.2.2.
   + New patches from alexsid@: alt-man, alt-powercom (update powercom driver).
   + Patch from ab@ for fix usb support.
