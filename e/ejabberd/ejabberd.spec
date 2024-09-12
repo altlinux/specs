@@ -15,7 +15,7 @@
 
 Name: ejabberd
 Version: 21.12
-Release: alt1
+Release: alt2
 Summary: Fault-tolerant distributed Jabber server written in Erlang
 License: GPL-2.0 with OpenSSL-exception
 Group: System/Servers
@@ -225,6 +225,9 @@ install -p -m 0644 sql/pg.sql    %buildroot%_erllibdir/%name-%version/priv/sql/
 %attr(1770,root,ejabberd) %dir %_lockdir/ejabberd
 
 %changelog
+* Fri Sep 13 2024 Alexey Shabalin <shaba@altlinux.org> 21.12-alt2
+- Move systemd unit to /usr.
+
 * Mon Jan 17 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 21.12-alt1
 - Updated to upstream version 21.12.
 
