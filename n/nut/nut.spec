@@ -3,7 +3,7 @@
 
 Name: nut
 Version: 2.8.2
-Release: alt1
+Release: alt2
 
 Summary: Network UPS Tools
 License:  GPLv2+ and GPLv3+
@@ -90,7 +90,7 @@ BuildRequires: libfreeipmi-devel
 %define libusb libusb-compat-devel
 %endif
 
-%add_findreq_skiplist /usr/lib/systemd/system-shutdown/nutshutdown
+%add_findreq_skiplist %_systemddir/system-shutdown/nutshutdown
 %add_findreq_skiplist /usr/lib/nut-driver-enumerator.sh
 
 BuildRequires: %libusb
@@ -423,7 +423,7 @@ fi
 %if_with systemd
 %_unitdir/nut-monitor.service
 %_unitdir/upsmon.service
-/usr/lib/systemd/system-shutdown/nutshutdown
+%_systemddir/system-shutdown/nutshutdown
 %endif
 
 %_bindir/upsc
@@ -591,6 +591,9 @@ fi
 %python3_sitelibdir/test_nutclient.py
 
 %changelog
+* Thu Sep 12 2024 Andrey Kovalev <ded@altlinux.org> 2.8.2-alt2
+- Replaced /usr/lib/systemd with the %_systemddir macro.
+
 * Wed Sep 11 2024 Andrey Kovalev <ded@altlinux.org> 2.8.2-alt1
 - Update to upstream version 2.8.2.
 - Built without python2.
