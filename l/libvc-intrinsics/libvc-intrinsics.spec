@@ -1,8 +1,9 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+%define llvmversion 14
 
 Name: libvc-intrinsics
 Version: 0.19.0
-Release: alt1
+Release: alt2
 
 Summary: Set of new intrinsics on top of core LLVM IR instructions that represent SIMD semantics of a program targeting GPU
 License: MIT
@@ -14,8 +15,14 @@ Source: %name-%version.tar
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: llvm-devel
-BuildRequires: llvm-devel-static
+BuildRequires: llvm%llvmversion.0-devel
+BuildRequires: clang%llvmversion.0
+BuildRequires: llvm%llvmversion-spirv
+BuildRequires: llvm%llvmversion.0-devel
+BuildRequires: llvm%llvmversion.0-polly
+BuildRequires: libpolly%llvmversion.0-devel
+BuildRequires: mlir%llvmversion.0-tools
+BuildRequires: libmlir%llvmversion.0-devel
 
 %description
 VC Intrinsics project contains a set of new intrinsics on top of core LLVM IR instructions
@@ -41,7 +48,7 @@ Group: Development/C++
 %setup
 
 %build
-%cmake -DLLVM_DIR=%_libdir/cmake/llvm -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF -DBUILD_SHARED_LIBS:BOOL=OFF
+%cmake -DLLVM_DIR=/usr/lib/llvm-%llvmversion.0/lib64/cmake/llvm/ -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF -DBUILD_SHARED_LIBS:BOOL=OFF
 %cmake_build
 
 %install
@@ -57,6 +64,9 @@ Group: Development/C++
 %_libdir/libLLVMGenXIntrinsics.a
 
 %changelog
+* Wed Sep 11 2024 Andrey Kovalev <ded@altlinux.org> 0.19.0-alt2
+- Built the package using llvm14 for build intel-graphics-compiler.
+
 * Wed Jul 31 2024 Boris Yumankulov <boria138@altlinux.org> 0.19.0-alt1
 - initial build for ALT Sisyphus
 
