@@ -7,7 +7,7 @@
 %def_without doc
 
 Name: python3-module-%oname
-Version: 2.0.4
+Version: 2.0.6
 Release: alt1
 
 Summary: Planar geometries, predicates, and operations
@@ -118,6 +118,9 @@ py.test3 -vv
 %endif
 
 %changelog
+* Fri Sep 13 2024 Anton Midyukov <antohami@altlinux.org> 2.0.6-alt1
+- New version 2.0.6.
+
 * Thu Apr 18 2024 Anton Midyukov <antohami@altlinux.org> 2.0.4-alt1
 - New version 2.0.4
 - Enable check
