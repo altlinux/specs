@@ -1,5 +1,5 @@
 Name: pciids
-Version: 20240627
+Version: 20240913
 Release: alt1
 
 Summary: Repository of PCI IDs (pci.ids database)
@@ -33,6 +33,9 @@ install -pD -m644 pci.ids %buildroot%_datadir/misc/pci.ids
 %_datadir/misc/pci.ids
 
 %changelog
+* Fri Sep 13 2024 Cronbuild Service <cronbuild@altlinux.org> 20240913-alt1
+- repocop cronbuild 20240913. At your service.
+
 * Thu Jun 27 2024 Cronbuild Service <cronbuild@altlinux.org> 20240627-alt1
 - repocop cronbuild 20240627. At your service.
 
