@@ -4,8 +4,8 @@
 %def_disable clang
 
 Name: deepin-qt-dbus-factory
-Version: 6.0.0
-Release: alt3
+Version: 6.0.1
+Release: alt1
 
 Summary: A repository stores auto-generated Qt5 dbus code
 
@@ -81,6 +81,9 @@ export PATH=%_dqt5_bindir:$PATH
 %_libdir/lib%soname.so
 
 %changelog
+* Fri Sep 13 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.1-alt1
+- New version 6.0.1.
+
 * Thu May 09 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.0-alt3
 - Built via separate qt5 instead system (ALT #48138).
 
