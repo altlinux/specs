@@ -1,7 +1,7 @@
 %define rname plasma-wayland-protocols
 
 Name: kde5-%rname
-Version: 1.13.0
+Version: 1.14.0
 Release: alt1
 %K5init altplace no_appdata
 
@@ -35,6 +35,9 @@ XML files of non-standard wayland protocols used in Plasma.
 %_datadir/plasma-wayland-protocols/
 
 %changelog
+* Fri Sep 13 2024 Sergey V Turchin <zerg@altlinux.org> 1.14.0-alt1
+- new version
+
 * Mon May 27 2024 Sergey V Turchin <zerg@altlinux.org> 1.13.0-alt1
 - new version
 
