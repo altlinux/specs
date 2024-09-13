@@ -1,14 +1,17 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: z3
 Version: 4.13.0
-Release: alt1
-Summary: High-performance theorem prover
+Release: alt2
+Summary: High-performance theorem prover (SMT solver)
 License: MIT
 Group: Sciences/Mathematics
 Url: https://github.com/Z3Prover/z3
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-make
 BuildRequires(pre): rpm-build-python3
 BuildRequires: cmake
 BuildRequires: gcc-c++ doxygen graphviz
@@ -69,6 +72,7 @@ This package contains Python bindings of %name.
 %setup
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %cmake \
 	-DZ3_INCLUDE_GIT_HASH:BOOL=OFF \
 	-DZ3_INCLUDE_GIT_DESCRIBE:BOOL=OFF \
@@ -86,6 +90,9 @@ This package contains Python bindings of %name.
 %cmakeinstall_std
 
 %check
+set -o pipefail
+%cmake_build --target test-z3
+%_cmake__builddir/test-z3 -a | tail
 export LD_LIBRARY_PATH=%buildroot%_libdir
 export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 python3 -c "import z3; print (z3.get_version_string())"
@@ -112,6 +119,11 @@ python3 examples/python/example.py
 %python3_sitelibdir_noarch/%name
 
 %changelog
+* Tue Sep 03 2024 Vitaly Chikunov <vt@altlinux.org> 4.13.0-alt2
+- spec: Enable additional post-build QA checks.
+- spec: Enable LFS on 32-bit architectures.
+- spec: check: Run test-z3.
+
 * Tue Jun 04 2024 Grigory Ustinov <grenka@altlinux.org> 4.13.0-alt1
 - Automatically updated to 4.13.0.
 
