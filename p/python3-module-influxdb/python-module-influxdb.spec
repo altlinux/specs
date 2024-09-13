@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.3.1
-Release: alt4
+Version: 5.3.2
+Release: alt1
 
 Summary: Python client for InfluxDB
 
@@ -73,6 +73,9 @@ py.test-3 -k 'not test_write_points_from_dataframe_with_tags_and_nan_json and no
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Fri Sep 13 2024 Anton Vyatkin <toni@altlinux.org> 5.3.2-alt1
+- New version 5.3.2.
+
 * Sat Jul 27 2024 Anton Vyatkin <toni@altlinux.org> 5.3.1-alt4
 - Fixed FTBFS.
 
