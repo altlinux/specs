@@ -8,7 +8,7 @@
 
 Name: qt5-webkit
 Version: 5.212.0
-Release: alt25
+Release: alt26
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
@@ -17,6 +17,7 @@ Url: http://qt.io/
 Source: %qt_module-everywhere-src-%version.tar
 
 # FC
+Patch1: webkit-offlineasm-warnings-ruby27.patch
 Patch2: qtwebkit-5.212.0_cmake_cmp0071.patch
 Patch3: qtwebkit-5.212.0-add-riscv64.patch
 # Gentoo
@@ -98,6 +99,7 @@ Requires: libqt5-core = %_qt5_version
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
+%patch1 -p1
 %patch2 -p1
 %ifnarch %e2k
 %patch3 -p1
@@ -227,6 +229,9 @@ done
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Thu Sep 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt26
+- fix to build with new ruby
+
 * Mon Jul 03 2023 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt25
 - support LoongArch architecture (lp64d ABI) (thanks asheplyakov@alt) (closes: #46582)
 

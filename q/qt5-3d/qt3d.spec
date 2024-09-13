@@ -3,7 +3,7 @@
 %define optflags_lto %nil
 
 Name: qt5-3d
-Version: 5.15.13
+Version: 5.15.15
 Release: alt1
 
 Group: System/Libraries
@@ -17,9 +17,8 @@ Source: %qt_module-everywhere-src-%version.tar
 
 BuildRequires(pre): rpm-build-ubt rpm-macros-qt5 qt5-tools
 BuildRequires: qt5-base-devel-static
-BuildRequires: zlib-devel libassimp-devel
+BuildRequires: zlib-devel libpoly2tri-devel pkgconfig(assimp)
 BuildRequires: pkgconfig(Qt5Quick) pkgconfig(Qt5XmlPatterns) pkgconfig(Qt5Qml) pkgconfig(Qt5Network) pkgconfig(Qt5Core) pkgconfig(Qt5OpenGL)
-BuildRequires: pkgconfig(assimp)
 
 %description
 Qt 3D provides functionality for near-realtime simulation systems with
@@ -226,6 +225,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Wed Sep 11 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.15-alt1
+- new version
+
 * Thu Apr 04 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.13-alt1
 - new version
 

@@ -6,7 +6,7 @@
 %add_findreq_skiplist %_qt5_examplesdir/*
 
 Name: qt5-webchannel
-Version: 5.15.13
+Version: 5.15.15
 Release: alt1
 
 Group: System/Libraries
@@ -117,6 +117,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Wed Sep 11 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.15-alt1
+- new version
+
 * Thu Apr 04 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.13-alt1
 - new version
 

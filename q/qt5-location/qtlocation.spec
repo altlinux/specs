@@ -5,8 +5,8 @@
 %def_disable bootstrap
 
 Name: qt5-location
-Version: 5.15.13
-Release: alt1.1
+Version: 5.15.15
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtLocation component
@@ -159,6 +159,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Wed Sep 11 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.15-alt1
+- new version
+
 * Mon Apr 15 2024 Michael Shigorin <mike@altlinux.org> 5.15.13-alt1.1
 - spec: drop obsolete e2kv3-only hack for old lcc
 

@@ -32,8 +32,8 @@
 #endif
 
 Name: qt5-webengine
-Version: 5.15.16
-Release: alt5
+Version: 5.15.17
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -44,8 +44,6 @@ ExclusiveArch: %qt5_qtwebengine_arches
 Source: %qt_module-everywhere-src-%version.tar
 Source100: pako.min.js
 Source101: d3.min.js
-# upstream
-Patch1: chromium-icu-74.patch
 # FC
 Patch4:  qtwebengine-opensource-src-5.15.0-fix-extractcflag.patch
 Patch5:  qtwebengine-everywhere-src-5.15.5-no-icudtl-dat.patch
@@ -54,7 +52,6 @@ Patch7:  qtwebengine-opensource-src-5.9.2-arm-fpu-fix.patch
 Patch8: qtwebengine-everywhere-src-5.11.3-aarch64-new-stat.patch
 Patch9: qtwebengine-opensource-src-5.15.5-webrtc-neon-detect.patch
 Patch10: qtwebengine-skia-missing-includes.patch
-Patch11: 0001-avcodec-x86-mathops-clip-constants-used-with-shift-i.patch
 # SuSE
 Patch30: chromium-non-void-return.patch
 Patch31: armv6-ffmpeg-no-thumb.patch
@@ -63,9 +60,8 @@ Patch32: disable-gpu-when-using-nouveau-boo-1005323.diff
 Patch41: verbose-gn-bootstrap.patch
 Patch42: sandbox-time64-syscalls.patch
 Patch43: disable-catapult.patch
-Patch44: python3.patch
-Patch45: chromium-python3.patch
-Patch46: python3.11.patch
+#
+Patch46: python3.13-pipes.patch
 Patch47: python3.12-imp.patch
 Patch48: python3.12-six.patch
 Patch49: system-nspr-prtime.patch
@@ -201,9 +197,6 @@ Requires: libqt5-core = %_qt5_version
 %setup -n %qt_module-everywhere-src-%version
 ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 #
-pushd src/3rdparty/chromium
-%patch1 -p1
-popd
 %patch4 -p1
 %patch5 -p1
 %if_enabled no_sse2
@@ -213,7 +206,6 @@ popd
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
-%patch11 -p1
 #
 #%patch30 -p1
 %patch31 -p1
@@ -222,9 +214,8 @@ popd
 %patch41 -p1
 %patch42 -p1
 %patch43 -p1
+#
 %if_enabled python3
-%patch44 -p1
-%patch45 -p1
 %patch46 -p1
 %patch47 -p1
 %patch48 -p1
@@ -474,6 +465,12 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Wed Sep 11 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.17-alt1
+- new version
+
+* Wed Sep 11 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.15-alt1
+- new version
+
 * Thu May 02 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt5
 - build with python3
 - build without system libre2
