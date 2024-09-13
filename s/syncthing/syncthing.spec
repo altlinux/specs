@@ -7,7 +7,7 @@
 Name: syncthing
 Summary: FOSS Continuous File Synchronisation
 Summary(ru_RU.UTF-8): Свободная программа непрерывной синхронизации файлов
-Version: 1.27.9
+Version: 1.27.12
 Release: alt1
 License: MPL-2.0
 Group: Networking/Other
@@ -117,7 +117,6 @@ mkdir -p %buildroot/%_unitdir
 mkdir -p %buildroot/%_libexecdir/systemd/user
 
 cp -pav etc/linux-systemd/system/syncthing@.service %buildroot/%_unitdir/
-cp -pav etc/linux-systemd/system/syncthing-resume.service %buildroot/%_unitdir/
 cp -pav etc/linux-systemd/user/syncthing.service %buildroot/%_libexecdir/systemd/user/
 
 # install systemd preset disabling the service per default
@@ -182,7 +181,6 @@ export GO111MODULE=off
 %doc AUTHORS CONDUCT.md CONTRIBUTING.md LICENSE README.md
 %_bindir/%name
 %_unitdir/%name@.service
-%_unitdir/%name-resume.service
 %_libexecdir/systemd/user/*.service
 %_libexecdir/systemd/user-preset/*.preset
 %_mandir/man?/%{name}*
@@ -197,6 +195,9 @@ export GO111MODULE=off
 %_man1dir/strelaysrv*
 
 %changelog
+* Fri Sep 13 2024 Anton Midyukov <antohami@altlinux.org> 1.27.12-alt1
+- new version (1.27.12) with rpmgs script
+
 * Thu Jul 18 2024 Anton Midyukov <antohami@altlinux.org> 1.27.9-alt1
 - new version (1.27.9) with rpmgs script
 
