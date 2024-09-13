@@ -8,7 +8,7 @@
 
 Name: %rname
 Version: 6.1.5
-Release: alt1
+Release: alt2
 #Epoch: 2
 %K6init
 
@@ -27,6 +27,8 @@ Source: %rname-%version.tar
 Source2: kcheckpass.tar
 %endif
 Source10: pam-kde6-screenlocker
+Source11: pam-kde6-fingerprint
+Source12: pam-kde6-smartcard
 Patch1: alt-def-screenlocker.patch
 %if_enabled kcheckpass
 Patch2: alt-pam-support.patch
@@ -90,9 +92,9 @@ KF6 library
 %if_enabled kcheckpass
 %patch2 -p1
 %endif
-%patch3 -p1
+#patch3 -p1
 %patch4 -p1
-%patch5 -p1
+#patch5 -p1
 
 %if_enabled kcheckpass
 tar xf %SOURCE2 kcheckpass/
@@ -107,7 +109,6 @@ ln -s /bin/true bin_fake/loginctl
 export PATH=$PWD/bin_fake:$PATH
 %K6build \
     -DKDE_INSTALL_INCLUDEDIR=%_K6inc \
-    -DKSCREENLOCKER_PAM_SERVICE="kde6-screenlocker" \
     #
 # KSCREENLOCKER_PAM_SERVICE
 # KSCREENLOCKER_PAM_PASSWORD_SERVICE
@@ -121,14 +122,18 @@ export PATH=$PWD/bin_fake:$PATH
 
 # Install kde pam configuration files
 install -d -m 0755 %buildroot/%_sysconfdir/pam.d/
-install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kde6-screenlocker
+install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kde
+install -m 0644 %SOURCE11 %buildroot/%_sysconfdir/pam.d/kde-fingerprint
+install -m 0644 %SOURCE12 %buildroot/%_sysconfdir/pam.d/kde-smartcard
 
 %files common -f %name.lang
 %doc COPYING
 %_datadir/qlogging-categories6/*.*categories
 
 %files
-%config(noreplace) %_sysconfdir/pam.d/kde6-screenlocker
+%config(noreplace) %_sysconfdir/pam.d/kde
+%config(noreplace) %_sysconfdir/pam.d/kde-fingerprint
+%config(noreplace) %_sysconfdir/pam.d/kde-smartcard
 %if_enabled kcheckpass
 %attr(2711,root,chkpwd) %_K6libexecdir/kcheckpass
 %_K6libexecdir/kscreenlocker_greet
@@ -154,6 +159,11 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kde6-screenlocker
 
 
 %changelog
+* Fri Sep 13 2024 Oleg Solovyov <mcpain@altlinux.org> 6.1.5-alt2
+- enable non-interactive authenticators
+- use system-auth-multi for interactive prompts
+- use own fprintd and pkcs11 configs
+
 * Tue Sep 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
 - new version
 
