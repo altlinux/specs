@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: gum
-Version: 0.14.4
+Version: 0.14.5
 Release: alt1
 Summary: A tool for glamorous shell scripts
 License: MIT
@@ -51,6 +51,9 @@ install -Dpm644 gum.zsh  %buildroot%_datadir/zsh/site-functions/_gum
 %_datadir/zsh/site-functions/_gum
 
 %changelog
+* Sat Sep 07 2024 Vitaly Chikunov <vt@altlinux.org> 0.14.5-alt1
+- Update to v0.14.5 (2024-09-06).
+
 * Sat Aug 24 2024 Vitaly Chikunov <vt@altlinux.org> 0.14.4-alt1
 - Update to v0.14.4 (2024-08-23).
 
