@@ -19,7 +19,7 @@
 
 Name: branding-%flavour
 Version: 10.2
-Release: alt3
+Release: alt4
 Epoch: 1
 Url: https://altsp.su
 
@@ -286,6 +286,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Sep 12 2024 Anton Midyukov <antohami@altlinux.org> 1:10.2-alt4
+- indexhtml: update links (thanks black@)
+
 * Tue Jun 18 2024 Anton Midyukov <antohami@altlinux.org> 1:10.2-alt3
 - indexhtml/index-en.html: update links
 
