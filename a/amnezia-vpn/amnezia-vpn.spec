@@ -3,8 +3,8 @@
 %define qsimplecrypto_commit c99b33f0e08b7206116ddff85c22d3b97ce1e79d
 
 Name: amnezia-vpn
-Version: 4.7.0.0
-Release: alt3
+Version: 4.8.0.1
+Release: alt1
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
@@ -92,7 +92,6 @@ This package contains systemd service files.
 sed \
     -e 's|/usr/share/pixmaps/||' \
     -e 's|.png||' \
-    -e 's|Security;||' \
     deploy/installer/config/AmneziaVPN.desktop.in > %buildroot%_desktopdir/AmneziaVPN.desktop
 
 sed -i '/Version=/d' %buildroot%_desktopdir/AmneziaVPN.desktop
@@ -125,6 +124,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Fri Sep 13 2024 Nazarov Denis <nenderus@altlinux.org> 4.8.0.1-alt1
+- Version 4.8.0.1
+
 * Thu Aug 22 2024 Nazarov Denis <nenderus@altlinux.org> 4.7.0.0-alt3
 - Fix desktop file
 
