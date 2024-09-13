@@ -5,7 +5,7 @@
 
 Name: mediastreamer2
 Version: 5.3.74
-Release: alt3
+Release: alt4
 
 Summary: Mediastreamer2 is a powerful and lightweight streaming engine for voice/video telephony applications
 License: AGPL-3.0
@@ -50,7 +50,7 @@ BuildRequires: libyuv-devel
 BuildRequires: libvpx-devel
 BuildRequires: libtheora-devel
 BuildRequires: libturbojpeg-devel
-# BuildRequires: libmatroska-devel
+BuildRequires: libbcmatroska2-devel
 # BuildRequires: libdav1d-devel
 # BuildRequires: libaom-devel
 %if_with bcg729
@@ -102,6 +102,7 @@ sed -i '/find_package/s|BCG729|Bcg729|' CMakeLists.txt
 %endif
 
 %build
+export CPLUS_INCLUDE_PATH=%_includedir/bcmatroska2:$CPLUS_INCLUDE_PATH
 %if_with bcg729
 export CMAKE_PREFIX_PATH=%_datadir/Bcg729/cmake:$CMAKE_PREFIX_PATH
 %endif
@@ -143,6 +144,9 @@ export CMAKE_PREFIX_PATH=%_datadir/Bcg729/cmake:$CMAKE_PREFIX_PATH
 %_libdir/cmake/Mediastreamer2/*.cmake
 
 %changelog
+* Fri Sep 13 2024 Leontiy Volodin <lvol@altlinux.org> 5.3.74-alt4
+- Built with matroska support (ALT #51472).
+
 * Thu Aug 29 2024 Leontiy Volodin <lvol@altlinux.org> 5.3.74-alt3
 - Obsoleted libmediastreamer.
 
