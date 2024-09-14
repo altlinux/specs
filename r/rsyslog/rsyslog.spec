@@ -16,6 +16,7 @@
 %def_enable omhttpfs
 %def_enable elasticsearch
 %def_enable openssl
+%def_enable opensslcrypto
 %def_enable gnutls
 %def_enable libgcrypt
 %def_enable libsystemd
@@ -27,7 +28,7 @@
 %def_enable libcap_ng
 
 Name: rsyslog
-Version: 8.2406.0
+Version: 8.2408.0
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -401,6 +402,7 @@ export HIREDIS_LIBS=-lhiredis
 	%{subst_enable mmcount} \
 	%{subst_enable libgcrypt} \
 	%{subst_enable openssl} \
+	%{subst_enable opensslcrypto} \
 	%{subst_enable gnutls} \
 	%{?_enable_gssapi:--enable-gssapi-krb5} \
 	%{subst_enable libzstd} \
@@ -685,6 +687,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/fmhttp.so
 
 %changelog
+* Sat Sep 14 2024 Alexey Shabalin <shaba@altlinux.org> 8.2408.0-alt1
+- New version 8.2408.0.
+
 * Thu Jul 04 2024 Alexey Shabalin <shaba@altlinux.org> 8.2406.0-alt1
 - New version 8.2406.0.
 
