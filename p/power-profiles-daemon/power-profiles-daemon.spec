@@ -1,6 +1,6 @@
 Name:           power-profiles-daemon
-Version:        0.21
-Release:        alt3
+Version:        0.23
+Release:        alt1
 
 Summary:        Makes power profiles handling available over D-Bus
 Group:          System/Configuration/Hardware
@@ -73,6 +73,9 @@ mkdir -p %buildroot/%_localstatedir/power-profiles-daemon
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Sat Sep 14 2024 Roman Alifanov <ximper@altlinux.org> 0.23-alt1
+- new version 0.23 (with rpmrb script)
+
 * Sun May 26 2024 Roman Alifanov <ximper@altlinux.org> 0.21-alt3
 - fix ftbfs: _unitdir macro was returned
 
