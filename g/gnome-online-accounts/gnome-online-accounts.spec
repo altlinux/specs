@@ -18,7 +18,7 @@
 %define api_ver 1.0
 
 Name: gnome-online-accounts
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Provide online accounts information
@@ -180,6 +180,9 @@ sed -i s'|gtk+-3.0|libadwaita-1|' src/goabackend/meson.build
 %endif
 
 %changelog
+* Sat Sep 14 2024 Yuri N. Sedunov <aris@altlinux.org> 3.50.5-alt1
+- 3.50.5
+
 * Sun Aug 04 2024 Yuri N. Sedunov <aris@altlinux.org> 3.50.4-alt1
 - 3.50.4
 
