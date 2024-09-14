@@ -2,7 +2,7 @@
 %define _libexecdir /usr/libexec
 
 Name: aardvark-dns
-Version: 1.12.1
+Version: 1.12.2
 Release: alt1
 License: Apache-2.0
 Summary: Authoritative DNS server for A/AAAA container records
@@ -56,6 +56,9 @@ EOF
 %_libexecdir/podman/%name
 
 %changelog
+* Sat Sep 14 2024 Alexey Shabalin <shaba@altlinux.org> 1.12.2-alt1
+- New version 1.12.2 (Fixes: CVE-2024-8418).
+
 * Thu Aug 22 2024 Alexey Shabalin <shaba@altlinux.org> 1.12.1-alt1
 - New version 1.12.1.
 
