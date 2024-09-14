@@ -1,6 +1,6 @@
 Name: openvpn-auth-ldap
 Version: 2.0.4
-Release: alt3
+Release: alt4
 
 Summary: OpenVPN plugin for LDAP authentication
 License: BSD
@@ -12,6 +12,8 @@ Source0: %name-%version.tar
 Patch1: auth-ldap-tools-CFLAGS.patch
 # Patch from upstream issue nA.4, to fix tap bridging.
 Patch2: auth-ldap-remoteAddress.patch
+# fixed buffer overflow
+Patch3: auth-ldap-fix-cve-2024-28820.patch
 
 Buildrequires: doxygen
 BuildRequires: gcc-objc
@@ -32,6 +34,7 @@ LDAP for OpenVPN 2.x.
 %setup
 %patch1 -p1 -b .tools-CFLAGS
 %patch2 -p1 -b .remoteAddress
+%patch3 -p1
 # Fix plugin from the instructions in the included README
 sed -i 's|^plugin .*| plugin %_libdir/openvpn/plugins/openvpn-auth-ldap.so "/etc/openvpn/auth/ldap.conf"|g' README.md
 autoconf
@@ -61,6 +64,8 @@ install -D -p -m 0600 auth-ldap.conf \
 %_libdir/openvpn/plugins/openvpn-auth-ldap.so
 
 %changelog
+* Sat Sep 14 2024 Nikolay Burykin <bne@altlinux.org> 2.0.4-alt4
+- Fix for buffer overflow in extract_openvpn_cr() (CVE-2024-28820) (ALT #51361)
+
 * Mon May 22 2023 Nikolay Burykin <bne@altlinux.org> 2.0.4-alt3
 - Initial build for ALT
-
