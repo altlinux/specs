@@ -1,4 +1,4 @@
-%define git_commit b92e354389bb7c0bd114a8631b8af110d3cb3a14
+%define git_commit 3c4d4fcd09173ea070dc812ab5d64ca3a3af5f29
 
 %define enet_commit 2a85cd64459f6ba038d233a634d9440490dbba12
 %define implot_commit cc5e1daa5c7f2335a9460ae79c829011dc5cef2d
@@ -6,7 +6,7 @@
 %define tinygltf_commit c5641f2c22d117da7971504591a8f6a41ece488b
 
 Name: dolphin-emu
-Version: 2407
+Version: 2409
 Release: alt1
 
 Summary: The Gamecube / Wii Emulator
@@ -126,6 +126,9 @@ echo "#define SCM_REV_STR \"%git_commit\"
 %config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Sat Sep 14 2024 Nazarov Denis <nenderus@altlinux.org> 2409-alt1
+- Version 2409
+
 * Tue Jul 02 2024 Nazarov Denis <nenderus@altlinux.org> 2407-alt1
 - Version 2407
 
