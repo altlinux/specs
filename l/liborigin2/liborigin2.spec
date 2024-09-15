@@ -1,15 +1,14 @@
 Name: liborigin2
 Version: 20110829
-Release: alt1.qa1
+Release: alt2
 Summary: A library for reading OriginLab project files, version 2
 License: BSD
 Group: System/Libraries
 Url: http://soft.proindependent.com/liborigin2/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.zip
 
-BuildPreReq: unzip boost-devel gcc-c++ libqt4-devel
+BuildPreReq: unzip boost-devel gcc-c++ qt6-base-devel
 
 %description
 A library for reading OriginLab project files. Only files created with
@@ -42,7 +41,7 @@ version 2.
 %setup
 
 %build
-qmake-qt4 QMAKE_CFLAGS_RELEASE="%optflags" \
+qmake-qt6 QMAKE_CFLAGS_RELEASE="%optflags" \
 	QMAKE_CXXFLAGS_RELEASE="%optflags"
 %make_build
 
@@ -68,6 +67,9 @@ cp -fR doc/html/* %buildroot%_docdir/%name/
 %_docdir/%name
 
 %changelog
+* Sun Sep 15 2024 Anton Midyukov <antohami@altlinux.org> 20110829-alt2
+- NMU: rebuild with qmake-qt6
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 20110829-alt1.qa1
 - NMU: rebuilt for updated dependencies.
 
