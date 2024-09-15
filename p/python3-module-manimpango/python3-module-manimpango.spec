@@ -2,7 +2,7 @@
 %define pypi_name manimpango
 
 Name: python3-module-%pypi_name
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 
 Summary: Python bindings to Pango library
@@ -12,9 +12,9 @@ Url: https://pypi.python.org/pypi/%modname
 
 Vcs: https://github.com/ManimCommunity/ManimPango/
 
-Source: https://pypi.io/packages/source/M/%modname/%modname-%version.tar.gz
+Source: https://pypi.io/packages/source/m/%pypi_name/%pypi_name-%version.tar.gz
 
-%define pango_ver 1.4
+%define pango_ver 1.54
 BuildRequires(pre): rpm-build-python3
 BuildRequires: pkgconfig(pango) >= %pango_ver
 BuildRequires: python3(cython) python3(wheel) python3(setuptools)
@@ -23,7 +23,7 @@ BuildRequires: python3(cython) python3(wheel) python3(setuptools)
 Python3 bindings for Pango for using with Manim.
 
 %prep
-%setup -n %modname-%version
+%setup -n %pypi_name-%version
 
 %build
 %pyproject_build
@@ -38,6 +38,9 @@ Python3 bindings for Pango for using with Manim.
 
 
 %changelog
+* Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Sat Oct 14 2023 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - 0.5.0
 

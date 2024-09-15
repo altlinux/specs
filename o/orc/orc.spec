@@ -13,7 +13,7 @@
 %endif
 
 Name: orc
-Version: %ver_major.39
+Version: %ver_major.40
 Release: alt1
 
 Summary: The Oil Runtime Compiler
@@ -22,7 +22,8 @@ License: BSD-3-Clause
 Url: http://code.entropywave.com/projects/orc
 
 %if_disabled snapshot
-Source: https://github.com/GStreamer/orc/archive/%version/%name-%version.tar.gz
+#Source: https://github.com/GStreamer/orc/archive/%version/%name-%version.tar.gz
+Source: https://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
 %else
 Vcs: https://anongit.freedesktop.org/gstreamer/orc.git
 Source: %name-%version.tar
@@ -149,6 +150,9 @@ rm -f %buildroot/%_libdir/lib%name-test-%ver_major.a
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Fri Sep 13 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.40-alt1
+- 0.4.40
+
 * Sat Jul 20 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.39-alt1
 - 0.4.39 (fixed CVE-2024-40897)
 
