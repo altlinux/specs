@@ -1,6 +1,6 @@
 Name:		scrap2rtf
 Version:	0.5
-Release:	alt1
+Release:	alt2
 Summary:	A simple program to convert Shell Scrap Object File (.shs) to Rich Text Format
 
 License:	GPLv3+
@@ -14,7 +14,7 @@ Patch1:		%name-0.4-build-fix.patch
 Patch2:		%name-fix-stream-output.patch
 
 BuildRequires:	gcc-c++
-BuildRequires:  libqt4-devel
+BuildRequires:  qt6-base-devel
 
 %description
 %summary
@@ -23,7 +23,7 @@ BuildRequires:  libqt4-devel
 %setup -q -n %name
 %patch1 -p2
 %patch2 -p2
-qmake-qt4 scrap2rtf.pro
+qmake-qt6 scrap2rtf.pro
 
 %build
 %make
@@ -37,6 +37,9 @@ qmake-qt4 scrap2rtf.pro
 %_bindir/%name
 
 %changelog
+* Sun Sep 15 2024 Anton Midyukov <antohami@altlinux.org> 0.5-alt2
+- NMU: rebuild with qmake-qt6
+
 * Sun Jun 04 2017 Andrey Cherepanov <cas@altlinux.org> 0.5-alt1
 - New version
 - Fix project homepage
