@@ -27,7 +27,7 @@
 
 Name: jami
 Version: 20230922
-Release: alt4
+Release: alt5
 
 Group: Networking/Instant messaging
 Summary: SIP and IAX2 compatible softphone
@@ -209,6 +209,11 @@ rm -rf daemon/contrib/src/vpx
 rm -rf daemon/contrib/tarballs/libvpx*.tar.gz
 sed -i '/DEPS_ffmpeg/s/vpx//' daemon/contrib/src/ffmpeg/rules.mak
 
+# fix dbus interfaces
+for f in daemon/bin/dbus/cx.ring.Ring.*.xml ; do
+    sed -i '/^<node name=/s|\.|/|g' $f
+done
+
 %build
 %add_optflags %optflags_shared -Wno-error=return-type
 export CXXFLAGS="%optflags"
@@ -344,6 +349,9 @@ ln -s jami %buildroot/%_bindir/jami-qt
 %_pkgconfigdir/jami.pc
 
 %changelog
+* Sun Sep 15 2024 Sergey V Turchin <zerg@altlinux.org> 20230922-alt5
+- fix compile dbus interfaces
+
 * Mon Feb 05 2024 Sergey V Turchin <zerg@altlinux.org> 20230922-alt4
 - build with bundled ffnvcodec
 
