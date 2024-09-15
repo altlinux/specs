@@ -4,7 +4,7 @@
 
 Name:    qtcurve
 Version: 1.9.1
-Release: alt2.git%git_rev
+Release: alt3.git%git_rev
 Epoch:   2
 
 Summary: A set of widget styles for GTK+ and Qt widget toolkits
@@ -18,10 +18,11 @@ Source: %name-%version.tar
 Patch1: qtcurve-1.8.18-no_env.patch
 Patch2: maint.patch
 
-BuildRequires(pre): kde-common-devel rpm-macros-qt3 rpm-macros-qt4 cmake
+BuildRequires(pre): kde-common-devel cmake
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++ libgtk+2-devel
 %if_enabled qt4
+BuildRequires(pre): rpm-macros-qt4
 BuildRequires: kde4libs-devel
 BuildRequires: kde4base-workspace-devel
 %endif
@@ -155,6 +156,9 @@ mv %buildroot%_datadir/kstyle/themes/qtcurve.themerc %buildroot%_datadir/kf5/kst
 %endif
 
 %changelog
+* Sun Sep 15 2024 Anton Midyukov <antohami@altlinux.org> 2:1.9.1-alt3.git4e56a76a
+- NMU: do not add BR on qt4, when build with qt4 is disabled
+
 * Thu Oct 26 2023 Andrey Cherepanov <cas@altlinux.org> 2:1.9.1-alt2.git4e56a76a
 - FTBFS: fix locations.
 
