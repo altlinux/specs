@@ -1,7 +1,7 @@
 %def_without asserts
 Name: libuv
 Version: 1.48.0
-Release: alt1
+Release: alt2
 
 Summary: Evented I/O for NodeJS
 
@@ -16,6 +16,7 @@ Patch1: libuv-fix-tests-ipv6.patch
 Patch2: libuv-fix-test-thread-affinity.patch
 Patch3: libuv-fix-test-tcp-connect6-error.patch
 Patch4: libuv-fix-test-thread-priority.patch
+Patch5: libuv-export-wtf8-functions-properly.patch
 
 BuildRequires: /proc
 BuildRequires: gcc-c++ openssl-devel zlib-devel
@@ -39,6 +40,7 @@ libuv header and build tools.
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
+%patch5 -p1
 
 %build
 # due option hack in autogen.sh
@@ -70,6 +72,9 @@ rm -f %buildroot%_libdir/%name.a
 
 
 %changelog
+* Sun Sep 15 2024 Vitaly Lipatov <lav@altlinux.ru> 1.48.0-alt2
+- add patch for export wtf8 functions properly
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 1.48.0-alt1
 - new version 1.48.0 (with rpmrb script)
 - CVE-2024-24806
