@@ -1,5 +1,5 @@
 Name: kernel-image-6.11
-Release: alt0.rc7
+Release: alt1
 %define kernel_src_version	6.10
 %define kernel_base_version	6.11
 %define kernel_sublevel	.0
@@ -578,6 +578,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Sep 15 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.0-alt1
+- Update to v6.11 (2024-09-15) release.
+- config: Enable more Intel drivers.
+
 * Sun Sep 08 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.0-alt0.rc7
 - Update to v6.11-rc7 (2024-09-08).
 - altha: Remove sentinel elements from sysctl tables.
