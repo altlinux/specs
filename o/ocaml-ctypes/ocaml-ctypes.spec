@@ -1,17 +1,18 @@
 %define pkgname ctypes
 Name: ocaml-%pkgname
-Version: 0.21.1
+Version: 0.23.0
 Release: alt1
 Summary: Combinators for binding to C libraries without writing any C
 
 Group: Development/ML
 License: MIT
 Url: https://github.com/ocamllabs/ocaml-ctypes
+VCS: https://github.com/ocamllabs/ocaml-ctypes
 Source: %name-%version.tar
 BuildRequires:  ocaml-integers-devel ocaml-bigarray-compat-devel
 BuildRequires: libffi-devel 
 BuildRequires: dune ocaml ocaml-dune-configurator-devel
-BuildPreReq: rpm-build-ocaml >= 1.1
+BuildPreReq: rpm-build-ocaml >= 1.6.3
 
 %description
 ctypes is a library for binding to C libraries using pure OCaml. The primary
@@ -43,6 +44,9 @@ developing applications that use %name.
 %_libdir/ocaml/%pkgname/*.h
 
 %changelog
+* Thu Sep 05 2024 Anton Farygin <rider@altlinux.ru> 0.23.0-alt1
+- 0.21.1 -> 0.23.0
+
 * Tue Nov 07 2023 Anton Farygin <rider@altlinux.ru> 0.21.1-alt1
 - 0.21.1
 

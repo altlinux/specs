@@ -1,13 +1,15 @@
 Name: ocaml-ocamlnet
 Version: 4.1.9
-Release: alt3
+Release: alt4
 Summary: Network protocols for OCaml
-License: BSD
+License: BSD-3-Clause
 Group: Development/ML
 
 Url: https://projects.camlcity.org/projects/ocamlnet.html
 VCS: https://gitlab.com/gerdstolpmann/lib-ocamlnet3.git
 Source0:%name-%version.tar
+Patch0: ocamlnet-upstream-ocaml5-support.patch
+Patch1: ocaml-ocamlnet-ocaml5.patch
 
 BuildPreReq: /dev/shm
 BuildRequires: ocaml >= 4.04
@@ -97,6 +99,13 @@ files for developing applications that use %name-nethttpd.
 
 %prep
 %setup
+%patch0 -p2
+%patch1 -p2
+sed -i 's/^\(version=\).*/\1"%{version}"/' configure
+sed -i 's,ocamlopt -shared -o \.dummy\.cmxs >/dev/null 2>/dev/null,true,' configure
+sed -i 's,ocamlc -safe-string >/dev/null 2>/dev/null,true,' configure
+sed -i 's,ocamlc -opaque >/dev/null 2>/dev/null,true,' configure
+
 
 %build
 ./configure \
@@ -165,6 +174,9 @@ echo -e '-b /usr/bin/netplex-admin\n-b /usr/bin/ocamlrpcgen' \
 %_libdir/ocaml/nethttpd/*.mli
 
 %changelog
+* Thu Sep 12 2024 Anton Farygin <rider@altlinux.ru> 4.1.9-alt4
+- ocaml 5.2: added patches from upstream git and fedora
+
 * Fri Nov 24 2023 Anton Farygin <rider@altlinux.ru> 4.1.9-alt3
 - fixed build with bytecode-only ocaml
 

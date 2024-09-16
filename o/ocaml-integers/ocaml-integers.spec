@@ -2,13 +2,15 @@
 
 Name:    ocaml-%modulename
 Version: 0.7.0
-Release: alt1
+Release: alt2
 Summary: Various signed and unsigned integer types for OCaml
 License: MIT
 Group:   Development/ML
 URL:     https://github.com/ocamllabs/ocaml-integers
+VCS:     https://github.com/ocamllabs/ocaml-integers
 BuildRequires: dune
 BuildRequires: ocaml rpm-build-ocaml
+BuildRequires: ocaml-compiler-libs
 Source:  %modulename-%version.tar
 
 %description
@@ -43,6 +45,9 @@ sed -i 's,stdlib-shims,,' src/dune
 %_libdir/ocaml/%{modulename}*/*.h
 
 %changelog
+* Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 0.7.0-alt2
+- added ocaml-compiler-libs to BuildRequires
+
 * Thu Mar 24 2022 Anton Farygin <rider@altlinux.ru> 0.7.0-alt1
 - 0.5.1 -> 0.7.0
 

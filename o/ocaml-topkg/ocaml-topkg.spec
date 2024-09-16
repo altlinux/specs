@@ -1,11 +1,12 @@
 %define oname   topkg
 Name: ocaml-topkg
-Version: 1.0.6
-Release: alt2
+Version: 1.0.7
+Release: alt1
 Summary: The transitory OCaml software packager
 License: ISC
 Group: Development/ML
-Url: http://erratique.ch/software/topkg
+Url: https://erratique.ch/software/topkg
+VCS: https://github.com/dbuenzli/topkg
 Source0: %name-%version.tar
 BuildRequires: opam
 BuildRequires: ocaml-findlib-devel
@@ -60,6 +61,10 @@ rm -rf %buildroot%prefix/doc/%oname
 %doc doc/ test/
 
 %changelog
+* Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 1.0.7-alt1
+- fix package version
+- update homepage and add the VCS tag
+
 * Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 1.0.6-alt2
 - added support for bytecode-only version of the ocaml package
 

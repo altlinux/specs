@@ -1,6 +1,6 @@
 %define libname uunf
 Name: ocaml-%libname
-Version: 15.1.0
+Version: 16.0.0
 Release: alt1
 Summary: Unicode text normalization for OCaml
 License: ISC
@@ -47,6 +47,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Sep 11 2024 Anton Farygin <rider@altlinux.ru> 16.0.0-alt1
+- 16.0.0
+
 * Mon Nov 13 2023 Anton Farygin <rider@altlinux.ru> 15.1.0-alt1
 - first build for ALT
 

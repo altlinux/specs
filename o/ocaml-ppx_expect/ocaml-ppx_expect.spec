@@ -1,19 +1,19 @@
 %define ocamlmod ppx_expect
 Name: ocaml-%ocamlmod
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 Summary: a cram like framework for OCaml
 Group: Development/ML
 License: MIT
-Url: http://ounit.forge.ocamlcore.org/
-# https://github.com/gildor478/ounit
+Url: https://github.com/janestreet/ppx_expect
+VCS: https://github.com/janestreet/ppx_expect
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-BuildRequires: ocaml >= 4.10
+BuildRequires: ocaml >= 5.2.0
 BuildRequires: ocaml-ppxlib-devel
 BuildRequires: ocaml-stdio-devel
-BuildRequires: ocaml-ppx_inline_test-devel
+BuildRequires: ocaml-ppx_inline_test-devel >= 0.17.0
 BuildRequires: ocaml-ppx_here-devel
 BuildRequires: ocaml-re-devel
 BuildRequires: ocaml-base-devel
@@ -52,9 +52,12 @@ developing applications that use %name.
 %doc LICENSE.md
 
 %files devel -f ocaml-files.devel
-%doc README.org CHANGES.md
+%doc README.mdx CHANGES.md
 
 %changelog
+* Tue Sep 10 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
+- 0.17.0
+
 * Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
 - 0.16.0
 

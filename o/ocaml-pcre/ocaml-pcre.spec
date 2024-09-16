@@ -1,12 +1,12 @@
 Name: ocaml-pcre
 Version: 7.5.0
-Release: alt1
+Release: alt2
 
 Summary: Perl compatibility regular expressions (PCRE) for OCaml
 License: LGPLv2.1 with OCaml-LGPL-linking-exception
 Group: Development/ML
-Url: http://mmottl.github.io/pcre-ocaml/
-# https://github.com/mmottl/pcre-ocaml
+Url: https://mmottl.github.io/pcre-ocaml/
+VCS: https://github.com/mmottl/pcre-ocaml
 Source: %name-%version.tar
 Provides: pcre-ocaml = %version-%release
 Obsoletes: pcre-ocaml
@@ -50,6 +50,9 @@ developing applications that use %name.
 %doc README.md
 
 %changelog
+* Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 7.5.0-alt2
+- add VCS tag and update URL
+
 * Sun Oct 03 2021 Anton Farygin <rider@altlinux.ru> 7.5.0-alt1
 - 7.5.0
 

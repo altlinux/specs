@@ -1,6 +1,6 @@
 %define  modulename ppx_optional
 Name:    ocaml-%modulename
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 
 Summary: Pattern matching on flat options
@@ -9,6 +9,7 @@ Group:   Development/ML
 URL:     https://github.com/janestreet/ppx_optional
 BuildRequires: dune
 BuildRequires: ocaml-base-devel ocaml-ppxlib-devel
+BuildRequires: ocaml-ppxlib_jane-devel >= %version
 Source:  %modulename-%version.tar
 
 %description
@@ -41,6 +42,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Sep 11 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
+- 0.17.0
+
 * Tue Nov 14 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
 - 0.16.0
 

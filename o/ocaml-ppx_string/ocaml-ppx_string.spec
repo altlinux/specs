@@ -1,7 +1,7 @@
 %define  modulename ppx_string
 
 Name:    ocaml-%modulename
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 
 Summary: ppx extension for string interpolation
@@ -45,6 +45,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Sep 11 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
+- 0.17.0
+
 * Tue Nov 14 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
 - 0.16.0
 

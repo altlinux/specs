@@ -1,8 +1,8 @@
 %define  modulename cstruct
-%define opamodules cstruct,cstruct-unix,cstruct-lwt,cstruct-sexp
+%define opamodules cstruct,cstruct-unix,cstruct-sexp
 Name:    ocaml-%modulename
 Version: 6.2.0
-Release: alt1
+Release: alt2
 Summary: access C-like structures directly from OCaml
 License: ISC
 Group:   Development/ML
@@ -12,10 +12,8 @@ Patch0:   %name-%version-%release.patch
 BuildRequires: dune
 BuildRequires: ocaml-bigarray-compat-devel
 BuildRequires: ocaml-fmt-devel
-BuildRequires: ocaml-lwt-devel
 BuildRequires: ocaml-sexplib-devel
 BuildRequires: ocaml-alcotest-devel
-BuildRequires: ocaml-migrate-parsetree-devel
 BuildRequires: ocaml-cppo
 BuildRequires: ocaml-alcotest-devel
 BuildRequires(pre): rpm-build-ocaml >= 1.6
@@ -54,6 +52,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Sep 05 2024 Anton Farygin <rider@altlinux.ru> 6.2.0-alt2
+- built without lwt
+
 * Fri Nov 03 2023 Anton Farygin <rider@altlinux.ru> 6.2.0-alt1
 - 6.2.0
 

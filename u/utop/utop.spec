@@ -1,8 +1,7 @@
 Name: utop
-Version: 2.13.1
+Version: 2.14.0
 Release: alt1
 Summary: Universal toplevel for OCaml
-
 Group: Development/ML
 License: MIT
 Url: https://github.com/ocaml-community/utop
@@ -56,6 +55,9 @@ sed -i 's/%%%%VERSION%%%%/%version/' src/lib/uTop.ml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Sep 13 2024 Anton Farygin <rider@altlinux.ru> 2.14.0-alt1
+- 2.14.0
+
 * Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 2.13.1-alt1
 - 2.13.1
 

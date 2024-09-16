@@ -1,12 +1,13 @@
 Name: ocaml-num
-Version: 1.4
-Release: alt2
+Version: 1.5
+Release: alt1
 Summary: Legacy Num library for arbitrary-precision integer and rational arithmetic
 Group: Development/ML
 License: LGPLv2+ with exceptions
 Url: https://github.com/ocaml/num
 Source0: %name-%version.tar
 BuildRequires: ocaml
+BuildRequires: ocaml-compiler-libs >= 5.2.0
 BuildRequires: dune
 
 %description
@@ -50,6 +51,9 @@ developing applications that use %name.
 %doc LICENSE
 
 %changelog
+* Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 1.5-alt1
+- 1.4 -> 1.5
+
 * Tue Nov 07 2023 Anton Farygin <rider@altlinux.ru> 1.4-alt2
 - removed findlib from BuildRequires
 

@@ -1,12 +1,13 @@
 %define libname stdcompat
 Name: ocaml-%libname
 Version: 19
-Release: alt2
+Release: alt3.gitd53390d
 Summary: Compatibility module for OCaml standard library
 License: BSD-3-Clause
 Group: Development/ML
 Url: https://github.com/thierry-martinez/stdcompat
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 BuildRequires: dune ocaml
 
 %description
@@ -17,7 +18,7 @@ be compiled on former versions of OCaml.
 %package devel
 Summary: Development files for %name
 Group: Development/ML
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The %name-devel package contains libraries and signature files for
@@ -25,6 +26,7 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %dune_build
@@ -36,12 +38,15 @@ developing applications that use %name.
 %dune_check
 
 %files -f ocaml-files.runtime
-%doc README.md ChangeLog COPYING 
+%doc README.md CHANGES.md COPYING 
 
 %files devel -f ocaml-files.devel
 %_ocamldir/%libname/*.h
 
 %changelog
+* Thu Sep 05 2024 Anton Farygin <rider@altlinux.ru> 19-alt3.gitd53390d
+- added ocaml 5.2 compatibility patches from upstream git d53390d
+
 * Mon Dec 04 2023 Anton Farygin <rider@altlinux.ru> 19-alt2
 - added a lost header to the development package (Closes: #48671)
 

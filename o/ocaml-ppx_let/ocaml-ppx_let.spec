@@ -1,21 +1,23 @@
 %define  modulename ppx_let
 Name:    ocaml-%modulename
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 
 Summary: Monadic let-bindings
 License: MIT
 Group:   Development/ML
 URL:     https://github.com/janestreet/ppx_let
+VCS:     https://github.com/janestreet/ppx_let
 
 BuildRequires: dune ocaml-ppxlib-devel
-BuildRequires: ocaml-base-devel
+BuildRequires: ocaml-base-devel >= %version
 BuildRequires: ocaml-ppx_here-devel
 
 Source:  %modulename-%version.tar
 
 %description
-%summary
+A ppx rewriter for monadic and applicative let bindings, match expressions,
+and if expressions.
 
 %package devel
 Summary: Development files for %name
@@ -44,6 +46,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Sep 05 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
+- 0.17.0
+
 * Wed Nov 08 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
 - 0.16.0
 

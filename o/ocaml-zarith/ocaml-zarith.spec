@@ -2,7 +2,7 @@
 %global pkgname zarith
 %define ocamlstublib %_ocamldir/stublibs/
 Name: ocaml-%pkgname
-Version: 1.13
+Version: 1.14
 Release: alt1
 Summary: OCaml interface to GMP
 Group: Development/ML
@@ -84,6 +84,9 @@ make install INSTALLDIR=%buildroot%_libdir/ocaml
 %_ocamldir/%pkgname/*.h
 
 %changelog
+* Thu Sep 05 2024 Anton Farygin <rider@altlinux.ru> 1.14-alt1
+- 1.13 -> 1.14
+
 * Wed Nov 08 2023 Anton Farygin <rider@altlinux.ru> 1.13-alt1
 - 1.13
 

@@ -1,7 +1,7 @@
 %define modname csv
 Name: ocaml-%modname
 Version: 2.4
-Release: alt3
+Release: alt4
 Summary: OCaml library for reading and writing CSV files
 License: LGPLv2+
 Group: Development/ML
@@ -61,6 +61,9 @@ scripts based on the library ocaml-csv.
 %doc README.md LICENSE.md
 
 %changelog
+* Thu Sep 05 2024 Anton Farygin <rider@altlinux.ru> 2.4-alt4
+- fixed build with ocaml 5.2.0
+
 * Fri Nov 10 2023 Anton Farygin <rider@altlinux.ru> 2.4-alt3
 - removed ocaml-findlib from BuildRequires
 

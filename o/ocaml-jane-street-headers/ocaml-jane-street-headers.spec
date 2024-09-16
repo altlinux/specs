@@ -1,14 +1,15 @@
 %define  modulename jane-street-headers
 
 Name:    ocaml-%modulename
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 Summary: Jane Street header files
 License: MIT
 Group:   Development/ML
-URL:     https://github.com/janestreet/jane-street-headers
+URL: https://github.com/janestreet/jane-street-headers
+VCS: https://github.com/janestreet/jane-street-headers
 BuildRequires: dune ocaml
-BuildRequires: rpm-build-ocaml >= 1.4
+BuildRequires: rpm-build-ocaml >= 1.6.3
 Source:  %modulename-%version.tar
 
 %description
@@ -42,6 +43,9 @@ developing applications that use %name.
 %_ocamldir/%modulename/*.h
 
 %changelog
+* Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
+- 0.17.0
+
 * Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
 - 0.16.0
 

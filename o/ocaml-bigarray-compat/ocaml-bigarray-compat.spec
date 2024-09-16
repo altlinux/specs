@@ -2,12 +2,12 @@
 %define  modulename bigarray-compat
 Name:    ocaml-%modulename
 Version: 1.1.0
-Release: alt1
+Release: alt2
 Summary: Compatibility library to use Stdlib.Bigarray when possible
 License: ISC
 Group:   Development/ML
 URL:     https://github.com/mirage/bigarray-compat
-BuildRequires: dune ocaml
+BuildRequires: dune ocaml ocaml-compiler-libs >= 5.2.0
 BuildRequires: rpm-build-ocaml >= 1.4
 Source:  %name-%version.tar
 
@@ -41,6 +41,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 1.1.0-alt2
+- add ocaml-compiler-libs build dependency to fix build with ocaml 5.2
+
 * Tue Nov 07 2023 Anton Farygin <rider@altlinux.ru> 1.1.0-alt1
 - 1.1.0
 

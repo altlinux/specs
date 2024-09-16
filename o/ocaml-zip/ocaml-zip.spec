@@ -3,8 +3,8 @@
 %endif
 %define pkgname zip
 Name: ocaml-%pkgname
-Version: 1.11
-Release: alt2
+Version: 1.12
+Release: alt1
 Summary: OCaml library for reading and writing zip, jar and gzip files
 Group: Development/ML
 License: LGPLv2.1+ with OCaml-LGPL-linking-exception
@@ -54,6 +54,9 @@ mkdir -p %buildroot%_ocamldir
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Sep 05 2024 Anton Farygin <rider@altlinux.ru> 1.12-alt1
+- 1.11 -> 1.12
+
 * Sat Nov 18 2023 Anton Farygin <rider@altlinux.ru> 1.11-alt2
 - fixed build with bytecode-only ocaml
 

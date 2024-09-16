@@ -5,14 +5,14 @@
 
 %define libname qcheck
 Name: ocaml-%libname
-Version: 0.21.2
+Version: 0.22
 Release: alt1
 Summary: QuickCheck inspired property-based testing for OCaml
 Group: Development/ML
-License: BSD
+License: BSD-2-Clause
 Url: https://github.com/c-cube/qcheck/
+VCS: https://github.com/c-cube/qcheck/
 Source0: %name-%version.tar
-Patch0: %name-%version-%release.patch
 BuildRequires: dune
 BuildRequires: ocaml
 BuildRequires: ocaml-ppxlib-devel
@@ -35,7 +35,6 @@ developing applications that use %name.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 %dune_build --release @install
@@ -54,6 +53,9 @@ rm -rf %buildroot/usr/doc
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 0.22-alt1
+- 0.21.2 -> 0.22
+
 * Mon Nov 06 2023 Anton Farygin <rider@altlinux.ru> 0.21.2-alt1
 - 0.21.2
 

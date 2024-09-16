@@ -1,20 +1,25 @@
 %define  modulename ppx_enumerate
 
 Name:    ocaml-%modulename
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 
 Summary: Generate a list containing all values of a finite type
 License: MIT
 Group:   Development/ML
 URL:     https://github.com/janestreet/ppx_enumerate
+VCS:     https://github.com/janestreet/ppx_enumerate
 BuildRequires: dune
 BuildRequires: ocaml-base-devel
 BuildRequires: ocaml-ppxlib-devel
+BuildRequires: ocaml-ppxlib_jane-devel >= %version
 Source:  %modulename-%version.tar
 
 %description
 %summary
+
+ppx_enumerate is a ppx rewriter which generates a definition for the list of
+all values of a type with (for a type which only has finitely many values).
 
 %package devel
 Summary: Development files for %name
@@ -42,6 +47,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
+- 0.17.0
+
 * Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
 - 0.16.0
 

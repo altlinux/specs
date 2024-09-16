@@ -1,11 +1,11 @@
 %define libname uucd
 Name: ocaml-%libname
-Version: 15.1.0
+Version: 16.0.0
 Release: alt1
 Summary: Unicode character database decoder for OCaml
 License: ISC
 Group: Development/ML
-Url: http://erratique.ch/software/uucd
+Url: https://erratique.ch/software/uucd
 VCS: https://github.com/dbuenzli/uucd
 Source: %name-%version.tar
 
@@ -45,6 +45,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Sep 11 2024 Anton Farygin <rider@altlinux.ru> 16.0.0-alt1
+- 16.0.0 
+
 * Mon Nov 13 2023 Anton Farygin <rider@altlinux.ru> 15.1.0-alt1
 - first build for ALT
 

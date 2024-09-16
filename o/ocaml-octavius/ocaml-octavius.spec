@@ -3,13 +3,13 @@
 
 Name:    ocaml-%modulename
 Version: 1.2.2
-Release: alt3
+Release: alt4
 Summary: ocamldoc comment syntax parser
 License: ISC
 Group:   Development/ML
 URL:     https://github.com/ocaml-doc/octavius
-BuildRequires: dune ocaml
-BuildPreReq: rpm-build-ocaml >= 1.4
+BuildRequires: dune ocaml ocaml-compiler-libs >= 5.2.0
+BuildPreReq: rpm-build-ocaml >= 1.6.3
 
 Source:  %modulename-%version.tar
 
@@ -45,6 +45,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 1.2.2-alt4
+- add ocaml-compiler-libs to BuildRequires to fix build with ocaml-5.2.0
+
 * Thu Oct 15 2020 Anton Farygin <rider@altlinux.ru> 1.2.2-alt3
 - added ocaml to BuildRequires
 

@@ -11,13 +11,13 @@
 # collect2: error: ld returned 1 exit status
 # File "caml_startup", line 1:
 # Error: Error during linking (exit code 1)
-
+%def_with check
 %ifarch armh
 %def_without check
 %endif
 
 Name: ocaml-%libname
-Version: 0.31.0
+Version: 0.33.0
 Release: alt1
 Summary: Base library and tools for ppx rewriters.
 License: MIT
@@ -25,10 +25,14 @@ Group: Development/ML
 Url: https://github.com/ocaml-ppx/ppxlib
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
-BuildRequires: ocaml-findlib-devel dune cinaps ocaml-result-devel
-BuildRequires: ocaml-re-devel ocaml-compiler-libs-devel ocaml-ppx_derivers-devel
+BuildRequires: dune cinaps ocaml-result-devel
+BuildRequires: ocaml-re-devel ocaml-compiler-libs ocaml-ppx_derivers-devel
 BuildRequires: ocaml-sexplib0-devel ocaml-stdio-devel
 BuildRequires: ocaml-base-devel /proc
+BuildRequires: ocaml-compiler-libs-janestreet-devel
+%if_with check
+BuildRequires: ocaml-findlib-devel
+%endif
 
 %description
 A comprehensive toolbox for ppx development. It features:
@@ -73,6 +77,9 @@ rm -rf %buildroot%_bindir
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Sep 03 2024 Anton Farygin <rider@altlinux.ru> 0.33.0-alt1
+- 0.31.0 -> 0.33.0
+
 * Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.31.0-alt1
 - 0.31.0
 

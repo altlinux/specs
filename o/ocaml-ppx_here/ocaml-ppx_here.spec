@@ -1,7 +1,7 @@
 %define  modulename ppx_here
 
 Name:    ocaml-%modulename
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 Summary: Expands [%%here_str] into its location
 License: MIT
@@ -42,6 +42,9 @@ developing applications that use %name.
 %doc README.md CHANGES.md
 
 %changelog
+* Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
+- 0.17.0
+
 * Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
 - 0.16.0
 

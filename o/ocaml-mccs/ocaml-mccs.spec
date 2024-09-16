@@ -1,5 +1,5 @@
 Name: ocaml-mccs
-Version: 1.1.16
+Version: 1.1.18
 Release: alt1
 Summary: Multi Criteria CUDF Solver with OCaml bindings
 License: LGPL-2.1-only WITH OCaml-LGPL-linking-exception and BSD-3-Clause and GPL-3.0-only
@@ -10,6 +10,7 @@ BuildRequires: ocaml
 BuildRequires: dune
 BuildRequires: gcc-c++
 BuildRequires: ocaml-cudf-devel
+BuildRequires: ocaml-compiler-libs >= 5.2.0
 BuildRequires: libglpk-devel
 
 %description
@@ -47,6 +48,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Sep 10 2024 Anton Farygin <rider@altlinux.ru> 1.1.18-alt1
+- 1.1+18
+
 * Sun Nov 12 2023 Anton Farygin <rider@altlinux.ru> 1.1.16-alt1
 - 1.1+16
 

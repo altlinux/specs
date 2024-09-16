@@ -1,5 +1,5 @@
 Name: rpm-build-ocaml
-Version: 1.6.2.1
+Version: 1.6.3
 Release: alt1
 BuildArch: noarch
 
@@ -34,6 +34,10 @@ install -p -m755 ocaml.{req,prov}{.files,} ocaml-functions %buildroot%_rpmlibdir
 %_rpmlibdir/ocaml*
 
 %changelog
+* Tue Sep 03 2024 Anton Farygin <rider@altlinux.ru> 1.6.3-alt1
+- provide (in addition to implementation) version for interface (ocaml-cmi)
+  from .cmx files
+
 * Thu Apr 25 2024 Arseny Maslennikov <arseny@altlinux.org> 1.6.2.1-alt1
 - Stopped using files packaged in the rpm project.
 

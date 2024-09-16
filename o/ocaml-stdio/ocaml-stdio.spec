@@ -1,6 +1,6 @@
 %define oname stdio
 Name: ocaml-%oname
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 Summary: Standard IO library for OCaml
 License: Apache-2.0
@@ -8,7 +8,7 @@ Group: Development/ML
 Url: https://github.com/janestreet/%oname
 Source0: %name-%version.tar
 BuildRequires: dune
-BuildRequires: ocaml-base  >= 0.16.0
+BuildRequires: ocaml-base  >= 0.17.1
 
 %description
 Stdio implements simple input/output functionalities for OCaml.
@@ -43,6 +43,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Sep 03 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
+- 0.17.0
+
 * Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
 - 0.16.0
 

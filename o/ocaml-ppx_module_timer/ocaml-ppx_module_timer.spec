@@ -1,7 +1,7 @@
 %define  modulename ppx_module_timer
 
 Name:    ocaml-%modulename
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 
 Summary: Ppx rewriter that records top-level module startup times
@@ -13,7 +13,7 @@ BuildRequires: dune ocaml-time_now-devel
 BuildRequires: ocaml-base-devel ocaml-ppxlib-devel 
 BuildRequires: ocaml-ppx_base-devel 
 BuildRequires: ocaml-stdio-devel
-BuildPreReq: rpm-build-ocaml >= 1.4
+BuildPreReq: rpm-build-ocaml >= 1.6.3
 
 Source:  %modulename-%version.tar
 
@@ -47,6 +47,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Sep 10 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
+- 0.17.0
+
 * Sun Nov 12 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
 - 0.16.0
 

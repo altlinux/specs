@@ -2,13 +2,13 @@
 %define docdir %_docdir/%name-%version
 %define module sqlite3
 Name: ocaml-%module
-Version: 5.1.0
-Release: alt2
+Version: 5.2.0
+Release: alt1
 Summary: OCaml library for accessing SQLite3 databases
 License: MIT
 Group: Development/ML
 Url: https://mmottl.github.io/sqlite3-ocaml/
-# https://github.com/mmottl/sqlite3-ocaml
+VCS: https://github.com/mmottl/sqlite3-ocaml
 Source: %name-%version.tar
 
 BuildRequires: libsqlite3-devel ocaml-dune-configurator-devel rpm-build-ocaml
@@ -53,6 +53,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Sep 10 2024 Anton Farygin <rider@altlinux.ru> 5.2.0-alt1
+- 5.2.0
+
 * Tue Nov 14 2023 Anton Farygin <rider@altlinux.ru> 5.1.0-alt2
 - fix BuildRequires
 

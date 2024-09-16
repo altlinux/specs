@@ -1,12 +1,12 @@
 Name: ocaml-camlp-streams
 Version: 5.0.1
-Release: alt1
+Release: alt2
 Summary: The Stream and Genlex libraries for use with Camlp4 and Camlp5
 License: LGPLv2.1 with OCaml-LGPL-linking-exception
 Group: Development/ML
 Url: https://github.com/ocaml/camlp-streams
 Source0: %name-%version.tar
-BuildRequires: ocaml >= 4.14
+BuildRequires: ocaml >= 5.2.0 ocaml-compiler-libs >= 5.2.0
 BuildRequires: dune
 
 %description
@@ -58,5 +58,8 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Sep 05 2024 Anton Farygin <rider@altlinux.ru> 5.0.1-alt2
+- added ocaml-compiler-libs to BuildRequires against ocaml 5.2.0
+
 * Tue Nov 07 2023 Anton Farygin <rider@altlinux.ru> 5.0.1-alt1
 - first build for ALT

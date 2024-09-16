@@ -1,7 +1,7 @@
 %def_with check
 Name: ocaml-gapi
 Version: 0.4.5
-Release: alt1
+Release: alt2
 Summary: A simple OCaml client for Google Services
 License: MIT
 Group: Development/ML
@@ -59,10 +59,10 @@ sed -i 's,oUnit,ounit2,' src/test/dune
 %dune_build -p gapi-ocaml
 
 %install
-%dune_install
+%dune_install -p gapi-ocaml
 
 %check
-%dune_check
+%dune_check -p gapi-ocaml
 
 %files -f ocaml-files.runtime
 %doc README.md LICENSE
@@ -70,6 +70,9 @@ sed -i 's,oUnit,ounit2,' src/test/dune
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Sep 12 2024 Anton Farygin <rider@altlinux.ru> 0.4.5-alt2
+- install, check and build with enabled reproducible option (-p)
+
 * Tue Nov 14 2023 Anton Farygin <rider@altlinux.ru> 0.4.5-alt1
 - 0.4.5
 

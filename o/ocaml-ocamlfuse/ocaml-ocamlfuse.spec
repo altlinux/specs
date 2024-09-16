@@ -1,6 +1,6 @@
 Name: ocaml-ocamlfuse
 Version: 2.7.1
-Release: alt12
+Release: alt13.cvs11
 Summary: Ocaml FUSE binding
 Group: Development/ML
 License: GPL-2.0
@@ -47,6 +47,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Sep 10 2024 Anton Farygin <rider@altlinux.ru> 2.7.1-alt13.cvs11
+- updated to v2.7.1_cvs11
+
 * Sun Nov 12 2023 Anton Farygin <rider@altlinux.ru> 2.7.1-alt12
 - updated to v2.7.1_cvs8
 

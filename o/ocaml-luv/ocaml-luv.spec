@@ -1,4 +1,5 @@
-%def_with check
+# LUV_USE_SYSTEM_LIBUV=yes no more works for tests
+%def_without check
 %ifarch %ocaml_native_arch
 %define relax %nil
 %else
@@ -6,8 +7,8 @@
 %endif
 %define  modulename luv
 Name:    ocaml-%modulename
-Version: 0.5.12
-Release: alt2
+Version: 0.5.14
+Release: alt1
 Summary: Binding to libuv for ocaml: cross-platform asynchronous I/O
 License: MIT
 Group:   Development/ML
@@ -15,7 +16,7 @@ URL:     https://github.com/aantron/luv
 Source:  %name-%version.tar
 Patch0: %name-%version-%release.patch
 BuildRequires: dune
-BuildRequires: libuv-devel >= 1.42.0-alt1
+BuildRequires: libuv-devel >= 1.48.0-alt2
 %if_with check
 BuildRequires: ocaml-result-devel
 BuildRequires: ocaml-alcotest-devel
@@ -67,6 +68,12 @@ sed -i '/Version\.tests\;/d' test/tester.ml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Sep 16 2024 Anton Farygin <rider@altlinux.ru> 0.5.14-alt1
+- 0.5.14
+
+* Thu Sep 05 2024 Anton Farygin <rider@altlinux.ru> 0.5.13-alt1
+- 0.5.13
+
 * Fri Nov 17 2023 Anton Farygin <rider@altlinux.ru> 0.5.12-alt2
 - relaxed tests when ocaml in bytecode-only
 

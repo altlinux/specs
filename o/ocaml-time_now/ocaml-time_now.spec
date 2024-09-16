@@ -1,15 +1,15 @@
 %define  modulename time_now
 
 Name:    ocaml-%modulename
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 Summary: Reports the current time
 License: MIT
 Group:   Development/ML
 URL:     https://github.com/janestreet/time_now
-BuildRequires: dune ocaml-jane-street-headers-devel ocaml-jst-config-devel
+BuildRequires: dune ocaml-jane-street-headers-devel ocaml-jst-config-devel >= %version
 BuildRequires: ocaml-ppx_base-devel ocaml-ppx_optcomp-devel
-BuildPreReq: rpm-build-ocaml >= 1.4
+BuildPreReq: rpm-build-ocaml >= 1.6
 
 Source:  %modulename-%version.tar
 
@@ -21,11 +21,11 @@ Summary: Development files for %name
 Group: Development/ML
 Requires: %name = %EVR
 Requires: ocaml-jane-street-headers-devel
-Requires: ocaml-ppx_sexp_conv
+Requires: ocaml-ppx_sexp_conv-devel
 Requires: ocaml-sexplib0-devel
-Requires: ocaml-ppx_compare
-Requires: ocaml-ppx_enumerate
-Requires: ocaml-ppx_hash
+Requires: ocaml-ppx_compare-devel
+Requires: ocaml-ppx_enumerate-devel
+Requires: ocaml-ppx_hash-devel
 %description devel
 The %name-devel package contains libraries and signature files for
 developing applications that use %name.
@@ -48,6 +48,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Sep 10 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
+- 0.17.0
+
 * Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
 - 0.16.0
 

@@ -2,14 +2,16 @@
 %def_with check
 
 Name:    ocaml-%modulename
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 Summary: A ppx rewriter that generates functions to copy local values to the global heap
 License: MIT
 Group:   Development/ML
 URL:     https://github.com/janestreet/ppx_globalize
+VCS:     https://github.com/janestreet/ppx_globalize
 BuildRequires: dune ocaml-ppxlib-devel  ocaml-base-devel
-BuildPreReq: rpm-build-ocaml >= 1.4
+BuildRequires: ocaml-ppxlib_jane-devel >= %version
+BuildRequires: rpm-build-ocaml >= 1.6
 Source:  %name-%version.tar
 
 %description
@@ -41,6 +43,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
+- 0.17.0
+
 * Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
 - first build for ALT
 

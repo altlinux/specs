@@ -1,12 +1,13 @@
 %def_with check
 %define modulename angstrom
 Name: ocaml-%modulename
-Version: 0.15.0
+Version: 0.16.0
 Release: alt1
 Summary: OCaml Parser combinators built for speed and memory-efficiency
 License: BSD-3-Clause
 Group: Development/ML
 Url: https://github.com/inhabitedtype/angstrom
+VCS: https://github.com/inhabitedtype/angstrom
 Source: %name-%version.tar
 BuildRequires: dune ocaml-bigstringaf-devel
 BuildRequires: ocaml-result-devel
@@ -50,5 +51,8 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Sep 05 2024 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
+- 0.15.0 -> 0.16.0
+
 * Tue Mar 30 2021 Anton Farygin <rider@altlinux.org> 0.15.0-alt1
 - first build for ALT

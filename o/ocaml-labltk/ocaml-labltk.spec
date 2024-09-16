@@ -2,8 +2,8 @@
 %define pkgname labltk
 
 Name: ocaml-%pkgname
-Version: 8.06.13
-Release: alt2
+Version: 8.06.14
+Release: alt1
 
 Summary: Tcl/Tk interface for OCaml
 Group: Development/ML
@@ -15,8 +15,9 @@ Source: %name-%version.tar
 Conflicts: labltk
 Obsoletes: %name-runtime < %EVR
 Provides: %name-runtime = %EVR
-BuildRequires: ocaml >= 4.12
-BuildRequires: rpm-build-ocaml >= 1.6
+BuildRequires: ocaml >= 5.2.0
+BuildRequires: rpm-build-ocaml >= 1.6.3
+BuildRequires: ocaml-compiler-libs >= 5.2.0
 BuildRequires: tcl-devel, tk-devel
 
 %description
@@ -48,9 +49,9 @@ echo -e 'all:\ninstall:\n' > browser/Makefile
 
 %build
 
-find -type f | xargs sed -i -e 's/-warn-error/-w/g'
 export MAKE='make --no-print-directory' 
 ./configure --verbose 
+
 make all SHAREDCCCOMPOPTS='%optflags -fPIC'
 %ifarch %ocaml_native_arch
 make opt
@@ -78,6 +79,9 @@ make install \
 %files -f ocaml-files.runtime
 
 %changelog
+* Tue Sep 03 2024 Anton Farygin <rider@altlinux.ru> 8.06.14-alt1
+- 8.06.14
+
 * Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 8.06.13-alt2
 - added support for bytecode-only version of the ocaml package
 

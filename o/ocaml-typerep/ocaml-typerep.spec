@@ -1,19 +1,20 @@
 %define  modulename typerep
 
 Name:    ocaml-%modulename
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 
-Summary: Runtime types for OCaml (beta version)
+Summary: Runtime types for OCaml
 License: MIT
 Group:   Development/ML
 URL:     https://github.com/janestreet/typerep
+VCS:     https://github.com/janestreet/typerep
 
 BuildRequires: dune
-BuildRequires: ocaml-base-devel
-Requires: rpm-build-ocaml >= 1.4
+BuildRequires: ocaml-base-devel >= %version
+Requires: rpm-build-ocaml >= 1.6.3
 
-Source:  %modulename-%version.tar
+Source:  %name-%version.tar
 
 %description
 %summary
@@ -28,7 +29,7 @@ The %name-devel package contains libraries and signature files for
 developing applications that use %name.
 
 %prep
-%setup -n %modulename-%version
+%setup
 
 %build
 %dune_build -p %modulename
@@ -44,6 +45,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
+- 0.17.0
+
 * Mon Nov 06 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
 - 0.16.0
 

@@ -1,10 +1,11 @@
 Name: ocaml-stdlib-random
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 Summary: Ocaml Compatibility library for Random number generation
 License: LGPLv2.1 with OCaml-LGPL-linking-exception
 Group: Development/ML
 Url: https://github.com/ocaml/stdlib-random
+VCS: https://github.com/ocaml/stdlib-random
 Source0: %name-%version.tar
 BuildRequires: ocaml >= 4.14
 BuildRequires: dune ocaml-cppo
@@ -41,5 +42,8 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Sep 05 2024 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1
+- 1.1.0 -> 1.2.0
+
 * Tue Nov 07 2023 Anton Farygin <rider@altlinux.ru> 1.1.0-alt1
 - first build for ALT

@@ -2,12 +2,13 @@
 %def_with check
 
 Name:    ocaml-%modulename
-Version: 3.6.2
+Version: 3.6.8
 Release: alt1
 Summary: Manipulate, parse and generate OCaml compiler version strings
 License: ISC
 Group:   Development/ML
 URL:     https://github.com/ocurrent/ocaml-version
+VCS: https://github.com/ocurrent/ocaml-version
 BuildRequires: dune ocaml-alcotest-devel ocaml-odoc-devel
 Source:  %name-%version.tar
 
@@ -42,5 +43,8 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Sep 10 2024 Anton Farygin <rider@altlinux.ru> 3.6.8-alt1
+- 3.6.2 -> 3.6.8
+
 * Sun Nov 12 2023 Anton Farygin <rider@altlinux.ru> 3.6.2-alt1
 - first build for ALT

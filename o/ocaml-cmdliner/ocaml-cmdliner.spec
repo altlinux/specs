@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-cmdliner
-Version: 1.2.0
-Release: alt2
+Version: 1.3.0
+Release: alt1
 Summary: Declarative definition of command line interfaces for OCaml
 License: ISC
 Url: https://github.com/dbuenzli/cmdliner/
@@ -50,6 +50,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Sep 03 2024 Anton Farygin <rider@altlinux.ru> 1.3.0-alt1
+- 1.3.0
+
 * Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 1.2.0-alt2
 - cleanup buildrequires
 - build without docs to avoid cycles in rebuild order

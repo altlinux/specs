@@ -1,13 +1,13 @@
 %set_verify_elf_method textrel=relaxed
 Name: cinaps
 Version: 0.15.1
-Release: alt1
+Release: alt2
 Summary: Trivial metaprogramming tool.
 License: Apache-2.0
 Group: Development/ML
 Url: https://github.com/ocaml-ppx/cinaps
 Source0: %name-%version.tar
-BuildRequires: ocaml-findlib-devel dune ocaml-re-devel
+BuildRequires: dune ocaml-re-devel
 
 %description
 Cinaps is a trivial Metaprogramming tool using the OCaml toplevel. It is based
@@ -38,6 +38,9 @@ the OCaml code.
 %_libdir/ocaml/%name/runtime
 
 %changelog
+* Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 0.15.1-alt2
+- cleanup buildrequires
+
 * Thu Mar 18 2021 Anton Farygin <rider@altlinux.org> 0.15.1-alt1
 - 0.15.1
 

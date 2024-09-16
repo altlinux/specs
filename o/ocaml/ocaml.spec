@@ -17,29 +17,28 @@
 %filter_from_requires /Simplify_boxed_integer_ops_intf/d
 
 Name: ocaml
-Version: 4.14.1
+Version: 5.2.0
 Release: alt1
 
 Summary: The Objective Caml compiler and programming environment
 License: LGPLv2.1 with OCaml-LGPL-linking-exception
 Group: Development/ML
 
-Url: http://caml.inria.fr/
+Url: https://caml.inria.fr/
+Vcs: https://github.com/ocaml/ocaml
 Source0: %name-%version.tar
-Source1: ocaml-reqprov.ml
 
-Patch1: ocaml-3.12.1-alt-stdlib-pdf.patch
-Patch2: ocaml-4.14-alt-mk-reqprov.patch
+Patch1: ocaml-5.2.0-alt-reqprov-objinfo.patch
+Patch2: ocaml-5.2.0-fedora-configure-Allow-user-defined-C-compiler-flags.patch
 Patch3: ocaml-4.14.1-more-source-artifacts.patch
-Patch4: ocaml-4.11.1-RH-configure-Allow-user-defined-C-compiler-flags.patch
-Patch5: ocaml-4.14.1-alt-ocamldoc-install-all-cmti.patch
+Patch4: ocaml-5.2.0-alt-ocamldoc-install-all-cmti.patch
+Patch5: ocaml-5.2.0-fedora-Reload-exception-pointer-register-in-caml_c_call.patch
 
 Requires: rpm-build-ocaml >= 1.6.1
 BuildRequires(pre): rpm-build-ocaml >= 1.6.1
 
 Conflicts: ocaml4
 Obsoletes: ocaml4
-Provides: ocaml4
 
 # Automatically added by buildreq on Mon Sep 23 2013
 BuildRequires: texlive-latex-base texlive-latex-recommended
@@ -59,6 +58,11 @@ Group: Development/ML
 Requires: %name = %EVR
 Provides: ocaml4-ocamldoc
 Obsoletes: ocaml4-ocamldoc
+
+%package compiler-libs
+Group: Development/ML
+Summary: Compiler libraries for OCaml
+Requires: ocaml = %EVR
 
 %description
 Objective Caml is a high-level, strongly-typed, functional and
@@ -82,25 +86,42 @@ object-oriented programming language from the ML family of languages.
 This package provides OCamldoc, a tool that generates documentation
 from special comments embedded in source files.
 
+%description compiler-libs
+OCaml is a high-level, strongly-typed, functional and object-oriented
+programming language from the ML family of languages.
+
+This package contains some modules used internally by the OCaml
+compilers, useful for the development of some OCaml applications.
+Note that this exposes internal details of the OCaml compiler which
+may not be portable between versions.
+
 %prep
-%setup -T -b 0
+%setup 
 
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 
 %build
-install -pD -m644 %SOURCE1 tools/reqprov.ml
 %add_optflags -D_FILE_OFFSET_BITS=64
 ./configure \
 	CFLAGS="%optflags" \
-	-bindir %_bindir \
-	-libdir %_libdir/ocaml \
-	-mandir %_mandir \
+	--bindir %_bindir \
+	--libdir %_libdir/ocaml \
+	--sysconfdir=%_sysconfdir \
+	--datarootdir=%_datadir \
+	--mandir %_mandir \
+	--enable-flambda \
+%ifarch x86_64
+	--enable-frame-pointers \
+%endif
 %if_without nativeocaml
 	--disable-native-compiler \
+	--disable-native-toplevel \
+%else
+	--enable-native-compiler \
+	--enable-native-toplevel \
 %endif
 %if_with check
         --enable-ocamltest \
@@ -118,7 +139,11 @@ install -pD -m644 %SOURCE1 tools/reqprov.ml
 make install DESTDIR=%buildroot
 perl -pi -e "s|%buildroot||" %buildroot%_libdir/ocaml/ld.conf
 
-install -pD -m755 tools/ocamlreqprov %buildroot%_rpmlibdir/ocaml-reqprov
+mkdir -p %buildroot%_rpmlibdir
+ln -s ../../bin/ocamlobjinfo.byte %buildroot%_rpmlibdir/ocaml-reqprov
+
+#remove installed docs
+rm -rf %buildroot%_docdir
 
 %check
 pushd testsuite
@@ -127,21 +152,95 @@ popd
 
 %files
 %doc Changes LICENSE README.adoc
-%_bindir/ocaml*
-%exclude %_bindir/ocamlrun
-%exclude %_bindir/ocamldoc*
+%_bindir/ocaml
+%_bindir/ocamlcmt
+%_bindir/ocamlcp
+%_bindir/ocamldebug
+%_bindir/ocamlmklib
+%_bindir/ocamlmktop
+%_bindir/ocamlprof
+%_bindir/ocamlyacc
+
+%_bindir/ocamlc
+%_bindir/ocamldep
+%_bindir/ocamllex
+%_bindir/ocamlobjinfo
+
+%_bindir/ocamlc.byte
+%_bindir/ocamldep.byte
+%_bindir/ocamllex.byte
+%_bindir/ocamlobjinfo.byte
+
+	
+%if_with nativeocaml
+%_bindir/ocamlc.opt
+%_bindir/ocamldep.opt
+%_bindir/ocamllex.opt
+%_bindir/ocamlobjinfo.opt
+%_bindir/ocamlnat
+%_bindir/ocamlopt
+%_bindir/ocamlopt.byte
+%_bindir/ocamlopt.opt
+%_bindir/ocamloptp
+%endif
+
 %_man1dir/ocaml*
 %exclude %_man1dir/ocamldoc*
 %_man3dir/*.3o*
-%_libdir/ocaml/camlheader
-%_libdir/ocaml/camlheader_ur
 %_libdir/ocaml/expunge
-%_libdir/ocaml/*.*
-%exclude %_libdir/ocaml/ld.conf
+%_libdir/ocaml/*.a
+%if_with nativeocaml
+%_libdir/ocaml/*.cmxa
+%_libdir/ocaml/*.cmx
+%_libdir/ocaml/*.o
+%_libdir/ocaml/libasmrun_shared.so
+%endif
+%_libdir/ocaml/*.mli
+%_libdir/ocaml/sys.ml.in
+%_libdir/ocaml/libcamlrun_shared.so
+
+%_libdir/ocaml/dynlink/*.mli
+%_libdir/ocaml/runtime_events/*.mli
+%_libdir/ocaml/str/*.mli
+%_libdir/ocaml/threads/*.mli
+%_libdir/ocaml/unix/*.mli
+	
+%_libdir/ocaml/*.ml
+%_libdir/ocaml/*.cmt*
+%_libdir/ocaml/*/*.cmt*
+
+%if_with nativeocaml
+%_libdir/ocaml/dynlink/*.a
+%_libdir/ocaml/dynlink/*.cmxa
+%_libdir/ocaml/dynlink/*.cmx
+%_libdir/ocaml/profiling/*.cmx
+%_libdir/ocaml/runtime_events/*.a
+%_libdir/ocaml/runtime_events/*.cmxa
+%_libdir/ocaml/runtime_events/*.cmx
+%_libdir/ocaml/runtime_events/*.cmxs
+%_libdir/ocaml/str/*.a
+%_libdir/ocaml/str/*.cmxa
+%_libdir/ocaml/str/*.cmx
+%_libdir/ocaml/str/*.cmxs
+%_libdir/ocaml/threads/*.a
+%_libdir/ocaml/threads/*.cmxa
+%_libdir/ocaml/threads/*.cmx
+%_libdir/ocaml/unix/*.a
+%_libdir/ocaml/unix/*.cmxa
+%_libdir/ocaml/unix/*.cmx
+%_libdir/ocaml/unix/*.cmxs
+%_libdir/ocaml/profiling/*.o
+%endif
+%config %_libdir/ocaml/ld.conf
+%_libdir/ocaml/Makefile.config
 %_libdir/ocaml/caml/
-%exclude %_libdir/ocaml/ocamldoc/
-%_libdir/ocaml/threads/
+%exclude %_libdir/ocaml/compiler-libs
+%exclude %_libdir/ocaml/ocamldoc
+
+
+%files compiler-libs
 %dir %_libdir/ocaml/compiler-libs
+%_libdir/ocaml/compiler-libs/META
 %_libdir/ocaml/compiler-libs/*.mli
 %_libdir/ocaml/compiler-libs/*.cmt
 %_libdir/ocaml/compiler-libs/*.cmti
@@ -157,14 +256,42 @@ popd
 
 %files runtime
 %_bindir/ocamlrun
+%_bindir/ocamlrund
+%_bindir/ocamlruni
 %dir %_libdir/ocaml
-%config %_libdir/ocaml/ld.conf
+%_libdir/ocaml/runtime-launch-info
+%_libdir/ocaml/*.cmo
+%_libdir/ocaml/*.cmi
+%_libdir/ocaml/*.cma
+%_libdir/ocaml/stublibs
 %dir %_libdir/ocaml/stublibs
-%_libdir/ocaml/stublibs/dllcamlstr.so
+%dir %_libdir/ocaml/dynlink
+%dir %_libdir/ocaml/profiling
+%dir %_libdir/ocaml/runtime_events
+%dir %_libdir/ocaml/str
+%dir %_libdir/ocaml/unix
+%dir %_libdir/ocaml/stdlib
+%dir %_libdir/ocaml/threads
+%_libdir/ocaml/dynlink/META
+%_libdir/ocaml/dynlink/*.cma
+%_libdir/ocaml/dynlink/*.cmi
+%_libdir/ocaml/profiling/*.cmo
+%_libdir/ocaml/profiling/*.cmi
+%_libdir/ocaml/runtime_events/META
+%_libdir/ocaml/runtime_events/*.cmi
+%_libdir/ocaml/runtime_events/*.cma
+%_libdir/ocaml/stdlib/META
+%_libdir/ocaml/str/META
+%_libdir/ocaml/str/*.cmi
+%_libdir/ocaml/str/*.cma
+%_libdir/ocaml/threads/META
+%_libdir/ocaml/threads/*.cmi
+%_libdir/ocaml/threads/*.cma
+%_libdir/ocaml/unix/META
+%_libdir/ocaml/unix/*.cmi
+%_libdir/ocaml/unix/*.cma
+
 %_libdir/ocaml/stublibs/dllthreads.so
-%_libdir/ocaml/stublibs/dllunix.so
-%_libdir/ocaml/camlheaderd
-%_libdir/ocaml/camlheaderi
 %dir %_libdir/ocaml/stublibs
 %_rpmlibdir/ocaml-reqprov
 
@@ -174,6 +301,12 @@ popd
 %_libdir/ocaml/ocamldoc/
 
 %changelog
+* Fri Aug 09 2024 Anton Farygin <rider@altlinux.ru> 5.2.0-alt1
+- 5.2.0
+- implementation of the ocaml-reqprov moved into
+  ocamlobjinfo tool (ocaml-5.2.0-alt-reqprov-objinfo.patch)
+- built with enabled flambda and frame-pointers
+
 * Fri Nov 03 2023 Anton Farygin <rider@altlinux.ru> 4.14.1-alt1
 - 4.14.1
 - new implementaion of the ocaml-reqprov

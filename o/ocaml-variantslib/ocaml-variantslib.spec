@@ -1,22 +1,25 @@
 %define  modulename variantslib
 
 Name:    ocaml-%modulename
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 
 Summary: OCaml variants as first class values
 License: MIT
 Group:   Development/ML
 URL:     https://github.com/janestreet/variantslib
+VCS:     https://github.com/janestreet/variantslib
 
 BuildRequires: dune
-BuildRequires: ocaml-base-devel
-Requires: rpm-build-ocaml >= 1.4
+BuildRequires: ocaml-base-devel >= %version
+Requires: rpm-build-ocaml >= 1.6.3
 
 Source:  %modulename-%version.tar
 
 %description
-%summary
+The Core suite of libraries is an industrial strength alternative to OCaml's
+standard library that was developed by Jane Street, the
+largest industrial user of OCaml.
 
 %package devel
 Summary: Development files for %name
@@ -44,6 +47,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
+- 0.17.0
+
 * Mon Nov 06 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
 - 0.16.0
 

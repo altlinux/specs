@@ -2,12 +2,13 @@
 %def_with check
 
 Name:    ocaml-%modulename
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 Summary: A ppx rewriter that generates hash functions from type expressions and definitions
 License: MIT
 Group:   Development/ML
 URL:     https://github.com/janestreet/ppx_hash
+VCS:     https://github.com/janestreet/ppx_hash
 BuildRequires: dune ocaml-ppx_compare-devel ocaml-ppx_sexp_conv-devel
 BuildRequires: ocaml-base-devel ocaml-ppxlib-devel 
 BuildPreReq: rpm-build-ocaml >= 1.4
@@ -43,6 +44,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
+- 0.17.0
+
 * Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
 - 0.16.0
 

@@ -1,13 +1,15 @@
 %define libname ocaml-compiler-libs
-Name: %libname
-Version: 0.12.4
-Release: alt2
+Name: ocaml-compiler-libs-janestreet
+Version: 0.17.0
+Release: alt1
 Summary: OCaml compiler libraries repackaged
 License: Apache-2.0
 Group: Development/ML
 Url: https://github.com/janestreet/ocaml-compiler-libs
 Source0: %name-%version.tar
 BuildRequires: dune ocaml
+BuildRequires: ocaml-compiler-libs
+Obsoletes: ocaml-compiler-libs <= 0.12.4-alt2
 
 %description
 This packages exposes the OCaml compiler libraries repackages under the toplevel
@@ -16,7 +18,8 @@ names Ocaml_common, Ocaml_bytecomp, ...
 %package devel
 Summary: Development files for %name
 Group: Development/ML
-Requires: %name = %version-%release
+Requires: %name = %EVR
+Obsoletes: ocaml-compiler-libs-devel <= 0.12.4-alt2
 
 %description devel
 The %name-devel package contains libraries and signature files for
@@ -37,6 +40,10 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
+- 0.12.4 -> 0.17.0
+- renamed to ocaml-compiler-libs-janestreet
+
 * Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.12.4-alt2
 - fixed buildrequires 
 

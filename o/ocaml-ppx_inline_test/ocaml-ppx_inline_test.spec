@@ -1,6 +1,6 @@
 %define ocamlmod ppx_inline_test
 Name: ocaml-%ocamlmod
-Version: 0.16.1
+Version: 0.17.0
 Release: alt1
 Summary: Syntax extension for writing in-line tests in ocaml code
 Group: Development/ML
@@ -14,7 +14,7 @@ BuildRequires: ocaml-ppxlib-devel
 BuildRequires: ocaml-time_now-devel
 BuildRequires: ocaml-base-devel
 BuildRequires: dune
-BuildRequires: rpm-build-ocaml >= 1.4
+BuildRequires: rpm-build-ocaml >= 1.6.3
 
 %description
 Syntax extension for writing in-line tests in ocaml code.
@@ -39,7 +39,7 @@ developing applications that use %name.
 %dune_install
 
 # tests is broken in upstream
-#%check
+#check
 #dune_check
 
 %files -f ocaml-files.runtime
@@ -49,6 +49,9 @@ developing applications that use %name.
 %doc README.md CHANGES.md
 
 %changelog
+* Tue Sep 10 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
+- 0.17.0
+
 * Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.16.1-alt1
 - 0.16.1
 

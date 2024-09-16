@@ -1,13 +1,14 @@
 %define  modulename ppx_custom_printf
 
 Name:    ocaml-%modulename
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 
 Summary: Printf-style format-strings for user-defined string conversion
 License: MIT
 Group:   Development/ML
 URL:     https://github.com/janestreet/ppx_custom_printf
+VCS:     https://github.com/janestreet/ppx_custom_printf
 BuildRequires: dune
 BuildRequires: ocaml-ppxlib-devel
 BuildRequires: ocaml-ppx_sexp_conv-devel
@@ -43,6 +44,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
+- 0.17.0
+
 * Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
 - 0.16.0
 

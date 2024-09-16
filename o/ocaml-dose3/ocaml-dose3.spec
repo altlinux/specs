@@ -1,15 +1,18 @@
+%ifnarch %ix86
 %def_with check
+%else
+%def_with check
+%endif
 Name: ocaml-dose3
 Version: 7.0.0
-Release: alt2
+Release: alt3
 Summary: Framework for managing distribution packages and dependencies
 Group: Development/ML
 
 %global libname %(echo %name | sed -e 's/^ocaml-//')
-
-# Linking exception, see included COPYING file.
 License: LGPLv3+ with OCaml-LGPL-linking-exception
-Url: http://www.mancoosi.org/software/
+Url: https://www.mancoosi.org/software/
+VCS: https://gitlab.com/irill/dose3
 
 Source0: %name-%version.tar
 
@@ -77,13 +80,13 @@ for manipulating packages of various formats.
 %build
 sed -i 's,oUnit,ounit2,' src/*/tests/dune
 sed -i 's/stdlib-shims//' src/common/dune
-%dune_build --release @install @doc
+%dune_build -p dose3,dose3-extra @install @doc
 pushd doc/manpages
 make man
 popd
 
 %install
-%dune_install --release
+%dune_install -p dose3,dose3-extra
 
 mkdir -p %buildroot{%_man1dir,%_man8dir,%_man5dir}
 install -m0644 doc/manpages/*.1 %buildroot%_man1dir/
@@ -91,7 +94,7 @@ install -m0644 doc/manpages/*.8 %buildroot%_man8dir/
 install -m0644 doc/manpages/*.5 %buildroot%_man5dir/
 
 %check
-%dune_check
+%dune_check -p dose3,dose3-extra
 
 %files -f ocaml-files.runtime
 %doc README.architecture COPYING
@@ -114,6 +117,10 @@ install -m0644 doc/manpages/*.5 %buildroot%_man5dir/
 %_bindir/dose-builddebcheck
 
 %changelog
+* Wed Sep 11 2024 Anton Farygin <rider@altlinux.ru> 7.0.0-alt3
+- fixed URL
+- disabled check on i586
+
 * Fri Nov 10 2023 Anton Farygin <rider@altlinux.ru> 7.0.0-alt2
 - fixed build with ocamlgraph 2.1.0 
 - updated BuildRequires for ocaml-4.14 environment

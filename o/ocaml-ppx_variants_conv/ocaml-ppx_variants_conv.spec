@@ -1,13 +1,13 @@
 %define  modulename ppx_variants_conv
 Name:    ocaml-%modulename
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 
 Summary: Generation of accessor and iteration functions for ocaml variant types
 License: MIT
 Group:   Development/ML
 URL:     https://github.com/janestreet/ppx_variants_conv
-
+VCS:     https://github.com/janestreet/ppx_variants_conv
 BuildRequires: dune ocaml-ppxlib-devel ocaml-base-devel
 BuildRequires: ocaml-variantslib-devel
 Source:  %modulename-%version.tar
@@ -42,6 +42,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
+- 0.17.0
+
 * Mon Nov 06 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
 - 0.16.0
 

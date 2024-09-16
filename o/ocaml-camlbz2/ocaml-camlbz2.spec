@@ -1,15 +1,17 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: ocaml-camlbz2
-Version: 0.7.0
-Release: alt3
+Version: 0.8.0
+Release: alt1
 Summary: OCaml bindings for the libbz2
 License: LGPLv2 with OCaml-LGPL-linking-exception
 Group: Development/ML
-Url: http://camlbz2.forge.ocamlcore.org/
+Url: https://gitlab.com/irill/camlbz2
+VCS: https://gitlab.com/irill/camlbz2
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-ocaml >= 1.6
 BuildRequires: ocaml
-BuildRequires: ocaml-findlib
+BuildRequires: dune
 BuildRequires: bzlib-devel
 
 %description
@@ -36,24 +38,13 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
-%autoreconf
-%configure
-# to fix build without ocamlopt
-sed -i '/OCAMLOPT := no/d' Makefile
-%make 
+%dune_build -p bz2
 
 %install
-export DESTDIR=%buildroot
-export OCAMLFIND_DESTDIR=%buildroot/%_ocamldir
-export DLLDIR=$OCAMLFIND_DESTDIR/stublibs
-mkdir -p $OCAMLFIND_DESTDIR/bz2
-mkdir -p $DLLDIR
-make install
-%__install -m644 *.cmt* %buildroot/%_ocamldir/bz2/
-
-%ocaml_find_files
+%dune_install
 
 %files -f ocaml-files.runtime
 %doc BUGS COPYING ChangeLog INSTALL LICENSE README ROADMAP
@@ -62,6 +53,9 @@ make install
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Sep 05 2024 Anton Farygin <rider@altlinux.ru> 0.8.0-alt1
+- 0.7.0 -> 0.8.0
+
 * Sat Nov 18 2023 Anton Farygin <rider@altlinux.ru> 0.7.0-alt3
 - fixed build without ocamlopt
 

@@ -1,6 +1,6 @@
 %define oname sexplib
 Name: ocaml-%oname
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 Summary: OCaml library for converting OCaml values to S-expressions
 License: Apache-2.0
@@ -57,6 +57,9 @@ rm -rf %buildroot%_docdir/%oname
 %doc COPYRIGHT.txt README.org CHANGES.md CHANGES.txt
 
 %changelog
+* Thu Sep 05 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
+- 0.17.0
+
 * Tue Nov 07 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
 - 0.16.0
 

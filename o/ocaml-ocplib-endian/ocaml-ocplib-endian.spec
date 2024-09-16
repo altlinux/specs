@@ -7,12 +7,13 @@
 %define pkgname ocplib-endian
 Name: ocaml-%pkgname
 Version: 1.2
-Release: alt2
+Release: alt3
 Summary: Functions to read/write int16/32/64 from strings, bigarrays
 License: LGPLv2+
 Group: Development/ML
 Url: https://github.com/OCamlPro/ocplib-endian
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 BuildRequires: ocaml
 BuildRequires: ocaml-findlib
@@ -46,12 +47,13 @@ signature files for developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %dune_build --release @install
 
 %install
-%dune_install
+%dune_install --release
 
 %check
 %dune_check --release
@@ -62,6 +64,9 @@ signature files for developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Sep 12 2024 Anton Farygin <rider@altlinux.ru> 1.2-alt3
+- removed the module "bytes" dependence to fix build with ocaml 5.2
+
 * Fri Nov 17 2023 Anton Farygin <rider@altlinux.ru> 1.2-alt2
 - disabled tests for non-native ocaml architectures
 

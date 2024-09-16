@@ -1,15 +1,17 @@
 %define oname base
 Name: ocaml-%oname
-Version: 0.16.3
+Version: 0.17.1
 Release: alt1
 Summary: Full standard library replacement for OCaml
 License: Apache-2.0
 Group: Development/ML
 Url: https://github.com/janestreet/%oname
 Source0: %name-%version.tar
-BuildRequires: ocaml
+BuildRequires: ocaml >= 5.2.0
+BuildRequires: ocaml-compiler-libs >= 5.2.0
 BuildRequires: ocaml-dune-configurator-devel
 BuildRequires: ocaml-sexplib0-devel  >= 0.16
+BuildRequires: ocaml-intrinsics_kernel-devel >= 0.17.1
 
 %description
 Base is a complete and portable alternative to the OCaml standard
@@ -51,6 +53,9 @@ developing applications that use %name.
 %_libdir/ocaml/%oname/base_internalhash_types/internalhash.h
 
 %changelog
+* Tue Sep 03 2024 Anton Farygin <rider@altlinux.ru> 0.17.1-alt1
+- 0.17.1
+
 * Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.16.3-alt1
 - 0.16.3
 

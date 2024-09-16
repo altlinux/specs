@@ -1,16 +1,16 @@
 %define libname astring
 Name:           ocaml-%libname
 Version:        0.8.5
-Release:        alt2
+Release:        alt3
 Summary:        Alternative String module for OCaml
 License:        ISC
 Group:          Development/ML
-Url:            http://erratique.ch/software/astring
-# https://github.com/dbuenzli/astring
+Url:            https://erratique.ch/software/astring
+VCS: https://github.com/dbuenzli/astring
 Source: %name-%version.tar
 
 BuildRequires: ocaml-findlib ocaml-ocamlbuild ocaml-topkg-devel ocaml >= 4.07.1 opam
-BuildRequires: rpm-build-ocaml >= 1.6
+BuildRequires: rpm-build-ocaml >= 1.6.3
 
 %package devel
 Summary: Development files for programs which will use the %name
@@ -49,6 +49,10 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 0.8.5-alt3
+- updated homepage
+- added VCS tag
+
 * Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 0.8.5-alt2
 - added support for bytecode-only version of the ocaml package
 

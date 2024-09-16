@@ -4,7 +4,7 @@
 %def_without check
 
 Name: ocaml-odoc
-Version: 2.3.1
+Version: 2.4.2
 Release: alt1
 Summary: Documentation compiler for OCaml and Reason
 Group: Development/ML
@@ -26,7 +26,7 @@ BuildRequires: ocaml-rresult-devel
 BuildRequires: ocaml-result-devel
 BuildRequires: ocaml-astring-devel
 BuildRequires: ocaml-fpath-devel
-BuildRequires: ocaml-migrate-parsetree-devel
+BuildRequires: ocaml-crunch
 %if_with check
 BuildRequires: ocaml-bisect_ppx-devel
 BuildRequires: ocaml-markup-devel
@@ -72,6 +72,9 @@ mkdir -p %buildroot/%_docdir
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Sep 05 2024 Anton Farygin <rider@altlinux.ru> 2.4.2-alt1
+- 2.3.1 -> 2.4.2
+
 * Fri Nov 10 2023 Anton Farygin <rider@altlinux.ru> 2.3.1-alt1
 - 2.3.1
 

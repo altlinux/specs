@@ -1,11 +1,11 @@
 # subpackages build order
 # - bootstrap
-# - configurator
-# - private-libs
-# - site
 # - ordering
+# - configurator
 # - dyn
 # - stdune
+# - private-libs
+# - site
 
 %define dune_pkg configurator
 %if "%dune_pkg" != "bootstrap"
@@ -19,8 +19,8 @@
 %endif
 
 Name: dune%subpackagename
-Version: 3.11.1
-Release: alt2
+Version: 3.16.0
+Release: alt1
 Summary: A composable build system for OCaml
 Group: Development/ML
 License: MIT
@@ -31,7 +31,6 @@ Provides: ocaml-dune = %EVR
 
 BuildRequires: ocaml >= 4.14.0
 BuildRequires: rpm-build-ocaml >= 1.5
-BuildRequires: opam
 %if_with subpackage
 BuildRequires: dune
 BuildRequires: ocaml-csexp-devel
@@ -85,6 +84,8 @@ Among other things, dune-configurator allows one to:
 Group: Development/ML
 Summary: Runtime files for %name
 Requires: dune = %EVR
+BuildRequires: ocaml-dyn-devel = %version
+BuildRequires: ocaml-stdune-devel = %version
 %description -n ocaml-%name
 This package contains code that is shared between various dune-xxx
 packages. However, it is not meant for public consumption and provides
@@ -130,10 +131,21 @@ Dynamic type.
 Group: Development/ML
 Summary: Dune's unstable standard library
 Requires: dune = %EVR
-BuildRequires: ocaml-dune-private-libs-devel = %version ocaml-ordering-devel = %version
+BuildRequires: ocaml-ordering-devel = %version
 BuildRequires: ocaml-csexp-devel ocaml-pp-devel ocaml-dyn-devel = %version
 %description -n ocaml-%pkgname
 This library offers no backwards compatibility guarantees. Use at your own risk.
+%endif
+
+%if "%dune_pkg" == "xdg"
+%define pkgname %dune_pkg
+%package -n ocaml-%pkgname
+Group: Development/ML
+Summary: XDG Base Directory Specification
+Requires: dune = %EVR
+BuildRequires: dune = %version
+%description -n ocaml-%pkgname
+XDG Base Directory Specification
 %endif
 
 %if_with subpackage
@@ -234,6 +246,9 @@ rm -rf vendor/csexp vendor/pp
 %endif
 
 %changelog
+* Tue Sep 03 2024 Anton Farygin <rider@altlinux.ru> 3.16.0-alt1
+- 3.11.1 -> 3.16.0
+
 * Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 3.11.1-alt2
 - removed ocaml-findlib-devel from BuildRequires
 - added emacs-dune subpackage

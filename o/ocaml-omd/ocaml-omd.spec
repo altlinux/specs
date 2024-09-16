@@ -1,14 +1,15 @@
 %define libname omd
 Name: ocaml-%libname
 Version: 1.3.2
-Release: alt1
+Release: alt2
 Summary: OMD: extensible Markdown library and tool in OCaml
 Group: Development/ML
 License: ISC
 Url: https://github.com/ocaml/omd
 Source0: %name-%version.tar
-BuildRequires: ocaml dune
-BuildRequires: rpm-build-ocaml > 1.4
+Patch0: %name-%version-%release.patch
+BuildRequires: ocaml >= 5.2.0 dune
+BuildRequires: rpm-build-ocaml > 1.6
 
 %description
 This Markdown library is implemented using only pure OCaml (including
@@ -29,6 +30,7 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %dune_build
@@ -46,6 +48,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Sep 10 2024 Anton Farygin <rider@altlinux.ru> 1.3.2-alt2
+- fixed build by ocaml 5.2.0
+
 * Sun Nov 12 2023 Anton Farygin <rider@altlinux.ru> 1.3.2-alt1
 - 1.3.2
 

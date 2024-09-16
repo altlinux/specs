@@ -5,8 +5,8 @@
 %define native false
 %endif
 Name: ocaml-%pkgname
-Version: 0.14.2
-Release: alt2
+Version: 0.15.0
+Release: alt1
 Epoch: 1
 Summary: The Objective Caml project compilation tool
 License: LGPLv2 with OCaml-LGPL-linking-exception
@@ -42,14 +42,30 @@ This package contains development files for %name.
 %build
 %add_optflags -DUSE_NON_CONST -D_FILE_OFFSET_BITS=64
 
-env OCAML_NATIVE=%native make configure
-make
+make configure \
+  OCAMLBUILD_PREFIX=%{_prefix} \
+  OCAMLBUILD_BINDIR=%{_bindir} \
+  OCAMLBUILD_LIBDIR=%{_libdir}/ocaml \
+  OCAMLBUILD_MANDIR=%{_mandir} \
+%ifarch %{ocaml_native_arch}
+  OCAML_NATIVE=true \
+  OCAML_NATIVE_TOOLS=true
+%else
+  OCAML_NATIVE=false \
+  OCAML_NATIVE_TOOLS=false
+%endif
+
+make \
+%ifarch %{ocaml_native_arch}
+     OCAMLC="ocamlc.opt -g -bin-annot" \
+     OCAMLOPT="ocamlopt.opt -g"
+%else
+     OCAMLC="ocamlc -g -bin-annot" \
+     OCAMLOPT="ocamlopt -g"
+%endif
 
 %install
-make install DESTDIR=%buildroot BINDIR=%_bindir LIBDIR=%_libdir/ocaml
-
-# Remove the META file.  It will be replaced by ocaml-ocamlfind (findlib).
-rm %buildroot%_libdir/ocaml/%pkgname/META
+%makeinstall_std CHECK_IF_PREINSTALLED=false
 
 %ocaml_find_files
 
@@ -65,6 +81,9 @@ rm %buildroot%_libdir/ocaml/%pkgname/META
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Sep 03 2024 Anton Farygin <rider@altlinux.ru> 1:0.15.0-alt1
+- 0.15.0
+
 * Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 1:0.14.2-alt2
 - added support for bytecode-only version of the ocaml package
 

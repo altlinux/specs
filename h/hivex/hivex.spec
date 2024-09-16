@@ -6,14 +6,14 @@
 %def_disable static
 
 Name: hivex
-Version: 1.3.23
-Release: alt3
+Version: 1.3.24
+Release: alt1
 Summary: Read and write Windows Registry binary hive files
 
 Group: Development/Other
 License: LGPLv2
-Url: http://libguestfs.org/
-
+Url: https://libguestfs.org/
+VCS: https://github.com/libguestfs/hivex
 Source: %name-%version.tar
 Patch1: %name-%version-alt.patch
 
@@ -214,6 +214,9 @@ rm -f %buildroot%python3_sitelibdir/libhivexmod.la
 %endif
 
 %changelog
+* Fri Sep 13 2024 Anton Farygin <rider@altlinux.ru> 1.3.24-alt1
+- 1.3.23 -> 1.3.24
+
 * Fri Nov 24 2023 Anton Farygin <rider@altlinux.ru> 1.3.23-alt3
 - fixed build with bytecode-only ocaml
 

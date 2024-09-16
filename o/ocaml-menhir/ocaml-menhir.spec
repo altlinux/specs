@@ -1,11 +1,12 @@
 Name: ocaml-menhir
-Version: 20230608
+Version: 20240715
 Release: alt1
 Summary: LR(1) parser generator for the OCaml programming language.
 
 Group: Development/ML
 License: QPL
-Url: http://gallium.inria.fr/~fpottier/menhir/
+Url: https://gitlab.inria.fr/fpottier/menhir
+VCS: https://gitlab.inria.fr/fpottier/menhir
 Source: menhir-%version.tar
 
 BuildRequires(pre): ocaml
@@ -39,15 +40,16 @@ replacing all calls to module Parsing with new Menhir-specific keywords.
 %doc LICENSE
 %_bindir/*
 %_man1dir/*
-%dir %_libdir/ocaml/menhirLib
-%dir %_libdir/ocaml/menhirSdk
 %_libdir/ocaml/menhir
 %_libdir/ocaml/coq-menhirlib
-%_libdir/ocaml/menhirSdk/*
-%_libdir/ocaml/menhirLib/*
-%_libdir/ocaml/menhirSdk/*
+%_libdir/ocaml/menhirLib
+%_libdir/ocaml/menhirSdk
+%_libdir/ocaml/menhirCST
 
 %changelog
+* Thu Sep 05 2024 Anton Farygin <rider@altlinux.ru> 20240715-alt1
+- 20230608 -> 20240715
+
 * Fri Nov 10 2023 Anton Farygin <rider@altlinux.ru> 20230608-alt1
 - 20211230 -> 20230608
 

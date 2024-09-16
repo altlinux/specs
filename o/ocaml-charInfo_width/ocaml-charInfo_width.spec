@@ -2,11 +2,12 @@
 %define pkgname charInfo_width
 Name: ocaml-%pkgname
 Version: 2.0.0
-Release: alt1
+Release: alt2
 Summary: Determine column width for a character
 Group: Development/ML
 License: MIT
-Url: https://bitbucket.org/zandoye/charinfo_width/
+Url: https://github.com/kandu/charinfo_width/
+VCS: https://github.com/kandu/charinfo_width/
 Source: %name-%version.tar
 
 BuildRequires: dune
@@ -52,6 +53,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Sep 10 2024 Anton Farygin <rider@altlinux.ru> 2.0.0-alt2
+- fixed URL
+
 * Mon Nov 13 2023 Anton Farygin <rider@altlinux.ru> 2.0.0-alt1
 - 2.0.0
 

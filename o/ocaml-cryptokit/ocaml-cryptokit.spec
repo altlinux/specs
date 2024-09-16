@@ -4,8 +4,8 @@
 %define ocamlstublib %_libdir/ocaml/stublibs/
 
 Name: ocaml-%pkgname
-Version: 1.18
-Release: alt2
+Version: 1.20.1
+Release: alt1
 Group: Development/ML
 Summary: OCaml library of cryptographic and hash functions
 License: LGPLv2 with OCaml-LGPL-linking-exception
@@ -75,6 +75,9 @@ sed -i 's/#include <cpuid.h>/#define __get_cpuid(x,a,b,c,d) (*(c)=-1,1)/' \
 %doc README.md Changes
 
 %changelog
+* Mon Sep 16 2024 Anton Farygin <rider@altlinux.ru> 1.20.1-alt1
+- 1.18 -> 1.20.1
+
 * Thu Dec 07 2023 Michael Shigorin <mike@altlinux.org> 1.18-alt2
 - E2K: fix build (ilyakurdyukov@)
 

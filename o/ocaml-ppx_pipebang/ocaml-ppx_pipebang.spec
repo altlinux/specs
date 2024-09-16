@@ -1,18 +1,24 @@
 %define  modulename ppx_pipebang
 Name:    ocaml-%modulename
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 
 Summary: A ppx rewriter that inlines reverse application operators |> and |!
 License: MIT
 Group:   Development/ML
 URL:     https://github.com/janestreet/ppx_pipebang
+VCS:	https://github.com/janestreet/ppx_pipebang
 BuildRequires: dune
-BuildRequires: ocaml-base-devel ocaml-ppxlib-devel 
-Source:  %modulename-%version.tar
+BuildRequires: ocaml-base-devel ocaml-ppxlib-devel >= %version
+Source:  %name-%version.tar
 
 %description
-%summary
+A ppx rewriter that inlines the reverse application operator |>.
+ppx_pipebang rewrites x |> f as f x, regardless of whether |> has
+been redefined.
+
+This inlining is mostly done for historical reasons but it also
+allows f to have optional arguments (like Option.value_exn).
 
 %package devel
 Summary: Development files for %name
@@ -24,7 +30,7 @@ The %name-devel package contains libraries and signature files for
 developing applications that use %name.
 
 %prep
-%setup -n %modulename-%version
+%setup
 
 %build
 %dune_build -p %modulename
@@ -41,6 +47,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
+- 0.17.0
+
 * Tue Nov 14 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
 - 0.16.0
 

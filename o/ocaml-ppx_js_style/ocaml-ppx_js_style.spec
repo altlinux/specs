@@ -1,17 +1,16 @@
 %define  modulename ppx_js_style
 
 Name:    ocaml-%modulename
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 Summary: Code style checker for Jane Street Packages
 License: MIT
 Group:   Development/ML
 URL:     https://github.com/janestreet/ppx_js_style
-
+VCS:     https://github.com/janestreet/ppx_js_style
 BuildRequires: dune ocaml-octavius-devel
 BuildRequires: ocaml-base-devel ocaml-ppxlib-devel 
-Requires: rpm-build-ocaml >= 1.1
-BuildPreReq: rpm-build-ocaml >= 1.1
+BuildRequires: rpm-build-ocaml >= 1.6
 
 Source:  %modulename-%version.tar
 
@@ -45,6 +44,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
+- 0.17.0
+
 * Sun Nov 05 2023 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
 - 0.16.0
 
