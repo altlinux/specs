@@ -1,5 +1,5 @@
 Name: 	  osync
-Version:  1.2
+Version:  1.3
 Release:  alt1
 
 Summary:  A robust two way (bidirectional) file sync script based on rsync with fault tolerance
@@ -27,12 +27,10 @@ and can be run manually, by cron, or triggered via inotifytools
 %setup
 %patch -p1
 # Replace all /usr/local/bin by /usr/bin
-subst 's,/usr/local/bin,%_bindir,g' *.lyx *.sh osync-srv* *.md
+subst 's,/usr/local/bin,%_bindir,g' *.lyx *.sh osync*srv* *.md *.service*
 
 %install
-export FAKEROOT=%buildroot
-mkdir -p $FAKEROOT
-mkdir -p %buildroot%_initdir
+export BUILDROOT=%buildroot
 ./install.sh --no-stats
 install -Dp -m 0644 sync.conf.example %buildroot%_sysconfdir/osync/sync.conf
 # Fix command interpreter for executables
@@ -51,10 +49,14 @@ subst '1,1 s,^.*,#!/bin/bash,' %buildroot%_bindir/*.sh
 %config(noreplace) %_sysconfdir/osync/sync.conf
 %_sysconfdir/osync/*.example
 %_initdir/osync-srv
+%_initdir/osync-target-helper-srv
 %_unitdir/*.service
-#_sysconfdir/systemd/user/*.service.user
+%_userunitdir/*.service.user
 
 %changelog
+* Mon Sep 16 2024 Andrey Cherepanov <cas@altlinux.org> 1.3-alt1
+- New version.
+
 * Sun Mar 26 2017 Andrey Cherepanov <cas@altlinux.org> 1.2-alt1
 - New version
 
