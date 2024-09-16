@@ -8,7 +8,7 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt24
+Release: alt25
 
 Summary: %child modules set for %parent
 License: GPL-3.0
@@ -208,6 +208,9 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Mon Sep 16 2024 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt25
+- tricking old BIOS into booting from GPT (ALT #51479)
+
 * Sun Sep 01 2024 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt24
 - added asciidoc sources of the reference guide
 
