@@ -4,7 +4,7 @@
 
 Name: latte-dock
 Version: 0.10.9
-Release: alt2
+Release: alt3
 Summary: Latte is a dock based on plasma frameworks
 
 License: GPLv2+
@@ -44,7 +44,7 @@ BuildRequires: kf5-kxmlgui-devel
 BuildRequires: kf5-kglobalaccel-devel
 BuildRequires: kf5-kguiaddons-devel
 BuildRequires: kf5-kcrash-devel
-BuildRequires: plasma5-libksysguard-devel
+BuildRequires: plasma6-libksysguard-devel
 BuildRequires: kf5-kservice-devel
 BuildRequires: kf5-plasma-framework-devel
 
@@ -92,6 +92,9 @@ using parabolic zoom effect and tries to be there only when it is needed.
 %_K5srv/plasma-shell-org.kde.latte.shell.desktop
 
 %changelog
+* Mon Sep 16 2024 Artyom Bystrov <arbars@altlinux.org> 0.10.9-alt3
+- NMU: Fixed build with plasma6-libksysguard-devel
+
 * Tue Nov 14 2023 Alexander Makeenkov <amakeenk@altlinux.org> 0.10.9-alt2
 - NMU: Fixed build with new rpm-build-kf5.
 
