@@ -3,7 +3,7 @@
 
 Name: intel-compute-runtime
 Version: 24.35.30872.18
-Release: alt1
+Release: alt2
 Summary: Intel(R) Graphics Compute Runtime for OpenCL(TM)
 License: MIT
 Group: System/Libraries
@@ -59,6 +59,7 @@ intel-ocloc (a tool for managing Intel Compute GPU device binary format).
 %package -n intel-opencl
 Summary: OpenCL support implementation for Intel GPUs
 Group: System/Libraries
+Provides: intel-opencl-icd
 Requires: libigdfcl1
 Requires: libigc1
 Requires: libigdgmm12
@@ -133,6 +134,9 @@ mv %buildroot%_bindir/ocloc-24.35.1 %buildroot%_bindir/ocloc
 %_includedir/ocloc_api.h
 
 %changelog
+* Mon Sep 16 2024 Andrey Kovalev <ded@altlinux.org> 24.35.30872.18-alt2
+- Added provides intel-opencl-icd for intel-opencl.
+
 * Fri Sep 13 2024 Andrey Kovalev <ded@altlinux.org> 24.35.30872.18-alt1
 - Intial build for Sisyphus.
 
