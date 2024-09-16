@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpui
-Version: 0.2.52
+Version: 0.2.53
 Release: alt1
 
 Summary: Group policy editor
@@ -93,6 +93,7 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_libdir/gpui/plugins/libcmtl-plugin.so
 %_libdir/gpui/plugins/libcmtx-plugin.so
 %_libdir/gpui/plugins/libinifile-plugin.so
+%_libdir/gpui/plugins/libinifile-ascii-plugin.so
 %_libdir/gpui/plugins/libreg-plugin.so
 %_libdir/gpui/plugins/libspol-plugin.so
 %_libdir/gpui/plugins/libpol-plugin.so
@@ -112,6 +113,11 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Mon Sep 16 2024 Vladimir Rubanov <august@altlinux.org> 0.2.53-alt1
+- 0.2.53-alt1
+- Fixes:
+  + Fix add ascii ini file plugin (Closes: 51451, 51466, 47576).
+
 * Fri Sep 13 2024 Vladimir Rubanov <august@altlinux.org> 0.2.52-alt1
 - 0.2.52-alt1
 - Fixes:
