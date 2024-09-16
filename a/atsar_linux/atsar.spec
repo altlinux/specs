@@ -1,6 +1,6 @@
 Name: atsar_linux
 Version: 1.7
-Release: alt1
+Release: alt2
 License: GPL
 Summary: AT Computing System Activity Report is a sar clone for Linux
 Group: System/Base
@@ -51,7 +51,7 @@ echo "Configure the names of FTP- and HTTP-logfiles in /etc/atsar.conf ...."
 
 %preun
 if [ $1 = 0 ]; then
-	/sbin/chkconfig --del atsar
+	/sbin/chkconfig --del %name
 fi
 
 %postun
@@ -71,6 +71,11 @@ rm -f /var/lock/subsys/atsar 2> /dev/null
 %_logdir/atsar
 
 %changelog
+* Mon Sep 16 2024 Ivan A. Melnikov <iv@altlinux.org> 1.7-alt2
+- NMU: asheplyakov@:
+  - fixed FTBFS (removed x86_64 binary from the sources)
+  - fixed postun script (use the same service name as in %%post)
+
 * Wed Sep 13 2006 Mikhail Pokidko <pma@altlinux.ru> 1.7-alt1
 - Initial build
 
