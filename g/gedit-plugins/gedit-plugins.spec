@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 46
+%define ver_major 48
 %define beta %nil
 %def_enable python
 # removed since 3.36
@@ -15,7 +15,7 @@ Release: alt1%beta
 Summary: Plugins for GEdit
 License: GPL-2.0
 Group: Editors
-Url: https://wiki.gnome.org/Apps/Gedit/ShippedPlugins
+Url: https://gedit-technology.github.io
 
 %if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
@@ -26,7 +26,7 @@ Source: %name-%version.tar
 %define glib_ver 2.40.0
 %define gtk_ver 3.24
 %define gtksourceview_ver 299.0.4
-%define gedit_ver 46.0
+%define gedit_ver 48.0
 %define peas_ver 1.14.1
 %define git2_ver 0.0.12
 %define vte_ver 0.38
@@ -88,6 +88,9 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 
 
 %changelog
+* Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Sat Jul 29 2023 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 

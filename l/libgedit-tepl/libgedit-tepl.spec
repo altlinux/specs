@@ -1,23 +1,23 @@
 %def_disable snapshot
 
-%define ver_major 5.9
-%define api_ver 5
-%define namespace Amtk
+%define ver_major 6.11
+%define api_ver 6
+%define namespace Tepl
 
 %def_enable gtk_doc
 %def_enable introspection
 %def_enable check
 
-Name: libgedit-amtk
+Name: libgedit-tepl
 Version: %ver_major.0
 Release: alt1
 
-Summary: Gedit Technology - Actions, Menus and Toolbars Kit for GTK applications
+Summary: Gedit Technology - Text editor product line
 License: LGPL-3.0-or-later
 Group: System/Libraries
-Url: https://gitlab.gnome.org/World/gedit/libgedit-amtk
+Url: https://gitlab.gnome.org/World/gedit/libgedit-tepl
 
-Vcs: https://gitlab.gnome.org/World/gedit/libgedit-amtk.git
+Vcs: https://gitlab.gnome.org/World/gedit/libgedit-tepl.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
@@ -25,74 +25,84 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-#Obsoletes: libamtk < 5.8.0-alt1
-#Provides: libamtk = %EVR
+#Obsoletes: libtepl < 5.8.0-alt1
+#Provides: libtepl = %EVR
 
-%define gtk_ver 3.22
+%define meson_ver 0.64
+%define glib_ver 2.64
+%define gtk_doc_ver 1.0
+%define gtk_ver 3.24
+%define handy_ver 1.6
+%define gtksource_ver 299.3.0
+%define amtk_ver 5.9.0
+%define gfls_ver 0.2.0
 
-BuildRequires(pre): rpm-macros-meson %{?_enable_introspection:rpm-build-gir}
-BuildRequires: meson
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome %{?_enable_introspection:rpm-build-gir}
+BuildRequires: meson >= %meson_ver
+BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
-%{?_enable_gtk_doc:BuildRequires: gtk-doc}
-%{?_enable_check:BuildRequires: xvfb-run xmllint
-BuildRequires: fonts-ttf-roboto fonts-ttf-google-noto-sans-vf}
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
+BuildRequires: libgedit-gtksourceview-devel >= %gtksource_ver
+BuildRequires: libxml2-devel libuchardet-devel gtk-doc >= %gtk_doc_ver
+BuildRequires: pkgconfig(libgedit-amtk-5) >= %amtk_ver
+BuildRequires: pkgconfig(libgedit-gfls-1) >= %gfls_ver
+BuildRequires: pkgconfig(gsettings-desktop-schemas)
+BuildRequires: vala-tools
+BuildRequires: pkgconfig(sysprof-capture-4)
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.6.7 libgtk+3-gir-devel
+BuildRequires: libgedit-gtksourceview-gir-devel libgedit-amtk-gir-devel}
+%{?_enable_check:BuildRequires: xvfb-run}
 
 %description
-libgedit-amtk is part of [Gedit Technology](https://gedit-technology.net/).
+libgedit-tepl is part of Gedit Technology (https://gedit-technology.github.io/).
+It is a library that eases the development of text editors and IDEs based on
+GTK.
 
-Amtk is the acronym for "Actions, Menus and Toolbars Kit". It is a basic
-GtkUIManager replacement based on GAction. It is suitable for both a
-traditional UI or a modern UI with a GtkHeaderBar.
-
-This package contains shared Amtk library.
+This package contains shared Tepl library.
 
 %package devel
 Summary: Files to compile applications that use %name
 Group: Development/C
-#Obsoletes: libamtk-devel < 5.8.0-alt1
-#Provides: libamtk-devel = %EVR
+#Obsoletes: libtepl-devel < 5.8.0-alt1
+#Provides: libtepl-devel = %EVR
 Requires: %name = %EVR
 
 %description devel
 This package contains the files required to develop applications against
-the Amtk library.
+the Tepl library.
 
 %package devel-doc
 Summary: Development documentation for %name
 Group: Development/Documentation
 Conflicts: %name < %EVR
 BuildArch: noarch
-#Obsoletes: libamtk-devel-doc < 5.8.0-alt1
-#Provides: libamtk-devel-doc = %EVR
+#Obsoletes: libtepl-devel-doc < 5.8.0-alt1
+#Provides: libtepl-devel-doc = %EVR
 
 %description devel-doc
-libgedit-amtk is part of [Gedit Technology](https://gedit-technology.net/).
-
-Amtk is the acronym for "Actions, Menus and Toolbars Kit". It is a basic
-GtkUIManager replacement based on GAction. It is suitable for both a
-traditional UI or a modern UI with a GtkHeaderBar.
-
+libgedit-tepl is part of Gedit Technology (https://gedit-technology.net/).
+It is a library that eases the development of text editors and IDEs based on
+GTK.
 This package provides development documentation for %name.
 
 %package gir
-Summary: GObject introspection data for the Amtk library
+Summary: GObject introspection data for the Tepl library
 Group: System/Libraries
 Requires: %name = %EVR
-Conflicts: libamtk-gir
-#Obsoletes: libamtk-gir < 5.8.0-alt1
-#Provides: libamtk-gir = %EVR
+Conflicts: libtepl-gir
+#Obsoletes: libtepl-gir < 5.8.0-alt1
+#Provides: libtepl-gir = %EVR
 
 %description gir
 GObject introspection data for the %name library
 
 %package gir-devel
-Summary: GObject introspection devel data for the Amtk library
+Summary: GObject introspection devel data for the Tepl library
 Group: Development/Other
 BuildArch: noarch
-Conflicts: libamtk-gir-devel
-#Obsoletes: libamtk-gir-devel < 5.8.0-alt1
-#Provides: libamtk-gir-devel = %EVR
+Conflicts: libtepl-gir-devel
+#Obsoletes: libtepl-gir-devel < 5.8.0-alt1
+#Provides: libtepl-gir-devel = %EVR
 Requires: %name-gir = %EVR
 Requires: %name-devel = %EVR
 
@@ -160,10 +170,7 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
-* Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 5.9.0-alt1
-- 5.9.0
-
-* Sat Jul 29 2023 Yuri N. Sedunov <aris@altlinux.org> 5.8.0-alt1
+* Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 6.11.0-alt1
 - first build for Sisyphus
 
 

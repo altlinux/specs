@@ -1,23 +1,23 @@
 %def_disable snapshot
 
-%define ver_major 299
-%define api_ver 300
-%define namespace GtkSource
+%define ver_major 0.2
+%define api_ver 1
+%define namespace Gfls
 
 %def_enable gtk_doc
 %def_enable introspection
 %def_enable check
 
-Name: libgedit-gtksourceview
-Version: %ver_major.3.0
+Name: libgedit-gfls
+Version: %ver_major.0
 Release: alt1
 
-Summary: Gedit Technology - Source code editing widget
+Summary: Gedit Technology - File loading and saving library
 License: LGPL-2.1-or-later
 Group: System/Libraries
-Url: https://gitlab.gnome.org/World/gedit/libgedit-gtksourceview
+Url: https://gitlab.gnome.org/World/gedit/libgedit-gfls
 
-Vcs: https://gitlab.gnome.org/World/gedit/libgedit-gtksourceview.git
+Vcs: https://gitlab.gnome.org/World/gedit/libgedit-gfls.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
@@ -25,29 +25,25 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define gtk_ver 3.20
-%define libxml2_ver 2.6.0
+%define glib_ver 2.78
+%define gtk_ver 3.22
 
 BuildRequires(pre): rpm-macros-meson %{?_enable_introspection:rpm-build-gir}
 BuildRequires: meson
+BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: libxml2-devel >= %libxml2_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
-%{?_enable_check:BuildRequires: xvfb-run xmllint
-BuildRequires: fonts-ttf-roboto fonts-ttf-google-noto-sans-vf}
+%{?_enable_check:BuildRequires: xvfb-run}
 
 %description
-libgedit-gtksourceview is part of
+libgedit-gfls is part of
 [Gedit Technology](https://gedit-technology.net/).
 
-libgedit-gtksourceview is a library that extends GtkTextView, the
-standard GTK widget for multiline text editing. This library adds support
-for syntax highlighting, undo/redo, file loading and saving, search and
-replace, a completion system, printing, displaying line numbers, and
-other features typical of a source code editor.
+It is a module dedicated to file loading and saving for the needs of gedit and
+other similar text editors.
 
-This package contains shared GtkSourceView library.
+This package contains shared gfls library.
 
 %package devel
 Summary: Files to compile applications that use %name
@@ -56,7 +52,7 @@ Requires: %name = %EVR
 
 %description devel
 This package contains the files required to develop applications against
-the GtkSourceView library.
+the %name library.
 
 %package devel-doc
 Summary: Development documentation for %name
@@ -65,19 +61,13 @@ Conflicts: %name < %EVR
 BuildArch: noarch
 
 %description devel-doc
-libgedit-gtksourceview is part of
+libgedit-gfls is part of
 [Gedit Technology](https://gedit-technology.net/).
-
-libgedit-gtksourceview is a library that extends GtkTextView, the
-standard GTK widget for multiline text editing. This library adds support
-for syntax highlighting, undo/redo, file loading and saving, search and
-replace, a completion system, printing, displaying line numbers, and
-other features typical of a source code editor.
 
 This package provides development documentation for %name.
 
 %package gir
-Summary: GObject introspection data for the GtkSourceView library
+Summary: GObject introspection data for the %name
 Group: System/Libraries
 Requires: %name = %EVR
 
@@ -85,14 +75,14 @@ Requires: %name = %EVR
 GObject introspection data for the %name library
 
 %package gir-devel
-Summary: GObject introspection devel data for the GtkSourceView library
+Summary: GObject introspection devel data for the %name
 Group: Development/Other
 BuildArch: noarch
 Requires: %name-gir = %EVR
 Requires: %name-devel = %EVR
 
 %description gir-devel
-GObject introspection devel data for the %name library
+GObject introspection devel data for the %name library.
 
 %package tests
 Summary: Tests for the %name library
@@ -110,8 +100,8 @@ the functionality of the installed %name library.
 
 %build
 %meson \
-	%{?_enable_gtk_doc:-Dgtk_doc=true} \
-	%{?_disable_introspection:-Dgobject_introspection=false} \
+    %{subst_enable_meson_bool gtk_doc gtk_doc} \
+    %{subst_enable_meson_bool introspection gobject_introspection}
 %nil
 %meson_build
 
@@ -124,7 +114,6 @@ xvfb-run %__meson_test
 
 %files -f %name-%api_ver.lang
 %_libdir/%name-%api_ver.so.*
-%_datadir/%name-%api_ver/
 %doc NEWS README*
 
 %files devel
@@ -135,11 +124,10 @@ xvfb-run %__meson_test
 %_vapidir/%name-%api_ver.deps
 %_vapidir/%name-%api_ver.vapi
 %endif
-%doc HACKING
 
 %if_enabled gtk_doc
 %files devel-doc
-%_gtk_docdir/*
+%_gtk_docdir/%name-%api_ver/
 %endif
 
 %if_enabled introspection
@@ -157,19 +145,7 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
-* Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 299.3.0-alt1
-- 299.3.0
-
-* Fri Feb 16 2024 Yuri N. Sedunov <aris@altlinux.org> 299.1.0-alt1
-- 299.1.0
-
-* Thu Dec 07 2023 Yuri N. Sedunov <aris@altlinux.org> 299.0.5-alt1
-- 299.0.5
-
-* Sat Jul 29 2023 Yuri N. Sedunov <aris@altlinux.org> 299.0.4-alt1
-- 299.0.4
-
-* Fri Jun 23 2023 Yuri N. Sedunov <aris@altlinux.org> 299.0.3-alt1
+* Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - first build for Sisyphus
 
 

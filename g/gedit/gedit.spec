@@ -3,22 +3,23 @@
 %define xdg_name org.gnome.gedit
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 46
+%define ver_major 48
 %define beta %nil
-%define lib_ver 46
+%define lib_ver 48
 %define api_ver 3.0
+%define namespace Gedit
 %def_enable plugins
 %def_enable introspection
 %def_enable gtk_doc
 
 Name: gedit
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: gEdit is a small but powerful text editor for GNOME
-License: GPL-2.0
+License: GPL-2.0-or-later and GPL-3.0-or-later and LGPL-3.0-or-later
 Group: Editors
-Url: https://gedit-technology.github.io/apps/gedit/
+Url: https://gedit-technology.github.io/apps/gedit
 
 %if_enabled snapshot
 Source: %name-%version.tar
@@ -35,16 +36,17 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %set_typelibdir %pkglibdir
 %set_girdir %pkgdatadir
 
-%define glib_ver 2.44.0
+%define glib_ver 2.76.0
 %define gtk_ver 3.24.0
-%define tepl_ver 6.8.0
-%define gtksourceview_ver 299.0.4
+%define tepl_ver 6.11
+%define gtksourceview_ver 299.3.0
 %define peas_ver 1.14.1
 %define gspell_ver 1.0.0
 %define soup_ver 2.60.0
 
 Requires: %name-data = %EVR
 Requires: %name-gir = %EVR
+Requires: typelib(Peas) = 1.0 typelib(Gdk) = 3.0
 Requires: libpeas-python3-loader
 Requires: dconf gnome-icon-theme gvfs zenity
 
@@ -55,7 +57,8 @@ BuildRequires: gtk-doc >= 1.0
 BuildRequires: iso-codes-devel >= 0.35
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: pkgconfig(tepl-6) >= %tepl_ver
+BuildRequires: pkgconfig(libgedit-amtk-5)
+BuildRequires: pkgconfig(libgedit-tepl-6) >= %tepl_ver
 BuildRequires: libpeas-devel >= %peas_ver
 BuildRequires: libgedit-gtksourceview-devel >= %gtksourceview_ver
 BuildRequires: libgspell-devel >= %gspell_ver
@@ -66,7 +69,7 @@ BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: python3-devel python3-module-pygobject3-devel
 %endif
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.10.2 libgtk+3-gir-devel
-BuildRequires: libgedit-gtksourceview-gir-devel libtepl-gir-devel}
+BuildRequires: libgedit-gtksourceview-gir-devel libgedit-tepl-gir-devel}
 
 %description
 gEdit is the official text editor of the GNOME desktop environment.
@@ -88,7 +91,6 @@ This package provides noarch data needed for gEdit to work.
 Group: Development/C
 Summary: Libraries needed to develop plugins for gedit
 Requires: %name = %EVR
-Requires: libgtksourceview-devel
 
 %description devel
 Libraries needed to develop plugins for gedit.
@@ -97,6 +99,7 @@ Libraries needed to develop plugins for gedit.
 Summary: GObject introspection data for the Gedit
 Group: System/Libraries
 Requires: %name = %EVR
+Requires: libgedit-tepl-gir >= %tepl_ver
 
 %description gir
 GObject introspection data for the Gedit
@@ -126,7 +129,8 @@ This package contains documentation needed to develop plugins for gedit.
 %build
 %meson \
     -Dbuildtype=plain \
-    %{?_enable_gtk_doc:-Dgtk_doc=true}
+    %{subst_enable_meson_bool gtk_doc gtk_doc}
+%nil
 %meson_build
 
 %install
@@ -188,9 +192,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/dbus-1/services/org.gnome.gedit.service
 %_mandir/man?/*
 %config %_datadir/glib-2.0/schemas/*
-%_iconsdir/hicolor/scalable/apps/%xdg_name.svg
+%_iconsdir/hicolor/*/apps/%xdg_name.png
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc README* NEWS
 
 %exclude %pkgdatadir/gir-1.0/
@@ -206,12 +210,15 @@ desktop-file-install --dir %buildroot%_desktopdir \
 
 %if_enabled introspection
 %files gir
-%pkglibdir/girepository-1.0/Gedit-%api_ver.typelib
+%pkglibdir/girepository-1.0/%namespace-%api_ver.typelib
 %files gir-devel
-%pkgdatadir/gir-1.0/Gedit-%api_ver.gir
+%pkgdatadir/gir-1.0/%namespace-%api_ver.gir
 %endif
 
 %changelog
+* Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Mon Feb 19 2024 Yuri N. Sedunov <aris@altlinux.org> 46.2-alt1
 - 46.2
 
