@@ -2,20 +2,20 @@
 %define pypi_name paramiko
 
 %define add_python_extra() \
-%{expand:%%package -n %%name+%{1} \
+%{expand:%%package -n %%name+%1 \
 Summary: %%summary \
 Group: Development/Python3 \
 Requires: %%name \
-%{expand:%%pyproject_runtimedeps_metadata -- --extra %{1}} \
-%%description -n %%name+%{1}' \
-Extra "%{1}" for %%pypi_name. \
-%%files -n %%name+%{1} \
+%{expand:%%pyproject_runtimedeps_metadata -- --extra %1} \
+%%description -n %%name+%1' \
+Extra "%1" for %%pypi_name. \
+%%files -n %%name+%1 \
 }
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.4.0
+Version: 3.4.1
 Release: alt1
 Summary: SSH2 protocol for python
 License: LGPL-2.1
@@ -32,7 +32,8 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 BuildRequires: /dev/pts
-%add_pyproject_deps_check_filter codespell alabaster codecov
+# not packaged
+%add_pyproject_deps_check_filter codespell
 %pyproject_builddeps_metadata_extra invoke
 %pyproject_builddeps_metadata_extra gssapi
 %pyproject_builddeps_check
@@ -71,6 +72,9 @@ entirely in python (no C or platform-dependent code).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Sep 13 2024 Stanislav Levin <slev@altlinux.org> 3.4.1-alt1
+- 3.4.0 -> 3.4.1.
+
 * Mon Feb 05 2024 Stanislav Levin <slev@altlinux.org> 3.4.0-alt1
 - 3.3.1 -> 3.4.0.
 
