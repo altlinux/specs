@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Play your music elegantly
@@ -14,10 +14,11 @@ License: GPL-3.0-or-later
 Group: Sound
 Url: https://gitlab.gnome.org/neithern/g4music
 
+Vcs: https://gitlab.gnome.org/neithern/g4music.git
+
 %if_disabled snapshot
 Source: %url/-/archive/v%version/%_name-%version.tar.gz
 %else
-Vcs: https://gitlab.gnome.org/neithern/g4music.git
 Source: %_name-%version.tar
 %endif
 
@@ -30,8 +31,7 @@ Requires: gst-plugins-bad1.0 >= %gst_ver
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools
-BuildRequires: /usr/bin/appstream-util desktop-file-utils
-BuildRequires: /usr/bin/appstreamcli
+BuildRequires: desktop-file-utils /usr/bin/appstreamcli
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(gstreamer-1.0)
@@ -53,7 +53,7 @@ performance for large music collection.
 %meson_install
 %find_lang %_name
 
-appstreamcli metainfo-to-news --format text data/app.appdata.xml.in NEWS
+appstreamcli metainfo-to-news --format text data/app.metainfo.xml.in NEWS
 
 %check
 %__meson_test
@@ -64,11 +64,14 @@ appstreamcli metainfo-to-news --format text data/app.appdata.xml.in NEWS
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_datadir/dbus-1/services/%rdn_name.service
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
-%_datadir/metainfo/%rdn_name.appdata.xml
+%_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README* NEWS
 
 
 %changelog
+* Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 3.9.2-alt1
+- updated to v3.9.2-3-g21c26ed
+
 * Wed Sep 04 2024 Yuri N. Sedunov <aris@altlinux.org> 3.9.1-alt1
 - 3.9.1
 
