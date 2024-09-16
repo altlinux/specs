@@ -1,24 +1,24 @@
 # TODO: build from sources
 %define _unpackaged_files_terminate_build 1
-%def_disable netstandart
+%def_enable netstandart
 %def_enable dotnet_host
 
 %define _dotnet_major 8.0
-%define _dotnet_corerelease 8.0.3
+%define _dotnet_corerelease 8.0.8
 #define _dotnet_sdkmanifestsrelease1 %nil
 %define _dotnet_sdkmanifestsrelease 8.0.100
-%define _dotnet_sdkrelease 8.0.103
+%define _dotnet_sdkrelease 8.0.108
 %define _dotnet_templatesrelease %_dotnet_corerelease
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
 %define _dotnet_netstandartrelease 2.1.0
 %define preview %nil
-%define _dotnet_coreshortrelease 8.0.3%preview
-%define _dotnet_sdkshortrelease 8.0.103%preview
+%define _dotnet_coreshortrelease 8.0.8%preview
+%define _dotnet_sdkshortrelease 8.0.108%preview
 
 %define bootstrapdir %_libdir/dotnet-bootstrap-%_dotnet_major
 
 Name: dotnet-sdk-%_dotnet_major
-Version: 8.0.103%preview
+Version: 8.0.108%preview
 Release: alt1
 
 Summary: SDK for the .NET 8
@@ -162,6 +162,17 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %endif
 
 %changelog
+* Mon Sep 16 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.108-alt1
+- .NET SDK 8.0.108 release
+- enable netstandard-targeting-pack-2.1 subpackage
+- CVE-2024-38168: .NET Denial of Service Vulnerability
+- CVE-2024-38167: .NET Information Disclosure Vulnerability
+- CVE-2024-38095: .NET Denial of Service Vulnerability
+- CVE-2024-35264: .NET Remote Code Execution Vulnerability
+
+* Sat May 18 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.105-alt1
+- .NET SDK 8.0.105 release
+
 * Fri Apr 05 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.103-alt1
 - .NET SDK 8.0.103 release
 

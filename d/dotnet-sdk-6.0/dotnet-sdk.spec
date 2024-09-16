@@ -1,6 +1,6 @@
 # TODO: build from sources
 %define _unpackaged_files_terminate_build 1
-%def_enable netstandard
+%def_disable netstandard
 %def_enable dotnet_host
 
 %define _dotnet_major 6.0
@@ -18,7 +18,7 @@
 
 Name: dotnet-sdk-%_dotnet_major
 Version: 6.0.125%preview
-Release: alt1
+Release: alt2
 
 Summary: SDK for the .NET 6
 
@@ -152,6 +152,9 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %endif
 
 %changelog
+* Mon Sep 16 2024 Vitaly Lipatov <lav@altlinux.ru> 6.0.125-alt2
+- disable build netstandard-targeting-pack
+
 * Tue Jan 09 2024 Vitaly Lipatov <lav@altlinux.ru> 6.0.125-alt1
 - .NET SDK 6.0.125
 

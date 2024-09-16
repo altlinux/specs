@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 8.0
-%define _dotnet_corerelease 8.0.3
-%define _dotnet_aspnetcorerelease 8.0.3
-%define _dotnet_aspnetcoreapprefrelease 8.0.3
+%define _dotnet_corerelease 8.0.8
+%define _dotnet_aspnetcorerelease 8.0.8
+%define _dotnet_aspnetcoreapprefrelease 8.0.8
 %define preview %nil
 %define _dotnet_coreshortrelease %_dotnet_corerelease%preview
 
@@ -11,7 +11,7 @@
 %def_with bootstrap
 
 Name: dotnet-aspnetcore-%_dotnet_major
-Version: 8.0.3%preview
+Version: 8.0.8%preview
 Release: alt1
 
 Summary: ASP.NET is a cross-platform .NET framework for building modern cloud-based web application
@@ -130,6 +130,12 @@ cp -a %bootstrapdir/packs/Microsoft.AspNetCore.App.Ref/%_dotnet_aspnetcoreappref
 %_dotnet_aspnetcoreappref/
 
 %changelog
+* Mon Sep 16 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.8-alt1
+- ASP.NET 8.0.8 release
+
+* Sat May 18 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.5-alt1
+- ASP.NET 8.0.5 release
+
 * Fri Apr 05 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.3-alt1
 - ASP.NET 8.0.3 release
 

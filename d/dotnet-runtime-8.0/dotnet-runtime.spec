@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%def_disable dotnet_host
+%def_enable dotnet_host
 
 %define _dotnet_major 8.0
-%define _dotnet_corerelease 8.0.3
+%define _dotnet_corerelease 8.0.8
 # used for build
-%define _dotnet_sdkrelease 8.0.103
+%define _dotnet_sdkrelease 8.0.108
 %define preview %nil
 %define _dotnet_sdkshortrelease %_dotnet_sdkrelease%preview
 
@@ -26,7 +26,7 @@
 %endif
 
 Name: dotnet-runtime-%_dotnet_major
-Version: 8.0.3%preview
+Version: 8.0.8%preview
 Release: alt1
 
 Summary: Microsoft .NET Runtime and Microsoft.NETCore.App
@@ -396,6 +396,20 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Mon Sep 16 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.8-alt1
+- .NET 8.0.8 release
+- CVE-2024-38168: .NET Denial of Service Vulnerability
+- CVE-2024-38167: .NET Information Disclosure Vulnerability
+- CVE-2024-38095: .NET Denial of Service Vulnerability
+- CVE-2024-35264: .NET Remote Code Execution Vulnerability
+
+* Sat May 18 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.5-alt1
+- .NET 8.0.5 release
+- CVE-2024-21409: .NET Elevation of Privilege Vulnerability
+- CVE-2024-30046: .NET Denial of Service Vulnerability
+- CVE-2024-30045: .NET Remote Code Execution Vulnerability
+- enable build dotnet-host here
+
 * Fri Apr 05 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.3-alt1
 - new version (8.0.3) with rpmgs script
 

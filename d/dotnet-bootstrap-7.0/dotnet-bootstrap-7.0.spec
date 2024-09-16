@@ -1,22 +1,23 @@
 %define _unpackaged_files_terminate_build 1
+%global __find_debuginfo_files %nil
 
 %define _dotnet_major 7.0
-%define _dotnet_corerelease 7.0.17
+%define _dotnet_corerelease 7.0.20
 %define _dotnet_sdkmanifestsrelease 7.0.100
-%define _dotnet_sdkrelease 7.0.117
-%define _dotnet_aspnetcorerelease 7.0.17
-%define _dotnet_templatesrelease 7.0.17
-%define _dotnet_coreapprefrelease 7.0.17
-%define _dotnet_aspnetcoreapprefrelease 7.0.17
+%define _dotnet_sdkrelease 7.0.120
+%define _dotnet_aspnetcorerelease 7.0.20
+%define _dotnet_templatesrelease 7.0.20
+%define _dotnet_coreapprefrelease 7.0.20
+%define _dotnet_aspnetcoreapprefrelease 7.0.20
 %define _dotnet_netstandartrelease 2.1.0
 %define preview %nil
-%define _dotnet_coreshortrelease 7.0.17%preview
-%define _dotnet_sdkshortrelease 7.0.117%preview
+%define _dotnet_coreshortrelease 7.0.20%preview
+%define _dotnet_sdkshortrelease 7.0.120%preview
 
 %define _dotnetdir %_libdir/%name
 
 Name: dotnet-bootstrap-%_dotnet_major
-Version: 7.0.17%preview
+Version: 7.0.20%preview
 Release: alt1
 
 Summary: .NET Core SDK binaries
@@ -63,6 +64,8 @@ Requires: libicu
 
 Provides: dotnet-bootstrap-runtime-%_dotnet_major = %_dotnet_coreshortrelease
 Provides: dotnet-bootstrap-sdk-%_dotnet_major = %_dotnet_sdkshortrelease
+
+%filter_from_requires /^\/usr\/lib\/ld-linux-aarch64.*/d
 
 %description
 This package contains full .NET %_dotnet_major SDK binaries, needed for bootstrap build.
@@ -125,6 +128,16 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Mon Sep 16 2024 Vitaly Lipatov <lav@altlinux.ru> 7.0.20-alt1
+- The .NET 7.0.20 and .NET SDK 7.0.120 releases
+- CVE-2024-20672: .NET Denial of Service Vulnerability
+
+* Sat May 18 2024 Vitaly Lipatov <lav@altlinux.ru> 7.0.19-alt1
+- The .NET 7.0.19 and .NET SDK 7.0.119 releases
+- CVE-2024-21409: .NET Elevation of Privilege Vulnerability
+- CVE-2024-30046: .NET Denial of Service Vulnerability
+- CVE-2024-30045: .NET Remote Code Execution Vulnerability
+
 * Fri Apr 05 2024 Vitaly Lipatov <lav@altlinux.ru> 7.0.17-alt1
 - The .NET 7.0.17 and .NET SDK 7.0.117 releases
 - CVE-2024-0056: Microsoft.Data.SqlClient and System.Data.SqlClient SQL Data provider Information Disclosure Vulnerability

@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 8.0
-%define _dotnet_corerelease 8.0.3
+%define _dotnet_corerelease 8.0.8
 #define _dotnet_sdkmanifestsrelease1 %nil
 %define _dotnet_sdkmanifestsrelease 8.0.100
-%define _dotnet_sdkrelease 8.0.103
+%define _dotnet_sdkrelease 8.0.108
 %define _dotnet_aspnetcorerelease %_dotnet_corerelease
 %define _dotnet_templatesrelease %_dotnet_corerelease
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
@@ -17,7 +17,7 @@
 %define _dotnetdir %_libdir/%name
 
 Name: dotnet-bootstrap-%_dotnet_major
-Version: 8.0.3%preview
+Version: 8.0.8
 Release: alt1
 
 Summary: .NET 8 SDK binaries
@@ -30,11 +30,11 @@ Group: Development/Other
 # from https://github.com/dotnet/core/tree/master/release-notes/8.0
 
 # x86_64
-# Source-url: https://raw.githubusercontent.com/dotnet/core/main/release-notes/8.0/%{_dotnet_corerelease}/%{_dotnet_sdkrelease}.md dotnet-sdk-%{_dotnet_sdkrelease}-linux-x64.tar.gz
+# Source-url: https://raw.githubusercontent.com/dotnet/core/main/release-notes/%_dotnet_major/%{_dotnet_corerelease}/%{_dotnet_sdkrelease}.md dotnet-sdk-%{_dotnet_sdkrelease}-linux-x64.tar.gz
 Source: %name-%version.tar
 
 # aarch64
-# Source2-url: https://raw.githubusercontent.com/dotnet/core/main/release-notes/8.0/%{_dotnet_corerelease}/%{_dotnet_sdkrelease}.md dotnet-sdk-%{_dotnet_sdkrelease}-linux-arm64.tar.gz
+# Source2-url: https://raw.githubusercontent.com/dotnet/core/main/release-notes/%_dotnet_major/%{_dotnet_corerelease}/%{_dotnet_sdkrelease}.md dotnet-sdk-%{_dotnet_sdkrelease}-linux-arm64.tar.gz
 Source2: %name-aarch64-%version.tar
 
 ExclusiveArch: x86_64 aarch64
@@ -63,6 +63,8 @@ Requires: libicu
 
 Provides: dotnet-bootstrap-runtime-%_dotnet_major = %_dotnet_coreshortrelease
 Provides: dotnet-bootstrap-sdk-%_dotnet_major = %_dotnet_sdkshortrelease
+
+%filter_from_requires /^\/usr\/lib\/ld-linux-aarch64.*/d
 
 %description
 This package contains full .NET %_dotnet_major SDK binaries, needed for bootstrap build.
@@ -128,7 +130,28 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Sun Sep 15 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.8-alt1
+- The .NET 8.0.8 and .NET SDK 8.0.108 release
+- CVE-2024-38168: .NET Denial of Service Vulnerability
+- CVE-2024-38167: .NET Information Disclosure Vulnerability
+
+* Sun Sep 15 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.7-alt1
+- The .NET 8.0.7 and .NET SDK 8.0.107 release
+- CVE-2024-38095: .NET Denial of Service Vulnerability
+- CVE-2024-35264: .NET Remote Code Execution Vulnerability
+- CVE-2024-30105: .NET Denial of Service Vulnerability
+
+* Sun Sep 15 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.6-alt1
+- The .NET 8.0.6 and .NET SDK 8.0.106 release
+
+* Sat May 18 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.5-alt1
+- The .NET 8.0.5 and .NET SDK 8.0.105 release
+- CVE-2024-21409: .NET Elevation of Privilege Vulnerability
+- CVE-2024-30046: .NET Denial of Service Vulnerability
+- CVE-2024-30045: .NET Remote Code Execution Vulnerability
+
 * Fri Apr 05 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.3-alt1
+- The .NET 8.0.3 and .NET SDK 8.0.103 release
 - CVE-2024-21392: .NET Denial of Service Vulnerability
 - CVE-2024-26190: Microsoft QUIC Denial of Service Vulnerability
 
