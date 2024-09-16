@@ -1,7 +1,7 @@
 Name: blas
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 Version: 3.9.2
-Release: alt3
+Release: alt4
 Group: System/Libraries
 URL: http://www.netlib.org/blas/
 License: ALT-Public-Domain
@@ -11,7 +11,12 @@ Source: %name-%version.tar
 Patch0: make-libdir.patch
 Patch1: x86-32-do-not-optimize.patch
 
-BuildRequires: gcc-fortran texlive-dist texlive-latex-recommended
+%def_without doc
+
+BuildRequires: gcc-fortran
+%if_with doc
+BuildRequires: texlive-dist texlive-latex-recommended
+%endif
 
 %description
 Basic Linear Algebra Reference implementation.
@@ -113,7 +118,9 @@ sed -i -e 's/i386/i586/g' cblas/testing/Makefile
 
 %build
 %make -f debian/rules build
+%if_with doc
 %make -f debian/rules debian/patched-docs/cinterface.pdf
+%endif
 %make -f debian/rules debian/test_results
 %make -f debian/rules `echo man/manl/* | sed -e 's/\.l/.3/g'`
 
@@ -154,9 +161,15 @@ install -m0644 -t %buildroot%_man3dir man/man*/*.3
 
 %files -n lib%name-doc
 %doc doc/faq.html
+%if_with doc
 %doc debian/patched-docs/cinterface.pdf
+%endif
 
 %changelog
+* Mon Sep 16 2024 Ivan A. Melnikov <iv@altlinux.org> 3.9.2-alt4
+- NMU: Added --without=doc knob to keep build requirements sane
+  (by asheplyakov@).
+
 * Fri Apr 16 2021 Grigory Ustinov <grenka@altlinux.org> 3.9.2-alt3
 - Fixed FTBFS.
 
