@@ -4,11 +4,15 @@
 %define ver_major 3
 %define rev 1
 
+# nvdimm marked as deprecated since 3.1
+%def_with nvdimm
 %def_with tools
+%def_with smart
+%def_with smartmontools
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.0.4
+Version: %ver_major.2.0
 Release: alt1
 
 Summary: A library for low-level manipulation with block devices
@@ -18,7 +22,7 @@ Url: https://github.com/storaged-project/%name
 
 %if_disabled snapshot
 Vcs: https://github.com/storaged-project/libblockdev.git
-Source: %url/releases/download/%version-%rev/%name-%version.tar.gz
+Source: %url/releases/download/%version/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
@@ -42,6 +46,8 @@ BuildRequires: libbytesize-devel
 BuildRequires: libuuid-devel
 BuildRequires: libndctl-devel
 BuildRequires: libnvme-devel
+%{?_with_smart:BuildRequires: pkgconfig(libatasmart)}
+%{?_with_smartmontools:BuildRequires: pkgconfig(yaml-0.1) pkgconfig(json-glib-1.0)}
 %{?_enable_check:BuildRequires: python3-module-pylint python3-module-pygobject3}
 
 %ifarch s390 s390x
@@ -371,6 +377,43 @@ Requires: %name-utils-devel = %EVR
 This package contains header files and pkg-config files needed for development
 with the libblockdev-s390 plugin/library.
 
+%package smart
+Summary: The libatasmart plugin for the libblockdev library
+Group: System/Libraries
+
+%description smart
+The libblockdev library plugin (and in the same time a standalone library)
+providing ATA S.M.A.R.T. support via libatasmart.
+
+%package smart-devel
+Summary: Development files for the libblockdev-smart plugin/library
+Group: Development/C
+Requires: %name-smart = %EVR
+Requires: %name-utils-devel = %EVR
+
+%description smart-devel
+This package contains development files for libblockdev-smart plugin/library.
+
+%package smartmontools
+Summary: The libatasmart plugin for the libblockdev library
+Group: System/Libraries
+Requires: smartmontools
+
+%description smartmontools
+The libblockdev library plugin (and in the same time a standalone library)
+providing ATA S.M.A.R.T. support via smartmontools.
+
+%package smartmontools-devel
+Summary: Development files for the libblockdev-smartmontools plugin/library
+Group: Development/C
+Requires: %name-smartmontools = %EVR
+Requires: %name-utils-devel = %EVR
+
+%description smartmontools-devel
+This package contains development files for libblockdev-smartmontools
+plugin/library.
+
+
 %package plugins
 Summary: Meta-package that pulls all the libblockdev plugins as dependencies
 Group: System/Libraries
@@ -385,7 +428,9 @@ Requires: %name-mdraid = %EVR
 Requires: %name-mpath = %EVR
 Requires: %name-part = %EVR
 Requires: %name-swap = %EVR
-Requires: %name-nvdimm = %EVR
+%{?_with_nvdimm:Requires: %name-nvdimm = %EVR}
+%{?_with_smart:Requires: %name-smart}
+%{?_with_smartmontools:Requires: %name-smartmontools}
 Requires: %name-nvme = %EVR
 %ifarch s390 s390x
 Requires: %name-s390 = %EVR
@@ -411,7 +456,10 @@ sed -i 's/\(pylint\)-3/\1.py3/' Makefile.*
 %add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
-    %{subst_with tools}
+    %{subst_with nvdimm} \
+    %{subst_with tools} \
+    %{subst_with smart} \
+    %{subst_with smartmontools}
 %nil
 %make_build
 
@@ -555,6 +603,7 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 %dir %_includedir/blockdev
 %_includedir/blockdev/swap.h
 
+%if_with nvdimm
 %files nvdimm
 %_libdir/libbd_nvdimm.so.*
 
@@ -562,6 +611,7 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 %_libdir/libbd_nvdimm.so
 %dir %_includedir/blockdev
 %_includedir/blockdev/nvdimm.h
+%endif
 
 %ifarch s390 s390x
 %files s390
@@ -573,6 +623,23 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 %_includedir/blockdev/s390.h
 %endif
 
+%if_with smart
+%files smart
+%_libdir/libbd_smart.so.*
+
+%files smart-devel
+%_includedir/blockdev/smart.h
+%_libdir/libbd_smart.so
+%endif
+
+%if_with smartmontools
+%files smartmontools
+%_libdir/libbd_smartmontools.so.*
+
+%files smartmontools-devel
+%_libdir/libbd_smartmontools.so
+%endif
+
 %files plugins
 
 %if_with tools
@@ -582,6 +649,16 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 %endif
 
 %changelog
+* Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
+- 3.2.0
+- new smart{,montools} subpackages
+
+* Wed Mar 27 2024 Yuri N. Sedunov <aris@altlinux.org> 3.1.1-alt1
+- 3.1.1
+
+* Fri Jan 19 2024 Yuri N. Sedunov <aris@altlinux.org> 3.1.0-alt1
+- 3.1.0
+
 * Fri Oct 13 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0.4-alt1
 - 3.0.4
 
