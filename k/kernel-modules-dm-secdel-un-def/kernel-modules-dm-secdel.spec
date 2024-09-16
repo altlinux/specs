@@ -1,7 +1,7 @@
 %define module_name	dm-secdel
 %define module_version	1.0.11
 %define module_release	alt1
-%define flavour		std-def
+%define flavour		un-def
 %define karch		%ix86 x86_64 aarch64 ppc64le armh e2k e2kv4 e2kv5 e2kv6
 
 %setup_kernel_module %flavour
@@ -26,7 +26,7 @@ Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
 BuildRequires(pre): rpm-build-kernel
-BuildRequires(pre): kernel-headers-modules-std-def
+BuildRequires(pre): kernel-headers-modules-un-def
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
 %{?!_without_check:%{?!_disable_check:

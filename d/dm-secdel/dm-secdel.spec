@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: dm-secdel
-Version: 1.0.10
+Version: 1.0.11
 Release: alt1
 
 Summary: dm-linear with secure deletion on discard
@@ -20,6 +20,13 @@ BuildRequires: figlet
 BuildRequires: kernel-headers-modules-std-def
 BuildRequires: kernel-headers-modules-un-def
 BuildRequires: rpm-build-vm
+%if 0%{?kernel_latest:1}
+BuildRequires: kernel-headers-modules-latest
+%endif
+%if 0%{?kernel_new:1}
+BuildRequires: kernel-new
+BuildRequires: kernel-headers-modules-new
+%endif
 }}
 
 %description
@@ -62,6 +69,9 @@ systemctl -q enable secdeltab
 %preun_service secdeltab
 
 %changelog
+* Mon Sep 16 2024 Vitaly Chikunov <vt@altlinux.org> 1.0.11-alt1
+- Disable debugging messages in dmesg (for CONFIG_DYNAMIC_DEBUG=n kernels).
+
 * Tue Jul 16 2024 Vitaly Chikunov <vt@altlinux.org> 1.0.10-alt1
 - Fix FTBFS after usrmerge.
 - Compatibility with kernel v6.10.
