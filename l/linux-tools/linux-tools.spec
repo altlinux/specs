@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define kernel_base_version 6.10
+%define kernel_base_version 6.11
 %define kernel_source kernel-source-%kernel_base_version
 
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
@@ -20,6 +20,8 @@
 %define kvp_config_loc /var/lib/hyperv
 %define kvp_scripts_path /usr/libexec/hypervkvpd
 
+%brp_strip_none %_libexecdir/kselftests/net/*.bpf.o
+
 Name: linux-tools
 Version: %kernel_base_version
 Release: alt1
@@ -36,6 +38,7 @@ BuildRequires: asciidoc
 BuildRequires: asciidoc-a2x
 BuildRequires: banner
 BuildRequires: binutils-devel
+BuildRequires: clang
 BuildRequires: elfutils-devel
 BuildRequires: flex
 BuildRequires: libalsa-devel
@@ -59,6 +62,7 @@ BuildRequires: libslang2-devel
 BuildRequires: libssl-devel
 BuildRequires: libtraceevent-devel
 BuildRequires: libtracefs-devel >= 1.3.0
+BuildRequires: liburing-devel
 BuildRequires: libuuid-devel
 BuildRequires: libzstd-devel
 BuildRequires: perl-devel
@@ -90,6 +94,7 @@ Source33: hypervfcopyd.rules
 
 Patch1: 0002-rtla-basic-loongarch-support.patch
 Patch3: 0001-selftests-lsm-lsm_list_modules_test-List-ALT-specifi.patch
+Patch4: 0001-perf-tools-Build-x86-32-bit-syscall-table-from-arch-.patch
 
 %description
 Various tools from the Linux Kernel source tree.
@@ -338,6 +343,9 @@ grep -lrZz '#!/usr/bin/env python' | xargs -0 sed -i '1s,#!.*,#!%__python3,'
 
 %build
 %define optflags_lto %nil
+# Kernel developers disregard these warnings, so they clutter the
+# build log and obscure other potential errors.
+%add_optflags -Wno-unused-result -Wno-unused-variable -Wno-unused-but-set-variable
 banner build
 cd %kernel_source
 MAKEFLAGS=-s make kernelversion | grep -Fx '%version.0'
@@ -558,7 +566,7 @@ make %install_opts tracing_install STRIP=true
 make -C verification/rv %install_opts install STRIP=true
 %ifarch %ix86 x86_64
 mkdir -p %buildroot%_datadir/misc
-make -C arch/x86/kcpuid %install_opts install HWDATADIR=%buildroot%_datadir/misc
+make -C arch/x86/kcpuid %install_opts install
 make -C arch/x86/intel_sdsi %install_opts install
 %endif
 install -p -m755 firmware/ihex2fw		%buildroot%_bindir
@@ -604,6 +612,7 @@ cd /tmp
 cc %_docdir/libperf/examples/counting.c `pkg-config --libs libperf`
 cc %_docdir/libperf/examples/sampling.c `pkg-config --libs libperf`
 # Cannot run due to kernel.perf_event_paranoid=4
+rm a.out
 
 %post -n hypervkvpd
 # auto enable service for Hyper-V guest
@@ -674,6 +683,7 @@ fi
 %_man8dir/tmon.*
 %_sbindir/page-types
 %_sbindir/slabinfo
+%_sbindir/thp_swap_allocator_test
 %_sbindir/page_owner_sort
 %_sbindir/thpmaps
 %_sbindir/pfrut
@@ -804,6 +814,9 @@ fi
 %_man1dir/kvm_stat.1*
 
 %changelog
+* Mon Sep 16 2024 Vitaly Chikunov <vt@altlinux.org> 6.11-alt1
+- Update to v6.11 (2024-09-15).
+
 * Thu Jul 18 2024 Vitaly Chikunov <vt@altlinux.org> 6.10-alt1
 - Update to v6.10 (2024-07-14).
 
