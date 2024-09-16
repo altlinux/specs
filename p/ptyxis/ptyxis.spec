@@ -3,7 +3,7 @@
 
 Name: ptyxis
 Version: 46.6
-Release: alt1
+Release: alt1.1
 
 Summary: Ptyxis is a terminal for GNOME with first-class support for containers
 License: GPL-3.0
@@ -55,6 +55,10 @@ BuildRequires: pkgconfig(systemd)
 BuildRequires: gobject-introspection-devel >= %gir_ver
 BuildRequires: libgtk4-gir-devel
 BuildRequires: vala-tools libvala-devel
+
+Provides: Terminal = %version-%release
+
+Provides: x-terminal-emulator
 
 %description
 %summary
@@ -117,6 +121,9 @@ rm -vr %buildroot%_libdir/libvte-ptyxis-%version_vte_api-gtk4.so
 %_libdir/libvte-ptyxis-%version_vte_api-gtk4.so.*
 
 %changelog
+* Mon Sep 16 2024 Boris Yumankulov <boria138@altlinux.org> 46.6-alt1.1
+- add terminal provides (ALT Bug: 51463)
+
 * Sun Aug 11 2024 Boris Yumankulov <boria138@altlinux.org> 46.6-alt1
 - new version 46.6
 
