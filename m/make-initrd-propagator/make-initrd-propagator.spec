@@ -1,5 +1,5 @@
 Name: make-initrd-propagator
-Version: 0.50
+Version: 0.51
 Release: alt1
 
 Summary: Put propagator into make-initrd generated image
@@ -38,6 +38,9 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Mon Sep 16 2024 Anton Midyukov <antohami@altlinux.org> 0.51-alt1
+- init-bottom: fix for old BIOS into booting from GUID/GPT (Closes: 51479)
+
 * Fri Oct 20 2023 Anton Midyukov <antohami@altlinux.org> 0.50-alt1
 - rules.mk: add udev_log=err to udev.conf
 
