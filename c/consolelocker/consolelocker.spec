@@ -1,6 +1,6 @@
 Name: consolelocker
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Summary: Daemon to lock console terminal and virtual consoles.
 License: GPL
@@ -24,7 +24,7 @@ This package contains a daemon to lock console terminal and virtual consoles.
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%make_install install DESTDIR=%buildroot systemd_unitdir=%_unitdir
 
 %files
 %_bindir/*
@@ -36,6 +36,10 @@ This package contains a daemon to lock console terminal and virtual consoles.
 %config(noreplace) %_sysconfdir/cron.d/%name
 
 %changelog
+* Tue Sep 17 2024 Alexey Shabalin <shaba@altlinux.org> 1.1.0-alt2
+- Update systemd unit
+- Fix FTBFS (define unitdir for make)
+
 * Sat Feb 29 2020 Alexey Gladkov <legion@altlinux.ru> 1.1.0-alt1
 - Use the vt 63 number instead of the first available
 - Disable oom killing
