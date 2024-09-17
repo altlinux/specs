@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.32.0
+Version: 3.33.0
 Release: alt1
 
 Summary: Slack Developer Kit for Python
@@ -56,6 +56,9 @@ seamlessly when used together, too.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Sep 17 2024 Anton Vyatkin <toni@altlinux.org> 3.33.0-alt1
+- New version 3.33.0.
+
 * Mon Sep 09 2024 Anton Vyatkin <toni@altlinux.org> 3.32.0-alt1
 - New version 3.32.0.
 
