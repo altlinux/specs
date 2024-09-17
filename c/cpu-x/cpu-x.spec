@@ -1,9 +1,11 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
+%def_enable opencl
+
 Name: cpu-x
 Version: 5.0.4
-Release: alt1
+Release: alt2
 Summary: CPU-X is a Free software that gathers information on CPU, motherboard and more
 License: GPL-3.0-or-later
 Group: System/Kernel and hardware
@@ -26,6 +28,7 @@ BuildRequires: pkgconfig(libpci)
 BuildRequires: pkgconfig(libproc2)
 BuildRequires: pkgconfig(libstatgrab)
 BuildRequires: pkgconfig(ncursesw)
+%{?_enable_opencl:BuildRequires: ocl-icd-devel}
 Requires: icon-theme-hicolor
 
 ExclusiveArch: %ix86 x86_64
@@ -43,7 +46,12 @@ NCurses. A dump mode is present from command line.
 %patch -p1
 
 %build
-%cmake
+%cmake \
+%if_enabled opencl
+    -DWITH_OPENCL=ON \
+%endif
+%nil
+
 %cmake_build
 
 %install
@@ -67,6 +75,9 @@ rm -r %buildroot%_datadir/locale/zh_Hant
 %_prefix/libexec/*
 
 %changelog
+* Tue Sep 17 2024 Anton Midyukov <antohami@altlinux.org> 5.0.4-alt2
+- Enable OpenCL (thanks L.A. Kostis) (Closes: 51118)
+
 * Wed May 01 2024 Anton Midyukov <antohami@altlinux.org> 5.0.4-alt1
 - New version 5.0.4
 
