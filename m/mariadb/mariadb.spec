@@ -51,7 +51,7 @@
 
 Name: mariadb
 Version: 11.4.3
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -124,6 +124,7 @@ Patch101: rocksdb-6.8.0-alt-add-libatomic-if-needed.patch
 Patch102: mariadb-10.5.11-alt-link-with-latomic-if-needed.patch
 Patch103: rocksdb-alt-upstream-gcc13.patch
 Patch104: mariadb-10.11.9-disable-download-fmt.patch
+Patch105: mariadb-10.11.9-alt-wsrep-API_fix_api-ver.patch
 
 Patch2000: mariadb-e2k.patch
 
@@ -441,6 +442,7 @@ tar -xf %SOURCE107 -C extra/libfmt/src/libfmt
 #%%patch102 -p1
 %patch103 -p1 -d ./storage/rocksdb/rocksdb
 %patch104 -p1
+%patch105 -p1 -d ./wsrep-lib/wsrep-API/v26
 
 %ifarch %e2k
 %patch2000 -p1
@@ -1069,6 +1071,9 @@ fi
 %endif
 
 %changelog
+* Tue Sep 17 2024 Alexei Takaseev <taf@altlinux.org> 11.4.3-alt2
+- Fix wsrep-API version (ALT #43918)
+
 * Wed Aug 14 2024 Alexei Takaseev <taf@altlinux.org> 11.4.3-alt1
 - 11.4.3
 - Add conflick to rocksdb-tools
