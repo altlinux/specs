@@ -6,6 +6,9 @@
 %if "%altbranch" == "%nil"
 %define altbranch sisyphus
 %endif
+%if "%altbranch" == "%%_priority_distbranch"
+%define altbranch sisyphus
+%endif
 
 %ifarch %ix86 x86_64
 %def_disable gfxboot
@@ -29,7 +32,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt0.7
+Release: alt0.8
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -255,6 +258,7 @@ STATUS=%status \
 STATUS_RU=%status_ru \
 VERSION=%altversion \
 X86='%x86' \
+BRANCH='%altbranch' \
     ./configure
 make
 
@@ -488,6 +492,10 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Sep 17 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.8
+- fix repository URLs
+- update indexhtml URLs
+
 * Thu Sep 05 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.7
 - scale installer background image
 
