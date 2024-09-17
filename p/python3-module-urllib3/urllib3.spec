@@ -22,7 +22,7 @@ Extra "%1" for %%pypi_name. \
 %endif
 
 Name: python3-module-%pypi_name
-Version: 2.2.2
+Version: 2.2.3
 Release: alt1
 Epoch: 2
 Summary: HTTP library with thread-safe connection pooling, file post, and more
@@ -60,6 +60,7 @@ urllib3 is a powerful, user-friendly HTTP client for Python.
 %prep
 %setup
 %patch -p1
+%pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
@@ -84,6 +85,9 @@ export NO_VENDORED_HYPERCORN=yes
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Sep 13 2024 Stanislav Levin <slev@altlinux.org> 2:2.2.3-alt1
+- 2.2.2 -> 2.2.3.
+
 * Tue Jun 18 2024 Stanislav Levin <slev@altlinux.org> 2:2.2.2-alt1
 - 2.2.1 -> 2.2.2.
 
