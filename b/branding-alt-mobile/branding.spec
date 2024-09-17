@@ -10,7 +10,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.4.alpha1
+Release: alt0.5.alpha1
 
 Url: https://www.altlinux.org/ALT_Mobile
 
@@ -29,7 +29,12 @@ License: GPL-3.0-or-later
 %define distro_name %Brand Mobile
 %define distro_name_ru %Brand_ru Мобайл
 %define branding_data_dir %_datadir/branding-data-current
+
+%ifdef _priority_distbranch
 %define altbranch %_priority_distbranch
+%else
+%define altbranch sisyphus
+%endif
 
 %define status "-альфа1"
 %define status_en "-alpha1"
@@ -229,6 +234,9 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/gtk-3.0/gtk.css
 
 %changelog
+* Tue Sep 17 2024 Anton Midyukov <antohami@altlinux.org> 11.0-alt0.5.alpha1
+- fix build, when rpm macros _priority_distbranch is not defined
+
 * Wed Sep 11 2024 Anton Midyukov <antohami@altlinux.org> 11.0-alt0.4.alpha1
 - release: add missing conflict with altlinux-release-%%altbranch
 
