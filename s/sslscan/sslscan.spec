@@ -4,25 +4,30 @@
 %set_verify_elf_method strict
 
 Name: sslscan
-Version: 2.1.4
+Version: 2.1.5
 Release: alt1
-Summary: sslscan tests SSL/TLS enabled services to discover supported cipher suites
+Summary: Discover supported cipher suites in SSL/TLS services
 License: GPL-3.0-or-later
 Group: Security/Networking
 Url: https://github.com/rbsec/sslscan
 
 Source: %name-%version.tar
 BuildRequires: libssl-devel
-%{?!_without_check:%{?!_disable_check:BuildRequires: openssl}}
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: openssl
+}}
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
 
 %build
-%add_optflags %(getconf LFS_CFLAGS) -fanalyzer -Werror -Wno-analyzer-malloc-leak
+%ifarch x86_64 %ix86 aarch64 ppc64le
+%add_optflags -fanalyzer -Wno-analyzer-malloc-leak -Werror
+%endif
+%add_optflags %(getconf LFS_CFLAGS)
 %make_build CFLAGS="%optflags" DEFINES=-DVERSION='\"%version-%release\"'
 
 %install
@@ -36,8 +41,8 @@ trap "kill $!" EXIT
 sleep 1
 %buildroot%_bindir/sslscan --no-colour --xml=a.xml 127.1:4433
 grep -q -v error a.xml
-grep -q accepted a.xml
-grep -q qwerty   a.xml
+grep 'status="accepted"' a.xml
+grep -F '<subject><![CDATA[qwerty]]></subject>' a.xml
 
 %files
 %doc LICENSE README.md Changelog
@@ -45,6 +50,9 @@ grep -q qwerty   a.xml
 %_man1dir/sslscan.1.xz
 
 %changelog
+* Tue Sep 17 2024 Vitaly Chikunov <vt@altlinux.org> 2.1.5-alt1
+- Update to 2.1.5 (2024-07-02).
+
 * Mon Jun 17 2024 Vitaly Chikunov <vt@altlinux.org> 2.1.4-alt1
 - Update to 2.1.4 (2024-06-16).
 
