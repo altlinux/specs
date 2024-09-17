@@ -1,7 +1,7 @@
 %define oname plyfile
 
 Name: python3-module-plyfile
-Version: 1.0.3
+Version: 1.1
 Release: alt1
 
 Summary: NumPy-based text/binary PLY file reader/writer for Python
@@ -39,6 +39,9 @@ Welcome to the plyfile Python module, which provides a simple facility for readi
 %python3_sitelibdir/__pycache__/%oname.cpython*
 
 %changelog
+* Tue Sep 17 2024 Ivan Mazhukin <vanomj@altlinux.org> 1.1-alt1
+- new version 1.1 (with rpmrb script)
+
 * Fri Jul 26 2024 Ivan Mazhukin <vanomj@altlinux.org> 1.0.3-alt1
 - initial build for ALT Sisyphus
 
