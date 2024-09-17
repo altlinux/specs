@@ -1,7 +1,7 @@
 %define oname moderngl
 
 Name: python3-module-moderngl
-Version: 5.10.0
+Version: 5.11.1
 Release: alt1
 
 Summary: Modern OpenGL binding for Python
@@ -38,6 +38,9 @@ ModernGL is easy to learn and use. ModernGL is capable of rendering with high pe
 %python3_sitelibdir/*
 
 %changelog
+* Tue Sep 17 2024 Ivan Mazhukin <vanomj@altlinux.org> 5.11.1-alt1
+- new version 5.11.1 (with rpmrb script)
+
 * Fri Jul 26 2024 Ivan Mazhukin <vanomj@altlinux.org> 5.10.0-alt1
 - Initial build for ALT Sisyphus
 
