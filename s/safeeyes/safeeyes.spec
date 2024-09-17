@@ -1,6 +1,6 @@
 Name: safeeyes
 Version: 2.1.6
-Release: alt1.1
+Release: alt1.2
 
 Summary: Tool for reminding the user to take breaks
 
@@ -17,6 +17,7 @@ Patch: remove-distutils-for-python-3.12.patch
 BuildRequires(pre): rpm-build-python3
 
 Requires: typelib(Notify)
+Requires: typelib(AyatanaAppIndicator3)
 
 BuildArch: noarch
 
@@ -43,6 +44,9 @@ at the computer in an effort to alleviate eye strain (asthenopia).
 %python3_sitelibdir/%name-%version-py*.egg-info
 
 %changelog
+* Tue Sep 17 2024 Andrey Cherepanov <cas@altlinux.org> 2.1.6-alt1.2
+- NMU: added requirements of libayatana-appindicator3-gir (ALT #45647).
+
 * Thu Oct 19 2023 Grigory Ustinov <grenka@altlinux.org> 2.1.6-alt1.1
 - NMU: dropped dependency on distutils.
 
