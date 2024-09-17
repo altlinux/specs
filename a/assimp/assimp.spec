@@ -5,8 +5,8 @@
 %def_without examples
 
 Name: assimp
-Version: 5.4.2
-Release: alt2
+Version: 5.4.3
+Release: alt1
 Summary: Library to import various 3D model formats into applications
 Group: Graphics
 # Assimp is BSD
@@ -27,7 +27,7 @@ Source1: assimp_generate_tarball.sh
 
 # Un-bundle libraries that are provided by the distribution.
 # Also fixes FTBFS: https://github.com/assimp/assimp/issues/4334
-Patch0: assimp-5.4.0-alt-unbundle.patch
+Patch0: assimp-5.4.3-alt-unbundle.patch
 
 BuildRequires: boost-complete
 BuildRequires: cmake
@@ -137,6 +137,10 @@ rm -rf contrib/zlib
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Sep 16 2024 L.A. Kostis <lakostis@altlinux.ru> 5.4.3-alt1
+- 5.4.3.
+- Update unbundle.patch
+
 * Tue Aug 20 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 5.4.2-alt2
 - e2k build fix
 
