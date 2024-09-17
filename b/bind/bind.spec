@@ -29,7 +29,7 @@
 Name: bind
 Version: 9.18.29
 %define src_version 9.18.29
-Release: alt1
+Release: alt2
 
 Summary: ISC BIND - DNS server
 License: MPL-2.0
@@ -602,6 +602,9 @@ fi
 %endif
 
 %changelog
+* Mon Sep 16 2024 Stanislav Levin <slev@altlinux.org> 9.18.29-alt2
+- Updated default configured rndc paths (closes: #51450).
+
 * Wed Aug 21 2024 Stanislav Levin <slev@altlinux.org> 9.18.29-alt1
 - 9.18.28 -> 9.18.29.
 
