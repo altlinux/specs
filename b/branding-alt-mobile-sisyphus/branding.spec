@@ -10,7 +10,7 @@
 
 Name: branding-%flavour
 Version: 2024.08
-Release: alt2
+Release: alt3
 
 Url: https://www.altlinux.org/ALT_Mobile
 
@@ -29,7 +29,12 @@ License: GPL-3.0-or-later
 %define distro_name %Brand Mobile Sisyphus
 %define distro_name_ru %Brand_ru Мобайл Сизиф
 %define branding_data_dir %_datadir/branding-data-current
+
+%ifdef _priority_distbranch
 %define altbranch %_priority_distbranch
+%else
+%define altbranch sisyphus
+%endif
 
 %define status %nil
 %define status_en %nil
@@ -224,6 +229,9 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/gtk-3.0/gtk.css
 
 %changelog
+* Tue Sep 17 2024 Anton Midyukov <antohami@altlinux.org> 2024.08-alt3
+- fix build, when rpm macros _priority_distbranch is not defined
+
 * Wed Sep 11 2024 Anton Midyukov <antohami@altlinux.org> 2024.08-alt2
 - release: add missing conflicts with altlinux-release-%%altbranch
 
