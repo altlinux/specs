@@ -7,7 +7,7 @@
 
 Name: podsec
 Version: 1.1.6
-Release: alt4
+Release: alt5
 
 Summary: Set of scripts for Podman Security
 License: GPLv2+
@@ -238,6 +238,9 @@ ln -sf usernetes/containers . 2>&1 ||:
 %config(noreplace) %_sysconfdir/nagios/nrpe-commands/podsec-commands.cfg
 
 %changelog
+* Tue Sep 17 2024 Alexey Kostarev <kaf@altlinux.org> 1.1.6-alt5
+- - 1.1.6-alt5
+
 * Fri Aug 23 2024 Alexey Kostarev <kaf@altlinux.org> 1.1.6-alt4
 - Syntax  podsec-icinga2.json corrected (thnx amakeenk@, manowar@)
 - Some wording in event descriptions has been clarified and corrected in Nagios and Icinga (thnx manowar@)
