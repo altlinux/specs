@@ -8,7 +8,7 @@
 
 Name: libsepol
 Epoch: 1
-Version: 3.6
+Version: 3.7
 Release: alt1
 Summary: SELinux binary policy manipulation library
 License: LGPLv2+
@@ -72,16 +72,16 @@ on binary policies such as customizing policy boolean settings.
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
 
-%make_build CFLAGS="%optflags" LIBDIR=%_libdir SHLIBDIR=/%_lib all
+%make_build CFLAGS="%optflags" LIBDIR=%_libdir SHLIBDIR=%_libdir all
 
 %install
-%makeinstall_std LIBDIR=%_libdir SHLIBDIR=/%_lib
+%makeinstall_std LIBDIR=%_libdir SHLIBDIR=%_libdir
 
 %check
 %make_build test
 
 %files
-/%_lib/*
+%_libdir/*.so.*
 
 %files devel
 %_libdir/*.so
@@ -98,6 +98,10 @@ on binary policies such as customizing policy boolean settings.
 %exclude %_man8dir/genpol*
 
 %changelog
+* Mon Sep 16 2024 Anton Zhukharev <ancieg@altlinux.org> 1:3.7-alt1
+- (NMU) Updated to 3.7.
+  + Applied usrmerge paths changes.
+
 * Mon Dec 25 2023 Anton Zhukharev <ancieg@altlinux.org> 1:3.6-alt1
 - (NMU) Updated to 3.6.
   + Removed man-pages localizations that had been dropped by upstream.

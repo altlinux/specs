@@ -9,7 +9,7 @@
 Summary: SELinux policy core utilities
 Name: policycoreutils
 Epoch:   1
-Version: 3.6
+Version: 3.7
 Release: alt1
 License: GPLv2
 Group: System/Base
@@ -171,24 +171,24 @@ pushd mcstrans-%version
 popd
 
 %build
-%make_build -C policycoreutils-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
-%make_build -C selinux-python-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
-%make_build -C selinux-gui-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
-%make_build -C selinux-sandbox-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
-%make_build -C selinux-dbus-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
-%make_build -C semodule-utils-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
-%make_build -C restorecond-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
-%make_build -C mcstrans-%version LIBDIR=%_libdir CFLAGS="%optflags $(pkg-config --cflags-only-I libpcre2)" LIBSEPOLA="%_libdir/libsepol.a"
+%make_build -C policycoreutils-%version LSPP_PRIV=y SBINDIR="%_sbindir" LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
+%make_build -C selinux-python-%version LSPP_PRIV=y SBINDIR="%_sbindir" LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
+%make_build -C selinux-gui-%version LSPP_PRIV=y SBINDIR="%_sbindir" LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
+%make_build -C selinux-sandbox-%version LSPP_PRIV=y SBINDIR="%_sbindir" LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
+%make_build -C selinux-dbus-%version LSPP_PRIV=y SBINDIR="%_sbindir" LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
+%make_build -C semodule-utils-%version LSPP_PRIV=y SBINDIR="%_sbindir" LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
+%make_build -C restorecond-%version LSPP_PRIV=y SBINDIR="%_sbindir" LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
+%make_build -C mcstrans-%version SBINDIR="%_sbindir" LIBDIR=%_libdir CFLAGS="%optflags $(pkg-config --cflags-only-I libpcre2)" LIBSEPOLA="%_libdir/libsepol.a"
 
 %install
-%makeinstall_std -C policycoreutils-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
-%makeinstall_std -C selinux-python-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
-%makeinstall_std -C selinux-gui-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
-%makeinstall_std -C selinux-sandbox-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
-%makeinstall_std -C selinux-dbus-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
-%makeinstall_std -C semodule-utils-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
-%makeinstall_std -C restorecond-%version LSPP_PRIV=y LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
-%makeinstall_std -C mcstrans-%version LIBDIR=%_libdir CFLAGS="%optflags $(pkg-config --cflags-only-I libpcre2)" LIBSEPOLA="%_libdir/libsepol.a" SYSTEMDDIR="/lib/systemd"
+%makeinstall_std -C policycoreutils-%version LSPP_PRIV=y SBINDIR="%_sbindir" LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
+%makeinstall_std -C selinux-python-%version LSPP_PRIV=y SBINDIR="%_sbindir" LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
+%makeinstall_std -C selinux-gui-%version LSPP_PRIV=y SBINDIR="%_sbindir" LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
+%makeinstall_std -C selinux-sandbox-%version LSPP_PRIV=y SBINDIR="%_sbindir" LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
+%makeinstall_std -C selinux-dbus-%version LSPP_PRIV=y SBINDIR="%_sbindir" LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
+%makeinstall_std -C semodule-utils-%version LSPP_PRIV=y SBINDIR="%_sbindir" LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
+%makeinstall_std -C restorecond-%version LSPP_PRIV=y SBINDIR="%_sbindir" LIBDIR="%_libdir" LIBEXECDIR="%_libexecdir" LIBSEPOLA="%_libdir/libsepol.a" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro"
+%makeinstall_std -C mcstrans-%version SBINDIR="%_sbindir" LIBDIR=%_libdir CFLAGS="%optflags $(pkg-config --cflags-only-I libpcre2)" LIBSEPOLA="%_libdir/libsepol.a" SYSTEMDDIR="%_systemddir"
 
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 mkdir -pv %buildroot%python3_sitelibdir
@@ -211,9 +211,6 @@ install -D -m 0755 %SOURCE9 %buildroot%_initddir/mcstrans
 
 install -d -m 0755 %buildroot{%_datadir/mcstrans,%_sysconfdir/selinux/mls/setrans.d}
 cp -r mcstrans-%version/share/* %buildroot%_datadir/mcstrans/
-
-# TODO: compatibility for policy packages. remove later
-ln -sv $(relative %_sbindir/fixfiles /sbin/fixfiles) %buildroot/sbin/fixfiles
 
 %find_lang --with-man --all-name %name
 
@@ -238,11 +235,10 @@ ln -sv $(relative %_sbindir/fixfiles /sbin/fixfiles) %buildroot/sbin/fixfiles
 # Put it contents here, to main policycoreutils package
 #
 %files -f %name.lang
-/sbin/restorecon
-/sbin/restorecon_xattr
-/sbin/fixfiles
-/sbin/setfiles
+%_sbindir/restorecon
+%_sbindir/restorecon_xattr
 %_sbindir/fixfiles
+%_sbindir/setfiles
 %_sbindir/load_policy
 %_sbindir/genhomedircon
 %_sbindir/setsebool
@@ -335,9 +331,10 @@ ln -sv $(relative %_sbindir/fixfiles /sbin/fixfiles) %buildroot/sbin/fixfiles
 %_man8dir/restorecond.*
 
 %files mcstransd
-/sbin/mcstransd
+%_sbindir/mcstransd
 %_initrddir/mcstrans
 %_unitdir/mcstrans.service
+%dir %_sysconfdir/selinux/mls
 %dir %_sysconfdir/selinux/mls/setrans.d
 %_man5dir/setrans.conf.*
 %_man8dir/mcs.*
@@ -353,6 +350,7 @@ ln -sv $(relative %_sbindir/fixfiles /sbin/fixfiles) %buildroot/sbin/fixfiles
 
 %_datadir/bash-completion/completions/sepolicy
 
+%dir %_localstatedir/sepolgen
 %_localstatedir/sepolgen/perm_map
 
 %_man8dir/sepolgen.*
@@ -421,6 +419,10 @@ ln -sv $(relative %_sbindir/fixfiles /sbin/fixfiles) %buildroot/sbin/fixfiles
 %python3_sitelibdir/sepolicy/sepolicy.glade
 
 %changelog
+* Mon Sep 16 2024 Anton Zhukharev <ancieg@altlinux.org> 1:3.7-alt1
+- (NMU) Updated to 3.7.
+  + Applied usrmerge paths changes.
+
 * Tue Dec 26 2023 Anton Zhukharev <ancieg@altlinux.org> 1:3.6-alt1
 - (NMU) Updated to 3.6.
   + Removed man-pages localizations that had been dropped by upstream.

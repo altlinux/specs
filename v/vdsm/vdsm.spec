@@ -24,7 +24,7 @@
 
 Name: vdsm
 Version: 4.50.6
-Release: alt2
+Release: alt3
 Summary: Virtual Desktop Server Manager
 
 Group: System/Configuration/Other
@@ -851,6 +851,9 @@ fi
 %endif
 
 %changelog
+* Mon Sep 16 2024 Anton Zhukharev <ancieg@altlinux.org> 4.50.6-alt3
+- Fixed paths to restorecon (now it's /usr/sbin/restorecon).
+
 * Tue Jul 02 2024 Alexey Shabalin <shaba@altlinux.org> 4.50.6-alt2
 - Revert changes systemd and udev path.
 

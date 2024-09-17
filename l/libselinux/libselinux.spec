@@ -6,7 +6,7 @@
 
 Name: libselinux
 Epoch: 1
-Version: 3.6
+Version: 3.7
 Release: alt1
 Summary: SELinux library
 License: Public Domain
@@ -77,11 +77,14 @@ This package contains SELinux python 3.x bindings.
 %make_build CFLAGS="%optflags" LIBDIR=%_libdir PYTHON=%_bindir/python3 pywrap
 
 %install
-%makeinstall_std LIBDIR=%_libdir SHLIBDIR=/%_lib LIBSEPOLA=%_libdir/libsepol.a PYTHON=/usr/bin/python3 install-pywrap
+%makeinstall_std LIBDIR=%_libdir SHLIBDIR=%_libdir LIBSEPOLA=%_libdir/libsepol.a PYTHON=/usr/bin/python3 install-pywrap
 install -d -m 0755 %buildroot%_runtimedir/setrans
 
 mv %buildroot%_sbindir/getdefaultcon %buildroot%_sbindir/selinuxdefcon
 mv %buildroot%_sbindir/getconlist %buildroot%_sbindir/selinuxconlist
+
+mkdir -p %buildroot%_sysconfdir/selinux
+mkdir -p %buildroot%_prefix/libexec/selinux
 
 %check
 # Some vital PAM modules are linked with libselinux and therefore
@@ -92,10 +95,12 @@ if ldd -r %buildroot%_libdir/libselinux.so 2>&1 |grep -Fq libpthread; then
 fi
 
 %files
-/%_lib/*.so.*
+%_libdir/*.so.*
 %_man8dir/booleans.*
 %_man8dir/selinux.*
 %dir %_runtimedir/setrans
+%dir %_sysconfdir/selinux
+%dir %_prefix/libexec/selinux
 
 %files devel
 %_libdir/*.so
@@ -117,6 +122,10 @@ fi
 %python3_sitelibdir/*
 
 %changelog
+* Mon Sep 16 2024 Anton Zhukharev <ancieg@altlinux.org> 1:3.7-alt1
+- (NMU) Updated to 3.7.
+  + Applied usrmerge paths changes.
+
 * Mon Dec 25 2023 Anton Zhukharev <ancieg@altlinux.org> 1:3.6-alt1
 - (NMU) Updated to 3.6.
   + Removed man-pages localizations that had been dropped by upstream.

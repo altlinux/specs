@@ -10,7 +10,7 @@
 
 Name: libsemanage
 Epoch: 1
-Version: 3.6
+Version: 3.7
 Release: alt1
 Summary: Library, which provides an interface for SELinux management
 Group: System/Libraries
@@ -87,11 +87,11 @@ binary policies.
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
 
-%make_build CFLAGS="%optflags" LIBDIR=%_libdir SHLIBDIR=%_lib LIBEXECDIR=%_libexecdir all
-%make_build CFLAGS="%optflags" LIBDIR=%_libdir SHLIBDIR=%_lib LIBEXECDIR=%_libexecdir pywrap PYTHON=python3
+%make_build CFLAGS="%optflags" LIBDIR=%_libdir SHLIBDIR=%_libdir LIBEXECDIR=%_libexecdir all
+%make_build CFLAGS="%optflags" LIBDIR=%_libdir SHLIBDIR=%_libdir LIBEXECDIR=%_libexecdir pywrap PYTHON=python3
 
 %install
-%makeinstall_std LIBDIR=%_libdir SHLIBDIR=/%_lib install-pywrap PYTHON=python3
+%makeinstall_std LIBDIR=%_libdir SHLIBDIR=%_libdir install-pywrap PYTHON=python3
 
 %check
 %make_build test
@@ -99,7 +99,7 @@ binary policies.
 %files
 %dir %_sysconfdir/selinux
 %config(noreplace) %_sysconfdir/selinux/*
-/%_lib/*.so.*
+%_libdir/*.so.*
 %_man5dir/*
 
 %files devel
@@ -118,6 +118,10 @@ binary policies.
 %python3_sitelibdir/*
 
 %changelog
+* Mon Sep 16 2024 Anton Zhukharev <ancieg@altlinux.org> 1:3.7-alt1
+- (NMU) Updated to 3.7.
+  + Applied usrmerge paths changes.
+
 * Mon Dec 25 2023 Anton Zhukharev <ancieg@altlinux.org> 1:3.6-alt1
 - (NMU) Updated to 3.6.
   + Removed man-pages localizations that had been dropped by upstream.
