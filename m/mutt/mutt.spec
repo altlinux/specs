@@ -5,7 +5,7 @@
 Name: %oname%branch
 
 Version: 2.1.1.0.3.g6c0f75cca
-Release: alt1
+Release: alt1.1
 Epoch: 3
 
 %def_disable debug
@@ -162,6 +162,7 @@ build 'Nano' \
 	--disable-smtp \
 	--enable-compressed \
 	--disable-hcache \
+	--disable-sidebar \
 	--without-gss \
 	--with-ssl \
 	--without-sasl \
@@ -178,6 +179,7 @@ build 'default' \
 	--disable-smtp \
 	--enable-compressed \
 	--disable-hcache \
+	--disable-sidebar \
 	--without-gss \
 	--with-ssl \
 	--without-sasl \
@@ -194,6 +196,7 @@ build 'Mini' \
 	--disable-smtp \
 	--enable-compressed \
 	--enable-hcache \
+	--enable-sidebar \
 	--without-gss \
 	--with-ssl \
 	--without-sasl \
@@ -210,6 +213,7 @@ build 'Maxi' \
 	--enable-smtp \
 	--enable-compressed \
 	--enable-hcache \
+	--enable-sidebar \
 	--with-gss \
 	--with-ssl \
 	--with-sasl \
@@ -297,6 +301,9 @@ find %buildroot%_sysconfdir -type f -print0 |
 %_bindir/mutt-Maxi
 
 %changelog
+* Fri Jul 12 2024 Anton Zhukharev <ancieg@altlinux.org> 3:2.1.1.0.3.g6c0f75cca-alt1.1
+- (NMU) Enabled sidebar support for Mini and Maxi variants.
+
 * Mon Jul 26 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 3:2.1.1.0.3.g6c0f75cca-alt1
 - Updated to mutt-2-1-1-rel-3-g6c0f75cca.
 - Disabled $pgp_check_gpg_decrypt_status_fd by default.
