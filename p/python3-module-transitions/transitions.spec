@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
 
 Summary: A lightweight, object-oriented Python state machine implementation
@@ -59,6 +59,9 @@ Python.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Sep 16 2024 Stanislav Levin <slev@altlinux.org> 0.9.2-alt1
+- 0.9.1 -> 0.9.2.
+
 * Wed May 15 2024 Stanislav Levin <slev@altlinux.org> 0.9.1-alt1
 - 0.9.0 -> 0.9.1.
 
