@@ -1,7 +1,7 @@
 %define oname glcontext
 
 Name: python3-module-%oname
-Version: 2.5.0
+Version: 3.0.0
 Release: alt1
 
 Summary: glcontext is a library providing OpenGL implementation for ModernGL on multiple platforms
@@ -36,6 +36,9 @@ BuildRequires: gcc-c++ libX11-devel
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Tue Sep 17 2024 Ivan Mazhukin <vanomj@altlinux.org> 3.0.0-alt1
+- new version 3.0.0 (with rpmrb script)
+
 * Thu Aug 01 2024 Ivan Mazhukin <vanomj@altlinux.org> 2.5.0-alt1
 - Initial build for ALT Sisyphus
 
