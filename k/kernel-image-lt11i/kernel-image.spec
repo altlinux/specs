@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-lt11i
-Release: alt10
+Release: alt11
 epoch:1
 %define kernel_need_version	6.1
 # Used when kernel-source-x.y does not currently exist in repository.
@@ -429,6 +429,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Sep 17 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.1.55-alt11
+- gc5035/imx258_mipi: disable dmesg spam
+
 * Thu Aug 22 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.1.55-alt10
 - MIG-LT11i_defconfig: CONFIG_ANDROID_BINDER_IPC=y
 
