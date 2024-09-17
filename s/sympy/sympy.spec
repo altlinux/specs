@@ -11,7 +11,7 @@
 Name: sympy
 Epoch: 1
 Version: 1.13.2
-Release: alt1
+Release: alt2
 Summary: A Python library for symbolic mathematics
 License: BSD-3-Clause
 Group: Sciences/Mathematics
@@ -24,10 +24,14 @@ Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 %pyproject_runtimedeps_metadata
 
-Patch1: %name-1.13.1-alt-build.patch
+Patch1: sympy-1.13.1-alt-build.patch
+
+# https://github.com/sympy/sympy/pull/27069
+Patch2: sympy-1.13.2-alt-fix-races-in-tests.patch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-pyproject
+BuildRequires: python3-module-pytest-xdist
 BuildRequires: dvipng ImageMagick-tools graphviz librsvg-utils
 
 %if_with check
@@ -101,6 +105,7 @@ This package contains development documentation for SymPy.
 %pyproject_deps_resync_metadata
 
 %patch1 -p1
+%patch2 -p1
 
 for i in $(find ./ -name tests); do
 	touch $i/__init__.py
@@ -144,7 +149,7 @@ rm -rfv %buildroot%python3_sitelibdir/%name/utilities/{*test.py,_compilation/}
 rm -rfv %buildroot%python3_sitelibdir/%name/parsing/autolev/test-examples/
 
 %check
-py.test-3 -vv \
+py.test-3 -vv -n %_smp_build_ncpus \
 	--deselect=sympy/integrals/tests/test_failing_integrals.py::test_issue_15227 \
 	--deselect=sympy/matrices/tests/test_matrices.py::test_pinv_rank_deficient_when_diagonalization_fails \
 	--deselect=sympy/solvers/ode/tests/test_systems.py::test_linear_new_order1_type2_de_lorentz_slow_check \
@@ -177,6 +182,11 @@ python3 bin/doctest -v ||:
 %endif
 
 %changelog
+* Tue Sep 17 2024 Ivan A. Melnikov <iv@altlinux.org> 1:1.13.2-alt2
+- Run tests in parallel
+- Fix file-related race condition in the test suite
+  (fixes FTBFS on loongarch64).
+
 * Mon Sep 09 2024 Andrey Kovalev <ded@altlinux.org> 1:1.13.2-alt1
 - Updated to upstream version 1.13.2.
 - Returned the test check.
