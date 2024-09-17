@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 8.6.2
+Version: 8.6.3
 Release: alt1
 Summary: Jupyter protocol implementation and client libraries
 License: BSD-3-Clause
@@ -68,6 +68,9 @@ sed -i '/localinterfaces._load_ips_ifconfig/d' tests/test_localinterfaces.py
 
 
 %changelog
+* Tue Sep 17 2024 Anton Vyatkin <toni@altlinux.org> 8.6.3-alt1
+- New version 8.6.3.
+
 * Fri Jun 07 2024 Anton Vyatkin <toni@altlinux.org> 8.6.2-alt1
 - New version 8.6.2.
 
