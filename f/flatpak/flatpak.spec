@@ -15,7 +15,7 @@
 
 Name: flatpak
 Version: 1.14.10
-Release: alt1
+Release: alt1.1
 
 Summary: Application deployment framework for desktop apps
 Group: Development/Tools
@@ -47,6 +47,7 @@ Requires: bubblewrap >= %bwrap_ver
 Requires: ostree >= %ostree_ver
 Requires: dconf
 Requires: fuse
+Requires: p11-kit-server
 
 BuildRequires(pre): rpm-build-python3 rpm-build-systemd
 BuildRequires: gtk-doc gobject-introspection-devel
@@ -220,6 +221,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Tue Sep 17 2024 Yuri N. Sedunov <aris@altlinux.org> 1.14.10-alt1.1
+- added p11-kit-server to runtime dependencies (ALT #51496)
+
 * Thu Aug 15 2024 Yuri N. Sedunov <aris@altlinux.org> 1.14.10-alt1
 - 1.14.10 (fixed CVE-2024-42472, GHSA-7hgv-f2j8-xw87)
 
