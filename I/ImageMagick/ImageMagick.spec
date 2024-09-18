@@ -1,6 +1,6 @@
 %define mversion	7
 %define dversion	%mversion.1.1
-%define drelease	36
+%define drelease	38
 %define qlev		Q16HDRI
 %define mgkdir		ImageMagick
 %define soname		10
@@ -273,8 +273,11 @@ mv %buildroot%_docdir/%name-%mversion %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Wed Sep 18 2024 Anton Farygin <rider@altlinux.ru> 7.1.1.38-alt1
+- 7.1.1.36 -> 7.1.1.38
+
 * Thu Aug 08 2024 Anton Farygin <rider@altlinux.ru> 7.1.1.36-alt1
-- 7.1.1.34 -> 7.1.1.36
+- 7.1.1.34 -> 7.1.1.36 (Fixes: CVE-2024-41817)
 - enabled fftw support (closes: #51098)
 - enabled libzip support
 - enabled fluf support
