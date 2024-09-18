@@ -4,7 +4,7 @@
 
 Name:    rustic
 Version: 0.8.1
-Release: alt1
+Release: alt2
 
 Summary: rustic - fast, encrypted, deduplicated backups powered by pure Rust
 License: Apache-2.0
@@ -17,7 +17,7 @@ Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-rust
-BuildRequires: /proc
+BuildRequires: pkgconfig(libzstd)
 
 %description
 Rustic is a backup tool that provides fast, encrypted, deduplicated backups. It
@@ -40,6 +40,9 @@ directory = "vendor"
 [build]
 rustflags = ["-Copt-level=3", "-Cdebuginfo=1", "--cfg=rustix_use_libc"]
 
+[env]
+ZSTD_SYS_USE_PKG_CONFIG = "1"
+
 [profile.release]
 strip = false
 %if 0%{!?_is_lp64:1}
@@ -49,7 +52,8 @@ codegen-units = 16
 EOF
 
 %build
-%rust_build
+# Default features include 'self-update'.
+%rust_build --no-default-features --features webdav,tui
 
 %install
 %rust_install
@@ -62,6 +66,8 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 
 %check
 %rust_test
+%buildroot%_bindir/rustic --version | grep -Fx '%name %version'
+ldd %buildroot%_bindir/rustic | grep libzstd.so
 ## Smoke test.
 PATH=%buildroot%_bindir:$PATH
 export RUSTIC_PASSWORD=rustic
@@ -81,6 +87,10 @@ diff -qr --exclude=target . ../x
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Wed Sep 18 2024 Vitaly Chikunov <vt@altlinux.org> 0.8.1-alt2
+- Build without self-update feature.
+- spec: Link with system libzstd.
+
 * Mon Sep 09 2024 Vitaly Chikunov <vt@altlinux.org> 0.8.1-alt1
 - Update to v0.8.1 (2024-09-08).
 
