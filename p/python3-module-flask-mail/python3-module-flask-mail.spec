@@ -1,12 +1,11 @@
 %define        _unpackaged_files_terminate_build 1
 %define        pypiname flask-mail
-%define        mname Flask_Mail
+%define        mname flask_mail
 %define        oname flask_mail
-%def_enable    check
-%def_disable   doc
+%def_disable   check
 
 Name:          python3-module-%pypiname
-Version:       0.9.1
+Version:       0.10.0
 Release:       alt1
 Summary:       Flask-Mail adds SMTP mail sending to your Flask applications
 License:       BSD-3-Clause
@@ -20,9 +19,7 @@ Patch:         %name-%EVR.patch
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
-%if_enabled doc
-BuildRequires: python3-module-sphinx-sphinx-build-symlink
-%endif
+BuildRequires: python3(flit_core)
 %if_enabled check
 BuildRequires: python3(tox)
 BuildRequires: python3(mock)
@@ -43,25 +40,24 @@ Flask-Mail is a Flask extension providing simple email sending capabilities.
 
 %build
 %pyproject_build
-%if_enabled doc
-%make -C docs html
-%endif
 
 %install
 %pyproject_install
 
 %check
-%pyproject_run_unittest
+%pyproject_run_pytest
 
 %files
 %doc README.*
 %if_enabled doc
 %doc docs/_build/html/*
 %endif
-%python3_sitelibdir/%{oname}.py
+%python3_sitelibdir/%{oname}
 %python3_sitelibdir/%{mname}*/METADATA
-%python3_sitelibdir/__pycache__/%{oname}*
 
 %changelog
+* Wed Sep 18 2024 Pavel Skrylev <majioa@altlinux.org> 0.10.0-alt1
+- ^ 0.9.1 -> 0.10.0 (without tests)
+
 * Mon Aug 14 2023 Pavel Skrylev <majioa@altlinux.org> 0.9.1-alt1
 - Initial build v0.9.1 for Sisyphus.
