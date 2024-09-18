@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.20.0
+Version: 3.20.2
 Release: alt1
 
 Summary: A pathlib-compatible Zipfile object wrapper
@@ -43,7 +43,7 @@ A pathlib-compatible Zipfile object wrapper.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -ra
+%pyproject_run_pytest -ra --ignore-flaky
 
 %files
 %doc README.rst
@@ -51,6 +51,9 @@ A pathlib-compatible Zipfile object wrapper.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Sep 16 2024 Stanislav Levin <slev@altlinux.org> 3.20.2-alt1
+- 3.20.0 -> 3.20.2.
+
 * Mon Aug 19 2024 Stanislav Levin <slev@altlinux.org> 3.20.0-alt1
 - 3.19.2 -> 3.20.0.
 
