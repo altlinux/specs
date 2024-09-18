@@ -7,7 +7,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.0
+Version: 6.1
 Release: alt1
 
 Summary: Scalable persistent object containers
@@ -92,6 +92,9 @@ rm %buildroot%python3_sitelibdir/%pypi_name/*.{h,c}
 %python3_sitelibdir/*/tests
 
 %changelog
+* Wed Sep 18 2024 Stanislav Levin <slev@altlinux.org> 6.1-alt1
+- 6.0 -> 6.1.
+
 * Fri May 31 2024 Stanislav Levin <slev@altlinux.org> 6.0-alt1
 - 5.2 -> 6.0.
 
