@@ -1,7 +1,7 @@
 %def_without bootstrap
 
 Name:    opensearch
-Version: 2.16.0
+Version: 2.17.0
 Release: alt1
 
 Summary: Open source distributed and RESTful search engine
@@ -95,6 +95,9 @@ getent passwd opensearch >/dev/null || /usr/sbin/useradd -r \
 %config(noreplace) %_tmpfilesdir/%name.conf
 
 %changelog
+* Wed Sep 18 2024 Andrey Cherepanov <cas@altlinux.org> 2.17.0-alt1
+- New version.
+
 * Mon Aug 12 2024 Andrey Cherepanov <cas@altlinux.org> 2.16.0-alt1
 - New version.
 - Set home directory of opensearch user to /var/lib/opensearch.
