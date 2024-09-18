@@ -1,10 +1,10 @@
 %def_disable libcap
 %def_enable qt5
-%def_disable qt4
+%def_enable qt6
 %def_disable fltk
 
 Name: pinentry
-Version: 1.2.1
+Version: 1.3.1
 Release: alt1
 
 Summary: Simple PIN or passphrase entry dialog
@@ -12,15 +12,14 @@ License: GPLv2+
 Group: File tools
 Url: http://gnupg.org/related_software/pinentry/
 
-Requires: %name-common = %version-%release
-%{?_enable_qt4:Requires: %name-qt4 = %version-%release}
-Requires: %name-gtk2 = %version-%release
+Requires: %name-common
+Requires: %name-qt5
 
 # ftp://ftp.gnupg.org/gcrypt/pinentry/%name-%version.tar.gz
 Source: %name-%version.tar
 Source1: pinentry-wrapper
-# ALT
-Patch10: alt-mask-xprop.patch
+# FC
+Patch1: pinentry-1.1.1-coverity.patch
 
 %if_enabled qt5
 BuildRequires: qt5-base-devel kf5-kwayland-devel rpm-build-kf5
@@ -28,8 +27,8 @@ BuildRequires: qt5-base-devel kf5-kwayland-devel rpm-build-kf5
 %if_enabled libfltk-devel
 BuildRequires: libfltk-devel
 %endif
-%if_enabled qt4
-BuildRequires: libqt4-devel
+%if_enabled qt6
+BuildRequires: qt6-base-devel kf6-kwindowsystem-devel kf6-kguiaddons-devel rpm-build-kf6
 %endif
 %if_enabled libcap
 BuildRequires: libcap-devel
@@ -82,7 +81,7 @@ Provides: %name-x11 = %version-%release
 Provides: pinentry-qt = %EVR
 Obsoletes: pinentry-qt < %EVR
 
-%package qt4
+%package qt6
 Group: %group
 Summary: %summary
 Requires: xprop
@@ -99,7 +98,7 @@ the Assuan protocol as described by the aegypten project.
 %description qt5
 This is simple PIN or passphrase entry dialog which utilize
 the Assuan protocol as described by the aegypten project.
-%description qt4
+%description qt6
 This is simple PIN or passphrase entry dialog which utilize
 the Assuan protocol as described by the aegypten project.
 %description common
@@ -109,16 +108,18 @@ This package contains common files and documentation for %name.
 %setup -T -c
 tar xf %SOURCE0
 mv %name-%version gui
+pushd gui
+%patch1 -p1
+popd
 
-%{?_enable_qt4:cp -a gui gui-qt4}
+%{?_enable_qt6:cp -a gui gui-qt6}
 %{?_enable_qt5:cp -a gui gui-qt5}
 cp -a gui tui
 
 install -pm644 %SOURCE1 pinentry-wrapper
-%patch10 -p0
 
 for d in tui gui \
-             %{?_enable_qt4:gui-qt4} \
+             %{?_enable_qt6:gui-qt6} \
              %{?_enable_qt5:gui-qt5} ; do
     pushd $d
     %autoreconf
@@ -126,7 +127,7 @@ for d in tui gui \
 done
 
 %build
-%add_optflags -std=gnu++11
+%add_optflags -std=gnu++17
 
 pushd tui
 %configure \
@@ -161,8 +162,9 @@ pushd gui
 %make_build
 popd
 
-%if_enabled qt4
-pushd gui-qt4
+%if_enabled qt6
+pushd gui-qt6
+export KF6GUIADDONS_LIBS='-lKF6GuiAddons -lQt6Gui -lQt6Core -L%_K6link'
 %configure \
     --disable-rpath \
     --disable-pinentry-curses \
@@ -170,7 +172,7 @@ pushd gui-qt4
     --disable-pinentry-gtk2 \
     --disable-pinentry-fltk \
     --disable-pinentry-gnome3 \
-    --enable-pinentry-qt4 \
+    --enable-pinentry-qt \
     --disable-pinentry-qt5 \
     --enable-pinentry-qt-clipboard \
     --enable-libsecret \
@@ -190,7 +192,7 @@ export KF5WAYLANDCLIENT_LIBS="`pkg-config  --libs KF5WaylandClient` -L%_K5link"
     --disable-pinentry-gtk2 \
     --disable-pinentry-fltk \
     --disable-pinentry-gnome3 \
-    --enable-pinentry-qt \
+    --disable-pinentry-qt \
     --enable-pinentry-qt5 \
     --enable-pinentry-qt-clipboard \
     --enable-libsecret \
@@ -211,22 +213,27 @@ pushd gui
 popd
 rm %buildroot%_bindir/%name
 
-%if_enabled qt4
-pushd gui-qt4
+%if_enabled qt6
+pushd gui-qt6
 %makeinstall_std
 popd
-mv %buildroot/%_bindir/%name-qt %buildroot/%_bindir/%name-qt4
+[ -e %buildroot/%_bindir/%name-qt ] && \
+    mv %buildroot/%_bindir/%name-qt %buildroot/%_bindir/%name-qt6 ||:
+if [ -e %buildroot/%_desktopdir/org.gnupg.pinentry-qt.desktop ]; then
+    mv %buildroot/%_desktopdir/org.gnupg.pinentry-qt{,6}.desktop
+    sed -i '/^Exec=/s|pinentry-qt$|pinentry-qt6|' %buildroot/%_desktopdir/org.gnupg.pinentry-qt6.desktop
+fi
 %endif
 
 %if_enabled qt5
 pushd gui-qt5
 %makeinstall_std
 popd
-mv %buildroot/%_bindir/%name-qt %buildroot/%_bindir/%name-qt5
+[ -e %buildroot/%_bindir/%name-qt ] && \
+    mv %buildroot/%_bindir/%name-qt %buildroot/%_bindir/%name-qt5 ||:
 %endif
 
 ln -s %name-gtk-2 %buildroot/%_bindir/%name-gtk
-%{?_enable_qt5:ln -s %name-qt5 %buildroot/%_bindir/%name-qt}
 
 install -pDm755 pinentry-wrapper %buildroot/%_bindir/pinentry
 
@@ -234,15 +241,16 @@ install -pDm755 pinentry-wrapper %buildroot/%_bindir/pinentry
 %_bindir/%name-gtk
 %_bindir/%name-gtk-2
 
-%if_enabled qt4
-%files qt4
-%_bindir/%name-qt4
+%if_enabled qt6
+%files qt6
+%_bindir/%name-qt6
+%_desktopdir/org.gnupg.pinentry-qt6.desktop
 %endif
 
 %if_enabled qt5
 %files qt5
 %_bindir/%name-qt5
-%_bindir/%name-qt
+%_desktopdir/org.gnupg.pinentry-qt5.desktop
 %endif
 
 %files gnome3
@@ -253,9 +261,14 @@ install -pDm755 pinentry-wrapper %buildroot/%_bindir/pinentry
 %_bindir/%name
 %_bindir/%name-curses
 %_bindir/%name-tty
+%_datadir/pixmaps/pinentry.png
 %_infodir/*.info*
 
 %changelog
+* Tue Sep 17 2024 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt1
+- new version
+- build Qt6 version
+
 * Mon May 15 2023 Sergey V Turchin <zerg@altlinux.org> 1.2.1-alt1
 - new version
 
