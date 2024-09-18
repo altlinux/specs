@@ -2,9 +2,9 @@
 %define Brand ALT
 %define theme workstation
 %define Theme Workstation
-%define codename Autolycus
-%define status %nil
-%define status_en %nil
+%define codename unknown
+%define status alpha
+%define status_en alpha
 %define flavour %brand-%theme
 
 %define gtk_theme BlueMenta
@@ -22,15 +22,9 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 10.2
+Version: 10.900
 Release: alt1
 Url: https://basealt.ru
-
-%ifarch %ix86 x86_64
-BuildRequires: gfxboot >= 4
-BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-google-droid-sans
-BuildRequires: design-bootloader-source >= 5.0-alt2 fribidi
-%endif
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -90,8 +84,11 @@ License:  Distributable
 Group:    System/Configuration/Boot and Init
 BuildArch: noarch
 Provides: plymouth-theme-%theme
-Requires: plymouth-plugin-script
-Requires(pre):   plymouth
+Requires: plymouth
+Requires: plymouth-theme-bgrt-alt
+Requires: plymouth-plugin-label
+Requires: fonts-ttf-dejavu
+
 
 %branding_add_conflicts %flavour bootsplash
 
@@ -269,50 +266,27 @@ make
 %makeinstall
 find %buildroot -name \*.in -delete
 
-#bootloader
-%ifarch %ix86 x86_64
-%pre bootloader
-[ -s /usr/share/gfxboot/%theme ] && rm -fr  /usr/share/gfxboot/%theme ||:
-[ -s /boot/splash/%theme ] && rm -fr  /boot/splash/%theme ||:
-%endif
-
 %post bootloader
 [ "$1" -eq 1 ] || exit 0
-%ifarch %ix86 x86_64
-ln -snf %theme/message /boot/splash/message
-. /etc/sysconfig/i18n
-lang=$(echo $LANG | cut -d. -f 1)
-cd boot/splash/%theme/
-echo $lang > lang
-[ "$lang" = "C" ] || echo lang | cpio -o --append -F message
-%endif
 . shell-config
 shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.txt
 #shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_NORMAL %grub_normal
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 
-%ifarch %ix86 x86_64
-%preun bootloader
-[ "$1" -eq 0 ] || exit 0
-[ "`readlink /boot/splash/message`" != "%theme/message" ] ||
-    rm -f /boot/splash/message
-%endif
-
 %post indexhtml
 %_sbindir/indexhtml-update
 
 %files bootloader
-%ifarch %ix86 x86_64
-%_datadir/gfxboot/%theme
-/boot/splash/%theme
-%endif
 /boot/grub/themes/%theme
 
 #bootsplash
 %post bootsplash
-[ "$1" -eq 1 ] || exit 0
-subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
+if [ "$1" -eq 1 ]; then
+	subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
+else
+	subst "s/Theme=workstation/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
+fi
 
 %post mate-settings
 [ "$1" -eq 1 ] || exit 0
@@ -329,7 +303,6 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 #_iconsdir/hicolor/*/apps/alt-%theme.png
 
 %files bootsplash
-%_datadir/plymouth/themes/%theme/*
 
 %files release
 %_sysconfdir/*-release
@@ -360,6 +333,16 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed Sep 18 2024 Mikhail Efremov <sem@altlinux.org> 10.900-alt1
+- release: Set codename to unknown.
+- indexhtml: Update "Software Repository" link.
+- indexhtml: Use English page for "Software Repository" link.
+- indexhtml: Fix links.
+- bootsplash: Use bgrt-alt plymouth theme.
+- build: Replace convert with magick.
+- bootloader: Drop gfxboot support.
+- Set status to alpha.
+
 * Wed Feb 14 2024 Mikhail Efremov <sem@altlinux.org> 10.2-alt1
 - slideshow: Fix Telegram link.
 - indexhtml: Fix Telegram link.
