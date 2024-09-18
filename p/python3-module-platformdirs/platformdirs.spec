@@ -4,13 +4,13 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.3.2
+Version: 4.3.3
 Release: alt1
 Summary: Determining appropriate platform-specific dirs
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/platformdirs
-VCS: https://github.com/platformdirs/platformdirs.git
+VCS: https://github.com/tox-dev/platformdirs
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
@@ -53,6 +53,9 @@ location.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Sep 16 2024 Stanislav Levin <slev@altlinux.org> 4.3.3-alt1
+- 4.3.2 -> 4.3.3.
+
 * Tue Sep 10 2024 Stanislav Levin <slev@altlinux.org> 4.3.2-alt1
 - 4.2.2 -> 4.3.2.
 
