@@ -4,7 +4,7 @@
 %def_with python_ext
 
 Name: vapoursynth
-Version: 69
+Version: 70
 Release: alt1
 
 Summary: Video processing framework with simplicity in mind
@@ -138,6 +138,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_bindir/vspipe
 
 %changelog
+* Wed Sep 18 2024 Leontiy Volodin <lvol@altlinux.org> 70-alt1
+- New version 70.
+
 * Fri Jul 05 2024 Leontiy Volodin <lvol@altlinux.org> 69-alt1
 - New version 69.
 
