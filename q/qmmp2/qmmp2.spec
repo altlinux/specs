@@ -7,8 +7,8 @@
 
 %define rname qmmp
 Name: qmmp%major
-Version: 2.1.5
-Release: alt3
+Version: 2.1.9
+Release: alt1
 Epoch: 1
 %K5init no_altplace appdata
 
@@ -248,6 +248,9 @@ ln -s `relative %_wlskindir %_datadir/%rname/skins` %buildroot/%_datadir/%rname/
 %_K5link/lib*.so
 
 %changelog
+* Wed Sep 18 2024 Sergey V Turchin <zerg@altlinux.org> 1:2.1.9-alt1
+- new version
+
 * Tue Dec 26 2023 Sergey V Turchin <zerg@altlinux.org> 1:2.1.5-alt3
 - update package description
 
