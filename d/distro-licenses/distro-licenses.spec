@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: distro-licenses
-Version: 1.3.6
+Version: 1.3.7
 Release: alt1
 License: CC0-1.0
 Summary: Texts of various distribution licenses
@@ -27,6 +27,9 @@ Texts of various distribution licenses
 %_bindir/*
 
 %changelog
+* Tue Sep 17 2024 Anton Midyukov <antohami@altlinux.org> 1.3.7-alt1
+- Added license for ALT SP containers images
+
 * Tue Aug 13 2024 Anton Midyukov <antohami@altlinux.org> 1.3.6-alt1
 - ALT_SP_Container_License: removed reference to virtual machines
   from definition
