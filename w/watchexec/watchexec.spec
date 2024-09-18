@@ -1,5 +1,5 @@
 Name:    watchexec
-Version: 1.22.3
+Version: 2.1.2
 Release: alt1
 
 Summary: Executes commands in response to file modifications
@@ -13,6 +13,8 @@ Source:   %name-%version.tar
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: /proc
+
+ExcludeArch: %ix86
 
 %description
 Software development often involves running the same commands over and over.
@@ -50,6 +52,9 @@ install -Dm 644 doc/%name.1 %buildroot/%_man1dir/%name.1
 %doc *.md
 
 %changelog
+* Wed Sep 18 2024 Mikhail Gordeev <obirvalger@altlinux.org> 2.1.2-alt1
+- new version 2.1.2
+
 * Mon May 15 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.3-alt1
 - new version 1.22.3
 
