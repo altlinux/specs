@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.114.2
+Version: 0.115.0
 Release: alt1
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
@@ -85,11 +85,16 @@ cat requirements-docs-tests.txt requirements-tests.txt > alt-requirements-tests.
 
 %files
 %doc README.*
-%_bindir/%pypi_name
+# Temporary exclude /usr/bin/fastapi to resolve conflict with fastapi-cli.
+# For more details see https://github.com/fastapi/fastapi-cli/pull/85
+%exclude %_bindir/%pypi_name
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Sep 18 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.115.0-alt1
+- Updated to 0.115.0.
+
 * Mon Sep 16 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.114.2-alt1
 - Updated to 0.114.2.
 
