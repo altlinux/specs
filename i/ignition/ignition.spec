@@ -5,7 +5,7 @@
 
 Name:     ignition
 Version:  2.19.0
-Release:  alt2
+Release:  alt3
 
 Summary:  First boot installer and configuration tool
 License:  Apache-2.0
@@ -14,6 +14,9 @@ Url:      https://github.com/coreos/ignition
 
 Source: %name-%version.tar
 Patch: %name-%version.patch
+
+# https://github.com/coreos/ignition/pull/1942
+Patch1: ignition-2.19.0-alt-makefile-loongarch64.patch
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang
@@ -55,6 +58,7 @@ This package contains a tool for validating Ignition configurations.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -92,6 +96,9 @@ popd
 %_bindir/%name-validate
 
 %changelog
+* Wed Sep 18 2024 Ivan A. Melnikov <iv@altlinux.org> 2.19.0-alt3
+- Fix build for loongarch64 (by k0tran@).
+
 * Wed Sep 11 2024 Alexey Shabalin <shaba@altlinux.org> 2.19.0-alt2
 - Fixed build with golang-1.23.
 
