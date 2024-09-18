@@ -8,7 +8,7 @@
 
 Name: mpv
 Version: 0.38.0
-Release: alt1.1
+Release: alt2
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 License: GPLv2+
@@ -152,9 +152,23 @@ rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 %_libdir/libmpv.so.*
 
 %changelog
+* Tue Sep 17 2024 L.A. Kostis <lakostis@altlinux.ru> 0.38.0-alt2
+- Apply fixes from master:
+  + f_hwtransfer: fix best upload format selection
+  + ad_spdif: add an assert for lavf_ctx
+  + ad_spdif: fix lavf version check
+  + vo_gpu: optimize pass_info_reset
+  + ytdl_hook: strip quotes from cookie values
+  + wayland: fix missed int -> double conversion for cursor scaling
+  + vo_dmabuf_wayland: don't use -ve margins in window size calculation
+  + demux_mkv: ignore duplicated BlockAdditions to avoid memory leak
+  + demux_mkv: fix av_parser_codec leak
+  + msg: don't use bold colors and instead use bright ones
+  + vd_lavc: add Vulkan hardware decoding to autoprobe
+
 * Tue Jul 02 2024 L.A. Kostis <lakostis@altlinux.ru> 0.38.0-alt1.1
 - Apply fix from master branch:
-  + wayland: use wl->callback_surface for idle inhibitor 
+  + wayland: use wl->callback_surface for idle inhibitor
     creation (closes #49008) tnx to mr.shad@
 
 * Thu Apr 18 2024 L.A. Kostis <lakostis@altlinux.ru> 0.38.0-alt1
