@@ -3,11 +3,11 @@
 %define fullname MidnightCommander
 
 Name: mc
-Version: 4.8.30
-Release: alt5
+Version: 4.8.32
+Release: alt1
 
 # '-gitYYYYMMDD' or ''
-%define ver_date '-git20230916'
+%define ver_date '-git20240916'
 
 License: GPL-3.0-or-later
 Summary: An user-friendly file manager and visual shell
@@ -37,7 +37,7 @@ Patch3: mc-4.8.20-alt-menu.patch
 Patch101: mc-4.8.30-savannah-edit-homekey.patch
 
 # http://www.midnight-commander.org/ticket/2496
-Patch102: mc-4.8.20-alt-forceexec.patch
+Patch102: mc-4.8.32-alt-forceexec.patch
 
 # http://www.midnight-commander.org/ticket/34
 Patch103: mc-4.8.30-alt-extfs-udar.patch
@@ -107,7 +107,7 @@ Dektop files for %name
 %patch0 -p1
 
 # ALT
-%patch1 -p1
+#patch1 -p1
 %patch2 -p1
 %patch3 -p0
 
@@ -115,7 +115,7 @@ Dektop files for %name
 #patch101 -p1 // Old Patch
 %patch102 -p1
 %patch103 -p1
-%patch104 -p1
+#patch104 -p1
 
 %build
 cat <<EOF > mc-version.h
@@ -222,8 +222,8 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 
 %_datadir/mc/
 
-%doc AUTHORS doc/FAQ doc/HACKING doc/MAINTAINERS doc/NEWS doc/README
-%doc doc/README.QNX doc/TODO doc/filehighlight.txt contrib/README.xterm
+%doc AUTHORS doc/FAQ doc/HACKING doc/NEWS doc/README
+%doc doc/TODO doc/filehighlight.txt contrib/README.xterm
 %doc mc-dnlike.color mc-dark.color
 
 %files desktop
@@ -235,6 +235,11 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 %files full
 
 %changelog
+* Tue Sep 17 2024 Sergey Y. Afonin <asy@altlinux.org> 4.8.32-alt1
+- 4.8.32 (updated to 20240916 git snapshot)
+- disabled alt-wrapper.patch (a same as fixed in MC ticket #4575)
+- disabled python3.patch (fixed in MC tickets #4511 and #4324)
+
 * Fri Apr 26 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.8.30-alt5
 - e2k: fixed Regex for extensions
 
