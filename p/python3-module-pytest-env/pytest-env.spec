@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.4
+Version: 1.1.5
 Release: alt1
 Summary: py.test plugin that allows you to add environment variables
 License: MIT
@@ -20,7 +20,7 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_metadata_extra testing
 %endif
 
 %description
@@ -49,6 +49,9 @@ pytest.ini or pyproject.toml file.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Sep 18 2024 Stanislav Levin <slev@altlinux.org> 1.1.5-alt1
+- 1.1.4 -> 1.1.5.
+
 * Tue Sep 10 2024 Stanislav Levin <slev@altlinux.org> 1.1.4-alt1
 - 1.1.3 -> 1.1.4.
 
