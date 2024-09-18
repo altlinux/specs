@@ -1,6 +1,6 @@
 Name:    joshuto
 Version: 0.9.8
-Release: alt2
+Release: alt3.1f045515.1
 
 Summary: ranger-like terminal file manager written in Rust
 License: LGPL-3.0
@@ -52,6 +52,9 @@ cargo-vendor-checksum \
 %_bindir/*
 
 %changelog
+* Wed Sep 18 2024 Mikhail Gordeev <obirvalger@altlinux.org> 0.9.8-alt3.1f045515.1
+- Fix rebuild
+
 * Fri Jun 21 2024 Aleksei Kalinin <kaa@altlinux.org> 0.9.8-alt2
 - NMU: Patched vendor nix for loongarch64 support
 
