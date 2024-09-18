@@ -1,14 +1,14 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define _name vte
-%define ver_major 0.76
+%define ver_major 0.78
 %define api_ver 2.91
 # bindigs version for -gtk4 library
 %define bind_ver 3.91
 
 Name: %{_name}3
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 %def_disable static
@@ -17,12 +17,16 @@ Release: alt1
 %def_enable introspection
 %def_enable docs
 %def_enable glade
+%ifarch %ix86 armh
+%def_disable check
+%else
 %def_enable check
+%endif
 # removed in 0.69
 %def_disable sixel
 
 Summary: Terminal emulator widget for use with GTK+
-License: LGPL-2.0
+License: LGPL-3.0-or-later
 Group: Terminals
 Url: http://www.gnome.org/
 
@@ -141,14 +145,12 @@ sed -i "1i #define set_child_setup set_child_setup2" src/spawn.cc
 
 %build
 %meson \
-	%{?_enable_gtk3:-Dgtk3=true} \
-	%{?_disable_gtk4:-Dgtk4=false} \
-	%{?_disable introspection:-Dgir=false} \
-	%{?_enable_docs:-Ddocs=true} \
-	%{?_disable_glade:-Dglade=false} \
-	%{?_enable_sixel:-Dsixel=true}
+    %{subst_enable_meson_bool gtk3 gtk3} \
+    %{subst_enable_meson_bool gtk4 gtk4} \
+    %{subst_enable_meson_bool introspection gir} \
+    %{subst_enable_meson_bool docs docs} \
+    %{subst_enable_meson_bool glade glade}
 %nil
-
 %meson_build
 
 %install
@@ -214,6 +216,9 @@ install -p -m644 doc/*.txt %buildroot%pkgdocdir/
 %endif
 
 %changelog
+* Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.78.0-alt1
+- 0.78.0
+
 * Fri Aug 09 2024 Yuri N. Sedunov <aris@altlinux.org> 0.76.4-alt1
 - 0.76.4
 

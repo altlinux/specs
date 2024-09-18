@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define xdg_name org.gnome.SystemMonitor
 
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %def_enable systemd
 %def_disable check
@@ -31,7 +31,7 @@ Source: %name-%version%beta.tar
 %define libgtop_ver 2.38.0
 %define libxml_ver 2.0
 %define rsvg_ver 2.35
-%define adw_ver 1.4.0
+%define adw_ver 1.6
 
 Requires: polkit
 
@@ -86,6 +86,9 @@ Gnome-system-monitor is a simple process and system monitor.
 
 
 %changelog
+* Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0 (ported to GTK4/Libadwaita)
 

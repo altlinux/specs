@@ -1,16 +1,15 @@
 %def_disable snapshot
 
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
 
-%def_disable software_sources
 %def_enable systemd
 %def_enable malcontent
 
 Name: gnome-initial-setup
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Initial Setup
@@ -67,7 +66,6 @@ BuildRequires: libsecret-devel >= %secret_ver
 BuildRequires: libgeoclue2-devel >= %geoclue_ver pkgconfig(geocode-glib-2.0)
 BuildRequires: pkgconfig(webkitgtk-%webkit_api_ver) >= %webkit_ver
 BuildRequires: pkgconfig(systemd) >= %systemd_ver
-%{?_enable_software_sources:BuildRequires: pkgconfig(packagekit-glib2) >= %packagekit_ver}
 %{?_enable_malcontent:BuildRequires: pkgconfig(malcontent-ui-%malcontent_ui_api_ver) >= %malcontent_ver}
 
 %description
@@ -80,9 +78,8 @@ you through configuring it. It is integrated with gdm.
 
 %build
 %meson \
-	%{?_enable_software_sources:-Dsoftware-sources=enabled} \
-	%{?_disable_systemd:-Dsystemd=false} \
-	%{?_disable malcontent:-Dparental_controls=false}
+    %{subst_enable_meson_bool systemd systemd} \
+    %{subst_enable_meson_feature malcontent parental_controls}
 %nil
 %meson_build
 
@@ -117,6 +114,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README* NEWS
 
 %changelog
+* Thu Sep 12 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Wed Aug 07 2024 Yuri N. Sedunov <aris@altlinux.org> 46.4-alt1
 - 46.4
 

@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define xdg_name org.gnome.Music
 %define gst_api_ver 1.0
@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: gnome-music
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Music playing application for GNOME3
@@ -82,6 +82,9 @@ Music playing application for GNOME3.
 %doc README* NEWS*
 
 %changelog
+* Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Wed Jul 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
 - 46.1
 

@@ -3,20 +3,22 @@
 
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define xdg_name org.gnome.Boxes
 %def_enable check
 %def_disable installed_tests
 
 Name: gnome-boxes
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A GNOME 3 application to access virtual systems
 Group: Emulators
-License: LGPL-2.1
+License: LGPL-2.0-or-later
 Url: https://apps.gnome.org/Boxes
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-boxes.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -97,7 +99,8 @@ the functionality of the Boxes.
 
 %build
 %meson \
-    %{?_enable_installed_tests:-Dinstalled_tests=true}
+    %{subst_enable_meson_bool installed_tests installed_tests}
+%nil
 %meson_build
 
 %install
@@ -114,7 +117,6 @@ the functionality of the Boxes.
 %_datadir/%name
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/org.gnome.boxes.gschema.xml
-#%_datadir/osinfo/os/gnome.org/gnome-nightly.xml
 %_iconsdir/hicolor/*/apps/%{xdg_name}*
 %_libexecdir/gnome-boxes-search-provider
 %_datadir/dbus-1/services/*.service
@@ -130,6 +132,9 @@ the functionality of the Boxes.
 %exclude %_includedir/%name/
 
 %changelog
+* Tue Sep 17 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Mon Apr 22 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
 - 46.1
 

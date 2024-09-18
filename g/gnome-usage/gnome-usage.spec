@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %define xdg_name org.gnome.Usage
@@ -6,10 +6,10 @@
 
 Name: gnome-usage
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: The GNOME system information viewer
-License: GPLv3+
+License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Usage
 
@@ -27,13 +27,13 @@ Source: %name-%version.tar
 Requires: accountsservice >= %accountsservice_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome
-BuildRequires: meson vala-tools
-BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires: meson vala-tools yelp-tools
 BuildRequires: libgtk4-devel >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: libgtop-devel >= %gtop_ver
 BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: pkgconfig(tracker-sparql-3.0)
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 Gnome Usage is a graphical tool to view system resources, like memory and
@@ -56,10 +56,13 @@ disk space.
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc README* NEWS
 
 %changelog
+* Tue Sep 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt2
+- updated to 46.0-41-g83f58b0
+
 * Wed Mar 20 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 

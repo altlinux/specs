@@ -1,8 +1,10 @@
 %def_disable snapshot
 
-%define ver_major 3.50
+%define ver_major 3.52
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.OnlineAccounts
+%define namespace Goa
+%define api_ver 1.0
 
 %def_enable backend
 %def_enable kerberos
@@ -12,13 +14,11 @@
 %def_enable google
 %def_enable imap_smtp
 %def_enable windows_live
-%def_enable gtk_doc
+%def_enable doc
 %def_enable man
 
-%define api_ver 1.0
-
 Name: gnome-online-accounts
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Provide online accounts information
@@ -38,26 +38,27 @@ Requires: lib%name = %EVR
 Requires: dconf gnome-keyring
 
 %define glib_ver 2.68
-%define gtk4_ver 4.10
+%define gtk4_ver 4.15.2
 %define adw_ver 1.4
-#%define oauth_ver 0.9.5
+%define gcr_ver 4.1.0
 %define rest_ver 0.9.1
 %define soup3_ver 3.0.7
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson glib2-devel >= %glib_ver
-#BuildRequires: liboauth-devel >= %oauth_ver
+BuildRequires: meson vala-tools
+BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: pkgconfig(rest-1.0) >= %rest_ver
-BuildRequires: pkgconfig(gcr-4)
+BuildRequires: pkgconfig(gcr-4) >= %gcr_ver
 BuildRequires: pkgconfig(libsoup-3.0) >= %soup3_ver
 BuildRequires: libgtk4-devel >= %gtk4_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: libjson-glib-devel
 BuildRequires: libsecret-devel libdbus-devel
-BuildRequires: vala-tools gobject-introspection-devel
+BuildRequires: pkgconfig(libkeyutils)
+BuildRequires: gobject-introspection-devel
 %{?_enable_kerberos:BuildRequires: pkgconfig(krb5)}
-%{?_enable_gtk_doc:BuildRequires: gtk-doc}
-%{?_enable_man:BuildRequires: xsltproc}
+%{?_enable_doc:BuildRequires: gi-docgen}
+%{?_enable_man:BuildRequires: xsltproc docbook-dtds docbook-style-xsl}
 
 %description
 gnome-online-accounts provides interfaces so applications and
@@ -113,16 +114,16 @@ sed -i s'|gtk+-3.0|libadwaita-1|' src/goabackend/meson.build
 
 %build
 %meson \
-    %{?_enable_man:-Dman=true} \
-    %{?_enable_gtk_doc:-Dgtk_doc=true} \
-    %{?_disable_backend:-Dgoabackend=false} \
-    %{?_disable_exchange:-Dexchange=false} \
-    %{?_disable_google:-Dgoogle=false} \
-    %{?_disable_imap_smtp:-Dimap_smtp=false} \
-    %{?_disable_kerberos:-Dkerberos=false} \
-    %{?_disable_owncloud:-Downcloud=false} \
-    %{?_disable_webdav:-Dwebdav=false} \
-    %{?_disable_windows_live:-Dwindows_live=false}
+    %{subst_enable_meson_bool man man} \
+    %{subst_enable_meson_bool doc documentation} \
+    %{subst_enable_meson_bool backend goabackend} \
+    %{subst_enable_meson_bool exchange exchange} \
+    %{subst_enable_meson_bool google google} \
+    %{subst_enable_meson_bool imap_smtp imap_smtp} \
+    %{subst_enable_meson_bool kerberos kerberos} \
+    %{subst_enable_meson_bool owncloud owncloud} \
+    %{subst_enable_meson_bool webdav webdav} \
+    %{subst_enable_meson_bool windows_live windows_live}
 %nil
 %meson_build
 
@@ -169,17 +170,20 @@ sed -i s'|gtk+-3.0|libadwaita-1|' src/goabackend/meson.build
 %_vapidir/goa-%api_ver.vapi
 
 %files -n lib%name-gir
-%_typelibdir/Goa-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files -n lib%name-gir-devel
-%_girdir/Goa-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 
-%if_enabled gtk_doc
+%if_enabled doc
 %files -n lib%name-devel-doc
-%_datadir/gtk-doc/html/goa/
+%_datadir/doc/%name
 %endif
 
 %changelog
+* Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 3.52.0-alt1
+- 3.52.0
+
 * Sat Sep 14 2024 Yuri N. Sedunov <aris@altlinux.org> 3.50.5-alt1
 - 3.50.5
 

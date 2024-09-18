@@ -1,10 +1,11 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Characters
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %def_without included_libunistring
+%def_disable check
 
 Name: gnome-characters
 Version: %ver_major.0
@@ -15,10 +16,11 @@ Group: Text tools
 License: BSD-3-Clause
 Url: https://apps.gnome.org/Characters
 
+Vcs: https://gitlab.gnome.org/GNOME/gnome-characters.git
+
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Vcs: https://gitlab.gnome.org/GNOME/gnome-characters.git
 Source: %name-%version.tar
 %endif
 
@@ -26,7 +28,7 @@ Source: %name-%version.tar
 
 %define gjs_ver 1.50.0
 %define unistring_ver 0.9.5
-%define adwaita_ver 1.4
+%define adwaita_ver 1.5
 
 Requires: libgjs >= %gjs_ver
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
@@ -45,11 +47,12 @@ Requires: typelib(Pango)
 Requires: typelib(PangoCairo)
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
-BuildRequires: meson /usr/bin/appstream-util
+BuildRequires: meson
 BuildRequires: libgtk4-devel libgjs-devel >= %gjs_ver libdbus-devel
 BuildRequires: gobject-introspection-devel libgtk4-gir-devel
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 %{?_without_included_libunistring:BuildRequires: libunistring-devel >= %unistring_ver}
+%{?_enable_check:BuildRequires: xvfb-run desktop-file-utils /usr/bin/appstreamcli}
 BuildRequires: gperf
 
 %description
@@ -67,6 +70,9 @@ characters.
 %meson_install
 %find_lang %xdg_name
 
+%check
+xvfb-run %__meson_test
+
 %files -f %xdg_name.lang
 %_bindir/%name
 %_libdir/%xdg_name/
@@ -80,6 +86,9 @@ characters.
 %doc NEWS COPYING README*
 
 %changelog
+* Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Mon Mar 18 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 

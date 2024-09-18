@@ -9,7 +9,7 @@
 
 Name: gtranslator
 Version: %ver_major.1
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: A GNOME po file editor with many bells and whistles.
 License: GPLv3
@@ -98,6 +98,9 @@ This package contains documentation needed to develop %name plugins.
 %_datadir/gtk-doc/html/%name/}
 
 %changelog
+* Tue Sep 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1.1
+rebuilt against libspelling-0.4.0
+
 * Mon Apr 22 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1%beta
 - 46.1
 

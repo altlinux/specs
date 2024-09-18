@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define xdg_name org.gnome.SettingsDaemon
 
@@ -13,11 +13,11 @@
 %def_disable tests
 
 Name: gnome-settings-daemon
-Version: %ver_major.0
-Release: alt1.1%beta
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: A program that manages general GNOME settings
-License: GPL-2.0
+License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
 
@@ -27,12 +27,12 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 Source: %name-%version%beta.tar
 %endif
 
-%define glib_ver 2.58.0
+%define glib_ver 2.70.0
 %define gtk_ver 3.16
 %define gnome_desktop_ver 3.37.1
 %define notify_ver 0.7.3
 %define pulse_ver 2.0
-%define gsds_ver 46
+%define gsds_ver 47
 %define colord_ver 0.1.9
 %define dconf_ver 0.8
 %define upower_ver 0.99.12
@@ -44,7 +44,6 @@ Source: %name-%version%beta.tar
 %define nm_ver 1.0
 %define lcms_ver 2.2
 %define polkit_ver 0.114
-%define xfixes_ver 6.0
 
 Requires: dconf >= %dconf_ver
 Requires: colord >= %colord_ver
@@ -72,9 +71,8 @@ BuildRequires: xkeyboard-config-devel
 %{?_enable_wayland:BuildRequires: libwayland-client-devel}
 BuildRequires: libxkbfile-devel
 BuildRequires: docbook-style-xsl xsltproc
-BuildRequires: libcups-devel libgudev-devel libX11-devel libXi-devel
-BuildRequires: libXext-devel libXfixes-devel >= %xfixes_ver
-BuildRequires: libXrandr-devel xorg-proto-devel libICE-devel libSM-devel
+BuildRequires: libcups-devel libgudev-devel
+BuildRequires: pkgconfig(x11) pkgconfig(xi) pkgconfig(xext)
 BuildRequires: libupower-devel >= %upower_ver
 BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel >= %lcms_ver librsvg-devel
 BuildRequires: libwacom-devel >= %wacom_ver
@@ -110,9 +108,9 @@ The %name-tests package provides programms for testing GSD plugins.
 
 %build
 %meson \
-	%{?_disable_smartcard:-Dsmartcard=false} \
-	%{?_enable_wayland:-Dwayland=true} \
-	-Dudev_dir='%_udevdir'
+    %{subst_enable_meson_bool smartcard smartcard} \
+    %{subst_enable_meson_bool wayland wayland} \
+    -Dudev_dir='%_udevdir'
 %nil
 %meson_build
 
@@ -187,6 +185,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt1
+- 47.1
+
 * Sat Jun 22 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1.1
 - rebuilt with new systemd macros
 

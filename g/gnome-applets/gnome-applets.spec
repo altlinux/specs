@@ -12,7 +12,7 @@
 
 Name: gnome-applets
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Small applications for the GNOME panel
 License: GPL-2.0 and GFDL-1.1
@@ -43,7 +43,7 @@ Patch1: %name-3.22.0-alt-cpufreq_libs.patch
 
 Requires: gnome-panel >= %gnome_panel_ver
 Requires: gvfs
-%{?_enable_tracker:Requires: tracker3}
+%{?_enable_tracker:Requires: tinysparql localsearch}
 
 Obsoletes: %name-common < 3.37
 Provides: %name-common = %EVR
@@ -199,6 +199,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %exclude %_libdir/gnome-panel/modules/*.la
 
 %changelog
+* Tue Sep 17 2024 Yuri N. Sedunov <aris@altlinux.org> 3.52.0-alt1.1
+- rebuilt against gnome-47 libraries
+
 * Wed Mar 20 2024 Yuri N. Sedunov <aris@altlinux.org> 3.52.0-alt1
 - 3.52.0
 

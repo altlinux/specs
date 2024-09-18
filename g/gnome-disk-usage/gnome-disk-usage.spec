@@ -2,7 +2,7 @@
 
 %define _name baobab
 %define xdg_name org.gnome.baobab
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
@@ -11,22 +11,24 @@ Version: %ver_major.0
 Release: alt1%beta
 
 Summary: The GNOME disk usage analyser.
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/DiskUsageAnalyzer
+
+Vcs: https://gitlab.gnome.org/GNOME/baobab.git
 
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version%beta.tar.xz
 
 Provides: gnome-disk-usage-analyser = %EVR
 Provides: baobab = %EVR
 
-%define gtk4_ver 4.10.0
+%define gtk4_ver 4.16.0
 %define vala_ver 0.23.3
-%define adwaita_ver 1.4
+%define adwaita_ver 1.6
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
 BuildRequires: meson vala-tools >= %vala_ver
-BuildRequires: yelp-tools xmllint /usr/bin/appstream-util
+BuildRequires: yelp-tools xmllint /usr/bin/appstreamcli
 BuildRequires: libgtk4-devel >= %gtk4_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: gobject-introspection-devel libgtk4-gir-devel
@@ -63,6 +65,9 @@ popd
 %doc README* NEWS
 
 %changelog
+* Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Thu Mar 21 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 

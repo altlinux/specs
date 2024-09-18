@@ -1,14 +1,13 @@
 %def_disable snapshot
 
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
-%define plugins_ver 20
+%define plugins_ver 21
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Software
 
 %def_disable soup2
 %def_enable gudev
-%def_enable gnome_desktop
 %def_enable polkit
 %ifarch armh mipsel %e2k
 %def_disable fwupd
@@ -41,7 +40,7 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Software manager for GNOME
@@ -55,28 +54,31 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Source: %name-%version%beta.tar
 %endif
 
-%define glib_ver 2.70
-%define gtk4_ver 4.0.0
+%define glib_ver 2.76
+%define gtk4_ver 4.13.4
+%define adw_ver 1.6
 %define appstream_ver 0.14
 %define json_glib_ver 1.6.0
 %define soup_ver 2.52
 %define soup3_ver 3.0
 %define packagekit_ver 1.2.5
 %define gsds_ver 3.18
-%define fwupd_ver 1.5.6
+%define fwupd_ver 1.6.2
 %define flatpak_ver 1.9.1
+%define snapd_ver 1.6.2
 %define ostree_ver 2019.3
-%define xmlb_ver 0.1.4
-%define adwaita_ver 1.3
+%define xmlb_ver 0.3.4
 %define malcontent_ver 0.11
+%define applist_ver 1.0
 
+Requires: gnome-app-list >= %applist_ver
 %{?_enable_fwupd:Requires: fwupd >= %fwupd_ver}
 %{?_enable_packagekit:Requires: appstream-data}
 %{?_enable_malcontent:Requires: malcontent} >= %malcontent_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg
 BuildRequires: meson libgio-devel >= %glib_ver
-BuildRequires: libgtk4-devel >= %gtk4_ver pkgconfig(libadwaita-1) >= %adwaita_ver
+BuildRequires: libgtk4-devel >= %gtk4_ver pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(appstream) >= %appstream_ver
 BuildRequires: libjson-glib-devel >= %json_glib_ver
 %if_enabled soup2
@@ -85,18 +87,18 @@ BuildRequires: libsoup-devel >= %soup_ver
 BuildRequires: libsoup3.0-devel >= %soup3_ver
 %endif
 BuildRequires: yelp-tools gtk-doc xsltproc docbook-style-xsl desktop-file-utils
-BuildRequires: libsqlite3-devel libsecret-devel gsettings-desktop-schemas-devel liboauth-devel
+BuildRequires: libsqlite3-devel libsecret-devel liboauth-devel
+BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: libgnome-online-accounts-devel
 BuildRequires: libxmlb-devel >= %xmlb_ver
 BuildRequires: libglib-testing-devel
 BuildRequires: pkgconfig(sysprof-capture-4)
 %{?_enable sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
 %{?_enable_gudev:BuildRequires: libgudev-devel}
-%{?_enable_gnome_desktop:BuildRequires: gsettings-desktop-schemas >= %gsds_ver}
 %{?_enable_polkit:BuildRequires: libpolkit-devel}
 %{?_enable_fwupd:BuildRequires: fwupd-devel >= %fwupd_ver}
 %{?_enable_flatpak:BuildRequires: libflatpak-devel >= %flatpak_ver}
-%{?_enable_snap:BuildRequires: pkgconfig(snapd-glib-2)}
+%{?_enable_snap:BuildRequires: pkgconfig(snapd-glib-2) >= %snapd_ver}
 %{?_enable_packagekit:BuildRequires: libpackagekit-glib-devel >= %packagekit_ver}
 %{?_enable_rpm_ostree:BuildRequires: libostree-devel >= %ostree_ver}
 %{?_enable_rpm:BuildRequires: librpm-devel}
@@ -131,20 +133,19 @@ GNOME Software.
 
 %build
 %meson \
-	%{?_enable_soup2:-Dsoup2=true} \
-	%{?_enable_gudev:-Dgudev=true} \
-	%{?_disable_gnome_desktop:-Dgsettings_desktop_schemas=disabled} \
-	%{?_enable_polkit:-Dpolkit=true} \
-	%{?_disable_fwupd:-Dfwupd=false} \
-	%{?_enable_flatpak:-Dflatpak=true} \
-	%{?_enable_snap:-Dsnap=true} \
-	%{?_enable_ostree:-Dostree=true} \
-	%{?_enable_rpm_ostree:-Drpm_ostree=true} \
-	%{?_disable_packagekit:-Dpackagekit=false} \
-	%{?_disable_tests:-Dtests=false} \
-	%{?_disable_external_appstream:-Dexternal_appstream=false} \
-	%{?_disable_sysprof:-Dsysprof=disabled} \
-	%{?_disable_malcontent:-Dmalcontent=false}
+    %{subst_enable_meson_bool soup2 soup2} \
+    %{subst_enable_meson_bool gudev gudev} \
+    %{subst_enable_meson_bool polkit polkit} \
+    %{subst_enable_meson_bool fwupd fwupd} \
+    %{subst_enable_meson_bool flatpak flatpak} \
+    %{subst_enable_meson_bool snap snap} \
+    %{subst_enable_meson_bool ostree ostree} \
+    %{subst_enable_meson_bool rpm_ostree rpm_ostree} \
+    %{subst_enable_meson_bool packagekit packagekit} \
+    %{subst_enable_meson_bool tests tests} \
+    %{subst_enable_meson_bool external_appstream external_appstream} \
+    %{subst_enable_meson_feature sysprof sysprof} \
+    %{subst_enable_meson_bool malcontent malcontent}
 %meson_build
 
 %install
@@ -179,10 +180,8 @@ _EOF_
 %{?_enable_fwupd:%_desktopdir/%name-local-file-fwupd.desktop}
 %{?_enable_snap:%_desktopdir/%name-local-file-snap.desktop}
 %_desktopdir/%name-local-file-packagekit.desktop
-%_datadir/swcatalog/xml/%xdg_name.Featured.xml
 %_datadir/swcatalog/xml/gnome-pwa-list-foss.xml
 %_datadir/swcatalog/xml/gnome-pwa-list-proprietary.xml
-%_datadir/swcatalog/xml/%xdg_name.Curated.xml
 %_datadir/dbus-1/services/%xdg_name.service
 %{?_enable_packagekit:%_datadir/dbus-1/services/org.freedesktop.PackageKit.service}
 %{?_enable_external_appstream:%_datadir/polkit-1/actions/org.gnome.software.external-appstream.policy}
@@ -207,6 +206,9 @@ _EOF_
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Fri Sep 13 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Thu Sep 12 2024 Yuri N. Sedunov <aris@altlinux.org> 46.5-alt1
 - 46.5
 

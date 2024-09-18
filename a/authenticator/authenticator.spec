@@ -1,7 +1,7 @@
 %def_enable snapshot
 %define optflags_lto %nil
 
-%define ver_major 4.4
+%define ver_major 4.5
 %define rdn_name com.belmoussaoui.Authenticator
 
 %def_enable check
@@ -9,7 +9,7 @@
 
 Name: authenticator
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: Generate Two-Factor Codes
 License: GPL-3.0-or-later
@@ -26,7 +26,7 @@ Source1: %name-%version-cargo.tar
 
 %define glib_ver 2.76
 %define gtk_ver 4.10
-%define adwaita_ver 1.4
+%define adwaita_ver 1.6
 %define gst_ver 1.20
 
 Requires: gst-plugins-base1.0 >= %gst_ver
@@ -63,7 +63,7 @@ Features:
 %setup -n %name-%version %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 # remove broken build.rs from zbar-rust (the same in decoder)
@@ -95,6 +95,9 @@ vendor/zbar-rust/.cargo-checksum.json
 
 
 %changelog
+* Sat Sep 7 2024 Yuri N. Sedunov <aris@altlinux.org> 4.5.0-alt1
+- 4.5.0-4-g404131d
+
 * Tue Feb 13 2024 Yuri N. Sedunov <aris@altlinux.org> 4.4.0-alt2
 - updated to 4.4.0-46-gb8dbe84
 

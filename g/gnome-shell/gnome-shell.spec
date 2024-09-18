@@ -2,26 +2,27 @@
 
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
-%define api_ver 14
+%define api_ver 15
 %define gst_api_ver 1.0
 %define gvc_ver 5f9768a
 
 %def_enable extensions_tool
 %def_enable extensions_app
 %def_disable gtk_doc
+%def_enable man
 %def_disable check
 # removed in 3.31.x
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
-License: GPL-2.0
+License: GPL-2.0-or-later
 Url: https://wiki.gnome.org/Projects/GnomeShell
 
 %if_disabled snapshot
@@ -38,13 +39,11 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 %define session_ver 3.26
 %define gjs_ver 1.73.1
 %define mutter_ver %ver_major
-%define gtk_ver 3.16.0
+%define gtk_ver 4.0
 %define adwaita_ver 1.0
 %define gio_ver 2.56.0
 %define gstreamer_ver 1.0
 %define eds_ver 3.34.0
-%define telepathy_ver 0.17.5
-%define telepathy_logger_ver 0.2.4
 %define polkit_ver 0.100
 %define bt_api_ver 3.0
 %define bluetooth_ver 3.11.3
@@ -59,7 +58,7 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 %define json_glib_ver 0.13.2
 %define nm_ver 1.10.4
 %define ibus_ver 1.5.19
-%define gsds_ver 42
+%define gsds_ver 47
 %define libsecret_ver 0.18
 %define malcontent_ver 0.11
 %define gweather_api_ver 4.0
@@ -124,14 +123,12 @@ Requires: typelib(Shell)
 Requires: typelib(Shew)
 Requires: typelib(Soup) = 3.0
 Requires: typelib(St)
-Requires: typelib(TelepathyGLib)
-Requires: typelib(TelepathyLogger)
 Requires: typelib(UPowerGlib)
 Requires: typelib(WebKit) = %webkit_api_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires(pre): rpm-build-python3 rpm-build-xdg rpm-build-systemd
-BuildRequires: meson gcc-c++ xsltproc asciidoc-a2x sassc
+BuildRequires: meson gcc-c++ xsltproc asciidoc-a2x sassc /usr/bin/jasmine
 BuildRequires: /usr/bin/appstream-util /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: bash-completion
 BuildRequires: python3-devel
@@ -139,9 +136,8 @@ BuildRequires: libX11-devel libXfixes-devel
 BuildRequires: libmutter-devel >= %mutter_ver libmutter-gir-devel
 BuildRequires: libgjs-devel >= %gjs_ver
 BuildRequires: libgio-devel >= %gio_ver
-BuildRequires: libgtk+3-devel >= %gtk_ver libgtk+3-gir-devel
 # for Shew
-BuildRequires: libgtk4-devel libgtk4-gir-devel pkgconfig(libadwaita-1) >= %adwaita_ver
+BuildRequires: libgtk4-devel >= %gtk_ver libgtk4-gir-devel pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: at-spi2-atk-devel >= %atspi_ver
 BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: libxml2-devel
@@ -160,8 +156,6 @@ BuildRequires: gstreamer%gst_api_ver-devel >= %gstreamer_ver gst-plugins%gst_api
 BuildRequires: libXfixes-devel
 BuildRequires: mutter >= %mutter_ver
 BuildRequires: libpolkit-devel >= %polkit_ver
-BuildRequires: libtelepathy-glib-devel >= %telepathy_ver libtelepathy-glib-gir-devel libtelepathy-logger-gir-devel
-BuildRequires: libtelepathy-logger-devel >= %telepathy_logger_ver
 BuildRequires: libfolks-devel >= %folks_ver libfolks-gir-devel
 BuildRequires: libnm-devel >= %nm_ver libnm-gir-devel
 BuildRequires: libgudev-devel libgudev-gir-devel
@@ -174,6 +168,7 @@ BuildRequires: gir(Gcr) = %gcr_api_ver libsecret-devel >= %libsecret_ver libpolk
 BuildRequires: libgnome-autoar-devel
 BuildRequires: pkgconfig(tecla)
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
+%{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_browser_plugin:BuildRequires: browser-plugins-npapi-devel}
 
 %description
@@ -242,7 +237,7 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 
 %files
 %_bindir/%name
-%_bindir/%name-extension-prefs
+#%_bindir/%name-extension-prefs
 %_bindir/%name-test-tool
 %{?_enable_extensions_tool:%_bindir/gnome-extensions
 %_bindir/gnome-shell-extension-tool}
@@ -293,6 +288,7 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 
 %_man1dir/*
 %_iconsdir/hicolor/*/*/%xdg_name.Extensions*.svg
+%_iconsdir/hicolor/*/*/%xdg_name.CaptivePortal*.svg
 %doc README* NEWS
 
 %if_enabled gtk_doc
@@ -312,6 +308,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 }
 
 %changelog
+* Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Mon Aug 05 2024 Yuri N. Sedunov <aris@altlinux.org> 46.4-alt1
 - 46.4
 

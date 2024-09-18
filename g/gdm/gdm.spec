@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define api_ver 1.0
 
@@ -25,7 +25,7 @@
 %def_enable check
 
 Name: gdm
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: The GNOME Display Manager
@@ -80,9 +80,9 @@ Requires(pre): %name-libs = %EVR
 Requires(pre): %name-data = %EVR
 Requires: gnome-shell >= %shell_ver
 Requires: accountsservice >= %accountsservice_ver
-Requires: coreutils xinitrc iso-codes lsb-release shadow-utils
+Requires: coreutils iso-codes lsb-release shadow-utils
 Requires: gnome-session >= %session_ver
-Requires: gnome-session-wayland
+#Requires: gnome-session-wayland
 Requires: /bin/dbus-run-session
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome
@@ -240,7 +240,6 @@ dbus-run-session %__meson_test
 %files
 %_sbindir/gdm
 %_bindir/gdm-config
-%_bindir/gdm-screenshot
 %_bindir/gdmflexiserver
 %_libexecdir/gdm-host-chooser
 %_libexecdir/gdm-session-worker
@@ -310,6 +309,9 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Wed May 29 2024 Yuri N. Sedunov <aris@altlinux.org> 46.2-alt1
 - 46.2
 

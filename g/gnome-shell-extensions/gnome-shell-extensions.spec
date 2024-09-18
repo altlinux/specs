@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define domain gcampax.github.com
 %define _libexecdir %_prefix/libexec
@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: gnome-shell-extensions
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Shell Extensions
@@ -129,8 +129,11 @@ See %_docdir/%name-%version/README for more information.
 %dir %_datadir/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.%domain
 %_datadir/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.%domain/extension.js
 %_datadir/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.%domain/metadata.json
-%_datadir/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.%domain/stylesheet.css
 %_datadir/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.%domain/prefs.js
+%_datadir/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.%domain/stylesheet-dark.css
+%_datadir/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.%domain/stylesheet-light.css
+%_datadir/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.%domain/workspaceIndicator.js
+%_datadir/glib-2.0/schemas/org.gnome.shell.extensions.workspace-indicator.gschema.xml
 
 # launch-new-instance
 %dir %_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.%domain
@@ -144,6 +147,8 @@ See %_docdir/%name-%version/README for more information.
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/prefs.js
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/stylesheet-dark.css
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/stylesheet-light.css
+%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/stylesheet-workspace-switcher-dark.css
+%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/stylesheet-workspace-switcher-light.css
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/workspaceIndicator.js
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.window-list.gschema.xml
 
@@ -162,9 +167,17 @@ See %_docdir/%name-%version/README for more information.
 %_datadir/gnome-shell/extensions/system-monitor@gnome-shell-extensions.%domain/stylesheet.css
 %_datadir/gnome-shell/extensions/system-monitor@gnome-shell-extensions.%domain/icons/
 
+# status-icons
+%dir %_datadir/gnome-shell/extensions/status-icons@gnome-shell-extensions.gcampax.github.com
+%_datadir/gnome-shell/extensions/status-icons@gnome-shell-extensions.%domain/extension.js
+%_datadir/gnome-shell/extensions/status-icons@gnome-shell-extensions.%domain/metadata.json
+
 %doc NEWS README.md
 
 %changelog
+* Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Sun May 26 2024 Yuri N. Sedunov <aris@altlinux.org> 46.2-alt1
 - 46.2
 

@@ -5,46 +5,51 @@
 %define _name mahjongg
 %define xdg_name org.gnome.Mahjongg
 %define __name gnome-%_name
-%define ver_major 3.40
+%define ver_major 47
+%define beta %nil
 %define _libexecdir %_prefix/libexec
 
 %def_enable check
 
 Name: gnome-games-%_name
-Version: %ver_major.1
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Classic Chinese Tile Game
 Group: Games/Boards
-License: GPLv3+
+License: GPL-2.0-or-later
 Url: https://wiki.gnome.org/Apps/Mahjongg
 
+Vcs: https://gitlab.gnome.org/GNOME/gnome-mahjongg.git
+
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version%beta.tar.xz
 %else
-Source: %__name-%version.tar
+Source: %__name-%version%beta.tar
 %endif
 
 Provides:  %__name = %EVR
 
 %define glib_ver 2.72.0
-%define gtk4_ver 4.5.0
+%define gtk4_ver 4.14.0
+%define adw_ver 1.5
 %define rsvg_ver 2.46
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools yelp-tools 
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: libgtk4-devel >= %gtk4_ver libadwaita-devel
+BuildRequires: libgtk4-devel >= %gtk4_ver
+BuildRequires: libadwaita-devel >= %adw_ver
 BuildRequires: librsvg-devel >= %rsvg_ver
-%{?_enable_check:BuildRequires: /usr/bin/appstream-util desktop-file-utils /usr/bin/glib-compile-schemas}
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils /usr/bin/glib-compile-schemas}
 
 %description
 Gnome Mahjongg, or Mahjongg for short, is a solitaire (one player)
 version of the classic Eastern tile game, Mahjongg.
 
 %prep
-%setup -n %__name-%version
+%setup -n %__name-%version%beta
 
 %build
 %meson
@@ -64,10 +69,13 @@ version of the classic Eastern tile game, Mahjongg.
 %_iconsdir/hicolor/*/*/%{xdg_name}*.*
 %_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %_man6dir/%__name.*
 
 %changelog
+* Sat Sep 14 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Thu Apr 18 2024 Yuri N. Sedunov <aris@altlinux.org> 3.40.1-alt1
 - 3.40.1
 

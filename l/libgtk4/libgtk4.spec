@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gtk
-%define ver_major 4.14
+%define ver_major 4.16
 %define api_ver_major 4
 %define api_ver %api_ver_major.0
 %define binary_ver 4.0.0
@@ -21,6 +21,7 @@
 # 4.8.0: tracker disabled by default
 %def_disable tracker
 # enabled by default since 4.13.5
+# since 4.16.0 -- default renderer on Wayland
 %def_enable vulkan
 # media backends
 # gstreamer enabled by default
@@ -37,7 +38,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.5
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -67,8 +68,8 @@ Patch10: gtk-4.12.3-alt-printdialog-papersize.patch
 %define gtk_doc_ver 1.32.1
 %define colord_ver 0.1.9
 %define cups_ver 1.6
-%define wayland_ver 1.17.0
-%define wayland_protocols_ver 1.21
+%define wayland_ver 1.21
+%define wayland_protocols_ver 1.36
 %define xkbcommon_ver 0.2.0
 %define epoxy_ver 1.4
 %define graphene_ver 1.10
@@ -236,22 +237,20 @@ the functionality of the installed GTK+3 packages.
 %endif
 
 %meson \
-    %{?_enable_x11:-Dx11-backend=true} \
-    %{?_enable_wayland:-Dwayland-backend=true} \
-    %{?_enable_broadway:-Dbroadway-backend=true} \
-    %{?_enable_cloudproviders:-Dcloudproviders=enabled} \
-    %{?_enable_tracker:-Dtracker=enabled} \
-    %{?_enable_introspection:-Dintrospection=enabled} \
-    %{?_enable_gtk_doc:-Ddocumentation=true} \
-    %{?_enable_man:-Dman-pages=true} \
-    %{?_enable_colord:-Dcolord=enabled} \
-    %{?_enable_sysprof:-Dsysprof=enabled} \
-    %{?_disable_tests:-Dbuild-tests=false} \
-    %{?_disable_testsuite:-Dbuild-testsuite=false} \
-    %{?_enable_install_tests:-Dinstall-tests=true} \
-    %{?_enable_vulkan:-Dvulkan=enabled} \
-    %{?_disable_gstreamer:-Dmedia-gstreamer=disabled} \
-    %{?_enable_ffmpeg:-Dmedia-ffmpeg=enabled}
+    %{subst_enable_meson_bool x11 x11-backend} \
+    %{subst_enable_meson_bool wayland wayland-backend} \
+    %{subst_enable_meson_bool broadway broadway-backend} \
+    %{subst_enable_meson_feature cloudproviders cloudproviders} \
+    %{subst_enable_meson_feature tracker tracker} \
+    %{subst_enable_meson_feature introspection introspection} \
+    %{subst_enable_meson_bool gtk_doc documentation} \
+    %{subst_enable_meson_bool man man-pages} \
+    %{subst_enable_meson_feature colord colord} \
+    %{subst_enable_meson_feature sysprof sysprof} \
+    %{subst_enable_meson_bool tests build-tests} \
+    %{subst_enable_meson_bool testsuite build-testsuite} \
+    %{subst_enable_meson_feature vulkan vulkan} \
+    %{subst_enable_meson_feature gstreamer media-gstreamer} \
 %nil
 %meson_build
 
@@ -314,6 +313,7 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 %files devel
 %_bindir/gtk4-builder-tool
+%_bindir/gtk4-image-tool
 %_bindir/gtk4-path-tool
 %_bindir/gtk4-rendernode-tool
 %_includedir/gtk-%api_ver/
@@ -327,6 +327,7 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %_datadir/gettext/its/gtk%{api_ver_major}builder.loc
 %_datadir/gtk-%api_ver/valgrind/
 %{?_enable_man:%_man1dir/gtk%{api_ver_major}-builder-tool.1*
+%_man1dir/gtk4-image-tool.1*
 %_man1dir/gtk4-path-tool.1*
 %_man1dir/gtk4-rendernode-tool.1*}
 
@@ -417,6 +418,12 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Fri Sep 13 2024 Yuri N. Sedunov <aris@altlinux.org> 4.16.1-alt1
+- 4.16.1
+
+* Sat Sep 07 2024 Yuri N. Sedunov <aris@altlinux.org> 4.16.0-alt1
+- 4.16.0
+
 * Fri Aug 16 2024 Yuri N. Sedunov <aris@altlinux.org> 4.14.5-alt1
 - 4.14.5
 

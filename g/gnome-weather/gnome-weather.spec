@@ -1,9 +1,11 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Weather
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define _libexecdir %_prefix/libexec
+
+%def_enable check
 
 Name: gnome-weather
 Version: %ver_major.0
@@ -11,8 +13,10 @@ Release: alt1%beta
 
 Summary: Access current weather conditions and forecasts
 Group: Graphical desktop/GNOME
-License: GPL-2.0
+License: GPL-2.0-or-later
 Url: https://apps.gnome.org/Weather
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-weather.git
 
 %if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
@@ -46,11 +50,12 @@ Requires: typelib(Adw) = 1
 Requires: typelib(Graphene)
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
-BuildRequires: meson yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires: meson yelp-tools
 BuildRequires: libgtk4-devel >= %gtk4_ver libgjs-devel >= %gjs_ver
 BuildRequires: libgweather4.0-devel >= %gweather4_ver pkgconfig(libgeoclue-2.0)
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: gobject-introspection-devel >= %gi_ver libgtk4-gir-devel libgweather4.0-gir-devel
+%{?_enable_check:Buildrequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 %name is a small application that allows you to monitor the current
@@ -69,6 +74,9 @@ access updated forecasts provided by various internet services.
 %meson_install
 %find_lang --with-gnome --output=%name.lang %name %xdg_name
 
+%check
+%__meson_test
+
 %files -f %name.lang
 %_bindir/%name
 %_desktopdir/%xdg_name.desktop
@@ -81,9 +89,12 @@ access updated forecasts provided by various internet services.
 %_iconsdir/hicolor/scalable/status/*.svg
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 %_datadir/metainfo/%xdg_name.appdata.xml
-%doc NEWS
+%doc NEWS README*
 
 %changelog
+* Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Fri Mar 22 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 

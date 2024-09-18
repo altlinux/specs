@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 
 %def_enable braille
@@ -8,7 +8,7 @@
 %def_disable spiel
 
 Name: orca
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
@@ -89,6 +89,9 @@ Jaws For Windows компании Freedom Scientific.
 %_sysconfdir/xdg/autostart/%name-autostart.desktop
 
 %changelog
+* Tue Sep 17 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Tue Jun 25 2024 Yuri N. Sedunov <aris@altlinux.org> 46.2-alt1
 - 46.2
 - enabled Braille (brltty) support by default again

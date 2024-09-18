@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 3.52
+%define ver_major 3.54
 %define xdg_name org.gnome.Terminal
 %define _libexecdir %_prefix/libexec
 %define nautilus_extdir %_libdir/nautilus/extensions-4
@@ -8,13 +8,15 @@
 %def_with nautilus
 
 Name: gnome-terminal
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Terminal
 License: GPL-3.0-or-later
 Group: Terminals
 Url: http://www.gnome.org
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-terminal.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
@@ -25,7 +27,7 @@ Source: %name-%version.tar
 %define glib_ver 2.52
 %define gtk_ver 3.24
 %define handy_ver 1.6
-%define vte_ver 0.76.0
+%define vte_ver 0.78.0
 
 Provides: xvt
 Provides: x-terminal-emulator
@@ -54,7 +56,7 @@ GNOME terminal emulator application.
 %package nautilus
 Summary: Nautilus extension for the GNOME Terminal
 Group: Graphical desktop/GNOME
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description nautilus
 This package provides integration with the GNOME Terminal for the
@@ -111,6 +113,9 @@ EOF
 %endif
 
 %changelog
+* Tue Sep 17 2024 Yuri N. Sedunov <aris@altlinux.org> 3.54.0-alt1
+- 3.54.0
+
 * Sun May 26 2024 Yuri N. Sedunov <aris@altlinux.org> 3.52.2-alt1
 - 3.52.2
 

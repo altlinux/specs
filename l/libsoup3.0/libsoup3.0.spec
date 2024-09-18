@@ -2,8 +2,10 @@
 %def_disable snapshot
 
 %define _name libsoup
+%define ver_major 3.6
 %define api_ver 3.0
-%define ver_major 3.4
+%define namespace Soup
+
 %def_disable static
 %def_enable docs
 %def_enable introspection
@@ -17,7 +19,7 @@
 %def_disable check
 
 Name: %_name%api_ver
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -33,7 +35,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 
 Requires: glib-networking >= 2.70
 
-%define glib_ver 2.69.1
+%define glib_ver 2.70
 %define gi_ver 1.33.3
 %define psl_ver 0.20.0
 
@@ -137,13 +139,13 @@ This package provides PyGObject overrides for SoupMessageHeaders.
 %meson \
     %{?_enable_debug:--buildtype=debug} \
     %{?_enable_static:--default-library=both} \
-    %{?_enable_gnome:-Dgnome=true} \
-    %{?_disable_docs:-Ddocs=disabled} \
-    %{?_enable_snapshot:-Dgtk_doc=true} \
-    %{?_disable_introspection:-Dintrospection=disabled} \
-    %{?_disable_gssapi:-Dgssapi=disabled} \
-    %{?_disable_brotli:-Dbrotli=disabled} \
-    %{?_enable_sysprof:-Dsysprof=enabled}
+    %{subst_enable_meson_bool gnome gnome} \
+    %{subst_enable_meson_feature docs docs} \
+    %{subst_enable_meson_feature introspection introspection} \
+    %{subst_enable_meson_feature gssapi gssapi} \
+    %{subst_enable_meson_feature brotli brotli} \
+    %{subst_enable_meson_feature sysprof sysprof}
+%nil
 %meson_build
 
 %install
@@ -176,10 +178,10 @@ This package provides PyGObject overrides for SoupMessageHeaders.
 
 %if_enabled introspection
 %files gir
-%_typelibdir/Soup-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Soup-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 %if_enabled python
@@ -189,6 +191,9 @@ This package provides PyGObject overrides for SoupMessageHeaders.
 %endif
 
 %changelog
+* Tue Aug 27 2024 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Fri Oct 27 2023 Yuri N. Sedunov <aris@altlinux.org> 3.4.4-alt1
 - 3.4.4
 

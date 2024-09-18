@@ -1,13 +1,11 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 0.42
+%define ver_major 0.44
 %define api_ver 2.8
 %def_enable external_plugin
 %def_enable mpris_plugin
-%def_disable tracker_plugin
 %def_enable tracker3_plugin
-%def_disable lms_plugin
 %def_enable gtk
 %define media_engine gstreamer
 
@@ -22,13 +20,15 @@
 %endif
 
 Name: rygel
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: A UPnP v2 Media Server
 Group: System/Servers
-License: LGPLv2+
+License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/Rygel
+
+Vcs: https://gitlab.gnome.org/GNOME/rygel.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
@@ -53,10 +53,10 @@ Source: %name-%version.tar
 %define gst_app_ver 1.12
 %define gst_audio_ver 1.12
 %define gst_ges_ver 1.16
-%define gio_ver 2.56
+%define gio_ver 2.62
 %define gee_ver 0.8.0
 %define uuid_ver 1.41.3
-%define libsoup_ver 2.44.0
+%define libsoup_ver 3.2
 %define gtk_ver 3.22
 %define libsqlite3_ver 3.5
 %define mediaart_ver 1.9
@@ -103,7 +103,6 @@ BuildRequires: libvala-devel >= %vala_ver vala >= %vala_ver
 BuildRequires: vapi(gupnp-1.6) vapi(gupnp-av-1.0) vapi(gio-2.0) vapi(gee-0.8) vapi(posix)
 BuildRequires: gir(GUPnP) = 1.6 gir(GUPnPAV) = 1.0 gir(GObject) = 2.0 gir(Gee) = 0.8 gir(Gio) = 2.0 gir(GLib) = 2.0
 %{?_enable_gtk:BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver}
-%{?_enable_lms_plugin:BuildRequires: liblightmediascanner-devel libsqlite3-devel}
 BuildRequires: xsltproc docbook-style-xsl docbook-dtds
 BuildRequires: pkgconfig(systemd)
 
@@ -138,19 +137,10 @@ libraries.
 Summary: Tracker3 plugin for %name
 Group: System/Servers
 Requires: %name = %EVR
-Requires: tracker3
+Requires: localsearch
 
 %description tracker
 A plugin for rygel to use tracker to locate media on the local machine.
-
-%package lms
-Summary: Lightweight media scanner plugin for %name
-Group: System/Servers
-Requires: %name = %EVR
-Requires: lightmediascanner
-
-%description lms
-A plugin for rygel to use LMS to locate media on the local machine.
 
 %package gir
 Summary: GObject introspection data for the %name
@@ -175,8 +165,7 @@ GObject introspection devel data for the %name
 
 %build
 %meson \
-%{?_enable_api_docs:-Dapi-docs=true} \
--Dplugins="['external', 'gst-launch', 'lms', 'media-export', 'mpris', 'playbin', 'ruih', 'tracker3']"
+    %{subst_enable_meson_bool api_docs api-docs}
 %nil
 %meson_build
 
@@ -197,11 +186,6 @@ sed -E -i 's|(/>)(<)|\1\n\2|g' %buildroot%_girdir/*.gir
 %exclude %_libdir/%name-%api_ver/plugins/lib%name-tracker3.so
 %exclude %_libdir/%name-%api_ver/plugins/tracker3.plugin
 
-%if_enabled lms_plugin
-%exclude %_libdir/%name-%api_ver/plugins/librygel-lms.so
-%exclude %_libdir/%name-%api_ver/plugins/lms.plugin
-%endif
-
 %_datadir/%name
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*
@@ -214,12 +198,6 @@ sed -E -i 's|(/>)(<)|\1\n\2|g' %buildroot%_girdir/*.gir
 %files tracker
 %_libdir/%name-%api_ver/plugins/librygel-tracker3.so
 %_libdir/%name-%api_ver/plugins/tracker3.plugin
-
-%if_enabled lms_plugin
-%files lms
-%_libdir/%name-%api_ver/plugins/librygel-lms.so
-%_libdir/%name-%api_ver/plugins/lms.plugin
-%endif
 
 %files devel
 %_libdir/lib%name-*.so
@@ -239,6 +217,9 @@ sed -E -i 's|(/>)(<)|\1\n\2|g' %buildroot%_girdir/*.gir
 %_girdir/*.gir
 
 %changelog
+* Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.44.0-alt1
+- 0.44.0
+
 * Tue May 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.42.6-alt1
 - 0.42.6
 

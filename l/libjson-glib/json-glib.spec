@@ -2,10 +2,12 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name json-glib
-%define ver_major 1.8
+%define ver_major 1.10
 %define api_ver 1.0
+%define namespace Json
+
 %def_disable symbol_versioning
-%def_enable gtk_doc
+%def_enable doc
 %def_enable man
 %def_enable introspection
 %def_enable check
@@ -16,7 +18,7 @@ Release: alt1
 
 Summary: GLib-based JSON manipulation library
 Group: System/Libraries
-License: LGPLv2.1
+License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/JsonGlib
 
 %if_disabled snapshot
@@ -24,20 +26,19 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %else
 Source: %_name-%version.tar
 %endif
-Patch: json-glib-1.6.6-alt-doc_build.patch
 # https://gitlab.gnome.org/GNOME/json-glib/-/issues/33
 # --default-symver breaks set-versioned dependencies, revert it
 Patch1: json-glib-1.6.4-alt-remove_symbol_versioning.patch
 
-%define glib_ver 2.54
-%define gi_ver 0.10.5
+%define glib_ver 2.72
+%define gi_ver 1.72
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson glib2-devel >= %glib_ver
 %{?_enable_static:BuildRequires: glibc-devel-static}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
-%{?_enable_gtk_doc:BuildRequires: gi-docgen}
-%{?_enable_man:BuildRequires: xsltproc docbook-dtds docbook-style-xsl}
+%{?_enable_doc:BuildRequires: gi-docgen}
+%{?_enable_man:BuildRequires: /usr/bin/rst2man}
 
 %description
 JSON-GLib implements a full JSON parser using GLib and GObject. Use
@@ -92,13 +93,13 @@ the functionality of the installed %_name library.
 
 %prep
 %setup -n %_name-%version
-%patch -b .doc
 %{?_disable_symbol_versioning:%patch1 -p1 -b .symver}
 
 %build
-%meson %{?_disable_introspection:-Dintrospection=disabled} \
-    %{?_disable_gtk_doc:-Dgtk_doc=disabled} \
-    %{?_enable_man:-Dman=true}
+%meson \
+    %{subst_enable_meson_feature introspection introspection} \
+    %{subst_enable_meson_feature doc documentation} \
+    %{subst_enable_meson_bool man man}
 %nil
 %meson_build
 
@@ -126,13 +127,13 @@ the functionality of the installed %_name library.
 
 %if_enabled introspection
 %files gir
-%_typelibdir/Json-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Json-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
-%if_enabled gtk_doc
+%if_enabled doc
 %files devel-doc
 %_datadir/doc/%_name-%api_ver
 %endif
@@ -142,6 +143,9 @@ the functionality of the installed %_name library.
 %_datadir/installed-tests/%_name-%api_ver/
 
 %changelog
+* Sat Aug 31 2024 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Sat Sep 16 2023 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - 1.8.0
 

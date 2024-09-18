@@ -1,12 +1,9 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 43
+%define ver_major 47
 %define beta %nil
 %define httpd /usr/sbin/httpd2
 %define modules_path %_sysconfdir/httpd2/modules
-
-# removed since 43.alpha
-%def_disable nautilus
 
 Name: gnome-user-share
 Version: %ver_major.0
@@ -14,8 +11,10 @@ Release: alt1%beta
 
 Summary: Gnome user file sharing
 Group: Graphical desktop/GNOME
-License: GPLv2+
+License: GPL-2.0-or-later
 Url: https://www.gnome.org
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-user-share.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -23,18 +22,16 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Source: %name-%version%beta.tar
 %endif
 
-%define glib_ver 2.58
-%define nautilus_ver 3.27.90
+%define glib_ver 2.74
 
-Requires: apache2 >= 2.2
+Requires: apache2 >= 2.4
 Requires: apache2-mod_dnssd >= 0.6
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson yelp-tools desktop-file-utils
-BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel libnotify-devel libcanberra-gtk3-devel
-BuildRequires: libselinux-devel libgudev-devel
+BuildRequires: meson
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libselinux-devel
 BuildRequires: apache2 apache2-mod_dnssd pkgconfig(systemd)
-%{?_enable_nautilus:BuildRequires: libnautilus-devel >= %nautilus_ver}
 
 %description
 gnome-user-share is a small package that binds together various free
@@ -56,8 +53,7 @@ mDNSResolver running.
 
 %build
 %meson -Dhttpd=%httpd \
-       -Dmodules_path=%modules_path \
-       %{?_enable_nautilus:-Dnautilus_extension=true}
+       -Dmodules_path=%modules_path
 %nil
 %meson_build
 
@@ -69,14 +65,15 @@ mDNSResolver running.
 %_libexecdir/%name-webdav
 %_desktopdir/%name-webdav.desktop
 %_datadir/%name/
-%{?_enable_nautilus:%_libdir/nautilus/extensions-3.0/libnautilus-share-extension.so}
 %_datadir/GConf/gsettings/%name.convert
 %_datadir/glib-2.0/schemas/org.gnome.desktop.file-sharing.gschema.xml
-%_prefix/lib/systemd/user/%name-webdav.service
-%doc README NEWS
-
+%_userunitdir/%name-webdav.service
+%doc README* NEWS
 
 %changelog
+* Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
 - 43.0
 

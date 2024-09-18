@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define xdg_name org.gnome.Snapshot
 
@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: snapshot
-Version: %ver_major.3
+Version: %ver_major.0.1
 Release: alt1%beta
 
 Summary: GNOME Camera
@@ -24,13 +24,15 @@ Source: %name-%version%beta.tar
 
 %define glib_ver 2.76
 %define pango_ver 1.51
-%define gtk_ver 4.14
-%define adwaita_ver 1.5
+%define gtk_ver 4.15
+%define adwaita_ver 1.6
 %define gst_ver 1.20
+%define seccomp_ver 2.5.0
 
 Provides: gnome-camera = %EVR
 Requires: gst-plugins-base1.0 >= %gst_ver
 Requires: gst-plugins-bad1.0 >= %gst_ver
+Requires: gst-plugin-gtk4
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo
@@ -40,7 +42,10 @@ BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(gstreamer-video-1.0) >= %gst_ver
 BuildRequires: pkgconfig(gstreamer-plugins-bad-1.0) >= %gst_ver
+# for Glycin
+BuildRequires: pkgconfig(libseccomp) >= %seccomp_ver pkgconfig(lcms2)
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils clippy}
+
 
 %description
 A simple application to take pictures and videos from camera on your
@@ -76,6 +81,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0.1-alt1
+- 47.0.1
+
 * Mon May 06 2024 Yuri N. Sedunov <aris@altlinux.org> 46.3-alt1
 - 46.3
 

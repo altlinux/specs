@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 %define nautilus_extdir %_libdir/nautilus/extensions-4
 
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define xdg_name org.gnome.Console
 %define binary_name kgx
@@ -14,7 +14,7 @@ Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Console
-License: GPL-3.0
+License: GPL-3.0-or-later
 Group: Terminals
 Url: https://apps.gnome.org/Console
 
@@ -26,9 +26,10 @@ Source: %name-%version%beta.tar
 %endif
 
 %define glib_ver 2.76
-%define gtk4_ver 4.12.2
-%define adwaita_ver 1.5
-%define vte_ver 0.75.1
+%define pango_ver 1.52
+%define gtk4_ver 4.14
+%define adwaita_ver 1.6
+%define vte_ver 0.77.0
 %define nautilus_ver 43
 
 Provides: xvt
@@ -41,6 +42,7 @@ BuildRequires(pre): rpm-macros-meson rpm-macros-alternatives
 BuildRequires: meson yelp-tools
 BuildRequires: desktop-file-utils %_bindir/appstream-util
 BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: pkgconfig(pango) >= %pango_ver
 BuildRequires: libgtk4-devel >= %gtk4_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(libgtop-2.0)
@@ -63,6 +65,9 @@ Nautilus file manager.
 
 %prep
 %setup -n %name-%version%beta
+%ifarch %ix86 armh
+sed -i '/\-Werror=format/d' meson.build
+%endif
 
 %build
 %meson
@@ -95,6 +100,9 @@ EOF
 %endif
 
 %changelog
+* Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Tue Mar 19 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 

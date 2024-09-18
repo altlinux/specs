@@ -1,7 +1,8 @@
 %define _name at-spi2
-%define ver_major 2.52
+%define ver_major 2.54
 %define api_ver_major 2
 %define api_ver 2.0
+%define namespace Atspi
 %define atk_api_ver 1.0
 
 %define _libexecdir %_prefix/libexec
@@ -180,10 +181,10 @@ sed -i 's/\(sphinx-build\)/\1-3/' devel-docs/meson.build
 %build
 %meson \
     -Ddbus_daemon=/bin/dbus-daemon \
-    %{?_disable_x11:-Dx11=disabled} \
-    %{?_disable_gtk2:-Dgtk2_atk_adaptor=false} \
-    %{?_disable_introspection:-Dintrospection=disabled} \
-    %{?_enable_doc:-Ddocs=true}
+    %{subst_enable_meson_feature x11 x11} \
+    %{subst_enable_meson_bool gtk2 gtk2_atk_adaptor} \
+    %{subst_enable_meson_feature introspection introspection} \
+    %{subst_enable_meson_bool doc docs}
 %nil
 %meson_build
 %install
@@ -232,10 +233,10 @@ sed -i 's/\(sphinx-build\)/\1-3/' devel-docs/meson.build
 
 %if_enabled introspection
 %files -n lib%name-gir
-%_typelibdir/Atspi-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files -n lib%name-gir-devel
-%_girdir/Atspi-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 
 %files -n libatk-gir
 %_typelibdir/Atk-%atk_api_ver.typelib
@@ -253,6 +254,9 @@ sed -i 's/\(sphinx-build\)/\1-3/' devel-docs/meson.build
 %endif
 
 %changelog
+* Sat Sep 14 2024 Yuri N. Sedunov <aris@altlinux.org> 2.54.0-alt1
+- 2.54.0
+
 * Sat Mar 16 2024 Yuri N. Sedunov <aris@altlinux.org> 2.52.0-alt1
 - 2.52.0
 

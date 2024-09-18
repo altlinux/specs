@@ -8,7 +8,7 @@
 
 Name: bijiben
 Version: %ver_major
-Release: alt0.2%beta
+Release: alt0.3%beta
 
 Summary: GNOME Notes
 License: GPL-3.0
@@ -35,7 +35,7 @@ Provides: %_name = %EVR
 %define webkit_api_ver 6.0
 %define webkit_ver 2.40
 
-Requires: dconf tracker3 tracker-miners3 >= %tracker_ver
+Requires: dconf tinysparql localsearch
 
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg
 BuildRequires: meson yelp-tools
@@ -57,7 +57,7 @@ viewing notes.
 
 %build
 %meson \
-	-Dupdate_mimedb=false
+    -Dupdate_mimedb=false
 # SMP-incompatible build
 %meson_build -j 1
 
@@ -82,6 +82,10 @@ viewing notes.
 %doc README* AUTHORS NEWS
 
 %changelog
+* Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 41-alt0.3.alpha
+- updated to BIJIBEN_40_0-483-gd7c4b9c
+- built against gnome-47 libraries
+
 * Wed Mar 06 2024 Yuri N. Sedunov <aris@altlinux.org> 41-alt0.2.alpha
 - updated to BIJIBEN_40_0-472-g1e8cc33
 - provides gnome-notes

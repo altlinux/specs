@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name pygobject
-%define ver_major 3.48
+%define ver_major 3.50
 %define api_ver 3.0
 %define gtk_api_ver 3.0
 %def_enable pycairo
@@ -10,13 +10,15 @@
 %def_disable check
 
 Name: python3-module-%{_name}3
-Version: %ver_major.2
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: Python3 bindings for GObject
 Group: Development/Python3
-License: LGPL-2.1
-Url: http://www.pygtk.org/
+License: LGPL-2.1-or-later
+Url: https://wiki.gnome.org/Projects/PyGObject
+
+Vcs: https://gitlab.gnome.org/GNOME/pygobject.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
@@ -34,7 +36,7 @@ Patch: pygobject-3.38.0-alt-meson-0.55_build.patch
 %filter_from_requires /typelib(Gtk)/d
 %filter_from_requires /typelib(GdkX11)/d
 
-%define meson_ver 0.56
+%define meson_ver 0.64
 %define glib_ver 2.64.0
 %define gi_ver 1.64.0
 %define pycairo_ver 1.16
@@ -97,8 +99,8 @@ Development documentation for %_name.
 
 %build
 %meson \
-	%{?_disable_pycairo:-Dpycairo=disabled} \
-	%{?_disable_tests:-Dtests=false}
+    %{subst_enable_meson_feature pycairo pycairo} \
+    %{subst_enable_meson_bool tests tests}
 %nil
 %meson_build
 
@@ -110,7 +112,7 @@ xvfb-run %__meson_test -t 2
 
 %files
 %python3_sitelibdir/gi/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*.dist-info
 %exclude %python3_sitelibdir/gi/pygtkcompat.py*
 
 %files pygtkcompat
@@ -120,7 +122,7 @@ xvfb-run %__meson_test -t 2
 %files devel
 %_includedir/%_name-%api_ver/
 %_pkgconfigdir/%_name-%api_ver.pc
-%doc README* NEWS examples
+%doc README* NEWS
 
 %if_enabled devel_doc
 %files devel-doc
@@ -128,6 +130,9 @@ xvfb-run %__meson_test -t 2
 %endif
 
 %changelog
+* Thu Sep 12 2024 Yuri N. Sedunov <aris@altlinux.org> 3.50.0-alt1
+- 3.50.0
+
 * Mon Jul 01 2024 Yuri N. Sedunov <aris@altlinux.org> 3.48.2-alt1.1
 - removed typelib(Gtk/GdkX11) dependency to reduce dependencies
   of pure pygobject packages (par exemple, firewalld + python3-module-firewall)

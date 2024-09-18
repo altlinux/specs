@@ -10,10 +10,10 @@
 
 Name: gnome-%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GNOME Health
-License: GPL-3.0
+License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://gitlab.gnome.org/World/Health
 
@@ -52,7 +52,7 @@ A health tracking app for the GNOME desktop.
 %setup -n %_name-%version %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
 %build
@@ -79,6 +79,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Tue Sep 17 2024 Yuri N. Sedunov <aris@altlinux.org> 0.95.0-alt2
+- updated to 0.95.0-39-g01ec691
+
 * Tue Dec 12 2023 Yuri N. Sedunov <aris@altlinux.org> 0.95.0-alt1
 - first build for Sisyphus (0.95.0-16-g99f49a1)
 

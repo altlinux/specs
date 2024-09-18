@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gnome-bluetooth
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define namespace GnomeBluetooth
 %define api_ver 3.0
@@ -14,11 +14,11 @@
 %def_enable check
 
 Name: %_name%api_ver
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: The GNOME Bluetooth Subsystem
-License: GPL-2.0 and LGPL-2.1
+License: GPL-2.0-or-later and LGPL-2.1-or-later
 Group: System/Libraries
 Url: https://wiki.gnome.org/Projects/GnomeBluetooth
 
@@ -31,13 +31,13 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%
 Source: %_name-%version.tar
 %endif
 
-%define gtk_ver 4.10.0
-%define adwaita_ver 1.4
+%define gtk_ver 4.15.2
+%define adwaita_ver 1.6
 %define dbusmock_ver 0.30.0
 %define upower_ver 0.99.14
 
 BuildRequires(pre): rpm-macros-meson rpm-macros-alternatives
-BuildRequires: meson gtk-doc yelp-tools
+BuildRequires: meson yelp-tools
 BuildRequires: libgio-devel libgtk4-devel >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: libudev-devel libnotify-devel
@@ -46,6 +46,7 @@ BuildRequires: pkgconfig(upower-glib) >= %upower_ver libgsound-devel
 BuildRequires(pre): rpm-build-gir
 BuildRequires: gobject-introspection-devel
 %endif
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_check:BuildRequires: bluez dbus python3-module-pygobject3 python3-module-dbus
 BuildRequires: python3-module-dbusmock >= %dbusmock_ver typelib(Gtk) = 4.0}
 
@@ -116,9 +117,9 @@ GObject introspection devel data for the GNOME Bluetooth library
 
 %build
 %meson \
-	%{?_enable_gtk_doc:-Dgtk_doc=true} \
-	%{?_enable_introspection:-Dintrospection=true} \
-	%{?_disable_sendto:-Dsendto=false}
+    %{subst_enable_meson_bool gtk_doc gtk_doc} \
+    %{subst_enable_meson_bool introspection introspection} \
+    %{subst_enable_meson_bool sendto sendto}
 %nil
 %meson_build
 
@@ -179,6 +180,9 @@ dbus-run-session %__meson_test
 %endif
 
 %changelog
+* Thu Sep 12 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Sat Aug 03 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
 - 46.1
 

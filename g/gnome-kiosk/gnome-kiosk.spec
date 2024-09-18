@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define xdg_name org.gnome.Kiosk
 
@@ -23,8 +23,8 @@ Source: %name-%version%beta.tar
 
 %define glib_ver 2.68.0
 %define gtk4_ver 4.0
-%define mutter_api_ver 14
-%define mutter_ver 46
+%define mutter_api_ver 15
+%define mutter_ver 47
 %define ibus_ver 1.5.24
 
 Requires: dconf gnome-settings-daemon
@@ -60,7 +60,7 @@ Summary: Sample Search Appliance Application for GNOME Kiosk
 Group: Graphical desktop/GNOME
 BuildArch: noarch
 Requires: %name = %EVR
-Requires: firefox
+#Requires: firefox
 Requires: gnome-session
 
 %description search-appliance
@@ -109,6 +109,9 @@ sed -i 's|/usr/\(bin/sh\)|\1|' kiosk-script/%name-script
 %_datadir/wayland-sessions/%xdg_name.SearchApp.Session.desktop
 
 %changelog
+* Thu Sep 19 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Mon Mar 18 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 

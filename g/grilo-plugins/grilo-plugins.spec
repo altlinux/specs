@@ -21,7 +21,7 @@
 
 Name: grilo-plugins
 Version: %ver_major.16
-Release: alt2
+Release: alt2.1
 
 Summary: Plugins for the Grilo framework
 Group: Sound
@@ -38,7 +38,7 @@ Source: %name-%version.tar
 %define lua_api_ver 5.4
 
 Requires: grilo-tools >= 0.3.15-alt2
-%{?_enable_tracker3:Requires: tracker-miners3 >= %tracker3_ver}
+%{?_enable_tracker3:Requires: localsearch}
 # chromaprint plugin required
 Requires: gst-plugins-bad1.0 >= 1.20.3-alt2
 %{?_enable_lua:Requires: lua%lua_api_ver}
@@ -62,7 +62,7 @@ BuildRequires: pkgconfig(libdmapsharing-4.0) >= 3.9.12
 %endif
 BuildRequires: libgcrypt-devel
 BuildRequires: libgmime3.0-devel
-%{?_enable_tracker3:BuildRequires: pkgconfig(tracker-sparql-3.0) >= %tracker3_ver tracker3-tests}
+%{?_enable_tracker3:BuildRequires: pkgconfig(tracker-sparql-3.0) >= %tracker3_ver}
 BuildRequires: liboauth-devel
 BuildRequires: libgnome-online-accounts-devel >= 3.18.0
 BuildRequires: libtotem-pl-parser-devel >= 3.4.1
@@ -162,6 +162,9 @@ xvfb-run %__meson_test -t 2
 
 
 %changelog
+* Sat Sep 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.16-alt2.1
+- rebuilt for gnome-47
+
 * Tue Oct 03 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.16-alt2
 - updated to 0.3.16-15-ga72787d3
 - fixed BR

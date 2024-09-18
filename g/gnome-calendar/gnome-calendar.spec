@@ -1,20 +1,22 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Calendar
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
 %def_disable gtk_doc
 
 Name: gnome-calendar
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Calendar application for GNOME
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 Url: https://apps.gnome.org/Calendar
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-calendar.git
 
 %if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
@@ -25,13 +27,13 @@ Source: %name-%version%beta.tar
 BuildRequires(pre): rpm-build-licenses rpm-build-gnome rpm-macros-meson
 
 %define glib_ver 2.68.0
-%define gtk4_ver 4.11.2
+%define gtk4_ver 4.15.2
+%define adwaita_ver 1.6
 %define ical_ver 1.0.1
 %define eds_ver 3.46
 %define gsds_ver 3.21.2
 %define gweather_ver 3.99
 %define geocode_ver 3.26.3
-%define adwaita_ver 1.5
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson yelp-tools /usr/bin/appstreamcli
@@ -83,7 +85,7 @@ This package provides Calendar reference manual.
 %_datadir/glib-2.0/schemas/org.gnome.calendar.enums.xml
 %_iconsdir/hicolor/scalable/apps/*.svg
 %_iconsdir/hicolor/symbolic/apps/*.svg
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc NEWS README.md
 
 %if_enabled gtk_doc
@@ -92,6 +94,9 @@ This package provides Calendar reference manual.
 %endif
 
 %changelog
+* Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Mon Apr 22 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
 - 46.1
 

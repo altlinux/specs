@@ -3,20 +3,19 @@
 %define optflags_lto %nil
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define xdg_name org.gnome.Loupe
 
-%def_enable disable_glycin_sandbox
 %def_enable check
 %def_disable bootstrap
 
 Name: loupe
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Image Viewer
-License: GPL-3.0
+License: GPL-3.0-or-later
 Group: Graphics
 Url: https://apps.gnome.org/Loupe
 
@@ -29,14 +28,14 @@ Source: %name-%version%beta.tar
 %{?_enable_snapshot:Source1: %name-%version-cargo.tar}
 
 %define glib_ver 2.76
-%define gtk_ver 4.13.6
-%define adwaita_ver 1.4
+%define gtk_ver 4.15.3
+%define adwaita_ver 1.6
 %define gweather_ver 4.0.0
 %define lcms2_ver 2.12.0
 %define seccomp_ver 2.5.0
 
 Provides: gnome-image-viewer = %EVR
-Requires: glycin-loaders >= 1.0
+Requires: glycin-loaders >= 1.1.0
 Requires: dconf
 
 BuildRequires(pre): rpm-macros-meson
@@ -62,9 +61,7 @@ cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
-%meson \
-%{subst_enable_meson_bool disable_glycin_sandbox disable-glycin-sandbox}
-%nil
+%meson
 %meson_build
 
 %install
@@ -85,6 +82,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Fri Sep 13 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Wed Apr 10 2024 Yuri N. Sedunov <aris@altlinux.org> 46.2-alt1
 - 46.2
 

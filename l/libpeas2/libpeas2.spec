@@ -15,7 +15,7 @@
 %def_disable demo
 
 Name: %_name%api_ver
-Version: %ver_major.3
+Version: %ver_major.5
 Release: alt1
 
 Summary: A gobject-based plugins engine
@@ -36,7 +36,7 @@ BuildRequires: libgio-devel >= 2.74.0
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-pygobject3-devel >= 3.2.0
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 1.39}
-%{?_enable_gjs:BuildRequires: libgjs-devel >= 1.77.1 libmozjs115-devel gcc-c++}
+%{?_enable_gjs:BuildRequires: libgjs-devel >= 1.77.1 libmozjs128-devel gcc-c++}
 %{?_enable_lua:BuildRequires: liblua5-devel luajit libluajit-devel lgi >= 0.9.0}
 %{?_enable_vala:BuildRequires: vala-tools >= 0.14}
 %{?_enable_gtk_doc:BuildRequires: gi-docgen}
@@ -125,11 +125,11 @@ This package contains %name demonstration programs.
 
 %build
 %meson \
-    %{?_enable_gtk_doc:-Dgtk_doc=true} \
-    %{?_disable_gjs:-Dgjs=false} \
-    %{?_disable_lua:-Dlua51=false} \
-    %{?_enable_vala:-Dvapi=true} \
-    %{?_disable_introspection:-Dintrospection=false}
+    %{subst_enable_meson_bool gtk_doc gtk_doc} \
+    %{subst_enable_meson_bool gjs gjs} \
+    %{subst_enable_meson_bool lua lua51} \
+    %{subst_enable_meson_bool vala vapi} \
+    %{subst_enable_meson_bool introspection introspection}
 %nil
 %meson_build
 
@@ -188,6 +188,9 @@ This package contains %name demonstration programs.
 
 
 %changelog
+* Sat Sep 14 2024 Yuri N. Sedunov <aris@altlinux.org> 2.0.5-alt1
+- 2.0.5
+
 * Thu Jul 04 2024 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt1
 - 2.0.3
 

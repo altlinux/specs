@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name shumate
-%define ver_major 1.2
+%define ver_major 1.3
 %define beta %nil
 %define api_ver_major 1
 %define api_ver 1.0
@@ -15,7 +15,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Library with GTK4 widget to display maps
@@ -30,8 +30,8 @@ Vcs: https://gitlab.gnome.org/GNOME/libshumate.git
 Source: %name-%version.tar
 %endif
 
-%define meson_ver 0.53
-%define glib_ver 2.68
+%define meson_ver 0.55
+%define glib_ver 2.74
 %define gtk_ver 4.5.0
 %define soup3_ver 3.0.0
 
@@ -104,7 +104,7 @@ demonstrates %name.
 
 %build
 %meson \
-    %{?_enable_gtk_doc:-Dgtk_doc=true} \
+    %{subst_enable_meson_bool gtk_doc gtk_doc} \
     %{subst_enable_meson_bool vector_renderer vector_renderer} \
     %{subst_enable_meson_bool demos demos}
 %nil
@@ -147,6 +147,12 @@ xvfb-run -s -noreset %__meson_test -v
 %endif
 
 %changelog
+* Fri Sep 13 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
+* Sat Aug 31 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt1.rc
+- 1.3.rc
+
 * Fri Aug 02 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1
 - 1.2.3
 

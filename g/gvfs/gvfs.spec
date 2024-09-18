@@ -1,9 +1,7 @@
 %def_disable snapshot
 
-%define ver_major 1.54
+%define ver_major 1.56
 
-%def_disable gdu
-%def_disable gtk_doc
 # obexftp support removed since 3.15.91
 %def_disable obexftp
 %def_enable afc
@@ -35,7 +33,7 @@
 %def_disable check
 
 Name: gvfs
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -53,9 +51,6 @@ Source: %name-%version.tar
 # https://mail.gnome.org/archives/gvfs-list/2013-May/msg00014.html
 Patch1: gvfs-1.19.90-alt-1-logind-state.patch
 
-%{?_enable_gdu:Obsoletes: gnome-mount <= 0.8}
-%{?_enable_gdu:Obsoletes: gnome-mount-nautilus-properties <= 0.8}
-
 # obsolete by %_bindir/gio from libgio
 Obsoletes: %name-utils < 1.31
 Obsoletes: bash-completion-gvfs < 1.31
@@ -66,7 +61,6 @@ Obsoletes: bash-completion-gvfs < 1.31
 %define avahi_ver 0.6
 %define libcdio_paranoia_ver 10.2
 %define bluez_ver 4.0
-%define gdu_ver 3.3.91
 %define udisks_ver 1.99
 %define mtp_ver 1.1.12
 %define goa_ver 3.17.1
@@ -82,7 +76,6 @@ Obsoletes: bash-completion-gvfs < 1.31
 Requires: dconf
 Requires: gsettings-desktop-schemas >= %gsds_ver
 %{?_enable_fuse:Requires: fuse-gvfs}
-%{?_enable_gdu:Requires: gnome-disk-utility >= %gdu_ver}
 %{?_enable_udisks2:Requires: udisks2}
 
 BuildRequires(pre): meson rpm-build-gnome rpm-build-python3
@@ -90,7 +83,7 @@ BuildRequires(pre): meson rpm-build-gnome rpm-build-python3
 
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
-BuildRequires: libdbus-devel gtk-doc
+BuildRequires: libdbus-devel
 BuildRequires: openssh-clients
 BuildRequires: libgudev-devel >= %gudev_ver
 BuildRequires: pkgconfig(libgcrypt) pkgconfig(gcr-4)
@@ -102,7 +95,6 @@ BuildRequires: pkgconfig(libgcrypt) pkgconfig(gcr-4)
 %{?_enable_cdda:BuildRequires: libcdio-paranoia-devel >= %libcdio_paranoia_ver}
 %{?_enable_fuse:BuildRequires: libfuse3-devel}
 %{?_enable_gcr:BuildRequires: gcr-libs-devel}
-%{?_enable_gdu:BuildRequires: libgdu-devel >= %gdu_ver libgudev-devel}
 %{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver}
 %{?_enable_gphoto2:BuildRequires: libgphoto2-devel >= %gphoto_ver}
 %{?_enable_http:BuildRequires: libsoup3.0-devel >= %libsoup3_ver libxml2-devel}
@@ -117,6 +109,7 @@ BuildRequires: pkgconfig(libgcrypt) pkgconfig(gcr-4)
 %{?_enable_admin:BuildRequires: libpolkit-devel libcap-devel}
 %{?_enable_libusb:BuildRequires: libusb-devel >= %libusb_ver}
 %{?_enable_onedrive:BuildRequires: libmsgraph-devel}
+%{?_enable_man:BuildRequires: xsltproc docbook-dtds docbook-style-xsl}
 
 BuildRequires: desktop-file-utils
 BuildRequires: gcc-c++ perl-XML-Parser
@@ -126,12 +119,6 @@ BuildRequires: /proc dbus-tools-gui python3 python3-module-pygobject3 python-mod
 BuildRequires:  openssh-server apache2 samba genisoimage
 # and more ...
 %endif
-
-%package devel
-Summary: Libraries and include files for developing gvfs applications
-Group: Development/GNOME and GTK+
-BuildArch: noarch
-Requires: %name = %EVR
 
 %package -n fuse-%name
 Summary: gvfs fuse gateway
@@ -246,14 +233,6 @@ This package contains the gvfs server, libgvfscommon library, gio
 modules and backends for gvfs: archive, computer, dav, ftp,
 gphoto2, http, localtest, network, sftp and trash.
 
-%description devel
-gvfs is a userspace virtual filesystem where mount runs as a separate
-processes which you talk to via dbus. It also contains a gio module that
-seamlessly adds gvfs support to all applications using the gio API. It also
-supports exposing the gvfs mounts to non-gio applications using fuse.
-
-This package contains the libgvfscommon development files.
-
 %description -n fuse-%name
 fuse-gvfs is a bridge between the gvfs filesystem design and fuse, a
 program to mount user-space filesystems.
@@ -323,30 +302,28 @@ The %name-tests package provides programms for testing GVFS.
 
 %build
 %meson \
-        %{?_enable_http:-Dhttp=true} \
-        %{?_enable_dnssd:-Ddnssd=true} \
-        %{?_enable_cdda:-Dcdda=true} \
-        %{?_enable_fuse:-Dfuse=true} \
-        %{?_enable_gphoto2:-Dgphoto2=true} \
-        %{?_enable_keyring:-Dkeyring=true} \
-        %{?_enable_samba:-Dsmb=true} \
-        %{?_enable_archive:-Darchive=true} \
-        %{?_disable_afc:-Dafc=false} \
-        %{?_enable_afp:-Dafp=true} \
-        %{?_enable_gdu:-Dgdu=true} \
-        %{?_enable_udisks2:-Dudisks2=true} \
-        %{?_enable_libmtp:-Dmtp=true} \
-        %{?_enable_bluray:-Dbluray=true} \
-        %{?_enable_nfs:-Dnfs=true} \
-        %{?_enable_google:-Dgoogle=true} \
-        %{?_enable_libusb:-Dlibusb=true} \
-        %{?_enable_onedrive:-Donedrive=true} \
-        %{?_enable_wsdd:-Dwsdd=true} \
-        %{?_enable_systemd_login:-Dlogind=true} \
-        %{?_enable_gtk_doc:-Dgtk_doc=true} \
-        %{?_enable_man:-Dman=true} \
-        %{?_enable_installed_tests:-Dinstalled_tests=true} \
-        %{?_enable_devel_utils:-Ddevel_utils=true}
+    %{subst_enable_meson_bool http http} \
+    %{subst_enable_meson_bool dnssd dnssd} \
+    %{subst_enable_meson_bool cdda cdda} \
+    %{subst_enable_meson_bool fuse fuse} \
+    %{subst_enable_meson_bool gphoto2 gphoto2} \
+    %{subst_enable_meson_bool keyring keyring} \
+    %{subst_enable_meson_bool samba smb} \
+    %{subst_enable_meson_bool archive archive} \
+    %{subst_enable_meson_bool afc afc} \
+    %{subst_enable_meson_bool afp afp} \
+    %{subst_enable_meson_bool udisks2 udisks2} \
+    %{subst_enable_meson_bool libmtp mtp} \
+    %{subst_enable_meson_bool bluray bluray} \
+    %{subst_enable_meson_bool nfs nfs} \
+    %{subst_enable_meson_bool google google} \
+    %{subst_enable_meson_bool libusb libusb} \
+    %{subst_enable_meson_bool onedrive onedrive} \
+    %{subst_enable_meson_bool wsdd wsdd} \
+    %{subst_enable_meson_bool systemd_login logind} \
+    %{subst_enable_meson_bool man man} \
+    %{subst_enable_meson_bool installed_tests installed_tests} \
+    %{subst_enable_meson_bool devel_utils devel_utils}
 %nil
 %meson_build
 
@@ -379,7 +356,6 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 # monitors
 %_libexecdir/gvfs-gphoto2-volume-monitor
 %_prefix/lib/systemd/user/gvfs-gphoto2-volume-monitor.service
-%{?_enable_gdu:%_libexecdir/gvfs-gdu-volume-monitor}
 %{?_enable_udisks2:%_libexecdir/gvfs-udisks2-volume-monitor}
 %{?_enable_udisks2:%_prefix/lib/systemd/user/gvfs-udisks2-volume-monitor.service}
 %_datadir/dbus-1/services/*
@@ -393,7 +369,6 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 %dir %_datadir/%name
 %dir %_datadir/%name/remote-volume-monitors
 %_datadir/%name/remote-volume-monitors/gphoto2.monitor
-%{?_enable_gdu:%_datadir/%name/remote-volume-monitors/gdu.monitor}
 %{?_enable_udisks2:%_datadir/%name/remote-volume-monitors/udisks2.monitor}
 
 %_datadir/%name/mounts
@@ -469,9 +444,6 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
     %exclude %_libexecdir/gvfsd-wsdd
     %exclude %_datadir/%name/mounts/wsdd.mount
 %endif
-
-%files devel
-%_includedir/*
 
 %files -n fuse-%name
 %_libexecdir/gvfsd-fuse
@@ -586,6 +558,9 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %changelog
+* Fri Sep 13 2024 Yuri N. Sedunov <aris@altlinux.org> 1.56.0-alt1
+- 1.56.0
+
 * Fri Jun 28 2024 Yuri N. Sedunov <aris@altlinux.org> 1.54.2-alt1
 - 1.54.2
 

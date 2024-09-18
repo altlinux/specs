@@ -1,7 +1,8 @@
 %def_disable bootstrap
 
 %define bname librsvg
-%define ver_major 2.58
+%define ver_major 2.59
+%define namespace Rsvg
 %define api_ver 2.0
 %define gtk_api_ver 2.0
 %define gtk3_api_ver 3.0
@@ -19,7 +20,7 @@
 %def_disable check
 
 Name: %bname
-Version: %ver_major.91
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -32,9 +33,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.
 # since 2.55 no longer contains vendored Rust dependencies
 %{?_disable_bootstrap:Source1: %name-%version-cargo.tar}
 
-# From configure.ac
-# since 2.53.1 rust-1.56 required
-%define rust_ver 1.70.0
+%define rust_ver 1.77.2
+%define cargo_c_ver 0.9.19
 %define glib_ver 2.52.0
 %define pango_ver 1.46
 %define gtk3_ver 3.10.0
@@ -45,7 +45,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.
 %define harfbuzz_ver 2.0.0
 
 BuildRequires: rpm-macros-meson %{?_enable_introspection:rpm-build-gir} %{?_enable_vala:rpm-build-vala}
-BuildRequires: meson /proc rust >= %rust_ver rust-cargo rust-cargo-c
+BuildRequires: meson /proc rust >= %rust_ver rust-cargo rust-cargo-c >= %cargo_c_ver
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libpango-devel >= %pango_ver
 BuildRequires: libgtk+3-devel >= %gtk3_ver
@@ -192,10 +192,10 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %if_enabled introspection
 %files gir
-%_typelibdir/Rsvg-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Rsvg-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 %if_enabled installed_tests
@@ -205,6 +205,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %endif
 
 %changelog
+* Fri Sep 13 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.59.0-alt1
+- 2.59.0
+
 * Sat Apr 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.58.91-alt1
 - 2.58.91
 

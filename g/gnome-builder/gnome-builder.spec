@@ -2,27 +2,22 @@
 %define optflags_lto %nil
 
 %define xdg_name org.gnome.Builder
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define api_ver %ver_major.0
 
-%def_with clang
-%def_with sysprof
-%def_with flatpak
-%def_without docs
-%def_with help
-%def_with autotools
+%def_enable clang
+%def_enable sysprof
+%def_enable flatpak
+%def_disable docs
+%def_enable help
+%def_enable autotools
 # disabled by default
-%def_with vala
-# Rust Language Server integration plugin (disabled by default)
-%def_without rls
-# SDK for Language Server Protocol (LSP)
-# https://gitlab.gnome.org/esodan/gvls.git
-%def_without gvls
+%def_enable vala
 
 Name: gnome-builder
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Builder - Develop software for GNOME
@@ -42,10 +37,10 @@ Source1: %name-ru.po
 
 %set_typelibdir %_libdir/%name/girepository-1.0
 
-%define glib_ver 2.75.0
-%define gtk_ver 4.10
-%define adwaita_ver 1.5
-%define panel_ver 1.4
+%define glib_ver 2.76.0
+%define gtk_ver 4.16
+%define adwaita_ver 1.6
+%define panel_ver 1.7
 %define gtksourceview_api_ver 5
 %define gtksourceview_ver 5.8
 %define git2_ver 1.1.0
@@ -55,17 +50,16 @@ Source1: %name-ru.po
 %define sysprof_ver 45
 %define vte_ver 0.70
 %define gtkmm_ver 3.20
-%define gspell_ver 1.8.0
 %define peas_ver 2.0.0
 %define json_glib_ver 1.2.0
-%define template_glib_ver 3.36
+%define template_glib_ver 3.36.1
 %define soup3_ver 3.0
 %define webkit_api_ver 6.0
 %define webkit_ver 2.40.0
 %define portal_ver 0.5
 %define gi_docgen_ver 2021.9
 %define jsonrpc_ver 3.43.0
-%define dex_ver 0.4.0
+%define dex_ver 0.7
 
 %add_python3_path %_libdir/%name/plugins
 %add_findreq_skiplist %_datadir/%name/plugins/*_templates/resources/*/*.py
@@ -99,7 +93,7 @@ BuildRequires: gobject-introspection-devel libgtk4-gir-devel libpanel-gir-devel 
 BuildRequires: libgtksourceview%gtksourceview_api_ver-gir-devel libgit2-glib-gir-devel libpeas2-gir-devel
 BuildRequires: libjson-glib-gir-devel libsoup3.0-gir-devel >= %soup3_ver libwebkitgtk%webkit_api_ver-gir-devel
 BuildRequires: libvala-devel >= %vala_ver vala-tools
-BuildRequires: libgspell-devel >= %gspell_ver libenchant2-devel
+BuildRequires: pkgconfig(libspelling-1) libenchant2-devel
 BuildRequires: libtemplate-glib-devel >= %template_glib_ver libdspy-devel libeditorconfig-devel
 BuildRequires: libjsonrpc-glib-devel >= %jsonrpc_ver
 BuildRequires: libtemplate-glib-gir-devel libjsonrpc-glib-gir-devel
@@ -108,11 +102,12 @@ BuildRequires: libgtkmm4-devel >= %gtkmm_ver
 BuildRequires: cmark-devel
 BuildRequires: pkgconfig(libportal-gtk4)
 BuildRequires: libdex-devel >= %dex_ver
-%{?_with_clang:BuildRequires: llvm-devel clang-devel}
-%{?_with_docs:BuildRequires: gi-docgen >= %gi_docgen_ver}
-%{?_with_help:BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme}
-%{?_with_flatpak:BuildRequires: libflatpak-devel libostree-devel libportal-devel >= %portal_ver}
-%{?_with_sysprof:BuildRequires: sysprof-devel >= %sysprof_ver}
+BuildRequires: pkgconfig(gom-1.0)
+%{?_enable_clang:BuildRequires: llvm-devel clang-devel}
+%{?_enable_docs:BuildRequires: gi-docgen >= %gi_docgen_ver}
+%{?_enable_help:BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme}
+%{?_enable_flatpak:BuildRequires: libflatpak-devel libostree-devel libportal-devel >= %portal_ver}
+%{?_enable_sysprof:BuildRequires: sysprof-devel >= %sysprof_ver}
 
 %description
 Builder attempts to be an IDE for writing software for GNOME. It does not
@@ -141,14 +136,12 @@ This package provides files for Gnome Builder to work with Clang/LLVW.
 
 %build
 %meson \
-	%{?_without_clang:-Dplugin_clang=false} \
-	%{?_without_sysprof:-Dplugin_sysprof=false} \
-	%{?_with_docs:-Ddocs=true} \
-	%{?_with_help:-Dhelp=true} \
-	%{?_without_flatpak:-Dplugin_flatpak=false} \
-	%{?_with_autotools:-Dplugin_autotools=true} \
-	%{?_with_rls:-Dplugin_rls=true} \
-	%{?_with_gvls:-Dplugin_gvls=true}
+    %{subst_enable_meson_bool clang plugin_clang} \
+    %{subst_enable_meson_bool sysprof plugin_sysprof} \
+    %{subst_enable_meson_bool docs docs} \
+    %{subst_enable_meson_bool help help} \
+    %{subst_enable_meson_bool flatpak plugin_flatpak} \
+    %{subst_enable_meson_bool autotools plugin_autotools} \
 %nil
 %meson_build -v
 
@@ -165,11 +158,9 @@ This package provides files for Gnome Builder to work with Clang/LLVW.
 %_libdir/%name/girepository-1.0/Ide-%ver_major.typelib
 %_includedir/%name-%ver_major/
 %_pkgconfigdir/%name-%version.pc
-%python3_sitelibdir_noarch/gi/overrides/Ide.py
-%python3_sitelibdir_noarch/gi/overrides/__pycache__/
 %doc README* AUTHORS NEWS
 
-%if_with clang
+%if_enabled clang
 %files clang
 %_libexecdir/%name-clang
 %endif
@@ -200,10 +191,13 @@ This package provides files for Gnome Builder to work with Clang/LLVW.
 %_iconsdir/hicolor/*/*/*.*
 %_datadir/metainfo/%xdg_name.appdata.xml
 
-%{?_with_docs:%_datadir/doc/libide/}
-%{?_with_help:%_datadir/doc/%name/}
+%{?_enable_docs:%_datadir/doc/libide/}
+%{?_enable_help:%_datadir/doc/%name/}
 
 %changelog
+* Sat Sep 14 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Thu Jul 11 2024 Yuri N. Sedunov <aris@altlinux.org> 46.3-alt1
 - 46.3
 

@@ -1,6 +1,7 @@
 %define _name manette
 %define ver_major 0.2
 %define api_ver 0.2
+%define namespace Manette
 %define _libexecdir %_prefix/libexec
 
 %def_enable introspection
@@ -8,7 +9,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.7
+Version: %ver_major.9
 Release: alt1
 
 Summary: A simple GObject game controller library
@@ -36,7 +37,7 @@ controllers.
 %package devel
 Summary: libinput development package
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains development libraries and header files
@@ -45,7 +46,7 @@ that are needed to write applications that use %name.
 %package gir
 Summary: GObject introspection data for the Manette library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the Manette library.
@@ -54,8 +55,8 @@ GObject introspection data for the Manette library.
 Summary: GObject introspection devel data for the Manette library
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the Manette library.
@@ -63,7 +64,7 @@ GObject introspection devel data for the Manette library.
 %package tools
 Summary: tools for %name
 Group: Development/Tools
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tools
 This package contains commandline tools from %name package.
@@ -73,8 +74,8 @@ This package contains commandline tools from %name package.
 
 %build
 %meson \
-%{?_disable_introspection:-Dintrospection=flase} \
-%{?_disable_vala:-Dvapi=flase}
+    %{subst_enable_meson_bool introspection introspection} \
+    %{subst_enable_meson_bool vala vapi}
 %nil
 %meson_build
 
@@ -82,8 +83,7 @@ This package contains commandline tools from %name package.
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 %_libdir/%name-%api_ver.so.*
@@ -97,16 +97,19 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 %if_enabled introspection
 %files gir
-%_typelibdir/Manette-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Manette-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 %files tools
 %_bindir/%_name-test
 
 %changelog
+* Fri Sep 13 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.9-alt1
+- 0.2.9
+
 * Fri Feb 09 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.7-alt1
 - 0.2.7
 

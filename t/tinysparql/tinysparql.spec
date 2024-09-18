@@ -1,37 +1,38 @@
 %def_disable snapshot
-%define _name tracker
-%define ver_major 3.7
+
+%define _name tinysparql
+%define old_name tracker
+%define ver_major 3.8
 %define beta %nil
+%define namespace Tsparql
+%define old_namespace Tracker
 %define api_ver_major 3
 %define api_ver %{api_ver_major}.0
 %define gst_api_ver 1.0
-
-# since 1.0.3 (see https://bugzilla.gnome.org/show_bug.cgi?id=733857)
-%set_verify_elf_method unresolved=relaxed
 
 %def_with bootstrap
 %def_enable introspection
 %def_enable upower
 %def_enable stemmer
-%def_enable soup2
-%def_enable soup3
 %def_enable docs
 %def_enable man
-%def_enable test_utils
+%def_disable test_utils
 
 # Unicode support library? (unistring|icu)
 %define unicode_support icu
 
 %define _libexecdir %_prefix/libexec
 
-Name: %_name%api_ver_major
-Version: %ver_major.3
+Name: %_name
+Version: %ver_major.0
 Release: alt1%beta
 
-Summary: Tracker is a powerfull desktop-oriented search tool and indexer
-License: GPL-2.0 and LGPL-2.1-or-later
-Group: Office
+Summary: Low-footprint RDF triple store with SPARQL 1.1 interface
+License: GPL-2.0-or-later and LGPL-2.0-or-later
+Group: Databases
 Url: http://wiki.gnome.org/Projects/Tracker
+
+Vcs: https://gitlab.gnome.org/GNOME/tinysparql.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%beta.tar.xz
@@ -39,31 +40,28 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%
 Source: %_name-%version%beta.tar
 %endif
 
-Requires: lib%name = %EVR
-Requires: dconf
-%{?_without_bootstrap:Requires: %_name-miners%api_ver_major >= %ver_major}
-
 %define dbus_ver 1.3.1
 %define glib_ver 2.52.0
 %define pango_ver 1.0.0
 %define upower_ver 0.9.0
 %define sqlite_ver 3.20.1-alt2
-%define soup_ver 2.40.0
 %define soup3_ver 2.99.2
 
+Requires: lib%name = %EVR
+Requires: dconf
 Requires: libsqlite3 >= %sqlite_ver
+%{?_without_bootstrap:Requires: localsearch%api_ver_major >= %ver_major}
 
-BuildRequires(pre): rpm-macros-meson rpm-build-vala rpm-build-gnome rpm-build-gir rpm-build-systemd
-%{?_enable_test_utils:
-BuildRequires(pre): rpm-build-python3 python3-module-pygobject3
-%add_python3_path %_libdir/%_name-%api_ver/trackertestutils
-}
+Obsoletes: %old_name%api_ver_major < 3.8
+Provides: %old_name%api_ver_major = %EVR
+
+BuildRequires(pre): rpm-macros-meson rpm-build-vala rpm-build-gir rpm-build-systemd rpm-build-python3
+BuildRequires: python3-module-pygobject3
 BuildRequires: /proc meson gcc-c++ vala-tools
 BuildRequires: libxml2-devel libicu-devel libuuid-devel
 BuildRequires: libdbus-devel >= %dbus_ver
 BuildRequires: libgio-devel >= %glib_ver libpango-devel >= %pango_ver
-%{?_enable_soup2:BuildRequires: libsoup-devel >= %soup_ver}
-%{?_enable_soup3:BuildRequires: libsoup3.0-devel >= %soup3_ver}
+BuildRequires: libsoup3.0-devel >= %soup3_ver
 BuildRequires: libjson-glib-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: pkgconfig(avahi-glib) pkgconfig(avahi-client)
@@ -76,24 +74,30 @@ BuildRequires: bash-completion
 %{?_enable_man:BuildRequires: asciidoc-a2x xsltproc}
 
 %description
-Tracker is a powerful desktop-neutral first class object
-database, tag/metadata database, search tool and indexer.
+The TinySPARQL library offers a complete RDF triplestore with SPARQL 1.1
+interface and a minimal footprint. It allows creating local databases in
+memory or the filesystem, and accessing/creating endpoints for federated
+queries.
 
 %package devel
-Summary: Headers for developing programs that will use %name-miner
+Summary: Headers for developing programs that will use LocalSearch
+License: LGPL-2.0-or-later
 Group: Development/Other
 Requires: lib%name = %EVR
 Requires: %name = %EVR
-Obsoletes: lib%name-client-devel
-License: LGPL-2.1
 
 %description devel
-Tracker is a powerfull desktop-oriented search tool and indexer.
-This package contains header files for development  and link applications with libtracker-miner.
+The TinySPARQL library offers a complete RDF triplestore with SPARQL 1.1
+interface and a minimal footprint. It allows creating local databases in
+memory or the filesystem, and accessing/creating endpoints for federated
+queries.
+
+This package contains header files for development and link applications
+with LocalSearch.
 
 %package devel-doc
 Summary: Development documentation for %name
-Group: Development/GNOME and GTK+
+Group: Development/Documentation
 Conflicts: %name < %version-%release
 BuildArch: noarch
 
@@ -101,82 +105,103 @@ BuildArch: noarch
 This package provides development documentation for %name.
 
 %package -n lib%name
-Summary: Tracker shared libraries
+Summary: TinySPARQL shared libraries
 Group: System/Libraries
-Conflicts: %name < %version-%release
 
 %description -n lib%name
-This package contains shred Tracker libraries for applications.
+This package contains shared TinySPARQL libraries for applications.
 
 %package -n lib%name-gir
-Summary: GObject introspection data for the Tracker library
+Summary: GObject introspection data for the TinySPARQL library
 Group: System/Libraries
 Requires: lib%name = %EVR
 
 %description -n lib%name-gir
-GObject introspection data for the Tracker library
+GObject introspection data for the TinySPARQL library
 
 %package -n lib%name-gir-devel
-Summary: GObject introspection devel data for the Tracker library
+Summary: GObject introspection devel data for the TinySPARQL library
 Group: System/Libraries
 BuildArch: noarch
 Requires: lib%name-gir = %EVR
-Provides: gir(Tracker) = %api_ver
 
 %description -n lib%name-gir-devel
-GObject introspection devel data for the Tracker library
+GObject introspection devel data for the TinySPARQL library
 
 %package tests
-Summary: Tests for Tracker search tool
+Summary: Tests for TinySPARQL search tool
 Group: Development/Other
 Requires: %name = %EVR
 Provides: tracker-sandbox %name-sandbox
 
 %description tests
 This package provides tests programs that can be used to verify
-the functionality of the installed Tracker.
+the functionality of the installed TinySPARQL.
+
+%package -n lib%old_name%api_ver_major
+Summary: Tracker shared libraries
+Group: System/Libraries
+Requires: lib%name = %EVR
+
+%description -n lib%old_name%api_ver_major
+This package contains shared Tracker libraries for applications.
+
+%package -n %old_name%api_ver_major-devel
+Summary: Headers for developing programs that will use Tracker-SPARQL
+License: LGPL-2.0-or-later
+Group: Development/Other
+Requires: lib%old_name%api_ver_major = %EVR
+Requires: %name-devel = %EVR
+
+%description -n %old_name%api_ver_major-devel
+Tracker is a powerfull desktop-oriented search tool and indexer.
+
+This package contains header files for development and link applications
+with libtracker-sparql.
+
+%package -n lib%old_name%api_ver_major-gir
+Summary: GObject introspection data for the Tracker library
+Group: System/Libraries
+Requires: lib%old_name%api_ver_major = %EVR
+
+%description -n lib%old_name%api_ver_major-gir
+GObject introspection data for the Tracker library.
+
+%package -n lib%old_name%api_ver_major-gir-devel
+Summary: GObject introspection devel data for the Tracker library
+Group: System/Libraries
+BuildArch: noarch
+Requires: %old_name%api_ver_major-devel = %EVR
+Requires: lib%old_name%api_ver_major-gir = %EVR
+Provides: gir(%old_namespace) = %api_ver
+
+%description -n lib%old_name%api_ver_major-gir-devel
+GObject introspection devel data for the Tracker library.
 
 %prep
 %setup -n %_name-%version%beta
-#fixed install_rpath for tracker, tracker-store binaries
-sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/*/meson.build
-
 sed -i 's|#!.*/bin/env python3|#!/usr/bin/python3|' docs/reference/libtracker-sparql/*.py
 
 %build
 %meson \
-	%{?_disable_soup3:-Dsoup='soup2'} \
 	-Dunicode_support=%unicode_support \
-	%{?_enable_stemmer:-Dstemmer=enabled} \
-	%{?_disable_docs:-Ddocs=false} \
-	%{?_disable_man:-Dman=false} \
-	%{?_disable_test_utils:-Dtest_utils=false} \
-	-Dtest_utils_dir='%_libdir/%_name-%api_ver'
+	%{subst_enable_meson_feature stemmer stemmer} \
+	%{subst_enable_meson_bool docs docs} \
+	%{subst_enable_meson_bool man man}
 %nil
 %meson_build
 
 %install
 %meson_install
-%find_lang %name
+%find_lang --output=%name.lang %{name}%api_ver_major
 
 %files -f %name.lang
 %_bindir/%name
-%_bindir/%name-endpoint
-%_bindir/%name-export
-%_bindir/%name-help
-%_bindir/%name-import
-%_bindir/%name-sparql
-%_bindir/%name-sql
 %dir %_libdir/%_name-%api_ver
 %_libexecdir/*
-%dir %_datadir/%name
-%dir %_datadir/%name/commands
-%_datadir/%name/commands/%_name-endpoint.desktop
-%_datadir/%name/commands/%_name-export.desktop
-%_datadir/%name/commands/%_name-help.desktop
-%_datadir/%name/commands/%_name-import.desktop
-%_datadir/%name/commands/%_name-sparql.desktop
-%_datadir/%name/commands/%_name-sql.desktop
+%dir %_libdir/%name-%api_ver
+%_libdir/%name-%api_ver/libtracker-http-soup3.so
+%_libdir/%name-%api_ver/libtracker-parser-libicu.so
 %_datadir/bash-completion/completions/%name
 %_userunitdir/%_name-xdg-portal-%api_ver_major.service
 %_datadir/dbus-1/services/org.freedesktop.portal.Tracker.service
@@ -185,42 +210,60 @@ sed -i 's|#!.*/bin/env python3|#!/usr/bin/python3|' docs/reference/libtracker-sp
 %_man1dir/%name-endpoint.*
 %_man1dir/%name-export.*
 %_man1dir/%name-import.*
-%_man1dir/%name-sparql.*
+%_man1dir/%name-query.*
 %_man1dir/%name-sql.*
+%_man1dir/%name-introspect.*
 %endif
 %doc AUTHORS NEWS README*
 
 %files -n lib%name
-%_libdir/*.so.*
-%_libdir/%_name-%api_ver/lib%_name-parser-libicu.so
-%{?_enable_soup2:%_libdir/%_name-%api_ver/lib%_name-http-soup2.so}
-%{?_enable_soup3:%_libdir/%_name-%api_ver/lib%_name-http-soup3.so}
+%_libdir/lib%name-%api_ver.so.*
+
+%files -n lib%old_name%api_ver_major
+%_libdir/lib%old_name-sparql-%api_ver.so.*
 
 %files devel
 %_includedir/%_name-%api_ver/
-%_pkgconfigdir/*.pc
-%_libdir/*.so
-%_vapidir/*
+%exclude %_includedir/%_name-%api_ver/lib%old_name-sparql
+%_libdir/lib%name-%api_ver.so
+%_pkgconfigdir/%name-%api_ver.pc
+%_vapidir/%name-%api_ver.*
+
+%files -n %old_name%api_ver_major-devel
+%_includedir/%_name-%api_ver/lib%old_name-sparql
+%_libdir/lib%old_name-sparql-%api_ver.so
+%_pkgconfigdir/%old_name-sparql-%api_ver.pc
+%_vapidir/%old_name-sparql-%api_ver.*
 
 %if_enabled docs
 %files devel-doc
-%_datadir/doc/Tracker-%api_ver
+%_datadir/doc/%namespace-%api_ver
 %endif
 
 %if_enabled introspection
 %files -n lib%name-gir
-%_typelibdir/Tracker-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
+
+%files -n lib%old_name%api_ver_major-gir
+%_typelibdir/%old_namespace-%api_ver.typelib
 
 %files -n lib%name-gir-devel
-%_girdir/Tracker-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
+
+%files -n lib%old_name%api_ver_major-gir-devel
+%_girdir/%old_namespace-%api_ver.gir
 %endif
 
 %if_enabled test_utils
 %files tests
-%_libdir/%_name-%api_ver/trackertestutils/
+#%_libdir/%_name-%api_ver/trackertestutils/
 %endif
 
 %changelog
+* Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+- tracker -> tinysparql
+
 * Thu May 02 2024 Yuri N. Sedunov <aris@altlinux.org> 3.7.3-alt1
 - 3.7.3
 

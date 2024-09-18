@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.80
+%define ver_major 1.82
 %define api_ver 1.0
 %define gir_api_ver 1.0
 %def_enable doctool
@@ -12,7 +12,7 @@
 %def_enable gtk_doc
 
 Name: gobject-introspection
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Introspection system for GObject-based libraries
@@ -33,10 +33,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 #https://bugzilla.altlinux.org/38965
 # python3(pkgconfig) provided by giscanner/pkgconfig.py
 %filter_from_provides /python3(pkgconfig)/d
-%add_python3_req_skip distutils.msvccompiler
 %filter_from_requires /python3(distutils.*)/d
 
-%define glib_ver 2.79.1
+%define glib_ver 2.82.0
 %define python_ver 3.8
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
@@ -111,8 +110,8 @@ gobject-introspection.
 %build
 %add_optflags %(getconf LFS_CFLAGS)
 %meson \
-	%{?_enable_doctool:-Ddoctool=enabled} \
-	%{?_enable_gtk_doc:-Dgtk_doc=true} \
+	%{subst_enable_meson_feature doctool doctool} \
+	%{subst_enable_meson_bool gtk_doc gtk_doc} \
 	-Dpython=%__python3
 %meson_build
 
@@ -170,6 +169,9 @@ gobject-introspection.
 %endif
 
 %changelog
+* Fri Sep 13 2024 Yuri N. Sedunov <aris@altlinux.org> 1.82.0-alt1
+- 1.82.0
+
 * Mon Apr 01 2024 Yuri N. Sedunov <aris@altlinux.org> 1.80.1-alt1
 - 1.80.1
 

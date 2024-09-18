@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define api_ver 6
 %define service_ver 3
@@ -10,7 +10,7 @@
 %define xdg_name org.gnome.Sysprof
 %define _libexecdir %_prefix/libexec
 
-%def_with sysprofd
+%def_enable sysprofd
 %def_enable gtk
 %ifnarch %e2k
 %def_enable libunwind
@@ -22,7 +22,7 @@ Release: alt1%beta
 
 Summary: Sysprof kernel based performance profiler for Linux
 Group: Development/Tools
-License: GPL-3.0
+License: GPL-3.0-or-later
 Url: http://sysprof.com
 
 %if_disabled snapshot
@@ -31,10 +31,11 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Source: %name-%version%beta.tar
 %endif
 
-%define glib_ver 2.76
-%define gtk_ver 4.10
-%define dex_ver 0.3
-%define panel_ver 1.4
+%define glib_ver 2.80
+%define gtk_ver 4.15.2
+%define adw_ver 1.6
+%define dex_ver 0.6
+%define panel_ver 1.7
 %define systemd_ver 222
 %define polkit_ver 0.105
 
@@ -44,8 +45,8 @@ BuildRequires: glib2-devel >= %glib_ver libjson-glib-devel
 BuildRequires: libdex-devel >= %dex_ver
 BuildRequires: libpanel-devel >= %panel_ver
 BuildRequires: gobject-introspection-devel
-%{?_enable_gtk:BuildRequires: libgtk4-devel >= %gtk_ver pkgconfig(libadwaita-1)}
-%{?_with_sysprofd:BuildRequires: pkgconfig(systemd) libpolkit-devel >= %polkit_ver}
+%{?_enable_gtk:BuildRequires: libgtk4-devel >= %gtk_ver pkgconfig(libadwaita-1) >= %adw_ver}
+%{?_enable_sysprofd:BuildRequires: pkgconfig(systemd) libpolkit-devel >= %polkit_ver}
 %{?_enable_libunwind:BuildRequires: libunwind-devel}
 
 %description
@@ -67,8 +68,8 @@ developing applications that use GtkGHex library.
 
 %build
 %meson \
-	%{?_enable_gtk:-Dgtk=true} \
-	%{?_with_sysprofd:-Dsysprofd=bundled}
+    %{subst_enable_meson_bool gtk gtk} \
+    %{?_enable_sysprofd:-Dsysprofd=bundled}
 %meson_build
 
 %install
@@ -87,7 +88,7 @@ developing applications that use GtkGHex library.
 %_libdir/lib%name-speedtrack-%api_ver.so
 %_libdir/lib%name-tracer-%api_ver.so
 
-%if_with sysprofd
+%if_enabled sysprofd
 %_libexecdir/sysprofd
 %_unitdir/sysprof3.service
 %_datadir/dbus-1/system-services/%{xdg_name}%{service_ver}.service
@@ -111,6 +112,9 @@ developing applications that use GtkGHex library.
 %_pkgconfigdir/%name-capture-%capture_ver.pc
 
 %changelog
+* Sat Sep 14 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Sat Mar 16 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 

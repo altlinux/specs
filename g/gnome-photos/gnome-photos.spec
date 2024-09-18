@@ -11,7 +11,7 @@
 
 Name: gnome-photos
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Photos - access, organize and share your photos on GNOME
 License: GPL-2.0-or-later
@@ -91,6 +91,9 @@ rm -rf %buildroot/%_datadir/doc/%name
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Tue Sep 17 2024 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1.1
+- rebuilt against gnome-47 libraries
+
 * Tue Mar 07 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
 - 44.0
 

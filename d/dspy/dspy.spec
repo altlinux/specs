@@ -1,10 +1,10 @@
-%define ver_major 1.10
+%define ver_major 47
 %define api_ver 1
 %define _name d-spy
 %define xdg_name org.gnome.dspy
 
 %def_enable tests
-%def_disable check
+%def_enable check
 
 Name: dspy
 Version: %ver_major.0
@@ -21,15 +21,15 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Requires: lib%name = %EVR
 Requires: dbus-tools-gui
 
-%define glib_ver 2.68
-%define gtk4_ver 4.6
-%define libadwaita_ver 1.0
+%define glib_ver 2.76
+%define gtk4_ver 4.12
+%define libadwaita_ver 1.4
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson libgio-devel >= %glib_ver
 BuildRequires: libgtk4-devel >= %gtk4_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %libadwaita_ver
-#%{?_enable_tests:BuildRequires:}
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 D-Spy is a tool to explore and test end-points and interfaces on the
@@ -90,6 +90,9 @@ This package provides development files for D-Spy library.
 %_pkgconfigdir/%name-%api_ver.pc
 
 %changelog
+* Sat Sep 14 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Sat Mar 16 2024 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
 - 1.10.0
 

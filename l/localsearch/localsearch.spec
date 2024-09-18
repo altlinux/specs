@@ -1,26 +1,25 @@
-%set_verify_elf_method unresolved=relaxed
-%define _name tracker-miners
-%define ver_major 3.7
+%define _name localsearch
+%define old_name tracker-miners
+%define ver_major 3.8
 %define beta %nil
 %define api_ver_major 3
 %define api_ver %api_ver_major.0
 %define xdg_name org.freedesktop.Tracker%api_ver_major
+%define rdn_name org.freedesktop.LocalSearch%api_ver_major
 %define _libexecdir %_prefix/libexec
 
-Name: %_name%api_ver_major
-Version: %ver_major.3
+Name: %_name
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
-License: GPL-2.0 and LGPL-2.1-or-later
-Group: Office
+License: GPL-2.0-or-later and LGPL-2.0-or-later
+Group: Databases
 Url: https://wiki.gnome.org/Projects/Tracker
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%beta.tar.xz
-# properly link tracker-miners-fs-control with private libraries
-Patch: %_name-3.2.0-alt-link.patch
 
-%add_findprov_lib_path %_libdir/%_name-%api_ver_major/
+%add_python3_path %_libdir/%_name-%api_ver/
 
 %def_enable xml
 %def_enable rss
@@ -70,20 +69,25 @@ Patch: %_name-3.2.0-alt-link.patch
 %define gst_ver 1.10
 %define libav_ver 0.8.4
 
+Obsoletes: tracker%api_ver_major-miners < %ver_major
+Obsoletes: %old_name%api_ver_major < %ver_major
 Provides: tracker%api_ver_major-miners = %EVR
+Provides: %old_name%api_ver_major = %EVR
 
 # mediaextractor (gstreamer|libav|mplayer|external)
 %define generic_media_extractor gstreamer
 BuildRequires: gstreamer1.0-devel >= %gst_ver gst-plugins1.0-devel >= %gst_ver
 
-BuildRequires(pre): rpm-macros-meson rpm-build-xdg rpm-build-systemd
+BuildRequires(pre): rpm-macros-meson rpm-build-xdg rpm-build-systemd rpm-build-gir rpm-build-python3
 BuildRequires: meson
-BuildRequires: tracker%api_ver_major-devel >= %ver_major
+BuildRequires: pkgconfig(gudev-1.0)
+BuildRequires: tinysparql-devel >= %ver_major
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libupower-devel libstemmer-devel libicu-devel
 BuildRequires: libenca-devel libseccomp-devel libdbus-devel
 BuildRequires: pkgconfig(systemd) pkgconfig(blkid)
 BuildRequires: libavformat-devel >= %libav_ver libavcodec-devel libavutil-devel
+BuildRequires: gobject-introspection-devel
 # discoverer
 BuildRequires: pkgconfig(gupnp-dlna-gst-2.0)
 %{?_enable_xml:BuildRequires: libxml2-devel >= %libxml2_ver}
@@ -118,8 +122,6 @@ This package provides miners for TRacker.
 # fix install_rpath for modules
 find src/ -name "meson.build" -print0 | xargs -r0 \
 sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
-
-%patch -b .link
 
 %build
 %meson \
@@ -156,52 +158,45 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 ln -sf %_name-%api_ver/libtracker-extract.so \
 %buildroot%_libdir/libtracker-extract.so
 
-%find_lang tracker%api_ver_major-miners
+%find_lang %name%api_ver_major
 
-%files -f tracker%api_ver_major-miners.lang
-%_xdgconfigdir/autostart/tracker-miner-fs-%api_ver_major.desktop
+%files -f %name%api_ver_major.lang
+%_xdgconfigdir/autostart/%name-%api_ver_major.desktop
 %_xdgconfigdir/autostart/tracker-miner-rss-%api_ver_major.desktop
-%_bindir/tracker3-daemon
-%_bindir/tracker3-extract
-%_bindir/tracker3-index
-%_bindir/tracker3-info
-%_bindir/tracker3-reset
-%_bindir/tracker3-search
-%_bindir/tracker3-status
-%_bindir/tracker3-tag
+%_bindir/%name
 %_libdir/%_name-%api_ver/
-%_datadir/tracker3/commands/*.desktop
 # symlink
 %_libdir/libtracker-extract.so
-%_libexecdir/tracker-extract-%api_ver_major
-%_libexecdir/tracker-miner-fs-%api_ver_major
-%_libexecdir/tracker-writeback-%api_ver_major
-%_libexecdir/tracker-miner-fs-control-%api_ver_major
-#%_libexecdir/tracker%api_ver_major/
+%_libexecdir/%name-%api_ver_major
+%_libexecdir/%name-control-%api_ver_major
+%_libexecdir/%name-extractor-%api_ver_major
+%_libexecdir/%name-writeback-%api_ver_major
 %{?_enable_rss:%_libexecdir/tracker-miner-rss-%api_ver_major}
-%_datadir/tracker%api_ver_major-miners/
-#%_userunitdir/tracker-extract*.service
-%_userunitdir/tracker-miner-fs*.service
+%_datadir/%name%api_ver_major/
+%_userunitdir/%name-%api_ver_major.service
+%_userunitdir/%name-control-%api_ver_major.service
+%_userunitdir/%name-writeback*.service
 %_userunitdir/tracker-miner-rss*.service
-%_userunitdir/tracker-writeback*.service
 %{?_enable_man:
-%_man1dir/tracker-miner-fs-*.*
+%_man1dir/%name-%{api_ver_major}.1*
+%_man1dir/%name-daemon.1*
+%_man1dir/%name-extract.1*
+%_man1dir/%name-index.1*
+%_man1dir/%name-info.1*
+%_man1dir/%name-reset.1*
+%_man1dir/%name-search.1*
+%_man1dir/%name-status.1*
+%_man1dir/%name-tag.1*
+%_man1dir/%name-writeback-%{api_ver_major}.1*
 %_man1dir/tracker-miner-rss-*.*
-%_man1dir/tracker-writeback-*.*
-%_man1dir/tracker%api_ver_major-daemon.1.*
-%_man1dir/tracker%api_ver_major-extract.1.*
-%_man1dir/tracker%api_ver_major-index.1.*
-%_man1dir/tracker%api_ver_major-info.1.*
-%_man1dir/tracker%api_ver_major-reset.1.*
-%_man1dir/tracker%api_ver_major-search.1.*
-%_man1dir/tracker%api_ver_major-status.1.*
-%_man1dir/tracker%api_ver_major-tag.1.*
 }
-#%_datadir/dbus-1/services/%xdg_name.Miner.Extract.service
 %_datadir/dbus-1/services/%xdg_name.Miner.Files.service
 %_datadir/dbus-1/services/%xdg_name.Miner.RSS.service
 %_datadir/dbus-1/services/%xdg_name.Writeback.service
 %_datadir/dbus-1/services/%xdg_name.Miner.Files.Control.service
+%_datadir/dbus-1/services/%rdn_name.service
+%_datadir/dbus-1/services/%rdn_name.Control.service
+%_datadir/dbus-1/services/%rdn_name.Writeback.service
 %_datadir/dbus-1/interfaces/%xdg_name.Miner.xml
 %_datadir/dbus-1/interfaces/%xdg_name.Miner.Files.Index.xml
 
@@ -213,6 +208,10 @@ ln -sf %_name-%api_ver/libtracker-extract.so \
 %doc AUTHORS NEWS README*
 
 %changelog
+* Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0
+- tracker-miners -> localsearch
+
 * Thu May 02 2024 Yuri N. Sedunov <aris@altlinux.org> 3.7.3-alt1
 - 3.7.3
 

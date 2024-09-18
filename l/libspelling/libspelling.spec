@@ -1,37 +1,38 @@
 %def_disable snapshot
 
-%def_disable installed_tests
 %def_enable docs
 %def_enable check
 
 %define _name spelling
-%define ver_major 0.2
+%define ver_major 0.4
 %define api_ver 1
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A spellcheck library for GTK 4
 Group: System/Libraries
 License: LGPL-2.1-or-later
-Url: https://gitlab.gnome.org/chergert/libspelling
+Url: https://gitlab.gnome.org/GNOME/libspelling
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
-Vcs: https://gitlab.gnome.org/chergert/libspelling.git
+Vcs: https://gitlab.gnome.org/GNOME/libspelling.git
 Source: %name-%version.tar
 %endif
 
-%define gtk_ver 4.6
+%define gtk_ver 4.15.5
 %define enchant_ver 2.2.12
+%define gtksource_ver 5.10
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-vala
 BuildRequires: meson vala-tools
-BuildRequires: libgtk4-devel >= %gtk_ver pkgconfig(gtksourceview-5) >= 5.6
+BuildRequires: libgtk4-devel >= %gtk_ver pkgconfig(gtksourceview-5) >= %gtksource_ver
 BuildRequires: libenchant2-devel >= %enchant_ver libicu-devel
 BuildRequires: gobject-introspection-devel libgtk4-gir-devel gir(GtkSource) = 5
+BuildRequires: pkgconfig(sysprof-capture-4)
 %{?_enable_docs:BuildRequires: gi-docgen}
 %{?_enable_check:BuildRequires: xvfb-run /usr/bin/gjs hunspell-en}
 
@@ -91,8 +92,8 @@ the functionality of the installed Spelling library.
 
 %build
 %meson \
-    %{?_disable_docs:-Ddocs=false} \
-    %{?_enable_installed_tests:--enable-installed-tests}
+    %{subst_enable_meson_bool docs docs}
+%nil
 %meson_build
 
 %install
@@ -123,14 +124,11 @@ xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 %endif
 
-%if_enabled installed_tests
-%files tests
-%_libexecdir/installed-tests/%name-%api_ver/
-%_datadir/installed-tests/%name-%api_ver/
-%endif
-
 
 %changelog
+* Tue Sep 10 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Mon Mar 04 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
 - 0.2.1
 

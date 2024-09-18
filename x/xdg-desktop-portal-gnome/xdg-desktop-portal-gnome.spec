@@ -1,11 +1,13 @@
+%def_disable snapshot
+
 %define _libexecdir %_prefix/libexec
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 
 %def_enable check
 
 Name: xdg-desktop-portal-gnome
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Desktop Portal
@@ -13,17 +15,24 @@ Group: Graphical desktop/GNOME
 License: LGPL-2.1-or-later
 Url: https://gitlab.gnome.org/GNOME/xdg-desktop-portal-gnome
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
+%else
+Source: %name-%version%beta.tar
+%endif
 
 %define xdg_desktop_portal_ver 1.18.2
+%define adw_ver 1.6
+%define gsds_ver 47
 
 Requires: xdg-desktop-portal-gtk >= 1.14
 Conflicts: xdg-desktop-portal-gtk < 1.12.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
-BuildRequires: meson libgtk4-devel pkgconfig(libadwaita-1) pkgconfig(gnome-desktop-4)
+BuildRequires: meson libgtk4-devel pkgconfig(libadwaita-1) >= %adw_ver
+BuildRequires: pkgconfig(gnome-desktop-4)
 BuildRequires: pkgconfig(xdg-desktop-portal) >= %xdg_desktop_portal_ver
-BuildRequires: gsettings-desktop-schemas-devel
+BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 
 %description
 XDG Desktop Portal implementation for GNOME. It uses GNOME-specific APIs
@@ -55,6 +64,9 @@ to provide various portal features.
 
 
 %changelog
+* Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Sat May 25 2024 Yuri N. Sedunov <aris@altlinux.org> 46.2-alt1
 - 46.2
 

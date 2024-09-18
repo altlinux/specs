@@ -1,20 +1,20 @@
 %def_enable snapshot
 
 %define _name extension-list
-%define ver_major 46
-%define beta %nil
+%define ver_major 47
+%define beta .beta
 %define uuid %_name@tu.berry
 %define xdg_name org.gnome.shell.extensions.%_name
 
 %define ego 3088/%_name
 # EGO=3088/extension-list sh cli/get-version.sh
-%define ego_ver 36
+%define ego_ver 41
 
 %def_enable check
 
 Name: gnome-shell-extension-%_name
-Version: %ver_major.1
-Release: alt1%beta
+Version: %ver_major
+Release: alt0.5%beta
 
 %define gettext_domain %name
 
@@ -64,6 +64,9 @@ Simple GNOME Shell extension manager in the top panel.
 %doc README.md
 
 %changelog
+* Tue Sep 17 2024 Yuri N. Sedunov <aris@altlinux.org> 47-alt0.5.beta
+- 47.beta-2-g33ae1bd
+
 * Mon May 13 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
 - 46.1
 

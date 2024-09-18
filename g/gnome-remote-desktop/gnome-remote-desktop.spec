@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define xdg_name org.gnome.RemoteDesktop
 
@@ -11,7 +11,7 @@
 %def_enable man
 
 Name: gnome-remote-desktop
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Remote Desktop
@@ -26,7 +26,7 @@ Vcs: https://gitlab.gnome.org/GNOME/gnome-remote-desktop.git
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.68
+%define glib_ver 2.76
 %define pw_api_ver 0.3
 %define pw_ver 0.3.49
 %define vnc_ver 0.9.11
@@ -34,11 +34,12 @@ Source: %name-%version.tar
 %define fuse_ver 3.9.1
 %define xkbc_ver 1.0.0
 %define nvenc_ver 11.1.5.0
-%define ei_ver 1.0.901
+%define ei_ver 1.2.0
+%define polkit_ver 122
 
 Requires: pipewire >= %pw_ver
 Requires: fuse3 >= %fuse_ver
-Requires: polkit
+Requires: polkit >= %polkit_ver
 %{?_enable_rdp:Requires: freerdp3 >= %freerdp_ver}
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
@@ -55,7 +56,7 @@ BuildRequires: libxkbcommon-devel >= %xkbc_ver
 BuildRequires: libsecret-devel libnotify-devel libcairo-devel
 BuildRequires: libepoxy-devel libdrm-devel libgbm-devel
 BuildRequires: libei-devel >= %ei_ver
-BuildRequires: libdbus-devel libpolkit-devel
+BuildRequires: libdbus-devel libpolkit-devel >= %polkit_ver
 BuildRequires: /bin/dbus-run-session /usr/bin/openssl
 BuildRequires: pipewire wireplumber mutter-gnome
 
@@ -83,7 +84,9 @@ Remote desktop daemon for GNOME using pipewire.
 %_bindir/grdctl
 %_libexecdir/%name-daemon
 %_libexecdir/%name-enable-service
+%_libexecdir/%name-configuration-daemon
 %_unitdir/%name.service
+%_unitdir/%name-configuration.service
 %_sysusersdir/%name-sysusers.conf
 %_tmpfilesdir/%name-tmpfiles.conf
 %_userunitdir/%name.service
@@ -98,7 +101,7 @@ Remote desktop daemon for GNOME using pipewire.
 %_datadir/%name/grd-cuda-damage-utils_30.ptx
 %_datadir/%name/grd-cuda-avc-utils_30.ptx}
 %_datadir/%name/grd.conf
-%_datadir/dbus-1/system-services/%xdg_name.service
+%_datadir/dbus-1/system-services/%xdg_name.Configuration.service
 %_datadir/dbus-1/system.d/%xdg_name.conf
 %_datadir/polkit-1/actions/org.gnome.remotedesktop.configure-system-daemon.policy
 %_datadir/polkit-1/actions/org.gnome.remotedesktop.enable-system-daemon.policy
@@ -106,6 +109,9 @@ Remote desktop daemon for GNOME using pipewire.
 %doc README*
 
 %changelog
+* Sat Sep 14 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Tue Aug 06 2024 Yuri N. Sedunov <aris@altlinux.org> 46.4-alt1
 - 46.4
 

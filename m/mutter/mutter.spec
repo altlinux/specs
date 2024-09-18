@@ -1,12 +1,12 @@
 # since 3.21.90 (libmutter-clutter-1.0.so private library)
 %set_verify_elf_method unresolved=relaxed
 
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 # %%ver_major - 32
-%define api_ver 14
+%define api_ver 15
 %define sover 0
 %define xdg_name org.gnome.mutter
 %define _libexecdir %_prefix/libexec
@@ -18,14 +18,16 @@
 %def_enable wayland_eglstream
 %def_enable libdisplay_info
 
+%define gvdb_ver b54bc5da
+
 Name: mutter
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 Epoch: 1
 
 Summary: Clutter based compositing Window Manager
 Group: Graphical desktop/GNOME
-License: GPL-2.0
+License: GPL-2.0-or-later
 Url: http://ftp.gnome.org/pub/gnome/sources/%name
 
 %if_disabled snapshot
@@ -33,39 +35,37 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %else
 Source: %name-%version%beta.tar
 %endif
+%{?_enable_snapshot:Source1: gvdb-%gvdb_ver.tar}
 
 %define pkglibdir %_libdir/%name-%api_ver
 %define pkgdatadir %_datadir/%name-%api_ver
 
 %{?_enable_installed_tests:%add_python3_path %_libexecdir/installed-tests/%name-%api_ver/
-%add_python3_req_skip logind_helpers
+# provided by /usr/share/mutter-%api_ver/tests/*
+%add_python3_req_skip logind_helpers mutter_dbusrunner
 }
+
 %add_findprov_lib_path %pkglibdir
 %set_typelibdir %pkglibdir
 %set_girdir %pkglibdir
 
-# since 3.22 mutter forks Cogl and Clutter libraries into own private libraries
-#%%filter_from_provides /[typelib\|gir]([Cally\|Clutter\|Cogl].*/d
-#%%filter_from_requires /[typelib\|gir]([Cally\|Clutter\|Cogl].*/d
-
-#https://lists.altlinux.org/pipermail/sisyphus-incominger/2016-October/444041.html
-
 %define drm_ver 2.4.118
+%define gbm_ver 21.3
 %define gtk_ver 3.20.0
 %define gtk4_ver 4.0.0
 %define gi_ver 0.9.5
-%define glib_ver 2.75.1
+%define glib_ver 2.81.1
 %define pango_ver 1.46.0
 %define cairo_ver 1.10.0
 %define Xi_ver 1.7.4
-%define wayland_ver 1.21
-%define wayland_protocols_ver 1.26
+%define wayland_ver 1.23
+%define wayland_protocols_ver 1.36
 # xwayland with ei support
 %define xwayland_ver 2:23.2.2-alt2
 %define upower_ver 0.99.0
-%define libinput_ver 1.18
+%define libinput_ver 1.26
 %define fribidi_ver 1.0.0
-%define gsds_ver 40
+%define gsds_ver 47
 %define gudev_ver 232
 %define pipewire_ver 0.3.21
 %define sysprof_ver 3.38
@@ -97,7 +97,7 @@ BuildRequires: libXdamage-devel libXtst-devel libXi-devel >= %Xi_ver
 BuildRequires: libXcursor-devel libX11-devel libXinerama-devel libXext-devel libXrandr-devel libSM-devel libICE-devel
 BuildRequires: libxcb-devel
 BuildRequires: libwayland-server-devel >= %wayland_ver wayland-protocols >= %wayland_protocols_ver
-BuildRequires: libgdk-pixbuf-devel libgbm-devel
+BuildRequires: libgdk-pixbuf-devel libgbm-devel >= %gbm_ver
 BuildRequires: libstartup-notification-devel zenity libcanberra-gtk3-devel
 BuildRequires: libclutter-gir-devel libpango-gir-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel
 BuildRequires: libgnome-desktop3-devel libupower-devel >= %upower_ver
@@ -177,25 +177,25 @@ the functionality of the installed Mutter.
 
 
 %prep
-%setup -n %name-%version%beta
-# we have no catchsegv
-sed -i '/catchsegv/d' meson.build
-# https://gitlab.gnome.org/GNOME/mutter/-/issues/2210 (fixed)
-# disable KMS modifiers for radeon
-#echo 'DRIVERS=="radeon", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-modifiers"' \
-#>> data/61-%name.rules
-# Also disable KMS modifiers for baikal-vdu
+%setup -n %name-%version%beta %{?_enable_snapshot:-a1
+    mv gvdb-%gvdb_ver subprojects/gvdb}
+
+# disable KMS modifiers for baikal-vdu
 echo 'DRIVERS=="baikal-vdu", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-modifiers"' \
 >> data/61-%name.rules
 
+sed -i 's|/usr\(/bin/bash\)|\1|' src/tests/socket-launch.sh
+
+sed -i 's/\.beta//' meson.build
+
 %build
 %meson \
-	-Dintrospection=true \
-	%{subst_enable_meson_bool remote_desktop remote_desktop} \
-	%{subst_enable_meson_bool egl_device egl_device} \
-	%{subst_enable_meson_bool wayland_eglstream wayland_eglstream} \
-	%{subst_enable_meson_feature libdisplay_info libdisplay_info} \
-	%{subst_enable_meson_bool installed_tests installed_tests}
+    -Dintrospection=true \
+    %{subst_enable_meson_bool remote_desktop remote_desktop} \
+    %{subst_enable_meson_bool egl_device egl_device} \
+    %{subst_enable_meson_bool wayland_eglstream wayland_eglstream} \
+    %{subst_enable_meson_feature libdisplay_info libdisplay_info} \
+    %{subst_enable_meson_bool installed_tests installed_tests}
 %nil
 %meson_build
 
@@ -216,8 +216,8 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %_libexecdir/%name-x11-frames
 %dir %pkglibdir/plugins
 %pkglibdir/plugins/*.so
-%{?_enable_installed_tests:%dir %pkgdatadir}
-#%_desktopdir/%name.desktop
+%dir %pkgdatadir
+%pkgdatadir/tests/
 %_man1dir/*
 %doc NEWS README.md
 
@@ -229,6 +229,7 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %pkglibdir/lib%name-cogl-pango-%api_ver.so.*
 %pkglibdir/lib%name-cogl-%api_ver.so.*
 %pkglibdir/lib%name-mtk-%api_ver.so.*
+%_libdir/lib%name-test-%api_ver.so
 # symlinks
 %_libdir/lib%name-clutter-%api_ver.so.%sover
 %_libdir/lib%name-cogl-%api_ver.so.%sover
@@ -236,28 +237,25 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %files -n lib%name-devel
 %_includedir/%name-%api_ver/
 %_libdir/lib%name-%api_ver.so
-%{?_enable_installed_tests:%_libdir/lib%name-test-%api_ver.so}
 %pkglibdir/*.so
 %_pkgconfigdir/*.pc
 %endif
 
 %files -n lib%name-gir
-%pkglibdir/Cally-%api_ver.typelib
 %pkglibdir/Clutter-%api_ver.typelib
 %pkglibdir/Cogl-%api_ver.typelib
 %pkglibdir/CoglPango-%api_ver.typelib
 %pkglibdir/Meta-%api_ver.typelib
 %pkglibdir/Mtk-%api_ver.typelib
-%{?_enable_installed_tests:%pkglibdir/MetaTest-%api_ver.typelib}
+%pkglibdir/MetaTest-%api_ver.typelib
 
 %files -n lib%name-gir-devel
-%pkglibdir/Cally-%api_ver.gir
 %pkglibdir/Clutter-%api_ver.gir
 %pkglibdir/Cogl-%api_ver.gir
 %pkglibdir/CoglPango-%api_ver.gir
 %pkglibdir/Meta-%api_ver.gir
 %pkglibdir/Mtk-%api_ver.gir
-%{?_enable_installed_tests:%pkglibdir/MetaTest-%api_ver.gir}
+%pkglibdir/MetaTest-%api_ver.gir
 
 %files gnome
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
@@ -269,10 +267,13 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %files tests
 %_libexecdir/installed-tests/%name-%api_ver/
 %_datadir/installed-tests/%name-%api_ver/
-%pkgdatadir/tests/
+#%pkgdatadir/tests/
 %endif
 
 %changelog
+* Wed Sep 18 2024 Yuri N. Sedunov <aris@altlinux.org> 1:47.0-alt1
+- 47.0-7-g846fc458d
+
 * Mon Aug 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1:46.4-alt1
 - 46.4
 

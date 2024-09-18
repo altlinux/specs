@@ -1,9 +1,9 @@
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 
 Name: gnome-user-docs
-Version: %ver_major.4
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: General GNOME User Documentation
 License: %fdl
@@ -44,6 +44,9 @@ directly associated with any particular GNOME application or package.
 %doc README* NEWS
 
 %changelog
+* Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Sun Aug 04 2024 Yuri N. Sedunov <aris@altlinux.org> 46.4-alt1
 - 46.4
 

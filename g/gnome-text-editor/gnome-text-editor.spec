@@ -1,18 +1,20 @@
 %def_disable snapshot
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define xdg_name org.gnome.TextEditor
 
 %def_enable check
 
 Name: gnome-text-editor
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A simple Text Editor for GNOME
 Group: Editors
-License: GPL-3.0
+License: GPL-3.0-or-later
 Url: https://apps.gnome.org/TextEditor
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-text-editor.git
 
 %if_disabled snapshot
 Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -20,18 +22,18 @@ Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version%beta.
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.73
-%define gtk_ver 4.10
+%define glib_ver 2.80
+%define gtk_ver 4.15
 %define gtksource_ver 5.10
-%define enchant_ver 2.2.0
-%define adwaita_ver 1.5
+%define spelling_ver 0.3.1
+%define adwaita_ver 1.6
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson yelp-tools
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk4-devel >= %gtk_ver
 BuildRequires: libgtksourceview5-devel >= %gtksource_ver
-BuildRequires: pkgconfig(enchant-2) >= %enchant_ver
+BuildRequires: pkgconfig(libspelling-1) >= %spelling_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: libeditorconfig-devel
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
@@ -61,11 +63,13 @@ general purpose default editor.
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/dbus-1/services/%xdg_name.service
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
-#%_iconsdir/hicolor/*/actions/*.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
 %doc README* NEWS
 
 %changelog
+* Sat Sep 14 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Fri May 10 2024 Yuri N. Sedunov <aris@altlinux.org> 46.3-alt1
 - 46.3
 

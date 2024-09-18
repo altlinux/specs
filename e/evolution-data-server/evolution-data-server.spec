@@ -3,8 +3,8 @@
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.52
-%define ver_base 3.52
+%define ver_major 3.54
+%define ver_base 3.54
 %define ver_lib 1.2
 %define ver_libecal 2.0
 %define sover_libecal 3
@@ -33,7 +33,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution Data Server
@@ -81,6 +81,7 @@ BuildRequires: libgweather4.0-devel >= %gweather4_ver
 BuildRequires: libical-glib-devel >= %ical_ver
 BuildRequires: libsecret-devel >= %secret_ver
 BuildRequires: gperf docbook-utils flex bison libcom_err-devel libnss-devel libnspr-devel zlib-devel libicu-devel
+BuildRequires: pkgconfig(uuid)
 %{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver liboauth-devel}
 %{?_enable_oauth2_webkitgtk3:BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver) >= %webkit_ver}
 %{?_enable_oauth2_webkitgtk4:BuildRequires: pkgconfig(webkit2gtk-6.0) >= %webkit_ver}
@@ -293,6 +294,12 @@ ln -s camel-lock-helper-%ver_lib %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Fri Sep 13 2024 Yuri N. Sedunov <aris@altlinux.org> 3.54.0-alt1
+- 3.54.0
+
+* Sat Sep 07 2024 Yuri N. Sedunov <aris@altlinux.org> 3.53.3-alt1
+- 3.53.3
+
 * Sat Aug 03 2024 Yuri N. Sedunov <aris@altlinux.org> 3.52.4-alt1
 - 3.52.4
 

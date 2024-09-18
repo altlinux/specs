@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define api_ver 4.0
 %define ext_api_ver 4
@@ -17,11 +17,11 @@
 %def_disable check
 
 Name: nautilus
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Nautilus is a network user environment
-License: GPL-3.0
+License: GPL-2.0-or-later and GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://apps.gnome.org/Nautilus
 
@@ -35,12 +35,12 @@ Source: %name-%version%beta.tar
 %define glib_ver 2.79.0
 %define desktop_ver 43
 %define pango_ver 1.28.3
-%define gtk4_ver 4.13.6
-%define adwaita_ver 1.4
+%define gtk4_ver 4.15.2
+%define adwaita_ver 1.6
 %define libxml2_ver 2.7.8
 %define gexiv2_ver 0.14.2
 %define gir_ver 0.10.2
-%define tracker_ver 2.99.2
+%define tracker_ver 3.8
 %define autoar_ver 0.4.4
 %define portal_ver 0.5
 %define handy_ver 1.5.0
@@ -54,11 +54,11 @@ Requires: gvfs >= 1.34
 Requires: %_bindir/bwrap
 Requires: totem-video-thumbnailer
 Requires: gnome-disk-utility
-%{?_enable_tracker:Requires: tracker3 tracker-miners3}
+%{?_enable_tracker:Requires: tinysparql localsearch}
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome
 BuildRequires: meson desktop-file-utils >= %desktop_file_utils_ver
-BuildRequires: /usr/bin/appstream-util
+BuildRequires: /usr/bin/appstreamcli
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: pkgconfig(gnome-desktop-4) >= %desktop_ver
 BuildRequires: libpango-devel >= %pango_ver
@@ -73,7 +73,7 @@ BuildRequires: libcloudproviders-devel
 %{?_enable_extensions:BuildRequires: libgexiv2-devel >= %gexiv2_ver
 BuildRequires: pkgconfig(gstreamer-tag-1.0) pkgconfig(gstreamer-pbutils-1.0)}
 %{?_enable_docs:BuildRequires: docbook-utils gi-docgen}
-%{?_enable_tracker:BuildRequires: pkgconfig(tracker-sparql-3.0) tracker3-sandbox}
+%{?_enable_tracker:BuildRequires: pkgconfig(tracker-sparql-3.0) >= %tracker_ver localsearch}
 %{?_enable_introspection:
 BuildRequires(pre): rpm-build-gir
 BuildRequires: gobject-introspection-devel >= %gir_ver libgtk4-gir-devel}
@@ -139,10 +139,10 @@ GObject introspection devel data for the nautilus-extension library
 
 %build
 %meson \
-    %{?_enable_docs:-Ddocs=true} \
-    %{?_disable_extensions:-Dextensions=false} \
-    %{?_disable_packagekit:-Dpackagekit=false} \
-    %{?_enable_selinux:-Dselinux=true}
+    %{subst_enable_meson_bool docs docs} \
+    %{subst_enable_meson_bool extensions extensions} \
+    %{subst_enable_meson_bool packagekit packagekit} \
+    %{subst_enable_meson_bool selinux selinux}
 %meson_build
 
 %install
@@ -172,7 +172,7 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %dir %_datadir/%name/ontology
 %_datadir/%name/ontology/%name.description
 %_datadir/%name/ontology/%name.ontology
-%_datadir/tracker3/domain-ontologies/%xdg_name.domain.rule
+%_datadir/localsearch3/domain-ontologies/%xdg_name.domain.rule
 # docs
 %doc --no-dereference COPYING
 %doc NEWS.bz2 README*
@@ -206,6 +206,12 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
+* Wed Sep 04 2024 Yuri N. Sedunov <aris@altlinux.org> 47-alt0.9.rc
+- 47.rc
+
 * Sun May 26 2024 Yuri N. Sedunov <aris@altlinux.org> 46.2-alt1
 - 46.2
 

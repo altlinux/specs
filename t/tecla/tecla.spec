@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define xdg_name org.gnome.Tecla
 
@@ -10,14 +10,15 @@ Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Tecla is a keyboard layout viewer
-License: GPL-3.0
+License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://gitlab.gnome.org/GNOME/tecla
+
+Vcs: https://gitlab.gnome.org/GNOME/tecla.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Vcs: https://gitlab.gnome.org/GNOME/tecla.git
 Source: %name-%version%beta.tar
 %endif
 
@@ -67,6 +68,9 @@ This package contains development files for %name
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 

@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 46
 %define beta %nil
@@ -8,7 +8,7 @@
 
 Name: polari
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: Internet Relay Chat client for GNOME
 License: GPL-2.0 and LGPL-2.0
@@ -30,7 +30,7 @@ Source: %name-%version.tar
 Requires: libgjs >= %gjs_ver
 Requires: telepathy-mission-control
 Requires: telepathy-idle
-Requires: tracker3
+Requires: tinysparql localsearch
 
 %set_typelibdir %_libdir/%name/girepository-1.0
 
@@ -42,17 +42,14 @@ Requires: typelib(Gio)
 Requires: typelib(GLib)
 Requires: typelib(GObject)
 Requires: typelib(Graphene)
-Requires: typelib(Gspell)
 Requires: typelib(Gtk) = 4.0
 Requires: typelib(Pango)
 Requires: typelib(PangoCairo)
 Requires: typelib(Polari)
 Requires: typelib(Secret)
 Requires: typelib(TelepathyGLib)
-Requires: typelib(TelepathyLogger)
 Requires: typelib(Tracker) = 3.0
 Requires: typelib(Soup) = 3.0
-Requires: typelib(WebKit2) = 4.1
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson gtk-doc yelp-tools
@@ -98,6 +95,9 @@ with GNOME 3 Desktop.
 
 
 %changelog
+* Tue Sep 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt2
+- updated to 46.0-18-gadda9456
+
 * Sun Apr 21 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 

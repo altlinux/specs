@@ -1,7 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
+%define namespace GDesktopEnums
+%define api_ver 3.0
 %def_enable introspection
 
 Name: gsettings-desktop-schemas
@@ -70,7 +72,7 @@ GObject introspection devel data for %name.
 
 %build
 %meson \
-	%{?_enable_introspection:-Dintrospection=true}
+    %{subst_enable_meson_bool introspection introspection}
 %meson_build
 
 %install
@@ -88,6 +90,7 @@ GObject introspection devel data for %name.
 %_datadir/glib-2.0/schemas/org.gnome.desktop.a11y.mouse.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.app-folders.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.background.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.desktop.break-reminders.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.calendar.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.datetime.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.default-applications.gschema.xml
@@ -121,13 +124,16 @@ GObject introspection devel data for %name.
 
 %if_enabled introspection
 %files gir
-%_typelibdir/GDesktopEnums-3.0.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/GDesktopEnums-3.0.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 %changelog
+* Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt1
+- 47.1
+
 * Mon Jul 15 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
 - 46.1
 

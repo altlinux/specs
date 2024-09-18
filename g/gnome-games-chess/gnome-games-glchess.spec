@@ -3,7 +3,7 @@
 %define _name chess
 %define xdg_name org.gnome.Chess
 %define __name gnome-%_name
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
@@ -26,10 +26,10 @@ Provides:  gnome-games-glchess = %version-%release
 Requires: gnuchess >= 6.2.3
 
 %define glib_ver 2.44
-%define gtk_ver 4.0
+%define gtk_ver 4.10
 %define rsvg_ver 2.46
 %define vala_ver 0.50.0
-%define adwaita_ver 1.0.0
+%define adwaita_ver 1.5
 
 BuildRequires(pre):rpm-macros-meson
 BuildRequires: meson vala-tools >= %vala_ver
@@ -68,6 +68,9 @@ A chess game which supports several chess engines, with 2D and optionally
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Thu Sep 12 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Fri Mar 15 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 

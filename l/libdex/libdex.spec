@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 0.6
+%define ver_major 0.8
 %define beta %nil
 %define api_ver 1
 %define namespace Dex
@@ -13,19 +13,20 @@
 %def_enable check
 
 Name: libdex
-Version: %ver_major.1
-Release: alt1.1%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Dex provides Future-based programming for GLib-based applications
 Group: System/Libraries
 License: LGPL-2.1-or-later
 Url: https://gitlab.gnome.org/GNOME/%name
 
+Vcs: https://gitlab.gnome.org/GNOME/libdex.git
+
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 #Source: %url/-/archive/%version/%name-%version.tar.bz2
 %else
-Vcs: https://gitlab.gnome.org/GNOME/libdex.git
 Source: %name-%version.tar
 %endif
 Patch2000: %name-e2k.patch
@@ -115,7 +116,7 @@ This package contains Dex example programs.
 
 %files -f %name.lang
 %_libdir/%name-%api_ver.so.*
-%doc README* TODO* NEWS
+%doc README* NEWS
 
 %files devel
 %_includedir/%name-%api_ver/
@@ -142,6 +143,9 @@ This package contains Dex example programs.
 %endif
 
 %changelog
+* Tue Sep 17 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Mon Aug 19 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1.1
 - updated E2K patch by ilyakurdyukov@
 

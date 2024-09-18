@@ -3,20 +3,20 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define api_ver 2.0
 %define xdg_name org.gnome.Settings
 
 %def_disable debug
-%def_with bluetooth
-%def_with snap
-%def_with malcontent
+%def_enable bluetooth
+%def_enable snap
+%def_enable malcontent
 %def_enable doc
 %def_enable check
 
 Name: gnome-control-center
-Version: %ver_major.4
+Version: %ver_major.0.1
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -32,8 +32,8 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 Source1: https://raw.githubusercontent.com/eggert/tz/main/zone.tab
 
 %define glib_ver 2.75.0
-%define gtk4_ver 4.9.3
-%define adwaita_ver 1.4
+%define gtk4_ver 4.15.2
+%define adwaita_ver 1.6
 %define desktop_ver 43
 %define fontconfig_ver 1.0.0
 %define gsds_ver 46
@@ -112,9 +112,9 @@ BuildRequires: libgrilo-devel >= %grilo_ver
 BuildRequires: libsecret-devel libgnutls-devel
 BuildRequires: libudisks2-devel
 BuildRequires: tecla-devel
-%{?_with_bluetooth:BuildRequires: pkgconfig(gnome-bluetooth-ui-%bt_api_ver) >= %bt_ver}
-%{?_with_snap:BuildRequires: pkgconfig(snapd-glib-2) >= %snapd_ver}
-%{?_with_malcontent:BuildRequires: pkgconfig(malcontent-0) >= %malcontent_ver}
+%{?_enable_bluetooth:BuildRequires: pkgconfig(gnome-bluetooth-ui-%bt_api_ver) >= %bt_ver}
+%{?_enable_snap:BuildRequires: pkgconfig(snapd-glib-2) >= %snapd_ver}
+%{?_enable_malcontent:BuildRequires: pkgconfig(malcontent-0) >= %malcontent_ver}
 BuildRequires: libgudev-devel >= %gudev_ver libgsound-devel
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: libepoxy-devel
@@ -158,9 +158,9 @@ sed -i 's|\(\/usr\/share\/\)zoneinfo\/\(zone.tab\)|\1%name/\2|' panels/system/da
 
 %build
 %meson \
-    %{?_with_snap:-Dsnap=true} \
-    %{?_with_malcontent:-Dmalcontent=true} \
-    %{?_enable_doc:-Ddocumentation=true}
+    %{subst_enable_meson_bool snap snap} \
+    %{subst_enable_meson_bool malcontent malcontent} \
+    %{subst_enable_meson_bool doc documentation}
 %nil
 %meson_build
 
@@ -210,6 +210,9 @@ sed -e '/Simferopol/d' %SOURCE1 > %buildroot%_datadir/%name/zone.tab
 
 
 %changelog
+* Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0.1-alt1
+- 47.0.1
+
 * Mon Aug 05 2024 Yuri N. Sedunov <aris@altlinux.org> 46.4-alt1
 - 46.4
 

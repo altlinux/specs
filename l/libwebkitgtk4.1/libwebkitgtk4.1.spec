@@ -15,7 +15,7 @@
 %endif
 
 %define pkglibexecdir %_libexecdir/webkit2gtk-%api_ver
-%define ver_major 2.44
+%define ver_major 2.46
 
 %define oname webkit
 %define _name webkitgtk
@@ -36,6 +36,8 @@
 %else
 %def_enable jpegxl
 %endif
+%def_enable sysprof
+
 # since 2.19.x in some build environments
 # while build webki2gtk-dep typelibs this error appears
 # FATAL: Could not allocate gigacage memory with maxAlignment = ..
@@ -45,7 +47,7 @@
 %def_enable bubblewrap_sandbox
 
 Name: libwebkitgtk%api_ver
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Web browser engine
@@ -55,13 +57,6 @@ Url: https://www.webkitgtk.org/
 
 Source: %url/releases/%_name-%version.tar.xz
 Source1: webkit2gtk.env
-# Source/cmake/BubblewrapSandboxChecks.cmake
-# https://gitlab.kitware.com/cmake/cmake/issues/18044
-Patch: webkitgtk-2.26.1-alt-bwrap_check.patch
-# python->python3
-Patch1: webkitgtk-2.35.90-alt-python3.patch
-Patch2: webkitgtk-2.30.0-alt-arm64-return-type.patch
-Patch10: webkitgtk-2.33.90-alt-format.patch
 Patch2000: webkitgtk-2.34.3-alt-e2k.patch
 
 %define bwrap_ver 0.3.1
@@ -130,6 +125,8 @@ BuildRequires: libmanette-devel
 %{?_enable_jpegxl:BuildRequires: libjxl-devel}
 # since 2.43.x
 BuildRequires: libbacktrace-devel
+# since 2.45.x
+%{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
 
 %description
 WebKit is an open source web browser engine.
@@ -255,12 +252,6 @@ GObject introspection devel data for the JavaScriptCore library
 
 %prep
 %setup -n %_name-%version
-#%%patch -b .bwrap
-#%%patch1 -p1 -b .python3
-%ifarch aarch64
-#%%patch2 -b .arm64
-%endif
-%patch10 -p1 -b .format
 %ifarch %e2k
 %patch2000 -p2 -b .e2k
 %endif
@@ -329,6 +320,7 @@ export PYTHON=%__python3
 %{?_disable_systemd:-DUSE_SYSTEMD:BOOL=OFF} \
 %{?_enable_soup2:-DUSE_SOUP2=ON} \
 %{?_disable_webdriver:-DENABLE_WEBDRIVER=OFF}
+%{?_disable_sysprof:-DUSE_SYSTEM_SYSPROF_CAPTURE=NO}
 %nil
 %ifarch aarch64 x86_64
 [ %__nprocs -lt 128 ] || export NPROCS=128
@@ -400,6 +392,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Tue Sep 17 2024 Yuri N. Sedunov <aris@altlinux.org> 2.46.0-alt1
+- 2.46.0
+
 * Mon Sep 09 2024 Yuri N. Sedunov <aris@altlinux.org> 2.44.4-alt1
 - 2.44.4
 

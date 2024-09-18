@@ -1,5 +1,5 @@
 %define _name calls
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define xdg_name org.gnome.Calls
 
@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: gnome-%_name
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A phone dialer and call handler
@@ -19,7 +19,7 @@ Url: https://gitlab.gnome.org/GNOME/calls
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%beta.tar.xz
 
 %define glib_ver 2.62
-%define handy_ver 1.4.0
+%define adw_ver 1.4.0
 %define mm_ver 1.12.0
 %define feedback_ver 0.0.1
 
@@ -30,9 +30,9 @@ Requires: feedbackd callaudiod
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg
 BuildRequires: meson
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
-BuildRequires: pkgconfig(gtk+-3.0)
-BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
-BuildRequires: pkgconfig(libpeas-1.0)
+BuildRequires: pkgconfig(gtk4)
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
+BuildRequires: pkgconfig(libpeas-2)
 BuildRequires: pkgconfig(gom-1.0)
 BuildRequires: pkgconfig(mm-glib) >= %mm_ver
 BuildRequires: pkgconfig(libebook-contacts-1.2)
@@ -45,7 +45,7 @@ BuildRequires: pkgconfig(gstreamer-1.0)
 BuildRequires: pkgconfig(gstreamer-audio-1.0)
 BuildRequires: vapi(folks) vapi(libebook-contacts-1.2)
 %{?_enable_man:BuildRequires: %_bindir/rst2man}
-%{?_enable_check:BuildRequires: xvfb-run /usr/bin/appstreamcli desktop-file-utils libcmocka-devel}
+%{?_enable_check:BuildRequires: xvfb-run /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 Calls is a dialer for phone calls, initially PSTN calls but eventually
@@ -56,7 +56,8 @@ other systems like SIP in future.
 
 %build
 %meson \
-%{?_disable_man:-Dmanpages=false}
+    -Dsystemd_user_unit_dir=%_userunitdir \
+    %{subst_enable_meson_bool man manpages}
 %nil
 %meson_build
 
@@ -78,6 +79,7 @@ xvfb-run %__meson_test
 %_libdir/%_name/plugins/provider/ofono/
 %_libdir/%_name/plugins/provider/sip/
 %_datadir/dbus-1/services/%xdg_name.service
+%_userunitdir/%_name-daemon.service
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %{?_enable_man:%_man1dir/%name.1*}
 %_desktopdir/%xdg_name.desktop
@@ -87,6 +89,12 @@ xvfb-run %__meson_test
 %doc NEWS README.md
 
 %changelog
+* Sat Sep 14 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
+* Sun Sep 01 2024 Yuri N. Sedunov <aris@altlinux.org> 47-alt0.9.rc.1
+- 47.rc.1
+
 * Sat Jun 29 2024 Yuri N. Sedunov <aris@altlinux.org> 46.3-alt1
 - 46.3
 

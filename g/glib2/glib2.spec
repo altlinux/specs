@@ -3,7 +3,7 @@
 %{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 2.80
+%define ver_major 2.82
 %define api_ver 2.0
 %define gir_api_ver 3.0
 %define meson_ver 1.2.0
@@ -42,7 +42,7 @@
 %endif
 
 Name: glib2
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -266,6 +266,7 @@ install -p -m644 %_sourcedir/gio-compat-2.57.lds gio/compat.lds
 %build
 %meson \
     %{?_enable_static:--default-library=both} \
+    %{subst_enable_meson_feature debug glib_debug} \
     -Dgio_module_dir='%gio_module_dir' \
     %{subst_enable_meson_feature introspection introspection} \
     %{subst_enable_meson_feature selinux selinux} \
@@ -499,6 +500,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Tue Aug 27 2024 Yuri N. Sedunov <aris@altlinux.org> 2.82.0-alt1
+- 2.82.0
+
 * Mon Aug 26 2024 Yuri N. Sedunov <aris@altlinux.org> 2.80.5-alt1
 - 2.80.5
 

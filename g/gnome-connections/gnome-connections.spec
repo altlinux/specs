@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _name connections
 %define xdg_name org.gnome.Connections
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 
 Name: gnome-%_name
@@ -73,6 +73,9 @@ BuildRequires: pkgconfig(fuse3) >= %fuse_ver
 %exclude %_libdir/%name/pkgconfig/
 
 %changelog
+* Fri Sep 13 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Wed Mar 20 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 

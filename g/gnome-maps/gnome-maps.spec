@@ -1,15 +1,15 @@
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Maps
 
 Name: gnome-maps
-Version: %ver_major.11
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Maps is a map application for GNOME
-License: GPL-2.0 and LGPL-2.0
+License: GPL-2.0-or-later and LGPL-2.1-or-later
 Group: Graphical desktop/GNOME
 Url: https://apps.gnome.org/Maps/
 
@@ -25,10 +25,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %define geocode_api_ver 2.0
 %define geocode_ver 3.26.0
 %define geoclue_ver 2.4.0
-%define shumate_ver 1.2
+%define shumate_ver 1.3
 %define gweather_api_ver 4.0
 %define soup_api_ver 3.0
-%define webkit_api_ver 6.0
 %define rest_api_ver 1.0
 
 Requires: geoclue2 >= %geoclue_ver
@@ -44,7 +43,6 @@ Requires: typelib(Graphene)
 Requires: typelib(Gio)
 Requires: typelib(GLib)
 Requires: typelib(GnomeMaps)
-Requires: typelib(Goa)
 Requires: typelib(GObject)
 Requires: typelib(Gtk) = %gtk_api_ver
 Requires: typelib(GWeather) = %gweather_api_ver
@@ -56,27 +54,24 @@ Requires: typelib(Secret)
 Requires: typelib(Shumate)
 Requires: typelib(Soup) = %soup_api_ver
 Requires: typelib(Xdp) = 1.0
-#Requires: typelib(WebKit) = %webkit_api_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
-BuildRequires: meson >= %meson_ver yelp-tools %_bindir/appstream-util desktop-file-utils
+BuildRequires: meson >= %meson_ver yelp-tools %_bindir/appstreamcli desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: libgjs-devel >= %gjs_ver gobject-introspection-devel
 BuildRequires: pkgconfig(libgeoclue-2.0) >= %geoclue_ver
-BuildRequires: pkgconfig(librsvg-2.0)
-BuildRequires: libgee0.8-devel libgeocode-glib%geocode_api_ver-devel
-BuildRequires: libshumate-devel libxml2-devel
-BuildRequires: libportal-devel
-BuildRequires: libgeocode-glib%geocode_api_ver-gir-devel libgweather%gweather_api_ver-devel
-BuildRequires: libshumate-gir-devel librest%rest_api_ver-gir-devel
+BuildRequires: pkgconfig(geocode-glib-%geocode_api_ver)
+BuildRequires: pkgconfig(shumate-1.0) >= %shumate_ver pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(librsvg-2.0) pkgconfig(libportal)
+BuildRequires: gir(GeocodeGlib) = %geocode_api_ver gir(GWeather) = %gweather_api_ver
+BuildRequires: gir(Shumate) gir(Rest) = %rest_api_ver
 
 %description
 Maps is a map application for GNOME.
 
 %prep
 %setup -n %name-%version%beta
-sed -i 's/\(1.0.0\).beta/\1/' meson.build
 
 %build
 %meson
@@ -102,6 +97,9 @@ sed -i 's/\(1.0.0\).beta/\1/' meson.build
 %exclude %_datadir/%name/gir-1.0/GnomeMaps-%api_ver.gir
 
 %changelog
+* Fri Sep 13 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Mon May 13 2024 Yuri N. Sedunov <aris@altlinux.org> 46.11-alt1
 - 46.11
 

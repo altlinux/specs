@@ -19,7 +19,7 @@
 
 Name: brasero
 Version: %ver_major.3
-Release: alt4
+Release: alt4.1
 
 Summary: CD/DVD burning tool for GNOME.
 Group: Archiving/Cd burning
@@ -61,8 +61,8 @@ BuildRequires: gst-plugins%gst_api_ver-devel >= 0.11.99
 BuildRequires: libxml2-devel >= 2.6.0
 %{?_enable_libburnia:BuildRequires: libburn-devel >= %burn_ver libisofs-devel >= %isofs_ver}
 BuildRequires: libnotify-devel >= 0.7
-%{?_enable_search:BuildPreReq: pkgconfig(tracker-sparql-3.0)}
-%{?_enable_playlist:BuildPreReq: libtotem-pl-parser-devel >= 2.30.2}
+%{?_enable_search:BuildRequires: pkgconfig(tracker-sparql-3.0)}
+%{?_enable_playlist:BuildRequires: libtotem-pl-parser-devel >= 2.30.2}
 BuildRequires: intltool >= 0.35.0
 BuildRequires: libcanberra-gtk3-devel
 BuildRequires: gtk-doc >= 1.11
@@ -243,6 +243,9 @@ GObject introspection devel data for the Brasero
 %{?_enable_nautilus:%exclude %_libdir/nautilus/extensions-%nau_api_ver/libnautilus-%name-extension.la}
 
 %changelog
+* Sat Sep 07 2024 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt4.1
+- rebuilt for gnome-47
+
 * Mon Jul 29 2024 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt4
 - updated to 3.12.3-36-g5cdefa8c
 

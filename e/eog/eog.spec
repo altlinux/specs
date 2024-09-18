@@ -1,9 +1,11 @@
 %define _libexecdir %_prefix/libexec
 %define oldname eog2
-%define ver_major 45
+%define ver_major 47
 %define beta %nil
 %define xdg_name org.gnome.eog
 %define api_ver 3.0
+%define namespace Eog
+
 %def_enable color_management
 %def_enable introspection
 %def_enable libportal
@@ -12,7 +14,7 @@
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Eye Of Gnome
@@ -34,6 +36,7 @@ Obsoletes: %oldname < 2.14.2-alt1
 %define glib_ver 2.74
 %define peas_ver 0.7.4
 %define portal_ver 0.5
+%define gtk_ver 3.24.15
 %define handy_ver 1.5
 %define rsvg_ver 2.44
 %define exempi_ver 1.99.5
@@ -42,8 +45,7 @@ BuildRequires(pre): rpm-macros-meson rpm-build-gnome
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: meson python3-devel yelp-tools libappstream-glib-devel
 BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: libgtk+3-devel >= 3.22
-BuildRequires: libgio-devel >= 2.54
+BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgnome-desktop3-devel >= 3.0
 BuildRequires: gnome-icon-theme >= 2.19.1
 BuildRequires: shared-mime-info >= 0.60
@@ -118,11 +120,11 @@ the functionality of the EOG GUI.
     -Dxmp=true \
     -Dlibjpeg=true \
     -Dlibrsvg=true \
-    %{?_enable_introspection:-Dintrospection=true} \
-    %{?_enable_color_management:-Dcms=true} \
-    %{?_disable_libportal:-Dlibportal=false} \
-    %{?_enable_installed_tests:-Dinstalled-tests=true} \
-    %{?_enable_gtk_doc:-Dgtk_doc=true}
+    %{subst_enable_meson_bool introspection introspection} \
+    %{subst_enable_meson_bool color_management cms} \
+    %{subst_enable_meson_bool libportal libportal} \
+    %{subst_enable_meson_bool installed_tests installed_tests} \
+    %{subst_enable_meson_bool gtk_doc gtk_doc}
 %nil
 %meson_build
 
@@ -165,10 +167,10 @@ ln -sf %name/lib%name.so \
 
 %if_enabled introspection
 %files gir
-%_libdir/%name/girepository-1.0/Eog-%api_ver.typelib
+%_libdir/%name/girepository-1.0/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_datadir/%name/gir-1.0/Eog-%api_ver.gir
+%_datadir/%name/gir-1.0/%namespace-%api_ver.gir
 %endif
 
 %if_enabled installed_tests
@@ -179,6 +181,9 @@ ln -sf %name/lib%name.so \
 
 
 %changelog
+* Sun Sep 08 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Fri Aug 02 2024 Yuri N. Sedunov <aris@altlinux.org> 45.4-alt1
 - 45.4
 
