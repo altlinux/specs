@@ -1,14 +1,13 @@
 %def_disable snapshot
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define _libexecdir %_prefix/libexec
-%def_enable systemd
 %def_enable session_selector
-%def_disable consolekit
 %def_enable docs
 %def_enable man
+%def_enable x11
 
 Name: gnome-session
 Version: %ver_major.0
@@ -16,7 +15,7 @@ Release: alt1%beta
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
 Group: Graphical desktop/GNOME
-License: GPL-2.0
+License: GPL-2.0-or-later
 Url: https://wiki.gnome.org/Projects/SessionManagement
 
 %if_disabled snapshot
@@ -53,16 +52,11 @@ BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-systemd
 BuildRequires: meson
 BuildRequires: libgio-devel glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
-# https://bugzilla.gnome.org/show_bug.cgi?id=710383
-# BuildRequires: libupower-devel >= %upower_ver
-BuildRequires: libgnome-desktop3-devel librsvg-devel libjson-glib-devel
-BuildRequires: libX11-devel libXau-devel libXrandr-devel libXrender-devel libXt-devel
-BuildRequires: libSM-devel libXext-devel libXtst-devel libXi-devel libXcomposite-devel
-BuildRequires: libGL-devel libGLES-devel
-BuildRequires: browser-plugins-npapi-devel perl-XML-Parser xorg-xtrans-devel
-BuildRequires: docbook-utils
-%{?_enable_systemd:BuildRequires: pkgconfig(systemd) >= %systemd_ver libpolkit-devel}
-%{?_enable_consolekit:BuildRequires: libdbus-glib-devel}
+BuildRequires: libgnome-desktop3-devel libjson-glib-devel
+BuildRequires: perl-XML-Parser xmlto docbook-utils
+BuildRequires: pkgconfig(systemd) >= %systemd_ver
+%{?_enable_x11:BuildRequires: pkgconfig(x11) pkgconfig(sm) pkgconfig(ice)
+BuildRequires: pkgconfig(xtrans) pkgconfig(xcomposite)}
 %{?_enable_docs:BuildRequires: docbook-utils xmlto}
 %{?_enable_man:BuildRequires: docbook-utils docbook-style-xsl xsltproc}
 # since 3.22.2
@@ -111,11 +105,10 @@ This package permits to log into GNOME using Xorg.
 %build
 export PATH=$PATH:/sbin
 %meson \
-    %{?_disable_systemd:-Dsystemd=false} \
-    %{?_enable_consolekit:-Dconsolekit=true} \
-    %{?_enable_session_selector:-Dsession_selector=true} \
-    %{?_disable_docs:-Ddocbook=false} \
-    %{?_disable_man:-Dman=false}
+    %{subst_enable_meson_bool x11 x11} \
+    %{subst_enable_meson_bool session_selector session_selector} \
+    %{subst_enable_meson_bool docs docbook} \
+    %{subst_enable_meson_bool man man}
 %nil
 %meson_build
 
@@ -129,13 +122,15 @@ export PATH=$PATH:/sbin
 
 %files -f %name.lang
 %_bindir/%name
+%{?_enable_x11:
 %_bindir/%name-inhibit
-%_bindir/%name-quit
+%_bindir/%name-quit}
 %_libexecdir/%name-binary
+%{?_enable_x11:
 %_libexecdir/%name-check-accelerated
 %_libexecdir/%name-check-accelerated-gl-helper
 %_libexecdir/%name-check-accelerated-gles-helper
-%_libexecdir/%name-ctl
+%_libexecdir/%name-ctl}
 %_libexecdir/%name-failed
 %dir %_datadir/%name
 %_datadir/%name/hardware-compatibility
@@ -153,7 +148,6 @@ export PATH=$PATH:/sbin
 
 %dir %_userunitdir/gnome-launched-.scope.d
 %_userunitdir/gnome-launched-.scope.d/override.conf
-%_userunitdir/gnome-session-x11-services-ready.target
 %dir %_userunitdir/gnome-session@gnome.target.d
 %_userunitdir/gnome-session@gnome.target.d/gnome.session.conf
 %_userunitdir/%name-failed.service
@@ -168,16 +162,20 @@ export PATH=$PATH:/sbin
 %_userunitdir/%name-signal-init.service
 %_userunitdir/%name-wayland.target
 %_userunitdir/%name-wayland@.target
+%_userunitdir/%name.target
+%_userunitdir/%name@.target
+%{?_enable_x11:
+%_userunitdir/gnome-session-x11-services-ready.target
 %_userunitdir/%name-x11-services.target
 %_userunitdir/%name-x11.target
 %_userunitdir/%name-x11@.target
-%_userunitdir/%name.target
-%_userunitdir/%name@.target
+}
 
 %if_enabled session_selector
 %files selector
+%{?_enable_x11:
 %_bindir/%name-custom-session
-%_bindir/%name-selector
+%_bindir/%name-selector}
 %_datadir/%name/session-selector.ui
 %{?_enable_man:%_man1dir/%name-selector.*}
 %_datadir/xsessions/gnome-custom-session.desktop
@@ -185,7 +183,7 @@ export PATH=$PATH:/sbin
 
 %files xsession
 %_datadir/xsessions/gnome.desktop
-%_datadir/xsessions/gnome-xorg.desktop
+%{?_enable_x11:%_datadir/xsessions/gnome-xorg.desktop}
 
 %files wayland
 %_datadir/wayland-sessions/gnome.desktop
@@ -193,6 +191,9 @@ export PATH=$PATH:/sbin
 
 
 %changelog
+* Thu Sep 19 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Mon Mar 18 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 
