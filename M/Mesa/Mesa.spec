@@ -93,7 +93,7 @@
 %vulkan_drivers_add swrast
 
 %define ver_major 24.2
-%define ver_minor 2
+%define ver_minor 3
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -115,7 +115,7 @@ BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel l
 BuildRequires: libdrm-devel libexpat-devel libselinux-devel libxcb-devel libSM-devel libtinfo-devel libudev-devel
 BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel libvdpau-devel xorg-proto-devel libxshmfence-devel
 BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwayland-client-devel libwayland-server-devel
-BuildRequires: libwayland-egl-devel python3-module-mako wayland-protocols libsensors-devel libzstd-devel
+BuildRequires: libwayland-egl-devel python3-module-mako-tests wayland-protocols libsensors-devel libzstd-devel
 BuildRequires: libglvnd-devel rpm-build-python3 glslang python3-module-docutils python3-module-ply python3-module-yaml
 BuildRequires: llvm-devel clang-devel
 %ifarch %gallium_opencl_arches
@@ -380,10 +380,6 @@ tar -xf subprojects.tar
 %ifarch %gallium_opencl_arches
 	-Dgallium-opencl=icd \
 %endif
-#ifarch %vulkan_nouveau_arches
-#	--wrap-mode=nofallback \
-#	--force-fallback-for=syn,paste
-#endif
 #
 
 %meson_build -v
@@ -403,32 +399,6 @@ done
 
 mkdir -p %buildroot%_sysconfdir
 touch %buildroot%_sysconfdir/drirc
-
-shopt -s nullglob
-m="%buildroot%_libdir/X11/modules/dri %buildroot%_libdir/dri"
-for d in $m; do
-	for f in $d/*.so; do
-		[ ! -L "$f" ] || continue
-		n="${f##*/}"
-		s="$(objdump -p "$f" | awk '/SONAME/ {print $2}')"
-		[ -n "$s" ]
-		[ "$n" != "$s" ] || continue
-		t="$d/$s"
-		[ -f "$t" ] || mv "$f" "$t"
-		ln -v -snf "${t##*/}" "$f"
-	done
-done
-d=%buildroot%_libdir/vdpau
-	for f in $d/*.so.1.0.0; do
-                [ ! -L "$f" ] || continue
-                n="${f##*/}"
-                s="$(objdump -p "$f" | awk '/SONAME/ {print $2}')"
-                [ -n "$s" ]
-                [ "$n" != "$s" ] || continue
-                t="$d/$s"
-                [ -f "$t" ] || mv "$f" "$t"
-                ln -v -snf "${t##*/}" "$f"
-        done
 
 %ifarch %armsoc_arches
 find %buildroot%_libdir/X11/modules/dri/ -type l | sed -ne "s|^%buildroot||p" > xorg-dri-armsoc.list
@@ -523,12 +493,6 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %dir %_libdir/gallium-pipe
 %_libdir/gallium-pipe/pipe_swrast.so
 %endif
-%ifarch %gallium_megadriver_arches
-%_libdir/dri/libgallium_drv_video.so
-%endif
-%ifarch %vdpau_arches
-%_libdir/vdpau/libvdpau_gallium.so.1.0.0
-%endif
 %_libdir/libvulkan_lvp.so
 %_datadir/vulkan/icd.d/lvp_icd*.json
 %_bindir/mesa-overlay-control.py
@@ -618,6 +582,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Sep 19 2024 Valery Inozemtsev <shrek@altlinux.ru> 4:24.2.3-alt1
+- 24.2.3
+
 * Mon Sep 09 2024 Valery Inozemtsev <shrek@altlinux.ru> 4:24.2.2-alt1
 - 24.2.2
 
