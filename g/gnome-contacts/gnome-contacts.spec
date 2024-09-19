@@ -1,11 +1,11 @@
 %def_disable snapshot
 
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define gst_api_ver 1.0
 %define xdg_name org.gnome.Contacts
-%def_without cheese
+%def_enable check
 
 Name: gnome-contacts
 Version: %ver_major.0
@@ -16,6 +16,8 @@ License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://apps.gnome.org/Contacts
 
+Vcs: https://gitlab.gnome.org/GNOME/gnome-contacts.git
+
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
@@ -23,25 +25,28 @@ Source: %name-%version%beta.tar
 %endif
 
 %define glib_ver 2.64
-%define gtk4_ver 4.12.0
-%define adwaita_ver 1.4
+%define gtk4_ver 4.15.3
+%define adwaita_ver 1.6
 %define vala_ver 0.56.11
 %define folks_ver 0.15.6
 %define eds_ver 3.42
-%define cheese_ver 3.5.90
 %define portal_ver 0.6
 %define libqrencode_ver 4.1.1
 
+Requires: gst-plugins-base1.0
+Requires: gst-plugin-gtk4
+
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools
-BuildRequires: yelp-tools xsltproc docbook-dtds docbook-style-xsl /usr/bin/appstreamcli valadoc
+BuildRequires: yelp-tools xsltproc docbook-dtds docbook-style-xsl valadoc
 BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk4_ver pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: libfolks-devel >= %folks_ver libfolks-vala libvala-devel >= %vala_ver
 BuildRequires: libgnome-online-accounts-devel libgee0.8-devel evolution-data-server-devel >= %eds_ver
-BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
+BuildRequires: gobject-introspection-devel
 BuildRequires: libportal-gtk4-devel >= %portal_ver
 BuildRequires: libqrencode-devel >= %libqrencode_ver
-%{?_with_cheese:BuildRequires: gstreamer%gst_api_ver-devel libcheese-devel >= %cheese_ver}
+BuildRequires: pkgconfig(gstreamer-1.0)
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 %name is a standalone contacts manager for GNOME desktop.
@@ -51,13 +56,14 @@ BuildRequires: libqrencode-devel >= %libqrencode_ver
 
 %build
 %meson
-# %{?_without_cheese:-Dcheese=false}
 %meson_build
 
 %install
 %meson_install
-
 %find_lang %name
+
+%check
+%__meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -75,6 +81,9 @@ BuildRequires: libqrencode-devel >= %libqrencode_ver
 %doc README*
 
 %changelog
+* Thu Sep 19 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Mon Mar 18 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 
