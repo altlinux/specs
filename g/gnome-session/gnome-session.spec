@@ -10,7 +10,7 @@
 %def_enable x11
 
 Name: gnome-session
-Version: %ver_major.0
+Version: %ver_major.0.1
 Release: alt1%beta
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
@@ -126,11 +126,11 @@ export PATH=$PATH:/sbin
 %_bindir/%name-inhibit
 %_bindir/%name-quit}
 %_libexecdir/%name-binary
+%_libexecdir/%name-ctl
 %{?_enable_x11:
 %_libexecdir/%name-check-accelerated
 %_libexecdir/%name-check-accelerated-gl-helper
-%_libexecdir/%name-check-accelerated-gles-helper
-%_libexecdir/%name-ctl}
+%_libexecdir/%name-check-accelerated-gles-helper}
 %_libexecdir/%name-failed
 %dir %_datadir/%name
 %_datadir/%name/hardware-compatibility
@@ -191,6 +191,9 @@ export PATH=$PATH:/sbin
 
 
 %changelog
+* Thu Sep 19 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0.1-alt1
+- 47.0.1
+
 * Thu Sep 19 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - 47.0
 
