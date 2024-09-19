@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 Summary: Easily test your HTTP library against a local copy of httpbin
 License: MIT
@@ -54,6 +54,9 @@ fixture.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Sep 19 2024 Stanislav Levin <slev@altlinux.org> 2.1.0-alt1
+- 2.0.0 -> 2.1.0.
+
 * Thu May 11 2023 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1
 - 1.0.2 -> 2.0.0.
 
