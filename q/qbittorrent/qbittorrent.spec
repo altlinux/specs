@@ -2,7 +2,7 @@
 %define rel alt1
 
 Name: qbittorrent
-Version: 4.6.6
+Version: 4.6.7
 Epoch: 1
 Release: %rel
 
@@ -132,6 +132,9 @@ desktop-file-install \
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Sep 19 2024 Ilya Mashkin <oddity@altlinux.ru> 1:4.6.7-alt1
+- 4.6.7
+
 * Thu Aug 22 2024 Ilya Mashkin <oddity@altlinux.ru> 1:4.6.6-alt1
 - 4.6.6
 - Add Requires qt6-svg (Closes: #50537)
