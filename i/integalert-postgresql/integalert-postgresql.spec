@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     integalert-postgresql
-Version:  0.1.2
+Version:  0.1.3
 Release:  alt1
 
 Summary:  PostgreSQL checking module for Integalert
@@ -45,6 +45,9 @@ touch %buildroot%_sysconfdir/osec/integalert_postgresql/dirs.conf
 %ghost %_sysconfdir/osec/integalert_postgresql/dirs.conf
 
 %changelog
+* Thu Sep 19 2024 Paul Wolneykien <manowar@altlinux.org> 0.1.3-alt1
+- Fixed sender script access mode: 0755.
+
 * Thu Sep 05 2024 Paul Wolneykien <manowar@altlinux.org> 0.1.2-alt1
 - integalert_postgresql.service: Run /usr/sbin/integalert.
 - Build with integalert. Package configuration files and scripts.
