@@ -6,7 +6,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:    etcd
-Version: 3.5.12
+Version: 3.5.15
 Release: alt1
 Summary: A highly-available key value store for shared configuration
 Group:   System/Servers
@@ -18,7 +18,7 @@ Source0: %name-%version.tar
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.20
+BuildRequires: rpm-build-golang golang >= 1.21
 
 %description
 Etcd is a distributed key value store that provides a reliable way to store data
@@ -101,6 +101,9 @@ useradd -r -g %etcd_group -d /dev/null -s /dev/null -n %etcd_user >/dev/null 2>&
 %_unitdir/%name.service
 
 %changelog
+* Wed Sep 18 2024 Alexander Stepchenko <geochip@altlinux.org> 3.5.15-alt1
+- 3.5.12 -> 3.5.15 (Fixes: CVE-2023-45288, CVE-2024-24786)
+
 * Mon Feb 05 2024 Alexey Shabalin <shaba@altlinux.org> 3.5.12-alt1
 - 3.5.12
 

@@ -12,8 +12,8 @@
 
 %define prog_name            cri-o
 %define cri_o_major          1
-%define cri_o_minor          29
-%define cri_o_patch          8
+%define cri_o_minor          31
+%define cri_o_patch          0
 
 Name: %prog_name%cri_o_major.%cri_o_minor
 Version: %cri_o_major.%cri_o_minor.%cri_o_patch
@@ -26,14 +26,13 @@ VCS: https://github.com/cri-o/cri-o
 ExclusiveArch: %go_arches
 
 Source: %name-%version.tar
-Patch1: .gear/cri-o-vendored-cilium-ebpf-loongarch64-support.patch
 
 Provides: %prog_name = %EVR
 Conflicts: %prog_name < %EVR
 Conflicts: %prog_name > %EVR
 
 Requires: containers-common
-Requires: runc
+Requires: crun
 Requires: cni-plugins >= 1.4.0
 Requires: conntrack-tools
 Requires: iproute2
@@ -61,7 +60,6 @@ Provides: cri-runtime
 
 %prep
 %setup
-%patch1 -p1
 
 sed -i 's/\/local//' contrib/systemd/crio.service
 sed -i 's/\/local//' contrib/systemd/crio-wipe.service
@@ -136,17 +134,23 @@ install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/ne
 %_datadir/zsh/site-functions/*
 
 %changelog
-* Wed Sep 11 2024 Alexander Stepchenko <geochip@altlinux.org> 1.29.8-alt1
-- 1.29.7 -> 1.29.8
+* Wed Sep 11 2024 Alexander Stepchenko <geochip@altlinux.org> 1.31.0-alt1
+- 1.30.5 -> 1.31.0
 
-* Tue Aug 06 2024 Alexander Stepchenko <geochip@altlinux.org> 1.29.7-alt1
-- 1.29.6 -> 1.29.7
+* Wed Sep 11 2024 Alexander Stepchenko <geochip@altlinux.org> 1.30.5-alt1
+- 1.30.4 -> 1.30.5
 
-* Wed Jul 10 2024 Alexander Stepchenko <geochip@altlinux.org> 1.29.6-alt1
-- 1.29.4 -> 1.29.6 (Fixes: CVE-2024-5154)
+* Tue Aug 06 2024 Alexander Stepchenko <geochip@altlinux.org> 1.30.4-alt1
+- 1.30.3 -> 1.30.4
 
-* Fri Jul 05 2024 Alexander Stepchenko <geochip@altlinux.org> 1.29.4-alt2
+* Wed Jul 10 2024 Alexander Stepchenko <geochip@altlinux.org> 1.30.3-alt1
+- 1.30.1 -> 1.30.3
+
+* Fri Jul 05 2024 Alexander Stepchenko <geochip@altlinux.org> 1.30.1-alt2
 - Use macros for systemd instead of absolute paths.
+
+* Thu May 23 2024 Alexander Stepchenko <geochip@altlinux.org> 1.30.1-alt1
+- 1.29.4 -> 1.30.1 (Fixes: CVE-2024-5154)
 
 * Wed May 22 2024 Alexander Stepchenko <geochip@altlinux.org> 1.29.4-alt1
 - 1.28.6 -> 1.29.4

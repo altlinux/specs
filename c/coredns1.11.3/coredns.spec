@@ -1,6 +1,11 @@
+%global _unpackaged_files_terminate_build 1
 %global import_path github.com/coredns/coredns
-Name:     coredns
-Version:  1.11.1
+
+%define prog_name    coredns
+%define prog_version 1.11.3
+
+Name:     %prog_name%prog_version
+Version:  %prog_version
 Release:  alt1
 
 Summary:  CoreDNS is a DNS server that chains plugins
@@ -11,8 +16,12 @@ Url:      https://github.com/coredns/coredns
 Source:   %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-golang
-BuildRequires: golang
+Provides: %prog_name = %EVR
+Conflicts: %prog_name < %EVR
+Conflicts: %prog_name > %EVR
+
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang golang >= 1.21
 
 %description
 %summary.
@@ -52,6 +61,19 @@ export IGNORE_SOURCES=1
 %_man7dir/*
 
 %changelog
+* Thu Sep 19 2024 Alexander Stepchenko <geochip@altlinux.org> 1.11.3-alt1
+- 1.11.1 -> 1.11.3
+- Fixes:
+  + CVE-2023-45288
+  + CVE-2024-22189
+  + CVE-2024-24786
+  + CVE-2023-49295
+  + CVE-2023-48795
+  + CVE-2023-39325
+
+* Wed Sep 18 2024 Alexander Stepchenko <geochip@altlinux.org> 1.11.1-alt2
+- Rename the package to include version in the name
+
 * Sat May 25 2024 Alexander Stepchenko <geochip@altlinux.org> 1.11.1-alt1
 - 1.10.1 -> 1.11.1
 
