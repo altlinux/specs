@@ -1,6 +1,6 @@
 Name: hypridle
 Version: 0.1.2
-Release: alt1
+Release: alt2
 License: BSD-3-Clause
 
 Summary: Hyprland's idle daemon
@@ -31,7 +31,6 @@ Hypridle поддерживает команды блокировки, разб�
 
 %prep
 %setup
-subst "s|lib/systemd/user|%_unitdir|" CMakeLists.txt
 
 %build
 %cmake
@@ -42,8 +41,11 @@ subst "s|lib/systemd/user|%_unitdir|" CMakeLists.txt
 
 %files
 %_bindir/%name
-%_unitdir/%name.service
+%_userunitdir/%name.service
 
 %changelog
+* Thu Sep 19 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.1.2-alt2
+- Fix the systemd service path (ALT bug 51488)
+
 * Fri Jun 14 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.1.2-alt1
 - Initial build
