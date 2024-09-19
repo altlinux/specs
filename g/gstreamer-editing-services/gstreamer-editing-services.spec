@@ -7,7 +7,7 @@
 %def_disable doc
 
 Name: gstreamer-editing-services
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: GStreamer Editing Services (GES)
@@ -93,8 +93,11 @@ library.
 %prep
 %setup -n %new_name-%version
 
+# https://gitlab.freedesktop.org/gstreamer/gstreamer/-/issues/3800
+sed -i 's|Gst\(FrameCompositionApi\)|GES\1|' ges/ges-frame-composition-meta.c
+
 %build
-%meson %{?_enable_doc:-Ddoc=disabled}
+%meson %{subst_enable_meson_feature doc doc}
 %meson_build
 
 %install
@@ -135,6 +138,9 @@ library.
 %endif
 
 %changelog
+* Thu Sep 19 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.8-alt1
+- 1.24.8
+
 * Wed Aug 21 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.7-alt1
 - 1.24.7
 
