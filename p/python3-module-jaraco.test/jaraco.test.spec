@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.4.0
-Release: alt3
+Version: 5.5.1
+Release: alt1
 Summary: Testing support by jaraco
 License: MIT
 Group: Development/Python3
@@ -27,7 +27,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
-%pyproject_builddeps_metadata_extra testing
+%pyproject_builddeps_metadata_extra test
 # required by jaraco/test/cpython.py
 BuildRequires: python3-test
 %endif
@@ -57,6 +57,9 @@ BuildRequires: python3-test
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Wed Sep 18 2024 Stanislav Levin <slev@altlinux.org> 5.5.1-alt1
+- 5.4.0 -> 5.5.1.
+
 * Thu May 16 2024 Stanislav Levin <slev@altlinux.org> 5.4.0-alt3
 - Added missing runtime dependency on python3-test.
 
