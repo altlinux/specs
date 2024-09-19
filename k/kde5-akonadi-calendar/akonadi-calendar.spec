@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -55,7 +55,7 @@ developing applications that use %name.
 %package -n libkf5akonadicalendar
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n libkf5akonadicalendar
 KF5 library
 
@@ -93,6 +93,9 @@ KF5 library
 %_K5lib/libKPim5AkonadiCalendar.so.*
 
 %changelog
+* Thu Sep 19 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt2
+- update requires
+
 * Fri Feb 16 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
