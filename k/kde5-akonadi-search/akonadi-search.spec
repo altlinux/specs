@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -50,28 +50,28 @@ developing applications that use %name.
 %package -n libkf5akonadisearchxapian
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n libkf5akonadisearchxapian
 KF5 library
 
 %package -n libkf5akonadisearchcore
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n libkf5akonadisearchcore
 KF5 library
 
 %package -n libkf5akonadisearchpim
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n libkf5akonadisearchpim
 KF5 library
 
 %package -n libkf5akonadisearchdebug
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n libkf5akonadisearchdebug
 KF5 library
 
@@ -117,6 +117,9 @@ sed -i '/EnabledByDefault/s|true|false|' runner/plasma-krunner-pimcontacts.json.
 %_K5lib/libKPim5AkonadiSearchDebug.so.*
 
 %changelog
+* Thu Sep 19 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt2
+- update requires
+
 * Fri Feb 16 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
