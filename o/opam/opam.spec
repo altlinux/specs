@@ -1,5 +1,5 @@
 Name: opam
-Version: 2.1.5
+Version: 2.2.1
 Release: alt1
 Summary: A source-based package manager for OCaml
 License: LGPLv3
@@ -23,6 +23,11 @@ BuildRequires: ocaml-dose3-devel
 BuildRequires: ocaml-extlib-devel
 BuildRequires: ocaml-jsonm-devel
 BuildRequires: ocaml-result-devel
+BuildRequires: ocaml-spdx_licenses-devel
+BuildRequires: ocaml-sha-devel
+BuildRequires: ocaml-opam-0install-cudf-devel
+BuildRequires: ocaml-swhid_core-devel
+
 BuildRequires: curl dune ocaml-omd gcc-c++
 
 %description
@@ -91,6 +96,9 @@ rm -rf %buildroot%prefix/doc
 %doc shell/
 
 %changelog
+* Thu Sep 17 2024 Anton Farygin <rider@altlinux.ru> 2.2.1-alt1
+- 2.2.1
+
 * Thu Nov 02 2023 Anton Farygin <rider@altlinux.ru> 2.1.5-alt1
 - 2.1.5
 
