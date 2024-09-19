@@ -3,7 +3,7 @@
 
 Name: hashcat
 Version: 6.2.6
-Release: alt2
+Release: alt3
 
 Summary: Advanced password recovery utility
 Group: System/Base
@@ -27,7 +27,9 @@ BuildRequires: libminizip-ng-compat-devel
 # we dont want to make dependencies based on extra tools
 %add_findprov_skiplist %_datadir/%name/tools/*
 %add_findreq_skiplist %_datadir/%name/tools/*
-%add_findreq_skiplist %_datadir/%name/extra/*
+
+# compiling for big-endian architecture is not supported by upstream
+ExcludeArch: ppc64le
 
 %description
 Hashcat is the world's fastest and most advanced password recovery utility,
@@ -36,6 +38,18 @@ supporting five unique modes of attack for over
 Hashcat currently supports CPUs, GPUs, and other hardware accelerators on
 Linux, Windows, and macOS, and has facilities to help
 enable distributed password cracking.
+
+%package cpu
+Summary: Advanced password recovery utility - requirements to run on CPU
+Group: System/Base
+Requires: %name
+Requires: pocl-opencl-icd
+Requires: binutils
+Requires: ocl-icd
+Requires: gcc
+
+%description cpu
+%summary.
 
 %package -n lib%name%soversion
 Summary: Advanced password recovery utility - library
@@ -89,13 +103,20 @@ rm -rf deps/{OpenCL-Headers,unrar,xxHash,zlib}
 ln -s libhashcat.so.%version %buildroot%_libdir/libhashcat.so.%soversion
 ln -s libhashcat.so.%soversion %buildroot%_libdir/libhashcat.so
 
-# remove installed docs
+# install bash completion
+install -D -m 0644 extra/tab_completion/hashcat.sh %buildroot%_datadir/bash-completion/completions/hashcat
+
+# remove installed docs and bash completion
 rm -r %buildroot%_datadir/hashcat/docs
+rm -r %buildroot%_datadir/hashcat/extra/tab_completion
 
 %files
 %_bindir/hashcat
 %_libdir/hashcat
 %_datadir/hashcat
+%_datadir/bash-completion/completions/hashcat
+
+%files cpu
 
 %files -n lib%name%soversion
 %_libdir/libhashcat.so.%soversion
@@ -109,6 +130,10 @@ rm -r %buildroot%_datadir/hashcat/docs
 %doc docs/*
 
 %changelog
+* Wed Jul 31 2024 Alexander Kuznetsov <kuznetsovam@altlinux.org> 6.2.6-alt3
+- Install bash completion.
+- Add separate package with CPU requirements.
+
 * Tue Jul 30 2024 Alexander Kuznetsov <kuznetsovam@altlinux.org> 6.2.6-alt2
 - Drop extra dependencies.
 
