@@ -19,7 +19,7 @@
 
 Name: gpgme
 Version: 1.23.2
-Release: alt4
+Release: alt5
 
 Summary: GnuPG Made Easy is a library designed to make access to GnuPG easier for applications
 License: LGPLv2.1+
@@ -49,7 +49,7 @@ Patch16: gost-constants.patch
 %def_disable static
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 
-BuildRequires(pre): python-devel python3-devel python3(setuptools) rpm-build-ubt
+BuildRequires(pre): python-devel python3-devel python3(setuptools)
 BuildRequires: /proc gcc-c++ gnupg2 libgpg-error-devel libpth-devel libstdc++-devel libassuan-devel >= 2.0
 BuildRequires: texinfo
 BuildRequires: swig
@@ -292,6 +292,9 @@ popd
 %_libdir/libqgpgmeqt6.so.%qgpgme_sover.*
 
 %changelog
+* Thu Sep 19 2024 Sergey V Turchin <zerg@altlinux.org> 1.23.2-alt5
+- fix build requires
+
 * Thu Sep 19 2024 Sergey V Turchin <zerg@altlinux.org> 1.23.2-alt4
 - Build with Qt6 too.
 
