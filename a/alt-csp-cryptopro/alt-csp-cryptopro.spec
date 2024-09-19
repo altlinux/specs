@@ -1,6 +1,15 @@
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
+%ifver_gteq %ubt_id M120
+%define qtver 6
+%else
+%define qtver 5
+%endif
+
 Name: alt-csp-cryptopro
-Version: 0.3.0
-Release: alt4
+Version: 0.3.1
+Release: alt1
 
 Group: File tools
 Summary: CryptoPRO GUI tool
@@ -8,10 +17,11 @@ License: GPL-2.0-or-later
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-kf5
 BuildRequires: cmake
-BuildRequires: quazip-qt5-devel
-BuildRequires: qt5-tools-devel
+
+BuildRequires(pre): rpm-build-kf%qtver rpm-build-ubt rpm-macros-ifver
+BuildRequires: quazip-qt%qtver-devel
+BuildRequires: qt%qtver-tools-devel
 
 Provides: alt-csp-cryptopro-mate = %EVR
 Obsoletes: alt-csp-cryptopro-mate < %EVR
@@ -25,22 +35,43 @@ CryptoPRO GUI tool
 %setup
 
 %build
-%cmake
-%cmake_build
+%if %qtver == 6
+%K6init no_altplace
+%define Kbuild %K6build
+%define Kinstall %K6install
+%define _Ksrv %_K6srv
+%else
+%K5init no_altplace
+%define Kbuild %K5build
+%define Kinstall %K5install
+%define _Ksrv %_K5srv
+%endif
+%Kbuild \
+    -DQT_MAJOR_VERSION=%qtver \
+    #
 
 %install
-%cmake_install
+%Kinstall
+%if %qtver == 6
+mkdir -p %buildroot/%_qt6_translationdir/
+install -m 0644 BUILD/*.qm %buildroot/%_qt6_translationdir/
+%else
 mkdir -p %buildroot/%_qt5_translationdir/
-install -m 0644 %_cmake__builddir/*.qm %buildroot/%_qt5_translationdir/
+install -m 0644 BUILD/*.qm %buildroot/%_qt5_translationdir/
+%endif
 %find_lang --with-qt --all-name %name
 
 %files -f %name.lang
 %_bindir/alt-csp-cryptopro
 %_desktopdir/alt-csp-cryptopro.desktop
-%_K5srv/ServiceMenus/alt-csp-cryptopro.desktop
+%_Ksrv/ServiceMenus/alt-csp-cryptopro.desktop
 %_datadir/file-manager/actions/alt-csp-cryptopro.desktop
 
 %changelog
+* Wed Sep 18 2024 Oleg Solovyov <mcpain@altlinux.org> 0.3.1-alt1
+- build with qt5/6 based on branch
+- explicitly attach signature (Closes: #51245)
+
 * Fri Aug 02 2024 Oleg Solovyov <mcpain@altlinux.org> 0.3.0-alt4
 - fix controls (Closes: #50922)
 
