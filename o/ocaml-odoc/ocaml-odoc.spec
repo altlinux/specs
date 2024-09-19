@@ -4,7 +4,7 @@
 %def_without check
 
 Name: ocaml-odoc
-Version: 2.4.2
+Version: 2.4.3
 Release: alt1
 Summary: Documentation compiler for OCaml and Reason
 Group: Development/ML
@@ -72,6 +72,9 @@ mkdir -p %buildroot/%_docdir
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Sep 19 2024 Anton Farygin <rider@altlinux.ru> 2.4.3-alt1
+- 2.4.2 -> 2.4.3
+
 * Thu Sep 05 2024 Anton Farygin <rider@altlinux.ru> 2.4.2-alt1
 - 2.3.1 -> 2.4.2
 
