@@ -6,6 +6,7 @@
 %define libgpgmepp libgpgmepp%gpgmepp_sover
 %define qgpgme_sover 15
 %define libqgpgme libqgpgme%qgpgme_sover
+%define libqgpgme6 libqgpgmeqt6_%qgpgme_sover
 
 %define min_gnupg_version 1.9.6
 %define gpg_bin_path %_bindir/gpg2
@@ -18,7 +19,7 @@
 
 Name: gpgme
 Version: 1.23.2
-Release: alt3
+Release: alt4
 
 Summary: GnuPG Made Easy is a library designed to make access to GnuPG easier for applications
 License: LGPLv2.1+
@@ -48,10 +49,12 @@ Patch16: gost-constants.patch
 %def_disable static
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 
-BuildRequires(pre): python-devel python3-devel python3(setuptools)
+BuildRequires(pre): python-devel python3-devel python3(setuptools) rpm-build-ubt
 BuildRequires: /proc gcc-c++ gnupg2 libgpg-error-devel libpth-devel libstdc++-devel libassuan-devel >= 2.0
 BuildRequires: texinfo
-BuildRequires: qt5-base-devel swig
+BuildRequires: swig
+BuildRequires: qt5-base-devel
+BuildRequires: qt6-base-devel
 BuildRequires: glib2-devel
 
 %package common
@@ -81,6 +84,13 @@ Group: System/Libraries
 Summary: %name library
 Requires: %name-common >= %EVR
 %description -n %libqgpgme
+%name library
+
+%package -n %libqgpgme6
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %EVR
+%description -n %libqgpgme6
 %name library
 
 %package -n lib%name
@@ -176,6 +186,9 @@ export PATH=$PWD/tmp_bin:$PATH
 %{?!_enable_static:export lt_cv_prog_cc_static_works=no}
 # --enable-maintainer-mode is required to generate the info file
 # when building from CVS snapshot
+mkdir -p BUILD
+ln -sf ../configure BUILD/configure
+pushd BUILD
 %configure \
 	--disable-silent-rules \
 	%{?cvsdate: --enable-maintainer-mode } \
@@ -183,12 +196,33 @@ export PATH=$PWD/tmp_bin:$PATH
 	--disable-fd-passing \
 	--with-gpg=%gpg_bin_path \
 	--with-gpgsm=%gpgsm_bin_path \
+	--enable-languages=cpp,python,qt5 \
 	#
-
 %make_build MAKEINFOFLAGS=--no-split
+popd
+
+mkdir -p BUILD-qt6
+ln -sf ../configure BUILD-qt6/configure
+pushd BUILD-qt6
+%configure \
+	--disable-silent-rules \
+	%{?cvsdate: --enable-maintainer-mode } \
+	%{subst_enable static} \
+	--disable-fd-passing \
+	--with-gpg=%gpg_bin_path \
+	--with-gpgsm=%gpgsm_bin_path \
+	--enable-languages=cpp,python,qt6 \
+	#
+%make_build MAKEINFOFLAGS=--no-split
+popd
 
 %install
+pushd BUILD
 %makeinstall_std
+popd
+pushd BUILD-qt6
+%makeinstall_std
+popd
 
 # Keep only PKG-INFO and *.txt files in egg-info dirs.
 find %buildroot%python3_sitelibdir/gpg-%version-py*egg-info \
@@ -199,7 +233,12 @@ find %buildroot%python3_sitelibdir/gpg-%version-py*egg-info \
 
 %check
 export PATH=$PWD/tmp_bin:$PATH
+pushd BUILD
 %make_build -k check
+popd
+pushd BUILD-qt6
+%make_build -k check
+popd
 
 %files
 %_bindir/gpgme-tool
@@ -226,12 +265,12 @@ export PATH=$PWD/tmp_bin:$PATH
 %_includedir/qgpgme/
 %_libdir/*.so
 %_libdir/cmake/Gpgmepp/
-%_libdir/cmake/QGpgme/
+%_libdir/cmake/QGpgme*/
 %_datadir/aclocal/*.m4
 %_infodir/*.info*
 %_pkgconfigdir/%name.pc
 %_pkgconfigdir/%name-*.pc
-%_datadir/common-lisp/source/%name
+#%_datadir/common-lisp/source/%name
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -248,8 +287,14 @@ export PATH=$PWD/tmp_bin:$PATH
 %files -n %libqgpgme
 %_libdir/libqgpgme.so.%qgpgme_sover
 %_libdir/libqgpgme.so.%qgpgme_sover.*
+%files -n %libqgpgme6
+%_libdir/libqgpgmeqt6.so.%qgpgme_sover
+%_libdir/libqgpgmeqt6.so.%qgpgme_sover.*
 
 %changelog
+* Thu Sep 19 2024 Sergey V Turchin <zerg@altlinux.org> 1.23.2-alt4
+- Build with Qt6 too.
+
 * Tue Apr 30 2024 Paul Wolneykien <manowar@altlinux.org> 1.23.2-alt3
 - Enable tests.
 
