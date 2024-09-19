@@ -10,7 +10,7 @@ AutoProv: no
 
 Name: portproton-installer
 Version: 1.7.1
-Release: alt1
+Release: alt2
 
 Summary: Installer for PortProton
 
@@ -44,7 +44,6 @@ mkdir -p %buildroot%_libdir/%oname
 for lib in %i586_req_l1 %i586_req_l2 %i586_req_l3 ; do
     ln -s /usr/lib/$lib %buildroot%_libdir/%oname/
 done
-ln -s /usr/lib/vdpau/libvdpau_gallium.so.1.0.0 %buildroot%_libdir/%oname/
 
 install -Dm755 %oname %buildroot%_bindir/%oname
 install -Dm644 %xdg_name.desktop %buildroot%_desktopdir/%xdg_name.desktop
@@ -60,6 +59,9 @@ install -Dm644 %xdg_name.metainfo.xml %buildroot%_datadir/metainfo/%xdg_name.met
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Thu Sep 19 2024 Mikhail Tergoev <fidel@altlinux.org> 1.7.1-alt2
+- dropped requires: libvdpau_gallium.so.1.0.0
+
 * Fri Aug 09 2024 Mikhail Tergoev <fidel@altlinux.org> 1.7.1-alt1
 - added .bat file association (thanks @Boria138)
 - dropped requires: wmctrl, /usr/bin/convert
