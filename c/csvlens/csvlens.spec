@@ -1,5 +1,5 @@
 Name:    csvlens
-Version: 0.9.1
+Version: 0.10.1
 Release: alt1
 
 Summary: Command line csv viewer
@@ -60,5 +60,8 @@ install -pv %SOURCE1 %buildroot%_man1dir
 %_man1dir/%{name}*
 
 %changelog
+* Thu Sep 19 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.10.1-alt1
+- New version
+
 * Tue Aug 06 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.9.1-alt1
 - Initial build for Sisyphus (Closes: #50194)
