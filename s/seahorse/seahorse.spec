@@ -1,8 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
-%define ver_major 43
+%define ver_major 47
 %define beta %nil
 %define xdg_name org.gnome.seahorse
 
@@ -21,21 +21,21 @@
 %endif
 
 Name: seahorse
-Version: %ver_major.0
-Release: alt3%beta
+Version: %ver_major.0.1
+Release: alt1%beta
 
 Summary: A password and encryption key manager
-License: GPL-2.0 and LGPL-2.1
+License: GPL-2.0-or-later and LGPL-2.1-or-later
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Seahorse
+
+Vcs: https://gitlab.gnome.org/GNOME/seahorse.git
 
 %if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
-#https://bugzilla.altlinux.org/show_bug.cgi?id=37650
-Source1: %name.ru.po
 
 %define glib_ver 2.66
 %define gtk_ver 3.24
@@ -45,7 +45,7 @@ Source1: %name.ru.po
 %define gcr_ver 3.38
 %define gpgme_ver 1.14
 %define handy_ver 1.5.0
-%define gnupg_ver 2.2.0
+%define gnupg_ver 2.4.0
 
 Requires: dconf
 Requires: gnupg2 > %gnupg_ver gcr >= %gcr_ver
@@ -77,15 +77,14 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 
 %prep
 %setup -n %name-%version%beta
-#cp %SOURCE1 po/ru.po
 
 %build
 %meson \
-%{?_disable_ldap:-Dldap-support=false} \
-%{?_disable_pkcs11:-Dpkcs11-support=false} \
-%{?_disable_hkp:-Dhkp-support=false} \
-%{?_disable_sharing:-Dkey-sharing=false} \
-%{?_enable_man:-Dmanpage=true}
+    %{subst_enable_meson_bool ldap ldap-support} \
+    %{subst_enable_meson_bool pkcs11 pkcs11-support} \
+    %{subst_enable_meson_bool hkp hkp-support} \
+    %{subst_enable_meson_bool sharing key-sharing} \
+    %{subst_enable_meson_bool man manpage}
 %nil
 %meson_build
 
@@ -112,6 +111,9 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 %doc NEWS README* THANKS
 
 %changelog
+* Wed Sep 18 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0.1-alt1
+- 47.0.1
+
 * Wed Aug 16 2023 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt3
 - updated to 43.0-15-g034ddf2b (fixed build with GnuPG-2.4.x)
 
