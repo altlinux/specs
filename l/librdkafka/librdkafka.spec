@@ -10,7 +10,7 @@
 %endif
 
 Name: librdkafka
-Version: 2.5.0
+Version: 2.5.3
 Release: alt1
 
 Summary: the Apache Kafka C/C++ client library
@@ -80,6 +80,9 @@ rm -f %buildroot%_datadir/licenses/librdkafka/LICENSES.txt
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Sep 19 2024 Grigory Ustinov <grenka@altlinux.org> 2.5.3-alt1
+- Automatically updated to 2.5.3.
+
 * Thu Jul 11 2024 Grigory Ustinov <grenka@altlinux.org> 2.5.0-alt1
 - Automatically updated to 2.5.0.
 
