@@ -1,11 +1,11 @@
 %define _name Morphosis
-%define ver_major 1
+%define ver_major 1.4
 %define rdn_name garden.jamie.%_name
 
 %def_enable check
 
 Name: morphosis
-Version: %ver_major.3
+Version: %ver_major.1
 Release: alt1
 
 Summary: Documents converter for the Gnome Desktop
@@ -56,6 +56,9 @@ Libadwaita. Conversions are done with Pandoc.
 %doc README.*
 
 %changelog
+* Fri Sep 20 2024 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
+- 1.4.1
+
 * Sat Jun 15 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt1
 - 1.3
 
