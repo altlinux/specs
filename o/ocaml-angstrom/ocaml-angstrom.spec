@@ -1,7 +1,7 @@
 %def_with check
 %define modulename angstrom
 Name: ocaml-%modulename
-Version: 0.16.0
+Version: 0.16.1
 Release: alt1
 Summary: OCaml Parser combinators built for speed and memory-efficiency
 License: BSD-3-Clause
@@ -51,6 +51,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Sep 20 2024 Anton Farygin <rider@altlinux.ru> 0.16.1-alt1
+- 0.16.0 -> 0.16.1
+
 * Thu Sep 05 2024 Anton Farygin <rider@altlinux.ru> 0.16.0-alt1
 - 0.15.0 -> 0.16.0
 
