@@ -3,8 +3,8 @@
 %set_verify_elf_method strict
 
 Name: liblog4cpp
-Version: 1.1.1
-Release: alt4
+Version: 1.1.5
+Release: alt0.rc1.1
 Summary: Log for C++
 Group: Development/C++
 
@@ -58,6 +58,9 @@ rm -rf %buildroot%_prefix/doc
 %_datadir/aclocal/*.m4
 
 %changelog
+* Fri Sep 20 2024 Anton Farygin <rider@altlinux.ru> 1.1.5-alt0.rc1.1
+- 1.1.1 -> 1.1.5rc1
+
 * Tue Oct 12 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt4
 - Fixed build with gcc-11
 
