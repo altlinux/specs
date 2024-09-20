@@ -1,6 +1,6 @@
 %define libname ptime
 Name: ocaml-%libname
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 Summary: POSIX time for OCaml
 License: ISC
@@ -51,6 +51,9 @@ ocaml pkg/pkg.ml test
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Sep 20 2024 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1
+- 1.2.0
+
 * Thu Sep 05 2024 Anton Farygin <rider@altlinux.ru> 1.1.0-alt1
 - 1.1.0
 
