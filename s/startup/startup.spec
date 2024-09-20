@@ -1,5 +1,5 @@
 Name: startup
-Version: 0.9.9.16
+Version: 0.9.9.17
 Release: alt1
 
 Summary: The system startup scripts
@@ -30,6 +30,8 @@ Requires: /sbin/fsck
 Requires: /etc/modules
 # due to /etc/sysctl.conf move
 Requires: /etc/sysctl.conf
+# Legacy configuration
+Requires: server-role
 
 # due to systemd-sysctl, systemd-tmpfiles, and systemd-modules-load (see ALT#29537).
 # We need a separate version of the utilities because they have less
@@ -54,6 +56,13 @@ Conflicts: sysvinit < 2.88-alt4
 %description
 This package contains scripts used to boot your system,
 change runlevels, and shut the system down cleanly.
+
+%package -n server-role
+Summary: Configuration of server role
+Group: System/Base
+
+%description -n server-role
+%summary
 
 %prep
 %setup
@@ -133,6 +142,7 @@ done
 
 %files
 %config(noreplace) %verify(not md5 mtime size) %_sysconfdir/sysconfig/*
+%exclude %_sysconfdir/sysconfig/system
 %config(noreplace) %_sysconfdir/inittab
 %config(missingok) %_sysconfdir/rc.d/rc?.d/*
 %dir    %_sysconfdir/rc.d/scripts
@@ -148,7 +158,13 @@ done
 %dir %_localstatedir/random
 %ghost %config(noreplace,missingok) %verify(not md5 mtime size) %attr(600,root,root) %_localstatedir/random/random-seed
 
+%files -n server-role
+%config(noreplace) %verify(not md5 mtime size) %_sysconfdir/sysconfig/system
+
 %changelog
+* Fri Sep 06 2024 Andrey Cherepanov <cas@altlinux.org> 0.9.9.17-alt1
+- Move /etc/sysconfig/system to separate package server-role.
+
 * Tue Nov 22 2022 Alexey Gladkov <legion@altlinux.ru> 0.9.9.16-alt1
 - Do not check mounted filesystems (ALT#44394).
 
