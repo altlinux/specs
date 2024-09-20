@@ -10,11 +10,11 @@
 %def_enable vala
 %def_enable qt
 %def_enable qml
-%def_disable check
+%def_enable check
 
 Name: snapd-glib-%api_ver
-Version: 1.65
-Release: alt1.1
+Version: 1.66
+Release: alt1
 
 Group: System/Libraries
 Summary: Library providing a GLib interface to snapd (API 2)
@@ -23,8 +23,6 @@ Url: https://github.com/snapcore/snapd-glib
 
 Vcs: https://github.com/snapcore/snapd-glib.git
 Source: https://github.com/snapcore/%_name/releases/download/%version/%_name-%version.tar.xz
-# 3b46e014bd
-Patch10: snapd-glib-1.65-up-Notice_header.patch
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir %{?_enable_vala:rpm-build-vala} %{?_enable_qt:rpm-macros-qt6}
 BuildRequires: meson gcc-c++
@@ -110,14 +108,13 @@ for snapd-qt to verify the functionality of snapd-qt.
 
 %prep
 %setup -n %_name-%version
-%patch10 -p1
 
 %build
 %meson \
-    %{?_disable_docs:-Ddocs=false} \
-    %{?_disable_vala:-Dvala-bindings=false} \
-    %{?_disable_qt:-Dqt-bindings=false} \
-    %{?_disable_qml:-Dqml-bindings=false}
+    %{subst_enable_meson_bool docs docs} \
+    %{subst_enable_meson_bool vala vala-bindings} \
+    %{subst_enable_meson_bool qt qt6} \
+    %{subst_enable_meson_bool qml qml-bindings}
 %nil
 %meson_build
 
@@ -165,6 +162,10 @@ for snapd-qt to verify the functionality of snapd-qt.
 %endif
 
 %changelog
+* Fri Sep 20 2024 Yuri N. Sedunov <aris@altlinux.org> 1.66-alt1
+- 1.66
+- enabled %%check
+
 * Thu Jul 11 2024 Yuri N. Sedunov <aris@altlinux.org> 1.65-alt1.1
 - applied upstream fix "snapd-qt/meson.build: Install Notice header" (ALT #50876)
 
