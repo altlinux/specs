@@ -4,14 +4,14 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 
 Summary: Style checker for sphinx (or other) rst documentation.
 
 License: Apache-2.0
 Group:   Development/Python3
-URL:     https://github.com/openstack/doc8
+URL:     https://pypi.org/project/doc8
 
 BuildArch: noarch
 
@@ -79,6 +79,9 @@ rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %changelog
+* Fri Sep 20 2024 Anton Vyatkin <toni@altlinux.org> 1.1.2-alt1
+- NMU: New version 1.1.2.
+
 * Wed Apr 26 2023 Anton Vyatkin <toni@altlinux.org> 1.1.1-alt1
 - NMU: New version 1.1.1 (Fix BuildRequires)
 
