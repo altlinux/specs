@@ -1,5 +1,5 @@
 Name: sdcv
-Version: 0.5.4
+Version: 0.5.5.0.1.gbeeb
 Release: alt1
 
 Summary: A console version of StarDict the international dictionary
@@ -11,6 +11,7 @@ Url: https://dushistov.github.io/sdcv/
 Source: %name-%version.tar
 Patch0: %name-t_interactive.patch
 Patch1: %name-t_list.patch
+Patch2: %name-const_cast.patch
 
 BuildPreReq: rpm-macros-cmake
 BuildRequires: gcc-c++
@@ -27,9 +28,7 @@ dictionary.
 
 %prep
 %setup -q
-# fix tests to run in isolated environment
-%patch0 -p1
-%patch1 -p1
+%autopatch -p1
 # make output readable on dark terminals
 sed -i 's/;34m/;36m/' src/libwrapper.cpp
 
@@ -57,6 +56,10 @@ popd
 %_mandir/uk/man1/*
 
 %changelog
+* Fri Sep 20 2024 Andrew Savchenko <bircoph@altlinux.org> 0.5.5.0.1.gbeeb-alt1
+- Version bump.
+- Fix build with recent gcc.
+
 * Fri Oct 28 2022 Andrew Savchenko <bircoph@altlinux.org> 0.5.4-alt1
 - Version bump.
 
