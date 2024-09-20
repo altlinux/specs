@@ -1,13 +1,13 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 0.8
+%define ver_major 0.9
 %define rdn_name org.gnome.World.Iotas
 
 %def_enable check
 
 Name: iotas
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple note taking with Nextcloud Notes
@@ -22,7 +22,8 @@ Vcs: https://gitlab.gnome.org/World/iotas.git
 Source: %name-%version.tar
 %endif
 
-%define adw_ver 1.5
+%define adw_ver 1.6
+%define gtksource_ver 5.6
 
 Requires: typelib(Adw) = 1
 Requires: typelib(GtkSource) = 5
@@ -37,8 +38,7 @@ BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(gobject-introspection-1.0)
-BuildRequires: pkgconfig(libadwaita-1)
-BuildRequires: pkgconfig(gtksourceview-5)
+BuildRequires: pkgconfig(gtksourceview-5) >= %gtksource_ver
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils /usr/bin/glib-compile-schemas}
 
 %description
@@ -77,6 +77,9 @@ on sync with Nextcloud Notes.
 %doc README*
 
 %changelog
+* Fri Sep 20 2024 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
+- 0.9.0
+
 * Fri Aug 09 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1
 - 0.8.2
 
