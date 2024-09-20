@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 %define xdg_name org.gnome.clocks
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 
 %def_enable waked
@@ -8,7 +8,7 @@
 
 Name: gnome-clocks
 Version: %ver_major.0
-Release: alt2%beta
+Release: alt1%beta
 
 Summary: Clock application designed for GNOME 3
 Group: Graphical desktop/GNOME
@@ -28,7 +28,7 @@ Patch10: %name-46.0-alt-waked.patch
 %define geocode_ver 3.26.0
 %define geoclue_ver 2.4
 %define gtk4_ver 4.5
-%define adwaita_ver 1.4
+%define adwaita_ver 1.5
 
 Requires: geoclue2
 %{?_enable_waked:Requires: waked}
@@ -75,6 +75,9 @@ Clock application designed for GNOME 3
 %doc README* NEWS*
 
 %changelog
+* Fri Sep 20 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Mon Aug 19 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt2
 - 46.0-11-g302f429 (updated translations)
 - enabled waked support (ALT #51204)
