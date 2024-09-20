@@ -5,12 +5,12 @@
 
 Summary: MooseFS - distributed, fault tolerant file system
 Name: moosefs
-Version: 3.0.118
+Version: 4.56.5
 Release: alt1
 License: GPLv2
 Group: System/Servers
 Url: http://www.moosefs.com/
-# git-vcs: https://github.com/moosefs/moosefs.git
+Vcs: https://github.com/moosefs/moosefs.git
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
@@ -193,18 +193,23 @@ popd
 %_sbindir/mfsmetadirinfo
 %_sbindir/mfsmetarestore
 %_sbindir/mfsstatsdump
+%_sbindir/mfssupervisor
 %_man5dir/mfsexports.cfg.5*
 %_man5dir/mfstopology.cfg.5*
 %_man5dir/mfsmaster.cfg.5*
+%_man5dir/mfsipmap.cfg.5*
 %_man7dir/moosefs.7*
 %_man8dir/mfsmaster.8*
 %_man8dir/mfsmetarestore.8*
 %_man8dir/mfsmetadump.8*
 %_man8dir/mfsmetadirinfo.8*
 %_man8dir/mfsstatsdump.8*
+%_man8dir/mfsmetasearch.8*
+%_man8dir/mfssupervisor.8*
 %config(noreplace) %mfsconfdir/mfsexports.cfg
 %config(noreplace) %mfsconfdir/mfstopology.cfg
 %config(noreplace) %mfsconfdir/mfsmaster.cfg
+%config(noreplace) %mfsconfdir/mfsipmap.cfg
 %config(noreplace) %attr(640,%_username,%_groupname) %_localstatedir/mfs/metadata.mfs
 %_initdir/moosefs-master
 %_unitdir/moosefs-master.service
@@ -222,12 +227,15 @@ popd
 %files chunkserver
 %_sbindir/mfschunkserver
 %_sbindir/mfschunktool
+%_sbindir/mfschunkdbdump
 %_sbindir/mfscsstatsdump
+%_sbindir/mfsmetasearch
 %_man5dir/mfschunkserver.cfg.5*
 %_man5dir/mfshdd.cfg.5*
 %_man8dir/mfschunkserver.8*
 %_man8dir/mfschunktool.8*
 %_man8dir/mfscsstatsdump.8*
+%_man8dir/mfschunkdbdump.8*
 %config(noreplace) %mfsconfdir/mfschunkserver.cfg
 %config(noreplace) %mfsconfdir/mfshdd.cfg
 %_udevrulesdir/80-moosefs-chunkserver.rules
@@ -236,47 +244,68 @@ popd
 %_unitdir/moosefs-chunkserver@.service
 
 %files client
-%_bindir/mfsappendchunks
+%_bindir/mfsdiagtools
 %_bindir/mfscheckfile
 %_bindir/mfsdirinfo
 %_bindir/mfsfileinfo
 %_bindir/mfsfilerepair
+%_bindir/mfsfilepaths
+%_bindir/mfssnapshots
 %_bindir/mfsmakesnapshot
 %_bindir/mfsrmsnapshot
-%_bindir/mfsgetgoal
-%_bindir/mfssetgoal
-%_bindir/mfscopygoal
-%_bindir/mfsrgetgoal
-%_bindir/mfsrsetgoal
+%_bindir/mfsappendchunks
+%_bindir/mfsfacl
+%_bindir/mfsgetfacl
+%_bindir/mfssetfacl
+%_bindir/mfssclass
 %_bindir/mfsgetsclass
 %_bindir/mfssetsclass
 %_bindir/mfscopysclass
 %_bindir/mfsxchgsclass
-%_bindir/mfslistsclass
+%_bindir/mfstrashtime
 %_bindir/mfsgettrashtime
 %_bindir/mfssettrashtime
 %_bindir/mfscopytrashtime
-%_bindir/mfsrgettrashtime
-%_bindir/mfsrsettrashtime
+%_bindir/mfstrashretention
+%_bindir/mfsgettrashretention
+%_bindir/mfssettrashretention
+%_bindir/mfscopytrashretention
+%_bindir/mfseattr
 %_bindir/mfsgeteattr
 %_bindir/mfsseteattr
 %_bindir/mfsdeleattr
 %_bindir/mfscopyeattr
+%_bindir/mfsquota
 %_bindir/mfsgetquota
 %_bindir/mfssetquota
 %_bindir/mfsdelquota
 %_bindir/mfscopyquota
+%_bindir/mfsarchive
 %_bindir/mfschkarchive
 %_bindir/mfsclrarchive
 %_bindir/mfssetarchive
-%_bindir/mfsfilepaths
 %_bindir/mfsscadmin
-%_bindir/mfstools
 %_bindir/mfsmount
+%_bindir/mfscreatesclass
+%_bindir/mfsmodifysclass
+%_bindir/mfsdeletesclass
+%_bindir/mfsclonesclass
+%_bindir/mfsrenamesclass
+%_bindir/mfslistsclass
+%_bindir/mfsimportsclass
+%_bindir/mfspatadmin
+%_bindir/mfscreatepattern
+%_bindir/mfsdeletepattern
+%_bindir/mfslistpattern
+%_bindir/mfstrashtool
+%_bindir/mfsgetgoal
+%_bindir/mfssetgoal
+%_bindir/mfscopygoal
 %_sbindir/mfsbdev
 /sbin/mount.moosefs
 %_man1dir/*
 %exclude %_man1dir/mfscli.1*
+%_man5dir/mfsbdev.cfg.5*
 %_man8dir/mfsmount.8*
 %_man8dir/mount.moosefs.8*
 %_man8dir/mfsbdev.8*
@@ -294,7 +323,8 @@ popd
 %_datadir/mfscgi/*.html
 %_datadir/mfscgi/*.ico
 %_datadir/mfscgi/*.js
-%_datadir/mfscgi/*.png
+%_datadir/mfscgi/*.py
+%_datadir/mfscgi/*.svg
 
 %files cgiserv
 %config(noreplace) %_sysconfdir/sysconfig/moosefs-cgiserv
@@ -308,6 +338,9 @@ popd
 %_man8dir/mfsnetdump.8*
 
 %changelog
+* Fri Sep 20 2024 Andrew A. Vasilyev <andy@altlinux.org> 4.56.5-alt1
+- 4.56.5
+
 * Tue Aug 13 2024 Andrew A. Vasilyev <andy@altlinux.org> 3.0.118-alt1
 - 3.0.118
 
