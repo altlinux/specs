@@ -1,13 +1,14 @@
-%define _name eyedropper
+%def_disable snapshot
 
-%def_enable snapshot
-%define ver_major 1.0
+%define _name eyedropper
+%define ver_major 2.0
 %define rdn_name com.github.finefindus.%_name
 
+%def_enable check
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME Eyedropper
@@ -15,24 +16,26 @@ License: GPL-3.0
 Group: Graphics
 Url: https://apps.gnome.org/Eyedropper
 
-%if_disabled snapshot
-Source: %url/-/archive/%version/%name-%version.tar.gz
-%else
 Vcs: https://github.com/FineFindus/eyedropper.git
+
+%if_disabled snapshot
+Source: https://github.com/FineFindus/eyedropper/archive/v%version/%name-%version.tar.gz
+%else
 Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
 
 %define glib_ver 2.76
-%define gtk_ver 4.10
-%define adwaita_ver 1.2
+%define gtk_ver 4.14
+%define adwaita_ver 1.6
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson rust-cargo /usr/bin/appstream-util desktop-file-utils
+BuildRequires: meson rust-cargo
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: blueprint-compiler gir(Adw)
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 An application to pick and format colors.
@@ -49,7 +52,7 @@ Features:
 %setup -n %name-%version %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
@@ -75,6 +78,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc CHANGELOG* README*
 
 %changelog
+* Fri Sep 20 2024 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
 * Sun Oct 08 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - v1.0.0-5-g2c52ba0
 
