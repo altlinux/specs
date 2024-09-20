@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 2.2.2
-Release: alt1.1
+Release: alt1.2
 Summary: Python Data Analysis Library
 License: BSD-3-Clause
 Group: Development/Python3
@@ -16,7 +16,7 @@ Url: https://pandas.pydata.org
 # https://github.com/pandas-dev/pandas.git
 Source: %name-%version.tar
 Patch1: pandas-fix-generate-version.patch
-Patch2: pandas-2.1.4-alt-remove-tests-dependency.patch
+Patch2: pandas-alt-remove-tests-dependency.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
@@ -154,6 +154,9 @@ py.test-3 -vra '%buildroot%python3_sitelibdir/pandas'
 %endif
 
 %changelog
+* Thu Sep 19 2024 Anton Vyatkin <toni@altlinux.org> 2.2.2-alt1.2
+- Fix testing import.
+
 * Fri Jul 26 2024 Ivan A. Melnikov <iv@altlinux.org> 2.2.2-alt1.1
 - NMU: skip more numba submodules (fixes FTBFS on loongarch64
   and riscv64).
