@@ -51,7 +51,7 @@
 
 Name: mariadb
 Version: 11.4.3
-Release: alt2
+Release: alt2.1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -1071,6 +1071,9 @@ fi
 %endif
 
 %changelog
+* Fri Sep 20 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 11.4.3-alt2.1
+- Fix build on e2k
+
 * Tue Sep 17 2024 Alexei Takaseev <taf@altlinux.org> 11.4.3-alt2
 - Fix wsrep-API version (ALT #43918)
 
