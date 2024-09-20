@@ -3,7 +3,7 @@
 
 Name: lightdm-kde-greeter
 Version: 0.4.23
-Release: alt5
+Release: alt6
 Group: Graphical desktop/Other
 Summary: LightDM KDE6 Greeter
 License: GPL-3.0+
@@ -14,6 +14,8 @@ Source: %name-%version.tar
 Patch1: port-build-files-to-kde6.patch
 Patch2: embed-liblightdm.patch
 Patch3: port-to-kde6.patch
+Patch4: move-kcm-module-qml-files.patch
+Patch5: port-kcm-to-qt-6.patch
 
 %K6init
 
@@ -49,6 +51,8 @@ This is a fork of KDE4-based LightDM greeter engine for KDE6.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
 %K6build \
@@ -84,11 +88,15 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %_datadir/lightdm-kde-greeter/
 %_K6xdgapp/kcm_lightdm.desktop
 %_K6plug/plasma/kcms/systemsettings/kcm_lightdm.so
-%_K6data/kpackage/kcms/kcm_lightdm/
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmlightdm.policy
 
 
 %changelog
+* Fri Sep 20 2024 Anton Golubev <golubevan@altlinux.org> 0.4.23-alt6
+- set a nicer icon for the "log in" button
+- better debug info
+- port KCM to Qt 6 (Closes: 51186)
+
 * Wed Sep 04 2024 Anton Golubev <golubevan@altlinux.org> 0.4.23-alt5
 - fix FTBFS due to qml_req_skipall macro
 
