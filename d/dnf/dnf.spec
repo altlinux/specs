@@ -3,7 +3,7 @@
 
 Name:    dnf
 Version: 4.13.0
-Release: alt2
+Release: alt3
 
 Summary: Package manager based on libdnf and libsolv. Replaces YUM.
 License: GPL-2.0
@@ -25,6 +25,9 @@ BuildRequires: libdnf-devel
 %if_with tests
 BuildRequires: ctest
 %endif
+
+Provides: yum = %EVR
+Obsoletes: yum < %EVR
 
 %description
 Dandified YUM (DNF) is the next upcoming major version of YUM. It does package
@@ -49,7 +52,9 @@ Automatic upgrades for DNF.
 
 %prep
 %setup
+if [ "$(rpm --eval '%{_tmpfilesdir}')" = "/lib/tmpfiles.d" ] ; then
 %patch0 -p1
+fi
 %patch1 -p1
 
 %build
@@ -60,6 +65,7 @@ make -C "%_cmake__builddir" doc-man
 %install
 %cmake_install
 ln -s dnf-3 %buildroot%_bindir/dnf
+ln -s dnf-3 %buildroot%_bindir/yum
 ln -s dnf-automatic-3 %buildroot%_bindir/dnf-automatic
 mkdir -p %buildroot%_sysconfdir/dnf/vars
 mkdir -p %buildroot%_sysconfdir/dnf/aliases.d
@@ -91,6 +97,7 @@ ctest -VV
 %dir %_sysconfdir/dnf/vars
 %dir %_sysconfdir/dnf/aliases.d
 %_bindir/dnf
+%_bindir/yum
 %_bindir/dnf-3
 %_man1dir/*
 %_man5dir/*
@@ -112,6 +119,9 @@ ctest -VV
 %python3_sitelibdir/%name/automatic
 
 %changelog
+* Thu Sep 19 2024 Andrey Cherepanov <cas@altlinux.org> 4.13.0-alt3
+- Provided yum as package name and executable.
+
 * Wed Jan 24 2024 Andrey Cherepanov <cas@altlinux.org> 4.13.0-alt2
 - Do not use dbCookie for transactions.
 
