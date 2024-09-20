@@ -1,5 +1,5 @@
 Name:    python3-module-google-api-core
-Version: 2.19.2
+Version: 2.20.0
 Release: alt1
 
 Summary: Core Library for Google Client Libraries
@@ -15,7 +15,6 @@ BuildRequires: python3-dev python3-module-setuptools
 BuildArch: noarch
 
 Source: python-api-core-%version.tar
-Patch0: 0001-fix-resolve-issue-handling-protobuf-responses-in-res.patch
 
 %description
 %summary
@@ -26,7 +25,6 @@ documentation at https://googleapis.dev/python/google-api-core/latest.
 
 %prep
 %setup -n python-api-core-%version
-%patch0 -p1
 
 %build
 %python3_build
@@ -40,6 +38,9 @@ documentation at https://googleapis.dev/python/google-api-core/latest.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Sep 20 2024 Andrey Cherepanov <cas@altlinux.org> 2.20.0-alt1
+- New version.
+
 * Wed Aug 28 2024 Andrey Cherepanov <cas@altlinux.org> 2.19.2-alt1
 - New version.
 
