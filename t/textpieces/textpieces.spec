@@ -6,7 +6,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Developer's scratchpad
@@ -46,8 +46,6 @@ Replace substrings and regular expressions
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
-sed -i 's|nonet|no-net|' data/meson.build
-
 %build
 %meson
 %meson_build
@@ -69,6 +67,9 @@ sed -i 's|nonet|no-net|' data/meson.build
 %doc README.*
 
 %changelog
+* Fri Sep 20 2024 Yuri N. Sedunov <aris@altlinux.org> 4.1.1-alt1
+- 4.1.1
+
 * Sun Jul 28 2024 Yuri N. Sedunov <aris@altlinux.org> 4.1.0-alt1
 - 4.1.0
 

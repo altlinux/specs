@@ -1,5 +1,5 @@
 %define _name binary
-%define ver_major 4.0
+%define ver_major 5.0
 %define rdn_name io.github.fizzyizzy05.%_name
 
 %def_enable check
@@ -11,7 +11,7 @@ Release: alt1
 Summary: Convert numbers between bases
 License: GPL-3.0-or-later
 Group: Sciences/Mathematics
-Url: https://github.com/fizzyizzy05/binary
+Url: https://apps.gnome.org/Binary
 
 Vcs: https://github.com/fizzyizzy05/binary.git
 
@@ -57,5 +57,8 @@ hexadecimal and binary numbers.
 %doc README.*
 
 %changelog
+* Fri Sep 20 2024 Yuri N. Sedunov <aris@altlinux.org> 5.0-alt1
+- updated to 5.0-19-g11475c1
+
 * Mon Aug 05 2024 Yuri N. Sedunov <aris@altlinux.org> 4.0-alt1
 - first build for Sisyphus (4.0-5-g7d12c18)
