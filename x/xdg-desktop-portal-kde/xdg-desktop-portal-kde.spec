@@ -5,7 +5,7 @@
 %define rname xdg-desktop-portal-kde
 Name: %rname
 Version: 6.1.5
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -68,6 +68,9 @@ install -m 0755 %SOURCE1 %buildroot/%_K6xdgconf/plasma-workspace/env/%{name}.sh
 
 
 %changelog
+* Fri Sep 20 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt2
+- don't export GTK_USE_PORTAL=1 because GTK3 fonts antialiasing fail
+
 * Tue Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
 - new version
 
