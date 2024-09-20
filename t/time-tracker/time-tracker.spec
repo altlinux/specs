@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Time Tracker for GNOME
@@ -30,6 +30,7 @@ Requires: /usr/bin/gjs dconf
 Requires: typelib(Adw) = 1
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: meson /usr/bin/gjs
 BuildRequires: typelib(Adw)
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils /usr/bin/glib-compile-schemas}
@@ -70,6 +71,9 @@ software (since it's a CSV file).
 %doc README*
 
 %changelog
+* Fri Sep 20 2024 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
 * Wed Aug 14 2024 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
 - 2.0.0
 
