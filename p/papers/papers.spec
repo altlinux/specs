@@ -2,7 +2,7 @@
 %define xdg_name org.gnome.Papers
 
 Name: papers
-Version: 46.2
+Version: 47.0
 Release: alt1
 
 Summary: A document viewer for PDF and other document formats aimed at the GNOME desktop
@@ -19,6 +19,7 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
 BuildRequires: cmake
 BuildRequires: rust-cargo
+BuildRequires: rustfmt
 BuildRequires: clippy
 BuildRequires: gi-docgen
 BuildRequires: itstool
@@ -120,6 +121,9 @@ Requires: %name-gir = %EVR
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Fri Sep 20 2024 Anton Zhukharev <ancieg@altlinux.org> 47.0-alt1
+- Updated to 47.0.
+
 * Tue Sep 17 2024 Anton Zhukharev <ancieg@altlinux.org> 46.2-alt1
 - Built for ALT Sisyphus.
 
