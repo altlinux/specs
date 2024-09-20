@@ -2,13 +2,13 @@
 
 %define _name dosage
 %define __name Dosage
-%define ver_major 1.6
+%define ver_major 1.7
 %define rdn_name io.github.diegopvlk.Dosage
 
 %def_enable check
 
 Name: gnome-%_name
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Dosage
@@ -26,7 +26,7 @@ Source: %_name-%version.tar
 
 BuildArch: noarch
 
-%define bp_ver 0.10
+%define bp_ver 0.14
 
 Requires: /usr/bin/gjs dconf
 Requires: typelib(Adw) = 1
@@ -74,6 +74,9 @@ sed -i "s|no-net --explain|no-net', '--explain|" data/meson.build
 %doc README*
 
 %changelog
+* Fri Sep 20 2024 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
+- 1.7.0
+
 * Sun Aug 04 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.6-alt1
 - 1.6.6
 
