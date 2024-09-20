@@ -1,7 +1,7 @@
 %def_with check
 %define ocamlmod 0install-solver
 Name: ocaml-%ocamlmod
-Version: 2.17
+Version: 2.18
 Release: alt1
 Summary: Package dependency solver
 Group: Development/ML
@@ -54,5 +54,8 @@ developing applications that use %name.
 %doc README.md CHANGES.md
 
 %changelog
+* Fri Sep 20 2024 Anton Farygin <rider@altlinux.ru> 2.18-alt1
+- update to 2.18
+
 * Tue Sep 17 2024 Anton Farygin <rider@altlinux.ru> 2.17-alt1
 - first build for ALT
