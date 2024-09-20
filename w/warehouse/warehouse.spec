@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: %_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Flatpak manager for GNOME
@@ -14,10 +14,11 @@ License: GPL-3.0-or-later
 Group: System/Configuration/Packaging
 Url: https://github.com/flattool/warehouse
 
-BuildArch: noarch
-
 Vcs: https://github.com/flattool/warehouse.git
+
 Source: %name-%version.tar
+
+BuildArch: noarch
 
 %add_python3_path %_datadir/%_name
 
@@ -59,6 +60,9 @@ sed -i "s/\('appstream\)-util'/\1cli'/" data/meson.build
 %doc README*
 
 %changelog
+* Fri Sep 20 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.5-alt1
+- 1.6.5
+
 * Sun Jul 07 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.4-alt1
 - 1.6.4
 

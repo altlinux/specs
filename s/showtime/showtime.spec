@@ -1,19 +1,19 @@
 %def_enable snapshot
 
 %define _name Showtime
-%define ver_major 46
+%define ver_major 47
 %define rdn_name org.gnome.%_name
 
 %def_enable check
 
 Name: showtime
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Movie player for GNOME
 License: GPL-3.0-or-later
 Group: Video
-Url: https://gitlab.gnome.org/GNOME/Incubator/showtime
+Url: https://apps.gnome.org/Showtime
 
 Vcs: https://gitlab.gnome.org/GNOME/Incubator/showtime.git
 
@@ -25,9 +25,12 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
+# macOS specific
+%add_python3_req_skip AppKit Foundation
+
 %define gst_api_ver 1.0
 %define gst_ver 1.24
-%define adw_ver 1.5
+%define adw_ver 1.6
 
 Requires: typelib(Adw) = 1
 Requires: gst-plugin-gtk4 >= 0.13
@@ -76,6 +79,9 @@ straightforward viewing experience.
 %doc README*
 
 %changelog
+* Fri Sep 20 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- updated to 47.0-1-gdb8510a
+
 * Wed Aug 28 2024 Yuri N. Sedunov <aris@altlinux.org> 46.3-alt2
 - updated to 46.3-6-gd8d8f82 (fixed i18n)
 - added gst-plugin-gtk4 to runtime dependencies (ALT #51303)
