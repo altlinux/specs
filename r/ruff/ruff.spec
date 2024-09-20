@@ -6,7 +6,7 @@
 %define zsh_completionsdir %_datadir/zsh/site-functions
 
 Name: %pypi_name
-Version: 0.6.5
+Version: 0.6.6
 Release: alt1
 
 Summary: An extremely fast Python linter, written in Rust
@@ -27,6 +27,7 @@ BuildRequires: rust
 BuildRequires: rust-cargo
 BuildRequires: /proc
 BuildRequires: libjemalloc-devel
+BuildRequires: libzstd-devel
 
 %description
 %summary.
@@ -55,6 +56,11 @@ Requires: %pypi_name = %EVR
 #    - undefined reference to `__aarch64_swp1_acq'
 #    - undefined reference to `__aarch64_cas1_acq_rel'
 export CFLAGS="$CFLAGS -mno-outline-atomics"
+%endif
+%ifarch i586
+# i586 needs this flag to avoid the following building error:
+#    - undefined reference to '__stack_chk_fail_local'
+export CFLAGS="$CFLAGS -fno-stack-protector"
 %endif
 %pyproject_build
 
@@ -92,6 +98,9 @@ export CFLAGS="$CFLAGS -mno-outline-atomics"
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Sep 20 2024 Anton Zhukharev <ancieg@altlinux.org> 0.6.6-alt1
+- Updated to 0.6.6.
+
 * Mon Sep 16 2024 Anton Zhukharev <ancieg@altlinux.org> 0.6.5-alt1
 - Updated to 0.6.5.
 
