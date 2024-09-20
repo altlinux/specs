@@ -1,6 +1,6 @@
 Name: zynaddsubfx
 Version: 3.0.6
-Release: alt4
+Release: alt5
 
 Summary: %name is a open source software synthesizer
 License: GPLv2+
@@ -8,9 +8,7 @@ Group: Sound
 Url: http://zynaddsubfx.sourceforge.net/
 
 Source0: %name-%version-%release.tar
-Source1: DPF.tar
-Source2: pugl.tar
-Source3: instruments.tar
+Source1: deps.tar
 
 BuildRequires: cmake gcc-c++
 BuildRequires: pkgconfig(alsa)
@@ -18,7 +16,6 @@ BuildRequires: pkgconfig(jack)
 BuildRequires: pkgconfig(fftw3)
 BuildRequires: pkgconfig(liblo)
 BuildRequires: pkgconfig(mxml)
-BuildRequires: pkgconfig(rtosc)
 BuildRequires: pkgconfig(zlib)
 
 BuildRequires: pkgconfig(gl)
@@ -35,7 +32,8 @@ number of instruments, from some common heard from expensive hardware to
 interesting sounds that you'll boost to an amazing universe of sounds.
 
 %prep
-%setup -a1 -a2 -a3
+%setup
+tar ixf %SOURCE1
 sed -i '/^#include <string>/ a#include <cstdint>' \
     src/Misc/Bank.h src/Nio/Engine.h
 sed -i 's,/opt/zyn-fusion,%_libdir/zyn-fusion,' \
@@ -61,6 +59,9 @@ sed -i 's,/opt/zyn-fusion,%_libdir/zyn-fusion,' \
 %_pixmapsdir/zynaddsubfx.*
 
 %changelog
+* Fri Sep 20 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.6-alt5
+- 3.0.6-122-g07308dd8
+
 * Wed Aug 30 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.6-alt4
 - fix ui plugin search path (closes: 47068)
 
@@ -93,4 +94,3 @@ sed -i 's,/opt/zyn-fusion,%_libdir/zyn-fusion,' \
 
 * Sun Jul 18 2010 Egor Glukhov <kaman@altlinux.org> 2.4.1-alt1
 - 2.4.1 from upstream tarball
-
