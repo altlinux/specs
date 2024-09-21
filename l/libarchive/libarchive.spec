@@ -4,20 +4,17 @@
 %define libarchive libarchive%sover
 
 Name: libarchive
-Version: 3.6.1
-Release: alt2
+Version: 3.7.5
+Release: alt1
 
 Group: System/Libraries
 Summary: A library for handling streaming archive formats
 License: BSD
-Url: http://www.libarchive.org
-
-# https://github.com/libarchive/libarchive.git
+Url: https://www.libarchive.org
+VCS: https://github.com/libarchive/libarchive.git
 Source: %name-%version.tar
-# SuSE
 # ALT
 Patch100: alt-disable-lzma-mt.patch
-Patch101: CVE-2022-36227-handle-a-calloc-returning-NULL.patch
 
 
 BuildRequires: bzlib-devel glibc-devel libacl-devel libattr-devel libe2fs-devel liblzma-devel liblzo2-devel libssl-devel libxml2-devel zlib-devel
@@ -37,6 +34,14 @@ Provides: %name = %EVR
 
 %description -n %libarchive
 The bsdtar program is a full-featured tar replacement built on libarchive.
+
+%package -n bsdunzip
+Summary: Full-featured unzip replacement built on libarchive
+Group: Archiving/Backup
+Requires: %libarchive = %EVR
+
+%description -n bsdunzip
+The bsdunzip program is a full-featured unzip replacement built on libarchive.
 
 %package -n bsdtar
 Summary: Full-featured tar replacement built on libarchive
@@ -73,7 +78,6 @@ developing applications that use %name.
 %prep
 %setup
 %patch100 -p1
-%patch101 -p1
 
 %build
 %autoreconf
@@ -96,6 +100,10 @@ developing applications that use %name.
 %_libdir/*.so.%sover
 %_libdir/*.so.%sover.*
 
+%files -n bsdunzip
+%_bindir/bsdunzip
+%_man1dir/bsdunzip*
+
 %files -n bsdtar
 %_bindir/bsdtar
 %_man1dir/bsdtar*
@@ -116,6 +124,9 @@ developing applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Sep 21 2024 Anton Farygin <rider@altlinux.ru> 3.7.5-alt1
+- 3.6.1 -> 3.7.5 (Fixes: CVE-2024-26256, CVE-2024-20696)
+
 * Mon Dec 05 2022 Alexander Danilov <admsasha@altlinux.org> 3.6.1-alt2
 - security (fixes: CVE-2022-36227)
 
