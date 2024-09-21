@@ -3,7 +3,7 @@
 %define qsimplecrypto_commit c99b33f0e08b7206116ddff85c22d3b97ce1e79d
 
 Name: amnezia-vpn
-Version: 4.8.0.5
+Version: 4.8.1.0
 Release: alt1
 
 Summary: The best client for self-hosted VPN
@@ -124,6 +124,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Sat Sep 21 2024 Nazarov Denis <nenderus@altlinux.org> 4.8.1.0-alt1
+- Version 4.8.1.0
+
 * Fri Sep 20 2024 Nazarov Denis <nenderus@altlinux.org> 4.8.0.5-alt1
 - Version 4.8.0.5
 
