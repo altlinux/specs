@@ -1,5 +1,5 @@
 %define _name Keypunch
-%define ver_major 3.1
+%define ver_major 4.0
 %define rdn_name dev.bragefuglseth.%_name
 
 %def_enable check
@@ -53,6 +53,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README.*
 
 %changelog
+* Sat Sep 21 2024 Yuri N. Sedunov <aris@altlinux.org> 4.0-alt1
+- 4.0
+
 * Sat Aug 17 2024 Yuri N. Sedunov <aris@altlinux.org> 3.1-alt1
 - 3.1
 

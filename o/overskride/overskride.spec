@@ -1,12 +1,12 @@
 %def_disable snapshot
-%define ver_major 0.5
+%define ver_major 0.6
 %define rdn_name io.github.kaii_lb.Overskride
 
 %def_disable bootstrap
 %def_disable check
 
 Name: overskride
-Version: %ver_major.7
+Version: %ver_major.0
 Release: alt1
 
 Summary: A simple but powerful bluetooth app
@@ -14,10 +14,11 @@ License: GPL-3.0-or-later
 Group: System/Configuration/Hardware
 Url: https://github.com/kaii-lb/overskride
 
+Vcs: https://github.com/kaii-lb/overskride.git
+
 %if_disabled snapshot
 Source: %url/archive/v%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/kaii-lb/overskride.git
 Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
@@ -53,7 +54,7 @@ The main features are:
 %setup -n %name-%version %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
@@ -78,6 +79,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sat Sep 21 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Sun Mar 24 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.7-alt1
 - 0.5.7
 
