@@ -1,28 +1,26 @@
-
 %ifarch %ocaml_native_arch
 %global unison_native NATIVE=true
 %else
-# Use -output-complete-exe instead of -custom
-# see https://bugzilla.altlinux.org/48475
-%global unison_native NATIVE=false CAMLLDFLAGS=-output-complete-exe
+%global unison_native NATIVE=false
 %endif
 
 Name: unison
-Version: 2.51.4
-Release: alt1.1
+Version: 2.53.5
+Release: alt1
 
 Summary: File-synchronization tool
 
 Group: Networking/File transfer
-License: GPLv2+
-Url: http://www.cis.upenn.edu/~bcpierce/unison
-# https://github.com/bcpierce00/unison
+License: GPL-3.0-or-later AND LGPL-2.0-only AND LGPL-2.1-only AND LGPL-2.1-or-later
+Url: https://github.com/bcpierce00/unison
+VCS: https://github.com/bcpierce00/unison
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
-
 BuildRequires(pre): rpm-build-ocaml >= 1.6.1
 BuildRequires: ocaml >= 4.10
+BuildRequires: ocaml-lablgtk3-devel
+BuildRequires: ocaml-cairo2-devel
 BuildRequires: texlive-collection-latexrecommended texlive-collection-basic ghostscript-utils
 
 %description
@@ -35,6 +33,7 @@ other.
 %package gui
 Summary: GTK+ version of unison file-synchronization tool
 Group: Networking/File transfer
+
 %description gui
 Unison is a file-synchronization tool. It allows two replicas of a
 collection of files and directories to be stored on different hosts
@@ -47,20 +46,46 @@ other.
 %patch0 -p1
 
 %build
-%make_build %unison_native
+%make_build tui fsmonitor manpage gui docs %unison_native
 
 %install
-install -Dp -m 0755 src/%name %buildroot/%_bindir/%name
+%makeinstall PREFIX=%_prefix %unison_native
+
+install -Dpm0644 icons/U.svg %buildroot%_iconsdir/hicolor/scalable/apps/unison.svg
+
+mkdir -p %buildroot%_datadir/applications
+cat > %buildroot%_datadir/applications/%{name}.desktop << EOF
+[Desktop Entry]
+Name=Unison
+GenericName=File Synchronizer
+Comment=File-synchronization tool
+Exec=%{name}-gui
+Icon=%name
+Terminal=false
+Type=Application
+Categories=Utility;System;
+EOF
 
 %check
 make test %unison_native
 
 
 %files
-%doc src/COPYING src/NEWS src/README
+%doc LICENSE NEWS.md README.md
 %_bindir/unison
+%_bindir/unison-fsmonitor
+%_man1dir/unison.*
+
+%files gui
+%doc LICENSE
+%_bindir/unison-gui
+%_datadir/applications/%name.desktop
+%_iconsdir/hicolor/scalable/apps/unison.svg
 
 %changelog
+* Sat Sep 21 2024 Anton Farygin <rider@altlinux.ru> 2.53.5-alt1
+- 2.53.5
+
 * Wed Feb 28 2024 Ivan A. Melnikov <iv@altlinux.org> 2.51.4-alt1.1
 - NMU: support building on architectures that don't have ocamlopt
 
