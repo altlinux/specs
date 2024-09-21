@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1
 
 Summary: Planify
@@ -25,7 +25,7 @@ Source: %_name-%version.tar
 %add_debuginfo_skiplist %_bindir/%rdn_name
 
 %define gtk_ver 4.13.7
-%define adwaita_ver 1.4
+%define adwaita_ver 1.5
 %define ecal_ver 3.45.1
 
 Requires: lib%_name = %EVR
@@ -103,6 +103,9 @@ This package contains files necessary to develop Planify plugins.
 %_vapidir/%_name.*
 
 %changelog
+* Sat Sep 21 2024 Yuri N. Sedunov <aris@altlinux.org> 4.11.4-alt1
+- 4.11.4
+
 * Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 4.11.2-alt1
 - 4.11.2
 
