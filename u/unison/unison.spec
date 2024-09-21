@@ -1,12 +1,12 @@
 %ifarch %ocaml_native_arch
 %global unison_native NATIVE=true
 %else
-%global unison_native NATIVE=false
+%global unison_native NATIVE=false CAMLLDFLAGS=-output-complete-exe
 %endif
 
 Name: unison
 Version: 2.53.5
-Release: alt1
+Release: alt2
 
 Summary: File-synchronization tool
 
@@ -83,6 +83,10 @@ make test %unison_native
 %_iconsdir/hicolor/scalable/apps/unison.svg
 
 %changelog
+* Sat Sep 21 2024 Anton Farygin <rider@altlinux.ru> 2.53.5-alt2
+- added CAMLLDFLAGS=-output-complete-exe on non-native architectures
+  (which i lost in 2.35.5-alt1)
+
 * Sat Sep 21 2024 Anton Farygin <rider@altlinux.ru> 2.53.5-alt1
 - 2.53.5
 
