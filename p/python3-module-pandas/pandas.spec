@@ -5,8 +5,8 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 2.2.2
-Release: alt1.2
+Version: 2.2.3
+Release: alt1
 Summary: Python Data Analysis Library
 License: BSD-3-Clause
 Group: Development/Python3
@@ -154,6 +154,9 @@ py.test-3 -vra '%buildroot%python3_sitelibdir/pandas'
 %endif
 
 %changelog
+* Sat Sep 21 2024 Anton Vyatkin <toni@altlinux.org> 2.2.3-alt1
+- New version 2.2.3.
+
 * Thu Sep 19 2024 Anton Vyatkin <toni@altlinux.org> 2.2.2-alt1.2
 - Fix testing import.
 
