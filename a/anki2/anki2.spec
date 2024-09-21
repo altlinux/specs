@@ -2,7 +2,7 @@
 
 Name: anki2
 Version: 24.06.3
-Release: alt1
+Release: alt2
 
 Summary: Flashcard program for using space repetition learning
 License: AGPL-3.0+ and BSD-3-Clause and GPL-3 and MIT and 0BSD and CC-BY-4.0 and Apache-2.0
@@ -27,6 +27,9 @@ Source4: yarn-cache.tar
 Patch1: anki-24.06.3-alt-disable-git-rev-parse.patch
 Patch2: anki-24.06.3-arch-strip-formatter-deps.patch
 Patch3: anki-24.06.3-arch-strip-type-checking-deps.patch
+# Fix build with rust 1.80:
+# https://github.com/time-rs/time/issues/693.
+Patch4: anki2-24.06.3-alt-fix-build-with-rust-1.80.patch
 
 # For playing sound.
 Requires: mpv
@@ -61,6 +64,7 @@ as possible. Anki is based on a theory called spaced repetition.
 %patch1 -p 1
 %patch2 -p 1
 %patch3 -p 1
+%patch4 -p 1
 
 # Replace git rev-parse hash with alt release
 sed -i 's/<BUILDHASH_STRING>/%release/' build/runner/src/build.rs
@@ -136,6 +140,9 @@ install -Dm644 qt/bundle/lin/anki.xml %buildroot%_xdgmimedir/packages/anki.xml
 %_man1dir/anki.*
 
 %changelog
+* Sat Sep 21 2024 Alexander Stepchenko <geochip@altlinux.org> 24.06.3-alt2
+- Fix build with rust 1.80 (force "time" crate to use version 0.3.36).
+
 * Tue Jul 23 2024 Alexander Stepchenko <geochip@altlinux.org> 24.06.3-alt1
 - 2.1.12 -> 24.06.3 (ALT #44369, #44622, #42124, #42288)
 
