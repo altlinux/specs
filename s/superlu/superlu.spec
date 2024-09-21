@@ -1,16 +1,22 @@
 %define _unpackaged_files_terminate_build 1
 
-%define sover 6
+%define sover 7
+
+%ifarch %ix86
+%def_without check
+%else
+%def_with check
+%endif
 
 Name: superlu
-Version: 6.0.1
+Version: 7.0.0
 Release: alt1
 Summary: A set of subroutines to solve a sparse linear system A*X=B
 License: BSD and GPLv2+
 Group: Sciences/Mathematics
 Url: https://github.com/xiaoyeli/superlu
 
-# https://github.com/xiaoyeli/superlu.git
+VCS: https://github.com/xiaoyeli/superlu.git
 Source: %name-%version.tar
 
 # Patch from Gentoo
@@ -121,6 +127,9 @@ ctest
 %doc FORTRAN
 
 %changelog
+* Fri Aug 30 2024 Anton Farygin <rider@altlinux.ru> 7.0.0-alt1
+- 6.0.1 -> 7.0.0
+
 * Wed Feb 14 2024 Anton Farygin <rider@altlinux.ru> 6.0.1-alt1
 - 5.2.2 -> 6.0.1
 - built with libflexiblas

@@ -1,30 +1,22 @@
+%ifnarch %ix86
+%def_with check
+%else
+%def_without check
+%endif
+Name: ensmallen
+Version: 2.21.1
+Release: alt1
+Summary: Header-only C++ library for efficient mathematical optimization
 Group: System/Libraries
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
-# END SourceDeps(oneline)
+License: BSD
+Url: https://www.ensmallen.org
+VCS: https://github.com/mlpack/ensmallen
+Source0: %name-%version.tar
+BuildRequires: ctest cmake
+BuildRequires: gcc-c++
+BuildRequires: libarmadillo-devel >= 9.800.0
 BuildRequires: libhdf5-devel libsuperlu-devel
-# for test, ver >= 2.19.0
 BuildRequires: libflexiblas-devel
-
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:           ensmallen
-Version:        2.19.0
-Release:        alt1_3
-Summary:        Header-only C++ library for efficient mathematical optimization
-
-License:        BSD
-URL:            https://www.ensmallen.org
-Source0:        https://www.ensmallen.org/files/%{name}-%{version}.tar.gz
-
-BuildRequires:  ctest cmake
-BuildRequires:	gcc-c++
-BuildRequires:	libarmadillo-devel >= 9.800.0
-
-# ensmallen is header-only, and the build just builds the tests, so there's no
-# use for a debuginfo package.
-%global debug_package %{nil}
-Source44: import.info
 
 %description
 ensmallen is a header-only C++ library for efficient mathematical optimization.
@@ -34,28 +26,33 @@ that can be used for virtually any mathematical optimization task.  These
 include full-batch gradient descent techniques, small-batch techniques,
 gradient-free optimizers, and constrained optimization.
 
-%prep
-%setup -q
+%package devel
+Group: Other
+Summary: Header-only C++ library for efficient mathematical optimization
+Provides: ensmallen-static = %EVR
 
+%description devel
+ensmallen is a header-only C++ library for efficient mathematical optimization.
+It provides a simple set of abstractions for writing an objective function to
+optimize. It also provides a large set of standard and cutting-edge optimizers
+that can be used for virtually any mathematical optimization task.  These
+include full-batch gradient descent techniques, small-batch techniques,
+gradient-free optimizers, and constrained optimization.
+
+%prep
+%setup
 
 %build
-%{fedora_v2_cmake} -DENSMALLEN_CMAKE_DIR=%{_libdir}/cmake/ensmallen/ -DBUILD_TESTS=ON
+%cmake -DENSMALLEN_CMAKE_DIR=%_libdir/cmake/ensmallen/ -DBUILD_TESTS=ON
 
-%fedora_v2_cmake_build -t ensmallen_tests
+%cmake_build -t ensmallen_tests
 
 %install
-%fedora_v2_cmake_install
+%cmake_install
 
 %check
-# Disable the SmallLovaszThetaSdp test---it exposes a bug in one of ensmallen's
-# dependencies.  In addition, sometimes the tests may fail, as they are
-# probabilistic---so just make sure the test suite passes at least once out of
-# five runs.
-%ifarch armv7hl
-# There's an issue with the tests on armv7hl.
-%else
 success=0;
-cd %{_vpath_builddir};
+pushd %_cmake__builddir;
 for i in `seq 1 5`; do
   code=""; # Reset exit code.
   ./ensmallen_tests --rng-seed=time ~SmallLovaszThetaSdp ~BBSBBLogisticRegressionTest || code=$?
@@ -67,31 +64,20 @@ done
 if [ $success -eq 0 ]; then
   false # Force a build error.
 fi
-cd ..;
-%endif
-
-%package devel
-Group: Other
-Summary:  Header-only C++ library for efficient mathematical optimization
-Provides: ensmallen-static = %{version}-%{release}
-
-%description devel
-ensmallen is a header-only C++ library for efficient mathematical optimization.
-It provides a simple set of abstractions for writing an objective function to
-optimize. It also provides a large set of standard and cutting-edge optimizers
-that can be used for virtually any mathematical optimization task.  These
-include full-batch gradient descent techniques, small-batch techniques,
-gradient-free optimizers, and constrained optimization.
+popd;
 
 %files devel
 %doc --no-dereference LICENSE.txt
-%{_includedir}/ensmallen.hpp
-%{_includedir}/ensmallen_bits/
-%{_libdir}/cmake/ensmallen/ensmallen-config-version.cmake
-%{_libdir}/cmake/ensmallen/ensmallen-config.cmake
-%{_libdir}/cmake/ensmallen/ensmallen-targets.cmake
+%_includedir/ensmallen.hpp
+%_includedir/ensmallen_bits/
+%_libdir/cmake/ensmallen/ensmallen-config-version.cmake
+%_libdir/cmake/ensmallen/ensmallen-config.cmake
+%_libdir/cmake/ensmallen/ensmallen-targets.cmake
 
 %changelog
+* Sat Sep 21 2024 Anton Farygin <rider@altlinux.ru> 2.21.1-alt1
+- 2.19.0 -> 2.21.1
+
 * Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 2.19.0-alt1_3
 - new version
 

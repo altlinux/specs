@@ -1,41 +1,27 @@
-Group: Sciences/Mathematics
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat rpm-macros-generic-compat
-# END SourceDeps(oneline)
+%ifarch %ix86
+%def_without check
+%else
+%def_with check
+%endif
+
+%define soname 14
 %define _unpackaged_files_terminate_build 1
-%define fedora 37
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:           armadillo
-Version:        10.8.2
-Release:        alt1_3
+Version:        14.0.2
+Release:        alt1
 Summary:        Fast C++ matrix library with syntax similar to MATLAB and Octave
-
-License:        ASL 2.0
-URL:            http://arma.sourceforge.net/
-Source:         http://sourceforge.net/projects/arma/files/%{name}-%{version}.tar.xz
-
+Group: Sciences/Mathematics
+License:        Apache-2.0
+URL:            https://arma.sourceforge.net/
+VCS: https://gitlab.com/conradsnicta/armadillo-code
+Source:         %{name}-%{version}.tar
 BuildRequires:  gcc-c++
 BuildRequires:  ctest cmake
 BuildRequires:  libarpack-ng-devel
 BuildRequires:  hdf5-tools libhdf5-devel
 BuildRequires:  libsuperlu-devel
-
-# flexiblas is only available on Fedora, for EPEL replace it by atlas, lapack and openblas
-%if %{?fedora}
-%global extra_options -DALLOW_FLEXIBLAS_LINUX=ON
 BuildRequires:  libflexiblas-devel
-%else
-%undefine __cmake_in_source_build
-%global extra_options %{nil}
-BuildRequires:  atlas-devel
 BuildRequires:  liblapack-devel
-%{!?openblas_arches:%global openblas_arches x86_64 %{ix86} armv7hl %{power64} aarch64}
-%ifarch %{openblas_arches}
-BuildRequires:  libopenblas-devel
-%endif
-%endif
-Source44: import.info
 
 %description
 Armadillo is a C++ linear algebra library (matrix maths)
@@ -52,11 +38,11 @@ This library is useful if C++ has been decided as the language
 of choice (due to speed and/or integration capabilities), rather
 than another language like Matlab or Octave.
 
-%package -n libarmadillo10
-Summary:        Shared library for the %name library
+%package -n libarmadillo%soname
+Summary:        Shared library for the armadillo library
 Group:          System/Libraries
 
-%description -n libarmadillo10
+%description -n libarmadillo%soname
 Armadillo is a C++ linear algebra library (matrix maths)
 aiming towards a good balance between speed and ease of use.
 Integer, floating point and complex numbers are supported,
@@ -77,14 +63,8 @@ This package contains the shared library.
 %package -n libarmadillo-devel
 Group: Sciences/Mathematics
 Summary:        Development headers and documentation for the Armadillo C++ library
-Requires:       libarmadillo10 = %EVR
+Requires:       libarmadillo%soname = %EVR
 Requires:       hdf5-tools
-
-%if %{?fedora}
-%else
-%ifarch %{openblas_arches}
-%endif
-%endif
 Provides: %name-devel = %EVR
 
 
@@ -100,26 +80,25 @@ and user documentation (API reference guide).
 sed -i 's/\r//' README.md
 rm -rf examples/*win64*
 
-
 %build
-%{fedora_v2_cmake} %{extra_options}
-%fedora_v2_cmake_build
+%cmake -DALLOW_FLEXIBLAS_LINUX=ON
+%cmake_build
 
 
 %install
-%fedora_v2_cmake_install
+%cmake_install
 
 
 %check
-%{fedora_v2_cmake} %{extra_options} -DBUILD_SMOKE_TEST=ON
-make -C "%{_vpath_builddir}"
-%fedora_v2_ctest
+%cmake -DALLOW_FLEXIBLAS_LINUX=ON -DBUILD_SMOKE_TEST=ON
+%cmake_build
+%ctest
 
 
-%files -n libarmadillo10
+%files -n libarmadillo%soname
 %doc --no-dereference LICENSE.txt NOTICE.txt
-%_libdir/libarmadillo.so.10
-%_libdir/libarmadillo.so.10.*
+%_libdir/libarmadillo.so.%soname
+%_libdir/libarmadillo.so.%{soname}.*
 
 %files -n libarmadillo-devel
 %{_libdir}/libarmadillo.so
@@ -134,14 +113,18 @@ make -C "%{_vpath_builddir}"
 %doc armadillo_icon.png
 %doc mex_interface
 %doc armadillo_nicta_2010.pdf
-%doc rcpp_armadillo_csda_2014.pdf
+%doc armadillo_rcpp_2014.pdf
 %doc armadillo_joss_2016.pdf
 %doc armadillo_spcs_2017.pdf
 %doc armadillo_lncs_2018.pdf
 %doc armadillo_solver_2020.pdf
+%doc armadillo_mca_2019.pdf
 
 
 %changelog
+* Fri Sep 20 2024 Anton Farygin <rider@altlinux.ru> 14.0.2-alt1
+- 10.8.2 -> 14.0.2
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 10.8.2-alt1_3
 - update to new release by fcimport
 
