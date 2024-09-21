@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define ver_major 1.6
 %define beta %nil
 %define namespace Adw
@@ -13,7 +13,7 @@
 
 Name: libadwaita
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 Epoch: 1
 
 Summary: Library with GTK4 widgets for mobile devices
@@ -21,11 +21,11 @@ Group: System/Libraries
 License: LGPL-2.1-or-later
 Url: https://gitlab.gnome.org/GNOME/libadwaita
 
+Vcs: https://gitlab.gnome.org/GNOME/libadwaita.git
+
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
-#Source: %url/-/archive/%version/%name-%version.tar.bz2
 %else
-Vcs: https://gitlab.gnome.org/GNOME/libadwaita.git
 Source: %name-%version%beta.tar
 %endif
 
@@ -101,8 +101,8 @@ demonstrates %name variety of all its widgets.
 
 %build
 %meson \
-    %{?_enable_gtk_doc:-Dgtk_doc=true} \
-    %{?_disable_examples:-Dexamples=false}
+    %{subst_enable_meson_bool gtk_doc gtk_doc} \
+    %{subst_enable_meson_bool examples examples}
 %nil
 %meson_build
 
@@ -147,6 +147,9 @@ xvfb-run -s -noreset %__meson_test
 %endif
 
 %changelog
+* Sat Sep 21 2024 Yuri N. Sedunov <aris@altlinux.org> 1:1.6.0-alt2
+- updated to 1.6.0-2-g74032bba (fixed i908, i915)
+
 * Fri Sep 13 2024 Yuri N. Sedunov <aris@altlinux.org> 1:1.6.0-alt1
 - 1.6.0
 

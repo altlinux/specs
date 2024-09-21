@@ -11,7 +11,7 @@
 
 Name: warp
 Version: %ver_major.0
-Release: alt1.1
+Release: alt2
 
 Summary: Fast and secure file transfer tool
 License: GPL-3.0
@@ -58,7 +58,7 @@ transfers are encrypted.
 %setup -n %name-%version %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
@@ -83,6 +83,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sat Sep 21 2024 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt2
+- updated to v0.7.0-38-gcf65284
+
 * Sat Apr 13 2024 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1.1
 - explicitly enabled qr-code support (ALT #50014)
 
