@@ -1,28 +1,26 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_with libQgpsmm
-%define abiversion 29
+%define abiversion 30
 
 Name: gpsd
 Summary: Service daemon for mediating access to a GPS
-Version: 3.23.1
-Release: alt2.1
+Version: 3.25
+Release: alt1
 License: BSD-2-Clause
 Group: System/Servers
 Url: https://gpsd.gitlab.io/gpsd/index.html
-Packager: Anton V. Boyarshinov <boyarsh@altlinux.org>
-
+VCS: https://gitlab.com/gpsd/gpsd
 Source: %name-%version.tar
-Requires: libgps%abiversion = %version-%release
 
-Patch0: gpsd-apistatus.patch
-Patch1: remove-distutils-for-python-3.12.patch
-
+# Add old status names to gps.h for compatibility
+Patch0: gpsd-3.25-fedora-apistatus.patch
+Requires: libgps%abiversion = %EVR
 BuildRequires: asciidoc docbook-dtds docbook-style-xsl asciidoctor gem-rouge
 
 BuildRequires: scons gcc-c++ libXaw-devel libXext-devel libXpm-devel libdbus-glib-devel xorg-cf-files xsltproc libgtk+3-devel pps-tools-devel
-
 BuildRequires: python3-dev python3-module-pycairo python3-module-pygobject3 python3-module-serial python3-module-matplotlib
+BuildRequires: python3-module-setuptools
 %add_findreq_skiplist */gpsdebuginfo
 
 %if_with libQgpsmm
@@ -69,9 +67,9 @@ This package contains Qt bindings for gpsd
 %package -n libgps-devel
 Summary: Development files for libgps
 Group: Development/C
-Requires: libgps%abiversion = %version-%release
+Requires: libgps%abiversion = %EVR
 %if_with libQgpsmm
-Requires: libQgpsmm%abiversion = %version-%release
+Requires: libQgpsmm%abiversion = %EVR
 %endif
 
 %description -n libgps-devel
@@ -80,9 +78,9 @@ Development files for libgps
 %package -n gpsd-clients-console
 Summary: Console clients for gpsd
 Group: Sciences/Geosciences
-Requires: libgps%abiversion = %version-%release
-Requires: python3-module-gps = %version-%release
-Conflicts: gpsd-clients < %version-%release
+Requires: libgps%abiversion = %EVR
+Requires: python3-module-gps = %EVR
+Conflicts: gpsd-clients < %EVR
 
 %description -n gpsd-clients-console
 Console clients pack for the gpsd
@@ -93,9 +91,9 @@ It can run on a serial terminal or terminal emulator.
 %package -n gpsd-clients-gui
 Summary: Clients for gpsd with an X interface
 Group: Sciences/Geosciences
-Requires: libgps%abiversion = %version-%release
-Requires: python3-module-gps = %version-%release
-Conflicts: gpsd-clients < %version-%release
+Requires: libgps%abiversion = %EVR
+Requires: python3-module-gps = %EVR
+Conflicts: gpsd-clients < %EVR
 
 %description -n gpsd-clients-gui
 xgps is a simple sample client for gpsd with an X interface.
@@ -104,9 +102,9 @@ xgpsspeed is a speedometer that uses position information from gpsd.
 %package -n gpsd-helpers
 Summary: Helpers pack for the gpsd
 Group: Sciences/Geosciences
-Requires: libgps%abiversion = %version-%release
-Requires: python3-module-gps = %version-%release
-Conflicts: gpsd-clients < %version-%release
+Requires: libgps%abiversion = %EVR
+Requires: python3-module-gps = %EVR
+Conflicts: gpsd-clients < %EVR
 
 %description -n gpsd-helpers
 Helpers pack for the gpsd
@@ -120,18 +118,21 @@ Python bindings to libgps
 
 %prep
 %setup
-
 %patch0 -p1
-%patch1 -p2
 
 %build
 scons \
     prefix=/usr \
+    systemd=yes \
+    dbus_export=yes \
     libdir=%_libdir \
     docdir=%_defaultdocdir/%name-%version \
     icondir=%_iconsdir \
     python_libdir=%python3_sitelibdir \
+    udevdir=$(dirname %{_udevrulesdir}) \
+    unitdir=%{_unitdir} \
     target_python=%__python3 \
+    python_shebang=%__python3 \
     %if_with libQgpsmm
 	qt=yes \
 	qt_versioned=5 \
@@ -177,6 +178,7 @@ install -p -m 0644 %name-%version/packaging/rpm/gpsd.sysconfig %buildroot/%_sysc
 %_man1dir/gps.*
 
 %_iconsdir/gpsd-logo.png
+%_datadir/snmp
 
 %files -n libgps%abiversion
 %_libdir/libgps*.so.%abiversion
@@ -245,10 +247,8 @@ install -p -m 0644 %name-%version/packaging/rpm/gpsd.sysconfig %buildroot/%_sysc
 %_bindir/xgps
 %_desktopdir/xgps.desktop
 %_man1dir/xgps*
-
 %_bindir/xgpsspeed
 %_desktopdir/xgpsspeed.desktop
-%_man1dir/xgpsspeed*
 
 %files -n gpsd-helpers
 %_bindir/gps2udp
@@ -269,9 +269,6 @@ install -p -m 0644 %name-%version/packaging/rpm/gpsd.sysconfig %buildroot/%_sysc
 %_bindir/gpssnmp
 %_man1dir/gpssnmp*
 
-#_bindir/ntploggps
-#_man1dir/ntploggps*
-
 %_bindir/ntpshmmon
 %_man1dir/ntpshmmon*
 
@@ -280,6 +277,9 @@ install -p -m 0644 %name-%version/packaging/rpm/gpsd.sysconfig %buildroot/%_sysc
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat Sep 21 2024 Anton Farygin <rider@altlinux.ru> 3.25-alt1
+- 3.23.1 -> 3.25
+
 * Sat Oct 21 2023 Grigory Ustinov <grenka@altlinux.org> 3.23.1-alt2.1
 - NMU: dropped dependency on distutils.
 
