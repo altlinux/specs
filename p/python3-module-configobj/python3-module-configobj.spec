@@ -3,18 +3,19 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 5.0.8
-Release: alt1.1
+Version: 5.0.9
+Release: alt1
 
 Summary: a Python module for easy reading and writing of config files
 License: BSD-3-Clause
 Group: Development/Python3
 Url: http://configobj.readthedocs.org/
 
+Vcs: https://github.com/DiffSK/configobj
+
 %if_disabled snapshot
 Source: https://pypi.python.org/packages/source/c/%pypi_name/%pypi_name-%version.tar.gz
 %else
-Vcs: https://github.com/DiffSK/configobj
 Source: %pypi_name-%version.tar
 %endif
 
@@ -46,6 +47,9 @@ tox.py3 -e py%(echo %__python3_version | tr -d .) --sitepackages -o -v
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Sep 21 2024 Yuri N. Sedunov <aris@altlinux.org> 5.0.9-alt1
+- 5.0.9
+
 * Mon Mar 25 2024 Yuri N. Sedunov <aris@altlinux.org> 5.0.8-alt1.1
 - fixed BR
 
