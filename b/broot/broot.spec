@@ -1,12 +1,14 @@
 %def_with check
 
 Name: broot
-Version: 1.36.1
+Version: 1.44.0
 Release: alt1
 Summary: A new way to see and navigate directory trees
 License: MIT
 Group: File tools
 Url: https://dystroy.org/broot
+VCS: https://github.com/Canop/broot
+
 Source: %name-%version.tar
 Source1: vendor.tar
 Patch: alt-fix-build-nix-on-loongarch64.patch
@@ -23,7 +25,7 @@ BuildRequires: cargo-vendor-checksum diffstat
 %patch -p1
 diffstat -p1 -l < %PATCH0 | sed -re 's@vendor/@@' | xargs -r cargo-vendor-checksum -f
 mkdir -p .cargo
-cat >> .cargo/config <<EOF
+cat >> .cargo/config.toml <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
@@ -50,6 +52,9 @@ install -Dm 0644 man/page %buildroot%_man1dir/%name.1
 %_man1dir/%name.1.*
 
 %changelog
+* Sat Sep 21 2024 Alexander Makeenkov <amakeenk@altlinux.org> 1.44.0-alt1
+- Updated to version 1.44.0.
+
 * Fri Apr 26 2024 Alexander Makeenkov <amakeenk@altlinux.org> 1.36.1-alt1
 - Updated to version 1.36.1.
 
