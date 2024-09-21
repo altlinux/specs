@@ -6,7 +6,7 @@
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Javascript Bindings for Cinnamon
 Group: System/Libraries
@@ -99,6 +99,9 @@ xvfb-run %meson_test
 %doc examples/*
 
 %changelog
+* Sat Sep 21 2024 Anton Midyukov <antohami@altlinux.org> 6.2.0-alt2
+- Fix meson.build deprecations up to 0.56.0 (applied upstream patch)
+
 * Sun Jun 16 2024 Anton Midyukov <antohami@altlinux.org> 6.2.0-alt1
 - 6.2.0
 
