@@ -9,7 +9,7 @@
 
 Name: libnss-role
 Version: 0.5.6
-Release: alt3
+Release: alt4
 
 Summary: NSS API library and admin tools for roles and privilegies
 
@@ -90,10 +90,10 @@ if [ $1 -eq 0 ]; then
 	update_chrooted all
 fi
 
-%triggerun -- libnss-role < 0.5.6-alt3
+%triggerun -- libnss-role < 0.5.6-alt4
 %pre_control libnss-role
 
-%triggerpostun -- libnss-role < 0.5.6-alt3
+%triggerpostun -- libnss-role < 0.5.6-alt4
 %post_control libnss-role
 
 %files
@@ -113,6 +113,10 @@ fi
 %_includedir/role/
 
 %changelog
+* Thu Sep 19 2024 Evgeny Sinelnikov <sin@altlinux.org> 0.5.6-alt4
+- Fix control support with various role module using.
+- Fix not standart setup of libnss-role during upgrade (closes #50704).
+
 * Fri Aug 16 2024 Evgeny Sinelnikov <sin@altlinux.org> 0.5.6-alt3
 - Fix disabling libnss-role by control during upgrade (closes #50704).
 
