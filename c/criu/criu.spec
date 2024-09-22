@@ -2,12 +2,13 @@
 %define optflags_lto %nil
 %ifnarch ppc64le loongarch64
 %define with_amdgpu 1
+%define with_cuda 1
 %endif
 %define _unpackaged_files_terminate_build 1
 
 Name: criu
-Version: 3.19
-Release: alt1.1
+Version: 4.0
+Release: alt1
 
 Summary: Utility to checkpoint/restore tasks
 License: GPL-2.0-only
@@ -42,6 +43,7 @@ BuildRequires: asciidoc xmlto %_bindir/a2x
 BuildRequires: libnftables-devel
 BuildRequires: libgnutls-devel
 BuildRequires: libbsd-devel
+BuildRequires: git
 %ifdef with_amdgpu
 BuildRequires: libdrm-devel
 %endif
@@ -97,6 +99,13 @@ Group: System/Libraries
 %description plugin-amdgpu
 This package contains the AMDGPU ROCm support plugin for checkpoint/restore.
 
+%package plugin-cuda
+Summary: CUDA plugin for checkpoint/restore.
+Group: System/Libraries
+
+%description plugin-cuda
+This package contains the CUDA support plugin for checkpoint/restore.
+
 %prep
 %setup -n criu-%version
 %autopatch -p1
@@ -113,7 +122,7 @@ export CFLAGS="%optflags"
 	PREFIX=%prefix V=1 all docs
 
 %install
-sed -i -e "s,--upgrade --ignore-installed,--no-index --no-deps -v --no-build-isolation,g" lib/Makefile crit/Makefile
+export PIPFLAGS="--no-build-isolation --no-index --no-deps"
 %makeinstall_std \
 %ifarch armh
     UNAME-M=armv7l \
@@ -131,6 +140,9 @@ find %buildroot -name 'lib*.a' -delete
 %ifndef with_amdgpu
 echo "Removing %buildroot%_man1dir/criu-amdgpu-plugin.1*"
 rm -f %buildroot%_man1dir/criu-amdgpu-plugin.1*
+%endif
+%ifndef with_cuda
+rm -f %buildroot%_libdir/criu/cuda_plugin.so
 %endif
 
 %files
@@ -175,7 +187,17 @@ rm -f %buildroot%_man1dir/criu-amdgpu-plugin.1*
 %_libdir/criu/amdgpu_plugin.so
 %endif
 
+%ifdef with_cuda
+%files plugin-cuda
+%doc plugins/cuda/README.md
+%dir %_libdir/criu
+%_libdir/criu/cuda_plugin.so
+%endif
+
 %changelog
+* Sun Sep 22 2024 Andrew A. Vasilyev <andy@altlinux.org> 4.0-alt1
+- Updated to 4.0.
+
 * Tue Dec 05 2023 Ivan A. Melnikov <iv@altlinux.org> 3.19-alt1.1
 - NMU: build on loongarch64
 
