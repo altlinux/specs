@@ -2,7 +2,7 @@
 
 Name: menu
 Version: 2.1.41
-Release: alt23
+Release: alt24
 
 Group: System/Base
 Summary: Menu system
@@ -191,6 +191,9 @@ sh -n %buildroot%_sysconfdir/firsttime.d/menu
 %doc doc/{*html,README*,BUGS,menu.txt*} AUTHORS debian/changelog debian/copyright examples
 
 %changelog
+* Sun Sep 22 2024 Anton Midyukov <antohami@altlinux.org> 2.1.41-alt24
+- update-menus.sh: use config /etc/locale.conf as a fallback
+
 * Fri Apr 21 2023 Sergey V Turchin <zerg@altlinux.org> 2.1.41-alt23
 - don't use egrep
 
