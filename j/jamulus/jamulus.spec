@@ -1,5 +1,5 @@
 %define ver_major 3
-%define ver_minor 10
+%define ver_minor 11
 %define ver_micro 0
 
 %define version %ver_major.%ver_minor.%ver_micro
@@ -14,6 +14,8 @@ License: GPL-2.0 and BSD-3-Clause and MIT
 Group: Sound
 Url: https://jamulus.io/
 
+Vcs: https://github.com/jamulussoftware/jamulus.git
+
 Source: https://github.com/jamulussoftware/jamulus/archive/%git_ver/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-macros-qt6
@@ -26,6 +28,7 @@ BuildRequires: qt6-multimedia-devel
 BuildRequires: libqt6-network
 BuildRequires: libqt6-widgets
 BuildRequires: libqt6-xml
+BuildRequires: qt6-tools
 BuildRequires: libopus-devel
 BuildRequires: pkgconfig(jack)
 
@@ -58,6 +61,9 @@ software, mixes the audio data and sends the mix back to each client.
 %doc README.md ChangeLog COPYING
 
 %changelog
+* Sun Sep 22 2024 Yuri N. Sedunov <aris@altlinux.org> 3.11.0-alt1
+- 3.11.0
+
 * Wed Nov 29 2023 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
 - 3.10.0
 

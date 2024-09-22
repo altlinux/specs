@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: geeqie
-Version: 2.4
+Version: 2.5
 Release: alt1
 
 Summary: Graphics file browser utility
@@ -92,6 +92,7 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %dir %_libdir/%name
 %_libdir/%name/%name-camera-import
 %_libdir/%name/%name-camera-import-hook-script
+%_libdir/%name/%name-exif-datetime-to-file
 %_libdir/%name/%name-export-jpeg
 %_libdir/%name/%name-image-crop
 %_libdir/%name/%name-random-image
@@ -110,9 +111,13 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_man1dir/%name.1.*
 %_datadir/metainfo/%rdn_name.appdata.xml
+%_datadir/bash-completion/completions/%name
 %doc NEWS README.*
 
 %changelog
+* Sun Sep 22 2024 Yuri N. Sedunov <aris@altlinux.org> 2.5-alt1
+- 2.5
+
 * Sun Mar 24 2024 Yuri N. Sedunov <aris@altlinux.org> 2.4-alt1
 - 2.4
 

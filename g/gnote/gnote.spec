@@ -2,7 +2,7 @@
 
 %define rdn_name org.gnome.Gnote
 %define _rdn_name org.gnome.gnote
-%define ver_major 46
+%define ver_major 47
 %define api_ver %ver_major
 %define beta %nil
 %define _libexecdir %_prefix/libexec
@@ -10,13 +10,15 @@
 %def_disable check
 
 Name: gnote
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Note-taking application
 Group: Graphical desktop/GNOME
 License: GPL-3.0-or-later
 Url: https://wiki.gnome.org/Apps/Gnote
+
+Vcs: https://gitlab.gnome.org/GNOME/gnote.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -27,6 +29,7 @@ Source: %name-%version.tar
 %define glibmm_ver 2.74
 %define gtkmm_ver 4.10
 %define libsecret_ver 0.8
+%define gspell_ver 1.6
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson gcc-c++
@@ -37,6 +40,7 @@ BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(libxml-2.0) pkgconfig(libxslt)
 BuildRequires: pkgconfig(libsecret-1) >= %libsecret_ver
 BuildRequires: pkgconfig(uuid)
+BuildRequires: pkgconfig(gspell-1)
 %{?_enable_check:BuildRequires: libunittest-cpp-devel}
 
 %description
@@ -76,6 +80,9 @@ and consumes fewer resources.
 %exclude %_libdir/lib%name-%api_ver.so
 
 %changelog
+* Sun Sep 22 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Mon Jul 29 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
 - 46.1
 
