@@ -5,7 +5,7 @@
 Name:           python3-module-%pypi_name
 Epoch:          2
 Version:        3.3
-Release:        alt2
+Release:        alt3
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python3
 License:        BSD-3-Clause
@@ -23,7 +23,7 @@ BuildRequires(pre): rpm-build-pyproject
 %if_with check
 BuildRequires: python3-module-pytest python3-module-pytest-cov
 BuildRequires: python3-module-numpy python3-module-numpy-testing
-BuildRequires: python3-module-lxml python3-module-pandas
+BuildRequires: python3-module-lxml python3-module-pandas-tests
 BuildRequires: python3-module-matplotlib python3-module-fonttools
 %endif
 
@@ -111,6 +111,9 @@ This package contains tests for NetworkX.
 %python3_sitelibdir/%pypi_name/*/*/tests
 
 %changelog
+* Sun Sep 22 2024 Anton Vyatkin <toni@altlinux.org> 2:3.3-alt3
+- Fixed FTBFS.
+
 * Sun May 26 2024 Grigory Ustinov <grenka@altlinux.org> 2:3.3-alt2
 - Removed dependency from python3-module-networkx-core
   to python3-module-networkx-drawing again (Closes: #39559).
