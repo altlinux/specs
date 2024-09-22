@@ -4,8 +4,8 @@
 %define irrlichtmt_version 1.9.0mt13
 
 Name: minetest
-Version: 5.9.0
-Release: alt3
+Version: 5.9.1
+Release: alt1
 Summary: Multiplayer infinite-world block sandbox with survival mode
 License: LGPL-2.0+ and CC-BY-SA-3.0
 Group: Games/Other
@@ -136,8 +136,8 @@ find . -name .luacheckrc -print -delete
 %install
 %ninja_install
 
-mkdir -p %{buildroot}%{_datadir}/minetest/irr/media
-cp -r irr/media/Shaders %{buildroot}%{_datadir}/minetest/irr/media
+#mkdir -p %{buildroot}%{_datadir}/minetest/irr/media
+#cp -r irr/media/Shaders %{buildroot}%{_datadir}/minetest/irr/media
 
 # Systemd unit file
 mkdir -p %buildroot%_unitdir
@@ -215,6 +215,9 @@ fi
 %_man6dir/minetestserver.6*
 
 %changelog
+* Sun Sep 22 2024 Ilya Mashkin <oddity@altlinux.ru> 5.9.1-alt1
+- 5.9.1
+
 * Wed Aug 28 2024 Ilya Mashkin <oddity@altlinux.ru> 5.9.0-alt3
 - Copy irr/Shaders
 
