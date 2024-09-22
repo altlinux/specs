@@ -1,48 +1,29 @@
 Name: libdwarf
-Version: 20200114
-Release: alt2
+Version: 0.7.0
+Release: alt1
+Epoch: 1
 
 Summary: Library to access the DWARF Debugging file format
-
-Group: Development/C
-License: LGPLv2
+License: LGPL-2.1
+Group: System/Libraries
 Url: http://www.prevanders.net/dwarf.html
 
-BuildPreReq: gcc-c++ binutils-devel libelf-devel
+Source: %name-%version.tar
 
-%define soversion 0
-%define soname libdwarf.so.%soversion
-%define sofullname libdwarf.so.%soversion.%version.0
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-Source: http://www.prevanders.net/%name-%version.tar.gz
+BuildRequires: gcc-c++ meson libelf-devel libzstd-devel zlib-devel
 
 %package devel
 Summary: Library and header files of libdwarf
 Group: Development/C
-License: LGPLv2
-Requires: %name = %version-%release
-
-%package devel-static
-Summary: Static libdwarf library
-Group: Development/C
-License: LGPLv2
-Requires: %name-devel-static = %version-%release
 
 %package tools
 Summary: Tools for accessing DWARF debugging information
 Group: Development/Tools
-License: GPLv2
-Requires: %name = %version-%release
 
 %description
 Library to access the DWARF debugging file format which supports
 source level debugging of a number of procedural languages, such as C, C++,
 and Fortran.  Please see http://www.dwarfstd.org for DWARF specification.
-
-%description devel-static
-Static libdwarf library.
 
 %description devel
 Development package containing library and header files of libdwarf.
@@ -52,41 +33,33 @@ C++ version of dwarfdump (dwarfdump2) command-line utilities
 to access DWARF debug information.
 
 %prep
-%setup -n dwarf-%version
-# hack
-%__subst "s|@dwfzlib@|@dwfzlib@ -lelf|" libdwarf/Makefile.in
+%setup
 
 %build
-%autoreconf
-%configure --enable-shared --disable-static
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-rm -rfv %buildroot%_datadir/libdwarf/libdwarf-devel/
-mkdir -p %buildroot%_includedir/%name/
-mv %buildroot%_includedir/*.h %buildroot%_includedir/%name/
+%meson_install
 
 %files
-%doc libdwarf/ChangeLog libdwarf/README libdwarf/COPYING libdwarf/LIBDWARFCOPYRIGHT libdwarf/LGPL.txt
+%doc ChangeLog COPYING README
 %_libdir/libdwarf.so.*
 
-#files devel-static
-#{_libdir}/libdwarf.a
-
 %files devel
-%doc libdwarf/*.pdf
-%_includedir/%name/libdwarf.h
-%_includedir/%name/dwarf.h
 %_libdir/libdwarf.so
+%_includedir/libdwarf-0
+%_pkgconfigdir/libdwarf.pc
 
 %files tools
-%doc dwarfdump/README dwarfdump/ChangeLog dwarfdump/COPYING dwarfdump/DWARFDUMPCOPYRIGHT dwarfdump/GPL.txt
 %_bindir/dwarfdump
-%_man1dir/*
-%_datadir/dwarfdump/
+%_datadir/dwarfdump
+%_man1dir/dwarfdump.1*
 
 %changelog
+* Sun Sep 22 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1:0.7.0-alt1
+- 0.7.0 released
+
 * Mon Jan 27 2020 Vitaly Lipatov <lav@altlinux.ru> 20200114-alt2
 - fix conflict with libwf-devel (ALT bug 37935)
 
