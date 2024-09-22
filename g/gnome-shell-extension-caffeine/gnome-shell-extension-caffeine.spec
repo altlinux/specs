@@ -1,7 +1,7 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name caffeine
-%define ver_major 53
+%define ver_major 54
 %define beta %nil
 %define uuid %_name@patapon.info
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -11,7 +11,7 @@
 
 Name: gnome-shell-extension-%_name
 Version: %ver_major
-Release: alt2
+Release: alt1
 
 Summary: Enable/Disable auto suspend with quick setting toggle.
 Group: Graphical desktop/GNOME
@@ -62,6 +62,9 @@ popd
 %doc README.md
 
 %changelog
+* Sun Sep 22 2024 Yuri N. Sedunov <aris@altlinux.org> 54-alt1
+- 54
+
 * Tue Sep 17 2024 Yuri N. Sedunov <aris@altlinux.org> 53-alt2
 - updated to v53-50-gbe10165 (shell-47 supported)
 
