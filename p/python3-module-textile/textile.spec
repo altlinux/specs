@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%modulename
-Version: 4.0.2
+Version: 4.0.3
 Release: alt1
 
 Summary: This is Textile. A Humane Web Text Generator
@@ -23,7 +23,7 @@ BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-html5lib
+BuildRequires: python3-module-nh3
 %endif
 
 %description
@@ -51,6 +51,9 @@ MathML translation, Python code coloring and much more.
 
 
 %changelog
+* Mon Sep 23 2024 Anton Vyatkin <toni@altlinux.org> 4.0.3-alt1
+- New version 4.0.3.
+
 * Mon Apr 24 2023 Anton Vyatkin <toni@altlinux.org> 4.0.2-alt1
 - New version 4.0.2.
 
