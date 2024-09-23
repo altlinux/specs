@@ -16,7 +16,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 2.7.0
+Version: 2.7.3
 Release: alt1
 Summary: Safe, atomic formatting with black and usort
 License: MIT
@@ -85,6 +85,9 @@ rm -r %buildroot%python3_sitelibdir/%pypi_name/tests/
 %_bindir/%pypi_name
 
 %changelog
+* Mon Sep 23 2024 Stanislav Levin <slev@altlinux.org> 2.7.3-alt1
+- 2.7.0 -> 2.7.3.
+
 * Mon Jun 17 2024 Stanislav Levin <slev@altlinux.org> 2.7.0-alt1
 - 2.6.0 -> 2.7.0.
 
