@@ -2,6 +2,7 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict,lint=relaxed
 %define git %nil
+%define kern_dir scripts/addons_core/cycles/lib
 
 %def_with docs
 
@@ -51,8 +52,8 @@
 %endif
 
 Name: blender
-Version: 4.1.1
-Release: alt3
+Version: 4.2.1
+Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -65,12 +66,6 @@ ExcludeArch: %ix86 %arm
 # git://git.blender.org/blender.git
 Source: %name-%version.tar
 
-# git submodules
-# before updating submodules via script don't forget
-# to update relative submodule paths into absolute ones
-Source1: %name-%version-release-scripts-addons_contrib.tar
-Source2: %name-%version-release-scripts-addons.tar
-
 Patch21: blender-2.77-alt-enable-localization.patch
 Patch22: blender-2.92-alt-include-deduplication-check-skip.patch
 Patch23: blender-2.80-alt-use-system-glog.patch
@@ -78,22 +73,19 @@ Patch24: blender-2.90-alt-non-x86_64-linking.patch
 Patch25: blender-3.4.1-gcc-13-fix.patch
 Patch26: blender-4.0.1-alt-pcre.patch
 Patch27: blender-4.0.1-suse-reproducible.patch
-Patch29: blender-4.0.2-alt-fix-manpage.patch
+
 # needed for static clang libs
 Patch30: blender-alt-fix-clang-linking.patch
 Patch31: blender-alt-osl-shader-dir.patch
+
 # needed for dynamic clang libs
 Patch32: blender-4.1-alt-use-libclang.patch
 Patch33: blender-alt-cycles-aarch64-hip-cuda-fix.patch
+
 # need to send this to upstream:
 # gfx900 needs -O1 on Linux too, otherwise it will fail
 # https://github.com/ROCm/llvm-project/issues/58#issuecomment-2041433424
 Patch34: blender-cycles-fix-hip-kernels.patch
-Patch35: blender-4.1-alt-hiprt-enable.patch
-# https://projects.blender.org/blender/blender/pulls/121636
-Patch36: blender-4.1-usd-compile-fix.patch
-
-# upstream fixes to merge
 
 Patch2000: blender-e2k-support.patch
 Patch3500: blender-4.1-loongarch64.patch
@@ -104,7 +96,7 @@ BuildRequires: cmake gcc-c++
 BuildRequires: ninja-build /proc
 BuildRequires: libGLEW-devel libXi-devel
 BuildRequires: libavdevice-devel libavformat-devel libavfilter-devel libswresample-devel
-BuildRequires: libfftw3-devel libjack-devel libopenal-devel libsndfile-devel
+BuildRequires: libfftw3-devel >= 3.3.9 libjack-devel libopenal-devel libsndfile-devel
 BuildRequires: libjpeg-devel pkgconfig(libopenjp2) libpng-devel libtiff-devel libpcre-devel libswscale-devel libxml2-devel
 BuildRequires: liblzo2-devel
 BuildRequires: libopenCOLLADA-devel >= 0-alt3
@@ -173,7 +165,7 @@ BuildRequires: OpenUSD-devel
 BuildRequires: nvidia-cuda-devel
 # .cubin files are ELF files but we still don't know how
 # to handle them.
-%set_verify_elf_skiplist %_datadir/%name/*/scripts/addons/cycles/lib/*.cubin
+%set_verify_elf_skiplist %_datadir/%name/*/%kern_dir/*.cubin
 %endif
 
 %if_with oidn
@@ -286,7 +278,7 @@ This package contains binaries for Nvidia GPUs to use with CUDA.
 %endif
 
 %prep
-%setup -a1 -a2
+%setup
 
 %patch21 -p1
 %patch22 -p1
@@ -295,15 +287,9 @@ This package contains binaries for Nvidia GPUs to use with CUDA.
 %patch25 -p1
 %patch26 -p1
 %patch27 -p1
-%patch29 -p1
 #%%patch30 -p1
 %patch31 -p1
 #%%patch32 -p1
-%patch34 -p1 -b .hip-kernels-fixes
-%patch36 -p1
-
-# upstream patches
-
 %ifarch aarch64
 # see https://github.com/OE4T/meta-tegra/pull/1445
 %patch33 -p1
@@ -314,6 +300,7 @@ cat >/tmp/bits/math-vector.h <<EOF
 #undef __SVE_VEC_MATH_SUPPORTED
 EOF
 %endif
+%patch34 -p1 -b .hip-kernels-fixes
 
 %ifarch %e2k
 %patch2000 -p1
@@ -338,7 +325,7 @@ BUILD_DATE="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%Y-%%m-%%d')"
 BUILD_TIME="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%H:%%M:%%S')"
 
 # Explicitly use python3 in hashbangs.
-pushd scripts/addons
+pushd scripts/addons_core
 subst '/^#!.*python$/s|python$|python3|' $(grep -Rl '#!.*python$' *)
 popd
 
@@ -353,7 +340,7 @@ popd
 	-DWITH_CYCLES_CUDA_BINARIES:BOOL=ON \
 %endif #cuda
 %if_with hiprt
-	-DHIPRT_ROOT_DIR=/usr \
+	-DHIPRT_ROOT_DIR=%prefix \
 	-DWITH_CYCLES_DEVICE_HIPRT:BOOL=ON \
 %endif #hiprt
 	-DBUILD_SHARED_LIBS=OFF \
@@ -424,14 +411,14 @@ popd
 %_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
 %_datadir/%name/
 %if_with hip
-%exclude %_datadir/%name/*/scripts/addons/cycles/lib/kernel_gfx*.fatbin
+%exclude %_datadir/%name/*/%kern_dir/kernel_gfx*.fatbin*
 %endif
 %if_with hiprt
-%exclude %_datadir/%name/*/scripts/addons/cycles/lib/kernel_rt_gfx.*
+%exclude %_datadir/%name/*/%kern_dir/kernel_rt_gfx.*
 %endif
 %if_with cuda
-%exclude %_datadir/%name/*/scripts/addons/cycles/lib/kernel_compute*.ptx
-%exclude %_datadir/%name/*/scripts/addons/cycles/lib/kernel_sm_*.cubin
+%exclude %_datadir/%name/*/%kern_dir/kernel_compute*.ptx*
+%exclude %_datadir/%name/*/%kern_dir/kernel_sm_*.cubin*
 %endif
 %_datadir/metainfo/*.metainfo.xml
 %_defaultdocdir/%name/
@@ -439,16 +426,16 @@ popd
 
 %if_with hip
 %files cycles-hip-kernels
-%_datadir/%name/*/scripts/addons/cycles/lib/kernel_gfx*.fatbin
+%_datadir/%name/*/%kern_dir/kernel_gfx*.fatbin*
 %if_with hiprt
-%_datadir/%name/*/scripts/addons/cycles/lib/kernel_rt_gfx.*
+%_datadir/%name/*/%kern_dir/kernel_rt_gfx.*
 %endif
 %endif
 
 %if_with cuda
 %files cycles-nvidia-kernels
-%_datadir/%name/*/scripts/addons/cycles/lib/kernel_compute*.ptx
-%_datadir/%name/*/scripts/addons/cycles/lib/kernel_sm_*.cubin
+%_datadir/%name/*/%kern_dir/kernel_compute*.ptx*
+%_datadir/%name/*/%kern_dir/kernel_sm_*.cubin*
 %endif
 
 %if_with docs
@@ -457,6 +444,13 @@ popd
 %endif
 
 %changelog
+* Wed Aug 28 2024 Egor Ignatov <egori@altlinux.org> 4.2.1-alt1
+- Update to 4.2.1.
+- Don't pack addons and addons_contrib as they are now part of extensions
+  platform.
+- Update cycles patch: gfx1031 still needs -O1 but not hipcc-func-supp
+  (thx lakostis@).
+
 * Tue Aug 27 2024 Anton Farygin <rider@altlinux.ru> 4.1.1-alt3
 - added -DGLOG_USE_GLOG_EXPORT  to fix build with glog 0.7.0
 
