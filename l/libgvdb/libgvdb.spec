@@ -3,7 +3,7 @@
 
 Name: libgvdb
 Version: 0.0
-Release: alt2.git816b474
+Release: alt3.git816b474
 
 Summary: Python binding (PyGObject) of GVDB library
 License: LGPLv2.1
@@ -89,11 +89,15 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_includedir/gvdb/gvdb-format.h
 %_includedir/gvdb/gvdb-reader.h
 %_libdir/%name.so
+%_pkgconfigdir/*.pc
 
 %files gir
 %_typelibdir/*.typelib
 
 %changelog
+* Wed Sep 11 2024 Maria Alexeeva <alxvmr@altlinux.org> 0.0-alt3.git816b474
+- added generation of libgvdb.pc file
+
 * Tue Jul 23 2024 Evgeny Sinelnikov <sin@altlinux.org> 0.0-alt2.git816b474
 - initial build for Sisyphus
 
