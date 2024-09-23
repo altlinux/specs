@@ -4,7 +4,7 @@
 
 Name: deepin-launcher
 Version: 6.0.19
-Release: alt1
+Release: alt2
 
 Summary: Deepin desktop-environment - Launcher module
 
@@ -23,14 +23,12 @@ Obsoletes: deepin-launchpad
 
 # Requires: deepin-menu deepin-daemon startdde icon-theme-hicolor
 
-BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
 # Automatically added by buildreq on Tue Oct 24 2023
 # optimized out: bash5 bashrc cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel libxcbutil-icccm pkg-config python3 python3-base qt5-base-devel sh5
-BuildRequires: cmake dtk6-common-devel dtkcore gsettings-qt-devel libdtkwidget-devel libgio-devel libxcbutil-icccm-devel qt5-svg-devel qt5-tools qt5-x11extras-devel
+BuildRequires: cmake dtk6-common-devel dtkcore gsettings-qt-devel libdtkwidget-devel libgio-devel libxcbutil-icccm-devel dqt5-svg-devel dqt5-tools dqt5-x11extras-devel
 %if_with clang
-BuildRequires: clang-devel
-BuildRequires: lld-devel
-BuildRequires: llvm-devel
+BuildRequires: clang-devel lld-devel
 %else
 BuildRequires: gcc-c++
 %endif
@@ -50,7 +48,9 @@ The package provides development files for %name.
 %setup -n %repo-%version
 
 %build
-export PATH=%_qt5_bindir:$PATH
+export PATH=%_dqt5_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
 %if_with clang
 %define optflags_lto -flto=thin
 export CC=clang
@@ -63,17 +63,18 @@ export CXX=g++
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DWITHOUT_UNINSTALL_APP=1 \
-    %nil
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
+    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
+#
 cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
+%find_lang --with-qt %repo
 
-%files
+%files -f %repo.lang
 %doc LICENSE
 %_bindir/%repo
-%_datadir/%repo/
 %_datadir/dbus-1/services/*.service
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/glib-2.0/schemas/com.deepin.dde.launcher.gschema.xml
@@ -84,12 +85,21 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/dde-launcher/
 %_datadir/dsg/configs/dde-launcher/org.deepin.dde.launcher.json
+# outside find_lang
+%dir %_datadir/%repo/
+%dir %_datadir/%repo/translations/
+%_datadir/%repo/translations/%repo.qm
+%_datadir/%repo/translations/%{repo}_es_419.qm
+%_datadir/%repo/translations/%{repo}_ky@Arab.qm
 
 %files devel
 %dir %_includedir/dde-launcher/
 %_includedir/dde-launcher/*.h
 
 %changelog
+* Mon Sep 23 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt2
+- Built via separate qt5 instead system (ALT #48138).
+
 * Tue Dec 26 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt1
 - New version 6.0.19.
 - Cleanup BRs.
