@@ -33,7 +33,7 @@
 
 Name: qt5-webengine
 Version: 5.15.17
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -304,8 +304,8 @@ popd
 # copy the Chromium license so it is installed with the appropriate name
 cp -p src/3rdparty/chromium/LICENSE LICENSE.Chromium
 
-# fix find system ninja
 mkdir -p bin
+# fix find system ninja
 ln -s %_bindir/ninja-build bin/ninja
 # fix find system python
 %if_enabled python3
@@ -362,7 +362,7 @@ pushd %_target_platform
     QMAKE_LFLAGS+=-Wl,-z,notext \
 %endif
     QMAKE_EXTRA_ARGS+="-proprietary-codecs -feature-webengine-system-libvpx -feature-webengine-system-openjpeg2" \
-    QMAKE_EXTRA_ARGS+="-webengine-jumbo-build 0 -system-opus -system-webp -webengine-kerberos" \
+    QMAKE_EXTRA_ARGS+="-webengine-jumbo-build 0 -system-opus -system-webp -webengine-kerberos %{?_enable_python3:-webengine-python-version python3}" \
 %if_enabled system_icu
     QMAKE_EXTRA_ARGS+="-system-webengine-icu" \
 %endif
@@ -465,6 +465,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Mon Sep 23 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.17-alt2
+- fix find python3
+
 * Wed Sep 11 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.17-alt1
 - new version
 
