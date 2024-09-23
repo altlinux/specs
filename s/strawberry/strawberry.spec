@@ -1,25 +1,24 @@
 %def_without clang
-%def_without qt5
 
 Name: strawberry
-Version: 1.0.23
-Release: alt2
+Version: 1.2.0
+Release: alt1
 
 Summary: Audio player and music collection organizer
 
 # Main program: GPL-3.0-or-later
-# 3rdparty/ksingleapplication: BSD-3-Clause and MIT
-# src/widgets/qocoa_mac.h: MIT
-# ext/libstrawberry-common/core/logging and ext/libstrawberry-common/core/messagehandler: APSL-2.0
-License: GPL-3.0-or-later and BSD-3-Clause and APSL-2.0 and MIT
+# src/widgets/{qocoa_mac.h,searchfield*}, src/engine/AsyncOperations.h: MIT
+# ext/libstrawberry-common/core/{logging*,messagehandler*}, src/utilities/timeconstants.h: Apache-2.0
+# 3rdparty/gstfastspectrum/: LGPL-2.0-or-later
+# 3rdparty/SPMediaKeyTap/, src/core/scoped*, src/core/arraysize.h: BSD-style
+License: GPL-3.0-or-later and Apache-2.0 and LGPL-2.0-or-later and BSD
 Group: Sound
 Url: https://www.strawberrymusicplayer.org
 
 Source: https://github.com/strawberrymusicplayer/strawberry/archive/%version/%name-%version.tar.gz
 
 Provides: bundled(SPMediaKeyTap)
-Provides: bundled(ksingleapplication)
-Provides: bundled(getopt)
+Provides: bundled(gstfastspectrum)
 
 Requires: gst-plugins-good1.0 vlc-mini
 
@@ -27,19 +26,13 @@ BuildRequires(pre): desktop-file-utils rpm-build-ninja /usr/bin/appstream-util
 # Automatically added by buildreq on Tue Oct 24 2023
 # optimized out: boost-devel-headers cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gstreamer1.0-devel icu-utils libX11-devel libdouble-conversion3 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgmock-devel libgpg-error libgst-plugins1.0 libicu-devel libimobiledevice-devel libp11-kit libplist-devel libqt6-concurrent libqt6-core libqt6-dbus libqt6-gui libqt6-network libqt6-sql libqt6-test libqt6-widgets libsasl2-3 libssl-devel libstdc++-devel libvulkan-devel libxcb-devel libxkbcommon-devel pkg-config python3 python3-base qt6-base-common qt6-base-devel qt6-tools sh5 shared-mime-info xorg-proto-devel zlib-devel
 BuildRequires: boost-devel cmake gst-plugins1.0-devel libalsa-devel libcdio-devel libchromaprint-devel libdbus-devel libebur128-devel libfftw3-devel libgpod-devel libgtest-devel libmtp-devel libprotobuf-devel libpulseaudio-devel libsqlite3-devel libtag-devel libvlc-devel protobuf-compiler
-BuildRequires: qt6-sql-interbase qt6-sql-mysql qt6-sql-odbc qt6-sql-postgresql libkdsingleapplication-qt6-devel
+BuildRequires: qt6-base-devel qt6-tools-devel qt6-sql-interbase qt6-sql-mysql qt6-sql-odbc qt6-sql-postgresql libkdsingleapplication-qt6-devel
 BuildRequires: libicu-devel
 
 %if_with clang
-BuildRequires: clang-devel
+BuildRequires: clang-devel lld-devel
 %else
 BuildRequires: gcc-c++
-%endif
-
-%if_with qt5
-BuildRequires: qt5-tools-devel qt5-x11extras-devel
-%else
-BuildRequires: qt6-tools-devel
 %endif
 
 %description
@@ -73,29 +66,14 @@ Features:
 %if_with clang
 export CC="clang"
 export CXX="clang++"
-export AR="llvm-ar"
-%else
-export CC="gcc"
-export CXX="g++"
-export AR="ar"
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-
-%if_with qt5
-export PATH=%_qt5_bindir:$PATH
-%else
 export PATH=%_qt6_bindir:$PATH
-%endif
 
 %cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-%if_with qt5
-  -DBUILD_WITH_QT5=ON \
-%else
-  -DBUILD_WITH_QT6=ON \
-%endif
   -DBUILD_WERROR=OFF \
-  -DUSE_SYSTEM_TAGLIB=ON \
 #
 
 cmake --build "%_cmake__builddir" -j%__nprocs
@@ -118,6 +96,11 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Mon Sep 23 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.0-alt1
+- New version 1.2.0.
+- Removed qt5 support (by upstream).
+- Updated license tag.
+
 * Thu Feb 22 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.0.23-alt2
 - Fixed build for Elbrus (missing BR).
 
