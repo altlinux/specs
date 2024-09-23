@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-interface-component
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: Components interface for alterator browser
@@ -46,6 +46,9 @@ install -v -p -m 755 -D basic_get_component_description %buildroot%_libexecdir/%
 %_datadir/dbus-1/interfaces/ru.basealt.alterator.component1.xml
 
 %changelog
+* Thu Sep 23 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.2-alt1
+- Fix install status of virtual packages.
+
 * Thu Jun 27 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.1-alt1
 - Improve performance of basic check for component installed.
 
