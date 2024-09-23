@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: IMSProg
-Version: 1.4.3
+Version: 1.4.4
 Release: alt1
 
 Summary: I2C, SPI and MicroWire EEPROM/Flash chip programmer for CH341a devices
@@ -102,6 +102,9 @@ cp IMSProg_programmer/README.md IMSProg_programmer.md
 %_man1dir/*.1.*
 
 %changelog
+* Mon Sep 23 2024 Anton Midyukov <antohami@altlinux.org> 1.4.4-alt1
+- new version
+
 * Fri Jul 26 2024 Anton Midyukov <antohami@altlinux.org> 1.4.3-alt1
 - new version
 
