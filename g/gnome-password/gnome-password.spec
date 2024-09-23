@@ -8,10 +8,10 @@
 %def_disable check
 
 Name: gnome-%_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
-Summary: Password calculator and random generator for Gnome
+Summary: Password calculator and generator for Gnome
 License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://gitlab.com/elescoute/password
@@ -68,6 +68,9 @@ sed -i "s/\('appstream\)-util'/\1cli'/" data/meson.build
 %doc README*
 
 %changelog
+* Mon Sep 23 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.4-alt1
+- 1.6.4
+
 * Mon Jun 24 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.3-alt1
 - 1.6.3
 
