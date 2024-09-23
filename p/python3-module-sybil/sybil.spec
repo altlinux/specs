@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.1.0
+Version: 8.0.0
 Release: alt1
 Summary: Automated testing for the examples in your documentation
 License: MIT
@@ -46,6 +46,9 @@ Automated testing for the examples in your documentation.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Sep 23 2024 Stanislav Levin <slev@altlinux.org> 8.0.0-alt1
+- 7.1.0 -> 8.0.0.
+
 * Mon Sep 16 2024 Stanislav Levin <slev@altlinux.org> 7.1.0-alt1
 - 7.0.0 -> 7.1.0.
 
