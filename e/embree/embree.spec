@@ -14,14 +14,13 @@
 %define soname 4
 
 Name: embree
-Version: 4.3.2
+Version: 4.3.3
 Release: alt1
 Summary: Collection of high-performance ray tracing kernels developed at Intel
 Group: Graphics
 License: Apache-2.0
 URL: https://embree.github.io
-
-# https://github.com/embree/embree.git
+VCS: https://github.com/RenderKit/embree
 Source: %name-%version.tar
 
 Source1: %name.watch
@@ -75,10 +74,6 @@ applications that use %{name}.
 %endif
 
 %build
-# limit parallel build
-#if [ %__nprocs -gt 4 ] ; then
-#	export NPROCS=4
-#fi
 
 %ifarch %e2k
 %add_optflags -Wno-reduced-alignment -Wno-sign-compare -mno-avx
@@ -117,6 +112,9 @@ rm -f %buildroot%prefix/%{name}-vars.*
 %_man3dir/*
 
 %changelog
+* Mon Sep 23 2024 Anton Farygin <rider@altlinux.ru> 4.3.3-alt1
+- 4.3.2 -> 4.3.3
+
 * Mon Jul 01 2024 L.A. Kostis <lakostis@altlinux.ru> 4.3.2-alt1
 - Updated to upstream version 4.3.2.
 
