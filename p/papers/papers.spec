@@ -3,11 +3,11 @@
 
 Name: papers
 Version: 47.0
-Release: alt1
+Release: alt2
 
 Summary: A document viewer for PDF and other document formats aimed at the GNOME desktop
 License: GPL-2.0
-Group: Sound
+Group: Office
 Url: https://welcome.gnome.org/app/Papers/
 VCS: https://gitlab.gnome.org/GNOME/Incubator/papers
 
@@ -121,6 +121,9 @@ Requires: %name-gir = %EVR
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Mon Sep 23 2024 Anton Zhukharev <ancieg@altlinux.org> 47.0-alt2
+- Fixed value of the group tag (closes 51526).
+
 * Fri Sep 20 2024 Anton Zhukharev <ancieg@altlinux.org> 47.0-alt1
 - Updated to 47.0.
 
