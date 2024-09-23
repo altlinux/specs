@@ -1,17 +1,17 @@
 %def_disable static
+# next time soname change -> add soname to package name for the library
+%define soname 1
 
 Name: numactl
-Version: 2.0.14
-Release: alt2
-
+Version: 2.0.18
+Release: alt1
 Summary: Simple NUMA policy support
 License: GPLv2
 Group: System/Libraries
-
 Url: https://github.com/numactl/numactl
-Source: %name-%version.tar.gz
+VCS: https://github.com/numactl/numactl
+Source: %name-%version.tar
 Source100: %name.watch
-Packager: Michael Shigorin <mike@altlinux.org>
 
 %description
 NUMA stands for Non-Uniform Memory Access, in other words a system whose
@@ -24,7 +24,7 @@ nodes.
 %package -n libnuma
 Group: System/Libraries
 Summary: Shared libraries for %name
-License: LGPLv2
+License: LGPL-2.1-only and GPL-2.0-only
 
 %description -n libnuma
 %summary
@@ -32,7 +32,8 @@ License: LGPLv2
 %package -n libnuma-devel
 Summary: Development files for %name
 Group: Development/C
-Requires: libnuma = %version-%release
+Requires: libnuma = %EVR
+License: LGPL-2.1-only and GPL-2.0-only
 
 %description -n libnuma-devel
 The %name-devel package contains libraries and header files for
@@ -41,7 +42,7 @@ developing applications that use %name.
 %package -n libnuma-devel-static
 Summary: Development files for %name
 Group: Development/C
-Requires: libnuma = %version-%release
+Requires: libnuma = %EVR
 
 %description -n libnuma-devel-static
 The %name-devel package contains libraries and header files for
@@ -66,7 +67,8 @@ developing applications that use %name.
 %_man8dir/*
 
 %files -n libnuma
-%_libdir/*.so.*
+%_libdir/*.so.%soname
+%_libdir/*.so.%soname.*
 
 %files -n libnuma-devel
 %_includedir/*
@@ -80,6 +82,10 @@ developing applications that use %name.
 %endif
 
 %changelog
+* Mon Sep 23 2024 Anton Farygin <rider@altlinux.ru> 2.0.18-alt1
+- 2.0.14 -> 2.0.18
+- fixed License in libnuma package according upstream
+
 * Fri Nov 20 2020 Andrew A. Vasilyev <andy@altlinux.org> 2.0.14-alt2
 - exclude conflicting move_pages(2) man pages
 
