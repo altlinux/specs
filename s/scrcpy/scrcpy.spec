@@ -4,7 +4,7 @@
 %def_disable build_server
 
 Name: scrcpy
-Version: 2.3.1
+Version: 2.7
 Release: alt1
 Summary: Display and control your Android device screen
 License: Apache-2.0
@@ -20,8 +20,8 @@ Source1: scrcpy-server.jar
 # Android SDK is not free and its license doesn't permit redistribution.
 # If you want to (re)build the server application download it here:
 # https://developer.android.com/studio#downloads
-# SHA256 (commandlinetools-linux-10406996_latest.zip) = 8919e8752979db73d8321e9babe2caedcc393750817c1a5f56c128ec442fb540
-Source2: commandlinetools-linux-10406996_latest.zip
+# SHA256 (commandlinetools-linux-11076708_latest.zip) = 2d2d50857e4eb553af5a6dc3ad507a17adf43d115264b1afc116f95c92e5e258
+Source2: commandlinetools-linux-11076708_latest.zip
 
 BuildPreReq: java-devel unzip
 %endif
@@ -81,6 +81,9 @@ rm %buildroot%_desktopdir/*.desktop
 %_datadir/bash-completion/completions/scrcpy
 
 %changelog
+* Mon Sep 23 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.7-alt1
+- Updated to v2.7 (ALT#51425).
+
 * Wed Dec 20 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.3.1-alt1
 - Updated to v2.3.1.
 
