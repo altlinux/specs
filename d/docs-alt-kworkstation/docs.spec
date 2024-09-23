@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.4
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -49,6 +49,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Mon Sep 23 2024 Elena Mishina <lepata@altlinux.org> 10.4-alt2
+- typo fixes, small improvements (closes #51469, #51473, #51470)
+
 * Thu Sep 05 2024 Elena Mishina <lepata@altlinux.org> 10.4-alt1
 - update to ALT Kworkstation 10.4
 
