@@ -11,15 +11,16 @@
 %def_disable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.6
-Release: alt1.1
+Version: %ver_major.7
+Release: alt1
 
 Summary: A framework for creating UPnP devices and control points
 Group: System/Libraries
-License: LGPLv2.1+
+License: LGPL-2.1-or-later
 Url: http://www.gupnp.org/
 
 Vcs: https://gitlab.gnome.org/GNOME/gupnp.git
+
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 %define meson_ver 0.54
@@ -137,6 +138,9 @@ sed -i 's/-Werror/-Wno-error/g' meson.build
 
 
 %changelog
+* Mon Sep 23 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.7-alt1
+- 1.6.7
+
 * Thu Apr 11 2024 Michael Shigorin <mike@altlinux.org> 1.6.6-alt1.1
 - E2K: lcc 1.27 ftbfs workaround (ilyakurdyukov@; mcst#8784)
 
