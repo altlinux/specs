@@ -1,13 +1,13 @@
 %def_enable snapshot
 
-%define ver_major 9
+%define ver_major 10
 %define pypi_name gsecrets
 %define xdg_name org.gnome.World.Secrets
 
 %def_disable check
 
 Name: secrets
-Version: %ver_major.6
+Version: %ver_major.1
 Release: alt1
 
 Summary: A password manager for GNOME
@@ -15,16 +15,17 @@ License: GPL-3.0
 Group: Graphical desktop/GNOME
 Url: https://gitlab.gnome.org/World/secrets
 
+Vcs: https://gitlab.gnome.org/World/secrets.git
+
 %if_disabled snapshot
 Source: %url/-/archive/v%version/%name-%version.tar.gz
 %else
-Vcs: https://gitlab.gnome.org/World/secrets.git
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.74
-%define gtk_ver 4.9
-%define adwaita_ver 1.5
+%define glib_ver 2.76
+%define gtk_ver 4.16
+%define adwaita_ver 1.6
 
 Requires: typelib(Adw) = 1
 Requires: yelp
@@ -39,7 +40,7 @@ BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(gobject-introspection-1.0)
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: python3(pykeepass) python3(pyotp) python3(validators)
-BuildRequires: python3(zxcvbn) python3(PyKCS11) python3(yubico)
+BuildRequires: python3(zxcvbn_rs_py) python3(PyKCS11) python3(yubico)
 %{?_enable_check:
 BuildRequires: desktop-file-utils /usr/bin/appstreamcli
 BuildRequires: python3(pytest) python3(gi) typelib(Gtk) = 4.0 ruff}
@@ -76,6 +77,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %doc README*
 
 %changelog
+* Sat Sep 21 2024 Yuri N. Sedunov <aris@altlinux.org> 10.1-alt1
+- 10.1
+
 * Sun Jul 14 2024 Yuri N. Sedunov <aris@altlinux.org> 9.6-alt1
 - 9.6
 
