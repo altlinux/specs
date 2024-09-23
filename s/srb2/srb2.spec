@@ -1,16 +1,18 @@
 Name: srb2
 Summary: Sonic Robo Blast 2
-Version: 2.2.9
+Version: 2.2.13
 Release: alt1
 License: GPL2
 Group: Games/Arcade
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source: %name-%version.tar
-Source1: SRB2-v229-Full.zip
+Source1: SRB2-v2213-Full.zip
+
+Patch0: 0001-Offline-build.patch
 
 Url: https://www.srb2.org/
-BuildRequires(pre):  rpm-macros-cmake
+BuildRequires(Pre):  rpm-macros-cmake
 BuildRequires: cmake gcc-c++ ImageMagick-tools
 BuildRequires: hicolor-icon-theme
 BuildRequires: nasm
@@ -44,16 +46,17 @@ mkdir -p assets/installer
 unzip %SOURCE1 -d assets/installer
 
 find . -name *.c -exec sed -i 's|%prefix/games/SRB2|%_datadir/srb2|g' {} \;
+%patch0 -p1
+
 
 %build
+%cmake \
+    -DSRB2_CONFIG_ENABLE_TESTS=OFF \
+    -DUSE_CCACHE=OFF
 
-mkdir BUILD
-cd ./BUILD
-cmake ..
-
-%make
+%cmake_build
 %install
-install -D -m 0775 BUILD/bin/lsdlsrb2-* %buildroot/%_bindir/srb2
+install -D -m 0775 %_cmake__builddir/bin/lsdlsrb2 %buildroot/%_bindir/srb2
 install -d %buildroot/%_datadir/srb2/
 install -m 0644 assets/installer/*.{dta,pk3} %buildroot/%_datadir/srb2/
 
@@ -93,5 +96,8 @@ done
 %_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Fri Sep 20 2024 Artyom Bystrov <arbars@altlinux.org> 2.2.13-alt1
+- update to new version
+
 * Mon Aug 02 2021  Artyom Bystrov <arbars@altlinux.org> 2.2.9-alt1
 - initial build for ALT Sisyphus
