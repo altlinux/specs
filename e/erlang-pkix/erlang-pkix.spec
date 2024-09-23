@@ -3,7 +3,7 @@
 %define realname pkix
 
 Name: erlang-%realname
-Version: 1.0.8
+Version: 1.0.10
 Release: alt1
 Summary: PKIX certificates management for Erlang
 Group: Development/Erlang
@@ -49,6 +49,9 @@ ln -s $(relative %_sysconfdir/pki/tls/certs/ca-bundle.trust.crt %_erllibdir/%rea
 %_erllibdir/%realname-%version
 
 %changelog
+* Mon Sep 23 2024 Egor Ignatov <egori@altlinux.org> 1.0.10-alt1
+- Updated to upstream version 1.0.10.
+
 * Mon Jul 26 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.8-alt1
 - Updated to upstream version 1.0.8.
 
