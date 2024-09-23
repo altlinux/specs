@@ -9,7 +9,7 @@
 
 Name: lightdm
 Version: 1.32.0
-Release: alt7
+Release: alt8
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -288,6 +288,10 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Mon Sep 23 2024 Paul Wolneykien <manowar@altlinux.org> 1.32.0-alt8
+- Make locale read error a non-fatal error with a warning message.
+- Support reading of /etc/locale.conf prior to /etc/sysconfig/i18n.
+
 * Fri Aug 09 2024 Anton Golubev <golubevan@altlinux.org> 1.32.0-alt7
 - add client library version for Qt6
 - drop the option for Qt4
