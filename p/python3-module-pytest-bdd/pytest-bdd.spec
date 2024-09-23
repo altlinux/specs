@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.2.0
+Version: 7.3.0
 Release: alt1
 
 Summary: BDD library for the py.test runner
@@ -62,6 +62,9 @@ the Gherkin imperative declarations.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Sep 23 2024 Stanislav Levin <slev@altlinux.org> 7.3.0-alt1
+- 7.2.0 -> 7.3.0.
+
 * Wed Jun 05 2024 Stanislav Levin <slev@altlinux.org> 7.2.0-alt1
 - 7.1.2 -> 7.2.0.
 
