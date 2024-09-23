@@ -5,7 +5,7 @@
 
 Name: liblief
 Version: 0.12.3
-Release: alt1
+Release: alt2
 
 Summary: Library to instrument executable formats
 License: Apache-2.0
@@ -23,7 +23,7 @@ Patch3: 0003-fix-modules-for-python-test.patch
 Patch4: 0004-tests-elf-test_dynamic.py-skip-some-tests-for-aarch6.patch
 Patch5: 0005-tests-elf-test_bin2lib.py-skip-some-tests-for-armh-i.patch
 Patch6: 0006-tests-elf-test_static.py-skip-some-tests-for-armh-an.patch
-Patch7: 0007-tests-pe-test_authenticode.py-skip-some-tests-for-p10.patch
+Patch7: 0007-tests-pe-test_authenticode.py-Fix-expired-certificat.patch
 Patch8: 0008-fix-build-for-gcc13.patch
 
 Provides: python3(%pypi_name.PE)
@@ -130,5 +130,8 @@ find build/*/include/ -name leaf.hpp -exec cp "{}" %LIEF_DIR_internal \;
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Sep 23 2024 Vasiliy Kovalev <kovalev@altlinux.org> 0.12.3-alt2
+- tests/pe/test_authenticode.py: Fix expired certificate
+
 * Tue Feb 28 2023 Vasiliy Kovalev <kovalev@altlinux.org> 0.12.3-alt1
 - Initial build for Sisyphus
