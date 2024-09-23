@@ -2,7 +2,7 @@
 
 Name: angelscript
 Version: 2.37.0
-Release: alt1
+Release: alt2
 
 Summary: Flexible cross-platform scripting library
 
@@ -13,6 +13,8 @@ Vcs: git://github.com/codecat/angelscript-mirror.git
 
 Source: %name-%version.tar.gz
 # Source-url: %url/sdk/files/%{name}_%version.zip
+
+Patch: angelscript-2.37.0-alt-cmake-riscv64.patch
 
 %if_with cmake
 BuildRequires(pre): rpm-build-ninja
@@ -56,6 +58,7 @@ sed -i 's|lib/cmake/Angelscript|%_lib/cmake/Angelscript|' \
   %name/projects/cmake/CMakeLists.txt
 sed -i '/DESTINATION/s|lib|%_lib|g' \
   %name/projects/cmake/CMakeLists.txt
+%patch -p2
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -94,6 +97,9 @@ cd %name/projects/meson/
 %endif
 
 %changelog
+* Mon Sep 23 2024 Ivan A. Melnikov <iv@altlinux.org> 2.37.0-alt2
+- Add cmake build patch for riscv64 (by k0tran@).
+
 * Mon Sep 09 2024 Leontiy Volodin <lvol@altlinux.org> 2.37.0-alt1
 - New version 2.37.0.
 
