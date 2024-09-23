@@ -1,7 +1,7 @@
 
 Name: libvirglrenderer
-Version: 1.0.1
-Release: alt2
+Version: 1.1.0
+Release: alt1
 
 Summary: Virgl Rendering library
 Group: System/Libraries
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): meson >= 0.55
 BuildRequires: pkgconfig(libdrm) >= 2.4.50
+BuildRequires: pkgconfig(libdrm_amdgpu) >= 2.4.121
 BuildRequires: pkgconfig(gbm) >= 18.0.0
 BuildRequires: pkgconfig(epoxy) >= 1.5.4
 BuildRequires: pkgconfig(libva) pkgconfig(libva-drm)
@@ -65,6 +66,9 @@ driver to test virgl rendering without GL.
 %_bindir/virgl_test_server
 
 %changelog
+* Tue Sep 24 2024 Alexey Shabalin <shaba@altlinux.org> 1.1.0-alt1
+- New version 1.1.0.
+
 * Fri Feb 09 2024 Alexey Shabalin <shaba@altlinux.org> 1.0.1-alt2
 - Add info about CVE to changelog.
 
