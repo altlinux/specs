@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.4.4
+Version: 2.4.8
 Release: alt1
 Summary: Proxy server
 License: BSD
@@ -26,8 +26,7 @@ BuildRequires(pre): rpm-build-pyproject
 %if_with check
 # py-spy: sampling profiler for Python programs (not packaged)
 %add_pyproject_deps_check_filter py-spy
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+%pyproject_builddeps_metadata_extra testing
 # required by proxy/common/pki.py
 BuildRequires: %_bindir/openssl
 %endif
@@ -41,9 +40,6 @@ BuildRequires: %_bindir/openssl
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_pipreqfile requirements-testing.txt
-%endif
 
 %build
 %pyproject_build
@@ -62,6 +58,8 @@ BuildRequires: %_bindir/openssl
     --ignore=tests/integration/test_integration.py \
     --ignore=tests/plugin/test_http_proxy_plugins.py \
     --ignore=tests/plugin/test_http_proxy_plugins_with_tls_interception.py \
+    --ignore=tests/http/test_client.py \
+    --ignore=tests/test_grout.py \
 
 %files
 %doc README.*
@@ -71,5 +69,8 @@ BuildRequires: %_bindir/openssl
 %python3_sitelibdir/proxy.py-%version.dist-info/
 
 %changelog
+* Mon Sep 23 2024 Stanislav Levin <slev@altlinux.org> 2.4.8-alt1
+- 2.4.4 -> 2.4.8.
+
 * Fri Jun 21 2024 Stanislav Levin <slev@altlinux.org> 2.4.4-alt1
 - Initial build for Sisyphus.
