@@ -6,7 +6,7 @@
 %define zsh_completionsdir %_datadir/zsh/site-functions
 
 Name: %pypi_name
-Version: 0.6.6
+Version: 0.6.7
 Release: alt1
 
 Summary: An extremely fast Python linter, written in Rust
@@ -98,6 +98,9 @@ export CFLAGS="$CFLAGS -fno-stack-protector"
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Sep 23 2024 Anton Zhukharev <ancieg@altlinux.org> 0.6.7-alt1
+- Updated to 0.6.7.
+
 * Fri Sep 20 2024 Anton Zhukharev <ancieg@altlinux.org> 0.6.6-alt1
 - Updated to 0.6.6.
 
