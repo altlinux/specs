@@ -53,7 +53,7 @@
 
 Name: blender
 Version: 4.2.1
-Release: alt1
+Release: alt1.1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -88,7 +88,7 @@ Patch33: blender-alt-cycles-aarch64-hip-cuda-fix.patch
 Patch34: blender-cycles-fix-hip-kernels.patch
 
 Patch2000: blender-e2k-support.patch
-Patch3500: blender-4.1-loongarch64.patch
+Patch3500: blender-4.2.1-loongarch64.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-filesystem-devel boost-locale-devel boost-wave-devel boost-python3-devel
@@ -444,6 +444,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 23 2024 Ivan A. Melnikov <iv@altlinux.org> 4.2.1-alt1.1
+- NMU: update loongarch64 patch
+
 * Wed Aug 28 2024 Egor Ignatov <egori@altlinux.org> 4.2.1-alt1
 - Update to 4.2.1.
 - Don't pack addons and addons_contrib as they are now part of extensions
