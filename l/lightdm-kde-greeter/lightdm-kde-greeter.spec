@@ -3,7 +3,7 @@
 
 Name: lightdm-kde-greeter
 Version: 0.4.23
-Release: alt6
+Release: alt7
 Group: Graphical desktop/Other
 Summary: LightDM KDE6 Greeter
 License: GPL-3.0+
@@ -16,6 +16,8 @@ Patch2: embed-liblightdm.patch
 Patch3: port-to-kde6.patch
 Patch4: move-kcm-module-qml-files.patch
 Patch5: port-kcm-to-qt-6.patch
+Patch6: remove-the-binding-loop-in-the-userslist-component.patch
+Patch7: make-non-existent-default-index-in-listbutton.patch
 
 %K6init
 
@@ -53,6 +55,8 @@ This is a fork of KDE4-based LightDM greeter engine for KDE6.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 %build
 %K6build \
@@ -92,6 +96,10 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Tue Sep 24 2024 Anton Golubev <golubevan@altlinux.org> 0.4.23-alt7
+- fix that the last logged in user is not selected automatically
+- fix empty session title
+
 * Fri Sep 20 2024 Anton Golubev <golubevan@altlinux.org> 0.4.23-alt6
 - set a nicer icon for the "log in" button
 - better debug info
