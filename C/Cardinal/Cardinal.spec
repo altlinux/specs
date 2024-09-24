@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     Cardinal
-Version:  24.05
-Release:  alt2.git77b5becf
+Version:  24.09
+Release:  alt1
 
 Summary:  Virtual modular synthesizer plugin
 License:  GPL-3.0-or-later
@@ -20,7 +20,6 @@ Source2: sub-merge.unpack.sh
 # Import sub-merge sources right here
 %(cat %SOURCE1)
 
-Patch:    Cardinal-24.05-upstream-git77b5becf.patch
 Patch1:   Cardinal-22.07-alt-lv2-in-lib64.patch
 Patch2:   Cardinal-22.11-rebeltech-fix-compilation.patch
 Patch3:   Cardinal-22.12-alt-more-system-libs.patch
@@ -163,6 +162,9 @@ install -m 644 docs/*.md docs/*.png %buildroot%_datadir/doc/cardinal/docs/
 %doc %_datadir/doc/cardinal
 
 %changelog
+* Tue Sep 24 2024 Ivan A. Melnikov <iv@altlinux.org> 24.09-alt1
+- 24.09
+
 * Fri Jun 07 2024 Ivan A. Melnikov <iv@altlinux.org> 24.05-alt2.git77b5becf
 - Update to the latest upstream snapshot
   + fixes build with LTO (upstream #671);
