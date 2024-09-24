@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qucs-s
-Version: 24.3.1
+Version: 24.3.2
 Release: alt1
 
 Summary: Circuit simulator
@@ -67,6 +67,9 @@ done > %name.lang
 %_man1dir/*
 
 %changelog
+* Tue Sep 24 2024 Anton Midyukov <antohami@altlinux.org> 24.3.2-alt1
+- New version 24.3.2
+
 * Tue Sep 10 2024 Anton Midyukov <antohami@altlinux.org> 24.3.1-alt1
 - New version 24.3.1
 
