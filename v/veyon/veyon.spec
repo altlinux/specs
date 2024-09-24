@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veyon
-Version: 4.8.3
-Release: alt3
+Version: 4.9.0
+Release: alt1
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -33,10 +33,11 @@ Patch4: alt-fix-dm-login.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-ubt
-BuildRequires: rpm-build-kf5
+BuildRequires: rpm-build-kf6
 BuildRequires: gcc-c++ make cmake
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-tools-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools-devel
+BuildRequires: qt6-5compat-devel
 BuildRequires: libjpeg-devel
 BuildRequires: zlib-devel
 BuildRequires: liblzo2-devel
@@ -47,7 +48,7 @@ BuildRequires: libsasl2-devel
 BuildRequires: libpng-devel
 BuildRequires: libXrandr-devel
 BuildRequires: libXinerama-devel
-BuildRequires: libqca-qt5-devel
+BuildRequires: libqca-qt6-devel
 BuildRequires: libXdamage-devel
 BuildRequires: libXtst-devel
 BuildRequires: libfakekey-devel
@@ -140,6 +141,10 @@ sed -i "s/QOverload<int>::of(&QComboBox::/(void(QComboBox::*)(int))(\&QComboBox:
 %_datadir/%name
 
 %changelog
+* Sat Sep 21 2024 Ajrat Makhmutov <rauty@altlinux.org> 4.9.0-alt1
+- New version.
+- Change the build requirements from Qt5 to Qt6.
+
 * Thu Jun 27 2024 Ajrat Makhmutov <rauty@altlinux.org> 4.8.3-alt3
 - fix FTBFS: specify the new path to the systemd services
 
