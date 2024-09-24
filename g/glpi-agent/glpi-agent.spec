@@ -1,6 +1,6 @@
 Name:    glpi-agent
-Version: 1.10
-Release: alt2
+Version: 1.11
+Release: alt1
 
 Summary: GLPI Agent
 License: GPL-2.0
@@ -140,6 +140,9 @@ find %buildroot -name .packlist -delete
 %dir %_localstatedir/%name
 
 %changelog
+* Tue Sep 24 2024 Andrey Cherepanov <cas@altlinux.org> 1.11-alt1
+- New version.
+
 * Fri Jul 26 2024 Andrey Cherepanov <cas@altlinux.org> 1.10-alt2
 - Required perl-XML-LibXML (ALT #50882).
 
