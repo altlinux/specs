@@ -7,7 +7,7 @@
 %def_enable ocaml
 
 Name: libnbd
-Version: 1.21.3
+Version: 1.21.4
 Release: alt1
 Summary: NBD client library in userspace
 License: LGPL-2.1-or-later
@@ -137,6 +137,9 @@ rm %buildroot%_datadir/bash-completion/completions/nbdsh
 %endif
 
 %changelog
+* Tue Sep 24 2024 Vitaly Chikunov <vt@altlinux.org> 1.21.4-alt1
+- Update to v1.21.4 (2024-09-12).
+
 * Sat Aug 10 2024 Vitaly Chikunov <vt@altlinux.org> 1.21.3-alt1
 - Update to v1.21.3 (2024-07-28).
 
