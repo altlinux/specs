@@ -20,7 +20,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt4
+Release: alt5
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -254,6 +254,10 @@ install mate-settings/lightdm-gtk-greeter.conf %buildroot/%_datadir/install3/lig
 mkdir -p %buildroot/%_datadir/mate-menu
 install mate-settings/applications.list-themed %buildroot/%_datadir/mate-menu/applications.list-themed
 
+#graphics
+mkdir -p %buildroot/%_datadir/design/%theme
+cp -a images/product-logo.png %buildroot/%_datadir/design/%theme/icons/system-logo.png
+
 #bootloader
 %ifarch %ix86 x86_64
 %pre bootloader
@@ -334,6 +338,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Sep 24 2024 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt5
+- Change images to p11
+
 * Thu Jul 25 2024 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt4
 - Add Chromium to the "Favorites" menu item
 
