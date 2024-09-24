@@ -7,7 +7,7 @@
 %define with_devel 0
 
 Name: cbmc
-Version: 6.1.1
+Version: 6.3.1
 Release: alt1
 Summary: C Bounded Model Checker
 License: BSD-4-Clause
@@ -117,6 +117,9 @@ rm -rf %buildroot%_includedir/cprover
 %endif
 
 %changelog
+* Tue Sep 24 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 6.3.1-alt1
+- Update to cbmc-6.3.1 (thx vt@).
+
 * Tue Jul 30 2024 Vitaly Chikunov <vt@altlinux.org> 6.1.1-alt1
 - Update to cbmc-6.1.1 (2024-07-29).
 
