@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 3.9.7
+Version: 3.10.0
 Release: alt1
 
 Summary: Fast string Python 3 matching library for Python and C++
@@ -15,11 +15,11 @@ Vcs: https://github.com/maxbachmann/RapidFuzz.git
 Source: https://pypi.io/packages/source/r/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-wheel
-BuildRequires: python3-module-setuptools python3(skbuild)
+BuildRequires: python3-devel python3(wheel) python3(scikit_build_core)
+# for extern taskflow/rapidfuzz
+BuildRequires: python3(skbuild) cmake gcc-c++ ninja-build
 %{?_enable_check:BuildRequires: /proc python3(pytest) python3(mypy) python3(pylint)
 BuildRequires: python3(hypothesis) python3(pandas.testing)}
-#BuildRequires: python3(pandas)
 
 %add_python3_req_skip PyInstaller
 
@@ -48,6 +48,9 @@ py.test3
 
 
 %changelog
+* Tue Sep 24 2024 Yuri N. Sedunov <aris@altlinux.org> 3.10.0-alt1
+- 3.10.0
+
 * Tue Sep 03 2024 Yuri N. Sedunov <aris@altlinux.org> 3.9.7-alt1
 - 3.9.7
 
