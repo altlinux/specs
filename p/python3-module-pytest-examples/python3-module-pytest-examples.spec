@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.12
+Version: 0.0.13
 Release: alt1
 
 Summary: Pytest plugin for testing examples in docstrings and markdown files
@@ -23,7 +23,6 @@ Patch0: %name-%version-alt.patch
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -50,7 +49,6 @@ or update print statements.
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-
 %if_with check
 cat requirements/{pyproject,testing}.txt > requirements.txt
 %pyproject_deps_resync_check_pipreqfile requirements.txt
@@ -71,6 +69,9 @@ cat requirements/{pyproject,testing}.txt > requirements.txt
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 24 2024 Anton Zhukharev <ancieg@altlinux.org> 0.0.13-alt1
+- Updated to 0.0.13.
+
 * Wed Jul 03 2024 Anton Zhukharev <ancieg@altlinux.org> 0.0.12-alt1
 - Updated to 0.0.12.
 
