@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 
 Summary: Python bindings for jq
@@ -22,7 +22,6 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 BuildRequires: python3-module-cython
 BuildRequires: libjq-devel
-
 %if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -36,18 +35,11 @@ This project contains Python bindings for jq.
 %prep
 %setup
 %autopatch -p1
-sed -i '/sources=/ s/jq.c/jq.pyx/' setup.py
-sed -i '/link_args_deps/ s/"-lonig"//' setup.py
-
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-
 %if_with check
 %pyproject_deps_resync_check_pipreqfile test-requirements.txt
 %endif
-
-# remove vendored libraries
-rm -fvr deps
 
 %build
 export JQPY_USE_SYSTEM_LIBS=1
@@ -66,6 +58,9 @@ export JQPY_USE_SYSTEM_LIBS=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 24 2024 Anton Zhukharev <ancieg@altlinux.org> 1.8.0-alt1
+- Updated to 1.8.0.
+
 * Mon Mar 25 2024 Anton Zhukharev <ancieg@altlinux.org> 1.7.0-alt1
 - Updated to 1.7.0.
 
