@@ -1,7 +1,7 @@
 Name: bluefish
 Summary: A GTK3 web development application for experienced users
-Version: 2.2.15
-Release: alt3
+Version: 2.2.16
+Release: alt1
 Epoch: 2
 
 Url: http://bluefish.openoffice.nl
@@ -12,9 +12,9 @@ Group: Editors
 Source: %name-%version.tar
 
 # Russian translation
-Source1: ru.po
-Source2: plugin_about-ru.po
-Source3: plugin_htmlbar-ru.po
+#Source1: ru.po
+#Source2: plugin_about-ru.po
+#Source3: plugin_htmlbar-ru.po
 
 # Fedora patches
 # Avoid potential aliasing issues in zencoding plugin
@@ -22,9 +22,11 @@ Patch0: bluefish-2.2.13-strict-aliasing.patch
 
 # Avoid use of /usr/bin/env in shipped scripts
 # Also change /usr/bin/python → /usr/bin/python3 (for now)
-Patch1: bluefish-2.2.15-shellbang.patch
+Patch1: bluefish-2.2.16-shellbang.patch
 
 Patch3: bluefish-2.2.12-fix-command-chmod-a-x.patch
+
+Patch4: bluefish-2.2.16-russian-translation.patch
 
 Obsoletes: bluefish-common =< %EVR
 
@@ -55,11 +57,12 @@ find data -type f -name \*.py -exec sed -i 's/\r//' {} \;
 %patch0
 %patch1 -p2
 %patch3 -p2
+%patch4 -p2
 
 # Update russian translation
-cp %SOURCE1 po/ru.po
-cp %SOURCE2 src/plugin_about/po/ru.po
-cp %SOURCE3 src/plugin_htmlbar/po/ru.po
+#cp %SOURCE1 po/ru.po
+#cp %SOURCE2 src/plugin_about/po/ru.po
+#cp %SOURCE3 src/plugin_htmlbar/po/ru.po
 
 # Update binary translation
 rm src/plugin_about/po/ru.gmo
@@ -102,6 +105,10 @@ cat %{name}_plugin_*.lang >> %name.lang
 %_datadir/xml/%name/*
 
 %changelog
+* Tue Sep 24 2024 Anton Midyukov <antohami@altlinux.org> 2:2.2.16-alt1
+- new version (2.2.16) with rpmgs script
+- use upstream russian translation
+
 * Fri Mar 22 2024 Anton Midyukov <antohami@altlinux.org> 2:2.2.15-alt3
 - do not provides python3 modules
 
