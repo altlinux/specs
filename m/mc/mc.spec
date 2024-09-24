@@ -4,7 +4,7 @@
 
 Name: mc
 Version: 4.8.32
-Release: alt1
+Release: alt2
 
 # '-gitYYYYMMDD' or ''
 %define ver_date '-git20240916'
@@ -116,6 +116,10 @@ Dektop files for %name
 %patch102 -p1
 %patch103 -p1
 #patch104 -p1
+
+# use alt-forceexec.patch
+sed 's|mc-wrapper.csh|mc-wrapper.csh -r|' -i contrib/mc.csh.in
+sed 's|mc-wrapper.sh|mc-wrapper.sh -r|'   -i contrib/mc.sh.in
 
 %build
 cat <<EOF > mc-version.h
@@ -235,6 +239,10 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 %files full
 
 %changelog
+* Tue Sep 24 2024 Sergey Y. Afonin <asy@altlinux.org> 4.8.32-alt2
+- returned -r option for run mc (lost when alt-wrapper.patch was
+  disabled)
+
 * Tue Sep 17 2024 Sergey Y. Afonin <asy@altlinux.org> 4.8.32-alt1
 - 4.8.32 (updated to 20240916 git snapshot)
 - disabled alt-wrapper.patch (a same as fixed in MC ticket #4575)
