@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name mistletoe
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: A fast, extensible and spec-compliant Markdown parser in pure Python
@@ -59,10 +60,13 @@ Remember to spell mistletoe in lowercase!
 %files
 %doc LICENSE README.md
 %_bindir/%pypi_name
-%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 24 2024 Anton Zhukharev <ancieg@altlinux.org> 1.4.0-alt1
+- Updated to 1.4.0.
+
 * Mon Feb 12 2024 Anton Zhukharev <ancieg@altlinux.org> 1.3.0-alt1
 - Updated to 1.3.0.
 
