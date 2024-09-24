@@ -2,7 +2,7 @@
 
 %define _name openweather
 %define git_name gnome-%_name
-%define ver_major 138
+%define ver_major 139
 %define beta %nil
 %define uuid %_name-extension@penguin-teal.github.io
 %define xdg_name org.gnome.shell.extensions.%{_name}refined
@@ -61,6 +61,9 @@ including 3 hour forecasts for up to 5 days.
 %doc AUTHORS README.md CHANGELOG*
 
 %changelog
+* Tue Sep 24 2024 Yuri N. Sedunov <aris@altlinux.org> 139-alt1
+- 139 (shell-47 supported)
+
 * Mon Jul 01 2024 Yuri N. Sedunov <aris@altlinux.org> 138-alt1
 - 138
 

@@ -1,5 +1,5 @@
 %define _name ascii-draw
-%define ver_major 0.4
+%define ver_major 1.0
 %define rdn_name io.github.nokse22.asciidraw
 
 # online screenshots
@@ -14,8 +14,10 @@ License: GPL-3.0-or-later
 Group: Graphics
 Url: https://github.com/Nokse22/ascii-draw
 
-BuildArch: noarch
 Vcs: https://github.com/Nokse22/ascii-draw.git
+
+BuildArch: noarch
+
 Source0: %name-%version.tar
 
 %add_python3_path %_datadir/%_name
@@ -55,6 +57,9 @@ There are many stiles to choose from and multiple tools available to use.
 %doc README.*
 
 %changelog
+* Tue Sep 24 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Tue Jul 09 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - 0.4.0
 
