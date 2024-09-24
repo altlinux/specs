@@ -1,5 +1,5 @@
 Name: eget
-Version: 7.11
+Version: 7.12
 Release: alt1
 
 Summary: wget like downloader wrapper with wildcard support
@@ -34,6 +34,12 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Thu Sep 19 2024 Vitaly Lipatov <lav@altlinux.ru> 7.12-alt1
+- eget: use ipfs.io instead of cloudflare
+- eget: use timeout 20s for response checking, only one try by default
+- eget: fix ipfs_diag_timeout
+- eget: disable hack for converted markdown
+
 * Sun Jun 23 2024 Vitaly Lipatov <lav@altlinux.ru> 7.11-alt1
 - eget: fix header quoting issue
 - eget: don't add duplicate URL with the same CID
