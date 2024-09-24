@@ -8,7 +8,7 @@
 
 Name: gnome-disk-utility
 Version: %ver_major.1
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Disk management application
 License: GPL-2.0-or-later
@@ -31,6 +31,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 
 Provides: gnome-disks = %EVR
 Requires: udisks2 >= %udisks_ver
+Requires: libblockdev-tools
 
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg
 BuildRequires: meson
@@ -88,6 +89,9 @@ RAID, SMART monitoring, etc
 
 
 %changelog
+* Tue Sep 24 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1.1
+- added libblockdev-tools to runtime dependencies (ALT #51540)
+
 * Tue Sep 03 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
 - 46.1
 

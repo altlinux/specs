@@ -1,11 +1,14 @@
 %def_disable snapshot
 
 %define _name harfbuzz
-%define ver_major 9.0
-%def_with graphite2
-%def_with icu
-%def_with cairo
-%def_with gobject
+%define ver_major 10.0
+%define namespace HarfBuzz
+%define api_ver 0.0
+
+%def_enable graphite2
+%def_enable icu
+%def_enable cairo
+%def_enable gobject
 %def_enable introspection
 %def_enable docs
 %def_disable experimental_api
@@ -23,10 +26,11 @@ Group: System/Libraries
 License: MIT
 Url: https://harfbuzz.org/
 
+Vcs: https://github.com/harfbuzz/harfbuzz.git
+
 %if_disabled snapshot
 Source: https://github.com/%_name/%_name/archive/%version/%_name-%version.tar.gz
 %else
-Vcs: https://github.com/harfbuzz/harfbuzz.git
 Source: %_name-%version.tar
 %endif
 
@@ -40,8 +44,8 @@ BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson gcc-c++ glib2-devel >= %glib_ver
 BuildRequires: pkgconfig(freetype2) >= %freetype_ver libcairo-devel >= %cairo_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
-%{?_with_graphite2:BuildRequires: libgraphite2-devel >= %graphite2_ver}
-%{?_with_icu:BuildRequires: pkgconfig(icu-uc) >= %icu_ver}
+%{?_enable_graphite2:BuildRequires: libgraphite2-devel >= %graphite2_ver}
+%{?_enable_icu:BuildRequires: pkgconfig(icu-uc) >= %icu_ver}
 %{?_enable_docs:BuildRequires: gtk-doc}
 %{?_enable_check:BuildRequires: python3-test fonttools}
 
@@ -80,9 +84,9 @@ integrate well with the GObject object system used by GNOME.
 Summary: Development files for %name
 Group: Development/C++
 Requires: %name = %EVR
-%{?_with_icu:Requires: %name-icu = %EVR}
-%{?_with_cairo:Requires: %name-cairo = %EVR}
-%{?_with_gobject:Requires: %name-gobject = %EVR}
+%{?_enable_icu:Requires: %name-icu = %EVR}
+%{?_enable_cairo:Requires: %name-cairo = %EVR}
+%{?_enable_gobject:Requires: %name-gobject = %EVR}
 
 %description devel
 The %name-devel package contains files for developing applications that
@@ -130,15 +134,15 @@ GObject introspection devel data for the HarfBuzz library
 
 %build
 %meson \
-	-Dglib=enabled \
-	-Dfreetype=enabled \
-	%{?_without_icu:-Dicu=disabled} \
-	%{?_without_cairo:-Dcairo=disabled} \
-	%{?_with_graphite2:-Dgraphite2=enabled} \
-        %{?_enable_gobject:-Dgobject=enabled} \
-        %{?_enable_introspection:-Dintrospection=enabled} \
-	%{?_disable_docs:-Ddocs=disabled} \
-	%{?_enable_experimental_api:-Dexperimental_api=true}
+    -Dglib=enabled \
+    -Dfreetype=enabled \
+    %{subst_enable_meson_feature icu icu} \
+    %{subst_enable_meson_feature cairo cairo} \
+    %{subst_enable_meson_feature graphite2 graphite2} \
+    %{subst_enable_meson_feature gobject gobject} \
+    %{subst_enable_meson_feature introspection introspection} \
+    %{subst_enable_meson_feature docs docs} \
+    %{subst_enable_meson_bool experimental_api experimental_api}
 %nil
 %meson_build
 
@@ -152,17 +156,17 @@ GObject introspection devel data for the HarfBuzz library
 %_libdir/%name.so.*
 %_libdir/%name-subset.so.*
 
-%if_with icu
+%if_enabled icu
 %files icu
 %_libdir/%name-icu.so.*
 %endif
 
-%if_with cairo
+%if_enabled cairo
 %files cairo
 %_libdir/%name-cairo.so.*
 %endif
 
-%if_with gobject
+%if_enabled gobject
 %files gobject
 %_libdir/%name-gobject.so.*
 %endif
@@ -173,15 +177,15 @@ GObject introspection devel data for the HarfBuzz library
 %_libdir/%name-subset.so
 %_pkgconfigdir/%_name.pc
 %_pkgconfigdir/%_name-subset.pc
-%{?_with_icu:
+%{?_enable_icu:
 %_libdir/%name-icu.so
 %_pkgconfigdir/%_name-icu.pc}
-%{?_with_cairo:
+%{?_enable_cairo:
 %_libdir/%name-cairo.so
 %_pkgconfigdir/%_name-cairo.pc}
 %_libdir/cmake/%_name/
-%doc NEWS AUTHORS COPYING README
-%if_with gobject
+%doc NEWS AUTHORS COPYING README.md
+%if_enabled gobject
 %_libdir/%name-gobject.so
 %_pkgconfigdir/%_name-gobject.pc
 %endif
@@ -200,13 +204,16 @@ GObject introspection devel data for the HarfBuzz library
 
 %if_enabled introspection
 %files gir
-%_typelibdir/*.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/*.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 %changelog
+* Tue Sep 24 2024 Yuri N. Sedunov <aris@altlinux.org> 10.0.0-alt1
+- 10.0.0
+
 * Fri Jun 28 2024 Yuri N. Sedunov <aris@altlinux.org> 9.0.0-alt1
 - 9.0.0
 
