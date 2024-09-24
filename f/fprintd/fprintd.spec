@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fprintd
-Version: 1.94.3
+Version: 1.94.4
 Release: alt1
 
 Summary: D-Bus service for Fingerprint reader access
@@ -34,6 +34,7 @@ BuildRequires: xsltproc
 BuildRequires: docbook-dtds
 
 BuildRequires: pam_wrapper
+BuildRequires: rpm-macros-pam0
 BuildRequires: libpamtest-devel
 BuildRequires: python3-module-libpamtest
 
@@ -79,7 +80,7 @@ Client appications to access fingerprint readers
 %patch -p1
 
 %build
-%meson
+%meson -Dpam_modules_dir=%_pam_modules_dir
 %meson_build
 
 %install
@@ -105,7 +106,7 @@ install -m0644 -p %SOURCE2 %buildroot%_sysconfdir/pam.d/
 
 %files -n pam_fprintd
 %doc pam/README
-/%_lib/security/pam_fprintd.so
+%_pam_modules_dir/pam_fprintd.so
 %_man8dir/pam_fprintd.8*
 %_sysconfdir/pam.d/system-auth-*
 
@@ -117,6 +118,9 @@ install -m0644 -p %SOURCE2 %buildroot%_sysconfdir/pam.d/
 %_bindir/%name-*
 
 %changelog
+* Tue Sep 24 2024 Egor Ignatov <egori@altlinux.org> 1.94.4-alt1
+- 1.94.4
+
 * Thu Apr 04 2024 Egor Ignatov <egori@altlinux.org> 1.94.3-alt1
 - 1.94.3
 

@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libfprint2
-Version: 1.94.7
-Release: alt2
+Version: 1.94.8
+Release: alt1
 
 Summary: Tool kit for fingerprint scanner
 License: LGPLv2+
@@ -113,6 +113,9 @@ Installed tests for %name.
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Tue Sep 24 2024 Egor Ignatov <egori@altlinux.org> 1.94.8-alt1
+- new version 1.94.8
+
 * Wed Apr 03 2024 Egor Ignatov <egori@altlinux.org> 1.94.7-alt2
 - add rpm-build-python3 BR
 
