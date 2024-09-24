@@ -5,7 +5,7 @@
 
 Name: libarchive
 Version: 3.7.5
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: A library for handling streaming archive formats
@@ -15,7 +15,7 @@ VCS: https://github.com/libarchive/libarchive.git
 Source: %name-%version.tar
 # ALT
 Patch100: alt-disable-lzma-mt.patch
-
+Patch101: alt-autoconf-req.patch
 
 BuildRequires: bzlib-devel glibc-devel libacl-devel libattr-devel libe2fs-devel liblzma-devel liblzo2-devel libssl-devel libxml2-devel zlib-devel
 BuildRequires: libzstd-devel
@@ -78,6 +78,7 @@ developing applications that use %name.
 %prep
 %setup
 %patch100 -p1
+%patch101 -p1
 
 %build
 %autoreconf
@@ -124,6 +125,9 @@ developing applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Sep 24 2024 Sergey V Turchin <zerg@altlinux.org> 3.7.5-alt2
+- relax autoconf requires
+
 * Sat Sep 21 2024 Anton Farygin <rider@altlinux.ru> 3.7.5-alt1
 - 3.6.1 -> 3.7.5 (Fixes: CVE-2024-26256, CVE-2024-20696)
 
