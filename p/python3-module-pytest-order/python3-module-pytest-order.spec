@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.2.1
+Version: 1.3.0
 Release: alt1
 
 Summary: pytest plugin that allows to customize the test execution order
@@ -62,6 +62,9 @@ features like ordering relative to other tests.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 24 2024 Anton Zhukharev <ancieg@altlinux.org> 1.3.0-alt1
+- Updated to 1.3.0.
+
 * Thu Apr 04 2024 Anton Zhukharev <ancieg@altlinux.org> 1.2.1-alt1
 - Updated to 1.2.1.
 
