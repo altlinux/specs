@@ -15,7 +15,7 @@
 
 Name: ejabberd
 Version: 21.12
-Release: alt2
+Release: alt3
 Summary: Fault-tolerant distributed Jabber server written in Erlang
 License: GPL-2.0 with OpenSSL-exception
 Group: System/Servers
@@ -29,6 +29,8 @@ Source: %name-%version.tar
 Source1: %name-%version-alt.tar
 
 Source2: %name.watch
+
+Source3: ejabberd.service
 
 # Use ejabberd as an example for PAM service name
 Patch4: ejabberd-fedora-enable-systemd-notification-if-available.patch
@@ -181,6 +183,8 @@ mv %buildroot%_sysconfdir/%name/ejabberdctl.cfg %buildroot%_sysconfdir/sysconfig
 install -p -m 0644 sql/mysql.sql %buildroot%_erllibdir/%name-%version/priv/sql/
 install -p -m 0644 sql/pg.sql    %buildroot%_erllibdir/%name-%version/priv/sql/
 
+install -D -m 0644 %SOURCE3 %buildroot%_unitdir/ejabberd.service
+
 %pre
 %_sbindir/groupadd -r -f ejabberd &>/dev/null
 %_sbindir/useradd -r -g ejabberd  -d %_localstatedir/ejabberd -s /dev/null \
@@ -225,6 +229,9 @@ install -p -m 0644 sql/pg.sql    %buildroot%_erllibdir/%name-%version/priv/sql/
 %attr(1770,root,ejabberd) %dir %_lockdir/ejabberd
 
 %changelog
+* Tue Sep 24 2024 Egor Ignatov <egori@altlinux.org> 21.12-alt3
+- Install ejabberd.service to _unitdir.
+
 * Fri Sep 13 2024 Alexey Shabalin <shaba@altlinux.org> 21.12-alt2
 - Move systemd unit to /usr.
 
