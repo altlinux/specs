@@ -4,18 +4,15 @@
 
 %def_without check
 
-%ifdef _priority_distbranch
-%define altbranch %_priority_distbranch
+%if "%(rpmvercmp '%{get_version ImageMagick-tools}' '7.0')" <= "0"
+%def_disable IM7
 %else
-%define altbranch %(rpm --eval %%_priority_distbranch)
-%endif
-%if "%altbranch" == "%nil"
-%define altbranch sisyphus
+%def_enable IM7
 %endif
 
 Name: ravada
 Version: 2.3.0
-Release: alt1
+Release: alt2
 Summary: Remote Virtual Desktops Manager
 License: AGPL-3.0
 Group: Development/Perl
@@ -93,7 +90,7 @@ Ravada is a software that allows the user to connect to a remote virtual desktop
 # find . -type f -name "*.xml" -exec sed -i 's|kvm-spice|qemu-kvm|g' {} ';'
 
 %build
-%if "%altbranch" == "sisyphus" || "%altbranch" == "p11"
+%if_enabled IM7
 sed -e 's/Image::Magick::Q16;/Image::Magick::Q16HDRI;/g' -i lib/Ravada.pm
 %endif
 
@@ -195,6 +192,10 @@ fi
 %config(noreplace)%_sysconfdir/rvd_front.conf
 
 %changelog
+* Tue Sep 24 2024 Anton Farygin <rider@altlinux.ru> 2.3.0-alt2
+- use the ImageMagick version check instead of checking
+  the version of the branch to fix Magick perl module name
+
 * Tue Sep 10 2024 Andrew A. Vasilyev <andy@altlinux.org> 2.3.0-alt1
 - 2.3.0
 
