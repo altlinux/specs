@@ -171,7 +171,7 @@
 %endif
 
 Name: libvirt
-Version: 10.6.0
+Version: 10.7.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: GPL-2.0-or-later AND LGPL-2.1-only AND LGPL-2.1-or-later AND OFL-1.1
@@ -1544,11 +1544,14 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Thu Sep 26 2024 Alexey Shabalin <shaba@altlinux.org> 10.7.0-alt1
+- 10.7.0 (Fixes: CVE-2024-8235)
+
 * Wed Aug 28 2024 Alexey Shabalin <shaba@altlinux.org> 10.6.0-alt1
 - 10.6.0
 
 * Thu Jul 11 2024 Alexey Shabalin <shaba@altlinux.org> 10.5.0-alt1
-- 10.5.0
+- 10.5.0 (Fixes: CVE-2024-4418)
 - Add ssh-proxy, daemon-common, daemon-lock, daemon-log packages
 - Rename lock-sanlock to daemon-plugin-sanlock
 - Build with modular_daemons on p11 and sisyphus
