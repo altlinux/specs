@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 1.2.1
+Version: 1.3.0
 Release: alt1
 
 Summary: Python library for calculating contours in 2D quadrilateral grids
@@ -65,6 +65,9 @@ sed -i '/meson_version/s/1.2.0/1.1.0/' meson.build
 %python3_sitelibdir/%{pyproject_distinfo %modulename}
 
 %changelog
+* Wed Sep 25 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
+- Automatically updated to 1.3.0.
+
 * Wed Apr 03 2024 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt1
 - Automatically updated to 1.2.1.
 
