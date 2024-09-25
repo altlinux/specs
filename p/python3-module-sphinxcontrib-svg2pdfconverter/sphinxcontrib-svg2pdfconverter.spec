@@ -1,22 +1,25 @@
 %define  prefixname python3-module-sphinxcontrib
 %define  modulename svg2pdfconverter
 
+# There are currently no tests
 # https://github.com/missinglinkelectronics/sphinxcontrib-svg2pdfconverter/issues/14
 %def_without check
 
 Name:    %prefixname-%modulename
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 
 Summary: Sphinx SVG to PDF converter extension
 License: BSD-2-Clause
 Group:   Development/Python3
 URL:     https://pypi.org/project/sphinxcontrib-svg2pdfconverter
-# https://github.com/missinglinkelectronics/sphinxcontrib-svg2pdfconverter
+VCS:     https://github.com/missinglinkelectronics/sphinxcontrib-svg2pdfconverter
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-sphinx
 
 BuildArch: noarch
@@ -79,20 +82,19 @@ This package contains converter using CairoSVG.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%{__python3} setup.py test
 
 # Note that there is no %%files section for the unversioned python module
 %files common
 %doc README.rst
 %dir %python3_sitelibdir/sphinxcontrib/__pycache__
 %python3_sitelibdir/sphinxcontrib_svg2pdfconverter*nspkg.pth
-%python3_sitelibdir/sphinxcontrib_svg2pdfconverter-*.egg-info
+%python3_sitelibdir/sphinxcontrib_svg2pdfconverter-%version.dist-info
 
 
 %files -n %prefixname-inkscapeconverter
@@ -110,6 +112,9 @@ This package contains converter using CairoSVG.
 %python3_sitelibdir/sphinxcontrib/cairosvgconverter.py
 
 %changelog
+* Wed Sep 25 2024 Grigory Ustinov <grenka@altlinux.org> 1.2.3-alt1
+- Automatically updated to 1.2.3.
+
 * Sat Jan 14 2023 Grigory Ustinov <grenka@altlinux.org> 1.2.2-alt1
 - Automatically updated to 1.2.2.
 
