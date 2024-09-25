@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: mousai
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: Identify songs in seconds
@@ -18,23 +18,24 @@ License: GPL-3.0
 Group: Sound
 Url: https://apps.gnome.org/Mousai
 
+Vcs: https://github.com/SeaDve/Mousai.git
+
 %if_disabled snapshot
 Source: %url/-/archive/v%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/SeaDve/Mousai.git
 Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
 
 %define glib_ver 2.66
-%define gtk_ver 4.13
-%define adwaita_ver 1.5
+%define gtk_ver 4.16
+%define adwaita_ver 1.6
 %define gst_ver 1.22
 
 Requires: gst-plugins-base1.0 >= %gst_ver
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson rust-cargo 
+BuildRequires: meson rust-cargo
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(gstreamer-1.0) >= %gst_ver
@@ -56,7 +57,7 @@ will magically return the title and artist of that song.
 %setup -n %name-%version %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
@@ -81,6 +82,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Wed Sep 25 2024 Yuri N. Sedunov <aris@altlinux.org> 0.7.8-alt1
+- 0.7.8
+
 * Sun Mar 24 2024 Yuri N. Sedunov <aris@altlinux.org> 0.7.7-alt1
 - 0.7.7
 
