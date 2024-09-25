@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
 Summary: Spying framework
@@ -48,6 +48,9 @@ Mockito is a spying framework based on Java library with the same name.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Sep 25 2024 Grigory Ustinov <grenka@altlinux.org> 1.5.1-alt1
+- Automatically updated to 1.5.1.
+
 * Sat May 18 2024 Grigory Ustinov <grenka@altlinux.org> 1.5.0-alt1
 - Automatically updated to 1.5.0.
 
