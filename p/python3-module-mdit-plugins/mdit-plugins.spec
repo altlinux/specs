@@ -1,5 +1,3 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname mdit-plugins
 %define mname mdit_py_plugins
 %define pypi_name mdit-py-plugins
@@ -7,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 Summary: Collection of core plugins for markdown-it-py 
 License: MIT
@@ -56,6 +54,9 @@ Collection of core plugins for markdown-it-py.
 %python3_sitelibdir/%{pyproject_distinfo %mname}
 
 %changelog
+* Wed Sep 25 2024 Grigory Ustinov <grenka@altlinux.org> 0.4.2-alt1
+- Automatically updated to 0.4.2.
+
 * Tue May 14 2024 Grigory Ustinov <grenka@altlinux.org> 0.4.1-alt1
 - Automatically updated to 0.4.1.
 
