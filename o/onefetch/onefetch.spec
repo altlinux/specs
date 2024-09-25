@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: onefetch
-Version: 2.20.0
+Version: 2.22.0
 Release: alt1
 
 Summary: Command-line Git information tool
@@ -17,6 +17,7 @@ BuildRequires(pre): rpm-build-rust
 BuildRequires: rust-cargo
 BuildRequires: rust
 BuildRequires: /proc
+# error: failed to run custom build command for `libz-ng-sys v1.1.9` (cmake required)
 BuildRequires: cmake
 
 %description
@@ -26,7 +27,7 @@ to your terminal. The tool is completely offline - no network access is required
 
 %prep
 %setup -a 1
-install -D %SOURCE2 .cargo/config.toml
+install -Dm 644 %SOURCE2 .cargo/config.toml
 
 %build
 %rust_build
@@ -41,6 +42,12 @@ install -Dm 644  docs/onefetch.1 %buildroot%_man1dir/onefetch.1
 %_man1dir/*
 
 %changelog
+* Wed Sep 25 2024 Vladislav Glinkin <smasher@altlinux.org> 2.22.0-alt1
+- Update to 2.22.0
+
+* Sat Jul 06 2024 Vladislav Glinkin <smasher@altlinux.org> 2.21.0-alt1
+- Update to 2.21.0
+
 * Wed Mar 27 2024 Vladislav Glinkin <smasher@altlinux.org> 2.20.0-alt1
 - Update to 2.20.0
 
