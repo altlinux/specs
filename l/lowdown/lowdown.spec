@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: lowdown
-Version: 1.1.0
-Release: alt1.1
+Version: 1.1.1
+Release: alt1
 Summary: A simple markdown translator
 License: ISC
 Group: Development/Documentation
@@ -78,6 +78,9 @@ CFLAGS="%optflags" \
 %_libdir/liblowdown.so.*
 
 %changelog
+* Wed Sep 25 2024 Vitaly Chikunov <vt@altlinux.org> 1.1.1-alt1
+- Update to VERSION_1_1_1 (2024-09-24).
+
 * Wed Jun 19 2024 Boris Yumankulov <boria138@altlinux.org> 1.1.0-alt1.1
 - NMU: add devel subpackage (ALT bug: 50681)
 
