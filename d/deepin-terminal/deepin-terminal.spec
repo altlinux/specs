@@ -2,8 +2,8 @@
 %define twver 0
 
 Name: deepin-terminal
-Version: 6.0.12
-Release: alt2
+Version: 6.0.14
+Release: alt1
 
 Summary: Default terminal emulation application for Deepin
 
@@ -130,6 +130,9 @@ sed -i -e '/Libs/s|terminalwidget5|terminalwidget5 -L%_dqt5_libdir -lQt5Widgets|
 %_includedir/terminalwidget5/
 
 %changelog
+* Wed Sep 25 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.14-alt1
+- New version 6.0.14.
+
 * Wed May 22 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.12-alt2
 - Built via separate qt5 instead system (ALT #48138).
 
