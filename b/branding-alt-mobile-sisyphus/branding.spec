@@ -9,8 +9,8 @@
 %define flavour %brand-%theme
 
 Name: branding-%flavour
-Version: 2024.08
-Release: alt3
+Version: 2024.09
+Release: alt1
 
 Url: https://www.altlinux.org/ALT_Mobile
 
@@ -27,7 +27,7 @@ License: GPL-3.0-or-later
 
 %define Brand_ru Альт
 %define distro_name %Brand Mobile Sisyphus
-%define distro_name_ru %Brand_ru Мобайл Сизиф
+%define distro_name_ru %Brand_ru Мобильный Сизиф
 %define branding_data_dir %_datadir/branding-data-current
 
 %ifdef _priority_distbranch
@@ -229,6 +229,11 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/gtk-3.0/gtk.css
 
 %changelog
+* Wed Sep 25 2024 Anton Midyukov <antohami@altlinux.org> 2024.09-alt1
+- Bump version
+- Fix Russian name
+- indexhtml: use @PRODUCT_NAME@ and /@PRODUCT_NAME_RU@ instead @BRAND@ @NAME@
+
 * Tue Sep 17 2024 Anton Midyukov <antohami@altlinux.org> 2024.08-alt3
 - fix build, when rpm macros _priority_distbranch is not defined
 
