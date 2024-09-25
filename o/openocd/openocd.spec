@@ -1,6 +1,6 @@
 Name: openocd
 Version: 0.12.0
-Release: alt2
+Release: alt3
 
 Summary: Debugging, in-system programming and boundary-scan testing for embedded devices
 License: GPLv2
@@ -80,6 +80,9 @@ install -pm644 -D contrib/60-openocd.rules %buildroot%_udevrulesdir/60-openocd.r
 %_mandir/man1/*
 
 %changelog
+* Sat Aug 10 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.12.0-alt3
+- added support for Arterytek AT32 MCU family
+
 * Mon Mar 11 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.0-alt2
 - rebuilt with jimtcl-0.82 and internal libgpiod
 
