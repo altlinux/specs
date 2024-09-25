@@ -1,17 +1,19 @@
 %define __builddir %_target_platform
 
-%define ver_major 0.2
+%define ver_major 0.3
 %define _libexecdir %_prefix/libexec
 %define pkgconf_ver 1.8.0
 
-%def_disable check
+%def_disable bootstrap
+
 %def_enable docs
 %def_enable libpkgconf
 %def_disable tracy
+%def_disable check
 
 Name: muon
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: C-implemetation of Meson build system
 License: GPL-3.0-only
@@ -19,8 +21,9 @@ Group: Development/Other
 Url: https://github.com/annacrombie/muon
 
 Vcs: https://github.com/annacrombie/muon.git
+
 Source: %name-%version.tar
-Source1: https://mochiro.moe/wrap/meson-docs-1.1.1-1-g1c1a31a22.tar.gz
+Source1: https://mochiro.moe/wrap/meson-docs-1.5.1-18-g587869c37.tar.gz
 #Source2: https://mochiro.moe/wrap/samurai-1.2-32-g81cef5d.tar.gz
 Source3: %name.macros
 Source4: %name.env
@@ -28,7 +31,9 @@ Source4: %name.env
 Requires: rpm-macros-%name = %EVR
 Requires: pkgconf >= %pkgconf_ver ninja-build
 
-BuildRequires: ninja-build libcurl-devel libarchive-devel
+%{?_disable_bootstrap:BuildRequires(pre): rpm-macros-meson}
+BuildRequires: %{?_disable_bootstrap:meson} ninja-build
+BuildRequires: libcurl-devel libarchive-devel
 %{?_enable_libpkgconf:BuildRequires: libpkgconf-devel}
 %{?_enable_docs:BuildRequires: python3-module-yaml scdoc}
 %{?_enable_tracy:BuildRequires: pkgconfig(tracy) gcc-c++}
@@ -61,6 +66,7 @@ mv meson-docs subprojects/
 mkdir %__builddir
 
 %build
+%if_enabled bootstrap
 CC=gcc ./bootstrap.sh ./
 CFLAGS="${CFLAGS:-%optflags %(getconf LFS_CFLAGS)}"; export CFLAGS;
 ./muon setup \
@@ -69,16 +75,29 @@ CFLAGS="${CFLAGS:-%optflags %(getconf LFS_CFLAGS)}"; export CFLAGS;
     -Dsamurai=enabled \
     %{?_disable_tracy:-Dtracy=disabled} \
     %__builddir
-ninja-build %_smp_mflags -C %__builddir
+./muon %_smp_mflags -C %__builddir
 cp -f %__builddir/muon ./
+%else
+%meson
+%meson_build
+%endif
 
 %install
+%if_enabled bootstrap
 DESTDIR=%buildroot ./muon -C %__builddir install
+%else
+%meson_install
+%endif
+
 install -Dpm 0644 %SOURCE3 %buildroot%_rpmmacrosdir/%name
 install -Dpm 0755 %SOURCE4 %buildroot%_rpmmacrosdir/%name.env
 
 %check
+%if_enabled bootstrap
 ./muon -C %__builddir test -R
+%else
+%__meson_test
+%endif
 
 %files
 %_bindir/%name
@@ -97,6 +116,9 @@ install -Dpm 0755 %SOURCE4 %buildroot%_rpmmacrosdir/%name.env
 
 
 %changelog
+* Wed Sep 25 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Thu Mar 28 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt2
 - updated to 0.2.0-274-ga65caf87
 
