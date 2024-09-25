@@ -1,5 +1,5 @@
 Name: mtd-utils
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 
 Summary: Tools for maintaining Memory Technology Devices
@@ -35,6 +35,9 @@ including JFFS2, M-Systems DiskOnChip devices, etc.
 %_man8dir/ubinize.*
 
 %changelog
+* Wed Sep 25 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.2.1-alt1
+- 2.2.1 released
+
 * Mon Apr 01 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.2.0-alt1
 - 2.2.0 released
 
