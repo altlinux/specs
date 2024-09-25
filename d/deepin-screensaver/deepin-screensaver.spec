@@ -1,5 +1,7 @@
+%define _libexecdir %_prefix/libexec
+
 Name: deepin-screensaver
-Version: 5.0.16
+Version: 5.0.20.0.2.522b
 Release: alt1
 Summary: Screensaver Tool
 License: GPL-3.0+
@@ -9,7 +11,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
 
-BuildRequires: gcc-c++ qt5-base-devel qt5-tools qt5-x11extras-devel qt5-declarative-devel libXScrnSaver-devel dtk5-widget-devel deepin-qt-dbus-factory-devel
+BuildRequires: gcc-c++ dqt5-base-devel dqt5-tools dqt5-x11extras-devel dqt5-declarative-devel libXScrnSaver-devel libdtkwidget-devel deepin-qt-dbus-factory-devel deepin-desktop-base
 # BuildRequires: xscreensaver-modules xscreensaver-modules-gl
 
 %description
@@ -30,22 +32,25 @@ Extra modules for Deepin Screensaver.
 sed -i 's|/lib/|/libexec/|' \
   common.pri \
   xscreensaver/xscreensaver.pro
-sed -i 's|/usr/lib|/usr/libexec|' \
+sed -i 's|/usr/lib|%_libexecdir|' \
   common.pri \
   tools/preview/main.cpp \
   customscreensaver/deepin-custom-screensaver/deepin-custom-screensaver.pro
-sed -i 's|/etc/os-version|/etc/os-release|' \
+sed -i 's|/etc/os-version|/etc/uos-version|' \
   common.pri
 
 %build
-export PATH=%_qt5_bindir:$PATH
-%qmake_qt5 \
+export QMAKE=qmake-dqt5
+export PATH=%_dqt5_bindir:$PATH
+%qmake_dqt5 \
     DEFINES+="VERSION=%version" \
     VERSION=%version \
     CONFIG+=nostrip \
     PREFIX=%_prefix \
-    XSCREENSAVER_DATA_PATH=%_prefix/libexec/xscreensaver \
-    MODULE_PATH=%_prefix/libexec/%name/modules/
+    XSCREENSAVER_DATA_PATH=%_libexecdir/xscreensaver \
+    MODULE_PATH=%_libexecdir/%name/modules \
+    QMAKE_RPATHDIR=%_dqt5_libdir \
+#
 %make_build
 
 %install
@@ -61,12 +66,20 @@ export PATH=%_qt5_bindir:$PATH
 %dir %_sysconfdir/%name/
 %dir %_sysconfdir/%name/deepin-custom-screensaver/
 %_sysconfdir/%name/deepin-custom-screensaver/deepin-custom-screensaver*
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/org.deepin.screensaver/
+%_datadir/dsg/configs/org.deepin.screensaver/*.json
 
 %files modules
-%dir %_prefix/libexec/%name/
-%_prefix/libexec/%name/modules/
+%dir %_libexecdir/%name/
+%_libexecdir/%name/modules/
 
 %changelog
+* Wed Sep 25 2024 Leontiy Volodin <lvol@altlinux.org> 5.0.20.0.2.522b-alt1
+- New version 5.0.20-2-g522bb08.
+- Built via separate qt5 instead system (ALT #48138).
+
 * Tue Apr 25 2023 Leontiy Volodin <lvol@altlinux.org> 5.0.16-alt1
 - New version 5.0.16.
 
