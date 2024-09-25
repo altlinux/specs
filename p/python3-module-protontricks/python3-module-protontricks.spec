@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name protontricks
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.11.1
-Release: alt3
+Version: 1.12.0
+Release: alt1
 
 Summary: Python package for %pypi_name
 License: GPL-3.0
@@ -37,7 +38,7 @@ Group: File tools
 Requires: winetricks
 
 %description -n %pypi_name
-%summary.
+%{summary %pypi_name}.
 
 %prep
 %setup
@@ -62,7 +63,7 @@ rm %buildroot%_bindir/protontricks-desktop-install
 %pyproject_run_pytest -vra
 
 %files
-%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %files -n %pypi_name
@@ -71,6 +72,9 @@ rm %buildroot%_bindir/protontricks-desktop-install
 %_desktopdir/%{pypi_name}*
 
 %changelog
+* Wed Sep 25 2024 Anton Zhukharev <ancieg@altlinux.org> 1.12.0-alt1
+- Updated to 1.12.0.
+
 * Mon Jul 08 2024 Anton Zhukharev <ancieg@altlinux.org> 1.11.1-alt3
 - Separated protontricks package (closes 50567).
 - Stopped shipping desktop files installer.
