@@ -1,5 +1,5 @@
 %define module_name     vhba
-%define module_version  20240202
+%define module_version  20240917
 %define module_release alt1.k
 
 %define flavour         6.10
@@ -63,6 +63,9 @@ cp -a %module_name.ko %buildroot/%module_dir/
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Sep 25 2024 Nazarov Denis <nenderus@altlinux.org> 20240917-alt1
+- Version 20240917
 
 * Thu Feb 15 2024 Nazarov Denis <nenderus@altlinux.org> 20240202-alt1
 - Version 20240202
