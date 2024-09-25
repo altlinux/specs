@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: eartag
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Small and simple audio file tag editor
@@ -21,11 +21,10 @@ Vcs: https://gitlab.gnome.org/World/eartag.git
 Source: %name-%version.tar
 %endif
 
-%define gtk_ver 4.9
-%define adwaita_ver 1.4
+%define gtk_ver 4.16
+%define adwaita_ver 1.6
 
 Requires: typelib(Adw) = 1
-Requires: yelp
 
 BuildArch: noarch
 
@@ -70,6 +69,9 @@ BuildRequires: python3(acoustid)}
 %doc README*
 
 %changelog
+* Wed Sep 25 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.2-alt1
+- 0.6.2
+
 * Sat May 04 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
 - 0.6.1
 
