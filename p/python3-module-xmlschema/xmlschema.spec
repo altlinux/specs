@@ -8,7 +8,7 @@
 %endif
 
 Name: python3-module-%oname
-Version: 3.3.2
+Version: 3.4.2
 Release: alt1
 
 Summary: XML Schema validator and data conversion library
@@ -65,6 +65,9 @@ sed -i 's/unittest/unittest -v/' tox.ini
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Sep 25 2024 Grigory Ustinov <grenka@altlinux.org> 3.4.2-alt1
+- Automatically updated to 3.4.2.
+
 * Tue Jul 30 2024 Grigory Ustinov <grenka@altlinux.org> 3.3.2-alt1
 - Automatically updated to 3.3.2.
 
