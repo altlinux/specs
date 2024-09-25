@@ -1,6 +1,6 @@
 Name: dos2unix
 Version: 7.5.2
-Release: alt1
+Release: alt2
 
 Summary: Text file format converter
 License: BSD
@@ -13,9 +13,7 @@ Source100: %name.watch
 Obsoletes: unix2dos
 Provides: unix2dos = %version-%release
 
-# Automatically added by buildreq on Mon Feb 15 2016
-# optimized out: perl-Encode perl-Locale-gettext perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Pod-Usage perl-parent perl-podlators
-BuildRequires: perl-Pod-Checker po4a gettext gcc perl-Padre
+BuildRequires: perl-devel perl-Pod-Checker po4a gettext perl-Pod-Html
 
 %description
 %name - DOS/Mac to Unix and vice versa text file format converter.
@@ -33,6 +31,9 @@ rm -rf man/{es,nl}
 
 %find_lang --with-man --output=%name.lang %name mac2unix unix2dos unix2mac
 
+%check
+%make_build check
+
 %files -f %name.lang
 %_bindir/%name
 %_bindir/mac2unix
@@ -42,6 +43,10 @@ rm -rf man/{es,nl}
 %doc *.txt
 
 %changelog
+* Wed Sep 25 2024 Ivan A. Melnikov <iv@altlinux.org> 7.5.2-alt2
+- reduce BR to fix FTBFS;
+- add %%check section.
+
 * Tue Jan 30 2024 Ilya Mashkin <oddity@altlinux.ru> 7.5.2-alt1
 - 7.5.2
 
