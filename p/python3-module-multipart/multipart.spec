@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 0.2.5
+Version: 1.0.0
 Release: alt1
 
 Summary: Multipart parser for Python3
@@ -16,8 +16,11 @@ VCS:     https://github.com/defnull/multipart
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-flit
+
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 BuildArch: noarch
 
@@ -36,7 +39,7 @@ Source:  %name-%version.tar
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest
 
 %files
 %doc LICENSE *.rst
@@ -45,6 +48,9 @@ Source:  %name-%version.tar
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Wed Sep 25 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1
+- Automatically updated to 1.0.0.
+
 * Wed Aug 21 2024 Grigory Ustinov <grenka@altlinux.org> 0.2.5-alt1
 - Automatically updated to 0.2.5.
 - Built with check.
