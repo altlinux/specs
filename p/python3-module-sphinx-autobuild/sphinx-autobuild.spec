@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2024.9.3
+Version: 2024.9.19
 Release: alt1
 
 Summary: Watch a Sphinx directory and rebuild the documentation when a change is detected
@@ -55,6 +55,9 @@ Also includes a livereload enabled web server.
 %python3_sitelibdir/sphinx_autobuild-%version.dist-info
 
 %changelog
+* Wed Sep 25 2024 Grigory Ustinov <grenka@altlinux.org> 2024.9.19-alt1
+- Automatically updated to 2024.9.19.
+
 * Wed Sep 11 2024 Grigory Ustinov <grenka@altlinux.org> 2024.9.3-alt1
 - Automatically updated to 2024.9.3.
 
