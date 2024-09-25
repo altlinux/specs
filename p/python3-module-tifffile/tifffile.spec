@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2024.8.30
+Version: 2024.9.20
 Release: alt1
 
 Summary: Read and write TIFF(r) files
@@ -58,31 +58,18 @@ and the Open Microscopy Environment consortium, respectively.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export PYTHONDONTWRITEBYTECODE=1
 export PYTEST_ADDOPTS='-p no:cacheprovider'
 export PYTHONPATH=%buildroot%python3_sitelibdir
-# test_write_5GB_bigtiff and test_write_imagej_raw are too long and can crash builder
-py.test-3 -v tests -k 'not test_write_5GB_bigtiff and not test_write_imagej_raw' \
-	--deselect=tests/test_tifffile.py::test_issue_infinite_loop \
-	--deselect=tests/test_tifffile.py::test_issue_jpeg_ia \
-	--deselect=tests/test_tifffile.py::test_func_pformat_xml \
-	--deselect=tests/test_tifffile.py::test_filehandle_seekable \
-	--deselect=tests/test_tifffile.py::test_read_cfa \
-	--deselect=tests/test_tifffile.py::test_read_tiles \
-	--deselect=tests/test_tifffile.py::test_write_cfa \
-	--deselect=tests/test_tifffile.py::test_write_volume_png \
-	--deselect=tests/test_tifffile.py::test_class_omexml \
-	--deselect=tests/test_tifffile.py::test_class_omexml_modulo \
-	--deselect=tests/test_tifffile.py::test_class_omexml_attributes \
-	--deselect=tests/test_tifffile.py::test_class_omexml_multiimage \
-	--deselect=tests/test_tifffile.py::test_write_ome \
-	%nil
+export SKIP_LARGE=1
+export SKIP_HTTP=1
+%pyproject_run_pytest
 
 %files
 %doc LICENSE
@@ -92,9 +79,12 @@ py.test-3 -v tests -k 'not test_write_5GB_bigtiff and not test_write_imagej_raw'
 %_bindir/tiff2fsspec
 %_bindir/tiffcomment
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Sep 24 2024 Grigory Ustinov <grenka@altlinux.org> 2024.9.20-alt1
+- Automatically updated to 2024.9.20.
+
 * Tue Sep 10 2024 Grigory Ustinov <grenka@altlinux.org> 2024.8.30-alt1
 - Automatically updated to 2024.8.30.
 
