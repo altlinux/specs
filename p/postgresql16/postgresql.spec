@@ -1,5 +1,5 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
-%def_with devel
+%def_without devel
 
 # Use ICU
 %def_with icu
@@ -19,7 +19,7 @@
 %define prog_name            postgresql
 %define postgresql_major     16
 %define postgresql_minor     4
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -206,14 +206,12 @@ Provides: %prog_name-server-devel = %EVR
 Obsoletes: %prog_name-server-devel < %EVR
 %endif
 %filter_from_requires /^\/usr\/include\/pgsql\/libpq-fe\.h/d
-
-Conflicts: %{prog_name}10-server-devel
-Conflicts: %{prog_name}11-server-devel
 Conflicts: %{prog_name}12-server-devel
 Conflicts: %{prog_name}13-server-devel
 Conflicts: %{prog_name}14-server-devel
 Conflicts: %{prog_name}15-server-devel
 Conflicts: %{prog_name}16-1C-server-devel
+Conflicts: %{prog_name}17-server-devel
 
 %description server-devel
 The %name-server-devel package contains the header files and configuration
@@ -552,16 +550,6 @@ chown postgres:postgres ~postgres/.bash_profile
 
 # $2, holds the number of instances of the target package that will remain
 # after the operation if $2 is 0, the target package will be removed
-%triggerpostun -- %{prog_name}10-server
-if [ "$2" -eq 0 ]; then
-       %post_service %prog_name
-fi
-
-%triggerpostun -- %{prog_name}11-server
-if [ "$2" -eq 0 ]; then
-       %post_service %prog_name
-fi
-
 %triggerpostun -- %{prog_name}12-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
@@ -593,6 +581,11 @@ if [ "$2" -eq 0 ]; then
 fi
 
 %triggerpostun -- %{prog_name}16-server
+if [ "$2" -eq 0 ]; then
+       %post_service %prog_name
+fi
+
+%triggerpostun -- %{prog_name}17-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
@@ -977,6 +970,11 @@ fi
 %endif
 
 %changelog
+* Wed Sep 25 2024 Alexei Takaseev <taf@altlinux.org> 16.4-alt2
+- Disable -devel
+- Add triggerpostun and conflict for PG 17
+- Remove triggerpostun and conflict for PG 10 and 11
+
 * Thu Aug 08 2024 Alexei Takaseev <taf@altlinux.org> 16.4-alt1
 - 16.4 (Fixes CVE-2024-7348)
 
