@@ -1,7 +1,7 @@
 %define soversion 5
 
 Name: json-c
-Version: 0.17
+Version: 0.18
 Release: alt1
 
 Summary: JSON implementation in C
@@ -24,6 +24,7 @@ of JSON objects.
 %package -n lib%name%soversion
 Summary: JSON shared library
 Group: System/Libraries
+Conflicts: filesystem < 3
 
 %description -n lib%name%soversion
 JSON-C implements a reference counting object model that allows you to
@@ -50,9 +51,10 @@ This package contains development part of JSON-C
 %setup
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %cmake \
   -DBUILD_STATIC_LIBS:BOOL=OFF \
-  -DCMAKE_BUILD_TYPE:STRING=RELEASE \
+  -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
   -DCMAKE_C_FLAGS_RELEASE:STRING="" \
   -DDISABLE_BSYMBOLIC:BOOL=OFF \
   -DDISABLE_WERROR:BOOL=OFF \
@@ -62,24 +64,14 @@ This package contains development part of JSON-C
 %cmake_build
 
 %install
-%cmakeinstall_std
-
-# Relocate shared libraries from %%_libdir/ to /%%_lib/.
-mkdir -p %buildroot/%_lib
-for f in %buildroot%_libdir/*.so; do
-        t=$(readlink -v "$f")
-        ln -fnrs %buildroot/%_lib/"$t" "$f"
-done
-mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
+%cmake_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot/%_lib
-pushd %_cmake__builddir
-ctest --output-on-failure
-popd
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%ctest
 
 %files -n lib%name%soversion
-/%_lib/*.so.%{soversion}*
+%_libdir/*.so.%{soversion}*
 
 %files -n lib%name-devel
 %_libdir/*.so
@@ -88,6 +80,10 @@ popd
 %_libdir/cmake/%name
 
 %changelog
+* Wed Sep 25 2024 Alexey Shabalin <shaba@altlinux.org> 0.18-alt1
+- Updated to 0.18
+- Not relocate shared libraries to /lib.
+
 * Thu Oct 19 2023 Alexey Shabalin <shaba@altlinux.org> 0.17-alt1
 - Updated to 0.17 (Fixes: CVE-2021-32292).
 
