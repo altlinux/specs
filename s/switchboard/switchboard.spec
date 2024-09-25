@@ -5,11 +5,11 @@
 Name: switchboard
 %define xdg_name org.pantheon.%name
 %define rdn_name io.elementary.settings
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Modular Desktop Settings Hub for elementary OS
-License: LGPL-2.1
+License: LGPL-2.1-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/elementary/switchboard
 
@@ -80,6 +80,9 @@ This package contains files that are needed to develop Switchboard plugins.
 %_vapidir/%name-%api_ver.vapi
 
 %changelog
+* Thu Sep 26 2024 Yuri N. Sedunov <aris@altlinux.org> 8.0.1-alt1
+- 8.0.1
+
 * Sat May 25 2024 Yuri N. Sedunov <aris@altlinux.org> 8.0.0-alt1
 - 8.0.0 (ported to GTK4)
 
