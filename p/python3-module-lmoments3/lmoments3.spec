@@ -1,10 +1,9 @@
-%define _unpackaged_files_terminate_build 1
 %define oname lmoments3
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.0.6
+Version: 1.0.8
 Release: alt1
 Summary: Estimate linear moments for statistical distribution functions
 License: GPLv3
@@ -17,6 +16,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools-scm
 BuildRequires: python3-module-wheel
 
 %if_with check
@@ -34,13 +34,8 @@ frequently used in Extreme Value Analyses.
 %prep
 %setup
 
-sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
-
-sed -i  -e '/import versioneer/d' \
-        -e 's/version=.*/version="%version",/' \
-        -e '/cmdclass=versioneer/d' setup.py
-
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
@@ -56,6 +51,9 @@ sed -i  -e '/import versioneer/d' \
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Sep 25 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.8-alt1
+- Automatically updated to 1.0.8.
+
 * Tue Apr 09 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.6-alt1
 - Automatically updated to 1.0.6.
 
