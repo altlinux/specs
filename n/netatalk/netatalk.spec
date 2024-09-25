@@ -1,5 +1,5 @@
 Name: netatalk
-Version: 3.2.9
+Version: 3.2.10
 Release: alt1
 
 Summary: Open Source Apple Filing Protocol (AFP) File Server
@@ -106,8 +106,8 @@ mkdir -p %buildroot/var/lock/netatalk
 mkdir -p %buildroot%_sysconfdir/pam.d
 install -pm644 %SOURCE1 %buildroot%_sysconfdir/pam.d/netatalk
 
-mkdir -p %buildroot%_sysconfdir/dbus-1/system.d/
-cp %buildroot/usr/etc/dbus-1/system.d/netatalk-dbus.conf %buildroot%_sysconfdir/dbus-1/system.d/
+#mkdir -p %buildroot%_sysconfdir/dbus-1/system.d/
+#cp %buildroot/usr/etc/dbus-1/system.d/netatalk-dbus.conf %buildroot%_sysconfdir/dbus-1/system.d/
 find %buildroot -name '*.la' -delete -print
 
 touch %buildroot%_sysconfdir/netatalk/afppasswd
@@ -117,14 +117,14 @@ sh test/afpd/test.sh
 
 %files
 %doc CONTRIBUTORS NEWS COPYING COPYRIGHT
-%config(noreplace) %_sysconfdir/dbus-1/system.d/netatalk-dbus.conf
+%config(noreplace) %_datadir/dbus-1/system.d/netatalk-dbus.conf
 %dir %_sysconfdir/netatalk
 %config(noreplace) %_sysconfdir/netatalk/afp.conf
 %config(noreplace) %_sysconfdir/netatalk/dbus-session.conf
 %config(noreplace) %_sysconfdir/netatalk/extmap.conf
 %config(noreplace) %_sysconfdir/pam.d/netatalk
 %config(noreplace) %_sysconfdir/netatalk/afppasswd
-/usr/etc/dbus-1/system.d/netatalk-dbus.conf
+#_datadir/dbus-1/system.d/netatalk-dbus.conf
 /usr/etc/pam.d/netatalk
 %_bindir/*
 %exclude %_bindir/netatalk-config
@@ -147,6 +147,9 @@ sh test/afpd/test.sh
 %_mandir/man*/netatalk-config.1*
 
 %changelog
+* Wed Sep 25 2024 Ilya Mashkin <oddity@altlinux.ru> 3.2.10-alt1
+- 3.2.10
+
 * Thu Sep 19 2024 Ilya Mashkin <oddity@altlinux.ru> 3.2.9-alt1
 - 3.2.9
 
