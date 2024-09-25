@@ -1,5 +1,5 @@
 Name:    postgresql-deploy-cert
-Version: 0.6
+Version: 0.7
 Release: alt1
 
 Summary: deploy script for postgresql cert config
@@ -27,6 +27,8 @@ install -Dm 0644 *.conf  %buildroot/%_datadir/deploy/postgresql-cert/tasks
 install -Dm 0644 *.acl  %buildroot/%_datadir/deploy/postgresql-cert/tasks
 install -Dm 0644 main.yml  %buildroot/%_datadir/deploy/postgresql-cert/tasks
 install -Dm 0644 postgresql.pam  %buildroot/%_datadir/deploy/postgresql-cert/tasks
+install -Dm 0644 pw_blocker.sysconfig %buildroot/%_datadir/deploy/postgresql-cert/tasks
+
 
 
 %files
@@ -34,6 +36,9 @@ install -Dm 0644 postgresql.pam  %buildroot/%_datadir/deploy/postgresql-cert/tas
 %_datadir/deploy/postgresql-cert/tasks/*
 
 %changelog
+* Wed Sep 25 2024 "Denis Medvedev" <nbr@altlinux.org> 0.7-alt1
+- fixes and minor config changes
+
 * Thu Jun 27 2024 "Denis Medvedev" <nbr@altlinux.org> 0.6-alt1
 - added packages for cluster and checksums
 
