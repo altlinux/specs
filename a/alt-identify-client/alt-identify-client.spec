@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-identify-client
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: Client-side executable for ALT OS validation
@@ -33,6 +33,9 @@ cp -rp %_builddir/%name-%version/%_arch/prefix/* %buildroot/
 %_bindir/perform_request_with_identification
 
 %changelog
+* Tue Sep 24 2024 Oleg Solovyov <mcpain@altlinux.org> 1.0.6-alt1
+- Update to new version
+
 * Wed Apr 03 2024 Slava Aseev <ptrnine@altlinux.org> 1.0.5-alt1
 - Update to new version
 
