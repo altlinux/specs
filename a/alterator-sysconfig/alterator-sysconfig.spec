@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sysconfig
-Version: 1.3.15
+Version: 1.3.16
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/preinstall.d/*
@@ -50,6 +50,9 @@ alterator module for basic system settings
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Wed Sep 25 2024 Anton Midyukov <antohami@altlinux.org> 1.3.16-alt1
+- sysconfig-base: do not setup /etc/sysconfig/i18n, if it doesn't exist
+
 * Wed Jan 10 2024 Anton Midyukov <antohami@altlinux.org> 1.3.15-alt1
 - preinstall.d: copy langlist.all from installer
 
