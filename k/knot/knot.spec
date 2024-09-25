@@ -4,11 +4,11 @@
 %def_disable dnstap
 %def_enable maxminddb
 %def_enable xdp
-%def_disable documentation
-%def_disable quic
+%def_enable documentation
+%def_enable quic
 
 Name: knot
-Version: 3.3.9
+Version: 3.4.0
 Release: alt1
 Summary: High-performance authoritative DNS server
 Group: System/Servers
@@ -19,7 +19,7 @@ Patch0: %name-%version.patch
 
 # Required dependencies
 BuildRequires: pkgconfig(liburcu)
-BuildRequires: pkgconfig(gnutls) >= 3.3
+BuildRequires: pkgconfig(gnutls) >= 3.6.10
 BuildRequires: pkgconfig(libedit)
 
 # Optional dependencies
@@ -31,7 +31,7 @@ BuildRequires: pkgconfig(libnghttp2)
 %{?_enable_quic:BuildRequires: pkgconfig(libngtcp2) >= 0.17.0 pkgconfig(gnutls) >= 3.7.3}
 BuildRequires: pkgconfig(libsystemd)
 BuildRequires: pkgconfig(systemd)
-%{?_enable_documentation:BuildRequires: /usr/bin/sphinx-build-3}
+%{?_enable_documentation:BuildRequires: /usr/bin/sphinx-build}
 BuildRequires: liblmdb-devel
 %{?_enable_dnstap:BuildRequires: /usr/bin/protoc-c pkgconfig(libfstrm) pkgconfig(libprotobuf-c) >= 1.0.0}
 
@@ -164,21 +164,27 @@ V=1 %make check ||:
 %_unitdir/%name.service
 %_bindir/kzone*
 %_sbindir/*
+%if_enabled documentation
 %_man1dir/kzone*
 %_man5dir/*
 %_man8dir/*
-%exclude %_sbindir/kxdpgun
 %exclude %_man8dir/kxdpgun.*
+%endif
+%exclude %_sbindir/kxdpgun
 
 %files utils
 %_bindir/*
 %if_enabled xdp
 %_sbindir/kxdpgun
+%if_enabled documentation
 %_man8dir/kxdpgun.*
 %endif
+%endif
+%if_enabled documentation
 %_man1dir/*
-%exclude %_bindir/kzone*
 %exclude %_man1dir/kzone*
+%endif
+%exclude %_bindir/kzone*
 
 %files devel
 %_includedir/*
@@ -196,10 +202,14 @@ V=1 %make check ||:
 
 %if_enabled documentation
 %files doc
-%doc html
+%doc doc/_build/html
 %endif
 
 %changelog
+* Wed Sep 25 2024 Alexey Shabalin <shaba@altlinux.org> 3.4.0-alt1
+- New version 3.4.0.
+- Enable build with quic support (DoQ).
+
 * Thu Aug 29 2024 Alexey Shabalin <shaba@altlinux.org> 3.3.9-alt1
 - New version 3.3.9.
 

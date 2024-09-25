@@ -4,7 +4,7 @@
 %def_disable dnstap
 
 Name: knot-resolver
-Version: 6.0.7
+Version: 6.0.8
 Release: alt1
 Summary: Caching full DNS Resolver
 Group: System/Servers
@@ -18,15 +18,20 @@ Patch0: %name-%version.patch
 
 ExclusiveArch: %luajit_arches
 
+Provides: knot-resolver6 = %EVR
+Provides: knot-resolver-core = %EVR
+Obsoletes: knot-resolver-core < %EVR
+Provides: knot-resolver-manager = %EVR
+Obsoletes: knot-resolver-manager < %EVR
+
 BuildRequires(pre): meson >= 0.49 rpm-macros-luajit rpm-macros-systemd rpm-macros-python3
 BuildRequires: gcc-c++ luajit
 BuildRequires: python3-module-setuptools
 BuildRequires: pkgconfig(cmocka)
 BuildRequires: pkgconfig(gnutls)
-BuildRequires: pkgconfig(libedit)
-BuildRequires: pkgconfig(libknot) >= 3.0.2
-BuildRequires: pkgconfig(libzscanner) >= 3.0.2
-BuildRequires: pkgconfig(libdnssec) >= 3.0.2
+BuildRequires: pkgconfig(libknot) >= 3.1
+BuildRequires: pkgconfig(libzscanner) >= 3.1
+BuildRequires: pkgconfig(libdnssec) >= 3.1
 BuildRequires: pkgconfig(libnghttp2)
 BuildRequires: pkgconfig(libsystemd)
 BuildRequires: pkgconfig(libcap-ng)
@@ -74,16 +79,6 @@ provide a web interface for local visualization of the resolver cache and
 queries. It can also serve DNS-over-HTTPS, but it is deprecated in favor of
 native C implementation, which doesn't require this package.
 
-%package manager
-Summary: Configuration tool for Knot Resolver
-Group: Development/Python3
-
-%description manager
-Knot Resolver Manager is a configuration tool for Knot Resolver. The Manager
-hides the complexity of running several independent resolver processes while
-ensuring zero-downtime reconfiguration with YAML/JSON declarative
-configuration and an optional HTTP API for dynamic changes.
-
 %prep
 %setup
 tar -xf %SOURCE11 -C modules/policy/lua-aho-corasick
@@ -91,6 +86,7 @@ tar -xf %SOURCE11 -C modules/policy/lua-aho-corasick
 
 %build
 %meson \
+    -Dinstall_rpath=disabled \
     -Dsystemd_files=enabled \
     -Dunit_tests=enabled \
     -Dmanaged_ta=enabled \
@@ -135,15 +131,16 @@ export LD_LIBRARY_PATH=$(pwd)/%{__builddir}/lib:$(pwd)/%{__builddir}
 groupadd -r -f %name >/dev/null 2>&1 ||:
 useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Knot Resolver" -g %name %name >/dev/null 2>&1 ||:
 
-%post manager
+%post
 %post_systemd_postponed knot-resolver.service
 
-%preun manager
+%preun
 %systemd_preun knot-resolver.service
 
 %files
 %doc COPYING AUTHORS NEWS etc/config/config.*
 %dir %_sysconfdir/%name
+%config(noreplace) %_sysconfdir/%name/config.yaml
 %config(noreplace) %_sysconfdir/%name/root.hints
 %config(noreplace) %_sysconfdir/%name/icann-ca.pem
 %attr(750,%name,%name) %dir %_sharedstatedir/%name
@@ -159,6 +156,13 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Knot Resolver" -g %nam
 %exclude %_libdir/%name/kres_modules/http
 %exclude %_libdir/%name/kres_modules/http*.lua
 %exclude %_libdir/%name/kres_modules/prometheus.lua
+%_bindir/kresctl
+%_bindir/knot-resolver
+%_unitdir/knot-resolver.service
+%_unitdir/multi-user.target.wants/knot-resolver.service
+%_datadir/bash-completion/completions/kresctl
+%_datadir/fish/completions/kresctl.fish
+%python3_sitelibdir/knot_resolver_manager*
 
 %files -n libkres
 %_libdir/libkres.so.*
@@ -174,18 +178,11 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Knot Resolver" -g %nam
 %_libdir/%name/kres_modules/http*.lua
 %_libdir/%name/kres_modules/prometheus.lua
 
-%files manager
-%python3_sitelibdir/knot_resolver_manager*
-%config(noreplace) %_sysconfdir/knot-resolver/config.yaml
-%_unitdir/knot-resolver.service
-%_unitdir/multi-user.target.wants/knot-resolver.service
-%_bindir/kresctl
-%_bindir/knot-resolver
-%_man8dir/kresctl.8.*
-%_datadir/bash-completion/completions/kresctl
-%_datadir/fish/completions/kresctl.fish
-
 %changelog
+* Thu Sep 26 2024 Alexey Shabalin <shaba@altlinux.org> 6.0.8-alt1
+- 6.0.8
+- Merge manager package into main.
+
 * Fri Jun 21 2024 Alexey Shabalin <shaba@altlinux.org> 6.0.7-alt1
 - 6.0.7 (Fixes: CVE-2023-50387, CVE-2023-50868)
 - Revert "ALT: fix unit and tmpfiles path"
