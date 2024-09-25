@@ -1,5 +1,5 @@
 Name: xfce4-dict
-Version: 0.8.6
+Version: 0.8.7
 Release: alt1
 
 Summary: Xfce4 Dictionary - A client program to query different dictionaries
@@ -17,7 +17,6 @@ Provides: xfce4-dict-plugin
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
 BuildRequires: libgio-devel
-BuildRequires: intltool
 
 Requires: enchant xdg-utils
 
@@ -48,7 +47,7 @@ panel plugin for the Xfce panel.
 %find_lang %name
 
 %files -f %name.lang
-%doc README ChangeLog AUTHORS
+%doc README NEWS AUTHORS
 %_bindir/xfce4-dict
 %_libdir/xfce4/panel/plugins/*.so
 %_datadir/xfce4/panel/plugins/*.desktop
@@ -59,6 +58,9 @@ panel plugin for the Xfce panel.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Sep 25 2024 Mikhail Efremov <sem@altlinux.org> 0.8.7-alt1
+- Updated to 0.8.7.
+
 * Mon Nov 20 2023 Mikhail Efremov <sem@altlinux.org> 0.8.6-alt1
 - Updated to 0.8.6.
 
