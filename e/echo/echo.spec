@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name Echo
-%define ver_major 1.2
+%define ver_major 2.0
 %define rdn_name io.github.lo2dev.%_name
 
 %def_disable check
@@ -27,7 +27,7 @@ Source: %_name-%version.tar
 
 %add_python3_path %_datadir/%name
 
-%define adw_ver 1.5
+%define adw_ver 1.6
 
 Requires: typelib(Adw) = 1
 Requires: dconf
@@ -65,6 +65,7 @@ sed -i 's|\(Exec=\)%name|\1%rdn_name|' %buildroot%_desktopdir/%rdn_name.desktop
 %attr(755,root,iputils) %_bindir/%rdn_name
 %_desktopdir/%rdn_name.desktop
 %_datadir/%name/
+%_datadir/dbus-1/services/%rdn_name.service
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
@@ -72,6 +73,9 @@ sed -i 's|\(Exec=\)%name|\1%rdn_name|' %buildroot%_desktopdir/%rdn_name.desktop
 
 
 %changelog
+* Wed Sep 25 2024 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt1
+- updated to 2.0-2-gd8bb5ca
+
 * Tue Jul 23 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2-alt1
 - first build for Sisyphus
 
