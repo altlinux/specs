@@ -4,8 +4,19 @@
 
 %def_with check
 
+%define add_python_extra() \
+%{expand:%%package -n %%name+%1 \
+Summary: %%summary \
+Group: Development/Python3 \
+Requires: %%name \
+%{expand:%%pyproject_runtimedeps_metadata -- --extra %1} \
+%%description -n %%name+%1' \
+Extra "%1" for %%pypi_name. \
+%%files -n %%name+%1 \
+}
+
 Name: python3-module-%mod_name
-Version: 3.8.2
+Version: 3.9.0
 Release: alt1
 Summary: A module with some convenient utilities not included with the standard Python install
 License: BSD
@@ -16,6 +27,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage extra dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 # mapping from PyPI name
 Provides: python3-module-%pypi_name = %EVR
@@ -24,6 +37,8 @@ BuildRequires(pre): rpm-build-pyproject
 %if_with check
 %pyproject_builddeps_metadata_extra tests
 %endif
+
+%add_python_extra loguru
 
 %description
 Python Utils is a collection of small Python functions and classes which
@@ -52,6 +67,9 @@ extending it.
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}/
 
 %changelog
+* Wed Sep 25 2024 Stanislav Levin <slev@altlinux.org> 3.9.0-alt1
+- 3.8.2 -> 3.9.0.
+
 * Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 3.8.2-alt1
 - 3.8.1 -> 3.8.2.
 
