@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define ver_major 1.0
-%define beta .alpha.1
+%define beta .alpha.2
 %define rdn_name com.system76.CosmicApplet
 
 %def_disable bootstrap
@@ -8,7 +8,7 @@
 
 Name: cosmic-applets
 Version: %ver_major.0
-Release: alt0.1%beta
+Release: alt0.2%beta
 
 Summary: COSMIC Panel Applets
 License: GPL-3.0
@@ -27,10 +27,12 @@ Source1: %name-%version%beta-cargo.tar
 BuildRequires(pre): rpm-build-rust
 BuildRequires: just
 BuildRequires: pkgconfig(xkbcommon)
-BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(libudev)
 BuildRequires: pkgconfig(libinput)
+BuildRequires: pkgconfig(libpulse)
+BuildRequires: pkgconfig(libpipewire-0.3)
+BuildRequires: pkgconfig(wayland-client)
 
 # rustc-LLVM ERROR: out of memory
 # Allocation failed
@@ -77,6 +79,9 @@ just rootdir=%buildroot install
 #%doc README*
 
 %changelog
+* Thu Sep 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.2.alpha.2
+- 1.0.0-alpha.2
+
 * Sun Aug 18 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.1.alpha.1
 - first build for Sisyphus (epoch-1.0.0-alpha.1-18-g323e8a5)
 
