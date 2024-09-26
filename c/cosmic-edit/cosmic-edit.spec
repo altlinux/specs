@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define ver_major 1.0
-%define beta .alpha.1
+%define beta .alpha.2
 %define rdn_name com.system76.CosmicEdit
 
 %def_disable bootstrap
@@ -8,7 +8,7 @@
 
 Name: cosmic-edit
 Version: %ver_major.0
-Release: alt0.1%beta
+Release: alt0.2%beta
 
 Summary: COSMIC Text Editor
 License: GPL-3.0
@@ -68,6 +68,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Thu Sep 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.2.alpha.2
+- 1.0.0-alpha.2
+
 * Wed Aug 21 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.1.alpha.1
 - first build for Sisyphus (epoch-1.0.0-alpha.1-3-g220cd93)
 
