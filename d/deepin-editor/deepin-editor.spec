@@ -1,8 +1,8 @@
 %def_disable clang
 
 Name: deepin-editor
-Version: 6.0.17
-Release: alt2
+Version: 6.5.2
+Release: alt1
 
 Summary: Simple editor for Linux Deepin
 
@@ -84,6 +84,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/deepin-manual/manual-assets/application/%name/editor/
 
 %changelog
+* Thu Sep 26 2024 Leontiy Volodin <lvol@altlinux.org> 6.5.2-alt1
+- New version 6.5.2.
+
 * Wed May 22 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.17-alt2
 - Built via separate qt5 instead system (ALT #48138).
 
