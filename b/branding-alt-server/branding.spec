@@ -20,7 +20,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt5
+Release: alt6
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -338,6 +338,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Sep 26 2024 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt6
+- Stretch background image to entire installer window
+
 * Tue Sep 24 2024 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt5
 - Change images to p11
 
