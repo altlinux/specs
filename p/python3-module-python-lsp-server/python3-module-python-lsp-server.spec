@@ -5,17 +5,21 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.11.0
+Version: 1.12.0
 Release: alt1
+
 Summary: Python Language Server for the Language Server Protocol
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/python-lsp-server/
 Vcs: https://github.com/python-lsp/python-lsp-server
+
 BuildArch: noarch
-Source: %name-%version.tar
+
+Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-%py3_provides %pypi_name
+Patch0: %name-%version-alt.patch
+
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -33,6 +37,7 @@ A Python 3.7+ implementation of the Language Server Protocol.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
@@ -53,6 +58,9 @@ A Python 3.7+ implementation of the Language Server Protocol.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Sep 26 2024 Anton Zhukharev <ancieg@altlinux.org> 1.12.0-alt1
+- Updated to 1.12.0.
+
 * Tue Apr 09 2024 Anton Zhukharev <ancieg@altlinux.org> 1.11.0-alt1
 - Updated to 1.11.0.
 
