@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-set
-Version: 24.01.1
+Version: 24.01.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -208,7 +208,7 @@ Provides: kde5-printing = %EVR
 Obsoletes: kde5-printing < %EVR
 Requires: kde-runtime
 #
-Requires: kde5-print-manager cups printer-drivers-X11
+Requires: print-manager cups printer-drivers-X11
 %description -n kde-printing
 KDE printing support applications.
 
@@ -261,6 +261,9 @@ Requires: kde5-kaddressbook
 %files -n kde-pim
 
 %changelog
+* Wed Sep 25 2024 Sergey V Turchin <zerg@altlinux.org> 24.01.2-alt1
+- update print-manager
+
 * Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 24.01.1-alt1
 - update requires
 
