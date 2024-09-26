@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.4.1
+Version: 3.5.0
 Release: alt1
 Summary: Binding for xxHash
 License: BSD-2-Clause
@@ -58,6 +58,9 @@ ENDUNITTEST
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Sep 25 2024 Stanislav Levin <slev@altlinux.org> 3.5.0-alt1
+- 3.4.1 -> 3.5.0.
+
 * Thu Oct 05 2023 Stanislav Levin <slev@altlinux.org> 3.4.1-alt1
 - 3.3.0 -> 3.4.1.
 
