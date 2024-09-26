@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define ver_major 1.0
-%define beta .alpha.1
+%define beta .alpha.2
 %define rdn_name com.system76.CosmicPortal
 %define dbus_name org.freedesktop.impl.portal.desktop.cosmic
 
@@ -11,7 +11,7 @@
 
 Name: xdg-desktop-portal-cosmic
 Version: %ver_major.0
-Release: alt0.1%beta
+Release: alt0.2%beta
 
 Summary: COSMIC Desktop Portal
 License: GPL-3.0
@@ -35,8 +35,9 @@ BuildRequires: make
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(libpipewire-0.3) clang-devel
 BuildRequires: pkgconfig(gbm)
-BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(gstreamer-1.0)
+
+ExcludeArch: %ix86 armh
 
 %description
 XDG Desktop Portal implementation for COSMIC desktop environment.
@@ -76,6 +77,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 #%doc README*
 
 %changelog
+* Thu Sep 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.2.alpha.2
+- 1.0.0-alpha.2
+
 * Sun Aug 18 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.1.alpha.1
 - first build for Sisyphus
 
