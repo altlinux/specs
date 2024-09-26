@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: fribidi
-Version: 1.0.15
+Version: 1.0.16
 Release: alt1
 
 Summary: Bi-directional scripts support
@@ -13,14 +13,15 @@ License: LGPL-2.0-or-later and UCD
 Group: System/Internationalization
 Url: https://github.com/%name/%name
 
+Vcs: https://github.com/fribidi/fribidi.git
+
 %if_disabled snapshot
 Source: %url/releases/download/v%version/%name-%version.tar.xz
 %else
-Vcs: https://github.com/fribidi/fribidi.git
 Source: %name-%version.tar
 %endif
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -34,7 +35,7 @@ Group: System/Libraries
 %package -n lib%name-devel
 Summary: Library implementing the Unicode BiDi algorithm
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Provides: %name-devel = %version
 Obsoletes: %name-devel
 
@@ -44,7 +45,7 @@ Bi-directional scripts support.
 %package -n lib%name-devel-static
 Summary: Library implementing the Unicode BiDi algorithm
 Group: Development/C
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name
 A library to handle bidirectional scripts (eg hebrew, arabic), so that
@@ -73,9 +74,9 @@ programs which will use fribidi.
 
 %build
 %meson \
-%{?_enable_static:--default-library=both} \
-%{?_disable_deprecated:-Ddeprecated=false} \
-%{?_disable_docs:-Ddocs=false} 
+    %{?_enable_static:--default-library=both} \
+    %{subst_enable_meson_bool deprecated deprecated} \
+    %{subst_enable_meson_bool docs docs}
 %nil
 %meson_build
 
@@ -105,6 +106,9 @@ programs which will use fribidi.
 %endif
 
 %changelog
+* Thu Sep 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.16-alt1
+- 1.0.16
+
 * Fri Jun 07 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.15-alt1
 - 1.0.15
 
