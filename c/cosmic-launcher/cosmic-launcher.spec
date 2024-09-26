@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define ver_major 1.0
-%define beta .alpha.1
+%define beta .alpha.2
 %define rdn_name com.system76.CosmicLauncher
 
 %def_disable bootstrap
@@ -65,6 +65,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Thu Sep 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.2.alpha.2
+- 1.0.0-alpha.2
+
 * Sat Aug 31 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.2.alpha.1
 - required pop-launcher
 - fixed build for loongarch64
