@@ -7,7 +7,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.0
+Version: 7.0
 Release: alt1
 Summary: Hookable object support
 License: ZPL-2.1
@@ -64,6 +64,9 @@ rm %buildroot%python3_sitelibdir/%ns_name/%mod_name/*.c
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Wed Sep 25 2024 Stanislav Levin <slev@altlinux.org> 7.0-alt1
+- 6.0 -> 7.0.
+
 * Fri Mar 15 2024 Stanislav Levin <slev@altlinux.org> 6.0-alt1
 - 5.4 -> 6.0.
 

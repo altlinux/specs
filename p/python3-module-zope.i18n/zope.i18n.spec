@@ -8,7 +8,7 @@
 
 Name: python3-module-%pypi_name
 Version: 5.1
-Release: alt1
+Release: alt2
 Summary: Zope Internationalization Support
 License: ZPL-2.1
 Group: Development/Python3
@@ -16,6 +16,7 @@ Url: https://pypi.org/project/zope.i18n/
 Vcs: https://github.com/zopefoundation/zope.i18n.git
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
 # setuptools(pkg_resources) is used by namespace root that is packaged
 # separately at python3-module-zope
 %add_pyproject_deps_runtime_filter setuptools
@@ -41,6 +42,7 @@ localization.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -70,6 +72,9 @@ export zope_i18n_compile_mo_files=True
 %exclude %python3_sitelibdir/%ns_name/%mod_name/locales/tests
 
 %changelog
+* Thu Sep 26 2024 Stanislav Levin <slev@altlinux.org> 5.1-alt2
+- Fixed FTBFS (zope.i18nmessageid 7.0).
+
 * Fri Mar 15 2024 Stanislav Levin <slev@altlinux.org> 5.1-alt1
 - 5.0 -> 5.1.
 
