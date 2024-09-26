@@ -1,13 +1,13 @@
 %def_enable snapshot
 %define ver_major 1.0
-%define beta .alpha.1
+%define beta .alpha.2
 
 %def_disable bootstrap
 %def_enable check
 
 Name: cosmic-randr
 Version: %ver_major.0
-Release: alt0.1%beta
+Release: alt0.2%beta
 
 Summary: COSMIC RandR
 License: MPL-2.0
@@ -55,6 +55,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Thu Sep 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.2.alpha.2
+- 1.0.0-alpha.2
+
 * Sun Aug 18 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.1.alpha.1
 - first build for Sisyphus
 
