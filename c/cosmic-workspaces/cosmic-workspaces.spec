@@ -3,7 +3,7 @@
 %define _name cosmic-workspaces
 %define git_name %_name-epoch
 %define ver_major 1.0
-%define beta .alpha.1
+%define beta .alpha.2
 %define rdn_name com.system76.CosmicWorkspaces
 
 %def_disable bootstrap
@@ -11,7 +11,7 @@
 
 Name: %_name
 Version: %ver_major.0
-Release: alt0.1%beta
+Release: alt0.2%beta
 
 Summary: COSMIC Workspaces
 License: GPL-3.0
@@ -72,6 +72,9 @@ sed -i -e 's/"files":{[^}]*}/"files":{}/' \
 #%doc README*
 
 %changelog
+* Thu Sep 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.2.alpha.2
+- 1.0.0-alpha.2
+
 * Sun Aug 18 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.1.alpha.1
 - first build for Sisyphus (epoch-1.0.0-alpha.1-1-g70d6c41)
 
