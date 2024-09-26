@@ -1,13 +1,13 @@
 %def_enable snapshot
 %define _name cosmic-icons
 %define ver_major 1.0
-%define beta .alpha.1
+%define beta .alpha.2
 
 %def_disable check
 
 Name: icon-theme-cosmic
 Version: %ver_major.0
-Release: alt0.1%beta
+Release: alt0.2%beta
 
 Summary: COSMIC Icons
 License: CC-BY-SA-4.0
@@ -44,6 +44,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Thu Sep 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.2.alpha.2
+- 1.0.0-alpha.2
+
 * Sat Aug 17 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.1.alpha.1
 - first build for Sisyphus (epoch-1.0.0-alpha.1-8-gea9e3b8)
 
