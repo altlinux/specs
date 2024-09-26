@@ -5,7 +5,7 @@
 %add_optflags -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
 
 Name: yubico-piv-tool
-Version: 2.5.2
+Version: 2.6.1
 Release: alt1
 
 Summary: Command line tool for the YubiKey PIV application
@@ -14,7 +14,8 @@ Group: System/Configuration/Hardware
 Url: https://developers.yubico.com/yubico-piv-tool/
 Vcs: https://github.com/Yubico/yubico-piv-tool
 
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 Requires: pcsc-lite-ccid
 
@@ -46,6 +47,7 @@ Group: Development/Other
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %cmake -DBUILD_STATIC_LIB=OFF
@@ -69,10 +71,13 @@ Group: Development/Other
 %_includedir/ykpiv/
 %_libdir/libykpiv.so
 %_libdir/libykcs11.so
-%_libdir/pkgconfig/ykpiv.pc
-%_libdir/pkgconfig/ykcs11.pc
+%_pkgconfigdir/ykpiv.pc
+%_pkgconfigdir/ykcs11.pc
 
 %changelog
+* Thu Sep 26 2024 Anton Zhukharev <ancieg@altlinux.org> 2.6.1-alt1
+- Updated to 2.6.1.
+
 * Thu May 16 2024 Anton Zhukharev <ancieg@altlinux.org> 2.5.2-alt1
 - Updated to 2.5.2.
 
