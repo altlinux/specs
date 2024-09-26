@@ -1,6 +1,6 @@
 Name: mkimage
 Version: 0.3.5
-Release: alt1
+Release: alt2
 
 Summary: Simple image creator
 License: GPL-3.0-or-later
@@ -88,6 +88,9 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Tue Sep 24 2024 Ivan A. Melnikov <iv@altlinux.org> 0.3.5-alt2
+- Capitalize primary EFI bootloader name on non-secureboot platforms.
+
 * Sun Aug 11 2024 Alexey Gladkov <legion@altlinux.ru> 0.3.5-alt1
 - mki-pack-date: fix exclude subdir.
 
