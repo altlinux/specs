@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define ver_major 1.0
-%define beta .alpha.1
+%define beta .alpha.2
 %define rdn_name com.system76.CosmicSettings
 
 %def_disable bootstrap
@@ -8,7 +8,7 @@
 
 Name: cosmic-settings
 Version: %ver_major.0
-Release: alt0.1%beta
+Release: alt0.2%beta
 
 Summary: COSMIC Settings
 License: GPL-3.0
@@ -78,6 +78,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Thu Sep 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.2.alpha.2
+- updated to epoch-1.0.0-alpha.2-8-gc38e870
+
 * Sun Aug 18 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.1.alpha.1
 - first build for Sisyphus (epoch-1.0.0-alpha.1-27-g83a4296)
 
