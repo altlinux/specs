@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.11.0
+Version: 0.11.2
 Release: alt1
 Summary: Framework that can run checks on repos
 License: BSD-3-Clause
@@ -54,6 +54,9 @@ to be installed.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Sep 25 2024 Stanislav Levin <slev@altlinux.org> 0.11.2-alt1
+- 0.11.0 -> 0.11.2.
+
 * Mon May 06 2024 Stanislav Levin <slev@altlinux.org> 0.11.0-alt1
 - 0.10.6 -> 0.11.0.
 
