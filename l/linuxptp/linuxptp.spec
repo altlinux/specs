@@ -1,5 +1,5 @@
 Name: linuxptp
-Version: 4.3
+Version: 4.4
 Release: alt1
 
 Summary: Precision Time Protocol (PTP) implementation
@@ -60,6 +60,9 @@ install -pm0644 phc2sys.service %buildroot%_unitdir/phc2sys.service
 %_man8dir/*
 
 %changelog
+* Thu Sep 26 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 4.4-alt1
+- 4.4 released
+
 * Mon Jun 17 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 4.3-alt1
 - 4.3 released
 
