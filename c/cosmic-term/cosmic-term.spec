@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define ver_major 1.0
-%define beta .alpha.1
+%define beta .alpha.2
 %define rdn_name com.system76.CosmicTerm
 
 %def_disable bootstrap
@@ -8,7 +8,7 @@
 
 Name: cosmic-term
 Version: %ver_major.0
-Release: alt0.1%beta
+Release: alt0.2%beta
 
 Summary: COSMIC terminal emulator
 License: GPL-3.0
@@ -27,7 +27,6 @@ Patch1: %name-1.0.0-alt-no-vergen.patch
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: just
-BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: /usr/bin/appstreamcli /usr/bin/desktop-file-validate
 
@@ -70,6 +69,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Thu Sep 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.2.alpha.2
+- updated to epoch-1.0.0-alpha.2-3-g6025963
+
 * Thu Aug 15 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.1.alpha.1
 - first build for Sisyphus (epoch-1.0.0-alpha.1-3-gb397149)
 
