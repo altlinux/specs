@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 0.6.2
+Version: 0.6.3
 Release: alt1
 Summary: Simplifies to build parse types based on the parse module
 License: MIT
@@ -54,6 +54,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Sep 25 2024 Stanislav Levin <slev@altlinux.org> 0.6.3-alt1
+- 0.6.2 -> 0.6.3.
+
 * Tue Mar 05 2024 Stanislav Levin <slev@altlinux.org> 0.6.2-alt1
 - 0.5.6 -> 0.6.2.
 
