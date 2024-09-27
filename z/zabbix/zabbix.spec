@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		d93ce022627
+%define svnrev		f383737f108
 
 %def_with pgsql
 %def_enable java
@@ -17,8 +17,8 @@
 %endif
 
 Name: zabbix
-Version: 7.0.3
-Release: alt3
+Version: 7.0.4
+Release: alt1
 Epoch: 1
 
 Summary: A network monitor
@@ -857,6 +857,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Sat Sep 28 2024 Alexei Takaseev <taf@altlinux.org> 1:7.0.4-alt1
+- 7.0.4
+
 * Wed Sep 04 2024 Alexei Takaseev <taf@altlinux.org> 1:7.0.3-alt3
 - Add 2GIS tile provider and set by default
 

@@ -1,7 +1,7 @@
 %define zabbix_group    zabbix
 
 Name:   zabbix-agent2-plugin-mongodb
-Version: 7.0.3
+Version: 7.0.4
 Release: alt1
 
 Summary: Provides native Zabbix solution for monitoring MongoDB
@@ -45,6 +45,9 @@ mv mongodb.conf %{buildroot}%{_sysconfdir}/zabbix/zabbix_agent2.conf.d/plugins.d
 %config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/zabbix/zabbix_agent2.conf.d/plugins.d/mongodb.conf
 
 %changelog
+* Sat Sep 28 2024 Alexei Takaseev <taf@altlinux.org> 7.0.4-alt1
+- 7.0.4
+
 * Wed Aug 28 2024 Alexei Takaseev <taf@altlinux.org> 7.0.3-alt1
 - 7.0.3
 
