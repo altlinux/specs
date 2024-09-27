@@ -13,7 +13,7 @@
 %define libname %name-%apiversion
 
 Name: wireplumber
-Version: 0.5.5
+Version: 0.5.6
 Release: alt1
 
 Summary: a modular session/policy manager for PipeWire
@@ -130,6 +130,9 @@ This package contains GObject introspection development data for lib%libname.
 %prep
 %setup
 %patch0001 -p1
+mkdir -p "$HOME/bin"
+printf '%%s\n' '#!/bin/sh -eu' 'exec sphinx-build-3 "$@"' > "$HOME/bin/sphinx-build"
+chmod +x "$HOME/bin/sphinx-build"
 
 %build
 %meson \
@@ -198,6 +201,9 @@ mv -v %buildroot%_datadir/doc/%name %buildroot%{docdir %name-doc}
 %endif
 
 %changelog
+* Wed Sep 18 2024 Arseny Maslennikov <arseny@altlinux.org> 0.5.6-alt1
+- 0.5.5 -> 0.5.6.
+
 * Mon Jul 22 2024 Arseny Maslennikov <arseny@altlinux.org> 0.5.5-alt1
 - 0.4.17 -> 0.5.5.
 - Added a script to migrate route prop state from 0.4, if pre-0.5 props
