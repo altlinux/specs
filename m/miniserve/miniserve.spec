@@ -1,13 +1,14 @@
 %def_without check
 
 Name: miniserve
-Version: 0.26.0
+Version: 0.28.0
 Release: alt1
 Summary: A CLI tool to serve files and dirs over HTTP
 License: MIT
 Group: System/Servers
 Url: https://github.com/svenstaro/miniserve
 Source: %name-%version.tar
+
 Source1: vendor.tar
 
 ExcludeArch: ppc64le
@@ -23,7 +24,7 @@ via HTTP.
 %prep
 %setup -a 1
 mkdir -p .cargo
-cat >> .cargo/config <<EOF
+cat >> .cargo/config.toml <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
@@ -45,10 +46,13 @@ install -m 0644 %name.1 %buildroot%_man1dir
 
 %files
 %_bindir/%name
-%_man1dir/%name.1.xz
+%_man1dir/%name.1.*
 %doc LICENSE README.md
 
 %changelog
+* Fri Sep 27 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.28.0-alt1
+- Updated to version 0.28.0.
+
 * Wed Jan 17 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.26.0-alt1
 - Updated to version 0.26.0.
 
