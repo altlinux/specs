@@ -14,7 +14,7 @@
 
 Name: wireplumber-0.4
 Version: 0.4.17
-Release: alt2
+Release: alt3
 
 Summary: a modular session/policy manager for PipeWire (0.4 compat library)
 
@@ -133,6 +133,10 @@ if [ -f src/meson.build ]; then : > src/meson.build; fi
 if [ -f po/meson.build ]; then : > po/meson.build; fi
 if [ -f tests/wplua/meson.build ]; then : > tests/wplua/meson.build; fi
 
+mkdir -p "$HOME/bin"
+printf '%%s\n' '#!/bin/sh -eu' 'exec sphinx-build-3 "$@"' > "$HOME/bin/sphinx-build"
+chmod +x "$HOME/bin/sphinx-build"
+
 %build
 %meson \
     -Dsystem-lua=true \
@@ -204,6 +208,9 @@ mv -v %buildroot%_datadir/doc/wireplumber %buildroot%{docdir %name-doc}
 %endif
 
 %changelog
+* Wed Sep 18 2024 Arseny Maslennikov <arseny@altlinux.org> 0.4.17-alt3
+- Fixed FTBFS in p11; no change from -alt2.
+
 * Tue Jul 30 2024 Arseny Maslennikov <arseny@altlinux.org> 0.4.17-alt2
 - Built library and modules only for compatibility with some other packages in
   the presence of 0.5.
