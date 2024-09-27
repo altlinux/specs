@@ -1,20 +1,22 @@
 %def_without check
 
 Name: xcp
-Version: 0.17.0
+Version: 0.21.3
 Release: alt1
 Summary: An extended cp
 License: GPL-3.0
 Group: File tools
 Url: https://github.com/tarka/xcp
+
 Source: %name-%version.tar
 Source1: vendor.tar
 Patch1: alt-fix-i586-armh-build.patch
 Patch3500: alt-loongarch64-fiemap.patch
 
 BuildRequires(pre): rpm-build-rust
+BuildRequires: cargo-vendor-checksum
+BuildRequires: diffstat
 BuildRequires: rust-cargo
-BuildRequires: cargo-vendor-checksum diffstat
 
 %description
 xcp is a (partial) clone of the Unix cp command. It is not intended
@@ -25,7 +27,7 @@ certain tasks.
 %prep
 %setup -a 1
 mkdir -p .cargo
-cat >> .cargo/config <<EOF
+cat >> .cargo/config.toml <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
@@ -52,6 +54,9 @@ diffstat -p1 -l < %PATCH3500 | sed -re 's@vendor/@@' | xargs cargo-vendor-checks
 %_bindir/%name
 
 %changelog
+* Fri Sep 27 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.21.3-alt1
+- Updated to version 0.21.3.
+
 * Sun Jan 21 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.17.0-alt1
 - Updated to version 0.17.0.
 
