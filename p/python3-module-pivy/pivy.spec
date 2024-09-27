@@ -1,7 +1,7 @@
 %define oname pivy
 Name: python3-module-%oname
-Version: 0.6.8
-Release: alt3.gitd77e175
+Version: 0.6.9
+Release: alt1
 Epoch: 2
 Summary: Pivy is a Coin binding for Python
 License: ISC
@@ -59,6 +59,9 @@ mv %buildroot%python3_sitelibdir_noarch/%oname \
 %python3_sitelibdir/*
 
 %changelog
+* Fri Sep 27 2024 Andrey Cherepanov <cas@altlinux.org> 2:0.6.9-alt1
+- New version.
+
 * Tue Apr 09 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2:0.6.8-alt3.gitd77e175
 - Fixed build for Elbrus.
 
