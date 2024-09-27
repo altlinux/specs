@@ -4,7 +4,7 @@
 
 Name: wget
 Version: 1.24.5
-Release: alt2
+Release: alt3
 
 Summary: A free utility for non-interactive download of files from the Web
 License: GPL-3.0-or-later
@@ -96,6 +96,10 @@ fi
 %_infodir/wget.info*
 
 %changelog
+* Fri Sep 27 2024 Vitaly Chikunov <vt@altlinux.org> 1.24.5-alt3
+- Fix a crash caused by seccomp filtering by permitting additional
+  DNS-resolving syscalls (ALT#51563).
+
 * Mon Sep 09 2024 Vitaly Chikunov <vt@altlinux.org> 1.24.5-alt2
 - Update to v1.24.5-22-g8775506f6 (fixes: CVE-2024-38428).
 
