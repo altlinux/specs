@@ -24,7 +24,7 @@
 %define fwupd_pluginsdir %_libdir/fwupd-%version
 
 Name: fwupd
-Version: 1.9.24
+Version: 1.9.25
 Release: alt1
 
 Summary: Firmware update daemon
@@ -321,6 +321,9 @@ vm-run --sbin --udevd --kvm=cond --overlay=tmpfs:/usr/src \
 %endif
 
 %changelog
+* Wed Sep 25 2024 Egor Ignatov <egori@altlinux.org> 1.9.25-alt1
+- 1.9.25
+
 * Thu Aug 22 2024 Egor Ignatov <egori@altlinux.org> 1.9.24-alt1
 - 1.9.24
 

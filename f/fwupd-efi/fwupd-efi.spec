@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fwupd-efi
-Version: 1.6
+Version: 1.7
 Release: alt1
 License: LGPLv2+
 
@@ -52,12 +52,15 @@ This package enables EFI signature verification.
 %meson_install
 
 %files
-%_libdir/efi/fwupd*.efi
+%attr(644, root, root) %_libdir/efi/fwupd*.efi
 %_libdir/pkgconfig/fwupd-efi.pc
 
 %files checkinstall
 
 %changelog
+* Wed Sep 25 2024 Egor Ignatov <egori@altlinux.org> 1.7-alt1
+- 1.7
+
 * Mon Jul 22 2024 Egor Ignatov <egori@altlinux.org> 1.6-alt1
 - 1.6
 
