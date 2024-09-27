@@ -1,6 +1,13 @@
+%ifarch %e2k
+# lcc's openmp implementation is way too old
+%def_disable openmp
+%else
+%def_enable openmp
+%endif
+
 Name: GraphicsMagick
 Version: 1.3.45
-Release: alt1
+Release: alt2
 
 Summary: Image manipulation and translation utility
 License: MIT
@@ -29,13 +36,7 @@ BuildRequires: libwebp-devel
 BuildRequires: libxml2-devel
 BuildRequires: libzstd-devel
 BuildRequires: zlib-devel
-
-%ifarch %e2k
-# lcc's openmp implementation is way too old
-%def_disable openmp
-%else
-%def_enable openmp
-%endif
+%{?_enable_openmp:BuildRequires: libgomp-devel}
 
 %define quantum_depth 16
 %define gmpath %_libdir/%name-%version
@@ -187,6 +188,9 @@ make check
 %_man1dir/GraphicsMagick++-config.*
 
 %changelog
+* Fri Sep 27 2024 L.A. Kostis <lakostis@altlinux.ru> 1.3.45-alt2
+- NMU: fix OpenMP BR (and use GOMP).
+
 * Thu Aug 29 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.45-alt1
 - 1.3.45 released
 
