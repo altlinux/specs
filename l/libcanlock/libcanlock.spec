@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libcanlock
-Version: 3.3.0
+Version: 3.3.1
 Release: alt1
 %define abiversion 3
 
-Summary: Library for creating and verifying Usenet cancel locks
-License: MIT
+Summary: A standalone RFC 8315 Netnews Cancel-Lock implementation for Unix
+License: ICU and BSD-3-Clause
 Group: Development/C
 Url: https://micha.freeshell.org/libcanlock/
 
@@ -106,5 +106,8 @@ done
 %_man3dir/*
 
 %changelog
+* Fri Sep 27 2024 Sergey Y. Afonin <asy@altlinux.org> 3.3.1-alt1
+- new version
+
 * Tue Nov 28 2023 Sergey Y. Afonin <asy@altlinux.org> 3.3.0-alt1
 - initial build for ALT Linux (ALT #44168)
