@@ -5,10 +5,11 @@
 
 %define _name spelling
 %define ver_major 0.4
+%define namespace Spelling
 %define api_ver 1
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A spellcheck library for GTK 4
@@ -114,10 +115,10 @@ xvfb-run %__meson_test
 %_vapidir/%name-%api_ver.*
 
 %files gir
-%_typelibdir/Spelling-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Spelling-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 
 %if_enabled docs
 %files devel-doc
@@ -126,6 +127,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Fri Sep 27 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
+- 0.4.1
+
 * Tue Sep 10 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - 0.4.0
 
