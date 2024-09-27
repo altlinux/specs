@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: libcamera
-Version: 0.3.1
-Release: alt1.2
+Version: 0.3.2
+Release: alt1
 Epoch: 1
 
 Summary: A complex camera support library for Linux
@@ -92,7 +92,7 @@ sed -i "s|\"caps\", caps|\"caps\", (GstCaps*)caps|" src/gstreamer/gstlibcamerapr
     -Dpipelines=%platdefs \
     -Dv4l2=true \
     -Dwerror=false \
-    %{?_enable_test:-Dtest=true}
+    %{subst_enable_meson_bool test test}
 %nil
 %meson_build
 
@@ -143,6 +143,9 @@ mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Sep 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1:0.3.2-alt1
+- 0.3.2
+
 * Thu Aug 01 2024 Ivan A. Melnikov <iv@altlinux.org> 1:0.3.1-alt1.2
 - use platdefs=auto on all architectures
   + enables simple (soft) pipeline on most architectures
