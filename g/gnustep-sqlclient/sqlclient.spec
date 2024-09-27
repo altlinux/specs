@@ -2,8 +2,8 @@
 %def_without java
 %set_verify_elf_method unresolved=strict
 Name: gnustep-sqlclient
-Version: 1.7.0
-Release: alt9
+Version: 1.9.0
+Release: alt1
 Summary: Provide a simple interface to SQL databases for GNUstep applications
 License: LGPLv3+
 Group: Graphical desktop/GNUstep
@@ -95,7 +95,8 @@ export LD_LIBRARY_PATH=$(dirname $(find %_jvmdir -name libjvm.so) \
 	--with-jre-architecture=i386 \
 %endif
 %endif
-	--with-installation-domain=SYSTEM
+	--with-installation-domain=SYSTEM \
+	--disable-ecpg-bundle
 
 libSQLClient=$PWD/obj/libSQLClient.so
 
@@ -114,7 +115,7 @@ for i in SQLite MySQL \
 	JDBC_libs \
 	JDBC \
 %endif
-	Postgres ECPG
+	Postgres
 do
 	rm -f $(find ./ -name $i -type f)
 done
@@ -140,6 +141,10 @@ buildIt $libSQLClient
 %_docdir/GNUstep
 
 %changelog
+* Thu Sep 26 2024 Alexei Takaseev <taf@altlinux.org> 1.9.0-alt1
+- 1.9.0
+- Disable ECPG
+
 * Wed Oct 07 2020 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt9
 - Build without libgnustep-objc2-devel.
 - Build on any architectures.
