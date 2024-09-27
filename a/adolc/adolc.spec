@@ -2,11 +2,12 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %define soname 2
+%define _optlevel 3
 
 Name: adolc
 Summary: A Package for Automatic Differentiation of Algorithms Written in C/C++
 Version: 2.7.2
-Release: alt0.2
+Release: alt0.3
 Group: Sciences/Mathematics
 License: EPL-1.0 or GPL-2.0+
 Url: https://github.com/coin-or/ADOL-C
@@ -118,10 +119,12 @@ This package contains examples for ADOL-C.
 
 %build
 %autoreconf
-FLAGS="-g -pipe -O3 -Wall %optflags_shared -pthread -I%_includedir/colpack"
+FLAGS="%optflags_default %optflags_shared -pthread -I%_includedir/colpack"
 %configure \
 %ifarch x86_64
 	--enable-ulong \
+	--enable-parexa \
+	--with-openmp-flag="-fopenmp" \
 %endif
 	--enable-shave=no \
 	--enable-tserrno \
@@ -129,7 +132,6 @@ FLAGS="-g -pipe -O3 -Wall %optflags_shared -pthread -I%_includedir/colpack"
 	--enable-sparse \
 	--enable-docexa \
 	--enable-addexa \
-	--with-openmp-flag="-fopenmp" \
 	--with-cflags="$FLAGS" \
 	--with-cxxflags="$FLAGS" \
 	--with-colpack=%prefix
@@ -142,7 +144,6 @@ sed -ri \
 %makeinstall_std
 
 install -d %buildroot%_docdir/lib%name-devel/papers
-install -d %buildroot%_libdir/%name-examples
 
 install -p -m644 ADOL-C/doc/*.pdf %SOURCE1 \
 	%buildroot%_docdir/lib%name-devel
@@ -151,9 +152,9 @@ install -p -m644 %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 %SOURCE6 %SOURCE7 \
 	%buildroot%_docdir/lib%name-devel/papers
 
 rm -f $(find ADOL-C/examples -name '*.o')
-cp -fR ADOL-C/examples/* %buildroot%_libdir/%name-examples/
+cp -fR ADOL-C/examples %buildroot%_libdir/%name-examples
 
-for i in %buildroot%_libdir/%name-examples/additional_examples/*/.libs/*
+for i in %buildroot%_libdir/{%name-examples,%name-examples/additional_examples}/*/.libs/*
 do
 	chrpath -d $i ||:
 done
@@ -177,6 +178,11 @@ chrpath -d %buildroot%_libdir/*.so
 %_libdir/%name-examples
 
 %changelog
+* Fri Sep 27 2024 L.A. Kostis <lakostis@altlinux.ru> 2.7.2-alt0.3
+- examples: preserve files in .libs.
+- additonal_examples: build parallel examples too.
+- .spec: use macros for optflags.
+
 * Tue Aug 20 2024 Ivan A. Melnikov <iv@altlinux.org> 2.7.2-alt0.2
 - NMU: Fix FTBFS on loongarch64 (by k0tran@).
 
