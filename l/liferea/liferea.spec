@@ -1,7 +1,7 @@
 %define rdn_name net.sourceforge.liferea
 
 Name: liferea
-Version: 1.15.7
+Version: 1.15.8
 Release: alt1
 
 Summary: A RSS News Reader for GNOME
@@ -108,6 +108,9 @@ xvfb-run %make_build
 %_libdir/%name/plugins/__pycache__/gnome-keyring.*
 
 %changelog
+* Fri Sep 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1.15.8-alt1
+- 1.15.8
+
 * Sat Jun 22 2024 Yuri N. Sedunov <aris@altlinux.org> 1.15.7-alt1
 - updated to v1.15.7-3-dea9940bc7
 
