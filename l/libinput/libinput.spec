@@ -9,7 +9,7 @@
 
 Name: libinput
 Version: 1.26.2
-Release: alt1
+Release: alt2
 
 Summary: Input devices library
 Group: System/Libraries
@@ -22,6 +22,8 @@ Source: https://gitlab.freedesktop.org/%name/%name/-/archive/%version/%name-%ver
 Vcs: https://gitlab.freedesktop.org/libinput/libinput.git
 Source: %name-%version.tar
 %endif
+# https://gitlab.freedesktop.org/rautyrauty/libinput/-/commit/8f6e08d8e5835dea8ae73a7ad86d22dc9403236c.patch
+Patch10: libinput-1.26.2-up-ICL.patch
 
 %add_python3_path %_libexecdir/%name
 
@@ -101,6 +103,7 @@ the functionality of the installed libinput library.
 
 %prep
 %setup
+%patch10 -p1
 
 %build
 %meson %{subst_enable_meson_bool libwacom libwacom} \
@@ -193,6 +196,9 @@ the functionality of the installed libinput library.
 %endif
 
 %changelog
+* Fri Sep 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1.26.2-alt2
+- applied patch for ICL Si1516/Si1512 proposed in mr1054 (ALT ##44766,51497)
+
 * Mon Aug 19 2024 Yuri N. Sedunov <aris@altlinux.org> 1.26.2-alt1
 - 1.26.2
 
