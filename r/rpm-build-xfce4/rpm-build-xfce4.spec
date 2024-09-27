@@ -1,11 +1,11 @@
 Name: rpm-build-xfce4
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
 Summary: comfort build environment for xfce4 and plugins
 Summary(ru_RU.UTF-8): Зависимости для удобной сборки Xfce
 Group: Graphical desktop/XFce
-License: Public Domain
+License: GPL-2.0-or-later
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Source: xfce4.macros
@@ -46,6 +46,10 @@ install -m644 %SOURCE0 %buildroot%_rpmmacrosdir/xfce4
 
 
 %changelog
+* Fri Sep 27 2024 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt1
+- Changed license to GPL-2.0-or-later.
+- Added %%if_xfce4_wayland_support macro.
+
 * Tue Sep 19 2023 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt1
 - Add %%xfce4_cleanup_version() macro.
 
