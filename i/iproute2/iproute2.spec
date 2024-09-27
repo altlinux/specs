@@ -2,7 +2,7 @@
 %def_with selinux
 
 Name: iproute2
-Version: 6.10.0
+Version: 6.11.0
 Release: alt1
 
 Summary: Advanced IP routing and network devices configuration tools
@@ -98,6 +98,9 @@ done
 %attr(700,root,root) %dir %_localstatedir/arpd
 
 %changelog
+* Wed Sep 25 2024 Arseny Maslennikov <arseny@altlinux.org> 6.11.0-alt1
+- 6.10.0 -> 6.11.0.
+
 * Wed Jul 17 2024 Arseny Maslennikov <arseny@altlinux.org> 6.10.0-alt1
 - 6.9.0 -> 6.10.0.
 
