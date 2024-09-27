@@ -1,8 +1,13 @@
 Name: parole
 Version: 4.18.1
-Release: alt1
+Release: alt2
 
 %def_enable clutter
+%if_xfce4_wayland_support
+%def_enable wayland
+%else
+%def_disable wayland
+%endif
 
 Summary: Media player for the Xfce desktop
 License: GPLv2+
@@ -15,8 +20,8 @@ Source1: alt_ru.po
 Patch: %name-%version-%release.patch
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4ui-gtk3-devel libxfce4util-devel libxfconf-devel
+BuildRequires(pre): rpm-build-xfce4 >= 0.3.0 xfce4-dev-tools
+BuildRequires: libxfce4ui-gtk3-devel libxfce4util-devel libxfconf-devel
 BuildRequires: libgtk+3-devel libnotify-devel libtag-devel
 BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
 BuildRequires: libdbus-glib-devel libdbus-devel
@@ -58,6 +63,8 @@ mv -f merged_ru.po po/ru.po
 %configure \
 	--disable-static \
 	--enable-maintainer-mode \
+	--enable-x11 \
+	%{subst_enable wayland} \
 	--enable-taglib \
 	%{subst_enable clutter} \
 	--enable-gtk-doc \
@@ -83,6 +90,9 @@ mv -f merged_ru.po po/ru.po
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Sep 27 2024 Mikhail Efremov <sem@altlinux.org> 4.18.1-alt2
+- Enabled wayland support in the Sisyphus only.
+
 * Thu Nov 30 2023 Mikhail Efremov <sem@altlinux.org> 4.18.1-alt1
 - Use our own Russian translation.
 - Updated to 4.18.1.

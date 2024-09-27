@@ -1,6 +1,6 @@
 Name:           xfce4-notifyd
 Version:        0.9.6
-Release:        alt1
+Release:        alt2
 Summary:        Simple notification daemon for Xfce
 Summary(ru_RU.UTF-8): Менеджер уведомлений для Xfce
 
@@ -12,9 +12,13 @@ Source0:        %name-%version.tar
 Patch:          %name-%version-%release.patch
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
+%if_xfce4_wayland_support
 %def_enable wayland
+%else
+%def_disable wayland
+%endif
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools >= 4.18.1
+BuildRequires(pre): rpm-build-xfce4 >= 0.3.0 xfce4-dev-tools >= 4.18.1
 BuildRequires: libxfce4ui-gtk3-devel libxfconf-devel libxfce4util-devel
 BuildRequires: libxfce4panel-gtk3-devel
 BuildRequires: libgio-devel libX11-devel
@@ -102,6 +106,9 @@ Notification plugin for the Xfce panel.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Fri Sep 27 2024 Mikhail Efremov <sem@altlinux.org> 0.9.6-alt2
+- Enabled wayland support in the Sisyphus only.
+
 * Thu Aug 15 2024 Mikhail Efremov <sem@altlinux.org> 0.9.6-alt1
 - Updated to 0.9.6.
 

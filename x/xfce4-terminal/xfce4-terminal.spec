@@ -1,6 +1,6 @@
 Name: xfce4-terminal
 Version: 1.1.3
-Release: alt2
+Release: alt3
 
 Summary: Terminal emulator application for Xfce
 Summary (ru_RU.UTF-8): Эмулятор терминала для Xfce
@@ -12,9 +12,13 @@ Vcs: https://gitlab.xfce.org/apps/xfce4-terminal.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+%if_xfce4_wayland_support
 %def_enable wayland
+%else
+%def_disable wayland
+%endif
 
-BuildRequires: rpm-build-xfce4 xfce4-dev-tools >= 4.18.1
+BuildRequires(pre): rpm-build-xfce4 >= 0.3.0 xfce4-dev-tools >= 4.18.1
 BuildRequires: libxfconf-devel >= 4.16 libxfce4ui-gtk3-devel >= 4.17.5
 BuildRequires: libpcre2-devel
 BuildRequires: docbook-dtds docbook-style-xsl intltool libvte3-devel
@@ -71,6 +75,9 @@ __EOF__
 %_desktopdir/*
 
 %changelog
+* Fri Sep 27 2024 Mikhail Efremov <sem@altlinux.org> 1.1.3-alt3
+- Enabled wayland support in the Sisyphus only.
+
 * Fri May 31 2024 Mikhail Efremov <sem@altlinux.org> 1.1.3-alt2
 - Explicitly enabled wayland support.
 

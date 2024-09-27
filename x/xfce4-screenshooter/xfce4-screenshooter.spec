@@ -3,7 +3,7 @@
 
 Name: xfce4-screenshooter
 Version: 1.11.1
-Release: alt1%git_date
+Release: alt2%git_date
 
 Summary: Screenshot Xfce4 panel plugin
 Summary (ru_RU.UTF-8): Дополнение для панели Xfce позволяющее делать снимки экрана
@@ -16,10 +16,16 @@ Vcs: https://gitlab.xfce.org/apps/xfce4-screenshooter.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+%if_xfce4_wayland_support
+%def_enable wayland
+%else
+%def_disable wayland
+%endif
+
 BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel libexo-gtk3-devel libxfconf-devel
 BuildRequires: libX11-devel libXi-devel libXext-devel libXfixes-devel libXtst-devel
-BuildRequires: wayland-devel libwayland-client-devel wlr-protocols
+%{?_enable_wayland:BuildRequires: wayland-devel libwayland-client-devel wlr-protocols}
 BuildRequires: libpango-devel >= 1.44.0
 
 BuildRequires: help2man
@@ -53,7 +59,7 @@ A plugin for the Xfce panel is also available.
 %xfce4reconf
 %configure \
 	--enable-x11 \
-	--enable-wayland \
+	%{subst_enable wayland} \
     --enable-debug=minimum
 %make_build
 
@@ -76,6 +82,9 @@ A plugin for the Xfce panel is also available.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Fri Sep 27 2024 Mikhail Efremov <sem@altlinux.org> 1.11.1-alt2
+- Enabled wayland support in the Sisyphus only.
+
 * Wed Jul 31 2024 Mikhail Efremov <sem@altlinux.org> 1.11.1-alt1
 - Updated to 1.11.1.
 
