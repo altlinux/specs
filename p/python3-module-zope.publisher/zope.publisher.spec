@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.0
+Version: 7.1
 Release: alt1
 Epoch: 1
 Summary: The Zope publisher publishes Python objects on the web
@@ -88,6 +88,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/%ns_name/%mod_name/__pycache__/testing.*
 
 %changelog
+* Fri Sep 27 2024 Stanislav Levin <slev@altlinux.org> 1:7.1-alt1
+- 7.0 -> 7.1.
+
 * Fri Mar 15 2024 Stanislav Levin <slev@altlinux.org> 1:7.0-alt1
 - 6.1.0 -> 7.0.
 

@@ -7,8 +7,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.1
-Release: alt2
+Version: 5.2
+Release: alt1
 Summary: Zope Internationalization Support
 License: ZPL-2.1
 Group: Development/Python3
@@ -72,6 +72,9 @@ export zope_i18n_compile_mo_files=True
 %exclude %python3_sitelibdir/%ns_name/%mod_name/locales/tests
 
 %changelog
+* Fri Sep 27 2024 Stanislav Levin <slev@altlinux.org> 5.2-alt1
+- 5.1 -> 5.2.
+
 * Thu Sep 26 2024 Stanislav Levin <slev@altlinux.org> 5.1-alt2
 - Fixed FTBFS (zope.i18nmessageid 7.0).
 
