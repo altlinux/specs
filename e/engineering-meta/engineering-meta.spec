@@ -1,6 +1,6 @@
 Name: engineering-meta
-Version: p10
-Release: alt10.1
+Version: p11
+Release: alt1
 Summary: Metapackage for install Engineering Applications
 Summary(ru_RU.UTF-8): Метапакет для установки инженерных приложений
 Group: Engineering
@@ -133,6 +133,8 @@ Requires: rastercarve
 Requires: f-engrave ttf2cxf_stream
 Requires: dmap2gcode
 Requires: gimp-plugin-laser
+# gcode-editor
+Requires: gcodeworkshop
 
 %description -n engineering-CAM
 Metapackage for install CAM (Computer-aided manufacturing)
@@ -208,6 +210,10 @@ Engineering applications not included in any category.
 %files -n engineering-misc
 
 %changelog
+* Sat Sep 28 2024 Anton Midyukov <antohami@altlinux.org> p11-alt1
+- bump version
+- engineering-CAM: add gcodeworkshop
+
 * Thu Apr 04 2024 Andrey Cherepanov <cas@altlinux.org> p10-alt10.1
 - NMU: freecad is missing for i586.
 
