@@ -20,7 +20,7 @@
 %define prog_name            postgresql
 %define postgresql_major     16
 %define postgresql_minor     4
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -101,8 +101,6 @@ if you're installing the postgresql-server package.
 %package -n %libpq_name
 Summary: The shared libraries required for any PostgreSQL clients
 Group: Databases
-Provides: libpq = %EVR
-Obsoletes: libpq < %EVR
 
 %description -n %libpq_name
 C and C++ libraries to enable user programs to communicate with the
@@ -131,47 +129,11 @@ Obsoletes: libpq-devel-static < %EVR
 %description -n %libpq_name-devel-static
 Development static library for %libpq_name-devel
 
-%package -n %libecpg_name
-Summary: ECPG - Embedded SQL in C
-Group: Databases
-Requires: %libpq_name = %EVR
-Provides: libecpg = %EVR
-Obsoletes: libecpg < %EVR
-
-%description -n %libecpg_name
-An embedded SQL program consists of code written in an ordinary programming
-language, in this case C, mixed with SQL commands in specially marked sections.
-To build the program, the source code (*.pgc) is first passed through the
-embedded SQL preprocessor, which converts it to an ordinary C program (*.c), and
-afterwards it can be processed by a C compiler.
-
-%package -n %libecpg_name-devel
-Summary: Development files for ECPG - Embedded SQL in C
-Group: Development/Databases
-Requires: %libpq_name = %EVR
-Requires: %libecpg_name = %EVR
-Provides: libecpg-devel = %EVR
-Obsoletes: libecpg-devel < %EVR
-
-%description -n %libecpg_name-devel
-ECPG development files.  You will need to install this package to build any
-package or any clients that use the ECPG to connect to a PostgreSQL server.
-
-%package -n %libecpg_name-devel-static
-Summary: Development static library for %libecpg_name-devel
-Group: Development/Databases
-Requires: %libecpg_name-devel = %EVR
-Provides: libecpg-devel-static = %EVR
-Obsoletes: libecpg-devel-static < %EVR
-
-%description -n %libecpg_name-devel-static
-Development static library for %libecpg_name-devel
-
 %package -n %prog_name-devel
 Summary: PostgreSQL development header files
 Group: Development/Databases
 Requires: %libpq_name-devel = %EVR
-Requires: %libecpg_name-devel = %EVR
+Requires: %libecpg_name-%postgresql_major-1C-devel = %EVR
 Requires: %name-server-devel = %EVR
 
 %description -n %prog_name-devel
@@ -184,12 +146,12 @@ with a PostgreSQL server.
 Summary: Development static library for %libpq_name-devel and %libecpg_name-devel
 Group: Development/Databases
 Requires: %libpq_name-devel-static = %EVR
-Requires: %libecpg_name-devel-static = %EVR
+Requires: %libecpg_name-%postgresql_major-1C-devel-static = %EVR
 Requires: %prog_name-devel = %EVR
 
 %description -n %prog_name-devel-static
 Development static library for %libpq_name-devel
-and %libecpg_name-devel
+and %libecpg_name-%postgresql_major-1C-devel
 
 %package -n rpm-macros-%prog_name
 Summary: RPM macros to PostgreSQL
@@ -200,11 +162,71 @@ BuildArch: noarch
 RPM macros to PostgreSQL for build server extentions
 %endif
 
+%package -n %libecpg_name-%postgresql_major-1C
+Summary: ECPG - Embedded SQL in C
+Group: Databases
+%if_without devel
+%add_findprov_skiplist %_libdir/libecpg*.so*
+%add_findprov_skiplist %_libdir/libpgtypes*.so*
+%add_findreq_skiplist %_libdir/libecpg*.so*
+%add_findreq_skiplist %_libdir/libpgtypes*.so*
+%endif
+Conflicts: %libecpg_name-12
+Conflicts: %libecpg_name-13
+Conflicts: %libecpg_name-14
+Conflicts: %libecpg_name-15
+Conflicts: %libecpg_name-16
+Conflicts: %libecpg_name-17
+
+%description -n %libecpg_name-%postgresql_major-1C
+An embedded SQL program consists of code written in an ordinary programming
+language, in this case C, mixed with SQL commands in specially marked sections.
+To build the program, the source code (*.pgc) is first passed through the
+embedded SQL preprocessor, which converts it to an ordinary C program (*.c), and
+afterwards it can be processed by a C compiler.
+
+%package -n %libecpg_name-%postgresql_major-1C-devel
+Summary: Development files for ECPG - Embedded SQL in C
+Group: Development/Databases
+Requires: %libecpg_name-%postgresql_major-1C = %EVR
+%if_with devel
+Provides: libecpg-devel = %EVR
+Provides: %libecpg_name-devel = %EVR
+Obsoletes: libecpg-devel < %EVR
+Obsoletes: %libecpg_name-devel < %EVR
+%else
+%add_findprov_skiplist %_libdir/pkgconfig/*.pc
+%endif
+Conflicts: %libecpg_name-12-devel
+Conflicts: %libecpg_name-13-devel
+Conflicts: %libecpg_name-14-devel
+Conflicts: %libecpg_name-15-devel
+Conflicts: %libecpg_name-16-devel
+Conflicts: %libecpg_name-17-devel
+
+%description -n %libecpg_name-%postgresql_major-1C-devel
+ECPG development files.  You will need to install this package to build any
+package or any clients that use the ECPG to connect to a PostgreSQL server.
+
+%package -n %libecpg_name-%postgresql_major-1C-devel-static
+Summary: Development static library for %libecpg_name-devel
+Group: Development/Databases
+Requires: %libecpg_name-%postgresql_major-1C-devel = %EVR
+%if_with devel
+Provides: libecpg-devel-static = %EVR
+Provides: %libecpg_name-devel-static = %EVR
+Obsoletes: libecpg-devel-static < %EVR
+Obsoletes: %libecpg_name-devel-static < %EVR
+%endif
+
+%description -n %libecpg_name-%postgresql_major-1C-devel-static
+Development static library for %libecpg_name-%postgresql_major-1C-devel
+
 %package server-devel
 Summary: PostgreSQL development header files
 Group: Development/Databases
 Requires: %libpq_name-devel
-Requires: %libecpg_name-devel
+Requires: %libecpg_name-%postgresql_major-1C-devel
 %if_with jit
 Requires: llvm15.0-devel clang15.0-devel gcc-c++
 %endif
@@ -922,6 +944,34 @@ fi
 %_datadir/%PGSQL/extension/plpython3u-*.sql
 %_datadir/%PGSQL/extension/plpython3u.control
 
+%files -f ecpglib.lang -n %libecpg_name-%postgresql_major-1C
+%_libdir/libecpg.so.%libecpg_major
+%_libdir/libecpg.so.%libecpg_major.*
+%_libdir/libecpg_compat.so.*
+%_libdir/libpgtypes.so.*
+
+%files -f ecpg.lang -n %libecpg_name-%postgresql_major-1C-devel
+%_bindir/ecpg
+%_includedir/%PGSQL/informix/esql
+%_includedir/%PGSQL/ecpg*.h
+%_includedir/%PGSQL/pgtypes*.h
+%_includedir/%PGSQL/sql*.h
+%_libdir/libecpg*.so
+%_libdir/libpgtypes.so
+%_libdir/pkgconfig/libecpg.pc
+%_libdir/pkgconfig/libecpg_compat.pc
+%_libdir/pkgconfig/libpgtypes.pc
+%_man1dir/ecpg.*
+
+%files -n %libecpg_name-%postgresql_major-1C-devel-static
+%_libdir/libecpg*.a
+%_libdir/libpgcommon.a
+%_libdir/libpgcommon_shlib.a
+%_libdir/libpgfeutils.a
+%_libdir/libpgtypes.a
+%_libdir/libpgport.a
+%_libdir/libpgport_shlib.a
+
 %if_with devel
 %files -n %prog_name-devel
 %files -n %prog_name-devel-static
@@ -935,35 +985,16 @@ fi
 %_includedir/%PGSQL
 %_includedir/postgresql
 %exclude %_includedir/%PGSQL/server
+%exclude %_includedir/%PGSQL/informix/esql
+%exclude %_includedir/%PGSQL/ecpg*.h
+%exclude %_includedir/%PGSQL/pgtypes*.h
+%exclude %_includedir/%PGSQL/sql*.h
 %_libdir/libpq*.so
 %_libdir/pkgconfig/libpq.pc
 %_man1dir/pg_config.*
 %_man3dir/*
 
-%files -f ecpglib.lang -n %libecpg_name
-%_libdir/libecpg.so.%libecpg_major
-%_libdir/libecpg.so.%libecpg_major.*
-%_libdir/libecpg_compat.so.*
-%_libdir/libpgtypes.so.*
-
-%files -f ecpg.lang -n %libecpg_name-devel
-%_bindir/ecpg
-%_libdir/libecpg*.so
-%_libdir/libpgtypes.so
-%_libdir/pkgconfig/libecpg.pc
-%_libdir/pkgconfig/libecpg_compat.pc
-%_libdir/pkgconfig/libpgtypes.pc
-%_man1dir/ecpg.*
-
 %files -n %libpq_name-devel-static
-%_libdir/libpq*.a
-
-%files -n %libecpg_name-devel-static
-%_libdir/libecpg*.a
-%_libdir/libpgcommon.a
-%_libdir/libpgfeutils.a
-%_libdir/libpgtypes.a
-%_libdir/libpgport.a
 %_libdir/libpq*.a
 
 %files -n rpm-macros-%prog_name
@@ -978,6 +1009,12 @@ fi
 %endif
 
 %changelog
+* Fri Sep 27 2024 Alexei Takaseev <taf@altlinux.org> 16.4-alt3
+- Build libecpg6, libecpg6-devel and libecpg6-devel-static as
+  libecpg6-XY, libecpg6-XY-devel and libecpg6-XY-devel-static
+  and package every major version
+- Remove provides libpq and libecpg - no needed very long time
+
 * Wed Sep 25 2024 Alexei Takaseev <taf@altlinux.org> 16.4-alt2
 - Add triggerpostun and conflict for PG 17
 - Remove triggerpostun and conflict for PG 10 and 11
