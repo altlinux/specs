@@ -4,7 +4,7 @@
 
 Name: wget
 Version: 1.24.5
-Release: alt3
+Release: alt4
 
 Summary: A free utility for non-interactive download of files from the Web
 License: GPL-3.0-or-later
@@ -96,6 +96,9 @@ fi
 %_infodir/wget.info*
 
 %changelog
+* Sat Sep 28 2024 Vitaly Chikunov <vt@altlinux.org> 1.24.5-alt4
+- Make some syscalls allowed only for libfakeroot.
+
 * Fri Sep 27 2024 Vitaly Chikunov <vt@altlinux.org> 1.24.5-alt3
 - Fix a crash caused by seccomp filtering by permitting additional
   DNS-resolving syscalls (ALT#51563).
