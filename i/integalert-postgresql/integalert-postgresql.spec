@@ -2,7 +2,7 @@
 
 Name:     integalert-postgresql
 Version:  0.1.3
-Release:  alt1
+Release:  alt2
 
 Summary:  PostgreSQL checking module for Integalert
 License:  GPLv2
@@ -42,9 +42,13 @@ touch %buildroot%_sysconfdir/osec/integalert_postgresql/dirs.conf
 %_sysconfdir/osec/integalert_postgresql/sender
 %config(noreplace) %_sysconfdir/osec/integalert_postgresql/sender.conf
 %config(noreplace) %_sysconfdir/osec/integalert_postgresql/exclude.conf
+%dir %_sysconfdir/osec/integalert_postgresql/trigger.d
 %ghost %_sysconfdir/osec/integalert_postgresql/dirs.conf
 
 %changelog
+* Sat Sep 28 2024 Paul Wolneykien <manowar@altlinux.org> 0.1.3-alt2
+- Fix: Own /etc/osec/integalert_postgresql/trigger.d.
+
 * Thu Sep 19 2024 Paul Wolneykien <manowar@altlinux.org> 0.1.3-alt1
 - Fixed sender script access mode: 0755.
 
