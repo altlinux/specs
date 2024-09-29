@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define pg_ver 15
+%define pg_ver 12
 
 Name: postgresql%pg_ver-pg-auto-failover
 Version: 2.1
