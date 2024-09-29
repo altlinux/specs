@@ -1,6 +1,6 @@
 Name:    postgresql-deploy-cert
 Version: 0.8
-Release: alt3
+Release: alt4
 
 Summary: deploy script for postgresql cert config
 License: MIT
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 Requires: deploy
+Requires: integalert-postgresql
 
 
 %description
@@ -54,6 +55,9 @@ install -Dm 0750 pw_krb_unblocker %buildroot/%_bindir
 
 
 %changelog
+* Sun Sep 29 2024 Denis Medvedev <nbr@altlinux.org> 0.8-alt4
+- dependency to integalert-postgresql
+
 * Sun Sep 29 2024 Denis Medvedev <nbr@altlinux.org> 0.8-alt3
 - copy instead of file statement used
 
