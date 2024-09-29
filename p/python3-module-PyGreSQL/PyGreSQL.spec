@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 6.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: PyGreSQL is a Python module that interfaces to a PostgreSQL database
 License: PostgreSQL
@@ -14,6 +14,7 @@ Vcs: https://github.com/PyGreSQL/PyGreSQL
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: %name-%version-%release.patch
 
 %pyproject_runtimedeps_metadata
 # mapping of PyPI name to distro name
@@ -34,6 +35,7 @@ allow easy use of the powerful PostgreSQL features from Python.
 
 %prep
 %setup
+%patch0 -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
@@ -67,6 +69,9 @@ popd
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Sun Sep 29 2024 Alexei Takaseev <taf@altlinux.org> 6.0.1-alt1.1
+- Fix build with PostgreSQL 17
+
 * Thu May 16 2024 Ajrat Makhmutov <rauty@altlinux.org> 6.0.1-alt1
 - New version.
 
