@@ -1,28 +1,32 @@
 %define _unpackaged_files_terminate_build 1
 
-Name: kde5-plasma-wallpapers-dynamic
-Version: 4.4.1
+Name: kde-plasma-addon-wallpapers-dynamic
+Version: 5.0.0
 Release: alt1
 Summary: Dynamic wallpaper plugin for KDE Plasma
-License: GPL-3.0-or-later and LGPL-3.0-or-later and MIT
+License: BSD-3-Clause and CC-BY-SA-4.0 and CC0-1.0 and GPL-3.0-or-later and LGPL-3.0-or-later
 Group: Graphical desktop/KDE
 Url: https://github.com/zzag/plasma5-wallpapers-dynamic
+
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf6
 BuildRequires: cmake
 BuildRequires: extra-cmake-modules
 BuildRequires: gcc-c++
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-location-devel
-BuildRequires: qt5-declarative-devel
-BuildRequires: kf5-kio-devel
-BuildRequires: kf5-ki18n-devel
-BuildRequires: kf5-kpackage-devel
-BuildRequires: kf5-plasma-framework-devel
-BuildRequires: libheif-devel
-BuildRequires: libexif-devel
+BuildRequires: kf6-kconfig-devel
+BuildRequires: kf6-kcoreaddons-devel
+BuildRequires: kf6-ki18n-devel
+BuildRequires: kf6-kpackage-devel
+BuildRequires: kf6-kwindowsystem-devel
 BuildRequires: libavif-devel
+BuildRequires: libexif-devel
+BuildRequires: libheif-devel
+BuildRequires: plasma6-lib-devel
+BuildRequires: qt6-positioning-devel
+
+Provides: kde5-plasma-wallpapers-dynamic = %EVR
+Obsoletes: kde5-plasma-wallpapers-dynamic < %EVR
 
 %description
 A wallpaper plugin for KDE Plasma that continuously updates
@@ -34,6 +38,9 @@ https://github.com/karmanyaahm/awesome-plasma5-dynamic-wallpapers
 Summary: %summary
 Group: Graphical desktop/KDE
 
+Provides: kde5-plasma-wallpapers-dynamic-devel = %EVR
+Obsoletes: kde5-plasma-wallpapers-dynamic-devel < %EVR
+
 %description -n %name-devel
 A wallpaper plugin for KDE Plasma that continuously updates
 the desktop background based on the current time in your location.
@@ -44,34 +51,38 @@ https://github.com/karmanyaahm/awesome-plasma5-dynamic-wallpapers
 %setup
 
 %build
-%K5cmake
-%K5make
+%K6cmake
+%K6make
 
 %install
-%K5install
+%K6install
 %find_lang --with-kde %name
 
 %files -f %name.lang
 %_bindir/kdynamicwallpaperbuilder
 %_libdir/libkdynamicwallpaper.so.*
-%_K5plug/kpackage/packagestructure/packagestructure_dynamicwallpaper.so
-%_K5qml/com/github/zzag/plasma/wallpapers/dynamic
-%_kf5_data/plasma/wallpapers/com.github.zzag.dynamic
+%_K6qml/com/github/zzag
+%_K6plug/kpackage/packagestructure/kdynamicwallpaper.so
+%_datadir/plasma/wallpapers/com.github.zzag.dynamic
 %_datadir/wallpapers/Dynamic
 %_datadir/locale/*/LC_MESSAGES/plasma_wallpaper_com.github.zzag.dynamic.mo
 %_datadir/metainfo/com.github.zzag.dynamic.appdata.xml
 %_datadir/bash-completion/completions/kdynamicwallpaperbuilder
 %_datadir/fish/completions/kdynamicwallpaperbuilder.fish
 %_datadir/zsh/site-functions/_kdynamicwallpaperbuilder
-%_K5srv/plasma-wallpaper-com.github.zzag.dynamic.desktop
 %doc LICENSES README.md
 
 %files -n %name-devel
 %_includedir/KDynamicWallpaper
-%_K5link/libkdynamicwallpaper.so
+%_K6link/libkdynamicwallpaper.so
 %_libdir/cmake/KDynamicWallpaper
 
 %changelog
+* Sun Sep 29 2024 Alexander Makeenkov <amakeenk@altlinux.org> 5.0.0-alt1
+- Updated to version 5.0.0.
+- Build for KF6.
+- Fixed license.
+
 * Sat Jan 20 2024 Alexander Makeenkov <amakeenk@altlinux.org> 4.4.1-alt1
 - Updated to version 4.4.1.
 
