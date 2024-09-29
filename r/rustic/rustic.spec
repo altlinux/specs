@@ -4,7 +4,7 @@
 
 Name:    rustic
 Version: 0.8.1
-Release: alt2
+Release: alt3
 
 Summary: rustic - fast, encrypted, deduplicated backups powered by pure Rust
 License: Apache-2.0
@@ -37,6 +37,10 @@ replace-with = "vendored-sources"
 [source.vendored-sources]
 directory = "vendor"
 
+[term]
+verbose = true
+quiet = false
+
 [build]
 rustflags = ["-Copt-level=3", "-Cdebuginfo=1", "--cfg=rustix_use_libc"]
 
@@ -50,6 +54,9 @@ lto = false
 codegen-units = 16
 %endif
 EOF
+
+sed -i '/services-webdav/a\"services-yandex-disk",' vendor/rustic_backend/Cargo.toml
+sed -i 's/"Cargo.toml":"[^"]\+",\?//' vendor/rustic_backend/.cargo-checksum.json
 
 %build
 # Default features include 'self-update'.
@@ -87,6 +94,9 @@ diff -qr --exclude=target . ../x
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Sun Sep 29 2024 Vitaly Chikunov <vt@altlinux.org> 0.8.1-alt3
+- Experimentally enable YandexDisk backend.
+
 * Wed Sep 18 2024 Vitaly Chikunov <vt@altlinux.org> 0.8.1-alt2
 - Build without self-update feature.
 - spec: Link with system libzstd.
