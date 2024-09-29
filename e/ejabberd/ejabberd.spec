@@ -15,7 +15,7 @@
 
 Name: ejabberd
 Version: 21.12
-Release: alt3
+Release: alt4
 Summary: Fault-tolerant distributed Jabber server written in Erlang
 License: GPL-2.0 with OpenSSL-exception
 Group: System/Servers
@@ -229,6 +229,9 @@ install -D -m 0644 %SOURCE3 %buildroot%_unitdir/ejabberd.service
 %attr(1770,root,ejabberd) %dir %_lockdir/ejabberd
 
 %changelog
+* Sun Sep 29 2024 Alexey Shabalin <shaba@altlinux.org> 21.12-alt4
+- Fix systemd service - start service as foreground (ALT #51259).
+
 * Tue Sep 24 2024 Egor Ignatov <egori@altlinux.org> 21.12-alt3
 - Install ejabberd.service to _unitdir.
 
