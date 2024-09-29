@@ -1,5 +1,5 @@
 Name: pg_catcheck
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 Epoch: 1
 
@@ -40,6 +40,9 @@ you should use PostgreSQL's checksum feature (initdb -k).
 %_bindir/*
 
 %changelog
+* Fri Sep 27 2024 Alexei Takaseev <taf@altlinux.org> 1:1.5.0-alt1
+- 1.5.0
+
 * Mon Sep 25 2023 Alexei Takaseev <taf@altlinux.org> 1:1.4.0-alt1
 - 1.4.0
 
