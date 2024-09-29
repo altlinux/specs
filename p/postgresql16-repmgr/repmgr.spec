@@ -8,7 +8,7 @@
 
 Name: postgresql%pg_ver-%prog_name
 Version: 5.4.1
-Release: alt1.1
+Release: alt2
 Summary: Replication Manager for PostgreSQL Clusters
 Group: Databases
 License: GPL-3.0
@@ -32,7 +32,7 @@ Obsoletes: %prog_name < %EVR
 BuildRequires: flex
 BuildRequires: libssl-devel libselinux-devel liblz4-devel libxslt-devel libpam-devel
 BuildRequires: libkrb5-devel libcurl-devel libjson-c-devel
-BuildRequires: libecpg-devel-static libpq5-devel-static postgresql%pg_ver-server-devel
+BuildRequires: libecpg6-%pg_ver-devel-static libpq5-devel-static postgresql%pg_ver-server-devel
 # for build doc
 BuildRequires: docbook-dtds docbook-style-xsl
 BuildRequires: /usr/bin/xmllint /usr/bin/xsltproc
@@ -105,6 +105,9 @@ echo "ALTER EXTENSION repmgr UPDATE;                                            
 %doc doc/html
 
 %changelog
+* Sun Sep 29 2024 Alexei Takaseev <taf@altlinux.org> 5.4.1-alt2
+- Fix BuildReq
+
 * Wed May 08 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 5.4.1-alt1.1
 - NMU: fixed FTBFS on LoongArch (jit is not available here)
 
