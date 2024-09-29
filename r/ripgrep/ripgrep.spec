@@ -2,12 +2,13 @@
 %def_with check
 
 Name: ripgrep
-Version: 14.1.0
+Version: 14.1.1
 Release: alt1
 Summary: Recursively searches directories for a regex pattern
 License: MIT and Unlicense
 Group: File tools
 Url: https://github.com/BurntSushi/ripgrep
+
 Source: %name-%version.tar
 Source1: vendor.tar
 Patch1: 0001-pcre2-sys-disable-JIT-on-LoongArch-not-supported.patch
@@ -29,7 +30,7 @@ your current directory for a regex pattern.
 %setup -a 1
 %patch1 -p1
 mkdir -p .cargo
-cat >> .cargo/config <<EOF
+cat >> .cargo/config.toml <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
@@ -71,6 +72,9 @@ install -m 0644 _%bin_name %buildroot/%_datadir/zsh/site-functions
 %doc COPYING LICENSE-MIT UNLICENSE
 
 %changelog
+* Sun Sep 29 2024 Alexander Makeenkov <amakeenk@altlinux.org> 14.1.1-alt1
+- Updated to version 14.1.1.
+
 * Thu Jan 11 2024 Alexander Makeenkov <amakeenk@altlinux.org> 14.1.0-alt1
 - Updated to version 14.1.0.
 
