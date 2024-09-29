@@ -69,8 +69,8 @@
 %define apudir %name-%version
 
 Name: aprutil%aprver
-Version: 1.6.1
-Release: alt4
+Version: 1.6.3
+Release: alt1
 
 Summary: Apache Portable Runtime Utility shared library
 Group: System/Libraries
@@ -151,7 +151,7 @@ This package contains APU static library.
 %package -n lib%name-pgsql
 Group: System/Libraries
 Summary: APR utility library PostgreSQL DBD driver
-BuildRequires: postgresql-devel
+BuildRequires: libpq5-devel
 Requires: lib%name = %version-%release
 
 %description -n lib%name-pgsql
@@ -213,7 +213,7 @@ This package provides the ODBC driver for the apr-util DBD
 
 %prep
 %setup -n apr-util-%version
-%patch1 -p0
+%patch1 -p2
 
 # my_global.h and my_sys.h are gone in MySQL8 API, so loosen autodetection restrictions
 sed -i 's|#include <my_global\.h>|#include <mysql\.h>|g' build/dbd.m4
@@ -296,6 +296,9 @@ rm -rf %buildroot%_libdir/apr-util-%aprver/*.la
 %_libdir/apr-util-%aprver/apr_dbd_odbc*.so
 
 %changelog
+* Mon Sep 30 2024 Alexei Takaseev <taf@altlinux.org> 1.6.3-alt1
+- 1.6.3 (Fixes CVE-2022-25147)
+
 * Fri Sep 10 2021 Ivan A. Melnikov <iv@altlinux.org> 1.6.1-alt4
 - Update mysql patch to avoid calling absent my_init function
 
