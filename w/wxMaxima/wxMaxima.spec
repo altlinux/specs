@@ -1,7 +1,7 @@
 %undefine __cmake_in_source_build
 Name: wxMaxima
-Version: 24.05.0
-Release: alt1.1
+Version: 24.08.0
+Release: alt1
 
 Summary: GUI for the computer algebra system Maxima
 License: GPL-2.0+
@@ -109,6 +109,9 @@ install -pD -m644 data/wxmaxima-32.xpm %buildroot%_niconsdir/%name.xpm
 %_datadir/metainfo/*wxMaxima.appdata.xml
 
 %changelog
+* Sun Sep 29 2024 Ilya Mashkin <oddity@altlinux.ru> 24.08.0-alt1
+- 24.08.0
+
 * Wed Aug 07 2024 Ivan A. Melnikov <iv@altlinux.org> 24.05.0-alt1.1
 - NMU: replace ExclusiveArch with ExcludeArch
   (fixes build on loongarch64).
