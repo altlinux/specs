@@ -1,5 +1,5 @@
 Name: poco
-Version: 1.12.5p1
+Version: 1.13.3
 Release: alt1
 Summary: POrtable COmponents C++ Libraries
 License: BSL-1.0
@@ -241,7 +241,7 @@ cp -fR CppParser/include/Poco/CppParser %buildroot%_includedir/Poco/
 cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 
 %files -n lib%name
-%doc CHANGELOG CONTRIBUTORS libversion LICENSE NEWS README* VERSION
+%doc CHANGELOG CONTRIBUTORS libversion LICENSE README* VERSION
 %_libdir/libPocoActiveRecord*.so.*
 %_libdir/libPocoFoundation*.so.*
 %_libdir/libPocoXML*.so.*
@@ -303,6 +303,9 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 %_libdir/cmake/*
 
 %changelog
+* Sun Sep 29 2024 Alexei Takaseev <taf@altlinux.org> 1.13.3-alt1
+- 1.13.3 (Fixes CVE-2023-52389)
+
 * Fri Nov 03 2023 Alexei Takaseev <taf@altlinux.org> 1.12.5p1-alt1
 - 1.12.5p1
 
