@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 7.4.2
-Release: alt4
+Version: 8.0
+Release: alt1
 
 Summary: Python module to generate QR Codes
 
@@ -14,13 +14,11 @@ URL: https://pypi.org/project/qrcode
 VCS: https://github.com/lincolnloop/python-qrcode
 
 Source: %name-%version.tar
-Patch: 1009adc1d19529c49e2f20b8ebc759e30060a5b2.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-Buildrequires: python3-module-setuptools
-Buildrequires: python3-module-wheel
+Buildrequires: python3-module-poetry-core
 
 %if_with check
 Buildrequires: python3-module-pytest
@@ -38,7 +36,6 @@ to generate QR Codes.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %pyproject_build
@@ -47,18 +44,18 @@ to generate QR Codes.
 %pyproject_install
 
 %check
-# test_bad_factory broken
-# https://github.com/lincolnloop/python-qrcode/issues/361
-%pyproject_run_pytest -k'not test_script'
+%pyproject_run_pytest
 
 %files
 %doc README.rst LICENSE CHANGES.rst
 %_bindir/qr
-%_man1dir/*
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sun Sep 29 2024 Grigory Ustinov <grenka@altlinux.org> 8.0-alt1
+- Automatically updated to 8.0.
+
 * Wed May 01 2024 Grigory Ustinov <grenka@altlinux.org> 7.4.2-alt4
 - Fixed FTBFS.
 
