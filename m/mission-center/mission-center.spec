@@ -2,28 +2,29 @@
 %define optflags_lto %nil
 
 %define binary_name missioncenter
-%define ver_major 0.5
+%define ver_major 0.6
 %define rdn_name io.missioncenter.MissionCenter
 # src/sys_info_v2/gatherer/3rdparty/nvtop/nvtop.json
-%define nvtop_ver 45a1796375cd617d16167869bb88e5e69c809468
+%define nvtop_ver 20ea55dbd1eeb4342ff0112fae3ee2a0bfe352ea
 
 %def_disable bootstrap
 
 %def_disable check
 
 Name: mission-center
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Mission Center
-License: GPL-3.0
+License: GPL-3.0-or-later
 Group: Monitoring
 Url: https://missioncenter.io/
+
+Vcs: https://gitlab.com/mission-center-devs/mission-center.git
 
 %if_disabled snapshot
 Source: https://gitlab.com/mission-center-devs/mission-center/-/archive/v%version/%name-%version.tar.gz
 %else
-Vcs: https://gitlab.com/mission-center-devs/mission-center.git
 Source: %name-%version.tar
 %endif
 
@@ -33,8 +34,8 @@ Source2: https://github.com/Syllo/nvtop/archive/%nvtop_ver.tar.gz
 ExcludeArch: %ix86 armh ppc64le
 
 %define glib_ver 2.76
-%define gtk_ver 4.10
-%define adwaita_ver 1.2
+%define gtk_ver 4.16
+%define adwaita_ver 1.6
 
 Requires: dconf /usr/sbin/dmidecode
 
@@ -94,6 +95,9 @@ sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/sys_info_v2/mem_info.rs
 
 
 %changelog
+* Sun Sep 29 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- updated to v0.6.0-3-gaf370dc
+
 * Mon Jun 17 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.2-alt1
 - 0.5.2
 
