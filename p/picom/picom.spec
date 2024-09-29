@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: picom
-Version: 11.2
+Version: 12.1
 Release: alt1
 Summary: A lightweight compositor for X11
 License: MPL-2.0 or MIT
@@ -10,6 +10,9 @@ Group: System/X11
 Url: https://github.com/yshui/picom
 Source: %name-%version.tar
 Source44: %name.watch
+
+ExcludeArch: %ix86
+
 Obsoletes: compton < %EVR
 Provides: compton = %version
 
@@ -31,6 +34,7 @@ BuildRequires: pkgconfig(pixman-1)
 BuildRequires: pkgconfig(libxdg-basedir)
 BuildRequires: pkgconfig(xcb-util)
 BuildRequires: pkgconfig(libpcre2-8)
+BuildRequires: asciidoctor
 
 %description
 This is forked from the original Compton because it seems to have become
@@ -68,8 +72,13 @@ sed -i "/#warning Use of -ffast-math/s/#warning/#error/" src/utils.h
 %exclude %_datadir/applications/*.desktop
 %_iconsdir/hicolor/*/*/*
 %_man1dir/*
+%_pkgconfigdir/picom-api.pc
 
 %changelog
+* Sun Sep 29 2024 Anton Midyukov <antohami@altlinux.org> 12.1-alt1
+- New version 12.1.
+- ExcludeArch: %%ix86
+
 * Thu Feb 15 2024 Anton Midyukov <antohami@altlinux.org> 11.2-alt1
 - New version 11.2.
 

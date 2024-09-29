@@ -3,7 +3,7 @@
 
 Name: picom-conf
 Version: 0.17.0
-Release: alt1.20230814
+Release: alt2.20230814
 
 Summary: GUI configuration tool for picom X composite manager
 License: LGPL-2.1-or-later
@@ -11,6 +11,8 @@ Group: Graphical desktop/Other
 
 Url: https://github.com/qtilities/picom-conf
 Source: %name-%version.tar
+
+ExcludeArch: %ix86
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
@@ -43,6 +45,9 @@ Requires: picom
 %doc AUTHORS COPYING README.md
 
 %changelog
+* Sun Sep 29 2024 Anton Midyukov <antohami@altlinux.org> 0.17.0-alt2.20230814
+- ExcludeArch: %%ix86
+
 * Sun Aug 20 2023 Anton Midyukov <antohami@altlinux.org> 0.17.0-alt1.20230814
 - New version
 - Fix License
