@@ -1,7 +1,7 @@
 %define pg_ver 16
 
 Name: postgresql%pg_ver-pg_checksums
-Version: 1.1
+Version: 1.2
 Release: alt2
 
 Summary: pg_checksums_ext can verify, activate or deactivate checksums
@@ -12,7 +12,7 @@ Url: https://github.com/credativ/pg_checksums
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-BuildRequires: libecpg6-devel-static postgresql%pg_ver-server-devel
+BuildRequires: libecpg6-%pg_ver-devel-static postgresql%pg_ver-server-devel
 
 Requires: postgresql%pg_ver-server
 
@@ -41,6 +41,12 @@ online, contrary to PostgreSQL's `pg_checksums`
 %_bindir/*
 
 %changelog
+* Fri Sep 27 2024 Alexei Takaseev <taf@altlinux.org> 1.2-alt2
+- Change BR libecpg6-devel-static -> libecpg6-%%pg_ver-devel-static
+
+* Thu Sep 26 2024 Alexei Takaseev <taf@altlinux.org> 1.2-alt1
+- 1.2
+
 * Fri May 24 2024 Alexei Takaseev <taf@altlinux.org> 1.1-alt2
 - Do not consider empty new pages a problem.
 
