@@ -9,7 +9,7 @@
 
 Name: %_name
 Version: %ver_major.4
-Release: alt1
+Release: alt1.1
 
 Summary: Keep your data safe
 License: GPL-3.0
@@ -23,7 +23,7 @@ Source1: %name-%version-cargo.tar
 %define gtk_ver 4.12.5
 %define adwaita_ver 1.4.0
 
-Requires: borg fuse3 libsecret python3(pyfuse3)
+Requires: borg fuse3 libsecret python3(pyfuse3) python3(llfuse)
 
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg
 BuildRequires: meson rust-cargo yelp-tools git
@@ -78,6 +78,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sun Sep 29 2024 Yuri N. Sedunov <aris@altlinux.org> 0.7.4-alt1.1
+- python3(llfuse) required (ALT #51590)
+
 * Wed Sep 25 2024 Yuri N. Sedunov <aris@altlinux.org> 0.7.4-alt1
 - 0.7.4
 
