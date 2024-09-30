@@ -1,6 +1,6 @@
 Name: neovim
 Version: 0.10.1
-Release: alt2
+Release: alt3
 
 Summary: heavily refactored vim fork
 
@@ -12,6 +12,13 @@ Url: https://neovim.io/
 Source: %name-%version-%release.tar
 Source1: %name.watch
 Source2: sysinit.vim
+# Neovim doesn't have fallback to Vim grammar for Lua language.
+# So we pack Lua parser as part of Neovim. It is expected
+# that the rest of the parsers will be installed by user using one
+# of the Neovim package managers
+%define ts_lua_ver 0.2.0
+%define vendored_ts_parsers_dir %_libdir/neovim/ts-parsers
+Source3: tree-sitter-lua-%{ts_lua_ver}.tar.gz
 
 BuildRequires(pre): rpm-macros-cmake cmake
 
@@ -28,8 +35,6 @@ BuildRequires: lua5.1-module-lpeg lua5.1-mpack
 BuildRequires: libluv-devel
 BuildRequires: unibilium-devel
 BuildRequires: libtree-sitter-devel
-
-Requires: tree-sitter-lua
 
 ExcludeArch: armh
 
@@ -61,6 +66,13 @@ This package contains runtime files.
 %setup
 
 %build
+# build vendored Lua TS parser first
+mkdir -p .vendor/build
+tar -xf %SOURCE3 -C .vendor/build
+pushd .vendor/build/tree-sitter-lua-%{ts_lua_ver}
+gcc -shared %optflags %optflags_shared -Isrc src/parser.c src/scanner.c -o lua.so
+popd
+
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DNVIM_VERSION_RELEASE=%release \
@@ -77,8 +89,10 @@ install -pm0644 runtime/nvim.png -Dt %buildroot%_pixmapsdir
 
 install -pm0644 %SOURCE2 %buildroot%_datadir/nvim
 
-# include system tree-sitter grammars
-ln -s %_libdir/tree-sitter %buildroot%_datadir/nvim/runtime/parser
+# install vendored tree-sitter grammars
+install -d %buildroot%vendored_ts_parsers_dir
+install -pm0644 .vendor/build/tree-sitter-lua-%{ts_lua_ver}/lua.so %buildroot%vendored_ts_parsers_dir
+ln -s %vendored_ts_parsers_dir %buildroot%_datadir/nvim/runtime/parser
 
 # dependency is handled manually since the lua5.1-module-lpeg doesn't provide "Provides: lpeg.so"
 %filter_from_requires /lpeg.so/d
@@ -100,8 +114,12 @@ ln -s %_libdir/tree-sitter %buildroot%_datadir/nvim/runtime/parser
 %dir %_datadir/nvim/runtime
 %_datadir/nvim/runtime/*
 %_datadir/nvim/sysinit.vim
+%vendored_ts_parsers_dir/*
 
 %changelog
+* Mon Sep 30 2024 Vladimir Didenko <cow@altlinux.org> 0.10.1-alt3
+- Vendor Lua TS parser
+
 * Mon Aug 26 2024 Vladimir Didenko <cow@altlinux.org> 0.10.1-alt2
 - Include system TS parsers
 - Require lua TS parser (closes: #51257)
