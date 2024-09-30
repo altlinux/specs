@@ -2,7 +2,7 @@
 %define rel alt1
 
 Name: qbittorrent
-Version: 4.6.7
+Version: 5.0.0
 Epoch: 1
 Release: %rel
 
@@ -65,7 +65,7 @@ Default is to listen on tcp/8080 with admin/adminadmin credentials
 
 %prep
 %setup -q
-%patch3500 -p1
+#patch3500 -p1
 
 %ifarch %e2k
 sed -i "1i #include <cstdlib>\nnamespace std { using ::aligned_alloc; }" \
@@ -128,10 +128,15 @@ desktop-file-install \
 %_bindir/%name
 %_desktopdir/*
 %_man1dir/%name.*
+/usr/share/man/ru/man1/qbittorrent.1.*
+/usr/share/man/ru/man1/qbittorrent-nox.1.*
 %_datadir/icons/hicolor/*/*/*
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Oct 01 2024 Ilya Mashkin <oddity@altlinux.ru> 1:5.0.0-alt1
+- 5.0.0
+
 * Thu Sep 19 2024 Ilya Mashkin <oddity@altlinux.ru> 1:4.6.7-alt1
 - 4.6.7
 
