@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: liboqs
-Version: 0.10.1
+Version: 0.11.0
 Release: alt1
 Summary: C library for prototyping and experimenting with quantum-resistant cryptography
 License: MIT and BSD-3-Clause and Apache-2.0 and ALT-Public-Domain and CC0-1.0
@@ -123,6 +123,9 @@ time timeout --kill-after=300 200 %ninja_build -C build run_tests
 %_bindir/oqs-*
 
 %changelog
+* Sun Sep 29 2024 Vitaly Chikunov <vt@altlinux.org> 0.11.0-alt1
+- Update to 0.11.0 (2024-09-27).
+
 * Sat Jun 08 2024 Vitaly Chikunov <vt@altlinux.org> 0.10.1-alt1
 - Update to 0.10.1 (2024-06-07).
 
