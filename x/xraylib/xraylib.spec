@@ -4,12 +4,13 @@
 
 Name: xraylib
 Version: 4.1.1
-Release: alt1
+Release: alt2
+
 Summary: X-ray matter interaction cross sections for X-ray fluorescence applications
 License: BSD-3-Clause
 Group: Sciences/Physics
-Url: https://github.com/tschoonj/xraylib
 
+Url: https://github.com/tschoonj/xraylib
 # https://github.com/tschoonj/xraylib.git
 Source: %name-%version.tar
 Patch2000: %name-e2k.patch
@@ -109,6 +110,9 @@ rm -f %buildroot%python3_sitelibdir/*.la
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Mon Sep 30 2024 Michael Shigorin <mike@altlinux.org> 4.1.1-alt2
+- Minor spec cleanup.
+
 * Mon Jan 10 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 4.1.1-alt1
 - Updated to upstream version 4.1.1.
 
