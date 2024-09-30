@@ -2,18 +2,22 @@
 
 Name: samba-winbind-dnsupdate
 Version: 0.5
-Release: alt1
+Release: alt2
 
 Summary: Dynamic dns update for winbind backend
 License: GPLv3
+Group: System/Configuration/Networking
+
 URL: https://github.com/altlinuxteam/samba-winbind-dnsupdate
 VCS: https://github.com/altlinuxteam/samba-winbind-dnsupdate
 
-BuildArch: noarch
-Group: System/Configuration/Networking
 Source: %name-%version.tar
 
+# actually not anymore but e2k has a standalone girar
+BuildArch: noarch
+%ifnarch %e2k
 BuildRequires: shellcheck
+%endif
 
 Requires: samba-winbind
 
@@ -40,7 +44,9 @@ install -Dm 644 doc/winbind-dnsupdate.1 %buildroot/%_man1dir/winbind-dnsupdate.1
 install -Dm 644 %script_name.ini %buildroot%_sysconfdir/dconf/db/policy.d/%script_name.ini
 
 %check
+%ifnarch %e2k
 shellcheck %script_name
+%endif
 
 %files
 %doc README.md
@@ -56,6 +62,9 @@ shellcheck %script_name
 dconf compile %_sysconfdir/dconf/db/policy %_sysconfdir/dconf/db/policy.d/
 
 %changelog
+* Mon Sep 30 2024 Michael Shigorin <mike@altlinux.org> 0.5-alt2
+- E2K: avoid shellcheck due to ghc still lacking
+
 * Wed Sep 18 2024 Evgenii Sozonov <arzdez@altlinux.org> 0.5-alt1
 - Change the site name retrieval method
 - Move the server availability check cycle into a separate function
