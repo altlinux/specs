@@ -1,7 +1,11 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname hoe
 
 Name:          gem-hoe
-Version:       3.23.1
+Version:       4.2.2
 Release:       alt1
 Summary:       Hoe is a rake/rubygems helper for project Rakefiles
 License:       MIT
@@ -13,15 +17,23 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(rake) >= 0.8 gem(rake) < 15.0
-BuildRequires: gem(rdoc) >= 4.0 gem(rdoc) < 7
+%if_enabled check
+BuildRequires: gem(rake) >= 0.8
+BuildRequires: gem(rdoc) >= 4.0
+BuildRequires: gem(simplecov) >= 0.17
+BuildConflicts: gem(rake) >= 15.0
+BuildConflicts: gem(rdoc) >= 7
+BuildConflicts: gem(simplecov) >= 1
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Requires:      gem(rake) >= 0.8 gem(rake) < 15.0
-Obsoletes:     ruby-hoe
-Provides:      ruby-hoe
-Provides:      gem(hoe) = 3.23.1
+%ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
+Requires:      gem(rake) >= 0.8
+Conflicts:     gem(rake) >= 15.0
+Obsoletes:     ruby-hoe < %EVR
+Provides:      ruby-hoe = %EVR
+Provides:      gem(hoe) = 4.2.2
 
 
 %description
@@ -33,14 +45,14 @@ announcement.
 
 
 %package       -n sow
-Version:       3.23.1
+Version:       4.2.2
 Release:       alt1
 Summary:       Hoe is a rake/rubygems helper for project Rakefiles executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета hoe
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(hoe) = 3.23.1
+Requires:      gem(hoe) = 4.2.2
 
 %description   -n sow
 Hoe is a rake/rubygems helper for project Rakefiles executable(s).
@@ -55,15 +67,16 @@ announcement.
 Исполнямка для самоцвета hoe.
 
 
+%if_enabled    doc
 %package       -n gem-hoe-doc
-Version:       3.23.1
+Version:       4.2.2
 Release:       alt1
 Summary:       Hoe is a rake/rubygems helper for project Rakefiles documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета hoe
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(hoe) = 3.23.1
+Requires:      gem(hoe) = 4.2.2
 
 %description   -n gem-hoe-doc
 Hoe is a rake/rubygems helper for project Rakefiles documentation files.
@@ -76,18 +89,23 @@ announcement.
 
 %description   -n gem-hoe-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета hoe.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-hoe-devel
-Version:       3.23.1
+Version:       4.2.2
 Release:       alt1
 Summary:       Hoe is a rake/rubygems helper for project Rakefiles development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета hoe
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(hoe) = 3.23.1
-Requires:      gem(rdoc) >= 4.0 gem(rdoc) < 7
+Requires:      gem(hoe) = 4.2.2
+Requires:      gem(rdoc) >= 4.0
+Requires:      gem(simplecov) >= 0.17
+Conflicts:     gem(rdoc) >= 7
+Conflicts:     gem(simplecov) >= 1
 
 %description   -n gem-hoe-devel
 Hoe is a rake/rubygems helper for project Rakefiles development package.
@@ -100,6 +118,7 @@ announcement.
 
 %description   -n gem-hoe-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета hoe.
+%endif
 
 
 %prep
@@ -123,15 +142,25 @@ announcement.
 %doc README.rdoc template/README.txt.erb
 %_bindir/sow
 
+%if_enabled    doc
 %files         -n gem-hoe-doc
 %doc README.rdoc template/README.txt.erb
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-hoe-devel
 %doc README.rdoc template/README.txt.erb
+%endif
 
 
 %changelog
+* Sat Aug 24 2024 Pavel Skrylev <majioa@altlinux.org> 4.2.2-alt1
+- ^ 4.1.0 -> 4.2.2
+
+* Sat Dec 02 2023 Pavel Skrylev <majioa@altlinux.org> 4.1.0-alt1
+- ^ 3.23.1 -> 4.1.0
+
 * Fri Mar 18 2022 Pavel Skrylev <majioa@altlinux.org> 3.23.1-alt1
 - ^ 3.22.1 -> 3.23.1
 

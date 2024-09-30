@@ -1,28 +1,33 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname bluecloth
 
 Name:          gem-bluecloth
-Version:       2.2.0
+Version:       2.2.0.2
 Release:       alt1
 Summary:       BlueCloth is a Ruby implementation of John Gruber's Markdown
 License:       BSD
 Group:         Development/Ruby
 Url:           http://deveiate.org/projects/BlueCloth
-Packager:      Pavel Skrylev <majioa@altlinux.org>
+Vcs:           http://deveiate.org/projects/bluecloth.git
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
-Patch:         patch.patch
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(tidy-ext) >= 0.1 gem(tidy-ext) < 1
-BuildRequires: gem(rake-compiler) >= 0.7 gem(rake-compiler) < 2
-BuildRequires: gem(rspec) >= 2.6 gem(rspec) < 4
-BuildRequires: gem(rdoc) >= 4.0 gem(rdoc) < 7
-BuildRequires: gem(hoe) >= 3.22 gem(hoe) < 4
+%if_enabled check
+BuildRequires: gem(hoe) >= 0
+BuildRequires: gem(rdoc) >= 4.0
+BuildRequires: gem(tidy-ext) >= 0.1
+BuildRequires: gem(rake-compiler) >= 0.7
+BuildRequires: gem(rspec) >= 2.6
+BuildConflicts: gem(tidy-ext) >= 1
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rspec >= 3.10.0,rspec < 4
-%ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
-Provides:      gem(bluecloth) = 2.2.0
+Provides:      gem(bluecloth) = 2.2.0.2
 
 
 %description
@@ -54,17 +59,18 @@ directive:
 
 
 %package       -n bluecloth
-Version:       2.2.0
+Version:       2.2.0.2
 Release:       alt1
 Summary:       BlueCloth is a Ruby implementation of John Gruber's Markdown executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета bluecloth
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(bluecloth) = 2.2.0
+Requires:      gem(bluecloth) = 2.2.0.2
 
 %description   -n bluecloth
-BlueCloth is a Ruby implementation of John Gruber's Markdown executable(s).
+BlueCloth is a Ruby implementation of John Gruber's Markdown
+executable(s).
 
 BlueCloth is a Ruby implementation of John Gruber's
 Markdown[http://daringfireball.net/projects/markdown/], a text-to-HTML
@@ -89,22 +95,23 @@ Note that the new gem is called 'bluecloth' and the old one 'BlueCloth'. If you
 have both installed, you can ensure you're loading the new one with the 'gem'
 directive:
 
-    # Load the 2.0 version gem 'bluecloth', '>= 2.0.0' # Load the 1.0 version gem
-    'BlueCloth' require 'bluecloth'
+# Load the 2.0 version gem 'bluecloth', '>= 2.0.0' # Load the 1.0 version gem
+'BlueCloth' require 'bluecloth'
 
 %description   -n bluecloth -l ru_RU.UTF-8
 Исполнямка для самоцвета bluecloth.
 
 
+%if_enabled    doc
 %package       -n gem-bluecloth-doc
-Version:       2.2.0
+Version:       2.2.0.2
 Release:       alt1
 Summary:       BlueCloth is a Ruby implementation of John Gruber's Markdown documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета bluecloth
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(bluecloth) = 2.2.0
+Requires:      gem(bluecloth) = 2.2.0.2
 
 %description   -n gem-bluecloth-doc
 BlueCloth is a Ruby implementation of John Gruber's Markdown documentation
@@ -133,27 +140,30 @@ Note that the new gem is called 'bluecloth' and the old one 'BlueCloth'. If you
 have both installed, you can ensure you're loading the new one with the 'gem'
 directive:
 
-    # Load the 2.0 version gem 'bluecloth', '>= 2.0.0' # Load the 1.0 version gem
-    'BlueCloth' require 'bluecloth'
+# Load the 2.0 version gem 'bluecloth', '>= 2.0.0' # Load the 1.0 version gem
+'BlueCloth' require 'bluecloth'
 
 %description   -n gem-bluecloth-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета bluecloth.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-bluecloth-devel
-Version:       2.2.0
+Version:       2.2.0.2
 Release:       alt1
 Summary:       BlueCloth is a Ruby implementation of John Gruber's Markdown development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета bluecloth
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(bluecloth) = 2.2.0
-Requires:      gem(tidy-ext) >= 0.1 gem(tidy-ext) < 1
-Requires:      gem(rake-compiler) >= 0.7 gem(rake-compiler) < 2
-Requires:      gem(rspec) >= 2.6 gem(rspec) < 4
-Requires:      gem(rdoc) >= 4.0 gem(rdoc) < 7
-Requires:      gem(hoe) >= 3.22 gem(hoe) < 4
+Requires:      gem(bluecloth) = 2.2.0.2
+Requires:      gem(hoe) >= 0
+Requires:      gem(rdoc) >= 4.0
+Requires:      gem(tidy-ext) >= 0.1
+Requires:      gem(rake-compiler) >= 0.7
+Requires:      gem(rspec) >= 2.6
+Conflicts:     gem(tidy-ext) >= 1
 
 %description   -n gem-bluecloth-devel
 BlueCloth is a Ruby implementation of John Gruber's Markdown development
@@ -182,16 +192,16 @@ Note that the new gem is called 'bluecloth' and the old one 'BlueCloth'. If you
 have both installed, you can ensure you're loading the new one with the 'gem'
 directive:
 
-    # Load the 2.0 version gem 'bluecloth', '>= 2.0.0' # Load the 1.0 version gem
-    'BlueCloth' require 'bluecloth'
+# Load the 2.0 version gem 'bluecloth', '>= 2.0.0' # Load the 1.0 version gem
+'BlueCloth' require 'bluecloth'
 
 %description   -n gem-bluecloth-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета bluecloth.
+%endif
 
 
 %prep
 %setup
-%autopatch
 
 %build
 %ruby_build
@@ -212,15 +222,22 @@ directive:
 %doc README.rdoc
 %_bindir/bluecloth
 
+%if_enabled    doc
 %files         -n gem-bluecloth-doc
 %doc README.rdoc
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-bluecloth-devel
 %doc README.rdoc
 %ruby_includedir/*
+%endif
 
 
 %changelog
+* Fri Aug 30 2024 Pavel Skrylev <majioa@altlinux.org> 2.2.0.2-alt1
+- ^ 2.2.0 -> 2.2.0p2
+
 * Tue May 17 2022 Pavel Skrylev <majioa@altlinux.org> 2.2.0-alt1
 - + packaged gem with Ruby Policy 2.0

@@ -1,27 +1,39 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname ruby-growl
 
 Name:          gem-ruby-growl
 Version:       4.1
-Release:       alt1
+Release:       alt1.1
 Summary:       A pure-ruby growl notifier for UDP and GNTP growl protocols
 License:       BSD 3-clause
 Group:         Development/Ruby
 Url:           https://github.com/drbrain/ruby-growl
 Vcs:           https://github.com/drbrain/ruby-growl.git
-Packager:      Pavel Skrylev <majioa@altlinux.org>
+Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(uuid) >= 2.3.5 gem(uuid) < 3
-BuildRequires: gem(minitest) >= 5.14 gem(minitest) < 6
-BuildRequires: gem(rdoc) >= 4.0 gem(rdoc) < 7
-BuildRequires: gem(hoe) >= 3.22 gem(hoe) < 4
+%if_enabled check
+BuildRequires: gem(uuid) >= 2.3.5
+BuildRequires: gem(minitest) >= 5.17.0
+BuildRequires: gem(rdoc) >= 4.0
+BuildRequires: gem(hoe) >= 4.2
+BuildConflicts: gem(uuid) >= 3
+BuildConflicts: gem(minitest) >= 6
+BuildConflicts: gem(rdoc) >= 7
+BuildConflicts: gem(hoe) >= 5
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
-Requires:      gem(uuid) >= 2.3.5 gem(uuid) < 3
+%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
+%ruby_ignore_names cgi_multipart_eof_fix,gem_plugin,(?-mix:mongrel_),fastthread,(?-mix:project)
+Requires:      gem(uuid) >= 2.3.5
+Conflicts:     gem(uuid) >= 3
 Provides:      gem(ruby-growl) = 4.1
 
 
@@ -46,7 +58,7 @@ supported, use --priority instead.)
 
 %package       -n growl
 Version:       4.1
-Release:       alt1
+Release:       alt1.1
 Summary:       A pure-ruby growl notifier for UDP and GNTP growl protocols executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета ruby-growl
 Group:         Other
@@ -78,9 +90,10 @@ supported, use --priority instead.)
 Исполнямка для самоцвета ruby-growl.
 
 
+%if_enabled    doc
 %package       -n gem-ruby-growl-doc
 Version:       4.1
-Release:       alt1
+Release:       alt1.1
 Summary:       A pure-ruby growl notifier for UDP and GNTP growl protocols documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ruby-growl
 Group:         Development/Documentation
@@ -111,20 +124,25 @@ supported, use --priority instead.)
 
 %description   -n gem-ruby-growl-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета ruby-growl.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-ruby-growl-devel
 Version:       4.1
-Release:       alt1
+Release:       alt1.1
 Summary:       A pure-ruby growl notifier for UDP and GNTP growl protocols development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ruby-growl
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(ruby-growl) = 4.1
-Requires:      gem(minitest) >= 5.14 gem(minitest) < 6
-Requires:      gem(rdoc) >= 4.0 gem(rdoc) < 7
-Requires:      gem(hoe) >= 3.22 gem(hoe) < 4
+Requires:      gem(minitest) >= 5.17.0
+Requires:      gem(rdoc) >= 4.0
+Requires:      gem(hoe) >= 4.2
+Conflicts:     gem(minitest) >= 6
+Conflicts:     gem(rdoc) >= 7
+Conflicts:     gem(hoe) >= 5
 
 %description   -n gem-ruby-growl-devel
 A pure-ruby growl notifier for UDP and GNTP growl protocols development
@@ -149,6 +167,7 @@ supported, use --priority instead.)
 
 %description   -n gem-ruby-growl-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета ruby-growl.
+%endif
 
 
 %prep
@@ -172,14 +191,21 @@ supported, use --priority instead.)
 %doc README.txt
 %_bindir/growl
 
+%if_enabled    doc
 %files         -n gem-ruby-growl-doc
 %doc README.txt
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-ruby-growl-devel
 %doc README.txt
+%endif
 
 
 %changelog
+* Fri Sep 27 2024 Pavel Skrylev <majioa@altlinux.org> 4.1-alt1.1
+- ! spec and deps
+
 * Tue Jun 22 2021 Pavel Skrylev <majioa@altlinux.org> 4.1-alt1
 - + packaged gem with Ruby Policy 2.0

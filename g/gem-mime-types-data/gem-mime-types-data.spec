@@ -1,7 +1,11 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname mime-types-data
 
 Name:          gem-mime-types-data
-Version:       3.2021.0704
+Version:       3.2024.0820
 Release:       alt1
 Summary:       MIME Type registry data
 License:       MIT
@@ -13,23 +17,35 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(nokogiri) >= 1.6 gem(nokogiri) < 2
-BuildRequires: gem(hoe-doofus) >= 1.0 gem(hoe-doofus) < 2
-BuildRequires: gem(hoe-gemspec2) >= 1.1 gem(hoe-gemspec2) < 2
-BuildRequires: gem(hoe-git) >= 1.6 gem(hoe-git) < 2
-BuildRequires: gem(hoe-rubygems) >= 1.0 gem(hoe-rubygems) < 2
-BuildRequires: gem(rake) >= 10.0 gem(rake) < 14
-BuildRequires: gem(mime-types) >= 3.2.1 gem(mime-types) < 4
-BuildRequires: gem(rdoc) >= 4.0 gem(rdoc) < 7
-BuildRequires: gem(hoe) >= 3.22 gem(hoe) < 4
+%if_enabled check
+BuildRequires: gem(byebug) >= 0
+BuildRequires: gem(hoe) >= 4.0
+BuildRequires: gem(hoe-doofus) >= 1.0
+BuildRequires: gem(hoe-gemspec2) >= 1.1
+BuildRequires: gem(hoe-git2) >= 1.7
+BuildRequires: gem(hoe-rubygems) >= 1.0
+BuildRequires: gem(mime-types) >= 3.4.0
+BuildRequires: gem(nokogiri) >= 1.6
+BuildRequires: gem(rake) >= 10.0
+BuildRequires: gem(standard) >= 1.0
+BuildRequires: gem(rdoc) >= 4.0
+BuildConflicts: gem(hoe) >= 5
+BuildConflicts: gem(hoe-doofus) >= 2
+BuildConflicts: gem(hoe-gemspec2) >= 2
+BuildConflicts: gem(hoe-git2) >= 2
+BuildConflicts: gem(hoe-rubygems) >= 2
+BuildConflicts: gem(mime-types) >= 4
+BuildConflicts: gem(nokogiri) >= 2
+BuildConflicts: gem(rake) >= 14
+BuildConflicts: gem(standard) >= 2
+BuildConflicts: gem(rdoc) >= 7
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rake >= 13.0.1,rake < 14
-%ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
 Obsoletes:     ruby-mime-types-data < %EVR
 Provides:      ruby-mime-types-data = %EVR
-Provides:      gem(mime-types-data) = 3.2021.0704
+Provides:      gem(mime-types-data) = 3.2024.0820
 
 
 %description
@@ -39,15 +55,16 @@ to determine defined filename extensions for MIME types, or to use filename
 extensions to look up the likely MIME type definitions.
 
 
+%if_enabled    doc
 %package       -n gem-mime-types-data-doc
-Version:       3.2021.0704
+Version:       3.2024.0820
 Release:       alt1
 Summary:       MIME Type registry data documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета mime-types-data
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(mime-types-data) = 3.2021.0704
+Requires:      gem(mime-types-data) = 3.2024.0820
 
 %description   -n gem-mime-types-data-doc
 MIME Type registry data documentation files.
@@ -59,26 +76,40 @@ extensions to look up the likely MIME type definitions.
 
 %description   -n gem-mime-types-data-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета mime-types-data.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-mime-types-data-devel
-Version:       3.2021.0704
+Version:       3.2024.0820
 Release:       alt1
 Summary:       MIME Type registry data development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета mime-types-data
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(mime-types-data) = 3.2021.0704
-Requires:      gem(nokogiri) >= 1.6 gem(nokogiri) < 2
-Requires:      gem(hoe-doofus) >= 1.0 gem(hoe-doofus) < 2
-Requires:      gem(hoe-gemspec2) >= 1.1 gem(hoe-gemspec2) < 2
-Requires:      gem(hoe-git) >= 1.6 gem(hoe-git) < 2
-Requires:      gem(hoe-rubygems) >= 1.0 gem(hoe-rubygems) < 2
-Requires:      gem(rake) >= 10.0 gem(rake) < 14
-Requires:      gem(mime-types) >= 3.2.1 gem(mime-types) < 4
-Requires:      gem(rdoc) >= 4.0 gem(rdoc) < 7
-Requires:      gem(hoe) >= 3.22 gem(hoe) < 4
+Requires:      gem(mime-types-data) = 3.2024.0820
+Requires:      gem(byebug) >= 0
+Requires:      gem(hoe) >= 4.0
+Requires:      gem(hoe-doofus) >= 1.0
+Requires:      gem(hoe-gemspec2) >= 1.1
+Requires:      gem(hoe-git2) >= 1.7
+Requires:      gem(hoe-rubygems) >= 1.0
+Requires:      gem(mime-types) >= 3.4.0
+Requires:      gem(nokogiri) >= 1.6
+Requires:      gem(rake) >= 10.0
+Requires:      gem(standard) >= 1.0
+Requires:      gem(rdoc) >= 4.0
+Conflicts:     gem(hoe) >= 5
+Conflicts:     gem(hoe-doofus) >= 2
+Conflicts:     gem(hoe-gemspec2) >= 2
+Conflicts:     gem(hoe-git2) >= 2
+Conflicts:     gem(hoe-rubygems) >= 2
+Conflicts:     gem(mime-types) >= 4
+Conflicts:     gem(nokogiri) >= 2
+Conflicts:     gem(rake) >= 14
+Conflicts:     gem(standard) >= 2
+Conflicts:     gem(rdoc) >= 7
 
 %description   -n gem-mime-types-data-devel
 MIME Type registry data development package.
@@ -90,6 +121,7 @@ extensions to look up the likely MIME type definitions.
 
 %description   -n gem-mime-types-data-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета mime-types-data.
+%endif
 
 
 %prep
@@ -109,15 +141,22 @@ extensions to look up the likely MIME type definitions.
 %ruby_gemspec
 %ruby_gemlibdir
 
+%if_enabled    doc
 %files         -n gem-mime-types-data-doc
 %doc README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-mime-types-data-devel
 %doc README.md
+%endif
 
 
 %changelog
+* Sat Aug 24 2024 Pavel Skrylev <majioa@altlinux.org> 3.2024.0820-alt1
+- ^ 3.2021.0704 -> 3.2024.0820
+
 * Sat Jul 17 2021 Pavel Skrylev <majioa@altlinux.org> 3.2021.0704-alt1
 - ^ 3.2019.1009 -> 3.2021.0704
 
