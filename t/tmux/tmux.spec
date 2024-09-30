@@ -4,7 +4,7 @@
 
 Summary: Terminal multiplexer
 Name: tmux
-Version: 3.4
+Version: 3.5
 Release: alt1
 License: ISC and BSD-3-Clause and BSD-2-Clause
 Group: Terminals
@@ -44,6 +44,9 @@ install -Dpm 644 %SOURCE1 %buildroot%_datadir/bash-completion/completions/tmux
 %_datadir/bash-completion/completions/tmux
 
 %changelog
+* Sun Sep 29 2024 Vitaly Chikunov <vt@altlinux.org> 3.5-alt1
+- Update to 3.5 (2024-09-29).
+
 * Wed Feb 14 2024 Vitaly Chikunov <vt@altlinux.org> 3.4-alt1
 - Update to 3.4 (2024-02-14).
 
