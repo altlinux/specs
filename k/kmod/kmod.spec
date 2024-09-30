@@ -1,5 +1,5 @@
 Name:		kmod
-Version:	31
+Version:	32
 Release:	alt1
 Summary:	Linux kernel module management utilities
 
@@ -10,8 +10,6 @@ ExclusiveOS:	Linux
 Requires:	lib%name = %version-%release
 
 Source0:	%name-%version.tar
-
-Patch0002: 0002-man-Fix-path.patch
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
@@ -30,6 +28,9 @@ BuildRequires: zlib-devel
 Provides:	module-init-tools = 3.17-alt1
 Obsoletes:	module-init-tools
 Conflicts:	module-init-tools-compat
+Conflicts: filesystem < 3
+Provides: /bin/kmod /bin/lsmod
+Provides: /sbin/depmod /sbin/insmod /sbin/lsmod /sbin/modinfo /sbin/modprobe /sbin/rmmod
 
 %description
 The kmod package provides various programs needed for automatic
@@ -71,18 +72,15 @@ Contains bash completion support for kmod utilities.
 
 %prep
 %setup -q
-%autopatch -p1
 
 %build
 touch libkmod/docs/gtk-doc.make
 %autoreconf
 
 %configure \
-	--prefix=/ \
 	--disable-static \
 	--disable-test-modules \
-	--bindir=/bin \
-	--with-rootlibdir=/%_lib \
+	--with-rootlibdir=%_libdir \
 	--with-openssl \
 	--with-zlib \
 	--with-xz \
@@ -94,28 +92,28 @@ touch libkmod/docs/gtk-doc.make
 %make_install DESTDIR=%buildroot install
 rm -rf %buildroot/%_libdir/*.la
 
-# New configuration files we ship (if any) should go into /lib/modprobe.d
+# New configuration files we ship (if any) should go into /usr/lib/modprobe.d
 # in order to allow the local sysadmin to customize /etc/modprobe.d
-mkdir -p %buildroot/{%_sysconfdir,/lib}/modprobe.d
-mkdir -p %buildroot/{%_sysconfdir,/lib}/depmod.d
+mkdir -p %buildroot/{%_sysconfdir,%prefix/lib}/modprobe.d
+mkdir -p %buildroot/{%_sysconfdir,%prefix/lib}/depmod.d
 
 # Add blacklists from module-init-tools
 find rpm/modprobe.d -maxdepth 1 -type f -name '*.conf' -print0 |
-	xargs -r0 install -m644 -p -t %buildroot/lib/modprobe.d/ --
+	xargs -r0 install -m644 -p -t %buildroot%_modprobedir/ --
 
 %ifarch %ix86 x86_64
-install -m644 -p rpm/modprobe.d/arch/i386.conf %buildroot/lib/modprobe.d/arch.conf
+install -m644 -p rpm/modprobe.d/arch/i386.conf %buildroot%_modprobedir/arch.conf
 %endif
 
 # Make compatibility symlinks
-mkdir -p %buildroot/sbin
+mkdir -p %buildroot%_sbindir
 for n in modprobe modinfo insmod rmmod depmod lsmod; do
-	t=$(relative /bin/kmod /sbin/$n)
-	ln -s "$t" "%buildroot/sbin/$n"
+	t=$(relative %_bindir/kmod %_sbindir/$n)
+	ln -s "$t" "%buildroot%_sbindir/$n"
 done
 
-# lsmod was in /bin before
-ln -s kmod %buildroot/bin/lsmod
+# cleanup non-root access utils
+rm -f %buildroot%_bindir/{depmod,insmod,modinfo,modprobe,rmmod}
 
 %check
 make check V=1
@@ -123,33 +121,38 @@ make check V=1
 %files
 %dir %_sysconfdir/depmod.d
 %dir %_sysconfdir/modprobe.d
-%dir /lib/depmod.d
-%dir /lib/modprobe.d
-/lib/modprobe.d/*.conf
-/bin/kmod
-/bin/lsmod
-/sbin/depmod
-/sbin/insmod
-/sbin/lsmod
-/sbin/modinfo
-/sbin/modprobe
-/sbin/rmmod
+%dir %_prefix/lib/depmod.d
+%dir %_modprobedir
+%_modprobedir/*.conf
+%_bindir/kmod
+%_bindir/lsmod
+%_sbindir/depmod
+%_sbindir/insmod
+%_sbindir/lsmod
+%_sbindir/modinfo
+%_sbindir/modprobe
+%_sbindir/rmmod
 %_man5dir/*
 %_man8dir/*
 %doc NEWS README.md COPYING
 
 %files -n lib%name
-/%_lib/libkmod.so*
+%_libdir/libkmod.so.*
 
 %files -n lib%name-devel
 %_includedir/libkmod.h
-%_libdir/pkgconfig/libkmod.pc
+%_pkgconfigdir/libkmod.pc
 %_libdir/libkmod.so
+%_datadir/pkgconfig/%name.pc
 
 %files -n bash-completion-%name
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Mon May 27 2024 Alexey Shabalin <shaba@altlinux.org> 32-alt1
+- Version (32).
+- Moved utils and lib to /usr.
+
 * Sat Sep 30 2023 Alexey Gladkov <legion@altlinux.ru> 31-alt1
 - Version (31).
 
