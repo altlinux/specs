@@ -1,9 +1,9 @@
 %global _firmwarepath  /lib/firmware
-%define version_major 2024.06
+%define version_major 2024.09
 Summary: Firmware and topology files for Sound Open Firmware project
 Name: firmware-alsa-sof
 Version: %version_major
-Release: alt2
+Release: alt1
 # See later in the spec for a breakdown of licensing
 License: BSD
 Group: Sound
@@ -82,6 +82,9 @@ end
 %files debug -f alsa-sof-firmware.debug-files
 
 %changelog
+* Mon Sep 30 2024 Anton Farygin <rider@altlinux.ru> 2024.09-alt1
+- 2024.06 -> 2024.09
+
 * Sat Aug 31 2024 Anton Farygin <rider@altlinux.ru> 2024.06-alt2
 - added lost symlink for sof-ace-tplg (Closes: #51357)
 
