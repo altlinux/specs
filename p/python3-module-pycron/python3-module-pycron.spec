@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.0.0
-Release: alt2
+Version: 3.1.1
+Release: alt1
 
 Summary: Simple cron-like parser for Python, which determines if current datetime matches conditions
 License: MIT
@@ -17,11 +17,9 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildRequires: python3(poetry-core)
 
 %if_with check
-BuildRequires: python3(pytest)
 BuildRequires: python3(pytz)
 BuildRequires: python3(pendulum)
 BuildRequires: python3(arrow)
@@ -37,10 +35,6 @@ BuildArch: noarch
 %prep
 %setup
 
-# Replace nose with pytest
-sed -i 's/from nose.tools import assert_raises/import pytest/' tests/test_has_been.py
-sed -i 's/assert_raises/pytest.raises/' tests/test_has_been.py
-
 %build
 %pyproject_build
 
@@ -48,8 +42,7 @@ sed -i 's/assert_raises/pytest.raises/' tests/test_has_been.py
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_unittest -v
 
 %files
 %doc README.md LICENSE
@@ -57,6 +50,9 @@ sed -i 's/assert_raises/pytest.raises/' tests/test_has_been.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Sep 30 2024 Anton Vyatkin <toni@altlinux.org> 3.1.1-alt1
+- New version 3.1.1.
+
 * Tue May 02 2023 Anton Vyatkin <toni@altlinux.org> 3.0.0-alt2
 - Fix BuildRequires
 
