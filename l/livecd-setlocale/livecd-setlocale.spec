@@ -1,27 +1,28 @@
 Name: livecd-setlocale
-Version: 0.3.14
+Version: 0.3.15
 Release: alt1
 
 Summary: Automatically set locale from /proc/cmdline
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
 
-Source0: %name.tar
+Source: %name-%version.tar
 BuildArch: noarch
 # NB: alterator-sysconfig's kbd data is required
-Requires: service chkconfig alterator-sysconfig
+Requires: alterator-sysconfig
 
 %description
 Service to automatically set locale from /proc/cmdline
 (when specified as e.g. lang=ru_RU).
 
 %prep
-%setup -c
+%setup
 
 %install
-mkdir -p %buildroot%_initdir/
-install -pDm755 {livecd-setlocale,%buildroot%_initdir}/livecd-setlocale
-install -pDm644 {livecd-setlocale,%buildroot%_unitdir}/livecd-setlocale.service
+mkdir -p %buildroot{%prefix/libexec,%_initdir,%_unitdir}
+install -pDm755 livecd-setlocale %buildroot%prefix/libexec/livecd-setlocale
+install -pDm755 livecd-setlocale.init %buildroot%_initdir/livecd-setlocale
+install -pDm644 livecd-setlocale.service %buildroot%_unitdir/livecd-setlocale.service
 
 %preun
 # would be an inconvenient %%ghost
@@ -29,10 +30,15 @@ rm -f %_sysconfdir/profile.d/00dconf-kbd.sh
 %preun_service %name
 
 %files 
+%prefix/libexec/livecd-setlocale
 %_initdir/livecd-setlocale
 %_unitdir/livecd-setlocale.service
 
 %changelog
+* Mon Sep 30 2024 Anton Midyukov <antohami@altlinux.org> 0.3.15-alt1
+- Separate init script from livecd-setlocale script
+- Cleanup dconf hook
+
 * Mon Sep 23 2024 Anton Midyukov <antohami@altlinux.org> 0.3.14-alt1
 - do not setup /etc/sysconfig/i18n, if it doesn't exist
 
