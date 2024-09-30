@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1
 %define kernel_base_version	6.6
-%define kernel_sublevel	.52
+%define kernel_sublevel	.53
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -583,6 +583,13 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Sep 30 2024 Kernel Bot <kernelbot@altlinux.org> 1:6.6.53-alt1
+- v6.6.53 (2024-09-30).
+- config: unset CONFIG_BPFILTER and CONFIG_BPFILTER_UMH.
+- config: Enable CONFIG_WDAT_WDT=m.
+- config: Enable more Realtek Wi-Fi drivers.
+- config: Enable CONFIG_ATH12K=m (Wi-Fi 7).
+
 * Thu Sep 19 2024 Kernel Bot <kernelbot@altlinux.org> 1:6.6.52-alt1
 - v6.6.52 (2024-09-18).
 
