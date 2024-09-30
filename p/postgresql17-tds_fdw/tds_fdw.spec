@@ -1,4 +1,4 @@
-%define pg_ver 15
+%define pg_ver 17
 %define prog_name tds_fdw
 %ifarch loongarch64
 %def_without jit
