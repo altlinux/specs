@@ -2,7 +2,7 @@ Name: kernel-image-6.10
 Release: alt1
 %define kernel_src_version	6.10
 %define kernel_base_version	6.10
-%define kernel_sublevel	.11
+%define kernel_sublevel	.12
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -594,6 +594,16 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Sep 30 2024 Kernel Bot <kernelbot@altlinux.org> 6.10.12-alt1
+- v6.10.12 (2024-09-30).
+- config: Enable CONFIG_FPROBE=y.
+- config: Enable CONFIG_WDAT_WDT=m.
+- config: Enable CONFIG_AMD_PMF=m.
+- config: CONFIG_DRM_XE=m.
+- config: Enable CONFIG_IOMMUFD=m.
+- config: Enable more Realtek Wi-Fi drivers.
+- config: Enable CONFIG_ATH12K=m (Wi-Fi 7).
+
 * Thu Sep 19 2024 Kernel Bot <kernelbot@altlinux.org> 6.10.11-alt1
 - v6.10.11 (2024-09-18).
 
