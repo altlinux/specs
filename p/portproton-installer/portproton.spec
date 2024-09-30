@@ -4,13 +4,13 @@ AutoProv: no
 %define oname portproton
 %define xdg_name ru.linux_gaming.PortProton
 
-%define i586_req_l1 libGL.so.1 libgio-2.0.so.0 libnm.so.0 libnss3.so libunwind.so.8
+%define i586_req_l1 libGL.so.1 libgio-2.0.so.0 libnm.so.0 libnss3.so libunwind.so.8 libvdpau.so.1
 %define i586_req_l2 libVkLayer_MESA_device_select.so libgamemodeauto.so.0 libnsl.so.1
-%define i586_req_l3 libvulkan.so.1 libvulkan_intel.so libvulkan_radeon.so
+%define i586_req_l3 libvulkan.so.1 libvulkan_intel.so libvulkan_radeon.so libvulkan_lvp.so
 
 Name: portproton-installer
 Version: 1.7.1
-Release: alt2
+Release: alt3
 
 Summary: Installer for PortProton
 
@@ -24,7 +24,7 @@ Requires: bubblewrap cabextract zstd gawk tar xz pciutils coreutils file
 Requires: curl xdg-utils desktop-file-utils yad jq
 Requires: libvulkan1 vulkan-tools libd3d libGL gamemode fontconfig xrdb
 Requires: libcurl libgio libnm libnsl1 libnss glibc-nss glibc-pthread
-Requires: xorg-dri-intel xorg-dri-radeon
+Requires: xorg-dri-intel xorg-dri-radeon xorg-dri-swrast libvdpau
 Requires: /usr/bin/exiftool /usr/bin/icoextract
 
 ExclusiveArch: i586
@@ -59,6 +59,10 @@ install -Dm644 %xdg_name.metainfo.xml %buildroot%_datadir/metainfo/%xdg_name.met
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Mon Sep 30 2024 Mikhail Tergoev <fidel@altlinux.org> 1.7.1-alt3
+- added requires: xorg-dri-swrast, libvdpau (i586 and x86_64)
+- fixed ALT bug: #51174 #51173 #51171 #51170 #51168 #50828
+
 * Thu Sep 19 2024 Mikhail Tergoev <fidel@altlinux.org> 1.7.1-alt2
 - dropped requires: libvdpau_gallium.so.1.0.0
 
