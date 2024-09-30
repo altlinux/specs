@@ -2,7 +2,7 @@
 
 Name: hardinfo2
 Version: 2.1.14
-Release: alt1
+Release: alt2
 
 Summary: System Information and Benchmark for Linux Systems
 License: GPL-2.0-or-later
@@ -52,19 +52,22 @@ It can benchmark your system and compare to other machines online.
 
 %install
 %cmake_install
+%find_lang %name
 
-%files
+%files -f %name.lang
 %doc README.md
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_datadir/%name
 %_iconsdir/hicolor/*/apps/%name.png
 %_man1dir/%{name}*
-%_datadir/locale/*/LC_MESSAGES/%name.mo
 %_datadir/metainfo/org.hardinfo2.hardinfo2.metainfo.xml
 %_libdir/%name
 
 %changelog
+* Mon Sep 30 2024 Vladislav Glinkin <smasher@altlinux.org> 2.1.14-alt2
+- Add find_lang to spec file
+
 * Thu Sep 26 2024 Vladislav Glinkin <smasher@altlinux.org> 2.1.14-alt1
 - Initial build for ALT
 
