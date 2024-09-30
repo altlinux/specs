@@ -1,11 +1,11 @@
 Name: kernel-image-6.11
 Release: alt1
-%define kernel_src_version	6.10
+%define kernel_src_version	6.11
 %define kernel_base_version	6.11
-%define kernel_sublevel	.0
+%define kernel_sublevel	.1
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
-%define kernel_latest	new
+%define kernel_latest	latest
 Version: %kversion
 
 %define krelease	%release
@@ -578,6 +578,17 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Sep 30 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.1-alt1
+- Update to v6.11.1 (2024-09-30).
+- config: Enable CONFIG_FPROBE=y.
+- config: Enable CONFIG_WDAT_WDT=m.
+- config: Enable more Realtek Wi-Fi drivers.
+- config: Enable CONFIG_ATH12K=m (Wi-Fi 7).
+- config: Enable CONFIG_AMD_PMF=m.
+- config: CONFIG_DRM_XE=m.
+- config: Enable CONFIG_IOMMUFD=m.
+- config: Enable CONFIG_INTEL_TPMI=m.
+
 * Sun Sep 15 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.0-alt1
 - Update to v6.11 (2024-09-15) release.
 - config: Enable more Intel drivers.
