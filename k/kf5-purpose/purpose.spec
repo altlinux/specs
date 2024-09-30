@@ -1,6 +1,6 @@
 %define rname purpose
 
-%def_disable bootstrap
+%def_enable bootstrap
 
 %define sover 5
 %define libphabricatorhelpers libphabricatorhelpers%sover
@@ -8,7 +8,7 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -146,6 +146,9 @@ mkdir -p %buildroot/%_datadir/accounts/services/kde/
 %_K5lib/libKF5PurposeWidgets.so.*
 
 %changelog
+* Mon Sep 30 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt2
+- relax requires
+
 * Thu May 23 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt1
 - new version
 
