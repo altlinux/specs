@@ -8,15 +8,15 @@
 
 Name: pnetcdf
 Version: 1.8.1
-Release: alt3.1
+Release: alt4
+
 Summary: Parallel netCDF: A High Performance API for NetCDF File Access
 License: Open source
 Group: File tools
+
 Url: http://trac.mcs.anl.gov/projects/parallel-netcdf
-
 Source: %name-%version.tar
-
-Patch1: %name-%version-alt-build.patch
+Patch: %name-%version-alt-build.patch
 
 BuildRequires(pre): %mpiimpl-devel
 BuildRequires: flex gcc-fortran
@@ -87,7 +87,7 @@ Parallel netCDF.
 
 %prep
 %setup
-%patch1 -p2
+%patch -p2
 rm -fR autom4te.cache
 
 %build
@@ -141,6 +141,10 @@ rm -f %buildroot%_libdir/*.a
 %doc doc/*.pdf doc/*.txt examples
 
 %changelog
+* Mon Sep 30 2024 Michael Shigorin <mike@altlinux.org> 1.8.1-alt4
+- Minor spec cleanup
+  + ...and a release bump to facilitate upgrade of the e2k fork.
+
 * Fri Apr 05 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.8.1-alt3.1
 - The compiler for e2k finally knowns -fallow-argument-mismatch.
 
