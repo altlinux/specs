@@ -2,17 +2,20 @@
 %define mpidir %_libdir/%mpiimpl
 
 %define sover 0
+
 Name: scotch
 Version: 5.1.12b
-Release: alt4.svn20110910
+Release: alt5.svn20110910
+
 Summary: Package and libraries for sequential and parallel graph partitioning
 License: CeCILL-C
 Group: Sciences/Mathematics
+
 Url: http://www.labri.fr/perso/pelegrin/scotch/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # svn://scm.gforge.inria.fr/svn/scotch
-Source: %{name}_%version.tar.gz
+Source0: %{name}_%version.tar.gz
 Source1: %{name}_%{version}_esmumps.tar.gz
 Source2: Makefile.inc
 Source3: Makefile.inc.esmumps
@@ -89,9 +92,9 @@ This package contains GRF and TGT files for Scotch.
 %prep
 %setup
 tar -xzf %SOURCE1
-install -m644 %SOURCE2 %SOURCE3 %SOURCE4 .
+install -pm644 %SOURCE2 %SOURCE3 %SOURCE4 .
 
-%ifarch x86_64
+%if "%_lib" == "lib64"
 LIB64=64
 %endif
 sed -i "s|@64@|$LIB64|g" %name.pc
@@ -154,7 +157,6 @@ sed -i 's|@VERSION@|%version|' %name.pc
 install -m644 %name.pc %buildroot%_pkgconfigdir
 
 # shared libraries
-
 pushd %buildroot%_libdir
 for i in $(ls *.a|sed 's|\.a||'); do
 	case $i in
@@ -198,9 +200,6 @@ popd
 %_includedir/*
 %_pkgconfigdir/*
 
-#files -n lib%name-devel-static
-#_libdir/*.a
-
 %files -n lib%name-devel-doc
 %_docdir/%name
 
@@ -210,6 +209,10 @@ popd
 %_datadir/%name/tgt
 
 %changelog
+* Mon Sep 30 2024 Michael Shigorin <mike@altlinux.org> 5.1.12b-alt5.svn20110910
+- Fixed 64-bit builds for non-x86.
+- Minor spec cleanup.
+
 * Thu Sep 17 2020 Grigory Ustinov <grenka@altlinux.org> 5.1.12b-alt4.svn20110910
 - Fixed FTBFS.
 
