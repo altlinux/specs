@@ -8,7 +8,7 @@
 
 Name: postgresql%pg_ver-%prog_name
 Version: 5.4.1
-Release: alt2
+Release: alt3
 Summary: Replication Manager for PostgreSQL Clusters
 Group: Databases
 License: GPL-3.0
@@ -105,6 +105,9 @@ echo "ALTER EXTENSION repmgr UPDATE;                                            
 %doc doc/html
 
 %changelog
+* Tue Oct 01 2024 Alexei Takaseev <taf@altlinux.org> 5.4.1-alt3
+- /etc/sudoers.d/repmgr fix syntax for service and add support systemctl
+
 * Sun Sep 29 2024 Alexei Takaseev <taf@altlinux.org> 5.4.1-alt2
 - Fix BuildReq
 
