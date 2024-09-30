@@ -3,8 +3,8 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name:    rustic
-Version: 0.8.1
-Release: alt3
+Version: 0.9.0
+Release: alt1
 
 Summary: rustic - fast, encrypted, deduplicated backups powered by pure Rust
 License: Apache-2.0
@@ -87,13 +87,20 @@ rustic restore latest --verify-existing ../x
 diff -qr --exclude=target . ../x
 
 %files
+%define _customdocdir %_docdir/%name
 %doc *.md
+%doc rustic-docs/src/*
 %_bindir/%name
 %_datadir/bash-completion/completions/%name
 %_datadir/zsh/site-functions/_%name
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Mon Sep 30 2024 Vitaly Chikunov <vt@altlinux.org> 0.9.0-alt1
+- Update to v0.9.0 (2024-09-29).
+  Note: this release has Breaking Changes (see breaking_changes.md).
+- spec: Package documentation (which was in another repo).
+
 * Sun Sep 29 2024 Vitaly Chikunov <vt@altlinux.org> 0.8.1-alt3
 - Experimentally enable YandexDisk backend.
 
