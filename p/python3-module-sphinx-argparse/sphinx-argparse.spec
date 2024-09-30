@@ -1,7 +1,7 @@
 %define oname sphinx-argparse
 
 Name: python3-module-%oname
-Version: 0.4.0
+Version: 0.5.2
 Release: alt1
 
 Summary: Sphinx extension that automatically document argparse commands and options
@@ -17,10 +17,14 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-poetry
+BuildRequires: python3-module-flit
 BuildRequires: python3-module-pkg_resources
 BuildRequires: python3-module-sphinx_rtd_theme
-BuildRequires: python3-module-pytest python3-module-commonmark
+BuildRequires: python3-module-commonmark
+BuildRequires: python3-module-furo
+BuildRequires: python3-module-sphinx_basic_ng
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-sphinx-tests
 
 Requires: python3-module-commonmark
 
@@ -74,7 +78,7 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %pyproject_run_pytest
 
 %files
-%doc *.md
+%doc *.rst
 %python3_sitelibdir/sphinxarg
 %python3_sitelibdir/sphinx_argparse-%version.dist-info
 %exclude %python3_sitelibdir/*/pickle
@@ -86,6 +90,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc docs/_build/html/*
 
 %changelog
+* Mon Sep 30 2024 Grigory Ustinov <grenka@altlinux.org> 0.5.2-alt1
+- Automatically updated to 0.5.2.
+
 * Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 0.4.0-alt1
 - Build new version.
 
