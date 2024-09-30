@@ -1,8 +1,10 @@
 %def_enable check
 %def_disable bootstrap
 
+%define rdn_name sm.puri.Squeekboard
+
 Name: squeekboard
-Version: 1.41.0
+Version: 1.42.0
 Release: alt1
 
 Summary: A Wayland on-screen keyboard
@@ -16,6 +18,7 @@ Source1: %name-%version-crates.tar
 Patch3500: squeekboard-1.23-alt-nix-loongarch64.patch
 
 Provides: osk-wayland
+Requires: dconf
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-macros-alternatives
 BuildRequires: meson rust-cargo /proc
@@ -66,8 +69,12 @@ EOF
 %_bindir/*
 %_altdir/%name
 %_desktopdir/*.desktop
+%_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 
 %changelog
+* Mon Sep 30 2024 Yuri N. Sedunov <aris@altlinux.org> 1.42.0-alt1
+- 1.42.0
+
 * Thu Aug 15 2024 Yuri N. Sedunov <aris@altlinux.org> 1.41.0-alt1
 - 1.41.0
 

@@ -1,15 +1,16 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.41
+%define ver_major 0.42
 %define beta %nil
 %define namespace Phosh
-%define api_ver 0
+%define api_ver %ver_major
+%define doc_api_ver 0
 %define rdn_name sm.puri.Phosh
 %define dev_uid 1000
 
 # since 0.41 gvc & libcallui subprojects use wrap-files
 %define gvc_ver 5f9768a
-%define callui_ver 0.1.3
+%define callui_ver 0.1.4
 
 # shared libs disabled by default
 %def_enable shared_libs
@@ -22,7 +23,7 @@
 %def_disable check
 
 Name: phosh
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A pure Wayland shell for mobile devices
@@ -93,6 +94,7 @@ BuildRequires: pkgconfig(libfeedback-0.0)
 BuildRequires: pkgconfig(libhandy-1) >= 1.1.90
 BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(libnm) >= 1.14
+BuildRequires: pkgconfig(mm-glib)
 BuildRequires: pkgconfig(libpulse) >= 2.0
 BuildRequires: pkgconfig(libpulse-mainloop-glib)
 BuildRequires: pkgconfig(libsecret-1)
@@ -192,7 +194,7 @@ install -Dpm 0644 data/phosh.service %buildroot%_unitdir/phosh.service
 install -d %buildroot%_datadir/applications
 desktop-file-install --dir %buildroot%_datadir/applications %SOURCE2
 
-%{?_enable_shared_libs:rm -f %buildroot%_libdir/lib%name.a}
+%{?_enable_shared_libs:rm -f %buildroot%_libdir/lib%name-%api_ver.a}
 
 %find_lang %name
 
@@ -219,6 +221,7 @@ xvfb-run %__meson_test
 %_libdir/%name/plugins/lib%name-plugin-emergency-info.so
 %_libdir/%name/plugins/prefs/lib%name-plugin-prefs-ticket-box.so
 %_libdir/%name/plugins/prefs/lib%name-plugin-prefs-emergency-info.so
+%_libdir/%name/plugins/prefs/lib%name-plugin-prefs-upcoming-events.so
 %_libdir/%name/plugins/caffeine-quick-setting.plugin
 %_libdir/%name/plugins/lib%name-plugin-caffeine-quick-setting.so
 %_libdir/%name/plugins/lib%name-plugin-simple-custom-quick-setting.so
@@ -241,7 +244,7 @@ xvfb-run %__meson_test
 %_datadir/glib-2.0/schemas/sm.puri.phosh.enums.xml
 %_datadir/glib-2.0/schemas/sm.puri.phosh.plugins.launcher-box.gschema.xml
 %_datadir/glib-2.0/schemas/sm.puri.phosh.plugins.ticket-box.gschema.xml
-#%_datadir/glib-2.0/schemas/00_%rdn_name.gschema.override
+%_datadir/glib-2.0/schemas/sm.puri.phosh.plugins.upcoming-events.gschema.xml
 %_datadir/glib-2.0/schemas/00_mobi.Phosh.gschema.override
 %_datadir/dbus-1/services/%rdn_name.CalendarServer.service
 %_datadir/gnome-session/sessions/%name.session
@@ -262,19 +265,22 @@ xvfb-run %__meson_test
 %_pkgconfigdir/%name-plugins.pc
 %_pkgconfigdir/%name-settings.pc
 #%{?_enable_introspection:%_girdir/%namespace-%api_ver.gir}
-%{?_enable_gtk_doc:%doc %_datadir/doc/%name-%api_ver}
+%{?_enable_gtk_doc:%doc %_datadir/doc/%name-%doc_api_ver}
 
 %{?_enable_shared_libs:
 %files -n lib%name
-%_libdir/lib%name.so.*
+%_libdir/lib%name-%api_ver.so.*
 
 %files -n lib%name-devel
 %_includedir/lib%name-%api_ver
-%_libdir/lib%name.so
+%_libdir/lib%name-%api_ver.so
 %_pkgconfigdir/lib%name-%api_ver.pc
 }
 
 %changelog
+* Mon Sep 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.42.0-alt1
+- 0.42.0
+
 * Fri Sep 06 2024 Yuri N. Sedunov <aris@altlinux.org> 0.41.1-alt1
 - 0.41.1
 

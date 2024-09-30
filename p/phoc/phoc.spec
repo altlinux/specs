@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.41
+%define ver_major 0.42
 %define api_ver 0
 %define beta %nil
 %define rdn_name sm.puri.Phoc
@@ -95,11 +95,11 @@ popd}
 
 %build
 %meson \
-    %{?_disable_embed_wlroots:-Dembed-wlroots=disabled} \
+    %{subst_enable_meson_feature embed_wlroots embed-wlroots} \
     %{?_enable_embed_wlroots:--default-library=static} \
     -Ddev-uid=%dev_uid \
-    %{?_enable_gtk_doc:-Dgtk_doc=true} \
-    %{?_enable_man:-Dman=true}
+    %{subst_enable_meson_bool gtk_doc gtk_doc} \
+    %{subst_enable_meson_bool man man}
 %nil
 %meson_build
 
@@ -132,6 +132,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Mon Sep 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.42.0-alt1
+- 0.42.0
+
 * Thu Aug 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.41.0-alt1
 - 0.41.0
 

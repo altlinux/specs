@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define libname libfeedback
-%define ver_major 0.4
+%define ver_major 0.5
 %define namespace Lfb
 %define api_ver 0.0
 
@@ -13,7 +13,7 @@
 %def_enable check
 
 Name: feedbackd
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Feedback library for GNOME
@@ -99,10 +99,10 @@ sed -i 's|-G %name|-G users|' data/90-feedbackd.rules
 
 %build
 %meson \
-    %{?_disable_introspection:-Dintrospection=disabled} \
-    %{?_disable_vala:-Dvapi=false} \
-    %{?_enable_gtk_doc:-Dgtk_doc=true} \
-    %{?_enable_man:-Dman=true}
+    %{subst_enable_meson_feature introspection introspection} \
+    %{subst_enable_meson_bool vala vapi} \
+    %{subst_enable_meson_bool gtk_doc gtk_doc} \
+    %{subst_enable_meson_bool man man}
 %nil
 %meson_build
 
@@ -116,7 +116,9 @@ sed -i 's|-G %name|-G users|' data/90-feedbackd.rules
 %_bindir/fbcli
 %_bindir/fbd-theme-validate
 %_libexecdir/%name
+%_libexecdir/fbd-alert-slider
 %_libexecdir/fbd-ledctrl
+%_userunitdir/fbd-alert-slider.service
 %_udevrulesdir/90-%name.rules
 %_datadir/dbus-1/interfaces/org.sigxcpu.Feedback.xml
 %_datadir/dbus-1/services/org.sigxcpu.Feedback.service
@@ -145,6 +147,9 @@ sed -i 's|-G %name|-G users|' data/90-feedbackd.rules
 %endif
 
 %changelog
+* Mon Sep 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Thu Aug 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
 - 0.4.1
 

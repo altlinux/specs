@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _name phosh
-%define ver_major 0.41
+%define ver_major 0.42
 %define beta %nil
 
 %def_enable check
@@ -75,6 +75,9 @@ This package provides sound theme for Phosh.
 %doc README.* NEWS
 
 %changelog
+* Mon Sep 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.42.0-alt1
+- 0.42.0
+
 * Thu Aug 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.41.0-alt1
 - 0.41.0
 

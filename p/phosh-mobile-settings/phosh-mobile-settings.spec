@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 0.41
+%define ver_major 0.42
 %define beta %nil
 %define gmobile_ver 0.2.0
 %define rdn_name mobi.phosh.MobileSettings
@@ -28,6 +28,8 @@ Source: %name-%version%beta.tar
 %{?_enable_embed_gmobile:Source1: gmobile-%gmobile_ver.tar}
 
 %define phoc_ver %ver_major
+%define phosh_ver %ver_major
+%define desktop_ver 44
 
 Requires: dconf lm_sensors3
 
@@ -43,7 +45,8 @@ BuildRequires: pkgconfig(wayland-protocols) >= 1.12
 BuildRequires: pkgconfig(gsound)
 BuildRequires: libsensors3-devel
 BuildRequires: pkgconfig(phosh-plugins)
-#BuildRequires: pkgconfig(phosh-settings-schemas)
+BuildRequires: pkgconfig(phosh-settings) >= %phosh_ver
+BuildRequires: pkgconfig(gnome-desktop-4) >= %desktop_ver
 %if_enabled embed_gmobile
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: gobject-introspection-devel}
@@ -90,6 +93,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Mon Sep 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.42.0-alt1
+- 0.42.0
+
 * Thu Aug 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.41.0-alt1
 - 0.41.0
 

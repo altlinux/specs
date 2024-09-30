@@ -1,5 +1,6 @@
 %def_enable snapshot
 
+%define ver_major 0.42
 %define beta %nil
 %define rdn_name sm.puri.Phosh.OskStub
 
@@ -9,7 +10,7 @@
 %def_enable check
 
 Name: phosh-osk-stub
-Version: 0.41.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Phosh OSK Stub
@@ -27,6 +28,8 @@ Source: %name-%version%beta.tar
 
 Provides: osk-wayland
 
+%define gmobile_ver 0.2.0
+
 Requires: dconf
 Requires: hunspell-en_US hunspell-ru-lebedev
 
@@ -35,6 +38,7 @@ BuildRequires: meson
 BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: pkgconfig(gio-2.0) >= 2.68
 BuildRequires: pkgconfig(gtk+-wayland-3.0) >= 3.22
+BuildRequires: pkgconfig(gmobile) >= %gmobile_ver
 BuildRequires: pkgconfig(libhandy-1) >= 1.5
 BuildRequires: pkgconfig(wayland-client) >= 1.14
 BuildRequires: pkgconfig(wayland-protocols) >= 1.12
@@ -66,8 +70,8 @@ The purpose of phosh-osk-stub:
 
 %build
 %meson \
-    %{?_enable_man:-Dman=true} \
-    %{?_disable_default_osk:-Ddefault_osk=false}
+    %{subst_enable_meson_bool man man} \
+    %{subst_enable_meson_bool default_osk default_osk}
 %nil
 %meson_build
 
@@ -89,6 +93,8 @@ xvfb-run %__meson_test
 %_altdir/%name
 %{?_enable_default_osk:%_desktopdir/sm.puri.OSK0.desktop}
 %{?_disable_default_osk:%_desktopdir/%rdn_name.desktop}
+%dir %_datadir/%name
+%_datadir/%name/layouts.json
 %_datadir/glib-2.0/schemas/sm.puri.phosh.osk.enums.xml
 %_datadir/glib-2.0/schemas/sm.puri.phosh.osk.gschema.xml
 %{?_enable_man:%_man1dir/%name.1*}
@@ -97,6 +103,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Mon Sep 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.42.0-alt1
+- 0.42.0
+
 * Wed Aug 21 2024 Yuri N. Sedunov <aris@altlinux.org> 0.41.1-alt1
 - 0.41.1
 
