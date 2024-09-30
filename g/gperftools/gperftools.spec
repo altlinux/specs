@@ -4,8 +4,8 @@
 %set_verify_elf_method strict,lfs=relaxed,lint=relaxed
 
 Name: gperftools
-Version: 2.15
-Release: alt1.1
+Version: 2.16
+Release: alt1
 
 Provides: google-perftools
 
@@ -18,6 +18,9 @@ Source: %name-%version.tar.gz
 
 BuildRequires: gcc-c++
 BuildRequires: libunwind-devel
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: /proc
+}}
 
 %description
 gperftools is a collection of a high-performance multi-threaded
@@ -47,12 +50,19 @@ files for developing applications that use the %name package.
 %setup
 
 %build
+%define optflags_lto %nil
 %autoreconf
 %configure --disable-static
 %make_build
 
 %install
 %make_install DESTDIR=%buildroot install
+
+%check
+# https://github.com/gperftools/gperftools/issues/1557
+%make_build check VERBOSE=1 ||
+%make_build recheck VERBOSE=1 ||
+%make_build recheck VERBOSE=1
 
 %files
 %doc %_defaultdocdir/%name
@@ -63,12 +73,15 @@ files for developing applications that use the %name package.
 %_libdir/lib*.so.*
 
 %files -n lib%name-devel
-%exclude %_includedir/google
 %_includedir/%name
 %_libdir/lib*.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Sep 29 2024 Vitaly Chikunov <vt@altlinux.org> 2.16-alt1
+- Update to 2.16 (2024-09-29).
+- spec: Run unit tests in %%check.
+
 * Wed May 08 2024 Ivan A. Melnikov <iv@altlinux.org> 2.15-alt1.1
 - NMU: full build on loongarch64
 
