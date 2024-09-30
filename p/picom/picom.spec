@@ -3,7 +3,7 @@
 
 Name: picom
 Version: 12.1
-Release: alt1
+Release: alt2
 Summary: A lightweight compositor for X11
 License: MPL-2.0 or MIT
 Group: System/X11
@@ -72,9 +72,12 @@ sed -i "/#warning Use of -ffast-math/s/#warning/#error/" src/utils.h
 %exclude %_datadir/applications/*.desktop
 %_iconsdir/hicolor/*/*/*
 %_man1dir/*
-%_pkgconfigdir/picom-api.pc
+%exclude %_pkgconfigdir/picom-api.pc
 
 %changelog
+* Mon Sep 30 2024 Anton Midyukov <antohami@altlinux.org> 12.1-alt2
+- exclude %%_pkgconfigdir
+
 * Sun Sep 29 2024 Anton Midyukov <antohami@altlinux.org> 12.1-alt1
 - New version 12.1.
 - ExcludeArch: %%ix86
