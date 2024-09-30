@@ -3,8 +3,8 @@
 %set_verify_elf_method strict
 
 Name: z3
-Version: 4.13.0
-Release: alt2
+Version: 4.13.2
+Release: alt1
 Summary: High-performance theorem prover (SMT solver)
 License: MIT
 Group: Sciences/Mathematics
@@ -119,6 +119,9 @@ python3 examples/python/example.py
 %python3_sitelibdir_noarch/%name
 
 %changelog
+* Mon Sep 30 2024 Grigory Ustinov <grenka@altlinux.org> 4.13.2-alt1
+- Automatically updated to 4.13.2.
+
 * Tue Sep 03 2024 Vitaly Chikunov <vt@altlinux.org> 4.13.0-alt2
 - spec: Enable additional post-build QA checks.
 - spec: Enable LFS on 32-bit architectures.
