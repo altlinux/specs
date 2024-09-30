@@ -1,5 +1,5 @@
 Name: python3-module-platformio
-Version: 6.1.15
+Version: 6.1.16
 Release: alt1
 
 Summary: PlatformIO Core
@@ -42,6 +42,9 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/platformio-%version.dist-info
 
 %changelog
+* Mon Sep 30 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 6.1.16-alt1
+- 6.1.16 released
+
 * Thu May 02 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 6.1.15-alt1
 - 6.1.15 released
 
