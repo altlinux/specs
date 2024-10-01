@@ -2,7 +2,7 @@
 
 Name: pdns-recursor
 Version: 4.9.2
-Release: alt2
+Release: alt3
 Summary: Modern, advanced and high performance recursing/non authoritative name server
 License: GPL-2.0
 Group: System/Servers
@@ -29,14 +29,8 @@ BuildRequires: libfstrm-devel
 BuildRequires: libprotobuf-devel
 BuildRequires: libsodium-devel
 BuildRequires: libssl-devel
-BuildRequires: libsystemd-devel
+BuildRequires: libsystemd-devel systemd
 BuildRequires: libudev-devel
-BuildRequires: libudev-devel
-BuildRequires: systemd-analyze
-BuildRequires: systemd-homed
-BuildRequires: systemd-networkd
-BuildRequires: systemd-portable
-BuildRequires: systemd-sysvinit
 
 %description
 PowerDNS Recursor is a non authoritative/recursing DNS server. Use this
@@ -79,17 +73,15 @@ sed -i \
     %buildroot%_sysconfdir/%name/recursor.conf
 
 %pre
-getent group pdns-recursor > /dev/null || groupadd -r pdns-recursor
-getent passwd pdns-recursor > /dev/null || \
-    useradd -r -g pdns-recursor -d / -s /sbin/nologin \
-    -c "PowerDNS Recursor user" pdns-recursor
-exit 0
+groupadd -r -f %name 2> /dev/null ||:
+useradd -r -N -g %name -M -d %_sharedstatedir/%name -s /sbin/nologin \
+    -c "PowerDNS Recursor user" %name 2>/dev/null ||:
 
 %post
-%post_service pdns-recursor
+%post_service %name
 
 %preun
-%preun_service pdns-recursor
+%preun_service %name
 
 %files
 %doc README
@@ -98,14 +90,17 @@ exit 0
 %_sbindir/pdns_recursor
 %_man1dir/pdns_recursor.1*
 %_man1dir/rec_control.1*
-%_unitdir/pdns-recursor.service
+%_unitdir/%{name}.service
 %_unitdir/pdns-recursor@.service
 %dir %_sysconfdir/%name
-%dir %attr(0755,pdns-recursor,pdns-recursor) %_sharedstatedir/%name
-%dir %attr(0755,pdns-recursor,pdns-recursor) %_sharedstatedir/%name/nod
-%dir %attr(0755,pdns-recursor,pdns-recursor) %_sharedstatedir/%name/udr
+%dir %attr(0755,%name,%name) %_sharedstatedir/%name
+%dir %attr(0755,%name,%name) %_sharedstatedir/%name/nod
+%dir %attr(0755,%name,%name) %_sharedstatedir/%name/udr
 
 %changelog
+* Tue Oct 01 2024 Alexey Shabalin <shaba@altlinux.org> 4.9.2-alt3
+- Cleanup BuildRequires.
+
 * Thu Sep 12 2024 Andrey Cherepanov <cas@altlinux.org> 4.9.2-alt2
 - FTBFS: fixed systemd services placement.
 
