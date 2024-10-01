@@ -3,7 +3,7 @@
 
 Name: lightdm-kde-greeter
 Version: 0.4.23
-Release: alt7
+Release: alt8
 Group: Graphical desktop/Other
 Summary: LightDM KDE6 Greeter
 License: GPL-3.0+
@@ -18,6 +18,7 @@ Patch4: move-kcm-module-qml-files.patch
 Patch5: port-kcm-to-qt-6.patch
 Patch6: remove-the-binding-loop-in-the-userslist-component.patch
 Patch7: make-non-existent-default-index-in-listbutton.patch
+Patch8: fix-networkmanager-widget-in-the-userbar-theme.patch
 
 %K6init
 
@@ -57,6 +58,7 @@ This is a fork of KDE4-based LightDM greeter engine for KDE6.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 %build
 %K6build \
@@ -96,6 +98,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Mon Sep 30 2024 Anton Golubev <golubevan@altlinux.org> 0.4.23-alt8
+- fix NetworkManager widget in the userbar theme
+
 * Tue Sep 24 2024 Anton Golubev <golubevan@altlinux.org> 0.4.23-alt7
 - fix that the last logged in user is not selected automatically
 - fix empty session title
