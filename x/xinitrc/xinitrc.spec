@@ -1,6 +1,6 @@
 Name: xinitrc
 Version: 2.4.47
-Release: alt3
+Release: alt4
 
 Summary: The default startup scripts for the X Window System
 License: GPLv2
@@ -72,6 +72,9 @@ fi
 %config(noreplace) %_sysconfdir/X11/xdm/*
 
 %changelog
+* Mon Sep 30 2024 Alexey Shabalin <shaba@altlinux.org> 2.4.47-alt4
+- Fix FTBFS: moved systemd unit to /usr/lib (usrmerge).
+
 * Fri Apr 21 2023 Fr. Br. George <george@altlinux.org> 2.4.47-alt3
 - Fix [ef]grep issue
 - Change "GPL" license to GPLv2 ("if no version use any")
