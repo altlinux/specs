@@ -1,6 +1,6 @@
 Name: passwdqc
 Version: 2.0.3
-Release: alt1
+Release: alt2
 
 Summary: A passphrase strength checking and policy enforcement toolset
 License: LGPLv2+
@@ -127,6 +127,10 @@ rebuilding.
 	SHARED_LIBDIR=/%_lib DEVEL_LIBDIR=%_libdir SECUREDIR=/%_lib/security
 install -pD -m755 passwdqc.control \
         %buildroot%_controldir/passwdqc-enforce
+install -pD -m755 passwdqc-min.control \
+        %buildroot%_controldir/passwdqc-min
+install -pD -m755 passwdqc-match.control \
+        %buildroot%_controldir/passwdqc-match
 
 %find_lang passwdqc
 
@@ -135,10 +139,12 @@ install -pD -m755 passwdqc.control \
 %set_verify_elf_method strict
 
 %pre -n lib%name
-%pre_control passwdqc-enforce
+%pre_control passwdqc-enforce passwdqc-min passwdqc-match
 
 %post -n lib%name
 %post_control -s users passwdqc-enforce
+%post_control -s default passwdqc-min
+%post_control -s default passwdqc-match
 
 %files control
 %config %_controldir/*
@@ -164,6 +170,9 @@ install -pD -m755 passwdqc.control \
 %_man1dir/*
 
 %changelog
+* Fri Aug 30 2024 Egor Shestakov <ved@altlinux.org> 2.0.3-alt2
+- Added control(8) for passwdqc min and match properties (Closes: #51342).
+
 * Fri Jun 23 2023 Dmitry V. Levin <ldv@altlinux.org> 2.0.3-alt1
 - Merged with 2.0.3-owl1:
   + wordset_4k: Move "enroll" to the multiple spellings list (by Solar Designer)
