@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define pg_ver 15
+%define pg_ver 16
 
 Name: postgresql%pg_ver-multicorn2
 Version: 3.0
