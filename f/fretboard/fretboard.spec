@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _name Fretboard
-%define ver_major 7.1
+%define ver_major 8.0
 %define xdg_name dev.bragefuglseth.%_name
 
 %def_enable check
@@ -64,10 +64,13 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
-%_datadir/appdata/%xdg_name.metainfo.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc README*
 
 %changelog
+* Tue Oct 01 2024 Yuri N. Sedunov <aris@altlinux.org> 8.0-alt1
+- updated to v8.0-7-gcf9e72b
+
 * Mon Jul 15 2024 Yuri N. Sedunov <aris@altlinux.org> 7.1-alt1
 - updated to v7.1-2-g4b0c06c
 
