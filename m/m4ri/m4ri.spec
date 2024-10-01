@@ -5,24 +5,24 @@
 %endif
 
 Name: m4ri
-Version: 20200125
+Version: 20240729
 Release: alt1
 Summary: Linear Algebra over F_2
 License: GPL-2.0+
 Group: Sciences/Mathematics
-Url: https://bitbucket.org/malb/%name
+Url: https://bitbucket.org/malb/m4ri
 
 Source: %url/downloads/%name-%version.tar.gz
 
 # This patch will not be sent upstream, as it is Fedora-specific.
 # Permanently disable SSE3 and SSSE3 detection.  Without this patch, the
 # config file tends to be regenerated at inconvenient times.
-Patch: %name-no-sse3.patch
+Patch: m4ri-20240729-no-sse3.patch
 # Fix a format specifier.
-Patch1: %name-printf.patch
+Patch1: m4ri-20240729-printf.patch
 # Remove an unnecessary direct library dependency from the pkgconfig file,
 # and also cflags used to compile m4ri, but not needed by consumers of m4ri.
-Patch2: %name-pkgconfig.patch
+Patch2: m4ri-20240729-pkgconfig.patch
 
 BuildRequires: doxygen
 BuildRequires: gcc
@@ -64,9 +64,9 @@ The %name-static package contains the static %name library.
 
 %prep
 %setup
-%patch -p0
-%patch1 -p0
-%patch2 -p0
+%patch -p1
+%patch1 -p1
+%patch2 -p1
 
 # Fix the version number in the documentation, and generate only HTML
 %__subst 's/20140914/%version/;/GENERATE_LATEX/s/YES/NO/' m4ri/Doxyfile
@@ -89,11 +89,9 @@ sed -e 's/^\(#define __M4RI_HAVE_SSE2[[:blank:]]*\)0/\11/' \
   --disable-sse2
 %endif
 
-# Die, rpath, die!  Also workaround libtool reordering -Wl,--as-needed after
-# all the libraries
+# Die, rpath, die!
 sed -e "s|\(hardcode_libdir_flag_spec=\)'.*|\1|" \
     -e "s|\(runpath_var=\)LD_RUN_PATH|\1|" \
-    -e 's|CC="\(g..\)"|CC="\1 -Wl,--as-needed"|' \
     -i libtool
 
 %make_build
@@ -116,7 +114,8 @@ make check LD_LIBRARY_PATH=$PWD/.libs
 %files -n lib%name
 %doc AUTHORS
 %doc COPYING
-%_libdir/lib%name-0.0.%version.so
+# %%_libdir/lib%%name-0.0.%%version.so
+%_libdir/lib%name-0.0.20200125.so
 
 %files -n lib%name-devel
 %doc doc/html
@@ -130,6 +129,9 @@ make check LD_LIBRARY_PATH=$PWD/.libs
 %endif
 
 %changelog
+* Tue Oct 01 2024 Leontiy Volodin <lvol@altlinux.org> 20240729-alt1
+- New version 20240729.
+
 * Mon Oct 25 2021 Leontiy Volodin <lvol@altlinux.org> 20200125-alt1
 - Initial build for ALT Sisyphus (thanks fedora for the spec).
 - Built as require for sagemath.
