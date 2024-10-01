@@ -10,6 +10,7 @@
 # If one of those versions change, we need to make sure we rebuilt or adapt
 # projects comsuming those. This is e.g. sssd, openchange, evolution-mapi, ...
 %define libdcerpc_binding_so_version 0
+%define libdcerpc_samr_so_version 0
 %define libdcerpc_server_core_so_version 0
 %define libdcerpc_so_version 0
 %define libndr_krb5pac_so_version 0
@@ -120,7 +121,7 @@
 %endif
 
 Name:    samba
-Version: 4.20.4
+Version: 4.20.5
 Release: alt1
 
 Group:   System/Servers
@@ -1607,6 +1608,7 @@ control role-sambashare enabled
 
 %if_with libcephfs
 %exclude %_man8dir/vfs_ceph.8*
+%exclude %_man8dir/vfs_ceph_new.8*
 %exclude %_man8dir/vfs_ceph_snapshots.8*
 %endif
 %if_enabled glusterfs
@@ -1656,9 +1658,19 @@ control role-sambashare enabled
 
 %if_with libsmbclient
 %exclude %_includedir/samba-4.0/libsmbclient.h
+%else
+%_samba_libdir/libsmbclient.so
+%_pkgconfigdir/smbclient.pc
+%if_with doc
+%_man7dir/libsmbclient.7*
 %endif
+%endif
+
 %if_with libwbclient
 %exclude %_includedir/samba-4.0/wbclient.h
+%else
+%_samba_libdir/libwbclient.so
+%_pkgconfigdir/wbclient.pc
 %endif
 
 %_samba_libdir/libdcerpc-binding.so
@@ -1696,7 +1708,10 @@ control role-sambashare enabled
 %endif
 
 %files common-libs
-%_samba_libdir/libdcerpc-samr.so.*
+# libraries needed by the public libraries
+%_samba_libdir/libdcerpc.so.%{libdcerpc_so_version}*
+%_samba_libdir/libdcerpc-samr.so.%{libdcerpc_samr_so_version}*
+%_samba_libdir/libdcerpc-server-core.so.%{libdcerpc_server_core_so_version}*
 %_samba_libdir/libdcerpc-binding.so.%{libdcerpc_binding_so_version}*
 %_samba_libdir/libndr-krb5pac.so.%{libndr_krb5pac_so_version}*
 %_samba_libdir/libndr-nbt.so.%{libndr_nbt_so_version}*
@@ -1705,6 +1720,7 @@ control role-sambashare enabled
 %_samba_libdir/libsamba-credentials.so.%{libsamba_credentials_so_version}*
 %_samba_libdir/libsamba-errors.so.%{libsamba_errors_so_version}*
 %_samba_libdir/libsamba-hostconfig.so.%{libsamba_hostconfig_so_version}*
+%_samba_libdir/libsamba-passdb.so.%{libsamba_passdb_so_version}*
 %_samba_libdir/libsamba-util.so.%{libsamba_util_so_version}*
 %_samba_libdir/libsamdb.so.%{libsamdb_so_version}*
 %_samba_libdir/libsmbconf.so.%{libsmbconf_so_version}*
@@ -1734,6 +1750,7 @@ control role-sambashare enabled
 %_samba_mod_libdir/libctdb-event-client-private-samba.so
 %endif
 %_samba_mod_libdir/libdbwrap-private-samba.so
+%_samba_mod_libdir/libdcerpc-pkt-auth-private-samba.so
 %_samba_mod_libdir/libdcerpc-samba-private-samba.so
 %if_with dc
 %_samba_mod_libdir/libdfs-server-ad-private-samba.so
@@ -1743,6 +1760,7 @@ control role-sambashare enabled
 %_samba_mod_libdir/libgenrand-private-samba.so
 %_samba_mod_libdir/libgensec-private-samba.so
 %_samba_mod_libdir/libgse-private-samba.so
+%_samba_mod_libdir/libhttp-private-samba.so
 %_samba_mod_libdir/libinterfaces-private-samba.so
 %_samba_mod_libdir/libiov-buf-private-samba.so
 %_samba_mod_libdir/libkrb5samba-private-samba.so
@@ -1774,6 +1792,7 @@ control role-sambashare enabled
 %_samba_mod_libdir/libserver-role-private-samba.so
 %_samba_mod_libdir/libshares-private-samba.so
 %_samba_mod_libdir/libsmb-transport-private-samba.so
+%_samba_mod_libdir/libsmbclient-raw-private-samba.so
 %_samba_mod_libdir/libsmbd-shim-private-samba.so
 %_samba_mod_libdir/libsmbpasswdparser-private-samba.so
 %_samba_mod_libdir/libstable-sort-private-samba.so
@@ -1788,40 +1807,6 @@ control role-sambashare enabled
 %_samba_mod_libdir/libutil-setid-private-samba.so
 %_samba_mod_libdir/libutil-tdb-private-samba.so
 %_samba_mod_libdir/libxattr-tdb-private-samba.so
-
-%files libs
-# libraries needed by the public libraries
-%_samba_libdir/libdcerpc.so.%{libdcerpc_so_version}*
-%_samba_libdir/libdcerpc-server-core.so.%{libdcerpc_server_core_so_version}*
-%_samba_libdir/libsamba-passdb.so.%{libsamba_passdb_so_version}*
-
-%dir %_samba_mod_libdir/pdb
-%_samba_mod_libdir/pdb
-
-%_samba_mod_libdir/libREG-FULL-private-samba.so
-%_samba_mod_libdir/libRPC-SERVER-LOOP-private-samba.so
-%_samba_mod_libdir/libRPC-WORKER-private-samba.so
-
-%_samba_mod_libdir/libMESSAGING-private-samba.so
-%_samba_mod_libdir/libads-private-samba.so
-%_samba_mod_libdir/libauth-private-samba.so
-%_samba_mod_libdir/libcli-spoolss-private-samba.so
-%_samba_mod_libdir/libdcerpc-pkt-auth-private-samba.so
-%_samba_mod_libdir/libdcerpc-samba4-private-samba.so
-%_samba_mod_libdir/libgpext-private-samba.so
-%_samba_mod_libdir/libgpo-private-samba.so
-%_samba_mod_libdir/libhttp-private-samba.so
-%_samba_mod_libdir/liblibcli-netlogon3-private-samba.so
-%_samba_mod_libdir/libmscat-private-samba.so
-%_samba_mod_libdir/libnet-keytab-private-samba.so
-
-%_samba_mod_libdir/libprinter-driver-private-samba.so
-%_samba_mod_libdir/libprinting-migrate-private-samba.so
-%_samba_mod_libdir/libregistry-private-samba.so
-%_samba_mod_libdir/libsmbclient-raw-private-samba.so
-%_samba_mod_libdir/libsmbldaphelper-private-samba.so
-%_samba_mod_libdir/libsmbd-base-private-samba.so
-%_samba_mod_libdir/libtrusts-util-private-samba.so
 
 %if_with ldb
 %_samba_libdir/libldb.so.*
@@ -1839,13 +1824,40 @@ control role-sambashare enabled
 %endif
 
 %if_without libsmbclient
-%_samba_mod_libdir/libsmbclient.so
+%_samba_libdir/libsmbclient.so.%{libsmbclient_so_version}*
 %endif
 %if_without libwbclient
-%_samba_mod_libdir/libwbclient.so
+%_samba_libdir/libwbclient.so.%{libwbclient_so_version}*
 %endif
+
+%files libs
+%dir %_samba_mod_libdir/pdb
+%_samba_mod_libdir/pdb
+
+%_samba_mod_libdir/libREG-FULL-private-samba.so
+%_samba_mod_libdir/libRPC-SERVER-LOOP-private-samba.so
+%_samba_mod_libdir/libRPC-WORKER-private-samba.so
+
+%_samba_mod_libdir/libMESSAGING-private-samba.so
+%_samba_mod_libdir/libads-private-samba.so
+%_samba_mod_libdir/libauth-private-samba.so
+%_samba_mod_libdir/libcli-spoolss-private-samba.so
+%_samba_mod_libdir/libdcerpc-samba4-private-samba.so
+%_samba_mod_libdir/libgpext-private-samba.so
+%_samba_mod_libdir/libgpo-private-samba.so
+%_samba_mod_libdir/liblibcli-netlogon3-private-samba.so
+%_samba_mod_libdir/libmscat-private-samba.so
+%_samba_mod_libdir/libnet-keytab-private-samba.so
+
+%_samba_mod_libdir/libprinter-driver-private-samba.so
+%_samba_mod_libdir/libprinting-migrate-private-samba.so
+%_samba_mod_libdir/libregistry-private-samba.so
+%_samba_mod_libdir/libsmbldaphelper-private-samba.so
+%_samba_mod_libdir/libsmbd-base-private-samba.so
+%_samba_mod_libdir/libtrusts-util-private-samba.so
+
 %if_without libnetapi
-%_samba_libdir/libnetapi.so.*
+%_samba_libdir/libnetapi.so.%{libnetapi_so_version}*
 %endif
 
 %if_with libcephfs
@@ -1853,6 +1865,7 @@ control role-sambashare enabled
 %_samba_mod_libdir/vfs/ceph*.so
 %if_with doc
 %_man8dir/vfs_ceph.8*
+%_man8dir/vfs_ceph_new.8*
 %_man8dir/vfs_ceph_snapshots.8*
 %endif
 %endif
@@ -2225,6 +2238,29 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Sat Sep 21 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.20.5-alt1
+- Update to maintenance release of Samba 4.20
+- Major fixes from upstream (Samba#15695, Samba#15699, Samba#15698, Samba#15696,
+                             Samba#15686, Samba#15700, Samba#15677)
+  + "inherit permissions = yes" triggers assert() in vfs_default.
+  + Incorrect FSCTL_QUERY_ALLOCATED_RANGES response when truncated.
+  + samba-tool can not load the default configuration file (upstream update).
+  + Compound SMB2 requests don't return NT_STATUS_NETWORK_SESSION_EXPIRED for
+    all requests, confuses MacOSX clients.
+  + Add vfs_ceph_new module (based on low level API).
+  + Crash when readlinkat fails.
+  + ntlm_auth make logs more consistent with length check.
+
+* Thu Aug 22 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.20.4-alt2
+- Replace all libraries needed by the public libraries to common-libs:
+  + libdcerpc.so.0
+  + libdcerpc-server-core.so.0
+  + libsamba-passdb.so.0
+- Replace some common private libraries to common-libs (for public libraries):
+  + libdcerpc-pkt-auth-private-samba.so
+  + libhttp-private-samba.so
+  + libsmbclient-raw-private-samba.so
+
 * Wed Aug 21 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.20.4-alt1
 - Update to stable release of Samba 4.20 (Samba#15673):
   + Due --version-* options are still not ergonomic, and they reject tilde
