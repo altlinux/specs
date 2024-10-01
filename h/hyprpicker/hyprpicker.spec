@@ -1,5 +1,5 @@
 Name: hyprpicker
-Version: 0.3.0
+Version: 0.4.1
 Release: alt1
 License: BSD-3-Clause
 
@@ -12,7 +12,7 @@ Url: https://github.com/hyprwm/hyprpicker
 Vcs: https://github.com/hyprwm/hyprpicker.git
 
 ExcludeArch: i586
-Source0: %name-%version.tar
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 
@@ -23,6 +23,9 @@ BuildRequires: libjpeg-devel libglvnd-devel
 BuildRequires: libcairo-devel libpango-devel
 BuildRequires: libwayland-client-devel libwayland-cursor-devel
 BuildRequires: pkgconfig(libffi) pkgconfig(bzip2)
+
+BuildRequires: pkgconfig(hyprwayland-scanner)
+BuildRequires: pkgconfig(hyprutils)
 
 %description
 A wlroots-compatible Wayland color picker that does not suck.
@@ -46,5 +49,8 @@ A wlroots-compatible Wayland color picker that does not suck.
 %doc README.md LICENSE
 
 %changelog
+* Tue Oct 01 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.4.1-alt1
+- new version 0.4.1 (with rpmrb script)
+
 * Thu Jun 13 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.3.0-alt1
 - Initial build
