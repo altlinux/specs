@@ -1,5 +1,6 @@
 %define ver_major 1.14
 %define api_ver 1
+%define namespace Gsf
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
@@ -10,7 +11,7 @@
 %endif
 
 Name: libgsf
-Version: %ver_major.52
+Version: %ver_major.53
 Release: alt1
 
 Summary: GNOME Structured file library
@@ -18,9 +19,11 @@ License: GPL-2.0 and LGPL-2.1
 Group: System/Libraries
 Url: http://www.gnumeric.org/
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Vcs: https://gitlab.gnome.org/GNOME/libgsf.git
 
-BuildRequires(pre): rpm-build-gnome rpm-build-gir
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+
+BuildRequires(pre): rpm-build-gir
 
 # From configure.ac
 BuildRequires: gtk-doc >= 1.0
@@ -137,10 +140,10 @@ subst 's/pythondir/pyexecdir/' python/Makefile.am
 
 %if_enabled introspection
 %files gir
-%_typelibdir/Gsf-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Gsf-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 %if_enabled static
@@ -154,6 +157,9 @@ subst 's/pythondir/pyexecdir/' python/Makefile.am
 %endif
 
 %changelog
+* Tue Oct 01 2024 Yuri N. Sedunov <aris@altlinux.org> 1.14.53-alt1
+- 1.14.53
+
 * Mon Feb 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1.14.52-alt1
 - 1.14.52
 
