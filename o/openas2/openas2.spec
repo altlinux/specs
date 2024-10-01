@@ -39,7 +39,7 @@ BuildRequires: jpackage-default
 
 Name:           openas2
 Version:        2.10.0
-Release:        alt3_9jpp11
+Release:        alt4_9jpp11
 Summary:        Java-based implementation of the EDIINT AS2 standard
 
 License:        BSD
@@ -88,15 +88,16 @@ BuildRequires:  mvn(org.osgi:osgi.cmpn)
 BuildRequires:  mvn(org.apache.commons:commons-pool)
 %endif
 #
-BuildRequires:  libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-homed systemd-networkd systemd-portable systemd-services systemd-stateless systemd-sysvinit systemd-utils
+BuildRequires:  libsystemd-devel libudev-devel systemd
 BuildArch:      noarch
 
 %{?systemd_requires}
-Requires:       systemd systemd-analyze systemd-coredump systemd-homed systemd-networkd systemd-portable systemd-services systemd-stateless systemd-sysvinit systemd-utils
+Requires:       systemd
 Requires:       %{name}-lib = %{version}-%{release}
 Obsoletes:      openas2-server <= 2.6.2-2
 Source44: import.info
 %filter_from_requires /^mvn[(].*[)]$/d
+%filter_from_requires /^\/usr\/libexec\/java_home/d
 
 %description
 OpenAS2 is a java-based implementation of the EDIINT AS2 standard. It is
@@ -350,6 +351,9 @@ systemctl daemon-reload >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Oct 01 2024 Alexey Shabalin <shaba@altlinux.org> 2.10.0-alt4_9jpp11
+- deleted unneeded systemd-* packages from Requires and Buildrequires
+
 * Mon Jul 11 2022 Igor Vlasenko <viy@altlinux.org> 2.10.0-alt3_9jpp11
 - fixed build with new libbase
 
