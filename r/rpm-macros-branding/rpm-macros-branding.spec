@@ -1,5 +1,5 @@
 Name: rpm-macros-branding
-Version: 1.0.14
+Version: 1.0.15
 Release: alt1
 Summary: RPM helper macros to build branding packages
 License: %gpl2plus
@@ -68,6 +68,7 @@ etersoft-ximper \
 uzguard-server \
 uzguard-workstation \
 alt-container \
+asman \
 "
 sed -e "s/@BRANDING_VARIANTS@/$VARIANTS/" -i branding.rpm.macros
 
@@ -79,6 +80,9 @@ install -m 0644 branding.rpm.macros %buildroot%_rpmmacrosdir/branding
 %_rpmmacrosdir/*
 
 %changelog
+* Sat Sep 28 2024 Andrey Cherepanov <cas@altlinux.org> 1.0.15-alt1
+- Added asman
+
 * Tue Sep 17 2024 Anton Midyukov <antohami@altlinux.org> 1.0.14-alt1
 - Added alt-container
 
