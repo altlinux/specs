@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rpm-build-pyproject
-Version: 0.0.7
+Version: 0.0.8
 Release: alt1
 Summary: Extra RPM macros for packaging Python projects
 License: GPLv2+
@@ -39,6 +39,9 @@ install -pD -m0644 macros/pyproject -t %buildroot%_rpmmacrosdir/
 %doc docs/*
 
 %changelog
+* Tue Oct 01 2024 Stanislav Levin <slev@altlinux.org> 0.0.8-alt1
+- Introduced %%pyproject_runtimedeps_metadata_extra.
+
 * Thu Aug 22 2024 Stanislav Levin <slev@altlinux.org> 0.0.7-alt1
 - Allow to disable verify mode on syncing deps.
 
