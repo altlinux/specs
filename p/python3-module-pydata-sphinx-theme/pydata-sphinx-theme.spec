@@ -1,7 +1,9 @@
 %define  modulename pydata-sphinx-theme
 
+%def_with check
+
 Name:    python3-module-%modulename
-Version: 0.15.3
+Version: 0.15.4
 Release: alt1
 
 Summary: Bootstrap-based sphinx theme from the PyData community
@@ -21,12 +23,22 @@ BuildRequires: python3-module-nodeenv
 BuildRequires: yarn webpack npm
 BuildRequires: /proc /dev/pts
 
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-BeautifulSoup4
+BuildRequires: python3-module-sphinx-tests
+BuildRequires: python3-module-typing-extensions
+BuildRequires: python3-module-pytest-regressions
+BuildRequires: python3-module-accessible-pygments
+%endif
+
 BuildArch: noarch
 
 Source:  %name-%version.tar
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
@@ -43,12 +55,19 @@ python3 -m nodeenv --node=system --prebuilt --clean-src $PWD/.nodeenv
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest
+
 %files
 %doc LICENSE *.md
 %python3_sitelibdir/pydata_sphinx_theme
 %python3_sitelibdir/pydata_sphinx_theme-%version.dist-info
 
 %changelog
+* Tue Oct 01 2024 Grigory Ustinov <grenka@altlinux.org> 0.15.4-alt1
+- Build new version.
+- Build with check.
+
 * Fri May 31 2024 Grigory Ustinov <grenka@altlinux.org> 0.15.3-alt1
 - Build new version.
 
