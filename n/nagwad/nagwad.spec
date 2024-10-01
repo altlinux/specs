@@ -2,7 +2,7 @@
 %define icinga_user icinga
 
 Name: 	  nagwad
-Version:  0.11.8
+Version:  0.11.9
 Release:  alt1
 
 Summary:  System journal event scanner and handler
@@ -270,6 +270,9 @@ usermod -a -G %name %icinga_user
 %_bindir/nsca-shell
 
 %changelog
+* Tue Oct 01 2024 Paul Wolneykien <manowar@altlinux.org> 0.11.9-alt1
+- Fixed undefined TEST_BOOTID env var.
+
 * Wed Sep 18 2024 Paul Wolneykien <manowar@altlinux.org> 0.11.8-alt1
 - Version 0.11.8.
 - Make nagwad-icinga* packages conflict with each other.
