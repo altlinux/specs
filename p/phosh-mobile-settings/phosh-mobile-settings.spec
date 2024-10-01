@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %def_enable snapshot
 
 %define ver_major 0.42
@@ -11,7 +12,7 @@
 
 Name: phosh-mobile-settings
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Mobile Settings App for phosh and related components
 Group: Graphical desktop/GNOME
@@ -86,6 +87,7 @@ xvfb-run %__meson_test
 %_libdir/%name/plugins/libms-plugin-librem5.so
 %_desktopdir/%rdn_name.desktop
 %_datadir/dbus-1/services/%rdn_name.service
+%_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_datadir/icons/hicolor/scalable/apps/%rdn_name.svg
 %_datadir/icons/hicolor/symbolic/apps/%rdn_name-symbolic.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
@@ -93,6 +95,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Tue Oct 01 2024 Yuri N. Sedunov <aris@altlinux.org> 0.42.0-alt1.1
+- packaged lost schemas file (ALT #51612)
+
 * Mon Sep 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.42.0-alt1
 - 0.42.0
 
