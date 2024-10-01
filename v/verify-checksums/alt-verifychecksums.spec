@@ -1,14 +1,17 @@
+%define pypi_name verify_checksums
+%define mod_name %pypi_name
+
 Packager: Egor Boyko <nit@altlinux.org>
 Name:     verify-checksums
-Version:  1.0.11
+Version:  1.0.12
 Release:  alt1
 Summary: A utility for verify checksums in files
 License: GPL-2.0-only
 Group:   System/Configuration/Other
 BuildArch: 	noarch
-Source:  %name.tar.xz
+Source:  %name-%version.tar
 
-BuildRequires: python3
+BuildRequires(pre): rpm-macros-python3
 BuildRequires: rpm-build-python3 
 BuildRequires: python3-module-setuptools 
 BuildRequires: python3-module-wheel
@@ -20,7 +23,7 @@ Obsoletes: verifychecksums
 Reads files containing hashes of rpm files and checks them.
 
 %prep
-%setup -n verify-checksums
+%setup
 
 %build
 %pyproject_build
@@ -30,10 +33,14 @@ Reads files containing hashes of rpm files and checks them.
 
 %files
 %_bindir/verify-checksums
-%python3_sitelibdir/*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 %doc README.md
 
 %changelog
+* Tue Oct 01 2024 Egor Boyko <nit@altlinux.org> 1.0.12-alt1
+- Update README.md
+
 * Mon Sep 09 2024 Egor Boyko <nit@altlinux.org> 1.0.11-alt1
 - Add the ability to use a different rpm database for package verification
 
