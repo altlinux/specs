@@ -1,6 +1,6 @@
 Name: tree-sitter-lua
-Version: 0.1.0
-Release: alt2
+Version: 0.2.0
+Release: alt1
 
 Summary: Lua grammar for tree-sitter
 License: MIT
@@ -23,17 +23,15 @@ install -pm0644 -D lua.so %buildroot%_libdir/libtree-sitter-lua.so
 install -pm0644 -D src/grammar.json %buildroot%_libdir/tree-sitter-lua/src/grammar.json
 install -pm0644 package.json %buildroot%_libdir/tree-sitter-lua
 
-# create symlink libdir/tree-sitter/lua.so so Neovim could load it
-install -d %{buildroot}%{_libdir}/tree-sitter
-ln -s %{_libdir}/libtree-sitter-lua.so %{buildroot}%{_libdir}/tree-sitter/lua.so
-
 %files
 %doc LICENSE* README*
 %_libdir/*.so
-%_libdir/tree-sitter/*.so
 %_libdir/tree-sitter-lua
 
 %changelog
+* Mon Sep 30 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.2.0-alt1
+- 0.2.0 released
+
 * Mon Aug 26 2024 Vladimir Didenko <cow@altlinux.org> 0.1.0-alt2
 - create libdir/tree-sitter/lua.so symlink for Neovim compatibility
 
