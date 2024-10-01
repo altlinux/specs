@@ -1,5 +1,5 @@
 Name: buildbot
-Version: 4.0.2
+Version: 4.0.3
 Release: alt1
 Summary: Python-based continuous integration testing framework
 
@@ -297,6 +297,9 @@ buildbot-worker start worker
 %files checkinstall
 
 %changelog
+* Tue Oct 01 2024 Mikhail Gordeev <obirvalger@altlinux.org> 4.0.3-alt1
+- new version 4.0.3
+
 * Fri Aug 16 2024 Mikhail Gordeev <obirvalger@altlinux.org> 4.0.2-alt1
 - new version 4.0.2
 
