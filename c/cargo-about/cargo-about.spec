@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cargo-about
-Version: 0.6.2
+Version: 0.6.4
 Release: alt1
 
 Summary: Cargo plugin to generate list of all licenses for a crate
@@ -12,12 +12,12 @@ Vcs: https://github.com/EmbarkStudios/cargo-about
 
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
+Source2: config.toml
 Patch0: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-rust
 BuildRequires: /proc
-BuildRequires: rust
 BuildRequires: rust-cargo
+BuildRequires: mold
 
 %description
 %summary.
@@ -25,27 +25,13 @@ BuildRequires: rust-cargo
 %prep
 %setup -a1
 %autopatch -p1
-
-mkdir -p .cargo
-cat >> .cargo/config.toml <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-
-[build]
-rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
-
-[profile.release]
-strip = false
-EOF
+install -vD %SOURCE2 .cargo/config.toml
 
 %build
-%rust_build
+mold -run cargo build %_smp_mflags --release --offline
 
 %install
-%rust_install
+install -Dvm0644 target/release/cargo-about %buildroot%_bindir/cargo-about
 
 %files
 # LICENSE-MIT has copyright
@@ -53,6 +39,9 @@ EOF
 %_bindir/cargo-about
 
 %changelog
+* Tue Oct 01 2024 Anton Zhukharev <ancieg@altlinux.org> 0.6.4-alt1
+- Updated to 0.6.4.
+
 * Mon Jul 15 2024 Anton Zhukharev <ancieg@altlinux.org> 0.6.2-alt1
 - Built for ALT Sisyphus.
 
