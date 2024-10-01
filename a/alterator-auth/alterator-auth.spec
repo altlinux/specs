@@ -2,7 +2,7 @@
 
 Name: alterator-auth
 Version: 0.44.10
-Release: alt2
+Release: alt3
 
 Summary: Alterator module for system wide auth settings
 License: GPL-2.0+
@@ -46,6 +46,8 @@ Requires: pam_propperpwnam
 Requires: samba-winbind-dnsupdate
 Requires: system-report
 Requires: diag-domain-client
+Requires: samba
+Requires: samba-common-tools
 
 %description -n task-auth-ad-winbind
 Metapackage to authenticate in Active Directory domain by Winbind.
@@ -68,6 +70,8 @@ Requires: adcli
 Requires: pam_propperpwnam
 Requires: system-report
 Requires: diag-domain-client
+Requires: samba
+Requires: samba-common-tools
 
 Provides:  task-auth-ad = %EVR
 Obsoletes: task-auth-ad < %EVR
@@ -174,6 +178,9 @@ rm -f %buildroot%_libexecdir/alterator/hooks/auth
 %files -n task-auth-freeipa
 
 %changelog
+* Tue Oct 01 2024 Andrey Cherepanov <cas@altlinux.org> 0.44.10-alt3
+- task-auth-ad*: added samba and samba-common-tools.
+
 * Wed Sep 18 2024 Andrey Cherepanov <cas@altlinux.org> 0.44.10-alt2
 - task-auth-ad*: added diagnostic tools.
 - task-auth-ad-winbind: added samba-winbind-dnsupdate.
