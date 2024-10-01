@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-pygame
-Version: 2.6.0
+Version: 2.6.1
 Release: alt1
 
 Summary: A Python module for interfacing with the SDL multimedia library
@@ -26,7 +26,7 @@ BuildRequires: libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel
 BuildRequires: libjpeg-devel libpng-devel libportmidi-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-Cython
-BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
+BuildRequires: python3-module-sphinx
 
 %if_with check
 BuildRequires: libvorbis
@@ -117,6 +117,9 @@ python3 -m pygame.tests -v --exclude opengl --time_out 300
 
 
 %changelog
+* Tue Oct 01 2024 Grigory Ustinov <grenka@altlinux.org> 2.6.1-alt1
+- Automatically updated to 2.6.1.
+
 * Fri Jul 05 2024 Grigory Ustinov <grenka@altlinux.org> 2.6.0-alt1
 - Automatically updated to 2.6.0.
 - Built with check (Closes: #50821, #50833, #50834, #50836, #50838, #50839).
