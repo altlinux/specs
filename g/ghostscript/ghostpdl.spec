@@ -1,6 +1,6 @@
 Name: ghostscript
-Version: 10.01.1
-Release: alt2
+Version: 10.04.0
+Release: alt1
 
 %define ijsver	0.35
 %global origver %version
@@ -20,23 +20,21 @@ Source2: ghostscript.unused
 Source3: README.patches
 
 ## FC patches
-Patch1: FC-10.01.0-pdfwrite-Substituted-TTF-CIDFont-CID-hand.patch
-Patch2: FC-10.01.0-convert-defaultpage-to-lowercase.patch
-Patch3: FC-10.01.0-CVE-2023-28879.patch
+Patch1: FC-gs-opvp-vectordriver.patch
 
 ## Ubuntu patches
-Patch101: Ubuntu-1004_enable_spot_devices.patch
-Patch102: Ubuntu-2001_docdir_fix_for_debian.patch
-Patch103: Ubuntu-2002_gs_man_fix_debian.patch
-Patch104: Ubuntu-2003_support_multiarch.patch
-Patch105: Ubuntu-2004_remove_non-Debian_paths_from_docs.patch
-Patch106: Ubuntu-2005_fix_Debian_paths_in_docs.patch
-Patch107: Ubuntu-2006_suggest_install_ghostscript-doc_in_docs.patch
-Patch108: Ubuntu-2007_suggest_install_ghostscript-doc_in_code.patch
-Patch109: Ubuntu-2008_mention_ghostscript-x_in_docs.patch
-Patch110: Ubuntu-2010_add_build_timestamp_setting.patch
-Patch111: Ubuntu-2011_avoid_remote_font.patch
-Patch112: Ubuntu-020220925~387f094.patch
+Patch101: Ubuntu-0001_pdf_sec_fix_gcc14.patch
+Patch102: Ubuntu-1004_enable_spot_devices.patch
+Patch103: Ubuntu-1005_simplify_ps2ascii.patch
+Patch104: Ubuntu-2001_docdir_fix_for_debian.patch
+Patch105: Ubuntu-2002_gs_man_fix_debian.patch
+Patch106: Ubuntu-2003_support_multiarch.patch
+Patch107: Ubuntu-2004_remove_non-Debian_paths_from_docs.patch
+Patch108: Ubuntu-2005_fix_Debian_paths_in_docs.patch
+Patch109: Ubuntu-2006_suggest_install_ghostscript-doc_in_docs.patch
+Patch110: Ubuntu-2007_suggest_install_ghostscript-doc_in_code.patch
+Patch111: Ubuntu-2008_mention_ghostscript-x_in_docs.patch
+Patch112: Ubuntu-2010_add_build_timestamp_setting.patch
 
 ## ALT patches
 Patch500: ghostscript-alt-ijs-version.patch
@@ -177,23 +175,21 @@ Common files for the %name
 rm -rf expat freetype icclib jasper jpeg lcms lcms2 libpng openjpeg zlib cups/libs
 
 ## FC apply patches
-%patch1 -p1
-%patch2 -p1
-#patch3 -p1
+#patch1 -p1
 
 ## Ubuntu apply patches
-%patch101 -p1
+#patch101 -p1
 %patch102 -p1
-#patch103 -p1
-#patch104 -p1
-%patch105 -p1
+%patch103 -p1
+%patch104 -p1
+#patch105 -p1
 #patch106 -p1
-#patch107 -p1
+%patch107 -p1
 #patch108 -p1
 #patch109 -p1
-%patch110 -p1
+#patch110 -p1
 #patch111 -p1
-#patch112 -p1
+%patch112 -p1
 
 ## ALT apply patches
 %patch500 -p1
@@ -321,6 +317,9 @@ cp -a examples %buildroot%_docdir/%name-%version
 %_includedir/ijs
 
 %changelog
+* Wed Oct 02 2024 Fr. Br. George <george@altlinux.org> 10.04.0-alt1
+- Autobuild version bump to 10.04.0 (Cloeses: 47283)
+
 * Wed Jan 10 2024 Vasiliy Kovalev <kovalev@altlinux.org> 10.01.1-alt2
 - Returned the upstream font naming (Closes: #46986)
 
