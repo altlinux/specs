@@ -1,5 +1,5 @@
 Name: xfce4-dev-tools
-Version: 4.19.1
+Version: 4.19.2
 Release: alt1
 
 Summary: Development tools for Xfce
@@ -14,8 +14,8 @@ Patch: %name-%version-%release.patch
 
 BuildRequires: glib2-devel
 BuildRequires: xsltproc docbook-style-xsl
+BuildRequires: rpm-build-python3
 
-Requires: intltool >= 0.50.0
 Requires: xfce4-common
 
 %define _unpackaged_files_terminate_build 1
@@ -55,6 +55,11 @@ make check
 %_man1dir/*
 
 %changelog
+* Wed Oct 02 2024 Mikhail Efremov <sem@altlinux.org> 4.19.2-alt1
+- Don't pull git (patch updated).
+- Removed intltool dependence.
+- Updated to 4.19.2.
+
 * Wed May 29 2024 Mikhail Efremov <sem@altlinux.org> 4.19.1-alt1
 - Updated to 4.19.1.
 
