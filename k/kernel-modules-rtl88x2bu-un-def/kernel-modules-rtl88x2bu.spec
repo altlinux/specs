@@ -1,9 +1,9 @@
 %define module_name rtl88x2bu
 %define module_version 5.8.7.1
-%define module_release alt3
+%define module_release alt4
 
 %define flavour	un-def
-%define karch %ix86 x86_64
+%define karch @karch@
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-un-def
 
