@@ -1,7 +1,7 @@
 %define  modulename durationpy
 
 Name:     python3-module-%modulename
-Version:  0.7
+Version:  0.8
 Release:  alt1
 
 Summary:  Module for converting between datetime.timedelta and Go's Duration strings
@@ -34,6 +34,9 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/*
 
 %changelog
+* Wed Oct 02 2024 Andrew A. Vasilyev <andy@altlinux.org> 0.8-alt1
+- 0.8
+
 * Tue Sep 24 2024 Andrew A. Vasilyev <andy@altlinux.org> 0.7-alt1
 - Initial build for ALT
 
