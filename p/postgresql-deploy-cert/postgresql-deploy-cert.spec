@@ -1,6 +1,6 @@
 Name:    postgresql-deploy-cert
 Version: 0.8
-Release: alt4
+Release: alt5
 
 Summary: deploy script for postgresql cert config
 License: MIT
@@ -37,6 +37,7 @@ install -Dm 0644 *.conf  %buildroot/%_datadir/deploy/postgresql-cert/tasks
 install -Dm 0644 *.acl  %buildroot/%_datadir/deploy/postgresql-cert/tasks
 install -Dm 0644 main.yml  %buildroot/%_datadir/deploy/postgresql-cert/tasks
 install -Dm 0644 postgresql.pam  %buildroot/%_datadir/deploy/postgresql-cert/tasks
+install -Dm 0644 postgresql.logrotate  %buildroot/%_datadir/deploy/postgresql-cert/tasks
 install -Dm 0644 pw_blocker.sysconfig %buildroot/%_datadir/deploy/postgresql-cert/tasks
 mkdir -p %buildroot/%_bindir
 install -Dm 0750 pw_krb_blocker %buildroot/%_bindir
@@ -55,6 +56,9 @@ install -Dm 0750 pw_krb_unblocker %buildroot/%_bindir
 
 
 %changelog
+* Wed Oct 02 2024 Denis Medvedev <nbr@altlinux.org> 0.8-alt5
+- added missing logrotate feature
+
 * Sun Sep 29 2024 Denis Medvedev <nbr@altlinux.org> 0.8-alt4
 - dependency to integalert-postgresql
 
