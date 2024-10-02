@@ -2,7 +2,7 @@
 
 Name: cargo-about
 Version: 0.6.4
-Release: alt1
+Release: alt2
 
 Summary: Cargo plugin to generate list of all licenses for a crate
 License: Apache-2.0 or MIT
@@ -31,7 +31,7 @@ install -vD %SOURCE2 .cargo/config.toml
 mold -run cargo build %_smp_mflags --release --offline
 
 %install
-install -Dvm0644 target/release/cargo-about %buildroot%_bindir/cargo-about
+install -Dvm0755 target/release/cargo-about %buildroot%_bindir/cargo-about
 
 %files
 # LICENSE-MIT has copyright
@@ -39,6 +39,9 @@ install -Dvm0644 target/release/cargo-about %buildroot%_bindir/cargo-about
 %_bindir/cargo-about
 
 %changelog
+* Wed Oct 02 2024 Anton Zhukharev <ancieg@altlinux.org> 0.6.4-alt2
+- Fixed wrong permissions of cargo-about binary.
+
 * Tue Oct 01 2024 Anton Zhukharev <ancieg@altlinux.org> 0.6.4-alt1
 - Updated to 0.6.4.
 
