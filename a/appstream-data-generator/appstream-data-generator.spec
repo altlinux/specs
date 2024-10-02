@@ -3,7 +3,7 @@
 # Use current date as version
 
 Name:    appstream-data-generator
-Version: 20240809
+Version: 20241002
 Release: alt1
 Summary: Collection of tools for generation of appstream-data
 Group:   System/Configuration/Packaging
@@ -15,6 +15,7 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ cmake
 BuildRequires: boost-complete
+BuildRequires: gettext
 
 # /usr/bin/bsdtar
 Requires: bsdtar
@@ -34,10 +35,26 @@ Collection of tools for generation of appstream-data
 %install
 %cmakeinstall_std
 
+# Install localization files
+%find_lang appstream-data
+
 %files
 %_bindir/*
+%_datadir/locale/*/LC_MESSAGES/appstream-data.mo
 
 %changelog
+* Wed Oct 02 2024 Kirill Izmestev <felixz@altlinux.org> 20241002-alt1
+- Added removal of unnecessary languages in \
+appstream-data-appdata-converter (ALT #51298, #51299).
+- Minor improvements \
+(thanks Sergey Shevchenko sergey.shevchenko04@gmail.com).
+- Added russian translation (thanks gammaray@basealt.ru).
+
+* Tue Aug 20 2024 Kirill Izmestev <felixz@altlinux.org> 20240820-alt1
+- Added functionality: takes into account the computer locale and \
+substitutes the translation \
+(thanks Sergey Shevchenko sergey.shevchenko04@gmail.com).
+
 * Fri Aug 09 2024 Kirill Izmestev <felixz@altlinux.org> 20240809-alt1
 - Added exception for overwriting <pkgname> to existing appdata.xml.
 
@@ -70,7 +87,7 @@ the redexp https://github.com/python/cpython/issues/98401.
 * Fri Jul 12 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 20190712-alt1
 - Updated option descriptions in help message (Closes: #37021).
 - Added options to configure generation of
-  metadata_license and project_license tags 
+  metadata_license and project_license tags
   in appdata generated from desktop files (Closes: #37022).
 - Added options to skip or exclusively process specified
   desktop files if desktop files convertion is enabled.
