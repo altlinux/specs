@@ -1,33 +1,40 @@
-%define full_ver %(pkg-config --modversion libpq)
-%define pg_ver %(c=%{full_ver}; echo ${c%%.*})
+%define pg_ver 16
+%define prog_name pgpool-II
 %define sname pgpool
+%ifarch loongarch64
+%def_without jit
+%else
+%def_with jit
+%endif
 
-Name: pgpool-II
-Version: 4.2.7
+Name: postgresql%pg_ver-%prog_name
+Version: 4.2.19
 Release: alt1
 Summary: Pgpool is a connection pooling/replication server for PostgreSQL
 License: BSD
 Group: Databases
+# Source git://git.postgresql.org/git/pgpool2.git
 Url: http://www.pgpool.net
-Source: %name-%version.tar
-
+Source: %prog_name-%version.tar
 Source1: pgpool.service
 Source2: pgpool.tmpfiles
 Source3: pgpool.init
 Source4: pgpool.sysconfig
+Patch0: 0001-Update-path-for-socket-and-log.patch
 
-Patch: 0001-Update-path-for-socket-and-log.patch
-
+BuildRequires: libfreetds-devel
 BuildRequires: flex
-BuildRequires: postgresql-devel
+BuildRequires: postgresql%pg_ver-server-devel
 BuildRequires: pam-devel
 BuildRequires: libmemcached-devel
 BuildRequires: libssl-devel
 BuildRequires: setproctitle-devel
 
 Provides: pgpool2 = %EVR
-
-Requires: postgresql-common
+Conflicts: pgpool2 < %EVR
+Requires: postgresql%pg_ver-server
+%add_findprov_skiplist %_libdir/libpcp.so*
+%filter_from_requires /^libpcp\.so.*/d
 
 %description
 pgpool-II is a inherited project of pgpool (to classify from
@@ -39,36 +46,11 @@ user to connect at most two PostgreSQL servers for higher
 availability or for higher search performance compared to a
 single PostgreSQL server.
 
-%package -n libpcp
-Summary: lib files for  %name
-Group: System/Libraries
-Provides: %name-lib = %EVR
-Obsoletes: %name-lib < %EVR
-
-%description -n libpcp
-lib files for %name.
-
-%package -n libpcp-devel
-Summary: The development files for pgpool-II
-Group: Development/C
-Provides: %name-devel = %EVR
-Obsoletes: %name-devel < %EVR
-Requires: libpcp = %EVR
-
-%description -n libpcp-devel
-Development headers and libraries for pgpool-II.
-
-%package -n postgresql%pg_ver-%name
-Summary: Postgresql extensions for pgpool-II
-Group: Databases
-Requires: postgresql%pg_ver-server
-
-%description -n postgresql%pg_ver-%name
 Postgresql extensions libraries and sql files for pgpool-II.
 
 %prep
-%setup -q
-%patch -p1
+%setup -n %prog_name-%version
+%patch0 -p1
 
 %build
 %autoreconf
@@ -105,9 +87,10 @@ mv %buildroot%_sysconfdir/%sname/pgpool_remote_start.sample %buildroot%_sysconfd
 mv %buildroot%_sysconfdir/%sname/recovery_1st_stage.sample %buildroot%_sysconfdir/%sname/recovery_1st_stage
 mv %buildroot%_sysconfdir/%sname/pgpool.conf.sample-* %buildroot%_datadir/%sname/
 
+# TODO after fix doc build
 # Copy man pages
-cp doc/src/sgml/man1/* %buildroot%_man1dir/
-cp doc/src/sgml/man8/* %buildroot%_man8dir/
+#cp doc/src/sgml/man1/* %buildroot%_man1dir/
+#cp doc/src/sgml/man8/* %buildroot%_man8dir/
 
 rm -f %buildroot%_libdir/*.{a,la}
 
@@ -120,7 +103,6 @@ if [ $1 -eq 2 ]; then
     chown root:postgres %_sysconfdir/%sname/*
     chmod 640 %_sysconfdir/%sname/*
 fi
-
 %post_service %sname
 
 %preun
@@ -128,32 +110,26 @@ fi
 
 %files
 %doc NEWS COPYING src/sample
-%_bindir/*
-%_datadir/%name
-%_datadir/%sname
-%_initdir/*
-%_unitdir/*
-%_tmpfilesdir/*
 %dir %attr(750,root,postgres) %_sysconfdir/%sname
 %config(noreplace) %attr(640,root,postgres) %_sysconfdir/%sname/*
 %config(noreplace) %_sysconfdir/sysconfig/%sname
-%_man1dir/*
-%_man8dir/*
-
+%_bindir/*
+%_initdir/*
+%_libdir/libpcp.so.*
+%_libdir/pgsql/*
+%_datadir/%sname
+%_datadir/%prog_name
+%_datadir/pgsql/extension/*
+%_unitdir/*
+%_tmpfilesdir/*
+#%%_man1dir/*
+#%%_man8dir/*
 %attr(1775,root,%sname) %dir %_logdir/%sname
 
-%files -n libpcp-devel
-%_includedir/*
-%_libdir/libpcp.so
-
-%files -n libpcp
-%_libdir/libpcp.so.*
-
-%files -n postgresql%pg_ver-%name
-%_libdir/pgsql/*
-%_datadir/pgsql/extension/*
-
 %changelog
+* Tue Oct 01 2024 Alexei Takaseev <taf@altlinux.org> 4.2.19-alt1
+- 4.2.19 (Fixes CVE-2023-22332, CVE-2024-45624)
+
 * Tue Feb 08 2022 Alexey Shabalin <shaba@altlinux.org> 4.2.7-alt1
 - 4.2.7
 
