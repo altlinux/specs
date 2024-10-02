@@ -28,7 +28,7 @@
 
 Name: branding-%flavour
 Version: 1.0
-Release: alt0.1
+Release: alt0.2
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -445,5 +445,8 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Wed Oct 02 2024 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.2
+- Install both wallpapers with and without logotype.
+
 * Sat Sep 28 2024 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.1
 - Asman 1.0.
