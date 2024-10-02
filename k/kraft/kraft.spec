@@ -1,7 +1,7 @@
 %define rev 100ca9f323f4cb90eade1af9d7c6d5351f8c2783
 
 Name: kraft
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 
 Summary: Kraft - Software for small business
@@ -59,6 +59,9 @@ echo "%rev" > .tag
 %_datadir/metainfo/*.appdata.xml
 
 %changelog 
+* Wed Oct 02 2024 Andrey Cherepanov <cas@altlinux.org> 1.2.2-alt1
+- New version.
+
 * Tue May 07 2024 Andrey Cherepanov <cas@altlinux.org> 1.2.1-alt1
 - New version.
 
