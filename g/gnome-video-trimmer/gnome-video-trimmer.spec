@@ -1,12 +1,12 @@
 %def_enable snapshot
 %define _name video-trimmer
-%define ver_major 0.8
+%define ver_major 0.9
 %define rdn_name org.gnome.gitlab.YaLTeR.VideoTrimmer
 
 %def_disable bootstrap
 
 Name: gnome-%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Video Trimmer
@@ -14,16 +14,17 @@ License: GPL-3.0-or-later
 Group: Video
 Url: https://gitlab.gnome.org/YaLTeR/video-trimmer
 
+Vcs: https://gitlab.gnome.org/YaLTeR/video-trimmer.git
+
 %if_disabled snapshot
 Source: %url/archive/-/v%version/%_name-%version.tar.gz
 %else
-Vcs: https://gitlab.gnome.org/YaLTeR/video-trimmer.git
 Source: %_name-%version.tar
 %endif
 Source1: %_name-%version-cargo.tar
 
-%define gtk_ver 4.0.0
-%define adwaita_ver 1.4
+%define gtk_ver 4.16.0
+%define adwaita_ver 1.6
 
 Requires: ffmpeg ffprobe
 
@@ -43,7 +44,7 @@ and does not reduce the video quality.
 %setup -n %_name-%version %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
 %build -n %_name-%version
@@ -68,6 +69,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Wed Oct 02 2024 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
+- updated to v0.9.0-2-g4cef814
+
 * Sat Oct 14 2023 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1
 - updated to v0.8.2-3-g4259123
 
