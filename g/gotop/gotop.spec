@@ -1,7 +1,7 @@
 %global import_path github.com/xxxserxxx/gotop
 Name:     gotop
 Version:  4.2.0
-Release:  alt1
+Release:  alt1.1
 
 Summary:  A terminal based graphical activity monitor inspired by gtop and vtop
 License:  MIT-Festival
@@ -12,6 +12,11 @@ Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 Source:   %name-%version.tar
 
+Patch1:   gopsutil-loongarch64-support.patch
+Patch2:   gotop-fix-build-failure-on-riscv64.patch
+Patch3:   gotop-fix-build-failure-on-loongarch64.patch
+
+
 BuildRequires(pre): rpm-macros-golang rpm-build-xdg
 BuildRequires: golang >= 1.21 rpm-build-golang
 
@@ -20,6 +25,8 @@ BuildRequires: golang >= 1.21 rpm-build-golang
 
 %prep
 %setup
+%autopatch -p1
+
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -57,6 +64,9 @@ mkdir -p %buildroot%_man1dir
 %doc *.md
 
 %changelog
+* Wed Oct 02 2024 Ivan A. Melnikov <iv@altlinux.org> 4.2.0-alt1.1
+- NMU: loongarch64 and riscv64 support
+
 * Wed May 22 2024 Alexey Shabalin <shaba@altlinux.org> 4.2.0-alt1
 - new version 4.2.0
 - fix show --version
