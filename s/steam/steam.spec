@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.81
-Release: alt2
+Release: alt3
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -35,7 +35,6 @@ Requires: libnsl1
 Requires: libnss
 Requires: lsof
 Requires: sysctl-conf-userns
-Requires: xorg-dri-swrast
 Requires: xz
 
 %add_python3_path %_libexecdir/%name/%{name}_launcher
@@ -76,6 +75,9 @@ savegame and screenshot functionality, and many social features.
 %config %_datadir/polkit-1/rules.d/%name-nm.rules
 
 %changelog 
+* Wed Oct 02 2024 Nazarov Denis <nenderus@altlinux.org> 1.0.0.81-alt3
+- Remove require xorg-dri-swrast (ALT #51618)
+
 * Wed Oct 02 2024 Nazarov Denis <nenderus@altlinux.org> 1.0.0.81-alt2
 - Change require xorg-dri-vmwgfx to xorg-dri-swrast (ALT #51618)
 
