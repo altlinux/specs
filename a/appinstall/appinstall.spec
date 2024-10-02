@@ -1,5 +1,5 @@
 Name: appinstall
-Version: 1.4.3
+Version: 1.4.4
 Release: alt1
 Summary: GUI frontend for install third-party applications
 
@@ -12,11 +12,11 @@ Source0: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-qt5
+BuildRequires(pre): rpm-macros-qt6
 BuildRequires(pre): libpam-devel
 BuildRequires: gcc-c++
-BuildRequires: qt5-tools
-BuildRequires: python3-module-PyQt5
+BuildRequires: qt6-tools
+BuildRequires: python3-module-PyQt6
 
 Requires: eepm
 
@@ -26,14 +26,14 @@ GUI frontend for install third-party applications using epm play.
 %prep
 # For translators:
 # 1. Install eepm
-# 2. make make LUPDATE=lupdate-qt5 LRELEASE=lrelease-qt5 update_translations all clean
+# 2. make make LUPDATE=lupdate-qt6 LRELEASE=lrelease-qt6 update_translations all clean
 # 3. subst '/oldsource/d' *.ts
 # 4. Translate appinstall_ru.ts in kde5-lokalize
 # 5. Commit strings.cpp and *.ts
 %setup -q
 
 %build
-export PATH=$PATH:%_qt5_bindir
+export PATH=$PATH:%_qt6_bindir
 %make_build
 
 %install
@@ -52,6 +52,11 @@ export PATH=$PATH:%_qt5_bindir
 %config(noreplace) %_sysconfdir/security/console.apps/%name
 
 %changelog
+* Thu Aug 29 2024 2023 Kirill Izmestev <felixz@altlinux.org> 1.4.4-alt1
+- Upgrading a program and this package from using PyQt5 to using PyQt6.
+- Added quick filtering of applications when entering in the search \
+line (thanks Sergey Shevchenko <sergey.shevchenko04@gmail.com>).
+
 * Mon Jun 26 2023 Andrey Cherepanov <cas@altlinux.org> 1.4.3-alt1
 - Update Russian translation for eepm-3.57.7 (ALT #46564).
 
