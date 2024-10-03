@@ -1,7 +1,7 @@
 Name: xfmpc
 Summary: MPD client written in GTK+ for Xfce
 Version: 0.3.1
-Release: alt1
+Release: alt2
 License: GPL-2.0+
 Url: https://docs.xfce.org/apps/xfmpc/start
 Vcs: https://gitlab.xfce.org/apps/xfmpc.git
@@ -14,6 +14,7 @@ BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4util-devel libxfce4ui-gtk3-devel
 BuildRequires: libmpd-devel
 BuildRequires: vala
+BuildRequires: intltool
 
 Provides: xfce4-xfmpc = %version-%release
 Obsoletes: xfce4-xfmpc < %version-%release
@@ -49,6 +50,9 @@ export NPROCS=1
 %_man1dir/xfmpc.1.*
 
 %changelog
+* Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 0.3.1-alt2
+- Fixed build: added intltool to BR.
+
 * Mon Apr 24 2023 Mikhail Efremov <sem@altlinux.org> 0.3.1-alt1
 - Added Vcs tag.
 - Updated Url tag.
