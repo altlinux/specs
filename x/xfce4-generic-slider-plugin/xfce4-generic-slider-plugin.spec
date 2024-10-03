@@ -1,7 +1,7 @@
 %define _name xfce4-generic-slider
 Name: %_name-plugin
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: A slider for adjusting the value passed to a command
 License: GPL-3.0-only
@@ -15,6 +15,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4ui-gtk3-devel >= 4.12.0 libxfce4panel-gtk3-devel >= 4.12.0
+BuildRequires: intltool
 
 Requires: xfce4-panel
 
@@ -49,6 +50,9 @@ ln -s README.md README
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt2
+- Fixed build: added intltool to BR.
+
 * Mon May 29 2023 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt1
 - Initial build.
 
