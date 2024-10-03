@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 
 Summary: A small binding library that exposes C++ types in Python and vice versa
@@ -14,6 +14,7 @@ License: BSD-3-Clause
 Url: https://pypi.org/project/%pypi_name
 
 Vcs: https://github.com/wjakob/nanobind.git
+
 %if_disabled snapshot
 Source: https://pypi.io/packages/source/n/%pypi_name/%pypi_name-%version.tar.gz
 %else
@@ -35,7 +36,9 @@ BuildRequires: cmake gcc-c++
 
 %build
 %cmake_insource \
-    -DNB_INSTALL_DATADIR="%_datadir/%pypi_name"
+    -DNB_INSTALL_DATADIR="%_datadir/%pypi_name" \
+    -DNB_TEST_FREE_THREADED=OFF
+%nil
 %cmake_build
 %pyproject_build
 
@@ -59,6 +62,9 @@ py.test-3
 %doc README*
 
 %changelog
+* Thu Oct 03 2024 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Mon Aug 26 2024 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
 - first build for Sisyphus
 
