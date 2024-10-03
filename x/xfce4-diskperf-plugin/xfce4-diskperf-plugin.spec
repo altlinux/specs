@@ -1,6 +1,6 @@
 Name: xfce4-diskperf-plugin
 Version: 2.7.0
-Release: alt1
+Release: alt2
 
 Summary: Disk performance plugin for the Xfce panel
 License: BSD-2-Clause
@@ -14,6 +14,7 @@ Source: %name-%version.tar
 
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
+BuildRequires: intltool
 
 Requires: xfce4-panel >= 4.14
 
@@ -25,8 +26,6 @@ Requires: xfce4-panel >= 4.14
 %prep
 %setup
 #patch -p1
-# Don't use git tag in version.
-%xfce4_drop_gitvtag diskperf_version_tag configure.ac.in
 
 %build
 %xfce4reconf
@@ -46,6 +45,9 @@ Requires: xfce4-panel >= 4.14
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 2.7.0-alt2
+- Fixed build: added intltool to BR.
+
 * Thu Mar 03 2022 Mikhail Efremov <sem@altlinux.org> 2.7.0-alt1
 - Updated for 2.7.0.
 
