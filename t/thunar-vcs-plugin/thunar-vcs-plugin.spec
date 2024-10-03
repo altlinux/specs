@@ -1,30 +1,26 @@
-#define git_date .git20150306
-%define git_date %nil
-
 %def_enable git
 %def_enable subversion
 
 Name: thunar-vcs-plugin
 Version: 0.2.0
-Release: alt1%git_date
+Release: alt2
 
 Summary: Version Contol System plugin for Thunar
-License: %gpl2plus
+License: GPL-2.0-or-later
 Group: Graphical desktop/XFce
 
-URL: https://goodies.xfce.org/projects/thunar-plugins/thunar-vcs-plugin
-# git://git.xfce.org/thunar-plugins/thunar-vcs-plugin
+Url: https://docs.xfce.org/xfce/thunar/thunar-vcs-plugin
+Vcs: https://gitlab.xfce.org/thunar-plugins/thunar-vcs-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
-
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libthunar-devel libgio-devel libxfce4util-devel libexo-gtk3-devel
 BuildRequires: libgtk+3-devel
 %if_enabled subversion
 BuildRequires: libapr1-devel libsubversion-devel libaprutil1-devel
 %endif
+BuildRequires: intltool
 
 %define _unpackaged_files_terminate_build 1
 
@@ -59,6 +55,12 @@ menu. It also shows the svn file status in the file properties window.
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt2
+- Fixed build: added intltool to BR.
+- Added Vcs tag.
+- Updated Url tag.
+- Don't use rpm-build-licenses.
+
 * Tue Aug 21 2018 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt1
 - Update url.
 - Enable debug (minimum level).
