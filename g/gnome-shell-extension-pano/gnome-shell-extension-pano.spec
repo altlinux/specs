@@ -2,8 +2,8 @@
 
 %define _name pano
 %define __name gnome-shell-%_name
-%define ver_major 22
-%define beta %nil
+%define ver_major 23
+%define beta .alpha3
 %define uuid pano@elhan.io
 %define xdg_name org.gnome.shell.extensions.%_name
 %define gettext_domain %uuid
@@ -12,12 +12,14 @@
 
 Name: gnome-shell-extension-%_name
 Version: %ver_major
-Release: alt2
+Release: alt0.1%beta
 
 Summary: Next-gen Clipboard manager for Gnome Shell
 Group: Graphical desktop/GNOME
 License: GPL-2.0
 Url: https://github.com/oae/gnome-shell-pano
+
+Vcs: https://github.com/oae/gnome-shell-pano.git
 
 #Error: Your current platform "linux" and architecture "ia32" combination is not yet supported by the native Rollup build.
 ExclusiveArch: x86_64
@@ -26,7 +28,6 @@ BuildArch: noarch
 %if_disabled snapshot
 Source: %url/archive/v%version%beta/%_name-%version%beta.tar.gz
 %else
-Vcs: https://github.com/oae/gnome-shell-pano.git
 Source: %__name-%version%beta.tar
 %endif
 Source1: %_name-%version%beta-node.tar
@@ -74,6 +75,9 @@ popd
 %doc README.md
 
 %changelog
+* Thu Oct 03 2024 Yuri N. Sedunov <aris@altlinux.org> 23-alt0.1.alpha3
+- v23-alpha3
+
 * Tue Mar 26 2024 Yuri N. Sedunov <aris@altlinux.org> 22-alt2
 - updated to v22-7-gf1756e4 (gnome-46 supported)
 
