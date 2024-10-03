@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.4.0
+Version: 2.4.2
 Release: alt1
 
 Summary: A python client for etcd3 grpc-gateway v3 API
@@ -35,7 +35,6 @@ BuildRequires: python3-module-urllib3 >= 1.15.1
 BuildRequires: python3-module-hacking >= 6.1.0
 BuildRequires: python3-module-testscenarios >= 0.4
 BuildRequires: python3-module-pytest >= 3.0.0
-BuildRequires: python3-module-extras >= 1.0.0
 %endif
 
 %if_with docs
@@ -109,6 +108,9 @@ install -pDm 644 man/etcd3-gateway.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 2.4.2-alt1
+- Automatically updated to 2.4.2.
+
 * Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 2.4.0-alt1
 - Automatically updated to 2.4.0.
 

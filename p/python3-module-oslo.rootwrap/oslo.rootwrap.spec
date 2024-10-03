@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 7.2.0
+Version: 7.3.0
 Release: alt1
 
 Summary: OpenStack Oslo Rootwrap
@@ -118,6 +118,9 @@ TEST_EVENTLET=1 %__python3 -m stestr run tests.test_functional_eventlet
 %endif
 
 %changelog
+* Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 7.3.0-alt1
+- Automatically updated to 7.3.0.
+
 * Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 7.2.0-alt1
 - Automatically updated to 7.2.0.
 

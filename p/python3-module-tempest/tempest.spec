@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 39.0.0
+Version: 41.0.0
 Release: alt1
 
 Summary: OpenStack Integration Testing
@@ -49,6 +49,7 @@ BuildRequires: python3-module-cryptography >= 2.1
 BuildRequires: python3-module-pycodestyle >= 2.0.0
 BuildRequires: python3-module-defusedxml >= 0.7.1
 BuildRequires: python3-module-fasteners >= 0.16.0
+BuildRequires: python3-module-testscenarios >= 0.5.0
 %endif
 
 %if_with docs
@@ -143,6 +144,9 @@ export PYTHONPATH="%buildroot%python3_sitelibdir"
 %endif
 
 %changelog
+* Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 41.0.0-alt1
+- Automatically updated to 41.0.0.
+
 * Fri Jul 26 2024 Grigory Ustinov <grenka@altlinux.org> 39.0.0-alt1
 - Automatically updated to 39.0.0.
 - Built with check.

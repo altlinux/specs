@@ -3,7 +3,7 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 5.9.0
+Version: 5.9.1
 Release: alt1
 Epoch: 1
 
@@ -131,6 +131,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 1:5.9.1-alt1
+- Automatically updated to 5.9.1.
+
 * Fri Jul 26 2024 Grigory Ustinov <grenka@altlinux.org> 1:5.9.0-alt1
 - Automatically updated to 5.9.0.
 

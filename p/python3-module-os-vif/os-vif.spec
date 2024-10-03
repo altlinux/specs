@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.6.0
+Version: 3.7.0
 Release: alt1
 
 Summary: A library for plugging and unplugging virtual interfaces in OpenStack
@@ -22,7 +22,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-pbr >= 3.0.0
 BuildRequires: python3-module-oslo.concurrency >= 3.20.0
 BuildRequires: python3-module-oslo.config >= 5.1.0
 BuildRequires: python3-module-oslo.log >= 3.30.0
@@ -34,12 +34,12 @@ BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-debtcollector >= 1.19.0
 
 %if_with check
-BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-coverage >= 4.4.1
 BuildRequires: python3-module-oslotest >= 1.10.0
 BuildRequires: python3-module-openvswitch >= 2.9.2
 BuildRequires: python3-module-stestr >= 3.1.0
 BuildRequires: python3-module-testscenarios >= 0.4
-BuildRequires: python3-module-oslo.serialization >= 2.18.0
+BuildRequires: python3-module-oslo.serialization >= 2.20.0
 BuildRequires: python3-module-oslo.utils >= 2.0.0
 BuildRequires: python3-module-pyroute2 >= 0.5.2
 %endif
@@ -135,6 +135,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 3.7.0-alt1
+- Automatically updated to 3.7.0.
+
 * Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 3.6.0-alt1
 - Automatically updated to 3.6.0.
 

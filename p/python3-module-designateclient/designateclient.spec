@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 6.0.1
+Version: 6.1.0
 Release: alt1
 
 Summary: OpenStack DNS-as-a-Service - Client
@@ -30,7 +30,7 @@ BuildRequires: python3-module-requests >= 2.14.2
 BuildRequires: python3-module-stevedore >= 1.20.0
 
 %if_with check
-BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-hacking >= 6.1.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslotest >= 3.2.0
@@ -117,6 +117,9 @@ install -pDm 644 man/python-%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 6.1.0-alt1
+- Automatically updated to 6.1.0.
+
 * Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 6.0.1-alt1
 - Automatically updated to 6.0.1.
 

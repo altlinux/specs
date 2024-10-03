@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.9.1
+Version: 5.0.0
 Release: alt1
 
 Summary: Client library for OpenStack Manila API.
@@ -39,7 +39,6 @@ BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-tempest >= 17.1.0
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-openstackclient-tests
-BuildRequires: python3-module-simplejson >= 3.5.1
 BuildRequires: python3-module-babel
 BuildRequires: python3-module-hacking >= 6.1.0
 %endif
@@ -123,6 +122,9 @@ install -pDm 644 tools/manila.bash_completion \
 %endif
 
 %changelog
+* Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
+- Automatically updated to 5.0.0.
+
 * Fri Jul 26 2024 Grigory Ustinov <grenka@altlinux.org> 4.9.1-alt1
 - Automatically updated to 4.9.1.
 

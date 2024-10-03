@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.5.1
+Version: 3.6.0
 Release: alt1
 
 Summary: Python client library for OpenStack Aodh
@@ -21,7 +21,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 1.4
-BuildRequires: python3-module-cliff >= 1.14.0
+BuildRequires: python3-module-cliff >= 1.17.0
 BuildRequires: python3-module-osc-lib >= 1.0.1
 BuildRequires: python3-module-oslo.i18n >= 1.5.0
 BuildRequires: python3-module-oslo.serialization >= 1.4.0
@@ -110,6 +110,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 3.6.0-alt1
+- Automatically updated to 3.6.0.
+
 * Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 3.5.1-alt1
 - Automatically updated to 3.5.1.
 

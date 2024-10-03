@@ -1,13 +1,13 @@
-%define _unpackaged_files_terminate_build 1
 %define pypi_name hacking
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.1.0
+Version: 7.0.0
 Release: alt1
 
 Summary: OpenStack Hacking Guideline Enforcement
+
 License: Apache-2.0
 Group: Development/Python3
 BuildArch: noarch
@@ -63,6 +63,9 @@ export PBR_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 7.0.0-alt1
+- Automatically updated to 7.0.0.
+
 * Mon May 27 2024 Grigory Ustinov <grenka@altlinux.org> 6.1.0-alt1
 - Automatically updated to 6.1.0.
 

@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 6.1.0
+Version: 6.2.0
 Release: alt1
 
 Summary: OpenStack Oslo Middleware library
@@ -41,9 +41,7 @@ BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
-BuildRequires: python3-module-bandit >= 1.7.0
 BuildRequires: python3-module-stestr >= 2.0.0
-BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
 %if_with docs
@@ -121,6 +119,9 @@ install -pDm 644 man/oslomiddleware.1 %buildroot%_man1dir/oslomiddleware.1
 %endif
 
 %changelog
+* Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 6.2.0-alt1
+- Automatically updated to 6.2.0.
+
 * Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 6.1.0-alt1
 - Automatically updated to 6.1.0.
 

@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.1.0
+Version: 4.2.0
 Release: alt1
 
 Summary: OpenStack Profiler Library
@@ -132,6 +132,9 @@ rm osprofiler/tests/unit/drivers/test_jaeger.py
 %endif
 
 %changelog
+* Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
+- Automatically updated to 4.2.0.
+
 * Fri Jul 26 2024 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1
 - Automatically updated to 4.1.0.
 

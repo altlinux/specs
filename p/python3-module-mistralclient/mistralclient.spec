@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.2.0
+Version: 5.3.0
 Release: alt1
 
 Summary: OpenStack Mistral Client Library
@@ -135,6 +135,9 @@ install -pDm 644 tools/mistral.bash_completion \
 %endif
 
 %changelog
+* Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 5.3.0-alt1
+- Automatically updated to 5.3.0.
+
 * Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 5.2.0-alt1
 - Automatically updated to 5.2.0.
 

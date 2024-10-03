@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 6.1.1
+Version: 6.1.2
 Release: alt1
 
 Summary: OpenStack Oslo Log library
@@ -115,6 +115,9 @@ install -pDm 644 man/oslolog.1 %buildroot%_man1dir/oslolog.1
 %endif
 
 %changelog
+* Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 6.1.2-alt1
+- Automatically updated to 6.1.2.
+
 * Fri Jul 26 2024 Grigory Ustinov <grenka@altlinux.org> 6.1.1-alt1
 - Automatically updated to 6.1.1.
 

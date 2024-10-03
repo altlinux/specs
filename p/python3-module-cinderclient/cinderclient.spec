@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 9.5.0
+Version: 9.6.0
 Release: alt1
 
 Summary: OpenStack Block Storage API Client Library
@@ -124,6 +124,9 @@ install -pDm 644 tools/cinder.bash_completion \
 %endif
 
 %changelog
+* Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 1:9.6.0-alt1
+- Automatically updated to 9.6.0.
+
 * Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 1:9.5.0-alt1
 - Automatically updated to 9.5.0.
 

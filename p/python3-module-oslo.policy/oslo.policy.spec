@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.3.0
+Version: 4.4.0
 Release: alt1
 
 Summary: OpenStack Oslo Policy library
@@ -126,6 +126,9 @@ install -pDm 644 man/oslopolicy-sample-generator.1 %buildroot%_man1dir/oslopolic
 %endif
 
 %changelog
+* Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 4.4.0-alt1
+- Automatically updated to 4.4.0.
+
 * Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 4.3.0-alt1
 - Automatically updated to 4.3.0.
 

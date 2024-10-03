@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 6.6.0
+Version: 7.1.2
 Release: alt1
 
 Summary: OpenStack Command-line Client
@@ -15,8 +15,6 @@ Url: https://pypi.org/project/python-openstackclient
 Source: %oname-%version.tar
 Source1: %oname.watch
 
-Patch: fix_tests_on_python3.12.patch
-
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -25,11 +23,10 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-cliff >= 3.5.0
 BuildRequires: python3-module-iso8601 >= 0.1.11
-BuildRequires: python3-module-openstacksdk >= 2.0.0
+BuildRequires: python3-module-openstacksdk >= 3.3.0
 BuildRequires: python3-module-osc-lib >= 2.3.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-keystoneclient >= 3.17.0
-BuildRequires: python3-module-novaclient >= 9.1.0
 BuildRequires: python3-module-cinderclient >= 3.3.0
 BuildRequires: python3-module-stevedore >= 2.0.1
 
@@ -85,7 +82,6 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
-%patch -p1
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -131,6 +127,9 @@ install -pDm 644 man/openstack.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 7.1.2-alt1
+- Automatically updated to 7.1.2.
+
 * Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 6.6.0-alt1
 - Automatically updated to 6.6.0.
 - Built with check.

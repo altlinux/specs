@@ -4,7 +4,7 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 4.0.1
+Version: 4.1.0
 Release: alt1
 
 Summary: Client for OpenStack Reservation Service
@@ -29,7 +29,7 @@ BuildRequires: python3-module-keystoneauth1 >= 3.4.0
 BuildRequires: python3-module-osc-lib >= 1.3.0
 
 %if_with check
-BuildRequires: python3-module-hacking >= 1.1.0
+BuildRequires: python3-module-hacking >= 7.0.0
 BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-stestr >= 2.0.0
@@ -37,7 +37,6 @@ BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-prettytable
 BuildRequires: python3-module-oslo.log >= 3.36.0
-BuildRequires: python3-module-pyflakes >= 2.1.1
 %endif
 
 %if_with docs
@@ -112,6 +111,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1
+- Automatically updated to 4.1.0.
+
 * Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt1
 - Automatically updated to 4.0.1.
 

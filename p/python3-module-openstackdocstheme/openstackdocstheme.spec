@@ -4,7 +4,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.2.0
+Version: 3.3.0
 Release: alt1
 
 Summary: OpenStack Docs Theme
@@ -91,6 +91,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1
+- Automatically updated to 3.3.0.
+
 * Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
 - Automatically updated to 3.2.0.
 

@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.4.0
+Version: 4.5.0
 Release: alt1
 
 Summary: OpenStack Oslo VMware library
@@ -41,9 +41,9 @@ BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-bandit >= 1.7.0
 BuildRequires: python3-module-ddt >= 1.0.1
+BuildRequires: python3-module-defusedxml >= 0.7.1
 BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-lxml >= 4.5.0
-BuildRequires: python3-module-defusedxml >= 0.7.1
 BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
@@ -125,6 +125,9 @@ install -pDm 644 man/oslovmware.1 %buildroot%_man1dir/oslovmware.1
 %endif
 
 %changelog
+* Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt1
+- Automatically updated to 4.5.0.
+
 * Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 4.4.0-alt1
 - Automatically updated to 4.4.0.
 

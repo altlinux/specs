@@ -4,7 +4,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 6.0.0
+Version: 6.1.0
 Release: alt1
 
 Summary: OpenStack Oslo Concurrency library
@@ -114,6 +114,9 @@ install -pDm 644 man/osloconcurrency.1 %buildroot%_man1dir/osloconcurrency.1
 %endif
 
 %changelog
+* Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 6.1.0-alt1
+- Automatically updated to 6.1.0.
+
 * Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 6.0.0-alt1
 - Automatically updated to 6.0.0.
 

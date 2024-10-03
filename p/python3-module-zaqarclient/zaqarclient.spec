@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.7.0
+Version: 2.8.0
 Release: alt1
 
 Summary: Client Library for OpenStack Zaqar Messaging API
@@ -116,6 +116,9 @@ install -pDm 644 man/python-%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 2.8.0-alt1
+- Automatically updated to 2.8.0.
+
 * Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 2.7.0-alt1
 - Automatically updated to 2.7.0.
 
