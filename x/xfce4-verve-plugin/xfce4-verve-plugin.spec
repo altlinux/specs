@@ -1,6 +1,6 @@
 Name: xfce4-verve-plugin
 Version: 2.0.3
-Release: alt1
+Release: alt2
 
 Summary: Command line plugin for Xfce Desktop
 License: GPLv2+
@@ -18,6 +18,7 @@ Provides: verve-plugin
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel
 BuildRequires: libpcre2-devel
+BuildRequires: intltool
 
 Requires: xfce4-panel >= 4.14
 Requires: exo-utils
@@ -58,6 +59,9 @@ plugin for the Xfce panel. It supports several nice features, such as:
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 2.0.3-alt2
+- Fixed build: added intltool to BR.
+
 * Wed Jul 26 2023 Mikhail Efremov <sem@altlinux.org> 2.0.3-alt1
 - Updated to 2.0.3.
 
