@@ -1,9 +1,9 @@
 Name: xarchiver
 Version: 0.5.4.18
-Release: alt1
+Release: alt2
 
 Summary: A GTK+2 only archive manager
-License: %gpl2plus
+License: GPL-2.0-or-later
 Group: File tools
 
 Url: http://xarchiver.sourceforge.net/
@@ -12,10 +12,11 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 
 # TODO strace -eaccess xarchiver |& grep "/usr/bin"
 
-BuildRequires(pre): rpm-build-licenses rpm-build-xfce4 xfce4-dev-tools
+BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
 # Automatically added by buildreq on Thu Dec 19 2019
 # optimized out: fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config intltool libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libharfbuzz-devel libpango-devel perl perl-Encode perl-parent pkg-config python-modules python2-base sh4 xml-common xml-utils
 BuildRequires: glibc-devel-static libgtk+2-devel xsltproc libzstd-devel
+BuildRequires: intltool
 
 %description
 Xarchiver is a lightweight GTK2 only frontend for manipulating 7z, arj,
@@ -50,6 +51,10 @@ touch AUTHORS NEWS # XXX
 %doc %_docdir/%name
 
 %changelog
+* Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 0.5.4.18-alt2
+- Fixed build: added intltool to BR.
+- Don't use rpm-build-licenses.
+
 * Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 0.5.4.18-alt1
 - Autobuild version bump to 0.5.4.18
 
