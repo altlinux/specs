@@ -1,6 +1,6 @@
 Name: xfce4-mpc-plugin
 Version: 0.5.3
-Release: alt1
+Release: alt2
 
 Summary: MPD Client Plugin
 License: ISC
@@ -15,6 +15,7 @@ Patch: %name-%version-%release.patch
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4panel-gtk3-devel >= 4.13.5 libxfce4ui-gtk3-devel libxfce4util-devel
 BuildRequires: libmpd-devel
+BuildRequires: intltool
 
 Requires: xfce4-panel
 
@@ -44,6 +45,9 @@ Xfce panel.
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 0.5.3-alt2
+- Fixed build: added intltool to BR.
+
 * Tue May 02 2023 Mikhail Efremov <sem@altlinux.org> 0.5.3-alt1
 - Enabled build on aarch64.
 - Added Vcs tag.
