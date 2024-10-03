@@ -10,7 +10,7 @@
 
 %define gtk_theme BlueMenta
 %define kde_theme Breeze
-%define icon_theme mate
+%define icon_theme Papirus-Light
 %define window_theme BlueMenta
 
 %define design_graphics_abi_epoch 0
@@ -24,7 +24,7 @@
 
 Name: branding-%flavour
 Version: 10.2
-Release: alt4
+Release: alt5
 Epoch: 1
 Url: https://altsp.su
 
@@ -181,6 +181,8 @@ License: Distributable
 Group:   Graphical desktop/GNOME
 Requires: dconf
 Requires: gtk3-theme-clearlooks-phenix
+Requires: icon-theme-Papirus-Light
+Requires: icon-theme-Papirus-Dark
 Requires: x-cursor-theme-jimmac
 %branding_add_conflicts %flavour mate-settings 
 PreReq(post): lightdm-gtk-greeter
@@ -323,6 +325,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Oct 03 2024 Anton Midyukov <antohami@altlinux.org> 1:10.2-alt5
+- mate-settings: set icon theme Papirus-Light
+
 * Thu Sep 12 2024 Anton Midyukov <antohami@altlinux.org> 1:10.2-alt4
 - indexhtml: update links (thanks black@)
 - indexhtml: add dependency on shared-desktop-icons
