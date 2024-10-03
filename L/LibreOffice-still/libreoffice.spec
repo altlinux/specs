@@ -30,7 +30,7 @@
 
 Name: LibreOffice-still
 %define hversion 24.2
-%define urelease 5.2
+%define urelease 6.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -772,6 +772,11 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Thu Oct 03 2024 Andrey Cherepanov <cas@altlinux.org> 24.2.6.2-alt1
+- New version.
+- Security fixes (for 24.8.0/24.2.5):
+  + CVE-2024-7788 Signatures in "repair mode" should not be trusted
+
 * Fri Aug 23 2024 Andrey Cherepanov <cas@altlinux.org> 24.2.5.2-alt1
 - New version.
 - Security fixes:
