@@ -1,6 +1,6 @@
 Name: xfce4-screensaver
 Version: 4.18.3
-Release: alt1
+Release: alt2
 
 Summary: Screen saver and locker for Xfce
 License: GPLv2+ and LGPLv2+
@@ -21,6 +21,7 @@ BuildRequires: libdbus-glib-devel libdbus-devel
 BuildRequires: libXScrnSaver-devel libxklavier-devel libXrandr-devel libGL-devel
 BuildRequires: libsystemd-devel libpam0-devel libwnck3-devel
 BuildRequires: xmlto
+BuildRequires: intltool
 # For xfce4-screensaver-configure
 BuildRequires: rpm-build-python3
 
@@ -75,6 +76,9 @@ and the Xfconf configuration backend.
 %_pixmapsdir/*.svg
 
 %changelog
+* Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 4.18.3-alt2
+- Fixed build: added intltool to BR.
+
 * Mon Mar 04 2024 Mikhail Efremov <sem@altlinux.org> 4.18.3-alt1
 - 4.18.2 -> 4.18.3.
 
