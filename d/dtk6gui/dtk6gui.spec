@@ -4,7 +4,7 @@
 
 Name: dtk6gui
 Version: 6.0.19
-Release: alt1
+Release: alt2
 
 Summary: Deepin Toolkit, gui module for DDE look and feel
 
@@ -17,10 +17,10 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-qt6
-BuildRequires: cmake dtk6-common-devel qt6-base-devel libdtk6core-devel librsvg-devel libraw-devel libfreeimage-devel
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
+BuildRequires: cmake dtk6-common-devel dqt6-base-devel libdtk6core-devel librsvg-devel libraw-devel libfreeimage-devel
 # waiting Qt6XdgIconLoaderConfig.cmake
-# BuildRequires: libqt6xdg-devel
+# BuildRequires: libdqt6xdg-devel
 %if_enabled clang
 BuildRequires: clang-devel
 %else
@@ -35,8 +35,8 @@ Summary: Library for %name
 Group: System/Libraries
 Provides: libdtk6-gui = %EVR
 Obsoletes: libdtk6-gui < %EVR
-Requires: libqt6-core = %_qt6_version
-Requires: libqt6-gui = %_qt6_version
+Requires: libdqt6-core = %_dqt6_version
+Requires: libdqt6-gui = %_dqt6_version
 
 %description -n lib%{name}6
 DtkGui is used for DDE look and feel.
@@ -64,12 +64,15 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-export PATH=%_qt6_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt6_libdir/cmake:$CMAKE_PREFIX_PATH
+export PATH=%_dqt6_bindir:$PATH
 %cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-  -DMKSPECS_INSTALL_DIR=%_qt6_archdatadir/mkspecs/modules/ \
+  -DMKSPECS_INSTALL_DIR=%_dqt6_mkspecsdir/modules/ \
   -DPACKAGE_TOOL_INSTALL_DIR=libexec/dtk6/DGui/bin \
+  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+  -DCMAKE_INSTALL_RPATH=%_dqt6_libdir \
   -DCMAKE_INSTALL_LIBDIR=%_lib \
   -DLIB_INSTALL_DIR=%_libdir \
   -DLIBRARY_INSTALL_DIR=%_lib \
@@ -96,7 +99,7 @@ cmake --build %_cmake__builddir -j%__nprocs
 %files -n lib%{name}-devel
 %dir %_includedir/dtk6/
 %_includedir/dtk6/DGui/
-%_qt6_archdatadir/mkspecs/modules/qt_lib_dtkgui.pri
+%_dqt6_mkspecsdir/modules/qt_lib_dtkgui.pri
 %dir %_libdir/cmake/Dtk6Gui/
 %_libdir/cmake/Dtk6Gui/Dtk6GuiConfig.cmake
 %_libdir/cmake/Dtk6Gui/Dtk6GuiConfigVersion.cmake
@@ -105,6 +108,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/lib%name.so
 
 %changelog
+* Wed Oct 02 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt2
+- Built with separate qt6 (ALT #48138).
+
 * Fri Aug 30 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt1
 - New version 6.0.19.
 

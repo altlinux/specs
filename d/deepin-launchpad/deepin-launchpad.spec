@@ -4,7 +4,7 @@
 
 Name: deepin-launchpad
 Version: 0.6.12
-Release: alt1
+Release: alt2
 
 Summary: Launcher for DDE - next generation
 
@@ -24,9 +24,9 @@ BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
-BuildRequires: cmake dtk6-common-devel libappstream-qt6-devel libdtk6gui-devel libgio-devel qt6-declarative-devel qt6-svg-devel qt6-tools-devel libsystemd-devel
+BuildRequires: cmake dtk6-common-devel libappstream-qt6-devel libdtk6gui-devel libgio-devel dqt6-declarative-devel dqt6-svg-devel dqt6-tools-devel libsystemd-devel
 
-Requires: qt6-declarative qt6-5compat
+Requires: dqt6-declarative
 
 %description
 %summary.
@@ -43,11 +43,14 @@ export CC="clang"
 export CXX="clang++"
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-export PATH=%_qt6_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt6_libdir/cmake:$CMAKE_PREFIX_PATH
+export PATH=%_dqt6_bindir:$PATH
 %cmake \
-    -GNinja \
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    %nil
+  -GNinja \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+  -DCMAKE_INSTALL_RPATH=%_dqt6_libdir \
+#
 cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
@@ -69,6 +72,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/dsg/configs/dde-launchpad/org.deepin.dde.launchpad.appsmodel.json
 
 %changelog
+* Wed Oct 02 2024 Leontiy Volodin <lvol@altlinux.org> 0.6.12-alt2
+- Built with separate qt6 (ALT #48138).
+
 * Fri May 17 2024 Leontiy Volodin <lvol@altlinux.org> 0.6.12-alt1
 - New version 0.6.12.
 

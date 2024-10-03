@@ -5,7 +5,7 @@
 
 Name: deepin-application-manager
 Version: 1.2.4.0.1.g6096
-Release: alt2
+Release: alt3
 
 Summary: App manager for Deepin
 
@@ -17,7 +17,7 @@ Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: cmake libgtest-devel libsystemd-devel python3-module-setuptools qt6-base-devel dtk6-common-devel libdtk6core-devel
+BuildRequires: cmake libgtest-devel libsystemd-devel python3-module-setuptools dqt6-base-devel dtk6-common-devel libdtk6core-devel
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -39,11 +39,14 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-export PATH=%_qt6_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt6_libdir/cmake:$CMAKE_PREFIX_PATH
+export PATH=%_dqt6_bindir:$PATH
 %cmake \
-    -GNinja \
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
+  -GNinja \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
+  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+  -DCMAKE_INSTALL_RPATH=%_dqt6_libdir \
 #
 cmake --build "%_cmake__builddir" -j%__nprocs
 
@@ -83,6 +86,9 @@ rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 %_datadir/dsg/configs/org.deepin.dde.application-manager/org.deepin.dde.am.json
 
 %changelog
+* Wed Oct 02 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.4.0.1.g6096-alt3
+- Built with separate qt6 (ALT #48138).
+
 * Thu Jul 04 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.4.0.1.g6096-alt2
 - Applied usrmerge.
 

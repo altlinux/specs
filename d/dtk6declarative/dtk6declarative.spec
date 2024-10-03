@@ -4,7 +4,7 @@
 
 Name: dtk6declarative
 Version: 6.0.19
-Release: alt1
+Release: alt2
 
 Summary: Widget development toolkit for Deepin
 Summary(ru): Инструментарий по разработке виджетов для Deepin
@@ -15,6 +15,7 @@ Url: https://github.com/linuxdeepin/dtk6declarative
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch: %name-%version-%release.patch
+Patch1: dtk6declarative-6.0.19-pkgconfig-dqt6.patch
 
 %if_enabled clang
 ExcludeArch: armh
@@ -23,16 +24,16 @@ ExcludeArch: armh
 Provides: dtk6-declarative = %EVR
 Obsoletes: dtk6-declarative < %EVR
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-qt6
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 %if_enabled clang
 BuildRequires: clang-devel
 %else
 BuildRequires: gcc-c++
 %endif
-#BuildRequires: doxygen graphviz qt6-base-doc
-BuildRequires: cmake libdtk6gui-devel qt6-tools-devel qt6-declarative-devel qt6-shadertools-devel
+#BuildRequires: doxygen graphviz dqt6-base-doc
+BuildRequires: cmake libdtk6gui-devel dqt6-tools-devel dqt6-declarative-devel dqt6-shadertools-devel
 
-Requires: libqt6-core = %_qt6_version libqt6-qmlmodels = %_qt6_version libqt6-quickcontrols2 = %_qt6_version
+Requires: libdqt6-core = %_dqt6_version libdqt6-qmlmodels = %_dqt6_version libdqt6-quickcontrols2 = %_dqt6_version
 
 %description
 dtkdeclarative is a widget development toolkit based on QtQuick/QtQml, which is
@@ -63,7 +64,7 @@ dtkdeclarative разрабатывается на основе qtdeclarative. �
 Summary: Libraries for %name
 Summary(ru): Библиотеки для %name
 Group: System/Libraries
-Requires: libqt6-core = %_qt6_version libqt6-gui = %_qt6_version libqt6-qml = %_qt6_version libqt6-qmlmodels = %_qt6_version libqt6-quick = %_qt6_version
+Requires: libdqt6-core = %_dqt6_version libdqt6-gui = %_dqt6_version libdqt6-qml = %_dqt6_version libdqt6-qmlmodels = %_dqt6_version libdqt6-quick = %_dqt6_version
 
 %description -n lib%name%soname
 The package provides libraries for %name.
@@ -98,11 +99,9 @@ QtCreator Data files for %name.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
-export PATH=%_qt6_bindir:$PATH
-
 %if_enabled clang
 
 export CC="clang"
@@ -113,11 +112,17 @@ export READELF="llvm-readelf"
 
 %endif
 
+export CMAKE_PREFIX_PATH=%_dqt6_libdir/cmake:$CMAKE_PREFIX_PATH
+export PATH=%_dqt6_bindir:$PATH
+
 %cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
   -DBUILD_DOCS=OFF \
-  -DMKSPECS_INSTALL_DIR=%_qt6_archdatadir/mkspecs/modules/ \
+  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+  -DCMAKE_INSTALL_RPATH=%_dqt6_libdir \
+  -DMKSPECS_INSTALL_DIR=%_dqt6_mkspecsdir/modules/ \
+  -DQML_INSTALL_DIR=%_dqt6_qmldir \
   -DCMAKE_INSTALL_PREFIX=%_prefix \
   -DINCLUDE_INSTALL_DIR=include \
   -DCMAKE_INSTALL_LIBDIR=%_lib \
@@ -135,18 +140,18 @@ cmake --build %_cmake__builddir -j%__nprocs
 %dir %_libdir/dtk6/
 %dir %_libdir/dtk6/DDeclarative/
 %_libdir/dtk6/DDeclarative/dtk-exhibition
-%dir %_qt6_qmldir/Chameleon/
-%_qt6_qmldir/Chameleon/*
-%dir %_qt6_qmldir/org/deepin/
-%dir %_qt6_qmldir/org/deepin/dtk/
-%_qt6_qmldir/org/deepin/dtk/%{name}*
-%_qt6_qmldir/org/deepin/dtk/*.qml
-%_qt6_qmldir/org/deepin/dtk/libdtkdeclarativeplugin.so
-%_qt6_qmldir/org/deepin/dtk/qmldir
-%dir %_qt6_qmldir/org/deepin/dtk/private/
-%_qt6_qmldir/org/deepin/dtk/private/*
-%dir %_qt6_qmldir/org/deepin/dtk/settings/
-%_qt6_qmldir/org/deepin/dtk/settings/*
+%dir %_dqt6_qmldir/Chameleon/
+%_dqt6_qmldir/Chameleon/*
+%dir %_dqt6_qmldir/org/deepin/
+%dir %_dqt6_qmldir/org/deepin/dtk/
+%_dqt6_qmldir/org/deepin/dtk/%{name}*
+%_dqt6_qmldir/org/deepin/dtk/*.qml
+%_dqt6_qmldir/org/deepin/dtk/libdtkdeclarativeplugin.so
+%_dqt6_qmldir/org/deepin/dtk/qmldir
+%dir %_dqt6_qmldir/org/deepin/dtk/private/
+%_dqt6_qmldir/org/deepin/dtk/private/*
+%dir %_dqt6_qmldir/org/deepin/dtk/settings/
+%_dqt6_qmldir/org/deepin/dtk/settings/*
 %dir %_datadir/dtk6/
 %_datadir/dtk6/DDeclarative/
 
@@ -159,12 +164,15 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_pkgconfigdir/%name.pc
 %dir %_libdir/cmake/Dtk6Declarative/
 %_libdir/cmake/Dtk6Declarative/*.cmake
-%_qt6_archdatadir/mkspecs/modules/qt_lib_dtkdeclarative.pri
+%_dqt6_archdatadir/mkspecs/modules/qt_lib_dtkdeclarative.pri
 
 %files -n qt-creator-data-%name
 %_datadir/qtcreator/templates/wizards/projects/qml6-app-template/
 
 %changelog
+* Wed Oct 02 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt2
+- Built with separate qt6 (ALT #48138).
+
 * Fri Aug 30 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt1
 - New version 6.0.19.
 

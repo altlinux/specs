@@ -2,7 +2,7 @@
 
 Name: dtk6log
 Version: 0.0.1
-Release: alt1
+Release: alt2
 
 Summary: Deepin tool kit log modules
 
@@ -17,8 +17,8 @@ Obsoletes: libdtk6-log < %EVR
 Provides: dtk6-log = %EVR
 Obsoletes: dtk6-log < %EVR
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-qt6
-BuildRequires: cmake qt6-base-devel libspdlog-devel
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
+BuildRequires: cmake dqt6-base-devel libspdlog-devel
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
 %else
@@ -31,7 +31,7 @@ Deepin tool kit log modules.
 %package -n lib%{name}0
 Summary: Libraries for %name
 Group: System/Libraries
-Requires: libqt6-core = %_qt6_version
+Requires: libdqt6-core = %_dqt6_version
 
 %description -n lib%{name}0
 Deepin tool kit log modules.
@@ -53,10 +53,14 @@ Header files and libraries for %name.
 %if_enabled clang
 export CC=clang CXX=clang++ LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-export PATH=%_qt6_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt6_libdir/cmake:$CMAKE_PREFIX_PATH
+export PATH=%_dqt6_bindir:$PATH
 %cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+  -DCMAKE_INSTALL_RPATH=%_dqt6_libdir \
+  -DMKSPECS_INSTALL_DIR=%_dqt6_mkspecsdir/modules/ \
   -DCMAKE_INSTALL_LIBDIR=%_lib \
   -DLIBRARY_INSTALL_DIR=%_lib \
   -DBUILD_WITH_QT6=ON \
@@ -79,8 +83,11 @@ cmake --build %_cmake__builddir -j%__nprocs
 %dir %_libdir/cmake/Dtk6Log/
 %_libdir/cmake/Dtk6Log/*.cmake
 %_pkgconfigdir/%name.pc
-%_libdir/qt6/mkspecs/modules/qt_lib_dtklog.pri
+%_dqt6_mkspecsdir/modules/qt_lib_dtklog.pri
 
 %changelog
+* Wed Oct 02 2024 Leontiy Volodin <lvol@altlinux.org> 0.0.1-alt2
+- Built with separate qt6 (ALT #48138).
+
 * Fri Aug 30 2024 Leontiy Volodin <lvol@altlinux.org> 0.0.1-alt1
 - Initial build for ALT Sisyphus.

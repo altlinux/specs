@@ -3,7 +3,7 @@
 
 Name: dtk6widget
 Version: 6.0.19
-Release: alt1
+Release: alt2
 
 Summary: Deepin tool kit widget modules
 
@@ -19,15 +19,15 @@ Provides: libdtk6-widget = %EVR
 Obsoletes: libdtk6-widget < %EVR
 
 # for webp (dci) icons
-Requires: qt6-imageformats
+Requires: dqt6-imageformats
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
-BuildRequires(pre): rpm-build-ninja rpm-macros-qt6
-BuildRequires: cmake doxygen dtk6-common-devel libdtk6gui-devel qt6-tools-devel libxcbutil-devel libstartup-notification-devel libXext-devel libXi-devel qt6-svg-devel libcups-devel
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
+BuildRequires: cmake doxygen dtk6-common-devel libdtk6gui-devel dqt6-tools-devel libxcbutil-devel libstartup-notification-devel libXext-devel libXi-devel dqt6-svg-devel libcups-devel
 
 %description
 DtkWidget is Deepin graphical user interface for deepin desktop development.
@@ -35,10 +35,10 @@ DtkWidget is Deepin graphical user interface for deepin desktop development.
 %package -n lib%{name}6
 Summary: Libraries for %name
 Group: System/Libraries
-Requires: libqt6-core = %_qt6_version
-Requires: libqt6-gui = %_qt6_version
-Requires: libqt6-printsupport = %_qt6_version
-Requires: libqt6-widgets = %_qt6_version
+Requires: libdqt6-core = %_dqt6_version
+Requires: libdqt6-gui = %_dqt6_version
+Requires: libdqt6-printsupport = %_dqt6_version
+Requires: libdqt6-widgets = %_dqt6_version
 
 %description -n lib%{name}6
 DtkWidget is Deepin graphical user interface for deepin desktop development.
@@ -86,14 +86,17 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-export PATH=%_qt6_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt6_libdir/cmake:$CMAKE_PREFIX_PATH
+export PATH=%_dqt6_bindir:$PATH
 %cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=None \
-  -DMKSPECS_INSTALL_DIR=%_qt6_archdatadir/mkspecs/modules/ \
+  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+  -DCMAKE_INSTALL_RPATH=%_dqt6_libdir \
+  -DMKSPECS_INSTALL_DIR=%_dqt6_mkspecsdir/modules/ \
 %if_enabled docs
   -DBUILD_DOCS=ON \
-  -DQCH_INSTALL_DESTINATION=%_qt6_docdir \
+  -DQCH_INSTALL_DESTINATION=%_dqt6_docdir \
 %else
   -DBUILD_DOCS=OFF \
 %endif
@@ -121,7 +124,7 @@ cmake --build %_cmake__builddir -j%__nprocs
 %files -n lib%name-devel
 %dir %_includedir/dtk6/
 %_includedir/dtk6/DWidget/
-%_qt6_archdatadir/mkspecs/modules/*.pri
+%_dqt6_mkspecsdir/modules/*.pri
 %_libdir/cmake/Dtk6Widget/
 %_pkgconfigdir/%name.pc
 %_libdir/lib%name.so
@@ -131,9 +134,12 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/dtk6/DWidget/examples/
 
 %files doc
-%_qt6_docdir/dtkwidget.qch
+%_dqt6_docdir/dtkwidget.qch
 
 %changelog
+* Wed Oct 02 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt2
+- Built with separate qt6 (ALT #48138).
+
 * Fri Aug 30 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt1
 - New version 6.0.19.
 
