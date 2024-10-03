@@ -1,6 +1,6 @@
 Name: xfce4-stopwatch-plugin
 Version: 0.5.0
-Release: alt1
+Release: alt2
 
 Summary: Stopwatch plugin for the Xfce panel
 License: BSD-2-Clause
@@ -14,6 +14,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4panel-gtk3-devel libxfce4util-devel
+BuildRequires: intltool
 
 Requires: xfce4-panel >= 4.12
 
@@ -49,6 +50,9 @@ automatically.
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 0.5.0-alt2
+- Fixed build: added intltool to BR.
+
 * Tue Jan 19 2021 Mikhail Efremov <sem@altlinux.org> 0.5.0-alt1
 - Updated to 0.5.0.
 
