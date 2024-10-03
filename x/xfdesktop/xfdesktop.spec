@@ -1,10 +1,11 @@
 Name: xfdesktop
-Version: 4.19.3
+Version: 4.19.4
 Release: alt1
 
 Summary: Desktop manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Менеджер рабочего стола Xfce
-License: GPLv2+
+# Backgrounds licensed as CC-BY-SA-4.0
+License: GPLv2+ and CC-BY-SA-4.0
 Group: Graphical desktop/XFce
 Url: https://docs.xfce.org/xfce/xfdesktop/start
 Packager: Xfce Team <xfce@packages.altlinux.org>
@@ -20,6 +21,7 @@ BuildRequires: libX11-devel
 BuildRequires: libgtk-layer-shell-devel
 Buildrequires: time
 BuildRequires: libnotify-devel
+BuildRequires: libyaml-devel
 
 Requires: exo-utils
 
@@ -63,6 +65,10 @@ Requires: exo-utils
 %_datadir/backgrounds/xfce
 
 %changelog
+* Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 4.19.4-alt1
+- Updated license tag.
+- Updated to 4.19.4 (closes: #50685).
+
 * Sat Aug 17 2024 Mikhail Efremov <sem@altlinux.org> 4.19.3-alt1
 - Updated to 4.19.3.
 
