@@ -9,7 +9,7 @@
 
 Name: postgresql%pg_ver-credcheck
 Version: 2.8
-Release: alt1
+Release: alt2
 
 Summary: The credcheck PostgreSQL extension provides few general credential checks
 License: PostgreSQL
@@ -20,8 +20,10 @@ Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 BuildRequires: postgresql%pg_ver-server-devel libssl-devel libkrb5-devel
+BuildRequires: cracklib-devel
 
 Requires: postgresql%pg_ver-server
+Requires: cracklib-words
 
 %description
 The credcheck PostgreSQL extension provides few general credential checks, which will
@@ -54,5 +56,8 @@ By using this extension, we can define a set of rules:
 %_datadir/pgsql/extension/*
 
 %changelog
+* Thu Oct 03 2024 Alexei Takaseev <taf@altlinux.org> 2.8-alt2
+- Build with cracklib support
+
 * Wed Aug 28 2024 Alexei Takaseev <taf@altlinux.org> 2.8-alt1
 - Initial build for ALT Linux
