@@ -2,7 +2,7 @@
 
 Name: xfce4-calculator-plugin
 Version: 0.7.2
-Release: alt1
+Release: alt2
 
 Summary: A calculator plugin for the Xfce panel
 License: GPLv2+
@@ -14,8 +14,9 @@ Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-calculator-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
+BuildRequires: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
+BuildRequires: intltool
 
 Requires: xfce4-panel >= 4.12
 
@@ -25,8 +26,6 @@ Simple command line based calculator for the Xfce panel
 %prep
 %setup
 %patch -p1
-# Don't use git tag in version.
-%xfce4_drop_gitvtag calculator_version_tag configure.ac.in
 
 %build
 %xfce4reconf
@@ -50,6 +49,9 @@ make check
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 0.7.2-alt2
+- Fixed build: added intltool to BR.
+
 * Thu Apr 20 2023 Mikhail Efremov <sem@altlinux.org> 0.7.2-alt1
 - Updated to 0.7.2.
 
