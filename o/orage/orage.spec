@@ -1,6 +1,6 @@
 Name: orage
 Version: 4.18.0
-Release: alt1
+Release: alt2
 
 Summary: Time-managing application for the Xfce desktop environment
 Summary (ru_RU.UTF-8): Календарь для окружения рабочего стола Xfce
@@ -13,9 +13,10 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4util-devel libxfce4ui-gtk3-devel
+BuildRequires: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libxfce4util-devel libxfce4ui-gtk3-devel
 BuildRequires: libnotify-devel libical-devel
+BuildRequires: intltool
 
 Requires: xfce4-common
 
@@ -60,6 +61,9 @@ Xfce.
 %_datadir/metainfo/org.xfce.orage.appdata.xml
 
 %changelog
+* Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt2
+- Fixed build: added intltool to BR.
+
 * Wed Feb 08 2023 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
 - Fixed License tag.
 - Dropped panel plugin.
