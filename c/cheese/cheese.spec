@@ -15,7 +15,7 @@
 
 Name: cheese
 Version: %ver_major.1
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Cheese is a Photobooth-inspired application for taking pictures and videos
 License: GPL-2.0
@@ -27,6 +27,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/cheese/%ver_major/%name-%version%b
 %else
 Source: %name-%version.tar
 %endif
+# https://gitlab.gnome.org/GNOME/cheese/-/merge_requests/75
+Patch10: cheese-44.1-up-mr75.patch
 
 %define glib_ver 2.40.0
 %define gtk_ver 3.14.0
@@ -123,11 +125,12 @@ GObject introspection devel data for the Cheese library.
 
 %prep
 %setup -n %name-%version%beta
+%patch10 -p1
 
 %build
 %meson \
-	%{?_disable_gtk_doc:-Dgtk_doc=false} \
-	%{?_disable_man:-Dman=false}
+    %{subst_enable_meson_bool gtk_doc gtk_doc} \
+    %{subst_enable_meson_bool man man}
 %nil
 %meson_build
 
@@ -170,6 +173,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Thu Oct 03 2024 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1.1
+- data/cheese-viewport.json: fixed json validation (ALT #51625)
+
 * Sun Jul 16 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1
 - 44.1
 
