@@ -1,6 +1,6 @@
 Name: xfce4-notes-plugin
 Version: 1.11.0
-Release: alt1
+Release: alt2
 
 Summary: Sticky notes plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Липкие записки для Xfce.
@@ -18,6 +18,7 @@ BuildRequires: libcairo-gobject-devel
 BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfconf-devel
 BuildRequires: libxfce4util-vala libxfce4panel-gtk3-vala libxfconf-vala
 BuildRequires: vala
+BuildRequires: intltool
 
 %define _unpackaged_files_terminate_build 1
 
@@ -55,6 +56,9 @@ BuildRequires: vala
 %_desktopdir/xfce4-notes.desktop
 
 %changelog
+* Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 1.11.0-alt2
+- Fixed build: added intltool to BR.
+
 * Sun Jan 14 2024 Mikhail Efremov <sem@altlinux.org> 1.11.0-alt1
 - Dropped obsoleted patches.
 - Updated to 1.11.0.
