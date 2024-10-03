@@ -1,5 +1,5 @@
 Name: xfce4-kbdleds-plugin
-Version: 0.2.5
+Version: 0.3.0
 Release: alt1
 
 Summary: This plugin shows the state of your keyboard LEDs
@@ -14,6 +14,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4panel-gtk3-devel >= 4.12 libxfce4ui-gtk3-devel >= 4.12 libxfce4util-devel
+BuildRequires: intltool
 
 Requires: xfce4-panel >= 4.12
 
@@ -46,6 +47,9 @@ Num Lock in Xfce panel.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt1
+- Updated to 0.3.0.
+
 * Mon Apr 04 2022 Mikhail Efremov <sem@altlinux.org> 0.2.5-alt1
 - Use %%_unpackaged_files_terminate_build.
 - Don't use rpm-build-licenses.
