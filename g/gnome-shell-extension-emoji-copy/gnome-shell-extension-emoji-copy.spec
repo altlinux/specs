@@ -4,10 +4,7 @@
 %define old_name emoji-selector
 %define git_ver 2.2.0
 # from metadata.json
-#%%define ego_ver 21
-# from e.g.o
-%define EGO 6242/%_name
-%define ego_ver 23
+%define ego_ver 25
 %define beta %nil
 %define uuid emoji-copy@felipeftn
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -84,6 +81,9 @@ popd
 %doc README.md
 
 %changelog
+* Thu Oct 03 2024 Yuri N. Sedunov <aris@altlinux.org> 25-alt1
+- 25 (v2.2.0-5-g554ed6b)
+
 * Thu Jul 18 2024 Yuri N. Sedunov <aris@altlinux.org> 23-alt1
 - 23 (v2.2.0)
 
