@@ -2,7 +2,7 @@ Name: libm4rie
 # Note that libm4rie is not always updated in lockstep with libm4ri,
 # and that is absolutely normal.
 %define lname libm4rie0
-Version: 20200125
+Version: 20220305
 Release: alt1
 Summary: Library for linear arithmetic over GF(2^e)
 License: GPL-2.0+
@@ -50,7 +50,7 @@ applications that want to make use of libm4rie.
 %makeinstall_std
 
 %files -n %lname
-%_libdir/libm4rie-0.0.20200115.so
+%_libdir/libm4rie-0.0.20200125.so
 
 %files devel
 %_libdir/libm4rie.so
@@ -58,6 +58,9 @@ applications that want to make use of libm4rie.
 %_includedir/m4rie/
 
 %changelog
+* Thu Oct 03 2024 Leontiy Volodin <lvol@altlinux.org> 20220305-alt1
+- New version 20220305.
+
 * Tue Nov 16 2021 Leontiy Volodin <lvol@altlinux.org> 20200125-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
 - Built as require for sagemath.

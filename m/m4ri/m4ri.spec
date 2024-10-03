@@ -6,7 +6,7 @@
 
 Name: m4ri
 Version: 20240729
-Release: alt1
+Release: alt2
 Summary: Linear Algebra over F_2
 License: GPL-2.0+
 Group: Sciences/Mathematics
@@ -72,6 +72,7 @@ The %name-static package contains the static %name library.
 %__subst 's/20140914/%version/;/GENERATE_LATEX/s/YES/NO/' m4ri/Doxyfile
 
 %build
+%autoreconf
 %configure \
   --enable-openmp \
 %ifarch x86_64
@@ -114,8 +115,7 @@ make check LD_LIBRARY_PATH=$PWD/.libs
 %files -n lib%name
 %doc AUTHORS
 %doc COPYING
-# %%_libdir/lib%%name-0.0.%%version.so
-%_libdir/lib%name-0.0.20200125.so
+%_libdir/lib%name-0.0.%version.so
 
 %files -n lib%name-devel
 %doc doc/html
@@ -129,6 +129,9 @@ make check LD_LIBRARY_PATH=$PWD/.libs
 %endif
 
 %changelog
+* Thu Oct 03 2024 Leontiy Volodin <lvol@altlinux.org> 20240729-alt2
+- Fixed build libm4rie.
+
 * Tue Oct 01 2024 Leontiy Volodin <lvol@altlinux.org> 20240729-alt1
 - New version 20240729.
 
