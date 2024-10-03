@@ -1,6 +1,6 @@
 Name: xfce4-mount-plugin
 Version: 1.1.6
-Release: alt1
+Release: alt2
 
 Summary: Mount plugin for Xfce Desktop
 License: GPLv2+
@@ -12,8 +12,9 @@ Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-mount-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel
+BuildRequires: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel
+BuildRequires: intltool
 
 Requires: xfce4-panel
 
@@ -28,9 +29,6 @@ information on each device.
 %prep
 %setup
 %patch -p1
-
-# Don't use git tag in version.
-%xfce4_drop_gitvtag mount_version_tag configure.ac.in
 
 %build
 %xfce4reconf
@@ -51,6 +49,9 @@ information on each device.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 1.1.6-alt2
+- Fixed build: added intltool to BR.
+
 * Fri Apr 21 2023 Mikhail Efremov <sem@altlinux.org> 1.1.6-alt1
 - Updated to 1.1.6.
 
