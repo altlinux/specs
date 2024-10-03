@@ -2,7 +2,7 @@
 %def_disable docs
 
 Name: libxfce4windowing
-Version: 4.19.4
+Version: 4.19.5
 Release: alt1
 
 Summary: Xfce-related windowing concept abstraction library for X11 and Wayland
@@ -110,6 +110,9 @@ GObject introspection devel data for %name.
 %endif
 
 %changelog
+* Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 4.19.5-alt1
+- Updated to 4.19.5.
+
 * Tue Aug 27 2024 Mikhail Efremov <sem@altlinux.org> 4.19.4-alt1
 - Explicitly enabled both Wayland and X11 support.
 - Updated to 4.19.4.
