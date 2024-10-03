@@ -2,7 +2,7 @@
 
 Name: xfce4-systemload-plugin
 Version: 1.3.2
-Release: alt1
+Release: alt2
 
 Summary: System load plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Отображение использования ресурсов системы на панели Xfce
@@ -20,6 +20,7 @@ BuildRequires: libxfce4util-devel >= 4.17.2 libxfce4ui-gtk3-devel >= 4.16.0 libx
 BuildRequires: gcc-c++
 BuildRequires: libX11-devel libgtk+3-devel libstartup-notification libupower-devel
 %{?_enable_libgtop:BuildRequires: libgtop-devel}
+BuildRequires: intltool
 
 Requires: xfce4-panel >= 4.17
 
@@ -35,8 +36,6 @@ Requires: xfce4-panel >= 4.17
 %prep
 %setup
 %patch -p1
-# Don't use git tag in version.
-%xfce4_drop_gitvtag systemload_version_tag configure.ac.in
 
 %build
 %xfce4reconf
@@ -60,6 +59,9 @@ Requires: xfce4-panel >= 4.17
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 1.3.2-alt2
+- Fixed build: added intltool to BR.
+
 * Thu Nov 03 2022 Mikhail Efremov <sem@altlinux.org> 1.3.2-alt1
 - Fixed build on 32bit arches.
 - Updated BR.
