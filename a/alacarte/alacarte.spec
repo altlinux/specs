@@ -1,11 +1,15 @@
-%define ver_major 3.52
+%define ver_major 3.54
+%define xdg_name org.gnome.alacarte
+
+%def_enable documentation
+%def_enable check
 
 Name: alacarte
 Version: %ver_major.0
 Release: alt1
 
 Summary: Menu editor for GNOME
-License: LGPL-2.0
+License: LGPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://www.gnome.org
 
@@ -18,9 +22,11 @@ BuildArch: noarch
 Requires: typelib(Gtk) = 3.0
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: libgnome-menus-devel >= %menus_ver
-BuildRequires: python3-module-pygobject3-devel
-BuildRequires: docbook-dtds docbook-style-xsl xsltproc
+BuildRequires: pkgconfig(libgnome-menu-3.0) >= %menus_ver
+BuildRequires: pkgconfig(pygobject-3.0)
+%{?_enable_documentation:BuildRequires: docbook-dtds docbook-style-xsl xsltproc}
+%{?_enable_check:BuildRequires: /usr/bin/desktop-file-validate /usr/bin/appstreamcli
+BuildRequires: /usr/bin/glib-compile-schemas}
 
 %description
 Alacarte is a menu editor for GNOME using the freedesktop.org menu
@@ -30,12 +36,17 @@ specification.
 %setup
 
 %build
-%configure
+%configure \
+    %{subst_enable documentation}
+%nil
 %make_build
 
 %install
 %makeinstall_std
 %find_lang --with-gnome %name
+
+%check
+%make -k check VERBOSE=1
 
 %files -f %name.lang
 %python3_sitelibdir_noarch/Alacarte/
@@ -43,10 +54,14 @@ specification.
 %_datadir/applications/*
 %_datadir/%name/
 %_iconsdir/hicolor/*x*/apps/%name.png
-%_man1dir/%name.1.*
+%{?_enable_documentation:%_man1dir/%name.1.*}
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc README* AUTHORS NEWS
 
 %changelog
+* Thu Oct 03 2024 Yuri N. Sedunov <aris@altlinux.org> 3.54.0-alt1
+- 3.54.0
+
 * Thu Mar 21 2024 Yuri N. Sedunov <aris@altlinux.org> 3.52.0-alt1
 - 3.52.0
 
