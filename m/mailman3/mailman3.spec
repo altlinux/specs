@@ -3,7 +3,7 @@
 %def_without check
 
 Name: mailman3
-Version: 3.3.9
+Version: 3.3.10
 Release: alt1
 
 Summary: Managing electronic mail discussion and e-newsletter lists
@@ -21,8 +21,7 @@ Source5: %name-digests.service
 Source6: %name-digests.timer
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-pdm-backend
 
 %if_with check
 BuildRequires: python3-module-nose2
@@ -165,6 +164,9 @@ getent passwd mailman >/dev/null || \
 
 
 %changelog
+* Thu Oct 03 2024 Anton Vyatkin <toni@altlinux.org> 3.3.10-alt1
+- new version 3.3.10
+
 * Mon Oct 23 2023 Anton Vyatkin <toni@altlinux.org> 3.3.9-alt1
 - new version 3.3.9
 
