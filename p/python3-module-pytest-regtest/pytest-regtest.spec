@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pytest-regtest
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 2.1.1
+Version: 2.2.0
 Release: alt1
 
 Summary: pytest plugin for regression tests
@@ -16,9 +18,14 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
+%if_with check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-numpy
+BuildRequires: python3-module-pandas
+%endif
 
 %py3_provides pytest_regtest
+%add_python3_req_skip  pandas numpy
 
 %description
 pytest-regtest is a pytest-plugin for implementing regression tests. Compared
@@ -36,14 +43,17 @@ way as it did before introduced changes.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -v
+%pyproject_run_pytest -v tests/
 
 %files
-%doc PKG-INFO
+%doc README.*
 %python3_sitelibdir/pytest_regtest
 %python3_sitelibdir/pytest_regtest-%version.dist-info
 
 %changelog
+* Thu Oct 03 2024 Anton Vyatkin <toni@altlinux.org> 2.2.0-alt1
+- new version 2.2.0
+
 * Mon Mar 04 2024 Anton Vyatkin <toni@altlinux.org> 2.1.1-alt1
 - new version 2.1.1
 
