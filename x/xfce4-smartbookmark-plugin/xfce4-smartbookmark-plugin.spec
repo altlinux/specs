@@ -1,6 +1,6 @@
 Name: xfce4-smartbookmark-plugin
 Version: 0.5.2
-Release: alt1
+Release: alt2
 
 Summary: Smart bookmarks for the Xfce panel
 License: GPLv2+
@@ -12,10 +12,10 @@ Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-smartbookmark-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel
-
+BuildRequires: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel
 BuildRequires: libXt-devel libgtk+3-devel xorg-cf-files
+BuildRequires: intltool
 
 Requires: xfce4-panel >= 4.11
 
@@ -48,6 +48,9 @@ directly to your browser and perform custom searches.
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 0.5.2-alt2
+- Fixed build: added intltool to BR.
+
 * Thu Dec 24 2020 Mikhail Efremov <sem@altlinux.org> 0.5.2-alt1
 - Updated to 0.5.2.
 
