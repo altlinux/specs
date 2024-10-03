@@ -1,6 +1,6 @@
 Name: xfdashboard
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: A Gnome shell like dashboard for Xfce
 License: GPL-2.0+
@@ -14,10 +14,11 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 
 BuildRequires(pre): rpm-build-xdg
 
-BuildPreReq: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
-BuildPreReq: libxfconf-devel >= 4.14.0 libgarcon-devel libxfce4util-devel libxfce4ui-gtk3-devel
+BuildRequires: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
+BuildRequires: libxfconf-devel >= 4.14.0 libgarcon-devel libxfce4util-devel libxfce4ui-gtk3-devel
 BuildRequires: libgtk+3-devel libwnck3-devel libclutter-devel
 BuildRequires: libXinerama-devel
+BuildRequires: intltool
 
 %define _unpackaged_files_terminate_build 1
 
@@ -50,8 +51,6 @@ This package contains development files required to build
 %patch -p1
 
 %build
-# Don't use git tag in version.
-%xfce4_drop_gitvtag xfdashboard_version_tag configure.ac.in
 %xfce4reconf
 %configure \
 	--disable-static \
@@ -84,6 +83,9 @@ This package contains development files required to build
 %_libdir/*.so
 
 %changelog
+* Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt2
+- Fixed build: added intltool to BR.
+
 * Mon Aug 15 2022 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt1
 - Updated to 1.0.0.
 
