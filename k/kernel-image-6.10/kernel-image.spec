@@ -2,7 +2,7 @@ Name: kernel-image-6.10
 Release: alt1
 %define kernel_src_version	6.10
 %define kernel_base_version	6.10
-%define kernel_sublevel	.12
+%define kernel_sublevel	.13
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -594,6 +594,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Oct 05 2024 Kernel Bot <kernelbot@altlinux.org> 6.10.13-alt1
+- v6.10.13 (2024-10-04).
+- config-aarch64: enable more configs for better Rockchip support.
+
 * Mon Sep 30 2024 Kernel Bot <kernelbot@altlinux.org> 6.10.12-alt1
 - v6.10.12 (2024-09-30).
 - config: Enable CONFIG_FPROBE=y.
