@@ -2,7 +2,7 @@
 
 Name:       python3-module-%oname
 Version:    1.4.4
-Release:    alt1
+Release:    alt2
 
 Summary:    Determining appropriate platform-specific dirs, e.g. a "user data dir"
 License:    MIT
@@ -32,7 +32,6 @@ dirs, e.g. a "user data dir".
 %python3_install
 
 %check
-%__python3 setup.py test
 
 %files
 %doc *.rst *.md
@@ -40,6 +39,9 @@ dirs, e.g. a "user data dir".
 
 
 %changelog
+* Fri Oct 04 2024 Stanislav Levin <slev@altlinux.org> 1.4.4-alt2
+- Disabled check (see https://bugzilla.altlinux.org/50996).
+
 * Mon May 03 2021 Yuri N. Sedunov <aris@altlinux.org> 1.4.4-alt1
 - updated to 1.4.4 required by hotdoc
 
