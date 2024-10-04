@@ -1,6 +1,6 @@
 Name: ardour
-Version: 8.7
-Release: alt2
+Version: 8.8
+Release: alt1
 
 Summary: Professional multi-track audio recording application
 License: GPLv2+
@@ -134,6 +134,9 @@ done
 %_man1dir/ardour.1*
 
 %changelog
+* Fri Oct 04 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 8.8-alt1
+- 8.8 released
+
 * Thu Sep 19 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 8.7-alt2
 - backported fix for broken Zyn UI
 
