@@ -1,17 +1,18 @@
 %define _unpackaged_files_terminate_build 1
-%define xdg_name io.github.Rirusha.Cassette
+%define xdg_name space.rirusha.Cassette
 
 Name: cassette
 Version: 0.2.0
-Release: alt1
+Release: alt2
 
 Summary: GTK/Adwaita application that allows you to use Yandex Music service on Linux operating systems
 License: GPL-3.0
 Group: Sound
-Url: https://github.com/Rirusha/Cassette
-VCS: https://github.com/Rirusha/Cassette
+Url: https://gitlab.gnome.org/Rirusha/Cassette
+VCS: https://gitlab.gnome.org/Rirusha/Cassette
 
 Source0: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson cmake vala
@@ -28,6 +29,7 @@ BuildRequires: libwebkitgtk6.0-devel
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %meson
@@ -40,12 +42,15 @@ BuildRequires: libwebkitgtk6.0-devel
 %files -f %name.lang
 %doc README.md
 %_bindir/cassette
-%_datadir/appdata/%xdg_name.appdata.xml
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Fri Oct 4 2024 Alexey Volkov <qualimock@altlinux.org> 0.2.0-alt2
+- Change upstream sources to the current (closes: #51091)
+
 * Thu Jul 11 2024 Alexey Volkov <qualimock@altlinux.org> 0.2.0-alt1
 - New version 0.2.0
 
