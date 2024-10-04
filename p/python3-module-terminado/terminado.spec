@@ -1,38 +1,27 @@
-%define oname terminado
+%define _unpackaged_files_terminate_build 1
+%define pypi_name terminado
+%define mod_name %pypi_name
 
-%def_without check
+%def_with check
 
-Name: python3-module-%oname
-Version: 0.11.1
+Name: python3-module-%pypi_name
+Version: 0.18.1
 Release: alt1
-
-Summary: Terminals served by tornado websockets
-
+Summary: Tornado websocket backend for the Xterm.js Javascript terminal emulator
 License: BSD
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/terminado/
-
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-# Source-url: %__pypi_url %oname
-Source: %name-%version.tar
-
+Url: https://pypi.org/project/terminado/
+Vcs: https://github.com/jupyter/terminado
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-intro
-BuildRequires(pre): rpm-build-python3
-
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-sphinx-sphinx-build-symlink
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
 BuildRequires: /dev/pts
-BuildRequires: python3-module-nose
-BuildRequires: python3-module-ptyprocess
-BuildRequires: python3-module-tornado_xstatic
+%pyproject_builddeps_metadata_extra test
 %endif
-
-%py3_requires xstatic.pkg.termjs ptyprocess tornado_xstatic
 
 %description
 This is a Tornado websocket backend for the term.js Javascript terminal
@@ -51,72 +40,29 @@ JS:
 * terminado/_static/terminado.js: A lightweight wrapper to set up a
   term.js terminal with a websocket.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-This is a Tornado websocket backend for the term.js Javascript terminal
-emulator library.
-
-This package contains tests for %oname.
-
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-This is a Tornado websocket backend for the term.js Javascript terminal
-emulator library.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-This is a Tornado websocket backend for the term.js Javascript terminal
-emulator library.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
-
-%prepare_sphinx3 .
-#ln -s ../objects.inv doc/
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
-
-#export PYTHONPATH=$PWD
-#make -C doc pickle
-#make -C doc html
-
-#cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
+%pyproject_install
 
 %check
-rm -fR build
-nosetests3 -v
+%pyproject_run_pytest -vra
 
 %files
-%doc *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-
-%files tests
-%python3_sitelibdir/*/tests
-
-#%files docs
-#%doc doc/_build/html/*
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 04 2024 Stanislav Levin <slev@altlinux.org> 0.18.1-alt1
+- 0.11.1 -> 0.18.1.
+
 * Thu Aug 26 2021 Vitaly Lipatov <lav@altlinux.ru> 0.11.1-alt1
 - new version 0.11.1 (with rpmrb script)
 
