@@ -2,7 +2,7 @@
 %define pg_ver 16
 
 Name: postgresql%pg_ver-postgis
-Version: 3.4.3
+Version: 3.5.0
 Release: alt1
 
 Summary: Geographic Information Systems Extensions to PostgreSQL %pg_ver
@@ -18,7 +18,7 @@ Source2: postgis.watch
 BuildRequires: gcc-c++
 BuildRequires: ImageMagick-tools
 BuildRequires: docbook-dtds
-BuildRequires: docbook-style-xsl
+BuildRequires: docbook5-style-xsl
 BuildRequires: flex
 BuildRequires: libgdal-devel
 BuildRequires: libgeos-devel
@@ -59,7 +59,7 @@ subst 's/PGSQL_FULL_VERSION=.*/PGSQL_FULL_VERSION="PostgreSQL %pg_ver.0"/' confi
 	--disable-static \
 	--with-gui \
 	--with-raster \
-	--with-xsldir=%_datadir/xml/docbook/xsl-stylesheets
+	--with-xsldir="$(ls -d %_datadir/usr/share/sgml/docbook/xsl-ns-stylesheets-*)"
 %make all docs comments
 
 %install
@@ -89,6 +89,9 @@ rm -rf %buildroot%_libdir/liblwgeom.a
 %_datadir/pgsql/extension
 
 %changelog
+* Fri Oct 04 2024 Andrey Cherepanov <cas@altlinux.org> 3.5.0-alt1
+- New version.
+
 * Tue Sep 24 2024 Andrey Cherepanov <cas@altlinux.org> 3.4.3-alt1
 - New version.
 
