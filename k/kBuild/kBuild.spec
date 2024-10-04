@@ -1,12 +1,12 @@
 %def_disable    bootstrap
 %define         short_version 0.1.9998
-%define         svn_revision 3592
+%define         svn_revision 3606
 
 ExclusiveArch: %ix86 x86_64
 
 Name:           kBuild
 Version:        %short_version.r%svn_revision
-Release:        alt3
+Release:        alt1
 License:        %gpl3plus
 Group:          Development/Other
 Summary:        A cross-platform build environment framework for complex tasks
@@ -89,6 +89,12 @@ install -m 644 -D kmk.1 %buildroot%_man1dir/kmk.1
 %_datadir/%name
 
 %changelog
+* Mon Sep 30 2024 Valery Sinelnikov <greh@altlinux.org> 0.1.9998.r3606-alt1
+- Update to last unstable release from svn trunk (r3606)
+
+* Thu Oct 19 2023 Valery Sinelnikov <greh@altlinux.org> 0.1.9998.r3592-alt2.p10.1
+- Backport new version to p10 branch
+
 * Fri Jun 02 2023 Valery Sinelnikov <greh@altlinux.org> 0.1.9998.r3592-alt3
 - Removed use of rpm-build-ubt
 
