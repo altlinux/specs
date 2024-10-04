@@ -8,7 +8,7 @@
 %def_with gpu
 
 Name: stress-ng
-Version: 0.18.04
+Version: 0.18.05
 Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
@@ -17,7 +17,6 @@ Url: https://github.com/ColinIanKing/stress-ng
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-make
 BuildRequires: banner
 BuildRequires: libacl-devel
 BuildRequires: libaio-devel
@@ -47,7 +46,7 @@ ways. It was designed to exercise various physical subsystems
 of a computer as well as the various operating system kernel
 interfaces. Stress-ng features:
 
-  * 340+ stress tests
+  * 350+ stress tests
   * 80+ CPU specific stress tests that exercise floating point, integer,
     bit manipulation and control flow
   * 20+ virtual memory stress tests
@@ -81,6 +80,10 @@ sed -ri 's,"-O([0123])",\1,' stress-ng.h
 %endif
 
 %build
+# Hopefully temporary workaround for
+#   verify-elf: ERROR: ./usr/bin/stress-ng: uses non-LFS functions: __ppoll_chk
+# See https://github.com/ColinIanKing/stress-ng/issues/350
+%add_optflags -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2
 %ifarch ppc64le
 # Disable LTO as is does not build on ppc64:
 #   https://github.com/ColinIanKing/stress-ng/issues/273
@@ -88,7 +91,7 @@ sed -ri 's,"-O([0123])",\1,' stress-ng.h
 #   {standard input}:20240: Error: unrecognized opcode: `darn'
 %define optflags_lto %nil
 %endif
-%make_build_ext --no-print-directory --output-sync=none VERBOSE=1
+%make_build CFLAGS="%optflags" --no-print-directory VERBOSE=1
 
 %install
 %makeinstall_std
@@ -115,6 +118,10 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Wed Oct 02 2024 Vitaly Chikunov <vt@altlinux.org> 0.18.05-alt1
+- Update to V0.18.05 (2024-10-02).
+- spec: Stop using rpm-macros-make.
+
 * Sat Sep 07 2024 Vitaly Chikunov <vt@altlinux.org> 0.18.04-alt1
 - Update to V0.18.04 (2024-09-06).
 
