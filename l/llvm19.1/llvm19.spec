@@ -6,9 +6,9 @@
 # Self-provided by python3(lldb14.0) in a custom path.
 %filter_from_requires /python[0-9.]\+(lldb)/d
 
-%global v_major 18
+%global v_major 19
 %global v_majmin %v_major.1
-%global v_full %v_majmin.8
+%global v_full %v_majmin.1
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -23,13 +23,15 @@
 %global omp_sover %v_majmin
 # libomp has own versioning
 %global omp_vmajor 5
-# According to openmp/libomptarget/README.txt
-%global libomptarget_arches x86_64 aarch64 loongarch64 ppc64le
+# According to offload/README.txt
+%global libomptarget_arches x86_64 aarch64 ppc64le
 %ifarch ppc64le
-%global libomp_arch ppc64
+%global libomp_arch powerpc64le
 %else
 %global libomp_arch %_arch
 %endif
+# According libc/src/string/memory_utils/inline_memcpy.h
+%global libc_arches x86_64 aarch64
 
 %global llvm_default_name llvm%_llvm_version
 %global clang_default_name clang%_llvm_version
@@ -81,8 +83,6 @@ AutoProv: nopython
 %def_disable tests
 # this is not for linking but for building :)
 %def_with lld
-# disable openmp due soname clash
-%def_without openmp
 
 %ifarch x86_64 ppc64le aarch64
 %def_with clang
@@ -113,7 +113,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.2
+Release: alt0.1
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -124,15 +124,9 @@ Source: llvm-project-%{v_major}.tar
 Patch:  clang-alt-i586-fallback.patch
 Patch1: clang-alt-triple.patch
 Patch2: 0001-alt-llvm-config-Ignore-wrappers-when-looking-for-current.patch
-Patch4: llvm-alt-triple.patch
 Patch5: compiler-rt-alt-i586-arch.patch
 Patch7: clang-alt-aarch64-dynamic-linker-path.patch
 Patch8: clang-tools-extra-alt-gcc-0001-clangd-satisfy-ALT-gcc-s-Werror-return-type.patch
-Patch10: llvm-10-alt-python3.patch
-# TODO: upstream this
-# Patch11: hwasan_symbolize-python3.patch
-Patch12: llvm-12-alt-mips-pcrel-personality.patch
-Patch13: llvm-12-debian-mips-force-nomadd4.patch
 Patch17: llvm-cmake-pass-ffat-lto-objects-if-using-the-GNU-toolcha.patch
 Patch18: lld-compact-unwind-encoding.h.patch
 Patch19: llvm-alt-cmake-build-with-install-rpath.patch
@@ -142,10 +136,10 @@ Patch101: clang-ALT-bug-40628-grecord-command-line.patch
 Patch102: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.patch
 Patch103: clang-alt-nvvm-libdevice.patch
 Patch104: openmp-alt-soname.patch
-# upstream 822142ffdfbe93f213c2c6b3f2aec7fe5f0af072
-Patch105: openmp-libompd-should-not-link-libomp.patch
+# upstream issue 100383
+Patch106: llvm-amdgpu-udiv64-opts.patch
+Patch107: offload-amdgpu-rocm-path.patch
 
-Patch110: RH-0001-clang-tools-extra-Make-test-dependency-on-LLVMHello-.patch
 Patch111: RH-0003-PATCH-clang-Don-t-install-static-libraries.patch
 Patch112: RH-0001-Workaround-a-bug-in-ORC-on-ppc64le.patch
 
@@ -754,33 +748,29 @@ These modules are used by llvm runtimes built outside of llvm tree.
 %patch1 -p2 -b .clang-alt-triple
 %patch2 -p1
 sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
-%patch4 -p1 -b .llvm-alt-triple
 %patch5 -p1 -b .alt-i586-arch
 %patch7 -p1 -b .alt-aarch64-dynamic-linker
 %patch8 -p1
-%patch10 -p1
-%patch12 -p1
-%patch13 -p1
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1 -b .llvm-cmake-build-with-install-rpath
 %patch20 -p1 -b .clang-rocm-device-path
-%patch23 -p1
+%patch23 -p2
 %patch101 -p1
 %patch102 -p2
 %patch103 -p1
 %patch104 -p2
-%patch105 -p1 -b .libompd-do-not-link-libomp
+%patch106 -p1 -b .llvm-amdgpu-udiv64-opts
+%patch107 -p2 -b .offload-rocm-path
 
 # RH patches
-%patch110 -p1
 %patch111 -p1
 %patch112 -p1
 
-%patch200 -p2
-%patch201 -p2
-%patch202 -p2
-%patch203 -p2
+#%%patch200 -p2
+#%%patch201 -p2
+#%%patch202 -p2
+#%%patch203 -p2
 
 # debian patches
 %patch300 -p1
@@ -792,14 +782,14 @@ subst '/^#!.*python$/s|python$|python3|' $(grep -Rl '#!.*python$' *)
 
 %build
 PROJECTS="clang;clang-tools-extra;compiler-rt;mlir;polly"
+# for openmp offload
+# https://github.com/llvm/llvm-project/issues/106399
+RUNTIMES="openmp;offload"
 %if_with lld
 PROJECTS="$PROJECTS;lld"
 %endif
 %if_with lldb
 PROJECTS="$PROJECTS;lldb"
-%endif
-%if_with openmp
-PROJECTS="$PROJECTS;openmp"
 %endif
 export NPROCS="%__nprocs"
 if [ "$NPROCS" -gt 64 ]; then
@@ -823,7 +813,8 @@ fi
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
 	-DCMAKE_BUILD_RPATH:STRING='' \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
-	-DLLVM_ENABLE_PROJECTS="$PROJECTS" \
+	-DLLVM_ENABLE_PROJECTS:STRING="$PROJECTS" \
+	-DLLVM_ENABLE_RUNTIMES:STRING="$RUNTIMES" \
 	-DLLVM_TARGETS_TO_BUILD="all" \
 	-DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD='AVR' \
 	-DLLVM_ENABLE_LIBCXX:BOOL=OFF \
@@ -861,29 +852,32 @@ fi
 	-DCMAKE_RANLIB:PATH=%_bindir/gcc-ranlib \
 	%endif
 	\
-	-DLLVM_LIBDIR_SUFFIX="%_libsuff" \
+	-DLLVM_LIBDIR_SUFFIX:STRING="%_libsuff" \
 	-DLLVM_BUILD_RUNTIME:BOOL=ON \
 	\
 	-DLLVM_INCLUDE_TOOLS:BOOL=ON \
 	-DLLVM_BUILD_TOOLS:BOOL=ON \
 	\
 	-DMLIR_INSTALL_AGGREGATE_OBJECTS=OFF \
-	%if_with openmp
 	-DLIBOMP_INSTALL_ALIASES=OFF \
-	-DOPENMP_LIBDIR_SUFFIX="%_libsuff" \
+	-DOPENMP_LIBDIR_SUFFIX:STRING="%_libsuff" \
 	-DOPENMP_INSTALL_LIBDIR=%llvm_libdir \
-	%endif
 	\
+	%ifarch %libc_arches
+	-DRUNTIMES_nvptx64-nvidia-cuda_LLVM_ENABLE_RUNTIMES=libc \
+	-DRUNTIMES_amdgcn-amd-amdhsa_LLVM_ENABLE_RUNTIMES=libc \
+	-DLLVM_RUNTIME_TARGETS="default;amdgcn-amd-amdhsa;nvptx64-nvidia-cuda" \
+	%endif
 	%if_enabled tests
 	-DLLVM_INCLUDE_TESTS:BOOL=ON \
 	-DLLVM_BUILD_TESTS:BOOL=ON \
 	-DLLDB_INCLUDE_TESTS:BOOL=ON \
 	%else
-		%if_with clang
-		-DLLDB_TEST_COMPILER:PATH=%_bindir/clang \
-		%else
-		-DLLDB_TEST_COMPILER:PATH=%_bindir/gcc \
-		%endif
+	%if_with clang
+	-DLLDB_TEST_COMPILER:PATH=%_bindir/clang \
+	%else
+	-DLLDB_TEST_COMPILER:PATH=%_bindir/gcc \
+	%endif
 	%endif
 	%ifarch %ix86
 	-DLLVM_DEFAULT_TARGET_TRIPLE:STRING="i586-pc-linux-gnu" \
@@ -917,12 +911,6 @@ sed -i '/^[[:space:]]*include.*tools\/lld\/docs\/cmake_install.cmake.*/d' %build
 %endif
 DESTDIR=%buildroot ninja -C %builddir install
 
-# scanbuild is noarch
-if [ %_libsuff == 64 ]; then
-mkdir -p %buildroot%llvm_prefix/lib ||:
-mv %buildroot%llvm_libdir/{libear,libscanbuild} %buildroot%llvm_prefix/lib
-fi
-
 # Prepare Clang documentation.
 rm -rf %builddir/clang-docs
 mkdir -p %builddir/clang-docs
@@ -930,9 +918,10 @@ for f in LICENSE.TXT NOTES.txt README.txt; do
   ln clang/$f %builddir/clang-docs/
 done
 rm -rf tools/clang/docs/{doxygen*,Makefile*,*.graffle,tools}
+rm -rf %buildroot%llvm_datadir/clang-doc
 mkdir -p %buildroot%llvm_docdir/lld
 
-install -m 0755 %builddir/%_lib/LLVMHello.so %buildroot%llvm_libdir/
+#install -m 0755 %builddir/%_lib/LLVMHello.so %buildroot%llvm_libdir/
 install -m 0755 %builddir/%_lib/BugpointPasses.so %buildroot%llvm_libdir/
 
 %ifarch %ix86
@@ -945,13 +934,11 @@ cd -
 rm -f %buildroot%llvm_bindir/argdumper
 rm -f %buildroot%llvm_datadir/clang/clang-format-bbedit.applescript
 
-%if_with openmp
 # Remove OpenMP static libraries with equivalent shared libraries
 rm -rf %buildroot%llvm_libdir/libarcher_static.a
 # FIXME! will pack it later
 # those files are needed for libompd (OMP debugger)
 rm -rf %buildroot%llvm_datadir/gdb
-%endif
 
 # Install the clang bash completion.
 mkdir -p %buildroot%_datadir/bash-completion/completions
@@ -992,9 +979,20 @@ paste %_tmppath/shared-objects %_tmppath/shared-object-links | while read object
 	ln -srv "$object" "$link"
 done
 
-%if_with openmp
 # OpenMP needs special handling here
 ln -srv %buildroot%llvm_libdir/libomp.so.%omp_vmajor %buildroot%_libdir/libomp.so.%omp_vmajor
+ln -srv %buildroot%llvm_libdir/libarcher.so %buildroot%_libdir/libarcher.so
+%ifarch %libomptarget_arches
+mv %buildroot%llvm_libdir/%libomp_arch-unknown-linux-gnu/* %buildroot%llvm_libdir/clang/%v_major/lib/%libomp_arch-unknown-linux-gnu/
+ln -srv %buildroot%llvm_libdir/clang/%v_major/lib/%libomp_arch-unknown-linux-gnu/libomptarget.so.%v_majmin %buildroot%_libdir/libomptarget.so.%v_majmin
+%endif
+%ifarch %libc_arches
+# FIXME! need to figure out why _SUFFIX is not used here
+mv %buildroot%llvm_prefix/lib/{amdgcn-amd-amdhsa,nvptx64-nvidia-cuda} %buildroot%llvm_libdir/clang/%v_major/lib/
+mv %buildroot%llvm_prefix/lib/%libomp_arch-unknown-linux-gnu/* %buildroot%llvm_libdir/clang/%v_major/lib/%libomp_arch-unknown-linux-gnu/
+mv %buildroot%llvm_prefix/lib/clang/%v_major/include/llvm_libc_wrappers/llvm-libc-decls %buildroot%llvm_libdir/clang/%v_major/include/llvm_libc_wrappers/
+rm -rf %buildroot%llvm_prefix/lib/{clang,%libomp_arch-unknown-linux-gnu}
+rm -rf %buildroot%llvm_libdir/%libomp_arch-unknown-linux-gnu
 %endif
 
 # List all packaged binaries in this source package.
@@ -1103,6 +1101,7 @@ bin	sancov
 bin	sanstats
 bin	verify-uselistorder
 bin	tblgen-to-irdl
+bin	reduce-chunk-list
 
 man	FileCheck
 man	extraclangtools
@@ -1140,8 +1139,10 @@ bin	clang-extdef-mapping
 bin	clang-format
 bin	clang-include-cleaner
 bin	clang-include-fixer
+bin	clang-installapi
 bin	clang-linker-wrapper
 bin	clang-move
+bin	clang-nvlink-wrapper
 bin	clang-offload-bundler
 bin	clang-offload-packager
 bin	clang-pseudo
@@ -1167,6 +1168,7 @@ bin	mlir-pdll
 bin	mlir-pdll-lsp-server
 bin	mlir-reduce
 bin,man	mlir-tblgen
+bin	mlir-transform-opt
 bin	mlir-translate
 bin	tblgen-lsp-server
 bin	mlir-cat
@@ -1179,15 +1181,12 @@ emit_filelist >%_tmppath/dyn-files-lib%polly_name-devel <<EOExecutableList
 man	polly
 EOExecutableList
 
-%if_with openmp
 emit_filelist >%_tmppath/dyn-files-lib%omp_name-devel <<EOExecutableList
 %ifarch %libomptarget_arches
 bin	llvm-omp-device-info
 bin	llvm-omp-kernel-replay
 %endif
-man	llvmopenmp
 EOExecutableList
-%endif
 
 # Comment out file validation for CMake targets placed
 # in a different package.
@@ -1197,6 +1196,7 @@ sed -i '
 /APPEND _cmake_import_check_targets \(Polly\)/ {s|^|#|}
 /APPEND _cmake_import_check_targets \(llvm-omp-device-info\|llvm-omp-kernel-replay\|omptarget\)/ {s|^|#|}
 /APPEND _cmake_import_check_targets \(omp\)/ {s|^|#|}
+/APPEND _cmake_import_check_targets \(LibcTableGenUtil\)/ {s|^|#|}
 ' %buildroot%llvm_libdir/cmake/llvm/LLVMExports-*.cmake
 
 # Comment out file validation for CMake targets producing executables
@@ -1267,7 +1267,7 @@ ninja -C %builddir check-all || :
 %llvm_libdir/libLLVM.so
 %llvm_libdir/libLTO.so
 %llvm_libdir/libRemarks.so
-%llvm_libdir/LLVMHello.so
+#%%llvm_libdir/LLVMHello.so
 %llvm_libdir/BugpointPasses.so
 %llvm_libdir/cmake/llvm
 %llvm_libdir/libLLVM*.a
@@ -1298,14 +1298,25 @@ ninja -C %builddir check-all || :
 %ifarch %hwasan_symbolize_arches
 %exclude %llvm_libdir/clang/%v_major/bin/hwasan_symbolize
 %endif
-%if_with openmp
 %exclude %llvm_libdir/clang/%v_major/include/omp.h
 %ifnarch %arm
 %exclude %llvm_libdir/clang/%v_major/include/omp-tools.h
 %exclude %llvm_libdir/clang/%v_major/include/ompt.h
 %exclude %llvm_libdir/clang/%v_major/include/ompt-multiplex.h
 %endif
-%endif #openmp
+%ifarch %libc_arches
+%exclude %llvm_libdir/clang/%v_major/include/llvm_libc_wrappers/llvm-libc-decls
+%exclude %llvm_libdir/clang/%v_major/lib/amdgcn-amd-amdhsa
+%exclude %llvm_libdir/clang/%v_major/lib/nvptx64-nvidia-cuda
+%exclude %llvm_libdir/clang/%v_major/lib/%libomp_arch-unknown-linux-gnu/libcgpu-*.a
+%exclude %llvm_libdir/clang/%v_major/lib/%libomp_arch-unknown-linux-gnu/libmgpu-*.a
+%endif
+%ifarch %libomptarget_arches
+%exclude %llvm_libdir/clang/%v_major/lib/%libomp_arch-unknown-linux-gnu/libomptarget.devicertl.a
+%exclude %llvm_libdir/clang/%v_major/lib/%libomp_arch-unknown-linux-gnu/libomptarget-amdgpu-*.bc
+%exclude %llvm_libdir/clang/%v_major/lib/%libomp_arch-unknown-linux-gnu/libomptarget-nvptx-*.bc
+%exclude %llvm_libdir/clang/%v_major/lib/%libomp_arch-unknown-linux-gnu/libomptarget.so*
+%endif
 
 %files -n %clang_name-support-shared-runtimes -f %_tmppath/libclang-support-shared-runtimes
 
@@ -1403,12 +1414,15 @@ ninja -C %builddir check-all || :
 %llvm_libdir/libmlir_arm_sme_abi_stubs.so.*
 %_libdir/libmlir_arm_runner_utils.so.*
 %_libdir/libmlir_arm_sme_abi_stubs.so.*
+%llvm_libdir/libMLIRExecutionEngineShared.so.*
+%_libdir/libMLIRExecutionEngineShared.so.*
 
 %files -n lib%mlir_name-devel
 %llvm_includedir/mlir
 %llvm_includedir/mlir-c
 %llvm_libdir/libMLIR*.a
 %llvm_libdir/libMLIR.so
+%llvm_libdir/libMLIRExecutionEngineShared.so
 %llvm_libdir/libmlir_async_runtime.so
 %llvm_libdir/libmlir_c_runner_utils.so
 %llvm_libdir/libmlir_runner_utils.so
@@ -1447,57 +1461,64 @@ ninja -C %builddir check-all || :
 %files -n lib%polly_name-doc
 %doc %llvm_docdir/LLVM/polly
 
-%if_with openmp
-%files -n lib%omp_name-doc
-%doc %llvm_docdir/LLVM/openmp
-
 %files -n lib%omp_name
 %llvm_libdir/libomp.so.%omp_vmajor
 %_libdir/libomp.so.%omp_vmajor
 %ifarch %libomptarget_arches
-%ifnarch loongarch64
-%llvm_libdir/libomptarget.rtl.amdgpu.so.%omp_sover
-%llvm_libdir/libomptarget.rtl.cuda.so.%omp_sover
-%llvm_libdir/libomptarget.rtl.%libomp_arch.so.%omp_sover
-%_libdir/libomptarget.rtl.amdgpu.so.%omp_sover
-%_libdir/libomptarget.rtl.cuda.so.%omp_sover
-%_libdir/libomptarget.rtl.%libomp_arch.so.%omp_sover
-%endif
-%llvm_libdir/libomptarget.so.%omp_sover
-%_libdir/libomptarget.so.%omp_sover
+%llvm_libdir/clang/%v_major/lib/%libomp_arch-unknown-linux-gnu/libomptarget.so.%v_majmin
+%_libdir/libomptarget.so.%v_majmin
 %endif
 
 %files -n lib%omp_name-devel -f %_tmppath/dyn-files-lib%omp_name-devel
 %llvm_libdir/clang/%v_major/include/omp.h
 %llvm_libdir/libomp.so
-%ifnarch %arm
 %llvm_libdir/libompd.so
 %llvm_libdir/libarcher.so
 %llvm_libdir/clang/%v_major/include/omp-tools.h
 %llvm_libdir/clang/%v_major/include/ompt.h
 %llvm_libdir/clang/%v_major/include/ompt-multiplex.h
-%endif
 %llvm_libdir/cmake/openmp
+%_libdir/libarcher.so
 %ifarch %libomptarget_arches
-%ifnarch loongarch64
-%llvm_libdir/libomptarget.rtl.amdgpu.so
-%llvm_libdir/libomptarget.rtl.cuda.so
-%llvm_libdir/libomptarget.rtl.%libomp_arch.so
+%llvm_libdir/clang/%v_major/lib/%libomp_arch-unknown-linux-gnu/libomptarget.devicertl.a
+%llvm_libdir/clang/%v_major/lib/%libomp_arch-unknown-linux-gnu/libomptarget-amdgpu-*.bc
+%llvm_libdir/clang/%v_major/lib/%libomp_arch-unknown-linux-gnu/libomptarget-nvptx-*.bc
+%llvm_libdir/clang/%v_major/lib/%libomp_arch-unknown-linux-gnu/libomptarget.so
 %endif
-%llvm_libdir/libomptarget.devicertl.a
-%llvm_libdir/libomptarget-amdgpu-*.bc
-%llvm_libdir/libomptarget-nvptx-*.bc
-%llvm_libdir/libomptarget.so
+%ifarch %libc_arches
+%llvm_includedir/amdgcn-amd-amdhsa
+%llvm_includedir/nvptx64-nvidia-cuda
+%llvm_includedir/llvmlibc_rpc_opcodes.h
+%llvm_includedir/llvmlibc_rpc_server.h
+%llvm_libdir/clang/%v_major/include/llvm_libc_wrappers/llvm-libc-decls
+%llvm_libdir/clang/%v_major/lib/amdgcn-amd-amdhsa
+%llvm_libdir/clang/%v_major/lib/nvptx64-nvidia-cuda
+%llvm_libdir/clang/%v_major/lib/%libomp_arch-unknown-linux-gnu/libcgpu-*.a
+%llvm_libdir/clang/%v_major/lib/%libomp_arch-unknown-linux-gnu/libmgpu-*.a
+%llvm_libdir/libLibcTableGenUtil.a
+%llvm_libdir/libllvmlibc_rpc_server.a
 %endif
-%endif #openmp
 
 %files cmake-common-modules
 %dir %llvm_datadir/cmake/Modules
 %llvm_datadir/cmake/Modules/*
 
 %changelog
-* Fri Sep 20 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.8-alt0.2
-- Build without openmp.
+* Wed Oct 02 2024 L.A. Kostis <lakostis@altlinux.ru> 19.1.1-alt0.1
+- Update to 19.1.1.
+- loongarch64: remove merged patches.
+- ppc64le: don't build GPU libc (unsupported arch).
+- GPU libc: exclude it from LLVMExports.
+
+* Mon Sep 23 2024 L.A. Kostis <lakostis@altlinux.ru> 19.1.0-alt0.2
+- Enable GPU libc for omptarget.
+- OpenMP: relocate some libs to satisfy clang requires.
+
+* Wed Sep 18 2024 L.A. Kostis <lakostis@altlinux.ru> 19.1.0-alt0.1
+- Update to 19.1.0.
+- Re-apply all patches, drop merged ones.
+- Don't apply -alt MCJIT riscv64/loongarch64 patches yet.
+- llvm/AMDGPU: apply optimisation fix for s/udiv64 (issue 100383).
 
 * Tue Jun 25 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.8-alt0.1
 - Update to 18.1.8.

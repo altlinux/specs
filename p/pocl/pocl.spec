@@ -26,14 +26,15 @@
 # RDMA used only by remote for HPC-like performance
 %def_without rdma
 # risc-v/loongarch64 might not supported
-%def_with openmp
+# XXX disable until we migrate to llvm19.1
+%def_without openmp
 
 # pocl detects LTO automatically
 %define optflags_lto %nil
 
 Name: pocl
 Version: 6.0
-Release: alt0.2
+Release: alt0.3
 
 # The entire code is under MIT
 # include/utlist.h which is under BSD-1-Clause (unbundled)
@@ -335,6 +336,9 @@ sphinx-build-3 -N -b html doc/sphinx/source build-doc/html
 %endif
 
 %changelog
+* Fri Oct 04 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0-alt0.3
+- Disable OpenMP (for now).
+
 * Sun Jul 28 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0-alt0.2
 - remote: enable vsock.
 - remote: enable traffic monitor.

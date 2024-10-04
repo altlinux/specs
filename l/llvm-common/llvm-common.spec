@@ -4,7 +4,7 @@
 
 Name: llvm-common
 Version: 18.1.0
-Release: alt1
+Release: alt2
 
 Summary: Common directories, symlinks and tool selection for LLVM
 License: Apache-2.0 with LLVM-exception
@@ -21,7 +21,7 @@ Source4: tests-%version.tar
 # against pre-wrapped llvm packages.
 Obsoletes: clang              <= 11.0.0-alt1
 Obsoletes: clang-devel        <= 11.0.0-alt1
-Obsoletes: clang-devel-static <= 11.0.0-alt1
+Obsoletes: clang-devel-static <= 18.0.0-alt1
 Obsoletes: clang-doc          <= 11.0.0-alt1
 Obsoletes: lld                <= 11.0.0-alt1
 Obsoletes: lld-devel          <= 11.0.0-alt1
@@ -100,14 +100,7 @@ Summary: Provides clang-devel
 License: Apache-2.0 with LLVM-exception
 Group: Development/C
 Provides: llvm-common-clang-devel = %EVR
-Requires: clang%_llvm_version-devel
-Requires(pre,postun): %name = %version-%release
-
-%package -n clang-devel-static
-Summary: Provides clang-devel-static
-License: Apache-2.0 with LLVM-exception
-Group: Development/C
-Provides: llvm-common-clang-devel-static = %EVR
+Provides: clang-devel-static = %EVR
 Requires: clang%_llvm_version-devel
 Requires(pre,postun): %name = %version-%release
 
@@ -173,15 +166,6 @@ Provides: llvm-common-libpolly-devel = %EVR
 Requires: libpolly%_llvm_version-devel
 Requires(pre,postun): %name = %version-%release
 
-%package -n libomp-devel
-Summary: Provides libomp-devel
-License: Apache-2.0 with LLVM-exception
-Group: Development/C
-BuildArch: noarch
-Provides: llvm-common-libomp-devel = %EVR
-Requires: libomp%_llvm_version-devel
-Requires(pre,postun): %name = %version-%release
-
 %description -n rpm-macros-%name
 This package contains RPM macros related to LLVM packaging.
 
@@ -212,9 +196,6 @@ language server.
 %description -n clang-devel
 This package contains clangXXX-devel and provides clang-devel.
 
-%description -n clang-devel-static
-This package contains clangXXX-devel-static and provides clang-devel-static.
-
 %description -n lld
 This package contains common symlinks to wrap LLD.
 
@@ -235,9 +216,6 @@ This package contains common symlinks to wrap MLIR bundled tools.
 
 %description -n libpolly-devel
 This package pulls in libpollyXXX-devel.
-
-%description -n libomp-devel
-This package pulls in libompXXX-devel
 
 %prep
 %setup -cT
@@ -475,8 +453,6 @@ which %__clang_versioned || { echo 'Skipping the test of llvm-alt-tool-wrapper.'
 %files -n clang-devel
 %_libdir/cmake/clang
 
-%files -n clang-devel-static
-
 %files -n lld
 %_bindir/ld*.lld
 %_bindir/lld
@@ -508,8 +484,6 @@ which %__clang_versioned || { echo 'Skipping the test of llvm-alt-tool-wrapper.'
 %_bindir/tblgen-lsp-server
 
 %files -n libpolly-devel
-
-%files -n libomp-devel
 
 %package tooltests-checkinstall
 Summary: Tests to be run as part of checkinstall
@@ -545,6 +519,10 @@ for i in %_CI_tests_execdir/[0-9]*; do
 done
 
 %changelog
+* Fri Oct 04 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.0-alt2
+- Remove libomp-devel package (for now).
+- Remove clang-devel-static package.
+
 * Wed Mar 27 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.0-alt1
 - Bump llvm_version to 18.1.
 
