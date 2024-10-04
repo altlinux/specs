@@ -3,7 +3,7 @@
 
 Name: dqt6-svg
 Version: 6.7.2
-Release: alt0.dde.1
+Release: alt0.dde.2
 
 Group: System/Libraries
 Summary: Qt6 - Support for rendering and displaying SVG
@@ -29,7 +29,7 @@ displaying SVG drawings in widgets and on other paint devices.
 Summary: Common package for %name
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: qt6-base-common
+Requires: dqt6-base-common
 %description common
 Common package for %name
 
@@ -37,7 +37,7 @@ Common package for %name
 Group: Development/KDE and QT
 Summary: Development files for %name
 Requires: %name-common
-Requires: qt6-base-devel
+Requires: dqt6-base-devel
 %description devel
 %summary.
 
@@ -129,6 +129,9 @@ done
 #%_dqt6_examplesdir/*
 
 %changelog
+* Fri Oct 04 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt0.dde.2
+- fix requires
+
 * Wed Oct 02 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt0.dde.1
 - fork qt6 for separate deepin packaging (ALT #48138)
 
