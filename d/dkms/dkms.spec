@@ -5,7 +5,7 @@
 
 Summary: Dynamic Kernel Module Support Framework
 Name: dkms
-Version: 3.0.13
+Version: 3.1.0
 Release: alt1
 License: GPL-2.0-or-later
 Group: System/Kernel and hardware
@@ -65,6 +65,9 @@ install -D -p -m644 dkms.preset %buildroot%_presetdir/30-dkms.preset
 # Fix daemon executable in service file
 subst 's|%buildroot||' %buildroot%_unitdir/dkms.service %buildroot%_initdir/dkms %buildroot%_libexecdir/dkms/postinst %buildroot%_libexecdir/dkms/dkms_autoinstaller
 
+# Remove kernel hook because we use rpm filetrigger
+rm -f %buildroot%_libexecdir/kernel/install.d/*.install
+
 %post
 %post_service dkms
 
@@ -120,6 +123,9 @@ rm -rf /usr/src/dkms_test-1.0
 %files checkinstall
 
 %changelog
+* Thu Oct 03 2024 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1
+- New version.
+
 * Thu Mar 07 2024 Andrey Cherepanov <cas@altlinux.org> 3.0.13-alt1
 - New version.
 
