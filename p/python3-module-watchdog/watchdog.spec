@@ -15,7 +15,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 5.0.2
+Version: 5.0.3
 Release: alt1
 
 Summary: Filesystem events monitoring
@@ -72,6 +72,9 @@ export NO_SUDO=YES
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 04 2024 Stanislav Levin <slev@altlinux.org> 5.0.3-alt1
+- 5.0.2 -> 5.0.3.
+
 * Wed Sep 04 2024 Stanislav Levin <slev@altlinux.org> 5.0.2-alt1
 - 5.0.1 -> 5.0.2.
 
