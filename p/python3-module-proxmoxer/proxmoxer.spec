@@ -1,12 +1,13 @@
 %set_python3_req_method strict
 %define _unpackaged_files_terminate_build 1
 %define pypi_name proxmoxer
+%def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.1
+Version: 2.1.0
 Release: alt1
 
-Summary: Wrapper around Proxmox REST API v2
+Summary: A Python wrapper for Proxmox REST API
 License: MIT
 Group: Development/Python3
 Url: https://github.com/proxmoxer/proxmoxer
@@ -21,16 +22,26 @@ BuildRequires: python3(wheel)
 BuildRequires: python3(requests)
 BuildRequires: python3(paramiko)
 
+%if_with check
+BuildRequires: python3(responses)
+BuildRequires: python3(requests_toolbelt)
+BuildRequires: python3(pytest)
+BuildRequires: python3(openssh_wrapper)
+%endif
+
+
 %py3_provides %pypi_name
 
 %add_python3_req_skip httplib # python3(http) is used instead this
 %add_python3_req_skip urlparse # python3(urllib) is used instead this
 
 %description
-Pythonic API for a Proxmox cluster manipulation.
+Proxmoxer is a python wrapper around the Proxmox REST API v2.
+It currently supports the Proxmox services of Proxmox Virtual Environment (PVE),
+Proxmox Mail Gateway (PMG), and Proxmox Backup Server (PBS).
 
 %prep
-%setup -q -n %name-%version
+%setup
 
 %build
 %pyproject_build
@@ -38,12 +49,19 @@ Pythonic API for a Proxmox cluster manipulation.
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest
+
 %files
 %python3_sitelibdir/%pypi_name
 %python3_sitelibdir/%pypi_name-%version.dist-info
 %doc README.rst LICENSE.txt
 
 %changelog
+* Tue Aug 13 2024 Alexander Makeenkov <amakeenk@altlinux.org> 2.1.0-alt1
+- Updated to version 2.1.0.
+- Enabled tests.
+
 * Tue Jan 03 2023 Alexander Makeenkov <amakeenk@altlinux.org> 2.0.1-alt1
 - Updated to version 2.0.1
 - Use pyproject macroses for build
