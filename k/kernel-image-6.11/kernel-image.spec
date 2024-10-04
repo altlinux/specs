@@ -2,7 +2,7 @@ Name: kernel-image-6.11
 Release: alt1
 %define kernel_src_version	6.11
 %define kernel_base_version	6.11
-%define kernel_sublevel	.1
+%define kernel_sublevel	.2
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -578,6 +578,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Oct 05 2024 Kernel Bot <kernelbot@altlinux.org> 6.11.2-alt1
+- v6.11.2 (2024-10-04).
+- config-aarch64: enable more configs for better Rockchip support.
+
 * Mon Sep 30 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.1-alt1
 - Update to v6.11.1 (2024-09-30).
 - config: Enable CONFIG_FPROBE=y.
