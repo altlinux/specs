@@ -1,8 +1,9 @@
 %define cname spleen
+%define cfontsdir %_prefix/lib/kbd/consolefonts
 
 Name: fonts-bitmap-%cname
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 Summary: Monospaced bitmap fonts
 License: BSD-2-Clause
@@ -12,7 +13,8 @@ Vcs: https://github.com/fcambus/spleen
 
 BuildArch: noarch
 
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Source1: console-setup.tar
 
 BuildRequires(pre): rpm-build-fonts
 BuildRequires: bdftopcf
@@ -51,22 +53,50 @@ Spleen also has support for Powerline symbols out of the box.
 
 The font name is a reference to Baudelaire.
 
+%package -n fonts-console-%name
+Summary: Monospaced console fonts
+Group: System/Fonts/Console
+
+%description -n fonts-console-%name
+%{summary -n fonts-console-%name}.
+
 %prep
-%setup
+%setup -a1
 
 %build
+CONSETUP=console-setup
+EQUIVALENT="${CONSETUP}/standard.equivalents"
+ASCII="${CONSETUP}/ascii.set"
+LINUX="${CONSETUP}/linux.set"
+USEFUL="${CONSETUP}/useful.set"
+FONTSET="${CONSETUP}/Uni1.512+:${ASCII}+:${LINUX}+:${USEFUL}"
+OPTIONS="${EQUIVALENT} ${FONTSET} 512"
+
 for size in $(ls -1 spleen-*.bdf | grep -oE '[[:digit:]]+x[[:digit:]]+'); do
     %_bindir/bdftopcf -t -o spleen-${size}.pcf spleen-${size}.bdf
     gzip spleen-${size}.pcf
+
+    ./${CONSETUP}/bdf2psf --fb spleen-${size}.bdf ${OPTIONS} spleen-${size}.psfu
+    gzip spleen-${size}.psfu
 done
 
 %install
 %bitmap_fonts_install %cname
 
+for file in $(ls -1 spleen-*.psfu.gz); do
+    install -vpD -m644 ${file} %buildroot%cfontsdir/${file}
+done
+
 %files -f %cname.files
 %doc LICENSE AUTHORS README.md FAQ
 
+%files -n fonts-console-%name
+%cfontsdir/spleen-*.psfu.gz
+
 %changelog
+* Sat Oct 05 2024 Anton Zhukharev <ancieg@altlinux.org> 2.1.0-alt2
+- Added package with console fonts.
+
 * Mon Mar 25 2024 Anton Zhukharev <ancieg@altlinux.org> 2.1.0-alt1
 - Updated to 2.1.0.
 
