@@ -38,7 +38,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -418,6 +418,12 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Sat Oct 05 2024 Yuri N. Sedunov <aris@altlinux.org> 4.16.3-alt1
+- 4.16.3
+- gtk4-icon-cache.filetrigger: don't include image data in the cache
+  if /etc/gtk-4.0/gtk4-update-icon-cache-no-include-image-data exists
+  (ALT #50313)
+
 * Tue Sep 24 2024 Yuri N. Sedunov <aris@altlinux.org> 4.16.2-alt1
 - 4.16.2
 
