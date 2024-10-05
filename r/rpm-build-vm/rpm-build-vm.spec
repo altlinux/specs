@@ -9,7 +9,7 @@
 %endif
 
 Name: rpm-build-vm
-Version: 1.72
+Version: 1.73
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -231,6 +231,9 @@ vm-run --stub-exit=7 && exit 1 || test $? -eq 7
 %endif
 
 %changelog
+* Sat Oct 05 2024 Vitaly Chikunov <vt@altlinux.org> 1.73-alt1
+- Reduce the initrd size by improving the handling of zstd compressed modules.
+
 * Sun Sep 08 2024 Vitaly Chikunov <vt@altlinux.org> 1.72-alt1
 - Add --klog to maximize printk level just before running the command.
 
