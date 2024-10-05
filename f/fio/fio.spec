@@ -28,7 +28,7 @@
 %endif
 
 Name: fio
-Version: 3.37
+Version: 3.38
 Release: alt1
 Summary: Flexible I/O Tester
 License: GPL-2.0
@@ -55,7 +55,7 @@ BuildRequires: zlib-devel
 %{?_enable_libnfs:BuildRequires: libnfs-devel}
 %{?_enable_numa:BuildRequires: libnuma-devel }
 %{?_enable_rbd:BuildRequires: ceph-devel}
-%{?_enable_rdmacm:BuildRequires: librdmacm-devel}
+%{?_enable_rdmacm:BuildRequires: librdmacm-devel libnl-devel}
 %{?_enable_libpmem:BuildRequires: libpmem-devel}
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: CUnit-devel
@@ -250,6 +250,9 @@ rmdir $PWD
 %files checkinstall
 
 %changelog
+* Sat Oct 05 2024 Vitaly Chikunov <vt@altlinux.org> 3.38-alt1
+- Update to fio-3.38 (2024-10-02).
+
 * Wed Mar 27 2024 Vitaly Chikunov <vt@altlinux.org> 3.37-alt1
 - Update to fio-3.37 (2024-03-26).
 
