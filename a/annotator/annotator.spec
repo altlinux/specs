@@ -9,12 +9,13 @@
 
 Name: annotator
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Image annotation for Elementary OS
 License: GPL-2.0-or-later
 Group: Graphics
 Url: https://github.com/phase1geo/Annotator
+
 Vcs: https://github.com/phase1geo/Annotator.git
 
 %if_disabled snapshot
@@ -75,6 +76,9 @@ Annotate your images and let a picture say 1000 words.
 
 
 %changelog
+* Sat Oct 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt2
+- updated to 1.2.1-69-g77c352e
+
 * Fri May 10 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
 - first build for Sisyphus (1.2.1-62-gdf6f74d)
 

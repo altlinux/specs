@@ -1,8 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define _name curtail
-%define ver_major 1.10
-%define xdg_name com.github.huluti.Curtail
+%define _name Curtail
+%define ver_major 1.11
+%define xdg_name com.github.huluti.%_name
 
 %def_enable check
 
@@ -15,17 +15,18 @@ License: GPL-3.0-or-later
 Group: Graphics
 Url: https://apps.gnome.org/Curtail
 
-%if_disabled snapshot
-Source: %url/-/archive/v%version/%name-%version.tar.gz
-%else
 Vcs: https://github.com/Huluti/Curtail.git
+
+%if_disabled snapshot
+Source: https://github.com/Huluti/Curtail/archive/%version/%name-%version.tar.gz
+%else
 Source: %name-%version.tar
 %endif
 
 BuildArch: noarch
 %add_python3_path %_datadir/%name
 
-%define adwaita_ver 1.5
+%define adwaita_ver 1.6
 
 Requires: typelib(Adw) = 1
 Requires: yelp
@@ -48,7 +49,7 @@ It supports both lossless and lossy compression modes with an option to
 whether keep or not metadata of images.
 
 %prep
-%setup
+%setup %{?_disable_snapshot:-n %_name-%version}
 
 %build
 %meson
@@ -71,6 +72,9 @@ whether keep or not metadata of images.
 %doc README*
 
 %changelog
+* Sat Oct 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1.11.0-alt1
+- 1.11.0
+
 * Sat Jun 15 2024 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
 - updated to 1.10.0-2-ge6900c9
 
