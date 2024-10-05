@@ -1,10 +1,9 @@
-%define _unpackaged_files_terminate_build 1
 %define oname robotframework
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 7.0
+Version: 7.1
 Release: alt1
 
 Summary: A generic test automation framework
@@ -69,6 +68,9 @@ EOF
 %python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Sat Oct 05 2024 Grigory Ustinov <grenka@altlinux.org> 7.1-alt1
+- Automatically updated to 7.1.
+
 * Wed Apr 03 2024 Grigory Ustinov <grenka@altlinux.org> 7.0-alt1
 - Automatically updated to 7.0.
 
