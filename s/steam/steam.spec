@@ -1,6 +1,6 @@
 Name: steam
-Version: 1.0.0.81
-Release: alt3
+Version: 1.0.0.82
+Release: alt1
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -75,6 +75,9 @@ savegame and screenshot functionality, and many social features.
 %config %_datadir/polkit-1/rules.d/%name-nm.rules
 
 %changelog 
+* Sat Oct 05 2024 Nazarov Denis <nenderus@altlinux.org> 1.0.0.82-alt1
+- Version 1.0.0.82
+
 * Wed Oct 02 2024 Nazarov Denis <nenderus@altlinux.org> 1.0.0.81-alt3
 - Remove require xorg-dri-swrast (ALT #51618)
 
