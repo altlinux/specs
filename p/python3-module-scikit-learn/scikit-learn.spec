@@ -1,12 +1,12 @@
 %define oname scikit-learn
 
 # CPU time limit exceeded
-# 1.4.0 passes check on local machine
+# 1.5.2 passes check on local machine
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.4.0
-Release: alt2
+Version: 1.5.2
+Release: alt1
 
 Summary: A set of python modules for machine learning and data mining
 
@@ -29,6 +29,8 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-numpy
 BuildRequires: python3-module-scipy
 BuildRequires: python3-module-Cython
+BuildRequires: python3-module-mesonpy
+BuildRequires: meson
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -82,6 +84,9 @@ popd
 %python3_sitelibdir/sklearn/utils/__pycache__/_testing.*
 
 %changelog
+* Sat Oct 05 2024 Grigory Ustinov <grenka@altlinux.org> 1.5.2-alt1
+- Automatically updated to 1.5.2.
+
 * Mon Feb 12 2024 Michael Shigorin <mike@altlinux.org> 1.4.0-alt2
 - E2K: disable openmp on e2k
 
