@@ -31,7 +31,7 @@
 %def_enable rrdtool
 %def_enable sensors
 %def_enable snmp
-%def_enable tokyotyrant
+%def_disable tokyotyrant
 %def_disable xmms
 %def_enable amqp
 %def_enable write_http
@@ -46,7 +46,7 @@
 
 Name: collectd
 Version: 5.12.0
-Release: alt5
+Release: alt6
 
 Summary: (Multi-)System statistics collection
 License: GPLv2 AND MIT
@@ -1017,6 +1017,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Sat Oct 05 2024 Anton Farygin <rider@altlinux.ru> 5.12.0-alt6
+- disabled unsupported tokyo tyrant
+
 * Wed Nov 01 2023 Anton Farygin <rider@altlinux.ru> 5.12.0-alt5
 - fixed build with python 3.11
 
