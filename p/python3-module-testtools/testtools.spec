@@ -1,30 +1,29 @@
-%define _unpackaged_files_terminate_build 1
 %define pypi_name testtools
 %define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.6.0
-Release: alt1.1
+Version: 2.7.2
+Release: alt1
 Summary: Extensions to the Python standard library's unit testing framework
 License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/testtools/
-Vcs: https://github.com/testing-cabal/testtools
+URL: https://pypi.org/project/testtools
+VCS: https://github.com/testing-cabal/testtools
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
-Patch0: %name-%version-alt.patch
-%pyproject_runtimedeps_metadata
 %add_python3_req_skip twisted
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-vcs
+BuildRequires: python3-module-setuptools-scm
+
 %if_with check
-%pyproject_builddeps_metadata_extra test
-%pyproject_builddeps_metadata_extra twisted
 # tests are subpackaged
 BuildRequires: python3-module-twisted-core-tests
+BuildRequires: python3-module-testscenarios
 %endif
 
 %description
@@ -35,19 +34,13 @@ sources.
 
 %prep
 %setup
-%autopatch -p1
-%pyproject_scm_init
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
 %pyproject_install
-
-# remove import of distutils.dist
-rm -rv %buildroot%python3_sitelibdir/%mod_name/tests/test_distutilscmd.py
 
 %check
 %pyproject_run -- python -m testtools.run testtools.tests.test_suite
@@ -58,6 +51,10 @@ rm -rv %buildroot%python3_sitelibdir/%mod_name/tests/test_distutilscmd.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Oct 05 2024 Grigory Ustinov <grenka@altlinux.org> 2.7.2-alt1
+- Automatically updated to 2.7.2.
+- Fixed package building scheme.
+
 * Tue Oct 24 2023 Grigory Ustinov <grenka@altlinux.org> 2.6.0-alt1.1
 - NMU: dropped dependency on distutils.
 
