@@ -1,6 +1,7 @@
 %define _name libwnck
 %define ver_major 43
 %define api_ver 3.0
+%define namespace Wnck
 
 %def_enable introspection
 %def_enable startup_notification
@@ -9,25 +10,15 @@
 %def_enable check
 
 Name: %{_name}3
-Version: %ver_major.0
-Release: alt2.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: libwnck is a Window Navigator Construction Kit
-License: LGPL-2.0
+License: LGPL-2.0-or-later
 Group: System/Libraries
-Url: http://www.gnome.org
+Url: https://www.gnome.org
 
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
-# https://gitlab.archlinux.org/archlinux/packaging/packages/libwnck3/-/raw/main/0001-handle-avoid-segfault-in-invalidate_icons.patch
-Patch1: libwnck3-43.0-archlinux-handle-avoid-segfault-in-invalidate_icons.patch
-# https://gitlab.archlinux.org/archlinux/packaging/packages/libwnck3/-/raw/main/0002-handle-init-XRes-extension.patch
-Patch2: libwnck3-43.0-archlinux-handle-init-XRes-extension.patch
-# https://gitlab.archlinux.org/archlinux/packaging/packages/libwnck3/-/raw/main/0003-xutils-move-XRes-code-to-separate-function.patch
-Patch3: libwnck3-43.0-archlinux-xutils-move-XRes-code-to-separate-function.patch
-# https://gitlab.archlinux.org/archlinux/packaging/packages/libwnck3/-/raw/main/0004-xutils-use-WnckScreen-in-_wnck_get_pid.patch
-Patch4: libwnck3-43.0-archlinux-xutils-use-WnckScreen-in-_wnck_get_pid.patch
-# https://gitlab.archlinux.org/archlinux/packaging/packages/libwnck3/-/raw/main/0005-xutils-check-if-XRes-is-available-before-using-XResQ.patch
-Patch5: libwnck3-43.0-archlinux-xutils-check-if-XRes-is-available-before-using-XResQ.patch
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome %{?_enable_introspection:rpm-build-gir}
 BuildRequires: meson libX11-devel libXres-devel libXi-devel pkgconfig(cairo-xlib-xrender)
@@ -82,14 +73,14 @@ GObject introspection devel data for the Window Navigator Construction Kit libra
 
 %prep
 %setup -n %_name-%version
-%autopatch -p1
 
 %build
 %meson \
-    %{?_disable_startup_notification:-Dstartup-notification=disabled} \
-    %{?_disable_introspection:--Dintrospection=disabled} \
-    %{?_disable_install_tools:-Dinstall_tools=false} \
-    %{?_enable_gtk_doc:-Dgtk_doc=true}
+    %{subst_enable_meson_feature startup_notification startup_notification} \
+    %{subst_enable_meson_feature introspection introspection} \
+    %{subst_enable_meson_bool install_tools install_tools} \
+    %{subst_enable_meson_bool gtk_doc gtk_doc}
+%nil
 %meson_build
 
 %install
@@ -97,8 +88,7 @@ GObject introspection devel data for the Window Navigator Construction Kit libra
 %find_lang --output=%_name.lang %_name-%api_ver
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 
 %files -f %_name.lang
@@ -120,14 +110,18 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 %if_enabled introspection
 %files gir
-%_typelibdir/*
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/*
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 
 %changelog
+* Sat Oct 05 2024 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt1
+- 43.1
+- drop upstreamed patches
+
 * Fri Dec 29 2023 Leontiy Volodin <lvol@altlinux.org> 43.0-alt2.1
 - trully apply the patches
 

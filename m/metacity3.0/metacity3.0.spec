@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name metacity
-%define ver_major 3.52
+%define ver_major 3.54
 %define api_ver 3.0
 %def_disable static
 %def_enable vulkan
@@ -21,11 +21,11 @@ Source: %_name-%version.tar
 %endif
 
 # From configure.ac
-%define gtk_ver 3.22.0
-%define glib_ver 2.44.0
+%define gtk_ver 3.24.6
+%define glib_ver 2.68.0
 %define startup_notification_ver 0.7
 %define xcomposite_ver 0.3
-%define gsds_ver 3.3.0
+%define gsds_ver 42.0
 
 Conflicts: %_name
 Obsoletes: %name-themes-default < %version-%release
@@ -135,6 +135,9 @@ This package contains the lib%name static library.
 %endif
 
 %changelog
+* Sat Oct 05 2024 Yuri N. Sedunov <aris@altlinux.org> 3.54.0-alt1
+- 3.54.0
+
 * Wed Mar 20 2024 Yuri N. Sedunov <aris@altlinux.org> 3.52.0-alt1
 - 3.52.0
 

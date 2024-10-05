@@ -1,20 +1,22 @@
 %def_disable snapshot
 
-%define ver_major 46
+%define ver_major 47
 %define beta %nil
 %define api_ver 3.0
 %define xdg_name org.gnome.Gtranslator
 
-%def_disable gtk_doc
+%def_enable check
 
 Name: gtranslator
-Version: %ver_major.1
-Release: alt1.1%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: A GNOME po file editor with many bells and whistles.
-License: GPLv3
+License: GPL-3.0-or-later
 Group: Development/Tools
-Url: https://wiki.gnome.org/Apps/Gtranslator
+Url: https://gitlab.gnome.org/GNOME/gtranslator
+
+Vcs: https://gitlab.gnome.org/GNOME/gtranslator.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
@@ -24,21 +26,23 @@ Source: %name-%version.tar
 
 Requires: libgda6-sqlite gettext-tools
 
-%define gtk_ver 4.12.0
-%define adw_ver 1.5
+%define gtk_ver 4.16
+%define adw_ver 1.6
 %define spell_ver 0.2.0
 %define gtksourceview_api_ver 5
 %define gtksourceview_ver 5.10.0
 %define xml_ver 2.4.12
+%define json_glib_ver 1.2.0
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gir
-BuildRequires: meson yelp-tools gtk-doc
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson yelp-tools
 BuildRequires: libgtk4-devel >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: libgda6-devel libgtksourceview%gtksourceview_api_ver-devel >= %gtksourceview_ver
 BuildRequires: libsoup3.0-devel gsettings-desktop-schemas-devel iso-codes-devel
 BuildRequires: libspelling-devel >= %spell_ver libxml2-devel >= %xml_ver
-BuildRequires: libjson-glib-devel
+BuildRequires: libjson-glib-devel >= %json_glib_ver
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 gtranslator is a quite comfortable gettext po/po.gz/(g)mo files editor
@@ -47,38 +51,20 @@ and many useful functions are already implemented; gtranslator aims to
 be a very complete editing environment for translation issues within the
 GNU gettext/GNOME desktop world.
 
-%package devel
-Summary: %name header files
-Group: Development/C
-BuildArch: noarch
-Requires: %name = %EVR
-
-%description devel
-This package provides header files needed for build %name plugins.
-
-%package devel-doc
-Summary: %name development documentation
-Group: Development/C
-BuildArch: noarch
-Conflicts: %name < %version
-
-%description devel-doc
-This package contains documentation needed to develop %name plugins.
-
-%set_typelibdir %_libdir/%name/girepository-1.0
 
 %prep
 %setup
 
 %build
-%meson -Dbuildtype=release \
-%{?_enable_gtk_doc:-Dgtk_doc=true}
-%nil
+%meson
 %meson_build
 
 %install
 %meson_install
 %find_lang --with-gnome %name
+
+%check
+%__meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -91,13 +77,11 @@ This package contains documentation needed to develop %name plugins.
 %_datadir/metainfo/%xdg_name.appdata.xml
 %doc AUTHORS NEWS README* THANKS
 
-%files devel
-%_includedir/gtr-marshal.h
-
-%{?_enable_gtk_doc:%files devel-doc
-%_datadir/gtk-doc/html/%name/}
 
 %changelog
+* Sat Oct 05 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- 47.0
+
 * Tue Sep 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1.1
 rebuilt against libspelling-0.4.0
 
