@@ -3,7 +3,7 @@
 
 Name: fonts-bitmap-%cname
 Version: 2.1.0
-Release: alt2
+Release: alt3
 
 Summary: Monospaced bitmap fonts
 License: BSD-2-Clause
@@ -53,12 +53,12 @@ Spleen also has support for Powerline symbols out of the box.
 
 The font name is a reference to Baudelaire.
 
-%package -n fonts-console-%name
+%package -n fonts-console-%cname
 Summary: Monospaced console fonts
 Group: System/Fonts/Console
 
-%description -n fonts-console-%name
-%{summary -n fonts-console-%name}.
+%description -n fonts-console-%cname
+%{summary -n fonts-console-%cname}.
 
 %prep
 %setup -a1
@@ -90,10 +90,13 @@ done
 %files -f %cname.files
 %doc LICENSE AUTHORS README.md FAQ
 
-%files -n fonts-console-%name
+%files -n fonts-console-%cname
 %cfontsdir/spleen-*.psfu.gz
 
 %changelog
+* Sat Oct 05 2024 Anton Zhukharev <ancieg@altlinux.org> 2.1.0-alt3
+- Fixed name for package with console fonts.
+
 * Sat Oct 05 2024 Anton Zhukharev <ancieg@altlinux.org> 2.1.0-alt2
 - Added package with console fonts.
 
