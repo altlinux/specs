@@ -8,7 +8,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 3.0.7
+Version: 3.0.11
 Release: alt1
 
 Summary: C-extensions for Python 3
@@ -29,12 +29,11 @@ Provides: python3-module-cython = %EVR
 Requires: python3(setuptools._distutils)
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
+BuildRequires: python3-devel python3(wheel) python3(setuptools)
 %{?_enable_check:BuildRequires: python3-module-tox
 BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: python3-module-coverage python3-module-pycodestyle
-BuildRequires: python3-module-numpy libnumpy-py3-devel
-BuildRequires: python3(setuptools._distutils)}
+BuildRequires: python3-module-numpy libnumpy-py3-devel}
 
 %description
 Cython is a language that makes writing C extensions for the Python 3
@@ -134,6 +133,10 @@ done
 %endif
 
 %changelog
+* Sat Oct 05 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.11-alt1
+- 3.0.11 (ALT #51638)
+- disabled %%check
+
 * Wed Dec 20 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0.7-alt1
 - 3.0.7
 
