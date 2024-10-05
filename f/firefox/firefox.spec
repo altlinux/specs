@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 130.0.1
+Version: 131.0.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -264,12 +264,12 @@ done < .rpm/firefox-l10n.txt
 
 make -C objdir/browser/installer multilocale.txt
 
-$CC $CFLAGS \
+$CXX $CXXFLAGS \
 	-Wall -Wextra \
 	-DMOZ_PLUGIN_PATH=\"%browser_plugins_path\" \
 	-DMOZ_PROGRAM=\"%firefox_prefix/firefox\" \
 	-DMOZ_DIST_BIN=\"%firefox_prefix\"\
-	.rpm/firefox.c -o firefox
+	.rpm/firefox.cpp -o firefox
 
 %install
 export SHELL=/bin/sh
@@ -383,6 +383,25 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Fri Oct 04 2024 Ajrat Makhmutov <rauty@altlinux.org> 131.0.0-alt1
+- New version (131.0.0).
+- Add the WM_CLASS setting directly in the app launcher (closes: 51627).
+- Stop unsetting the DISPLAY variable in the app launcher (closes: 51569).
+- Security fixes:
+  + CVE-2024-9391: Prevent users from exiting full-screen mode in Firefox Focus for Android
+  + CVE-2024-9392: Compromised content process can bypass site isolation
+  + CVE-2024-9393: Cross-origin access to PDF contents through multipart responses
+  + CVE-2024-9394: Cross-origin access to JSON contents through multipart responses
+  + CVE-2024-9395: Specially crafted filename could be used to obscure download type
+  + CVE-2024-9396: Potential memory corruption may occur when cloning certain objects
+  + CVE-2024-9397: Potential directory upload bypass via clickjacking
+  + CVE-2024-9398: External protocol handlers could be enumerated via popups
+  + CVE-2024-9399: Specially crafted WebTransport requests could lead to denial of service
+  + CVE-2024-9400: Potential memory corruption during JIT compilation
+  + CVE-2024-9401: Memory safety bugs fixed in Firefox 131, Firefox ESR 115.16, Firefox ESR 128.3, Thunderbird 131, and Thunderbird 128.3
+  + CVE-2024-9402: Memory safety bugs fixed in Firefox 131, Firefox ESR 128.3, Thunderbird 131, and Thunderbird 128.3
+  + CVE-2024-9403: Memory safety bugs fixed in Firefox 131 and Thunderbird 131
+
 * Thu Sep 19 2024 Ajrat Makhmutov <rauty@altlinux.org> 130.0.1-alt1
 - New version (130.0.1).
 

@@ -16,7 +16,7 @@
 %endif
 
 Name: 	 thunderbird
-Version: 128.2.3
+Version: 128.3.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -25,7 +25,7 @@ Group: 	 Networking/Mail
 URL: 	 https://www.thunderbird.net
 
 Source0: %name-%version.tar
-Source1: thunderbird.c
+Source1: thunderbird.cpp
 Source2: rpm.macros
 Source3: thunderbird.desktop
 Source4: thunderbird-mozconfig
@@ -397,7 +397,7 @@ popd
 
 # This is necessary to configure the environment variables.
 # It is written in C so that the process in the ps has the right name.
-$CC $CFLAGS \
+$CXX $CXXFLAGS \
 	-Wall -Wextra \
 	-DMOZ_PLUGIN_PATH=\"%browser_plugins_path\" \
 	-DMOZ_PROGRAM=\"%tbird_prefix/thunderbird-bin\" \
@@ -520,6 +520,22 @@ cat %SOURCE2 | \
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Thu Oct 03 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.3.0-alt1
+- New version.
+- Add the WM_CLASS setting directly in the app launcher (closes: 51613).
+- Security fixes:
+  + CVE-2024-9392: Compromised content process can bypass site isolation
+  + CVE-2024-9393: Cross-origin access to PDF contents through multipart responses
+  + CVE-2024-9394: Cross-origin access to JSON contents through multipart responses
+  + CVE-2024-8900: Clipboard write permission bypass
+  + CVE-2024-9396: Potential memory corruption may occur when cloning certain objects
+  + CVE-2024-9397: Potential directory upload bypass via clickjacking
+  + CVE-2024-9398: External protocol handlers could be enumerated via popups
+  + CVE-2024-9399: Specially crafted WebTransport requests could lead to denial of service
+  + CVE-2024-9400: Potential memory corruption during JIT compilation
+  + CVE-2024-9401: Memory safety bugs fixed in Firefox 131, Firefox ESR 115.16, Firefox ESR 128.3, Thunderbird 131, and Thunderbird 128.3
+  + CVE-2024-9402: Memory safety bugs fixed in Firefox 131, Firefox ESR 128.3, Thunderbird 131, and Thunderbird 128.3
+
 * Sat Sep 21 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.2.3-alt1
 - New version.
 
