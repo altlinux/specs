@@ -1,20 +1,21 @@
 %define oname fuse
 
 Name: python3-module-%oname
-Version: 1.0.7
+Version: 1.0.8
 Release: alt1
 
 Summary: This is a Python interface to FUSE
-License: LGPL
+License: LGPL-2.1
 Group: Development/Python3
-Url: http://sourceforge.net/projects/fuse/
-# https://github.com/libfuse/python-fuse
+URL: https://pypi.org/project/fuse-python
+VCS: https://github.com/libfuse/python-fuse
 
-Source0: python-%oname.tar
+Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: libfuse-devel
-
 
 %description
 This is a Python interface to FUSE.
@@ -28,17 +29,22 @@ create and mount their own filesystem implementations.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc AUTHORS COPYING FAQ README.* example
-%python3_sitelibdir/*
-
+%python3_sitelibdir/fuse.py
+%python3_sitelibdir/__pycache__
+%python3_sitelibdir/fuse_python-%version.dist-info
+%python3_sitelibdir/fuseparts
 
 %changelog
+* Fri Aug 23 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.8-alt1
+- Automatically updated to 1.0.8.
+
 * Tue Jan 09 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.7-alt1
 - Updated to 1.0.7.
 
