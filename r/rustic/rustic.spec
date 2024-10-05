@@ -3,7 +3,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name:    rustic
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 
 Summary: rustic - fast, encrypted, deduplicated backups powered by pure Rust
@@ -20,12 +20,13 @@ BuildRequires(pre): rpm-build-rust
 BuildRequires: pkgconfig(libzstd)
 
 %description
-Rustic is a backup tool that provides fast, encrypted, deduplicated backups. It
-reads and writes the restic repo format described in the design document and can
-therefore be used as a complete replacement for restic.
+Rustic is a backup tool that provides fast, encrypted, deduplicated
+backups. It reads and writes the restic repo format described in the
+design document and can therefore be used as a complete replacement
+for restic.
 
-rustic currently is in beta state and misses regression tests. It is not
-recommended to use it for production backups, yet.
+NB: rustic currently is in beta state and misses regression tests.
+    It is not recommended to use it for production backups, yet.
 
 %prep
 %setup
@@ -75,6 +76,7 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %rust_test
 %buildroot%_bindir/rustic --version | grep -Fx '%name %version'
 ldd %buildroot%_bindir/rustic | grep libzstd.so
+grep -sF 'https://cloud-api.yandex.net/v1/disk' %buildroot%_bindir/rustic
 ## Smoke test.
 PATH=%buildroot%_bindir:$PATH
 export RUSTIC_PASSWORD=rustic
@@ -88,14 +90,16 @@ diff -qr --exclude=target . ../x
 
 %files
 %define _customdocdir %_docdir/%name
-%doc *.md
-%doc rustic-docs/src/*
+%doc *.md config rustic-docs/src/*
 %_bindir/%name
 %_datadir/bash-completion/completions/%name
 %_datadir/zsh/site-functions/_%name
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Fri Oct 04 2024 Vitaly Chikunov <vt@altlinux.org> 0.9.1-alt1
+- Update to v0.9.1 (2024-10-03).
+
 * Mon Sep 30 2024 Vitaly Chikunov <vt@altlinux.org> 0.9.0-alt1
 - Update to v0.9.0 (2024-09-29).
   Note: this release has Breaking Changes (see breaking_changes.md).
