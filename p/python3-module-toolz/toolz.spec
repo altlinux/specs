@@ -1,7 +1,7 @@
 %define oname toolz
 
 Name: python3-module-%oname
-Version: 0.12.1
+Version: 1.0.0
 Release: alt1
 
 Summary: List processing tools and functional utilities
@@ -42,6 +42,9 @@ sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sat Oct 05 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1
+- Automatically updated to 1.0.0.
+
 * Sun May 19 2024 Grigory Ustinov <grenka@altlinux.org> 0.12.1-alt1
 - Built new version.
 - Built with check.
