@@ -1,17 +1,17 @@
 %define oname freetype
 
 Name: python3-module-%oname
-Version: 2.4.0
+Version: 2.5.1
 Release: alt1
 
 Summary: Freetype python bindings
 License: BSD
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/freetype-py/
+URL: https://pypi.org/project/freetype-py
+VCS: https://github.com/rougier/freetype-py
 
 BuildArch: noarch
 
-# https://github.com/rougier/freetype-py.git
 Source: %name-%version.tar
 Patch1: %oname-1.1-alt-build.patch
 
@@ -87,6 +87,9 @@ cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc examples doc/_build/html
 
 %changelog
+* Sat Oct 05 2024 Grigory Ustinov <grenka@altlinux.org> 2.5.1-alt1
+- Build new version.
+
 * Tue Nov 28 2023 Grigory Ustinov <grenka@altlinux.org> 2.4.0-alt1
 - Build new version (Closes: #48597).
 
