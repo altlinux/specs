@@ -1,6 +1,7 @@
 %define pypi_name pbr
 
 %def_without doc
+%def_with check
 
 %define descr \
 PBR is a library that injects some useful and sensible default behaviors \
@@ -11,23 +12,32 @@ branches, it seems like a good time to make that code into a proper \
 re-usable library.
 
 Name:       python3-module-%pypi_name
-Version:    6.0.0
+Version:    6.1.0
 Release:    alt1
 
 Summary:    Python Build Reasonableness
 
 Group:      Development/Python3
 License:    Apache-2.0
-URL:        http://pypi.python.org/pypi/pbr
+URL:        https://pypi.org/project/pbr
+VCS:        https://opendev.org/openstack/pbr
 
-# Source-url: %__pypi_url %pypi_name
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
 %if_with doc
-BuildRequires: python3-module-sphinx python3-module-sphinxcontrib-apidoc
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinxcontrib-apidoc
+%endif
+
+%if_with check
+BuildRequires: python3-module-stestr
+BuildRequires: python3-module-testresources
+BuildRequires: git gnupg
 %endif
 
 BuildArch:  noarch
@@ -53,7 +63,7 @@ rm -rf %{pypi_name}.egg-info
 %build
 export PBR_VERSION="%version"
 export SKIP_PIP_INSTALL=1
-%python3_build
+%pyproject_build
 
 %if_with doc
 # generate html docs
@@ -64,11 +74,15 @@ rm -rf html/.{doctrees,buildinfo}
 
 %install
 export PBR_VERSION="%version"
-%python3_install
-%python3_prune
+%pyproject_install
+rm -rv %buildroot%python3_sitelibdir/%pypi_name/tests
 
 # no idea who use it
 rm -fv %buildroot%python3_sitelibdir/%pypi_name/sphinxext.py
+
+%check
+excluded_tests='test_requirement_parsing|test_pep_517_support|test_wsgi_script_run|test_with_argument'
+%tox_check_pyproject -- --exclude-regex "$excluded_tests"
 
 %files
 %doc README.rst LICENSE
@@ -76,10 +90,15 @@ rm -fv %buildroot%python3_sitelibdir/%pypi_name/sphinxext.py
 %doc html
 %endif
 %_bindir/*
-%python3_sitelibdir/%pypi_name-%version-py*.egg-info
+%python3_sitelibdir/%pypi_name-%version.dist-info
 %python3_sitelibdir/%pypi_name
 
 %changelog
+* Sat Oct 05 2024 Grigory Ustinov <grenka@altlinux.org> 6.1.0-alt1
+- Automatically updated to 6.1.0.
+- Moved on modern pyproject macros.
+= Built with check.
+
 * Mon Dec 18 2023 Grigory Ustinov <grenka@altlinux.org> 6.0.0-alt1
 - Automatically updated to 6.0.0.
 - Build without docs for python3.12.
