@@ -3,8 +3,9 @@
 %global import_path github.com/swaggo/swag
 
 Name: swag
-Version: 2.0.0
-Release: alt1.rc3
+Version: 1.16.3
+Release: alt1
+Epoch: 1
 
 Summary: Automatically generate RESTful API doc with Swagger 2.0 for Go
 License: MIT
@@ -49,6 +50,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Sat Oct 05 2024 Alexandr Shashkin <dutyrok@altlinux.org> 1:1.16.3-alt1
+- Rolled to 1.16.3.
+
 * Tue Jul 25 2023 Alexandr Shashkin <dutyrok@altlinux.org> 2.0.0-alt1.rc3
 - Initial build for Sisyphus
 
