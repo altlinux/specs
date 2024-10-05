@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.2.2
+Version: 4.2.5
 Release: alt1
 
 Summary: The Reportlab Toolkit
@@ -16,9 +16,11 @@ Url: http://www.reportlab.org
 # Source-url: %__pypi_url %rname
 Source: reportlab-%version.tar
 
-BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
+
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 BuildRequires: python3-module-sphinx
 BuildRequires: libfreetype-devel
@@ -49,27 +51,32 @@ This package contains documentation for Reportlab Toolkit.
 %setup -n reportlab-%version
 
 %build
-%add_optflags -fno-strict-aliasing
-%python3_build_debug
+%pyproject_build
 
 %make -C docs html SPHINXBUILD=sphinx-build-3
 
 %install
-%python3_install
-%python3_prune
+%pyproject_install
 
 %check
-python3 setup.py tests
+pushd tests
+python3 runAll.py
+popd
 
 %files
 %doc *.txt
-%python3_sitelibdir/%rname/
-%python3_sitelibdir/%rname-*.egg-info/
+%python3_sitelibdir/%rname
+%python3_sitelibdir/%rname-%version.dist-info
 
 %files docs
 %doc docs/build/html docs/userguide demos
 
 %changelog
+* Sat Oct 05 2024 Grigory Ustinov <grenka@altlinux.org> 4.2.5-alt1
+- Build new version.
+- Move on modern pyproject macros.
+- Fix check section.
+
 * Sun Jul 28 2024 Grigory Ustinov <grenka@altlinux.org> 4.2.2-alt1
 - Build new version.
 
