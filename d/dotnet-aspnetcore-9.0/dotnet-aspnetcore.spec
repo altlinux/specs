@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 9.0
-%define preview .preview.2
+%define preview .rc.1
 %define _dotnet_coreversion 9.0.0%preview
-%define _dotnet_corerelease 9.0.0-preview.2.24128.5
-%define _dotnet_corerelease1 9.0.0-preview.2.24128.4
+%define _dotnet_corerelease 9.0.0-rc.1.24431.7
+%define _dotnet_corerelease1 9.0.0-rc.1.24452.1
 %define _dotnet_aspnetcorerelease %_dotnet_corerelease1
 %define _dotnet_aspnetcoreapprefrelease %_dotnet_corerelease1
 
@@ -131,6 +131,9 @@ cp -a %bootstrapdir/packs/Microsoft.AspNetCore.App.Ref/%_dotnet_aspnetcoreappref
 %_dotnet_aspnetcoreappref/
 
 %changelog
+* Sun Oct 06 2024 Vitaly Lipatov <lav@altlinux.ru> 9.0.0.rc.1-alt1
+- ASP.NET 9.0.0 rc 1
+
 * Sat Apr 06 2024 Vitaly Lipatov <lav@altlinux.ru> 9.0.0.preview.2-alt1
 - ASP.NET 9.0.0 preview 2
 - initial release for ALT Sisyphus

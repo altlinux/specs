@@ -4,15 +4,17 @@
 %def_enable dotnet_host
 
 %define _dotnet_major 9.0
-%define preview .preview.2
+%define preview .rc.1
 %define _dotnet_coreversion 9.0.0%preview
 %define _dotnet_sdkversion 9.0.100%preview
-%define _dotnet_corerelease 9.0.0-preview.2.24128.5
-%define _dotnet_corerelease1 9.0.0-preview.2.24128.4
+
+%define _dotnet_corerelease 9.0.0-rc.1.24431.7
+%define _dotnet_corerelease1 9.0.0-rc.1.24452.1
 %define _dotnet_sdkmanifestsrelease0 8.0.100
-%define _dotnet_sdkmanifestsrelease1 9.0.100-preview.2
-%define _dotnet_sdkmanifestsrelease 9.0.100-preview.1
-%define _dotnet_sdkrelease 9.0.100-preview.2.24157.14
+%define _dotnet_sdkmanifestsrelease1 9.0.100-preview.6
+%define _dotnet_sdkmanifestsrelease 9.0.100-rc.1
+%define _dotnet_sdkrelease 9.0.100-rc.1.24452.12
+
 %define _dotnet_templatesrelease %_dotnet_corerelease1
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
 %define _dotnet_netstandartrelease 2.1.0
@@ -23,7 +25,7 @@ Name: dotnet-sdk-%_dotnet_major
 Version: %_dotnet_sdkversion
 Release: alt1
 
-Summary: SDK for the .NET 8
+Summary: SDK for the .NET 9
 
 License: MIT
 URL: https://github.com/dotnet/sdk
@@ -173,6 +175,9 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %endif
 
 %changelog
+* Sun Oct 06 2024 Vitaly Lipatov <lav@altlinux.ru> 9.0.100.rc.1-alt1
+- .NET SDK 9.0.0 rc 1
+
 * Sat Apr 06 2024 Vitaly Lipatov <lav@altlinux.ru> 9.0.100.preview.2-alt1
 - .NET SDK 9.0.0 preview 2
 - initial build for ALT Sisyphus

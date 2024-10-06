@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 9.0
-%define preview .preview.2
+%define preview .rc.1
 %define _dotnet_coreversion 9.0.0%preview
 %define _dotnet_sdkversion 9.0.100%preview
-%define _dotnet_corerelease 9.0.0-preview.2.24128.5
-%define _dotnet_corerelease1 9.0.0-preview.2.24128.4
+%define _dotnet_corerelease 9.0.0-rc.1.24431.7
+%define _dotnet_corerelease1 9.0.0-rc.1.24452.1
 %define _dotnet_sdkmanifestsrelease0 8.0.100
-%define _dotnet_sdkmanifestsrelease1 9.0.100-preview.2
-%define _dotnet_sdkmanifestsrelease 9.0.100-preview.1
-%define _dotnet_sdkrelease 9.0.100-preview.2.24157.14
+%define _dotnet_sdkmanifestsrelease1 9.0.100-preview.6
+%define _dotnet_sdkmanifestsrelease 9.0.100-rc.1
+%define _dotnet_sdkrelease 9.0.100-rc.1.24452.12
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
 %define _dotnet_aspnetcorerelease %_dotnet_corerelease1
 %define _dotnet_templatesrelease %_dotnet_corerelease1
@@ -18,7 +18,7 @@
 
 %define _dotnetdir %_libdir/%name
 #define mdsourceurl https://raw.githubusercontent.com/dotnet/core/main/release-notes/%_dotnet_major/%{_dotnet_corerelease}/%{_dotnet_sdkrelease}.md
-%define mdsourceurl https://raw.githubusercontent.com/dotnet/core/main/release-notes/9.0/preview/preview2/9.0.0-preview.2.md
+%define mdsourceurl https://github.com/dotnet/core/blob/main/release-notes/9.0/preview/rc1/9.0.0-rc.1.md
 
 Name: dotnet-bootstrap-%_dotnet_major
 Version: %_dotnet_coreversion
@@ -68,6 +68,8 @@ Requires: libicu
 
 Provides: dotnet-bootstrap-runtime-%_dotnet_major = %_dotnet_coreversion
 Provides: dotnet-bootstrap-sdk-%_dotnet_major = %_dotnet_sdkversion
+
+%filter_from_requires /^\/usr\/lib\/ld-linux-aarch64.*/d
 
 %description
 This package contains full .NET %_dotnet_major SDK binaries, needed for bootstrap build.
@@ -136,5 +138,8 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Thu Sep 19 2024 Vitaly Lipatov <lav@altlinux.ru> 9.0.0.rc.1-alt1
+- new version (9.0.0.rc.1) with rpmgs script
+
 * Fri Apr 05 2024 Vitaly Lipatov <lav@altlinux.ru> 9.0.0.preview.2-alt1
 - initial release for ALT Sisyphus

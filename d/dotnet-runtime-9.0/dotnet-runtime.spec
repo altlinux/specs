@@ -2,12 +2,12 @@
 %def_disable dotnet_host
 
 %define _dotnet_major 9.0
-%define preview .preview.2
+%define preview .rc.1
 %define _dotnet_coreversion 9.0.0%preview
 %define _dotnet_sdkversion 9.0.100%preview
-%define _dotnet_corerelease 9.0.0-preview.2.24128.5
+%define _dotnet_corerelease 9.0.0-rc.1.24431.7
 # used for build
-%define _dotnet_sdkrelease 9.0.100-preview.2.24157.14
+%define _dotnet_sdkrelease 9.0.100-rc.1.24452.12
 
 %define upstream_tag v%_dotnet_corerelease
 %define commithash %version-%release
@@ -30,7 +30,7 @@ Name: dotnet-runtime-%_dotnet_major
 Version: %_dotnet_coreversion
 Release: alt1
 
-Summary: Microsoft .NET Runtime and Microsoft.NETCore.App
+Summary: Microsoft .NET 9 Runtime and Microsoft.NETCore.App
 
 License: MIT
 Url: https://github.com/dotnet/runtime
@@ -397,6 +397,9 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Sun Oct 06 2024 Vitaly Lipatov <lav@altlinux.ru> 9.0.0.rc.1-alt1
+- .NET 9.0.0 rc 1
+
 * Sat Apr 06 2024 Vitaly Lipatov <lav@altlinux.ru> 9.0.0.preview.2-alt1
 - .NET 9.0.0 preview 2
 - initial build for ALT Sisyphus
