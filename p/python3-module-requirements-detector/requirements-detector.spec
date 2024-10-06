@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.2.2
-Release: alt2
+Version: 1.3.1
+Release: alt1
 
 Summary: Python tool to find and list requirements of a Python project
 License: MIT
@@ -41,9 +41,6 @@ depends on.
 %prep
 %setup
 
-# temporary fix for astroid 3.1
-sed -i 's/AstroidBuildingException/AstroidBuildingError/' requirements_detector/handle_setup.py
-
 %build
 %pyproject_build
 
@@ -61,6 +58,9 @@ sed -i 's/AstroidBuildingException/AstroidBuildingError/' requirements_detector/
 
 
 %changelog
+* Sun Oct 06 2024 Anton Vyatkin <toni@altlinux.org> 1.3.1-alt1
+- New version 1.3.1.
+
 * Wed Mar 13 2024 Anton Vyatkin <toni@altlinux.org> 1.2.2-alt2
 - Fixed FTBFS.
 
