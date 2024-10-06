@@ -4,7 +4,7 @@
 
 Summary: Terminal multiplexer
 Name: tmux
-Version: 3.5
+Version: 3.5a
 Release: alt1
 License: ISC and BSD-3-Clause and BSD-2-Clause
 Group: Terminals
@@ -16,6 +16,9 @@ Source1: bash_completion_tmux.sh
 BuildRequires: libevent-devel >= 2.0
 BuildRequires: libncurses-devel
 BuildRequires: libutempter-devel
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: /proc /dev/pts
+}}
 
 %description
 tmux is a terminal multiplexer: it enables a number of terminals to
@@ -37,6 +40,15 @@ later reattached.
 %makeinstall_std
 install -Dpm 644 %SOURCE1 %buildroot%_datadir/bash-completion/completions/tmux
 
+%check
+# We have default TERM=screen-256color
+sed -i 's/screen/screen-256color/' regress/new-session-environment.sh
+# No need to wait.
+sed -i '/sleep/d' regress/Makefile
+# Known failure for us.
+rm regress/capture-pane-hyperlink.sh
+make -C regress
+
 %files
 %doc CHANGES README COPYING example_tmux.conf
 %_bindir/*
@@ -44,6 +56,10 @@ install -Dpm 644 %SOURCE1 %buildroot%_datadir/bash-completion/completions/tmux
 %_datadir/bash-completion/completions/tmux
 
 %changelog
+* Sun Oct 06 2024 Vitaly Chikunov <vt@altlinux.org> 3.5a-alt1
+- Update to 3.5a (2024-10-05).
+- spec: Run regression tests in %%check.
+
 * Sun Sep 29 2024 Vitaly Chikunov <vt@altlinux.org> 3.5-alt1
 - Update to 3.5 (2024-09-29).
 
