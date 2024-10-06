@@ -1,6 +1,6 @@
 Name: cups
-Version: 2.4.10
-Release: alt2
+Version: 2.4.11
+Release: alt1
 
 Summary: Common Unix Printing System - server package
 License: Apache-2.0
@@ -405,6 +405,9 @@ fi
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 
 %changelog
+* Sun Oct 06 2024 Anton Farygin <rider@altlinux.ru> 2.4.11-alt1
+- 2.4.10 -> 2.4.11 (Fixes: CVE-2024-47175)
+
 * Mon Aug 05 2024 Anton Farygin <rider@altlinux.ru> 2.4.10-alt2
 - Merged with the upstream 2.4.x branch
 - Applyed upstream fix against memory corruption
