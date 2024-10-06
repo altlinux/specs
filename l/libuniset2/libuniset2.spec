@@ -27,7 +27,7 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.36.1
+Version: 2.36.2
 Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
@@ -42,7 +42,7 @@ Source: %name-%version.tar
 
 # Automatically added by buildreq on Sun Aug 15 2021
 # optimized out: fontconfig fonts-ttf-liberation-narrow glibc-kernheaders-generic glibc-kernheaders-x86 libcrypt-devel libgpg-error libpoco-net libsasl2-3 libsqlite3-devel libstdc++-devel perl pkg-config python-modules python2-base python3 python3-base python3-module-omniidl python3-module-paste sh4 tzdata
-BuildRequires: catch-devel gcc-c++ libev-devel libomniORB-devel libpoco-devel libsigc++2-devel libxml2-devel xsltproc
+BuildRequires: gcc-c++ libev-devel libomniORB-devel libpoco-devel libsigc++2-devel libxml2-devel xsltproc
 
 # for uniset2-codegen
 BuildPreReq: xsltproc
@@ -81,7 +81,7 @@ BuildRequires: libmosquitto-devel
 %endif
 
 %if_enabled opcua
-BuildRequires: libopen62541-devel libopen62541pp-devel >= 0.13.0-alt1
+BuildRequires: libopen62541-devel libopen62541pp-devel >= 0.15.0-alt1
 %endif
 
 
@@ -99,10 +99,6 @@ BuildRequires(pre): rpm-build-python3
 
 %if_enabled docs
 BuildRequires: doxygen graphviz ImageMagick-tools
-%endif
-
-%if_enabled tests
-BuildRequires: catch2-devel
 %endif
 
 #set_verify_elf_method textrel=strict,rpath=strict,unresolved=strict
@@ -675,6 +671,9 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Sun Oct 06 2024 Pavel Vainerman <pv@altlinux.ru> 2.36.2-alt1
+- (opcua): update for new libopen62541pp
+
 * Sat Jul 27 2024 Pavel Vainerman <pv@altlinux.ru> 2.36.1-alt1
 - (smemory): HTTP API supported "set" function
 
