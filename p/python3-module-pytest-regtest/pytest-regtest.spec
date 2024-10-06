@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 
 Summary: pytest plugin for regression tests
@@ -51,6 +51,9 @@ way as it did before introduced changes.
 %python3_sitelibdir/pytest_regtest-%version.dist-info
 
 %changelog
+* Sun Oct 06 2024 Anton Vyatkin <toni@altlinux.org> 2.2.1-alt1
+- new version 2.2.1
+
 * Thu Oct 03 2024 Anton Vyatkin <toni@altlinux.org> 2.2.0-alt1
 - new version 2.2.0
 
