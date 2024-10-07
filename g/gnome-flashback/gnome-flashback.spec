@@ -1,11 +1,11 @@
 %def_disable snapshot
 
-%define ver_major 3.52
+%define ver_major 3.54
 %define _libexecdir %_prefix/libexec
 %def_with compiz
 
 Name: gnome-flashback
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Flashback session
@@ -19,8 +19,8 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.44.0
-%define gtk_ver 3.22.0
+%define glib_ver 2.68.0
+%define gtk_ver 3.24.6
 %define desktop_ver 43
 %define gsds_ver 3.32.0
 %define compiz_ver 0.9.14.0
@@ -169,6 +169,9 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 
 %changelog
+* Sat Oct 05 2024 Yuri N. Sedunov <aris@altlinux.org> 3.54.0-alt1
+- 3.54.0
+
 * Sat Mar 23 2024 Yuri N. Sedunov <aris@altlinux.org> 3.52.1-alt1
 - 3.52.1
 

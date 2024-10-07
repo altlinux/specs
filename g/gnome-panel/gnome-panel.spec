@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.52
+%define ver_major 3.54
 %define api_ver 3.0
 %define applet_api_ver 6.0
 %define xdg_name org.gnome.gnome-panel
@@ -194,6 +194,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Sun Oct 06 2024 Yuri N. Sedunov <aris@altlinux.org> 3.54.0-alt1
+- 3.54.0
+
 * Wed Mar 20 2024 Yuri N. Sedunov <aris@altlinux.org> 3.52.0-alt1
 - 3.52.0
 
