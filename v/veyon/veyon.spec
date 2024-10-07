@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.9.0
-Release: alt1
+Release: alt2
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -11,7 +11,7 @@ VCS: https://github.com/veyon/veyon/
 Summary: Open source computer monitoring and classroom management
 Summary(ru.UTF-8): Программа с открытым кодом для контроля компьютеров и организации учебного процесса
 
-Requires: polkit qca-qt5-ossl qt5-translations
+Requires: polkit qca-qt6-ossl qt6-translations
 
 Obsoletes: italc3
 
@@ -141,6 +141,9 @@ sed -i "s/QOverload<int>::of(&QComboBox::/(void(QComboBox::*)(int))(\&QComboBox:
 %_datadir/%name
 
 %changelog
+* Mon Oct 07 2024 Ajrat Makhmutov <rauty@altlinux.org> 4.9.0-alt2
+- Change the runtime requirements from Qt5 to Qt6 (closes: 51649).
+
 * Sat Sep 21 2024 Ajrat Makhmutov <rauty@altlinux.org> 4.9.0-alt1
 - New version.
 - Change the build requirements from Qt5 to Qt6.
