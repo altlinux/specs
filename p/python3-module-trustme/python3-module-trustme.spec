@@ -1,18 +1,20 @@
 %define  modulename trustme
 
 Name:    python3-module-%modulename
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: #1 quality TLS certs while you wait, for the discerning tester
-License: Apache2 or MIT
+License: Apache-2.0 or MIT
 Group:   Development/Python3
 URL:     https://github.com/python-trio/trustme
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-devel
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-hatchling
 
 BuildArch: noarch
 
@@ -29,15 +31,21 @@ it. Trust me.
 %setup -n %modulename-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %python3_sitelibdir/%{modulename}*
+%python3_sitelibdir/%{pyproject_distinfo %modulename}/
 
 %changelog
+* Mon Oct 07 2024 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
+- New version.
+- Used pyproject macros.
+- Fixed license according to SPDX.
+
 * Tue Jul 11 2023 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
 - New version.
 
