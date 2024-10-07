@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 Summary: ANSI color formatting for output in terminal
 License: MIT
@@ -15,6 +15,7 @@ Vcs: https://github.com/termcolor/termcolor
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -27,6 +28,7 @@ BuildRequires(pre): rpm-build-pyproject
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
@@ -47,6 +49,9 @@ export TERM=xterm
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 07 2024 Stanislav Levin <slev@altlinux.org> 2.5.0-alt1
+- 2.4.0 -> 2.5.0.
+
 * Fri Mar 01 2024 Stanislav Levin <slev@altlinux.org> 2.4.0-alt1
 - 2.3.0 -> 2.4.0.
 
