@@ -16,7 +16,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 1.2.2
+Version: 1.2.2.post1
 Release: alt1
 
 Summary: Simple, correct PEP 517 build frontend
@@ -84,6 +84,9 @@ Requires: python3-module-%pypi_name
 %_bindir/pyproject-build
 
 %changelog
+* Mon Oct 07 2024 Stanislav Levin <slev@altlinux.org> 1.2.2.post1-alt1
+- 1.2.2 -> 1.2.2.post1.
+
 * Tue Sep 10 2024 Stanislav Levin <slev@altlinux.org> 1.2.2-alt1
 - 1.2.1 -> 1.2.2.
 
