@@ -1,5 +1,5 @@
 Name: eepm-play-gui
-Version: 0.1.0
+Version: 0.2.0
 Release: alt1
 License: AGPL2
 
@@ -52,5 +52,10 @@ GUI frontend for install third-party applications using epm play.
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Tue Oct 08 2024 Roman Alifanov <ximper@altlinux.org> 0.2.0-alt1
+- redesign + changing the color of the row when the state is changed
+- added filter: changed
+- resetting the button status and lists immediately after command running
+
 * Thu Oct 03 2024 Roman Alifanov <ximper@altlinux.org> 0.1.0-alt1
 - initial build
