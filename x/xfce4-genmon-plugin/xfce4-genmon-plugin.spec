@@ -1,6 +1,6 @@
 Name: xfce4-genmon-plugin
 Version: 4.2.0
-Release: alt1
+Release: alt2
 
 Summary: Generic monitor plugin for the Xfce panel
 License: LGPLv2.1+
@@ -12,8 +12,9 @@ Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-genmon-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfconf-devel
+BuildRequires: intltool
 
 Requires: xfce4-panel >= 4.12
 
@@ -49,6 +50,9 @@ chmod +x scripts/migrate_to_xfconf.sh
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 4.2.0-alt2
+- Fixed build: added intltool to BR.
+
 * Mon Apr 17 2023 Mikhail Efremov <sem@altlinux.org> 4.2.0-alt1
 - Packaged example scripts.
 - Packaged NEWS file.
