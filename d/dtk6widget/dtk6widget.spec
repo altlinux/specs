@@ -3,7 +3,7 @@
 
 Name: dtk6widget
 Version: 6.0.19
-Release: alt2
+Release: alt3
 
 Summary: Deepin tool kit widget modules
 
@@ -14,6 +14,7 @@ Url: https://github.com/linuxdeepin/dtkwidget
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: dtk6widget-6.0.19-alt-pkgconfig-found-dqt6.patch
 
 Provides: libdtk6-widget = %EVR
 Obsoletes: libdtk6-widget < %EVR
@@ -77,6 +78,7 @@ This package provides %name documantation.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %if_enabled clang
@@ -137,6 +139,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_dqt6_docdir/dtkwidget.qch
 
 %changelog
+* Mon Oct 07 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt3
+- Fixed pkgconfig file.
+
 * Wed Oct 02 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt2
 - Built with separate qt6 (ALT #48138).
 
