@@ -1,120 +1,53 @@
-%define oname eve
+%define _unpackaged_files_terminate_build 1
+%define pypi_name Eve
+%define pypi_nname eve
+%define mod_name %pypi_nname
 
-%def_disable check
-
-%def_without docs
-
-Name: python3-module-%oname
-Version: 0.7.8
+Name: python3-module-%pypi_nname
+Version: 2.1.0
 Release: alt1
-Summary: REST API framework powered by Flask, MongoDB and good intentions
+Summary: Python REST API for Humans
 License: BSD
 Group: Development/Python3
+Url: https://pypi.org/project/Eve/
+Vcs: https://github.com/pyeve/eve
 BuildArch: noarch
-Url: https://pypi.python.org/pypi/Eve/
-
-# https://github.com/nicolaiarocci/eve.git
 Source: %name-%version.tar
-Patch1: %oname-0.7.5-alt-build.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-cerberus python3-module-events
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-flask-pymongo
-
-%if_with docs
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-simplejson
-%endif
-
-%py3_provides %oname
-%py3_requires flask_pymongo
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %description
-Powered by Flask, MongoDB, Redis and good intentions Eve allows to
-effortlessly build and deploy highly customizable, fully featured
-RESTful Web Services.
-
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-Powered by Flask, MongoDB, Redis and good intentions Eve allows to
-effortlessly build and deploy highly customizable, fully featured
-RESTful Web Services.
-
-This package contains tests for %oname.
-
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-Powered by Flask, MongoDB, Redis and good intentions Eve allows to
-effortlessly build and deploy highly customizable, fully featured
-RESTful Web Services.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-Powered by Flask, MongoDB, Redis and good intentions Eve allows to
-effortlessly build and deploy highly customizable, fully featured
-RESTful Web Services.
-
-This package contains documentation for %oname.
+%pypi_name is an open source Python REST API framework designed for human beings. It
+allows to effortlessly build and deploy highly customizable, fully featured
+RESTful Web Services. Eve offers native support for MongoDB, and SQL backends
+via community extensions.
 
 %prep
 %setup
-%patch1 -p1
-
-%if_with docs
-%prepare_sphinx3 .
-ln -s ../objects.inv docs/
-%endif
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
-
-%if_with docs
-%make SPHINXBUILD="sphinx-build-3" -C docs pickle
-%make SPHINXBUILD="sphinx-build-3" -C docs html
-
-cp -fR ~/code/eve.docs/pickle %buildroot%python3_sitelibdir/%oname/
-%endif
+%pyproject_install
 
 %check
-python3 setup.py test
+# requires running mongodb and redis
 
 %files
-%doc AUTHORS CHANGES *.rst
-%python3_sitelibdir/*
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 %exclude %python3_sitelibdir/*/tests
-%if_with docs
-%exclude %python3_sitelibdir/*/pickle
-
-%files pickles
-%python3_sitelibdir/*/pickle
-
-%files docs
-%doc ~/code/eve.docs/html/*
-%endif
-
-%files tests
-%python3_sitelibdir/*/tests
 
 %changelog
+* Mon Oct 07 2024 Stanislav Levin <slev@altlinux.org> 2.1.0-alt1
+- 0.7.8 -> 2.1.0.
+
 * Fri Jan 10 2020 Grigory Ustinov <grenka@altlinux.org> 0.7.8-alt1
 - Build new version.
 - Build without python2.
