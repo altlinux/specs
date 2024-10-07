@@ -1,6 +1,6 @@
 Name: unzip
 Version: 6.0
-Release: alt5
+Release: alt6
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -75,6 +75,14 @@ Patch30: CVE-2015-7697-part_from_opensuse.patch
 
 # fix CVE-2021-4217
 Patch31: 0001-Fix-null-pointer-dereference-and-use-of-uninitialized-data.patch
+
+Patch32: unzip-6.0-CVE-2019-13232-fix-bug-in-undefer-input.patch
+Patch33: unzip-6.0-CVE-2019-13232-zip-bomb-with-overlapped-entries.patch
+Patch34: unzip-6.0-CVE-2019-13232-do-not-raise-alert-for-misplaced-central-directory.patch
+Patch35: unzip-6.0-CVE-2019-13232-fix-bug-in-uzbunzip2.patch
+Patch36: unzip-6.0-CVE-2019-13232-fix-bug-in-uzinflate.patch
+Patch37: unzip-6.0-CVE-2022-0529.patch
+Patch38: unzip-6.0-CVE-2022-0530.patch
 
 # Automatically added by buildreq on Mon Aug 10 2009
 BuildRequires: libnatspec-devel
@@ -164,6 +172,9 @@ ln -s unzip %buildroot%_bindir/zipinfo
 %doc BUGS LICENSE
 
 %changelog
+* Mon Oct 07 2024 Alexander Danilov <admsasha@altlinux.org> 6.0-alt6
+- fixes CVE-2019-13232, CVE-2022-0529, CVE-2022-0530.
+
 * Wed Oct 12 2022 Alexander Danilov <admsasha@altlinux.org> 6.0-alt5
 - fixes CVE-2021-4217
 
