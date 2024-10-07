@@ -1,15 +1,13 @@
 Name: libnetfilter_conntrack
-Version: 1.0.9
+Version: 1.1.0
 Release: alt1
 Epoch: 1
 
 Summary: Netfilter conntrack userspace library
 License: GPLv2+
 Group: System/Libraries
-Url: http://netfilter.org/projects/libnetfilter_conntrack/
-
-# git://git.netfilter.org/%name
-# git://git.altlinux.org/gears/l/%name
+Url: https://netfilter.org/projects/libnetfilter_conntrack/
+VCS: https://git.netfilter.org/libnetfilter_conntrack
 Source: %name-%version.tar
 
 BuildRequires: libnfnetlink-devel libmnl-devel
@@ -47,6 +45,9 @@ interface (API) to the in-kernel connection tracking state table.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Oct 07 2024 Anton Farygin <rider@altlinux.ru> 1:1.1.0-alt1
+- 1.1.0
+
 * Fri Feb 25 2022 Anton Farygin <rider@altlinux.ru> 1:1.0.9-alt1
 - 1.0.9
 
