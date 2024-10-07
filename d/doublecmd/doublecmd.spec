@@ -1,7 +1,7 @@
 %def_with gtk
 
 Name: doublecmd
-Version: 1.1.18
+Version: 1.1.19
 Release: alt1
 Epoch: 1
 
@@ -145,6 +145,9 @@ convert -resize 16x16 pixmaps/mainicon/alt/256px-dcfinal.png %buildroot%_miconsd
 %_pixmapsdir/%name.png
 
 %changelog
+* Mon Oct 07 2024 Andrey Cherepanov <cas@altlinux.org> 1:1.1.19-alt1
+- New version.
+
 * Mon Sep 23 2024 Andrey Cherepanov <cas@altlinux.org> 1:1.1.18-alt1
 - New version.
 
