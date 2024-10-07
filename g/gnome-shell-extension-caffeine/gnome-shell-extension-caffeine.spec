@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name caffeine
-%define ver_major 54
+%define ver_major 55
 %define beta %nil
 %define uuid %_name@patapon.info
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -15,15 +15,16 @@ Release: alt1
 
 Summary: Enable/Disable auto suspend with quick setting toggle.
 Group: Graphical desktop/GNOME
-License: GPL-2.0
+License: GPL-3.0-or-later
 Url: https://github.com/eonpatapon/gnome-shell-extension-caffeine
+
+Vcs: https://github.com/eonpatapon/gnome-shell-extension-caffeine.git
 
 BuildArch: noarch
 
 %if_disabled snapshot
 Source: %url/archive/v%version%beta/%_name-%version%beta.tar.gz
 %else
-Vcs: https://github.com/eonpatapon/gnome-shell-extension-caffeine.git
 Source: %name-%version%beta.tar
 %endif
 
@@ -62,6 +63,9 @@ popd
 %doc README.md
 
 %changelog
+* Mon Oct 07 2024 Yuri N. Sedunov <aris@altlinux.org> 55-alt1
+- 55
+
 * Sun Sep 22 2024 Yuri N. Sedunov <aris@altlinux.org> 54-alt1
 - 54
 
