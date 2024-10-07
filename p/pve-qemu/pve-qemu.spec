@@ -8,7 +8,7 @@
 
 Name: pve-%rname
 Version: 9.0.2
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -51,6 +51,7 @@ BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme ninja-build
 BuildRequires: python3-module-setuptools
 BuildRequires: libproxmox-backup-qemu-devel >= 1.3.0
 BuildRequires: libvitastor-devel
+BuildRequires: perl(JSON.pm)
 
 %description
 QEMU is a fast processor emulator using dynamic translation to achieve
@@ -201,6 +202,15 @@ install -D -m 0644 %SOURCE12 %buildroot%_sysconfdir/%name/bridge.conf
 install -D -p -m 0644 qemu.sasl %buildroot%_sysconfdir/sasl2/%rname.conf
 %endif
 
+mkdir -p %buildroot%_sysconfdir/kvm
+install -m 0755 debian/kvm-ifdown %buildroot%_sysconfdir/kvm/kvm-ifdown
+install -m 0755 debian/kvm-ifup %buildroot%_sysconfdir/kvm/kvm-ifup
+
+# CPU flags are static for QEMU version, allows avoiding more costly checks
+mkdir -p %buildroot%_datadir/kvm
+%buildroot%_bindir/qemu-system-x86_64 -cpu help | ./debian/parse-cpu-flags.pl > %buildroot%_datadir/kvm/recognized-CPUID-flags-x86_64
+%buildroot%_bindir/qemu-system-x86_64 -machine help | ./debian/parse-machines.pl > %buildroot%_datadir/kvm/machine-versions-x86_64.json
+
 %find_lang %rname
 
 rm -f %buildroot%_datadir/%rname/pxe*rom
@@ -269,9 +279,12 @@ ln -sf ../AAVMF/AAVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/AAVMF_VARS.f
 %if_enabled vnc_sasl
 %config(noreplace) %_sysconfdir/sasl2/%rname.conf
 %endif
+%dir %_sysconfdir/kvm
+%config(noreplace) %_sysconfdir/kvm/*
 %_man7dir/qemu-block-drivers.*
 %_man7dir/qemu-qmp-ref.*
 %_man7dir/qemu-cpu-models.*
+%_datadir/kvm
 
 %files system -f %rname.lang
 %_bindir/elf2dmp
@@ -306,6 +319,10 @@ ln -sf ../AAVMF/AAVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/AAVMF_VARS.f
 %_man8dir/qemu-nbd.8*
 
 %changelog
+* Mon Oct 07 2024 Alexey Shabalin <shaba@altlinux.org> 1:9.0.2-alt2
+- 9.0.2-3
+- Package recognized-CPUID-flags-x86_64 and machine-versions-x86_64.json
+
 * Thu Aug 29 2024 Alexey Shabalin <shaba@altlinux.org> 1:9.0.2-alt1
 - 9.0.2-2
 
