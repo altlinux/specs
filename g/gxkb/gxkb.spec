@@ -5,7 +5,7 @@
 %def_enable appindicator
 
 Name: gxkb
-Version: 0.9.5
+Version: 0.9.6
 Release: alt1
 
 Summary: X11 keyboard indicator and switcher
@@ -49,6 +49,9 @@ sed -i 's@bw\.png[[:space:]]*\\@&\n    by.png           \\@
 %doc README* doc/AUTHORS doc/NEWS
 
 %changelog
+* Mon Oct 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.9.6-alt1
+- 0.9.6
+
 * Wed Feb 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.9.5-alt1
 - 0.9.5
 - enabled appindicator support
