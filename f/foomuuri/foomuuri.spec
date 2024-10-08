@@ -1,8 +1,8 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: foomuuri
-Version: 0.24
-Release: alt3
+Version: 0.25
+Release: alt1
 Summary: Multizone bidirectional nftables firewall
 Group: Security/Networking
 License: GPL-2.0-or-later
@@ -92,6 +92,9 @@ SYSTEMD_SYSTEM_LOCATION=%_unitdir %makeinstall_std
 %_datadir/%name/dbus-firewalld.conf
 
 %changelog
+* Tue Oct 08 2024 Alexey Shabalin <shaba@altlinux.org> 0.25-alt1
+- New version 0.25.
+
 * Tue Sep 03 2024 Alexey Shabalin <shaba@altlinux.org> 0.24-alt3
 - Fixed %%_sysctldir and %%_tmpfilesdir in Makefile, really.
 
