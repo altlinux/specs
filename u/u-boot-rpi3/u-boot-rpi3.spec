@@ -1,5 +1,5 @@
 Name: u-boot-rpi3
-Version: 2024.07
+Version: 2024.10
 Release: alt1
 
 Summary: Das U-Boot
@@ -11,7 +11,7 @@ ExclusiveArch: aarch64
 
 Source: %name-%version-%release.tar
 
-BuildRequires: bc dtc >= 1.4 flex libssl-devel
+BuildRequires: bc dtc >= 1.4 flex libgnutls-devel libssl-devel libuuid-devel
 
 %description
 boot loader for embedded boards based on PowerPC, ARM, MIPS and several
@@ -42,6 +42,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Oct 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.10-alt1
+- 2024.10 released
+
 * Tue Jul 02 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.07-alt1
 - 2024.07 released
 
