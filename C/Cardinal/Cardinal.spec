@@ -3,14 +3,14 @@
 
 Name:     Cardinal
 Version:  24.09
-Release:  alt1
+Release:  alt2
 
 Summary:  Virtual modular synthesizer plugin
 License:  GPL-3.0-or-later
 Group:    Sound
 Url:      https://github.com/DISTRHO/Cardinal
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 
 Source:   %name-%version.tar
 
@@ -23,8 +23,11 @@ Source2: sub-merge.unpack.sh
 Patch1:   Cardinal-22.07-alt-lv2-in-lib64.patch
 Patch2:   Cardinal-22.11-rebeltech-fix-compilation.patch
 Patch3:   Cardinal-22.12-alt-more-system-libs.patch
+Patch4:   Cardinal-24.09-loongarch64.patch
 
 BuildRequires: gcc-c++ cmake
+BuildRequires: simde-devel
+
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(dbus-1)
@@ -162,6 +165,10 @@ install -m 644 docs/*.md docs/*.png %buildroot%_datadir/doc/cardinal/docs/
 %doc %_datadir/doc/cardinal
 
 %changelog
+* Tue Oct 08 2024 Ivan A. Melnikov <iv@altlinux.org> 24.09-alt2
+- use system simde-devel
+- basic loongarch64 support
+
 * Tue Sep 24 2024 Ivan A. Melnikov <iv@altlinux.org> 24.09-alt1
 - 24.09
 
