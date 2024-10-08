@@ -1,6 +1,6 @@
 Name: u-boot-qemu
-Version: 2024.07
-Release: alt2
+Version: 2024.10
+Release: alt1
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -10,7 +10,7 @@ ExclusiveArch: armh aarch64 %ix86 x86_64 mips mipsel mips64 mips64el riscv32 ris
 
 Source: %name-%version-%release.tar
 
-BuildRequires: dtc >= 1.4 flex libssl-devel
+BuildRequires: dtc >= 1.4 flex libgnutls-devel libssl-devel libuuid-devel
 BuildRequires: python3(setuptools)
 BuildRequires: python3(libfdt)
 
@@ -76,6 +76,9 @@ install -pm0644 -D u-boot.bin %buildroot%_datadir/u-boot/%qemu/u-boot.bin
 %_datadir/u-boot/*
 
 %changelog
+* Tue Oct 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.10-alt1
+- 2024.10 released
+
 * Thu Jul 04 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.07-alt2
 - package ROM images on x86 (closes: 50813)
 
