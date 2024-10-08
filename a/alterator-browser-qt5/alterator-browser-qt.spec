@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.4.20
+Version: 3.4.21
 Release: alt1
 
 Source:%name-%version.tar
@@ -83,6 +83,9 @@ __EOF__
 
 
 %changelog
+* Tue Oct 08 2024 Sergey V Turchin <zerg at altlinux dot org> 3.4.21-alt1
+- fix help browser width on ultrawide screens
+
 * Thu Sep 05 2024 Sergey V Turchin <zerg at altlinux dot org> 3.4.20-alt1
 - fix help browser width on ultrawide screens
 
