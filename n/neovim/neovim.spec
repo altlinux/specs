@@ -1,6 +1,6 @@
 Name: neovim
-Version: 0.10.1
-Release: alt3
+Version: 0.10.2
+Release: alt1
 
 Summary: heavily refactored vim fork
 
@@ -117,6 +117,9 @@ ln -s %vendored_ts_parsers_dir %buildroot%_datadir/nvim/runtime/parser
 %vendored_ts_parsers_dir/*
 
 %changelog
+* Mon Oct 07 2024 Vladimir Didenko <cow@altlinux.org> 0.10.2-alt1
+- New version
+
 * Mon Sep 30 2024 Vladimir Didenko <cow@altlinux.org> 0.10.1-alt3
 - Vendor Lua TS parser
 
