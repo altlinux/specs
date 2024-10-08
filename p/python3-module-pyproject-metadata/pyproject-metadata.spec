@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 Summary: PEP 621 metadata parsing
 License: MIT
@@ -52,6 +52,9 @@ file (e.g. PKG-INFO).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Oct 08 2024 Stanislav Levin <slev@altlinux.org> 0.8.1-alt1
+- 0.8.0 -> 0.8.1.
+
 * Thu Apr 18 2024 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1
 - 0.7.1 -> 0.8.0.
 
