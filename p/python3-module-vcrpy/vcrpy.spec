@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.0.1
+Version: 6.0.2
 Release: alt1
 Summary: Automatically mock your HTTP interactions to simplify and speed up testing
 License: MIT
@@ -50,6 +50,9 @@ export REQUESTS_CA_BUNDLE=`python3 -m pytest_httpbin.certs`
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 08 2024 Stanislav Levin <slev@altlinux.org> 6.0.2-alt1
+- 6.0.1 -> 6.0.2.
+
 * Mon Feb 26 2024 Stanislav Levin <slev@altlinux.org> 6.0.1-alt1
 - 4.1.1 -> 6.0.1.
 
