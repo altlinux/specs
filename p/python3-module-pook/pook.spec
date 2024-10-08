@@ -4,14 +4,15 @@
 %def_without check
 
 Name:    python3-module-%oname
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 
 Summary: HTTP traffic mocking and testing made easy in Python
 
 License: MIT
 Group:   Development/Python3
-URL:     https://github.com/h2non/pook
+URL:     https://pypi.org/project/pook
+VCS:     https://github.com/h2non/pook
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -35,7 +36,7 @@ BuildArch: noarch
 Source:  %name-%version.tar
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
@@ -55,6 +56,9 @@ Source:  %name-%version.tar
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Oct 08 2024 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1
+- Automatically updated to 2.1.0.
+
 * Fri Jul 05 2024 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
 - Automatically updated to 2.0.0.
 
