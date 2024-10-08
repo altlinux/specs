@@ -2,7 +2,7 @@
 
 Name:           cepces
 Version:        0.3.8
-Release:        alt1
+Release:        alt2
 Summary:        Certificate Enrollment through CEP/CES
 Group:          System/Configuration/Other
 BuildArch:      noarch
@@ -79,9 +79,9 @@ cat <<EOF>%buildroot%_sysconfdir/logrotate.d/%name
 EOF
 
 %check
-# Create a symlink so test can locate cepces_test
-ln -s tests/cepces_test .
-%__python3 setup.py test
+# see .github/workflows/ci.yml
+cd tests
+python3 runner.py
 
 %post certmonger
 # Install the CA into certmonger.
@@ -113,6 +113,9 @@ fi
 %_libexecdir/certmonger/%name-submit
 
 %changelog
+* Tue Oct 08 2024 Stanislav Levin <slev@altlinux.org> 0.3.8-alt2
+- Migrated from removed setuptools test command.
+
 * Fri Mar 15 2024 Evgeny Sinelnikov <sin@altlinux.org> 0.3.8-alt1
 - Update to latest release, which includes spnego changes.
 
