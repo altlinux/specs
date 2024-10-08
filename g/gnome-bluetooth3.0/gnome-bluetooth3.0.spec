@@ -14,7 +14,7 @@
 %def_enable check
 
 Name: %_name%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: The GNOME Bluetooth Subsystem
@@ -180,6 +180,9 @@ dbus-run-session %__meson_test
 %endif
 
 %changelog
+* Tue Oct 08 2024 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt1
+- 47.1
+
 * Thu Sep 12 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - 47.0
 

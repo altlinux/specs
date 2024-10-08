@@ -1,12 +1,12 @@
 %def_enable snapshot
 %define _name dialect
-%define ver_major 2.4
+%define ver_major 2.5
 %define rdn_name app.drey.Dialect
 
 %def_enable check
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A translation app for GNOME
@@ -14,10 +14,11 @@ License: GPL-3.0-or-later
 Group: Text tools
 Url: https://dialectapp.org
 
+Vcs: https://github.com/dialect-app/dialect.git
+
 %if_disabled snapshot
 Source: https://github.com/dialect-app/dialect/archive/%version/%_name-%version.tar.gz
 %else
-Vcs: https://github.com/dialect-app/dialect.git
 # AHTUNG: updated https://github.com/dialect-app/po required
 Source: %_name-%version.tar
 %endif
@@ -89,6 +90,9 @@ Features:
 
 
 %changelog
+* Tue Oct 08 2024 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
+- 2.5.0
+
 * Mon Jul 29 2024 Yuri N. Sedunov <aris@altlinux.org> 2.4.2-alt1
 - 2.4.2
 
