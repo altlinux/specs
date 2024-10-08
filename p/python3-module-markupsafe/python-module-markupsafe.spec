@@ -1,7 +1,7 @@
 %define oname markupsafe
 
 Name: python3-module-%oname
-Version: 2.1.5
+Version: 3.0.0
 Release: alt1
 Epoch: 1
 Summary: Implements a XML/HTML/XHTML Markup safe string for Python
@@ -43,10 +43,13 @@ This package contains tests for MarkupSafe.
 %python3_install
 
 %files
-%doc README.rst
+%doc README.md
 %python3_sitelibdir/*
 
 %changelog
+* Tue Oct 08 2024 Andrey Cherepanov <cas@altlinux.org> 1:3.0.0-alt1
+- New version.
+
 * Fri Feb 02 2024 Andrey Cherepanov <cas@altlinux.org> 1:2.1.5-alt1
 - New version.
 
