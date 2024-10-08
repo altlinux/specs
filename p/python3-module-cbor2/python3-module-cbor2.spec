@@ -1,7 +1,12 @@
-%define oname cbor2
-Name: python3-module-%oname
+%define _unpackaged_files_terminate_build 1
+%define pypi_name cbor2
+%define mod_name %pypi_name
+
+%def_with check
+
+Name: python3-module-%pypi_name
 Version: 5.4.6
-Release: alt1
+Release: alt2
 
 Summary: Pure Python CBOR (de)serializer with extensive tag support
 
@@ -9,16 +14,19 @@ License: MIT
 Group: Development/Python
 Url: https://github.com/agronholm/cbor2
 
-# Source-url: %__pypi_url %oname
+# Source-url: %__pypi_url %pypi_name
 Source: %name-%version.tar
 
 #BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-intro >= 2.2.4
-
-# for test
+# build backend and its deps
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-setuptools_scm
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 
@@ -39,19 +47,24 @@ On PyPy, cbor2 runs with almost identical performance to the C backend.
 %setup
 
 %build
-SETUPTOOLS_SCM_DEBUG=1 %python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %python3_prune
 
 %check
-%python3_test
+%pyproject_run_pytest -vra -o=addopts=''
 
 %files
-%python3_sitelibdir/*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/_%mod_name.*.so
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 08 2024 Stanislav Levin <slev@altlinux.org> 5.4.6-alt2
+- Migrated from removed setuptools' test command (#51666).
+
 * Fri Dec 30 2022 Vitaly Lipatov <lav@altlinux.ru> 5.4.6-alt1
 - new version 5.4.6 (with rpmrb script)
 
