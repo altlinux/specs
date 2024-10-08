@@ -1,5 +1,5 @@
 Name:     bleachbit
-Version:  4.6.1
+Version:  4.6.2
 Release:  alt1
 
 Summary:  Remove unnecessary files, free space, and maintain privacy
@@ -70,6 +70,9 @@ rm -f %buildroot%_datadir/%name/Windows.py*
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Tue Oct 08 2024 Andrey Cherepanov <cas@altlinux.org> 4.6.2-alt1
+- New version.
+
 * Tue Aug 27 2024 Andrey Cherepanov <cas@altlinux.org> 4.6.1-alt1
 - New version.
 
