@@ -10,7 +10,7 @@
 %endif
 
 Name: ollama
-Version: 0.1.46
+Version: 0.3.12
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -44,7 +44,7 @@ Using llama.cpp backend.
 %prep
 %setup
 tar xf %SOURCE1 -C llm
-tar xf %SOURCE2 -C llm/llama.cpp
+tar xf %SOURCE2 -C llm/llama.cpp/ggml/src
 # Build process requires git repo to repeatedly patch and restore different
 # modifications to llama.cpp
 cd llm/llama.cpp
@@ -102,6 +102,9 @@ go test ./...
 %attr(-,ollama,ollama) %dir %_localstatedir/%name
 
 %changelog
+* Tue Oct 08 2024 Vitaly Chikunov <vt@altlinux.org> 0.3.12-alt1
+- Update to v0.3.12 (2024-09-24). (Fixes CVE-2024-45436).
+
 * Tue Jun 25 2024 Vitaly Chikunov <vt@altlinux.org> 0.1.46-alt1
 - Update to v0.1.46 (2024-06-24).
 
