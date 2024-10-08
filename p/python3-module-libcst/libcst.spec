@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.4.0
-Release: alt1
+Release: alt2
 
 Summary: A Concrete Syntax Tree (CST) parser and serializer library for Python
 License: MIT and Python-2.0 and Apache-2.0
@@ -29,7 +29,6 @@ BuildRequires(pre): rpm-build-pyproject
 %add_pyproject_deps_check_filter prompt-toolkit
 %add_pyproject_deps_check_filter pyre-check
 %add_pyproject_deps_check_filter slotscheck
-%add_pyproject_deps_check_filter sphinx-rtd-theme
 %pyproject_builddeps_metadata_extra dev
 %pyproject_builddeps_check
 %endif
@@ -88,6 +87,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 08 2024 Stanislav Levin <slev@altlinux.org> 1.4.0-alt2
+- Fixed FTBFS (black 24.10.0).
+
 * Fri May 24 2024 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
 - 1.3.1 -> 1.4.0.
 
