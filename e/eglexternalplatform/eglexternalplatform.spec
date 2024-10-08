@@ -6,17 +6,19 @@
 %global debug_package %{nil}
 
 Name:           eglexternalplatform
-Version:        1.1
-Release:        alt1_2
+Version:        1.2
+Release:        alt1
 Summary:        EGL External Platform Interface headers
 Group:		System/Libraries
 
 License:        MIT
 URL:            https://github.com/NVIDIA
-Source0:        %url/%{name}/archive/%{commit}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
+#Source0:        %url/%{name}/archive/%{commit}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
+Source0:        %name-%version.tar.gz
 
-BuildArch:      noarch
 Source44: import.info
+
+Buildrequires: meson libglvnd-devel
 
 %description
 %summary
@@ -31,28 +33,31 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q -n %{name}-%{commit}
-
+#setup -q -n %{name}-%{commit}
+%setup
 
 %build
+%meson
+%meson_build
 
 %install
-mkdir -p %{buildroot}%{_includedir}/
-install -p -m 0644 interface/eglexternalplatform.h %{buildroot}%{_includedir}/
-install -p -m 0644 interface/eglexternalplatformversion.h %{buildroot}%{_includedir}/
-mkdir -p %{buildroot}%{_datadir}/pkgconfig/
-install -p -m 0644 eglexternalplatform.pc %{buildroot}%{_datadir}/pkgconfig/
+%meson_install
+#mkdir -p %{buildroot}%{_includedir}/
+#install -p -m 0644 interface/eglexternalplatform.h %{buildroot}%{_includedir}/
+#install -p -m 0644 interface/eglexternalplatformversion.h %{buildroot}%{_includedir}/
+#mkdir -p %{buildroot}%{_datadir}/pkgconfig/
+#install -p -m 0644 eglexternalplatform.pc %{buildroot}%{_datadir}/pkgconfig/
 
 %files devel
 %doc README.md samples
 %doc --no-dereference COPYING
 %{_includedir}/*
-%{_datadir}/pkgconfig/eglexternalplatform.pc
-
-
-
+%{_libdir}/pkgconfig/eglexternalplatform.pc
 
 %changelog
+* Tue Oct 08 2024 Sergey V Turchin <zerg@altlinux.org> 1.2-alt1
+- new version
+
 * Tue Aug 06 2019 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_2
 - update by mgaimport
 
