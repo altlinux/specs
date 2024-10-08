@@ -4,7 +4,7 @@
 Name: 	       pcs
 Epoch:         1
 Version:       0.11.6
-Release:       alt1
+Release:       alt2
 Summary:       Pacemaker/Corosync configuration system
 License:       GPL-2.0 and Apache-2.0 and MIT
 Group:         System/Servers
@@ -170,6 +170,9 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %_man8dir/pcs_snmp_agent.*
 
 %changelog
+* Tue Oct 08 2024 Pavel Skrylev <majioa@altlinux.org> 1:0.11.6-alt2
+- ! fixed rack/handler for new rack 3.x (closes #51647)
+
 * Wed Dec 06 2023 Andrey Cherepanov <cas@altlinux.org> 1:0.11.6-alt1
 - New version.
 

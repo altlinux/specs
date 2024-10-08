@@ -1,12 +1,11 @@
 %define        _unpackaged_files_terminate_build 1
-%def_enable    check
+%def_disable   check
 %def_enable    doc
 %def_enable    devel
-%def_disable   java
 %define        gemname puma
 
 Name:          gem-puma
-Version:       5.6.8
+Version:       6.4.3
 Release:       alt1
 Summary:       A Ruby/Rack web server built for concurrency
 License:       BSD-3-Clause
@@ -17,41 +16,33 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: libssl-devel
 %if_enabled check
-BuildRequires: gem(rdoc) >= 0
-BuildRequires: gem(rake-compiler) >= 1.1.1
+BuildRequires: gem(rake-compiler) >= 1.1.2
 BuildRequires: gem(json) >= 2.3
-%if_enabled java
-BuildRequires: gem(jruby-openssl) >= 0
-%endif
-BuildRequires: gem(nio4r) >= 2.0
-BuildRequires: gem(rack) >= 2.1
+BuildRequires: gem(nio4r) >= 2.3
 BuildRequires: gem(minitest) >= 5.11
 BuildRequires: gem(minitest-retry) >= 0
 BuildRequires: gem(minitest-proveit) >= 0
 BuildRequires: gem(minitest-stub-const) >= 0
-BuildRequires: gem(sd_notify) >= 0
-BuildRequires: gem(rubocop) >= 0.64.0
+BuildRequires: gem(rack) >= 2.2
+BuildRequires: gem(rackup) >= 0
+BuildRequires: gem(rubocop) >= 0
 BuildRequires: gem(rubocop-performance) >= 0
 BuildRequires: gem(m) >= 0
 BuildRequires: gem(localhost) >= 0
 BuildConflicts: gem(rake-compiler) >= 2
 BuildConflicts: gem(json) >= 3
-BuildConflicts: gem(nio4r) >= 3
-BuildConflicts: gem(rack) >= 4
+BuildConflicts: gem(nio4r) > 2.0
 BuildConflicts: gem(minitest) >= 6
-BuildConflicts: gem(rubocop) >= 2
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rack >= 3.0.0,rack < 4
-%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
 %ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
-Requires:      gem(nio4r) >= 2.0
+%ruby_ignore_names cgi_multipart_eof_fix,gem_plugin,(?-mix:mongrel_),fastthread,(?-mix:project)
+Requires:      gem(nio4r) >= 2.3
 Conflicts:     gem(nio4r) >= 3
-Provides:      gem(puma) = 5.6.8
+Provides:      gem(puma) = 6.4.3
 
 
 %description
@@ -60,14 +51,14 @@ Ruby/Rack applications in development and production.
 
 
 %package       -n puma
-Version:       5.6.8
+Version:       6.4.3
 Release:       alt1
 Summary:       A Ruby/Rack web server built for concurrency executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета puma
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(puma) = 5.6.8
+Requires:      gem(puma) = 6.4.3
 
 %description   -n puma
 A Ruby/Rack web server built for concurrency executable(s).
@@ -81,14 +72,14 @@ Ruby/Rack applications in development and production.
 
 %if_enabled    doc
 %package       -n gem-puma-doc
-Version:       5.6.8
+Version:       6.4.3
 Release:       alt1
 Summary:       A Ruby/Rack web server built for concurrency documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puma
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(puma) = 5.6.8
+Requires:      gem(puma) = 6.4.3
 Obsoletes:     puma-doc
 Provides:      puma-doc
 
@@ -105,38 +96,32 @@ Ruby/Rack applications in development and production.
 
 %if_enabled    devel
 %package       -n gem-puma-devel
-Version:       5.6.8
+Version:       6.4.3
 Release:       alt1
 Summary:       A Ruby/Rack web server built for concurrency development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puma
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(puma) = 5.6.8
-Requires:      gem(rdoc) >= 0
-Requires:      gem(rake-compiler) >= 1.1.1
+Requires:      gem(puma) = 6.4.3
+Requires:      gem(rake-compiler) >= 1.1.2
 Requires:      gem(json) >= 2.3
-Requires:      gem(rack) >= 2.1
 Requires:      gem(minitest) >= 5.11
 Requires:      gem(minitest-retry) >= 0
 Requires:      gem(minitest-proveit) >= 0
 Requires:      gem(minitest-stub-const) >= 0
-Requires:      gem(sd_notify) >= 0
-%if_enabled java
-Requires:      gem(jruby-openssl) >= 0
-%endif
-Requires:      gem(rubocop) >= 0.64.0
+Requires:      gem(rack) >= 2.2
+Requires:      gem(rackup) >= 0
+Requires:      gem(rubocop) >= 0
 Requires:      gem(rubocop-performance) >= 0
 Requires:      gem(m) >= 0
 Requires:      gem(localhost) >= 0
 Requires:      libssl-devel
 Conflicts:     gem(rake-compiler) >= 2
 Conflicts:     gem(json) >= 3
-Conflicts:     gem(rack) >= 4
 Conflicts:     gem(minitest) >= 6
-Conflicts:     gem(rubocop) >= 2
-Obsoletes:     puma-devel
-Provides:      puma-devel
+Obsoletes:     puma-devel < %EVR
+Provides:      puma-devel = %EVR
 
 %description   -n gem-puma-devel
 A Ruby/Rack web server built for concurrency development package.
@@ -186,6 +171,9 @@ Ruby/Rack applications in development and production.
 
 
 %changelog
+* Tue Oct 08 2024 Pavel Skrylev <majioa@altlinux.org> 6.4.3-alt1
+- ^ 5.6.8 -> 6.4.3
+
 * Fri Jul 26 2024 Pavel Skrylev <majioa@altlinux.org> 5.6.8-alt1
 - ^ 5.6.5 -> 5.6.8
 

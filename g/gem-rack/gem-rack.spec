@@ -1,13 +1,13 @@
 %define        _unpackaged_files_terminate_build 1
-%def_disable   check
+%def_enable    check
 %def_enable    doc
 %def_enable    devel
 %define        gemname rack
 
 Name:          gem-rack
 Epoch:         1
-Version:       3.0.10
-Release:       alt2
+Version:       3.1.7
+Release:       alt1
 Summary:       Modular Ruby webserver interface
 License:       MIT
 Group:         Development/Ruby
@@ -20,25 +20,23 @@ Source:        %name-%version.tar
 Patch:         fix-digit-when-nil-body.patch
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
+BuildRequires: gem(minitest) >= 5.0
 BuildRequires: gem(minitest-global_expectations) >= 0
 BuildRequires: gem(bundler) >= 0
 BuildRequires: gem(rake) >= 0
-BuildRequires: gem(webrick) >= 0
 BuildRequires: gem(rubocop) >= 0
 BuildRequires: gem(rubocop-packaging) >= 0
 BuildRequires: gem(rdoc) >= 0
-BuildRequires: gem(minitest) >= 0
-BuildRequires: gem(bake-test-external) >= 0.1.3
-BuildConflicts: gem(bake-test-external) >= 1
+BuildRequires: gem(webrick) >= 0
+BuildRequires: gem(bake-test-external) >= 0
+BuildConflicts: gem(minitest) >= 6
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
-%ruby_use_gem_dependency bake-test-external < 1
 Obsoletes:     ruby-rack < %EVR
 Provides:      ruby-rack = %EVR
-Provides:      gem(rack) = 3.0.10
+Provides:      gem(rack) = 3.1.7
 
 
 %description
@@ -53,14 +51,14 @@ You may need to install appropriate gem-rack-handler-XXX.
 
 %if_enabled    doc
 %package       -n gem-rack-doc
-Version:       3.0.10
-Release:       alt2
+Version:       3.1.7
+Release:       alt1
 Summary:       Modular Ruby webserver interface documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rack
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rack) = 3.0.10
+Requires:      gem(rack) = 3.1.7
 
 %description   -n gem-rack-doc
 Modular Ruby webserver interface documentation files.
@@ -80,24 +78,24 @@ You may need to install appropriate gem-rack-handler-XXX.
 
 %if_enabled    devel
 %package       -n gem-rack-devel
-Version:       3.0.10
-Release:       alt2
+Version:       3.1.7
+Release:       alt1
 Summary:       Modular Ruby webserver interface development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rack
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rack) = 3.0.10
+Requires:      gem(rack) = 3.1.7
+Requires:      gem(minitest) >= 5.0
 Requires:      gem(minitest-global_expectations) >= 0
 Requires:      gem(bundler) >= 0
 Requires:      gem(rake) >= 0
-Requires:      gem(webrick) >= 0
 Requires:      gem(rubocop) >= 0
 Requires:      gem(rubocop-packaging) >= 0
 Requires:      gem(rdoc) >= 0
-Requires:      gem(minitest) >= 0
-Requires:      gem(bake-test-external) >= 0.1.3
-Conflicts:     gem(bake-test-external) >= 1
+Requires:      gem(webrick) >= 0
+Requires:      gem(bake-test-external) >= 0
+Conflicts:     gem(minitest) >= 6
 
 %description   -n gem-rack-devel
 Modular Ruby webserver interface development package.
@@ -146,6 +144,9 @@ You may need to install appropriate gem-rack-handler-XXX.
 
 
 %changelog
+* Tue Oct 08 2024 Pavel Skrylev <majioa@altlinux.org> 1:3.1.7-alt1
+- ^ 3.0.10 -> 3.1.7
+
 * Tue May 14 2024 Pavel Skrylev <majioa@altlinux.org> 1:3.0.10-alt2
 - ! fixed digest calculation when body is null
 
