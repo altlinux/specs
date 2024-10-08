@@ -1,15 +1,17 @@
 %define vendorzone ru.
 
 Name: chrony
-Version: 4.5
-Release: alt2
+Version: 4.6
+Release: alt1
 
 Summary: Chrony clock synchronization program
 License: GPLv2
 Group: System/Configuration/Other
 
-Url: http://chrony.tuxfamily.org
-Source0: http://download.tuxfamily.org/chrony/%name-%version.tar
+Url: https://chrony-project.org/
+VCS: https://gitlab.com/chrony/chrony
+Source0: %name-%version.tar
+
 Source1: clknetsim-chrony-%version.tar
 Patch0: %name-%version-alt.patch
 Source2: chronyd.init
@@ -158,6 +160,9 @@ echo 'd /run/chrony 0750 _chrony _chrony' >> %buildroot%_tmpfilesdir/chronyd.con
 %_man8dir/*
 
 %changelog
+* Tue Oct 08 2024 Anton Farygin <rider@altlinux.ru> 4.6-alt1
+- 4.5 -> 4.6
+
 * Mon Mar 25 2024 Alexey Shabalin <shaba@altlinux.org> 4.5-alt2
 - package chronyd-restricted.service
 - add alias chrony.service -> chronyd.service
