@@ -16,19 +16,20 @@
 #
 
 Name: libdecor
-Version: 0.1.1
+Version: 0.2.2
 Release: alt1
 
 Summary: Wayland client side decoration library
 License: MIT
 Group: System/Libraries
 
-Url: https://gitlab.gnome.org/jadahl/libdecor
+URL: https://gitlab.freedesktop.org/libdecor/libdecor
 Source: %name-%version.tar
 
 BuildRequires: meson
 BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(dbus-1)
+BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: pkgconfig(pangocairo)
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-cursor)
@@ -74,5 +75,8 @@ Libraries and header files for developing applications that target libdecor.
 %_libdir/pkgconfig/libdecor-0.pc
 
 %changelog
+* Tue Oct 08 2024 Grigory Ustinov <grenka@altlinux.org> 0.2.2-alt1
+- Automatically updated to 0.2.2 (Closes: #51660).
+
 * Mon May 08 2023 Michael Shigorin <mike@altlinux.org> 0.1.1-alt1
 - built for ALT Linux (based on openSUSE spec)
