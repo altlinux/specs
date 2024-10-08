@@ -2,7 +2,7 @@
 
 Name: glances
 Version: 3.4.0.5
-Release: alt1
+Release: alt2
 
 Summary: CLI curses based monitoring tool
 License: GPLv3
@@ -55,7 +55,8 @@ Glances uses the PsUtil library to get information from your system.
 %pyproject_install
 
 %check
-%__python3 setup.py test
+# see .github/workflows/test.yml
+python3 ./unitest.py
 
 %files
 %doc AUTHORS COPYING README.rst NEWS.rst
@@ -68,6 +69,9 @@ Glances uses the PsUtil library to get information from your system.
 %python3_sitelibdir/Glances-%version.dist-info
 
 %changelog
+* Tue Oct 08 2024 Stanislav Levin <slev@altlinux.org> 3.4.0.5-alt2
+- Migrated from removed setuptools' test command.
+
 * Sun Apr 07 2024 Egor Ignatov <egori@altlinux.org> 3.4.0.5-alt1
 - new version 3.4.0.5
 
