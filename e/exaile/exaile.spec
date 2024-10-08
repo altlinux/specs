@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define beta %nil
 %define gst_api_ver 1.0
 
@@ -8,10 +8,10 @@
 
 Name: exaile
 Version: 4.1.3
-Release: alt1
+Release: alt2
 
 Summary: a music player aiming to be similar to KDE's Amarok, but for GTK+ and written in Python
-License: GPL-2.0
+License: GPL-2.0-or-later
 Group: Sound
 Url: http://www.exaile.org
 
@@ -37,6 +37,7 @@ Requires: typelib(WebKit2) = 4.1
 Requires: dbus dconf
 Requires: gst-plugins-base%gst_api_ver
 Requires: gst-plugins-good%gst_api_ver
+Requires: python3(bsddb3)
 
 BuildRequires(pre): rpm-build-gir
 BuildRequires: python3-devel python3-module-pygobject3
@@ -121,6 +122,10 @@ cp %buildroot%_datadir/%name/data/images/48x48/%name.png %buildroot%_liconsdir/
 %endif
 
 %changelog
+* Tue Oct 08 2024 Yuri N. Sedunov <aris@altlinux.org> 4.1.3-alt2
+- updated to 4.1.3-36-g2f06cc94
+- requires python3(bsddb3) (ALT #51008)
+
 * Thu Aug 03 2023 Yuri N. Sedunov <aris@altlinux.org> 4.1.3-alt1
 - 4.1.3
 
