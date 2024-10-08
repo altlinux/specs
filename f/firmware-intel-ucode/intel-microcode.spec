@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20240813
+%define orig_timestamp 20240910
 %define orig_rev %nil
 
 Name: firmware-intel-ucode
-Version: 27
+Version: 28
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -50,6 +50,37 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Tue Oct 08 2024 L.A. Kostis <lakostis@altlinux.ru> 2:28-alt1.20240910
+- Synced with debian/3.20240910.1 (original changelog below):
+  + New upstream microcode datafile 20240910
+    - Mitigations for INTEL-SA-01103 (CVE-2024-23984)
+      A potential security vulnerability in the Running Average Power Limit
+      (RAPL) interface for some Intel Processors may allow information
+      disclosure.
+    - Mitigations for INTEL-SA-01097 (CVE-2024-24968)
+      A potential security vulnerability in some Intel Processors may allow
+      denial of service.
+    - Fixes for unspecified functional issues on several processor models
+    - The processor voltage limit issue on Core 13rd/14th gen REQUIRES A
+      FIRMWARE UPDATE.  It is present in this release for sig 0xb0671, but
+      THE VOLTAGE ISSUE FIX ONLY WORKS WHEN THE MICROCODE UPDATE IS LOADED
+      THROUGH THE FIT TABLE IN FIRMWARE.  Contact your system vendor for a
+      firmware update that includes the appropriate microcode update for
+      your processor.
+  + Updated Microcodes:
+    sig 0x00090672, pf_mask 0x07, 2024-02-22, rev 0x0036, size 224256
+    sig 0x00090675, pf_mask 0x07, 2024-02-22, rev 0x0036
+    sig 0x000b06f2, pf_mask 0x07, 2024-02-22, rev 0x0036
+    sig 0x000b06f5, pf_mask 0x07, 2024-02-22, rev 0x0036
+    sig 0x000906a3, pf_mask 0x80, 2024-02-22, rev 0x0434, size 222208
+    sig 0x000906a4, pf_mask 0x80, 2024-02-22, rev 0x0434
+    sig 0x000a06a4, pf_mask 0xe6, 2024-06-17, rev 0x001f, size 137216
+    sig 0x000b0671, pf_mask 0x32, 2024-07-18, rev 0x0129, size 215040
+    sig 0x000b06a2, pf_mask 0xe0, 2024-02-22, rev 0x4122, size 220160
+    sig 0x000b06a3, pf_mask 0xe0, 2024-02-22, rev 0x4122
+    sig 0x000b06a8, pf_mask 0xe0, 2024-02-22, rev 0x4122
+    sig 0x000b06e0, pf_mask 0x19, 2024-03-25, rev 0x001a, size 138240
+
 * Tue Aug 27 2024 L.A. Kostis <lakostis@altlinux.ru> 2:27-alt1.20240813
 - Synced with debian/3.20240813.2 (original changelog below):
     + New upstream microcode datafile 20240813:
