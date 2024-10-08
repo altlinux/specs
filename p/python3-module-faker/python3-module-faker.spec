@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 30.1.0
+Version: 30.3.0
 Release: alt1
 
 Summary: Faker is a Python package that generates fake data for you.
@@ -55,6 +55,9 @@ py.test3 --ignore-glob='tests/sphinx/*'
 %python3_sitelibdir/Faker-%version-py%_python3_version.egg-info
 
 %changelog
+* Tue Oct 08 2024 Grigory Ustinov <grenka@altlinux.org> 30.3.0-alt1
+- Automatically updated to 30.3.0.
+
 * Tue Oct 01 2024 Grigory Ustinov <grenka@altlinux.org> 30.1.0-alt1
 - Automatically updated to 30.1.0.
 
