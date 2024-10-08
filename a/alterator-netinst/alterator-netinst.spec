@@ -1,6 +1,6 @@
 Name: alterator-netinst
 Version: 1.9.1
-Release: alt8
+Release: alt9
 
 Source:%name-%version.tar
 
@@ -12,6 +12,7 @@ Requires: alterator-l10n >= 2.7-alt5
 Requires: tftp-server nfs-server
 Requires: syslinux-data
 Requires: alterator-net-iptables >= 1.6
+Requires: curl
 
 Conflicts: alterator-fbi < 5.19-alt4
 Conflicts: alterator-dhcp < 0.5-alt4
@@ -40,6 +41,9 @@ alterator module for network installations management
 %_bindir/alterator-netinst
 
 %changelog
+* Tue Oct 08 2024 Anton Midyukov <antohami@altlinux.org> 1.9.1-alt9
+- Add dependency on curl (Closes: 51661)
+
 * Mon Mar 25 2024 Anton Midyukov <antohami@altlinux.org> 1.9.1-alt8
 - alterator-netinst: fix help for option '-v'
 
