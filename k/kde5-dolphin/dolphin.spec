@@ -13,7 +13,7 @@
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt2
+Release: alt3
 %K5init
 
 Group: File tools
@@ -71,14 +71,14 @@ developing applications that use %name.
 %package -n %libdolphinprivate
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n %libdolphinprivate
 KF5 library
 
 %package -n %libdolphinvcs
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n %libdolphinvcs
 KF5 library
 
@@ -105,6 +105,7 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
     --add-mime-type=x-scheme-handler/ftp \
     --add-mime-type=x-scheme-handler/smb \
     --add-mime-type=x-scheme-handler/trash \
+    --add-mime-type=x-scheme-handler/nfs \
     %buildroot/%_K5xdgapp/org.kde.dolphin.desktop
 # kf5-kio-extras
 #    --add-mime-type=x-scheme-handler/network \
@@ -148,6 +149,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Tue Oct 08 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt3
+- add nfs:/ handler
+
 * Thu Jul 25 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt2
 - temporary build without baloo
 
