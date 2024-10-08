@@ -25,14 +25,14 @@
 %else
 %define opengl_type opengl-desktop
 %endif
-%define optflags_lto %nil
+%define optflags_lto -ffat-lto-objects
 
 %global qt_module  qtbase
 %define gname  qt6
 Name: qt6-base
 %define major  6
 Version: 6.7.2
-Release: alt2
+Release: alt3
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -832,6 +832,9 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Thu Oct 03 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt3
+- don't disable lto
+
 * Tue Sep 03 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt2
 - restore qmenu_fix_shortcuts.patch (thanks Corwin)
 
