@@ -2,14 +2,13 @@
 
 Name: alteratorctl
 Version: 0.0.5
-Release: alt1
+Release: alt3
 
 Summary: CLI for alterator browser
-License: GPL-2
+License: GPL-2.0+
 Group: System/Configuration/Other
 
 BuildRequires: cmake gcc glib2-devel libdbus-glib-devel libgio-devel
-#BuildRequires: complgen
 
 Source0: %name-%version.tar
 
@@ -23,26 +22,22 @@ A command line tool for using DBus objects
 %cmake -DCMAKE_BUILD_TYPE=Release
 %cmake_build
 
-#complgen aot --bash-script %name.bash %name.usage
-#complgen aot --zsh-script  %name.zsh  %name.usage
-#complgen aot --fish-script %name.fish %name.usage
-
 %install
 %cmakeinstall_std
-
-#install -Dm 0644 %name.bash %buildroot%_datadir/bash-completion/completions/%name
-#install -Dm 0644 %name.zsh  %buildroot%_datadir/zsh/site-functions/_%name
-#install -Dm 0644 %name.fish %buildroot%_datadir/fish/vendor_completions.d/%name.fish
 
 %files
 %_bindir/%name
 %_datadir/alteratorctl/lang/ru/LC_MESSAGES/%name.mo
 
-#%_datadir/bash-completion/completions/%name
-#%_datadir/zsh/site-functions/_%name
-#%_datadir/fish/vendor_completions.d/%name.fish
-
 %changelog
+* Wed Oct 02 2024 Aleksey Saprunov <sav@altlinux.org> 0.0.5-alt3
+- two ways of getting information about an object are implemented: plain text and keyed parsed content
+- fix components and packages modules
+
+* Fri Sep 27 2024 Aleksey Saprunov <sav@altlinux.org> 0.0.5-alt2
+- fix component module
+- implement obtaining information about the object both in text and parsed form
+
 * Mon Sep 16 2024 Aleksey Saprunov <sav@altlinux.org> 0.0.5-alt1
 - implement Alterator Entry parsing
 - add diag module
