@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.15.0
+Version: 2.16.0
 Release: alt1
 Summary: Travel through time in your tests
 License: MIT
@@ -32,7 +32,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile requirements/requirements.in
+%pyproject_deps_resync_check_pipreqfile tests/requirements/requirements.in
 %endif
 
 %build
@@ -51,6 +51,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Oct 09 2024 Stanislav Levin <slev@altlinux.org> 2.16.0-alt1
+- 2.15.0 -> 2.16.0.
+
 * Wed Sep 25 2024 Stanislav Levin <slev@altlinux.org> 2.15.0-alt1
 - 2.14.2 -> 2.15.0.
 
