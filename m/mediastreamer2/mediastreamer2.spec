@@ -5,7 +5,7 @@
 
 Name: mediastreamer2
 Version: 5.3.74
-Release: alt5
+Release: alt6
 
 Summary: Mediastreamer2 is a powerful and lightweight streaming engine for voice/video telephony applications
 License: AGPL-3.0
@@ -27,6 +27,9 @@ Patch2: mediastreamer2-5.3.74-mageia-cmake-config-location.patch
 Patch3: mediastreamer2-5.3.74-mageia-soname.patch
 Patch4: mediastreamer2-5.3.74-mageia-system-OpenGL.patch
 Patch5: mediastreamer2-5.3.74-alt-pkgconfig-dav1d-aom.patch
+
+# fix mediastreamer2-mkvstream
+Requires: libglvnd-devel libGLEW-devel
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -102,6 +105,12 @@ rm -rf include/OpenGL
 sed -i '/find_package/s|BCG729|Bcg729|' CMakeLists.txt
 %endif
 
+# fix mediastreamer2-tester startup
+sed -i '/MEDIASTREAMER_LOCAL_RESOURCE_LOCATION/s|${CMAKE_CURRENT_SOURCE_DIR}/tester|%_datadir/%name-tester|' \
+  mediastreamer-config.h.cmake
+sed -i '/MEDIASTREAMER_LOCAL_PLUGINS_LOCATION/s|${CMAKE_BINARY_DIR}/lib|%_libdir|' \
+  mediastreamer-config.h.cmake
+
 %build
 export CPLUS_INCLUDE_PATH=%_includedir/bcmatroska2:$CPLUS_INCLUDE_PATH
 %if_with bcg729
@@ -145,6 +154,9 @@ export CMAKE_PREFIX_PATH=%_datadir/Bcg729/cmake:$CMAKE_PREFIX_PATH
 %_libdir/cmake/Mediastreamer2/*.cmake
 
 %changelog
+* Tue Oct 08 2024 Leontiy Volodin <lvol@altlinux.org> 5.3.74-alt6
+- Fixed mediastreamer2-mkvstream and mediastream2-tester startup.
+
 * Thu Sep 19 2024 Leontiy Volodin <lvol@altlinux.org> 5.3.74-alt5
 - Built with AV1 support.
 
