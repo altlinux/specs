@@ -5,63 +5,52 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.4.6
-Release: alt2
-
+Version: 5.6.4
+Release: alt1
 Summary: Pure Python CBOR (de)serializer with extensive tag support
-
 License: MIT
 Group: Development/Python
-Url: https://github.com/agronholm/cbor2
-
-# Source-url: %__pypi_url %pypi_name
+Url: https://pypi.org/project/cbor2/
+Vcs: https://github.com/agronholm/cbor2
 Source: %name-%version.tar
-
-#BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-build-intro >= 2.2.4
-# build backend and its deps
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-setuptools_scm
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-pytest
+%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
-
 This library provides encoding and decoding for the Concise Binary Object
-Representation (CBOR) (`RFC 7049`_) serialization format. `Read the docs
-<https://cbor2.readthedocs.io/>`_ to learn more.
-
-It is implemented in pure python with an optional C backend and is
-compatible with versions 2.7 through to 3.7.
-
-On cPython>=3.3 cbor2 can use a built in C module for performance similar
-to how ``pickle`` wraps the ``_pickle`` C module in the Python Standard
-Library. On Windows, this is restricted to cPython>=3.5.
-
-On PyPy, cbor2 runs with almost identical performance to the C backend.
+Representation (CBOR) (RFC 8949) serialization format. The specification is
+fully compatible with the original RFC 7049.
 
 %prep
 %setup
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
 
 %install
 %pyproject_install
-%python3_prune
 
 %check
 %pyproject_run_pytest -vra -o=addopts=''
 
 %files
+%_bindir/cbor2
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/_%mod_name.*.so
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 09 2024 Stanislav Levin <slev@altlinux.org> 5.6.4-alt1
+- 5.4.6 -> 5.6.4.
+
 * Tue Oct 08 2024 Stanislav Levin <slev@altlinux.org> 5.4.6-alt2
 - Migrated from removed setuptools' test command (#51666).
 
