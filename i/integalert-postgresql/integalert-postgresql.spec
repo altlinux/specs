@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     integalert-postgresql
-Version:  0.1.3
-Release:  alt2
+Version:  0.1.4
+Release:  alt1
 
 Summary:  PostgreSQL checking module for Integalert
 License:  GPLv2
@@ -13,9 +13,9 @@ Packager: Paul Wolneykien <manowar@altlinux.org>
 Source:   %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: integalert >= 0.4.14
+BuildRequires: integalert >= 0.5.0
 
-Requires: integalert >= 0.4.14
+Requires: integalert >= 0.5.0
 
 %description
 Configuration files and services to check PostgreSQL integrity
@@ -33,19 +33,29 @@ using Integalert.
 # For ghost:
 touch %buildroot%_sysconfdir/osec/integalert_postgresql/dirs.conf
 
+%post
+%post_service integalert_postgresql
+
+%preun
+%preun_service integalert_postgresql
+
 %files
 %_unitdir/integalert_postgresql.*
 %_unitdir/postgresql-integ-failed.target
 %config(noreplace) %_sysconfdir/osec/integalert_postgresql/files.list
 %config(noreplace) %_logrotatedir/integalert_postgresql.conf
 %config(noreplace) %_sysconfdir/osec/integalert_postgresql/pipe.conf
-%_sysconfdir/osec/integalert_postgresql/sender
 %config(noreplace) %_sysconfdir/osec/integalert_postgresql/sender.conf
 %config(noreplace) %_sysconfdir/osec/integalert_postgresql/exclude.conf
 %dir %_sysconfdir/osec/integalert_postgresql/trigger.d
 %ghost %_sysconfdir/osec/integalert_postgresql/dirs.conf
 
 %changelog
+* Thu Oct 10 2024 Paul Wolneykien <manowar@altlinux.org> 0.1.4-alt1
+- Run %%post_service and %%preun_service for
+  integalert_postgresql.service.
+- Switch to standard sender script (requires integalert >= 0.5.0).
+
 * Sat Sep 28 2024 Paul Wolneykien <manowar@altlinux.org> 0.1.3-alt2
 - Fix: Own /etc/osec/integalert_postgresql/trigger.d.
 
