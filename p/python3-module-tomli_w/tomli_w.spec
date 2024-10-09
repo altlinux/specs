@@ -1,38 +1,31 @@
 %define _unpackaged_files_terminate_build 1
-%define oname tomli_w
+%define pypi_name tomli-w
+%define pypi_nname tomli_w
+%define mod_name %pypi_nname
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 1.0.0
+Name: python3-module-%pypi_nname
+Version: 1.1.0
 Release: alt1
-
 Summary: A lil' TOML writer
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/hukkin/tomli-w.git
 Url: https://pypi.org/project/tomli_w
-
-Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# PEP517 build backend
-BuildRequires: python3(flit)
-
-%if_with check
-BuildRequires: python3(tomli)
-BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
-%endif
-
+Vcs: https://github.com/hukkin/tomli-w
 BuildArch: noarch
-
-# PyPI name(dash, underscore)
-%py3_provides tomli-w
-Provides: python3-module-tomli-w = %EVR
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 Tomli-W is a Python library for writing TOML. It is a write-only counterpart to
@@ -42,43 +35,31 @@ v1.0.0.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile tests/requirements.txt
+%endif
 
 %build
-# generate setup.py for legacy builder
-%__python3 - <<-'EOF'
-from pathlib import Path
-from flit.sdist import SdistBuilder
-
-
-with open("setup.py", "wb") as f:
-    sd_builder = SdistBuilder.from_ini_path(Path("pyproject.toml"))
-    f.write(sd_builder.make_setup_py())
-EOF
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-# pyproject.toml already has configuration for tox, but it requires
-# patching. It is simpler to override with own config.
-cat > tox.ini <<'EOF'
-[testenv]
-usedevelop=True
-commands =
-    pytest {posargs:-vra}
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 -c tox.ini --sitepackages --console-scripts -vvr
+# .github/workflows/tests.yaml
+%pyproject_run_pytest -vra
 
 %files
 %doc README.md
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 09 2024 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
+- 1.0.0 -> 1.1.0.
+
 * Wed Jan 26 2022 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1
 - 0.4.0 -> 1.0.0.
 
