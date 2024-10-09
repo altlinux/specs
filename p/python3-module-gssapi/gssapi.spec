@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.8.3
+Version: 1.9.0
 Release: alt1
 
 Summary: Python GSSAPI Wrapper
@@ -63,6 +63,9 @@ ENDUNITTEST
 %exclude %python3_sitelibdir/gssapi/tests/
 
 %changelog
+* Wed Oct 09 2024 Stanislav Levin <slev@altlinux.org> 1.9.0-alt1
+- 1.8.3 -> 1.9.0.
+
 * Tue Sep 26 2023 Stanislav Levin <slev@altlinux.org> 1.8.3-alt1
 - 1.8.2 -> 1.8.3.
 
