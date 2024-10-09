@@ -1,6 +1,6 @@
 Name: SimplePAMApps
 Version: 0.60
-Release: alt36
+Release: alt37
 
 %def_with login
 %def_with su
@@ -154,6 +154,9 @@ fi
 %endif #with su
 
 %changelog
+* Mon Jun 24 2024 Egor Ignatov <egori@altlinux.org> 0.60-alt37
+- alt-audit patch: suppress unused-result warning
+
 * Fri Jul 03 2020 Dmitry V. Levin <ldv@altlinux.org> 0.60-alt36
 - login: do not set PAM_RUSER and PAM_RHOST unnecessarily (closes: #38655).
 
