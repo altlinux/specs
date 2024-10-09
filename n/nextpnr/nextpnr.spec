@@ -6,7 +6,7 @@
 
 Name:     nextpnr
 Version:  0.7
-Release:  alt2
+Release:  alt3
 
 Summary:  portable FPGA place and route tool
 License:  ISC
@@ -27,6 +27,8 @@ BuildRequires: python3-devel
 BuildRequires: boost-program_options-devel
 BuildRequires: boost-filesystem-devel
 BuildRequires: eigen3
+# ice40
+BuildRequires: icestorm-chipdb
 # gowin
 BuildRequires: python3-module-apycula
 # # machxo2, ecp5
@@ -46,9 +48,10 @@ route tool.
 %patch -p1
 
 %build
+
 %cmake \
 	-DCURRENT_GIT_VERSION=%version \
-	-DARCH=gowin \
+	-DARCH='gowin;ice40' \
 	-DGOWIN_BBA_EXECUTABLE=%_bindir/gowin_bba \
 	-DBUILD_TESTS=ON \
 	-DSTATIC_BUILD=OFF \
@@ -64,10 +67,13 @@ route tool.
 %make_build -C %_cmake__builddir test
 
 %files
-%_bindir/nextpnr-gowin
+%_bindir/nextpnr-*
 %doc *.md docs/*
 
 %changelog
+* Wed Oct 09 2024 Ivan A. Melnikov <iv@altlinux.org> 0.7-alt3
+- enable ice40 support
+
 * Sun Apr 28 2024 Anton Midyukov <antohami@altlinux.org> 0.7-alt2
 - fix build with boost 1.85
 
