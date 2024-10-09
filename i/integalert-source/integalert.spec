@@ -12,7 +12,7 @@
 
 Name:     %pname-source
 Version:  0.5.0
-Release:  alt1
+Release:  alt2
 
 Summary:  Osec-based integrity checking script and settings
 License:  GPLv2
@@ -99,6 +99,12 @@ touch %buildroot%_sysconfdir/sysconfig/integalert
 %preun -n %pname
 %preun_service %pname
 
+%post -n %pname-vm-check
+%post_service integalert_vm
+
+%preun -n %pname-vm-check
+%preun_service integalert_vm
+
 %files -n installer-feature-integalert-stage2
 %_datadir/install2/postinstall.d/90-integrity-init.sh
 
@@ -129,6 +135,10 @@ touch %buildroot%_sysconfdir/sysconfig/integalert
 %endif
 
 %changelog
+* Thu Oct 10 2024 Paul Wolneykien <manowar@altlinux.org> 0.5.0-alt2
+- Fix: Run %%post_service and %%preun_service for
+  integalert_vm.service.
+
 * Thu Oct 10 2024 Paul Wolneykien <manowar@altlinux.org> 0.5.0-alt1
 - Version: 0.5.0
 - Remove the migration %%post script. Use normal %%post_service and
