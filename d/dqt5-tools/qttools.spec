@@ -7,7 +7,7 @@
 
 Name: dqt5-tools
 Version: 5.15.13
-Release: alt0.dde.1
+Release: alt0.dde.2
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -37,7 +37,7 @@ Source24: qtconfig.desktop
 
 # ALT
 Patch10: alt-build-qtconfig.patch
-Patch11: alt-runqttools-with-qt5-suffix.patch
+Patch11: alt-runqttools-with-dqt5-suffix.patch
 
 # Automatically added by buildreq on Tue Oct 01 2013 (-bi)
 # optimized out: elfutils libGL-devel libgst-plugins libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-opengl libdqt5-printsupport libdqt5-qml libdqt5-quick libdqt5-sql libdqt5-v8 libdqt5-webkit libdqt5-webkitwidgets libdqt5-widgets libdqt5-xml libstdc++-devel pkg-config python-base python3 python3-base dqt5-base-devel dqt5-declarative-devel ruby ruby-stdlibs
@@ -369,6 +369,9 @@ fi
 %_dqt5_libdir/libQt5Help.so.*
 
 %changelog
+* Wed Oct 09 2024 Leontiy Volodin <lvol@altlinux.org> 5.15.13-alt0.dde.2
+- fix requires
+
 * Thu Jul 25 2024 Leontiy Volodin <lvol@altlinux.org> 5.15.13-alt0.dde.1
 - fork qtbase for separate deepin buildings (ALT #48138)
 
