@@ -1,16 +1,17 @@
 Name: x11spice
 Version: 1.2
-Release: alt1
+Release: alt2
 Summary: x11spice connects a running X server as a Spice server
 Group: Networking/Remote access
 License: GPL-3.0+
-Url: https://gitlab.com/spice/x11spice/
+Url: https://gitlab.freedesktop.org/spice/x11spice/
 Source0: %name-%version.tar
 
 Patch1: %name-alt-show-ip-address.patch
 Patch2: %name-allow-access-in-config.patch
 Patch3: %name-alt-crash.patch
 Patch4: %name-alt-desktop-l10n.patch
+Patch5: %name-alt-build.patch
 
 BuildRequires(pre): rpm-build-xdg
 BuildRequires: libxcb-devel libxcbutil-devel libgtk+3-devel libspice-server-devel libpixman-devel libaudit-devel
@@ -30,6 +31,7 @@ notably that of scan.c, was inspired by the code in x11vnc.
 %patch2 -p2
 %patch3 -p1
 %patch4 -p2
+%patch5 -p1
 
 %build
 %ifarch %ix86
@@ -51,6 +53,10 @@ notably that of scan.c, was inspired by the code in x11vnc.
 %_man1dir/*
 
 %changelog
+* Wed Oct 09 2024 Andrey Kovalev <ded@altlinux.org> 1.2-alt2
+- Fixed build.
+- Updated URL to the current one.
+
 * Fri Mar 05 2021 Andrey Cherepanov <cas@altlinux.org> 1.2-alt1
 - New version.
 
