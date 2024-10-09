@@ -1,7 +1,9 @@
-%define oname dpkt
-Name: python3-module-dpkt
+%define pypi_name dpkt
+%define mod_name %pypi_name
+
+Name: python3-module-%pypi_name
 Version: 1.9.8
-Release: alt1
+Release: alt2
 
 Summary: Fast, simple packet creation and parsing
 
@@ -26,22 +28,25 @@ Fast, simple packet creation / parsing, with definitions for the basic TCP/IP pr
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 #epydoc -o doc -n dpkt -u %url --docformat=plaintext ./dpkt/
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%python3_test
-py.test3 -vv %oname || py.test3 -p no:warnings -vv %oname
+%pyproject_run_pytest -vra %mod_name
 
 %files
 %doc docs AUTHORS LICENSE README* examples
-%python3_sitelibdir/*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 09 2024 Stanislav Levin <slev@altlinux.org> 1.9.8-alt2
+- migrated from removed setuptools' test command (#51666).
+
 * Sun Mar 12 2023 Vitaly Lipatov <lav@altlinux.ru> 1.9.8-alt1
 - new version 1.9.8 (with rpmrb script)
 
