@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-components
-Version: 0.1.1
+Version: 0.1.3
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -55,6 +55,14 @@ install -v -p -m 644 -D setup/ru.basealt.alterator.components1.xml %buildroot%_d
 %_bindir/%name
 
 %changelog
+* Wed Sep 25 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.3-alt1
+- Now component description desappears on click on category.
+- Remove redundant buttons.
+- Improve logging.
+
+* Mon Jul 23 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.2-alt1
+- Fix build on older gcc.
+
 * Thu Mar 21 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.1-alt1
 - Add support for nested categories of components.
 - Update logic to comply with new component status API.

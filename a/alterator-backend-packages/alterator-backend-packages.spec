@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-packages
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: Alterator backends for managing system packages
@@ -74,5 +74,10 @@ install -v -p -m 644 -D repo/repo.object %buildroot%_alterator_datadir/objects
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Wed Sep 25 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.1-alt1
+- Fix some incorrect package names in List method of apt backend.
+- Add lastUpdate method to apt backend.
+- Add error output to all methods.
+
 * Wed May 29 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.0-alt1
 - Initial build.
