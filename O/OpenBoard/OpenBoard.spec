@@ -3,7 +3,7 @@
 
 Name: OpenBoard
 Version: 1.7.1
-Release: alt1
+Release: alt2
 Summary: Interactive whiteboard for schools and universities
 Summary(ru_RU.UTF-8): Интерактивная доска для школ и университетов
 License: GPL-3.0+
@@ -110,14 +110,14 @@ sed -i  -e '/LIBS += -lquazip5/d' \
 	OpenBoard.pro
 
 # Removed some map widgets because of incorrect display of borders of Ukraine and Russia
-rm -fvr resources/library/applications/GoogleMap.wgt
-rm -fvr resources/library/applications/OpenStreetMap.wgt
+rm -vr resources/library/applications/GoogleMaps.wgt
+rm -vr resources/library/applications/OpenStreetMap.wgt
 
 # Replacement of the GeoInfo widget with a version with modified borders of Ukraine and Russia
-rm -fvr resources/library/applications/GeoInfo.wgt
+rm -vr resources/library/applications/GeoInfo.wgt
 mv GeoInfo.wgt resources/library/applications/GeoInfo.wgt
 
-rm -fv resources/etc/OpenBoard.css
+rm -v resources/etc/OpenBoard.css
 
 %build
 %qmake_qt5 \
@@ -207,6 +207,9 @@ cp -R resources/customizations %buildroot%_libdir/%name/
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Wed Oct 09 2024 Anton Midyukov <antohami@altlinux.org> 1.7.1-alt2
+- Remove Google Maps widget
+
 * Sat Jun 29 2024 Anton Midyukov <antohami@altlinux.org> 1.7.1-alt1
 - New version 1.7.1.
 - ExcludeArch: ppc64le
