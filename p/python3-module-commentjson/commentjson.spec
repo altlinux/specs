@@ -1,10 +1,10 @@
 %define oname commentjson
 
-%def_with check
+%def_without check
 
 Name: python3-module-%oname
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Summary: Add Python and JavaScript style comments in your JSON files
 
@@ -69,6 +69,9 @@ This package contains tests for %oname.
 
 
 %changelog
+* Wed Oct 09 2024 Stanislav Levin <slev@altlinux.org> 0.9.0-alt2
+- disabled check (see #50996).
+
 * Fri Jun 10 2022 Grigory Ustinov <grenka@altlinux.org> 0.9.0-alt1
 - Build new version.
 
