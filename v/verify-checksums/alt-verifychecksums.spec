@@ -3,7 +3,7 @@
 
 Packager: Egor Boyko <nit@altlinux.org>
 Name:     verify-checksums
-Version:  1.0.12
+Version:  1.0.13
 Release:  alt1
 Summary: A utility for verify checksums in files
 License: GPL-2.0-only
@@ -38,6 +38,9 @@ Reads files containing hashes of rpm files and checks them.
 %doc README.md
 
 %changelog
+* Wed Oct 09 2024 Egor Boyko <nit@altlinux.org> 1.0.13-alt1
+- Change gostsum to gost12sum algorithm
+
 * Tue Oct 01 2024 Egor Boyko <nit@altlinux.org> 1.0.12-alt1
 - Update README.md
 
