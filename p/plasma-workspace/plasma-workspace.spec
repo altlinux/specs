@@ -32,7 +32,7 @@
 
 Name: %rname
 Version: 6.1.5
-Release: alt1
+Release: alt2
 Epoch: 1
 %K6init
 
@@ -576,6 +576,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Wed Oct 09 2024 Sergey V Turchin <zerg@altlinux.org> 1:6.1.5-alt2
+- don't apply background on logout screen
+
 * Tue Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 1:6.1.5-alt1
 - new version
 
