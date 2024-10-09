@@ -1,7 +1,9 @@
+# for ring
+%define optflags_lto %nil
 %def_disable snapshot
 
 %define _name Hieroglyphic
-%define ver_major 1.1
+%define ver_major 2.0
 %define rdn_name io.github.finefindus.%_name
 
 %def_disable check
@@ -25,7 +27,7 @@ Source: %_name-%version.tar
 %endif
 Source1: %_name-%version-cargo.tar
 
-%define adw_ver 1.5
+%define adw_ver 1.6
 
 Requires: dconf
 
@@ -68,6 +70,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Wed Oct 09 2024 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Mon Jul 22 2024 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - first build for Sisyphus
 
