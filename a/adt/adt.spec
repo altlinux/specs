@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: adt
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
 Summary: ALT Diagnostic tool
@@ -60,6 +60,11 @@ install -p -D man/ru/%name.man %buildroot%_mandir/ru/man1/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Fri Oct 04 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.5-alt1
+- remove horizontal scrollbar in test widget
+- implement test status reset
+- fix report suffix
+
 * Tue Sep 03 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.4-alt1
 - session bus test support
 - new UI design
