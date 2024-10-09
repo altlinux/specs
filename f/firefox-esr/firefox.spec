@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox-esr
-Version: 128.3.0
+Version: 128.3.1
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -387,6 +387,11 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Oct 09 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.3.1-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2024-9680: Use-after-free in Animation timeline
+
 * Fri Oct 04 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.3.0-alt1
 - New ESR version.
 - Add the WM_CLASS setting directly in the app launcher (closes: 51627).

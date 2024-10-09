@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 131.0.0
+Version: 131.0.2
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -383,6 +383,11 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Oct 09 2024 Ajrat Makhmutov <rauty@altlinux.org> 131.0.2-alt1
+- New version (131.0.2).
+- Security fixes:
+  + CVE-2024-9680: Use-after-free in Animation timeline
+
 * Fri Oct 04 2024 Ajrat Makhmutov <rauty@altlinux.org> 131.0.0-alt1
 - New version (131.0.0).
 - Add the WM_CLASS setting directly in the app launcher (closes: 51627).
