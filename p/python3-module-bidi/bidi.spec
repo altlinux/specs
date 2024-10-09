@@ -3,49 +3,83 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.4.2
+Version: 0.6.0
 Release: alt1
 
 Summary: BIDI algorithm related functions
 
 License: LGPL-3.0
 Group:   Development/Python3
-URL:     https://github.com/MeirKriheli/python-bidi
+URL:     https://pypi.org/project/python-bidi
+VCS:     https://github.com/MeirKriheli/python-bidi
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-maturin
+BuildRequires: rust-cargo
+BuildRequires: /proc
 
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-six
 %endif
 
-BuildArch: noarch
-
 Source:  %name-%version.tar
+Source1: vendor.tar
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
 
+mkdir -p .cargo
+cat >> .cargo/config <<EOF
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"
+
+[term]
+verbose = true
+quiet = false
+
+[install]
+root = "%buildroot%_prefix"
+
+[build]
+rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
+
+[profile.release]
+strip = false
+EOF
+
+tar -xvf %SOURCE1
+
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-py.test-3 -v
+rm -rv bidi
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%pyproject_run_pytest
 
 %files
 %doc *.rst
 %_bindir/py%oname
 %python3_sitelibdir/%oname
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/python_bidi-%version.dist-info
 
 %changelog
+* Tue Oct 08 2024 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt1
+- Automatically updated to 0.6.0 (thx to k0tran@).
+
 * Fri Sep 16 2022 Grigory Ustinov <grenka@altlinux.org> 0.4.2-alt1
 - Initial build for Sisyphus.
