@@ -1,27 +1,26 @@
 %define _unpackaged_files_terminate_build 1
 %define oname xmltodict
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.13.0
-Release: alt2
+Version: 0.14.0
+Release: alt1
 
 Summary: Makes working with XML feel like you are working with JSON
 
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/xmltodict/
+Url: https://pypi.org/project/xmltodict
+Vcs: https://github.com/martinblech/xmltodict
 
-# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-intro >= 2.2.5
-BuildRequires(pre): rpm-build-python3
 
 BuildArch: noarch
 
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-pytest
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %py3_provides %oname
 
@@ -33,20 +32,24 @@ are working with JSON.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=$PWD
-py.test3
+%pyproject_run_unittest discover -v tests/
 
 %files
 %doc *.md
 %python3_sitelibdir/*
 
 %changelog
+* Wed Oct 09 2024 Anton Vyatkin <toni@altlinux.org> 0.14.0-alt1
+- New version 0.14.0.
+- Move to pyproject macroses.
+- Move to gear remotes.
+
 * Mon Apr 10 2023 Anton Vyatkin <toni@altlinux.org> 0.13.0-alt2
 - Fix BuildRequires
 
