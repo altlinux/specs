@@ -11,7 +11,7 @@
 
 
 Name:     %pname-source
-Version:  0.4.14
+Version:  0.5.0
 Release:  alt1
 
 Summary:  Osec-based integrity checking script and settings
@@ -84,60 +84,20 @@ Lock down PVE cluster VMs on integalert_vm.service failure.
 %setup
 
 %build
-%make_build
+%make_build sbindir=%_sbindir sysconfdir=%_sysconfdir datadir=%_datadir unitdir=%_unitdir presetdir=%_presetdir WITH_PVE=%{with pve} logrotatedir=%_logrotatedir mandir=%_mandir man8dir=%_man8dir sharedstatedir=%_sharedstatedir logdir=%_logdir libexecdir=%_libexecdir
 
 %install
-%makeinstall_std sbindir=%_sbindir sysconfdir=%_sysconfdir datadir=%_datadir unitdir=%_unitdir presetdir=%_presetdir WITH_PVE=%{with pve} logrotatedir=%_logrotatedir mandir=%_mandir man8dir=%_man8dir
+%makeinstall_std sbindir=%_sbindir sysconfdir=%_sysconfdir datadir=%_datadir unitdir=%_unitdir presetdir=%_presetdir WITH_PVE=%{with pve} logrotatedir=%_logrotatedir mandir=%_mandir man8dir=%_man8dir sharedstatedir=%_sharedstatedir logdir=%_logdir libexecdir=%_libexecdir
 
 # For ghost:
 mkdir -p %buildroot%_sysconfdir/sysconfig
 touch %buildroot%_sysconfdir/sysconfig/integalert
 
 %post -n %pname
-# On package update (don't check the $1 value due to package
-# rename):
-if systemctl -q is-enabled integalert.service; then
-    systemctl daemon-reload
-    systemctl -q preset integalert.service
-fi
+%post_service %pname
 
-# On first installation, try to migrate from existing
-# configuration not maintained by RPM:
-if [ $1 -eq 1 ]; then
-    for d in integalert integalert_vm integalert_container; do
-	for f in pipe.conf; do
-	    if [ -e "%_sysconfdir/osec/$d/$f.rpmnew" ]; then
-		if [ -e "%_sysconfdir/osec/$d/$f.rpmold" ]; then
-		    mv -vf "%_sysconfdir/osec/$d/$f.rpmold" \
-		       "$(mktemp %_sysconfdir/osec/$d/$f.rpmold.XXX)"
-		fi
-
-		mv -vf "%_sysconfdir/osec/$d/$f" \
-		   "%_sysconfdir/osec/$d/$f.rpmold"
-		mv -vf "%_sysconfdir/osec/$d/$f.rpmnew" \
-		   "%_sysconfdir/osec/$d/$f"
-
-		echo "Warning! %_sysconfdir/osec/$d/$f.rpmnew was automatically re-installed as %_sysconfdir/osec/$d/$f. Existing file has been saved as %_sysconfdir/osec/$d/$f.rpmold." >&2
-	    fi
-	done
-
-	if [ -d %_sysconfdir/osec/${d}_fix ]; then
-	    ls %_sysconfdir/osec/${d}_fix | while read f; do
-		if [ -e "%_sysconfdir/osec/$d/$f.fix.rpmold" ]; then
-		    mv -vf "%_sysconfdir/osec/$d/$f.fix.rpmold" \
-		       "$(mktemp %_sysconfdir/osec/$d/$f.fix.rpmold.XXX)"
-		fi
-
-		mv -vf "%_sysconfdir/osec/${d}_fix/$f" \
-		   "%_sysconfdir/osec/${d}/$f.fix.rpmold"
-	    done
-
-	    rmdir -v %_sysconfdir/osec/${d}_fix
-
-	    echo "Warning! Files in %_sysconfdir/osec/${d}_fix were automatically saved as *.fix.rpmold files in %_sysconfdir/osec/$d." >&2
-	fi
-    done
-fi
+%preun -n %pname
+%preun_service %pname
 
 %files -n installer-feature-integalert-stage2
 %_datadir/install2/postinstall.d/90-integrity-init.sh
@@ -151,7 +111,8 @@ fi
 %_sbindir/integalert
 %dir %_sysconfdir/osec/integalert*
 %config(noreplace) %_sysconfdir/osec/integalert*/*.conf
-%_sysconfdir/osec/integalert*/sender
+%config(noreplace) %_sysconfdir/osec/integalert.conf
+%_libexecdir/integalert/sender
 %dir %_sysconfdir/osec/integalert*/trigger.d
 %config(noreplace) %_logrotatedir/integalert*.conf
 %ghost %_sysconfdir/sysconfig/integalert
@@ -168,6 +129,15 @@ fi
 %endif
 
 %changelog
+* Thu Oct 10 2024 Paul Wolneykien <manowar@altlinux.org> 0.5.0-alt1
+- Version: 0.5.0
+- Remove the migration %%post script. Use normal %%post_service and
+  %%preun_service scripts.
+- Install the default /etc/osec/integalert.conf.
+- Triggers are now disabled by default (use config to enable).
+- Use the single sender script instead of per-profile sender scripts.
+- Read /etc/osec/integalert.conf before /etc/sysconfig/integalert.
+
 * Thu Sep 05 2024 Paul Wolneykien <manowar@altlinux.org> 0.4.14-alt1
 - Place integalert into /usr/sbin/.
 - Install integalert with 0755 (world executable).
