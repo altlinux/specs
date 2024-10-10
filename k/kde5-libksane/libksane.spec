@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -43,7 +43,7 @@ developing applications that use %name.
 %package -n libkf5sane
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n libkf5sane
 KF5 library
 
@@ -72,6 +72,9 @@ KF5 library
 %_K5lib/libKF5Sane.so.*
 
 %changelog
+* Thu Oct 10 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt2
+- relax requires
+
 * Fri Feb 16 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
