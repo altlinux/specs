@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.6.13
-Release: alt2
+Version: 0.6.16
+Release: alt1
 Summary: Python library for NETCONF clients
 License: Apache-2.0
 Group: Development/Python3
@@ -14,21 +14,16 @@ Url: https://pypi.org/project/ncclient/
 VCS: https://github.com/ncclient/ncclient
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+# https://github.com/ncclient/ncclient/issues/598
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-# install_requires:
-BuildRequires: python3(paramiko)
-BuildRequires: python3(lxml)
-BuildRequires: python3(six)
-
-BuildRequires: python3(pytest)
+%pyproject_builddeps_metadata
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -40,15 +35,13 @@ Poulopoulos (@leopoul)
 %prep
 %setup
 %autopatch -p1
-
-# hotfix for python3.12
-sed -i 's/SafeConfigParser/ConfigParser/' versioneer.py
-sed -i 's/readfp/read_file/' versioneer.py
 # workaround for versioneer
 grep -qsF ' export-subst' .gitattributes || exit 1
 vers_f="$(sed -n 's/ export-subst//p' .gitattributes)"
 grep -qs '^[ ]*git_refnames[ ]*=[ ]*".*"[ ]*$' "$vers_f" || exit 1
 sed -i 's/^\([ ]*\)git_refnames[ ]*=[ ]*".*"[ ]*$/\1git_refnames = " (tag: v%version, upstream\/master)"/' "$vers_f"
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -65,6 +58,9 @@ sed -i 's/^\([ ]*\)git_refnames[ ]*=[ ]*".*"[ ]*$/\1git_refnames = " (tag: v%ver
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 10 2024 Stanislav Levin <slev@altlinux.org> 0.6.16-alt1
+- 0.6.13 -> 0.6.16.
+
 * Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 0.6.13-alt2
 - Fixed FTBFS.
 
