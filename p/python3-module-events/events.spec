@@ -1,21 +1,28 @@
-%define oname events
+%define _unpackaged_files_terminate_build 1
+%define pypi_name Events
+%define pypi_nname events
+%define mod_name %pypi_nname
 
-Name: python3-module-%oname
-Version: 0.2.1
-Release: alt2
+%def_with check
+
+Name: python3-module-%pypi_nname
+Version: 0.5
+Release: alt1
 
 Summary: Bringing the elegance of C# EventHanlder to Python
 License: BSD
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/Events/
+Url: https://pypi.org/project/Events/
+Vcs: https://github.com/pyeve/events
 BuildArch: noarch
-
-# https://github.com/nicolaiarocci/events.git
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-%py3_provides %oname
-
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%endif
 
 %description
 The C# language provides a handy way to declare, subscribe to and fire
@@ -25,43 +32,30 @@ subscribing to an event. Here is a handy package that encapsulates the
 core to event subscription and event firing and feels like a "natural"
 part of the language.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-The C# language provides a handy way to declare, subscribe to and fire
-events. Technically, an event is a "slot" where callback functions
-(event handlers) can be attached to - a process referred to as
-subscribing to an event. Here is a handy package that encapsulates the
-core to event subscription and event firing and feels like a "natural"
-part of the language.
-
-This package contains tests for %oname.
-
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test
+%pyproject_run_unittest -v
 
 %files
-%doc AUTHORS CHANGES *.rst docs/*.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-
-%files tests
-%python3_sitelibdir/*/tests
-
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
+%exclude %python3_sitelibdir/%mod_name/tests
 
 %changelog
+* Thu Oct 10 2024 Stanislav Levin <slev@altlinux.org> 0.5-alt1
+- 0.2.1 -> 0.5.
+
 * Fri Feb 07 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.2.1-alt2
 - Build for python2 disabled.
 
