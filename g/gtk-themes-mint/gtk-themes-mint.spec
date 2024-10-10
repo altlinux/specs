@@ -1,7 +1,7 @@
 %define rname mint-themes
 
 Name: gtk-themes-mint
-Version: 1.8.8
+Version: 2.1.8
 Release: alt1
 Summary: Mint themes
 License: GPLv3+
@@ -9,13 +9,12 @@ Group: Graphical desktop/MATE
 Url: https://github.com/linuxmint/mint-themes.git
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Requires: icon-themes-mint-x
+Requires: icon-themes-mint-x icon-themes-mint-y
 
 Source: %rname-%version.tar
 
 BuildArch: noarch
-BuildRequires: python3
-# sassc
+BuildRequires: python3-module-libsass
 
 %description
 A collection of mint themes
@@ -25,7 +24,7 @@ A collection of mint themes
 
 %build
 ./generate-themes.py
-rm -fr usr/share/themes/Mint-Y*
+for i in X Y; do cp metacity-theme-2.xml usr/share/themes/Mint-$i/metacity-1/; done
 
 %install
 mkdir -p %buildroot
@@ -35,6 +34,9 @@ cp -a usr %buildroot/
 %_datadir/themes/*
 
 %changelog
+* Thu Oct 10 2024 Valery Inozemtsev <shrek@altlinux.ru> 2.1.8-alt1
+- 2.1.8
+
 * Tue Aug 10 2021 Valery Inozemtsev <shrek@altlinux.ru> 1.8.8-alt1
 - 1.8.8
 
