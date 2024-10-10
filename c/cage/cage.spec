@@ -1,6 +1,6 @@
 Name:    cage
-Version: 0.1.5
-Release: alt2.20240216
+Version: 0.2.0
+Release: alt1
 
 Summary: A Wayland kiosk
 License: MIT
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
 BuildRequires: scdoc
-BuildRequires: pkgconfig(wlroots) >= 0.17
+BuildRequires: pkgconfig(wlroots-0.18) >= 0.18.0
 BuildRequires: pkgconfig(wayland-protocols) >= 1.14
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(xkbcommon)
@@ -28,7 +28,7 @@ This is Cage, a Wayland kiosk. A kiosk runs a single, maximized application.
 %setup
 
 %build
-%meson -Dxwayland=enabled
+%meson
 %meson_build
 
 %install
@@ -40,6 +40,9 @@ This is Cage, a Wayland kiosk. A kiosk runs a single, maximized application.
 %_man1dir/%name.1.*
 
 %changelog
+* Sun Oct 06 2024 Anton Midyukov <antohami@altlinux.org> 0.2.0-alt1
+- New version 0.2.
+
 * Mon Feb 26 2024 Anton Midyukov <antohami@altlinux.org> 0.1.5-alt2.20240216
 - New snapshot for build wlroots 0.17
 
