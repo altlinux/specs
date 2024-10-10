@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: ndctl
-Version: 79
+Version: 80
 Release: alt1
 
 Summary: Manage NVDIMM subsystem devices (Non-volatile Memory)
@@ -12,6 +12,7 @@ Group: System/Base
 Url: https://github.com/pmem/ndctl
 
 Vcs: https://github.com/pmem/ndctl.git
+
 Source: %url/archive/v%version/%name-%version.tar.gz
 
 Requires: lib%name = %EVR
@@ -27,7 +28,7 @@ BuildRequires: pkgconfig(json-c)
 BuildRequires: pkgconfig(systemd)
 BuildRequires: pkgconfig(iniparser) >= 4.1
 BuildRequires: pkgconfig(libtraceevent)
-BuildRequires: pkgconfig(libtracefs)
+BuildRequires: pkgconfig(libtracefs) >= 1.2.0
 %{?_with_keyutils:BuildRequires: pkgconfig(libkeyutils)}
 %{?_with_bash:BuildRequires: bash-completion >= 2.0}
 BuildRequires: asciidoctor asciidoc xmlto
@@ -198,6 +199,9 @@ sed -i 's|/usr\(/bin/systemd-escape\)|\1|' daxctl/90-daxctl-device.rules
 %_man3dir/*cxl*
 
 %changelog
+* Thu Oct 10 2024 Yuri N. Sedunov <aris@altlinux.org> 80-alt1
+- 80
+
 * Fri May 03 2024 Yuri N. Sedunov <aris@altlinux.org> 79-alt1
 - 79
 
