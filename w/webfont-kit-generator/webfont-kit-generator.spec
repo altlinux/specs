@@ -3,13 +3,13 @@
 
 %define _name webfont-kit-generator
 %define binary_name webfontkitgenerator
-%define ver_major 1.1
+%define ver_major 1.2
 %define rdn_name com.rafaelmardojai.WebfontKitGenerator
 
 %def_enable check
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Webfont Kit Generator
@@ -79,6 +79,9 @@ Fonts for self-hosting.
 
 
 %changelog
+* Thu Oct 10 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Thu Aug 15 2024 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
 - 1.1.1
 
