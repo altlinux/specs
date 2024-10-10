@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2024.4.15
-Release: alt2
+Version: 2024.10.9
+Release: alt1
 
 Summary: Flexible test automation for Python
 
@@ -56,6 +56,9 @@ for configuration.
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Thu Oct 10 2024 Grigory Ustinov <grenka@altlinux.org> 2024.10.9-alt1
+- Automatically updated to 2024.10.9.
+
 * Tue Apr 16 2024 Grigory Ustinov <grenka@altlinux.org> 2024.4.15-alt2
 - Fixed version of package.
 
