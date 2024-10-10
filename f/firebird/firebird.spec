@@ -13,7 +13,7 @@
 
 Name: firebird
 Version: %major
-Release: alt1
+Release: alt2
 Summary: Firebird SQL Database, fork of InterBase
 Group: Databases
 License: IPL
@@ -185,6 +185,8 @@ rm -rf ./extern/{editline,libtomcrypt,libtommath,re2,zlib} || { echo "rm -rf fai
 %ifarch %e2k
 # required to enable GNU extensions from fenv.h
 %add_optflags -D_GNU_SOURCE
+# workaround for "Include file for re2 not found"
+export CXXFLAGS="%{optflags} -std=c++17"
 %endif
 
 %autoreconf
@@ -408,6 +410,9 @@ fi
 %_datadir/%name/examples
 
 %changelog
+* Wed Oct 09 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.0.5-alt2
+- e2k build fix
+
 * Thu Aug 29 2024 Anton Farygin <rider@altlinux.ru> 4.0.5-alt1
 - 4.0.0.2496.0 -> 4.0.5
 - moved /var/lib/firebird from firefebird-server
