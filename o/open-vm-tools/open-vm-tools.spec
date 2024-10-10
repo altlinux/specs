@@ -3,6 +3,8 @@
 # like subst_with, but replacing '_' with '-'
 %define subst_enable_dash() %{expand:%%(echo '%%{subst_enable %1}' | sed 's/_/-/g')}
 
+%filter_from_requires /\/usr\/bin\/java/d
+
 %def_enable vgauth
 %def_enable xmlsec1
 %def_disable xmlsecurity
@@ -19,9 +21,9 @@
 %def_with gtk3
 %def_with gtkmm3
 
-%global majorversion    12.4
-%global minorversion    5
-%global toolsbuild      23787635
+%global majorversion    12.5
+%global minorversion    0
+%global toolsbuild      24276846
 %global toolsversion    %majorversion.%minorversion
 %global toolsdaemon     vmtoolsd
 %global vgauthdaemon    vgauthd
@@ -326,6 +328,10 @@ fi
 
 
 %changelog
+* Thu Oct 10 2024 Andrew A. Vasilyev <andy@altlinux.org> 12.5.0-alt1
+- 12.5.0 (CVE-2024-40896)
+- remove Java from R: (Closes: #50869)
+
 * Fri Jun 28 2024 Andrew A. Vasilyev <andy@altlinux.org> 12.4.5-alt1
 - 12.4.5
 
