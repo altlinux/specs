@@ -3,16 +3,15 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.6.1
+Version: 3.6.2
 Release: alt1
 
 Summary: Draws Python object reference graphs with graphviz
 
 License: MIT
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/objgraph
-
-# https://github.com/mgedmin/objgraph
+URL:    https://pypi.org/project/objgraph/
+VCS:    https://github.com/mgedmin/objgraph
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -54,6 +53,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Oct 10 2024 Grigory Ustinov <grenka@altlinux.org> 3.6.2-alt1
+- Automatically updated to 3.6.2.
+
 * Thu Apr 04 2024 Grigory Ustinov <grenka@altlinux.org> 3.6.1-alt1
 - Automatically updated to 3.6.1.
 
