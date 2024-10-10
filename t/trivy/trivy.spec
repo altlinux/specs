@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: trivy
-Version: 0.55.0
+Version: 0.56.1
 Release: alt1
 Summary: A Fast Vulnerability Scanner for Containers
 
@@ -13,6 +13,8 @@ Url: https://%import_path
 Source: %name-%version.tar
 Source2: %name.service
 Source3: %name.sysconfig
+
+Patch: fix-k8s-1_31-scan.patch
 
 ExclusiveArch:  %go_arches
 
@@ -52,6 +54,7 @@ Requires: trivy-db
 
 %prep
 %setup
+%patch -p1
 
 %build
 # replace default node-collector image source
@@ -61,6 +64,10 @@ find . -type f -exec \
 # replace default trivy-db image source
 find . -type f -exec \
 	sed -i "s/ghcr.io\/aquasecurity\/trivy-db/registry.altlinux.org\/alt\/trivy-db/g" {} +
+
+# replace default trivy-checks image source
+find . -type f -exec \
+	sed -i "s/ghcr.io\/aquasecurity\/trivy-checks/registry.altlinux.org\/alt\/trivy-checks/g" {} +
 
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
@@ -100,6 +107,11 @@ rm -rf -- %buildroot%go_root
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Thu Oct 10 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.56.1-alt1
+- 0.55.0 -> 0.56.1
+- Fixed `trivy k8s` scan for k8s >= 1.31
+- Replace `trivy-checks` default image repository
+
 * Tue Sep 10 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.55.0-alt1
 - 0.54.1 -> 0.55.0
 
