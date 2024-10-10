@@ -1,5 +1,5 @@
 Name:		edid-decode
-Version:	20230831
+Version:	20240903
 Release:	alt1
 
 Summary:	EDID decoder and conformance tester
@@ -9,7 +9,7 @@ Url:		https://git.linuxtv.org/edid-decode.git/
 
 Source:		%name-%version.tar
 
-BuildRequires:	gcc-c++
+BuildRequires:	gcc-c++ meson
 
 %description
 %summary
@@ -18,16 +18,20 @@ BuildRequires:	gcc-c++
 %setup
 
 %build
-%make CFLAGS='%optflags'
+%meson
+%meson_build
 
 %install
-%makeinstall
+%meson_install
 
 %files
 %_bindir/*
 %_man1dir/edid-decode.1*
 
 %changelog
+* Thu Oct 10 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 20240903-alt1
+- updated from git.88d457c
+
 * Tue Oct  3 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 20230831-alt1
 - updated from git.e59b8a2
 
