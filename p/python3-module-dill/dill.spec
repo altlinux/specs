@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.3.8
+Version: 0.3.9
 Release: alt1
 Summary: Serialize all of Python
 License: BSD
@@ -15,6 +15,8 @@ Vcs: https://github.com/uqfoundation/dill
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+# manually manage extra dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -35,7 +37,7 @@ command.
 Summary: %summary
 Group: Development/Python3
 Requires: %name
-%pyproject_runtimedeps_metadata -- --extra graph
+%pyproject_runtimedeps_metadata_extra graph
 %description -n %name+graph
 Extra 'graph' for %pypi_name.
 
@@ -43,7 +45,7 @@ Extra 'graph' for %pypi_name.
 Summary: %summary
 Group: Development/Python3
 Requires: %name
-%pyproject_runtimedeps_metadata -- --extra profile
+%pyproject_runtimedeps_metadata_extra profile
 # file conflict on /usr/bin/get_gprof
 Conflicts: %name+graph < 0.3.8-alt1
 %description -n %name+profile
@@ -78,6 +80,9 @@ rm -r %buildroot%python3_sitelibdir/%mod_name/tests/
 %_bindir/get_gprof
 
 %changelog
+* Thu Oct 10 2024 Stanislav Levin <slev@altlinux.org> 0.3.9-alt1
+- 0.3.8 -> 0.3.9.
+
 * Thu Feb 29 2024 Stanislav Levin <slev@altlinux.org> 0.3.8-alt1
 - 0.3.7 -> 0.3.8.
 
