@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt5
+Release: alt6
 %K5init no_altplace
 
 Group: System/Libraries
@@ -130,6 +130,7 @@ sed -i '/install.*desktop.*DESTINATION.*KDE_INSTALL_KSERVICESDIR/d' src/kcms/*/C
 %find_lang %name --with-kde --all-name
 %K5find_qtlang %name --all-name
 mkdir -p %buildroot/%_K5data/kio/servicemenus/
+mv %buildroot/%_K5xdgapp/kcm_trash{,5}.desktop
 
 %files common -f %name.lang
 %doc LICENSES/* README.md
@@ -185,6 +186,9 @@ mkdir -p %buildroot/%_K5data/kio/servicemenus/
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Thu Oct 10 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt6
+- rename kcm_trash.desktop
+
 * Mon Aug 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt5
 - merge with p10
 
