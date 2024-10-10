@@ -1,8 +1,9 @@
+%define _libexecdir %_prefix/libexec
 %define soname 0
 
 Name: sharedmeataxe
 Version: 1.0.1
-Release: alt1
+Release: alt2
 
 Summary: Matrix representations over finite fields
 
@@ -66,12 +67,7 @@ API documentation for %name.
 
 %build
 %autoreconf
-%configure --disable-silent-rules
-
-# Get rid of undesirable hardcoded rpaths.
-# sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
-#     -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
-#     -i libtool
+%configure --disable-silent-rules --bindir=%_libexecdir/%name
 
 # Build the library and programs
 %make_build
@@ -91,7 +87,8 @@ LD_LIBRARY_PATH=$PWD/src/.libs make check
 
 %files
 %doc NEWS
-%_bindir/*
+%dir %_libexecdir/%name/
+%_libexecdir/%name/*
 
 %files -n libmtx%soname
 %doc AUTHORS README
@@ -107,6 +104,9 @@ LD_LIBRARY_PATH=$PWD/src/.libs make check
 %doc html
 
 %changelog
+* Thu Oct 10 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.1-alt2
+- Fixed file conflicts with zoneminder and perl6-Zef (ALT #51682).
+
 * Thu Jul 28 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.1-alt1
 - New version (1.0.1).
 
