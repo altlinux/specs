@@ -1,6 +1,6 @@
 Name: drumgizmo
 Version: 0.9.20
-Release: alt1
+Release: alt2
 
 Summary: Multichannel drum plugin 
 License: LGPLv3
@@ -19,7 +19,7 @@ BuildRequires: pkgconfig(jack)
 BuildRequires: pkgconfig(alsa)
 
 %package -n lv2-drumgizmo-plugin
-Summary: Surge XT synthesizer as LV2 plugin
+Summary: Multichannel drum plugin
 Group: Sound
 
 %define desc\
@@ -53,6 +53,9 @@ sed -i '/^#include <cstdlib>/ a#include <cstdint>' \
 %_libdir/lv2/*
 
 %changelog
+* Thu Oct 10 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.9.20-alt2
+- fixed summary tag value
+
 * Fri Jun 14 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.9.20-alt1
 - initial
 
