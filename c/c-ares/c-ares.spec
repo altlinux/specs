@@ -3,15 +3,16 @@
 %define soname 2
 
 Name: c-ares
-Version: 1.33.1
+Version: 1.34.1
 Release: alt1
 
 Summary: A library that performs asynchronous DNS operations
 License: MIT
 Group: System/Libraries
 
-Url: http://c-ares.haxx.se/
-Source: %url/download/c-ares-%version.tar
+Url: https://c-ares.org/
+VCS: https://github.com/c-ares/c-ares.git
+Source: c-ares-%version.tar
 Patch0: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
@@ -48,7 +49,7 @@ compile applications or shared objects that use c-ares.
 %patch0 -p1
 
 %build
-%cmake -DCMAKE_INSTALL_LIBDIR:PATH="%_libdir" -DCARES_BUILD_TESTS:BOOL=ON
+%cmake -DCARES_BUILD_TESTS:BOOL=ON
 %cmake_build
 
 %install
@@ -73,6 +74,10 @@ compile applications or shared objects that use c-ares.
 %_man3dir/*
 
 %changelog
+* Thu Oct 10 2024 Anton Farygin <rider@altlinux.ru> 1.34.1-alt1
+- 1.34.1
+- deleted libdir declaration from cmake configuration (Fixed: #51659)
+
 * Mon Aug 26 2024 Anton Farygin <rider@altlinux.ru> 1.33.1-alt1
 - 1.33.1
 
