@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2023.12.1
+Version: 2024.10.1
 Release: alt1
 
 Summary: Support files exposing JSON from the JSON Schema specifications to Python
@@ -64,6 +64,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%mod_name-*.dist-info
 
 %changelog
+* Thu Oct 10 2024 Anton Vyatkin <toni@altlinux.org> 2024.10.1-alt1
+- New version 2024.10.1.
+
 * Sun Jan 21 2024 Anton Vyatkin <toni@altlinux.org> 2023.12.1-alt1
 - New version 2023.12.1.
 
