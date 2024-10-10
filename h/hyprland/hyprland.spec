@@ -2,7 +2,7 @@
 
 Name: hyprland
 Version: 0.42.0
-Release: alt1
+Release: alt2
 
 Summary: Hyprland is a dynamic tiling Wayland compositor that doesn't sacrifice on its looks
 License: BSD-3-Clause and MIT
@@ -90,7 +90,6 @@ subst '/^version_h = run_command/d' meson.build
 
 %install
 %meson_install
-rm -rf %buildroot%_includedir/%name
 
 %files
 %doc README.md LICENSE
@@ -118,8 +117,12 @@ rm -rf %buildroot%_includedir/%name
 %_datadir/pkgconfig/%name-protocols.pc
 %_datadir/pkgconfig/%name.pc
 %_datadir/hyprland-protocols/
+%_includedir/%name
 
 %changelog
+* Thu Oct 10 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.42.0-alt2
+- pack headers for building plugins
+
 * Wed Aug 14 2024 Roman Alifanov <ximper@altlinux.org> 0.42.0-alt1
 - new version 0.42.0 (with rpmrb script)
 
