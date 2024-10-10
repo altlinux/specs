@@ -1,6 +1,6 @@
 Name:    cage
 Version: 0.2.0
-Release: alt1
+Release: alt2
 
 Summary: A Wayland kiosk
 License: MIT
@@ -20,6 +20,7 @@ BuildRequires: pkgconfig(xcb)
 BuildRequires: pkgconfig(xcb-icccm)
 
 Requires: xorg-xwayland
+Requires: seatd
 
 %description
 This is Cage, a Wayland kiosk. A kiosk runs a single, maximized application.
@@ -40,6 +41,9 @@ This is Cage, a Wayland kiosk. A kiosk runs a single, maximized application.
 %_man1dir/%name.1.*
 
 %changelog
+* Thu Oct 10 2024 Anton Midyukov <antohami@altlinux.org> 0.2.0-alt2
+- Add dependency on seatd
+
 * Sun Oct 06 2024 Anton Midyukov <antohami@altlinux.org> 0.2.0-alt1
 - New version 0.2.
 
