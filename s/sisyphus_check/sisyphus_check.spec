@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.70
+Version: 0.8.71
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -35,6 +35,9 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Tue Oct 08 2024 Vitaly Chikunov <vt@altlinux.org> 0.8.71-alt1
+- check-kernel: Allow %%kcode in the new format to match rpm-build-kernel.
+
 * Wed May 15 2024 Alexey Shabalin <shaba@altlinux.org> 0.8.70-alt1
 - 186-check-systemd: new check, disallows packages containing
   system or user units files outside /lib/systemd/system/,
