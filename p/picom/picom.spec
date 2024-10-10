@@ -2,16 +2,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: picom
-Version: 12.1
-Release: alt2
+Version: 12.2
+Release: alt1
 Summary: A lightweight compositor for X11
 License: MPL-2.0 or MIT
 Group: System/X11
 Url: https://github.com/yshui/picom
 Source: %name-%version.tar
 Source44: %name.watch
-
-ExcludeArch: %ix86
 
 Obsoletes: compton < %EVR
 Provides: compton = %version
@@ -75,6 +73,10 @@ sed -i "/#warning Use of -ffast-math/s/#warning/#error/" src/utils.h
 %exclude %_pkgconfigdir/picom-api.pc
 
 %changelog
+* Thu Oct 10 2024 Anton Midyukov <antohami@altlinux.org> 12.2-alt1
+- New version 12.2.
+- Enable build on %%ix86 again
+
 * Mon Sep 30 2024 Anton Midyukov <antohami@altlinux.org> 12.1-alt2
 - exclude %%_pkgconfigdir
 
