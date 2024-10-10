@@ -4,7 +4,7 @@
 %filter_from_requires /^python3(gajim.gui/d
 
 Name: gajim
-Version: 1.9.4
+Version: 1.9.5
 Release: alt1
 
 Summary: a Jabber/XMPP client written in PyGTK
@@ -130,6 +130,9 @@ end
 
 
 %changelog
+* Thu Oct 10 2024 Ilya Mashkin <oddity@altlinux.ru> 1.9.5-alt1
+- 1.9.5
+
 * Tue Sep 24 2024 Ilya Mashkin <oddity@altlinux.ru> 1.9.4-alt1
 - 1.9.4
 
