@@ -1,7 +1,7 @@
 Name: iputils
-%define timestamp 20240117
+%define timestamp 20240905
 Version: %timestamp
-Release: alt2
+Release: alt1
 
 Summary: Utilities for IPv4/IPv6 networking
 License: BSD-3-Clause and GPL-2.0+
@@ -116,6 +116,10 @@ fi
 %_mandir/man?/*
 
 %changelog
+* Thu Oct 10 2024 Mikhail Efremov <sem@altlinux.org> 20240905-alt1
+- meson: Don't use pre-generated man pages.
+- 20240117 -> 20240905.
+
 * Tue Jan 23 2024 Mikhail Gordeev <obirvalger@altlinux.org> 20240117-alt2
 - Make symlinks in %%_bindir with the same contents as in /bin.
 
