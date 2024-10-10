@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 24.02.2
-Release: alt2
+Release: alt3
 %K5init
 
 Group: Graphical desktop/KDE
@@ -50,7 +50,7 @@ developing applications that use %name.
 %package -n %libksanecore
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libksanecore
 KF5 library
 
@@ -84,6 +84,9 @@ KF5 library
 %_K5lib/libKSaneCore.so.*
 
 %changelog
+* Thu Oct 10 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.2-alt3
+- relax requires
+
 * Tue May 28 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.2-alt2
 - fix headers placement
 
