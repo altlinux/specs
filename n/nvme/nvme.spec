@@ -2,7 +2,7 @@
 
 Name: nvme
 Version: 2.10.2
-Release: alt1
+Release: alt2
 Summary: NVM-Express user space tooling for Linux
 License: GPL-2.0+
 Group: System/Configuration/Hardware
@@ -46,7 +46,7 @@ sed -i "s/'-ldl'/[&,'-lm']/" meson.build
 %meson \
    -D docs=man \
    -D udevrulesdir=%_udevrulesdir \
-   -D systemddir=%_systemddir/system \
+   -D systemddir=%_unitdir \
 %meson_build
 
 %install
@@ -76,6 +76,9 @@ if [ $1 = 1 ]; then # 1 : This package is being installed for the first time
 fi
 
 %changelog
+* Thu Oct 10 2024 L.A. Kostis <lakostis@altlinux.ru> 2.10.2-alt2
+- fix systemd macros use (tnx to mike@).
+
 * Wed Aug 07 2024 L.A. Kostis <lakostis@altlinux.ru> 2.10.2-alt1
 - 2.10.2.
 
