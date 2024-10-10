@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.13.0
+Version: 0.13.1
 Release: alt1
 Summary: Buffer compression and transformation codecs for use
 License: MIT
@@ -69,6 +69,9 @@ This package contains tests for %pypi_name.
 %python3_sitelibdir/%mod_name/tests/
 
 %changelog
+* Thu Oct 10 2024 Stanislav Levin <slev@altlinux.org> 0.13.1-alt1
+- 0.13.0 -> 0.13.1.
+
 * Mon Jul 15 2024 Stanislav Levin <slev@altlinux.org> 0.13.0-alt1
 - 0.12.1 -> 0.13.0.
 
