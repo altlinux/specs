@@ -1,13 +1,13 @@
 %def_enable selinux
 # "setuid" or "none"
-%define priv_mode setuid
+%define priv_mode none
 %if %priv_mode == "setuid"
 %def_disable userns
 %endif
 
 Name: bubblewrap
 Version: 0.10.0
-Release: alt1
+Release: alt1.1
 
 Summary: Unprivileged sandboxing tool
 License: LGPL-2.0-or-later
@@ -22,7 +22,7 @@ Source: %name-%version.tar
 Patch1: bubblewrap-0.9.0-alt-fix-run-path.patch
 
 %if %priv_mode == "none"
-Requires(pre): libcap-utils
+Requires(pre): sysctl-conf-userns
 %endif
 
 %define meson_ver 1.3.0
@@ -46,25 +46,25 @@ because it is trivial to turn such access into to a fully privileged root shell 
 
 %build
 %meson \
-	%{?_disable_selinux:-Dselinux=disabled} \
-	%{?_enable_userns:-Drequire_userns=true}
+	%{subst_enable_meson_feature selinux selinux} \
+	%{subst_enable_meson_bool userns require_userns}
 %nil
 %meson_build
 
 %install
 %meson_install
 
-%if_enabled userns
-mkdir -p %buildroot%_sysctldir
-cat > %buildroot%_sysctldir/90-bwrap.conf << _EOF_
-kernel.userns_restrict = 0
-_EOF_
-%endif
+#%%if_enabled userns
+#mkdir -p %buildroot%_sysctldir
+#cat > %buildroot%_sysctldir/90-bwrap.conf << _EOF_
+#kernel.userns_restrict = 0
+#_EOF_
+#%%endif
 
-%if %priv_mode == "none"
-%post
-setcap -q "cap_sys_admin,cap_net_admin,cap_sys_chroot,cap_setuid,cap_setgid=ep" %_bindir/bwrap 2>/dev/null ||:
-%endif
+#%%if %priv_mode == "none"
+#%%post
+#setcap -q "cap_sys_admin,cap_net_admin,cap_sys_chroot,cap_setuid,cap_setgid=ep" %_bindir/bwrap 2>/dev/null ||:
+#%%endif
 
 %files
 %if %priv_mode == "setuid"
@@ -72,12 +72,15 @@ setcap -q "cap_sys_admin,cap_net_admin,cap_sys_chroot,cap_setuid,cap_setgid=ep" 
 %else
 %_bindir/bwrap
 %endif
-%{?_enable_userns:%_sysctldir/90-bwrap.conf}
+#%{?_enable_userns:%_sysctldir/90-bwrap.conf}
 %_man1dir/bwrap*
 %_datadir/bash-completion/completions/bwrap
 %_datadir/zsh/site-functions/_bwrap
 
 %changelog
+* Thu Oct 10 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1.1
+- rebuilt with priv_mode=none (required for xdg-desktop-portal-1.19)
+
 * Thu Aug 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
 - 0.10.0
 

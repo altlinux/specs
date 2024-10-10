@@ -3,17 +3,20 @@
 %define _libexecdir %_prefix/libexec
 %def_disable docs
 %def_enable man
-%def_enable check
+# kernel.unprivileged_userns_clone required
+%def_disable check
 %def_enable installed_tests
 
 Name: xdg-desktop-portal
-Version: 1.18.4
+Version: 1.19.0
 Release: alt1
 
 Summary: Portal frontend service to Flatpak
 Group: Graphical desktop/GNOME
-License: LGPL-2.0
+License: LGPL-2.1-or-later
 Url: https://github.com/flatpak/%name
+
+Vcs: https://github.com/flatpak/xdg-desktop-portal.git
 
 %if_disabled snapshot
 Source: %url/releases/download/%version/%name-%version.tar.xz
@@ -47,7 +50,7 @@ BuildRequires: pkgconfig(systemd)
 BuildRequires: pkgconfig(json-glib-1.0)
 # since 1.5
 BuildRequires: pkgconfig(libportal) >= %portal_ver
-%{?_enable_docs:BuildRequires: xmlto docbook-dtds docbook-style-xsl}
+%{?_enable_docs:BuildRequires: python3(sphinx) xmlto docbook-dtds docbook-style-xsl}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_installed_tests:BuildRequires: /proc fuse3 pipewire
 BuildRequires: python3(pytest)  python3-module-pygobject3
@@ -87,9 +90,9 @@ sed -i 's/pytest-3/py.test-3/' tests/meson.build
 
 %build
 %meson \
-    %{?_disable_docs:-Ddocbook-docs=disabled} \
-    %{?_disable_man:-Dman-pages=disabled} \
-    %{?_enable_installed_tests:-Dinstalled-tests=true}
+    %{subst_enable_meson_feature docs documentation} \
+    %{subst_enable_meson_feature man man-pages} \
+    %{subst_enable_meson_bool installed_tests installed-tests}
 %nil
 %meson_build
 
@@ -132,6 +135,9 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 %endif
 
 %changelog
+* Thu Oct 10 2024 Yuri N. Sedunov <aris@altlinux.org> 1.19.0-alt1
+- 1.19.0
+
 * Fri Apr 19 2024 Yuri N. Sedunov <aris@altlinux.org> 1.18.4-alt1
 - 1.18.4 (fixed CVE-2024-32462)
 
