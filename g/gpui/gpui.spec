@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpui
-Version: 0.2.54
+Version: 0.2.55
 Release: alt1
 
 Summary: Group policy editor
@@ -113,6 +113,11 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Fri Oct 11 2024 Vladimir Rubanov <august@altlinux.org> 0.2.55-alt1
+- 0.2.54-alt1
+- Fixes:
+  + Fix list values dialog (Closes: 51681).
+
 * Mon Oct 4 2024 Vladimir Rubanov <august@altlinux.org> 0.2.54-alt1
 - 0.2.54-alt1
 - Fixes:
