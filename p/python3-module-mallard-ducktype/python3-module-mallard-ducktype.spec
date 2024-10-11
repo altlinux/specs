@@ -1,8 +1,11 @@
 %define modname mallard-ducktype
+%define pypi_name mallard_ducktype
+
+%def_enable check
 
 Name: python3-module-%modname
 Version: 1.0.2
-Release: alt1
+Release: alt2
 
 Summary: Parse Ducktype files and convert them to Mallard
 Group: Development/Python3
@@ -14,7 +17,7 @@ Source: https://github.com/projectmallard/%modname/archive/%version/%modname-%ve
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildRequires: python3(wheel) python3(setuptools)
 
 %description
 Parse Ducktype files and convert them to Mallard.
@@ -23,21 +26,30 @@ Parse Ducktype files and convert them to Mallard.
 %setup -n %modname-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test
+pushd tests
+    ./runtests
+popd
+
 
 %files
 %_bindir/ducktype
-%python3_sitelibdir_noarch/*
+%python3_sitelibdir_noarch/mallard/__init__.py
+%python3_sitelibdir_noarch/mallard/__pycache__/*
+%python3_sitelibdir_noarch/mallard/ducktype/
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
 %doc AUTHORS README.md COPYING
 
 
 %changelog
+* Fri Oct 11 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt2
+- switched build to %%pyproject* macros, improved %%check (ALT #51697)
+
 * Tue Jul 23 2019 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
 - 1.0.2
 
