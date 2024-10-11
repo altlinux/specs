@@ -1,22 +1,32 @@
-%define modulename genshi
+%define _unpackaged_files_terminate_build 1
+%define pypi_name Genshi
+%define pypi_nname genshi
+%define mod_name %pypi_nname
 
-Name: python3-module-%modulename
+%def_with check
+
+Name: python3-module-%pypi_nname
 Version: 0.7.9
-Release: alt1
+Release: alt2
 
 Summary: A toolkit for stream-based generation of output for the web
 
 License: BSD
 Group: Development/Python3
 Url: http://genshi.edgewall.org/
-
-# https://github.com/edgewall/genshi
+Vcs: https://github.com/edgewall/genshi
 Source: %name-%version.tar
+# https://github.com/edgewall/genshi/pull/86
+Patch0: genshi-0.7.9-Switch-tests-to-pytest.patch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
+# build backend and its deps
 BuildRequires: python3-module-setuptools
+%if_with check
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-six
+%endif
 
 %description
 Genshi is a Python library that provides an integrated set of
@@ -26,22 +36,26 @@ feature is a template language, which is heavily inspired by Kid.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %python3_prune
 
 %check
-%python3_test
+%pyproject_run_pytest -vra %mod_name
 
 %files
-%python3_sitelibdir/%modulename
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Fri Oct 11 2024 Stanislav Levin <slev@altlinux.org> 0.7.9-alt2
+- Migrated from removed setuptools' test command (see #50996).
+
 * Tue Jul 09 2024 Grigory Ustinov <grenka@altlinux.org> 0.7.9-alt1
 - Automatically updated to 0.7.9.
 
