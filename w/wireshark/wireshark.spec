@@ -6,16 +6,16 @@
 # as they are loaded into wireshark/tshark processes which guarantee that linkage
 %set_verify_elf_method unresolved=relaxed
 
-%define _pluginsdir %_libdir/%name/plugins/4.2
+%define _pluginsdir %_libdir/%name/plugins/4.4
 
 Name: wireshark
-Version: 4.2.7
+Version: 4.4.1
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
 Group: Monitoring
 License: GPLv2
-Url: http://www.wireshark.org/
+Url: https://www.wireshark.org/
 VCS: https://gitlab.com/wireshark/wireshark.git
 Source: http://www.wireshark.org/download/src/%name-%version.tar
 Source2: %name.control
@@ -38,7 +38,7 @@ BuildRequires: libcares-devel
 BuildRequires: libsmi-devel
 BuildRequires: libGeoIP-devel
 BuildRequires: libglib2-devel
-BuildRequires: qt6-base-devel qt6-multimedia-devel qt6-tools-devel qt6-svg-devel qt6-5compat-devel qt6-svg
+BuildRequires: qt6-base-devel qt6-multimedia-devel qt6-tools-devel qt6-svg-devel qt6-5compat-devel
 BuildRequires: cmake
 BuildRequires: libsystemd-devel
 BuildRequires: libmaxminddb-devel
@@ -51,6 +51,7 @@ BuildRequires: libzstd-devel
 BuildRequires: libspeexdsp-devel
 BuildRequires: libbrotli-devel
 BuildRequires: libpcre2-devel
+BuildRequires: libcares-devel
 BuildRequires: git
 BuildRequires(pre):rpm-build-xdg
 
@@ -61,11 +62,13 @@ Obsoletes: ethereal-libs < 0.10.10
 Obsoletes: libwiretap
 Obsoletes: ethereal-base
 
-%package qt5
-Summary: QT5 GUI for Wireshark package
+%package qt
+Summary: QT GUI for Wireshark package
 Group: Monitoring
 Requires: %name-base = %EVR
 Provides: %name = %EVR
+Provides: %name-qt5 = %EVR
+Obsoletes: %name-qt5 < %EVR
 Requires: url_handler
 Obsoletes: ethereal
 
@@ -100,8 +103,8 @@ library, contains command-line utilities, plugins and documentation
 for wireshark. A graphical user interface is packaged separately to
 GTK+/QT5 packages.
 
-%description qt5
-This package contains QT5 GUI ie. the wireshark -- application.
+%description qt
+This package contains QT GUI ie. the wireshark -- application.
 
 %description -n tshark
 This package contains console wireshark application.
@@ -139,13 +142,13 @@ install -p -m644 wiretap/wtap.h %buildroot%_includedir/wiretap/wtap.h
 
 install -p -m755 %_sourcedir/%name.control %buildroot%_controldir/%name-capture
 
-# Rename qt5 binary:
-mv -v %buildroot%_bindir/%name %buildroot%_bindir/%name-qt5
+# Rename qt binary:
+mv -v %buildroot%_bindir/%name %buildroot%_bindir/%name-qt
 
 # Make alternatives:
 mkdir -p %buildroot%_altdir
-cat <<'_EOF'_ > %buildroot%_altdir/%name-qt5
-%_bindir/%name	%_bindir/%name-qt5	20
+cat <<'_EOF'_ > %buildroot%_altdir/%name-qt
+%_bindir/%name	%_bindir/%name-qt	20
 _EOF_
 
 %pre base
@@ -155,7 +158,7 @@ _EOF_
 %post_control -s relaxed %name-capture
 
 %files base
-%doc AUTHORS COPYING ChangeLog INSTALL NEWS README* doc/README.*
+%doc AUTHORS COPYING ChangeLog INSTALL README* doc/README.*
 %config %_controldir/%name-capture
 %_bindir/capinfos
 %_bindir/captype
@@ -206,9 +209,9 @@ _EOF_
 %_xdgmimedir/packages/org.wireshark.Wireshark.xml
 %_datadir/metainfo/org.wireshark.Wireshark.metainfo.xml
 
-%files qt5
-%_altdir/%name-qt5
-%_bindir/wireshark-qt5
+%files qt
+%_altdir/%name-qt
+%_bindir/wireshark-qt
 %_datadir/applications/org.wireshark.Wireshark.desktop
 
 %files -n tshark
@@ -226,6 +229,10 @@ _EOF_
 %_libdir/cmake/%name
 
 %changelog
+* Thu Oct 10 2024 Anton Farygin <rider@altlinux.ru> 4.4.1-alt1
+- 4.4.1 (Fixes: CVE-2024-9781)
+- renamed wireshark-qt5 to wireshark-qt
+
 * Tue Sep 17 2024 Anton Farygin <rider@altlinux.ru> 4.2.7-alt1
 - 4.2.7 (Fixes: CVE-2024-8250)
 
