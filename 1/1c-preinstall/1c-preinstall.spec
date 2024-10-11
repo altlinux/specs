@@ -2,7 +2,7 @@
 
 Name:    1c-preinstall
 Version: 8.3
-Release: alt16
+Release: alt17
 
 Summary: Set correct environment for 1C:Enterprise platform
 License: GPL-2.0
@@ -95,6 +95,8 @@ Requires: zlib
 
 Requires: libstdc++6
 Requires: fonts-ttf-ms
+# https://t.me/alt_linux/448716
+Requires: xorg-96dpi
 
 %description
 This metapackage is intend to deploy correct environment for 1C:Enterprise platform installation.
@@ -113,6 +115,9 @@ Tested with 1C:Enterprise platform version %tested_version
 %files
 
 %changelog
+* Fri Oct 11 2024 Andrey Cherepanov <cas@altlinux.org> 8.3-alt17
+- Required xorg-96dpi according https://t.me/alt_linux/448716.
+
 * Tue May 28 2024 Pavel Isopenko <pauli@altlinux.org> 8.3-alt16
 - clarification of dependencies: minus libcrypto1.1 and libssl1.1 (ALT #50479)
 
