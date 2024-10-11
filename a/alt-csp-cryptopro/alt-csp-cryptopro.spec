@@ -8,7 +8,7 @@
 %endif
 
 Name: alt-csp-cryptopro
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Group: File tools
@@ -64,10 +64,14 @@ install -m 0644 BUILD/*.qm %buildroot/%_qt5_translationdir/
 %files -f %name.lang
 %_bindir/alt-csp-cryptopro
 %_desktopdir/alt-csp-cryptopro.desktop
+%_iconsdir/hicolor/*/apps/alt-csp-cryptopro.*
 %_Ksrv/ServiceMenus/alt-csp-cryptopro.desktop
 %_datadir/file-manager/actions/alt-csp-cryptopro.desktop
 
 %changelog
+* Fri Oct 11 2024 Sergey V Turchin <zerg at altlinux dot org> 0.3.2-alt1
+- add own icon
+
 * Wed Sep 18 2024 Oleg Solovyov <mcpain@altlinux.org> 0.3.1-alt1
 - build with qt5/6 based on branch
 - explicitly attach signature (Closes: #51245)
