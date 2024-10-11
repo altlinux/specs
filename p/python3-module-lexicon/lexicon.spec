@@ -1,51 +1,60 @@
 %define _unpackaged_files_terminate_build 1
-%define oname lexicon
+%define pypi_name lexicon
+%define mod_name %pypi_name
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 1.0.0
-Release: alt2
-
-Summary: Powerful Python dict subclass(es) providing aliasing & attribute access
+Name: python3-module-%pypi_name
+Version: 2.0.1
+Release: alt1
+Summary: Powerful dict subclass(es) with aliasing & attribute access
 License: BSD-2-Clause
 Group: Development/Python3
-Url: https://github.com/bitprophet/lexicon
-
+Url: https://pypi.org/project/lexicon/
+Vcs: https://github.com/bitprophet/lexicon
 BuildArch: noarch
-
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-six
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+BuildRequires: /dev/pts
 %endif
 
-
 %description
-Lexicon is a simple Python 2.6+ and 3.3+ compatible collection of dict subclasses
-providing extra power.
-
+Lexicon is a simple collection of Python dict subclasses providing extra power.
 
 %prep
 %setup
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile dev-requirements.txt
+%endif
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test
+%pyproject_run -- inv test
 
 %files
-%doc LICENSE README.md CHANGES
-%python3_sitelibdir/%oname
-%python3_sitelibdir/*.egg-info
-
+%doc LICENSE README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 11 2024 Stanislav Levin <slev@altlinux.org> 2.0.1-alt1
+- 1.0.0 -> 2.0.1.
+
 * Sun Jul 18 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt2
 - drop tests packing (the tests is not used by other packages)
 
