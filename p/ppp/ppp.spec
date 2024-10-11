@@ -9,7 +9,7 @@
 %def_with pcap
 
 Name: ppp
-Version: 2.5.0
+Version: 2.5.1
 Release: alt1
 
 Summary: The PPP daemon and documentation
@@ -117,6 +117,9 @@ sed -i -e "s|/etc/radiusclient|/etc/ppp/radius|g" \
 
 %install
 %makeinstall_std
+for f in %buildroot%_sysconfdir/%name/*.example; do
+        mv "$f" "${f%%.*}"
+done
 
 for f in `find scripts/ sample/ -type f`; do
 	chmod 644 "$f"
@@ -150,6 +153,7 @@ install -pDm644 %SOURCE5 %buildroot%_sysconfdir/logrotate.d/%name
 
 %post
 %post_control -s traditional %name
+%tmpfiles_create %name.conf
 
 %files
 %attr(711,root,root) %_sbindir/*
@@ -197,6 +201,9 @@ install -pDm644 %SOURCE5 %buildroot%_sysconfdir/logrotate.d/%name
 %config(noreplace) %_sysconfdir/%name/radius/
 
 %changelog
+* Tue Oct 08 2024 Alexey Shabalin <shaba@altlinux.org> 2.5.1-alt1
+- 2.5.1.
+
 * Fri Aug 04 2023 Alexey Shabalin <shaba@altlinux.org> 2.5.0-alt1
 - 2.5.0
 - new gear history without old patches
