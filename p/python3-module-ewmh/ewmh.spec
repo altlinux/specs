@@ -1,23 +1,21 @@
-%define modulename ewmh
+%define _unpackaged_files_terminate_build 1
+%define pypi_name ewmh
+%define mod_name %pypi_name
 
-%def_with test
-
-Name: python3-module-%modulename
+Name: python3-module-%pypi_name
 Version: 0.1.6
-Release: alt3
+Release: alt4
 Summary: An implementation of EWMH (Extended Window Manager Hints) for python, based on Xlib
-
 License: GPLv3
 Group: Development/Python3
-Url: https://github.com/parkouss/pyewmh
+Url: https://pypi.org/project/ewmh/
+Vcs: https://github.com/parkouss/pyewmh
 BuildArch: noarch
-
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-xlib
-%py3_provides %modulename
-
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %description
 An implementation of EWMH (Extended Window Manager Hints) for python, based on
@@ -26,23 +24,27 @@ and controlled.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export LC_ALL=en_US.UTF-8
-%__python3 setup.py test
+# upstream doesn't have any tests
 
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/*
-
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 11 2024 Stanislav Levin <slev@altlinux.org> 0.1.6-alt4
+- Disabled check (see #50996).
+
 * Fri Feb 07 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.1.6-alt3
 - Build for python2 disabled.
 
