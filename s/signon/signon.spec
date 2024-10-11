@@ -8,7 +8,7 @@
 
 Name: signon
 Version: 8.60
-Release: alt4
+Release: alt6
 
 Group: System/Servers
 Summary: Accounts framework for Linux and POSIX based platforms
@@ -53,28 +53,28 @@ Headers, development libraries and documentation for %name.
 %package -n %libsignon_extension
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n %libsignon_extension
 %name library
 
 %package -n %libsignon_plugins_common
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n %libsignon_plugins_common
 %name library
 
 %package -n %libsignon_plugins
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n %libsignon_plugins
 %name library
 
 %package -n %libsignon_qt5
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n %libsignon_qt5
 %name library
 
@@ -154,6 +154,9 @@ mkdir -p %buildroot/%_libdir/signon/extensions/
 %_libdir/libsignon-qt5.so.*
 
 %changelog
+* Fri Oct 11 2024 Sergey V Turchin <zerg@altlinux.org> 8.60-alt6
+- relax requires
+
 * Wed Mar 16 2022 Sergey V Turchin <zerg@altlinux.org> 8.60-alt4
 - update compile flags
 
