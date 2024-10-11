@@ -2,7 +2,7 @@ Name: kernel-image-6.10
 Release: alt1
 %define kernel_src_version	6.10
 %define kernel_base_version	6.10
-%define kernel_sublevel	.13
+%define kernel_sublevel	.14
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -365,11 +365,11 @@ install -d %buildroot%modules_dir/updates
 install -d %buildroot%modules_dir/kernel/drivers/media-core/
 mv %buildroot%modules_dir/kernel/drivers/media/common/videobuf2/ %buildroot%modules_dir/kernel/drivers/media-core/
 mv %buildroot%modules_dir/kernel/drivers/media/mc/ %buildroot%modules_dir/kernel/drivers/media-core/
-mv %buildroot%modules_dir/kernel/drivers/media/v4l2-core/videodev.ko %buildroot%modules_dir/kernel/drivers/media-core/
+mv %buildroot%modules_dir/kernel/drivers/media/v4l2-core/videodev.ko* %buildroot%modules_dir/kernel/drivers/media-core/
 # other deps
-mv %buildroot%modules_dir/kernel/drivers/media/rc/rc-core.ko %buildroot%modules_dir/kernel/drivers/media-core/
-mv %buildroot%modules_dir/kernel/drivers/media/dvb-core/dvb-core.ko %buildroot%modules_dir/kernel/drivers/media-core/
-mv %buildroot%modules_dir/kernel/drivers/media/radio/tea575x.ko %buildroot%modules_dir/kernel/drivers/media-core/
+mv %buildroot%modules_dir/kernel/drivers/media/rc/rc-core.ko* %buildroot%modules_dir/kernel/drivers/media-core/
+mv %buildroot%modules_dir/kernel/drivers/media/dvb-core/dvb-core.ko* %buildroot%modules_dir/kernel/drivers/media-core/
+mv %buildroot%modules_dir/kernel/drivers/media/radio/tea575x.ko* %buildroot%modules_dir/kernel/drivers/media-core/
 
 %ifarch aarch64 %arm
 make dtbs_install INSTALL_DTBS_PATH=%buildroot/boot/devicetree/$KernelVer
@@ -545,12 +545,12 @@ check-pesign-helper
 %exclude %modules_dir/kernel/drivers/media/
 %exclude %modules_dir/kernel/drivers/staging/
 %exclude %modules_dir/kernel/drivers/gpu/
-%exclude %modules_dir/kernel/drivers/usb/typec/altmodes/typec_displayport.ko
-%exclude %modules_dir/kernel/drivers/usb/typec/altmodes/typec_nvidia.ko
+%exclude %modules_dir/kernel/drivers/usb/typec/altmodes/typec_displayport.ko*
+%exclude %modules_dir/kernel/drivers/usb/typec/altmodes/typec_nvidia.ko*
 %ifarch armh aarch64
 # usb_f_uvc now depends on drm causing "kernel image shouldn't require
 # kernel modules" "sisyphus_check: check-kernel ERROR: kernel package.
-%exclude %modules_dir/kernel/drivers/usb/gadget/function/usb_f_uvc.ko
+%exclude %modules_dir/kernel/drivers/usb/gadget/function/usb_f_uvc.ko*
 %endif
 %ifarch aarch64 %arm
 /boot/devicetree/%kversion-%flavour-%krelease
@@ -578,10 +578,10 @@ check-pesign-helper
 %files -n kernel-modules-drm-%flavour
 %modules_dir/kernel/drivers/gpu/
 %modules_dir/kernel/drivers/media/
-%modules_dir/kernel/drivers/usb/typec/altmodes/typec_displayport.ko
-%modules_dir/kernel/drivers/usb/typec/altmodes/typec_nvidia.ko
+%modules_dir/kernel/drivers/usb/typec/altmodes/typec_displayport.ko*
+%modules_dir/kernel/drivers/usb/typec/altmodes/typec_nvidia.ko*
 %ifarch armh aarch64
-%modules_dir/kernel/drivers/usb/gadget/function/usb_f_uvc.ko
+%modules_dir/kernel/drivers/usb/gadget/function/usb_f_uvc.ko*
 %endif
 %exclude %modules_dir/kernel/drivers/gpu/drm/nouveau
 
@@ -594,6 +594,14 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Oct 11 2024 Vitaly Chikunov <vt@altlinux.org> 6.10.14-alt1
+- Update to v6.10.14 (2024-10-10).
+- config: Enable CONFIG_EDAC_DEBUG=y.
+- config: Enable ZSTD modules compression.
+- config: Enable CONFIG_INTEL_TPMI=m.
+- config: Enable more Intel drivers.
+- config: Enable CONFIG_USB_ANNOUNCE_NEW_DEVICES=y.
+
 * Sat Oct 05 2024 Kernel Bot <kernelbot@altlinux.org> 6.10.13-alt1
 - v6.10.13 (2024-10-04).
 - config-aarch64: enable more configs for better Rockchip support.
