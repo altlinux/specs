@@ -4,7 +4,7 @@
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Databases
@@ -127,35 +127,35 @@ developing applications that use %name.
 %package -n libkf5akonadiprivate
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n libkf5akonadiprivate
 KF5 library
 
 %package -n libkf5akonadiagentbase
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n libkf5akonadiagentbase
 KF5 library
 
 %package -n libkf5akonadicore
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n libkf5akonadicore
 KF5 library
 
 %package -n libkf5akonadiwidgets
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n libkf5akonadiwidgets
 KF5 library
 
 %package -n libkf5akonadixml
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n libkf5akonadixml
 KF5 library
 
@@ -291,6 +291,9 @@ rm -f %buildroot/%_sysconfdir/apparmor.d/*akonadi*
 %endif
 
 %changelog
+* Fri Oct 11 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt2
+- relax requires
+
 * Fri Feb 16 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
