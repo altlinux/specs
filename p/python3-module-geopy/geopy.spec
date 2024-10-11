@@ -1,100 +1,64 @@
-%define oname geopy
+%define _unpackaged_files_terminate_build 1
+%define pypi_name geopy
+%define mod_name %pypi_name
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 1.19.0
-Release: alt1.1
+Name: python3-module-%pypi_name
+Version: 2.4.1
+Release: alt1
 
 Summary: Python Geocoding Toolbox
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/geopy/
+Vcs: https://github.com/geopy/geopy
 BuildArch: noarch
-
-# https://github.com/geopy/geopy.git
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme
-
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-geographiclib
+%pyproject_builddeps_metadata_extra dev-test
+# setup.py: `docutils` from sphinx is used in tests
+# sphinx is filtered by rpm-build-pyproject
+BuildRequires: python3-module-sphinx
 %endif
 
-
 %description
-geopy is a Python 2 and 3 client for several popular geocoding web
-services.
+geopy is a Python client for several popular geocoding web services.
 
 geopy makes it easy for Python developers to locate the coordinates of
 addresses, cities, countries, and landmarks across the globe using
 third-party geocoders and other data sources.
 
-geopy includes geocoder classes for the OpenStreetMap Nominatim, ESRI
-ArcGIS, Google Geocoding API (V3), Baidu Maps, Bing Maps API, Yahoo!
-PlaceFinder, GeoNames, MapQuest, OpenMapQuest, OpenCage, SmartyStreets,
-geocoder.us, and GeocodeFarm geocoder services. The various geocoder
-classes are located in geopy.geocoders.
-
-%package tests
-Summary: Tests %name
-Group: Development/Python3
-Requires: %name = %EVR
-
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/test
-
-%description tests
-geopy is a Python 2 and 3 client for several popular geocoding web
-services.
-
-geopy makes it easy for Python developers to locate the coordinates of
-addresses, cities, countries, and landmarks across the globe using
-third-party geocoders and other data sources.
-
-geopy includes geocoder classes for the OpenStreetMap Nominatim, ESRI
-ArcGIS, Google Geocoding API (V3), Baidu Maps, Bing Maps API, Yahoo!
-PlaceFinder, GeoNames, MapQuest, OpenMapQuest, OpenCage, SmartyStreets,
-geocoder.us, and GeocodeFarm geocoder services. The various geocoder
-classes are located in geopy.geocoders.
-
-This package contains tests for %name.
+geopy includes geocoder classes for the OpenStreetMap Nominatim, Google
+Geocoding API (V3), and many other geocoding services.
 
 %prep
 %setup
-
-sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
-
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
-mv test/ %buildroot%python3_sitelibdir/%oname
-
-export PYTHONPATH=%buildroot%python3_sitelibdir
-%make -C docs html
-
-%if_with check
 %check
-%__python3 setup.py test
-%endif
+%pyproject_run_pytest -vra --skip-tests-requiring-internet
 
 %files
-%doc *.md docs/_build/html
-%python3_sitelibdir/*
-
-%exclude %python3_sitelibdir/%oname/test
-
-%files tests
-%python3_sitelibdir/%oname/test
-
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 11 2024 Stanislav Levin <slev@altlinux.org> 2.4.1-alt1
+- 1.19.0 -> 2.4.1.
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.19.0-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
