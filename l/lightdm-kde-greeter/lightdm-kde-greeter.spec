@@ -3,7 +3,7 @@
 
 Name: lightdm-kde-greeter
 Version: 0.4.23
-Release: alt8
+Release: alt9
 Group: Graphical desktop/Other
 Summary: LightDM KDE6 Greeter
 License: GPL-3.0+
@@ -19,6 +19,7 @@ Patch5: port-kcm-to-qt-6.patch
 Patch6: remove-the-binding-loop-in-the-userslist-component.patch
 Patch7: make-non-existent-default-index-in-listbutton.patch
 Patch8: fix-networkmanager-widget-in-the-userbar-theme.patch
+Patch9: bring-back-the-password-preview-button.patch
 
 %K6init
 
@@ -59,6 +60,7 @@ This is a fork of KDE4-based LightDM greeter engine for KDE6.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 %build
 %K6build \
@@ -98,6 +100,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Thu Oct 10 2024 Anton Golubev <golubevan@altlinux.org> 0.4.23-alt9
+- bring back the password preview button
+
 * Mon Sep 30 2024 Anton Golubev <golubevan@altlinux.org> 0.4.23-alt8
 - fix NetworkManager widget in the userbar theme
 
