@@ -11,6 +11,7 @@
 %add_python3_req_skip gpt.gpo_dconf_mapping
 %add_python3_req_skip gpt.dynamic_attributes
 %add_python3_req_skip messages
+%add_python3_req_skip plugin
 %add_python3_req_skip storage
 %add_python3_req_skip storage.fs_file_cache
 %add_python3_req_skip storage.dconf_registry
@@ -35,7 +36,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.11.3
+Version: 0.11.4
 Release: alt1
 
 Summary: GPT applier
@@ -194,6 +195,12 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Fri Oct 11 2024 Valery Sinelnikov <greh@altlinux.org> 0.11.4-alt1
+- Added skip plugin (closes: 51631)
+- Fixed getting the network path (closes:51606)
+- The _appliers sequence has been changed,
+  package_applier has been moved to the end
+
 * Fri Sep 06 2024 Valery Sinelnikov <greh@altlinux.org> 0.11.3-alt1
 - Optimized string cleaning using str.translate()
 
