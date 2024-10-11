@@ -8,7 +8,7 @@ epoch:1
 %define kernel_need_version	6.6
 # Used when kernel-source-x.y does not currently exist in repository.
 %define kernel_base_version	6.6
-%define kernel_sublevel .51
+%define kernel_sublevel .56
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -441,6 +441,12 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Oct 11 2024 Dmitry Terekhin <jqt4@altlinux.org> 1:6.6.56-alt1
+- Updated to 6.6.56
+- https://github.com/raspberrypi/linux.git rpi-6.6.y commit e53eefbc711622f0702e887f88d69f867aa0bf1a
+- Baikal-M support git.alt/people/asheplyakov/linux.git commit c4451cc76e1dd58fb02887a34daaa49972dd8e1a
+- Revert 31b9871b to play H264 L5.0&5.1 video on RPi4,3B+
+
 * Fri Oct 04 2024 Dmitry Terekhin <jqt4@altlinux.org> 1:6.6.51-alt1
 - Updated to 6.6.51
 - https://github.com/raspberrypi/linux.git rpi-6.6.y commit 3be1a52ad9e3ae7b0e16eb20c77d9df60e29f139
