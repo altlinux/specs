@@ -1,5 +1,5 @@
 Name: cloak
-Version: 2.9.0
+Version: 2.10.0
 Release: alt1
 
 Summary: Cloak
@@ -102,5 +102,8 @@ Cloak also supports tunneling through an intermediary CDN server such as Amazon 
 %config %_sysconfdir/%name/ckserver.json
 
 %changelog
+* Sat Oct 12 2024 Nazarov Denis <nenderus@altlinux.org> 2.10.0-alt1
+- New version 2.10.0.
+
 * Mon Aug 19 2024 Nazarov Denis <nenderus@altlinux.org> 2.9.0-alt1
 - Initial build for ALT Linux
