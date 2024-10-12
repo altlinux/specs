@@ -4,7 +4,7 @@
 %define sover 4
 
 Name: libqt6xdg
-Version: 4.0.0
+Version: 4.0.1
 Release: alt1
 
 Summary: Qt implementation of freedesktop.org xdg specs
@@ -61,5 +61,8 @@ sed -i 's,-flto -fuse-linker-plugin,,' cmake/compiler_settings.cmake
 %_datadir/cmake/qt6xdg*/
 
 %changelog
+* Sat Oct 12 2024 Anton Midyukov <antohami@altlinux.org> 4.0.1-alt1
+- new version 4.0.1
+
 * Thu Apr 18 2024 Anton Midyukov <antohami@altlinux.org> 4.0.0-alt1
 - Initial build
