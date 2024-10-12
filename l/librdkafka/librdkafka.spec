@@ -10,7 +10,7 @@
 %endif
 
 Name: librdkafka
-Version: 2.5.3
+Version: 2.6.0
 Release: alt1
 
 Summary: the Apache Kafka C/C++ client library
@@ -21,7 +21,6 @@ Url: https://github.com/edenhill/librdkafka
 
 Packager: Pavel Vainerman <pv@altlinux.ru>
 
-# Source-url: https://github.com/edenhill/librdkafka/archive/v%{version}.tar.gz
 Source: %name-%version.tar
 Source1: rdkafka.pc
 
@@ -60,7 +59,7 @@ msgs/second for the producer and 3 million msgs/second for the consumer.
 
 mkdir -p %buildroot%_libdir/pkgconfig
 cp %SOURCE1 %buildroot%_libdir/pkgconfig/
-%__subst 's|@VERSION@|%{version}|g' %buildroot%_libdir/pkgconfig/*.pc
+sed -i 's|@VERSION@|%version|g' %buildroot%_libdir/pkgconfig/*.pc
 
 rm -f %buildroot%_libdir/*.a
 rm -f %buildroot%_datadir/licenses/librdkafka/LICENSES.txt
@@ -80,6 +79,9 @@ rm -f %buildroot%_datadir/licenses/librdkafka/LICENSES.txt
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Sat Oct 12 2024 Grigory Ustinov <grenka@altlinux.org> 2.6.0-alt1
+- Automatically updated to 2.6.0.
+
 * Thu Sep 19 2024 Grigory Ustinov <grenka@altlinux.org> 2.5.3-alt1
 - Automatically updated to 2.5.3.
 

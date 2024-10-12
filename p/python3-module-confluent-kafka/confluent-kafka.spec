@@ -6,7 +6,7 @@
 %def_without check
 
 Name:    python3-module-%modulename
-Version: 2.5.3
+Version: 2.6.0
 Release: alt1
 
 Summary: Confluent's Kafka Python Client
@@ -62,6 +62,9 @@ rm -f  %buildroot/%_prefix/LICENSE.txt
 %python3_sitelibdir/%{pyproject_distinfo confluent_kafka}
 
 %changelog
+* Sat Oct 12 2024 Grigory Ustinov <grenka@altlinux.org> 2.6.0-alt1
+- Automatically updated to 2.6.0.
+
 * Thu Sep 19 2024 Grigory Ustinov <grenka@altlinux.org> 2.5.3-alt1
 - Automatically updated to 2.5.3.
 
