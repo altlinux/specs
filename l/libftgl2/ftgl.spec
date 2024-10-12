@@ -5,7 +5,7 @@
 
 Name: %{oname}2
 Version: 2.4.0
-Release: alt1
+Release: alt2
 Summary: OpenGL frontend to Freetype 2
 
 Group: System/Libraries
@@ -13,6 +13,8 @@ License: LGPLv2
 Url: http://ftgl.wiki.sourceforge.net/
 # https://github.com/frankheckenbach/ftgl
 Source0: %name-%version.tar
+
+Patch1: ftgl-2.4.0-ustream-fix-type-error.patch
 
 # Automatically added by buildreq on Sun Aug 23 2009
 BuildRequires: ImageMagick-tools cppunit-devel doxygen gcc-c++
@@ -61,6 +63,7 @@ This package contains documentation files for %oname.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 touch msvc/Makefile.in
@@ -100,6 +103,9 @@ rm -rf %buildroot%_datadir/doc
 %doc __doc/*
 
 %changelog
+* Sat Oct 12 2024 Ivan A. Melnikov <iv@altlinux.org> 2.4.0-alt2
+- fix FTBFS via backport from upstream
+
 * Wed Jun 02 2021 Ivan A. Melnikov <iv@altlinux.org> 2.4.0-alt1
 - 2.4.0
 - new upstream, https://github.com/frankheckenbach/ftgl
