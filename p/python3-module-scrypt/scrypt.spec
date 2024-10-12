@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.8.24
+Version: 0.8.27
 Release: alt1
 
 Summary: Bindings for the scrypt key derivation function library
@@ -56,6 +56,9 @@ hardware.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sat Oct 12 2024 Grigory Ustinov <grenka@altlinux.org> 0.8.27-alt1
+- Automatically updated to 0.8.27.
+
 * Tue Mar 05 2024 Grigory Ustinov <grenka@altlinux.org> 0.8.24-alt1
 - Automatically updated to 0.8.24.
 
