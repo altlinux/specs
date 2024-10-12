@@ -1,7 +1,7 @@
 %def_with doc
 
 Name: cifs-utils
-Version: 7.0
+Version: 7.1
 Release: alt1
 
 Summary: Utilities for doing and managing mounts of the Linux CIFS filesystem
@@ -11,8 +11,8 @@ Group: System/Kernel and hardware
 Url: https://wiki.samba.org/index.php/LinuxCIFS_utils
 Source: %name-%version.tar
 
-Patch2: cifs-utils-alt-python3.patch
 Patch3: cifs-utils-alt-docutils.patch
+Patch4: smbinfo-bash-completion.patch
 
 BuildRequires(pre): rpm-macros-pam0 rpm-macros-alternatives
 BuildRequires: libcap-ng-devel libkeyutils-devel libkrb5-devel libtalloc-devel libwbclient-devel libpam-devel
@@ -51,8 +51,8 @@ provide these credentials to the kernel automatically at login.
 
 %prep
 %setup
-%patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %autoreconf
@@ -119,6 +119,15 @@ printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildro
 %endif
 
 %changelog
+* Sat Oct 12 2024 Evgeny Sinelnikov <sin@altlinux.org> 7.1-alt1
+- Update to latest stable release supported latest kernel 6.11.
+- Major fixes from upstream:
+  + LDAP Ping capability (to find the closest site);
+  + smbinfo adds gettconinfo command (allowed dumping session and tcon id);
+  + Various improvements to man pages.
+- Backport bash completion support for smbinfo (with filestreaminfo, keys,
+  gettconinfo) from Fedora.
+
 * Sat Nov 04 2023 Evgeny Sinelnikov <sin@altlinux.org> 7.0-alt1
 - Latest stable release with gssproxy support
 
