@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: snapshot
-Version: %ver_major.0.1
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: GNOME Camera
@@ -32,7 +32,9 @@ Source: %name-%version%beta.tar
 Provides: gnome-camera = %EVR
 Requires: gst-plugins-base1.0 >= %gst_ver
 Requires: gst-plugins-bad1.0 >= %gst_ver
+Requires: gst-plugins-libcamera1.0
 Requires: gst-plugin-gtk4
+Requires: glycin-loaders
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo
@@ -81,6 +83,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sat Oct 12 2024 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt1
+- 47.1
+
 * Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0.1-alt1
 - 47.0.1
 
