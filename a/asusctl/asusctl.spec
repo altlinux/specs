@@ -1,5 +1,5 @@
 Name:     asusctl
-Version:  6.0.11
+Version:  6.0.12
 Release:  alt1
 
 Summary:  A control daemon, CLI tools, and a collection of crates for interacting with ASUS ROG laptops 
@@ -17,8 +17,8 @@ Source:  %name-%version.tar
 Source1: README.ru
 Source2: vendor.tar
 Source3: cargo_src.tar
-# Patch1: asusctl-6.0.11-sleep.patch
-
+Source4: update-vendor.sh
+Source5: config.toml
 
 BuildRequires(pre): rpm-macros-rust rpm-macros-systemd >= 5
 BuildRequires(pre): rust-cargo
@@ -70,36 +70,36 @@ a notification service, and ability to run in the background.
 
 %prep
 %setup -a2 -a3
-%__subst "s|/usr/bin/sleep|/bin/sleep|g" ./data//asusd-user.service
+#%%patch1 -p1
 
-#patch1 -p1
+install -m755 %SOURCE4 .
 
-mkdir .cargo
-cat >.cargo/config.toml <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
+install -D -m644 %SOURCE5 .cargo/config.toml
 
-[source."git+https://github.com/emilk/egui?rev=b8e798777de519de3a1878798097ab2ab0bd4def"]
-git = "https://github.com/emilk/egui"
-rev = "b8e798777de519de3a1878798097ab2ab0bd4def"
-replace-with = "vendored-sources"
+%__subst s\^/usr/bin/sleep^/bin/sleep^ ./data/asusd-user.service
 
-[source."git+https://github.com/flukejones/notify-rust.git"]
-git = "https://github.com/flukejones/notify-rust.git"
-replace-with = "vendored-sources"
 
-[source."git+https://gitlab.com/asus-linux/supergfxctl.git"]
-git = "https://gitlab.com/asus-linux/supergfxctl.git"
-
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
+#mkdir .cargo
+#cat >.cargo/config.toml <<EOF
+#[source.crates-io]
+#replace-with = "vendored-sources"
+#
+#[source."git+https://github.com/slint-ui/slint.git"]
+#git = "https://github.com/slint-ui/slint.git"
+#replace-with = "vendored-sources"
+#
+#[source."git+https://gitlab.com/asus-linux/supergfxctl.git"]
+#git = "https://gitlab.com/asus-linux/supergfxctl.git"
+#replace-with = "vendored-sources"
+#
+#[source.vendored-sources]
+#directory = "vendor"
+#EOF
 
 %build
 export RUSTFLAGS="%rustflags"
 RUST_BACKTRACE=1 
+
 
 export CARGO_HOME=%_builddir/%name-%version/cargo_src
 
@@ -117,12 +117,11 @@ install -m644 %SOURCE1 %_builddir/%name-%version
 
 mkdir -p %buildroot/%_unitdir
 mkdir -p %buildroot/%_udevrulesdir
-mkdir -p %user_service/
-install  data/asusd.service %buildroot/%_unitdir/asusd.service
-install  data//asusd-user.service %buildroot/%_user_unitdir/asusd-user.service
+install data/asusd.service %buildroot/%_unitdir/asusd.service
 
 #mv data/asusd-user.service %buildroot/%_unitdir/asusd-user.service
 #mv %buildroot/usr/lib/udev/rules.d/99-asusd.rules %buildroot/%_udevrulesdir/99-asusd.rules
+
 
 %files
 %_bindir/*
@@ -133,8 +132,8 @@ install  data//asusd-user.service %buildroot/%_user_unitdir/asusd-user.service
 %_udevrulesdir/*.rules
 
 %_unitdir/*.service
-%_user_unitdir/*.service
 
+%_user_unitdir/*.service
 %_iconsdir/hicolor/512x512/apps/*
 %exclude %_iconsdir/hicolor/512x512/apps/rog-control-center.png
 %_iconsdir/hicolor/scalable/*
@@ -147,6 +146,9 @@ install  data//asusd-user.service %buildroot/%_user_unitdir/asusd-user.service
 %_datadir/rog-gui/*
 
 %changelog
+* Sun Oct 13 2024 Hihin Ruslan <ruslandh@altlinux.ru> 6.0.12-alt1
+- Version 6.0.12
+
 * Sun Aug 25 2024 Hihin Ruslan <ruslandh@altlinux.ru> 6.0.11-alt1
 - Version 6.0.11
 
