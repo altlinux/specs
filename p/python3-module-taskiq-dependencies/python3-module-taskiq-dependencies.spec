@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.3
+Version: 1.5.4
 Release: alt1
 
 Summary: FastAPI-like dependency injection implementation
@@ -39,6 +39,10 @@ dependencies, and you can easily integrate it in any project.
 %prep
 %setup
 %autopatch -p1
+
+# set version manually, not via poetry
+sed -i '/^version =/s/.*/version="%version"/' pyproject.toml
+
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
@@ -60,6 +64,9 @@ dependencies, and you can easily integrate it in any project.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Oct 13 2024 Anton Zhukharev <ancieg@altlinux.org> 1.5.4-alt1
+- Updated to 1.5.4.
+
 * Sat Mar 30 2024 Anton Zhukharev <ancieg@altlinux.org> 1.5.3-alt1
 - Updated to 1.5.3.
 
