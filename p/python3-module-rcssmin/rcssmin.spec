@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 
 Summary: CSS Minifier
@@ -16,6 +16,8 @@ VCS: https://github.com/ndparker/rcssmin
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -30,22 +32,25 @@ rCSSmin is a CSS minifier written in python.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3 -v
+%pyproject_run_pytest
 
 %files
 %python3_sitelibdir/%oname.py
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %python3_sitelibdir/__pycache__
 %python3_sitelibdir/_%oname.*.so
 
 %changelog
+* Sun Oct 13 2024 Grigory Ustinov <grenka@altlinux.org> 1.1.3-alt1
+- Automatically updated to 1.1.3.
+
 * Wed Jan 24 2024 Grigory Ustinov <grenka@altlinux.org> 1.1.2-alt1
 - Automatically updated to 1.1.2.
 
