@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: z3
-Version: 4.13.2
+Version: 4.13.3
 Release: alt1
 Summary: High-performance theorem prover (SMT solver)
 License: MIT
@@ -74,15 +74,15 @@ This package contains Python bindings of %name.
 %build
 %add_optflags %(getconf LFS_CFLAGS)
 %cmake \
-	-DZ3_INCLUDE_GIT_HASH:BOOL=OFF \
-	-DZ3_INCLUDE_GIT_DESCRIBE:BOOL=OFF \
-	-DZ3_BUILD_DOCUMENTATION:BOOL=ON \
-	-DZ3_ENABLE_EXAMPLE_TARGETS:BOOL=OFF \
-	-DPYTHON_EXECUTABLE=$(which python3) \
-	-DZ3_BUILD_PYTHON_BINDINGS:BOOL=ON \
-	-DZ3_INSTALL_PYTHON_BINDINGS:BOOL=ON \
-	-DZ3_USE_LIB_GMP:BOOL=ON \
-	%nil
+    -DZ3_INCLUDE_GIT_HASH:BOOL=OFF \
+    -DZ3_INCLUDE_GIT_DESCRIBE:BOOL=OFF \
+    -DZ3_BUILD_DOCUMENTATION:BOOL=ON \
+    -DZ3_ENABLE_EXAMPLE_TARGETS:BOOL=OFF \
+    -DPYTHON_EXECUTABLE=$(which python3) \
+    -DZ3_BUILD_PYTHON_BINDINGS:BOOL=ON \
+    -DZ3_INSTALL_PYTHON_BINDINGS:BOOL=ON \
+    -DZ3_USE_LIB_GMP:BOOL=ON \
+    %nil
 
 %cmake_build
 
@@ -119,6 +119,9 @@ python3 examples/python/example.py
 %python3_sitelibdir_noarch/%name
 
 %changelog
+* Sat Oct 12 2024 Grigory Ustinov <grenka@altlinux.org> 4.13.3-alt1
+- Automatically updated to 4.13.3.
+
 * Mon Sep 30 2024 Grigory Ustinov <grenka@altlinux.org> 4.13.2-alt1
 - Automatically updated to 4.13.2.
 
