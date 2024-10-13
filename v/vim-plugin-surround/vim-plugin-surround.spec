@@ -1,7 +1,7 @@
 %define oname vim-surround
 
 Name: vim-plugin-surround
-Version: 2.1.0.18.gitf51a26d
+Version: 2.2.0.6.git3d188ed
 Release: alt1
 
 Summary: Vim plugin for easily delete, change and add such surroundings in pairs
@@ -36,6 +36,9 @@ cp -a doc plugin %buildroot%vim_runtime_dir
 %vim_runtime_dir/*/*
 
 %changelog
+* Sat Oct 12 2024 Arseny Maslennikov <arseny@altlinux.org> 2.2.0.6.git3d188ed-alt1
+- 2.1.0.18.gitf51a26d -> 2.2.0.6.git3d188ed.
+
 * Sat Jul 18 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.1.0.18.gitf51a26d-alt1
 - Initial build for ALT Sisyphus.
 
