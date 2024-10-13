@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name numpydoc
+%define mod_name %pypi_name
 
 # tests requires an access to the Internet
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 Epoch: 1
 
@@ -46,18 +47,21 @@ np-c:function, etc.
 
 %install
 %pyproject_install
-%__rm -r %buildroot%python3_sitelibdir/%pypi_name/tests
+rm -r %buildroot%python3_sitelibdir/%mod_name/tests
 
 %check
 %pyproject_run_pytest -vra
 
 %files
 %doc LICENSE.txt README.rst
-%_bindir/validate-docstrings
-%python3_sitelibdir/%pypi_name/
+%_bindir/%pypi_name
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Oct 13 2024 Anton Zhukharev <ancieg@altlinux.org> 1:1.8.0-alt1
+- Updated to 1.8.0.
+
 * Tue Apr 02 2024 Anton Zhukharev <ancieg@altlinux.org> 1:1.7.0-alt1
 - Updated to 1.7.0.
 
