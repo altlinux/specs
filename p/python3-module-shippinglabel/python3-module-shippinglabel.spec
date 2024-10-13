@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name shippinglabel
+%define mod_name %pypi_name
 
 # tests require the Internet connection
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.7.2
+Version: 2.1.0
 Release: alt1
 
 Summary: Utilities for handling packages
@@ -18,7 +19,7 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-Patch: %name-%version-alt.patch
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -51,10 +52,13 @@ BuildRequires(pre): rpm-build-pyproject
 
 %files
 %doc LICENSE README.rst
-%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Oct 13 2024 Anton Zhukharev <ancieg@altlinux.org> 2.1.0-alt1
+- Updated to 2.1.0.
+
 * Mon May 27 2024 Anton Zhukharev <ancieg@altlinux.org> 1.7.2-alt1
 - Updated to 1.7.2.
 
