@@ -1,6 +1,10 @@
 Name: gsasl
+# Taken from gsasl/configure.ac: LT_CURRENT - LT_AGE.
+# Look for `AC_SUBST(LT_CURRENT, *)`, etc. in the source.
+%define soversion 18
+%define libnso lib%name%soversion
 %define libname lib%name
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 
 Summary: GNU SASL implementation
@@ -10,7 +14,7 @@ Url: http://www.gnu.org/software/gsasl/
 # ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
 Source: %name-%version.tar
 
-Requires: lib%name = %version-%release
+Requires: %libnso = %version-%release
 
 # Automatically added by buildreq on Thu Dec 08 2011
 BuildRequires: gtk-doc libgnutls-devel libidn-devel libkrb5-devel libntlm-devel libreadline-devel
@@ -21,21 +25,21 @@ BuildRequires: texinfo
 GNU SASL is an implementation of the Simple Authentication and
 Security Layer framework and a few common SASL mechanisms.
 
-%package -n lib%name
+%package -n %libnso
 Summary: GNU SASL library
 Group: System/Libraries
 License: LGPLv2+
 
-%description -n lib%name
+%description -n %libnso
 GNU SASL is an implementation of the Simple Authentication and
 Security Layer framework and a few common SASL mechanisms.
 
-This package contains lib%name runtime library.
+This package contains the %libnso runtime library.
 
 %package -n lib%name-devel
 Summary: Files for development of lib%name-based applications
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: %libnso = %version-%release
 
 %description -n lib%name-devel
 This package contains files for development of applications
@@ -44,8 +48,6 @@ which will use lib%name.
 %prep
 %setup
 sed -i 's/^AM_CPPFLAGS +=/& \$(GSS_CFLAGS)/' lib/gl/Makefile.*
-# These gnulib tests fail.
-sed -i -r 's/^(TESTS \+= .*)test-(lock|thread_create)/\1/' gltests/Makefile.am
 
 # Use gnulib largefile module in the library as well.
 sed -i '/AC_REQUIRE(\[gl_USE_SYSTEM_EXTENSIONS\])/a AC_REQUIRE([AC_SYS_LARGEFILE])' \
@@ -67,7 +69,7 @@ sed -i '/AC_REQUIRE(\[gl_USE_SYSTEM_EXTENSIONS\])/a AC_REQUIRE([AC_SYS_LARGEFILE
 %makeinstall_std
 %find_lang %name
 sed -i '/libgsasl\.mo/d' %name.lang
-%find_lang lib%name
+%find_lang %libnso
 
 %set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
@@ -80,8 +82,8 @@ sed -i '/libgsasl\.mo/d' %name.lang
 %_man1dir/*
 %doc AUTHORS NEWS README THANKS
 
-%files -n lib%name -f lib%name.lang
-%_libdir/*.so.*
+%files -n %libnso -f %libnso.lang
+%_libdir/lib%name.so.*
 
 %files -n lib%name-devel
 %_libdir/*.so
@@ -91,6 +93,10 @@ sed -i '/libgsasl\.mo/d' %name.lang
 %_man3dir/*
 
 %changelog
+* Wed Oct 09 2024 Arseny Maslennikov <arseny@altlinux.org> 2.2.1-alt1
+- 2.2.0 -> 2.2.1.
+- Moved libgsasl.so to a SharedLibsPolicy-compliant subpackage.
+
 * Sun Oct 29 2023 Arseny Maslennikov <arseny@altlinux.org> 2.2.0-alt1
 - 1.8.0 -> 2.2.0.
 
