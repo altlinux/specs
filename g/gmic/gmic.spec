@@ -8,16 +8,16 @@
 %def_enable openmp
 %endif
 
-# https://github.com/c-koi/zart
+# https://github.com/GreycLab/zart
 # no tags
 %define zart_ver d014169
-# https://github.com/c-koi/gmic-qt
-%define gmic_qt_ver v.3.4.2
+# https://github.com/GreycLab/gmic-qt
+%define gmic_qt_ver v.3.4.3
 # https://github.com/GreycLab/gmic-community.git
-%define gmic_comm_ver gmic-3.3.4-170-g325ce793
+%define gmic_comm_ver gmic-3.3.4-241-gc2c06cf4
 
 Name: gmic
-Version: 3.4.2
+Version: 3.4.3
 Release: alt1
 
 Summary: GREYC's Magic Image Converter
@@ -40,6 +40,7 @@ Requires: lib%name = %EVR
 BuildRequires: dos2unix
 BuildRequires: gcc-c++ imake libGraphicsMagick-c++-devel libImageMagick-devel libXext-devel libXrandr-devel
 BuildRequires: libavformat-devel libfftw3-devel libgimp-devel libjpeg-devel libopencv-devel libpng-devel
+BuildRequires: libwebp-devel
 BuildRequires: libswscale-devel libtiff-devel openexr-devel xorg-cf-files zlib-devel
 %{?_enable_openmp:BuildRequires: libgomp-devel}
 BuildRequires: libcurl-devel
@@ -208,6 +209,9 @@ popd
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Sun Oct 13 2024 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt1
+- 3.4.3
+
 * Thu Sep 05 2024 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 
