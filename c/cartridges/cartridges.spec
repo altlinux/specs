@@ -2,13 +2,13 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name cartridges
-%define ver_major 2.9
+%define ver_major 2.10
 %define rdn_name page.kramo.Cartridges
 
 %def_enable check
 
 Name: %_name
-Version: %ver_major.3
+Version: %ver_major.1
 Release: alt1
 
 Summary: Cartridges
@@ -26,7 +26,7 @@ Source: %_name-%version.tar
 BuildArch: noarch
 
 %define bp_ver 0.10
-%define adw_ver 1.5
+%define adw_ver 1.6
 
 Requires: typelib(Adw) = 1
 Requires: libadwaita-gir >= %adw_ver
@@ -74,6 +74,9 @@ SteamGridDB.
 
 
 %changelog
+* Sun Oct 13 2024 Yuri N. Sedunov <aris@altlinux.org> 2.10.1-alt1
+- 2.10.1
+
 * Sun Jul 21 2024 Yuri N. Sedunov <aris@altlinux.org> 2.9.3-alt1
 - 2.9.3
 
