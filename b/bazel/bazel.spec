@@ -11,7 +11,7 @@
 %add_debuginfo_skiplist %_bindir/*
 
 Name: bazel
-Version: 7.2.1
+Version: 7.3.2
 Release: alt1
 
 Summary: A fast, scalable, multi-language and extensible build system
@@ -75,6 +75,9 @@ install -D -m644 scripts/zsh_completion/_bazel %buildroot%_datadir/zsh/site-func
 %_datadir/zsh/site-functions/_bazel
 
 %changelog
+* Sun Oct 13 2024 Anton Zhukharev <ancieg@altlinux.org> 7.3.2-alt1
+- Updated to 7.3.2.
+
 * Wed Jul 10 2024 Anton Zhukharev <ancieg@altlinux.org> 7.2.1-alt1
 - Updated to 7.2.1.
 
