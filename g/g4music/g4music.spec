@@ -1,12 +1,12 @@
 %def_enable snapshot
 %define _name g4music
-%define ver_major 3.9
+%define ver_major 4.0
 %define rdn_name com.github.neithern.%_name
 
 %def_disable check
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major
 Release: alt1
 
 Summary: Play your music elegantly
@@ -22,9 +22,9 @@ Source: %url/-/archive/v%version/%_name-%version.tar.gz
 Source: %_name-%version.tar
 %endif
 
-%define gtk_ver 4.10
-%define adwaita_ver 1.2
-%define gst_ver 1.20
+%define gtk_ver 4.16
+%define adwaita_ver 1.6
+%define gst_ver 1.24
 
 Requires: gst-plugins-base1.0 >= %gst_ver
 Requires: gst-plugins-bad1.0 >= %gst_ver
@@ -69,6 +69,9 @@ appstreamcli metainfo-to-news --format text data/app.metainfo.xml.in NEWS
 
 
 %changelog
+* Sun Oct 13 2024 Yuri N. Sedunov <aris@altlinux.org> 4.0-alt1
+- 4.0
+
 * Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 3.9.2-alt1
 - updated to v3.9.2-3-g21c26ed
 
