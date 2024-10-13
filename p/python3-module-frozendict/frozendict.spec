@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-frozendict
-Version: 2.4.5
+Version: 2.4.6
 Release: alt1
 
 Summary: An immutable dictionary
@@ -48,6 +48,9 @@ for dictionaries where immutability is desired.
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Sun Oct 13 2024 Grigory Ustinov <grenka@altlinux.org> 2.4.6-alt1
+- Automatically updated to 2.4.6.
+
 * Mon Oct 07 2024 Grigory Ustinov <grenka@altlinux.org> 2.4.5-alt1
 - Automatically updated to 2.4.5.
 
