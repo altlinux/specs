@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.6.7
+Version: 0.6.9
 Release: alt1
 
 Summary: Pure python logging handler for writing logs to the journald using native protocol
@@ -57,6 +57,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/__pycache__/%mod_name.*.pyc
 
 %changelog
+* Sun Oct 13 2024 Anton Zhukharev <ancieg@altlinux.org> 0.6.9-alt1
+- Updated to 0.6.9.
+
 * Mon Feb 12 2024 Anton Zhukharev <ancieg@altlinux.org> 0.6.7-alt1
 - Updated to 0.6.7.
 
