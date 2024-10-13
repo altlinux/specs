@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name aiormq
+%define mod_name %pypi_name
 
 # tests require running amql broker
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 6.8.0
+Version: 6.8.1
 Release: alt1
 
 Summary: Pure python AMQP 0.9.1 asynchronous client library
@@ -55,10 +56,13 @@ BuildRequires(pre): rpm-build-pyproject
 
 %files
 %doc COPYING README.rst
-%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Oct 13 2024 Anton Zhukharev <ancieg@altlinux.org> 6.8.1-alt1
+- Updated to 6.8.1.
+
 * Wed Feb 07 2024 Anton Zhukharev <ancieg@altlinux.org> 6.8.0-alt1
 - Updated to 6.8.0.
 
