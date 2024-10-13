@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.2.3
-Release: alt2
+Version: 3.2.4
+Release: alt1
 
 Summary: A Python 3.6+ port of the GraphQL.js reference implementation of GraphQL
 License: MIT
@@ -18,18 +18,13 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-
-%py3_provides %pypi_name
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
-%add_pyproject_deps_check_filter bump2version
-%add_pyproject_deps_check_filter check-manifest
-%add_pyproject_deps_check_filter sphinx-rtd-theme
-%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
 
@@ -40,11 +35,11 @@ created by Facebook.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-
 %if_with check
-%pyproject_deps_resync_check_poetry dev
+%pyproject_deps_resync_check_tox tox.ini testenv
 %endif
 
 %build
@@ -54,8 +49,7 @@ created by Facebook.
 %pyproject_install
 
 %check
-# Remove broken test for Python 3.11 (there is not asyncio.coroutine anymore).
-%pyproject_run_pytest -vra -k "not recognizes_an_old_style_coroutine"
+%pyproject_run_pytest -vra
 
 %files
 %doc LICENSE README.md
@@ -63,6 +57,9 @@ created by Facebook.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Oct 13 2024 Anton Zhukharev <ancieg@altlinux.org> 3.2.4-alt1
+- Updated to 3.2.4.
+
 * Mon Aug 28 2023 Anton Zhukharev <ancieg@altlinux.org> 3.2.3-alt2
 - Fixed FTBFS.
 
