@@ -1,31 +1,23 @@
 Name: docbook-utils
-Version: 0.6.14
-Release: alt5
+Version: 0.6.15
+Release: alt1
 
 Summary: Shell scripts for managing DocBook documents
 Group: Publishing
-License: GPLv2+
-Url: http://sources.redhat.com/docbook-tools/
+License: GPL-2.0-or-later
+Url: https://github.com/devexp-db/docbook-utils
+
+Vcs: https://github.com/devexp-db/docbook-utils.git
+
 BuildArch: noarch
 
-# ftp://sources.redhat.com/pub/docbook-tools/new-trials/SOURCES/%name-%version.tar.gz
-Source0: %name-%version.tar
+Source0: https://github.com/devexp-db/docbook-utils/releases/download/v%version/%name-%version.tar.xz
 Source1: db2html
 Source2: gdp-both.dsl
 # Newer version of docbook2man-spec.pl for better handling of docbook2man
 # conversion from http://sourceforge.net/projects/docbook2x/
 Source3: docbook2man-spec.pl
 
-Patch0: docbook-utils-spaces.patch
-Patch1: docbook-utils-2ndspaces.patch
-Patch2: docbook-utils-w3mtxtconvert.patch
-Patch3: docbook-utils-grepnocolors.patch
-Patch4: docbook-utils-sgmlinclude.patch
-Patch5: docbook-utils-rtfmanpage.patch
-Patch6: docbook-utils-papersize.patch
-Patch7: docbook-utils-nofinalecho.patch
-
-Patch11: docbook-alt-jw-grep.patch.patch
 Patch12: docbook-alt-docbook2man-spec.diff
 
 Requires: docbook-style-dsssl >= 1.72
@@ -63,15 +55,6 @@ to formats suitable for printing (PostScript, PDF, DVI).
 %prep
 %setup
 install -pm755 %_sourcedir/docbook2man-spec.pl helpers/
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch11 -p1
 %patch12 -p1
 
 %build
@@ -82,8 +65,8 @@ install -pm755 %_sourcedir/docbook2man-spec.pl helpers/
 %makeinstall htmldir=%buildroot%docdir
 
 for util in dvi html pdf ps rtf; do
-	ln -s docbook2$util %buildroot%_bindir/db2$util
-	ln -s jw.1 %buildroot%_man1dir/db2$util.1
+    ln -s docbook2$util %buildroot%_bindir/db2$util
+    ln -s jw.1 %buildroot%_man1dir/db2$util.1
 done
 ln -s jw.1 %buildroot%_man1dir/docbook2txt.1
 
@@ -92,13 +75,13 @@ rm %buildroot%_bindir/db2html
 install -pm755 %_sourcedir/db2html %buildroot%_bindir/db2html
 
 install -pm644 %_sourcedir/gdp-both.dsl \
-	%buildroot%du_dir/docbook-utils.dsl
+    %buildroot%du_dir/docbook-utils.dsl
 
 install -pm644 AUTHORS NEWS README TODO %buildroot%docdir/
 
 # frontend-spec and backend-spec names are too generic
 for f in %buildroot%_man7dir/*-spec.*; do
-	mv -f "$f" %buildroot%_man7dir/jw-"${f##*/}"
+    mv -f "$f" %buildroot%_man7dir/jw-"${f##*/}"
 done
 
 %files
@@ -129,6 +112,10 @@ done
 %_man1dir/*ps.1*
 
 %changelog
+* Sun Oct 13 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.15-alt1
+- 0.6.15 (new upstream)
+- drop upstreamed patches
+
 * Mon Jul 12 2021 Yuri N. Sedunov <aris@altlinux.org> 0.6.14-alt5
 - updated dependencies
 
