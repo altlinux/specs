@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 10.11.1
+Version: 10.11.2
 Release: alt1
 
 Summary: Extensions for Python Markdown
@@ -55,6 +55,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Oct 13 2024 Anton Zhukharev <ancieg@altlinux.org> 10.11.2-alt1
+- Updated to 10.11.2.
+
 * Mon Sep 30 2024 Anton Zhukharev <ancieg@altlinux.org> 10.11.1-alt1
 - Updated to 10.11.1.
 
