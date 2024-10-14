@@ -1,6 +1,6 @@
 Name: mate-themes
 Version: 3.22.26
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: MATE Desktop themes
 License: GPLv2+
@@ -37,6 +37,9 @@ MATE Desktop themes
 %_iconsdir/*
 
 %changelog
+* Thu Oct 10 2024 Leonid Krivoshein <klark@altlinux.ru> 1:3.22.26-alt2
+- Fix for displaying LibreOffice autofilter window
+
 * Tue Apr 09 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:3.22.26-alt1
 - 3.22.26
 
