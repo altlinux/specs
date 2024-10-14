@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.7.0
+Version: 5.7.1
 Release: alt1
 Summary: Implements a fake file system that mocks the Python file system modules
 License: Apache-2.0
@@ -60,6 +60,9 @@ rm -r %buildroot%python3_sitelibdir/%pypi_name/{tests,pytest_tests}
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 14 2024 Stanislav Levin <slev@altlinux.org> 5.7.1-alt1
+- 5.7.0 -> 5.7.1.
+
 * Wed Oct 09 2024 Stanislav Levin <slev@altlinux.org> 5.7.0-alt1
 - 5.6.0 -> 5.7.0.
 
