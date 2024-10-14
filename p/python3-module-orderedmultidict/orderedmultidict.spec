@@ -1,10 +1,12 @@
-%define  oname orderedmultidict
+%define _unpackaged_files_terminate_build 1
+%define pypi_name orderedmultidict
+%define mod_name %pypi_name
 
 %def_with check
 
-Name:    python3-module-%oname
+Name:    python3-module-%pypi_name
 Version: 1.0.1
-Release: alt1
+Release: alt2
 
 Summary: Ordered Multivalue Dictionary. Helps power furl.
 
@@ -15,10 +17,11 @@ URL:     https://github.com/gruns/orderedmultidict
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
+# build backend and its deps
+BuildRequires: python3-module-setuptools
 
 %if_with check
 BuildRequires: python3-module-six
-BuildRequires: python3-module-flake8
 %endif
 
 BuildArch: noarch
@@ -34,19 +37,22 @@ retains the order of insertions and deletions.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test
+%pyproject_run_unittest discover -v tests
 
 %files
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 %doc *.md
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 14 2024 Stanislav Levin <slev@altlinux.org> 1.0.1-alt2
+- migrated from removed setuptools' test command (see #50996).
+
 * Fri Jun 24 2022 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt1
 - Initial build for Sisyphus.
