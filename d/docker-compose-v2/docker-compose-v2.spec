@@ -11,7 +11,7 @@
 
 Name:		docker-compose-v2
 Version:	2.29.7
-Release:	alt1
+Release:	alt2
 Summary:	Multi-container orchestration for Docker
 
 Group:		Development/Tools
@@ -28,6 +28,8 @@ Requires: /usr/bin/docker
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
+Provides: docker-compose = %version-%release
+Obsoletes: docker-compose <= 1.29.2
 
 %description
 Docker Compose is a tool for running multi-container applications
@@ -56,6 +58,9 @@ install -Dpm0755 %binname %buildroot%{_libexecdir}/docker/cli-plugins
 %{_libexecdir}/docker/cli-plugins/%binname
 
 %changelog
+* Mon Oct 14 2024 Vladimir Didenko <cow@altlinux.org> 2.29.7-alt2
+- Obsolete docker-compose v1
+
 * Fri Sep 20 2024 Vladimir Didenko <cow@altlinux.org> 2.29.7-alt1
 - New version
 
