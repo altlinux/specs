@@ -3,7 +3,7 @@ Summary: CUPS printer drivers for SPL (Samsung Printer Language) printers
 %define real_name splix
 Name: printer-driver-%real_name
 Version: 2.0.1
-Release: alt2.svn315.1
+Release: alt3.svn315.1
 
 Provides: %real_name = %version
 Obsoletes: %real_name
@@ -39,6 +39,8 @@ Moreover you will find documentation about this proprietary language.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p2
+# user code should never use names with two underscores
+sed -i 's/__compare/fix&/g' src/algo0x11.cpp include/algo0x11.h
 
 %build
 %make_build V=1 OPTIM_CXXFLAGS="%optflags" DISABLE_JBIG=1 THREADS=1
@@ -52,6 +54,9 @@ Moreover you will find documentation about this proprietary language.
 %_datadir/cups/model/*/*
 
 %changelog
+* Mon Oct 14 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.0.1-alt3.svn315.1
+- e2k build fix
+
 * Tue Apr 05 2022 Anton Midyukov <antohami@altlinux.org> 2.0.1-alt2.svn315.1
 - build without qt4
 - don't build additional tools
