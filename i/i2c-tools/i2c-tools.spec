@@ -1,6 +1,6 @@
 Name: i2c-tools
-Version: 4.3
-Release: alt2
+Version: 4.4
+Release: alt1
 
 Summary: I2C tools
 License: GPLv2+
@@ -51,7 +51,6 @@ Group: Development/C
 
 %prep
 %setup
-sed -i 's,distutils\.core,setuptools,' py-smbus/setup.py
 
 %build
 make CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS" BUILD_STATIC_LIB=0 EXTRA=eeprog
@@ -116,6 +115,9 @@ echo 'i2c-dev' > %buildroot%_libdir/modules-load.d/%name.conf
 %_man3dir/libi2c.3*
 
 %changelog
+* Mon Oct 14 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 4.4-alt1
+- 4.4 released
+
 * Tue Dec 19 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.3-alt2
 - dropped obsolete distutils build req
 
