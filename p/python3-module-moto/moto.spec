@@ -8,7 +8,7 @@
 %def_without full_testsuite
 
 Name: python3-module-%pypi_name
-Version: 5.0.15
+Version: 5.0.17
 Release: alt1
 
 Summary: A library that allows your python tests to easily mock out the boto library
@@ -74,6 +74,9 @@ export TESTS=tests/test_core
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 14 2024 Stanislav Levin <slev@altlinux.org> 5.0.17-alt1
+- 5.0.15 -> 5.0.17.
+
 * Mon Sep 23 2024 Stanislav Levin <slev@altlinux.org> 5.0.15-alt1
 - 5.0.14 -> 5.0.15.
 
