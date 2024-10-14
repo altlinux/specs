@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name:    drgn
-Version: 0.0.27
+Version: 0.0.29
 Release: alt1
 Summary: Programmable debugger
 License: LGPL-2.1-or-later
@@ -78,6 +78,8 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 mkdir -p %buildroot%_datadir/drgn
 cp -r contrib tools -t %buildroot%_datadir/drgn
 install -Dpm644 build/man/drgn.1 -t %buildroot%_man1dir
+# Python code of doc generator.
+rm -r docs/exts docs/conf.py
 
 %check
 test -d /proc/self
@@ -113,12 +115,15 @@ EOF
 %_bindir/drgn
 %_datadir/drgn
 %_man1dir/drgn.1*
-%python3_sitelibdir/drgn*
-%python3_sitelibdir/_drgn.*
+%python3_sitelibdir/*drgn*
 
+# warning: package with no files has %post-script
 %files -n kernel-ci-drgn-debuginfo
 
 %changelog
+* Wed Oct 09 2024 Vitaly Chikunov <vt@altlinux.org> 0.0.29-alt1
+- Update to v0.0.29 (2024-10-08).
+
 * Fri Jul 05 2024 Vitaly Chikunov <vt@altlinux.org> 0.0.27-alt1
 - Update to v0.0.27 (2024-07-01).
 
