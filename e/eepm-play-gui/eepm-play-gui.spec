@@ -1,5 +1,5 @@
 Name: eepm-play-gui
-Version: 0.2.1
+Version: 0.3.0
 Release: alt1
 License: AGPL2
 
@@ -52,6 +52,13 @@ GUI frontend for install third-party applications using epm play.
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Tue Oct 15 2024 Roman Alifanov <ximper@altlinux.org> 0.3.0-alt1
+- fix error: tput: unknown terminfo capability '2'
+- added flags dialog and button
+- added the ability to answer a question from the terminal (such as [Y/n])
+- added the --auto flag and other minor improvements
+- added reset button
+
 * Wed Oct 09 2024 Roman Alifanov <ximper@altlinux.org> 0.2.1-alt1
 - some improvements (thx rirusha@)
 
