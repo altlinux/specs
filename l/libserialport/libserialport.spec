@@ -1,6 +1,6 @@
 Name: libserialport
-Version: 0.1.1
-Release: alt2
+Version: 0.1.2
+Release: alt1
 
 Summary: Serial port handling library
 License: LGPLv3
@@ -45,5 +45,8 @@ this package contains libserialport development part.
 %_pkgconfigdir/libserialport.pc
 
 %changelog
+* Mon Oct 14 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.1.2-alt1
+- 0.1.2 released
+
 * Mon Jun 19 2017 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.1.1-alt2
 - initial
