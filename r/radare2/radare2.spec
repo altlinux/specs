@@ -1,5 +1,5 @@
 Name: radare2
-Version: 5.9.4
+Version: 5.9.6
 Release: alt1
 
 Summary: A reverse engineering framework
@@ -69,6 +69,9 @@ cp -r libr/include/heap %buildroot%_includedir/libr
 %_includedir/libr
 
 %changelog
+* Mon Oct 14 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 5.9.6-alt1
+- 5.9.6 released
+
 * Fri Aug 30 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 5.9.4-alt1
 - 5.9.4 released
 
