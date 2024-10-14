@@ -1,10 +1,10 @@
 %define  oname meinheld
 
-%def_with check
+%def_without check
 
 Name:    python3-module-%oname
 Version: 0.6.1
-Release: alt3.1
+Release: alt4
 
 Summary: meinheld is a high performance asynchronous WSGI Web Server (based on picoev)
 License: BSD
@@ -64,6 +64,9 @@ mv tests/ %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Mon Oct 14 2024 Stanislav Levin <slev@altlinux.org> 0.6.1-alt4
+- Disabled check (see #50996).
+
 * Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.6.1-alt3.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
