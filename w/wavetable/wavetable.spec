@@ -1,5 +1,5 @@
 Name: wavetable
-Version: 1.0.21
+Version: 1.0.22
 Release: alt1
 
 Summary: Wavetable synth
@@ -61,5 +61,8 @@ cp -av %_cmake__builddir/*/VST3/*.vst3 %buildroot%_libdir/vst3
 %_libdir/vst3/*
 
 %changelog
+* Mon Oct 14 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.22-alt1
+- 1.0.22 released
+
 * Fri Jul 19 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.21-alt1
 - 1.0.21 released
