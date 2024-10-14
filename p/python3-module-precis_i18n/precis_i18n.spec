@@ -1,8 +1,10 @@
-%define  oname precis_i18n
+%define _unpackaged_files_terminate_build 1
+%define pypi_name precis-i18n
+%define mod_name precis_i18n
 
-Name:    python3-module-%oname
+Name:    python3-module-%mod_name
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Summary: Python3 implementation of PRECIS framework (RFC 8264, RFC 8265, RFC 8266)
 
@@ -12,10 +14,16 @@ URL:     https://pypi.org/project/precis-i18n
 VCS:     https://github.com/byllyfish/precis_i18n
 
 Source:  %name-%version.tar
+# https://github.com/byllyfish/precis_i18n/pull/39
+Patch0: precis_i18n-1.1.0-setup.py-remove-test_suite-as-setuptools-72-dropped.patch
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
-
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 BuildRequires(pre): rpm-build-python3
+# build backend and its deps
+BuildRequires: python3-module-setuptools
 
 BuildArch: noarch
 
@@ -37,22 +45,26 @@ Representing Nicknames (RFC 8266)
 
 %prep
 %setup
+%autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test
+%pyproject_run_unittest -v
 
 %files
 %doc LICENSE.txt *.md
-%python3_sitelibdir/%oname
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 14 2024 Stanislav Levin <slev@altlinux.org> 1.1.0-alt2
+- Migrated from removed setuptools' test command (see #50996).
+
 * Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
 - Automatically updated to 1.1.0.
 
