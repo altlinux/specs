@@ -5,7 +5,7 @@
 %define service_name plasma-kded6
 
 Name: kf6-%rname
-Version: 6.5.0
+Version: 6.7.0
 Release: alt1
 %K6init
 
@@ -82,6 +82,12 @@ KF6 library
 
 
 %changelog
+* Fri Oct 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.0-alt1
+- new version
+
+* Fri Oct 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt1
+- new version
+
 * Wed Sep 04 2024 Sergey V Turchin <zerg@altlinux.org> 6.5.0-alt1
 - new version
 

@@ -5,7 +5,7 @@
 %define libkuriikwsfiltereng_private libkuriikwsfiltereng_private%sover
 
 Name: kf6-%rname
-Version: 6.5.0
+Version: 6.7.0
 Release: alt1
 %K6init no_altplace
 
@@ -174,6 +174,12 @@ mkdir -p %buildroot/%_K6data/kio/servicemenus/
 
 
 %changelog
+* Fri Oct 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.0-alt1
+- new version
+
+* Fri Oct 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt1
+- new version
+
 * Wed Sep 04 2024 Sergey V Turchin <zerg@altlinux.org> 6.5.0-alt1
 - new version
 

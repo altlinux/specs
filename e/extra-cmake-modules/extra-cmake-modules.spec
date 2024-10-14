@@ -20,7 +20,7 @@ AutoProv: yes, nopython nopython3
 %add_python3_path %_datadir/ECM/find-modules
 
 Name: extra-cmake-modules
-Version: 6.5.0
+Version: 6.7.0
 Release: alt1
 
 Group: Development/Other
@@ -37,7 +37,6 @@ Requires: clang-devel
 %endif
 
 Source: %name-%version.tar
-Patch1: alt-find-qcollectiongenerator.patch
 Patch2: alt-fix-python-install-dirs.patch
 Patch3: alt-find-clang-library.patch
 Patch4: alt-remove-c90.patch
@@ -54,7 +53,6 @@ Additional modules for CMake build system needed by KDE Frameworks.
 
 %prep
 %setup
-%patch1 -p1
 %patch2 -p1
 #%patch3 -p1
 #%patch4 -p1
@@ -89,6 +87,12 @@ fi
 
 
 %changelog
+* Fri Oct 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.0-alt1
+- new version
+
+* Fri Oct 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt1
+- new version
+
 * Wed Sep 04 2024 Sergey V Turchin <zerg@altlinux.org> 6.5.0-alt1
 - new version
 

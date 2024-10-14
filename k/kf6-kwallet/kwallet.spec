@@ -1,7 +1,7 @@
 %define rname kwallet
 
 Name: kf6-%rname
-Version: 6.5.0
+Version: 6.7.0
 Release: alt1
 %K6init
 
@@ -29,7 +29,7 @@ BuildRequires: kf6-kauth-devel kf6-kcodecs-devel kf6-kconfig-devel kf6-kconfigwi
 BuildRequires: kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-kguiaddons-devel kf6-ki18n-devel
 BuildRequires: kf6-kiconthemes-devel kf6-kitemviews-devel kf6-knotifications-devel
 BuildRequires: kf6-kservice-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel
-BuildRequires: kf6-kdoctools-devel kf6-kcolorscheme-devel
+BuildRequires: kf6-kdoctools-devel kf6-kcolorscheme-devel kf6-kcrash-devel
 BuildRequires: qca-qt6-devel
 # For secrets API tests
 BuildRequires: qca-qt6-ossl
@@ -137,6 +137,12 @@ fi
 
 
 %changelog
+* Fri Oct 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.0-alt1
+- new version
+
+* Fri Oct 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt1
+- new version
+
 * Wed Sep 04 2024 Sergey V Turchin <zerg@altlinux.org> 6.5.0-alt1
 - new version
 
