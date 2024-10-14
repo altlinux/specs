@@ -1,5 +1,5 @@
 Name: kernel-image-6.12
-Release: alt0.rc2
+Release: alt0.rc3
 %define kernel_src_version	6.11
 %define kernel_base_version	6.12
 %define kernel_sublevel	.0
@@ -439,6 +439,7 @@ KbuildFiles="
 	scripts/recordmcount.c
 	scripts/recordmcount
 	scripts/gcc-x86_*-has-stack-protector.sh
+	scripts/module-common.c
 	scripts/module-common.lds
 	scripts/subarch.include
 	scripts/depmod.sh
@@ -578,6 +579,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Oct 14 2024 Vitaly Chikunov <vt@altlinux.org> 6.12.0-alt0.rc3
+- Update to v6.12-rc3 (2024-10-13).
+- spec: headers-modules: Install scripts/module-common.c.
+
 * Mon Oct 07 2024 Vitaly Chikunov <vt@altlinux.org> 6.12.0-alt0.rc2
 - Update to v6.12-rc2 (2024-10-06).
 
