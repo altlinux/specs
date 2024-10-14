@@ -1,24 +1,26 @@
-%define oname markdown-include
+%define _unpackaged_files_terminate_build 1
+%define pypi_name markdown-include
+%define mod_name markdown_include
 
-Name: python3-module-%oname
-Version: 0.4.2
-Release: alt2
+%def_with check
 
-Summary: Provides an "include" function, similar to that found in LaTeX
+Name: python3-module-%pypi_name
+Version: 0.8.1
+Release: alt1
+Summary: A Python-Markdown extension which provides an 'include' function
 License: GPLv3
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/markdown-include/
+Url: https://pypi.org/project/markdown-include/
+Vcs: https://github.com/cmacmackin/markdown-include
 BuildArch: noarch
-
-# https://github.com/cmacmackin/markdown-include.git
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-markdown
-
-%py3_provides markdown_include
-%py3_requires markdown json
-
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata_extra tests
+%endif
 
 %description
 This is an extension to Python-Markdown which provides an "include"
@@ -27,27 +29,28 @@ and Fortran).
 
 %prep
 %setup
-
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
-
-ln -s README.md README.rst
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test
+%pyproject_run_pytest -vra
 
 %files
-%doc *.md
-%python3_sitelibdir/*
-
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 14 2024 Stanislav Levin <slev@altlinux.org> 0.8.1-alt1
+- 0.4.2 -> 0.8.1.
+
 * Fri Nov 29 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.4.2-alt2
 - python2 disabled
 
