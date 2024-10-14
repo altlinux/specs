@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.4.8
+Version: 2.4.9
 Release: alt1
 Summary: Proxy server
 License: BSD
@@ -69,6 +69,9 @@ BuildRequires: %_bindir/openssl
 %python3_sitelibdir/proxy.py-%version.dist-info/
 
 %changelog
+* Mon Oct 14 2024 Stanislav Levin <slev@altlinux.org> 2.4.9-alt1
+- 2.4.8 -> 2.4.9.
+
 * Mon Sep 23 2024 Stanislav Levin <slev@altlinux.org> 2.4.8-alt1
 - 2.4.4 -> 2.4.8.
 
