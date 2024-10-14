@@ -1,8 +1,8 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.44.10
-Release: alt3
+Version: 0.44.11
+Release: alt1
 
 Summary: Alterator module for system wide auth settings
 License: GPL-2.0+
@@ -178,6 +178,10 @@ rm -f %buildroot%_libexecdir/alterator/hooks/auth
 %files -n task-auth-freeipa
 
 %changelog
+* Mon Oct 14 2024 Andrey Cherepanov <cas@altlinux.org> 0.44.11-alt1
+- system-auth: added support spaces in OU for registered computers (ALT #51675).
+- system-auth: fixed show version.
+
 * Tue Oct 01 2024 Andrey Cherepanov <cas@altlinux.org> 0.44.10-alt3
 - task-auth-ad*: added samba and samba-common-tools.
 
