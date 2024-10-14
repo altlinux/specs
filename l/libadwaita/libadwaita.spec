@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define ver_major 1.6
 %define beta %nil
 %define namespace Adw
@@ -12,8 +12,8 @@
 %def_disable check
 
 Name: libadwaita
-Version: %ver_major.0
-Release: alt2%beta
+Version: %ver_major.1
+Release: alt1%beta
 Epoch: 1
 
 Summary: Library with GTK4 widgets for mobile devices
@@ -147,6 +147,9 @@ xvfb-run -s -noreset %__meson_test
 %endif
 
 %changelog
+* Mon Oct 14 2024 Yuri N. Sedunov <aris@altlinux.org> 1:1.6.1-alt1
+- 1.6.1
+
 * Sat Sep 21 2024 Yuri N. Sedunov <aris@altlinux.org> 1:1.6.0-alt2
 - updated to 1.6.0-2-g74032bba (fixed i908, i915)
 
