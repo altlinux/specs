@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.10.2
+Version: 0.11.1
 Release: alt1
 
 Summary: Python SPNEGO authentication library
@@ -62,6 +62,9 @@ sed -i 's/main()/main(sys.argv[1:])/' %buildroot%_bindir/pyspnego-parse
 %python3_sitelibdir/py%oname-%version.dist-info
 
 %changelog
+* Mon Oct 14 2024 Grigory Ustinov <grenka@altlinux.org> 0.11.1-alt1
+- Automatically updated to 0.11.1.
+
 * Mon Apr 01 2024 Grigory Ustinov <grenka@altlinux.org> 0.10.2-alt1
 - Automatically updated to 0.10.2.
 - Fixed pyspnego-parse utility (Closes: #47250).
