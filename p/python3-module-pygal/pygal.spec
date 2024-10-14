@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.0.4
+Version: 3.0.5
 Release: alt1
 Summary: A python svg graph plotting library
 License: LGPLv3
@@ -20,8 +20,7 @@ Source1: %pyproject_deps_config_name
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
@@ -33,9 +32,6 @@ documentation is on http://pygal.org
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_tox tox.ini testenv
-%endif
 
 %build
 %pyproject_build
@@ -57,6 +53,9 @@ rm -r %buildroot%python3_sitelibdir/%mod_name/test/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 14 2024 Stanislav Levin <slev@altlinux.org> 3.0.5-alt1
+- 3.0.4 -> 3.0.5.
+
 * Fri Mar 29 2024 Stanislav Levin <slev@altlinux.org> 3.0.4-alt1
 - 3.0.0 -> 3.0.4.
 
