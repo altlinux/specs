@@ -5,7 +5,7 @@ Name: gsasl
 %define libnso lib%name%soversion
 %define libname lib%name
 Version: 2.2.1
-Release: alt1
+Release: alt2
 
 Summary: GNU SASL implementation
 Group: System/Libraries
@@ -29,6 +29,9 @@ Security Layer framework and a few common SASL mechanisms.
 Summary: GNU SASL library
 Group: System/Libraries
 License: LGPLv2+
+# The previous versions of this subpackage had non-SLP-compliant names. Make
+# apt push them out on upgrades.
+Obsoletes: lib%name < 2.2.1-alt1
 
 %description -n %libnso
 GNU SASL is an implementation of the Simple Authentication and
@@ -93,6 +96,10 @@ sed -i '/libgsasl\.mo/d' %name.lang
 %_man3dir/*
 
 %changelog
+* Mon Oct 14 2024 Arseny Maslennikov <arseny@altlinux.org> 2.2.1-alt2
+- Explicitly push out earlier versions of the libgsasl package. (Closes: 51714)
+  Not sure why apt does not deal with this automatically.
+
 * Wed Oct 09 2024 Arseny Maslennikov <arseny@altlinux.org> 2.2.1-alt1
 - 2.2.0 -> 2.2.1.
 - Moved libgsasl.so to a SharedLibsPolicy-compliant subpackage.
