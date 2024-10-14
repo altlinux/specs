@@ -24,7 +24,7 @@
 
 Name: branding-%flavour
 Version: 10.2
-Release: alt5
+Release: alt6
 Epoch: 1
 Url: https://altsp.su
 
@@ -325,6 +325,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon Oct 14 2024 Anton Midyukov <antohami@altlinux.org> 1:10.2-alt6
+- Update system-logo.png
+
 * Thu Oct 03 2024 Anton Midyukov <antohami@altlinux.org> 1:10.2-alt5
 - mate-settings: set icon theme Papirus-Light
 
