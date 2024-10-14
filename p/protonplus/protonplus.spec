@@ -3,7 +3,7 @@
 %define xdg_name com.vysp3r.ProtonPlus
 
 Name: protonplus
-Version: 0.4.18
+Version: 0.4.20
 Release: alt1
 
 Summary: Simple and powerful manager for Wine, Proton, DXVK and VKD3D
@@ -13,6 +13,8 @@ Group: Games/Other
 Url: https://github.com/Vysp3r/ProtonPlus
 # Source-url: https://github.com/Vysp3r/ProtonPlus/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
+
+Patch: protonplus-0.4.20-alt-update-russian-translate.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala
@@ -39,6 +41,7 @@ Supports Steam, Lutris, Heroic and Bottles.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %meson
@@ -61,9 +64,12 @@ ln -s %xdg_name %buildroot%_bindir/%name
 %_datadir/metainfo/%xdg_name.metainfo.xml
 %_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_iconsdir/hicolor/*/apps/%xdg_name.svg
+%_iconsdir/hicolor/*/apps/%xdg_name.png
 
 %changelog
+* Mon Oct 14 2024 Boris Yumankulov <boria138@altlinux.org> 0.4.20-alt1
+- new version 0.4.20
+
 * Thu Oct 03 2024 Boris Yumankulov <boria138@altlinux.org> 0.4.18-alt1
 - new version 0.4.18
 
