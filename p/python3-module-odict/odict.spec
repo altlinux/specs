@@ -1,27 +1,24 @@
-%define oname odict
+%define _unpackaged_files_terminate_build 1
+%define pypi_name odict
+%define mod_name %pypi_name
 
 %def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 1.9.0
-Release: alt1.1
+Release: alt2
 
 Summary: Ordered dictionary
 
 License: Python-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/odict
-# https://github.com/bluedynamics/odict
-
+Url: https://pypi.org/project/odict/
+Vcs: https://github.com/conestack/odict
 Source: %name-%version.tar
-
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%mod_name
 BuildRequires(pre): rpm-build-python3
-
-%if_with check
-BuildRequires: python3-module-pytest
-%endif
-
-%py3_provides %oname
+# build backend and its deps
+BuildRequires: python3-module-setuptools
 
 BuildArch: noarch
 
@@ -30,43 +27,30 @@ Dictionary in which the insertion order of items is preserved (using an
 internal double linked list). In this implementation replacing an
 existing item keeps it at its original position.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname
-
-%description tests
-Dictionary in which the insertion order of items is preserved (using an
-internal double linked list). In this implementation replacing an
-existing item keeps it at its original position.
-
-This package contains tests for %oname.
-
 %prep
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test
+# see .github/workflows/test.yaml
+%pyproject_run -- python -m %mod_name.tests
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/*/tests.*
 %exclude %python3_sitelibdir/*/*/tests.*
 
-%files tests
-%python3_sitelibdir/*/tests.*
-%python3_sitelibdir/*/*/tests.*
-
 %changelog
+* Mon Oct 14 2024 Stanislav Levin <slev@altlinux.org> 1.9.0-alt2
+- migrated from removed setuptools' test command (see #50996).
+
 * Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.9.0-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
