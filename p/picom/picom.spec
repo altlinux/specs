@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: picom
-Version: 12.2
+Version: 12.3
 Release: alt1
 Summary: A lightweight compositor for X11
 License: MPL-2.0 or MIT
@@ -73,6 +73,9 @@ sed -i "/#warning Use of -ffast-math/s/#warning/#error/" src/utils.h
 %exclude %_pkgconfigdir/picom-api.pc
 
 %changelog
+* Mon Oct 14 2024 Anton Midyukov <antohami@altlinux.org> 12.3-alt1
+- New version 12.3.
+
 * Thu Oct 10 2024 Anton Midyukov <antohami@altlinux.org> 12.2-alt1
 - New version 12.2.
 - Enable build on %%ix86 again
