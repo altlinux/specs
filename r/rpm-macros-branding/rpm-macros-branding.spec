@@ -1,5 +1,5 @@
 Name: rpm-macros-branding
-Version: 1.0.15
+Version: 1.0.16
 Release: alt1
 Summary: RPM helper macros to build branding packages
 License: %gpl2plus
@@ -27,6 +27,8 @@ alt-spserver \
 alt-spworkstation \
 alt-spcontainer \
 alt-starterkit \
+alt-virtualization-pve \
+alt-virtualization-one \
 alt-workstation \
 alt-tonk \
 alt-mobile \
@@ -80,6 +82,9 @@ install -m 0644 branding.rpm.macros %buildroot%_rpmmacrosdir/branding
 %_rpmmacrosdir/*
 
 %changelog
+* Sun Oct 13 2024 Alexey Shabalin <shaba@altlinux.org> 1.0.16-alt1
+- Added alt-virtualization-pve and alt-virtualization-one
+
 * Sat Sep 28 2024 Andrey Cherepanov <cas@altlinux.org> 1.0.15-alt1
 - Added asman
 
