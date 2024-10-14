@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.6.1
+Version: 1.7.0
 Release: alt1
 Summary: A final implementation of JSONPath for Python
 License: Apache-2.0
@@ -58,6 +58,9 @@ tree.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Oct 14 2024 Stanislav Levin <slev@altlinux.org> 1.7.0-alt1
+- 1.6.1 -> 1.7.0.
+
 * Thu Mar 28 2024 Alexandr Shashkin <dutyrok@altlinux.org> 1.6.1-alt1
 - 1.5.3 -> 1.6.1.
 
