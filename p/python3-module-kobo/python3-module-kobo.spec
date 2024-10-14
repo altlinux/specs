@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.30.1
+Version: 0.37.0
 Release: alt1
 Summary: A collection of Python utilities
 License: LGPLv2.1 
@@ -54,6 +54,9 @@ export TOX_TESTENV_PASSENV='DJANGO_SETTINGS_MODULE'
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Aug 12 2024 Mikhail Chernonog <snowmix@altlinux.org> 0.37.0-alt1
+- 0.30.1 -> 0.37.0
+
 * Fri Oct 13 2023 Mikhail Chernonog <snowmix@altlinux.org> 0.30.1-alt1
 - 0.25.0 -> 0.30.1
 
