@@ -36,7 +36,8 @@
 %def_enable selinux
 # disabled by default
 %def_disable vulkan
-%def_enable snap
+# libapparmor required
+%def_disable snap
 %ifarch %e2k
 %def_disable examples
 %else
@@ -48,7 +49,7 @@
 
 Name: pipewire
 Version: %ver_major.5
-Release: alt1
+Release: alt1.1
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -113,7 +114,7 @@ BuildRequires: pkgconfig(gstreamer-allocators-%gst_api_ver)
 %{?_enable_lv2:BuildRequires: liblilv-devel}
 %{?_enable_libcanberra:BuildRequires: libcanberra-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
-%{?_enable_snap:BuildRequires: pkgconfig(snapd-glib-2)}
+%{?_enable_snap:BuildRequires: pkgconfig(snapd-glib-2) pkgconfig(libapparmor)}
 %{?_enable_docs:BuildRequires: doxygen graphviz /usr/bin/dot fonts-otf-adobe-source-sans-pro fonts-ttf-google-droid-sans}
 %{?_enable_man:BuildRequires: doxygen}
 %{?_enable_check:BuildRequires: /proc gcc-c++ libcap-devel}
@@ -198,8 +199,7 @@ This package provides development files for PipeWire JACK.
 
 %ifarch %e2k
 # no attribute cleanup in C++ mode, but it's only used in C sources
-sed -i '1i #ifndef __cplusplus' spa/include/spa/utils/cleanup.h
-echo -e "\n#else\n#define SPA_DEFINE_AUTO_CLEANUP(...)\n#endif" >> spa/include/spa/utils/cleanup.h
+sed -i 's/__has_attribute(__cleanup__)/!defined(__cplusplus)/' spa/include/spa/utils/cleanup.h
 sed -i -E 's/static const char \*const (.*) =/#define \1 /;T;:a;s/;$//;t;s/$/\\/;n;ba' \
     src/modules/module-protocol-pulse/modules/module-*.c
 %endif
@@ -209,26 +209,26 @@ mv media-session-%ms_ver subprojects/media-session
 %build
 export LIB=%_lib
 %meson \
-	%{?_enable_docs:-Ddocs=enabled} \
-	%{?_enable_man:-Dman=enabled} \
-	%{?_enable_jack_devel:-Djack-devel=true} \
-	%{?_enable_gstreamer:-Dgstreamer=enabled} \
-	%{?_enable_vulkan:-Dvulkan=enabled} \
-	%{?_disable_libusb:-Dlibusb=disabled} \
-	%{?_disable_libffado:-Dlibffado=disabled} \
-	%{?_disable_libcamera:-Dlibcamera=disabled} \
-	%{?_disable_avahi:-Davahi=disabled} \
-	%{?_disable_webrtc:-Decho-cancel-webrtc=disabled} \
-	%{?_disable_sdl:-Dsdl=disabled} \
-	%{?_disable_lv2:-Dlv2=disabled} \
-	%{?_disable_libcanberra:-Dlibcanberra=disabled} \
-	%{?_enable_lc3:-Dbluez5-codec-lc3=enabled} \
-	%{?_enable_mm:-Dbluez5-backend-native-mm=enabled} \
-	%{?_disable_systemd:-Dsystemd=disabled} \
-	%{?_disable_selinux:-Dselinux=disabled} \
-	%{?_disable_snap:-Dsnap=disabled} \
-	%{?_enable_systemd_system_service:-Dsystemd-system-service=enabled} \
-	%{?_disable_examples:-Dexamples=disabled} \
+	%{subst_enable_meson_feature docs docs} \
+	%{subst_enable_meson_feature man man} \
+	%{subst_enable_meson_bool jack_devel jack-devel} \
+	%{subst_enable_meson_feature gstreamer gstreamer} \
+	%{subst_enable_meson_feature vulkan vulkan} \
+	%{subst_enable_meson_feature libusb libusb} \
+	%{subst_enable_meson_feature libffado libffado} \
+	%{subst_enable_meson_feature libcamera libcamera} \
+	%{subst_enable_meson_feature avahi avahi} \
+	%{subst_enable_meson_feature webrtc echo-cancel-webrtc} \
+	%{subst_enable_meson_feature sdl sdl2} \
+	%{subst_enable_meson_feature lv2 lv2} \
+	%{subst_enable_meson_feature libcanberra libcanberra} \
+	%{subst_enable_meson_feature lc3 bluez5-codec-lc3} \
+	%{subst_enable_meson_feature mm bluez5-backend-native-mm} \
+	%{subst_enable_meson_feature systemd systemd} \
+	%{subst_enable_meson_feature selinux selinux} \
+	%{subst_enable_meson_feature snap snap} \
+	%{subst_enable_meson_feature systemd_system_service systemd-system-service} \
+	%{subst_enable_meson_feature examples examples} \
 	-Dsession-managers='media-session' \
 	-Dudevrulesdir='%_udevrulesdir' \
 	-Dsystemd-system-unit-dir='%_unitdir' \
@@ -430,6 +430,9 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 
 
 %changelog
+* Tue Oct 15 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.5-alt1.1
+- E2K: ftbfs workaround by ilyakurdyukov@
+
 * Fri Sep 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.5-alt1
 - 1.2.5
 
