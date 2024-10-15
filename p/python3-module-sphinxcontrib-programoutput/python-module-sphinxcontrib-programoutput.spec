@@ -1,10 +1,12 @@
-%define  modulename sphinxcontrib-programoutput
+%define _unpackaged_files_terminate_build 1
+%define pypi_name sphinxcontrib-programoutput
+%define modulename %pypi_name
 
 %def_with check
 
 Name:    python3-module-%modulename
 Version: 0.17
-Release: alt1
+Release: alt2
 
 Summary: Sphinx extension for capturing program output
 
@@ -16,6 +18,8 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-intro
+# build backend and its deps
+BuildRequires: python3-module-setuptools
 
 %if_with check
 BuildRequires: python3-module-pytest python3-module-docutils
@@ -34,24 +38,27 @@ documents, helping you to keep your command examples up to date.
 %setup -n %modulename-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %python3_prune
 
 # remove .pth file which is useless under python3 and breaks namespace modules
 rm %buildroot%python3_sitelibdir/*programoutput*.pth
 
 %check
-%__python3 setup.py test
+%pyproject_run_unittest discover -s src/sphinxcontrib
 
 %files
 %python3_sitelibdir/sphinxcontrib/programoutput/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %doc *.rst
 
 %changelog
+* Tue Oct 15 2024 Stanislav Levin <slev@altlinux.org> 0.17-alt2
+- Migrated from removed setuptools' test command (see #50996).
+
 * Mon May 17 2021 Grigory Ustinov <grenka@altlinux.org> 0.17-alt1
 - Automatically updated to 0.17.
 - Enabled tests back.
