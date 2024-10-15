@@ -2,10 +2,10 @@
 
 Name: SDL2_gfx
 Version: 1.0.4
-Release: alt2
+Release: alt3
 
 Summary: Simple DirectMedia Layer - Graphics primitives and surface functions
-License: zlib
+License: Zlib
 Group: System/Libraries
 
 Url: http://www.ferzkopp.net/wordpress/2016/01/02/sdl_gfx-sdl2_gfx/
@@ -59,6 +59,8 @@ circles or polygons provided by SDL_gfx on SDL2 against renderers of SDL2.
 
 %install
 %makeinstall_std
+# Missing from Makefile.am
+%__install -Dp -m0644 SDL2_gfxPrimitives_font.h %buildroot%_includedir/SDL2/
 %__rm -rf %buildroot%_libdir/lib%name.la
 
 %files -n lib%name
@@ -77,6 +79,9 @@ circles or polygons provided by SDL_gfx on SDL2 against renderers of SDL2.
 %endif
 
 %changelog
+* Tue Oct 15 2024 Nazarov Denis <nenderus@altlinux.org> 1.0.4-alt3
+- Pack SDL2_gfxPrimitives_font.h (ALT #51724)
+
 * Wed Jan 16 2019 Nazarov Denis <nenderus@altlinux.org> 1.0.4-alt2
 - Remove %ubt macro
 
