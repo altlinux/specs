@@ -4,7 +4,7 @@
 
 Name: gsl
 Version: 2.8
-Release: alt2
+Release: alt3
 Summary: The GNU Scientific Library for numerical analysis
 License: GPLv3
 Group: Development/Other
@@ -153,8 +153,11 @@ rm -f %buildroot%_libdir/*.a
 %doc doc/examples
 
 %changelog
+* Tue Oct 15 2024 Anton Farygin <rider@altlinux.ru> 2.8-alt3
+- fix typo in chanelog
+
 * Sun Jul 14 2024 Anton Farygin <rider@altlinux.ru> 2.8-alt2
-- Added copflict with libgs < 2.8 (Fixes: #50901)
+- Added conflict with libgsl < 2.8 (Fixes: #50901)
 
 * Wed May 29 2024 Anton Farygin <rider@altlinux.ru> 2.8-alt1
 - 2.7 -> 2.8
