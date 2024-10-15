@@ -1,6 +1,6 @@
 Name:    postgresql-deploy-cert
 Version: 0.8
-Release: alt5
+Release: alt6
 
 Summary: deploy script for postgresql cert config
 License: MIT
@@ -56,6 +56,10 @@ install -Dm 0750 pw_krb_unblocker %buildroot/%_bindir
 
 
 %changelog
+* Tue Oct 15 2024 Denis Medvedev <nbr@altlinux.org> 0.8-alt6
+- corrected pg_hba transport,
+redesigned config for blocking script
+
 * Wed Oct 02 2024 Denis Medvedev <nbr@altlinux.org> 0.8-alt5
 - added missing logrotate feature
 
