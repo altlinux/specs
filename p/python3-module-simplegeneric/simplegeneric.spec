@@ -1,18 +1,22 @@
-%global modname simplegeneric
+%define _unpackaged_files_terminate_build 1
+%define pypi_name simplegeneric
+%define modname %pypi_name
 
-Name:           python3-module-%{modname}
-Version:        0.8.1
-Release:        alt4
-Summary:        Simple generic functions (similar to Python's own len(), pickle.dump(), etc.)
+Name: python3-module-%modname
+Version: 0.8.1
+Release: alt5
+Summary: Simple generic functions (similar to Python's own len(), pickle.dump(), etc.)
 
-Group:          Development/Python3
-License:        Python or ZPLv2.1
-URL:            http://cheeseshop.python.org/pypi/simplegeneric
-Source0:        %{modname}-%{version}.zip
+Group: Development/Python3
+License: Python or ZPLv2.1
+Url: https://pypi.org/project/simplegeneric/
+Source0: %modname-%version.zip
 
-BuildArch:      noarch
-BuildRequires:  unzip
-BuildRequires:  rpm-build-python3
+BuildArch: noarch
+BuildRequires: unzip
+BuildRequires: rpm-build-python3
+# build backend and its deps
+BuildRequires: python3-module-setuptools
 
 %description
 The simplegeneric module lets you define simple single-dispatch generic
@@ -22,27 +26,27 @@ functions use simple lookup tables, akin to those used by e.g. pickle.dump()
 and other generic functions found in the Python standard library.
 
 %prep
-%setup -n %{modname}-%{version}
-
-    sed -i "s/file(/open(/g" setup.py
-find . -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python3}|'
+%setup -n %modname-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-PYTHONPATH=$(pwd) %{__python3} setup.py test
+%pyproject_run_unittest %modname.test_suite
 
 %files
 %doc README.txt
-%{python3_sitelibdir}/__pycache__/simplegeneric.cpython*
-%{python3_sitelibdir}/simplegeneric.py*
-%{python3_sitelibdir}/simplegeneric-%version-py%_python3_version.egg-info
+%python3_sitelibdir/__pycache__/%modname.cpython*
+%python3_sitelibdir/%modname.py
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 15 2024 Stanislav Levin <slev@altlinux.org> 0.8.1-alt5
+- Migrated from removed setuptools' test command (see #50996).
+
 * Thu Mar 02 2023 Anton Vyatkin <toni@altlinux.org> 0.8.1-alt4
 - (NMU) Fix BuildRequires, drop 2to3
 
