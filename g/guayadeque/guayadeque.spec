@@ -2,18 +2,14 @@
 %global wxversion 3.2
 
 Name: guayadeque
-Version: 0.4.7
+Version: 0.5.3
 Release: alt1
 Summary: Music player
 License: GPLv3+ and BSD and LGPLv2+ and wxWidgets
 URL: http://guayadeque.org/
 Group: Sound
-# Source-url: https://github.com/anonbeat/guayadeque/archive/refs/tags/v%version.tar.gz
+# Source-url: https://github.com/thothix/guayadeque/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
-# https://github.com/anonbeat/guayadeque/issues/144
-Patch0: guayadeque-wxwidgets-3.2.patch
-# https://github.com/anonbeat/guayadeque/issues/155
-Patch1: guayadeque-ambiguous-overload.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++
@@ -37,8 +33,6 @@ and uses the Gstreamer media framework.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
 
 %build
 %cmake \
@@ -73,5 +67,8 @@ appstream-util validate-relax --nonet %buildroot%_datadir/appdata/*.appdata.xml
 %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Fri Oct 11 2024 Anton Midyukov <antohami@altlinux.org> 0.5.3-alt1
+- New version 0.5.3
+
 * Fri Mar 17 2023 Anton Midyukov <antohami@altlinux.org> 0.4.7-alt1
 - Initial build
