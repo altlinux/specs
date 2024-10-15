@@ -1,75 +1,84 @@
-Name: ru_tts
-Version: 20110405
+%define _unpackaged_files_terminate_build 1
+%define sover 7
+
+Name:    ru_tts
+Version: 6.2.3
 Release: alt1
-Packager: Michael Pozhidaev <msp@altlinux.ru>
+Epoch: 1
 
-Summary: %name is a russian text-to-speech tool
-Summary(ru_RU.UTF-8): Синтезатор русской речи
-Group: Sound
-License: non-free
-Url: ftp://ftp.rakurs.spb.ru:/pub/Goga/projects/speech-interface/
+Summary: Compact and portable Russian speech synthesizer
+License: MIT
+Group:   Sound
+Url:     https://github.com/poretsky/ru_tts
 
-Requires: tts-base
-Requires: %name-data
-BuildRequires: rpm-macros-tts
+Requires: sox
 
-Source: %name.static.bz2
-Source1: lexicon.bz2
-Source2: permission.txt
-Source3: %name.voiceman
-Source4: replacements.%name
+Source: %name-%version.tar
 
-%package data
-Summary: Lexicon file for %name speech synthesizer
-Summary(ru_RU.UTF-8): Словарь ударений для синтезатора ru_tts
-License: non-free
-Group: Sound 
-BuildArch: noarch
+BuildRequires: autoconf-archive
+BuildRequires: automake
+BuildRequires: libtool
+BuildRequires: gcc
+BuildRequires: make
+BuildRequires: librulex-devel
 
 %description
-%name is a speech synthesizer for russian language written by Igor B. Poretsky.
-It produces speech output with stress processing. Lexicon file is stored as /usr/share/ru_tts/lexicon.
-Text input should be sent to the stdin of ru_tts in koi8-r encoding. The format of the output is 10000, 8but mono.
+An alternative implementation of the Phonemophone-5 Russian speech
+synthesizer by the international laboratory of intelligent systems
+BelSInt (the Speech Recognition and Synthesis Lab of the Institute of
+Technical Cybernetics of the Academy of Sciences of the Byelorussian
+SSR). The source code of the original implementation has been lost.
+This implementation is the result of a reverse engineering of
+the SDRV resident speech driver for MS-DOS, and it is officially
+approved for publication under a free license by Boris Lobanov
 
-%description -l ru_RU.UTF-8
-ru_tts - это синтезатор русской речи, разработанный Игорем
-Порецким. ru_tts произносит слова с расстановкой ударений, используя
-словарь, который разположенв /usr/share/ru_tts/lexicon. Текст для
-обработки должен поступать на стандартный поток ввода в кодировке koi8-r, и речь будет
-синтезирована как PCM данные в формате 8-бит, моно с частотой
-дискретизации 10000Гц.
+%package -n librutts%sover
+Summary: Lib files for %name
+Group: System/Libraries
+Provides: librutts = %EVR
 
-%description data
-This package contains dictionary for stress processing.
+%description -n librutts%sover
+%summary
 
-%description -l ru_RU.UTF-8 data
-Этот пакет содержит словарь ударений для синтезатора русской речи ru_tts.
+%Package -n librutts-devel
+Summary: Devel files for %name
+Group: Development/C++
+Requires: librutts = %EVR
+
+%description -n librutts-devel
+%summary
 
 %prep
-%build
-%__cp %SOURCE2 ./permission.txt
-%install
-%__install -d %buildroot%_bindir
-bunzip2 < %SOURCE0 > %buildroot%_bindir/%name
-%__install -d %buildroot%_datadir/ru_tts
-bunzip2 < %SOURCE1 > %buildroot%_datadir/ru_tts/lexicon
-chmod 755 %buildroot%_bindir/%name
-chmod 644 %buildroot%_datadir/ru_tts/lexicon
-%__install -pD -m 644 %SOURCE3 %buildroot%_ttsdir/%name.voiceman
-%__install -pD -m 644 %SOURCE4 %buildroot%_datadir/%name/replacements.%name
+%setup
 
-%preun
-%tts_unregister ru_tts
+%build
+%autoreconf -ifs
+%configure --with-dictionary --disable-static
+%make_build
+
+%install
+%makeinstall_std DESTDIR=%buildroot PREFIX=%prefix
 
 %files
-%_bindir/*
-%_ttsdir/*
-%doc permission.txt
+%dir %_datadir/doc/ru-tts
+%_datadir/doc/ru-tts/README*
+%_bindir/ru_speak
+%_bindir/ru_tts
+%_man1dir/*
+%_man3dir/*
 
-%files data
-%_datadir/ru_tts
+%files -n librutts%sover
+%_libdir/librutts.so.%sover
+%_libdir/librutts.so.%sover.*
+
+%files -n librutts-devel
+%_includedir/ru_tts.h
+%_libdir/librutts.so
 
 %changelog
+* Thu Aug 08 2024 Artem Semenov <savoptik@altlinux.org> 1:6.2.3-alt1
+- Build new version and change license (ALT bug: 51041)
+
 * Tue Apr 05 2011 Michael Pozhidaev <msp@altlinux.ru> 20110405-alt1
 - Removed old version
 - tts-devel buildreq replaced by rpm-macros-tts
