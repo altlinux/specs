@@ -6,14 +6,14 @@
 
 Name: libgumbo
 Version: 0.12.1
-Release: alt1
+Release: alt2.g1440b18
 
 Summary: An HTML5 parsing library
 License: Apache-2.0
 Group: System/Libraries
 
-Url: https://codeberg.org/grisha/gumbo-parser
-Vcs: https://codeberg.org/grisha/gumbo-parser.git
+Url: https://codeberg.org/gumbo-parser/gumbo-parser
+Vcs: https://codeberg.org/gumbo-parser/gumbo-parser.git
 Source: %_name-%version.tar
 Patch: %_name-%version-%release.patch
 
@@ -134,6 +134,10 @@ make check
 %endif
 
 %changelog
+* Tue Oct 15 2024 Mikhail Efremov <sem@altlinux.org> 0.12.1-alt2.g1440b18
+- Updated Url and Vcs tags.
+- Upstream git snapshot (fixed potential segfault).
+
 * Wed Nov 22 2023 Mikhail Efremov <sem@altlinux.org> 0.12.1-alt1
 - Added Vcs tag.
 - Updated url tag.
