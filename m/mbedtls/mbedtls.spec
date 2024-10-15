@@ -2,12 +2,12 @@
 %define so_tls_version 21
 %define so_crypto_version 16
 %define so_x509_version 7
-%define framework_commit 750634d3a51eb9d61b59fd5d801546927c946588
+%define framework_commit 94599c0e3b5036e086446a51a3f79640f70f22f6
 %def_disable static
 
 Name: mbedtls
-Version: 3.6.0
-Release: alt1.1
+Version: 3.6.2
+Release: alt1
 
 Summary: Transport Layer Security protocol suite
 License: Apache-2.0 OR GPL-2.0-or-later
@@ -158,6 +158,9 @@ rm -rf %buildroot%_bindir
 %_libexecdir/%name/*
 
 %changelog
+* Tue Oct 15 2024 Nazarov Denis <nenderus@altlinux.org> 3.6.2-alt1
+- New version 3.6.2.
+
 * Mon Apr 08 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.6.0-alt1.1
 - Fixed build for Elbrus
 
