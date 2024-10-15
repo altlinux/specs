@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 11.0
-Release: alt0.1
+Release: alt0.2
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Tue Oct 15 2024 Alexey Shabalin <shaba@altlinux.org> 11.0-alt0.2
+- drop docs about container and basic virtualization
+
 * Mon Oct 14 2024 Alexey Shabalin <shaba@altlinux.org> 11.0-alt0.1
 - package PVE only docs; drop OpenNebula docs
 
