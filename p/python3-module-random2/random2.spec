@@ -1,45 +1,56 @@
-%define oname random2
+%define _unpackaged_files_terminate_build 1
+%define pypi_name random2
+%define mod_name %pypi_name
 
-Name: python3-module-%oname
+%def_with check
+
+Name: python3-module-%pypi_name
 Version: 1.0.2
-Release: alt4
+Release: alt5
 
 Summary: Python 3 compatible Python 2 `random` Module
 
-License: PSFL
+License: PSF-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/random2/
-
-# https://github.com/strichter/random2.git
+Url: https://pypi.org/project/random2/
+Vcs: https://github.com/strichter/random2
 BuildArch: noarch
-
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%endif
 
 %description
 Python 3 compatible Python 2 `random` Module.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-
-# Remove a test that is invalid as of python 3.9
-sed -i '/self\.gen\.getrandbits, 0/d' src/tests.py
+%pyproject_install
 
 %check
-%__python3 setup.py test
+%pyproject_run -- python src/tests.py
 
 %files
-%doc *.txt
-%python3_sitelibdir/*
+%doc README.*
+%python3_sitelibdir/%mod_name.py
+%python3_sitelibdir/__pycache__/%mod_name.*
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 15 2024 Stanislav Levin <slev@altlinux.org> 1.0.2-alt5
+- migrated from removed setuptools' test command (see #50996).
+
 * Mon Aug 16 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt4
 - build python3 module separately
 
