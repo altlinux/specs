@@ -4,7 +4,7 @@
 %define mod_name %pypi_nname
 
 Name: python3-module-%pypi_nname
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 Summary: Python REST API for Humans
 License: BSD
@@ -42,9 +42,11 @@ via community extensions.
 %doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%pypi_name-%version.dist-info/
-%exclude %python3_sitelibdir/*/tests
 
 %changelog
+* Tue Oct 15 2024 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1
+- 2.1.0 -> 2.2.0.
+
 * Mon Oct 07 2024 Stanislav Levin <slev@altlinux.org> 2.1.0-alt1
 - 0.7.8 -> 2.1.0.
 
