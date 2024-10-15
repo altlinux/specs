@@ -1,6 +1,6 @@
 Name: installer
 Version: 1.15.10
-Release: alt1
+Release: alt2
 
 Summary: Installer common parts
 License: GPLv2+
@@ -105,6 +105,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Tue Oct 15 2024 Anton Midyukov <antohami@altlinux.org> 1.15.10-alt2
+- steps/notes-license.desktop: fix typo in Name[ru]
+
 * Thu Sep 12 2024 Anton Midyukov <antohami@altlinux.org> 1.15.10-alt1
 - preinstall.d/00-cp-diskinfo.sh: fix exit from script, if .disk/info do not
   exist
