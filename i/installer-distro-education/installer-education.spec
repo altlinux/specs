@@ -1,6 +1,6 @@
 Name:    installer-distro-education
-Version: 10.0
-Release: alt5
+Version: 11.0
+Release: alt1
 
 Summary: Installer common files for ALT Education
 License: GPL-2.0
@@ -9,7 +9,7 @@ Group: System/Configuration/Other
 Url: http://altlinux.org/installer/beans
 Source: %name-%version.tar
 
-ExcludeArch: armh
+BuildArch: noarch
 
 BuildRequires: alterator rpm-devel
 
@@ -38,7 +38,6 @@ Requires: bc
 #features
 Requires: installer-feature-autohostname-stage2
 Requires: installer-feature-samba-usershares-stage2
-Requires: installer-feature-desktop-other-fs-stage2
 Requires: installer-feature-desktop-suspend-stage2
 Requires: installer-feature-hwtweaks-stage2
 Requires: installer-feature-set-tz
@@ -113,6 +112,12 @@ rm -rf %buildroot%_datadir/alterator/help/ru_RU \
 %_datadir/install2/initinstall.d/10-vm-profile.sh
 
 %changelog
+* Tue Oct 15 2024 Andrey Cherepanov <cas@altlinux.org> 11.0-alt1
+- Bump version for p11 and Sisyphus where armh is deprecated.
+
+* Tue Oct 15 2024 Andrey Cherepanov <cas@altlinux.org> 10.0-alt6
+- Removed installer-feature-desktop-other-fs-stage2.
+
 * Fri Jul 14 2023 Andrey Cherepanov <cas@altlinux.org> 10.0-alt5
 - Do not enable bind service.
 
