@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.115.0
+Version: 0.115.2
 Release: alt1
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
@@ -18,7 +18,6 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Source2: clean_coverage_usage.py
-Patch0: fastapi-0.95.1-alt-fix-databases-tests-connections.patch
 
 # Some packages require fastapi-slim, but it's fastapi with the no installed
 # certain requirements.
@@ -59,7 +58,6 @@ The key features are:
 
 %prep
 %setup
-%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
@@ -76,12 +74,7 @@ cat requirements-docs-tests.txt requirements-tests.txt > alt-requirements-tests.
 %check
 # Clean of the using coverage module, because we don't needs to it.
 %SOURCE2 tests/
-# test_async_sql_databases/test_tutorial001.py::test_create_read:
-# Due to too new sqlalchemy databases' sqlite backend is broken.
-# Temporary skip this test.
-%pyproject_run_pytest -q -Wignore \
-    --deselect='tests/test_tutorial/test_async_sql_databases/test_tutorial001.py::test_create_read' \
-    tests
+%pyproject_run_pytest -q -Wignore tests
 
 %files
 %doc README.*
@@ -92,6 +85,9 @@ cat requirements-docs-tests.txt requirements-tests.txt > alt-requirements-tests.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Oct 15 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.115.2-alt1
+- Updated to 0.115.2.
+
 * Wed Sep 18 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.115.0-alt1
 - Updated to 0.115.0.
 
