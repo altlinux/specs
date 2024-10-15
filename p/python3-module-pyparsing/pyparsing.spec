@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.1.4
+Version: 3.2.0
 Release: alt1
 Summary: Python parsing module
 License: MIT
@@ -53,6 +53,9 @@ that client code uses to construct the grammar directly in Python code.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 14 2024 Stanislav Levin <slev@altlinux.org> 3.2.0-alt1
+- 3.1.4 -> 3.2.0.
+
 * Wed Sep 25 2024 Stanislav Levin <slev@altlinux.org> 3.1.4-alt1
 - 3.1.2 -> 3.1.4.
 
