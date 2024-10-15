@@ -4,8 +4,8 @@
 %def_without bcg729
 
 Name: mediastreamer2
-Version: 5.3.74
-Release: alt6
+Version: 5.3.90
+Release: alt1
 
 Summary: Mediastreamer2 is a powerful and lightweight streaming engine for voice/video telephony applications
 License: AGPL-3.0
@@ -108,7 +108,7 @@ sed -i '/find_package/s|BCG729|Bcg729|' CMakeLists.txt
 # fix mediastreamer2-tester startup
 sed -i '/MEDIASTREAMER_LOCAL_RESOURCE_LOCATION/s|${CMAKE_CURRENT_SOURCE_DIR}/tester|%_datadir/%name-tester|' \
   mediastreamer-config.h.cmake
-sed -i '/MEDIASTREAMER_LOCAL_PLUGINS_LOCATION/s|${CMAKE_BINARY_DIR}/lib|%_libdir|' \
+sed -i '/MEDIASTREAMER_LOCAL_PLUGINS_LOCATION/s|${CMAKE_BINARY_DIR}/lib|%_lib|' \
   mediastreamer-config.h.cmake
 
 %build
@@ -154,6 +154,9 @@ export CMAKE_PREFIX_PATH=%_datadir/Bcg729/cmake:$CMAKE_PREFIX_PATH
 %_libdir/cmake/Mediastreamer2/*.cmake
 
 %changelog
+* Tue Oct 15 2024 Leontiy Volodin <lvol@altlinux.org> 5.3.90-alt1
+- New version 5.3.90.
+
 * Tue Oct 08 2024 Leontiy Volodin <lvol@altlinux.org> 5.3.74-alt6
 - Fixed mediastreamer2-mkvstream and mediastream2-tester startup.
 

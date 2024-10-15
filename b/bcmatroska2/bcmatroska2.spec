@@ -1,7 +1,7 @@
 %define sover 0
 
 Name: bcmatroska2
-Version: 5.3.83
+Version: 5.3.90
 Release: alt1
 
 Summary: C Library to Deal with Matroska Files
@@ -68,5 +68,8 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/cmake/BCMatroska2/*.cmake
 
 %changelog
+* Tue Oct 15 2024 Leontiy Volodin <lvol@altlinux.org> 5.3.90-alt1
+- New version 5.3.90.
+
 * Fri Sep 13 2024 Leontiy Volodin <lvol@altlinux.org> 5.3.83-alt1
 - Initial build for ALT Sisyphus (ALT #51472).
