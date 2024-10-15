@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fooyin
-Version: 0.7.3
+Version: 0.8.0
 Release: alt1
 
 Summary: Music player built around customisation
@@ -20,6 +20,7 @@ BuildRequires: qt6-tools-devel
 BuildRequires: qt6-svg-devel
 BuildRequires: libtag-devel
 BuildRequires: libalsa-devel
+BuildRequires: libsndfile-devel
 BuildRequires: libavcodec-devel
 BuildRequires: libavformat-devel
 BuildRequires: libavutil-devel
@@ -67,6 +68,9 @@ rm -fv %buildroot%_libdir/libfooyin*.so
 %_libdir/libfooyin_*.so.*
 
 %changelog
+* Tue Oct 15 2024 Anton Kurachenko <srebrov@altlinux.org> 0.8.0-alt1
+- New version 0.8.0.
+
 * Fri Oct 04 2024 Anton Kurachenko <srebrov@altlinux.org> 0.7.3-alt1
 - New version 0.7.3.
 
