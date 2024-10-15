@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: keyd
-Version: 2.4.3
+Version: 2.5.0
 Release: alt1
 
 Summary: A key remapping daemon for linux.
@@ -26,10 +26,10 @@ using kernel level input primitives (evdev, uinput).
 %patch0 -p1
 
 %build
-%make_build
+%make_build PREFIX=%prefix
 
 %install
-%makeinstall_std
+%makeinstall_std PREFIX=%prefix
 
 install -Dm644 keyd.service -t %buildroot%_unitdir/
 
@@ -45,6 +45,9 @@ install -Dm644 keyd.service -t %buildroot%_unitdir/
 %_man1dir/*
 
 %changelog
+* Wed Oct 09 2024 Andrey Kovalev <ded@altlinux.org> 2.5.0-alt1
+- new version 2.5.0
+
 * Wed May 24 2023 Egor Ignatov <egori@altlinux.org> 2.4.3-alt1
 - new version 2.4.3
 
