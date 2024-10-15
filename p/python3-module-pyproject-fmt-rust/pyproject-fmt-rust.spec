@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 Summary: Format pyproject.toml files
 License: MIT
@@ -49,6 +49,9 @@ cat < vendor_cargoconf.toml >> .cargo/config.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Oct 15 2024 Stanislav Levin <slev@altlinux.org> 1.2.1-alt1
+- 1.2.0 -> 1.2.1.
+
 * Fri Oct 11 2024 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
 - 1.1.6 -> 1.2.0.
 
