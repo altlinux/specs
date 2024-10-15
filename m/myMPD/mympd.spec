@@ -1,6 +1,6 @@
 Name: myMPD
-Version: 14.0.3
-Release: alt2
+Version: 17.0.4 
+Release: alt1
 
 Summary: myMPD is a standalone and mobile friendly web mpd client with a tiny footprint and advanced features
 License: GPL-3.0-or-later
@@ -59,12 +59,16 @@ fi
 %_bindir/mympd-config
 %_bindir/mympd-script
 %_unitdir/mympd.service
+%_prefix/lib/systemd/user/
 %_initdir/mympd
 %_man1dir/mympd.1.xz
 %_man1dir/mympd-config.1.xz
 %_man1dir/mympd-script.1.xz
 
 %changelog
+* Tue Oct 15 2024 Nikolay Burykin <bne@altlinux.org> 17.0.4-alt1
+- 17.0.4
+
 * Thu Jul 04 2024 Nikolay Burykin <bne@altlinux.org> 14.0.3-alt2
 - fix FTBFS
 
