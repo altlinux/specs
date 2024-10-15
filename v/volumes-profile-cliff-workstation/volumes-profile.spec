@@ -1,6 +1,6 @@
 Name: volumes-profile-cliff-workstation
-Version: 0.4
-Release: alt2
+Version: 0.5
+Release: alt1
 
 Summary: Volumes description for SP Workstation
 License: GPL-2.0-or-later
@@ -27,6 +27,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Wed Oct 16 2024 Anton Midyukov <antohami@altlinux.org> 0.5-alt1
+- decrease minimal size /home to 9,5 GiB
+
 * Mon Sep 02 2024 Anton Midyukov <antohami@altlinux.org> 0.4-alt2
 - fix syntax errors for disk < 60 GiB (fix created /home for this case)
 
