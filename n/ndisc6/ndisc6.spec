@@ -1,6 +1,6 @@
 Name: ndisc6
 Version: 1.0.8
-Release: alt1
+Release: alt2
 
 Summary: IPv6 diagnostic tools
 License: GPLv2+
@@ -89,6 +89,10 @@ useradd -r -g rdnssd -d %_runtimedir/rdnssd -s /dev/null -N rdnssd >/dev/null 2>
 %ghost %_runtimedir/rdnssd/resolv.conf
 
 %changelog
+* Tue Oct 15 2024 Mikhail Efremov <sem@altlinux.org> 1.0.8-alt2
+- Patch from upstream:
+  + Fix potential integer overflow in parsednssl().
+
 * Thu Feb 08 2024 Mikhail Efremov <sem@altlinux.org> 1.0.8-alt1
 - Updated to 1.0.8.
 
