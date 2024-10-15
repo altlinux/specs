@@ -1,10 +1,12 @@
-%define oname readthedocs-sphinx-ext
+%define _unpackaged_files_terminate_build 1
+%define pypi_name readthedocs-sphinx-ext
+%define mod_name readthedocs_ext
 
 %def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 2.2.5
-Release: alt1
+Release: alt2
 
 Summary: This holds code specific for Read the Docs and Sphinx
 
@@ -17,13 +19,14 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+# build backend and its deps
+BuildRequires: python3-module-setuptools
+
 BuildRequires: python3-module-sphinx
 
 %if_with check
 BuildRequires: python3-module-pytest
 %endif
-
-%py3_provides readthedocs_ext
 
 %description
 Tooling for a better Read the Docs Sphinx build experience.
@@ -32,20 +35,23 @@ Tooling for a better Read the Docs Sphinx build experience.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test
+%pyproject_run_pytest -vra
 
 %files
 %doc *.rst
-%python3_sitelibdir/readthedocs_ext
-%python3_sitelibdir/readthedocs_sphinx_ext-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 15 2024 Stanislav Levin <slev@altlinux.org> 2.2.5-alt2
+- Migrated from removed setuptools' test command (see #50996).
+
 * Wed Jan 31 2024 Grigory Ustinov <grenka@altlinux.org> 2.2.5-alt1
 - Automatically updated to 2.2.5.
 
