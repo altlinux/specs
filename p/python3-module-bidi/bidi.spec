@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: BIDI algorithm related functions
@@ -78,6 +78,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/python_bidi-%version.dist-info
 
 %changelog
+* Tue Oct 15 2024 Grigory Ustinov <grenka@altlinux.org> 0.6.2-alt1
+- Automatically updated to 0.6.2.
+
 * Tue Oct 15 2024 Grigory Ustinov <grenka@altlinux.org> 0.6.1-alt1
 - Automatically updated to 0.6.1.
 
