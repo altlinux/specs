@@ -1,26 +1,23 @@
 %define _unpackaged_files_terminate_build 1
 
-%define _optlevel s
-
 Name: rtorrent
-Version: 0.9.8
-Release: alt2
+Version: 0.10.0
+Release: alt1
 
 Summary: rTorrent - rakshasa's ncurses BitTorrent client using librTorrent
 Group: Networking/File transfer
-License: GPL2
+License: GPLv2
 Url: https://github.com/rakshasa/rtorrent/wiki
 
 # https://github.com/rakshasa/rtorrent.git
 Source: %name-%version.tar
 
-# https://github.com/rakshasa/rtorrent/pull/1169
-Patch: 1169.patch
+Patch: %name-fix-ax-define.patch
 
 BuildRequires: gcc-c++ libcurl-devel libidn-devel libncursesw-devel libsigc++2.0-devel libssl-devel libstdc++-devel libtinfo-devel zlib-devel
 BuildRequires: cppunit-devel
 BuildRequires: libxmlrpc-devel >= 0.12.2 libxml2-devel
-BuildRequires: libtorrent-devel >= 0.13.8
+BuildRequires: libtorrent-devel >= 0.14.0
 
 %description
 rTorrent is a ncurses based client and is therefor ideal to use with
@@ -54,6 +51,10 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %_bindir/%name
 
 %changelog
+* Wed Oct 16 2024 L.A. Kostis <lakostis@altlinux.ru> 0.10.0-alt1
+- 0.10.0.
+- Remove merged patches.
+
 * Wed Feb 14 2024 L.A. Kostis <lakostis@altlinux.ru> 0.9.8-alt2
 - Fix buffer overflow (upstream MR#1169).
 
