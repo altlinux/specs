@@ -11,7 +11,7 @@
 
 Name: kf6-kirigami
 Version: 6.7.0
-Release: alt1
+Release: alt2
 %K6init altplace
 
 Group: System/Libraries
@@ -58,6 +58,7 @@ Requires: kde-common
 Group: Development/KDE and QT
 Summary: Development files for %name
 Requires: %name-common
+Requires: libgmp-devel
 %description devel
 The %name-devel package contains libraries and header files for developing
 applications that use %name
@@ -161,6 +162,9 @@ sed -i "s/_MSC_VER/__e2k__/" src/imagecolors.cpp
 %_K6lib/libKirigamiPrivate.so.*
 
 %changelog
+* Wed Oct 16 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.0-alt2
+- fix requires
+
 * Fri Oct 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.0-alt1
 - new version
 
