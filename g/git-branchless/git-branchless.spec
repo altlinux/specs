@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: git-branchless
-Version: 0.9.0
+Version: 0.10.0
 Release: alt1
 Summary: High-velocity, monorepo-scale workflow for Git
 License: MIT or Apache-2.0
@@ -35,9 +35,6 @@ directory = "vendor"
 verbose = true
 quiet = false
 
-[env]
-LIBGIT2_NO_VENDOR = "1"
-
 [build]
 rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
 
@@ -55,7 +52,6 @@ target/release/%name install-man-pages %buildroot%_mandir
 
 %check
 %buildroot%_bindir/git-branchless --version |& grep -Fx '%name-opts %version'
-ldd %buildroot%_bindir/git-branchless | grep -Fw libgit2.so
 ldd %buildroot%_bindir/git-branchless | grep -Fw libsqlite3.so
 ldd %buildroot%_bindir/git-branchless | grep -Fw libz.so
 ldd %buildroot%_bindir/git-branchless
@@ -78,5 +74,9 @@ cargo test --release -- \
 %_man1dir/git-branchless*.1*
 
 %changelog
+* Tue Oct 15 2024 Vitaly Chikunov <vt@altlinux.org> 0.10.0-alt1
+- Update to v0.10.0 (2024-10-14).
+- spec: Build with vendored libgit2(1.8.1) as our libgit2(1.7.2) is too old.
+
 * Sat Oct 12 2024 Vitaly Chikunov <vt@altlinux.org> 0.9.0-alt1
 - First import v0.9.0 (2024-05-26).
