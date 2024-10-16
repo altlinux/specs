@@ -1,5 +1,5 @@
 Name:    ortp
-Version: 5.3.89
+Version: 5.3.90
 Release: alt1
 
 Summary: oRTP is a C library implementing the RTP protocol (rfc3550)
@@ -59,6 +59,9 @@ rm -rf %buildroot%_defaultdocdir/ortp-5.3.0
 %_datadir/ortp-tester
 
 %changelog
+* Wed Oct 16 2024 Andrey Cherepanov <cas@altlinux.org> 5.3.90-alt1
+- New version.
+
 * Thu Oct 10 2024 Andrey Cherepanov <cas@altlinux.org> 5.3.89-alt1
 - New version.
 
