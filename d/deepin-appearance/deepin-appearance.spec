@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-appearance
-Version: 1.1.28
+Version: 1.1.34
 Release: alt1
 
 Summary: Set the theme and appearance of DDE
@@ -70,6 +70,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/dsg/configs/org.deepin.dde.appearance/org.deepin.dde.appearance.json
 
 %changelog
+* Wed Oct 16 2024 Leontiy Volodin <lvol@altlinux.org> 1.1.34-alt1
+- New version 1.1.34.
+
 * Mon May 27 2024 Leontiy Volodin <lvol@altlinux.org> 1.1.28-alt1
 - New version 1.1.28.
 - Built via separate qt5 instead system (ALT #48138).
