@@ -1,7 +1,7 @@
 %{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
 %define ubt_id %__ubt_branch_id
 
-%ifver_gteq %ubt_id M120
+%ifver_gteq %ubt_id M110
 %define qtver 6
 %else
 %define qtver 5
@@ -9,7 +9,7 @@
 
 Name: krb5-ticket-watcher
 Version: 1.0.3
-Release: alt27
+Release: alt28
 
 Group: System/X11
 Summary: A Tray Applet for Watching, Renewing, and Reinitializing Kerberos Tickets
@@ -96,6 +96,9 @@ desktop-file-install --dir %buildroot/%_xdgconfigdir/autostart \
 %doc COPYING Changes News TODO
 
 %changelog
+* Wed Oct 16 2024 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt28
+- build with Qt6 on p11
+
 * Tue Sep 03 2024 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt27
 - fix to build on p10
 
