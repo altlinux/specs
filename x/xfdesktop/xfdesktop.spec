@@ -1,6 +1,6 @@
 Name: xfdesktop
-Version: 4.19.4
-Release: alt2
+Version: 4.19.5
+Release: alt1
 
 Summary: Desktop manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Менеджер рабочего стола Xfce
@@ -16,7 +16,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-xfce4 >= 0.2.0-alt1 xfce4-dev-tools
 BuildRequires: libthunar-devel libgarcon-devel libgarcon-gtk3-devel libxfce4panel-gtk3-devel libxfconf-devel libexo-gtk3-devel libxfce4ui-gtk3-devel
-BuildRequires: libxfce4windowing-devel >= 4.19.3
+BuildRequires: libxfce4windowing-devel >= 4.19.7
 BuildRequires: libX11-devel
 BuildRequires: libgtk-layer-shell-devel
 Buildrequires: time
@@ -24,6 +24,9 @@ BuildRequires: libnotify-devel
 BuildRequires: libyaml-devel
 
 Requires: exo-utils
+
+# libxfce4windowing >= 4.19.6 breaks API/ABI whithout soname change
+Conflicts: libxfce4windowing < 4.19.6
 
 %define _unpackaged_files_terminate_build 1
 
@@ -65,6 +68,10 @@ Requires: exo-utils
 %_datadir/backgrounds/xfce
 
 %changelog
+* Wed Oct 16 2024 Mikhail Efremov <sem@altlinux.org> 4.19.5-alt1
+- Fixed xfce-teal background file type.
+- Updated to 4.19.5.
+
 * Wed Oct 09 2024 Mikhail Efremov <sem@altlinux.org> 4.19.4-alt2
 - Fixed crash with xfconf <= 4.19.2 (closes: #50685).
 

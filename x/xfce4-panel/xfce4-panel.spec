@@ -1,12 +1,10 @@
 %def_enable introspection
 %def_enable vala
 %def_disable docs
-#define git_hash .g1870071c
-%define git_hash %nil
 
 Name: xfce4-panel
-Version: 4.19.4
-Release: alt2%git_hash
+Version: 4.19.5
+Release: alt1
 
 Summary: Panel for Xfce
 Summary(ru_RU.UTF-8): Панель для окружения рабочего стола Xfce
@@ -22,8 +20,8 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 BuildRequires: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
 BuildRequires: libxfce4util-devel >= 4.17.2-alt1
 BuildRequires: libxfce4ui-gtk3-devel >= 4.17.1-alt1 libexo-gtk3-devel >= 0.11.2 libgarcon-gtk3-devel >= 4.17.0
-Buildrequires: libxfce4windowing-devel >= 4.19.3-alt1
-BuildRequires: libX11-devel libwnck3-devel
+Buildrequires: libxfce4windowing-devel >= 4.19.6-alt1
+BuildRequires: libX11-devel libXext-devel libwnck3-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libwayland-client-devel libgtk-layer-shell-devel
 BuildRequires: libdbusmenu-gtk3-devel
@@ -35,6 +33,9 @@ BuildRequires: gtk-doc
 Requires: xfce4-common
 
 Obsoletes: xfce4-showdesktop-plugin, xfce4-windowlist-plugin
+
+# libxfce4windowing >= 4.19.6 breaks API/ABI whithout soname change
+Conflicts: libxfce4windowing < 4.19.6
 
 %define libxfce4panel_name_gtk3 libxfce4panel-2.0
 %define wrapper_name_gtk3 wrapper-2.0
@@ -175,6 +176,9 @@ Vala bindings for libxfce4panel-gtk3.
 %endif
 
 %changelog
+* Wed Oct 16 2024 Mikhail Efremov <sem@altlinux.org> 4.19.5-alt1
+- Updated to 4.19.5.
+
 * Mon Jun 10 2024 Mikhail Efremov <sem@altlinux.org> 4.19.4-alt2
 - Dropped non-existent plugin from default panel configuration
   (closes: #50585).
