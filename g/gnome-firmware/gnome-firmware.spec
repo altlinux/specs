@@ -1,4 +1,9 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %define git %nil
+%define org org.gnome.Firmware
 
 %def_enable systemd
 %def_enable man
@@ -7,7 +12,7 @@
 
 
 Name: gnome-firmware
-Version: 46.0
+Version: 47.0
 Release: alt1
 Summary: Install firmware on devices
 Group: System/Configuration/Hardware
@@ -52,13 +57,17 @@ export LIB=%_lib
 %files -f %{name}.lang
 %doc README* COPYING
 %_bindir/*
-%_datadir/metainfo/org.gnome.Firmware.metainfo.xml
+%_datadir/metainfo/%org.metainfo.xml
+%_datadir/glib-2.0/schemas/%org.gschema.xml
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/scalable/apps/*.svg
 %_iconsdir/hicolor/symbolic/apps/*.svg
 %_man1dir/*
 
 %changelog
+* Wed Oct 16 2024 L.A. Kostis <lakostis@altlinux.ru> 47.0-alt1
+- 47.0.
+
 * Fri Mar 29 2024 L.A. Kostis <lakostis@altlinux.ru> 46.0-alt1
 - 46.0.
 
