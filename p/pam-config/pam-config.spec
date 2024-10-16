@@ -1,6 +1,6 @@
 Name: pam-config
-Version: 1.9.0
-Release: alt4
+Version: 1.9.1
+Release: alt1
 
 Summary: Systemwide PAM config files for Linux-PAM
 License: GPLv2+
@@ -16,6 +16,7 @@ Source5: system-policy.control
 Source6: system-auth.filetrigger
 Source7: system-policy.filetrigger
 Source8: pam_access.control
+Source9: pam_canonicalize_user.control
 
 %define _pamdir %_sysconfdir/pam.d
 
@@ -83,7 +84,7 @@ mkdir -p %buildroot{%_pamdir,%_controldir,/etc/security}
 cp -a * %buildroot%_pamdir/
 chmod 644 %buildroot%_pamdir/*
 
-for f in pam_access pam_mktemp system-auth system-policy; do
+for f in pam_access pam_canonicalize_user pam_mktemp system-auth system-policy; do
 	install -pm755 %_sourcedir/$f.control %buildroot%_controldir/$f
 done
 
@@ -91,9 +92,20 @@ for f in system-auth system-policy; do
 	install -Dm0755 %_sourcedir/$f.filetrigger %buildroot%_rpmlibdir/$f.filetrigger
 done
 
+%trigger control -- pam-config < 1.9.1-alt1
+# disable legacy pam_propperpwnam.so and enable pam_canonicalize_user.so
+if grep -q '^[#[:space:]]*-\?auth\s\+\(optional\|required\)\s\+pam_propperpwnam\.so\s*$' "%_pamdir/system-auth-common"; then
+	sed -i 's,^\([#[:space:]]*-\?auth\s\+\(optional\|required\)\s\+\)pam_propperpwnam\.so\s*$,\1pam_canonicalize_user.so,' "%_pamdir/system-auth-common"
+else
+# default state for pam_canonicalize_user.so
+	grep -q '^[#[:space:]]*-\?auth\s\+\(optional\|required\)\s\+pam_canonicalize_user\.so\s*$' "%_pamdir/system-auth-common" ||
+		sed -i '/^#%%PAM-1\.0$/a #auth\t\trequired\tpam_canonicalize_user.so' "%_pamdir/system-auth-common"
+fi
+
 %pre
 %pre_control pam_mktemp
 %pre_control pam_access
+%pre_control pam_canonicalize_user
 for f in %_pamdir/system-auth %_pamdir/system-auth-use_first_pass %_pamdir/system-policy; do
 	if [ -f "$f" -a ! -L "$f" ]; then
 		mv -f "$f" "$f-local" &&
@@ -144,6 +156,7 @@ fi
 %post_control -s local system-policy
 %post_control -s enabled pam_mktemp
 %post_control -s disabled pam_access
+%post_control -s disabled pam_canonicalize_user
 
 %triggerpostun -- pam <= 0:0.75-alt8
 [ $2 -gt 0 ] || exit 0
@@ -181,6 +194,11 @@ fi
 %config %_controldir/*
 
 %changelog
+* Tue Sep 03 2024 Evgeny Sinelnikov <sin@altlinux.org> 1.9.1-alt1
+- Added pam_canonicalize_user.so to system-auth-common (closes: #47426).
+- Added pam_canonicalize_user control (closes: #47713).
+- Disabled legacy pam_propperpwnam.so in system-auth-common during upgrade.
+
 * Wed Jul 08 2020 Ivan Razzhivin <underwit@altlinux.org> 1.9.0-alt4
 - add pam_access control
 
