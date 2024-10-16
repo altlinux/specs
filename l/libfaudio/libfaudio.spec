@@ -5,7 +5,7 @@
 %def_disable static
 
 Name: libfaudio
-Version: 24.06
+Version: 24.10
 Release: alt1
 Summary: Accuracy-focused XAudio reimplementation for open platforms
 
@@ -82,6 +82,9 @@ chrpath -d %buildroot%{_libdir}/*.so.*.*
 %endif
 
 %changelog
+* Wed Oct 16 2024 L.A. Kostis <lakostis@altlinux.ru> 24.10-alt1
+- 24.10.
+
 * Wed Jun 26 2024 L.A. Kostis <lakostis@altlinux.ru> 24.06-alt1
 - 24.06.
 
