@@ -1,6 +1,6 @@
 %define _name Iconic
 %define binary_name folder_icon
-%define ver_major 2024.8
+%define ver_major 2024.10
 %define rdn_name nl.emphisia.icon
 
 %def_enable check
@@ -23,7 +23,7 @@ Source1: %name-%version-cargo.tar
 Requires: dconf
 Requires: icon-theme-adwaita
 
-%define adw_ver 1.5
+%define adw_ver 1.6
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo blueprint-compiler
@@ -72,6 +72,9 @@ _EOF_
 %doc README*
 
 %changelog
+* Wed Oct 16 2024 Yuri N. Sedunov <aris@altlinux.org> 2024.10.1-alt1
+- updated to v2024.10.1-2-g93c41e3
+
 * Sun Aug 25 2024 Yuri N. Sedunov <aris@altlinux.org> 2024.8.1-alt1
 - first build for Sisyphus (v2024.8.1-4-gb103890)
 
