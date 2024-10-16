@@ -1,7 +1,7 @@
 %{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
 %define ubt_id %__ubt_branch_id
 
-%ifver_gteq %ubt_id M120
+%ifver_gteq %ubt_id M110
 %define qtver 6
 %else
 %define qtver 5
@@ -9,7 +9,7 @@
 
 Name: alt-csp-cryptopro
 Version: 0.3.2
-Release: alt1
+Release: alt2
 
 Group: File tools
 Summary: CryptoPRO GUI tool
@@ -69,6 +69,9 @@ install -m 0644 BUILD/*.qm %buildroot/%_qt5_translationdir/
 %_datadir/file-manager/actions/alt-csp-cryptopro.desktop
 
 %changelog
+* Wed Oct 16 2024 Sergey V Turchin <zerg at altlinux dot org> 0.3.2-alt2
+- build with Qt6 on p11
+
 * Fri Oct 11 2024 Sergey V Turchin <zerg at altlinux dot org> 0.3.2-alt1
 - add own icon
 
