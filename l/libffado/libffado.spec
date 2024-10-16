@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define org org.ffado
 
 Name: libffado
-Version: 2.4.8
-Release: alt1.2
+Version: 2.4.9
+Release: alt1
 
 Summary: Free firewire audio driver library
 License: GPLv2+
@@ -20,10 +21,7 @@ BuildRequires: libdbus-c++-devel
 BuildRequires: qt5-dbus
 BuildRequires: python3-dev python3-module-setuptools
 BuildRequires: python3-module-PyQt5-devel python3-module-dbus
-# A copy of the imp module that was removed in Python 3.12.
-# It shouldn't be used, should use `importlib.metadata` instead.
-BuildRequires: python3-module-zombie-imp
-BuildRequires: scons xdg-utils libconfig-c++-devel
+BuildRequires: scons libconfig-c++-devel
 
 %description
 The FFADO project aims to provide a generic, open-source solution for the
@@ -74,35 +72,26 @@ sed -i 's|/usr/bin/.*python$|/usr/bin/python3|' \
 sed -i 's|-m32||' SConstruct
 
 %build
-export CFLAGS="%optflags"
-export CXXFLAGS="%optflags --std=gnu++11"
-[ -n "$NPROCS" ] || NPROCS=%__nprocs;
+export CFLAGS="%optflags" \
+export CXXFLAGS="%optflags --std=gnu++11" \
+[ -n "$NPROCS" ] || NPROCS=%__nprocs; \
 scons -j$NPROCS \
 	PREFIX=%prefix \
 	LIBDIR=%_libdir \
-	WILL_DEAL_WITH_XDG_MYSELF=YES \
 	CFLAGS='%optflags' \
 	CXXFLAGS='%optflags' \
 	CUSTOM_ENV=True \
 	ENABLE_OPTIMIZATIONS=True \
 	MANDIR=%_mandir \
 	PYPKGDIR=%python3_sitelibdir_noarch/ \
-	PYTHON_INTERPRETER=%__python3
+	PYTHON_INTERPRETER=%__python3 \
+	UDEVDIR=%_udev_rulesdir
 
 %install
-scons \
-	PREFIX=%prefix \
-	LIBDIR=%_libdir \
-	WILL_DEAL_WITH_XDG_MYSELF=YES \
-	CFLAGS='%optflags' \
-	CXXFLAGS='%optflags' \
-	CUSTOM_ENV=True \
-	MANDIR=%_mandir \
-	DESTDIR=%buildroot install
+scons DESTDIR=%buildroot install
 
 # remove unpackaged files
-rm -f %buildroot%_libdir/libffado/static_info.txt
-rm -f %buildroot%_datadir/metainfo/ffado-mixer.appdata.xml
+rm -f %buildroot%_libdir/libffado/static_info.txt ||:
 
 %files
 %doc AUTHORS ChangeLog LICENSE.* README
@@ -119,13 +108,23 @@ rm -f %buildroot%_datadir/metainfo/ffado-mixer.appdata.xml
 %_man1dir/*
 %dir %_datadir/libffado
 %_datadir/libffado/*
-%_datadir/dbus-1/services/org.ffado.Control.service
-/lib/udev/rules.d/*ffado*.rules
+%_desktopdir/%org.FfadoMixer.desktop
+%_iconsdir/hicolor/64x64/apps/*ffado.png
+%_datadir/metainfo/%org.FfadoMixer.metainfo.xml
+%_datadir/dbus-1/services/%org.Control.service
+%_udev_rulesdir/*ffado*.rules
 
 %files -n python3-module-ffado
 %python3_sitelibdir_noarch/ffado
 
 %changelog
+* Wed Oct 16 2024 L.A. Kostis <lakostis@altlinux.ru> 2.4.9-alt1
+- 2.4.9.
+- BR: remove imp (obsoleted code removed by upstream).
+
+* Thu May 30 2024 L.A. Kostis <lakostis@altlinux.ru> 2.4.8-alt1.3
+- use udevdir macros.
+
 * Fri Apr 05 2024 L.A. Kostis <lakostis@altlinux.ru> 2.4.8-alt1.2
 - BR: add setuptools python module (fix FTBFS).
 
