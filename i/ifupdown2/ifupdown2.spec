@@ -1,6 +1,6 @@
 Name: ifupdown2
-Version: 3.2.0.8
-Release: alt2
+Version: 3.2.0.9
+Release: alt1
 Summary: Network Interface Management tool similar to ifupdown
 License: GPL-2
 Group: System/Base
@@ -13,6 +13,7 @@ Source2: ip-brctl
 Source3: ip-brctl.8
 Patch1: 0001-ALT-change-path-to-ifup-ifdown-ifreload.patch
 Patch2: 0002-ALT-python-3.12-compatibility.patch
+Patch3: ALT-do-not-run-scripts-rpmnew-rpmsave.patch
 
 BuildArch: noarch
 
@@ -47,6 +48,7 @@ pushd %name
 for p in `cat ../debian/patches/series`; do
     patch -p1 < ../debian/patches/$p
 done
+%patch3 -p1
 popd
 
 %build
@@ -109,6 +111,10 @@ fi
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Wed Oct 16 2024 Alexey Shabalin <shaba@altlinux.org> 3.2.0.9-alt1
+- 3.2.0-1+pmx9
+- Do not run scripts ending with .rpm{new,save}
+
 * Wed Apr 17 2024 Andrew A. Vasilyev <andy@altlinux.org> 3.2.0.8-alt2
 - ALT: python-3.12 compatibility
 
