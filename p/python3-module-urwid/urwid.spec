@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-urwid
-Version: 2.6.15
+Version: 2.6.16
 Release: alt1
 
 Summary: Urwid is a console user interface library for Python.
@@ -78,6 +78,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Oct 16 2024 Grigory Ustinov <grenka@altlinux.org> 2.6.16-alt1
+- Automatically updated to 2.6.16.
+
 * Fri Jul 05 2024 Grigory Ustinov <grenka@altlinux.org> 2.6.15-alt1
 - Automatically updated to 2.6.15.
 
