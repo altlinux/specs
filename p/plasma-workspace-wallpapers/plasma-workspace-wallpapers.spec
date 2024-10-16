@@ -1,7 +1,7 @@
 %define rname plasma-workspace-wallpapers
 
 Name: %rname
-Version: 6.1.3
+Version: 6.2.1
 Release: alt1
 %K5init
 
@@ -12,8 +12,6 @@ License: GPL-2.0-or-later
 
 BuildArch: noarch
 
-Provides: kf5-plasma-workspace-wallpapers = %EVR
-Obsoletes: kf5-plasma-workspace-wallpapers < %EVR
 Provides: plasma5-workspace-wallpapers = %EVR
 Obsoletes: plasma5-workspace-wallpapers < %EVR
 
@@ -39,5 +37,8 @@ BuildRequires: extra-cmake-modules qt5-base-devel
 %_datadir/wallpapers/*
 
 %changelog
+* Wed Oct 16 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.1-alt1
+- new version
+
 * Wed Jul 17 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.3-alt1
 - initial build
