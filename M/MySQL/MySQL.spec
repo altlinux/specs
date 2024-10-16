@@ -16,7 +16,7 @@
 
 Name: MySQL
 Version: 8.0.39
-Release: alt1
+Release: alt1.1
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -71,6 +71,8 @@ Patch126: boost-1.77.0-boostfix_multiprecision_issue_419-ppc64le.patch
 
 # Patches for mysql-shell
 Patch201: mysql-shell-8.0.26-alt-link-secret-store-login-path-with-ssl.patch
+
+Patch202: mysql-8.0.39-alt-disable-faster-TLS-model.patch
 
 Patch2000: mysql-8.0.37-alt-e2k.patch
 
@@ -397,6 +399,7 @@ pushd boost/boost_1_77_0
 popd
 
 %patch201 -p1
+%patch202 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -917,6 +920,9 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Tue Oct 15 2024 Andrey Cherepanov <cas@altlinux.org> 8.0.39-alt1.1
+- disable use Faster TLS model (ALT #45499).
+
 * Tue Aug 27 2024 Nikolai Kostrigin <nickel@altlinux.org> 8.0.39-alt1
 - new version
   + (fixes: CVE-2024-20996, CVE-2024-21125, CVE-2024-21127, CVE-2024-21129)
