@@ -1,7 +1,7 @@
 %def_with tests
 
 Name: corectrl
-Version: 1.4.0
+Version: 1.4.2
 Release: alt1
 Summary: Core control application
 Group: System/Configuration/Hardware
@@ -78,6 +78,9 @@ fi
 %_datadir/polkit-1/actions/org.%name.*.policy
 
 %changelog
+* Wed Oct 16 2024 L.A. Kostis <lakostis@altlinux.ru> 1.4.2-alt1
+- 1.4.2.
+
 * Sat Mar 23 2024 L.A. Kostis <lakostis@altlinux.ru> 1.4.0-alt1
 - 1.4.0.
 - easyloggingpp->spdlog.
