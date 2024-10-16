@@ -1,6 +1,6 @@
 Name: xfce4-dev-tools
 Version: 4.19.3
-Release: alt1
+Release: alt2
 
 Summary: Development tools for Xfce
 Summary (ru_RU.UTF-8): Инструменты для разработчика Xfce
@@ -55,6 +55,9 @@ make check
 %_man1dir/*
 
 %changelog
+* Wed Oct 16 2024 Mikhail Efremov <sem@altlinux.org> 4.19.3-alt2
+- xdt-version: Get upstream git commit from rpm release.
+
 * Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 4.19.3-alt1
 - Updated to 4.19.3.
 
