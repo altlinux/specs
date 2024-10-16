@@ -1,12 +1,9 @@
 %ifdef _priority_distbranch
 %define altbranch %_priority_distbranch
 %else
-%define altbranch %(rpm --eval %%_priority_distbranch)
-%endif
-%if "%altbranch" == "%nil"
 %define altbranch sisyphus
 %endif
-%if "%altbranch" == "%%_priority_distbranch"
+%if "%altbranch" == "%nil"
 %define altbranch sisyphus
 %endif
 
@@ -32,7 +29,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt0.8
+Release: alt0.9
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -492,6 +489,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Wed Oct 16 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.9
+- fix detect current branch
+
 * Tue Sep 17 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.8
 - fix repository URLs
 - update indexhtml URLs
