@@ -1,5 +1,5 @@
 Name: rack-plugin-freesurface
-Version: 2.1.3
+Version: 2.1.4
 Release: alt1
 
 Summary: Physical modeling system for Rack
@@ -31,6 +31,9 @@ make install RACK_DIR=%_datadir/rack/sdk \
 %_libdir/rack/*
 
 %changelog
+* Wed Oct 16 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.1.4-alt1
+- 2.1.4 released
+
 * Thu Oct 10 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.1.3-alt1
 - 2.1.3 released
 
