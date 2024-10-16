@@ -26,13 +26,7 @@
 
 Name: branding-%flavour
 Version: 1.0
-Release: alt0.1
-
-%ifarch %ix86 x86_64
-BuildRequires: gfxboot >= 4
-BuildRequires: design-bootloader-source >= 7.3-alt1
-BuildRequires: cpio
-%endif
+Release: alt0.2
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -63,11 +57,7 @@ Summary(ru_RU.UTF-8): Тема для экрана выбора варианто
 License: GPL-2.0
 
 Requires(pre): coreutils
-Provides:  design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
 %branding_add_conflicts %flavour bootloader
-
-%define grub_normal light-gray/black
-%define grub_high white/dark-gray
 
 %description bootloader
 Here you find the graphical boot logo for %distro_name.
@@ -333,33 +323,11 @@ touch %buildroot%_sysconfdir/os-release
 
 find %buildroot -name \*.in -delete
 
-#bootloader
-%pre bootloader
-%ifarch %ix86 x86_64
-[ -s /usr/share/gfxboot/%theme ] && rm -fr  /usr/share/gfxboot/%theme ||:
-%endif
-%ifarch %ix86 x86_64 aarch64
-[ -s /boot/splash/%theme ] && rm -fr  /boot/splash/%theme ||:
-%endif
-
 %post bootloader
 %ifarch %ix86 x86_64 aarch64
-%__ln_s -nf %theme/message /boot/splash/message
-. /etc/sysconfig/i18n
-lang=$(echo $LANG | cut -d. -f 1)
-cd boot/splash/%theme/
-echo $lang > lang
-[ "$lang" = "C" ] || echo lang | cpio -o --append -F message
 . shell-config
 shell_config_del /etc/sysconfig/grub2 GRUB_THEME
 shell_config_del /etc/sysconfig/grub2 GRUB_BACKGROUND
-%endif
-
-%ifarch %ix86 x86_64 aarch64
-%preun bootloader
-[ $1 = 0 ] || exit 0
-[ "`readlink /boot/splash/message`" != "%theme/message" ] ||
-    %__rm -f /boot/splash/message
 %endif
 
 %post indexhtml
@@ -373,11 +341,6 @@ sed -i '/pam_env\.so/ {
 ' %_sysconfdir/pam.d/lightdm-greeter
 
 %files bootloader
-%ifarch %ix86 x86_64
-%_datadir/gfxboot/%theme
-/boot/splash/%theme
-%endif
-/boot/grub/themes/%theme
 
 #bootsplash
 %post bootsplash
@@ -409,11 +372,10 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 %files graphics
 %config /etc/alternatives/packages.d/%name-graphics
 %_datadir/design
-#_iconsdir/hicolor/*/apps/alt-%theme.svg
+%exclude %_datadir/design/%theme/icons/system-logo.png
 
 %files bootsplash
-%_datadir/plymouth/themes/%theme/*
-%_pixmapsdir/system-logo.png
+%_datadir/design/%theme/icons/system-logo.png
 
 %files release
 %_sysconfdir/altlinux-release
@@ -478,5 +440,8 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Wed Oct 16 2024 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.2
+- bootloader: removed old stuff (ALT #51349).
+
 * Wed Mar 27 2024 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.1
 - New branding uzguard-server (alpha version).
