@@ -1,6 +1,6 @@
 Name: control
 Version: 0.8.0
-Release: alt1
+Release: alt2
 
 Summary: A set of scripts to control installed system facilities
 License: GPLv2+
@@ -35,6 +35,7 @@ install -p -m755 functions %buildroot%_sysconfdir/control.d/
 install -p -m644 control{,-dump,-restore}.8 %buildroot%_man8dir/
 install -p -m644 ru/control{,-dump,-restore}.8 %buildroot%_mandir/ru/man8/
 install -pD -m644 control.macros %buildroot%_rpmmacrosdir/control
+install -pD -m644 bash_completions %buildroot%_datadir/bash-completion/completions/control
 
 # Generate shell functions provides list.
 (
@@ -45,6 +46,9 @@ install -pD -m644 control.macros %buildroot%_rpmmacrosdir/control
 	done |LC_COLLATE=C sort -u
 ) >%buildroot%_controldir/.provides.sh
 
+%check
+bash -n bash_completions
+
 %files
 %_sbindir/control*
 %_rpmmacrosdir/control
@@ -52,8 +56,12 @@ install -pD -m644 control.macros %buildroot%_rpmmacrosdir/control
 %attr(0700,root,root) %ghost /var/run/control/
 %_man8dir/*.8*
 %_mandir/ru/man8/*.8*
+%_datadir/bash-completion/completions/control
 
 %changelog
+* Wed Oct 16 2024 Vitaly Chikunov <vt@altlinux.org> 0.8.0-alt2
+- Install bash_completions script.
+
 * Fri Jan 26 2018 Mikhail Efremov <sem@altlinux.org> 0.8.0-alt1
 - Initialize local variables.
 - Add capabilities support.
