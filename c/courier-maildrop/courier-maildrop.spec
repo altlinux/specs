@@ -7,7 +7,7 @@
 %define origname maildrop
 
 Name: courier-maildrop
-Version: 3.1.6
+Version: 3.1.8
 Release: alt0.1
 
 Summary: maildrop mail filter/mail delivery agent
@@ -135,6 +135,9 @@ install -m 0644 libs/maildrop/maildroptips.html %buildroot%_docdir/%name-%versio
 %_man8dir/deliverquota.8*
 
 %changelog
+* Thu Oct 17 2024 L.A. Kostis <lakostis@altlinux.ru> 3.1.8-alt0.1
+- 3.1.8.
+
 * Wed Jan 24 2024 L.A. Kostis <lakostis@altlinux.ru> 3.1.6-alt0.1
 - 3.1.6.
 

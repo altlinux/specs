@@ -4,7 +4,7 @@
 
 Summary: CONE mail reader
 Name: cone
-Version: 1.13
+Version: 1.14
 Release: alt0.1
 Url: http://www.courier-mta.org/cone
 Source0: %name-%version.tar
@@ -107,6 +107,9 @@ echo 'and earlier'
 %endif
 
 %changelog
+* Thu Oct 17 2024 L.A. Kostis <lakostis@altlinux.ru> 1.14-alt0.1
+- 0.14.
+
 * Wed Jan 24 2024 L.A. Kostis <lakostis@altlinux.ru> 1.13-alt0.1
 - 1.13.
 - enable spellchecking via hunspell.

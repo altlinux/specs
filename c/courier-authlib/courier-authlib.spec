@@ -8,7 +8,7 @@
 %define rev %nil
 
 Name: courier-authlib
-Version: 0.72.0
+Version: 0.72.3
 Release: alt1%rev
 Summary: Courier authentication library -- tool and utilities
 License: GPL-3
@@ -351,6 +351,9 @@ chown courier:courier %_sysconfdir/%name/authdaemon-sqlite.conf
 %_libdir/%name/libauthsqlite*.so.*
 
 %changelog
+* Thu Oct 17 2024 L.A. Kostis <lakostis@altlinux.ru> 0.72.3-alt1
+- 0.72.3.
+
 * Mon Feb 20 2023 L.A. Kostis <lakostis@altlinux.ru> 0.72.0-alt1
 - 0.72.0.
 - BR: switch to libidn2.
