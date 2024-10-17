@@ -2,7 +2,7 @@
 %def_with check
 
 Name: kitty
-Version: 0.36.3
+Version: 0.36.4
 Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
@@ -14,6 +14,12 @@ Url: https://sw.kovidgoyal.net/kitty/
 Requires: %name-kitten = %EVR
 Requires: %name-terminfo = %EVR
 Requires: %name-shell-integration = %EVR
+
+Provides: xvt
+Provides: x-terminal-emulator
+
+# Provide alternatives file but don't depend on alternatives package
+%filter_from_requires /^\/etc\/alternatives\/packages.d$/d
 
 Source: %name-%version.tar
 Source1: %name-%version-vendor.tar
@@ -54,10 +60,10 @@ BuildRequires: fontconfig-devel
 BuildRequires: libharfbuzz-devel
 
 BuildRequires: python3-dev
+BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinx-copybutton
 BuildRequires: python3-module-sphinx-inline-tabs
 BuildRequires: python3-module-sphinxext-opengraph
-BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
 # tic for xterm-kitty terminfo
 BuildRequires: ncurses
@@ -174,6 +180,11 @@ cp -r ./linux-package %buildroot%_prefix
     +runpy 'from kitty.config import *; print(commented_out_default_config())' \
     | install -Dm644 /dev/stdin %buildroot%_datadir/kitty/kitty.conf.default
 
+mkdir -p %buildroot%_altdir
+cat >%buildroot%_altdir/kitty <<EOF
+%_bindir/xvt %_bindir/kitty 69
+%_bindir/x-terminal-emulator %_bindir/kitty 69
+EOF
 
 %check
 %ifarch ppc64le
@@ -201,6 +212,7 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %_datadir/bash-completion/completions/kitty
 %_datadir/zsh/site-functions/_kitty
 %_datadir/fish/vendor_completions.d/kitty.fish
+%_altdir/kitty
 
 %files terminfo
 %_datadir/terminfo/*/*
@@ -212,6 +224,11 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %_bindir/kitten
 
 %changelog
+* Fri Sep 27 2024 Egor Ignatov <egori@altlinux.org> 0.36.4-alt1
+- new version 0.36.4 (closes: #51734)
+- provide xvt and x-terminal-emulator (closes: #51691)
+- add xvt and x-terminal-emulator alternatives
+
 * Wed Sep 25 2024 Egor Ignatov <egori@altlinux.org> 0.36.3-alt1
 - new version 0.36.3
 
