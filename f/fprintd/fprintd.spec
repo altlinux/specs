@@ -2,7 +2,7 @@
 
 Name: fprintd
 Version: 1.94.4
-Release: alt1
+Release: alt2
 
 Summary: D-Bus service for Fingerprint reader access
 License: GPLv2+
@@ -92,7 +92,7 @@ install -m0644 -p %SOURCE1 %buildroot%_sysconfdir/pam.d/
 install -m0644 -p %SOURCE2 %buildroot%_sysconfdir/pam.d/
 
 %check
-%meson_test -j1
+meson test -C %{__builddir} -j1 --no-rebuild --print-errorlogs
 
 %files -f %name.lang
 %doc README COPYING AUTHORS TODO
@@ -118,6 +118,10 @@ install -m0644 -p %SOURCE2 %buildroot%_sysconfdir/pam.d/
 %_bindir/%name-*
 
 %changelog
+* Thu Oct 17 2024 Andrey Kovalev <ded@altlinux.org> 1.94.4-alt2
+- fixed an error related to the crash of tests
+- backport upstream fixes for pam tests
+
 * Tue Sep 24 2024 Egor Ignatov <egori@altlinux.org> 1.94.4-alt1
 - 1.94.4
 
