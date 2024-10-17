@@ -1,69 +1,57 @@
-%define oname tarjan
+%define _unpackaged_files_terminate_build 1
+%define pypi_name tarjan
+%define mod_name %pypi_name
 
-Name: python3-module-%oname
-Version: 0.2.1.3
-Release: alt2
+%def_with check
 
+Name: python3-module-%pypi_name
+Version: 0.2.4
+Release: alt1
 Summary: Implementation of Tarjan's algorithm: resolve cyclic deps
-License: AGPLv3
+License: LGPLv3
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/tarjan/
-# https://github.com/bwesterb/py-tarjan.git
+Url: https://pypi.org/project/tarjan/
+Vcs: https://github.com/bwesterb/py-tarjan/
 BuildArch: noarch
-
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-
-%py3_provides %oname
-
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 Tarjan's algorithm takes as input a directed (possibly cyclic!) graph
 and returns as output its strongly connected components in a topological
 order.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-Tarjan's algorithm takes as input a directed (possibly cyclic!) graph
-and returns as output its strongly connected components in a topological
-order.
-
-This package contains tests for %oname.
-
-
 %prep
 %setup
-
-sed -i 's|@VERSION@|%version|' setup.py
-
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-%__python3 setup.py test
+%pyproject_run_pytest -vra
 
 %files
-%doc *.md doc/*
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-
-%files tests
-%python3_sitelibdir/*/tests
-
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%exclude %python3_sitelibdir/%mod_name/tests
 
 %changelog
+* Thu Oct 17 2024 Stanislav Levin <slev@altlinux.org> 0.2.4-alt1
+- 0.2.1.3 -> 0.2.4.
+
 * Tue Nov 19 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.2.1.3-alt2
 - python2 disabled
 
