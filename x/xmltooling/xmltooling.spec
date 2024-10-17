@@ -1,8 +1,8 @@
-%define soname 10
+%define soname 11
 %define pkgdocdir %_docdir/%name-%version
 
 Name: xmltooling
-Version: 3.2.4
+Version: 3.3.0
 Release: alt1
 
 Summary: OpenSAML XML Processing library
@@ -11,9 +11,11 @@ License: Apache-2.0
 Group: System/Libraries
 Url: https://wiki.shibboleth.net/confluence/display/OpenSAML/XMLTooling-C
 
-Source: http://shibboleth.net/downloads/c++-opensaml/latest/%name-%version.tar.gz
+Source: https://shibboleth.net/downloads/c++-opensaml/%version/%name-%version.tar.gz
 
-BuildRequires: gcc-c++ boost-devel-headers boost-devel liblog4shib-devel libxerces-c-devel >= 3.2 libxml-security-c-devel openssl-devel zlib-devel doxygen libcurl-devel
+# Automatically added by buildreq on Thu Oct 17 2024
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libgpg-error libssl-devel libstdc++-devel libxerces-c libxerces-c-devel libxml-security-c30 perl pkg-config sh5
+BuildRequires: gcc-c++ boost-devel-headers doxygen libcurl-devel liblog4shib-devel libxml-security-c-devel zlib-devel
 
 %description
 The XMLTooling library contains generic XML parsing and processing
@@ -83,10 +85,6 @@ sed -r -i 's,\^boost(.)lib(.)version,boost\1lib\2version,' configure m4/boost.m4
 %endif
 
 %build
-# The default C++ standard used in GCC-11 is C++17,
-# which does not support opensaml codebase.
-CXXFLAGS="-std=c++11 %optflags"
-export CXXFLAGS
 %autoreconf
 %configure
 %make_build
@@ -109,13 +107,16 @@ rm -f %buildroot/%_libdir/libxmltooling-lite.la
 %_datadir/xml/xmltooling/*
 
 %files -n libxmltooling-devel
+%doc %pkgdocdir
 %_includedir/%name/
 %_libdir/*.so
 %_pkgconfigdir/xmltooling.pc
 %_pkgconfigdir/xmltooling-lite.pc
-%doc %pkgdocdir
 
 %changelog
+* Thu Oct 17 2024 Leontiy Volodin <lvol@altlinux.org> 3.3.0-alt1
+- New version 3.3.0.
+
 * Wed Jun 28 2023 Leontiy Volodin <lvol@altlinux.org> 3.2.4-alt1
 - New version 3.2.4.
 

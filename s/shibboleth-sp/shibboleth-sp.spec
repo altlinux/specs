@@ -1,12 +1,12 @@
-%define soname 11
-%define soname_lite 11
+%define soname 12
+%define soname_lite 12
 %define runuser shibd
 %define realname shibboleth
 %define pkgdocdir %_docdir/%realname
 %define _localstatedir %_var
 
 Name: shibboleth-sp
-Version: 3.4.1
+Version: 3.5.0
 Release: alt1
 
 Summary: Open source system for attribute-based Web SSO
@@ -15,11 +15,12 @@ License: Apache-2.0
 Group: Networking/Other
 Url: https://shibboleth.net/
 
-Source0: https://shibboleth.net/downloads/service-provider/latest/%name-%version.tar.gz
+Source0: https://shibboleth.net/downloads/service-provider/%version/%name-%version.tar.gz
 Source1: shibd.service
 
-BuildRequires: gcc-c++ boost-devel-headers liblog4cpp-devel libxerces-c-devel libxml-security-c-devel libxmltooling-devel libsaml-devel
-BuildRequires: libsystemd-devel libmemcached-devel apache2-devel libunixODBC-devel libkrb5-devel
+# Automatically added by buildreq on Thu Oct 17 2024
+# optimized out: apache2-httpd-worker boost-devel-headers glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libapr1-devel libaprutil1-devel libcrypt-devel libexpat-devel libgpg-error libldap-devel liblog4shib-devel libp11-kit libsasl2-3 libssl-devel libstdc++-devel libunixODBC-devel-compat libuuid-devel libxerces-c libxerces-c-devel libxml-security-c-devel libxml-security-c20 libxml-security-c30 libxmltooling-devel libxmltooling-lite11 perl pkg-config sh5 xalan-c
+BuildRequires: gcc-c++ apache2-devel libkrb5-devel libmemcached-devel libsaml-devel libsystemd-devel libunixODBC-devel
 
 %description
 Shibboleth is a Web Single Sign-On implementations based on OpenSAML
@@ -72,7 +73,6 @@ sed -r -i 's,\^boost(.)lib(.)version,boost\1lib\2version,' configure m4/boost.m4
 %endif
 
 %build
-export CXXFLAGS="%optflags --std=c++11"
 %autoreconf
 %configure --with-gssapi --enable-systemd --with-memcached
 %make_build pkgdocdir=%pkgdocdir
@@ -84,7 +84,7 @@ install -D -m 644 %SOURCE1 %buildroot%_unitdir/shibd.service
 ln -sf /sbin/service %buildroot%_sbindir/rcshibd
 
 # sed -i "s|/var/log/httpd|/var/log/apache2|g" \
-# 		%buildroot%_sysconfdir%realname/native.logger
+# 		%%buildroot%%_sysconfdir%%realname/native.logger
 
 
 # Delete unnecessary files
@@ -160,13 +160,16 @@ EOF
 %_libdir/libshibsp-lite.so.%{soname_lite}*
 
 %files devel
+%doc %pkgdocdir/
 %_includedir/*
 %_libdir/libshibsp.so
 %_libdir/libshibsp-lite.so
 %_pkgconfigdir/*.pc
-%doc %pkgdocdir/
 
 %changelog
+* Thu Oct 17 2024 Leontiy Volodin <lvol@altlinux.org> 3.5.0-alt1
+- New version 3.5.0.
+
 * Tue Jun 06 2023 Leontiy Volodin <lvol@altlinux.org> 3.4.1-alt1
 - New version 3.4.1.
 
