@@ -3,7 +3,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.21.7
+Version: 1.21.8
 Release: alt1
 
 Summary: Automated generation of real Swagger/OpenAPI 2.0 schemas DRF code
@@ -50,5 +50,8 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Oct 17 2024 Anton Vyatkin <toni@altlinux.org> 1.21.8-alt1
+- New version 1.21.8.
+
 * Mon Jul 22 2024 Anton Vyatkin <toni@altlinux.org> 1.21.7-alt1
 - Initial build for Sisyphus.
