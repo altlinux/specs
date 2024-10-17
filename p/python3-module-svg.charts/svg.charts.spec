@@ -1,112 +1,61 @@
-%define mname svg
-%define oname %mname.charts
+%define _unpackaged_files_terminate_build 1
+%define ns_root svg
+%define pypi_name %ns_root.charts
+%define mod_name charts
 
-%def_without doc
-%def_without check
+%def_with check
 
-Name: python3-module-%oname
-Version: 6.1
-Release: alt4
+Name: python3-module-%pypi_name
+Version: 7.3.1
+Release: alt1
 
 Summary: Python SVG Charting Library
 
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/svg.charts/
-
-# Source-url: https://pypi.io/packages/source/s/%oname/%oname-%version.tar.gz
+Url: https://pypi.org/project/svg.charts/
+Vcs: https://github.com/jaraco/svg.charts
+BuildArch: noarch
 Source: %name-%version.tar
-
-%if_with doc
-BuildRequires: rpm-macros-sphinx3 python3-module-sphinx python3-module-rst.linker
-BuildRequires: python3-module-jaraco.packaging
-%endif
-
+Source1: %pyproject_deps_config_name
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+Requires: python3-module-%ns_root-alt-namespace
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-jaraco.itertools
+%pyproject_builddeps_metadata_extra testing
 %endif
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-cssutils python3-module-dateutil
-BuildRequires: python3-module-lxml python3-module-six
-BuildRequires: python3-module-setuptools_scm
-BuildRequires: python3-module-pytest python3-module-tempora
-
-%py3_provides %oname
-Requires: python3-module-%mname = %EVR
-%py3_requires cssutils dateutil lxml six
 
 %description
 svg.charts is a pure-python library for generating charts and graphs in
 SVG, originally based on the SVG::Graph Ruby package by Sean E. Russel.
 
-%package -n python3-module-%mname
-Summary: Core files of %mname
-Group: Development/Python3
-%py3_provides %mname
-
-%description -n python3-module-%mname
-Core files of %mname.
-
-%if_with doc
-%package -n python3-module-%oname-doc
-Summary: Doc files of %oname
-Group: Development/Python3
-
-%description -n python3-module-%oname-doc
-Doc files of %oname.
-%endif
-
 %prep
 %setup
-
-%if_with doc
-%prepare_sphinx3 .
-ln -s ../objects.inv docs/
-%endif
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-
-# fix install hack
-[ "%_libexecdir" = %_libdir ] || mv %buildroot%_libexecdir %buildroot%_libdir
-
-install -p -m644 %mname/__init__.py \
-	%buildroot%python3_sitelibdir/%mname/
-
-%if_with doc
-export PYTHONPATH=$PWD
-pushd docs
-sphinx-build-3 -b pickle -d _build/doctrees . _build/pickle
-sphinx-build-3 -b html -d _build/doctrees . _build/html
-popd
-%endif
+%pyproject_install
 
 %check
-rm -f conf.py
-python3 setup.py test
+%pyproject_run_pytest -vra
 
 %files
-%python3_sitelibdir/%mname/*
-%python3_sitelibdir/*.egg-info
-%exclude %python3_sitelibdir/%mname/__init__.py
-%exclude %python3_sitelibdir/%mname/__pycache__/__init__.*
-
-%files -n python3-module-%mname
-%dir %python3_sitelibdir/%mname
-%dir %python3_sitelibdir/%mname/__pycache__
-%python3_sitelibdir/%mname/__init__.py
-%python3_sitelibdir/%mname/__pycache__/__init__.*
-
-%if_with doc
-%files -n python3-module-%oname-doc
-%doc docs/_build/html
-%endif
+%python3_sitelibdir/%ns_root/%mod_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Thu Oct 17 2024 Stanislav Levin <slev@altlinux.org> 7.3.1-alt1
+- 6.1 -> 7.3.1.
+
 * Sun Oct 16 2022 Grigory Ustinov <grenka@altlinux.org> 6.1-alt4
 - Updated build dependencies.
 
