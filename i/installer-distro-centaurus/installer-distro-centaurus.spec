@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
-Version: 10.2
-Release: alt3
+Version: 10.4
+Release: alt1
 
 Summary: Installer files for Centaurus distro
 License: GPL-2.0-only
@@ -68,6 +68,9 @@ echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
 %install2dir/*.d/*
 %files stage3
 %changelog
+* Thu Oct 17 2024 Dmitry Terekhin <jqt4@altlinux.org> 10.4-alt1
+- 66-setup-net-services.sh: systemd-resolved configuration
+
 * Mon Feb 05 2024 Dmitry Terekhin <jqt4@altlinux.org> 10.2-alt3
 - added pkg-groups.conf
 
