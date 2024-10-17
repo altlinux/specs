@@ -1,10 +1,10 @@
 Name: alt-tasks
-Version: 0.9.1
+Version: 0.10.0
 Release: alt1
 
 Summary: Utility for observing ALT Linux tasks
 License: GPLv3
-Group: Other
+Group: Development/Tools
 
 Packager: Alexey Appolonov <alexey@altlinux.org>
 
@@ -38,6 +38,12 @@ cp COPYING readme.txt %{buildroot}%{_defaultdocdir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Thu Oct 17 2024 Alexey Appolonov <alexey@altlinux.org> 0.10.0-alt1
+- Ability to display Unix time of a task while using a custom output format;
+- Ability to select tasks using a range of task IDs (the commit time of a task
+  specified by the "after_task" and "before_task" parameters are used the same
+  as values of the "after" and "before" parameters respectively).
+
 * Wed Mar 20 2024 Alexey Appolonov <alexey@altlinux.org> 0.9.1-alt1
 - Updated help notes.
 
