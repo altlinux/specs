@@ -4,7 +4,7 @@
 %def_without check
 
 Name:    python3-module-%oname
-Version: 5.1.0
+Version: 5.2.0
 Release: alt1
 
 Summary: Python ODBC bridge
@@ -49,6 +49,9 @@ more Pythonic convenience.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Thu Oct 17 2024 Anton Vyatkin <toni@altlinux.org> 5.2.0-alt1
+- New version 5.2.0.
+
 * Tue Feb 06 2024 Anton Vyatkin <toni@altlinux.org> 5.1.0-alt1
 - New version 5.1.0.
 
