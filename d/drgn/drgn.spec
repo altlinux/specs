@@ -5,7 +5,7 @@
 
 Name:    drgn
 Version: 0.0.29
-Release: alt1
+Release: alt2
 Summary: Programmable debugger
 License: LGPL-2.1-or-later
 Group:   Development/Debuggers
@@ -21,6 +21,7 @@ Provides: python3-module-drgn
 
 Source: %name-%version.tar
 
+BuildRequires(pre): kernel
 BuildRequires(pre): rpm-build-python3
 BuildRequires: bzip2-devel
 BuildRequires: flex
@@ -52,8 +53,8 @@ Note: Requires debuginfo package installed to work.
 Summary: CI test for %name
 Group: Development/Other
 Requires(post): drgn = %EVR
-Requires(post): kernel-image-un-def-debuginfo
 Requires(post): rpm-build-vm
+Requires(post): %(rpm -qa 'kernel-image-*' --qf '%%{NAME}-debuginfo')
 
 %description -n kernel-ci-drgn-debuginfo
 %summary with a workaround for 'sisyphus_check: check-deps ERROR: package
@@ -121,6 +122,9 @@ EOF
 %files -n kernel-ci-drgn-debuginfo
 
 %changelog
+* Thu Oct 17 2024 Vitaly Chikunov <vt@altlinux.org> 0.0.29-alt2
+- spec: Change kernel for checkinstall preparing for removal of un-def.
+
 * Wed Oct 09 2024 Vitaly Chikunov <vt@altlinux.org> 0.0.29-alt1
 - Update to v0.0.29 (2024-10-08).
 
