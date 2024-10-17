@@ -5,8 +5,8 @@
 %def_enable prebuilded_frontend
 
 Name:		grafana
-Version:	10.2.2
-Release:	alt1.1
+Version:	11.2.2
+Release:	alt1
 Summary:	Metrics dashboard and graph editor
 
 Group:		Development/Other
@@ -28,13 +28,12 @@ Source17: %name.tmpfiles
 # on ppc64le error:
 # error Command failed with signal "SIGXCPU"
 ExclusiveArch: %ix86 x86_64 %arm aarch64 loongarch64 mipsel riscv64
-BuildRequires(pre): rpm-build-golang rpm-macros-nodejs
-BuildRequires: golang >= 1.20
+BuildRequires(pre): rpm-macros-golang rpm-macros-nodejs
+BuildRequires: rpm-build-golang golang >= 1.22
 %if_disabled prebuilded_frontend
 BuildRequires: npm
 BuildRequires: node >= 18 node-devel node-gyp
 %endif
-BuildRequires: wire
 BuildRequires: fontconfig libfreetype
 BuildRequires: /proc
 
@@ -44,14 +43,13 @@ for Graphite, Elasticsearch, OpenTSDB, Prometheus and InfluxDB.
 
 %prep
 # Build the Front-end Assets
-# $ node .yarn/releases/yarn-3.6.1.cjs install
-# $ git add .pnp.cjs .pnp.loader.mjs .yarn -f
+# $ node .yarn/releases/yarn-X.X.X.cjs install
+# $ git add .yarn -f
 # $ git commit -n --no-post-rewrite -m "add node js modules"
 
 # Test build
 # $ export NODE_OPTIONS="--max-old-space-size=8192" # Increase to 8 GB
-# $ node .yarn/releases/yarn-3.6.1.cjs run build
-# $ node .yarn/releases/yarn-3.6.1.cjs run plugins:build-bundled
+# $ node .yarn/releases/yarn-X.X.X.cjs run build
 #
 # Go vendors modules
 # $ go mod vendor -v
@@ -88,18 +86,16 @@ export NODE_OPTIONS=--max_old_space_size=2048
 #npm rebuild
 #npm run build
 #go run build.go build-frontend
-node .yarn/releases/yarn-3.6.1.cjs run build
-node .yarn/releases/yarn-3.6.1.cjs run plugins:build-bundled
+node .yarn/releases/yarn-4.4.0.cjs run build
+node .yarn/releases/yarn-4.4.0.cjs run plugins:build-bundled
 %endif
 
 # generate code from .cue files
-go generate ./pkg/plugins/plugindef
 go generate ./kinds/gen.go
 go generate ./public/app/plugins/gen.go
-go generate ./pkg/kindsysreport/codegen/report.go
 
 # generate go files
-wire gen -tags oss ./pkg/server ./pkg/cmd/grafana-cli/runner
+go run ./pkg/build/wire/cmd/wire/main.go gen -tags oss ./pkg/server
 
 #GO111MODULE=off CGO_ENABLED=1 go run build.go build
 #%%golang_build pkg/cmd/*
@@ -140,13 +136,11 @@ install -p -m 755 %SOURCE12 %buildroot%_bindir/%name-server
 # Install config files
 install -p -D -m 640 conf/sample.ini %buildroot%_sysconfdir/%name/%name.ini
 install -p -D -m 640 conf/ldap.toml %buildroot%_sysconfdir/%name/ldap.toml
-mkdir -p %buildroot%_sysconfdir/%name/provisioning/{dashboards,datasources,notifiers}
-install -p -D -m 640 conf/provisioning/dashboards/sample.yaml %buildroot%_sysconfdir/%name/provisioning/dashboards/sample.yaml
-install -p -D -m 640 conf/provisioning/datasources/sample.yaml %buildroot%_sysconfdir/%name/provisioning/datasources/sample.yaml
-install -p -D -m 640 conf/provisioning/notifiers/sample.yaml %buildroot%_sysconfdir/%name/provisioning/notifiers/sample.yaml
-install -p -D -m 640 conf/provisioning/plugins/sample.yaml %buildroot%_sysconfdir/%name/provisioning/plugins/sample.yaml
 install -p -D -m 640 conf/provisioning/access-control/sample.yaml %buildroot%_sysconfdir/%name/provisioning/access-control/sample.yaml
 install -p -D -m 640 conf/provisioning/alerting/sample.yaml %buildroot%_sysconfdir/%name/provisioning/alerting/sample.yaml
+install -p -D -m 640 conf/provisioning/dashboards/sample.yaml %buildroot%_sysconfdir/%name/provisioning/dashboards/sample.yaml
+install -p -D -m 640 conf/provisioning/datasources/sample.yaml %buildroot%_sysconfdir/%name/provisioning/datasources/sample.yaml
+install -p -D -m 640 conf/provisioning/plugins/sample.yaml %buildroot%_sysconfdir/%name/provisioning/plugins/sample.yaml
 
 # Setup directories
 install -d -m 755 %buildroot%_logdir/%name
@@ -200,11 +194,10 @@ fi
 %_tmpfilesdir/%name.conf
 %dir %attr(0750, root, %name) %_sysconfdir/%name
 %dir %attr(0750, root, %name) %_sysconfdir/%name/provisioning
-%dir %attr(0750, root, %name) %_sysconfdir/%name/provisioning/dashboards
-%dir %attr(0750, root, %name) %_sysconfdir/%name/provisioning/datasources
-%dir %attr(0750, root, %name) %_sysconfdir/%name/provisioning/notifiers
 %dir %attr(0750, root, %name) %_sysconfdir/%name/provisioning/access-control
 %dir %attr(0750, root, %name) %_sysconfdir/%name/provisioning/alerting
+%dir %attr(0750, root, %name) %_sysconfdir/%name/provisioning/dashboards
+%dir %attr(0750, root, %name) %_sysconfdir/%name/provisioning/datasources
 %dir %attr(0750, root, %name) %_sysconfdir/%name/provisioning/plugins
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/%name.ini
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/ldap.toml
@@ -216,6 +209,9 @@ fi
 %_datadir/%name
 
 %changelog
+* Thu Oct 17 2024 Alexey Shabalin <shaba@altlinux.org> 11.2.2-alt1
+- 11.2.2 (Fixes: CVE-2024-8118).
+
 * Sun Nov 26 2023 Ivan A. Melnikov <iv@altlinux.org> 10.2.2-alt1.1
 - NMU: Build on loongarch64.
 
