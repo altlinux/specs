@@ -4,7 +4,7 @@
 
 Name: wget
 Version: 1.24.5
-Release: alt4
+Release: alt5
 
 Summary: A free utility for non-interactive download of files from the Web
 License: GPL-3.0-or-later
@@ -75,6 +75,9 @@ fi
 
 %install
 %makeinstall
+install -Dp .gear/wget.control %buildroot%_controldir/wget
+install -d %buildroot%_localstatedir/seccomp
+touch %buildroot%_localstatedir/seccomp/wget
 
 %find_lang --output=%name.lang %name %name-gnulib
 
@@ -88,14 +91,27 @@ else
 	! grep syscall= a
 fi
 
+# We don't need %%pre/%%post hooks for %%pre_control/%%post_control
+# because we don't modify config nor relax file permissions. Also,
+# they output a garbage on the first install:
+#   control: No such facility: wget
+#   control-restore: No status available for "wget" facility
+
 %files -f %name.lang
 %doc COPYING ChangeLog* AUTHORS MAILING-LIST NEWS README*
 %config(noreplace) %_sysconfdir/wgetrc
+%_controldir/wget
+%dir %_localstatedir/seccomp
+%ghost %_localstatedir/seccomp/wget
 %_bindir/wget
 %_man1dir/wget.1*
 %_infodir/wget.info*
 
 %changelog
+* Tue Oct 15 2024 Vitaly Chikunov <vt@altlinux.org> 1.24.5-alt5
+- Install the control(8) file for wget. This will allow system-wide disabling
+  seccomp filtering in case it is suddenly broken by external circumstances.
+
 * Sat Sep 28 2024 Vitaly Chikunov <vt@altlinux.org> 1.24.5-alt4
 - Make some syscalls allowed only for libfakeroot.
 
