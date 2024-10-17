@@ -4,7 +4,7 @@
 
 Name: %rname
 Version: 6.1.5
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -246,9 +246,10 @@ done
 #%_K6link/lib*.so
 %_K6dbus_iface/*.xml
 
-
-
 %changelog
+* Thu Oct 17 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt2
+- using alt-main-menu icon for main menu
+
 * Tue Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
 - new version
 
