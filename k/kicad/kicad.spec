@@ -4,7 +4,7 @@
 %define majver 8.0
 
 Name: kicad
-Version: %majver.5
+Version: %majver.6
 Release: alt1
 Epoch: 1
 
@@ -191,6 +191,9 @@ done
 %dir %_datadir/kicad/template
 
 %changelog
+* Thu Oct 17 2024 Anton Midyukov <antohami@altlinux.org> 1:8.0.6-alt1
+- New version 8.0.6.
+
 * Tue Sep 10 2024 Anton Midyukov <antohami@altlinux.org> 1:8.0.5-alt1
 - new version 8.0.5
 
