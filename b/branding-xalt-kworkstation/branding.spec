@@ -29,7 +29,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt0.9
+Release: alt0.10
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -292,7 +292,7 @@ cat >>%buildroot/%_sysconfdir/os-release <<__EOF__
 NAME="%Brand"
 VERSION="%altversion%status"
 ID=altlinux
-LOGO="basealt"
+LOGO="alt-distro-logo"
 VERSION_ID=%altversion
 PRETTY_NAME="%ProductName%status (%codename)"
 ANSI_COLOR="1;33"
@@ -489,6 +489,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Oct 17 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.10
+- using alt-distro-logo icon in os-release
+
 * Wed Oct 16 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.9
 - fix detect current branch
 
