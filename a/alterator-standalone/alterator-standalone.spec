@@ -3,7 +3,7 @@
 %define legacy_name acc-legacy
 
 Name: alterator-standalone
-Version: 7.4.3
+Version: 7.4.4
 Release: alt1
 
 Summary: System Management center
@@ -105,6 +105,9 @@ install -Dpm644 acc.desktop %buildroot/%_desktopdir/acc.desktop
 %_bindir/*
 
 %changelog
+* Thu Oct 17 2024 Sergey V Turchin <zerg@altlinux.org> 7.4.4-alt1
+- change desktop icon to alterator
+
 * Sat Aug 24 2024 Evgeny Sinelnikov <sin@altlinux.org> 7.4.3-alt1
 - rename acc as acc-legacy for execution via alternatives
 
