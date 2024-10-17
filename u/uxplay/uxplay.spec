@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: uxplay
-Version: 1.68.3
+Version: 1.70
 Release: alt1
 
 Summary: AirPlay Unix mirroring server
@@ -54,5 +54,8 @@ rm -rf %buildroot%_defaultdocdir
 %doc README.md LICENSE
 
 %changelog
+* Thu Oct 17 2024 Anastasia Osmolovskaya <lola@altlinux.org> 1.70-alt1
+- Updated to version 1.70.
+
 * Wed Jun 26 2024 Anastasia Osmolovskaya <lola@altlinux.org> 1.68.3-alt1
 - Initial build for ALT.
