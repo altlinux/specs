@@ -2,7 +2,7 @@ Name: kernel-image-6.11
 Release: alt1
 %define kernel_src_version	6.11
 %define kernel_base_version	6.11
-%define kernel_sublevel	.3
+%define kernel_sublevel	.4
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -578,6 +578,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Oct 17 2024 Kernel Bot <kernelbot@altlinux.org> 6.11.4-alt1
+- v6.11.4 (2024-10-17).
+
 * Thu Oct 10 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.3-alt1
 - Update to v6.11.3 (2024-10-10).
 - config: Enable ZSTD modules compression.
