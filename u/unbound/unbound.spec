@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: unbound
-Version: 1.20.1
+Version: 1.22.0
 Release: alt1
 License: BSD
 Url: http://unbound.net/
@@ -237,6 +237,9 @@ rm -f %buildroot%python3_sitelibdir/*.la
 %endif
 
 %changelog
+* Thu Oct 17 2024 Alexei Takaseev <taf@altlinux.org> 1.22.0-alt1
+- 1.22.0
+
 * Fri Oct 04 2024 Alexei Takaseev <taf@altlinux.org> 1.20.1-alt1
 - 1.20.1 (Fixes CVE-2024-8508)
 
