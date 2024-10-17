@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.40.0
+Version: 0.41.0
 Release: alt1
 
 Summary: The little ASGI framework that shines
@@ -17,6 +17,7 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -47,6 +48,7 @@ It is production-ready, and gives you the following:
 
 %prep
 %setup
+%autopatch -p1
 sed -n '/^# Testing$/,/^[[:space:]]*$/p' requirements.txt | \
     tee test-requirements.txt
 %pyproject_deps_resync_build
@@ -70,6 +72,9 @@ sed -n '/^# Testing$/,/^[[:space:]]*$/p' requirements.txt | \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Oct 17 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.41.0-alt1
+- Updated to 0.41.0.
+
 * Tue Oct 15 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.40.0-alt1
 - Updated to 0.40.0.
 
