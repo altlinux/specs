@@ -1,12 +1,9 @@
 %define version_SingleApplication v3.5.1
-%define version_QTaskbarControl 2.0.2
-%define version_QOnlineTranslator 1.6.4
 %define version_QHotkey 1.5.0
-%define version_circle_flags v2.7.0
-%define version_Fluent 2023-06-07
+%define version_Breeze 6.7.0
 
 Name: crow-translate
-Version: 2.11.0
+Version: 3.0.0
 Release: alt1
 
 Summary: A Qt GUI for Google, Yandex and Bing translators
@@ -14,28 +11,19 @@ Summary(ru_RU.UTF-8): GUI интерфейс Qt для переводчиков 
 
 License: GPL-3.0-only and MIT and BSD-3-Clause
 Group: System/Internationalization
-Url: https://crow-translate.github.io
+Url: https://invent.kde.org/office/crow-translate
 
-# Source-url: https://github.com/crow-translate/crow-translate/releases/download/%version/crow-translate-%version-source.tar.gz
+# Source-url: https://invent.kde.org/office/crow-translate/-/archive/v%version/crow-translate-v%version.tar.gz
 Source: %name-%version.tar
 
 # Source1-url: https://github.com/itay-grudev/SingleApplication/archive/refs/tags/%version_SingleApplication.tar.gz
 Source1: SingleApplication.tar
 
-# Source2-url: https://github.com/Skycoder42/QTaskbarControl/archive/refs/tags/%version_QTaskbarControl.tar.gz
-Source2: QTaskbarControl.tar
+# Source2-url: https://github.com/Skycoder42/QHotkey/archive/refs/tags/%version_QHotkey.tar.gz
+Source2: QHotkey.tar
 
-# Source3-url: https://github.com/crow-translate/QOnlineTranslator/archive/refs/tags/%version_QOnlineTranslator.tar.gz
-Source3: QOnlineTranslator.tar
-
-# Source4-url: https://github.com/Skycoder42/QHotkey/archive/refs/tags/%version_QHotkey.tar.gz
-Source4: QHotkey.tar
-
-# Source5-url: https://github.com/HatScripts/circle-flags/archive/refs/tags/%version_circle_flags.tar.gz
-Source5: circle-flags.tar
-
-# Source6-url: https://github.com/vinceliuice/Fluent-icon-theme/archive/refs/tags/%version_Fluent.tar.gz
-Source6: Fluent-icon-theme.tar
+# Source3-url: https://invent.kde.org/frameworks/breeze-icons/-/archive/v%version_Breeze/breeze-icons-v%version_Breeze.tar.gz
+Source3: Breeze-icon-theme.tar
 
 BuildRequires: extra-cmake-modules
 BuildRequires: libleptonica-devel
@@ -78,24 +66,12 @@ sed -i -E "s/qOverload<([^>]*)>\(&([^:]*::)/(void(\\2*)(\\1))(\&\\2/" \
 	src/mainwindow.cpp
 %endif
 
-# preparing external libraries for building
-mkdir -p \
-    src/qonlinetranslator/ \
-    src/third-party/qhotkey/ \
-    src/third-party/qtaskbarcontrol/ \
-    src/third-party/singleapplication/ \
-    src/circle-flags \
-    src/Fluent-icon-theme
-
-tar -xf %SOURCE1 -C src/third-party/singleapplication/ --strip-components=1
-tar -xf %SOURCE2 -C src/third-party/qtaskbarcontrol/ --strip-components=1
-tar -xf %SOURCE3 -C src/qonlinetranslator/ --strip-components=1
-tar -xf %SOURCE4 -C src/third-party/qhotkey/ --strip-components=1
-tar -xf %SOURCE5 -C src/circle-flags/ --strip-components=1
-tar -xf %SOURCE6 -C src/Fluent-icon-theme/ --strip-components=1
+tar -xf %SOURCE1 -C src/3rdparty/singleapplication/ --strip-components=1
+tar -xf %SOURCE2 -C src/3rdparty/qhotkey/ --strip-components=1
+tar -xf %SOURCE3 -C data/icons/3rdparty/breeze-icons --strip-components=1
 
 # Analog of crow-2.10.0-alt-desktop.patch
-subst "s|Categories=Office;Qt;|Categories=Qt;Graphics;OCR;Scanning;|" data/io.crow_translate.CrowTranslate.desktop
+subst "s|Categories=Office;Qt;|Categories=Qt;Graphics;OCR;Scanning;|" data/org.kde.CrowTranslate.desktop.in
 
 # Fix QX11Info: No such file or directory
 subst "s|<QX11Info>|<QtX11Extras/QX11Info>|" src/mainwindow.cpp
@@ -111,16 +87,21 @@ subst "s|<QX11Info>|<QtX11Extras/QX11Info>|" src/xdgdesktopportal.cpp
 
 %install
 %cmake_install
+%find_lang %name --with-qt
 
-%files
-%doc README.md COPYING
+%files -f %name.lang
+%doc README.md
 %_bindir/crow
-%_desktopdir/io.crow_translate.CrowTranslate.desktop
-%_datadir/crow*/*
-%_datadir/metainfo/io.crow_translate.CrowTranslate.metainfo.xml
-%_iconsdir/hicolor/*/*/crow-translate*
+%_desktopdir/org.kde.CrowTranslate.desktop
+%_datadir/metainfo/org.kde.CrowTranslate.metainfo.xml
+%_iconsdir/hicolor/*/*/org.kde.CrowTranslate*
 
 %changelog
+* Thu Oct 17 2024 Roman Alifanov <ximper@altlinux.org> 3.0.0-alt1
+- new version 3.0.0 (with rpmrb script)
+- remove old submodules
+- change upstream
+
 * Sun Nov 12 2023 Roman Alifanov <ximper@altlinux.org> 2.11.0-alt1
 - new version (2.11.0) with rpmgs script (ALT bug 48383)
 - updated libraries and icons
