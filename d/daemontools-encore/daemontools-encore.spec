@@ -5,7 +5,7 @@
 Name: daemontools-encore
 Summary: Daemontools by DJB
 Version: 1.10
-Release: alt2
+Release: alt3
 License: Public domain
 Group: System/Servers
 Url: http://untroubled.org/daemontools-encore/
@@ -19,7 +19,6 @@ Patch: %name-%version-%release.patch
 %package -n daemontools
 Summary: Daemontools and other packages shared files
 Group: System/Base
-Requires(pre): startup
 Requires(post): daemontools-common = %version-%release
 Requires(post): daemontools-utils = %version-%release
 
@@ -86,20 +85,6 @@ install -D -m644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 install -D -m644 %SOURCE2 %buildroot%_unitdir/daemontools.service
 
 %post -n daemontools
-if [ ! -f %_sysconfdir/inittab ]; then
-  echo '/etc/inittab not exists. I assume that used systemd-based configuration'
-elif grep svscanboot %_sysconfdir/inittab >/dev/null; then
-  echo 'inittab contains an svscanboot line. I assume that svscan is already running.'
-else
-  echo 'Adding svscanboot to inittab...'
-  rm -f %_sysconfdir/inittab'{new}'
-  cat %_sysconfdir/inittab > %_sysconfdir/inittab'{new}'
-  echo >> %_sysconfdir/inittab'{new}'
-  echo 'SV:123456:respawn:/bin/svscanboot' >> %_sysconfdir/inittab'{new}'
-  mv -f %_sysconfdir/inittab'{new}' %_sysconfdir/inittab
-  kill -HUP 1
-  echo 'init should start svscan now.'
-fi
 if [ ! -f %_sysconfdir/daemontools.d/.gitignore ]; then
 	echo supervise > %_sysconfdir/daemontools.d/.gitignore
 fi
@@ -141,6 +126,10 @@ fi
 %_rpmmacrosdir/%name
 
 %changelog
+* Thu Oct 17 2024 Anton Midyukov <antohami@altlinux.org> 1.10-alt3
+- NMU: drop dependency on startup package (not needed when systemd)
+  (Closes: 51588)
+
 * Tue May 21 2024 Paul Wolneykien <manowar@altlinux.org> 1.10-alt2
 - Move all programs and manual pages to the separate
   'daemontools-utils' package.
