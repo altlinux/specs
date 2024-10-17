@@ -1,52 +1,73 @@
 %define _unpackaged_files_terminate_build 1
-%define oname tblib
+%define pypi_name tblib
+%define mod_name %pypi_name
 
-Name: python3-module-%oname
-Version: 1.3.0
-Release: alt2
+%def_with check
 
-Summary: Traceback fiddling library. Allows you to pickle tracebacks
+Name: python3-module-%pypi_name
+Version: 3.0.0
+Release: alt1
+Summary: Traceback serialization library
 License: BSD
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/tblib/
+Url: https://pypi.org/project/tblib/
+Vcs: https://github.com/ionelmc/python-tblib
 BuildArch: noarch
-
-# https://github.com/ionelmc/python-tblib.git
-Source0: https://pypi.python.org/packages/52/aa/aefcbf6b2976fc91d5c32c4014f40e2202654279654cc509b613d7cf5568/%{oname}-%{version}.tar.gz
-
-BuildRequires(pre): rpm-build-python3
-
-%py3_provides %oname
-%py3_requires six
-
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
-Traceback fiddling library. For now allows you to pickle tracebacks and
-raise exceptions with pickled tracebacks in different processes. This
-allows better error handling when running code over multiple processes
-(imagine multiprocessing, billiard, futures, celery etc).
+%pypi_name allows you to:
+- pickle tracebacks and raise exceptions with pickled tracebacks in different
+  processes. This allows better error handling when running code over multiple
+  processes (imagine multiprocessing, billiard, futures, celery etc).
+
+- create traceback objects from strings (the from_string method). No pickling is
+  used.
+
+- serialize tracebacks to/from plain dicts (the from_dict and to_dict methods).
+  No pickling is used.
+
+- raise the tracebacks created from the aforementioned sources.
+
+- pickle an Exception together with its traceback and exception chain (raise ...
+  from ...) (Python 3 only)
 
 %prep
-%setup -q -n %{oname}-%{version}
-
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
+%setup
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test
+%pyproject_run_pytest -vra tests
 
 %files
-%doc *.rst tests
-%python3_sitelibdir/*
-
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 17 2024 Stanislav Levin <slev@altlinux.org> 3.0.0-alt1
+- 1.3.0 -> 3.0.0.
+
 * Wed Nov 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.3.0-alt2
 - python2 disabled
 
