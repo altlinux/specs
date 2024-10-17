@@ -1,9 +1,9 @@
 Name: kernel-image-6.6
-Release: alt2
+Release: alt1
 epoch:1
 %define kernel_src_version      6.6
 %define kernel_base_version	6.6
-%define kernel_sublevel	.56
+%define kernel_sublevel	.57
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest        lts
@@ -579,6 +579,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Oct 17 2024 Kernel Bot <kernelbot@altlinux.org> 1:6.6.57-alt1
+- v6.6.57 (2024-10-17).
+
 * Wed Oct 16 2024 Vitaly Chikunov <vt@altlinux.org> 1:6.6.56-alt2
 - Change flavour to 6.6 from un-def.
 
