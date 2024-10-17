@@ -2,7 +2,7 @@
 %global _localstatedir %_var
 
 Name: zfs
-Version: 2.2.2
+Version: 2.2.6
 Release: alt1
 Summary: ZFS on Linux
 License: CDDL-1.0
@@ -158,6 +158,7 @@ fi
 %_sysconfdir/zfs/*.example
 %_sysconfdir/modules-load.d/%name.conf
 %_sysconfdir/bash_completion.d/zfs
+%_sysconfdir/bash_completion.d/zpool
 %_unitdir/*.service
 %_unitdir/*.timer
 %_unitdir/*.target
@@ -198,6 +199,9 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Thu Oct 17 2024 Anton Farygin <rider@altlinux.ru> 2.2.6-alt1
+- 2.2.2 -> 2.2.6
+
 * Tue Dec 26 2023 Anton Farygin <rider@altlinux.ru> 2.2.2-alt1
 - 2.2.2
 - tools and libraries were moved to /usr
