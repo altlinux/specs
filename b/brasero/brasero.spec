@@ -2,6 +2,8 @@
 
 %define ver_major 3.12
 %define brasero_api_ver 3
+%define namespace Brasero
+%define gi_ver 3.1
 %define nau_api_ver 3.0
 %define gst_api_ver 1.0
 
@@ -19,11 +21,11 @@
 
 Name: brasero
 Version: %ver_major.3
-Release: alt4.1
+Release: alt5
 
 Summary: CD/DVD burning tool for GNOME.
 Group: Archiving/Cd burning
-License: %gpl2plus
+License: GPL-2.0-or-later and GPL-3.0-or-later
 Url: https://wiki.gnome.org/Apps/Brasero
 
 %if_disabled snapshot
@@ -34,8 +36,16 @@ Source: %name-%version.tar
 Patch: %name-2.27.90-alt-link.patch
 Patch1: %name-2.28.1-alt-button-underline.patch
 Patch2: %name-2.32.1-schemas_convert_typo.patch
+# https://gitlab.gnome.org/GNOME/brasero/-/merge_requests/26
+# https://gitlab.gnome.org/GNOME/brasero/-/commit/5a3ffe64600aeef84c239b70679ca0e0c3e97307.patch
+# fix mime type for shared-mime-info >= 2.3 (x-cd-image -> vnd.efi.iso)
+Patch3: %name-3.12.3-up-fix-cd-mime-type-detection.patch
+# https://gitlab.gnome.org/GNOME/brasero/-/merge_requests/31
+# https://gitlab.gnome.org/GNOME/brasero/-/commit/e475dbeedf49c94b8a4f1278b694f690ddfc8ddb.patch
+# libbrasero-burn: fix incorrect plugin version comparison
+Patch4: %name-3.12.3-up-fix-app-version-check.patch
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %define burn_ver 1.4.9
 %define isofs_ver 1.4.9
@@ -91,7 +101,7 @@ This package provides shared library required for Brasero to work.
 %package -n lib%name-devel
 Summary: Development files and libraries for Brasero CD/DVD burning application
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 Brasero is an application to burn CD/DVD for the Gnome Desktop. It is designed
@@ -118,7 +128,7 @@ that use libbrasero.
 %package nautilus
 Summary: Nautilus extension for the Brasero CD/DVD burning application
 Group: Archiving/Cd burning
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description nautilus
 This package provides integration with the Brasero for the Nautilus file
@@ -127,7 +137,7 @@ manager.
 %package -n lib%name-gir
 Summary: GObject introspection data for the Brasero
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-gir
 GObject introspection data for the Brasero
@@ -136,34 +146,37 @@ GObject introspection data for the Brasero
 Summary: GObject introspection devel data for the Brasero
 Group: System/Libraries
 BuildArch: noarch
-Requires: lib%name-gir = %version-%release
+Requires: lib%name-gir = %EVR
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-gir-devel
-GObject introspection devel data for the Brasero
+GObject introspection devel data for the Brasero.
 
 %prep
 %setup
 %patch -p1 -b .link
 %patch1 -p1 -b .button_underline
 %patch2 -b .schemas_convert
+%patch3 -p1 -b .mime
+%patch4 -p1 -b .version
 
 %build
 %autoreconf
 %configure \
-	%{subst_enable libburnia} \
-	%{subst_enable search} \
-	%{subst_enable playlist} \
-	%{subst_enable cdrkit} \
-	%{subst_enable cdrtools} \
-	%{subst_enable cdrdao} \
-	%{subst_enable nautilus} \
-	%{subst_enable introspection} \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	--enable-preview \
-	--enable-inotify \
-	--disable-caches \
-	--disable-static \
-	--disable-schemas-compile
+    %{subst_enable libburnia} \
+    %{subst_enable search} \
+    %{subst_enable playlist} \
+    %{subst_enable cdrkit} \
+    %{subst_enable cdrtools} \
+    %{subst_enable cdrdao} \
+    %{subst_enable nautilus} \
+    %{subst_enable introspection} \
+    %{?_enable_gtk_doc:--enable-gtk-doc} \
+    --enable-preview \
+    --enable-inotify \
+    --disable-caches \
+    --disable-static \
+    --disable-schemas-compile
 # SMP-incompatible build
 %make
 
@@ -234,15 +247,21 @@ GObject introspection devel data for the Brasero
 
 %if_enabled introspection
 %files -n lib%name-gir
-%_typelibdir/*.typelib
+%_typelibdir/%{namespace}Burn-%gi_ver.typelib
+%_typelibdir/%{namespace}Media-%gi_ver.typelib
 
 %files -n lib%name-gir-devel
-%_girdir/*.gir
+%_girdir/%{namespace}Burn-%gi_ver.gir
+%_girdir/%{namespace}Media-%gi_ver.gir
 %endif
 
 %{?_enable_nautilus:%exclude %_libdir/nautilus/extensions-%nau_api_ver/libnautilus-%name-extension.la}
 
 %changelog
+* Fri Oct 18 2024 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt5
+- image-copy: fix mime type detection for CD image (upstream MR#26)
+- burn-plugin: fix app version detection (upstream MR#31)
+
 * Sat Sep 07 2024 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt4.1
 - rebuilt for gnome-47
 
