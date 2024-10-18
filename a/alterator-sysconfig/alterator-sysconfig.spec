@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sysconfig
-Version: 1.3.16
+Version: 1.3.17
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/preinstall.d/*
@@ -50,6 +50,9 @@ alterator module for basic system settings
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Fri Oct 18 2024 Sergey V Turchin <zerg@altlinux.org> 1.3.17-alt1
+- unify kde settings usage
+
 * Wed Sep 25 2024 Anton Midyukov <antohami@altlinux.org> 1.3.16-alt1
 - sysconfig-base: do not setup /etc/sysconfig/i18n, if it doesn't exist
 
