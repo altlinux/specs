@@ -33,7 +33,7 @@
 %def_disable check
 
 Name: gvfs
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -333,7 +333,7 @@ The %name-tests package provides programms for testing GVFS.
 
 %check
 export PATH=/usr/sbin:$PATH
-%meson_test
+%__meson_test
 
 %post
 killall -USR1 gvfsd >&/dev/null || :
@@ -558,6 +558,9 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %changelog
+* Fri Oct 18 2024 Yuri N. Sedunov <aris@altlinux.org> 1.56.1-alt1
+- 1.56.1
+
 * Fri Sep 13 2024 Yuri N. Sedunov <aris@altlinux.org> 1.56.0-alt1
 - 1.56.0
 
