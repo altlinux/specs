@@ -1,6 +1,6 @@
 %define phpversion php8.2
 Name: cacti
-Version: 1.2.27
+Version: 1.2.28
 Release: alt1
 
 %define cactidir %_datadir/%name
@@ -164,6 +164,9 @@ fi
 %cactidir/install
 
 %changelog
+* Fri Oct 18 2024 Anton Farygin <rider@altlinux.ru> 1.2.28-alt1
+- 1.2.28
+
 * Sun Jul 14 2024 Anton Farygin <rider@altlinux.ru> 1.2.27-alt1
 - 1.2.27
 - switch default to php8.2
