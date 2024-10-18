@@ -3,7 +3,7 @@
 
 Name: cdrdao
 Version: 1.2.5
-Release: alt3
+Release: alt4
 
 Summary: Cdrdao - Write audio CD-Rs in disk-at-once mode
 Group: Archiving/Cd burning
@@ -14,6 +14,11 @@ Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.bz2
 Source1: %name.control
 # https://github.com/cdrdao/cdrdao/commit/251a40ab.patch
 Patch10: %name-1.2.5-up-Fix-uninitialized-TOC-data-file-name.patch
+# https://github.com/cdrdao/cdrdao/pull/25
+# https://github.com/cdrdao/cdrdao/commit/ada9f82dbab5b07da49ca47e0b799b456d696b1a.patch
+# otherwise brasero will fail to detect it
+Patch11: %name-1.2.5-up-fix-version-command.patch
+
 Patch2000: %name-e2k.patch
 Requires(pre,postun): control
 
@@ -46,6 +51,7 @@ ISRC codes/CD-TEXT and non destructive cut of the audio data.
 %prep
 %setup
 %patch10 -p1
+%patch11 -p1
 %ifarch %e2k
 # mcst#7806: EDG archdep deficiency
 %patch2000 -p2
@@ -57,10 +63,10 @@ sed -i 's|\(AC_\)CHECK_\(INCLUDES_DEFAULT\)|\1\2|' configure.ac
 %add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
-	--with-mp3-support \
-	--with-ogg-support \
-	%{?_disable_gcdmaster:--without-gcdmaster} \
-	%{subst_with scglib}
+    --with-mp3-support \
+    --with-ogg-support \
+    %{?_disable_gcdmaster:--without-gcdmaster} \
+    %{subst_with scglib}
 %nil
 %make_build
 
@@ -104,6 +110,9 @@ chmod 700 %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Fri Oct 18 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.5-alt4
+- dao/main.cc: fixed "version" command (upstream PR#25)
+
 * Thu Nov 16 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.5-alt3
 - Fixed uninitialized TOC data file name (https://github.com/cdrdao/cdrdao/pull/21)
 
