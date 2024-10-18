@@ -58,7 +58,7 @@
 
 Name: ceph
 Version: 18.2.4
-Release: alt4
+Release: alt4.1
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -1869,6 +1869,9 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Sat Oct 05 2024 Ivan A. Melnikov <iv@altlinux.org> 18.2.4-alt4.1
+- NMU: Fix build with boost 1.86.0
+
 * Wed Sep 04 2024 Alexey Shabalin <shaba@altlinux.org> 18.2.4-alt4
 - rgw/file: advance rgw_file interface version (for ganesha)
 

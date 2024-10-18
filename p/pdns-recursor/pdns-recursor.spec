@@ -2,13 +2,15 @@
 
 Name: pdns-recursor
 Version: 4.9.2
-Release: alt3
+Release: alt3.1
 Summary: Modern, advanced and high performance recursing/non authoritative name server
 License: GPL-2.0
 Group: System/Servers
 URL: https://powerdns.com
 Source0: https://downloads.powerdns.com/releases/%name-%version.tar.bz2
 Source1: %name.watch
+
+Patch1: pdns-recursor-fix-build-with-boost-1.86.0.patch
 
 ExcludeArch: %arm %ix86
 
@@ -38,6 +40,7 @@ package if you need a dns cache for your network.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 %configure \
@@ -98,6 +101,9 @@ useradd -r -N -g %name -M -d %_sharedstatedir/%name -s /sbin/nologin \
 %dir %attr(0755,%name,%name) %_sharedstatedir/%name/udr
 
 %changelog
+* Sat Oct 05 2024 Ivan A. Melnikov <iv@altlinux.org> 4.9.2-alt3.1
+- fix build with boost 1.86.0
+
 * Tue Oct 01 2024 Alexey Shabalin <shaba@altlinux.org> 4.9.2-alt3
 - Cleanup BuildRequires.
 

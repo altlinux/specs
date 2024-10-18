@@ -2,7 +2,7 @@
 %define boost_include %_includedir/%name
 %define boost_doc %_docdir/%name
 
-%def_with devel
+%def_without devel
 %if_with devel
 %def_with boost_build
 %def_with devel_static
@@ -53,7 +53,7 @@
 %add_findreq_skiplist  %_datadir/b2/src/tools/doxproc.py
 
 %define ver_maj 1
-%define ver_min 86
+%define ver_min 85
 %define ver_rel 0
 
 %define namesuff %{ver_maj}.%{ver_min}.%{ver_rel}
@@ -66,10 +66,10 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 
-Name: boost
+Name: boost%namesuff
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt4
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -90,11 +90,12 @@ Patch83: boost-1.83.0-fedora-b2-build-flags.patch
 # https://lists.boost.org/Archives/boost/2020/04/248812.php
 Patch88: boost-1.73.0-fedora-cmakedir.patch
 
-# https://github.com/boostorg/charconv/issues/220
-Patch89: boost-1.86.0-upstream-ppc64le-charconv-workaround.patch
+# https://github.com/boostorg/charconv/issues/182
+Patch89: boost-1.85.0-upstream-ppc64le-charconv-workaround.patch
 
-# https://github.com/boostorg/compute/issues/889
-Patch90: boost-1.86.0-upstream-compute-fixap-sha1-digest-type.patch
+# https://bugzilla.altlinux.org/50506
+# https://github.com/boostorg/container/issues/281
+Patch90: boost-1.85.0-upstream-ub-in-container-flat-map.patch
 
 Patch2000: boost-1.83-e2k-makecontext.patch
 
@@ -223,7 +224,6 @@ Requires: libboost_date_time%version = %EVR
 Requires: libboost_graph%version = %EVR
 Requires: libboost_iostreams%version = %EVR
 Requires: libboost_json%version = %EVR
-Requires: libboost_process%version = %EVR
 Requires: libboost_random%version = %EVR
 Requires: libboost_regex%version = %EVR
 Requires: libboost_serialization%version = %EVR
@@ -1112,17 +1112,6 @@ The program_options library allows program developers to obtain program
 options, that is (name, value) pairs from the user, via conventional
 methods such as command line and config file.
 
-%package -n libboost_process%version
-Summary: The Boost.Process library
-Group: Development/C++
-
-%description -n libboost_process%version
-Boost.Process is a library to manage system processes. It can be used to:
-* create child processes;
-* setup streams for child processes;
-* communicate with child processes through streams;
-* wait for processes to exit;
-* terminate processes.
 
 %package -n libboost_python3-%version
 Summary: The Boost Python Library (Boost.Python) for Python 3
@@ -1376,8 +1365,7 @@ source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 %endif
 
-./bootstrap.sh --with-toolset=gcc --with-icu \
-	--prefix=%_prefix --exec-prefix=%_prefix
+./bootstrap.sh --with-toolset=gcc --with-icu
 
 # Form Fedora spec:
 # N.B. When we build the following with PCH, parts of boost (math
@@ -1394,16 +1382,12 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 	optimization=off \
 	debug-symbols=off \
 	pch=off \
-%ifarch %ix86
-	boost.stacktrace.from_exception=off \
-%endif
 %ifarch %e2k
 	context-impl=ucontext \
 	define=BOOST_USE_UCONTEXT \
 %endif
 	-sHAVE_ICU=1 \
 	--prefix=%{_prefix} \
-	--exec-prefix=%{_prefix} \
 	--libdir=%{_libdir} \
 %if_without context
 	--without-context \
@@ -1452,16 +1436,12 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 	optimization=off \
 	debug-symbols=off \
 	pch=off \
-%ifarch %ix86
-	boost.stacktrace.from_exception=off \
-%endif
 %ifarch %e2k
 	context-impl=ucontext \
 	define=BOOST_USE_UCONTEXT \
 %endif
 	-sHAVE_ICU=1 \
 	--prefix=%{buildroot}%{_prefix} \
-	--exec-prefix=%{buildroot}%{_prefix} \
 	--libdir=%{buildroot}%{_libdir} \
 %if_without context
 	--without-context \
@@ -1561,10 +1541,7 @@ boost_make_linker_script filesystem-st system-st
 
 %if_with boost_build
 pushd tools/build
-./b2 \
-	--prefix=%buildroot%_prefix \
-	--exec-prefix=%buildroot%_prefix \
-	install
+./b2 --prefix=%buildroot%_prefix install
 # Fix some permissions
 chmod +x %buildroot%_datadir/b2/src/tools/doxproc.py
 sed -i -e '1s|^#!/usr/bin/python$|#!/usr/bin/python2|' %buildroot%_datadir/b2/src/tools/doxproc.py
@@ -1881,9 +1858,6 @@ rm -rf %buildroot%_libdir/*math_tr1l*.so*
 %files -n libboost_program_options%version
 %_libdir/*_program_options*.so.*
 
-%files -n libboost_process%version
-%_libdir/*_process*.so.*
-
 %if_with python
 %files -n libboost_python3-%version
 %_libdir/*boost_python3*.so.*
@@ -1972,12 +1946,8 @@ done
 
 
 %changelog
-* Thu Aug 29 2024 Ivan A. Melnikov <iv@altlinux.org> 1:1.86.0-alt1
-- 1.86.0
-- Apply additional workaround to compile Boost.Charconv
-  on ppc64le
-- Disable boost.stacktrace.from_exception on %%ix86
-- Backport upstream fixup for sha1 digest type in Boost.Compute
+* Thu Aug 15 2024 Ivan A. Melnikov <iv@altlinux.org> 1:1.85.0-alt4
+- rebuild as compat package without development files
 
 * Wed Jun 05 2024 Ivan A. Melnikov <iv@altlinux.org> 1:1.85.0-alt3
 - Backport upstream fix for UB in Boost.Containers flat_map

@@ -23,15 +23,21 @@
 
 Name: wesnoth%wessuffix
 Version: 1.16.11
-Release: alt1
+Release: alt1.1
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
 Summary(ru_RU.UTF-8): двухмерная пошаговая стратегия в стиле фэнтези
 License: %gpl2plus
 Url: http://www.wesnoth.org
 VCS: git+https://github.com/wesnoth/wesnoth.git
+Packager: Igor Vlasenko <viy@altlinux.org>
 Source0: wesnoth-%version.tar
 Patch1: wesnoth-1.13.8-sdl2.02-alt-hack.patch
+
+# backport from upstream/master
+Patch2: wesnoth-1.16.7-upstream-fix-build-with-boost-1.86.0.patch
+# https://github.com/wesnoth/wesnoth/pull/9480
+Patch3: wesnoth-1.16.11-campaignd-fix-build-with-boost-1.86.0.patch
 
 Requires: %name-data = %EVR
 
@@ -176,6 +182,9 @@ This package contains python3 interface to Battle for Wesnoth.
 %prep
 %setup -n wesnoth-%version
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+
 %ifarch %e2k
 # jump tables are slow with LCC
 # there's also a bug where LCC demands a "void*" pointer, not a "const void*"
@@ -422,6 +431,9 @@ mv %buildroot%_datadir/%name/data/tools/wesnoth %buildroot%_datadir/%name/data/t
 %endif
 
 %changelog
+* Fri Oct 18 2024 Ivan A. Melnikov <iv@altlinux.org> 1.16.11-alt1.1
+- NMU: fix build with boost 1.86.0
+
 * Sun Feb 18 2024 Igor Vlasenko <viy@altlinux.org> 1.16.11-alt1
 - new version
 
