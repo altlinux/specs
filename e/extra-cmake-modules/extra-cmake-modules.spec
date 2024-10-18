@@ -14,6 +14,7 @@
 %add_python3_req_skip clang.cindex
 %endif
 %add_python3_req_skip PyQt6.Qt
+%add_python3_req_skip PyQt5.Qt
 
 AutoReq: yes, nopython
 AutoProv: yes, nopython nopython3
@@ -21,7 +22,7 @@ AutoProv: yes, nopython nopython3
 
 Name: extra-cmake-modules
 Version: 6.7.0
-Release: alt1
+Release: alt2
 
 Group: Development/Other
 Summary: Additional modules for CMake build system
@@ -87,6 +88,9 @@ fi
 
 
 %changelog
+* Fri Oct 18 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.0-alt2
+- fix requires
+
 * Fri Oct 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.0-alt1
 - new version
 
