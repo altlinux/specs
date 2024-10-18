@@ -10,7 +10,7 @@
 %def_disable docs
 
 Name: lib%_name
-Version: 4.19.2
+Version: 4.19.3
 Release: alt1
 
 Summary: Hierarchical configuration system for Xfce
@@ -138,6 +138,7 @@ xvfb-run make -k check
 %files -f %_name.lang
 %doc AUTHORS NEWS
 %_sysconfdir/xdg/xfce4/xfconf
+%_user_unitdir/*.service
 %_libdir/*.so.*
 %if_enabled gsettings
 %_libdir/gio/modules/*.so
@@ -173,6 +174,9 @@ xvfb-run make -k check
 %endif
 
 %changelog
+* Fri Oct 18 2024 Mikhail Efremov <sem@altlinux.org> 4.19.3-alt1
+- Updated to 4.19.3.
+
 * Tue May 28 2024 Mikhail Efremov <sem@altlinux.org> 4.19.2-alt1
 - devel: Dropped html documentation.
 - Enabled tests.
