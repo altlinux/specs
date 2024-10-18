@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: cert-manager
-Version: 1.14.5
+Version: 1.15.3
 Release: alt1
 Summary: Automatically provision and manage TLS certificates in Kubernetes
 License: Apache-2.0
@@ -12,10 +12,11 @@ Url: https://cert-manager.io
 Vcs: https://github.com/cert-manager/cert-manager
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch: %name-%version.patch
 
 ExclusiveArch: %go_arches
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang
 BuildRequires: golang
 
 %description
@@ -52,18 +53,6 @@ export LDFLAGS="-X github.com/cert-manager/cert-manager/pkg/util.AppVersion=%ver
 %golang_build cmd/cainjector
 %golang_build cmd/startupapicheck
 
-LDFLAGS="$LDFLAGS \
-                 -X github.com/cert-manager/cert-manager/cmd/ctl/pkg/build.name=cmctl \
-                 -X github.com/cert-manager/cert-manager/cmd/ctl/pkg/build/commands.registerCompletion=true" \
-%golang_build cmd/ctl
-mv $BUILDDIR/bin/ctl $BUILDDIR/bin/cmctl
-
-LDFLAGS="$LDFLAGS \
-                 -X \"github.com/cert-manager/cert-manager/cmd/ctl/pkg/build.name=kubectl cert-manager\" \
-                 -X github.com/cert-manager/cert-manager/cmd/ctl/pkg/build/commands.registerCompletion=false" \
-%golang_build cmd/ctl
-mv $BUILDDIR/bin/ctl $BUILDDIR/bin/kubectl-cert_manager
-
 %install
 export BUILDDIR="$PWD/.gopath"
 export GOPATH="%go_path"
@@ -84,10 +73,12 @@ rm -rf -- %buildroot%_datadir
 %_bindir/webhook
 %_bindir/acmesolver
 %_bindir/startupapicheck
-%_bindir/cmctl
-%_bindir/kubectl-cert_manager
 
 %changelog
+* Fri Oct 18 2024 Alexander Stepchenko <geochip@altlinux.org> 1.15.3-alt1
+- 1.14.5 -> 1.15.3 (Fixes: CVE-2024-35255, CVE-2024-6104, CVE-2024-41110, CVE-2024-24557)
+- Remove cmctl and kubectl-cert_manager binaries.
+
 * Sat May 18 2024 Alexander Stepchenko <geochip@altlinux.org> 1.14.5-alt1
 - 1.11.0 -> 1.14.5 (Fixes: CVE-2024-26147)
 - Add startupapicheck binary.
