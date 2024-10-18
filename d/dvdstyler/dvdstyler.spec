@@ -1,6 +1,6 @@
 Name: dvdstyler
 Version: 3.2.1
-Release: alt2
+Release: alt2.1
 Summary: %name is a crossplatform DVD Authoring System
 Summary(ru_RU.UTF-8): %name - это программа для создания DVD дисков
 License: GPL
@@ -19,8 +19,8 @@ BuildRequires: libwxsvg-devel libexif-devel
 BuildRequires: libjpeg-devel libudev-devel libgnomeui-devel
 BuildRequires: libavcodec-devel libavformat-devel libavutil-devel
 BuildRequires: libavfilter-devel libswscale-devel ffmpeg
-BuildRequires: dvdauthor mjpegtools genisoimage dvd+rw-tools
-BuildRequires: cdrecord-classic dvdrecord xmlto zip bison flex mpgtx
+BuildRequires: dvdauthor mjpegtools /usr/bin/mkisofs dvd+rw-tools
+BuildRequires: xmlto zip bison flex mpgtx
 
 Requires: mjpegtools dvdauthor dvd+rw-tools genisoimage dvdisaster ffmpeg
 
@@ -96,6 +96,13 @@ install -p -m 644 data/%name.png %buildroot%_liconsdir/%name.png
 
 
 %changelog
+* Wed Oct 02 2024 L.A. Kostis <lakostis@altlinux.ru> 3.2.1-alt2.1
+- NMU:
+  - BR: don't require dvdrecord/cdrecord (actually they're added by mistake,
+       as this program requires mkisofs).
+  - BR: use /usr/bin/mkisofs dependency (to use genisoimage or
+    mkisofs from schilytools).
+
 * Wed Sep 27 2023 Anton Midyukov <antohami@altlinux.org> 3.2.1-alt2
 - fix build with ffmpeg 6
 
