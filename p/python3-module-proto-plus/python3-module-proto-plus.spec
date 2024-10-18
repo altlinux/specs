@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 1.24.0
+Version: 1.25.0
 Release: alt1
 
 Summary: Beautiful, idiomatic protocol buffers in Python
@@ -42,5 +42,8 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Oct 18 2024 Andrey Cherepanov <cas@altlinux.org> 1.25.0-alt1
+- New version.
+
 * Fri Sep 20 2024 Andrey Cherepanov <cas@altlinux.org> 1.24.0-alt1
 - Initial build for Sisyphus.
