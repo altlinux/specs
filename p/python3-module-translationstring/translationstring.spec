@@ -1,19 +1,28 @@
-%define oname translationstring
+%define _unpackaged_files_terminate_build 1
+%define pypi_name translationstring
+%define mod_name %pypi_name
 
-Name: python3-module-%oname
+%def_with check
+
+Name: python3-module-%pypi_name
 Version: 1.4
-Release: alt3
+Release: alt4
 
 Summary: Utility library for i18n relied on by various Repoze packages
 License: BSD-4-Clause
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/translationstring
+Url: https://pypi.org/project/translationstring/
+Vcs: https://github.com/Pylons/translationstring
 BuildArch: noarch
-
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-sphinx
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 A library used by various Repoze packages for internationalization
@@ -26,95 +35,31 @@ package. It does not depend on Babel, but its translation and
 pluralization services are meant to work best when provided with an
 instance of the babel.support.Translations class.
 
-%package tests
-Summary: Tests for translationstring
-Group: Development/Python3
-Requires: %name = %version-%release
-
-%description tests
-A library used by various Repoze packages for internationalization
-(i18n) duties related to translation.
-
-This package provides a translation string class, a translation string
-factory class, translation and pluralization primitives, and a utility
-that helps Chameleon templates use translation facilities of this
-package. It does not depend on Babel, but its translation and
-pluralization services are meant to work best when provided with an
-instance of the babel.support.Translations class.
-
-This package contains tests for translationstring.
-
-%package pickles
-Summary: Pickles for translationstring
-Group: Development/Python3
-
-%description pickles
-A library used by various Repoze packages for internationalization
-(i18n) duties related to translation.
-
-This package provides a translation string class, a translation string
-factory class, translation and pluralization primitives, and a utility
-that helps Chameleon templates use translation facilities of this
-package. It does not depend on Babel, but its translation and
-pluralization services are meant to work best when provided with an
-instance of the babel.support.Translations class.
-
-This package contains pickles for translationstring.
-
-%package docs
-Summary: Documentation for translationstring
-Group: Development/Documentation
-
-%description docs
-A library used by various Repoze packages for internationalization
-(i18n) duties related to translation.
-
-This package provides a translation string class, a translation string
-factory class, translation and pluralization primitives, and a utility
-that helps Chameleon templates use translation facilities of this
-package. It does not depend on Babel, but its translation and
-pluralization services are meant to work best when provided with an
-instance of the babel.support.Translations class.
-
-This package contains documentation for translationstring.
-
 %prep
 %setup
-
-sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
-
-pushd docs
-%make pickle
-%make html
-popd
+%pyproject_build
 
 %install
-%python3_install
-
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
+%pyproject_install
 
 %check
-%__python3 setup.py test
+%pyproject_run_pytest -vra
 
 %files
-%doc *.txt
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/%oname/tests
-%exclude %python3_sitelibdir/%oname/pickle
-
-%files tests
-%python3_sitelibdir/%oname/tests
-
-%files docs
-%doc docs/_build/html/*
-
-%files pickles
-%python3_sitelibdir/%oname/pickle
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%exclude %python3_sitelibdir/%mod_name/tests/
 
 %changelog
+* Fri Oct 18 2024 Stanislav Levin <slev@altlinux.org> 1.4-alt4
+- Migrated from removed setuptools' test command (see #50996).
+
 * Tue Jun 01 2021 Grigory Ustinov <grenka@altlinux.org> 1.4-alt3
 - Fixed Build Requires.
 - Fixed license tag.
