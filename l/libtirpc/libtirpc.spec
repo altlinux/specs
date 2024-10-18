@@ -1,6 +1,6 @@
 Name: libtirpc
-Version: 1.3.5
-Release: alt2
+Version: 1.3.6
+Release: alt1
 
 Summary: transport-independent RPC library
 License: BSD
@@ -37,25 +37,23 @@ This package holds development part of %name library
 
 %install
 %make_install DESTDIR=%buildroot install
-mkdir -p %buildroot/%_lib
-mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
-find %buildroot%_libdir -name \*.so|while read; do
-	ln -snf ../../%_lib/`readlink $REPLY` %buildroot%_libdir/${REPLY##*/}
-done
 
 %files
 %doc AUTHORS COPYING INSTALL README
 %config(noreplace) %_sysconfdir/netconfig
-/%_lib/%name.so.*
+%_libdir/libtirpc.so.*
 %_man5dir/netconfig.5.*
 
 %files devel
-%_libdir/%name.so
-%_pkgconfigdir/*
+%_libdir/libtirpc.so
 %_includedir/tirpc
+%_pkgconfigdir/libtirpc.pc
 %_man3dir/*
 
 %changelog
+* Fri Oct 18 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.6-alt1
+- 1.3.6 released
+
 * Thu Jul 25 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.5-alt2
 - keep GSS API consistent with previous release
 
