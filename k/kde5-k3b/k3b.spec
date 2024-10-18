@@ -1,13 +1,10 @@
-%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
-%define ubt_id %__ubt_branch_id
-
 %define sover 8
 %define libk3blib libk3blib%sover
 %define libk3bdevice libk3bdevice%sover
 
 %define req_permhelper /usr/sbin/usermod
 
-%define req_std_burning cdrkit cdrdao dvd+rw-tools cdrskin
+%define req_std_burning /usr/bin/cdrecord /usr/bin/mkisofs /usr/bin/readcd cdrdao dvd+rw-tools cdrskin
 %define req_std_common kde5-runtime %req_permhelper
 #define req_multimedia sox-play libsox-fmt-pulseaudio transcode vcdimager normalize lame flac mpc
 %define req_multimedia sox-play libsox-fmt-pulseaudio normalize lame flac mpc
@@ -17,7 +14,7 @@
 %define rname k3b
 Name: kde5-%rname
 Version: 24.02.2
-Release: alt1
+Release: alt1.1
 %K5init no_altplace
 
 Group: Archiving/Cd burning
@@ -39,7 +36,7 @@ Patch2: alt-return-wodim.patch
 # Automatically added by buildreq on Mon May 23 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ glibc-devel-static gtk-update-icon-cache kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libavcodec-devel libavutil-devel libdbusmenu-qt52 libflac-devel libgpg-error libgst-plugins1.0 libjson-c libogg-devel libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-sensors libqt5-sql libqt5-svg libqt5-test libqt5-webchannel libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs shared-mime-info xml-common xml-utils
 #BuildRequires: extra-cmake-modules kde5-libkcddb-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdelibs4support kf5-kdoctools-devel kf5-kfilemetadata-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel libavdevice-devel libavformat-devel libdvdread-devel libflac++-devel liblame-devel libmad-devel libmpcdec-devel libmusicbrainz-devel libmusicbrainz3-devel libpostproc-devel libsamplerate-devel libsndfile-devel libswscale-devel libtag-devel libvorbis-devel python-module-google python3-dev qt5-multimedia-devel qt5-webkit-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-multimedia-devel qt5-declarative-devel
 BuildRequires: libavdevice-devel libavformat-devel libpostproc-devel libswscale-devel
 BuildRequires: libdvdread-devel libflac++-devel liblame-devel libmad-devel libmpcdec-devel
@@ -178,6 +175,11 @@ fi
 %_K5inc/k3b*.h
 
 %changelog
+* Wed Oct 02 2024 L.A. Kostis <lakostis@altlinux.ru> 24.02.2-alt1.1
+- NMU: require apps paths over cdrkit (as cdrecord/mkisofs/readcd
+       provided by schilytools).
+- NMU: remove ubt cruft.
+
 * Thu May 02 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.2-alt1
 - new version
 

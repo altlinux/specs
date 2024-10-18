@@ -1,7 +1,7 @@
 %define svn_rev 852
 Name: cdrkit
 Version: 1.1.11
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: A collection of command-line CD/DVD recording utilities
@@ -31,6 +31,8 @@ Requires: dirsplit = %epoch:%version-%release
 Requires: %name-doc = %epoch:%version-%release
 Requires: %name-utils = %epoch:%version-%release
 
+BuildRequires(pre): alternatives
+%define weight 5
 BuildRequires: bzlib-devel cmake libcap-devel libmagic-devel zlib-devel
 
 %description
@@ -46,29 +48,24 @@ an independent project.
 Summary: A command line utility to write data to optical disk media
 Group: Archiving/Cd burning
 Requires: cdrkit-control
-Provides: cdrecord = 6:2.01.01, cdrecord-classic = 6:2.01.01
-Obsoletes: cdrecord, cdrecord-classic
-Provides: dvdrecord = 0:0.3.1
-Obsoletes: dvdrecord
+Provides: cdrecord = 6:2.01.01
 
 %package -n readom
 Summary: A command line utility to read or write data Compact Discs
 Group: Archiving/Cd burning
 Requires: cdrkit-control
 Provides: readcd = 6:2.01.01
-Obsoletes: readcd
 
 %package -n genisoimage
 Summary: A command line utility to create an ISO9660/Joliet/HFS filesystem
 Group: Archiving/Cd burning
 Provides: mkisofs = 6:2.01.01
-Obsoletes: mkisofs
 
 %package -n icedax
 Group: Sound
 Summary: A command line utility for sampling/copying .wav files from digital audio CDs
 Provides: cdda2wav = 6:2.01.01
-Obsoletes: cdda2wav
+Conflicts: cdda2wav > 6:2.01.01
 
 %package -n dirsplit
 Summary: A dirsplit utility
@@ -82,8 +79,6 @@ BuildArch: noarch
 %package utils
 Summary: Command line utilities for dumping and verifying ISO9660 images
 Group: Archiving/Cd burning
-Provides: isoutils = 6:2.01.01
-Obsoletes: isoutils
 
 %package -n netscsid
 Summary: NET SCSI Daemon
@@ -159,29 +154,37 @@ cp -a ABOUT COPYING FAQ FORK START doc/WHY doc/READMEs \
 
 cd %buildroot%_bindir
 chmod 700 wodim readom
-ln -s wodim cdrecord
-ln -s wodim dvdrecord
-ln -s readom readcd
-ln -s genisoimage mkisofs
-ln -s genisoimage mkhybrid
-ln -s icedax cdda2wav
-cd %buildroot%_man1dir
-ln -s wodim.1 cdrecord.1
-ln -s wodim.1 dvdrecord.1
-ln -s readom.1 readcd.1
-ln -s genisoimage.1 mkisofs.1
-ln -s genisoimage.1 mkhybrid.1
-ln -s icedax.1 cdda2wav.1
+
+mkdir -p %buildroot%_altdir
+cat <<__EOF__ >%buildroot%_altdir/wodim
+%_bindir/cdrecord	%_bindir/wodim	%weight
+%_man1dir/cdrecord.1.xz	%_man1dir/wodim.1.xz	%_bindir/wodim
+%_bindir/dvdrecord	%_bindir/wodim	%weight
+%_man1dir/dvdrecord.1.xz	%_man1dir/wodim.1.xz	%_bindir/wodim
+__EOF__
+
+cat <<__EOF__ >%buildroot%_altdir/readom
+%_bindir/readcd	%_bindir/readom	%weight
+%_man1dir/readcd.1.xz	%_man1dir/readom.1.xz	%_bindir/readom
+__EOF__
+
+cat <<__EOF__ >%buildroot%_altdir/genisoimage
+%_bindir/mkisofs	%_bindir/genisoimage	%weight
+%_man1dir/mkisofs.1.xz	%_man1dir/genisoimage.1.xz	%_bindir/genisoimage
+%_bindir/mkhybrid	%_bindir/genisoimage	%weight
+%_man1dir/mkhybrid.1.xz	%_man1dir/genisoimage.1.xz	%_bindir/genisoimage
+__EOF__
+
+cat <<__EOF__ >%buildroot%_altdir/icedax
+%_bindir/cdda2wav	%_bindir/icedax	%weight
+%_man1dir/cdda2wav.1.xz	%_man1dir/icedax.1.xz	%_bindir/icedax
+__EOF__
 
 %pre -n wodim
 %pre_control wodim
 
 %post -n wodim
 %post_control wodim
-
-%triggerpostun -n wodim -- cdrecord, cdrecord-classic, dvdrecord
-rm -f '/etc/alternatives/links/|usr|bin|cdrecord'
-ln -snf wodim %_bindir/cdrecord
 
 %pre -n readom
 %pre_control readom
@@ -195,23 +198,23 @@ ln -snf wodim %_bindir/cdrecord
 %docdir
 
 %files -n wodim
+%_altdir/wodim
 %_bindir/wodim
-%_bindir/*record
 %_man1dir/wodim.*
-%_man1dir/*record.*
 
 %files -n readom
+%_altdir/readom
 %_bindir/read??
 %_man1dir/read??.*
 
 %files -n genisoimage
+%_altdir/genisoimage
 %_bindir/genisoimage
-%_bindir/mk*
 %_man5dir/genisoimage*
 %_man1dir/genisoimage.*
-%_man1dir/mk*.*
 
 %files -n icedax
+%_altdir/icedax
 %_bindir/icedax
 %_bindir/cdda2*
 %_bindir/readmult
@@ -232,20 +235,16 @@ ln -snf wodim %_bindir/cdrecord
 %files utils
 %_bindir/*
 %exclude %_bindir/wodim
-%exclude %_bindir/*record
 %exclude %_bindir/read*
 %exclude %_bindir/genisoimage
-%exclude %_bindir/mk*
 %exclude %_bindir/icedax
 %exclude %_bindir/cdda2*
 %exclude %_bindir/pitchplay
 %exclude %_bindir/dirsplit
 %_man1dir/*
 %exclude %_man1dir/wodim.*
-%exclude %_man1dir/*record.*
 %exclude %_man1dir/read*.*
 %exclude %_man1dir/genisoimage.*
-%exclude %_man1dir/mk*.*
 %exclude %_man1dir/icedax.*
 %exclude %_man1dir/cdda2*.*
 %exclude %_man1dir/pitchplay.*
@@ -253,6 +252,10 @@ ln -snf wodim %_bindir/cdrecord
 %exclude %_man1dir/dirsplit.*
 
 %changelog
+* Wed Oct 02 2024 L.A. Kostis <lakostis@altlinux.ru> 1:1.1.11-alt3
+- Return alternatives to coexist with cdrecord-classic.
+- icedax: added conflict with cdda2wav from schilytools.
+
 * Sat Dec 26 2020 Dmitry V. Levin <ldv@altlinux.org> 1:1.1.11-alt2
 - Fixed build with gcc-10.
 
