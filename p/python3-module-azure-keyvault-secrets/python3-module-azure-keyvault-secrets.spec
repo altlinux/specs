@@ -3,7 +3,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 4.8.0
+Version: 4.9.0
 Release: alt1
 
 Summary: Microsoft Azure Key Vault Secrets Client Library for Python
@@ -37,5 +37,8 @@ BuildRequires: python3-module-wheel
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Oct 18 2024 Anton Vyatkin <toni@altlinux.org> 4.9.0-alt1
+- new version 4.9.0
+
 * Thu Jul 25 2024 Anton Vyatkin <toni@altlinux.org> 4.8.0-alt1
 - Initial build for Sisyphus.
