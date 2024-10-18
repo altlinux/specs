@@ -5,8 +5,8 @@
 %define pypi_name pydantic-extra-types
 
 Name: python3-module-%pypi_name
-Version: 2.9.0
-Release: alt2
+Version: 2.10.0
+Release: alt1
 
 Summary: Extra Pydantic types
 License: MIT
@@ -60,6 +60,9 @@ See https://github.com/pydantic/pydantic/issues/5012 for more info.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Oct 18 2024 Alexandr Shashkin <dutyrok@altlinux.org> 2.10.0-alt1
+- Updated to 2.10.0.
+
 * Fri Oct 11 2024 Alexandr Shashkin <dutyrok@altlinux.org> 2.9.0-alt2
 - Fixed FTBFS: adjusted test_json_schema() for Pydantic 2.9.
 
