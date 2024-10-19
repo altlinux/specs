@@ -3,7 +3,7 @@
 %global gcc_version 13
 
 Name:    osquery
-Version: 5.13.1
+Version: 5.14.0
 Release: alt1
 
 Summary: SQL powered operating system instrumentation, monitoring, and analytics
@@ -19,7 +19,7 @@ Patch0: osquery-unbundle-libraries.patch
 Patch1: osquery-disable-expiremental.patch
 Patch2: osquery-disable-dpkg.patch
 Patch3: osquery-use-cstdint.patch
-Patch4: osquery-new-boost.patch
+Patch4: osquery-fix-std-types.patch
 Patch5: osquery-fix-std-functions.patch
 Patch6: osquery-fix-audit_rule_syscall_data.patch
 Patch7: osquery-sysctl.h.patch
@@ -27,7 +27,6 @@ Patch8: osquery-no-lvm2app.h.patch
 Patch9: osquery-enable_yara_string.patch
 Patch10: osquery-no-__secure_getenv.patch
 Patch11: osquery-no-sysctl.patch
-Patch12: osquery-fix-docker-networks.patch
 Patch13: osquery-no-experiments.patch
 Patch14: osquery-link-system-libraries.patch
 Patch15: osquery-no-examples-build.patch
@@ -155,6 +154,9 @@ mkdir -p %buildroot%_logdir/osquery
 %dir %_logdir/osquery
 
 %changelog
+* Fri Oct 18 2024 Andrey Cherepanov <cas@altlinux.org> 5.14.0-alt1
+- New version.
+
 * Wed Aug 14 2024 Andrey Cherepanov <cas@altlinux.org> 5.13.1-alt1
 - New version.
 
