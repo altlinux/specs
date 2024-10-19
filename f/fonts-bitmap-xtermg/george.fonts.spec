@@ -1,7 +1,7 @@
 %define cname xtermg
 
 Name: fonts-bitmap-%cname
-Version: 5.342
+Version: 5.371
 Release: alt1
 Summary: XTermG fonts - a fixed width English/Cyrillic fonts with some additional characters
 License: MIT
@@ -37,6 +37,12 @@ cp %SOURCE1 .
 %doc TODO
 
 %changelog
+* Sat Oct 19 2024 Fr. Br. George <george@altlinux.org> 5.371-alt1
+- +Additional box and block glyphs (block autegenerator added)
+
+* Fri Sep 06 2024 Fr. Br. George <george@altlinux.org> 5.347-alt1
+- +BALLOT glyphs
+
 * Wed Aug 28 2024 Fr. Br. George <george@altlinux.org> 5.342-alt1
 - +5 glyphs
 
