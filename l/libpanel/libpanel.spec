@@ -12,19 +12,20 @@
 %def_disable check
 
 Name: libpanel
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Library with GTK4 widgets for IDE-like applications
 Group: System/Libraries
 License: LGPL-3.0-or-later
-Url: https://gitlab.gnome.org/GNOME/%name
+Url: https://gitlab.gnome.org/GNOME/libpanel
+
+Vcs: https://gitlab.gnome.org/GNOME/libpanel.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 #Source: %url/-/archive/%version/%name-%version.tar.bz2
 %else
-Vcs: https://gitlab.gnome.org/GNOME/libpanel.git
 Source: %name-%version.tar
 %endif
 
@@ -141,6 +142,9 @@ xvfb-run -s -noreset %__meson_test
 %endif
 
 %changelog
+* Sat Oct 19 2024 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
+- 1.8.1
+
 * Sat Sep 14 2024 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - 1.8.0
 

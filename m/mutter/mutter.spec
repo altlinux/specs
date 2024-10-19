@@ -1,7 +1,7 @@
 # since 3.21.90 (libmutter-clutter-1.0.so private library)
 %set_verify_elf_method unresolved=relaxed
 
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 47
 %define beta %nil
@@ -12,6 +12,7 @@
 %define _libexecdir %_prefix/libexec
 # only private lib now
 %def_enable privatelib
+%def_enable x11
 %def_enable remote_desktop
 %def_enable installed_tests
 %def_enable egl_device
@@ -21,7 +22,7 @@
 %define gvdb_ver b54bc5da
 
 Name: mutter
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 Epoch: 1
 
@@ -40,10 +41,10 @@ Source: %name-%version%beta.tar
 %define pkglibdir %_libdir/%name-%api_ver
 %define pkgdatadir %_datadir/%name-%api_ver
 
-%{?_enable_installed_tests:%add_python3_path %_libexecdir/installed-tests/%name-%api_ver/
+%{?_enable_installed_tests:%add_python3_path %_libexecdir/installed-tests/%name-%api_ver/}
+
 # provided by /usr/share/mutter-%api_ver/tests/*
 %add_python3_req_skip logind_helpers mutter_dbusrunner
-}
 
 %add_findprov_lib_path %pkglibdir
 %set_typelibdir %pkglibdir
@@ -89,20 +90,18 @@ BuildRequires: libgtk4-devel >= %gtk4_ver
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libpango-devel >= %pango_ver
 BuildRequires: libcairo-devel >= %cairo_ver
+BuildRequires: libfribidi-devel >= %fribidi_ver
 BuildRequires: pkgconfig(pixman-1)
 BuildRequires: libjson-glib-devel >= %json_glib_ver
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
-BuildRequires: libXcomposite-devel libXfixes-devel libXrender-devel
-BuildRequires: libXdamage-devel libXtst-devel libXi-devel >= %Xi_ver
-BuildRequires: libXcursor-devel libX11-devel libXinerama-devel libXext-devel libXrandr-devel libSM-devel libICE-devel
-BuildRequires: libxcb-devel
-BuildRequires: libwayland-server-devel >= %wayland_ver wayland-protocols >= %wayland_protocols_ver
-BuildRequires: libgdk-pixbuf-devel libgbm-devel >= %gbm_ver
-BuildRequires: libstartup-notification-devel zenity libcanberra-gtk3-devel
-BuildRequires: libclutter-gir-devel libpango-gir-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel
-BuildRequires: libgnome-desktop3-devel libupower-devel >= %upower_ver
-BuildRequires: libxkbcommon-x11-devel libinput-devel >= %libinput_ver
-BuildRequires: libxkbfile-devel xkeyboard-config-devel libfribidi-devel >= %fribidi_ver
+BuildRequires: wayland-protocols >= %wayland_protocols_ver
+BuildRequires: libwayland-server-devel >= %wayland_ver
+BuildRequires: libwayland-cursor-devel
+BuildRequires: libgbm-devel >= %gbm_ver
+BuildRequires: libstartup-notification-devel libcanberra-gtk3-devel
+BuildRequires: libpango-gir-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel
+BuildRequires: pkgconfig(gnome-desktop-4) libupower-devel >= %upower_ver
+BuildRequires: libxkbcommon-devel libinput-devel >= %libinput_ver
 BuildRequires: libwacom-devel >= %wacom_ver
 BuildRequires: gnome-settings-daemon-devel
 BuildRequires: pkgconfig(sysprof-capture-4)
@@ -115,8 +114,28 @@ BuildRequires: libdrm-devel >= %drm_ver libsystemd-devel libgudev-devel >= %gude
 BuildRequires: libGL-devel libGLES-devel xorg-xwayland-devel >= %xwayland_ver %_bindir/cvt
 BuildRequires: libdbus-devel
 %{?_enable_egl_device:BuildRequires: libEGL-devel}
-%{?_enable_wayland_eglstream:BuildRequires: egl-wayland-devel}
+%{?_enable_wayland_eglstream:BuildRequires: pkgconfig(wayland-egl) pkgconfig(wayland-eglstream-protocols)}
 %{?_enable_libdisplay_info:BuildRequires: pkgconfig(libdisplay-info)}
+%{?_enable_x11:BuildRequires: pkgconfig(gtk4)
+BuildRequires: pkgconfig(x11)
+BuildRequires: pkgconfig(xcomposite)
+BuildRequires: pkgconfig(xcursor)
+BuildRequires: pkgconfig(xdamage)
+BuildRequires: pkgconfig(xext)
+BuildRequires: pkgconfig(xfixes)
+BuildRequires: pkgconfig(xi)
+BuildRequires: pkgconfig(xkbfile)
+BuildRequires: pkgconfig(xkeyboard-config)
+BuildRequires: pkgconfig(x11-xcb)
+BuildRequires: pkgconfig(xrandr)
+BuildRequires: pkgconfig(xcb-res)
+BuildRequires: pkgconfig(xinerama)
+BuildRequires: pkgconfig(xau)
+BuildRequires: pkgconfig(ice)
+BuildRequires: pkgconfig(sm)
+BuildRequires: pkgconfig(xcb-randr)
+BuildRequires: pkgconfig(xkbcommon-x11)
+BuildRequires: pkgconfig(xtst)}
 
 %description
 Mutter is a Wayland display server and X11 window manager and compositor library.
@@ -175,7 +194,6 @@ Requires: xvfb-run
 This package provides tests programs that can be used to verify
 the functionality of the installed Mutter.
 
-
 %prep
 %setup -n %name-%version%beta %{?_enable_snapshot:-a1
     mv gvdb-%gvdb_ver subprojects/gvdb}
@@ -191,6 +209,7 @@ sed -i 's/\.beta//' meson.build
 %build
 %meson \
     -Dintrospection=true \
+    %{subst_enable_meson_bool x11 x11} \
     %{subst_enable_meson_bool remote_desktop remote_desktop} \
     %{subst_enable_meson_bool egl_device egl_device} \
     %{subst_enable_meson_bool wayland_eglstream wayland_eglstream} \
@@ -271,6 +290,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Sat Oct 19 2024 Yuri N. Sedunov <aris@altlinux.org> 1:47.1-alt1
+- 47.1
+
 * Wed Sep 18 2024 Yuri N. Sedunov <aris@altlinux.org> 1:47.0-alt1
 - 47.0-7-g846fc458d
 

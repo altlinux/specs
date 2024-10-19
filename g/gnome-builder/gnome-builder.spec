@@ -17,7 +17,7 @@
 %def_enable vala
 
 Name: gnome-builder
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Builder - Develop software for GNOME
@@ -195,6 +195,9 @@ This package provides files for Gnome Builder to work with Clang/LLVW.
 %{?_enable_help:%_datadir/doc/%name/}
 
 %changelog
+* Sat Oct 19 2024 Yuri N. Sedunov <aris@altlinux.org> 47.2-alt1
+- 47.2
+
 * Fri Sep 27 2024 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt1
 - 47.1
 

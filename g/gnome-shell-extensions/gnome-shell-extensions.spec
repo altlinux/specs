@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: gnome-shell-extensions
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: GNOME Shell Extensions
@@ -175,6 +175,9 @@ See %_docdir/%name-%version/README for more information.
 %doc NEWS README.md
 
 %changelog
+* Sat Oct 19 2024 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt1
+- 47.1
+
 * Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - 47.0
 
