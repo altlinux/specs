@@ -1,18 +1,19 @@
-%define sover 0.18
+%define oname cpp-httplib
+%define sover 0.12
 
-Name: cpp-httplib
-Version: 0.18.1
-Release: alt1
+Name: %oname%sover
+Version: 0.12.6
+Release: alt2
 
 Summary: A C++11 single-file header-only cross platform HTTP/HTTPS library.
 License: MIT
-Group: System/Libraries
+Group: System/Legacy libraries
 
-Url: https://github.com/yhirose/%name
+Url: https://github.com/yhirose/%oname
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-# https://github.com/yhirose/%name/archive/refs/tags/v%version/%name-%version.tar.gz
-Source: %name-%version.tar
+# https://github.com/yhirose/%oname/archive/refs/tags/v%version/%oname-%version.tar.gz
+Source: %oname-%version.tar
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -24,22 +25,15 @@ BuildRequires: zlib-devel
 %description
 A C++11 single-file header-only cross platform HTTP/HTTPS library.
 
-%package -n lib%name%sover
+%package -n lib%oname%sover
 Summary: A C++11 single-file header-only cross platform HTTP/HTTPS library.
-Group: System/Libraries
+Group: System/Legacy libraries
 
-%description -n lib%name%sover
+%description -n lib%oname%sover
 A C++11 single-file header-only cross platform HTTP/HTTPS library.
 
-%package -n lib%name-devel
-Summary: Header files for lib%name
-Group: Development/C++
-
-%description -n lib%name-devel
-Header files for lib%name
-
 %prep
-%setup
+%setup -n %oname-%version
 
 %build
 %cmake \
@@ -50,20 +44,17 @@ Header files for lib%name
 %install
 %cmake_install
 
-%__rm -rf %buildroot%_datadir/{doc,licenses}
+%__rm -rf %buildroot%_libdir/cmake/httplib
+%__rm -rf %buildroot%_libdir/libhttplib.so
+%__rm -rf %buildroot%_includedir/httplib.h
 
-%files -n lib%name%sover
+%files -n lib%oname%sover
 %doc LICENSE README.md
-%_libdir/lib%name.so.*
-
-%files -n lib%name-devel
-%_libdir/cmake/httplib
-%_libdir/lib%name.so
-%_includedir/httplib.h
+%_libdir/libhttplib.so.*
 
 %changelog
-* Sat Oct 19 2024 Nazarov Denis <nenderus@altlinux.org> 0.18.1-alt1
-- New version 0.18.1.
+* Sat Oct 19 2024 Nazarov Denis <nenderus@altlinux.org> 0.12.6-alt2
+- Build as legacy library
 
 * Sat Jun 10 2023 Nazarov Denis <nenderus@altlinux.org> 0.12.6-alt1
 - New version 0.12.6.
