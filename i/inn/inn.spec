@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
 Name: inn
-Version: 2.7.1
+Version: 2.7.2
 Release: alt1
 
 Summary: The InterNetNews (INN) system, an Usenet news server
@@ -43,8 +44,10 @@ Requires: webserver-common
 
 BuildRequires: ctags flex gnupg  su tcl time uucp wget gawk ncompress perl-podlators
 BuildRequires: libkrb5-devel libpam-devel libssl-devel libsasl2-devel libdb4-devel libe2fs-devel
-BuildRequires: perl-devel perl-libnet perl-Math-BigInt perl-Encode perl-MIME-tools perl-GD-Text
-BuildRequires: python-devel python-modules-compiler python-modules-encodings
+
+BuildRequires: perl-devel perl-libnet perl-Math-BigInt perl-Encode perl-MIME-tools perl-GD-Text perl-Time-Piece
+
+BuildRequires: python3-dev
 
 BuildRequires: libcanlock-devel
 
@@ -332,6 +335,7 @@ fi
 %_man1dir/sm.*
 %_man1dir/pullnews.*
 %_man1dir/gencancel.*
+%_man1dir/delayer.*
 
 %_man5dir/*
 %_man8dir/*
@@ -419,6 +423,7 @@ fi
 %_libexecdir/%name/innreport-display.conf
 %_libexecdir/%name/ovsqlite-server
 %_libexecdir/%name/ovsqlite-util
+%_libexecdir/%name/delayer
 
 %dir %_libexecdir/%name/auth
 
@@ -470,6 +475,9 @@ fi
 %_bindir/inews
 
 %changelog
+* Mon Oct 14 2024 Sergey Y. Afonin <asy@altlinux.org> 2.7.2-alt1
+- 2.7.2 (built with python3)
+
 * Mon Dec 04 2023 Sergey Y. Afonin <asy@altlinux.org> 2.7.1-alt1
 - 2.7.1 (with libcanlock, ALT #44169)
 - updated License tag to SPDX syntax, added BSD and MIT
