@@ -22,7 +22,7 @@
 
 Name:    freecad
 Version: 0.21.2
-Release: alt7.2
+Release: alt7.3
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -48,6 +48,9 @@ Patch6: freecad-upstream-pr13570-fix-for-boost-1.85.0.patch
 # Part of https://github.com/FreeCAD/FreeCAD/pull/13226
 # fixes build with boost 1.85.0+
 Patch7: freecad-upstream-fix-copy-option-deprecation.patch
+
+# https://github.com/FreeCAD/FreeCAD/pull/16004
+Patch8: freecad-upstream-fix-build-with-boost-1.86.0.patch
 
 # Gentoo
 Patch20: freecad-0.21.2-navcube-qt6.patch
@@ -174,6 +177,7 @@ rm -rf src/CXX
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
@@ -301,6 +305,9 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_datadir/thumbnailers/FreeCAD.thumbnailer
 
 %changelog
+* Sat Oct 19 2024 Ivan A. Melnikov <iv@altlinux.org> 1:0.21.2-alt7.3
+- NMU: fix building with boost 1.86.0.
+
 * Fri Aug 30 2024 Sergey V Turchin <zerg@altlinux.org> 1:0.21.2-alt7.2
 - NMU: fix building new Qt/PySide
 
