@@ -1,11 +1,9 @@
 Name: sendmail
 
-%define tarbolversion 8.18.0.Alpha2
+%define tarbolversion 8.18.1
 
-Version: 8.18.0
-Release: alt0.Alpha2
-
-Packager: Sergey Y. Afonin <asy@altlinux.ru>
+Version: 8.18.1
+Release: alt1
 
 Summary: A widely used Mail Transport Agent (MTA)
 License: Sendmail-8.23
@@ -55,7 +53,7 @@ Patch5: %name-8.11.1-up-limit.patch
 Patch6: %name-8.11.0-m4path.patch
 
 # experimental
-Patch7: %name-8.14.4-BODY_7BIT_IGNORED-srvrsmtp.c.patch
+Patch7: %name-8.18.1-BODY_7BIT_IGNORED-srvrsmtp.c.patch
 
 # Cyrus-imap integration
 Patch10: %name-mrs-8.12.11.patch
@@ -497,6 +495,10 @@ EOF
 %doc docs/LICENSE
 
 %changelog
+* Sat Oct 19 2024 Sergey Y. Afonin <asy@altlinux.org> 8.18.1-alt1
+- New version
+- updated BODY_7BIT_IGNORED-srvrsmtp.c.patch for 8.18.1
+
 * Mon Sep 25 2023 Sergey Y. Afonin <asy@altlinux.org> 8.18.0-alt0.Alpha2
 - New version (with openssl 3.0.x support)
 - changed FEATURE(blacklist_recipients) to FEATURE(blocklist_recipients) in *.mc
