@@ -3,7 +3,7 @@
 
 Name: vcmi
 Version: 1.5.7
-Release: alt1
+Release: alt2
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
 License: GPL-2.0-or-later
@@ -37,8 +37,8 @@ BuildRequires: pkgconfig(libswscale)
 BuildRequires: pkgconfig(libswresample)
 BuildRequires: pkgconfig(libavfilter)
 BuildRequires: pkgconfig(minizip)
-BuildRequires: pkgconfig(Qt5Network)
-BuildRequires: pkgconfig(Qt5Widgets)
+BuildRequires: pkgconfig(Qt6Network)
+BuildRequires: pkgconfig(Qt6Widgets)
 BuildRequires: pkgconfig(sdl2)
 BuildRequires: pkgconfig(SDL2_image)
 BuildRequires: pkgconfig(SDL2_mixer)
@@ -47,7 +47,7 @@ BuildRequires: pkgconfig(zlib)
 BuildRequires: tbb-devel
 BuildRequires: libfuzzylite-devel >= 6.0
 BuildRequires: libluajit-devel
-BuildRequires: qt5-tools-devel
+BuildRequires: qt6-tools-devel
 #BuildRequires: git-core
 
 Requires: ffmpeg
@@ -103,7 +103,7 @@ VCMI - это фанатский проект с открытым исходны
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 mv %buildroot/%_libdir/%name/libvcmi.so %buildroot/%_libdir/libvcmi.so
 rm -f %buildroot%_libdir/*.a
 
@@ -119,6 +119,10 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/%name/
 
 %changelog
+* Sat Oct 19 2024 Anton Midyukov <antohami@altlinux.org> 1.5.7-alt2
+- Fix build with boost 1.86
+- build with qt6
+
 * Thu Aug 29 2024 Anton Midyukov <antohami@altlinux.org> 1.5.7-alt1
 - New version 1.5.7
 
