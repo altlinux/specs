@@ -3,7 +3,7 @@
 %global gcc_version 13
 
 Name:    osquery
-Version: 5.14.0
+Version: 5.14.1
 Release: alt1
 
 Summary: SQL powered operating system instrumentation, monitoring, and analytics
@@ -154,6 +154,9 @@ mkdir -p %buildroot%_logdir/osquery
 %dir %_logdir/osquery
 
 %changelog
+* Sun Oct 20 2024 Andrey Cherepanov <cas@altlinux.org> 5.14.1-alt1
+- New version.
+
 * Fri Oct 18 2024 Andrey Cherepanov <cas@altlinux.org> 5.14.0-alt1
 - New version.
 
