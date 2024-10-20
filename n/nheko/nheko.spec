@@ -2,7 +2,7 @@
 
 Name: nheko
 Version: 0.11.3
-Release: alt1
+Release: alt1.1
 
 Summary: Desktop client (QT) for the Matrix protocol
 
@@ -12,6 +12,7 @@ Url: https://nheko.im/nheko-reborn/nheko
 
 Source: %name-%version.tar
 Patch0: %name-fmt10-fix.patch
+Patch1: %name-fmt11-fix.patch
 
 BuildRequires: cmake gcc-c++
 BuildRequires: qt5-tools-devel qt5-multimedia-devel qt5-svg-devel
@@ -77,6 +78,9 @@ and less like an IRC client.
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Sun Oct 20 2024 Nazarov Denis <nenderus@altlinux.org> 0.11.3-alt1.1
+- NMU: Fix build with fmt 11
+
 * Wed Feb 07 2024 Paul Wolneykien <manowar@altlinux.org> 0.11.3-alt1
 - New version 0.11.3.
 - Added ZSH site-functions.

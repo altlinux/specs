@@ -1,5 +1,5 @@
 Name: waybar
-Version: 0.10.3
+Version: 0.11.0
 Release: alt1
 License: MIT
 Summary: Highly customizable Wayland bar for Sway and Wlroots based compositors
@@ -91,6 +91,9 @@ BuildRequires: libgtk-layer-shell-devel
 %_man5dir/*
 
 %changelog
+* Sun Oct 20 2024 Nazarov Denis <nenderus@altlinux.org> 0.11.0-alt1
+- New version (0.11.0)
+
 * Thu Jun 27 2024 Artyom Bystrov <arbars@altlinux.org> 0.10.3-alt1
 - New version (0.10.3)
 

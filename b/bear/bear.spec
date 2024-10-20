@@ -5,7 +5,7 @@
 %define optflags_lto %{nil}
 
 Name: bear
-Version: 3.1.3
+Version: 3.1.5
 Release: alt1
 
 Summary: Tool that generates a compilation database for clang tooling
@@ -69,6 +69,9 @@ done
 %doc COPYING README.md
 
 %changelog
+* Sat Oct 19 2024 Nazarov Denis <nenderus@altlinux.org> 3.1.5-alt1
+- New version
+
 * Sat Oct 14 2023 Nazarov Denis <nenderus@altlinux.org> 3.1.3-alt1
 - New version
 

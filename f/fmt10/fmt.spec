@@ -1,43 +1,37 @@
-%define sover 11
+%define oname fmt
+%define sover 10
 
-Name: libfmt
-Version: 11.0.2
-Release: alt1
+Name: %oname%sover
+Version: 10.2.1
+Release: alt2
 Epoch: 1
 
 Summary: An open-source formatting library for C++
 License: BSD
-Group: System/Libraries
+Group: System/Legacy libraries
 Url: http://fmtlib.net/
 
-# https://github.com/fmtlib/fmt/archive/%version/fmt-%version.tar.gz
-Source: fmt-%version.tar
+# https://github.com/fmtlib/%oname/archive/%version/%oname-%version.tar.gz
+Source: %oname-%version.tar
 
 BuildRequires: cmake ctest gcc-c++
 
-%package -n %name%sover
+%package -n lib%oname%sover
 Summary: An open-source formatting library for C++
-Group: System/Libraries
-
-%package devel
-Summary: An open-source formatting library for C++
-Group: Development/C++
+Group: System/Legacy libraries
 
 %define desc fmt (formerly cppformat) is an open-source formatting library. \
 It can be used as a fast and safe alternative to printf and IOStreams.
 
 %description
-%desc
+fmt (formerly cppformat) is an open-source formatting library. \
+It can be used as a fast and safe alternative to printf and IOStreams.
 
-%description -n %name%sover
+%description -n lib%oname%sover
 %desc
-
-%description devel
-%desc
-This package contains development part of fmt.
 
 %prep
-%setup -n fmt-%version
+%setup -n %oname-%version
 
 %build
 %cmake_insource \
@@ -56,19 +50,18 @@ make test
 %install
 %makeinstall_std
 
-%files -n %name%sover
+%__rm -rf %buildroot%_includedir/fmt
+%__rm -rf %buildroot%_libdir/cmake
+%__rm -rf %buildroot%_pkgconfigdir
+%__rm -rf %buildroot%_libdir/libfmt.so
+
+%files -n lib%oname%sover
 %doc LICENSE* README*
 %_libdir/libfmt.so.*
 
-%files devel
-%_includedir/fmt
-%_libdir/cmake/fmt
-%_pkgconfigdir/fmt.pc
-%_libdir/libfmt.so
-
 %changelog
-* Sat Oct 19 2024 Nazarov Denis <nenderus@altlinux.org> 1:11.0.2-alt1
-- New version 11.0.2.
+* Sat Oct 19 2024 Nazarov Denis <nenderus@altlinux.org> 1:10.2.1-alt2
+- Build as legacy library
 
 * Fri Jan 05 2024 Nazarov Denis <nenderus@altlinux.org> 1:10.2.1-alt1
 - New version 10.2.1.
