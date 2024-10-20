@@ -2,7 +2,7 @@
 
 Name: pve-storage
 Summary: PVE storage management library
-Version: 8.2.3
+Version: 8.2.5
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
@@ -26,7 +26,7 @@ Requires: smartmontools
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
-BuildRequires: librados2-perl pve-common pve-cluster >= 5.0.32 libpve-cluster-perl
+BuildRequires: librados2-perl pve-common >= 8.2.3 pve-cluster >= 5.0.32 libpve-cluster-perl
 BuildRequires: pve-doc-generator >= 5.3.3 pve-access-control >= 8.1.2 pve-apiclient xmlto
 BuildRequires: perl(File/chdir.pm) perl(Net/DBus.pm) perl(POSIX/strptime.pm)
 BuildRequires: perl(PVE/DataCenterConfig.pm)
@@ -59,6 +59,9 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Wed Oct 16 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.5-alt1
+- 8.2.5
+
 * Thu Aug 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.2.3-alt1
 - 8.2.3
 

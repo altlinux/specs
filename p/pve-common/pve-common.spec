@@ -2,7 +2,7 @@
 
 Name: pve-common
 Summary: PVE base library
-Version: 8.2.2
+Version: 8.2.3
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
@@ -77,6 +77,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Wed Oct 16 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.3-alt1
+- 8.2.3
+
 * Thu Aug 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.2.2-alt1
 - 8.2.2
 
