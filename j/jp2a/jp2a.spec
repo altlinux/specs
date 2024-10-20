@@ -3,7 +3,7 @@
 #
 
 Name: jp2a
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: an utility for converting JPEG images to ASCII
@@ -24,9 +24,9 @@ Source1: %name.1
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Tue Jul 13 2021
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libncurses-devel libsasl2-3 libtinfo-devel perl pkg-config python-modules python2-base python3 python3-base python3-module-paste ruby ruby-stdlibs sh4 texlive
-BuildRequires: doxygen libcurl-devel libjpeg-devel libpng-devel
+# Automatically added by buildreq on Sun Oct 20 2024
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libp11-kit libsasl2-3 libtinfo-devel perl perl-parent pkg-config python-modules python2-base python3 python3-base sh5
+BuildRequires: doxygen libcurl-devel libjpeg-devel libpng-devel libexif-devel libwebp-devel
 
 BuildRequires: autoconf-archive
 
@@ -64,9 +64,16 @@ install -pD -m0644 %SOURCE1 %buildroot%rman1dir/%name.1
 %rman1dir/%{name}*
 %_sysconfdir/bash_completion.d/%name
 
-/usr/share/man/ru/man1/
+#/usr/share/man/ru/man1/
+%exclude %_datadir/zsh/site-functions/_jp2a
 
 %changelog
+* Sun Oct 20 2024 Nikolay A. Fetisov <naf@altlinux.org> 1.3.0-alt1
+- New version
+  - support Exif metadata for image orientation
+  - support for WebP images
+  - add option to center image in terminal
+
 * Wed Mar 27 2024 Nikolay A. Fetisov <naf@altlinux.org> 1.2.0-alt1
 - New version
 
