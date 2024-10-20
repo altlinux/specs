@@ -1,6 +1,6 @@
 Name: libnatspec
 Version: 0.3.3
-Release: alt1
+Release: alt2
 
 Summary: Library for national and language-specific issues
 
@@ -95,6 +95,9 @@ mv %buildroot%_libdir/%{name}.* %buildroot/%_lib
 
 
 %changelog
+* Fri Oct 04 2024 Kirill Izmestev <felixz@altlinux.org> 0.3.3-alt2
+- Fixed Tatar locale name as glibc.
+
 * Sat Aug 12 2023 Vitaly Lipatov <lav@altlinux.ru> 0.3.3-alt1
 - enrich_fs_options: fix warning about buffer overflow
 - netspec: use natspec_convert() for transliteration via -a
