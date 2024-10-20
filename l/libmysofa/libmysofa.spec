@@ -1,11 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name mysofa
 
 %def_enable tests
 %def_enable check
 
 Name: lib%_name
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 
 Summary: Reader for AES SOFA files to get better HRTFs 
@@ -14,6 +14,7 @@ Group: System/Libraries
 Url: https://github.com/hoene/libmysofa
 
 Vcs: https://github.com/hoene/libmysofa.git
+
 %if_disabled snapshot
 Source: %url/archive/v%version/%name-%version.tar.gz
 %else
@@ -68,11 +69,15 @@ export ARGS="--rerun-failed --output-on-failure"
 
 %files devel
 %_includedir/%_name.h
+%_includedir/%{_name}_export.h
 %_libdir/%name.so
 %_pkgconfigdir/%name.pc
 %_libdir/cmake/mysofa/
 
 %changelog
+* Sun Oct 20 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.3-alt1
+- 1.3.3
+
 * Sun Nov 26 2023 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt1
 - updated to v1.3.2-8-g52494cc
 

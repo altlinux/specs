@@ -2,12 +2,11 @@
 %def_enable snapshot
 
 %define _name Biblioteca
-%define ver_major 1.4
+%define ver_major 1.5
 %define beta %nil
 %define rdn_name app.drey.%_name
-%define mozjs_ver 115
 
-# broken appdata/metainfo
+# still broken appdata/metainfo
 %def_disable check
 
 Name: biblioteca
@@ -30,6 +29,7 @@ Patch: Biblioteca-1.4-alt-no-flatpak.patch
 
 BuildArch: noarch
 
+%define mozjs_ver 115
 %define gjs_ver 1.74
 %define adw_ver 1.4
 
@@ -39,7 +39,7 @@ Requires: dconf
 Requires: typelib(Adw) = 1
 Requires: typelib(WebKit) = 6.0
 Requires: typelib(Xdp)
-Requires(post): glib2-doc libgtk4-devel-doc
+Requires(post): glib2-doc libgtk4-devel-doc libgom-devel-doc libadwaita-devel-doc libspelling-devel-doc
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: libgjs-devel >= %gjs_ver
@@ -81,7 +81,7 @@ install -pD -m755 build-aux/build-index.js %buildroot%_datadir/%rdn_name/
 %dir %_datadir/%rdn_name
 %_datadir/%rdn_name/%rdn_name.src.gresource
 %_datadir/%rdn_name/build-index.js
-%_datadir/%rdn_name/index.json
+%ghost %_datadir/%rdn_name/index.json
 %_datadir/dbus-1/services/%rdn_name.service
 %_iconsdir/hicolor/symbolic/apps/%rdn_name-symbolic.svg
 %_iconsdir/hicolor/scalable/apps/%{rdn_name}*.svg
@@ -90,6 +90,11 @@ install -pD -m755 build-aux/build-index.js %buildroot%_datadir/%rdn_name/
 %doc README*
 
 %changelog
+* Sun Oct 20 2024 Yuri N. Sedunov <aris@altlinux.org> 1.5-alt1
+- 1.5
+- added lib{gom,adwaita,spelling}-devel-doc to runtime dependencies
+- marked /usr/share/app.drey.Biblioteca/index.json as %%ghost
+
 * Wed Aug 21 2024 Yuri N. Sedunov <aris@altlinux.org> 1.4-alt1
 - first build for Sisyphus (v1.4-2-g90c9fd8)
 
