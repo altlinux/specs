@@ -13,12 +13,12 @@
 # https://lists.altlinux.org/pipermail/devel/2018-August/205163.html
 %def_enable mh
 
-%define use_chrpath 0
+%define use_chrpath 1
 %define snapshot    0
 
 Name: mailutils
 
-%define baseversion 3.15
+%define baseversion 3.17.90
 
 %if %snapshot
 %define snapshotdate 20200913
@@ -469,6 +469,9 @@ done
 %endif
 
 %changelog
+* Sun Oct 20 2024 Sergey Y. Afonin <asy@altlinux.org> 3.17.90-alt1
+- New version (git 20241010)
+
 * Tue Dec 20 2022 Sergey Y. Afonin <asy@altlinux.org> 3.15-alt1
 - New version (git 20220816)
 
