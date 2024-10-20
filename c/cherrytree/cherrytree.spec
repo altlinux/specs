@@ -1,5 +1,5 @@
 Name: cherrytree
-Version: 1.0.4
+Version: 1.2.0
 Release: alt1
 
 Summary: Hierarchical note taking application
@@ -18,20 +18,16 @@ Patch: categories.patch
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: desktop-file-utils
-BuildRequires: gettext
-BuildRequires: libgtkmm3-devel
-BuildRequires: libxml++2-devel
-BuildRequires: libgtksourceviewmm3-devel
-BuildRequires: libsqlite3-devel
-BuildRequires: libgspell-devel
-BuildRequires: libfmt-devel
-BuildRequires: libspdlog-devel
-BuildRequires: gnome-icon-theme
-BuildRequires: libuchardet-devel
 BuildRequires: libcurl-devel
 BuildRequires: libfribidi-devel
+BuildRequires: libgspell-devel
+BuildRequires: libgtkmm3-devel
+BuildRequires: libgtksourceview4-devel
+BuildRequires: libspdlog-devel
+BuildRequires: libsqlite3-devel
+BuildRequires: libuchardet-devel
 BuildRequires: libvte3-devel
+BuildRequires: libxml++2-devel
 
 %description
 CherryTree is a hierarchical note taking application, featuring rich text and
@@ -83,6 +79,9 @@ rm -r src/spdlog
 
 
 %changelog
+* Sun Oct 20 2024 Nazarov Denis <nenderus@altlinux.org> 1.2.0-alt1
+- new version 1.2.0 (with rpmrb script)
+
 * Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 1.0.4-alt1
 - new version 1.0.4 (with rpmrb script)
 - remove unused sources before build
