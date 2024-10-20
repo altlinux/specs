@@ -2,7 +2,7 @@
 
 Name: apt-repo-lakostis
 Version: 0.0.1
-Release: alt1
+Release: alt2
 
 Summary: lakostis.unsafe.ru package repo
 
@@ -13,6 +13,9 @@ Url: https://lakostis.unsafe.ru/RPMS/ALTLinux
 Source0: lakostis-unsafe-ru.list
 
 ExclusiveArch: x86_64 noarch
+
+# ca-certificates added due bug #51766
+Requires: apt-https ca-certificates
 
 %description
 This is an apt repo configuration to ease switch to lakostis.unsafe.ru
@@ -33,5 +36,8 @@ install -pDm644 %SOURCE0 %buildroot%_sysconfdir/apt/sources.list.d/lakostis-unsa
 %_sysconfdir/apt/sources.list.d/lakostis-unsafe-ru.list
 
 %changelog
+* Sun Oct 20 2024 L.A. Kostis <lakostis@altlinux.ru> 0.0.1-alt2
+- Added missing deps to apt-https (tnx to legion@).
+
 * Thu Aug 08 2024 L.A. Kostis <lakostis@altlinux.ru> 0.0.1-alt1
 - Initial build for ALTLinux.
