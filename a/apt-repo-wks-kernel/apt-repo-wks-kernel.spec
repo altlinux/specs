@@ -3,7 +3,7 @@
 
 Name: apt-repo-wks-kernel
 Version: 0.0.1
-Release: alt1
+Release: alt2
 
 Summary: %kflavour kernel migration package
 
@@ -15,7 +15,7 @@ Source0: kernel-%kflavour.list
 
 # lks-wks is x86_64 only
 ExclusiveArch: x86_64
-Requires: update-kernel
+Requires: update-kernel apt-https ca-certificates
 
 %description
 This is an apt repo configuration to ease switch to %kflavour kernel with
@@ -43,5 +43,8 @@ fi
 %_sysconfdir/apt/sources.list.d/kernel-%kflavour.list
 
 %changelog
+* Sun Oct 20 2024 L.A. Kostis <lakostis@altlinux.ru> 0.0.1-alt2
+- Added missing deps to apt-https.
+
 * Thu Aug 08 2024 L.A. Kostis <lakostis@altlinux.ru> 0.0.1-alt1
 - Initial build for ALTLinux.
