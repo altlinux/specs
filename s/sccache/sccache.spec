@@ -2,17 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 %define _customdocdir %_docdir/%name
 
-%ifarch x86_64 aarch64 %ix86
-%def_with gcs
-%def_with s3
-%else
-# gcs feature depends on ring crate, which is not very portable
-%def_without gcs
-%def_without s3
-%endif
-
 Name:    sccache
-Version: 0.3.3
+Version: 0.8.2
 Release: alt1
 
 Summary: sccache is ccache with cloud storage
@@ -23,8 +14,17 @@ Url:     https://github.com/mozilla/sccache
 
 Source:   %name-%version.tar
 
-# cargo-vendor-filterer --all-features false --offline \
-#  --platform x86_64-unknown-linux-gnu --exclude-crate-path zstd-sys#zstd
+# cargo vendor-filterer  --all-features \
+#   --platform=aarch64-unknown-linux-gnu \
+#   --platform=armv7-unknown-linux-gnueabihf \
+#   --platform=loongarch64-unknown-linux-gnu \
+#   --platform=i686-unknown-linux-gnu \
+#   --platform=powerpc64le-unknown-linux-gnu \
+#   --platform=riscv64gc-unknown-linux-gnu \
+#   --platform=x86_64-unknown-linux-gnu \
+#   --exclude-crate-path zstd-sys#zstd \
+#   --exclude-crate-path openssl-src#openssl
+
 Source1:  vendor.tar
 
 Patch: %name-%version-%release.patch
@@ -50,8 +50,11 @@ code, Rust, as well as NVIDIA's CUDA using nvcc.
 
 tar -xf %SOURCE1
 
+# use system libzstd
+sed -ir 's/^zstd = \(.*\)/zstd = { version = \1, features = ["pkg-config"] }/' Cargo.toml
+
 mkdir -p .cargo
-cat >> .cargo/config <<EOF
+cat >> .cargo/config.toml <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
@@ -60,14 +63,11 @@ directory = "vendor"
 EOF
 
 %build
-features=dist-client,redis,memcached,azure
-%if_with gcs
-features="$features",gcs
+%rust_build \
+%if "%_pointer_size" == "32"
+    --no-default-features \
 %endif
-%if_with s3
-features="$features",s3
-%endif
-%rust_build --no-default-features --features="$features"
+    %nil
 
 %install
 %rust_install
@@ -77,6 +77,11 @@ features="$features",s3
 %doc README.md docs
 
 %changelog
+* Sun Oct 20 2024 Ivan A. Melnikov <iv@altlinux.org> 0.8.2-alt1
+- 0.8.2
+- build with default features on 64-bit platforms
+  and in minimal configuration on 32-bit platforms.
+
 * Tue Dec 13 2022 Ivan A. Melnikov <iv@altlinux.org> 0.3.3-alt1
 - 0.3.3
 - Restrict use of s3 feature to selected architectures,
