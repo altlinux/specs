@@ -1,20 +1,23 @@
 ## SPEC file for innotop
 
 Name: innotop
-Version: 1.13.0
+Version: 1.15.1
 Release: alt1
 
 Summary: a 'top' clone for MySQL with special attention paid to InnoDB
 
 License: %perl_license
 Group: Databases
-URL: http://code.google.com/p/innotop
+URL: https://github.com/innotop/innotop/
+#URL: http://code.google.com/p/innotop
 # http://sourceforge.net/projects/innotop/files/
 
 Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
+
+Patch1: %name-1.15.1-alt-fix_pod.patch
 
 BuildArch: noarch
 
@@ -38,6 +41,8 @@ servers at once with innotop.
 %prep
 %setup
 %patch0 -p1
+
+%patch1
 
 mv -f -- COPYING COPYING.GPL.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
@@ -64,6 +69,11 @@ install -m 644 %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.*
 
 %changelog
+* Sat Oct 19 2024 Nikolay A. Fetisov <naf@altlinux.org> 1.15.1-alt1
+- New version
+  - New display mode to monitor Group Replication Members
+  - Add --ssl_optional MySQL connection option
+
 * Sat May 15 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.13.0-alt1
 - New version
 
