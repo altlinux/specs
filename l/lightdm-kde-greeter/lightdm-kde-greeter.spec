@@ -3,7 +3,7 @@
 
 Name: lightdm-kde-greeter
 Version: 0.4.23
-Release: alt10
+Release: alt11
 Group: Graphical desktop/Other
 Summary: LightDM KDE6 Greeter
 License: GPL-3.0+
@@ -21,6 +21,7 @@ Patch7: make-non-existent-default-index-in-listbutton.patch
 Patch8: fix-networkmanager-widget-in-the-userbar-theme.patch
 Patch9: bring-back-the-password-preview-button.patch
 Patch10: provide-some-time-to-read-messages-from-pam.patch
+Patch11: show-caps-lock-or-num-lock-enabled.patch
 
 %K6init
 
@@ -63,6 +64,7 @@ This is a fork of KDE4-based LightDM greeter engine for KDE6.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 %build
 %K6build \
@@ -102,6 +104,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Mon Oct 21 2024 Anton Golubev <golubevan@altlinux.org> 0.4.23-alt11
+- show Caps Lock or Num Lock enabled
+
 * Fri Oct 18 2024 Anton Golubev <golubevan@altlinux.org> 0.4.23-alt10
 - provide some time to read messages from PAM (Closes: 51493)
 
