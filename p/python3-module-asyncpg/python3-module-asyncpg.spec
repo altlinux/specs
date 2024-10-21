@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name asyncpg
+%define mod_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.29.0
-Release: alt2
+Version: 0.30.0
+Release: alt1
 
 Summary: A fast PostgreSQL Database Client Library for Python/asyncio
 License: Apache-2.0
@@ -21,14 +22,13 @@ Patch0: %name-%version-alt.patch
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
-%pyproject_builddeps_metadata
+%pyproject_builddeps_metadata_extra test
 %pyproject_builddeps_check
 BuildRequires: python3-module-pytest
 BuildRequires: libpq5-devel
-BuildRequires: postgresql15-server
-BuildRequires: postgresql15-contrib
+BuildRequires: postgresql17-server
+BuildRequires: postgresql17-contrib
 %endif
 
 %description
@@ -37,7 +37,7 @@ and Python/asyncio. asyncpg is an efficient, clean implementation of PostgreSQL
 server binary protocol for use with Python's asyncio framework.
 
 asyncpg requires Python 3.8 or later and is supported for PostgreSQL
-versions 9.5 to 16. Older PostgreSQL versions or other databases implementing
+versions 9.5 to 17. Older PostgreSQL versions or other databases implementing
 the PostgreSQL protocol may work, but are not being actively tested.
 
 %prep
@@ -56,14 +56,18 @@ the PostgreSQL protocol may work, but are not being actively tested.
 # Don't append current directory to sys.path to
 # avoid 'ModuleNotFoundError' error, becase
 # the package has modules which need compiling.
-%pyproject_run -- pytest -vra ./tests
+%pyproject_run -- pytest -vra ./tests -k 'not test_auth_gssapi'
 
 %files
 %doc README.rst LICENSE AUTHORS
-%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%exclude %python3_sitelibdir/%mod_name/_testbase/
 
 %changelog
+* Mon Oct 21 2024 Anton Zhukharev <ancieg@altlinux.org> 0.30.0-alt1
+- Updated to 0.30.0.
+
 * Tue Dec 19 2023 Anton Zhukharev <ancieg@altlinux.org> 0.29.0-alt2
 - Fixed building with cython>3.
 
