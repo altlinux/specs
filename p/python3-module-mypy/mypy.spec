@@ -11,7 +11,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 1.12.0
+Version: 1.12.1
 Release: alt1
 Summary: Optional static typing for Python 3 and 2 (PEP 484)
 License: MIT
@@ -134,6 +134,9 @@ rm -r %buildroot%python3_sitelibdir/mypyc/
 %endif
 
 %changelog
+* Mon Oct 21 2024 Stanislav Levin <slev@altlinux.org> 1.12.1-alt1
+- 1.12.0 -> 1.12.1.
+
 * Tue Oct 15 2024 Stanislav Levin <slev@altlinux.org> 1.12.0-alt1
 - 1.11.2 -> 1.12.0.
 
