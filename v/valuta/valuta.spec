@@ -9,7 +9,7 @@
 
 Name: valuta
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Currency converter for GNOME
 License: GPL-3.0-or-later
@@ -34,8 +34,6 @@ BuildArch: noarch
 
 Requires: typelib(Adw) = 1
 Requires: typelib(Soup) = 3.0
-#Requires: gstreamer%gst_api_ver >= %gst_ver
-#Requires: gst-plugins-base%gst_api_ver
 Requires: dconf
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
@@ -44,7 +42,7 @@ BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver gir(Adw)
 BuildRequires: pkgconfig(gstreamer-1.0) >= %gst_ver
 BuildRequires: pkgconfig(libsoup-3.0)
 BuildRequires: pkgconfig(pygobject-3.0)
-%{?_enable_check:BuildRequires: /usr/bin/appstream-util desktop-file-utils}
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 Valuta is a simple and fast conversion tool, ideal for those who need to
@@ -74,10 +72,13 @@ currencies.
 %_datadir/dbus-1/services/%rdn_name.SearchProvider.service
 %_datadir/gnome-shell/search-providers/%rdn_name.SearchProvider.ini
 %_iconsdir/hicolor/*/*/*.svg
-%_datadir/appdata/%rdn_name.appdata.xml
+%_datadir/metainfo/%rdn_name.appdata.xml
 %doc README*
 
 %changelog
+* Mon Oct 21 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt2
+- updated to v1.3.2-38-gd4c86cd
+
 * Mon Aug 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt1
 - updated to v1.3.2-7-g61bf77b
 

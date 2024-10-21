@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: Simulate user input repeatedly
@@ -13,8 +13,10 @@ License: GPL-3.0-or-later
 Group: Text tools
 Url: https://codeberg.org/eyekay/clicker
 
-BuildArch: noarch
 Vcs: https://codeberg.org/eyekay/clicker.git
+
+BuildArch: noarch
+
 Source: %name-%version.tar
 
 %add_python3_path %_datadir/%_name
@@ -60,5 +62,8 @@ duration. This is useful in some video games or web applications.
 %doc README.*
 
 %changelog
+* Mon Oct 21 2024 Yuri N. Sedunov <aris@altlinux.org> 0.1.8-alt1
+- 0.1.8
+
 * Wed Jun 19 2024 Yuri N. Sedunov <aris@altlinux.org> 0.1.7-alt1
 - first build for Sisyphus
