@@ -1,5 +1,5 @@
 Name: nfs
-Version: 2.7.1
+Version: 2.8.1
 Release: alt1
 Epoch: 1
 
@@ -13,6 +13,7 @@ Source0: %name-%version-%release.tar
 BuildRequires: libblkid-devel libevent-devel libuuid-devel libxml2-devel
 BuildRequires: libdevmapper-devel libkrb5-devel libsqlite3-devel
 BuildRequires: libcap-devel libtirpc-devel libkeyutils-devel libmount-devel
+BuildRequires: libnl-devel libreadline-devel
 BuildRequires: rpcgen rpcsvc-proto-devel
 BuildRequires: rpm-build-python3
 
@@ -202,6 +203,7 @@ touch /var/lock/subsys/rpc.svcgssd
 %systemd_unitdir/nfsv4-server.service
 %systemd_unitdir/nfsv4-exportd.service
 
+%_sbindir/nfsdctl
 %_sbindir/nfsdcltrack
 %_sbindir/exportfs
 %_sbindir/fsidd
@@ -223,6 +225,7 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsdcltrack.*
 %_man8dir/mountd.*
 %_man8dir/rpc.mountd.*
+%_man8dir/nfsdctl.*
 %_man8dir/nfsd.*
 %_man8dir/rpc.nfsd.*
 %_man8dir/svcgssd.*
@@ -314,6 +317,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Mon Oct 21 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1:2.8.1-alt1
+- 2.8.1 released
+
 * Fri Aug 30 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1:2.7.1-alt1
 - 2.7.1 released
 
