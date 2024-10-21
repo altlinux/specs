@@ -2,7 +2,7 @@
 
 Name: dqt6-shadertools
 Version: 6.7.2
-Release: alt0.dde.1
+Release: alt0.dde.2
 # %%if "%%version" == "%%{get_version dqt6-tools-common}"
 %def_disable bootstrap
 # %%else
@@ -15,6 +15,9 @@ Url: http://qt.io/
 License: GPL-3.0-or-later
 
 Source: %qt_module-everywhere-src-%version.tar
+
+# find librares
+%add_findprov_lib_path %_dqt6_libdir
 
 BuildRequires(pre): rpm-macros-dqt6 rpm-build-ninja
 # BuildRequires(pre): dqt6-tools-common
@@ -77,7 +80,7 @@ Requires: libdqt6-core = %_dqt6_version
 %define qdoc_found 0
 %endif
 
-%DQ6build -DCMAKE_MAKE_PROGRAM="ninja"
+%DQ6build
 %if %qdoc_found
 %DQ6make --target docs
 %endif
@@ -115,6 +118,9 @@ Requires: libdqt6-core = %_dqt6_version
 #%_dqt6_examplesdir/*
 
 %changelog
+* Mon Oct 21 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt0.dde.2
+- fix library detection
+
 * Tue Oct 01 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt0.dde.1
 - fork qt6 for separate deepin packaging (ALT #48138)
 
