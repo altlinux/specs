@@ -1,12 +1,13 @@
 Name:     python3-module-ruamel-yaml.clib
-Version:  0.2.8
+Version:  0.2.12
 Release:  alt1
 
 Summary:  C version of reader, parser and emitter for ruamel.yaml derived from libyaml
 
 License:  MIT
 Group:    Development/Python3
-Url:      https://github.com/ruamel/yaml.clib
+URL:      https://pypi.org/project/ruamel.yaml.clib
+VCS:      https://github.com/ruamel/yaml.clib
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -33,11 +34,14 @@ a ruamel directory) and the Python code for ruamel.yaml under /usr/lib/pythonX.Y
 %pyproject_install
 
 %files
-%doc LICENSE README.rst
+%doc LICENSE README.md
 %python3_sitelibdir/_ruamel_yaml.*.so
 %python3_sitelibdir/ruamel.yaml.clib-%version.dist-info
 
 %changelog
+* Mon Oct 21 2024 Grigory Ustinov <grenka@altlinux.org> 0.2.12-alt1
+- Automatically updated to 0.2.12.
+
 * Tue Oct 10 2023 Grigory Ustinov <grenka@altlinux.org> 0.2.8-alt1
 - Automatically updated to 0.2.8.
 
