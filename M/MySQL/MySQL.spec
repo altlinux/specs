@@ -15,8 +15,8 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.0.39
-Release: alt1.1
+Version: 8.0.40
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -63,6 +63,7 @@ Patch5: mysql-8.0.12-alt-load_defaults.patch
 Patch6: mysql-5.1.50-alt-fPIC-innodb.patch
 Patch7: mysql-8.0.27-alt-mysql_config-libs.patch
 Patch9: mysql-8.0.33-alt-disable-run-libmysql_api_test.patch
+Patch10: mysql-8.0.39-alt-disable-faster-TLS-model.patch
 
 # Patches taken from boost 1.59
 Patch115: boost-1.58.0-pool.patch
@@ -71,8 +72,6 @@ Patch126: boost-1.77.0-boostfix_multiprecision_issue_419-ppc64le.patch
 
 # Patches for mysql-shell
 Patch201: mysql-shell-8.0.26-alt-link-secret-store-login-path-with-ssl.patch
-
-Patch202: mysql-8.0.39-alt-disable-faster-TLS-model.patch
 
 Patch2000: mysql-8.0.37-alt-e2k.patch
 
@@ -390,6 +389,7 @@ Python module for MySQL Shell
 %patch5 -p1
 %patch7 -p1
 %patch9 -p1
+%patch10 -p1
 
 # Patch Boost
 pushd boost/boost_1_77_0
@@ -399,7 +399,6 @@ pushd boost/boost_1_77_0
 popd
 
 %patch201 -p1
-%patch202 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -920,6 +919,16 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Fri Oct 18 2024 Nikolai Kostrigin <nickel@altlinux.org> 8.0.40-alt1
+- new version
+  + (fixes: CVE-2024-21193, CVE-2024-21194, CVE-2024-21196, CVE-2024-21197)
+  + (fixes: CVE-2024-21198, CVE-2024-21199, CVE-2024-21200, CVE-2024-21201)
+  + (fixes: CVE-2024-21203, CVE-2024-21207, CVE-2024-21212, CVE-2024-21213)
+  + (fixes: CVE-2024-21218, CVE-2024-21219, CVE-2024-21230, CVE-2024-21231)
+  + (fixes: CVE-2024-21236, CVE-2024-21237, CVE-2024-21238, CVE-2024-21239)
+  + (fixes: CVE-2024-21241, CVE-2024-21247)
+- update mysql-shell 8.0.38 -> 8.0.40
+
 * Tue Oct 15 2024 Andrey Cherepanov <cas@altlinux.org> 8.0.39-alt1.1
 - disable use Faster TLS model (ALT #45499).
 
