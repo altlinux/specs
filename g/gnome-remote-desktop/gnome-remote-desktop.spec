@@ -6,12 +6,10 @@
 
 %def_enable vnc
 %def_enable rdp
-# hardware acceleration using NVENC and CUDA for RDP backend
-%def_enable nvenc
 %def_enable man
 
 Name: gnome-remote-desktop
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: GNOME Remote Desktop
@@ -47,18 +45,18 @@ BuildRequires: meson libgio-devel >= %glib_ver libgudev-devel
 BuildRequires: pkgconfig(libpipewire-%pw_api_ver) >= %pw_ver
 BuildRequires: pkgconfig(opus)
 BuildRequires: libtpm2-tss-devel libfdk-aac-devel
-%{?_enable_vnc:BuildRequires: libvncserver-devel >= %vnc_ver}
-%{?_enable_rdp:BuildRequires: pkgconfig(freerdp3) >= %freerdp_ver}
-%{?_enable_nvenc:BuildRequires: pkgconfig(ffnvcodec) >= %nvenc_ver}
-%{?_enable_man:BuildRequires: /usr/bin/a2x xmllint}
 BuildRequires: libfuse3-devel >= %fuse_ver
 BuildRequires: libxkbcommon-devel >= %xkbc_ver
 BuildRequires: libsecret-devel libnotify-devel libcairo-devel
 BuildRequires: libepoxy-devel libdrm-devel libgbm-devel
+BuildRequires: pkgconfig(ffnvcodec) >= %nvenc_ver
 BuildRequires: libei-devel >= %ei_ver
 BuildRequires: libdbus-devel libpolkit-devel >= %polkit_ver
 BuildRequires: /bin/dbus-run-session /usr/bin/openssl
 BuildRequires: pipewire wireplumber mutter-gnome
+%{?_enable_vnc:BuildRequires: libvncserver-devel >= %vnc_ver}
+%{?_enable_rdp:BuildRequires: pkgconfig(freerdp3) >= %freerdp_ver}
+%{?_enable_man:BuildRequires: /usr/bin/a2x xmllint}
 
 %description
 Remote desktop daemon for GNOME using pipewire.
@@ -68,10 +66,9 @@ Remote desktop daemon for GNOME using pipewire.
 
 %build
 %meson \
-    %{?_disable_rdp:-Drdp=false} \
-    %{?_enable_vnc:-Dvnc=true} \
-    %{?_disable_nvenc:-Dnvenc=false} \
-    %{?_disable_man:-Dman=false} \
+    %{subst_enable_meson_bool rdp rdp} \
+    %{subst_enable_meson_bool vnc vnc} \
+    %{subst_enable_meson_bool man man} \
     -Dsystemd_user_unit_dir=%_userunitdir
 %nil
 %meson_build
@@ -97,9 +94,8 @@ Remote desktop daemon for GNOME using pipewire.
 %_datadir/glib-2.0/schemas/org.gnome.desktop.remote-desktop.enums.xml
 %{?_enable_man:%_man1dir/grdctl.1*}
 %dir %_datadir/%name
-%{?_enable_nvenc:
 %_datadir/%name/grd-cuda-damage-utils_30.ptx
-%_datadir/%name/grd-cuda-avc-utils_30.ptx}
+%_datadir/%name/grd-cuda-avc-utils_30.ptx
 %_datadir/%name/grd.conf
 %_datadir/dbus-1/system-services/%xdg_name.Configuration.service
 %_datadir/dbus-1/system.d/%xdg_name.conf
@@ -109,6 +105,9 @@ Remote desktop daemon for GNOME using pipewire.
 %doc README*
 
 %changelog
+* Mon Oct 21 2024 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt1
+- 47.1
+
 * Sat Sep 14 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - 47.0
 

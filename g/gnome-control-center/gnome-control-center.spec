@@ -16,7 +16,7 @@
 %def_enable check
 
 Name: gnome-control-center
-Version: %ver_major.0.1
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -36,7 +36,7 @@ Source1: https://raw.githubusercontent.com/eggert/tz/main/zone.tab
 %define adwaita_ver 1.6
 %define desktop_ver 43
 %define fontconfig_ver 1.0.0
-%define gsds_ver 46
+%define gsds_ver 47
 # nm_client_get_permissions_state()
 %define nm_ver 1.46
 %define goa_ver 3.49.1
@@ -210,6 +210,9 @@ sed -e '/Simferopol/d' %SOURCE1 > %buildroot%_datadir/%name/zone.tab
 
 
 %changelog
+* Mon Oct 21 2024 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt1
+- 47.1
+
 * Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0.1-alt1
 - 47.0.1
 

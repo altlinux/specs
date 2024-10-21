@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: Better dates & times for Python
 License: Apache-2.0
@@ -18,16 +18,18 @@ Source: https://pypi.io/packages/source/a/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
 
+%define dateutil_ver 2.7.0
+
+Requires: python3-module-python-dateutil >= %dateutil_ver
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-flit-core python3-module-wheel
-BuildRequires: python3-module-dateutil
-BuildRequires: python3-module-chai
-BuildRequires: python3-module-simplejson
-BuildRequires: python3-module-mock python3-module-dateparser >= 0.7.2
+BuildRequires: python3(wheel) python3(flit_core)
+BuildRequires: python3-module-python-dateutil >= %dateutil_ver
 %{?_enable_docs:
 BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-sphinx python3-module-sphinx-autodoc-typehints}
-%{?_enable_check:BuildRequires: python3-module-tox}
+BuildRequires: python3(sphinx) python3(sphinx_autodoc_typehints}
+%{?_enable_check:BuildRequires: python3(tox) python3(dateparser) >= 1.0
+BuildRequires: python3(pytest_mock) python3(pytest_cov) python3(simplejson)}
 
 %description
 Arrow is a Python library that offers a sensible, human-friendly
@@ -64,6 +66,9 @@ cp -fR docs/_build/html/* man/
 %{?_enable_docs: man/}
 
 %changelog
+* Mon Oct 21 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1.1
+- removed python3-module-chai from BR (ALT #51769)
+
 * Mon Oct 02 2023 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - 1.3.0
 
