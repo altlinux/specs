@@ -2,7 +2,7 @@
 
 Name:	 python3-module-axolotl-curve25519
 Version: 0.4.1.post2
-Release: alt1
+Release: alt2
 
 Summary: python wrapper for curve25519 library with ed25519 signatures
 
@@ -29,13 +29,16 @@ code was pulled from libaxolotl-android.
 %python3_install
 
 %check
-python3 setup.py test
+# no tests suite
 
 %files
 %python3_sitelibdir/%modulename.cpython-*.so
 %python3_sitelibdir/python_%modulename-%version-py*.egg-info/
 
 %changelog
+* Mon Oct 21 2024 Stanislav Levin <slev@altlinux.org> 0.4.1.post2-alt2
+- Disabled check (see #50996).
+
 * Sun Oct 18 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.4.1.post2-alt1
 - Initial build for ALT Sisyphus.
 
