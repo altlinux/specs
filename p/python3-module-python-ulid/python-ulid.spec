@@ -5,7 +5,7 @@
 %define pypi_name python-ulid
 
 Name: python3-module-%pypi_name
-Version: 2.7.0
+Version: 3.0.0
 Release: alt1
 
 Summary: ULID implementation for Python
@@ -24,6 +24,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
+BuildRequires: python3-module-pytest
 %pyproject_builddeps_metadata -- --extra pydantic
 %pyproject_builddeps_check
 %endif
@@ -47,7 +48,7 @@ It is:
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_hatch hatch.toml default
+%pyproject_deps_resync_check_hatch hatch.toml hatch-test
 %endif
 
 %build
@@ -66,6 +67,9 @@ It is:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Oct 21 2024 Alexandr Shashkin <dutyrok@altlinux.org> 3.0.0-alt1
+- Updated to 3.0.0.
+
 * Fri Jun 28 2024 Alexandr Shashkin <dutyrok@altlinux.org> 2.7.0-alt1
 - 2.6.0 -> 2.7.0.
 
