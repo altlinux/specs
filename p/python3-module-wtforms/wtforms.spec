@@ -1,11 +1,10 @@
 %define oname wtforms
 
 %def_with check
-%def_without docs
 
 Name: python3-module-%oname
-Version: 3.1.2
-Release: alt2
+Version: 3.2.0
+Release: alt1
 
 Summary: Form validation and rendering for Python web development
 
@@ -23,13 +22,6 @@ BuildRequires: python3-module-hatchling
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-babel
 
-%if_with docs
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-pallets-sphinx-themes
-BuildRequires: python3-module-sphinx-issues
-BuildRequires: python3-module-sphinxcontrib-log-cabinet
-%endif
-
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-markupsafe
@@ -40,44 +32,14 @@ BuildRequires: python3-module-email-validator
 WTForms is a flexible forms validation and rendering library for python
 web development.
 
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-WTForms is a flexible forms validation and rendering library for python
-web development.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-
-%description docs
-WTForms is a flexible forms validation and rendering library for python
-web development.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
-
-%if_with doc
-sed -i 's|sphinx-build|&-3|' docs/Makefile
-%endif
 
 %build
 %pyproject_build
 
 %install
 %pyproject_install
-
-%if_with docs
-export PYTHONPATH=%buildroot%python3_sitelibdir
-%make -C docs pickle html
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
-%endif
 
 %check
 %pyproject_run_pytest
@@ -86,17 +48,11 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc README.rst
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version.dist-info
-%if_with docs
-%exclude %python3_sitelibdir/*/pickle
-
-%files pickles
-%python3_sitelibdir/*/pickle
-
-%files docs
-%doc docs/_build/html/*
-%endif
 
 %changelog
+* Mon Oct 21 2024 Anton Vyatkin <toni@altlinux.org> 3.2.0-alt1
+- New version 3.2.0.
+
 * Sun Sep 01 2024 Anton Vyatkin <toni@altlinux.org> 3.1.2-alt2
 - Fixed FTBFS.
 - Build without docs.
