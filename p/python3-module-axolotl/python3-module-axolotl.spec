@@ -2,7 +2,7 @@
 
 Name:	 python3-module-axolotl
 Version: 0.2.3
-Release: alt1
+Release: alt2
 
 Summary: python port of libsignal-protocol-java
 
@@ -14,11 +14,6 @@ Source:	 python-%modulename-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev
-# check
-BuildRequires: python3-module-axolotl-curve25519
-BuildRequires: python3-module-cryptography
-BuildRequires: python3-module-google.google
-BuildRequires: python3-module-protobuf
 
 BuildArch: noarch
 
@@ -36,7 +31,7 @@ Marlinspike.
 %python3_install
 
 %check
-python3 setup.py test
+# upstream uses unmaintained nose
 
 %files
 %python3_sitelibdir/%modulename
@@ -44,6 +39,9 @@ python3 setup.py test
 %exclude %python3_sitelibdir/%modulename/tests
 
 %changelog
+* Mon Oct 21 2024 Stanislav Levin <slev@altlinux.org> 0.2.3-alt2
+- Disabled check (see #50996).
+
 * Sun Oct 18 2020 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.2.3-alt1
 - Initial build for ALT Sisyphus.
 
