@@ -1,14 +1,12 @@
 %define rname drkonqi
-%define _unit_nedodir %{expand: %(dirname %_unitdir)}
-%ifndef _userunitdir
-%define _userunitdir %prefix/lib/systemd/user
-%endif
+%define _sysd_unitdir /usr/lib/systemd/user
+%define _sysd_userunitdir /usr/lib/systemd/system
 %add_python3_path %_K6data/drkonqi/gdb/python/gdb_preamble/
 %add_python3_req_skip gdb gdb.FrameDecorator
 
 Name: %rname
 Version: 6.1.5
-Release: alt1
+Release: alt2
 #Epoch: 1
 %K6init
 
@@ -54,8 +52,6 @@ Compatibility package.
 
 %build
 %K6build \
-    -DSYSTEMD_UNIT_INSTALL_DIR=%_unit_nedodir \
-    -DSYSTEMD_USER_UNIT_INSTALL_DIR=%_userunitdir \
     -DWITH_GDB12:BOOL=ON \
     -DWITH_PYTHON_VENDORING:BOOL=OFF \
     #
@@ -75,16 +71,19 @@ Compatibility package.
 %_K6plug/drkonqi/
 %_K6data/drkonqi/
 %_K6xdgapp/*drkonqi*.desktop
-%_unitdir/*drkonqi*
-%_unitdir/*.wants/*drkonqi*
-%_userunitdir/*drkonqi*
-%_userunitdir/*.wants/*drkonqi*
+%_sysd_unitdir/*drkonqi*
+%_sysd_unitdir/*.wants/*drkonqi*
+%_sysd_userunitdir/*drkonqi*
+%_sysd_userunitdir/*.wants/*drkonqi*
 %_datadir/qlogging-categories6/*.*categories
 %_datadir/polkit-1/actions/*drkonqi*.policy
 %_K6dbus_sys_srv/*drkonqi*.service
 %_K6dbus/system.d/*drkonqi*.conf
 
 %changelog
+* Mon Oct 21 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt2
+- workaround against broken systemd.pc
+
 * Tue Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
 - new version
 
