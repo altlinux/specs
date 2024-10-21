@@ -4,8 +4,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-application-manager
-Version: 1.2.4.0.1.g6096
-Release: alt3
+Version: 1.2.14
+Release: alt1
 
 Summary: App manager for Deepin
 
@@ -65,10 +65,13 @@ rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 %_libexecdir/deepin/application-manager/app-launch-helper
 %_libexecdir/deepin/application-manager/app-update-notifier
 %_libexecdir/deepin/application-manager/dockEnv.sh
+%_libexecdir/deepin/application-manager/debFix.sh
 %_unitdir/org.desktopspec.ApplicationUpdateNotifier1.service
 %_userunitdir/org.desktopspec.ApplicationManager1.service
 %dir %_userunitdir/dde-session-initialized.target.wants/
 %_userunitdir/dde-session-initialized.target.wants/org.desktopspec.ApplicationManager1.service
+%dir %_userunitdir/app-DDE-.service.d/
+%_userunitdir/app-DDE-.service.d/override.conf
 %_datadir/dbus-1/system-services/org.desktopspec.ApplicationUpdateNotifier1.service
 %_datadir/dbus-1/system.d/org.desktopspec.ApplicationUpdateNotifier1.conf
 %_datadir/dbus-1/services/org.desktopspec.ApplicationManager1.service
@@ -78,6 +81,7 @@ rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 %dir %_datadir/deepin/%repo/
 %dir %_datadir/deepin/%repo/hooks.d/
 %_datadir/deepin/%repo/hooks.d/1-dockEnv.json
+%_datadir/deepin/%repo/hooks.d/2-debFix.json
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/%repo/
@@ -86,6 +90,9 @@ rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 %_datadir/dsg/configs/org.deepin.dde.application-manager/org.deepin.dde.am.json
 
 %changelog
+* Mon Oct 21 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.14-alt1
+- New version 1.2.14.
+
 * Wed Oct 02 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.4.0.1.g6096-alt3
 - Built with separate qt6 (ALT #48138).
 

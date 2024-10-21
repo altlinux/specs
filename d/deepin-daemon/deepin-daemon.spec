@@ -3,8 +3,8 @@
 %define repo dde-daemon
 
 Name: deepin-daemon
-Version: 6.0.36
-Release: alt2
+Version: 6.0.45
+Release: alt1
 Epoch: 2
 
 Summary: Daemon handling the DDE session settings
@@ -18,7 +18,6 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%repo-%version.tar.gz
 Source1: vendor.tar
 Source3: deepin-auth
-Patch: deepin-daemon-6.0.23-archlinux-ddcutil-2.patch
 
 ExcludeArch: ppc64le
 
@@ -47,7 +46,6 @@ Daemon handling the DDE session settings
 %prep
 %setup -n %repo-%version
 patch -p1 < archlinux/dde-daemon.patch
-%patch -p1
 
 # Unpacked vendor/ into the source (used .gear/tags).
 tar -xf %SOURCE1
@@ -175,6 +173,9 @@ mv -f %buildroot/lib/systemd/user/org.dde.session.Daemon1.service \
 %_datadir/dsg/configs/org.deepin.dde.daemon/*.json
 
 %changelog
+* Fri Sep 06 2024 Leontiy Volodin <lvol@altlinux.org> 2:6.0.45-alt1
+- New version 6.0.45.
+
 * Tue Jul 02 2024 Leontiy Volodin <lvol@altlinux.org> 2:6.0.36-alt2
 - Fixed build with systemd 255 and applied usrmerge.
 - Packaged post-install unowned files.

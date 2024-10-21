@@ -1,6 +1,6 @@
 Name: deepin-wallpapers
 Version: 1.7.16.0.1.354b
-Release: alt1
+Release: alt2
 
 Summary: Deepin Wallpapers provides wallpapers of DDE
 
@@ -20,10 +20,6 @@ BuildRequires: deepin-api
 %setup -n %name-%version
 
 %build
-for _pic in deepin/*; do
-  make PICS=$_pic
-done
-
 %make_build
 
 %install
@@ -35,28 +31,20 @@ cp -r image-blur %buildroot%_cachedir/
 
 # Suggested by upstream
 install -dm755 %buildroot%_datadir/backgrounds/deepin
-#ln -s ../../wallpapers/deepin/desktop.jpg %buildroot%_datadir/backgrounds/deepin/desktop.jpg
-ln -s ../wallpapers/deepin/desktop.jpg %buildroot%_datadir/backgrounds/default_background.jpg
+ln -s ../wallpapers/deepin/desktop.jpg %buildroot%_datadir/backgrounds/deepin-default.jpg
 
-#ln -s $(echo -n %_datadir/wallpapers/deepin/desktop.jpg | md5sum | cut -d " " -f 1).jpg \
-#      %buildroot%_cachedir/image-blur/$(echo -n %_datadir/backgrounds/deepin/desktop.jpg | md5sum | cut -d " " -f 1).jpg
 ln -s $(echo -n %_datadir/wallpapers/deepin/desktop.jpg | md5sum | cut -d " " -f 1).jpg \
-      %buildroot%_cachedir/image-blur/$(echo -n %_datadir/backgrounds/default_background.jpg | md5sum | cut -d " " -f 1).jpg
-
-#install -dm755 %buildroot%_datadir/wallpapers/deepin
-#cp deepin-community/* %buildroot%_datadir/wallpapers/deepin/
+      %buildroot%_cachedir/image-blur/$(echo -n %_datadir/backgrounds/deepin-default.jpg | md5sum | cut -d " " -f 1).jpg
 
 install -dm755 %buildroot%_cachedir
 cp -r image-blur %buildroot%_cachedir/
-
-#touch %buildroot%_datadir/backgrounds/default_background.jpg
 
 %post
 if [ $1 -ge 1 ]; then
     mv /usr/share/wallpapers/deepin/desktop.jpg /usr/share/wallpapers/deepin/abc-124.jpg
     mv /usr/share/wallpapers/deepin/Deepin-Technology-Brand-Logo.jpg /usr/share/wallpapers/deepin/desktop.jpg
     mkdir -p /usr/share/backgrounds/
-    %_sbindir/update-alternatives --install /usr/share/backgrounds/default_background.jpg \
+    %_sbindir/update-alternatives --install /usr/share/backgrounds/deepin-default.jpg \
     deepin-default-background /usr/share/wallpapers/deepin/desktop.jpg 50
 fi
 
@@ -68,14 +56,15 @@ fi
 %files
 %doc README.md
 %doc LICENSE
-%dir %_datadir/backgrounds/deepin/
-#%%_datadir/backgrounds/deepin/desktop.jpg
-%_datadir/backgrounds/default_background.jpg
+%_datadir/backgrounds/deepin-default.jpg
 %dir %_datadir/wallpapers/deepin/
 %_datadir/wallpapers/deepin/*
 %_cachedir/image-blur/*.jpg
 
 %changelog
+* Fri Sep 06 2024 Leontiy Volodin <lvol@altlinux.org> 1.7.16.0.1.354b-alt2
+- Adapted for deepin-daemon 6.0.45.
+
 * Wed Mar 27 2024 Leontiy Volodin <lvol@altlinux.org> 1.7.16.0.1.354b-alt1
 - New version 1.7.16-1-g354bd34.
 - Updated url tag.
