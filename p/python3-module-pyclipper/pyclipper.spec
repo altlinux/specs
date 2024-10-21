@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.3.0.post5
+Version: 1.3.0.post6
 Release: alt1
 
 Summary: Cython wrapper for the C++ translation of the Angus Johnson's Clipper library
@@ -50,6 +50,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
 
 %changelog
+* Mon Oct 21 2024 Anton Vyatkin <toni@altlinux.org> 1.3.0.post6-alt1
+- New version 1.3.0.post6.
+
 * Fri Dec 15 2023 Anton Vyatkin <toni@altlinux.org> 1.3.0.post5-alt1
 - New version 1.3.0.post5.
 
