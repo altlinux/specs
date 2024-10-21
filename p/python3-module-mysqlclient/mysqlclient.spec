@@ -5,15 +5,16 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 2.2.4
+Version: 2.2.5
 Release: alt1
 
 Summary: Python interface to MySQL
-Group: Development/Python3
 
 License: GPL-2.0
-Url: https://pypi.python.org/pypi/mysqlclient/
-# https://github.com/PyMySQL/mysqlclient-python.git
+Group: Development/Python3
+URL:    https://pypi.org/project/mysqlclient
+VCS:    https://github.com/PyMySQL/mysqlclient
+
 Source: %name-%version.tar
 
 Conflicts: python3-module-MySQLdb
@@ -98,6 +99,9 @@ py.test-3
 %endif
 
 %changelog
+* Mon Oct 21 2024 Grigory Ustinov <grenka@altlinux.org> 2.2.5-alt1
+- Automatically updated to 2.2.5.
+
 * Mon Feb 26 2024 Grigory Ustinov <grenka@altlinux.org> 2.2.4-alt1
 - Automatically updated to 2.2.4.
 
