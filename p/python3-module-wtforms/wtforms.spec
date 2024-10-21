@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 
 Summary: Form validation and rendering for Python web development
@@ -11,7 +11,7 @@ Summary: Form validation and rendering for Python web development
 License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/WTForms
-Vcs: https://github.com/wtforms/wtforms.git
+Vcs: https://github.com/wtforms/wtforms
 
 BuildArch: noarch
 
@@ -50,6 +50,9 @@ web development.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Oct 21 2024 Grigory Ustinov <grenka@altlinux.org> 3.2.1-alt1
+- Automatically updated to 3.2.1.
+
 * Mon Oct 21 2024 Anton Vyatkin <toni@altlinux.org> 3.2.0-alt1
 - New version 3.2.0.
 
