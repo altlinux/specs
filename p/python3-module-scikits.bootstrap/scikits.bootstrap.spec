@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.0
-Release: alt5
+Release: alt6
 
 Summary: Bootstrap confidence interval estimation routines for Numpy/Scipy/Pandas
 License: BSD-3-Clause
@@ -16,13 +16,14 @@ VCS: https://github.com/cgevans/scikits-bootstrap.git
 Source: %name-%version.tar
 # backported from d9ebd7e727595cabbc8e949584396a42b14a90d5
 Patch0: scikits.bootstrap-1.1.0-fix-pytest-8-compatibility.patch
+# backported from b00f5ec14e946c78269d66e67aecbfd979bd7f27
+Patch1: scikits.bootstrap-1.1.0-remove-pyerf-dependency.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-numpy-testing
-BuildRequires: python3-module-erf
 BuildRequires: python3-module-pytest
 %endif
 
@@ -65,6 +66,9 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Oct 21 2024 Stanislav Levin <slev@altlinux.org> 1.1.0-alt6
+- Removed dependency on pyerf.
+
 * Thu May 30 2024 Stanislav Levin <slev@altlinux.org> 1.1.0-alt5
 - Fixed FTBFS (Pytest 8.2.0).
 
