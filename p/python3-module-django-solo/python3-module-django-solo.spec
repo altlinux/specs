@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 
 Summary: Django Solo helps working with singletons
@@ -47,5 +47,8 @@ to edit from the admin site.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Oct 21 2024 Anton Vyatkin <toni@altlinux.org> 2.4.0-alt1
+- New version 2.4.0.
+
 * Wed Jul 24 2024 Anton Vyatkin <toni@altlinux.org> 2.3.0-alt1
 - Initial build for Sisyphus.
