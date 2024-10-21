@@ -6,7 +6,7 @@
 
 Name: vtk
 Version: %ver.0
-Release: alt1.1
+Release: alt1.2
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-3-Clause
 Group: Development/Tools
@@ -29,6 +29,7 @@ Patch2: %name-9.1.0-alt-modules-autoinit.patch
 Patch3: %name-9.1.0-alt-dont-fetch-remote-modules.patch
 Patch4: %name-9.1.0-alt-compile-flags.patch
 Patch5: %name-9.3.0-alt-armh-compat.patch
+Patch6: %name-9.3.0-alt-fmt-11.patch
 
 Requires: lib%name%ver = %EVR
 
@@ -250,6 +251,7 @@ This package contains VTK QML plugin.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 %ifarch %e2k
 sed -i 's/decltype(resRange)::/typename &/' Common/Math/vtkFFT.txx
 %endif
@@ -379,6 +381,9 @@ export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/%_lib
 %endif
 
 %changelog
+* Sun Oct 20 2024 Nazarov Denis <nenderus@altlinux.org> 9.3.0-alt1.2
+- Fix build with fmt 11
+
 * Mon Feb 26 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 9.3.0-alt1.1
 - Fixed build for Elbrus.
 
