@@ -1,5 +1,5 @@
 Name: rack-plugin-mindmeld
-Version: 2.2.3
+Version: 2.5.0
 Release: alt1
 
 Summary: Mind Meld modules for VCV Rack
@@ -31,6 +31,9 @@ make install RACK_DIR=%_datadir/rack/sdk \
 %_libdir/rack/*
 
 %changelog
+* Mon Oct 21 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.5.0-alt1
+- 2.5.0 released
+
 * Fri Mar 15 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.2.3-alt1
 - 2.2.3 released
 
