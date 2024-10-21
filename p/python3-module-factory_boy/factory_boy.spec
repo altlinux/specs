@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.3.0
+Version: 3.3.1
 Release: alt1
 
 Summary: A test fixtures replacement for Python
@@ -60,6 +60,9 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/python3|' \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 21 2024 Stanislav Levin <slev@altlinux.org> 3.3.1-alt1
+- 3.3.0 -> 3.3.1.
+
 * Fri Mar 01 2024 Stanislav Levin <slev@altlinux.org> 3.3.0-alt1
 - 3.2.1 -> 3.3.0.
 
