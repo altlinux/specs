@@ -1,43 +1,53 @@
-%define oname file-read-backwards
+%define _unpackaged_files_terminate_build 1
+%define pypi_name file-read-backwards
+%define mod_name file_read_backwards
 
-Name: python3-module-%oname
-Version: 2.0.0
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 3.1.0
 Release: alt1
-
 Summary: Memory efficient way of reading files line-by-line from the end of file
-
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/file-read-backwards
-
-# Source-url: https://pypi.io/packages/source/f/file_read_backwards/file_read_backwards-%version.tar.gz
-Source: %name-%version.tar
-
+Url: https://pypi.org/project/file-read-backwards/
+Vcs: https://github.com/RobinNil/file_read_backwards
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
 BuildRequires: python3-module-mock
+%endif
 
 %description
 Memory efficient way of reading files line-by-line from the end of file.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-python3 setup.py test
+%pyproject_run_unittest discover -v tests
 
 %files
-%doc *.rst
-%python3_sitelibdir/*
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 21 2024 Stanislav Levin <slev@altlinux.org> 3.1.0-alt1
+- 2.0.0 -> 3.1.0.
+
 * Mon Jun 03 2019 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
 - initial build for ALT Sisyphus
