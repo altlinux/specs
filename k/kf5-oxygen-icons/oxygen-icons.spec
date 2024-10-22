@@ -1,25 +1,22 @@
 %define rname oxygen-icons
 
 Name: kf5-oxygen-icons
-Version: 5.116.0
+Version: 6.1.0
 Release: alt1
-%K5init no_altplace
+%K6init no_altplace
 
 Group: Graphical desktop/KDE
 Summary: Oxygen icons theme
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: LGPL-2.1-or-later
 
 BuildArch: noarch
 
 Source: %rname-%version.tar
 Patch1: alt-icons-defaults.patch
 
-# Automatically added by buildreq on Fri Dec 11 2015 (-bi)
-# optimized out: cmake cmake-modules gtk-update-icon-cache libqt5-core libstdc++-devel perl-Encode perl-XML-LibXML perl-XML-SAX perl-XML-SAX-Base perl-XML-Simple perl-parent python-base python3 python3-base
-#BuildRequires: extra-cmake-modules gcc-c++ icon-naming-utils qt5-base-devel rpm-build-python3 ruby ruby-stdlibs
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
+BuildRequires(pre): rpm-build-kf6
+BuildRequires: extra-cmake-modules gcc-c++ qt6-base-devel
 BuildRequires: icon-naming-utils
 
 %description
@@ -28,10 +25,6 @@ BuildRequires: icon-naming-utils
 %package -n icon-theme-oxygen
 Summary: Oxygen icons theme
 Group: Graphics
-Provides: kde4-icon-theme-oxygen = %version-%release
-Provides: kde4-icon-theme = %version-%release
-Conflicts: kde4base-workspace-core <= 4.11.22-alt4
-Conflicts: kde4pim-core <= 4.14.10-alt4
 %description -n icon-theme-oxygen
 %summary
 
@@ -41,10 +34,10 @@ Conflicts: kde4pim-core <= 4.14.10-alt4
 %patch1 -p1
 
 %build
-%K5build
+%K6build
 
 %install
-%K5install
+%K6install
 
 # 6971
 for t in %buildroot/%_iconsdir/* ; do
@@ -97,6 +90,12 @@ done
 %_iconsdir/oxygen*/
 
 %changelog
+* Tue Oct 22 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.0-alt1
+- new version
+
+* Fri Jul 12 2024 Sergey V Turchin <zerg@altlinux.org> 6.0.0-alt1
+- new version
+
 * Thu May 23 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt1
 - new version
 
@@ -298,70 +297,70 @@ done
 * Wed Oct 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.51.0-alt1
 - new version
 
-* Mon Sep 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.50.0-alt1%ubt
+* Mon Sep 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.50.0-alt1
 - new version
 
-* Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 5.49.0-alt1%ubt
+* Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 5.49.0-alt1
 - new version
 
-* Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt1%ubt
+* Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt1
 - new version
 
-* Fri Jun 15 2018 Sergey V Turchin <zerg@altlinux.org> 5.47.0-alt1%ubt
+* Fri Jun 15 2018 Sergey V Turchin <zerg@altlinux.org> 5.47.0-alt1
 - new version
 
-* Mon May 14 2018 Sergey V Turchin <zerg@altlinux.org> 5.46.0-alt1%ubt
+* Mon May 14 2018 Sergey V Turchin <zerg@altlinux.org> 5.46.0-alt1
 - new version
 
-* Fri May 04 2018 Sergey V Turchin <zerg@altlinux.org> 5.45.0-alt1%ubt
+* Fri May 04 2018 Sergey V Turchin <zerg@altlinux.org> 5.45.0-alt1
 - new version
 
-* Tue Mar 20 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt1%ubt
+* Tue Mar 20 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt1
 - new version
 
-* Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 5.42.0-alt1%ubt
+* Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 5.42.0-alt1
 - new version
 
-* Tue Dec 12 2017 Sergey V Turchin <zerg@altlinux.org> 5.41.0-alt1%ubt
+* Tue Dec 12 2017 Sergey V Turchin <zerg@altlinux.org> 5.41.0-alt1
 - new version
 
-* Tue Nov 21 2017 Sergey V Turchin <zerg@altlinux.org> 5.40.0-alt1%ubt
+* Tue Nov 21 2017 Sergey V Turchin <zerg@altlinux.org> 5.40.0-alt1
 - new version
 
-* Tue Oct 24 2017 Sergey V Turchin <zerg@altlinux.org> 5.39.0-alt1%ubt
+* Tue Oct 24 2017 Sergey V Turchin <zerg@altlinux.org> 5.39.0-alt1
 - new version
 
-* Wed Oct 04 2017 Sergey V Turchin <zerg@altlinux.org> 5.38.0-alt2%ubt
+* Wed Oct 04 2017 Sergey V Turchin <zerg@altlinux.org> 5.38.0-alt2
 - remove package.png
 
-* Tue Sep 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.38.0-alt1%ubt
+* Tue Sep 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.38.0-alt1
 - new version
 
-* Wed Aug 16 2017 Sergey V Turchin <zerg@altlinux.org> 5.37.0-alt1%ubt
+* Wed Aug 16 2017 Sergey V Turchin <zerg@altlinux.org> 5.37.0-alt1
 - new version
 
-* Mon Jul 10 2017 Sergey V Turchin <zerg@altlinux.org> 5.36.0-alt1%ubt
+* Mon Jul 10 2017 Sergey V Turchin <zerg@altlinux.org> 5.36.0-alt1
 - new version
 
-* Thu Jun 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.35.0-alt1%ubt
+* Thu Jun 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.35.0-alt1
 - new version
 
-* Fri May 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.34.0-alt1%ubt
+* Fri May 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.34.0-alt1
 - new version
 
-* Mon Apr 17 2017 Sergey V Turchin <zerg@altlinux.org> 5.33.0-alt1%ubt
+* Mon Apr 17 2017 Sergey V Turchin <zerg@altlinux.org> 5.33.0-alt1
 - new version
 
-* Wed Mar 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.32.0-alt1%ubt
+* Wed Mar 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.32.0-alt1
 - new version
 
-* Mon Feb 13 2017 Sergey V Turchin <zerg@altlinux.org> 5.31.0-alt1%ubt
+* Mon Feb 13 2017 Sergey V Turchin <zerg@altlinux.org> 5.31.0-alt1
 - new version
 
-* Wed Feb 08 2017 Sergey V Turchin <zerg@altlinux.org> 5.30.0-alt1%ubt
+* Wed Feb 08 2017 Sergey V Turchin <zerg@altlinux.org> 5.30.0-alt1
 - new version
 
-* Tue Dec 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.29.0-alt1%ubt
+* Tue Dec 13 2016 Sergey V Turchin <zerg@altlinux.org> 5.29.0-alt1
 - new version
 
 * Fri Nov 18 2016 Sergey V Turchin <zerg@altlinux.org> 5.28.0-alt0.M80P.1
