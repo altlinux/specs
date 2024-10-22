@@ -2,12 +2,12 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: forgejo
-Version: 8.0.3
+Version: 9.0.0
 Release: alt1
 
 Summary: Self-hosted lightweight software forge
 
-License: MIT
+License: GPL-3.0-or-later
 Group: Development/Other
 Url: https://forgejo.org
 Vcs: https://codeberg.org/forgejo/forgejo.git
@@ -19,7 +19,7 @@ Source3: %name.service.d.conf
 Patch3: disable-strip.patch
 
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: golang >= 1.22 rpm-build-golang
+BuildRequires: golang >= 1.23 rpm-build-golang
 BuildRequires: libpam-devel
 BuildRequires: /proc
 
@@ -111,6 +111,9 @@ useradd -r -g %name -c 'Forgejo daemon' \
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Oct 22 2024 Alexey Shabalin <shaba@altlinux.org> 9.0.0-alt1
+- 9.0.0.
+
 * Wed Sep 25 2024 Alexey Shabalin <shaba@altlinux.org> 8.0.3-alt1
 - 8.0.3.
 
