@@ -3,13 +3,15 @@
 
 %ifver_gteq %ubt_id M110
 %define qtver 6
+%define kfver 6
 %else
 %define qtver 5
+%define kfver 5
 %endif
 
 Name: krb5-ticket-watcher
 Version: 1.0.3
-Release: alt28
+Release: alt29
 
 Group: System/X11
 Summary: A Tray Applet for Watching, Renewing, and Reinitializing Kerberos Tickets
@@ -28,17 +30,18 @@ Patch6: alt-tray-icon.patch
 Patch7: alt-wait-for-tray.patch
 Patch8: alt-force-kinit.patch
 Patch9: alt-password-dialog-ontop.patch
-Patch10: krb5-ticket-watcher-add-pw-exp-notif.patch
+#
 Patch11: fix-deprecated-krb5-api-meth.patch
 Patch12: alt-crash-1.patch
 Patch13: alt-ignore-localhost-ip-as-def-realm.patch
 Patch14: alt-no-message-on-automatic-reniew.patch
+Patch15: alt-rework-password-change.patch
 
 BuildRequires(pre): rpm-build-xdg rpm-build-ubt rpm-macros-ifver
 BuildRequires: rpm-build-kf%qtver
 BuildRequires: desktop-file-utils
 BuildRequires: libkrb5-devel libkeyutils-devel
-BuildRequires: cmake libcom_err-devel qt%qtver-base-devel qt%qtver-tools
+BuildRequires: cmake libcom_err-devel qt%qtver-base-devel qt%qtver-tools kf%kfver-kwidgetsaddons-devel
 
 %description
 A tray applet for watching, renewing, and reinitializing Kerberos
@@ -55,11 +58,12 @@ tickets.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%patch10 -p1
+#
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
+%patch15 -p1
 cat %SOURCE10 > po/ru.po
 
 %build
@@ -96,6 +100,9 @@ desktop-file-install --dir %buildroot/%_xdgconfigdir/autostart \
 %doc COPYING Changes News TODO
 
 %changelog
+* Wed Oct 18 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 1.0.3-alt29
+- rework change password option
+
 * Wed Oct 16 2024 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt28
 - build with Qt6 on p11
 
