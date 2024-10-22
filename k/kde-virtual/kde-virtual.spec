@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-virtual
-Version: 6.0.2
+Version: 6.0.3
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -200,9 +200,9 @@ Obsoletes: kde5-email-client-2-kmail < %EVR
 Provides: kde-email-client = %EVR
 Provides: kde-email-client-kmail = %EVR
 Requires: kde-common
-Requires: kde5-kmail kde5-pim-addons-kmail kde5-pim-addons-plugins bogofilter bogofilter-utils
-Requires: kde5-akonadi-import-wizard kde5-kmail-account-wizard kde5-mbox-importer kde5-pim-sieve-editor
-Requires: kde5-grantlee-editor
+Requires: kmail kdepim-addons-kmail kdepim-addons-plugins bogofilter bogofilter-utils
+Requires: akonadi-import-wizard kmail-account-wizard mbox-importer pim-sieve-editor
+Requires: grantlee-editor
 %description -n kde-email-client-2-kmail
 %summary
 
@@ -377,6 +377,9 @@ Requires: lightdm-kde-greeter dm-tool
 %files -n kde-display-manager-7-lightdm
 
 %changelog
+* Wed Oct 02 2024 Sergey V Turchin <zerg@altlinux.org> 6.0.3-alt1
+- update for PIM
+
 * Thu Aug 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.0.2-alt1
 - fix provides
 

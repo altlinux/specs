@@ -4,7 +4,7 @@
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt2
+Release: alt101
 %K5init
 
 Group: Databases
@@ -30,7 +30,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: boost-devel extra-cmake-modules qt5-declarative-devel qt5-tools-devel
 BuildRequires: xsltproc xml-utils shared-mime-info
 BuildRequires: libsqlite3-devel libxslt-devel liblzma-devel
-BuildRequires: signon-devel libaccounts-glib-devel accounts-qt5-devel kde5-kaccounts-integration-devel
+#BuildRequires: signon-devel libaccounts-glib-devel accounts-qt5-devel kde5-kaccounts-integration-devel
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdesignerplugin-devel kf5-kguiaddons-devel kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel
@@ -291,6 +291,9 @@ rm -f %buildroot/%_sysconfdir/apparmor.d/*akonadi*
 %endif
 
 %changelog
+* Fri Oct 11 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt101
+- drop accounts deps
+
 * Fri Oct 11 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt2
 - relax requires
 

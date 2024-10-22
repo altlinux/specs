@@ -2,7 +2,7 @@
 
 Name: accounts-qml-module
 Version: 0.7
-Release: alt2
+Release: alt10
 
 Group: System/Libraries
 Summary: QML bindings for libaccounts-qt + libsignon-qt
@@ -11,7 +11,7 @@ Url: https://gitlab.com/accounts-sso/accounts-qml-module
 
 Source: %name-%version.tar
 
-BuildRequires: qt5-declarative-devel qt5-tools accounts-qt5-devel signon-devel
+BuildRequires: qt6-declarative-devel qt6-tools accounts-qt6-devel signon-devel
 
 %description
 This QML module provides an API to manage the user's online accounts and get
@@ -36,7 +36,7 @@ sed -i 's,-Werror,,' common-project-config.pri
 %build
 mkdir build
 pushd build
-%qmake_qt5 \
+%qmake_qt6 \
     QMF_INSTALL_ROOT=%prefix \
     PREFIX=%prefix \
     CONFIG+=release \
@@ -50,7 +50,7 @@ popd
 
 %install
 pushd build
-%installqt5
+%install_qt6
 popd
 
 # remove tests
@@ -58,8 +58,8 @@ rm %buildroot/%_bindir/tst_plugin
 
 %files
 %doc README.md
-%dir %_qt5_qmldir/Ubuntu/
-%_qt5_qmldir/Ubuntu/OnlineAccounts/
+%dir %_qt6_qmldir/SSO/
+%_qt6_qmldir/SSO/OnlineAccounts/
 
 %files doc
 %if_disabled bootstrap
@@ -67,6 +67,9 @@ rm %buildroot/%_bindir/tst_plugin
 %endif
 
 %changelog
+* Tue Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 0.7-alt10
+- build with Qt6
+
 * Mon Aug 10 2020 Sergey V Turchin <zerg@altlinux.org> 0.7-alt2
 - fix build for e2k; thanks mike@alt
 

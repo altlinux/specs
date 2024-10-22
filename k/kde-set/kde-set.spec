@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-set
-Version: 24.01.2
+Version: 24.01.4
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -36,7 +36,7 @@ Obsoletes: kde5-mini < %EVR
 Requires: kde-runtime
 #
 Requires: qt6-dbus kde-cli-tools kwin plasma-desktop kf6-kdeclarative
-Requires: kde5-dolphin kde5-kdialog
+Requires: dolphin kdialog
 %description -n kde-mini
 %summary
 
@@ -56,12 +56,12 @@ Requires: /usr/bin/x-www-browser
 #
 Requires: icon-theme-breeze
 Requires: kf6-kwallet kf6-kconfig kf6-kimageformats
-Requires: kde5-svgpart
+Requires: svgpart
 Requires: kf6-baloo
-Requires: polkit-kde-agent kde5-kio-extras plasma6-breeze powerdevil plasma-systemmonitor
+Requires: polkit-kde-agent kio-extras plasma6-breeze powerdevil plasma-systemmonitor
 Requires: drkonqi milou systemsettings plasma6-integration
-Requires: kde5-ark kde5-konsole kde5-gwenview kde5-okular kde5-kwrite kde5-kwalletmanager
-Requires: kde5-kcalc kde5-kross-python
+Requires: ark konsole gwenview okular kwrite kwalletmanager
+Requires: kcalc kde5-kross-python
 #
 Requires: plasma5-breeze plasma5-integration
 %description -n kde-small
@@ -88,10 +88,13 @@ Requires: oxygen-sounds
 Requires: kde-gtk-config bluedevil kscreen ksshaskpass
 Requires: kinfocenter kdeplasma-addons plasma-browser-integration
 Requires: plasma-disks
-Requires: kde5-khelpcenter kde5-kolourpaint kde5-kio-audiocd kde5-kgpg
+%if_enabled qtwebengine
+Requires: khelpcenter
+%endif
+Requires: kde5-kolourpaint kde5-kio-audiocd kgpg
 Requires: kmenuedit kgamma plasma-thunderbolt
-Requires: kde5-kfind kde5-filelight kde5-kcharselect kde5-kteatime kde5-spectacle
-Requires: kde5-kamera kde5-network-filesharing kde5-ktorrent
+Requires: kfind filelight kde5-kcharselect kde5-kteatime spectacle
+Requires: kamera kdenetwork-filesharing ktorrent
 Requires: kde5-kio-zeroconf kde5-sweeper
 %description -n kde
 %summary
@@ -110,11 +113,11 @@ Requires: plasma6-oxygen
 Requires: icon-theme-oxygen
 Requires: plasma-workspace-wallpapers
 Requires: kwrited
-Requires: kde5-ksystemlog
-Requires: kde5-krdc
-Requires: kde5-kcron kde5-kruler kde5-ffmpegthumbs
-Requires: kde5-connect
-Requires: kde5-krfb
+Requires: ksystemlog
+Requires: krdc
+Requires: kde5-kcron kruler ffmpegthumbs
+Requires: kdeconnect
+Requires: krfb
 Requires: kde5-kdf
 Requires: kid3-ui-kde5
 Requires: kde5-graphics-thumbnailers
@@ -141,8 +144,10 @@ Requires: kde5-dragon
 Requires: kde5-kmousetool kde5-kmag
 Requires: kde5-juk kde5-kmouth
 Requires: kdenlive
-Requires: kde5-k3b kde5-kwave kde5-konversation
-Requires: kde5-digikam
+Requires: k3b kde5-kwave konversation
+%if_enabled qtwebengine
+Requires: digikam
+%endif
 Requires: kde5-kdebugsettings
 %description -n kde-maxi
 %summary
@@ -154,7 +159,7 @@ Provides: kde5-somedevel = %EVR
 Obsoletes: kde5-somedevel < %EVR
 Requires: kde-runtime
 #
-Requires: kde5-kate
+Requires: kate
 Requires: kde5-dolphin-plugins
 Requires: kde5-lokalize kde5-okteta kde5-kapptemplate kde5-dev-scripts kde5-kompare
 Requires: kde5-sdk-thumbnailers kde5-poxml kde5-umbrello
@@ -233,15 +238,16 @@ Requires: kde-runtime
 Requires: kde-email-client
 #
 %if_enabled qtwebengine
-Requires: kde5-pim-data-exporter kde5-pim-addons
-Requires: kde5-akregator kde5-kontact
-Requires: kde5-korganizer kde5-zanshin
-Requires: kde5-akonadi-calendar-tools
+Requires: pim-data-exporter kdepim-addons
+Requires: akregator kontact
+Requires: korganizer zanshin
+Requires: akonadi-calendar-tools
 %endif
-Requires: kde5-kalarm kde5-knotes
-Requires: kde5-kaddressbook
+Requires: kalarm
+# dead knotes
+Requires: kaddressbook
 # akonadi based email client
-#Requires: kde5-akonadi-import-wizard kde5-mbox-importer kde5-pim-sieve-editor kde5-mbox-importer kde5-pim-sieve-editor kde5-grantlee-editor
+#Requires: akonadi-import-wizard mbox-importer pim-sieve-editor mbox-importer pim-sieve-editor grantlee-editor
 %description -n kde-pim
 %summary
 
@@ -261,6 +267,12 @@ Requires: kde5-kaddressbook
 %files -n kde-pim
 
 %changelog
+* Wed Oct 09 2024 Sergey V Turchin <zerg@altlinux.org> 24.01.4-alt1
+- update for Apps
+
+* Wed Oct 02 2024 Sergey V Turchin <zerg@altlinux.org> 24.01.3-alt1
+- update for PIM
+
 * Wed Sep 25 2024 Sergey V Turchin <zerg@altlinux.org> 24.01.2-alt1
 - update print-manager
 
