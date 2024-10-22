@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 1.64.0
-Release: alt1
+Release: alt2
 Summary: HTTP/2-based RPC framework
 License: Apache-2.0
 Group: Development/Python3
@@ -39,14 +39,16 @@ export GRPC_PYTHON_BUILD_WITH_CYTHON=1
 %pyproject_install
 
 %check
-export GRPC_PYTHON_BUILD_WITH_CYTHON=1
-python3 setup.py test
+# requires grpc repo
 
 %files
 %doc README.rst
 %python3_sitelibdir/*
 
 %changelog
+* Tue Oct 22 2024 Stanislav Levin <slev@altlinux.org> 1.64.0-alt2
+- Disabled check (see #50996).
+
 * Wed May 29 2024 Andrey Cherepanov <cas@altlinux.org> 1.64.0-alt1
 - New version.
 
