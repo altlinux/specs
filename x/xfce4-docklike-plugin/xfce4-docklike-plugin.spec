@@ -1,6 +1,6 @@
 Name:     xfce4-docklike-plugin
 Version:  0.4.0
-Release:  alt1
+Release:  alt2
 
 Summary:  A Dock-like Taskbar Plugin for XFCE
 License:  GPL-3.0
@@ -17,6 +17,7 @@ BuildRequires: libxfce4panel-gtk3-devel
 BuildRequires: xfce4-dev-tools
 BuildRequires: libwnck3-devel
 BuildRequires: libXi-devel
+BuildRequires: intltool
 
 %description
 A modern, docklike, minimalist taskbar for XFCE.
@@ -40,6 +41,9 @@ rm -f %buildroot%_libdir/xfce4/panel/plugins/libdocklike.la
 %_datadir/xfce4/panel/plugins/docklike.desktop
 
 %changelog
+* Tue Oct 22 2024 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt2
+- Fixed build: added intltool to BR.
+
 * Fri Dec 23 2022 Andrey Cherepanov <cas@altlinux.org> 0.4.0-alt1
 - New version (ALT #44172).
 
