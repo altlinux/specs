@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 %define oname ipdb
+%define mod_name %oname
 
 %def_with check
 
 Name: python3-module-%oname
 Version: 0.13.13
-Release: alt1
+Release: alt2
 Summary: IPython-enabled pdb
-License: BSD 3-Clause
+License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/ipdb/
 
@@ -16,12 +17,9 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+# build backend and its deps
+BuildRequires: python3-module-setuptools
 BuildPreReq: ipython3
-
-%if_with check
-BuildRequires: python3-module-mock
-BuildRequires: python3-module-toml
-%endif
 
 %description
 ipdb exports functions to access the IPython debugger, which features
@@ -32,20 +30,24 @@ introspection with the same interface as the pdb module.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-PYTHONPATH=%buildroot%python3_sitelibdir python3 setup.py test
+%pyproject_run_unittest discover -v tests
 
 %files
 %doc *.txt *.rst
 %_bindir/%{oname}3
-%python3_sitelibdir/*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Tue Oct 22 2024 Stanislav Levin <slev@altlinux.org> 0.13.13-alt2
+- Migrated from removed setuptools' test command (see #50996).
+
 * Fri Mar 10 2023 Grigory Ustinov <grenka@altlinux.org> 0.13.13-alt1
 - Automatically updated to 0.13.13.
 
