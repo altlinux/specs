@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 20230430
+Version: 20241021
 Release: alt1
 
 Summary: Python diff, match and patch libraries
@@ -47,6 +47,9 @@ operations required for synchronizing plain text.
 %python3_sitelibdir/%pkgname-%version.dist-info
 
 %changelog
+* Tue Oct 22 2024 Grigory Ustinov <grenka@altlinux.org> 20241021-alt1
+- Automatically updated to 20241021.
+
 * Fri May 24 2024 Grigory Ustinov <grenka@altlinux.org> 20230430-alt1
 - Build new version.
 - Build with check.
