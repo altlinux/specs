@@ -3,7 +3,7 @@
 %define real_name Module-Info
 
 Name: perl-Module-Info
-Version: 0.37
+Version: 0.39
 Release: alt1
 
 Summary: Information about Perl modules
@@ -50,6 +50,9 @@ to modules and should work on any perl code.
 %_man1dir/*
 
 %changelog
+* Tue Oct 22 2024 Nikolay A. Fetisov <naf@altlinux.org> 0.39-alt1
+- New version
+
 * Sat Nov 07 2015 Nikolay A. Fetisov <naf@altlinux.ru> 0.37-alt1
 - New version
 
