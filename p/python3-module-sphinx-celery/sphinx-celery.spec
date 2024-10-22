@@ -1,20 +1,23 @@
-%define _unpackaged_files_terminate_build 1
 %define oname sphinx-celery
 
 Name: python3-module-%oname
-Version: 1.3.1
-Release: alt2
+Version: 2.1.3
+Release: alt1
+
 Summary: Sphinx Celery Theme
+
 License: BSD
 Group: Development/Python3
-BuildArch: noarch
-Url: https://github.com/celery/sphinx_celery
+URL: https://pypi.org/project/sphinx-celery
+VCS: https://github.com/celery/sphinx_celery
 
-# https://github.com/celery/sphinx_celery.git
+BuildArch: noarch
+
 Source: %name-%version.tar
-Patch1: %oname-%version-upstream-refdomain.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-sphinx
 
 %py3_requires sphinx
@@ -24,20 +27,22 @@ This project provides the Celery sphinx theme and common Sphinx utilities.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc README.rst
 %python3_sitelibdir/sphinx_celery
-%python3_sitelibdir/sphinx_celery-%version-py*.egg-info
+%python3_sitelibdir/sphinx_celery-%version.dist-info
 
 %changelog
+* Tue Oct 22 2024 Grigory Ustinov <grenka@altlinux.org> 2.1.3-alt1
+- Automatically updated to 2.1.3.
+
 * Tue Jun 01 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.1-alt2
 - Drop python2 support.
 
