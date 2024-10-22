@@ -5,7 +5,7 @@
 %define schemasdir %_datadir/glib-2.0/schemas
 
 Name: alt-gaming
-Version: 0.0.5
+Version: 0.0.6
 Release: alt1
 
 Summary: Easy system setup to optimize for games.
@@ -95,8 +95,9 @@ if ! grep -q "clearcpuid=514" /etc/sysconfig/grub2 ; then
 fi
 
 %postun clearcpuid514
-if sed -i 's/clearcpuid=514 //g' /etc/sysconfig/grub2
-then update-grub || :
+if [ $1 -eq 0 ] ; then
+    sed -i 's/clearcpuid=514 //g' /etc/sysconfig/grub2
+    update-grub || :
 fi
 
 %files
@@ -119,6 +120,9 @@ fi
 %schemasdir/95-gnome-gschema.override
 
 %changelog
+* Tue Oct 22 2024 Mikhail Tergoev <fidel@altlinux.org> 0.0.6-alt1
+- fixed removal of clearcpuid=514 from grub2 when updating package
+
 * Tue Aug 13 2024 Mikhail Tergoev <fidel@altlinux.org> 0.0.5-alt1
 - fixed alt-gaming-check: alive-timeout for GNOME
 
