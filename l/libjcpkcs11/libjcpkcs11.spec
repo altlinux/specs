@@ -9,8 +9,8 @@
 %define soversion 2.9.0
 
 Name: libjcpkcs11
-Version: 2.9.0.806
-Release: alt3
+Version: 2.9.0.881
+Release: alt2
 
 Summary: Aladdin JaCarta PKCS#11 library
 License: Proprietary
@@ -20,7 +20,7 @@ Url: https://www.aladdin-rd.ru/support/downloads/c9b88e95-aaef-4448-9c86-7456394
 Source: %name-%version.tar
 ExclusiveArch: aarch64 armh e2kv4 %ix86 mipsel x86_64
 
-BuildRequires: libpcsclite-devel chrpath
+BuildRequires: libpcsclite-devel patchelf
 
 Requires: pcsc-lite-ccid
 
@@ -51,8 +51,6 @@ L-02210004 от 04.02.2021.
 
 %install
 %makeinstall ARCH=%_arch
-chrpath -d %buildroot%_libdir/*.so* \
-	   %buildroot%_bindir/*
 
 %files
 %dir %_datadir/doc/%name-%soversion
@@ -68,6 +66,12 @@ chrpath -d %buildroot%_libdir/*.so* \
 %config(noreplace) %_sysconfdir/pkcs11/modules/jcpkcs11.module
 
 %changelog
+* Tue Oct 22 2024 Paul Wolneykien <manowar@altlinux.org> 2.9.0.881-alt2
+- Fix: Use patchelf to remove RPATH and set the binary interpreter.
+
+* Tue Oct 22 2024 Paul Wolneykien <manowar@altlinux.org> 2.9.0.881-alt1
+- Version: 2.9.0.881.
+
 * Thu Dec 07 2023 Paul Wolneykien <manowar@altlinux.org> 2.9.0.806-alt3
 - Added armh, i586 and mipsel arches.
 - Fix: update.sh: Delete old binaries before update.
