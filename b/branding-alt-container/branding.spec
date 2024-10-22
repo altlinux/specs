@@ -21,7 +21,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 10
+Version: 11
 Release: alt1
 Url: https://packages.altlinux.org/en/sisyphus/srpms/branding-alt-container/
 
@@ -143,5 +143,8 @@ fi
 %ghost %config(noreplace) %_datadir/alt-notes/license.*.html
 
 %changelog
+* Tue Oct 22 2024 Anton Midyukov <antohami@altlinux.org> 11-alt1
+- bump version
+
 * Tue Sep 17 2024 Anton Midyukov <antohami@altlinux.org> 10-alt1
 - Initial build
