@@ -3,7 +3,7 @@
 %define real_name Module-Extract-Use
 
 Name: perl-Module-Extract-Use
-Version: 1.052
+Version: 1.053
 Release: alt1
 
 Summary: Perl module to pull out the modules a module explicitly uses
@@ -53,6 +53,9 @@ ln -s -- $(relative %_licensedir/Artistic-2 %_docdir/%name/LICENSE) LICENSE
 %perl_vendor_privlib/Module/Extract/Use*
 
 %changelog
+* Tue Oct 22 2024 Nikolay A. Fetisov <naf@altlinux.org> 1.053-alt1
+- New version
+
 * Wed Mar 27 2024 Nikolay A. Fetisov <naf@altlinux.org> 1.052-alt1
 - New version
 
