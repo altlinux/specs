@@ -6,7 +6,7 @@
 
 Name:		grafana
 Version:	11.2.2
-Release:	alt1
+Release:	alt2
 Summary:	Metrics dashboard and graph editor
 
 Group:		Development/Other
@@ -209,6 +209,10 @@ fi
 %_datadir/%name
 
 %changelog
+* Tue Oct 22 2024 Alexey Shabalin <shaba@altlinux.org> 11.2.2-alt2
+- v11.2.2+security-01
+- Fix panic with golang 1.23.
+
 * Thu Oct 17 2024 Alexey Shabalin <shaba@altlinux.org> 11.2.2-alt1
 - 11.2.2 (Fixes: CVE-2024-8118).
 
