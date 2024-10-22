@@ -1,5 +1,5 @@
 Name: gcodeworkshop
-Version: 202409
+Version: 202410
 Release: alt1
 
 Summary: GCodeWorkShop is text editor for CNC programmers
@@ -44,5 +44,8 @@ rm -vr %buildroot/%_datadir/doc/gcodeworkshop/
 %doc LICENSE README.md doc/SerialTransmission_Help.html
 
 %changelog
+* Tue Oct 22 2024 Anton Midyukov <antohami@altlinux.org> 202410-alt1
+- New version 202410.
+
 * Sat Sep 28 2024 Anton Midyukov <antohami@altlinux.org> 202409-alt1
 - Initial build
