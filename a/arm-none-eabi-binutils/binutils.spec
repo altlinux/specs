@@ -1,5 +1,5 @@
 Name: arm-none-eabi-binutils
-Version: 2.42
+Version: 2.43.1
 Release: alt1
 
 Summary: GNU Binary Utility Development Utilities
@@ -59,12 +59,15 @@ Binutils is a collection of binary utilities, including:
 rm -r %buildroot%_infodir
 
 %files
-%doc COPYING* ChangeLog
+%doc COPYING* ChangeLog binutils/NEWS
 %_libexecdir/%target
 %_bindir/%target-*
 %_man1dir/%target-*.1.*
 
 %changelog
+* Tue Oct 22 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.43.1-alt1
+- 2.43.1 released
+
 * Fri Mar 22 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.42-alt1
 - 2.42 released
 

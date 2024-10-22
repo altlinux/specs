@@ -1,11 +1,11 @@
 Name: arm-none-eabi-gcc
-Version: 13.2.1
-Release: alt2
+Version: 14.2.0
+Release: alt1
 
 Summary: GNU Compiler Collection
 License: GPLv3+
 Group: Development/C
-Url: https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads
+Url: https://gcc.gnu.org/
 
 Requires: arm-none-eabi-newlib
 
@@ -25,7 +25,7 @@ AutoReq: yes, nopython
 Requires: %name = %version-%release
 
 %description
-This package contains the GNU Compiler Collection version 12.2.1.
+This package contains the GNU Compiler Collection version 14.2.0.
 You'll need this package in order to compile C code.
 It is also required for all other GCC compilers.
 
@@ -134,6 +134,12 @@ find  %buildroot%_libexecdir/ -type f -name \*.la -delete
 %_libexecdir/gcc/%target/*/cc1plus
 
 %changelog
+* Tue Oct 22 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 14.2.0-alt1
+- 14.2.0 released
+
+* Thu Jul 25 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 14.1.0-alt1
+- 14.1.0 released
+
 * Mon Jul 22 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 13.2.1-alt2
 - packaged nano flavour of libstdc++ (closes: 50949)
 
