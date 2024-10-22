@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.0.0
+Version: 6.1.0
 Release: alt1
 
 Summary: A wrapper around the stdlib `tokenize` which roundtrips
@@ -63,6 +63,9 @@ the python tokenization.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 22 2024 Anton Zhukharev <ancieg@altlinux.org> 6.1.0-alt1
+- Updated to 6.1.0.
+
 * Mon Aug 05 2024 Anton Zhukharev <ancieg@altlinux.org> 6.0.0-alt1
 - Updated to 6.0.0.
 

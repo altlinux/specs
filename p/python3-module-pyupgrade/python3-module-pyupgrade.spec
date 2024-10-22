@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.18.0
+Version: 3.19.0
 Release: alt1
 
 Summary: A tool to automatically upgrade syntax for newer versions of the language
@@ -56,6 +56,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 22 2024 Anton Zhukharev <ancieg@altlinux.org> 3.19.0-alt1
+- Updated to 3.19.0.
+
 * Sat Oct 12 2024 Anton Zhukharev <ancieg@altlinux.org> 3.18.0-alt1
 - Updated to 3.18.0.
 
