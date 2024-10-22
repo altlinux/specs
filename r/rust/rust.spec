@@ -8,7 +8,7 @@
 %define r_ver 1.76.0
 
 Name: rust
-Version: 1.81.0
+Version: 1.82.0
 Release: alt1
 Epoch: 1
 
@@ -110,6 +110,7 @@ BuildRequires: rust-cargo
 %if_without debuginfo
 # Since 1.12.0: striping debuginfo damages *.so files
 %add_debuginfo_skiplist %_libdir/* %_bindir/* %_libexecdir/*
+%add_debuginfo_skiplist %rustlibdir/%rust_triple/bin/*
 %endif
 
 %description
@@ -457,6 +458,9 @@ rm -rf %rustdir
 %rustlibdir/src
 
 %changelog
+* Mon Oct 21 2024 Ajrat Makhmutov <rauty@altlinux.org> 1:1.82.0-alt1
+- New version (1.82.0).
+
 * Sat Sep 07 2024 Ajrat Makhmutov <rauty@altlinux.org> 1:1.81.0-alt1
 - New version (1.81.0).
 

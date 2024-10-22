@@ -14,7 +14,7 @@
 
 Name: firefox-esr
 Version: 128.3.1
-Release: alt1
+Release: alt2
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
@@ -387,6 +387,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Oct 22 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.3.1-alt2
+- Add a Russian translation to a desktop file.
+
 * Wed Oct 09 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.3.1-alt1
 - New ESR version.
 - Security fixes:
