@@ -1,5 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
+%ifarch %e2k
+%define arch e2k
+%else
+%define arch %_arch
+%endif
+
 #%ifarch %ix86
 %set_verify_elf_method relaxed
 #%endif
@@ -10,7 +16,7 @@
 
 Name: libjcpkcs11
 Version: 2.9.0.881
-Release: alt2
+Release: alt3
 
 Summary: Aladdin JaCarta PKCS#11 library
 License: Proprietary
@@ -18,7 +24,7 @@ Group: System/Configuration/Hardware
 
 Url: https://www.aladdin-rd.ru/support/downloads/c9b88e95-aaef-4448-9c86-745639439189
 Source: %name-%version.tar
-ExclusiveArch: aarch64 armh e2kv4 %ix86 mipsel x86_64
+ExclusiveArch: aarch64 armh e2kv4 e2kv5 e2kv6 %ix86 mipsel x86_64
 
 BuildRequires: libpcsclite-devel patchelf
 
@@ -50,7 +56,7 @@ L-02210004 от 04.02.2021.
 %setup
 
 %install
-%makeinstall ARCH=%_arch
+%makeinstall ARCH=%arch
 
 %files
 %dir %_datadir/doc/%name-%soversion
@@ -66,6 +72,9 @@ L-02210004 от 04.02.2021.
 %config(noreplace) %_sysconfdir/pkcs11/modules/jcpkcs11.module
 
 %changelog
+* Tue Oct 22 2024 Michael Shigorin <mike@altlinux.org> 2.9.0.881-alt3
+- E2K: adjust for 2.9.0.881
+
 * Tue Oct 22 2024 Paul Wolneykien <manowar@altlinux.org> 2.9.0.881-alt2
 - Fix: Use patchelf to remove RPATH and set the binary interpreter.
 
