@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define optflags_lto %nil
 %define _libexecdir %_prefix/libexec
 
@@ -36,8 +36,8 @@
 
 
 Name: totem
-Version: %ver_major.0
-Release: alt2%beta
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: Movie player for GNOME 3
 Group: Video
@@ -57,9 +57,9 @@ Obsoletes: %name-plugins-publish  %name-plugins-iplayer %name-plugins-grilo
 Obsoletes: mozilla-plugin-%name
 Provides: %name-backend = %version %name-backend-gstreamer = %version %name-backend-xine = %version
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Requires: libpeas-python3-loader
-Requires: %name-video-thumbnailer = %version-%release
+Requires: %name-video-thumbnailer = %EVR
 Requires: dconf gnome-icon-theme
 Requires: gstreamer%gst_api_ver >= %gst_ver
 Requires: gst-plugins-base%gst_api_ver
@@ -116,7 +116,7 @@ This package provides shared library for Totem movie player.
 Summary: Development files for Totem Library
 License: LGPLv2+
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 This package provides files required to develop programs that use
@@ -125,7 +125,7 @@ Totem library.
 %package -n lib%name-gir
 Summary: GObject introspection data for the Totem library
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-gir
 GObject introspection data for the Totem library
@@ -134,8 +134,8 @@ GObject introspection data for the Totem library
 Summary: GObject introspection devel data for the Totem library
 Group: System/Libraries
 BuildArch: noarch
-Requires: lib%name-gir = %version-%release
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-gir = %EVR
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the Totem library
@@ -143,7 +143,7 @@ GObject introspection devel data for the Totem library
 %package plugins
 Summary: default plugins for Totem
 Group: Video
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugins
 A default plugins for Totem:
@@ -158,7 +158,7 @@ A default plugins for Totem:
 %package plugins-lirc
 Summary: LIRC (Infrared remote) plugin for Totem
 Group: Video
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugins-lirc
 A plugin to add LIRC (Infrared remote) support to Totem.
@@ -166,7 +166,7 @@ A plugin to add LIRC (Infrared remote) support to Totem.
 %package plugins-rotation
 Summary: Rotation plugin for Totem
 Group: Video
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugins-rotation
 A plugin to allow videos to be rotated if they're in the wrong orientation.
@@ -174,7 +174,7 @@ A plugin to allow videos to be rotated if they're in the wrong orientation.
 %package plugins-zeitgeist
 Summary: Zeitgeist plugin for Totem
 Group: Video
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: zeitgeist
 
 %description plugins-zeitgeist
@@ -183,7 +183,7 @@ A plugin sending events to Zeitgeist
 %package plugins-jamendo
 Summary: Plugin for jamendo.com music collection
 Group: Video
-Requires: %name = %version-%release
+Requires: %name = %EVR
 %py_requires json
 
 %description plugins-jamendo
@@ -193,7 +193,7 @@ Commons licensed music on Jamendo
 %package plugins-coherence_upnp
 Summary: Coherence DLNA/UPnP totem plugin
 Group: Video
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: python-module-coherence coherence
 
 %description plugins-coherence_upnp
@@ -202,7 +202,7 @@ This package contains a DLNA/UPnP client for Totem powered by Coherence
 %package plugins-brasero
 Summary: Video disc recorder plugin for Totem
 Group: Video
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: brasero
 
 %description plugins-brasero
@@ -238,9 +238,8 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 
 %build
 %meson \
-	%{?_enable_python:-Denable-python=yes} \
-	%{?_disable_vala:-Denable-vala=no} \
-	%{?_enable_gtk_doc:-Denable-gtk-doc=true}
+    %{?_enable_python:-Denable-python=yes} \
+    %{?_enable_gtk_doc:-Denable-gtk-doc=true}
 %nil
 # https://github.com/mesonbuild/meson/issues/1994
 %meson_build -j1
@@ -346,6 +345,9 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Wed Oct 23 2024 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt1
+- 43.1
+
 * Sun Mar 05 2023 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt2
 - updated to 43.0-37-gb8a2f3e93
 
