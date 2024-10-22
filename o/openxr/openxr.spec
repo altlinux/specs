@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: openxr
-Version: 1.1.36
-Release: alt2
+Version: 1.1.41
+Release: alt1
 
 Summary: An API for writing VR and AR software
 
@@ -96,6 +96,9 @@ rm -v %buildroot%_docdir/openxr/LICENSE
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Oct 22 2024 Mikhail Tergoev <fidel@altlinux.org> 1.1.41-alt1
+- 1.1.41
+
 * Fri May 03 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.1.36-alt2
 - NMU: fixed FTBFS on LoongArch
 
