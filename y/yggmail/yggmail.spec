@@ -3,7 +3,7 @@
 
 Name: yggmail
 Version: 0.0.0
-Release: alt4.git1d5545a
+Release: alt5.git3e20a60
 
 Summary: End-to-end encrypted email for the mesh networking age
 License: MPL-2.0
@@ -65,6 +65,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Tue Oct 22 2024 Anton Zhukharev <ancieg@altlinux.org> 0.0.0-alt5.git3e20a60
+- Updated to 3e20a60741b0f21950a7cf301a1ad167657b23af (yggdrasil 0.5.9).
+
 * Tue Aug 27 2024 Anton Zhukharev <ancieg@altlinux.org> 0.0.0-alt4.git1d5545a
 - Updated to 1d5545a8179293f9271fed760c9c99cc1b404444 (yggdrasil 0.5.8).
 
