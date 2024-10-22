@@ -1,5 +1,5 @@
 Name:    wlmaker
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: Wayland Maker - A Wayland compositor inspired by Window Maker
@@ -13,7 +13,7 @@ Source0: %name-%version.tar
 # and extract it to .gear/submodules/libbase.
 Source1: submodules.tar
 
-BuildRequires(pre): cmake ctest
+BuildRequires(pre): rpm-build-cmake ctest
 BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-protocols)
@@ -26,6 +26,7 @@ BuildRequires: pkgconfig(libdrm)
 BuildRequires: flex doxygen
 
 Requires: foot
+Requires: seatd
 
 %description
 A lightweight and fast Wayland compositor, visually inspired by Window Maker,
@@ -48,18 +49,29 @@ Key features:
 %install
 %cmake_install
 
+# Install default config files
+install -d %buildroot%_sysconfdir
+install -m644 -v ./etc/{style-default.plist,wlmaker.plist,wlmaker-state.plist} \
+%buildroot%_sysconfdir
+install -m644 -v ./etc/wlmaker-home.plist %buildroot%_sysconfdir
+
 %check
-# FIXME: Temporarily ignore broken toolkit_test set
-%ctest -E toolkit_test
+%ctest
 
 %files
 %doc *.md LICENSE
 %_bindir/%name
 %_bindir/wlmclock
+%_bindir/example_toplevel
 %_bindir/wrap-%name.sh
 %_datadir/%name.desktop
+%_datadir/wlmclock.desktop
 %_iconsdir/%name
+%config(noreplace)%_sysconfdir/*.plist
 
 %changelog
+* Tue Oct 22 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.4-alt1
+- 0.3 -> 0.4
+
 * Fri Oct 04 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.3-alt1
 - initial build for Sisyphus
