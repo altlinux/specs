@@ -3,7 +3,7 @@
 
 Name: far2l
 Version: 2.6.3
-Release: alt1
+Release: alt2
 
 Summary: Linux port of FAR v2
 
@@ -13,6 +13,10 @@ Url: https://github.com/elfmz/far2l
 
 # Source-url: https://github.com/elfmz/far2l/archive/refs/tags/v_%version.tar.gz
 Source: %name-%version.tar
+# https://github.com/elfmz/far2l/commit/c160f4f7914d8f003ee8bfea598689005464e608.patch
+Patch: upstream-c160f4f7.patch
+# https://github.com/elfmz/far2l/commit/4cb8b0fe3b0d7d1016c1a3fc9ed75a69d197c120.patch
+Patch1: upstream-4cb8b0fe.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -91,6 +95,9 @@ Used code from projects:
 %_man1dir/far2l.*
 
 %changelog
+* Mon Oct 21 2024 Anton Midyukov <antohami@altlinux.org> 2.6.3-alt2
+- Fix build with libfmt 11 (add upstream patches)
+
 * Fri Jul 26 2024 Anton Midyukov <antohami@altlinux.org> 2.6.3-alt1
 - new version (2.6.3) with rpmgs script
 
