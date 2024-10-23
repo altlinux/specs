@@ -16,7 +16,7 @@
 %endif
 
 Name: 	 thunderbird
-Version: 128.3.2
+Version: 128.3.3
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -520,6 +520,9 @@ cat %SOURCE2 | \
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Wed Oct 23 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.3.3-alt1
+- New version.
+
 * Fri Oct 18 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.3.2-alt1
 - New version.
 - Fix the icon display in the upper left corner.
