@@ -2,7 +2,7 @@
 
 Name: kde6-%rname
 Version: 0.4.0
-Release: alt1
+Release: alt2
 %K6init altplace
 
 Group: System/Libraries
@@ -30,6 +30,7 @@ Common %name files
 %package devel
 Summary: Development files for %name
 Group: Development/KDE and QT
+Conflicts: kde5-kquickimageeditor-devel
 %description devel
 This package contains the development files for %name.
 
@@ -54,5 +55,8 @@ This package contains the development files for %name.
 
 
 %changelog
+* Wed Oct 23 2024 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt2
+- fix conflicts
+
 * Fri Oct 18 2024 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt1
 - initial build
