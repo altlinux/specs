@@ -4,22 +4,22 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.6.1
-Release: alt2
+Version: 0.7.2
+Release: alt1
 Summary: An ISO 8601 date/time/duration parser and formater
 License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/isodate/
-
-Source0: %name-%version.tar
+Vcs: https://github.com/gweis/isodate
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
-
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-coverage
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -44,6 +44,12 @@ finds for instance nanoseconds it will round it to microseconds.
 
 %prep
 %setup
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
@@ -52,15 +58,17 @@ finds for instance nanoseconds it will round it to microseconds.
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -vra
 
 %files
 %doc *.txt *.rst
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname-%version.dist-info/
-%exclude %python3_sitelibdir/*/tests
 
 %changelog
+* Tue Oct 22 2024 Stanislav Levin <slev@altlinux.org> 0.7.2-alt1
+- 0.6.1 -> 0.7.2.
+
 * Tue Jan 23 2024 Grigory Ustinov <grenka@altlinux.org> 0.6.1-alt2
 - Fixed FTBFS.
 
