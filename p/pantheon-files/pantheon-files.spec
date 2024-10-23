@@ -3,7 +3,7 @@
 
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 7.0
+%define ver_major 7.1
 %define _name files
 %define xdg_name org.pantheon.%_name
 %define rdn_name io.elementary.%_name
@@ -116,6 +116,9 @@ This package provides Vala language bindings for the pantheon-files.
 %endif
 
 %changelog
+* Wed Oct 23 2024 Yuri N. Sedunov <aris@altlinux.org> 7.1.0-alt1
+- 7.1.0
+
 * Sun Aug 04 2024 Yuri N. Sedunov <aris@altlinux.org> 7.0.0-alt1
 - 7.0.0
 
