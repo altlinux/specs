@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 0.7
+%define ver_major 0.8
 %define rdn_name app.drey.Warp
 
 %define optflags_lto %nil
@@ -11,17 +11,18 @@
 
 Name: warp
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: Fast and secure file transfer tool
-License: GPL-3.0
+License: GPL-3.0-or-later
 Group: Networking/File transfer
 Url: https://apps.gnome.org/Warp
+
+Vcs: https://gitlab.gnome.org/World/warp.git
 
 %if_disabled snapshot
 Source: %url/-/archive/v%version/%name-%version.tar.gz
 %else
-Vcs: https://gitlab.gnome.org/World/warp.git
 Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
@@ -29,9 +30,9 @@ Source1: %name-%version-cargo.tar
 #error: failed to run custom build command for `ring v0.16.20`
 ExcludeArch: ppc64le
 
-%define glib_ver 2.66
-%define gtk_ver 4.13
-%define adwaita_ver 1.5
+%define glib_ver 2.78
+%define gtk_ver 4.16
+%define adwaita_ver 1.6
 
 Requires: yelp
 %{?_enable_qr:Requires: gst-plugins-bad1.0}
@@ -44,6 +45,7 @@ BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(dbus-1)
 %{?_enable_qr:BuildRequires: pkgconfig(zbar) pkgconfig(gstreamer-plugins-bad-1.0)}
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils clippy}
+BuildRequires: license-list-data
 
 %description
 Warp allows you to securely send files to each other via the internet or
@@ -61,6 +63,8 @@ mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
+ln -s %_datadir/license-list-data vendor/license/license-list-data
+
 %build
 %meson \
     %{subst_enable_meson_feature qr qr-code-scanning}
@@ -76,6 +80,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %files -f %name.lang
 %_bindir/%name
+#%dir %_datadir/%name/
+# ~600M
+#%_datadir/%name/licenses.json
 %_desktopdir/%rdn_name.desktop
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
@@ -83,6 +90,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Wed Oct 23 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Sat Sep 21 2024 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt2
 - updated to v0.7.0-38-gcf65284
 
