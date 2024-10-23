@@ -3,7 +3,7 @@
 %def_without clang
 
 Name: deepin-qt5platform-plugins
-Version: 5.6.28
+Version: 5.6.34
 Release: alt1
 
 Summary: Qt platform integration plugins for Deepin Desktop Environment
@@ -22,9 +22,6 @@ BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
 # optimized out: cmake cmake-modules fontconfig-devel gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXfixes-devel libXi-devel libcairo-devel libdouble-conversion3 libfreetype-devel libglvnd-devel libgmock-devel libgpg-error libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-test libdqt5-waylandclient libdqt5-widgets libdqt5-x11extras libdqt5-xcbqpa libsasl2-3 libssl-devel libstdc++-devel libwayland-client-devel libwayland-server-devel libxcb-devel libxcb-render-util libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxcbutil-keysyms-devel libxkbcommon-devel libxkbcommon-x11 pkg-config python3 python3-base python3-dev python3-module-setuptools dqt5-base-devel sh5 wayland-devel xorg-proto-devel zlib-devel
 BuildRequires: dwayland-devel extra-cmake-modules libdbus-devel libgtest-devel libmtdev-devel libwayland-cursor-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxkbcommon-x11-devel dqt5-wayland-devel dqt5-x11extras-devel dqt5-base-devel-static
 BuildRequires: kf5-kwayland-devel
-
-# find libraries
-%add_findprov_lib_path %_dqt5_libdir
 
 %if_with clang
 BuildRequires: clang-devel lld-devel
@@ -76,6 +73,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_dqt5_plugindir/wayland-shell-integration/libkwayland-shell.so
 
 %changelog
+* Wed Oct 23 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.34-alt1
+- New version 5.6.34.
+
 * Thu May 09 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.28-alt1
 - New version 5.6.28.
 - Built via separate qt5 instead system (ALT #48138).
