@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.16.0
-Release: alt1
+Release: alt2
 
 Summary: Meson PEP 517 Python build backend
 License: MIT
@@ -32,6 +32,7 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 Patch: 225a26d8c854987897448b17478166570c7be777.patch
+Patch1: mesonpy-0.16.0-adjust-for-changes-in-pyproject-metadata-0.9.0.patch
 # mapping from PyPI name (actual PyPI name is meson-python)
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
 Provides: python3-module-meson-python = %EVR
@@ -47,7 +48,7 @@ for more details.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -65,6 +66,9 @@ for more details.
 %python3_sitelibdir/%{pyproject_distinfo meson_python}
 
 %changelog
+* Wed Oct 23 2024 Stanislav Levin <slev@altlinux.org> 0.16.0-alt2
+- Fixed FTBFS (pyproject-metadata 0.9.0).
+
 * Fri Apr 19 2024 Grigory Ustinov <grenka@altlinux.org> 0.16.0-alt1
 - Automatically updated to 0.16.0.
 
