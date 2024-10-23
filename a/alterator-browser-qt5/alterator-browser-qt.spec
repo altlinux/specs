@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.4.22
+Version: 3.4.23
 Release: alt1
 
 Source:%name-%version.tar
@@ -83,6 +83,9 @@ __EOF__
 
 
 %changelog
+* Wed Oct 23 2024 Sergey V Turchin <zerg at altlinux dot org> 3.4.23-alt1
+- don't force compobox popup extra height
+
 * Tue Oct 08 2024 Sergey V Turchin <zerg at altlinux dot org> 3.4.22-alt1
 - fix help window size
 
