@@ -1,8 +1,11 @@
-%define oname markdown-checklist
+%define pypi_name markdown-checklist
+%define mod_name markdown_checklist
 
-Name: python3-module-%oname
+%def_with check
+
+Name: python3-module-%pypi_name
 Version: 0.4.4
-Release: alt1
+Release: alt2
 
 Summary: Python Markdown extension for task lists with checkboxes
 
@@ -16,9 +19,12 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+# build backend and its deps
+BuildRequires: python3-module-setuptools
+%if_with check
 BuildRequires: python3-module-markdown
-BuildRequires: python3-module-coverage
 BuildRequires: python3-module-pytest
+%endif
 
 %py3_provides markdown_checklist
 %py3_requires markdown
@@ -30,20 +36,23 @@ Python Markdown extension for lists of tasks with checkboxes.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test
+%pyproject_run_pytest -vra
 
 %files
 %doc README
-%python3_sitelibdir/markdown_checklist
-%python3_sitelibdir/markdown_checklist-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 23 2024 Stanislav Levin <slev@altlinux.org> 0.4.4-alt2
+- Migrated from removed setuptools' test command (see #50996).
+
 * Thu Aug 04 2022 Grigory Ustinov <grenka@altlinux.org> 0.4.4-alt1
 - Build new version.
 
