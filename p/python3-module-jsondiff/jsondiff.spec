@@ -1,46 +1,57 @@
-%define oname jsondiff
+%define _unpackaged_files_terminate_build 1
+%define pypi_name jsondiff
+%define mod_name %pypi_name
 
-Name: python3-module-%oname
-Version: 2.0.0
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 2.2.1
 Release: alt1
-
 Summary: Diff JSON and JSON-like structures in Python
-
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/jsondiff
-
-# Source-url: https://pypi.io/packages/source/j/%oname/%oname-%version.tar.gz
-Source: %name-%version.tar
-
+Url: https://pypi.org/project/jsondiff/
+Vcs: https://github.com/xlwings/jsondiff
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
 Conflicts: jdiff
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata_extra dev
+%endif
 
 %description
 Diff JSON and JSON-like structures in Python.
 
 %prep
 %setup
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-python3 setup.py test
+# .github/workflows/pr_check.yml
+%pyproject_run_pytest -vra
 
 %files
-%doc *.rst
+%doc README.*
 %_bindir/jdiff
-%python3_sitelibdir/*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 23 2024 Stanislav Levin <slev@altlinux.org> 2.2.1-alt1
+- 2.0.0 -> 2.2.1.
+
 * Mon May 22 2023 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
 - new version 2.0.0 (with rpmrb script)
 - add conflicts: jdiff (ALT bug 41297)
