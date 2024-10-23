@@ -6,7 +6,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt80
+Release: alt81
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -184,6 +184,11 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Wed Jul 24 2024 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt81
+- adjust minmal XFS size (Closes: #49868)
+- show custom error messages (Closes: #50989, #47580, #48961, #48962)
+- md: use 1.0 superblock (Closes: #49438)
+
 * Thu May 23 2024 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt80
 - initalize partition table after disk discovery
 
