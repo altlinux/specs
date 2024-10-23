@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 8.13.47
+Version: 8.13.48
 Release: alt1
 
 Summary: Python port of Google's libphonenumber
@@ -51,6 +51,9 @@ popd
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Oct 23 2024 Grigory Ustinov <grenka@altlinux.org> 8.13.48-alt1
+- Automatically updated to 8.13.48.
+
 * Sat Oct 05 2024 Grigory Ustinov <grenka@altlinux.org> 8.13.47-alt1
 - Automatically updated to 8.13.47.
 
