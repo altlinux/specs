@@ -1,29 +1,22 @@
-%def_without fam
-
 Name: apachetop
-Version: 0.12.6
-Release: alt2
+Version: 0.23.2
+Release: alt1
 
 Epoch: 20060605
 
 Summary: ApacheTop is top-like utility for Apache 
-License: BSD
+License: BSD-3-Clause
 Group: Monitoring
 
-Url: http://clueful.shagged.org/apachetop
-Source: %url/files/%name-%version.tar.gz
-Patch0: http://security.debian.org/pool/updates/main/a/apachetop/apachetop_0.12.5-1sarge1.diff.gz
-Patch1: apachetop-0.12.6-gcc41.patch
-
+Url: https://github.com/tessus/apachetop
+Source: %name-%version.tar.gz
 Summary(ru_RU.KOI8-R): ApacheTop -- top'ообразная утилита для Apache
 Summary(uk_UA.KOI8-U): ApacheTop -- top'ообразна утил╕та для Apache
 
 # Automatically added by buildreq on Mon Jun 05 2006
-BuildRequires: gcc-c++ libadns-devel libncurses-devel libpcre-devel libreadline-devel
-
-%if_with fam
-BuildRequires: libgamin-devel
-%endif
+BuildRequires: gcc-c++ libadns-devel libreadline-devel
+BuildRequires: pkgconfig(ncurses)
+BuildRequires: pkgconfig(libpcre2-posix)
 
 %description
 A curses-based top-like display for Apache information, including requests per
@@ -39,26 +32,28 @@ second, bytes per second, most popular URLs, etc.
 
 %prep
 %setup -q
-%patch1 -b .gcc41
 
 %build
-subst 's,pcre.h,pcre/pcre.h,g' src/apachetop.h configure
-%configure --with-logfile=%_logdir/httpd/access_log --without-fam
+%autoreconf
+%configure --with-logfile=%_logdir/httpd2/access_log --without-fam
 %make_build
 
 %install
 %makeinstall
 
 %files
-%_bindir/*
-%doc AUTHORS ChangeLog LICENSE NEWS README TODO
-%doc %_man1dir/*
+%_bindir/%name
+%doc AUTHORS ChangeLog LICENSE NEWS README
+%doc %_man1dir/%name.1.*
 
 # TODO:
 # - some wrapper to point at /var/log/httpd/access_log ?
 #   (until proper multi-host infrastructure is in place)
 
 %changelog
+* Tue Oct 22 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 20060605:0.23.2-alt1
+- new version
+
 * Tue Feb 05 2019 Michael Shigorin <mike@altlinux.org> 20060605:0.12.6-alt2
 - rebuilt against readline7
 
