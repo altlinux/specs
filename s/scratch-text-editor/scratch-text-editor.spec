@@ -2,22 +2,22 @@
 
 %define _name code
 %define rdn_name io.elementary.%_name
-%define ver_major 7.3
+%define ver_major 7.4
 
 Name: scratch-text-editor
 Version: %ver_major.0
 Release: alt1
 
 Summary: The text editor that works
-License: GPL-3.0
+License: GPL-3.0-or-later
 Group: Editors
-
 Url: https://github.com/elementary/code
+
+Vcs: https://github.com/elementary/code.git
 
 %if_disabled snapshot
 Source: %url/archive/%version/%_name-%version.tar.gz
 %else
-Vcs: https://github.com/elementary/code.git
 Source: %_name-%version.tar
 %endif
 
@@ -126,6 +126,9 @@ This package provides Vala language bindings for the scratch text editor.
 %_vapidir/%{_name}core.vapi
 
 %changelog
+* Wed Oct 23 2024 Yuri N. Sedunov <aris@altlinux.org> 7.4.0-alt1
+- 7.4.0
+
 * Thu Jul 25 2024 Yuri N. Sedunov <aris@altlinux.org> 7.3.0-alt1
 - 7.3.0
 
