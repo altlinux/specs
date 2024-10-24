@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		f383737f108
+%define svnrev		9406e67a5ff
 
 %def_with pgsql
 %def_enable java
@@ -17,7 +17,7 @@
 %endif
 
 Name: zabbix
-Version: 7.0.4
+Version: 7.0.5
 Release: alt1
 Epoch: 1
 
@@ -417,9 +417,6 @@ zabbix web frontend, edition for php8.3
 %patch0 -p1
 
 %build
-%ifarch armh
-export CFLAGS=-fPIC
-%endif
 # fix ZABBIX_REVISION
 sed -i -e "s,{ZABBIX_REVISION},%svnrev," include/version.h src/zabbix_java/src/com/zabbix/gateway/GeneralInformation.java src/go/pkg/version/version.go
 
@@ -857,6 +854,10 @@ fi
 %_includedir/%name
 
 %changelog
+* Thu Oct 24 2024 Alexei Takaseev <taf@altlinux.org> 1:7.0.5-alt1
+- 7.0.5
+- Cleanup spec
+
 * Sat Sep 28 2024 Alexei Takaseev <taf@altlinux.org> 1:7.0.4-alt1
 - 7.0.4
 
