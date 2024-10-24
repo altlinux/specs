@@ -3,7 +3,7 @@
 
 Name:           altmediawriter
 Version:        1.0.5
-Release:        alt1
+Release:        alt2
 Summary:        ALT Media Writer
 Group:          System/Configuration/Other
 
@@ -59,6 +59,12 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/%name.appdata
 
 
 %changelog
+* Mon Sep 23 2024 Maria Alexeeva <alxvmr@altlinux.org> 1.0.5-alt2
+- Fix corruption of the last connected drive (thx a-shavlidze@mail.ru).
+- Fix progress bar display.
+- Fix disk formatting.
+- Fixes #44462, #49205, #47202
+
 * Tue Jun 14 2022 Dmitry Degtyarev <kevl@altlinux.org> 1.0.5-alt1
 - Misc: Fix compatibility with ALT Linux P9.
 
