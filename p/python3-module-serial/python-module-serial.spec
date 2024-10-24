@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 3.5
-Release: alt2
+Release: alt3
 Summary: Serial port access for python
 Summary(ru_RU.UTF-8): Доступ к последовательному порту из python
 # https://github.com/pyserial/pyserial
@@ -16,8 +16,12 @@ Group: Development/Python3
 Prefix: %_prefix
 Url: https://github.com/pyserial/pyserial
 BuildArch: noarch
-
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-pyserial = %EVR
 BuildRequires(pre): rpm-build-python3
+# build backend and its deps
+BuildRequires: python3-module-setuptools
 %add_python3_req_skip System clr
 
 Conflicts: python-module-%oname
@@ -61,16 +65,16 @@ It's built for python %__python_version
 %setup
 
 %build
-echo "*** Creating package %name ***"
-%python3_build
+%pyproject_build
 
 %install
-%python3_build_install --optimize=2
+%pyproject_install
 
 %files
 %doc CHANGES.rst README.rst LICENSE.txt
 %_bindir/*
-%python3_sitelibdir/*
+%python3_sitelibdir/serial/
+%python3_sitelibdir/%{pyproject_distinfo pyserial}/
 %exclude %python3_sitelibdir/serial/*java.py*
 %exclude %python3_sitelibdir/serial/__pycache__/*java.*
 %exclude %python3_sitelibdir/serial/*win32.py*
@@ -87,6 +91,9 @@ echo "*** Creating package %name ***"
 %endif
 
 %changelog
+* Thu Oct 24 2024 Stanislav Levin <slev@altlinux.org> 3.5-alt3
+- Mapped PyPI name to the distro's one.
+
 * Thu Aug 05 2021 Grigory Ustinov <grenka@altlinux.org> 3.5-alt2
 - Drop python2 support.
 

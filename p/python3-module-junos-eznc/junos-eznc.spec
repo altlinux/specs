@@ -2,12 +2,11 @@
 %define pypi_name junos-eznc
 %define mod_name junos
 
-# depends on deprecated nose
-%def_without check
+%def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.6.7
-Release: alt2
+Version: 2.7.2
+Release: alt1
 Summary: Junos 'EZ' automation for non-programmers
 License: Apache-2.0
 Group: Development/Python3
@@ -15,19 +14,19 @@ Url: https://pypi.org/project/junos-eznc/
 VCS: https://github.com/Juniper/py-junos-eznc
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-# for some reason not detected automatically
-%py3_requires scp
-
 # provide PyPI's name(dash and underscore)
 %py3_provides %pypi_name
-%py3_provides junos_eznc
-
-BuildRequires(pre): rpm-build-python3
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%add_pyproject_deps_check_filter 'ntc-templates$'
+%add_pyproject_deps_check_filter 'pep8$'
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 Junos PyEZ is a Python library to remotely manage/automate Junos
@@ -38,15 +37,19 @@ understanding of the Junos XML API.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile development.txt
+%endif
 
-# hotfix for python3.12
-sed -i 's/SafeConfigParser/ConfigParser/' versioneer.py
-sed -i 's/readfp/read_file/' versioneer.py
 # workaround for versioneer
+rm versioneer.py
 grep -qsF ' export-subst' .gitattributes || exit 1
 vers_f="$(sed -n 's/ export-subst//p' .gitattributes)"
-grep -qs '^[ ]*git_refnames[ ]*=[ ]*".*"[ ]*$' "$vers_f" || exit 1
-sed -i 's/^\([ ]*\)git_refnames[ ]*=[ ]*".*"[ ]*$/\1git_refnames = " (tag: v%version, upstream\/master)"/' "$vers_f"
+echo 'def get_versions():return {"version": "%version"}' > "$vers_f"
+echo 'def get_cmdclass(): return {}' > versioneer.py
+echo 'def get_version(): return "%version"' >> versioneer.py
 
 %build
 %pyproject_build
@@ -55,6 +58,8 @@ sed -i 's/^\([ ]*\)git_refnames[ ]*=[ ]*".*"[ ]*$/\1git_refnames = " (tag: v%ver
 %pyproject_install
 
 %check
+# .github/workflows/pylint.yml
+%pyproject_run -- nose2 -vvv tests.unit
 
 %files
 # jnpr is the namespace package, don't own that directory
@@ -63,6 +68,9 @@ sed -i 's/^\([ ]*\)git_refnames[ ]*=[ ]*".*"[ ]*$/\1git_refnames = " (tag: v%ver
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 24 2024 Stanislav Levin <slev@altlinux.org> 2.7.2-alt1
+- 2.6.7 -> 2.7.2.
+
 * Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 2.6.7-alt2
 - Fixed FTBFS.
 
