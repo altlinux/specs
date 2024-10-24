@@ -1,6 +1,6 @@
 Name: kodi
-Version: 21.0
-Release: alt2
+Version: 21.1
+Release: alt1
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
@@ -212,6 +212,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/xsessions/kodi.desktop
 
 %changelog
+* Thu Oct 24 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 21.1-alt1
+- 21.1 released
+
 * Wed Apr 10 2024 Michael Shigorin <mike@altlinux.org> 21.0-alt2
 - E2K: more workarounds for lcc 1.27 (ilyakurdyukov@, mcst#7982)
 
