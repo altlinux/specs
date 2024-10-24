@@ -3,21 +3,20 @@
 
 Name:           altmediawriter
 Version:        1.0.5
-Release:        alt2
+Release:        alt2.1
 Summary:        ALT Media Writer
 Group:          System/Configuration/Other
+Packager:       Maria Alexeeva <alxvmr@altlinux.org>
 
 License:        GPLv2+
 URL:            https://github.com/altlinux/ALTMediaWriter
 Source:         %oname-%version.tar
 
-BuildRequires:  libGConf
-BuildRequires:  libappstream-glib
 BuildRequires:  liblzma-devel
-BuildRequires:  libnss-mdns
 BuildRequires:  libyaml-cpp-devel
 BuildRequires:  qt5-declarative-devel
 BuildRequires:  qt5-x11extras-devel
+BuildRequires:  libappstream-glib
 
 Requires:       qt5-quickcontrols
 Requires:       qt5-quickcontrols2
@@ -59,6 +58,9 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/%name.appdata
 
 
 %changelog
+* Fri Oct 25 2024 Ivan A. Melnikov <iv@altlinux.org> 1.0.5-alt2.1
+- NMU: Trimmed build dependencies (thx asheplyakov@).
+
 * Mon Sep 23 2024 Maria Alexeeva <alxvmr@altlinux.org> 1.0.5-alt2
 - Fix corruption of the last connected drive (thx a-shavlidze@mail.ru).
 - Fix progress bar display.
